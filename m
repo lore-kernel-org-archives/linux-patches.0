@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024519;
-	b=qGxvS9+FjbLMcMPMRdDpzbulON7UnVub8Eih1BnXxeqaqM08dIBxW+J1CA51al9p8/w4
-	 Jxq0KC/F2ACNwJ3vcp7tZ/J6VyZFSOh0W0Hjm0mo2/7/kptvWUZ408LcHAMe1J71BpwJP
-	 po00RKFdP0atVDmm8plUcVgPnWNJbRLwoIMCz/HANA4AwRizFLOvIFSFkMP58n8ElgANM
-	 W+yb8qxkdu14mjbSTElHjNZsdlrqXm1XmebKcRWbWxCt4Apezy2BwMsteYKlQq+2lehym
-	 S5NH4hkZ+mF924hbOAjOvvQKS6k+ilqb2mDp5xyil1GrwO4981XRxQBY0zYlvV5jGyw==
+	t=1795024522;
+	b=5ZSIM2C+vtJA3z5z7F1mCjLPquU1PMWWfcsWGsNBkMtlVi0XKbyCiSSTOciei3Wg7Hnw
+	 qA6xwsHVYZsWaMuMMf4OKM/X1WlIqhFfTM5izcKx9sAUHaIdP8jWV9S/Fz674U+AxDu/J
+	 OirhbFpanpsrHzRzwwn8HLCkZKEC0A0mj9cZNtOaTJJD/ldNDd/ck6S3HhkGZj0sIyb5m
+	 wMBp5zAD/R1ott7POadJGHW69BQ/zt9MVOijfr7SDJKvu0JnPCsDIrzxfQ6XHR5Ci4sqN
+	 EsHmEnGgrUYxqrcgbTjKYLAwlyfwLxdCKb0rgSOFjIzra1few1sswV9XO4rWhFx99cQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CCFvlb9Pvdo3AdX7aNWQwDeBUfFtQ5Pohzy6w5PKoTg=;
-	b=m6cHdz51llOhTPMniGGuuhEQoLFOU+1wHs0xezQaNiAdxyJ7AxzAPl/FBL5w8i/kAAGv
-	 04qUGArCfdjBCxU6mEGs8loD9jf2dJJmRx6qfMUU7tjbCARzfpmjf8x34mSOKFTF0hXTB
-	 4Tj8ERuuGVJ6AVO3096+lU+Dyqjz2qbuduX4Juhlc+o+xVTkHGj7KpeJSX7sWZZFCBm2d
-	 xRPavBCcixT+JEVja1fGs2X0VgcaPbZ9O2HHJdtJb4JElNkZprRzDNPWN3zZTzbLRKHlm
-	 ueCG6xRzm55fhiqu4U4I//aNZXFiGJwDtKDD3DXVN4hersOt+iSLTiaFLulWvlD36mg==
+	bh=tb+PWR82XaUNG8hg1Oht3sO7sCrjnehYZ7T4SwXqPb0=;
+	b=fycxbWC2WVj2nU3jwxsE1UYxMJNpXIwdIJrsAOtSuyyqB/8TscdoD5xN+DEdPQM2mTSY
+	 Npecd/CgJSqb9iW9b1bcYFCz7hLmwkNhECAqUeojk8wsq0MHwGUbBik75ne+HYoWtElXG
+	 Oc5DcJZrBk97DZXEvTjowmaoXcySqGZTT3kAjSIjU+05haWQ60ZPhsYTBzT2Vl6aCdtXo
+	 A1nEmLOYHOQC5/MSHuC40VQ8KBq4BNf2UqgDyMNkTL349GYVHzZiJN7NlTX+D8esUWKsj
+	 3zNL0ykqFPlzn71tCrZGdDRPOZmCSI0AhyX/k5ssOT3q6i/j+HdNAOuwEiBeqpymqwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2W+KLjuJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qft9V9pM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3B0606A325;
-	Wed, 18 Nov 2026 17:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E16C606A325;
+	Wed, 18 Nov 2026 17:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2W+KLjuJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFA91F000C5;
-	Wed, 18 Nov 2026 17:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qft9V9pM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7D9B1F000C4;
+	Wed, 18 Nov 2026 17:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024519;
-	bh=CCFvlb9Pvdo3AdX7aNWQwDeBUfFtQ5Pohzy6w5PKoTg=;
+	s=korg; t=1795024522;
+	bh=tb+PWR82XaUNG8hg1Oht3sO7sCrjnehYZ7T4SwXqPb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2W+KLjuJ+aj+j27sCB5nt/v7/EsjlTAUv76ACaW0o+4bjF14hJlyM07dzpS/jdoao
-	 QQgmKTRyNERlqaPcNSUFioG+uaAhdFcDL49TI7yaTQyIJ1oFC4Mc/JomJMGKm0qPlh
-	 I3dkMqONl3Mc1AKWo7iEVvSLdwXFMo/9k1OV/Gnk=
+	b=qft9V9pMAfH6/7f30vdNg7zKOAPfczoC7909IXiRBKdy9ay4X5FoEGQHP1KUrgLSw
+	 TGuqwrqqwvQsD2CJtO/cDTlIPZlSJxCFL+QObMSe9nsJAClejUybfNE5LPDJjyyVhr
+	 6ZdNBwCtGy8sogwk2ql7sokOlglBjplx3xtsK2Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0754/2151] arm64: dts: qcom: lemans-ride-common: fix SerDes PHY regulator supplies
-Date: Wed, 18 Nov 2026 15:41:29 +0100
-Message-ID: <20261118150149.518994956@linuxfoundation.org>
+Subject: [PATCH 6.18 0755/2151] arm64: dts: qcom: monaco-evk: fix SerDes PHY regulator supplies
+Date: Wed, 18 Nov 2026 15:41:30 +0100
+Message-ID: <20261118150149.563397221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,49 +72,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 
-[ Upstream commit 0d567fb7def9564d15c334ec0fa5f5f6a0114ffa ]
+[ Upstream commit de7bc562fc363421902db7bdda8e347cc78a5173 ]
 
-Both SerDes PHY nodes were configured with 'phy-supply = <&vreg_l5a>',
-which was incorrect on two counts: vreg_l5a is not a supply the PHY
-requires, and only one rail was described where the hardware needs two.
+The SerDes PHY node was configured with 'phy-supply = <&vreg_l4a>',
+which only described one of the two supplies the hardware requires.
+While vreg_l4a is the correct 0.9V rail, the 1.2V rail (vreg_l5a)
+was missing entirely.
 
-The PHY requires vdda-0p9 (vreg_l4a) and vdda-1p2 (vreg_l1c). Replace
-the incorrect phy-supply with these two named properties on both nodes.
+Replace phy-supply with the two named properties vdda-0p9-supply
+(vreg_l4a) and vdda-1p2-supply (vreg_l5a).
 
-Fixes: 5ef26fb8b3ed ("arm64: dts: qcom: sa8775p-ride: enable the SerDes PHY")
+Fixes: 117d6bc9326b ("arm64: dts: qcom: qcs8300: Add Monaco EVK board")
 Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-4-c4bc688177dd@oss.qualcomm.com
+Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-5-c4bc688177dd@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/monaco-evk.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
-index c69aa2f41ce29..37b140dbb7b23 100644
---- a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
-@@ -778,12 +778,16 @@ &qup_uart17_rx {
+diff --git a/arch/arm64/boot/dts/qcom/monaco-evk.dts b/arch/arm64/boot/dts/qcom/monaco-evk.dts
+index e72cf6725a52c..cf8af1aa66bb4 100644
+--- a/arch/arm64/boot/dts/qcom/monaco-evk.dts
++++ b/arch/arm64/boot/dts/qcom/monaco-evk.dts
+@@ -427,7 +427,8 @@ &remoteproc_gpdsp {
  };
  
  &serdes0 {
--	phy-supply = <&vreg_l5a>;
+-	phy-supply = <&vreg_l4a>;
 +	vdda-0p9-supply = <&vreg_l4a>;
-+	vdda-1p2-supply = <&vreg_l1c>;
-+
++	vdda-1p2-supply = <&vreg_l5a>;
+ 
  	status = "okay";
  };
- 
- &serdes1 {
--	phy-supply = <&vreg_l5a>;
-+	vdda-0p9-supply = <&vreg_l4a>;
-+	vdda-1p2-supply = <&vreg_l1c>;
-+
- 	status = "okay";
- };
- 
 -- 
 2.53.0
 
