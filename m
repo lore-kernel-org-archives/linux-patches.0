@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031486;
-	b=Zl5JzcuVQsRh+3PIWYf/eQ7YB1ni0wDlnARuJ4iroLiCtziy6sv+wsRZRbH/9TFRrf04
-	 J2i5AKN9lKY/pJmdi4GgKheNNOA3taq4ss92XowT1edTt4Kh8YcBRVU7jQ9E20IhX+4te
-	 Xd5/yndYVLIdqzjthQVezN+alOGAjlfGUpBfaCSQn0IcIDh+gayegWrxCHYdDA+MHCrWR
-	 DFB6dHym5/Ki2f+papubcUQGvbZKxt2i7yq2yzpKoaYYtEuF1/K9cwP7JBBXiRIr05yV9
-	 Hsyt2wJZ6CvizuVIFJp2BzqscQlp3heyCsPuZ4uxwIpv1y/6/KuUYW5g1y0oeCM1H+A==
+	t=1795031489;
+	b=N3R/Eh94ov2gDWc55dC6IIPutABCR7fVtcbx8XycUNQxc5NuWWJar4AIRYllBnHwMbws
+	 8VN5IQD7dmaBcMw5mKR0uEg1VP0ci4zN2FIKoA34n0EspSn8t/Y+7Wp39vXoKrniUon3h
+	 jE20B/S0Q/SIBC5eT3cWDwwnK7HRBYQIWGw5Z2Q0j0lp+Ys3mPUI/J/wei0LylvxVHqrb
+	 251OrXrt0n5POqwsL3QzTylLyO2gHz3f0E4509RhjhE0OHmb9qylao/xqLNYQU/d53AIU
+	 iME5KE2+CENtHoZBHgeVckm+cJwIHVUPIW/9dParogzsYxV52yTphP74fU2VL2qnTIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bLiDSJEj8o1O1xj0KaLEWzSKL0H+DC0PvXUEnRn4MS4=;
-	b=CLHcD7J+ZaZwEJuiClB6wZoidGABAgeHe2k/i2Xq1G3kX7vWFjll2SmW4i7cdSCeYzV8
-	 86wTaQzZH4z0XnpHzSogroiyB6kO1Kc8P5MlTO5PM8ijuDTiTtLo75TcKPrc3OqeXCN/s
-	 sUumpxJGAAo5GqulBgO64Y7/SNwIlB1JmpRc1YfO6gW85XvgeWr/Ok/hUky5NZ1thnzTv
-	 iLqpj2e/yOEWZxtmWJlO0PiQj8jAlwSofQAin3GpwMuWZj3XMbtBIyIVW6UWV0ocjdZzS
-	 W//zs5c4gEcLfPIVLPNjT8xUEqiPkmjEAearGA8532BYB/MxkQQtOyxKQNjO5AxPKNg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yNTkOSxcVqEnz19Caefry9RO4fKM2K2sNfHbTP5g5QA=;
+	b=CJ40ir5dxOQxgC/PxM/1AW7c6B6MXmb+4bPL7l6fsMlSf1mTZTCilN+S/89xtIqu3c7s
+	 JiWm19ShvNoqFn6meS8XtMysx1218NbOY5hPgLRHHwrAynk9jVjsrshEElt9zXVmrrMfD
+	 F1Kl8A+/C2otRtSuWqTkGv1ZUm51XFDcpK/lGG+FNskH2+vyzilsFGhPLRAqAz8vn3gkR
+	 70oy0stk4pTUxvu6flaPgFbIiD3MTNeOgAqsM9+RyjHAfr9fRZ79xeEwXN+bAGCcL/Y+L
+	 +X9Tz6MWUdT8gbhWzSMUoqf2d+qCLTlEKp2PJG5JeFr233lTSYZvWUH4ECcV/JTfweQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQ4T7ZHJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3RNotOt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF7E606A32A;
-	Wed, 18 Nov 2026 19:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351E0606A32C;
+	Wed, 18 Nov 2026 19:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQ4T7ZHJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F8D1F000C4;
-	Wed, 18 Nov 2026 19:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G3RNotOt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8833F1F000C4;
+	Wed, 18 Nov 2026 19:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031486;
-	bh=bLiDSJEj8o1O1xj0KaLEWzSKL0H+DC0PvXUEnRn4MS4=;
+	s=korg; t=1795031489;
+	bh=yNTkOSxcVqEnz19Caefry9RO4fKM2K2sNfHbTP5g5QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQ4T7ZHJkLopj3A83d98rVAYdUzIrQ8rGML1Zlt5D/Pcr4syrg3kWCJrfFoXEI3BC
-	 9ARvwUAmgmie7cgS2UegiCIfJ4IPGDO2OR4UxTG1b1Q4qpm6TuPB3gFEh5+tE863rO
-	 2jvbyCc/gFThB+9pb66i0i+2C9LnpVwctqFj4+Q0=
+	b=G3RNotOtNYWsmiUOVo4UOnVVDk8pDJ77vFOzqvwEBTi9pnyfBFy3fcK88/lIUA0RK
+	 ax9z+tDFB4pMa/puGgOcOp1pUVHcBuIgw2Q81+1KLwyFsyJIcV5foWaNc1lXRKjYyV
+	 c1aOYbrkwepKr+43m8SDPNwmdARWj9KVgyYX29/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1059/1756] ALSA: control_led: Fix deadlock between sysfs writes and card disconnect
-Date: Wed, 18 Nov 2026 15:53:06 +0100
-Message-ID: <20261118150052.388311935@linuxfoundation.org>
+Subject: [PATCH 6.12 1077/1756] btrfs: qgroup: fix swapped blocks existence check when tracing after COW
+Date: Wed, 18 Nov 2026 15:53:24 +0100
+Message-ID: <20261118150053.104153767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,134 +63,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ali Ahmet Memiş <aliamemis@disroot.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 682d6bb5f783adea7fa2a5b05166bff01b338081 ]
+[ Upstream commit 0388b5bd3a6eb8bcb20208c3b6dbee96fd30bbe0 ]
 
-snd_ctl_led_disconnect() removes the ctl-led sysfs files while
-holding card->controls_rwsem. device_unregister() waits for running
-sysfs callbacks which can deadlock when a concurrent write causes
-the attach or detach callback to wait for controls_rwsem.
+In btrfs_qgroup_trace_subtree_after_cow(), after we erase the swapped
+block, iterate over all possible tree levels to check if we sill have
+other swapped blocks. However the check is wrong, it considers that there
+are other swapped blocks if any rbtree for any level is empty, instead of
+not empty. As a consequence we set blocks->swapped to true basically every
+time since we always find an empty rbtree at least at level 7, since in
+practice it's nearly impossible to find such a huge btree. This makes
+every future call to btrfs_qgroup_trace_subtree_after_cow() do an
+unnecessary rbtree search instead of returning immediately.
 
-Break kernfs active protection in the attach, detach and list
-callbacks and hold a module reference instead.
+Fix this by updating the condition to set swapped to true if we find an
+rbtree that is not empty.
 
-Fixes: a135dfb5de15 ("ALSA: led control - add sysfs kcontrol LED marking layer")
-Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
-Link: https://patch.msgid.link/20261011180627.1594051-1-aliamemis@disroot.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: f616f5cd9da7 ("btrfs: qgroup: Use delayed subtree rescan for balance")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/control_led.c | 62 ++++++++++++++++++++++++++++++++++++----
- 1 file changed, 57 insertions(+), 5 deletions(-)
+ fs/btrfs/ctree.h  | 2 +-
+ fs/btrfs/qgroup.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/control_led.c b/sound/core/control_led.c
-index f76a2f7ac7366..415b186561152 100644
---- a/sound/core/control_led.c
-+++ b/sound/core/control_led.c
-@@ -563,12 +563,43 @@ static ssize_t set_led_id(struct snd_ctl_led_card *led_card, const char *buf, si
- 	return count;
- }
- 
-+/*
-+ * snd_ctl_led_disconnect() removes these files with card->controls_rwsem
-+ * held. so don't let the removal wait for a callback that takes it.
-+ */
-+static struct kernfs_node *snd_ctl_led_sysfs_enter(struct device *dev,
-+						   struct device_attribute *attr)
-+{
-+	struct kernfs_node *kn;
-+
-+	if (!try_module_get(THIS_MODULE))
-+		return NULL;
-+	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
-+	if (!kn)
-+		module_put(THIS_MODULE);
-+	return kn;
-+}
-+
-+static void snd_ctl_led_sysfs_exit(struct kernfs_node *kn)
-+{
-+	sysfs_unbreak_active_protection(kn);
-+	module_put(THIS_MODULE);
-+}
-+
- static ssize_t attach_store(struct device *dev,
- 			    struct device_attribute *attr,
- 			    const char *buf, size_t count)
- {
- 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
--	return set_led_id(led_card, buf, count, true);
-+	struct kernfs_node *kn;
-+	ssize_t ret;
-+
-+	kn = snd_ctl_led_sysfs_enter(dev, attr);
-+	if (!kn)
-+		return -ENODEV;
-+	ret = set_led_id(led_card, buf, count, true);
-+	snd_ctl_led_sysfs_exit(kn);
-+	return ret;
- }
- 
- static ssize_t detach_store(struct device *dev,
-@@ -576,7 +607,15 @@ static ssize_t detach_store(struct device *dev,
- 			    const char *buf, size_t count)
- {
- 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
--	return set_led_id(led_card, buf, count, false);
-+	struct kernfs_node *kn;
-+	ssize_t ret;
-+
-+	kn = snd_ctl_led_sysfs_enter(dev, attr);
-+	if (!kn)
-+		return -ENODEV;
-+	ret = set_led_id(led_card, buf, count, false);
-+	snd_ctl_led_sysfs_exit(kn);
-+	return ret;
- }
- 
- static ssize_t reset_store(struct device *dev,
-@@ -594,10 +633,8 @@ static ssize_t reset_store(struct device *dev,
- 	return count;
- }
- 
--static ssize_t list_show(struct device *dev,
--			 struct device_attribute *attr, char *buf)
-+static ssize_t snd_ctl_led_list(struct snd_ctl_led_card *led_card, char *buf)
- {
--	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
- 	struct snd_ctl_led_ctl *lctl;
- 	size_t l = 0;
- 	struct snd_card *card __free(snd_card_unref) =
-@@ -620,6 +657,21 @@ static ssize_t list_show(struct device *dev,
- 	return l;
- }
- 
-+static ssize_t list_show(struct device *dev,
-+			 struct device_attribute *attr, char *buf)
-+{
-+	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
-+	struct kernfs_node *kn;
-+	ssize_t ret;
-+
-+	kn = snd_ctl_led_sysfs_enter(dev, attr);
-+	if (!kn)
-+		return -ENODEV;
-+	ret = snd_ctl_led_list(led_card, buf);
-+	snd_ctl_led_sysfs_exit(kn);
-+	return ret;
-+}
-+
- static DEVICE_ATTR_WO(attach);
- static DEVICE_ATTR_WO(detach);
- static DEVICE_ATTR_WO(reset);
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 937f32e5ad72b..3a0c0ac0d1184 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -155,7 +155,7 @@ enum {
+  */
+ struct btrfs_qgroup_swapped_blocks {
+ 	spinlock_t lock;
+-	/* RM_EMPTY_ROOT() of above blocks[] */
++	/* True if any of the rbtrees in the blocks array below is not empty. */
+ 	bool swapped;
+ 	struct rb_root blocks[BTRFS_MAX_LEVEL];
+ };
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 68b2df4355766..de30aa41458c9 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -4918,7 +4918,7 @@ int btrfs_qgroup_trace_subtree_after_cow(struct btrfs_trans_handle *trans,
+ 	/* Found one, remove it from @blocks first and update blocks->swapped */
+ 	rb_erase(&block->node, &blocks->blocks[level]);
+ 	for (i = 0; i < BTRFS_MAX_LEVEL; i++) {
+-		if (RB_EMPTY_ROOT(&blocks->blocks[i])) {
++		if (!RB_EMPTY_ROOT(&blocks->blocks[i])) {
+ 			swapped = true;
+ 			break;
+ 		}
 -- 
 2.53.0
 
