@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019007;
-	b=zUu/NHm0Xi5An5aTwXZsyt1B+M1TZx+souhveqoAQeLHwj+HSahaJzyos2WzaTFjCc73
-	 joU4iAQorfDyIyVn+bA1Tkc47hgTBArldnREC84SwJa1WCiEzxkdRK4nrm6li+4epHpY8
-	 JHAi5RFoPm8VQJKeVoO7ubHa3XXlbihqfKWwc4HHx4bYQGkudlyRq9AVqOho7CebTY3yX
-	 mQpu8X9XgyN3EgqCnWb6fFhDVoQLoOMHk1tAfDEh67zVVCcPKKjjdz8JqixqQdnznsw/N
-	 hG9OnPwImlnNvAAC8Hiy0Y0YuPs1nW6GJ4q1I47JpTMMY2Kh8tx2qH5S/ayR9vaIfhA==
+	t=1795019009;
+	b=jBv3HAnUhlxTNcrFTgsOoxTfdNVaeUEXBEecrDIxFpqxW28l3zmoYx42K/Kd9OxYO3qv
+	 AFXGu9utKhTtbA0LbUTS93va0hYsCipgQIC1KP3FR/74WG6YRkzYHYtK+m0Hs2Bnvva01
+	 S6yuewZ5PZgW7jMAUS3aw1TIMHHdJDbOd6xlzzCXrggwh7u6Y+17DW66Y/AjzhEN2mb/B
+	 5BboDKnxge8hu2OvrrEfyRd6v1I6xOla82hcC/neAad0Pafj08y9fM1wHNeh0+JU2Iv2T
+	 lvgz3y3j2N1Sq3Z0aWerxi4BO4yzsfUX/k8Wv/Tv3MC39jXmzsBcTNY/TJ6dpQ9ISKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+fZcC0WjjxHoL+JYPXplnwmcDloX0OK2iho+pSD8OGI=;
-	b=zOcPLiYxI+obted6dDEGlHPcVf+WzT5cPR844V5/zRD7462lQIZdBhoZmz1A4aBsGnXp
-	 S6r4U3FVWUVhaxpdHVjixP69bmF6V42SDArOp1By/c0P01P0bw/QH6BeCG+f42tvex1dk
-	 oOT/EfAtNFQ1dXL8VAQ7P3S6PAiQ3rbP7u9bbLq74eeOTIdyUcemu7cl0rBIsayRL/usI
-	 AgA1/pkZ6CDpMq/LxlazWHp06tTR+QO2sugXoGh1p/5KCE6S/s6gKZUFgCjcNF0AMVdSH
-	 z3WcwNqjeODJPjntpwh8Hlvt6lswRIVj16TE857KHv0rV++RSdhHTupo3qCAWxYxoxg==
+	bh=i+A6jSXBRJU7lG7/7i32lVWA+wlHaHggxdNHWbPBs6A=;
+	b=vx13b/YB/QZ3qWC+OonKvTZM2xJCpK9CdbaGcF0tSb56ldgCy894hs8tp3bdzn0hZ2LN
+	 wBD3SvQWjagIKMBcAxF36SwCqfliohhdrT8PcTIg3CmtL3iVnpCj4eZAfTSTurRiZe8RE
+	 3bpzEQ6f2ei6nGceF3WrF7DBFmLKLC/h64I1Q1+khvMlXN7jasH2n1HHJ3ZyCAk7+Nf5i
+	 KeQ1UWzOMlgWVXKymAPk/2QrOQlqsxDOCTk7Z9XdJ//qrXrlWh+W1mZO1GFlNvg0u38nm
+	 O9CgokAIgeVs8JshfpbvnHTJO0jJm2aPdxStzht2LSKIxqe87OFPAtdaIEP75uPV/Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BT2DMXg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzd5kAOs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C1E606A31C;
-	Wed, 18 Nov 2026 16:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D2460A2609;
+	Wed, 18 Nov 2026 16:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2BT2DMXg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3E61F000C4;
-	Wed, 18 Nov 2026 16:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzd5kAOs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214401F000CA;
+	Wed, 18 Nov 2026 16:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019006;
-	bh=+fZcC0WjjxHoL+JYPXplnwmcDloX0OK2iho+pSD8OGI=;
+	s=korg; t=1795019009;
+	bh=i+A6jSXBRJU7lG7/7i32lVWA+wlHaHggxdNHWbPBs6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2BT2DMXg+Ff++MbPL/7oV+tKuDOEc7QD2YpIA9y1nQegLBC8oZfarkwo4guQsX9+4
-	 LPd8CPLN8meLwvLBWUcS73p3jeff8rFiPLmotFaHvpWmF6xQQ532v+SVa/xMO9aleu
-	 86wSxBA38EcdOURfPz5NwGlZ/5OiGWvUASASptaI=
+	b=lzd5kAOsnQcxJgxeh3cTanseL5rlu4ZCdYdvaffsxJ+Tl1+YS0LmCZo2R8O+qDmHj
+	 cmYeWvuVG+Fze3hJWMnb4JWDWgITmbRNwt3fSIveKY4e/JbNfOa5Xl1DvX/7I2vk2/
+	 eOgy2xhyIA6CLN0amFlX6AmnximJw3FJRv6AqR4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Petr Vorel <pvorel@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Andy Whitcroft <apw@canonical.com>,
+	Dwaipayan Ray <dwaipayanray1@gmail.com>,
+	Joe Perches <joe@perches.com>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1401/2651] wifi: mm81x: move beacon work and init below the tx op
-Date: Wed, 18 Nov 2026 15:44:01 +0100
-Message-ID: <20261118150338.448657813@linuxfoundation.org>
+Subject: [PATCH 7.3 1392/2651] checkpatch: skip CamelCase cache for --no-tree without root
+Date: Wed, 18 Nov 2026 15:43:52 +0100
+Message-ID: <20261118150338.132237531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,131 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+From: Petr Vorel <pvorel@suse.cz>
 
-[ Upstream commit 483e1ebc813280dc566210ec5c48738060355f62 ]
+[ Upstream commit d41ebc7f9e2cc80cb57139c05e71415a79582ab0 ]
 
-Move mm81x_mac_beacon_work() and mm81x_mac_beacon_init() to below
-mm81x_mac_ops_tx() to prepare for future multicast handling such that
-we avoid a forward declaration. No functional change.
+Running outside tree (--no-tree) without git root (--root DIR) is not
+doable because we have no include/ directory which could be cached.  But
+3445686af721 expected that we are always in Linux tree (w/a git).  But
+--no-tree does not require --root.  Therefore skip whole caching in that
+case.
 
-Link: https://patch.msgid.link/20260827054917.255584-2-lachlan.hodges@morsemicro.com
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Stable-dep-of: 54b961097682 ("wifi: mm81x: start beaconing on beacon enable not interface add")
+This fixes perl and find errors when running checkpatch.pl *with*
+--no-tree --strict and *without* --root:
+
+    No structs that should be const will be found - file 'scripts/const_structs.checkpatch': No such file or directory
+    Use of uninitialized value $root in concatenation (.) or string at scripts/checkpatch.pl line 1213.
+    find: `/include': No such file or directory
+
+Link: https://lore.kernel.org/20260810161159.1044160-1-pvorel@suse.cz
+Fixes: 3445686af721 ("checkpatch: ignore existing CamelCase uses from include/...")
+Signed-off-by: Petr Vorel <pvorel@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Andy Whitcroft <apw@canonical.com>
+Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
+Cc: Joe Perches <joe@perches.com>
+Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/morsemicro/mm81x/mac.c | 84 ++++++++++-----------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ scripts/checkpatch.pl | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/morsemicro/mm81x/mac.c b/drivers/net/wireless/morsemicro/mm81x/mac.c
-index 0fa80b1488aac..2760e9389518b 100644
---- a/drivers/net/wireless/morsemicro/mm81x/mac.c
-+++ b/drivers/net/wireless/morsemicro/mm81x/mac.c
-@@ -445,39 +445,6 @@ static void mm81x_beacon_h_fill_tx_info(struct mm81x *mors,
- 			cpu_to_le32(MM81X_TX_CONF_FLAGS_IMMEDIATE_REPORT);
- }
- 
--static void mm81x_mac_beacon_work(struct work_struct *work)
--{
--	struct mm81x_vif *mors_vif =
--		from_work(mors_vif, work, u.ap.beacon_work);
--	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
--	struct mm81x_skbq *mq;
--	struct sk_buff *beacon;
--	struct ieee80211_vif *vif = mm81x_vif_to_ieee80211_vif(mors_vif);
--	struct mm81x_skb_tx_info tx_info = { 0 };
--	int num_bcn_vifs = atomic_read(&mors->num_bcn_vifs);
--
--	mq = mm81x_hif_get_tx_beacon_queue(mors);
--	if (!mq) {
--		dev_err(mors->dev, "no matching beacon Q found");
--		return;
--	}
--
--	if (mm81x_skbq_count(mq) >= num_bcn_vifs) {
--		dev_err(mors->dev,
--			"previous beacon not consumed, dropping req [id:%d]",
--			mors_vif->id);
--		return;
--	}
--
--	beacon = ieee80211_beacon_get(mors->hw, vif, false);
--	if (!beacon)
--		return;
--
--	mm81x_beacon_h_fill_tx_info(mors, &tx_info, mors_vif,
--				    cfg80211_chandef_s1g_pri_width(&mors->chandef));
--	mm81x_skbq_skb_tx(mq, &beacon, &tx_info, MM81X_SKB_CHAN_BEACON);
--}
--
- void mm81x_mac_beacon_irq_handle(struct mm81x *mors, u32 status)
- {
- 	int vif_id;
-@@ -497,15 +464,6 @@ void mm81x_mac_beacon_irq_handle(struct mm81x *mors, u32 status)
- 	}
- }
- 
--static void mm81x_mac_beacon_init(struct mm81x_vif *mors_vif)
--{
--	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
--
--	INIT_WORK(&mors_vif->u.ap.beacon_work, mm81x_mac_beacon_work);
--	mm81x_mac_beacon_irq_enable(mors_vif, true);
--	atomic_inc(&mors->num_bcn_vifs);
--}
--
- static struct hw_scan_tlv_hdr mm81x_hw_scan_h_pack_tlv_hdr(u16 tag, u16 len)
- {
- 	struct hw_scan_tlv_hdr hdr = { .tag = cpu_to_le16(tag),
-@@ -1328,6 +1286,48 @@ static void mm81x_mac_ops_tx(struct ieee80211_hw *hw,
- 				      MM81X_SKB_CHAN_DATA);
- }
- 
-+static void mm81x_mac_beacon_work(struct work_struct *work)
-+{
-+	struct mm81x_vif *mors_vif =
-+		from_work(mors_vif, work, u.ap.beacon_work);
-+	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
-+	struct mm81x_skbq *mq;
-+	struct sk_buff *beacon;
-+	struct ieee80211_vif *vif = mm81x_vif_to_ieee80211_vif(mors_vif);
-+	struct mm81x_skb_tx_info tx_info = { 0 };
-+	int num_bcn_vifs = atomic_read(&mors->num_bcn_vifs);
-+
-+	mq = mm81x_hif_get_tx_beacon_queue(mors);
-+	if (!mq) {
-+		dev_err(mors->dev, "no matching beacon Q found");
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 8a7787d228a63..f424dafce5bce 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1206,6 +1206,8 @@ sub seed_camelcase_includes {
+ 		my $git_last_include_commit = `${git_command} log --no-merges --pretty=format:"%h%n" -1 -- include`;
+ 		chomp $git_last_include_commit;
+ 		$camelcase_cache = ".checkpatch-camelcase.git.$git_last_include_commit";
++	} elsif (not defined $root) {
 +		return;
-+	}
-+
-+	if (mm81x_skbq_count(mq) >= num_bcn_vifs) {
-+		dev_err(mors->dev,
-+			"previous beacon not consumed, dropping req [id:%d]",
-+			mors_vif->id);
-+		return;
-+	}
-+
-+	beacon = ieee80211_beacon_get(mors->hw, vif, false);
-+	if (!beacon)
-+		return;
-+
-+	mm81x_beacon_h_fill_tx_info(mors, &tx_info, mors_vif,
-+				    cfg80211_chandef_s1g_pri_width(&mors->chandef));
-+	mm81x_skbq_skb_tx(mq, &beacon, &tx_info, MM81X_SKB_CHAN_BEACON);
-+}
-+
-+static void mm81x_mac_beacon_init(struct mm81x_vif *mors_vif)
-+{
-+	struct mm81x *mors = mm81x_vif_to_mors(mors_vif);
-+
-+	INIT_WORK(&mors_vif->u.ap.beacon_work, mm81x_mac_beacon_work);
-+	mm81x_mac_beacon_irq_enable(mors_vif, true);
-+	atomic_inc(&mors->num_bcn_vifs);
-+}
-+
- static void mm81x_mac_ops_stop(struct ieee80211_hw *hw, bool suspend)
- {
- 	struct mm81x *mors = hw->priv;
+ 	} else {
+ 		my $last_mod_date = 0;
+ 		$files = `find $root/include -name "*.h"`;
 -- 
 2.53.0
 
