@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044493;
-	b=FdWMepiDYyq15eSRrSLSIgLoTlvFA2s7ag2dYexKtWpQTAlSxqfjJiDVjbbxi8qIE4v2
-	 FjHVg30Yukr0Mqct8/iM8Pi/QMwcqcBQkjVWgvW3pErMOD2yV0N1XhCLRk59YyNNBUhuS
-	 G+2OcfckBm1Jyx4t79BG5sdoPEM2reN5VSiJzulrMwdeBvi3M5sLI+8yvBYgdjxwn/gnj
-	 v6yisCKUOtEVT8Xio9WKAJkyIKURRuvLdUgLL1gDnh/+E/GPf2B6ZPmJAOtCyoaYsp097
-	 wUFwXpcGBrB11UgmyFRty6VzLnsZiUyQ+dJy9ntpLYXcc38MSdbm7goY2OAaFG0TtSg==
+	t=1795044496;
+	b=yU8znpPOik5tObriPOvukaivqEMz6L0/PnUddRqfj/gizaazZOCtvNo0m2L8UM05VjMt
+	 NTiBkvqm+5b78pqmgZVRWYBRjfp22Q8OmsIhrnsotkkUk7xXapAruEhvPKM8GRjFXJM8q
+	 U3cAv5AhUc0aJaRs6IJQ/CnwDB7fGLIV2YE+LrsyTvtmr6m2FvbkoXujUHyRZO4NpsAt8
+	 8ArzFzhyIT4S6RSXdheeKYlzlHGdJDvqB4Hih3ia+vipdJLt0Hepq67z71+SjblCte6yr
+	 q0Kwd4XyJJLX493D2L2k51HXpgFZspJ6mw85bzMX3GWRbZ0Z9c4BIjat1v7zxnVjlIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L0coT3wumkXuYx7ob76alpY23nxyQpGUK6a4glL9jA8=;
-	b=mWQ0uNffpiGN8WrXcVWn/qut1d5uGROY+MJ57YeC/dLMk+JE22WQz3VZ9yZT7CiRyEJG
-	 4sKyZh9Z7C1caazOKzvlTAG2satjfRLtDhf51avCfq6K/H+Sc9NnzHLIJVUYsVR0eWyn5
-	 orFGyjyNLf/cOz1sWrJLCJ1hXN7CbFKrit4hr/Ab0uVOvCKlSt+goKhqQ3Kx7A9KCyILi
-	 UUcmOQSg2GukT81ttMiYumgoilMMwypA1CIVR59W8ESIrxcyM2SMS3maav8J9/KSociuq
-	 eURlAuqlnGLTsA7+9CLSE54/k4OPvIRBnSVKeZUREtX7+ERpiDo7QsfKiTqSJK+I8pA==
+	bh=4jy43FDA1v1Av7GBEAHWPhMefpsfrS5DDAcXb6PhbtE=;
+	b=3r0VqDTucZotpi/ZenFfYumV2e38KDbhyc9hNQBm+rILWeG5jkFVPqxZb5lt2ktYBr4W
+	 ymAgo3sY1MgXB4cRbkSQ+0MW65gQS08LDlhuuK2juT06tGlcNjP1BiKgCCQ/JAIva6rrd
+	 KUEIdHRylPeNY7Yy+6kzFIqdiQPhL59JfUnw+99Y85jviWBiiqGid1FOuQ9lI1DhYeZXn
+	 D/pOMJRkEEVD6osGf9vRPku1ApLSoV+zBDZeuGgBX/a1B6kNOPx/bp66XLgJvan2SUstK
+	 DaFV+I9RpBLehuUjXOUNQjziD4YVBRF64oLlnTchH/j7+VKFO3V1Kg9+f6ufa0yhwFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srxioM3t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ez2AonvM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEB4606A31C;
-	Wed, 18 Nov 2026 23:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57323606A320;
+	Wed, 18 Nov 2026 23:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srxioM3t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B9C1F000C5;
-	Wed, 18 Nov 2026 23:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ez2AonvM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12F91F000C4;
+	Wed, 18 Nov 2026 23:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044493;
-	bh=L0coT3wumkXuYx7ob76alpY23nxyQpGUK6a4glL9jA8=;
+	s=korg; t=1795044496;
+	bh=4jy43FDA1v1Av7GBEAHWPhMefpsfrS5DDAcXb6PhbtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srxioM3tdoqUNqaAWoLjOn96Ljq0q7O36Hiq9LWXf+mmnjOUNo9YnFmv+y0acVLzp
-	 uxC4UfwgzfztBEd+VmlEMlEmlbivCnZqF+7T292NrRrLrhNxjFQv3VqM94FUlJKlbl
-	 X3cTCVNV0FqD62aYePqji0IK17vOucVAB2gFlyuY=
+	b=ez2AonvMHC73XK075vcGomBfWnbOzkfkoMfcM128D4mPYyrvNUvLvzHHTXzdrc2Ql
+	 HSxmTqEbozj3+XYSuWWup4j3nUcXSDYyIxONcGtajqH9wAs+Cg0o2piL7eerKBV6tR
+	 bHq6hse1KmKM4UuGrisCPe7/9+teSYKNQro4TDko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.1 0588/2857] xfs: reject out-of-range attribute value lengths in xfs_attr_copy_value
-Date: Wed, 18 Nov 2026 15:27:02 +0100
-Message-ID: <20261118150222.656291437@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Yufan Chen <ericterminal@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com
+Subject: [PATCH 6.1 0571/2857] ocfs2/heartbeat: unlink live slots when their node is missing
+Date: Wed, 18 Nov 2026 15:26:45 +0100
+Message-ID: <20261118150222.042927217@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,60 +74,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit 0643549ffecaeb716c0b75590a9b76dfa5eb35b3 upstream.
+commit 3ccd24c3f7a577b84a532cb027f1378385b82ef6 upstream.
 
-xfs_attr_copy_value() takes the value length as a signed int and, for a
-remote xattr, is handed args->rmtvaluelen.  That field is filled from the
-on-disk __be32 xfs_attr_leaf_name_remote.valuelen in
-xfs_attr3_leaf_getvalue(), so a crafted length such as 0x80000000 is
-stored into the signed rmtvaluelen as a negative number.
+o2hb_shutdown_slot() returns immediately when its node is no longer in the
+configfs registry.  A slot can still be linked in o2hb_live_slots when
+that lookup fails.  Region teardown or startup-error cleanup then frees
+the slot array without removing its embedded list member.
 
-The "buffer too small" guard in xfs_attr_copy_value() is a signed
-comparison:
+With the same peer live in another region, the next list update can follow
+a predecessor into the freed array.  Reusing the node number can also make
+a later insertion encounter that stale member.
 
-	if (args->valuelen < valuelen)
-		return -ERANGE;
+Always remove the slot under o2hb_live_lock, even when node lookup fails.
+Preserve aggregate membership accounting and the last-region DOWN
+callback: the existing callback interface explicitly permits a NULL node
+for DOWN events.  Only drop the node reference when lookup returned one.
+This closes both normal release and startup-abort paths without changing
+the publication or callback locking protocol.
 
-A negative valuelen therefore compares as smaller than the caller's
-buffer size, skips the -ERANGE path, and is then used as a copy length,
-leading to an out-of-bounds copy of a full remote block into a small
-getxattr(2) buffer on a mounted crafted image.
+Also require a configured node before admitting a new live slot in
+o2hb_check_slot().  The early live-bitmap check is not held through
+admission: the last live slot in another region can be removed in between.
+Without a node, admission can then queue an UP event with a NULL argument
+and hit the event helper's BUG_ON.  Existing live slots can still leave
+and generate NULL-node DOWN events.
 
-Reject a value length that is negative or larger than the maximum xattr
-size before it is used, so a bogus on-disk length can no longer slip
-through the value copier.
+A controlled probe-instrumented test reproduced this while stopping one of
+two regions after removing the peer from configfs.  Its KASAN report
+includes:
 
-Fixes: 9df243a1a9e6 ("xfs: consolidate attribute value copying")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+  BUG: KASAN: slab-use-after-free in __list_del_entry_valid_or_report+0x1e0/0x210
+  Read of size 8 at addr ffff888106a4ac60 by task o2hb-pmbd0058_b/497
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x93/0xd0
+   print_report+0xce/0x630
+   kasan_report+0xe0/0x110
+   __list_del_entry_valid_or_report+0x1e0/0x210
+   o2hb_do_disk_heartbeat+0x1591/0x2c50
+   o2hb_thread+0x1ed/0xe70
+   kthread+0x351/0x460
+   ret_from_fork+0x659/0x940
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+  Allocated by task 491:
+   kasan_save_stack+0x33/0x60
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0xaa/0xb0
+   __kmalloc_noprof+0x2de/0x780
+   o2hb_region_dev_store+0x7c2/0x1b60
+   configfs_write_iter+0x2f9/0x4f0
+   vfs_write+0x639/0x1010
+   ksys_write+0x111/0x200
+   do_syscall_64+0x114/0x620
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Freed by task 491:
+   kasan_save_stack+0x33/0x60
+   kasan_save_track+0x14/0x30
+   kasan_save_free_info+0x3b/0x60
+   __kasan_slab_free+0x5f/0x80
+   kfree+0x308/0x580
+   o2hb_unmap_slot_data+0x1db/0x330
+   o2hb_region_release+0x14b/0x4f0
+   config_item_cleanup+0x14b/0x230
+   config_item_put+0x79/0x90
+   configfs_rmdir+0x58a/0x910
+   vfs_rmdir+0x2e8/0x820
+   filename_rmdir+0x3b1/0x520
+   __x64_sys_rmdir+0x4b/0x70
+   do_syscall_64+0x114/0x620
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0058-v2-9446113c2b16c817c538@gmail.com
+Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Yufan Chen <ericterminal@gmail.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_attr_leaf.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ocfs2/cluster/heartbeat.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_attr_leaf.c
-+++ b/fs/xfs/libxfs/xfs_attr_leaf.c
-@@ -517,6 +517,17 @@ xfs_attr_copy_value(
- 	int			valuelen)
- {
- 	/*
-+	 * A value length that is negative or larger than the maximum xattr
-+	 * size is on-disk corruption.  The remote value length is an on-disk
-+	 * __be32 stored into the signed args->rmtvaluelen, so a crafted value
-+	 * such as 0x80000000 becomes negative and would slip past the
-+	 * "args->valuelen < valuelen" check below and be used as a copy
-+	 * length.  Reject it before that can happen.
-+	 */
-+	if (valuelen < 0 || valuelen > XFS_XATTR_SIZE_MAX)
-+		return -EFSCORRUPTED;
-+
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -860,8 +860,11 @@ static void o2hb_shutdown_slot(struct o2
+ 	int queued = 0;
+ 
+ 	node = o2nm_get_node_by_num(slot->ds_node_num);
+-	if (!node)
+-		return;
 +	/*
- 	 * No copy if all we have to do is get the length
- 	 */
- 	if (!args->valuelen) {
++	 * The node may have been removed from the node table while this
++	 * region's slot is still linked.  The list member must still be
++	 * removed before the region releases its slot array.
++	 */
+ 
+ 	spin_lock(&o2hb_live_lock);
+ 	if (!list_empty(&slot->ds_live_item)) {
+@@ -883,7 +886,8 @@ static void o2hb_shutdown_slot(struct o2
+ 	if (queued)
+ 		o2hb_run_event_list(&event);
+ 
+-	o2nm_node_put(node);
++	if (node)
++		o2nm_node_put(node);
+ }
+ 
+ static void o2hb_set_quorum_device(struct o2hb_region *reg)
+@@ -1018,7 +1022,7 @@ static int o2hb_check_slot(struct o2hb_r
+ fire_callbacks:
+ 	/* dead nodes only come to life after some number of
+ 	 * changes at any time during their dead time */
+-	if (list_empty(&slot->ds_live_item) &&
++	if (node && list_empty(&slot->ds_live_item) &&
+ 	    slot->ds_changed_samples >= O2HB_LIVE_THRESHOLD) {
+ 		mlog(ML_HEARTBEAT, "Node %d (id 0x%llx) joined my region\n",
+ 		     slot->ds_node_num, (long long)slot->ds_last_generation);
 
 
