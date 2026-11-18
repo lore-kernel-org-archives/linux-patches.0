@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024082;
-	b=tm9t6C1p19Hv1aYnClkrdXRPI6A4/GxoSGD9myuz8F0CAE05pdt9j9m7ZYuVAv1OLMYi
-	 uUjdBJHF8CfthIq3CEJrs5Ypqw5I8j6PR1pzMjjI2r43kbx7dIP/ayVgOh/TWD+jGjrMI
-	 IY5NAMOV7gu5wYUrDWWaIxlsmU6InIFhJWQ1l7+NSi2soh8wOwUnzeCJ5eNH5P5K0N5Dn
-	 Qq3SKL9rx/NYKFqySmhuZ3CxLYUGcCwccVGzHq/hrILWBJ1e0y2xL5sauCyekLQLpHFOo
-	 HNOgl7mE5+kk8asCEdcO1tDtqBktYhKHVJt1n5NYF/Mg+ImV7sFBqghuQpGFWmqOQaA==
+	t=1795024085;
+	b=1VxZ5zyUlQY9u1yu0oJA5pUqN5ndaleX3aBXZIpoE6YuQk1keC/sfikyUQFtEgCCzFMw
+	 1v4gP9qCP4NJxgWBU8cwj3+7PleD9bLS/W9e+DNKu7zhL7Exf7g9vXJWVaZp09WyReS0R
+	 BJdQ7W29pono8hrvt4+7sJqy3OVNn3fO6vfD5ibulM8hjsCsI+6C8gEFQOH4vKRC+RpeG
+	 CDKa/cdFOu187iwS9h1U7XH+/00rpaRd2YhLB1xJqgMfTlngYK5y5iecl8rVvqkbCCVo3
+	 6OM4D2J45e34tbWQFbdmYmu3p3JP4Jy+b+5yhAn3OK2X3LxFpXjBvAcLGKx38pzS0Gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ifPGBq42aYFtRxbyJEBTIMJMyUUVYNOcn5WSQwOggBQ=;
-	b=OFunPGwzmRiKd+uFcKwg6kymQ16tjbG4cUO90vy5AkNRX2/IekHZDqUv9qAqNTecKYZ9
-	 pwYxPwM006bwhyM3iqG6RHcxwhOqXvpKpJ3KVtWdk2o5/Uy3E4rZg+8hHA2rkF4tEyzx4
-	 txGWkdOundYmtH8r0yJWVmMlY5+o71rZOq1rtJSGavnogSkgeML4CGzgTv3CVC38JOpL3
-	 w/8JVT2SJ7LOx2+SExdjWrCUw01iq8DIVVG5lQCTiqNRtHGHpvA20Kj5vZ4/pt0xCRdZJ
-	 gWCMCrz7tDAhs/yNoq2Tj/L53dfDYNOuUa6dWn0ew44eIMlyuXDrNdbfU2/z3e3N6DA==
+	bh=ADxtiKIfvCUbdiI9vf6PPGzScyH+RZ6LaYGR5+sGHEY=;
+	b=dXNfNSpuz3PjsD6TzqIPsy+QVy6tj3IQAYjMdRPSYsOino8tVEgPgp5YFV6BqktsFPQe
+	 O7w+HAO5mnkyWb7oKcvMTEpALBcBs7+ji//i0jglbRsJkHR85mqN4A3K/YoYcFP4T2y/C
+	 6JfwS6nTjUke0h7N+LyQyhQt5Dbd7lFdLg07KCP+qfZpyCvvH/CUzHM/7srBMklntHB1Y
+	 qlbO0b098nQw9LNRBEFHy6l6txLzhMjc31FV12TpspFvQhDhWUyU9mT10EyZQkk4q+9SJ
+	 PXVBDxTVlPk/drQFez+1cl6H/1QNzxdcw7ywTAF9nXORWT9gbz8AbHvr1pYsZDgqshg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oCuOZXkh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIYFitd2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD068606A320;
-	Wed, 18 Nov 2026 17:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EC3606A31C;
+	Wed, 18 Nov 2026 17:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oCuOZXkh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166C31F000C4;
-	Wed, 18 Nov 2026 17:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIYFitd2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D010A1F000C4;
+	Wed, 18 Nov 2026 17:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024082;
-	bh=ifPGBq42aYFtRxbyJEBTIMJMyUUVYNOcn5WSQwOggBQ=;
+	s=korg; t=1795024085;
+	bh=ADxtiKIfvCUbdiI9vf6PPGzScyH+RZ6LaYGR5+sGHEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oCuOZXkhyKliAOY9qYUFR+xs0XFcjyMwkO46+Z26Ys0JCVa6DiOUTUjnxhmgcKbG5
-	 /ZFL3GrnDO41qyfYxrJGgFwo6ARTy5fdL3kiTVxvn1RzERrFuWzF4ZNB4wT0ng/Cu0
-	 d5QQSdYhgriCJp3jJe1XwDJbUdiqKRywx7Ltdvuw=
+	b=RIYFitd2TxTzCn7lNfsJP85Gbxn56EkapoB+9ixY/7+a53L7t/NgUPjygASw19OWI
+	 pA9wNNEH7BB4OXUe8Y9HHs9hlRlQT4LQyt3yHhtflSAOZbHiStNrsfmgZecOi8TGnH
+	 thmfaMrEmFGvaX6Qc904zuJPD9j1ki+YNwDQvYsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WanLi Niu <niuwl1@chinatelecom.cn>,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Manuel Fombuena <fombuena@outlook.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0562/2151] bpftool: Make skeleton C++ compatible with explicit casts
-Date: Wed, 18 Nov 2026 15:38:17 +0100
-Message-ID: <20261118150142.426924932@linuxfoundation.org>
+Subject: [PATCH 6.18 0598/2151] leds: st1202: Clear unused pattern slots in blink_set()
+Date: Wed, 18 Nov 2026 15:38:53 +0100
+Message-ID: <20261118150143.732943802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,103 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WanLi Niu <niuwl1@chinatelecom.cn>
+From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit 4effccde0a0521b220c3585c9a0d8e677d345209 ]
+[ Upstream commit 3268b9e91db16f240ffe07ff6caf963ba8191ce8 ]
 
-Fix C++ compilation errors in generated skeleton by adding explicit
-pointer casts and use char * subtraction for offset calculation
+st1202_blink_set() programs slots 0 and 1 of its own channel and leaves
+slots 2 to 7 at ST1202_PATTERN_PWM_FULL, the value both st1202_led_set()
+and st1202_led_pattern_clear() leave behind. Nothing keeps those slots
+out of the output except the duration registers being zero, and those
+are shared by all twelve channels.
 
-error: invalid conversion from 'void*' to '<obj_name>*' [-fpermissive]
-      |         skel = skel_alloc(sizeof(*skel));
-      |                ~~~~~~~~~~^~~~~~~~~~~~~~~
-      |                          |
-      |                          void*
+Another channel programming a hardware pattern longer than two steps
+writes those durations again and re-arms the sequencer, so the blinking
+channel drives full scale for the extra steps. With two LEDs on one
+device, blinking one and giving the other a four step pattern, the
+blinking channel lights during the two steps it never programmed.
 
-error: arithmetic on pointers to void
-      |         skel->ctx.sz = (void *)&skel->links - (void *)skel;
-      |                        ~~~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~~
+Zero the channel's own unused slots, the same invariant
+st1202_led_pattern_set() applies to the slots beyond its pattern length.
+blink_set() already zeroes durations 2 to 7 when it runs; the slots are
+exposed only when another channel sets those shared durations again.
 
-error: assigning to 'struct <obj_name>__<ident> *' from incompatible type 'void *'
-      |                 skel-><ident> = skel_prep_map_data((void *)data, 4096,
-      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                                 sizeof(data) - 1);
-      |                                                 ~~~~~~~~~~~~~~~~~
+A channel whose blink is shorter than the active timeline still loses
+its own timing, because the sequencer has one set of duration registers.
+This only stops it emitting output it never asked for.
 
-error: assigning to 'struct <obj_name>__<ident> *' from incompatible type 'void *'
-      |         skel-><ident> = skel_finalize_map_data(&skel->maps.<ident>.initial_value,
-      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                         4096, PROT_READ | PROT_WRITE, skel->maps.<ident>.map_fd);
-      |                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Minimum reproducer:
-
-	$ cat test.bpf.c
-	int val; // placed in .bss section
-
-	#include "vmlinux.h"
-	#include <bpf/bpf_helpers.h>
-
-	SEC("raw_tracepoint/sched_wakeup_new") int handle(void *ctx) { return 0; }
-
-	$ cat test.cpp
-	#include <cerrno>
-
-	extern "C" {
-	#include "test.bpf.skel.h"
-	}
-
-	$ bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
-	$ clang -g -O2 -target bpf -c test.bpf.c -o test.bpf.o
-	$ bpftool gen skeleton test.bpf.o -L  > test.bpf.skel.h
-	$ g++ -c test.cpp -I.
-
-Co-developed-by: Menglong Dong <dongml2@chinatelecom.cn>
-Signed-off-by: WanLi Niu <niuwl1@chinatelecom.cn>
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260106023123.2928-1-kiraskyler@163.com
-Stable-dep-of: a885470df10b ("bpftool: Compute map size of light skeletons at runtime")
+Fixes: 35cbd34a6a05 ("leds: st1202: Add hardware-accelerated blink support")
+Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/GV1PR08MB849770CF6D41F3DFF56B1AC3C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/gen.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/leds/leds-st1202.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
-index bdef69c5e6cd4..d6040b52d4e1b 100644
---- a/tools/bpf/bpftool/gen.c
-+++ b/tools/bpf/bpftool/gen.c
-@@ -731,10 +731,10 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
- 		{							    \n\
- 			struct %1$s *skel;				    \n\
- 									    \n\
--			skel = skel_alloc(sizeof(*skel));		    \n\
-+			skel = (struct %1$s *)skel_alloc(sizeof(*skel));    \n\
- 			if (!skel)					    \n\
- 				goto cleanup;				    \n\
--			skel->ctx.sz = (void *)&skel->links - (void *)skel; \n\
-+			skel->ctx.sz = (char *)&skel->links - (char *)skel; \n\
- 		",
- 		obj_name, opts.data_sz);
- 	bpf_object__for_each_map(map, obj) {
-@@ -755,7 +755,7 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
- 		\n\
- 		\";							    \n\
- 									    \n\
--				skel->%1$s = skel_prep_map_data((void *)data, %2$zd,\n\
-+				skel->%1$s = (__typeof__(skel->%1$s))skel_prep_map_data((void *)data, %2$zd,\n\
- 								sizeof(data) - 1);\n\
- 				if (!skel->%1$s)			    \n\
- 					goto cleanup;			    \n\
-@@ -857,7 +857,7 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
+diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
+index 23fffee873b9e..98e8a43b5ed7b 100644
+--- a/drivers/leds/leds-st1202.c
++++ b/drivers/leds/leds-st1202.c
+@@ -359,9 +359,11 @@ static int st1202_blink_set(struct led_classdev *led_cdev,
+ 	if (ret)
+ 		return ret;
  
- 		codegen("\
- 		\n\
--			skel->%1$s = skel_finalize_map_data(&skel->maps.%1$s.initial_value,  \n\
-+			skel->%1$s = (__typeof__(skel->%1$s))skel_finalize_map_data(&skel->maps.%1$s.initial_value,\n\
- 							%2$zd, %3$s, skel->maps.%1$s.map_fd);\n\
- 			if (!skel->%1$s)				    \n\
- 				return -ENOMEM;				    \n\
+-	ret = st1202_pwm_pattern_write(chip, led->led_num, 1, LED_OFF);
+-	if (ret)
+-		return ret;
++	for (int pattern = 1; pattern < ST1202_MAX_PATTERNS; pattern++) {
++		ret = st1202_pwm_pattern_write(chip, led->led_num, pattern, LED_OFF);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ret = st1202_duration_pattern_write(chip, 0, on);
+ 	if (ret)
 -- 
 2.53.0
 
