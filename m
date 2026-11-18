@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023832;
-	b=0lQFLIfk5oHQts6uc7g6qFEdnZ1qa1iU3YYdoeklb3eOxF1MN1AN6PDfPWArrIBtiyfu
-	 +hRR77o+txLiacvuQ9LAPtgJc/mu6SyztyiB6ObjUfsh1I36Gk1JM8HVrjRXdspUNwbTE
-	 T8tc+ha07bdxbtGqwwlLOaGaKWa+9Cx/Kf9YgDbKPmBP6Thw2xHznLKN3W9sd1+pnxR7F
-	 c495IHr2kxXdCkZasGImhrWWc+2Z2Yv4KVpxrNS2SsR40r+aqlh5cwga5KiXx1SoXGSie
-	 s5Aqb1j538eyctycsUU33WiwQW1EZ0Z1iF2aY/J1LNg6oaO/rIPLBLM4f2zQblbaC2w==
+	t=1795023835;
+	b=DGH7bRABa7Fd0RPD/9CR3j7no3fF20qzjCNTDw9PDcOai/MUtxpPknbe8QTW8BrWj02Z
+	 36cokp0jLxwuFggkfuRfXt2PoOBdHaCShz9H5zmJ9uEHC7uXzCkBOwOt86zB8Uy0Ybg/U
+	 aSJ48g7qPlZVzl+sSYZ2lZINTIeee8N57RLO4g8PrZskS809+uLFYseKUk6ZtrVbnSDLp
+	 FnCNAh5/YDv+VzqbHNxTWWTR7Dq+FtTOkA08Z6yky3uV9PU+Ei6K1mzKEX98ZhU4TnGTL
+	 exVg4hLtIDn8R/NxPCv4UczrftfR6VF6ojYp5/MJh8r/SqRSsBUve6fTXpetnD0nHgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=T/TxSIQV0XYAi5uGzyJIx0OUuzvhx42te6lkvlv/4q4=;
-	b=ZkUYbYKiNPCPOmln6mDb8jen/XjRJKNUXWP+u8btTiCy0z33Wknn1NNHweT23MupfvGp
-	 gKOJ3gHLghYP2W1ScI6ENK4u9gpmsdZpNI9nGh6Tdwmk+kMCZ6DvmMtq2BmdmGXboELDH
-	 rv+Av/IkoIR8Ty0d5ueFQBz04rKR6W1L3AXyUUx1lS/c6zB3XkctVageu1kJ2RRSBRoba
-	 pNaEnv51adYzUvEMzLHv1zlvpdfrzn0IGb7yuInTu8Th6ErIiZT6QeSDD/ZI7bHIfteXn
-	 wMjAyQ1EEz8rXEpuowlx5K4EPXpolME6qwd/TudzAWRzskCkqSwfXNISRRugC5lYVMQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=hP1NEHKbyDBtY4rYRHC1Np1aO8iG404vKUBeDAIcKmo=;
+	b=Y2LCcd7UYxfZh4yXMiXEgJ+HGvY7b2gchiSk9HMOn5Fg7qG4KzRCs/blWukApNHGeeja
+	 HCjLrzI/WcwY01vS4o1KIlQAvVtGanA+Kcv4kMo3NZBn26mSA42dFELQI12Nq50u7hhTO
+	 r8MlOZnOwkUujAkWw5P5RyOZ4nPe3MEZZx95sp4Hjlef+w0pzaHvB8LnwKV52/50HBwOS
+	 oSXAQ9AD6cphJvt0JWRtR4QoFacxtQazZpi5I/R2L1yAATl0KwPzYZ/L0G0U9pW3lThas
+	 Xi9FixDZrR1KiScVvVqW0TJAa+FBMdNkFlIICbxikbvQLjvCY9VmS7i8hjZt1vs1CJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+gBeexd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9NvHkTv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86FC606A320;
-	Wed, 18 Nov 2026 17:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA386606A320;
+	Wed, 18 Nov 2026 17:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+gBeexd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294A91F000C5;
-	Wed, 18 Nov 2026 17:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9NvHkTv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039821F000C5;
+	Wed, 18 Nov 2026 17:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023832;
-	bh=T/TxSIQV0XYAi5uGzyJIx0OUuzvhx42te6lkvlv/4q4=;
+	s=korg; t=1795023835;
+	bh=hP1NEHKbyDBtY4rYRHC1Np1aO8iG404vKUBeDAIcKmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+gBeexd9Glk3WuyyrSv8u7ae+/nan4qQzMo4dZ2PA1L+Qe9nWJaH66IhzxsaFtZA
-	 G5/kXby48XAsxrki0WQQyk4vkQC+IHvZZRwqzoBFxiVuvkwQFpQJ4+M9NyG9+9rnrx
-	 0q5+w62qdLUDbehVJJGpUFNNmtWnr69oMDR5eLL0=
+	b=w9NvHkTvkVsSXYoW4nWY978ZDjGJJHYIMUxnQtK2vpR1/uEEOn6IhVa682DFnCI/5
+	 UPXrP6RXot+/JzTJ4uUNTwSthrcpVclHJ1L0KE5fmhXQLcP5YbWfgAHi3ArhpMJygo
+	 MM0gFb5tEE2iWhoL5LJe4xN+tGpJdiu43t0vYJtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Julian Braha <julianbraha@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?=C8=98tefan=20Ghe=C8=9Bu?= <stefanghetu9@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0509/2151] kconfig: fix extra output from savedefconfig on out-of-range defaults
-Date: Wed, 18 Nov 2026 15:37:24 +0100
-Message-ID: <20261118150140.594560456@linuxfoundation.org>
+Subject: [PATCH 6.18 0474/2151] ASoC: SOF: imx: Prevent stack OOB read in DSP panic dump
+Date: Wed, 18 Nov 2026 15:36:49 +0100
+Message-ID: <20261118150139.282463444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,250 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Ștefan Ghețu <stefanghetu9@gmail.com>
 
-[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
+[ Upstream commit 48ed992bfbe53537ad1cbc8ad68f7031e7ac0af3 ]
 
-The Kconfig interpreter currently allows defaults that are outside of the
-range bounds.
+Commit 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore
+call stack") added a shared Xtensa helper that iterates over a flexible
+array of AR registers (`ar[]`) controlled by `plat_hdr.numaregs`.
 
-In these cases, the 'sym_validate_range' function will adjust the default
-value to the nearest range bound. For example, see this example:
+While Intel IPC4 allocates dynamic storage for the AR block, the i.MX
+IPC3 path reads the oops message into a stack-allocated struct without
+backing storage for `ar[]`, while leaving `numaregs` unvalidated. This
+causes a stack out-of-bounds read when printing a DSP panic.
 
-  config A
-    int
-    range 1 2
-    default 16
+Clear `numaregs` to 0 on i.MX since the AR block is not fetched or
+supported on this platform, preventing unsafe out-of-bounds memory
+accesses in the shared Xtensa helper.
 
-Here, since the default value of 16 is greater than the bounds, the
-effective default value gets adjusted down to the upper bound, 2.
-
-However, 'savedefconfig' writes non-default values, and without being
-aware of the automatic adjustment to the range bound, it would write: A=2
-
-This limitation is also documented in a comment: "The following fails to
-handle the situation where a default value is further limited by the valid
-range."
-
-To resolve this, let's factor out the default-range adjustment logic from
-the existing 'sym_validate_range' function into its own
-'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
-that it compares against the effective value.
-
-Adds tests, accordingly.
-
-Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
-Assisted-by: Codex:gpt-5.6-sol
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore call stack")
+Signed-off-by: Ștefan Ghețu <stefanghetu9@gmail.com>
+Link: https://patch.msgid.link/20260908170740.276800-1-stefanghetu9@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c                      | 39 ++++++++----
- .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
- .../tests/savedefconfig_range/__init__.py     |  8 +++
- .../kconfig/tests/savedefconfig_range/config  |  7 +++
- .../savedefconfig_range/expected_defconfig    |  0
- 5 files changed, 102 insertions(+), 12 deletions(-)
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+ sound/soc/sof/imx/imx-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index 7e81b3676ee94..1536db1599f4c 100644
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -157,7 +157,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
- 	return strtoll(sym->curr.val, NULL, base);
- }
+diff --git a/sound/soc/sof/imx/imx-common.c b/sound/soc/sof/imx/imx-common.c
+index e787d3932fbbf..1f506e606b012 100644
+--- a/sound/soc/sof/imx/imx-common.c
++++ b/sound/soc/sof/imx/imx-common.c
+@@ -34,6 +34,7 @@ void imx8_get_registers(struct snd_sof_dev *sdev,
  
--static void sym_validate_range(struct symbol *sym)
-+/*
-+ * Return the nearest range bound for an out-of-range default value.
-+ * Return NULL if the value is valid or the symbol has no active range.
-+ */
-+static struct symbol *sym_get_near_range_bound(struct symbol *sym,
-+					  const char *value)
- {
- 	struct property *prop;
- 	struct symbol *range_sym;
-@@ -172,21 +177,31 @@ static void sym_validate_range(struct symbol *sym)
- 		base = 16;
- 		break;
- 	default:
--		return;
-+		return NULL;
- 	}
- 	prop = sym_get_range_prop(sym);
- 	if (!prop)
--		return;
--	val = strtoll(sym->curr.val, NULL, base);
-+		return NULL;
-+	val = strtoll(value, NULL, base);
- 	range_sym = prop->expr->left.sym;
- 	val2 = sym_get_range_val(range_sym, base);
- 	if (val >= val2) {
- 		range_sym = prop->expr->right.sym;
- 		val2 = sym_get_range_val(range_sym, base);
- 		if (val <= val2)
--			return;
-+			return NULL;
- 	}
--	sym->curr.val = range_sym->curr.val;
-+
-+	return range_sym;
-+}
-+
-+static void sym_validate_range(struct symbol *sym)
-+{
-+	struct symbol *range_sym;
-+
-+	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
-+	if (range_sym)
-+		sym->curr.val = range_sym->curr.val;
- }
+ 	/* first read registers */
+ 	sof_mailbox_read(sdev, offset, xoops, sizeof(*xoops));
++	xoops->plat_hdr.numaregs = 0;
  
- static void sym_set_changed(struct symbol *sym)
-@@ -812,7 +827,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
- const char *sym_get_string_default(struct symbol *sym)
- {
- 	struct property *prop;
--	struct symbol *ds;
-+	struct symbol *ds, *range_sym;
- 	const char *str = "";
- 	tristate val;
- 
-@@ -830,11 +845,6 @@ const char *sym_get_string_default(struct symbol *sym)
- 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
- 			break;
- 		default:
--			/*
--			 * The following fails to handle the situation
--			 * where a default value is further limited by
--			 * the valid range.
--			 */
- 			ds = prop_get_symbol(prop);
- 			if (ds != NULL) {
- 				sym_calc_value(ds);
-@@ -878,6 +888,11 @@ const char *sym_get_string_default(struct symbol *sym)
- 	default:
- 		break;
- 	}
-+
-+	range_sym = sym_get_near_range_bound(sym, str);
-+	if (range_sym)
-+		str = range_sym->curr.val;
-+
- 	return str;
- }
- 
-diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-new file mode 100644
-index 0000000000000..fd59d9082ed5b
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-@@ -0,0 +1,60 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+# Static default and range values
-+
-+config INT_DEFAULT_ABOVE_RANGE
-+	int
-+	range 1 1
-+	default 16
-+
-+config INT_DEFAULT_BELOW_RANGE
-+	int
-+	range 4 8
-+	default 2
-+
-+# Default and range values determined by other options
-+
-+config RANGE_UPPER_BOUND
-+	int
-+	default 3
-+
-+config INT_DYNAMIC_RANGE
-+	int
-+	range 0 RANGE_UPPER_BOUND
-+	default 4
-+
-+# Hex
-+
-+config HEX_DEFAULT_ABOVE_RANGE
-+	hex
-+	range 0x10 0x20
-+	default 0x40
-+
-+# Implicit default value of 0
-+
-+config INT_IMPLICIT_DEFAULT_ZERO
-+	int
-+	range 1 4
-+
-+# Conditional range
-+
-+config USE_FIRST_RANGE
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_RANGE
-+	int
-+	range 1 2 if USE_FIRST_RANGE
-+	range 3 4 if !USE_FIRST_RANGE
-+	default 3
-+
-+# Conditional default
-+
-+config USE_DEFAULT
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_DEFAULT
-+	int
-+	range 1 2
-+	default 3 if USE_DEFAULT
-diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-new file mode 100644
-index 0000000000000..961454be732c2
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-@@ -0,0 +1,8 @@
-+# SPDX-License-Identifier: GPL-2.0
-+"""Test savedefconfig with numerical defaults outside of ranges."""
-+
-+
-+def test(conf):
-+    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
-+                          out_file='defconfig') == 0
-+    assert conf.config_matches('expected_defconfig')
-diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
-new file mode 100644
-index 0000000000000..d939cfe5fd349
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/config
-@@ -0,0 +1,7 @@
-+CONFIG_INT_DEFAULT_ABOVE_RANGE=1
-+CONFIG_INT_DEFAULT_BELOW_RANGE=4
-+CONFIG_INT_DYNAMIC_RANGE=3
-+CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
-+CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
-+CONFIG_INT_CONDITIONAL_RANGE=2
-+CONFIG_INT_CONDITIONAL_DEFAULT=2
-diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
-new file mode 100644
-index 0000000000000..e69de29bb2d1d
+ 	/* then get panic info */
+ 	if (xoops->arch_hdr.totalsize > EXCEPT_MAX_HDR_SIZE) {
 -- 
 2.53.0
 
