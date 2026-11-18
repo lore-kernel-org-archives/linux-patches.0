@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054740;
-	b=1Jw7vFiV/V8k+u7sXExrFIlqlJpMlMPeSu+QELrTBd0+p1L8eG7Gx1i5ZIP6Kwt4wQ7F
-	 W1a5gDfCRfm2O6GLzgz4/pUHsBJwIP3uAs5MhUHrxtMPe1wxfiLJYaRQgNks3OHYxH62Z
-	 izGMyGUORCCfH8RHSgHoYvuIOC0EX89r6cZ0HpE+oMxaTQ2X5l5z6rpMZBGmfm0oLrjqQ
-	 YK1TH5w8CIf/l21uZUG3jvvGQmLha6+/LwFxAPUN1EheyPcyvnlf+0D1SwKf58QRrnZUV
-	 vKag6u5hYEEx2/t+xLUCMTxx7tPgkZj2k60/0tyFYNIjUiKBO7D5p5HjzlQkadTb2kg==
+	t=1795054743;
+	b=4w1JAfD1HdHIjyXjQkqIkGhHhSF2ahzODdY+VxBRQJJJOnSY5FSeOSEyP5Cvp/foGlBo
+	 7sDkUQioWXJdf279DgskXb0fZysncM2w0fdzGqBA6/g4xMszOrnxHlznuQUkf57JHHMiZ
+	 seZM+urXqtcBBTEy9N+rYBScH3fXFyTg9Mlcv7yK0biMnLfwhtZjfK58Nz9Qd4Tj9fcSg
+	 L98kWwWVQwJmoy/vQ9C5nr5mdPFRkLKyiJryi0BUE7fH/tKQNH5KMTpR13dKZwEq/InEA
+	 nvA2k8E8SJZ0us4IpsWWjSaQNdne8ELffiaukci6wB8gQvFj8VQ8lI0GgHN+9uIEgeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GVoZQM+No8Ln3tySMUP9En1EPEFhugA+QIZiXX+nI6Q=;
-	b=A9NsNoPzTEzRr6mAPOI+CqYVVkBdaECVqYe2MVGRhuXXDUrtvzUCgo+RRDJFGWhBBOsL
-	 sWeIZd7WZobcduj8Lu1ObaYqLZZSAGR/SPiVJ2uJvOfkPJGzwpzgcef4/nTpt9eFuxKxD
-	 kj3jpFMy+dIyRmRCERJ2n+k43DNMnrkXujWCZ99gyZvimomo42Edyv37v62Zsfs++rGn1
-	 x7o4GtK/4oCTEUebHeOdeDBZJ20msJPnxYntqzWXLYEMlFFOF3BrEG0N+uMaetmFVq4wq
-	 K/4W9w2koxdiKaK0r+wByWUam5OsHLb7IhCreqNZkWN5YK+Vz8OV/aFJ28ocq2zOtZA==
+	bh=tjubGu9PNEVYrAZntaczat/6IdJe3gG/9S9yjuQQ8mU=;
+	b=zNZPjc0dhssGv7i4dr4A2nII2xztrDN3UC7NfhGXN386KBeFSZbHCmmYiF9Yhl3bSeFg
+	 QMM7OHnLNRZJV2Vinxk70xFSoL+Ir1FIYssUMmERUboL9pbNGr1Cc7NNLQ0kpX1pPlH4U
+	 atLT85hDFIe0ksS14utUoXAvTYaW39okbCszk6ZgFKBDFxYjRx0Qkb+7BbExJkSYP7XIA
+	 JtU+W4qdbnu282h9B6bNpRBmy3yogS2AlQ3Ek3WK5FAK3A0BfLevUmfNMy/XnhyHt5n8j
+	 RWMa8X1ob1EucmWxe4yR54VrJvCwGr3N3cupH0mlgK9WzWTEa1gNUVPljKBWqsJw4nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gw4yBLk9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1F8FqVYC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5585606A325;
-	Thu, 19 Nov 2026 02:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F092606A325;
+	Thu, 19 Nov 2026 02:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gw4yBLk9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25E21F000C4;
-	Thu, 19 Nov 2026 02:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1F8FqVYC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777A51F000C4;
+	Thu, 19 Nov 2026 02:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054740;
-	bh=GVoZQM+No8Ln3tySMUP9En1EPEFhugA+QIZiXX+nI6Q=;
+	s=korg; t=1795054743;
+	bh=tjubGu9PNEVYrAZntaczat/6IdJe3gG/9S9yjuQQ8mU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gw4yBLk9JfpFkGSTjenUL13glhubppHZecUJEZvdepndbSr89XS+Jv0hWNiSjz9k4
-	 MmZfoCeNUy2y3pQFlF8yWh3cn6WOx/WSsBOeYKKzNhzVhS0ln/WPOyfQp6Kmu2Bx2r
-	 v7/XB97OR2Da5DaCXly0qyDkiVvfKFIxYppevJis=
+	b=1F8FqVYClPnurIY7n3deymyf8/RkD7SkkSwutJUfNyB5m4oMJBT5/FKRZV8L7JDsb
+	 /pWAAPqltvQ/KEoZ9ND84nvC32K5S/H/skP8oOLjnvIOlLXymclWxrYSLaWFyOFWh7
+	 QqKEx9TvnsNHvDvuC3xRcFPydehg7J99R58de+ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1375/2214] fs: dlm: add debugfs rawmsg send functionality
-Date: Wed, 18 Nov 2026 15:50:51 +0100
-Message-ID: <20261118150106.403590547@linuxfoundation.org>
+Subject: [PATCH 5.15 1384/2214] crypto: asymmetric_keys - fix OOB read in pefile_parse_binary
+Date: Wed, 18 Nov 2026 15:51:00 +0100
+Message-ID: <20261118150106.722738382@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,159 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit 9af5b8f0ead7cd90161b0555ed8e85ee38f79fa5 ]
+[ Upstream commit 37d550172c2d3cdb3a5ace3e6cb0625967d86349 ]
 
-This patch adds a dlm functionality to send a raw dlm message to a
-specific cluster node. This raw message can be build by user space and
-send out by writing the message to "rawmsg" dlm debugfs file.
+pefile_parse_binary() reads the size field of the certificate table's
+data-directory entry, which sits at fixed index 4 of the PE optional
+header's data directory:
 
-There is a in progress scapy dlm module which provides a easy build of
-DLM messages in user space. For example:
+	ctx->certs_size = ddir->certs.size;
 
-DLM(h_cmd=3, o_nextcmd=1, h_nodeid=1, h_lockspace=0xe4f48a18, ...)
+but nothing ensures index 4 is present. n_data_dirents (the untrusted
+NumberOfRvaAndSizes) is only upper-bounded against header_size and may be
+0, and header_size need only satisfy cursor < header_size < datalen. A
+crafted PE with n_data_dirents = 0 and a tiny header_size therefore causes
+the ddir->certs.size read to land past the end of the image (CWE-125). The
+chkaddr() that bounds the certificate blob runs only after this read.
 
-The goal is to provide an easy reproducable state to crash DLM or to
-fuzz the DLM kernel stack if there are possible ways to crash it.
+verify_pefile_signature() is reached from kexec_file_load() (the
+lockdown/secure-boot enforced PE-image signature path), and the image is
+parsed before its signature is checked. The trigger needs CAP_SYS_BOOT and
+the access is out-of-bounds read only (no write).
 
-Note: that if the sequence number is zero and dlm version is not set to
-3.1 the kernel will automatic will set a right sequence number, otherwise
-DLM stack testing is not possible.
+Require the certificate table's data-directory entry (index 4) to be
+present; the existing upper-bound check then keeps ddir->certs within
+[cursor, header_size).
 
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: 7bf1aca6d626 ("dlm: validate lock modes in recovery messages")
+Fixes: 26d1164be37f ("pefile: Parse a PE binary to find a key and a signature contained therein")
+Assisted-by: copilot-cli:claude-opus-4-6 frama-c
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/debug_fs.c | 37 ++++++++++++++++++++++++++++++++++++
- fs/dlm/midcomms.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++
- fs/dlm/midcomms.h |  2 ++
- 3 files changed, 87 insertions(+)
+ crypto/asymmetric_keys/verify_pefile.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/dlm/debug_fs.c b/fs/dlm/debug_fs.c
-index 47e9d57e4cae3..555904eeea8ea 100644
---- a/fs/dlm/debug_fs.c
-+++ b/fs/dlm/debug_fs.c
-@@ -768,6 +768,42 @@ static int dlm_version_show(struct seq_file *file, void *offset)
- }
- DEFINE_SHOW_ATTRIBUTE(dlm_version);
+diff --git a/crypto/asymmetric_keys/verify_pefile.c b/crypto/asymmetric_keys/verify_pefile.c
+index 7e5b392dcac79..320397f78b40e 100644
+--- a/crypto/asymmetric_keys/verify_pefile.c
++++ b/crypto/asymmetric_keys/verify_pefile.c
+@@ -87,6 +87,11 @@ static int pefile_parse_binary(const void *pebuf, unsigned int pelen,
+ 	if (ctx->n_data_dirents > (ctx->header_size - cursor) / sizeof(*dde))
+ 		return -ELIBBAD;
  
-+static ssize_t dlm_rawmsg_write(struct file *fp, const char __user *user_buf,
-+				size_t count, loff_t *ppos)
-+{
-+	void *buf;
-+	int ret;
++	/* the certificate table entry must be present in the data directory */
++	if (ctx->n_data_dirents <=
++	    offsetof(struct data_directory, certs) / sizeof(*dde))
++		return -ELIBBAD;
 +
-+	if (count > PAGE_SIZE || count < sizeof(struct dlm_header))
-+		return -EINVAL;
-+
-+	buf = kmalloc(PAGE_SIZE, GFP_NOFS);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	if (copy_from_user(buf, user_buf, count)) {
-+		ret = -EFAULT;
-+		goto out;
-+	}
-+
-+	ret = dlm_midcomms_rawmsg_send(fp->private_data, buf, count);
-+	if (ret)
-+		goto out;
-+
-+	kfree(buf);
-+	return count;
-+
-+out:
-+	kfree(buf);
-+	return ret;
-+}
-+
-+static const struct file_operations dlm_rawmsg_fops = {
-+	.open	= simple_open,
-+	.write	= dlm_rawmsg_write,
-+	.llseek	= no_llseek,
-+};
-+
- void *dlm_create_debug_comms_file(int nodeid, void *data)
- {
- 	struct dentry *d_node;
-@@ -782,6 +818,7 @@ void *dlm_create_debug_comms_file(int nodeid, void *data)
- 	debugfs_create_file("send_queue_count", 0444, d_node, data,
- 			    &dlm_send_queue_cnt_fops);
- 	debugfs_create_file("version", 0444, d_node, data, &dlm_version_fops);
-+	debugfs_create_file("rawmsg", 0200, d_node, data, &dlm_rawmsg_fops);
- 
- 	return d_node;
- }
-diff --git a/fs/dlm/midcomms.c b/fs/dlm/midcomms.c
-index 8e97da3555c57..ae71f13c91e4f 100644
---- a/fs/dlm/midcomms.c
-+++ b/fs/dlm/midcomms.c
-@@ -1434,3 +1434,51 @@ int dlm_midcomms_close(int nodeid)
- 
- 	return ret;
- }
-+
-+/* debug functionality to send raw dlm msg from user space */
-+struct dlm_rawmsg_data {
-+	struct midcomms_node *node;
-+	void *buf;
-+};
-+
-+static void midcomms_new_rawmsg_cb(void *data)
-+{
-+	struct dlm_rawmsg_data *rd = data;
-+	struct dlm_header *h = rd->buf;
-+
-+	switch (h->h_version) {
-+	case cpu_to_le32(DLM_VERSION_3_1):
-+		break;
-+	default:
-+		switch (h->h_cmd) {
-+		case DLM_OPTS:
-+			if (!h->u.h_seq)
-+				h->u.h_seq = rd->node->seq_send++;
-+			break;
-+		default:
-+			break;
-+		}
-+		break;
-+	}
-+}
-+
-+int dlm_midcomms_rawmsg_send(struct midcomms_node *node, void *buf,
-+			     int buflen)
-+{
-+	struct dlm_rawmsg_data rd;
-+	struct dlm_msg *msg;
-+	char *msgbuf;
-+
-+	rd.node = node;
-+	rd.buf = buf;
-+
-+	msg = dlm_lowcomms_new_msg(node->nodeid, buflen, GFP_NOFS,
-+				   &msgbuf, midcomms_new_rawmsg_cb, &rd);
-+	if (!msg)
-+		return -ENOMEM;
-+
-+	memcpy(msgbuf, buf, buflen);
-+	dlm_lowcomms_commit_msg(msg);
-+	return 0;
-+}
-+
-diff --git a/fs/dlm/midcomms.h b/fs/dlm/midcomms.h
-index 1a36b7834dfc5..6bcfd84591834 100644
---- a/fs/dlm/midcomms.h
-+++ b/fs/dlm/midcomms.h
-@@ -31,6 +31,8 @@ const char *dlm_midcomms_state(struct midcomms_node *node);
- unsigned long dlm_midcomms_flags(struct midcomms_node *node);
- int dlm_midcomms_send_queue_cnt(struct midcomms_node *node);
- uint32_t dlm_midcomms_version(struct midcomms_node *node);
-+int dlm_midcomms_rawmsg_send(struct midcomms_node *node, void *buf,
-+			     int buflen);
- 
- #endif				/* __MIDCOMMS_DOT_H__ */
+ 	ddir = pebuf + cursor;
+ 	cursor += sizeof(*dde) * ctx->n_data_dirents;
  
 -- 
 2.53.0
