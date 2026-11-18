@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028544;
-	b=rXgtZsC6TJaGgZSQpkMklxvI7UFL5SJaVUXwHus6SPPSyoqEEZiUOyuAjbhpX/2owtLp
-	 798oz3DyZHMhMRqswHSUH1yG/+VAw+5XiR4Sk/+dGudvLJEx7uHtJciM1qXwcaaljvZhM
-	 57iU1vjuhRD/oL9ahkE1xFalwusU68p7hVQaVAxJJ0ezLAiDfPmrIRKy9oMLwYPL169+t
-	 /YBUm0lQOEryR+6L6HRpweU9FRY0gdh48kdan9B5Sm0f4RewVWzl3ceZEaoz1rH2gDFrY
-	 sHSyXuVvHwPVJ+RyvJBNt4vVCD/CQ8foc/2cFPVtasYySDFUugOVPkpZ/zGKawyDgIA==
+	t=1795028547;
+	b=FXm2xzAHihlR6dbnrZrvQYcbpSPIzfbT8nxHBS41uZYKiuCeDRCANQvpiJRkabagPPmI
+	 /rSJTUnAFV/QoGspqa9wVbVFLnLXV0lrBRCIotwZCpFaFT8mHfsxBzfdoWr7QB67cCnDu
+	 NZacunUA+aGcssHMe4xDSs1kVgvqRPFr34x1c7wM6ezaVqRTUP45HuLS7uXnyuQr3LSHS
+	 2pXYhR4cNT3nQSHDn9xZYz3vLqU/H4SxK9LmXZ/f/2cbUnOYVJkEAp+u6A+rX1eDtDibM
+	 nUUkOMuLjdESzoDvPTUGWUMgz9VA11RRSi/JRHZer9KnBcVFZYnAgxWRP2xU0wDCDAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028544;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028547;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WNcD4kKMu/+ZVwgNEBH/RXCgjtFXY12ycCL8qL5dKtM=;
-	b=M2llomf+zfKsbIS50pk3UxKlzJh/SaLbg0/cqvjJDEL7tvAZFLFKSbQdpQ0r2PUctkOU
-	 FZfOf+0IxFXOhXXhIgyr4Yp6ROSAXrfTIqtuF+E0ejPRRMe2q+QVXgzM0p5JyVuC0JYVs
-	 JH9FvBtlUbILZR7wjgubGNC1sKerz+Q9eLpz/dRLflCMn/ocAjjO2PAYAXogRnG+8YU25
-	 YNyaW7kZSV3Z4IEjdvnrba4FBVvN24u9QnBHR+O2n/yP+ZVwZxhbZUgpYU15N6o4974kp
-	 x3fR84zpbu+oXwhdJ4TQqVqKDdaxnIY3LoQcVZOuZ8kNFhExLh1LWrt5TPw5VuveXmQ==
+	bh=JnqHH+Ojjy1PUVjOCeVRYU+a1yXcIJOK7cJHmGgKPG8=;
+	b=GVZ9fikTuwp1vm5F2Kxd/fEEaO8Yzu6i2sHMlhlZA2eKvcbsihf78dfe5UOfVvlQriBt
+	 or6fpvZhLv3UDBE8u+Iextf6FqC0lVMO9YMKqNZiWMCk04GmChrb32ZDKod0MJrnWxwQV
+	 i09kV9B3BMOuEJmAVtMEUagtQ11P6n1NNeDAXXSB4rbnavlYqk1y8fYKIyteMIpQGRWiE
+	 wif2I0DCLqzZGzGk+aedTyJ5Noauc8j+CeF76OAe+kKv0UURWz7B+mzjDaIijzkTudB+M
+	 HY6KSoaRCHtRZyN8VRU4oWJ9LrAoc7BmvhtBpknGZOnnUlpbcF5pvuSC7UEZBeXaNEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d59bM+Ww;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+iV3wWI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C22606A31C;
-	Wed, 18 Nov 2026 19:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC318606A31C;
+	Wed, 18 Nov 2026 19:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d59bM+Ww
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF011F000C4;
-	Wed, 18 Nov 2026 19:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A+iV3wWI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508C41F000C4;
+	Wed, 18 Nov 2026 19:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028544;
-	bh=WNcD4kKMu/+ZVwgNEBH/RXCgjtFXY12ycCL8qL5dKtM=;
+	s=korg; t=1795028546;
+	bh=JnqHH+Ojjy1PUVjOCeVRYU+a1yXcIJOK7cJHmGgKPG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d59bM+WwbajJ+vmTodfyURj8HWr45TIto892dj9cDaMeEp+SkRaCdq5zt4N4uWeN+
-	 yH4dQ/MLZ+4w+mgAebjdiXhWvPEsazsjEI4jaOIxR/n3YdLzCUaycmweNfvUxbSQzi
-	 6lSOR2Yoj+HDpGJnGg5I7FqlTF8OiVOj4WaVZ2pc=
+	b=A+iV3wWIyORjm5rNsXx4tgEuoijO802jHe1j5dP7L0vE8V1Ed/0RWXKDk+xqq7zqc
+	 oAF7cZa6Y2Z5nGQfBv23bOOLxo+ntLbufWEqzUmKNTgK1LxylfPwxjZly6lgegMJ9U
+	 mZMtfFKfYaQg6Voom/TFj8ALlAecAy5BQqaKsJ0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Xu Xin <xu.xin16@zte.com.cn>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0034/1756] apparmor: fix profile leak when a policy load fails
-Date: Wed, 18 Nov 2026 15:36:01 +0100
-Message-ID: <20261118150009.215376629@linuxfoundation.org>
+Subject: [PATCH 6.12 0035/1756] mm/ksm: mark migration stores with WRITE_ONCE()
+Date: Wed, 18 Nov 2026 15:36:02 +0100
+Message-ID: <20261118150009.251535402@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,105 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgia Garcia <georgia.garcia@canonical.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit ce94927fa4173fcc1eca27bdc65a140064c8f1e6 ]
+[ Upstream commit d3863210464f69c18615cbe400d48a6e53e770d4 ]
 
-The error paths of aa_replace_profiles() and aa_unpack() do not break
-the refcount cycle between label and proxy. They just aa_put_profile()
-the new profiles, which drops the label refcount from 2 to 1, and the
-proxy keeps the profile alive. Every failed atomic policy load
-(e.g. "profile can not be replaced", or a later profile in the blob
-failing to unpack) leaks every new profile in the set, along with its
-proxy, rules and its loaddata reference.
+ksm_get_folio() deliberately samples stable_node->kpfn and folio->mapping
+without taking the folio lock because the KSM folio may be migrated
+concurrently.  folio_migrate_ksm() updates the same state using plain
+assignments.
 
-The leak is usually not visible from userspace, because the raw_data
-directory for a failed load is not created, but it becomes visible
-when the blob is deduplicated onto an existing loaddata, which then
-keeps its policy/raw_data/<rev> directory forever.
+The reader can load the old kpfn, then the migrator can store the new
+kpfn, execute smp_wmb(), and clear the old folio's mapping before the
+reader checks that mapping.  Thus the initial kpfn load can overlap its
+update and the subsequent mapping load can overlap the clear, with no
+common lock.  This leaves marked READ_ONCE() accesses racing with plain
+stores.
 
-Add aa_put_unpublished_profile(), which drops the profile's own proxy
-before putting the profile, and use it on those error paths. The
-proxy of an unpacked profile is always freshly allocated and not
-referenced by anything else before the profile is published, so
-putting it is safe.
+The kernel reported:
 
-Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
-Cc: stable@vger.kernel.org
-Signed-off-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-[ sashal: Adjusted helper insertion context to retain the existing non-const AUDIT_MODE() parameter. ]
+  BUG: KCSAN: data-race in folio_migrate_ksm / ksm_get_folio
+
+  read (marked) to 0xffff8ce401421330 of 8 bytes by task 48 on cpu 3:
+   ksm_get_folio+0x7f/0x2a0
+   ksm_scan_thread+0x1635/0x3330
+   kthread+0x1af/0x1f0
+
+  write to 0xffff8ce401421330 of 8 bytes by task 102 on cpu 1:
+   folio_migrate_ksm+0x6a/0xd0
+   folio_migrate_flags+0x193/0x420
+   __migrate_folio.isra.0+0x162/0x1a0
+   migrate_folio+0x4c/0x70
+   move_to_new_folio+0xd6/0x170
+
+Use WRITE_ONCE() for both stores to pair them with the existing lockless
+reads.  This preserves the existing smp_wmb()/smp_rmb() migration protocol
+and control flow while preventing compiler transformations of the shared
+accesses.
+
+Link: https://lore.kernel.org/20260824112433.191301-1-nicoyip.dev@gmail.com
+Fixes: c8d6553b9580 ("ksm: make KSM page migration possible")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Xu Xin <xu.xin16@zte.com.cn>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Replaced FOLIO_MAPPING_KSM with the equivalent PAGE_MAPPING_KSM flag. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/policy.h | 20 ++++++++++++++++++++
- security/apparmor/policy.c         |  3 +++
- security/apparmor/policy_unpack.c  |  4 +++-
- 3 files changed, 26 insertions(+), 1 deletion(-)
+ mm/ksm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
-index e85824c90f430..47199bead884b 100644
---- a/security/apparmor/include/policy.h
-+++ b/security/apparmor/include/policy.h
-@@ -382,6 +382,26 @@ static inline void aa_put_profile(struct aa_profile *p)
- 		kref_put(&p->label.count.count, aa_label_kref);
+diff --git a/mm/ksm.c b/mm/ksm.c
+index e64a0dbcad5dd..9a98aa97317a4 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -1067,7 +1067,8 @@ static inline void folio_set_stable_node(struct folio *folio,
+ 					 struct ksm_stable_node *stable_node)
+ {
+ 	VM_WARN_ON_FOLIO(folio_test_anon(folio) && PageAnonExclusive(&folio->page), folio);
+-	folio->mapping = (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM);
++	WRITE_ONCE(folio->mapping,
++		   (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM));
  }
  
-+/**
-+ * aa_put_unpublished_profile - put a profile that was never made visible
-+ * @p: profile  (MAYBE NULL)
-+ *
-+ * A newly allocated profile and its proxy reference each other
-+ * (proxy->label holds a label refcount). That cycle is normally broken
-+ * when the profile is replaced or removed, which redirects the proxy.
-+ * A profile that is discarded before being added to the policy tree
-+ * never goes through either path, so break the cycle here, otherwise
-+ * the profile, its proxy and its rawdata are leaked.
-+ */
-+static inline void aa_put_unpublished_profile(struct aa_profile *p)
-+{
-+	if (p && p->label.proxy) {
-+		aa_put_proxy(p->label.proxy);
-+		p->label.proxy = NULL;
-+	}
-+	aa_put_profile(p);
-+}
-+
- static inline int AUDIT_MODE(struct aa_profile *profile)
- {
- 	if (aa_g_audit != AUDIT_NORMAL)
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index c9ffb1eec7a7c..62345fad007c3 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1403,6 +1403,9 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	}
- 	list_for_each_entry_safe(ent, tmp, &lh, list) {
- 		list_del_init(&ent->list);
-+		/* new was never added to the policy tree */
-+		aa_put_unpublished_profile(ent->new);
-+		ent->new = NULL;
- 		aa_load_ent_free(ent);
- 	}
- 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 61d7ef232f320..0928c064ee9f9 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -1512,11 +1512,13 @@ int aa_unpack(struct aa_loaddata *udata, struct list_head *lh,
- 
- fail_profile:
- 	kfree(ns_name);
--	aa_put_profile(profile);
-+	aa_put_unpublished_profile(profile);
- 
- fail:
- 	list_for_each_entry_safe(ent, tmp, lh, list) {
- 		list_del_init(&ent->list);
-+		aa_put_unpublished_profile(ent->new);
-+		ent->new = NULL;
- 		aa_load_ent_free(ent);
- 	}
- 
+ #ifdef CONFIG_SYSFS
+@@ -3258,7 +3259,7 @@ void folio_migrate_ksm(struct folio *newfolio, struct folio *folio)
+ 	stable_node = folio_stable_node(folio);
+ 	if (stable_node) {
+ 		VM_BUG_ON_FOLIO(stable_node->kpfn != folio_pfn(folio), folio);
+-		stable_node->kpfn = folio_pfn(newfolio);
++		WRITE_ONCE(stable_node->kpfn, folio_pfn(newfolio));
+ 		/*
+ 		 * newfolio->mapping was set in advance; now we need smp_wmb()
+ 		 * to make sure that the new stable_node->kpfn is visible
 -- 
 2.53.0
 
