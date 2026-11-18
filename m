@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059936;
-	b=X7YOxMCbIy1jXiOlUeQLEkG675Z4V8gvAWUfsjy2ZZcHZBf2hs/Kxq90VdV76ARNPdQM
-	 kPQpwH9B/UZ8xMecsghF6rEcKbhB2CiRGpvGMIORIL4gSnLw5Xrz+rBNd4l7C8gR5MvWb
-	 Blu1BYVFDJ1o7cL9pB0S74/43ekEn3XUKpaC9qEWapjrzo0tYXht8OIw09dOnZXM/pgKE
-	 t8wZFbqQUMkvClqjxufyKZMoMSbjUX3iie9KNlO2F9Zz3jzUa769Qh48ODUpNam63UOxp
-	 ReeZZ4vuZV7i1jnXgDmx/ikW9Z5X2UytF6x25VzQ6t2wzZhNNmft1oCYtX5vBzocQbA==
+	t=1795059938;
+	b=MoEhkF4+WSl8hnLIaWzqyGdcGgjGD/NIodQynTeP/voxB4F0+k8xJAV/zg5xOVNPVloT
+	 3czdvkqa+5s924Of3pcQ1MjsiQfZ3+vIFGa7zgwwVoVo4vJpj+zpUvuARVXOm5iszLtLP
+	 OBuvD+n3hpt7MsBLmVDrZtBTTpOGFfyIZ/3vQgFFiHs9h3KGQCPoZoqaeE276h79OHdtz
+	 yMOcB+VfVkORAM/XhNJZ3XF8MPZVVbr2hoa+9DVNyeHFq7uttQS+JlkWD9xVCg6Xfcjac
+	 UIS1B/EBxVAy4ZsL3u62xnnPN8CsppCUeMU0Q8/kll+kJ6xzVDKD3qLeUitAxAIGb3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059936;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059938;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8KiOyPvK92G1EQ4Xv06Ie6/l8so1lPqYJ0odxUTLAgs=;
-	b=VHMsr8GXRYVKkAW8BP7ooj2K27Pv0a8hLUV+R8Pmj+qjwsIdrppTdbK+ZvUAzmHInm/O
-	 FCip/i81Z0LPBXhi7XkGI84SQ92C5x7BXl6nq1I8cNn5iu0a0fa9J/kfawjCVRSTAersy
-	 YX+L3erlPpgLeD6+IOSqWN6Q/ZTxmaR35AtgrFyXUH9/kjqX9ANJULVm+qIvBTX0H8K+7
-	 8HoxjFLKwF/66UhJW/JCdG2LHsNwuIPZ+MijvwdoatuDMjzk09ZQUkpnr1gqLiWQCRNKP
-	 ZvtkM0kQ8v9etrDup2M2KSRd6DxgTDI1m6fh7cGXCahtVyBlR/eJboDOKqoK97qNvBA==
+	bh=vXTrVHXsd2PNfcALKi8G6EZYs/TmrpDXpS+F3AlNAYE=;
+	b=FrPrIDTVCMpAziOI5369oTHr/kk4YJQYHXsdjzYZ7vFx3M5rg3m4YvPWmD+z2rIwbzc6
+	 VVUf0igkQ4/OIBb9QB8lENm8YQEtfhzs4U74XIi4VwlLkJ/MA5WgNIvWgM8YD4zn0ptl1
+	 e6Xu90FVUJllguSoP3pbJfWz4MIo/3rxTN0Tku5gpLFpXr34PNAx49ZTe5WIFoXTqgWBG
+	 wBpu3B565cwvtnuO06MWbDU3TEdkteeXiGgoXggVh5LiD3Gpn0eHrH8utDNpcOMjIr0H3
+	 If2JGRNI8vC2Pv3zsEmcpLNxzZ0vgqv1uDMEIDh7eKV4yTNUjjAD92i/S8IhUu4UBIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kpTrnXun;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jMXfRO/P";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E126D606A326;
-	Thu, 19 Nov 2026 03:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E0F606A325;
+	Thu, 19 Nov 2026 03:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kpTrnXun
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAAE1F000C5;
-	Thu, 19 Nov 2026 03:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMXfRO/P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88221F000C5;
+	Thu, 19 Nov 2026 03:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059935;
-	bh=8KiOyPvK92G1EQ4Xv06Ie6/l8so1lPqYJ0odxUTLAgs=;
+	s=korg; t=1795059938;
+	bh=vXTrVHXsd2PNfcALKi8G6EZYs/TmrpDXpS+F3AlNAYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kpTrnXunvaH69IMDF/wuvgSzcvr0vWnu3QKd0et1bapQgxQBo0oz0RaY5pHoRKQ78
-	 SCWgXilNJQORMiqO6ihZEqYbFfOyXJ1bUYaU2oFZ0hpv+vwX1nDuAVaQDUgNaUYc90
-	 RHY+s3qXj+eoJ5vI0e34rHnNA5wF0lm+hgltsH68=
+	b=jMXfRO/PECJCWi6j3vWyEpp8FCUQ2tvufJY5TaIoP4T9SUFw+i6nhpIVfcD3OOo6B
+	 T7xnV/bwKef6TZ2h4vt3ePOYne5xew64IwvVTWbv9XxzfA1sBldjk3YZx8qOq1KWxI
+	 /RTymr7Tkt187jmp7mxrGtBYGtj+eO5gyZLwRQdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Samarth Narang <samarth.colleges@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Xu Xin <xu.xin@linux.dev>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0978/1848] KVM: arm64: Turn vcpu->arch.pause into a counter
-Date: Wed, 18 Nov 2026 15:50:16 +0100
-Message-ID: <20261118145957.887348989@linuxfoundation.org>
+Subject: [PATCH 5.10 0979/1848] mm/ksm: keep soft-dirty when merging a page
+Date: Wed, 18 Nov 2026 15:50:17 +0100
+Message-ID: <20261118145957.920077992@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,99 +75,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Samarth Narang <samarth.colleges@gmail.com>
 
-[ Upstream commit e64309198eda29415a95113def92aa40196cd422 ]
+[ Upstream commit 2efc6332f18bfd848f74f3d5ba45b31450601faa ]
 
-We have situations where we can call kvm_arm_halt_guest() without
-holding config_lock, which means that halt and resume can overlap in
-funny ways when called from separate contexts, and result in situations
-where a vcpu is resumed while other parts of KVM assume it is halted.
-Consequences are left to the imagination of the reader.
+replace_page() maps the KSM page with a PTE built from scratch, so the
+soft-dirty bit of the PTE it replaces is lost.  A page written since
+"clear_refs 4" then no longer shows as soft-dirty once it is merged, and a
+soft-dirty based dumper treats it as unchanged.
 
-Fix this sorry situation by turning kvm_vcpu_arch::pause into an
-atomic counter, which makes the races described above harmless.
+Copy the soft-dirty bit from the original PTE to the new PTE.
 
-Fixes: 3b92830ad41b2 ("KVM: arm/arm64: implement kvm_arm_[halt,resume]_guest")
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015100539.1011760-5-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: adapted pause handling to existing power_off checks and vcpu_req_sleep(), retaining direct rcuwait_wake_up() calls ]
+Link: https://lore.kernel.org/20261021182157.1873726-1-samarth.colleges@gmail.com
+Fixes: 0f8975ec4db2 ("mm: soft-dirty bits for user memory changes tracking")
+Signed-off-by: Samarth Narang <samarth.colleges@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Xu Xin <xu.xin@linux.dev>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: adjusted context for direct *ptep access instead of ptep_get(ptep) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kvm_host.h |  2 +-
- arch/arm64/kvm/arm.c              | 13 +++++++------
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ mm/ksm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-index 48ee1fe3aca40..16062b15131cf 100644
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -354,7 +354,7 @@ struct kvm_vcpu_arch {
- 	bool power_off;
- 
- 	/* Don't run the guest (internal implementation need) */
--	bool pause;
-+	atomic_t pause;
- 
- 	/* Cache some mmu pages needed inside spinlock regions */
- 	struct kvm_mmu_memory_cache mmu_page_cache;
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index ccf31a749c827..3b3d9cfd6bbbc 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -289,6 +289,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 	kvm_arm_pvtime_vcpu_init(&vcpu->arch);
- 
- 	vcpu->arch.hw_mmu = &vcpu->kvm->arch.mmu;
-+	atomic_set(&vcpu->arch.pause, 0);
- 
- 	err = kvm_vgic_vcpu_init(vcpu);
- 	if (err)
-@@ -447,7 +448,7 @@ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
- {
- 	bool irq_lines = *vcpu_hcr(v) & (HCR_VI | HCR_VF);
- 	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
--		&& !v->arch.power_off && !v->arch.pause);
-+		&& !v->arch.power_off && !atomic_read(&v->arch.pause));
- }
- 
- bool kvm_arch_vcpu_in_kernel(struct kvm_vcpu *vcpu)
-@@ -589,7 +590,7 @@ void kvm_arm_halt_guest(struct kvm *kvm)
- 	struct kvm_vcpu *vcpu;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm)
--		vcpu->arch.pause = true;
-+		atomic_inc(&vcpu->arch.pause);
- 	kvm_make_all_cpus_request(kvm, KVM_REQ_SLEEP);
- }
- 
-@@ -599,8 +600,8 @@ void kvm_arm_resume_guest(struct kvm *kvm)
- 	struct kvm_vcpu *vcpu;
- 
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
--		vcpu->arch.pause = false;
--		rcuwait_wake_up(kvm_arch_vcpu_get_wait(vcpu));
-+		if (atomic_dec_and_test(&vcpu->arch.pause))
-+			rcuwait_wake_up(kvm_arch_vcpu_get_wait(vcpu));
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 466ca19997551..bc097bb03c1c2 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -1170,6 +1170,10 @@ static int replace_page(struct vm_area_struct *vma, struct page *page,
+ 		dec_mm_counter(mm, MM_ANONPAGES);
  	}
- }
  
-@@ -609,10 +610,10 @@ static void vcpu_req_sleep(struct kvm_vcpu *vcpu)
- 	struct rcuwait *wait = kvm_arch_vcpu_get_wait(vcpu);
- 
- 	rcuwait_wait_event(wait,
--			   (!vcpu->arch.power_off) &&(!vcpu->arch.pause),
-+			   !vcpu->arch.power_off && !atomic_read(&vcpu->arch.pause),
- 			   TASK_INTERRUPTIBLE);
- 
--	if (vcpu->arch.power_off || vcpu->arch.pause) {
-+	if (vcpu->arch.power_off || atomic_read(&vcpu->arch.pause)) {
- 		/* Awaken to handle a signal, request we sleep again later. */
- 		kvm_make_request(KVM_REQ_SLEEP, vcpu);
- 	}
++	/* Preserve soft-dirty when replacing the page. */
++	if (pte_soft_dirty(orig_pte))
++		newpte = pte_mksoft_dirty(newpte);
++
+ 	flush_cache_page(vma, addr, pte_pfn(*ptep));
+ 	/*
+ 	 * No need to notify as we are replacing a read only page with another
 -- 
 2.53.0
 
