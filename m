@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019099;
-	b=Wt0tzOFnLmUddhpGGc+CToG9n2Llg57hDE5KHS2ICbXA5vKYfhi/P8Gb6RlQ2nlBaXad
-	 yhS0Ivnnr2Ae+IDnqQV7XotxoDbZ9i3DnCgKED0PHkg2G7Xzl76hHUgu7mTOz2D3YcdJP
-	 JCMS6o3Kvn3BivcEmmQMR15k4Ap6V5HoHcuqZ7rjqLmhmCy74I+dvokm5lMCKheh57ITZ
-	 QRnd2BcWk/vCwWbWR2OMP5pT0i9hVibvAsYFdfGPMgWbsH+rwTRPd4ZZg9iv63AznvrrY
-	 oeh4cnoaCqnYK2uZhW9kY7BDO+3rwsdl1j/udG1tJMnHAgfz0pghw+RvvMd1+WPlOtw==
+	t=1795019102;
+	b=xOCt+1z+tBNbGsw7DgQMntm++l2Mdarlvm1ERgfd5IRaXpXq4fyhClmOvvNfshdJ/Rqt
+	 0d/fiX0c2NZiSQ3pGwunl5cpbclndo3Z4EY4tN99TjBqluLe1PsEWaH81k269YwVHhX56
+	 eA2j68/0YKCzrQY7Sf0PU1P291pVgXuV+qPnM6uy4lEuhIoJwwIHfDa0IfLmHF61Q7ljj
+	 Nfc7lFnkZBlwGBduf5EispFulYkmQ7CWd+o3due+P9JNZFnpdIUkNb+YBfcxIoqfzFON4
+	 HaTbRpQQPC1LmE7vD4fB7+5duf8JK5kH8VRxkmM1JKoGRAA4jCtR1q87obXZNTYeIhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZR0l8xfPqY2m0GKMQTip5Cbr8KnD2/2bIZcJsvoYLQs=;
-	b=gENXZlF3Lpo2LbJueIbbqyBlQYaBrZAWJigkn43JPSuAK1O8PELsfqt1TqmTp6XqKLKK
-	 kpbGbIklE8utpn/TAeVr0+qcrxOEhquhwzS+Pd9NQ7SyDsvzbsKOMl/qas/77veZjQhy7
-	 0bJ+NgXwcL2rwgJSMBc3lJm8wcNbhxsR3wP6sR/CuvG4U6XvfDgSnoW6eGs6Fihk5ANo6
-	 8WPdhSAlZBJH55WDf6cgDbvFwfxf0ORJqjEWr8jBlCgfMKIGuGDE2gaKU28EsmbBbPBYM
-	 nkswRlN+qO1fZg7ifp5HZl115VevIKPB52BwBuFHSsyfnxC2ZpVL1BW1FbPKNV/z8/Q==
+	bh=GK5BZpfSt7hQbrbOFmptkUZ2W7pPiPK/lZOAv7/itcA=;
+	b=kcostTawaj0o3GMEUy5fTfxN1hPC/KJ3h98Iil2GyHyjsBIqlWwmtDI2rEwfnBt8XUu8
+	 M2+6beztBDaF8t1OoV/JRmNgegvl1yKuwiWaQr96uyy8TzqdJ+faRyTjJ8njPuoqlVeYG
+	 suTuvGtFiGBW3ttOWm135EgLQSHERpzKie+fTMS0+qIiPz9lHyWgojXmdWS7luSVirZf1
+	 WnLEMFEGgV/QM6hDmRQJcG1WecW3FDUOeCZaVHVx49MI479Q6EgjY3EWeTloxraHjwiqW
+	 zsVbS15PnbpErKJblsP8XZGNn0w6GCFMv6nrVNKFGZhlsH9RAn3Tkgg6Y9KzC3SKrFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tOBvdq7C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TK5fAuBh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C5D60A2606;
-	Wed, 18 Nov 2026 16:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C7C606A334;
+	Wed, 18 Nov 2026 16:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tOBvdq7C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3961F000CF;
-	Wed, 18 Nov 2026 16:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TK5fAuBh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7271F000C7;
+	Wed, 18 Nov 2026 16:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019099;
-	bh=ZR0l8xfPqY2m0GKMQTip5Cbr8KnD2/2bIZcJsvoYLQs=;
+	s=korg; t=1795019101;
+	bh=GK5BZpfSt7hQbrbOFmptkUZ2W7pPiPK/lZOAv7/itcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tOBvdq7CwLI99IIMhARUuKq5bWFmVF0OuuIVLEc5SdvaocwIUDhuaTgCTi3BEqaqA
-	 XA5pmtynNQyvkiIGxIo3ODPajSHUmH3JYF6PZLJJFZw3j/34GmSz8O3YqvhxKJDAiO
-	 aXhrDfF0wYu3gOzTs9gf5A0Q+CIi7V8qSX1tkoKc=
+	b=TK5fAuBhoPt6R7Vw/XEdp8gvufqWQ37ZhzCb6A0fq1M+2Uu3lVnhBHof+eRwRwi71
+	 N4j37V/TmLst6nXMo2HRvWkb5hAs6Ze27GxjhYy8z5p9+VrAZ1vDWkzPSht+sC320j
+	 XsFNys07PcYeuCdEkpqf5owjj0typk4J9r9pDbvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1474/2651] wifi: mt76: mt7996: clear all link wcid entries in sta_pre_rcu_remove
-Date: Wed, 18 Nov 2026 15:45:14 +0100
-Message-ID: <20261118150341.095507735@linuxfoundation.org>
+Subject: [PATCH 7.3 1475/2651] wifi: mt76: mt7996: free the WTBL index if a link allocation fails
+Date: Wed, 18 Nov 2026 15:45:15 +0100
+Message-ID: <20261118150341.127317126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,72 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit a53699a3d482a980efb016469b99ffac172280af ]
+[ Upstream commit 36f1934a2bf04f355e748c68ba7f7cbb5e6950fc ]
 
-mt76_sta_pre_rcu_remove() clears the wcid table entry of msta->deflink
-only. mac80211 calls it before the synchronize_net() that ends the RCU
-readers of the station, and frees the station right after
-mt7996_mac_sta_remove(). For an MLD station, the wcid table entries of
-the other links stay set until mt7996_mac_sta_remove(), after that
-grace period. An RX or TX status reader that looks up one of these
-entries in that window can follow msta_link->sta or def_wcid into the
-freed station.
+mt7996_mac_sta_init_link() takes a WTBL index from wcid_mask before it
+allocates the msta_link of a link other than the first one. If that
+allocation fails, the function returns -ENOMEM and the index stays set
+in wcid_mask, so no later station can use it.
 
-Clear the wcid table entries of all links of the station in
-.sta_pre_rcu_remove.
+Return the index to wcid_mask on that error.
 
 Fixes: dd82a9e02c05 ("wifi: mt76: mt7996: Rely on mt7996_sta_link in sta_add/sta_remove callbacks")
-Link: https://patch.msgid.link/20261006205936.669125-10-nbd@nbd.name
+Link: https://patch.msgid.link/20261006205936.669125-11-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 26 ++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index b52308c42d106..3b50457955978 100644
+index 3b50457955978..6ef399b7f72e1 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1521,6 +1521,30 @@ mt7996_set_active_links(struct ieee80211_vif *vif)
- 	ieee80211_set_active_links_async(vif, active_links);
- }
+@@ -1166,8 +1166,10 @@ mt7996_mac_sta_init_link(struct mt7996_dev *dev,
+ 		mt7996_sta_init_txq_wcid(sta, idx);
+ 	} else {
+ 		msta_link = kzalloc_obj(*msta_link);
+-		if (!msta_link)
++		if (!msta_link) {
++			mt76_wcid_mask_clear(dev->mt76.wcid_mask, idx);
+ 			return -ENOMEM;
++		}
  
-+static void
-+mt7996_sta_pre_rcu_remove(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
-+			  struct ieee80211_sta *sta)
-+{
-+	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
-+	struct mt7996_dev *dev = mt7996_hw_dev(hw);
-+	unsigned int link_id;
-+
-+	mutex_lock(&dev->mt76.mutex);
-+	spin_lock_bh(&dev->mt76.status_lock);
-+
-+	for (link_id = 0; link_id < ARRAY_SIZE(msta->link); link_id++) {
-+		struct mt7996_sta_link *msta_link;
-+
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
-+		if (msta_link)
-+			rcu_assign_pointer(dev->mt76.wcid[msta_link->wcid.idx],
-+					   NULL);
-+	}
-+
-+	spin_unlock_bh(&dev->mt76.status_lock);
-+	mutex_unlock(&dev->mt76.mutex);
-+}
-+
- static int
- mt7996_sta_state(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		 struct ieee80211_sta *sta, enum ieee80211_sta_state old_state,
-@@ -2626,7 +2650,7 @@ const struct ieee80211_ops mt7996_ops = {
- 	.vif_cfg_changed = mt7996_vif_cfg_changed,
- 	.link_info_changed = mt7996_link_info_changed,
- 	.sta_state = mt7996_sta_state,
--	.sta_pre_rcu_remove = mt76_sta_pre_rcu_remove,
-+	.sta_pre_rcu_remove = mt7996_sta_pre_rcu_remove,
- 	.link_sta_rc_update = mt7996_link_sta_rc_update,
- 	.set_key = mt7996_set_key,
- 	.ampdu_action = mt7996_ampdu_action,
+ 		if (msta->seclink_id == msta->deflink_id &&
+ 		    (sta->valid_links & ~BIT(msta->deflink_id)))
 -- 
 2.53.0
 
