@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046178;
-	b=mfyJdkRutmCuf+l7nHaaWhzEsAqBJUJx5wzfWDg9OTZS+mgQJu8qStFSvmLALaI45AiI
-	 C6R9KqFpP6ye+F24ZzNiBU/t6Z3XENnYCMDYLM179piVLNvT9Y5YQy+7UawJVT+VC8NNn
-	 lFTnG2oxtfrgIQcJEKRUvQzp3c+Ubig3Tej1GOTKRtBAf+7blivAW5Ulq0as4LASL3WZe
-	 iQ0AhpxbTvf7v8cV9onhfrEYmms024PHgkWA5KsjEdubs4iU8M9+iDxXkobzWunzeFLg2
-	 0P5eKQNXH7dn7hFQYsYokNrPTvC4zC42IBnV5EctQOi4m67dPpdMLr2gfpQckk7rRpQ==
+	t=1795046181;
+	b=Me1LVehiR8nB0yj/o0we/y/Fy7N019w9WsihMy/50XM1Bp1x6u+P4ltt6RcTb7xyysMx
+	 ApBB5GBopzSGb9gq8W6OKH0X1Rh/DPFV8Ar1n7ObHqTimdWgVcC86JKYnRBVIMnPLbdRT
+	 MHWssYrQQyTtrWjIo+Q5NPYxIZrQHNxgcE9/fEEkDJ5i9K0X171mMHFwEizuR2bWuUd6r
+	 NM7MO50OGs3PIuPJn9+THfLaCJ5whIWbampSdu4XKN7Jn+nfLdu0x/oHjTbXZdcoZd4oW
+	 g3FRAwWX1jN9ySDFAJgaFJ9dh8LA32tCTDjFmRpUMQQOnnlmxpv+IIrTS4eS+RXw9zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046181;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QeODakCetYIXOidz7k0HXSHN5di+WhgNcp2isNqVRng=;
-	b=J2inScOsDZquY3eEDVY8HZvzvXKWxr5BaADVQRiLdBAtYE6j0Nc4peuoDYBmHUkZzzmn
-	 YJSu18eybteB8g2U0Y3xAXeBVQ/hgukkQ86JdNNK7P10zc6jL3+SB3ajGQrGsE8O33Xn4
-	 S8q15F4iKklKo3CN0HKDkVDVDoAJQQbNbF9xiJwNrg9gEZjPGxhxuV+T5m5QPTXsl9fLs
-	 wlAoZnw0B6pfsrhsNPbm1gKxBvKDyjWBvoTYyxIkiY08yLZAWRvFy9KZ3p0w3ch090kDd
-	 XoV2t0IqyQcVeqqPdFZ7yGOK+LopX8vdedktu15IczsV7PvJoNM440l/KRWSbMJcpUQ==
+	bh=fTHluGsto1CNN75NMG2+1n34wc5QZv+Q1wG6d2UxkDg=;
+	b=hdIZREUuMAUu/x+D7lkTivHDMTAxMwXNnG7tvKqO8RST5PAGJR8nD+wLLc8osGtIxMZL
+	 hh9qOVFjbQ904kEsBMXnLPAeOGorx3W6v279urLSLyyBCJjq08Y4SrpOhKsAn1Ieg98A1
+	 Tffd6keCtnr46UAcieBLJS5IT5Nyi9mF4DysHAnQcealsaydSKh90yIX2dpR1Dwyu54iW
+	 zf17dWudoyWuxcGoID00jArqzutq5WS8iFlnrFKkkTftSV07Z2Dk3mT7JCjlSgdQWN/en
+	 K+mrlZaGyH/iTd/pB/R23FjCKPa0Wm0/+v186hWVtGHEqBP4uGE3EWDolbqVmJ3ZmMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPVqb762;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjZIDvxg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7A5606A320;
-	Wed, 18 Nov 2026 23:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406BE606A320;
+	Wed, 18 Nov 2026 23:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPVqb762
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB5C1F000C4;
-	Wed, 18 Nov 2026 23:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjZIDvxg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DB71F000C4;
+	Wed, 18 Nov 2026 23:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046178;
-	bh=QeODakCetYIXOidz7k0HXSHN5di+WhgNcp2isNqVRng=;
+	s=korg; t=1795046181;
+	bh=fTHluGsto1CNN75NMG2+1n34wc5QZv+Q1wG6d2UxkDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FPVqb7627hlrgEU29eBULh3hukgn5ucUjaTxSYpyu0wjryhoNtqZJ9TnuAP6fyZ3D
-	 ZiZi7YoSGQHY6yvSBFk1f6u/cD8oieZifVPC6qRO5lH3NsUexIftCFOHZBza/f5SzW
-	 pJjnRiyHAqm3sNBELmSFAFCVSuqwMPK2RosRqEM4=
+	b=hjZIDvxgqdfYua3YrsD7j2LJoaMAGAqBN4xS82y8EN/lfPdztqvF3lxFKlwM4SyvP
+	 a2R9GhakW+3F+3LzRwZLYae+trHe/JzZQ8o9S+yS+hfV0Mt6CG5qTrKTCmN1tEIPJK
+	 fDkd8+OGKU9FgIFa4Qp/FickMlVRf8dMxDpaFbU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1188/2857] posix-timers: Accept NULL clock_getres() output in stubs
-Date: Wed, 18 Nov 2026 15:37:02 +0100
-Message-ID: <20261118150244.382332916@linuxfoundation.org>
+Subject: [PATCH 6.1 1162/2857] mtd: rawnand: ndfc: add CONFIG_OF dependency
+Date: Wed, 18 Nov 2026 15:36:36 +0100
+Message-ID: <20261118150243.428071623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,51 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5b819071e4346256c4edbae5cc2095dff25694fc ]
+[ Upstream commit 97f9e509d839f7e5b9a32105ae322e5223c86786 ]
 
-With CONFIG_POSIX_TIMERS disabled, clock_getres() returns -EFAULT for a
-supported clock when the result pointer is NULL. POSIX permits a NULL
-result pointer to suppress returning the clock resolution.
+When compile-testing on x86 without CONFIG_OF, the ndfc driver produces
+a harmless warning:
 
-Only copy the result when a destination is provided, in both the native
-and time32 stubs. This matches the full POSIX timer implementation and
-preserves clock ID validation.
+drivers/mtd/nand/raw/ndfc.c: In function 'ndfc_probe':
+include/linux/dev_printk.h:154:31: error: 'len' is used uninitialized [-Werror=uninitialized]
+  154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+      |                               ^
+drivers/mtd/nand/raw/ndfc.c:196:17: note: in expansion of macro 'dev_err'
+  196 |                 dev_err(&ofdev->dev, "unable read reg property (%d)\n", len);
 
-Fixes: baa73d9e478f ("posix-timers: Make them configurable")
-Fixes: d822cdcce43f ("posix-timers: Move compat versions of clock_gettime/settime/getres")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020161121.85042-1-dennylin0707@gmail.com
+Limit compile-testing to configurations with CONFIG_OF to trivially
+avoid this. The driver will still be built in allmodconfig and many
+randconfig builds.
+
+Fixes: 4f2692a5383e ("mtd: rawnand: ndfc: use ioread32be/iowrite32be and allow COMPILE_TEST")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-stubs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/time/posix-stubs.c b/kernel/time/posix-stubs.c
-index 828aeecbd1e8a..b2bb38e78520f 100644
---- a/kernel/time/posix-stubs.c
-+++ b/kernel/time/posix-stubs.c
-@@ -117,7 +117,7 @@ SYSCALL_DEFINE2(clock_getres, const clockid_t, which_clock, struct __kernel_time
- 	case CLOCK_REALTIME:
- 	case CLOCK_MONOTONIC:
- 	case CLOCK_BOOTTIME:
--		if (put_timespec64(&rtn_tp, tp))
-+		if (tp && put_timespec64(&rtn_tp, tp))
- 			return -EFAULT;
- 		return 0;
- 	default:
-@@ -211,7 +211,7 @@ SYSCALL_DEFINE2(clock_getres_time32, clockid_t, which_clock,
- 	case CLOCK_REALTIME:
- 	case CLOCK_MONOTONIC:
- 	case CLOCK_BOOTTIME:
--		if (put_old_timespec32(&rtn_tp, tp))
-+		if (tp && put_old_timespec32(&rtn_tp, tp))
- 			return -EFAULT;
- 		return 0;
- 	default:
+diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
+index ed828149c94cf..602952b3f9f65 100644
+--- a/drivers/mtd/nand/raw/Kconfig
++++ b/drivers/mtd/nand/raw/Kconfig
+@@ -72,6 +72,7 @@ config MTD_NAND_AU1550
+ config MTD_NAND_NDFC
+ 	tristate "IBM/MCC 4xx NAND controller"
+ 	depends on 44x || COMPILE_TEST
++	depends on OF
+ 	select MTD_NAND_ECC_SW_HAMMING
+ 	select MTD_NAND_ECC_SW_HAMMING_SMC
+ 	help
 -- 
 2.53.0
 
