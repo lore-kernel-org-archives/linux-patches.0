@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060830;
-	b=PNqM9kbVPWogVYdpsXFI8eUl2GN3kdBJIEmekSXtMARK15Soqa/DP2rs0XEdtt+QDnEX
-	 bxMabGoQPGo1PjP5unYCtTottStzXLZyFGC5I84whzxw7MbJlqNlOeP9Qv7YyWhwESDWt
-	 aFU+iQnsCVygxXORIU1iT2ZgCvjidP4iB5YfhJzPv4MUowe8/ecgKC4Bxzx8hpRlwjHm1
-	 P6DuWvzLdiNTiY+gl3KxbiGyM+GnfHAs9h3lV6o/O+3g/4Groa6X7Wgw1U/3T73aSH4jZ
-	 5vhUpWy/gROsTHA24OJAe1zFsSmABp4ZDXJfHr5jebrtlDRxhgRXyySDfM0nfRftojQ==
+	t=1795060833;
+	b=GLoohfPceYgdJqn+/zmVuYsa3fvWd45pJzB8U7nLfKqddVDvOMkSXYVs74DEEIB/8ogO
+	 UOnHLTNMU5SmBcTIr46Xo9Btz6VYgzz5/udI6VhkqYKvjDkTEIDrKbCPSmaCVOjHd1raV
+	 Q06iwrt3KMuNx/n8hWJtsYU3rR6NH/c+8M+5GoIGx90WlAGv86F2uWlFN5c8BzInq6MAJ
+	 2UW7XORzV/QHu3EtOnMVAF5w+JKqNc3pDGahnhzStsXqSqS68808H8jfl5m5Rte9DbTE0
+	 ktUcaMXhDp5hdHUKvNKNsQM5NbKZnMwfgD9J4Im4g9Z0WtVuZLVvfHMB10PbiJujVQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t3fjEZ6/kUuctse88gx0IIKIOw6eZ5ZEUXaD4i4u3Zs=;
-	b=P3Mb7n+M7daxAVbkiqWIrhcQTz3PLL2otxvf6YJT5n5CUzNgiX/CJAvst7uXsg7wZWxq
-	 3uPV+o/kiLhwEknv5eqGwuEucwJ5r4mBA2/OqEnhUAfDKabhS3FBbLa6Yt3jZC7gXLHFi
-	 +QVw6mYEkpNt6BHLFMHHsUgUh80BXg/Iok0hXRUVoi+8tBVmE0Hoz59n7yS4tmjWHRgR7
-	 ejCU3UJOTW74xMzcGA31UNXkUvU/94dZ1oZ+aIvG+zg8oKbvq0b3GuiquAVwRJW/+vGJz
-	 Wcj/VA2K1VO+xIk/lDdjRFAgei67962kcm2ODL18GVWBt1iL1+pHAZxyZrX5i5UKjPQ==
+	bh=ODIPvrDNZYoXW28yJJC9hK9ZV+W644TBn+Akcpuk4Wo=;
+	b=Gkgrzaf8cHyEhsgYGn6wPUPM9usygOxL7t6xxKF1VKFewwCsCFQTJqdR4h98CnB2toWy
+	 SkLtArV57hMOy19cblNrKOkPbXSkmP1B/Q+U0JH9anmJNdTY80hz9V7O4lHbPx0zWv7CU
+	 XDmJ/iEWYgllPZghOj96JS4kyZoC948J5j6cswQUri7zIGY0Mf565gSaQnVPLfQBB2Ed1
+	 WjijFH/WlS6V6sMblIIIOJ18vSAj68RYGrlWikQ+bmrQMSe1/Q2pDVED0xsrphos3R2SM
+	 f0FgKbNA4fRThNTcHolZPC8CIOEwGpujDCIcGAFt6kPNUqchRnq90z41tggI2zqGUpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y01c4JST;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wwYJia0U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2779A606A325;
-	Thu, 19 Nov 2026 04:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F16606A326;
+	Thu, 19 Nov 2026 04:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y01c4JST
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8262E1F000C4;
-	Thu, 19 Nov 2026 04:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wwYJia0U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E0A1F000C4;
+	Thu, 19 Nov 2026 04:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060830;
-	bh=t3fjEZ6/kUuctse88gx0IIKIOw6eZ5ZEUXaD4i4u3Zs=;
+	s=korg; t=1795060832;
+	bh=ODIPvrDNZYoXW28yJJC9hK9ZV+W644TBn+Akcpuk4Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y01c4JSTTQE8snLXfsyZV81dR7/Bs0s//F+syf/gMI86CjomK274lTcKVCS/w6gRe
-	 atXT2D56B+lNeJ61WVctjHyNBzv0VP5kf6l+M5L8KiUPa6EbhJK9N5xLzc4W/eyx3j
-	 SBudF0ilRT3KydG1pHNqILSi1oMIVCieABB18/aM=
+	b=wwYJia0Uwv9MpeR645U2/4UAFuzmuFcKPAdSMlQ4bVTP53V1J4mzEzZlViKnHRODr
+	 FeBQcmNm743nWHP67q8a9VYVPOealqUlj6nmz9jom95vy8AeVl29R6YUVWu+SaKl1d
+	 YGRDS7/pPXa7ElDHbOXosaCTfMVUFCMGNV0ajDA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Chancel Liu <chancel.liu@nxp.com>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1340/1848] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
-Date: Wed, 18 Nov 2026 15:56:18 +0100
-Message-ID: <20261118150015.798469679@linuxfoundation.org>
+Subject: [PATCH 5.10 1341/1848] ASoC: fsl_asrc: check the second front-end DMA channel
+Date: Wed, 18 Nov 2026 15:56:19 +0100
+Message-ID: <20261118150015.834703293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,48 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
+[ Upstream commit b4136c0d69ead737197af741e20edd1c3574f6b4 ]
 
-After a warm reboot the REG_ASRCSR register may not be in its hardware
-reset state. regmap caches the register value as 0 (the assumed default),
-so when the desired clock source index is also 0, regmap_update_bits()
-skips the actual hardware write because it believes the register already
-holds the correct value. This leaves a stale clock source in the hardware.
+The temporary Front-End DMA request can fail independently of the
+persistent channel acquired earlier in fsl_asrc_dma_hw_params(). The
+returned NULL pointer is immediately used to read its private data.
 
-Replace regmap_update_bits() with regmap_write_bits() so that the masked
-fields are always written to hardware regardless of the cached value.
+Check the temporary channel and release the previously acquired
+persistent Front-End channel on failure. Clear its slot so a later
+hw_free cannot release it twice. ASoC marks a component's hw_params
+only after success and skips unmarked components during rollback, so
+returning an error alone would leak the earlier channel.
+
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
 Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
-Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260913125147.109920-1-bolin.liu@seu.edu.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/fsl/fsl_asrc_dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index cf6d3c549707b..45879c861ddf9 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -517,10 +517,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
- 			   ASRCTR_USR(index));
+diff --git a/sound/soc/fsl/fsl_asrc_dma.c b/sound/soc/fsl/fsl_asrc_dma.c
+index 9b2a986ce4152..e88d2936c2073 100644
+--- a/sound/soc/fsl/fsl_asrc_dma.c
++++ b/sound/soc/fsl/fsl_asrc_dma.c
+@@ -230,6 +230,11 @@ static int fsl_asrc_dma_hw_params(struct snd_soc_component *component,
  
- 	/* Set the input and output clock sources */
--	regmap_update_bits(asrc->regmap, REG_ASRCSR,
--			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
--			   ASRCSR_AICS(index, clk_index[IN]) |
--			   ASRCSR_AOCS(index, clk_index[OUT]));
-+	regmap_write_bits(asrc->regmap, REG_ASRCSR,
-+			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
-+			  ASRCSR_AICS(index, clk_index[IN]) |
-+			  ASRCSR_AOCS(index, clk_index[OUT]));
- 
- 	/* Calculate the input clock divisors */
- 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
+ 		/* Get DMA request of Front-End */
+ 		tmp_chan = asrc->get_dma_channel(pair, dir);
++		if (!tmp_chan) {
++			dma_release_channel(pair->dma_chan[!dir]);
++			pair->dma_chan[!dir] = NULL;
++			return -EINVAL;
++		}
+ 		tmp_data = tmp_chan->private;
+ 		pair->dma_data.dma_request2 = tmp_data->dma_request;
+ 		pair->dma_data.peripheral_type = tmp_data->peripheral_type;
 -- 
 2.53.0
 
