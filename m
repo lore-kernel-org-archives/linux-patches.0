@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035057;
-	b=T0FmymkHH/BIEHJ0Ta8vZdRxBbNzDbbiQ1zHEh5uPb8dN/rG4+AHyWwet8fBzMiSLDzH
-	 7Bx7yiOK1ACypB18i434dVZNTj3SvD5Bq7YfoRt7Cs5CH03maTmO7zzIJPvNu7UUQoib1
-	 YpiyLA/c+ECmRPWXC+axpMelDv3P4dmIEJygKNC5tXqv+Az0G9WVgoeYHfS/Edy6sFk4G
-	 a01U6DkzlolSOr+v15kWjN54H7dISz3hEs1LDMIfqMTvyRWLbbv1+OLWHirrU8v4nCwrc
-	 J71oC8zQfxO8qLATxl369Q/MOs97RitAOlNxfykVAcuAYcAEZHB0F3WfJH+NnZbMR+A==
+	t=1795035060;
+	b=SpY/EXfUkY5Ix9QSfUTQ/LTMRYonSn960mHKpaJDzoVGkWswM9iRMDb/g/F4eSQKXdyE
+	 5uq2iUABuZ167ZGsLO4xFQxVKfRpaeAsqZqfYBXYlBdU3kzVZ8SeIYdPePgmziZ9bJphf
+	 lEcLwO5gZaB6SiKlM8dPtCcPzDgX5quW5AaEzKn8V/wOX2yXh+KgaUkBbMV8l2q6sQOFX
+	 7RQW7ye5+WTAxHJh6eiJ78KpG/nUwzliJPnMlCcrnFENh6Gp0TLGGwAUeh4OjofkpBVfN
+	 +ew5h5VmHlwH70l39mI9X2KcTDO54UNKqKX2sigWd6pLiK0WWuwVwq4czVFhlQ0jexg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=BUmLKOOow4Wpf8dCxEW15Xc2jnWBcfbgf5Dpqz2cSE4=;
-	b=oKpmvKxIGW1P3mYhcBIn4ITO2eKUVUCQ1RM+XrpTKjE860QBXiogu1R0aTZ1R7Wk95qJ
-	 uOJIwANNDjH5vhyERTROvgd6/Tri8mIB7eYzMDPrRvPU55jvLuHz3mEQJwLaA6c4nND0R
-	 /yObGIg6DdIk2IpMGCMYSvQrcWLvkez68VoyyDWwYJr44PVoM1o3+3dYSzhepuV8TPjcw
-	 hYpN21gTu/0ZikzIpX1s0+gcLotFSkvvR2/gM/YcJdp01LRxQ0woCnuHme0L6xzd+evOu
-	 7MulDWAhTZ9RjU3FN6fInRHrapA5ubcH9QHKyEtvqh79aABEzMRmSAy7W0tEfm6PHsA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6uUshEoqskJZkUMTBH7lulb68Pe9YzNAhNHKOcOySHo=;
+	b=NHwYsmqnF8g2qjfzw7We9+KciQfIARoxlBkAQdXKLu4yPmb30jpHYHhfcd8czozqzPsk
+	 83zlnat2gLlWAa+ryyHSQSOZcpoFdxykWvLRz8C1W2iwrWdkiHdPlji7hrC98iQ0G/dVf
+	 LkIgNQfpmNWtT6BRk3qXzArG2r9ANtnRNAYLgj8kGawcejaBRpKfgyVsqVnQ0wc7RpVU7
+	 4jRPywaL89yysZnZNAcfrEy7HWT8lzHCXLasNyXQuPM5Wnme3GHHXdKHskjtTuM5qqn6W
+	 6UhQzrWtDabqqbGoK5+IohKtZY9H9K4vibRFPlFEaf27yR3n1hsnirEpBS5EzyIQP3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0Q83Kzl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQ42qT8O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9042F606A320;
-	Wed, 18 Nov 2026 20:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628C0606A31C;
+	Wed, 18 Nov 2026 20:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m0Q83Kzl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF50C1F000C4;
-	Wed, 18 Nov 2026 20:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQ42qT8O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73471F000C4;
+	Wed, 18 Nov 2026 20:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035057;
-	bh=BUmLKOOow4Wpf8dCxEW15Xc2jnWBcfbgf5Dpqz2cSE4=;
+	s=korg; t=1795035060;
+	bh=6uUshEoqskJZkUMTBH7lulb68Pe9YzNAhNHKOcOySHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0Q83KzlQ8cCFiMUfSOpkoqN8rtVmBK2lTU+tYad6k8Wpq+B121bcxjYax6+4/6vX
-	 S0hSJ4xQ/71fnIMtWceaZ2MKQ/vmyue2MrnQSFuO4Ia8Y98RxdPEXK0L3AolYjGe3P
-	 GiFImM/WJUYeCK/eqgAQdKZmctcJytckGtwEf2tc=
+	b=XQ42qT8OzwkfCEOn8y4/F3TTBWJZnkz/lf1Qa0C0l0XfUQvKMT40rcb1eprvJoOaA
+	 mH9IYJ8ugY14jMrtpc3suCsSaYhX+gB0JVuAhSGsvJ/OB06Bg9korrdPCdB/0+mrcc
+	 onF/FY2ExQMYKjqM4MYrY6VUMVnaaU2eIOhtrdZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.6 0587/3318] nvmet-fc: fix use-after-free in nvmet_fc_ls_create_connection()
-Date: Wed, 18 Nov 2026 15:20:09 +0100
-Message-ID: <20261118150335.171367848@linuxfoundation.org>
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.6 0588/3318] landlock: Fix superblock use-after-free in release_inode()
+Date: Wed, 18 Nov 2026 15:20:10 +0100
+Message-ID: <20261118150335.208197841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,107 +61,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Günther Noack <gnoack@google.com>
 
-commit 2c29f8c9b9e598c09fa50aa02200136a107f6b3f upstream.
+commit 3e271a27c46fd591d1011c7de5a644a41e2010f1 upstream.
 
-nvmet_fc_ls_create_connection() looks up the association with
-nvmet_fc_find_target_assoc(), which returns it with a reference held,
-and drops that reference as soon as the target queue has been allocated.
-iod->assoc is then dereferenced again by nvmet_fc_makeconnid() while
-building the connection id.
+Without this fix, release_inode() (task 1) can race with a umount
+operation in hook_sb_delete() (task 2).  The order of operations in
+which the race occurs is:
 
-The queue only borrows the pointer and takes no reference of its own.
-Once the lookup reference is dropped the association is kept alive
-solely by the reference taken when it was created, so a disconnect LS or
-a remote port unregister running concurrently can free it before
-nvmet_fc_makeconnid() reads it:
+* task 2: hook_sb_delete() arrives at the end of the function, waiting
+  for landlock_superblock(sb)->inode_refs to become zero.
+* task 1: release_inode(): does atomic_long_dec_and_test(), decrementing
+  inode_refs to zero.
+* task 2: gets woken up through some other means, sees that inode_refs
+  is zero and returns.  The caller is the unmount operation and proceeds
+  to release the superblock.
+* task 1: Runs wake_up_var(&landlock_superblock(sb)->inode_refs),
+  *dereferencing the sb_security on the freed-up superblock*.
 
-BUG: KASAN: slab-use-after-free in nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
-Read of size 8 at addr ffff888179f1b000 by task kworker/u9:2/1167
+Notably, wake_up_var() does not dereference the pointer passed to it,
+and only uses it to determine an overapproximated set of tasks to wake
+up. So while it's potentially possible for an attacker to provide a
+different value for that pointer, this only results in the wrong set of
+tasks getting woken up, and in this scenario, no further tasks are
+actually waiting.
 
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: nvmet-wq nvmet_fc_handle_ls_rqst_work
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
- print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
- kasan_report (mm/kasan/report.c:595)
- nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:193 drivers/nvme/target/fc.c:1841 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
- process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
- worker_thread (kernel/workqueue.c:3486)
- kthread (kernel/kthread.c:436)
- ret_from_fork (archkernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
- </TASK>
+Nevertheless, KASAN detects it as a slab-use-after-free read on
+sb->s_security:
 
-Freed by task 1167 on cpu 0 at 405.998150s:
- kasan_save_track (mm/kasan/common.c:57 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:584)
- __kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
- kfree (include/linux/kasan.h:235 mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
- nvmet_fc_handle_ls_rqst_work (drivers/nvme/target/fc.c:1808 drivers/nvme/target/fc.c:1995 drivers/nvme/target/fc.c:2021)
- process_scheduled_works (kernel/workqueue.c:3322 kernel/workqueue.c:3405)
- worker_thread (kernel/workqueue.c:3486)
- kthread (kernel/kthread.c:436)
- ret_from_fork (archkernel/process.c:158)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  BUG: KASAN: slab-use-after-free in release_inode+0x196/0x290
+  Read of size 8 at addr ffff888103b6c0a8 by task repro/217
+   release_inode+0x196/0x290
+   landlock_put_object+0x71/0x90
+   landlock_free_rules+0x38/0xc0
+   landlock_put_ruleset+0x47/0x130
+   fop_ruleset_release+0x33/0x40
+   __fput+0x305/0x780
+  Freed by task 54:
+   kfree+0x11c/0x390
+   process_scheduled_works+0x766/0xe50
+   worker_thread+0x7bc/0xb20
 
-The buggy address belongs to the object at ffff888179f1b000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 0 bytes inside of
- freed 2048-byte region [ffff888179f1b000, ffff888179f1b800)
+The fix is to determine &landlock_superblock(inode->i_sb)->inode_refs only once
+earlier in release_inode(), and later use that precalculated address for the
+wake_up_var() call, without having to dereference through the superblock.
 
-Hold the lookup reference until the response has been built, and drop it
-on the error path as well.
-
-Reported-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-nvme/20260731204504.2396434-1-shuangpeng.kernel@gmail.com
-Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
+Assisted-by: LLM
+Signed-off-by: Günther Noack <gnoack@google.com>
+Link: https://patch.msgid.link/20261006105847.2541190-1-gnoack@google.com
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ security/landlock/fs.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1773,9 +1773,6 @@ nvmet_fc_ls_create_connection(struct nvm
- 					be16_to_cpu(rqst->connect_cmd.sqsize));
- 			if (!queue)
- 				ret = VERR_QUEUE_ALLOC_FAIL;
--
--			/* release get taken in nvmet_fc_find_target_assoc */
--			nvmet_fc_tgt_a_put(iod->assoc);
- 		}
- 	}
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -45,7 +45,7 @@ static void release_inode(struct landloc
+ 	__releases(object->lock)
+ {
+ 	struct inode *const inode = object->underobj;
+-	struct super_block *sb;
++	atomic_long_t *inode_refs;
  
-@@ -1789,6 +1786,8 @@ nvmet_fc_ls_create_connection(struct nvm
- 					FCNVME_RJT_RC_INV_ASSOC :
- 					FCNVME_RJT_RC_LOGIC,
- 				FCNVME_RJT_EXP_NONE, 0);
-+		if (iod->assoc)
-+			nvmet_fc_tgt_a_put(iod->assoc);
- 		return;
- 	}
+ 	if (!inode) {
+ 		spin_unlock(&object->lock);
+@@ -61,8 +61,8 @@ static void release_inode(struct landloc
+ 	 * Makes sure that if the filesystem is concurrently unmounted,
+ 	 * hook_sb_delete() will wait for us to finish iput().
+ 	 */
+-	sb = inode->i_sb;
+-	atomic_long_inc(&landlock_superblock(sb)->inode_refs);
++	inode_refs = &landlock_superblock(inode->i_sb)->inode_refs;
++	atomic_long_inc(inode_refs);
+ 	spin_unlock(&object->lock);
+ 	/*
+ 	 * Because object->underobj was not NULL, hook_sb_delete() and
+@@ -76,8 +76,8 @@ static void release_inode(struct landloc
+ 	 */
  
-@@ -1810,6 +1809,9 @@ nvmet_fc_ls_create_connection(struct nvm
- 	acc->connectid.connection_id =
- 			cpu_to_be64(nvmet_fc_makeconnid(iod->assoc,
- 				be16_to_cpu(rqst->connect_cmd.qid)));
-+
-+	/* release get taken in nvmet_fc_find_target_assoc */
-+	nvmet_fc_tgt_a_put(iod->assoc);
+ 	iput(inode);
+-	if (atomic_long_dec_and_test(&landlock_superblock(sb)->inode_refs))
+-		wake_up_var(&landlock_superblock(sb)->inode_refs);
++	if (atomic_long_dec_and_test(inode_refs))
++		wake_up_var(inode_refs);
  }
  
- /*
+ static const struct landlock_object_underops landlock_fs_underops = {
 
 
