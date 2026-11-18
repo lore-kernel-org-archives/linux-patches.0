@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019739;
-	b=yVfzCeIMwEbpoZ/IhQGfsmvchqdCqWLEH5C7Tf8EGg/tRec3AFi1AXvi7cIlRwaeo/Ln
-	 pVWn/BJKUZdAFG/Ij6XJGJbRCEriXVx21sk1RrLVZ+cOUWtpKab9VdN54Jq/LjcIkP7+K
-	 TWPAthe/ZSg+Z7+LDxtBWNp3e94YlIY7JV/uzpyTCh1nz0ANUqVt0mcAeRLfsOBMdZdNC
-	 7SCXbxLUrtfbpFyalGPyBgKkFGItc64O/PUpekMd4Y0kb7GuNzpjCqpMfKf+LZmHmEAj7
-	 MhuP8FbVPps3zuDDziVQcX3xyWguu6UCnhcVv674026N+3F/9nWOq5dSwo9a+JYEDqw==
+	t=1795019741;
+	b=pFZaN47oOpyZsZnX0F1oISkEJxF9pNd06aodwXIVkmg40tDBwUcVYNiWeAj8nYJtpojx
+	 C1cTRAv7JiyAmRotkQblciVuJcyAyOfF/IP9PJUmtuQJfTKW4K6XerN7isJr9IKgO4c+A
+	 sADKRztKCsRQKrmDvC00I+KnlS+lbotjRorq+8hgKssvYtVx8mk2bnKzkImAmfdSRKXaX
+	 tB3+7X0UhNkbwFuYE8XIxN4eQoMoFb/Z/GSerP0or8kSodUMMNscMf8LeRf28DZEBX3Sj
+	 nTG5feSfbka7W7UlODVUJuG8wbaH70nW5GuPGafKXZaXeRxUsJZD/Ow6HRl/5bDzzBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019741;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ETmO/uKVHeDhWkTQF86k6/iSvW4bKn+fhqoXB2kAbHk=;
-	b=lMr9ZAIS7JssjBdXEAFM7Dsy/siJdSyGfHSK80mKtxM4ps0pGddcBjOFiBTNspJgg/a9
-	 AicvkXRcrlmzgyOOGWZMUzljRZXocuFbTPrrXtZAh9j4bDlmQni6Af/J7eETzlSRSzOte
-	 VTa8kMoiKsdJYPy+P5WiQGLr+ChilxnRA84ywFKaMvxzcnPZDe+5QYQelvwIQ1U+c59EC
-	 ZQ7KUXyUH1NQEkXaYzITeBdjlkAfuKA0yxB3dc16tKGZlrUWXmBPBmk6ydzQAhHlSCgiU
-	 61/RnOxp9Py0V/pS7GglKaioieQKydOmyiNKQ4HpXWdEm5idtSUJWsiqPyhK6CofMKQ==
+	bh=gyk//C3bWwM3H9GYTaUQ1JVjRNuKb68sLhBJ19fEcWk=;
+	b=tU0n/HanhjSWNuiJexH0Cq0j+hSMQhYQvG6gtK9UV2jLADkSHQmglPmyEyvoCG6C76aL
+	 wZcocIsqDfdpufouqw/iGFVCEgalDqPB21J/pOGxV3JuVPH7rmFkQwMCRfBK5Zqn6yfbD
+	 44ShXQAJJf3lkLRaFWCktUzU4S68lo1l6ebFnKz9kXIEEl6fpOaZZAwO3rjJwyHJMviTI
+	 AzOaXlShdgL1G1VJPkvPL01dcRtJw6hZLelwuXEjjK5lADNlpruRm9gt0R+RJt9vyq7FE
+	 8khZqthHV4Y5wRupCpoMMfInK9OkRXr8zqQrt1j6kIW0fetp8fhRwf2E2IPvyMnn8Pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PO2zr8Mw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="A3vj1s/T";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F248B606A320;
-	Wed, 18 Nov 2026 16:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D157606A31C;
+	Wed, 18 Nov 2026 16:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PO2zr8Mw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024051F000C4;
-	Wed, 18 Nov 2026 16:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A3vj1s/T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA5D1F000C4;
+	Wed, 18 Nov 2026 16:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019738;
-	bh=ETmO/uKVHeDhWkTQF86k6/iSvW4bKn+fhqoXB2kAbHk=;
+	s=korg; t=1795019741;
+	bh=gyk//C3bWwM3H9GYTaUQ1JVjRNuKb68sLhBJ19fEcWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PO2zr8MwwGDBtVxhNmnHeqXE5sZIESzcKzTi093XD8LYlyB6vXR+vcz0F0vP7x3Vs
-	 g+ae8iOSBmMKV4B+URjTZqtbQu7i4+kV5N0rAspePGp1uP3ui6erudrB5q7MaFRxA3
-	 IgbmCJtSrl8wHCgm6iH5hYk6Qdf9idsGzjZYJxyE=
+	b=A3vj1s/TcNw3+M+5Mp+G3CAPK6T0i9p9QLZJie8vAq3chfymrYvfbjCY+oB/yRg9X
+	 Ee9naBNTgMDrbgn+O9cdotC9HXHiiBUsj23CZeE47RF+8Ny2XNSEiygHDhwPYm80oX
+	 iKnOOZbPinakylqeI4zKrvNgpovDxT6xRAbKSX9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1663/2651] power: supply: generic-adc-battery: Propagate charged GPIO errors
-Date: Wed, 18 Nov 2026 15:48:23 +0100
-Message-ID: <20261118150347.594741990@linuxfoundation.org>
+Subject: [PATCH 7.3 1664/2651] mtd: rawnand: pl353: fix clk reference leak in pl35x_nfc_setup_interface()
+Date: Wed, 18 Nov 2026 15:48:24 +0100
+Message-ID: <20261118150347.625189580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,41 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 36b0abe904ac9cbdce6161d9c7c0bcac963bb3fe ]
+[ Upstream commit 1ce45f0e74d60e8279ed380c97047e6c351aee1b ]
 
-devm_gpiod_get_optional() may return an error pointer such as
--EPROBE_DEFER, but gab_probe() only checks for NULL. The error
-pointer is then passed to gpiod_to_irq() and the original error,
-including -EPROBE_DEFER, is lost.
+pl35x_nfc_setup_interface() obtains a reference to the SMC "memclk" with
+of_clk_get_by_name() and only uses it to read the clock rate. The
+reference is never released: the function has many early return paths
+and no clk_put() call anywhere, so the clock reference is leaked.
 
-Check the return value and propagate errors from the charged GPIO lookup.
+The hook is invoked repeatedly by the NAND core (nand_reset(),
+nand_setup_interface() and the NAND_DATA_IFACE_CHECK_ONLY mode probing
+loops), so the reference count keeps growing.
 
-Fixes: b0327ffb133f ("power: supply: generic-adc-battery: Use GPIO descriptors")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20261009112429.33318-1-phucduc.bui@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Release the clock reference with clk_put() as soon as its rate has been
+read.
+
+Fixes: 08d8c62164a3 ("mtd: rawnand: pl353: Add support for the ARM PL353 SMC NAND controller")
+Assisted-by: DeepSeek-V4.1-Flash
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/generic-adc-battery.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
-index 937b84e04ba27..7a1f8188bd27c 100644
---- a/drivers/power/supply/generic-adc-battery.c
-+++ b/drivers/power/supply/generic-adc-battery.c
-@@ -243,6 +243,9 @@ static int gab_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, ret, "Failed to register delayed work\n");
+diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+index bd89aaadd1b2f..26b61d856143c 100644
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -807,6 +807,7 @@ static int pl35x_nfc_setup_interface(struct nand_chip *chip, int cs,
+ 	 * macro to convert from one to the other.
+ 	 */
+ 	period_ns = NSEC_PER_SEC / clk_get_rate(mclk);
++	clk_put(mclk);
  
- 	adc_bat->charge_finished = devm_gpiod_get_optional(&pdev->dev, "charged", GPIOD_IN);
-+	if (IS_ERR(adc_bat->charge_finished))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(adc_bat->charge_finished),
-+				     "failed to get charged GPIO\n");
- 	if (adc_bat->charge_finished) {
- 		int irq;
- 
+ 	/*
+ 	 * PL35X SMC needs one extra read cycle in SDR Mode 5. This is not
 -- 
 2.53.0
 
