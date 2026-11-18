@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041162;
-	b=kCMKPVvdYFlSXh5f6w2XTbc+NtSmPJ8wsJCmtEEem8Bh20JSvsHCafHq2pQHPQlzcOgh
-	 4eQdFSnd7kd9eGsKIFvovuv+jlNALLEQiQmpJqZD46rIjKDwuob37fNs3jk6gZOqFqeTf
-	 QSJ7ptJQGllgEO3KO/Y+ucvEp7ksgrlxz4GI1FevWCVNo5K94gsjpS/vaiddxiOtlxTcu
-	 oEIWgbzloZMCmNsA7yhZw0E8FRxcjNY6vQG2SJRKvd2vZkWXwX65SlwvPe3fx5wFnADhU
-	 ULl6hrd4m6BTpafMgs2FtHYkZteckWFmuU9IFtPsDy+qRGFVdhj9H5zQZUMunTNmqcg==
+	t=1795041164;
+	b=mZenyvQk09GP/vSuVrvcrL1Z+J81fsgGR0RF3CVqGzFxgUZuOJh0SsdSC23XkczBKK8L
+	 S2rIKHH8c5GELS1WbxKUfO0LrM/EJZ/+8ufvAFAtm8PwhtVbtaoPypRqoCAQVe/zI5b/U
+	 mZe2RU2TpuZz2cavsSbSylZ8yRed0cRlEc10efhlIiiZeJxFFg9bQr632ub1727rOQsB3
+	 Ee+S3Huwn1sDS16hJZhudlqgLCLaBVhQkXOYHkah/wTUMIaR5od+CtKtjSObWb+jLJmk+
+	 o1av2/liHsOzV6kcNclKJhj5kGnlx8uhIReOm2AgeW9gdro/6ekMDYqM+kHVVvMDOYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mdyrgc/WFO/9BYaAC9u7J/KZ8D8HCLmyFUdKLZnlOPI=;
-	b=kUXlfr732o9nTqcTpgQvEEwl650JjsZogm9vqQ63kb71QzpUfL5dTMjCHpH27SQmK+7x
-	 qdz00e2UaDmwbjv3JkFDR3d1vupkC56+n0y6751GJSZnvt3j1akg+Md/zvDBr4cOx+ldq
-	 6EPivqd/BcbtZuBpBQp0RWusCWl2d5em7oWjF2DvoKSiZNLowqvTjswFUnleNqGfdVNRB
-	 DmMmYxwIzjFG3RughNtTTjUmJXcKDOPK1q7eAGHMP9VNnyh0P41w+haJnONxjziAd2oZ2
-	 mQQ4VuIM+eFhMfkJjNTmLjZVf62tOS+c5ghoebxDHQk6ZmvC/AauA5CrnCvwD6Arb7g==
+	bh=+DN92as2GBsmBpZCjbDJfa5P9+37YeneuquCalwwAOM=;
+	b=gkdZWbWulq0tvTumLOZiaAyG8SVkobDuhbLEQ4EltJj4yrF0u0zXmfrxOh2hWs67ZDHg
+	 2XXrkxhN1xtPyb/0RV2bjCny3pKtuZeJ2giQY0NcMEuFqgmaQKh3hEBMWgSVgqa/F41rv
+	 jOgeuheuh8GCYxkRQ0AhjPnNs6Gbe9C6dEW84Crdzia1h7m/jhkqE7LY+x4VreFEDZDtF
+	 QLKOvlRwQC2YYNfBrKBfPTGJmxI6RZl31oAxlJj1LpyuM9TxeQ2xE0JdAhkzjnoNDw56s
+	 w81o3mNeX8kjS+NwZOgpyKwoSVda94uA28J9Je62nh9gKikNYAOyq41RIwTnei7mHGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SlzkBL0E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FY9nAdcS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E66606A320;
-	Wed, 18 Nov 2026 22:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB224606A32A;
+	Wed, 18 Nov 2026 22:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SlzkBL0E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817C61F000C4;
-	Wed, 18 Nov 2026 22:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FY9nAdcS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE3D1F000C4;
+	Wed, 18 Nov 2026 22:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041162;
-	bh=Mdyrgc/WFO/9BYaAC9u7J/KZ8D8HCLmyFUdKLZnlOPI=;
+	s=korg; t=1795041164;
+	bh=+DN92as2GBsmBpZCjbDJfa5P9+37YeneuquCalwwAOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SlzkBL0EXxaVrjKTK71GCGZ0qax3Qq1k0fV+rIC6B/onw0L7NtOCov7nH4bNRiL4a
-	 MaZXbRQc96FDD5isV4cIZTUx5fsfjSf3TRgMrEjtNI7RaIh9uFTZCxUw/XfaTayt6E
-	 dFWOcHC0yoil1jYSIejKqHJgou4scTgnwLdBiuIU=
+	b=FY9nAdcSP3WHhBpJfhf0cBpBx3pGnRaU0dXPqO2UNwGPyf6fCkdnnM/wTzmh694GH
+	 xl6dj6BlnFspORRpvG4BXkO82Z09gboHyPhgZxeTqxunusJmo8zMzzBtImOipTrjv7
+	 LyXWuiRgXAnpYOFPaO60ppcI4dxGEu7jMZTKOhjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Papa <pcristian292@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2674/3318] wifi: mt76: feed the station RSSI average from the chain signals
-Date: Wed, 18 Nov 2026 15:54:56 +0100
-Message-ID: <20261118150441.221831797@linuxfoundation.org>
+Subject: [PATCH 6.6 2675/3318] wifi: mt76: mt7996: fix PLE free page and AC queue register offsets
+Date: Wed, 18 Nov 2026 15:54:57 +0100
+Message-ID: <20261118150441.249494874@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,71 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Papa <pcristian292@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e1534fef1ae4df6e16401117394c26dbef84f361 ]
+[ Upstream commit c33af2e4622baafc56c565a13823f6b89d3f50db ]
 
-mt76_check_sta() adds status->signal of every received frame to the
-station's RSSI average, wcid->rssi, which mt76_get_min_avg_rssi() reads
-for the dynamic sensitivity of mt7603 and mt7615 and for the gain
-control of mt76x0 and mt76x2.
+The PLE register map in the MediaTek vendor driver places the free
+page counter, the free page head and tail, and the HIF group page status
+at 0x3a0, 0x3a4 and 0x3a8. The driver reads them at 0x380, 0x384 and
+0x388, and the vendor map has the band 1 TXCMD queue empty status at
+0x388. The same map has 0x100 bytes per AC for the station queue empty
+bitmaps, with the MT7992 extension register at offset 0x80. The driver
+uses 0x80, which cannot hold the 34 registers per AC of MT7996, so the
+hw-queues file reads AC1 to AC3 of a station from the wrong register.
 
-Since commit 4550fb9e9810 ("mt76: improve signal strength reporting"),
-drivers no longer set status->signal: mt76_rx_convert() computes it from
-the chain values when the frame is handed to mac80211, after
-mt76_check_sta() has run. Except on mt7921, which still sets it, the
-average is fed zeros. mt76_get_min_avg_rssi() then returns 0, so mt7603
-and mt7615 leave the sensitivity at its default, and mt76x0 and mt76x2
-fall back to -75 dBm for their gain settings.
+Use the offsets of the vendor register map.
 
-Compute the signal from the chain values in mt76_check_sta() as well,
-as mt76_rx_convert() does. On mt7921, the average now follows the same
-combined value that mac80211 gets instead of the strongest chain.
-
-Tested on a TP-Link Archer XR500v with one client, switching between
-the old and the new input every 30 seconds. On the MT7662E (mt76x2),
-the average the AGC works with was -75 dBm, its fallback, with the old
-input and -54 dBm with the new one, while iw reported -54 and -52 dBm
-for the station, and the AGC mostly used its low_gain 2 setting instead
-of 1. On the MT7603E, the station average was 0 with the old input and
--41 dBm with the new one, while iw reported -42 and -41 dBm. The mt7603
-sensitivity still stayed at its default: a separate bug keeps it from
-leaving 0.
-
-Fixes: 4550fb9e9810 ("mt76: improve signal strength reporting")
-Assisted-by: LLM
-Signed-off-by: Cristian Papa <pcristian292@gmail.com>
-Link: https://patch.msgid.link/20260924032639.28158-1-pcristian292@gmail.com
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Link: https://patch.msgid.link/20261006205936.669125-25-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/regs.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 1d28d26a45ad3..8f2f890403939 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1317,6 +1317,7 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
- 	struct ieee80211_hw *hw;
- 	struct mt76_wcid *wcid = status->wcid;
- 	u8 tidno = status->qos_ctl & IEEE80211_QOS_CTL_TID_MASK;
-+	int signal;
- 	bool ps;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+index 97beab924517b..8d762076a29ac 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
+@@ -53,12 +53,12 @@ enum base_rev {
+ #define MT_FL_Q2_CTRL				MT_PLE(0x3e8)
+ #define MT_FL_Q3_CTRL				MT_PLE(0x3ec)
  
- 	hw = mt76_phy_hw(dev, status->phy_idx);
-@@ -1334,8 +1335,9 @@ mt76_check_sta(struct mt76_dev *dev, struct sk_buff *skb)
+-#define MT_PLE_FREEPG_CNT			MT_PLE(0x380)
+-#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x384)
++#define MT_PLE_FREEPG_CNT			MT_PLE(0x3a0)
++#define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x3a4)
+ #define MT_PLE_PG_HIF_GROUP			MT_PLE(0x00c)
+-#define MT_PLE_HIF_PG_INFO			MT_PLE(0x388)
++#define MT_PLE_HIF_PG_INFO			MT_PLE(0x3a8)
  
- 	sta = container_of((void *)wcid, struct ieee80211_sta, drv_priv);
+-#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 +	0x80 * (ac) + ((n) << 2))
++#define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 + 0x100 * (ac) + ((n) << 2))
+ #define MT_PLE_AMSDU_PACK_MSDU_CNT(n)		MT_PLE(0x10e0 + ((n) << 2))
  
--	if (status->signal <= 0)
--		ewma_signal_add(&wcid->rssi, -status->signal);
-+	signal = mt76_rx_signal(status->chains, status->chain_signal);
-+	if (signal <= 0 && signal > -128)
-+		ewma_signal_add(&wcid->rssi, -signal);
- 
- 	wcid->inactive_count = 0;
- 
+ /* WF MDP TOP */
 -- 
 2.53.0
 
