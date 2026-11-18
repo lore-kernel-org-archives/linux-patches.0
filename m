@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046587;
-	b=DlFVdnyMUiVnmpv5xho3AMxarUZgLOvgyxDSyDTfDR9J5cJkXyAd75RdwBMNoLRR7nMW
-	 sl1VI4UaU13pGZj8vE8qoGDdjK23rlJeA3xbRtfGK1Ce7yuC16WamqlP+ldcVpdb+D3RW
-	 NtuGqb4Dgfze0Ku/B5ku6Jr/NnrvCN3sQ0GC1aJTeMFCy0xdse8pcN/70w/fY6JKxTH4O
-	 nh4AV+kAFhqktPPCp0b9lL2bFtlrbqrpDzoyLmlkekHgFs5yv/O1zm7Ljjv0LH5fSmDAT
-	 i2R0ulPeMrxAvk3ZRDUNlWkwbyAeJG2q59u1Vuh0wZwm3FvOHcc1zXr8FWL8ZQukpjA==
+	t=1795046589;
+	b=gRhgZZETgWJcojb4SIVNkOGYy/p48IAX4R6wT7TcvUfKrrsW8/KPM5Unfr3ZgsWOPsXj
+	 GgxxmwbhyG5G0ML90IkwJySSofq2VxuBAjuXweLUtPit/2feAaMbkBGUEuR0OMfTPwB6p
+	 0Qgl3WXbe0xNBNsJXfSIbjMOg3u9NqMYw0T8Q7cNPObOFjVAnYqGrDJ32p1XMS+Vidid7
+	 USCJ55H3j7eas05BRWgCqNHoAumnn6ADnW/LUz6HMIh676PTOX2xW/ByenjD9N28UNk3q
+	 LxxhySAjvlMiFSjAZY/kNpF1dpwmDg3FXZlGwsXjH7G1biAeQRLCxVFK0ouLXHj5JnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046587;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046589;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wwawvkCRQExSo/TRYXRZNv3n0+z5+LkUg7+1qUqPm1Y=;
-	b=eSO2NB1ND+PRJGKazAUM0AnbVj3DYdYhDmkVU1oXzFneWBCy+dZhz+A2DkRC65xh9/Jy
-	 nLyaehWci7LN0HG/rjVAxf9qKl0udxyAApBu7W6h9YNjy/b7XnzNGcbkPOtH1Vm/H9klK
-	 3xOd+G6wjCWZ6UQhzbsU0d5OPQAcwG8F62KTv79RAu4wUFd7WlXPcRWs7rBYOD/Cmbk81
-	 o0wqrNv2FXzXwYs/ZQ0PrT0nkac9N0BGozSaq3lsjbR9uEd7Oyll4821fxJaYEAM0MJyx
-	 7u7FSJZQPlQk55uFSS6VujvCeggolcwqZNxxkncIXdJR/Abwcu9GbfEDc8QyijUDsBQ==
+	bh=Fzx9Fkn9Ta3rfU8mliMahAh5BQcTZcBLRmGr+YXbEWU=;
+	b=TDW89oPXlmjgLA5HfMExrXOvyxHb40XwIfhfL429YBc0I/bUWQGwj1DUXeAxw0EAEXl8
+	 CuSvv2BWBp/YXaUQLA/mH6YPj3fHtAv+E1puaIVPA3AgmXP26pC7YlKyC+O5RHIz/2bxj
+	 Tlg9kKaSaSFTQ/e9RnqbhHzjprCv23Wkxw1UQj5fh8pjksfLCB8aLjiusuO9NPMpSpR65
+	 Hed+bDvDlk9Xon6zj40yMK7vJXMVzfDKKL2CE+t523bs/pCwThHcglJNwxjoX5SkaDxo+
+	 V2wWcpuet9GxkPrks19aN1z6pAf8Wq/vvDTQvWV/Ot/t4VotGxCyaIbJni0S8IyrG3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ajGk/DWf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGHYFpXo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DEC606A325;
-	Thu, 19 Nov 2026 00:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E9E606A32A;
+	Thu, 19 Nov 2026 00:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ajGk/DWf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029A41F000C4;
-	Thu, 19 Nov 2026 00:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fGHYFpXo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B833B1F000C4;
+	Thu, 19 Nov 2026 00:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046586;
-	bh=wwawvkCRQExSo/TRYXRZNv3n0+z5+LkUg7+1qUqPm1Y=;
+	s=korg; t=1795046589;
+	bh=Fzx9Fkn9Ta3rfU8mliMahAh5BQcTZcBLRmGr+YXbEWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ajGk/DWfmEqXVuF0xVoxmyhkA8vM9hLa2Y0t/NuHbCqSbmVVmUgFzPo3IdK7mXG2H
-	 hlfo/Y/uX6fA0byA2QgMsIEtv6BsUVUq/Jfr3wutP0smdH8zwR20K5d4gSXMXAzlci
-	 HC7WFeTHcCH8X+Oc03ySgru1XPEt05OLQg1XCS0g=
+	b=fGHYFpXoKsRm0dU+RkXt563q9XiXbTfS41hv3xKkgjZKH4zqmHgiQx+3G4fgZSGMI
+	 MEMzTIVT5YxWF1GhZodNh/oeH9s+WIhCk79aTz2msmOSoeTCGAKw2oGrZLm8KYl9R1
+	 f6Y0wP6T36DCeskOylcgnb3A/t0LsBDqPrIDy5kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Kylie C <kyliepc@proton.me>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1332/2857] f2fs: force out-place update for all writes on compressed file
-Date: Wed, 18 Nov 2026 15:39:26 +0100
-Message-ID: <20261118150249.397923617@linuxfoundation.org>
+Subject: [PATCH 6.1 1294/2857] drm/amd/display: Dont select zero V_TOTAL_MIN/MAX on seamless boot
+Date: Wed, 18 Nov 2026 15:38:48 +0100
+Message-ID: <20261118150248.078690712@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,65 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiucheng Xu <jiucheng.xu@amlogic.com>
+From: Kylie C <kyliepc@proton.me>
 
-commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4 upstream.
+[ Upstream commit d13f36e4e055cce03761de590bc8dc6346b1d5c8 ]
 
-For compressed file, compressed write may fail and fall back to raw
-write.
+Initialize V_TOTAL_MIN/MAX to V_TOTAL before enabling the selectors if
+they are still 0, as optc1_program_timing() does without seamless boot.
 
--Thread A                                         - Thread B
-  - f2fs_write_multi_pages                          - f2fs_down_write(&sbi->cp_rwsem);
-   - f2fs_write_compressed_pages                    - ...
-    - f2fs_trylock_op                               - ...
-     - f2fs_down_read_trylock(&sbi->cp_rwsem);      - ...
-   - f2fs_write_raw_pages                           - ...
+Tested on Renoir (DCN 2.1) eDP with amdgpu.seamless=1.
 
-Thread B acquires the lock first, which causes Thread A to fail lock
-acquisition and fall back to raw-data write.
-IPU_FORCE is enabled on small-capacity storage devices (< 16GB),
-so f2fs_write_raw_pages() overwrites the original compressed data
-in-place.
+This removes the flash between the bios logo & plymouth on my laptop.
 
-The in-memory node has been updated with raw-data addresses, while the
-node metadata stored on eMMC still remains in compressed state.
-If a power-cut occurs before the node is flushed to disk, on-disk
-inconsistency arises: disk data is raw, yet metadata treats it as a
-compressed cluster, leading to decompression failure.
-
-To eliminate this risk completely, force out-place update for all
-write operations on compressed file.
-
-Cc: stable@kernel.org
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-(cherry picked from commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4)
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Signed-off-by: Kylie C <kyliepc@proton.me>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1ad7473e82b9242c4ee7eea82ab16d3f82f01651)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 7 +++++++
+ drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 6384ac931bb7d..4a0bf44b3a545 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2662,6 +2662,13 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
- 		return true;
- 	if (f2fs_is_atomic_file(inode))
- 		return true;
-+	/*
-+	 * rewrite low ratio compress data w/ OPU mode to avoid fragmentation.
-+	 * If IO comes from compressed write path and fallback to raw write,
-+	 * force out-place to prevent metadata-data inconsistency.
-+	 */
-+	if (f2fs_compressed_file(inode))
-+		return true;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c
+index a08c335b73838..01613f688b2d8 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_optc.c
+@@ -455,6 +455,13 @@ void optc2_lock_doublebuffer_disable(struct timing_generator *optc)
+ void optc2_setup_manual_trigger(struct timing_generator *optc)
+ {
+ 	struct optc *optc1 = DCN10TG_FROM_TG(optc);
++	uint32_t v_total, v_total_max;
++
++	REG_GET(OTG_V_TOTAL_MAX, OTG_V_TOTAL_MAX, &v_total_max);
++	if (!v_total_max) {
++		REG_GET(OTG_V_TOTAL, OTG_V_TOTAL, &v_total);
++		optc->funcs->set_vtotal_min_max(optc, v_total, v_total);
++	}
  
- 	/* swap file is migrating in aligned write mode */
- 	if (is_inode_flag_set(inode, FI_ALIGNED_WRITE))
+ 	REG_SET_8(OTG_TRIGA_CNTL, 0,
+ 			OTG_TRIGA_SOURCE_SELECT, 21,
 -- 
 2.53.0
 
