@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047870;
-	b=fKEmqla2xj84r772Qbs2IDhk3YL4f5Enl5OG9ZulwDAd+Ak8+FiOFJhKbyfkUaANfKUI
-	 meyML4lDJ1KfEd2slHv/bkfqRVtOEMVdDVAxGJuMHS63HZUOszEoFoXw6SgtdJHaZ+GS8
-	 DWYzacDwIlFqe6XHAIb6lGNHnJTm9VpFX0DqMt2D4Q73Tw6FFKArdRKtFvaQoUjDq5o7g
-	 xK950uPS/S3ACUaKHIWU7A/tyWw5dXjQQF0ylaGY1mZVT84ab/NSUEvwt1/SqLdm/vPje
-	 ZrZgF1p8QgvSdeefx4ezr/MAe3k54CJp6T14yhqqVIv56JIqL3lbLpHtevLfPIRc2Kw==
+	t=1795047873;
+	b=edsP/k783d1QDRI3pQLxoQ5/hYBCC5F0kyfnIbaqOf3raRyDv3D+eC3QPud1hlQpsYy9
+	 JyGykjGIQF+bkiJIrSsTUWRsuerYibulwQBT2iiYuTr9ptRV4DZ3JMIiK3g5lN6s6Luxn
+	 u0+/M8Vuucqnb5F10uG5L5Soezm8VNodu/XqWgq3uwzU2SM1KQSVycx6M8Tio2iM0KqlF
+	 iZoVpvI5VsVvK7eLo2QLzLzEHTnb7rL1lkDbEMaVFrXJ/iy2PMCxv09qxVCE1wV1cHMvr
+	 b3mGdH0EEL5HoWHbRLyv2xz1LtdbAYK/jSN8IJ0pMiPXzGg99DJHzJH+3Ovtd0R/xmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZBOJRTU6Lq3ykPqeW83nFJk1hBVoihUgy4l/J2RYilU=;
-	b=1iVldlWfNgj2VDy2H7nS6bXyKfM6fcv332XXcitlWM6vCxOL9t0MH7jukcT/hDZ3hzDy
-	 RT9k69H83O9atvNXLaYlm7BB0wEZgntxt8hAwxLvkqbJhN4BTZbLuj+1mdkUbtbQpWWfA
-	 VATgTMnNnfaJwTSYznPup3TUbt2V1SiZG2s9er0kib7+WR8WXhtqRA3t/5A27L8eNk8tM
-	 uep/oynG3tGbqEbEZljQ8lKAbNZrgSA1pxaaqDqdSyM9DvAJdbznez+Q0+MlvPeHm/MQi
-	 GkMwMyVJRJiml9Nr/ulVOxbz7IF9AEDykLftMZlB3C7wJ4ikvRDsDHL8pv3Wsfb9ziw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=IJodem+6XoOT5jWk7/0cmYa5anEhKPzRfDf6RiXbIAY=;
+	b=0VcntjdXp4MxqBTo5h4jeZ/N5i76CtZWnldDnvoqM+69oN+QQxnpUezrZTFwKMLJkAXj
+	 mdsGvUxfsDSh22eXZIV+81x2KuoT5RIrH9jDcxO82sOLt0uWHrhK8tTTeyy8x9pBBLp9s
+	 0ivrGrpLpgwuouV8dpO6IiuclP+Ax8iDAfjDgEYnbeSQIQueJ4nbjbGZe1P/lhauT0+pf
+	 5l09W8uDwHSOA73LPPHO2ZRZjLD0ABYUnN7PrAaPz3+tynead/JENZcHLDdnjrw0vNYcY
+	 WLHwZ7EXKLu+ncIvnIYheRxDReHHkLONs1j0moot2tO8W5Vj+JSnwmfLjS3y2Sc3o8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XD2gJjQL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPs8dVDr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D0C606A320;
-	Thu, 19 Nov 2026 00:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C626A606A320;
+	Thu, 19 Nov 2026 00:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XD2gJjQL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119E41F000C4;
-	Thu, 19 Nov 2026 00:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPs8dVDr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D422E1F000C4;
+	Thu, 19 Nov 2026 00:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047870;
-	bh=ZBOJRTU6Lq3ykPqeW83nFJk1hBVoihUgy4l/J2RYilU=;
+	s=korg; t=1795047873;
+	bh=IJodem+6XoOT5jWk7/0cmYa5anEhKPzRfDf6RiXbIAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XD2gJjQLuxveADTVNqlV6oIwE+gMK+lc4GwYnsQujvF00wom8H3CG3aGWRNp/yntg
-	 mkpab1N+OtLNd4R3shTiVkm+W+cZECEDFz5jlo2WyToYrytyO/KARQyt7JDhDzFjvN
-	 FH8YHqFYmO5e/yyMrZCVkzryghZm+loNLXZ3WhTI=
+	b=jPs8dVDrJWFv3Y2Y/SNwZBjiiu4dEnFW/8AuhPlO2z0Pe/ZYmMBvlG7J752bhX8Xd
+	 t6T6H8+eD3AcSnEMf7xnOcIlO6bEK+zVZYGOOEFjB2nDt+E8ugYkPLUAo5WJabT5FM
+	 iZ8ucICyjktbAGfum5kAorA2SRtwPh8rtsNYjD0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1793/2857] wifi: mac80211: fix unauthorised port check for encap offload
-Date: Wed, 18 Nov 2026 15:47:07 +0100
-Message-ID: <20261118150305.824836993@linuxfoundation.org>
+Subject: [PATCH 6.1 1794/2857] wifi: wfx: Remove some dead code
+Date: Wed, 18 Nov 2026 15:47:08 +0100
+Message-ID: <20261118150305.858413677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -61,99 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d59b9bf7df49367e01b06e82dd0f6e7ad3be493c ]
+[ Upstream commit 015bf4df8ea67080668ac8314e692076dea1ce6d ]
 
-The check in ieee80211_tx_dequeue() reads frame_control, addr1 and
-addr2 out of the skb, but for encapsulation offload that's just a
-random part of the ethernet addresses, so dropping depends on bits
-in the destination address. This is obviously wrong.
+wait_for_completion_timeout() can not return a <0 value.
+So simplify the logic and remove dead code.
 
-Refactor the check and short-circuit for ethernet format frames,
-it only needs the port-control flag check since those are locally
-generated and not forwarded frames.
+-ERESTARTSYS can not be returned by do_wait_for_common() for tasks with
+TASK_UNINTERRUPTIBLE, which is the case for wait_for_completion_timeout()
 
-Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
-Link: https://patch.msgid.link/20260802105818.dd5da579813d.I51ed0121154bb652bebc97bb0597b1fae9ac978f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/809c4a645c8d1306c0d256345515865c40ec731c.1676464422.git.christophe.jaillet@wanadoo.fr
+Stable-dep-of: 102f54dc47be ("wifi: wfx: fix possible device hang during init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 48 +++++++++++++++++++++++++++++++++--------------
- 1 file changed, 34 insertions(+), 14 deletions(-)
+ drivers/net/wireless/silabs/wfx/main.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 028e5d25d005f..9fd867722ef9b 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3749,6 +3749,38 @@ static bool ieee80211_xmit_fast(struct ieee80211_sub_if_data *sdata,
- 	return true;
- }
+diff --git a/drivers/net/wireless/silabs/wfx/main.c b/drivers/net/wireless/silabs/wfx/main.c
+index 2a3dc7d961edc..b5269fcba1a3f 100644
+--- a/drivers/net/wireless/silabs/wfx/main.c
++++ b/drivers/net/wireless/silabs/wfx/main.c
+@@ -357,13 +357,9 @@ int wfx_probe(struct wfx_dev *wdev)
  
-+static bool ieee80211_drop_unauth_port(struct ieee80211_tx_data *tx)
-+{
-+	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
-+	struct ieee80211_hdr *hdr;
-+
-+	if (likely(test_sta_flag(tx->sta, WLAN_STA_AUTHORIZED)))
-+		return false;
-+
-+	if (info->flags & IEEE80211_TX_CTL_INJECTED)
-+		return false;
-+
-+	if (ieee80211_vif_is_mesh(&tx->sdata->vif) ||
-+	    tx->sdata->vif.type == NL80211_IFTYPE_OCB)
-+		return false;
-+
-+	/* no need to check forwarding here */
-+	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP)
-+		return !(info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO);
-+
-+	hdr = (struct ieee80211_hdr *)tx->skb->data;
-+
-+	if (!ieee80211_is_data_present(hdr->frame_control) ||
-+	    is_multicast_ether_addr(hdr->addr1))
-+		return false;
-+
-+	if ((info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO) &&
-+	    ieee80211_is_our_addr(tx->sdata, hdr->addr2, NULL))
-+		return false;
-+
-+	return true;
-+}
-+
- struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
- 				     struct ieee80211_txq *txq)
- {
-@@ -3815,20 +3847,8 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 	wfx_bh_poll_irq(wdev);
+ 	err = wait_for_completion_timeout(&wdev->firmware_ready, 1 * HZ);
+-	if (err <= 0) {
+-		if (err == 0) {
+-			dev_err(wdev->dev, "timeout while waiting for startup indication\n");
+-			err = -ETIMEDOUT;
+-		} else if (err == -ERESTARTSYS) {
+-			dev_info(wdev->dev, "probe interrupted by user\n");
+-		}
++	if (err == 0) {
++		dev_err(wdev->dev, "timeout while waiting for startup indication\n");
++		err = -ETIMEDOUT;
+ 		goto bh_unregister;
+ 	}
  
- 	if (txq->sta) {
- 		tx.sta = container_of(txq->sta, struct sta_info, sta);
--		/*
--		 * Drop unicast frames to unauthorised stations unless they are
--		 * injected frames or EAPOL frames from the local station.
--		 */
--		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
--			     ieee80211_is_data_present(hdr->frame_control) &&
--			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
--			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
--			     !is_multicast_ether_addr(hdr->addr1) &&
--			     !test_sta_flag(tx.sta, WLAN_STA_AUTHORIZED) &&
--			     (!(info->control.flags &
--				IEEE80211_TX_CTRL_PORT_CTRL_PROTO) ||
--			      !ieee80211_is_our_addr(tx.sdata, hdr->addr2,
--						     NULL)))) {
-+
-+		if (unlikely(ieee80211_drop_unauth_port(&tx))) {
- 			I802_DEBUG_INC(local->tx_handlers_drop_unauth_port);
- 			ieee80211_free_txskb(&local->hw, skb);
- 			goto begin;
 -- 
 2.53.0
 
