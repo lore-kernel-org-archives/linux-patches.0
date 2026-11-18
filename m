@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020703;
-	b=pkCJcMPMOxv82rqrgnR1/TkciKOpK3U29qYN574fkHDLkCLsz8vuEJ2fErJAk37s1jXo
-	 vaRga4LI+4vteuImyhT4LeRhuxdk4GqkZGrSGAkD4D4SbzfTRGFlPS0jPaAqovCFJY84g
-	 WjQ6sMopNBSVm7I3ogGichMMuEcYHSHPtH/MxeK54ok3ppFGIPebbLK2F0VBj40YLpV0p
-	 gTv3enp+p1bS6SvDaWzv0F3UPgHzO7IfwsfW+NMRj5ymM9L1UxEO7NVT1QRWZSekRgX0V
-	 MhBYe9O+f1+pndrRh5UAzd9WjDI3yJhhcnivZMdWCWbnfqs/WoyZQvs5oTGr98n920A==
+	t=1795020706;
+	b=vVnrZ7wH5Alv16KMLLhRna823Ldwqvtd88LKwLZ8P4QlQSQPkBXv1Os0alkQZAwizYAm
+	 2ReGzfVRQsLtR3qu5qu0/ptp6aldky0v6d/Xfo0xLua99+3ZSqk5fOoBEo7aURTEkNLuj
+	 dmMqGb5ZxV/1wtEhRDiTfqU9M1LmEZpQyv23kjS9WYganO7t8e3DSMmY5KdiJzjHUgj4L
+	 q2NxjQFWOgpslbP55+sUlUCzuPrNtTA4YA7aDN329nZWbAYe+BMnMQqbypF13g/YZMnu3
+	 4AGOWTyA+nR4bTeJ5mUOI/7wq85mta8BRxTVvYzLqSqEhCVH0tR/c1GNbR7pF6tLAhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4Fn6qGtgJvCKDKZGMidyERNCjeIB25ZZTuH7pr7jDf4=;
-	b=nsWTPREtkLCsTxxyinR7Rv0EEOhvejZOGwcgvKfy4ZqHi3BGuZ65UJbCejJi6AT91ta+
-	 x7BrufEuHsmmvIQ8kFg7RIj56iPw9OSvp5rDHhoocvOyeR0zoplqczlQN3uUsTzFNmgP9
-	 c1aY5Tnw8gWTOipqHtTLugezncC5XtT8NlV6b5xCjvAzVCnnMnVPn34gUOWcCtq+/JXZd
-	 egoegAyMb6KL5uERIZNCRY+JtTTbTxAk629ks2AldTu4qxOJCxavqd/Ob2Im+FLKOINy6
-	 CTCC2THz5tkwmQLtRtwTSrqWgs6YDv/WqROHLhGSsTWUW8jz3O1lkZD2MLcZ4SE8YEQ==
+	bh=bsndqKQy14H1+yn+M3pHnH0I+nfBwVB0osBoatONYpA=;
+	b=F9fvQcC079l/7gRJumfISpoxXdlZk9ufTQlOguR6OmEtNffB42GCGO0WXNZE9SILe7eN
+	 yxoabiE4uMK+kvYc3kDFqHo7d8G5W+T27Ku5Gku5imoJ783D146rVmNYkVL13I10BB2hX
+	 GNo9/YqtTLv2b1JubtZQExNo3SKrs1VoNH0JeVHc1wWNWpYGKGuyDkThEliKhybY7PDvw
+	 AoGFyJ5LdALDStvfZ0DvmIaaNUjqMPYuR+HC+Wk7GiZeSfwaCHXsFPfVSyN6WSOweoEeA
+	 KST0ZxuwVgzb1R0PrV5sG9nrB0azlzqTJJY6ntNF5jbxCT1Tt8awZpTdCp49S9TMGVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z0eLeCyb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKCMuksE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9279760A2612;
-	Wed, 18 Nov 2026 16:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CF160A2623;
+	Wed, 18 Nov 2026 16:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z0eLeCyb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52771F000C5;
-	Wed, 18 Nov 2026 16:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKCMuksE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2731F000C5;
+	Wed, 18 Nov 2026 16:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020703;
-	bh=4Fn6qGtgJvCKDKZGMidyERNCjeIB25ZZTuH7pr7jDf4=;
+	s=korg; t=1795020706;
+	bh=bsndqKQy14H1+yn+M3pHnH0I+nfBwVB0osBoatONYpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z0eLeCyb07osg+wzC3XGLTcpatAZ3duULZSuDUPaEQWtMrUpA7fxIsfGGkUjsnwi2
-	 WmQEZB1npLY/cZ4yxWA11GN9T8ahppgBSA8pVHOAmRzYOVGcofDWrccAbUPGYyxgUI
-	 LIoZQfeRams3tTLCYnuYuDLpFNlbmZANamflkicg=
+	b=CKCMuksEJ0EdORbCqmqnTeF+2gL3ChSSc+C6irYevSy6hTo8uifuJtYAeW+2T5/z3
+	 2m7oZtWDsqxP39AOD7+M2CF8+YRX/LicRvVy7Kdykeww5vK9D1sdO8+mONo4BnCuf6
+	 onvztrwuaZ+dfXBS8CLvRjfS1+QwuJycwM9Lvm2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Val Packett <val@packett.cool>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2045/2651] selftests/bpf: Fix spelling mistakes in descr literal strings
-Date: Wed, 18 Nov 2026 15:54:45 +0100
-Message-ID: <20261118150359.706906052@linuxfoundation.org>
+Subject: [PATCH 7.3 2046/2651] power: sequencing: pcie-m2: Add Foxconn WCN7850 subsystem PCI ID
+Date: Wed, 18 Nov 2026 15:54:46 +0100
+Message-ID: <20261118150359.739962628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,43 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 760c953525bab88f053e61f1c1a6b2a5f76911c0 ]
+[ Upstream commit eadea156f11b2c9a780b60c1699c2da145c9d1f2 ]
 
-There are spelling mistakes in the descr literal strings. Fix them.
+Add a new device match for the PCI subdev id found on the Dell
+Latitude 7455 laptop.
 
-Fixes: 095ddb501b39 ("selftests/bpf: Add sockopt case to verify prog_type")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261012212334.183116-1-colin.i.king@gmail.com
+Fixes: a39ac4651e3b ("power: sequencing: pcie-m2: Match WCN6855 and WCN7851 UART BT variants by subdevice ID")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261016051745.577777-1-val@packett.cool
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sockopt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/sequencing/pwrseq-pcie-m2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockopt.c b/tools/testing/selftests/bpf/prog_tests/sockopt.c
-index 6c96f2d9fccfc..7dfdc4c12deca 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockopt.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockopt.c
-@@ -955,7 +955,7 @@ static struct sockopt_test {
- 	/* ==================== prog_type ====================  */
+diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
+index e42e85f47629e..a745dc81003f4 100644
+--- a/drivers/power/sequencing/pwrseq-pcie-m2.c
++++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
+@@ -199,6 +199,8 @@ static const struct pci_device_id pwrseq_m2_pci_ids[] = {
+ 	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_LENOVO, 0xe0e9),
+ 	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x1107, PCI_VENDOR_ID_FOXCONN, 0xe0ee),
++	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
+ 	{ } /* Sentinel */
+ };
  
- 	{
--		.descr = "can attach only BPF_CGROUP_SETSOCKOP",
-+		.descr = "can attach only BPF_CGROUP_SETSOCKOPT",
- 		.insns = {
- 			/* return 1 */
- 			BPF_MOV64_IMM(BPF_REG_0, 1),
-@@ -969,7 +969,7 @@ static struct sockopt_test {
- 	},
- 
- 	{
--		.descr = "can attach only BPF_CGROUP_GETSOCKOP",
-+		.descr = "can attach only BPF_CGROUP_GETSOCKOPT",
- 		.insns = {
- 			/* return 1 */
- 			BPF_MOV64_IMM(BPF_REG_0, 1),
 -- 
 2.53.0
 
