@@ -1,51 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049832;
-	b=jihhOJQWPHp0Qa931q2xRA/ZfOKJJ6qHojk2VQFlHXPxMQxmhxMi5GaC2eGOm/JW817H
-	 nbSKdmRwjnJuO4xGOHFSicp7t7XiEui/oEG55f0lESOMesj3ki3yOTXUBMU8fBA7tnkiX
-	 m9oqqFNfnH0DcRCfsW9qK17yo/MnUI/C3dQg1nanUSQEQ/hPRgxQ65Ulp9+0StUqGlrJF
-	 fkqeOox/SS6KfA2ysj7TJezBSF5dSz671T77g7+F8I/txWOMHNf1dgtq/wtjVgy+VoVWq
-	 ht+A5nkaglUXZFf5O4Rh8zdn78IGypb/DxmgsJeU2NXID09/NHv3VahstoLJtdj5bCg==
+	t=1795049835;
+	b=Eo8XnxRaOVpka4gIBjFc9siBeLZ2HOhwDnNWl9sZopofeQ9dxYmDgrUvsTKLMr4WTdGe
+	 Jm3x9R70npmV4JiWnK0MHyni6qP2/3s27/vDDCYKuV4u+Ysm3SHRGGCJMR9VyPSvymqsQ
+	 ksW21XGBJaFQ21BaM4AbvbsG1UWzeEzyVQop3pjKTSdd0soY1a5btLglmBWUWHLQe5vrI
+	 b0WVGRBZaBOeOLmLG8TcVDAMSJfKMAuCyPuB/v0FSeG76ZWJMGjtsMR4RPyI1KKPXwWmy
+	 gwgxatvWmcS6Su8jtzLRZGLndKnXJ1sjLfmWuCSZK3Pkc5zuHOvjVudwx5oGykIR1og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qvjQyNt0YdGEu+Cqu2mIU6PVSleqwb7F1D2uluyfyVQ=;
-	b=VTxbM2dFN/WPWb56vGHd2amLb2FrL/pAUR/fEpZii0KBjbXlB6CcHGk4v4XdF4EArwr0
-	 Xsg8PCUmbBd3AmD7exGP7BB66JjyLVeSbE19pUK98mfvgPQAQb7MdDXtJ4ca6/P/hpGLL
-	 K5ELW5Kk82d10KErI87i1EF/pIokaOJNc4uhcJCYVFujqyBrn69sS0bZqgSrT7xxUK8NR
-	 IAQD06JtuSTmkg78FXkWSLQpT247h0qjrjWx4QW5VqGDAt1ozoe0B54JBnU1T/uJMgej6
-	 9Zt74FwgazxbbV7rlxaq7K31UNjR851ObCWYWgesqYmdjbPXwVfYs1vXwJyH2c/jsWQ==
+	bh=yBteXZaXL8+Ux3RCk1Hvzdw/RsbPD7EopiNdcKuzUOQ=;
+	b=aw1Mf/y+6XHL5IsBLkatmsXQZBRn/gz9frnuzRemlnV+VK5HX1IPytWvkr0VmdeQ75XA
+	 VP4N8jedTWlp9xsXepgE+LCxkP2KO3tCFWid89YGqq79ujEeRMfh2Cy7lRXiUEtRPyceB
+	 x1DX3qmcvDL8TXHbHjcKIbnHbbJ7l3G35Nbij6ta9DJXk8M6PyNz6Dy801FdEXhoBCUAt
+	 etw4ewCp6uOdyTjPFtoyuggZbrCB4FmfV9OetkRWXC995iUrs6XPGjVCJBwwm5vxC+hH6
+	 1KuOhr78wAIvHiMlvRCillV+0jUGVgB2vffMaX4Smkx9uVpLwQnb2vepZvkYeoPcKuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o1iwxLeJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtw4T94o;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E3C606A325;
-	Thu, 19 Nov 2026 00:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298AE606A320;
+	Thu, 19 Nov 2026 00:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o1iwxLeJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8CD81F000C4;
-	Thu, 19 Nov 2026 00:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtw4T94o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8479D1F000C4;
+	Thu, 19 Nov 2026 00:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049832;
-	bh=qvjQyNt0YdGEu+Cqu2mIU6PVSleqwb7F1D2uluyfyVQ=;
+	s=korg; t=1795049835;
+	bh=yBteXZaXL8+Ux3RCk1Hvzdw/RsbPD7EopiNdcKuzUOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o1iwxLeJXszsBO65G245KC7KUaIHe1Kh0g2yY16GkjjOxEe2uiuHuKC6eyVek275U
-	 7vlNn18O8MgNRsRDGZu0JF3MzFNqSFuMebK8XL0hx0EuFhmSKVqnK+aSRBEs1cWor+
-	 OB490K9EaGwcYgBwr41ye6TfvOA+7ay9ihOldWyI=
+	b=rtw4T94occJ9Z+TXNngW6YIQ0XmrXVopkQK6mjCvbjCjNc95DU/R+vMV++tCpRfed
+	 3LJ89vctJAkfkDiQz+KIBJehDbm1duDyXwSc1Pfjq2TR1WfPlNoe5GYh17QnJNxZBZ
+	 wkUoDcXbAO9UuuvX9DsOCc7Og3SBsuBDysL0BU8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+a68ce48df87b8e36e915@syzkaller.appspotmail.com,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2490/2857] Bluetooth: MGMT: Fix advertising instances with Global Advertising
-Date: Wed, 18 Nov 2026 15:58:44 +0100
-Message-ID: <20261118150331.218969887@linuxfoundation.org>
+Subject: [PATCH 6.1 2452/2857] ocfs2: fix possible deadlock between nfs_sync_rwlock and fs_reclaim
+Date: Wed, 18 Nov 2026 15:58:06 +0100
+Message-ID: <20261118150329.853693266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,237 +73,278 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 0ad48c88a2ed3b58164fa771977868503b0abac3 ]
+[ Upstream commit 169bc4d16a8efa7852b101fdaa4c028505cd6750 ]
 
-Global Advertising, enabled with MGMT_OP_SET_ADVERTISING, uses instance
-0 and with extended advertising it has its own advertising set, but
-instances were still being treated as if they shared the same set:
+syzbot detected a circular locking dependency on &osb->nfs_sync_rwlock:
 
- - Add Advertising and Add Extended Advertising Data would return
-   success without ever enabling the instance.
- - Removing the last instance would disable all advertising sets,
-   stopping Global Advertising while leaving its setting enabled.
- - Disabling Global Advertising would disable all sets, including
-   active instances.
+       CPU0                    CPU1
+       ----                    ----
+  lock(fs_reclaim);
+                               lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);
+                               lock(fs_reclaim);
+  rlock(&osb->nfs_sync_rwlock);
 
-Fix this by only overriding instances that share the advertising set of
-Global Advertising, and by tracking HCI_LE_ADV_0 rather than HCI_LE_ADV
-to determine the state of Global Advertising.
+ *** DEADLOCK ***
 
-Fixes: 0d92808024b4 ("Bluetooth: HCI: Fix tracking of advertisement set/instance 0x00")
-Assisted-by: OpenCode:claude-opus-5.5
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Chain exists of:
+  &osb->nfs_sync_rwlock --> &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] --> fs_reclaim
+
+CPU0 is kswapd.  The dentry shrinker runs under fs_reclaim and reaches
+ocfs2_delete_inode() through ->evict_inode():
+
+kswapd
+ balance_pgdat
+  shrink_node
+   shrink_slab
+    super_cache_scan
+     prune_dcache_sb
+      shrink_dentry_list
+       dentry_kill
+        ocfs2_dentry_iput
+         evict
+          ocfs2_evict_inode
+           ocfs2_delete_inode
+            ocfs2_nfs_sync_lock
+             down_read(&osb->nfs_sync_rwlock)      //C0: grabbing
+
+CPU1 is a task deleting an inode.  It takes nfs_sync_rwlock first, then
+the orphan dir and inode alloc system inode i_rwsems, and allocates the
+metadata reservation with GFP_KERNEL while holding them:
+
+evict
+ ocfs2_evict_inode
+  ocfs2_delete_inode
+  + ocfs2_nfs_sync_lock
+  |  down_read(&osb->nfs_sync_rwlock)              //C1: hold
+  + ocfs2_wipe_inode
+     + inode_lock(orphan_dir_inode)                //C1: hold
+     + ocfs2_truncate_for_delete
+     |  ocfs2_commit_truncate
+     |   ocfs2_remove_btree_range
+     |    ocfs2_reserve_blocks_for_rec_trunc
+     |     ocfs2_reserve_new_metadata_blocks
+     |      kzalloc_obj()                          //C1: grabbing
+     |      // GFP_KERNEL -> might_alloc -> fs_reclaim_acquire
+     + ocfs2_remove_inode
+        inode_lock(inode_alloc_inode)
+
+jbd2 pins allocations to GFP_NOFS for the lifetime of a transaction
+handle, but these reservations are made before ocfs2_start_trans(), so
+fs_reclaim is acquired with ocfs2 locks still held and the cycle closes.
+
+The same cycle is reachable from ocfs2_get_dentry() and
+ocfs2_get_parent(), which hold nfs_sync_rwlock for write across
+ocfs2_test_inode_bit() and ocfs2_iget().
+
+This is more than a lockdep artifact.  A GFP_KERNEL allocation under the
+orphan dir i_rwsem enters direct reclaim, which runs the shrinkers, which
+can evict another ocfs2 inode and re-enter ocfs2_wipe_inode() on the same
+task; the second inode_lock() on the singleton orphan dir inode then
+self-deadlocks, since i_rwsem is not recursive.
+
+Establish a GFP_NOFS allocation context for the whole nfs_sync_rwlock
+critical section so that nothing holding it can recurse into filesystem
+reclaim.  Do it in ocfs2_nfs_sync_lock()/ocfs2_nfs_sync_unlock() rather
+than at the call sites, so that future callers cannot forget it.
+
+Link: https://lore.kernel.org/20260922093437.954127-1-joseph.qi@linux.alibaba.com
+Fixes: 6ca497a83e59 ("ocfs2: fix rare stale inode errors when exporting via nfs")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: syzbot+a68ce48df87b8e36e915@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a68ce48df87b8e36e915
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_sync.h |  1 +
- net/bluetooth/hci_event.c        | 11 ++++-
- net/bluetooth/hci_sync.c         |  2 +-
- net/bluetooth/mgmt.c             | 83 +++++++++++++++++++++++++++-----
- 4 files changed, 83 insertions(+), 14 deletions(-)
+ fs/ocfs2/dlmglue.c | 29 +++++++++++++++++++++++++----
+ fs/ocfs2/dlmglue.h |  5 +++--
+ fs/ocfs2/export.c  | 10 ++++++----
+ fs/ocfs2/inode.c   |  5 +++--
+ 4 files changed, 37 insertions(+), 12 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
-index 012ac6db29fd7..0a6fe64860c76 100644
---- a/include/net/bluetooth/hci_sync.h
-+++ b/include/net/bluetooth/hci_sync.h
-@@ -115,6 +115,7 @@ int hci_start_per_adv_sync(struct hci_dev *hdev, u8 instance, u8 data_len,
- int hci_remove_advertising_sync(struct hci_dev *hdev, struct sock *sk,
- 				u8 instance, bool force);
- int hci_disable_advertising_sync(struct hci_dev *hdev);
-+int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev);
- int hci_clear_adv_instance_sync(struct hci_dev *hdev, struct sock *sk,
- 				u8 instance, bool force);
- int hci_update_passive_scan_sync(struct hci_dev *hdev);
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 13c1fa740b480..b9688be5a6348 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -1618,15 +1618,22 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index c8cda79945317..f0febcca61f6f 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -19,6 +19,7 @@
+ #include <linux/time.h>
+ #include <linux/delay.h>
+ #include <linux/quotaops.h>
++#include <linux/sched/mm.h>
+ #include <linux/sched/signal.h>
  
- 			/* If just one instance was disabled check if there are
--			 * any other instance enabled before clearing HCI_LE_ADV
-+			 * any other instance enabled, including instance 0,
-+			 * before clearing HCI_LE_ADV
- 			 */
-+			if (hci_dev_test_flag(hdev, HCI_LE_ADV_0))
-+				goto unlock;
-+
- 			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
- 						 list) {
- 				if (adv->enabled)
- 					goto unlock;
- 			}
- 		} else {
--			/* All instances shall be considered disabled */
-+			/* All instances shall be considered disabled, except
-+			 * instance 0 whose state is preserved so it can be
-+			 * re-enabled by hci_resume_advertising_sync.
-+			 */
- 			list_for_each_entry_safe(adv, n, &hdev->adv_instances,
- 						 list)
- 				adv->enabled = false;
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 12f4c737e4c75..9327bf897951b 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1196,7 +1196,7 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
- 	return 0;
+ #define MLOG_MASK_PREFIX ML_DLM_GLUE
+@@ -2853,21 +2854,34 @@ void ocfs2_rename_unlock(struct ocfs2_super *osb)
+ 		ocfs2_cluster_unlock(osb, lockres, DLM_LOCK_EX);
  }
  
--static int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
-+int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
+-int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex)
++int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex, unsigned int *nofs_flag)
  {
- 	struct hci_cp_le_set_ext_adv_enable *cp;
- 	struct hci_cp_ext_adv_set *set;
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index b09a8aaf03623..a36e04e553386 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -6435,7 +6435,12 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 		return;
- 	}
+ 	int status;
++	unsigned int flags;
+ 	struct ocfs2_lock_res *lockres = &osb->osb_nfs_sync_lockres;
  
--	if (hci_dev_test_flag(hdev, HCI_LE_ADV))
-+	/* With extended advertising global advertising (instance 0) has its
-+	 * own advertising set so only consider its state, other instances may
-+	 * still be enabled.
+ 	if (ocfs2_is_hard_readonly(osb))
+ 		return -EROFS;
+ 
++	/*
++	 * ocfs2_delete_inode() takes this lock from ->evict_inode(), which the
++	 * dentry shrinker reaches while holding fs_reclaim.  Anything allocated
++	 * under the lock must therefore stay out of filesystem reclaim, or
++	 * reclaim recurses back into the shrinker and tries to take this lock
++	 * again.  Cover the whole critical section, including the cluster lock
++	 * and the sysfile inode locks the callers take below it.
 +	 */
-+	if (ext_adv_capable(hdev) ? hci_dev_test_flag(hdev, HCI_LE_ADV_0) :
-+				    hci_dev_test_flag(hdev, HCI_LE_ADV))
- 		hci_dev_set_flag(hdev, HCI_ADVERTISING);
++	flags = memalloc_nofs_save();
++
+ 	if (ex)
+ 		down_write(&osb->nfs_sync_rwlock);
  	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
-@@ -6455,6 +6460,34 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 	    list_empty(&hdev->adv_instances))
- 		return;
+ 		down_read(&osb->nfs_sync_rwlock);
  
-+	/* With extended advertising instances are not overridden by global
-+	 * advertising, except the ones sharing its set, so only (re)start the
-+	 * instances that are not already enabled.
-+	 *
-+	 * Lookup instances by identifier while holding hdev->lock since the
-+	 * list may change while waiting for the HCI commands to complete.
-+	 */
-+	if (ext_adv_capable(hdev)) {
-+		u16 i;
-+
-+		for (i = 1; i <= hdev->le_num_of_adv_sets + 1; i++) {
-+			bool enabled;
-+
-+			hci_dev_lock(hdev);
-+			adv_instance = hci_find_adv_instance(hdev, i);
-+			enabled = !adv_instance || adv_instance->enabled;
-+			hci_dev_unlock(hdev);
-+
-+			if (enabled)
-+				continue;
-+
-+			err = hci_schedule_adv_instance_sync(hdev, i, true);
-+			enable_advertising_instance(hdev, err);
-+		}
-+
-+		return;
+-	if (ocfs2_mount_local(osb))
++	if (ocfs2_mount_local(osb)) {
++		*nofs_flag = flags;
+ 		return 0;
 +	}
-+
- 	instance = hdev->cur_adv_instance;
- 	if (!instance) {
- 		adv_instance = list_first_entry_or_null(&hdev->adv_instances,
-@@ -6497,6 +6530,11 @@ static int set_adv_sync(struct hci_dev *hdev, void *data)
- 			hci_update_scan_rsp_data_sync(hdev, 0x00);
- 			hci_enable_advertising_sync(hdev);
- 		}
-+	} else if (ext_adv_capable(hdev)) {
-+		/* Only disable global advertising (instance 0) leaving other
-+		 * instances untouched.
-+		 */
-+		hci_disable_ext_adv_legacy_instance_sync(hdev);
- 	} else {
- 		hci_disable_advertising_sync(hdev);
+ 
+ 	status = ocfs2_cluster_lock(osb, lockres, ex ? LKM_EXMODE : LKM_PRMODE,
+ 				    0, 0);
+@@ -2878,12 +2892,17 @@ int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex)
+ 			up_write(&osb->nfs_sync_rwlock);
+ 		else
+ 			up_read(&osb->nfs_sync_rwlock);
++		memalloc_nofs_restore(flags);
++		return status;
  	}
-@@ -8675,6 +8713,21 @@ static bool adv_busy(struct hci_dev *hdev)
- 	return pending_find(MGMT_OP_SET_LE, hdev);
+ 
+-	return status;
++	*nofs_flag = flags;
++
++	return 0;
  }
  
-+/* Global advertising, enabled with MGMT_OP_SET_ADVERTISING, uses instance 0
-+ * and takes precedence over any instance that would share its advertising
-+ * set: with legacy advertising there is only a single set so all instances
-+ * are overridden, whereas with extended advertising only an instance using
-+ * handle 0x00 is.
-+ */
-+static bool adv_overridden_by_global(struct hci_dev *hdev,
-+				     struct adv_info *adv)
-+{
-+	if (!hci_dev_test_flag(hdev, HCI_ADVERTISING))
-+		return false;
-+
-+	return !ext_adv_capable(hdev) || !adv->handle;
-+}
-+
- static void add_adv_complete(struct hci_dev *hdev, struct sock *sk, u8 instance,
- 			     int err)
+-void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex)
++void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex,
++			   unsigned int nofs_flag)
  {
-@@ -8836,12 +8889,12 @@ static int add_advertising(struct sock *sk, struct hci_dev *hdev,
- 		schedule_instance = cp->instance;
- 	}
+ 	struct ocfs2_lock_res *lockres = &osb->osb_nfs_sync_lockres;
  
--	/* If the HCI_ADVERTISING flag is set or the device isn't powered or
--	 * there is no instance to be advertised then we have no HCI
--	 * communication to make. Simply return.
-+	/* If the instance is overridden by global advertising or the device
-+	 * isn't powered or there is no instance to be advertised then we have
-+	 * no HCI communication to make. Simply return.
+@@ -2894,6 +2913,8 @@ void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex)
+ 		up_write(&osb->nfs_sync_rwlock);
+ 	else
+ 		up_read(&osb->nfs_sync_rwlock);
++
++	memalloc_nofs_restore(nofs_flag);
+ }
+ 
+ int ocfs2_trim_fs_lock(struct ocfs2_super *osb,
+diff --git a/fs/ocfs2/dlmglue.h b/fs/ocfs2/dlmglue.h
+index e5da5809ed95b..dc383a0a87cbe 100644
+--- a/fs/ocfs2/dlmglue.h
++++ b/fs/ocfs2/dlmglue.h
+@@ -163,8 +163,9 @@ void ocfs2_orphan_scan_unlock(struct ocfs2_super *osb, u32 seqno);
+ 
+ int ocfs2_rename_lock(struct ocfs2_super *osb);
+ void ocfs2_rename_unlock(struct ocfs2_super *osb);
+-int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex);
+-void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex);
++int ocfs2_nfs_sync_lock(struct ocfs2_super *osb, int ex, unsigned int *nofs_flag);
++void ocfs2_nfs_sync_unlock(struct ocfs2_super *osb, int ex,
++			   unsigned int nofs_flag);
+ void ocfs2_trim_fs_lock_res_init(struct ocfs2_super *osb);
+ void ocfs2_trim_fs_lock_res_uninit(struct ocfs2_super *osb);
+ int ocfs2_trim_fs_lock(struct ocfs2_super *osb,
+diff --git a/fs/ocfs2/export.c b/fs/ocfs2/export.c
+index eaa8c80ace3cd..41048591ebcf1 100644
+--- a/fs/ocfs2/export.c
++++ b/fs/ocfs2/export.c
+@@ -37,6 +37,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
+ 	struct inode *inode;
+ 	struct ocfs2_super *osb = OCFS2_SB(sb);
+ 	u64 blkno = handle->ih_blkno;
++	unsigned int nofs_flag = 0;
+ 	int status, set;
+ 	struct dentry *result;
+ 
+@@ -59,7 +60,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
+ 	 * This will synchronize us against ocfs2_delete_inode() on
+ 	 * all nodes
  	 */
- 	if (!hdev_is_powered(hdev) ||
--	    hci_dev_test_flag(hdev, HCI_ADVERTISING) ||
-+	    adv_overridden_by_global(hdev, adv) ||
- 	    !schedule_instance) {
- 		rp.instance = cp->instance;
- 		err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_ADD_ADVERTISING,
-@@ -9017,8 +9070,11 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
+-	status = ocfs2_nfs_sync_lock(osb, 1);
++	status = ocfs2_nfs_sync_lock(osb, 1, &nofs_flag);
+ 	if (status < 0) {
+ 		mlog(ML_ERROR, "getting nfs sync lock(EX) failed %d\n", status);
+ 		goto check_err;
+@@ -89,7 +90,7 @@ static struct dentry *ocfs2_get_dentry(struct super_block *sb,
+ 	inode = ocfs2_iget(osb, blkno, 0, 0);
  
--	/* Submit request for advertising params if ext adv available */
--	if (ext_adv_capable(hdev)) {
-+	/* Submit request for advertising params if ext adv available, unless
-+	 * the set is in use by global advertising in which case the params
-+	 * will be programmed once the instance is scheduled.
-+	 */
-+	if (ext_adv_capable(hdev) && !adv_overridden_by_global(hdev, adv)) {
- 		cmd = mgmt_pending_new(sk, MGMT_OP_ADD_EXT_ADV_PARAMS, hdev,
- 				       data, data_len);
- 		if (!cmd) {
-@@ -9168,11 +9224,12 @@ static int add_ext_adv_data(struct sock *sk, struct hci_dev *hdev, void *data,
- 		schedule_instance = cp->instance;
- 	}
+ unlock_nfs_sync:
+-	ocfs2_nfs_sync_unlock(osb, 1);
++	ocfs2_nfs_sync_unlock(osb, 1, nofs_flag);
  
--	/* If the HCI_ADVERTISING flag is set or there is no instance to
--	 * be advertised then we have no HCI communication to make.
-+	/* If the instance is overridden by global advertising or there is no
-+	 * instance to be advertised then we have no HCI communication to make.
- 	 * Simply return.
+ check_err:
+ 	if (status < 0) {
+@@ -132,12 +133,13 @@ static struct dentry *ocfs2_get_parent(struct dentry *child)
+ 	u64 blkno;
+ 	struct dentry *parent;
+ 	struct inode *dir = d_inode(child);
++	unsigned int nofs_flag = 0;
+ 	int set;
+ 
+ 	trace_ocfs2_get_parent(child, child->d_name.len, child->d_name.name,
+ 			       (unsigned long long)OCFS2_I(dir)->ip_blkno);
+ 
+-	status = ocfs2_nfs_sync_lock(OCFS2_SB(dir->i_sb), 1);
++	status = ocfs2_nfs_sync_lock(OCFS2_SB(dir->i_sb), 1, &nofs_flag);
+ 	if (status < 0) {
+ 		mlog(ML_ERROR, "getting nfs sync lock(EX) failed %d\n", status);
+ 		parent = ERR_PTR(status);
+@@ -181,7 +183,7 @@ static struct dentry *ocfs2_get_parent(struct dentry *child)
+ 	ocfs2_inode_unlock(dir, 0);
+ 
+ unlock_nfs_sync:
+-	ocfs2_nfs_sync_unlock(OCFS2_SB(dir->i_sb), 1);
++	ocfs2_nfs_sync_unlock(OCFS2_SB(dir->i_sb), 1, nofs_flag);
+ 
+ bail:
+ 	trace_ocfs2_get_parent_end(parent);
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index e370efeb70dc1..82183c408fe81 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -1046,6 +1046,7 @@ static void ocfs2_delete_inode(struct inode *inode)
+ {
+ 	int wipe, status;
+ 	sigset_t oldset;
++	unsigned int nofs_flag = 0;
+ 	struct buffer_head *di_bh = NULL;
+ 	struct ocfs2_dinode *di = NULL;
+ 
+@@ -1080,7 +1081,7 @@ static void ocfs2_delete_inode(struct inode *inode)
+ 	 * shared mode so that all nodes can still concurrently
+ 	 * process deletes.
  	 */
--	if (hci_dev_test_flag(hdev, HCI_ADVERTISING) || !schedule_instance) {
-+	if (adv_overridden_by_global(hdev, adv_instance) ||
-+	    !schedule_instance) {
- 		if (adv_instance->pending) {
- 			mgmt_advertising_added(sk, hdev, cp->instance);
- 			adv_instance->pending = false;
-@@ -9248,7 +9305,11 @@ static int remove_advertising_sync(struct hci_dev *hdev, void *data)
- 	if (err)
- 		return err;
+-	status = ocfs2_nfs_sync_lock(OCFS2_SB(inode->i_sb), 0);
++	status = ocfs2_nfs_sync_lock(OCFS2_SB(inode->i_sb), 0, &nofs_flag);
+ 	if (status < 0) {
+ 		mlog(ML_ERROR, "getting nfs sync lock(PR) failed %d\n", status);
+ 		ocfs2_cleanup_delete_inode(inode, 0);
+@@ -1152,7 +1153,7 @@ static void ocfs2_delete_inode(struct inode *inode)
+ 	brelse(di_bh);
  
--	if (list_empty(&hdev->adv_instances))
-+	/* Don't disable advertising if global advertising (instance 0) is
-+	 * enabled since it is not affected by removing instances.
-+	 */
-+	if (list_empty(&hdev->adv_instances) &&
-+	    !hci_dev_test_flag(hdev, HCI_ADVERTISING))
- 		err = hci_disable_advertising_sync(hdev);
+ bail_unlock_nfs_sync:
+-	ocfs2_nfs_sync_unlock(OCFS2_SB(inode->i_sb), 0);
++	ocfs2_nfs_sync_unlock(OCFS2_SB(inode->i_sb), 0, nofs_flag);
  
- 	return err;
+ bail_unblock:
+ 	ocfs2_unblock_signals(&oldset);
 -- 
 2.53.0
 
