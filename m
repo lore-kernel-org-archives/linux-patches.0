@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059536;
-	b=yELesxGx9lwDuyMyDDL8nvup0qAYizpT52HAd+muh/6nUwTpFoZU0mcporhrt9aFpI6I
-	 1o05+MzH+Shxzz9Gk5V3mzIVlj3RDqNoSZvLzrh6qtRub/YmvPAEUZrGhbvh7pfeSBBDl
-	 T6CDPOnnKINMo/vZwKdq2dklrGBmsLoRTtmeV3GPkLyDUVoqcjGlQMx+/PgEL5oog96AK
-	 VJpNr9+nKEGQq61bztjqAlEaW7r9cph2O+FZKCPO7B14nkoQKeVYYeXiBbGQjxF94IWyO
-	 fjBfZGIEAranLYDaVp/XfDK2rcC2PEDRDYD8dlwb8Z+8HEtp5+MyOkf5659sg5g6tTA==
+	t=1795059539;
+	b=5qAWBB7DV/fu4dX73dyUnsE3rcMAa1v1DBIZqHWl/FHX7NVY6LOFUgCmXKxf1eYM1H/0
+	 BN7+UZRntbG15Z0se9Uwzab6NcAOaAJN6X/Iuei97h8wmvbgUBmCvAsj1fy8V1hVaxM+V
+	 j+PYF+/gY71bYrHRcd+CmYGcuk2522Yzdi2XGTEyzXqtQCZMS8Jh9BlGqz8Qflj13lMbS
+	 m27ut7PM2QWFHEojf+Pyf5AZr1lwS9YhZrzn8EAxUPNEUyU/nwmgGMZvBt0tSdlvTOVGy
+	 jEDzGns5RvJKcNpNQ5KrCJNaUgcCG/lImU4z87ujpwJaZEEPRYyJhGct/ve7b7UsPbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lPGJRJKyEZjC7g9aWS4ofYX6n71NhXfC53VglHKF3wg=;
-	b=UGZwsNqajtg52/fxBjEGphc+CRN/EU832s6elPEGpvaKegEMTYvBE0uKqyQHcLIy/r5K
-	 LC+7TDyjYpz6nAKJ0LMLYiU6Hv6h3VYpGvYgIhcAQAN6HVPsSn0L/0nJH9pR5TIgRPA6B
-	 V1iBW4pJ/tryAMI33EieZ9InDLBWs8xwalfZyI4CGrJws5GJml+ZpzYSmgROXS5iATMh3
-	 V3Fd3mzVPFGNOqIGESo7MpqatPLcL5Lsy2fvprnn1R4vRkbTTR6WSUCsUeTw7cL45EoVm
-	 Yf3Rf1ro1ee3xVI+5zvlWnAzp7HdndxR/PdVoCCVH8FVNAJb5ZCC1cq2z/UbRriMlow==
+	bh=QlcubVk5gbdoxqBRUMMAK9mqI5IryMHWRG+kty0yiX0=;
+	b=Z4CI8/R7qWOfw/gs5/YWJBRw2lerK78/wJTlv5g1cBtigPB9pr8yD7cCQh52N1VHJjpD
+	 gWT1mJ6SMMDCarYle/5WYDBwqtFejFdqQVlK7Q3A7YqOwjUS2s5H/MR5p9IfTHTT7WdLL
+	 iDXUC8dI7X9vLgXfO8U28QME0XM2HiA8v2TXJGrW8/O9IDRv+fE3+EdL0Kp+Q/Yk+SiL/
+	 R013bTGGwjTg6p7LE+cFe+RGLWR5Ym7VnUKgv0BlXCkxRDDvvcroMHfYjfENYR+msfBJU
+	 K8MtjZCkQFaYCiJcGfG54J5d5Xn4DdkkGJbVLR2zr5c2A7Qh5n2XE/fTI1gQIiYXlEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CSRjqk6/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5e57QAG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B9606A32A;
-	Thu, 19 Nov 2026 03:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F4E606A325;
+	Thu, 19 Nov 2026 03:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSRjqk6/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30ADC1F000C4;
-	Thu, 19 Nov 2026 03:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r5e57QAG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE78D1F000C4;
+	Thu, 19 Nov 2026 03:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059536;
-	bh=lPGJRJKyEZjC7g9aWS4ofYX6n71NhXfC53VglHKF3wg=;
+	s=korg; t=1795059539;
+	bh=QlcubVk5gbdoxqBRUMMAK9mqI5IryMHWRG+kty0yiX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CSRjqk6/m9gUr6FfM6elV07JuJ8RiLTxRypMkQk+Ybzkis+2afPqZ+UUNjGZLRPdx
-	 OsteYcky+pfNIT7dSFy2vcPn94ZTTxHg0cZmAo+sNyLvno2X5/Rr/2PV7L/dP0WSvK
-	 640GbY5sVtcA8SllcMkxF/WqhHkwlhTa0OXq9SHk=
+	b=r5e57QAGfnxAH6iTkGTYsBIi5v1YaZJxJmF3lbCdRe4d+b9Y0GSm5W2nVVB1kOciV
+	 1T4FLo0Dpsk/aR5UZqQ4kibo8IA7H1J4sc7YabwJn0/J9rfOt07Wi3fW0nzxRO8JRj
+	 SSWgs7aD/ohBX5jG+/DJToEmN8XX4suDsMPmwJMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Lee Jones <lee.jones@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0876/1848] PCI: rockchip-host: Do not attempt 5.0 GT/s retraining
-Date: Wed, 18 Nov 2026 15:48:34 +0100
-Message-ID: <20261118145953.078109770@linuxfoundation.org>
+Subject: [PATCH 5.10 0877/1848] mfd: ab8500: Drop bm disable parameter
+Date: Wed, 18 Nov 2026 15:48:35 +0100
+Message-ID: <20261118145953.114328285@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,68 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 2a1e6c382fb7567679c07bd6a7060fefc7a5edc9 ]
+[ Upstream commit a98688d2ddfe274cb7c7ca3c6b6afbe9f844ffc3 ]
 
-Drop the 5.0 GT/s Link Speed retraining from Rockchip PCIe Root Complex
-Mode Operation, so-called host driver.
+Nobody is passing the module parameter to disable the
+battery management portions so just drop this parameter.
 
-The reason is that Shawn Lin from Rockchip has reiterated that there may be
-danger of "catastrophic failure" in using their PCIe with 5.0GT/s speeds.
-
-While Rockchip has done so informally without issuing a proper errata, and
-the particulars are thus unknown, this may cause data loss or worse.
-
-This change is corroborated by RK3399 official datasheet [1], which states
-maximum link speed for this platform is 2.5 GT/s.
-
-[1] https://opensource.rock-chips.com/images/d/d7/Rockchip_RK3399_Datasheet_V2.1-20200323.pdf
-
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Reported-by: Dragan Simic <dsimic@manjaro.org>
-Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://lore.kernel.org/all/ffd05070-9879-4468-94e3-b88968b4c21b@rock-chips.com/
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/68f6353e3a2ea4914de36c42b6906e41282adad3.1781622998.git.geraldogabriel@gmail.com
-[ sashal: adapted retraining removal to the older sequence using PCIE_RC_CONFIG_LCS ]
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Stable-dep-of: 5bf2ae8b131d ("mfd: ab8500: Fix child device leaks on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rockchip-host.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/mfd/ab8500-core.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rockchip-host.c b/drivers/pci/controller/pcie-rockchip-host.c
-index 90f3e69b5d940..aa8e9f73478bc 100644
---- a/drivers/pci/controller/pcie-rockchip-host.c
-+++ b/drivers/pci/controller/pcie-rockchip-host.c
-@@ -339,22 +339,6 @@ static int rockchip_pcie_host_init_port(struct rockchip_pcie *rockchip)
- 		goto err_power_off_phy;
- 	}
+diff --git a/drivers/mfd/ab8500-core.c b/drivers/mfd/ab8500-core.c
+index 4cea63a4cab73..bad4cb684da36 100644
+--- a/drivers/mfd/ab8500-core.c
++++ b/drivers/mfd/ab8500-core.c
+@@ -122,12 +122,6 @@
+ static DEFINE_SPINLOCK(on_stat_lock);
+ static u8 turn_on_stat_mask = 0xFF;
+ static u8 turn_on_stat_set;
+-static bool no_bm; /* No battery management */
+-/*
+- * not really modular, but the easiest way to keep compat with existing
+- * bootargs behaviour is to continue using module_param here.
+- */
+-module_param(no_bm, bool, S_IRUGO);
  
--	if (rockchip->link_gen == 2) {
--		/*
--		 * Enable retrain for gen2. This should be configured only after
--		 * gen1 finished.
--		 */
--		status = rockchip_pcie_read(rockchip, PCIE_RC_CONFIG_LCS);
--		status |= PCI_EXP_LNKCTL_RL;
--		rockchip_pcie_write(rockchip, status, PCIE_RC_CONFIG_LCS);
--
--		err = readl_poll_timeout(rockchip->apb_base + PCIE_CORE_CTRL,
--					 status, PCIE_LINK_IS_GEN2(status), 20,
--					 500 * USEC_PER_MSEC);
--		if (err)
--			dev_dbg(dev, "PCIe link training gen2 timeout, fall back to gen1!\n");
+ #define AB9540_MODEM_CTRL2_REG			0x23
+ #define AB9540_MODEM_CTRL2_SWDBBRSTN_BIT	BIT(2)
+@@ -1256,14 +1250,12 @@ static int ab8500_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (!no_bm) {
+-		/* Add battery management devices */
+-		ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
+-				      ARRAY_SIZE(ab8500_bm_devs), NULL,
+-				      0, ab8500->domain);
+-		if (ret)
+-			dev_err(ab8500->dev, "error adding bm devices\n");
 -	}
--
- 	/* Check the final link width from negotiated lane counter from MGMT */
- 	status = rockchip_pcie_read(rockchip, PCIE_CORE_CTRL);
- 	status = 0x1 << ((status & PCIE_CORE_PL_CONF_LANE_MASK) >>
++	/* Add battery management devices */
++	ret = mfd_add_devices(ab8500->dev, 0, ab8500_bm_devs,
++			      ARRAY_SIZE(ab8500_bm_devs), NULL,
++			      0, ab8500->domain);
++	if (ret)
++		dev_err(ab8500->dev, "error adding bm devices\n");
+ 
+ 	if (((is_ab8505(ab8500) || is_ab9540(ab8500)) &&
+ 			ab8500->chip_id >= AB8500_CUT2P0) || is_ab8540(ab8500))
 -- 
 2.53.0
 
