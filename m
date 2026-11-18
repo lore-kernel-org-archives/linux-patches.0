@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057391;
-	b=WK3KHv8r0JXkllMonLThtQpN+HcGtPPRNjAypydnSp98VwDPdAM4DJqekdfRgzrvvdMv
-	 7vC8z+HLc525GogFIP2mcQJdsOWO1e+YF950PosR5JLMdNigoKwE6V2+LnDPuPiDjmzHX
-	 uJNDiXvTCUrJLZ2n0SKF6xmmSWP5yOCEjsd628KLjR3NoVD9lGTPKUYB3Nltfv7o9X50J
-	 SSikFhkhalaP8NoRpCyE6auf9WrXrbuhu0VunnW8noXPhKGjJoHUwaQvlxAYbqqD+YcYr
-	 cmhj5rGPAAFTuvgKprAkWM09NA35J3D2ilS/BXQBZoKb7geDf6nRF3V/nXXH5qLNPJg==
+	t=1795057394;
+	b=xfhsaBqnWqOIyOwE+A39AcjVGAX8kN5Ni2ga+3q1mDUOzqMWwVTl+oAaH8paxRLknBwb
+	 pk4DPqSOjfEwK3mPUeV7OSUV8U41t6sNanwxYsS479CpBGQSf9enWBJYP75schs5DYAz/
+	 fe1QYIkj8qwFC5zofEXAB2x5G1cbRwWd/VtF1gMcWqlS4XB3bGEk9oXYAgJd4VRAXyGgM
+	 mEect3y5PJTO21t0G/aOz4OFV5J2YHlCeLfDLx4+fqjJWWgNYhPLAp9KSgKb6kgnTr1ie
+	 tvlvYN+fxSAo/zPBFi62476oXPZHTXIHgGJujPg7DSTvwDUOM4qOqvE8C4l290c8TrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+FItY5ghECZTxOWcBcll7yJhV7XCpukqyJ2kmNityPM=;
-	b=Sd4LdMEE6BpCnQwhd+OQexAlND23Rj14IR++Dr9OaHaYVP9Ohh8Mqb0m4+tpwc1NgjGD
-	 kM4CRlYzqJlD8N4LGvUu+v6xBzC70lHj7pMo7XYJR0mAtpNeTcHTPU3911LBjblKp/Pcp
-	 hh1aZTu1Yx3bzdEwGrJm7DWd5U9FG/9LA1WkE/iPnrID5/evczhTva/jJMDqC6k/zjDms
-	 AJUf9Ki5UhC+WgJXE/Vkd52VJjS0KX0JK0h9Ve6Pyecrv7ZKAj6d7hqFaALXVw4clQZVr
-	 Xo1+56SQduMhB3NqXIjbTs1o0zsxFJ88MPH8MAL/qsPb0PKBSOEPlQnWfNjz/xcijhA==
+	bh=4+qmhq4+fEWtKjwGlUn/+H+FzP5ywd+nYmiUGPRf/ao=;
+	b=2k0FycMlcRiwb20QnlvX+3QtNhJOQYn1Ce2chY5hpYIf5WKYd3k2PisDfwbhoSVUtbL1
+	 OfzwCD18iH8FMTRSx03uiKef3FFBf9jQMbboRz4y5Xq9IvaJwg8+wFxYRsqbWpPSxJrSM
+	 LmKQC5rFFNhOmTP3pXD4FPafg4yrc0/R/yhIHFDla2Sc5XkXBe7QUnpKmVHahnaMk4obD
+	 RRW6ouvGnO1m4BYSHl2siGmapzOW5xjzNaSvGKHM+9GnxITXM9XfFaC26qHdYwDMhduIX
+	 SUo1hkO6oyM3T01xDS58/l3wk8RlKH6plFPyTGxPLyr2I9c4HLp5rEj8OaU4JYVG+iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VdiStQF+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L531aMOn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A647606A33D;
-	Thu, 19 Nov 2026 03:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845C660A2608;
+	Thu, 19 Nov 2026 03:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VdiStQF+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF4C1F000C4;
-	Thu, 19 Nov 2026 03:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L531aMOn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB271F000C6;
+	Thu, 19 Nov 2026 03:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057391;
-	bh=+FItY5ghECZTxOWcBcll7yJhV7XCpukqyJ2kmNityPM=;
+	s=korg; t=1795057394;
+	bh=4+qmhq4+fEWtKjwGlUn/+H+FzP5ywd+nYmiUGPRf/ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VdiStQF+r+xSVc5GeJYaJNHYugghmeeh8MU9KVTgo3MpzwvOhFeK71LHquaSv+1xE
-	 Ih0Op/f0Ds6+ntnRCLZ96EhF4UAvAP/iepfbfplozGWKABrGw8WkNqlfZlUdu8qcyF
-	 FEl4lyn0g7dQ9M9FdfXXHx1F/K4Nfa7sIsubYI6Q=
+	b=L531aMOnkt4RwVF6uBpAbe78o6EwIVBOd777bV6M4FmJfWmweeNJYCShNyxn3HA66
+	 OsRytC714kLU1t39sxHL3HOMs0sIw9U+s05nNvCWtFfHKMboLl9RlSGJDFsbxitaNt
+	 RGYA3THW0PqWSNscZRBAos7PMNf5gu4P4WK+g/58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	Yury Norov <ynorov@nvidia.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0114/1848] bitops: make the *_bit_le functions use unsigned long
-Date: Wed, 18 Nov 2026 15:35:52 +0100
-Message-ID: <20261118145915.759951414@linuxfoundation.org>
+Subject: [PATCH 5.10 0115/1848] soc: ixp4xx: qmgr: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:35:53 +0100
+Message-ID: <20261118145915.809823497@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,101 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1c61b0a6e5c472737619f74f79c390363ee258df ]
+[ Upstream commit 01479280fa5d4691013bcd64fdfd935117b69769 ]
 
-The *_bit_le functions use a signed integer for the bit number.
-However, the *_bit functions can use an unsigned long. This causes
-problems if there is a large bitmap and a bit number > 0x80000000 is
-passed in. Since that is a negative int, it will get sign extended to a
-long when getting passed to the *_bit function, turning it into a huge
-bit number. This usually ends up with the memory address wrapping around
-and the function accessing memory before the start of the bitmap.
+The driver has an OF match table wired to .of_match_table, but does
+not export the table with MODULE_DEVICE_TABLE().
 
-Avoid this by making the *_bit_le functions take an unsigned long.
+Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
+information is generated for OF based module autoloading.
 
-This can be triggered by faking an almost 4TB dm-mirror device, which
-uses bitmaps to track the mirror regions:
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the platform driver, and the missing module alias publication.
 
-$ dmsetup create bigzero --table '0 8589934590 zero'
-$ dmsetup create mymirror --table '0 8589934590 mirror core 2 2 nosync 2 /dev/mapper/bigzero 0 /dev/mapper/bigzero 0'
-
-This will access memory before the start of the sync_bits bitmap, and
-likely hit the guard page of the previously allocated clean_bits bitmap,
-causing a kernel panic with the old code.
-
-I looked and didn't see any crazy code using the signed int to
-intentionally try and access bits before some address within the bitmap.
-
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Message-ID: <20260704121851.63805-1-pengpeng@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/bitops/le.h | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/soc/ixp4xx/ixp4xx-qmgr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/asm-generic/bitops/le.h b/include/asm-generic/bitops/le.h
-index 188d3eba3ace8..e83a53ecbc6df 100644
---- a/include/asm-generic/bitops/le.h
-+++ b/include/asm-generic/bitops/le.h
-@@ -50,47 +50,47 @@ extern unsigned long find_next_bit_le(const void *addr,
- #error "Please fix <asm/byteorder.h>"
- #endif
+diff --git a/drivers/soc/ixp4xx/ixp4xx-qmgr.c b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
+index 065a800717bd5..cb3c228cdf84c 100644
+--- a/drivers/soc/ixp4xx/ixp4xx-qmgr.c
++++ b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
+@@ -454,6 +454,7 @@ static const struct of_device_id ixp4xx_qmgr_of_match[] = {
+         },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, ixp4xx_qmgr_of_match);
  
--static inline int test_bit_le(int nr, const void *addr)
-+static inline int test_bit_le(unsigned long nr, const void *addr)
- {
- 	return test_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void set_bit_le(int nr, void *addr)
-+static inline void set_bit_le(unsigned long nr, void *addr)
- {
- 	set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void clear_bit_le(int nr, void *addr)
-+static inline void clear_bit_le(unsigned long nr, void *addr)
- {
- 	clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void __set_bit_le(int nr, void *addr)
-+static inline void __set_bit_le(unsigned long nr, void *addr)
- {
- 	__set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline void __clear_bit_le(int nr, void *addr)
-+static inline void __clear_bit_le(unsigned long nr, void *addr)
- {
- 	__clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int test_and_set_bit_le(int nr, void *addr)
-+static inline int test_and_set_bit_le(unsigned long nr, void *addr)
- {
- 	return test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int test_and_clear_bit_le(int nr, void *addr)
-+static inline int test_and_clear_bit_le(unsigned long nr, void *addr)
- {
- 	return test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int __test_and_set_bit_le(int nr, void *addr)
-+static inline int __test_and_set_bit_le(unsigned long nr, void *addr)
- {
- 	return __test_and_set_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
- 
--static inline int __test_and_clear_bit_le(int nr, void *addr)
-+static inline int __test_and_clear_bit_le(unsigned long nr, void *addr)
- {
- 	return __test_and_clear_bit(nr ^ BITOP_LE_SWIZZLE, addr);
- }
+ static struct platform_driver ixp4xx_qmgr_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
