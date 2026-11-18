@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054638;
-	b=mbT77aURdXWCguymQVwkcBKcNviX8dAcnekmdaNewNU/k72G5QMUtMbw7/Y/eVcocxTS
-	 DY/rMp/k4+7ScuEibU1W8tBsQ9zZuEIs3QATinRCH2UTrf7EMoDvlr6mshFSd6jmXf2TH
-	 L82K5dUrmJZi+D6osVf634hEVGSmZeZRJUwLPuoT3K8cQrcp70h2TOHftlWJgCM1r6IgM
-	 kUGgvjvWGF5ZeffDOSsvR1SONUxYXgmQNIW0OkFgzRS9Pl7aHvQ72pZI9ppwpQ+5HrlRU
-	 9GuruuDMtqJU5SN3/27XoPqljeKzGi5gEWJhkXwALwmOR3Z07b4LxX8Ef0EPPlw4Skw==
+	t=1795054641;
+	b=saiknu7A9iBg/jTy5QrslNCPmpP1bK8HK5gbWOoBVEaVNCzhpuL01mi0TcltTX/6MFMV
+	 eq8sBQJsSxH1a6JTIWuDLK475+uAXXc+/jHLejrZK6mXYvM+EUGyd7jgj7FzqRteqLYhi
+	 vHcAZb3COIQJOoyWfdI0LovQ7QFhGejKG+0niBTYyDRdcyilMOA2sByDsgCn+qZLMNUWI
+	 l8o9eBEPESpeOPNjDs5p3JRY1dZoi1El52J9CgBs844dnswKk10LDBd9MooVoevp9rBUK
+	 oyX01xXBF54FrrbR4N7VYxQVahkhxv+mLJHOomeuLBvdnYR7SlonWrMjstFgf7AOAIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2upQr5IHSFX0SLp1Zp5EcNdzD+qi1jQ28wACXe0kvy8=;
-	b=DycAscBpgIk40v6qTwFQcJNSqcAyytFXR+9pN3FBb5GYatExqKps18exexIZhqM0ISyK
-	 AuhDmoaGNpvZ+t5bswsL76RDrac+MckceABdagngNgfgqfpvAOevbpLUxLOkx2qvN6nIw
-	 DoxOyH7Eygk6sAv0QUcTpjvfCNONmRfM/g43V80y3Jc1N6ACYjKg8Z01J2gvVxOM/vgTB
-	 hFxnyI/T+K2u0GQ2DsbvM5rkcbp2YGm9uQTyeWR/7GD9K6HIBMwDPiM3zKNDMhcgj/N/n
-	 aXrMuB1WTJUhxHPAZQXTw7CID0MeZA0eQcH4DjU1ISsSQ/wZrSR7pUXt9c0TTBulZsw==
+	bh=tCo1wVWeUGqMjfA6Z9ykkkxYXJpLTKLyPkFk/LL+LVA=;
+	b=qCwewJu/IMO0JJwAQTnSDvbGSLjW0jjE2CCPXxBZXcgmjXBxqsTeVe80pI/gHTvBctf/
+	 g6Y1t/2XMEjBnecEALKv78Z4mIjgogMBro5Sobw8/RPJ3Z3SJba+90RQ97vm8/5Jvngm3
+	 kRnRZ0iYGNsZ2acv8QKfh8cXbsTjEBqYhzUDKUFlkIN8W/HBKtx8GC8iMjryfN8MqOzoY
+	 zjvu7gE87VPePiH4HXtT5JcxMEF2H8awlLCDzse79Ub74iBFda+Z0/OY2hfUEh/cgfi0S
+	 Bf4UplGdj2LMZbuxDAZ2bI90zD7sXofhrimKsjp4i8yAkTpij3lFeAYB7Ak8Zps7bHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1qXo2l0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t+gOoBme;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA031606A31C;
-	Thu, 19 Nov 2026 02:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA60606A31C;
+	Thu, 19 Nov 2026 02:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1qXo2l0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198E61F000C4;
-	Thu, 19 Nov 2026 02:17:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t+gOoBme
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19CD1F000C4;
+	Thu, 19 Nov 2026 02:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054638;
-	bh=2upQr5IHSFX0SLp1Zp5EcNdzD+qi1jQ28wACXe0kvy8=;
+	s=korg; t=1795054641;
+	bh=tCo1wVWeUGqMjfA6Z9ykkkxYXJpLTKLyPkFk/LL+LVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e1qXo2l06VE+gTWAFntla4Gi4JgzwBtUulniVSeLSTbxfUrU03CQqTwptWySfIoiC
-	 +KvrM2+RVcpeLfyTmADOUe/FhIiHby6Iht69Cl3OYAcWPEjP/Rw8toJsxtfZjkFWfK
-	 d4Nc7uxnN0nKdq+I1TQ2umwN8N0OBA1Q3RJ7Kd5Q=
+	b=t+gOoBme7rG73zfUTMaCcATca4aw1OVhFOsvUcc8DCkRc73jHYzYJNB+JSDk+XRe/
+	 qsiMB+QXVZWkD6adJPa0ywMkQg0Yvc3EJJsRXS3ncWyf+rlj3pShetUgq8Y4Iwee6H
+	 7AREqkuTE63t+FrmBFK3XD+Q1f1RlUK52gCCVHws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1347/2214] perf jitdump: Check snprintf return before computing header size
-Date: Wed, 18 Nov 2026 15:50:23 +0100
-Message-ID: <20261118150105.340859471@linuxfoundation.org>
+Subject: [PATCH 5.15 1348/2214] perf jitdump: Fix funlockfile on unlocked stream in jit_open() error path
+Date: Wed, 18 Nov 2026 15:50:24 +0100
+Message-ID: <20261118150105.382158840@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,17 +72,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 0155f05ea6e133c18a04b8b5945cac59870da156 ]
+[ Upstream commit bfde6848c1e24fd979d0138c57c1cc28c35093c3 ]
 
-snprintf() returns the would-have-been length on truncation.  When the
-jitted filename exceeds PATH_MAX, the unclamped 'size' value inflates
-sizeof(event->mmap2.filename) - size into a massive underflow, causing
-the header.size computation to write an oversized header.  The
-subsequent write to 'id = event + header.size - idr_size' then corrupts
-the heap.
+If the malloc() for the initial read buffer fails, jit_open() jumps to
+the error label which calls funlockfile(jd->in).  However, flockfile()
+is called later in the function, so at this point the stream was never
+locked.  Calling funlockfile() on an unlocked stream is undefined
+behavior per POSIX.
 
-Clamp size to PATH_MAX - 1 after snprintf in both jit_repipe_code_load()
-and jit_repipe_code_move().
+Split the error path into two labels: 'error' (after flockfile) calls
+funlockfile before cleanup, 'error_noflock' (before flockfile) skips
+the unlock.
 
 Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -92,33 +92,31 @@ Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/perf/util/jitdump.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 12337ff564ece..bf87e32f4bbe8 100644
+index bf87e32f4bbe8..5eba0914f1709 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -498,6 +498,9 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 			jd->dir,
- 			nspid,
- 			count);
-+	/* snprintf returns would-be length on truncation, clamp to buffer */
-+	if (size >= sizeof(event->mmap2.filename))
-+		size = sizeof(event->mmap2.filename) - 1;
+@@ -163,7 +163,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
  
- 	size++; /* for \0 */
+ 	buf = malloc(bsz);
+ 	if (!buf)
+-		goto error;
++		goto error_noflock;
  
-@@ -610,6 +613,9 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	         jd->dir,
- 		 nspid,
- 		 jr->move.code_index);
-+	/* snprintf returns would-be length on truncation, clamp to buffer */
-+	if (size >= sizeof(event->mmap2.filename))
-+		size = sizeof(event->mmap2.filename) - 1;
- 
- 	size++; /* for \0 */
- 
+ 	/*
+ 	 * protect from writer modifying the file while we are reading it
+@@ -251,6 +251,8 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ 	return 0;
+ error:
+ 	funlockfile(jd->in);
++error_noflock:
++	free(buf);
+ 	fclose(jd->in);
+ 	return retval;
+ }
 -- 
 2.53.0
 
