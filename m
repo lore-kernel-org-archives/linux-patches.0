@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020645;
-	b=oZm+gyIHJRNscILSAawY8ZKYfIq9b677i9WfCh9cIJLsH0FEha0zfnDQrhdPDynu0EIV
-	 o3P4uMDAJBMuMqQMsYEcKjZcvGvnTIsVCOCf+VcQvZs3UJffSCCRKs20ctfTlfYj7a/K3
-	 XTLrlPNAfKDtX5TEDwD39GohuCILY0EA4dcwG/yTkoZpJUXGn5L04gby0Sp7SLmMIQDbn
-	 +vr9i1OPcUOxE5vBJu3LIopbW7ieNqlQWijU4uQIPg8434fybUAURsFhzb2c80zBstMcQ
-	 Lnzb5Uiw9zGFPpnw/vYHguG65VUpq/Quv8zgatT1CeQqTbGkPbJeofrFr5W3bVjQxmg==
+	t=1795020647;
+	b=l8RAIHtygifmabalVix37bp+SP6Vp6MfKZv0aQ5XL6LkU+P+nw6wWDx0raGfl8ONXu5B
+	 NLcShPZD00aPRcujuyjUXdjWDXKgjPrkrnFUm4HZGQ/2pLFVvDve/0wolY2c1S1dSlYkS
+	 DNrxgYvmMN5PT1WU9N7+MZkjXHjSShwEF6ohBn9YkegqnwSucj8yh2Hygoak1rkiFA7Z2
+	 b964TZ/jYdCoKZRFnlT0Gt9dSvlUdhJRU9UJx+tY2cugo3K+zkTiNWolSpJ2goj0lz3gL
+	 U27/jNMJLR6Ry+gRI9ETvodtsrnFI59isfdKQ06xhfHCKzkqzLORvHT3jkScnqNpiWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020645;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i38Ywe4qsdRJKWxDAQj36lYr0r8euHtJB6Z4ycI8Olo=;
-	b=nCn/+NKehNYY4A/V4ld4SwP9GatbBEfOJodNAN2PLGJIS/NJyuwYCbEhqLSowsqWoRM1
-	 3thlroN3eI6+45ErGNdErI+2tIxZWO+6HVlyGyYK5nDBXOIVL+iCxhOpGde4Qsa07ABEl
-	 N2sVQIkxHrK6e1FO11Jk4I4gG9MwbLwXKshb4jCJTbJrxY/LFYPqsKQypqpak94rWNcY1
-	 mhg9aFYtZMj+COh1JOPdSUCPq3J+sXHPiSaoXQ+0K4Y+Y7oGKkheJiRU2VnUnRFWg+HHJ
-	 Gp7JGI8FLTK0shmqgYtBVEPi7MHTwOf4l0LLwa9fps4KixE7vbEcD0QxRAgqjK+InSQ==
+	bh=2ilRGwoGZUSnPRU6gSlKaHotC5gkBqdA+a+/AyQD/zY=;
+	b=bJfvHRZ059NwzDtJtApc/mR5+mtzfpIBEUwiTnFYWD4mjE4Z2WHrzRp9cjMqAaZBXirG
+	 CZArUBMlYmkvmUcoHwa2VEBQidRQLfPkUyY9j08kAbSuWtVQfmlL55Efy9JaadGdV7n8D
+	 n48sITp4J3p1+8DNIe4bJnVY2MW7bI99HgdzGejzYONnLTyqxyONuOSwpcNcXzzUsE4k5
+	 CETNcnRWMIBhRUkR4OkHHqZ2GXVwHLruY2aM3GihhjpXSAXsqUuA1BOqdAvt7Xod+huIX
+	 LtsJyv+g28rIS6iyupgfeaG7tCE/F+6gpm0uy0odOdr7zTP3Pm1q8Y6jIntNrZLcjrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLLwSQ0p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPBpuXfi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0961E606A32A;
-	Wed, 18 Nov 2026 16:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E4F606A320;
+	Wed, 18 Nov 2026 16:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLLwSQ0p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF441F000CA;
-	Wed, 18 Nov 2026 16:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uPBpuXfi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23FF1F000C6;
+	Wed, 18 Nov 2026 16:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020644;
-	bh=i38Ywe4qsdRJKWxDAQj36lYr0r8euHtJB6Z4ycI8Olo=;
+	s=korg; t=1795020647;
+	bh=2ilRGwoGZUSnPRU6gSlKaHotC5gkBqdA+a+/AyQD/zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLLwSQ0pGBC+7OqkNbl/VUW8I1gCDW6tB55ZXN70QJiKrHbSdaCWUO8rTmBP8UkPs
-	 MHhZExS2+jzJvMJrlsI7M1TAol+mO/uDYSBbzHRFIxDAdJlNukTNhYTm7241KI+XK7
-	 eBTS/pxmDfMAXl7vQgIO9+YUcNoCat+CiSCp5J1A=
+	b=uPBpuXfilZswzbLZYpO/s7lnl8BWNYXNaOASRN+Lvg6Lr8IFUUrnmRIrRf3VV71+x
+	 aW2tARjEoLWVNALlxwt3s5XBUJmtqj3Io3l/+pkMpwvLbKu7uByAwipwDfRWHKhigV
+	 4jg1wP2TBYi8PkHfOE08W3bN1KVjuTOXtizEEoDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qiliang Yuan <odys.yuan@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2026/2651] selftests/bpf: Keep the bpffs of cgroup_hierarchical_stats private
-Date: Wed, 18 Nov 2026 15:54:26 +0100
-Message-ID: <20261118150359.117868797@linuxfoundation.org>
+Subject: [PATCH 7.3 2027/2651] selftests/bpf: Unmount the bpffs that cgroup_hierarchical_stats mounted
+Date: Wed, 18 Nov 2026 15:54:27 +0100
+Message-ID: <20261118150359.147031441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,45 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 3c824dfd17e6e918e45a6a96bda0d020ddec8287 ]
+[ Upstream commit e0645cfd0e1b2ae7b8ad989bef00a30016b16b5f ]
 
-setup_hierarchy() mounts a bpffs on /sys/fs/bpf with setup_bpffs(), and
-then sets up the cgroups with setup_cgroups(), which moves the test into
-a private mount namespace.
+setup_bpffs() mounts a bpffs on /sys/fs/bpf and records in mounted_bpffs
+whether it did, so that cleanup_bpffs() unmounts only a bpffs that the
+test mounted itself.
 
-The bpffs thus lands in the mount namespace that test_progs shares with
-the tests running in parallel, on top of the bpffs already there, and
-hides what they pin. cleanup_bpffs() later runs in the private mount
-namespace and can't unmount it, so it stays there for good.
-bpftool_maps_access then fails to pin an iterator because
-/sys/fs/bpf/test_bpftool_map doesn't exist anymore, and bpftool_metadata
-can't find the program it pinned in /sys/fs/bpf/test_metadata.
+cleanup_bpffs() checks the flag the other way around. As mounting on
+/sys/fs/bpf succeeds even when a bpffs is already there, the test never
+unmounts the bpffs it mounted, and every run leaves another one stacked
+on /sys/fs/bpf of the mount namespace that the test_progs worker keeps
+running later tests in.
 
-Set up the cgroups first, so that the bpffs is mounted in the private
-mount namespace.
+Unmount the bpffs only when setup_bpffs() mounted it.
 
 Fixes: 88886309d2e8 ("selftests/bpf: add a selftest for cgroup hierarchical stats collection")
 Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261009-selftests-bpf-cgroup-stats-bpffs-v2-1-f93a111da992@gmail.com
+Reviewed-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20261009-selftests-bpf-cgroup-stats-bpffs-v2-2-f93a111da992@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  .../selftests/bpf/prog_tests/cgroup_hierarchical_stats.c        | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-index 3bd27d2ea668c..ad19d6d41918a 100644
+index ad19d6d41918a..cc6ab2c263da1 100644
 --- a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
 +++ b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-@@ -151,7 +151,7 @@ static void cleanup_cgroups(void)
- /* Sets up cgroup hiearchary, returns 0 on success. */
- static int setup_hierarchy(void)
- {
--	return setup_bpffs() || setup_cgroups();
-+	return setup_cgroups() || setup_bpffs();
- }
+@@ -110,7 +110,7 @@ static void cleanup_bpffs(void)
+ 	ASSERT_OK(rmdir(BPFFS_ATTACH_COUNTERS), "rmdir "BPFFS_ATTACH_COUNTERS);
  
- static void destroy_hierarchy(void)
+ 	/* Unmount bpffs, if it wasn't already mounted when we started */
+-	if (mounted_bpffs)
++	if (!mounted_bpffs)
+ 		return;
+ 
+ 	ASSERT_OK(umount(BPFFS_ROOT), "unmount bpffs");
 -- 
 2.53.0
 
