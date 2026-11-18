@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022380;
-	b=KX/5qlrZD21r5veWRNmp8nQKP6nEBwmsauAkULcRSEjOEpHSIySouSjJo+X3617DqynQ
-	 W8/tyIZY8WulJmnpcAie6RJU1sMNDQV6qARxDvrOTO1dxwMGj+bTXi95BJilBCCi+RUCK
-	 2g02K4ovY4AuTtdM3bm6Odb1wXI+l9Ow94tOfJ2cPjiSHzunK191b35nMQLGG/eQumU/j
-	 UfaUH56AI7lrlvv713ArR1Z3oSz/kR7QiNYJLh1My6JgbDf4cW8GNXBu8iqf+ug7Bfb2b
-	 PlNbMsNAh1XAMfc257QLV374iHxixzHw9gFHsAStg+37w/GNWaUg3cwMa5O9zQ/mzig==
+	t=1795022383;
+	b=R6pxe8MPPKJ24kEUUTQlrAQi0z897NmPrGVCFtT/z6+RE8WnYmVsyvZ0SeQKhUIMHtO9
+	 OlGmHypIhBtNUkq5mDzYNXLG4BWlcD7xp0l10foKi/6CFtde8kkE8ORuLCXw2vMAy56b/
+	 4yyX12KJROMMd0KG91SC0GC8wR7MNP1N0iq97IxkQ4hHx/Q+6dDta7t4hUpsnEJesHR6j
+	 TT9fFkDlmeO/xogkJpBECUb6cIBLJ2ZCupHC463o6KoTuqeB7pH0WFJQI8GDegWZufsqA
+	 LeOxqd4nN0oIqS+EEjCm3g1NPBkVNvUJtEeas76Zij0RjQaVWD4QqRQdfYLcg2ji7Wg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022380;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022383;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rh/OnJ/4fu6O5KMn7GwxlXQ+Aq9JBiJ7H0q2XZvfF+8=;
-	b=KQIsw+G9NhoDXIvFyWElSzIQCRs/6UCei08I0zTyzKpcpzup9lG3EWAXI43gCMQeMcwz
-	 /0i24yi9eYFBpZvz07Yj43sWIS4D2txUmVjt2o0LixfJ+3Bd68qomPYtktuUL0PhiX54O
-	 Pe72lesRUIAStMhrzuNhlOpu4HSjN+icnYox+jB7XSzsCtlOdFG+SCXgQuKt6b6bJ202i
-	 PjnO6HsjKf6B0vHZC98ilIRvCofSouCdFs2PFcnJo+sYqAxnDBQl56O+JAGII1xtwZV3x
-	 e8B4p20Vomx5xJxvcU/rDqsnTRkY8+vuHFLzY8yj0OMsJ58cGXg0fQl8eZI9tGyo2cA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SknrWukl0pp18M9GAulpiax6xtLlzQb3GYos5XZX9Ng=;
+	b=lG9EWUcH9bo2WxiNtLyO4D6uAlLg6QwyYYYYXRqJ8FRtu9d0CjGKOhMFd/fm8m/Xh6of
+	 FT6mMSoD5qy3zFOUgQCJguzbw+m9ViyeYBDKLLiQFhhY3iE2Mhxm1QsZbgirW9kJV5uyx
+	 j4jdR6BXinYvBAz+Hdu41Gwpp9XSLBo4bx4LNxBLJtk/0Rf/Zg3bb64xlGlwnNI1pgW7i
+	 9e8UpK5xP/KB2mvcEflnXLTL2McqhxQWF07MiVFh0Wdfmqd5x1g9Fktch4LF6GXjxXet+
+	 rX97A37N3TKp6855OwZD1oZPC5A0F6OoprSiuF9fp1Dtcw+KzsDNP/KWSgeE85eGPew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=St4LA72a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwKBpZqO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B686606A31C;
-	Wed, 18 Nov 2026 17:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F788606A330;
+	Wed, 18 Nov 2026 17:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=St4LA72a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBAD1F000C4;
-	Wed, 18 Nov 2026 17:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CwKBpZqO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48921F000C4;
+	Wed, 18 Nov 2026 17:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022380;
-	bh=Rh/OnJ/4fu6O5KMn7GwxlXQ+Aq9JBiJ7H0q2XZvfF+8=;
+	s=korg; t=1795022383;
+	bh=SknrWukl0pp18M9GAulpiax6xtLlzQb3GYos5XZX9Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=St4LA72aA4CEsXbYLGzWvEmNNttZm4NxChNxw2GI9jrp9yG+AsfyKdjND2/1KOrBW
-	 GHFW7ZHZAOF+LsdsRwUN9O7Wtu5EQokdKNLQ0VAdIl77McvdJlwgz0UH2gIF604uOC
-	 KV2r1EPujngQgiUOrRjJ+fcUWmIoCGDJ85lCDEeM=
+	b=CwKBpZqONCClvp8fzN/Vff5ToYT1TcKmZLYo0aCJ3cJVavCRTNsB/wVKg/qatEKZ6
+	 uTS/u9CCmQ1KYQx3q9p5VkOxgDYgArCGqE6ECWknPulK8Pz9PUtNmV0AI3TnRyBEZT
+	 yU3Wsja6bwcwKikycEwZMwNq90Uwv+NBZFzjEjqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 7.3 2641/2651] vdpa_sim: disable page faults around vringh_need_notify_iotlb()
-Date: Wed, 18 Nov 2026 16:04:41 +0100
-Message-ID: <20261118150419.186360771@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2642/2651] PCI/sysfs: Decouple acpi_index from the optional device name element
+Date: Wed, 18 Nov 2026 16:04:42 +0100
+Message-ID: <20261118150419.218374866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,102 +62,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 05fb07c40e0013ba5ae373c6ea1bcc622eaea7f0 ]
+[ Upstream commit 337bdf853101a0ee66eadf668f0fef21f8276b52 ]
 
-When vdpa_sim runs with use_va (the default), its rings live in user
-memory, and vringh reads the ring's flags and event index with
-__get_user() through the user address.  The net and block simulators
-call vringh_need_notify_iotlb() with bottom halves disabled, so those
-reads happen in atomic context.
+The "_DSM for Naming a PCI or PCI Express Device Under Operating Systems"
+(PCI Firmware r3.3, sec 4.6.7) returns a package of two elements:
 
-That only works today because __get_user() has no might_fault() check: a
-fault is not handled in atomic context and simply comes back as -EFAULT.
-Make that explicit with pagefault_disable() around the call, so vringh
-can use the normal user accessors without complaint.  Only the
-notification check needs this: the rest of the ring processing runs in
-the same kthread without bottom halves disabled, and can fault normally.
+  1) Instance number (mandatory Integer)
+  2) String name (optional String, null string if not populated)
 
-Tested-and-acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+These are exposed as sysfs 'acpi_index' and 'label'. Previously, if
+the name was malformed, reads of 'acpi_index' failed unnecessarily.
+
+Validate each element only for the attribute that exports it.  So
+"acpi_index" now depends on the instance number alone, and "label" reads
+fail with -EIO when the name element is neither a string nor a buffer.  The
+package elements pointer is read only after the object type has been
+checked.
+
+On platforms with a valid instance number and a malformed name element the
+"acpi_index" attribute starts returning data.  Because udev derives the
+onboard interface name from "acpi_index", an interface on such a platform
+may be renamed once, on the first boot after this change.  That is the
+attribute assuming the value the firmware always provided.
+
+Link: https://github.com/pciutils/pciutils/issues/175
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260814070522.2327975-3-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 9 ++++++++-
- drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 9 ++++++++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/pci/pci-label.c | 53 +++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-index 76dd5b0828d7a..4d3e36fb59d50 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-@@ -11,6 +11,7 @@
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/kernel.h>
-+#include <linux/uaccess.h>
- #include <linux/blkdev.h>
- #include <linux/vringh.h>
- #include <linux/vdpa.h>
-@@ -343,11 +344,17 @@ static void vdpasim_blk_work(struct vdpasim *vdpasim)
- 			continue;
- 
- 		while (vdpasim_blk_handle_req(vdpasim, vq)) {
-+			bool notify;
-+
- 			/* Make sure used is visible before rasing the interrupt. */
- 			smp_wmb();
- 
- 			local_bh_disable();
--			if (vringh_need_notify_iotlb(&vq->vring) > 0)
-+			/* The ring may be in user memory, and we can't take faults here */
-+			pagefault_disable();
-+			notify = vringh_need_notify_iotlb(&vq->vring) > 0;
-+			pagefault_enable();
-+			if (notify)
- 				vringh_notify(&vq->vring);
- 			local_bh_enable();
- 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-index a6514b5ccd865..543a58abcdb8c 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-@@ -11,6 +11,7 @@
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/kernel.h>
-+#include <linux/uaccess.h>
- #include <linux/etherdevice.h>
- #include <linux/vringh.h>
- #include <linux/vdpa.h>
-@@ -68,6 +69,8 @@ static struct vdpasim_net *sim_to_net(struct vdpasim *vdpasim)
- 
- static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index f81248a11a18e..08c461f1142d7 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -157,7 +157,7 @@ static int dsm_get_label(struct device *dev, char *buf,
  {
-+	bool notify;
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	union acpi_object *obj, *tmp;
+-	int len = 0;
++	int len;
+ 
+ 	if (!handle)
+ 		return -ENODEV;
+@@ -167,30 +167,43 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 	if (!obj)
+ 		return -EIO;
+ 
++	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2) {
++		len = -EIO;
++		goto out;
++	}
 +
- 	/* Make sure data is wrote before advancing index */
- 	smp_wmb();
+ 	tmp = obj->package.elements;
+-	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
+-	    tmp[0].type == ACPI_TYPE_INTEGER &&
+-	    (tmp[1].type == ACPI_TYPE_STRING ||
+-	     tmp[1].type == ACPI_TYPE_BUFFER)) {
+-		/*
+-		 * The second string element is optional even when
+-		 * this _DSM is implemented; when not implemented,
+-		 * this entry must return a null string.
+-		 */
+-		if (attr == ACPI_ATTR_INDEX_SHOW) {
+-			len = sysfs_emit(buf, "%llu\n", tmp->integer.value);
+-		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
+-			if (tmp[1].type == ACPI_TYPE_STRING)
+-				len = sysfs_emit(buf, "%s\n",
+-						 tmp[1].string.pointer);
+-			else if (tmp[1].type == ACPI_TYPE_BUFFER)
+-				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
+-		}
++	if (tmp[0].type != ACPI_TYPE_INTEGER) {
++		len = -EIO;
++		goto out;
+ 	}
  
-@@ -77,7 +80,11 @@ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
- 	smp_wmb();
++	if (attr == ACPI_ATTR_INDEX_SHOW) {
++		len = sysfs_emit(buf, "%llu\n", tmp[0].integer.value);
++		goto out;
++	}
++
++	/*
++	 * Per PCI Firmware r3.3, sec 4.6.7, the device name is optional
++	 * even when this _DSM is implemented. When not implemented, this
++	 * entry must return a NULL string.
++	 */
++	switch (tmp[1].type) {
++	case ACPI_TYPE_STRING:
++		len = sysfs_emit(buf, "%s\n", tmp[1].string.pointer);
++		break;
++	case ACPI_TYPE_BUFFER:
++		len = dsm_label_utf16s_to_utf8s(&tmp[1], buf);
++		break;
++	default:
++		len = -EIO;
++		break;
++	}
++
++out:
+ 	ACPI_FREE(obj);
  
- 	local_bh_disable();
--	if (vringh_need_notify_iotlb(&vq->vring) > 0)
-+	/* The ring may be in user memory, and we can't take faults here */
-+	pagefault_disable();
-+	notify = vringh_need_notify_iotlb(&vq->vring) > 0;
-+	pagefault_enable();
-+	if (notify)
- 		vringh_notify(&vq->vring);
- 	local_bh_enable();
+-	return len > 0 ? len : -EIO;
++	return len;
  }
+ 
+ static ssize_t label_show(struct device *dev, struct device_attribute *attr,
 -- 
 2.53.0
 
