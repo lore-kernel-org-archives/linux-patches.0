@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031332;
-	b=LpF9z583KR2rkxkv3pBni4dJ5H1J2LlZ0Fa2mDRT8vQDxFiFE4dG4hYRqAd1WuUqiI1k
-	 256bQ4VuHCUHwAGQxajtCVbWlUvrSlmSU9heRRpIVE0wLNgJwGGPsrR95YDGyaKzUENlR
-	 k6mDPPNJCcT6jxBIvbteSil3Z8Xpv6+r/nnnMvDKFKnEdy+Yep3uOGHNK9QyG9oo/iCYY
-	 sga+cBn0eDOqmyNxOwKr8y4TdEsRxYou2rneHd5tzC90qQM4/bXF3ZqbVkb4o2ZcssV/A
-	 Do0+bb2mMTcY2bxvw7KSTot2zZjzfWmzrkSNqowe7Gm3m+PIXM6MKtgcFqT5HUpUj5w==
+	t=1795031335;
+	b=BNyK3deg37pSX01f1uiUNr2/OkijSNg8WZfcO2nSRJM3H5Of89M9xzVi0gtshvY0EIwk
+	 XvNneza+16Fi2eNNhD0Iv0QDI8Ge4+ht588XoSfkyYdVoLF43L4Ypm24paNrVyRhR0znz
+	 EcQnuPOcZxNXvB2NKhhjebOEVxpczXBUxsBHNRG4KkBDXFg4Ygu+HAx5ylHEDgiQQ7yh3
+	 YOzyBZwsyrGedkKJxs9zzrhddyBfIthtCmTcZTNisoS2KSzGLt6rASfAQylSCpNMEwIEQ
+	 O2/yE2UYRl7VVUOOjTaxzaZ5FjZBVk3P1nKC8HxW/qJRi9Efu/GcaHRGMeCFjpzyNZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031332;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031335;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gcsILDVfgLXiAE+CuYvqrjEirMfZl3HKqRn1unOd75Y=;
-	b=C0PC6iU2GCgQ0S20UNH+ggREmBdhMu4XoLHEJMZkZPeyMWm1TEfdnwgLPv4WP4MPDSc7
-	 sA4a7kHKB6Bhkdhv0CzqNZIEmmyeI1jV8v+MFk9lgL9oy21JkiJ1YPeL3xRvUD9+GMh7K
-	 iCSl/ujqT6RW8jePTvAPjqjSCnLf3C23JvW7xyRR4Fby949S3ys74RaLyf9mdEEz53GUl
-	 UuY/mFHuEgBwlp65UG49f1FlV2GhZJY1iDXqgykEPtpFpRU8lscJk3w/VVvMTUmu6dS0V
-	 CziwJ0LqFckjq9TYLa2rc+pFUckGct2AX3UsdVbJ/xdxM/V+2xHDmvXGqRs3U/08WiQ==
+	bh=HNIwZcmlktbZmmP2mjMRIy9AYcBd22K2UociC+wExSM=;
+	b=VmEELBpXh2kJE4R91xwlHKxwtaQpnVFFE0Nwfj/h2lIUGV/JAHNCyl5MuxBJ8OFJTxzX
+	 Sd6Vv4Ad5uV/T03qn/xYw49U4Rr2Ym0ZVQkdca5WonUo0s2/CJ+Nf84GN/76GYyqXeNtD
+	 QACRFmXQvS55EeEckTX4/g2JrMiovECOsotNSz23ydpSOnFA1ZP9uJ3BIvBuQCSSQzKRs
+	 nDk79NEQHg4f8G5KkCInrhYA/xxlt+brlcfn2fdHNjBM6e8KXvz61RUVB8KjM3hJ7hNv/
+	 ZMT2dvoZWDry/eTBPAh1lCZFu1bBNe0GVAbMwuUz9BQMzP7v5uT9FLJ2mLmfAmZi8JA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oExmwl2j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sV5Ierze;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30132606A31C;
-	Wed, 18 Nov 2026 19:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09055606A320;
+	Wed, 18 Nov 2026 19:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oExmwl2j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D621F000C4;
-	Wed, 18 Nov 2026 19:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sV5Ierze
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9521F000C4;
+	Wed, 18 Nov 2026 19:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031332;
-	bh=gcsILDVfgLXiAE+CuYvqrjEirMfZl3HKqRn1unOd75Y=;
+	s=korg; t=1795031334;
+	bh=HNIwZcmlktbZmmP2mjMRIy9AYcBd22K2UociC+wExSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oExmwl2jPdzpspkh6kzrKYuRhjAKPaOF8t6n7xPkE+CNs7M9aoxReToF5cncEaAgD
-	 Fi2lR21I/o0YzmQU6T96UT0H/+NwtND5ZLF2MQiL3dybDl+kkv+h7MrFgN+YHhYfyw
-	 sulZyvFB7jtz2W4tLDys0EufejqjqcOiEhC/0u1A=
+	b=sV5IerzexCPtHqh2rQK8r8JHvy5mqN74Gn9KZh6y7EJ7Yy/tT6WtBeDw+nsGes5tF
+	 N931D6BfWolamzTSxqsedjiUBZaWRQVCq2INnfMgM4g1e+HoZWGu0xI39t6k1/OWvN
+	 kSODx1xnhYWPieWFuVUuurq6Du0VtgKxxR+I0BA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1022/1756] wifi: ath6kl: dont take RTNL in del_virtual_intf
-Date: Wed, 18 Nov 2026 15:52:29 +0100
-Message-ID: <20261118150050.791869267@linuxfoundation.org>
+Subject: [PATCH 6.12 1023/1756] wifi: mac80211: clear fragment cache entry is_protected
+Date: Wed, 18 Nov 2026 15:52:30 +0100
+Message-ID: <20261118150050.827191646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,38 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 97aab70a03df478ffefcf890ed4be258c0240bcb ]
+[ Upstream commit f3d29dc9224b0881d10d34664456adf113bc4777 ]
 
-cfg80211 already holds the RTNL here, so this will
-just deadlock. Remove the extra RTNL acquisition.
+In practice, we probably shouldn't end up with a fragmented
+frame that's protected, filled into the cache, finished or
+dropped and then the next frame is unprotected, since only
+unicast data frames can be fragmented.
 
-Oddly enough this was all true even back when the
-locking here was added, so this is just a revert
-of a broken ~13 year old commit.
+However, tools complain and it's more correct to be able to
+do this (e.g. an unencrypted fragmented EAPOL _could_, at
+least in theory, happen), so clear the flag when the entry
+is reused.
 
-Fixes: bc52aab380c7 ("ath6kl: Protect ath6kl_cfg80211_vif_cleanup using rtnl_locks")
+Assisted-by: LLM
+Fixes: 7e44a0b597f0 ("mac80211: prevent attacks on TKIP/WEP as well")
+Link: https://patch.msgid.link/20261005224950.c3e4106f34d5.I866c0862db031c3a810d2333acdd22e2733d2b8c@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20261008165646.48866f0521af.I1c166be830384473f67677eeb187afa7e54106ea@changeid
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/mac80211/rx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/cfg80211.c b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-index 163351b169961..9b5e6207474d9 100644
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -1551,9 +1551,7 @@ static int ath6kl_cfg80211_del_iface(struct wiphy *wiphy,
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 261add4790307..1af24cd4d88f4 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -2188,6 +2188,7 @@ ieee80211_reassemble_add(struct ieee80211_fragment_cache *cache,
+ 	entry->rx_queue = rx_queue;
+ 	entry->last_frag = frag;
+ 	entry->check_sequential_pn = false;
++	entry->is_protected = false;
+ 	entry->extra_len = 0;
  
- 	ath6kl_cfg80211_vif_stop(vif, test_bit(WMI_READY, &ar->flag));
- 
--	rtnl_lock();
- 	ath6kl_cfg80211_vif_cleanup(vif);
--	rtnl_unlock();
- 
- 	return 0;
- }
+ 	return entry;
 -- 
 2.53.0
 
