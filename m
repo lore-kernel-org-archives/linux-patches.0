@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023893;
-	b=zA8g0rXar4jHqkGLkrv+j/hb3AztwBI2kwlEgveUfJ2REiuWgdqGWhrNABpSN6wlDwzZ
-	 040BNoj0QC1eCMvLMfuGigxDRe8qHLCUbdPYd26dWYP+QbNABcjc/mhXP8kPOLX8Bxi62
-	 n195IoHMtpu/Ei1fLAtAvJG5mixs3Wz0tDxoXaQCIO2+LdbtxKJTx0SsWXRmK6Asb8Ixq
-	 XZkjDg0j+Om59vg9g1PffNVIFjp0MZNPWmWBbFOOm7OMpIiFDXPH46IKAR3Alae6P3CWM
-	 JtYK19SLEkgvmH2ksLvhIFAmvELEgS6fyG6yUvUCQzqEiqdakuVMr/UkkdX546M0+xA==
+	t=1795023896;
+	b=37CdHyXxw7WM344HdFVfjML6s3E3TMxxsCVVuKsF5cPIbFwH2+PNEschMDDeLev31gmk
+	 Bsjk7xa8en4FejItPkySsdh61bGzCm/OvfFE8O7/tsFylmhd1lqTm/Q/g5iTQ1UQ3G/GN
+	 oPocJvSbFaMuBz85QOsd/VjgPu8AwM0zOavEJeJH8SYb7DE+BOqhocRW+gDUrt0sgWJma
+	 y9VBE75oPpGubeWWf0sLEJw9NSPyQbj01wrH21mF8MVwnDkQ4UKHbJaXHWlRlK8qXpFBd
+	 DPYzYkWZf5SaPtzDE6ndQHVzF/35rmSs7yWARFkzEBnE2/skjJOmUGKLJY0hxMGNIpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6cGkmrOSDcpMNxVY7Hg4yKJLRtIWqlh6yL9ObdThTic=;
-	b=vUirfq1kWPZRFkq4W4yEdklPa64DqJHkFZkRn8tdzSGSXYsQ9EGbEXacnqZ01mzh0GbO
-	 Qj6t4s9kAt7qa86xm85Xs/myTp5TR6QnLHIPoWTVpan+h4h3v1GQD6bl+Q9MpjaoDfPl/
-	 2kAKjU3Su4RMHQdTE043EHTLPvk4boLEvGBZ0ABFSaYYPYvEU8w5Z04oNLYwM5OGfUvpR
-	 N13Fi7fTS7fXPiNNEtJ3Zwc77+/WZxWB9fpiOER3ZnQX3T4JOONAJzdVuCEzAPLCop5QE
-	 +magqkN/Bs6yhEJqcl6QMgpdAru1tZPLs5p7mD6XUBJLc+AAwCNpb0oWS4oxtfRzXUQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=bTcivYr/AlLHU+hDsLsrHhVBn2O8alwG3q4lhwnOejA=;
+	b=STsD9YYbBBdAUQ4JwNdnay1Wgo08sQQMcX8ljZUM1iOBAugmFrRQxl5umDMnoHvWiMcr
+	 mSKypz52GIRQLBzfFx6S31JCWPrpUQX7Et6cGRgME9lwCDvTtJ9gDuiSCgjIOfbD47rbo
+	 b3fqjfrgu6mp0nbFGXouSJyp0QfvTAn/3Uw05gIvAmiyUSElsSAmPNdKC+Xt1r2A07yBY
+	 bE3/9+CCmqEykjmagsY2dMOCocTkQx2NJvp/cij3lgTX6i8UCxkVExaXxC0Nb2vMyACXW
+	 eW3OkhZmXvhmd3yfPyTOoin4FPR47wS1f5/F/Z/6M24w0n7bNrdioC/PhjHd29YdbRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KD4q1+9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P75ZVzJU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B57606A31C;
-	Wed, 18 Nov 2026 17:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C67E606A31C;
+	Wed, 18 Nov 2026 17:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2KD4q1+9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAD21F000C4;
-	Wed, 18 Nov 2026 17:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P75ZVzJU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934F01F000C4;
+	Wed, 18 Nov 2026 17:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023893;
-	bh=6cGkmrOSDcpMNxVY7Hg4yKJLRtIWqlh6yL9ObdThTic=;
+	s=korg; t=1795023896;
+	bh=bTcivYr/AlLHU+hDsLsrHhVBn2O8alwG3q4lhwnOejA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2KD4q1+9Tj85HSRGbD8LFtKWGFq7cx6COuzpQiDpAI266NPMAyx+FM0MGvX0PObKt
-	 NFAtqY+VwrB/jmeP8SL27tbDakZCU7TxeojlsECMafRDAXcOcSL+cpN20q3mipFxlQ
-	 76Wp5AVrDHoqDz4piicqwkn408SEgFz3apbyO29E=
+	b=P75ZVzJUvy7MPkLzTJ+MXGYjLqLFqREiQk3eu0kqIe9+j1FfJEDkA7cnVxYmXYrLH
+	 YrlAGkIt+Wcs6yy5eT67WuP2hwEYwF/wKkXu35Kn6WTjgT/FBhQLaGPRnNGhN2H6GN
+	 xTGbqfHWwyjI611cDpFg85q/nctzhFadyTqEJ4b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0532/2151] ASoC: codecs: ab8500: Remove suspicious code
-Date: Wed, 18 Nov 2026 15:37:47 +0100
-Message-ID: <20261118150141.394222351@linuxfoundation.org>
+Subject: [PATCH 6.18 0533/2151] ASoC: codecs: ab8500: Use guard() for mutex locks
+Date: Wed, 18 Nov 2026 15:37:48 +0100
+Message-ID: <20261118150141.427379478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,444 +63,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit e366ce8b22ec68189ffea2bb8009f7b20d549b0f ]
+[ Upstream commit 350b7eae8e8b2bd3885a3e2424381494d6bde038 ]
 
-anc_configure() passed values from drvdata->anc_fir_values[],
-drvdata->anc_iir_values[] and drvdata->sid_fir_values[] as register
-offset to snd_soc_component_read(). The content of these arrays are user
-controllable via the component controls "ANC FIR Coefficients", "ANC
-IIR Coefficients" and "Sidetone FIR Coefficients" which I assume are
-supposed to hold register values, not register offsets.
+Clean up the code using guard() for mutex locks.
+Merely code refactoring, and no behavior change.
 
-Without a datasheet for that component and given that before commit
-a201aef1a88b ("ASoC: codecs: ab8500: Fix casting of private data") the
-arrays overlapped with driver control structures and thus didn't work
-properly since 2012, drop that functionality and let someone repair it
-who has an actual need for it.
-
-With the core functionally removed several code parts become essentially
-unused and are removed, too.
-
-Reported-by: Sashiko (gemini/gemini-3.1-pro-preview)
-Link: https://sashiko.dev/#/patchset/20260428192255.2294705-2-u.kleine-koenig%40baylibre.com
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20260430154524.338912-2-u.kleine-koenig@baylibre.com
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260708125002.202515-2-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 0d46182a1be7 ("ASoC: ab8500: Skip digital microphone support on AB8505")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 304 +-------------------------------
- 1 file changed, 3 insertions(+), 301 deletions(-)
+ sound/soc/codecs/ab8500-codec.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
 diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 0c070ab489292..63b0d57341396 100644
+index 63b0d57341396..167f021c7ecbc 100644
 --- a/sound/soc/codecs/ab8500-codec.c
 +++ b/sound/soc/codecs/ab8500-codec.c
-@@ -60,19 +60,6 @@
- low before proceeding with the configuration sequence */
- #define AB8500_ANC_SM_DELAY			2000
- 
--#define AB8500_FILTER_CONTROL(xname, xcount, xmin, xmax) \
--{	.iface = SNDRV_CTL_ELEM_IFACE_MIXER, .name = (xname), \
--	.info = filter_control_info, \
--	.get = filter_control_get, .put = filter_control_put, \
--	.private_value = (unsigned long)&(struct filter_control) \
--		{.count = xcount, .min = xmin, .max = xmax} }
--
--struct filter_control {
--	long min, max;
--	unsigned int count;
--	long value[128];
--};
--
- /* Sidetone states */
- static const char * const enum_sid_state[] = {
- 	"Unconfigured",
-@@ -85,45 +72,13 @@ enum sid_state {
- 	SID_FIR_CONFIGURED = 2,
- };
- 
--static const char * const enum_anc_state[] = {
--	"Unconfigured",
--	"Apply FIR and IIR",
--	"FIR and IIR are configured",
--	"Apply FIR",
--	"FIR is configured",
--	"Apply IIR",
--	"IIR is configured"
--};
--enum anc_state {
--	ANC_UNCONFIGURED = 0,
--	ANC_APPLY_FIR_IIR = 1,
--	ANC_FIR_IIR_CONFIGURED = 2,
--	ANC_APPLY_FIR = 3,
--	ANC_FIR_CONFIGURED = 4,
--	ANC_APPLY_IIR = 5,
--	ANC_IIR_CONFIGURED = 6
--};
--
--/* Analog microphones */
--enum amic_idx {
--	AMIC_IDX_1A,
--	AMIC_IDX_1B,
--	AMIC_IDX_2
--};
--
- /* Private data for AB8500 device-driver */
- struct ab8500_codec_drvdata {
- 	struct regmap *regmap;
- 	struct mutex ctrl_lock;
- 
- 	/* Sidetone */
--	long *sid_fir_values;
- 	enum sid_state sid_status;
--
--	/* ANC */
--	long *anc_fir_values;
--	long *anc_iir_values;
--	enum anc_state anc_status;
- };
- 
- static inline const char *amic_micbias_str(enum amic_micbias micbias)
-@@ -1016,89 +971,6 @@ static const struct snd_soc_dapm_route ab8500_dapm_routes_mic2_vamicx[] = {
- 	{"MIC2 V-AMICx Enable", NULL, "V-AMIC2"},
- };
- 
--/* ANC FIR-coefficients configuration sequence */
--static void anc_fir(struct snd_soc_component *component,
--		unsigned int bnk, unsigned int par, unsigned int val)
--{
--	if (par == 0 && bnk == 0)
--		snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--			BIT(AB8500_ANCCONF1_ANCFIRUPDATE),
--			BIT(AB8500_ANCCONF1_ANCFIRUPDATE));
--
--	snd_soc_component_write(component, AB8500_ANCCONF5, val >> 8 & 0xff);
--	snd_soc_component_write(component, AB8500_ANCCONF6, val &  0xff);
--
--	if (par == AB8500_ANC_FIR_COEFFS - 1 && bnk == 1)
--		snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--			BIT(AB8500_ANCCONF1_ANCFIRUPDATE), 0);
--}
--
--/* ANC IIR-coefficients configuration sequence */
--static void anc_iir(struct snd_soc_component *component, unsigned int bnk,
--		unsigned int par, unsigned int val)
--{
--	if (par == 0) {
--		if (bnk == 0) {
--			snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--					BIT(AB8500_ANCCONF1_ANCIIRINIT),
--					BIT(AB8500_ANCCONF1_ANCIIRINIT));
--			usleep_range(AB8500_ANC_SM_DELAY, AB8500_ANC_SM_DELAY*2);
--			snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--					BIT(AB8500_ANCCONF1_ANCIIRINIT), 0);
--			usleep_range(AB8500_ANC_SM_DELAY, AB8500_ANC_SM_DELAY*2);
--		} else {
--			snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--					BIT(AB8500_ANCCONF1_ANCIIRUPDATE),
--					BIT(AB8500_ANCCONF1_ANCIIRUPDATE));
--		}
--	} else if (par > 3) {
--		snd_soc_component_write(component, AB8500_ANCCONF7, 0);
--		snd_soc_component_write(component, AB8500_ANCCONF8, val >> 16 & 0xff);
--	}
--
--	snd_soc_component_write(component, AB8500_ANCCONF7, val >> 8 & 0xff);
--	snd_soc_component_write(component, AB8500_ANCCONF8, val & 0xff);
--
--	if (par == AB8500_ANC_IIR_COEFFS - 1 && bnk == 1)
--		snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--			BIT(AB8500_ANCCONF1_ANCIIRUPDATE), 0);
--}
--
--/* ANC IIR-/FIR-coefficients configuration sequence */
--static void anc_configure(struct snd_soc_component *component,
--			bool apply_fir, bool apply_iir)
--{
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--	unsigned int bnk, par, val;
--
--	dev_dbg(component->dev, "%s: Enter.\n", __func__);
--
--	if (apply_fir)
--		snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--			BIT(AB8500_ANCCONF1_ENANC), 0);
--
--	snd_soc_component_update_bits(component, AB8500_ANCCONF1,
--		BIT(AB8500_ANCCONF1_ENANC), BIT(AB8500_ANCCONF1_ENANC));
--
--	if (apply_fir)
--		for (bnk = 0; bnk < AB8500_NR_OF_ANC_COEFF_BANKS; bnk++)
--			for (par = 0; par < AB8500_ANC_FIR_COEFFS; par++) {
--				val = snd_soc_component_read(component,
--						drvdata->anc_fir_values[par]);
--				anc_fir(component, bnk, par, val);
--			}
--
--	if (apply_iir)
--		for (bnk = 0; bnk < AB8500_NR_OF_ANC_COEFF_BANKS; bnk++)
--			for (par = 0; par < AB8500_ANC_IIR_COEFFS; par++) {
--				val = snd_soc_component_read(component,
--						drvdata->anc_iir_values[par]);
--				anc_iir(component, bnk, par, val);
--			}
--
--	dev_dbg(component->dev, "%s: Exit.\n", __func__);
--}
--
- /*
-  * Control-events
+@@ -14,6 +14,7 @@
+  *         for ST-Ericsson.
   */
-@@ -1122,7 +994,7 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
- {
+ 
++#include <linux/cleanup.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+@@ -981,9 +982,8 @@ static int sid_status_control_get(struct snd_kcontrol *kcontrol,
  	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
  	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--	unsigned int param, sidconf, val;
-+	unsigned int param, sidconf;
- 	int status = 1;
  
- 	dev_dbg(component->dev, "%s: Enter\n", __func__);
-@@ -1151,9 +1023,8 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
- 	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
+-	mutex_lock(&drvdata->ctrl_lock);
++	guard(mutex)(&drvdata->ctrl_lock);
+ 	ucontrol->value.enumerated.item[0] = drvdata->sid_status;
+-	mutex_unlock(&drvdata->ctrl_lock);
  
- 	for (param = 0; param < AB8500_SID_FIR_COEFFS; param++) {
--		val = snd_soc_component_read(component, drvdata->sid_fir_values[param]);
--		snd_soc_component_write(component, AB8500_SIDFIRCOEF1, val >> 8 & 0xff);
--		snd_soc_component_write(component, AB8500_SIDFIRCOEF2, val & 0xff);
-+		snd_soc_component_write(component, AB8500_SIDFIRCOEF1, 0);
-+		snd_soc_component_write(component, AB8500_SIDFIRCOEF2, 0);
+ 	return 0;
+ }
+@@ -1006,7 +1006,7 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+ 		return -EIO;
  	}
  
- 	snd_soc_component_update_bits(component, AB8500_SIDFIRADR,
-@@ -1172,136 +1043,6 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+-	mutex_lock(&drvdata->ctrl_lock);
++	guard(mutex)(&drvdata->ctrl_lock);
+ 
+ 	sidconf = snd_soc_component_read(component, AB8500_SIDFIRCONF);
+ 	if (((sidconf & BIT(AB8500_SIDFIRCONF_FIRSIDBUSY)) != 0)) {
+@@ -1017,7 +1017,8 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+ 		} else {
+ 			status = -EBUSY;
+ 		}
+-		goto out;
++		dev_dbg(component->dev, "%s: Exit\n", __func__);
++		return status;
+ 	}
+ 
+ 	snd_soc_component_write(component, AB8500_SIDFIRADR, 0);
+@@ -1035,9 +1036,6 @@ static int sid_status_control_put(struct snd_kcontrol *kcontrol,
+ 
+ 	drvdata->sid_status = SID_FIR_CONFIGURED;
+ 
+-out:
+-	mutex_unlock(&drvdata->ctrl_lock);
+-
+ 	dev_dbg(component->dev, "%s: Exit\n", __func__);
+ 
  	return status;
- }
- 
--static int anc_status_control_get(struct snd_kcontrol *kcontrol,
--				struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--
--	mutex_lock(&drvdata->ctrl_lock);
--	ucontrol->value.enumerated.item[0] = drvdata->anc_status;
--	mutex_unlock(&drvdata->ctrl_lock);
--
--	return 0;
--}
--
--static int anc_status_control_put(struct snd_kcontrol *kcontrol,
--				struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
--	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(component->dev);
--	struct device *dev = component->dev;
--	bool apply_fir, apply_iir;
--	unsigned int req;
--	int status;
--
--	dev_dbg(dev, "%s: Enter.\n", __func__);
--
--	mutex_lock(&drvdata->ctrl_lock);
--
--	req = ucontrol->value.enumerated.item[0];
--	if (req >= ARRAY_SIZE(enum_anc_state)) {
--		status = -EINVAL;
--		goto cleanup;
--	}
--	if (req != ANC_APPLY_FIR_IIR && req != ANC_APPLY_FIR &&
--		req != ANC_APPLY_IIR) {
--		dev_err(dev, "%s: ERROR: Unsupported status to set '%s'!\n",
--			__func__, enum_anc_state[req]);
--		status = -EINVAL;
--		goto cleanup;
--	}
--	apply_fir = req == ANC_APPLY_FIR || req == ANC_APPLY_FIR_IIR;
--	apply_iir = req == ANC_APPLY_IIR || req == ANC_APPLY_FIR_IIR;
--
--	status = snd_soc_dapm_force_enable_pin(dapm, "ANC Configure Input");
--	if (status < 0) {
--		dev_err(dev,
--			"%s: ERROR: Failed to enable power (status = %d)!\n",
--			__func__, status);
--		goto cleanup;
--	}
--	snd_soc_dapm_sync(dapm);
--
--	anc_configure(component, apply_fir, apply_iir);
--
--	if (apply_fir) {
--		if (drvdata->anc_status == ANC_IIR_CONFIGURED)
--			drvdata->anc_status = ANC_FIR_IIR_CONFIGURED;
--		else if (drvdata->anc_status != ANC_FIR_IIR_CONFIGURED)
--			drvdata->anc_status =  ANC_FIR_CONFIGURED;
--	}
--	if (apply_iir) {
--		if (drvdata->anc_status == ANC_FIR_CONFIGURED)
--			drvdata->anc_status = ANC_FIR_IIR_CONFIGURED;
--		else if (drvdata->anc_status != ANC_FIR_IIR_CONFIGURED)
--			drvdata->anc_status =  ANC_IIR_CONFIGURED;
--	}
--
--	status = snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
--	snd_soc_dapm_sync(dapm);
--
--cleanup:
--	mutex_unlock(&drvdata->ctrl_lock);
--
--	if (status < 0)
--		dev_err(dev, "%s: Unable to configure ANC! (status = %d)\n",
--			__func__, status);
--
--	dev_dbg(dev, "%s: Exit.\n", __func__);
--
--	return (status < 0) ? status : 1;
--}
--
--static int filter_control_info(struct snd_kcontrol *kcontrol,
--			struct snd_ctl_elem_info *uinfo)
--{
--	struct filter_control *fc =
--			(struct filter_control *)kcontrol->private_value;
--
--	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
--	uinfo->count = fc->count;
--	uinfo->value.integer.min = fc->min;
--	uinfo->value.integer.max = fc->max;
--
--	return 0;
--}
--
--static int filter_control_get(struct snd_kcontrol *kcontrol,
--			struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = snd_soc_component_get_drvdata(component);
--	struct filter_control *fc =
--			(struct filter_control *)kcontrol->private_value;
--	unsigned int i;
--
--	mutex_lock(&drvdata->ctrl_lock);
--	for (i = 0; i < fc->count; i++)
--		ucontrol->value.integer.value[i] = fc->value[i];
--	mutex_unlock(&drvdata->ctrl_lock);
--
--	return 0;
--}
--
--static int filter_control_put(struct snd_kcontrol *kcontrol,
--		struct snd_ctl_elem_value *ucontrol)
--{
--	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
--	struct ab8500_codec_drvdata *drvdata = snd_soc_component_get_drvdata(component);
--	struct filter_control *fc =
--			(struct filter_control *)kcontrol->private_value;
--	unsigned int i;
--
--	mutex_lock(&drvdata->ctrl_lock);
--	for (i = 0; i < fc->count; i++)
--		fc->value[i] = ucontrol->value.integer.value[i];
--	mutex_unlock(&drvdata->ctrl_lock);
--
--	return 0;
--}
--
- /*
-  * Controls - Non-DAPM ASoC
-  */
-@@ -1589,7 +1330,6 @@ static SOC_ENUM_SINGLE_DECL(soc_enum_bfifomast,
- static SOC_ENUM_SINGLE_EXT_DECL(soc_enum_sidstate, enum_sid_state);
- 
- /* ANC */
--static SOC_ENUM_SINGLE_EXT_DECL(soc_enum_ancstate, enum_anc_state);
- 
- static struct snd_kcontrol_new ab8500_ctrls[] = {
- 	/* Charge pump */
-@@ -1865,8 +1605,6 @@ static struct snd_kcontrol_new ab8500_ctrls[] = {
- 		AB8500_FIFOCONF6_BFIFOSAMPLE_MAX, 0),
- 
- 	/* ANC */
--	SOC_ENUM_EXT("ANC Status", soc_enum_ancstate,
--		anc_status_control_get, anc_status_control_put),
- 	SOC_SINGLE_XR_SX("ANC Warp Delay Shift",
- 		AB8500_ANCCONF2, 1, AB8500_ANCCONF2_SHIFT,
- 		AB8500_ANCCONF2_MIN, AB8500_ANCCONF2_MAX, 0),
-@@ -1887,21 +1625,6 @@ static struct snd_kcontrol_new ab8500_ctrls[] = {
- 		AB8500_SIDFIRADR, AB8500_SIDFIRADR_FIRSIDSET, 0),
- };
- 
--static struct snd_kcontrol_new ab8500_filter_controls[] = {
--	AB8500_FILTER_CONTROL("ANC FIR Coefficients", AB8500_ANC_FIR_COEFFS,
--		AB8500_ANC_FIR_COEFF_MIN, AB8500_ANC_FIR_COEFF_MAX),
--	AB8500_FILTER_CONTROL("ANC IIR Coefficients", AB8500_ANC_IIR_COEFFS,
--		AB8500_ANC_IIR_COEFF_MIN, AB8500_ANC_IIR_COEFF_MAX),
--	AB8500_FILTER_CONTROL("Sidetone FIR Coefficients",
--			AB8500_SID_FIR_COEFFS, AB8500_SID_FIR_COEFF_MIN,
--			AB8500_SID_FIR_COEFF_MAX)
--};
--enum ab8500_filter {
--	AB8500_FILTER_ANC_FIR = 0,
--	AB8500_FILTER_ANC_IIR = 1,
--	AB8500_FILTER_SID_FIR = 2,
--};
--
- /*
-  * Extended interface for codec-driver
-  */
-@@ -2429,7 +2152,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 	struct device_node *np = dev->of_node;
- 	struct ab8500_codec_drvdata *drvdata = dev_get_drvdata(dev);
- 	struct ab8500_codec_platform_data codec_pdata;
--	struct filter_control *fc;
- 	int status;
- 
- 	dev_dbg(dev, "%s: Enter.\n", __func__);
-@@ -2461,25 +2183,6 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 	snd_soc_component_write(component, AB8500_SHORTCIRCONF,
- 		      BIT(AB8500_SHORTCIRCONF_HSZCDDIS));
- 
--	/* Add filter controls */
--	status = snd_soc_add_component_controls(component, ab8500_filter_controls,
--				ARRAY_SIZE(ab8500_filter_controls));
--	if (status < 0) {
--		dev_err(dev,
--			"%s: failed to add ab8500 filter controls (%d).\n",
--			__func__, status);
--		return status;
--	}
--	fc = (struct filter_control *)
--		ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
--	drvdata->anc_fir_values = (long *)fc->value;
--	fc = (struct filter_control *)
--		ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
--	drvdata->anc_iir_values = (long *)fc->value;
--	fc = (struct filter_control *)
--		ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
--	drvdata->sid_fir_values = (long *)fc->value;
--
- 	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
- 
- 	mutex_init(&drvdata->ctrl_lock);
-@@ -2513,7 +2216,6 @@ static int ab8500_codec_driver_probe(struct platform_device *pdev)
- 	if (!drvdata)
- 		return -ENOMEM;
- 	drvdata->sid_status = SID_UNCONFIGURED;
--	drvdata->anc_status = ANC_UNCONFIGURED;
- 	dev_set_drvdata(&pdev->dev, drvdata);
- 
- 	drvdata->regmap = devm_regmap_init(&pdev->dev, NULL, &pdev->dev,
 -- 
 2.53.0
 
