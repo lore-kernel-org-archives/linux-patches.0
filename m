@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057822;
-	b=UUp6+ASvJGYsK04WXzaFS4l4ieaUq3MFEh/SaLfADq6H+LkBpfeMFl8bFHd9QhrG5S4u
-	 Ur6EFvn8lH5ZCPwi6yVNWpXZ13uFS6mnYCvf/O2raHhd6AUCwVJhXQgMgWYaD44zLYpGm
-	 pldhxVKCfx66yWiLGZuzQJxP2iCDPYc9reMy1GoZ2KkqCjFhPuTuPVyI22NhjaC32oMCs
-	 Q/NzA/oFnAkn2aSWWHm0AmHw82RYvhCS90pjMzfjAFYKGVAGgVOT6dlrkItY/VlTutFMR
-	 mE1mn6S1o2keoBID4e42TnNxUHs4qifjlv5fXpPSb6h0itTnbuSkGmPn8Z3Mwp6M29w==
+	t=1795057825;
+	b=edbzzTiYsLWCtrX4yl7OuAainwBk7Y1aJss6iF0/jM4y8ZVAKVtYpRE8jAZMO8dUZue6
+	 0Va7Zmuz2hLM3kNV/QMpMSR8xCEZLX+uDi7+GCY/F1UiBgGd5pEde0ZZ0h+X/U1x3tGpW
+	 nw/RLPdG7P5jZ8YGpgEh9wavGCJpB1Kpra13BPKPKxMgsD5Szv2RzLQrEXlKWH2YFAGdD
+	 1UnByeXHBk8WmcuqDYOkPcRPCffADp4RevoR4q8OEZKtCTGfJ8gKsQq25EBwAhsYkAiAB
+	 N9wj4yZTHyzAD1/wthKkpOXD/4E8vQ80gl/F5HLPIEU1IWnGix6tITNV8ompoX/uBAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zNFTlDSYi3Csz9yaQT/rZ03GefEpOdH/HqtDYLJc+V0=;
-	b=tBFpsP+h3Je0XVNoS1QmX4LD+6eSXV8rHJseB4HJ5U2L471Liiuo4GMO4uxpmNBoCz7t
-	 RElo7WcakLiyohbvbsWaxsTX3weRJCqVqevC4ZHHrLRe8qfg1sE9Bf872itN3htpX3K9U
-	 P1j8lZWfDMSxASPtsjxSqHaaVDyh1Nm1IdP/471UM+4/op/zo75W1QKty2mBIjBHxzAvd
-	 ayUs0xBiQAIN2OAaisJz6HgxwuJcLWW0M7nT5VJQYfEp5OknJi/mjqnl4NJIO9TRII+W+
-	 mh8+A4DCC2PXq6/JTLqcooA+0VHjqJUkRTr1V2lhd4PrM9rhvzLiBNmSAn3lkCGGN6Q==
+	bh=cKcOc2qsCVyIEtuuYqtedCOX2fz20C9wRhjHyUMvTC8=;
+	b=u/Pri1SJe9bKTlHJaMSjLpMvjB7T2n7kbV8/scRjQvuXSB9pRq+5DstQchPP/dUveiYu
+	 8ieZmCxvrqHEA1dcDWUMzkZHFMO9/D1LE5RCuq20NZN4oDjYTC3QkvAtsDsO7O6TxTgw/
+	 tK/tDDfGO/lzQsGz5uhcH+IKNQHaWZ8ATr0Ievk4ekEw3mpzc4V91UNgKzMauYcQXeuW3
+	 VMXwfqxx+Pw7g9ESOuTQ8kqQCGFYah+e0vIAalg3t4u5zVz7gRd4A40pWsP0ERDujGnWs
+	 RZu6fhAnsqufFBq+bvS+iRGginfynJbNKt4hqe4umRNDFR9ElQuCUU3Oz3TrNs3mPoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YWcbPU8h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b1DtEpJ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157F8606A320;
-	Thu, 19 Nov 2026 03:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED441606A31C;
+	Thu, 19 Nov 2026 03:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YWcbPU8h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1881F000C8;
-	Thu, 19 Nov 2026 03:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b1DtEpJ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0EB1F000C8;
+	Thu, 19 Nov 2026 03:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057821;
-	bh=zNFTlDSYi3Csz9yaQT/rZ03GefEpOdH/HqtDYLJc+V0=;
+	s=korg; t=1795057824;
+	bh=cKcOc2qsCVyIEtuuYqtedCOX2fz20C9wRhjHyUMvTC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YWcbPU8hr37L/Se7mjD4G4c6wsmKjla9SIAXahvr9PnvwFgtFReO+vDYgrn/q6abm
-	 kGbq3jMHXuwjoDJRcSuryAfaNhfxoDT8GYSfn/9ZwZLeKFLwNcQwxDQgL0upF9knq9
-	 pMLD8qbwzOy38FvnGTsNqLKlB2xAJr+JMg/D33H0=
+	b=b1DtEpJ08GkK7ipHV6QbdxJ5tAfl779RqgI91WRlKZ3TVi52+P0EwAinqBDtRv1Mh
+	 CeOg+T3+QeZ5r8XISfJKm/KYw4Ax+ZVfsLwNQCirJ5xwEhktX9MAuubxk77U98VihE
+	 PIS3w+QJpFIe9jQuUE6PGD8XoHpq56QnaPS1sjY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Siddhi Katage <siddhi.katage@oracle.com>,
+	Qing Luo <luoqing@kylinos.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
 	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0225/1848] KVM: nVMX: Put vmcs12 pages if nested VM-Enter fails due to invalid guest state
-Date: Wed, 18 Nov 2026 15:37:43 +0100
-Message-ID: <20261118145921.389855619@linuxfoundation.org>
+Subject: [PATCH 5.10 0226/1848] sctp: auth: discard auth_chunk when skb_clone fails
+Date: Wed, 18 Nov 2026 15:37:44 +0100
+Message-ID: <20261118145921.424570737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,57 +71,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Qing Luo <luoqing@kylinos.cn>
 
-[ Upstream commit 2f2312c422fd2695da772cecb30c69994b795964 ]
+[ Upstream commit 9ae7ed101cf28613071ebfbc42668c8917a670cf ]
 
-Put all vmcs12 pages if KVM synthesizes a nested VM-Exit due to invalid
-guest while emulating VMLAUNCH or VMRESUME.  The invalid guest state path
-doesn't use nested_vmx_vmexit() as that API is intended to be used if and
-only if L2 is active, and the open coded equivalent neglects to put the
-vmcs12 pages.  Failure to put the vmcs12 pages leaks any pinned pages
-(and/or mappings) if L1 retries VMLAUNCH/VMRESUME.
+When processing AUTH + COOKIE-ECHO packets, if skb_clone() fails
+due to memory pressure, chunk->auth_chunk is NULL. The original
+code still sets chunk->auth = 1 and continues, leaving the
+COOKIE-ECHO to be processed without a valid auth_chunk for
+deferred verification.
 
-Note, the !from_vmenter scenario doesn't suffer the same problem, as
-vmx_get_nested_state_pages() only gets/pins/maps the vmcs12 pages if L2 is
-active, i.e. if a "full" VM-Exit is guaranteed before KVM will retry
-getting vmcs12 pages.
+Discard the AUTH chunk early via pdiscard when skb_clone() fails,
+so that the receive loop can continue processing remaining chunks
+in the inqueue instead of stalling the entire packet.
 
-Fixes: 96c66e87deee ("KVM/nVMX: Use kvm_vcpu_map when mapping the virtual APIC page")
-Fixes: 3278e0492554 ("KVM/nVMX: Use kvm_vcpu_map when mapping the posted interrupt descriptor table")
-Fixes: fe1911aa443e ("KVM: nVMX: Use kvm_vcpu_map() to get/pin vmcs12's APIC-access page")
-Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 2f2312c422fd2695da772cecb30c69994b795964)
-[Siddhi: use 5.10 vmcs12 page release operations; helper is absent]
-Signed-off-by: Siddhi Katage <siddhi.katage@oracle.com>
+Signed-off-by: Qing Luo <luoqing@kylinos.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260723061107.384106-1-l1138897701@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
 Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/sctp/associola.c   | 4 ++++
+ net/sctp/endpointola.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 118aa1fb8fce7..7c861d34f9c56 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3514,6 +3514,14 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
- 		return NVMX_VMENTRY_VMEXIT;
- 	}
- 
-+	if (vmx->nested.apic_access_page) {
-+		kvm_release_page_clean(vmx->nested.apic_access_page);
-+		vmx->nested.apic_access_page = NULL;
-+	}
-+	kvm_vcpu_unmap(vcpu, &vmx->nested.virtual_apic_map, true);
-+	kvm_vcpu_unmap(vcpu, &vmx->nested.pi_desc_map, true);
-+	vmx->nested.pi_desc = NULL;
-+
- 	load_vmcs12_host_state(vcpu, vmcs12);
- 	vmcs12->vm_exit_reason = exit_reason.full;
- 	if (enable_shadow_vmcs || vmx->nested.hv_evmcs)
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index ad1a7368f6ab0..13a3cb5c95ae0 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -1019,6 +1019,10 @@ static void sctp_assoc_bh_rcv(struct work_struct *work)
+ 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
+ 				chunk->auth_chunk = skb_clone(chunk->skb,
+ 							      GFP_ATOMIC);
++				if (!chunk->auth_chunk) {
++					chunk->pdiscard = 1;
++					continue;
++				}
+ 				chunk->auth = 1;
+ 				continue;
+ 			}
+diff --git a/net/sctp/endpointola.c b/net/sctp/endpointola.c
+index efffde7f2328e..2313ea9fbe065 100644
+--- a/net/sctp/endpointola.c
++++ b/net/sctp/endpointola.c
+@@ -362,6 +362,10 @@ static void sctp_endpoint_bh_rcv(struct work_struct *work)
+ 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
+ 				chunk->auth_chunk = skb_clone(chunk->skb,
+ 								GFP_ATOMIC);
++				if (!chunk->auth_chunk) {
++					chunk->pdiscard = 1;
++					continue;
++				}
+ 				chunk->auth = 1;
+ 				continue;
+ 			}
 -- 
 2.53.0
 
