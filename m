@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048333;
-	b=252Xs9oWuMAE8VceC4bz+WmynQ3Ze/XVVdrF/ypGvbQg8zc9b6Aft6pL3oAF5OsN/40Q
-	 ZSoQQF26uFJYqxXW+85brYSD9Ks+nzgjcmmduvxjOc7dgdYqViGsgsSmhheaVt+FSxZw4
-	 rBFEVotCMYpHI10BqLSRG9kyZdEKqzvy3PDnuaS/iQMtdL3HwubzuirVSck3V2mAXqEAk
-	 TBKCMtHJcKX13d43xf5B43YvfKxofp7C7HuSZtBe7cJrHN/Yq7b0v7wwCafmIBvpTpCbf
-	 GQ+vgNHXfwNtwYZXOAtI4DahYWsI6nYjkISnJz8fdcvIoeMs92JkQzI8a+nFkUCn25A==
+	t=1795048336;
+	b=MThnojDtrMZYtE8yZ3l6zz8ICY6yh+Y4UsVSCCVeohvhJWxXuHQNCWusZCBCyi891BVD
+	 EZT+DxyCjr6vq/C7X6teruImq+fgBPv3EvlmkIlIEYfA/CVcsKIdNRPM2ShfGNWdhNf8z
+	 4/0l7cX4TPK/gu3HX1wsRcFHhhQcW0w4+MuoHt2N/SANhr3wo6+FYjUdXfERmjrQWClry
+	 IbU8K0T8cmLi0fcEUc1eSR70f1IBST7V2Qh3gmj5LwKWc+k2kFUXqJHAc7n1DJYKJuhbu
+	 Ja0pqQqvIdly1uJYV77DNAaJMbWZ/1IvP//8wUWpQJhfQrGDQT0y+YlPyBEbkFN1iMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XOre3hM9Wejo1cTd0o0wLod1pQpkjxGhG/niq+/b0Uc=;
-	b=g2O0s49yFWQTnqz0JhmXfldufUvl6FfodJT1o6VhpxukpFqJ6JwGtQ939fzZysvruu4g
-	 FWGHrOjNg7VGjbXMoxhhK+WoFOKPl1QueT8nh/j1ixY2a5G8J94QODmu7J7CV353Tlm89
-	 QE1QtKBKIUYOaW3tEUB5K1XSWLFqnt/phK56SKgdDfOWXMqv4E7gq+m/qBjq1EJ48lqay
-	 G3n7QrWlIkP21PXYI1rplY9drGYnRmjiJkWG+T19Hlg7QUU9lGUWbKpc7LLEUqKK/lDw3
-	 n7MlnifOFYDtBAoftzD4nVVMafvf4r9zyeVwHtZJogUdNII2BWCv1ua2f+SeCE7gfnQ==
+	bh=759jPZo+y3gSOWeQLMFHQfoeMV3u8HXdxIe8jXhvaEk=;
+	b=LfshtEFaxfMymxYFkPIYPpiP8PA+Dhxh1yF9cS88EL0lefgYMIvcIjE94FI/aphEl9ge
+	 Ck3sWcKG74RZkxcwXSwwaaO5EM6Q41KBTS/+CWjZuI/PXaovNbFJb4Oh1s44HTsdFyCvA
+	 ghpkmAguZUb0DaTzNODRshQaGWQLHKUm3+fqHOXo83TZqhY57ePM6m04Mi/0GtItdg3EB
+	 B1hWPBVruuITMd6jKWqjVuyx5yIj7RS0wEU0R7wtAzQLXPhEKy2GRGpV8sR+zwUPGZcLl
+	 3GZ/5ziO9fbZhX+UAOh4p1ongwHR3UbrrRCKkujtE2Loi9u52axzW27XlvDa2B0mMdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvg7XWHA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPeQYj1x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB1B606A32A;
-	Thu, 19 Nov 2026 00:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92E8606A320;
+	Thu, 19 Nov 2026 00:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vvg7XWHA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B47A1F000C5;
-	Thu, 19 Nov 2026 00:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fPeQYj1x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CDC1F000C4;
+	Thu, 19 Nov 2026 00:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048333;
-	bh=XOre3hM9Wejo1cTd0o0wLod1pQpkjxGhG/niq+/b0Uc=;
+	s=korg; t=1795048336;
+	bh=759jPZo+y3gSOWeQLMFHQfoeMV3u8HXdxIe8jXhvaEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vvg7XWHA1+nuBmWhyRPhh0rxunwPcdbvCHCCz67n9S05sn6qB5Ycxi0wvURgBwafh
-	 1xM69rrcz/A0nSar6pKV8/L9W+xcNIk7OxrluOG+0tLxkmBLvo/sYI8QYF58cAP1HT
-	 0XvQC0/2tmuWVyuNgN3jGK6q2H+kQz/6u1I4bah0=
+	b=fPeQYj1x8j7U/JLBTUBpbess/3t3rWBtQXd90Dzn95HKeWSSpbTWxn0eaWeNu28DW
+	 AqHBu6wIqAF5O8dtmt1w88xykwd9iDbd0B9EG8hxzC+pUChyBMpLiLtW6GfuXq20yS
+	 XiDaDL9Z/t/2L1bmxIrxnwFJpz/YwWQa0UnPAqnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1958/2857] md/raid5: setup_conf: Fix null-ptr-def in error handling path
-Date: Wed, 18 Nov 2026 15:49:52 +0100
-Message-ID: <20261118150311.906915786@linuxfoundation.org>
+Subject: [PATCH 6.1 1959/2857] clk: milbeaut: Return divider update timeouts
+Date: Wed, 18 Nov 2026 15:49:53 +0100
+Message-ID: <20261118150311.940860784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,50 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit eba5f518701b1c7f2d883504f89c41611bd2de46 ]
+[ Upstream commit 92d0998090d1716ee6b47174c10eb9415a12fca8 ]
 
-For raid5 setup_conf, if an error(eg. bioset_init fails) happens before
-'conf->mddev = mddev', following error handling path could trigger a
-null-ptr-def problem:
+m10v_clk_divider_set_rate() logs when the hardware does not clear its
+write-valid request, but still returns success to the clock framework. It
+also uses the sleeping poll helper while holding the divider spinlock.
 
- free_conf
-  log_exit
-   raid5_has_ppl
-    test_bit(MD_HAS_PPL, &conf->mddev->flags) // conf->mddev is NULL !
+Use the atomic poll helper under the lock and return its timeout so the
+rate change is not reported as successful before the hardware accepts it.
 
-Fix it by initializing conf->mddev in advance.
+The issue was found by our static-analysis tool and manually reviewed.
 
-Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://patch.msgid.link/20260915081731.122933-1-chengzhihao1@huawei.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 6a6ba5b55a72 ("clock: milbeaut: Add Milbeaut M10V clock controller")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-milbeaut.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index b022df9fdca0d..cbcca76b5b1d3 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -7544,6 +7544,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	if (conf == NULL)
- 		goto abort;
+diff --git a/drivers/clk/clk-milbeaut.c b/drivers/clk/clk-milbeaut.c
+index 80b9d78493bcd..eacc37f5b0bbd 100644
+--- a/drivers/clk/clk-milbeaut.c
++++ b/drivers/clk/clk-milbeaut.c
+@@ -411,8 +411,8 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 				unsigned long parent_rate)
+ {
+ 	struct m10v_clk_divider *divider = to_m10v_div(hw);
+-	int value;
+ 	unsigned long flags = 0;
++	int value, ret = 0;
+ 	u32 val;
+ 	u32 write_en = BIT(divider->width - 1);
  
-+	conf->mddev = mddev;
- #if PAGE_SIZE != DEFAULT_STRIPE_SIZE
- 	conf->stripe_size = DEFAULT_STRIPE_SIZE;
- 	conf->stripe_shift = ilog2(DEFAULT_STRIPE_SIZE) - 9;
-@@ -7617,7 +7618,6 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	ret = bioset_init(&conf->bio_split, BIO_POOL_SIZE, 0, 0);
- 	if (ret)
- 		goto abort;
--	conf->mddev = mddev;
+@@ -434,8 +434,10 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
  
- 	ret = -ENOMEM;
- 	conf->stripe_hashtbl = kzalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (divider->write_valid_reg) {
+ 		writel(M10V_DCHREQ, divider->write_valid_reg);
+-		if (readl_poll_timeout(divider->write_valid_reg, val,
+-			!val, M10V_UPOLL_RATE, M10V_UTIMEOUT))
++		ret = readl_poll_timeout_atomic(divider->write_valid_reg, val,
++						!val, M10V_UPOLL_RATE,
++						M10V_UTIMEOUT);
++		if (ret)
+ 			pr_err("%s:%s couldn't stabilize\n",
+ 				__func__, clk_hw_get_name(hw));
+ 	}
+@@ -445,7 +447,7 @@ static int m10v_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	else
+ 		__release(divider->lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static const struct clk_ops m10v_clk_divider_ops = {
 -- 
 2.53.0
 
