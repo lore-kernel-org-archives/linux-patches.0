@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045689;
-	b=0cq8nkp+gx1fs6MFJ7p3xcTdwDmcHLT0ntUnPFQjWkUOoo0OODmG4XNXOiNhT3yji7wH
-	 Ctt70xmlr7brBYA5wBrLTDxrSWXi3pSoIBDqU5mFOh8u3nALnsvdtrah/cJ/Hl+IgpLf1
-	 Qj6YW/i1SO3bqVbc718KTUIf1wcLn1mWCXbfWQh2d6AajcgQhhOem0ehscpFobpCHAVSM
-	 kPASqFprHoCUWKFzJUwXBNcIlJDMX0a4CdqNNHgyeeWu/rVVdVI+JXLvuDMP4dYQPcGXv
-	 o/8C5h5OWDgN1/CN0q4yeaaDsbdz7Cu8OVD9Er31dFIOCIo7dGheMo/HXY3LehbxEfA==
+	t=1795045692;
+	b=VAi3aaVr6iuTX+8a8NC1FUWfs6pjT46dXFfuUU/c5lqzanJxguYPdiOx9bCqsxRYQKfK
+	 sDuRHMES3Swj1J3WL3o9BJcBT5KR9oYsdyvvheFN/WnZXAD/WLtKoly8D499X49ZKQsap
+	 r3XZ+W5ZsmuSS82WHyQ+VqZwdzN5XvoUYLAFN8HP5mNdwQtCBflNcuAS1xvvT+TbrGioM
+	 KvDGhdz30iB6XOMGLGQjvdd/IrewP4TLcd0Adx171/ULcVkn23Q6rzSRyCRNQH9pzmrIb
+	 je45JkCBW8RY3vjYH3Uw9Lw3XbO5VGa7PE1neksTYYHHxNvXH+4pmI4EWTTrMHhr2lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045692;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HgyvFInrgTRGVv0gvUjRvnIWNrWEXTgbaCBeuXSCJJg=;
-	b=C6VXyjtFKC4pdUxQGG9OA6KWgSx2zKAXpqOfj92jvr5i/3G9Vhp/cXPRDYQ2JQ0wsunW
-	 xyLBTyrV/v84Ox1NRIHlNDl1uOwKaV1PkLB5YDeLahDyrHarfmpeRhhR5iPUqSSR+4CT8
-	 kN50CliJpRo+iJJhffk2ThbcIjtUWsIXyFzOkKyicVzp30BerZay1C3YH7YqLNnIQ/PNs
-	 c94W0HoOrAXPtP8POTr71tiH+80sb4/yFLyxOdsFKwnuDGQ5nn/x3txcjW+942WW6wUAX
-	 WOxIesZrWQ0wur5eYdSjvGqaiemibYI5IBy4F08p6tXyI8+Ds0XLa0wZ5T0TVOoWC0g==
+	bh=52wEDVJ8jylAHLSNFwJr8wjR0efOBAaBHD18BteykeY=;
+	b=ETR9+x6UJeWfTiDMe4QEKcIA0Ydj+DhO820LYfA/mdr4xJl4vIo40oAONwaUZEdSzI2m
+	 JuYlfgJmSJbJ6jxFqFVpYb0JecQHQHof5ukjRTwvEPYcZBhmvzIrE4REmTNGKYsAk0BIY
+	 WS2rgltOUacNCnw3VtAaUgjdJqrKti023X6O45dCpZN5K71soWGvzjyLGZLE+gnD31CWa
+	 SdldBiFi+oHapdzs+erUsERjcPlhl9RkNmsKMuq8RhvO1kj6kHVSmgULPRusg9vzhrAW6
+	 BNlkVJtB7U57+UH+gWElZDnKwc7GgcWksnImJU6IzFspew129O+6DDA9QlHwP4JkVig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pzfSIhjr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dm7oI8nW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8D7606A320;
-	Wed, 18 Nov 2026 23:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35376606A320;
+	Wed, 18 Nov 2026 23:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pzfSIhjr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B66C1F000C4;
-	Wed, 18 Nov 2026 23:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dm7oI8nW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEB81F000C4;
+	Wed, 18 Nov 2026 23:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045688;
-	bh=HgyvFInrgTRGVv0gvUjRvnIWNrWEXTgbaCBeuXSCJJg=;
+	s=korg; t=1795045691;
+	bh=52wEDVJ8jylAHLSNFwJr8wjR0efOBAaBHD18BteykeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pzfSIhjrU4dXt3YA2ayPIJFlLErv9n9OrAiX8dd+i7CcFXDIqC8OFgrcOkPZh2Pvd
-	 sB40FW0ESA7W/pmB8v6LprheUciZTPy3xSOaBcOM7ukEqyIumsS6C0G+OMB7t0jfac
-	 PQYm4EwHcabdpW6mYPWvZ8fkkFKk+35zbDxH05uE=
+	b=Dm7oI8nW8ik6Nxdiikri1bwQrWgAOfAMJ3JDAR3KjDbQdgaXR/6V4OXCv+QS6lPsm
+	 z0G69USumryDZ8rbJQ4kEQa/7l3oIA8BtgbNs4qGqgvzH0E8NRsLeV/omJ3LgYG1G1
+	 iV7N38mwg+BP5hWA6wxwriAqV39w3EevL08TiaIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1013/2857] ocfs2: reserve metadata for a new xattr block and its value tree
-Date: Wed, 18 Nov 2026 15:34:07 +0100
-Message-ID: <20261118150238.069738254@linuxfoundation.org>
+Subject: [PATCH 6.1 0987/2857] f2fs: flush SIT journal during filesystem resize
+Date: Wed, 18 Nov 2026 15:33:41 +0100
+Message-ID: <20261118150237.141018393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,103 +71,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-[ Upstream commit 8ad5fa0c11246d260d7b12c9672e604b1f431b2e ]
+[ Upstream commit a6ede405455106bf42164ec96fd84008c5aabdd9 ]
 
-Patch series "ocfs2: fix metadata reservation for xattr value trees".
+During a filesystem resize, SBI_IS_RESIZEFS prevents new SIT entries
+from being added to the journal and forces existing entries to the SIT
+area. However, f2fs_flush_sit_entries() returns early when there are no
+new dirty sentries, leaving existing journal entries behind.
 
-ocfs2_calc_xattr_set_need() reserves too little metadata for a new xattr
-value's extent tree on three paths.  The reservation cannot be topped up
-once the transaction has started, so ocfs2_add_clusters_in_btree() gives
-up with RESTART_META when the value root fills and nothing is left.
-ocfs2_xattr_extend_allocation() turns that into -ENOSPC, after
-ocfs2_xa_cleanup_value_truncate() has dropped the entry and leaked the
-clusters already handed out; before commit 0cdc7dde00ec ("ocfs2: fix
-missing metadata reservation for large xattrs") it was a BUG_ON() instead.
-It takes a fragmented cluster allocator to get there, since the first
-extent always fits in the root.
+After the main area shrinks, a later checkpoint can access a journal
+entry whose segment number is outside the new geometry and trigger
+f2fs_bug_on().
 
-Patch 1 fixes the create side of meta_guess: commit 3ed2be719eb9 ("ocfs2:
-allow for more than one data extent when creating xattr") replaced the
-block reserved for the new xattr block with the two the value tree needs
-instead of adding them together.
+Only take the zero-dirty fast path when entries may be written back to
+the journal. This lets resize drain existing entries through
+remove_sits_in_journal() even when there are no new dirty sentries.
 
-Patch 2 fixes the arm that moves an xattr back into the inode, which
-charges credits for a value tree but no metadata for one.
-
-Patch 3 drops a second copy of the same reservation on the path that falls
-through to meta_guess.  That one is cleanup rather than a fix and is not
-for stable, and it must not be backported without patch 1: the duplicate
-it removes is what currently covers the shortfall patch 1 fixes.
-
-This patch (of 3):
-
-The create side of meta_guess in ocfs2_calc_xattr_set_need() reserves
-metadata for the new value's extent tree and nothing for the xattr block
-that will hold it:
-
-        } else {
-                credits += OCFS2_XATTR_BLOCK_CREATE_CREDITS;
-                if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE) {
-                        struct ocfs2_extent_list *el = &def_xv.xv.xr_list;
-                        meta_add += ocfs2_extend_meta_needed(el);
-                        ...
-
-Commit 3ed2be719eb9 ("ocfs2: allow for more than one data extent when
-creating xattr") meant to add that tree on top of the meta_add += 1 the
-branch already had, but it moved the 1 into the else arm instead, so the
-external-value case lost it.  The 1 is not optional: it is what
-ocfs2_create_xattr_block() takes from meta_ac through
-ocfs2_claim_metadata(), and it is spent before the value tree exists.
-
-ocfs2_extend_meta_needed() on the empty def_xv list returns 2, so the
-branch reserves 2 where 3 are needed.  The xattr block consumes one, and
-when the cluster allocator is fragmented enough that the value needs more
-than one extent, ocfs2_add_clusters_in_btree() comes back around with a
-full value root and ocfs2_alloc_context_bits_left() of 1 against a
-threshold of 2.  It answers RESTART_META, which
-ocfs2_xattr_extend_allocation() turns into a BUG_ON().  Commit
-0cdc7dde00ec ("ocfs2: fix missing metadata reservation for large xattrs")
-downgraded that to -ENOSPC, at the cost of leaking the clusters already
-handed out: ocfs2_xa_cleanup_value_truncate() takes its !orig_clusters
-arm, drops the entry and leaves the clusters for fsck.ocfs2 to reclaim.
-
-Reserve for the block and the tree separately.
-
-Link: https://lore.kernel.org/20261010113454.1420939-1-joseph.qi@linux.alibaba.com
-Link: https://lore.kernel.org/20261010113454.1420939-2-joseph.qi@linux.alibaba.com
-Fixes: 3ed2be719eb9 ("ocfs2: allow for more than one data extent when creating xattr")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org>
+Cc: stable@kernel.org
+Fixes: 04f0b2eaa3b3 ("f2fs: ioctl for removing a range from F2FS")
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 62d6d73083642..bf4265e754a5b 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -3247,7 +3247,13 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
- 		credits += OCFS2_XATTR_BLOCK_CREATE_CREDITS;
- 		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE) {
- 			struct ocfs2_extent_list *el = &def_xv.xv.xr_list;
--			meta_add += ocfs2_extend_meta_needed(el);
-+			/*
-+			 * One block for the xattr block we may have to
-+			 * allocate, the rest for growing the value tree it
-+			 * would hold.  If ocfs2_xattr_ibody_set() succeeds
-+			 * instead, that first block goes unused.
-+			 */
-+			meta_add += 1 + ocfs2_extend_meta_needed(el);
- 			credits += ocfs2_calc_extend_credits(inode->i_sb,
- 							     el);
- 		} else {
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index bf52ba8a32c04..0d002abbec3e7 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -4082,7 +4082,7 @@ void f2fs_flush_sit_entries(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 
+ 	down_write(&sit_i->sentry_lock);
+ 
+-	if (!sit_i->dirty_sentries)
++	if (!sit_i->dirty_sentries && to_journal)
+ 		goto out;
+ 
+ 	/*
 -- 
 2.53.0
 
