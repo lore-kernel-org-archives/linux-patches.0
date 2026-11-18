@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031039;
-	b=SaQdZ43ilBep4GXX+MGDrOQseZoSPtFV4nprKZ0cmk40smPCn0cuSNjBMsGKiwoYwNoF
-	 SLZ/jfmXD3aLoZeKODTRccSdfnE8vajV4DlI9snrYSuhYDnQQ7wA/wFmiVptzF/fircCw
-	 f174fn1d499NwUXNBnI1vfvV/d1zDx5zOBWOBRPR4zrkCdZZ+ocipSEqlTmN7t8kM200b
-	 Mqq2n42z8GCM8r3N7zi14U4utNAVqOBfk9I7oCCoyit1FxzJg2fXRf3SAZ5rDq6uYIPS5
-	 37qe8IhoQ5eDyThcmwyQ/gm42HOMjwBA0uOKB2kdgZw41nTzxKqZzV7uMczQXZ1w87g==
+	t=1795031042;
+	b=UGfpMJZC10/kXS6P6mEZUr8peCLUMnTO2hp9E9fvUV4Tb9rJqMi2PJh6jKoZVdl9YKfs
+	 jlvevXAXzmnA6KfrU1Ae8o/KH4m3BPv3x5o6f1hhuSac5brTOFXz0h5HJVdKthSZeGFxg
+	 zLm9+b0uj7nGjtV7Pgi2schI1ISz9d8yLLvdqUTbc/UKv/vsIPYTZjFAoXeKtKqsdZ54X
+	 +JqzQZp+/YklAEzgV3TH8j0v52vV1kOD9T1j991nuFw/PkOfOjysCmLu6GnhSvrS3BtpU
+	 2enejl6ufpVmA0M9EubBgRnNEKWTesI4tE0cSsS5J+lJ//GrXYXQEqz1XhO0UvWnHQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0fq6LYSX2zuPoRtPVsCZq003qSO3WG/AsycW7TRFubc=;
-	b=JRFkilvuaTSiduBhg52IXU09CaCx3ZZAxPyqBEQMt/aMpiJ2wHmQVAtJN22X6ycSeIlx
-	 iBPNOCVqAp5s1g6jxb1M4IwltLaGzQGR9pemDGBt9ov4d/CSJRXk8fccy2C7038/vRAsz
-	 fENNY7t76RaqQf8YzKKWlC1ZjYZgM/4wZ7bVV388x1/HZ3Vk6afq+IYFhefEn936afhE9
-	 rW/NNYqj58FdHMF/m8gAw5BxcLgrssnBWFLpS9rf09rRoCxXEXkkW33hScyOoazbPp/g+
-	 JHuha763OgvI5TiBXQHov4ez9mtRExXkVFVc9zjPDspzQB2zNuxUmSN7uZ4eayM5o0A==
+	bh=OfiXNt9h7nT3c3gPdCEdzIMQdgP6UNm7efFdzHrpF+A=;
+	b=h4pqycWfmrQagisFpSbHswcavEPkrHSeujG1UuFxe56zPW3hZsydNfcn7cATu4USMzJH
+	 j9/FgkixcqiSM0CqWfLQiBW+gxC25S84QXWoLoQM40n6nr4af7qDSe18P+nb8mrJkAUmU
+	 uuCqGBXnfVnm744/Af2irEB0gxeCMwhj7D9lF3koXF3kWqZ9iNTbKIdV5ErmWWHtvOhLw
+	 DCnV2C4Zf36B0sl0hJ1B8T8RCfCb2unBar0Zx8hzS3xX2mmLRyA2nB3fRAt19zNpmnMgZ
+	 3aAjKlqdcsN91gMc9jAMMWAcyA/WwX5iqL4A6qh/+hRZfHJ9XXFyMjsO32Dr+NVgNuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O4fmCd13;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgW7ejzz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C84606A320;
-	Wed, 18 Nov 2026 19:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C93606A31C;
+	Wed, 18 Nov 2026 19:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O4fmCd13
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFFB1F000C4;
-	Wed, 18 Nov 2026 19:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgW7ejzz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208101F000C4;
+	Wed, 18 Nov 2026 19:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031039;
-	bh=0fq6LYSX2zuPoRtPVsCZq003qSO3WG/AsycW7TRFubc=;
+	s=korg; t=1795031042;
+	bh=OfiXNt9h7nT3c3gPdCEdzIMQdgP6UNm7efFdzHrpF+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O4fmCd13C6mvu4TrzKwnOKw4mZFv2YXq5TsSyqJ/M4ero4WFqoQZwvulqxKUdmgFJ
-	 NqoU0+v/7JGa5zYXDdQ//gPiL7Y6BDjyizY5G8uXeA+Ue/GGqqDTHGgk7SrwgHOb9L
-	 3I6DmiWIKa1MSQfmaKB34pLazl0HSdPlguJC5m3g=
+	b=kgW7ejzz/CxUZR2d7lHoUELlpHivk6Ne6XFgJccHhj+D4StUBS1x1F1ZRXL3TP+be
+	 awt5AHrJ95cAUkBYLnqP0eeCttY8wxKlJaJL7gWrg0uH2uUs3uVsAGiTzUQN0eVJb9
+	 Uoz1BcUmzMJfeEHN55kBR2jYQCNdNOVBvGgb+Uyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0880/1756] dmaengine: ste_dma40: Fix probe runtime PM disable
-Date: Wed, 18 Nov 2026 15:50:07 +0100
-Message-ID: <20261118150044.542695205@linuxfoundation.org>
+Subject: [PATCH 6.12 0916/1756] efi/libstub: Simplify GOP handling code
+Date: Wed, 18 Nov 2026 15:50:43 +0100
+Message-ID: <20261118150046.461169779@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,86 +67,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit c6809b381e34f8966cc3d9e5d7d658775a408f83 ]
+[ Upstream commit 60a34085c36d6eb292c1e03bc355b1aa3a74a689 ]
 
-Some d40_probe() error paths jump to destroy_cache before runtime PM has
-been enabled for the DMA controller device. The label unconditionally calls
-pm_runtime_disable(), which increments disable_depth even though this probe
-attempt never enabled runtime PM.
+Use the LocateHandleBuffer() API and a __free() function to simplify the
+logic that allocates a handle buffer to iterate over all GOP protocols
+in the EFI database.
 
-Use devm_pm_runtime_set_active_enabled() to mark the controller active,
-enable runtime PM and register balanced cleanup for probe failure. This
-avoids both the disable-depth imbalance and ad-hoc probe state tracking.
-
-The interrupt handler uses pm_runtime_get_if_active() and cannot
-acknowledge a pending interrupt while runtime PM is disabled. Request the
-IRQ only after enabling runtime PM so the handler cannot enter an
-unacknowledged interrupt loop during probe.
-
-Fixes: 0618c077a8c2 ("dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-5-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/efi.h              |  3 ++
+ drivers/firmware/efi/libstub/efi-stub.c | 28 +++++-------
+ drivers/firmware/efi/libstub/efistub.h  |  9 ++--
+ drivers/firmware/efi/libstub/gop.c      | 57 +++++++++----------------
+ drivers/firmware/efi/libstub/x86-stub.c | 17 +-------
+ 5 files changed, 40 insertions(+), 74 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 2f636c7333d24..08d1c2197ded5 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3602,12 +3602,6 @@ static int __init d40_probe(struct platform_device *pdev)
- 		goto destroy_cache;
- 	}
+diff --git a/arch/x86/include/asm/efi.h b/arch/x86/include/asm/efi.h
+index 222410af815cf..dc8fe1361c18e 100644
+--- a/arch/x86/include/asm/efi.h
++++ b/arch/x86/include/asm/efi.h
+@@ -250,6 +250,9 @@ static inline u32 efi64_convert_status(efi_status_t status)
+ #define __efi64_argmap_allocate_pool(type, size, buffer)		\
+ 	((type), (size), efi64_zero_upper(buffer))
  
--	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
--	if (ret) {
--		d40_err(dev, "No IRQ defined\n");
--		goto destroy_cache;
++#define __efi64_argmap_locate_handle_buffer(type, proto, key, num, buf)	\
++	((type), (proto), (key), efi64_zero_upper(num), efi64_zero_upper(buf))
++
+ #define __efi64_argmap_create_event(type, tpl, f, c, event)		\
+ 	((type), (tpl), (f), (c), efi64_zero_upper(event))
+ 
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index 438c7aed2d287..52b7029707642 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -10,6 +10,7 @@
+  */
+ 
+ #include <linux/efi.h>
++#include <linux/screen_info.h>
+ #include <asm/efi.h>
+ 
+ #include "efistub.h"
+@@ -53,25 +54,16 @@ void __weak free_screen_info(struct screen_info *si)
+ 
+ static struct screen_info *setup_graphics(void)
+ {
+-	efi_guid_t gop_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
+-	efi_status_t status;
+-	unsigned long size;
+-	void **gop_handle = NULL;
+-	struct screen_info *si = NULL;
++	struct screen_info *si, tmp = {};
+ 
+-	size = 0;
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
+-			     &gop_proto, NULL, &size, gop_handle);
+-	if (status == EFI_BUFFER_TOO_SMALL) {
+-		si = alloc_screen_info();
+-		if (!si)
+-			return NULL;
+-		status = efi_setup_gop(si, &gop_proto, size);
+-		if (status != EFI_SUCCESS) {
+-			free_screen_info(si);
+-			return NULL;
+-		}
 -	}
--
- 	if (base->plat_data->use_esram_lcla) {
- 
- 		base->lcpa_regulator = regulator_get(base->dev, "lcla_esram");
-@@ -3632,10 +3626,20 @@ static int __init d40_probe(struct platform_device *pdev)
- 
- 	pm_runtime_irq_safe(base->dev);
- 	pm_runtime_set_autosuspend_delay(base->dev, DMA40_AUTOSUSPEND_DELAY);
--	pm_runtime_use_autosuspend(base->dev);
- 	pm_runtime_mark_last_busy(base->dev);
--	pm_runtime_set_active(base->dev);
--	pm_runtime_enable(base->dev);
++	if (efi_setup_gop(&tmp) != EFI_SUCCESS)
++		return NULL;
 +
-+	ret = devm_pm_runtime_set_active_enabled(base->dev);
-+	if (ret) {
-+		d40_err(dev, "Failed to enable runtime PM: %d\n", ret);
-+		goto destroy_cache;
-+	}
-+	pm_runtime_use_autosuspend(base->dev);
++	si = alloc_screen_info();
++	if (!si)
++		return NULL;
 +
-+	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
-+	if (ret) {
-+		d40_err(dev, "No IRQ defined\n");
-+		goto destroy_cache;
-+	}
++	*si = tmp;
+ 	return si;
+ }
  
- 	ret = d40_dmaengine_init(base, num_reserved_chans);
- 	if (ret)
-@@ -3671,7 +3675,6 @@ static int __init d40_probe(struct platform_device *pdev)
- 		regulator_disable(base->lcpa_regulator);
- 		regulator_put(base->lcpa_regulator);
+diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
+index 21986fd151426..154d15901a1c6 100644
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -4,6 +4,7 @@
+ #define _DRIVERS_FIRMWARE_EFI_EFISTUB_H
+ 
+ #include <linux/compiler.h>
++#include <linux/cleanup.h>
+ #include <linux/efi.h>
+ #include <linux/kernel.h>
+ #include <linux/kern_levels.h>
+@@ -313,7 +314,9 @@ union efi_boot_services {
+ 		void *close_protocol;
+ 		void *open_protocol_information;
+ 		void *protocols_per_handle;
+-		void *locate_handle_buffer;
++		efi_status_t (__efiapi *locate_handle_buffer)(int, efi_guid_t *,
++							      void *, unsigned long *,
++							      efi_handle_t **);
+ 		efi_status_t (__efiapi *locate_protocol)(efi_guid_t *, void *,
+ 							 void **);
+ 		efi_status_t (__efiapi *install_multiple_protocol_interfaces)(efi_handle_t *, ...);
+@@ -1052,6 +1055,7 @@ void efi_puts(const char *str);
+ __printf(1, 2) int efi_printk(char const *fmt, ...);
+ 
+ void efi_free(unsigned long size, unsigned long addr);
++DEFINE_FREE(efi_pool, void *, if (_T) efi_bs_call(free_pool, _T));
+ 
+ void efi_apply_loadoptions_quirk(const void **load_options, u32 *load_options_size);
+ 
+@@ -1081,8 +1085,7 @@ efi_status_t efi_parse_options(char const *cmdline);
+ 
+ void efi_parse_option_graphics(char *option);
+ 
+-efi_status_t efi_setup_gop(struct screen_info *si, efi_guid_t *proto,
+-			   unsigned long size);
++efi_status_t efi_setup_gop(struct screen_info *si);
+ 
+ efi_status_t handle_cmdline_files(efi_loaded_image_t *image,
+ 				  const efi_char16_t *optstr,
+diff --git a/drivers/firmware/efi/libstub/gop.c b/drivers/firmware/efi/libstub/gop.c
+index 8eef63c48288d..a4b3d18f91da8 100644
+--- a/drivers/firmware/efi/libstub/gop.c
++++ b/drivers/firmware/efi/libstub/gop.c
+@@ -461,25 +461,25 @@ setup_pixel_info(struct screen_info *si, u32 pixels_per_scan_line,
  	}
--	pm_runtime_disable(base->dev);
+ }
  
-  report_failure:
- 	d40_err(dev, "probe failed\n");
+-static efi_graphics_output_protocol_t *
+-find_gop(efi_guid_t *proto, unsigned long size, void **handles)
++static efi_graphics_output_protocol_t *find_gop(unsigned long num,
++						const efi_handle_t handles[])
+ {
+ 	efi_graphics_output_protocol_t *first_gop;
+ 	efi_handle_t h;
+ 
+ 	first_gop = NULL;
+ 
+-	for_each_efi_handle(h, handles, efi_get_handle_num(size)) {
++	for_each_efi_handle(h, handles, num) {
+ 		efi_status_t status;
+ 
+ 		efi_graphics_output_protocol_t *gop;
+ 		efi_graphics_output_protocol_mode_t *mode;
+ 		efi_graphics_output_mode_info_t *info;
+-
+-		efi_guid_t conout_proto = EFI_CONSOLE_OUT_DEVICE_GUID;
+ 		void *dummy = NULL;
+ 
+-		status = efi_bs_call(handle_protocol, h, proto, (void **)&gop);
++		status = efi_bs_call(handle_protocol, h,
++				     &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID,
++				     (void **)&gop);
+ 		if (status != EFI_SUCCESS)
+ 			continue;
+ 
+@@ -499,7 +499,8 @@ find_gop(efi_guid_t *proto, unsigned long size, void **handles)
+ 		 * Once we've found a GOP supporting ConOut,
+ 		 * don't bother looking any further.
+ 		 */
+-		status = efi_bs_call(handle_protocol, h, &conout_proto, &dummy);
++		status = efi_bs_call(handle_protocol, h,
++				     &EFI_CONSOLE_OUT_DEVICE_GUID, &dummy);
+ 		if (status == EFI_SUCCESS)
+ 			return gop;
+ 
+@@ -510,16 +511,22 @@ find_gop(efi_guid_t *proto, unsigned long size, void **handles)
+ 	return first_gop;
+ }
+ 
+-static efi_status_t setup_gop(struct screen_info *si, efi_guid_t *proto,
+-			      unsigned long size, void **handles)
++efi_status_t efi_setup_gop(struct screen_info *si)
+ {
+-	efi_graphics_output_protocol_t *gop;
++	efi_handle_t *handles __free(efi_pool) = NULL;
+ 	efi_graphics_output_protocol_mode_t *mode;
+ 	efi_graphics_output_mode_info_t *info;
++	efi_graphics_output_protocol_t *gop;
++	efi_status_t status;
++	unsigned long num;
+ 
+-	gop = find_gop(proto, size, handles);
++	status = efi_bs_call(locate_handle_buffer, EFI_LOCATE_BY_PROTOCOL,
++			      &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, NULL, &num,
++			      &handles);
++	if (status != EFI_SUCCESS)
++		return status;
+ 
+-	/* Did we find any GOPs? */
++	gop = find_gop(num, handles);
+ 	if (!gop)
+ 		return EFI_NOT_FOUND;
+ 
+@@ -551,29 +558,3 @@ static efi_status_t setup_gop(struct screen_info *si, efi_guid_t *proto,
+ 
+ 	return EFI_SUCCESS;
+ }
+-
+-/*
+- * See if we have Graphics Output Protocol
+- */
+-efi_status_t efi_setup_gop(struct screen_info *si, efi_guid_t *proto,
+-			   unsigned long size)
+-{
+-	efi_status_t status;
+-	void **gop_handle = NULL;
+-
+-	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, size,
+-			     (void **)&gop_handle);
+-	if (status != EFI_SUCCESS)
+-		return status;
+-
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, proto, NULL,
+-			     &size, gop_handle);
+-	if (status != EFI_SUCCESS)
+-		goto free_handle;
+-
+-	status = setup_gop(si, proto, size, gop_handle);
+-
+-free_handle:
+-	efi_bs_call(free_pool, gop_handle);
+-	return status;
+-}
+diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
+index f77d6fd7e1154..76e611ffadccb 100644
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -406,24 +406,11 @@ static void setup_quirks(struct boot_params *boot_params)
+ 
+ static void setup_graphics(struct boot_params *boot_params)
+ {
+-	efi_guid_t graphics_proto = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
+-	struct screen_info *si;
+-	efi_status_t status;
+-	unsigned long size;
+-	void **gop_handle = NULL;
+-
+-	si = &boot_params->screen_info;
+-	memset(si, 0, sizeof(*si));
+-
+-	size = 0;
+-	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
+-			     &graphics_proto, NULL, &size, gop_handle);
+-	if (status == EFI_BUFFER_TOO_SMALL)
+-		status = efi_setup_gop(si, &graphics_proto, size);
++	struct screen_info *si = memset(&boot_params->screen_info, 0, sizeof(*si));
+ 
++	efi_setup_gop(si);
+ }
+ 
+-
+ static void __noreturn efi_exit(efi_handle_t handle, efi_status_t status)
+ {
+ 	efi_bs_call(exit, handle, status, 0, NULL);
 -- 
 2.53.0
 
