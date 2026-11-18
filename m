@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053336;
-	b=aUlhiCOqr4Vx3xK0x0B2lGMN65C0IK42LPwk+ghRiw14vQ+HXeJJW+TCXHxvk/SNSbrb
-	 9NwivKQ5PQi2PaZQbzQAWtjkT/tqjlAUE+VrvHDkfdgxF0v4Rp6Td/3iMbfRZD2LOQQ5R
-	 HCERzEKo7zIwuGg8NP+jj5pAKSs7l45BSvMxpK3VneHskxXU+oRFTasS+tfdWkWw1gj/U
-	 sIb0oY1HOQbjbPGU+/xPiSSW5cPox8NxFmR6silOGK2SNgTQq1Bq4L6vSvUmezygVWjBd
-	 hK3f7A0ZrmXUe8Mgm/ibg20jbMT+wM5NtmbAR/1LaXD08fVCIDZsE0WrhgQxeLfyzow==
+	t=1795053339;
+	b=If4bYKQQi7h5F29h+gyeMifqkuRv/Hf02UxFV6h1VYI9wLPfXns5ANr6hvIX9FvnBXBs
+	 Tpqxu6efNueoTv8ULbhxUmvu4laalNaVXg0XceL822TP3SvVD2IImng0gInoe3P7PvoCS
+	 nrVUT75WyusV8OoddWB8g8FE0IWOHB02atGfksGw7r8haeA3ISwAe+TmIWKqcr8TBnugj
+	 +kosWQODAqkxnuPmdkQISnEl95evRWkCqHx0blzBWwdzp8xLrPYwuZrUesFaWeHGDYlz9
+	 A/QlX+xAn8Xiz4qVSQWgLc9yengEHPV4i6CJ+zW59QvZFpi+ykt6vkXjsWVWVyEBwVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053336;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=shJDy35+5QVpEq+OM204EE8A8xkyc4K1FrpAurLuUag=;
-	b=UOvTSCLxmjLwNHDK3sO09na8Z6Vhf2ybXebQiDBnINQojmy4n86wEl+UPVjq//SUQlOT
-	 IQSgGVqUwwdDvvzHlapyT3AAmhsC4UP3EGyNnZjmYXE7dhc71snMq62nfmT6fZ5WKyMqz
-	 Scscn4W52E803IvHxjrvfzOU3xVcEIvSDWj4WjCTCV2wCIAtS7T4uW83v13K+yz7fdjG3
-	 MfLLnV+hNugIKAYX9HO2DhiphIXMkJrCxMgyJGp6/3lH9RDLWqmGNZvYuZZbEydW70fkM
-	 KHoRZ6GHpOqbjYy+sZcDUAWyGWVfSbb9I+EIy3H5a29fK30xA+TPZ4PhBWdF8++SuNg==
+	bh=NKFd+c9PV/SMplxXzsJ7iyGdxCE9DQH6dwr7mhTLvow=;
+	b=NP/JEzYlXJSy65xxgKPNqH5pf220WUtFdsO/K25yYT6dbvcIjo+ndxfh90pxLTvDl0VL
+	 Kl/z+8arzxbfSfLiLYZwehimkuOgVJNTEgOAFd7Zfm6kleDP79DFEhc7DuzN2VVJt+Y7N
+	 QMOsD9opawtd8YCcfyBBugmj6/VHpcIWbUuEDmF4sPdOMbqlbi7tOl/lzGGCKuCMyD4Wk
+	 vgtKWVCQvHociGpjqBBM9rN0A4BzUJNH61mESFl1u0R7uK9BlB6jDDyo3W4Z5zHM1wDy0
+	 qIkEldf96ysjSdIHXvNretNzL1W+yQ5GfdmZYMGil/84RRxTOWNG+mJVq+EUV48VEpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xpT2+zQf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CMnxYf6n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7A060A2606;
-	Thu, 19 Nov 2026 01:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2974B60A2627;
+	Thu, 19 Nov 2026 01:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xpT2+zQf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604891F000C9;
-	Thu, 19 Nov 2026 01:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CMnxYf6n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6A11F000C6;
+	Thu, 19 Nov 2026 01:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053335;
-	bh=shJDy35+5QVpEq+OM204EE8A8xkyc4K1FrpAurLuUag=;
+	s=korg; t=1795053338;
+	bh=NKFd+c9PV/SMplxXzsJ7iyGdxCE9DQH6dwr7mhTLvow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xpT2+zQfO66rfVgDoc5egnZKUXHnQmCkrqB74A0yvK/DlTC1+/Ksgr+6BPeaGhB5Y
-	 Pki9fBV65swE8J5/e8jY4JFASd4tFBX6Ab8edI6VhrjnIHtZzG4/yKC0tLU/J5E6Kt
-	 OYPDCVVDMy2ZA+8oEJ5I6NQX9tWA8Ye1LVo2lRlU=
+	b=CMnxYf6n8kMHU2PzA1m6DKTcltSBMewZRff0oOhxkGA5gNKRRZds1zQcSbIYALMmr
+	 LjjD9Vp5pA3jrwMMvZxLLzlzUl68qIzqroEo8RN+LEtEG1loW2HDrAxRQI2Z3B6+DI
+	 AS1c72sVHabkjTB9CUmZU1m7uDedx4V2waeqdmo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0881/2214] fat: hold truncate_lock in fat_write_failed()
-Date: Wed, 18 Nov 2026 15:42:37 +0100
-Message-ID: <20261118150047.422989101@linuxfoundation.org>
+Subject: [PATCH 5.15 0882/2214] ocfs2: keep locking_state within the cluster connection lifetime
+Date: Wed, 18 Nov 2026 15:42:38 +0100
+Message-ID: <20261118150047.461696567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,55 +74,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 7b90009546f5d3f3ac9428040cd7ffbdfd60f2eb ]
+[ Upstream commit 5bdef466851e39ba752634cbea68e5ea24ccfb24 ]
 
-The current fat_write_failed() implementation calls into
-fat_truncate_blocks() without holding truncate_lock.
+The locking_state reader calls ocfs2_dlm_lvb() through the selected
+cluster stack.  Its debug-object reference keeps the tracking list alive,
+but does not keep that stack selected without a cluster connection.
 
-A failed or short extending write racing with FIBMAP can spuriously make a
-FAT filesystem read-only.  FIBMAP bounds its lookup by i_blocks, so it can
-walk allocated clusters beyond i_size while fat_write_failed() is removing
-them.  If the chain is shortened during the walk, the mapper can report a
-bogus "request beyond EOF" error, triggering the default read-only error
-policy.  Hold truncate_lock for write around the block cleanup to
-serialize it with _fat_bmap().
+DLM initialization publishes the file before establishing its connection,
+and DLM shutdown drops the connection while the file still exists.  Both
+the mount error unwind in ocfs2_mount_volume() and ocfs2_dismount_volume()
+remove the debugfs subtree only after ocfs2_dlm_shutdown() has returned.
+Whenever the disconnect releases the last stack reference, which is the
+case for a failed mount and for any unmount without a pending hangup, a
+concurrent reader dereferences a NULL active_stack:
 
-For comparison, fat_setattr() correctly holds truncate_lock during
-truncation:
+  Mount error unwind                  Debugfs reader
+  ------------------                  --------------
+  ocfs2_mount_volume(): out_dlm
+    ocfs2_dlm_shutdown()
+      disconnect last cluster
+        clear active_stack
+                                      read locking_state
+                                        ocfs2_dlm_seq_show()
+                                          ocfs2_dlm_lvb()
+                                            dereference active_stack
+  fill_super(): out_debugfs
+    remove debugfs subtree
 
-	down_write(&MSDOS_I(inode)->truncate_lock);
-	truncate_setsize(inode, attr->ia_size);
-	fat_truncate_blocks(inode, attr->ia_size);
-	up_write(&MSDOS_I(inode)->truncate_lock);
+Publish the debug files only after the connection and the mount lock
+resources are initialized, so a failed DLM initialization has no debug
+reference to drop.  Remove them again in the common DLM shutdown helper
+before the connection is dropped: debugfs removal waits for readers that
+are inside the file operations, and the parent directory is still present
+at that point in every caller.  This covers the mount error unwind, the
+ocfs2_fill_super() failures after a successful mount that dismount with
+mnt_err set, and unmounts whose disconnect releases the stack directly.
 
-Make it so ->truncate_lock is held exclusive while truncating.
+Only the relevant frames of the report are kept:
 
-Link: https://lore.kernel.org/20261021162105.62525-1-matheus.aalmeida@inf.ufrgs.br
-Fixes: 16fab2015099 ("fat: permit to return phy block number by fibmap in fallocated region")
-Fixes: 459f6ed3b8c7 ("fat: convert to use the new truncate convention.")
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:ocfs2_dlm_lvb+0x38/0xf0
+Call Trace:
+ <TASK>
+ ocfs2_dlm_seq_show+0x36a/0xb70
+ seq_read_iter+0x480/0x1110
+ seq_read+0x362/0x5a0
+ full_proxy_read+0x11f/0x180
+ vfs_read+0x1a0/0xc20
+ ksys_read+0x111/0x200
+ </TASK>
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0011-v7-61e3ef8b1ad44ac2e817@gmail.com
+Fixes: 286eaa95c5c5 ("ocfs2: Break out stackglue into modules.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ocfs2/dlmglue.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/fs/fat/inode.c b/fs/fat/inode.c
-index de0c9b013a851..185e6f6c68151 100644
---- a/fs/fat/inode.c
-+++ b/fs/fat/inode.c
-@@ -221,7 +221,9 @@ static void fat_write_failed(struct address_space *mapping, loff_t to)
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index a91fdc7a638f8..dacf01536b529 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3337,6 +3337,14 @@ static void ocfs2_dlm_shutdown_debug(struct ocfs2_super *osb)
+ {
+ 	struct ocfs2_dlm_debug *dlm_debug = osb->osb_dlm_debug;
  
- 	if (to > inode->i_size) {
- 		truncate_pagecache(inode, inode->i_size);
-+		down_write(&MSDOS_I(inode)->truncate_lock);
- 		fat_truncate_blocks(inode, inode->i_size);
-+		up_write(&MSDOS_I(inode)->truncate_lock);
++	/*
++	 * Drain the readers before the cluster stack goes away: the
++	 * locking_state reader resolves ocfs2_dlm_lvb() through the
++	 * stack. Every caller removes the parent directory later.
++	 */
++	debugfs_lookup_and_remove("locking_state", osb->osb_debug_root);
++	debugfs_lookup_and_remove("locking_filter", osb->osb_debug_root);
++
+ 	if (dlm_debug)
+ 		ocfs2_put_dlm_debug(dlm_debug);
+ }
+@@ -3351,8 +3359,6 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
+ 		goto local;
+ 	}
+ 
+-	ocfs2_dlm_init_debug(osb);
+-
+ 	/* launch downconvert thread */
+ 	osb->dc_task = kthread_run(ocfs2_downconvert_thread, osb, "ocfs2dc-%s",
+ 			osb->uuid_str);
+@@ -3392,9 +3398,10 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
+ 	ocfs2_orphan_scan_lock_res_init(&osb->osb_orphan_scan.os_lockres, osb);
+ 
+ 	osb->cconn = conn;
++	if (conn)
++		ocfs2_dlm_init_debug(osb);
+ bail:
+ 	if (status < 0) {
+-		ocfs2_dlm_shutdown_debug(osb);
+ 		if (osb->dc_task)
+ 			kthread_stop(osb->dc_task);
+ 	}
+@@ -3424,10 +3431,11 @@ void ocfs2_dlm_shutdown(struct ocfs2_super *osb,
+ 	ocfs2_lock_res_free(&osb->osb_orphan_scan.os_lockres);
+ 
+ 	if (osb->cconn) {
++		/* The disconnect below may release the selected stack. */
++		ocfs2_dlm_shutdown_debug(osb);
++
+ 		ocfs2_cluster_disconnect(osb->cconn, hangup_pending);
+ 		osb->cconn = NULL;
+-
+-		ocfs2_dlm_shutdown_debug(osb);
  	}
  }
  
