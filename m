@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040984;
-	b=0lUefcNZd1uqhi5TAgDqJj3/ls1ZN8vWA/0E/hgDI4gmU+NtLrwTpS9BwhI/tlYBXqRd
-	 WcZdtC3Fwv3Ap1CZci6uyOUJfGimhdmGQ6lIXqVxVtyMIjkOEy692aBo76/5T6AbhrGNe
-	 YGGJevVD01q2CP753glRPdDSHGlrhQrrEjj/Tt2QOcrsMemd9kJ4NDN4JzJF5UExpmM04
-	 MNKsAxc8YHUE2pNWAC9oqzIYbH0QDAkkFlddPAiXDj839HRkFkWldFkn70UF4El1i307+
-	 pGQXFgnIb83gyxFXEidXGBTp7kZu1y09a5nf7Wvn3+nlxIkkko1+kKOMn/s2Qw14Kog==
+	t=1795040986;
+	b=N/z1mJi65wPFmht93fsQZCtcxjSUdYq0jVfvq+/MwMtxwJXe0pBOsc3KsXL/GrInApa0
+	 4wazmc20QQvwZfkK3F3gSyprX+ckplLkP+9TMtwwNcQMa1P3s+QXjvAqFV4ekndU7NPm2
+	 oxv/tNczz7UBz6G9QIwzA23gbPm1FvPiblDwzAcvpMqa5TGGJ7mTL6PaH7/lYbfmOL24n
+	 P86uG9o/izSZ37DfCMbFIJyekv7WiGGrgvze42Qogfc78bccCyNCwlY3d0g/XOUBWExXO
+	 2F3erJDSgoz4K/pdJcMtuAW8fGMAPn1RCagJAR6RdTswfS/Y+OJNZrUm1rPl58etLCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iksYTY0DK5hKi7DGi25iwpbWwMIkGoy4cLzT56qaOxg=;
-	b=WO3R1P+5BsGkQU4Na9nyeG8BUP3sM2pNsG2SehcwWby27JkKSEU+UxOFAcxPgiK34s/o
-	 wDSb1clADH1p/V/lWScQnKJtte8FU2N1YGTPOw3OdrzgmDH1n0QSAkYotmsVr+WJ6wvnc
-	 9HR9xL1/Ys+Z6v/7hNGMHrgMCTylJpROP+xlCXekppiwZBxusuk8I0d7rp6OtWRGJXY+N
-	 saCfeEvShQy9Dmb4TcCVgQYbQGfbYBdvHihFi5EcLTTc4t/fq3/OQUoutmTvzf0mhurUc
-	 6N4zzQUJnSpQFWYyrzwxTdtVTWxjjJGFU38LBqk+jtwVxl9aRBBRtROF0r3rZfxVVuw==
+	bh=rhQU8LEWVG89lIKhiXEFPKO8aZwPu3NRqfaj9P++tFE=;
+	b=HoXqscSOwdE16NyX8uGgj+2t5RWJEDpMsBWV22u5H3DhjhmdHSihePwrBl6ibB/Ft440
+	 ILpiBDhV/lnqAaWX9kjHs75dCP0mrPinJY2yFs7yTjC4WzUvxMIo97kGtBkWlFqpJ/vC/
+	 G8KUv/DGNNdV/RlUkeNOwq8DMi/v2bRUARLMk5Rtn1coTQOW0DfrVyE9MJqPlUEo7kA+x
+	 EeSRLdKb5Oo9FB4NUjL3cqHKu8pE2YpJz+t63LPr1yKn0fqunJm9RXR+A2HRnPg7Pu/pZ
+	 CtwB3vML8NfVhz1k+vFF7K92oeQOoIUFltaZQydBlTfLWWp28urz9ohrPl3dzYzoz2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5JfCnYb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZJf4O088;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDEB606A325;
-	Wed, 18 Nov 2026 22:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF03606A320;
+	Wed, 18 Nov 2026 22:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5JfCnYb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F11C1F000C5;
-	Wed, 18 Nov 2026 22:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZJf4O088
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245901F000C4;
+	Wed, 18 Nov 2026 22:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040983;
-	bh=iksYTY0DK5hKi7DGi25iwpbWwMIkGoy4cLzT56qaOxg=;
+	s=korg; t=1795040986;
+	bh=rhQU8LEWVG89lIKhiXEFPKO8aZwPu3NRqfaj9P++tFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j5JfCnYbO/FgEnEGaXZj8S0ImUoId2E6aq9HQaiLCoJXO9j1dPeGuaJJs4CpynWPK
-	 3H8cDqyY9A24XilbvzCj78iSRyEicSZrKV0+er8S6+XJuxl6XuBBKSbfmcQknaJyr7
-	 BJfYuu/kUw94fFwm/hXbT0fgiGonOtFsHvFEXWnA=
+	b=ZJf4O088Z4E9B2fCw/U1Lo6+4LSOjw40f5IewkUBS0UVLwCBjstG4jQyrZW5qiRCa
+	 KrUAzS2op3B0Qgvhm7kZW2G1+HEnMgMjuXkFBIyK3nC+Y1dfnpx9+c8haqpzMpJPOR
+	 ESJBCMjwQAU61ULAgvn5d24iO6vBcZYv3aBlFuIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Leizhen Zhang <lzsx618@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2651/3318] ALSA: caiaq: Allow zero-length packet handling for EP1
-Date: Wed, 18 Nov 2026 15:54:33 +0100
-Message-ID: <20261118150440.575153893@linuxfoundation.org>
+Subject: [PATCH 6.6 2652/3318] gen_init_cpio: stop parsing on lines with a missing argument list
+Date: Wed, 18 Nov 2026 15:54:34 +0100
+Message-ID: <20261118150440.605670707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,49 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Leizhen Zhang <lzsx618@gmail.com>
 
-[ Upstream commit ccfe6ab672c020fca56988e634088bfb7764e2a7 ]
+[ Upstream commit c8dd1aa0274d8ad3df82ec1b064065f410ce99ed ]
 
-The recent fix to avoid OOB access for malformed packets added a
-packet length check and returns immediately if it's too short.
-However, this can be lead to a regression because the completion
-handler doesn't resubmit the packet, while a zero-length packet itself
-is valid, per se.
+When a line in the cpio list consists of a file type followed only by
+whitespace and no newline (e.g. "slink " as the last line of the file),
+strtok(NULL, "\n") returns NULL. main() prints an error and sets ec, but
+then carries on and passes the NULL args pointer to the type handler,
+which hands it to sscanf() and crashes:
 
-For addressing the potential regression above, change the handling for
-a zero-length packet to just resubmit without processing the incoming
-contents.
+  AddressSanitizer: SEGV on unknown address 0x000000000000
+    #4 __isoc99_sscanf
+    #5 cpio_mkslink_line usr/gen_init_cpio.c:169
 
-Fixes: aba30af07d4f ("ALSA: usb-audio: caiaq: validate EP1 reply lengths")
-Link: https://patch.msgid.link/20261006134405.479603-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Break out of the loop as is already done for the other format error, so
+that the error is reported and gen_init_cpio exits with a failure status.
+
+Found by fuzzing gen_init_cpio built with ASan/UBSan.
+
+Reproducer:
+  printf 'slink ' > list && usr/gen_init_cpio list
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Claude:claude-opus-5-5 ASan UBSan
+Signed-off-by: Leizhen Zhang <lzsx618@gmail.com>
+Link: https://patch.msgid.link/20261005085729.872402-1-lzsx618@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ usr/gen_init_cpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
-index e8619bb743581..993858d18b680 100644
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -142,7 +142,7 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 		return;
- 	}
- 	if (urb->actual_length < 1)
--		return;
-+		goto resubmit;
+diff --git a/usr/gen_init_cpio.c b/usr/gen_init_cpio.c
+index 61230532fef10..14b271e7ee68f 100644
+--- a/usr/gen_init_cpio.c
++++ b/usr/gen_init_cpio.c
+@@ -663,6 +663,7 @@ int main (int argc, char *argv[])
+ 				"ERROR: incorrect format, newline required line %d: '%s'\n",
+ 				line_nr, line);
+ 			ec = -1;
++			break;
+ 		}
  
- 	payload_len = urb->actual_length - 1;
- 
-@@ -192,6 +192,7 @@ static void usb_ep1_command_reply_dispatch (struct urb* urb)
- 		break;
- 	}
- 
-+ resubmit:
- 	cdev->ep1_in_urb->actual_length = 0;
- 	ret = usb_submit_urb(cdev->ep1_in_urb, GFP_ATOMIC);
- 	if (ret < 0)
+ 		for (type_idx = 0; file_handler_table[type_idx].type; type_idx++) {
 -- 
 2.53.0
 
