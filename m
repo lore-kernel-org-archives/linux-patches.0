@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026914;
-	b=0K9PuDHJ9+9h3ww80YpMND4j5eFwq7+CF1SwYgnb1RMmp9CuIqa2WVzrD2q3VHfPxe9j
-	 +d9A1BB778rSxqCMsY4Ge4fMiAvPf3Nbg10DA96qgkM6ee7BX/sGudm/tVXAUsBuj9QLQ
-	 3rUCEqnLIIhxhGrwfNSI90WNHEyCKk4qZWLxAeNiqTyGyiQ/KYcXJQd7q1rPV2QQvghT5
-	 4HIfTar3vkHVIf58LkfvqDTW2/xVPRy5evPWDPBNMuOvYYMA955vD/968CnbtzaJ7rcfP
-	 lOd9MTzw4F9r8YtWo7MusAQ0UIOjTOwjaSGIvSgRauKupGB+VdVDjCxK9yFP+Fqfjig==
+	t=1795026916;
+	b=H4yDto+43oGHxLCZCaDvPROxMlUwn6pZoNcxPZtonJJb9dOMnvTB/LIfNc7IEOATFX9P
+	 pb3gW0GnFzdhpVfDWIOdFCL34LGLjpI1/EybM8xz9cPucFHI063/5ZLcLsYwGL02pUJOk
+	 mPc7MILLXIJm4j9ktmb+8Fx3QlHGWUq005VNCkjV513+wcUe89xll/m7LM4WlxonuJdoz
+	 0FlVD+79WYRZTq35HlGrmo3ejtyvQP25V9DrhX7o0npjaG62IoH3fwZnwnAdgZF8qAXt1
+	 bIMiFtsP4Kn5EHcpkijfPs0Ed4/luLFaT1+5fBAgSeNqVLeU1+DLxY9TROHZ9yzahzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026916;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2RtVjFLzE9JiFHLSOQoIX/i3o0wBSP3B7+mN7mE+n0g=;
-	b=0J/sKbb0vtfjwKv+J8E/TRAbe4dgG24SWclIJUL9tnAT2imMyJGxm3fKaVRZFLZuSR5V
-	 KpGHrdTbK17QKKJ1jpBFXUZVe/nDvQRRBfNW+MgmaHR9kcHO26ZavKL5VgaK9desKeM/z
-	 1PCEYEkRrWFphxJs53hIZWGbTfFSuVlpRXmXRvWnGSCXXndNs545fdcdLQNObeTfxA/k3
-	 oJY+gqlmqCEhb7CRotPD3PXyOGSVdEEZbp8kArJGXUmFa8jfwpFaN3cRka1JyzJQdKEcm
-	 xIAR0vyHWlNdz3V/0XUkusTnbzaV44kzPLqi3ooxV5dFJFPnhCNAHGFrFExttn6mVsA==
+	bh=vOw7ie8vwSfB4VqMreMwpZKm42xYNPsIYxUVP6RnrJA=;
+	b=aQWEDBujqnNnNYSEkzzttQuJCXuVmX1RUSj/NsI+KLkdEw0ZKGpHUag/GC58uPDZWtQK
+	 IsvEwLu5FdvkmmRttlCgioQQF43UrcrjcdYvxIgS0WtczhnLjj3+NLRROnRHP5n2tdxox
+	 +erRAhQ0XE+IiEbSgb4nYNcqf6WPDlYlZBVE0lGFco1S035Xjbxwob3v7+FkCqt/0DJij
+	 //wTHlYBMwsvsIQI4mH0fMKi3xXrLZ+1PqgkdO1SMOcS0eYib+6N2K3QO4rDxlEt57vDT
+	 ktwpAmC5Mc/t1rD8Znm+yrayZfSPlrGPQ0mHa00tMcKsy1dWAtuc4w1z6HWdHtgT4ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oOI3TKbj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLHUOvDZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EB3606A32C;
-	Wed, 18 Nov 2026 18:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D1606A31C;
+	Wed, 18 Nov 2026 18:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oOI3TKbj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CE11F000C8;
-	Wed, 18 Nov 2026 18:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLHUOvDZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C571F000C8;
+	Wed, 18 Nov 2026 18:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026913;
-	bh=2RtVjFLzE9JiFHLSOQoIX/i3o0wBSP3B7+mN7mE+n0g=;
+	s=korg; t=1795026916;
+	bh=vOw7ie8vwSfB4VqMreMwpZKm42xYNPsIYxUVP6RnrJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oOI3TKbjM6R+IEEVjjlcvjcm3ce2XV50wlz/t/99xerkziVje9LpgcpGjcg1rRmkn
-	 DDTPzxOhqLd+sG2WVTTEdqGlSpGwPun9xD55ncLtN98Kd3t62SFI+fwWfgtHjmx79r
-	 NhY664OC0om6WuHFxi/a/fZuvp98js5Ml/SaI94A=
+	b=YLHUOvDZvIELRD+W766jHamGHTZ9MStfV6e2sM4JXQ8M9iglhxZTi9s1SFVXEDo2W
+	 48asLAfXNzQBCAmUqrDg9yvYxUjD7Shxogzn0ojfuFBANFP0QELGhUxpI1G6t3dCp0
+	 empQrNFKivH+44oFkY6KLx6gLBnSyGm8R/CGDSSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1563/2151] scsi: core: Prepare for using combined sense codes
-Date: Wed, 18 Nov 2026 15:54:58 +0100
-Message-ID: <20261118150218.830127818@linuxfoundation.org>
+Subject: [PATCH 6.18 1554/2151] net/mlx5e: use skb_share_check() in the loopback selftest hook
+Date: Wed, 18 Nov 2026 15:54:49 +0100
+Message-ID: <20261118150218.505986770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,164 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit ec5562d3ea803ec45831477129c626b2a22d2e2c ]
+[ Upstream commit 16fb7aa6955a0af9f67ca42a61d9be58dfc9382a ]
 
-In preparation for handling sense codes and their qualifers as a single
-16-bit sense code field, with the values defined as macros in
-include/scsi/scsi_sense.h, modify the definition of the structures
-scsi_failure and scsi_sense_hdr to introduce a 16-bit sense_code field as a
-union with the existing 8-bit asc and ascq fields.
+The loopback hook gets a shared skb when another ETH_P_IP handler is
+bound to the device. skb_linearize() on a non-linear frame then hits
+BUG_ON(skb_shared()).
 
-This temporary modification allows accessing either the asc and ascq fields
-individually, or their combination as the 16-bit sense_code field.
+Call skb_share_check() before linearizing the skb.
 
-The helper functions scsi_sense_asc(), scsi_sense_ascq() are defined to
-allow accessing the 8-bit ASC and ASCQ values from the sense_code filed of
-struct scsi_sense_hdr. The helper functions scsi_failure_asc() and
-scsi_failure_ascq() provide the same for the sense code field of struct
-scsi_failure.
-
-The helper functions scsi_set_sense_buffer() and scsi_set_sense() are also
-added to wrap calls to scsi_build_sense_buffer() and scsi_build_sense()
-using a 16-bit sense code argument instead of the 8-bit ASC and ASCQ
-arguments.
-
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260908090308.1085097-6-dlemoal@kernel.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-Stable-dep-of: 92821c2358c7 ("scsi: hisi_sas: Fix spinup failure for SAS SSP devices in Active_Wait state")
+Fixes: 95b9606b15bb ("net/mlx5: Extend Ethtool loopback selftest to support non-linear SKB")
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-3-458369bfa1ba@tipi-net.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/scsi/scsi_cmnd.h   |  7 +++++++
- include/scsi/scsi_common.h | 31 +++++++++++++++++++++++++++++--
- include/scsi/scsi_device.h | 25 +++++++++++++++++++++++--
- 3 files changed, 59 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/scsi/scsi_cmnd.h b/include/scsi/scsi_cmnd.h
-index 8ecfb94049db5..bf6d69f0249f8 100644
---- a/include/scsi/scsi_cmnd.h
-+++ b/include/scsi/scsi_cmnd.h
-@@ -394,6 +394,13 @@ static inline unsigned scsi_transfer_length(struct scsi_cmnd *scmd)
- extern void scsi_build_sense(struct scsi_cmnd *scmd, int desc,
- 			     u8 key, u8 asc, u8 ascq);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+index 2f7a543feca62..9e0a677ea9db6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_selftest.c
+@@ -166,6 +166,10 @@ mlx5e_test_loopback_validate(struct sk_buff *skb,
+ 	struct udphdr *udph;
+ 	struct iphdr *iph;
  
-+static inline void scsi_set_sense(struct scsi_cmnd *scmd, int desc,
-+				  u8 key, u16 code)
-+{
-+	scsi_build_sense(scmd, desc, key, scsi_sense_code_asc(code),
-+			 scsi_sense_code_ascq(code));
-+}
++	skb = skb_share_check(skb, GFP_ATOMIC);
++	if (!skb)
++		goto out;
 +
- struct request *scsi_alloc_request(struct request_queue *q, blk_opf_t opf,
- 				   blk_mq_req_flags_t flags);
+ 	if (skb_linearize(skb))
+ 		goto out;
  
-diff --git a/include/scsi/scsi_common.h b/include/scsi/scsi_common.h
-index fb58715fac869..f1f35c2546222 100644
---- a/include/scsi/scsi_common.h
-+++ b/include/scsi/scsi_common.h
-@@ -63,8 +63,18 @@ extern u64 scsilun_to_int(struct scsi_lun *);
- struct scsi_sense_hdr {		/* See SPC-3 section 4.5 */
- 	u8 response_code;	/* permit: 0x0, 0x70, 0x71, 0x72, 0x73 */
- 	u8 sense_key;
--	u8 asc;
--	u8 ascq;
-+	union {
-+		struct {
-+#if defined(__BIG_ENDIAN)
-+			u8 asc;
-+			u8 ascq;
-+#elif defined(__LITTLE_ENDIAN)
-+			u8 ascq;
-+			u8 asc;
-+#endif
-+		};
-+		u16 sense_code;
-+	};
- 	u8 byte4;
- 	u8 byte5;
- 	u8 byte6;
-@@ -79,10 +89,27 @@ static inline bool scsi_sense_valid(const struct scsi_sense_hdr *sshdr)
- 	return (sshdr->response_code & 0x70) == 0x70;
- }
- 
-+static inline u8 scsi_sense_asc(const struct scsi_sense_hdr *sshdr)
-+{
-+	return scsi_sense_code_asc(sshdr->sense_code);
-+}
-+
-+static inline u8 scsi_sense_ascq(const struct scsi_sense_hdr *sshdr)
-+{
-+	return scsi_sense_code_ascq(sshdr->sense_code);
-+}
-+
- extern bool scsi_normalize_sense(const u8 *sense_buffer, int sb_len,
- 				 struct scsi_sense_hdr *sshdr);
- 
- extern void scsi_build_sense_buffer(int desc, u8 *buf, u8 key, u8 asc, u8 ascq);
-+
-+static inline void scsi_set_sense_buffer(int desc, u8 *buf, u8 key, u16 code)
-+{
-+	scsi_build_sense_buffer(desc, buf, key, scsi_sense_code_asc(code),
-+				scsi_sense_code_ascq(code));
-+}
-+
- int scsi_set_sense_information(u8 *buf, int buf_len, u64 info);
- int scsi_set_sense_field_pointer(u8 *buf, int buf_len, u16 fp, u8 bp, bool cd);
- extern const u8 * scsi_sense_desc_find(const u8 * sense_buffer, int sb_len,
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index 053f9d860b126..850aceb35139c 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -512,6 +512,7 @@ extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
-  * to match any sense key, ASC, and ASCQ value.
-  */
- #define SCMD_FAILURE_SENSE_KEY_ANY	0xff
-+#define SCMD_FAILURE_SENSE_CODE_ANY	0xffff
- #define SCMD_FAILURE_ASC_ANY		0xff
- #define SCMD_FAILURE_ASCQ_ANY		0xff
- /* Always retry a matching failure. */
-@@ -520,8 +521,18 @@ extern void scsi_sanitize_inquiry_string(unsigned char *s, int len);
- struct scsi_failure {
- 	int result;
- 	u8 sense_key;
--	u8 asc;
--	u8 ascq;
-+	union {
-+		struct {
-+#if defined(__BIG_ENDIAN)
-+			u8 asc;
-+			u8 ascq;
-+#elif defined(__LITTLE_ENDIAN)
-+			u8 ascq;
-+			u8 asc;
-+#endif
-+		};
-+		u16 sense_code;
-+	};
- 	/*
- 	 * Number of times scsi_execute_cmd will retry the failure. It does
- 	 * not count for the total_allowed.
-@@ -531,6 +542,16 @@ struct scsi_failure {
- 	s8 retries;
- };
- 
-+static inline u8 scsi_failure_asc(const struct scsi_failure *failure)
-+{
-+	return scsi_sense_code_asc(failure->sense_code);
-+}
-+
-+static inline u8 scsi_failure_ascq(const struct scsi_failure *failure)
-+{
-+	return scsi_sense_code_ascq(failure->sense_code);
-+}
-+
- struct scsi_failures {
- 	/*
- 	 * If a scsi_failure does not have a retry limit setup this limit will
 -- 
 2.53.0
 
