@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050163;
-	b=jL0VgWzDwjp2SihuyVrZHU0YMdFs9o7InRMEUYHtStWJnHSeJJwpe+xSzg02xEgj2ux7
-	 tCaaB5Zb2rgdT3gQVaBVnveQ+hodJ9CbzmzNCVKuNICdhPpxegmcKBPOLMlKKQg9t1VPO
-	 GccwxQ9lQGctqNuuj0kAUKVBBL4R8lpVRH9Dn16o4p7cXoHEHROGsPQ/a9LttYvtDpE1+
-	 JYmnNSD69bHn+RWV0Qm/VYxAoPgj71nt70GKXdt3Xm4YE5o1dVXJh5k7YgGEobmEQsjoK
-	 lhlfNrmNUpc9JLhkDTGK3sv8eT8IUpwLVxPWx1vIaKqeheMh+buveCFFBsXUnscv5AA==
+	t=1795050166;
+	b=M4iSRudfHAciMXjmA2oDx4otrTBWcbJHySi1D4WrFTk22mqDbkoBfelLSfaDcdLpcvOi
+	 ONKzsp6nmeWWFJp/RxUF1r2vcjGIqHKfWlRZ5L2RDOQRJffoKVB+Rmbs8p09RqdaFHvmg
+	 chUJ1wRfwBa5JofdF1hRlTcJHii8Gw1WFNrKdg2AKou4+BPw4vSJHU2GnDItptuTokY6E
+	 VTpSiI5n1IaLAZSA0tfB/u6E8Ohck1/d1Qh4hBsuDunctQRvwvkpRFKHZhxOauTy4zA/9
+	 sq+NUXZPiloGL8KwMhChkCgU7h9+qfgEWojOpy0HcO02IDIUha50lXk+HuIuDDKHLHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050163;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050166;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lEoZEaa/ctMdT/8GfAmB5ctyTjK9Nu9Ff68A78e1Bx8=;
-	b=m6lL0SvtCi/MIjbeb4OkLBAI7PqpdyQphUeVT5s28R0Dy0YVMoVe67NHEmJ9jmWcygEP
-	 2AAMI3t/jKauLrZJYmdDSkvW5Wjknh6rGjsyfEKeRYHotez0e/VUxqQaGbBGWalQ4gVkw
-	 jTrHylf0/1q7d4RLFle7DMPwDGDb9CU+GGOy36szv9x0Qqs1fSIOHMtKpxPXeVI6HfWyh
-	 sErRmAx5lztct1qqeWLmqaWR2Q/kXewow3/LOZ5W0zDo7R4FrOKpn79za0I3sVMzft5Fv
-	 99gYwdLMMoPJlc6h5sqFtkU/sRquwZap5HMcEt9OpsYbMsxrWmsMLdw6/R4ySEHZmcw==
+	bh=RpQudfYZ5bLdeGDSjC4aZxlnFNfuQ9ZwywQihlhY+0A=;
+	b=uwHamVA+VWKS5q67XwSlPNgZSsO17xmfj8xqfWY9u6/CC/u6+AwdlZqLzobszI88EHpw
+	 2VBPjr2pC4LgP+mPUTMP+nxEwxQgbcsCcuUEJ6DW7sMSuh5Gw5j9PATHbvrtSkJScgZsW
+	 vrsDtxvmDhxTDUpFAxuN2NfKcUDVaN46f6tslhIeaJlKbDmm22uK1vNW1n9bRFECnd1PB
+	 IsXA8vqDCTzFC+isttNfQBmF+HTWpAXfhzMLrkncj9AXL59gYMz29+3kTIFc2jOnqG961
+	 Vrxo6cNEKthGopza/T8VRDIt2MfH9OpZzTtUfMrGXXcqMIMozyJLs16J67pUuNL/nhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dtEUEhzx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNEZzPHV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931AD606A330;
-	Thu, 19 Nov 2026 01:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A7160A2600;
+	Thu, 19 Nov 2026 01:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dtEUEhzx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADF11F000C4;
-	Thu, 19 Nov 2026 01:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNEZzPHV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0641F000C6;
+	Thu, 19 Nov 2026 01:02:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050163;
-	bh=lEoZEaa/ctMdT/8GfAmB5ctyTjK9Nu9Ff68A78e1Bx8=;
+	s=korg; t=1795050166;
+	bh=RpQudfYZ5bLdeGDSjC4aZxlnFNfuQ9ZwywQihlhY+0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dtEUEhzxDEeoa/+ij69Co/vKa1ro2VNfpMazvxMtz395Jp5XSmCmEb0K7qezwqdDR
-	 SxrZWJNpy9CLfBGnNrjZ9FQSw69XYSCllU1KfXozai3e4+pKjCuTF6fwwXMY+nzvSv
-	 0OUCMg6NvGc5R3Ml3kZSxU4z8zBdMcqqfB6mgkcA=
+	b=XNEZzPHVKe1NETNO/7fTri6tEARcHjkuJCnDNRcEahINSE+Zw1gIzyD+7qCkxPfNY
+	 Ej7Z78vwqye9MSUMt2SdgZCrY05kwJBGx0sMEZauve9jxQeTQkTjBqG01IBI98lIxp
+	 nlt0kHpoPEUjZTV4dTb+5aJmcctabLbtHlxF7e1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2609/2857] ASoC: codecs: sta350: Fix definition of limiter threshold controls
-Date: Wed, 18 Nov 2026 16:00:43 +0100
-Message-ID: <20261118150335.516537887@linuxfoundation.org>
+Subject: [PATCH 6.1 2610/2857] ASoC: codecs: tlv320aic32x4: Fix Wvoid-pointer-to-enum-cast warning
+Date: Wed, 18 Nov 2026 16:00:44 +0100
+Message-ID: <20261118150335.551565150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,65 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 77623752c156763d7a80414afe5b769ba4532bd3 ]
+[ Upstream commit 66de320b0214a60095287ba1afa09e870d8cdbe5 ]
 
-The limiter attack and release thresholds are the two 4-bit halves of
-one register, so their maximum is 15, not 16. With 16 the controls on
-bits 3:0 also write bit 4, which belongs to the other threshold.
+'type' is an enum, thus cast of pointer on 64-bit compile test with W=1
+causes:
 
-Fixes: 2439ea1f0f8f ("ASoC: sta350: Add codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/d65a21665a1e0d63dec174dd3691bd97764b8ae0.1792135145.git.sammiee5311@gmail.com
+  tlv320aic32x4.c:1352:18: error: cast to smaller integer type 'enum aic32x4_type' from 'void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230815143204.379708-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: f28c09b7e62f ("ASoC: tlv320aic32x4: Fix definition of TAS2505 HP Driver Gain Volume control")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta350.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/soc/codecs/tlv320aic32x4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/sta350.c b/sound/soc/codecs/sta350.c
-index b64ef956ef778..f978d9da4e208 100644
---- a/sound/soc/codecs/sta350.c
-+++ b/sound/soc/codecs/sta350.c
-@@ -507,28 +507,28 @@ SOC_ENUM("Limiter2 Release Rate (dB/ms)", sta350_limiter2_release_rate_enum),
-  */
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_ac_attack_tlv),
-+	       15, 0, sta350_limiter_ac_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (AC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (AC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_ac_release_tlv),
-+	       15, 0, sta350_limiter_ac_release_tlv),
- SOC_SINGLE_TLV("Limiter1 Attack Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter2 Attack Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxA_SHIFT,
--	       16, 0, sta350_limiter_drc_attack_tlv),
-+	       15, 0, sta350_limiter_drc_attack_tlv),
- SOC_SINGLE_TLV("Limiter1 Release Threshold (DRC Mode)",
- 	       STA350_L1ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
- SOC_SINGLE_TLV("Limiter2 Release Threshold (DRC Mode)",
- 	       STA350_L2ATRT, STA350_LxR_SHIFT,
--	       16, 0, sta350_limiter_drc_release_tlv),
-+	       15, 0, sta350_limiter_drc_release_tlv),
+diff --git a/sound/soc/codecs/tlv320aic32x4.c b/sound/soc/codecs/tlv320aic32x4.c
+index ffe1828a4b7ed..6829834a412fc 100644
+--- a/sound/soc/codecs/tlv320aic32x4.c
++++ b/sound/soc/codecs/tlv320aic32x4.c
+@@ -1349,7 +1349,7 @@ int aic32x4_probe(struct device *dev, struct regmap *regmap)
+ 		return -ENOMEM;
  
- BIQUAD_COEFS("Ch1 - Biquad 1", 0),
- BIQUAD_COEFS("Ch1 - Biquad 2", 5),
+ 	aic32x4->dev = dev;
+-	aic32x4->type = (enum aic32x4_type)dev_get_drvdata(dev);
++	aic32x4->type = (uintptr_t)dev_get_drvdata(dev);
+ 
+ 	dev_set_drvdata(dev, aic32x4);
+ 
 -- 
 2.53.0
 
