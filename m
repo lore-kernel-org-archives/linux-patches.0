@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059565;
-	b=x+dUtGidT42omk5Zzf/u2TAYqxc5n8VThIkl4SHLJEZW1iivLyq7jQiAu8+vPo1LnhML
-	 gJKNaXczjbZqhifGW6mm4ddhrqfxmubhNXzoSW22GdzUJZbMrx4NW4OqqPHRl8uAEme8b
-	 hpvfWLE4/4bPNCbX2zhzfrqWq9LsLFveT3YTNvOAQoqkJsGk6WP2O8RN3BmTPXtXyF9ZR
-	 RlmVBm8pKAMiStvvVonlZztxaU653zWpbENiQKVi+ZHZ82vf6e1PDSFkEWpFIBJPDmyky
-	 C4vglx2T/no7reb56fcHfQl8IPRAx5/7TDyB19rwsKQFpAKKC2LDHep9DWFDVSkmMhQ==
+	t=1795059567;
+	b=rabT32GN2Spi8CUiDNw1+u9HE/3vJh1SfNw4sNqyRyJoTWrgstF0Anuad/9gr2LAXe+H
+	 YNjSF/LH5sEIH6Mbqldh9YbfsmBFFM7iod/Ti60VOt8P9uEDchBu4vUbBvIAdwBMtFw5H
+	 e1gmLxQpMGaUxlSmO7bCnrZrUu8gQm1nRBqAZt3l0VkYE4Zv14tRNJq6e0zx0LNHlpleD
+	 p84lNOJg2TiOoAHpNxvRW670/bUQZJ0H2gPMImK/2OCt3Pm5Gt/tasAy4yeKul6HyByh4
+	 ltEJfEAK6MuEtur3odLs5fM5qTYK+AD+OvScIBZTiFWTMb6T8R5LEhzjf9Jcc9G5Kxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Iz8G2vwdudFIJLrSxa3qTJoL3/6gRAyCYBPAiRu8iYY=;
-	b=YCsSeitLLXKNwzRG66DlAylVLzt1EYc0wuMDL0vlGylpjviCFRL+K4lGC/y6cwtC2G2L
-	 IAiVoYG+++ut26yQN6R8Zl6M+GRryFlieVBf98gco8juFrVVnF8q4zLe+k5t+kLb1cxk0
-	 QXNDnwgDGnrHBF+2djJD76bg1dVn3Zo0jKb+NP6VFW36Yt4vJz5cxHv3mvZYloCLhunrT
-	 3MDC27S7N4KrRICOmEml4w8/AHnzc+PYjpEkdj8+AxuR19AbqTS0i8i1leOruyKMFIWPN
-	 J4R4qqQgz5lzZCzvzhJ4tAEBy/FGKY+7wR6tAv+jqFwCW8ZTKMwo8VLSlxzVl7EAMyA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=7gPdKmNNso4sfjUyUyDMh2fiNJT4+IlluuWFvamrzE0=;
+	b=l5lbhPWQztXxhGnckk5wiCkRNTEr7mBHxLt3aBEjelERCdRe77GAnNOoP35EFBZc7+j1
+	 B3mAX5Q01h494MQYulznY5Qy3ldyPDvqeqrUIdIimZbe03z5atfns+dpC7L5pm0aCCMzp
+	 2mSSUEHakdnKSSlcAP9+6YnJmzrH4Wj+w8SZiM1IJE68Q1tzYJfeC5Gnk0rb1Gql6Jtnj
+	 pinV9V/tm6Ty2CJQsf6JP8dwKvSE8pnDDDZSxjFXFKN+JxvkH0TIFW++duMIwS2NAve/J
+	 VDtlQMPsZ2ZAG8kG6py1LYxqY9+3sAX1SA9xB+bo4ekkhWKtJsRkq+gWbwzAqOWMDnA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rqc7a+1t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kh86RYqZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFED4606A32F;
-	Thu, 19 Nov 2026 03:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3852606A32A;
+	Thu, 19 Nov 2026 03:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rqc7a+1t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB9C1F000C5;
-	Thu, 19 Nov 2026 03:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kh86RYqZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043801F000C4;
+	Thu, 19 Nov 2026 03:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059564;
-	bh=Iz8G2vwdudFIJLrSxa3qTJoL3/6gRAyCYBPAiRu8iYY=;
+	s=korg; t=1795059567;
+	bh=7gPdKmNNso4sfjUyUyDMh2fiNJT4+IlluuWFvamrzE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rqc7a+1t6lCb2IlEqKZPurZucfsxLBeghR5xSYn1gGesbPDn0Bi4+sQj9c+dsx4S1
-	 p/xOmWPvAZAZAKDwZ1I3EOgHYm27EDNIFjSPrr36rrRawVa5gEg3XLwJJ9GmzX4t9q
-	 N4DfZbfBX65iIuI7EYo45CLOop62eJxerMCQkwHA=
+	b=Kh86RYqZlZH+PKuRO706hZsd+5QpuK3sbUmgcct5EzNnlmYvKYYAUHIfxfpyB9+0J
+	 VSwCAfE4HQNlz5/9m8Cvbf5IJySAlPD0gnNao3SuAVfEc14cpUoortUcfyBdScMnhM
+	 ieqKnkuk3dZMEYT5IbEz8qG1MqjO1CCLKN3AUuLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sinan Turunc <enscrpt@pm.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0846/1848] platform/x86: hp-wmi: fix heap OOB read and memory corruption in hp_wmi_perform_query()
-Date: Wed, 18 Nov 2026 15:48:04 +0100
-Message-ID: <20261118145952.018523741@linuxfoundation.org>
+Subject: [PATCH 5.10 0847/1848] ALSA: usb-audio: Bound packet copies by the PCM buffer size
+Date: Wed, 18 Nov 2026 15:48:05 +0100
+Message-ID: <20261118145952.053651716@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,79 +62,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 6dea092b261f04d632411c2be52d13190f5f67b1 ]
+[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
 
-hp_wmi_perform_query() evaluates an ACPI WMI method and expects a
-struct bios_return header in the returned buffer. However, it only
-checks that the ACPI object type is ACPI_TYPE_BUFFER without verifying
-that obj->buffer.length is at least sizeof(*bios_return) (8 bytes).
+retire_capture_urb() and prepare_playback_urb() assume that one USB
+packet never carries more data than the whole ALSA ring buffer. Nothing
+enforces that: the packet size comes from the device (wMaxPacketSize,
+and curpacksize == maxpacksize when the class-specific endpoint
+descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
+require 64-byte periods, two periods and a period time of one data
+interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
+full-speed device can send 1023-byte packets into it.
 
-If the firmware or ACPI method returns a buffer shorter than 8 bytes:
+On the first oversized packet hwptr_done is wrapped once and stays
+beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
+the wrap arithmetic in the copy path computes
 
-1. bios_return->return_code at offset 4 reads out of bounds from the
-   allocated ACPI buffer slab.
+    bytes1 = subs->buffer_bytes - oldptr
 
-2. If return_code evaluates to 0 and outsize is non-zero,
-   (int)(obj->buffer.length - sizeof(*bios_return)) evaluates to a
-   negative integer (e.g. -8 for a 0-length buffer). actual_outsize is
-   set to this negative value and passed to memcpy(buffer, ...,
-   actual_outsize), where the signed negative value is cast to
-   size_t (e.g. 0xfffffffffffffff8), attempting to copy ~18 Exabytes
-   and triggering an immediate kernel crash. Additionally,
-   memset(buffer + actual_outsize, ...) performs an out-of-bounds
-   write before buffer.
+with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
+runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
 
-Fix this by ensuring obj->buffer.length is at least sizeof(*bios_return)
-before accessing the return code, and compute actual_outsize safely
-using min_t(u32, ...), which is sound specifically because the guard
-above already rules out obj->buffer.length being smaller than
-sizeof(*bios_return) by the time that subtraction runs.
+  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
+  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
 
-Fixes: c3021ea1beee ("hp-wmi: allow setting input and output buffer sizes separately")
+and for playback, where copy_to_urb() has the same shape:
+
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
+  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
+   prepare_playback_urb+0x98a/0x1fc0
+
+Truncate an oversized capture packet to the buffer size, and stop
+filling a playback URB once it holds a whole buffer. With bytes <=
+buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
+in both copy paths stay inside the buffer. A device whose packets do
+not fit the buffer at all was never going to play correctly anyway.
+
+Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
+isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
+wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260826103012.240453-1-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
+[ sashal: replaced missing subs->buffer_bytes with runtime->buffer_size * stride ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/usb/pcm.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 140a5f797980d..c721fcdd2e43c 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -246,8 +246,9 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
- 		goto out_free;
- 	}
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 802ed1dbd23b0..82cfa3f75d530 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1438,6 +1438,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
+ 			bytes -= adj;
+ 			subs->stream_offset_adj -= adj;
+ 		}
++		/*
++		 * A packet can be as large as the endpoint's maxpacksize, which
++		 * the device chooses, while the ring buffer can be as small as
++		 * two 64-byte periods. The hwptr_done wrap below handles one
++		 * wrap only, so never take more than one buffer from a packet.
++		 */
++		if (unlikely(bytes > runtime->buffer_size * stride)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "%u-byte packet exceeds %lu-byte buffer, truncating\n",
++					     bytes, runtime->buffer_size * stride);
++			bytes = runtime->buffer_size * stride;
++		}
+ 		frames = bytes / stride;
+ 		if (!subs->txfr_quirk)
+ 			bytes = frames * stride;
+@@ -1614,6 +1626,14 @@ static void prepare_playback_urb(struct snd_usb_substream *subs,
+ 		else
+ 			counts = snd_usb_endpoint_next_packet_size(ep);
  
--	if (obj->type != ACPI_TYPE_BUFFER) {
--		pr_warn("query 0x%x returned an invalid object 0x%x\n", query, ret);
-+	if (obj->type != ACPI_TYPE_BUFFER ||
-+	    obj->buffer.length < sizeof(*bios_return)) {
-+		pr_warn("query 0x%x returned wrong type or too small buffer\n", query);
- 		ret = -EINVAL;
- 		goto out_free;
- 	}
-@@ -266,7 +267,7 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
- 	if (!outsize)
- 		goto out_free;
- 
--	actual_outsize = min(outsize, (int)(obj->buffer.length - sizeof(*bios_return)));
-+	actual_outsize = min_t(u32, outsize, obj->buffer.length - sizeof(*bios_return));
- 	memcpy(buffer, obj->buffer.pointer + sizeof(*bios_return), actual_outsize);
- 	memset(buffer + actual_outsize, 0, outsize - actual_outsize);
- 
++		/*
++		 * Bound by the ring buffer as well as by the URB:
++		 * copy_to_urb() wraps hwptr_done once, so one URB must
++		 * never carry more than the whole buffer.
++		 */
++		if ((frames + counts) * ep->stride > ctx->buffer_size ||
++		    (frames + counts) * ep->stride > runtime->buffer_size * stride)
++			break;
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[i].offset = frames * ep->stride;
+ 		urb->iso_frame_desc[i].length = counts * ep->stride;
 -- 
 2.53.0
 
