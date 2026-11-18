@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039225;
-	b=TxaeBuDh+U3HUQnZUikSmL14/QBCJUmn0n1i/Z1XhEp3QzutYf3ie2IAz6x58bH9XtsF
-	 JiEPASxPumLAkHlUM+cZehHplawM2mump75Oeq8yZIt5INFwiAu9q7EKAY+C7L+W/ZYLN
-	 8oBXzORtPFGF+9L8I1e+qNcY4pj7NNC6XK7G5+OqgSX+b0Db8LzZMUyJE8Wugq7cOhJtz
-	 WJvEe9GSx2sNVpNZlB9siQ00wEUQN663m9Vmtr7R5+yIk0fHjCFSIMbyz6vm3P219WdkS
-	 SuWIrBoXffTipNXIqnNSWbA4EDdlJmawbK/9gqXd4F92IP0NdJJpB0MYOEd03rwEP5Q==
+	t=1795039228;
+	b=x6Z9QVZF6Imo7ibmZbATQxboAgPM5dEXx1OTZv3Gh40tgY/Wi3ZEnLL+ckNfHpGAI5R5
+	 kQDT3kwJ26hDy3oft/gr1cvx6TdnQLPwJFVZr0IySvGlph4ph5ygyP5CazT7slcE20XeL
+	 jC2cFKeK/TmKCLk9IVRc3M3U9amBqE47RqPPqkMceH4V0l7JOTeQs/JgQR6+O6nhzueRF
+	 zLJkzoyS8YlPEnkFT2Fhl4FoKtLn8L5fePZrD9/Gb7L7BVOtpf5x62aFJC/qPd0120emd
+	 5PfsSaDh8rAt+KNLIZdOHi55CNIKyTFFyKtxW4wiDT15Vb31eTfjBbVCkVYfZMvuZxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039228;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1D9ekCLi8FlBKwpKAJ3Fay962nFHtgKeDC6ByVb8eQE=;
-	b=abnNum1tJffNKY7wtGiYa0bINdZPnSF2in3KCZAjdEbq5mDbHIa9gds0rd3iDCqwxKbw
-	 ymsjDUUyeEY1mYBTzOloKP7u7VcsM1yPaQqh+VkK8KYcFoTGibvsgbmr5FmQTfm+dALHu
-	 fcKxhZO6HHGLxTFAQVE7fzkEVFR3vGSNvXNZSS00WTMNywAMi2EAT4wagrAqUoQcZRZje
-	 TqQnwddfiai103uY4NAAYkREXRWIj8+hSa1Ma1cZFC3GN3tMpyu7GfyVoHDFNO5umTB1h
-	 ma6Bp1GDc/kYpeUtZeYhZ57+hTwS422MApST/JqIF2PrspeUNVnCX1/CySbGZOY0fUQ==
+	bh=xvSTV2XWpYohB+KJAJx0Bc2nv1kIAE3JdODXhvdQjgI=;
+	b=lOAM55d1NtdL9qyRUvCzwlrjlwME4Y2J5mCUy+yrK7Sp60KT1fHT8nhd1auWN6YMSfG0
+	 Smk8lEXqzylium22mvMIINK0dKYlWw6/l1IPVyqjiYH7HdvBUQN8GYwSwz4uB3QiQIF6x
+	 H78qyKID1JRHtLclY+NXcRa70RODL1EQ50RPqsCUyu5svdcmxNNUXKCiFz0zKrXOthZK9
+	 3Fn5VdMLy6xjXatmv0k5cqMAt8BS0SEY6HPfpHNSrZ9lnQAsfcpjks1iicyRI6Q15SHpp
+	 zsCHCNRRSQ91XQduUuDZy7GH/wxamG9f8JGp1oA4E0VXS9mMN3hhb2QyfT4bncLQpDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4zPwc3O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uqMV9ZYP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADA2606A32A;
-	Wed, 18 Nov 2026 22:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49413606A320;
+	Wed, 18 Nov 2026 22:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4zPwc3O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F256A1F000C4;
-	Wed, 18 Nov 2026 22:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uqMV9ZYP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45861F000C5;
+	Wed, 18 Nov 2026 22:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039225;
-	bh=1D9ekCLi8FlBKwpKAJ3Fay962nFHtgKeDC6ByVb8eQE=;
+	s=korg; t=1795039228;
+	bh=xvSTV2XWpYohB+KJAJx0Bc2nv1kIAE3JdODXhvdQjgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4zPwc3O3ZtMl4NbWRDVQu+92CfVnSAaxbXu4M1jniW2tfSvqbUo3U6WFGDr6eR8d
-	 d7XhjSSyDrh9i/YC8oeB39IEf6W0FwZ8UTQctqcKig7n0ShoI4aE929UZwLxzB+SI3
-	 NJY4qjoLul+bCsyCPRnAjvXC+VFVnqlArs4U4L8s=
+	b=uqMV9ZYPU2D7i0syKsTZmiedwetVkTeiXE5ShUjqW4KH4cDgn3VZZ3oQ2swkJOK2S
+	 auLS7gzHYThZHoZhltCgkLt2daxYuumyIebp23IrF0k7Scfpmj+2X/M6/dTx4tbsVU
+	 ml4mFU24PoWVv3Mh4UgVNxa8fju4jxRxh3y5b2Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Michael Straube <straube.linux@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2007/3318] perf jitdump: Check snprintf return before computing header size
-Date: Wed, 18 Nov 2026 15:43:49 +0100
-Message-ID: <20261118150422.260217195@linuxfoundation.org>
+Subject: [PATCH 6.6 2025/3318] staging: rtl8723bs: remove return from void function
+Date: Wed, 18 Nov 2026 15:44:07 +0100
+Message-ID: <20261118150422.791659163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,55 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Michael Straube <straube.linux@gmail.com>
 
-[ Upstream commit 0155f05ea6e133c18a04b8b5945cac59870da156 ]
+[ Upstream commit 9279204d37cce549f40cdc677b86405e8628212c ]
 
-snprintf() returns the would-have-been length on truncation.  When the
-jitted filename exceeds PATH_MAX, the unclamped 'size' value inflates
-sizeof(event->mmap2.filename) - size into a massive underflow, causing
-the header.size computation to write an oversized header.  The
-subsequent write to 'id = event + header.size - idr_size' then corrupts
-the heap.
+Remove exit label and return statement from a void function.
+After the exit label no cleanup is done, so it is safe to remove it
+and return early in the only place where the label is used.
+This simplifies the code and clears a checkpatch warning.
 
-Clamp size to PATH_MAX - 1 after snprintf in both jit_repipe_code_load()
-and jit_repipe_code_move().
+WARNING: void function return statements are not generally useful
 
-Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Michael Straube <straube.linux@gmail.com>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Link: https://lore.kernel.org/r/20250615123758.41869-1-straube.linux@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: baa84b1bb164 ("staging: rtl8723bs: disable SDIO function on block size failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/staging/rtl8723bs/os_dep/os_intfs.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 8264d03260706..37aa6729ab0f2 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -493,6 +493,9 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 			jd->dir,
- 			nspid,
- 			count);
-+	/* snprintf returns would-be length on truncation, clamp to buffer */
-+	if (size >= sizeof(event->mmap2.filename))
-+		size = sizeof(event->mmap2.filename) - 1;
+diff --git a/drivers/staging/rtl8723bs/os_dep/os_intfs.c b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+index 68bba3c0e757a..6a44fb1b8593e 100644
+--- a/drivers/staging/rtl8723bs/os_dep/os_intfs.c
++++ b/drivers/staging/rtl8723bs/os_dep/os_intfs.c
+@@ -1145,7 +1145,7 @@ void rtw_suspend_common(struct adapter *padapter)
  
- 	size++; /* for \0 */
+ 	if ((!padapter->bup) || (padapter->bDriverStopped) || (padapter->bSurpriseRemoved)) {
+ 		pdbgpriv->dbg_suspend_error_cnt++;
+-		goto exit;
++		return;
+ 	}
+ 	rtw_ps_deny(padapter, PS_DENY_SUSPEND);
  
-@@ -607,6 +610,9 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	         jd->dir,
- 		 nspid,
- 		 jr->move.code_index);
-+	/* snprintf returns would-be length on truncation, clamp to buffer */
-+	if (size >= sizeof(event->mmap2.filename))
-+		size = sizeof(event->mmap2.filename) - 1;
+@@ -1167,10 +1167,6 @@ void rtw_suspend_common(struct adapter *padapter)
  
- 	size++; /* for \0 */
+ 	netdev_dbg(padapter->pnetdev, "rtw suspend success in %d ms\n",
+ 		   jiffies_to_msecs(jiffies - start_time));
+-
+-exit:
+-
+-	return;
+ }
  
+ static int rtw_resume_process_normal(struct adapter *padapter)
 -- 
 2.53.0
 
