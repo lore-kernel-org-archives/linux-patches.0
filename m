@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046822;
-	b=KvRE7cRxNzTULJ0fBJ5zOyqiHk0DGoEd73/ThjLH18eqb2oVJu2kro1/J0dIqZr6sIEo
-	 M1opVk3IKuxCR6OEC2te17b+cDyztOxVGh7Vj1pgK2xGyEDnaT0MpEKQ94ok2csNGXKwJ
-	 hXTnLaIK/Mad7I6sLrkQVzpbkxKbB65MLpDGeLMYZbwmXyW4w0HTTBGFb4etbp4nDlE7p
-	 /RpgIipNooB16O3DyORaXfTCOO3xn6ImNOB7WgffZ0E3USGS8XMbWpQzaEF1odEkwZsbZ
-	 rB+yQRHUOdNPlaVWO7ldVq3a1BEdJr5XNJNnAn1R+68AkWj0sZQtmyClqXMikr1apUQ==
+	t=1795046824;
+	b=p2qga/3EGZZFnrsXLUbdspJDxmR4USXioaEhMi1eSTR1icmHvU+FgqVDShNzhUf1T4Lu
+	 0Tc1YPvw4UVctuGI5bAwIv7HrBzWH57MsmxKQsVbWnQU1glp9rz3KpLlwXjAqJzpSGIQ/
+	 IoOZ2ld+4u5tYKDF/PAxmBUHYgeUbUYtpPZNwQlCPJbLbSBkvBRyzttTJY8d2ytLjWDSP
+	 mNywdikhMPVha8WBoqrMu/gmMEiaGkWLZ4H29H3h+vCCoREtgFRQFedx5zH/FZr4nZiGl
+	 8SdBT0yfYGXjNSwnBCpjuFmiDMjC9+h0Hwq8IWVJQcENC51B1vLwniJzyejS/840E+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aA+as+aGTf+ap28r/DIhd8ZzjWe/u2D9zBj0Z/yI6fI=;
-	b=hy9YfuzysIDqHSc/mQkLhhoxs33xYkq+R/TnA6jKdErPgCjw74TALW0GExRsCR1T7dhR
-	 4hG3ZU16ETcAU7ALFW+HaEuAeQYCbDJPHhMGG+J2azzWhkZmoAhkeRQcQmOcb3PjtQtfG
-	 ++RWc3kSsDodRhVV6rwL2wUVi5EqBc6T6wlCpEBumFKIRaM1uBU2sbBslYhTjTBHlniDm
-	 xsHtPUx/V5S+DodftymIbVnvrH5HIz5TmjowBExGSOiRru516pQhGZJ0R12FBY7GsyXtr
-	 LFwQ9EypYMHzcNF60W0qkk/zQHLp5m/+kUA0nlF3C8K9+gt5fJm+5qgW/UOKIg7mrKQ==
+	bh=Y2JpUzRCaBdqvsEtVjgJjOo8gys0WmeB4/KZAitoyTI=;
+	b=Sw6mPIxb1oCS+M8dWKKWQDH+mUqFXSJejSyafT+zbYOKvXFGIueniguApbqfnVHCVciA
+	 +wSvghv2XNbSludt7PQHIIvuty3vCaidjiBFS5QMSgPTXwh1uBun0yuSHIO0xwesj7qKS
+	 74ZCMVEWeEPUt0EZeo+wOtFgXntaQqOxmIRjkR+ZrKLH+9n3w3OLPt2Ze/tiu0BY6vPF2
+	 YAQwQKu+BiWtIFLJvJY+Xstdn0siiDdKec2fHGqjXy7uLhh3Ksf0RcU6ZsW33FgektVn4
+	 l9O4Z5L1fSBS8CCYM9qy8cOq/LnxDkX4UEjV512+Kt2YM82XD6G6k/DAJ5cGaSlwv5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJbOjLvs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFk3iYKy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E224B606A31C;
-	Thu, 19 Nov 2026 00:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A70606A32F;
+	Thu, 19 Nov 2026 00:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJbOjLvs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8A01F000C4;
-	Thu, 19 Nov 2026 00:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nFk3iYKy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73C21F000C4;
+	Thu, 19 Nov 2026 00:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046821;
-	bh=aA+as+aGTf+ap28r/DIhd8ZzjWe/u2D9zBj0Z/yI6fI=;
+	s=korg; t=1795046824;
+	bh=Y2JpUzRCaBdqvsEtVjgJjOo8gys0WmeB4/KZAitoyTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XJbOjLvsYybCxzRH8doGeOCCcBDB/b9LAKAKaZq4+rQJfeaRCmpANbfq6kX/d09GU
-	 ffc2QeSXiLDQLLi+Yvblm4ES6sw8dWZJ8uZiepfLlA4AxRk++521vZNsXkKx8+q8/V
-	 53Gcqb/ysCz3+34yzRkT6bNepj8YQ3YuyPuBvjB0=
+	b=nFk3iYKyr59DD3drDcFW55bmGH+JQ1UrxCo5pcJO0fsG0UxQPzszWugPdbuS4yVh3
+	 VZP6JzPJ7vW+kNp1qOxovxscasm9dP7VArXWb11YRlzbZPk37znQXDJ59rIRzsplR1
+	 S2dJseWOZgr9GHS0qtqm4PGLPmO50VL0Aym3lUE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1416/2857] ipmr: only copy pktinfo to cache reports
-Date: Wed, 18 Nov 2026 15:40:50 +0100
-Message-ID: <20261118150252.313398585@linuxfoundation.org>
+Subject: [PATCH 6.1 1417/2857] alpha: load the MMU context when switch_mm() switches the current task
+Date: Wed, 18 Nov 2026 15:40:51 +0100
+Message-ID: <20261118150252.347786365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,81 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 94a6736bb5abe6b2ef38490d0cab19c1c6a7c71f ]
+[ Upstream commit 9b8be19d5dc9525a408942e2e8012873199e7455 ]
 
-ipmr_cache_report() prepares IP_PKTINFO on the original skb. The
-ipv4_pktinfo_prepare() helper updates skb->cb and clears the pktinfo fields
-when packet info is disabled. Since the skb can continue through the data
-path, preserve and restore its original control block around the helper.
+The 6.1.y header still contains ev4_switch_mm().  Retain it, and omit the
+unrelated do_page_fault() declaration move.  Of the direct callers
+described below, only kthread_use_mm() is present in this tree.
 
-The original implementation copies the entire control block to the report
-skb. For synthetic RTM_GETROUTE packets, NETLINK_CB data is interpreted as
-IPCB by the raw IPv4 receive path. With IP_RECVOPTS or IP_RETOPTS enabled,
-corrupted option offsets cause out-of-bounds reads or a stack buffer
-overflow. WHOLEPKT and WRVIFWHOLE reports also inherit stale IP option
-offsets when their header is prepended.
+ev5_switch_mm() only prepares the incoming PCB. The context is installed
+by PAL_swpctx, which alpha_switch_to() issues against that PCB on the way
+out of the scheduler.
 
-Clear the report skb control block. Only prepare and copy pktinfo when the
-input skb has an IPv4 header. Synthetic route-query skbs use NETLINK_CB,
-not IPCB, so leave their report control block zeroed. Restore pkt->cb after
-preparing pktinfo for regular IPv4 packets.
+Direct callers reach switch_mm() without going through alpha_switch_to():
+kthread_use_mm(), which borrows an mm for the current kernel thread,
+sched_force_init_mm() on the CPU-hotplug teardown path, and
+do_shoot_lazy_tlb(), which switches to init_mm from an IPI. None explicitly
+loads the context, so the task can carry on running under whatever was
+loaded before. For kthread_use_mm(), current->mm then names the borrowed
+mm even though its context has not been loaded. The other two callers
+change active_mm while leaving current->mm NULL.
 
-Fixes: bb7403655b3c ("ipmr: support IP_PKTINFO on cache report IGMP msg")
+The stale page-table root need not be swapper_pg_dir; it may belong to a
+user process that ran on the CPU earlier, and the kthread's user accesses
+can then read and write that process's memory wherever the stale mappings
+allow. Translations taken that way can also end up tagged with the
+borrowed mm's ASN: ev5_switch_mm() writes that ASN into the PCB, which the
+next PAL_swpctx installs against the stale ptbr. An address the stale
+tables do not map faults instead, and since do_page_fault() resolves
+faults against current->mm without reloading the context, the same access
+can fault again on return.
+
+sched_force_init_mm() needs CONFIG_HOTPLUG_CPU and do_shoot_lazy_tlb()
+needs CONFIG_MMU_LAZY_TLB_SHOOTDOWN. Alpha selects neither, so only
+kthread_use_mm() is reachable in practice. Test the caller's identity
+rather than special-casing individual callers.
+
+The scheduler passes the incoming task, which is not current until
+alpha_switch_to() runs; all three direct callers pass current. Test for
+that and load the context the way activate_mm() does. All three run with
+interrupts disabled across the switch, so this completes before any
+shootdown can be taken and needs no asn_lock handshake.
+
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/20260903113055.GA90787@shredder/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20261010142533.974797-2-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+(cherry picked from commit 9b8be19d5dc9525a408942e2e8012873199e7455)
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/alpha/include/asm/mmu_context.h | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 459d58b36dec6..623c41514d4c3 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1037,6 +1037,7 @@ static void ipmr_cache_resolve(struct net *net, struct mr_table *mrt,
- static int ipmr_cache_report(const struct mr_table *mrt,
- 			     struct sk_buff *pkt, vifi_t vifi, int assert)
- {
-+	unsigned char pkt_cb[sizeof(pkt->cb)];
- 	const int ihl = ip_hdrlen(pkt);
- 	struct sock *mroute_sk;
- 	struct igmphdr *igmp;
-@@ -1092,8 +1093,6 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		msg = (struct igmpmsg *)skb_network_header(skb);
- 		msg->im_vif = vifi;
- 		msg->im_vif_hi = vifi >> 8;
--		ipv4_pktinfo_prepare(mroute_sk, pkt, false);
--		memcpy(skb->cb, pkt->cb, sizeof(skb->cb));
- 		/* Add our header.
- 		 * Note that code, csum and group fields are cleared.
- 		 */
-@@ -1104,6 +1103,15 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		skb->transport_header = skb->network_header;
- 	}
+diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
+index 7aeee0846dc9d..14f85e7e88387 100644
+--- a/arch/alpha/include/asm/mmu_context.h
++++ b/arch/alpha/include/asm/mmu_context.h
+@@ -132,6 +132,8 @@ __get_new_mm_context(struct mm_struct *mm, long cpu)
+ 	return next;
+ }
  
-+	memset(skb->cb, 0, sizeof(skb->cb));
-+	/* Route queries from ipmr_get_route() carry NETLINK_CB, not IPCB. */
-+	if (ip_hdr(pkt)->version) {
-+		memcpy(pkt_cb, pkt->cb, sizeof(pkt_cb));
-+		ipv4_pktinfo_prepare(mroute_sk, pkt, false);
-+		*PKTINFO_SKB_CB(skb) = *PKTINFO_SKB_CB(pkt);
-+		memcpy(pkt->cb, pkt_cb, sizeof(pkt_cb));
++extern void __load_new_mm_context(struct mm_struct *);
++
+ __EXTERN_INLINE void
+ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 	      struct task_struct *next)
+@@ -141,6 +143,15 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 	unsigned long mmc;
+ 	long cpu = smp_processor_id();
+ 
++	/*
++	 * kthread_use_mm() switches current's mm without alpha_switch_to(),
++	 * which loads the context.
++	 */
++	if (next == current) {
++		__load_new_mm_context(next_mm);
++		return;
 +	}
 +
- 	igmpmsg_netlink_event(mrt, skb);
+ #ifdef CONFIG_SMP
+ 	cpu_data[cpu].asn_lock = 1;
+ 	barrier();
+@@ -182,8 +193,6 @@ ev4_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 	ev5_switch_mm(prev_mm, next_mm, next);
+ }
  
- 	/* Deliver to mrouted */
+-extern void __load_new_mm_context(struct mm_struct *);
+-
+ #ifdef CONFIG_SMP
+ #define check_mmu_context()					\
+ do {								\
 -- 
 2.53.0
 
