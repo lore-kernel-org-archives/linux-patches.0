@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044150;
-	b=GBDc3lf6h5zjNvpey4uVQ6EqIy0x7J0WbOEr4RDyNp03gB602BjaO0UEBuV2XXmWbzCW
-	 SuRV92aFi/nt4wib4nwXN+X8v2YusO14S7qe5JuxZRn0JGl3+jzBzag9ocKH7o+ArKUYQ
-	 0UpLZ5D+if9b0jVvSxOoHJaymCh01seU1vN6I0snFsE5IePxhyc361ap+VP/YFUlQIRmn
-	 NDvEBTolOENU+qY+cPZ+gEUaZcV5XoqliCmHqXXl2bkJpqVmL4CheWsmPAyLZVbIx7Fm1
-	 8zwMuVyXFuP2R6mNm1yq7G3OT0ARWYo4iiyVVdgCKIBnCf3gSCnLMdK5wu3UC8GgFpQ==
+	t=1795044153;
+	b=sko5nb+ZTITgSBwJ6L9h1srrz4nSI8ZpwCxYTBIk6kW605cysWrQy1VEn6AG80AYXkyT
+	 OeKfW4ClGPOnPIKqFCnbNS3PWeXqXZp6mQlXphLSIfFN/arYjR73B5bh2f4vEOTcI6xeX
+	 jvnpEWvjqWnAscumqbLPS2qdbF27QNEptoOdrVGtAULCn9UZ3iyLf9ahXFwc8Kb885ZAV
+	 H7ixBCguPKmd13voD+pFPfi5wWn/tbrSia5hoEJUlN6mXOP8s+7yk5RnhGzMNfxsBx8dS
+	 Yc/524U3fS4ksMRzQlipdVBeX4OGsfJ4CwtwQ88Xy7Aj1d+Coj5a2K2K9M+mHfOA4UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zOB2kMl2MxWDeSAc/5sh4TLIiVzM37p4AurFeXZ06j0=;
-	b=yCk8F5drz6+j2eCF12YVOWJYBqCWZ/BKsCOMUdG8PEruEGE4vV98GPQNqvIKSCR8MDt9
-	 p1CLQN2R6PPs3r0lXh4kdcbEie7lRPy1kVC9QrrF4T7amfzZ9fCz/ufYFrEQPk/jhbg9z
-	 UwZ0tRpdFw0I6RhildIC0yH01UyikxHJO2zxpAcFfLuyAkzmZIgrBWt8xEgjgmxAhq/NR
-	 JotT3P8Kl9uhiMtDiuBQ9oIX9MjB70sQwNL6+OnEoELllwUt9OeP4m2/fmgzEFruWoovT
-	 tAenvNEuKLTCadSKmin205NPWSXN3pMYngGJg7KZHOKXql1aj+BchcQFTE3cew8AHNA==
+	bh=uEc2w6P1w/9l9KCtI+2siUI2WzLSbXwpMkRZVMlHJUk=;
+	b=2+P9izi/Jmch4/0oEKZb1gaJ0LCEUsp6ff82qklhkoVlHrLzi0Bz8YJrRcaA6ZqJV8I1
+	 LrehZjxh8PgtKIQBVVKNhhdpacAXnpq7yc5U08QrOvsHrRzq/c/VNxdg9dqygtqL+f0fP
+	 8+gInwVV5a4Qzcr8dhmgWkZAe9Jj0dMXynCj3rJodu49XfnDsXsJXiCivkk1xuQUeukOc
+	 A6TouWnqwOkHEU174jX6NcIZoXKXmEX9nN8dj2owYD1QKabXgv09svLnOujYHGaB7BtfP
+	 OE7SlBvHuouQ474MPJcccSqoaYpkhBJ/CuEa9uZNUaNSoP05owECj378SbO4JxXDkTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbmTpEIe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnubImK3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECD0606A320;
-	Wed, 18 Nov 2026 23:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F24606A325;
+	Wed, 18 Nov 2026 23:22:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rbmTpEIe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02691F000C4;
-	Wed, 18 Nov 2026 23:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OnubImK3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0421F000C4;
+	Wed, 18 Nov 2026 23:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044150;
-	bh=zOB2kMl2MxWDeSAc/5sh4TLIiVzM37p4AurFeXZ06j0=;
+	s=korg; t=1795044153;
+	bh=uEc2w6P1w/9l9KCtI+2siUI2WzLSbXwpMkRZVMlHJUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rbmTpEIeqGjKQrAh/S7P8Jwd9VOD+cPUD+t0hF000vuFMUMdforhv7+1gnn/7f8MQ
-	 7ytBGtmBiko0vo9LWxvvca+9l6yeB/RvFD4Cvvhmsw/mqYcnwbYHfwor63EWC0TAFj
-	 XrWvJf1GT6Ryan9xtpRjzqi/35ZknFZlpgQOpFXI=
+	b=OnubImK3yZSVEi7c6N0I7wIHdaOvv6eCvrn8HsdF5MDNeMwqbvcb5nxwopxj6JQl6
+	 XQEHG3W4rYRSS/1FSQmhpnmrD9TQ87yko32Bql2uoUgtCuZUEOE1OcZlwwJQGJYNaV
+	 MhnWgk10XdaIPOu0sXKnhKRugGSzs915ySQgoYRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0462/2857] net: mctp: Add some detail on the key allocation implementation
-Date: Wed, 18 Nov 2026 15:24:56 +0100
-Message-ID: <20261118150218.059247680@linuxfoundation.org>
+Subject: [PATCH 6.1 0417/2857] drm/amdgpu: skip gfx switch_power_profile during GPU reset
+Date: Wed, 18 Nov 2026 15:24:11 +0100
+Message-ID: <20261118150216.397453121@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,76 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit aee6479a458e2c5027e558cfe26c60c37f8efc80 ]
+[ Upstream commit 1f1d43418d61c8511779e0f63a954a78b9433b43 ]
 
-We could do with a little more comment on where MCTP_ADDR_ANY will match
-in the key allocations.
+During resume from GPU reset, the gfx idle work may invoke switch_power_profile
+before the reset completes. This causes the following assert error because the
+register access occurs without first releasing the GPU reset semaphore:
 
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 26cc0e69cce0 ("mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()")
+[ 1576.768935] CR2: 0000559ea133ead0 CR3: 00000002e6c42000 CR4: 0000000000350ef0
+[ 1576.768940] Call Trace:
+[ 1576.768944]  <TASK>
+[ 1576.768953]  amdgpu_device_rreg+0x21/0x50 [amdgpu]
+[ 1576.769158]  smu_msg_v1_send_msg+0x1a4/0x6e0 [amdgpu]
+[ 1576.769437]  smu_cmn_send_smc_msg_with_params_ext+0xba/0x120 [amdgpu]
+[ 1576.769721]  smu_cmn_send_smc_msg_with_param+0x33/0x40 [amdgpu]
+[ 1576.769993]  smu_v13_0_0_set_power_profile_mode+0x192/0x2b0 [amdgpu]
+[ 1576.770267]  smu_bump_power_profile_mode+0x5d/0x80 [amdgpu]
+[ 1576.770538]  smu_switch_power_profile+0xa4/0xf0 [amdgpu]
+[ 1576.770839]  amdgpu_dpm_switch_power_profile+0x6f/0x90 [amdgpu]
+[ 1576.771210]  amdgpu_gfx_profile_idle_work_handler+0xe9/0x130 [amdgpu]
+[ 1576.771460]  process_one_work+0x23e/0x6f0
+[ 1576.771491]  worker_thread+0x1c4/0x380
+[ 1576.771506]  kthread+0x10c/0x150
+[ 1576.771512]  ? __pfx_worker_thread+0x10/0x10
+[ 1576.771518]  ? __pfx_kthread+0x10/0x10
+[ 1576.771530]  ret_from_fork+0x314/0x390
+[ 1576.771537]  ? __pfx_kthread+0x10/0x10
+[ 1576.771546]  ret_from_fork_asm+0x1a/0x30
+
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d93b1ff538ce9750c01e0dd0aa62575579c0fc08)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index cbcf5ecec93bb..7235467f11021 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -73,6 +73,40 @@ static struct mctp_sock *mctp_lookup_bind(struct net *net, struct sk_buff *skb)
- 	return NULL;
- }
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+index 52c179e2fb702..ce54a73737edb 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -288,7 +288,8 @@ int amdgpu_dpm_switch_power_profile(struct amdgpu_device *adev,
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
  
-+/* A note on the key allocations.
-+ *
-+ * struct net->mctp.keys contains our set of currently-allocated keys for
-+ * MCTP tag management. The lookup tuple for these is the peer EID,
-+ * local EID and MCTP tag.
-+ *
-+ * In some cases, the peer EID may be MCTP_EID_ANY: for example, when a
-+ * broadcast message is sent, we may receive responses from any peer EID.
-+ * Because the broadcast dest address is equivalent to ANY, we create
-+ * a key with (local = local-eid, peer = ANY). This allows a match on the
-+ * incoming broadcast responses from any peer.
-+ *
-+ * We perform lookups when packets are received, and when tags are allocated
-+ * in two scenarios:
-+ *
-+ *  - when a packet is sent, with a locally-owned tag: we need to find an
-+ *    unused tag value for the (local, peer) EID pair.
-+ *
-+ *  - when a tag is manually allocated: we need to find an unused tag value
-+ *    for the peer EID, but don't have a specific local EID at that stage.
-+ *
-+ * in the latter case, on successful allocation, we end up with a tag with
-+ * (local = ANY, peer = peer-eid).
-+ *
-+ * So, the key set allows both a local EID of ANY, as well as a peer EID of
-+ * ANY in the lookup tuple. Both may be ANY if we prealloc for a broadcast.
-+ * The matching (in mctp_key_match()) during lookup allows the match value to
-+ * be ANY in either the dest or source addresses.
-+ *
-+ * When allocating (+ inserting) a tag, we need to check for conflicts amongst
-+ * the existing tag set. This requires macthing either exactly on the local
-+ * and peer addresses, or either being ANY.
-+ */
-+
- static bool mctp_key_match(struct mctp_sk_key *key, mctp_eid_t local,
- 			   mctp_eid_t peer, u8 tag)
- {
-@@ -386,6 +420,9 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 			 * key lookup to find the socket, but don't use this
- 			 * key for reassembly - we'll create a more specific
- 			 * one for future packets if required (ie, !EOM).
-+			 *
-+			 * this lookup requires key->peer to be MCTP_ADDR_ANY,
-+			 * it doesn't match just any key->peer.
- 			 */
- 			any_key = mctp_lookup_key(net, skb, MCTP_ADDR_ANY, &f);
- 			if (any_key) {
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev) ||
++		amdgpu_in_reset(adev))
+ 		return 0;
+ 
+ 	if (pp_funcs && pp_funcs->switch_power_profile) {
+@@ -307,7 +308,8 @@ int amdgpu_dpm_pause_power_profile(struct amdgpu_device *adev,
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
+ 
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev) ||
++		amdgpu_in_reset(adev))
+ 		return 0;
+ 
+ 	if (pp_funcs && pp_funcs->pause_power_profile) {
 -- 
 2.53.0
 
