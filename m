@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047270;
-	b=NAQOeE/ttode7GeEjt+b52Itx5as25O+dcyxCJnVvwcZh7pyLw5hRj2+IltTjCjGMtuT
-	 Idke6fx5qaOmzumU5w8iwAVWUrC/+aG7HxxaRHkZw74RCYkmI09dGh3NQiagsUpuTjFVf
-	 sKtkbUogrx16rFt0yATeLnyuYipGzT4Guc6+0U1/gIdRLM3BFfrrPPaHipxjXUQ1qE1VW
-	 SweyaUP6VH2AREHi+mrMOym2QmEsN5ZasENwr7SFmHV/ELpyAjU4pG5lw2usCG6tCWXUU
-	 FEkTbWPmRk0sgIt92oWMTsluU5FCixjJeb8XsMrTS8/FOSqMh9xIoS4YBHzvuBC487Q==
+	t=1795047273;
+	b=DCKIQhjQMudBWBgzIC6zQ9y2ydQbN/H4ht9d1tN8tij1WPIhl3zrqrfC6xQVqx0/y06c
+	 2U8uqBTE1ZE6XtAewzTLLaqMIWFqmvuFAbzZFtRavXZ7/lng847h1Qoxo82XtrwXoq3qw
+	 xUUkleKHhTco0RdydMdcRRG5zRvMbO2uZOGwvAVjVwD+XXNI4PK0ugHiLI+/UCk7Z+9gV
+	 gO+n7JzusxDBND9pDtjhq7PUnrUm1hOoIOLV6FhbaEUBjZqYW1CJeQyzuxOfGqIBW3tZ/
+	 X7JeWASB5N96vltUczfNGK4B49KULC/1mOhzO/4z/Tcu5tGZJZAI4GLVDhIAWou83CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mpX3QrpyC/k2PmG5LzMY3nejdQ5CilX8DtOWvu9+E8g=;
-	b=C+xef7F27gbKgp+vC21JY5vnqWYtrE5ybIoZ3SaM7gA7VwE/OM5UZsmWTrmbUgtdJO8H
-	 hp3V/6C1zGkR9I4FqOVdMceuE9Mu0m4RpghU4p+64XIHjkNcKKH4eTh7gpC/uaWYuNz3x
-	 Ja+RODGN6Xzgs0F3eOsQRs6yqURRb1G38Rx65cDkh11ptXlHjGvDIaC6Eq/MQuc3gN6C4
-	 XM7d5/6zVC6uPyjRvnIVPtzL52LRpURrou0wP3o1KcNqaknRs/fYDsFZB2kBvwb/3n44H
-	 g7WXgZlemRwcdsZpq1bH/3mgNG/FKCvAc5bdmCZOFWKA0bVubblpTbKEsczN8ceCL9A==
+	bh=OKTHYbRoRej1jasxzPrUlGvXhiKiYKQqaC/xsctdmdw=;
+	b=O+iEDvgWE7tbUFwUDbB7aZxBjr7Epp5kXpF0jbgwgJsCyHbDDscSyh9i44qMf/Lxeqrp
+	 7xon7CBDUC709eDI14Yq+zNY4SiAyTJdGAdf7O/miHlyb/90T/U8Pgkaj/N2ZgFJLjvGe
+	 dPUOXIitZ63l0ryZhKjv0x28/+YG7kloZSl4zWfA9lkJJT263fXltpsiZtD6YrKHvmBy7
+	 txkucL10Fn71H+6a9LPec6D5ophpC9WdNru760V4HriAwRFEtVgbaLwR5l+5nHiAI+mfV
+	 hhvWeO4CHzxVwBkflDNKTb3dIhQS978xeqiiwnxWcWSeWqtwiQyzAguMzD8ncIAIPLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qqXJNh2E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I0PmUIqY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548F7606A32A;
-	Thu, 19 Nov 2026 00:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA520606A320;
+	Thu, 19 Nov 2026 00:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qqXJNh2E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C0A1F000C4;
-	Thu, 19 Nov 2026 00:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I0PmUIqY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431F21F000C4;
+	Thu, 19 Nov 2026 00:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047269;
-	bh=mpX3QrpyC/k2PmG5LzMY3nejdQ5CilX8DtOWvu9+E8g=;
+	s=korg; t=1795047272;
+	bh=OKTHYbRoRej1jasxzPrUlGvXhiKiYKQqaC/xsctdmdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qqXJNh2EogstS1ymWCi4bTGhhRZP7ge+g3VHZtn6UFC/mMpe+hwbIZX2y8G2ukOnH
-	 zeQDHLtREdWpywCsYtiTA4qOze0622huat9gFXmysztTK0HkkwBXUWjGiO52Uh7gsy
-	 lQBkszqGLyZhvrUQK4/iOktWn2NhVcR4IHbC0wJU=
+	b=I0PmUIqYVYyGrXWtvZW3QcMey2mHWVuyW92arOjFX32fj3Xrp2+y+ejsn8y6NFC1g
+	 cy8xw8pk1hoVyugSKGkz9BvUv7gJpwZH/MdI6mj2oXTZXhEVU3Ideq8D4E7qMIP/LX
+	 Jtl2wehXQySTJ0A+h4uVkov/PkzCwGjmXSHD9728=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Hugh Dickins <hughd@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1552/2857] filemap: find_lock_entries() now updates start offset
-Date: Wed, 18 Nov 2026 15:43:06 +0100
-Message-ID: <20261118150257.259962862@linuxfoundation.org>
+Subject: [PATCH 6.1 1579/2857] ALSA: usb-audio: rename QUIRK_FLAG_MIXER_MIN_MUTE to QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE
+Date: Wed, 18 Nov 2026 15:43:33 +0100
+Message-ID: <20261118150258.229580692@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,189 +68,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 3392ca121872dd8c33015c7703d4981c78819be3 ]
+[ Upstream commit ace1817ab49b3f92b3e965caa63b4a78e69266cd ]
 
-Patch series "Rework find_get_entries() and find_lock_entries()", v3.
+As a preparation of introduction QUIRK_FLAG_MIXER_CAPTURE_MIN_MUTE
 
-Originally the callers of find_get_entries() and find_lock_entries() were
-keeping track of the start index themselves as they traverse the search
-range.
+Also make it printing an info while applying
 
-This resulted in hacky code such as in shmem_undo_range():
-
-			index = folio->index + folio_nr_pages(folio) - 1;
-
-where the - 1 is only present to stay in the right spot after incrementing
-index later.  This sort of calculation was also being done on every folio
-despite not even using index later within that function.
-
-These patches change find_get_entries() and find_lock_entries() to
-calculate the new index instead of leaving it to the callers so we can
-avoid all these complications.
-
-This patch (of 2):
-
-Initially, find_lock_entries() was being passed in the start offset as a
-value.  That left the calculation of the offset to the callers.  This led
-to complexity in the callers trying to keep track of the index.
-
-Now find_lock_entries() takes in a pointer to the start offset and updates
-the value to be directly after the last entry found.  If no entry is
-found, the offset is not changed.  This gets rid of multiple hacky
-calculations that kept track of the start offset.
-
-Link: https://lkml.kernel.org/r/20221017161800.2003-1-vishal.moola@gmail.com
-Link: https://lkml.kernel.org/r/20221017161800.2003-2-vishal.moola@gmail.com
-Signed-off-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: ebd1a08c1921 ("mm/shmem: report RCU-tasks quiescent states while undoing a range")
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250903-sound-v1-1-d4ca777b8512@uniontech.com
+Stable-dep-of: 874323b68c93 ("ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c  | 15 ++++++++++++---
- mm/internal.h |  2 +-
- mm/shmem.c    |  8 ++------
- mm/truncate.c | 11 +++--------
- 4 files changed, 18 insertions(+), 18 deletions(-)
+ sound/usb/mixer_quirks.c |  7 +++++--
+ sound/usb/quirks.c       | 20 ++++++++++----------
+ sound/usb/usbaudio.h     |  4 ++--
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index e26b58aa3c6e4..7c996dc4dad28 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2125,16 +2125,16 @@ unsigned find_get_entries(struct address_space *mapping, pgoff_t start,
-  *
-  * Return: The number of entries which were found.
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 90de8ae32eb62..e3fda32bac1cb 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -3921,9 +3921,12 @@ void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
+ 	}
+ 
+ 	/* lowest playback value is muted on some devices */
+-	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_MIN_MUTE)
+-		if (strstr(kctl->id.name, "Playback"))
++	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE)
++		if (strstr(kctl->id.name, "Playback")) {
++			usb_audio_info(mixer->chip,
++				       "applying playback min mute quirk\n");
+ 			cval->min_mute = 1;
++		}
+ 
+ 	/* ALSA-ify some Plantronics headset control names */
+ 	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 6dc54fd449f78..55453873524be 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2100,9 +2100,9 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x0556, 0x0014, /* Phoenix Audio TMX320VC */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0572, 0x1b08, /* Conexant Systems (Rockwell), Inc. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x05a3, 0x9420, /* ELP HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x05a7, 0x1020, /* Bose Companion 5 */
+@@ -2146,15 +2146,15 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x0b0e, 0x0349, /* Jabra 550a */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0bda, 0x498a, /* Realtek Semiconductor Corp. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0c45, 0x636b, /* Microdia JP001 USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0d8c, 0x000c, /* C-Media */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0d8c, 0x0014, /* C-Media */
+-		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2125, /* JBL Quantum650 Wireless */
+@@ -2166,7 +2166,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x1101, 0x0003, /* Audioengine D1 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x12d1, 0x3a07, /* Huawei Technologies Co., Ltd. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x1224, 0x2a25, /* Jieli Technology USB PHY 2.0 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
+ 	DEVICE_FLG(0x1395, 0x740a, /* Sennheiser DECT */
+@@ -2212,7 +2212,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x19f7, 0x0003, /* RODE NT-USB */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x19f7, 0x0035, /* RODE NT-USB+ */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x1bcf, 0x2281, /* HD Webcam */
+@@ -2270,7 +2270,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x2b53, 0x0023, /* Fiero SC-01 (firmware v1.0.0 @ 48 kHz) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0024, /* Fiero SC-01 (firmware v1.0.0 @ 96 kHz) */
+@@ -2282,13 +2282,13 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x534d, 0x0021, /* MacroSilicon MS2100/MS2106 */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 17db6a7f3a844..67dfdc62a179f 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -180,7 +180,7 @@ extern bool snd_usb_skip_validation;
+  *  for the given endpoint.
+  * QUIRK_FLAG_MIC_RES_16 and QUIRK_FLAG_MIC_RES_384
+  *  Set the fixed resolution for Mic Capture Volume (mostly for webcams)
+- * QUIRK_FLAG_MIXER_MIN_MUTE
++ * QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE
+  *  Set minimum volume control value as mute for devices where the lowest
+  *  playback value represents muted state instead of minimum audible volume
   */
--unsigned find_lock_entries(struct address_space *mapping, pgoff_t start,
-+unsigned find_lock_entries(struct address_space *mapping, pgoff_t *start,
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices)
- {
--	XA_STATE(xas, &mapping->i_pages, start);
-+	XA_STATE(xas, &mapping->i_pages, *start);
- 	struct folio *folio;
+@@ -209,6 +209,6 @@ extern bool snd_usb_skip_validation;
+ #define QUIRK_FLAG_FIXED_RATE		(1U << 21)
+ #define QUIRK_FLAG_MIC_RES_16		(1U << 22)
+ #define QUIRK_FLAG_MIC_RES_384		(1U << 23)
+-#define QUIRK_FLAG_MIXER_MIN_MUTE	(1U << 24)
++#define QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE	(1U << 24)
  
- 	rcu_read_lock();
- 	while ((folio = find_get_entry(&xas, end, XA_PRESENT))) {
- 		if (!xa_is_value(folio)) {
--			if (folio->index < start)
-+			if (folio->index < *start)
- 				goto put;
- 			if (folio->index + folio_nr_pages(folio) - 1 > end)
- 				goto put;
-@@ -2157,6 +2157,15 @@ unsigned find_lock_entries(struct address_space *mapping, pgoff_t start,
- 	}
- 	rcu_read_unlock();
- 
-+	if (folio_batch_count(fbatch)) {
-+		unsigned long nr = 1;
-+		int idx = folio_batch_count(fbatch) - 1;
-+
-+		folio = fbatch->folios[idx];
-+		if (!xa_is_value(folio) && !folio_test_hugetlb(folio))
-+			nr = folio_nr_pages(folio);
-+		*start = indices[idx] + nr;
-+	}
- 	return folio_batch_count(fbatch);
- }
- 
-diff --git a/mm/internal.h b/mm/internal.h
-index 3e3dfc8e0bc6a..f99d9812c48d7 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -125,7 +125,7 @@ static inline void force_page_cache_readahead(struct address_space *mapping,
- 	force_page_cache_ra(&ractl, nr_to_read);
- }
- 
--unsigned find_lock_entries(struct address_space *mapping, pgoff_t start,
-+unsigned find_lock_entries(struct address_space *mapping, pgoff_t *start,
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
- unsigned find_get_entries(struct address_space *mapping, pgoff_t start,
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 97288239d98a5..420d4e3b79e35 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -931,21 +931,18 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 
- 	folio_batch_init(&fbatch);
- 	index = start;
--	while (index < end && find_lock_entries(mapping, index, end - 1,
-+	while (index < end && find_lock_entries(mapping, &index, end - 1,
- 			&fbatch, indices)) {
- 		for (i = 0; i < folio_batch_count(&fbatch); i++) {
- 			folio = fbatch.folios[i];
- 
--			index = indices[i];
--
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
- 				nr_swaps_freed += !shmem_free_swap(mapping,
--								index, folio);
-+							indices[i], folio);
- 				continue;
- 			}
--			index += folio_nr_pages(folio) - 1;
- 
- 			if (!unfalloc || !folio_test_uptodate(folio))
- 				truncate_inode_folio(mapping, folio);
-@@ -954,7 +951,6 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 		folio_batch_remove_exceptionals(&fbatch);
- 		folio_batch_release(&fbatch);
- 		cond_resched();
--		index++;
- 	}
- 
- 	/*
-diff --git a/mm/truncate.c b/mm/truncate.c
-index 7297ad6b5aac5..cd6768ca5b975 100644
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -385,9 +385,8 @@ void truncate_inode_pages_range(struct address_space *mapping,
- 
- 	folio_batch_init(&fbatch);
- 	index = start;
--	while (index < end && find_lock_entries(mapping, index, end - 1,
-+	while (index < end && find_lock_entries(mapping, &index, end - 1,
- 			&fbatch, indices)) {
--		index = indices[folio_batch_count(&fbatch) - 1] + 1;
- 		truncate_folio_batch_exceptionals(mapping, &fbatch, indices);
- 		for (i = 0; i < folio_batch_count(&fbatch); i++)
- 			truncate_cleanup_folio(fbatch.folios[i]);
-@@ -534,20 +533,17 @@ unsigned long invalidate_mapping_pagevec(struct address_space *mapping,
- 	int i;
- 
- 	folio_batch_init(&fbatch);
--	while (find_lock_entries(mapping, index, end, &fbatch, indices)) {
-+	while (find_lock_entries(mapping, &index, end, &fbatch, indices)) {
- 		for (i = 0; i < folio_batch_count(&fbatch); i++) {
- 			struct folio *folio = fbatch.folios[i];
- 
- 			/* We rely upon deletion not changing folio->index */
--			index = indices[i];
- 
- 			if (xa_is_value(folio)) {
- 				count += invalidate_exceptional_entry(mapping,
--								      index,
--								      folio);
-+							     indices[i], folio);
- 				continue;
- 			}
--			index += folio_nr_pages(folio) - 1;
- 
- 			ret = mapping_evict_folio(mapping, folio);
- 			folio_unlock(folio);
-@@ -566,7 +562,6 @@ unsigned long invalidate_mapping_pagevec(struct address_space *mapping,
- 		folio_batch_remove_exceptionals(&fbatch);
- 		folio_batch_release(&fbatch);
- 		cond_resched();
--		index++;
- 	}
- 	return count;
- }
+ #endif /* __USBAUDIO_H */
 -- 
 2.53.0
 
