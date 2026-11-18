@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052874;
-	b=mrPOi/JLd8fds76G2AnNJaGImzYIRRU+rUHielMCB89z8sE8zFojNf0IN066EA2Rtc+G
-	 a0hA9lswRKrp+yX1RhF6/j8DvIp1qqoBnZElq4ODC15w6sslygbVNxBACTklF2zP2gYPQ
-	 XksAJJ0+fgHbLvPuKU2/4ovf+yxdupSVy5ZU9x+dzW/fSyiKY3hk1h90sH7PQPCu/zFnZ
-	 MJt2YnudU22lpwgnsDa7Sqx6H8L2e8LOq3+FZI045J/yMID6oU106NYVJT6xQPpcyra5v
-	 WArIbGH63KnxpFTGN2kdE3BIxE4G42+DJtOAo9rkoIMs+oDADbUEFw5jssEbCuqbGog==
+	t=1795052876;
+	b=tSyMzFYVUx11YO/8L0mOfwl1u1DW41Ukd42wFIfkmgJIFkbSLNw2h+SrTHYymcQCSbO1
+	 vQ5ordm5tnT7lUFFTCbKjCplixUlgJlkxocTRO5j26S+QePZobWVtK4SaDxHgO9WIofrs
+	 jz3Bj/+AxpHOFYKfViobwhZfZpB5E/63f9EvHX/ZmpEsXogsaVju5IVDWJUZDjhWvOIxB
+	 mm3zI8Hd7frr+MXow6d/d1Opu53EAfUNx3A7LMh0+H7ua+m+mR5o8zCWiLKX88NO0fMwa
+	 k33QUNjZa0zEy5PgpO9B7KAqhh3iCSGaEMfHkgbQa0iL3fmyYX5bk4shy8lwBaEGIKg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=cV22o0xgXFtsNNMqr35ySkIVI9+UdK475sikL54cieA=;
-	b=qNnyOkhcQOgxpUFTs+5Wh3eKe4pnaceH9PdP3iF0U91FcFVZl1IWkPy/jnYp0SBVkOkn
-	 +AeKmOulsgFfqxBm2S31jElj2Y5Lt4j7bL4M1cJsW3v/aw2nxkhgKrSkpCJ4MXoTMAVG4
-	 NusAR3SJnz0I2f9u7W+B2pypm0zrnZSNSX78gpbbf5fzGdQM3mPdO9z2cmkN1UOrnaqOT
-	 mVHBLpyfZF2Z7O1ES/PEvRFCOyrybwyaHLyDsmp8zj24spBmm3nEU/j/ynV/x4ZR0M6Vd
-	 ir8d0vGuQ4ZGN9/42tCda4aqfbTxPxiopE8W7etpquypBqfx2t2C/N12rKHQP+F5piA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=nZNWGrVMx/Nq17NbsYGzhzIC4ogicFR3Cf/KEdmen+A=;
+	b=noKxNr2KyIw1T68mpdgolqy8fILy9NSLx/p2sgO8boQYIXBxrk+gTao/vG9uMrmIO30v
+	 HD+OwdhxaUgohv9OSE8A5lEXtG7qPqDyhTkY8s6rNA7eyGrtdmhxT0tbCcHuU4uXIESxI
+	 Jdy+SpLPqC+EphH38aTca7+A03XqSFD52uvs4E0mcD2y6cPvtZeoOEWxskQeQmwnX7EIL
+	 kTphXoW1w0AsnRXtPfIWPsYbgh1rv9sWx7pWnwgxUxXJwM34N693ocavdVjZGxGmijLXQ
+	 FZnaD1jTemAHFlXPAh33LbAQ8o/A0hISnq/j4AePJIWDZUeYa1yqL6lFUv7Yi42+YRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ykr0kkJV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZUOJD+Lh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6AC606A33A;
-	Thu, 19 Nov 2026 01:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAB8606A32A;
+	Thu, 19 Nov 2026 01:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ykr0kkJV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9B81F000C4;
-	Thu, 19 Nov 2026 01:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZUOJD+Lh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11F31F000C4;
+	Thu, 19 Nov 2026 01:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052873;
-	bh=cV22o0xgXFtsNNMqr35ySkIVI9+UdK475sikL54cieA=;
+	s=korg; t=1795052876;
+	bh=nZNWGrVMx/Nq17NbsYGzhzIC4ogicFR3Cf/KEdmen+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ykr0kkJVr4xyFL9YvxluieEHfzDK0BhIY/26J8XGVMXwJziykVA6uLpJuMm8rCYz1
-	 MqROOXCnTcq82Vyz0Mc9IvZXoi5YtzkmPKyKyo6WgHb0GxyoMP/97OBVErHq016mza
-	 blhrusgE4zw0aTw84TZrdHkhMtZ5O07ltRbl0a9I=
+	b=ZUOJD+Lh95DkojcewO+tOClz3Nq8AIF0MQj27P+jypd24cJNwHaFuCW8mIKc+22JE
+	 PIzNMLHHZ5SdDugZfVq9dh/hoJAfyGEUO7pRk+caYVdDFLb+4n23fCmx+Q9JmAbh8I
+	 YMwNJNWN69qk6HafJoggIPBaPsUZHGG7OMfcV+Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0717/2214] ceph: Fix mds session leak in __open_export_target_session()
-Date: Wed, 18 Nov 2026 15:39:53 +0100
-Message-ID: <20261118150040.480612726@linuxfoundation.org>
+Subject: [PATCH 5.15 0718/2214] libceph: fix out-of-bounds reads from repeated CRUSH bucket entries
+Date: Wed, 18 Nov 2026 15:39:54 +0100
+Message-ID: <20261118150040.514972605@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,50 +63,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 6c80207392fdb86107d7acbdbf4c86cac38da1af ]
+[ Upstream commit 569a9bb1e5615c2b88b8d76f03a4ab82e65a673e ]
 
-__open_export_target_session() holds a reference on the target session,
-either from __ceph_lookup_mds_session() or from register_session(),
-which the caller is expected to drop. When __open_session() fails, the
-helper returns ERR_PTR(ret) without dropping that reference, leaking
-one session reference on every open failure.
+decode_choose_arg() assumes that its destination is zero-initialized.
+Although decode_choose_args() zeroes the argument array, it does not reject
+a repeated bucket_index and can decode into an already populated entry.
 
-Drop the session reference before returning the error.
+Repeating a bucket with weight_set_size=0 preserves its existing weight_set
+pointer but clears the count. Placement then reads weight_set[-1].weights
+and dereferences the resulting pointer.
+
+A malformed monitor OSDMap triggers this during RBD placement:
+
+  BUG: KASAN: slab-out-of-bounds in crush_bucket_choose+0xdd1/0xf90
+  Read of size 8 at addr ffff88800290df70 by task init/75
+
+Reject populated arguments before decoding another entry, so the error
+path can free their original allocations.
 
 Cc: stable@vger.kernel.org
-Fixes: b682c6d41bc2 ("ceph: switch to WARN_ON_ONCE in encode_supported_features()")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Fixes: c7ed1a4bf4b4 ("crush: assume weight_set != null imples weight_set_size > 0")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ceph/osdmap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 7c47ce276a993..beda154f134bf 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -1417,8 +1417,10 @@ __open_export_target_session(struct ceph_mds_client *mdsc, int target)
- 	if (session->s_state == CEPH_MDS_SESSION_NEW ||
- 	    session->s_state == CEPH_MDS_SESSION_CLOSING) {
- 		ret = __open_session(mdsc, session);
--		if (ret)
-+		if (ret) {
-+			ceph_put_mds_session(session);
- 			return ERR_PTR(ret);
-+		}
- 	}
+diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
+index 13d0ad66e3896..af8b6c01784ec 100644
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -371,6 +371,8 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
+ 				goto e_inval;
  
- 	return session;
+ 			arg = &arg_map->args[bucket_index];
++			if (arg->ids || arg->weight_set)
++				goto e_inval;
+ 			ret = decode_choose_arg(p, end, arg);
+ 			if (ret)
+ 				goto fail;
 -- 
 2.53.0
 
