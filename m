@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037555;
-	b=GMV+5RSQ4/npT956yEsuQaIUvUEIDCCosrOWlGqriuiP2lUBjMUQSvHmnv7Z86O7/q5R
-	 ka7sfxJcR5V/Fw2SiYh0TcjfMhCVwb0Ew+HqBSh8hnbf520iDgtLmd3lu49Eghj4t9NCf
-	 Mp/lzZol0QhLizn4zqz1qtqx6aYfp3kzvMs398VK3uB3TW12FlPIdF5NMVH3f8IEdnFrw
-	 +zhYZr9/01mioism+UtajRYj0wrAPAezmcmFFfhUH3K+2meYmsp3bG0vrwznJWNugZa9W
-	 CuddtshH9gV7Nlm7G/2xwhHjR35l8CdgQ+2tkzn4HHIii4eYnysn4Zz1GxhRVh7Bc6A==
+	t=1795037557;
+	b=MDDMIFNTWRl5leX+vzIodvA/GHSG0kWb8NXKk2RHqzV14cNSgYNZE/MFkITTM6M41hsk
+	 Zw6ZrHYkcnK9Rb15k+VgKAvKOkcSwTEOYMD8QWH/BE20R43FBe6dtb7c9n0GVmH35owWp
+	 9lGG1NNs8WS2HLNNy9RQDm82a2M5Ujept0wlo0F8POzy5Qz/tn7m+DjbYNQHunqIku80Q
+	 Ha01Pm1MWga8waCqKtj0ra+7dz2LbPVNCpuIyhd1rXhZHEqdyXErF8xn6ZZC+j5ZAvUPV
+	 DGkI5gRWwiji7jQFNt9KLDCK54rQiR0ji5BQOTvqWZj2RfDJeWSSLjisIR92Ljvp6vQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wUHO0aal1nlYUD6sRl1did65JEJqoM48CadFu0/StgA=;
-	b=uPaiM637CkiBxV2WjDHJp6OY7gO5sgQmVrh1+eDlbmo314M65Vm28xUIixBR5CMo7EEh
-	 qHouyaKLYeUB97ubYf0OOP3gL+lwkI6xqWzsm9OMRp7m2KPWF+gk/ltYCvzAzmiPa6YPo
-	 SrUrA8q7ybjdivIY44A/+D0P5RJo87VEjU3ufjG8GjcaBsxOhxkE3yf6y7JSoruyp3lAs
-	 Y7IaZ037Qx2rYDOCSYH5LAdbCQ9RgmCcoLBxAKIgN1fOsEIFF5m0QRvAj5MzQsafBvfux
-	 u0Syn6ELHZrCYsdI4GEnL1sHSN+zptzi5G0HN+pPMMD9vLZdl2IgziCMSS1Qfyetr1g==
+	bh=5cZSkGt+qK+fB+QNNfkbzAThGqto8UOPbDmbee5s8Wc=;
+	b=PvkhzgJ7i1ns2Fb0b51UScHB71P1H/ja3UfV6ElmwPCJBfWQvYCc/9w+KTAFyTGoQtBG
+	 uFebf82d/q1BYU0mEcrne63Q+dVb7hcNsNLEDDbyhvMBGYA57mvEgHLG+WpBywwDHlwh/
+	 yHVHH+QdG+j0qfLct6DrbFHz6s4bYjFi355eBM5CMq2DBiavHZfrvhRipZHE7DUXX0sW4
+	 Nu9ZA8F2zxnmoJPxb/g+bqV8NeMdvZyyudsGQm/MVF/F2eeE/hRdFx2QgsxyfM8g1dAQe
+	 +mFo1mzaII0P1bI5nOHlgRB5dm+qTqBxw80dsZl6ItqLjpIIiaxjAWPbnMxFXrqLDjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0Bhi949;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpMYo5gD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E48B606A31C;
-	Wed, 18 Nov 2026 21:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA681606A325;
+	Wed, 18 Nov 2026 21:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l0Bhi949
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9611F000C4;
-	Wed, 18 Nov 2026 21:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpMYo5gD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1AA1F000C4;
+	Wed, 18 Nov 2026 21:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037555;
-	bh=wUHO0aal1nlYUD6sRl1did65JEJqoM48CadFu0/StgA=;
+	s=korg; t=1795037557;
+	bh=5cZSkGt+qK+fB+QNNfkbzAThGqto8UOPbDmbee5s8Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0Bhi949SpZCLfn+YSE5BAAV/gVrA+RElqX18dCyAkqLFsSVpo1I0+q2ifz2GmMtm
-	 cZ4PDuqFCRyPLdWQ0mHqCpN/jtclfRsjzKE/UoolPJGQGz2sLAda8hwl6wmAP4Ri5O
-	 qcfvZMQR7CY79Vq41j6CjfvDIISumMOPraOTW100=
+	b=SpMYo5gDTXZzMGdu6388gE84HPom1FvykCxEzrhKw57XOPmakruDwba6jmGtxg+Lu
+	 LtnIxp2T97Q7ecD5fRwls88hh7cArOF4TfIUyqmdhmyilApPeLyj4LEV9iS/Yhyetq
+	 vjNYLtxkmDcaFWFZ2Nk3GZzMmWOTpWSTLqEQdzjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jan Kara <jack@suse.cz>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Balbir Singh <balbirs@nvidia.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1439/3318] mm/mempolicy: charge shared policy nodes
-Date: Wed, 18 Nov 2026 15:34:21 +0100
-Message-ID: <20261118150403.982289031@linuxfoundation.org>
+Subject: [PATCH 6.6 1440/3318] tmpfs: keep the quota soft limits of an unused id
+Date: Wed, 18 Nov 2026 15:34:22 +0100
+Message-ID: <20261118150404.014709271@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,76 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 68b2aa37afa390f08de13bc0bac61a9ded3318bc ]
+[ Upstream commit 968d73463059156e1b89bfa6b189acd7d27197b2 ]
 
-Any local user can bypass memory.max with mbind() on a tmpfs file, and
-allocate unbounded kernel memory.
+When the last reference to a dquot goes away, shmem_release_dquot()
+stores its limits in the rb tree of the mount, unless
+shmem_is_empty_dquot() says that there is nothing worth storing. That
+function looks at the usage and at the two hard limits only.
 
-mbind() sets a NUMA memory policy for a range of a mapping. If the
-mapping is of a shmem and friends, the kernel also stores the policy on
-the inode, in a tree with one entry per range of the file.
+So if the administrator sets nothing but soft limits for an id that owns
+no file yet, the entry is thrown away as soon as the dquot that
+Q_SETQUOTA used is released, and the id never gets to see a limit.
 
-Each mbind() on a single page of a mapping can add one shared policy node
-(struct sp_node) and one struct mempolicy to that tree. They outlive the
-mapping and stay around until the inode is destroyed. The tree is not
-bounded by the file size, so the file can be empty.
+To fix it, compare the soft limits as well: an entry can be empty only if
+both soft limits are zero as well, which is exactly what
+shmem_acquire_dquot() sets for a new entry.
 
-Memory that user space can allocate must be charged to a memory cgroup. A
-slab cache does that for all of its objects if it is created with
-SLAB_ACCOUNT. numa_policy_init() creates the slab caches for both
-structs without SLAB_ACCOUNT, so they are not charged to any cgroup.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Reproduced with mbind() on single pages of an empty tmpfs file, from a
-cgroup with memory.max=8M: the global OOM killer killed tasks owned by
-root, and the machine panicked.
-
-Fix this by creating both caches with SLAB_ACCOUNT. This change implies
-that mbind() can now fail when running into memcg limits. Further,
-the policy_cache also serves task and VMA policies, so they are
-similarly accounted now.
-
-Note that per-file limits are not really helpful, as the user could
-simply use many files; having limits per user is tricky as well.
-
-Fix generated by an LLM and submitted by Chris Mason in private.
-
-Fixes: 5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg")
+Fixes: de4c0e7ca8b5 ("shmem: Add default quota limit mount options")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: smaller description tweaks ]
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-1-392fc715d8f6@kernel.org
+[ david: slightly adjusted description ]
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-2-392fc715d8f6@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/shmem_quota.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 0d31b705015d2..393b2f1fee9ce 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -2898,11 +2898,11 @@ void __init numa_policy_init(void)
- 
- 	policy_cache = kmem_cache_create("numa_policy",
- 					 sizeof(struct mempolicy),
--					 0, SLAB_PANIC, NULL);
-+					 0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
- 
- 	sn_cache = kmem_cache_create("shared_policy_node",
- 				     sizeof(struct sp_node),
--				     0, SLAB_PANIC, NULL);
-+				     0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
- 
- 	for_each_node(nid) {
- 		preferred_node_policy[nid] = (struct mempolicy) {
+diff --git a/mm/shmem_quota.c b/mm/shmem_quota.c
+index ce514e700d2f6..23589d18a532a 100644
+--- a/mm/shmem_quota.c
++++ b/mm/shmem_quota.c
+@@ -253,6 +253,8 @@ static bool shmem_is_empty_dquot(struct dquot *dquot)
+ 	if (test_bit(DQ_FAKE_B, &dquot->dq_flags) ||
+ 		(dquot->dq_dqb.dqb_curspace == 0 &&
+ 		 dquot->dq_dqb.dqb_curinodes == 0 &&
++		 dquot->dq_dqb.dqb_bsoftlimit == 0 &&
++		 dquot->dq_dqb.dqb_isoftlimit == 0 &&
+ 		 dquot->dq_dqb.dqb_bhardlimit == bhardlimit &&
+ 		 dquot->dq_dqb.dqb_ihardlimit == ihardlimit))
+ 		return true;
 -- 
 2.53.0
 
