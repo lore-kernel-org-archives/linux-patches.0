@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050865;
-	b=UDt8Sx5JQNZy7lZfFVZgtn+HijdsZtzDFXuBJzCFRC6pWCmqE9Hj8Oq2vpbhnbA49NGm
-	 X8WuF8StV12LtaAs0tBW5sfOLyADctvwJSIMjlyAetRL8TVBKc6P2HoRAYLnBjZlKehyx
-	 MkgHG+ZkqvTl/Wyf7srE7GN5OZs7yNarETbnZuEAyZq/dQqfCvh0C9oksy4z6kmTazVo1
-	 0HV7uWEbpHfPeiPSoU9z9AscoGeuUv3uQOjzN0A4jZdZDe7YX2jLaZtyyG/BRL4tcGlMe
-	 zY1aMon9kswzrYdd917GMW/TqC4y74rzHX8n8Kj0li2tfDJ7MZCdbkb6ZYTV7Q9MsDQ==
+	t=1795050868;
+	b=MIoF84bu3T1wUPrk3FAEsgsSqUwpuEA/1ZBJp1OYdHdz/IxeCCp53MqKv8Hle2BRzJhq
+	 S9KwrGD6mCucuKYAR46fwgObMxTqGEIRLS2NZ+l+gHFy+CkFzZw3VMQLkhtO9yaj0yScg
+	 ByUyOyV17tMLpNcud5yo2ycYrFm54yvA0BVwv+Bmq/Ggb8iZatR81QeJ9m2cIvwgx//pK
+	 m6m4Jok+azqTXq30VRJQcWvv2ouiXG7bQQodIMqYzJ/xGWnCQ0cMMA//WG8AMne8p8Vu0
+	 MTNQPjqJ45MExZfsHNKFpX0dHhow0gIGEjSJLUm46E/GZJ9dOPBCAKYggzBxfJJbvHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050865;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050868;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xzJj5lezFGafAHWQTHGwxQx4xIhPshQmHQqx8ALpC0E=;
-	b=E7uXSAWtcMjjKL7ea2zeVnFXZ5hur/VJN7g5KRqtRjjJ701+5Wjtg6oDmeqR+MMzMgqy
-	 mwrDyWNSpWx6PXe9xseFbSRezABDMkPPlhGt5d5XXJVk9qcb7Iu34lqE4uJwpBuwb5ufG
-	 OqZkd9LnKoMFbqJpH9vp3b5BcaQ2XTPngl1YZB5fJlD+ft6sEHhiYdP9IylJ/wKucq+9d
-	 x4SJG1p713bLPctAWiDh3F9x8RRzsegaYU9P8PxM0mLC7iQxUPXjIcpeOCMPXp7WMlE+j
-	 TsP8e0OPQSMX3FQjcc2VCRxRGJx6hnFBHdpbe+pS1QJSxB/d9UCzEpyYmi1i16/fdIw==
+	bh=Dg+qq8pAu2giaI8fbiw57zLOE/a2DF6wYYbOsk+HfDY=;
+	b=Q/IHrUGAysOdZIchi6p91kTxRRwBjdSDyIaj4mh8b2ga8tqZco4ju+mT86xesvD0jzQF
+	 ISibMHyAqL0jN4JCYqikCmP/4iPVeROWg7BQSaAsWscYI7D8uxu2u3iBPhJJ8Wgb7f0Mn
+	 Ft0DIx4RuewJbIEzyBrCbip5Ru/xT7PcmVIMjM8mtSo5Y+y91g4NnsckAT00jUBv0LQcw
+	 QX83t+CeNdh/d4OCng34oZMlhgQzOqWqaoZAkU1WjVMWoNegFbs2Yh4ki6qXdhy8Zx2/k
+	 EUiVABssfKNyWkf93fllY3CIjs1ohl56HE66Xv4YKGK5ZFlyTlQJX/qUOIdmAMkdGow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oArfNo+o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0s1PCGY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5E7606A330;
-	Thu, 19 Nov 2026 01:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D707606A320;
+	Thu, 19 Nov 2026 01:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oArfNo+o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5ECA1F000C4;
-	Thu, 19 Nov 2026 01:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0s1PCGY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DFA1F000C4;
+	Thu, 19 Nov 2026 01:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050865;
-	bh=xzJj5lezFGafAHWQTHGwxQx4xIhPshQmHQqx8ALpC0E=;
+	s=korg; t=1795050867;
+	bh=Dg+qq8pAu2giaI8fbiw57zLOE/a2DF6wYYbOsk+HfDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oArfNo+oCMT2YcDAI5KNToiloaIq7/GJUou2OFePGsl8+czdX8B3+FlatnK1Qx/TZ
-	 zQonDPxN/J0StGFVMYc19oiZkc4WDGXhtjN37cT1hZ9ZlbeTzcbrKmXLbkdzwdZY9F
-	 IMaSG6GWVEz808eKFOWTcS7fKfo+hvs3Kt6ZyiWI=
+	b=w0s1PCGYbcpEYVpA7O7oOyJo5fv8zts96MHv5tXrH6BB7u262APH7No+jHqAgXLTW
+	 Wq1jFl4/+LiL/mcwvSjugsmAj1nBVnaiHUGTb2i/Xd7SpWNddd1RsomdQJW27s1AzI
+	 DWa+CKHdACZLg1A33S3hQr2xkBnehGng5Km631LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 2845/2857] dmaengine: ste_dma40: use correct print specfier for resource_size_t
-Date: Wed, 18 Nov 2026 16:04:39 +0100
-Message-ID: <20261118150344.011181168@linuxfoundation.org>
+Subject: [PATCH 6.1 2846/2857] dmaengine: ste_dma40: use proper format string for resource_size_t
+Date: Wed, 18 Nov 2026 16:04:40 +0100
+Message-ID: <20261118150344.053727551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,21 +67,20 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinod Koul <vkoul@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit ef1e1c41a11d37069029bc0563c2fa6915d9880b upstream.
+commit 41be14c71bae05c8daa3de5ae7fd7c2a7bc0d057 upstream.
 
-We should use %pR for printing resource_size_t, so update that fixing
-the warning:
+A fixup for a printk format string warning causes an out-of-bounds
+variable access as the %pR string expects a struct resource instead of
+a plain resource_size_t.
 
-drivers/dma/ste_dma40.c:3556:25: warning: format specifies type 'unsigned int'
-but the argument has type 'resource_size_t' (aka 'unsigned long long') [-Wformat]
+Change both to the special %pap and %pap helpers for these types.
 
-Reported-by: kernel test robot <lkp@intel.com>
 Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20230517064434.141091-1-vkoul@kernel.org
+Fixes: ef1e1c41a11d ("dmaengine: ste_dma40: use correct print specfier for resource_size_t")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230519093447.4097040-1-arnd@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -95,10 +93,10 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  	base->lcpa_size = resource_size(&res_lcpa);
  	base->phy_lcpa = res_lcpa.start;
--	dev_info(dev, "found LCPA SRAM at 0x%08x, size 0x%08x\n",
--		 (u32)base->phy_lcpa, base->lcpa_size);
-+	dev_info(dev, "found LCPA SRAM at 0x%08x, size %pR\n",
-+		 (u32)base->phy_lcpa, &base->lcpa_size);
+-	dev_info(dev, "found LCPA SRAM at 0x%08x, size %pR\n",
+-		 (u32)base->phy_lcpa, &base->lcpa_size);
++	dev_info(dev, "found LCPA SRAM at %pad, size %pa\n",
++		 &base->phy_lcpa, &base->lcpa_size);
  
  	/* We make use of ESRAM memory for this. */
  	val = readl(base->virtbase + D40_DREG_LCPA);
