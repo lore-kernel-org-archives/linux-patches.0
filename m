@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015328;
-	b=oRujgNe8uX5xrq9fv0xzwY/sB71DOy1YbjX0PHWPrIrshLYwNhbMkehsNB/Bc5YKT0o2
-	 YZ+8JJ7+dYY06J4QxBLt5V0aKaaqX2u0nU7crR4ZmKfw31BM5EigGhPF2dCC4rmFd9T0u
-	 WiB8rkv9NbH31GVdpOz8V+cLAE1vmQIvWo0TgAP208UAjTxhgHZdApWatp5gzXhW6g2Bu
-	 ux78yKwPA2F9hwrGgt3u/7JjvxAKlRaW0kvxHaMcU2mT3S9HP7m4PNkJQbbZGJ5gdV2al
-	 mKf42MJLzviJQo24aYz8iIOcSePv92C1riL12O821FLtWpvL1U7qy//+xcHcQf6PEww==
+	t=1795015331;
+	b=niDl15eXl5XNLWeAUDFHuw77exCLwewy9NIN13b7dhFZ5DsCXSjPGD8CoFnhYZMj1aUN
+	 RnQT0XFZo+nT7beyQox/5ilcUVI4kZ0i08/8JiaYVXlz0NxPmW1g3u9fu/l5RSEDwaU1b
+	 V/wefO2/W7Q9r8IDt9ArY1Z75sJXytTMh0sSjt9T8jxx/v+UQNNj3j44ZvoLEg4pNerXh
+	 FC/hXU0fA/WZo0r7Oiqy5I6Dpi37+HveaTzC4K33ZCXXJLbV0ldZ/WB9s9Vq4ceIJceiy
+	 LwBgHUzl+UepSmVAULSfhapwnrB2wlAUmFY7ULTSqGG6oH8jUtQ4+LhgnuEYi1B6pTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015331;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=nnIpsB+oKxIn16FxtUFLjJyiVPtkJrmBvWR5mU62lAA=;
-	b=ZKjOdoF8AEgyn/CYz5/9Kp3aD0bTw0wqIkbYkn1QQV+5Va0S8aSf+fp4gviH93SSPCIu
-	 D81+03BllcnU7liUtl+rtSPV2wRO9xxFO8L21TjIytPm1Kj89lDU6l/q7gxA7o5nFUiYq
-	 F0KXrFAoC2JChVVvQrcIRISoWoQSBxh1gLRRLdTTFh5BYOWKiGLvXyLqGV8aMwcF921s4
-	 iIW7s/KN7EoTJHyJtB90uwOFg8jazQGqDMlmzpB3rbciz4KJZj9NDGkaKqe3fYUxBIYIh
-	 pUqs1TK23i/WHFPsVedOVdR/oaLwVTwa9p+JpzfzLK7TQQINuY0JGJarkl+/Mv8Wngg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=1dup64gc5cVj7itHy4U3xq2oeQumef1ge/WnCUAbrfk=;
+	b=SgoE0Kqqi8ZWaL0+bqdfjAIYFmEOgniD8GLvqgiaxIOwVa2sLpsyNLDCQY5aa/4m0MDL
+	 8Dr1xysYq2kuexG7d7eOND4fr0xapu1b0ss7oMqee0cECzCwtwlI5XziNZibmKKaduUzO
+	 jxAyeUs0RCx/ybwrD+M+nsq6KoKV5Crk9NEI5MGrA4G0FgeTxETFSeMW9To4FAVtFgl9u
+	 TUxJqhGVjHiR6zTZwj+m4N3YlwxMfR00eS/pbXbhSHpGMMnYVUl7dgNJtUonisoaA83RH
+	 k5eg1dwZRvkOH896VQY8eOkQrpIGbTCoAZC3cYgAsIBYLnC0QYcVyZt5x1XU2sIiwMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YYx7bz/M";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlMhRZv+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39428606A31C;
-	Wed, 18 Nov 2026 15:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4951E606A325;
+	Wed, 18 Nov 2026 15:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYx7bz/M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9183E1F000C4;
-	Wed, 18 Nov 2026 15:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VlMhRZv+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563511F000C4;
+	Wed, 18 Nov 2026 15:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015328;
-	bh=nnIpsB+oKxIn16FxtUFLjJyiVPtkJrmBvWR5mU62lAA=;
+	s=korg; t=1795015330;
+	bh=1dup64gc5cVj7itHy4U3xq2oeQumef1ge/WnCUAbrfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YYx7bz/M37JJ+N8aNi/4WuYz+3HyMBAGZU5bQuM6kFfKlO+OLxN5bBmJVR2v+fvgK
-	 +djKJweN/uhvd0IjyaCgmGsk7pN/1oi4Wz8os53k3oAlMEW9BCRfRvM/FHnSc6+8VS
-	 n/iIgkMT9vsgfYf6Kj38MAyQdmWYjNdi/bHc3zHA=
+	b=VlMhRZv+9GjDCnrpangYrrI1r1030QB4xOIXuVsl+UcPQtoc67FkS7bAjvtDmVrEL
+	 79Zvg+6AufSl1Thekegi/nMiG7p/fD7gkOI+pbMmwxMvsgGli7t3f82PSBo+vD/RCt
+	 OAdyAjffwpfM/iCzWaS1NeMvedwjLCa5mLjJNuk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stefano Sanfilippo <ssanfilippo@chromium.org>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Cai Xinchen <caixinchen1@huawei.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0117/2651] perf jitdump: Validate unwinding sizes against record payload
-Date: Wed, 18 Nov 2026 15:22:37 +0100
-Message-ID: <20261118150252.087192928@linuxfoundation.org>
+Subject: [PATCH 7.3 0135/2651] lsm: dont call security_backing_file_free() multiple times
+Date: Wed, 18 Nov 2026 15:22:55 +0100
+Message-ID: <20261118150252.714166867@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -65,99 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Cai Xinchen <caixinchen1@huawei.com>
 
-[ Upstream commit 92d50319b4f0c0bbee8a236a09063272cd22faab ]
+[ Upstream commit 3a84fc1a21577dbc8da7e4b6a49c9d8b07c07000 ]
 
-jit_repipe_unwinding_info() copies unwinding_size and eh_frame_hdr_size
-from the jitdump record into jd-> fields without checking them against
-the actual payload size.  Downstream, jit_add_eh_frame_info() in
-genelf.c computes unwinding_table_size = unwinding_size -
-eh_frame_hdr_size, which underflows when eh_frame_hdr_size >
-unwinding_size.  The result is passed as d->d_size to libelf, causing
-an OOB heap read into the output ELF file.
+I found the following path:
 
-Validate that unwinding_size fits within the record payload and that
-eh_frame_hdr_size does not exceed unwinding_size before allocating or
-storing the values, so a bogus record cannot force a large allocation
-that is then discarded.
+alloc_empty_backing-file
+    init_file(&ff->file, xxx)
+        -> file_ref_init(&f->f_ref, 1); // only 1
+    error = init_backing_file
+        -> security_backing_file_alloc
+        -> rc = call_int_hook(backing_file_alloc, ...)
+           if (unlikely(rc))
+           	security_backing_file_free(backing_file); // first call
+    if (unlikely(error)) {
+        fput(&ff->file);
+         -> if (unlikely(file_ref_put(&file->f_ref))) // zero
+                __fput_deferred(file);
+                 -> ____fput -> __fput -> file_free(file);
+                 -> backing_file_free(backing_file(f));
+                 -> security_backing_file_free(&ff->file); // second call
 
-mapped_size is likewise taken from the record and was narrowed into an
-int for the mmap2 len computation in jit_repipe_code_load() and
-jit_repipe_code_move(); values above INT_MAX would turn negative,
-producing a wrong mmap2 length.  Use uint64_t for usize so the value
-cannot truncate.
+Currently, only SELinux has the lsm backing_file_alloc hook, and it always
+return 0. When security_backing_file_free is called for the first time,
+the blobs pointer is set to NULL. Therefore, double free will not occur in
+the code.
 
-Fixes: 0284fecd13b6db3e ("perf jit: Add unwinding support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 6af36aeb147a ("lsm: add backing_file LSM hooks")
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
+[PM: subject line tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ security/security.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 5898a7d8eb962..d25a9fe9b020c 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -462,7 +462,8 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	u16 idr_size;
- 	const char *sym;
- 	uint64_t count;
--	int ret, csize, usize;
-+	int ret, csize;
-+	uint64_t usize;
- 	pid_t nspid, pid, tid;
- 	struct {
- 		u32 pid, tid;
-@@ -543,7 +544,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+diff --git a/security/security.c b/security/security.c
+index 2ee276ab15c5b..208738238e37f 100644
+--- a/security/security.c
++++ b/security/security.c
+@@ -2486,9 +2486,8 @@ void security_backing_file_free(struct file *backing_file)
+ {
+ 	void *blob = backing_file_security(backing_file);
  
- 	event->mmap2.pgoff = GEN_ELF_TEXT_OFFSET;
- 	event->mmap2.start = addr;
--	event->mmap2.len   = usize ? ALIGN_8(csize) + usize : csize;
-+	event->mmap2.len   = usize ? ALIGN_8((uint64_t)csize) + usize : (uint64_t)csize;
- 	event->mmap2.pid   = pid;
- 	event->mmap2.tid   = tid;
- 	event->mmap2.ino   = st.st_ino;
-@@ -612,7 +613,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	char *filename;
- 	size_t size;
- 	struct stat st;
--	int usize;
-+	uint64_t usize;
- 	u16 idr_size;
- 	int ret;
- 	pid_t nspid, pid, tid;
-@@ -761,6 +762,18 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 		return -1;
- 
- 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
-+
-+	/*
-+	 * Validate sizes before allocating — jit_add_eh_frame_info()
-+	 * computes unwinding_size - eh_frame_hdr_size and uses the
-+	 * result as a buffer length for libelf.
-+	 */
-+	if (jr->unwinding.unwinding_size > unwinding_data_size ||
-+	    jr->unwinding.eh_frame_hdr_size > jr->unwinding.unwinding_size) {
-+		pr_warning("jitdump: invalid unwinding sizes in unwinding_info record\n");
-+		return -1;
-+	}
-+
- 	unwinding_data = malloc(unwinding_data_size);
- 	if (!unwinding_data)
- 		return -1;
+-	call_void_hook(backing_file_free, backing_file);
+-
+ 	if (blob) {
++		call_void_hook(backing_file_free, backing_file);
+ 		backing_file_set_security(backing_file, NULL);
+ 		kmem_cache_free(lsm_backing_file_cache, blob);
+ 	}
 -- 
 2.53.0
 
