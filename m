@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035251;
-	b=pOxQA6z748SLNlv7HBY3IrpX4YzbKG3pRUZFV8FnJmdL9/K+DeaUbJOxEYQKLgsV4OYL
-	 138nCD8HaqMXjRh2GCqH/4JQ7e3CDpNJ4Z1z1ijJwnpT62SJaTLAgNyABUdwU9Sqq/b5+
-	 WuwNLHZ3DJpL2pCMRbVbFT6k2HMNCwLB9iCHeDCwLmpFVUPvkRNqPftpq5bFMzmvY1lkb
-	 fZHf6rj3SAwyMKBOgTA5mTImmEdKXRbNXgVlG1SYuihuwGEtM+mczGbIVIKGS4yLz3Z9F
-	 bmfMXziosMkUBY/wn77URQq1V679SsxKsTKqBTJkuGY7gXIlL98uMQOcLZpv8F+Gcgg==
+	t=1795035254;
+	b=kncBZJfK5lX5wKcylnBlccPHqIo7m4v2skr78k3pJ/PYtUk7OxODo6CG+h03N9BVim49
+	 HcE/LObCLaqKFYKf/aPbs+RSrhKi4ZJF0z8+jdo23hXEm2T8Jea2dirJcrXITRppTICrI
+	 SYPDlZGtRA7YcAgvzifdDHjBOljQ3KescPnqlLbuQLngDXIiBMUQ8xq8SX4Yw/TF6Jqml
+	 iwzIg2Vh0Spy169YcYLhWxX4WZA0jVox9Z7732hrvdgTJAaozvRqm6kVw2i4wGZuYssHJ
+	 UA3/VB8z0+TZ6G6Pa5In+br4uyGdN6hM3ia8owjM7IXzowxH9pSgP+XS3Ji0wsCK1LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035251;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MGxK2mpw6lP4TPxOXAUMG57qZtS+ss32A8x6LD4QIcQ=;
-	b=a+v722OI2OQ2HleVMA7HUcSv+KwVID5tAHfUXTBctfq9OVc+FWb1l/94GE8fse8lph7n
-	 Av7pga7Wj3uo8i9PzJemeNlbBsqfWJ0W3BaX12oUUBrxH3LiT3AistyMK7EgT9CTjP90I
-	 xJvXm8yECU+EmWyysZrDBuIWOMo/nuE+/gw2mrmzX0El//eMfv1ww78TXMNQlxP56lLmQ
-	 I2KWd/HcPil/zMUa09FHQBNSGmpzyhGgEpohwd/6oYNWCDYZSlFX6R/3wrmDGyGLjLb7J
-	 BW/XdySQdSMI0ykbh0Ltwz65FP7mx5XjD5UmaPlBu/DmAeUMDW796/+WLzL4Lj80alQ==
+	bh=85gBbppKJdGtDW7vjO/+a3EqhSKRjOlgtRBLMkOnxds=;
+	b=wCYgY4k7WUTHBaj1ZyNLc6S6Y0vU/fmRRlKuQsT4CvRXTieVsdgeQwOYXffRIXVDuCte
+	 mP180lAk1J3ADAyhZ06mlbrNXUDNBj3OtsJUm1I/09ibTn4r4ShkuSgW0JYdkUp/2dB/P
+	 lCKiXdSZjiFoM7d6bYTqTcz9hZO5j6k3KwAGSslH9OKABg2USPHVGNkPbC99qmzOT9Ix0
+	 BdZrRTW/B7hRk5An2ps+pOqrhMQx/oN11B5SVd+nRfsC+1+ZKFJiU0cLYM/ONQ5q7u1xt
+	 SG6D5isNwC6SsS/CwqDgiJ+dRWjSoz6lGU2cFpRReZt//EtHbcvjorC4qx76qxULlxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWWKjVby;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Q4gWAHk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE83606A320;
-	Wed, 18 Nov 2026 20:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF251606A32A;
+	Wed, 18 Nov 2026 20:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWWKjVby
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEF01F000C4;
-	Wed, 18 Nov 2026 20:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Q4gWAHk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A8E1F000C4;
+	Wed, 18 Nov 2026 20:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035251;
-	bh=MGxK2mpw6lP4TPxOXAUMG57qZtS+ss32A8x6LD4QIcQ=;
+	s=korg; t=1795035254;
+	bh=85gBbppKJdGtDW7vjO/+a3EqhSKRjOlgtRBLMkOnxds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWWKjVbyZ6x1XNz+5oBTuT/MhQ/jhxQyZgEXHRiwCodMd7Mbf968EHnFfjmAOjidk
-	 Sd2va8cT7z6Z5QS0VNmibKozlfRYXYN7v89N2CA/1EHKoGWpNbVIFHEfeQfzbGpDkd
-	 sntDzK/oLB1Al6sKcPI1JWJGV88SL7IkDD26OlO8=
+	b=0Q4gWAHk2LlyD7Dr9blHKjn9PL+HohCW0ZlFrSux0xzx7NBwZVUl28JSSsd1IyVSM
+	 Ns5LJ4+kuzOB+DNeoI6WvgZTDw8cUO1h+uOvzHKukZRpuIrf1Vw0yLoZiV6nUSOyPF
+	 BKGRA0MgdpkgnRWhKpNhyXAH2z3mJUFyVI8X8FAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjun Gwon <d3bugee@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0660/3318] ksmbd: serialize directory emptiness checks with readdir
-Date: Wed, 18 Nov 2026 15:21:22 +0100
-Message-ID: <20261118150337.862581023@linuxfoundation.org>
+Subject: [PATCH 6.6 0661/3318] ksmbd: fix breaking_cnt leak on early return in oplock_break()
+Date: Wed, 18 Nov 2026 15:21:23 +0100
+Message-ID: <20261118150337.896625517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,101 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjun Gwon <d3bugee@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 7220980b2423d06a0604516129bfa4cec8a697ae ]
+For leases, oplock_break() increments breaking_cnt before calling
+oplock_break_pending(), and returns early when the pending check
+reports nothing to break: the level is already at or below the
+requested level and, for a lease, the state is not HANDLE|READ
+caching.  Neither early return decrements the counter, and
+wait_lease_breaking(), the only place that force-clears it, sits
+below those returns, so breaking_cnt stays elevated for the life of
+the open.
 
-SMB2 QUERY_DIRECTORY holds fp->readdir_lock while it calls iterate_dir()
-on fp->filp. An SMB2 SET_INFO request with FILE_DISPOSITION_INFORMATION
-can resolve the same FileId and call ksmbd_vfs_empty_dir() on the same
-filp without that lock.
+A stuck breaking_cnt makes same_client_has_lease() skip lease
+upgrades forever, and every subsequent same-client CREATE on that
+lease is answered with SMB2_LEASE_FLAG_BREAK_IN_PROGRESS, so the
+client never resumes caching.
 
-iterate_dir()'s inode read lock permits concurrent readers and does not
-serialize per-file iterator state. ext4 stores its dx readdir cursor and
-fname RB tree in file->private_data. Concurrent reset or refill can
-therefore free a fname node while the other worker still traverses it or
-retains its RB-tree link, resulting in use-after-free accesses.
+The ordering dates back to the original SMB3 server code, but the
+early return became routinely reachable for leases already broken to
+NONE when smb_break_all_levII_oplock() stopped filtering out
+non-level-II leases in 17699905a381, "ksmbd: fix lease break and ack
+state handling".
 
-An authenticated SMB client with list and delete rights on a directory in
-a writable KSMBD share backed by ext4 can trigger this when the directory
-takes the dx readdir path. The client overlaps an SMB2 QUERY_DIRECTORY
-request with an SMB2 SET_INFO request carrying FILE_DISPOSITION_INFORMATION
-on one live FileId.
-
-In one x86_64 SMP KASAN multi-shot guest using ksmbd-for-next at
-171df27077fb, the unmodified kernel reported a cross-worker use-after-free
-before a panic. The first report's access and free stacks show the two
-request paths directly (trimmed):
-
-  BUG: KASAN: slab-use-after-free in ext4_htree_store_dirent+0x488/0x550
-  Read of size 8 by task kworker/2:0/29
-  Workqueue: ksmbd-io handle_ksmbd_work
-  Call Trace:
-   ext4_htree_store_dirent+0x488/0x550
-   htree_dirblock_to_tree+0x535/0x990
-   ext4_htree_fill_tree+0x319/0xba0
-   ext4_readdir+0x175a/0x2f40
-   iterate_dir+0x1b6/0x630
-   smb2_query_dir+0x1003/0x1cc0
-
-  Freed by task 279:
-   free_rb_tree_fname+0x67/0xc0
-   ext4_readdir+0x13a9/0x2f40
-   iterate_dir+0x1b6/0x630
-   ksmbd_vfs_empty_dir+0xa2/0x100
-   smb2_set_info+0x2ffa/0x45d0
-
-Take fp->readdir_lock across the entire emptiness check. This places both
-iterators over that handle's filp in the same lock domain while
-preserving the disposition status handling. The exact code change
-completed a warning-free x86_64 KASAN bzImage build. Tracing three request
-pairs showed that the two iterate_dir() calls no longer overlapped and the
-expected statuses were preserved. A further 1,600 reproducer iterations
-completed with expected statuses and no KASAN report, Oops, or panic.
-
-The reproducer and complete guest configuration are available privately
-to maintainers on request.
+Move the increment below the pending check so the early returns
+cannot strand the counter.  This is the minimal equivalent of the
+reorder that mainline made in b0148dc5625d, "ksmbd: serialize oplock
+close with pending break ownership".
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Yongjun Gwon <d3bugee@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: Adapted the directory check to the existing condition without the ksmbd_stream_fd() guard. ]
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/smb/server/oplock.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index aaccef2e3f3bb..0f92fb2efc473 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6542,6 +6542,7 @@ static int set_file_disposition_info(struct ksmbd_work *work,
- 				     struct smb2_file_disposition_info *file_info)
- {
- 	struct inode *inode;
-+	int err;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 2d3cb9fe94bbe..c087fd5d3d301 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1012,10 +1012,15 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
+ 	if (brk_opinfo->is_lease) {
+ 		struct lease *lease = brk_opinfo->o_lease;
  
- 	if (!(fp->daccess & FILE_DELETE_LE)) {
- 		pr_err("no right to delete : 0x%x\n", fp->daccess);
-@@ -6550,9 +6551,13 @@ static int set_file_disposition_info(struct ksmbd_work *work,
+-		atomic_inc(&brk_opinfo->breaking_cnt);
+ 		err = oplock_break_pending(brk_opinfo, req_op_level);
+ 		if (err)
+ 			return err < 0 ? err : 0;
++		/*
++		 * Increment breaking_cnt only after the pending check
++		 * above: its early returns would otherwise strand the
++		 * counter, as wait_lease_breaking() is never reached.
++		 */
++		atomic_inc(&brk_opinfo->breaking_cnt);
  
- 	inode = file_inode(fp->filp);
- 	if (file_info->DeletePending) {
--		if (S_ISDIR(inode->i_mode) &&
--		    ksmbd_vfs_empty_dir(fp) == -ENOTEMPTY)
--			return -EBUSY;
-+		if (S_ISDIR(inode->i_mode)) {
-+			mutex_lock(&fp->readdir_lock);
-+			err = ksmbd_vfs_empty_dir(fp);
-+			mutex_unlock(&fp->readdir_lock);
-+			if (err == -ENOTEMPTY)
-+				return -EBUSY;
-+		}
- 		smb_break_all_levII_oplock(work, fp, 0);
- 		ksmbd_set_inode_pending_delete(fp);
- 	} else {
+ 		if (brk_opinfo->open_trunc) {
+ 			/*
 -- 
 2.53.0
 
