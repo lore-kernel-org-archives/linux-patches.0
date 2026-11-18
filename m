@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056260;
-	b=vXsFwEWxEw8xu/EvpDHE0nW7CHTte0Gznn7He5Bl6tkbMo4QdYqqMSF3fFupYSbHQyPo
-	 xlvGwOe2GQ7niOirOZCjkMhv1K7Dr4g5YEk+IVYHPOIIBbhNieXgnmUyCEzUPJujpeVuE
-	 0wot/06+BBjJjENZuYmVfnOG4IcnDbhpWH7VZnc9R3LofijvajiuLewGkSLB9IRII7emw
-	 I6PMkK97JMBYWeJ9eftei5qLdnZ9p1/AhUVWeiW16B/JrHoznaDiWtJFFkjD/zPjQXEEL
-	 ZIIcGBqUeVDuPXJjlQxJxrDQq/aC5CC3LVE2yAoIw2Y3cNrR4lSWNUimLHtq57CPXtA==
+	t=1795056263;
+	b=Koz/XaWkSL7hpBRnRidoRBUjZO5WbD+GirLV+//DjN6COXqXG88WSchZjNh1wg/LDHan
+	 NR4I03c1ozeGbGwBKSOd7pYh/6IG+eXP7mMy55b4G5Me4q6oWMFdEAHpn3765sZ515Sss
+	 GrM4IL5Pq79c971b4PxQJG+rwXvDLRG8jCyfd6oaBxQkHVFYPdeoRfFFN6yNtCAqA43c6
+	 7zQRLVMnD2q8W8NQla2R/ItA8HWrP9TFFAJg8EnwpkwFCgYbwqlx2ANis1NyV6R7KeuKs
+	 LM0dGNZqRASAC4Gh6L1d0RfQnyHUV9MHXYvGyVK3Cro4K5aWw2ZwhvsYQZ8ouRq0IUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4H7oIEeNbaORyPkwzxo1ppMAilM4iSibC/KbTUNhym8=;
-	b=hl+UcEv8f5tp8BceIxEwhhuJHE2l7bbjh9SIMYjf9972Bu/e1Hq35oOeKFnB3r0vWNTs
-	 RuQ1jmD8mPKUyQOTlJJPzhCZ2jeKeE3c+HZLF5Cvo+J4UPrM1ks7Qk+2EZ8ISpPeeA8Ah
-	 AU/oKKgCMp8N9xHTGPo/l2zW8JF8urII1/aBP5FH2xAEd6bYMR8DBdShkNLAi6vpiVZGw
-	 dORFevSS7LiH/wdzHpq8HO/ikdglmaxL7F4ZCYLwo7bGguT/hWpg16jwZY+wT03xfwQKv
-	 8k86pIfjZtlG6MInhbCr9BzV5rYPBmUXxn6NBUqF4pdACoqgUr+2UtlAWQjW1Q6OobQ==
+	bh=GNJjTT/9PQsschV5t2Q8+hfgs7q2JTBMSSIdo2LbEjg=;
+	b=UXXpHFVAg4pOPoG6AiShc7eQs8gPSecUYcXXWt9IkD/RTIsqLPTXVqXkRDY/XxmzfdHW
+	 paXY2poVFZqu5lnWn2bl3CZ+NdWkDK3PFep626LlXLaUzbSvYW/2O4a0G9jAB/fMJNsIa
+	 MLY6de1hYxPax9c/uVxX31l9bhvOX+GSr0DNtIM9RK3ZIzsQi/ivFQsgE6S28X51Fl6f2
+	 8GYLuAe8CU2PIfCUkYjAd454EUHPhFbq/aOA2yR1zNPIMQ2/o0omYUHZaaZW9dUlNQMhr
+	 NmuiYaqrhO6yC3wyJXZ92M160P1K1ghJIxi26HrwIfRYIAx//jct2TiJNCVBrwQkdtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BItbMtPj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OfTEzMM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9C5606A31C;
-	Thu, 19 Nov 2026 02:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E55606A325;
+	Thu, 19 Nov 2026 02:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BItbMtPj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3671F000C4;
-	Thu, 19 Nov 2026 02:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2OfTEzMM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E8F1F000C4;
+	Thu, 19 Nov 2026 02:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056260;
-	bh=4H7oIEeNbaORyPkwzxo1ppMAilM4iSibC/KbTUNhym8=;
+	s=korg; t=1795056263;
+	bh=GNJjTT/9PQsschV5t2Q8+hfgs7q2JTBMSSIdo2LbEjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BItbMtPjhqoKzaidUMrmxWrVSpf8B5gcO1hRSEpd4MSz9L3qk6TwKSu6neqwKjdyg
-	 V9mLcws0sul1eddrMX9YUyQNCJeIonHT7WliVLIalzSQoig87bwe+zYXiknK6vNZNQ
-	 GX3j/bczJET0SQntZsAyUf/SVZfvlDMAx3kd1oT4=
+	b=2OfTEzMMZTlvpO36C1ZgYrWZgWuslxkQX1EuocauTVgU6NjYSsgvufdu4ZdNFMcvx
+	 cQs1wvtHBSmE8fYAToqUFD5PLflMepx5F3/oCNv91oHB1NdbdRMY+Var22cPXX0lNH
+	 FzP6IXjR83c2xhJpcyVneatQltsGDF+sJN8S4BmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1924/2214] ASoC: codecs: wm5100: Fix definition of EQ3 Band 1 Volume control
-Date: Wed, 18 Nov 2026 16:00:00 +0100
-Message-ID: <20261118150128.010164260@linuxfoundation.org>
+Subject: [PATCH 5.15 1925/2214] ASoC: codecs: wm8750: Fix definition of ALC Capture NG Type control
+Date: Wed, 18 Nov 2026 16:00:01 +0100
+Message-ID: <20261118150128.043273617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,35 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 96d30816a9a4fa6b3cc470f82d0f53e8a6425ab9 ]
+[ Upstream commit 8c299077c787c151c5c88928467d8e8d85cebdb7 ]
 
-The EQ3 band 1 gain is in WM5100_EQ3_1, not in WM5100_EQ1_1, which
-holds the EQ1 band 1 gain.
+The noise gate type is wm8750_enum[7], bit 1 of WM8750_NGATE, not
+wm8750_enum[4], which is the 3D upper cut-off.
 
-Fixes: 6d4baf084f4d ("ASoC: Add WM5100 driver")
+Fixes: abadfc928a27 ("[ALSA] ASoC codecs: WM8750 support")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/d7f690e391feda7a6d8f38d0b238b165bc1f4fe2.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/ce530dfb932d9e8def75059ab9d669360adc76e8.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm5100.c | 2 +-
+ sound/soc/codecs/wm8750.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm5100.c b/sound/soc/codecs/wm5100.c
-index 9cab01ee4ee91..45ffe82abef57 100644
---- a/sound/soc/codecs/wm5100.c
-+++ b/sound/soc/codecs/wm5100.c
-@@ -655,7 +655,7 @@ SOC_SINGLE_TLV("EQ2 Band 4 Volume", WM5100_EQ2_2, WM5100_EQ2_B4_GAIN_SHIFT,
- SOC_SINGLE_TLV("EQ2 Band 5 Volume", WM5100_EQ2_2, WM5100_EQ2_B5_GAIN_SHIFT,
- 	       24, 0, eq_tlv),
+diff --git a/sound/soc/codecs/wm8750.c b/sound/soc/codecs/wm8750.c
+index 9491817020d85..8ea0c039af2cd 100644
+--- a/sound/soc/codecs/wm8750.c
++++ b/sound/soc/codecs/wm8750.c
+@@ -171,7 +171,7 @@ SOC_SINGLE("ALC Capture Hold Time", WM8750_ALC2, 0, 15, 0),
+ SOC_SINGLE("ALC Capture Decay Time", WM8750_ALC3, 4, 15, 0),
+ SOC_SINGLE("ALC Capture Attack Time", WM8750_ALC3, 0, 15, 0),
+ SOC_SINGLE("ALC Capture NG Threshold", WM8750_NGATE, 3, 31, 0),
+-SOC_ENUM("ALC Capture NG Type", wm8750_enum[4]),
++SOC_ENUM("ALC Capture NG Type", wm8750_enum[7]),
+ SOC_SINGLE("ALC Capture NG Switch", WM8750_NGATE, 0, 1, 0),
  
--SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ1_1, WM5100_EQ3_B1_GAIN_SHIFT,
-+SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ3_1, WM5100_EQ3_B1_GAIN_SHIFT,
- 	       24, 0, eq_tlv),
- SOC_SINGLE_TLV("EQ3 Band 2 Volume", WM5100_EQ3_1, WM5100_EQ3_B2_GAIN_SHIFT,
- 	       24, 0, eq_tlv),
+ SOC_SINGLE("Left ADC Capture Volume", WM8750_LADC, 0, 255, 0),
 -- 
 2.53.0
 
