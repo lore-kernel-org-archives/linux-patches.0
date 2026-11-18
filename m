@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039075;
-	b=RYdBmZwRJwg9tcHYEOIKiNAyLQ+gdwNw7qdWbOjXtxFDNki61KEAemrYtEy/z+z6ILjM
-	 HE6vOFdtKrxmuoUb+xjwHYyHbKKf7eIIkMcwuwYweNuE6GnWOEvrWKWFn6QLp4546DO9U
-	 GE/id9fLib0irCxLTVWXOPrib6jAqXJgw61dK0jmSl/Vkcg1JXJFcfXsJeEbZelXjCoXb
-	 kzeGK0OgDM+xu47LPyloyM5RFiG39B6w/7/OIWF3PSCgWN3pgKRscufRd42EPaVJbpeYR
-	 r+N1xQ4PlqID//4jPhBbmgx73SER3JrT6Oc/QM2nVF65Cn5mIc7NX3x61q36wwPhQeA==
+	t=1795039078;
+	b=Yug3x0S5nxkwnFwu2W2XuOOYhBkERZdlSpWZ8Ehm+WBvHC0i715+OIWfxGDf04z7esYi
+	 6FmIaWq5dHCYbDFfJqgTWpeUpzT+F2eeZwitSTkWWyYrf18a9B7fx/QIfcxfr0CRinDB6
+	 V6Ex+FDAwtkTMjvq/ROb5ib9JiIq0iNJ+cMSHQLcBE9h5ak5W9GxpMlghwlVIHdjihII7
+	 qDLxk9+P1PA3Yl0Gtyvgl45WY/ldON9bVGiMLcKsm82yrSR9dYPKV/c1KRkIpv61MmMui
+	 nuTJ7E9+i9qQG/cvLVBEsuzT+tEKpKMJzI/t3fo9snVhAiUmj1e6tGv9bKB0w7PDBMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uTx+N//5Uj0xArtB8uDyWfzAjR1fNCIKWPXg1ZAimB4=;
-	b=iIDT20PyI3LKCsmbOZReagfFeHbj5sVSSZlgd1R6UT07U/92fsjb/g9iDR0tVkUEdvWD
-	 syn9syUqQQUW0eP5IaqRjtUlQ0Q/5jKZ5TH4z8OhKZGScgXG7sj7jNLPeL1/4DhKlH7h7
-	 lZszodwHGybjuS+sZeSAepe+yllSxUFI7CO/woVl50nzn7qV233d4rxIldTQzd1/VmdnP
-	 ar3xFJTA+tWEduxDi4eHPKEAC3iwWkUbbp5zB7AV7yQtOQuMMYaIdeBLNZfUNxOqQoe3L
-	 hxAl3X0oQkjMW9XIy9+CeyaQG9Pu9aNDa8n8UOqulByvdCfn9HyhdH3YhvcccwZDSZg==
+	bh=iFGao7a07Hqwb2/Xet5TCkvVY2bCNaN/Ave0+Y86XlY=;
+	b=n0OFg8bxVouEgB/7V+dlvk9EqMJM8JSvjUMPBsW24027AsT3CCZPmsE58HQJfFwNenkY
+	 f/BKt3hBz9DT2d1mUJf9gAV8QmIMC/vJ8addZu62LQkLut0OeUbwQNYuDYax30tageNI3
+	 FO0NrI7AGZ+wbN3Y/A3WJzi7ZH3mu1zsUtP0OJxz+JNi6rFdAHF5kqv7TchNNvDAHJANd
+	 kLfpYSFeT6jzclsNQw3aGPWkJ+nZ5XRJyeoN8RgjU+CwDvuIrQY8V4olFS6ZBBj9l4DvA
+	 kLlh7WodZXlYmoHkUi+5UTJLR+bZHYOFdHihzWPcztJcBGDvj4KfYEUyvWGSZJG7Y7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="M4kBp3/X";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t8joEdut;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ECD60A260B;
-	Wed, 18 Nov 2026 21:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEBD606A33D;
+	Wed, 18 Nov 2026 21:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M4kBp3/X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF6F1F000CB;
-	Wed, 18 Nov 2026 21:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t8joEdut
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB111F000CA;
+	Wed, 18 Nov 2026 21:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039075;
-	bh=uTx+N//5Uj0xArtB8uDyWfzAjR1fNCIKWPXg1ZAimB4=;
+	s=korg; t=1795039078;
+	bh=iFGao7a07Hqwb2/Xet5TCkvVY2bCNaN/Ave0+Y86XlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M4kBp3/XdsJYmBaWyl+yUMQ/G23PxFDBI9b5OuJeae1GHnCH+Di7852ofjFUfFkbK
-	 8B8lDUmroyBhmf1A/Ov4SGd/1eg+2uMQACt/ge57gJkfZzTior7MYLiBBY8z8+wn/q
-	 If+ud7p4yVHlnUZx8WscZLRyJAq+XUq+FmiBmrUw=
+	b=t8joEdutmV+R5DlbV7pjkIXQJ8sDiWFwIgm0vasA2Sl95CSWBAyEzuEN3cqG5w1/R
+	 0xKqQZxx1v1J+G0KvxBwSOutNGhhoH8UpF6twLnpx3asl8/5jOeZaC6giA+BLYmBuv
+	 yiee2MT0yp/ezLKgUjPt5udIatJar45VSCeaWXWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
-	Will Deacon <will@kernel.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1971/3318] vsock/virtio: Rename virtio_vsock_skb_rx_put()
-Date: Wed, 18 Nov 2026 15:43:13 +0100
-Message-ID: <20261118150421.213197543@linuxfoundation.org>
+Subject: [PATCH 6.6 1972/3318] vhost/vsock: size receive SKBs from declared payload
+Date: Wed, 18 Nov 2026 15:43:14 +0100
+Message-ID: <20261118150421.242982377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,67 +70,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 8ca76151d2c8219edea82f1925a2a25907ff6a9d ]
+[ Upstream commit d5e912448cd98b261eba8e35ab838f2dc69a79f5 ]
 
-In preparation for using virtio_vsock_skb_rx_put() when populating SKBs
-on the vsock TX path, rename virtio_vsock_skb_rx_put() to
-virtio_vsock_skb_put().
+vhost_vsock_alloc_skb() sizes the skb from iov_length(), the total guest
+descriptor length.  virtio_transport_inc_rx_pkt() instead adds hdr->len to
+rx_bytes and buf_used, and budgets each queued skb as SKB_TRUESIZE(0).  The
+guest controls the descriptor length and hdr->len independently.
 
-No functional change.
+A guest can therefore provide a 64 KiB descriptor while declaring a zero
+payload.  The descriptor-sized skb remains queued, rx_bytes and buf_used
+remain unchanged, and only the fixed queue-entry budget limits retention.
+This is not a lifetime leak: the skb is freed when dequeued or at socket
+teardown.  Repeating this across connections can nevertheless exhaust host
+memory.  On Linux v7.2, 455 such descriptors retained 30,255,680 bytes for
+a 262,144-byte receive buffer; a full-payload control retained 265,984
+bytes.
 
+Vhost previously read hdr->len and allocated pkt->buf from that value.  The
+conversion from virtio_vsock_pkt to sk_buff instead allocated receive skbs
+from the descriptor length, introducing the allocation-accounting mismatch.
+
+Copy the header into a stack object and validate hdr->len before allocating
+the skb.  Size the allocation as sizeof(hdr) + payload_len so descriptor
+capacity no longer determines queued memory.  Check payload_len against
+len - sizeof(hdr) to avoid addition overflow on 32-bit hosts.
+
+Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Message-Id: <20250717090116.11987-9-will@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: d5e912448cd9 ("vhost/vsock: size receive SKBs from declared payload")
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20261004235101.1464007-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vsock.c            | 2 +-
- include/linux/virtio_vsock.h     | 2 +-
- net/vmw_vsock/virtio_transport.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/vhost/vsock.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
-index a5bbbb5d0273e..f197f0c28022e 100644
+index f197f0c28022e..b67ccae915464 100644
 --- a/drivers/vhost/vsock.c
 +++ b/drivers/vhost/vsock.c
-@@ -372,7 +372,7 @@ vhost_vsock_alloc_skb(struct vhost_virtqueue *vq,
+@@ -327,7 +327,7 @@ static struct sk_buff *
+ vhost_vsock_alloc_skb(struct vhost_virtqueue *vq,
+ 		      unsigned int out, unsigned int in)
+ {
+-	struct virtio_vsock_hdr *hdr;
++	struct virtio_vsock_hdr hdr;
+ 	struct iov_iter iov_iter;
+ 	struct sk_buff *skb;
+ 	size_t payload_len;
+@@ -344,34 +344,32 @@ vhost_vsock_alloc_skb(struct vhost_virtqueue *vq,
+ 	if (len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM)
+ 		return NULL;
+ 
+-	/* len contains both payload and hdr */
+-	skb = virtio_vsock_alloc_skb(len, GFP_KERNEL);
+-	if (!skb)
+-		return NULL;
+-
+ 	iov_iter_init(&iov_iter, ITER_SOURCE, vq->iov, out, len);
+ 
+-	hdr = virtio_vsock_hdr(skb);
+-	nbytes = copy_from_iter(hdr, sizeof(*hdr), &iov_iter);
+-	if (nbytes != sizeof(*hdr)) {
++	nbytes = copy_from_iter(&hdr, sizeof(hdr), &iov_iter);
++	if (nbytes != sizeof(hdr)) {
+ 		vq_err(vq, "Expected %zu bytes for pkt->hdr, got %zu bytes\n",
+-		       sizeof(*hdr), nbytes);
+-		kfree_skb(skb);
++		       sizeof(hdr), nbytes);
  		return NULL;
  	}
  
--	virtio_vsock_skb_rx_put(skb, payload_len);
-+	virtio_vsock_skb_put(skb, payload_len);
+-	payload_len = le32_to_cpu(hdr->len);
++	payload_len = le32_to_cpu(hdr.len);
++
++	/* The pkt is too big or the length in the header is invalid */
++	if (payload_len > len - sizeof(hdr))
++		return NULL;
++
++	/* Allocate only for the payload declared in the header. */
++	skb = virtio_vsock_alloc_skb(payload_len + sizeof(hdr), GFP_KERNEL);
++	if (!skb)
++		return NULL;
++
++	memcpy(virtio_vsock_hdr(skb), &hdr, sizeof(hdr));
+ 
+ 	/* No payload */
+ 	if (!payload_len)
+ 		return skb;
+ 
+-	/* The pkt is too big or the length in the header is invalid */
+-	if (payload_len + sizeof(*hdr) > len) {
+-		kfree_skb(skb);
+-		return NULL;
+-	}
+-
+ 	virtio_vsock_skb_put(skb, payload_len);
  
  	nbytes = copy_from_iter(skb->data, payload_len, &iov_iter);
- 	if (nbytes != payload_len) {
-diff --git a/include/linux/virtio_vsock.h b/include/linux/virtio_vsock.h
-index 3e91cde041037..a8ebcb04d0c80 100644
---- a/include/linux/virtio_vsock.h
-+++ b/include/linux/virtio_vsock.h
-@@ -46,7 +46,7 @@ static inline void virtio_vsock_skb_clear_tap_delivered(struct sk_buff *skb)
- 	VIRTIO_VSOCK_SKB_CB(skb)->tap_delivered = false;
- }
- 
--static inline void virtio_vsock_skb_rx_put(struct sk_buff *skb, u32 len)
-+static inline void virtio_vsock_skb_put(struct sk_buff *skb, u32 len)
- {
- 	skb_put(skb, len);
- }
-diff --git a/net/vmw_vsock/virtio_transport.c b/net/vmw_vsock/virtio_transport.c
-index fb7acdf4ad2b3..1fc8025bfb06d 100644
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -531,7 +531,7 @@ static void virtio_transport_rx_work(struct work_struct *work)
- 			}
- 
- 			if (payload_len)
--				virtio_vsock_skb_rx_put(skb, payload_len);
-+				virtio_vsock_skb_put(skb, payload_len);
- 
- 			virtio_transport_deliver_tap_pkt(skb);
- 			virtio_transport_recv_pkt(&virtio_transport, skb);
 -- 
 2.53.0
 
