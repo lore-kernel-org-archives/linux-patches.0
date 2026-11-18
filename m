@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054421;
-	b=B1yHion2QC58GNZ/32rc59d55y3gjG2jFWnDbGNM626RlPIhfNJhIQLBnHlwp5njOGbM
-	 dsXg+k/TuQRnVZ8+Lua8lnNmc4BBf25n7ZL50wXhzzy6rlFOTmEKNxvIw0oZ0cLIYf+ao
-	 aGO8gYyj+iXeTfXde8eIW4viGGHBbTt8Q6tcPVV4UtPIs0XUn1ShFbQM68w3RQXreimrq
-	 SWKansnl1JIPhbN0JqlJeV/ww9j6RPKTu6jbBPMbOfvd31nAOGwgbYeuZUXLbnm+Z90WY
-	 j5sFhaPJLhacalwTVTbdWW9Mci0VYVnjcY+wsZLEihaLhkNdemVRNXmZv3rOySpvqew==
+	t=1795054424;
+	b=LUbPsVKhxKh/xvjCfH34LQG/oj6JXVk5eKC0+la5URiy5aT63lZQPdE15yM9RdVRLWo0
+	 pcMjLNendKfUTPHEFPf0NBCdpyxIprR7nW+3HenhoUYk9h+EiP4CAbb4FSeYeHq4p+6B8
+	 /ECZs/Hch4gvttI0sxX1AWnSEIKTD2yZs/V86yCwoRb2GmQwSoDatdAensYHc8xSVlhQC
+	 +I1GGsWGQz0GnAr3usVDjYMHWXGoQYHKu2VgWU1x03KHdPEIPHeDWQi1N1Y3PtHzRGpHg
+	 HY19cwu55TrRIcVi2B/kYCe5Cr4t9ls50oPBMf4Mqijrgo/rqtpdRDMd9D6DJbwKrcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054424;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bxHVJFalepBvBU2xVx9uqY8Kims0hsJM9aSBczNCqh4=;
-	b=UyIGZE9m1EWVOqBLtiBK1JqgdaOQd14tOYZ7X3J7j0ssLK9QG4md72nAON+G2Z351kbL
-	 C/E8xK36BwhCrUMMjXCVzJfISdaeChRSsu3HIzyNghF22HzcmFxcj2ioEvyTRRVPb7gFB
-	 jzSd74goR31VDp9FtN8BDSE69sIVH870yKT6AY3v2+dGeCE+38TVmImk5cEYtJ1ZYsaK/
-	 2TI4sp44sbjffbpKkPwH9u2zuLWBk8+HwA1b/pO7mb6SMjvzofV/IOSfJMJIbr3V/delz
-	 KFsNgpHn+uG/kkvkbwydenlwsgObbvSsa/TZieaqhWAcx5CJStDSGV2BAG3bWD94hlA==
+	bh=BnSQJEreACODK7eVeCvvMVO/GI7seCX71dwriEf8rZ8=;
+	b=5X+lVf8U/iq+YHY5YJn5DXagI+YSRWgInXB2xshqZVmFe6Q+6+281d7235M6U7D/nCfU
+	 QmuN8EANqR0Aa2fzQOGqKj+SodEvh0vnnBuDjz8DBxGLLRXvvUdQ7/y4dGW4TwF/IRNqL
+	 9FGQVk04+to/bWcZRKxcrBUN7ZFr1I8OkuKsqr37bUBb2C0ks/0esGz73ySvVwnYI0j8e
+	 qmcw6pkv72ioSYKpn69Ez9KPPIZmMUmBl+ivi7egLEFNeluR4wY2t8iJ0ytkxNTP6/5g5
+	 7qFsB+p4cHwkeHS9SrEk5zh5IEUC0wboqKQ5V1VzN4ofHD/kJAytEFoONykAeGeX33A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6K8GUW1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PAvG6CRI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20031606A32A;
-	Thu, 19 Nov 2026 02:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E4C606A31C;
+	Thu, 19 Nov 2026 02:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6K8GUW1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E48D1F000C4;
-	Thu, 19 Nov 2026 02:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PAvG6CRI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543021F000C4;
+	Thu, 19 Nov 2026 02:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054421;
-	bh=bxHVJFalepBvBU2xVx9uqY8Kims0hsJM9aSBczNCqh4=;
+	s=korg; t=1795054423;
+	bh=BnSQJEreACODK7eVeCvvMVO/GI7seCX71dwriEf8rZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G6K8GUW12MKc/jkyBlYornZttBnI7ILGkAb648YGH350xfRUrUj2vHfPqSgntk+wa
-	 ASoLVq8XYDJrnZsDjyCxBpnj78zasM6KDvC8vQ4IfHszzk7ShvX3IdiRZ2nhJFqkXf
-	 rgVCISGQlAQp/RJFXcvndaOIZu8LgMTdcBwB61g4=
+	b=PAvG6CRIZDojK7Hp/TkAG5Xw+2hQmNi5tyUYJhN9R+zuKnIGE7tgAhaFB2hIvKb8K
+	 yjpWZUYo6lyfZLoN0Zo+0K8rSHQ9WTHypPqusoi9vGUPGxgNVEhcGIC/WKvuwh1YnS
+	 9fRWGrVnI0WBg4/aKJlOTrJselsb38LLwEZ+6DtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1268/2214] fbdev: kyro: Use devm_ioremap_wc() for screen mem
-Date: Wed, 18 Nov 2026 15:49:04 +0100
-Message-ID: <20261118150102.340673998@linuxfoundation.org>
+Subject: [PATCH 5.15 1269/2214] fbdev: kyro: Release WC setup on registration failure
+Date: Wed, 18 Nov 2026 15:49:05 +0100
+Message-ID: <20261118150102.373481017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,65 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 32dfb6112ea3ca143636832cd34234f2be4830bb ]
+[ Upstream commit d3bc005a62945aec57059201092b12b7c955e5a7 ]
 
-Replace the manual pci_ioremap_wc() call for mapping screen memory with the
-device-managed devm_ioremap_wc() variant.
+If register_framebuffer() fails, kyrofb_probe() frees the framebuffer
+without releasing its write-combining range. Release the range before
+freeing the framebuffer. Earlier failures still skip this cleanup.
 
-This simplifies the driver's resource management by ensuring the memory is
-automatically unmapped when the driver detaches from the device.
+The missing cleanup already exists in the initial Git import, before
+the conversion from mtrr_add() to arch_phys_wc_add().
 
-Signed-off-by: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
+
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/kyro/fbdev.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/kyro/fbdev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
-index 7441d48faea77..b298e9a1b4510 100644
+index b298e9a1b4510..c9f8875e34d91 100644
 --- a/drivers/video/fbdev/kyro/fbdev.c
 +++ b/drivers/video/fbdev/kyro/fbdev.c
-@@ -718,7 +718,8 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (!currentpar->regbase)
- 		goto out_free_fb;
- 
--	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
-+	info->screen_base = devm_ioremap_wc(&pdev->dev, kyro_fix.smem_start,
-+					    kyro_fix.smem_len);
- 	if (!info->screen_base)
- 		goto out_free_fb;
- 
-@@ -756,7 +757,7 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+@@ -757,7 +757,7 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  	fb_memset(info->screen_base, 0, size);
  
  	if (register_framebuffer(info) < 0)
--		goto out_unmap;
-+		goto out_free_fb;
+-		goto out_free_fb;
++		goto out_free_wc;
  
  	fb_info(info, "%s frame buffer device, at %dx%d@%d using %ldk/%ldk of VRAM\n",
  		info->fix.id,
-@@ -767,8 +768,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+@@ -768,6 +768,8 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
  	return 0;
  
--out_unmap:
--	iounmap(info->screen_base);
++out_free_wc:
++	arch_phys_wc_del(currentpar->wc_cookie);
  out_free_fb:
  	framebuffer_release(info);
  
-@@ -790,8 +789,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
- 	deviceInfo.ulNextFreeVidMem = 0;
- 	deviceInfo.ulOverlayOffset = 0;
- 
--	iounmap(info->screen_base);
--
- 	arch_phys_wc_del(par->wc_cookie);
- 
- 	unregister_framebuffer(info);
 -- 
 2.53.0
 
