@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055790;
-	b=N1qO++lx309P7lzflVsll9urofNp1fIYwKoNVQZmZvdKh0s7uuVPAyY9Y7tfHs7As94V
-	 MvJ0PNB4u5QfNYUitEmorKwJORb5m4PgAKCIlmo/QphA5TeA7D9le7vrbjfMBNwHSRwZJ
-	 P7jCtuYy0usPZm98Hk9Sd4eWBYZZnvlrWjqekMJn3yEp90jzeLs0sEp7MQhz+n4M4i9x3
-	 2QZfKxfZTEXf7y6Capx4eokMx1Ks43Df+vEPG0BmcRUDvEDs2eJwNuWZJbYFAiGIAkXj0
-	 CyquTslNW7LxEoyQc8OeQOCBnp3ry9WB9yN3AFZTMxHWA8KkYgl/Kv15ej+8J0vH1NA==
+	t=1795055792;
+	b=Q2uO0QznU6nTtnHNQpChvNNa36swju8KFOEX1xuVdFguI/jRyEgiP0QI+cBKqT64687d
+	 BXVNNWAMXiGJzxoM5Obd30dHs5Jlvqd+UOHfxtxlSHePWcKJzCFI6UDw0LlJbBp3QU0KV
+	 p8RW8Mwmmwj6VvoYcTnea/ScJh34BfkV659Mz5fEZdQKn0qjlO8bh48ULGasAvge//ncd
+	 CEvszEal5BFTUg/FB1O/Q0MrT1exDIPpc0cBlljH/qxybdY5ltzcec/Hn7Vc6RkfZ2tAY
+	 6zXANsUUg6r/EzdB2oUJFptF+xesx4cyuplBdLBU/6n3CFuvjK3hqhJ9GQnvT+85ZIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/HL5KMdpfeLLPuZ6b5dr4j2apBrWrxShRtFBT+Tp7Qs=;
-	b=OxlzPXOgvq0zRpLREW0WtlGfJUsKz3TclbjnyO3K89H9EJn8pHD4i6EeQU8/gMcrxp2X
-	 ieLyjJ+WosCf3oZviM9Hk1fGO55RYqlRZew/F93xJ6fxiBiMdvOdk9LwWjYKo6cWXRUvN
-	 V+mwpl7whtm3gKxlazsyGkPPHnF83CZQjorgi9GMge4liLl1Ut0SvJMODim0vxilgVHos
-	 fU7JCROG48PZUDulrYA0IbsY1P0Kvjn09xsGxa9b7kRaZpsm+u/IzR8+mSSguUKpPejX/
-	 UnqmfT7ATquXYB9YxVpcq0W+0k+KpgJr0pZttmC4LNOAtBNedb631uT+ISG/d83f5IQ==
+	bh=ZP/rmC4BWu8w+YLpSEEdqLErAT40nxAv8x/h9C6AZBA=;
+	b=vO7N5/SpR0rf6qoK2KZic8bFNQfykK8wwgiuTTtV6ACb8vKm09ha2P29lGYftpahs4ba
+	 iBGk5HPLSRMkho0Lqa7WwjbmFzs1WGgE1vYAPEjUe5LphwZfqNcpH8StSKsuHJALwk1zv
+	 XW6P1pMfYSdwN7ztgOF0K6WkJbawBxZAb40ym2ZQFKByIwr031mbszZVgOAUxb/T47xEx
+	 1LuzCSIaj1KcHCOXk39igrohVyjuc7NrIOSBQq7A6A+Gpf7ihoHrP23vwQCafSy9DIu+w
+	 7VhDE0uPVIthIb2z24j77FSa3skil1PqlF6YcyoDtuoNCcLFZqBpsrotM/Xx2O/CC9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emiFC7vL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFuDR6p3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20129606A31C;
-	Thu, 19 Nov 2026 02:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24CE606A31C;
+	Thu, 19 Nov 2026 02:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emiFC7vL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790F71F000C4;
-	Thu, 19 Nov 2026 02:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFuDR6p3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3473F1F000C4;
+	Thu, 19 Nov 2026 02:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055790;
-	bh=/HL5KMdpfeLLPuZ6b5dr4j2apBrWrxShRtFBT+Tp7Qs=;
+	s=korg; t=1795055792;
+	bh=ZP/rmC4BWu8w+YLpSEEdqLErAT40nxAv8x/h9C6AZBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=emiFC7vLzzf9nPK+f9Df5fQYKWm2vvB4FqUcIVZhxUHcVHzdS0tkGSPAcWo0uMzHH
-	 x+0R6N2x05aPD9kKLYzDVNZQPr3BGNxk5iaNLzbrAlFpCwCmr5sh6saUOr2dtEbeGg
-	 vs+sa648QI2D2E/EVJT3R20/8ADoF0zTXHgIApUc=
+	b=MFuDR6p3rtoAV4vYmk9IhhhIzXEq9YBa2N0xfnepsIAY3fuh+Ng7nVKe9EQndiXDh
+	 mS9pM25EuiSHUjNVJFoBmPazexh5iOmMOiX7IQc6oh+KSjBsRGlfxXaBYszUsBhk30
+	 0xZFdkOFtbOmUi3DvV0gNuPSuy87D9D8/Tqh03WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1756/2214] dmaengine: ste_dma40: Fix probe runtime PM disable
-Date: Wed, 18 Nov 2026 15:57:12 +0100
-Message-ID: <20261118150121.811308317@linuxfoundation.org>
+Subject: [PATCH 5.15 1757/2214] dmaengine: ste_dma40: Check runtime PM in IRQ
+Date: Wed, 18 Nov 2026 15:57:13 +0100
+Message-ID: <20261118150121.846706939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,84 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit c6809b381e34f8966cc3d9e5d7d658775a408f83 ]
+[ Upstream commit 12787e3f2f93f3af59769b08ee4fcb044531120b ]
 
-Some d40_probe() error paths jump to destroy_cache before runtime PM has
-been enabled for the DMA controller device. The label unconditionally calls
-pm_runtime_disable(), which increments disable_depth even though this probe
-attempt never enabled runtime PM.
+d40_handle_interrupt() reads DMA40 interrupt registers unconditionally. A
+spurious interrupt can arrive while the device is runtime suspended, after
+dma40_runtime_suspend() has disabled the GCC clock.
 
-Use devm_pm_runtime_set_active_enabled() to mark the controller active,
-enable runtime PM and register balanced cleanup for probe failure. This
-avoids both the disable-depth imbalance and ad-hoc probe state tracking.
+Avoid touching the registers unless the device is runtime active by taking
+a conditional runtime PM reference. Return IRQ_NONE when the device is
+suspended, and drop the reference after handling an active interrupt.
 
-The interrupt handler uses pm_runtime_get_if_active() and cannot
-acknowledge a pending interrupt while runtime PM is disabled. Request the
-IRQ only after enabling runtime PM so the handler cannot enter an
-unacknowledged interrupt loop during probe.
+When CONFIG_PM is disabled, pm_runtime_get_if_active() returns -EINVAL even
+though the registers remain accessible. Keep handling interrupts in that
+configuration and only drop the runtime PM reference when one was acquired.
 
-Fixes: 0618c077a8c2 ("dmaengine: ste_dma40: Fix PM disable depth imbalance in d40_probe")
+Fixes: 7fb3e75e1833 ("dmaengine/ste_dma40: support pm in dma40")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
-Assisted-by: LLM
+Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-5-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-6-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/dma/ste_dma40.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 191e2e506be18..ed7705e4efd19 100644
+index ed7705e4efd19..363df8e15114f 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3616,12 +3616,6 @@ static int __init d40_probe(struct platform_device *pdev)
- 		goto destroy_cache;
- 	}
- 
--	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
--	if (ret) {
--		d40_err(dev, "No IRQ defined\n");
--		goto destroy_cache;
--	}
--
- 	if (base->plat_data->use_esram_lcla) {
- 
- 		base->lcpa_regulator = regulator_get(base->dev, "lcla_esram");
-@@ -3646,10 +3640,20 @@ static int __init d40_probe(struct platform_device *pdev)
- 
- 	pm_runtime_irq_safe(base->dev);
- 	pm_runtime_set_autosuspend_delay(base->dev, DMA40_AUTOSUSPEND_DELAY);
--	pm_runtime_use_autosuspend(base->dev);
- 	pm_runtime_mark_last_busy(base->dev);
--	pm_runtime_set_active(base->dev);
--	pm_runtime_enable(base->dev);
+@@ -1657,6 +1657,11 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ 	u32 *regs = base->regs_interrupt;
+ 	struct d40_interrupt_lookup *il = base->gen_dmac.il;
+ 	u32 il_size = base->gen_dmac.il_size;
++	int ret;
 +
-+	ret = devm_pm_runtime_set_active_enabled(base->dev);
-+	if (ret) {
-+		d40_err(dev, "Failed to enable runtime PM: %d\n", ret);
-+		goto destroy_cache;
-+	}
-+	pm_runtime_use_autosuspend(base->dev);
++	ret = pm_runtime_get_if_active(base->dev);
++	if (IS_ENABLED(CONFIG_PM) && ret <= 0)
++		return IRQ_NONE;
+ 
+ 	spin_lock(&base->interrupt_lock);
+ 
+@@ -1705,6 +1710,9 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ 
+ 	spin_unlock(&base->interrupt_lock);
+ 
++	if (ret > 0)
++		pm_runtime_put_autosuspend(base->dev);
 +
-+	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
-+	if (ret) {
-+		d40_err(dev, "No IRQ defined\n");
-+		goto destroy_cache;
-+	}
+ 	return IRQ_HANDLED;
+ }
  
- 	ret = d40_dmaengine_init(base, num_reserved_chans);
- 	if (ret)
-@@ -3709,7 +3713,6 @@ static int __init d40_probe(struct platform_device *pdev)
- 		regulator_disable(base->lcpa_regulator);
- 		regulator_put(base->lcpa_regulator);
- 	}
--	pm_runtime_disable(base->dev);
- 
- 	kfree(base->lcla_pool.alloc_map);
- 	kfree(base->lookup_log_chans);
 -- 
 2.53.0
 
