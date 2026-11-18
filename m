@@ -1,62 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062110;
-	b=zEmFFMM9yEkH5uRtPhp1l5wmQCHP1cdXthIbu8cvytfiyV8EkQwlzOjj4Me6nXT3+Bx6
-	 HZZKyJN9z/YiUIyQb/fkdQt6+sdqML1sJeed6hmYXKZSqhSs1N0MX5GnfjN0I2/XSx29S
-	 qgFzI1hwpUlXvo7VYCFuYHeZQ0gsURqZpGX/kz5wq7ITrj59Eu8rBEGrxUflyVBgRD+wM
-	 nxMN+R8Y428FI/hp/wDQKTQOv9O8d82xC7pMglrembolbGx60oDXkblhFBQKz6WGLUTRJ
-	 HR9ha4daJn9LsOT5H9ukvk7jVcV0cA0HyayFm4BZrIzP7j1HHuJ/AZxVypZvwlomp1g==
+	t=1795062113;
+	b=TpY84pmesFcPD+b7JyGaFvdP5j9iB36jv3NiocvyxlAxWSdqSmPoHduzOqSzyd9ho0nH
+	 4fNnoNVQzHa739u7dWtCPunjWjQ8iw3UjJxJVNxTeq4/tZzDKqnzpRiJqRBC5uhzgpWYk
+	 xaQnmI4NUz4dkiVmvt/enLUvDzBE3J0C+hJT1Ai07pLBQMWRsSX+fzTyC1BCH1e4rdIzJ
+	 Li04HUVjpaMrWdao4zSFPcfKx3jwfnZfNvSzzMDWqod0v+HgFGLGWYw9xZmhAcih3jn/p
+	 Bdxv1/1Tx5KSzKbNUg+WsJkLJ4my7/ni0BFvZw7PL9LrrUdFga1mvV3nGG4wfctn8nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Ix3uvJaUC0t6HGZxOg0IvLG7V8ZHM4dIZhGvaZ88nM=;
-	b=HQP3GCGTGpsczg+a2PtzIVj8SPLHBQ/1eTp+ICQZfSKZf6LPWLzUq799/3M7FTGmRD9P
-	 JgtKwAw1GcE9pL2U5ZjsmtL1L1OYSIyKwuiaJkfYXpScs/veXW0XIhCWyqdIBq1KbPwup
-	 AVS4lnQOqnHUaWY8a5X26D3fHSZjxPcrUlq9GzSxQhfPzPNj05yvGoPekAbRrSpf4vfAS
-	 KB0XPgjtaJGB96nzwCty10BNzbEauW8ijrbNMAtmgPccJklmTIHqHu5CQmz3+Ok0Pbg67
-	 OzFjcWMpxaXFj71H/xow2SLOJkjvCLqwdLEsZz4p6VqVk8/UFcdFPFtHX+mBDs5Ghjg==
+	bh=l0OrgGILN3AgIINN/7rGlXlv+9EXt8iy/J/tXhb6Sok=;
+	b=IAwfQUMe8Wr6sX0yJgh+ACqyaqEGx7sUyfqme+v5wZFJLjC3140s0CBlo3M3S5ZTs4z4
+	 S4vLzR/k5Dgy/v+jz9eur/MsubbXdMCHA45h1CJt0ROCdGpZvXRnuFycBtigsC9YhpsW6
+	 4wl3Z1M/5qUTXDyFXhlI+8vQbAF9LoDJWbbQfV+8dt6+DtGOkQPzyzZfoF3A+R96KHmAa
+	 b8OQHC85Of90g3Q/u+ZG7879yFKPXqxdTg74Ah6zR5no3cGXm8rBN1N2Prp9dKKsi05V1
+	 L/NQtNCL9ERyANVth4jZYF91g98ISIDT5Np37f+P0moe+ksochxI+As3O8zBAvz+jOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPzSE5tP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAO3WGs6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80785606A32A;
-	Thu, 19 Nov 2026 04:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BCA606A320;
+	Thu, 19 Nov 2026 04:21:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPzSE5tP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79B61F000C4;
-	Thu, 19 Nov 2026 04:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAO3WGs6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68D91F000C4;
+	Thu, 19 Nov 2026 04:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062110;
-	bh=0Ix3uvJaUC0t6HGZxOg0IvLG7V8ZHM4dIZhGvaZ88nM=;
+	s=korg; t=1795062113;
+	bh=l0OrgGILN3AgIINN/7rGlXlv+9EXt8iy/J/tXhb6Sok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mPzSE5tPe7QPYpp0gptkpErF+eZ3fbTfy2IJMCQaZLLuIiAfWdyIk3bxGc8v/EPCs
-	 mH0n+ufFOng5KEYA6o934D0AS8jyGut5AiMHo/EL9uFrSDyVjhoNlTPZk30v0Mwg5R
-	 QriptdUt9fM/PF3F98Wq4H7ajrDikm1T9sfLPgDU=
+	b=EAO3WGs6znqWJM0cDncpPIb4W9ajZCSp2ucIVTcKjkdbmUrxSBmhA0bnODFlqK/HJ
+	 G14g6EJ9F25Ikx9YbU7wsiErOWKqkUhZ1cwMLRrVDdkDshnPXJLXmF6ivz6mLqr+vx
+	 ZFLgt6ZtFn6ToIyYG6lgWU17JArVhFrx3ggygMLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1793/1848] perf mmap: Preserve the consumed cursor in forward mode
-Date: Wed, 18 Nov 2026 16:03:51 +0100
-Message-ID: <20261118150034.351969550@linuxfoundation.org>
+Subject: [PATCH 5.10 1794/1848] net: dsa: mv88e6xxx: fix 6351 family statistics snapshot
+Date: Wed, 18 Nov 2026 16:03:52 +0100
+Message-ID: <20261118150034.384862230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -78,57 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 1e826983ceef421d7047ed76581840b778294ad4 ]
+[ Upstream commit 9663edfa71e8807890203578dab6db60c6b548c4 ]
 
-perf_mmap__read_event() updates prev as it consumes forward-buffer
-records. perf_mmap__read_done() then overwrites prev with a fresh
-producer head, even when unread records remain.
+The 88E6171, 88E6175, 88E6350 and 88E6351 take the port number in the
+low bits of the statistics operation register. The 6320 snapshot helper
+instead encodes the port as (port + 1) << 5. On an EA4500 with an
+88E6171, this causes ethtool -S to return physical port 0's MIB counters
+for every user port. Traffic on other ports does not update their
+reported hardware counters.
 
-perf_kvm__mmap_read_idx() stops after 25 records per mmap and calls
-read_done(). If more records are pending, prev advances past them. The
-next drain starts at that new position and skips the unread remainder.
+Before the snapshot operation was moved into the chip operations, only
+the 6320 and 6352 families used the shifted encoding. The refactoring
+incorrectly assigned that encoding to all four 6351 family chips.
 
-An event arriving after the last empty read_event() and before
-read_done() can also be skipped. read_done() does not itself update the
-kernel's data_tail.
+Use the unshifted snapshot helper for the entire 6351 family. This
+matches the Marvell DSDT statsCapture() implementation, which uses the
+raw port number for chips outside DEV_RMON_PORT_BITS, including these
+four chips.
 
-Only refresh prev for overwrite buffers, which need the current head as
-the end of the next backward read. Leave the forward cursor at the
-consumed position.
+The original 88E6171 change was tested on an EA4500: pings through
+different switch ports updated only the corresponding port's hardware
+counters. The other three chips have not been hardware tested.
 
-Fixes: 53172f9057e92c9b ("perf kvm: Switch to new perf_mmap__read_event() interface")
-Signed-off-by: Paul Moses <p@1g4.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: a605a0fe7115 ("net: dsa: mv88e6xxx: Abstract stats_snapshot into ops structure")
+Link: https://lore.kernel.org/all/404d5f2d-24a5-4edc-897b-b1b3c54a20e1@lunn.ch/
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20261026164733.737299-2-f.fainelli@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/lib/perf/mmap.c b/tools/lib/perf/mmap.c
-index 79d5ed6c38cc5..4a49d31fd9ee5 100644
---- a/tools/lib/perf/mmap.c
-+++ b/tools/lib/perf/mmap.c
-@@ -191,7 +191,7 @@ void perf_mmap__read_done(struct perf_mmap *map)
- 	/*
- 	 * Check if event was unmapped due to a POLLHUP/POLLERR.
- 	 */
--	if (!refcount_read(&map->refcnt))
-+	if (!refcount_read(&map->refcnt) || !map->overwrite)
- 		return;
- 
- 	map->prev = perf_mmap__read_head(map);
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index 1822c8e137c52..0980466ce5f29 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3608,7 +3608,7 @@ static const struct mv88e6xxx_ops mv88e6171_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -3702,7 +3702,7 @@ static const struct mv88e6xxx_ops mv88e6175_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -4315,7 +4315,7 @@ static const struct mv88e6xxx_ops mv88e6350_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
+@@ -4356,7 +4356,7 @@ static const struct mv88e6xxx_ops mv88e6351_ops = {
+ 	.port_disable_pri_override = mv88e6xxx_port_disable_pri_override,
+ 	.port_get_cmode = mv88e6352_port_get_cmode,
+ 	.port_setup_message_port = mv88e6xxx_setup_message_port,
+-	.stats_snapshot = mv88e6320_g1_stats_snapshot,
++	.stats_snapshot = mv88e6xxx_g1_stats_snapshot,
+ 	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+ 	.stats_get_sset_count = mv88e6095_stats_get_sset_count,
+ 	.stats_get_strings = mv88e6095_stats_get_strings,
 -- 
 2.53.0
 
