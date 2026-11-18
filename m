@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016205;
-	b=PhUntVbcTwaAlQBUcPQx/9ivMOmYqjteDzoxwa7mYNU6W6JP8b5nlYsGE7iLTtdO4gg1
-	 uuBgqvXbp35AC72ivSP4MMlWUtk7LGDBoJXfQZjHkdXrXX4HISv45nE47hI5fXaO/nxWn
-	 VBjPHcsUi/mGfvXlExnyOCIhgpM8fwx8Nke4Gy8amK1NT62IIv/ISDLo5FNN3oroyn9/X
-	 jtbXss/khyi46i98Zc0BtM/qoq/KvSliyGTRGRAjd10wDYBwvQfezd9W8yIQWdyebbRaz
-	 rXcaTyX7XGKMf2GYMIu85LKqrdUPXVkTB9bsTfeClPWe99wYhtQFoisPZxWIDlx85yQ==
+	t=1795016208;
+	b=J7o5/gqZkkfw/nQwhRO8s04tMUBY1BOyjrOCX2Y3A10X/lMzmPhL+zO2dFe2CpXrILbf
+	 y21Z+HeiA1H/xQe39lrI1b0OgouXCMb5W9tZHMl8rFY9h8P52UqxXMmPcEq1B80KTwpby
+	 p8jTWIf+68nTEmU22mHejB12fv+bq8hRmdgFzTf8EnGmJtLCjd2gzW1vYQFezBUMgOaq9
+	 tw0G4H5iTOQ9bBBsEq+zz6wyCaeJ40kgp8HhjCt8BSOPBq6ZFSFnX03wdSykwHfKUfnwN
+	 Yb5sLP+pHE3PYnXmG0hSrKlvxpYTNoin8OmpSf4NLvn+QQ9lhrW1GxUC4a6bZiGqQbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V4usiko/rGMtvGcJB0ILyM0OGjPA+Pb/0CeoJzO3ucY=;
-	b=LEsmecTp4Izw7uLPTOQLcNRoslKrxA4uMqG4SsQHiFWa0HctlbJIcETJs2+fWV5c1wle
-	 q+jlvUri0N8KgdfZxoXgME+F+dLm4rvFFJc7oR6ofGvAmBQL3RGcGFvvpErXXEMYcPeC/
-	 AoRavmWs5Lln79MLp9rexHkylLZDqHH+LBR7XHgt/Tz7ht/PZlwvkwJ0C53RsPP6Epk9C
-	 l+MKI3ne5d1La2fQOU+CHeUOIrbX+uOboEeB6qGmt1TeqrZ9sRtdvMpKbs91MteO6tqr7
-	 teSRnSgoMDbeD/LYwfFyqL6AED1MWFyo539Eaze2o/nsc9Ywo3LixoJIvVikdn0DXfA==
+	bh=yRQxLKyK4CQmqAtIlOT2HHHeOECien5nZLUd1ehxLBs=;
+	b=NCzHPmXbqzYCfd5O5KfjrFKhthppdyAyy8PgXT2YgAWnkdX3UNVhGVHBxW6XwXdpoWS1
+	 n1ldRJ4Bz/QS6bitnFVcCUlB1o0DVCMoPRMNvmWY8ih0AoQL+XvzDOODJZ95XyIpAsfy8
+	 8qfmQe4MLKPgYS9Z6zdwpBdJAP3NfTYDVJB8kY8hwdzNubHEVIYwKQCJNVk37riMvG788
+	 TZOSojbGqisJ0wjUh9YKhLh8bRmuw5kMcE8MBfabRTlmV8RoBWylvK6Ibod/FUyIzwCU9
+	 oToAcBK17TswEJD7haMdOXoN/34CnWNeTL2RYwaNcfJmGvXJNEM1TwytS7dQfW9oXCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=023ldW52;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCBxlyEa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D58606A320;
-	Wed, 18 Nov 2026 15:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424AE606A320;
+	Wed, 18 Nov 2026 15:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=023ldW52
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA451F000C4;
-	Wed, 18 Nov 2026 15:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wCBxlyEa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8D01F000C4;
+	Wed, 18 Nov 2026 15:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016205;
-	bh=V4usiko/rGMtvGcJB0ILyM0OGjPA+Pb/0CeoJzO3ucY=;
+	s=korg; t=1795016208;
+	bh=yRQxLKyK4CQmqAtIlOT2HHHeOECien5nZLUd1ehxLBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=023ldW524HK4qJcWxEINhRdc4XKID3wUn4Zh9C4B18Csj+d1Moes/H3oJ1lfbqDUo
-	 a13dGOp6keRe9zolzAQJlSoXeI8qi2aj6CTvboPMR5MosX1ZXB5bU8mmWstbVRE3b8
-	 ItebVztmJ9aNoxFEmsC9JmSj8WV3y5mORuyLuEGs=
+	b=wCBxlyEadlXryjDzD+6M3LC48tZ817VDZdfURJLo4SteMx3VMBLvgeM5fdA5tUvGf
+	 qgUsB7k/03ESeESMk1c+rXWRBtoSV07ek3XbQ7TXLmA2/xlfzYt5PHVLHm+5dZQyM2
+	 hgErtDOTjMsB+NJYYcYrcZip3xGOLqUcpENCUexI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0446/2651] clk: sunxi-ng: sun55i-a523-r-ccu: Use P-only clocks for timers
-Date: Wed, 18 Nov 2026 15:28:06 +0100
-Message-ID: <20261118150303.866403062@linuxfoundation.org>
+Subject: [PATCH 7.3 0447/2651] perf header: Fix potential memory corruption in cpu_cache_level__read
+Date: Wed, 18 Nov 2026 15:28:07 +0100
+Message-ID: <20261118150303.904908315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,75 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1002cc9d60942f8f294d8de7f2805f82f4ebdda0 ]
+[ Upstream commit d964ffba01f5d0935dd6bc850029958a62c74491 ]
 
-The R timer clocks only have a P divider, but are currently modeled as
-MP clocks with a zero-width M divider.
+strim() may advance the pointer assigned to cache->size which causes
+later frees to crash.
 
-ccu_mp_set_rate() generates an invalid mask for the zero-width M
-divider, clearing unrelated register fields. Model these clocks as
-P-only clocks to avoid accessing a nonexistent M divider.
+Fix by performing the strim and then memmove-ing the potentially shifted
+string back over the original string.
 
-Fixes: 8cea339cfb81 ("clk: sunxi-ng: add support for the A523/T527 PRCM CCU")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-4-cbde21c9fe69@pigmoral.tech
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+The bug was introduced by the transition from rtrim() to strim(), as
+rtrim() wouldn't move on the left.
+
+Fixes: 13c230ab6e56c6ae ("perf tools: Ditch rtrim(), use strim() from tools/lib")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c | 37 +++++++++++-------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ tools/perf/util/header.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
-index db0e36d8838e7..349230e28c1c3 100644
---- a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
-@@ -43,27 +43,24 @@ static SUNXI_CCU_M_DATA_WITH_MUX(r_apb1_clk, "r-apb1",
- 				 24, 3,	/* mux */
- 				 0);
+diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
+index 7db7da090a1e0..128aff15fbbe6 100644
+--- a/tools/perf/util/header.c
++++ b/tools/perf/util/header.c
+@@ -1264,7 +1264,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
+ 		return -1;
  
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(r_cpu_timer0, "r-timer0",
--				       r_ahb_apb_parents, 0x100,
--				       0, 0,	/* no M */
--				       1, 3,	/* P */
--				       4, 3,	/* mux */
--				       BIT(0),
-+static SUNXI_CCU_P_DATA_WITH_MUX_GATE(r_cpu_timer0, "r-timer0",
-+				      r_ahb_apb_parents, 0x100,
-+				      1, 3,	/* P */
-+				      4, 3,	/* mux */
-+				      BIT(0),
-+				      0);
-+static SUNXI_CCU_P_DATA_WITH_MUX_GATE(r_cpu_timer1, "r-timer1",
-+				      r_ahb_apb_parents, 0x104,
-+				      1, 3,	/* P */
-+				      4, 3,	/* mux */
-+				      BIT(0),
-+				      0);
-+static SUNXI_CCU_P_DATA_WITH_MUX_GATE(r_cpu_timer2, "r-timer2",
-+				      r_ahb_apb_parents, 0x108,
-+				      1, 3,	/* P */
-+				      4, 3,	/* mux */
-+				      BIT(0),
- 				      0);
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(r_cpu_timer1, "r-timer1",
--				       r_ahb_apb_parents, 0x104,
--				       0, 0,	/* no M */
--				       1, 3,	/* P */
--				       4, 3,	/* mux */
--				       BIT(0),
--				       0);
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE(r_cpu_timer2, "r-timer2",
--				       r_ahb_apb_parents, 0x108,
--				       0, 0,	/* no M */
--				       1, 3,	/* P */
--				       4, 3,	/* mux */
--				       BIT(0),
--				       0);
+ 	cache->type[len] = 0;
+-	cache->type = strim(cache->type);
++	{
++		char *trimmed = strim(cache->type);
++
++		memmove(cache->type, trimmed, strlen(trimmed) + 1);
++	}
  
- static SUNXI_CCU_GATE_HW(bus_r_timer_clk, "bus-r-timer", &r_ahb_clk.common.hw,
- 			 0x11c, BIT(0), 0);
+ 	scnprintf(file, PATH_MAX, "%s/size", path);
+ 	if (sysfs__read_str(file, &cache->size, &len)) {
+@@ -1273,7 +1277,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
+ 	}
+ 
+ 	cache->size[len] = 0;
+-	cache->size = strim(cache->size);
++	{
++		char *trimmed = strim(cache->size);
++
++		memmove(cache->size, trimmed, strlen(trimmed) + 1);
++	}
+ 
+ 	scnprintf(file, PATH_MAX, "%s/shared_cpu_list", path);
+ 	if (sysfs__read_str(file, &cache->map, &len)) {
+@@ -1283,7 +1291,11 @@ static int cpu_cache_level__read(struct cpu_cache_level *cache, u32 cpu, u16 lev
+ 	}
+ 
+ 	cache->map[len] = 0;
+-	cache->map = strim(cache->map);
++	{
++		char *trimmed = strim(cache->map);
++
++		memmove(cache->map, trimmed, strlen(trimmed) + 1);
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
