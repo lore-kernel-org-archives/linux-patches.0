@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058504;
-	b=2TyxjypqOQa1bl9Ytii16QUat6ATy+TiHY7hyYWyixrFTtCv++T30Eleeftq0FrTvRAQ
-	 GDk+CU7Nmnujvd2gHYbWa44RtU6DEsxPv49J8JH3E16W0yAnXT59Po21VlRt8sDjvE2m6
-	 SbFQTcfA9wjaacy1MjDDSGM/acflBmrBii8iVBoAKknKQENV23RQUmbqEiw6Dt3d+WcPp
-	 WVL/9XS67+uJ5WpclM2Fr9vPYkQ9trXDGe0bExZF5tQHqwK7ru0BV/akmIsPfYvbm774q
-	 qs0KtGKTU6AETpXcuyD+olaVmeVrdrxnZHtQxwChoYabm+bAQ3g/+w8b1ZT4GR1GjPw==
+	t=1795058507;
+	b=4rXPWXHZCUKzLIAycdnYWR1yMDkxFj6yWMfO7dq4nRT1wmiogCPTHVbAqcbGO6qXJcwq
+	 qxUTz9VgNhPzj+iQP5PfGm8k2AAOP2ptaODHD8USB7dboxgKPdeByFLLGKdxUoiQ48OEL
+	 tUyzBbBJVmQhip05YgP8+QQ08WeOCu2v+9ZIfzj0VLlKFwDUiv4yx8edg19wzXTGoFft1
+	 RPjcgynLPXlqltUt2skw67UFI0BRb8uRKYqkWV61f/yHF/PdbE8WES6O3QM4yghcUsRLn
+	 HMXJ8urkCXyaMu7SIF84/0pSopzb9UKJD5D5MTv7z2cmBa0RsGiMM5ge24wre7ntB8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058504;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058507;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kzyX2gGfnUpEIkSUU8uEBaOZY1WPLJTvWhd+BcxoPE8=;
-	b=DCyqxwCEKx2lYbfdGU3z/67lnWYCb04i1MQnF//l9r8pnRyRj208+wVM3j2sLweTEjHy
-	 0E3zszahPXSKXUPtCgoSFYHLRrsmjKAamWEiALkNYvipHI9Jg3GKwL2C/A1iKd+N71R8V
-	 zgriH4tdTL0TSUj2G44SSYKbV5tK4NxmKL9hnrEDGFZgO5aMSAPcLLHIsdCoWAmazSNeb
-	 rilA8c8GmmTkLq7T68ANkoM1b/3H00uZTsqFM6L0AyM38oZaO1SVEoSVAu2AIg8o5TAjQ
-	 8x9wPnWkXZTYihMmKaY4gdOg/eqVxz7gHH18XvPGXjNBA1KYsohVvpYnq7tMIT9GjUA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=AtwNA8deHsd4YcI8I3rvUxs6n9VyERSc2IMZ1T6wA8w=;
+	b=pdd4C673YmioBdwmodsFldZSPXOnVL7eBrEUzpVB3YRsFesTO3vM/OE3/G6qjxKs+aj5
+	 Cvc8zlY9jokmLO3SIYi1SIMpU7GbG25ckpEusnFjzDrPovgRPq7spUmgOVaDyOAxpd8N7
+	 FwbWBBFUMc8Z1tW2mUL/tPvokS+27u+ghRSW5gwqqF7lKmN37j0MxKPR0VJSKXjsl+PxD
+	 Y+M0OVnMjdL2pDYN55HFPnmUarwEgb3ZE9DEN7j7F6fu3QQrXP8IXPC94E2Nnn8TA2NSH
+	 n2wgGdxCcOoyJXkBB7ZXm54KnJmzvhEbQg9MIx9k2p8GoIOeEomIjKdlif3cNNUactg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCkDc4uj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RXkoGLgb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662AA606A32C;
-	Thu, 19 Nov 2026 03:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A83C606A325;
+	Thu, 19 Nov 2026 03:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zCkDc4uj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806F21F000C4;
-	Thu, 19 Nov 2026 03:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RXkoGLgb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484F81F000C4;
+	Thu, 19 Nov 2026 03:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058504;
-	bh=kzyX2gGfnUpEIkSUU8uEBaOZY1WPLJTvWhd+BcxoPE8=;
+	s=korg; t=1795058506;
+	bh=AtwNA8deHsd4YcI8I3rvUxs6n9VyERSc2IMZ1T6wA8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zCkDc4ujNM6bTBNGJVQL+30fPm6HfjIaSr4/4SBNNferEdLL0XtfelfMDyI4IjUhf
-	 OOV1AviAGxs0GpbpNlRBGOJnFTFR71RbeeONPZkxeZG5oPSQxGNzY25RRnqiFPuSt6
-	 sj30AcO37QRxxTeKhvPoLlKuAbRLbn6luUA8KHGA=
+	b=RXkoGLgby78QfxDUjXigMwQxVmynlYg8q2OuIOz9whZUTQESaCvENVZ2U7HN9466u
+	 NE3RVJ/CV4XgHFRGPSlMVBP9bEc+2bgbHJusi0Q3X2a04bzJjUS9klYUhBawGh7sKv
+	 2AllvQOL+OMqZyG0w2+877taqaEoUviJJFXbgK5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0509/1848] nvme-rdma: dont complete a request after a bogus remote invalidation
-Date: Wed, 18 Nov 2026 15:42:27 +0100
-Message-ID: <20261118145936.059510384@linuxfoundation.org>
+Subject: [PATCH 5.10 0510/1848] nvmet: free the bvec on file namespace range errors
+Date: Wed, 18 Nov 2026 15:42:28 +0100
+Message-ID: <20261118145936.092320560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,50 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 909307cea08aff4e486cdb7491de5c76a2c31341 ]
+[ Upstream commit 9d820d55b3cb4859c7cf42a74dc78f6154f97398 ]
 
-When a remote invalidation names an rkey that is not the one we handed out
-for this request, nvme_rdma_process_nvme_rsp() logs and schedules error
-recovery, then falls through to nvme_rdma_end_request().  The request is
-completed with req->mr never invalidated, and nvme_rdma_unmap_data() hands
-it back with ib_mr_pool_put(), which only puts it on a list.  The rkey
-stays valid and still maps the pages the completed read filled, so a
-controller that sent the bogus invalidation can write into those pages
-after pread() has returned.
+nvmet_file_execute_rw() allocates the bvec before
+nvmet_file_execute_io() checks whether the request fits in the backing
+file. If the request extends beyond the file, nvmet_file_execute_io()
+calls nvmet_req_complete() to return an error. This skips
+nvmet_file_io_done(), so the allocated memory is never freed. Repeated
+requests can exhaust memory.
 
-Return instead, the way the local invalidation path below already does,
-and leave the request for error recovery to cancel.
+Use nvmet_file_io_done() to free the bvec before returning the range
+error to the client.
 
-Fixes: 3ef0279bb0031 ("nvme-rdma: Check remotely invalidated rkey matches our expected rkey")
+Fixes: 50a909db36f2 ("nvmet: use IOCB_NOWAIT for file-ns buffered I/O")
 Cc: stable@vger.kernel.org
+Assisted-by: LLM
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/io-cmd-file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 824d4c088646a..0ea3b6ed9ab9f 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -1773,6 +1773,7 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
- 				"Bogus remote invalidation for rkey %#x\n",
- 				req->mr ? req->mr->rkey : 0);
- 			nvme_rdma_error_recovery(queue->ctrl);
-+			return;
- 		}
- 	} else if (req->mr) {
- 		int ret;
+diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
+index 9d1acc4a52538..7e7c226bc117c 100644
+--- a/drivers/nvme/target/io-cmd-file.c
++++ b/drivers/nvme/target/io-cmd-file.c
+@@ -159,8 +159,8 @@ static bool nvmet_file_execute_io(struct nvmet_req *req, int ki_flags)
+ 
+ 	pos = le64_to_cpu(req->cmd->rw.slba) << req->ns->blksize_shift;
+ 	if (unlikely(pos + req->transfer_len > req->ns->size)) {
+-		nvmet_req_complete(req, errno_to_nvme_status(req, -ENOSPC));
+-		return true;
++		ret = -ENOSPC;
++		goto complete;
+ 	}
+ 
+ 	memset(&req->f.iocb, 0, sizeof(struct kiocb));
 -- 
 2.53.0
 
