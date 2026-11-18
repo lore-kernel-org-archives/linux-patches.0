@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030036;
-	b=y8vx+KPjXwCdozufVTvCa+2W5zQE53QPMKp2mUodulJvTxKNPm7/BK2lN0seFSqA0WRW
-	 dOiAkRjooogJlWu2KOvnxRpVmi1hnrx3hDG9H/mYpbL4VYIQjC+WFzRKwIQokORyuZvLV
-	 nsBzPIFdvvTAeOoNWJr83nQq6xRSxC8yIut//ZqElLfxurXR/Sbi1GjewQ2+YrNu7Rbd1
-	 4AHavdNfb7WMIN0b2xrlnLmELBhtj8qrXKKoDHK+pJ1htTyCMDcb90BS027RZsv1F3Chz
-	 ox3vE9D57v1h+tSHTakGbRiDYguHXxJNYzCavWBiQCXIEIXUhnQaC5OEkn6RapuRW0Q==
+	t=1795030039;
+	b=YH+8pFguliJfLgKUp0NHOaiMBjhsC2xJlUFSoPhTR6wa5QwfQCH9gs5kNDik/XfYn4TC
+	 XSfDV6kAXf1+oNHKYB+LoViZ8PEtzuq3Knts/9CRqqA7N3W/407u64fZMUqpvjljRxk9A
+	 YtZLJ0fiutWsE2vaAj3p1cxRlvAa8OEbjrcPLItXMR4NCw7rE3uYlhsmYUmx/XgIGRGRF
+	 4UFHO/k0dwZLP719L03VkQ19BKBGOgRfJ/oova3iZ+Y0vEy++6Qmq3zrBqnjuVnMd9+xB
+	 eCx84dRcYoErTNFSAw+48Ro1g7g07gNersFxnPG2ZWGf+5yIUJiMBRPP2ehyFBnbqIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r2+37VU5KqAR882AwFej2zF0V3oYisCtUBHItxmyiHA=;
-	b=umZ5J9rsFvgUuO4ZR0PTUSWyv3sz8CFLxj1JQidWtvUz1sE0pNE0KG3IPkCLIr0cb1K0
-	 7ugZNXgxWjMNNyOuy+qLNjuhRnrb6RYAgKyQZI8OKvot5au54THDaHKRZwuWDFZ/nn9ya
-	 No6ZaLaxbPYmg1H6Y5H1dCq6X/cdTNPDtW5W6vZNHenVxEJIIjhjldmTu8L3eFEdm4as0
-	 XxDQivpJnk6Iq/7wzgpB6nm+MlrbGdlFLeW/1PN06NZsbUMJGXK6pjtTcXalidzAbPsyn
-	 IC2pmDSJV/3VImjCFCgCqH4eXWF3s9koNVnsYhTxU+yjDZlnap8mKQyn7twJE+JDb0Q==
+	bh=oHpVtW3jFDCi/KYmxVJIwipwhfimyVg+ouFQSuK0U1A=;
+	b=MxwmA8Bz4xq15XEqZxlHJd1pHr6Z/P/9nZtuaCm3SmJ2ilYjzfPTQHP9sltVEfOrbsec
+	 ntxSy08yCVPjezEtjwAC1HkrBChG1aLJuYK2dyU/Iz8xqHMHxHXp6RIwXvCs8fym6PB9A
+	 IKuq9c3CruBX00JXhshASKAOSfRamUHpgnaWPTu3XSADyf9XK96I7edcSKRWguRY5HmSk
+	 nJ4UemaLM17pEyW/3TmJOuKaDDouQRPLnSAFaBOEF2NPrmVpLB7HzyW/U7n4udG4ufYtJ
+	 /t0kfpA/hMWpoq93blKmGa7amAiLYBOLGe2LD/67lCxTsGO3xGXs7UWxAtC+abdHOMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H7tP4gqC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFlauz1y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8B4606A31C;
-	Wed, 18 Nov 2026 19:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C341E606A32C;
+	Wed, 18 Nov 2026 19:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H7tP4gqC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C941F000C4;
-	Wed, 18 Nov 2026 19:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFlauz1y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F041F000C9;
+	Wed, 18 Nov 2026 19:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030036;
-	bh=r2+37VU5KqAR882AwFej2zF0V3oYisCtUBHItxmyiHA=;
+	s=korg; t=1795030039;
+	bh=oHpVtW3jFDCi/KYmxVJIwipwhfimyVg+ouFQSuK0U1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H7tP4gqCvLLeDrx9ILw1ZMJrPlrj/r9wrMOMkssVzpX8DTgIdu+33Kd08xUDSH5cl
-	 Bw+U/8/GarqV6O48rsqCUQwH69JZmZWFppt2/muDAy9dpE5fWlVNVFOvttuERFqCsO
-	 lwz7kwD00f4zq9r4Is2qpYm2OsqrUCwVn2XfAbqA=
+	b=tFlauz1yQvXM0kOKvflNQ3Pcnf7A9yNAykquYnJOlFU+SyfE17gwU6GbpuLvNpF1q
+	 s/VTtBd4FVkxW0QTJb8eNl6qT2ocSG3fXFugoUwEtPOWHcrIBNy8BH9eX6Vq/XaFLp
+	 IEqQoy0cAcFh4d0dDnQhM8z47aCvjSyuCfBpn+lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jiawen Liu <1298662399@qq.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0520/1756] swim: Dont disable drive after every sector
-Date: Wed, 18 Nov 2026 15:44:07 +0100
-Message-ID: <20261118150029.863411008@linuxfoundation.org>
+Subject: [PATCH 6.12 0511/1756] crypto: starfive - handle clock enable failures
+Date: Wed, 18 Nov 2026 15:43:58 +0100
+Message-ID: <20261118150029.529570878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,46 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 05a7c4b197279cfb3ec3df26146ce085a2438aec ]
+[ Upstream commit 5358248961ae23f7253d010ddfde1cfd2556ce22 ]
 
-This fixes multi-sector reads on a Sony drive. The Mitsubishi drive
-doesn't seem to care either way.
+Return error from failed clock enable.
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/fc511e72753ae18b6f021701aa00d480335b0caf.1788513996.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+starfive_cryp_probe ignores clk_prepare_enable return for hclk/ahb, then
+remove/error paths unconditionally clk_disable_unprepare both clocks.
+
+Check consecutive clk_prepare_enable(cryp->hclk)/cryp->ahb returns in
+starfive_cryp_probe.
+
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: c8acdd77a623 ("crypto: starfive - propagate clock and reset errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/crypto/starfive/jh7110-cryp.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index d69dfd6a824a5..6f40b057032a8 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -473,8 +473,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
- 	short i;
+diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
+index e4dfed7ee0b01..a373eba869cc1 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.c
++++ b/drivers/crypto/starfive/jh7110-cryp.c
+@@ -126,8 +126,15 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(cryp->rst),
+ 				     "Error getting hardware reset line\n");
  
- 	swim_track(fs, track);
--
--	swim_write(base, mode1, MOTON);
- 	swim_head(base, side);
- 	swim_write(base, mode0, side);
+-	clk_prepare_enable(cryp->hclk);
+-	clk_prepare_enable(cryp->ahb);
++	ret = clk_prepare_enable(cryp->hclk);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(cryp->ahb);
++	if (ret) {
++		clk_disable_unprepare(cryp->hclk);
++		return ret;
++	}
+ 	reset_control_deassert(cryp->rst);
  
-@@ -490,8 +488,6 @@ static inline int swim_read_sector(struct floppy_state *fs,
- 	}
- 	local_irq_restore(flags);
- 
--	swim_write(base, mode0, MOTON);
--
- 	if ((header.side != side)  || (header.track != track) ||
- 	     (header.sector != sector))
- 		return 0;
+ 	spin_lock(&dev_list.lock);
 -- 
 2.53.0
 
