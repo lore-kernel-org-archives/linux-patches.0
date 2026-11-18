@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049879;
-	b=grLCmhHtkHh8GhpIYvvuOc3VYS4mvODsQCQNZzovI496pt1TsXJ2ZLqRSaWBTFrjenq0
-	 zXpwP7zwIkDi5DyD5A11tdn90nk9K6f3/prHKYqsIv7VA+aiDkEF2JtfWIVDSrMCof0kS
-	 gqttuEQ2WIfi9O8QIfc4OeKLm5NEckq0Tg6khwjSGvLEyPdVXtXpP04FYq0UCIIhkTJIv
-	 rik9iERu5YLYngTrPLe/e1i43oju0hkPMIfVgvMg00OjJcRgr5CWb6iZPhtg9p/lCTTIA
-	 0YefUC3b5YaqVz4GEhkqdtj12MHKFCZQX1Am2JkpQZt61oIbQ60W+XX3D8vPQxCzZNw==
+	t=1795049882;
+	b=mzQcgv9hPvFw/U6eCOVie7tK8Awms+UOOCDiYSd+25/c5KMm5xSKEKps65f5HMMWGJYa
+	 Zw9L29zndSNi6qFABzzDYO7ibDnkwpOTLzeEXeaLR/5kkSKnIrY57WEd4hcy6QjqmpW75
+	 ZLnTlLgY6H1CpFcpWkBEkfKxfeC/6Wuy6f/WYYfYRGInwVCu6U8csK9vBf30kDLZTS0FO
+	 h16x24pKnnVFdAGWbz15qWIIMk5FRrB7TDrRMf+kP2rtPJYVZTiCD2TJwJf2sIOkX1/7B
+	 V7He/Ty7UXzaLhGc9zj3fjxbuoivxRKe0Si01W2LNzyt7uhoSfpA/mHAmwG9ek4PQBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QtwqBXx2Q0TDia4zZoiPcxgAVNIt6o64rqjLitqUDQA=;
-	b=3HDNYwcIBBj00YyGAAt+WOB1va6mxlIaQiu8kL3lrVbE3Ej203v01SomxImjU7rmhgpt
-	 fKBOvWYpQS4HdyQJ6XiB+BUPFLYQwpN9hDzEb46Vd2hYamtQvC62UuOtwboI9Qi2yP5El
-	 LvSh00TxLFP+UYMferYzoHkdBAJ9nwOiZw4pQ20sAPHNKaNZrr+WL1DYJMlP3TEUbTsi8
-	 auex77XdQIG4guQrv8KvY5iSRWKO4kBk9YlyD3JRj3pct97k0lceQs5Mh246mqCGnjP8A
-	 lJDlc5KB3E71+vfhBJx0QWLTpW5riNKOq9xyKBg3jfeRt55TOPSyOpj7ETltNqRMpLQ==
+	bh=PXUtoRfYN8UwRpeqzZw8bb+1Y2IHmKMwC62s2pwVPnM=;
+	b=BTQ8COXGTDTxec+CQgsSrjsAu8O1ic1KQPyX7OeZdNY4l3nLxfwVSpFRNyWcDkn4vx8o
+	 /PFKXGxrIlTIDC2puVWe2DhY0YfBNzRw/4AsuzipFH+1/BCM6/fWmL77o7HfjM3LY8duc
+	 12GGuU7zQA6DUtM15bQxbMwUmz5E9HlEBmtqn2mMWs2oK2U4YHIcKtojZB+cfp3oVYFv0
+	 O6BpTeZMBpq82vMesv6Tk3VTU26IBbJH+MMuDXkldOyG549C5ppu/0EyM41mxvIoTkIlz
+	 lrgSzbD5fGKEdahkVcywyV+M2Qgs0RJp91MDtOfbCUhPyGhGS/CdU4z5U+2QAmIwY1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPpzx2lB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yUlYxyQ1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC16A606A32C;
-	Thu, 19 Nov 2026 00:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE43B606A31C;
+	Thu, 19 Nov 2026 00:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPpzx2lB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B5E1F000C4;
-	Thu, 19 Nov 2026 00:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yUlYxyQ1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190C31F000C4;
+	Thu, 19 Nov 2026 00:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049879;
-	bh=QtwqBXx2Q0TDia4zZoiPcxgAVNIt6o64rqjLitqUDQA=;
+	s=korg; t=1795049882;
+	bh=PXUtoRfYN8UwRpeqzZw8bb+1Y2IHmKMwC62s2pwVPnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPpzx2lBU7/woUKtxs3J/O4diX1Pde8YAewriWqHTTRlPEr5W52fKumu85mcYF4OI
-	 rveyLLYuYI6MRioqG7SK5Bgvs/csnpOkT/CuY+NIkOV3KLiMbqVZ4Pzqf+frIpaVKS
-	 Vn8aKFKJT8i31G92knMs+zNLYSXQCUe8fjqZ/LVI=
+	b=yUlYxyQ1aW+id5wTPij7BvllQRwBxMptLj0g4OfY8+XDMUKQZ1goFfHjTbda8j4Tp
+	 hYeaH61Rgpf7aGVCUvtUumQNPckzpa70eVnHR5bVQFQDYeBIVC9uk0aiDUJRSRLXqI
+	 xQ4qPscfadvpWENJpRdQXOKzyJOOD5J3PakysFlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2510/2857] net: stmmac: selftests: use skb_share_check() in the loopback receive hook
-Date: Wed, 18 Nov 2026 15:59:04 +0100
-Message-ID: <20261118150331.918772251@linuxfoundation.org>
+Subject: [PATCH 6.1 2493/2857] Bluetooth: MGMT: Fix leaking instance on Add Extended Advertising Parameters
+Date: Wed, 18 Nov 2026 15:58:47 +0100
+Message-ID: <20261118150331.326537048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,38 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit a7a89019bac0e8810bde7f1419f4adf9adc23d41 ]
+[ Upstream commit f7f0d0a9eb6e4616c0b3a2a95498b5204c5543c9 ]
 
-The loopback hook gets a shared skb when another ETH_P_IP handler is
-bound to the device. skb_unshare() does not unshare it, so
-skb_linearize() on a non-linear frame hits BUG_ON(skb_shared()).
+If queueing the command fails the instance is never removed, despite it
+having already been added or modified by hci_add_adv_instance, so remove
+it as it is done by add_ext_adv_params_complete on failure, signaling
+it has been removed if it was previously added.
 
-Use skb_share_check() instead.
-
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-2-458369bfa1ba@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
+Assisted-by: OpenCode:claude-opus-5.5
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/mgmt.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index fa338b083129c..11172f05ef6fb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -262,7 +262,7 @@ static int stmmac_test_loopback_validate(struct sk_buff *skb,
- 	struct tcphdr *thdr;
- 	struct iphdr *ihdr;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 93728a13ce448..1e05c1bbdbd3c 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9085,14 +9085,15 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
+ 				       data, data_len);
+ 		if (!cmd) {
+ 			err = -ENOMEM;
+-			hci_remove_adv_instance(hdev, cp->instance);
+-			goto unlock;
++			goto remove;
+ 		}
  
--	skb = skb_unshare(skb, GFP_ATOMIC);
-+	skb = skb_share_check(skb, GFP_ATOMIC);
- 	if (!skb)
- 		goto out;
+ 		err = hci_cmd_sync_queue(hdev, add_ext_adv_params_sync, cmd,
+ 					 add_ext_adv_params_complete);
+-		if (err < 0)
++		if (err < 0) {
+ 			mgmt_pending_free(cmd);
++			goto remove;
++		}
+ 	} else {
+ 		rp.instance = cp->instance;
+ 		rp.tx_power = HCI_ADV_TX_POWER_NO_PREFERENCE;
+@@ -9103,6 +9104,18 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
+ 					MGMT_STATUS_SUCCESS, &rp, sizeof(rp));
+ 	}
+ 
++	goto unlock;
++
++remove:
++	/* The instance may have been modified already so remove it, like it
++	 * is done in add_ext_adv_params_complete, signaling it has been
++	 * removed if it was previously added.
++	 */
++	if (!adv->pending)
++		mgmt_advertising_removed(sk, hdev, cp->instance);
++
++	hci_remove_adv_instance(hdev, cp->instance);
++
+ unlock:
+ 	hci_dev_unlock(hdev);
  
 -- 
 2.53.0
