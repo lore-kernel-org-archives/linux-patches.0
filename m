@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026238;
-	b=07nSdep/rqLYNhBdZDg4wkX4rBplKUtQENe7pVrQbtTvb+8e+BsXVaCxSxZx6hU4PjXT
-	 g5wYCt9nCn/bcC30V4uTWGnlyeeaR+YSGJN6LCPSIptnwEh9oRgxy0p6njbkcKWjFypgv
-	 xgi2FW62m95nrDHmEPcWADjHC0ClI04sSmotLOxKhVNvzuLjnXQGxMrHwjf03eW2qWCXi
-	 94FPXwu1WwsKx+XcdoePMAeyyIlG8/MIHacgpq1n83PBiYqmPdJOSGbXyvtSKYpXwSiah
-	 4c3RzX7NIbsGA/ibRPKjq6lxjDNwrgD3iXIY2MuuKv/t9gQZl2FB1ge2ymsNyrShHBw==
+	t=1795026241;
+	b=rGYi91W7U6qYbogwnokfh/l+7BTVeKxpM8cVljc1IfoBu4Ak1CXJdeASwuSazhhQNi3Y
+	 +jWZ0T4A87gwo/nj37bwuQ171yo7/KZQPrJNm+Qk12JXkRQhtrzxtY5MdQpVevGpOSgkY
+	 866/rhE5sI33lItXecDH3fQ63WiqqhxrNgBFR9NMkYp+XqbRz7/O0wn0UKPgU+vDtMhxI
+	 p3nfr6tvzc0KNMpgcw4cF4ZO6FoDMoMBPZhe7tCv8hQtWO2vUEA8JIcsagTEGCyzFuVFy
+	 a8MH1uakVVmvcsx120eEWoksX18hH9G8yN9g4G6a2tsQ83AxdcS8MbdA0BgRb0j/Lvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gh00yKomDKOZdqQQTm/+bPFQqtZrBQjEXzCo4q7IjCs=;
-	b=wytR8sCP2J7ybO8Yi19urn0Jr2iWUNwn176KM6g2MtknAe37qJ0DAMJU6PZfbLe716QE
-	 NtN+ULG24SzAoy6zf9mVZhVCp48tMO4c+y9Np+HoAke0vWMv2beBgehG82LgS/yHvvMcc
-	 0+e9Du0m6NsOhxS2BLiQdBlYLNvMV9pwl2qr0kqjRGJipLmWKiXcZfDEr/B8eaj+MPx8y
-	 6k7+cjAErEL/aZ/AM1i91ITyb5qG7xr2z9uLtY9kQ71CUmydwOTlmlgz0dE1m796c+H2o
-	 aw7A3O1VjYpd3YTuAnrO3YrpiXnXe5d357FFKrileNdEwqEpI/a7xxra0yzffLr36qA==
+	bh=7Trn3Xn7hZYR2aPhov2L1v5Ao5qwqoQrk6P2vYiZnhI=;
+	b=mo+1FHCRVls9PUVZP3S1c/q+yhxQPBg6REHJiRep0G1Uf265isXhwIgRIV3k4AR5Xi5D
+	 cJ999NeRKChUh+TJpNUW832Lxh9F3sz0DMfxwHju5JIA3dDdH2FKv662rWQVjkl+iK6SG
+	 +EO7FpY+N8WCUMvGg5qa/vFVpI+ZbiYxkf6We7HZoplhFJKe7onuDEFmZ/1zMw6yWR/id
+	 VIlNvghPkc8F28nob1iYaid2GoKVaYefOLMk+wNwTU/cjnORr5hgxKHjUg1CD5uM18Zz5
+	 Lpo6k7pjqkOLeCITN0nMM21ILL6RPNGtwTXKfB2yrevVr2eAplPBn2JLIlj3UIVLYTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CnYnlGc6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=toXhqmpD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C65606A335;
-	Wed, 18 Nov 2026 18:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E70606A339;
+	Wed, 18 Nov 2026 18:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CnYnlGc6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50DB1F000C7;
-	Wed, 18 Nov 2026 18:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=toXhqmpD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12C61F000C4;
+	Wed, 18 Nov 2026 18:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026238;
-	bh=gh00yKomDKOZdqQQTm/+bPFQqtZrBQjEXzCo4q7IjCs=;
+	s=korg; t=1795026241;
+	bh=7Trn3Xn7hZYR2aPhov2L1v5Ao5qwqoQrk6P2vYiZnhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CnYnlGc6ZAIbyAFwzv1neokHv8HqssOB69WV3690F6uugJc0QrpbUsP+/rpJKbtK2
-	 O/VzetOx1lplmx3sHNai+JVqrxsDb4411y+arqvSSnJefSo6568CJUn1EEDeezaWgt
-	 cT3vo8EYFZ7++c17FWmasUl7BJVbKu6z1xlwOcNk=
+	b=toXhqmpDb6PcJ/YYe8DEJCiJf0kWS8fW/Ew4o09R0VeyMgkMVO7DA86p3yncD+XSi
+	 E4bqbr3+LfD/0YjIwFbdsvdqw7ozhwChAzasc6fUoMJhMOoBYsyWEu0z9Iz2H8Z6Vx
+	 mgPB8M440VgccbhHDeN9Y2Co4AyyJ/Xly8I3adug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1363/2151] btrfs: fix lost error return value in btrfs_alloc_logged_file_extent()
-Date: Wed, 18 Nov 2026 15:51:38 +0100
-Message-ID: <20261118150211.679697472@linuxfoundation.org>
+Subject: [PATCH 6.18 1364/2151] btrfs: defrag: fix check to see if next extent can be defragged too
+Date: Wed, 18 Nov 2026 15:51:39 +0100
+Message-ID: <20261118150211.710699195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,38 +71,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 784cd5a83476c6c720521f21350fb823928555ff ]
+[ Upstream commit eb55bc2bfe204e6bfccfe179226d7fb5024cb010 ]
 
-If we fail to allocate a reserved file extent we then call
-btrfs_record_squota_delta() and assign its return value to 'ret',
-discarding the error from the failed allocation attempt and allowing
-log replay to proceed as if no errors happened, resulting in some
-replayed file extent item to point to an unallocated extent. At the
-moment btrfs_record_squota_delta() always returns 0 (success).
+We want to check if the next extent is at maximum capacity but we are
+passing the current extent map to get_extent_max_capacity() and not
+the next extent map. For example if the current extent is compressed (its
+maximum capacity is 128K) and the next extent is uncompressed (its
+maximum capacity is 128M), then we can bail out and not defrag the next
+extent too - when for example the next extent as a size of 128K, is
+uncompressed, and the extent threshold is >= 256K.
 
-Fixes: cecbb533b5fc ("btrfs: record simple quota deltas in delayed refs")
+Fixes: 979b25c300db ("btrfs: defrag: don't defrag extents which are already at max capacity")
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/defrag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 95bff1616f4a8..2f207bca62720 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -5011,7 +5011,8 @@ int btrfs_alloc_logged_file_extent(struct btrfs_trans_handle *trans,
- 					 offset, ins, 1, root_objectid);
- 	if (ret)
- 		btrfs_pin_extent(trans, ins->objectid, ins->offset);
--	ret = btrfs_record_squota_delta(fs_info, &delta);
-+	else
-+		ret = btrfs_record_squota_delta(fs_info, &delta);
- 	btrfs_put_block_group(block_group);
- 	return ret;
- }
+diff --git a/fs/btrfs/defrag.c b/fs/btrfs/defrag.c
+index c59548a0b9c53..8b9766b67c333 100644
+--- a/fs/btrfs/defrag.c
++++ b/fs/btrfs/defrag.c
+@@ -818,7 +818,7 @@ static bool defrag_check_next_extent(struct inode *inode, struct extent_map *em,
+ 	 * If the next extent is at its max capacity, defragging current extent
+ 	 * makes no sense, as the total number of extents won't change.
+ 	 */
+-	if (next->len >= get_extent_max_capacity(fs_info, em))
++	if (next->len >= get_extent_max_capacity(fs_info, next))
+ 		goto out;
+ 	/* Skip older extent */
+ 	if (next->generation < newer_than)
 -- 
 2.53.0
 
