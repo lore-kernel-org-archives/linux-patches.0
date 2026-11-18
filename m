@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058437;
-	b=stJriB7ocRKmSzusLitdqDeJ9azrArukhbGEAD+GCiC+WWMtso9PM5E3DltC4T8ieZOu
-	 au4KIrPSZmltlL0mIkHzbP1LRv12jjUud0BuZ4MOfI9UOXFmNPz9A3GDVFNCrZeDasfyS
-	 jZIrkvsJJk3pbQyYGyxg0+uhANR0hpjP4VXzNwq2Ek7kQAsf0JYARTon/AWdEpcbGxsFZ
-	 C8e85JiIE4qQabb/fiI/4EjqO0XgigqJy1Cgu0PR8JkLmJguaXYxPSYWeFr0FkSMDe1uO
-	 q2hRvLrO5lZNVoW4dW18VXHwKKD0n9u7BTRE8Id+7gvhsJyUITNfVDMxdps2wRK28Wg==
+	t=1795058439;
+	b=4qjZck/IWSS+NrDHjKjjXm8WHvosGHrF1Z57l3nfyBP7Km+6+BSMUe8E54atXWoxUJj/
+	 ikEmUmLjTye2dP4QGZNuuwH3Ci8hSiiSZ/hqpSG24NRe5owiUo1Lq6a7lMZ5ZKLZ67vdf
+	 4JkrOmG2h5W5hRsycCHg5VVxvIT9tP4M8Cd4NXyO2zkR7lz8OXS5USiLtPR5YySs3UL+q
+	 TWWGRv4LQDLo39urIVx5tOWWVNnCFC+lyRTcaAWplv73efR68VzgpId86MnBfzobgB07S
+	 +NrgizL78JAvgSlUL5CLi/+WSNSa4+UamTinQOS9j3JUdI9sg5Q3PQRkvXUGpF7aD2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hKV94+TEcW0LVyHXDlXK2H2R4tjKT988DDJEICt7JTY=;
-	b=zz/Nl9mzxYC5YzIa8LE3o7yNInCGxSpITsSdrCix89YInYpKsUSKK7hgczPqB5xrnQrB
-	 R5gafKm6y8m9UrrDCCK9+xmz4PqKBXpBQbCluMI9D/5rFzb13RaqYYeK+JRB2ALZLVvku
-	 fko2X+DSzVJywFtaPg5O390rNEW3bWabADKYmravpOwqH/yP2Ax5HKeoUJXe6xebcALp5
-	 mgh6DYfBW5Fi12vTWdCoqrKrqMg9KUw5pjxx6EOGVeNp1gtQ/57wpo+jEVIGvXbDe727v
-	 gLiZ/AQFhND/9odzCaXNexryToBcwnaKkqkIaWPJyBWFc2Dqz8DCOve9q//xkVoMRsw==
+	bh=75KBF4Q4ipbzDfv0Y8YyEhPlD9GHkl55M2+ReGQ+4v0=;
+	b=MEUJI8lEr+Ypv5MzvorZrKQD/B/jXJzRwJA69EG+aGHOwSehq6tpO/9pEJr6WYEy3CD+
+	 wHMQSEkVaPAJ9rvXS9ITrCUtGkodQWEEnkueqL69JX2zOYWBFM8d/5pvEze4urAUx6xK2
+	 GvCn2/JfGWwMdM7JocYY/KTwCG/57QGE5uWgdF5I/v7kaH4C97iKHOO9kuwBPhGe6NSbb
+	 qBrki/SoABaKYMSNOxlo1WVJfCJuFoEe8FpMgUUBmMGokaV7Xks/yWrz0gbGSqwsf8eSo
+	 7noS5TToq08sajFhLJceCW98j53Aw3GMjd1K+627psJM7DbOi+4Gekk/hszNc7Ccyog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xRM2+YT+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vXJQ3m9Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0A5606A332;
-	Thu, 19 Nov 2026 03:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D97606A33B;
+	Thu, 19 Nov 2026 03:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xRM2+YT+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4B01F000C5;
-	Thu, 19 Nov 2026 03:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vXJQ3m9Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EC11F000C5;
+	Thu, 19 Nov 2026 03:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058436;
-	bh=hKV94+TEcW0LVyHXDlXK2H2R4tjKT988DDJEICt7JTY=;
+	s=korg; t=1795058439;
+	bh=75KBF4Q4ipbzDfv0Y8YyEhPlD9GHkl55M2+ReGQ+4v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xRM2+YT+nm5EX+mKQf83OxOMlAPPpyBVFzjXpK8kw/V3kfpTark8/cq9zqdXsp1oe
-	 LvOcSUuUE3igJGHM7Fvn5FDQeiYMEoSLN25m3Gdxl91PrRqc9xfovztaKEgdhOJvY8
-	 Chee2LU1e/bHnTwuY5WS0rUo/MxABj1eqmGMoEUU=
+	b=vXJQ3m9Y1epdRMVt2lrSIgHiWnSncYtxBF2pq3zRRftFfclsRwzU/e/l76FfsxhOL
+	 JDRNkuGhJZ1GAgxXbz5fnKUVcO+AF/gYTTlXtFrWT4XzxdK/+DyKXNI3Mh1+9B3lxG
+	 eKtopSecP6nVAQmk/A6U8FZ+GreU0Nnr3AxWlYLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Baruch Siach <baruch@tkos.co.il>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0483/1848] clocksource/drivers/fttmr010: Fix clk reference leak in error paths
-Date: Wed, 18 Nov 2026 15:42:01 +0100
-Message-ID: <20261118145934.419962754@linuxfoundation.org>
+Subject: [PATCH 5.10 0484/1848] clocksource/drivers/digicolor: Fix clk reference leak on request_irq failure
+Date: Wed, 18 Nov 2026 15:42:02 +0100
+Message-ID: <20261118145934.449492139@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,51 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 277e5657237a92e279ee28da2f5c07902cc6aa0b ]
+[ Upstream commit 9cc2e18b32f12d26ae6729c62a03640423956b17 ]
 
-fttmr010_common_init() obtains the PCLK reference with
-of_clk_get_by_name() but never calls clk_put(). If clk_prepare_enable()
-fails the reference is leaked directly, and every error path that jumps
-to out_disable_clock only calls clk_disable_unprepare(), which releases
-the prepare/enable state but not the reference obtained from
-of_clk_get_by_name().
+digicolor_timer_init() obtains the timer clock with of_clk_get() and
+enables it, but the request_irq() failure path returns without releasing
+the clock reference, leaking both the enable/prepare state and the
+reference itself.
 
-Add clk_put() to the clk_prepare_enable() failure path and to the
-out_disable_clock label so the clock reference is no longer leaked. The
-success path keeps PCLK enabled for the lifetime of the timer and is
-left untouched.
+Disable and put the clock before returning on the request_irq() failure
+path. The success path keeps the clock enabled for the lifetime of the
+timer and is left untouched.
 
-Fixes: dd98442e17a6 ("clocksource/drivers/fttmr010: Drop Gemini specifics")
+Fixes: 9b8bb7736b78 ("clocksource: Driver for Conexant Digicolor SoC timer")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260915045426.1726805-1-vulab@iscas.ac.cn
+Acked-by: Baruch Siach <baruch@tkos.co.il>
+Link: https://patch.msgid.link/20260915045242.1726702-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-fttmr010.c | 2 ++
+ drivers/clocksource/timer-digicolor.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clocksource/timer-fttmr010.c b/drivers/clocksource/timer-fttmr010.c
-index edb1d5f193f5d..8be9fc8ea91f4 100644
---- a/drivers/clocksource/timer-fttmr010.c
-+++ b/drivers/clocksource/timer-fttmr010.c
-@@ -294,6 +294,7 @@ static int __init fttmr010_common_init(struct device_node *np,
- 	ret = clk_prepare_enable(clk);
+diff --git a/drivers/clocksource/timer-digicolor.c b/drivers/clocksource/timer-digicolor.c
+index 1e984a4d8ad00..ae758b3059cc1 100644
+--- a/drivers/clocksource/timer-digicolor.c
++++ b/drivers/clocksource/timer-digicolor.c
+@@ -193,6 +193,8 @@ static int __init digicolor_timer_init(struct device_node *node)
+ 			  &dc_timer_dev.ce);
  	if (ret) {
- 		pr_err("failed to enable PCLK\n");
+ 		pr_warn("request of timer irq %d failed (%d)\n", irq, ret);
++		clk_disable_unprepare(clk);
 +		clk_put(clk);
  		return ret;
  	}
  
-@@ -426,6 +427,7 @@ static int __init fttmr010_common_init(struct device_node *np,
- 	kfree(fttmr010);
- out_disable_clock:
- 	clk_disable_unprepare(clk);
-+	clk_put(clk);
- 
- 	return ret;
- }
 -- 
 2.53.0
 
