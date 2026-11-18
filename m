@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034196;
-	b=S8ixdt+XUvu2uMmgUQcbwYQv51nF4eJpz1+29pFiWz09diXVrsPWsFE0dBfvEfuWsdKH
-	 SfcpGhljO/ttBjpyU7udCCQa8j9Qw7BsmAa+0vnxuOztVfY+eo1bO82hXQw6QSoimf2Fq
-	 hrNEWiFEdZtGnJR2YCWc2L49ASk0SEfsuxZpj/QZJ7yphI9i8kJwqFt1A4W8mKlPoT9L6
-	 AxUANc/TuywqeBemGdWfzrmSB7eHH5jfRb2cQw2emMAPbWdBaLjJRSDYgYQO4IRka/OA6
-	 zfnAkvo9Y/7/A3XBsv/ETNBezYKbjgfDh5kAhT7qZc6iu/AXfTDUaOFucMoPmpbtr2w==
+	t=1795034199;
+	b=QiW6A9qyD/jL/9K+76cKODBaYcvzkkOvRLmHizy+CEQF0yHMcTmx4K1F6WiiWPdEO4SN
+	 5X++f5OmiQsDMPuqpkXzHZJ9oP+p7sCvJqBovkRxkW0EzgKZSc+UVgBpT2lXPZn/94VE5
+	 2FjeFsxZXw9UahAr8BOaXDX2F5eOZ3ZgEWJ0JCwyaownCXdUAHx4H7hiNP4fY6HTOtf6b
+	 bapfS+pM9WyRxVRBJTvLqcKFEulDVMTFQWpPVdjAZqvLfHH91Rxs+92zrTeTlJENgwga5
+	 SlYpmexpJkEWrKNbec39RJxEhqHzQdg9DOUaFZdEFEoH7UfkYsrTWF4xp/lERKN6g7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hO7sw47GdqrqlqG6ZtJpJDzYUTdltXOf3Yy1E2f3S8M=;
-	b=G5E9DksW53Jl7lRHk1BsAe6TVNdRA9TzFwhxfx7Qt/ppBvNeTumRCH0M+NxRFMI8u+aB
-	 OvMUT99LtkazqQtdjs47XPnvXx54oF0Q+CmDnj3cL6wCcnvV2VxLb+pRRwhiPerDMKPNU
-	 W7rKYOndodZYXlv8XHT2x00aNj9svg2Rplg4jXZLHl9A1W6IMDEsWOY3V3JJ2PlPlprSq
-	 G4ki0tpqEeMnNP6FpNQ4U7sENwwcIBC4RRGTL/PId/8Myb2qTqGRxWrgVnqGP5ECyYcRj
-	 mbT2I9dCIUCKbk94rklOwhXwA/rNaOG+ELMMu1HXmRMg7N/13KsX9etsGNqK5r0Yh0A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OyjmTv65o0V5OjfJ/OsuIU2keknMxACFtNzploM9tH8=;
+	b=3gDZF9IHJBIR3lJDiPpOa3+IIGe6vZpOdH/Q9+6/qIjhmuo2MYj/jsDss4gchT9n3Rwk
+	 VHutamkrOo3A9KqaA/ruaEUTfmoiZMT7bMUhdg3SFC9VP/5POxs7XUbdaOj5UInIFJPY8
+	 8oJuafuengKv+cqV1gtdr+8+1oULrdrPlb01zEcTRZOUu4Qce7OACrlhZ3+YbvuJ6xlQ+
+	 h50bRRRf5IvMsmS2nY/4u5sQT6ahuqRy0Yl89bT9VSiFsRrbXcghflaHaXM/Zg+I/OwLO
+	 QOrkRRMCVvB6gwKLOWOVikOdlYl8UHeUnlF2yAt2M9Frtdj7PaGEphmK2RwMC8i4dCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FqbRhUqr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeO8qq59;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D8E60A2610;
-	Wed, 18 Nov 2026 20:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF7606A320;
+	Wed, 18 Nov 2026 20:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FqbRhUqr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5891F000CB;
-	Wed, 18 Nov 2026 20:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeO8qq59
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816761F000C4;
+	Wed, 18 Nov 2026 20:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034196;
-	bh=hO7sw47GdqrqlqG6ZtJpJDzYUTdltXOf3Yy1E2f3S8M=;
+	s=korg; t=1795034199;
+	bh=OyjmTv65o0V5OjfJ/OsuIU2keknMxACFtNzploM9tH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FqbRhUqrqtV9vfASLkhzTG/7oWvvT52Vv+1yVA2hw2CAkM6JmhukZWnk4yWLaXFCe
-	 KUbGgOUTTHBhqcCwHw6evhsXZpLhevNrp0tZ44QzK9F8r/mfd0Guu/KuxZFfH1c89d
-	 uP3rk13z1QzsTJt77xwMJRYjP9io6nioUscHLo0k=
+	b=BeO8qq59SxgquPfsZ+W2/Y/7FxxvvzkYBqHcSheL7B/cEO7YwKKbBzkbN2oGKFgs8
+	 J6vC4NxJ0dfXY34DZQAwGY34klgIraADvwKrlmaol+7LS77Vzwe/e8l8ZlX1NKI/Kj
+	 xKrmXYWyC8l+s0z/krUmKpZ/ix7Xz13lIRWWJLWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Li Qiang <liqiang01@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0283/3318] libbpf: Fix ring buffer consumer loop on 32-bit position wrap
-Date: Wed, 18 Nov 2026 15:15:05 +0100
-Message-ID: <20261118150324.030331757@linuxfoundation.org>
+Subject: [PATCH 6.6 0249/3318] Bluetooth: hci_bcsp: validate received packet lengths
+Date: Wed, 18 Nov 2026 15:14:31 +0100
+Message-ID: <20261118150322.758488124@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,61 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit fdd4fad0bbbd08501465c5f9b556963093c5d58a ]
+[ Upstream commit ceea75ad8925425ee6520ead964b55888fe871ec ]
 
-ringbuf_process_ring() walks the records between the consumer and the
-producer with an ordering comparison:
+The BCSP transmit path reads an HCI command header when an extension
+packet has only been tested for a nonzero length. Its LE configuration
+packet handler also indexes bytes through offset seven without a length
+check.
 
-	while (cons_pos < prod_pos) {
+Validate the complete command and LE configuration packet headers
+before accessing their fields.
 
-cons_pos and prod_pos mirror the kernel's ring positions and are
-unsigned long here too, so on 32-bit they wrap at 2^32 bytes of traffic.
-When producer_pos has wrapped and consumer_pos has not, prod_pos is the
-smaller of the two, the loop body never runs and no record is consumed.
-Since consumer_pos only advances inside that loop, it never wraps either
-and the consumer stops delivering samples for good, with no error
-returned to the caller: ring_buffer__poll() keeps reporting zero
-records while the kernel side fills up and starts dropping.
-
-Compare the distance instead. The consumer never runs ahead of the
-producer, so prod_pos - cons_pos is the amount of unconsumed data and
-stays correct across the wrap.
-
-64-bit hosts are unaffected in practice: the counters would need 16 EiB
-to wrap. This is the userspace counterpart of the kernel-side walk fixed
-in "bpf: Fix pending_pos walk on 32-bit ring position wrap"; a 32-bit
-consumer hits whichever of the two comes first.
-
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-5-i.tellez@btesa.com
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_bcsp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/ringbuf.c b/tools/lib/bpf/ringbuf.c
-index 02199364db136..0683729d4e2f3 100644
---- a/tools/lib/bpf/ringbuf.c
-+++ b/tools/lib/bpf/ringbuf.c
-@@ -237,7 +237,7 @@ static int64_t ringbuf_process_ring(struct ring *r)
- 	do {
- 		got_new_data = false;
- 		prod_pos = smp_load_acquire(r->producer_pos);
--		while (cons_pos < prod_pos) {
-+		while (prod_pos - cons_pos > 0) {
- 			len_ptr = r->data + (cons_pos & r->mask);
- 			len = smp_load_acquire(len_ptr);
+diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
+index e991d9e624869..0bd50471ef869 100644
+--- a/drivers/bluetooth/hci_bcsp.c
++++ b/drivers/bluetooth/hci_bcsp.c
+@@ -194,7 +194,7 @@ static struct sk_buff *bcsp_prepare_pkt(struct bcsp_struct *bcsp, u8 *data,
+ 		return NULL;
+ 	}
  
+-	if (hciextn && chan == 5) {
++	if (hciextn && chan == 5 && len > HCI_COMMAND_HDR_SIZE) {
+ 		__le16 opcode = ((struct hci_command_hdr *)data)->opcode;
+ 
+ 		/* Vendor specific commands */
+@@ -402,6 +402,9 @@ static void bcsp_handle_le_pkt(struct hci_uart *hu)
+ 	u8 sync_pkt[4]     = { 0xda, 0xdc, 0xed, 0xed };
+ 
+ 	/* spot "conf" pkts and reply with a "conf rsp" pkt */
++	if (bcsp->rx_skb->len < 8)
++		return;
++
+ 	if (bcsp->rx_skb->data[1] >> 4 == 4 && bcsp->rx_skb->data[2] == 0 &&
+ 	    !memcmp(&bcsp->rx_skb->data[4], conf_pkt, 4)) {
+ 		struct sk_buff *nskb = alloc_skb(4, GFP_ATOMIC);
 -- 
 2.53.0
 
