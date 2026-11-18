@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050445;
-	b=RcmGGd2rMwr+9i85yB/zQHgWb8sopF53+ujGE/PC4R9OFjiXy4UnK02tM3zID1vwhIxI
-	 sh72BfOHwhOCfpX2gP21q4jxHxYDFpcSz0dm8gwy+XfTBEEV5KbpFBu0M6bm7N7IcqQUx
-	 wzrMD0GyHpkxMIZbtX6Iqu7R5g6wBx1WRtgQKLFQxl5vC3kCVVX10ncEUYZH2GTaKatWn
-	 IL+DayaOEiG42GT0iUbj+ZsDzS0n1XYXDVpK5ogXhCcQwLh2xG+AprcsXc4hS97jcxRQ3
-	 g316WWekUoUPdasENWbTU8PhJH4MPbXctj9anxIzQIuLEdeGozvSPKmuvfB5x/bzw6A==
+	t=1795050448;
+	b=W+DD3cFgUd0dJvKOvzftGIWgCU+a9pWOW++tZh2ulyzoicWIOukInpwDmm7k+JdaIPt4
+	 +oXcMpqVmyoi8eYiMzEjCwzU+dOWoJBJHFAvb0Z373KYwlFIxQuQYY80pDHD+mE7TY+Ck
+	 wiQpYkoArRt2JJS3GzlQq1qyZuLGi3kPO8YexV+ZSYd24n+EHT2kx+bAtPN7IP3pJ49NT
+	 /PN3cWsW26E+HwKbU8PY6hBCvV3fGdb9gdTBDdcgW/cIfm82mu/2fK4Pq/1L76hPCBinY
+	 xyiluI7eHjsZWkPqAmv3EpxqJXzyqqKZU+Dk6ELnRy+XUlaQvxMz8b0qwmjLcWHg1tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050445;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050448;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DNgS3SIFTWbl6V+jMx9VScauieSZfM01Ct5K0DR4ENs=;
-	b=JUimTkSmfViuLA8ZHjwAwKXixDN4fGwRwf1Vu+KpP4+c54q50t0Kt0aDbIRApOoXcjGh
-	 zCH8m0xdz5NDxvZJqriTD0nq70xFpxjZKLcoMIslN+cnMttiPe6f58vcJLj2Vi9mBIZJo
-	 CMkVBkbGjXnWU2CY4H7siw2yWApTj1bN2g/DK4DkqUc9olJkjJEdruQCJ5SBRYSiaHbwR
-	 wneE6NJY/8y02LCLM4Yf6YxIPb7N4Z0+y6INNM5PcyRYI8SU/j1jKI3t800XNPqHfE99j
-	 GmUA9tbYxaDBapASXRvBwKk6VfQyKgeUketX8sXPUhL960IPC4hY+gJSUfwrYiUEsFg==
+	bh=kOjOF9WKpZeVlme1FtE2y6rNU0siYnupBWvprOBxKv8=;
+	b=zFRLG8GGmc16bxMt1/yftFYxWenlPGHthFH0Sjjwvd9owL5EYw3AGxHpmpp9l9uROGRw
+	 AA0G5xD9rGSo9UEZaCh6EmS98VghngjRUXr+tfyYDboFPiJBk2jrfR/r8WE7tROhGsvT8
+	 JCzWianwi9QvqKPLJFGQiLMySPO4TGGgUB+kCdnI6QAxD7d6z5eLjpyHQqIPSgqtdMmT7
+	 kGwWZagVPFYd/fHZZHq0EemD4fMbcumcDdFhr1gKDTtnEIlWprEnU4+atUp7ov7ZKXZZb
+	 w2fFmmrui1/YdsUaZXD+dxtNBJj7apE/NpJpzUMjR9r2b9SX2CEOzjHaGaXPfhlxcNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kPBNnt/c";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UE+9P7Og;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB6A606A320;
-	Thu, 19 Nov 2026 01:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C21606A320;
+	Thu, 19 Nov 2026 01:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPBNnt/c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6C61F000C4;
-	Thu, 19 Nov 2026 01:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UE+9P7Og
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A501F000C4;
+	Thu, 19 Nov 2026 01:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050445;
-	bh=DNgS3SIFTWbl6V+jMx9VScauieSZfM01Ct5K0DR4ENs=;
+	s=korg; t=1795050447;
+	bh=kOjOF9WKpZeVlme1FtE2y6rNU0siYnupBWvprOBxKv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kPBNnt/cTt9jb9x6BTRb3VjcaWMtfy354zv6EUakQWa1cpLM3WYMxPzoM5kLpZGKH
-	 A3auQ4HXNx85HJB4XtA4o6hVIwxB1BACedj1Ugm/bIUUZZS6TqlCRpfNM8Bwxd7d15
-	 yQDu/ze+nE+eXrePlQIufpsLoPPFEP5YN7p5Xx/Y=
+	b=UE+9P7OgEnKeGnfEUDRiUT0kUhlgbRKYckI3LJGWYbv4GwewE4lbXneCf4xy5ApdE
+	 IiGSc1uPqJYohxIkHrmXSxwV7+5V4Xjkwa557yuxSurL5IU0qGJHk7zxDdf/S7ynln
+	 9WH0hfeNU72mQcdkzDXPE8ZfSdcuq3P9IpOAv1dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Simon Polack <spolack+git@mailbox.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Wang Zhan <wang.zhan@smartx.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Anil Kaushik <anilkaushikwireless@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2708/2857] net: fix frag_list leak in skb_segment_list() error path
-Date: Wed, 18 Nov 2026 16:02:22 +0100
-Message-ID: <20261118150339.100874747@linuxfoundation.org>
+Subject: [PATCH 6.1 2671/2857] gtp: set a valid genl command in PDP context get and dump replies
+Date: Wed, 18 Nov 2026 16:01:45 +0100
+Message-ID: <20261118150337.748270149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,59 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Anil Kaushik <anilkaushikwireless@gmail.com>
 
-[ Upstream commit 546daf344420b5dce27eded3ad15be12628dd185 ]
+[ Upstream commit 758d8928d2c5d6703da827577cef86d643155236 ]
 
-skb_segment_list() detaches the frag_list from the head skb and moves
-its members one by one to the skb->next chain. On error, err_linearize
-frees that chain with kfree_skb_list(skb->next), relying on the members
-not yet processed to still be linked after the current one.
+gtp_genl_fill_info() stamps the reply with the command its callers pass
+in. gtp_genl_get_pdp() and gtp_genl_dump_pdp() pass nlmsg_type, which in
+a genl message is the dynamically assigned family id rather than a
+GTP_CMD_* value, so replies to a PDP context get or dump carry a
+meaningless command number.
 
-This does not hold when the current member was shared: it is replaced
-by skb_clone(), and __skb_clone() clears ->next. If __skb_linearize()
-then fails on that clone, the remaining members are no longer reachable
-from skb->next nor from skb_shinfo(skb)->frag_list, and they leak.
+libgtpnl ignores the command and is unaffected, but parsers that check
+it (for example the ynl tooling) treat the reply as an unknown command
+and discard it. Pass GTP_CMD_GETPDP, as gtp_tunnel_notify() already
+passes a real command on the notification path. No uapi change.
 
-The skb_shared() error branch already relinks nskb->next to list_skb
-before jumping to err_linearize. Do it unconditionally right after nskb
-is added to the chain, so every error exit sees the remaining members.
-On the last member list_skb is NULL, which still terminates the chain.
-
-Fixes: 53475c5dd856 ("net: fix use-after-free when UDP GRO with shared fraglist")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Cc: Simon Polack <spolack+git@mailbox.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261021161858.761205-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Signed-off-by: Anil Kaushik <anilkaushikwireless@gmail.com>
+Link: https://patch.msgid.link/20261016093225.1036375-2-anilkaushikwireless@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/gtp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index ea5faa225e759..96286a16199b0 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4103,10 +4103,13 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
- 		else
- 			tail->next = nskb;
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 501dbfa917408..ea5d1cb255f33 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1684,7 +1684,7 @@ static int gtp_genl_get_pdp(struct sk_buff *skb, struct genl_info *info)
+ 	}
  
--		if (unlikely(err)) {
--			nskb->next = list_skb;
-+		/* nskb may be a clone with a NULL ->next: keep the remaining
-+		 * members linked so that err_linearize frees them.
-+		 */
-+		nskb->next = list_skb;
-+
-+		if (unlikely(err))
- 			goto err_linearize;
--		}
+ 	err = gtp_genl_fill_info(skb2, NETLINK_CB(skb).portid, info->snd_seq,
+-				 0, info->nlhdr->nlmsg_type, pctx);
++				 0, GTP_CMD_GETPDP, pctx);
+ 	if (err < 0)
+ 		goto err_unlock_free;
  
- 		tail = nskb;
- 
+@@ -1731,7 +1731,7 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
+ 					    NETLINK_CB(cb->skb).portid,
+ 					    cb->nlh->nlmsg_seq,
+ 					    NLM_F_MULTI,
+-					    cb->nlh->nlmsg_type, pctx)) {
++					    GTP_CMD_GETPDP, pctx)) {
+ 					cb->args[0] = i;
+ 					cb->args[1] = j;
+ 					cb->args[2] = (unsigned long)gtp;
 -- 
 2.53.0
 
