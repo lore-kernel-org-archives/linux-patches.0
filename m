@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021760;
-	b=u/xufAGsSdM5Yhp7HSS5dOxxpbZWE5kDdqaDAeXjpL1pKIXlCUzSI/rz5922/4kAjzfb
-	 aHNaIKzDpTWH3EeFj1XTC1tr5dRey6UMOYXg+jZcxQO5StY01yF3YuYcgn5CJjRAF77Hy
-	 D8k6aIdNiUmu2YDESp38sUX/Z8JFJHfdaVnK8ARebGN4jmxL0IGsB7xWxuoKe/XrqY72Y
-	 fp9UrWP15hiTLiNUkiEom3/aDhSekpuExu9HhSm6+LOs5GE6A64dbribINGL196tOkDtD
-	 6U57pyDd5/g9vxkCOcsQwLWRVHFMNEl4otNZngO9bebfV5Fy0x4NCZpu+r8KqgfypqA==
+	t=1795021763;
+	b=Uv7MmzOZIDE2lJgX44KI8ZlDrH/6+EFzCUTXPKsFlzpRKvYIAefOktgqR6JJerX080EO
+	 /EeuOrkxSI7tCRwlGXH31iO7tkF4LTa5wxAnbSjz9GyKLg+FXtraxELwfFdmb37TRZq2f
+	 1aT30Ky0gHXykAXW6pXK7MGbrDII+7c1cWPzqZcfVoboKXCiy7ywGhd7fJjpPRYYuHJip
+	 f/XqbFHjLoMiV2DaAwJk86+eBSrhrLRe5hvVk7tSRx7dgFbo2Io9Kyga1KaY0CFqoLtJd
+	 2V0SE1WcoNguqJAF8rO9ldmwTf3STjjCeYxxZrbDVKCi3KrllkVvpmNRnlLiG+vizmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oKleffkJDNixMN/JDAk5Hf0XA+SUIITmki5Qr8admqY=;
-	b=pJMSIxYRKRH/hpZ6dvPlqn4pP/qrA0burs6BpbW6yOwlswtHH58vwPmOH1cqHLZ2R78D
-	 9sFiQ2B2nkcQLlbLZDlkmzA6DS109zRh4/yFiaNk3WEMCCt3f752M7d+mS26nJWkFo83/
-	 qRvVBbb3zUcApnq5Rrb8wMRoeYjW8lYCEPTV8SJnHUcNhCEcFHiShjknJAZeFDE8HmKol
-	 XJ3ZmfUqW4eAF/LMv7HITXNi7I5dHcwiNoUwiCYMdPEAPXnmaT6WRJr6B5Zz7Qc64Qnyl
-	 2ZRGB9foBP0vCoOXAor3AWAgpEQ0AYIA+ZGTUYBUx+h/G9aPbnLSmfi5va3btDLQLWQ==
+	bh=qIn8HYYFa43QVerfTUUI2cHh7iaGhRUnb+JUpYPMoZA=;
+	b=jNCg1HR4KjuU0VsDUMH6l54r7GR3v2SalGyLfBQyUmEOIKUZitSYK86BYLB5t+GPwsJE
+	 /m/l5JGIj+6Fccyng4D61gZemlpd7TX2LG6wBNHCB7w+WyS6vDeHy5xV4zr+5VgBuFxdF
+	 PgHT6nJYcJhB6Ud8mj8v4Ggs8zwXN/vZkj7jDFXnT5RmmxY2iqt7dnFL09WIwG1hSUVNI
+	 yNn/gKs0iK1TfC/cI3vjuvaH26QGa9pgZ9grE5N6LA0VZqBMMmLmYurYL4ntGcxvo7/mk
+	 4fGDu0h7vo1umoRd5MLFHZxviSF0VI6vbtwMem7SA/KC8t4eJYNoje1+TylHap6wdpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8cgC1gf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtSnbORp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0EC60A2616;
-	Wed, 18 Nov 2026 17:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560B760A2603;
+	Wed, 18 Nov 2026 17:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8cgC1gf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1691F000C7;
-	Wed, 18 Nov 2026 17:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtSnbORp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D9B1F000C8;
+	Wed, 18 Nov 2026 17:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021760;
-	bh=oKleffkJDNixMN/JDAk5Hf0XA+SUIITmki5Qr8admqY=;
+	s=korg; t=1795021762;
+	bh=qIn8HYYFa43QVerfTUUI2cHh7iaGhRUnb+JUpYPMoZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R8cgC1gfTMs4/Y52qtU0EuPco2gGazI9VMolMEpU5rYPiDOZoe1hFDfYGe/+8H4zW
-	 DYQ7kL7TK10E6DNZ192QbBbVP4bvHyuaKuYOzLBLEIlHMGEq1ROJFqKwvfZvmZkNRe
-	 I3B/PGJFtFNa9HsK75F3qEKB76IWnNZnBbVET8tc=
+	b=GtSnbORpdNrNKFZf5GMA2S2L8w8cMET6ym5sBnRQcGJZa92Zks0fry8kTyQLiNJx/
+	 eBa5risRjLlzbpG008zRqAmpIMWmHIE/LqnWrfsoh5DmZ+azxVnXgCZyxRZd4K/IAC
+	 D4bwR4Q57LpBbq2q6GORz3to93JPZ8lKysEtPAV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2422/2651] cgroup/cpuset: Find furthest isolated ancestor for invalidated isolated partition
-Date: Wed, 18 Nov 2026 16:01:02 +0100
-Message-ID: <20261118150412.438639261@linuxfoundation.org>
+Subject: [PATCH 7.3 2405/2651] kthread: Fall back when no preferred housekeeping CPU is online
+Date: Wed, 18 Nov 2026 16:00:45 +0100
+Message-ID: <20261118150411.914789099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,206 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 0bce85ff2cc0f7f7d8de16f5fdfc0ae7d29f21f1 ]
+[ Upstream commit 78ff77ded78f2d3d6040705a3ab5a83cc45275e3 ]
 
-Commit 46b885416c27 ("cgroup/cpuset: Fix a missing isolated_cpus
-update in update_cpumasks_hier()") searches for the closet partition
-root ancestor to determine if the isolated CPUs in a to be invalidated
-isolation partition should be removed from isolated_cpus or not.
+kthread_fetch_affinity() falls back to the housekeeping mask
+only when the intersection with the preferred mask is empty.
 
-As reported by sashiko, this method may not work when there is a deeply
-nested isolated partition hierarchy. For instance, Consider a nested
-hierarchy A0 -> A1 -> A2 -> A3 where all four are PRS_ISOLATED:
+If the intersection contains only offline CPUs,
+set_cpus_allowed_ptr() returns -EINVAL and the kthread keeps
+its previous affinity, which may still include an isolated CPU.
 
-  A0: effective_xcpus = 0-4
-  A1: effective_xcpus = 1-4
-  A2: effective_xcpus = 2-4
-  A3: effective_xcpus = 3-4
+Check whether the intersection contains an online CPU instead.
+Fall back to the full housekeeping mask when none are online.
 
-When A1 shrinks its exclusive_cpus from 1-4 to 1-2, A2 will update it
-effective_xcpus to 2. A3 will find its closet partition root ancestor
-A2 and decides that its effective_xcpus 3-4 should be removed from
-isolated_cpus which is incorrect.
-
-Address this corner case by adding a new isolated_cpus_release() helper
-to replace the existing ancestor_partition() helper. This new helper
-will search for the furthest isolated partition root ancestor to decide
-if some or all of its isolated CPUs should be removed from isolated_cpus
-and also perform the removal when appropriate.
-
-The is_remote_partition() and is_local_partition() helpers are also
-moved up so they can be used in earlier functions.
-
-There are other pre-existing problems that will still prevent the
-above test case to work correctly. These problems will be addressed in
-subsequent patches.
-
-Fixes: 46b885416c27 ("cgroup/cpuset: Fix a missing isolated_cpus update in update_cpumasks_hier()")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: e894f6339808 ("kthread: Honour kthreads preferred affinity after cpuset changes")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 104 +++++++++++++++++++++--------------------
- 1 file changed, 53 insertions(+), 51 deletions(-)
+ kernel/kthread.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index d39953799ad56..f9ce9383af3f5 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1281,6 +1281,16 @@ static void reset_partition_data(struct cpuset *cs)
- 		cpumask_copy(cs->effective_cpus, parent->effective_cpus);
+diff --git a/kernel/kthread.c b/kernel/kthread.c
+index a3f95c90456bd..0dbff3b68ffbe 100644
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -343,7 +343,7 @@ static void kthread_fetch_affinity(struct kthread *kthread, struct cpumask *cpum
+ 	}
+ 
+ 	cpumask_and(cpumask, pref, housekeeping_cpumask(HK_TYPE_DOMAIN));
+-	if (cpumask_empty(cpumask))
++	if (!cpumask_intersects(cpumask, cpu_online_mask))
+ 		cpumask_copy(cpumask, housekeeping_cpumask(HK_TYPE_DOMAIN));
  }
  
-+static inline bool is_remote_partition(struct cpuset *cs)
-+{
-+	return cs->remote_partition;
-+}
-+
-+static inline bool is_local_partition(struct cpuset *cs)
-+{
-+	return is_partition_valid(cs) && !is_remote_partition(cs);
-+}
-+
- /* Return true if isolated_cpus changes. */
- static bool isolated_cpu_update(int new_prs, int cpu)
- {
-@@ -1323,6 +1333,45 @@ static void isolated_cpus_update(int old_prs, int new_prs, struct cpumask *xcpus
- 		update_housekeeping = true;
- }
- 
-+/*
-+ * isolated_cpus_release - Remove the relevant CPUs in @xcpus from isolated_cpus
-+ * @cs: the current cpuset
-+ * @xcpus: the set of effective xcpus to be considered for removal
-+ *
-+ * This function is called when an isolated partition is invalidated or when
-+ * some of its effective xcpus are to be removed from isolated_cpus due to
-+ * changes in parent cpuset. The given @xcpus must be modifiable as the function
-+ * will update its value to determine the right set of CPUs to be removed.
-+ */
-+static void isolated_cpus_release(struct cpuset *cs, struct cpumask *xcpus)
-+{
-+	struct cpuset *ancestor = parent_cs(cs);
-+	struct cpuset *iancestor = NULL;
-+
-+	/*
-+	 * Search the furthest isolated partition root ancestor available
-+	 * until top_cpuset or a remote partition root is hit.
-+	 */
-+	for (; ancestor; ancestor = parent_cs(ancestor)) {
-+		if (ancestor->partition_root_state == PRS_ISOLATED)
-+			iancestor = ancestor;
-+		if (is_remote_partition(ancestor))
-+			break;
-+	}
-+
-+	/*
-+	 * If a furthest isolated partition acnestor is found, use it to
-+	 * determine which of the CPUs in @xcpus should be removed from
-+	 * isolated_cpus. Otherwise, all of them will be removed.
-+	 */
-+	if (iancestor && !cpumask_andnot(xcpus, xcpus, iancestor->effective_xcpus))
-+		return; /* No CPU should be removed from isolated_cpus */
-+
-+	spin_lock_irq(&callback_lock);
-+	isolated_cpus_update(PRS_ISOLATED, PRS_ROOT, xcpus);
-+	spin_unlock_irq(&callback_lock);
-+}
-+
- /*
-  * partition_xcpus_add - Add new exclusive CPUs to partition
-  * @new_prs: new partition_root_state
-@@ -1595,16 +1644,6 @@ static int compute_trialcs_excpus(struct cpuset *trialcs, struct cpuset *cs)
- 	return rm_siblings_excl_cpus(parent, cs, excpus);
- }
- 
--static inline bool is_remote_partition(struct cpuset *cs)
--{
--	return cs->remote_partition;
--}
--
--static inline bool is_local_partition(struct cpuset *cs)
--{
--	return is_partition_valid(cs) && !is_remote_partition(cs);
--}
--
- /*
-  * remote_partition_enable - Enable current cpuset as a remote partition root
-  * @cs: the cpuset to update
-@@ -2184,25 +2223,6 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
- 	rcu_read_unlock();
- }
- 
--/*
-- * ancestor_partition - Find and return the closest valid partition root ancestor
-- * @cs: the current cpuset
-- *
-- * Return: The closet partition root ancestor cpuset
-- */
--static struct cpuset *ancestor_partition(struct cpuset *cs)
--{
--	struct cpuset *ancestor = parent_cs(cs);
--
--	/*
--	 * The top_cpuset is always a valid partition root which will stop
--	 * the loop if it is reached.
--	 */
--	while (!is_partition_valid(ancestor))
--		ancestor = parent_cs(ancestor);
--	return ancestor;
--}
--
- /*
-  * update_cpumasks_hier - Update effective cpumasks and tasks in the subtree
-  * @cs:  the cpuset to consider
-@@ -2296,7 +2316,6 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
- 		 */
- 		if ((cp != cs) && old_prs) {
- 			int parent_prs = parent->partition_root_state;
--			struct cpumask *del_cpus = NULL;
- 
- 			switch (parent_prs) {
- 			case PRS_ROOT:
-@@ -2310,32 +2329,15 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
- 				 * child partition roots become invalid too.
- 				 *
- 				 * For a to be invalidated isolated partition,
--				 * its isolated CPUs may or may not need to be
--				 * removed from isolated_cpus depending on if
--				 * its closest partition root ancestor is a root
--				 * or isolated partition. With a PRS_ISOLATED
--				 * ancestor, the CPUs are checked against its
--				 * effective xcpus to see if any of them needed
--				 * to be removed.
-+				 * call return_isolated_cpus() to remove the
-+				 * relevant CPUs from isolated_cpus.
- 				 */
- 				if (is_partition_valid(cp))
- 					new_prs = -old_prs;
- 
- 				if (old_prs == PRS_ISOLATED) {
--					struct cpuset *ancestor = ancestor_partition(cp);
--
--					if (ancestor->partition_root_state == PRS_ROOT)
--						del_cpus = cp->effective_xcpus;
--					else if (cpumask_andnot(tmp->delmask,
--								cp->effective_xcpus,
--								ancestor->effective_xcpus))
--						del_cpus = tmp->delmask;
--
--					if (del_cpus) {
--						spin_lock_irq(&callback_lock);
--						isolated_cpus_update(old_prs, new_prs, del_cpus);
--						spin_unlock_irq(&callback_lock);
--					}
-+					cpumask_copy(tmp->delmask, cp->effective_xcpus);
-+					isolated_cpus_release(cp, tmp->delmask);
- 				}
- 				WRITE_ONCE(cp->prs_err,
- 					   is_partition_invalid(parent)
 -- 
 2.53.0
 
