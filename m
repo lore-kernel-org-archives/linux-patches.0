@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060324;
-	b=T5FlSdg5GoXf3gnmmak7yVWviCrYKtjDAL5ait8DUTCEzlVI0qQRi0Bj9M+FaeI/V7AX
-	 4oT53+bdXZyCa5iOcODsCr1YV2cGpSCeyMF8aJh/qswjJkpwyWlTNsHFTcrW55nP/wV3Z
-	 /RSG6hLR3XhFx2vPT2F9076/bZp8wxZEx0iFGQNG9eZ0N1nX/UCHt5AJy5pCBWaklamdI
-	 QzsCDaWp7w7YxQHPVaGOELjEMrZo9ye8N7sJBKTPrmBZmzRmcurJSS8Sd7AWR7GecEn7O
-	 qa36+lX7nCwU0RyJQY78/8+h1b0YIU2Mq3XNBrfmEgZd5sf2S9XyepiMWCr3ratBaLQ==
+	t=1795060326;
+	b=41Qh1LHFhAmoZMCxawht3kvWM60PF68VppcDaCjo0EZ5I3v5alyYFOkzhfl1eN87yqBT
+	 36yvmCs9NO74BCTjD7jFLmJj5Bst0kAqyF12T8tt84L4ewe9xzAIJrd3BAMB2tYIJxlkH
+	 M3PMhB5lWIhs6Dqa/Ttd2HuITEsZoZiAdpoO4Hzux5jTuayDsZbRmYpdPxvyPRr4Qr1J5
+	 tDcVWrIbuWuDn+VLE80aEOZyXViMO3vRgiUFGKSgbvoSzkUyOUdg+bj2O10WLDfj1OyZX
+	 shG1s6/tjp16mm4joyDTdavLcQWx8qynWBsVq8ZmehJ7tT65oAbwa5yyVVN43x/F2Rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ILIjxHuduoXbp68lxIONZKZpdnSHYrsMJXF70IS0YtI=;
-	b=JN2rf6twDZvDSOiB6H/cVUxsbsVRhXZgkJMoYXZd7wy25CXZnp8cCyCwz8elwiNBFuhQ
-	 k0ggKnx8K8vKpMlmdan4Nd2FQ3yGAb9CPirDE6xBBdClr7a1nZdlUG5ipAPOiqwumj05k
-	 0jauCKJ7W+t/C9Tv90wxAhjMpUdeNDm6udtYUXmH+mBV3uqt+GrRmMPOEP09bk3MQLjbX
-	 vbHSYIWz44rQa4FOz5t4fwAKXTnKpOVG5OIUU1PFtqjQvl5UcvzQAP88JeHE6NDeU84R3
-	 i8w9h7OHEDCJvC1ZW/7j2rRjjlqJVUVS3uSHpo+fRhELHi3ntPQB9kz5nzleoILJbNQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=dtdw1d8HTrit7G/vP1qLSeHYyEAYB7vxURawc28PCk8=;
+	b=jwuXCb3akVvOlGuO2uTiyl8ShJmrpomhCYWeWU+wrAEjjqGxOS6PAFlsyiddeLU6Xg0M
+	 0rMycTZGlORKfrSq8tTkmo15sUQRoKjHdsWfi/iGYgcRYl14EHS3B6Nm0/7Eya5Q+McGQ
+	 B+ojeLfpwDD1oFWAfli3DOaIzyXFnwF5oqGgOAlqcXDlnKCVWe6dKSMK1jv/i7XRW6DDH
+	 qIsixbyy7ycBAGqXfyGZc+cP+RHg74gkA8TZXqLBg2ixopfU+cgBu74mCWM+D8iZa/1cI
+	 pVuYfjcACTIAkowQkskOlV3EXXQEGJ46NW3hLsGbAq8Q1K1tO04GynM3olCvcKdfmEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVKkezBu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWsVpQbC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3300606A325;
-	Thu, 19 Nov 2026 03:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1928606A325;
+	Thu, 19 Nov 2026 03:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVKkezBu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED951F000C4;
-	Thu, 19 Nov 2026 03:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CWsVpQbC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F111F000C4;
+	Thu, 19 Nov 2026 03:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060323;
-	bh=ILIjxHuduoXbp68lxIONZKZpdnSHYrsMJXF70IS0YtI=;
+	s=korg; t=1795060326;
+	bh=dtdw1d8HTrit7G/vP1qLSeHYyEAYB7vxURawc28PCk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVKkezBub+s5xCeSlpj4sf9CZiad7gGJ3ICZqdvqkY+ZOR042abY5QOIOj+5eH9AP
-	 j8woZBWBbewCA+tD9y2QsSW3EZ878Mrr+YvnW5cts7I/jiyPNyYz5s3kRtTa0jrknY
-	 /3BVM698rIdNOiL/vBWO/QXu6dt3lzgmegStpGZQ=
+	b=CWsVpQbCVl8kdnFYcYjqvWZonEn+KS3ggYPGSB9wHeFq5YSlGqduPCBCgQutnbiBD
+	 5cLlRxkfllug4gi3O6JzofZt9N/MP9IIdpRWdmO6b5Dkg1obwwotksPVe9pEgr3NW/
+	 t37g57pCVcYZtQ106VciS44VMoHmhTpP16aVaPHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	"Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1151/1848] pwm: renesas: Drop usage of pwm_[gs]et_chip_data()
-Date: Wed, 18 Nov 2026 15:53:09 +0100
-Message-ID: <20261118150007.912107689@linuxfoundation.org>
+Subject: [PATCH 5.10 1160/1848] clk: Use the generic OF phandle parsing in only one place
+Date: Wed, 18 Nov 2026 15:53:18 +0100
+Message-ID: <20261118150008.255829758@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,115 +64,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
 
-[ Upstream commit ec63391a0d402cafa5f4dfd11e05cd325ae7e2f5 ]
+[ Upstream commit 57d728b4ab15a8af890013bb0f302e7733f7c1c6 ]
 
-Instead of distributing the driver's bookkeeping over 5 (i.e.
-TPU_CHANNEL_MAX + 1) separately allocated memory chunks, put all together
-in struct tpu_device. This reduces the number of memory allocations and
-so fragmentation and maybe even the number of cache misses. Also
-&tpu->tpd[pwm->hwpwm] is cheaper to evaluate than pwm_get_chip_data(pwm)
-as the former is just an addition in machine code while the latter involves
-a function call.
+Ideally, there should be one single entry in the OF world. This way, the
+DT parsing logic is always identical. At this stage, we call
+of_parse_phandle_with_args() in:
+- of_parse_clkspec()
+- of_clk_get_parent_name()
+which kinds of defeats the above statement. Furthermore, when this call
+is done from of_clk_get_parent_name(), we fail to parse the
+'clock-ranges' property.
 
-Link: https://lore.kernel.org/r/20230705080650.2353391-6-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 62cff15fbf2b ("pwm: renesas-tpu: Fix runtime PM reference leak")
+Make sure DT world is entered only once by calling of_parse_clkspec()
+from of_clk_get_parent_name(). Doing so implies that we do not try the
+"clock-ranges" path if we already found a "clocks" property.
+
+Suggested-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 4472287a3b2f5 ("clk: Introduce of_clk_get_hw_from_clkspec()")
+Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-renesas-tpu.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/clk/clk.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-renesas-tpu.c b/drivers/pwm/pwm-renesas-tpu.c
-index 9e4298ceb5871..a9750a4482a78 100644
---- a/drivers/pwm/pwm-renesas-tpu.c
-+++ b/drivers/pwm/pwm-renesas-tpu.c
-@@ -85,6 +85,7 @@ struct tpu_device {
- 
- 	void __iomem *base;
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 950dfa059a209..4f380c40db30a 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4825,6 +4825,8 @@ static int of_parse_clkspec(const struct device_node *np, int index,
+ 		 * has a "clock-ranges" property, then we can try one of its
+ 		 * clocks.
+ 		 */
++		if (of_property_present(np, "clocks"))
++			break;
+ 		np = np->parent;
+ 		if (np && !of_get_property(np, "clock-ranges", NULL))
+ 			break;
+@@ -4970,8 +4972,7 @@ const char *of_clk_get_parent_name(const struct device_node *np, int index)
+ 	int count;
  	struct clk *clk;
-+	struct tpu_pwm_device tpd[TPU_CHANNEL_MAX];
- };
  
- #define to_tpu_device(c)	container_of(c, struct tpu_device, chip)
-@@ -215,9 +216,7 @@ static int tpu_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
- 	if (pwm->hwpwm >= TPU_CHANNEL_MAX)
- 		return -EINVAL;
+-	rc = of_parse_phandle_with_args(np, "clocks", "#clock-cells", index,
+-					&clkspec);
++	rc = of_parse_clkspec(np, index, NULL, &clkspec);
+ 	if (rc)
+ 		return NULL;
  
--	tpd = kzalloc(sizeof(*tpd), GFP_KERNEL);
--	if (tpd == NULL)
--		return -ENOMEM;
-+	tpd = &tpu->tpd[pwm->hwpwm];
- 
- 	tpd->tpu = tpu;
- 	tpd->channel = pwm->hwpwm;
-@@ -228,24 +227,22 @@ static int tpu_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
- 
- 	tpd->timer_on = false;
- 
--	pwm_set_chip_data(pwm, tpd);
--
- 	return 0;
- }
- 
- static void tpu_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
-+	struct tpu_device *tpu = to_tpu_device(chip);
-+	struct tpu_pwm_device *tpd = &tpu->tpd[pwm->hwpwm];
- 
- 	tpu_pwm_timer_stop(tpd);
--	kfree(tpd);
- }
- 
- static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 			  int duty_ns, int period_ns, bool enabled)
- {
--	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
- 	struct tpu_device *tpu = to_tpu_device(chip);
-+	struct tpu_pwm_device *tpd = &tpu->tpd[pwm->hwpwm];
- 	unsigned int prescaler;
- 	bool duty_only = false;
- 	u32 clk_rate;
-@@ -347,7 +344,8 @@ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- static int tpu_pwm_set_polarity(struct pwm_chip *chip, struct pwm_device *pwm,
- 				enum pwm_polarity polarity)
- {
--	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
-+	struct tpu_device *tpu = to_tpu_device(chip);
-+	struct tpu_pwm_device *tpd = &tpu->tpd[pwm->hwpwm];
- 
- 	tpd->polarity = polarity;
- 
-@@ -356,7 +354,8 @@ static int tpu_pwm_set_polarity(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- static int tpu_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
-+	struct tpu_device *tpu = to_tpu_device(chip);
-+	struct tpu_pwm_device *tpd = &tpu->tpd[pwm->hwpwm];
- 	int ret;
- 
- 	ret = tpu_pwm_timer_start(tpd);
-@@ -378,7 +377,8 @@ static int tpu_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 
- static void tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
-+	struct tpu_device *tpu = to_tpu_device(chip);
-+	struct tpu_pwm_device *tpd = &tpu->tpd[pwm->hwpwm];
- 
- 	/* The timer must be running to modify the pin output configuration. */
- 	tpu_pwm_timer_start(tpd);
 -- 
 2.53.0
 
