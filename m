@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021947;
-	b=lqNlkGF59/HmObFvE/WJ5jXX0PaU063vmJA2T46AM+aJCL3Y8abx+ehzymlTJYvfrGyq
-	 EtclLiJjWqyO7P37SWrm1wQi4iQCcrzWDm1lApPtN3vlK3PKzFFKVq8DVSqmWYZJQPHey
-	 KKQTf/7mDcO/+YZerzsFGx4eMRgLESUGhqojdah+hAnZKm6UxWCHBLbvT74n7wyn4jpno
-	 KGI/dZVREYXNE4ddoltUPpVcxliAEWFP/z+hrrlf1JlrFOv4cvTZiKnbHLC+fhmtJDbjV
-	 pmRnO8jP+2K7+qAuYHHS6tOgyb7Phb3CqhRB38SoeSlsYaQCIJ3/xGWHMr0IJmE9XEQ==
+	t=1795021950;
+	b=Tv3UprmnojY1Ya6XRFFk0JTaLD6wSDFcBnmTIYXUalrLwvbIsPRIn7mwCjfhrqhv29vd
+	 xubbcNj6SV4qfPdi0CoiFGU18qKSvtGGpGS70EJRgUcwjT0LnrZQj6ef8fuuI6Y0YS2hF
+	 HfYtc0qfAreSK1IByOxMAYi7z9iBO8R5YEpZJqHPh5+0uQKZK0i7LD6gtrV4c/EqCCREA
+	 o75ze+EiHbCckmqgl8rF5lWTsrYvwkigCbkq43810uUiTbO6acHliqEpuZq1VBhHMEazE
+	 Q4dA5fVVfyZvci/VG2+k5vUM6yFu9Bzx6WSdM7+Y0SBAcjocshr1UBHrIRwI68VGkiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=APB5q+3A+ikme7yvQpCONje3UdVr+qja+pJlBM4jcfk=;
-	b=GCw56U386+d1wSGo9k9KjAF9B6LoQ7gnCfhhAzDiiC1MLTVz4qlHKUWigTHBbzjH8cwc
-	 UvsyMzE39HmZU0CqvZJVLtWEmRMvfXm47oz1FKPIKQQHbWU0QgpS1cbFflFdfQDA+Kuyl
-	 PXh47xks+hIt0mH3dTuoh5rvbagQKify8edxfW4HhILIn8AjJntNOGVM+O+SLFoYkbQvw
-	 VprDHu3z1cHo9jq437arW+916YV6XC/O9VH9Hk9faCCrQ4TtsypMOFtaNvGaw5r3xsPJp
-	 6FFR9ohj35VtMjgcPY+idJ04aT419pOA7W0pkrzFl90FbeywH/SOxWfPMwGVLL8+nZA==
+	bh=FTpN2G6lOmDTKi2p+6LFJh5pfAKsM8hK/VCGD3HVIwc=;
+	b=31UMVMSLFOt2TXgGbxJBKV6ov04JgeFB63jFbHSK95N3SjQlowu18XSPoBAGRf9D5crj
+	 m6wZvgGOO/1fQZLrXnOmcB4v8XjzZ1NO4N/gYnt8dGZFCX3lDxbRCm28IfcTzTNytYw1I
+	 kzRHasTerdrDJxNg/5zGDhYoB3HVKObR/Ynbqn7RQxCOKfIsxfqto22XyPZmusVJHkJUB
+	 7GGQ950vCHosSPZTxDOi6EpSp4ocOUihD6arx0+W5/NeT0Hb1z9oxWIDA7F5Fp4CNg723
+	 bmBJhHvrTTGfWkFTsFyVtGHjlu1KGNRQQ/1+VB1etOtaP1eKcE+BWbK/FGDZTnyzVgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IDsIoUL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lCY45+hl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511FD606A32C;
-	Wed, 18 Nov 2026 17:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39387606A32A;
+	Wed, 18 Nov 2026 17:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IDsIoUL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A390E1F000C4;
-	Wed, 18 Nov 2026 17:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lCY45+hl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877551F000C4;
+	Wed, 18 Nov 2026 17:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021947;
-	bh=APB5q+3A+ikme7yvQpCONje3UdVr+qja+pJlBM4jcfk=;
+	s=korg; t=1795021950;
+	bh=FTpN2G6lOmDTKi2p+6LFJh5pfAKsM8hK/VCGD3HVIwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1IDsIoULA2502GU4KOHzuiCPFZzHHWJp6Jyf9ShgAHkCoCt3O9zpJNama3kT6eHbq
-	 UdftfYsL7gQUJmYEI+hOHM3bfnnnlpEZeUq8o33cilQYniFkhobwhveLNmTo6YWLGD
-	 6gRDKzjKqApGsiAeCOtjS7XjQRpx9Y/qKUSPjRaE=
+	b=lCY45+hlh9rgTV6MYRnVNjhLQHv3UEioOJz/9Xute2Apvk8VKJEi/tf55G2mYj/xB
+	 jK9UsjnGHsP5xe4soZHPBMt2QgqaSSIOX/mKkSiFpcYu2JhAJHMJ/BhsGpg2smSMPq
+	 F15La5NBAxBRLDfxpyYj0A6EeyY9w4t7DgrQSWHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Fernandez <gabriel.fernandez@foss.st.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2451/2651] clk: stm32: fix clock array size for STM32MP21
-Date: Wed, 18 Nov 2026 16:01:31 +0100
-Message-ID: <20261118150413.346584351@linuxfoundation.org>
+Subject: [PATCH 7.3 2487/2651] sched_ext: Add ops.sub_cid_sched_updated() to report the sched running on a cid
+Date: Wed, 18 Nov 2026 16:02:07 +0100
+Message-ID: <20261118150414.419850583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,52 +67,411 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 40e5d379cc19fa7fa477414087df5e915d5e843f ]
+[ Upstream commit 457fff158adcd2a60f2a908957e193cb78649dbf ]
 
-STM32MP21_LAST_CLK is used as the number of entries of the onecell
-clk_hw array allocated in stm32_rcc_clock_init(), and as the bound of
-the clock IDs it can hold. It was wrongly set to CK_SCMI_KER_ETR (112),
-which belongs to the SCMI clock ID range, whereas the RCC clock IDs
-go up to CK_KER_STM (289).
+A parent sched that delegates cpus to sub-scheds has no way of telling how
+much each delegatee is using them. A parent that sizes its delegations by
+demand cannot measure it, and one that wants to hand a cid from one sub to
+another cannot see which sub it would take the cid from.
 
-As a result the array is too small, and registering a clock whose ID
-is greater than 111 writes past the end of the allocated clk_hw array
-(hws[cfg_clock->id] = hw), and consumers requesting such a clock
-get rejected or read out of bounds.
+Add ops.sub_cid_sched_updated(), invoked on a sched when what it sees
+running on a cid changes: NONE when no task of its subtree runs there, SELF
+for its own task, or a direct child's cgroup id. Changes inside a child's
+subtree are not reported.
 
-Define STM32MP21_LAST_CLK as CK_KER_STM + 1 so that the array covers
-all the RCC clock IDs.
+The op costs one pointer compare per context switch when the sched does not
+change, a notification reaches only the scheds that see a change, and the
+whole mechanism sits behind a static key that is on only while a loaded
+sched implements the op. After a sched's tasks are gone, its disable closes
+every rq session still pointing at it, so nothing refers to it once it is
+freed.
 
-No device tree node uses the STM32MP21 RCC driver yet, so there is no
-need to backport this patch to stable kernels.
+The op is cid-form only like the other sub ops and runs with the rq lock
+held on the context switch path.
 
-Fixes: 37ae8501cdb0 ("clk: stm32: introduce clocks for STM32MP21 platform")
-Signed-off-by: Gabriel Fernandez <gabriel.fernandez@foss.st.com>
-Link: https://patch.msgid.link/20261012131859.215240-1-gabriel.fernandez@foss.st.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 5c23d1710606 ("sched_ext: Fix queued bypassed tasks stalling when the host loses SCX_CAP_BASE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/stm32/clk-stm32mp21.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/ext/ext.c      |  20 ++++-
+ kernel/sched/ext/internal.h |  29 +++++++
+ kernel/sched/ext/sub.c      | 166 ++++++++++++++++++++++++++++++++++++
+ kernel/sched/ext/sub.h      |   6 ++
+ kernel/sched/sched.h        |   2 +
+ 5 files changed, 222 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/stm32/clk-stm32mp21.c b/drivers/clk/stm32/clk-stm32mp21.c
-index bdb17419908c8..961a228d8c640 100644
---- a/drivers/clk/stm32/clk-stm32mp21.c
-+++ b/drivers/clk/stm32/clk-stm32mp21.c
-@@ -17,8 +17,8 @@
- #include <dt-bindings/clock/st,stm32mp21-rcc.h>
- #include <dt-bindings/reset/st,stm32mp21-rcc.h>
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index c7565bc66fa1f..e6211adf015e1 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -3074,6 +3074,8 @@ static void scx_start_task_running(struct rq *rq, struct task_struct *p)
+ 	if (p->scx.flags & SCX_TASK_RUN_TRACKED)
+ 		return;
  
--/* Max clock binding value */
--#define STM32MP21_LAST_CLK	CK_SCMI_KER_ETR
-+/* Number of RCC clock bindings (highest RCC clock ID + 1) */
-+#define STM32MP21_LAST_CLK	(CK_KER_STM + 1)
++	scx_cid_sched_update(rq, sch);
++
+ 	if (SCX_HAS_OP(sch, running))
+ 		SCX_CALL_OP_TASK(sch, running, rq, p);
  
- /* Clock security definition */
- #define SECF_NONE		-1
+@@ -3322,8 +3324,10 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
+ 	}
+ 
+ switch_class:
+-	if (next && next->sched_class != &ext_sched_class)
++	if (next && next->sched_class != &ext_sched_class) {
++		scx_cid_sched_update(rq, NULL);
+ 		switch_class(rq, next);
++	}
+ }
+ 
+ static void kick_sync_wait_bal_cb(struct rq *rq)
+@@ -4484,6 +4488,13 @@ static void switching_to_scx(struct rq *rq, struct task_struct *p)
+ 
+ static void switched_from_scx(struct rq *rq, struct task_struct *p)
+ {
++	/*
++	 * A class change of the running task: sched_change_begin() put @p with
++	 * no successor, which leaves rq->scx.sched set.
++	 */
++	if (task_current_donor(rq, p))
++		scx_cid_sched_update(rq, NULL);
++
+ 	if (task_dead_and_done(p))
+ 		return;
+ 
+@@ -6777,6 +6788,8 @@ static void scx_root_disable(struct scx_sched *sch)
+ 		}
+ 	}
+ 
++	scx_ops_cid_sched_updated_disable(sch);
++
+ 	/* no task is on scx, turn off all the switches and flush in-progress calls */
+ 	static_branch_disable(&__scx_enabled);
+ 	static_branch_disable(&__scx_is_cid_type);
+@@ -7969,6 +7982,8 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+ 		if (((void (**)(void))ops)[i])
+ 			set_bit(i, sch->has_op);
+ 
++	scx_ops_cid_sched_updated_enable(sch);
++
+ 	if (sch->ops.cpu_acquire || sch->ops.cpu_release)
+ 		sch->ops.flags |= SCX_OPS_HAS_CPU_PREEMPT;
+ 
+@@ -8615,6 +8630,7 @@ static void sched_ext_ops_cid__set_cmask(struct task_struct *p, const struct scx
+ static void sched_ext_ops_cid__enable(struct task_struct *p, struct scx_enable_args *args) {}
+ static void sched_ext_ops__sub_caps_updated(const struct scx_cmask *cmask__arena, u64 caps) {}
+ static void sched_ext_ops__sub_ecaps_updated(s32 cid, u64 before, u64 after) {}
++static void sched_ext_ops__sub_cid_sched_updated(s32 cid, u64 sched) {}
+ 
+ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
+ 	.select_cid		= sched_ext_ops__select_cpu,
+@@ -8649,6 +8665,7 @@ static struct sched_ext_ops_cid __bpf_ops_sched_ext_ops_cid = {
+ 	.sub_detach		= sched_ext_ops__sub_detach,
+ 	.sub_caps_updated	= sched_ext_ops__sub_caps_updated,
+ 	.sub_ecaps_updated	= sched_ext_ops__sub_ecaps_updated,
++	.sub_cid_sched_updated	= sched_ext_ops__sub_cid_sched_updated,
+ 	.cid_online		= sched_ext_ops__cpu_online,
+ 	.cid_offline		= sched_ext_ops__cpu_offline,
+ 	.init_cids		= sched_ext_ops__init_cids,
+@@ -11292,6 +11309,7 @@ static int __init scx_init(void)
+ 	CID_OFFSET_MATCH(sub_detach, sub_detach);
+ 	CID_OFFSET_MATCH(sub_caps_updated, sub_caps_updated);
+ 	CID_OFFSET_MATCH(sub_ecaps_updated, sub_ecaps_updated);
++	CID_OFFSET_MATCH(sub_cid_sched_updated, sub_cid_sched_updated);
+ 	CID_OFFSET_MATCH(init_cids, init_cids);
+ 	CID_OFFSET_MATCH(init, init);
+ 	CID_OFFSET_MATCH(exit, exit);
+diff --git a/kernel/sched/ext/internal.h b/kernel/sched/ext/internal.h
+index 8d5ebec29b70d..73a84c660caf5 100644
+--- a/kernel/sched/ext/internal.h
++++ b/kernel/sched/ext/internal.h
+@@ -336,6 +336,18 @@ struct scx_sub_detach_args {
+ 	char			*cgroup_path;
+ };
+ 
++/*
++ * What a sched sees running on a cid, as reported by
++ * ops.sub_cid_sched_updated(): NONE when the cid is idle or runs a task outside
++ * the sched's subtree, SELF for the sched itself, or a direct child by its
++ * cgroup id. The sentinels lie outside the cgroup id space, whose low 32 bits
++ * are an idr value of at most INT_MAX.
++ */
++enum scx_cid_sched_consts {
++	SCX_CID_SCHED_NONE = (u64)-2,
++	SCX_CID_SCHED_SELF = (u64)-1,
++};
++
+ /**
+  * struct sched_ext_ops - Operation table for BPF scheduler implementation
+  *
+@@ -874,6 +886,22 @@ struct sched_ext_ops {
+ 	 */
+ 	void (*sub_ecaps_updated)(s32 cid, u64 before, u64 after);
+ 
++	/**
++	 * @sub_cid_sched_updated: The sched running on a cid changed
++	 * @cid: cid whose running sched changed
++	 * @sched: what this sched now sees running there
++	 *
++	 * Invoked when the sched owning the task running on @cid changes.
++	 * @sched is %SCX_CID_SCHED_NONE when no task of this sched's subtree
++	 * runs there, %SCX_CID_SCHED_SELF for its own task, or the cgroup id of
++	 * the direct child whose subtree the task belongs to. Changes inside a
++	 * child's subtree, whether across tasks or nested sub-scheds, are not
++	 * reported. Every sched for which @sched changes is notified.
++	 *
++	 * Runs with the rq lock held on the context switch path.
++	 */
++	void (*sub_cid_sched_updated)(s32 cid, u64 sched);
++
+ 	/*
+ 	 * All online ops must come before ops.cpu_online().
+ 	 */
+@@ -1131,6 +1159,7 @@ struct sched_ext_ops_cid {
+ 	void (*sub_detach)(struct scx_sub_detach_args *args);
+ 	void (*sub_caps_updated)(const struct scx_cmask *cmask__arena, u64 caps);
+ 	void (*sub_ecaps_updated)(s32 cid, u64 before, u64 after);
++	void (*sub_cid_sched_updated)(s32 cid, u64 sched);
+ 	void (*cid_online)(s32 cid);
+ 	void (*cid_offline)(s32 cid);
+ 	s32 (*init_cids)(void);
+diff --git a/kernel/sched/ext/sub.c b/kernel/sched/ext/sub.c
+index dd467f217efe1..02a27571f2d0a 100644
+--- a/kernel/sched/ext/sub.c
++++ b/kernel/sched/ext/sub.c
+@@ -28,6 +28,13 @@
+  */
+ DEFINE_STATIC_KEY_FALSE(__scx_has_subs);
+ 
++/*
++ * On while a loaded sched implements ops.sub_cid_sched_updated(), see
++ * scx_ops_cid_sched_updated_enable().
++ */
++static DEFINE_STATIC_KEY_FALSE(__scx_ops_cid_sched_updated_enabled);
++static s32 scx_nr_ops_cid_sched_updated;	/* such scheds, under scx_enable_mutex */
++
+ /* latched at root enable before any rescue runs */
+ static s32 scx_rescue_bw_1024;
+ static s64 scx_rescue_quantum_ns;
+@@ -92,6 +99,161 @@ struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sche
+ 	return scx_skip_subtree_pre(pos, root);
+ }
+ 
++/**
++ * scx_cid_sched_id_from - Resolve what @from sees when @sch runs on a cid
++ * @sch: sched whose task runs there, %NULL for none
++ * @from: sched asking
++ *
++ * Return %SCX_CID_SCHED_NONE when @sch is %NULL or outside @from's subtree,
++ * %SCX_CID_SCHED_SELF for @from itself, or else the cgroup id of the direct
++ * child of @from on the way down to @sch.
++ */
++static u64 scx_cid_sched_id_from(struct scx_sched *sch, struct scx_sched *from)
++{
++	if (!sch || !scx_is_descendant(sch, from))
++		return SCX_CID_SCHED_NONE;
++	if (sch == from)
++		return SCX_CID_SCHED_SELF;
++	return sch->ancestors[from->level + 1]->ops.sub_cgroup_id;
++}
++
++/* notify @from of what it now sees running on @rq's cid */
++static void scx_cid_notify_sched_updated(struct rq *rq, struct scx_sched *sch,
++					 struct scx_sched *from)
++{
++	if (SCX_HAS_OP(from, sub_cid_sched_updated))
++		SCX_CALL_OP(from, sub_cid_sched_updated, rq, __scx_cpu_to_cid(cpu_of(rq)),
++			    scx_cid_sched_id_from(sch, from));
++}
++
++/**
++ * scx_cid_sched_update - Update rq->scx.sched and notify the scheds affected
++ * @rq: rq whose running session opens or closes
++ * @sch: sched starting a session, %NULL to close the open one
++ *
++ * Every sched whose scx_cid_sched_id_from() value changes is notified of the
++ * new one. Above the deepest common ancestor of the two scheds, both map to the
++ * same child, so the walk stops there. With root R, children A and B, and A's
++ * child A1, a switch from an A1 task to a B task reports:
++ *
++ *         R        R:  A -> B
++ *        / \
++ *       A   B      A:  A1 -> NONE      B: NONE -> SELF
++ *       |
++ *       A1         A1: SELF -> NONE
++ *
++ * When the task on one side is not an ext task, there is no common ancestor and
++ * only the other side is walked.
++ */
++void scx_cid_sched_update(struct rq *rq, struct scx_sched *sch)
++{
++	struct scx_sched *prev = rq->scx.sched;
++	s32 level, common = -1;
++
++	lockdep_assert_rq_held(rq);
++
++	if (!static_branch_unlikely(&__scx_ops_cid_sched_updated_enabled) || prev == sch)
++		return;
++
++	rq->scx.sched = sch;
++
++	if (prev && sch) {
++		for (level = min(prev->level, sch->level); level >= 0; level--)
++			if (prev->ancestors[level] == sch->ancestors[level])
++				break;
++		common = level;
++		scx_cid_notify_sched_updated(rq, sch, prev->ancestors[common]);
++	}
++	if (prev)
++		for (level = common + 1; level <= prev->level; level++)
++			scx_cid_notify_sched_updated(rq, sch, prev->ancestors[level]);
++	if (sch)
++		for (level = common + 1; level <= sch->level; level++)
++			scx_cid_notify_sched_updated(rq, sch, sch->ancestors[level]);
++}
++
++/**
++ * scx_ops_cid_sched_updated_enable - Maintain rq->scx.sched if @sch has the op
++ * @sch: sched being enabled, its has_op filled in
++ *
++ * rq->scx.sched is maintained only while a loaded sched implements
++ * ops.sub_cid_sched_updated(), so that everyone else pays one static branch per
++ * session open or close. The first such sched turns the key on and then
++ * initializes every rq from the task running there, in that order so that no
++ * session change in between goes unrecorded. While the key is off every
++ * rq->scx.sched is NULL, see scx_ops_cid_sched_updated_disable().
++ */
++void scx_ops_cid_sched_updated_enable(struct scx_sched *sch)
++{
++	s32 cpu;
++
++	lockdep_assert_held(&scx_enable_mutex);
++
++	if (!SCX_HAS_OP(sch, sub_cid_sched_updated) || scx_nr_ops_cid_sched_updated++)
++		return;
++
++	static_branch_enable(&__scx_ops_cid_sched_updated_enabled);
++
++	for_each_possible_cpu(cpu) {
++		struct rq *rq = cpu_rq(cpu);
++		struct task_struct *p;
++
++		guard(rq_lock_irqsave)(rq);
++		p = rq->donor;
++		if (p->sched_class == &ext_sched_class &&
++		    (p->scx.flags & SCX_TASK_RUN_TRACKED))
++			rq->scx.sched = scx_task_sched(p);
++	}
++}
++
++/**
++ * scx_ops_cid_sched_updated_disable - Stop maintaining rq->scx.sched for @sch
++ * @sch: sched being disabled, its tasks all gone
++ *
++ * Close the session on every rq that still points at @sch, before ops.exit(),
++ * so that no sched is notified of @sch once it is gone. The last sched with the
++ * op turns the key off first and clears every rq, so while the key is off every
++ * rq->scx.sched is NULL. A sched whose enable failed before its has_op fill was
++ * never counted, so has_op gates the decrement.
++ */
++void scx_ops_cid_sched_updated_disable(struct scx_sched *sch)
++{
++	bool last;
++	s32 cpu;
++
++	lockdep_assert_held(&scx_enable_mutex);
++
++	last = SCX_HAS_OP(sch, sub_cid_sched_updated) && !--scx_nr_ops_cid_sched_updated;
++	if (last)
++		static_branch_disable(&__scx_ops_cid_sched_updated_enabled);
++
++	/*
++	 * Re-homing restarts a running task's session under its new sched. A
++	 * task that blocked while its cpu's dispatch had the rq lock dropped is
++	 * put and set next again without a restart, so rq->scx.sched keeps @sch
++	 * until the pick completes:
++	 *
++	 *   cpu 0, __schedule()                 cpu 1, scx_sub_disable(@sch)
++	 *   T of @sch blocks, stops running
++	 *   dispatch drops the rq lock
++	 *                                       re-home T, nothing to restart
++	 *                                       this sweep
++	 *   pick N, N's session opens
++	 *
++	 * Closing the session here reports NONE to @sch and its ancestors now
++	 * and lets the pick report N's sched from NONE instead of from @sch.
++	 */
++	for_each_possible_cpu(cpu) {
++		struct rq *rq = cpu_rq(cpu);
++
++		guard(rq_lock_irqsave)(rq);
++		if (rq->scx.sched == sch)
++			scx_cid_sched_update(rq, NULL);
++		if (last)
++			rq->scx.sched = NULL;
++	}
++}
++
+ static struct scx_sched *scx_find_sub_sched(u64 cgroup_id)
+ {
+ 	return rhashtable_lookup(&scx_sched_hash, &cgroup_id,
+@@ -1654,6 +1816,8 @@ void scx_sub_disable(struct scx_sched *sch)
+ 	scx_cgroup_unlock();
+ 	percpu_up_write(&scx_fork_rwsem);
+ 
++	scx_ops_cid_sched_updated_disable(sch);
++
+ 	/*
+ 	 * All tasks are moved off of @sch but there may still be on-going
+ 	 * operations (e.g. ops.select_cpu()). Drain them by flushing RCU. Use
+@@ -1882,6 +2046,8 @@ void scx_sub_enable_workfn(struct kthread_work *work)
+ 		if (((void (**)(void))ops)[i])
+ 			set_bit(i, sch->has_op);
+ 
++	scx_ops_cid_sched_updated_enable(sch);
++
+ 	percpu_down_write(&scx_fork_rwsem);
+ 	scx_cgroup_lock();
+ 
+diff --git a/kernel/sched/ext/sub.h b/kernel/sched/ext/sub.h
+index 0ac7b8e592050..bcf0ab51e531b 100644
+--- a/kernel/sched/ext/sub.h
++++ b/kernel/sched/ext/sub.h
+@@ -16,6 +16,9 @@
+ 
+ struct scx_sched *scx_skip_subtree_pre(struct scx_sched *pos, struct scx_sched *root);
+ struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root);
++void scx_cid_sched_update(struct rq *rq, struct scx_sched *sch);
++void scx_ops_cid_sched_updated_enable(struct scx_sched *sch);
++void scx_ops_cid_sched_updated_disable(struct scx_sched *sch);
+ void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch);
+ struct cgroup *sch_cgroup(struct scx_sched *sch);
+ void set_cgroup_sched(struct cgroup *cgrp, struct scx_sched *sch);
+@@ -76,6 +79,9 @@ static inline void scx_dec_has_subs(struct scx_sched *sch)
+ 
+ static inline struct scx_sched *scx_next_descendant_pre(struct scx_sched *pos, struct scx_sched *root) { return pos ? NULL : root; }
+ static inline struct scx_sched *scx_skip_subtree_pre(struct scx_sched *pos, struct scx_sched *root) { return NULL; }
++static inline void scx_cid_sched_update(struct rq *rq, struct scx_sched *sch) {}
++static inline void scx_ops_cid_sched_updated_enable(struct scx_sched *sch) {}
++static inline void scx_ops_cid_sched_updated_disable(struct scx_sched *sch) {}
+ static inline void scx_set_task_sched(struct task_struct *p, struct scx_sched *sch) {}
+ static inline struct cgroup *sch_cgroup(struct scx_sched *sch) { return NULL; }
+ static inline const char *sch_cgrp_path(struct scx_sched *sch) { return "/"; }
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 18c7799ea8864..8d805aa7c85dc 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -830,6 +830,8 @@ struct scx_rq {
+ #endif
+ 	u64			clock;			/* current per-rq clock -- see scx_bpf_now() */
+ #ifdef CONFIG_EXT_SUB_SCHED
++	/* sched of the open running session, see scx_cid_sched_update() */
++	struct scx_sched	*sched;
+ 	struct llist_head	ecaps_to_sync;		/* pending ecaps syncs */
+ 	struct task_struct	*sub_dispatch_prev;
+ #endif
 -- 
 2.53.0
 
