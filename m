@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027784;
-	b=DXbhO+hbwW1Mxtf+yhfaud0v/DrwOy0wzwaQ/Fdo8Aj9b371uGrf6svkx2uXBqqbXwOx
-	 41SYkLTunMYHNrZVDQBwYZVFfRX5fuAbeLvjUDAAiIDEF7Z6aIRi3jYwHWDCglb6SLqBQ
-	 /2Qqk9tA6nmXqWUByA5948c2zjFr9VFjmAjEu0AnwZFM4QuQN6toRr3MzJo74E+nIa13J
-	 hMSwFSwg4QzZGOrHXewBpj+JCrLNDb8XPgX+OzErZy7qgSuMkuFC9NjytWybpzbtJH/Iz
-	 UJEUPwzPccmcTnWbmEnrdTagwvPlWvQ3OdWon53Y5mprnEAQHgB7/Ck3kV29MjsmPAQ==
+	t=1795027786;
+	b=Y001AFisrdUQpLLBE4WGvJr9tC0tkKQM8dekeYF1rCEB/SgOnVh6TNnJy0loUpCeg1vJ
+	 enCDcATufce3V6TSP0SFCEfXbsOrQDB8oyc2dmnlAeYELW1HDUFcgkh7bfsYCxdwAudhR
+	 FaKXGeuLqBhPquKIsqVaI04LjMo3bf/DbvC+GSWCUX7WuWwJcE0GlbQJABktzNRCb6tLn
+	 i2xJH0rSCL+2o14uQf/iEs0wraPGqbmL1pbEF9hP7marSxFn2q0Nfn/QELL9tkzpz/kLs
+	 Amk+EGmk8YqnVYEd+HgoG2Fzt8iFB2B6/X+MfVWK2ImEANv891xLWnZIBYcTs74h4mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F97yXX9BuRv6GzxHd3JCXere8XZ+L43fTQJ6fJSKjSc=;
-	b=0aDZmUaLe1awvpQhMgZmHm9fO5apkoFzYUSTT2KhrBd4T/P1vo9QLYdjvmsFpK9F67VY
-	 uH1ReID6TeIl3p6YJ7BDk0myTpjDk3VyCArK0YCkxveVV27sN66fCEHrVfV69jqAsfzsj
-	 XK391VQh629maf8GQavuQWjiDxq5X9i4NGEkXhWC/Psz3WfMY3w/SwwWsVi7PBPBazcT5
-	 4bppG3wM6zKNvb9+wq59w44ZJUAgD8bhLLyQb7xRpFyRU/xYInmDsHRuA9NX/aBV9LVzX
-	 ZeqqXSMC2CbrMJFozJYsvSxPJjmJX7Cdhv/q/bDuae068sKcReaco5iPKMU9FgJM0Ag==
+	bh=FY3thWeHE+hNktTjNGLjnXfYRQJ4F3Wiftjn/BIqpJM=;
+	b=OVDhjX9ndsSsRfVK5BimD9CpLG5uxA3rsfYNyln7yesjbdEXV6NVNeefXpKPhto1FW2O
+	 GQpIin8dwy279spX4eCb9KTiUpj9gYPRoYQJp+Of8BNWmwtbQZhPnyAvXnrFIyHAUBR3u
+	 Y1I0n6IgOG/0w3hTcleSDsYMqmm4dCTx1aahqNuNDRGX8pkGV7yA3mZPPX8QSXKc0D77W
+	 DFYfy1I6kO8gHp+Ith2SY7+8Wi4KYuqiplGPviC0LVgJUJ+eY8D5mj0myjFAARMKKZgUH
+	 DPd0XtWRIGUXeM0CuR4/RhaOnwIe0owita8ChwISM42UMbg7Z2U/QIQsw0+WGlYdMFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9HRS0O0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msDgAZfr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8B3606A332;
-	Wed, 18 Nov 2026 18:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D26606A339;
+	Wed, 18 Nov 2026 18:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9HRS0O0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688BC1F000C5;
-	Wed, 18 Nov 2026 18:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msDgAZfr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF381F000C6;
+	Wed, 18 Nov 2026 18:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027783;
-	bh=F97yXX9BuRv6GzxHd3JCXere8XZ+L43fTQJ6fJSKjSc=;
+	s=korg; t=1795027786;
+	bh=FY3thWeHE+hNktTjNGLjnXfYRQJ4F3Wiftjn/BIqpJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q9HRS0O0CBfzJ0BpF/GJb8g5k2AX4tMsyh7Wi7Wc+MiWPJjV5irqwt8270qYkE5gS
-	 YmBIb9cDZprTk8blvU0aq6DfZPjiCtjA5KnIRLurHkzOgD5negU3sd8WsuDI6C1Sf1
-	 O6a3FckXQuzG7iCxcpGu/ZuJK1RMF9lpDVpvsnoE=
+	b=msDgAZfrFGC5p4oXEnYx4fG1r88XhPiD465PbezQMTZ3qnsXSybKV5zCUBaO+/0EE
+	 d7lc4rVGlCM6v7xNESYOWZs8t6H6eKfBHLdVFu6f1WDNXr9uMy6YnqW10EW+GyNGbU
+	 yMlInSu2GPK1lSCpP7F0uxhUNoCWvDjeGx1vO3LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
 	Alexandre Cassen <acassen@corp.free.fr>,
 	Yevgeny Kliteynik <kliteyn@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1871/2151] net/mlx5: HWS, fix modify header pattern compare on big-endian
-Date: Wed, 18 Nov 2026 16:00:06 +0100
-Message-ID: <20261118150229.952536393@linuxfoundation.org>
+Subject: [PATCH 6.18 1872/2151] net/mlx5: HWS, fix modify header pool match for copy actions
+Date: Wed, 18 Nov 2026 16:00:07 +0100
+Message-ID: <20261118150229.988114151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,49 +71,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 7eed173447fba937a19e2f5f2dc79780793f72e7 ]
+[ Upstream commit d425ec9bb9371d52d492ac4d09f0da6e26561684 ]
 
-mlx5hws_pat_compare_pattern() casts each __be64 action to __be32 to
-compare only its control dword. On big-endian this keeps the data dword
-instead, which HWS clears from the pattern of set and add actions. Two
-such actions writing the same value into different fields then share a
-pattern and the second rule modifies the wrong field.
+mlx5_fs_hws_mh_pool_match() compares a single dword of each action
+since rules pass their values as arguments. Copy and add_field actions
+keep their destination in the second dword and HWS reads them from the
+pattern alone. Two modify headers whose copies differ only in
+destination then share a pool and the second rule writes to the wrong
+field.
 
-Read the first dword of each action from memory instead. Little-endian
-behavior is unchanged.
+Use the HWS core comparison that checks these actions in full.
 
-Discovered by an AI code review agent [1] and confirmed by code
-inspection. Not reproduced for lack of big-endian hardware running HWS.
-Tested for regressions on ConnectX-7 with firmware 28.48.1000 on a
-little-endian host.
+Found while checking a Sashiko AI review report and confirmed against
+the HWS pattern code. Not reproduced. No in-kernel user puts such
+actions on the FDB but RDMA flow actions can. Tested for regressions on
+ConnectX-7 with firmware 28.48.1000 on a little-endian host.
 
-Fixes: aefc15a0fa1c ("net/mlx5: HWS, added modify header pattern and args handling")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261010120147.135825-1-acassen%40corp.free.fr [1]
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: b36315ca69cb ("net/mlx5: fs, add HWS modify header API function")
 Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
 Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Link: https://patch.msgid.link/20261019133159.1742411-2-acassen@corp.free.fr
+Link: https://patch.msgid.link/20261019133159.1742411-3-acassen@corp.free.fr
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../mellanox/mlx5/core/steering/hws/fs_hws_pools.c    | 11 ++++-------
+ .../mellanox/mlx5/core/steering/hws/pat_arg.c         |  8 ++++----
+ .../mellanox/mlx5/core/steering/hws/pat_arg.h         |  5 +++++
+ 3 files changed, 13 insertions(+), 11 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c
+index 839d71bd42164..f1ce03bdffe70 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws_pools.c
+@@ -3,6 +3,7 @@
+ 
+ #include <mlx5_core.h>
+ #include "fs_hws_pools.h"
++#include "internal.h"
+ 
+ #define MLX5_FS_HWS_DEFAULT_BULK_LEN 65536
+ #define MLX5_FS_HWS_POOL_MAX_THRESHOLD BIT(18)
+@@ -385,7 +386,7 @@ bool mlx5_fs_hws_mh_pool_match(struct mlx5_fs_pool *mh_pool,
+ 			       struct mlx5hws_action_mh_pattern *pattern)
+ {
+ 	struct mlx5hws_action_mh_pattern *pool_pattern;
+-	int num_actions, i;
++	int num_actions;
+ 
+ 	pool_pattern = mh_pool->pool_ctx;
+ 	if (WARN_ON_ONCE(!pool_pattern))
+@@ -394,12 +395,8 @@ bool mlx5_fs_hws_mh_pool_match(struct mlx5_fs_pool *mh_pool,
+ 	if (pattern->sz != pool_pattern->sz)
+ 		return false;
+ 	num_actions = pattern->sz / MLX5_UN_SZ_BYTES(set_add_copy_action_in_auto);
+-	for (i = 0; i < num_actions; i++) {
+-		if ((__force __be32)pattern->data[i] !=
+-		    (__force __be32)pool_pattern->data[i])
+-			return false;
+-	}
+-	return true;
++	return mlx5hws_pat_compare_pattern(num_actions, pool_pattern->data,
++					   num_actions, pattern->data);
+ }
+ 
+ struct mlx5hws_action *mlx5_fc_get_hws_action(struct mlx5hws_context *ctx,
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
-index d56271a9e4f01..f5f7eebfb52de 100644
+index f5f7eebfb52de..8d08f6773b024 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.c
-@@ -116,8 +116,8 @@ static bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
- 				return false;
- 		} else {
- 			/* Compare just the control, not the values */
--			if ((__force __be32)actions[i] !=
--			    (__force __be32)cur_actions[i])
-+			if (*(__be32 *)&actions[i] !=
-+			    *(__be32 *)&cur_actions[i])
- 				return false;
- 		}
- 	}
+@@ -96,10 +96,10 @@ void mlx5hws_pat_uninit_pattern_cache(struct mlx5hws_pattern_cache *cache)
+ 	kfree(cache);
+ }
+ 
+-static bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
+-					__be64 cur_actions[],
+-					int num_of_actions,
+-					__be64 actions[])
++bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
++				 __be64 cur_actions[],
++				 int num_of_actions,
++				 __be64 actions[])
+ {
+ 	int i;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h
+index 7fbd8dc7aa186..2be7787104e10 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/pat_arg.h
+@@ -49,6 +49,11 @@ int mlx5hws_pat_init_pattern_cache(struct mlx5hws_pattern_cache **cache);
+ 
+ void mlx5hws_pat_uninit_pattern_cache(struct mlx5hws_pattern_cache *cache);
+ 
++bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
++				 __be64 cur_actions[],
++				 int num_of_actions,
++				 __be64 actions[]);
++
+ bool mlx5hws_pat_verify_actions(struct mlx5hws_context *ctx, __be64 pattern[], size_t sz);
+ 
+ int mlx5hws_arg_create(struct mlx5hws_context *ctx,
 -- 
 2.53.0
 
