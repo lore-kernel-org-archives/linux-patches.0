@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036671;
-	b=F4vGccSMlN/uDCesrCqgaO3rPXej6ofzQ4q6TiCI5rVAnS6TQ1Na1jg0qiCr59ra4Sug
-	 dMStiG09lWds1dTHRHJgUdVu69P4W2UBSle34/ej4bxnM3zU56NavL8mNev5mwjgj8UPg
-	 Ba613E4x8jZzgLDj69pDY0vnabQg4U4TOvqCUuakerP66R4bVwglgtS7zABA12AhFyUt6
-	 8vsvTR5IJRQuOleXlSdKMtqQ/9tFeCos89VjULXMZF2vOD4oJ7bUll7X9PMG1UtRs8puP
-	 o59QuspUa5R6zF+TgB31duQlvSSH2/QHgLhXFMxz+Tx8npjOF+uKxrv2jJ4rjBzvs0w==
+	t=1795036674;
+	b=QD0aCwTV+r331aqO29yNoo66Sm0lErL7RCXSuYYJ7QSIET81RxaJlNQbYQhgPO3Ly7uY
+	 yEFHwij4ZoMw0BwJnP6BpNuP3dDyhkATcsZxje4uqhbt6nJyh8F0yCbEsIZBrUKX0iiEa
+	 5b0MQCfKqmc1xY36/UOtuCEAzzYk3RoJtdBrPijoAuO2Z1Xn54J/HZ9/3M/bKf4YLN3yx
+	 32oA89ScGs1nC+YzXzqnim0BZ5RjeLjenfzsnXzFZkTaCEUxoucQp/shMKtCqvNatK15y
+	 ybMCPSRiJ90/Zz8qaP4b+gJLhuTglEMcIUqK5OiL6gDLNH7fBk/e0PySHuELqAL4bXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E58r34CWScoteNkO7vieDSRm6v21dR75A7rZ2cu+JTA=;
-	b=BIhAV4YMOkC4HPvdB9cQqGk/GVNbhKHgV0dSz01sRd2juM/BlTv5/dgSgOvs0YevxYxw
-	 YoMGFuSMvJRyH3vsRQrVeXR+ulLEG0IJpt+cVjjLBY49cWLp7k6FGrzVumk2zO99zzENX
-	 VjiMtX1XHbGl9lo4JZNhoBnt964CUFyWsBGdcgm+6/iokgQJAggr54Nmezzq4h6dsgjSy
-	 gYXRg3fxZuvrai9HmvNPKMsxh978veDSnfaCjw/V6qMkFZhYEXLRJWPyvZp6pjyXffcAh
-	 NVTxF2imEeQPtEL1WO5xouBmquiRgqpEg6h2eWrl70ZmK0kph1neT89tiR4kL7jmdvA==
+	bh=2Ne/vo4KXZ5P2xl4m1YhMEZy/O+kCi4Oe3sl1xrb+AQ=;
+	b=Cxw+L8d/zMnxdQWHRU6uKDKh+tcR8qQKIHTbH3cf65dgzFu5adRNmOqWRtr20AYEeYT7
+	 0kVVomzNt7ktxl83dZ6as9O0pmF/FVL0ZCs+qHcqRxTc4Yaecgsz2KggghCFEPOj7qhhl
+	 rnykqxHS7nibwQ1oSl8y22ld+9e36kY7qO6j/SmZCg/I/N8BoSvOmhwvZYrQi3xd6NiDV
+	 roVsTPncFeoc11libTJe3q6+UurA7vai/hYL2sMjH1J5CoapqLmNxLZ7Ypbd1Z3tHPXCt
+	 m2hhd803zqJDHldoN1a97OvrGGWP1IIzz2Pxjz74UBmVYLTe1Pi3hd980ZmnaG7YvCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZcqcf8p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1EJhrg6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F04606A320;
-	Wed, 18 Nov 2026 21:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6639606A320;
+	Wed, 18 Nov 2026 21:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZcqcf8p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B121F000C4;
-	Wed, 18 Nov 2026 21:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e1EJhrg6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38261F000C4;
+	Wed, 18 Nov 2026 21:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036671;
-	bh=E58r34CWScoteNkO7vieDSRm6v21dR75A7rZ2cu+JTA=;
+	s=korg; t=1795036674;
+	bh=2Ne/vo4KXZ5P2xl4m1YhMEZy/O+kCi4Oe3sl1xrb+AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tZcqcf8pGeLIGZfqwfkExJ5GzNcMUNDao7qFB8IEAiN9xxmEQk7Ai4G+VXB3SoqbA
-	 LIkIL18iB3fPQxs9ZoViVZAP5hdJnAo8FHatXmvFgT1jCjDXCTIH10AyBfqnsN8EJH
-	 QTTaOK0CkqgNjwoZpAXtgMsI84YHDUUzZ78/nVC8=
+	b=e1EJhrg6awhHd5T0pNie3GlZTRGI4spyoG6Ws4hVH2YYBxAMFwFuCJRnh6he43nFL
+	 nriV/ro/e9CVRNB3FdL5JsllykLq/kZf720R9n2zKa+CL+2HQ7Ev0OBm40F0hXdYqd
+	 ZVhdrLqKQiz1/XB8v5M0uV+a0kyO4guhcA2IdQbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanye Yang <quanyeyang@proton.me>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1142/3318] mptcp: reset msk state on early connect failure
-Date: Wed, 18 Nov 2026 15:29:24 +0100
-Message-ID: <20261118150354.327408417@linuxfoundation.org>
+Subject: [PATCH 6.6 1143/3318] ALSA: seq: oss: Skip events until fully initialized
+Date: Wed, 18 Nov 2026 15:29:25 +0100
+Message-ID: <20261118150354.361654170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,56 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanye Yang <quanyeyang@proton.me>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 29afe67082b2d33ab2e90c56c337235d725f023f ]
+[ Upstream commit 68d4a6ea6cc6091a05836f783bc17d525d266d0b ]
 
-mptcp_connect() can fall back before the subflow SYN is sent, for
-example when the netns is in an MPTCP blackhole, token allocation fails,
-or MD5SIG is in use. If the subsequent subflow connect() fails
-immediately (EAFNOSUPPORT, ENETUNREACH, ...), __inet_stream_connect()
-returns while the socket is still SS_UNCONNECTED and never calls
-->disconnect(). This was reported by Clashiko [1].
+When an OSS sequencer device is opened, it creates a sequencer port,
+then further initializes the internal states like a timer instance,
+etc.  Since the sequencer port is published, an event can be already
+delivered, and this may hit unexpected event handling, which can
+eventually cause a NULL dereference (like the timer start/stop event
+triggered before the timer initialization).
 
-The error path only dropped the token and moved the msk back to
-TCP_CLOSE. MPTCP_FALLBACK_DONE, allow_subflows and
-request_mptcp were left as after early fallback, so a later
-connect() on the same fd stayed TCP-only.
+For avoiding such a race, introduce a simple guard and skips the event
+processing until the port is fully initialized.
+At releasing the device, in turn, clear this guard, so that any input
+events will be discarded during the teardown.
 
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/633 [1]
-Fixes: 0235d075a592 ("mptcp: mark as fallback even early ones")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quanye Yang <quanyeyang@proton.me>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-1-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20261016161930.482309-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/core/seq/oss/seq_oss_device.h | 1 +
+ sound/core/seq/oss/seq_oss_event.c  | 3 +++
+ sound/core/seq/oss/seq_oss_init.c   | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 7b08b5899ef39..331a10fc46eb5 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3952,9 +3952,16 @@ static int mptcp_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 	 * subflow_finish_connect()
- 	 */
- 	if (unlikely(err)) {
--		/* avoid leaving a dangling token in an unconnected socket */
- 		mptcp_token_destroy(msk);
- 		mptcp_set_state(sk, TCP_CLOSE);
+diff --git a/sound/core/seq/oss/seq_oss_device.h b/sound/core/seq/oss/seq_oss_device.h
+index 6c2c4fb9b7537..f0d7bb0e11a94 100644
+--- a/sound/core/seq/oss/seq_oss_device.h
++++ b/sound/core/seq/oss/seq_oss_device.h
+@@ -73,6 +73,7 @@ struct seq_oss_devinfo {
+ 	int cseq;	/* sequencer client number */
+ 	int port;	/* sequencer port number */
+ 	int queue;	/* sequencer queue number */
++	bool initialized;
+ 
+ 	struct snd_seq_addr addr;	/* address of this device */
+ 
+diff --git a/sound/core/seq/oss/seq_oss_event.c b/sound/core/seq/oss/seq_oss_event.c
+index 4699c084d018e..fa91eb1233de3 100644
+--- a/sound/core/seq/oss/seq_oss_event.c
++++ b/sound/core/seq/oss/seq_oss_event.c
+@@ -427,6 +427,9 @@ snd_seq_oss_event_input(struct snd_seq_event *ev, int direct, void *private_data
+ 	struct seq_oss_devinfo *dp = (struct seq_oss_devinfo *)private_data;
+ 	union evrec *rec;
+ 
++	if (!dp || !smp_load_acquire(&dp->initialized))
++		return 0; /* ignored */
 +
-+		spin_lock_bh(&msk->fallback_lock);
-+		msk->allow_subflows = true;
-+		msk->allow_infinite_fallback = true;
-+		clear_bit(MPTCP_FALLBACK_DONE, &msk->flags);
-+		spin_unlock_bh(&msk->fallback_lock);
-+
-+		mptcp_subflow_ctx_reset(mptcp_subflow_ctx(ssk));
- 		return err;
- 	}
+ 	if (ev->type != SNDRV_SEQ_EVENT_ECHO)
+ 		return snd_seq_oss_midi_input(ev, direct, private_data);
+ 
+diff --git a/sound/core/seq/oss/seq_oss_init.c b/sound/core/seq/oss/seq_oss_init.c
+index 42d4e7535a820..e0e5e2853754d 100644
+--- a/sound/core/seq/oss/seq_oss_init.c
++++ b/sound/core/seq/oss/seq_oss_init.c
+@@ -263,6 +263,7 @@ snd_seq_oss_open(struct file *file, int level)
+ 
+ 	client_table[dp->index] = dp;
+ 	num_clients++;
++	smp_store_release(&dp->initialized, true);
+ 
+ 	return 0;
+ 
+@@ -408,6 +409,7 @@ snd_seq_oss_release(struct seq_oss_devinfo *dp)
+ 
+ 	client_table[dp->index] = NULL;
+ 	num_clients--;
++	smp_store_release(&dp->initialized, false);
+ 
+ 	snd_seq_oss_reset(dp);
  
 -- 
 2.53.0
