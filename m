@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032673;
-	b=LfjggV595gw2Fva8jXQpj9QejyUWu9U1DS92tLaKWqPRgle77VtBplNeduvlz8b87PcV
-	 DIX6vtCvOSU9SYfWiB6Se8U7E10R+ECcH/3r1EZntwYgELJQ41+0NgZ/qDscmXQgHbAlf
-	 Iv35wh9oL5f5jpwR47IjpZs9pqM6AD8WyvyaifCJDoKqZ8mZJ7t/8Fv8tsTBw5ChyTwWN
-	 mcn0DH55PWR5J9BHWITK1YGKIIDxxOCYimmoko9SqrVFFAsidXWBb+ZAyUOBiexoHX3m1
-	 Ex0Fh0QFu8O5xTfheGXPkxVZwu6aZfkH652AA2HBjqYtbrLC9bMvDqkdkB0FhWVInZA==
+	t=1795032676;
+	b=qJXI7vgHqM067iK0leF+sZ/+fgibZ+u/Fij9qJX2Wv85tzudL1s9Zh5eCp3AuZvbEjZz
+	 VawfAdhwlDEpBdLsB/kO4MJhEsIyXSQ7RfG+UfLwU3o1ttOIA3ntB4x2mh9dR4tKIG6ck
+	 i8WipcGdnmwyVeHZs6H1OFrQmbBfBSawYRwB7K4VBqx9eVphKLlbdhl/d57nVVKtT+mCm
+	 yUaYl1UTCYcRVa3hDzZLmQuoFNxxA80UEuRWvzBAuliwgdf2Ux96CPDuBDcEPd+UWA4O1
+	 3Y8KZQa/++bdRODCozmg+r/9iMBAJcsiOBybdfodSXx3l0K6/PNw7tRS2MsDy6qNt4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032676;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+vHg/q3rPxgsLhLfOkSO5vaLCTyMUFA/iTAkdEp8E98=;
-	b=cmdmayhEmQvSks3EUgA3ORnOTUcEG444lXZDYib2U9JtwHk3AkK8yNIzCWdVza+QgFLX
-	 9kXAsqyLCd65bHFvxGssVqcHMUk4G1vQa7WACuKJr863v+2RMZwS+V6ulwLiJJCRrwxe3
-	 ofg9LBl+6DxMM4GZtzFrgbvPp+N7W1xT/76vV9Oy2XhoUpHEyMxF6vAvLSat8/MRPmNGr
-	 Dc/yv0iKOsMz4C0Yt/4gOtAq0F59zeupWygvOfb/Wbvi3QpP9kp1u6cvQVLtMt2dzS/Rb
-	 PJy5gWVqCxdEWWOBDpoC2bd192DcGzSCwMNek8P3LnJhpIusrOZaYgdSRgFeTLEHlWA==
+	bh=r22kdfBZLw2dHDND3H5O2Fvv6XaK8SWruAIIgcRsKAA=;
+	b=TNMer9CxOjHrkXPegoj9gjvXEroNYFW6dJUCBF2IkozjrEUPWNfp8rtn7q8vVXSBuYpG
+	 VfjKLvu9l7/K1tEJtJKeQkTOWQKPT7T3onRaaMAafPEwgvfW9hSzvU7ZTaU7DGV3ebVyh
+	 5U6ttugtiGr6NhQoe3GKKI6pxqIhaQsZu4QJlELXoH5wc8DWhN4qCdBPSnNjqtN0920tR
+	 G4PkpAWikLh+/Jpt9LTo1b7qUyjNdCaibeGthHAygy6V68ztRiB56K/4IQl1HBMDTfI+d
+	 GYUQ8O0pEy5BnaABThRLagJAa+2w/iziWnEtliCHpFHXsLfMPnGJNb81d+scCyydhXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fIqQCIkK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTeRt+5S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6D5606A31C;
-	Wed, 18 Nov 2026 20:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0299F606A31C;
+	Wed, 18 Nov 2026 20:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fIqQCIkK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FC11F000C4;
-	Wed, 18 Nov 2026 20:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTeRt+5S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CD41F000C4;
+	Wed, 18 Nov 2026 20:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032673;
-	bh=+vHg/q3rPxgsLhLfOkSO5vaLCTyMUFA/iTAkdEp8E98=;
+	s=korg; t=1795032675;
+	bh=r22kdfBZLw2dHDND3H5O2Fvv6XaK8SWruAIIgcRsKAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIqQCIkKZsufv+WuoF7dnPn96yxHGmKGFbbFRVRKQf3xf5T9dmYiua5z7tzt0sK3N
-	 lnpb/XMwHcei/huvIkl1Hk0YEMyhHtKCbADwbmteG+j7UnThkweoOoLhT0KL+YSr7O
-	 9g00TZQxXTtD1iqb4E6H5qXbxjnBpZhi1JNF1mRk=
+	b=OTeRt+5SFLSvlvZhV5DsJCtV5Zdrt8IF2M6feF+mE3touJ5Jq+wfREAvd4/imUUk9
+	 OVhC1fxt+VC1koGwLZr3GWGwO8hbzg5K8LAe1w11BfAwseXllNtsviV+lvUMnYgM6F
+	 6/WgDkOYmgb65RukeOmyJ4wQUXeeLgN1gc7SDlMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Alexandre Cassen <acassen@corp.free.fr>,
-	Yevgeny Kliteynik <kliteyn@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1494/1756] net/mlx5: HWS, fix modify header pattern compare on big-endian
-Date: Wed, 18 Nov 2026 16:00:21 +0100
-Message-ID: <20261118150108.444912488@linuxfoundation.org>
+Subject: [PATCH 6.12 1495/1756] selftests: ALSA: pcmtest: Compare all captured bytes in ni_capture
+Date: Wed, 18 Nov 2026 16:00:22 +0100
+Message-ID: <20261118150108.476203085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,50 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Cassen <acassen@corp.free.fr>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 7eed173447fba937a19e2f5f2dc79780793f72e7 ]
+[ Upstream commit c8c199e1b1b3bb0ef52a2a02d1ec87bee574ce13 ]
 
-mlx5hws_pat_compare_pattern() casts each __be64 action to __be32 to
-compare only its control dword. On big-endian this keeps the data dword
-instead, which HWS clears from the pattern of set and add actions. Two
-such actions writing the same value into different fields then share a
-pattern and the second rule modifies the wrong field.
+The ni_capture test reads rate * time frames into each channel buffer
+and then compares rate * time bytes. A frame is sample_size bytes per
+channel, so with S16_LE only the first half of each channel is checked.
+If the second half is wrong the test still passes.
 
-Read the first dword of each action from memory instead. Little-endian
-behavior is unchanged.
+Compare rate * time * sample_size bytes per channel.
 
-Discovered by an AI code review agent [1] and confirmed by code
-inspection. Not reproduced for lack of big-endian hardware running HWS.
-Tested for regressions on ConnectX-7 with firmware 28.48.1000 on a
-little-endian host.
-
-Fixes: aefc15a0fa1c ("net/mlx5: HWS, added modify header pattern and args handling")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261010120147.135825-1-acassen%40corp.free.fr [1]
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
-Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
-Link: https://patch.msgid.link/20261019133159.1742411-2-acassen@corp.free.fr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261021112554.4037107-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/steering/hws/mlx5hws_pat_arg.c         | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/alsa/test-pcmtest-driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pat_arg.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pat_arg.c
-index e084a5cbf81fd..887a9c3633a15 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pat_arg.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_pat_arg.c
-@@ -116,8 +116,8 @@ static bool mlx5hws_pat_compare_pattern(int cur_num_of_actions,
- 				return false;
- 		} else {
- 			/* Compare just the control, not the values */
--			if ((__force __be32)actions[i] !=
--			    (__force __be32)cur_actions[i])
-+			if (*(__be32 *)&actions[i] !=
-+			    *(__be32 *)&cur_actions[i])
- 				return false;
- 		}
+diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+index 82ddedaab9054..c2ad42b66b9b1 100644
+--- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
++++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
+@@ -265,7 +265,7 @@ TEST_F(pcmtest, ni_capture) {
+ 	snd_pcm_close(handle);
+ 
+ 	for (i = 0; i < CH_NUM; i++) {
+-		for (j = 0; j < params.rate * params.time; j++)
++		for (j = 0; j < params.rate * params.time * params.sample_size; j++)
+ 			ASSERT_EQ(chan_samples[i][j], patterns[i].buf[j % patterns[i].len]);
+ 		free(chan_samples[i]);
  	}
 -- 
 2.53.0
