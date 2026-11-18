@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020959;
-	b=dgFNK2H3aEwJLUcjn+qPTqGQ/cBfpFTS33uAtZpWx1KdodMw3XYpJaKomBDqDuWdyPyC
-	 okCwrRDRvgpXwICgaGBks9NYx8CxZSsUJ+2Bqa0+Uj9qmaWDKlKNnrUjGN+iwrPyby5mo
-	 U5s+f2kRc+zdy9BX62/g1ZjGDf9ep3EaW4UzjsEaaFvv4YJUgsBb4DEc8csTcnCeHhtu2
-	 sGlqx9AipOMoRwhUXP4OZ+VcfJaIbCkt0rOYRdrOI0W9usEDebxc0CQVmxE/uo44RxT4L
-	 5f6/ULX+3668pBKhhBmUxjjkBoKJM0/AXoycQx7Vvdx1mYu/m/46TCNclxSMBk7XERg==
+	t=1795020962;
+	b=v7UGhYnkgSEJHq2cyjb4cQv9QeBHpI4pIWE5h/X7zSoZwQBqfeGZFOyO3MQw97PrAhFg
+	 ER22vBelOVul1uNxZi8LPCko38mn90mqmbIdbO9yZPy18UJZbH1cEfEHvDi8YD6L3dMl6
+	 4eNBPePBLR/9d7J8UNNSaqUa26TIB191vBjqojsRpApxUWc1+hhlmHbE+c0qAlp9wLUou
+	 cNBzlXUPUR15EPMnktLnpSQgdBZvaeiW+khNS20XEGp20etawjIttrRTnve5ZTWEsjJl8
+	 vBCN5p0Q037pVhg3FoHdKxQXyE2nvVUqKGU8cRaSCaf1isXcL7VLulWV3VVKdq1uFAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020962;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lguk+8K0DJ5WInp1RwbpBYIGWT3hBu/yKqLNs1rzg5k=;
-	b=JAPh4EbXwyOPPBLJB1WCfLVEEiWPz+ySBi397/6WugYcfc1lZsHzLvdXtlP2cLeN7CWK
-	 OlmIS0W4Vc0tGVj6RgmY7ZKUrrFBMDtuNS+eK8fLdsV//YZ5zeADVjGTDhioYhGvZKxlF
-	 YAfmxNO190x4H4/RGgv6cu81ZpBNnhMwuPjxja8qm1GWltCm8fWuiGELBih1of5kRFk3j
-	 9ESFlS2UgMLdQSlAzs/zugKlNX2qCDvZey3mt3CYytsZ3XdsG0RFpMTt+1MKjCjvZcuwP
-	 jkZr02AnxigEfn5+KVfFEgsm1YUOVytq8r9Ed/oebOo4VvSH+t1UpRqUdfrTfHB/Aew==
+	bh=MsWAHCBHcIi1idhrxwI7VLY5Yh+vh4a/WtE3aHjuJMo=;
+	b=Ct/iJaPdsC2VrNBji6TqoaXaqtBUuGoya4tGfQE5195Ghucawo6FzQbTuymOWKhqpVZx
+	 j8ucUtGvJXLSA2fuIkQ1n11pOIO4hgawpgTg3BnXwEPRNTif9NJiYKcEqYG46ksHH2zMx
+	 SRXdaoNsL3/XFSGDSl9b4yvo9J9+xr+y9W86BXyfUVEs2IXt0wBoHfVJroc52CC03huRs
+	 qAq9c5Jx0MVpEmibladBJT4MNmgmkzk2gc6XW2mbwznUHFq3Ge6nY1MuVXc1IxicXxZV6
+	 qb+lrEDYrIwPyqf96BKE1DIKqknW3iBBlJU5hGwHaPTSlfgqnqAMUZGl+96kCXLSDYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lX109jOR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dmSxIyfi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D787E606A31C;
-	Wed, 18 Nov 2026 16:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868DD606A31C;
+	Wed, 18 Nov 2026 16:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lX109jOR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D951F000C4;
-	Wed, 18 Nov 2026 16:55:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dmSxIyfi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E033C1F000C4;
+	Wed, 18 Nov 2026 16:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020959;
-	bh=lguk+8K0DJ5WInp1RwbpBYIGWT3hBu/yKqLNs1rzg5k=;
+	s=korg; t=1795020962;
+	bh=MsWAHCBHcIi1idhrxwI7VLY5Yh+vh4a/WtE3aHjuJMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lX109jORXHUc6yD+UYWnzsipa+Fe3E5AFm5CjzVHK/sQazOAXLGK6Up9ZlulfEPQi
-	 F9qqsnWb362kuSvVggQ/jIN6SKLqT7Piyq6fFP3oxwDeASDeOwWrWFRYawmciV4/Tj
-	 jwPyefITavkOshgOD0/X9Z0tduUG9RfF3mgjPo94=
+	b=dmSxIyfi8oFbxfmcRwxztE9Rxp1XzWO6G/UcGNyUrUldshseJoogUSNUM55uHm1WS
+	 4NXomPUTL6xeyHbjBKfytycEG9ag01Wa4ak8K1WExYRKcDSloXY5eT9QXR9PoRhja4
+	 lS2Y3uZLGcMGweli8wQar8XbdzLO4IvBvI5NfS4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2100/2651] bpf: Pull the inner header for End.DT6 in End.BPF
-Date: Wed, 18 Nov 2026 15:55:40 +0100
-Message-ID: <20261118150401.594034057@linuxfoundation.org>
+Subject: [PATCH 7.3 2136/2651] RDMA/core: Free unpublished port statistics after initial-read failure
+Date: Wed, 18 Nov 2026 15:56:16 +0100
+Message-ID: <20261118150402.781303558@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,59 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 434324c611a98bc76dc850d45d67756dae5622cf ]
+[ Upstream commit d74bdcfa89fa45d3a506cddc37b3bf1b76cea0ce ]
 
-bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6) pulls the outer headers off
-the packet and hands it to seg6_lookup_nexthop(), which reads the inner
-IPv6 header at skb->data. Nothing says that this header is in the head of
-the skb, or that there is one. If the head ends with the outer headers,
-the route is looked up for whatever lies behind the head, and the packet
-is dropped or leaves by the wrong route. If the program then pushes an SRH
-with SEG6_LOCAL_ACTION_END_B6, seg6_do_srh_inline() pulls an IPv6 header
-off a head which has none, and __skb_pull() hits its BUG(): the kernel
-panics on a packet from the network.
+An initial port counter read can fail after allocating its statistics
+buffer and wrapper. Free these both allocations.
 
-GRO pulls the inner header of a plain IPv6 in IPv6 packet into the head. It
-takes a packet which GRO does not look into that far, one with a fragment
-header in front of the inner header for example, or a device without GRO,
-and a driver which leaves the inner header in a fragment.
-
-Make sure of the inner header together with the outer ones. The program
-goes on behind an error of the helper, so do it before the packet is
-changed. A pull which fails can still have moved the head, so look for the
-SRH again.
-
-Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-13-alexei.starovoitov@gmail.com
+Fixes: 467f432a521a ("RDMA/core: Split port and device counter sysfs attributes")
+Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-2-60f6da3ddec3@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/sysfs.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index ef09652b8b160..1a01b8e364504 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7073,9 +7073,14 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
+diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
+index 69df8b703cbd5..4cd861b5d953c 100644
+--- a/drivers/infiniband/core/sysfs.c
++++ b/drivers/infiniband/core/sysfs.c
+@@ -996,8 +996,8 @@ static int setup_hw_port_stats(struct ib_port *port,
+ 					    data->stats->num_counters);
+ 	if (ret != data->stats->num_counters) {
+ 		if (WARN_ON(ret >= 0))
+-			return -EINVAL;
+-		return ret;
++			ret = -EINVAL;
++		goto err_free_data;
+ 	}
  
- 		if (ipv6_find_hdr(skb, &hdroff, IPPROTO_IPV6, NULL, NULL) < 0)
- 			return -EBADMSG;
--		if (!pskb_pull(skb, hdroff))
-+		/* As long as nothing has been changed, the program goes on */
-+		if (!pskb_may_pull(skb, hdroff + sizeof(struct ipv6hdr))) {
-+			/* but the head may have moved */
-+			bpf_update_srh_state(skb);
- 			return -EBADMSG;
-+		}
+ 	data->stats->timestamp = jiffies;
+@@ -1031,6 +1031,11 @@ static int setup_hw_port_stats(struct ib_port *port,
  
-+		__skb_pull(skb, hdroff);
- 		skb_postpull_rcsum(skb, skb_network_header(skb), hdroff);
- 		skb_reset_network_header(skb);
- 		skb_reset_transport_header(skb);
+ 	port->hw_stats_data = data;
+ 	return 0;
++
++err_free_data:
++	rdma_free_hw_stats_struct(data->stats);
++	kfree(data);
++	return ret;
+ }
+ 
+ struct rdma_hw_stats *ib_get_hw_stats_port(struct ib_device *ibdev,
 -- 
 2.53.0
 
