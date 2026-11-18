@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020308;
-	b=r8Wlx8osvf0xLtRpw1btzBOcEA/T77EmPia9IOvqRBNnPs0J16JKtd1MQF4zNR8HnE4O
-	 i7qm0kfU8zwCEzd9K9vMnYU9b0sA4ppxmjbcPXmwECKjt37Y2s8637T/XQai9fgH1aY98
-	 nRwbCvJO4B6eKtp052SOuWoiayVWmtyzW3245nrXxaXF6Lp6krzsn3XdxrwTX66vtvsSB
-	 5fxKHPChtJuCppFTObFIqIZds0Wj2fiSzQ55rGkbudaBFhjHCYsCCYqBEuY0ldATMaP4z
-	 CguA6xlQ9EwatVURGpNl4DLKi1zID4aWg/SIqI5LiMhAUsmx8KrDFVtY9wgtOvybP6A==
+	t=1795020311;
+	b=E71a90Achh3mKhf3ns9LIyAQXCRB3fvSi5r6g2LkkURzonbjKqb0eJxY4q/wawfOXkkU
+	 ab6dXKjplZYRXLJuqROarpYqKZi0dX0dAsTX+/wS8Hia9ytTq0ykNFVNdoy6TPCSNeJIa
+	 7ir17uFFAHmsFbxMKAG3WQ2kjDrADJ5NUU9rkM1p9jP1ey2a5WLEqNcvbH++YVDF91x+Z
+	 SPqB9qH32qay6THd+xYAl8b2u/4X0Pa9KTXbUhTdZgG++1Ruw8oWw3FFQcy19e2E2IPwB
+	 mMgApSoAXOwmQQq723moLCw4sVWhMq8JLi8wyI0ICa+ZPKO0OXAuNZtuBOFtb9s7LJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020308;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020311;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v0VCRLsdo+0ccSHrotv6l6o9ckd41muoN3g+eWdXjZs=;
-	b=uI8Rb0uENygc9NxmpE3dVGiR87i5K0T2xf5DWSj4Q+kzogokLx3YNBBwSBAfHLqw7bz/
-	 5Pp01NOyNZ2ZemiiZNMZKeWsShMvjpQKIQoMyCBqYibiiP185iKwPO2T/XtQjiYyzQxME
-	 zBoVetDHSscTjZCf2/0EsNRP1mr9RhYREL8Oa1p3ttUe3vRodW9ttjMxMQfLK6Kqu4l4y
-	 9odWTz0kEWC7QtVD6hzn/619+cRzx0sNoAlPmF3/9q0BUUyRQ12oja0I7ZCuJh9mcma7Y
-	 ac81Z3D5zn2/93ZSylvxN8J66nbIOJocWUO1ug2ebzFyyGz8IzGh3ehgBqMq96vD1hQ==
+	bh=ZUau8gw4seTtMb2Td90fX3q0QE+Wa2eZfidzHq7wW4s=;
+	b=cwYlUIxpqhGfKEFia0vL7xc7q6wF2W/aF9PAYoFqkOBR7owusZmQeyFZ22hcRRjaqgUm
+	 Y/A2mGEo+tVWNWAfbStbWnJf72IFmrRrLg69U0xpu/kQ1ho4/bILfKwg+P+N8EKHfHmwb
+	 oB0Y3xgHr9M3QCD7ZsaEWVjbM2akjBHl1Ba/ZQPB0RST3AQxQfmWRlnAKRBUoAc3pw7fi
+	 bpTgP0WcHM78yf5zEB0qJ/Vqjvfl1P74ZHWf2JVItgnItF6OhciX7tu2YwplaNViKtVfW
+	 f2SvFl+WVa0FYFm/RwJbvBtjKHEvwPgQ5DD5mAFKF9MqosGxh5oJZIQxFVK4tCDLV+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ro5j2kx7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pe8RkgR9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791CA606A32A;
-	Wed, 18 Nov 2026 16:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C1D606A32C;
+	Wed, 18 Nov 2026 16:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ro5j2kx7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE63B1F000C4;
-	Wed, 18 Nov 2026 16:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pe8RkgR9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C611F000C4;
+	Wed, 18 Nov 2026 16:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020308;
-	bh=v0VCRLsdo+0ccSHrotv6l6o9ckd41muoN3g+eWdXjZs=;
+	s=korg; t=1795020311;
+	bh=ZUau8gw4seTtMb2Td90fX3q0QE+Wa2eZfidzHq7wW4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ro5j2kx7NtBXWTF0wJPTIzHeksRiZYMUfj6u55xgGVyeyRsPK/8mV2vhkxCpcGmGg
-	 ZdcG+K43VanUKgxLIiXk/R1mwIGUoVAWOCziXQBmf5E3awDcvcnQC3ObpGIaUJlmbU
-	 9hzFrahNPyYmZu3n1AFQb3wqFy8Wv2Byark21jeI=
+	b=pe8RkgR9UrbpgyA4FnExTlZcUffMRTQZ+fWeRcYjqu0Pg9LuJG3xWXrZgXr6mBHCM
+	 eoF39p5NMmRQPAMNjJ9IZkjqyPKF8z+BRQaUPeE0zn8jjnpASPkvNSIaYgd7JEIib9
+	 Qc0xjuYoH5xqeJlquATUOpOghLl7h1ev20I2op0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Kevin Dewald <kevin@simpleble.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1905/2651] Bluetooth: MSFT: Serialize handle map cleanup with event processing
-Date: Wed, 18 Nov 2026 15:52:25 +0100
-Message-ID: <20261118150355.394406817@linuxfoundation.org>
+Subject: [PATCH 7.3 1906/2651] Bluetooth: hci_event: Fix LE link drop on remote features command status
+Date: Wed, 18 Nov 2026 15:52:26 +0100
+Message-ID: <20261118150355.424855830@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,95 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Kevin Dewald <kevin@simpleble.org>
 
-[ Upstream commit 56e20c3d8ad340bbfc90221c4aae1c870485fb57 ]
+[ Upstream commit 91638f53ff2b8234195ff27ec913e068269a28e9 ]
 
-MSFT monitor handle mappings must remain valid while vendor events look
-up and use them under hdev->lock. msft_do_close() removes and frees the
-mappings without that lock.
+When the local controller supports peripheral-initiated features
+exchange, the LE Read Remote Features procedure also runs for incoming
+connections, and it fails with Unsupported Remote Feature (0x1a) if the
+central does not support that feature. hci_le_remote_feat_complete_evt()
+and hci_le_read_all_remote_features_evt() handle this and let the
+connection transition into connected state.
 
-hci_dev_close_sync() clears HCI_UP and drains the RX workqueue before
-MSFT cleanup. However, a transport callback that already passed
-hci_recv_frame()'s state check can queue a vendor event after the drain
-returns, if no earlier shutdown callback has quiesced reception. The
-driver close callback runs after MSFT cleanup, so event processing can
-overlap the unlocked removal. msft_monitor_device_evt() can then
-traverse freed list entries or read handle_data->mgmt_handle after it is
-freed.
+A controller can also return that error in the Command Status event
+instead. An Intel controller does so for a central that does not
+support peripheral-initiated features exchange, presumably because it
+already has the features of the central. hci_cs_le_read_remote_features()
+and hci_cs_le_read_all_remote_features() then confirm the connection as
+failed while it is still in BT_CONFIG, and the hci_conn_drop() in
+le_read_features_complete() disconnects it right away:
 
-Take hdev->lock while resetting monitor states and removing handle
-mappings in msft_do_close(), as normal monitor cancellation already
-does. An active event reader then finishes before its mapping is freed,
-and later lookups see an empty handle map.
+  > HCI Event: LE Meta Event (0x3e) plen 31
+      LE Enhanced Connection Complete (0x0a)
+        Status: Success (0x00)
+        Role: Peripheral (0x01)
+  < HCI Command: LE Read Remote Used Features (0x08|0x0016) plen 2
+  > HCI Event: Command Status (0x0f) plen 4
+      LE Read Remote Used Features (0x08|0x0016) ncmd 1
+        Status: Unsupported Remote Feature / Unsupported LMP Feature (0x1a)
+  < HCI Command: Disconnect (0x01|0x0006) plen 3
+        Reason: Remote User Terminated Connection (0x13)
 
-An instrumented kernel produced this KASAN report (timestamps removed
-and unrelated frames omitted):
+Data the central sends afterwards is reported as:
 
-    BUG: KASAN: slab-use-after-free in msft_vendor_evt+0x1906/0x1990
-    Read of size 2 at addr ffff888104df3602 by task kworker/u17:2/502
+  Bluetooth: hci0: ACL packet for unknown connection handle 3585
 
-    Workqueue: hci0 hci_rx_work
-    Call Trace:
-      [...]
-      msft_vendor_evt+0x1906/0x1990
-      hci_vendor_evt+0x6f/0x90
-      hci_event_packet+0x894/0xc70
-      [...]
-      hci_rx_work+0x3f8/0xfa0
-      [...]
+Handle Unsupported Remote Feature in the command status the same way as
+in the complete events.
 
-    Allocated by task 499:
-      [...]
-      msft_add_monitor_sync+0x6a8/0x10a0
-      msft_add_monitor_pattern+0x7f/0xb0
-      hci_add_adv_monitor+0x1fa/0x2e0
-      [...]
-
-    Freed by task 499:
-      [...]
-      kfree+0x307/0x580
-      msft_do_close+0x238/0x750
-      hci_dev_close_sync+0x546/0x1380
-      [...]
-
-    The buggy address belongs to the object at ffff888104df3600
-      which belongs to the cache kmalloc-32 of size 32
-    The buggy address is located 2 bytes inside of
-      freed 32-byte region [ffff888104df3600, ffff888104df3620)
-    [...]
-
-Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: 0fe29fd1cd77 ("Bluetooth: Read LE remote features during connection establishment")
+Fixes: a106e50be74b ("Bluetooth: HCI: Add support for LL Extended Feature Set")
+Assisted-by: Claude:claude-opus-5.5
+Signed-off-by: Kevin Dewald <kevin@simpleble.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_event.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 6f4b7c38a2474..2559c5b1bef02 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -683,6 +683,8 @@ void msft_do_close(struct hci_dev *hdev)
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index c9cf7f27d21b9..3ea6c06adaaf0 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -2989,8 +2989,25 @@ static void hci_cs_le_read_remote_features(struct hci_dev *hdev, u8 status)
+ 	hci_dev_lock(hdev);
  
- 	bt_dev_dbg(hdev, "Cleanup of MSFT extension");
- 
-+	hci_dev_lock(hdev);
+ 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
+-	if (conn && conn->state == BT_CONFIG)
++	if (conn && conn->state == BT_CONFIG) {
++		/* If the local controller supports peripheral-initiated
++		 * features exchange, but the remote controller does not,
++		 * then the controller may already return the error code
++		 * 0x1a for unsupported remote feature in the command
++		 * status.
++		 *
++		 * Handle it as hci_le_remote_feat_complete_evt() does and
++		 * allow the connection to transition into connected state.
++		 */
++		if (!conn->out &&
++		    status == HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE &&
++		    (hdev->le_features[0] & HCI_LE_PERIPHERAL_FEATURES)) {
++			conn->state = BT_CONNECTED;
++			status = 0x00;
++		}
 +
- 	/* The controller will silently remove all monitors on power off.
- 	 * Therefore, remove handle_data mapping and reset monitor state.
- 	 */
-@@ -697,6 +699,8 @@ void msft_do_close(struct hci_dev *hdev)
- 		kfree(handle_data);
- 	}
+ 		hci_connect_cfm(conn, status);
++	}
  
-+	hci_dev_unlock(hdev);
+ 	hci_dev_unlock(hdev);
+ }
+@@ -4039,8 +4056,17 @@ static void hci_cs_le_read_all_remote_features(struct hci_dev *hdev, u8 status)
+ 	hci_dev_lock(hdev);
+ 
+ 	conn = hci_conn_hash_lookup_handle(hdev, __le16_to_cpu(cp->handle));
+-	if (conn && conn->state == BT_CONFIG)
++	if (conn && conn->state == BT_CONFIG) {
++		/* See hci_cs_le_read_remote_features() */
++		if (!conn->out &&
++		    status == HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE &&
++		    (hdev->le_features[0] & HCI_LE_PERIPHERAL_FEATURES)) {
++			conn->state = BT_CONNECTED;
++			status = 0x00;
++		}
 +
- 	mutex_lock(&msft->filter_lock);
- 	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
- 				 list) {
+ 		hci_connect_cfm(conn, status);
++	}
+ 
+ 	hci_dev_unlock(hdev);
+ }
 -- 
 2.53.0
 
