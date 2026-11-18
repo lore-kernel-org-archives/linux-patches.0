@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043136;
-	b=Gyq7H2bl0lWa+YA2tFy85yDlLOaFPZD8u0kW9fL/oMPrv++S60PpGdwSejSMF35V09Gn
-	 z9QkQ1L9RQX7wrGPKLzmzK9xXH81PM7Uz1gQURI3XMEN8OoESEKsMlUKsZOViS5cfAbRB
-	 8pUkP8+L8PbvoXOmf9Tl8lonImsYc94IEORARKIUOnLEtxQGGnBmLz6qB7+YrA4bigJlL
-	 izGBUlEeNll8wbkYHP4r3dJOQPn6DSBZfB45hFo0kEKFEF3/VDmcCAm40PAts+CeFHTUM
-	 EJ0ik6Nmn3jH1RFzMjrJTc1kFHP0CDQ/h4EkIrgLrw4PVT4qIlheI/1SjFpKK4+Ekrg==
+	t=1795043139;
+	b=sarVjktdC1NdsZm3ZSG7EhYO35XaXQcC3lmEk/ZTQzc3sWun1xHnw3yUBYa1xWSpYayZ
+	 Ez7DVnjrKVcvwBsefxyve0nHzl2sVHlFlj+T5A3ciSFZ9RyLPthAP1c5jqE2MwUwtmzi/
+	 Uo2HvKuuYQM5YGRsldQOy8CvY3ZHJIvdJ9sR+44c+qoU8Tgj+RgKvzoDUScz+KnjuVK2P
+	 ElNfXahqqNbEfzXjrChzVYluIbi6ob0x4UMp+q61a6JVbWJNwuOgfWKeqTCKJpTz5Vnrv
+	 isC+fEmfieUosAqDacud9DJG9fDeKHs6gU3tMxH2oKZkjAihb8Ga1m+fE6MDwqNtvHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043136;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bth5Yaw8eHcZ1D7PHF+aWqBvvEwtnz71+Ymo3oVay4s=;
-	b=CDGulPqwJbYOwi8RtkogfvqHbNNy38TjqO1XiQG02hV6kxpzHKlAZNMxvs4D/a9AwEGT
-	 6414aU26qXjYCuHt4L8/g8jRqKQ5RfZWSz0iGVZYSw6T49KoM8eKC277y/atxA/6YSfDS
-	 omuiMR50e5k2ALC6A5cV4MzeOPAip3MrnTSspGZdJY8KEdNtYIBntPPMC/gC5440HOkVF
-	 a9uPQ254/jwNbA5omxjC2bIjRmSWik4V0s4lj6noFcHmoHYVRwTEQgou+Y4jdoArgCzJn
-	 Y9rlyiRutBVniipGucitrihZQV8Oinx4WAS+Va5w9We9VkQXE4cSWV1IjGoIFUBTszQ==
+	bh=VXLa5T9EHJkEDdJlC1Ov+puArSdouR9igp5ow3QqfqY=;
+	b=fI96zAetSOQDTHhCLPqN179WhkIOVR4YVb4Az8nN6jovMZwPtPzoe72yB2cp3vhTbSfM
+	 0SWVQNnHNVDySMT/CFgdXnd4MBr7R/qj7Bi1acZjitVuxFXf4OzoxI+5NpOCAVp4qybdb
+	 0Tz7RvTef/21c8WzbzHbGljVo+hAd9Hyx+qPcFudDgAbj5kYnnpUZ0p4ZHlWIrxX5Dx5a
+	 WUOtIC64McB9Qm977IHRnShMGiVKVVa5eQeCzcqxNBLslx0TK9hg5xA/hcSKj1Sj51PMF
+	 J6Kd0hVM1EXu3AcjdCkBcrftUfp47WIECXZ8I4QMQSONEtaMyZjGDoMJRP7aZ7H7RRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRR20r1u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IL5/6rBR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B44606A33F;
-	Wed, 18 Nov 2026 23:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F0F606A31C;
+	Wed, 18 Nov 2026 23:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRR20r1u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7851F000C5;
-	Wed, 18 Nov 2026 23:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IL5/6rBR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569E01F000C8;
+	Wed, 18 Nov 2026 23:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043136;
-	bh=bth5Yaw8eHcZ1D7PHF+aWqBvvEwtnz71+Ymo3oVay4s=;
+	s=korg; t=1795043138;
+	bh=VXLa5T9EHJkEDdJlC1Ov+puArSdouR9igp5ow3QqfqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRR20r1uKQuJAX292qa0ywhuZIu9V4FSiJUNpYaH3QaqbZ5pYeP+gEaAI4//12+QN
-	 Rwi2WUJu5IU+J8HY+2emHBH1LxxHw5Biy3lcBLH2zQ/vcnVZnPByAo/KedhT/xUkyC
-	 whYQnZJTiaYWj5eSXJ0xDc3omL4kSuKvhDOvrdnM=
+	b=IL5/6rBRY0hYVdFZgSZw0JE1h0ZV8Lhc/j5xvr31+n/+hAD+DkjKMqZigRTaB1hQ9
+	 AB8eDXmgw8QhY/l8AVUYmvJI5xJqhNgqt8VQY2kFwxFsUmPLLLFTIcib+tHbAJB28Q
+	 /I4vdnG5vV597+nphhK1ac97JVgOB0bTdu/6CbM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	syzbot+56962eb32ba0136cd330@syzkaller.appspotmail.com,
+	Michail Tatas <michail.tatas@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0101/2857] usb: misc: cypress_cy7c63: check result of IO
-Date: Wed, 18 Nov 2026 15:18:55 +0100
-Message-ID: <20261118150204.886469047@linuxfoundation.org>
+Subject: [PATCH 6.1 0102/2857] USB: misc: uss720: Fix leak in get_1284_register
+Date: Wed, 18 Nov 2026 15:18:56 +0100
+Message-ID: <20261118150204.930294737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,49 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Michail Tatas <michail.tatas@gmail.com>
 
-[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
+[ Upstream commit 15902712b9e2a46649cba2f22002d05faec2a990 ]
 
-If the device returns a bogus short read, treat it as EIO.
-Actually check for IO errors.
+if wait_for_completion_timeout() times out in get_1284_register()
+then we do not destroy the reference acquired via kref_get() in
+submit_async_request. Add the missing kref_put in the timeout path.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
+link: https://syzkaller.appspot.com/bug?extid=56962eb32ba0136cd330
+
+Reported-by: syzbot+56962eb32ba0136cd330@syzkaller.appspotmail.com
+Signed-off-by: Michail Tatas <michail.tatas@gmail.com>
+Link: https://patch.msgid.link/allaDTUua9n5DQ0a@michalis-linux
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/misc/uss720.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
-index 3be5551a98678..3def90646fdcd 100644
---- a/drivers/usb/misc/cypress_cy7c63.c
-+++ b/drivers/usb/misc/cypress_cy7c63.c
-@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
- 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
- 				 USB_CTRL_GET_TIMEOUT);
- 	/* we must not process garbage */
--	if (retval < 2)
-+	if (retval < 2) {
-+		if (retval >= 0)
-+			retval = -EIO;
- 		goto err_buf;
-+	}
- 
- 	/* store returned data (more READs to be added) */
- 	switch (request) {
-@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
- 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
- 
- 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
--
- 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
-+	if (result < 0)
-+		return result;
- 
- 	return sprintf(buf, "%d", cyp->port[port_num]);
+diff --git a/drivers/usb/misc/uss720.c b/drivers/usb/misc/uss720.c
+index 3bb0405d85c0e..fa66e1d5cfb04 100644
+--- a/drivers/usb/misc/uss720.c
++++ b/drivers/usb/misc/uss720.c
+@@ -223,6 +223,7 @@ static int get_1284_register(struct parport *pp, unsigned char reg, unsigned cha
+ 	}
+ 	printk(KERN_WARNING "get_1284_register timeout\n");
+ 	kill_all_async_requests_priv(priv);
++	kref_put(&rq->ref_count, destroy_async);
+ 	return -EIO;
  }
+ 
 -- 
 2.53.0
 
