@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035631;
-	b=2PTkwam2FK9jd/xXsbk+Mug0cCTAHAcKezgYP2wCF2B6KC1Yamk2wqvYCh2F8y4OA0/4
-	 RU8L22Q9GywikfwG5j1pshOud/oL6uOs0nyCngpt9toL/YUeCqIjFXj3G0oTNHtNSGevP
-	 g1s2k2HJ/Grj4+qX6ntv6BZO+3vxVBoaTAVJq+y7udk4Wk9DgcHquSiyf0BJP+WZvw12p
-	 TDmmkf4hf+7cXCpNG5d1drMemFnbknK/t4Tustvqdh/vofQKydzEH785bZlfnVmmaKBzJ
-	 OcoxhZ3GvRfPVbmwcsYU00oxj3ndRwLAWu9TPBdBbVK3k9Q0hlSGbHxXi3h7G0+1VdA==
+	t=1795035633;
+	b=Tdz7F5FOiUNyQxAe1FUwrMpl5u0m5hhwOyqh6dQJVzP3f/NzB86XkdNLqVIs8CHduhXR
+	 6Uj8wJ1eqyXNSeOZzJdeSf9q14OQxVePTE77og6s790Hh6JpnSSRkbfF3InDKYb2TJRXj
+	 dEybQ2YTP/+X+Fn5I26wp60jBpixvldy3Sm53u9Qy1W/s+c+X7Y+aV9xUZvycZ2mN3MRr
+	 1dGUSP0Ee9/mYRgjXN8TDYwFy2mdLvR6csqADeH1k6zb5ludjB3OHIriJJMDxfTG+eGR8
+	 GQrxcTt/nxg9PHBj78fm4uVA6dYGEcRWBRRMIeqTIl4aoQGWx2/Z5ig2F9UQ/nfGEVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035633;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i/aNouvi/24rOXm3PPZ/gllcwMRTnfAyqKGf9iCQRVM=;
-	b=zySKUf+eZALh56R5wWUmUy6dWbpTgshTbmeZE5JjaIhWhJ7k3af9ALqFTuzy6+C5Y1aS
-	 vGp6isG0M/SYphaLhAL7/Exek7q1iHyqI0KrE7s1FwbAiJGjrOwEol39n1wNsXjK5dIGJ
-	 ZOjNcqw7MwLx1SxONXuwdAnlDsZS3XZHIXSnbBInYmo3eeEVzZq01kzQQGqLvxZBVEmdC
-	 14Kq6/rgPEcXpn4VDayegWjDfbiidrqC+vrxmo+rltgff5jxmRCGNkFJTwywdBY0icI3i
-	 eE6mJkxYi/qciUJUSNctO4PQfl6427sOIrBpHfhNafj3c17OtMpG7Cp+9S7Thf+DhjQ==
+	bh=3w5if5zII0rf3V8/p9MGn14PfNttmnvuM/yRlJcXZ8A=;
+	b=aUozfVgajsRSC/Y0MwkQtm0Q/swBJZrz5w3KZzJN7imzpXgc6/046g7Q91mHNfzQRTR7
+	 wU+s6XwIQKHtxZVZWrSDKPzLA2M/zZFHUqQO55mEmOy7Hnk7a64w7zXW2P4lZO1G7YiJ/
+	 NaNcjhSO6B80keMn+2b+P2LnkYcQrNl/bXtApfk/+GE49HzdIpNXOrouH1UeFSjF5EliH
+	 cRA2ONM09ETrxJNlP/z8aIjyy1qO2kykcSjqL1wSrPV//9OVMCwNfJKDzizyaFSHiu1Zo
+	 hyUP65PfrILjr9FcWtLPy++Izfilt1g1wlx5/noW6MTiGD9ue6Vf8pZOkhpYcCJBGpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tj91SgVN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmcKq8ov;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5611A606A320;
-	Wed, 18 Nov 2026 21:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D119E606A31C;
+	Wed, 18 Nov 2026 21:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tj91SgVN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBF51F000C4;
-	Wed, 18 Nov 2026 21:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmcKq8ov
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A4F1F000C4;
+	Wed, 18 Nov 2026 21:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035630;
-	bh=i/aNouvi/24rOXm3PPZ/gllcwMRTnfAyqKGf9iCQRVM=;
+	s=korg; t=1795035633;
+	bh=3w5if5zII0rf3V8/p9MGn14PfNttmnvuM/yRlJcXZ8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tj91SgVNyEtD20ImLRUl6C7jmykdKTQHN23KuNTY6bOn+OnhUu11VLuRHNob2LlrY
-	 +wb+WDvZZUUO3WADJfEk7YEguTsPSPyfLD9Ae1XL7XOFWBd2dpIRWJsmwnQ1kjXQhV
-	 LHXuRVXaur/VAakrj9g75K8PCOIwPEj/RIjptFi8=
+	b=NmcKq8ov0/Z5xlRAVWeSndmVEZyHzxujEyjhc9FnoYsDrFdXqs+NjMiDX63+bo58D
+	 DPJi9WaEKw181wHfTMHar0WMzPGkJ7Y0jiW9FptBoBUMjpQK1B8ASTxmHxjWMqunfW
+	 OK/5+qlOPney947PG9q+5vj4LOc3EnO4lQaG1WHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0772/3318] inet: reject unhashed sockets during established lookups
-Date: Wed, 18 Nov 2026 15:23:14 +0100
-Message-ID: <20261118150341.934532721@linuxfoundation.org>
+	Daan De Meyer <daan@amutable.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 0746/3318] io_uring/net: dont retry a non-blocking connect() that fails with -EAGAIN
+Date: Wed, 18 Nov 2026 15:22:48 +0100
+Message-ID: <20261118150341.002314015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,193 +67,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Daan De Meyer <daan@amutable.com>
 
-[ Upstream commit 4e2b3ef19e0e04adca38442f07dd6bc93c712bf1 ]
+Commit 71537ed811107c514c0342e98902d489d6d2b7cd upstream.
 
-TCP established ehash lookups are lockless. The socket caches involved
-use SLAB_TYPESAFE_BY_RCU, so memory can be reused before an RCU reader
-that retained its old address has finished.
+IORING_OP_CONNECT on an O_NONBLOCK AF_UNIX stream socket retries a
+connect that fails with -EAGAIN because the listener's backlog is full.
+Polling the client socket doesn't help: an unconnected stream socket
+reports EPOLLOUT and EPOLLHUP right away, before the backlog drains. So
+io_uring retries the connect until the apoll retry limit is hit, then
+punts the request to io-wq. With a full backlog, io_connect() runs 128
+times in the submitting task and once more in a new io-wq worker. That
+worker stays in the task's thread group, so a later
+unshare(CLONE_NEWUSER) fails with -EINVAL.
 
-After a tuple match, __inet_lookup_established() and
-__inet6_lookup_established() acquire a reference and repeat the tuple
-check. They do not check whether the new object is hashed. If the
-address is reused for a socket with the same tuple, the lookup can
-acquire a reference to the new object and return it while its nulls node
-is unhashed.
+None of this changes the result. __sys_connect_file() adds the socket's
+own O_NONBLOCK to every attempt, so the attempt from io-wq fails with
+-EAGAIN as well. That -EAGAIN becomes the CQE result, and connect(2)
+returns the same -EAGAIN.
 
-A PoC that drives reuse with a SYN cookie request socket reproduced the
-crash. The new request socket is unhashed and has a NULL rsk_listener.
-A lookup that had loaded the address of the old request socket acquired
-the reference published by tcp_get_cookie_sock() and returned the new
-object. tcp_v4_rcv() then read sk_state through the NULL listener.
+Let's complete the request with -EAGAIN right away when the socket has
+O_NONBLOCK set, like connect(2) does. io_accept() already completes
+-EAGAIN this way for IORING_ACCEPT_DONTWAIT. -EINPROGRESS still waits
+for the connection to complete. A blocking socket still ends up in
+io-wq, where the connect sleeps until the listener accepts.
 
-The resulting crash was:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000012
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  ...
-  Oops: Oops: 0000 [#1] SMP NOPTI
-  CPU: 4 UID: 0 PID: 0 Comm: swapper/4 Not tainted 7.3.0-00591-g0e135910deec #1 PREEMPT(lazy)
-  ...
-  RIP: 0010:tcp_v4_rcv+0x44e/0x1280
-  ...
-  R10: 0000000000000001 R11: 00000000024ca8c0 R12: 0000000000000000
-  ...
-  CR2: 0000000000000012 CR3: 0000000103d50004 CR4: 0000000000770ef0
-  ...
-  Call Trace:
-   <IRQ>
-   ? raw_local_deliver+0xae/0x240
-   ip_protocol_deliver_rcu+0x2d/0x180
-   ip_local_deliver_finish+0x84/0x100
-   ip_sublist_rcv_finish+0x5f/0x70
-   ip_sublist_rcv+0x12a/0x1d0
-   ip_list_rcv+0xfd/0x130
-   __netif_receive_skb_list_core+0x223/0x250
-   netif_receive_skb_list_internal+0x1d2/0x2c0
-   ? try_fill_recv+0x39/0x7b0
-   napi_complete_done+0x74/0x170
-   virtnet_poll+0x445/0x600
-   __napi_poll+0x27/0x1e0
-   net_rx_action+0x2fe/0x3b0
-   handle_softirqs+0xc2/0x2c0
-   __irq_exit_rcu+0x74/0xd0
-   common_interrupt+0x7f/0x90
-   </IRQ>
-  ...
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-After taking a reference, check whether the nulls node is unhashed in
-both IPv4 and IPv6 established lookups. If it is unhashed or the tuple
-no longer matches, drop the reference and restart the lookup.
-
-Lookups racing with the TIME_WAIT hashdance, or with a request being
-replaced by its child, now restart and find the new socket instead of
-returning the old one.
-
-Request sockets that were never inserted into ehash can have a nonzero
-refcount, and a stale lookup can hold a transient reference. Therefore,
-when SYN cookie, Fast Open, and request migration paths fail after
-setting a nonzero refcount, release the references held by those paths
-with reqsk_put() instead of freeing the request directly.
-
-Fixes: 079096f103fa ("tcp/dccp: install syn_recv requests into ehash table")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261029214219.1035176-2-imv4bel@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f8e85cf255ad ("io_uring: add support for IORING_OP_CONNECT")
+Signed-off-by: Daan De Meyer <daan@amutable.com>
+Link: https://patch.msgid.link/20261027-b4-io-uring-connect-eagain-v1-1-f4e3aaaa49ee@amutable.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c | 10 +++++++---
- net/ipv4/inet_hashtables.c      |  5 +++--
- net/ipv4/syncookies.c           |  2 ++
- net/ipv4/tcp_input.c            |  4 +++-
- net/ipv6/inet6_hashtables.c     |  4 +++-
- 5 files changed, 18 insertions(+), 7 deletions(-)
+ io_uring/net.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index af4c46d841a7f..89adcd9711fed 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1120,10 +1120,14 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	 */
- 	if (nreq) {
- 		__NET_INC_STATS(net, LINUX_MIB_TCPMIGRATEREQFAILURE);
-+		/* The timer was not armed, drop its reference here. */
-+		reqsk_put(nreq);
- no_ownership:
- 		reqsk_migrate_reset(nreq);
- 		reqsk_queue_removed(queue, nreq);
--		__reqsk_free(nreq);
-+		/* Drop the temporary reference and the one reserved for ehash. */
-+		reqsk_put(nreq);
-+		reqsk_put(nreq);
- 	}
- 
- drop:
-@@ -1404,7 +1408,7 @@ struct sock *inet_csk_complete_hashdance(struct sock *sk, struct sock *child,
- 
- 			__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMIGRATEREQFAILURE);
- 			reqsk_migrate_reset(nreq);
--			__reqsk_free(nreq);
-+			reqsk_put(nreq);
- 		} else if (inet_csk_reqsk_queue_add(sk, req, child)) {
- 			return child;
- 		}
-@@ -1460,7 +1464,7 @@ void inet_csk_listen_stop(struct sock *sk)
- 					__NET_INC_STATS(sock_net(nsk),
- 							LINUX_MIB_TCPMIGRATEREQFAILURE);
- 					reqsk_migrate_reset(nreq);
--					__reqsk_free(nreq);
-+					reqsk_put(nreq);
- 				}
- 				rcu_read_unlock();
- 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index ed253aa1f5d3f..f3430f96db0c3 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -518,8 +518,9 @@ struct sock *__inet_lookup_established(struct net *net,
- 		if (likely(inet_match(net, sk, acookie, ports, dif, sdif))) {
- 			if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1564,6 +1564,17 @@ int io_connect(struct io_kiocb *req, uns
+ 			if (connect->seen_econnaborted)
  				goto out;
--			if (unlikely(!inet_match(net, sk, acookie,
--						 ports, dif, sdif))) {
-+			if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
-+				     !inet_match(net, sk, acookie, ports, dif,
-+						 sdif))) {
- 				sock_gen_put(sk);
- 				goto begin;
- 			}
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 349e96d029c3d..3140c7742b30f 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -215,6 +215,8 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
- 
- 		bh_unlock_sock(child);
- 		sock_put(child);
-+		reqsk_put(req);
-+		return NULL;
- 	}
- 	__reqsk_free(req);
- 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 8a6d7dac50b26..e911ad30d9a75 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7257,7 +7257,9 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 		if (!inet_csk_reqsk_queue_add(sk, req, fastopen_sk)) {
- 			bh_unlock_sock(fastopen_sk);
- 			sock_put(fastopen_sk);
--			goto drop_and_free;
-+			/* tcp_disconnect() already dropped one reqsk ref. */
-+			reqsk_put(req);
-+			goto drop;
+ 			connect->seen_econnaborted = true;
++		} else if (req->file->f_flags & O_NONBLOCK) {
++			/*
++			 * __sys_connect_file() adds O_NONBLOCK from the socket
++			 * to every attempt, so a retry from io-wq fails with
++			 * -EAGAIN as well. A poll on the socket doesn't wait
++			 * until a retry can succeed. For example, an AF_UNIX
++			 * client reports EPOLLOUT right away while the
++			 * listener's backlog is full. Complete the request
++			 * with -EAGAIN, like connect(2) does.
++			 */
++			goto out;
  		}
- 		READ_ONCE(sk->sk_data_ready)(sk);
- 		bh_unlock_sock(fastopen_sk);
-diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
-index b0e8d278e8a9b..e755e90999654 100644
---- a/net/ipv6/inet6_hashtables.c
-+++ b/net/ipv6/inet6_hashtables.c
-@@ -75,7 +75,9 @@ struct sock *__inet6_lookup_established(struct net *net,
- 		if (unlikely(!refcount_inc_not_zero(&sk->sk_refcnt)))
- 			goto out;
- 
--		if (unlikely(!inet6_match(net, sk, saddr, daddr, ports, dif, sdif))) {
-+		if (unlikely(hlist_nulls_unhashed_lockless(&sk->sk_nulls_node) ||
-+			     !inet6_match(net, sk, saddr, daddr, ports, dif,
-+					  sdif))) {
- 			sock_gen_put(sk);
- 			goto begin;
- 		}
--- 
-2.53.0
-
+ 		if (req_has_async_data(req))
+ 			return -EAGAIN;
 
 
