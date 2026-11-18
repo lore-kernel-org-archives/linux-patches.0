@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057928;
-	b=FX5JlO8ErY0n4C4qOJ2Z/z+RUAZnXx6gghGf2Mlp7+FwHsr2y9Gr+ldOjIUTjvErTm47
-	 S+QMqSCHhviBdK/aep8By2y2SlOzvZ/IykW5klda6Kf+U509r5o1JwZ5Ko5VEdcGfeXNP
-	 zNHyV1qSJYE0QdFxQxChevvlYJDbBD+UImgkf1KSqdHf0+1xNpdpeqKFYJMqKsGIfQ6nS
-	 NaXYo5jCYLwgba2DHGzqgCBf3imHhBkJxxJUS6wtRAgmmbkOuwGjepgGg1Bs1RQyZSXuP
-	 IfgpFSVFHLb4bILzSs91fAJR5ci+5TR7rejAW6kJD8MSgbfedfIE8NZgge64mQu998g==
+	t=1795057930;
+	b=Env4W+rZCZj1M1z2LlHkgYnZvbA29XPuVyZ+bXgGEMq/vGmdelx7ENBlOM8eA9O+98ky
+	 3GgvSpnQUw2oL8zHmwZJCh9F+0sCSIBV7i9B3b14RLC5kjUdUW1SWiYPHkYX/TV1V/XXj
+	 FH6uWY0yQY6TFsTTq+IsiPYiTHE1rarFG3MfnIQIgNEjH2JaBjiQvS/TJOKnhFCq6jzyI
+	 VPAI7ruIaYBH/OUT68OcGMTLHzS4P18z+tS3lCj0ABypuNFJ6I9tCIpBxdNh4A3nXDhjU
+	 tucFZm6V8fZIUAMszCvC6jSNl3/dpeWxTfLsj469VlCdSTMHAmUnhxobri2+tTo5ynw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057928;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g+CRRQFq+BfRAX2oq5poI1bSkp4z8OdpcyPpaehHGyg=;
-	b=qEWMgVOuEQnbSUeSB5WS1yuf4esQ46FlPyy0jN4dNtGnuJpXjQpMAeg0RqSGdU1C9Zjj
-	 A2msuZhc+GIuCClTbf9cR3yLiwNxe6eA1S1mLFa+/QZraUTtYAqJf9JQph/KEkfyyI9sT
-	 6203I2wtuTGik35Vno5vg8bY6UK7I4S+7//eVkG0V+Sv9gYCIkuraISJm7r5iTP9N/MGf
-	 iiNnf7QD3uUBQ6PBxQICkxposeNIQm6Xi56TGmawnXi55IiJnySF9JpAfDEFsF1w7uY88
-	 jxgT3l1y2TefjNAQDuKWSYX3Psyy/ptvnsGpcGuXLi4FFG+PXTixhxqKCGbDdlMHf0A==
+	bh=yhHLDUCzTSMubxnxkD2CLMnywnpXjMeB2z9vC7dY65c=;
+	b=x7hbo2B8IGBoPqUVXeuysCUIVlkx6xbfPLdi/KbN773MVSLmfOOhd2SO2TwW18R/m1rB
+	 21F5P87rtf8Kw4LBPIxt8aUxXau/T2Q4+31QrmlwdvLDmxkIfULToPe77wfEbYs/ViR8b
+	 cZNk6c+MlEPtbl6D+RhCjspQDVBIDskVjByxziKlZuu/i4PCAc33hk1QE0/hWoSiUTAov
+	 JtgWLrEuuuMrWiFTnxU9wgrRMsr/ZfZJ5DMrLGarWMswknLH+0d3qOFckd7Fq1y0i4oK/
+	 EliSLp2IdZOtEs5Ph+iYNtkF7na15f8S/i1uq1rQpR8ZyK/MpJQ38inbK01MKy3OVtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSqwfLih;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT+M3JEr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30DE606A31C;
-	Thu, 19 Nov 2026 03:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C8606A32A;
+	Thu, 19 Nov 2026 03:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oSqwfLih
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552941F000C4;
-	Thu, 19 Nov 2026 03:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WT+M3JEr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E841F000C4;
+	Thu, 19 Nov 2026 03:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057927;
-	bh=g+CRRQFq+BfRAX2oq5poI1bSkp4z8OdpcyPpaehHGyg=;
+	s=korg; t=1795057930;
+	bh=yhHLDUCzTSMubxnxkD2CLMnywnpXjMeB2z9vC7dY65c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oSqwfLihSY5w0qLv8qyQr0BxzPJ4pcaL//z573jWmmsnudSgBKzNlsnXvuGeHwz75
-	 MKoUbkd7ysIZDNqc/n3ZoHXzES/shiDfKRY/zTbAaoyE7yRTm6Wi5uVKuzkqGs7FO+
-	 Fm2CpuyMYXR+LtUCdYh5uMqfNrUaLy0VDANjk7/I=
+	b=WT+M3JEr5Nf/8vab+Lct0ze/5bI0tIx9v8bAWa3hiWpzs7URL8FR/gPuNnUKq3mdO
+	 5adjTDR5ifoR5MjsJoCnL6Y7j41lqDCKtsRNtZMa7PGmwX9IrEMT50PshD7ZwsCRS7
+	 aqxEfvYx0N33wAe7mq2mbxmitMjJZDETamEDcmGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
+	Ameer Hamza <ameer.hamza@truenas.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.10 0302/1848] SUNRPC: Reject a socket that already has an svc_sock attached
-Date: Wed, 18 Nov 2026 15:39:00 +0100
-Message-ID: <20261118145924.800267711@linuxfoundation.org>
+Subject: [PATCH 5.10 0303/1848] sunrpc: treat empty auth.unix.gid replies as negative entries
+Date: Wed, 18 Nov 2026 15:39:01 +0100
+Message-ID: <20261118145924.849345230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,64 +67,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Ameer Hamza <ameer.hamza@truenas.com>
 
-commit 0995447b8059c4d23853cdcddbe789c4a2b6bb88 upstream.
+commit a12cc0930235b86b934ade7c077a1935c2ac333d upstream.
 
-Writing the same socket descriptor to /proc/fs/nfsd/portlist twice
-attaches a second svc_sock to one socket. svc_setup_socket() saves
-the socket's callbacks before installing its own, so the second
-attach records svc_write_space() as the old write_space callback.
-svc_udp_init() invokes that callback by way of svc_sock_setbufsize(),
-and svc_write_space() then calls itself until the kernel stack is
-exhausted:
+When rpc.mountd cannot resolve a uid (getpwuid() or getgrouplist()
+failure, e.g. while winbind or sssd is briefly unreachable), it
+answers the auth.unix.gid upcall with zero groups. unix_gid_parse()
+installs that as a valid positive entry, and svcauth_unix_set_client()
+then replaces the credential's group list with the empty one on
+every request, RPCSEC_GSS included via svcauth_gss_set_client().
+One failed lookup strips that uid of all supplementary groups on
+every export for up to mountd's configured TTL (30 minutes by
+default), long after the NSS backend has recovered.
 
-  BUG: TASK stack guard page was hit at ffffc900037d7ff8
-   svc_write_space+0x90/0x2b0 net/sunrpc/svcsock.c:429
-   svc_write_space+0xe6/0x2b0 net/sunrpc/svcsock.c:430
-   ... 700 more ...
-   svc_sock_setbufsize+0x18d/0x220 net/sunrpc/svcsock.c:386
-   svc_udp_init net/sunrpc/svcsock.c:854 [inline]
-   svc_setup_socket+0xb2f/0x1090 net/sunrpc/svcsock.c:1498
-   svc_addsock+0x2fd/0x760 net/sunrpc/svcsock.c:1547
-   __write_ports_addfd fs/nfsd/nfsctl.c:742 [inline]
-   write_ports+0xa5b/0xcc0 fs/nfsd/nfsctl.c:861
-   nfsctl_transaction_write+0x106/0x1a0 fs/nfsd/nfsctl.c:112
+mountd cannot send an empty list for a successful lookup, since
+getgrouplist(3) always includes at least the user's primary group,
+so a zero-group reply can only mean the lookup failed. Record it as
+a negative entry: unix_gid_find() then returns -ENOENT and
+svcauth_unix_set_client() keeps the groups the RPC credential
+already carries. This is the fallback that
+commit 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a
+gid list when using AUTH_UNIX authentication") promised when no
+answer is available, and the same state try_to_negate_entry()
+already creates when no listener holds the channel open.
 
-svc_data_ready() and svc_tcp_state_change() chain through their saved
-callbacks the same way, so a TCP descriptor added twice recurses on
-the next incoming segment instead. Reaching any of this takes a
-writer on portlist, and the nfsd filesystem sets no FS_USERNS_MOUNT,
-so the reproducer needs CAP_SYS_ADMIN in the initial user namespace.
-
-Reject a socket that already carries sk_user_data. svc_setup_socket()
-overwrites that field unconditionally, so a socket some other
-consumer has claimed is one NFSD would corrupt whether or not the
-callbacks recurse.
-
-Fixes: b41b66d63c73 ("[PATCH] knfsd: allow sockets to be passed to nfsd via 'portlist'")
+Fixes: 3fc605a2aa38 ("[PATCH] knfsd: allow the server to provide a gid list when using AUTH_UNIX authentication")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+54cdc566f64abf51b7f1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=54cdc566f64abf51b7f1
-Link: https://patch.msgid.link/20260815162844.8219-1-cel@kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Ameer Hamza <ameer.hamza@truenas.com>
+Link: https://patch.msgid.link/20260814221953.108837-2-ameer.hamza@truenas.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svcsock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/sunrpc/svcauth_unix.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -1380,6 +1380,9 @@ int svc_addsock(struct svc_serv *serv, s
- 	err = -EISCONN;
- 	if (so->state > SS_UNCONNECTED)
- 		goto out;
-+	err = -EBUSY;
-+	if (so->sk->sk_user_data)
-+		goto out;
- 	err = -ENOENT;
- 	if (!try_module_get(THIS_MODULE))
- 		goto out;
+--- a/net/sunrpc/svcauth_unix.c
++++ b/net/sunrpc/svcauth_unix.c
+@@ -544,6 +544,13 @@ static int unix_gid_parse(struct cache_d
+ 	if (ugp) {
+ 		struct cache_head *ch;
+ 		ug.h.flags = 0;
++		/*
++		 * mountd sends at least the user's primary group on
++		 * success, so an empty list can only mean the lookup
++		 * failed. Keep the credential's own groups instead.
++		 */
++		if (gids == 0)
++			set_bit(CACHE_NEGATIVE, &ug.h.flags);
+ 		ug.h.expiry_time = expiry;
+ 		ch = sunrpc_cache_update(cd,
+ 					 &ug.h, &ugp->h,
 
 
