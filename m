@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029266;
-	b=4SS8QCA1utrxY/nfGAzszdUAhxiBI4Zk29Yap/eo4YSbiKiw7jKk9IDbtmLUEoeSsCs8
-	 rMln4aOLMHJik0i87UkTIlQ+iWiljL5Xw+tmxPcWkAjBbtFQSdzKvshJRENw+PcmCuZmh
-	 hIXMGIaUSpLxVEiOCbV11Z2GPsGV3+Vj9UJIYbQaYT8qe6Hyk2Z1fiWcdbNnHH9hE97Y6
-	 Y5keDCco24ZNz0OnLCLBd+0fqEubaxoOpVOnY0iM/+quVW8zXCiKKfc5DZbxlhC79ZeYE
-	 AU1V50/6TjivSvlIvJguCBeu6Eo8t5UWrtYU2xOC7mzeGaWDxt6lK1cYGXQf0tc0Atg==
+	t=1795029269;
+	b=q1J4CWF5t2HMWv7ew6Ze1pD13gGFtk4pLqyKIdUtSpZk2pza8DjTq6uQUe43MJ9cK+gg
+	 gKfyhB7aH9fI9mY/mnfSCXkZZnK4yvRq2otE0DbruMp2jxhLzH1F5gUnuwb+x64kgG5dp
+	 7CyJ0ajHgw9fvc9dp0gg8srAabzhpB/eemCPTQyExKlRbO/H2nvkUBdxX7CVnhR/AsJ/Z
+	 Zv/v6SQ9Ak3cZtAuRH2jc0T0ppTSPidGbkjGGD/oElncfaadZNpGm+8uzTG3ORMa1QnSI
+	 dAtwuypDDDI2yz2oZ7Uig/Idj38SGxgoHJEfQYM+uPfVrxgvXVJAkQ6uk9f/+m3mpwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029266;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SxVbDiWUQHfCDWCgLsc3Uza+iOkt7RW97ZUBrX4Ulzo=;
-	b=sXwKjBCPLbSwIuxTS8BZcqQroCjimDXz7zm2in6xs34ylCG9nMMOmfh8looleTIgjh+v
-	 2AmRKjK0Oc19DkOAtDeoaLZ3UmyTD+HWtW+3CMQXw5LhGhbzzgiAN5Q/SyDIdcL3GkL6n
-	 a+LmerwBITV2YZs3J5cXdznd/uDKehDpukU/9TE++gXFMFPQMCC8TL//adBJF9bIfVD0b
-	 rIhUDyw7AkH8/OKYxF9VNc0SQQDwmBQkwcmJxNLk0XJO8mC1KPNfEm/z6lG5VCsfp1OMZ
-	 IatHgE6s8xex9nnQX+o1dp0c1bhGbt3xLk1evh1kf8Ym7A1wykzVbs4b2LXXVTJdxhA==
+	bh=MSVBFV1Q7D//2u3+fgZP8SUH2ag7cu5FHGkb+yiuJFk=;
+	b=AEZkqkplQSj2UPAAsXt06+/S2kFj7tYEQYzmy3zxXnthukV7eomSHirpFFZv+ENkpYJL
+	 SRHnSDaZiQk5QpuCu4BaaJf+z5bHIHzWPC7czzqcstKjKx7vMOesrWl9hrl5qBMTRyuvN
+	 0Pj3XjRHUTKNe2Z/aA7RNxiJPJcubIksCxC1F2vYETtnRxpgefY31z/1D51Lp1y3l9s4o
+	 yt8ERajf2an8TgSBXb5vcBhrVVMXNmTOhZ8FTLCRmHRZrVypZjn4O9qp3dZHbmET2lEJy
+	 rKe2rRriHRrtcKz48rL2kRAarodjBvMcCU0Gy+zuVXmY4F6H6xZhouJb6NnNNM6S/Lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5S07eU4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbZUt1CM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0BE606A31C;
-	Wed, 18 Nov 2026 19:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A60C606A31C;
+	Wed, 18 Nov 2026 19:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5S07eU4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CABB1F000C4;
-	Wed, 18 Nov 2026 19:14:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbZUt1CM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581C71F000C4;
+	Wed, 18 Nov 2026 19:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029266;
-	bh=SxVbDiWUQHfCDWCgLsc3Uza+iOkt7RW97ZUBrX4Ulzo=;
+	s=korg; t=1795029268;
+	bh=MSVBFV1Q7D//2u3+fgZP8SUH2ag7cu5FHGkb+yiuJFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h5S07eU4op7DmtAoQduvNTP5Vg41aabJ03eM3fOyjtB4VgaP4YAkR1bSTII+8XDdS
-	 zzbMmyMZ4HALGJK9UoTQBpLx8h2bx9bsmFiWSdWVpOSfp2jrCMxkSnUGju9RA4VDb3
-	 3095nIGZlarCTeWHvaeH3G35ORCMjF3MBRm4RQtQ=
+	b=qbZUt1CMu+wl4x3rU45rinOCCZoiI2eJPoxtrGi7NiMgLTv8LcmuDGozi0pYSYdak
+	 y6a53Ynk21dJRjGVI1mLgUrqJl+i33KF+UMcKPfpn8SLoIHryuSMi58T6BfP7X/iVP
+	 sA9SiGVMfGIj8SrHj+QOMieZQ4kqHyDmYNi/+Pgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0289/1756] wifi: ath12k: Free allocated external IRQs on request_irq() failure
-Date: Wed, 18 Nov 2026 15:40:16 +0100
-Message-ID: <20261118150019.894291267@linuxfoundation.org>
+Subject: [PATCH 6.12 0290/1756] selftests: net: csum: Clean up recv_verify_packet_ipv6
+Date: Wed, 18 Nov 2026 15:40:17 +0100
+Message-ID: <20261118150019.933152853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,105 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 9a78703ec4a895bd2e99bf43bd18d76683126c19 ]
+[ Upstream commit d772cc25ccf772f4cbb81270970cbe1356c23d3e ]
 
-When external IRQ configuration fails, the driver does not release all
-IRQs that were successfully requested before the failure. This can leak
-IRQ resources during probe failure.
+Rename ip_len to payload_len since the length in this case refers only
+to the payload, and not the entire IP packet like for IPv4. While we're
+at it, just use the variable directly when calling
+recv_verify_packet_udp/tcp.
 
-Free previously requested external IRQs when external IRQ configuration
-fails.
-
-Also remove the NAPI instance with netif_napi_del() before freeing the
-associated netdev to properly clean up the NAPI resources.
-
-Store the IRQ number only after request_irq() succeeds to avoid recording
-an IRQ that was not successfully requested.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260819110215.2485514-3-aaradhana.sahu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240930162935.980712-1-sean.anderson@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8342c68435dd ("selftests: net: csum: filter packets by source address and port")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ tools/testing/selftests/net/lib/csum.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 2017b54dc9f92..3ccd15accf87e 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -356,11 +356,11 @@ static void ath12k_pci_free_ce_irq(struct ath12k_base *ab, int num_ce)
- 	}
- }
- 
--static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
-+static void ath12k_pci_free_ext_irq(struct ath12k_base *ab, int num_ext_irq_grp)
+diff --git a/tools/testing/selftests/net/lib/csum.c b/tools/testing/selftests/net/lib/csum.c
+index e0a34e5e8dd5c..27437590eeb53 100644
+--- a/tools/testing/selftests/net/lib/csum.c
++++ b/tools/testing/selftests/net/lib/csum.c
+@@ -675,22 +675,20 @@ static int recv_verify_packet_ipv6(void *nh, int len)
  {
- 	int i, j;
+ 	struct ipv6hdr *ip6h = nh;
+ 	uint16_t proto = cfg_encap ? IPPROTO_UDP : cfg_proto;
+-	uint16_t ip_len;
++	uint16_t payload_len;
  
--	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
-+	for (i = 0; i < num_ext_irq_grp; i++) {
- 		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
+ 	if (len < sizeof(*ip6h) || ip6h->nexthdr != proto)
+ 		return -1;
  
- 		for (j = 0; j < irq_grp->num_irq; j++)
-@@ -374,7 +374,7 @@ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
- static void ath12k_pci_free_irq(struct ath12k_base *ab)
- {
- 	ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
--	ath12k_pci_free_ext_irq(ab);
-+	ath12k_pci_free_ext_irq(ab, ATH12K_EXT_IRQ_GRP_NUM_MAX);
- }
+-	ip_len = ntohs(ip6h->payload_len);
+-	if (ip_len > len - sizeof(*ip6h))
++	payload_len = ntohs(ip6h->payload_len);
++	if (payload_len > len - sizeof(*ip6h))
+ 		return -1;
  
- static void ath12k_pci_ce_irq_enable(struct ath12k_base *ab, u16 ce_id)
-@@ -619,8 +619,6 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
- 			int vector = (i % num_vectors) + base_vector;
- 			int irq = ath12k_pci_get_msi_irq(ab->dev, vector);
- 
--			ab->irq_num[irq_idx] = irq;
+-	len = ip_len;
+ 	iph_addr_p = &ip6h->saddr;
 -
- 			ath12k_dbg(ab, ATH12K_DBG_PCI,
- 				   "irq:%d group:%d\n", irq, i);
- 
-@@ -631,22 +629,24 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
- 			if (ret) {
- 				ath12k_err(ab, "failed request irq %d: %d\n",
- 					   vector, ret);
--				goto fail_request;
-+
-+				for (n = 0; n < j; n++)
-+					free_irq(ab->irq_num[irq_grp->irqs[n]], irq_grp);
-+
-+				netif_napi_del(&ab->ext_irq_grp[i].napi);
-+				free_netdev(ab->ext_irq_grp[i].napi_ndev);
-+				goto fail_allocate;
- 			}
-+
-+			ab->irq_num[irq_idx] = irq;
- 		}
- 		ath12k_pci_ext_grp_disable(irq_grp);
- 	}
- 
- 	return 0;
- 
--fail_request:
--	/* i ->napi_ndev was properly allocated. Free it also */
--	i += 1;
- fail_allocate:
--	for (n = 0; n < i; n++) {
--		irq_grp = &ab->ext_irq_grp[n];
--		free_netdev(irq_grp->napi_ndev);
--	}
-+	ath12k_pci_free_ext_irq(ab, i);
- 	return ret;
+ 	if (proto == IPPROTO_TCP)
+-		return recv_verify_packet_tcp(ip6h + 1, len);
++		return recv_verify_packet_tcp(ip6h + 1, payload_len);
+ 	else
+-		return recv_verify_packet_udp(ip6h + 1, len);
++		return recv_verify_packet_udp(ip6h + 1, payload_len);
  }
  
+ /* return whether auxdata includes TP_STATUS_CSUM_VALID */
 -- 
 2.53.0
 
