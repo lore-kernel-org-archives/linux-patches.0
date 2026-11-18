@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034843;
-	b=r/S+qWwKo2nzeoYI1pjwf4PaCY2tTqVV76DdNRLXeO+b7E03ODUQMH89C/w1awhXR8aI
-	 1m7kk9r9P5IpRIAtj+OLKdCFhCIHvoxjJBfeI3Okgv8mzYoWWbQEkqii7F/1viNdxNPqD
-	 luaP0s/KjWWasFbwRSj5a47YvYlp/Fz5tFTGlbxb3yEEHZK0ZfVhfzKP34JwadoRX3cpd
-	 +qD1mze7cjd6ONG0aeeQ56JqaozAmhQHH5nf4DVckoz1MRuzaMfnNUgZznw9sj5daGax4
-	 6JVIurHOO81CJQ6W9lLDq+6bV26auGZnTCfk9KnrjryKHp/V2RKFTnuVb5uMLwuO/xg==
+	t=1795034846;
+	b=HHbzH0iWVau1JREg1b5Y4kwVgCW0hXAcHv/inRKLB3Hn05qs7KiCdQ5C+sMuDxt5S7ly
+	 LVPRnZj8ZoIq38MTBE+WAzWlvegdbvUdwxeSNTsDrvCr+8c+xrQ+k/uPAETo/tDDNR4H2
+	 Xnpci2p7nNq+20A0fCs7r06RddbPF7cjx7c7BUi0FN2KL/Y06XC8boexgbmHC/s6dG00l
+	 XEndFBfuzsy96xg3+7yGKw42lsn5Li4l5kuDl8mrrf7gnWcKU6gLizXMcXFMKA86+6XuF
+	 N/Gczo0ZVS+OCYG86ie5R77tPhY7SPu4HZztxI02xFFQ+243ciaG46nEtalvXBKHaNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034843;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034846;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hUv7hiNRSMeRiIP7kf8b1Mg0VKu9HtOHqRMLwoYODCI=;
-	b=atsQeHWLR1frehjIxRrS+sM6B7u571vPqK/t7biZSuF/MmyODP6jm+gVYPiRrA4JTsfG
-	 cnDabV+EK5Ceu0Usx3AiVd3gubW13DwvoBoLaOOPDt60uzrt700lHPdFEDD+FKccaDyXE
-	 yhpr46sIWZwe0O7Wb8XigWGPHOwLbTiByTUtY/X+GZRFRF+6pYexIuqWpKrB/o3mLUAX3
-	 H+cGGIjaeeWIKWaPSGRxRIOal6BJRb6ujG6sG0OTT4uQGgnsaSTUNGnGnn/AFE3kC6Ww3
-	 +8i0jQDoM5FRYVeQgdzXlgkOHTAkIFSxfQfDOWkB0qR+AYi3z2Mwg3SrQHr27eicjqg==
+	bh=UNmbnd0d7h1JmvHD+Q3fChVutFOekQLh6jOiNpKn9PI=;
+	b=l4gtarMeUQ5QKFMZYlCO/ds90HaCPubYptFuLbs6jji07/j/vw2UNotThUL04pAbTPvQ
+	 388bxvQ5o+0z4pWZhtT4OcEOYUJBiZldTpBt67d8P91/GcmfrR8QvLnrpseQr1uwLu1kh
+	 gjpyRd4wCjERPkPgZ5rx4qZ7sZH/o8YPpvkIvG3HhQmaG1SnsJmcgcDjqHcHblUBkB44X
+	 c3R2aY0FlIcEYci+pZnwyYDEvJzf4Ze9SdbLnVI9FACA3vonvAAVicrFiT4hyOjGg57Nu
+	 rodfLm6eubHscTm7bZzl3QyUTcHZq3s7JfmkNpQvE45qpEZK6Ja1zKrZz74KrGimRPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+wNn7BJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uFKve4Ae;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE9D606A320;
-	Wed, 18 Nov 2026 20:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2047606A31C;
+	Wed, 18 Nov 2026 20:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+wNn7BJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410681F000C4;
-	Wed, 18 Nov 2026 20:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uFKve4Ae
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA4D1F000C4;
+	Wed, 18 Nov 2026 20:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034843;
-	bh=hUv7hiNRSMeRiIP7kf8b1Mg0VKu9HtOHqRMLwoYODCI=;
+	s=korg; t=1795034846;
+	bh=UNmbnd0d7h1JmvHD+Q3fChVutFOekQLh6jOiNpKn9PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+wNn7BJYWHs9ODQNPxobpB7JUeHYPQ3xOfXyV1tg+kcrSChb3INr0E0+ZgyN07aq
-	 2qvdbF7bEBUQzRT/6BErMRwBVXDQaNxVB08vUiJGPFNTZbHI2S/Hm3zb8JIuMy5+ON
-	 D7E7ep7O3Lq7rBVMvt88rwryhawUjWK1e6MqBmUk=
+	b=uFKve4AeGwZqTLJay3cq3ewn/U/1fmBXj/vUMfFKm8gqTXMzLdzeSQ1pxcGvmkI2F
+	 uy2H0pFC2vrcqDzuatRAfh9qpb+x2lDKDfmNC/Ea0abruRquBBi545iVL4mnOYBB+o
+	 ppcajHjShqwYB8hGE4V7XIRFvmJZ/qtBP+LwxwZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Hao <flyingpeng@tencent.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0513/3318] KVM: X86: Reduce size of kvm_vcpu_arch structure when CONFIG_KVM_XEN=n
-Date: Wed, 18 Nov 2026 15:18:55 +0100
-Message-ID: <20261118150332.520083662@linuxfoundation.org>
+Subject: [PATCH 6.6 0514/3318] KVM: x86/xen: Remove unneeded xen context from kvm_arch when !CONFIG_KVM_XEN
+Date: Wed, 18 Nov 2026 15:18:56 +0100
+Message-ID: <20261118150332.559431891@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,88 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Hao <flyingpeng@tencent.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-[ Upstream commit ee11ab6bb04e1093d3cc5f5bea9779799ce1d2c7 ]
+[ Upstream commit 87562052c965ba7de6dc490434e53691fe46c898 ]
 
-When CONFIG_KVM_XEN=n, the size of kvm_vcpu_arch can be reduced
-from 5100+ to 4400+ by adding macro control.
+Saving a few bytes of memory per KVM VM is certainly great but what's more
+important is the ability to see where the code accesses Xen emulation
+context while CONFIG_KVM_XEN is not enabled. Currently, kvm_cpu_get_extint()
+is the only such place and it is harmless: kvm_xen_has_interrupt() always
+returns '0' when !CONFIG_KVM_XEN.
 
-Signed-off-by: Peng Hao <flyingpeng@tencent.com>
-Link: https://lore.kernel.org/all/CAPm50aKwbZGeXPK5uig18Br8CF1hOS71CE2j_dLX+ub7oJdpGg@mail.gmail.com
-[sean: fix whitespace damage]
+No functional change intended.
+
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Tested-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20231205103630.1391318-2-vkuznets@redhat.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Stable-dep-of: 2abb25273c82 ("KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h | 5 ++++-
- arch/x86/kvm/cpuid.c            | 2 ++
- arch/x86/kvm/x86.c              | 2 ++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/kvm_host.h | 5 +++++
+ arch/x86/kvm/irq.c              | 2 ++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index d79b8f7a39913..b2aa5b455e1d6 100644
+index b2aa5b455e1d6..87b74673878e3 100644
 --- a/arch/x86/include/asm/kvm_host.h
 +++ b/arch/x86/include/asm/kvm_host.h
-@@ -679,6 +679,7 @@ struct kvm_hypervisor_cpuid {
- 	u32 limit;
+@@ -1130,6 +1130,7 @@ struct msr_bitmap_range {
+ 	unsigned long *bitmap;
  };
  
 +#ifdef CONFIG_KVM_XEN
- /* Xen HVM per vcpu emulation context */
- struct kvm_vcpu_xen {
- 	u64 hypercall_rip;
-@@ -701,6 +702,7 @@ struct kvm_vcpu_xen {
- 	struct timer_list poll_timer;
- 	struct kvm_hypervisor_cpuid cpuid;
+ /* Xen emulation context */
+ struct kvm_xen {
+ 	struct mutex xen_lock;
+@@ -1141,6 +1142,7 @@ struct kvm_xen {
+ 	struct idr evtchn_ports;
+ 	unsigned long poll_mask[BITS_TO_LONGS(KVM_MAX_VCPUS)];
  };
 +#endif
  
- struct kvm_queued_exception {
- 	bool pending;
-@@ -931,8 +933,9 @@ struct kvm_vcpu_arch {
+ enum kvm_irqchip_mode {
+ 	KVM_IRQCHIP_NONE,
+@@ -1342,7 +1344,10 @@ struct kvm_arch {
+ 	struct hlist_head mask_notifier_list;
  
- 	bool hyperv_enabled;
- 	struct kvm_vcpu_hv *hyperv;
+ 	struct kvm_hv hyperv;
++
 +#ifdef CONFIG_KVM_XEN
- 	struct kvm_vcpu_xen xen;
--
+ 	struct kvm_xen xen;
 +#endif
- 	cpumask_var_t wbinvd_dirty_mask;
  
- 	unsigned long last_retry_eip;
-diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
-index 2c0bc6a93ec3e..861bfefc110f4 100644
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -470,7 +470,9 @@ static int kvm_set_cpuid(struct kvm_vcpu *vcpu, struct kvm_cpuid_entry2 *e2,
- 	vcpu->arch.cpuid_nent = nent;
+ 	bool backwards_tsc_observed;
+ 	bool boot_vcpu_runs_old_kvmclock;
+diff --git a/arch/x86/kvm/irq.c b/arch/x86/kvm/irq.c
+index b2c397dd2bc66..ad9ca8a60144c 100644
+--- a/arch/x86/kvm/irq.c
++++ b/arch/x86/kvm/irq.c
+@@ -118,8 +118,10 @@ static int kvm_cpu_get_extint(struct kvm_vcpu *v)
+ 	if (!lapic_in_kernel(v))
+ 		return v->arch.interrupt.nr;
  
- 	vcpu->arch.kvm_cpuid = kvm_get_hypervisor_cpuid(vcpu, KVM_SIGNATURE);
 +#ifdef CONFIG_KVM_XEN
- 	vcpu->arch.xen.cpuid = kvm_get_hypervisor_cpuid(vcpu, XEN_SIGNATURE);
+ 	if (kvm_xen_has_interrupt(v))
+ 		return v->kvm->arch.xen.upcall_vector;
 +#endif
- 	kvm_vcpu_after_set_cpuid(vcpu);
  
- 	return 0;
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 3d5aa251547e5..19d2170994f43 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -3246,11 +3246,13 @@ static int kvm_guest_time_update(struct kvm_vcpu *v)
- 
- 	if (vcpu->pv_time.active)
- 		kvm_setup_guest_pvclock(v, &vcpu->pv_time, 0);
-+#ifdef CONFIG_KVM_XEN
- 	if (vcpu->xen.vcpu_info_cache.active)
- 		kvm_setup_guest_pvclock(v, &vcpu->xen.vcpu_info_cache,
- 					offsetof(struct compat_vcpu_info, time));
- 	if (vcpu->xen.vcpu_time_info_cache.active)
- 		kvm_setup_guest_pvclock(v, &vcpu->xen.vcpu_time_info_cache, 0);
-+#endif
- 	kvm_hv_setup_tsc_page(v->kvm, &vcpu->hv_clock);
- 	return 0;
- }
+ 	if (irqchip_split(v->kvm)) {
+ 		int vector = v->arch.pending_external_vector;
 -- 
 2.53.0
 
