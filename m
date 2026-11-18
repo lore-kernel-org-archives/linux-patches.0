@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035143;
-	b=IPspIVrWq0Dz+o4HqLhLgGZ8KV6dG3AoRr/R+kROndjKQiaFoONRcrikypD2byw7fxJt
-	 3CkjON8k6i4p1LFG5j55slMPbPrpVHjUomnFmp8839sgcZy1R5gRLzFXEEoXV1oRhs+A9
-	 4RhWWhUZ8XJurb4xGUs11TupbiYb2999+FGU8XlFWHMFDQq/SBXfqrdRvB+TXkpbxHbml
-	 kGiKSDiHzXoVnLqnXGk3Ajw+QrQZfLQDcewt4WdEeAjTVsIWE77HPxkn9VYhp7BpFxYPH
-	 tq+kVCM4TNImric0MVMVafE3tvChpOiYhJIBunKjZfZShcidIzCn5Vkh8r7Vx6H2P9w==
+	t=1795035146;
+	b=ax1vdHLBJbmlMLNY8Vu+y4Nf+s4ZYLxMyZsqbbvw3VZRQnBjm1zxMSEduR7lo3LCpoBp
+	 r3p48E68JU/kXiBR/RNewUGHAs8TsJw6h+NIg98X2eaFNxosDJzMqtihqZxEQ+wENy+kU
+	 0vxU4v06hR6R8Wdni63TP8SlXG2x/VnnMTyNVoRKR30U/bfaGzsF4LMRXy9iZkcpis0pQ
+	 JXwKNaNa9cJIvKeDJv/xKxdqjKfj/8nDVvFkduojvbgPvBhoCYl8HLd2qxpKoOzpiRQXi
+	 nJflEAEjJSiwTu3P73J4TXjqHMVS1K3GraNU/7DLdRRFimxmZOIt9/yTNpj83lAdQjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o0sKzjcqA6NlGiJXOjtj/MfNzozQO2vY6Ki/6eofL6o=;
-	b=gX8QZobjQBFyASwfdLU9ma1j/ouy641kmCcW9osbumDUQ5ZeecgJhVupG5ajmY7xKQgP
-	 OtT94UXfzdii0Gld9dAPt6giwheZRC56uEqQg7VTIF76oDXXY53u7hHUFpmdGAKVDfUyo
-	 I3UG+RzqNEOcHegS74wApFa/wPJB1TIvxO3qwXjecbnj1K5slcbT1WaG3g/UVZ88TQTuL
-	 wpQ6ZTqhlMwoQqz3TJgF3mJHDwlXXzPnc9uK3+MQ/PNuZ5EA2V2kPRYFPSXgkja/+STEb
-	 P7RUOctYgzWsQ9luWAwN4uaG6MteOS8knZFMyMHmEMXwWIS+2j4osSKW4cZq5PjKTXQ==
+	bh=lzMvfQ/28KGfw2hK1DEmbmPHSoi+4DIGoQySXMCWuU8=;
+	b=Rk4lDW5pRI7U3CCpfRJWaCC/vQMGVoG26Hws/itCTclCAbKugoq5IlTlU6cQzbSD0pA9
+	 yCl522HTMbCoNzOTLn7D88egtTHF7fgiAB4bkBlyLNVHDEalKFFt4rks4chuQyB84hw9u
+	 qG/RQdtNXwCPMPgiQPpjCq+JYE1u3xXuuA1dU73xn2Z/nczgLfvrvG5bggFp08t+A7xCO
+	 U8GYhff76llDBTZ1e9OtmQUtIoA3i4gfXLL4vxRd1vc46TYObNN7UH0WmQtFgkkD2nFMz
+	 QoQ3FaEUZjVcvqL3IBZo8EwULAdVrp+kgD+wsyfxRSA2DMQ1AV5MVr0eLxzxI121W9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yxe/J4eG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeL7Xb29;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF21606A31C;
-	Wed, 18 Nov 2026 20:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42349606A32A;
+	Wed, 18 Nov 2026 20:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yxe/J4eG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FAD1F000C4;
-	Wed, 18 Nov 2026 20:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yeL7Xb29
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945591F000C7;
+	Wed, 18 Nov 2026 20:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035143;
-	bh=o0sKzjcqA6NlGiJXOjtj/MfNzozQO2vY6Ki/6eofL6o=;
+	s=korg; t=1795035146;
+	bh=lzMvfQ/28KGfw2hK1DEmbmPHSoi+4DIGoQySXMCWuU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yxe/J4eGb1We8UpfEa2GC9ZbTlRLBK3qS2EBsCXEzko/ov45Bf6tQHPzO6l1gW9sk
-	 WCV31I2FYZDdvZ91hUwIfGzKnYvEM9rdJcQLiN3t2zIQbnihvx67tF9MkU9nVJ+1zw
-	 kPIHJ9Yc/d3IXhWcC6FLsdiBrqp/BknBbgaU0DEQ=
+	b=yeL7Xb29LlWBX75IS/jgyMBd281HMnTlMnrmeBAnHMA7uKW9Q5OGcqK6T/I/3GZh4
+	 J+IQLFKO6L6SQ3jHnM4TjOm9ngesOTCV2UX0UnSQ2PCsVkb3/L0Z/+mU4wMa0N2DUm
+	 v1DFVPmEWpko+Y+vgccTVFGqJ/EvXaWuL0WrQR/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0620/3318] media: gspca: use vb2_video_unregister_device() on disconnect
-Date: Wed, 18 Nov 2026 15:20:42 +0100
-Message-ID: <20261118150336.425882798@linuxfoundation.org>
+Subject: [PATCH 6.6 0621/3318] media: imx-jpeg: cancel timeout worker when streaming stops
+Date: Wed, 18 Nov 2026 15:20:43 +0100
+Message-ID: <20261118150336.462848777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,47 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 3dbbbc3cafa2de377d9b97af4e35b8b6b5282047 upstream.
+commit 78fdfbf117c409273eecbfa7a528ef42358a0e38 upstream.
 
-gspca uses vb2_fop_release(), but gspca_disconnect() only unregisters
-the video device. If the queue owner closes the device after USB
-disconnect, vb2_fop_release() releases the queue and invokes
-gspca_stop_streaming() at that point.
+Each per-fd context ctx owns a delayed_work (ctx->task_timer, callback
+mxc_jpeg_device_run_timeout) armed via schedule_delayed_work() at the end
+of mxc_jpeg_device_run() to recover a stalled encode/decode job. The only
+existing cancellation is cancel_delayed_work() in the frame-done IRQ
+handler, which de-queues a pending work item but does not wait for a
+callback that has already started, and it only runs when a frame completes.
 
-gspca_stream_off() calls subdriver stop callbacks and
-usb_set_interface() through gspca_dev->dev. By the time the late close
-runs, the USB core can have freed the usb_device, resulting in a
-use-after-free. This was observed as a KASAN use-after-free in sd_stopN().
+When the fd is closed while a job is in flight (the frame-done IRQ has not
+fired yet), nothing syncs the worker before mxc_jpeg_release() frees ctx
+with kfree() after v4l2_m2m_ctx_release(). A queued or executing
+mxc_jpeg_device_run_timeout() can then recover ctx through
+container_of(&ctx->task_timer) and dereference it (ctx->mxc_jpeg,
+slot_data, dev_warn) after ctx has been freed.
 
-Use vb2_video_unregister_device() so the queue is released and streaming
-is stopped synchronously during disconnect, while the usb_device is still
-valid. Since the helper takes the queue lock, which is usb_lock, call it
-after dropping that lock.
+Cancel the worker from mxc_jpeg_stop_streaming(). The cancel cannot live
+in mxc_jpeg_release(): mxc_jpeg_device_run() arms the timer while holding
+only hw_lock, not the mxc_jpeg->lock mutex that release holds, so a cancel
+in release could still race a concurrent mxc_jpeg_device_run() that
+re-arms the timer afterwards. mxc_jpeg_stop_streaming() instead runs inside
+v4l2_m2m_ctx_release() -> vb2_queue_release(), i.e. after
+v4l2_m2m_cancel_job() has set TRANS_ABORT and waited for any in-flight job
+to finish (so __v4l2_m2m_try_queue() will not queue and v4l2_m2m_try_run()
+will not run any further job for this context, which prevents
+mxc_jpeg_device_run() from re-arming the timer) and before the m2m context
+is freed. cancel_delayed_work_sync() removes a pending work item and waits
+for a running callback, so the worker can no longer race with the
+subsequent kfree(). The cancel is placed before the buffer-release loop so
+a concurrently running timeout callback cannot race with it over the same
+buffers. If the frame-done IRQ canceled a still-pending timer, this cancel
+is a no-op; if the timeout callback has already started, it waits for the
+callback to finish. The same mxc_jpeg_stop_streaming() call is also
+reached from VIDIOC_STREAMOFF, which drains the worker early, although
+STREAMOFF itself does not free ctx -- the use-after-free arises only
+when the fd is later closed.
 
-Fixes: f729ef5796d8 ("media: videobuf2-v4l2.c: add vb2_video_unregister_device helper function")
-Cc: stable@vger.kernel.org # 5.10.x
-Suggested-by: Hans Verkuil <hverkuil@kernel.org>
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+This bug was found by static analysis.
+
+Fixes: cfed9632ca8e ("media: imx-jpeg: Add a timeout mechanism for each frame")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/gspca/gspca.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/usb/gspca/gspca.c
-+++ b/drivers/media/usb/gspca/gspca.c
-@@ -1643,9 +1643,8 @@ void gspca_disconnect(struct usb_interfa
- #endif
+--- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
++++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
+@@ -1658,6 +1658,8 @@ static void mxc_jpeg_stop_streaming(stru
  
- 	v4l2_device_disconnect(&gspca_dev->v4l2_dev);
--	video_unregister_device(&gspca_dev->vdev);
--
- 	mutex_unlock(&gspca_dev->usb_lock);
-+	vb2_video_unregister_device(&gspca_dev->vdev);
+ 	dev_dbg(ctx->mxc_jpeg->dev, "Stop streaming ctx=%p", ctx);
  
- 	/* (this will call gspca_release() immediately or on last close) */
- 	v4l2_device_put(&gspca_dev->v4l2_dev);
++	cancel_delayed_work_sync(&ctx->task_timer);
++
+ 	/* Release all active buffers */
+ 	for (;;) {
+ 		if (V4L2_TYPE_IS_OUTPUT(q->type))
 
 
