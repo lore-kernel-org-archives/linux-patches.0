@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040318;
-	b=RRVvUKjhE4s2M9xbu3KsljX8r055PmVrAehWoJ+C4yBWRC4ZJA8qS+xoK7gBV+492qS1
-	 dkkx26QcPtuuHLsHr1OO+FssEOdxsmA0GFxzloOz/DxcY7DQlUcCVFfJZAKf7GKc7lDj7
-	 8m60KlcyA76HX/t4oCeGdTdqF9+AYYrhCad2dmPt7X58geXbvRTfBskt9wNN8xiO0vdMz
-	 tiBtGRBnn8tIpD48Q3Qc1TwsSWHG0VCeEu5I2Jiy1PCFXf7m57p+QzyKG/ZZgC/A38iyV
-	 oSCv5GH4S5eEAS8FeSLG+4n+5acLpT9f+rd+pN//Gjw4SNB5nktlUq2TqZdR9Ck17sA==
+	t=1795040321;
+	b=2FCMAdEk73wi1wZ/bjOBhfcUkSo1hc/GZ78OmoG73bT3Ny/thupu/ppV8rX024Hjilwg
+	 PyVDBjxjejGMl7UsrsM1jcmCDJbwdEH+EQdM5LnWbxTMuHDYdq7tfB2BKVC8eb7Ym/pL2
+	 hrXvuONle+j4oo+OsMlDtPAnJn/6j6EaPk8uWLxT/BQH+2fq81O2bx2L5Saa6UFCQRFMD
+	 m8X0/2hX+Plw9zaJrz7awmNDDGbiwIZbgOSe8QRnMizADBCmxekxEe7qPMHg54sWaU/OM
+	 apzzsXeIHSXIFL160Uj61jOcuuHgUP4Vtp2+BrBFX5MUxgs8Eau1CIy7l5lCn3y/wfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040321;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Bc8E7NHlf+jGHMVyx6VJ+7fNbbYbA4brkwmgM1vld9A=;
-	b=41kGsp2WHOsM/bfVNzIoINttRQeBXCVbSyunRm5Tan0XNHUU1twJ9qNRKbsh2wJXnOIC
-	 gN25nwj+nODEnCKcyzreAKiiIDMcgmOsqZhUqYKXEbwpxgYUgOrew5vCcaN2Hpn8S+bjj
-	 RH8K2OlxdDZUZCQIXAupteMt9YAE0gh3J6mOoM+601cNoLUO2LH5vpu/dePPvF27GsUTO
-	 pS4PJg6FdUMASBXkuqJwtpz6vHr54T6fgh6Xm3PAEU9rhr+UGMeob13V5wkfoEh5usIBU
-	 UJhpHL4wDShgdpdbIgc0jmGGKYx/sVcn6hIgK71W7ShUS4wES9Hx924mIcmLYgKWAGQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VIC/z8DQxM2oivfD1d2MBY0HR1z/GMe4tuZlJAG41C4=;
+	b=DwBLyDoc7KvYox5LJ30nHMPZt+p8gBF5kW6EtzQpNqN/ppxnpCwcIzG7BIeVnPc6x58Y
+	 mN2laAeJlfnVnC60WDCMY9kVLQAkaDpWx3ThcxDRzIUMft7WNkT7RsNHmdc+2+Zpy/4uP
+	 pi1dBjrGk5aR4pqp+vWBIVHMgd2YmEZDV+J1AETrbcX9jGtqVG1S5gTg3MtuKnR/x308V
+	 dOr7nvYa4o4oNP44Ps06EnDwg7P+yAVEyJvTY3LFEdT+vUjaIfev80kynKX9o1r51UCCb
+	 xf1T6RXtjcH5bwSPzcvdgrq5N58VAcaPq9AkZai9yo2F5OFzPzgtQaNlzJMuJJ8STVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iaMaISVi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xh5fUjpo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36626606A32A;
-	Wed, 18 Nov 2026 22:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC78606A325;
+	Wed, 18 Nov 2026 22:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iaMaISVi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4DC1F000C4;
-	Wed, 18 Nov 2026 22:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xh5fUjpo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7D31F000C4;
+	Wed, 18 Nov 2026 22:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040318;
-	bh=Bc8E7NHlf+jGHMVyx6VJ+7fNbbYbA4brkwmgM1vld9A=;
+	s=korg; t=1795040320;
+	bh=VIC/z8DQxM2oivfD1d2MBY0HR1z/GMe4tuZlJAG41C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iaMaISViDos2QsT1VpZPf/FSl+9IHzThdr6LlPMnJN64PVkJjVNBA4y+qNkKHjU9p
-	 YQjWjuL3NuAaAR+ubxPAka25Uuj9bDDHjA41JhwV7KRjuSZwgxBv/JjK4zp6Rghc1y
-	 jp8rxs1csdt9EYGS2QTJRpy+3IyLnd4yrfynE0LQ=
+	b=xh5fUjpoqpnjvhWPDNW6UJZ1hAOvzwlIfdMCdMcN3tPfM/DU44n33V/djX0Cz/+tk
+	 zE6ew+mu1G4b6wW3VJ8y4Oas485CzxWC8ARygx9S6vqZ4Jm8eGCbgVOtZCYvvcFQKZ
+	 M+PrCHXhRVqSzF0a7gA5F7THvS7rrJaTxMpQQ8nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arka Mondal <arka@arkamondal.net>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Niko Huuskonen <niko.huuskonen.00@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2415/3318] iio: dac: ad5758: Fix the offset calculation
-Date: Wed, 18 Nov 2026 15:50:37 +0100
-Message-ID: <20261118150433.938208518@linuxfoundation.org>
+Subject: [PATCH 6.6 2416/3318] ALSA: caiaq: Serialize access to the EP1 command buffer
+Date: Wed, 18 Nov 2026 15:50:38 +0100
+Message-ID: <20261118150433.966531442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,55 +62,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arka Mondal <arka@arkamondal.net>
+From: Niko Huuskonen <niko.huuskonen.00@gmail.com>
 
-[ Upstream commit a3b3580713f3ac5a32dc2874ee546828977a1d68 ]
+[ Upstream commit a718fd03e1e00211cf4662f5ab82d33f4c18e2a7 ]
 
-The offset is a count of DAC codes, so the microamp or microvolt units
-of min and max cancel out and the final division by 1000 is wrong. For
-the +-20 mA range the driver reports -32 instead of -32768. For the
-+-5 V and +-10 V ranges min * (1 << 16) also overflows int, and the
-reported offset is 0.
+snd_usb_caiaq_send_command() and snd_usb_caiaq_send_command_bank() copy
+the command into cdev->ep1_out_buf and send it with a synchronous bulk
+transfer. Nothing serializes their callers. An ALSA control write, which
+sets the LEDs on the Kore controllers and several other devices, can run
+at the same time as a PCM prepare, which sends the audio parameters
+through the same buffer. One caller can then overwrite the buffer while
+the transfer of the other is still in flight, and the device receives a
+mix of both commands.
 
-Drop the division and do the multiplication in 64 bits.
+Protect the buffer with a mutex. All callers run in process context and
+already sleep in usb_bulk_msg().
 
-Fixes: 28d1a7ac2a0d ("iio: dac: Add AD5758 support")
-Signed-off-by: Arka Mondal <arka@arkamondal.net>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+The problem was found by code review while adding another user of the
+buffer, the Kore LCD support later in this series. It has not been
+observed or reproduced.
+
+Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
+Assisted-by: LLM
+Signed-off-by: Niko Huuskonen <niko.huuskonen.00@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260927003532.289468-2-niko.huuskonen.00@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5758.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/caiaq/device.c | 5 +++++
+ sound/usb/caiaq/device.h | 3 +++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/iio/dac/ad5758.c b/drivers/iio/dac/ad5758.c
-index 19e8397b6ca05..b444c21719853 100644
---- a/drivers/iio/dac/ad5758.c
-+++ b/drivers/iio/dac/ad5758.c
-@@ -9,6 +9,7 @@
- #include <linux/bsearch.h>
- #include <linux/delay.h>
- #include <linux/kernel.h>
-+#include <linux/math64.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/property.h>
-@@ -541,7 +542,7 @@ static int ad5758_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CHAN_INFO_OFFSET:
- 		min = st->out_range.min;
- 		max = st->out_range.max;
--		*val = ((min * (1 << 16)) / (max - min)) / 1000;
-+		*val = div_s64((s64)min * (1 << 16), max - min);
- 		return IIO_VAL_INT;
- 	default:
- 		return -EINVAL;
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index f604846ec6e6f..e8619bb743581 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -212,6 +212,8 @@ int snd_usb_caiaq_send_command(struct snd_usb_caiaqdev *cdev,
+ 	if (len > EP1_BUFSIZE - 1)
+ 		len = EP1_BUFSIZE - 1;
+ 
++	guard(mutex)(&cdev->ep1_out_mutex);
++
+ 	if (buffer && len > 0)
+ 		memcpy(cdev->ep1_out_buf+1, buffer, len);
+ 
+@@ -235,6 +237,8 @@ int snd_usb_caiaq_send_command_bank(struct snd_usb_caiaqdev *cdev,
+ 	if (len > EP1_BUFSIZE - 2)
+ 		len = EP1_BUFSIZE - 2;
+ 
++	guard(mutex)(&cdev->ep1_out_mutex);
++
+ 	if (buffer && len > 0)
+ 		memcpy(cdev->ep1_out_buf+2, buffer, len);
+ 
+@@ -443,6 +447,7 @@ static int create_card(struct usb_device *usb_dev,
+ 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
+ 				  le16_to_cpu(usb_dev->descriptor.idProduct));
+ 	spin_lock_init(&cdev->spinlock);
++	mutex_init(&cdev->ep1_out_mutex);
+ 
+ 	*cardp = card;
+ 	return 0;
+diff --git a/sound/usb/caiaq/device.h b/sound/usb/caiaq/device.h
+index 5ad6cebd639c0..bef5fd31dedd4 100644
+--- a/sound/usb/caiaq/device.h
++++ b/sound/usb/caiaq/device.h
+@@ -2,6 +2,8 @@
+ #ifndef CAIAQ_DEVICE_H
+ #define CAIAQ_DEVICE_H
+ 
++#include <linux/mutex.h>
++
+ #include "../usbaudio.h"
+ 
+ #define USB_VID_NATIVEINSTRUMENTS 0x17cc
+@@ -68,6 +70,7 @@ struct snd_usb_caiaqdev {
+ 
+ 	unsigned char ep1_in_buf[EP1_BUFSIZE];
+ 	unsigned char ep1_out_buf[EP1_BUFSIZE];
++	struct mutex ep1_out_mutex;	/* protects ep1_out_buf */
+ 	unsigned char midi_out_buf[EP1_BUFSIZE];
+ 
+ 	struct caiaq_device_spec spec;
 -- 
 2.53.0
 
