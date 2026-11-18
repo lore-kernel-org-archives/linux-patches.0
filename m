@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049497;
-	b=y3DAKK79h1NvKwx1UAQyTYmYlNU8RttS7d+8ZCJoIfAGQyMPdlVv5SDWNnWKr17GirM/
-	 VaAM5lvi4irdKUiAUZXVSYXAOuQkzrp3wExfIumVXSOSAzvgIf2fN2VfblFLDmluyeNzy
-	 93eIPlh3HkmrsjpT/sUCUqpypbRwuKhjfpePFiMeqi7nBj44DVSJiZgSQRh3FB+rba9/U
-	 awZyY4XY7lecxM2fG9w9ad5lFOH2VqtGUoZvoUpDw9M2ei5Wp7oezHgqZmy9c+rQ1w2cU
-	 WTSv7F2Ex6N9uXyb/u95CUpj4wH9JLmEiBWhgcvnASGGdMDlkvCsN46k/gVFC34DqKA==
+	t=1795049500;
+	b=ArQYfK/o95vCTmXosV48iUVWOhVXyFSAnzqRiMZmBFAuuY3fILlJOQzObbaVwrwaywjg
+	 axV2PFn9Eqe9wDZFNtko+Eh0v6KDf0zSaKt3enruBUebeqPen05n70rl3PCeYr5XM+f39
+	 zfAGd3dOFfO+72U+zAivoLpUe+k+uaFjCw4YuMO8oUd9qIi/119lvqGILIZVIW2gP6asx
+	 xqqrq1UQI4UAxlrMqSB1igytc41PyFihJyBftclsIva5WXPHuyxhv37OmrAi46LPeQTUn
+	 dHZdfPDhM3Oja6JjIu5CW0IIOw8G1GHqErDyOMm6ejLGHo3ryMDn8XUpwxLjMYP2EBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q1avM48GGxTNWkvJSygMGHzCSZSV6f8iO3mM4ifUTHU=;
-	b=0zi/7UhYoeRtQ4Zb+xR9wGtvihjgIk5IPqbjFA9J+G7cVg9A46k98ErQOaKXGds7zQl2
-	 41YDs9UvhJq62m5LW5SKReXuEHGSQ9tRWHgoGE7fMa9T1VaBtAfq8xkG19QcX9HCYtskc
-	 U5ZdMqrzOkA18ovpjEHZDjKW8VJhE69J8xEck1cig0hi+a1OmArBN5wlvt3TEnlwZtzr6
-	 BRxcJHS+CNJ5OcJF2/J91K4sS8kMDd+OJmVPRe95gPpdzQJs1D8rswuR5bVxcm6HSBke8
-	 /wsGuspxgx3uGZGUrDqRVgy924bdmyRP1snRdVcf1ccY+0nIoJDVG7cD97GNEaljoPA==
+	bh=ykKEmjqo1iW8lUmukwiPiNPrPDoxVocBXrCv8ShZk64=;
+	b=gO1iER4EnLTD2uSLth/EHZ+gYmxsnsk8rLeQPTSZrhzXXNHz+gHB7My2fw+bruC3GCMJ
+	 jv4ad9X+g6B/yZHPFzofP6yLZeaRMgCivLM1gg1roMMLwbo9av8ZDIriMXSvs/QOB15jI
+	 REMTVLdB22ts1Y4AYxc6wF18VRT3p7ihfjNpNyCfUmf4BDgLWo8QJYBSEw4EScm5jNKwh
+	 NHYuGw5O/hWBbt8LzCSHqIP+PQEPMCeJXGg3j5wS01pd1O9mCNHFQH+Bo9mxeo6OSdxLc
+	 wmZpx9aoQGqjQdq1JBsQ97M76Hm3jTH825NgkIYOj+IaHp0ig/ALumOIVGxf3ti7gxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YdS9cUAR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIT83e8V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA84606A31C;
-	Thu, 19 Nov 2026 00:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F245F606A320;
+	Thu, 19 Nov 2026 00:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YdS9cUAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EC81F000C4;
-	Thu, 19 Nov 2026 00:51:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIT83e8V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E97B1F000C4;
+	Thu, 19 Nov 2026 00:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049497;
-	bh=q1avM48GGxTNWkvJSygMGHzCSZSV6f8iO3mM4ifUTHU=;
+	s=korg; t=1795049499;
+	bh=ykKEmjqo1iW8lUmukwiPiNPrPDoxVocBXrCv8ShZk64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YdS9cUARRqt1I/lGOZatcpTcYd+QuYy/yemlXcPt6PCPfxqb4byozDqDKUpK84o33
-	 HKJBgElFOxPjz/osIIi8k9ENCXC6kYEUtB8lrZrihn7Vdk3H+6xQMhSADrdeTlg8RZ
-	 nJK0x3BmpmzYf4kHQhAhaFPG/eqVKncv4YLqNKOo=
+	b=RIT83e8VMjRDrxLd/qELy/U0Ln20Bu6uVl/cz72aPpzgLvF/FXnf1bO8PtOTsAvFB
+	 D05+cN1au+cA7YrOQeOIfrFHcTKPgpT4qYir5xo0NSdAZU0M3dAJ+nJwI21N6DueNd
+	 y/IzhBSsVlPDQnp7mBHOAJEKpzuAVtEV0HWKIroM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
+	Daniel Vacek <neelx@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2373/2857] btrfs: fix dangling nodes in tree-mod-log after error in btrfs_tree_mod_log_insert_root()
-Date: Wed, 18 Nov 2026 15:56:47 +0100
-Message-ID: <20261118150326.963516042@linuxfoundation.org>
+Subject: [PATCH 6.1 2374/2857] btrfs: zoned: fix double list add in btrfs_load_block_group_zone_info
+Date: Wed, 18 Nov 2026 15:56:48 +0100
+Message-ID: <20261118150327.000601595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,54 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 057e3c350a9185df598c88b4081168ed047c9247 ]
+[ Upstream commit 9bdef63e2b5d4a88810329a1cab3642d6378a895 ]
 
-If in btrfs_tree_mod_log_insert_root() there is an error in the call to
-tree_mod_log_insert() (the only possible error is -EEXIST, which means we
-have a bug or some memory corruption maybe) we free all the nodes in the
-'tm_list' array but we don't remove them from the tree-mod-log rbtree,
-which can result in use-after-free bugs later.
+For DUP and RAID profiles with zones in a mismatching active state, i.e.
+due to one of the zones of the block-group being on a conventional
+zone, btrfs_zone_activate() has already put the block group on the list.
 
-So make sure we remove the nodes from the rbtree before freeing them after
-an error.
+This leads to a double list add and refcounting problems.
 
-Fixes: 5de865eebb83 ("Btrfs: fix tree mod logging")
-Assisted-by: LLM (found the bug)
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Fixes: 265f7237dd25 ("btrfs: zoned: allow DUP on meta-data block groups")
+Fixes: 568220fa9657 ("btrfs: zoned: support RAID0/1/10 on top of raid stripe tree")
+Reviewed-by: Daniel Vacek <neelx@suse.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-mod-log.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/btrfs/zoned.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/tree-mod-log.c b/fs/btrfs/tree-mod-log.c
-index 73fc7d156383e..10ccaa6350d54 100644
---- a/fs/btrfs/tree-mod-log.c
-+++ b/fs/btrfs/tree-mod-log.c
-@@ -444,10 +444,17 @@ int btrfs_tree_mod_log_insert_root(struct extent_buffer *old_root,
- 		goto out_unlock;
- 	}
- 
--	if (tm_list)
-+	if (tm_list) {
- 		ret = tree_mod_log_free_eb(fs_info, tm_list, nritems);
--	if (!ret)
--		ret = tree_mod_log_insert(fs_info, tm);
-+		if (ret)
-+			goto out_unlock;
-+	}
-+
-+	ret = tree_mod_log_insert(fs_info, tm);
-+	if (ret && tm_list) {
-+		for (i = 0; i < nritems; i++)
-+			rb_erase(&tm_list[i]->node, &fs_info->tree_mod_log);
-+	}
- 
- out_unlock:
- 	write_unlock(&fs_info->tree_mod_log_lock);
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 1c4f959923dd4..2f9c6540b2655 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1563,10 +1563,12 @@ int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
+ 	if (!ret) {
+ 		cache->meta_write_pointer = cache->alloc_offset + cache->start;
+ 		if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags)) {
+-			btrfs_get_block_group(cache);
+ 			spin_lock(&fs_info->zone_active_bgs_lock);
+-			list_add_tail(&cache->active_bg_list,
+-				      &fs_info->zone_active_bgs);
++			if (list_empty(&cache->active_bg_list)) {
++				btrfs_get_block_group(cache);
++				list_add_tail(&cache->active_bg_list,
++					      &fs_info->zone_active_bgs);
++			}
+ 			spin_unlock(&fs_info->zone_active_bgs_lock);
+ 		}
+ 	} else {
 -- 
 2.53.0
 
