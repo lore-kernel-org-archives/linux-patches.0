@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045387;
-	b=FYPiyjJIly2mEmcy6CsGFXjdlBYJ3TfLt1xINI3Z2b9bk8ALhtZm1/juCeUMhqDo7afX
-	 f0FxTTZomgzylrCRWdln7E9sTAFuY1SKhBMI8J41Se6HoVqDjynY0YS61lty9Y8NioT/L
-	 0c3DZcpteo0ypK0VVGUq6jU1KvFpM+e7N1hYAg94PeP2qIIYlxcyHcAYj00uWjcTqnEu6
-	 qbNRiKMjtBqZk/51Qx7ku/3D5JYijqD6MPDpIU8qvL9++ZdvKLLQAhfwYWlKoM741urAO
-	 B4RKk8F4uo203d36tmZ6C9C3NNWISonRzCh1KC1XLX+M724zXLlYmGHZpk/dgop5irg==
+	t=1795045389;
+	b=jv80KVb706w7S37nRvQEUl7GCNTxisC9H4vUL7jUqdBMc6O60J5vYXxunuaxNf5QyO7X
+	 HXnx/3ocS5O+3mgs+z+gtbxKDiY2MpXnKhziozrO0gkfbGr2WXkBq3rbRLno0ynMzzlFJ
+	 UV4nNd72+K3DIsXGaJnS35sBn+4K17mmU4ng0X5VDePfyO0TTOPhU5e4i+YdJaCsQ7MPq
+	 EmDpVABM9HgQyaTE0HrFLHqJrLydCj3cOwdgwpFMdOT7cB63cy50cgt8V/pLivOQ5U1L1
+	 zFrCCZPcC5Hji12FiRRwpZKyO9IS3TRNhhcPWqbYLUoQMz4CpBB5nBVf7SG1TT6Eseg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045387;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=asq6WN99GENzApdT8u6Yy5A0lgunGQIharnZHP8yTBo=;
-	b=z4lsLpHZXxfaU+lP+qw7/xDYGUnSfODytrUmh8G3YIDHqolq5t0oe7Ld3e2/Sj2DC8b5
-	 nfUPttyGb96B0dKEhmxTOc5EEJPiPLB51q7i24vJWXk0Hm5vxNLg4VZRmD/FB/baHc9C7
-	 aB6z+1pTHzIwzqW8jyYJ3EidVt4+pldjXEH23aahxD0sOKpkuEJnhvuQ7ya5/4UQmrNqY
-	 LtBU+klooF/++yMJ1Hnnl+VFley4e73o9JAKOoH4cG9929/Q3/tKQPJjbDI+KWdC3vw+Y
-	 1yYKmoHuBhjrH6AXnYLSNq0rVJs4PxxN28d5cySrVxwce/m9WtJefFxx6cCRTznQtRg==
+	bh=72c6q2dGEs2vfnc0oJ0N1fcgPfd+rYhQR3TrBVc9abI=;
+	b=pdakI1INTLWoqW+N8YS4wpiHkVxIHNMMwyWD7Id7trx/DMug87XtERch6CszcgKKMGGu
+	 tkZf5StejUuysk+YGXhLkcNe8BI3PkFnwWUXVLl9iOUXdLi9GCVp1Hnp3lg9VCvZ73POO
+	 ZhkMXMGcXf5icG0mId4LDZumERKo7gtvQ1Iqg+mT3tB4ZLlVR5hKzdqVZYnfviy1YhYTp
+	 +UELY/DzMochEbKu8ihjiN+kDNFgMaOru/Bth/hAfpAT2JcW9dunBZCjoAScqZCujWM/0
+	 XTYT3dgcHNs9GiOvP/JfpHML98a49LxjDINJKt4PNkEHVb8yVxQNrC1xBi8mYFGfizw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uoWK2yLh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RXXGbU8P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7CD606A31C;
-	Wed, 18 Nov 2026 23:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD99C606A320;
+	Wed, 18 Nov 2026 23:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uoWK2yLh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE751F000C4;
-	Wed, 18 Nov 2026 23:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RXXGbU8P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285571F000C4;
+	Wed, 18 Nov 2026 23:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045386;
-	bh=asq6WN99GENzApdT8u6Yy5A0lgunGQIharnZHP8yTBo=;
+	s=korg; t=1795045389;
+	bh=72c6q2dGEs2vfnc0oJ0N1fcgPfd+rYhQR3TrBVc9abI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uoWK2yLhPH4zNFa982mn2lYi9SXfm7k46k5bVpoljdHXe0U4aoadW2mNs2ddaoNSG
-	 bDJCDDOcf78ul9V9YbzzofffyqXsVW1+kI/8BjdFGPbicRXAhy/LCOZtqend/Wd+2Z
-	 owUEqyWrijef3hfQnQBh14mEt/4smaLscHrLW+GA=
+	b=RXXGbU8PE5OcDMchl69BpVCwoLdGDTu4ORrAq65KAfDzhza5piizNKpvpi3TDj4GS
+	 wQNwQh4x+mK5cOD5vV/03tlIysi3f+EkTNDCrLuHnCpKo0nxUVDfVIcSCHIn/Bexvv
+	 lP0MtG7iZPzdX+xcaQdyeXu9lECLA0xj2OxzEAtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasios Papagiannis <tasos.papagiannnis@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Hajime Tazaki <thehajime@gmail.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0906/2857] mm/nommu: reject wrapping ranges in access_remote_vm()
-Date: Wed, 18 Nov 2026 15:32:20 +0100
-Message-ID: <20261118150234.188589567@linuxfoundation.org>
+Subject: [PATCH 6.1 0907/2857] clk: imx: Fix clock reference leak in imx_get_clk_hw_by_name()
+Date: Wed, 18 Nov 2026 15:32:21 +0100
+Message-ID: <20261118150234.226918719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,57 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 51a8de81fd2edbf87d8046e352060329bb216fad ]
+[ Upstream commit 8e177ca735761a1f03e1dedffd7ab00d6d0540ae ]
 
-The NOMMU implementation of access_process_vm() rejects address ranges
-whose end wraps around, but access_remote_vm() bypasses this check even
-though both functions delegate to __access_remote_vm().
+imx_get_clk_hw_by_name() obtains a consumer clock with
+of_clk_get_by_name(), extracts the hardware pointer with __clk_get_hw()
+and returns it without ever calling clk_put(), leaking the consumer
+reference on both return paths.
 
-Move the wraparound check into __access_remote_vm() so it applies to both
-entry points.
+Extract the hardware pointer first and drop the clock reference with
+clk_put() before returning.
 
-This is originally reported in [1].
-
-Link: https://lore.kernel.org/20260909064231.18693-1-tasos.papagiannnis@gmail.com
-Fixes: f55f199b7d76 ("NOMMU: implement access_remote_vm")
-Signed-off-by: Anastasios Papagiannis <tasos.papagiannnis@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://lore.kernel.org/bpf/4ef240a5bea36ff84df9589671367832860795159386a4c8fba546a0fa8b786f@mail.kernel.org/ [1]
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Hajime Tazaki <thehajime@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 3b315214e091 ("clk: imx: implement new clk_hw based APIs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260915055515.1730145-1-vulab@iscas.ac.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/nommu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/mm/nommu.c b/mm/nommu.c
-index 6f4025d1b52be..6817fa329520e 100644
---- a/mm/nommu.c
-+++ b/mm/nommu.c
-@@ -1705,6 +1705,9 @@ int __access_remote_vm(struct mm_struct *mm, unsigned long addr, void *buf,
- 	struct vm_area_struct *vma;
- 	int write = gup_flags & FOLL_WRITE;
- 
-+	if (addr + len < addr)
-+		return 0;
-+
- 	if (mmap_read_lock_killable(mm))
- 		return 0;
- 
-@@ -1758,9 +1761,6 @@ int access_process_vm(struct task_struct *tsk, unsigned long addr, void *buf, in
+diff --git a/drivers/clk/imx/clk.c b/drivers/clk/imx/clk.c
+index 5582f18dd632f..4aa86bf8a8b93 100644
+--- a/drivers/clk/imx/clk.c
++++ b/drivers/clk/imx/clk.c
+@@ -114,12 +114,16 @@ struct clk_hw * imx_obtain_fixed_clk_hw(struct device_node *np,
+ 					const char *name)
  {
- 	struct mm_struct *mm;
+ 	struct clk *clk;
++	struct clk_hw *hw;
  
--	if (addr + len < addr)
--		return 0;
--
- 	mm = get_task_mm(tsk);
- 	if (!mm)
- 		return 0;
+ 	clk = of_clk_get_by_name(np, name);
+ 	if (IS_ERR(clk))
+ 		return ERR_PTR(-ENOENT);
+ 
+-	return __clk_get_hw(clk);
++	hw = __clk_get_hw(clk);
++	clk_put(clk);
++
++	return hw;
+ }
+ EXPORT_SYMBOL_GPL(imx_obtain_fixed_clk_hw);
+ 
 -- 
 2.53.0
 
