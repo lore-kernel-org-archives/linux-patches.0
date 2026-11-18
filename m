@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049932;
-	b=Kqibqhvcdg46uEndoj5e562gVRY6BXhnXSmFcsblq/ZUiG9vr2ZgMb7BJCHjPzWjUv1+
-	 SUPv48xWAmRqJwNF2tc/Z2CcerfWY+09UbD95CEee263nHYH/R5gCbMA7hm592b6v9SFz
-	 YAISSwGXz0AI3OaXQYG41hoSIDmbo7vbmIQUm/bbvliYIsIaQWLM0vhucyRKIiDIHN7QF
-	 feq+Av9MGS/bFbNQYi9YQIkyL7tEYDXFgSvtPZYt7bj9uZaI4HSWpfrSDp5Cu/I7rmWdZ
-	 2vaiGJ7MRKz/8wT6N7vh0+amZIKa+on1mCHK+TEDPzqXDZwZbG16ArTj9ildrSV0EcA==
+	t=1795049935;
+	b=O3CvjSoh1dwTT6+b2dW6k0Bv6Oit3MaWtGtNb1Z4D86zV8ljlFBl+wsK7gxPWrpwO913
+	 L7hOpDTDyezB4Myy0DBau/sHDBgOYvwEQzdTKR+clj+68Csy8WctRqKoNkVaIDyGC60iu
+	 H6YSUzaGFNVb1OObx5DPpultt4OyQDrmGUW/1TRyUAohWp2bU5qhllyvxMzcnrUzhmWhV
+	 Gs676bFJQamtyl5WjUVKA7NkLvhoqr/2BztSO9+sIcU//SVJQJMthf3oL3bphjCutwdge
+	 MYeShahUSFNtak4fGZPXHCjQ1jQVMZPSXeOJQOrJyalR3lEroX4W2LTcnAVUKmM429w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0zrvJJEMVIRpwnu3/sdxMaYgQM65fQtdYRAKQwLROMM=;
-	b=C+MAkIy4iqmG1TIkoH3WOSue6+S/EyPJOn43YoaL8x8MXlZRnO+dTz5vw82IMckaoHtg
-	 ABOXsca0QJaiFUTjk+3xtXOO5ZcbHasGlkISME7BfgOE4usjtabkcgAGm5kX+NA4YM9Yc
-	 LAmx7O26QSeo6MLQQU2AJOvZ6Ih+zKEfgeAdRndLDf9XX7ZZxO6wpKcpYtyAQAvTify30
-	 KDpRmggQJPtAzIor+YH0+RAz8csQ3/4Fdzdr3XOhQmClznoGQmTQyU3woOJDD9xB2jFga
-	 zgfrwQIv48haTBz0Bf5MpOJzP+OHZqEOVoOYDfiAuPfhmZLg6FyrVolab3tdpB84Zig==
+	bh=/BCQpm98mS90pPRWTztYoSfxTtVV7cVsV7+nXRMGckw=;
+	b=v+7ACZ1ctqq1bNqr0Wvm6NIJvF7qGRm5EhZm1Cild8GYCA/ajot54G5BiQh68qy6Q9HC
+	 qqKljdQjLwbv1hqU6hbdhAuc1bbFSSuLjobQRg2AsVDW4PAuwwZGV8UKoIK3n8pKLa8/0
+	 u9UGPC/cC2K4tVJ+P8xE/zG4sl05GgsuM/bUWQdP494FklrpIU7/3cZx3bP59fGCJcHrp
+	 4+tVv8juv2SLfKowIJPwGzwCyt+6wmhcFpn3M76GmytvwGUlXFn2rCih+Ry78o2gZkTvz
+	 0LteQamM2h2dNj6MQz3dmdssfdFcgcb8g0pRNWxC1KBO3crerW7oiuEIYtzFcYfj3SA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDgbaldn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mx+JgP6Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F0C606A325;
-	Thu, 19 Nov 2026 00:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9685A606A320;
+	Thu, 19 Nov 2026 00:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zDgbaldn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8001F000C4;
-	Thu, 19 Nov 2026 00:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mx+JgP6Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82C81F000C4;
+	Thu, 19 Nov 2026 00:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049932;
-	bh=0zrvJJEMVIRpwnu3/sdxMaYgQM65fQtdYRAKQwLROMM=;
+	s=korg; t=1795049935;
+	bh=/BCQpm98mS90pPRWTztYoSfxTtVV7cVsV7+nXRMGckw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zDgbaldnEeRDX2sB3hicsSe3RVlbtsdh/K3w1dqh+rI8x7pKOFwDiZqXsQ1w9xab1
-	 eVe+Ra99sPU/sdMTcAr7tyYQxMuk620AjF9yzawhj/jA8GBWnk3TGV7zf69fs7z+1B
-	 WEFzsN6eCATx7MSOtOl9buSMeWy6f85gQIU7ZvKA=
+	b=mx+JgP6QqFZYpxZkDz4xAOIldHZz9sDyjVbCHnEXhDUzXFosyIqydFge6m04lNgAt
+	 OHu3U2oTdfxYfLO4y58wxYJmctWUwkG2OpkbK1tJ6Gzb1wOsp1oXeWUYLPxA0UsSAw
+	 JP4VQb4V9/9NQJ4Y0YRPoWOeQI6j51F0KW5eWWJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Youngsung Ahn <ays511.kr@gmail.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2527/2857] RDMA/rxe: validate inline sge_offset in finish_packet() before indexing inline_data[]
-Date: Wed, 18 Nov 2026 15:59:21 +0100
-Message-ID: <20261118150332.525452800@linuxfoundation.org>
+Subject: [PATCH 6.1 2528/2857] RDMA/rxe: bound the WQE opcode before indexing rxe_wr_opcode_info[]
+Date: Wed, 18 Nov 2026 15:59:22 +0100
+Message-ID: <20261118150332.562148970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,57 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Youngsung Ahn <ays511.kr@gmail.com>
 
-[ Upstream commit 47a9c0338f2e0d4178d77b0d2f529fe1fde84642 ]
+[ Upstream commit c887e53e1c852b88bd5442d1bf4717ee3e7aadda ]
 
-For a user QP, rxe_post_send() takes the qp->is_user branch and
-never runs init_send_wqe(), so
-dma.length/resid/num_sge/cur_sge/sge_offset all come straight from
-the mmap'd SQ ring. In the inline send path finish_packet() uses
-sge_offset directly as an index:
+wr_opcode_mask() indexes the global rxe_wr_opcode_info[] array with
+a caller-supplied opcode and no bounds check. For a user QP the WQE
+comes from an mmap'd SQ ring, so wqe->wr.opcode is an
+attacker-controlled __u32 read back by the requester
+(req_next_wqe() -> rxe_requester()); rxe_post_send() takes the
+qp->is_user branch and never runs validate_send_wr(), whose only
+opcode check is itself !wr_opcode_mask() (it indexes before it
+checks). rxe_wr_opcode_info[] has entries only up to IB_WR_REG_MR,
+so an out-of-range opcode reads out of bounds and the result is used
+as a mask and dereferenced; observed as a KASAN global-out-of-bounds
+"Read of size 4" and a wild-pointer oops.
 
-	u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
-	memcpy(payload_addr(pkt), tmp, payload);
-
-inline_data is a flex array whose capacity is qp->sq.max_inline, but
-sge_offset is a u32 from user space, so the source pointer is
-displaced arbitrarily past the WQE and the memcpy reads out of
-bounds.
-commit 126c757e4cd4 ("RDMA/rxe: Validate num_sge/cur_sge before indexing wqe->dma.sge[]")
-added num_sge/cur_sge checks on the send path but not sge_offset, the
-third attacker-controlled index in the same struct.
-
-Read sge_offset once with READ_ONCE() and bound it (and the payload
-that follows it) by qp->sq.max_inline before indexing, so the value
-that is validated is the value that is used.
+Return a zero mask for an out-of-range opcode, matching how
+validate_send_wr() already treats a zero mask (an invalid WR), so no
+path indexes the array out of bounds.
 
 Fixes: 8700e3e7c485 ("Soft RoCE driver")
 Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261001152433.3259573-1-ays511.kr@gmail.com
+Link: https://patch.msgid.link/20261002164552.294749-1-ays511.kr@gmail.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_req.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_loc.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index 55accb4a42980..be2d0f7a78741 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -467,7 +467,14 @@ static int finish_packet(struct rxe_qp *qp, struct rxe_av *av,
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index c2a5c8814a48b..ab638db78594b 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -185,6 +185,9 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
  
- 	if (pkt->mask & RXE_WRITE_OR_SEND_MASK) {
- 		if (wqe->wr.send_flags & IB_SEND_INLINE) {
--			u8 *tmp = &wqe->dma.inline_data[wqe->dma.sge_offset];
-+			u32 sge_offset = READ_ONCE(wqe->dma.sge_offset);
-+			u8 *tmp;
+ static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
+ {
++	if (unlikely(opcode < 0 || opcode > IB_WR_REG_MR))
++		return 0;
 +
-+			if (unlikely(sge_offset > (u32)qp->sq.max_inline ||
-+				     payload > (u32)qp->sq.max_inline - sge_offset))
-+				return -EINVAL;
-+
-+			tmp = &wqe->dma.inline_data[sge_offset];
- 
- 			memcpy(payload_addr(pkt), tmp, payload);
+ 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
+ }
  
 -- 
 2.53.0
