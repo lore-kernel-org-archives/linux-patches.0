@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024224;
-	b=Qgm3rvmX1WdGToO8yw1x/8HRxzQxtso3NFQ563Jn4e2c/PM8B7yzfZ4NVDwcty2TbNJW
-	 BVN/aQMqRydrY2dvFlkfnyTa09Ha0xo3iV5s47FnIoFLe0W1qwuZGb6YXANx2UF+EycAM
-	 zXmnohup4BG+Y40MPblGTxT0/dkaTicDVyxXKoqB6N+zw0eXzA/rq8g7TJtOxg7+aYjak
-	 LIi07sJdQ339FxGizYQguCQlqKgg07WO0pij48UsQgpVLqAfZfpVR1xK3sFCyjzBSXBWY
-	 XD0EPHk64PdeJgeEdRcxrBUhnQKSLteLqonb/2OSc+A4MPVzfvG0LXEAH/kCIN0DW0Q==
+	t=1795024227;
+	b=xZGLPxcETlKxXYtPhkXyW8aVF1l2G1vGFCs0VRfdeR9OPE2EqtsHvAbCJmD7ilH9/CTd
+	 usfWWaTI+wQ5xj/KJSMNLivdJlAvWtufHr8VOUmLEhyBV/uBHQAVzGk3hUqD7fPLKbA67
+	 fRGlOXpmmXxumJu93hqMCudlSMs3aU//a89DrPkkBw/WR0Z0KS3daB/5RzJxa8V+6Habx
+	 YCuoMOIHdjUadvVv/SqADcpfjGO9AYUiDgfjAnqWPZtckdAeTWcAVkadG9VcYLJZ7edVA
+	 AmFPk4fiG8z1ZqF0jyI6kqe4ib1ZO0peAs4hsAkp2UfBDBh57LZW5IKn8clfw8RR/Fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B4P37iyHa68qGh/btM9ycQelTzGKC/a/LZBpA8i2RxA=;
-	b=oybyALgQiVi/E57mSbCIjvHH1oCLnC1PTJBnkx94uOQbDje3dXpYaHpIWMA1OZ6QHO+3
-	 wncULGJWtGCRk+sznpoGL/U65PYro5HQ2mWFupXe/Y1LMnm6gqqtxmFOymZ0h4ZU4BHK+
-	 yrnNpn8HGOpWWHnoGnIQ60tGpi/LNmPoV65/ihOr11tP5WyklWEYwDJUxrP+gilLiie5C
-	 WpNDWd/AtzYQhJMUtSmqC6W9MPcS5EaZMneKkOaBgs3xmy2OIPoBqO4AMwAjpcLmqCGGO
-	 t/lMFOc8V615woJuAdUnIs0DggBCZUNR/nDK+GixPI91HYDKR/7H4FO72/Pl3q/N6Lw==
+	bh=sr5kS/QKQ5xS01QX33SCcxFPSqMJR3/RD6C/sTx4o7Y=;
+	b=ybgU4CrtnjNd0Ryd6OsbiWfNckrQ1Bt3A9L5RU4A3ylMHrBWOt2nRlv99DTndqqAz/Vb
+	 OZelmEUV7F60271x1JzCvfPaANkwdzmgpUTw3BX3vVgzjmvvrDcFuiQcradWK8XI/Tji3
+	 MI2GHkGC/vqh28ZQyOzdSjPKZSFBngXygklxlJeWCYbeUPnbhYui2C+8IVECZZTVDchrl
+	 FKbULu2BogCYjNf+5QxEVqB45574jefwzRcIcNlnFHR5j2qy0hVUcOG6yvzOXlIIG64DO
+	 nq9icp6DhID/TxSeL8pxaDpQuSYLZR6QhhaPuVcBOYtP6PbxhHk3PpZFUEZ406ThZuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1p+2YVW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbs6qkVR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36658606A325;
-	Wed, 18 Nov 2026 17:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E55606A325;
+	Wed, 18 Nov 2026 17:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1p+2YVW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0CA1F000C5;
-	Wed, 18 Nov 2026 17:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbs6qkVR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5493F1F000C7;
+	Wed, 18 Nov 2026 17:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024224;
-	bh=B4P37iyHa68qGh/btM9ycQelTzGKC/a/LZBpA8i2RxA=;
+	s=korg; t=1795024226;
+	bh=sr5kS/QKQ5xS01QX33SCcxFPSqMJR3/RD6C/sTx4o7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1p+2YVW76Gpn+oLmB2LqsFw6t/UTQGW040T1JGAJml4IAoSEk7HtEAGoGiC7yx9at
-	 mPEhXx59ChrJs8HhoZOtCn9sEhdjQ/4Y84OsDdGsAmvI7gd9TivObTRFyxoweqNca1
-	 WfcVVf3kxRuSGB60XCEeSowq2RCenWA3ZPYvnvPw=
+	b=vbs6qkVRLVT2IDEL9OStZHq2lBVoOo551qMVeH6ywb7L79vrU7YFdHwOHEau7HdvX
+	 LyBoQF7tEbl+yr/T1ctUAaHR4uNb1wHfqUF/1dvjWgrs7+nchpjzhNBNtDKvKG4rbV
+	 b57xO9pytZOJC7bpNju3q8a55cHza8qE8kNjrZCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0608/2151] ASoC: amd: acp3x-es83xx: Switch to use acpi_bus_get_primary_device()
-Date: Wed, 18 Nov 2026 15:39:03 +0100
-Message-ID: <20261118150144.083880908@linuxfoundation.org>
+Subject: [PATCH 6.18 0609/2151] x86/boot: Remove redundant "cc" clobber in memcmp() and document it
+Date: Wed, 18 Nov 2026 15:39:04 +0100
+Message-ID: <20261118150144.116173618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,44 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Mauricio Faria de Oliveira <mfo@igalia.com>
 
-[ Upstream commit aae5bd00ced5b7e42ef3b3aa46923ad72388c60b ]
+[ Upstream commit 94509668fccfa098e0a3d57e7093a9afd88aea9f ]
 
-Replace acpi_get_first_physical_node() that is slated for removal
-with acpi_bus_get_primary_device() that takes a reference to the
-device it is about to return.
+The "cc" clobber remains recognized for source compatibility, but it has
+no meaning anymore; it is automatically generated without condition-code
+constraints:
 
-This addresses a potential use-after-free that may occur if the
-device returned by acpi_get_first_physical_node() is removed right
-after dropping its ACPI companion's physical_node_lock in that
-function.
+  https://lore.kernel.org/all/57b0d188-b256-bde4-43e6-99dae4f59d60@suse.de
 
-It also fixes a device reference counting issue that may lead to a
-premature device release if devm_kzalloc() fails in acp3x_es83xx_probe().
+Comment out the redundant "cc" clobber for documentation purposes.
 
-Fixes: 54fcd9dd44b2 ("ASoC: amd: acp: Add machine driver that enables sound for systems with a ES8336 codec")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/2310746.NgBsaNRSFp@rafael.j.wysocki
+  [ bp: Massage commit message. ]
+
+Fixes: a8c171c107c0 ("x86/boot: Add volatile, clobbers and zero-length test in memcmp()")
+Reported-by: "H. Peter Anvin" <hpa@zytor.com>
+Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-1-08da47943d8e@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/boot/string.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-index b18a8971aec94..7197c1d21d955 100644
---- a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-+++ b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-@@ -425,7 +425,7 @@ static int acp3x_es83xx_probe(struct snd_soc_card *card)
- 			return -ENXIO;
- 		}
+diff --git a/arch/x86/boot/string.c b/arch/x86/boot/string.c
+index 3a2bba7c25e9d..fa9623988826b 100644
+--- a/arch/x86/boot/string.c
++++ b/arch/x86/boot/string.c
+@@ -36,11 +36,15 @@ int memcmp(const void *s1, const void *s2, size_t len)
+ 	/*
+ 	 * Make sure ZF is properly set in the len==0 case because in it,
+ 	 * RCX==0 and the REPE; CMPSB won't get executed.
++	 *
++	 * The "cc" clobber has no meaning anymore, just source compatibility.
++	 * On x86 the flag status bits are automatically added to the clobber
++	 * set when there are no =@ccXY constraints. Keep it as documentation.
+ 	 */
+ 	asm volatile("test %3, %3\n\t"
+ 		     "repe cmpsb"
+ 		     : "=@ccnz" (diff), "+D" (s1), "+S" (s2), "+c" (len)
+-		     : : "cc", "memory");
++		     : : /* "cc", */ "memory");
+ 	return diff;
+ }
  
--		codec_dev = acpi_get_first_physical_node(adev);
-+		codec_dev = acpi_bus_get_primary_device(adev);
- 		acpi_dev_put(adev);
- 		if (!codec_dev) {
- 			dev_warn(dev, "Error cannot find codec device, will defer probe\n");
 -- 
 2.53.0
 
