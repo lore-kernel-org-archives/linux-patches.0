@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054341;
-	b=zgDVsCBTcM5D3BjgD4A1IFxAJXaTBs3FLxEXr/ocl/KD7FUmA2UXrHrUIO9YHTDoAbf1
-	 r60K+8O5wgmBYNnPoZfLq7oWjs+jDN7QD0qbASnOmlto0s3qQ8EjNAWE9IzxIsOfPmPB0
-	 PFpBADx72gqS2oKRhgTNrIUzp4mHrQWcYEySfxT/6qerq8FNmMwJEXilavggRWlk29NBi
-	 yM5RmEbdZT1LB+1EIyTLDMRJgirbOmQsK7BP40a8NPbBWCvSErhkChxPx/RE6fW1bMC1F
-	 AfUR6wIOQlyU2XAhwnern3bFlpDRHjjnGfiYBoHpQSGH7ObL8S45docXyiQU/cd2oSg==
+	t=1795054344;
+	b=moiIOLxXGRjYu049+RlUEGFaRW+BufTng+dCXtqA/N7ekIVJh+tuKDSmMwuheqSONbah
+	 +EUecny3jvLLF2IEDvQzqP7B/fu7/Iuo0CfIA5TW3/blVkAmn2rObGVu2uVI8rFijF9X5
+	 +IfG9LdVWaRDNNgslTFCjD7Yys8r1LgcDh5ChhoRfoX6wiQ7f/4ucl6YKMQVtj76NfT4e
+	 IqkBNaWPU3+6MaNJG5RLIg3BmDcwnA09nBx/Avx93e7o70wGI5FWqY9xL4y3apH4sAnm4
+	 iUIsXq7l09EgFZc+J57fSyk61nBH4a42T8Vu0DKh838ZQbOhmqNFomYa2mTj/kcFOtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054341;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l7Fq4pSR2BhdPbfp1s/pn5HmBn4TkI5WJPuF0xrY7aI=;
-	b=qAsGR0Zf0fsESui5MtVibUlWi4T9y8n19W7eoEwhS+B7Vd68CztYRENjyukpYi/vPE2s
-	 uw4PpdlSNp3KvHPFwZ5VoMyXsrZzyFqeTC0IiS2Uf3rR7xJBytWj6ME/9ygUXL/BKUMIB
-	 5YDhPzJa7vj7QgLeErs+EdCEHa2y0+dLT2ABWZoZTpXgnBGG7Y6DXFltM09HLUYBMfSLO
-	 WrAmdxsYc0NfD27P/scO5NErubtAQzMjyEk9CaSR2/pOS8CL1qlBwYgcS3vNOrPBHOSx/
-	 PnD1YPU7K9fk0FHYI994rEYKoLV62zoNVNC0BXPTixMPAji/HCtQHORKaBtYaVa+3+A==
+	bh=EyoEZ2Q7bpP5zxtpOmv+Unk/+mXriWh8lT93uzgEz2o=;
+	b=qmplKf/q7wetrqKIFQEMgnoA3kFGzTDEfDgXTOW1wNtGbhEF9gjtgSIJNDrJFWzsFSEU
+	 FajWZxPPYVrzkenmS/ttKM8fN67IjNwe2RieaQ2/QMcL0E/jyTfePNbeuKlb5EtRldmu0
+	 paQ1w86g6bioDoQYgEVQKk1msAAxFbeFOlHP33RYt/qQG+yP7nzlMlz7q+fZC1a3fZg0U
+	 J86hDJv2Fh7SVVgySO4vMOuvCo96uTMtAqJzvwVWWkvKyK5Chf43w3Jhc61S/lPmSmXFs
+	 k3PtJbjFi1QgftPHLmuUJgRU+5Qp9pllfyOhxs99ahhyejxYmGj84rZ+ojcLlCF1SUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bj+O+8vk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QuhGx8yd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307E6606A336;
-	Thu, 19 Nov 2026 02:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C44606A31C;
+	Thu, 19 Nov 2026 02:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bj+O+8vk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8424A1F000C7;
-	Thu, 19 Nov 2026 02:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QuhGx8yd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590551F000C6;
+	Thu, 19 Nov 2026 02:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054341;
-	bh=l7Fq4pSR2BhdPbfp1s/pn5HmBn4TkI5WJPuF0xrY7aI=;
+	s=korg; t=1795054343;
+	bh=EyoEZ2Q7bpP5zxtpOmv+Unk/+mXriWh8lT93uzgEz2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bj+O+8vkdQ3nKpySVRI900VMfODN68zKdNdFhc779SnsZ48Ffi21Ysacdu90ezL0S
-	 GRMkD87VMFGKZNaIbQBcBkXoOW8WVexMJBtYurTeaWmx7C7VzWHA24nlYhiwQl7qGJ
-	 L1cRdnKP0G97y+F7XClEoIGwmQrLe35gQxuXxMMI=
+	b=QuhGx8ydPSWIngtFGmVNMLiwZeJPq8RrLhlH18DfF48W14LE1cMrdF5D2iOp1PWJ2
+	 j1+hFMlFLvoWTMy1JpLcHDdZLiGqgcn0E/n2MiZ3kpticNhjFCglGQx+ZYIlISTtqA
+	 rdHVXsG3n70XTG7QMqeGzRTLbI5uG7lUh/F8PZ/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Khorenko <khorenko@virtuozzo.com>,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1239/2214] selftests/core: fix unshare_test with large fs.nr_open
-Date: Wed, 18 Nov 2026 15:48:35 +0100
-Message-ID: <20261118150101.293277219@linuxfoundation.org>
+Subject: [PATCH 5.15 1204/2214] assoc_array: move in-place insertion into a function of its own
+Date: Wed, 18 Nov 2026 15:48:00 +0100
+Message-ID: <20261118150100.017919745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,86 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit df0b7e0ea59c43708cff8c7e34da5e2f8d430e5e ]
+[ Upstream commit a624a7ce7d85b514d949b6c7a049f43ac96f3257 ]
 
-The test assumes fs.nr_open is close to the default 1048576, but some
-systems set it much higher (e.g.  1073741816).  This is systemd's doing:
-since systemd v240 (2018), PID 1 bumps fs.nr_open and fs.file-max to their
-largest possible values on boot, as file descriptors are already accounted
-for by memcg [1].
+assoc_array_insert_into_terminal_node() is over 300 lines and does four
+jobs, joined by gotos: putting the new leaf in place of a matching one
+or in a free slot, working out the segment of each leaf, splitting the
+node, and replacing the node with a shortcut.  The last two share the
+function's tail, which installs the replacement where the node was.
 
-In that case, dup2() to nr_open + 64 requires the kernel to allocate a
-file descriptor table with ~1 billion entries, which fails with ENOMEM.
+Move the jobs into functions of their own, one per commit, starting with
+the two cases that need no new node: assoc_array_insert_in_node().
 
-On a kernel that already carries 04a2c4b4511d1, dup2() no longer fails
-with ENOMEM.  The allocation is now rejected up front and the caller
-gets EMFILE instead, without the WARNING, but the test still fails.
+No functional change.
 
-Cap the nr_open value used for the test's own arithmetic to a known
-reasonable base value (1048576) and restore the true original value once
-the test has completed.
-
-Link: https://lore.kernel.org/20260814165709.513263-1-khorenko@virtuozzo.com
-Link: https://github.com/systemd/systemd/commit/a8b627aaed409a15260c25988970c795bf963812 [1]
-Signed-off-by: Konstantin Khorenko <khorenko@virtuozzo.com>
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
-Cc: <stable@vger.kernel.org>
+Assisted-by: LLM
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/core/unshare_test.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ lib/assoc_array.c | 68 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 43 insertions(+), 25 deletions(-)
 
-diff --git a/tools/testing/selftests/core/unshare_test.c b/tools/testing/selftests/core/unshare_test.c
-index 7fec9dfb1b0e3..6716e0f74d7da 100644
---- a/tools/testing/selftests/core/unshare_test.c
-+++ b/tools/testing/selftests/core/unshare_test.c
-@@ -40,6 +40,14 @@ TEST(unshare_EMFILE)
- 
- 	ASSERT_EQ(sscanf(buf, "%d", &nr_open), 1);
- 
-+	/*
-+	 * Cap nr_open for the duration of the test to avoid ENOMEM from a
-+	 * huge fd table allocation; buf/n keep the real original value so
-+	 * fs.nr_open can be restored to it once the test is done.
-+	 */
-+	if (nr_open > 1024 * 1024)
-+		nr_open = 1024 * 1024;
-+
- 	ASSERT_EQ(0, getrlimit(RLIMIT_NOFILE, &rlimit));
- 
- 	/* bump fs.nr_open */
-@@ -73,10 +81,13 @@ TEST(unshare_EMFILE)
- 
- 	if (pid == 0) {
- 		int err;
-+		char buf3[32];
-+		ssize_t n3;
- 
--		/* restore fs.nr_open */
-+		/* restore fs.nr_open to the (possibly capped) test baseline */
-+		n3 = sprintf(buf3, "%d\n", nr_open);
- 		lseek(fd, 0, SEEK_SET);
--		write(fd, buf, n);
-+		write(fd, buf3, n3);
- 		/* ... and now unshare(CLONE_FILES) must fail with EMFILE */
- 		err = unshare(CLONE_FILES);
- 		EXPECT_EQ(err, -1)
-@@ -89,6 +100,10 @@ TEST(unshare_EMFILE)
- 	EXPECT_EQ(waitpid(pid, &status, 0), pid);
- 	EXPECT_EQ(true, WIFEXITED(status));
- 	EXPECT_EQ(0, WEXITSTATUS(status));
-+
-+	/* restore the real fs.nr_open value */
-+	lseek(fd, 0, SEEK_SET);
-+	write(fd, buf, n);
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index e7c9a2f513114..a9295e8ca5d4d 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -470,33 +470,17 @@ static bool assoc_array_insert_in_empty_tree(struct assoc_array_edit *edit)
  }
  
- TEST_HARNESS_MAIN
+ /*
+- * Handle insertion into a terminal node.
++ * Insert into a terminal node without changing its shape, if that can be
++ * done: in place of a leaf with the same index key, or in a free slot.
+  */
+-static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+-						  const struct assoc_array_ops *ops,
+-						  const void *index_key,
+-						  struct assoc_array_walk_result *result)
++static bool assoc_array_insert_in_node(struct assoc_array_edit *edit,
++				       const struct assoc_array_ops *ops,
++				       const void *index_key,
++				       struct assoc_array_node *node)
+ {
+-	struct assoc_array_shortcut *shortcut, *new_s0;
+-	struct assoc_array_node *node, *new_n0, *new_n1, *side;
+ 	struct assoc_array_ptr *ptr;
+-	unsigned long dissimilarity, base_seg, blank;
+-	size_t keylen;
+-	bool have_meta;
+-	int level, diff;
+-	int slot, next_slot, free_slot, i, j;
+-
+-	node	= result->terminal_node.node;
+-	level	= result->terminal_node.level;
+-	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
+-
+-	pr_devel("-->%s()\n", __func__);
++	int free_slot, i;
+ 
+-	/* We arrived at a node which doesn't have an onward node or shortcut
+-	 * pointer that we have to follow.  This means that (a) the leaf we
+-	 * want must go here (either by insertion or replacement) or (b) we
+-	 * need to split this node and insert in one of the fragments.
+-	 */
+ 	free_slot = -1;
+ 
+ 	/* Firstly, we have to check the leaves in this node to see if there's
+@@ -514,7 +498,6 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 			pr_devel("replace in slot %d\n", i);
+ 			edit->leaf_p = &node->slots[i];
+ 			edit->dead_leaf = node->slots[i];
+-			pr_devel("<--%s() = ok [replace]\n", __func__);
+ 			return true;
+ 		}
+ 	}
+@@ -526,7 +509,42 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 		pr_devel("insert in free slot %d\n", free_slot);
+ 		edit->leaf_p = &node->slots[free_slot];
+ 		edit->adjust_count_on = node;
+-		pr_devel("<--%s() = ok [insert]\n", __func__);
++		return true;
++	}
++
++	return false;
++}
++
++/*
++ * Handle insertion into a terminal node.
++ */
++static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
++						  const struct assoc_array_ops *ops,
++						  const void *index_key,
++						  struct assoc_array_walk_result *result)
++{
++	struct assoc_array_shortcut *shortcut, *new_s0;
++	struct assoc_array_node *node, *new_n0, *new_n1, *side;
++	struct assoc_array_ptr *ptr;
++	unsigned long dissimilarity, base_seg, blank;
++	size_t keylen;
++	bool have_meta;
++	int level, diff;
++	int slot, next_slot, free_slot, i, j;
++
++	node	= result->terminal_node.node;
++	level	= result->terminal_node.level;
++	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
++
++	pr_devel("-->%s()\n", __func__);
++
++	/* We arrived at a node which doesn't have an onward node or shortcut
++	 * pointer that we have to follow.  This means that (a) the leaf we
++	 * want must go here (either by insertion or replacement) or (b) we
++	 * need to split this node and insert in one of the fragments.
++	 */
++	if (assoc_array_insert_in_node(edit, ops, index_key, node)) {
++		pr_devel("<--%s() = ok [in node]\n", __func__);
+ 		return true;
+ 	}
+ 
 -- 
 2.53.0
 
