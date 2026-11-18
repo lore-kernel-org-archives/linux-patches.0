@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029990;
-	b=gK4xt6qwXOulArurVN1+Kd/BsIB4S1Rl7ntktx141RoQgCK+JxekVQyTKLeSsWU3rSaH
-	 TdMUg8PT4vQUdzJNNIGR5g7XM0VBFHwkmmrrO9eCHFWFox2gyht9OAD8GSmotEi4r5mEI
-	 7GWL2+HSvQwgjPsCqMM2YWc1nIPi9r5goGl07LtN6DheieTvqu4BvgteL581u/w9/5IUC
-	 aLP1MtkDn78LIZUb5OQxDoh6fIX9dMxUbmPnoHeOA7bG6PnQbZL1Pf397Nw8YP7z5XcMS
-	 0Kwoa6UCGDFCxxqkXLH6zCaPhrqn4qOujEWYVvHyxhRaXEXWHsFQy5PoedAl1O6CAIA==
+	t=1795029993;
+	b=jGE3eztzwd2DFo4UFsZKvpUh+lkCwSvltRT57KhxBlXeeUvrsGdlg/xWNQus6JDYz58n
+	 OhqhBTssEQFAML1UIpf62Ku1KR7RZXEq6Yi7AtbML/PAA5phYFcO/VLhxnZoRLrIK4hPR
+	 dA/sImPaYVa1fzwD+eMxIno/QNLoa3rQ80SP6queL3+0DP//Y9JH1ApJAlCHSIksezYbm
+	 sNvJH4HqJpHqbJ1X6q00sjZpdWZVuoL6mEvZCHN/G47yQdn0nkvAxwA0UWlOmRHB/BHnc
+	 KYQFFyCow0rWmjIS2bu+ZvjrifYpAIAe3N3qN+9jPEAoIsWNxuBMSFJboVebqT6HspQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=26q5vvSh9Uz6tkX4rfUUJH6e6kqktUKoT03Umb21ndI=;
-	b=lCnDlzpvp1aUA75As/tifQh6yO2HXX252hpiZD47yBSYEMoLTzj3YoLtGY/svI1KLeuG
-	 RSE3g78rvVT5scKWmF5I+IsFVEinyQfsyg+CPjYsBATp4GMStnYh6KeLJWEJQK684jshY
-	 UCA3TiynWXTvJxYhvPvXUnk5hJV+KodCs8oRP1+Ozwh070UHQjLa0N6ld/D5rgOAZlFvO
-	 g8sX1I0Z7SC7NLikBV2lkPfhicurFIDjdplxRoJH6uJ8PVQ/nYP2MJOdKxW+WMD+wyGIq
-	 qZ65DOu+9v39k4wlEct2S+JQ3vRhNDfJf8mKS9vzjpeoI4Kk2iXLvTwNVVlzjg9LlQQ==
+	bh=8/DmG5qBcg4NwfmSaF9ROC7W4FDkBJBq1Pm6IgZ31iE=;
+	b=WWUQKh/fGjjvBDVLU5AvoIlEJTp6snL2HOdz8IMweBjKAotmZVsQI2TM6nJ5iTrZ6+D0
+	 hNZhWMbNHsBF+dJCATkjX4JpwMh3PMEeQAbmzjPo/EY/x/Z+G60m9I0fgFtTy+HunJkYQ
+	 qinTgl8iLTE8hVino5pISjuddh533tCFVf9cbbtCDqyA1dteyWKdET7Mq4Y9JQGzYI1aA
+	 UFZKCuOWbPXFC9mXxIATTxG5hEGtEdw0/H5g/rbj8pWqvPsqU0Wdp39BXNU2GZZjMLE/p
+	 LTAD+blpsPmbJ7yss/U0BiD7xgyuOwTX7YGrZUSxdBr1PdnYeLObOfF32mSPSB1oizg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQxul9pM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vN9SH+Uz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA72606A32A;
-	Wed, 18 Nov 2026 19:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE92606A325;
+	Wed, 18 Nov 2026 19:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQxul9pM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3791F000C4;
-	Wed, 18 Nov 2026 19:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vN9SH+Uz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A1B1F000C4;
+	Wed, 18 Nov 2026 19:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029990;
-	bh=26q5vvSh9Uz6tkX4rfUUJH6e6kqktUKoT03Umb21ndI=;
+	s=korg; t=1795029993;
+	bh=8/DmG5qBcg4NwfmSaF9ROC7W4FDkBJBq1Pm6IgZ31iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NQxul9pMXwhLOiOH/Pwv0QgRSNx4gD6d0rQVUB4u28mXwMfm497LbXuik9U7b+RTG
-	 Feq80KPUBmNp1qrPKruDGelTSwxEmu5K5M93M533SUXd3D6GkglEuwtJORyNLUSjMH
-	 3cR3NiVGlLBTQ4gdkChGVR8rsUYmP4M1r0J2YORk=
+	b=vN9SH+UzxIo1I1GZ1lHTBSSZecmhctk3O3tYC2Ssu5qSvnNea3Nh0m9/ZqNDQOQkS
+	 wpVy+bRY3quRVbR1uh/ey8yfrxfBwwqLsa7nNeB1CUxr/r9nyt3kkf2FO4EZTC9NjH
+	 YTZN28kkf3VIvW+wQzb5KfBvnBiE/TTgSpTURnmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malathi A <malathi.a2000@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0545/1756] serial: 8250_uniphier: Use devm_clk_get_enabled()
-Date: Wed, 18 Nov 2026 15:44:32 +0100
-Message-ID: <20261118150030.833751502@linuxfoundation.org>
+Subject: [PATCH 6.12 0546/1756] serial: sifive: fix off-by-one in console port bounds check
+Date: Wed, 18 Nov 2026 15:44:33 +0100
+Message-ID: <20261118150030.868681403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,80 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malathi A <malathi.a2000@gmail.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit 790aacba3fdfd3a227cdd5e4952c596ed66a0ed8 ]
+[ Upstream commit bf961847813d9edcb5a9c089714069428d141fa9 ]
 
-uniphier_uart_probe() enables priv->clk by hand and is then responsible
-for disabling it again on every error path. It misses one: when
-uart_read_port_properties() fails the function returns directly, leaving
-the clock prepared and enabled. The neighbouring path, taken when
-serial8250_register_8250_port() fails, does call clk_disable_unprepare(),
-which shows the leak is an oversight rather than intent.
+sifive_serial_console_ports[] is sized SIFIVE_SERIAL_MAX_PORTS (8), so
+valid indices are 0..7. The bounds check in sifive_serial_probe() uses
+"id > SIFIVE_SERIAL_MAX_PORTS", which lets id == 8 pass and causes an
+out-of-bounds write in __ssp_add_console_port() through
+sifive_serial_console_ports[ssp->port.line].
 
-Rather than adding another manual unwind, switch to
-devm_clk_get_enabled() so the clock is released by devres. That removes
-the error path entirely, along with the explicit disables in the
-register failure path and in uniphier_uart_remove().
+Fix the check to use >= instead, matching the check already used in
+sifive_serial_console_setup().
 
-The clock is still disabled and re-enabled by hand across system sleep,
-which stays balanced: only SET_SYSTEM_SLEEP_PM_OPS is used, so the
-device cannot be unbound while suspended and devres always sees an
-enabled clock at detach.
-
-Found by smatch:
-
-  drivers/tty/serial/8250/8250_uniphier.c:232 uniphier_uart_probe() warn: 'priv->clk' from clk_prepare_enable() not released on lines: 205.
-
-Fixes: 26e8349c0d76 ("serial: 8250_uniphier: Switch to use uart_read_port_properties()")
-Signed-off-by: Malathi A <malathi.a2000@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260917040511.103232-1-malathi.a2000@gmail.com
+Fixes: 45c054d0815b ("tty: serial: add driver for the SiFive UART")
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://patch.msgid.link/20260827014524.19375-1-min_halo@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_uniphier.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/tty/serial/sifive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_uniphier.c b/drivers/tty/serial/8250/8250_uniphier.c
-index 4874a9632db39..6d8c0098bfa55 100644
---- a/drivers/tty/serial/8250/8250_uniphier.c
-+++ b/drivers/tty/serial/8250/8250_uniphier.c
-@@ -180,16 +180,12 @@ static int uniphier_uart_probe(struct platform_device *pdev)
- 
- 	memset(&up, 0, sizeof(up));
- 
--	priv->clk = devm_clk_get(dev, NULL);
-+	priv->clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(priv->clk)) {
--		dev_err(dev, "failed to get clock\n");
-+		dev_err(dev, "failed to get and enable clock\n");
- 		return PTR_ERR(priv->clk);
+diff --git a/drivers/tty/serial/sifive.c b/drivers/tty/serial/sifive.c
+index 054a8e630acea..1046ada8be444 100644
+--- a/drivers/tty/serial/sifive.c
++++ b/drivers/tty/serial/sifive.c
+@@ -937,7 +937,7 @@ static int sifive_serial_probe(struct platform_device *pdev)
  	}
  
--	ret = clk_prepare_enable(priv->clk);
--	if (ret)
--		return ret;
--
- 	up.port.uartclk = clk_get_rate(priv->clk);
- 
- 	spin_lock_init(&priv->atomic_write_lock);
-@@ -222,7 +218,6 @@ static int uniphier_uart_probe(struct platform_device *pdev)
- 	ret = serial8250_register_8250_port(&up);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to register 8250 port\n");
--		clk_disable_unprepare(priv->clk);
- 		return ret;
+ #ifdef CONFIG_SERIAL_SIFIVE_CONSOLE
+-	if (id > SIFIVE_SERIAL_MAX_PORTS) {
++	if (id >= SIFIVE_SERIAL_MAX_PORTS) {
+ 		dev_err(&pdev->dev, "too many UARTs (%d)\n", id);
+ 		return -EINVAL;
  	}
- 	priv->line = ret;
-@@ -237,7 +232,6 @@ static void uniphier_uart_remove(struct platform_device *pdev)
- 	struct uniphier8250_priv *priv = platform_get_drvdata(pdev);
- 
- 	serial8250_unregister_port(priv->line);
--	clk_disable_unprepare(priv->clk);
- }
- 
- static int __maybe_unused uniphier_uart_suspend(struct device *dev)
 -- 
 2.53.0
 
