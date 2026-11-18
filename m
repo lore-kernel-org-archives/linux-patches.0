@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015820;
-	b=xNLG8OcI3GxP/s4kLvyEpJUTI4yIepQk9xBbGhZswoO7k/g/0ei3A76A3JDaych64vpq
-	 9g0ZomGT+3HoxsUXG/byYyUBvIcXXwAHHiTHn47Lhhx5KhHwZhGSuZrAAka8tLsj7sjYe
-	 1HWqum5mfkkK22sPIOeE/G8DSXvF43vov/h9ZPWr7gZNHYGXJnmlmwy2SZP4XFY3H2MXD
-	 W3JgRR7jeQYFP48v1AtmgPWzR81TGv0Dqoh10gjMAXyE5bK6UmN5aIMRyj3QiLuXtJ6G0
-	 9FH5Vynxg+d/CxUVqy5EVEojQ18kdjH/nhSqPPmCzzWcw3SF4ssZ/PnJX6ptYvbV1Lw==
+	t=1795015823;
+	b=AmV73xsUFzAiKFAnN0EH5Oi5UBTxqoxvQtEaYIoLrD07WNA3cEtCsv7ED7AMnvrKjrkp
+	 XyuRXrm9hciV2Cw+/vYEaZfBQQU67bTJRPUw7XwzQTFaFyriGUndZq2ObsRq8deWZqC8f
+	 /GpQsv9HR6DpKZ+ub5ZEIMHXkC4bUAadQc8njbdxeieu8puyNhSsRK4c7jRSU6oFQkf10
+	 b07yDX8mCEI2UxiuQY++vAigWm4tzw/VSJTFvqAWX/ExcFD8H1UOPrPi/a7jALC6W4D0C
+	 DaOX5peU8KPvSn5DNF91qnwOmwZThL7Y7dvXFlQLBHnbvkWO7wEKWubSwwDb5N45gIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015823;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9av/pclYVWZGBk8omezJgIv6h1BD34mtBnG98yzoH60=;
-	b=B+EzwJIkhDPAiVP3PxSqYWqKHsYf0ZHs7Ayxsbc3aeQ88f4iGId9kgNjrlweI446ptF/
-	 d8d6nqHZQJpP7wbHdCD40NuKylZm2e1lcHF2sFa6kJzpXQsaUQKvyDrHeb0HJ59mpnT10
-	 MgijWtZ1Fml7Zvux+P2zctxEBV3xMWmpRB32X7KGg2+iWDZS/ihmsfWZyF+PYz5FM5IAw
-	 +TDTOCetxRt6QkINb6fuf0R4w+wDddh5ZFilbZrf4bziF8OgFsb0AqV8ypunEA/0fMtPi
-	 KfAZBZ5QrAwr5d9SJE9pvrHTatk3NZPfS65LT2GtMqrUhSqSAn6Lv2XH/7UZa4/N8nw==
+	bh=fjtidhRH/Byl7GrTiCi2Bv3XgSRXyK005fV9dcxDNNM=;
+	b=wfuo2gcmA03PgaCi5dBZZ4cUex0GZEfP6dlhOmA7rNYmGygx60YcZgQ0WBpiSYqxkjkX
+	 aaBbBv0FiPNszgsArO5mKllrIrdckGCYkHKJlsJYO/cyiZTAalkukNbDaARhv+cvNMA7k
+	 oas/09VBpVY6/1gnQal9g+V916AVUn3bd8bA5l7kiBLnuVUKoG1m8CzrdMjIpCown1l5F
+	 w7i/zqI0tLO+hT/+8BGXuMl2XvyquDuUDV7e43hBB71c2mZoLHBb//25xB9Tg4C5b3Usn
+	 eDbt05snZ2pks0rsNPPf7Z2gFdb8mY8eW0nf386OI65aUd89B8FKRxNgkdS6Kk1ZebA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tjjE5F/t";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2mqnjJ5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113DA606A32C;
-	Wed, 18 Nov 2026 15:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE97F606A330;
+	Wed, 18 Nov 2026 15:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tjjE5F/t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620F51F000C4;
-	Wed, 18 Nov 2026 15:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c2mqnjJ5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516021F000C4;
+	Wed, 18 Nov 2026 15:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015819;
-	bh=9av/pclYVWZGBk8omezJgIv6h1BD34mtBnG98yzoH60=;
+	s=korg; t=1795015822;
+	bh=fjtidhRH/Byl7GrTiCi2Bv3XgSRXyK005fV9dcxDNNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tjjE5F/tNLDPANPRvISQyj1qP++Vn+i14JHnn3SrKYhlC7eEh85XGp+yurAwqSXHz
-	 YL+fUli26AO/gTpv8Pm/nG3FYsv/s9Z8lAPFtQreVJ4aEGVAv8INMd4lYDO6UI8DTb
-	 IVZxYo8kgBsH/ZNLG4RF6Y2fc6Y4ATxsSdiCh4fY=
+	b=c2mqnjJ5k30SBBZmB1CZ9t5IruKYaxAiPxxv79VnlqWAAj+ojjPuDWDcz7J7yRoue
+	 Mc9ppcv4ofDhgXGiFLdQKAcQPphYuAK+7hjuv2oHma11DhJSZN6OuO0nmw/eRUd87h
+	 GBlU/qC7tMt7WyJkQ43Anf320UZGF1jmzMdQsb1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0310/2651] ACPI: glue: Rework the success message in acpi_device_notify()
-Date: Wed, 18 Nov 2026 15:25:50 +0100
-Message-ID: <20261118150259.050519343@linuxfoundation.org>
+Subject: [PATCH 7.3 0311/2651] ACPI: utils: Adjust message printing macros for ACPI objects
+Date: Wed, 18 Nov 2026 15:25:51 +0100
+Message-ID: <20261118150259.085313197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,42 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit aef7792cddcac7ab400912c2947a595401d4a7e8 ]
+[ Upstream commit 78ddbfaa72d68acc98cd5ba12eca071d452702c4 ]
 
-Using an ACPI handle in the acpi_device_notify() success message is
-somewhat misleading because the "physical" device is not bound to an
-ACPI namespace object in that function, but to an ACPI device object
-attached to it.  Moreover, the message is outright confusing for the
-"physical" devices bound to ACPI devices without ACPI namespace
-objects (for example, fixed event buttons).
+The majority of acpi_handle_<level>() macros use neither pr_fmt() nor
+dev_fmt() and acpi_handle_debug() uses pr_fmt() like dev_fmt(), but
+only if dynamic debug is compiled in.
 
-Address this by turning that message into a dev_dbg() one printed for
-the "physical" device and mentioning the name of the ACPI companion.
+For more consistency, redefine all of the macros in question to use
+dev_fmt() because they are more similar to the analogous dev_*()
+family of macros than to the pr_*() ones and make all of them use it
+in the same way.
 
-Fixes: ab06eb920401 ("ACPI: scan: Register platform devices for fixed event buttons")
+While at it, rephrase the comment documenting those macros for more
+clarity.
+
+Fixes: 45fef5b88d1f ("ACPI: add dynamic_debug support")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/2448150.ElGaqSPkdT@rafael.j.wysocki
+Link: https://patch.msgid.link/2300525.irdbgypaU6@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/glue.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/acpi.h | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
-index a2a394c226b3f..a47cccc4efd3f 100644
---- a/drivers/acpi/glue.c
-+++ b/drivers/acpi/glue.c
-@@ -394,8 +394,7 @@ void acpi_device_notify(struct device *dev)
- 		adev->handler->bind(dev);
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index ddacac8120947..f7e3efd328f79 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1305,34 +1305,34 @@ void __acpi_handle_debug(struct _ddebug *descriptor, acpi_handle handle, const c
+ #endif
  
- done:
--	acpi_handle_debug(ACPI_HANDLE(dev), "Bound to device %s\n",
--			  dev_name(dev));
-+	dev_dbg(dev, "Bound to ACPI device %s\n", acpi_dev_name(adev));
- }
+ /*
+- * acpi_handle_<level>: Print message with ACPI prefix and object path
++ * acpi_handle_<level> - Print a message with ACPI prefix and object path
+  *
+- * These interfaces acquire the global namespace mutex to obtain an object
+- * path.  In interrupt context, it shows the object path as <n/a>.
++ * In thread context, the global namespace mutex is acquired to obtain the
++ * object path.  In interrupt context, the object path is shown as <n/a>.
+  */
+ #define acpi_handle_emerg(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_EMERG, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_EMERG, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_alert(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_ALERT, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_ALERT, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_crit(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_CRIT, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_CRIT, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_err(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_ERR, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_ERR, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_warn(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_WARNING, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_WARNING, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_notice(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_NOTICE, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_NOTICE, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_info(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_INFO, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_INFO, handle, dev_fmt(fmt), ##__VA_ARGS__)
  
- void acpi_device_notify_remove(struct device *dev)
+ #if defined(DEBUG)
+ #define acpi_handle_debug(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_DEBUG, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_DEBUG, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #else
+ #if defined(CONFIG_DYNAMIC_DEBUG)
+ #define acpi_handle_debug(handle, fmt, ...)				\
+ 	_dynamic_func_call(fmt, __acpi_handle_debug,			\
+-			   handle, pr_fmt(fmt), ##__VA_ARGS__)
++			   handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #else
+ #define acpi_handle_debug(handle, fmt, ...)				\
+ ({									\
 -- 
 2.53.0
 
