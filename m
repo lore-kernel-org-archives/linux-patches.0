@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042855;
-	b=N4LUgKJH3wsmM5NrOVFF1ox7Aw/H24wT7Vb2mcElb2dnOI26CN+Zc01zoQF3enbwbwPe
-	 FylUl28ahNdg5wD2b6u8W7IqtwlpLVWBsErfz/51mGAUtaPFt1yDOlVQPurTFtiFlBJ+J
-	 HWWTaOR1zfCKN9nSxkGo0CZlqyMMbiSbio0jYc+OE3B8u6ANSB60xjheHS+aez8LAhWqS
-	 8I7DMkzaM3VWjHAIPXlP3BXhAjeL9cNOuhxc7DKuqi5cYqnxWLAs6zDx4WGghWKt+bVBM
-	 NrflBh6Y8kQemY8G0aZi8UcLo9BEPZwGXR9CFmXpA9F5Nq8M4lYq1Tc52NHsaHJ8zNg==
+	t=1795042858;
+	b=wCwOiraT27lfbg7FbVGG3cmDuBukCdCWGhQSUUJfCaLzjXCJ3qg8Ayei8JO1QyxQQdzk
+	 bzCA7e5grQQUxQ9wjtuKHl6Jg1DSMfsx6VQ+ErLvGxre4YDOAuCPzQjpb1/XrxOqY7hez
+	 gpY01UDgSLyXxtyFGNAARO9imuT4tUVdbryT/Pj1O9FeNXub1HgvwSgjMufBpRYUJeC9p
+	 eQqxYmYKL/lcot0idO/X8UFiKb44r7WTVhB6ui2T4VOyHsL8BmiHBY6ph+a+CIJuiqc8k
+	 JzGMTsJBZUdSrwlv2XWftFKrCxYGPajc2Dx4CAp3jByq1yrDRsU3b/zFCbhvgTYkfDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ii+wVtzZCoMhpFb5zLVqruND+5ZYcL/pRrcUPoXmtg8=;
-	b=VsM+nem+JPVeIQ/P+NxZLm3u43GlrRPrqnzzUgaa8GXr0F9Wbqr+2l2//liD5ni9y4/M
-	 pwQWEAMJN4WdN0gkiDbKpNN/LMLT844jMXaLtY0NeeVQ1fYw6idywLO5NS4lDdIExghkW
-	 Imfo1QiKJiZO3fPjJdTQ/oUlRg/IbOYTpMBkuHRzPMh1F9TQ62m8AlTDPnU1EXdu7CteD
-	 eh/FW+4S7v+TF211TNmjwG1+xByRZMGy4Q1hJM5OWCo52u+oqQSZgmjJ565RXAO075X+M
-	 tYg86Q4+I3L6BB4mPCUDAG+H9aNSo5ug9km9PhgrexJ2SpvaWhdE2J7bR8emt9bbuYQ==
+	bh=X+DDJjQK2BkZZVJm6D8u13Nru2hvWCKddGgqSTxvsEY=;
+	b=K6QNIjl96JxR/EZS60edn8chHz6gje16ilK+1OFphzD1lUhNbSfGKEcRQdICaNh/1HSV
+	 eAFgSrWMPftpkZSF6OKkZmZ8LgTVhpgTl4fPBM4EV0GuLKAmtQixaSwep9JaIiCoQ2kA+
+	 bjiinTmWUIMLMPQ4hwp+ckjFeyU1T0WnPbFMuWN8SdPra+FzYI0FNaM86gkMlkIfCALiY
+	 EMczeO2GC+v959iDWLcU2uWNx8nAYUo9s0fHwXYJmvhTTLZjXGZ8Q7LcjQECJkETrKSsY
+	 ui4RqmYap8CRGwEwAwLaCdwcHgb5uexMaVHpVxWKcMH7TgEoWaXHY7zZOmITFslOzIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KFJDT8MX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ety6T+8E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71388606A320;
-	Wed, 18 Nov 2026 23:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9CC606A320;
+	Wed, 18 Nov 2026 23:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KFJDT8MX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855D41F000C4;
-	Wed, 18 Nov 2026 23:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ety6T+8E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA681F000C4;
+	Wed, 18 Nov 2026 23:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042855;
-	bh=ii+wVtzZCoMhpFb5zLVqruND+5ZYcL/pRrcUPoXmtg8=;
+	s=korg; t=1795042857;
+	bh=X+DDJjQK2BkZZVJm6D8u13Nru2hvWCKddGgqSTxvsEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KFJDT8MXA2ACpGTfybxPwhx8j323I1pv/iwIpY+mCOtQ4mHeWZVElv1w+y5SDeBvC
-	 dIVcwQ1KXMLA46qv+PSZOEn2BNKSnwkyGQyyA5dnThnCqobFzUiLf9XSxzjnHPVQsL
-	 yK5kxK3GRPPiVFKNsD6cncT40T6s9fcKfqFBr96Q=
+	b=Ety6T+8Eozjxb3nlBF/sou3I34Q3+ymnU9KZapT1kQDRP1L2/xXKTKzcaxVBj9bj4
+	 v7wLSfWsElGZtBKoM+AroKPdN1riGQKzgUWMzpsH1oyYvlfiOTSu6IpNmmRs0WaWx6
+	 YP2ZxOT+FvwLOWnaD9ir/qfe1sLMKePjeJtNrkes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 3318/3318] Input: matrix_keypad - propagate error code from matrix_keypad_build_keymap()
-Date: Wed, 18 Nov 2026 16:05:40 +0100
-Message-ID: <20261118150459.104600747@linuxfoundation.org>
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 3289/3318] splice: retry tee() instead of returning 0 when it races
+Date: Wed, 18 Nov 2026 16:05:11 +0100
+Message-ID: <20261118150458.268842934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,36 +68,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-commit 4d8221c0d7e72bea5ee1a6bf8ae423a1faca66fa upstream.
+[ Upstream commit b2aa970a0a03c117306f48d75a4c3125a8cc9957 ]
 
-When switching to managed resources in matrix_keypad_probe(), the error
-return path after matrix_keypad_build_keymap() was replaced with a
-hardcoded -ENOMEM instead of propagating the real error code.
+tee() can return 0 while the input pipe still has writers, when
+another task reads the input pipe or fills the output pipe at the same
+time. tee(2) documents 0 as "no data was copied" because the input pipe
+has no writers, and loops built on it (the man page example breaks out
+on 0) stop early. In a test with one thread writing 1 byte at a time
+to the input pipe, one reading it and one draining the output pipe,
+about one tee() call in 150 returned 0.
 
-Return the original error so the actual failure reason is preserved.
+do_tee() runs ipipe_prep() and opipe_prep() to wait for data and room,
+each under its own pipe lock, and only then takes both locks in
+link_pipe(). If the input pipe was emptied or the output pipe filled in
+between, link_pipe() finds nothing to do and returns 0.
+splice_pipe_to_pipe(), which was modelled on tee(), handles the same
+race by dropping both locks and going back to the prep steps ("A zero
+return value means EOF, so retry instead"), and returns -EAGAIN for
+SPLICE_F_NONBLOCK.
 
-Fixes: 7d0f351da460 ("Input: matrix_keypad - switch to using managed resources")
-Reported-by: sashiko-bot@kernel.org
-Assisted-by: LLM
-Link: https://patch.msgid.link/ascss_vYXDPXIxmn@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Do the same in link_pipe(): move the prep steps into it and retry when
+nothing was linked although the input pipe still has writers.
+
+Tested under QEMU (x86_64) with the program in the notes: 154 of 22698
+tee() calls returned 0 before the change, none of 34429 after it.
+
+Fixes: aadd06e5c56b ("[PATCH] splice: fix problems with sys_tee()")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261018025541.799135-1-nickolai@csail.mit.edu
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/matrix_keypad.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/splice.c | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
---- a/drivers/input/keyboard/matrix_keypad.c
-+++ b/drivers/input/keyboard/matrix_keypad.c
-@@ -455,7 +455,7 @@ static int matrix_keypad_probe(struct pl
- 					 NULL, input_dev);
- 	if (err) {
- 		dev_err(&pdev->dev, "failed to build keymap\n");
--		return -ENOMEM;
-+		return err;
+diff --git a/fs/splice.c b/fs/splice.c
+index 53c5a44b08bb1..1e57100cc5dde 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1817,6 +1817,15 @@ static int link_pipe(struct pipe_inode_info *ipipe,
+ 	unsigned int i_mask, o_mask;
+ 	int ret = 0;
+ 
++retry:
++	ret = ipipe_prep(ipipe, flags);
++	if (ret)
++		return ret;
++
++	ret = opipe_prep(opipe, flags);
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Potential ABBA deadlock, work around it by ordering lock
+ 	 * grabbing by pipe info address. Otherwise two different processes
+@@ -1840,13 +1849,32 @@ static int link_pipe(struct pipe_inode_info *ipipe,
+ 		i_head = ipipe->head;
+ 		o_tail = opipe->tail;
+ 
++		if (pipe_empty(i_head, i_tail) && !ipipe->writers)
++			break;
++
+ 		/*
+ 		 * If we have iterated all input buffers or run out of
+ 		 * output room, break.
+ 		 */
+ 		if (pipe_empty(i_head, i_tail) ||
+-		    pipe_full(o_head, o_tail, opipe->max_usage))
+-			break;
++		    pipe_full(o_head, o_tail, opipe->max_usage)) {
++			if (ret)
++				break;
++
++			if (flags & SPLICE_F_NONBLOCK) {
++				ret = -EAGAIN;
++				break;
++			}
++
++			/*
++			 * We raced with another reader/writer and haven't
++			 * linked any buffers. A zero return value means EOF,
++			 * so retry instead.
++			 */
++			pipe_unlock(ipipe);
++			pipe_unlock(opipe);
++			goto retry;
++		}
+ 
+ 		ibuf = &ipipe->bufs[i_tail & i_mask];
+ 		obuf = &opipe->bufs[o_head & o_mask];
+@@ -1916,16 +1944,7 @@ long do_tee(struct file *in, struct file *out, size_t len, unsigned int flags)
+ 		if ((in->f_flags | out->f_flags) & O_NONBLOCK)
+ 			flags |= SPLICE_F_NONBLOCK;
+ 
+-		/*
+-		 * Keep going, unless we encounter an error. The ipipe/opipe
+-		 * ordering doesn't really matter.
+-		 */
+-		ret = ipipe_prep(ipipe, flags);
+-		if (!ret) {
+-			ret = opipe_prep(opipe, flags);
+-			if (!ret)
+-				ret = link_pipe(ipipe, opipe, len, flags);
+-		}
++		ret = link_pipe(ipipe, opipe, len, flags);
  	}
  
- 	if (!pdata->no_autorepeat)
+ 	if (ret > 0) {
+-- 
+2.53.0
+
 
 
