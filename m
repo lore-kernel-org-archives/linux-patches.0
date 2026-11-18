@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027579;
-	b=lzpfFHq9Taro2WWpTSJ02kSNiVqqYScsSOl3p12a7p3Db8F5eZac5T5yroPO2vg3Qq4X
-	 oZRGbsxcS7nRizhF8soCeR7LzmorArGHxBDYPBhaawBhpkO1qs5uNwK6nB98l9oIsViTM
-	 rPmAXOXrmyynXhczZ8eRUKQ3NJzi6Q8+wpS9DM1GzAWmj5cNAVkeYtSAVtuSiI3VxMY62
-	 xeB9TSgGA0s8Q4alet+xvALDeOmVnXnFnlUBCi3U8XO4uO3f4g7F3RLKTC8cXIHABJY3p
-	 xFLD87GMwbxZsq2UdnIisY4oUdF4L1DUx+DuxyXG1GXZ/w6+hbDgk9U11Lej8iYCihQ==
+	t=1795027581;
+	b=Gl64CBQjphKVKn6bROjOyiIid1kvDOrC4ChMQCU4SbQ8cafjZO9TVB2+JAQIVeFX+RTI
+	 LuWOfGVAaHIAhy1+hEbypxebwsNPSZqyysOuSWXnqn5xnGvoBZhFMaXqhRINlEBZcKhfe
+	 SF2HHNfXey7yIQOi6av/rLVqFueZSecH3LXvAhHwrmQ+WEtkvkDhkJpqGal3ezz7T+pGJ
+	 +NyEzJzM6y1u2BaGIg7xco/IOhvE8oh8Vow6wM4yMi5es5UyigB2e49JQC8vrFqHaP/Sa
+	 KtGdwFxyXtQzBRgrko9YQs5PafDRbwtaVqS39DIHlsCk5ri3v7A3ZBT4xiJFCHMTIeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4CaF2uZFH7SXCosT0EkRJ6qB4OGDGUNGMjT2uOLODnA=;
-	b=UjzM+KfH3uuPnQu8/ztPLbKdlIisOo/DItAoa0JmsuvudpaiPsddLFxzQYDIw453kKG7
-	 TCAwskN5BtD0bOOZAC2d7CGQphTllN0iylHd9/mOzTT+kVVmMw3nNnrYmnnKdTPE7vhu1
-	 k0Kf4Zccso/WivzwMLFyUPUuHsuIYfVLN+HSgbNsQMfgM2If1p4zcMVc40vFz2nnOqVrl
-	 6bIKnP62pUov/MQ4zD8/pfi+yP28FaDNa9yGinbhPiFmegxLjwy1uG5rJBRF4GLEPYzQt
-	 xt9PtmE94TS26V4CwIGMkj2YfRqb0R/GTM8Z/Uoi33HzbDtVhFLranImNzUwYdVi2LQ==
+	bh=Y0tH9K1YtjtxCcWRTHGvo7SsVGU0+Aua7NFr8NA0vPY=;
+	b=43Z+AeOcdxgfK9HJZy/4w+t0rWdnaNxmClxQHnBWIQpYb0kxnUURh/JdXQlh/qt5rgz4
+	 huIIbf23l+zUUfE5/Wzi9EbTZHMJuD8ZWXwxVvnSNEm/g3LL0885MhACQgBz0u7ESzkjv
+	 SlN4k36lBdC0X11nKhrCY+V/rrvRV2sajEQ3v+Pq/acbxIySrMNX98auf2WmznOKEw3GH
+	 sHfcIMMS7YXJZAqKR1nfFJmDdrN4XxZJsGorO2A635NW7oU6OH+vW4Gf6LcuXhXdacI/J
+	 GVeHgGcqTNp4t9ZzKdKpifK12n/PajywMIDFzwbGrAlg3tLUhIFdGIGJf6jTOI4qEdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGjvDxhm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QocOu0V+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04508606A31C;
-	Wed, 18 Nov 2026 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF85A60A2613;
+	Wed, 18 Nov 2026 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hGjvDxhm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509EE1F000C4;
-	Wed, 18 Nov 2026 18:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QocOu0V+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3D21F000C4;
+	Wed, 18 Nov 2026 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027578;
-	bh=4CaF2uZFH7SXCosT0EkRJ6qB4OGDGUNGMjT2uOLODnA=;
+	s=korg; t=1795027581;
+	bh=Y0tH9K1YtjtxCcWRTHGvo7SsVGU0+Aua7NFr8NA0vPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hGjvDxhmrnrfkyc9n3G8aZsxW7yCTqpGgt0nXwhyjwL1/obiWEc4VAiUhJUO3K8ID
-	 zSpxfPss9nqIsdguk5nwjUjW+1uQWAEAC9WLDkHRuKIwkMuRgGZ0g9JoIMfk3iRV0J
-	 RNSBkZdg+6NEWmlnLjQh9n0/EzBd2Sgg+Yof/cBQ=
+	b=QocOu0V+rGZOiyef/riW0Z5S+7MtYN85atrDgBsq9mzeXjQm0XnoPGp6z2I3abcN2
+	 AwXZyl18oiumiwI3aqB0RY6D2QA3jgnWZ8jUaDFWND64LyEXf801rJWTrQ9jKW8L66
+	 gykANhSJh6nkyA6hzMD8F5RnHzev00E3DeMghJes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Sagi Maimon <maimon.sagi@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1840/2151] ksmbd: server: avoid busy polling in accept loop
-Date: Wed, 18 Nov 2026 15:59:35 +0100
-Message-ID: <20261118150228.827146346@linuxfoundation.org>
+Subject: [PATCH 6.18 1823/2151] net: axienet: release every RX buffer in axienet_dma_bd_release()
+Date: Wed, 18 Nov 2026 15:59:18 +0100
+Message-ID: <20261118150228.214838545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,137 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Sagi Maimon <maimon.sagi@gmail.com>
 
-[ Upstream commit 3316a8fc840d82fad5efcf76ad0ea3f76fdca209 ]
+[ Upstream commit b59787892d04a5647a7e662fbb02cd0abdb1a993 ]
 
-The ksmbd listener thread was using busy waiting on a listening socket by
-calling kernel_accept() with SOCK_NONBLOCK and retrying every 100ms on
--EAGAIN. Since this thread is dedicated to accepting new connections,
-there is no need for non-blocking mode.
+The RX walk in axienet_dma_bd_release() stops at the first descriptor
+without an skb, assuming that such a slot and all after it were never
+filled.  That holds on the axienet_dma_bd_init() error path, but not once
+the ring has been running: when axienet_rx_poll() fails to allocate or
+map a replacement buffer it leaves the slot it emptied with a NULL skb,
+in the middle of a populated ring, until a later poll refills it.
+Closing the interface before then leaks the skb and the streaming DMA
+mapping of every descriptor after that slot, which can be most of the
+ring, and is most likely under memory pressure.
 
-Switch to a blocking accept() call instead, allowing the thread to sleep
-until a new connection arrives. This avoids unnecessary wakeups and CPU
-usage. During teardown, call shutdown() on the listening socket so that
-accept() returns -EINVAL and the thread exits cleanly.
+The walk also frees each skb before unmapping it.  With swiotlb, the
+DMA_FROM_DEVICE unmap copies the bounce buffer back into the skb data
+that was just freed, and on non-coherent platforms it invalidates cache
+lines that may already belong to a new owner.
 
-The socket release mutex is redundant because kthread_stop() blocks until
-the listener thread returns, guaranteeing safe teardown ordering.
+Skip empty slots instead of stopping at the first one.  An emptied slot
+still has a non-zero cntrl but its buffer is already unmapped, so the
+skip has to cover the unmap too, which it does by coming before it.
+Then unmap before freeing, as axienet_rx_poll() does.
 
-Also remove sk_rcvtimeo and sk_sndtimeo assignments, which only caused
-accept() to return -EAGAIN prematurely.
+This was reported by the Sashiko AI review bot.
 
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: d34d38ab0c62 ("ksmbd: fix iface_list use-after-free during server reset")
+Tested on the AXI Ethernet MAC of an ADVA TimeCard X2 (PCIe card, with
+the built-in AXI DMA): traffic passes after each of ten down/up cycles,
+each running axienet_dma_bd_release(), so the unmap-then-free order is
+exercised on every buffer.  A failed RX refill was not reproduced, so
+the skip over an empty slot was not exercised.
+
+Fixes: f26667a373f3 ("net: axienet: Fix DMA descriptor cleanup path")
+Fixes: 7a7d340ba4d9 ("net: axienet: fix RX ring refill allocation failure handling")
+Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
+Link: https://patch.msgid.link/20261015084743.1798326-1-maimon.sagi@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/transport_tcp.c | 41 +++++------------------------------
- 1 file changed, 6 insertions(+), 35 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
-index a25237f82cd76..f876ba5d8ed7b 100644
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -22,7 +22,6 @@ struct interface {
- 	struct socket		*ksmbd_socket;
- 	struct list_head	entry;
- 	char			*name;
--	struct mutex		sock_release_lock;
- 	int			state;
- };
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 9bd458f158391..d53b92c30b65a 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -245,13 +245,13 @@ static void axienet_dma_bd_release(struct net_device *ndev)
+ 	for (i = 0; i < lp->rx_bd_num; i++) {
+ 		dma_addr_t phys;
  
-@@ -57,19 +56,6 @@ static inline void ksmbd_tcp_reuseaddr(struct socket *sock)
- 	sock_set_reuseaddr(sock->sk);
- }
- 
--static inline void ksmbd_tcp_rcv_timeout(struct socket *sock, s64 secs)
--{
--	if (secs && secs < MAX_SCHEDULE_TIMEOUT / HZ - 1)
--		WRITE_ONCE(sock->sk->sk_rcvtimeo, secs * HZ);
--	else
--		WRITE_ONCE(sock->sk->sk_rcvtimeo, MAX_SCHEDULE_TIMEOUT);
--}
+-		/* A NULL skb means this descriptor has not been initialised
+-		 * at all.
++		/* A NULL skb means the descriptor holds no buffer: it was
++		 * never filled, or axienet_rx_poll() took its skb and could
++		 * not refill it, having already unmapped the old buffer.
++		 * Such slots can sit anywhere in a ring that has been running.
+ 		 */
+ 		if (!lp->rx_bd_v[i].skb)
+-			break;
 -
--static inline void ksmbd_tcp_snd_timeout(struct socket *sock, s64 secs)
--{
--	sock_set_sndtimeo(sock->sk, secs);
--}
--
- static struct tcp_transport *alloc_transport(struct socket *client_sk)
- {
- 	struct tcp_transport *t;
-@@ -239,20 +225,14 @@ static int ksmbd_kthread_fn(void *p)
- 	unsigned int max_ip_conns;
+-		dev_kfree_skb(lp->rx_bd_v[i].skb);
++			continue;
  
- 	while (!kthread_should_stop()) {
--		mutex_lock(&iface->sock_release_lock);
- 		if (!iface->ksmbd_socket) {
--			mutex_unlock(&iface->sock_release_lock);
- 			break;
+ 		/* For each descriptor, we programmed cntrl with the (non-zero)
+ 		 * descriptor size, after it had been successfully allocated.
+@@ -262,6 +262,8 @@ static void axienet_dma_bd_release(struct net_device *ndev)
+ 			dma_unmap_single(lp->dev, phys,
+ 					 lp->max_frm_size, DMA_FROM_DEVICE);
  		}
--		ret = kernel_accept(iface->ksmbd_socket, &client_sk,
--				    SOCK_NONBLOCK);
--		mutex_unlock(&iface->sock_release_lock);
--		if (ret) {
--			if (ret == -EAGAIN)
--				/* check for new connections every 100 msecs */
--				schedule_timeout_interruptible(HZ / 10);
-+		ret = kernel_accept(iface->ksmbd_socket, &client_sk, 0);
-+		if (ret == -EINVAL)
-+			break;
-+		if (ret)
- 			continue;
--		}
- 
- 		if (!server_conf.max_ip_connections)
- 			goto skip_max_ip_conns_limit;
-@@ -472,10 +452,6 @@ static void tcp_destroy_socket(struct socket *ksmbd_socket)
- 	if (!ksmbd_socket)
- 		return;
- 
--	/* set zero to timeout */
--	ksmbd_tcp_rcv_timeout(ksmbd_socket, 0);
--	ksmbd_tcp_snd_timeout(ksmbd_socket, 0);
--
- 	ret = kernel_sock_shutdown(ksmbd_socket, SHUT_RDWR);
- 	if (ret)
- 		pr_err("Failed to shutdown socket: %d\n", ret);
-@@ -546,9 +522,6 @@ static int create_socket(struct interface *iface)
- 		goto out_error;
++
++		dev_kfree_skb(lp->rx_bd_v[i].skb);
  	}
  
--	ksmbd_socket->sk->sk_rcvtimeo = KSMBD_TCP_RECV_TIMEOUT;
--	ksmbd_socket->sk->sk_sndtimeo = KSMBD_TCP_SEND_TIMEOUT;
--
- 	ret = kernel_listen(ksmbd_socket, KSMBD_SOCKET_BACKLOG);
- 	if (ret) {
- 		pr_err("Port listen() error: %d\n", ret);
-@@ -627,12 +600,11 @@ static int ksmbd_netdev_event(struct notifier_block *nb, unsigned long event,
- 		if (iface && iface->state == IFACE_STATE_CONFIGURED) {
- 			ksmbd_debug(CONN, "netdev-down event: netdev(%s) is going down\n",
- 					iface->name);
-+			kernel_sock_shutdown(iface->ksmbd_socket, SHUT_RDWR);
- 			tcp_stop_kthread(iface->ksmbd_kthread);
- 			iface->ksmbd_kthread = NULL;
--			mutex_lock(&iface->sock_release_lock);
--			tcp_destroy_socket(iface->ksmbd_socket);
-+			sock_release(iface->ksmbd_socket);
- 			iface->ksmbd_socket = NULL;
--			mutex_unlock(&iface->sock_release_lock);
- 
- 			iface->state = IFACE_STATE_DOWN;
- 			break;
-@@ -695,7 +667,6 @@ static struct interface *alloc_iface(char *ifname)
- 	iface->name = ifname;
- 	iface->state = IFACE_STATE_DOWN;
- 	list_add(&iface->entry, &iface_list);
--	mutex_init(&iface->sock_release_lock);
- 	return iface;
- }
- 
+ 	dma_free_coherent(lp->dev,
 -- 
 2.53.0
 
