@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049033;
-	b=gSzUO/eSVR56jRMyljfP1cW9k70iw7e1yMler5HIxnq8dQmKdpbwV5IYkypdnVxTTvid
-	 90fAUv0Xdk6Xkmk6X8mwBtiHoLxo6SMqx+rS2MdoUWsi3R/bIN8UUve04n3PTh4xSseXr
-	 osx9E1sV0/nWQEXfudXniBR3LX2Bs2cmPx1ynXhKXNOKdpdFlu5bJUwaYgHgEHYVdfurC
-	 QNi217ZglPBGnbDiJW2/MaJffnd8oOgycjDPaaDCSb4q+zgbJ8zE2f8094a1tl/VxQs/B
-	 HgWGrcekooKh2jPeTaP9ppyMxWOEOHdw028rLTWAKQacDWCgmfjTAj6suHctIfS2vDA==
+	t=1795049036;
+	b=G0bDFYxRfAqaatRFo3OJVqBwkwV+/vbwUijjDDUXg8RsdlZN6rltQHVyglJyzBIMHf9p
+	 gUTSdQV0FUPSU8uAD4P+fJCWq88d9Uy5ZyKv8idP7dOn81c9tQO0r7dtWL88JGHWigOm6
+	 pWnwCo/m1fjHqUhC2tzo884wi5hk0a84b8r5VhF7IwAb7ecyw35FkHuyRm+upUFchEXcA
+	 WJnkS5B1Y/M/4mq677Yw2DIlJAtnij27RzpeQmOEwkmyMrv9DKiwqYVYg0heWns6unZxY
+	 DP2PRKa9A1cUXCzT+XcxmSxg22VAO+qs2PhPGgcs+hb1V0GDGmHyGdkXet6I+wzjXCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XN3pk4c09BL2NjU9jZ4/F9zSlDYjRLNTTgJTKyv8Ngs=;
-	b=bL+kvKqIMPaAWWYlVAe+ELBf3AmGq8NdC5drotfmMS9DD/wD7cgix6qmJfQb3PE64mJ0
-	 XMpSF7qf1/4CSNpxddrkFAZM7aLt2KCKourZIqOS3SUIMhVUB5YAUFRiThY3tjx1QEChV
-	 ndL1xUghaFZsAHaZyH15+8wOHorgFkgwYkHZNFlwIV3fp3PvSVPrIv6V/KQTI5zyFygoL
-	 qFXnUX9lEV2UU9udPyPH+X+9E+S6QzyZpmCZYrVSMAmlS1j3SmGNRskHcjdNdK7w9mCpO
-	 IrhYcTBH81jLgRUbWnXuKPOPLfi67rzFTIXoS8yKbVnJ+M7wgTfVaA/VmzMXcfafYKA==
+	bh=wh2gEiqQG73/161gI9JT3YKLQOpCUpant4bSoM7OE3M=;
+	b=GmX29KHkzefgBW7X5tdfwGxAct7oR4dmKmzlhMnetnvdV3hxBqOaz1RqQ7QaBqKwY2/W
+	 +DLAUA5dZwL93aHWSL8k+hbCIlPk4WdJu4inEaLuh40mgnyTrqTpEKnLxSaH4gCbhZy35
+	 +h94WFguA2025Z3oHEEJy7YTLkk/62tsNxD+BmwZLneCK5pLQ3PpBXW/6pPfJq5pxDppV
+	 Cn8qTUSer6Qcg8geeblZGXd8vnZumlTqXkTUOsQH1f98Vp82/Cynyu9AT77hfvxXv+mdB
+	 tcxOZS1CHOsvBZ06BY3Z7nEb7Pdj/TsFVE7oFINCrlGEfjcdkoasuDXcE1PdKm/+xHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmXV+l+0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q61bxmfq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C990606A32A;
-	Thu, 19 Nov 2026 00:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA84606A31C;
+	Thu, 19 Nov 2026 00:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DmXV+l+0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5481F000C4;
-	Thu, 19 Nov 2026 00:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q61bxmfq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB5F1F000C4;
+	Thu, 19 Nov 2026 00:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049033;
-	bh=XN3pk4c09BL2NjU9jZ4/F9zSlDYjRLNTTgJTKyv8Ngs=;
+	s=korg; t=1795049036;
+	bh=wh2gEiqQG73/161gI9JT3YKLQOpCUpant4bSoM7OE3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DmXV+l+05+kMbl8oWsYguM5ZAvdghZTn0PD9JIb+Sxf8NmO8+wQca9IIwXqZ2Dl2y
-	 zrp/YrkUWlWec1AuUxK308uI0BnDha2IykPpgFp1HMYqBvdpbcOl6BxUZgQL08eI34
-	 tYRpPuswgYFdoxC175iFvuVnuRVuz8Lh5QKsZPRk=
+	b=q61bxmfqPmAHoSJaM7ROBFnZZbixG6eastJhz+X4w9mcWNF1I6Ng/MHAHEG+PBOkT
+	 6OgfddtQlKaHGZE04z7afOvtLEZ64jbCH2NdIO9tphCl5NDYVqCpWam+r2ghca7Hab
+	 TtG5OFdT0O7FU7FhsYvYWUuJHyzyhAEjTYZOMlbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2207/2857] power: supply: ab8500: Preserve battery termination current
-Date: Wed, 18 Nov 2026 15:54:01 +0100
-Message-ID: <20261118150320.888154995@linuxfoundation.org>
+Subject: [PATCH 6.1 2208/2857] power: supply: ab8500_charger: Fix AC charger re-enable
+Date: Wed, 18 Nov 2026 15:54:02 +0100
+Message-ID: <20261118150320.922567031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,38 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 3b33eda4067494658d51db0792377fef98787e3f ]
+[ Upstream commit 3e1d2517347f6bb72f74e63ec77d1634385fbf21 ]
 
-The battery-info parser uses a negative value for an unspecified
-termination current. Testing the value as a boolean instead replaces
-every valid positive current from the battery description with 200 mA.
+The AC check-enable callback passes the embedded USB charger object to
+ab8500_charger_ac_en(). That helper derives the parent with the AC
+charger offset, so the wrong object yields an invalid ab8500_charger
+pointer.
 
-Apply the default only when the property is unspecified so batteries
-retain their described charging termination current.
+Pass the AC charger object when re-enabling AC charging.
 
-Fixes: 9c20899da46b ("power: supply: ab8500: Standardize termination current")
+Fixes: bc6e02871402 ("power: supply: ab8500: Standardize CV voltage")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-6-e986ed321cc6@kernel.org
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-7-e986ed321cc6@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_bmdata.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/ab8500_charger.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_bmdata.c b/drivers/power/supply/ab8500_bmdata.c
-index 3e6ea22372b2d..0a6ea935fdc0f 100644
---- a/drivers/power/supply/ab8500_bmdata.c
-+++ b/drivers/power/supply/ab8500_bmdata.c
-@@ -174,7 +174,7 @@ int ab8500_bm_of_probe(struct power_supply *psy,
- 	if (bi->constant_charge_voltage_max_uv < 0)
- 		bi->constant_charge_voltage_max_uv = 4100000;
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index b497c4c370faa..f964fe48fef16 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -1766,7 +1766,7 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
+ }
  
--	if (bi->charge_term_current_ua)
-+	if (bi->charge_term_current_ua < 0)
- 		/* Charging stops when we drop below this current */
- 		bi->charge_term_current_ua = 200000;
+ /**
+- * ab8500_charger_ac_check_enable() - enable usb charging
++ * ab8500_charger_ac_check_enable() - enable AC charging
+  * @charger:	pointer to the ux500_charger structure
+  * @vset_uv:	charging voltage in microvolt
+  * @iset_ua:	charger output current in micrompere
+@@ -1805,7 +1805,7 @@ static int ab8500_charger_ac_check_enable(struct ux500_charger *charger,
+ 			return ret;
+ 		}
  
+-		ret = ab8500_charger_ac_en(&di->usb_chg, true, vset_uv, iset_ua);
++		ret = ab8500_charger_ac_en(&di->ac_chg, true, vset_uv, iset_ua);
+ 		if (ret < 0) {
+ 			dev_err(di->dev, "failed to enable AC charger %d\n",
+ 				__LINE__);
 -- 
 2.53.0
 
