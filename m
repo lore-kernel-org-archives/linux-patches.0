@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044294;
-	b=UwqaI8ZWs3a36N1PphA1Hg4Cpn6hqTsWlPvG3iuRKS5wqkNZUeCYIwK03TGuhH4RpEg5
-	 b0HTVETwzldN3teqv1OKpoG+vbRvd5rVl83GtiGVKsVXvAwBADKb23seVQP8vFF9/Kank
-	 PleZeW+3pjipNdwUuhykGvNshbd0cwXO9lSk9YvZyATUjWUCEjcBYtkDcVf5jpBc5bUbD
-	 1ovIfOHGsQcsMcYu/DhhlJGBvI06QET8g2IqoIBO5mSdqedl0Jr6KOTvv24joHtAOOAeI
-	 6zIZVPNQCJmqlFT5dE3et4RjOlhKXiQhEcTyLk2EzNIbcSqFfVCb8akoaybkxigPW9g==
+	t=1795044297;
+	b=TW/yPMFr9QvxLjE3R1QsZ5TK4waEgGjrGpBn+eK8/e8p1/KxTwNqaJCMsEF/s6ZwXXzr
+	 sWYpZdj7lZGEdIQzxEAn7QX9Cf+ka0TUB1S1cjiAPB7FH4iq9ZFr8o0qTN8+NtPPsguv8
+	 Eh/rsCfDkESZwdaj3WkIQUxBFbz1ZO3cyLcepfO50Z418hFdnsUgQxktnCMq6Dk2J2edc
+	 aqVe7+mBO0IpOI1VxGfKj3CRcHIQuJePwSikaZk4sgGT0lZ/b0FtI1QiOLIaomBA/bJom
+	 VRHOoQ7rmYGMCjWEexdcAOrRnmPbFSuE6KdWY1IjnBHX1znUK+4ouJ+C2IsFwGYf5/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r6ciUVyl901FQ3R/brHOMF5yZOcfOsebA25nh/vnMz8=;
-	b=CdY0sdlGxfXniLLHV97m+giLXZifM3HdDJdG2hPiKCs6bg2iSOuV1l57PgpR6VKMWoi7
-	 0gEXg33HCdkSgg4TluTP1k4ydESq42LTT2PS94ZTNoT0XXg4Dh7j+dRjkDD3x1aRnQyWF
-	 +LLzYBhJXu0o0SQvZGzJOiiFUe4WouNp65929IQZlHXaqxGVKw2A8seVz/tIfvLAmlhB9
-	 dYNFkTge1PshnuYd8+2r/gHviznfJsy0UZDIiqvzFY90XyHeXgcK+PL62rO7pLES1YGT0
-	 AhLnBTvpUiTDC2coFRslqHeV7CmGS2GAb7ftx5IgcLq7lcbSuOm6Eu/M+I6WMiivuDQ==
+	bh=L4UjUBtU3AVhZdPQo/bhy7/3QZY0yAEOO1IVzKn+jPU=;
+	b=xuBdSBLxoEJncoq5vg3C6ElgrM3Q3/MmFk6LsN5WCfO2XB9+NiGHqFwPzROd6q7Pf5m0
+	 eQ0pwXIjf0aI4GHfVCR2ocl+YA79eg8QqcrcPCcEGziW1Ue+3l67Y7Gq/govoYkcr/8By
+	 sSUyLi5QZJrW2cLOJ5eiY2nwyCOEtBzT+sIkSOM/E2J66Z5XUpsPY0RoQEisC2lt64RhU
+	 O/NfhmfBHEkh/lYswXW895bo+7magdOjLoTiBABD9to6oncDtq10QYVaQSubtCiQxLLR0
+	 x/hX/xwFjV8nv9WEQEEw2dPdWQRFqAKRgEOSs9pIGIiPahiiPdGG4pRt0ZfJyWVjTuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZbSAyXG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jYx/pNxa";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52BD606A320;
-	Wed, 18 Nov 2026 23:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8B606A31C;
+	Wed, 18 Nov 2026 23:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZbSAyXG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219DD1F000C4;
-	Wed, 18 Nov 2026 23:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jYx/pNxa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84871F000C5;
+	Wed, 18 Nov 2026 23:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044294;
-	bh=r6ciUVyl901FQ3R/brHOMF5yZOcfOsebA25nh/vnMz8=;
+	s=korg; t=1795044297;
+	bh=L4UjUBtU3AVhZdPQo/bhy7/3QZY0yAEOO1IVzKn+jPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZbSAyXGKtOr4i+Ysv0jzFG+zvAnm3viDT0gyNTXrsvt0x68oYiongiVLgV7g/NCj
-	 MhU8sTfA2DiAkvlhy55chilNInqd5/vPBJFsAvOMB8mPuV/3vU4qdo4yIV5vB0nn70
-	 vvTn4bpFzGdla2W4UtC9cz2PgH7zeViyTn9bgftc=
+	b=jYx/pNxatIMKN8L89HXq91Td2Nq4p6U8Gdvsb354ZQoZUE2sgHAR6aLVW+CZHRaMO
+	 3wqi6NSHms6vmZKDBcGMN2oZ2257Gip6z96xNgSnQeYJi6l4msIhrUZr2Ox5zDNlp0
+	 5tKiCIeJA8QAS5Fr4BLMV+UtXEQWWszla2lRefQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Giorgi Kobakhia <gkobakhi@asu.edu>,
+	Jan Koester <j.koester@act-marketing.de>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.1 0513/2857] ksmbd: fix overflow in dacloffset bounds check in build_sec_desc()
-Date: Wed, 18 Nov 2026 15:25:47 +0100
-Message-ID: <20261118150219.933452401@linuxfoundation.org>
+Subject: [PATCH 6.1 0514/2857] ksmbd: ignore network devices of other namespaces
+Date: Wed, 18 Nov 2026 15:25:48 +0100
+Message-ID: <20261118150219.971553114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,71 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giorgi Kobakhia <gkobakhi@asu.edu>
+From: Jan Koester <j.koester@act-marketing.de>
 
-commit eb96e2a0e817807c48dc8387ca6a5249fdeae3a0 upstream.
+commit 1f5ce2b8b9164b3fcb93a18fe1e7b451c2fc6eea upstream.
 
-When the large dacl_offset is provided, dacl_offset + sizeof(struct
-smb_acl) overflows on 32-bit builds and the check is passed,
-Which makes le16_to_cpu(ppdacl_ptr->size) read out-of-bounds. This
-only happens for dacl_offset in range [0xFFFFFFF8, 0xFFFFFFFF]. So
-the oob read is max 8 bytes preceding the allocated ppntsd.
+With no interface list configured, ksmbd binds every interface that
+comes up. ksmbd_netdev_event() does not look at the device's namespace,
+and create_socket() opens the listener in the namespace of the task
+raising NETDEV_UP. A container with its own address on a bridge brings
+up its interface and finds port 445 in its namespace already taken by
+ksmbd, so an SMB server running inside the container fails with
+"Address already in use".
 
-    unsigned int dacl_offset = le32_to_cpu(ppntsd->dacloffset);
-    int ppdacl_size, ntacl_size = ppntsd_size - dacl_offset;
+Interfaces are also matched by name only, so a container's eth0 going
+down would stop the listener on the host's eth0.
 
-    if (!dacl_offset ||
-	(dacl_offset + sizeof(struct smb_acl) > ppntsd_size))
-	    goto out;
+Only handle netdev events for devices in init_net.
 
-Commit beff0bc9d69b ("ksmbd: fix overflow in dacloffset bounds check")
-fixes similar checks in other functions. But leaves this one out,
-because it is only valid for 32-bit builds.
-
-Reproduced on 32-bit ARM with KASAN, by a client sending SMB2
-SET_INFO(SEC) with dacloffset=0xfffffff8, then QUERY_INFO(SEC) on the
-same file:
-
- BUG: KASAN: slab-out-of-bounds in build_sec_desc (fs/smb/server/smbacl.c:1105)
- Read of size 2 at addr c2a273fa by task kworker/1:1/35
- CPU: 1 UID: 0 PID: 35 Comm: kworker/1:1 Not tainted 7.3.0-rc2+ #5
- Workqueue: ksmbd-io handle_ksmbd_work
- Call trace:
-  kasan_check_range from build_sec_desc (fs/smb/server/smbacl.c:1105)
-  build_sec_desc from smb2_query_info (fs/smb/server/smb2pdu.c:7676)
-  smb2_query_info from handle_ksmbd_work (fs/smb/server/server.c:160)
-  handle_ksmbd_work from process_one_work (kernel/workqueue.c:3401)
-  process_one_work from worker_thread (kernel/workqueue.c:3473)
-  worker_thread from kthread (kernel/kthread.c:436)
-
-Add overflow check.
-
-Fixes: 8f0541186e9a ("ksmbd: fix heap-based overflow in set_ntacl_dacl()")
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM claude
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Giorgi Kobakhia <gkobakhi@asu.edu>
+Signed-off-by: Jan Koester <j.koester@act-marketing.de>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/transport_tcp.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1080,9 +1080,12 @@ int build_sec_desc(struct user_namespace
- 			struct smb_acl *ppdacl_ptr;
- 			unsigned int dacl_offset = le32_to_cpu(ppntsd->dacloffset);
- 			int ppdacl_size, ntacl_size = ppntsd_size - dacl_offset;
-+			size_t dacl_struct_end;
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -574,6 +574,15 @@ static int ksmbd_netdev_event(struct not
+ 	struct interface *iface;
+ 	int ret;
  
- 			if (!dacl_offset ||
--			    (dacl_offset + sizeof(struct smb_acl) > ppntsd_size))
-+			    check_add_overflow(dacl_offset, sizeof(struct smb_acl),
-+					       &dacl_struct_end) ||
-+			    dacl_struct_end > (size_t)ppntsd_size)
- 				goto out;
- 
- 			ppdacl_ptr = (struct smb_acl *)((char *)ppntsd + dacl_offset);
++	/*
++	 * ksmbd serves the initial namespace only. create_socket() listens in
++	 * the namespace of the task raising the event, so a container bringing
++	 * up its own interface would get a listener on its port 445, and the
++	 * name-only interface lookup would let its interfaces stop ours.
++	 */
++	if (!net_eq(dev_net(netdev), &init_net))
++		return NOTIFY_DONE;
++
+ 	switch (event) {
+ 	case NETDEV_UP:
+ 		if (netif_is_bridge_port(netdev))
 
 
