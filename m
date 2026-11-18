@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025537;
-	b=34SqN3ZQ+AVuM2ImmbxjAVaQapnM+QiSIx0R8A6/4CPLEj6YHAzxgjnVWiSsUjE9AIxw
-	 PbFl2g0hDrjfVD5uT1DeSbbFZriK87r9+Pi9995i8M+raWeKHCfNEA0J/wjQpGyZHxmCL
-	 Pgf4oW/ThvPMUfOCiIeDpECxi+iq5R13ryK6vKpyOS7gZXKhFSpC4hchxLwJgfqiwQMU/
-	 lEwyDRh/4Tcr74/9PleABc7NWEXH+73D1hf+4mfvYpJBLNZAYR+F1NIv010o13+85plYJ
-	 IGn+nnX2YjZmVOYskh1zuXIRvZ/Q6q7OxvbFIQJTrhYYB5yq3GMZ0KEizR5F3GomUbA==
+	t=1795025539;
+	b=KaTNfOWRFwF6SNChiuGmBi9IMRK+WOQAZxzkQhqEVJfsqk7QSbGmwvpceA9kO5yyBcDi
+	 zXnsAn6UhEtHrSzUtTLbbkrWyuqdJebs3iL6linH8LyUejnaYxqSxUvJBTShu0Zam4uNs
+	 8SEMM6v6s1bKMpmr081wG6UnQ+BywJhPfkMOjTuzoAKi3s+R6sGZLakkDJYAlcoc3wEJH
+	 jUfuRVjrmkcSE/w+O7QIqpfWMeVGUw1NzYN+7qKFqOxPzpOCVuyVOqzjmhngMy6df9Sgy
+	 2c3Gwnr12nc4hhTddxNG1/6T2dne5ZWpxBbscciqxsaiP+avP1BUNeLoFDnLOmkHqsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025537;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025539;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bdlnrNiCrbFVcTG8nRs6tszGpBCeGilRUbrwmbug1Zg=;
-	b=EhNErGBPJdpk1X+jZ/uyj4wiOhlArgtdejjYKfU6vJqNhQTzStBtpsMCsVHnyw5EPF2b
-	 +1cel3e0PZu/7v/mJROddAhM1RpwXcTkI9HYwQedR6kUdFoG7iHaaeeKDK0LwdP5SflUP
-	 2z8lmasQZcMhEgjIzK6KBiMyyDLtFgoIAGSaJInwDrjmWa3ahLdoE3s4E1FUgkul0IkGm
-	 ++LQzobcAXffa/ToaJDiDswVam4ddKABy8C1VmtuGVOrgqqRpJod1HxBaVjg5ZH8ZOxwD
-	 6/PFMDCKNY3boHCu4L1ewPfeniUNdc/0oyOP0yEsY2m6g0NKVSfT7S5eudGrzuWHWmw==
+	bh=+aowncxlHnX+d7tfo4Y4OwfUPemaZ5SKWEPef2MIMEQ=;
+	b=sPYM+SUzgAcEhgeaaJ3HRWPlTjzobAQ4xQu48wH0u8T/R7rg1PzZie+Qc/I6LgZI5/K7
+	 IwNFT87Nz0qOMqjhEfWxCXGsqfISgaRgLXcl0ol6Kxe/on2TfeKqhLExe/CjBF80ipged
+	 ih75XnkA7Dnf5nACDrW4k8A99VmvcZfmlGUFwXZjYmQhu8JQ6Iv5+rNw3gmGBciyLKQEB
+	 DodAkTOazHclqX4c/rm3c1RtzP7NZgZ5B4fmZlUTWYfwI5XCC7DOUbtBCeB9d7CH3rCa/
+	 mF8KNKthJpc/sJqmt3MW0CFmqFvFUyywelrFT1KHqePj2egtp0G6QNFZYAbRbDS2eDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X/Glp05K";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6MzHh63;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1C2606A32C;
-	Wed, 18 Nov 2026 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78612606A325;
+	Wed, 18 Nov 2026 18:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X/Glp05K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C081F000C4;
-	Wed, 18 Nov 2026 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6MzHh63
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4241F000C4;
+	Wed, 18 Nov 2026 18:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025536;
-	bh=bdlnrNiCrbFVcTG8nRs6tszGpBCeGilRUbrwmbug1Zg=;
+	s=korg; t=1795025539;
+	bh=+aowncxlHnX+d7tfo4Y4OwfUPemaZ5SKWEPef2MIMEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X/Glp05Kd317DYLyekJdZ3KBUYck23dE5H8ZqVG67LnvaYyyJHTtRQ3FYUmdEV7Xr
-	 +mAuehjPlnon0mviZLpXAwURqpD9q1aD9UpVOjPcvLCA45HOCukyybH4nTcs9NWerP
-	 JDVO0NrdUmeAT4WJdFiJQf+4HyrNjEvVOjBCcVgg=
+	b=G6MzHh63KdkBXahN8zLO7/x/Ct5sAK2d9syyi8oXKxe0w9lfCJYrIssm8G5mOeSvg
+	 8MshFgJNw2pQgoILoeHMEakxVmojyw9nBGzAEJjgUY9c7eRZtsFg3u8RCgfwaz/30k
+	 xMQIWWKWxoFBQ0QiQ/7ggq3pElfBKTWMYru5+FTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	"Denis Efremov (Oracle)" <efremov@linux.com>,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1107/2151] floppy: unregister platform device on add_disk failure
-Date: Wed, 18 Nov 2026 15:47:22 +0100
-Message-ID: <20261118150202.567785145@linuxfoundation.org>
+Subject: [PATCH 6.18 1116/2151] dmaengine: ste_dma40: Check runtime PM in IRQ
+Date: Wed, 18 Nov 2026 15:47:31 +0100
+Message-ID: <20261118150202.874259730@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,54 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit f1e72d80ad4ac5ff3573796d07bd1a1e74909f94 ]
+[ Upstream commit 12787e3f2f93f3af59769b08ee4fcb044531120b ]
 
-The change referenced by the Fixes tag reverted a previous fix because
-that fix added incorrect cleanup for the platform_device_register()
-failure path.
+d40_handle_interrupt() reads DMA40 interrupt registers unconditionally. A
+spurious interrupt can arrive while the device is runtime suspended, after
+dma40_runtime_suspend() has disabled the GCC clock.
 
-However, reverting the whole change also removed the cleanup for a later
-failure path. If platform_device_register() succeeds but device_add_disk()
-fails, the current floppy platform device has already been registered and
-registered[drive] has been set.
+Avoid touching the registers unless the device is runtime active by taking
+a conditional runtime PM reference. Return IRQ_NONE when the device is
+suspended, and drop the reference after handling an active interrupt.
 
-The common out_remove_drives path uses while (drive--), so it starts from
-the previous drive and does not unregister the current one. As a result,
-the platform device registered for the failing drive is leaked.
+When CONFIG_PM is disabled, pm_runtime_get_if_active() returns -EINVAL even
+though the registers remain accessible. Keep handling interrupts in that
+configuration and only drop the runtime PM reference when one was acquired.
 
-Unregister the current platform device directly on the device_add_disk()
-failure path, where platform_device_register() is known to have
-succeeded. Leave the platform_device_register() failure path unchanged.
-
-Fixes: 895a9b37917d ("Revert "floppy: fix reference leak on platform_device_register() failure"")
-Fixes: 47d34aa2d211 ("floppy: add error handling support for add_disk()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708105703.747262-1-lgs201920130244@gmail.com
-Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Fixes: 7fb3e75e1833 ("dmaengine/ste_dma40: support pm in dma40")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-6-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index f380c5a163e56..6ba9f131037b0 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -4734,8 +4734,11 @@ static int __init do_floppy_init(void)
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 08d1c2197ded5..df373c5b6b9f2 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1679,6 +1679,11 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ 	u32 *regs = base->regs_interrupt;
+ 	struct d40_interrupt_lookup *il = base->gen_dmac.il;
+ 	u32 il_size = base->gen_dmac.il_size;
++	int ret;
++
++	ret = pm_runtime_get_if_active(base->dev);
++	if (IS_ENABLED(CONFIG_PM) && ret <= 0)
++		return IRQ_NONE;
  
- 		err = device_add_disk(&floppy_device[drive].dev,
- 				      disks[drive][0], NULL);
--		if (err)
-+		if (err) {
-+			platform_device_unregister(&floppy_device[drive]);
-+			registered[drive] = false;
- 			goto out_remove_drives;
-+		}
- 	}
+ 	spin_lock(&base->interrupt_lock);
  
- 	return 0;
+@@ -1727,6 +1732,9 @@ static irqreturn_t d40_handle_interrupt(int irq, void *data)
+ 
+ 	spin_unlock(&base->interrupt_lock);
+ 
++	if (ret > 0)
++		pm_runtime_put_autosuspend(base->dev);
++
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.53.0
 
