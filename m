@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034763;
-	b=gMGyBxPDCVrCeYitXsVCxKUXpTOEq0c3uwnUmfI7ZwEnbRIZBHl3yMyYwHutDSRqVUFv
-	 GjIFnH18Qs6QdRdZlPdzO9Z3M7+SA3CEoInVycO+9qF7btKppLFhRrdES4Nwde0NSmZzV
-	 4VZxZ3ZVLJs8p5v83Uilmer7zE2rMdCbgf7FONK8FKcYsifa6Fs0Woa9+J6HxT5rboMXR
-	 u6DslDGbSQuJzZf+eh16AdiDTQYXMXRbGQl8YjKmrDBbW6ACwtP89PVEzGYmvM9wLEf/S
-	 /LlYYuED33Noo9L8rcpr4AFKmSIaZLEOE5lE62UcfsphnKePy6MQPBVOpxM6cFGfGig==
+	t=1795034766;
+	b=A8Z4RvtGlUsWoZq7o7WoEvCxPH9JemW6HontZpk4xtefPckoeyuNsJplz4zB06SkvLfM
+	 2Tlk7K/2K5uL+Af9U4fY0E17V7TymdWF13m6dPWm39aTZ+s0N5A+tzackVaXnFe2ypK70
+	 14xK4psYsagudJ7R/wnuhNs41J9+WqNy+tdCDs0ncTZrXAl4I++R/2F2Qt1vQVQ2gNCYt
+	 M9+fQf0vBTCQUHlOEXdW0ANxcI+Eu0LplL850H91ppwG6aXr6jI9BXnzY6BuElutyNJOe
+	 P3d/dk8XwgIk7ero+YSQzBGDBZrmpTeyvC1ZuQqj4NaAEkBhoyblup1lu94yy0jquxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zFgg4BmRyj61ZwAEpxWe27bcWerYodE1K6LlpD18zns=;
-	b=jJfCektzKv9wWaxKRynLAo69bcqpxqw7QkJl9urwm5rCxeqdISlWuBDxOwnD0qmGCvcQ
-	 TqsXmbMBxJDJL5VOknzwsKAU8GUD1cv3yNA98j1SoCgUhX+SQK7gyrvAv9Wgt9JrrpFg3
-	 G1lWhKNTlEe9yc0PuCVM5hz7tr7i73lPIcgRIb2fokUkIDgqppqPKgyBkRWLWBy0zB/ls
-	 ydJNWlo1elubY/xIFjxy/8xm19TD+yVEE9xWGFMnIbs6h7SdVZXnQvvGbaS5WJgs8jUvH
-	 457+X7h2i9cXDL+p4QMqG5lKLwogieLKXh0W/d0tP8feICMlYW65TUsgciUXTrtTRZQ==
+	bh=YuJZNPyyW6ltIkKqVY9YddvHxwDEZHDFN8NMauYAsBk=;
+	b=lXoyPYI1SNM0nqCLREz5b5nhVmqpfeay9DEBOclVdefJS5iRCqrLIPsIfihPJwkbnGKX
+	 Vz47z/acWLXMavt5Ji7Ct5mVpvuc7a55fR80yNnEUAkTnoQyV64tBLsf5Qg7s/vyo92qo
+	 LpLUvTcNAbUcbTi9OH58BfvxbvJD/n097L/zw1C9JucZz4dUwegHgPFY+vYP3ZA2hWMP1
+	 jqNGHCrM7Kjg3pH+CdLT40tv/hJIvW8r1/UD58cUwHMdZDfjWz6lrvk8yoMDdyx7QejqF
+	 BDgIGoiY82ZrIPW+Np00th6VUVCD5N6Xfd9uB9ONTT+/GB1JCTMLp5n1crjHmfBaWbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8KfGFwE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUBh+Sc8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E8606A320;
-	Wed, 18 Nov 2026 20:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3B4606A325;
+	Wed, 18 Nov 2026 20:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8KfGFwE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFE31F000C4;
-	Wed, 18 Nov 2026 20:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUBh+Sc8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10BB1F000C4;
+	Wed, 18 Nov 2026 20:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034763;
-	bh=zFgg4BmRyj61ZwAEpxWe27bcWerYodE1K6LlpD18zns=;
+	s=korg; t=1795034766;
+	bh=YuJZNPyyW6ltIkKqVY9YddvHxwDEZHDFN8NMauYAsBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8KfGFwEpWUQM7LvHeDsmPeA+tH6Wt4NiQ1y/QxjmLFzCRuOFcgEajAqu73esOyzM
-	 uJF9rDJhWMLf/p/Zixl67dc2tJ6n1j/fjd3GTVAhCFHvXAxLeMOwNkV9jrsecLAl/m
-	 60MWeIdJrhiv1qoLWThNk/HC3HMg3/sM38ESOly4=
+	b=YUBh+Sc8uov63ksl64iW6eKFE4rcr1mQ9B3qxUK77a3p/HKN27BfFwlv1h7SUahye
+	 KiMpkXL1CsixF6Jz00tgoGktZ6RzFAqfT8lVu1Wv2id7EJ+rzQ2oqJF2NHXOJSAKY3
+	 8o/qFiAxMIM9mpRTcAfE8gzoP7zmxTLpIxkcoXoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0482/3318] RISC-V: KVM: Propagate interrupted G-stage faults
-Date: Wed, 18 Nov 2026 15:18:24 +0100
-Message-ID: <20261118150331.420824436@linuxfoundation.org>
+Subject: [PATCH 6.6 0436/3318] iio: admv1013: initialize callback mutex before registering notifier
+Date: Wed, 18 Nov 2026 15:17:38 +0100
+Message-ID: <20261118150329.748154589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,56 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit f41fb17143df890855d3de980f8eb92dfd595817 ]
+[ Upstream commit baf7e43b7fb5afb777353bf265ddf9d909f72b9f ]
 
-__kvm_faultin_pfn() reports an interrupted host page fault with
-KVM_PFN_ERR_SIGPENDING. RISC-V currently handles it as a generic
-error PFN and returns -EFAULT.
+admv1013_probe() registers a clock notifier whose callback takes st->lock
+on POST_RATE_CHANGE. Initialize the mutex before
+devm_clk_notifier_register() so the callback cannot observe an
+uninitialized lock during probe.
 
-Return -EINTR for the signal-pending sentinel so callers can distinguish
-an interrupted fault from an invalid userspace mapping. Do not log the
-expected interruption as a vCPU exit error.
+Use devm_mutex_init() so the lock lifetime is tied to the device and
+cleanup stays paired with the rest of the managed probe resources.
 
-Fixes: 9d05c1fee837 ("RISC-V: KVM: Implement stage2 page table programming")
+Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260810051544.3953925-3-xb@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/mmu.c       | 2 ++
- arch/riscv/kvm/vcpu_exit.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/frequency/admv1013.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kvm/mmu.c b/arch/riscv/kvm/mmu.c
-index a9e2fd7245e1e..5e289af4ebdf7 100644
---- a/arch/riscv/kvm/mmu.c
-+++ b/arch/riscv/kvm/mmu.c
-@@ -673,6 +673,8 @@ int kvm_riscv_gstage_map(struct kvm_vcpu *vcpu,
- 				vma_pageshift, current);
- 		return 0;
- 	}
-+	if (is_sigpending_pfn(hfn))
-+		return -EINTR;
- 	if (is_error_noslot_pfn(hfn))
- 		return -EFAULT;
+diff --git a/drivers/iio/frequency/admv1013.c b/drivers/iio/frequency/admv1013.c
+index 8b521f371e87c..3193bc4e15882 100644
+--- a/drivers/iio/frequency/admv1013.c
++++ b/drivers/iio/frequency/admv1013.c
+@@ -604,11 +604,14 @@ static int admv1013_probe(struct spi_device *spi)
+ 				     "failed to get the LO input clock\n");
  
-diff --git a/arch/riscv/kvm/vcpu_exit.c b/arch/riscv/kvm/vcpu_exit.c
-index 2415722c01b8e..671744b651fba 100644
---- a/arch/riscv/kvm/vcpu_exit.c
-+++ b/arch/riscv/kvm/vcpu_exit.c
-@@ -209,7 +209,7 @@ int kvm_riscv_vcpu_exit(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 	}
+ 	st->nb.notifier_call = admv1013_freq_change;
+-	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
++
++	ret = devm_mutex_init(dev, &st->lock);
+ 	if (ret)
+ 		return ret;
  
- 	/* Print details in-case of error */
--	if (ret < 0) {
-+	if (ret < 0 && ret != -EINTR) {
- 		kvm_err("VCPU exit error %d\n", ret);
- 		kvm_err("SEPC=0x%lx SSTATUS=0x%lx HSTATUS=0x%lx\n",
- 			vcpu->arch.guest_context.sepc,
+-	mutex_init(&st->lock);
++	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
++	if (ret)
++		return ret;
+ 
+ 	ret = admv1013_init(st, vcm_uv);
+ 	if (ret) {
 -- 
 2.53.0
 
