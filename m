@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043325;
-	b=e5pezW1LcnMLBkaQy5wMt3smTuaJuFVn5Ux6q1sOoPKoOFMNJ29RpbulMrxDsTxapEvc
-	 9ToPeG2Vz356TSCHZLe9d6/sduyxCG/mri9CqQ0KYRH5oZUlFCJSjxunfc0zYX1p6ieZK
-	 7rzzW+jhe5mZlUFNf0AZ+f2somHz1eZ6DQrQRmwS9+uqAouvJgKDwAFghywsHuuSsDYQr
-	 WSpk0qlE9oMkBTkeHNGVBSmJwp06YKbAlAzMWuC2s+7rBtkZWD0K9azzJoiLAiR1z8MrS
-	 vNbVsmc747zWD1GXMiZs4orXNFSE10++1EiyiNdlOPOCias3r4FGh35oLs/i4SbnzXg==
+	t=1795043328;
+	b=FUXDegjwMml+8d4jmOscXI01MeIaJKKjuJI+wI7ptiJ6AS0DMOiLApOoNOUZa5XQbZw7
+	 uForXsFdT2bbsZlrgZe7w8/QujLLBrUsFGSWRPqN3Nny1ixFqBQsUXdHhGMSVWLWTMpUz
+	 yUGyeE+RPF2L8NL9CrFDZjlogq0hMhn65qz05RCSc5aUNEcY1QYmrrwX0B0aCPT1V4deD
+	 bMsSBZ9NfQQ4iSAqPnf5Fo9SasoSKOXv9UV8U3ml89Qg/483Zc6oeimqajEfd4DfIbv/N
+	 XkuvScR07c5O01gHYekePl9gT+BUoKQ+8B0kaUjAcC2ppZsl82MmuDZGZO+bzCu9YGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z0AdsaXpwjSYmiCG/Ye5Sos0ynfxsRoxaQUtHXTn+xo=;
-	b=uSuWOr1TEYUa6B4mC+UJQ4leTrGTWOxaL2Ix9yRHGrzVdSM9cECbswLMcdLAG/l6GjUF
-	 AcYyP5KSBAOO0vpr/pmDkrEqADp/FBLdWmA+4hrO/2y4ZEJtMqHJEhpCrqYJuVttdL6yR
-	 ibQfb6u7n4s4yrlB0rCBSUwWK0/+IDaceo9oMn5+4ut4aeEIi+33lWcuuRMEzO0fplBK5
-	 DIcr00az2zrrilnx0EJcsfV4tGN1t4B4TMzW7SgTpVP7KhaxFP8YZukO14sKoPHuJbXet
-	 ImdZnWmxAY9w1CDFr1209Xr+pV4wr8cHJMzG08iAGCi6DxRYAW68MqA3ja9j7C0lFZQ==
+	bh=9avYHlXpRI6l+bRwstMn8zWLyoMc6MN6FDInAMfamus=;
+	b=QJaBtKonsaK2hBlaH0+nh/5j6F3UG2lSe/lpFZ5DQazwlrAXfu3P9L+KhhvyIHDSQm52
+	 pkgIuIFd39bM7FaP8jfSXrTA1npNH5LxSPKoj8jGNcUQLhiqy3TgkCGE/AtTuTCMBWp2O
+	 neFIsDGUCTtnpMWxt12lkZQfaoX46/r1y6+u2JSuyIf0Uj2UPoMVnyViERTZj/NYHUlQq
+	 Sy3fxJKQlv7LN2YHS8FG0WnCPlHcFPrMcw0D57IV4mMVrVKxi6sztxxUASwZUTinLwCfc
+	 6m0cU5GniS7m/AGEbyYN+llmy+qEpmVssbmBBo0UykGink/IFfwccukhBNr81mD1iyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jRPTxwk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCpdFF5Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A103606A325;
-	Wed, 18 Nov 2026 23:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C967606A31C;
+	Wed, 18 Nov 2026 23:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jRPTxwk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8212D1F000C4;
-	Wed, 18 Nov 2026 23:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCpdFF5Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA2A1F000C4;
+	Wed, 18 Nov 2026 23:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043325;
-	bh=z0AdsaXpwjSYmiCG/Ye5Sos0ynfxsRoxaQUtHXTn+xo=;
+	s=korg; t=1795043327;
+	bh=9avYHlXpRI6l+bRwstMn8zWLyoMc6MN6FDInAMfamus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1jRPTxwkKcN2nS234Gls1Rp2rmIxwQYjQnlDZBaf7qT+4ndSvckEfj795cH+QSQUw
-	 b1F/Z2m02xsyJejjg5lWoFZtgfF9BNmY4+mHy6gUTQnQCgqQXEwIqVskK+5WUkgTuP
-	 POaub4rQyFG524sKrSx1vG0Xyg36+fNSqcLsbtco=
+	b=aCpdFF5Zey8VcCbXrtCMqWd9D3lrL17tsmeVWIJvSqt6q+xPjluYJVQkTIWOK73i4
+	 Znapt53D/CcK3g9A9fX+qypaM8UVc9/CWjV3NGI0i0rt8zRmW+3vjl8Y1/dx/BRjZG
+	 OLUFhYsqejbzIb7G/WFq0/vdQLnQGE8KYomc7n9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Song <songxiebing@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0170/2857] ALSA: hda/realtek: add missing error checks for COEF index reads in alc269
-Date: Wed, 18 Nov 2026 15:20:04 +0100
-Message-ID: <20261118150207.474095208@linuxfoundation.org>
+Subject: [PATCH 6.1 0171/2857] regulator: rt6245: Restore state on enable failure
+Date: Wed, 18 Nov 2026 15:20:05 +0100
+Message-ID: <20261118150207.510967802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,88 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 5b106b40ed22098f2bc049efb645148d038444bd ]
+[ Upstream commit e95a0a309ca02bf26dc937cdeb3fe2a235c65f63 ]
 
-alc_read_coef_idx() and alc_read_coefex_idx() can return -1 on error
-via snd_hda_codec_read(). Several codec initialization and shutdown
-functions save these return values and later write them back to
-hardware registers without checking for errors, potentially corrupting
-COEF register state on a read failure.
+Currently, if regcache_sync() fails after the enable GPIO has been
+asserted, the driver returns with enable_gpio still set high and
+regcache_cache_only() left disabled. This leaves the device state
+inconsistent with the disabled state, where the enable GPIO is low and
+cache_only is enabled.
+On failure, restore the original state by setting cache_only back to
+true and driving the enable GPIO low before returning the error.
 
-Add error checks in:
-- alc282_init() and alc282_shutup(): check coef78 before write-back
-- alc285_hp_init(): check coef38/coef0d/coef36 before update, check
-  val before write-back, and break polling loop on error
-- alc294_hp_init(): break polling loop on read error
-
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260730015302.253008-1-songxiebing@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260729100018.66577-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/regulator/rt6245-regulator.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index ce737b84729ca..3f74f485298cd 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3427,7 +3427,8 @@ static void alc282_init(struct hda_codec *codec)
- 		msleep(100);
+diff --git a/drivers/regulator/rt6245-regulator.c b/drivers/regulator/rt6245-regulator.c
+index cb22a207e9fff..051b444224bb7 100644
+--- a/drivers/regulator/rt6245-regulator.c
++++ b/drivers/regulator/rt6245-regulator.c
+@@ -49,8 +49,11 @@ static int rt6245_enable(struct regulator_dev *rdev)
  
- 	/* Headphone capless set to normal mode */
--	alc_write_coef_idx(codec, 0x78, coef78);
-+	if (coef78 != -1)
-+		alc_write_coef_idx(codec, 0x78, coef78);
- }
+ 	regcache_cache_only(regmap, false);
+ 	ret = regcache_sync(regmap);
+-	if (ret)
++	if (ret) {
++		regcache_cache_only(regmap, true);
++		gpiod_direction_output(priv->enable_gpio, 0);
+ 		return ret;
++	}
  
- static void alc282_shutup(struct hda_codec *codec)
-@@ -3464,7 +3465,8 @@ static void alc282_shutup(struct hda_codec *codec)
- 
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
--	alc_write_coef_idx(codec, 0x78, coef78);
-+	if (coef78 != -1)
-+		alc_write_coef_idx(codec, 0x78, coef78);
- }
- 
- static const struct coef_fw alc283_coefs[] = {
-@@ -3716,15 +3718,19 @@ static void alc285_hp_init(struct hda_codec *codec)
- 
- 	alc_write_coefex_idx(codec, 0x58, 0x00, 0xf888); /* HP depop procedure start */
- 	val = alc_read_coefex_idx(codec, 0x58, 0x00);
--	for (i = 0; i < 20 && val & 0x8000; i++) {
-+	for (i = 0; i < 20 && val != -1 && val & 0x8000; i++) {
- 		msleep(50);
- 		val = alc_read_coefex_idx(codec, 0x58, 0x00);
- 	} /* Wait for depop procedure finish  */
- 
--	alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
--	alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
--	alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
--	alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
-+	if (val != -1)
-+		alc_write_coefex_idx(codec, 0x58, 0x00, val); /* write back the result */
-+	if (coef38 != -1)
-+		alc_update_coef_idx(codec, 0x38, 1<<4, coef38);
-+	if (coef0d != -1)
-+		alc_update_coef_idx(codec, 0x0d, 0x110, coef0d);
-+	if (coef36 != -1)
-+		alc_update_coef_idx(codec, 0x36, 3<<13, coef36);
- 
- 	msleep(50);
- 	alc_update_coef_idx(codec, 0x4a, 1<<15, 0);
-@@ -3989,7 +3995,7 @@ static void alc294_hp_init(struct hda_codec *codec)
- 
- 	/* Wait for depop procedure finish  */
- 	val = alc_read_coefex_idx(codec, 0x58, 0x01);
--	for (i = 0; i < 20 && val & 0x0080; i++) {
-+	for (i = 0; i < 20 && val != -1 && val & 0x0080; i++) {
- 		msleep(50);
- 		val = alc_read_coefex_idx(codec, 0x58, 0x01);
- 	}
+ 	priv->enable_state = true;
+ 	return 0;
 -- 
 2.53.0
 
