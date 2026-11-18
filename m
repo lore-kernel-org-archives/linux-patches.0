@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056925;
-	b=pnbmGl+inLD9vfUx4+gAVduOtvguyhVRTAql6o9mqztqF9tuwOt4dZ9p/z5hEgcFLAIc
-	 OakAIhZe6y3h6jAUpKQ3fxJV+nEXvz61tkU57g1JVFcKH00D1vHXo56EX7aLfyCYdZ+8M
-	 v/ZjV36O8XAtotRfyuFHu9i628F/c20lpjX/jsQMopKVaBi2l4RcmNDN0rXjSefFcYT1p
-	 9J0si/1oyt0xAQfeIuhIJ5dbcvOosaCbh04WVqx304MNS9RSbf/2jP03MHDIHpyaVE5iO
-	 H23aith1ioL9OjJO+HSCZ642Huj+Vri1f0UysFttNCZtr5jB/gVGXY8CiVvhYk4qgRw==
+	t=1795056927;
+	b=DTsTKLNuUt5d3p0OdydOd6y10mgyxcPO9/f+5aWSPPR60793w7jXs0pteZ04hqZ6vnjL
+	 vWGPkxMjYaQ3R1/A5jZ7Wc8qQKYsz8QtPokj7K6bFq22DhN5fm7fPjsTn1usNx3+H/eGk
+	 Jfwb9AE8TLvOfy1jOOa3Am7TOqe8obmfz/pxZ4DVu70wwEYeIQ6PspmvWKkNCOcMNzA4V
+	 eTY5GZ3i8XG6zByozgEcGBnDG8vNjW03HGiMy8EbSbCnuPQkxi9dOMJuPrXK5EDY9zdQx
+	 NuI0eDaxxB91ZJ47WWMLjDSWldXGKXUt+VPT5iBXrq4BTjAC4I7WL+6mfGUBmjuUJ+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ljMPo/AIum35PpHglcR/AVwpQRr/37ecd4o+O0EGX9k=;
-	b=dChPG6bITzJwGrrr1+Ph77Z6Wd+Ee4rS6542pHOZSofVxHflgG5AR6V1oRTiAlMhJMcw
-	 klD9bzOW6KJEHBeh0q6OuFI9rwNvGKnM7BAZIBU8FG83mLUTT1vSF6R34qb8Z/U0zpLGc
-	 CPZm9qSMFr25mfBveUkcwWQ/TGLNujfBRYKaLxesdgHI/LCiUvVBAiS65vPj43a3xJTss
-	 zCp2EfUXu6d9CCMzyWam3M+QLZJYhtcUXDi/Kc3qqhpLXHmHjp2ueIAmWihXMLzWCu+jU
-	 4i/0lYW28dF8BP7KtdaQhQBKWZXeYTbc42WuYt8FD5DpOA06bsKmXSBA2aUNZ3OlRxg==
+	bh=m0MBAznIscZBOCFyrFALRYW2cIkiUGyDmEOsqli5+og=;
+	b=4RUGGmLal7k1LJXqk77FCkNkEMq+LtUXRrADW3AouypwDwOlXR2wxefutweMiu9HDeGP
+	 uY9yJlmAutTSUDRM8TMeD0OYzWvMs65t9vgkxuar7TMNJW97+l+fJwNsr4ve5KLl2PcVi
+	 bmgaoIZISSGygZNMNcIpa+SvY/p8jRTYqX/XkhdBYZf5DCfuqclHtlhgveBGOxPkaKO0p
+	 PAeBTFNyVgV9drsdPHF7YknOj/S3o//xhyZptu6bZyYH+uYI3kZvcoeylXgwUEeMC+ASe
+	 JCzVEU3Et5lweOfuCneh2EioQthtYkBuKU9zIpy97ttrdlD6PkdpHUJWJ3YgD1Gt89A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9jmBdIl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XPZev/62";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE62A606A325;
-	Thu, 19 Nov 2026 02:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBA7606A31C;
+	Thu, 19 Nov 2026 02:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9jmBdIl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5311F000C4;
-	Thu, 19 Nov 2026 02:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPZev/62
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA711F000C5;
+	Thu, 19 Nov 2026 02:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056924;
-	bh=ljMPo/AIum35PpHglcR/AVwpQRr/37ecd4o+O0EGX9k=;
+	s=korg; t=1795056927;
+	bh=m0MBAznIscZBOCFyrFALRYW2cIkiUGyDmEOsqli5+og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9jmBdIlrKDrhU6lIUm7GEybbL5ZmJauD2uwudsG9945Kp2r65m8meczoJ92soJ/i
-	 71cfHCnDtQAWgBenbrkx8+lZqsMrvTCf0b2pmxhog5sIE8DWxznbGkNH7dOFKTYBWw
-	 gVsNPSi2fZFxnPrehcRm3e1/jo5ijxXeeMYHtUpk=
+	b=XPZev/62wZXilodeceIJcFjyP+S6vzg/x4WTM51A7c4qkuGnmdGmliD/HYGxprR+z
+	 /hJT/RynvskwRPgmd0zZ/9HRRBTPvSsvT2QRD3WKH/l1E0O33tm/yolgHZy7sRRY+z
+	 tzFxvnSB0EWOVxz1vTxTBwu7MrHKkS/bsg/1yaGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2160/2214] nvmet-rdma: fix double puts after a failed RDMA WRITE
-Date: Wed, 18 Nov 2026 16:03:56 +0100
-Message-ID: <20261118150136.856720004@linuxfoundation.org>
+Subject: [PATCH 5.15 2125/2214] libceph: reject bad connect_seq in msgr1 READY reply
+Date: Wed, 18 Nov 2026 16:03:21 +0100
+Message-ID: <20261118150135.572610515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,56 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit f1dac2a2e75260d1466d9f03ccf0944d6d0449a4 ]
+[ Upstream commit 6dfc1b1a99da4909aee07a906352be5c3fc9baba ]
 
-For a read with T10-PI the RDMA WRITE is posted alone and
-nvmet_rdma_write_data_done() posts the SEND once the metadata check
-result is known. By then the request has been completed and its
-references put: __nvmet_req_complete() put ns->ref and the pc_ref, and
-nvmet_req_complete() sq->ref, right after queuing the response. The
-error branch of nvmet_rdma_write_data_done() copies the one from
-nvmet_rdma_read_data_done() and calls nvmet_req_uninit(), which puts
-all three again. A WRITE fails whenever the connection ends with reads
-in flight, which is up to the host. Depending on timing the sq->ref
-count goes to zero early and the queue is freed under the remaining
-completions, or never reaches zero and nvmet_sq_destroy() sleeps
-forever, or percpu_ref_put() dereferences NULL after percpu_ref_exit().
-ns->ref stays too low for good, so disabling the namespace hangs too.
-Reproduced with KASAN over rxe with a test patch forcing the PI path.
+process_connect() WARN_ON()s when the peer's READY/SEQ reply carries a
+connect_seq other than ours + 1. That value comes off the wire, so a
+misbehaving or malicious server can trigger the warning at will (and
+panic machines running with panic_on_warn).
 
-Drop the nvmet_req_uninit(). The branch still releases the RDMA context
-and the response, which is all the request owns at that point.
+Check it before touching connection state and fail the connection with
+a protocol error instead, like the other bad-reply cases here.
 
-Fixes: b09160c3996c ("nvmet-rdma: add metadata/T10-PI support")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 31b8006e10a4 ("ceph: messenger library")
+Reported-by: syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=21f8628595b2061c438d
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ceph/messenger_v1.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index b911b33bb15c0..f4819e2976a81 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -803,7 +803,10 @@ static void nvmet_rdma_write_data_done(struct ib_cq *cq, struct ib_wc *wc)
+diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
+index 6290b062d631d..dc5534c7d36f4 100644
+--- a/net/ceph/messenger_v1.c
++++ b/net/ceph/messenger_v1.c
+@@ -897,6 +897,12 @@ static int process_connect(struct ceph_connection *con)
+ 			return -1;
+ 		}
  
- 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
- 		nvmet_rdma_rw_ctx_destroy(rsp);
--		nvmet_req_uninit(&rsp->req);
-+		/*
-+		 * Unlike in nvmet_rdma_read_data_done(), the request has been
-+		 * completed and its references are put: no nvmet_req_uninit().
-+		 */
- 		nvmet_rdma_release_rsp(rsp);
- 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
- 			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
++		if (le32_to_cpu(con->v1.in_reply.connect_seq) !=
++		    con->v1.connect_seq + 1) {
++			con->error_msg = "protocol error, bad connect_seq";
++			return -1;
++		}
++
+ 		WARN_ON(con->state != CEPH_CON_S_V1_CONNECT_MSG);
+ 		con->state = CEPH_CON_S_OPEN;
+ 		con->v1.auth_retry = 0;    /* we authenticated; clear flag */
+@@ -908,8 +914,6 @@ static int process_connect(struct ceph_connection *con)
+ 		     con->v1.peer_global_seq,
+ 		     le32_to_cpu(con->v1.in_reply.connect_seq),
+ 		     con->v1.connect_seq);
+-		WARN_ON(con->v1.connect_seq !=
+-			le32_to_cpu(con->v1.in_reply.connect_seq));
+ 
+ 		if (con->v1.in_reply.flags & CEPH_MSG_CONNECT_LOSSY)
+ 			ceph_con_flag_set(con, CEPH_CON_F_LOSSYTX);
 -- 
 2.53.0
 
