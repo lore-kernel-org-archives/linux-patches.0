@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032615;
-	b=0R6wU4IOZu4OGr4Sh+dItGXWxFYBObowrlytCNk2EwTl4YC5iG/GCASXhxoAXE3xMhvX
-	 nr/++7w0J4vNYd4Z3D41Te06ZwF91pVbxN7IZNbJpkp7cHbgCVJg5FbYOqonaVHAs3O8g
-	 yuIFqpJSfv0B38d14vIG0DBO9WiOI3K1gEutwI8pZLAMks6Glb1tw2nLwIbrDygS4oCzS
-	 fMK9F1K7Y9Us9VJZxHmJJzny3Eke8GbMx1dQVkf6ULPPAObCt/DgqOi2HoYaXtj8enj92
-	 2J5AucUpPazNeLntg9Ft+gohj8WCZbRjYsMpfobYtE1MgtLv5Dpn4Doygs/NwiAmvyw==
+	t=1795032618;
+	b=U1A2lPYDxD57thh0vHQG+1Wmw6kYjZDvC3PYXOTmeIkBSHm6I4gVnCFx7g2ac83M+Tsu
+	 fB1BwpfMBJHw3KtRhJBW+2ZxOBT+Iz3Xx8U49xxylb3pm1QyluwYVNte4wuVyx3yLp75I
+	 5KovM19Oa5PwbE86M1URE5dhspJrqwYhTEFOW39fkErFMO8MFvpvURhBm+fHpeYnqH0ff
+	 jLOdMcgPtC46XnCUAbu/3Pz6NR/EvaQtnz3FYUEm1zme4MYXnSTZuA9wmFoLW+B/SpsJn
+	 TK4oxt5QgWzO/UdWqukRYivk0U5PN0WFpSnZDOgs5/pzmBQK75bZuOmKZtdLW937Ovg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NrxQCaNlhgi/R01ceIBTG1oHHPsQsAKrQRPxvlPgezg=;
-	b=EJpG4Qet4Cbw2Jyboya78YF7B/eSq2+VRfwQqo2VyFcv5WhbMhiVayuNQliUviJG5NqR
-	 ypNKgFXR5xWonETLXokb2xxGJKm/954nJo58xNj//owAb7PcGADD5dkWChft5DCf0yDM3
-	 A+AbYwsXUCEC7FOpbmfpMtqEW2dRzYflC9HqrRxi0OTxQwZwAVIAZhTr0tyrgYW9Z2xYQ
-	 QBDwenH1wfJaWrmsL76t54VTeU8xTjdibB2oiE82+ePlQj431dZPBfw9uz1zIoOl65mak
-	 PTdYRyXIeuqy2RZiVUjQNAC+Q1R0jkxVI3G/Xvl4ruXnMPqOaiW1Pu3Bd6O95KTf1JQ==
+	bh=1OD18jGZzFdDq5KV8inDfuccUzinDh5rG+nBNXDo1Ok=;
+	b=0Y2wOU5jWRZH664ZmrA/J3TlBVk7ZReVF1eTLq/2bPQ/r0c8uuxvDuDWTTQQ9LP8vG45
+	 hNYDe8IZaZLga2F8BpUa3SLxf/SuwNcfAkSCdXhq958nFnBjs6AT8X2qIJGxpnbhCPqRB
+	 SRmmTLECzhT/BYt/jNlzoG34aLNqtOidL+kPvCfZh2sKkfpUtO4lHOOVRcI2zeEy/9c6S
+	 67bCu9ZaXrxi/iFWMM37U8haokwFaFUahR+Qe5KRm45X3v+eq/04MGxTI7gJlwHAOt4YX
+	 9MisjZLmtQBcFqN70lHYDE2PG/lKj6ZltYj38nRhL7YwzDqnXr7FMstIMlC0CRoLtDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSRr4ll7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KrpBEdz6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0FF606A32C;
-	Wed, 18 Nov 2026 20:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2CD606A32C;
+	Wed, 18 Nov 2026 20:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSRr4ll7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A076E1F000C4;
-	Wed, 18 Nov 2026 20:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KrpBEdz6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7905E1F000C4;
+	Wed, 18 Nov 2026 20:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032615;
-	bh=NrxQCaNlhgi/R01ceIBTG1oHHPsQsAKrQRPxvlPgezg=;
+	s=korg; t=1795032618;
+	bh=1OD18jGZzFdDq5KV8inDfuccUzinDh5rG+nBNXDo1Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSRr4ll73K3IJzNFwyuRQo7G+7hQpavnoGQYqprTRKM8t+Pw9UPlxNhQl+duwLui5
-	 TArN3zp4GH2ECJobUH/qb+urnIR0GlcEYaS1welvkk/wYr26q9/2nvd0y8d3WMbfF/
-	 9pZLQuya0clITCjDzgHMiODQvNeBM0kxrQhgXvkI=
+	b=KrpBEdz60jD2a7pFoH7HxXbB0liXfxKziH9w7UEM6nOGtM+d0YcaFIX+IieDGei9c
+	 uXjMY5oFnFhEqe1j1JaPRaWz3nOWqGVBb6w1TpFNTgYDMIQQmnnplDpX1O+aRYCP7c
+	 kky74Ji3RreL/Pj5yxmEux0gxIoO5NjaUMzNottc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1475/1756] smb: move smb_sockaddr_in and smb_sockaddr_in6 to common/smb2pdu.h
-Date: Wed, 18 Nov 2026 16:00:02 +0100
-Message-ID: <20261118150107.720539667@linuxfoundation.org>
+Subject: [PATCH 6.12 1476/1756] smb: move create_durable_req_v2 to common/smb2pdu.h
+Date: Wed, 18 Nov 2026 16:00:03 +0100
+Message-ID: <20261118150107.756720480@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,163 +69,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 7844d50ca239f0788e732608820f7026cb0cc8fb ]
+[ Upstream commit 833a75fc9ecc3856a52223d8c245e52703e0a9f1 ]
 
-Rename 4 places:
+Modify the following places:
 
-  - iface_info_ipv4 -> smb_sockaddr_in
-  - iface_info_ipv6 -> smb_sockaddr_in6
-  - IPv4address -> IPv4Address
-  - IPv6address -> IPv6Address
+  - some fields in "struct create_durable_req_v2" ->
+                           struct durable_context_v2
+  - durable_context_v2 -> durable_context_v2_req
+  - create_durable_v2 -> create_durable_req_v2
 
 Then move duplicate definitions to common header file.
 
-Co-developed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Stable-dep-of: bb0326a58060 ("ksmbd: report IPv4 and IPv6 addresses independently in iface query")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c |  8 ++++----
- fs/smb/client/smb2pdu.h | 13 -------------
- fs/smb/common/smb2pdu.h | 15 +++++++++++++++
- fs/smb/server/smb2pdu.c |  4 ++--
- fs/smb/server/smb2pdu.h | 13 -------------
- 5 files changed, 21 insertions(+), 32 deletions(-)
+ fs/smb/client/smb2pdu.c | 14 +++++++-------
+ fs/smb/client/smb2pdu.h | 12 ------------
+ fs/smb/common/smb2pdu.h | 14 ++++++++++++++
+ fs/smb/server/smb2pdu.c |  8 ++++----
+ fs/smb/server/smb2pdu.h |  9 ---------
+ 5 files changed, 25 insertions(+), 32 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 5c083c52dca01..b1a2ada2b5c77 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -635,8 +635,8 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 	struct network_interface_info_ioctl_rsp *p;
- 	struct sockaddr_in *addr4;
- 	struct sockaddr_in6 *addr6;
--	struct iface_info_ipv4 *p4;
--	struct iface_info_ipv6 *p6;
-+	struct smb_sockaddr_in *p4;
-+	struct smb_sockaddr_in6 *p6;
- 	struct cifs_server_iface *info = NULL, *iface = NULL, *niface = NULL;
- 	struct cifs_server_iface tmp_iface;
- 	__be16 port;
-@@ -698,7 +698,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 		 */
- 		case INTERNETWORK:
- 			addr4 = (struct sockaddr_in *)&tmp_iface.sockaddr;
--			p4 = (struct iface_info_ipv4 *)p->Buffer;
-+			p4 = (struct smb_sockaddr_in *)p->Buffer;
- 			addr4->sin_family = AF_INET;
- 			memcpy(&addr4->sin_addr, &p4->IPv4Address, 4);
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 8e72506a24099..9dd7a3aaa0616 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2473,21 +2473,21 @@ add_lease_context(struct TCP_Server_Info *server,
+ 	return 0;
+ }
  
-@@ -710,7 +710,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 			break;
- 		case INTERNETWORKV6:
- 			addr6 =	(struct sockaddr_in6 *)&tmp_iface.sockaddr;
--			p6 = (struct iface_info_ipv6 *)p->Buffer;
-+			p6 = (struct smb_sockaddr_in6 *)p->Buffer;
- 			addr6->sin6_family = AF_INET6;
- 			memcpy(&addr6->sin6_addr, &p6->IPv6Address, 16);
+-static struct create_durable_v2 *
++static struct create_durable_req_v2 *
+ create_durable_v2_buf(struct cifs_open_parms *oparms)
+ {
+ 	struct cifs_fid *pfid = oparms->fid;
+-	struct create_durable_v2 *buf;
++	struct create_durable_req_v2 *buf;
  
+-	buf = kzalloc(sizeof(struct create_durable_v2), GFP_KERNEL);
++	buf = kzalloc(sizeof(struct create_durable_req_v2), GFP_KERNEL);
+ 	if (!buf)
+ 		return NULL;
+ 
+ 	buf->ccontext.DataOffset = cpu_to_le16(offsetof
+-					(struct create_durable_v2, dcontext));
+-	buf->ccontext.DataLength = cpu_to_le32(sizeof(struct durable_context_v2));
++					(struct create_durable_req_v2, dcontext));
++	buf->ccontext.DataLength = cpu_to_le32(sizeof(struct durable_context_v2_req));
+ 	buf->ccontext.NameOffset = cpu_to_le16(offsetof
+-				(struct create_durable_v2, Name));
++				(struct create_durable_req_v2, Name));
+ 	buf->ccontext.NameLength = cpu_to_le16(4);
+ 
+ 	/*
+@@ -2557,7 +2557,7 @@ add_durable_v2_context(struct kvec *iov, unsigned int *num_iovec,
+ 	iov[num].iov_base = create_durable_v2_buf(oparms);
+ 	if (iov[num].iov_base == NULL)
+ 		return -ENOMEM;
+-	iov[num].iov_len = sizeof(struct create_durable_v2);
++	iov[num].iov_len = sizeof(struct create_durable_req_v2);
+ 	*num_iovec = num + 1;
+ 	return 0;
+ }
 diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
-index cdf7c588cc00d..de2d83c6463c9 100644
+index de2d83c6463c9..472553e499830 100644
 --- a/fs/smb/client/smb2pdu.h
 +++ b/fs/smb/client/smb2pdu.h
-@@ -255,19 +255,6 @@ struct network_interface_info_ioctl_rsp {
- 	__u8 Buffer[126];
- } __packed;
- 
--struct iface_info_ipv4 {
--	__be16 Port;
--	__be32 IPv4Address;
--	__be64 Reserved;
+@@ -137,18 +137,6 @@ struct share_redirect_error_context_rsp {
+ /* See MS-SMB2 2.2.13.2.11 */
+ /* Flags */
+ #define SMB2_DHANDLE_FLAG_PERSISTENT	0x00000002
+-struct durable_context_v2 {
+-	__le32 Timeout;
+-	__le32 Flags;
+-	__u64 Reserved;
+-	__u8 CreateGuid[16];
 -} __packed;
 -
--struct iface_info_ipv6 {
--	__be16 Port;
--	__be32 FlowInfo;
--	__u8   IPv6Address[16];
--	__be32 ScopeId;
+-struct create_durable_v2 {
+-	struct create_context_hdr ccontext;
+-	__u8   Name[8];
+-	struct durable_context_v2 dcontext;
 -} __packed;
--
- #define NO_FILE_ID 0xFFFFFFFFFFFFFFFFULL /* general ioctls to srv not to file */
  
- struct compress_ioctl {
+ /* See MS-SMB2 2.2.13.2.12 */
+ struct durable_reconnect_context_v2 {
 diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index e4211f871370f..1e0769d03e656 100644
+index 1e0769d03e656..dbeddae71a18e 100644
 --- a/fs/smb/common/smb2pdu.h
 +++ b/fs/smb/common/smb2pdu.h
-@@ -1433,6 +1433,21 @@ struct smb2_ioctl_rsp {
- 	__u8   Buffer[];
+@@ -1290,6 +1290,20 @@ struct create_mxac_req {
+ 	__le64 Timestamp;
  } __packed;
  
-+/* See MS-SMB2 2.2.32.5.1.1 */
-+struct smb_sockaddr_in {
-+	__be16 Port;
-+	__be32 IPv4Address;
-+	__u8   Reserved[8];
++/* See MS-SMB2 2.2.13.2.11 */
++struct durable_context_v2_req {
++	__le32 Timeout;
++	__le32 Flags; /* see SMB2_DHANDLE_FLAG_PERSISTENT */
++	__u64 Reserved;
++	__u8 CreateGuid[16];
 +} __packed;
 +
-+/* See MS-SMB2 2.2.32.5.1.2 */
-+struct smb_sockaddr_in6 {
-+	__be16 Port;
-+	__be32 FlowInfo;
-+	__u8   IPv6Address[16];
-+	__be32 ScopeId;
++struct create_durable_req_v2 {
++	struct create_context_hdr ccontext;
++	__u8   Name[8];
++	struct durable_context_v2_req dcontext;
 +} __packed;
 +
- /* this goes in the ioctl buffer when doing FSCTL_SET_ZERO_DATA */
- struct file_zero_data_information {
- 	__le64	FileOffset;
+ /* See MS-SMB2 2.2.14.2.5 */
+ struct create_mxac_rsp {
+ 	struct create_context_hdr ccontext;
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index ff202ff161497..89abbd42e2f66 100644
+index 89abbd42e2f66..eb83fff79bbe8 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8265,7 +8265,7 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 			idev = __in_dev_get_rtnl(netdev);
- 			if (!idev)
- 				continue;
--			sockaddr_storage->addr4.IPv4address =
-+			sockaddr_storage->addr4.IPv4Address =
- 						idev_ipv4_address(idev);
- 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
- 			ipv4_set = true;
-@@ -8273,7 +8273,7 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 		} else {
- 			struct inet6_dev *idev6;
- 			struct inet6_ifaddr *ifa;
--			__u8 *ipv6_addr = sockaddr_storage->addr6.IPv6address;
-+			__u8 *ipv6_addr = sockaddr_storage->addr6.IPv6Address;
- 
- 			sockaddr_storage->Family = cpu_to_le16(INTERNETWORKV6);
- 			sockaddr_storage->addr6.Port = 0;
+@@ -2916,7 +2916,7 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
+ 			durable_v2_blob =
+ 				(struct create_durable_req_v2 *)context;
+ 			ksmbd_debug(SMB, "Request for durable v2 open\n");
+-			dh_info->fp = ksmbd_lookup_fd_cguid(durable_v2_blob->CreateGuid);
++			dh_info->fp = ksmbd_lookup_fd_cguid(durable_v2_blob->dcontext.CreateGuid);
+ 			if (dh_info->fp) {
+ 				if (!memcmp(conn->ClientGUID, dh_info->fp->client_guid,
+ 					    SMB2_CLIENT_GUID_SIZE)) {
+@@ -2941,11 +2941,11 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
+ 			if ((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
+ 			    req_op_level == SMB2_OPLOCK_LEVEL_BATCH) {
+ 				dh_info->CreateGuid =
+-					durable_v2_blob->CreateGuid;
++					durable_v2_blob->dcontext.CreateGuid;
+ 				dh_info->persistent =
+-					le32_to_cpu(durable_v2_blob->Flags);
++					le32_to_cpu(durable_v2_blob->dcontext.Flags);
+ 				dh_info->timeout =
+-					le32_to_cpu(durable_v2_blob->Timeout);
++					le32_to_cpu(durable_v2_blob->dcontext.Timeout);
+ 				dh_info->type = dh_idx;
+ 			}
+ 			break;
 diff --git a/fs/smb/server/smb2pdu.h b/fs/smb/server/smb2pdu.h
-index f7c3a6d45066c..917bffdc42dbc 100644
+index 917bffdc42dbc..b34d2b08897f0 100644
 --- a/fs/smb/server/smb2pdu.h
 +++ b/fs/smb/server/smb2pdu.h
-@@ -144,19 +144,6 @@ struct smb2_buffer_desc_v1 {
+@@ -66,15 +66,6 @@ struct preauth_integrity_info {
+ /* Apple Defined Contexts */
+ #define SMB2_CREATE_AAPL		"AAPL"
  
- #define SMB2_0_IOCTL_IS_FSCTL 0x00000001
- 
--struct smb_sockaddr_in {
--	__be16 Port;
--	__be32 IPv4address;
+-struct create_durable_req_v2 {
+-	struct create_context_hdr ccontext;
+-	__u8   Name[8];
+-	__le32 Timeout;
+-	__le32 Flags;
 -	__u8 Reserved[8];
+-	__u8 CreateGuid[16];
 -} __packed;
 -
--struct smb_sockaddr_in6 {
--	__be16 Port;
--	__be32 FlowInfo;
--	__u8 IPv6address[16];
--	__be32 ScopeId;
--} __packed;
--
- #define INTERNETWORK	0x0002
- #define INTERNETWORKV6	0x0017
+ #define DURABLE_HANDLE_MAX_TIMEOUT	300000
  
+ struct create_durable_reconn_req {
 -- 
 2.53.0
 
