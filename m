@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016443;
-	b=F3matSMbOTWgamPN9pe32fctnUxOSQ9/lbxCyrCqXnEze2f2o0c70NWXRoFPEbjMwpVc
-	 g28yXO0ykyj69AMYUdk0ovcddZxWZf7in5Oi4tCaqTXSg+7L+6X4+CxxvM3gZ/jbZ6GeZ
-	 u4BunsrP2St/sd9pUtdkdNvOFvAmBE5WNBDhJFfxU7h9Fvq8OvpUDIRnBbsumJflKUq/1
-	 0u6xMFtO+RY50KHvAghMFdFFwWf20Szpu0M8LYGMrh77BVGuOY0uuLMP7MfCJgSYpXkN+
-	 QaijbjVZAoeIc9uNGo2OHgADVi2TQlZbOl3zc6kl9NnOKk7UxgeunvAbQfvsvMMTQlw==
+	t=1795016446;
+	b=IPelbCQWudmLYM3wfNZhu0iM6fLqVcHB7+OwZHmbTLGmxP6ZB7v1t/Rk4UJlqCSn/RmB
+	 5P3Nd8C0IS9gghH/EEsCNrtB+mZQs52MA6BV8J/AmjTexGDNCk0M9zc8tClRIFi+ebP+n
+	 vC4kZFooVyhKoGDzeDhseao+PAAvqK6RrsODNVY6qAGu7CYqKrepEXWLTIAgaGrPwaX84
+	 pKlt6kxnHX4aUURIH3q5k732lMFOPWAy73XObzPoIaacRv0H4R/NHpsfoRABGiHTCS9TQ
+	 igw6yNBngqo6l6NBV4PIpnudFe/NVikaHdVP2PArAqtp6iitWdnAAjmhF3qDMnKvINQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016443;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016446;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V1ytJMFOs9rvi9Se3h9oL6hHPr0qCPg8MaUiKVo90E0=;
-	b=uoPYwFaPr6X02bW0O0wGpgEMfIJwBB+F6kYTzt9lqGtk/mu/SQEeiX0c1Hjdpd6qmeG5
-	 SvbQG4Bc39mZQBdhOXs5iOH0Ugcbh91QxjEpfm2MuCyMBroqpfStun6JZETtNrPDL4UX/
-	 TbYyYrcqz9aQsWUgur1RdFdkDcTicX/ED3U/z/dAu3YwqZ1/vmNXOWixXbJ9VFZsc9xkI
-	 BPhd/wVSXtAnaEUb8wG9367uchcKsyh5u4tr1sZr/prwQ2hXKhpcY974wkK6EjhujfuiJ
-	 GC3qwFjzzMqIr3QGcAPbENaslrKjCez16Q2FElaYMZMpyNGvd8hRoV6UXQW2wOiyNkQ==
+	bh=3lHOOEko9l1k2tEdXK+s9C8BRYz5yEtRCiT226TIzKY=;
+	b=Qt07USj6kKWlok4x5PMz3j9p4oxiUX2xMR0J0lKxgMsOxyFIc7PGg+LEd5cNf3yPpWKy
+	 22wXCCSOFpJWtxlEI7k1w2DlO/WChBObEucyuanW+1kSDSOwQJQYtu87+Qkl8IRDJrkVW
+	 8ERwxZnVVwjSNiy/TJFz02NSzDIr+ma9+e5CqqDO0y47jvv912dJosTbLGvykKa+gG7MY
+	 v7hX2ozIsyxTpXrF1GddQqjmi4LYhHFb2rJTmrCq5mGEd4TjVssQ1XzA1wT64ylTdXOnu
+	 9z5n4QMPVaazoYzr+H99yPlLbYvJsApFcEzBXIqK5YjaiTQ78ciKeeeBVlhmCwAcFIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f0w1EoJg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbXHGmdV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB9E606A31C;
-	Wed, 18 Nov 2026 15:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B31606A31C;
+	Wed, 18 Nov 2026 15:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f0w1EoJg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294DE1F000C4;
-	Wed, 18 Nov 2026 15:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbXHGmdV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD761F000C4;
+	Wed, 18 Nov 2026 15:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016443;
-	bh=V1ytJMFOs9rvi9Se3h9oL6hHPr0qCPg8MaUiKVo90E0=;
+	s=korg; t=1795016446;
+	bh=3lHOOEko9l1k2tEdXK+s9C8BRYz5yEtRCiT226TIzKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f0w1EoJgCsn/A5VQnvROSibTefIB+3BTrId8Sa4MWD4JsILOF3B5RwrFqkBiXWiwY
-	 im87TcKLw1y2Yr8Te28aZ6Qbve1ppgh9DtOD6cCK8/Gmw7vSTJdFvBFYgG6q9PPdge
-	 bfVN62R6lYKmYo3vpAlQ+Ym5QEoZTIXnLCUdlrmA=
+	b=IbXHGmdVm1Pixt+AowgUdgaDa2A0UpMLfGTsymNGc5mFGvvmI5EK3KEASKRWL2Feg
+	 FoTbDO/qA1O8hnj3/N4WGgid2M/BZDkVCywKcKuXxutmKKL/UAvfho63Ukml5MF3sR
+	 gu27WRukqdKlAmBMA3Vfm/5l4UD92g3o7xMZVq9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+1f5a7de91d547763f4c8@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0532/2651] ASoC: mediatek: mt8189: Validate sysclk frequency
-Date: Wed, 18 Nov 2026 15:29:32 +0100
-Message-ID: <20261118150306.916303471@linuxfoundation.org>
+Subject: [PATCH 7.3 0515/2651] md/raid5: dont BUG() on an inconsistent reshape state from the superblock
+Date: Wed, 18 Nov 2026 15:29:15 +0100
+Message-ID: <20261118150306.292822763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,37 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 9c73b5a43c99f905ebeab4744a8ba0b28232b189 ]
+[ Upstream commit 0669c7dbd1d375f279e607a24addc2f1dae2d4f3 ]
 
-A zero frequency causes a modulo-by-zero error when validating the
-I2S clock frequency. Reject it before performing the validation.
+raid5_run() branches on mddev->reshape_position. When it is MaxSector --
+no reshape in progress -- the else branch asserts that nothing else
+describes one:
 
-Fixes: 7eb153585598 ("ASoC: mediatek: mt8189: add platform driver")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260916050020.14575-11-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	BUG_ON(mddev->level != mddev->new_level);
+	BUG_ON(mddev->layout != mddev->new_layout);
+	BUG_ON(mddev->chunk_sectors != mddev->new_chunk_sectors);
+	BUG_ON(mddev->delta_disks != 0);
+
+Nothing enforces that invariant. Both superblock validators copy the
+reshape fields straight off disk without cross-checking them against
+each other: super_1_validate() takes reshape_position, delta_disks,
+new_level, new_layout and new_chunk from the superblock whenever
+MD_FEATURE_RESHAPE_ACTIVE is set, and super_90_validate() does the same
+for minor version 91. A superblock that sets the reshape feature while
+leaving reshape_position at the MaxSector sentinel therefore reaches the
+else branch with a non-zero delta_disks, and assembling the array takes
+the machine down:
+
+  kernel BUG at drivers/md/raid5.c:8117!
+  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:raid5_run+0x11a7/0x1670 drivers/md/raid5.c:8117
+  Call Trace:
+   md_run+0xc2f/0x2510 drivers/md/md.c:6779
+   do_md_run+0x36/0x660 drivers/md/md.c:6880
+   array_state_store+0x9c5/0xcf0 drivers/md/md.c:4765
+   md_attr_store+0x1c5/0x330 drivers/md/md.c:6158
+   sysfs_kf_write+0xf2/0x150 fs/sysfs/file.c:145
+   kernfs_fop_write_iter+0x3e0/0x5f0 fs/kernfs/file.c:345
+
+This is reachable by anyone who can present an md superblock, so BUG()
+is the wrong response. Refuse to start the array instead, the way the
+reshape_position != MaxSector branch a few lines above already refuses a
+reshape it cannot resume. Nothing has been allocated at this point --
+the journal-and-bitmap check just above returns -EINVAL the same way --
+so there is nothing to unwind.
+
+Reported-by: syzbot+1f5a7de91d547763f4c8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1f5a7de91d547763f4c8
+Fixes: 91adb56473fe ("md/raid5: refactor raid5 "run"")
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260910131103.988-1-yogeshgaur.83@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8189/mt8189-dai-i2s.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/raid5.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c b/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c
-index 8cd5ddf62d467..c9e80ef42f608 100644
---- a/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c
-+++ b/sound/soc/mediatek/mt8189/mt8189-dai-i2s.c
-@@ -1287,6 +1287,9 @@ static int mtk_dai_i2s_set_sysclk(struct snd_soc_dai *dai,
- 	    dir != SND_SOC_CLOCK_OUT)
- 		return -EINVAL;
- 
-+	if (!freq)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index bc5f4b048eeda..63e2bc9f329ed 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -8112,11 +8112,17 @@ static int raid5_run(struct mddev *mddev)
+ 		}
+ 		pr_debug("md/raid:%s: reshape will continue\n", mdname(mddev));
+ 		/* OK, we should be able to continue; */
+-	} else {
+-		BUG_ON(mddev->level != mddev->new_level);
+-		BUG_ON(mddev->layout != mddev->new_layout);
+-		BUG_ON(mddev->chunk_sectors != mddev->new_chunk_sectors);
+-		BUG_ON(mddev->delta_disks != 0);
++	} else if (mddev->level != mddev->new_level ||
++		   mddev->layout != mddev->new_layout ||
++		   mddev->chunk_sectors != mddev->new_chunk_sectors ||
++		   mddev->delta_disks != 0) {
++		/* No reshape is in progress, but the array describes one.
++		 * The superblock validators do not cross-check these against
++		 * reshape_position, so this is reachable from disk.
++		 */
++		pr_warn("md/raid:%s: inconsistent reshape state - aborting.\n",
++			mdname(mddev));
 +		return -EINVAL;
-+
- 	i2s_priv = afe_priv->dai_priv[dai->id];
- 	if (!i2s_priv)
- 		return -EINVAL;
+ 	}
+ 
+ 	if (test_bit(MD_HAS_JOURNAL, &mddev->flags) &&
 -- 
 2.53.0
 
