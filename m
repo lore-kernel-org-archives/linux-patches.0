@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047492;
-	b=fyNtrj3Pnzk4VlRmmzOf6I+xpc+FWNuIMBFo7x7IbRN72W5WYWPYjbCiCDqe74OVmedp
-	 ncTs4EgywCNcB7LODD2RmR3qdY7P1r3obPd48GKPwXkGLwP+n622J8VvFBXJ9gDRpZznY
-	 gQB4gxhZFZ9thbsmlwm0aH3XGDu+WFRQciQUj/xH01n+qtM2o6FVwswcYZjKrFGl5SkW6
-	 W01NKFVKBh/1iTti0ju8XbPyIzcyTQr9+HZPr8j87q6eZQV7I7TyVfqovckivA3D841iu
-	 cB582onHIN86kuBliyErFaMdO31nc3lqMKI0iEnJAjNuMNeti6x/LpdDWug7GpuW7Eg==
+	t=1795047495;
+	b=TF/Q4UceciEYw3xB1d0lNCKdmb4AAht6+7mrrgqu6Q/WaZOzMUY1bH0ix1pg+gy/fq0X
+	 ZOWSCSsDKaMzJQe3RtZLrm2Hn4kzvAxzBIW16zSRlTytmy5An4AGmBQnMYITWNCG6yP6o
+	 e7AiNsFaRr3Cjhrml33HqQjRnUlM4Eiu9tTnLYFnJ5v1DSMIl6sLrtk9mvavTfZpbDxyo
+	 IovEehes4Xoz4tZXeBO7XQyQv5oxEPdJeX7ibbEfKdhn+r3pmCAzDJv9j6LjnKuKCTqvQ
+	 9Hz6GmnUeyAh2jb6LBMxVFptYAMa1X/XynzXl8U2nxpD9aFo+4+wcAHxel9omh/S4KQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047492;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047495;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FEFeDoOwtatMOJpu9fwkkG9es5p1OD7Dsa/iTXWTStI=;
-	b=Zo0MAFA7rSGQFljNVqj42FmHUH/4SUdBRa35XN7xmUfcRsTrfIIwpA7d58x+6BkjqgTi
-	 ufcCLHXpoR5vtVPz2wVfT2kkBJ5nCsWnaaJKDikS4lGUuu0PJUorWHLR0hRDRhGgAWpTh
-	 SJpeBGhO2J0TUkwXqcFezwygSWijeTvwll0iDZgOTpycb8fVcnH/j1qCYxmw6vVoknvey
-	 yv08etq/CINH1lO86V5Cu7mGnTyKsZqdeStyvgvVIX5lLFmKaEnufwTcX8NUissAsS9Hu
-	 XeMLuYdX3/1CzZm0xHowDSnkIlLXK8wdWDCZHK0QaBi/XAndXH/S3bspjrqAgEccFlQ==
+	bh=kzHGimg3IuyYu22/DtzWmYAOmNxVpifiIhEKjH2nJy0=;
+	b=hRwmDScMGO9rKZhLEcxuby7Gi1NOEOLj4ZHLW69uiMz6eR+rDB39QzVi6Qyer/y54oyN
+	 KJ8CVHW1x54/X+I4VVeoivakfRplJxezfWSGwFx2YqsxR0jYGoNcr/5dH3zVCxg8gxgMa
+	 2w1lcm+JMBxpEn+5r6wQNkQe0kni2dheFtAJ8R2fLbBWakwYbSYc8Tktx+s2WbJaa6XQ+
+	 noJRbRGFtcOrLm9uL7GgXQKG4E/XhRg5m2DdzgiCltIRUoPKWqIV045XqNgqUsWcdfIOh
+	 jiLfsjYsh7zKLazaFnKvBo/0kuRycgjtms6WZ9kDs3+QdrcozAqfKrNsb2MokF5LDLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kkVfv4YE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IiSh7i+2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875C5606A31C;
-	Thu, 19 Nov 2026 00:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9BB606A320;
+	Thu, 19 Nov 2026 00:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kkVfv4YE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24F61F000C4;
-	Thu, 19 Nov 2026 00:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IiSh7i+2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 696831F000C4;
+	Thu, 19 Nov 2026 00:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047492;
-	bh=FEFeDoOwtatMOJpu9fwkkG9es5p1OD7Dsa/iTXWTStI=;
+	s=korg; t=1795047494;
+	bh=kzHGimg3IuyYu22/DtzWmYAOmNxVpifiIhEKjH2nJy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kkVfv4YEbFgVf7R+EI/nrLMArhGO1aYs8RZudqBt707jX+jdVYqK3f1KYO3dpAd7y
-	 rfArEMOfJAptpDimnI9Pq6aIkla5ijY2hL1DgmxR2AuqNCZvmKezd6JzmV32oHN81v
-	 MqXzSVK97kFcz6WQjYuGQDtGKxF1jgaJ0xfzE0EQ=
+	b=IiSh7i+2qDADHJHYaVi37diSmwbyir6H3dDuOeUy8WvPfmS+bRv+NwNSsOmmkB78O
+	 /IwVFA//eNFGahia3HnUxTNIiTHYPyoFg5d+ahbyAbwM9wQVmhGj1eg1NZYmfzZ/6W
+	 KLMcA8bvi1JIkc4xPWGXqMTwkiuP+lRPHNhYyJP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yuz08559@gmail.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1658/2857] scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown
-Date: Wed, 18 Nov 2026 15:44:52 +0100
-Message-ID: <20261118150301.028338693@linuxfoundation.org>
+Subject: [PATCH 6.1 1659/2857] scsi: target: Fix LUN/device R/W and total command stats
+Date: Wed, 18 Nov 2026 15:44:53 +0100
+Message-ID: <20261118150301.062350756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,166 +69,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 6a6e7d7230cd4e0a6c003bae5b85bf37a1e77b94 ]
+[ Upstream commit 95aa2041c654161d1b5c1eca5379d67d91ef1cf2 ]
 
-A demo-mode (generate_node_acls=1) login that allocates a dynamic NodeACL
-populates that ACL's per-LUN dev entries in core_tpg_add_node_to_devs()
-*before* the ACL is linked onto tpg->acl_node_list by
-target_add_node_acl():
+In commit 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
+I saw we sometimes use %u and also misread the spec. As a result I
+thought all the stats were supposed to be 32-bit only. However, for the
+majority of cases we support currently, the spec specifies u64 bit
+stats. This patch converts the stats changed in the commit above to u64.
 
-	core_tpg_check_initiator_node_acl():
-		...
-		core_tpg_add_node_to_devs(acl, tpg, NULL); /* builds deves */
-		target_add_node_acl(acl);                  /* only now listed */
-
-The LUN teardown sweep, core_clear_lun_from_tpg(), enumerates only
-tpg->acl_node_list, so a dev entry whose ACL is still in the window above
-is invisible to the sweep and is never disabled.  It is left on the
-se_lun->lun_deve_list after core_tpg_remove_lun() frees the se_lun; when
-the same unpacked_lun is later re-added and the se_lun is reallocated at
-the same address, the stale dev entry is rediscovered by
-target_nacl_find_deve() and core_enable_device_list_for_node() corrupts
-lun_deve_list:
-
-  BUG: KASAN: slab-use-after-free ...
-   core_enable_device_list_for_node+0x5ce/0x880
-   core_tpg_add_node_to_devs+0x169/0x190
-   core_dev_add_lun+0x146/0x190
-   target_fabric_port_link+0xe9/0x1b0
-   configfs_symlink+0x381/0xae0
-   __x64_sys_symlink+0x55/0x80
-
-The demo-mode login path that drives the ACL/dev-entry creation is
-reachable by an unauthenticated initiator; the colliding LUN add/remove is
-a local configfs operation.
-
-Commit 49cb77e297dc ("target: Avoid mappedlun symlink creation during lun
-shutdown") introduced se_lun->lun_shutdown and guarded the *explicit* ACL
-MappedLUN path (target_fabric_mappedlun_link()), but the demo-mode
-automatic path, core_tpg_add_node_to_devs() ->
-core_enable_device_list_for_node(), was never given the equivalent guard,
-and the publish-after-populate ordering in
-core_tpg_check_initiator_node_acl() was left unchanged.
-
-Fix it in three cooperating parts:
-
- 1) Publish the dynamic NodeACL onto acl_node_list *before* creating its
-    dev entries, so the teardown sweep can observe them.
-
- 2) Refuse to attach a dev entry to an se_lun that is shutting down,
-    checked under nacl->lun_entry_mutex -- the same lock the sweep takes --
-    so once the sweep has passed an ACL any later enable for that LUN
-    observes lun_shutdown and skips it.
-
- 3) In core_enable_device_list_for_node(), insert the new dev entry onto
-    lun->lun_deve_list while still holding nacl->lun_entry_mutex, in both
-    the replace and the new-entry branch.  Previously the entry was added
-    to nacl->lun_entry_hlist under the mutex but to lun->lun_deve_list only
-    after dropping it; with the ACL now published early, the sweep could
-    take the mutex in that gap, find the entry on the hlist,
-    core_disable_device_list_for_node() it (list_del() on the not-yet-
-    linked lun_link succeeds and the entry is freed), and then the enable
-    would list_add_tail() the freed entry back onto lun_deve_list.  Linking
-    both lists under the mutex makes enable and the sweep mutually
-    exclusive, closing that window.
-
-core_tpg_add_node_to_devs() already ignores the return value of
-core_enable_device_list_for_node(), so a shutting-down LUN is simply
-skipped.
-
-Cc: stable@vger.kernel.org
-Fixes: 49cb77e297dc ("target: Avoid mappedlun symlink creation during lun shutdown")
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Tested-by: Yu Zhang <yuz08559@gmail.com>
-Link: https://patch.msgid.link/20261014013746.46705-1-yuz08559@gmail.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://patch.msgid.link/20250917221338.14813-2-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_device.c | 18 +++++++++++++++---
- drivers/target/target_core_tpg.c    | 10 +++++++++-
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ drivers/target/target_core_stat.c | 24 ++++++++++++------------
+ include/target/target_core_base.h | 12 ++++++------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
-index dd5b7e324702a..0f162f4a6ebf8 100644
---- a/drivers/target/target_core_device.c
-+++ b/drivers/target/target_core_device.c
-@@ -350,6 +350,19 @@ int core_enable_device_list_for_node(
- 	new->attach_count++;
+diff --git a/drivers/target/target_core_stat.c b/drivers/target/target_core_stat.c
+index 57ec5e3d4e941..3e20fcb2bb7d3 100644
+--- a/drivers/target/target_core_stat.c
++++ b/drivers/target/target_core_stat.c
+@@ -282,7 +282,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 cmds = 0;
++	u64 cmds = 0;
  
- 	mutex_lock(&nacl->lun_entry_mutex);
-+	/*
-+	 * Do not attach a new dev entry to an se_lun that is being torn down.
-+	 * lun_shutdown is set by core_tpg_remove_lun() before its
-+	 * core_clear_lun_from_tpg() sweep; checking it here under the same
-+	 * nacl->lun_entry_mutex the sweep takes guarantees that once the sweep
-+	 * has passed this ACL no dev entry can be left dangling on the
-+	 * se_lun->lun_deve_list that is about to be freed.
-+	 */
-+	if (lun->lun_shutdown) {
-+		mutex_unlock(&nacl->lun_entry_mutex);
-+		ret = -ENODEV;
-+		goto free_stats;
-+	}
- 	orig = target_nacl_find_deve(nacl, mapped_lun);
- 	if (orig && orig->se_lun) {
- 		struct se_lun *orig_lun = orig->se_lun;
-@@ -376,12 +389,12 @@ int core_enable_device_list_for_node(
- 		new->se_lun_acl = lun_acl;
- 		hlist_del_rcu(&orig->link);
- 		hlist_add_head_rcu(&new->link, &nacl->lun_entry_hlist);
--		mutex_unlock(&nacl->lun_entry_mutex);
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -290,7 +290,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 	}
  
- 		spin_lock(&lun->lun_deve_lock);
- 		list_del(&orig->lun_link);
- 		list_add_tail(&new->lun_link, &lun->lun_deve_list);
- 		spin_unlock(&lun->lun_deve_lock);
-+		mutex_unlock(&nacl->lun_entry_mutex);
- 
- 		kref_put(&orig->pr_kref, target_pr_kref_release);
- 		wait_for_completion(&orig->pr_comp);
-@@ -394,11 +407,10 @@ int core_enable_device_list_for_node(
- 	new->se_lun = lun;
- 	new->se_lun_acl = lun_acl;
- 	hlist_add_head_rcu(&new->link, &nacl->lun_entry_hlist);
--	mutex_unlock(&nacl->lun_entry_mutex);
--
- 	spin_lock(&lun->lun_deve_lock);
- 	list_add_tail(&new->lun_link, &lun->lun_deve_list);
- 	spin_unlock(&lun->lun_deve_lock);
-+	mutex_unlock(&nacl->lun_entry_mutex);
- 
- 	target_luns_data_has_changed(nacl, new, true);
- 	return 0;
-diff --git a/drivers/target/target_core_tpg.c b/drivers/target/target_core_tpg.c
-index 8ebccdbd94f0e..37920119fa608 100644
---- a/drivers/target/target_core_tpg.c
-+++ b/drivers/target/target_core_tpg.c
-@@ -265,6 +265,15 @@ struct se_node_acl *core_tpg_check_initiator_node_acl(
- 	kref_get(&acl->acl_kref);
- 	acl->dynamic_node_acl = 1;
- 
-+	/*
-+	 * Publish the dynamic NodeACL on tpg->acl_node_list before creating
-+	 * its demo-mode MappedLUN dev entries below, so that a concurrent LUN
-+	 * teardown sweep (core_clear_lun_from_tpg(), which walks acl_node_list)
-+	 * can observe and disable those dev entries.  Otherwise a dev entry can
-+	 * be left on an se_lun->lun_deve_list that is about to be freed.
-+	 */
-+	target_add_node_acl(acl);
-+
- 	/*
- 	 * Here we only create demo-mode MappedLUNs from the active
- 	 * TPG LUNs if the fabric is not explicitly asking for
-@@ -274,7 +283,6 @@ struct se_node_acl *core_tpg_check_initiator_node_acl(
- 	    (tpg->se_tpg_tfo->tpg_check_demo_mode_login_only(tpg) != 1))
- 		core_tpg_add_node_to_devs(acl, tpg, NULL);
- 
--	target_add_node_acl(acl);
- 	return acl;
+ 	/* scsiLuNumCommands */
+-	return snprintf(page, PAGE_SIZE, "%u\n", cmds);
++	return snprintf(page, PAGE_SIZE, "%llu\n", cmds);
  }
- EXPORT_SYMBOL(core_tpg_check_initiator_node_acl);
+ 
+ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+@@ -299,7 +299,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -307,7 +307,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuReadMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+@@ -316,7 +316,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 	struct se_device *dev = to_stat_lu_dev(item);
+ 	struct se_dev_io_stats *stats;
+ 	unsigned int cpu;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		stats = per_cpu_ptr(dev->stats, cpu);
+@@ -324,7 +324,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiLuWrittenMegaBytes */
+-	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ }
+ 
+ static ssize_t target_stat_lu_resets_show(struct config_item *item, char *page)
+@@ -1044,7 +1044,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 cmds = 0;
++	u64 cmds = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1059,7 +1059,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrOutCommands */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", cmds);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", cmds);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1073,7 +1073,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1088,7 +1088,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrReadMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+@@ -1102,7 +1102,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 	struct se_dev_entry *deve;
+ 	unsigned int cpu;
+ 	ssize_t ret;
+-	u32 bytes = 0;
++	u64 bytes = 0;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
+@@ -1117,7 +1117,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
+ 	}
+ 
+ 	/* scsiAuthIntrWrittenMegaBytes */
+-	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
++	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
+ 	rcu_read_unlock();
+ 	return ret;
+ }
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index 70ea2748df2bf..e687859e28c79 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -659,9 +659,9 @@ struct se_lun_acl {
+ };
+ 
+ struct se_dev_entry_io_stats {
+-	u32			total_cmds;
+-	u32			read_bytes;
+-	u32			write_bytes;
++	u64			total_cmds;
++	u64			read_bytes;
++	u64			write_bytes;
+ };
+ 
+ struct se_dev_entry {
+@@ -795,9 +795,9 @@ struct se_device_queue {
+ };
+ 
+ struct se_dev_io_stats {
+-	u32			total_cmds;
+-	u32			read_bytes;
+-	u32			write_bytes;
++	u64			total_cmds;
++	u64			read_bytes;
++	u64			write_bytes;
+ };
+ 
+ struct se_device {
 -- 
 2.53.0
 
