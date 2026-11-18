@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054272;
-	b=m2UR5tioPpybBKdcaawvgxnexoyAsTvamLxTX8IxvNLKpsCFGS4Fr+3WI2p9cxco5t8V
-	 83tqdgP5g0iyZZYPTtfXwSCsaLvjZ9nLeAerWlMyoOJ95W30Ynzrhy8vcWsTK5p0V6yI1
-	 ZfWXbJaploZEDNzHMQn1YJDC0UxyR2SoBK1n4yGel3RSIbRltUp9lV3fRsDWMOLIiZrr0
-	 nPC/QBLnAvX2AtS95Vv7vexd4/RBkZgscrRCAwIpJz4cmg9/wtFa9IgRotTDJHNPtNLLE
-	 MhJqY68DI79o71fSSRytR7Sb0byGMS5/DERdd/DjkGTfBjCXECG3PBqs8aJFxdL6OPQ==
+	t=1795054275;
+	b=CaxdKEkZQ5MCSkcFj2eFH3gEeSjHCriPnBIVyy9f82alKazeQhmIfshhzxjG8oz6NqYL
+	 6XLRGnElszR6lzZ6y3n8IawHC5fE7Fu8OglOH/5APpp0AzEuyw7QKh1EglUHDZqqHvcnh
+	 Mg3y+hmn3VfatcQ0daCuoZx3e5wO2ZydvqftNkrXc8YMkpFf/TmmjPT8Pea4eBTEYb8M9
+	 mdz7PiAdCif/KPovGLs1tF4eRwTmDj4b4dLpPm2jtilaVO/m0Hh5bevESPfIgjkC5GE0v
+	 PdLb1BPQQv5Dl3TBLxZj2tha9NUSsob7Ka2IwrXx2wdo7/dLO3F/5DIJv97EUEB6gXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054275;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=px3Gj+I8gi65gzUSlo2leTKUyiCyyzWHpVouFcmMSMU=;
-	b=R5PJTbIX7tPaq3mbaaQ0XnOzfMKs2dWDtpUndrgkdo/TM6tfiYkBy0KT+S56HXZkRMKG
-	 97pVdpwxzNWypAJfDp9c6mJUJ5WnGctDPD6Whykj5wl6biM9da4woib16v51+W+VFedRs
-	 yb2anwW+hjsVpY3N0+XhEJeeQghlrE6suDm+apb67WB4ZtEf7B3dArxCxd6taPEAPARfz
-	 1WLC49VDWpb7mMjfS8VHQMHmwToGCvLygd3Q+lLpkbMMDiNPtXSBCPP9UrBOvVkHx2c4Y
-	 hPqQMQsZBRS02TjFxc1SnvoA6aYFY+DTO4IUG0C2Ni6fIHvPzNma4FxshPVrQC5Pkzw==
+	bh=CWazGq7cVH4k0kvDbHX4KokFc6cEUn4Io3FNhKXpAuk=;
+	b=oNzzlAqnLMeb04gkDnu18iQ4rI4yf+4mdK8pnu7JIdZ11aldmm8JLQgyLMjHbQn3F1Y3
+	 fsInQkt1EvmW3c7vJXeDFDwSiqw/XA9zbn56l/wrWXlt/NpOB0sNH2jHa++cKp/wUd0dp
+	 sixPNJfzb38G9d4XIWDfbgur+8BcwKjPzwdN78DcVp6iW3Ud2GRyVLd6OHa/j5YfFRnv1
+	 RxhwcgBjdnYFO9UfaRPU/cSsgAzvoiqlEENq3vjzfO4tMhT+0FgK/27QmZSKVG0pq1Hiz
+	 lvwT6zgmHGR2frVrxrMZDX02TrPm09CunVcyFbzl5viBf+sX2KnA8hg67Qpea1gSSeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyO3To3+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1gpc0+i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95964606A320;
-	Thu, 19 Nov 2026 02:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CF2606A31C;
+	Thu, 19 Nov 2026 02:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyO3To3+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66761F000C4;
-	Thu, 19 Nov 2026 02:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l1gpc0+i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFDD1F000C4;
+	Thu, 19 Nov 2026 02:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054272;
-	bh=px3Gj+I8gi65gzUSlo2leTKUyiCyyzWHpVouFcmMSMU=;
+	s=korg; t=1795054275;
+	bh=CWazGq7cVH4k0kvDbHX4KokFc6cEUn4Io3FNhKXpAuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eyO3To3+lUF3NRf0rEnw7OFAqXD8IX3eTs8QmFyHnFzeJm+n4AnUM9/odThiTXNjQ
-	 TgvK1TtlsiKA329JMm9624Tnk44TrmkHqmw5XaLBTzoaMZdKCoanTxi0tjrGO765B9
-	 kHlm2cuT0GzLVQssryHb76SiGHKRGjziGKXw1bBo=
+	b=l1gpc0+inc4rrko6oF5c7xEM193mWOf2Lp8uOOV8zUWOiidipt/eMLY3M2pFX7nbQ
+	 QWNRzqO7f+FF9CKdEmljTlnbkswmarcjLuC901dVwqhF+KnD7tG0TArWj20HVOoZag
+	 xPt4KGzl02kkhPreGmh9JIdTe13LFkHIKzNFNYhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Yiqi <yaoyiqi3@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Qu Wenruo <wqu@suse.com>,
+	guolingxing <guolingxing@tju.edu.cn>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1217/2214] fbcon: Rebuild rotated font buffer on font change
-Date: Wed, 18 Nov 2026 15:48:13 +0100
-Message-ID: <20261118150100.471639765@linuxfoundation.org>
+Subject: [PATCH 5.15 1218/2214] btrfs: prevent deleting the wrong subvolume by ID
+Date: Wed, 18 Nov 2026 15:48:14 +0100
+Message-ID: <20261118150100.510426490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,138 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Yiqi <yaoyiqi3@huawei.com>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-[ Upstream commit e4b6b865d45d8dafb6c6f28c8a993a5b4431d25a ]
+[ Upstream commit 1960146913b31b288ed2cd607d103ee3b41681d4 ]
 
-fbcon_rotate_font() caches a rotated copy of the console font in
-par->rotated.buf. The buffer is sized from the font's width, height
-and charcount, and is rebuilt in fbcon_init(), fbcon_switch() and
-fbcon_modechanged(), but not in fbcon_do_set_font().
+When deleting a subvolume by ID, btrfs_ioctl_snap_destroy() first
+resolves the requested ID to a name, then looks up that name again
+under the parent directory lock.
 
-When the font is changed through KDFONTOP, the new geometry is
-installed and vc_resize() redraws before the buffer is rebuilt. The
-rotated putcs/cursor ops then index the old buffer with the new cell
-size; KASAN reports a slab-out-of-bounds read in soft_cursor().
+A concurrent rename can change which subvolume is associated with
+the name between these operations. Since the deletion path does not
+verify the ID of the resolved subvolume, it can delete a different
+subvolume while leaving the requested one intact.
 
-Rebuild the buffer for the visible console before the redraw, as the
-other callers do: select the console's blitting state with
-set_blitting_type() (which also uploads the new font's map on
-tile-blitting hardware), then rebuild. Background consoles keep
-their rebuild at fbcon_switch() time, as the buffer is shared per
-framebuffer and must not be updated for a console that is not being
-displayed.
+This was reproduced by repeatedly exchanging the names of two
+subvolumes using renameat2(RENAME_EXCHANGE) while deleting one of
+them by ID. The wrong subvolume was deleted in 9 out of 14 independent
+tests.
 
-To ensure a correct rollback when the rebuild or the following
-vc_resize() fails, save the rotated font state, clear it before
-rebuilding, and restore it in the error path of
-fbcon_do_set_font().
+Fix this by checking that the resolved subvolume ID matches the
+requested ID while holding the parent directory lock. Return -EAGAIN
+on a mismatch so that userspace can retry the operation instead of
+being told that the requested subvolume does not exist.
 
-Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-[ sashal: adapted rotated font handling to separate fbcon_par fields and the direct par->rotate_font callback ]
+Fixes: 949964c92843 ("btrfs: add new BTRFS_IOC_SNAP_DESTROY_V2 ioctl")
+CC: stable@vger.kernel.org
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ sashal: Adapted error handling to use err instead of ret and out_dput instead of out_end_removing. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c | 57 ++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+ fs/btrfs/ioctl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
-index efefa73451a0b..a47b98c269cf3 100644
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2389,6 +2389,12 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	int resize, ret, old_userfont, old_width, old_height, old_charcount;
- 	u8 *old_data = vc->vc_font.data;
- 	unsigned short old_hi_font_mask = vc->vc_hi_font_mask;
-+#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
-+	u8 *saved_fontdata = NULL, *saved_fontbuffer = NULL;
-+	u32 saved_fd_size = 0;
-+	int saved_cur_rotate = 0;
-+	bool rotated_saved = false;
-+#endif
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index d56d6144707bb..a20abb2f5437e 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3070,6 +3070,17 @@ static noinline int btrfs_ioctl_snap_destroy(struct file *file,
  
- 	resize = (w != vc->vc_font.width) || (h != vc->vc_font.height);
- 	vc->vc_font.data = (void *)(p->fontdata = data);
-@@ -2408,6 +2414,33 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	else if (!vc->vc_hi_font_mask && charcount == 512)
- 		set_vc_hi_font(vc, true);
- 
+ 	inode = d_inode(dentry);
+ 	dest = BTRFS_I(inode)->root;
++
 +	/*
-+	 * Select the console's blitting state and update the rotated font buffer
-+	 * to match the new font, so that the rendering below does not use a
-+	 * cache that was built for the old font. Clear the cached state so
-+	 * the rebuild allocates a fresh buffer; the old state is kept until
-+	 * the font change can no longer fail.
++	 * A concurrent rename may have changed which subvolume the name
++	 * refers to. Verify that the resolved ID still matches the requested ID.
 +	 */
-+	if (con_is_visible(vc)) {
-+		set_blitting_type(vc, info);
-+		if (par->rotate_font) {
-+#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
-+			saved_fontdata = par->fontdata;
-+			saved_fontbuffer = par->fontbuffer;
-+			saved_fd_size = par->fd_size;
-+			saved_cur_rotate = par->cur_rotate;
-+			par->fontdata = NULL;
-+			par->fontbuffer = NULL;
-+			par->fd_size = 0;
-+			par->cur_rotate = 0;
-+			rotated_saved = true;
-+#endif
-+			ret = par->rotate_font(info, vc);
-+			if (ret)
-+				goto err_out;
-+		}
++	if (destroy_v2 && (vol_args2->flags & BTRFS_SUBVOL_SPEC_BY_ID) &&
++	    btrfs_root_id(dest) != vol_args2->subvolid) {
++		err = -EAGAIN;
++		goto out_dput;
 +	}
 +
- 	if (resize) {
- 		int cols, rows;
- 
-@@ -2424,11 +2457,28 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 		update_screen(vc);
- 	}
- 
-+#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
-+	if (rotated_saved)
-+		kfree(saved_fontbuffer);
-+#endif
- 	if (old_userfont && (--REFCOUNT(old_data) == 0))
- 		kfree(old_data - FONT_EXTRA_WORDS * sizeof(int));
- 	return 0;
- 
- err_out:
-+#ifdef CONFIG_FRAMEBUFFER_CONSOLE_ROTATION
-+	/*
-+	 * Drop the buffer built for the new font and restore the saved
-+	 * state.
-+	 */
-+	if (rotated_saved) {
-+		kfree(par->fontbuffer);
-+		par->fontdata = saved_fontdata;
-+		par->fontbuffer = saved_fontbuffer;
-+		par->fd_size = saved_fd_size;
-+		par->cur_rotate = saved_cur_rotate;
-+	}
-+#endif
- 	p->fontdata = old_data;
- 	vc->vc_font.data = old_data;
- 
-@@ -2448,6 +2498,13 @@ static int fbcon_do_set_font(struct vc_data *vc, int w, int h, int charcount,
- 	else if (!old_hi_font_mask && vc->vc_hi_font_mask)
- 		set_vc_hi_font(vc, false);
- 
-+	/*
-+	 * Re-select the blitting type, which re-uploads the font map on
-+	 * tile-blitting hardware.
-+	 */
-+	if (con_is_visible(vc))
-+		set_blitting_type(vc, info);
-+
- 	return ret;
- }
- 
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		/*
+ 		 * Regular user.  Only allow this with a special mount
 -- 
 2.53.0
 
