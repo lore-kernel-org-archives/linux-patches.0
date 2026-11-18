@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021071;
-	b=wTnb442hgdlEgbKJt4XBtZa6kt93/TcgzU2HqWiYx8fL486pSpgvwURoNBuzcOO+KKCx
-	 nF+FeiWgSmnJlsoEPqq8KNYeeodV66XRHWf97DZsflzcb08R45KYJDeADONh9irY3KvlZ
-	 Ww70QKebcwexAIWDwywyGXclU+QOAexUghMFYUq/S+G/fIW2dDQw+fuYr0V4G6xcewT11
-	 TjWxViArHfOWzvknDMHWar/uiygZzP3odNMJQqlWWXMFdJ9yNe0lstYR7o5hAkPMn84Rs
-	 1MuF2G7AqSke+aLKaNXQ7aks4lUtpoDadzthBlaiy7PDpf7vLCQ8fmVcui7VITjO9Tw==
+	t=1795021074;
+	b=LF5llknRlgTDLWBkLtrudrj0uyuXEFtta4gFAskEu4Aj6xvqUIwYgU31G2jV9ZoWhPvT
+	 yIhD03eKp9o6nfXrmH6YiVC//m2kaoEPr0Gvyzl/G82cCvQZ3sR08k8AQVU0Vwru5SAez
+	 HG9W46Lq7WGA1a6vY4Hu4E0ODOQqthTvNL1/D4YKEgwCqd2j7rWYpvrW9rMSB+DjT7c+Z
+	 7qeDg+d9DQFC6kJ9UKc2C983L8cMb9iNx/t+WwheQiPuhtwbbEntKKujjJuprHnTfIGas
+	 0aTtFiFSmKwKT86iNFA+yTVD5PZmDBLLc3ZR+f4GUDnMQUiuzyFaja3/INEo5dvVrzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KCZyGzHaRehBqYICs80PlHZe/fTrW2lZziTfZs7c13M=;
-	b=g73LAhrkv9FiPwd6053L/D8l3SDJ/dz2w8NGRMUgpSr6+nbXX6w0yyZV68eyGXktPaBY
-	 ySm5O4g/URFJcYEAb+d/0yN66lKpWXQytNAQNTaDY6H+TF1Dz7093ETIXy3ifCoYUlJqh
-	 DdwTiYBhLUpg7QEgBT8haQqbtHW+Rkg8wshPyRtnFRsqzMJdRBJ23Ce3Ow69jnxdr5SBb
-	 DNWy3QuKuepWYnbILpoahQs3hQsN286yWN/DCqB+Tm+toglDs5KrxbrgaQedxDh95rQNx
-	 s4PdxF7R5vH9JjykgJPwq6BYmnqVRJJfJGrTNdXyx/DNvQwczqhm/SXbYUgAb0k+v5g==
+	bh=ttWzRkkzWrTvt0ZB5CQSLtjtG7gBLPkAWUgLAk61f58=;
+	b=tR3k5c516+LQHY8Q8vleIhR0gL3CHUAskXwGouLevGv8ubZuWPmIhqs+rQMDuNKKMngC
+	 dVzvtUzFuzmQ+5RjRQLGWAxnHpSGIkCHTtIqsfem9cevhoZfkVAjrtRctgDa5H4IE5CZt
+	 EZgi8f8ayEEA6fknDqScKPNMUCVWsFHY6INVn4ERzcbmmbRqSwH03hGXZewjIwD4PvH8f
+	 u/gR5Dmbt5pqQHT2fqOBeDSZwyUN+dXfA1D7CjpbBxd3Gyr8Be1tLKjnatAp80vFNY1yd
+	 wmOlmPiUSkfVhv8/yaZ755I1FmqnAPHcjUwF0gVDNAsUDrlgmwskJOx3xBF7h7wXsxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXchOWGz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PR5G3LJW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD34606A31C;
-	Wed, 18 Nov 2026 16:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99648606A31C;
+	Wed, 18 Nov 2026 16:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXchOWGz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 160CB1F000C4;
-	Wed, 18 Nov 2026 16:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PR5G3LJW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F001F000C4;
+	Wed, 18 Nov 2026 16:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021071;
-	bh=KCZyGzHaRehBqYICs80PlHZe/fTrW2lZziTfZs7c13M=;
+	s=korg; t=1795021074;
+	bh=ttWzRkkzWrTvt0ZB5CQSLtjtG7gBLPkAWUgLAk61f58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXchOWGzGMC0t6UBW83b/lfiS6KX2sqPxBY/SljOGeAMPkepOxWaBZnT/oQNA9IVg
-	 gE2x/HWqP0PVGMGbZ8rW5GOPhdaURjttYZ3zSKZOAkUkFt4fhwQk/Z468mf9Je/1nF
-	 sD7IvmX2jVXYR1H65lsX0HstAjycmgRmw+ifCmRE=
+	b=PR5G3LJWJTesS/+6H7fK6BU+zkbpapHhB2uD8J9hbO3IsyRzoiZ1MJrgkxVP7Qtnp
+	 pIjKJn40P22OQacnEdSGE+2qVmcwdK7fLG2gOKEVntwDZWlLWXdpLj7o4H8krBVndp
+	 6jlE7KZj83zQgMGS95d2AjtUY/RUldFiMZ7udH40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinpyo Lee <bint4b13@gmail.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Koichiro Den <den@valinux.co.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2176/2651] nfs/localio: pin UUIDs during global invalidation
-Date: Wed, 18 Nov 2026 15:56:56 +0100
-Message-ID: <20261118150404.131623140@linuxfoundation.org>
+Subject: [PATCH 7.3 2177/2651] PCI: rcar-gen4: Add missing PM ops
+Date: Wed, 18 Nov 2026 15:56:57 +0100
+Message-ID: <20261118150404.166510629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,321 +71,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinpyo Lee <bint4b13@gmail.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 62e14699c4dfc98c514a44bf780678cf8622fc08 ]
+[ Upstream commit 6b8c12d354dfa9c80d82eea8c0c45d331a28be11 ]
 
-nfs_localio_invalidate_clients() moves UUID nodes embedded in nfs_client
-objects to a private list, then walks that list without retaining the
-containing clients. Concurrent client teardown can free an entry that
-the iterator has already selected, causing a use-after-free.
+The R-Car Gen4 PCIe controller is part of a power domain. On R-Car S4
+and V4H, this is an always-on power domain which is not shut down in
+suspend. On R-Car V4M, this is a dedicated A2PCIPHY power domain,
+which is shut down during suspend, and the controller loses state,
+which prevents the PCIe from working after resume.
 
-Take a reference to each selected UUID under the namespace list lock.
-Keep this reference count in nfs_common, independently of cl_count, and
-have nfs_free_client() drain temporary UUID users before freeing the
-client. Releasing a UUID reference wakes waiting probes and signals
-completion when the last reference is dropped. It neither calls into
-nfs.ko nor performs final NFS client teardown in the NFSD invalidation
-context.
+Fix this by adding generic suspend/resume noirq ops for the controller,
+which tear the link down on suspend, and restart it on resume. Use the
+same PM ops on all of R-Car Gen4 to gracefully suspend and resume the
+PCIe link on V4H and S4 too.
 
-Keep the UUID on the namespace list until its files have been closed.
-When another thread is already disabling it, wait for that thread to
-finish unlinking it instead of repeatedly selecting the same head entry.
-The wait releases the UUID spinlock so file cleanup can make progress.
+Test case which demonstrates the problem on R-Car V4M:
 
-Append registrations in sequence order and capture the last sequence
-under the namespace list lock at the start of invalidation. Stop at that
-boundary so new registrations cannot indefinitely extend the sweep,
-even if its original last entry is removed concurrently.
+  $ hexdump -vC /sys/bus/pci/devices/0000:00:00.0/config > /tmp/pre
+  $ echo s2idle > /sys/power/mem_sleep
+  $ echo platform > /sys/power/pm_test
+  $ echo mem > /sys/power/state
+  $ hexdump -vC /sys/bus/pci/devices/0000:00:00.0/config > /tmp/post
+  $ diff -Naru /tmp/pre /tmp/post
+  ...
+  -00000000  12 19 32 00 07 05 10 00  00 00 04 06 00 00 01 00
+  +00000000  12 19 32 00 07 05 10 00  00 00 00 ff 00 00 80 00
+                                            ^^^^^
+                                      Class 0604->00ff
 
-Publish the LOCALIO association under the UUID and namespace list locks
-before making the entry visible to invalidation. A temporary UUID
-reference allows the handshake to drop the global lookup lock before
-taking the UUID lock in the documented order; recheck the lookup in case
-the probe was withdrawn. A new probe waits for temporary UUID users to
-drain, then rechecks the association before reusing the UUID. This keeps
-a transient invalidation reference from discarding the client's LOCALIO
-revalidation attempt. Withdraw pending probes before dropping the owner's
-UUID reference.
-
-A deterministic same-base KASAN reproducer triggered the reported
-use-after-free on the unpatched tree. With this patch, the same controlled
-invalidation and teardown race completed without the target KASAN report
-or another selected kernel diagnostic. A separate all-live run recorded
-disable events for all 16 unique clients.
-
-Test-only synchronization hooks verified that a second disabler waits for
-unlink after ->net is cleared and that client teardown waits for a
-temporary UUID reference to drain. NFSv4.2 and NFSv3 read, write, and
-unmount smoke tests, export-flush and I/O stress, NFSD restarts, network
-namespace lifecycle tests, and module unloads passed with KASAN and
-lockdep enabled.
-
-A full x86_64 kernel and modules build with GCC 13.3, CONFIG_WERROR=y,
-NFS_FS=m, NFSD=m, and LOCALIO enabled completed without diagnostics.
-Module metadata showed that nfs_localio.ko depends only on sunrpc, while
-nfs.ko depends on lockd, nfs_localio, and sunrpc.
-
-A separate NFS_FS=m, NFSD=y build also linked vmlinux successfully.
-
-The vulnerability research and validation were conducted by members of
-the Tobabz team as part of the Best of the Best 15th program.
-
-Fixes: 085804110aa1 ("nfs_common: track all open nfsd_files per LOCALIO nfs_client")
-Assisted-by: LLM
-Signed-off-by: Jinpyo Lee <bint4b13@gmail.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 0270dbe4f891 ("arm64: dts: renesas: r8a779h0: Add PCIe Host and Endpoint nodes")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20261004011851.866833-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c            |   2 +-
- fs/nfs_common/nfslocalio.c | 101 +++++++++++++++++++++++++++++++------
- include/linux/nfslocalio.h |  12 +++++
- 3 files changed, 98 insertions(+), 17 deletions(-)
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c | 27 +++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 60386330aeeca..d85711edecbfc 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -256,7 +256,7 @@ static void pnfs_init_server(struct nfs_server *server)
-  */
- void nfs_free_client(struct nfs_client *clp)
- {
--	nfs_localio_disable_client(clp);
-+	nfs_localio_free_client(clp);
+diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+index 241adcd727894..964b45f8f9b7c 100644
+--- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
++++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+@@ -524,6 +524,8 @@ static int rcar_gen4_add_dw_pcie_rp(struct rcar_gen4_pcie *rcar)
+ 		return -ENODEV;
  
- 	/* -EIO all pending I/O */
- 	if (!IS_ERR(clp->cl_rpcclient))
-diff --git a/fs/nfs_common/nfslocalio.c b/fs/nfs_common/nfslocalio.c
-index 85aa03a7b020c..1423a43dbd6e9 100644
---- a/fs/nfs_common/nfslocalio.c
-+++ b/fs/nfs_common/nfslocalio.c
-@@ -24,6 +24,26 @@ static DEFINE_SPINLOCK(nfs_uuids_lock);
-  * that is protected by nfs_uuids_lock.
-  */
- static LIST_HEAD(nfs_uuids);
-+/* Namespace registration order, protected by nfs_uuids_lock. */
-+static u64 nfs_uuid_seq;
-+
-+/* The owner waits for temporary users before freeing its nfs_client. */
-+static void nfs_uuid_get(nfs_uuid_t *nfs_uuid)
+ 	pp->num_vectors = MAX_MSI_IRQS;
++	/* Reserve an iATU window for the generic PME_Turn_Off implementation. */
++	pp->use_atu_msg = true;
+ 	pp->ops = &rcar_gen4_pcie_host_ops;
+ 
+ 	return dw_pcie_host_init(pp);
+@@ -903,6 +905,26 @@ static int rcar_gen4_pcie_ltssm_control(struct rcar_gen4_pcie *rcar, bool enable
+ 	return 0;
+ }
+ 
++static int rcar_gen4_pcie_suspend_noirq(struct device *dev)
 +{
-+	refcount_inc(&nfs_uuid->refs);
++	struct rcar_gen4_pcie *rcar = dev_get_drvdata(dev);
++
++	if (rcar->drvdata->mode != DW_PCIE_RC_TYPE)
++		return 0;
++
++	return dw_pcie_suspend_noirq(&rcar->dw);
 +}
 +
-+static void nfs_uuid_release(nfs_uuid_t *nfs_uuid)
++static int rcar_gen4_pcie_resume_noirq(struct device *dev)
 +{
-+	bool released;
++	struct rcar_gen4_pcie *rcar = dev_get_drvdata(dev);
 +
-+	spin_lock(&nfs_uuid->lock);
-+	released = refcount_dec_and_test(&nfs_uuid->refs);
-+	wake_up_var_locked(&nfs_uuid->refs, &nfs_uuid->lock);
-+	spin_unlock(&nfs_uuid->lock);
-+	if (released)
-+		complete(&nfs_uuid->released);
-+}
- 
- /*
-  * Lock ordering:
-@@ -43,6 +63,8 @@ void nfs_uuid_init(nfs_uuid_t *nfs_uuid)
- 	INIT_LIST_HEAD(&nfs_uuid->list);
- 	INIT_LIST_HEAD(&nfs_uuid->files);
- 	spin_lock_init(&nfs_uuid->lock);
-+	refcount_set(&nfs_uuid->refs, 1);
-+	init_completion(&nfs_uuid->released);
- 	nfs_uuid->nfs3_localio_probe_count = 0;
- }
- EXPORT_SYMBOL_GPL(nfs_uuid_init);
-@@ -50,7 +72,12 @@ EXPORT_SYMBOL_GPL(nfs_uuid_init);
- bool nfs_uuid_begin(nfs_uuid_t *nfs_uuid)
- {
- 	spin_lock(&nfs_uuid->lock);
--	if (rcu_access_pointer(nfs_uuid->net)) {
-+	/* The caller retains the client while temporary UUID users drain. */
-+	wait_var_event_spinlock(&nfs_uuid->refs,
-+				refcount_read(&nfs_uuid->refs) <= 1,
-+				&nfs_uuid->lock);
-+	if (rcu_access_pointer(nfs_uuid->net) || nfs_uuid->list_lock ||
-+	    refcount_read(&nfs_uuid->refs) != 1) {
- 		/* This nfs_uuid is already in use */
- 		spin_unlock(&nfs_uuid->lock);
- 		return false;
-@@ -77,7 +104,7 @@ void nfs_uuid_end(nfs_uuid_t *nfs_uuid)
- {
- 	if (!rcu_access_pointer(nfs_uuid->net)) {
- 		spin_lock(&nfs_uuid->lock);
--		if (!rcu_access_pointer(nfs_uuid->net)) {
-+		if (!rcu_access_pointer(nfs_uuid->net) && !nfs_uuid->list_lock) {
- 			/* Not local, remove from nfs_uuids */
- 			spin_lock(&nfs_uuids_lock);
- 			list_del_init(&nfs_uuid->list);
-@@ -113,28 +140,37 @@ void nfs_uuid_is_local(const uuid_t *uuid, struct list_head *list,
- 		spin_unlock(&nfs_uuids_lock);
- 		return;
- 	}
-+	/* Drop the lookup lock before taking nfs_uuid->lock. */
-+	nfs_uuid_get(nfs_uuid);
-+	spin_unlock(&nfs_uuids_lock);
++	if (rcar->drvdata->mode != DW_PCIE_RC_TYPE)
++		return 0;
 +
-+	spin_lock(&nfs_uuid->lock);
-+	spin_lock(&nfs_uuids_lock);
-+	/* nfs_uuid_end() may have withdrawn the probe in the meantime. */
-+	if (nfs_uuid_lookup_locked(uuid) != nfs_uuid)
-+		goto out_unlock;
- 
- 	/*
- 	 * We don't hold a ref on the net, but instead put
- 	 * ourselves on @list (nn->local_clients) so the net
- 	 * pointer can be invalidated.
- 	 */
--	spin_lock(list_lock); /* list_lock is nn->local_clients_lock */
--	list_move(&nfs_uuid->list, list);
--	spin_unlock(list_lock);
--
--	spin_unlock(&nfs_uuids_lock);
--	/* Once nfs_uuid is parented to @list, avoid global nfs_uuids_lock */
--	spin_lock(&nfs_uuid->lock);
--
- 	__module_get(mod);
- 	nfsd_mod = mod;
- 
-+	spin_lock(list_lock); /* list_lock is nn->local_clients_lock */
- 	nfs_uuid->list_lock = list_lock;
- 	kref_get(&dom->ref);
- 	nfs_uuid->dom = dom;
- 	rcu_assign_pointer(nfs_uuid->net, net);
-+	nfs_uuid->seq = ++nfs_uuid_seq;
-+	list_move_tail(&nfs_uuid->list, list);
-+	spin_unlock(list_lock);
-+
-+out_unlock:
-+	spin_unlock(&nfs_uuids_lock);
- 	spin_unlock(&nfs_uuid->lock);
-+	nfs_uuid_release(nfs_uuid);
- }
- EXPORT_SYMBOL_GPL(nfs_uuid_is_local);
- 
-@@ -154,6 +190,10 @@ static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
- 	struct nfs_file_localio *nfl;
- 
- 	spin_lock(&nfs_uuid->lock);
-+	/* A concurrent disabler can drop the lock while closing files. */
-+	wait_var_event_spinlock(&nfs_uuid->list_lock,
-+				rcu_access_pointer(nfs_uuid->net) ||
-+				!nfs_uuid->list_lock, &nfs_uuid->lock);
- 	if (unlikely(!rcu_access_pointer(nfs_uuid->net))) {
- 		spin_unlock(&nfs_uuid->lock);
- 		return false;
-@@ -211,6 +251,7 @@ static bool nfs_uuid_put(nfs_uuid_t *nfs_uuid)
- 	}
- 
- 	module_put(nfsd_mod);
-+	wake_up_var_locked(&nfs_uuid->list_lock, &nfs_uuid->lock);
- 	spin_unlock(&nfs_uuid->lock);
- 
- 	return true;
-@@ -223,22 +264,50 @@ void nfs_localio_disable_client(struct nfs_client *clp)
- }
- EXPORT_SYMBOL_GPL(nfs_localio_disable_client);
- 
-+void nfs_localio_free_client(struct nfs_client *clp)
-+{
-+	nfs_uuid_t *nfs_uuid = &clp->cl_uuid;
-+
-+	nfs_uuid_end(nfs_uuid);
-+	nfs_localio_disable_client(clp);
-+	/* Unlink before dropping the owner reference, then drain all users. */
-+	nfs_uuid_release(nfs_uuid);
-+	wait_for_completion(&nfs_uuid->released);
-+}
-+EXPORT_SYMBOL_GPL(nfs_localio_free_client);
-+
- void nfs_localio_invalidate_clients(struct list_head *nn_local_clients,
- 				    spinlock_t *nn_local_clients_lock)
- {
--	LIST_HEAD(local_clients);
--	nfs_uuid_t *nfs_uuid, *tmp;
-+	nfs_uuid_t *nfs_uuid;
- 	struct nfs_client *clp;
-+	u64 last_seq;
- 
- 	spin_lock(nn_local_clients_lock);
--	list_splice_init(nn_local_clients, &local_clients);
--	spin_unlock(nn_local_clients_lock);
--	list_for_each_entry_safe(nfs_uuid, tmp, &local_clients, list) {
--		if (WARN_ON(nfs_uuid->list_lock != nn_local_clients_lock))
-+	if (list_empty(nn_local_clients))
-+		goto out_unlock;
-+	/* New registrations go to the tail and belong to a later sweep. */
-+	last_seq = list_last_entry(nn_local_clients, nfs_uuid_t, list)->seq;
-+	for (;;) {
-+		nfs_uuid = list_first_entry_or_null(nn_local_clients,
-+						    nfs_uuid_t, list);
-+		/* Use a signed difference to allow the sequence to wrap. */
-+		if (!nfs_uuid || (s64)(nfs_uuid->seq - last_seq) > 0)
- 			break;
-+		if (WARN_ON_ONCE(nfs_uuid->list_lock != nn_local_clients_lock))
-+			break;
-+		/* Teardown unlinks under this lock before dropping its reference. */
-+		nfs_uuid_get(nfs_uuid);
-+		spin_unlock(nn_local_clients_lock);
-+
- 		clp = container_of(nfs_uuid, struct nfs_client, cl_uuid);
- 		nfs_localio_disable_client(clp);
-+		nfs_uuid_release(nfs_uuid);
-+		cond_resched();
-+		spin_lock(nn_local_clients_lock);
- 	}
-+out_unlock:
-+	spin_unlock(nn_local_clients_lock);
- }
- EXPORT_SYMBOL_GPL(nfs_localio_invalidate_clients);
- 
-diff --git a/include/linux/nfslocalio.h b/include/linux/nfslocalio.h
-index 3d91043254e64..1a8cfb045abc7 100644
---- a/include/linux/nfslocalio.h
-+++ b/include/linux/nfslocalio.h
-@@ -8,8 +8,10 @@
- 
- #if IS_ENABLED(CONFIG_NFS_LOCALIO)
- 
-+#include <linux/completion.h>
- #include <linux/module.h>
- #include <linux/list.h>
-+#include <linux/refcount.h>
- #include <linux/uuid.h>
- #include <linux/sunrpc/clnt.h>
- #include <linux/sunrpc/svcauth.h>
-@@ -28,6 +30,11 @@ struct nfs_file_localio;
- typedef struct {
- 	uuid_t uuid;
- 	unsigned nfs3_localio_probe_count;
-+	/* Owner reference plus temporary references held by nfs_common */
-+	refcount_t refs;
-+	struct completion released;
-+	/* Namespace registration order, protected by list_lock */
-+	u64 seq;
- 	/* this struct is over a cacheline, avoid bouncing */
- 	spinlock_t ____cacheline_aligned lock;
- 	struct list_head list;
-@@ -46,6 +53,7 @@ void nfs_uuid_is_local(const uuid_t *, struct list_head *, spinlock_t *,
- 
- void nfs_localio_enable_client(struct nfs_client *clp);
- void nfs_localio_disable_client(struct nfs_client *clp);
-+void nfs_localio_free_client(struct nfs_client *clp);
- void nfs_localio_invalidate_clients(struct list_head *nn_local_clients,
- 				    spinlock_t *nn_local_clients_lock);
- 
-@@ -118,6 +126,10 @@ static inline void nfs_localio_disable_client(struct nfs_client *clp)
- {
- }
- 
-+static inline void nfs_localio_free_client(struct nfs_client *clp)
-+{
++	return dw_pcie_resume_noirq(&rcar->dw);
 +}
 +
- #endif  /* CONFIG_NFS_LOCALIO */
+ static struct rcar_gen4_pcie_drvdata drvdata_r8a779f0_pcie = {
+ 	.ltssm_control = r8a779f0_pcie_ltssm_control,
+ 	.mode = DW_PCIE_RC_TYPE,
+@@ -946,10 +968,15 @@ static const struct of_device_id rcar_gen4_pcie_of_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, rcar_gen4_pcie_of_match);
  
- #endif  /* __LINUX_NFSLOCALIO_H */
++static DEFINE_NOIRQ_DEV_PM_OPS(rcar_gen4_pcie_pm_ops,
++			       rcar_gen4_pcie_suspend_noirq,
++			       rcar_gen4_pcie_resume_noirq);
++
+ static struct platform_driver rcar_gen4_pcie_driver = {
+ 	.driver = {
+ 		.name = "pcie-rcar-gen4",
+ 		.of_match_table = rcar_gen4_pcie_of_match,
++		.pm = pm_sleep_ptr(&rcar_gen4_pcie_pm_ops),
+ 		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+ 	},
+ 	.probe = rcar_gen4_pcie_probe,
 -- 
 2.53.0
 
