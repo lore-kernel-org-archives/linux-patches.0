@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028294;
-	b=W7CLIaERTtLXrxMcYFSnSDeZTcdS2J9LYyjst/YKnDamIGuY7x+tFUxfKqPdfPCG4r3U
-	 qU//Z/W5L0gtUV2aj8V3rdS7+maOADSshil68giKG3Pm//tFBUgkYytwWcozCQR+6GYld
-	 KmHIPwrQW49NGSzsvYwQHW/CwC0aqdzWpKSwBSoZFNCS1zDIHuVRfLQvY056n+CibrfUQ
-	 r1stXyBIq8naXKbrPz4iGzJ5dheN/DynPk1R/2cU4IFpDH90VR4d+K7dFmZ+S7bB1+loD
-	 8TSBYnfYuG72ZArMwOrnOVjBLXhf/wt1aWZ79nVX3h7E68402jwlL3PWkikyNov1sgw==
+	t=1795028297;
+	b=lflTLA9Ywn8gqJhGY0+Kccwllx59MVcIUKgGkddEnRC+AzDN4BQ/Q7D0JzHapziPOygt
+	 ejM8pdbU7rVpOv194Uf5S/N5ErdGoDbOhZs3qTum6q5I0gEo7RJwa2n2sDb5sihQM8mIP
+	 m5QEnqpyXWhX04an3k0pXP7CUoaLP5rVHZZYYYL73WIOqiwTyXLiAHLu1mayHwGDiyqSG
+	 rDk7k+ERVP3NVXqOWugh0+9D/DY46DORBPbEaHpasCZ4l9sm6VyFUaymX1UBijkVYlpfW
+	 rYJMYe/Bo4yWAmKbm72OQwO4t3tclPgxyruRYdySNeunDKay0ISPeHV5u/vM0Vgen7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8j0ObH/UCqTtYTJI/1GrEXs8+V1OmrZYW/B77kCa+sg=;
-	b=aMPNOdEdZHT4VeCu2CWW1sxEM+7uVbRLPDFVwhtKwmF818HJW76vxR+kbV9QvLFLJXqy
-	 egR+eRg5IrkjETmlgcSVrl19GqUZpFT0+FAQpsGQGdk3+1JYO/8AT3VRFnTVAPEdAB3ur
-	 bKM/yrtN8YNsayrSrEPe11x2ZaxU7wnvcw1NkAMwANdCnZmN1cKchCITH8wt2sYkzIRQ2
-	 9OFIx2oJgCGDvcEJQ1Rf1wkWtwI291efaiH/okAt9CQjDgnT5y+dSxNSC+aczWvxz3m0I
-	 Ne2DwXlSiB9nTdRW5Uka4QnmZHkx0ifVUe6kWWrApKBB65s5v4/Lz0wbZCx6B0mntcQ==
+	bh=3yKjlZ1ltG96yOB0rjAXMiITV2wmUvV/c1NqSX/JMFM=;
+	b=wf+3NxZCIUdxc4S1If3BglbMLoG2/OD67IwdCX5NXb6G/4oEYb+PEQ654SljT2AkYxCn
+	 qwP4fQm+mSpYfTS48RhCOMgrxpDV/et6ohYukaIjLkwiwlCQbquyuWUYlNOVQz6+Fublt
+	 H2K1+I2SZN15eERNwfBhNQZOnqYtDNwOPHYt9/2TN3XSIo8+4n1xeMPj3apsSviLPgOil
+	 rqLkydJpJTAJSLHXkpyrxmq87R24z7xD8/fRJD+0pjyzfnTy12bMTpsAsCbl2AdvvR4Dv
+	 fw37QaeLQBQroZ0RKr6cTQGCHK4yP7RxyjubzVsoI+/t4KnBrPCYWWKcL7JrB9nslOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3zIg4YX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSfW8FTQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A679E606A325;
-	Wed, 18 Nov 2026 18:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5A0606A32A;
+	Wed, 18 Nov 2026 18:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3zIg4YX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D7B1F000C5;
-	Wed, 18 Nov 2026 18:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GSfW8FTQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A931F000C4;
+	Wed, 18 Nov 2026 18:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028294;
-	bh=8j0ObH/UCqTtYTJI/1GrEXs8+V1OmrZYW/B77kCa+sg=;
+	s=korg; t=1795028297;
+	bh=3yKjlZ1ltG96yOB0rjAXMiITV2wmUvV/c1NqSX/JMFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z3zIg4YXkkNiqewpHEKFY3LSSuFfxHfnXU9WojiRfdCsCjNWrXtNpJKmT7ML4c2q2
-	 TPwtwgOPiZnlYLgsrSlJMuuEZE8h2DEpfLo7mMv66+j95u46Jdl/GPUD/UQRg9Y59X
-	 KrKuO76qr9Q9I0Z0tIaXkvxaEVbbMczZcKH5TkYs=
+	b=GSfW8FTQXFhlvBKvcIHZIqFgqZ5aJnzL7Zt7hqC+FtoKFvChaQzbhHBCtyQwE5FIN
+	 73L7gtZ9egdBf/WvqNbMLoeDDkB6ttq6NgKkzfF+Py2jqvyDXSQVpxE82M34APvraL
+	 +G9oc4SAoJhdv8ZlNnac93d314ZURkY26lQLrXks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2042/2151] blk-throttle: pass the I/O counts of a dead group on
-Date: Wed, 18 Nov 2026 16:02:57 +0100
-Message-ID: <20261118150236.112844877@linuxfoundation.org>
+Subject: [PATCH 6.18 2088/2151] block/blk-iocost: Inline iocg_lock() and iocg_unlock()
+Date: Wed, 18 Nov 2026 16:03:43 +0100
+Message-ID: <20261118150237.766396563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,51 +70,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 587edb931fdda032bcd63fdfb0db4ded75159ee9 ]
+[ Upstream commit a255026594e9b7eea24c12d2bd4acae0c11eea94 ]
 
-The recursive io_service_bytes and io_serviced files sum up the online
-groups plus what dead descendants left in aux_cnt. That worked while the
-counters lived in the blkg. Since commit 7ca464383aec they're in the
-throtl_grp and nobody passes them up, so the files go backwards when a
-child is removed. Add them to the parent in throtl_pd_offline().
+Both iocg_lock() and iocg_unlock() use conditional locking. Fold these
+functions into their callers such that unlocking becomes unconditional.
 
-Fixes: 7ca464383aec ("blk-throtl: stop using blkg->stat_bytes and ->stat_ios")
 Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-26-axboe@kernel.dk
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://patch.msgid.link/f8c9867788957d2e40a32e23c6d9b866e480ad9d.1780682325.git.bvanassche@acm.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 0150554a3f38 ("blk-iocost: publish hweights as one atomic value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ block/blk-iocost.c | 53 +++++++++++++++++++++++-----------------------
+ 1 file changed, 26 insertions(+), 27 deletions(-)
 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index 03c3bfc165161..43d33adf21d69 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1676,7 +1676,18 @@ static void tg_flush_bios(struct throtl_grp *tg)
- 
- static void throtl_pd_offline(struct blkg_policy_data *pd)
- {
--	tg_flush_bios(pd_to_tg(pd));
-+	struct throtl_grp *tg = pd_to_tg(pd);
-+	struct throtl_grp *parent = blkg_to_tg(tg_to_blkg(tg)->parent);
-+
-+	tg_flush_bios(tg);
-+
-+	/* the recursive files of the ancestors go on counting what it did */
-+	if (parent) {
-+		blkg_rwstat_add_aux(&parent->stat_bytes, &tg->stat_bytes);
-+		blkg_rwstat_add_aux(&parent->stat_ios, &tg->stat_ios);
-+		blkg_rwstat_reset(&tg->stat_bytes);
-+		blkg_rwstat_reset(&tg->stat_ios);
-+	}
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 6f9611c9314e4..11d4162bb533b 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -727,26 +727,6 @@ static void iocg_commit_bio(struct ioc_gq *iocg, struct bio *bio,
+ 	put_cpu_ptr(gcs);
  }
  
- struct blkcg_policy blkcg_policy_throtl = {
+-static void iocg_lock(struct ioc_gq *iocg, bool lock_ioc, unsigned long *flags)
+-{
+-	if (lock_ioc) {
+-		spin_lock_irqsave(&iocg->ioc->lock, *flags);
+-		spin_lock(&iocg->waitq.lock);
+-	} else {
+-		spin_lock_irqsave(&iocg->waitq.lock, *flags);
+-	}
+-}
+-
+-static void iocg_unlock(struct ioc_gq *iocg, bool unlock_ioc, unsigned long *flags)
+-{
+-	if (unlock_ioc) {
+-		spin_unlock(&iocg->waitq.lock);
+-		spin_unlock_irqrestore(&iocg->ioc->lock, *flags);
+-	} else {
+-		spin_unlock_irqrestore(&iocg->waitq.lock, *flags);
+-	}
+-}
+-
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/iocost.h>
+ 
+@@ -1589,9 +1569,17 @@ static enum hrtimer_restart iocg_waitq_timer_fn(struct hrtimer *timer)
+ 
+ 	ioc_now(iocg->ioc, &now);
+ 
+-	iocg_lock(iocg, pay_debt, &flags);
+-	iocg_kick_waitq(iocg, pay_debt, &now);
+-	iocg_unlock(iocg, pay_debt, &flags);
++	if (pay_debt) {
++		spin_lock_irqsave(&iocg->ioc->lock, flags);
++		spin_lock(&iocg->waitq.lock);
++		iocg_kick_waitq(iocg, pay_debt, &now);
++		spin_unlock(&iocg->waitq.lock);
++		spin_unlock_irqrestore(&iocg->ioc->lock, flags);
++	} else {
++		spin_lock_irqsave(&iocg->waitq.lock, flags);
++		iocg_kick_waitq(iocg, pay_debt, &now);
++		spin_unlock_irqrestore(&iocg->waitq.lock, flags);
++	}
+ 
+ 	return HRTIMER_NORESTART;
+ }
+@@ -2740,10 +2728,21 @@ static void ioc_rqos_throttle(struct rq_qos *rqos, struct bio *bio)
+ 	use_debt = bio_issue_as_root_blkg(bio) || fatal_signal_pending(current);
+ 	ioc_locked = use_debt || READ_ONCE(iocg->abs_vdebt);
+ retry_lock:
+-	iocg_lock(iocg, ioc_locked, &flags);
+-	action = iocg_handle_over_budget(rqos, iocg, bio, &now, &wait, use_debt,
+-					 ioc_locked, abs_cost, cost);
+-	iocg_unlock(iocg, ioc_locked, &flags);
++	if (ioc_locked) {
++		spin_lock_irqsave(&iocg->ioc->lock, flags);
++		spin_lock(&iocg->waitq.lock);
++		action = iocg_handle_over_budget(rqos, iocg, bio, &now, &wait,
++						 use_debt, ioc_locked, abs_cost,
++						 cost);
++		spin_unlock(&iocg->waitq.lock);
++		spin_unlock_irqrestore(&iocg->ioc->lock, flags);
++	} else {
++		spin_lock_irqsave(&iocg->waitq.lock, flags);
++		action = iocg_handle_over_budget(rqos, iocg, bio, &now, &wait,
++						 use_debt, ioc_locked, abs_cost,
++						 cost);
++		spin_unlock_irqrestore(&iocg->waitq.lock, flags);
++	}
+ 	switch (action) {
+ 	case action_retry:
+ 		ioc_locked = true;
 -- 
 2.53.0
 
