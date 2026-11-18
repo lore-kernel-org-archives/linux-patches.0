@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023001;
-	b=gu4/xbL1fBcB4NzqkX1yhTrEq1J/sTLIQywarTQOeITn/cT/7yzDLCW1EZstgT/1I9B3
-	 A/pDS237BJfSObPwccVxquMyVunqQBYKZuVreAbMT8/zUDLkmRIoUTwZMzun7zFUzgOkz
-	 MvUsO4ivrVJ9MRenXxR5BmliDExG8NSG5Di6j2ITTY+Xj40xo+WQBhRZNRUpgtlJy7LH6
-	 djvRTcjhZRUIhW6wFsyqwDTEVkZKExivHSObo3wMI0AbRvlLVaE2Zay328xnrMhEkwd5n
-	 YhU8S00y1jRALFsLwNd1R6opbWw7dxhN0xguV6yaZnpSOmw8GD45fcouR7Oo2uHpMlg==
+	t=1795023003;
+	b=tsDcbx+IJ3QR/q0MPdPQLHvW8m9ygTezBZHJHs+gXsbohGiU0BJv4umLXE4VpPohqP63
+	 MT9befjRMNmSlTCtdfazWoapTT3TLCkZbEyJtaD/pNx0FTU5HUSyjOjm+0JQ+tqGSEVXU
+	 MNutnsTPCpg/IRh7gSBsUIGDF9wYc79B+NolUME05O8TbiohMYxwbf3jJa31kP5Wonhzh
+	 yJMHp3ZbD1HZxmupbZgn7VL9qIANHOtKKSKLAXUZ2OiW9LtgHbXA2y5g728jWJ3E/yNg+
+	 3mG1ih1shLv+CDkH839YVvpYKJN0S236gHa95NqoL4ebX1xA0bYAzc5JchJ3nBs/zIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023001;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NczEokDZEu5VaG8O0/qR3bMKj0m7/0Et4rW469wX81Y=;
-	b=tn6UMtux+r9TOJkqOWsjwv/e0Z/CrRo5LvnyvXpV8s+ay9pdubb9LAzLDm2+JeKbxN3K
-	 DEjqDwK9DopzOexdje/Y3T0CLe9qDsY7eFB16O54BCQWGSTS7ZHGzUSri4yPWtfpETspO
-	 IwOiDq4rjGIuL9sm4uLC2AU9+Dd4pn6einxViCH2Gy9MxuAysxA0djAGqNyzHaVAIasdh
-	 j2kwyzL0ootQ5bnPfLfsemIRCiVzhfQZuQsSb6Sq1KP53pUs5PRxlzXT6wENeJxOLIvoH
-	 bYxx9WYUilJJpqTsEZmq0Dt4VS6g84j8WxupwisglTNSN9r/wTvcPobqXIQxOJ83qnw==
+	bh=ZwTEaecIsXUI8DDo9x0AClLCp35v1gq9s/B9PCOgYtw=;
+	b=ZZJ61BMm5vTMrQ2/t16u/J+19OGGfFuKinpMExxhJY89JizDJIy3zvYwxkLOplkx/rBg
+	 W3tL8i/+kAg0FE3qNy8GcSleyhPfeumTWpsN/4v8721chDgWep7ecEQwVSnXQbbgld+Bd
+	 YtG0guBfxKNd/sPFcN+T1TnRblQPXzzFGD8mND75GbUOmru8FsJR9bBIf1+MYEDwshAva
+	 dWcjjqKSI5dt2jeeWDF3frc6MUnppBpY5HZrQFF8D8gllokNuQaFMTA+YmUT81x6g2c6S
+	 Ofr5rG5L9u3ToSsfzJHPxc1qRlO81tXe9FRKCAFmokDBM0F2PseFVmTOSFx55cPFhhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCTZbvej;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LdU4qBrc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A75606A754;
-	Wed, 18 Nov 2026 17:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C75606A331;
+	Wed, 18 Nov 2026 17:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCTZbvej
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3976A1F000C4;
-	Wed, 18 Nov 2026 17:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LdU4qBrc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508051F000C4;
+	Wed, 18 Nov 2026 17:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023000;
-	bh=NczEokDZEu5VaG8O0/qR3bMKj0m7/0Et4rW469wX81Y=;
+	s=korg; t=1795023003;
+	bh=ZwTEaecIsXUI8DDo9x0AClLCp35v1gq9s/B9PCOgYtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kCTZbvejEuIpA+SAgDrHgCpkr980GwTeyF2zL2iJlsudJRbTw1vgHoPTYRh47lVsj
-	 v26PD7+hhDGBVRM0mrNx6eubHoFFYoOTtWG2qEWLIgqXy+gZTClElaP4iMInDuFIeN
-	 8kk1psJt+HiSwZziw72GdPbmQrJ+fVa0UsI6ZvHY=
+	b=LdU4qBrcT7iX3o5cQcF/IV4SM7D+gyLY7XzBLy4IBNMxmpprmWF0/tO+0F2SYlbzl
+	 OQl3GZt/wPXjjQYmi1bqS03zuzCXXYPZ4CBVHBCRbPNkP+nzd2VbrTGiU+GFofaafS
+	 I7pnmQuB2u55zoPph76DRMrb9i+n4ciFf/PwZ5mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Julius Bairaktaris <julius@bairaktaris.de>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0213/2151] wifi: ath12k: signal regd update completion when reg event is dropped
-Date: Wed, 18 Nov 2026 15:32:28 +0100
-Message-ID: <20261118150129.538563103@linuxfoundation.org>
+Subject: [PATCH 6.18 0214/2151] wifi: ath11k: disable interrupts during firmware crash recovery
+Date: Wed, 18 Nov 2026 15:32:29 +0100
+Message-ID: <20261118150129.575452349@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,81 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Julius Bairaktaris <julius@bairaktaris.de>
 
-[ Upstream commit f2576dc0f894ef33045ba7ed057ec417988bba8a ]
+[ Upstream commit f7a74e131d3f0de04335dbe278bfb82bdafcdb3e ]
 
-During driver bring-up, ath12k_mac_hw_register() reinitializes
-ar->regd_update_completed and sends a set current country command to
-firmware. It then relies on the regulatory event from firmware to signal
-that completion via ath12k_reg_chan_list_event().
+On IPQ8074 a firmware assert reboots the SoC:
 
-However, when the country being set is identical to the one already
-applied at boot time, ath12k_reg_validate_reg_info() returns
-ATH12K_REG_STATUS_DROP through the "Avoid multiple overwrites to default
-regd" path. In that case ath12k_reg_chan_list_event() jumps to mem_free
-before assigning pdev_idx, so pdev_idx stays at its initial value of 255,
-'ar' remains NULL and complete_all() is never called.
+  Unable to handle kernel read from unreadable memory at virtual address 0
+  pc : ath11k_hal_srng_access_begin+0xc/0x60 [ath11k]
+  lr : ath11k_dp_rx_process_mon_status+0x15c/0xd84 [ath11k]
+  Call trace:
+   ath11k_hal_srng_access_begin+0xc/0x60 [ath11k]
+   ath11k_dp_rx_process_mon_rings+0xa0/0x5d4 [ath11k]
+   ath11k_dp_service_srng+0x1f4/0x348 [ath11k]
+   ath11k_ahb_ext_grp_napi_poll+0x34/0xd4 [ath11k_ahb]
+   __napi_poll+0x38/0x188
+   net_rx_action+0x120/0x2c0
 
-As a result the reinitialized completion is left unsignalled and the next
-ath12k_regd_update() waits the full timeout, printing:
+ath11k_core_reconfigure_on_crash() tears the data path down with
+ath11k_dp_pdev_free(), ath11k_dp_free() and ath11k_hal_srng_clear(),
+which memsets the ring list. The DP NAPI is still running while that
+happens, so it services a ring whose address pointer has just been
+cleared.
 
-  Timeout while waiting for regulatory update
+That function used to disable the interrupts first, until
+commit d455e805de70 ("wifi: ath11k: rearrange IRQ enable/disable in reset path")
+moved the disable into ath11k_core_reset(). reset_work is only queued
+from mhi.c and from the debugfs hw-restart handler, so AHB parts never
+run it on a real firmware crash. Their recovery goes QMI server exit ->
+restart_work -> ath11k_core_reconfigure_on_crash() ->
+ath11k_core_qmi_firmware_ready(), and nothing disables the interrupts
+anywhere along it.
 
-Fix this by assigning pdev_idx from the event's phy_id right after it is
-extracted, before validation, so that the drop and fallback paths still
-reach complete_all(). Change the guard at the end to check the index
-against ab->num_radios so that an out-of-range phy_id does not lead to an
-invalid pdevs[] access.
+Disable them again on the crash path. The reset path has already done
+so by the time it gets here, hence the ab->is_reset check.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+This is also why the debugfs hw-restart trigger never showed the
+problem: it goes through ath11k_core_reset(), the one path that still
+had the disable.
 
-Fixes: 906619a00967 ("wifi: ath12k: handle regulatory hints during mac registration")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.12-01460-QCAHKSWPL_SILICONZ-1
+
+Fixes: d455e805de70 ("wifi: ath11k: rearrange IRQ enable/disable in reset path")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260729-ath12k-regd-wait-timeout-v1-1-504aa6e7e93c@oss.qualcomm.com
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260726221908.104873-3-julius@bairaktaris.de
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 67c9174a30aab..026afd352e2ce 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -6821,6 +6821,14 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
- 		goto mem_free;
- 	}
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 78a1b0edd8b45..e8b130cd71d49 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -2304,6 +2304,16 @@ static int ath11k_core_reconfigure_on_crash(struct ath11k_base *ab)
  
-+	/*
-+	 * Set the valid pdev_idx before validating so that, even when the
-+	 * event is dropped or falls back, the completion the caller in
-+	 * ath12k_mac_hw_register() may be waiting on is still signalled at
-+	 * the end and it does not time out.
-+	 */
-+	pdev_idx = reg_info->phy_id;
+ 	mutex_lock(&ab->core_lock);
+ 	ath11k_thermal_unregister(ab);
 +
- 	ret = ath12k_reg_validate_reg_info(ab, reg_info);
- 	if (ret == ATH12K_REG_STATUS_FALLBACK) {
- 		ath12k_warn(ab, "failed to validate reg info %d\n", ret);
-@@ -6837,7 +6845,6 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
- 	}
- 
- 	/* free old reg_info if it exist */
--	pdev_idx = reg_info->phy_id;
- 	if (ab->reg_info[pdev_idx]) {
- 		ath12k_reg_reset_reg_info(ab->reg_info[pdev_idx]);
- 		kfree(ab->reg_info[pdev_idx]);
-@@ -6876,7 +6883,7 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
- 
- out:
- 	/* In some error cases, even a valid pdev_idx might not be available */
--	if (pdev_idx != 255)
-+	if (pdev_idx < ab->num_radios)
- 		ar = ab->pdevs[pdev_idx].ar;
- 
- 	/* During the boot-time update, 'ar' might not be allocated,
++	/*
++	 * ath11k_core_reset() already disabled the interrupts on the reset
++	 * path; only the firmware crash path reaches here with them live.
++	 */
++	if (!ab->is_reset) {
++		ath11k_hif_irq_disable(ab);
++		ath11k_hif_ce_irq_disable(ab);
++	}
++
+ 	ath11k_dp_pdev_free(ab);
+ 	ath11k_spectral_deinit(ab);
+ 	ath11k_ce_cleanup_pipes(ab);
 -- 
 2.53.0
 
