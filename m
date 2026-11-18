@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026188;
-	b=E/6QuYgkQI4oJrn9Jc+VXQZ8O9654sPJpD81fIXLMZV8PE7bVKPqRwU065NQVZP42dHY
-	 8FYiHA6A6aeBwtFOE+a6VlnS91CxF7Y4fZktC5fFFWWLYabUPYVcTw/GMBNdGn1eTTzBF
-	 psmrQo+5TDn+Iv8MPe0SbDkykrBdZvmoQShb/ng45rO3RwbaBRIElF/qg7+oYQKLptgrw
-	 RowZWvkTZUZWukWCnCLklyieTVBV7mj31qJ5a74quab/Gw2qt+8tRPbLEn8XF+F8mu4p1
-	 wx5O0uk+JqGvcV734YPYv2bsV7jvnhkET62dT8yKKCXL01G7f9gavqIsi3PYQ6BAxrA==
+	t=1795026191;
+	b=RuSfL4kTY/uGOBmijOeeU3ciZFvHGxiIc3PECpfKWOwxNWiBVXs5EudgltWyFja7btVQ
+	 CrN0z6x0QzRDRb1TpPHfn+dtJR3rVd02winSaZXD0SCv5EdxMavAMVfogBoFzv8N1d7wx
+	 p6zgGZuTTJzT3DpyN96hBeILsAG0mdMLvKMOnOytgNHmpa8Hz+eggQcYKg6q7kNPj/nSC
+	 WeFmOKHzbei/K7wUfeHZj503i1wfPaibOYmT151YP/ZSj3RBWKGhaU1RAaZZHbABCJPNj
+	 mFE+KxqExj5ya66BcTLmfPPVSCVhuImC+ai5kmV2S7oIUM89dKtKgsmStvPS0BgitvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a35X6Hhc2nik8iLGkxCA1RvyoR0OHYKKVlHooi/3FNk=;
-	b=A21af6XPdUkEenFAEyvrVOe7rB0xCSHnvRQu8u+wKqrZWs5/mtkAVG04IjAyxLHmuCb5
-	 3Zw9FB8ADKFF6NNC286ZRN8Re8CuW/Flr6GNn1DPuIp6k5tCfMhO6u9+VlxTcAill1rnL
-	 ssIKYXc+QZ0RxxqpEu8PTp3SSK8kKe4GGg4ZvU5QnL0FNTdoSK+NdoqLU6/KimvRv2ct8
-	 fOat4mEs5DXnyHHnbbISbNE48WjevbnkBDyNz+EoM/cX9yf5b7h+Z7P4YAYVI1DaVOSMZ
-	 N1l6S2szCrGpHrJOBzb6fJZ/SXiS2VO2VXWlJlIEOZ+K5b9zPlen5XifU8uQpISescg==
+	bh=gHlLbR6FXqPMiNiy/zDAoLOpRb8I8VQHVrIMDgVvMys=;
+	b=DAGVq3k4zgfnmaVlwx7P4Gf8J2ut1aCQSD3Nv3wtS9/ZQSzu18Jsfy7ZSLH8OWEF8PB3
+	 YcP6WC8rU6wRiWeGT6eOabPlIStfQlmgLvJUpNN9pVY+PVDEftNAJVPpW2+fsVCtScyo5
+	 QN5dt7ODhCKrX7CMStF7XALvp9Tqet5b7w/h9awuQ5YRoNFq1zn2XQ7oXuFcG00LIqzKd
+	 uVS4pV6RYJkkuQvwA5CVWTloxq42fel8kGwv+WbxNdu2WRdn5X16leBIiB7x7cQDXTpmd
+	 7hJmMEEhzv+43kp4Ksh0SPQiAG8YLF3n8Y+yVFEb8oPPAungRmy+2YDbQ8YyMVdg6aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iu4HtsMA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1NH96MR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E43760A261A;
-	Wed, 18 Nov 2026 18:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9269860A5BD0;
+	Wed, 18 Nov 2026 18:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iu4HtsMA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1B51F000C6;
-	Wed, 18 Nov 2026 18:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1NH96MR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937931F00927;
+	Wed, 18 Nov 2026 18:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026188;
-	bh=a35X6Hhc2nik8iLGkxCA1RvyoR0OHYKKVlHooi/3FNk=;
+	s=korg; t=1795026191;
+	bh=gHlLbR6FXqPMiNiy/zDAoLOpRb8I8VQHVrIMDgVvMys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iu4HtsMAk83FK6kr2tWl9xDHPL1GizM6CCx5PgKCfNOye6QXY0Imx91CJD7zIuBft
-	 RnfsdlmwNf6f1fDcU8/CKsCp9iFXg7a5Ecu4pQS48/n/FSE18dkiEoa4gSt9jZztQv
-	 lpUGTmwf6fAqYYGCrXDII49oxlZaHcWh+7wuHli4=
+	b=s1NH96MRCw2wbs/fIxSqA595HUVNtkNq1YhQ0cvgZo+V3XI6T2tGkhdkUG+UAeQnH
+	 ynQFMv+DfB8ei+xdO/fTS+cBWesmu2fH6YcvjIa/GS58gmFjaz3/N7kNAxmKNMDjXm
+	 PlEVArEuMlBGl4Oeg8XVomghIcf4ojx0QfVyp+LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Hannes Reinecke <hare@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Tal Zussman <tz2294@columbia.edu>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1347/2151] block: take i_rwsem for the direct I/O write fallback
-Date: Wed, 18 Nov 2026 15:51:22 +0100
-Message-ID: <20261118150211.113283426@linuxfoundation.org>
+Subject: [PATCH 6.18 1348/2151] block: take i_rwsem for the splice read path
+Date: Wed, 18 Nov 2026 15:51:23 +0100
+Message-ID: <20261118150211.146281794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,121 +73,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 2fec4fd97cc3ce32283aac03b6882d3d36cbd4bb ]
+[ Upstream commit 5574b81c642e83d962732e86399020517f5f15af ]
 
-Commit c0e473a0d226 ("block: fix race between set_blocksize and read
-paths") closed a race between set_blocksize() and block device I/O: with
-large sector size support, set_blocksize() can change i_blkbits and the
-mapping's minimum folio order while a concurrent reader still holds a
-folio of the old, smaller order, leading to crashes. In particular, it
-made blkdev_write_iter() wrap buffered writes in inode_lock_shared().
+def_blk_fops wires ->splice_read directly to filemap_splice_read(),
+which allocates folios based on mapping_min_folio_order() without any
+lock against set_blocksize(). A splice from a block device can race
+set_blocksize() raising the minimum folio order and insert a folio that
+is too small for the mapping. blkdev_read_iter() wraps filemap_read()
+in inode_lock_shared() for this reason, but the splice path was missed.
 
-However, the direct I/O fallback path was missed in that conversion.
-blkdev_write_iter() passes blkdev_buffered_write() as an argument to
-direct_write_fallback() with no lock held. A direct write that completes
-only partially then finishes as a buffered write with no protection.
-
-This can cause a BUG by racing partial direct writes against
-ioctl(BLKBSZSET). Writer threads issue O_DIRECT pwritev() with a
-two-segment iovec whose second segment is an unreadable PROT_NONE
-mapping. The direct path then writes the first segment, fails to pin the
-second, and returns short, entering the fallback. A second thread keeps
-toggling the second segment's protection so that some fallbacks get past
-fault_in_iov_iter_readable() and reach the page cache, a third thread
-populates the page cache with folios of the current block size via
-pread() and readahead(), and a fourth thread toggles the block size
-between 512 bytes and 64K with BLKBSZSET. The minimum folio order only
-moves with block sizes above PAGE_SIZE, i.e. with
-CONFIG_TRANSPARENT_HUGEPAGE raising BLK_MAX_BLOCK_SIZE to 64K.
-
-On a CONFIG_DEBUG_VM kernel this yields the following BUG:
+Splicing from a block device while toggling the block size between 512
+bytes and 64K with BLKBSZSET hits this within seconds on a
+CONFIG_DEBUG_VM kernel:
 
   page dumped because: VM_BUG_ON_FOLIO(folio_order(folio) < mapping_min_folio_order(mapping))
   kernel BUG at mm/filemap.c:858!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:__filemap_add_folio+0x860/0x8d0
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  RIP: 0010:__filemap_add_folio+0x51c/0x570
   Call Trace:
-   filemap_add_folio+0xc9/0x1f0
-   __filemap_get_folio_mpol+0x240/0x660
-   iomap_write_begin+0xa87/0xd70
-   iomap_file_buffered_write+0x304/0x6a0
-   blkdev_write_iter+0x255/0x510
-   do_iter_readv_writev+0x23d/0x3c0
-   vfs_writev+0x211/0x7d0
-   do_pwritev+0x121/0x190
-   do_syscall_64+0x121/0x630
+   filemap_add_folio+0x64/0x140
+   page_cache_ra_order+0x1dd/0x3d0
+   filemap_get_pages+0x153/0x760
+   filemap_splice_read+0x13f/0x300
+   splice_file_to_pipe+0xc0/0xd0
+   do_splice+0x6a8/0x890
+   __do_splice+0xb0/0x210
+   __x64_sys_splice+0x80/0x100
+   do_syscall_64+0x10e/0x520
    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-The same workload also trips WARN_ON_ONCE(pos >= folio_pos(folio) +
-fsize) in iomap_trim_folio_range().
-
-Fix this by calling blkdev_buffered_write() in the fallback path under
-inode_lock_shared(), matching the plain buffered-write branch. With the
-fix the same workload runs clean.
-
-A short IOCB_NOWAIT direct write reaches the same fallback. Taking
-i_rwsem there can now block behind set_blocksize(), and the fallback
-already blocks on writeback of the data it copied in
-direct_write_fallback(). blkdev_write_iter() already rejects a purely
-buffered IOCB_NOWAIT write with -EOPNOTSUPP, so do not enter the
-fallback for IOCB_NOWAIT at all: return the bytes the direct path
-already wrote, or -EAGAIN if none, and let the caller retry.
-
-The reproducer used was written by an LLM, and is available at [1].
-
-[1] https://gist.github.com/tzussman/69d06bc57d42a42989eb038b1b5aeb74
+Take inode_lock_shared() around filemap_splice_read(), like the read
+path does.
 
 Fixes: 3c20917120ce ("block/bdev: enable large folio support for large logical block sizes")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260730-blk-dontcache-v7-0-3e8e6850068d%40columbia.edu?part=5
 Assisted-by: Claude:claude-fable-5
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-2-307939c387df@columbia.edu
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-3-307939c387df@columbia.edu
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ block/fops.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/block/fops.c b/block/fops.c
-index e94ad38f0a426..4b058996fe086 100644
+index 4b058996fe086..de28ac38bcfef 100644
 --- a/block/fops.c
 +++ b/block/fops.c
-@@ -815,9 +815,28 @@ static ssize_t blkdev_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 	if (iocb->ki_flags & IOCB_DIRECT) {
- 		ret = blkdev_direct_write(iocb, from);
- 		if (ret >= 0 && iov_iter_count(from)) {
--			ret = direct_write_fallback(iocb, from, ret,
--					blkdev_buffered_write(iocb, from));
--			need_sync = true;
-+			if (iocb->ki_flags & IOCB_NOWAIT) {
-+				/*
-+				 * The buffered fallback blocks on i_rwsem and
-+				 * on writeback of the data it copied: return
-+				 * the short direct write instead and let the
-+				 * caller retry. The bytes already written
-+				 * still need a flush if REQ_FUA was not set.
-+				 */
-+				if (!ret)
-+					ret = -EAGAIN;
-+				else if (!blkdev_dio_fua(iocb, bdev))
-+					need_sync = true;
-+			} else {
-+				ssize_t ret2;
+@@ -916,6 +916,22 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	return ret;
+ }
+ 
++/*
++ * Take i_rwsem to avoid racing with set_blocksize changing i_blkbits/folio
++ * order and punching out the pagecache.
++ */
++static ssize_t blkdev_splice_read(struct file *in, loff_t *ppos,
++		struct pipe_inode_info *pipe, size_t len, unsigned int flags)
++{
++	struct inode *bd_inode = bdev_file_inode(in);
++	ssize_t ret;
 +
-+				inode_lock_shared(bd_inode);
-+				ret2 = blkdev_buffered_write(iocb, from);
-+				inode_unlock_shared(bd_inode);
-+				ret = direct_write_fallback(iocb, from, ret,
-+							    ret2);
-+				need_sync = true;
-+			}
- 		} else if (ret > 0 && !blkdev_dio_fua(iocb, bdev)) {
- 			/*
- 			 * The device does not support FUA, so REQ_FUA was not
++	inode_lock_shared(bd_inode);
++	ret = filemap_splice_read(in, ppos, pipe, len, flags);
++	inode_unlock_shared(bd_inode);
++	return ret;
++}
++
+ #define	BLKDEV_FALLOC_FL_SUPPORTED					\
+ 		(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE |		\
+ 		 FALLOC_FL_ZERO_RANGE | FALLOC_FL_WRITE_ZEROES)
+@@ -1017,7 +1033,7 @@ const struct file_operations def_blk_fops = {
+ #ifdef CONFIG_COMPAT
+ 	.compat_ioctl	= compat_blkdev_ioctl,
+ #endif
+-	.splice_read	= filemap_splice_read,
++	.splice_read	= blkdev_splice_read,
+ 	.splice_write	= iter_file_splice_write,
+ 	.fallocate	= blkdev_fallocate,
+ 	.uring_cmd	= blkdev_uring_cmd,
 -- 
 2.53.0
 
