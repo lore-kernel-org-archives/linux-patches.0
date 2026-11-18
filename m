@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046203;
-	b=DTS6JsO6zf2KltstAkCyQ2KLbx+Af3XVJcLG1ZbiCjMcp+tQhEq68xTQy2174VThfjMD
-	 jvT5+Zs52SPF32gGG09cvnypMypj1HKt+/bHA8879PZQ6te2JFu8uJI0YAfnhZu1iAL+F
-	 NDB9SEFAS5dQBEvpCzoUB918gdCcG1pO9w4+2Hw5UJTsAu51dYQxx4Tu7wLq9xLvDbWnf
-	 xm+5r0wId3pVhUw6IRK7aeabqSNoJMO1eQx7BaaMBeTqrkh9BdYrtzxsVqgwUPQup7k7p
-	 HWh2O37S93j+p1yRdpavzBxMMIp8yW+xPWqZip2ZmQH2Ul7tFdPE6T6N3fnIGBrEg6Q==
+	t=1795046206;
+	b=CU9oHTBNxnEUWds3Ibbo7Tfo3DcKkroDqiD4qevyM6Gh+opWpv0k5GK/kaTy4GLAgCdt
+	 oVG1dKCts4K1ACHtnIH96952y5oZU51pvbeY4E/OI+ROJwYkQBru/VcPjD4kJeAYtR83q
+	 in7e+VNXQvR4vWYq7nmEoWMqPM+hDAC8m3yO3IJVsadoWIc9oIquj1d9R2C9Z7BP8mFF7
+	 XproXZEE1CoFKWCmDvHdy/ABMBvsyzAvz/e5B/SSOg6IGbyNDA5w/ZNU6N5P40jODiPkk
+	 bc5DeAGcohl4jNnbUZYefvY9y3SwqjpDkfN7n7R9mpwiaFKt8tCWIUlzbk0WaccwvCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046203;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Bw1HlXjhBPNOeqSm2+g+us0Pu8jo+oVDxFKTKC8GTvM=;
-	b=YwnANYipTgXc3r9nS/9cVTtTqcPm9rGdDbKBgbVI7cWYjbuh5RsWCk4S7EIhIrtwlg4x
-	 QpbygL+NA7wzf1sPdFFS13GIrLCWIyakUsMBCqx5j0T/Gh6rlXYVQ9EoSzgx6ECeycwRZ
-	 i/prFG4EnK3GbSQMb/z1UYt7/pTV0U1kOF2fh+Vsrl7Blk0spSKFXX4CzdmvWRl183Vhr
-	 VSgwYIhBN2qnXjll++Rlb4cqTFwtav/iUXSAQOKqEd2aqpqPotgm7bEgCV4HmMx/J/Ye0
-	 9HvnphuJ3WV7RjtAQmgRqvVVyCocW5T/6Ti+T3DeaYXfyX86WS8AMKrtXLXmw99EBwQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=oM/PVCiE0SOa/UeUa0ZqC08upbeYD8905YSouqWjgdQ=;
+	b=sZFWGpXHOivaKZtd/s546kBRrg0SH6GEZ6bfoV5yu8+/fB4MdiJyWprZkd8pUG17trma
+	 51C22ljC7wAysaXJAJ/n3W4tjrcoK3UmYBSbyKh7kwKF1h/DEI0QprrLYEH1zJQ6aJGUj
+	 peBQtTsc3vbyjv/+EFZoCed+ooxkk16Mszx9GzLvQJBzb7PxCv/0czh/NhAbUQPJwaQRL
+	 JJtEFHzZ3QNksK8+pZM/CY43OjL4jRmUNVMkf9k+5tQ0Xhh50KB6QcqsiKIcH5IRITK+X
+	 aFw4foLN1/FyWjfRqfbgXeSz8gAwBppQBkKXPZp2ZydW8ZX/+qvQx6lezeiDHPhSLdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yAzuC8os;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3N20bwu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AAE606A33D;
-	Wed, 18 Nov 2026 23:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A86606A32A;
+	Wed, 18 Nov 2026 23:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yAzuC8os
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5C21F000C9;
-	Wed, 18 Nov 2026 23:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3N20bwu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B411C1F000C7;
+	Wed, 18 Nov 2026 23:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046203;
-	bh=Bw1HlXjhBPNOeqSm2+g+us0Pu8jo+oVDxFKTKC8GTvM=;
+	s=korg; t=1795046206;
+	bh=oM/PVCiE0SOa/UeUa0ZqC08upbeYD8905YSouqWjgdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yAzuC8osEesVdId7fH7axZeIH7VYUYWNsQ6o+xoFqnNMbXCQWxGGLYcHnIWcUmIo6
-	 UDDINulisD1tbXWrN1gtaezrDUFV+f5MMeSsAj31Q5m7SnIbctnKOrb/aufpdWrt6u
-	 cvXGy4xdk95I7Fl0fUu2q/WnCwX76HsXunX7N6y8=
+	b=i3N20bwu0SLZwZY148sgOXKoePBgLkXjsi3lMO623cbwJCPUZT5ciX3tbOvhbqScq
+	 eidv6GNoOREc/5MSAZJM3PUoC5AX9WRhxeokPqKWKGe8mTeeytwrR1cla7sL2xZCVv
+	 +RnTwrhrUs5e2ZO/VDTNAlJbZlPqhvQK7KKG3Pvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Philipp Stanner <phasta@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1196/2857] drm/drm_crtc: ensure dma_fence_ops remain valid during device unbind
-Date: Wed, 18 Nov 2026 15:37:10 +0100
-Message-ID: <20261118150244.682415989@linuxfoundation.org>
+Subject: [PATCH 6.1 1197/2857] wifi: mac80211: reload TDLS header pointer after skb_linearize()
+Date: Wed, 18 Nov 2026 15:37:11 +0100
+Message-ID: <20261118150244.717067665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,106 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 3be436cbd3d265fe4fcfbb5b650edad7b2108443 ]
+[ Upstream commit 35c5a5ea4418571997a7e7af3e7e8922b136f6e6 ]
 
-In [1], sashiko reported the following issue:
+ieee80211_process_tdls_channel_switch() sets tf = skb->data before it
+calls skb_linearize(), and reads tf->action_code afterwards.
 
-=== snip ===
-Looking at how these fences are managed, drm_crtc_create_fence()
-creates a dma_fence without taking a reference to the drm_device or
-drm_crtc. Because the sync_file framework exposes this fence to
-userspace, the fence can outlive the CRTC.
+ieee80211_rx_h_data() queues TDLS channel switch requests and
+responses to the interface after pulling only
+offsetof(struct ieee80211_tdls_data, u) bytes, so the skb can still be
+non-linear when the interface work handles it. Drivers that build
+paged RX skbs do this for every frame that does not fit into the skb
+head, e.g. iwlwifi (mvm), which is also the only mac80211 driver
+that sets NL80211_FEATURE_TDLS_CHANNEL_SWITCH. If the remaining data
+does not fit into the tailroom, skb_linearize() moves the data to a
+new head and frees the old one, and the action code is then read from
+freed memory. Depending on what that memory holds by then, the frame
+is handled as before or ends in the WARN_ON_ONCE() of the default
+case.
 
-The dma_fence contract requires that data accessed by dma_fence_ops
-(like get_driver_name) must remain valid for an RCU grace period after
-the fence is signaled. However, drm_crtc_cleanup() and the subsequent
-freeing of the device do not wait for an RCU grace period via
-synchronize_rcu().
+The frame only has to be a data frame with the TDLS ethertype from an
+authorized peer, e.g. relayed by the AP from another station in the
+BSS; the read happens before the sender is checked to be a TDLS peer.
 
-If userspace calls ioctl(SYNC_IOC_FILE_INFO) concurrently with a device
-hot-unplug:
+Load tf after skb_linearize(), as the request and response handlers
+already do.
 
-CPU1 (Userspace)
-sync_file_get_name()
-  ops = rcu_dereference(fence->ops);
-  if (!dma_fence_test_signaled_flag())
-    // Preempted or delayed here
+Found by static analysis tool CodeQL.
 
-CPU2 (Driver Teardown)
-Signals the fence (setting fence->ops = NULL)
-Destroys and frees the CRTC without waiting for an RCU grace period
-
-CPU1 (Resumes)
-  ops->get_driver_name(fence) -> drm_crtc_fence_get_driver_name()
-  crtc = fence_to_crtc(fence); // Casts to the freed CRTC
-  return crtc->dev->driver->name; // Use-after-free
-
-...
-
-Does the CRTC or DRM device need to be kept alive for the RCU grace
-period, or should the fence hold a proper reference to prevent the
-use-after-free when get_driver_name() and get_timeline_name() access
-the freed CRTC structure?
-=== snap ===
-
-I believe this to be a correct observation and this patch implements
-the suggestion of waiting for an RCU grace period before proceeding
-with destruction of the drm_crtc, so that get_driver_name() and
-get_timeline_name() can still work.
-
-Link: https://sashiko.dev/#/patchset/20260618-linux-drm_crtc_fix2-v1-1-c03e77b36f34@linaro.org?part=1
-Fixes: 6d6003c4b613 ("drm/fence: add fence timeline to drm_crtc")
+Fixes: 8a4d32f30d11 ("mac80211: add TDLS channel-switch Rx flow")
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Reviewed-by: Philipp Stanner <phasta@kernel.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-1-afa8c71506e6@linaro.org
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Link: https://patch.msgid.link/20261021145807.3018338-1-geoffreyhe2@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_crtc.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/mac80211/tdls.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index 65f9f66933bba..6b210bfd6ac0d 100644
---- a/drivers/gpu/drm/drm_crtc.c
-+++ b/drivers/gpu/drm/drm_crtc.c
-@@ -489,14 +489,23 @@ EXPORT_SYMBOL(__drmm_crtc_alloc_with_planes);
-  * drm_crtc_cleanup - Clean up the core crtc usage
-  * @crtc: CRTC to cleanup
-  *
-- * This function cleans up @crtc and removes it from the DRM mode setting
-- * core. Note that the function does *not* free the crtc structure itself,
-- * this is the responsibility of the caller.
-+ * This function cleans up @crtc and removes it from the DRM mode setting core,
-+ * after first waiting an RCU grace period to ensure @crtc->dev can safely be
-+ * dereferenced by our dma_fence_ops.
-+ *
-+ * Note that the function does *not* free the crtc structure itself, this is the
-+ * responsibility of the caller.
-  */
- void drm_crtc_cleanup(struct drm_crtc *crtc)
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index b25aed68dc8a8..071cbed5f3b06 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1976,7 +1976,7 @@ void
+ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
+ 				      struct sk_buff *skb)
  {
- 	struct drm_device *dev = crtc->dev;
+-	struct ieee80211_tdls_data *tf = (void *)skb->data;
++	struct ieee80211_tdls_data *tf;
+ 	struct wiphy *wiphy = sdata->local->hw.wiphy;
  
-+	/* Ensure our dma_fence_ops remain valid for an RCU grace period after
-+	 * the fence is signaled. This is necessary because our dma_fence_ops
-+	 * dereference crtc->dev.
-+	 */
-+	synchronize_rcu();
-+
- 	/* Note that the crtc_list is considered to be static; should we
- 	 * remove the drm_crtc at runtime we would have to decrement all
- 	 * the indices on the drm_crtc after us in the crtc_list.
+ 	lockdep_assert_wiphy(wiphy);
+@@ -1992,6 +1992,7 @@ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
+ 	 * The packet/size was already validated by mac80211 Rx path, only look
+ 	 * at the action type.
+ 	 */
++	tf = (void *)skb->data;
+ 	switch (tf->action_code) {
+ 	case WLAN_TDLS_CHANNEL_SWITCH_REQUEST:
+ 		ieee80211_process_tdls_channel_switch_req(sdata, skb);
 -- 
 2.53.0
 
