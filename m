@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017041;
-	b=xqwMyD1NAnRyY9bgCtmblIYZPw6nDA3zYqnHyCbUBr/AeDR07SjcKnOKZh86gdmsCQbL
-	 RPserOtPCV+RLhHM0niCyDTclRXYkFJHCpjsGfhjjLApy9i3Ol664mrI0LvGpIj4xXb0c
-	 LtEEWv+SM7tRNyYowPOO9zDNKp+VXLAXtVn4uFfB2v8zz1lQ/WG6aEhnlu06VX5iGzSm7
-	 NOxjrhTQUuV1Mvr6LWcxOzzEJyQb724sEYd5l8Czd+mQWiJAojC9D3qkBXwV2tas77aSK
-	 uJLO/MXXHYSTUhKp3u101MdiNPfEfnZNA9xnnsGsyYKVrLRTu7eDu3fSyQbIasACOpQ==
+	t=1795017044;
+	b=38z8uqOvD7QU0gfomjWLUajQXE6vnxoUruBLkbAw/0xMHoW9bDgftVRkyoWxDOaKwtIB
+	 ne1zSSrg0DnTsBrimZV+oQJBo/EYqs87Qm13h1g8XLthKUlCdFyws3Vi5Th/qjtg/ayre
+	 30ronSApY8B3rOIdKP6gcaF1MjVZhF+4UrSbecwy/1JIK8jVrJFgO/07M/3em51RjqH+d
+	 JEsQL300HxLCV++yrVa1z0ODF0t08LUifBg+qx1ALhZ1ofP4YvUjFqzVgy0EBz061erJQ
+	 nAsF60EH6JhKXex7yDA+NmeKvHZEqWBSnWVBp0t372irEmdmTwkqDkLI4nPEpyP4cSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kmJJo+3oaxNIqJN5WRo6kgOIVmzMMgvZu/xldZmoVyI=;
-	b=KQoffhRj0bqTYt0e0UXhr00bKK49PUydoGg6qEbqRBcqINhuxyHwc/6ScD1CJoVZ9JNI
-	 zHTfRNEB4kzIQXU/QDzd0KkUXhOp62auKnGW3MD+x7gqodvPFErLYaGcSuc/VdW7XFAqa
-	 jAZylqYbhmB154aa8T4+s7XyqdD5opA2wrOImUcyecwThQ7xycwOpkuHVqSTt+vg1L4WO
-	 oqzOZQas0EDTzmrCsFpyLF+cI5+dn9I+7oJXRSFwVtyf+y4iDxf53TLgqZ3wkRs5TUzSJ
-	 BsCEGCB0IVOXP0CnnxtVh6NDX02nySg7iXyrwXruLxbWpmGz5od9anwu9nJxIFz+CDQ==
+	bh=82OmfySOyER1/Lq4tzHkJJqU0GsNtP+Lr00j7eshHjA=;
+	b=GUxG3LMf/qdCd+myzvT59XSgdRr1I0RY/xIP/Fw0t2fELdkNz5S/y0kJZaGH4a621+/S
+	 pkXxeWEbqvhJiZ6pBuSIL906KU40izM2+Lf004kVrF9WzGx4ZxOxXRdQ0MxxsjjMZoa+9
+	 hsJE8pcXaPKKVdSuU1zY6fqDUcbtJnZ6ICGp4pAYARpdj261Tpn0x2bVTfFNM1w0qXCFp
+	 bVL2JThQxhzArRsJqYHSpx2kHZ3uJuuhBcReg5f0YS9JP+kT4ywQLm3pT6Q7/4JeqEn2K
+	 /w1DCp6Zuk/BS6EXL7ydcJ9n9cwN35jAxTzdJ+dhEOA751tvVmqx8VrLopwhotCDxAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZWukfTS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pczesbbv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C69606A325;
-	Wed, 18 Nov 2026 15:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62953606A32F;
+	Wed, 18 Nov 2026 15:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZWukfTS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D9D1F000C4;
-	Wed, 18 Nov 2026 15:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pczesbbv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A6A1F000C6;
+	Wed, 18 Nov 2026 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017041;
-	bh=kmJJo+3oaxNIqJN5WRo6kgOIVmzMMgvZu/xldZmoVyI=;
+	s=korg; t=1795017044;
+	bh=82OmfySOyER1/Lq4tzHkJJqU0GsNtP+Lr00j7eshHjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZWukfTSOUO+ktLKZfd6Rn51mE8Qo5+qPs6BJJy3ezeptQd702WEvOgeeLTPjuht/
-	 E30aSczS/1+HxgtuABuDkjVyg1utpdo/zQ1YWGtqM7oOFhdiEt8VCVV0hdRlf8Vzpj
-	 mgwoyCYe6ojOt0dGGENGIh3ITqRYja+guDVI9rZs=
+	b=pczesbbvpiCmPR38z4Au7sLZG0UtoPMIgoHp0+YL7YR0y3jR/NOeMx23D0lnOG7Zd
+	 kcKdHcsc6ddyM6nUWTyfGtzz22gT5yRr+yyijvVYxuWh+3B7fQ8YHyce7RiCwlzVYg
+	 prk6Ri9liJDYNiRZxboXLPoNt99uJ1ObN2TnRZzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0744/2651] drm/amdgpu: Move GC v12.1 spm vmid init to hw init
-Date: Wed, 18 Nov 2026 15:33:04 +0100
-Message-ID: <20261118150314.665317293@linuxfoundation.org>
+Subject: [PATCH 7.3 0745/2651] ARM: dts: ux500: Convert HREF audio to audio-graph-card2
+Date: Wed, 18 Nov 2026 15:33:05 +0100
+Message-ID: <20261118150314.702554531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,69 +67,366 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 52a484f3ef5b36c063d8fca7b8763c1a9676c625 ]
+[ Upstream commit f9b2262d1edba1b6c0abc12118105f8fa200980a ]
 
-GC reset is not released during sw init and hence it shouldn't be
-accessed. Move spm vmid programming to hw init phase. This programming
-may later be overridden with the job's vmid.
+Describe the HREF500 and HREF520 sound hardware with two-link audio
+graph cards in their PMIC-specific HREF DTSIs, and name the card
+HREF-500. Connect MSP1 to codec DAI 0 for playback and MSP3 to codec
+DAI 1 for capture.
 
-Fixes: ad5f1ee0a9b0 ("drm/amdgpu: Add initial support for gfx v12_1")
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Describe the DSP_A format, codec-provided bit and frame clocks,
+16-by-16-bit TDM frame and active slots on the graph endpoints. Keep the
+clocks running continuously, matching the legacy machine driver's normal
+one- and two-channel mode.
+
+Keep each complete card, including its endpoint graph, connector
+widgets and routes, in the existing PMIC-specific HREF DTSI. The AB8500
+variant exposes six digital microphone endpoints. AB8505 has neither
+the digital microphone interface nor its VDMIC regulator, so leave
+these endpoints out of HREF520 and remove its stale regulator and pin
+configuration nodes.
+
+Select ULPCLK as the fixed parent of the codec audio clock in the
+HREF-specific codec DTSIs. This replaces the machine driver clock
+control with declarative board policy.
+
+Fixes: 4ecae2ae9535 ("ARM: dts: ux500-href: Switch HREF520 to AB8505")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/st/ste-ab8500.dtsi      |   6 --
+ arch/arm/boot/dts/st/ste-ab8505.dtsi      |   6 --
+ arch/arm/boot/dts/st/ste-dbx5x0.dtsi      |   5 -
+ arch/arm/boot/dts/st/ste-href-ab8500.dtsi | 104 +++++++++++++++++++
+ arch/arm/boot/dts/st/ste-href-ab8505.dtsi | 118 +++++++++++++++++-----
+ 5 files changed, 196 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-index 61f89fcc3407b..0213df54b33a9 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
-@@ -216,6 +216,8 @@ static void gfx_v12_1_xcc_update_perf_clk(struct amdgpu_device *adev,
- static int gfx_v12_1_init_cp_compute_microcode_bo(struct amdgpu_device *adev);
- static void gfx_v12_1_xcc_update_medium_grain_clock_gating(
- 	struct amdgpu_device *adev, bool enable, int xcc_id, bool force);
-+static void gfx_v12_1_update_spm_vmid(struct amdgpu_device *adev, int xcc_id,
-+				      struct amdgpu_ring *ring, unsigned vmid);
+diff --git a/arch/arm/boot/dts/st/ste-ab8500.dtsi b/arch/arm/boot/dts/st/ste-ab8500.dtsi
+index dd30d08ccb9b9..a55f365ea0200 100644
+--- a/arch/arm/boot/dts/st/ste-ab8500.dtsi
++++ b/arch/arm/boot/dts/st/ste-ab8500.dtsi
+@@ -364,12 +364,6 @@ ab8500_ldo_ana_reg: ab8500_ldo_ana {
+ 			};
+ 		};
  
- static void gfx_v12_1_kiq_set_resources(struct amdgpu_ring *kiq_ring,
- 					uint64_t queue_mask)
-@@ -682,7 +684,7 @@ static void gfx_v12_1_init_rlcg_reg_access_ctrl(struct amdgpu_device *adev)
- static int gfx_v12_1_rlc_init(struct amdgpu_device *adev)
- {
- 	const struct cs_section_def *cs_data;
--	int r, i, num_xcc;
-+	int r;
- 
- 	adev->gfx.rlc.cs_data = gfx12_cs_data;
- 
-@@ -695,13 +697,6 @@ static int gfx_v12_1_rlc_init(struct amdgpu_device *adev)
- 			return r;
- 	}
- 
--	/* init spm vmid with 0xf */
--	num_xcc = NUM_XCC(adev->gfx.xcc_mask);
--	for (i = 0; i < num_xcc; i++) {
--		if (adev->gfx.rlc.funcs->update_spm_vmid)
--			adev->gfx.rlc.funcs->update_spm_vmid(adev, i, NULL, 0xf);
--	}
+-		sound {
+-			stericsson,audio-codec = <&codec>;
+-			clocks = <&prcmu_clk PRCMU_SYSCLK>, <&ab8500_clock AB8500_SYSCLK_ULP>, <&ab8500_clock AB8500_SYSCLK_INT>;
+-			clock-names = "sysclk", "ulpclk", "intclk";
+-		};
 -
- 	return 0;
- }
+ 		mcde@a0350000 {
+ 			vana-supply = <&ab8500_ldo_ana_reg>;
  
-@@ -2054,6 +2049,9 @@ static int gfx_v12_1_xcc_rlc_resume(struct amdgpu_device *adev,
- {
- 	int r;
+diff --git a/arch/arm/boot/dts/st/ste-ab8505.dtsi b/arch/arm/boot/dts/st/ste-ab8505.dtsi
+index 131c82508e820..24b12f0cf322f 100644
+--- a/arch/arm/boot/dts/st/ste-ab8505.dtsi
++++ b/arch/arm/boot/dts/st/ste-ab8505.dtsi
+@@ -301,12 +301,6 @@ ab8500_ldo_ana_reg: ab8500_ldo_ana {
+ 			};
+ 		};
  
-+	/* init spm vmid with 0xf */
-+	gfx_v12_1_update_spm_vmid(adev, xcc_id, NULL, 0xf);
+-		sound {
+-			stericsson,audio-codec = <&codec>;
+-			clocks = <&prcmu_clk PRCMU_SYSCLK>, <&ab8500_clock AB8500_SYSCLK_ULP>, <&ab8500_clock AB8500_SYSCLK_INT>;
+-			clock-names = "sysclk", "ulpclk", "intclk";
+-		};
+-
+ 		mcde@a0350000 {
+ 			vana-supply = <&ab8500_ldo_ana_reg>;
+ 
+diff --git a/arch/arm/boot/dts/st/ste-dbx5x0.dtsi b/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
+index 25a20fafc6b96..32ef115a243c9 100644
+--- a/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
++++ b/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
+@@ -1071,11 +1071,6 @@ mmc@80008000 {
+ 			status = "disabled";
+ 		};
+ 
+-		sound {
+-			compatible = "stericsson,snd-soc-mop500";
+-			stericsson,cpu-dai = <&msp1 &msp3>;
+-		};
+-
+ 		msp0: msp@80123000 {
+ 			compatible = "stericsson,ux500-msp-i2s";
+ 			reg = <0x80123000 0x1000>;
+diff --git a/arch/arm/boot/dts/st/ste-href-ab8500.dtsi b/arch/arm/boot/dts/st/ste-href-ab8500.dtsi
+index 5eeb44c5e9323..ff72f5f6d6525 100644
+--- a/arch/arm/boot/dts/st/ste-href-ab8500.dtsi
++++ b/arch/arm/boot/dts/st/ste-href-ab8500.dtsi
+@@ -6,6 +6,48 @@
+ #include "ste-ab8500.dtsi"
+ 
+ / {
++	href_sound: sound {
++		compatible = "audio-graph-card2";
++		label = "HREF-500";
++		widgets =
++			"Headphone", "Headset",
++			"Speaker", "Earpiece Speaker",
++			"Speaker", "Loudspeaker",
++			"Line", "Line Out",
++			"Speaker", "Vibra 1 Motor",
++			"Speaker", "Vibra 2 Motor",
++			"Microphone", "Mic 1 Jack",
++			"Microphone", "Mic 2 Jack",
++			"Line", "Line In",
++			"Microphone", "Digital Mic 1",
++			"Microphone", "Digital Mic 2",
++			"Microphone", "Digital Mic 3",
++			"Microphone", "Digital Mic 4",
++			"Microphone", "Digital Mic 5",
++			"Microphone", "Digital Mic 6";
++		routing =
++			"Headset", "Headset Left",
++			"Headset", "Headset Right",
++			"Earpiece Speaker", "Earpiece",
++			"Loudspeaker", "Speaker Left",
++			"Loudspeaker", "Speaker Right",
++			"Line Out", "LineOut Left",
++			"Line Out", "LineOut Right",
++			"Vibra 1 Motor", "Vibra 1",
++			"Vibra 2 Motor", "Vibra 2",
++			"Mic 1", "Mic 1 Jack",
++			"Mic 2", "Mic 2 Jack",
++			"LineIn Left", "Line In",
++			"LineIn Right", "Line In",
++			"DMic 1", "Digital Mic 1",
++			"DMic 2", "Digital Mic 2",
++			"DMic 3", "Digital Mic 3",
++			"DMic 4", "Digital Mic 4",
++			"DMic 5", "Digital Mic 5",
++			"DMic 6", "Digital Mic 6";
++		links = <&href_msp1_port &href_msp3_port>;
++	};
 +
- 	if (adev->firmware.load_type == AMDGPU_FW_LOAD_PSP) {
- 		gfx_v12_1_xcc_init_csb(adev, xcc_id);
+ 	soc {
+ 		prcmu@80157000 {
+ 			ab8500 {
+@@ -488,3 +530,65 @@ ab8500_chargalg {
+ 		};
+ 	};
+ };
++
++&codec {
++	assigned-clocks = <&ab8500_clock AB8500_SYSCLK_INT>;
++	assigned-clock-parents = <&ab8500_clock AB8500_SYSCLK_ULP>;
++
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		port@0 {
++			reg = <0>;
++
++			href_codec_playback: endpoint {
++				remote-endpoint = <&href_msp1_endpoint>;
++				bitclock-master;
++				frame-master;
++				dai-tdm-slot-num = <16>;
++				dai-tdm-slot-width = <16>;
++				dai-tdm-slot-tx-mask = <0 1 0 1>;
++			};
++		};
++
++		port@1 {
++			reg = <1>;
++
++			href_codec_capture: endpoint {
++				remote-endpoint = <&href_msp3_endpoint>;
++				bitclock-master;
++				frame-master;
++				dai-tdm-slot-num = <16>;
++				dai-tdm-slot-width = <16>;
++				dai-tdm-slot-rx-mask = <1>;
++			};
++		};
++	};
++};
++
++&msp1 {
++	href_msp1_port: port {
++		href_msp1_endpoint: endpoint {
++			continuous-clock;
++			remote-endpoint = <&href_codec_playback>;
++			dai-format = "dsp_a";
++			dai-tdm-slot-num = <16>;
++			dai-tdm-slot-width = <16>;
++			dai-tdm-slot-tx-mask = <0 1 0 1>;
++		};
++	};
++};
++
++&msp3 {
++	href_msp3_port: port {
++		href_msp3_endpoint: endpoint {
++			continuous-clock;
++			remote-endpoint = <&href_codec_capture>;
++			dai-format = "dsp_a";
++			dai-tdm-slot-num = <16>;
++			dai-tdm-slot-width = <16>;
++			dai-tdm-slot-rx-mask = <1>;
++		};
++	};
++};
+diff --git a/arch/arm/boot/dts/st/ste-href-ab8505.dtsi b/arch/arm/boot/dts/st/ste-href-ab8505.dtsi
+index 268db68ccf87b..eba6f674c6911 100644
+--- a/arch/arm/boot/dts/st/ste-href-ab8505.dtsi
++++ b/arch/arm/boot/dts/st/ste-href-ab8505.dtsi
+@@ -6,6 +6,36 @@
+ #include "ste-ab8505.dtsi"
  
+ / {
++	href_sound: sound {
++		compatible = "audio-graph-card2";
++		label = "HREF-500";
++		widgets =
++			"Headphone", "Headset",
++			"Speaker", "Earpiece Speaker",
++			"Speaker", "Loudspeaker",
++			"Line", "Line Out",
++			"Speaker", "Vibra 1 Motor",
++			"Speaker", "Vibra 2 Motor",
++			"Microphone", "Mic 1 Jack",
++			"Microphone", "Mic 2 Jack",
++			"Line", "Line In";
++		routing =
++			"Headset", "Headset Left",
++			"Headset", "Headset Right",
++			"Earpiece Speaker", "Earpiece",
++			"Loudspeaker", "Speaker Left",
++			"Loudspeaker", "Speaker Right",
++			"Line Out", "LineOut Left",
++			"Line Out", "LineOut Right",
++			"Vibra 1 Motor", "Vibra 1",
++			"Vibra 2 Motor", "Vibra 2",
++			"Mic 1", "Mic 1 Jack",
++			"Mic 2", "Mic 2 Jack",
++			"LineIn Left", "Line In",
++			"LineIn Right", "Line In";
++		links = <&href_msp1_port &href_msp3_port>;
++	};
++
+ 	soc {
+ 		prcmu@80157000 {
+ 			ab8505 {
+@@ -48,10 +78,6 @@ ab8500_ldo_anamic2_reg: ab8500_ldo_anamic2 {
+ 						regulator-name = "V-AMIC2";
+ 					};
+ 
+-					ab8500_ldo_dmic_reg: ab8500_ldo_dmic {
+-						regulator-name = "V-DMIC";
+-					};
+-
+ 					ab8500_ldo_ana_reg: ab8500_ldo_ana {
+ 						regulator-name = "V-CSI/DSI";
+ 					};
+@@ -80,7 +106,6 @@ gpio {
+ 						    <&pwm_default_mode>,
+ 						    <&adi1_default_mode>,
+ 						    <&usbuicc_default_mode>,
+-						    <&dmic_default_mode>,
+ 						    <&extcpena_default_mode>,
+ 						    <&modsclsda_default_mode>;
+ 
+@@ -365,27 +390,6 @@ default_cfg {
+ 							};
+ 						};
+ 					};
+-					/* This sets up the microphone pins */
+-					dmic {
+-						dmic_default_mode: dmic_default {
+-							default_mux {
+-								function = "dmic";
+-								groups = "dmic12_d_1",
+-									 "dmic34_d_1",
+-									 "dmic56_d_1";
+-							};
+-							default_cfg {
+-								pins = "GPIO27_J6",
+-									 "GPIO28_K6",
+-									 "GPIO29_G6",
+-									 "GPIO30_H6",
+-									 "GPIO31_F5",
+-									 "GPIO32_G5";
+-								input-enable;
+-								bias-pull-down;
+-							};
+-						};
+-					};
+ 					extcpena {
+ 						extcpena_default_mode: extcpena_default {
+ 							default_mux {
+@@ -488,3 +492,65 @@ ab8500_chargalg {
+ 		};
+ 	};
+ };
++
++&codec {
++	assigned-clocks = <&ab8500_clock AB8500_SYSCLK_INT>;
++	assigned-clock-parents = <&ab8500_clock AB8500_SYSCLK_ULP>;
++
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		port@0 {
++			reg = <0>;
++
++			href_codec_playback: endpoint {
++				remote-endpoint = <&href_msp1_endpoint>;
++				bitclock-master;
++				frame-master;
++				dai-tdm-slot-num = <16>;
++				dai-tdm-slot-width = <16>;
++				dai-tdm-slot-tx-mask = <0 1 0 1>;
++			};
++		};
++
++		port@1 {
++			reg = <1>;
++
++			href_codec_capture: endpoint {
++				remote-endpoint = <&href_msp3_endpoint>;
++				bitclock-master;
++				frame-master;
++				dai-tdm-slot-num = <16>;
++				dai-tdm-slot-width = <16>;
++				dai-tdm-slot-rx-mask = <1>;
++			};
++		};
++	};
++};
++
++&msp1 {
++	href_msp1_port: port {
++		href_msp1_endpoint: endpoint {
++			continuous-clock;
++			remote-endpoint = <&href_codec_playback>;
++			dai-format = "dsp_a";
++			dai-tdm-slot-num = <16>;
++			dai-tdm-slot-width = <16>;
++			dai-tdm-slot-tx-mask = <0 1 0 1>;
++		};
++	};
++};
++
++&msp3 {
++	href_msp3_port: port {
++		href_msp3_endpoint: endpoint {
++			continuous-clock;
++			remote-endpoint = <&href_codec_capture>;
++			dai-format = "dsp_a";
++			dai-tdm-slot-num = <16>;
++			dai-tdm-slot-width = <16>;
++			dai-tdm-slot-rx-mask = <1>;
++		};
++	};
++};
 -- 
 2.53.0
 
