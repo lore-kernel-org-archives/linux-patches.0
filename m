@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021040;
-	b=YM09HqVuH7Xum0YAUb3S+MBOHYDR7anNO9mAjgT1p+mAGO3Q6aR56+yDgE3XhTSXmG3t
-	 WkSCv04aFUgBpr1mbXaOlm0LjFyJoNdJR2E6NUwI+gtV3H1YnA/sNLYI0jDiEkJh9NlS/
-	 KLAqPbQVJ9xqNvKzRrl2Iyw52+4da8ObaXEWnuRzxWpkyOhI9rIw3gTqpZ8Iqaaj2sr3m
-	 br8rMSwWhB3pOA9JUcKbZsuo42/o3f2WTNf//Inp/BAK63pX3LMXNzFF3f3UdW0uXhs4E
-	 vFzZd0mdzDgMrJ17ZODueLD1tI1stVb0gPvtc1HhXtiltrYDX8Zi6dPWhvOGKzMF1hg==
+	t=1795021043;
+	b=AXMoEs4LhFd2tII+Cy/RpWKJ8p6wQdD7GXScetbiwiV5bfBY+Nqm8rGkbgRBy1407v8T
+	 7MI7Ur+vCQABIyGFUamYYe9JtiHZs0cDDVqgBUc9y/bDCr3EisOYfmy9wmZ83f/yfMhqu
+	 3PqOZqs7SfjmmeOvwwaoMCGYSLlyT1GXi7rNPY0KT6LQBx85vkkEAb1RWrI7QVLzrN1JV
+	 uzySzMOFJs505ojWhVW0npJMEJBpQwtmW3KS48Wd39AmUtrIBd272qdK8i+D/L0U/xte1
+	 pFj7PF3M4g71ZyQ1dVIAdxnZrNGZxUwcWY8woWSkYJpenFMTlYVrUQ2eAi3WBmfKjRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021043;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=s4jn9Du1r43RlM+wNdDc5jBD4fvPuxZnRCbyUl9ssrs=;
-	b=KAbWwnFWDjWy81Esqaiz1fRYQym4PPnF41PhWK/AcmG44WZ3LsMCXbuFbrNs17ZjC9eZ
-	 zCb2+ruJM1O5djuqXObFdWKO/kaRQ2P1wQVVjprdOuya/UJuLym90eZchg/ZdJp22GwEr
-	 Q08/1+wKxrh4lFGYODTgTHBRhGAQlB/7Zq+rQHMlA7HxHwmrJATCsA8zyDOEY7MUmKC3H
-	 yLaZGc3VJrs12vyf2NhjfdvSTjLGvV/rYV+sTZCCDtFnzo0g823q4gqzguRUEXC2BDal7
-	 0NBZtnrNCUMNGyGEQcoWVYrJ5C+zaGfOnObm85T45YKwdYuTcLCnMgdUyBioo4tbsRw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=NfHbplu1CLqY89tz0juJOG8PNKXShPSCcTp6zTLRR98=;
+	b=XqGT9Zjez465jlhRcRrOWUOuEMG9WB6YwmBrnstv3w9fIEm6qJq068y1/b7FoPPPNreN
+	 pU1B4msJaSOY7wbA2HoPujSk7KGO9+44bl4auUEnWj4U+XuYSWtJSspTCVNtj2lPPLRx4
+	 c3TdA77xMCrVyHH0O8h9HJ6B8KcDFTQo42dKLbog+a8mezIEyyfZQcVq0DE9O2pXm8OT/
+	 VT/ZF821XPQh2Tw8peJ69p8m77kfZ3m/0Q14Mts7NQ36xQ+/8VG92+UpVWBvXBOMY/p9E
+	 EKimGERsrJSKshRnsW2+uzRs6LFeFs4b1SR8R5zOrWezFBqf269EiHn499r2wZRSAWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pNG3pAuI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6ROtMWT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D546D606A32A;
-	Wed, 18 Nov 2026 16:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E45606A31C;
+	Wed, 18 Nov 2026 16:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pNG3pAuI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391091F000C4;
-	Wed, 18 Nov 2026 16:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m6ROtMWT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD5171F000C4;
+	Wed, 18 Nov 2026 16:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021040;
-	bh=s4jn9Du1r43RlM+wNdDc5jBD4fvPuxZnRCbyUl9ssrs=;
+	s=korg; t=1795021043;
+	bh=NfHbplu1CLqY89tz0juJOG8PNKXShPSCcTp6zTLRR98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pNG3pAuII97dRJqhGJGuKiQ8mVg+nj5ToSLWWEutUxz+YFhNC0KM3FGLlcl0bBdc4
-	 zWOlY7JmtNTChA+990bZ8Dltm+9yFTFNp5m+IsaUheLt6/m/nni5i8w3L91TPZb1yF
-	 f5nZ+2Lk9XyZvxInL0ym1XnQiFYIxQ+x4ueTNIJ0=
+	b=m6ROtMWTr3teR1A8vmIghBmswk2LxGRPPvQfp3v8MjS7m1hA0pWfqONgiZ/F7N4m/
+	 Tm97fITCJ9piGJe6wGNc/21DTY7MZ6QBpvkA1fw1XL1FrXPkvF9JDruxsfLdjHNxQm
+	 gZspGWw35ZOrCDyhiUZqINIIRmjppqTMXW+M7nTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2166/2651] tools/power turbostat: pmt: Improve sscanf() hygiene
-Date: Wed, 18 Nov 2026 15:56:46 +0100
-Message-ID: <20261118150403.796687670@linuxfoundation.org>
+Subject: [PATCH 7.3 2167/2651] nios2: ksyms: Declare __mulsi3 export
+Date: Wed, 18 Nov 2026 15:56:47 +0100
+Message-ID: <20261118150403.832704893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -61,54 +64,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit e817a533bbc0aef5a9cb6255153941ed968d2fb1 ]
+[ Upstream commit 2180d11e06fb56fd13643ae59964f144896870be ]
 
-Explicitly check sscanf() return values for number of matches,
-and handle EOF (-1).
+GCC may emit libcalls to __mulsi3(). As modpost is not aware that this
+function is provided through the linked in libgcc, it fails:
 
-Defensive programming -- not an issue actively seen by users.
+ERROR: modpost: kernel/locking/test-ww_mutex.ko: symbol '__mulsi3' undefined!
+ERROR: modpost: kernel/time/test_udelay.ko: symbol '__mulsi3' undefined!
+ERROR: modpost: kernel/resource_kunit.ko: symbol '__mulsi3' undefined!
+ERROR: modpost: fs/fuse/virtiofs.ko: symbol '__mulsi3' undefined!
+etc.
 
-Fixes: 4265a86582ea ("tools/power turbostat: Add PMT directory iterator helper")
-Assisted-by: Claude:claude-sonnet-4.6
-Signed-off-by: Len Brown <len.brown@intel.com>
+Make sure modpost can see the symbol from libgcc.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610171933.J4bFOfL8-lkp@intel.com/
+Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/nios2/kernel/nios2_ksyms.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index cb3d571f121ee..7e6e84d3d9c63 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -1995,15 +1995,17 @@ int pmt_telemdir_filter(const struct dirent *e)
- {
- 	unsigned int dummy;
- 
--	return sscanf(e->d_name, "telem%u", &dummy);
-+	return (sscanf(e->d_name, "telem%u", &dummy) == 1);
- }
- 
- int pmt_telemdir_sort(const struct dirent **a, const struct dirent **b)
- {
- 	unsigned int aidx = 0, bidx = 0;
- 
--	sscanf((*a)->d_name, "telem%u", &aidx);
--	sscanf((*b)->d_name, "telem%u", &bidx);
-+	if (sscanf((*a)->d_name, "telem%u", &aidx) != 1)
-+		aidx = 0;
-+	if (sscanf((*b)->d_name, "telem%u", &bidx) != 1)
-+		bidx = 0;
- 
- 	return (aidx > bidx) ? 1 : (aidx < bidx) ? -1 : 0;
- }
+diff --git a/arch/nios2/kernel/nios2_ksyms.c b/arch/nios2/kernel/nios2_ksyms.c
+index c40aa39e86587..e8710a269b398 100644
+--- a/arch/nios2/kernel/nios2_ksyms.c
++++ b/arch/nios2/kernel/nios2_ksyms.c
+@@ -38,6 +38,7 @@ DECLARE_EXPORT(__udivsi3);
+ DECLARE_EXPORT(__umoddi3);
+ DECLARE_EXPORT(__umodsi3);
+ DECLARE_EXPORT(__muldi3);
++DECLARE_EXPORT(__mulsi3);
+ DECLARE_EXPORT(__ucmpdi2);
+ DECLARE_EXPORT(__lshrdi3);
+ DECLARE_EXPORT(__ashldi3);
 -- 
 2.53.0
 
