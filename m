@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028076;
-	b=kAXzUk3ScJ6gbDSpvROsHIeUBqNNyBbhCVbgcIVLaqT8uOSfsGGIqT6hy4B9o+jb0R1Q
-	 vieMqK+9nUwpnwUqcv+GU1MC3LDC9jKOTFKzIbekX3H4d9k5MRAJT1WgbwezKPEYLocWs
-	 Wu6JKjDBorZDyb0+8n1b60DhB5qoZYBAhOXiBIayVs/n3RN55EC5DX/EmoIzoMJYs/Sg2
-	 jOiO7IekCTju7cyLYhqYJkf68N0pCF/g5LDo4v0ITTwptJ7Mw+1FSUY9AvdIQIONwWUdv
-	 diAXtfdYz1yC2MPHJZM5jGEMkqk577q04/4EqMTccja40avrOCiJPExMq6Q3jpMXZYA==
+	t=1795028079;
+	b=buZtpNkI9/UurM0C5CWlyL/APBBOMFmNRgdtFrnIYkSEoAn4g04VzzQCXyct/BzuJhcf
+	 CmP30+Mg00vJk8az4m16fGUuF+X8uplqddEKAlv4RJLhx7XYfzHKsOCuwPhylWdzWNn4h
+	 tP0wZyUFbuLi80eRArsfhO0sxRVDLkqpyGAsSjiCtQKjtVRIE41/cTS9G867P1K6L2usI
+	 F8pDWIBuLJAV+3sYKVPf9EA7ZaeLDXkk3O5rQ/XTlSxst4g0SdBcjV2cppSsY/aLSfRSN
+	 PYttdUWguFN2VNjkTMa1uhPymdgGRaM5Zp+GrKbZ20Yiy/jOpY2d3FLQ1ZGPOmErjgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VbDXvu5agfX6q8a7PkGWGfGE2ygjaFxYr2g8uaeRiUo=;
-	b=GroYqa4i9bvhfI+zkk3OFGI0xAJOmLNFSKcthDDg2G9hhav1gZCKEJ8+CywLhg4IPTZe
-	 9hj5zjTmpQsrJS7IZfy3CQ/tOsrNJ3IIUR5b78hD0xBzJ4sI1qtjPDEr+Bb9VR1x7Ffko
-	 S2rgQpEWfBIsv0gJPv8RtepT4he3YNl5bdvktF1WwalWScSenOR1d7pjlNtvEXfxq1TNh
-	 YgwtynDZWl6Bka5OFYShuALGvnNWFimrJuCdkHMdIf1g0XET7CiMVfSeZ89T9t+ARh9dP
-	 +XbRLte/q9T8hTE28TQi3esH0CAjEbwhv1PcR9JKe5rrTMGUtg72+++b+gPLFM3nosQ==
+	bh=pBhzvqmxlPaQ/cGp74bWYscvBoE4CfKn/X8VR/6ixYE=;
+	b=O/mtO1YDoWoaUPDlY/+37gvE3xrz9udnds2J2WjsSUTfK5ZZvDYFauUD3T0gAe9Op0Yt
+	 61C99ci2EODVlLibm+0FB3w6qMgMhHY7+dqi5EoWJTKUXqMtIR2HnYxC/p67ivWg/Sp9N
+	 iDq1AZTFmvAQ4CE6FwqVMux3FQ3gXmfgK8i8g81rxCAByDkK+a7BTACL5+zuMlMfYT9L6
+	 ZCZ0roTPPlx6JjBKqUqkeLlc4SPB7xtINLa82rdC58/F23wDBOwlm0zGLzHRMgZeIm8xn
+	 pS7acsUElABubLJv6QcSkH1ggY/gtnyjOD1vXwa+xO6PZLNgWtP3MF77h2dntPcdsvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aUyT/Rz5";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npAxgFnu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B099606A31C;
-	Wed, 18 Nov 2026 18:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4654B606A31C;
+	Wed, 18 Nov 2026 18:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aUyT/Rz5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CCD1F000C5;
-	Wed, 18 Nov 2026 18:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npAxgFnu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595431F000C4;
+	Wed, 18 Nov 2026 18:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028076;
-	bh=VbDXvu5agfX6q8a7PkGWGfGE2ygjaFxYr2g8uaeRiUo=;
+	s=korg; t=1795028078;
+	bh=pBhzvqmxlPaQ/cGp74bWYscvBoE4CfKn/X8VR/6ixYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aUyT/Rz56BklAqH2oivRhqxjjVYdQW/FbwSGS6Jbe/N0Vcu3eWrRSHqaX+/IcGlPQ
-	 7I9kQI3pykB0ecr13o/ibBqAE7C8sAPd4/SoIbjVeQu2CbpTZoQQxyIROSOzXF+aVm
-	 qnZOxQwpb/xYUpTyIyi/TZgRPJBusSilSpIBE7wE=
+	b=npAxgFnur0SFuerao308jaQzJ5vgNZn4tic4RbdmAuQbM/1ueXVBgXNC9RJs6aC87
+	 EKFFhpMCxnwZHT82fLwnXd720zonYDHczOHM+cFAv/hW0MiBCTEy2/E+o/KKkwE/cB
+	 TpCVMtb3p23aAciYqbG0tPT1+pzG8isV/ZNR2y3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
-	Peter Morrow <pdmorrow@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2017/2151] net/mlx4: always create the eth and ib auxiliary devices
-Date: Wed, 18 Nov 2026 16:02:32 +0100
-Message-ID: <20261118150235.216075461@linuxfoundation.org>
+Subject: [PATCH 6.18 2000/2151] x86_energy_perf_policy: Cleanup: Check fseek() in VM path
+Date: Wed, 18 Nov 2026 16:02:15 +0100
+Message-ID: <20261118150234.577800876@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,77 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Morrow <pdmorrow@gmail.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 557d80138618b9d17407733d4ec25b33d3971d60 ]
+[ Upstream commit 2778dc35d40e7e84c134ca4cab1376fa58208f80 ]
 
-Since commit 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the
-auxiliary bus"), mlx4_core creates the "ib" auxiliary device only for
-an IB port or a device that advertises IBoE. Before it, each mlx4
-interface was offered every device and decided in its own add callback.
-mlx4_ib_add() accepted Ethernet ports without IBoE and registered them
-for raw packet QPs only.
+Add return value validation for fseek() and ensure consistent
+resource cleanup on all error paths in err_on_hypervisor().
 
-ConnectX-3 VFs on Azure have an Ethernet port and no IBoE, so since
-v6.6 they get no RDMA device. DPDK's mlx4 PMD, which needs only raw
-packet QPs, then cannot open them:
-
-  net_mlx4: cannot access device, is mlx4_ib loaded?
-
-Restore the old behaviour by creating both auxiliary devices for every
-device and letting mlx4_en and mlx4_ib decide in probe, as their add
-callbacks did. mlx4_ib_probe() returns -ENODEV when there are no usable
-ports, and mlx4_en_probe() binds a device without Ethernet ports but
-creates no netdevs, as mlx4_en_add() did.
-
-Tested on 6.12.111 on an Azure VM with two ConnectX-3 VFs: each gets an
-eth and an ib auxiliary device, and DPDK attaches both VFs and passes
-traffic through them.
-
-Fixes: 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the auxiliary bus")
-Closes: https://lore.kernel.org/r/20261014133951.3219055-1-pdmorrow@gmail.com
-Suggested-by: Leon Romanovsky <leon@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Peter Morrow <pdmorrow@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 0936cdfbb527 ("tools/power x86_energy_perf_policy: Input/output error in a VM")
+Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/intf.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ .../x86/x86_energy_perf_policy/x86_energy_perf_policy.c     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/intf.c b/drivers/net/ethernet/mellanox/mlx4/intf.c
-index a371b970ac1e2..5bb6272968148 100644
---- a/drivers/net/ethernet/mellanox/mlx4/intf.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/intf.c
-@@ -43,23 +43,12 @@ static DEFINE_IDA(mlx4_adev_ida);
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 4aefdd3699f40..affdaa450cc6c 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -661,7 +661,11 @@ void err_on_hypervisor(void)
  
- static bool is_eth_supported(struct mlx4_dev *dev)
- {
--	for (int port = 1; port <= dev->caps.num_ports; port++)
--		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_ETH)
--			return true;
--
--	return false;
-+	return true;
- }
- 
- static bool is_ib_supported(struct mlx4_dev *dev)
- {
--	for (int port = 1; port <= dev->caps.num_ports; port++)
--		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_IB)
--			return true;
--
--	if (dev->caps.flags & MLX4_DEV_CAP_FLAG_IBOE)
--		return true;
--
--	return false;
-+	return true;
- }
- 
- static const struct mlx4_adev_device {
+ 	flags = strstr(buffer, "flags");
+ 	rewind(cpuinfo);
+-	fseek(cpuinfo, flags - buffer, SEEK_SET);
++	if (fseek(cpuinfo, flags - buffer, SEEK_SET) != 0) {
++		fclose(cpuinfo);
++		free(buffer);
++		err(1, "Failed to seek in /proc/cpuinfo");
++	}
+ 	if (!fgets(buffer, 4096, cpuinfo)) {
+ 		fclose(cpuinfo);
+ 		free(buffer);
 -- 
 2.53.0
 
