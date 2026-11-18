@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059003;
-	b=m//DkktUfXWcw+L4PSoE/5ujNj9XkBDl0Ks5PP3n748xhG61z9GEcymoPgkWDJFRWLsc
-	 tFWSZlNkNjRBN/QKjdUk3vgdqviOsXELB9MqD+tojBG1WM0a91VDbjsk7ZK0WX8YK484z
-	 kYmxMwgS8tWCKO2MNPGWh5pR87MTjdD22Z8EnvIKU5cNoW2bLRzaaJmUkW0b+38VkzgQg
-	 l2i2vADo1fGd/rTmBhgGWHtUOpT+g6Db8g/WJM07/qO9y5LUXQSrwNacbG9NVJOUKscIU
-	 iUd8J11LSwcsvo3yVFLwFqkKjFBY5IbX5+OXT+akPoED1V0yVZDTn/kOml/UoVMuW1g==
+	t=1795059006;
+	b=vQgavooBS80SxpANx3krwdxX4Sv4fs2jouK1BK30LcETDsegmQ3l0r11trLj77eyz2cc
+	 5NseLgTUpk9nECU0TUdofbssfva2F/56WZAJYU9wsoo3qlxAfn9yvzzWkBKekHlNw+7kb
+	 fd2AQdN5Hyifmnst41V3troKquDghGHOPbMpt7qLzhGD94PB1bxDLQAsLPfJkR26hMi82
+	 HFhocGayYZYgsPjBpRcvqDovCu9OGKjDWW1pnlTJUojGSANro4Spp2RhaAgFvy8wnJVL5
+	 XLFF2jmYek1wotqQ7qkrVWuKaOXQVLBOsbZOupliFXSIJ1waXTKyVEfGN9jHjhY1j4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FxEnPCB/SiT/MOxpD7yDuJBQigAs/fhuD/DC3hzTzdk=;
-	b=msMjQcVZW2eDpwKKjIvtp+1OJxFeEZAx6j2h93wIUHIB69ZIfNN34zQ3PEyLFWAoqnAX
-	 d+yf8Jemy1yky+d6rwm7DUcZaFpRXqrHgYbCL0v2Ns+icWFpauR5aMM0od/Mng7CFv1jG
-	 wjV6DR7/scBxEVpoJvCa2fNroXmbNs0q9pi1wsWPEtR8k423YcKfVimXXxxuZ9xrJSocG
-	 3+Ti8odjP3Xn7u3//wtAWx8VNVYORdV12xqwxkKyNuVEd50e8Q4RN04Dijqm/DeYiEgng
-	 aS4xGVFhHO6BVWc2aELeJSNnoAUqBnz/OzgZpcu3y0rdZLm6241/eq9aaRt8V7uGiDw==
+	bh=Mqp7cJDeuIfvf6Nc0fVXDZaStDDFZ8xKoFpp47s7rAU=;
+	b=sT+GaVcTBxFK5YPgc4yneEbY/Ufon25xiRTcc/8vmqivDc9lPmWWFFIUdli7zVQ8fwya
+	 yEv5OWminVdW8FRBAhXRe5Yg9678a2/hO7ame+UY9o3TjI0pql9YYHCDr1Lo3jvzr2VRG
+	 f5p+hormiZymDNnpNglL5eBVXxgLMGEDulTqRpygpcwEU+hOcXygJsKgTgGO1/dHebwk3
+	 IGVBj8GyxA7xFUQNJ3rd6wHxCHatNz0S1CORA1X8L4MUXblgEAKpV6fnODYOIxBhJP+dZ
+	 N8rpUzakZHOdJktkcvC9jVvJhTV/wbyIVFQmhMqYoXVS1rzmJZY74YlvuQ4GJc5myjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2UK5+eT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwgQbaGW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6E8606A325;
-	Thu, 19 Nov 2026 03:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3590606A32C;
+	Thu, 19 Nov 2026 03:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K2UK5+eT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8B41F000C4;
-	Thu, 19 Nov 2026 03:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwgQbaGW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4577E1F000C5;
+	Thu, 19 Nov 2026 03:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059003;
-	bh=FxEnPCB/SiT/MOxpD7yDuJBQigAs/fhuD/DC3hzTzdk=;
+	s=korg; t=1795059005;
+	bh=Mqp7cJDeuIfvf6Nc0fVXDZaStDDFZ8xKoFpp47s7rAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K2UK5+eTeAGnehLyam7TtOgQKVucztOy/b7VAx5ldq4tsYFQ9+1QV9P30EwnBOhtA
-	 FWNGvh1/WtF2gagmEw5/E4pswnFcNJdP+tTCiVjh0zvomvLtPXRtxL9T7etbaThk1v
-	 n8g2Z0dRxLMGs1amsoeAyDz0930ZDIK64rC66X1Q=
+	b=rwgQbaGWWeHo5Pes4RJbxO5Eb9GWXOCPtE7Uz/QMDLSvCFrtiqxR4MneB1Wk9R2O2
+	 MS4yNcVVkhjSmSTADsro0ISo9sVyNH4UvfOqupRruTQS+7sXPqcj6gUjNPwDuCPKmW
+	 MvCO8ffBnpwy5GQiVmx+pHFDGcHgqLkpbXIDEzLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masafumi Suzuki <shengshilingmu97@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	guolingxing <guolingxing@tju.edu.cn>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0687/1848] sctp: account for chunk padding in sctp_init_cause()
-Date: Wed, 18 Nov 2026 15:45:25 +0100
-Message-ID: <20261118145944.709780336@linuxfoundation.org>
+Subject: [PATCH 5.10 0688/1848] btrfs: sysfs: restore NOFS context on early return in btrfs_sysfs_add_block_group_type()
+Date: Wed, 18 Nov 2026 15:45:26 +0100
+Message-ID: <20261118145944.745900727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,59 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masafumi Suzuki <shengshilingmu97@gmail.com>
+From: guolingxing <guolingxing@tju.edu.cn>
 
-[ Upstream commit ed6c53b27be492643da2017c6f8e2732be5edf1a ]
+[ Upstream commit 4172be965c2ce887ebfb1117c634a68555be8c11 ]
 
-sctp_init_cause() accepts a chunk when skb_tailroom() can hold the
-cause header and the payload. sctp_addto_chunk() then writes 0-3
-bytes of padding before that header so the chunk stays 4-byte
-aligned. The check does not include the padding, and the following
-skb_put() calls skb_over_panic() from softirq.
+btrfs_sysfs_add_block_group_type() sets up a NOFS context with
+memalloc_nofs_save() because kobject_add() performs GFP_KERNEL
+allocations deep in its call chain, and the function may be called
+while holding a transaction handle or a lock required for a
+transaction commit, where reclaim could deadlock.
 
-Count the padding sctp_addto_chunk() is about to write. The cause
-length on the wire stays the header plus the payload.
+Every other return path of this function calls memalloc_nofs_restore()
+except the early return taken when another thread has already created
+the kobject for the same raid index (this can happen when restriping).
+Taking that path leaves PF_MEMALLOC_NOFS set on the calling task, so
+all subsequent memory allocations performed by that task remain
+restricted to the NOFS scope, which may lead to unexpected allocation
+failures or deadlocks later on.
 
-Found by LLM inspection, triggered and tested the fix.
+Restore the NOFS context before returning from that path.
 
-Fixes: 8914f4bace3f ("sctp: add sctp_make_op_error_limited and reuse inner functions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masafumi Suzuki <shengshilingmu97@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261027082405.1297-1-shengshilingmu97@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 49ea112da0e6 ("btrfs: do not create raid sysfs entries under any locks")
+CC: stable@vger.kernel.org
+Signed-off-by: guolingxing <guolingxing@tju.edu.cn>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/sysfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 3425554931a37..362c314fd48e9 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -145,6 +145,7 @@ int sctp_init_cause(struct sctp_chunk *chunk, __be16 cause_code,
- 		    size_t paylen)
- {
- 	struct sctp_errhdr err;
-+	int chunklen, padlen;
- 	__u16 len;
- 
- 	/* Cause code constants are now defined in network order.  */
-@@ -152,7 +153,13 @@ int sctp_init_cause(struct sctp_chunk *chunk, __be16 cause_code,
- 	len = sizeof(err) + paylen;
- 	err.length = htons(len);
- 
--	if (skb_tailroom(chunk->skb) < len)
-+	/* sctp_addto_chunk() pads the chunk up to a 4-byte boundary before
-+	 * appending the cause, so account for that padding here as well.
-+	 */
-+	chunklen = ntohs(chunk->chunk_hdr->length);
-+	padlen = SCTP_PAD4(chunklen) - chunklen;
-+
-+	if (skb_tailroom(chunk->skb) < padlen + len)
- 		return -ENOSPC;
- 
- 	chunk->subh.err_hdr = sctp_addto_chunk(chunk, sizeof(err), &err);
+diff --git a/fs/btrfs/sysfs.c b/fs/btrfs/sysfs.c
+index ecf190286377c..6fd7b531705e3 100644
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -1151,6 +1151,7 @@ void btrfs_sysfs_add_block_group_type(struct btrfs_block_group *cache)
+ 	if (space_info->block_group_kobjs[index]) {
+ 		spin_unlock(&space_info->lock);
+ 		kobject_put(&rkobj->kobj);
++		memalloc_nofs_restore(nofs_flag);
+ 		return;
+ 	} else {
+ 		space_info->block_group_kobjs[index] = &rkobj->kobj;
 -- 
 2.53.0
 
