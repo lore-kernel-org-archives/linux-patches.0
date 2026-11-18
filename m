@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026382;
-	b=QaIjr1wl1JJpalN7O2cLZFYYWyHc85fS5cZNaGlBur3dOyzYMPjczgw0I9y5s04R1cDG
-	 itdGDHr8e00uxmz+lsIOEfw913wyeZFBJZxiuspK1BTkCh0AeJ9t6h20ocAhR2ZqBg+UT
-	 q0BCc+K924dJUeRgyRcALIaswHKvLTzQ3BJA9Lge3TxTKccXFnrNwI81tsVf9cfd8IHe9
-	 TalsgvZpO7XQH2Wc3lGSukpRotZE1q9uJwt/8cvokMUfT4BFYzcfyg+gm9ruJKW8RkjQY
-	 sSocMP+NassOCWh8OMozwND14tvlLUUsksDJfe6veKpjfkItcoyn4gcl1UmIq8Mo1rg==
+	t=1795026385;
+	b=QwiidX1zOZNIGhF3nKPf8KvdfPxWgjz3hRs61F+xXSM8zhXiVxSQSnyn387e6xUHnPEG
+	 /rD1H6R6BTN35fCFV4P0HHwCp7HqWDqw7DV8jgChr6cK44zE8x1riOEzbRdRGGpHCJvuR
+	 PIdQirv80og8mObUBJXm4MPWnjSXWDSj0Mm5BFcwKUFjidcBfILCDexF1J+1PcnyEf4Ds
+	 1SjPUsP6BcQyM0uu17p/QJ/H9Jqj8O0AxPY52njtR27JWApwaP5f5WVLZ0itxxRJcF2NN
+	 45IFpgfdmh15iZ/66jwAxhVv34nwn6YBX4tiFPnJbktm1K1fD3+k7fBInxTVqlvIjSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026382;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FU4Th/vrCvSPMLqSyOqnoyOrUPoZee6IibJB5quoVec=;
-	b=PF7uI5rjbPyXiS79KKRqGQVpCsQzm9SVtr8AVPBpfzSL95OYhCCNmW8iwNZFGobukWKq
-	 jYWG0P5d66tZZ9pzKhLgUHnejDkv8StFvmcNsWki4p0e9fKZQ4EQpkygemNwMV/qq9Ch/
-	 6UKHYQCmLP2hwR6Nc3InZAsjOI2+Y2YK6POPRvdglZDFyHbVo/tsgd21g8tkLH/Tqkscg
-	 X4LVBHyznITF1tgtxiG8PkBi9tCqfzL1DkzL088RwSFllYkP5ug3Xj8QwB0xMim46qij3
-	 PS4hUBT0XqMPK6/OqFCyr0bFOgvLqgLNYCwszAd5RJCsvmROXFaOUafDZtx23fNL2YA==
+	bh=IJzQnDyYohlsrn8VaMlQKDX6TlHtDk5xXAtqP3137jA=;
+	b=djt8SRf7Z+i7pi+daZ+qffFXB/f+Xula7tMv2WCMZoZuY2pkW9xIdZhSJIGmm1PTTeoS
+	 HgC8JhMW8JLPMBpoGS9Si5NswtV91gJ50O9M8u1j5CX6LFe310xWbtO+zc2KUwGjVk8ZT
+	 b82cHJVMp/QiEzf8jPBZqIg3C/IloCbNIBG7lUQbIwWdyvw1bRcgX+innb8s/rFmtdMOy
+	 p9pV4OOihkzwZemEXjOuOuxsKtlCsO87V5a7RwSy1NBnycUXzHrRbL3dxztF8UF1mtVS5
+	 aGbB4+4kQrm4TjV7zmfRcp3jJM7MowUPSFuF+mAvrvInaptYua/IDwGLmNXGFbYMGEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTvCVnt+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFTUOxk3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D082606A31C;
-	Wed, 18 Nov 2026 18:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2538606A31C;
+	Wed, 18 Nov 2026 18:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTvCVnt+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738E41F000C9;
-	Wed, 18 Nov 2026 18:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EFTUOxk3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40ACC1F000C5;
+	Wed, 18 Nov 2026 18:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026382;
-	bh=FU4Th/vrCvSPMLqSyOqnoyOrUPoZee6IibJB5quoVec=;
+	s=korg; t=1795026384;
+	bh=IJzQnDyYohlsrn8VaMlQKDX6TlHtDk5xXAtqP3137jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTvCVnt+WgenD9ZLYbvXPkTrXZpkha+mb1nctd30qnUbRA27zT6DHDUFFx6cibfPm
-	 rMhJLs2kjIuXFnG9WNYqBbV9xEalyGAZAYOs2EXPltBKmjYgK+OFpAQQjsCTLTWA95
-	 yc55WkAO5zE6iH7nXf3eDiwgTtG1jSYwLUM2qdVw=
+	b=EFTUOxk3YO03rirZ9Fu5y5A3CdzMl4q7ynPH8DEtbQXdck+rknWX5VdHXA8fmG7Dt
+	 SqI06R0Eg5TK914T6RAsARhZ/VCgwEiCDcyCmJoV7ZB3E8EFR7hbi3BXRl4D24Xi0R
+	 ajIM8jNRQIsZtImgdOiZaKRDBmWWNct25uJ50pIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+690d666eb12fca6e1e61@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1414/2151] comedi: comedi_parport: validate the IRQ supplied by userspace
-Date: Wed, 18 Nov 2026 15:52:29 +0100
-Message-ID: <20261118150213.478196843@linuxfoundation.org>
+Subject: [PATCH 6.18 1379/2151] ALSA: jack: Remove debugfs before freeing unregistered jacks
+Date: Wed, 18 Nov 2026 15:51:54 +0100
+Message-ID: <20261118150212.244229578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,78 +68,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 790ea6844593bcd03b0379986fc821d8c511746e ]
+[ Upstream commit d3b59d50e1ff206aa519ed5c13bf6907f97dd6a6 ]
 
-comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. comedi_parport passes it to
-request_irq() without checking it first, which lets an interrupt owned by
-another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
-claimed for this board. When the owner of that interrupt is later
-released the descriptor is freed while this driver's handler is still
-installed on it.
+Jack debugfs files store a raw snd_jack_kctl pointer, so their
+callbacks must be drained before the attachment is freed.
+snd_jack_dev_free() unlinks and frees the attachments before calling
+snd_jack_dev_disconnect(). Its late snd_jack_remove_debugfs() call
+then has no entries left to traverse.
 
-A parallel port asserts a legacy ISA interrupt, so the ISA range is the
-right bound; it is also sufficient, because mp_chip_data->isa_irq is set
-only by alloc_isa_irq_from_domain() and mp_unmap_irq() returns early when
-it is set.
+With CONFIG_SND_JACK_INJECTION_DEBUG and input support enabled, an
+HDA codec rebind on a live card can publish a non-phantom jack's type
+file while its component is still in SNDRV_DEV_BUILD. A later
+jack-control allocation failure permits the following order:
 
-syzbot hit this one:
+  1. hda_codec_driver_probe() creates a jack and publishes its debugfs
+     files before reaching snd_card_register().
+  2. A later control-build failure calls
+     snd_hda_codec_cleanup_for_unbind(), then snd_hda_jack_tbl_clear()
+     and snd_device_free(). __snd_device_disconnect() skips BUILD
+     components. snd_jack_dev_free() frees the attachment before its
+     late disconnect, leaving the debugfs files published.
+  3. After cleanup, a reader opens the surviving type file and
+     jack_type_read() dereferences the freed attachment's jack pointer.
 
-	remove_proc_entry: removing non-empty directory 'irq/20', leaking at least 'comedi_parport'
-	WARNING: fs/proc/generic.c:747 at remove_proc_entry+0x4e7/0x610 fs/proc/generic.c:747
-	Call Trace:
-	 <TASK>
-	 unregister_irq_proc+0x206/0x2a0 kernel/irq/proc.c:406
-	 free_desc+0x89/0x330 kernel/irq/irqdesc.c:482
-	 irq_free_descs+0x84/0xc0 kernel/irq/irqdesc.c:865
-	 irq_domain_free_irqs+0x46a/0x5c0 kernel/irq/irqdomain.c:1917
-	 mp_unmap_irq+0xf8/0x130 arch/x86/kernel/apic/io_apic.c:1061
-	 acpi_unregister_gsi_ioapic+0x40/0x60 arch/x86/kernel/acpi/boot.c:722
-	 acpi_pci_irq_disable+0x275/0x360 drivers/acpi/pci_irq.c:517
-	 pci_disable_device+0x130/0x270 drivers/pci/pci.c:2206
-	 pci_device_remove+0xb2/0x1d0 drivers/pci/pci-driver.c:512
-	 device_release_driver_internal+0x44e/0x620 drivers/base/dd.c:1372
-	 unbind_store+0xf8/0x110 drivers/base/bus.c:244
-	 </TASK>
+The card's debugfs root remains live throughout this sequence. The
+result is a use-after-free even without an overlapping read. An
+already admitted callback is also not drained by this cleanup.
 
-The leaked /proc entry the warning names is the mild part.
-mp_chip_data->count tracks GSI mappings rather than request_irq() users,
-and __setup_irq() takes no reference on the descriptor, so the irq_desc
-is freed with the comedi irqaction still attached to it.
+Call snd_jack_remove_debugfs() before unlinking any controls in the
+free callback. The existing debugfs_remove() rundown blocks new
+accesses and waits for active callbacks while the attachment, control
+and jack remain valid. Roots cleared by an earlier disconnect are
+NULL, so repeating the removal is harmless.
 
-Bound the value before requesting it, as das16m1.c already does. An
-out-of-range value is ignored rather than rejected, so the board still
-attaches without interrupt support, exactly as it does today when
-request_irq() fails.
+KASAN report as below:
 
-Fixes: 241ab6ad7108 ("Staging: comedi: add comedi_parport driver")
-Reported-by: syzbot+690d666eb12fca6e1e61@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=690d666eb12fca6e1e61
+    ==================================================================
+    BUG: KASAN: slab-use-after-free in jack_type_read+0x1da/0x1f0
+    Read of size 8 at addr ffff8881085f9da0 by task python3/429
+
+    CPU: 2 UID: 0 PID: 429 Comm: python3 Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? jack_type_read+0x1da/0x1f0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? jack_type_read+0x1da/0x1f0
+     kasan_report+0xe0/0x110
+     ? jack_type_read+0x1da/0x1f0
+     jack_type_read+0x1da/0x1f0
+     ? __pfx_jack_type_read+0x10/0x10
+     ? __pfx___debugfs_file_get+0x10/0x10
+     ? __pfx_cp_new_stat+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? selinux_file_permission+0x122/0x570
+     full_proxy_read+0x11f/0x180
+     ? __pfx_full_proxy_read+0x10/0x10
+     vfs_read+0x1a0/0xc20
+     ? __pfx_vfs_read+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __do_sys_newfstat+0xa6/0x100
+     ? find_held_lock+0x2b/0x80
+     ? __pfx___do_sys_newfstat+0x10/0x10
+     ksys_read+0x111/0x200
+     ? __pfx_ksys_read+0x10/0x10
+     ? full_proxy_llseek+0x11e/0x170
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f7e392e7687
+    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    RSP: 002b:00007fff5f7b9180 EFLAGS: 00000202 ORIG_RAX: 0000000000000000
+    RAX: ffffffffffffffda RBX: 00007f7e39253780 RCX: 00007f7e392e7687
+    RDX: 0000000000002000 RSI: 000000003d2e9b00 RDI: 0000000000000003
+    RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000202 R12: 00007f7e39253700
+    R13: 0000000000002000 R14: 00007f7e38d7e2c0 R15: 0000000000a55b98
+     </TASK>
+
+    Allocated by task 425:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     snd_jack_kctl_new+0x80/0x180
+     snd_jack_new+0x4b/0x490
+     snd_hda_jack_add_kctl_mst+0x19b/0x610
+     add_jack_kctl+0x204/0x320
+     snd_hda_jack_add_kctls+0x212/0x910
+     snd_hda_gen_build_controls+0x233/0x600
+     snd_hda_codec_build_controls+0x2e4/0x9f0
+     hda_codec_driver_probe+0x26e/0x590
+     really_probe+0x21f/0xa90
+     __driver_probe_device+0x1ec/0x490
+     device_driver_attach+0xdc/0x210
+     bind_store+0xec/0x180
+     drv_attr_store+0x79/0xb0
+     sysfs_kf_write+0xed/0x140
+     kernfs_fop_write_iter+0x34b/0x500
+     vfs_write+0x637/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 425:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     snd_jack_kctl_private_free+0x153/0x200
+     __snd_ctl_remove+0x29f/0x3b0
+     snd_ctl_remove+0x46/0x70
+     snd_jack_dev_free+0x1b1/0x370
+     __snd_device_free+0x193/0x3f0
+     snd_device_free+0xcf/0x190
+     snd_hda_jack_tbl_clear+0x159/0x2e0
+     snd_hda_codec_cleanup_for_unbind+0x37e/0x9c0
+     hda_codec_driver_probe+0x3ae/0x590
+     really_probe+0x21f/0xa90
+     __driver_probe_device+0x1ec/0x490
+     device_driver_attach+0xdc/0x210
+     bind_store+0xec/0x180
+     drv_attr_store+0x79/0xb0
+     sysfs_kf_write+0xed/0x140
+     kernfs_fop_write_iter+0x34b/0x500
+     vfs_write+0x637/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff8881085f9d80
+     which belongs to the cache kmalloc-64 of size 64
+    The buggy address is located 32 bytes inside of
+     freed 64-byte region [ffff8881085f9d80, ffff8881085f9dc0)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1085f9
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff8881085f9c80: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+     ffff8881085f9d00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    >ffff8881085f9d80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+                                   ^
+     ffff8881085f9e00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff8881085f9e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    ==================================================================
+
+Fixes: 495000a38634 ("ALSA: core: Remove debugfs at disconnection")
 Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-2-yogeshgaur.83@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-e1e7490bbe7ba1b3c44a-v2-3e3b6315a18c02ced60d@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/comedi_parport.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/core/jack.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/comedi/drivers/comedi_parport.c b/drivers/comedi/drivers/comedi_parport.c
-index db9f58792ab91..c6169f03ebbd9 100644
---- a/drivers/comedi/drivers/comedi_parport.c
-+++ b/drivers/comedi/drivers/comedi_parport.c
-@@ -241,7 +241,8 @@ static int parport_attach(struct comedi_device *dev,
- 	outb(0, dev->iobase + PARPORT_DATA_REG);
- 	outb(0, dev->iobase + PARPORT_CTRL_REG);
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index 71607d904e061..12a3a0fad3ccb 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -68,6 +68,9 @@ static int snd_jack_dev_free(struct snd_device *device)
+ 	struct snd_card *card = device->card;
+ 	struct snd_jack_kctl *jack_kctl, *tmp_jack_kctl;
  
--	if (it->options[1]) {
-+	/* only ISA interrupts are valid on a parallel port */
-+	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		ret = request_irq(it->options[1], parport_interrupt, 0,
- 				  dev->board_name, dev);
- 		if (ret == 0)
++	/* Remove debugfs while the controls are still linked. */
++	snd_jack_remove_debugfs(jack);
++
+ 	list_for_each_entry_safe(jack_kctl, tmp_jack_kctl, &jack->kctl_list, list) {
+ 		list_del_init(&jack_kctl->list);
+ 		snd_ctl_remove(card, jack_kctl->kctl);
 -- 
 2.53.0
 
