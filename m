@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042902;
-	b=n0QeL/kBkZgvJIYerDtCZTkyOnuNsfSJODfRkHZWhy2qETI0zaHcbx+mNXd8AWIIBsQa
-	 DBCzTwtm26psK4cOfExSdpU9AuTOmmtiWfj1H7vqNtmGBd9Cyxcd5KXNHUlAdIOHxWz0b
-	 bOICDmFwfG53qmtSMqRGby2bX/fk1qlYf80ykouVCUCHU7LylYzCFyj6fB9gRZP/K9UF0
-	 oosSRM1Edt+LgsdEB7MPMOLkI5jT3CdX4VtGrT0p/AjWgR3m5mWAAaUjeI7RKu4Wss3X2
-	 HOCjc/7xLzwiQBYEqptvXSg6hfJ4hc/hDXNkG5KMJlvr1AEKtU7GcOSekjWj2njblEw==
+	t=1795042905;
+	b=dnNhTQorkPcSN7meYsGQHKVLrqmfFhAWY5sEtMYdLrk0Ie1r7YmgX3M6UXpQ7xXepMWZ
+	 JJ/umfssjxm1glDKScNYB0a8xiNIDDR85rs6zwBEZd0R10m8BveG2f4l20xVwIOkDm4Mz
+	 pLK9C/AphBbOQsSWUQpf9srLRF4tEPMQLjsqEhLDF0LPKILYlKjxT9yTFQ8PLKQsqJrF7
+	 9XaNc7Rt7BCwil7qTs8BK+AIoNs9Gk/dQRi3b1gQyQnJ+LSzwjRT5m+ILOTqRZB+5kYRM
+	 xnT69bTR2PiOnM0KL6HgVVrjrQQxmwZ55/H4IterdIDMoqqH8UisJ5V6XPT4vkgoe3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042902;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042905;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3G0nhJCl5OYMB3/O7sQYbDhxJgBtiiX62eSutIVXM8s=;
-	b=0jUEtK08oxc4r9Ud7s55gNP7xV6wvQkUCpHk7hC1Bzjn/BovYifhtYzAhBBERNSyksRW
-	 er4h2YS+0q4d1QSZvk40nMZUV6rZs/BLyYuFwMBWpuHqUHkpTAVASxLCtb5IqEXl1i1Bo
-	 HOPA3169hVh6vuAxC332sZ/ZavKr7HU16YdUJ/DtwkPnHRPi2K5sedwvK07N5tmcCBTbV
-	 J6sRzqio1b39MQeaOpOZHEf2fMXpzcovcH5xEbp1Qos+X2MdfDwaoUuuotB2tvmPiNCFC
-	 4RrVlPP5vEpy5/Gm+J8CoeE4H4LCgXaRjFAVEFkxr1ak7QdlNi+M/oHy1c45iL0MPVw==
+	bh=2E3Qv+vU0BdD/JdqtCuiajceugLchm816K8Tdifkzb0=;
+	b=aRdx7xHwwVuFKt6xYMyKr43mhbvujvM/4jciRLpT9KryfQQRfSfR7qEq313sIsW34yJI
+	 ruDfJqLvgYnolmpvgOEswsxXBmlptNcYKBLCL8JIC2pd1YEPxwyXjSkETLD0KvxYduJGv
+	 LYyMdm99sm6mH+S4RUXn2LogBEd7UXDRfPFikLJXeymMUNUsU6z5abApfkmxWscpsdVv/
+	 yHNu+zbqyQ8zTS9Wjezs6BSw5iYB9Dq0yH/WHbkwy0XsG83Ysm6jKDWo4taY07WoJl4fs
+	 fkS0L98Lv1p6X5T5QgxiTn88IOyJOMxrB4+wCEp3Z3E3atcTrQk3bzmJwn7MShCASCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TU7be4m3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTh+XWHA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08FD606A325;
-	Wed, 18 Nov 2026 23:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4645E606A320;
+	Wed, 18 Nov 2026 23:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TU7be4m3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42061F000C4;
-	Wed, 18 Nov 2026 23:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hTh+XWHA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E01F000C4;
+	Wed, 18 Nov 2026 23:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042902;
-	bh=3G0nhJCl5OYMB3/O7sQYbDhxJgBtiiX62eSutIVXM8s=;
+	s=korg; t=1795042905;
+	bh=2E3Qv+vU0BdD/JdqtCuiajceugLchm816K8Tdifkzb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TU7be4m30k5E8IGeoY4rvO+MEIUbVdu9JaHYnQyJb4N7vlP/iebxjeXyZeWov2zL0
-	 p3+yplMf04cemRZVRMZ+qazrTsxeTcSVHVAh4cKQWSWcfFW+7OwsK8732RNy/cNh1o
-	 jlVKA+ArQ8ZuD4k257B4FIm/yx1MD4D6hmgR/3jo=
+	b=hTh+XWHAcJFW+L5hmmzaCe7nolw/z6Aglw0Ghn0736Nq+3dTUIQKXzTuchdsBFBA3
+	 G12iW5ddSZaKAvBlBEbWgV5L3vDBEnv5w3AR0FXMCUF1xTxNC37csrUluLoFrM9Eov
+	 d/C+tOJK+WIUbtQjY6F6lN3TnhHv74RAjPVhIZgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zizhen Liu <pointerliu@126.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0003/2857] net: skbuff: propagate shared-frag marker in skb_zerocopy()
-Date: Wed, 18 Nov 2026 15:17:17 +0100
-Message-ID: <20261118150201.447584719@linuxfoundation.org>
+	Wei Xu <weixugc@google.com>,
+	Zeng Jingxiang <linuszeng@tencent.com>,
+	Kairui Song <kasong@tencent.com>,
+	Chris Li <chrisl@kernel.org>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Leno Hou <lenohou@gmail.com>
+Subject: [PATCH 6.1 0014/2857] mm/vmscan: wake up flushers conditionally to avoid cgroup OOM
+Date: Wed, 18 Nov 2026 15:17:28 +0100
+Message-ID: <20261118150201.824033771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,50 +73,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhen Liu <pointerliu@126.com>
+From: Zeng Jingxiang <linuszeng@tencent.com>
 
-commit 79dc34beb1fdb3da79753e51e15c68591a2561fe upstream.
+commit 1bc542c6a0d1444559ab75823a89a94d244bf933 upstream.
 
-skb_zerocopy() moves frag descriptors from @from into @to and takes a
-reference on each frag, but it does not copy skb_shinfo(from)->flags into
-skb_shinfo(to)->flags.  A destination skb holding the same page-cache
-backed frags as the source therefore reports skb_has_shared_frag() as
-false.
+Commit 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
+removed the opportunity to wake up flushers during the MGLRU page
+reclamation process can lead to an increased likelihood of triggering OOM
+when encountering many dirty pages during reclamation on MGLRU.
 
-That breaks the invariant relied on by later in-place writers.  ESP input
-checks skb_has_shared_frag() before deciding whether an uncloned
-nonlinear skb can skip skb_cow_data(); with the marker lost, an skb that
-skb_zerocopy() built for nfnetlink_queue or for an openvswitch upcall is
-decrypted in place, letting an unprivileged user write into the page
-cache of a root-owned read-only file.
+This leads to premature OOM if there are too many dirty pages in cgroup:
+Killed
 
-Propagate SKBFL_SHARED_FRAG when frag descriptors are copied, as done for
-the other frag-transfer helpers.
+dd invoked oom-killer: gfp_mask=0x101cca(GFP_HIGHUSER_MOVABLE|__GFP_WRITE),
+order=0, oom_score_adj=0
 
-Fixes: af2806f8f90a ("net: Export skb_zerocopy() to zerocopy from one skb to another")
-Fixes: f4c50a4034e6 ("xfrm: esp: avoid in-place decrypt on shared skb frags")
-Cc: stable@kernel.org
-Signed-off-by: Zizhen Liu <pointerliu@126.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261022104217.1852191-1-pointerliu@126.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adjusted context in skb_zerocopy() due to missing from->unreadable propagation. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Call Trace:
+  <TASK>
+  dump_stack_lvl+0x5f/0x80
+  dump_stack+0x14/0x20
+  dump_header+0x46/0x1b0
+  oom_kill_process+0x104/0x220
+  out_of_memory+0x112/0x5a0
+  mem_cgroup_out_of_memory+0x13b/0x150
+  try_charge_memcg+0x44f/0x5c0
+  charge_memcg+0x34/0x50
+  __mem_cgroup_charge+0x31/0x90
+  filemap_add_folio+0x4b/0xf0
+  __filemap_get_folio+0x1a4/0x5b0
+  ? srso_return_thunk+0x5/0x5f
+  ? __block_commit_write+0x82/0xb0
+  ext4_da_write_begin+0xe5/0x270
+  generic_perform_write+0x134/0x2b0
+  ext4_buffered_write_iter+0x57/0xd0
+  ext4_file_write_iter+0x76/0x7d0
+  ? selinux_file_permission+0x119/0x150
+  ? srso_return_thunk+0x5/0x5f
+  ? srso_return_thunk+0x5/0x5f
+  vfs_write+0x30c/0x440
+  ksys_write+0x65/0xe0
+  __x64_sys_write+0x1e/0x30
+  x64_sys_call+0x11c2/0x1d50
+  do_syscall_64+0x47/0x110
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ memory: usage 308224kB, limit 308224kB, failcnt 2589
+ swap: usage 0kB, limit 9007199254740988kB, failcnt 0
+
+  ...
+  file_dirty 303247360
+  file_writeback 0
+  ...
+
+oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=test,
+mems_allowed=0,oom_memcg=/test,task_memcg=/test,task=dd,pid=4404,uid=0
+Memory cgroup out of memory: Killed process 4404 (dd) total-vm:10512kB,
+anon-rss:1152kB, file-rss:1824kB, shmem-rss:0kB, UID:0 pgtables:76kB
+oom_score_adj:0
+
+The flusher wake up was removed to decrease SSD wearing, but if we are
+seeing all dirty folios at the tail of an LRU, not waking up the flusher
+could lead to thrashing easily.  So wake it up when a memcg is about to
+OOM due to dirty caches.
+
+I did run the build kernel test[1] on V6, with -j16 1G memcg on my local
+branch:
+
+Without the patch(10 times):
+user 1449.394
+system 368.78 372.58 363.03 362.31 360.84 372.70 368.72 364.94 373.51
+366.58 (avg 367.399)
+real 164.883
+
+With the V6 patch(10 times):
+user 1447.525
+system 360.87 360.63 372.39 364.09 368.49 365.15 359.93 362.04 359.72
+354.60 (avg 362.79)
+real 164.514
+
+Test results show that this patch has about 1% performance improvement,
+which should be caused by noise.
+
+Link: https://lkml.kernel.org/r/20241026115714.1437435-1-jingxiangzeng.cas@gmail.com
+Link: https://lore.kernel.org/all/CACePvbV4L-gRN9UKKuUnksfVJjOTq_5Sti2-e=pb_w51kucLKQ@mail.gmail.com/ [1]
+Fixes: 14aa8b2d5c2e ("mm/mglru: don't sync disk for each aging cycle")
+Suggested-by: Wei Xu <weixugc@google.com>
+Signed-off-by: Zeng Jingxiang <linuszeng@tencent.com>
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: Wei Xu <weixugc@google.com>
+Tested-by: Chris Li <chrisl@kernel.org>
+Cc: T.J. Mercier <tjmercier@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Leno Hou <lenohou@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/vmscan.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3376,6 +3376,8 @@ skb_zerocopy(struct sk_buff *to, struct
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4748,6 +4748,7 @@ static bool sort_folio(struct lruvec *lr
+ 		       int tier_idx)
+ {
+ 	bool success;
++	bool dirty, writeback;
+ 	int gen = folio_lru_gen(folio);
+ 	int type = folio_is_file_lru(folio);
+ 	int zone = folio_zonenum(folio);
+@@ -4797,9 +4798,17 @@ static bool sort_folio(struct lruvec *lr
+ 		return true;
  	}
- 	skb_shinfo(to)->nr_frags = j;
  
-+	skb_shinfo(to)->flags |= skb_shinfo(from)->flags & SKBFL_SHARED_FRAG;
++	dirty = folio_test_dirty(folio);
++	writeback = folio_test_writeback(folio);
++	if (type == LRU_GEN_FILE && dirty) {
++		sc->nr.file_taken += delta;
++		if (!writeback)
++			sc->nr.unqueued_dirty += delta;
++	}
 +
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(skb_zerocopy);
+ 	/* waiting for writeback */
+-	if (folio_test_locked(folio) || folio_test_writeback(folio) ||
+-	    (type == LRU_GEN_FILE && folio_test_dirty(folio))) {
++	if (folio_test_locked(folio) || writeback ||
++	    (type == LRU_GEN_FILE && dirty)) {
+ 		gen = folio_inc_gen(lruvec, folio, true);
+ 		list_move(&folio->lru, &lrugen->folios[gen][type][zone]);
+ 		return true;
+@@ -4915,6 +4924,8 @@ static int scan_folios(struct lruvec *lr
+ 	__count_memcg_events(memcg, PGREFILL, sorted);
+ 	__count_vm_events(PGSCAN_ANON + type, isolated);
+ 
++	if (type == LRU_GEN_FILE)
++		sc->nr.file_taken += isolated;
+ 	/*
+ 	 * There might not be eligible pages due to reclaim_idx, may_unmap and
+ 	 * may_writepage. Check the remaining to prevent livelock if it's not
+@@ -5045,6 +5056,7 @@ static int evict_folios(struct lruvec *l
+ 		return scanned;
+ retry:
+ 	reclaimed = shrink_folio_list(&list, pgdat, sc, &stat, false);
++	sc->nr.unqueued_dirty += stat.nr_unqueued_dirty;
+ 	sc->nr_reclaimed += reclaimed;
+ 
+ 	list_for_each_entry_safe_reverse(folio, next, &list, lru) {
+@@ -5243,6 +5255,13 @@ static void lru_gen_shrink_lruvec(struct
+ 	if (sc->nr_reclaimed - reclaimed >= MIN_LRU_BATCH && !need_aging)
+ 		sc->memcgs_need_aging = false;
+ done:
++	/*
++	 *  If too many file cache in the coldest generation can't be evicted
++	 *  due to being dirty, wake up the flusher.
++	 */
++	if (sc->nr.unqueued_dirty && sc->nr.unqueued_dirty == sc->nr.file_taken)
++		wakeup_flusher_threads(WB_REASON_VMSCAN);
++
+ 	clear_mm_walk();
+ 
+ 	blk_finish_plug(&plug);
 
 
