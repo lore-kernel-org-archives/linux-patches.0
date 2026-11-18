@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048671;
-	b=esPcbr3OorlAak+C/QGbpKJAUATOcNVTJJ/1PnJia/4TdLU5Df0cloHVELaCaN1usSak
-	 GrRIz1xl5ACe0q9U32WoRpbbgwIs++RyvC8qmi9V8hV6zCcrTN7h+I8Opx1bYxv6E5vQY
-	 W/F6R16MSTs31zocJPyJq0cevxEX96HLQtZb1PTcKzIhsU8mpU1cjxP9ua0Jl5BhIEOAL
-	 epfhBLl0gr2h5G3LUdnQflmDXKSWzYYYTUtDZZaolVVTK37xsGmeNzeYO6zh/I7NS+tod
-	 6OwtJZMp5qk4vU9hcwKF7Fzdbzt5bI4efcz7dtbEqEHcRS+pq5xE5UNxeDN+oYoAwXQ==
+	t=1795048674;
+	b=D59w/z2pr0UXcwfZCa0f+PcSaPGVrnX6H7LXjEUI51+bflMSJSv5k+JkUf5Q7MbwnAPA
+	 1nA8DvQJNXqklw4uQrPd+1p4u/ei4u6OS3cJxucGEsKON3BeuMzCTBNgsCibklTlDM7xr
+	 VNr+jIz4WoyYyhEGDUdb9EgrzPNnFvWDee2+fak2Q0xQZnYiV42B5sVO3JKk2QaHpTsrB
+	 KNXs9IQu2o3YnaEd2AIugHvA7Q8aY2ipqiJciSvD8qat0pNQLVcTfJ+3/wH2Al4efRbvO
+	 WwYQToOQ/i8uzGmAcYNe0e8f1RLn2KCHmOB66o5RcG2yLqKDTT9zoqvvY+HlkalNIOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zff6q0FpDulVsSR5OGgLE9pAlE9JeC4ZyOdyOFwgT+E=;
-	b=S6Cxd6l0oiaxg29wwqwR6TsVRZHXRXb/PM4/nt0PgSugqcznO+ps5aAz0zSq1FBOAaOB
-	 bPOZ38kXjR3YmqnzrCzDdIEACq3+l8cKMtvAgcePeUKik80gxUXcfGWPRQC5yirSFc6Gg
-	 LxA8ZHu7YBbpjCOT/xCFZrXM5TbgKQp23d6Pmcr8wob91EsQZZ8cXaU/MGsU4oGjKNC7G
-	 eFknpjKbmsgQfXVoi+A+tA9TT4LmdwpKcwhal2nLAUgo9ACPzBGfyB5jMFTkG1uNRXnHL
-	 dfCufJkNX/yzhgJWn+ZR5VMDRULZsZjsr/6tAV5cJN777bai9z6vF10SGkOjtiDOaZQ==
+	bh=PmkjMqVFJCZTYGtRjo+0+HegQ6kW8iEUYikj2SoTtKQ=;
+	b=HeEVVc3V0Z34+L5IrUqPPR1iak+zEMdKVgvkaokqGY/IYKW6a9uo12RcOQ+8198o6L2r
+	 QOfRXNpLdzy+DMqNTxPzWv0lVOP5BNCoeyEwHSW21KtNtPmrddH/0UPymwpwOnWT7crDH
+	 LG+ZRrS1kVh1JUToP6pH0jbsk9XuqxcKFPJtPE4jwEsM5zIEDxIIo2pyDZrdoV+ahuZud
+	 mFyNplIZRUMVy5uf9DsXFRb5LFo8eJ7yxLVmsrNFTmw9kZqNQZ5eVBZ23N/XlhSniAl8f
+	 SKgMnPUGvpkFPQPDCBfQRIUoxw0jqT9vrP03EuPEH1m0pY2oKu2egb0VWWvg5ZiS0Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l37h6XxR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o/Nz7IvQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C214F606A32C;
-	Thu, 19 Nov 2026 00:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B18606A31C;
+	Thu, 19 Nov 2026 00:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l37h6XxR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD801F000C4;
-	Thu, 19 Nov 2026 00:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o/Nz7IvQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CB21F000C5;
+	Thu, 19 Nov 2026 00:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048671;
-	bh=Zff6q0FpDulVsSR5OGgLE9pAlE9JeC4ZyOdyOFwgT+E=;
+	s=korg; t=1795048674;
+	bh=PmkjMqVFJCZTYGtRjo+0+HegQ6kW8iEUYikj2SoTtKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l37h6XxRCG/VAKkJVG/FVZ982x2nVh1/x8ubA3Aq5xw4F4r7B0jzg3/bmYeIZZ2gK
-	 tzw7BsvVDbaYqM8r37wIQHx7WEEyuaRJh1W5KrTLU4+ecws4loo5bbRKLALQ7VMyjM
-	 +xJ+ilJOF5am/MPRRLjqDtWpVL/A+X4SI5LlpDPQ=
+	b=o/Nz7IvQznQH9jgI1s9yXcKJdqDLQTcMDRviHilj0V/xvaTFUACMRB6Gtm+JhGQn7
+	 h12oryC+mP3WN0uv9n8qn4i2PeMOcXKj9ubUfH77RS28H/Kup7nPUu0dl97pZHvRms
+	 KA8d8ja+OlbFfgVu0E6PsY9uST68cLHcjaqnYAtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Dmitrii Tulnov <tulnov.dl@gmail.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2038/2857] mfd: da9150: Balance IRQ wake on teardown
-Date: Wed, 18 Nov 2026 15:51:12 +0100
-Message-ID: <20261118150314.791378775@linuxfoundation.org>
+Subject: [PATCH 6.1 2039/2857] kconfig: warn about malformed KCONFIG_PROBABILITY values
+Date: Wed, 18 Nov 2026 15:51:13 +0100
+Message-ID: <20261118150314.828724989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,82 +69,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Dmitrii Tulnov <tulnov.dl@gmail.com>
 
-[ Upstream commit ef464f82f3aecad4071af71074b2ceb77ffbb609 ]
+[ Upstream commit 9f01cd3a324390b235c67ae4ca3d35085369ebdd ]
 
-DA9150 enables IRQ wake after registering its regmap IRQ chip, but does not
-disable it on a later probe failure or driver removal. This leaves the wake
-depth elevated after the handler is removed, and repeated bind attempts can
-accumulate the imbalance.
+randconfig checks the numeric range of each probability but does not
+validate where strtol() stops. For example, KCONFIG_PROBABILITY=50% is
+accepted as 50:0:0: the '%' is parsed repeatedly as zero. For the
+documented value 50, tristate y/m/n probabilities are 25%/25%/50%.
+With 50%, both y/m probabilities silently become zero, reducing the
+coverage of random configuration builds. Empty fields and extra fields
+are also accepted.
 
-Remember whether enabling IRQ wake succeeded and balance only a successful
-call. Remove MFD children first so their nested IRQ users are gone, then
-disable wake before removing the regmap IRQ chip. Preserve the existing
-non-fatal behavior when IRQ wake cannot be enabled.
+Warn when the value does not follow the documented decimal format. For
+malformed inputs whose parsed probabilities are in range, preserve the
+existing interpretation unless KCONFIG_WERROR is set. In that case, exit
+with an error before writing the configuration. Leading whitespace and
+signs are accepted by strtol(), but also trigger the warning because they
+are outside the documented format.
 
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
+Keep the strtol() result as long until the range check. This rejects
+out-of-range values that narrowing to int previously made valid, such as
+4294967296 becoming zero on a 64-bit host, regardless of KCONFIG_WERROR.
 
-Fixes: b8fce55c09d3 ("mfd: Add support for DA9150 combined charger & fuel-gauge device")
+Add regression tests for one warning per malformed input, preserved
+configurations, KCONFIG_WERROR, out-of-range values, the supported
+probability formats, and the documented empty-value default.
+
+Fixes: e43956e60769 ("kconfig: implement KCONFIG_PROBABILITY for randconfig")
 Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260923021936.957065-1-mhun512@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Dmitrii Tulnov <tulnov.dl@gmail.com>
+Tested-by: Julian Braha <julianbraha@gmail.com>
+Reviewed-by: Julian Braha <julianbraha@gmail.com>
+Link: https://patch.msgid.link/20260918213430.3-1-tulnov.dl@gmail.com
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9150-core.c       | 8 ++++++--
- include/linux/mfd/da9150/core.h | 1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ scripts/kconfig/conf.c                        |  16 ++-
+ scripts/kconfig/tests/conftest.py             |   6 +
+ .../tests/randconfig_probability/Kconfig      |  12 ++
+ .../tests/randconfig_probability/__init__.py  | 130 ++++++++++++++++++
+ 4 files changed, 163 insertions(+), 1 deletion(-)
+ create mode 100644 scripts/kconfig/tests/randconfig_probability/Kconfig
+ create mode 100644 scripts/kconfig/tests/randconfig_probability/__init__.py
 
-diff --git a/drivers/mfd/da9150-core.c b/drivers/mfd/da9150-core.c
-index 6ae56e46d24e6..838e3dd06f848 100644
---- a/drivers/mfd/da9150-core.c
-+++ b/drivers/mfd/da9150-core.c
-@@ -451,7 +451,7 @@ static int da9150_probe(struct i2c_client *client,
+diff --git a/scripts/kconfig/conf.c b/scripts/kconfig/conf.c
+index fde46ed7eb397..ddd9e74abaffc 100644
+--- a/scripts/kconfig/conf.c
++++ b/scripts/kconfig/conf.c
+@@ -183,12 +183,23 @@ static bool conf_set_all_new_symbols(enum conf_def_mode mode)
  
- 	da9150->irq_base = regmap_irq_chip_get_base(da9150->regmap_irq_data);
+ 	if (mode == def_random) {
+ 		int n, p[3];
++		bool warned = false;
+ 		char *env = getenv("KCONFIG_PROBABILITY");
  
--	enable_irq_wake(da9150->irq);
-+	da9150->irq_wake_enabled = !enable_irq_wake(da9150->irq);
+ 		n = 0;
+ 		while (env && *env) {
+ 			char *endp;
+-			int tmp = strtol(env, &endp, 10);
++			long tmp = strtol(env, &endp, 10);
++
++			if (!isdigit((unsigned char)*env) ||
++			    (*endp && *endp != ':') ||
++			    (*endp == ':' && (!endp[1] || n == 2))) {
++				if (!warned) {
++					fprintf(stderr,
++						"warning: KCONFIG_PROBABILITY has malformed format\n");
++					warned = true;
++				}
++			}
  
- 	ret = mfd_add_devices(da9150->dev, -1, da9150_devs,
- 			      ARRAY_SIZE(da9150_devs), NULL,
-@@ -464,6 +464,8 @@ static int da9150_probe(struct i2c_client *client,
- 	return 0;
+ 			if (tmp >= 0 && tmp <= 100) {
+ 				p[n++] = tmp;
+@@ -224,6 +235,9 @@ static bool conf_set_all_new_symbols(enum conf_def_mode mode)
+ 			perror("KCONFIG_PROBABILITY");
+ 			exit(1);
+ 		}
++
++		if (warned && getenv("KCONFIG_WERROR"))
++			exit(1);
+ 	}
  
- mfd_fail:
-+	if (da9150->irq_wake_enabled)
-+		disable_irq_wake(da9150->irq);
- 	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- regmap_irq_fail:
- 	i2c_unregister_device(da9150->core_qif);
-@@ -475,8 +477,10 @@ static void da9150_remove(struct i2c_client *client)
- {
- 	struct da9150 *da9150 = i2c_get_clientdata(client);
+ 	for_all_symbols(i, sym) {
+diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
+index af8774a5697c8..3d75025437a70 100644
+--- a/scripts/kconfig/tests/conftest.py
++++ b/scripts/kconfig/tests/conftest.py
+@@ -289,6 +289,12 @@ class Conf:
+         return self._matches('stderr', expected)
  
--	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- 	mfd_remove_devices(da9150->dev);
-+	if (da9150->irq_wake_enabled)
-+		disable_irq_wake(da9150->irq);
-+	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
- 	i2c_unregister_device(da9150->core_qif);
- }
  
-diff --git a/include/linux/mfd/da9150/core.h b/include/linux/mfd/da9150/core.h
-index d116d5f3ef561..369698036d1aa 100644
---- a/include/linux/mfd/da9150/core.h
-+++ b/include/linux/mfd/da9150/core.h
-@@ -65,6 +65,7 @@ struct da9150 {
- 	struct regmap_irq_chip_data *regmap_irq_data;
- 	int irq;
- 	int irq_base;
-+	bool irq_wake_enabled;
- };
- 
- /* Device I/O - Query Interface for FG and standard register access */
++@pytest.fixture(autouse=True)
++def clear_werror(monkeypatch):
++    # extra_env can set strict mode, but cannot remove an inherited flag.
++    monkeypatch.delenv('KCONFIG_WERROR', raising=False)
++
++
+ @pytest.fixture(scope="module")
+ def conf(request):
+     """Create a Conf instance and provide it to test functions."""
+diff --git a/scripts/kconfig/tests/randconfig_probability/Kconfig b/scripts/kconfig/tests/randconfig_probability/Kconfig
+new file mode 100644
+index 0000000000000..84f4e5fcc51e4
+--- /dev/null
++++ b/scripts/kconfig/tests/randconfig_probability/Kconfig
+@@ -0,0 +1,12 @@
++# SPDX-License-Identifier: GPL-2.0-only
++
++config MODULES
++	bool
++	default y
++	modules
++
++config BOOL
++	bool "Bool"
++
++config TRI
++	tristate "Tristate"
+diff --git a/scripts/kconfig/tests/randconfig_probability/__init__.py b/scripts/kconfig/tests/randconfig_probability/__init__.py
+new file mode 100644
+index 0000000000000..e6e5dda10ad92
+--- /dev/null
++++ b/scripts/kconfig/tests/randconfig_probability/__init__.py
+@@ -0,0 +1,130 @@
++# SPDX-License-Identifier: GPL-2.0-only
++"""Validate KCONFIG_PROBABILITY without changing the supported distributions."""
++
++
++def test_malformed_warns(conf):
++    probabilities = [
++        'invalid', ' ', '50%', '50 ', '0x32', '10 20', '10:20x',
++        '10:20:invalid', '10:20:30x',
++        ':50', '50:', '10::20', '10:20:', '10:20:30:', '10:20:30:40',
++        '-0', '+0', '+', '-', '+100:0', ' \t100:0', '0: \t100:0',
++    ]
++    for probability in probabilities:
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': probability,
++            'KCONFIG_SEED': '0',
++        }) == 0, repr(probability)
++        assert ('warning: KCONFIG_PROBABILITY has malformed format' in
++                conf.stderr), repr(probability)
++        assert conf.stderr.count('warning:') == 1, repr(probability)
++        assert conf.config is not None, repr(probability)
++
++
++def test_malformed_preserves_config(conf):
++    probabilities = [('50%', '50:0:0'), ('-0', '0')]
++    for seed in range(20):
++        for probability, equivalent in probabilities:
++            context = 'probability={!r}, equivalent={!r}, seed={}'.format(
++                probability, equivalent, seed)
++            assert conf._run_conf('--randconfig', extra_env={
++                'KCONFIG_PROBABILITY': probability,
++                'KCONFIG_SEED': hex(seed),
++            }) == 0, context
++            assert ('warning: KCONFIG_PROBABILITY has malformed format' in
++                    conf.stderr), context
++            assert conf.stderr.count('warning:') == 1, context
++            malformed = conf.config
++
++            assert conf._run_conf('--randconfig', extra_env={
++                'KCONFIG_PROBABILITY': equivalent,
++                'KCONFIG_SEED': hex(seed),
++            }) == 0, context
++            assert 'warning:' not in conf.stderr, context
++            assert conf.config == malformed, context
++
++
++def test_werror(conf):
++    probabilities = [
++        ('', 0), ('50', 0), ('50%', 1), ('-0', 1), ('10:20:30:40', 1),
++    ]
++    for probability, status in probabilities:
++        for werror in ['', '0', '1']:
++            context = 'probability={!r}, werror={!r}'.format(
++                probability, werror)
++            assert conf._run_conf('--randconfig', extra_env={
++                'KCONFIG_PROBABILITY': probability,
++                'KCONFIG_SEED': '0',
++                'KCONFIG_WERROR': werror,
++            }) == status, context
++            if status:
++                assert ('warning: KCONFIG_PROBABILITY has malformed format' in
++                        conf.stderr), context
++                assert conf.stderr.count('warning:') == 1, context
++            else:
++                assert 'warning:' not in conf.stderr, context
++
++
++def test_out_of_range(conf):
++    probabilities = [
++        '-1', '101', '+101', '0:101', '0:0:101', '60:41', '0:60:41',
++        '4294967296', '-4294967296',
++        '999999999999999999999999', '-999999999999999999999999',
++    ]
++    for probability in probabilities:
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': probability,
++            'KCONFIG_SEED': '0',
++        }) == 1, repr(probability)
++        assert 'KCONFIG_PROBABILITY:' in conf.stderr, repr(probability)
++
++
++def test_valid(conf):
++    probabilities = [
++        ('0', 'n', 'n'),
++        ('0:0', 'n', 'n'),
++        ('100:0', 'y', 'y'),
++        ('0:100', 'y', 'm'),
++        ('100:0:0', 'y', 'n'),
++        ('0:100:0', 'n', 'y'),
++        ('0:0:100', 'n', 'm'),
++        ('000:000:100', 'n', 'm'),
++    ]
++    for probability, boolean, tristate in probabilities:
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': probability,
++            'KCONFIG_SEED': '0',
++        }) == 0, repr(probability)
++        assert 'warning:' not in conf.stderr, repr(probability)
++        for symbol, value in [('BOOL', boolean), ('TRI', tristate)]:
++            if value == 'n':
++                expected = '# CONFIG_{} is not set'.format(symbol)
++            else:
++                expected = 'CONFIG_{}={}'.format(symbol, value)
++            assert expected in conf.config.splitlines(), repr(probability)
++
++
++def test_single_probability_matches_tristate_split(conf):
++    for seed in range(20):
++        context = 'seed={}'.format(seed)
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': '50',
++            'KCONFIG_SEED': hex(seed),
++        }) == 0, context
++        assert 'warning:' not in conf.stderr, context
++        single = conf.config
++
++        # 50% boolean y; 25% tristate y, 25% m, and 50% n.
++        assert conf._run_conf('--randconfig', extra_env={
++            'KCONFIG_PROBABILITY': '50:25:25',
++            'KCONFIG_SEED': hex(seed),
++        }) == 0, context
++        assert 'warning:' not in conf.stderr, context
++        assert conf.config == single, context
++
++
++def test_empty(conf):
++    assert conf._run_conf('--randconfig', extra_env={
++        'KCONFIG_PROBABILITY': '',
++        'KCONFIG_SEED': '0',
++    }) == 0
++    assert 'warning:' not in conf.stderr
 -- 
 2.53.0
 
