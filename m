@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029365;
-	b=ska8PlHZ9RXgSBFCcUZwA9UbcYqkC470y9KGrnl2DEcOe9PLasISRzxB7S70zQPTkwPI
-	 o4tLnBgenOXVaVLcuDSUpsVC913poODkhe26Ny6h402g+8fKJ4rWfYz4a5U9u+r8jH2aE
-	 5VjmrB14tzmxBNSDo31MThQf7SpaigHStvMhGayJsuNspMDHOkgsQfN+Jc9pOUBpnsK+i
-	 lG1ssM8ac7O1th+5jLkahnTUboBNWTL82XHxb0QXiR2wGReyvPZIQ3Dam1Gg92G8CWaE4
-	 eslcLGD4t/jiteYsZQeKEP5Cx/CtdTiPSlcNHeTgfxp8otEloIFwJZyqcE9WXEdGdzw==
+	t=1795029367;
+	b=TMsZxqOHp8UF9nMqXhwekRbRzhNC+svC7EuEbqY7+O8sLpY+5E1uOyuvVUzbKPub+j6c
+	 iFsd/kN3ONwxT/pZxFN4tuhLhqnf564pgfplVoL7Wu1TdsknUuO8i52JKWAG2oDGZgZFB
+	 2qtd0urzWbgbveXTX058tALjb5uFlmG20Cba+mKiMUblDktGxorBoq8X37qNlPGh06sGm
+	 jRqO4fp9/uIfUYih0iUo5Hnma7FT4H75negyy6ROGrmnplh69Fn2BjUGSRJq8JX9UQj0k
+	 W+64Stls1YApzx2MalZx3cjpxnBXfe8y6RUr76XiMMSP6yLWl1br2Ql2FmcNGZeR5ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029367;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f6MBWbIdfplJ1W2cbCNPdIcFchx2k3QlKXg3qPNhAtY=;
-	b=JKrC/uImECmSqpOuJcxk9RXSdvPY8CBZX8rCCBgSha6YVOOUe2GllKF5q6aSCoL4zPMg
-	 UBo+A2v7MN3W16C/qHRnIev98QvKqamLYLRE8HJ3nwJcXZg6rdYIk6KRpTNCEAXjofyCW
-	 A4N+nd5ubp6prNX6+ItXBLHUBvL0a/xXjoVUBLq+yEO4q4mAM5OmDnUROryVp2aP4JaVO
-	 auYI6f40y6qjOua9f6uJuFpOx9JF3VrQKXzWqw/oItdTzOhEYkjFyUXgjkdM5eOuOtMat
-	 8SMLuWBGOCg3HB4CVTfDrkqOhUVRupzgdw583MzT9MrmqwPe/e0OYZY216M0TrZx/aw==
+	bh=2hWRF1vFqrE6IwWjoGCzY4ut/5zL+bVe/RL7RzWhtXU=;
+	b=aMpzVXW0JGKwoEtivToi3cPk8I//mjfUR/b2PdmnUz0+3DE7tCeSSxhpa+P1XAdTCh7+
+	 x5J8biajIeob6SIpdbDeu72yB2MSoA/E4RVI+2tDyJWlKVcInPA/pSKTNDkizg+aiThby
+	 2O7XtBJPlm5b/ryKJCOdaijJIoNIl+fF1hsKfgv1w8ZwoxiclMvczjPxCfwHbykajkM+y
+	 s/h3rTU6YViZEy7ODASPzbLGuTqEP/WZWASzwqGaYS3bHAsvdk+ZHhcREyPJWCFpjMiWX
+	 ZS33gWN6cERnxBxUJ0BUN/WdqVpUHnBwbckD//XBK4vz8zehICFLJgF7j7bdbiy0/Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZXOPAI2O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHq6+43v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB06606A334;
-	Wed, 18 Nov 2026 19:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8EB606A31C;
+	Wed, 18 Nov 2026 19:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZXOPAI2O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CD81F000C6;
-	Wed, 18 Nov 2026 19:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHq6+43v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BBE1F000C6;
+	Wed, 18 Nov 2026 19:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029364;
-	bh=f6MBWbIdfplJ1W2cbCNPdIcFchx2k3QlKXg3qPNhAtY=;
+	s=korg; t=1795029367;
+	bh=2hWRF1vFqrE6IwWjoGCzY4ut/5zL+bVe/RL7RzWhtXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZXOPAI2OrvnAeHLr7w/huwxPG/bYD9tgwkoPeno38x0E/n5p8WfLE8yR1JBCDnFXL
-	 NLi/DX7QyfJAZgF1SEJapZiqBTy53sU00GfsODtD3V1/3iwQCX/S3s3o2vgkhoNFrZ
-	 stDDR5bO0UqscffohqxXqmBs2Ff1Ovx7a+oHYdro=
+	b=KHq6+43vSx5aT6kLyoOiBrnPlFfivTTBGKyu3kgJWYOWA0BGsikz18cRDOfDXCkJq
+	 kbbBh9Z82Vr8l/Afn6y/deSCQWRwd/SPl/y7OB737MATo/glNugxdBH4Q5e6Mgcer8
+	 yUjdszU3tKlO/ejhv86cZD5quRegWySjbFNqxdWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0274/1756] dmaengine: mediatek: hsdma: fix runtime PM leak on init failure
-Date: Wed, 18 Nov 2026 15:40:01 +0100
-Message-ID: <20261118150019.331613548@linuxfoundation.org>
+Subject: [PATCH 6.12 0275/1756] dmaengine: img-mdc: Fix runtime PM usage counter leak
+Date: Wed, 18 Nov 2026 15:40:02 +0100
+Message-ID: <20261118150019.375351795@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,111 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit f10d96b1c549a2f43506e9bf847196839808b8dc ]
+[ Upstream commit 4a1a2d8b8529cc569b769b92fcd71c53805cbeb2 ]
 
-mtk_hsdma_hw_init() enables runtime PM and gets a runtime PM reference
-before enabling the HSDMA clock. It currently ignores failures from
-pm_runtime_get_sync(); if runtime resume fails, the usage count remains
-held. If clk_prepare_enable() then fails, the usage count remains held.
+pm_runtime_get_sync() leaves the IMG MDC device's usage counter
+incremented when runtime resume fails. mdc_alloc_chan_resources() returns
+that error to the DMA core, so the channel's client count is not
+incremented and mdc_free_chan_resources() is not called to drop the
+reference. Repeated allocation attempts can therefore accumulate usage
+references and prevent runtime suspend.
 
-Use devm_pm_runtime_enable() to manage runtime PM enablement, and use
-pm_runtime_resume_and_get() so resume failures do not leak the usage count.
-If clk_prepare_enable() fails after a successful runtime resume, drop the
-runtime PM reference before returning.
+Use pm_runtime_resume_and_get() so a failed resume does not retain a
+usage reference while successful allocations remain paired with
+mdc_free_chan_resources(). DMA core only treats negative return values as
+allocation failures, so the helper's zero success return preserves
+behavior.
 
-The probe path also ignores the return value from mtk_hsdma_hw_init(), so a
-failed hardware init can continue as a successful probe. Propagate
-mtk_hsdma_hw_init() failures from probe, while keeping a separate unwind
-label so mtk_hsdma_hw_deinit() is only called after hardware init succeeds.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Fixes: 548c4597e984 ("dmaengine: mediatek: Add MediaTek High-Speed DMA controller for MT7622 and MT7623 SoC")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Fixes: 56d355e6f586 ("dmaengine: img-mdc: Add runtime PM")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260804153924.49627-1-mhun512@gmail.com
+Link: https://patch.msgid.link/20260813153143.3953303-1-ruoyuw560@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mediatek/mtk-hsdma.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/dma/img-mdc-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
-index 58c7961ab9ad1..abbad59e0f958 100644
---- a/drivers/dma/mediatek/mtk-hsdma.c
-+++ b/drivers/dma/mediatek/mtk-hsdma.c
-@@ -848,17 +848,27 @@ static int mtk_hsdma_hw_init(struct mtk_hsdma_device *hsdma)
- {
- 	int err;
+diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
+index 0532dd2640dce..9dbceb9904e28 100644
+--- a/drivers/dma/img-mdc-dma.c
++++ b/drivers/dma/img-mdc-dma.c
+@@ -738,7 +738,7 @@ static int mdc_alloc_chan_resources(struct dma_chan *chan)
+ 	struct mdc_chan *mchan = to_mdc_chan(chan);
+ 	struct device *dev = mdma2dev(mchan->mdma);
  
--	pm_runtime_enable(hsdma2dev(hsdma));
--	pm_runtime_get_sync(hsdma2dev(hsdma));
-+	err = devm_pm_runtime_enable(hsdma2dev(hsdma));
-+	if (err)
-+		return err;
-+
-+	err = pm_runtime_resume_and_get(hsdma2dev(hsdma));
-+	if (err < 0)
-+		return err;
- 
- 	err = clk_prepare_enable(hsdma->clk);
- 	if (err)
--		return err;
-+		goto err_put_pm;
- 
- 	mtk_dma_write(hsdma, MTK_HSDMA_INT_ENABLE, 0);
- 	mtk_dma_write(hsdma, MTK_HSDMA_GLO, MTK_HSDMA_GLO_DEFAULT);
- 
- 	return 0;
-+
-+err_put_pm:
-+	pm_runtime_put_sync(hsdma2dev(hsdma));
-+
-+	return err;
+-	return pm_runtime_get_sync(dev);
++	return pm_runtime_resume_and_get(dev);
  }
  
- static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
-@@ -868,7 +878,6 @@ static int mtk_hsdma_hw_deinit(struct mtk_hsdma_device *hsdma)
- 	clk_disable_unprepare(hsdma->clk);
- 
- 	pm_runtime_put_sync(hsdma2dev(hsdma));
--	pm_runtime_disable(hsdma2dev(hsdma));
- 
- 	return 0;
- }
-@@ -983,7 +992,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 		goto err_unregister;
- 	}
- 
--	mtk_hsdma_hw_init(hsdma);
-+	err = mtk_hsdma_hw_init(hsdma);
-+	if (err)
-+		goto err_free;
- 
- 	err = devm_request_irq(&pdev->dev, hsdma->irq,
- 			       mtk_hsdma_irq, 0,
-@@ -991,7 +1002,7 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 	if (err) {
- 		dev_err(&pdev->dev,
- 			"request_irq failed with err %d\n", err);
--		goto err_free;
-+		goto err_deinit;
- 	}
- 
- 	platform_set_drvdata(pdev, hsdma);
-@@ -1000,8 +1011,9 @@ static int mtk_hsdma_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--err_free:
-+err_deinit:
- 	mtk_hsdma_hw_deinit(hsdma);
-+err_free:
- 	of_dma_controller_free(pdev->dev.of_node);
- err_unregister:
- 	dma_async_device_unregister(dd);
+ static void mdc_free_chan_resources(struct dma_chan *chan)
 -- 
 2.53.0
 
