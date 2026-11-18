@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037202;
-	b=OhGZZHn/tw52a2rZH+VMhWfxM2lN8pwpet5in6/SLc/d10na0KlObWh3o9wTrY3s8umI
-	 b8K5RTrasvHZU3XsB05eiO/9xuFxbpuHGF2nYfMLywOAUeP897Nb2ogxDJh0EARplpovp
-	 OCfkrp2hYlg7ZPWlfR94X6QcI19RTprMFsx9rj0jEfPPFK1XIinW0cQKO3N8gd0DyHbT2
-	 E9JzuG9o3uqCKnR5LmpuRlOEaSpLivvl+7AkRBatYeqHUEILD945HyanpqP7REsYnT3Zz
-	 cL7dUi3vLBjbsIhWnPReFxxGg3395in8O2MZmgv8BmKPABDjWZiED+IeoMctyLCa2Cg==
+	t=1795037205;
+	b=ZXl4Rv09UvAa+uQsdNnJi9F9xnLQDHkKFF32mjBu0uqR4v9l0XljOqQ+uxpYwDYtj5Lx
+	 1xKJEjSOtAYGBJHZQPVUh1mbzqs35aCK5B+1Zk2TjMnLaYWvWxaHHoNcd/w6+rwgS7OU0
+	 zSqbtUXpeN+3JL/egDdoy6t0tBfM157XynXLEVWLuuNmSvUXVz0anfQGuwY2FKS/2Ena/
+	 3dvRsNDVccL4hgO/oIa2zuHYV7LZQUWp8gjeSo+gDHw9PvsDOPOpqdjfHvAaANCrvA1pP
+	 a0KotuAXmVPSLK+hxjHwiSxA2LbwY0nIrXaSj+agUs4rdMspkwEfGl1EaJJH9tumHiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iWX+iTUrpq4qGlfTPB+1K+YENAPOb/rb/E56KPggynI=;
-	b=GREzg+l9pQdYJyY7/hRa/iaR2nkZAbsIFmCpfchInBD6+MMVu3Rs/JQjY3ahGLAe5QZZ
-	 u30KCPIEpTzgyFWvjqOXd5s5Y/n5LQiLm2q7FCmknfinaCNO49qo7BLEW8bL7bPndzVqd
-	 7vb2s3U6Syf6oA8JVcL9uRxnPNQLGvk2XN4piwGz+L3PA8Kp03UPjPYiKC7mKcAk49A87
-	 XbU4MF412gOW7NQBJiwUj9xFYgl93a8Np5MQWrCnKz0q5iDLCVl0sCdvEQ3e8br3In+Ed
-	 ZSNnZO1k0wteCRlXi6GVuShpIs9o1MGZeRqzH90bezzh4rSA77tYO5AlQRjIT+N4p9Q==
+	bh=rGVcDxgMpbcjpV5JvIDFCl8mrmRJ63kCf0mlS6jWSyM=;
+	b=CD90YfeJU7l6a90boJmcqk49nyVnPoY53Ok540rfJPc40obGqHAho9jQ+D3bqMJuAOel
+	 suJLmIqbJ1RT3jnCnaUTup3oYq6G01nCd2SLM8NRHSDcCUMTG+iL1UmBWGZl2zufXVooT
+	 jblvLgX1v+hLekqzSL4ox/bQLrOZl+AwkfYrZSCNJED8l5AWGkkFS7PpMrkCsT0bGMUfZ
+	 rMAJHu9q+4Uq+SBRq74o63DEzvao/g5qMa9dP27EIV0RRkpbN3g5+YLrpvufKOPdOojLN
+	 1zf9aUqD5ANaXDXx9jKKdc6frTsUqLjgtS92QzRxUYbt1bJ1GAZbwfuO67m0V0FVSgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRcgaXnQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NR5gHsnV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A69606A320;
-	Wed, 18 Nov 2026 21:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F90606A31C;
+	Wed, 18 Nov 2026 21:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BRcgaXnQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A001F000C4;
-	Wed, 18 Nov 2026 21:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NR5gHsnV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7D91F000C4;
+	Wed, 18 Nov 2026 21:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037201;
-	bh=iWX+iTUrpq4qGlfTPB+1K+YENAPOb/rb/E56KPggynI=;
+	s=korg; t=1795037204;
+	bh=rGVcDxgMpbcjpV5JvIDFCl8mrmRJ63kCf0mlS6jWSyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRcgaXnQbLFCMqrOMqMlIhiVcZa5+E0aobEzfja6k2BZ/i5rycG3JKV+1eWh/wPT9
-	 SJbUTd/MgQdkAWAqvbEKX0it4ndrcW2i4GGiJgMVrjsNKr0tw/okKNlT91IIZwS2a9
-	 Xs2PT3qOC25vz0TME5GIAg+HbJrNhofcRVoDqGxU=
+	b=NR5gHsnVa7HpMbtBQ96DxReIemQrMEkjlgvv09oNX/Di8ZS1eN7xEGHFUzjNHxWU1
+	 +iPMrWi9RsY4pRSXRj6uRHlhMOCmmemPDOmar2m9RrVdAnBdT1IGn/rkW2mEQGSrHj
+	 cxx4HqsKCyVOSGfz/LD4c/i85xjGr8ZkHMCaswJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1327/3318] KVM: nSVM: Reject KVM_SET_NESTED_STATE if L1 has EFER.LMA=1 && EFER.LME=0
-Date: Wed, 18 Nov 2026 15:32:29 +0100
-Message-ID: <20261118150400.136911601@linuxfoundation.org>
+Subject: [PATCH 6.6 1292/3318] fs: skip copy_file_range write limits when there is no data
+Date: Wed, 18 Nov 2026 15:31:54 +0100
+Message-ID: <20261118150359.028000441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,53 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 5dc500a354cc8e109df678076ae3488094649468 ]
+[ Upstream commit 81dfa035891f0502674332ee97db348a16486de0 ]
 
-Reject KVM_SET_NESTED_STATE if the incoming L1 host state has what is
-effectively an impossible EFER combination of LMA=1 but LME=0, i.e. if the
-state says long mode is active but not enabled.  Unlike VMX, SVM doesn't
-have an explicit consistent check for the illegal combination; presumably
-hardware simply ignores EFER.LMA if EFER.LME=0.
+generic_copy_file_checks() reduces count to zero for a source offset at
+or beyond EOF, but still checks the destination write limits. If pos_out
+is at RLIMIT_FSIZE, this sends SIGXFSZ and returns -EFBIG even though
+there is no data to write.
 
-Unfortunately, KVM doesn't ignore EFER.LMA in this case and consumes the
-illegal state when constructing the shadow MMU for L2.  E.g. if userspace
-also clears CR4.PAE, then kvm_calc_cpu_role() will compute a role with 4 or
-5 levels of paging, but shadow_mmu_init_context() will wire up the MMU to
-use the paging32 template, which maxes out its levels at 2.
+For example, GNU cat copying a 1024-byte regular file to another regular
+file with RLIMIT_FSIZE=1024 copies all bytes and is then killed by its
+next copy_file_range() call at EOF. A zero-length request can fail in
+the same way.
 
-Note, the "real badness" is effectively the same as what happened with the
-nVMX bug fixed by commit 112e66017bff ("KVM: nVMX: add missing consistency
-checks for CR0 and CR4").  Unfortunately, the sanity check added by commit
-72e2fb24a0b0 ("KVM: x86/mmu: Bug the VM if a vCPU ends up in long mode
-without PAE enabled") doesn't work for this case, since L2 state is active
-at the time of the page fault, but it's L1 that has the bad state.
+Check write limits only when count is nonzero, as the ordinary write
+checks already do. Keep the other copy validation in place.
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+Fixes: 96e6e8f4a68d ("vfs: add missing checks to copy_file_range")
 Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Reported-by: Stefan Teodorescu <fane@google.com>
-Link: https://patch.msgid.link/20260902232028.2767071-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: adjusted context for __nested_vmcb_check_save() instead of nested_vmcb_check_save() with a boolean argument ]
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Link: https://patch.msgid.link/20261026015738.46230-1-dennylin0707@gmail.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/read_write.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 141f0a6388e34..a4019175e39d7 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1768,6 +1768,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
- 	if (!(save->cr0 & X86_CR0_PG) ||
- 	    !(save->cr0 & X86_CR0_PE) ||
- 	    (save->rflags & X86_EFLAGS_VM) ||
-+	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
- 	    !__nested_vmcb_check_save(vcpu, &save_cached))
- 		goto out_free;
+diff --git a/fs/read_write.c b/fs/read_write.c
+index 4771701c896ba..7a9f4106068be 100644
+--- a/fs/read_write.c
++++ b/fs/read_write.c
+@@ -1453,9 +1453,11 @@ static int generic_copy_file_checks(struct file *file_in, loff_t pos_in,
+ 	else
+ 		count = min(count, size_in - (uint64_t)pos_in);
  
+-	ret = generic_write_check_limits(file_out, pos_out, &count);
+-	if (ret)
+-		return ret;
++	if (count) {
++		ret = generic_write_check_limits(file_out, pos_out, &count);
++		if (ret)
++			return ret;
++	}
+ 
+ 	/* Don't allow overlapped copying within the same file. */
+ 	if (inode_in == inode_out &&
 -- 
 2.53.0
 
