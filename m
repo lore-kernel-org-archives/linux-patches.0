@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054077;
-	b=LIlSuGi1/7uIhVDm9iacUdjraGB6mt9PZJR2AhIAeZTskBCx4OmtKvaP2DLzuYI906dN
-	 ofirekT28mDMgXZj5dJkbsVFkx+LoRd+V+TzhteFK9lOBv//3opcpsYDZegc+qdFR/KQL
-	 UD2NMZK5aAdQt9Cc1RIJPP8Hox0XW3EBG5n+i75mJ9EjrcYTHxF38W1mc3SgHJg9VSLyE
-	 C6TrJ6T2iPUb9tMdyejS45oLNUJTNb5dzOGbc6oRJXEWLpklmktHPFPsXYsrXf4CGDEfJ
-	 LFzuth8nG+eVw4RjMQlUIkuY8/JLcrn4JaFrZsNtDffFAn+IkfKce+Udyz/Xbcf+V8Q==
+	t=1795054080;
+	b=LGpae+vYLj5sVrpVcqbQTMf+YNfQoFZkUPx5VyV6aMT7EaMAn7XIJyT1LnENW/R8VLBo
+	 KBE6j5pCzHfa87/B2cqayGoGUgsn5s0+U5Ef6JAhN1HQTAqixiYSUIBT8n0C0PSHTANuu
+	 77cgfrA2yoY/wxZkHLOSOppdj1+WVBYvz7JnUrqaSjDJ5wHJRqlKI8Pf1YNxHRsyQKoF/
+	 h8WJiiU4MvC6ibWahujf47P2R/hr4aeWptjrYcyArgCUQnlc5Y+GbpUEwtDBnauvHw+YD
+	 viUbLNfnRQadBEp+GKmuQAAHWD1y0U9GRsxRvnfHD34gfWKqZkDrbH5nVEBFLyKnt6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054080;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wz4Cv6LzZylvW19qWLbCzy8+a/b9D2nY80BmviH2Es4=;
-	b=mJZnNZWNeWLqf1cOY9xXaTpbqoioMrCB42k2yuYNg5RGyiQ9U6T8oXuBCFwYj1s2396R
-	 uTDXxzZBByMGPhCefWnPaTjLxr7bbNF0rOc6OXy81N3/75Og2kTEQZ0eygJzOmuQt6Qiu
-	 NczOWPmkERoeiXv1PH8NCxiBUA/8SPos7/UX/wqzL19b4oP6NEzcElYKNuEOBanWcJlDz
-	 dIwc1gjMzdfZM34hLfnciVhUgaV4K6humprKXfS5yZuDKXC6MwIL6rIAkmyFzFs5yQYZ5
-	 yK6v7d3uHxo1thRPHOx/DQrWzg6U0c8a92vyts8fkHE0oIIRn8puCbP0CslGWazFlow==
+	bh=h5sMmabdZSyALvvuDDNKOBAxOxS1huDtIXjgpfc1cqg=;
+	b=l7kMWblkMCUfJkCYPPKSyr+2yY+0zCuTpkZJPtLiG8NbPPBFqS5oAhRhWCXbJr1JV3cG
+	 p1HsFl5lue56wa7BOo5tuHuKuFOOZQnvMkFBzdI2oknGwNFasTtowqkjKpQae70TqzWqT
+	 Kb2ZN/s/ls8jKlTRsj6jZNMbJJnZ+6UjAhcet4wNxhDAPNTeRYQzEy9ymf0ih9AppQShw
+	 NX7Zc8GuEKOiz2SYb3JasJu2EGx4xQvK/MlUcBWBpq2yxhR4aReoFMH+w0DgXhe4+v3HG
+	 eV3XuUrvN0rd4xd1rEI9wO0Zrr7pmU0FKYHG+VVP39aLUXQRz7n++SdvNZIWrxLLEgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpaojRCy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc9Oog98;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BE8606A32A;
-	Thu, 19 Nov 2026 02:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3B8606A32A;
+	Thu, 19 Nov 2026 02:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpaojRCy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B8C1F000C4;
-	Thu, 19 Nov 2026 02:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc9Oog98
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471F81F000C4;
+	Thu, 19 Nov 2026 02:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054077;
-	bh=wz4Cv6LzZylvW19qWLbCzy8+a/b9D2nY80BmviH2Es4=;
+	s=korg; t=1795054079;
+	bh=h5sMmabdZSyALvvuDDNKOBAxOxS1huDtIXjgpfc1cqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wpaojRCyVAxDwRfm1gD0Pq9PaL4l46l6vDiKqGENdlD5d7K/WXOPRHMxehBvtCRpf
-	 V7pgx2UAV2GDIoW/slIWPBZeLEFf7RD1qPbMgXIFIWJkUjLx/wGAP4ie9J0+jBwZ1N
-	 0JpOtJZ0lJg6pzQlADM0/SCr7qq23N7Kw7wz2yAc=
+	b=wc9Oog98IfWtTUtvbGku9Au/3pJpBXWxCtDtQDgLIP8cwrzTdHzN0FBlmP7asLe2h
+	 gekrtw7gXyxlHry8opemDR4o+beV5Yi0wC85zeSdYMQ1s3F8hmr1jOSOPIQ8Ppbn56
+	 vEVRFUYvdohNT8cx0obgHL8W+Pn8rqwjuYenJYw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1145/2214] signal: Requeue signals in the appropriate queue
-Date: Wed, 18 Nov 2026 15:47:01 +0100
-Message-ID: <20261118150057.815248235@linuxfoundation.org>
+Subject: [PATCH 5.15 1146/2214] signal: Remove task argument from dequeue_signal()
+Date: Wed, 18 Nov 2026 15:47:02 +0100
+Message-ID: <20261118150057.852680883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,189 +70,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric W. Biederman <ebiederm@xmission.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 5768d8906bc23d512b1a736c1e198aa833a6daa4 ]
+[ Upstream commit a2b80ce87a87fc18c594e74d13031d5e347b69cb ]
 
-In the event that a tracer changes which signal needs to be delivered
-and that signal is currently blocked then the signal needs to be
-requeued for later delivery.
+The task pointer which is handed to dequeue_signal() is always current. The
+argument along with the first comment about signalfd in that function is
+confusing at best. Remove it and use current internally.
 
-With the advent of CLONE_THREAD the kernel has 2 signal queues per
-task.  The per process queue and the per task queue.  Update the code
-so that if the signal is removed from the per process queue it is
-requeued on the per process queue.  This is necessary to make it
-appear the signal was never dequeued.
+Update the stale comment for dequeue_signal() while at it.
 
-The rr debugger reasonably believes that the state of the process from
-the last ptrace_stop it observed until PTRACE_EVENT_EXIT can be recreated
-by simply letting a process run.  If a SIGKILL interrupts a ptrace_stop
-this is not true today.
-
-So return signals to their original queue in ptrace_signal so that
-signals that are not delivered appear like they were never dequeued.
-
-Fixes: 794aa320b79d ("[PATCH] sigfix-2.5.40-D6")
-History Tree: https://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.gi
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lkml.kernel.org/r/87zgq4d5r4.fsf_-_@email.froward.int.ebiederm.org
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Stable-dep-of: d72e0fb3b00c ("signalfd: don't dequeue the forced fatal signals")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/signalfd.c                |  5 +++--
- include/linux/sched/signal.h |  7 ++++---
- kernel/signal.c              | 21 ++++++++++++++-------
- 3 files changed, 21 insertions(+), 12 deletions(-)
+ fs/signalfd.c                |  4 ++--
+ include/linux/sched/signal.h |  5 ++---
+ kernel/signal.c              | 23 ++++++++++-------------
+ 3 files changed, 14 insertions(+), 18 deletions(-)
 
 diff --git a/fs/signalfd.c b/fs/signalfd.c
-index 65ce0e72e7b95..e20d1484c6633 100644
+index e20d1484c6633..07cc5f6d3483a 100644
 --- a/fs/signalfd.c
 +++ b/fs/signalfd.c
-@@ -155,11 +155,12 @@ static int signalfd_copyinfo(struct signalfd_siginfo __user *uinfo,
- static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info,
- 				int nonblock)
- {
-+	enum pid_type type;
- 	ssize_t ret;
+@@ -160,7 +160,7 @@ static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info
  	DECLARE_WAITQUEUE(wait, current);
  
  	spin_lock_irq(&current->sighand->siglock);
--	ret = dequeue_signal(current, &ctx->sigmask, info);
-+	ret = dequeue_signal(current, &ctx->sigmask, info, &type);
+-	ret = dequeue_signal(current, &ctx->sigmask, info, &type);
++	ret = dequeue_signal(&ctx->sigmask, info, &type);
  	switch (ret) {
  	case 0:
  		if (!nonblock)
-@@ -174,7 +175,7 @@ static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info
+@@ -175,7 +175,7 @@ static ssize_t signalfd_dequeue(struct signalfd_ctx *ctx, kernel_siginfo_t *info
  	add_wait_queue(&current->sighand->signalfd_wqh, &wait);
  	for (;;) {
  		set_current_state(TASK_INTERRUPTIBLE);
--		ret = dequeue_signal(current, &ctx->sigmask, info);
-+		ret = dequeue_signal(current, &ctx->sigmask, info, &type);
+-		ret = dequeue_signal(current, &ctx->sigmask, info, &type);
++		ret = dequeue_signal(&ctx->sigmask, info, &type);
  		if (ret != 0)
  			break;
  		if (signal_pending(current)) {
 diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
-index 324a3fd0f3c3e..d71dc9a933d44 100644
+index d71dc9a933d44..6f105308ab5f0 100644
 --- a/include/linux/sched/signal.h
 +++ b/include/linux/sched/signal.h
-@@ -274,17 +274,18 @@ static inline int signal_group_exit(const struct signal_struct *sig)
+@@ -274,8 +274,7 @@ static inline int signal_group_exit(const struct signal_struct *sig)
  extern void flush_signals(struct task_struct *);
  extern void ignore_signals(struct task_struct *);
  extern void flush_signal_handlers(struct task_struct *, int force_default);
--extern int dequeue_signal(struct task_struct *task,
--			  sigset_t *mask, kernel_siginfo_t *info);
-+extern int dequeue_signal(struct task_struct *task, sigset_t *mask,
-+			  kernel_siginfo_t *info, enum pid_type *type);
+-extern int dequeue_signal(struct task_struct *task, sigset_t *mask,
+-			  kernel_siginfo_t *info, enum pid_type *type);
++extern int dequeue_signal(sigset_t *mask, kernel_siginfo_t *info, enum pid_type *type);
  
  static inline int kernel_dequeue_signal(void)
  {
- 	struct task_struct *task = current;
- 	kernel_siginfo_t __info;
-+	enum pid_type __type;
+@@ -285,7 +284,7 @@ static inline int kernel_dequeue_signal(void)
  	int ret;
  
  	spin_lock_irq(&task->sighand->siglock);
--	ret = dequeue_signal(task, &task->blocked, &__info);
-+	ret = dequeue_signal(task, &task->blocked, &__info, &__type);
+-	ret = dequeue_signal(task, &task->blocked, &__info, &__type);
++	ret = dequeue_signal(&task->blocked, &__info, &__type);
  	spin_unlock_irq(&task->sighand->siglock);
  
  	return ret;
 diff --git a/kernel/signal.c b/kernel/signal.c
-index 5d110fd089d10..8d711b8a2dd84 100644
+index 8d711b8a2dd84..d4e477e599385 100644
 --- a/kernel/signal.c
 +++ b/kernel/signal.c
-@@ -627,7 +627,8 @@ static int __dequeue_signal(struct sigpending *pending, sigset_t *mask,
-  *
-  * All callers have to hold the siglock.
-  */
--int dequeue_signal(struct task_struct *tsk, sigset_t *mask, kernel_siginfo_t *info)
-+int dequeue_signal(struct task_struct *tsk, sigset_t *mask,
-+		   kernel_siginfo_t *info, enum pid_type *type)
- {
- 	bool resched_timer = false;
- 	int signr;
-@@ -635,8 +636,10 @@ int dequeue_signal(struct task_struct *tsk, sigset_t *mask, kernel_siginfo_t *in
- 	/* We only dequeue private signals from ourselves, we don't let
- 	 * signalfd steal them
- 	 */
-+	*type = PIDTYPE_PID;
- 	signr = __dequeue_signal(&tsk->pending, mask, info, &resched_timer);
- 	if (!signr) {
-+		*type = PIDTYPE_TGID;
- 		signr = __dequeue_signal(&tsk->signal->shared_pending,
- 					 mask, info, &resched_timer);
- #ifdef CONFIG_POSIX_TIMERS
-@@ -2610,7 +2613,7 @@ static void do_freezer_trap(void)
- 		task_work_run();
+@@ -622,20 +622,18 @@ static int __dequeue_signal(struct sigpending *pending, sigset_t *mask,
  }
  
--static int ptrace_signal(int signr, kernel_siginfo_t *info)
-+static int ptrace_signal(int signr, kernel_siginfo_t *info, enum pid_type type)
+ /*
+- * Dequeue a signal and return the element to the caller, which is
+- * expected to free it.
+- *
+- * All callers have to hold the siglock.
++ * Try to dequeue a signal. If a deliverable signal is found fill in the
++ * caller provided siginfo and return the signal number. Otherwise return
++ * 0.
+  */
+-int dequeue_signal(struct task_struct *tsk, sigset_t *mask,
+-		   kernel_siginfo_t *info, enum pid_type *type)
++int dequeue_signal(sigset_t *mask, kernel_siginfo_t *info, enum pid_type *type)
  {
- 	/*
- 	 * We do not check sig_kernel_stop(signr) but set this marker
-@@ -2651,7 +2654,7 @@ static int ptrace_signal(int signr, kernel_siginfo_t *info)
++	struct task_struct *tsk = current;
+ 	bool resched_timer = false;
+ 	int signr;
  
- 	/* If the (new) signal is now blocked, requeue it.  */
- 	if (sigismember(&current->blocked, signr)) {
--		send_signal(signr, info, current, PIDTYPE_PID);
-+		send_signal(signr, info, current, type);
- 		signr = 0;
- 	}
- 
-@@ -2752,6 +2755,7 @@ bool get_signal(struct ksignal *ksig)
- 
- 	for (;;) {
- 		struct k_sigaction *ka;
-+		enum pid_type type;
- 
- 		/* Has this task already been marked for death? */
- 		if (signal_group_exit(signal)) {
-@@ -2794,16 +2798,18 @@ bool get_signal(struct ksignal *ksig)
- 		 * so that the instruction pointer in the signal stack
- 		 * frame points to the faulting instruction.
- 		 */
-+		type = PIDTYPE_PID;
+-	/* We only dequeue private signals from ourselves, we don't let
+-	 * signalfd steal them
+-	 */
++	lockdep_assert_held(&tsk->sighand->siglock);
++
+ 	*type = PIDTYPE_PID;
+ 	signr = __dequeue_signal(&tsk->pending, mask, info, &resched_timer);
+ 	if (!signr) {
+@@ -2801,8 +2799,7 @@ bool get_signal(struct ksignal *ksig)
+ 		type = PIDTYPE_PID;
  		signr = dequeue_synchronous_signal(&ksig->info);
  		if (!signr)
--			signr = dequeue_signal(current, &current->blocked, &ksig->info);
-+			signr = dequeue_signal(current, &current->blocked,
-+					       &ksig->info, &type);
+-			signr = dequeue_signal(current, &current->blocked,
+-					       &ksig->info, &type);
++			signr = dequeue_signal(&current->blocked, &ksig->info, &type);
  
  		if (!signr)
  			break; /* will return 0 */
- 
- 		if (unlikely(current->ptrace) && (signr != SIGKILL) &&
- 		    !(sighand->action[signr -1].sa.sa_flags & SA_IMMUTABLE)) {
--			signr = ptrace_signal(signr, &ksig->info);
-+			signr = ptrace_signal(signr, &ksig->info, type);
- 			if (!signr)
- 				continue;
- 		}
-@@ -3634,6 +3640,7 @@ static int do_sigtimedwait(const sigset_t *which, kernel_siginfo_t *info,
- 	ktime_t *to = NULL, timeout = KTIME_MAX;
- 	struct task_struct *tsk = current;
- 	sigset_t mask = *which;
-+	enum pid_type type;
- 	int sig, ret = 0;
- 
- 	if (ts) {
-@@ -3650,7 +3657,7 @@ static int do_sigtimedwait(const sigset_t *which, kernel_siginfo_t *info,
+@@ -3657,7 +3654,7 @@ static int do_sigtimedwait(const sigset_t *which, kernel_siginfo_t *info,
  	signotset(&mask);
  
  	spin_lock_irq(&tsk->sighand->siglock);
--	sig = dequeue_signal(tsk, &mask, info);
-+	sig = dequeue_signal(tsk, &mask, info, &type);
+-	sig = dequeue_signal(tsk, &mask, info, &type);
++	sig = dequeue_signal(&mask, info, &type);
  	if (!sig && timeout) {
  		/*
  		 * None ready, temporarily unblock those we're interested
-@@ -3669,7 +3676,7 @@ static int do_sigtimedwait(const sigset_t *which, kernel_siginfo_t *info,
+@@ -3676,7 +3673,7 @@ static int do_sigtimedwait(const sigset_t *which, kernel_siginfo_t *info,
  		spin_lock_irq(&tsk->sighand->siglock);
  		__set_task_blocked(tsk, &tsk->real_blocked);
  		sigemptyset(&tsk->real_blocked);
--		sig = dequeue_signal(tsk, &mask, info);
-+		sig = dequeue_signal(tsk, &mask, info, &type);
+-		sig = dequeue_signal(tsk, &mask, info, &type);
++		sig = dequeue_signal(&mask, info, &type);
  	}
  	spin_unlock_irq(&tsk->sighand->siglock);
  
