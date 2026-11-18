@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058279;
-	b=VCEr89xYt3cjmg4kP62ItFqMnWJv1dHeTpahLEgqm7tkk28tlb+qJ8ixS84qvNy+OQxp
-	 fFg+wj8l1DY2xVWlYp+29mjVolFPUDG9YqtVgTSYESmfoRDHrpwwoW6k7ToDy7LGXZjiQ
-	 a7/t3NvoJImIFUnPGykjwSQLZTB2YNOuMxGY+Ohyz27UFD/DLI6MlGlWM2cvqHlTPh2pd
-	 75VyaxVPZEABFeZ7c+INlCHCuTzZUfDkqwIlCxgu1BZjjIl9+UnCI6OQPVB2TsygHPvNR
-	 UtyGPYy7XsUQtk9G+FFG6EpUDKrRZg0aoDaR7Serx9cDsrgiKwc3tS8MAJgrGzzvsBg==
+	t=1795058282;
+	b=PtD6ALBI1U/EEL/TdnQzXhYth0p7ckQRHuROWCCsLz3CdjOADPGM/qqXT6esr/T1Mnlg
+	 4HNnUgMW1q2n1/Qv3krmHMqYbuJMXqFBkSfL+Ss++MZ9vEUqSe8AdbRbCSaxeQNoebFxj
+	 /3fjtpXOgURMNvMIrcJXhxv76OpkmVPr66yD28CMfKIKJgMUHYCP0slXtfAZvUBf9tWH6
+	 xJ25Adds6fGbr+2ISHZxyAanyli1G4PHd7xM+uYGArXpUEjgVwKRN+ugm6g2p5zy81IfF
+	 /gn0w/fYA3XLQAhDp7njBKagqls3Vc8J4WP6ux9W4MOzgjbxlON/i0yEeZ1LjEc/1sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058279;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058282;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ijSzKM50eoitaQaTOosd83PfV+BAbQfvksQkQ3+2HI=;
-	b=ODN2cDo7U5lW/tmV62KEDNH3u92dYVqISYaA4OHxduJ06+hC3jZqARKs7IN+tKfyL2nu
-	 Ts0ag3QFYOYEEgUENKJGZEOsLn/40aAT4f3QBSQIF/J/RTGEkziavbN4kGrJvFnEwzPmh
-	 9+G106ePfGhoxNeI3l/SkUJHcjmy5DICwhRukwyF35UNH/JdcJOfKWYX7p+/BZy1vkWr5
-	 3CWSj6DDUQ1rIghmHD3aNTa4XmKP8BNJQ/vvy8ksuu0ausO+UWoGQICHjtzaqH3uMfbPQ
-	 rKiArgz+V5UFU/38bYuGvxvxuM1qNi1kxJZmcscqIompISuWKEDp+cw/b13WE9maOng==
+	bh=Sa3BVn7o07gTBIyYmvmgdurlcTALcjt6HQ6EZEHSXSY=;
+	b=nh30w6gxFBvxOkPWU2TsPIHg5uHuGLjpBFh0xmPLwfg8dZSKXI3c/d/dfJm3lJqwAbaa
+	 2dMVcWQYGxBA+8Htkvh5B33StPDTQlpvJHpIIHbiI6/cfE3zWXRccZffxmt0RYMfB1W+X
+	 ThOrEOkOk0U47v4ZFxH/ib1HQi8Tck4ylZSLVEaumKlB4b4YnkeabNObR1h74jE+ABEQf
+	 dxOr4/UUAkAnCvgXbeCb81bcDZbc9DGcWsyj3rspXVF7RG9YzIdE/z/hq2hHPx0JhKY0A
+	 ySCz6d6ZDbn8C0EttPMg+Lk477MiQQKiHJsLTdukWeNKSSL5UT8mPj/Ks84DPMJIjNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tgZC+1Jp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdgEtwkG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35165606A31C;
-	Thu, 19 Nov 2026 03:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18922606A31C;
+	Thu, 19 Nov 2026 03:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tgZC+1Jp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A151F000C4;
-	Thu, 19 Nov 2026 03:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdgEtwkG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 661FA1F000C4;
+	Thu, 19 Nov 2026 03:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058279;
-	bh=4ijSzKM50eoitaQaTOosd83PfV+BAbQfvksQkQ3+2HI=;
+	s=korg; t=1795058282;
+	bh=Sa3BVn7o07gTBIyYmvmgdurlcTALcjt6HQ6EZEHSXSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgZC+1JpV/X7+meYKDIOb6Vlb5osdiX+Ad73mwSLdfJyaDm8bpexnAjhCA7/++MHa
-	 Rw8ci5EV5KSlbuArxvjeb4tvLPHz367u1zXUBtdff4zCrzbsYY1d53+ZfYtIBCRzE/
-	 3Cn2ZTJ7ZTWFR/yi6SGvq00V3Wbm2Sv++kKghT+k=
+	b=gdgEtwkGPO3ZHWBnyBWzJNekn0cuHZQQJElvG+L2SdkL/oRHwGo3rrjgO0196Dtl0
+	 AsS5v3jEVGaGkqxKcMZKBesVSc5iP9GMmtMv33whUQ8iP4Ork/7YRVsHOFb2g+X5VX
+	 fJfQaApJ5CadrvJ6uCRMg5jTdmtPn/AA5256rDfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0428/1848] media: vpif_display: Fix i2c adapter reference leak in vpif_probe()
-Date: Wed, 18 Nov 2026 15:41:06 +0100
-Message-ID: <20261118145932.111852147@linuxfoundation.org>
+Subject: [PATCH 5.10 0429/1848] mfd: wcd934x: Fix NULL pointer dereference on IRQ probe deferral
+Date: Wed, 18 Nov 2026 15:41:07 +0100
+Message-ID: <20261118145932.143831449@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,47 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit f5863ea3f99265e5e297e3dcf0f47432fee2b8ac ]
+[ Upstream commit dcf0e640b553d33512fbcaedb909c32ba9636a64 ]
 
-vpif_probe() takes a reference to the i2c adapter with
-i2c_get_adapter() and passes it to v4l2_i2c_new_subdev_board(),
-which does not consume it, but the reference is never released, so
-it is leaked both when the probe succeeds and when it fails after
-the adapter has been acquired.
+ddata->dev is only assigned at the end of wcd934x_slim_probe(), but the
+of_irq_get() error path has passed it to the error print since the
+driver was added, while it is still NULL.
 
-Release the reference with i2c_put_adapter() on the success path and
-in the probe_subdev_out cleanup.
+This used to be harmless with dev_err(), which copes with a NULL device
+and was skipped on -EPROBE_DEFER. Since the switch to dev_err_probe(), a
+deferred IRQ reaches device_set_deferred_probe_reason() ->
+dev_driver_string(), which dereferences the NULL pointer and crashes
+during probe. Use dev, which is already valid at this point.
 
-Fixes: e7332e3a552f ("V4L/DVB (12176): davinci/vpif_display: Add VPIF display driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 0f1b1b899521 ("mfd: wcd934x: Simplify with dev_err_probe()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/mfd/20260903145651.AC1311F00ACA@smtp.kernel.org/
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://patch.msgid.link/20260903-wcd-dma-v3-1-d3920c6563c4@ixit.cz
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/davinci/vpif_display.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mfd/wcd934x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/davinci/vpif_display.c b/drivers/media/platform/davinci/vpif_display.c
-index 46afc029138fc..988db0128f735 100644
---- a/drivers/media/platform/davinci/vpif_display.c
-+++ b/drivers/media/platform/davinci/vpif_display.c
-@@ -1336,11 +1336,14 @@ static __init int vpif_probe(struct platform_device *pdev)
- 		}
- 	}
+diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
+index c274d733b6566..bb889a1cd9423 100644
+--- a/drivers/mfd/wcd934x.c
++++ b/drivers/mfd/wcd934x.c
+@@ -220,7 +220,7 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
  
-+	i2c_put_adapter(i2c_adap);
-+
- 	return 0;
+ 	ddata->irq = of_irq_get(np, 0);
+ 	if (ddata->irq < 0)
+-		return dev_err_probe(ddata->dev, ddata->irq,
++		return dev_err_probe(dev, ddata->irq,
+ 				     "Failed to get IRQ\n");
  
- probe_cleanup:
- 	v4l2_async_notifier_cleanup(&vpif_obj.notifier);
- probe_subdev_out:
-+	i2c_put_adapter(i2c_adap);
- 	kfree(vpif_obj.sd);
- vpif_unregister:
- 	v4l2_device_unregister(&vpif_obj.v4l2_dev);
+ 	reset_gpio = of_get_named_gpio(np, "reset-gpios", 0);
 -- 
 2.53.0
 
