@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047481;
-	b=u5bJQXqHv7hBMaR54qtsBQ+9Iq081GnCWlpe4TVS2nNji4jTD6TrKkxSSIDU5cdsnIBa
-	 gINYFJ1b4Utmc49UlpRt+YpQhvqDRD3Vz1LrfkSKuN6chnRcHKOk34UK+36YUPm1mIirt
-	 sWFjWHzb0cbFvRRigOay2DSmvNT0cgs2iXBpxBV7d5wGcQ3h6VlOzsn8ZQcmsempy1PFK
-	 twlhmIu8WDb/kVIJ6JDh1BOodV/k7OvcDtl191ojm6SCXmVnw9CYzqqQPrpIbt3J4NAnn
-	 +2Nx96rwp4QjVERVrWLI7tuTPgCJllW5a1oMzm5YFYEvB8foVDTWXtD7msaGPijN03w==
+	t=1795047484;
+	b=cb9Yod0ATRgYnDddmxeKwjaNDMO63PNaSzsOvcUhbkgrPTg85DlbXlxXrnmJXfxCvbia
+	 fn74xEjxHmbvpNvr4+n2K3qpRqE+TY0o8I2MN1E2Vif8A32C6RFAdNGI2qqKbnz0BcbGp
+	 OcBWepyJlAKbCiWrKxMNq0u1/LQCwJb1BhD1rfpqRWFpec7OC1J98+CvL/ZSrkShf+h8z
+	 ftQg0I/pclq/6m/qmoA8aMfLUVCeoWmbz7DugRkUIiY16n6jU88gxkSceoEaGvo6WIHZu
+	 Zh7Vpdmv1oho1mmk9DCP2cJ0HU/jFw3KLbJbAWBNeX4k015fWy+Ql6V9pHcXWg8go/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047484;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=QX/n+TYsm1se4O9WN4kFs9Xh0qrGXV9Ki4cSY1VvNL4=;
-	b=47W3yVM2/7QxDy5e4F6EACj+JhugCfV0C3KljERG9LuIhLJu08csVhlrCxPc61aTwFdv
-	 Ji8wWZSY5dal0+2U0I78DvZdNaj2k6thidQENBIWDF11VOu9Lozt/Rvo4kjVw/ZAmBMIy
-	 TLOd1oYIdHu7OL4puhw8WqGhsSi6MoEzS5UCMdtq/TvaG8IM5bWhUPquLPTtWpEPRl/LE
-	 DL8++wixN9IkoqvUP8WXD1sAQpzMLuVsTY8FAeWrBguS37uGsxe6B8BMlGTOCoa8NdCPm
-	 t9HM6PwFtEtoQe32Mnfis9fUWQbMhASJyVEnQuEfRUjdLtlQa5gDBDIBeb/7XOndk0w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=LFi0tSQE98c0oMQhMUbUD+aalKcd0iBLLEanAE/fuNA=;
+	b=WMTSyRoqZOApxjVIwMxZcYTWXACShMEYiGq47iud1XUGNHdDO+je0EeJAu0gGZSpidpk
+	 MvyCHT4zTtEYHHBL1wKUTc4p9ppHUm4/Vz+wMg6TcnnFkKLiWRsTmbUEwn3Wfqa4Y41Ck
+	 vVUbgHbiucLs1jcHlRcfQSyX/nLXYEHrGMxwqWNCGSwv2TBZQiQ8vP9NqjUycWciIQfc3
+	 4T1YDt7vF2PVYP1qGkrzDRJJp6bxxzuWhl965DWNjXWhGThY2/eaVKn9ucyuTPRTmcm6n
+	 PWrnVHVjWvRy0L5ZillYyHd4+zCdge06rdqjFzvpcsuI1jh56QqbXalTueFE1SpxZuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bL8VY9Kp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kR5ORe4y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5926D606A325;
-	Thu, 19 Nov 2026 00:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EE6606A325;
+	Thu, 19 Nov 2026 00:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bL8VY9Kp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF42E1F000C4;
-	Thu, 19 Nov 2026 00:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kR5ORe4y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70ECD1F000C4;
+	Thu, 19 Nov 2026 00:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047481;
-	bh=QX/n+TYsm1se4O9WN4kFs9Xh0qrGXV9Ki4cSY1VvNL4=;
+	s=korg; t=1795047484;
+	bh=LFi0tSQE98c0oMQhMUbUD+aalKcd0iBLLEanAE/fuNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bL8VY9KpGnNPknXgJtoNSsNo46x52eyzROITPNVKAmHYM4IVKa/jWRz7G0kR44ZWR
-	 5L0/Bl+yqzxsiHoBaKEbpv1O5UOyXFxX20EFh7cnf9otU/j1/gNW6YBT2aS3L04Gum
-	 GqUV7pT2D7JnVeqOlZ48RfZ7syxU3E/oth6fxbV0=
+	b=kR5ORe4y/zrgz2Z26GrQsgy87CJiJbq2zCLOwyOSgHAEaDbFVnHb8fNt4SyWDJxkX
+	 vQG3DAzyEHxENKEOJQB6lEEZLPFnWDdA2xYKhKxbB1cWJU6PtpQiQsYtQFzjaeSBWT
+	 ScY+fk0hS+eD3XW10vYsJLGq+fqxjEF+H8de1ZV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1655/2857] drm/amdgpu: keep the CS user fence BO in GTT
-Date: Wed, 18 Nov 2026 15:44:49 +0100
-Message-ID: <20261118150300.924027533@linuxfoundation.org>
+Subject: [PATCH 6.1 1656/2857] ksmbd: do not read past the DACL in the access denied debug message
+Date: Wed, 18 Nov 2026 15:44:50 +0100
+Message-ID: <20261118150300.958724676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,77 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 7a56d929dc2304edaa6231e1eb5eb82b7e8b74a9 ]
+[ Upstream commit 8296a64df5448548f410fb246c1d88a93609602b ]
 
-The CS ioctl hands the GPU the GART address of the user fence BO, but
-since the BO keeps its own preferred and allowed domains, it no longer
-makes sure the BO is in GTT. A user fence in a VRAM BO, which only needs
-to be a page in size, gets its address from amdgpu_bo_gpu_offset(), which
-warns about non-contiguous VRAM. On navi31, a CS with a user fence in a
-4K VRAM BO, or in one created with AMDGPU_GEM_CREATE_VM_ALWAYS_VALID:
+When smb_check_perm_dacl() falls back to the POSIX ACL and then denies
+the request, its debug message prints the access mask of the ACE that
+the second DACL walk stopped at. On that path the walk ran to the end
+of the DACL, so the pointer is one past the last ACE. If the DACL is
+the last part of the stored security descriptor, the message reads 4
+bytes past the buffer, and KASAN reports a slab-out-of-bounds read in
+smb_check_perm_dacl().
 
-  WARNING: amdgpu_object.c:1531 at amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu], CPU#11: cs_gem_checks/18393
-  RIP: 0010:amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu]
-  Call Trace:
-   <TASK>
-   amdgpu_cs_parser_bos.isra.0+0x4eb/0x850 [amdgpu]
-   amdgpu_cs_ioctl+0x97e/0x2510 [amdgpu]
-   drm_ioctl_kernel+0xac/0x110 [drm]
-   drm_ioctl+0x2c6/0x5b0 [drm]
-   __x64_sys_ioctl+0xa0/0xf0
-   do_syscall_64+0xa3/0x4d0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Print the requested and allowed masks instead. They are what the check
+compares.
 
-and BOs which can't be in GTT at all, like GWS or OA ones of a page in
-size, pass the checks as well.
-
-Only take BOs which can't be anywhere else than in GTT as user fence,
-which the CS then validates there along with its other BOs. While at it,
-detect userptrs with amdgpu_ttm_tt_is_userptr(); amdgpu_ttm_tt_get_usermm()
-returns NULL once the task which created the userptr is gone.
-
-v2: only take BOs which can only be in GTT instead of special casing the
-    user fence BO in the validation, use amdgpu_ttm_tt_is_userptr()
-    (Christian)
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f16989def9561d04d0f2e77216f5319112d29bf1)
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-[ sashal: Replaced p->uf_bo references with the existing local bo pointer. ]
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: adjusted context for the broader access mask at check_access_bits ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/smbacl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 894989f453fff..cac55781798cd 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -153,7 +153,12 @@ static int amdgpu_cs_p1_user_fence(struct amdgpu_cs_parser *p,
- 	if (size != PAGE_SIZE || data->offset > (size - 8))
- 		return -EINVAL;
- 
--	if (amdgpu_ttm_tt_get_usermm(bo->tbo.ttm))
-+	if (amdgpu_ttm_tt_is_userptr(bo->tbo.ttm))
-+		return -EINVAL;
-+
-+	/* The GPU writes the user fence through the GART */
-+	if (bo->preferred_domains != AMDGPU_GEM_DOMAIN_GTT &&
-+	    bo->allowed_domains != AMDGPU_GEM_DOMAIN_GTT)
- 		return -EINVAL;
- 
- 	*offset = data->offset;
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index f0ec137e4efce..d3314b516e274 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1626,8 +1626,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ check_access_bits:
+ 	if (granted &
+ 	    ~(access_bits | FILE_READ_ATTRIBUTES | READ_CONTROL | WRITE_DAC | DELETE)) {
+-		ksmbd_debug(SMB, "Access denied with winACL, granted : %x, access_req : %x\n",
+-			    granted, le32_to_cpu(ace->access_req));
++		ksmbd_debug(SMB, "Access denied with winACL, requested : %x, allowed : %x\n",
++			    granted, access_bits);
+ 		rc = -EACCES;
+ 		goto err_out;
+ 	}
 -- 
 2.53.0
 
