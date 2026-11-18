@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061518;
-	b=LqrR14YLOLGUSo/Z1dzSLh18pKrl1uzuJ7waJ/v69nBy3dLyhKrRDnY3Tg9fWmmUwh45
-	 pigGUTF2dLDjLC0LULGf15qancIr4Il0ij1EofTjjUNEk/rTS4JOwkqyEhGEBR7/BGnl/
-	 2f9j+0zl+tIJ5IPUJre2pm1p32+S5phv9H6i4e0tD4fMVYhzh0mwvWVilBqvURRa++ZC4
-	 oNQ9eqJFFe+1YZtrHYaz2/QrxaPIhGzzRx3Wjm1WoXBEy/sSkyVHhW7+8RvW3rmRzo64s
-	 m0eNh9ziAqDosDy2jl883zzF5AGYCwyWmyQB51qVUC6DbyFBr9HMJoTTjxrGu7oxf/w==
+	t=1795061521;
+	b=d5YQ9UzUwkxwCg3D1WOzN3za3HamsGzvZmBgxnQl7qu8l7nZKso3Q/ZssvjvRv5UFhqc
+	 kou6b+cqJKIeHAvt3vvrB1XQx91s5kiWei2KX1OLYtV1zWQ2kiY5KxT9/KO3lm8ygMwVA
+	 s1Sh6/CAC/eQb9pu7ZTwxXwI44+CHScqsEfA1Mv3kaUARhghTStHBaDxASuym8mTbX5CL
+	 uC0AXwn8anmAKzoAt3cruQoUNaIRPwEHHydMEzaWfyFKR6ESo9QW+qvDDufw4+RBdiLSG
+	 iU5wdN80g2yb8qOsPVWOVgp3uRQlZf8NotL2bDwv6BUlh38IosqxqafoQUFLb7oc5BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DdCGLEkmE0CZAuN/BHqj3AdlXO6F+bAIyQDBwJeM2Cs=;
-	b=ZMXUMPDTzeoyudwisHNF/Z72OfblpQK6iJ1igg4JmJNIFpcqA+uPusycLVrOKYP+Qv9X
-	 7rNVFx2xFuf87tdJ7wsLmtvBNRoCYWV+gt5fdM4iCk+xq5Sz7PQjgV0QZQ/HlaBchQYix
-	 UM9iqu3oFSg+NojGgqFt/LaYuny9SZ497//QPalCiIURPUeLAvCxQNx1q3VnYpxyZ1FLG
-	 usIIMM+BZ47tL5v2KTLiWk4F2yugsGAG8HznJtgdHOQ3XAuvcUdaY2QOtjs/suVhYMmX7
-	 0Krr3A8aWr5zd87BGrzIemJSrk6xGebj4XQDIxDJIu2CZt+jpSWXCyaGTmBzeWkMtwQ==
+	bh=20JLRJN5U3n8ORKj2Pw9ar22mTZBFgiqhOd46OOOzXM=;
+	b=rNaULZ/i1VMR8h8QRVVP2kT6RkRCGCK7yS1usOhvMeF2/atviCwA++FJ6eLFKzLHKwT9
+	 gjfrbBBOFCpH7QtNU5Jr83Or/dRxf2C4lhySZFTDOCSM1Y7FnVAfL7qgQVEVTg7zjkuuS
+	 Ef5OPlsv8HEmrzVNfsxnpFwssFzVDnX3YEdIhhe4nJ0wYRzLDVn6O4iMSz6XgfuCnGpCv
+	 qNR8Kd3GsCN7CPPWZzC0mqUTZWdKbym+J0aBWnYNcyUBTFYPPjo7HYwD3PrW7PtCgxt2u
+	 Ru/zS+Di/jsyOq+cRpKY5FgFo6FSMAUVb2sWB/lruNIearkn0IE0Tvq/GXOu7J/tO1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWvSkaeZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhQ4WTQz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7DF60A260A;
-	Thu, 19 Nov 2026 04:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15C5606A325;
+	Thu, 19 Nov 2026 04:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWvSkaeZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278B31F000C4;
-	Thu, 19 Nov 2026 04:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fhQ4WTQz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDCF1F000C4;
+	Thu, 19 Nov 2026 04:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061517;
-	bh=DdCGLEkmE0CZAuN/BHqj3AdlXO6F+bAIyQDBwJeM2Cs=;
+	s=korg; t=1795061520;
+	bh=20JLRJN5U3n8ORKj2Pw9ar22mTZBFgiqhOd46OOOzXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jWvSkaeZUA86AAxwjh9LlPBHBwe569QH/VAYD2wJZOdgBEXg8LMVORDNlArmOGOMV
-	 6Z4R9EcyqhicjZyYYdppXIBnbUyuGLS/aToXQ3nu9/tjLFzzvq2AZSQ6LkHVBnffGL
-	 uYhkLjlNtBwgUdRlq5HvnJCKKaxT2r8DwCYz3V4o=
+	b=fhQ4WTQz9Z/dcIg6+Ceup/NAOxFHsI9j373zvJiHOI81/lWBAmR4lDBPKJoPUy224
+	 yH5Cv35xqgKBct4KyBBal7zdirIxkAzCm4CsvojhF7islTUiDzWFUuuqWlF5O+OYSz
+	 ThZngXezmNvqmAMrEG+V8xH+IgK1dJbZq8gw1KEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chien Wong <m@xv97.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1580/1848] wifi: mac80211: fix encryption tailroom
-Date: Wed, 18 Nov 2026 16:00:18 +0100
-Message-ID: <20261118150025.716954278@linuxfoundation.org>
+Subject: [PATCH 5.10 1581/1848] tcp_bic: fix divide by zero on max_increment == 0
+Date: Wed, 18 Nov 2026 16:00:19 +0100
+Message-ID: <20261118150025.755610748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,42 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chien Wong <m@xv97.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit c49f54fd2abff08964677db8fdc1674c713ab42c ]
+[ Upstream commit 8edbf6c23363563e508a61f3f26f4e4b6eec9dd5 ]
 
-BIP-CMAC-256 and BIP-GMAC append a 26-byte MME but mac80211
-currently reserves only 18 bytes of encryption tailroom.
+max_increment is how many packets cwnd can grow per RTT, so 0 makes
+no sense, and bictcp_update() divides by it.
 
-Generating 26-byte MME may happen to work because the actual skb
-tailroom can exceed the requested amount. For example, dev_alloc_skb()
-rounds the allocation to kmalloc size buckets or alignment boundaries,
-and the extra space may cover the 8-byte shortfall.
+Reject values below 1 when the parameter is written.
 
-Reserve enough tailroom for the 26-byte MME.
-
-Fixes: 56c52da2d554 ("mac80111: Add BIP-CMAC-256 cipher")
-Signed-off-by: Chien Wong <m@xv97.com>
-Link: https://patch.msgid.link/20261012140738.70178-2-m@xv97.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 83803034f423 ("[TCP]: Add TCP BIC congestion control module.")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261008092641.140777-2-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_bic.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 2da452ec53288..04ccf036783b2 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -48,7 +48,7 @@ struct ieee80211_local;
+diff --git a/net/ipv4/tcp_bic.c b/net/ipv4/tcp_bic.c
+index f5f588b1f6e9d..c2b602ff04d4c 100644
+--- a/net/ipv4/tcp_bic.c
++++ b/net/ipv4/tcp_bic.c
+@@ -27,15 +27,25 @@
+ 					  */
  
- /* Required encryption head and tailroom */
- #define IEEE80211_ENCRYPT_HEADROOM 8
--#define IEEE80211_ENCRYPT_TAILROOM 18
-+#define IEEE80211_ENCRYPT_TAILROOM 26 /* current max: GMAC/CMAC-256 MME */
+ static int fast_convergence = 1;
+-static int max_increment = 16;
++static unsigned int max_increment = 16;
+ static int low_window = 14;
+ static int beta = 819;		/* = 819/1024 (BICTCP_BETA_SCALE) */
+ static int initial_ssthresh;
+ static int smooth_part = 20;
  
- /* power level hasn't been configured (or set to automatic) */
- #define IEEE80211_UNSET_POWER_LEVEL	INT_MIN
++static int max_increment_set(const char *val, const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 1, INT_MAX);
++}
++
++static const struct kernel_param_ops max_increment_ops = {
++	.set = max_increment_set,
++	.get = param_get_uint,
++};
++
+ module_param(fast_convergence, int, 0644);
+ MODULE_PARM_DESC(fast_convergence, "turn on/off fast convergence");
+-module_param(max_increment, int, 0644);
++module_param_cb(max_increment, &max_increment_ops, &max_increment, 0644);
+ MODULE_PARM_DESC(max_increment, "Limit on increment allowed during binary search");
+ module_param(low_window, int, 0644);
+ MODULE_PARM_DESC(low_window, "lower bound on congestion window (for TCP friendliness)");
 -- 
 2.53.0
 
