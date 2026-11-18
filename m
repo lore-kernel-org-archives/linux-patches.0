@@ -1,51 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026289;
-	b=rZ6XFzcaFH1OCS4Ua2OcNVomOuDTYDx7h4Fl/lgZ9rW2dFKe2PmXozR0sk0wA/k2+AYY
-	 jtEeYLltr+vy3pv/StNnjdSEo+L3cwUQjGzIbfxoWmSK2h44ZS4M3pkFhlBOaNf5Jpqjv
-	 18+MZcA9NWt8dbJWE2f4CyDsORqvzEBSed//mkfLVCuP3l0j/I5o76LAI8bICV1MFf3iT
-	 qvtuza5md223NHJh5RU9MbTdejNLpNluZv6sQQbuhUPMKTUirL5JFvtyq+HVIuw1JZhhE
-	 PNBFcUNjAsDQHtYzfVjXVSuUMXuiUckU1dhcqgrhsQ3NXcITbpDeFbwW7P4/nh31UPA==
+	t=1795026292;
+	b=aqMzjaokW9iG5nzgLu6W4Qtjg1HjKyhmJgxpPhpWFsD6X0gLpVsISgePDr8wbawvSQRk
+	 SNtLBVhoE93oHn5byf+c0Lr+vGvdTiXbzc7cE2IlQCncP4OGT86hfm/TmpAXr1HA6Fn0O
+	 MG0ZT5VqLARiib42aZG0yadLn3g3xVFPcPIemNbx6VifR4xH5+qSwETIV0jESVngpOwpb
+	 JhvenrOB5uBMcLOxLkwukrWWI34+30pa1+gy8UDfVNOAHHncThvrHPJJOFRb5dd0MPRmz
+	 13v5DHZXyg3yl9yoaCEpwxRiV4nRMYsACCJctmx/DTDYTbscqSVaq7PJiHZwntH8BQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vgBllYzht2Y5JSpaCQ0AF5TbTeM257erwNBMYKizARU=;
-	b=TNp1JpOw7b3j3rNgwFOVWTOMCd9FnwLKc3i2Fsf9otvqfSe5KNoix5jEWvoCrcW2mDcB
-	 knneZys5vU7D9POFPSECKMZrAb8fWjg5TPKWSoQAX3eBkDuuVjT2YSHtJ1ODlYym4qiTk
-	 30zmckx9e68KBMJl/Zvvc00HpRwkJXLmMuG2oWk8317+OSN3hMha6xG2vs2n9NFf6WPW9
-	 xixn2M2HLxhqe6CSuk+LnC3gGymJ4P/3t8zVddPO3+j8QwBXJUU0gNuU6Us81jhl4EWE0
-	 FHaGarFAJfh/rtO7Z9M3q5CF6BQma3PmwjynPu8L4KALkD26F9gomh6GE6yavLfHB5g==
+	bh=Gg4zJBhkZID6dcRwaR7VDVQ8QXHt4Dvi4NvD7ORARS8=;
+	b=OSbH6mZWZcEIMJD3Wl0L9wGKCCLNS2atnzUQsagzhDfUX3zLUbvSsUentcuV00LHC69d
+	 NVCTRmu//RTGqAjIPqKBpEK7mvnTHJQb+HCdFeRnADBUiA5pJ8yYZB8Efmu7KcomiIuJl
+	 76QxTVQ+VGYY5iuZP7VMqjsi4xdSwmU3xPLDn+vCbyxQjs/9ad7wu5HOrJUwm4nYFiRQo
+	 CcYhtdvfPopEycq6deCl9F7NVeZ4SfoRV5KeHuzQZR74xysvdZH9Gox3WQHrODCuLAaTT
+	 fYYmpiW3dR3VfLaFtaLUl7UI5xL8xKSsj8mQyazrMj+bMeyVwcFdTc26unwR8vsS+MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mE1pEdyT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MyUqVaus;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBEB606A32A;
-	Wed, 18 Nov 2026 18:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8632606A325;
+	Wed, 18 Nov 2026 18:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mE1pEdyT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B601F000C4;
-	Wed, 18 Nov 2026 18:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MyUqVaus
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2718B1F000CA;
+	Wed, 18 Nov 2026 18:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026289;
-	bh=vgBllYzht2Y5JSpaCQ0AF5TbTeM257erwNBMYKizARU=;
+	s=korg; t=1795026291;
+	bh=Gg4zJBhkZID6dcRwaR7VDVQ8QXHt4Dvi4NvD7ORARS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mE1pEdyTo5cxWf9M5mBNbbD1jitMcliqVwLVblUrDoG2mlU44l0OCEnnWjo/gudq5
-	 JW3oLl8fq6+RDTa10NefmjzqFTfPwLFBw1UnTQro/LiEt+quTSzA/xBkmg2geBb/qR
-	 IvCbEgm2ihEB4P02WeZ3yLNuLURfEkvYLirrTT2Y=
+	b=MyUqVaus1ALgpSRL3N8e5DwVry25fXVrLG7o9lHCJidCL0pR0s9+FE6MQiu85Jpuv
+	 DJ9rjrV4mQB9qowfIkHoMyH0nkEmHLs4s+OsZ/Ikfcew8kYuA6iRcSiCGGo46Jdscz
+	 N2XL7B+ic4xFuF83mOUSg0ZEwhVWwRLZTLI1ITVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1330/2151] seq_buf: Do not print an empty line from an overflowed seq_buf_do_printk()
-Date: Wed, 18 Nov 2026 15:51:05 +0100
-Message-ID: <20261118150210.519856039@linuxfoundation.org>
+Subject: [PATCH 6.18 1376/2151] selftests/damon: stop kdamond on error exits of no-op commit test
+Date: Wed, 18 Nov 2026 15:51:51 +0100
+Message-ID: <20261118150212.139579640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,209 +85,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 
-[ Upstream commit a09fb764832dd7dbb9ccc38a9830f7294889c8ae ]
+[ Upstream commit 65c7e923ed1afa7329f8b910327ebf6ae10a5fb6 ]
 
-seq_buf_do_printk() prints a buffer line by line, then prints whatever
-follows the last newline. When a string has overflowed at exactly a
-newline, an empty line is printed since the pointer hasn't reached the
-overflow mark of the seq_buf. Switch to just check if the string is
-already empty and only print if not.
+Patch series "mm/damon: misc improvements in tests and documents".
 
-The only caller is the memory cgroup OOM report, so this could only ever
-add a blank line to a report whose statistics already did not fit.
+Add various improvements to DAMON tests and documents.
 
-Add a test that registers a console to count the records that
-seq_buf_do_printk() emits. It counts the records carrying the test's
-marker, and the records holding nothing but a line feed that arrive
-after one, so that unrelated kernel messages do not disturb it. Both
-states that reach the flaw are covered: exactly full, and overflowed.
+Patch 1 and 2 from Zenghui Yu (Huawei) let DAMON selftest to clean up its
+state and output after running the tests.  Patch 3 from Eva Kurchatova
+makes a few selftest be able to run with Python's safe path mode.  Patch 4
+from Kunwu Chan improves coverage of DAMON kunit tests.  Finally, patches
+5 and 6 from Liew Rui Yan clarify and fix typos on documents for DAMOS
+quota behaviors.
 
-Tests passed under qemu on ARCH=x86_64 with GCC 16.2.0 and CONFIG_KASAN=y,
-and on big-endian ARCH=s390 with GCC s390x-linux-gnu 16.2.0.
+Below are notes that can be removed in the final commit message.
 
-Fixes: 96928d9032a7c ("seq_buf: Add seq_buf_do_printk() helper")
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261005155708.1471260-1-kees@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+This is a batched repost of DAMON patches that were individually posted.
+Please refer to each patch for changelog.
+
+This patch (of 6):
+
+The sysfs_no_op_commit_break test starts a kdamond via sysfs, but its
+error paths (e.g., drgn not installed) exit without stopping it.  The
+leaked kdamond then makes subsequent tests, e.g.  lru_sort.sh and
+reclaim.sh, skip with "Another kdamond is running".
+
+Wrap the post-start logic in try-finally so that kdamonds.stop() is
+executed on every exit path.
+
+Link: https://lore.kernel.org/20260914141952.91465-1-sj@kernel.org
+Link: https://lore.kernel.org/20260914141952.91465-2-sj@kernel.org
+Fixes: 10725cd2b09a ("selftests/damon: test no-op commit broke DAMON status")
+Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: GLM-5.3 OpenCode
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Cc: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: Lian Wang <lianux.mm@gmail.com>
+Cc: Liew Rui Yan <aethernet65535@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/seq_buf.c             |   2 +-
- lib/tests/seq_buf_kunit.c | 132 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 133 insertions(+), 1 deletion(-)
+ .../damon/sysfs_no_op_commit_break.py         | 35 ++++++++++---------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/lib/seq_buf.c b/lib/seq_buf.c
-index b59488fa8135c..5161987fc8916 100644
---- a/lib/seq_buf.c
-+++ b/lib/seq_buf.c
-@@ -128,7 +128,7 @@ void seq_buf_do_printk(struct seq_buf *s, const char *lvl)
- 	}
+diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+index 2c65cffe6b545..81774ddc55ac4 100755
+--- a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
++++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+@@ -47,26 +47,27 @@ def main():
+         print('kdamond start failed: %s' % err)
+         exit(1)
  
- 	/* No trailing LF */
--	if (start < s->buffer + s->len)
-+	if (*start)
- 		printk("%s%s\n", lvl, start);
- }
- EXPORT_SYMBOL_GPL(seq_buf_do_printk);
-diff --git a/lib/tests/seq_buf_kunit.c b/lib/tests/seq_buf_kunit.c
-index eb466386bbefb..0934dfb602ff6 100644
---- a/lib/tests/seq_buf_kunit.c
-+++ b/lib/tests/seq_buf_kunit.c
-@@ -6,7 +6,9 @@
-  */
+-    before_commit_status, err = \
+-        dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+-    if err is not None:
+-        print('before-commit status dump failed: %s' % err)
+-        exit(1)
++    try:
++        before_commit_status, err = \
++            dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++        if err is not None:
++            print('before-commit status dump failed: %s' % err)
++            exit(1)
  
- #include <kunit/test.h>
-+#include <linux/console.h>
- #include <linux/seq_buf.h>
-+#include <linux/string.h>
+-    kdamonds.kdamonds[0].commit()
++        kdamonds.kdamonds[0].commit()
  
- static void seq_buf_init_test(struct kunit *test)
- {
-@@ -216,6 +218,135 @@ static void seq_buf_putmem_hex_overflow_test(struct kunit *test)
- 	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), expected);
- }
+-    after_commit_status, err = \
+-        dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+-    if err is not None:
+-        print('after-commit status dump failed: %s' % err)
+-        exit(1)
+-
+-    if before_commit_status != after_commit_status:
+-        print(f'before: {json.dumps(before_commit_status, indent=2)}')
+-        print(f'after: {json.dumps(after_commit_status, indent=2)}')
+-        exit(1)
++        after_commit_status, err = \
++            dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++        if err is not None:
++            print('after-commit status dump failed: %s' % err)
++            exit(1)
  
-+/*
-+ * Counters for the console that seq_buf_do_printk_test() registers while it
-+ * runs. Only records carrying the marker are counted, so unrelated kernel
-+ * messages do not disturb them.
-+ *
-+ * An empty record carries nothing to recognize it by, so count one only
-+ * where the flaw puts it: directly after a record of ours, with nothing in
-+ * between. That still misreads a bare line feed printed by another CPU in
-+ * exactly that gap, but no longer counts one printed at any point while the
-+ * console happens to be registered.
-+ */
-+#define SEQ_BUF_PRINTK_MARKER	"sbdpkx"
-+
-+static unsigned int seq_buf_printk_marked;
-+static unsigned int seq_buf_printk_empty;
-+static bool seq_buf_printk_last_was_ours;
-+
-+static void seq_buf_printk_capture(struct console *con,
-+				   const char *s, unsigned int count)
-+{
-+	const char *text = s;
-+	const char *prefix;
-+
-+	/*
-+	 * Skip what printk() puts in front of the message: a timestamp,
-+	 * and the caller id as well under CONFIG_PRINTK_CALLER, so strip
-+	 * every bracketed group rather than just the first.
-+	 */
-+	while (count && text[0] == '[') {
-+		prefix = memchr(text, ']', count);
-+		if (!prefix)
-+			break;
-+		count -= prefix + 1 - text;
-+		text = prefix + 1;
-+		if (count && text[0] == ' ') {
-+			text++;
-+			count--;
-+		}
-+	}
-+
-+	if (strnstr(text, SEQ_BUF_PRINTK_MARKER, count)) {
-+		seq_buf_printk_marked++;
-+		seq_buf_printk_last_was_ours = true;
-+		return;
-+	}
-+
-+	if (seq_buf_printk_last_was_ours &&
-+	    (count == 0 || (count == 1 && text[0] == '\n')))
-+		seq_buf_printk_empty++;
-+
-+	seq_buf_printk_last_was_ours = false;
-+}
-+
-+static void seq_buf_printk_run(struct console *capture, struct seq_buf *s)
-+{
-+	seq_buf_printk_marked = 0;
-+	seq_buf_printk_empty = 0;
-+	seq_buf_printk_last_was_ours = false;
-+
-+	/*
-+	 * register_console() will not take an unmatched console without
-+	 * CON_ENABLED, and unregister_console() clears it, so set it on
-+	 * every run to keep the test repeatable.
-+	 */
-+	capture->flags = CON_ENABLED;
-+	register_console(capture);
-+	seq_buf_do_printk(s, KERN_INFO);
-+	unregister_console(capture);
-+}
-+
-+static void seq_buf_do_printk_test(struct kunit *test)
-+{
-+	/*
-+	 * A registered console is a global object: printk() reaches it
-+	 * through the console list from any CPU, and the console code writes
-+	 * back into it, so keep it out of this function's stack frame the
-+	 * way every other console in the tree does.
-+	 */
-+	static struct console capture = {
-+		.name = "sbufcap",
-+		.write = seq_buf_printk_capture,
-+		.index = -1,
-+	};
-+	DECLARE_SEQ_BUF(s, 8);
-+	DECLARE_SEQ_BUF(t, 16);
-+	DECLARE_SEQ_BUF(u, 8);
-+
-+	/*
-+	 * Fill the buffer exactly, so that the NUL takes the place of the
-+	 * last byte and the string ends with the line feed before it.
-+	 */
-+	seq_buf_puts(&s, SEQ_BUF_PRINTK_MARKER);
-+	seq_buf_putc(&s, '\n');
-+	seq_buf_putc(&s, '!');
-+	KUNIT_ASSERT_FALSE(test, seq_buf_has_overflowed(&s));
-+	KUNIT_ASSERT_EQ(test, seq_buf_used(&s), 8);
-+	KUNIT_ASSERT_EQ(test, strlen(seq_buf_str(&s)), 7);
-+
-+	seq_buf_printk_run(&capture, &s);
-+
-+	/* The one line that was written, and nothing after it. */
-+	KUNIT_EXPECT_EQ(test, seq_buf_printk_marked, 1);
-+	KUNIT_EXPECT_EQ(test, seq_buf_printk_empty, 0);
-+
-+	/* Check that lines without a trailing newline are shown. */
-+	seq_buf_puts(&t, SEQ_BUF_PRINTK_MARKER "\n" SEQ_BUF_PRINTK_MARKER);
-+	KUNIT_ASSERT_FALSE(test, seq_buf_has_overflowed(&t));
-+
-+	seq_buf_printk_run(&capture, &t);
-+
-+	KUNIT_EXPECT_EQ(test, seq_buf_printk_marked, 2);
-+	KUNIT_EXPECT_EQ(test, seq_buf_printk_empty, 0);
-+
-+	/*
-+	 * The buffer above was exactly full, where "len" equals the size. A
-+	 * buffer that actually overflowed reaches the same bug by the other
-+	 * route the old test had, with "len" one past the size.
-+	 */
-+	seq_buf_puts(&u, SEQ_BUF_PRINTK_MARKER "\n");
-+	KUNIT_EXPECT_EQ(test, seq_buf_puts(&u, "yy"), -1);
-+	KUNIT_ASSERT_TRUE(test, seq_buf_has_overflowed(&u));
-+	KUNIT_ASSERT_EQ(test, u.len, u.size + 1);
-+
-+	seq_buf_printk_run(&capture, &u);
-+
-+	KUNIT_EXPECT_EQ(test, seq_buf_printk_marked, 1);
-+	KUNIT_EXPECT_EQ(test, seq_buf_printk_empty, 0);
-+}
-+
- static struct kunit_case seq_buf_test_cases[] = {
- 	KUNIT_CASE(seq_buf_init_test),
- 	KUNIT_CASE(seq_buf_declare_test),
-@@ -228,6 +359,7 @@ static struct kunit_case seq_buf_test_cases[] = {
- 	KUNIT_CASE(seq_buf_get_buf_commit_test),
- 	KUNIT_CASE(seq_buf_putmem_hex_test),
- 	KUNIT_CASE(seq_buf_putmem_hex_overflow_test),
-+	KUNIT_CASE(seq_buf_do_printk_test),
- 	{}
- };
+-    kdamonds.stop()
++        if before_commit_status != after_commit_status:
++            print(f'before: {json.dumps(before_commit_status, indent=2)}')
++            print(f'after: {json.dumps(after_commit_status, indent=2)}')
++            exit(1)
++    finally:
++        kdamonds.stop()
  
+ if __name__ == '__main__':
+     main()
 -- 
 2.53.0
 
