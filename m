@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018985;
-	b=glqm3Soug3EGmWb+1cxo1bwTN7hBxIKMa89x9SwLJr8iQVMbm4aR/kbXs4fkEEVLVIak
-	 FVmXVmsEJzMWcn3T4y2gATGjgDNQgcNonoMKZws2hyIVWS4yO6Mh1nqghcJW1I5y7Ca19
-	 besrbt2z5NpzC2lkysiDz3dB+BlNCrVtfbuGDYN69Y98VGu/KanlPTQ/M26zwr8pTcGAB
-	 uKQ47xxbdd5U6kUWQ+bOW6nYDJFXxdfWp6okbQ6Ww4Kt8UPPihmzVN+x10WGa9k+2Pvi1
-	 Wa4wp1yqvlo1QKG6SXQKA19dm1X6EAnsSJKM7z3nU4O9/k6BouubJYjGCzZ5C/0/k7g==
+	t=1795018987;
+	b=UE5eDnSDH9PublpE+RViTVGQibKIbYfTGKxkl6WwZRGK+mTbOdrvSlJmokfRNittsrXx
+	 akv7rT/eIonBIAlHFmukwWojnXU2Iwzr18jZiQwFf0XJF6sljijWxvxtupWpsmCpoOIDG
+	 6T6ch19ca9jVUHPlNNef7WYsBg2sl0DlYKCImd59rvTdNylQkYExeKXntfqVy2vTCWnX3
+	 yHFwNGyGUUXnRhfKsL2iIv1v6cEMJTmxpzhdjNPzwWUE1jkR3lumYlljCVlSZbtbQc99a
+	 TqvgTTuPS2Wsf/N3cM6jmBuQ9lfQPMKjg7J7XyU7wTklwABDhAhC8tO1Vz/RdaFLskA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018985;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SoH8x4oIVNe/n0zrUp31C8Z/n+cYWQC1r0E0shHfYew=;
-	b=ssiMSwBommmp28g6VlUn+CXarMIR834KW74P3qxs5By5twkiCXR3Oj3BiHbtsX83R0jo
-	 /BKd2/0eyQhj53yRroN4nyJvwg7s2vZFGvkI27Wzz0a/wzF/9W100k0Yk59YFsfEqSquK
-	 h+INY/Hh011s3Pn90373E9uZdgxxbuRZo4z3Xy0uTquQU5ThoC5+2LoSfi1r136uPrip1
-	 Jo2AKrfpUCTCT2twaSdPFpSC/nu2f+Pt+ty4IMOEstesXU1c6A2Dxtkp3lc0HbxVWwDms
-	 SiU0pG+RrDI7udNNvA4hEM3FndNzHM0pyb3UMwkOU5/A2U+scDJXW1gpC8lh2+1UZ/A==
+	bh=T9qJIuS7zG0eMCoGjcjfTPSuIQDS77s9P9H09IjQsvQ=;
+	b=kMzdtwvaf4M+YK6R4IXHWc4FJibSl1iMiTk/gq2tcTsqMQZJjHlXWEm0/Ous30j9AZxR
+	 +pUq8Zp8lWwhotkNTd5OzQwWYUzJslLsMob2jG06c1YWAp4XII7q2WJWE9/uADt/vIg0o
+	 pVMs3sPvQR7mxUQ0ub4RRhXA9dYqNYUp13VpJ9Ay3HBt1q8YmOc1LV3qagTE4kMvFoi0q
+	 a1DyEWQqghzbHhvihIss7u+/X10w76w6BPCtbCPoVEWBPc2EIb9RzNJkmug5T539ilQk3
+	 IFXo9DMUOXZPD3oAKfdKyZEn3PK9digvKkwgI1EBCu/k82jpUPpn/KcAzPCgSFCKDIA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E39gdGRL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uP556PQw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18B3606A320;
-	Wed, 18 Nov 2026 16:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD454606A335;
+	Wed, 18 Nov 2026 16:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E39gdGRL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BE81F000C8;
-	Wed, 18 Nov 2026 16:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uP556PQw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184621F000CE;
+	Wed, 18 Nov 2026 16:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018984;
-	bh=SoH8x4oIVNe/n0zrUp31C8Z/n+cYWQC1r0E0shHfYew=;
+	s=korg; t=1795018987;
+	bh=T9qJIuS7zG0eMCoGjcjfTPSuIQDS77s9P9H09IjQsvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E39gdGRLv8LAhgXqrAlOBnVQvDfBDgvhC1LyhhhHz22h2nOl/R1rxYgN3VPD4tq7O
-	 pWWxd3naAepBidYSs1h+mbvG9hJ9UTBVBYHwMqo6ti01Xc5YcrQBcNSDa3DmveFlXV
-	 BHO8NkFK/g5hT9Txy5BNSZIbmdnAWNX66wVYBdEU=
+	b=uP556PQwIZ6s7L7sy1ulJCr4Bqsp7JaZRQlVaZBSIcxYLuAAkubybtlrr247ltWmz
+	 DDKLh8kWRRDynpsM03JkoXS1JWIgDf5o7HORQhUT68jFy2MVj8zWpjm3APwZL/TPug
+	 JU+TRltd7lSedV01ABdRKZv/sYOAo6HsmOuyoVKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
-	Jacobs Wu <jacobs.wu@mediatek.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1432/2651] wifi: mt76: mt7925: fix HT/VHT caps and rates for NAN NDP peers
-Date: Wed, 18 Nov 2026 15:44:32 +0100
-Message-ID: <20261118150339.601555871@linuxfoundation.org>
+Subject: [PATCH 7.3 1433/2651] wifi: mt76: mt7921: fix lock inversion between dev->mutex and iflist_mtx
+Date: Wed, 18 Nov 2026 15:44:33 +0100
+Message-ID: <20261118150339.638169767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,162 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacobs Wu <jacobs.wu@mediatek.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 3590825b642ccda15690125d82d3d82206671486 ]
+[ Upstream commit 3dcb98c5cb51a70750ae8dc006d6d787ca09f425 ]
 
-NAN NDP peers were added with bare link_sta caps: no HT cap or QoS
-flag (so no BA/A-MPDU), no VHT cap / bandwidth / rx_nss, a data BSS
-phy mode that still read legacy when the firmware built the peer's
-rate table, and caps filtered down by the currently committed
-schedule.
+mt7921_config() holds dev->mutex across
+ieee80211_iterate_active_interfaces(), which takes local->iflist_mtx.
+mac80211 uses the opposite order: ieee80211_del_virtual_monitor() holds
+iflist_mtx while calling drv_unassign_vif_chanctx(), and
+mt792x_unassign_vif_chanctx() takes dev->mutex.
 
-Push the NAN_DATA BSS phymode before sta_update, force the HT cap and
-QoS flag, seed VHT80 / bandwidth / rx_nss=2 from the BSS RLM, fix the
-NDP HT/VHT rate selection and stop filtering the link_sta caps by the
-schedule, so rate control always sees the peer's real capabilities.
+Deleting a monitor interface that has a channel assigned reaches the
+second order and lockdep reports the cycle. The driver side of it:
 
-Bench (MT7925<->MT7925 NDP, 5 GHz ch149): 866.7M VHT80 MCS9 NSS2 link
-rate, UDP ~290 Mbit/s.
+  -> #1 (&local->iflist_mtx){+.+.}-{4:4}:
+         __mutex_lock+0xda/0x1070
+         ieee80211_iterate_interfaces+0x34/0x70 [mac80211]
+         mt7921_config+0xb8/0xe0 [mt7921_common]
+         drv_config+0x63/0x1d0 [mac80211]
 
-Fixes: 0f3605e4f8de ("wifi: mt76: mt7925: wire up NAN operations")
-Co-developed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Jacobs Wu <jacobs.wu@mediatek.com>
-Link: https://patch.msgid.link/20260824195227.12589-16-sean.wang@kernel.org
+.config is only reached through drv_config(), which asserts the wiphy
+mutex, so ieee80211_iterate_active_interfaces_mtx() can be used. It walks
+the same list under the wiphy mutex and never takes iflist_mtx, which
+drops the driver's dev->mutex -> iflist_mtx edge.
+
+Fixes: cbaa0a404f8d ("mt76: mt7921: fix up the monitor mode")
+Link: https://lore.kernel.org/linux-wireless/20260730053916.109426-1-lucid_duck@justthetip.ca/
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260810045338.118923-2-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7925/main.c  | 19 +++++-
- .../net/wireless/mediatek/mt76/mt7925/nan.c   | 62 +++++++++++++++++++
- .../net/wireless/mediatek/mt76/mt7925/nan.h   |  4 ++
- 3 files changed, 83 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index daa0ff1526fc6..d71e60594ea51 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -964,6 +964,21 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 3577c4cebb2e0..a905c21943f24 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -652,9 +652,9 @@ static int mt7921_config(struct ieee80211_hw *hw, int radio_idx, u32 changed)
+ 	}
  
- 	link_conf = mt792x_vif_to_bss_conf(vif, link_id);
+ 	if (changed & IEEE80211_CONF_CHANGE_MONITOR) {
+-		ieee80211_iterate_active_interfaces(hw,
+-						    IEEE80211_IFACE_ITER_RESUME_ALL,
+-						    mt7921_sniffer_interface_iter, dev);
++		ieee80211_iterate_active_interfaces_mtx(hw,
++							IEEE80211_IFACE_ITER_RESUME_ALL,
++							mt7921_sniffer_interface_iter, dev);
+ 	}
  
-+	/* NAN_DATA (NDI) peers skip association - fill link_sta caps
-+	 * from sband and push BSS_INFO with correct phymode + RLM.
-+	 */
-+	if (vif->type == NL80211_IFTYPE_NAN_DATA) {
-+		struct ieee80211_chanctx_conf *nan_ctx;
-+
-+		nan_ctx = mt7925_nan_seed_link_sta(dev, link_sta);
-+		mconf->mt76.ctx = nan_ctx;
-+
-+		ret = mt7925_mcu_add_bss_info(&dev->phy, nan_ctx,
-+					      link_conf, link_sta, true);
-+		if (ret)
-+			goto out_pm;
-+	}
-+
- 	/* should update bss info before STA add */
- 	if (vif->type == NL80211_IFTYPE_STATION && !link_sta->sta->tdls) {
- 		struct mt792x_link_sta *mlink_bc;
-@@ -2601,8 +2616,8 @@ static int mt7925_start_nan(struct ieee80211_hw *hw,
- 	cfg80211_chandef_create(&link_conf->chanreq.oper, chan,
- 				NL80211_CHAN_NO_HT);
- 
--	err = mt7925_mcu_add_bss_info(&dev->phy, NULL, link_conf,
--				      NULL, true);
-+	err = mt7925_mcu_add_bss_info(&dev->phy, NULL,
-+				      link_conf, NULL, true);
- 	if (err < 0)
- 		goto out;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-index 5fa0f11d62b68..1adef4d52f655 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-@@ -267,6 +267,68 @@ int mt7925_nan_update_phy_setting(struct mt792x_dev *dev)
- 				 &req, sizeof(req), true);
- }
- 
-+struct ieee80211_chanctx_conf *
-+mt7925_nan_seed_link_sta(struct mt792x_dev *dev,
-+			 struct ieee80211_link_sta *link_sta)
-+{
-+	struct ieee80211_supported_band *sband_2g, *sband_5g;
-+	struct ieee80211_chanctx_conf *nan_ctx = NULL;
-+	struct ieee80211_vif *nan_vif = dev->nan_vif;
-+
-+	/* Fill HT cap from 2G sband */
-+	sband_2g = dev->mphy.hw->wiphy->bands[NL80211_BAND_2GHZ];
-+	sband_5g = dev->mphy.hw->wiphy->bands[NL80211_BAND_5GHZ];
-+	if (sband_2g)
-+		link_sta->ht_cap = sband_2g->ht_cap;
-+
-+	link_sta->sta->wme = true;
-+	link_sta->rx_nss = hweight8(dev->mphy.antenna_mask);
-+
-+	/* Get chanctx from NAN schedule.
-+	 * Prefer 5G committed slot for wider BW (VHT), fallback
-+	 * to first valid slot if no 5G data slot is scheduled.
-+	 */
-+	if (nan_vif) {
-+		struct ieee80211_nan_channel **slots =
-+			nan_vif->cfg.nan_sched.schedule;
-+		int i;
-+
-+		for (i = 0; i < CFG80211_NAN_SCHED_NUM_TIME_SLOTS; i++) {
-+			struct ieee80211_chanctx_conf *ctx;
-+
-+			if (!slots[i] || IS_ERR(slots[i]) ||
-+			    !slots[i]->chanctx_conf)
-+				continue;
-+
-+			ctx = slots[i]->chanctx_conf;
-+			if (!nan_ctx)
-+				nan_ctx = ctx;
-+			if (ctx->def.chan->band == NL80211_BAND_5GHZ) {
-+				nan_ctx = ctx;
-+				break;
-+			}
-+		}
-+	}
-+
-+	/* Capability describes what the device can do and must not be
-+	 * filtered by the current schedule - firmware gates the VHT rate
-+	 * mode per the data schedule and re-derives it on schedule
-+	 * change, which only works if the caps are present up front.
-+	 */
-+	if (sband_5g)
-+		link_sta->vht_cap = sband_5g->vht_cap;
-+
-+	/* Bandwidth here is the capability ceiling, not the operating
-+	 * width - the per-slot operating bandwidth follows the current
-+	 * slot channel via the firmware RLM sync, so deriving it from
-+	 * the schedule at STA-add time would cap a later 5 GHz schedule
-+	 * at the bring-up width.
-+	 */
-+	link_sta->bandwidth = IEEE80211_STA_RX_BW_80;
-+
-+	return nan_ctx;
-+}
-+
- int mt7925_nan_enable(struct ieee80211_vif *vif,
- 		      struct mt792x_dev *dev,
- 		      struct cfg80211_nan_conf *conf)
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.h b/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
-index f9644945a22cd..9a0cd1d06d456 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.h
-@@ -479,6 +479,10 @@ struct mt7925_nan_update_phy_setting_tlv {
- 
- int mt7925_nan_update_phy_setting(struct mt792x_dev *dev);
- 
-+struct ieee80211_chanctx_conf *
-+mt7925_nan_seed_link_sta(struct mt792x_dev *dev,
-+			 struct ieee80211_link_sta *link_sta);
-+
- int mt7925_nan_enable(struct ieee80211_vif *vif,
- 		      struct mt792x_dev *dev,
- 		      struct cfg80211_nan_conf *conf);
+ out:
 -- 
 2.53.0
 
