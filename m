@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037917;
-	b=F11pZqwB05cstDuCET8kaKSp7mL6WKfsYS+p+Uox86Q/uzB/OMiE0gyYncoCiEFFi4iR
-	 u2KY6jMyFUxpGBXxOmVmQvcDVoG8lwMEOpoejiTlLqNpjBWBa/bHu6lTQlK5jMgzsAhIj
-	 0VJQfSWQDnd9js89NdWnXz2NRwWyvf205xHma06Vzp6PRHQNqM4WF9PDGVRQ/4Fj8JMdl
-	 VsYmXD8swVeofIpTFqgs8zwutcmDjZeCt+vzUB67BAyuFTapmTrzM2oX9vATVcUU89QsT
-	 Ao4VLZnNpA56vvh1jBMZpvV66OxoD1g32A+Xi3VHi76xvdiogEqaRPmJcSyKNrvnz5Q==
+	t=1795037920;
+	b=nBimzXEUHez5DIoMfh+B39GjUcc6zJycQ1LKh0YhNC5YLjFKIVXD00mWNUFbCWqcEY8u
+	 CNig33yQvPMM6cnuQbLkTF1CcXXMb61kBxmMYHiurzi/UTDHQ6Krxo7WDpJJQ4+hkDFJT
+	 V/B2+QccQSfy/M07ODuO8XdYFz097JeUaOcnRJ3gRfMKT9uSQsF1MjxzljQR7cg7Cb7gt
+	 Aeb+NgZFYCtj/MtlxzBtfD4SW8pb0OgqW0U9Au9j88CJU+E0WcqRfr3/R1x3/usE+KIwZ
+	 ua0WN/zUlzdZxO047oMo3US4jWn46+e/AV/qmSasPO3MYmNELvf3AOr3KPg//MuM+lA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NT4FSEwqeWH1MW/anReDPMv6odthxHSW3Zq3WOQRZuY=;
-	b=K7rpcqttu7K9rKvRj21QoaB9wEfIYWGvgTRVJz42vVMio2dEB1X+1kfc3+tvX9sQPCv/
-	 Wnhl1f4t/m11dY0FZWwqj3XSg1kd7EvB1JfKy08+vcRPT+F0fF1bDU5dL9RCt6pwiaxIC
-	 PFxlHD84Jx6a39NvrElTJd/FFyhiUUMy9HfNtfsWm/z2hFTMixgvrWvQbgefyOzizGe9P
-	 b6OHAyH9FiVFGPTrsDQx/iIQ/W4W+HroWIyinovYX2X7yqU6tQFI5yCR5lLUYPS/9qEZO
-	 hZsbdrohjtT7YkUfBFhENOCB0AFGMNw5ERL2B35VIQF0M1X1Qbjt1hj6TE8zuLaw16A==
+	bh=hlnVwwiep9MX2JYoZt26FIepJlWHO9vfk2+1lgOZrNc=;
+	b=GoNcnm0bg73AfSXcKVDTOFdh7jJQ8vuwGHWhv1zFaed5SMfKie02mX1nDkPIsNzty9bv
+	 rj9sXt+Rywi1+xgLd88CM7yhn0QVya52i/g2UOKQDonq5yh0B85k2/VQ4BiWlO6uMFJxk
+	 NLttFVs54qy46nTxKbsf9e2nvx1mOpjeNWEBOgGlpP0LLGmeDe2bqX15nhzupsP5/YA0E
+	 dlpZeQZ5egZY1rv+ss8znGuoCe9B6CtPe62SzwKKJIFgFNXLy51+GexE/o9C807WxyLbt
+	 hX3WoeBYTeaJlLSTe/cLWPtF29rZlCXfM7jfOsMbdKVW1u2hW0l3rTc5A3pqJiIG23Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ED2q6k5h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ENpD8UF7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933D7606A32A;
-	Wed, 18 Nov 2026 21:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62714606A31C;
+	Wed, 18 Nov 2026 21:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ED2q6k5h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A1F1F000C4;
-	Wed, 18 Nov 2026 21:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ENpD8UF7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47781F000C4;
+	Wed, 18 Nov 2026 21:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037917;
-	bh=NT4FSEwqeWH1MW/anReDPMv6odthxHSW3Zq3WOQRZuY=;
+	s=korg; t=1795037920;
+	bh=hlnVwwiep9MX2JYoZt26FIepJlWHO9vfk2+1lgOZrNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ED2q6k5hlAky62deqzEroZNFRWShNGIe6OVMRyYLLMr4BP99dd6ZcWIfzVJVLsCEf
-	 569Zxi5A8/QREuNMwnel+ps3uFk3Trnqs0tQ5Z0SXsRjbXHqYQI1MuKPHEYmlhzZcr
-	 Inz5Dot7et3nuAGD9X1KRvS5n6kxKkEvQ108K2tY=
+	b=ENpD8UF7CuB9Yc6G83k84B4lNkbW2X3QOFW56kL0o4dxjrH5YGrYMpWn5pzhGo97L
+	 nYBpsSFA9kktVQXF0qj/Lg6l9AyDv5qfsEvhoqZd344O1ljHbepSwM6t1DDlq8te2V
+	 ePMAIv2aQFZLVbLxwRPE7ds4nLiWC1AFoYhwylEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1520/3318] mm: fix unmap_mapping_range() beyond 4 GiB on 32-bit
-Date: Wed, 18 Nov 2026 15:35:42 +0100
-Message-ID: <20261118150406.555960289@linuxfoundation.org>
+Subject: [PATCH 6.6 1511/3318] can: isotp: check the return values of can_rx_register() in isotp_bind()
+Date: Wed, 18 Nov 2026 15:35:33 +0100
+Message-ID: <20261118150406.270747167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,61 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 7a81bc23dade8082187be6d9cc36e4be4b7207e2 ]
+[ Upstream commit 874f5f14cf626f72477071eff381c8485554250d ]
 
-Commit 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
-made holebegin and holelen unsigned before they are shifted, by casting
-them to pgoff_t. That is an unsigned long: on a 32-bit kernel the cast
-cuts off the upper half of the two loff_t values, so a hole which begins
-at 4 GiB or beyond is taken for one in the first 4 GiB of the file.
+isotp_bind() ignores the return values of can_rx_register() for the RX
+and the echo receiver and binds the socket anyway. When a receiver can
+not be allocated, bind() succeeds without this receiver, so the socket
+does not receive frames or its transmissions time out. isotp_release()
+and isotp_notify() later try to remove the missing receiver, which
+triggers the "receive list entry not found" warning in
+can_rx_unregister().
 
-truncate_pagecache() passes the new size of the file and asks for private
-COWed pages to be unmapped as well. If a file of 6 GiB is truncated to
-5 GiB, everything from 1 GiB on is unmapped, and what a process has
-written to a private mapping of the range between 1 GiB and 5 GiB is
-lost: it reads the contents of the file again.
+As the device has been checked before and RTNL prevents a namespace
+change during bind(), only -ENOMEM can be returned here.
 
-Where the range has an end, the wrong range is unmapped instead of the
-right one. The page cache copes with that, as it unmaps every folio that
-it removes. The callers which only have unmap_mapping_range() to get
-rid of user mappings do not, for example drm_vma_node_unmap(), whose fake
-offsets reach beyond 4 GiB on 32-bit, and revoke_iomem() with physical
-addresses of more than 32 bits.
+Check the return values and register the RX receiver as the last step.
+The echo receiver is registered first, as it only handles the socket's
+own echo frames and does nothing while no transmission is in progress.
+So a failed RX registration only needs to remove the echo receiver, and
+isotp_rcv() has never processed a frame for this socket.
 
-Cast to u64 instead. Nothing changes for 64-bit kernels.
+Set so->ifindex before the registrations, so that a First Frame received
+before so->bound is set can be answered with a Flow Control frame and
+the RX timeout is started as usual. As the RX receiver is registered
+last, this can only happen for a bind() that succeeds. Reset so->ifindex
+when bind() fails.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
+Check IFF_UP only after the receivers have been registered, so that a
+bind() that fails on a down device does not report ENETDOWN. As bind()
+holds RTNL, the device state can not change in between.
 
-Fixes: 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
+Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-36-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-2-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/can/isotp.c | 42 +++++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index a64919cf0fb0d..6d4a1032ca61a 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3582,8 +3582,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
- {
--	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
--	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (u64)holebegin >> PAGE_SHIFT;
-+	pgoff_t hlen = ((u64)holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 1a6691a5287ae..a11999c50c8ab 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1521,7 +1521,6 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	struct sock *sk = sock->sk;
+ 	struct isotp_sock *so = isotp_sk(sk);
+ 	struct net *net = sock_net(sk);
+-	int ifindex;
+ 	struct net_device *dev;
+ 	canid_t tx_id = addr->can_addr.tp.tx_id;
+ 	canid_t rx_id = addr->can_addr.tp.rx_id;
+@@ -1598,26 +1597,36 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		err = -EINVAL;
+ 		goto out_put_dev;
+ 	}
+-	if (!(dev->flags & IFF_UP))
+-		notify_enetdown = 1;
  
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
+-	ifindex = dev->ifindex;
+-
+-	if (isotp_register_rxid(so))
+-		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
+-				isotp_rcv, sk, "isotp", sk);
++	/* switch to new settings */
++	so->ifindex = dev->ifindex;
++	so->rxid = rx_id;
++	so->txid = tx_id;
+ 
+ 	/* no consecutive frame echo skb in flight */
+ 	WRITE_ONCE(so->cfecho, 0);
+ 
+-	/* register for echo skb's */
+-	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
+-			isotp_rcv_echo, sk, "isotpe", sk);
++	/* register for echo skb's first (no echo traffic at this point) */
++	err = can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
++			      isotp_rcv_echo, sk, "isotpe", sk);
++	if (err)
++		goto out_put_dev;
++
++	if (isotp_register_rxid(so)) {
++		err = can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
++				      isotp_rcv, sk, "isotp", sk);
++		if (err) {
++			/* unregister echo skb subscription */
++			can_rx_unregister(net, dev, tx_id, SINGLE_MASK(tx_id),
++					  isotp_rcv_echo, sk);
++			goto out_put_dev;
++		}
++	}
++
++	/* report a down device only for a successful bind() */
++	if (!(dev->flags & IFF_UP))
++		notify_enetdown = 1;
+ 
+-	/* switch to new settings */
+-	so->ifindex = ifindex;
+-	so->rxid = rx_id;
+-	so->txid = tx_id;
+ 	so->bound = 1;
+ 
+ 	/* bind() ok -> hold a reference for so->dev so that isotp_release()
+@@ -1628,6 +1637,9 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	dev_hold(so->dev);
+ 
+ out_put_dev:
++	if (err)
++		so->ifindex = 0; /* reset on failed bind() */
++
+ 	/* remove potential reference from dev_get_by_index() */
+ 	dev_put(dev);
+ out:
 -- 
 2.53.0
 
