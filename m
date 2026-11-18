@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035496;
-	b=TNR7yYuBsJo8jJUTdnKYVT3bm3eu4QtTuAeRS6/z1jCgAnusSTMVV6qYhBCt4lNsY913
-	 6Re14xpIsXJKagUN5lywcO8EZ9eDEukKwLDpVx99H15jVTLxu0U4aSjN7jBlk6b2xwiRH
-	 j3/hpHjD4pcIaBGOFUrCvhrBr1piGiiIiHS8AFb8rSOdUoAV1y0ygeDv00JACMnmPzqlP
-	 gQcHwfHUmSlvH478LSnu/JHw/ee7xrwtscsWJOn7UZDQ/7BmtIrcJjoII3zvQlTq1XjCB
-	 fZt0rwkJBf/Gr+VHb4GOQ5aKiDR+9rv26XJ90T/4CH6889eJVxrxGlFw33y+89h4k+g==
+	t=1795035499;
+	b=sBtffc/WMpPz18NW3H0DWwd0gDBLpm01fZrGfWFvoiAnxkIC/1K8VnUWn6eMll5qpBU2
+	 z/kba1aoPZvrm6Cs8f7Djt8leuMzNTt+CCp4ujE1Obwt3U6IO8tjVwQ+4/IYy+UMcaOS7
+	 2hgajuG6RBIAdYIoSvXm9OaHo2oRg8F7rkBH4wHDDs4z3UknulTmug8a1z/w6XQfisnYf
+	 ro4CDpv5cQYOMpFmXoklk4XU4/hcLFrIPW4FjrTMFQUGNP8cOCQ9Wcd7p5BjpDQT0/XzX
+	 X8NeGFsVgyFdyZN/EHlKBNbbmkWzVL44x6EruOilsCYSmIx47bS7VQ7D7PMjVVEqwcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EjXHAfiHaSEVRS5ElbZGQsBJpBSqdSDP0Hjf0njoEdU=;
-	b=JgzbQc2rustuQ75CpIwckwALAoe5roIcIr8M28vVWFyd6Qg7TAa0Jl07sRK4dldXAICl
-	 e1rJZ0pZLMZBduPaZTrwrIN+bJ9KOVM5XIwtrzwmUX/FUNUqWk3f79mDZCq6l0DX1k/+v
-	 YZdk12wUZuD5yNlXa7pVyF4QvktYqqcZ9Qf4CMHo+MQyy7cAuRQAlFbiTQQyIHSroYXRE
-	 gT2CmhbQIsWo7mY/AQmrwqYiVNQQjaae6C1SobWcsv5ZZVUNT2V4ByrR38HKkVHi5jfJI
-	 hu9ybE3arjb8vMoxz4Fdm+EM7ur6FdSTiMLgpnl98wQBPwaWZv4tGLGRafVNEGQgAOQ==
+	bh=G7rS780yVa6akNazfd+V0ryaT24ZVFBpW1dWm10kv/w=;
+	b=2RXxESZWiPGP1NlX47li9L2naug8T57xNScVxpxLPCMR6BWRHylUJYRdH9UYaekkbv3P
+	 gzfZUpjN0wSLJjtigaqC747fykRV4zcZlfzn7v8SRfQCM0MRH3uhSD0mSp4dXFpKgN2Xn
+	 tA7RJPMQ7kaUq2ww3Uj5dazp7GonqggN1q1jkSae1GO7ScJ/H3gZpPtIndWY7t7KMatnG
+	 MWr8gGztFj8d2TWbVu1OL64pSO67vwtmGor2eTvRYLTR8OAbv82JJd8F2TVA3XDOazarq
+	 s0tUIKFXiBQ8DRNuiZzlyZUrIkJwZ9sUrfEp9/8FZCwj9xtbze1vcOk/11yg/usjYrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGqC47+i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaifzZhP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D146606A320;
-	Wed, 18 Nov 2026 20:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD0B606A31C;
+	Wed, 18 Nov 2026 20:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGqC47+i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C4E1F000C5;
-	Wed, 18 Nov 2026 20:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaifzZhP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC7C1F000C5;
+	Wed, 18 Nov 2026 20:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035496;
-	bh=EjXHAfiHaSEVRS5ElbZGQsBJpBSqdSDP0Hjf0njoEdU=;
+	s=korg; t=1795035499;
+	bh=G7rS780yVa6akNazfd+V0ryaT24ZVFBpW1dWm10kv/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FGqC47+i4op3lPwlQhAn9LGFFlyYR4UpYA0uTJ8POAUzzQTpuMhvCurX7+/fYw/9X
-	 N+vySfHdA1B1ai84OsulICcL/2KllkAKQCH8paFsq+QDJOCWGyuCc2vgk4MEk7m9/h
-	 knv78BJd2eO2w5bMm69topYlxXjr+TO1TRB8BHz4=
+	b=YaifzZhPJlb1ZikCDl6MDSxXLJSaAT89jHLuYAKeUmltvQAmVgPj28J06aJrx0l40
+	 4vJ9hMTCPfcRysT95OweDlWnOq7Mx7vvp/3xAfIkQaOWp2G7UbTfBkBvqt0BWCPRCD
+	 wQckODs8ZfkqCOjc3GOW5Qu6/32mVa6nSEPADjSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 0724/3318] HID: amd_sfh: Use report type from request node
-Date: Wed, 18 Nov 2026 15:22:26 +0100
-Message-ID: <20261118150340.223915774@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.6 0725/3318] HID: core: Fix out-of-bounds left shift by 32 in s32ton()
+Date: Wed, 18 Nov 2026 15:22:27 +0100
+Message-ID: <20261118150340.257575645@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,43 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 85f1bea97f1909f81577cfcf3e4db9017e7f5337 upstream.
+commit 5fe63b415c636c7f4f6848a8e53bdd4bbf0c300d upstream.
 
-Use report type from request node while sending feature and input reports
-to HID core. The cli_data report type array is never assigned and
-feature reports are sent as input reports.
+Syzbot reported an out-of-bounds shift (32-bit integer shifted left by
+32) in the s32ton() routine in the HID core.  This routine converts a
+signed 32-bit integer to a signed n-bit integer, and it caps the value
+of n at 32.  But when n == 32 there's no need to do anything; it can
+simply return the input value.  This will avoid calculating (1 << n)
+when n is 32, which was the cause of the invalid shift.
 
-Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
-Closes: https://github.com/ublue-os/bazzite/issues/5796
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 69c02ffde6ed ("HID: core: clamp report_size in s32ton() to avoid undefined shift")
+Reported-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/6ac9cbd8.a150a118.27e199.0025.GAE@google.com/
+Tested-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Link: https://patch.msgid.link/dfa0aa1c-e55e-4316-8307-f72a07383634@rowland.harvard.edu
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c |    4 ++--
+ drivers/hid/hid-core.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -90,7 +90,7 @@ void amd_sfh_work(struct work_struct *wo
- 						    cli_data->feature_report[current_index]);
- 		if (report_size)
- 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
--					 cli_data->report_type[current_index],
-+					 node_type,
- 					 cli_data->feature_report[current_index], report_size, 0);
- 		else
- 			pr_err("AMDSFH: Invalid report size\n");
-@@ -99,7 +99,7 @@ void amd_sfh_work(struct work_struct *wo
- 		report_size = mp2_ops->get_in_rep(current_index, sensor_index, report_id, in_data);
- 		if (report_size)
- 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
--					 cli_data->report_type[current_index],
-+					 node_type,
- 					 in_data->input_report[current_index], report_size, 0);
- 		else
- 			pr_err("AMDSFH: Invalid report size\n");
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1366,8 +1366,8 @@ static u32 s32ton(__s32 value, unsigned
+ 	if (!value || !n)
+ 		return 0;
+ 
+-	if (n > 32)
+-		n = 32;
++	if (n >= 32)
++		return (u32) value;
+ 
+ 	a = value >> (n - 1);
+ 	if (a && a != -1)
 
 
