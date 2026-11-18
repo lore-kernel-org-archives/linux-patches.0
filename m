@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047620;
-	b=rF9Qsgz4T6QY9ZtOBsIOpNLsXciEUfJG4wKDpRUqbyAGim9f2gDEGPYllOUF7JnlKYjm
-	 Nj6psbxfZxNWk1agsmuSF5L6uKRzpWGsy+LhxGhwvxreHBH0V3C+GbH1tcYToe1ETVBxl
-	 HYQMlYsnr/1yff2S2xbmIW68ahTwcayGbSZTRXerTnMiQP1bzQknmXT6TH/PELx+TSuQU
-	 9fjr2zPS17gdUB1dx7wq4ODsa/qXfkx3VsE/nzZoP4SCkTSuQ6cqZXF7ecmcgpQqcRIvj
-	 RiZqdps3VJYbI5SfIiyTmBOFaSGVNhmurvsGamcPYoT6CdgMo41tlj5mnwM5ToyUwiA==
+	t=1795047622;
+	b=FHC6XBSg638fAkKxbrupEK0lGTalR4LgksNVFK18n3VcfVVw62MmZIRigz1g70dWMUI1
+	 jfZn9EoqAmmfabKSPt4YP7hVzXdbLQ31QkbXsOkwlxP0Dvm77ZL8TjlLa4tlUaBvhsaeh
+	 NJUDRWhrOly0MZPO3o8tLcgy9oJKJ4U+Ik4+q8twxq0/PFJY7SeD715gZtyfqnL0DKbgk
+	 9MdzpC0mpcTGdDl/qHl7hkA1rTLUnqwcVqDxZUQhLufbpW/fXwD2m3v3Lq/bAKiLVkcGh
+	 onKLWuUOPB9iLHxOsqKhNJiImtkA0nOl6DG4Uczp0kzwyIRUV7KuCV0BWBy+n5YJREg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZgdDsVbo21A3BHd7z9l+2PTq5Pi3IaoP7J+hNIszNzY=;
-	b=bJUohmPN1AYInMZmBb3LvJa85kaLFJ1Bj3FOjd1HPf9jjh8CTWEAaP8tff+zUAVyZNp5
-	 VGupoFvAqoemlvu+L5LTNnTuRwjJtqdeoW91K6mfeS+DrWiYuSgA5NvphYVmwZ3Ob7oPb
-	 1rx50Rsjl8nNYF1+1mWc/W8/7Zzdf4NWeBoTxboW5zaZsQ8PpGBr2oFqgd9pF5/yyX8r3
-	 hvI6vysO3bYb1AQLwhy9LQ+PkydKEAgvwAcKT8RG7HVaXdCD3Q0Iez47DU1fAFffH44++
-	 fIj/rK0+wsG1FRaGvsBygahbFod7U/lOs8Z82vzyS5mUJUuSlfC+bumLEv9eJHugSvg==
+	bh=tWSAqsTBro0/JWuHWPKvYPDAN7pu6IExOi5fMgcfH/A=;
+	b=P5J8kayvDrBbyMyQzqcs1HmNtdsgFCsbVcsyfMSY3M9f73u57XUIYXdyAl1+j6aq7/wz
+	 XQYrwH1m81pJeber25pd/aodY/yDPJzx8isMDlwC5jA5FERyWJD3yqGjM/pODOSaCJOLa
+	 wsbxMgiXko62cZSQZiImcBKSl/2/dcKIY1x5p+mGdUDESOrYZf0i7dq2H7GpGoGjHs75L
+	 GZzdGH5DbBgslLrbnA30Co+b8V5JKQ6zMjqcd2K1GsXuYegpfMuL6zfCGpfxTcJOpDG0o
+	 2G67u9ZcrCvPsK7NVfDctJPYQqc4W8w0iKRkQ/CqwcPZWDd3bt00SMFsB+V7UR9IRhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRwWzpPL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig5OYrhC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EF8606A320;
-	Thu, 19 Nov 2026 00:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3153606A320;
+	Thu, 19 Nov 2026 00:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gRwWzpPL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F56A1F000C4;
-	Thu, 19 Nov 2026 00:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ig5OYrhC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE751F000C4;
+	Thu, 19 Nov 2026 00:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047619;
-	bh=ZgdDsVbo21A3BHd7z9l+2PTq5Pi3IaoP7J+hNIszNzY=;
+	s=korg; t=1795047622;
+	bh=tWSAqsTBro0/JWuHWPKvYPDAN7pu6IExOi5fMgcfH/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRwWzpPLKu2hoaAuwgKPSDxY1kfXqwffPZ9vWHihgSXe0K0VFbsrJIDsEfYun/QwS
-	 tNDNlzSDkoZSC0ym39zCu/Gqkl+0I25vzlGDCZi8sl9THlt71Of/qIouo3Rr7MNwgf
-	 1tmC9NNraBIFaSrCy+k+b9FQ+/tVkJvEh60eCfJs=
+	b=Ig5OYrhCRwPxKefwveLOql1UpM1sVTW3j9BJ74/VpvGdYBGy1aLlQD/ipw7P2mIwK
+	 u4nA6MEEgO/l8E2JjrgfIaX48kcu2BSod69DnG2/VzuYCC5/aex1Ttrc0+MrtV0Ocp
+	 ytHHuKvM8HoJD7TYGp26GtkmXYOYOZFRBGFVUAzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yongji <xieyongji@bytedance.com>,
-	"chenglong.ma" <longpareto@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Claude Code <noreply@anthropic.com>
-Subject: [PATCH 6.1 1703/2857] vduse: fix VA/PA confusion in the coherent page fault path
-Date: Wed, 18 Nov 2026 15:45:37 +0100
-Message-ID: <20261118150302.651271907@linuxfoundation.org>
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1704/2857] drm/amdkfd: use the queues process info for the WPTR BO eviction fence
+Date: Wed, 18 Nov 2026 15:45:38 +0100
+Message-ID: <20261118150302.686763132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,87 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chenglong.ma <longpareto@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit bb2e6f166547838fd7c320b01c90918b736f76e2 ]
+[ Upstream commit da2897ee8b811945fd40ecc4aaf03291c14ce61c ]
 
-vduse_domain_get_coherent_page() assumes that iotlb entries above
-bounce_size were installed by vduse_domain_alloc_coherent(), so it
-treats map->addr as a physical address. But vduse registers with
-use_va = true, and when the device is bound to vhost_vdpa,
-vhost_vdpa_va_map() stores a userspace virtual address in map->addr,
-which vduse_domain_set_map() then copies into the same iotlb. A
-process holding the domain file descriptor across a rebind can
-therefore fault in an arbitrary physical page with read/write
-access, ignoring the entry permissions.
+amdgpu_amdkfd_map_gtt_bo_to_gart() removes the eviction fence of
+bo->vm_bo->vm->process_info from the WPTR BO of a new queue. bo->vm_bo
+is the VM which opened the BO last, not necessarily the KFD process' VM,
+and a render node VM has no process info.
 
-Additionally, since the domain file mmap lacks VM_IO, the domain
-file itself can be mapped and passed to vhost_vdpa_va_map(),
-producing self-referential entries that bypass the coherent path
-check.
+On navi31, an unprivileged process which exports its WPTR BO with
+AMDKFD_IOC_EXPORT_DMABUF and imports it on a second render node fd
+oopses in AMDKFD_IOC_CREATE_QUEUE:
 
-To fix, only translate entries whose backing file is the domain
-file itself in vduse_domain_get_coherent_page(), reject such
-entries in vduse_domain_set_map() since only external mappings
-should be imported, and set VM_IO on the domain file mmap so
-vhost_vdpa_va_map() refuses to map it in the first place.
+  BUG: kernel NULL pointer dereference, address: 0000000000000060
+  RIP: 0010:amdgpu_amdkfd_map_gtt_bo_to_gart+0x86/0x1a0 [amdgpu]
+   init_user_queue.part.0+0x180/0x250 [amdgpu]
+   pqm_create_queue+0x32d/0x730 [amdgpu]
+   kfd_ioctl_create_queue+0x583/0x9f0 [amdgpu]
 
-Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
-Cc: Xie Yongji <xieyongji@bytedance.com>
+Pass the process info of the queue instead. With the fix, the queue is
+created and destroyed normally.
+
+Fixes: 7f347e3f8217 ("drm/amdkfd: Fix NULL pointer error for GC 11.0.1 on mGPU")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6b4157498a176bd1c6083f6bb5aaf8a257a2027e)
 Cc: stable@vger.kernel.org
-Reported-by: chenglong.ma <longpareto@gmail.com>
-Signed-off-by: chenglong.ma <longpareto@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Co-Authored-By: Claude Code <noreply@anthropic.com>
-[ sashal: replaced vm_flags_set() with a direct vma->vm_flags |= update because the helper is unavailable ]
+[ sashal: adapted the process_info argument to the existing adev-based mapping API in kfd_ioctl_create_queue() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h       | 3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 8 +++++---
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c         | 3 ++-
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
-index e60a2b4065af9..a0c6835019a63 100644
---- a/drivers/vdpa/vdpa_user/iova_domain.c
-+++ b/drivers/vdpa/vdpa_user/iova_domain.c
-@@ -76,6 +76,10 @@ int vduse_domain_set_map(struct vduse_iova_domain *domain,
- 	for (map = vhost_iotlb_itree_first(iotlb, start, last); map;
- 	     map = vhost_iotlb_itree_next(map, start, last)) {
- 		map_file = (struct vdpa_map_file *)map->opaque;
-+		if (!map_file || map_file->file == domain->file) {
-+			ret = -EINVAL;
-+			goto err;
-+		}
- 		ret = vduse_iotlb_add_range(domain, map->start, map->last,
- 					    map->addr, map->perm,
- 					    map_file->file,
-@@ -222,6 +226,7 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+index ba065f7887aad..ed0f5e76324e0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h
+@@ -294,7 +294,8 @@ int amdgpu_amdkfd_gpuvm_map_gtt_bo_to_kernel(struct kgd_mem *mem,
+ 					     void **kptr, uint64_t *size);
+ void amdgpu_amdkfd_gpuvm_unmap_gtt_bo_from_kernel(struct kgd_mem *mem);
+ 
+-int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo);
++int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo,
++				     struct amdkfd_process_info *process_info);
+ 
+ int amdgpu_amdkfd_gpuvm_restore_process_bos(void *process_info,
+ 					    struct dma_fence **ef);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index eb4d652afbb60..49b9e0033be9e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2163,11 +2163,13 @@ int amdgpu_amdkfd_gpuvm_sync_memory(
+  * amdgpu_amdkfd_map_gtt_bo_to_gart - Map BO to GART and increment reference count
+  * @adev: Device to which allocated BO belongs
+  * @bo: Buffer object to be mapped
++ * @process_info: KFD process info of the queue the BO is for
+  *
+  * Before return, bo reference count is incremented. To release the reference and unpin/
+  * unmap the BO, call amdgpu_amdkfd_free_gtt_mem.
+  */
+-int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo)
++int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_bo *bo,
++				     struct amdkfd_process_info *process_info)
  {
- 	u64 start = iova & PAGE_MASK;
- 	u64 last = start + PAGE_SIZE - 1;
-+	struct vdpa_map_file *map_file;
- 	struct vhost_iotlb_map *map;
- 	struct page *page = NULL;
+ 	int ret;
  
-@@ -230,6 +235,10 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
- 	if (!map)
- 		goto out;
+@@ -2189,8 +2191,8 @@ int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_b
+ 		goto err_map_bo_gart_failed;
+ 	}
  
-+	map_file = (struct vdpa_map_file *)map->opaque;
-+	if (!map_file || map_file->file != domain->file)
-+		goto out;
-+
- 	page = pfn_to_page((map->addr + iova - map->start) >> PAGE_SHIFT);
- 	get_page(page);
- out:
-@@ -565,7 +574,7 @@ static int vduse_domain_mmap(struct file *file, struct vm_area_struct *vma)
- {
- 	struct vduse_iova_domain *domain = file->private_data;
+-	amdgpu_amdkfd_remove_eviction_fence(
+-		bo, bo->vm_bo->vm->process_info->eviction_fence);
++	/* bo->vm_bo can be the VM of any file which opened the BO */
++	amdgpu_amdkfd_remove_eviction_fence(bo, process_info->eviction_fence);
  
--	vma->vm_flags |= VM_DONTDUMP | VM_DONTEXPAND;
-+	vma->vm_flags |= VM_IO | VM_DONTDUMP | VM_DONTEXPAND;
- 	vma->vm_private_data = domain;
- 	vma->vm_ops = &vduse_domain_mmap_ops;
+ 	amdgpu_bo_unreserve(bo);
  
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index a08c84556ace4..4212d8c77de3b 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -368,7 +368,8 @@ static int kfd_ioctl_create_queue(struct file *filep, struct kfd_process *p,
+ 			goto err_wptr_map_gart;
+ 		}
+ 
+-		err = amdgpu_amdkfd_map_gtt_bo_to_gart(dev->adev, wptr_bo);
++		err = amdgpu_amdkfd_map_gtt_bo_to_gart(dev->adev, wptr_bo,
++						    p->kgd_process_info);
+ 		if (err) {
+ 			pr_err("Failed to map wptr bo to GART\n");
+ 			goto err_wptr_map_gart;
 -- 
 2.53.0
 
