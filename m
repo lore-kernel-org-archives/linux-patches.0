@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016262;
-	b=5AAf6L6/ZO8Gs2Fc9Ll7qzKlFHFzLYacpvIk8OG6/siwnrm+788f6ZzXq03x6sneMw3s
-	 DFYWASz6ggWGID5RN4436ibS6KXaLgR5MmRnoWZ+S6620IXT0rUTPQ5kraIZ3L8q/D5Qi
-	 NtpHy3x10I7neaQ9qgQRDGAwsMM30VkLxOf4QA1dBJYx5IYjQ8NW9JQ7+n5fWeaCOxnjM
-	 N6A1AK2UikW1OxVdL4v+O2M6IyyCMKTva0EIRQWRriGbXec783klc4CVrFn07CbTcpKPZ
-	 DgCKsW3LrCl7CQzZckum6Y4+08Kw6pKHFQ7X/kBi3Dwk0FEPX/z87UtK8B9Vt4e+DaA==
+	t=1795016264;
+	b=xszdyy7ONEo07XTBqE7hCQrbSiFcUBMt7lryPwuXlLNg5HWlr7w9ORM75pRq3XtPIm1B
+	 C7PEfQWriYrvpH53KggxVjD1ndp3MpfwHCZbPkdBqokpjLqp+1s/UpX380kvmGz7z149H
+	 2juR7uzx7EkQy9mQjtL8EXNyF1U/vNGfFmziFrRmflYr8idahJS6Vn/eZxISJNV2Llk4e
+	 iFLaXL0527s6U0oaNEjrC90Vzf/JHZMTgkL5TBgasGCHU8Nu//0atP36dENU623YBR5UR
+	 h0tTP6/o7vOaOVJf6sdc3BygwcSaOutGP9YCLG4UZGBvAWOmXWEu6dx10vRUe4uHUug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sLgbkVMbORcXpIoS7EVhZYViQGSfbhU6X0a4ivKpDms=;
-	b=TlkeIDJ2wRL71JILyYsZVoZabQApglYnaM62r6gOBO2hqTEMRaWUWmA087AsNwTTZU4s
-	 sY3g9xjL+YjkEtz7DZC1zZzF8pnuz8F8kd5WNgwc1xFi8TfGR3WFcirnz6ZEmstR5vAsA
-	 vxAuQdmjeKa1T4VQycTvEcltIEoKB1HQOlWgt8WkAhdJFDHE3Q8NgD7NTmtVE9/B6pMh0
-	 Z/qejo3SaubotnQg1JklYrRHS5ubZgRnZbZS6hU83YsjY4U1DtNzopWI2lA3I2Kx0cZM/
-	 TtZCRYYpy4fv2OP7JhAMVVwiWpCQPm3eO9wxpXA5J+oJGX0BHt9j6IiFCKxto/blhWw==
+	bh=Bnsle7qjqIj68En06V80YVi05smNAEQUHB9No/CKWuQ=;
+	b=Wq8bNwF6wrmNjRyfZXhMelafFGvGHJQ4AeUnQA/H/xraO12N+LHgwTgsdPWEFeGBBPQ4
+	 BcsGPCALpyLSsHyN1TfYId1CJwvpQ/Wl0ZuPAI1D8jKXJzu6Qt4WD93zClDyR3uG0QOg4
+	 3Yztp4mPNI+hNAJghNVRktA+SgWpHJXiQm14A8NfiWEnM8u0/8xP+vhUu7f3LPmFzIgoN
+	 G2w9wz9zQ5VXjfwE+46hWOw3+AU2p2XzMfRePbyUQU5U/1CIjoiQNwvDtJrJjFGrPSZ9V
+	 lSFYr9vcUo6+nUbAZmlSHi9kpNPhfZumdDJIhy7VVif1UhjIWsF5E/my149+EOvJrTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmCXU1pt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=riFZBbOC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CD8606A32A;
-	Wed, 18 Nov 2026 15:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80E4606A338;
+	Wed, 18 Nov 2026 15:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmCXU1pt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EAE1F00926;
-	Wed, 18 Nov 2026 15:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=riFZBbOC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAB61F000C5;
+	Wed, 18 Nov 2026 15:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016261;
-	bh=sLgbkVMbORcXpIoS7EVhZYViQGSfbhU6X0a4ivKpDms=;
+	s=korg; t=1795016264;
+	bh=Bnsle7qjqIj68En06V80YVi05smNAEQUHB9No/CKWuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NmCXU1ptFZB/hsa9pH/TEbnk0CEmfsuAnuz31EYmZDNJiOoC3HStt3EAVlrdDTc20
-	 AHfgsmDxG1gQ2V6gUyoVS9mGJy4/9ZF123yvC3HoURpoZVxpyaswfia5yv93Z2ag+4
-	 Jf++PW4YlV0+SVuinXzBKsYTiyGNAm3ukK32M3Ow=
+	b=riFZBbOC9bmFE6jRIQMMAhJxgL5t0rrUxVrpI8Rmxe7GOglR01d4g3TcWcbbyXhBF
+	 KfmqaiAXcXBrH1pugNtanNasHslzK9Zgx6g1QTMP1Aj3DcAJylWEBrCUb+F+7vOrTs
+	 yBaox6vUt1PcTXEHPjAaxTcjGiekNwl+cWnolfW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0429/2651] x86/svm: Avoid sign extension of SVM_EVTINJ_VALID in 64-bit expressions
-Date: Wed, 18 Nov 2026 15:27:49 +0100
-Message-ID: <20261118150303.270693792@linuxfoundation.org>
+Subject: [PATCH 7.3 0465/2651] f2fs: fix to record both APPEND and UPDATE ino entries
+Date: Wed, 18 Nov 2026 15:28:25 +0100
+Message-ID: <20261118150304.537142314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,70 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit c5991239b148d40d4981901968b3a6a838ff517b ]
+[ Upstream commit 06768d77ed956b4bf0b588fcff2fae8cfcb67269 ]
 
-SVM_EVTINJ_VALID is defined as (1 << 31), i.e. as an int with the sign
-bit set. Whenever it is used in a 64-bit expression the int is sign
-extended, so bits 63:32 end up set as well. Two 64-bit users are
-affected.
+In f2fs_post_evict_inode(), record_bits is assigned with BIT(APPEND_INO)
+and BIT(UPDATE_INO) respectively, so the second assignment overwrites
+the first one: when both FI_APPEND_WRITE and FI_UPDATE_WRITE are set,
+only the UPDATE_INO entry is recorded.
 
-verify_exception_info() uses the macro as a mask against a 64-bit value
-when it sanity checks hypervisor supplied exception information:
+The two flags are not mutually exclusive.Once the APPEND_INO entry is
+lost after the inode eviction, the shortcut in f2fs_do_sync_file() can
+take the flush_out path in the next fsync(), skipping f2fs_fsync_node_pages().
+As a result, the dnodes holding the newly allocated blocks are not
+fsync-marked, and after a sudden power loss, the data appended before the
+eviction is silently lost.
 
-	u64 info = ghcb->save.sw_exit_info_2;
-	...
-	if ((info & SVM_EVTINJ_VALID) &&
+This restores the previous behavior where the two ino entries were
+added independently.
 
-The mask is 0xffffffff80000000, so the check also passes when any bit of
-the error code in 63:32 is set while the valid bit itself is clear.
-
-svm_vmgexit_inject_exception() builds the value that KVM hands to an
-SEV-ES guest in GHCB SW_EXITINFO2:
-
-	u64 data = SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_EXEPT | vector;
-
-For vector == X86_TRAP_GP this yields 0xffffffff8000030d instead of
-0x000000008000030d. The field uses the EVENTINJ format, which holds the
-error code in bits 63:32, so KVM asks the guest to inject #GP with an
-error code of 0xffffffff. Linux guests only consume the error code when
-SVM_EVTINJ_VALID_ERR is set, which it is not here, so they are not
-affected in practice, but the value KVM writes is not the one it intends.
-
-Use BIT() instead, as is already done for most single bit definitions in
-this header. Every other user applies the macro to a u32, where the
-resulting bits are unchanged.
-
-Opportunistically give SVM_EVTINJ_VALID_ERR the same treatment, there's
-zero reason to open code BIT().
-
-Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
-Fixes: c3392d0ab714 ("KVM: SVM: Provide helpers to set the error code")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Link: https://patch.msgid.link/20260908053722.3917934-1-nagachaithanya9911@gmail.com
-[sean: use BIT() for SVM_EVTINJ_VALID_ERR as well]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 314c9e476ffc ("f2fs: call __add_ino_entry out of the eviction path")
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/svm.h | 4 ++--
+ fs/f2fs/inode.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
-index aa63431ba92c3..e883241b5e1eb 100644
---- a/arch/x86/include/asm/svm.h
-+++ b/arch/x86/include/asm/svm.h
-@@ -637,8 +637,8 @@ static inline void __unused_size_checks(void)
- #define SVM_EVTINJ_TYPE_EXEPT (3 << SVM_EVTINJ_TYPE_SHIFT)
- #define SVM_EVTINJ_TYPE_SOFT (4 << SVM_EVTINJ_TYPE_SHIFT)
+diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
+index 96cc0e777567e..4a6382b4c6a5b 100644
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -1055,9 +1055,9 @@ static void f2fs_post_evict_inode(struct inode *inode)
+ 		goto skip_record;
  
--#define SVM_EVTINJ_VALID (1 << 31)
--#define SVM_EVTINJ_VALID_ERR (1 << 11)
-+#define SVM_EVTINJ_VALID	BIT(31)
-+#define SVM_EVTINJ_VALID_ERR	BIT(11)
+ 	if (is_inode_flag_set(inode, FI_APPEND_WRITE))
+-		record_bits = BIT(APPEND_INO);
++		record_bits |= BIT(APPEND_INO);
+ 	if (is_inode_flag_set(inode, FI_UPDATE_WRITE))
+-		record_bits = BIT(UPDATE_INO);
++		record_bits |= BIT(UPDATE_INO);
  
- #define SVM_EVTINJ_RESERVED_BITS ~(SVM_EVTINJ_VEC_MASK | SVM_EVTINJ_TYPE_MASK | \
- 				   SVM_EVTINJ_VALID_ERR | SVM_EVTINJ_VALID)
+ 	if (!record_bits)
+ 		goto skip_record;
 -- 
 2.53.0
 
