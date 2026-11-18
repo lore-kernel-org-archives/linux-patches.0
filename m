@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047192;
-	b=VpnPFAaIJusi2/w44/kpKYSEkds+P+muDqgcHkfdsahyWOkqwIDtFyU6xs4MsOfSj0qj
-	 90DrB43iXfjXNqKrPoWxxx/D6edN/oMuY4IjVoJK5XDWpkLGXX+FG8wk6hSMc7MDR/IMd
-	 KflLqGz9BMAc6uR+Q8IiFl+smlxr5jOPVMBvTwZvpqdO8XJyEzGrjVk5inAtJFVBn7HJ5
-	 MaaEfVdst9xDwb6YUvrq6Wjyc95TFhw/EaCKc2trYomItipkDuFwHu4Ad4HY6wrD1K6Ur
-	 0+ceAPcO/m8rRPDCxqk7IZOjR2+chtSPUShFF/EChhD4MYyMI6zWN/fEJAR+PX4pi2g==
+	t=1795047195;
+	b=cYATCtPjqcpkd3pSe/IL+IMWWCxQNN6ujr8stEIHXBs4aHSiiAenqylSf2W6fFuk+gGS
+	 c0XN8URzSz4mbdtC0pAx1nDIG4UPOY50vpoqMK95piVpFJO3HQu6Jke5vhF0mRkCNFbX9
+	 keyyV/1ezvQNs9h/xZ07t25wRdvASy8X6ZGKvuKjBi3IZDyFKTluoJjc/MsoO/ypcMxaY
+	 v19kcQBram+UxV8IAvHqMAI0uzq4kKHthiL74b5pLmth1w8rn55ZOp87rCLY9K7y46bpw
+	 iOahyl9FhBD7mtWSaOudhVCEP0h3HNriqQjxHE8oXXNRlnBiJ3pffNP+lTZy/M4BuFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JQeC1jTcNBEt/A3RHYMPR1ECydI+iu4A5j3MxixiKew=;
-	b=oBdQuvFAs+NxNdXsUpptoeEowJB+R5m75HXrtMPx0vYC7z6NiZXa5rrT8u6yd9B8nNiC
-	 zgNgyA5xneGtRnUBSW7E/XCEG79ersqHK6dUO2kXGMH/RceugMDvaGQ4Q1LtSGS0tPyvP
-	 RFNBTSGHldxX6LZiDRo9QAoTaVNMdY1L1M5w9Uaj1wRz79pIx8SQNnWo9rr91tGtbevW5
-	 4JKUOnvb5gry3zGfhLvDAi6dt4WDRX5RyYQqL+ZpdctOEcAU6QkkdYP6jROohMVxDl1T9
-	 wtYqsuvUs0H7npP8sUBgUV+Z38QolDb0s3y5ME4e9824/ob/PGRfq5iS5TzZUrIFl2g==
+	bh=u9AxkLlfxDxOxJ9/OSEsI4BOokyIChn8Nxy+yOc9c9g=;
+	b=0yBdxXdYakdRqjBYsnoH8OmM2UDaXgeua4U4UzyKvfqfCZYyO1QovNuzqSVTVv+x487R
+	 xBUKdUqVx4tYBrPMq9r2Qrg3PGFv173tPPySRKAVgJZ1fDZHR0/Rw93SZGxHEJXAUKcwR
+	 XcbQ/wcniUzXKAyyT0AWJAgew/H4a82koW62W7CcPZTS2VAu+h65/vt0L/l0JCnhp2bHS
+	 9pUNxr9cqrasohfIyyUzOdvDG9J97aRTM9onki9Rx7DkCrhVj2AgpK7EQtaqr0sTKpB1q
+	 g+y1OO4K/4/dBG0qTjkHAuO+OL5fG78WpOT/OFY6EiWA1DBkejUbxxkaqsB92NEe1tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwVT6o8b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GvVpUSIt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93518606A33D;
-	Thu, 19 Nov 2026 00:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C335606A33F;
+	Thu, 19 Nov 2026 00:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwVT6o8b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B377C1F000C4;
-	Thu, 19 Nov 2026 00:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GvVpUSIt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725A61F000C4;
+	Thu, 19 Nov 2026 00:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047192;
-	bh=JQeC1jTcNBEt/A3RHYMPR1ECydI+iu4A5j3MxixiKew=;
+	s=korg; t=1795047195;
+	bh=u9AxkLlfxDxOxJ9/OSEsI4BOokyIChn8Nxy+yOc9c9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwVT6o8bcZ+a5RZN3BIJ5ShKN24ZhCu3nSrJYcOG0zN7Me4Kw2dFJxRHa/43uuV3X
-	 isrINxHXF5kReSNxm2wXxBbh2a5mvljouT57vUCRZFEWH5T34DJjiwAcJXYKRw325/
-	 eaH8OvdsVP/MJD/lI69TIrGQ/vFmDtlMJo4FgtAE=
+	b=GvVpUSItFidlaGrV64EjiLuGslG2VLKB/sZRdr/KFF6h86BslhjcZuJnEMJyhZ7/x
+	 FplPRQIF02qwJM39t3I2yutFMKfI/hLgQxp6nMTgDtPzD6XjWvHzRgA8+TvZ1Rt3GI
+	 ju/y4yWSEZKuUlEh3gy7C7yoBK/l+JJBTdkLXtiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Vincent Legoll <vincent.legoll@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1511/2857] ALSA: emux: Stop voices before freeing zones in all cases
-Date: Wed, 18 Nov 2026 15:42:25 +0100
-Message-ID: <20261118150255.737028736@linuxfoundation.org>
+Subject: [PATCH 6.1 1512/2857] nvmem: rockchip-otp: Add clks and reg_read to rockchip_data
+Date: Wed, 18 Nov 2026 15:42:26 +0100
+Message-ID: <20261118150255.770741977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,79 +70,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 8a5d87c2ba30e8de31cfbe888fd4d95f43c63db9 ]
+[ Upstream commit 8dc61364164e79e44c07fa2ac0a7b6939f00d5db ]
 
-The emux voice caches the soundfont zone pointer in vp->zone, which
-is referred to later, e.g. in snd_emux_send_effect().  For avoiding
-dangling pointers, the soundfont code calls the sample_reset callback
-to stop all voices before freeing zones.  However, in a few cases
-(e.g. emu10k1's missing sample_reset or the call path via
-remove_info()), the sample reset isn't called properly, leaving the
-playing voices.
+In preparation to support new Rockchip OTP memory devices with different
+clock configurations and register layout, extend rockchip_data struct
+with the related members: clks, num_clks, reg_read.
 
-Fix it by always registering the sample_reset callback, falling back
-to snd_emux_terminate_all() when the driver has no own ops, and by
-calling sample_reset in remove_info() before freeing the zones.
+Additionally, to avoid managing redundant driver data, drop num_clks
+member from rockchip_otp struct and update all references to point to
+the equivalent member in rockchip_data.
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020101624.205638-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Tested-by: Vincent Legoll <vincent.legoll@gmail.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <20230611140330.154222-10-srinivas.kandagatla@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9fc6a1592d84 ("nvmem: rockchip-otp: Serialize reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/emux.c      | 10 +++++++---
- sound/synth/emux/soundfont.c |  9 +++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/nvmem/rockchip-otp.c | 79 ++++++++++++++++++++++--------------
+ 1 file changed, 49 insertions(+), 30 deletions(-)
 
-diff --git a/sound/synth/emux/emux.c b/sound/synth/emux/emux.c
-index a02f952d74ba2..1b9f69efc2161 100644
---- a/sound/synth/emux/emux.c
-+++ b/sound/synth/emux/emux.c
-@@ -71,7 +71,12 @@ static int sf_sample_free(void *private_data, struct snd_sf_sample *sp,
- static void sf_sample_reset(void *private_data)
- {
- 	struct snd_emux *emu = private_data;
--	emu->ops.sample_reset(emu);
+diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
+index 9f53bcce2f877..b5a84b379da40 100644
+--- a/drivers/nvmem/rockchip-otp.c
++++ b/drivers/nvmem/rockchip-otp.c
+@@ -54,21 +54,19 @@
+ 
+ #define OTPC_TIMEOUT			10000
+ 
++struct rockchip_data {
++	int size;
++	const char * const *clks;
++	int num_clks;
++	nvmem_reg_read_t reg_read;
++};
 +
-+	/* stop all voices that might refer to zones and samples to be freed */
-+	if (emu->ops.sample_reset)
-+		emu->ops.sample_reset(emu);
-+	else
-+		snd_emux_terminate_all(emu);
+ struct rockchip_otp {
+ 	struct device *dev;
+ 	void __iomem *base;
+-	struct clk_bulk_data	*clks;
+-	int num_clks;
++	struct clk_bulk_data *clks;
+ 	struct reset_control *rst;
+-};
+-
+-/* list of required clocks */
+-static const char * const rockchip_otp_clocks[] = {
+-	"otp", "apb_pclk", "phy",
+-};
+-
+-struct rockchip_data {
+-	int size;
++	const struct rockchip_data *data;
+ };
+ 
+ static int rockchip_otp_reset(struct rockchip_otp *otp)
+@@ -132,29 +130,23 @@ static int rockchip_otp_ecc_enable(struct rockchip_otp *otp, bool enable)
+ 	return ret;
  }
  
- int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, char *name)
-@@ -96,8 +101,7 @@ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, ch
- 	sf_cb.private_data = emu;
- 	sf_cb.sample_new = sf_sample_new;
- 	sf_cb.sample_free = sf_sample_free;
--	if (emu->ops.sample_reset)
--		sf_cb.sample_reset = sf_sample_reset;
-+	sf_cb.sample_reset = sf_sample_reset;
- 	emu->sflist = snd_sf_new(&sf_cb, emu->memhdr);
- 	if (emu->sflist == NULL)
- 		return -ENOMEM;
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index 152a85013ba8e..e6d282668771d 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -470,6 +470,15 @@ remove_info(struct snd_sf_list *sflist, struct snd_soundfont *sf,
- 	struct snd_sf_zone *prev, *next, *p;
- 	int removed = 0;
+-static int rockchip_otp_read(void *context, unsigned int offset,
+-			     void *val, size_t bytes)
++static int px30_otp_read(void *context, unsigned int offset,
++			 void *val, size_t bytes)
+ {
+ 	struct rockchip_otp *otp = context;
+ 	u8 *buf = val;
+-	int ret = 0;
+-
+-	ret = clk_bulk_prepare_enable(otp->num_clks, otp->clks);
+-	if (ret < 0) {
+-		dev_err(otp->dev, "failed to prepare/enable clks\n");
+-		return ret;
+-	}
++	int ret;
  
-+	/* stop voices before freeing the zones they might refer to */
-+	for (p = sf->zones; p; p = p->next) {
-+		if (!p->mapped && p->bank == bank && p->instr == instr) {
-+			if (sflist->callback.sample_reset)
-+				sflist->callback.sample_reset(sflist->callback.private_data);
-+			break;
-+		}
+ 	ret = rockchip_otp_reset(otp);
+ 	if (ret) {
+ 		dev_err(otp->dev, "failed to reset otp phy\n");
+-		goto disable_clks;
++		return ret;
+ 	}
+ 
+ 	ret = rockchip_otp_ecc_enable(otp, false);
+ 	if (ret < 0) {
+ 		dev_err(otp->dev, "rockchip_otp_ecc_enable err\n");
+-		goto disable_clks;
++		return ret;
+ 	}
+ 
+ 	writel(OTPC_USE_USER | OTPC_USE_USER_MASK, otp->base + OTPC_USER_CTRL);
+@@ -174,8 +166,28 @@ static int rockchip_otp_read(void *context, unsigned int offset,
+ 
+ read_end:
+ 	writel(0x0 | OTPC_USE_USER_MASK, otp->base + OTPC_USER_CTRL);
+-disable_clks:
+-	clk_bulk_disable_unprepare(otp->num_clks, otp->clks);
++
++	return ret;
++}
++
++static int rockchip_otp_read(void *context, unsigned int offset,
++			     void *val, size_t bytes)
++{
++	struct rockchip_otp *otp = context;
++	int ret;
++
++	if (!otp->data || !otp->data->reg_read)
++		return -EINVAL;
++
++	ret = clk_bulk_prepare_enable(otp->data->num_clks, otp->clks);
++	if (ret < 0) {
++		dev_err(otp->dev, "failed to prepare/enable clks\n");
++		return ret;
 +	}
 +
- 	prev = NULL;
- 	for (p = sf->zones; p; p = next) {
- 		next = p->next;
++	ret = otp->data->reg_read(context, offset, val, bytes);
++
++	clk_bulk_disable_unprepare(otp->data->num_clks, otp->clks);
+ 
+ 	return ret;
+ }
+@@ -189,8 +201,15 @@ static struct nvmem_config otp_config = {
+ 	.reg_read = rockchip_otp_read,
+ };
+ 
++static const char * const px30_otp_clocks[] = {
++	"otp", "apb_pclk", "phy",
++};
++
+ static const struct rockchip_data px30_data = {
+ 	.size = 0x40,
++	.clks = px30_otp_clocks,
++	.num_clks = ARRAY_SIZE(px30_otp_clocks),
++	.reg_read = px30_otp_read,
+ };
+ 
+ static const struct of_device_id rockchip_otp_match[] = {
+@@ -225,21 +244,21 @@ static int rockchip_otp_probe(struct platform_device *pdev)
+ 	if (!otp)
+ 		return -ENOMEM;
+ 
++	otp->data = data;
+ 	otp->dev = dev;
+ 	otp->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(otp->base))
+ 		return PTR_ERR(otp->base);
+ 
+-	otp->num_clks = ARRAY_SIZE(rockchip_otp_clocks);
+-	otp->clks = devm_kcalloc(dev, otp->num_clks,
+-				     sizeof(*otp->clks), GFP_KERNEL);
++	otp->clks = devm_kcalloc(dev, data->num_clks, sizeof(*otp->clks),
++				 GFP_KERNEL);
+ 	if (!otp->clks)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < otp->num_clks; ++i)
+-		otp->clks[i].id = rockchip_otp_clocks[i];
++	for (i = 0; i < data->num_clks; ++i)
++		otp->clks[i].id = data->clks[i];
+ 
+-	ret = devm_clk_bulk_get(dev, otp->num_clks, otp->clks);
++	ret = devm_clk_bulk_get(dev, data->num_clks, otp->clks);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
