@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023143;
-	b=lwC2V0nF2rv+aflVQHVFMyK2svBtKzR1GCkYcsTPR6zG6LvWesspW38UyVuAMU7/KUa0
-	 MQcIty1a/qYi0YUQ9vVG8wumoeHslRcrhN+sq8iPSsqv+OEAZEMjuzi08MatatJ6+qMTy
-	 u9+eK43TIQDj5R3oPY0SvNiYFirNSlTFEfLoywIhl6E9OXs+5XJ5t/6ZpvGw5be0dG0VF
-	 53eOKZdutI2Tlg25ZzHU7fx1DkOh2M0BzgSg2z7qJl37AGOkET8hAF3oXPmrHGDfoGmk3
-	 GroLE9efRunsIkZcW+v4W0zAyxTA5YduWp/5is13W32EAH1mrSG/O8y4r3vwEg1d1Mg==
+	t=1795023145;
+	b=yx0RDpqyJN7ayUMgogmu/0j7irXtCZNpV+QZbAnEkm4nqtaEyyLtPzpYV8GETCcIoyYf
+	 V2b4zVEiokR5xGbVRFwO/rN1WLm0l9x7iXOqIoTA2nigZHFd+4/pF5tfWhAmUBMmRi+p5
+	 3kbaxOtnHJiJS4i/f9uMdcI3K2wCA6RKI8yt4fwZA/tIXrXTbBBmZxsRFtKdWtv5tYmq2
+	 E9gG3NYZjt/xPv0PzVw1joJcLsmoXF0Ve90NQItVnshApqkUdh6qlaMiI5NDUMbcT7pjj
+	 307hL1nCx3lhZqowdC1sQFyWZ6l4Jrc7x6FRJ/i33NGCkPcbDQa2pq0BckskZflOT9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=n664HoK3bJfv4p3tjfFPYksUbWT9cA4AHDG4UldYGYU=;
-	b=X/e8fpfTJ5j8mzwxmI1n2qB+V3iTnB9DClCdrNeIh26tHDQYNsSzhEfcE2VjSJ+IHrZx
-	 XV6SGeyKDGyRyzOByig7ij8hsAgMpxYETrXpXng8OMPYdx8fxhQ6i5DsPLKjab39iDWzR
-	 FWIxAdazZk+hGWGPuoK4EAgT2tljEUt2H7LccSK5gckbCKAAplJ7nkPwZG/eIlA364Oce
-	 CGBUWBPyRK6y3m2E9CWdB5ZjA9xv9tZdPLJRy742O84NB+Z6fYvdVF+1aB51iRkXNK57i
-	 ew3XjATRVzFKMIsOO/04SoZVZ5t7Ou87o0UuRCc0bWHx4JRtiMzEWQEXo5xbMF5CXcg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=m+aXDHHydfjkXCN5H4JkdikbMjoctxxn61KBM5mKUW8=;
+	b=TZyU9gD9T8AJ+gr6bUywM4I9iHpMYz18bdr2yQFWKpFRP4M6x+I6krg0stfRyLLgFuZT
+	 uI4g7l/NwIlzSBiFTSC8BKUffxmCk07QzFHtIx/aP0F8mAuaaQjPGdLGLnw8b4pIbP5py
+	 n0viMFLAM3zWSFL4F+mGKBYVgnlBnTEkm5QqJGmsM6XOzkNF5lvJCeBv70cG5SmZDQjQT
+	 b910G4TMAMLkY7OtsIRk4O3488PC/GoV0yPzNAXUO28Xf0CZONsKbnAqHq+GfbCwRM/HT
+	 F9pzRCIbqGMqENZwuMMTytbOawKZb/fkYkC2Ey7weFUwXzlZtEsQ7K+rD5Z+9dpI9ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bwlMtzOP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+IMYNzY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441BF606A320;
-	Wed, 18 Nov 2026 17:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9588606A32C;
+	Wed, 18 Nov 2026 17:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bwlMtzOP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDE61F000C6;
-	Wed, 18 Nov 2026 17:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U+IMYNzY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F981F000C4;
+	Wed, 18 Nov 2026 17:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023143;
-	bh=n664HoK3bJfv4p3tjfFPYksUbWT9cA4AHDG4UldYGYU=;
+	s=korg; t=1795023145;
+	bh=m+aXDHHydfjkXCN5H4JkdikbMjoctxxn61KBM5mKUW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bwlMtzOP2aLoUXlGm9Xd27smLILCvv7bd0Dhx+t25j1bA0LvRQ6O94xIrjtGqPPr6
-	 DRcDlHckc/EM+FOMhC+QmADotG9w1uxqdsjxl9OCeGZ5LbSU50ZnbSOhY4N9i1i0xp
-	 T7GqVuh/xx5Zg6QCCwmkZNwwP4sFzfySpuOCVrOI=
+	b=U+IMYNzY3VivWXVWTSrCZI00wZspc/8OuBr3Ol7rqQelqpYGDC6ifBUN4XK+chbXH
+	 7yNzURablXrqssG+wMDGjiEsZqBGSU8CTWMWq24xJqHD85liBw8HS5Gp8lbftjftXf
+	 mgqE3aWyhSrwIgCJz8Xud27qgpe21s24DSkVSmWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0264/2151] pwm: loongson: Reload PWM configuration through counter reset
-Date: Wed, 18 Nov 2026 15:33:19 +0100
-Message-ID: <20261118150131.424554198@linuxfoundation.org>
+Subject: [PATCH 6.18 0265/2151] drivers/base/node: fix UAF on device_register() failure
+Date: Wed, 18 Nov 2026 15:33:20 +0100
+Message-ID: <20261118150131.462327406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,58 +62,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keguang Zhang <keguang.zhang@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 0de9b836a3bc1cd30578ae2c4463d09afd85ed3d ]
+[ Upstream commit 6d7e9bc51d8f2d73b3403c759c769f880082f9ae ]
 
-The Loongson PWM controller latches the LOW and PERIOD registers only at
-the start of each PWM period. After disabling and re-enabling the PWM,
-the controller resumes from the previous counter value and completes the
-current period before re-latching the updated LOW and PERIOD values.
+node_init_node_access() frees the access node with kfree() if
+device_register() fails. After device_register() the embedded device is
+initialized and must be released with put_device() so that
+node_access_release() can free it.
 
-Reset the PWM counter when disabling the PWM and release it when
-enabling the PWM so that the updated LOW and PERIOD values are latched
-before the PWM starts running again.
-
-Fixes: 2b62c89448dd ("pwm: Add Loongson PWM controller support")
-Signed-off-by: Keguang Zhang <keguang.zhang@gmail.com>
-Link: https://patch.msgid.link/20260715-pwm-loongson-fix-v3-2-0aab2847eaa7@gmail.com
-[ukleinek: Note LOW refers to the register currently named
-LOONGSON_PWM_REG_DUTY. That name is wrong, the fix is still under
-discussion.]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 08d9dbe72b1f ("node: Link memory nodes to their compute nodes")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260907024732.1452228-1-gonglinkai@kylinos.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-loongson.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/node.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pwm/pwm-loongson.c b/drivers/pwm/pwm-loongson.c
-index 31a57edecfd0b..a7bd479aafe01 100644
---- a/drivers/pwm/pwm-loongson.c
-+++ b/drivers/pwm/pwm-loongson.c
-@@ -99,6 +99,7 @@ static void pwm_loongson_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index 83aeb0518e1da..1a1139a953ced 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -167,20 +167,19 @@ static struct node_access_nodes *node_init_node_access(struct node *node,
+ 	dev->parent = &node->dev;
+ 	dev->release = node_access_release;
+ 	dev->groups = node_access_node_groups;
+-	if (dev_set_name(dev, "access%u", access))
+-		goto free;
++	if (dev_set_name(dev, "access%u", access)) {
++		kfree(access_node);
++		return NULL;
++	}
  
- 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
-+	val |= LOONGSON_PWM_CTRL_REG_RST;
- 	val &= ~LOONGSON_PWM_CTRL_REG_EN;
- 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
+-	if (device_register(dev))
+-		goto free_name;
++	if (device_register(dev)) {
++		put_device(dev);
++		return NULL;
++	}
+ 
+ 	pm_runtime_no_callbacks(dev);
+ 	list_add_tail(&access_node->list_node, &node->access_list);
+ 	return access_node;
+-free_name:
+-	kfree_const(dev->kobj.name);
+-free:
+-	kfree(access_node);
+-	return NULL;
  }
-@@ -109,6 +110,7 @@ static int pwm_loongson_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
  
- 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
-+	val &= ~LOONGSON_PWM_CTRL_REG_RST;
- 	val |= LOONGSON_PWM_CTRL_REG_EN;
- 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
- 
+ #ifdef CONFIG_HMEM_REPORTING
 -- 
 2.53.0
 
