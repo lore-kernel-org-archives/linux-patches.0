@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015603;
-	b=xWNSnlhLkb87licXE+pzb8USUmHFIuQUSve3ViyLR5EuoZalGlPKmGrb7be50exs5cdj
-	 Qu51cztXueu7gnjFanQMgS2XY1bPiLz/era+sq2jabaK0rIeRa/fsyc/vsFnSmuoyk4yH
-	 vhXUYJ/pDIUeomGyYm/AwDtxuc1Rex5sttlRl3KP0VandGRTqse9ZAa7QbGE8yJeSAJu7
-	 YuQ9oU2HwtD/nVeIQXSLF4rKMBhcPrvyuyuk+3VfNFLFvFuIKPaiiueZjvCpYK4hFVi8w
-	 +c4XeyQwHfkfbPuDrNQpTcDTBhHBprlgvyAfWLmmje4J1BW8Uvv3CuteF8URKuxTz4g==
+	t=1795015606;
+	b=hvJjpGK+m44SfbMTQglE2cmDn7bC3jD5c0Y9mQFBCf3Oj373VA47aVvkrMuKzgHSzpxs
+	 g2RdKWvdLEDnBsHg0U6aDtjFck9Tq93F78RyqRRJdZRn07ocRKOnwGNdynaKI+8WFdql9
+	 YbcE6XaRcwNsE5Hwf7gsmAv2ZkHR9kWJlBEEdMXT+iCDfh010kU3pdXB62RsaRP1ReAWI
+	 a36+yjdFO9SeInQLVrRqHCld2YAr8YBOGJ71if3XJnapWT9DJ5kC1Hf0dwMOqBaxngE2Q
+	 QuSvrqer9NE0OZogy/r5GiJZrW/XtyR6HDtdK8dCSvKFAKV7YEWXElJHhdgtD4KHyiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZHuMXuABT+1RQALdohXl4WnF0/DBXMQR+XGSdOeufmQ=;
-	b=xZiOj0oZaGmzALGtRI3cg/4OQPWKrygZyM+9Ktg7jeGV0oY3XNKDVLpt2Ev8CJON2Geh
-	 /hguXFGO91QIfXnU8z/CqocjYWJE8Gug9/YM89mQlcaCTDfHDaeQ3dxiP1uZWMsY5jQbh
-	 CSt3vKW5S1HH5D1uo0l3bt1ofFSl2vew8ebqR+KGVSu4qfCpYJUJVkt0tVlhPiopmONJO
-	 gmKR7sNLvjGwezQu80vk/DDVADEAQ/D/ZvRAHd16egnBbVUJsVfHj1/Pf+wzjweDY4/8+
-	 lbRiXyNLxaVdzHvPY0ZFkKyYQs3cMLgWKj462lHkYDwSISEaC1ygvU4TblTE37fodJA==
+	bh=X8hBPv44C7lBHiA+6CRY3cuf3KrKwrd3uU3qrdfJaVo=;
+	b=lLaixVAQU0A9L9H5zcqPh2HJITqq+hbyLCLnFD21LINmTXacggFnJ9WXP3CJTkTvXgzp
+	 oqaD3RKIzYyYv3vZryYK32+P7KtvWk4fspDIW/sHA+ewdehopQyGgEyE3yuxlj+L0mo6R
+	 hGgSekiPztp9wDJwftiMHfgvhZVbP+8GMH9zrS0LzaGbDNuCpVuQdfg7YUEmFTzb0WEeC
+	 QogSvmGTKp3GsdU/C1iIAlYrxjSAiyjwrG7JF7YZ5TlR9TFf9JucqVQ9z8TZzv1ybvcjB
+	 IrowmgUMNdDOloTraLGDxzPGhA9OJWsVEtSA1f8JTj2POBOhh7bUI2xghrfuRI5yzbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u3Dna0/h";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pAJIDuhg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D368B606A31C;
-	Wed, 18 Nov 2026 15:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F36606A32A;
+	Wed, 18 Nov 2026 15:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u3Dna0/h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BA61F000C4;
-	Wed, 18 Nov 2026 15:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pAJIDuhg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1166D1F000C4;
+	Wed, 18 Nov 2026 15:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015603;
-	bh=ZHuMXuABT+1RQALdohXl4WnF0/DBXMQR+XGSdOeufmQ=;
+	s=korg; t=1795015606;
+	bh=X8hBPv44C7lBHiA+6CRY3cuf3KrKwrd3uU3qrdfJaVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3Dna0/hzvg1wUa6FzIE+OwEV4CWaT+7CQG4vOWmNmkRMQybezzOrWgHSGAkj2tt/
-	 qeJH0ZxVgNJSbJMizP1sCwNbvKRAvSjMsooJSf172M11L+BxHfCziEU6FmV2I3LUCZ
-	 XBpE6+iJjQMCXuoPeK1TLZjoLpOR3xIz7EwAttnA=
+	b=pAJIDuhg81atuFan2Mxqc3mDXqs7qAF01HE1MrxZCjVA960pohF7eCPCsU8BeP+Mt
+	 sMY361edpqKMiLbSA5NetX3HfCEHxeA1qdNulFXc6CHpxJ7LfRr+FCMlxWXMj7rcOl
+	 iysX/a0eU0tQ814sP7lERLRexCpEoJHo2/1sEa8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Paul Dolan <paul.dolan.dev@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0232/2651] efi/cper: Reject an error status block length that wraps a u32
-Date: Wed, 18 Nov 2026 15:24:32 +0100
-Message-ID: <20261118150256.211257328@linuxfoundation.org>
+Subject: [PATCH 7.3 0206/2651] selftests/pidfd: fix PPID values in error message
+Date: Wed, 18 Nov 2026 15:24:06 +0100
+Message-ID: <20261118150255.290185043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,60 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Paul Dolan <paul.dolan.dev@gmail.com>
 
-[ Upstream commit 41e25ef5e417c62eb7bf39b187242b283b3ef9f1 ]
+[ Upstream commit b4ad6eb49532a43ad06c4d59ec5d8c80a012eb3f ]
 
-cper_estatus_len() sums the firmware-controlled data_length (or
-raw_data_offset plus raw_data_length) into a u32. A data_length of
-0xffffffec wraps that sum to 0, and a length that reads back short defeats
-every bound built on it: bert_print_all() passes its "remain <
-estatus_len" check, then advances "estatus += estatus_len" by zero and
-loops forever. GHES survives only because __ghes_check_estatus() rejects a
-length below sizeof(*estatus) first.
+The PIDFD_GET_INFO PPID check compares info.ppid against getppid(), but
+its failure message prints pid and info.pid from the preceding PID
+check.
 
-Reject a length that cannot be expressed in a u32 in
-cper_estatus_check_header(), which both of today's callers reach: GHES via
-__ghes_check_estatus() and BERT via cper_estatus_check(). extlog reaches
-neither yet; a later patch routes it through cper_estatus_check(), whose
-ELOG_ENTRY_LEN bound needs this to hold.
+Print the PPID values being compared so that a failure reports the
+correct information.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=1
-Fixes: 06d65deade9a ("ACPI, APEI, UEFI Common Platform Error Record (CPER) header")
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-3-dave.jiang@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: cdda1f26e74b ("pidfd: add ioctl to retrieve pid info")
+Signed-off-by: Paul Dolan <paul.dolan.dev@gmail.com>
+Link: https://patch.msgid.link/20260902162615.11531-1-paul.dolan.dev@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/testing/selftests/pidfd/pidfd_open_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
-index 332c78f2d5617..3dcef618ad39f 100644
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -745,6 +745,17 @@ int cper_estatus_check_header(const struct acpi_hest_generic_status *estatus)
- 	    estatus->raw_data_offset < sizeof(*estatus) + estatus->data_length)
- 		return -EINVAL;
- 
-+	/*
-+	 * cper_estatus_len() sums these into a u32, and a wrapped sum reads
-+	 * back smaller than the record. Reject a length that cannot be
-+	 * expressed so no caller is handed the short value.
-+	 */
-+	if ((u64)sizeof(*estatus) + estatus->data_length > U32_MAX)
-+		return -EINVAL;
-+	if (estatus->raw_data_length &&
-+	    (u64)estatus->raw_data_offset + estatus->raw_data_length > U32_MAX)
-+		return -EINVAL;
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(cper_estatus_check_header);
+diff --git a/tools/testing/selftests/pidfd/pidfd_open_test.c b/tools/testing/selftests/pidfd/pidfd_open_test.c
+index 318e6f09c8e0b..c6698b7cdb479 100644
+--- a/tools/testing/selftests/pidfd/pidfd_open_test.c
++++ b/tools/testing/selftests/pidfd/pidfd_open_test.c
+@@ -168,7 +168,7 @@ int main(int argc, char **argv)
+ 	}
+ 	if (info.ppid != getppid()) {
+ 		ksft_print_msg("ppid %d does not match ppid from ioctl %d\n",
+-			       pid, info.pid);
++			       getppid(), info.ppid);
+ 		goto on_error;
+ 	}
+ 	if (info.ruid != getuid()) {
 -- 
 2.53.0
 
