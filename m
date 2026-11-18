@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046117;
-	b=mJ1WcnC3zLkS6esm6AQpUdPEhFJAm3gEo0ZdQoKMxbJUiz57NzuNHbFYfeUsLM8g7zAo
-	 8WlZUUOVzXbIAfLbH+ib43RnlVV+IHZ789GEmPu6M+TvteEred8BmvF39xM6Ssy5FD571
-	 h7C1XBxm8qb9/evw1AxQVCcjx2JLz+4kJ1fMzDM7qkDcdyPxEhmsSe362p7EKjsUopf0U
-	 GJJVUvS7vO3UTi/Zeli9nACe9yxRfZ/fdGg/721+fpKcYsF1+wKqWZoFOiwFx16yEayNW
-	 PxJWqbuYzCbbs+Hq43pRXUn93wUsSW2V2i6Z1zBATt0T75FOUHzXyE3sUn4bmsr+2Eg==
+	t=1795046119;
+	b=SlmGyPjXhOCt0VssKUAz4dZpcXyeD1nHwtNDgFblDKlFEJl8c5sBTRSg07RQa7ljrh9R
+	 +tbNbIcdaU7BkRApqDCfp3rWoDguAf4uRznn8EPtZ0BtvyKEzgYpf7nEuUaNS6bEhI5S8
+	 z7s5B7/eQLMEgKHbLigAWU2e8UkKXS636VvBfythFuNL0oB0HJS05Yzex2gS5FoT95447
+	 6BFSRWL8lB+Arz6I7KdZJdPQplFl3TNsTCQ9IpCiXnW1UJ3/DJmbsMT6pdVRlRz7y6Ce4
+	 iOBZTcubYsmmolWHpXzYHumDzW8JPdmBaRKR+Z/Sq8wO4vKfZwkNCMvXO/QPmOtrvCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046119;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uSnrg2hkrFx6JML7emRzTk5tzP4eWuy29s3za+hw9Bs=;
-	b=ZPBfuqE/F93NOsx3MlpNty6nkXqxCg4S8UcnFUpMT8VpWsgyvBRCdrqQSdxnVQaXByl3
-	 /VQ7CAmRbOJfnQn+s7sHHjKkjfx5yv5BsWZ4wKxxXetxjUx2Rl42/Ak9oghgaWGwXYOhV
-	 EO6qvDQZ9/tcZZIoRTRLWSC4p8DguAV3ANGJoVEkBs9qqqOZ/kBz+9+FZ6Rztsmb3cYON
-	 xGCYdy9IiLO+DShkQoKljlyExQQy3I+el1aefS7Ua3OnRkzePfaiO7lvqHUxvEwZCvEdp
-	 x6s0Tq/46babPURybX29OIxwPMYp6Di4TpMVsL83DDK4sUSGkbwRba7hPUKab1l7h3w==
+	bh=+k0jV1b945F+AfzHm9XfUBPOKmxgS7oSX0tx7cM9Xfg=;
+	b=Doxv4TQXVZygqB6nVMEa1aifk8PvBpD+m8EH73J2vvJ+JnjxSjE+2Gyro9AXC+jdRjVJ
+	 SAh6HzI+EtrFnaoQHdlqEdAfYgUmho/H8i9pvqtTvK3l8ZTIh40IG7E+mRrdGia8Bvyxi
+	 aDkarB2QJp1xCR8/sxt78gR4RCGoJMlwKOF4joL+Zt8pki09ai/rzB9rGfV3cydzFCuKJ
+	 w0kk1NspFmPr4WN2MQjwmGkywt5o9SLJazHVy371/gDAjRI2IzcHug+FpdD7x+VWQp61W
+	 TVRQYgD1lHml3xjuUN0BKmG7Wp0+BtAaG6WepF+uIySnjfa2TwLhsba6zzyeqk+X7RA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2m4+Auim;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qR5Jhvwj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C126606A325;
-	Wed, 18 Nov 2026 23:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F29606A31C;
+	Wed, 18 Nov 2026 23:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2m4+Auim
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412991F000C5;
-	Wed, 18 Nov 2026 23:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qR5Jhvwj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070E21F000C4;
+	Wed, 18 Nov 2026 23:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046116;
-	bh=uSnrg2hkrFx6JML7emRzTk5tzP4eWuy29s3za+hw9Bs=;
+	s=korg; t=1795046119;
+	bh=+k0jV1b945F+AfzHm9XfUBPOKmxgS7oSX0tx7cM9Xfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2m4+AuimhFcvIgzpYv/X/RFYdtHTt3BtDOtV/lsoESMYbgCy2stFIEuxeR23mATF5
-	 QXbA/rLon8S0fFIsSjf+LyA/SMueFfhIaG/l8BLz8UimXZKN+x07z4iqOUGhWMWDm+
-	 /tuFgNHMMSqo5mEi9E2eX/Ctk4dDDEwmod19tuXE=
+	b=qR5Jhvwju3rTkeGy9S1v+/8KHMVtiQvSVxCz3KiU9Ys53P21ESpUsCtzf8GgMbIhi
+	 kWDlzqmz9IQpMm6FXtd5E+Uk53NFW8fqLM+lHIjMcKEsPARx37y3x3zqmhutC1syzz
+	 AIopTnSfXjHEcitseOTqGTqfnPNew25ptEmMX9R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinwang Li <jinwang.li@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Siwei Zhang <oss@fourdim.xyz>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1115/2857] Bluetooth: L2CAP: Ignore connection responses with wrong ident
-Date: Wed, 18 Nov 2026 15:35:49 +0100
-Message-ID: <20261118150241.769235521@linuxfoundation.org>
+Subject: [PATCH 6.1 1160/2857] xfs: always report scrub errors in tracepoints
+Date: Wed, 18 Nov 2026 15:36:34 +0100
+Message-ID: <20261118150243.354101112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,49 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinwang Li <jinwang.li@oss.qualcomm.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit a9f9eeb5344fc7dc625e5700ccf09891bc2603b5 upstream.
+[ Upstream commit 1ccc8f553d885d49c1bfe141ea1f331511940b3a ]
 
-Adjusted context as stable does not have the lockdep_assert_held()
-call in l2cap_connect_create_rsp().
+LOLLM complains that the error processing functions in scrub will
+sometimes zero out *error before recording a tracepoint.  This makes
+diagnosing problems harder, so let's fix that.
 
-L2CAP/COS/CED/BI-28-C requires the IUT to ignore a Connection Response
-that carries an invalid Identifier.
-
-l2cap_connect_create_rsp() only checks that a connection request is
-outstanding, not that the response answers it. Add an ident check
-against the pending request so that a mismatched response is dropped.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jinwang Li <jinwang.li@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Cc: stable@vger.kernel.org # v4.15
+Fixes: 4700d22980d459 ("xfs: create helpers to record and deal with scrub problems")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: replaced cur->bc_ops->type == XFS_BTREE_TYPE_INODE with a cur->bc_flags & XFS_BTREE_ROOT_IN_INODE test ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/xfs/scrub/btree.c   | 8 +++++++-
+ fs/xfs/scrub/common.c  | 7 +++++--
+ fs/xfs/scrub/dabtree.c | 6 +++++-
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 174f7a513f9d1..69040c96e0e39 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4319,11 +4319,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
- 
- 	l2cap_chan_lock(chan);
- 
--	/* Only accept a response to a connection request we sent and that
--	 * is still outstanding. A channel waiting in BT_CONNECT for security
--	 * or the feature mask has not sent one yet.
-+	/* Only accept a response matching a connection request we sent and
-+	 * that is still outstanding. A channel waiting in BT_CONNECT for
-+	 * security or the feature mask has not sent one yet.
- 	 */
--	if (!l2cap_chan_connect_pending(chan))
-+	if (!l2cap_chan_connect_pending(chan) || chan->ident != cmd->ident)
- 		goto done;
- 
- 	switch (result) {
+diff --git a/fs/xfs/scrub/btree.c b/fs/xfs/scrub/btree.c
+index 5403ef11a21c2..bfd1dd4af9c74 100644
+--- a/fs/xfs/scrub/btree.c
++++ b/fs/xfs/scrub/btree.c
+@@ -45,8 +45,14 @@ __xchk_btree_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		if (cur->bc_flags & XFS_BTREE_ROOT_IN_INODE)
++			trace_xchk_ifork_btree_op_error(sc, cur, level,
++					*error, ret_ip);
++		else
++			trace_xchk_btree_op_error(sc, cur, level,
++					*error, ret_ip);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		if (cur->bc_flags & XFS_BTREE_ROOT_IN_INODE)
+ 			trace_xchk_ifork_btree_op_error(sc, cur, level,
+diff --git a/fs/xfs/scrub/common.c b/fs/xfs/scrub/common.c
+index 23de5443a12a6..b0b124943b79f 100644
+--- a/fs/xfs/scrub/common.c
++++ b/fs/xfs/scrub/common.c
+@@ -86,8 +86,9 @@ __xchk_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		trace_xchk_op_error(sc, agno, bno, *error, ret_ip);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		trace_xchk_op_error(sc, agno, bno, *error,
+ 				ret_ip);
+@@ -141,8 +142,10 @@ __xchk_fblock_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		trace_xchk_file_op_error(sc, whichfork, offset, *error,
++				ret_ip);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		trace_xchk_file_op_error(sc, whichfork, offset, *error,
+ 				ret_ip);
+diff --git a/fs/xfs/scrub/dabtree.c b/fs/xfs/scrub/dabtree.c
+index 1cfdba5b7f831..3b9655b3df426 100644
+--- a/fs/xfs/scrub/dabtree.c
++++ b/fs/xfs/scrub/dabtree.c
+@@ -48,8 +48,12 @@ xchk_da_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
++		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
++				xfs_dir2_da_to_db(ds->dargs.geo,
++					ds->state->path.blk[level].blkno),
++				*error, __return_address);
+ 		*error = 0;
+-		fallthrough;
++		break;
+ 	default:
+ 		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
+ 				xfs_dir2_da_to_db(ds->dargs.geo,
 -- 
 2.53.0
 
