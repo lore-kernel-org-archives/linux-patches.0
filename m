@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025919;
-	b=aBM9Arm75ZtIbiGjRXwSy5k7x8Q+H+wA8ivjxEDXTNLa0n4IdaAfY3OaEEQsFVuq19vr
-	 nxwPboWiQjtX3D8LtuDFhvbUufJIEeKdj6WBxMNn1WtV63QjnWOmBsgt+Yw3lD2iqvSF5
-	 U6fdm3hhPA55EwrFVjObIg+OQ5t8QJnir+1ruwZy1gYcA7sRYIXWva+u59N01rKOjtSPA
-	 NFWLqO5/ULyTm5hs03KJxz9ba0kmyU5QrvTBr6Zp/t/tXEukAdLltwUqPBxp+QAun61Ht
-	 nl21rByxNRbv35uaT7mB3jaLsEIj2ykHHdlIfPIr8SFu3g4iZlNHP+ejYGpz3vaybuQ==
+	t=1795025922;
+	b=mkYZ/vLQbD6JIcLzremI90ClakV+rvEPQ0uc3qdDpq2nIOMI14LbKbis45RErBZoYD/n
+	 XH6tMZ+xlN5ZOQeIa9JyfnCt5t6cGwoEDbTxYjcIzygw7PPRwjseNs1LJOD4MetEHT9T7
+	 9H7nNJ8ZXFNR8qJswcR8e06oQMwzoKC9gxtF0dvtiAFsTOKm8BxqhkKkm9I49T+VGSG2G
+	 /naaIp8Qir7JW7wS6xIM00JGGXrxj9Zs3sc7m4fKaWdOAxMPeJAW0RKkbnJN3tnNuJzdP
+	 2OnouSeJnFCwL01MR3gyQiTgKwZ90x7soL9gRZfNFKMYGeND8n8wYicYHtafELGyjfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025919;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025922;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=43smH14GZR14YkpyxvQYawoBbfKjmP1T4VTGSxAsYnY=;
-	b=H1YSP17OEm/YZlLzjNUErUD+ucW7AiAFMT4PaWnraMmKQPwW3xRMdpZyVoDroWeDX7Tw
-	 jq052yB0mxSf3NXVgbk45LACTZ4WRzDaPCGaNbSNyX6iRU3c2kaBBXvwlN8E1k06cFXEh
-	 SHcS5l87XqFkWbWVKkUfC2cH8BnyIvDlZalxHTTjFCge5p9aOy4y4M3ezpQlmRASgDrJC
-	 AiiCfpHi12LizC8Q8iDxRZFJDiHahfycXVo1yGRvcfgQ6AX4BbSUlcuVe3385ZnkI4UMW
-	 yfLt3HeEbtLBvyDOpXcbwrXHW+UkE1doIysqSlOpFycaiIy0SJpwynXAY3BjfuUFceA==
+	bh=ZQ3G2Xp9cca4K5H96GPpB4uJcHzCvUNh/t0BNHdv+Kc=;
+	b=A/61to1N4w6/BPcP5ZyrjX8+zL3UDGQOmo4Vu8+cLlsFdKciYYZKhvrcRU7ULzoPVizD
+	 WweX4mbWGQH/IsFJU6JbjsGaBfGm00jaJhQmaNS1VxBjgg2V9Zvk4/oUNP5AdV5AWzm9c
+	 EIwx2HK5MO9V5fQXPE7JA46lVfAe2H4qhexWo/lPV/YcFIqRtm5e2AVbGiyNvcCsAPy35
+	 f0imXlcAFDriZlfIVJzJhYWT8MKr/PK8C2SZ6qDTqkxdFyr6B8Sd9SU0Ziw9OVkwR3xaz
+	 UAGxMoAccX8bszkl+acA2gH0UJiyRqG6WUprIxh7hMKsINAjKapZxofDna3Bat4x3ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2q7htz2O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt8aGXGo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABAB606A320;
-	Wed, 18 Nov 2026 18:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10293606A31C;
+	Wed, 18 Nov 2026 18:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2q7htz2O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF241F000C4;
-	Wed, 18 Nov 2026 18:18:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt8aGXGo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F401F000C4;
+	Wed, 18 Nov 2026 18:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025919;
-	bh=43smH14GZR14YkpyxvQYawoBbfKjmP1T4VTGSxAsYnY=;
+	s=korg; t=1795025921;
+	bh=ZQ3G2Xp9cca4K5H96GPpB4uJcHzCvUNh/t0BNHdv+Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2q7htz2O+gAvwlWHiW3aU1M6Lc5A0x1GEbWeR5mHoojydPqSFn5sEQNn4c8rMHiJ2
-	 UhRQ6DQ4zHZ5jDBbOt/vYjk0cmqToNZjY9jUiuOQiJ2TcuPNxOKAMsqgBRUistECEs
-	 4jSGSlgpQVD1Q2JePplX5BIn7A/ltgfst9226rIQ=
+	b=qt8aGXGomdYIbY9hwotD4FSVwgxMBkUCfdCbzerDHYerzeBgaZATpF30WK8myp8K5
+	 BwCJU4zoFuL8U7v5BySWuWfKjGe51BEJ6WXExLcn2MkiMHfV5SAR4H0B5789tLSNbs
+	 3SqmPGDvsU4rb5wvnlWEthRXzdFCnqh8S8SMuTKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1251/2151] ASoC: mediatek: mt8188: Handle constraint return value in FE startup
-Date: Wed, 18 Nov 2026 15:49:46 +0100
-Message-ID: <20261118150207.736720460@linuxfoundation.org>
+Subject: [PATCH 6.18 1252/2151] ASoC: mediatek: mt8365: Handle constraint return value in FE startup
+Date: Wed, 18 Nov 2026 15:49:47 +0100
+Message-ID: <20261118150207.772204392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,38 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 71253751586b8ce37570b8e15cfbc74f0dd06c3d ]
+[ Upstream commit 8de3f4e8e81148dd4cdd19e622d4be1fe07a7f52 ]
 
-snd_pcm_hw_constraint_minmax() may return 1, which is then returned
-from mt8188_afe_fe_startup(). ASoC only treats 0 as success when marking
+snd_pcm_hw_constraint_integer() may return 1, which is then returned
+from mt8365_afe_fe_startup(). ASoC only treats 0 as success when marking
 the DAI as started, so .shutdown() can be skipped on rollback.
 
 Return 0 explicitly on success.
 
-Fixes: bf106bf09376 ("ASoC: mediatek: mt8188: add platform driver")
+Fixes: e1991d102bc2 ("ASoC: mediatek: mt8365: Add the AFE driver support")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261007110858.509341-3-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261007110858.509341-5-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/mediatek/mt8365/mt8365-afe-pcm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-index 4a7baa53f709a..682f5cd9b92e9 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-@@ -320,6 +320,9 @@ static int mt8188_afe_fe_startup(struct snd_pcm_substream *substream,
- 					   MT8188_MEMIF_DL7_MAX_PERIOD_SIZE);
- 	if (ret < 0)
- 		dev_dbg(afe->dev, "hw_constraint_minmax failed\n");
-+	else
-+		ret = 0;
+diff --git a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
+index bf92c8922c236..880266509925d 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
++++ b/sound/soc/mediatek/mt8365/mt8365-afe-pcm.c
+@@ -514,11 +514,14 @@ static int mt8365_afe_fe_startup(struct snd_pcm_substream *substream,
+ 	snd_soc_set_runtime_hwparams(substream, afe->mtk_afe_hardware);
+ 
+ 	ret = snd_pcm_hw_constraint_integer(runtime, SNDRV_PCM_HW_PARAM_PERIODS);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(afe->dev, "snd_pcm_hw_constraint_integer failed\n");
++		return ret;
++	}
+ 
+ 	mt8365_afe_enable_main_clk(afe);
+-	return ret;
 +
- out:
- 	return ret;
++	return 0;
  }
+ 
+ static void mt8365_afe_fe_shutdown(struct snd_pcm_substream *substream,
 -- 
 2.53.0
 
