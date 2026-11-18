@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044760;
-	b=xEsmqPSe3dx4ag7fwHBBNuJmpNhBOG1UIKojqFzcMRIBAtSaqkG+v3kbT2N0DN4muk2U
-	 gKaAhTnseS//YQ/6v0L3Qp2CmHrQjJVvN3HsD6pzYvlbtL+iKsJh8AvZDJPCulLp6h+Lq
-	 BRFFZLiba6t9Zkfr9mOjN2m0eAY4yydeH504hqNNFwEKwESBvK/aPIWkFRGQF9CI5GMx1
-	 DKmjT9aEmQwiQPSOK0zoGkUtIRx4+eYf3yKs582ipuniLcPoc9W2E4iwlh1WkGCa7Me3X
-	 qkeLBCvwfINcEqQ2bATnuhfdeNihdNMS22Net4NtOq5KBzZ/7g8g/oM3eGSwXxbggiw==
+	t=1795044763;
+	b=CZHcCmPRO1QbIuqrm7Y8Q12V25slrNZo8SEk7N6tA6SFhk2dOagRlLwzzaTxR+Q3kipS
+	 SfKP0TlzKV2C1wL8i3Gp9+KdWY96yxgfIVSwlY04WYScwtmApfkfDqn/8aIcbwHrWtKlu
+	 B60QAoeLqKvOzptzMc55NlxpdPrOzrgVhh7OO9lES9rBEAp2VyppHoNc4FuE0g+rsO4sQ
+	 V58Gzy5/4zZwg1iS3jQZvTXyUpLR8oXsf7hahxYU/3wHy8NbK6WENj7UjRQA9Hibrd+UZ
+	 HAsvqf1rgBjq0NZLeWTDeiceORiDaTepbn58BPS3HmF2et+/WLq9VU5b9ph1ysqdYgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044763;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YGlz02wBiplppSEd42GpV7DigA/Csi88oYCU/dpyGL8=;
-	b=TVIEA6UniIDwBC5W5I07VqjTkBbuIuSiuotaC+KwbxgN2ok62PmUirydHNpnyypI7TNO
-	 649T4hl8Q/9VBeuJwPGFwtbD/ZLHAwqQwBWS32TbNNOnz+FuZcBzycZnkwuZlXuEKAEYV
-	 qg4HFpis+NU8sHoOyIl/Bl9wAqwQEwI1J0NXY5Yj/BIDDh/33gWHe4XQ1M5uR6HZgeLKL
-	 7d2X5CAY4UJN6FUWsf7S5fgG61JoWBRzOh2RQdsHC2/A5I0ke+DA8MT3mjQ0gt/QYooab
-	 jzXU0kVACnWVocV7lThU0wt6bPns089wkQ57b1Sird9bPUykGjFxIxRMXFhZIV1xF5A==
+	bh=QP2GDi/94/fGvflr9VlqFLe5BYh5qDE76OYA2s5lLP4=;
+	b=3dkiKtQxDtYXTfqfDJwQcRGRQbITHcpnjTLXQ8yRIgzPm2bJb+o5nYs84Vm1jyn/+zDj
+	 6sO/wCVMnTXKeHmb/d7ti2wsBpkI6jkhO6320P/kbiIBMegenDRoCjl8XlHf26tDNAAru
+	 RhwIiwrwClHUdYPNOXLvxj/dcbc5eVgxA6C5qKx3jFnWLsOX+Ul6rCi9wHfvTiPJHE+2T
+	 GfxAKt/tqwO7w42ESbjLBqNo0Jueo0Owk51ovwTllMUufoErYLJuqYVuUCCou+4UNLrbA
+	 Iu4UAf3t4B4yP6qTffwuiyRn/llfQU2rHDU1ePJtP2c9TcDNkfMeq8FdYbiDl1oeqaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kbK7ukfF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4QLEmre;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BBE60A2601;
-	Wed, 18 Nov 2026 23:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF1C60A2634;
+	Wed, 18 Nov 2026 23:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kbK7ukfF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825121F00931;
-	Wed, 18 Nov 2026 23:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4QLEmre
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D4E1F000CB;
+	Wed, 18 Nov 2026 23:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044760;
-	bh=YGlz02wBiplppSEd42GpV7DigA/Csi88oYCU/dpyGL8=;
+	s=korg; t=1795044762;
+	bh=QP2GDi/94/fGvflr9VlqFLe5BYh5qDE76OYA2s5lLP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kbK7ukfF1hE1UTqbo+XmBF3jlaWFsaKf9fipf4lhF6F1v+nb1wEJPqc4+gCkq5E2f
-	 oUXeHgdexFYqxINM7E2+3NpCSoRiWCdOw60Ld+jUbQCIv531ccGCUG+XzJfiOKJhM2
-	 CHnHLyvTZundFaq5fxFklDT85wDx1EnR+vjVbxUM=
+	b=N4QLEmreneJi8juev3SPjnCKiapdMZyeunyVvnXICAanPbQeZHRaDkCZ9o6tylsSy
+	 +BPlYTZNrdYDAOoWmR3sx/hdkfPdHhHMFfXKq1LyF98t9lzUyXzIrcrM0BS/TqpK1J
+	 ipOGCKPmn6vZAWHbZkJ6XaF9cGQm+SI7Gh6dRXYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Scek <scek.andrej@gmail.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 0631/2857] HID: amd_sfh: Remove unsupported motion-state field from accelerometer report
-Date: Wed, 18 Nov 2026 15:27:45 +0100
-Message-ID: <20261118150224.222298641@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 0622/2857] KVM: SVM: Trigger new ASID allocation in both VMCBs on pCPU switch
+Date: Wed, 18 Nov 2026 15:27:36 +0100
+Message-ID: <20261118150223.883951126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,66 +69,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 6ff86122906357687735dd379c6279e3b2fa26af upstream.
+commit bf260dc9e7b8bfcd06c1a8e739797b1cf0917c72 upstream.
 
-The accelerometer HID report descriptor declares a trailing motion-state
-field (usage 0x0451), but the Sensor Fusion Hub never reports this data,
-so each accelerometer input report is one byte shorter than the descriptor
-advertises.
+When the pCPU where the VMCB was most recently used is switched, reset
+the ASID generation in both VMCBs, triggering new ASID allocation for
+the immediate VMRUN as well as the next VMRUN on the other VMCB.
 
-This was previously harmless because hid-core zero-padded short reports.
-Since commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()") such reports are rejected instead:
+The ASID is shared between vmcb01 and vmcb02, and gets flushed on every
+nested transition. However, since pCPU tracking is done per VMCB, it is
+possible for one VMCB to allocate a new ASID when migrated to a new
+pCPU, and then the other VMCB reuses that ASID on the old pCPU. This can
+result in the same ASID being used by multiple vCPUs on the old pCPU.
 
-  hid-sensor-hub 0020:1022:0001.0003: Event data for report 1 was too short (15 vs 14)
+Example scenario:
+- vCPU runs on pCPU A, vmcb01 is active, asid=1.
+- vCPU migrates to pCPU B, vmcb01 pCPU changes, new asid=2.
+- Another vCPU runs on pCPU A and allocates asid=2 as well.
+- vCPU migrates back to pCPU A, and then switches to vmcb02 before it
+  runs again with vmcb01.
+- No pCPU switch is detected for vmcb02, so VMRUN is done with asid=2.
+- Two vCPUs end up using asid=2 on the same pCPU.
 
-As a result the accelerometer input events are dropped and screen
-auto-rotation stops working on AMD SFH systems.
+Keep the VMCB dirtying to the active VMCB only. Clean bits are tracked
+by a pCPU for each VMCB, so do not unnecessarily dirty a VMCB if its
+pCPU does not change.
 
-Remove the motion-state field from the accelerometer report descriptor and
-drop the unused in_accel_shake_detection member, so the descriptor matches
-the report actually provided by the hardware.
+Additionally, initialize the tracked pCPU for vmcb02 to -1 on nested
+enablement as hardening, so that a new ASID allocation is always
+triggered when nested is disabled and re-enabled.
 
-Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
-Reported-by: Andrej Scek <scek.andrej@gmail.com>
-Closes: https://lore.kernel.org/linux-input/CADrS85612m-Hh-G4BJmOhy-y6r3Ni3kD8_GM-2QRBeWWEEZWuA@mail.gmail.com/
+No performance regression was noticed when overcommitting L1 vCPUs in L0
+(to force rescheduling), pinning L1 <-> L2 vCPUs, and running CPUID in a
+tight loop bouncing between 2 vCPUs in L2.
+
+An alternative (and perhaps more proper) fix would be tracking the ASID
+per-VMCB instead (e.g. [1]). However, that's a more involved change, and
+it would result in having different ASIDs for L1 and L2 without actually
+properly maintaining them. It would probably work because all TLB
+flushes target the current VMCB, and the other VMCB is always flushed on
+nested transitions, but the code ends up in an arguably more fragile
+state. Punt a proper clean fix to an incoming (and overdue) overhaul of
+SVM's ASID usage [2].
+
+[1] https://lore.kernel.org/lkml/20250205182402.2147495-2-yosry.ahmed@linux.dev
+[2] https://lore.kernel.org/kvm/20260728003557.1136583-1-yosry@kernel.org
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Link: https://patch.msgid.link/20260903223258.486034-1-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h        |    2 --
- drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h |    7 -------
- 2 files changed, 9 deletions(-)
+ arch/x86/kvm/svm/nested.c |    1 +
+ arch/x86/kvm/svm/svm.c    |   19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
-+++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
-@@ -48,8 +48,6 @@ struct accel3_input_report {
- 	int in_accel_x_value;
- 	int in_accel_y_value;
- 	int in_accel_z_value;
--	/* include if required to support the "shake" event */
--	u8 in_accel_shake_detection;
- } __packed;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1125,6 +1125,7 @@ int svm_allocate_nested(struct vcpu_svm
+ 		goto err_free_vmcb02;
+ 	svm_vcpu_init_msrpm(&svm->vcpu, svm->nested.msrpm);
  
- struct gyro_feature_report {
---- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
-+++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
-@@ -169,13 +169,6 @@ static const u8 accel3_report_descriptor
- 0x95, 1,		/* HID report count (1) */
- 0x55, 0x0E,		/* HID unit exponent(0x0E) */
- 0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
--
--0x0A, 0x51, 0x04,	/* HID usage sensor data motion state */
--0x15, 0,		/* HID logical Min_8(0) False = Still*/
--0x25, 1,		/* HID logical Min_8(1) True = In motion */
--0x75, 8,		/* HID report size(8) */
--0x95, 1,		/* HID report count (1) */
--0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
- 0xC0			/* HID end collection */
- };
++	svm->nested.vmcb02.cpu = -1;
+ 	svm->nested.initialized = true;
+ 	return 0;
  
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3495,14 +3495,25 @@ static void pre_svm_run(struct kvm_vcpu
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+ 	/*
+-	 * If the previous vmrun of the vmcb occurred on a different physical
+-	 * cpu, then mark the vmcb dirty and assign a new asid.  Hardware's
+-	 * vmcb clean bits are per logical CPU, as are KVM's asid assignments.
++	 * If the previous VMRUN of the VMCB occurred on a different physical
++	 * cpu, then mark the VMCB dirty as hardware's clean bits are per pCPU.
++	 *
++	 * Reset the ASID generation in both VMCBs. This will lead to assigning
++	 * a new ASID now, and then again when switching to the other VMCB.
++	 * However, this is needed as the ASID is shared between the VMCBs, and
++	 * otherwise it would be possible to use an ASID allocated on one pCPU
++	 * on another, for example:
++	 * - vCPU migrates from pCPU A to pCPU B, allocates a new ASID.
++	 * - vCPU migrates back to pCPU A, and then switches the VMCB.
++	 * - The new VMCB does not detect a pCPU change and runs on pCPU A with
++	 *   the new ASID allocated on pCPU B, which is potentially used by
++	 *   another vCPU/VM.
+ 	 */
+ 	if (unlikely(svm->current_vmcb->cpu != vcpu->cpu)) {
+-		svm->current_vmcb->asid_generation = 0;
+ 		vmcb_mark_all_dirty(svm->vmcb);
+ 		svm->current_vmcb->cpu = vcpu->cpu;
++		svm->vmcb01.asid_generation = 0;
++		svm->nested.vmcb02.asid_generation = 0;
+         }
+ 
+ 	if (sev_guest(vcpu->kvm))
 
 
