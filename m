@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033669;
-	b=ZKKYI7zU+H4ST47zZ+gy1zB8hG7BFS+YoQZKqUjfOlbrqIqP/hMEnompGYp9l3vRh4Ir
-	 cfw+I0gyBgy9QFvzf6l6h5B4IoFx6vYZNJZc7MzbPmqom2Y+Z++Qd4PUdUrEgwJqqn3cn
-	 tw/vFtYpn5BbdKikPGJFg74LGeim4N54Om5kY4k40/nrIFfNoD21T2qUbbpzayBu85tWS
-	 yAD0SnaRvFnIfN6tCsAzW1A/x65AVftlRn2ROMxrH70g/1SCt8dyUqzIgT1fIxGPWR+FI
-	 /CIj/S5LCgEtwsuKuYPlNWXeoXL8Zb9hrOX0tFJlDFDvY1y9nHwmsBS+n37bVzqGjtg==
+	t=1795033672;
+	b=HNZovggjpUpE4abUjdNUqg5pI3FORicMvGK9v/hCFTnq/jY3Wz0S3qbOfhvNV/Bd+76z
+	 MAmPW1oxQkxy9kYw0BoDtOJVqJLE0fIcGO8Un6j7u/wM0Pegd5DlVIFiZF5gLljQV+Np/
+	 GjeC2cV+6o4iUHBxIbKVGPVjSP47+20n16xd86dE8N+oQePbfr4YVgVksjbBsdzl7x9dt
+	 haNs3HrTDmVLlBN1Wid6nbxzksg48MFWbuHFY7QxQ28auNzNuCmMnbk+4SFEcCe/p3d1Q
+	 OCFp7LJAqRbmRZfIARCx4M7z/CWn7uRIldEejqwOR9X7BSKFFR/5g9V5idvhKN7iP/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihZVRQUClZbjIr+DGs0/qyoQWvLwbGLf/UHndXZB2Gc=;
-	b=tSiuw0eSu+KINkiyKIqaej66SdXqQFOoI28ibemkeYF5M//zJac7ONkOMYM75l7gOCoi
-	 MzT6ONaB3kC8xvC3RMtriFqiUSwm970PaHe1BhlGz54pUnlJ/qsHuurIlvMJyaGt22ImH
-	 SEcxJoln/WkZyAhkPtfuht0sBct4vD+mCShp6TLOBXXx18SGtm+kHkkeagWQKNMe5Zns/
-	 Uybe7PWFvMqpsXJPmeKh7s7P53hXEmsuSxll/BHnLuge9EkAcd1ExOfXOhJj7pG3ehH9j
-	 jnyom9IEhLOHN3yM7qu39BXMHKe85uXIR/FxfsRhF8PafDC0UTJ1nyHZLCLVLK5OahA==
+	bh=BaBZ0Yhw6uG07mSEUOgWLS7f6BBW42TTtCe18f8RQjw=;
+	b=4DXste5Apw6zHPSbvTMgkDeMgeeokCbh8I7lcNAGkGAVgPObzm00Y20cvhHzuAxNJ4r7
+	 5gE/4WcbKpFlIDrK57X/qS5aN2yXbGiieAjmsspOhlsH2rkht+8sjIhUm/pPpz1gPiJhJ
+	 pbQ9jHPur/lpMVXmZyw+HDVhaEntxewiQILrqsZKej4dEpAtt0M48d38w00vqB8BUdg7E
+	 lunLmsXbNTOdth757vXbgcEnW1pjBwONhHzZhHV+pQmiDCIpmZm90XTS6PuLF/ZzwPYR4
+	 7RlaiPpdDmTrxufY88i2ct2LO3fBLItT9xSKACoEzx0rCynjhMtHpmeU6bPyKWfQPfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYr1rC4j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrnnxE2N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986EF606A320;
-	Wed, 18 Nov 2026 20:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C29606A32A;
+	Wed, 18 Nov 2026 20:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WYr1rC4j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87641F000C4;
-	Wed, 18 Nov 2026 20:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrnnxE2N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C004F1F000C4;
+	Wed, 18 Nov 2026 20:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033669;
-	bh=ihZVRQUClZbjIr+DGs0/qyoQWvLwbGLf/UHndXZB2Gc=;
+	s=korg; t=1795033672;
+	bh=BaBZ0Yhw6uG07mSEUOgWLS7f6BBW42TTtCe18f8RQjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYr1rC4jqFJ6xd558jTeC8OZzRtkQ4LLXeR2Sc/mEjk58KDyE7QzmtDdMfJmdlVqY
-	 FsG1HJ4lN4MaoC2p/gYesLbnqXsDkTkYHYD7koej3Kn0ct9QrGm9QHNUgPd6Un74kJ
-	 3/PdlIxelnWZq13DfPbDjORZ6XzqeYujrJFgGZBI=
+	b=NrnnxE2NOx8mY3kOax/9R9A3CgYtLbjwAFJ7w0f5J6smIQu7IBLtt+m8OccjNfWX6
+	 N+NzORg7jrA3Z8Dtz9IALJW2m4GR6PwGepqfX5b3HYD7/wgp84vx3F4ibl98Yfave1
+	 w9M9w0VaJMDDvDyj4yfszkTxV27PMNsyZBfvqEFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <mike.tipton@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0097/3318] pmdomain: qcom: rpmhpd: Skip retention by default
-Date: Wed, 18 Nov 2026 15:11:59 +0100
-Message-ID: <20261118150317.104842133@linuxfoundation.org>
+Subject: [PATCH 6.6 0098/3318] media: em28xx: dev_info->pr_info since dev has been freed
+Date: Wed, 18 Nov 2026 15:12:00 +0100
+Message-ID: <20261118150317.143638154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,88 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Tipton <mike.tipton@oss.qualcomm.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-[ Upstream commit 7178817f190496f2bfdec181fb4aa72832448468 ]
+[ Upstream commit c132b07f7e5853c0df35a9b94b8e204cdc6afdef ]
 
-Retention is very rarely an operational corner. In the majority of
-cases, HW cannot operate properly at Retention levels and so the minimum
-operational level when enabling a rail is the first corner above
-Retention. A small subset of always-on use cases can operate at
-Retention, but those aren't controlled from HLOS.
+In em28xx_free_device() dev_info passed &dev->intf->dev,
+but that device can be freed already.
 
-Currently, we allow Retention by default and only disallow it special
-cases. But this leaves us open to various failures when the PD is
-enabled without first being voted to an OPP above Retention. Such as
-when a child GDSC PD requests to enable its parent RPMh PD. In this
-case, the GDSC would get stuck powering on.
+Just use pr_info instead.
 
-Newer chips have started supporting Retention on rails that didn't
-previously (such as for MMCX). Instead of adding more special cases to
-skip Retention on MMCX, start skipping Retention by default since it's
-almost never desired from an HLOS perspective.
-
-Signed-off-by: Mike Tipton <mike.tipton@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/qcom/rpmhpd.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/media/usb/em28xx/em28xx-cards.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
-index 823604952b5ec..78f0ac5bb0019 100644
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -40,7 +40,6 @@
-  * @addr:		Resource address as looped up using resource name from
-  *			cmd-db
-  * @state_synced:	Indicator that sync_state has been invoked for the rpmhpd resource
-- * @skip_retention_level: Indicate that retention level should not be used for the power domain
-  */
- struct rpmhpd {
- 	struct device	*dev;
-@@ -57,7 +56,6 @@ struct rpmhpd {
- 	const char	*res_name;
- 	u32		addr;
- 	bool		state_synced;
--	bool            skip_retention_level;
- };
+diff --git a/drivers/media/usb/em28xx/em28xx-cards.c b/drivers/media/usb/em28xx/em28xx-cards.c
+index 62887cf6afa5d..a835084914802 100644
+--- a/drivers/media/usb/em28xx/em28xx-cards.c
++++ b/drivers/media/usb/em28xx/em28xx-cards.c
+@@ -3504,7 +3504,7 @@ void em28xx_free_device(struct kref *ref)
+ {
+ 	struct em28xx *dev = kref_to_dev(ref);
  
- struct rpmhpd_desc {
-@@ -175,7 +173,6 @@ static struct rpmhpd mxc = {
- 	.pd = { .name = "mxc", },
- 	.peer = &mxc_ao,
- 	.res_name = "mxc.lvl",
--	.skip_retention_level = true,
- };
+-	dev_info(&dev->intf->dev, "Freeing device\n");
++	pr_info("%s: Freeing device\n", dev->name);
  
- static struct rpmhpd mxc_ao = {
-@@ -183,7 +180,6 @@ static struct rpmhpd mxc_ao = {
- 	.active_only = true,
- 	.peer = &mxc,
- 	.res_name = "mxc.lvl",
--	.skip_retention_level = true,
- };
- 
- static struct rpmhpd nsp = {
-@@ -757,7 +753,15 @@ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
- 		return -EINVAL;
- 
- 	for (i = 0; i < rpmhpd->level_count; i++) {
--		if (rpmhpd->skip_retention_level && buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
-+		/*
-+		 * Most HW won't function properly at Retention. The minimum
-+		 * operational level is the first level above Retention. The
-+		 * small subset of HW that can operate at Retention isn't
-+		 * controlled by HLOS. Skip the Retention level to avoid HW
-+		 * failures when the PD is enabled without first having an
-+		 * explicit OPP level set.
-+		 */
-+		if (buf[i] == RPMH_REGULATOR_LEVEL_RETENTION)
- 			continue;
- 
- 		rpmhpd->level[i] = buf[i];
+ 	if (!dev->disconnected)
+ 		em28xx_release_resources(dev);
 -- 
 2.53.0
 
