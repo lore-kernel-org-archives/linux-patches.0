@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043583;
-	b=iKBT04GOH0Ib7nsuLnTIV3ooYO2t9gpW5V5QJQBO/fT6W8beAsvzIGrgIfBadKKsUE1W
-	 szjmJET2DMxBwpdjFqMy9AERVCPkrw7cpvwheB82vchrdl3/KlKRx/Epk6nYkqOSXuRk5
-	 JWIYs3RW/vEKhOK2YmyVdDsJk/7NsD/oc2tuPiUml+W+TUZiev0Hjw9y9JhzPLMZxUjfU
-	 WwjoLIP92jX2rBrdcBDkUH4AUM+WswtGRuvsABmDO+4wsGw0VD90c77EJl2MRh0pTaBem
-	 3QvQVlKWW5tnWxEsXO1HEe8wR3PayZmKC4lXcVfVdTbVOXi4nJT28JmZV+r+3dNqKEQ==
+	t=1795043586;
+	b=Xdb1oGSBeB+XfQq9lf85v8d9pFKN7Wxcm6UlkfIf4AloP0HreLJUcNo+Fr5Ve+bGTGnc
+	 D6BQuwIufXCpT2QLC8FLJTl+8AyHUlK87DU9jFnZjDIU46BRKZUyuJeBn62TSt2BTAsF3
+	 /dYZQHAvOrf6bJ5c3udlUfMim3wDX8OCYwMVB3zoyIK16lDVrzVEGexHR4VYFQUGIErFg
+	 i1zIHgaVGE2jwgHT2wb3YUYZfqIa4NrkqA+R0+d5pntATpOZqFuE1oh0ip1IhFgsqqBZn
+	 KQ8SnrTar//2LY9VcldKavqboWlhJ+lcNLEs4nbYX8UKod9UZ9YL6gw7E3ytrjWBYUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V1L6OK4TGfjxKeiPal39zSvDT3DpkJgXzVr6jOj8/G0=;
-	b=1Z9gJkbmSm16aa3RDn1kZgEpMgdn687xHE1zJSCSgMXgGIWxHAIaOA/fkKhFJ8OFNXfg
-	 hA7SnN47SkrSizjw2nb4CGrVQTJSnh4RZgVDS8ZLtus9KjCI1AyU63ZRLDPwBlFl2TiDv
-	 mZW82HHc/uyRQZ1BoQMFeqFvbTJBhRQqSLEEaDGCDG2HWVcyihEb/4nAtDkVH800Ia9U3
-	 H8UepvKs4GdQ7kx48ai6F/INeN8x/IPWRz240Y1ldDJxVrz/uzn7YO84v4cWl3HwSuRkK
-	 K2+Ugli2UJSZg7yF9pFJQlV0Xk5VIFidKCPU/d1XZz0EcqEZpXeM5edV2fivLWdOxEA==
+	bh=GM7cYbGBIFpjPGVROpODZ2L59CVZMd8Aclfa+8YSFqg=;
+	b=J0WrgAqNHLVt5KYaOJ/sgL9kRPbzHsZ+aYowZ0zRWz/eZp65+kpF6uWuW353KZQHbZj7
+	 0bbY63/MY2DbFqc+rHmCD4/qJUPTuJtTM+tU0F0P5BLodfRjEhsJaPELNCGlxND20jpdz
+	 54b6L+ELaOStWMOjx1breVnzFxZC50luHKm8j4Oye3WLpnKBareT/IKvwv4lF/kZ5Ne9Z
+	 XCYx2BgKx2/Qu57AaE9tE8ySl5yIGPjkeobekVPqKXfDlRLyKAgKlfhR9DkxHqLJEAzoO
+	 CYPCuxwx3cVeDpOKtpDipI/7FOsfJKznxOb49MLOo4Ri6AkXPpJGlTFCt8OEZV6kUQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teoGcurN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DG+I7alo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACE2606A320;
-	Wed, 18 Nov 2026 23:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C8A606A31C;
+	Wed, 18 Nov 2026 23:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=teoGcurN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFD01F000C4;
-	Wed, 18 Nov 2026 23:13:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DG+I7alo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCA61F000C7;
+	Wed, 18 Nov 2026 23:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043583;
-	bh=V1L6OK4TGfjxKeiPal39zSvDT3DpkJgXzVr6jOj8/G0=;
+	s=korg; t=1795043586;
+	bh=GM7cYbGBIFpjPGVROpODZ2L59CVZMd8Aclfa+8YSFqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=teoGcurN/ZurxK4OsxLT4RirsZtjOlkGLlh4BoZ5Y2V+MawhEwcPp16CQ9/Cfovxm
-	 K3FgsCawlDcgAhn3ns885x89FnEXerakmIl9youalP4bNHcpU/MqOAd6B3OsLvRW6d
-	 bJojxicimAquuEZlV82pyTzgg124x86TROU7tlQY=
+	b=DG+I7alo9LihL42pcVx9CVnRR9O+2rMlCgGmbI1QCvMdx62SYL44ozVrQXDEIqvtm
+	 dbXwQSmdAFumTA5ZNkVkheE0cER0myQjr7yfzossBK/s5hfa2sraS6MbcLglGe0n3W
+	 3hN/LmTE7Kkml7JaQATuqOeNcbRqKC+cUbCQmil8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jinqian Yang <yangjinqian1@huawei.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0261/2857] rtc: ab-eoz9: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:21:35 +0100
-Message-ID: <20261118150210.829313274@linuxfoundation.org>
+Subject: [PATCH 6.1 0262/2857] virtio_ring: fix infinite loop in virtnet_poll_cleantx when device is broken
+Date: Wed, 18 Nov 2026 15:21:36 +0100
+Message-ID: <20261118150210.866870405@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,41 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jinqian Yang <yangjinqian1@huawei.com>
 
-[ Upstream commit 7490b8356e52e09c196645912f2c054f79aa5f3a ]
+[ Upstream commit 0d0eff39ceb3dcbf7847a6f4517086c207c60081 ]
 
-The driver has a match table for the i2c bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+virtnet_poll_cleantx() contains a do-while loop that cleans up
+transmitted TX buffers and calls virtqueue_enable_cb_delayed() to check
+whether more buffers need processing. When the virtio backend stops
+responding during guest reboot, used->idx is never updated, so
+virtqueue_enable_cb_delayed() always returns false and the loop never
+terminates. Then it will block reboot process, and the guest will hang.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+The problem occurs during guest reboot under network traffic:
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
+  1. kernel_restart() -> device_shutdown() traverses the device list
+  2. virtio_dev_shutdown() calls virtio_break_device() which sets
+     vq->broken = true
+  3. virtio_dev_shutdown() then calls virtio_synchronize_cbs() to wait
+     for in-flight callbacks to complete
+  4. A virtio interrupt fires, softirq is deferred to ksoftirqd which
+     calls net_rx_action() -> virtnet_poll() -> virtnet_poll_cleantx()
+  5. virtnet_poll_cleantx() enters the do-while loop and never exits
+     because the QEMU backend has stopped updating used->idx, despite
+     vq->broken having been set to true in step 2.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Since the loop runs inside ksoftirqd (a SCHED_OTHER kthread), it is
+visible to the scheduler and does not trigger a hard lockup. However,
+the kthread never leaves the loop, so RCU detects it as a CPU stall
+and reports it periodically. Meanwhile, the reboot process remains
+blocked in device_shutdown() because virtio_dev_shutdown() cannot
+complete its synchronization step, and the guest hangs permanently.
+
+This can be reproduced on a guest with a virtio-net device: run iperf3
+traffic in the guest, then trigger reboot. The reboot occasionally hangs
+permanently with RCU stall on ksoftirqd.
+
+Observed on ARM64 KVM guest:
+
+  CPU#1 RCU stall (ksoftirqd/1), repeated periodically:
+    virtqueue_enable_cb_delayed_split <- virtnet_poll <- __napi_poll <-
+    net_rx_action <- handle_softirqs <- run_ksoftirqd <-
+    smpboot_thread_fn <- kthread
+
+Fix by adding a vq->broken check in virtqueue_enable_cb_delayed(), so
+that the loop exits immediately when the device is broken, allowing
+the device shutdown to proceed.
+
+Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260716115940.394832-1-yangjinqian1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ab-eoz9.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/virtio/virtio_ring.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
-index da710a29e9620..70a35c0c62142 100644
---- a/drivers/rtc/rtc-ab-eoz9.c
-+++ b/drivers/rtc/rtc-ab-eoz9.c
-@@ -566,6 +566,7 @@ static const struct i2c_device_id abeoz9_id[] = {
- 	{ "abeoz9", 0 },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(i2c, abeoz9_id);
+diff --git a/drivers/virtio/virtio_ring.c b/drivers/virtio/virtio_ring.c
+index 4b1b17cf6938f..dda4d229ef651 100644
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -2418,6 +2418,14 @@ bool virtqueue_enable_cb_delayed(struct virtqueue *_vq)
+ {
+ 	struct vring_virtqueue *vq = to_vvq(_vq);
  
- static struct i2c_driver abeoz9_driver = {
- 	.driver = {
++	/*
++	 * When the device is broken there is no point in polling used->idx,
++	 * the backend will never update it. Return true to let callers
++	 * exit their cleanup loops instead of spinning forever.
++	 */
++	if (unlikely(vq->broken))
++		return true;
++
+ 	if (vq->event_triggered)
+ 		data_race(vq->event_triggered = false);
+ 
 -- 
 2.53.0
 
