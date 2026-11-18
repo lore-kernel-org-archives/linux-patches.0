@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058662;
-	b=aHMOC04Ts5ZW1UWXRhp5FHtTyDHXi3yOkmT2OugKls3YXdXigSxYhg1vQlfolUG+Avkb
-	 TemCY5E1g03mhNzRiNVnIb8zYPpGJB40RfbVdTdH2A9UTx4yIvfs6q0EJItzieLhG6NPd
-	 f5NUypQqPgFH9XvKf7LgUp3Z9o47BqYQfT3F8JlRs1tzpXOrVvKglWCAiSrmkt2vgFlBD
-	 TYdAcBzPFgQvQDVrYx2QiLRRb1SuXwhFjNgpKBSd130kwQUkNTGJYekomr8tbcSdSnkrP
-	 2X4n52Qrjfw54NX7tfwfONfxFRUnwRHMucDNZS1bQiRYMie/dk0Dzo/BOS9TSGfGZ9Q==
+	t=1795058665;
+	b=rGxJFAMCrHZXBLuiFwy3tqReUQ0kaU9Atjah3kVxZkfAyz6hfVF1z6KzLL0c87ZZoFHk
+	 wiA619rLqDej5awPiZREBoEvrA0UvW7kwdEPBQZwgEqjIqehdgCw8+KHSGOUQgmRi/TDm
+	 sQxcwQi5PMpLM37hS5k+ivLZOVtGlAZOPrXAbC7osgQ29Z1Why2HphZv1GP5yR7uz5Cnl
+	 7VE1uDEU4ZsrlElLFSc96KIcDpqhc8PHnx6p+DZQWskXeZMcg3zzhzH8CndCVDopOJVIO
+	 rt1UsRV0ScUVHcXtdhuF+8JNwQVpws316Dsn1EbsOJNPYPKaulfmtJ8RXjZ0PcPcvRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058665;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fclHfrlGBLHFhZxbP5kcOaez3QREsalTXPZO67rtETA=;
-	b=H7I/aWeS8AD4bd8WElXN8vfX+/PgmDf44s1Xxd/n5Uvl+THeOjByiseOL01II7sWrT4N
-	 o7nVcrWC3Gc1mZoTFvAjgvGa2mo+23ESx+IBZD0uQy5k/A/bDiDwYMloaHouUkrFLvles
-	 AOb29grv+ld0sd3MwHVBCMC3gHDJIbFaYHM9MLFHQde0u+IJsIHYQwQhc1rYnhqhqtdWE
-	 loBi3mLpjBOVU8GIMahaXiSCy1QcyWs2uexQOEiKX81rGKl6uYDg2WbQXzMJL2aELJIEo
-	 kz3X7Qe84cdBD7pN0i9XDIryHXP2cJtp7hld1X9wEhkzEUbYVbpEhOJZgCMr3GCbdWw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gHZoLg6KtWeyZ/KNolQPrQKOXtCre92G2RddeZh4H8Y=;
+	b=UpALpHpHBHhotvmjhNxj/Wuo2Vtq+tPFP5+JAeEgfQfqFN6yPjoSfPREFgaxJmxdx55f
+	 1QLERdWw1L8Derrojc0YmeKwiDJZjLbtD4L/SZs3e7FfU7rMAxyPxDMOUvB/6q8T9QK8U
+	 uvyEu28is5IHqVTLiTHYjSiZx+au3IwZ15YybIQlPrUtdvVF1qLzi34zsgV5UGn/o0u1a
+	 o4jGM1m4glwvr0R0kD+c84UNwafc0kZGqRivwEw7OMH6Uaco4RLlTP3nJaRpnmkeHxIGs
+	 VzVWGKYr1y/R2jOKLLZxUqatp7oepexlBXkK2LsUsnUxfuIPIABq5Qdi68qqlmYne2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suut0LAY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2OMW00T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D6606A31C;
-	Thu, 19 Nov 2026 03:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18EB606A320;
+	Thu, 19 Nov 2026 03:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suut0LAY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA631F000C5;
-	Thu, 19 Nov 2026 03:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v2OMW00T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423011F000C4;
+	Thu, 19 Nov 2026 03:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058662;
-	bh=fclHfrlGBLHFhZxbP5kcOaez3QREsalTXPZO67rtETA=;
+	s=korg; t=1795058664;
+	bh=gHZoLg6KtWeyZ/KNolQPrQKOXtCre92G2RddeZh4H8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=suut0LAYewuBx76iiqpTxEb3lf2g+u7Ah759Q3BphjdFchMcJOnDgNwLZYkW0n8Fw
-	 24ecEhi9tqEvwfCGd+l0amDqRene/bTFwXB/xKTBOvMGmGmbts6t8HehKYpBsSuc6x
-	 ZH/oRZykdCCidoI2QwA+meXi0XsYykWWxA1lwVbg=
+	b=v2OMW00TdtedAiQMfEwL4GyN9BfMvhEz0cMCdmE6U51cTo4Q9zugfpeO9DVBU5m8h
+	 PlKJ8wWTcFfOlvr3oRXu7F5kCXIKyyUmUTuEBuhTxoE1yPE/xyycgQANbvLSrlTguz
+	 8qq39VIJXweJ2Magq4djEu5zwMV6YRIq0Q5//IwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delu <jeandelu@tutamail.com>,
-	Helge Deller <deller@gmx.de>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0564/1848] parisc: eisa_enumerator: Fix out-of-bounds reads of the EEPROM buffer
-Date: Wed, 18 Nov 2026 15:43:22 +0100
-Message-ID: <20261118145938.568961555@linuxfoundation.org>
+Subject: [PATCH 5.10 0565/1848] i2c: mt7621: fix copying uninitialized kernel stack with reduced page_len
+Date: Wed, 18 Nov 2026 15:43:23 +0100
+Message-ID: <20261118145938.620575234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,90 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jean Delu <jeandelu@tutamail.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit c0a3e153804f0c14f4159ddbd2b73483c9cb3577 ]
+[ Upstream commit b7fd977fec0d3f2bdd4f13bb59949c817a365652 ]
 
-eisa_enumerator() trusts the contents of the EISA EEPROM.  The number
-of slots is read from the EEPROM header and used to access the slot
-records at HPEE_SLOT_INFO(i) = 20 + 48*i within the fixed-size
-eeprom_buf (HPEE_MAX_LENGTH, 8192 bytes) without any bound check.  As
-struct eeprom_eisa_slot_info is 48 bytes, only 170 records fit into the
-buffer, but num_slots is a u8 and may be up to 255, so a corrupted
-EEPROM makes the code read up to about 4 kB past the end of the buffer
-(e.g. record 254 is accessed at offset 20 + 48*254 = 12212).
+When a page_len is less than 5 bytes in mtk_i2c_xfer, uninitialized kernel
+stack data is copied and written to REG_SM0D1_REG. Equally on the read
+part, an unnecessary read is done.
 
-parse_slot_config() has the same kind of problem: it clamps
-config_data_length against HPEE_MAX_LENGTH but does not take
-config_data_offset into account, so the parser can walk past the end of
-the buffer even when the offset itself is valid.
+Guard these extra copy/write and read for the page_len to fix leaking
+uninitialized stack memory.
 
-Clamp the number of slots so that all slot records fit into the buffer,
-and hand the number of bytes actually available to parse_slot_config()
-and bound the parse by it.
-
-Signed-off-by: Jean Delu <jeandelu@tutamail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: d04913ec5f89 ("i2c: mt7621: Add MediaTek MT7621/7628/7688 I2C driver")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20261022193853.670625-1-ansuelsmth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parisc/eisa_enumerator.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-mt7621.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/parisc/eisa_enumerator.c b/drivers/parisc/eisa_enumerator.c
-index f54a6f4503915..c77fadc1bacaf 100644
---- a/drivers/parisc/eisa_enumerator.c
-+++ b/drivers/parisc/eisa_enumerator.c
-@@ -311,6 +311,7 @@ static int configure_function(const unsigned char *buf, int *more)
+diff --git a/drivers/i2c/busses/i2c-mt7621.c b/drivers/i2c/busses/i2c-mt7621.c
+index 901f0fb04fee4..d9728b763bd30 100644
+--- a/drivers/i2c/busses/i2c-mt7621.c
++++ b/drivers/i2c/busses/i2c-mt7621.c
+@@ -143,7 +143,6 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 	u16 addr;
+ 	int i, j, ret, len, page_len;
+ 	u32 cmd;
+-	u32 data[2];
  
- static int parse_slot_config(int slot,
- 			     const unsigned char *buf,
-+			     unsigned int buflen,
- 			     struct eeprom_eisa_slot_info *es, 
- 			     struct resource *io_parent,
- 			     struct resource *mem_parent)
-@@ -333,8 +334,8 @@ static int parse_slot_config(int slot,
- 	printk(KERN_INFO "EISA slot %d: %s %s ", 
- 	       slot, board, es->flags&HPEE_FLAG_BOARD_IS_ISA ? "ISA" : "EISA");
- 	
--	maxlen = es->config_data_length < HPEE_MAX_LENGTH ?
--			 es->config_data_length : HPEE_MAX_LENGTH;
-+	/* never parse beyond the data that is actually in the buffer */
-+	maxlen = min_t(unsigned int, es->config_data_length, buflen);
- 	while ((pos < maxlen) && (num_func <= es->num_functions)) {
- 		pos+=configure_function(buf+pos, &function_len); 
- 		
-@@ -491,6 +492,13 @@ int eisa_enumerator(unsigned long eeprom_addr,
- 	printk(KERN_INFO "Enumerating EISA bus\n");
- 		    	
- 	eh = (struct eeprom_header*)(eeprom_buf);
-+	/*
-+	 * The EEPROM contents are not to be trusted: clamp the number of
-+	 * slots so that all slot records fit into eeprom_buf.
-+	 */
-+	eh->num_slots = min_t(u8, eh->num_slots,
-+				(HPEE_MAX_LENGTH - sizeof(*eh)) /
-+				sizeof(struct eeprom_eisa_slot_info));
- 	for (i=0;i<eh->num_slots;i++) {
- 		struct eeprom_eisa_slot_info *es;
- 		
-@@ -503,7 +511,8 @@ int eisa_enumerator(unsigned long eeprom_addr,
- 		
- 		if (es->config_data_offset < HPEE_MAX_LENGTH) {
- 			if (parse_slot_config(i+1, &eeprom_buf[es->config_data_offset],
--					      es, io_parent, mem_parent)) {
-+						HPEE_MAX_LENGTH - es->config_data_offset,
-+						es, io_parent, mem_parent)) {
- 				return -1;
+ 	i2c = i2c_get_adapdata(adap);
+ 
+@@ -189,6 +188,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 		/* transfer data */
+ 		for (len = pmsg->len, j = 0; len > 0; len -= 8, j += 8) {
++			u32 data[2] = { };
++
+ 			page_len = (len >= 8) ? 8 : len;
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+@@ -197,7 +198,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 			} else {
+ 				memcpy(data, &pmsg->buf[j], page_len);
+ 				iowrite32(data[0], i2c->base + REG_SM0D0_REG);
+-				iowrite32(data[1], i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					iowrite32(data[1], i2c->base + REG_SM0D1_REG);
+ 				cmd = SM0CTL1_WRITE;
  			}
- 		} else {
+ 
+@@ -207,7 +209,8 @@ static int mtk_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 
+ 			if (pmsg->flags & I2C_M_RD) {
+ 				data[0] = ioread32(i2c->base + REG_SM0D0_REG);
+-				data[1] = ioread32(i2c->base + REG_SM0D1_REG);
++				if (page_len > 4)
++					data[1] = ioread32(i2c->base + REG_SM0D1_REG);
+ 				memcpy(&pmsg->buf[j], data, page_len);
+ 			} else {
+ 				if (!(pmsg->flags & I2C_M_IGNORE_NAK)) {
 -- 
 2.53.0
 
