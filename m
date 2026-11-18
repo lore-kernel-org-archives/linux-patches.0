@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022283;
-	b=ZQAcBhp2zfMbyD4E8Lw4Wzcy+jFvUxMHp98ycLEakGfaCNJlAaOj3S+jHSUilGrpnw/M
-	 U9DePPBAB93kmLztAxZtzgrwk7qpRBXXXcD40Cq+cwT6PQxWwxE9pcs1u7pLqa+dCSiYJ
-	 rNF48hiSUnCAAXSO6lir8qr4YEjiQX+2qGyPiqgk8Sf1IbJJGgtf/jzuO0NoU6ODZJC7W
-	 i2N74Cm2Zu5ZEeTsyXjNZZw1P73Nbol3uQuwkLSxnJhnldyaAwumi40X7SVnJIilOvIfN
-	 lJ5y8SrD0oDDCt75Hb5lWeAjrirlUEQJ8AO39zqHMtJQw3da+d6RP84m6CrJ4Tgruvw==
+	t=1795022286;
+	b=pIYceHLmZTtcB1k8eB/ZjSTOcFVk4avEaPGDP0gdbWf7A9tcAqoRt7m+6e3nfyk92ack
+	 d6zhlchnIMPNFcNlk+S+3P5vjNBWiZ2Qluz1DR2Fn03RtvIoO5PBk7+Mcg1mMvR3M5/X5
+	 Ay82OybloAW/kAxiOjp2n5PVD6bCLX1ZhnAAi+PfHVtcSvwZr2e+dau/ZJV1NuB4l2jSZ
+	 KTxb7c/3VC0psMDqZUy07/Ii7AT61AESMpqyMc4OVLiPnfAwybTk46c5dU8liRGTQz7Yo
+	 BjZAQnI/zqdtpzIdpKL7A3gvM10NDGrB7WR83WKXGat5Ti2ZgJeLm6wOO1Oj5oYRB1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aB8svDvy4796GZktCXDc62jEEr7Uf1CDhmUVj3QvLJE=;
-	b=45Uej0LwAQexikRFuGjr2+jK+WeNyW0/e9u41Jt+9Qkqs922uZt9mw9omLtFvi6DC4Ul
-	 Ya456zgUF8YtVN6Syqjj1DzpK+4ih6rmQ6C/NbqiuuW6S8+qP5EeYC5Gx5V3E7dvioqZz
-	 KGB2HhX8l5ziabqZl/vrRJ+2a46jQiGiX9r4pIq5W1RsxqPXyOgINEfFn6Qvu/65p9IoS
-	 e6X4Dy/rxT++S/7wVjmF/WnMHyK+8e1wBjk1yB/u4hwa/iA+Ylah3kd+0HDq4GMaUTNI5
-	 TDrfal5IFY0QHZAaXALkv9kwcS9HLLdh74V3XSrIFQjTG+YXehTFISk2lzwZgiY825g==
+	bh=VqobekTtSe8jxp6S5+chGyCVec9fzeCaBXIJX8bi374=;
+	b=joYoo2W/GDwLFa7Cs4+iMioamRuqZEal+fz5RQaNo4f2Z0dK/AocX3Avd3ieQURicVLT
+	 vkWJ+LetBRGxWJ9X588aKAXxuKoh0roXl7PpX7KzOib39/0/DZfkZeyvPwL+VzM5vlqxq
+	 /LcXKOSw7KKXichPMjrYANwjxPtt0097iNU2vax4dXj69A6J3JUoLZ/Yn8ZjCREpNVitQ
+	 0Ygr15HEnWlPqoaKIQjeG71qtopTyVt4UNO2GzHpMxqfwjabUq7QLc48zq1roJEt/BM60
+	 kihg6niGOWnpUb86s2hc5fQla01ZJGblN+hFZR4NWuLFP7KTQcmENVxbcnZXoE0ZhCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nm4f6KlM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVwTUIag;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817E2606A320;
-	Wed, 18 Nov 2026 17:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433AF606A31C;
+	Wed, 18 Nov 2026 17:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nm4f6KlM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0BE1F000C4;
-	Wed, 18 Nov 2026 17:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVwTUIag
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988671F000C4;
+	Wed, 18 Nov 2026 17:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022283;
-	bh=aB8svDvy4796GZktCXDc62jEEr7Uf1CDhmUVj3QvLJE=;
+	s=korg; t=1795022286;
+	bh=VqobekTtSe8jxp6S5+chGyCVec9fzeCaBXIJX8bi374=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nm4f6KlMyVX3Y0Ju33UVzC4Nee2C0U6LcCRpIgzXNFBH9USayjOZnCFugA1o6ZSUZ
-	 KdbJpwx8potnfKSETW/F/J5mCYj8PZSxthhVHyIZp1gTvxflvPHTyHF/BK6xzPbBbR
-	 jx/Q3ks0c+tDF1gYGC88eZaco5ohfmgQPX96w9vM=
+	b=KVwTUIagYa7Yjpf1ifCWWewUsBv09hFeDA/PE3s1zV/9ahLXNzKInPzC7jzDeZqF6
+	 l6tZfrCgbAEiDyb+GhkDVxfozTbjRxPS61J5Sf+3FeRm0qSZ1dKpd9ekG6/XKYLVS6
+	 LWXCi4/37ZEB5VwA3SfAb3LpKdm39x3BRZS31uFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josef Bacik <josef@toxicpanda.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2607/2651] zloop: fput file after failed zone init
-Date: Wed, 18 Nov 2026 16:04:07 +0100
-Message-ID: <20261118150418.111768706@linuxfoundation.org>
+Subject: [PATCH 7.3 2581/2651] blk-mq: dont trust the cookie in blk_mq_poll()
+Date: Wed, 18 Nov 2026 16:03:41 +0100
+Message-ID: <20261118150417.241844088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,75 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 134ffb0755626c91af82fc7debc8b6f75f1f777e ]
+[ Upstream commit 24974185999fd80b676fbe2a6c7a97bbd38aaf3a ]
 
-Clean up after failure in zloop_init_zone, as the caller only cleans up
-the zones before the current one.
+blk_mq_poll() indexes queue_hw_ctx[] with bio->bi_cookie unchecked. Zone
+write plugging keeps the segment count of a plugged write in
+__bi_nr_segments, which shares a union with the cookie, and clears
+REQ_POLLED, but bio_poll() only looks at the cookie. A plugged polled
+write with more segments than there are hardware queues reads past the
+array. The bio is also SLAB_TYPESAFE_BY_RCU, so a cookie from a bio
+reused for another device can meet the wrong array as well.
 
-Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261029150353.2503201-4-hch@lst.de
+Ignore a cookie that is out of range or doesn't name a poll queue.
+
+Fixes: 3e08773c3841 ("block: switch polling to be bio based")
+Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261028164415.1262013-28-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zloop.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ block/blk-mq.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
-index 0f37fb373a051..d41c0d54ae4e5 100644
---- a/drivers/block/zloop.c
-+++ b/drivers/block/zloop.c
-@@ -1125,7 +1125,7 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- 	if (zlo->block_size) {
- 		ret = zloop_get_block_size(zlo, zone);
- 		if (ret)
--			return ret;
-+			goto out_fput;
- 	}
- 
- 	if (zone_no < zlo->nr_conv_zones) {
-@@ -1140,14 +1140,14 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- 		ret = vfs_getattr(&zone->file->f_path, &stat, STATX_SIZE, 0);
- 		if (ret < 0) {
- 			pr_err("Failed to get zone %u file stat\n", zone_no);
--			return ret;
-+			goto out_fput;
- 		}
- 		file_sectors = stat.size >> SECTOR_SHIFT;
- 
- 		if (restore && file_sectors != zlo->zone_size) {
- 			pr_err("Invalid conventional zone %u file size (%llu sectors != %llu)\n",
- 			       zone_no, file_sectors, zlo->zone_capacity);
--			return ret;
-+			goto out_fput;
- 		}
- 
- 		ret = vfs_truncate(&zone->file->f_path,
-@@ -1155,15 +1155,21 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- 		if (ret < 0) {
- 			pr_err("Failed to truncate zone %u file (err=%d)\n",
- 			       zone_no, ret);
--			return ret;
-+			goto out_fput;
- 		}
- 	} else {
- 		/* Sequential zone file. */
- 		mutex_lock(&zone->lock);
- 		ret = zloop_update_seq_zone(zlo, zone_no);
- 		mutex_unlock(&zone->lock);
-+		if (ret)
-+			goto out_fput;
- 	}
- 
-+	return 0;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 90fe35f28f44f..7a07ae9dc6fa6 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -5245,9 +5245,22 @@ static int blk_hctx_poll(struct request_queue *q, struct blk_mq_hw_ctx *hctx,
+ int blk_mq_poll(struct request_queue *q, blk_qc_t cookie,
+ 		struct io_comp_batch *iob, unsigned int flags)
+ {
++	struct blk_mq_hw_ctx *hctx;
 +
-+out_fput:
-+	fput(zone->file);
- 	return ret;
+ 	if (!blk_mq_can_poll(q))
+ 		return 0;
+-	return blk_hctx_poll(q, q->queue_hw_ctx[cookie], iob, flags);
++
++	/*
++	 * The cookie is no more than a hint. iocb_bio_iopoll() may have read it
++	 * from a bio that was reused for another queue right afterwards, and
++	 * zone write plugging keeps the number of segments in the same field.
++	 */
++	if (cookie >= q->nr_hw_queues)
++		return 0;
++	hctx = q->queue_hw_ctx[cookie];
++	if (hctx->type != HCTX_TYPE_POLL)
++		return 0;
++	return blk_hctx_poll(q, hctx, iob, flags);
  }
  
+ int blk_rq_poll(struct request *rq, struct io_comp_batch *iob,
 -- 
 2.53.0
 
