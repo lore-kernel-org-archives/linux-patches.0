@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046477;
-	b=uIh0sLYbGBqdbXJhh7m9U4FcB51wih7u2GYf6mVYLbT5MqOduvOkevZxO360xB0nJphn
-	 PnbpjXAnohz+LJc7ADi5vtuYIdctZ/8HtPUUUMqT5GuomHoqkxdmIDhFFc1OpMZR0xWlG
-	 +qVkpRNV42AoeuIKLNipCtDfGiYcDttkIKYmQto9qw6APEGu58eWCO335aF7trDOYlMEW
-	 VpnZuEfdX79Qxn2ATytZK4SjPcP48UEK/wup4XcuArf7GOGThvqZbgpq/RmF9u0quG/ER
-	 HcxId9r14MWcI70I0BZNLoX/x5lMfSSBAn6ckXvrBLyio0nfAKOY0555jzV5OQkewGA==
+	t=1795046480;
+	b=gL2u/jROINWwptECIo/K1RUJFGVsjwywuHLJQmJzwvm8WeKX1zaUIH3F1kaO/JtlalUE
+	 vztUAWnVEtIgLOgbNDl6bcqsBNjy2nb30Y+EQxhEklyUMSChLdEtHX+AAhhSIaEJiJ0s/
+	 jPufjQ78lD2d1VyFMEoeRdNtlA8HUqrkAH8yc8qX+O+5/lemgptSKKGlHqKIPMuD/tgyM
+	 IOgvdc05XtLEvLxngENxPe3uYXEjxbQY1mCZ/B8z4pDqwh7AXeKZBlGzVZ0OpE/29ZOmc
+	 LEjunxqGF5Qw7evbUF1VZFfw8NRNTqXa940FChW/Wuzt4cw9jdGTyIhzehb+OFwx59Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046480;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VSoEepocWja1+V6jNhNt+fqpOSIuIQMyztT19g/Ng2Y=;
-	b=Wu746Hx4uBYBM+wjyvzSvG++l+txmBTwK/4MzZolGlc91IxRS6jwiQPbhh93y+TXNUWZ
-	 OjV6DkItq6y3C9pQnHg4gESRki1UCf7gwFvmb6eGeXEcnBbJRF4tsJjYMMvC5s2hgA+RA
-	 Vt/mZRH+Z1zjHtBqO9mFqQ09FlNgIIa8RpteFQjfXBZOJ7SOVtc9csSD5ZdGV/Ig+RN8y
-	 5MoG67t8Y+i3wWKbWrlYyezsXWjD+3LVIlsatEBWlSqwg+hjFEwhvPUKG9F6DW6lUk8A6
-	 kcjpg+AC0nm8LjNv3VeV2V7bvTXXVKe5BO7xmkf2dT21cB40elR8jF3YRBAFvL3h3YQ==
+	bh=7vroiwv7YKnUKX+Z6MhUvJYkJS1i3jqGkTBxIldNofQ=;
+	b=R1ic5mI5VoKhp7+1Kv4HVWRAsGT2T36TRZUO5PqPuwqMiOdKQ5K18hiLaCNsA+YILaPi
+	 /3GzY9ZoWUZfy7F8F+WakUFmgtcqMM5jChog67TuRPUGchyTl54PxP+O688UKhH6TTqZR
+	 agoPsilK7Z3p76IZYYNCkmsEkcollsAK4DIPiFI4S6mtgMYeuCe2m2iULujDL55EQHxfU
+	 Q1XS/bMDNIWIhXQPc1Ig5rlQbo8kPoQ0i64A4/leyRO64avBitOVJ4XWprUga/q/m8E3u
+	 UE5eeQ4GvmMiY/rFNTS6FrbzqBJ9gI/lZl0BBxD41YFkaYBGPZV5rwiHHHafCuGrrEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXJA7e2r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FsAiq4jZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49F5606A333;
-	Thu, 19 Nov 2026 00:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99C2606A31C;
+	Thu, 19 Nov 2026 00:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXJA7e2r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2421F000C6;
-	Thu, 19 Nov 2026 00:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FsAiq4jZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB8B1F000C4;
+	Thu, 19 Nov 2026 00:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046477;
-	bh=VSoEepocWja1+V6jNhNt+fqpOSIuIQMyztT19g/Ng2Y=;
+	s=korg; t=1795046480;
+	bh=7vroiwv7YKnUKX+Z6MhUvJYkJS1i3jqGkTBxIldNofQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXJA7e2rqWAKZ+ntqgcZHHYefzGjU9Tw9w95DRd8lbX9Ng1COJIx2Vu9YGOYr8WEV
-	 NUJMSq8JX4anX0DmydkYzCRDBmarBTRHlO2Oob2ALousHBR4hEydfFTAsqJyk+r4vj
-	 9W0/+UqkGzg72C+xjWLV++h8zxiO1DNdn4fzLx0Y=
+	b=FsAiq4jZ58hjoqRJWLeTnZwKTaQFfaVvVMW+kuKsItJI4Sm/em+sdsfB+rYhEWNkn
+	 QxTOU15BSDJem/oFrlcSEamTOM2cMpuQcmDMjSIds5WVrNYBnVHkbRxy/iS+HWrPPY
+	 49HfHMYxuwiwF89Knx3/OOXE+v+VTmtFPdxq00hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1255/2857] ocfs2: do not index before the entry array when dividing an empty bucket
-Date: Wed, 18 Nov 2026 15:38:09 +0100
-Message-ID: <20261118150246.728910278@linuxfoundation.org>
+Subject: [PATCH 6.1 1246/2857] KVM: x86: Conditionally resched when restarting REP string emulation
+Date: Wed, 18 Nov 2026 15:38:00 +0100
+Message-ID: <20261118150246.409927172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,74 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 7133a0d0954c109f1764ebf8ab32d7e757a6c587 ]
+[ Upstream commit ae85ac25eb671d174811cc3101549448671fd505 ]
 
-ocfs2_divide_xattr_bucket() appends an empty bucket carrying a sentinel
-hash when the source bucket has no divide position, taking that hash
-from xh_entries[start - 1].  ocfs2_xattr_find_divide_pos() returns count
-when every entry shares one hash, and its loop does not run at all for
-count < 2, so an empty bucket comes back with start == count == 0 and
-the read is xh_entries[-1].
+When restarting emulation, e.g. of a REP-prefixed string instruction,
+conditionally reschedule as emulating guest writes can be deceptively slow
+and expensive, e.g. when shadow paging is in use and each write can trigger
+write tracking.
 
-That is outside the __counted_by_le(xh_count) bounds of xh_entries[] and
-lands on the header, so the value picked up is
-xh_count | xh_free_start << 16.  One above it is written into the new
-bucket's xh_entries[0] and committed, which leaves a bucket whose first
-hash does not follow the bucket before it.  ocfs2_xattr_bucket_find()
-binary searches on xh_entries[0], so the broken key hides the range the
-sentinel was meant to cover: getxattr() answers -ENODATA for an
-attribute that is stored, and an insert can go to the wrong bucket and
-leave two copies of a name.  The cross cluster divide hands the same
-value back as a tree record's e_cpos, which then claims a hash range it
-does not cover.
+In a perfect world, restarting emulation (or not) would be less arbitrary,
+e.g. would honor not only host events (NEED_RESCHED, signals, etc.) but
+also guest events (e.g. by checking kvm_vcpu_has_events()).  Unfortunately,
+as pointed out by Sashiko, pio_in_emulated()'s read-ahead logic is baked
+into the restart logic, as KVM relies on restarting emulation to drain the
+cache and avoid duplicate reads from the I/O port.  I.e. re-entering the
+guest on kvm_vcpu_has_events() or __xfer_to_guest_mode_work_pending() would
+introduce architecturally-incorrect, guest-visible changes.
 
-Read xh_entries[0] instead.  The branch is only reached when every entry
-shares one hash, so for a non-empty bucket it holds the same value, and
-for an empty one it is the slot that carries the bucket key.
-
-An empty bucket reaches the divide from
-ocfs2_check_xattr_bucket_collision(), which reports no collision for
-one, through ocfs2_add_new_xattr_bucket() and
-ocfs2_extend_xattr_bucket().  It does not take a failed set to get
-there: a divide that finds no position is itself what leaves an empty
-sentinel bucket behind, and a later extend can pick it as the target.
-
-Link: https://lore.kernel.org/20261024151012.1059683-6-joseph.qi@linux.alibaba.com
-Fixes: 80bcaf3469b8 ("ocfs2/xattr: Proper hash collision handle in bucket division")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org>
+Fixes: 5cd21917da24 ("KVM: x86 emulator: restart string instruction without going back to a guest.")
+Cc: stable@vger.kernel.org
+Cc: David Woodhouse <dwmw2@infradead.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Suggested-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20261028173638.1765329-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 737b668667a8c..cad7a46525192 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -4756,7 +4756,15 @@ static int ocfs2_divide_xattr_bucket(struct inode *inode,
- 	start = ocfs2_xattr_find_divide_pos(xh);
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 0fcac00259cba..d9f8f2ce4ed25 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9062,10 +9062,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 	} else if (vcpu->arch.complete_userspace_io) {
+ 		writeback = false;
+ 		r = 0;
+-	} else if (r == EMULATION_RESTART)
++	} else if (r == EMULATION_RESTART) {
++		cond_resched();
+ 		goto restart;
+-	else
++	} else {
+ 		r = 1;
++	}
  
- 	if (start == count) {
--		xe = &xh->xh_entries[start-1];
-+		/*
-+		 * start == count means every entry shares one hash, so the
-+		 * first of them carries it too.  An empty bucket has no
-+		 * entries[start - 1], but its entries[0] still carries the
-+		 * bucket key: either the hash ocfs2_xa_remove_entry()
-+		 * deliberately leaves behind, or the sentinel a previous
-+		 * divide wrote.
-+		 */
-+		xe = &xh->xh_entries[0];
- 
- 		/*
- 		 * initialized a new empty bucket here.
+ writeback:
+ 	if (writeback) {
 -- 
 2.53.0
 
