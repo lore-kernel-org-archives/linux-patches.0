@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022992;
-	b=NjUDPu34fSaniu+ShLqaNf/CXMlWlvkgZFDcMLOz7/JbkB9BiUsmV9TyZdaqyLz5VNqB
-	 6mIfPhTUTbOsHcTkasmBSnD8/Jdz7UMXWbKRN1111qNA3Xp+ZZwSIrNrrwoZT+039YPC7
-	 vvjlGp7BsmZyzjfPvWZCZ8bIXstgxFwo1aU2lPUytqBt71B5E9HzY9kC8RokTJYAxwKna
-	 p7mNryncApCcWhyiZm6Ni0IEnjEsaW+jMyF2mQeqzpGaDerkqMU72fwhqxjgJZ0JCCYEF
-	 eNoWNjQxT6aSq161XoVL7kx71CWGcCJN302XrnlmM5/Mwt9wAF6FVY4luand2DlcM5Q==
+	t=1795022995;
+	b=NG8y1heLaVW+krFMeIV3HoY86qBybEzZvUKaiFwaXdsWeE1ZTBOfHv6TVRFWb+8vgdHm
+	 zjRF1XzuSNeTvW8ImxQcy22d1WcRfP4SUZec6qWxGKljVCgvjLmXZhOAkCUeA3Rj4mh3J
+	 WE7InoMCzw6lQevcm0a1reFly3C7X9NHDHUhGeuh1u0fgujf68dISVpvgCTiUo2GMZzeM
+	 POOcZkdd4CeQ+2g3+U7T2y25FsUa3SBqS8Ts5T7zU1fIgcDB0zeKDOAlGO3aVYSNwEC9l
+	 1nRmRH8Wjwe1DVhEuT7b/RnuG/g5zPHfU+FKNCYUhycB3eREMMumYwV/HsW3wTMplmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gqql6TeVWeilEQAZgVQeNpw8TovcY92qAk4zn6HIPc0=;
-	b=xzy67U8OVZomm+oUVK1Hc5CBeBs7efXIgkyXnI55u1I8mxFeMyVUHKYydhp51WZKgqE5
-	 ZthN+1oCQAC9izCamBpOEfBHhVU39LZ5n+PwjjL731AwVvhAK/CqVrWtjXMYrrPeO11pS
-	 iPRmYvEkvw8kVr009/h/JPnYi2Sdo8GTHVDmcQNARdrTzteXIyuHFkuFTZxmab5ZCjnne
-	 5omlvE9qvgzBcbUMvpiL5ue/4dzEkvSsmRfNAdqvp4Uyou5b1ME3u8+Ynugjl/HH4pzN9
-	 DJCkzNkf4IuRekIgO62j5d0QozLoRqa4fV9Q0caQ3p0b9hjzMQv+m7Y6EML8S4auKSw==
+	bh=t1T/ZrNMU+XGzB6jbQg478zB1SbWyG6Nt+Z7rYRrlFY=;
+	b=Omt19wVyQEnfCuapysdGePrfxh37G9RrHh+/DFs6zq9N99a59uvlRPp+PJwyMUICoijB
+	 T804Mpn+YSql+uEeQ/IdYIa/ZGQQKRvwJAgdHnpho3/D1FJBSnI82CxHuGv0mff0F0ijj
+	 jDp1d7XEWSGCEK5/IOlatbJ0OhmdArRe4JlcegkQKLa+OBFhBwvCVNqoanoFFkGeRamZt
+	 bpSNl2cOfLUDqVdynLVmalkpBxp0/4DIvtMOxwHab2JEErisUEDFFBHi38xFQ961b5qFl
+	 UsBvtjT7N++rYQlpa3s9u1LC47VSnzaUjfE3QCgSIQlaGFs5eJo8uShC3KQ/hJdqAeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWF3SZlg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5s6y1B4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5888606A320;
-	Wed, 18 Nov 2026 17:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54535606A331;
+	Wed, 18 Nov 2026 17:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWF3SZlg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080351F000C4;
-	Wed, 18 Nov 2026 17:29:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j5s6y1B4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA7F1F000C4;
+	Wed, 18 Nov 2026 17:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022992;
-	bh=Gqql6TeVWeilEQAZgVQeNpw8TovcY92qAk4zn6HIPc0=;
+	s=korg; t=1795022995;
+	bh=t1T/ZrNMU+XGzB6jbQg478zB1SbWyG6Nt+Z7rYRrlFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWF3SZlg4OTiSw4bvOhU/ZBEU/0b0i4OlYfbCSAKb0Mp5EktwdRCCjNnhUtjvKyIH
-	 ThZf7Dm0xkCkN9olXOKI3Q4SfbfZPWf8JstXLsFoKbdt6zcaH8T+Dr5A2BuwbHWK+F
-	 p1/VQd9MChl3Zhd6bDV1+qXU8inHlaYgnU6+8K6c=
+	b=j5s6y1B48tX/2P/uK04314plHAWTceojVIYh7iW+5zUg22hMBr+UzwrA7/ExK7UsO
+	 bz2VVfulC+PkKGrjHtR7Uq4Om/DOXVQsXNKlnXZCZe4TIliEblbTTIUXBGQ0MLgmcL
+	 OE1OUIDFfJ5Ov3Iae7yWq+4FaR/FZp4W5f36FHVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0210/2151] dmaengine: fsl_raid: avoid free_q underflow in free_chan_resources
-Date: Wed, 18 Nov 2026 15:32:25 +0100
-Message-ID: <20261118150129.430967935@linuxfoundation.org>
+Subject: [PATCH 6.18 0211/2151] RDMA/hns: Fix missing CQE when UD QP use different SL
+Date: Wed, 18 Nov 2026 15:32:26 +0100
+Message-ID: <20261118150129.467740251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,59 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit d805aa5b6088b193debabaa80cc0991bfa2bd057 ]
+[ Upstream commit 3547f46c31993d41748f0f7936f9d4dc5b5d4b12 ]
 
-fsl_re_free_chan_resources() loops alloc_count times calling
-list_first_entry() on free_q without checking whether the list still
-has entries. If descriptors remain un-acked or pending in submit_q /
-active_q / ack_q when the channel resources are freed, free_q becomes
-smaller than alloc_count and list_first_entry() returns the list head,
-causing list_del() to corrupt the list head and dereference a bogus
-pointer.
+Due to the hardware contraint, CQEs may be dropped when a UD QP
+sends with multiple SLs. Pin the SL to the value from the first
+post_send on the QP to avoid this issue.
 
-Walk free_q with list_for_each_entry_safe() until it is empty,
-decrementing alloc_count per freed descriptor, instead of relying on
-the alloc_count count.
-
-Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
-Assisted-by: opencode:hy3-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260718235227.385108-1-rosenp@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 66d86e529dd5 ("RDMA/hns: Add UD support for HIP09")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20260831020324.3540901-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl_raid.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h |  1 +
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 15 ++++++++++-----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
-index ad77694520e9e..fa8e40fdb005c 100644
---- a/drivers/dma/fsl_raid.c
-+++ b/drivers/dma/fsl_raid.c
-@@ -613,18 +613,15 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
- static void fsl_re_free_chan_resources(struct dma_chan *chan)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 06832c0ac0556..717e48772901c 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -645,6 +645,7 @@ struct hns_roce_qp {
+ 	u8			priority;
+ 	spinlock_t flush_lock;
+ 	struct hns_roce_dip *dip;
++	bool ud_sl_set;
+ };
+ 
+ struct hns_roce_ib_iboe {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 5512a8084b7c2..2336079daa1e0 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -428,7 +428,8 @@ static int set_ud_opcode(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
+ 	return 0;
+ }
+ 
+-static int fill_ud_av(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
++static int fill_ud_av(struct hns_roce_qp *qp,
++		      struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
+ 		      struct hns_roce_ah *ah)
  {
- 	struct fsl_re_chan *re_chan;
--	struct fsl_re_desc *desc;
-+	struct fsl_re_desc *desc, *_desc;
+ 	struct ib_device *ib_dev = ah->ibah.device;
+@@ -438,7 +439,12 @@ static int fill_ud_av(struct hns_roce_v2_ud_send_wqe *ud_sq_wqe,
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_HOPLIMIT, ah->av.hop_limit);
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_TCLASS, ah->av.tclass);
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_FLOW_LABEL, ah->av.flowlabel);
+-	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_SL, ah->av.sl);
++	if (!qp->ud_sl_set) {
++		qp->sl = ah->av.sl;
++		qp->ud_sl_set = true;
++	}
++
++	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_SL, qp->sl);
  
- 	re_chan = container_of(chan, struct fsl_re_chan, chan);
--	while (re_chan->alloc_count--) {
--		desc = list_first_entry(&re_chan->free_q,
--					struct fsl_re_desc,
--					node);
+ 	ud_sq_wqe->sgid_index = ah->av.gid_index;
+ 
+@@ -488,12 +494,10 @@ static inline int set_ud_wqe(struct hns_roce_qp *qp,
+ 			  qp->qkey : ud_wr(wr)->remote_qkey);
+ 	hr_reg_write(ud_sq_wqe, UD_SEND_WQE_DQPN, ud_wr(wr)->remote_qpn);
+ 
+-	ret = fill_ud_av(ud_sq_wqe, ah);
++	ret = fill_ud_av(qp, ud_sq_wqe, ah);
+ 	if (ret)
+ 		return ret;
+ 
+-	qp->sl = to_hr_ah(ud_wr(wr)->ah)->av.sl;
 -
-+	list_for_each_entry_safe(desc, _desc, &re_chan->free_q, node) {
- 		list_del(&desc->node);
- 		dma_pool_free(re_chan->re_dev->cf_desc_pool, desc->cf_addr,
- 			      desc->cf_paddr);
- 		kfree(desc);
-+		re_chan->alloc_count--;
- 	}
+ 	set_extend_sge(qp, wr->sg_list, &curr_idx, valid_num_sge);
  
- 	if (!list_empty(&re_chan->free_q))
+ 	/*
+@@ -5360,6 +5364,7 @@ static void v2_set_flushed_fields(struct ib_qp *ibqp,
+ 	hr_reg_write(context, QPC_SQ_PRODUCER_IDX, hr_qp->sq.head);
+ 	hr_reg_clear(qpc_mask, QPC_SQ_PRODUCER_IDX);
+ 	hr_qp->state = IB_QPS_ERR;
++	hr_qp->ud_sl_set = false;
+ 	spin_unlock_irqrestore(&hr_qp->sq.lock, sq_flag);
+ 
+ 	if (ibqp->srq || ibqp->qp_type == IB_QPT_XRC_INI) /* no RQ */
 -- 
 2.53.0
 
