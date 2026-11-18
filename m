@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056079;
-	b=0v/0E2HeKsad0BV0uMdNc2psBOLiPVAs6skPy4PXbNsezZLrMrpucvrzxkaQmq/RQcAz
-	 A3qoaRPzcPyNbIMUf/oLdRSZGMBmCsCIEf8dHEAtvgJpjoOaP1ECBsxMWrAKBsRUMXccu
-	 G/Nq2lAFQmSDyIFkTElj5VMWmgMtp37ToyJnjfBq0nQBfoBNvy8hIHTMeDTTxKJKo3MC/
-	 SMSSC/hJTx2j9iR3GwYBYyfxNj7/k1HaFLhyylYfLxdGTNHygOsHVgkifMzov450KFq/0
-	 EesyhuQNKcutvSTL6dKxoax6D/FwGscJEm6zetCubaFIspK1NFLsThBxvqqLJ0W6CHA==
+	t=1795056082;
+	b=EZ606zNB+lCKrZcUZVVWTtQ2hxYhGnMnlUx37d8MwbMh3QwX3Krenm7D+8JLTplNlL3U
+	 rwVzqZ49BXrfLupVb6WCnmXcihJGf42iHaOGLUbW46d4dgAPWxM4Xe7tqpamCb2prBxD1
+	 xSyszdrbsCISRf3FysjdeaZvp+KY1Etr40c3TfSGgipl/SujDqnhFaE74Z3MqhLp+sXiS
+	 /muE6qbqOQkqcoYpem+9ntV/eDTFTzAsYnFkPh/bcIzOlpQmXwqAldcPa26NCQjZ1eBKs
+	 y8Pg5nElporB4W9xXFYecnQbEqoDi2yAS/h3/ZA4S008DA93vdKCCFSX7A9o8eveTRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=v7WFiKUF2KMo4PQnZCLChlG5atGwuoLYh8bXf+qLetc=;
-	b=uqRlYol1jkAsm0+IbN3QgFO4CDRDCqUt6PHcUS0eJat0OTOnK6JIRrVo5z2w9gdKwLeB
-	 xloAgikgsSbrxXrnC87/zoaUNN8SPAQQmp/4MbBYgJF3hcKPaoqn+kL9xoTrjxfswbcjv
-	 RxyILwLe0vSk7rVjcOGouc8x16Zsho950bMrovBztrvL4/DJXpDcb5y8ZeV15wvQZE3o4
-	 SWKHcIxYUlX214VYh68Yh75Ny7cpbBjHorzPn4kMwCYgwuwsOwIyGIFBdOcFx0o5V5vkG
-	 uD6eW8dp63eT04WOj9Myl/s9nyUaoox0Qo4nmSZNf7VQmqQ13dC9Kv5nb3ciHU3lAQA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=k1DAM3P5pg/9c4LpABCVx9dogqenICG2MnkoUy9dBf4=;
+	b=Q4VYnQqG3WGNOzGRkwj2oZpKITT+3KDdTHHQdKou1XHmeGALYSNrdoezBRtieKZEfnVI
+	 k4iID3Q0es/Y5XuHI4ySkmzw8f1p/pZlSI4d9tboA17VN78jFg9ytymBipcrFDot/1bm7
+	 ubcobCAyOUKqh1hx1ck6PZ1yVMBYNGatE/c8Q/p/bz+IvqjYPZzFEiZZeKIf4zjuT2nDW
+	 KfA0azetzZOri1O93kJYFx7h+1qnhkF+WoqOzmev8+JWRyg6cSuKmhQznr560P2pystV1
+	 MF4N96Dd0vjMnjvacsJtQLTi0snGftAcbqkXcqqF1l/mjzeg9TwPOhDerb7VKIWequQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNELDdRG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bSMJeIBa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3965606A320;
-	Thu, 19 Nov 2026 02:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913E7606A31C;
+	Thu, 19 Nov 2026 02:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNELDdRG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116A11F000C4;
-	Thu, 19 Nov 2026 02:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bSMJeIBa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E203E1F000C4;
+	Thu, 19 Nov 2026 02:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056079;
-	bh=v7WFiKUF2KMo4PQnZCLChlG5atGwuoLYh8bXf+qLetc=;
+	s=korg; t=1795056082;
+	bh=k1DAM3P5pg/9c4LpABCVx9dogqenICG2MnkoUy9dBf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wNELDdRGKHZUSyNhrdvfJIOJTj8TXvJKHqFL3O/OiZ/wzMdpCVZL0UiW5it9rj1Rx
-	 iDTEbJh0ryZD7U9FDxnOgEQJTNzyxRs2jraKUBVdWzGfePKG7swlz5K+va08dR2YjP
-	 wPG1+gs2pnQNKQrEcnhe83k8tRswoaT5XqhQadrI=
+	b=bSMJeIBaulpVrz7k+7YTl0UGIyOcR+WBOmut2asj8LlP3RmjtHv+zn6z12DLyuPF6
+	 JKywpXJ6a2K6HtkMBVZvhplC+rdnM4+XLO1FhDrMajxXFn9Js92rr2HqmanLBYjCxV
+	 Qk/LYb8RxzQ2R0AdIS//eyzGZVWo9eRbwfZhF/Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Labelle <southampton.jake.labelle@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1819/2214] nilfs2: reject non-regular inodes in dsync recovery
-Date: Wed, 18 Nov 2026 15:58:15 +0100
-Message-ID: <20261118150124.232331271@linuxfoundation.org>
+Subject: [PATCH 5.15 1820/2214] xen/blkback: Prevent missed completion when draining I/O
+Date: Wed, 18 Nov 2026 15:58:16 +0100
+Message-ID: <20261118150124.268013888@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,69 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jake Labelle <southampton.jake.labelle@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit ef2ccb1554df254eb4066171ce93e6d5fb1af2e3 ]
+[ Upstream commit 9b4df0baa2aa03d22310e59846ca628f7afd4115 ]
 
-During roll-forward recovery, nilfs_recover_dsync_blocks() obtains the
-inode designated by fi_ino of a dsync log without checking its type.
-If a corrupted image designates a special inode (e.g. a device node)
-there, the inode's embedded bmap was never initialized:
-__nilfs_read_inode() calls nilfs_bmap_read() only for regular files,
-directories and symlinks.  The subsequent nilfs_get_block() then
-dereferences the uninitialized bmap->b_ops and jumps through it,
-crashing the kernel or worse.
+xen_blk_drain_io() sets drain before checking inflight.
+xen_blkbk_unmap_and_respond_callback() decrements inflight with
+atomic_dec_and_test() before checking drain.
 
-Regular files, directories, and symlinks are the only inode types
-with data blocks to recover; reject anything else before touching
-its block mapping.
+The pre-wait condition check was added to avoid missing a completion, but
+atomic_set() is unordered. With one I/O in flight, the drain path can set
+drain to 1 and read inflight as 1 before the completion decrement. The
+completion path then decrements inflight to 0 but can still read drain as
+0. It skips complete(), so the drain path waits until the timeout despite
+no I/O remaining.
 
-[ryusuke: conformed AI tag to guidelines]
+Add a full barrier between setting drain and reading inflight.
+atomic_dec_and_test() already provides full ordering on the completion
+side.
 
-Fixes: 0f3e1c7f23f8 ("nilfs2: recovery functions")
-Assisted-by: Claude:claude-mythos-5
-Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 6927d92091df ("xen/blkback: Fix two races in the handling of barrier requests.")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Acked-by: Roger Pau Monné <roger@xenproject.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260730084000.3305702-1-hanguidong02@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/recovery.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/block/xen-blkback/blkback.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
-index 0f5161df0709b..304f31dd697b7 100644
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -510,6 +510,23 @@ static int nilfs_recover_dsync_blocks(struct the_nilfs *nilfs,
- 			goto failed_inode;
- 		}
+diff --git a/drivers/block/xen-blkback/blkback.c b/drivers/block/xen-blkback/blkback.c
+index 14e452896d04c..976896abb0da6 100644
+--- a/drivers/block/xen-blkback/blkback.c
++++ b/drivers/block/xen-blkback/blkback.c
+@@ -1021,6 +1021,13 @@ static void xen_blk_drain_io(struct xen_blkif_ring *ring)
+ 	struct xen_blkif *blkif = ring->blkif;
  
-+		/*
-+		 * Regular files, directories, and symlinks are the only
-+		 * inode types with data blocks and an initialized bmap;
-+		 * a crafted image can reference some other inode type
-+		 * here, whose i_bmap_data was never set up by
-+		 * __nilfs_read_inode().
-+		 */
-+		if (!likely(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) ||
-+			    S_ISLNK(inode->i_mode))) {
-+			nilfs_warn(sb,
-+				   "%s: invalid inode type (ino=%lu, mode=0%o)",
-+				   __func__, (unsigned long)rb->ino,
-+				   inode->i_mode);
-+			err = -EINVAL;
-+			goto failed_inode;
-+		}
-+
- 		pos = rb->blkoff << inode->i_blkbits;
- 		err = block_write_begin(inode->i_mapping, pos, blocksize,
- 					0, &page, nilfs_get_block);
+ 	atomic_set(&blkif->drain, 1);
++	/*
++	 * Publish drain before checking inflight. Otherwise,
++	 * xen_blkbk_unmap_and_respond_callback() can decrement inflight with
++	 * atomic_dec_and_test() and still see drain == 0 after this path saw
++	 * inflight > 0, missing the completion.
++	 */
++	smp_mb();
+ 	do {
+ 		if (atomic_read(&ring->inflight) == 0)
+ 			break;
 -- 
 2.53.0
 
