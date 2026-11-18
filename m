@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055962;
-	b=FusmvhCJ1W5n5V4GNJBQ8q36l8N9Z7I/1jcHKd9wvsghbxefYzYMjgVerbSJ+lW/OU2E
-	 R4M+mULgWI/d1/idUIUSEIJFuVB5GQUlJI3Es3a8QkYjnnzNN08Zl907vAw4RPncRwoAI
-	 C53pHp1I3EvOoPuHVmNPLdmxPCCHhQqDShff6aNjnD8VZym9Z3w5hnPLTSIwWmQB4e0gJ
-	 6wPQ2UO4yvBemj2eQYMiRpicijl6Wf9qSj7+QSEhbi5EoUJXwn5fsldZ0fiilVaaYOEv6
-	 wTWfHyQGc2NLrxpgmIMQP0w8xk6hlbCIR+5s//DsotMHwWdqiylzcpgkwRzpsuQuRrg==
+	t=1795055965;
+	b=lX0HzR1WDy3GFlKQzHg3Nba9sx3yLteNRv3kwvaE1w+q0dSuSvqA9rQiWgQRGBBqA1Ed
+	 /ePjODLSrOmzJltCv/lNDLW038TLRu8IBMWVDX8X42hCY/pB8JpF71wq5w3p4zZcgCgB6
+	 ZiajUtGgEx27JENTtF/rclM1x8/O/iUDEeDf+dawwIGwMLGZ2YhBLzouP1y0A5yuxFJ7x
+	 IbiGxD410wZVWgad6vfXEKU12MIt+QdewbG+Y4qKG365NILbgUX2foFVgp3umIkXYzcUZ
+	 4NLlkZQewSh2Rvkz/wN6/H8UYGu8PfFbhJpBWiIiycb/dnU4XNi05QPEET8al7kJ/LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UlbtUU71ElCnQp3hV/yk9/H3S1QiVAhemZmxopfQNek=;
-	b=owm/BGC/54kFQWi74gpMIAMtNNresTIsI/ByMTRJvrdnHda2twQcBNvX/r5Ofg8FpiQB
-	 B0nBb7zNbCYSTfkT+N6bEcrSDIYJ6K9THtAtVimk8j0Er/CgW56hT2ikGaVeWQLlaZu7u
-	 7ESEhcE3r4hGfE4SYEMprEuhlC2gmzMADXN/eyGqiGb7//IoSM5UGSxpFjqnF6qZ8gv90
-	 tLlFKnKpoxt9FG+gkqh3G3YhrT23wLFOCe78W/CRZ2Nj9dnfWxLbfz5+HkveUjgEmaaPt
-	 3CE/LYVvcWjzFIFNFK1Vi0QH5hU9PcbAmFa4tS37SjDaUDSmyvUD7CQcbD+z/p2D+2g==
+	bh=1vwf74y+vakg4rfK0p1lpdBcRA72PvU4nvpZlcxXezE=;
+	b=ViSrz/dz/VkUGwCN+h43f8tRcKO6u/kImqKenHM0U786thWk7car/ODxgZLpwgHFUg3L
+	 cl+gKaROSXKu21CMrw8yAfpcancdXNJe1qs5qDctAoFgmyb+5D1zbNfrvrymDLEy3i66E
+	 tmvhh2iJ3zRBVHm+GLKC56LaN3nUBA34GzDC5nt7dVI7iqUiRtAUGpdHHQpgBRuPfS/+m
+	 Y9mWA0bOAZSWH12IoQN9AFhMVsWFLjkfSTJH7wLmapTp3lEHyx9Fj71WbjcJIwEPdP5o9
+	 M/pyE1wFGIFimzD5lGCPt9+hS9it9ylwmdV06qFv+T2Nj13N9eKlZ2PywepCAnQvxhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJdcdFQL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpjEPimu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F161606A320;
-	Thu, 19 Nov 2026 02:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B49606A320;
+	Thu, 19 Nov 2026 02:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SJdcdFQL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC151F000C4;
-	Thu, 19 Nov 2026 02:39:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KpjEPimu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8521F000C4;
+	Thu, 19 Nov 2026 02:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055962;
-	bh=UlbtUU71ElCnQp3hV/yk9/H3S1QiVAhemZmxopfQNek=;
+	s=korg; t=1795055965;
+	bh=1vwf74y+vakg4rfK0p1lpdBcRA72PvU4nvpZlcxXezE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SJdcdFQL5C422UJPhuv42L4oHIGSuVComeC0I40Vmpn78aXHKf/6TShgPdqXapTVg
-	 8LpRLAuFXSFAtZOQVl3nre/W9CehvodetoVE4a7ZnSx6xS444VZulRqXhaOnUP1JOV
-	 aoQBdQ8Msn48iJhW1tEWvUdzaCTYNWgJs8lC4uMw=
+	b=KpjEPimuUujVChBksDkMOYiJC2wNa+ru7VM/uEmqzuiaYAvgSrxkvrzhUvrBWwu7g
+	 Trdgg4UN/Ny6GnRhIoqv/TGGpa+X6XmAWnJmgGXs6E0RQNwhoV0cr6addvKl9u3APT
+	 ij1maoEsiWGjZ4oZaDYO3l2Q0qn7f2hXZmD2EQjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	sashiko-bot@kernel.org,
+	Linus Walleij <linusw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1778/2214] sh: defconfig: Enable the current M66592 UDC symbol
-Date: Wed, 18 Nov 2026 15:57:34 +0100
-Message-ID: <20261118150122.623495463@linuxfoundation.org>
+Subject: [PATCH 5.15 1769/2214] dmaengine: ste_dma40: Fix logical channel bounds check
+Date: Wed, 18 Nov 2026 15:57:25 +0100
+Message-ID: <20261118150122.291307966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,68 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9b65dcd94222c37febf98127b1ac5452c94a16d0 ]
+[ Upstream commit 57938e0c2a24f9f792fe9f611391ef6b58d1aa21 ]
 
-The M66592 UDC provider is built under CONFIG_USB_M66592. Several
-SuperH defconfigs still enable the removed CONFIG_USB_GADGET_M66592
-symbol.
+d40_validate_conf() checks the raw dev_type against num_log_chans,
+but d40_allocate_channel() derives the lookup_log_chans index as either
+2 * dev_type or 2 * dev_type + 1.
 
-Replace the stale entries with the current provider symbol.
+Validate the dev_type against the derived logical channel index limit so
+channel allocation cannot write past lookup_log_chans.
 
-Fixes: 193ab2a6070039e7 ("usb: gadget: allow multiple gadgets to be built")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Assisted-by: Codex:gpt-5
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be> # build-tested
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: 26955c07dcf3 ("dmaengine: ste_dma40: Amalgamate DMA source and destination channel numbers")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-19-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/configs/migor_defconfig   | 2 +-
- arch/sh/configs/sdk7786_defconfig | 2 +-
- arch/sh/configs/shx3_defconfig    | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/ste_dma40.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/arch/sh/configs/migor_defconfig b/arch/sh/configs/migor_defconfig
-index 4859cd30cfc4c..04a72ac6f67f7 100644
---- a/arch/sh/configs/migor_defconfig
-+++ b/arch/sh/configs/migor_defconfig
-@@ -75,7 +75,7 @@ CONFIG_LOGO=y
- # CONFIG_LOGO_SUPERH_MONO is not set
- # CONFIG_LOGO_SUPERH_CLUT224 is not set
- CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_M66592=y
-+CONFIG_USB_M66592=y
- CONFIG_USB_G_SERIAL=m
- CONFIG_RTC_CLASS=y
- CONFIG_RTC_DRV_RS5C372=y
-diff --git a/arch/sh/configs/sdk7786_defconfig b/arch/sh/configs/sdk7786_defconfig
-index f776a1d0d2776..37ee66c76efae 100644
---- a/arch/sh/configs/sdk7786_defconfig
-+++ b/arch/sh/configs/sdk7786_defconfig
-@@ -152,7 +152,7 @@ CONFIG_USB_MON=y
- CONFIG_USB_OHCI_HCD=y
- CONFIG_USB_STORAGE=y
- CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_M66592=y
-+CONFIG_USB_M66592=y
- CONFIG_RTC_CLASS=y
- CONFIG_RTC_DRV_MAX6900=y
- CONFIG_RTC_DRV_SH=y
-diff --git a/arch/sh/configs/shx3_defconfig b/arch/sh/configs/shx3_defconfig
-index 32ec6eb1eabcf..2ef24c4914ac2 100644
---- a/arch/sh/configs/shx3_defconfig
-+++ b/arch/sh/configs/shx3_defconfig
-@@ -80,7 +80,7 @@ CONFIG_USB=y
- CONFIG_USB_MON=y
- CONFIG_USB_R8A66597_HCD=m
- CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_M66592=y
-+CONFIG_USB_M66592=y
- CONFIG_RTC_CLASS=y
- CONFIG_RTC_DRV_SH=y
- CONFIG_UIO=m
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index fe674afa05286..4e3fba774358e 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1739,15 +1739,26 @@ static int d40_validate_conf(struct d40_chan *d40c,
+ {
+ 	int res = 0;
+ 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
++	bool invalid_dev_type = conf->dev_type < 0;
+ 
+ 	if (!conf->dir) {
+ 		chan_err(d40c, "Invalid direction.\n");
+ 		res = -EINVAL;
+ 	}
+ 
+-	if ((is_log && conf->dev_type > d40c->base->num_log_chans)  ||
+-	    (!is_log && conf->dev_type > d40c->base->num_phy_chans) ||
+-	    (conf->dev_type < 0)) {
++	if (!invalid_dev_type && is_log) {
++		int max_dev_type;
++
++		if (conf->dir == DMA_DEV_TO_MEM)
++			max_dev_type = DIV_ROUND_UP(d40c->base->num_log_chans, 2);
++		else
++			max_dev_type = d40c->base->num_log_chans / 2;
++
++		invalid_dev_type = conf->dev_type >= max_dev_type;
++	}
++
++	if (invalid_dev_type ||
++	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
+ 		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
+ 		res = -EINVAL;
+ 	}
 -- 
 2.53.0
 
