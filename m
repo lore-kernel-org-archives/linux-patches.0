@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034861;
-	b=IOLNUR0jmgT+ccH/VBVvMHAea6PqvygQU3HCn7+iSzlKmgpsgua0REvFR81vlyyxospC
-	 3ugv7Sxakb+IJ8MlO0cYiF5JFunyhXp82lhjjm6fjAYzJ5Cnr4xjhRwTZyrUq3zfKncpQ
-	 aw/HwNy7z34FJ2+ozekSqXJUUINP2l4Ua3xfiMVb5J6F51KdJHDaGk/fpY8XI2zN4ZN0i
-	 eLWYpsGYhpphz8IWvvyETlbArpI9t106lO31BDZL1Dx+7jS1gh/a0u4sEAu9q5fluBb6m
-	 f8V1HLMGOecQCru1g71qwQRhnxIvCVz2Xt25sK2rqiRLLgc3oCDhBT7U0IKi4qzvr6A==
+	t=1795034863;
+	b=Uwk1JxE3axUNMbMYhHlCuXYYrVD7LvnzEntiqlBn/+vH6wquvu2WYBaCOJIROzNpz6f8
+	 TCFGTqPTjYbev6aNVgwkCPErIa09dytUSBl+ojPIZnoIDVLhfv6oGVN+VDQCOjkRmgzat
+	 bdPxtiNkHRtBAWHskM7uvMBXgATMGo114HbMY3tw5TjHMx3WqjEPQW0AzWy1Yvd5XXqdF
+	 sSmvqtGUzhY5W5ZpbhjAGdffINEkLIG07ZrLgGmptthMMs3xg8l3/bc9kg5plfAirxOwe
+	 oIU5vmc0cEaAoPow/fCed3qLFtAHcQUrQTgDewcnLk2qrGFb8obxwg/K2ujnOrPmfGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=flRt5UeP8SjU4TuYpw1RghRbqBG58txrYTFfwZxAkVI=;
-	b=jo4YYboCpAbCIlNDsqoiwztyNo7Hbm0LvtriAqx5vYjpe7FmYdYzdJ2nxGOabLSYXL3G
-	 rp6eztIVQAln4xNaEtkJfPMmIJDm0H1VdYUy95FMFX28lK9qX3wvniC//Qva+W1Z2Nsfq
-	 8whz54BYOYT/09+MyZFjsYVQGsTUr65WM1d67W16/dFOfep6VID4zmkM5aMRz6MQc5Qkl
-	 ToPZtYMXsU5AvheRdAYxLSrgsbD5QaECCM301qgqVIzVBlk7Zp2p2rPv/zEhn2dOyYQwe
-	 ErjdmmOWE894Diy/jEfWGMR9qBZ/eOUSijGONxdtFj/pc+TJe3o4iwXSAkIabrBByOA==
+	bh=GAOtAMxe/1vQuFqaHJmdSuXJ03vIM3QtE1T0hUILri4=;
+	b=MiB3Xny7wJn9/TNeNsZ4v2Ilo2Z8QRh16XNz8o4E6Q/8tseLdt730fvnQAJIAWCrFKl9
+	 fzAzTfvBUtTd8Cj9ctw+XoypjC0vxaZTQ8f/kmNL2+C0Y4P5q6rBTX71egr2GlkTbDwzB
+	 1MQ3ugKHXVWRo7uDKYhjfgq0Nfvre4epdDnq6GLbEas4DiClfqecMQS1X1Mg8BTKQV7WK
+	 lxQKb/HqeflBaUnmkcwlYWuF0dDSc6hwFlMu6b54ORhDCn1QzsK7rn+L9f56SW98Q/2pc
+	 pbUb1UP4E6bQwJnAKi4rYY2fyFHWTvDjas7FN2HNqZFHSU+YBqlmoUo20LNNOLX1MwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cktgb5Ul;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gAZ1JJiJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E65606A31C;
-	Wed, 18 Nov 2026 20:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43B8606A325;
+	Wed, 18 Nov 2026 20:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cktgb5Ul
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4591F000C4;
-	Wed, 18 Nov 2026 20:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gAZ1JJiJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190D11F000C4;
+	Wed, 18 Nov 2026 20:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034860;
-	bh=flRt5UeP8SjU4TuYpw1RghRbqBG58txrYTFfwZxAkVI=;
+	s=korg; t=1795034863;
+	bh=GAOtAMxe/1vQuFqaHJmdSuXJ03vIM3QtE1T0hUILri4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cktgb5UlB5nFHkFb5GwpD1mJhFWK8HsqKVbibF6rnLY/6kOcKmvPinOAG3ZPPp0bx
-	 TUdGj0V9m1vmXlHsegUU9s+6ohgsReKvUp+O7BHfYBnr7TNhvy5WHDDoU2U4hX9LsD
-	 WIGC41LORMCpcQsmgAwcA2s10q/R61kNxeiuCAjM=
+	b=gAZ1JJiJEQ2JneQAPORJGPKXmeqGGCnK9zD3iE4YMDPXHJIAxdyXStsZMMdeOII8c
+	 9qijjdn+pJdDGZzH7HT3/oqGNsgOS1z4qd/uDfOmrL859plyqPXOMErL8BDiaurn2+
+	 G9F9yPGpepo19PJfWHGuQg8LjF1ldlRB+DW9Qlm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Yu-Hsiang Tseng <asas1asas200@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0519/3318] KVM: nVMX: Force MSR bitmap refresh if runtime eVMCS controls are modified
-Date: Wed, 18 Nov 2026 15:19:01 +0100
-Message-ID: <20261118150332.733420676@linuxfoundation.org>
+Subject: [PATCH 6.6 0520/3318] ALSA: hda/realtek: Fix silent speaker on Higole F9B
+Date: Wed, 18 Nov 2026 15:19:02 +0100
+Message-ID: <20261118150332.770866326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,52 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yu-Hsiang Tseng <asas1asas200@gmail.com>
 
-[ Upstream commit 2abb25273c82061dd4670690c81c319c03740bf6 ]
+[ Upstream commit 2a8ee6897302ca12ff39e8eb180503956797c60c ]
 
-Force a refresh of the vmcs02 MSR bitmap during nested VM-Enter if the
-runtime eVMCS controls (pin, primary, secondary, etc.) are being updated.
-If L1 isn't intercepting TPR writes, runs L2 with TPR virtualization, and
-then runs the same L2 with TPR virtualization disabled, KVM will fail to
-refresh msr_bitmap02 and leave TPR in passthrough mode even though TPR
-virtualization is disabled.  I.e. failure to refresh the bitmap lets L2 (or
-L1 by proxy) read and write L0's TPR.
+The Higole F9B is an Alder Lake-N mini PC with a 7" touchscreen and an
+ALC269VC codec (subsystem ID 0x10ec111e). Its DMI strings are all
+"Default string", so the SSID is the only way to identify it.
 
-Fixes: 502d2bf5f2fd ("KVM: nVMX: Implement Enlightened MSR Bitmap feature")
-Cc: stable@vger.kernel.org
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+The internal speaker is silent out of the box. The generic parser
+assigns DAC 0x03 to the speaker pin 0x14 and DAC 0x02 to the headphone
+pin 0x15, but the speaker only reproduces what DAC 0x02 plays, whatever
+its connection selection says. Checked one path at a time, only the
+gain of DAC 0x02 and the mute of pin 0x14 change what comes out of the
+speaker. User space only knows the path it was told the speaker uses,
+so selecting the speaker turns the path that actually reaches it all
+the way down.
+
+Route both 0x14 and 0x15 through mixer 0x0c (DAC 0x02), which is what
+ALC290_FIXUP_MONO_SPEAKERS already does. Tested on the device: the
+speaker plays.
+
+Cc: <stable@vger.kernel.org>
+Assisted-by: LLM
+Signed-off-by: Yu-Hsiang Tseng <asas1asas200@gmail.com>
+Link: https://patch.msgid.link/20260923141344.1543158-1-asas1asas200@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 34868396ccbfe..c32a05ad274d2 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -1622,6 +1622,9 @@ static void copy_vmcs12_to_shadow(struct vcpu_vmx *vmx)
- static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields)
- {
- #ifdef CONFIG_KVM_HYPERV
-+	const u64 runtime_controls = HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP1 |
-+				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_GRP2 |
-+				     HV_VMX_ENLIGHTENED_CLEAN_FIELD_CONTROL_PROC;
- 	struct vmcs12 *vmcs12 = vmx->nested.cached_vmcs12;
- 	struct hv_enlightened_vmcs *evmcs = vmx->nested.hv_evmcs;
- 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(&vmx->vcpu);
-@@ -1630,6 +1633,9 @@ static void copy_enlightened_to_vmcs12(struct vcpu_vmx *vmx, u32 hv_clean_fields
- 	vmcs12->tpr_threshold = evmcs->tpr_threshold;
- 	vmcs12->guest_rip = evmcs->guest_rip;
- 
-+	if ((hv_clean_fields & runtime_controls) != runtime_controls)
-+		vmx->nested.force_msr_bitmap_recalc = true;
-+
- 	if (unlikely(!(hv_clean_fields &
- 		       HV_VMX_ENLIGHTENED_CLEAN_FIELD_ENLIGHTENMENTSCONTROL))) {
- 		hv_vcpu->nested.pa_page_gpa = evmcs->partition_assist_page;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 24c7ce5f08660..8ebbbc731f8ac 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10460,6 +10460,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x10cf, 0x1757, "Lifebook E752", ALC269_FIXUP_LIFEBOOK_HP_PIN),
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
++	SND_PCI_QUIRK(0x10ec, 0x111e, "Higole F9B", ALC290_FIXUP_MONO_SPEAKERS),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
 -- 
 2.53.0
 
