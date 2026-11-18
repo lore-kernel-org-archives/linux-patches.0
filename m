@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055412;
-	b=SrD0iFk8OLO2MucM+10DL5hjNAPBCd/SBoQ5IM2HJHwKmGuYAV8GdcZFd3VyjFjzNCsL
-	 5iCp+nKJR0QQJvon2z7KHt/idbnnxoYdV1xvICNrtgEjGZ3//RneF32o9pNu1h6yu5kcD
-	 cXUfcL/bId9NSr2ZDi1lkkp4EBjBty+zSulSDeajTQi7xJRKekh38Fo7rtzwn7Q6SjeQL
-	 v7r/iDL49RwJSK+AMvAUucKAu+Qt6dZXPo+jgI7I9Y9xN24W7p91cykJ40f/AZ4O39b9U
-	 8GONyWgc2bAPzTRBc2NQNfVU02eMThdJjYYkyfoPK+NS+CgJ0Pnl2sDQ4MTljGXpiBQ==
+	t=1795055415;
+	b=eo2IFk/ipqb/peJpzgMSyNEMlSWq/6xxKW3gOmd0KJEz3Fna73jJAHJVwZJUG24oQwEb
+	 f3gIEbp1a47J/71D8LLhoYS8aifceouQyPP0ktA3yNn7Mmx3bJBdu8u2jrnepVRKGHv3l
+	 n2seq0sXd3sNJU+ORKvqrNoxJQP1N7up1hBjggxTzVZEfw/eGMboywF+RyQWKvvIJr8Nv
+	 t5YF1G1WN6MsPSLO74uk1Oy9U/lzOnXBni9nimjD5eKgSckYEULJv7Bmq5tmuu8oCgE8+
+	 tWfX/jsqqrkopdfoENcwaMarvftXPuA4Tt3T7RmE68d672zm7uoz8omOkl22XABhNbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055415;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=netChb1/CF5FiUlhC/nJavmfTIg8OiD2EXbsJ7hgul0=;
-	b=aDxcJeUOuFJpXFKNTLvgLtAUMGLsDEqRtce13lKdCOL+lr22rRyMpjgV9YLDsK91vi4m
-	 3hmULGG3aTYBsaKPfkDHjzXmNR8EM6ptT76nbnvjaqsHkpkCbZ9sYhV+OHrW/m3sHkMqd
-	 ST1YmCER9jBskj14Ghw2pP3P3X7WCZobEcpr80WmXcfFyYzbRb3Kengw8rOeRAHIAxAtl
-	 20bgFP4Xv0N+KHZ5IbXkmJQehCWt0/I2yNue8reH7QLaD4WPg0i0E0ASo1jqPzH4oDSCJ
-	 LwdkIbm0mHg+6hYAPtr8lCCr0g2wzBqi37CWEBDAszxtlyH5O+Cf1dLgcTpZlPmimWw==
+	bh=XqBGP1FaYXgmBhAKo0rVJBhAD6K1qOMiVD5WqTJ+Z1o=;
+	b=esBOxixgVtqFMoWFtrGUnLAwdjJdIrdqOJXXxafy6uOYrfn2uqU2q0xO6k35UJEirMAw
+	 Ciq7N8Rgj2/Nt0+eRlJmGq0zahI1v4VAZFueLpCERpQwIlNkqEmFlg650tSwPUqZr35kK
+	 zedzfRoPCYXQv5VFivbzkXP2HVsyXCWCp+QMoOravdeleZVZfK+zg6GCCbsJ9WBiDXoSQ
+	 PIieCT28lZ0NMeRcv5bTUx9olhe6zipPQ2dO+hz970sCyBDJ1sztWZDEI6DkdeBGcsEpe
+	 oBxjPN7zLYr3bhWwk3IERqTFMY2NqxI1OMxIBMUsErIYMBB41EKK0CxirctTNFqFLyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPNhsw4L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sxNQXVb7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924CA606A32C;
-	Thu, 19 Nov 2026 02:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4848606A331;
+	Thu, 19 Nov 2026 02:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPNhsw4L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39DF1F000C5;
-	Thu, 19 Nov 2026 02:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sxNQXVb7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83CA1F000C5;
+	Thu, 19 Nov 2026 02:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055412;
-	bh=netChb1/CF5FiUlhC/nJavmfTIg8OiD2EXbsJ7hgul0=;
+	s=korg; t=1795055415;
+	bh=XqBGP1FaYXgmBhAKo0rVJBhAD6K1qOMiVD5WqTJ+Z1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPNhsw4L2+E1j2WoHVY6LGYsUNEAQha8RjRBNODcx4owIHHeV7D5RfcF2Y8P7yW1W
-	 LyNV8tNQ1e2fjcAnCFldmSFrjjmeDwI+kCI44i+Jy2P7LOSFDmj0z3KYd9gyRDUl02
-	 aMOvOPQFNRiWCJS7olD477JWHV5PddJ6btoZrEys=
+	b=sxNQXVb7mh+85Yd8DHrsHAKHbGuoxp9A5l7vsBHCe3rn644eozsqWLFm+kMqFYmOu
+	 ja1YCl9QynAfXy0qmoJXY1VOXrbakmM+N8Td280pQ8YR9yPCeFPxLpGkNlpiJd8XfO
+	 HvBUPgdmdGDbqad1OjuHnBqLOb+GV+fA8E4XyfSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1595/2214] ASoC: adau17x1: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:54:31 +0100
-Message-ID: <20261118150115.781345630@linuxfoundation.org>
+Subject: [PATCH 5.15 1622/2214] MIPS: Octeon: size the swiotlb for a modular OHCI platform driver
+Date: Wed, 18 Nov 2026 15:54:58 +0100
+Message-ID: <20261118150116.861287520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,50 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 8ca84987c11d11e0ba60f202e3199b3b80c87721 ]
+[ Upstream commit f1dd1f0c8d595a019be503d40060d25721313b4a ]
 
-adau17x1_resume() restores cached registers during component resume but
-discards the regcache_sync() result and returns success. A failed replay
-can therefore leave the hardware register state stale without reaching
-the component error reporting path.
+plat_swiotlb_setup() raises the swiotlb to 64 MB on OCTEON II with
+memory above 4 GB, because that OHCI can only DMA to 32 bits. The test
+is "#ifdef CONFIG_USB_OHCI_HCD_PLATFORM", which is false when the driver
+is a module - the usual way to build it - so the bump is silently
+skipped.
 
-Return the cache synchronization result. The ASoC component wrapper
-reports a negative callback result and retains the established
-best-effort resume state, so this adds observability without introducing
-rollback or retry semantics.
+What is left depends on the rest of the function: with PCI enabled the
+"memory past the BAR1 hole" branch happens to ask for the same 64 MB,
+but with CONFIG_PCI off - which is normal on these SoCs when no PCI
+devices are wired - swiotlbsize stays at the PAGE_SIZE it was
+initialised to. A full- or low-speed device on an OCTEON II board with
+more than 4 GB of RAM then has no bounce buffer to speak of.
 
-The optional switch-mode callback remains ordered before the cache
-replay.
+Use IS_ENABLED() so a modular OHCI gets the same sizing as a built-in
+one. Seen on a CN6635 board with 8 GB of RAM and
+CONFIG_USB_OHCI_HCD_PLATFORM=m.
 
-The issue was found by a tool we developed.
-
-Fixes: 4101866c743a ("ASoC: Add ADAU1X61 and ADAU1X81 CODECs common code")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-2-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a8667d706dfa ("MIPS: OCTEON: dma-octeon: fix OHCI USB config check")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/adau17x1.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/mips/cavium-octeon/dma-octeon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/adau17x1.c b/sound/soc/codecs/adau17x1.c
-index 8aae7ab74091f..ba85fedcd50f8 100644
---- a/sound/soc/codecs/adau17x1.c
-+++ b/sound/soc/codecs/adau17x1.c
-@@ -978,9 +978,7 @@ int adau17x1_resume(struct snd_soc_component *component)
- 	if (adau->switch_mode)
- 		adau->switch_mode(component->dev);
- 
--	regcache_sync(adau->regmap);
--
--	return 0;
-+	return regcache_sync(adau->regmap);
- }
- EXPORT_SYMBOL_GPL(adau17x1_resume);
- 
+diff --git a/arch/mips/cavium-octeon/dma-octeon.c b/arch/mips/cavium-octeon/dma-octeon.c
+index df70308db0e69..8a9bf803c84ae 100644
+--- a/arch/mips/cavium-octeon/dma-octeon.c
++++ b/arch/mips/cavium-octeon/dma-octeon.c
+@@ -231,7 +231,7 @@ void __init plat_swiotlb_setup(void)
+ 		swiotlbsize = 64 * (1<<20);
+ 	}
+ #endif
+-#ifdef CONFIG_USB_OHCI_HCD_PLATFORM
++#if IS_ENABLED(CONFIG_USB_OHCI_HCD_PLATFORM)
+ 	/* OCTEON II ohci is only 32-bit. */
+ 	if (OCTEON_IS_OCTEON2() && max_addr >= 0x100000000ul)
+ 		swiotlbsize = 64 * (1<<20);
 -- 
 2.53.0
 
