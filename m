@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036571;
-	b=AmXD9AKevIUNe9VbOFxSLOIo0YwvcmofGwTt06erRKcEwdldq227VVd3K3SAcC3Nkxwx
-	 ds9BvPlSLQZeXHVjdgMmGkHGUcOGjCqLp7JKg4MZTQb46dm4SVwKwu0HphG3cTl27uDmS
-	 IUOiGlpyvJbCcsMuid1YXThsJ+pJlgSDX+F+UiZWn8zyI1biVYt+yAplwVJq658A6QvSi
-	 Bec5GrtZRCeyIt4VC5kMz9sb3ERS/yg2tJQXjMdr41gVoqMaPCoKDOThwEuuowoIaMdna
-	 9Xnrurq+YSlfoI8BH9sBBznjKrixsS/hRAFv8aIwlwBkeEbuQQD6gKkB1vKvpPdugrg==
+	t=1795036574;
+	b=KJfTCj3bA/MzpeB3kRXSVs79HugKhb5Uws8xbmGkwZ48YfJWuy8T52+iG0r3yJ9z6ujT
+	 hRMP9ah24GN6xyhO4o/FMmTr/u9vKgLzdHbI15rB1Rt0Rh2MQVWWf6aPc3ef+dCnt6c0J
+	 xjQSuNrE16Tn1nOJdESGETIZxh7HwKthl+ef+84w5t5YAj+CbcnSVRW2fdENZBrurUv9i
+	 FqylJJYebLOudR3Fa+EjFETH6Mstm1QlQFD2Wr9Zy+jfAp41E03UZ3KCeRJwdwYwXBoVN
+	 yVkg9g33bQxH9pV0mUtU6f0RxKxF9T0BiilbJ5ZIv3zfdMkB0LNatlXdRafBgxdQIWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036574;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9dFDcB09xvc4Pw5fWVdnslXqOHKxrEjeoNXZMStYQYs=;
-	b=LTJD8tTOK927dJ0Oxl5b/jR1ZQQiywhvoribOQdkXtCuCYIwmK8HKNzVJrZC0cc3fnOr
-	 xvY0f0KJwIgjA4GaNsKklzevGz9eTshvdEmDnfqSQlYA3ljHR71MNo2TmP1lpMOHFTEN1
-	 IKIg/wyS9J93P8LNuD5GGsN0UlO52agDPzOpVKaIQacRNlCw4Cdln34c/2qNV/+y2KU/U
-	 4wZdlVlwpx7SGmhVv09uYJWYjqTLYyTgiRrDbAnmZ9DFdRpEEMnE/ikk52SH4jrHg+TSu
-	 i4MA+wPE3CX4BKX5k6BwM7nXGLM7MtFCQCjlCNdhYKdVGjE7603f5/d2S1fNSd7dvFg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BamOC/6oaJVZOVHWOKmMd+nPgo0ny6zxpbAulIWdKrQ=;
+	b=ELFHw0sYRXiOvOkFO0earCQ6ECnnSQmpv9dv5AEGwIbM3/ZQZDzFd0AjCaKbZv/C8esq
+	 w9SzDA5DR1ndcZEGR024S/2NEx6Zy51qeHJCcrccmV+sH49ife/Sjo1ybylnpfBTszAiY
+	 nVGnKz00icGJp5dZdxwm7YZggfAoWbWQjvUtXnxmIZQ0rkS3fWwTzpPjyYADoQ1vR/rGP
+	 b0aTo7AXFyWBbr89qAyvDS5dESoGLCdJUdq9Npn3eVcEs3vMvKHJNQiUQtm1iMYyEcaxV
+	 rrSnbMWFq0ZBHt6998HOTfA+7T/8wvCBU4U3DGKtZIJ7YsqC7eRVUVKgGwzxHvUXHfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QafMxDYp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tulnsqZb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F690606A325;
-	Wed, 18 Nov 2026 21:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7383660A2604;
+	Wed, 18 Nov 2026 21:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QafMxDYp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694D41F000C4;
-	Wed, 18 Nov 2026 21:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tulnsqZb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D25D1F000C5;
+	Wed, 18 Nov 2026 21:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036571;
-	bh=9dFDcB09xvc4Pw5fWVdnslXqOHKxrEjeoNXZMStYQYs=;
+	s=korg; t=1795036574;
+	bh=BamOC/6oaJVZOVHWOKmMd+nPgo0ny6zxpbAulIWdKrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QafMxDYpH3VCpRQvjjuMGjT8ypkC5DgS+o0xN7BmxKTqfW7VR+jKlw//1xKHSkxB9
-	 vZQzlavMTvz8cyLFsJr3oMYpIkbRqpTt+HQFMyb/rmBg6qlqorrlyK5g9Cs1qFD5cs
-	 /mooAh8Vzk2J7TYL9HhKFx7OMnR+bVIptbAb8Ijc=
+	b=tulnsqZbl4JfgvrdprJnz6QkHoCFvuwjDmjfoBTmKGt4CNkPXeoClenvrL/S/wD9a
+	 LAOgtWo066k5fVd2EZ2QvQzLyS6DEJ3r5zj2Qm8iVB2wMlHlAVLpfT4+JebWVQLkUh
+	 hefID6EUPjPzKANqzjOXDAQFuzuOGsbGik61bC+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1105/3318] platform/x86: hp-bioscfg: return -E2BIG from validate_password_input()
-Date: Wed, 18 Nov 2026 15:28:47 +0100
-Message-ID: <20261118150353.143113999@linuxfoundation.org>
+Subject: [PATCH 6.6 1065/3318] dm-snapshot: fix crash if dm_io_client_create fails
+Date: Wed, 18 Nov 2026 15:28:07 +0100
+Message-ID: <20261118150351.910107343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,60 +61,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit a4f19c589b21e18567d3c0ac7b9294f81e29b1de ]
+[ Upstream commit 829c4d21148a205eca864429e06530319e1f92d5 ]
 
-validate_password_input() returns the positive INVALID_BIOS_AUTH on
-rejection. store_password_instance() skips the store on nonzero ret,
-but its final "return ret < 0 ? ret : count" treats the positive value
-as success, so userspace sees count instead of an error.
+If dm_io_client_create() fails, it stores error into the ps->io_client
+variable. The code would try to free it later with
+dm_io_client_destroy(ps->io_client), causing an invalid pointer
+dereference. Fix this by setting ps->io_client = NULL.
 
-Return -E2BIG for an invalid password length.
-
-Tested on HP EliteBook 840 G2 (Fedora 44, Linux 7.2.7): writing 999
-bytes to current_password returned 999 before this change.
-
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-4-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/dm-snap-persistent.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index b165f9b056e6a..d36f75ed1d773 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -71,12 +71,13 @@ static int validate_password_input(int instance_id, const char *buf)
- 		length--;
+diff --git a/drivers/md/dm-snap-persistent.c b/drivers/md/dm-snap-persistent.c
+index 568d10842b1f4..1eefa19d02940 100644
+--- a/drivers/md/dm-snap-persistent.c
++++ b/drivers/md/dm-snap-persistent.c
+@@ -325,8 +325,11 @@ static int read_header(struct pstore *ps, int *new_snapshot)
+ 	}
  
- 	if (length > MAX_PASSWD_SIZE)
--		return INVALID_BIOS_AUTH;
-+		return -E2BIG;
+ 	ps->io_client = dm_io_client_create();
+-	if (IS_ERR(ps->io_client))
+-		return PTR_ERR(ps->io_client);
++	if (IS_ERR(ps->io_client)) {
++		r = PTR_ERR(ps->io_client);
++		ps->io_client = NULL;
++		return r;
++	}
  
- 	if (password_data->min_password_length > length ||
- 	    password_data->max_password_length < length)
--		return INVALID_BIOS_AUTH;
--	return SUCCESS;
-+		return -E2BIG;
-+
-+	return 0;
- }
- 
- ATTRIBUTE_N_PROPERTY_SHOW(is_enabled, password);
+ 	r = alloc_area(ps);
+ 	if (r)
 -- 
 2.53.0
 
