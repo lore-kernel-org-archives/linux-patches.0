@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047408;
-	b=Czy3TVUtiuZlX1JWY0rdNOb4Ylt7+BYZ2tbp4SivamGlpCFOj4QZ9Jl/juDSA04MmqoE
-	 cSW3uTa+sdBJs3PlADCHWd6kCPtT7nEREH0Rm7jCs1iz8skpzDSI5FRvl2pQlwHqUpipb
-	 YOzdSNL0CrSyKyawjtwSmWxc3DSF1JOc9H4EVg2BtTwzRseT1797V4TFghmguVn5AtTXw
-	 Q9ChX021+vP2F0uu3KsD4LQ/Z6I6OsBL5pc3F0TiHJKPGTMy6FshAM19mKCrNhWaoFvTN
-	 vLlNDk7q4Mqf0BQPYzgugO4zgnHw3XNrCksR6MpRC00luSMGThV+El1lukURuw3A3UA==
+	t=1795047411;
+	b=X1jkNCxfCMphXsX/a5/ny0ctssDdwe+k412LvJJCGzTzUTf8YHQqUh/IIEQLGmqvcgOC
+	 2CZ/Bje2mn3/7nJIUMNFRff1F9tEHFLQMZbi+tvae8vObhbD1+I1qF7I2Zhg8bt0itS2E
+	 t0A5YRgvDZNJLtI/SHMotfM5eQ7ylXxhqRtPt/H+aJVOZ7yYGoEbMzeCx31Fp/pfmKI+S
+	 /pTnZr+H+la5tGesDe0OFHoBvWjg+1y/veh9ldpJSH8KeHSJxcNOHkSi/TTu/2Bx0j0o0
+	 ZPtkpAVonOtnDUVK++JKTlkq6H22bvCDjRIy2U7BAWkOIv31MmADaaYM2E0HopTeGMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047408;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mEUgsGvClr5lCuRZAfBBK+VZeFn3rx/mq8WaNVbODIA=;
-	b=SHP514/vNlxOMhCFfmyotYTmDcqfoXqGkEGPNbrLf4jBb8piUmoq5y6v6OZYqFfuoXIu
-	 fC3ga3eSv2/pTXqZ40mnR9oWarfPJhkvCvY7QekZUU93XanEy0aFiEuPgohZKSTtWyUoU
-	 zQBq/t4v+1h16rFGdEzkoKanxOEI1VhBF5/W9cm+7YzKB8wkyk9ksMKgufeIIzacWeHp/
-	 zBkuseVLs96fPiOa54tVTpOK4C4KPja5rscGC7M/mTmN2cGm7tEqqqg3oPlJel9cjZzIQ
-	 Os/IPAkmQDlKcSg2G8WX8kvk2Q3TInPW+yPpM0L9pXROJ2RYBAfdjxwm1k3A9TLBQbg==
+	bh=iBxVFSPiYLZOI+v4bc9fu/emohioYW9kNjq8iTq8KKU=;
+	b=KVDFHNgixaV/1zJkaA6yuG/nucJ7t5toDJ+AVG31H/SQi0Okf9gHUoF5SMtFrspxc/UE
+	 /L/T2FUoaa8bh56GKd8rZc3JgxU3VLn4GLhbE+765MXlfcEGpD+/LpdVZ2RfZSUdAqCHy
+	 svArtYAcy59wzlAfY3jGvqkgbiptXVcvll1MIi/yg8mD8TIHlOIZngarVsRvAIa3cuQQR
+	 hhVr5l46VjUPNpBSTrB1iUNi19IKIqaxpJe+FKl00JfWWyyVPwNoAHr1P1ZSFK0lJCPqs
+	 LXn89YLQIgAhcsNU5g59ccAwGuwwQPThqYlNj0i/sdPwNBwk5REbrlPYPlnBAho0sFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv19qqdL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=agVegkvi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BC0606A325;
-	Thu, 19 Nov 2026 00:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220A4606A31C;
+	Thu, 19 Nov 2026 00:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv19qqdL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27111F000C4;
-	Thu, 19 Nov 2026 00:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=agVegkvi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBD91F000C4;
+	Thu, 19 Nov 2026 00:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047408;
-	bh=mEUgsGvClr5lCuRZAfBBK+VZeFn3rx/mq8WaNVbODIA=;
+	s=korg; t=1795047411;
+	bh=iBxVFSPiYLZOI+v4bc9fu/emohioYW9kNjq8iTq8KKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zv19qqdLVwNZdl+x61Sv4aTjb+B7DlsA0UUPaNzOaFeKb2ydRJJaZmQymm+ZYrlsL
-	 LCSZf7ZvFkD9ldcCKUz8O0QAESbmqwfZ+10m6bU3Gi3/m9kOFpqE7Tz401n+ZCpwLh
-	 f/d2+plSrnFsPyr9dTP9xa4MFPge34tP7IfOIRBo=
+	b=agVegkviZ7ZX1ZwSXyfsnqwMzhsRlLvJdQr5eHOiwoXaTY5xt6zCKIaeV6TIMbTad
+	 VDF1VscLIOJ1lYzEYjMhTTOdqHRqg+Ru+mjcTqg4s80PX/d2XyV2oITYBfqY6m2w6z
+	 E6zPk5KSYdKwuho1lLvE5/+E7LXI2b0pMBpq2mG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Darong Lu <zzyy19904204639@163.com>,
+	Ren Wei <weir@nebusec.ai>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1627/2857] f2fs: fix to update superblock crc in sanity_check_area_boundary()
-Date: Wed, 18 Nov 2026 15:44:21 +0100
-Message-ID: <20261118150259.926629972@linuxfoundation.org>
+Subject: [PATCH 6.1 1628/2857] libceph: initialize CRUSH choose argument weights
+Date: Wed, 18 Nov 2026 15:44:22 +0100
+Message-ID: <20261118150259.961894531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,42 +71,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Darong Lu <zzyy19904204639@163.com>
 
-[ Upstream commit f8f956c7ec8c0285d7a80bed497d2f7adcbded15 ]
+[ Upstream commit c3a995ff0782587789333c621e1f6bd5e574371e ]
 
-This patch fixes the bug reported by Sashiko:
+Initialize the CRUSH choose argument weight-set array before decoding so
+entries start in a defined state while the decoder fills them.
 
-We should update superblock crc along w/ raw_super->segment_count in
-sanity_check_area_boundary() if sb_checksum feature is enabled.
-
-Cc: stable@kernel.org
-Fixes: d440c52d3151 ("f2fs: support superblock checksum")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: Added the required sbi argument to f2fs_crc32(). ]
+Cc: stable@vger.kernel.org
+Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Signed-off-by: Darong Lu <zzyy19904204639@163.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: used kcalloc() with an explicit element size instead of kzalloc_objs() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ceph/osdmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 89d1de05cb31c..9d6b1a91780a4 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3350,6 +3350,12 @@ static inline bool sanity_check_area_boundary(struct f2fs_sb_info *sbi,
- 		/* fix in-memory information all the time */
- 		raw_super->segment_count = cpu_to_le32((main_end_blkaddr -
- 				segment0_blkaddr) >> log_blocks_per_seg);
-+		if (__F2FS_HAS_FEATURE(raw_super, F2FS_FEATURE_SB_CHKSUM)) {
-+			__u32 crc = f2fs_crc32(sbi, raw_super,
-+					offsetof(struct f2fs_super_block, crc));
-+
-+			raw_super->crc = cpu_to_le32(crc);
-+		}
+diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
+index 803514a1bc7ce..fdb8c398f5ecd 100644
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -320,7 +320,7 @@ static int decode_choose_arg(void **p, void *end, struct crush_choose_arg *arg)
+ 	if (arg->weight_set_size) {
+ 		u32 i;
  
- 		if (f2fs_readonly(sb) || bdev_read_only(sb->s_bdev)) {
- 			set_sbi_flag(sbi, SBI_NEED_SB_WRITE);
+-		arg->weight_set = kmalloc_array(arg->weight_set_size,
++		arg->weight_set = kcalloc(arg->weight_set_size,
+ 						sizeof(*arg->weight_set),
+ 						GFP_NOIO);
+ 		if (!arg->weight_set)
 -- 
 2.53.0
 
