@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029956;
-	b=2f4XK/8I218K7uOvL+WB4MFENJKiLLoLirsNnbXmfhmg3Bg8BpX93ycZuU1T967O2hCU
-	 bGkF8f2cLsOL9wj5aBSEAuVQIFEvg8zhAk3I6NEaNS1fJQu+QXC4mdT7vR7lLMEhWsd9+
-	 AW05bcocG8v6sv1PnqkrHHHM+xb2lx45exKeU9qOG7uup8xEteR9MCddVWhrEugoswyW9
-	 LZmhiTGa97DPYof9YsNPqJebjr2sKP88SlQWFRpkNRHI+52gMH6dT9efRmH1/eeKx6sUC
-	 dvG8NW5iXx09p1kosjpd8Cc2RlpQ15tjHda39/tO/elQvZ2x05Gi9xi6HIfqTpPa2sg==
+	t=1795029959;
+	b=qns18us1bQ4Ts/oea/dUTU+v7C47xQhXmvKZHLhCvY46DmqV0ohZbkfzj8ie4wdTJkYu
+	 3mw018GAlovFkGsd+FAQ9j7Ypok7jmT4E/dyBb3de4iwBlNusPoPdyimFW7E+4TTOLpMg
+	 DFOgRF1A99JjGpePSPlyiE3AsfLzASesEIAxLSxIpjvyk/ntBLPR7uoxqMnt24YEIGECc
+	 S+WfipO+pVYXobdnvmVpZFNhlBcagYSLE2SIK1rJW6cBrk4zW/GDeXJMf2QgVqS1mmiIM
+	 9Ff6EnF9m4PbDVsMpn8uK4GGuJSPQwAzq7T7oMB6zyYY9Na0ZxFUQGwWaXUAG7qemrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Id5M+AjrG27gu0k+5BoCulbf2r+CfeM3PkrMGBMLRAY=;
-	b=mgM8FO15GsegVyvlJu1tfMacy0xjDp09OS5i8zPWN+80gzoTWPA9rbWG+8UWAu4QvV+Q
-	 BCO+xoZgixqLC041fI6NCuiKr/nndSTJ6ctV6T0vBOoNtUlaTIgAbPfsQiNGGHj3e5YTE
-	 ATxLmI7nt3zRFUTKLymoFtRebHXOijqOAZ/9UPlD+X69VafidNr0kEAZbZ+F45kewCaJm
-	 Xmigu+mLIwYEQkisMNpjjyL2UcWSSn5/Ot1GmXsRYwYaPWd0MaflweZE7XdF9b0Dw75i3
-	 GGlTSDOfCll0Ej9l5wzEremn9YmSNc0ZacMRYKMEXcQhsLk8WpQ3fctsY4uRHMpAbMQ==
+	bh=tf0EMgPvFboYRJk36el9yD3J1RYdSk1BfjH1VbaTn6o=;
+	b=ZQlZrq6M4xq9r0CdXhjUUweosbJxOy6wKB4wy2u1W6OHSUIGj2PqJcjBznJ+XzxRriso
+	 8ZFLFhn60s6lKG8xkBA4SZoXN5M09yz0xv0WCY9adjQSwrwhBk+vWq6t5XQJwqmH7yr4r
+	 abu0VC9phDlOwy9bkpGtMOBUQWjiphBI0CITYEExYf6VdDUA4x/acRgeqe6JmC3CmXfiN
+	 7ZZI8nNkMehwj9gSsvI10I5idHriPm2F/QghjEaCtXUSyu1JWX18jDH8s1eEO8tFFaL/h
+	 OqXbEvkXR5bqG60X1j2MidJL1NyxFvYhrY0dW/Fp/42RBoKPCBzXiRRzTh9rYB0DafQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8u2f4jc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qt08zIDD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E18606A320;
-	Wed, 18 Nov 2026 19:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3940606A33E;
+	Wed, 18 Nov 2026 19:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8u2f4jc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F292A1F000C6;
-	Wed, 18 Nov 2026 19:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qt08zIDD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C905B1F000C4;
+	Wed, 18 Nov 2026 19:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029956;
-	bh=Id5M+AjrG27gu0k+5BoCulbf2r+CfeM3PkrMGBMLRAY=;
+	s=korg; t=1795029959;
+	bh=tf0EMgPvFboYRJk36el9yD3J1RYdSk1BfjH1VbaTn6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8u2f4jcp3nYg3v8DZvOwATbNKBgueUc3P8MOYzAbbshSDR5IfOW+rbAIMHjN8wa2
-	 JAuJ6ewJLPekwpSjtVkwFdZDoDBCXQ9Rz5JB+WWRXkBTRLYlXFeOrOOiUpuq7rWFIj
-	 cedqPyq9gc6aA3y6UQBf5hg/Wg1xctBwv/KY4FUM=
+	b=Qt08zIDDae4NVitn6dV/+ci0y5YBIIeiVNgaBFLPT2zHR5a1S+XEwNxYyt+Talt+c
+	 qhJQhtiIbtvGzinY0Dqfaiqt+ibbMHnjde5tFgGh5vOf8M0Ywuf7arHupTbz2hVQcE
+	 wE5pyl4sw663bbimrl9FMsUZKU5M+FUsbWkJB/00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Omar Sandoval <osandov@fb.com>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0534/1756] block: remove BLK_MQ_F_SHOULD_MERGE
-Date: Wed, 18 Nov 2026 15:44:21 +0100
-Message-ID: <20261118150030.389817521@linuxfoundation.org>
+Subject: [PATCH 6.12 0535/1756] swim: Convert to blocking queue
+Date: Wed, 18 Nov 2026 15:44:22 +0100
+Message-ID: <20261118150030.443509348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,496 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit cc76ace465d6977b47daa427379b7be1e0976f12 ]
+[ Upstream commit 92353a04763726f70fea6be90957c50fc18215e0 ]
 
-BLK_MQ_F_SHOULD_MERGE is set for all tag_sets except those that purely
-process passthrough commands (bsg-lib, ufs tmf, various nvme admin
-queues) and thus don't even check the flag.  Remove it to simplify the
-driver interface.
+These drives are slow: completing a request can take hundreds of
+milliseconds. Delays are managed by disabling interrupts judiciously and
+sleeping opportunistically.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241219060214.1928848-1-hch@lst.de
+As of commit e3896d77b702 ("swim: convert to blk-mq"), a spinlock is
+taken in irq mode as soon as a request is issued. That lock is held for
+the duration of the request. Hence the driver sleeps while holding the
+lock which is forbidden.
+
+Adopt BLK_MQ_F_BLOCKING and remove the spinlock. Use a mutex to serialize
+requests from the two request queues. (The chip cannot simultaneously
+process requests on both internal and external drive.)
+
+Cc: Omar Sandoval <osandov@fb.com>
+Fixes: e3896d77b702 ("swim: convert to blk-mq")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/d06b19132ec678d6168d158e10cd63e10da45607.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 92353a047637 ("swim: Convert to blocking queue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/ubd_kern.c          | 1 -
- block/blk-mq-debugfs.c              | 1 -
- block/blk-mq-sched.c                | 3 +--
- drivers/block/amiflop.c             | 1 -
- drivers/block/aoe/aoeblk.c          | 1 -
- drivers/block/ataflop.c             | 1 -
- drivers/block/floppy.c              | 1 -
- drivers/block/loop.c                | 3 +--
- drivers/block/mtip32xx/mtip32xx.c   | 1 -
- drivers/block/nbd.c                 | 3 +--
- drivers/block/null_blk/main.c       | 2 --
- drivers/block/ps3disk.c             | 3 +--
- drivers/block/rbd.c                 | 1 -
- drivers/block/rnbd/rnbd-clt.c       | 3 +--
- drivers/block/sunvdc.c              | 2 +-
- drivers/block/swim.c                | 2 +-
- drivers/block/swim3.c               | 3 +--
- drivers/block/ublk_drv.c            | 1 -
- drivers/block/virtio_blk.c          | 1 -
- drivers/block/xen-blkfront.c        | 1 -
- drivers/block/z2ram.c               | 1 -
- drivers/cdrom/gdrom.c               | 2 +-
- drivers/md/dm-rq.c                  | 2 +-
- drivers/memstick/core/ms_block.c    | 3 +--
- drivers/memstick/core/mspro_block.c | 3 +--
- drivers/mmc/core/queue.c            | 2 +-
- drivers/mtd/mtd_blkdevs.c           | 2 +-
- drivers/mtd/ubi/block.c             | 2 +-
- drivers/nvme/host/apple.c           | 1 -
- drivers/nvme/host/core.c            | 1 -
- drivers/s390/block/dasd_genhd.c     | 1 -
- drivers/s390/block/scm_blk.c        | 1 -
- drivers/scsi/scsi_lib.c             | 1 -
- include/linux/blk-mq.h              | 1 -
- 34 files changed, 15 insertions(+), 43 deletions(-)
+ drivers/block/swim.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/arch/um/drivers/ubd_kern.c b/arch/um/drivers/ubd_kern.c
-index 66c1a8835e362..0b1e61f72fb3c 100644
---- a/arch/um/drivers/ubd_kern.c
-+++ b/arch/um/drivers/ubd_kern.c
-@@ -865,7 +865,6 @@ static int ubd_add(int n, char **error_out)
- 	ubd_dev->tag_set.ops = &ubd_mq_ops;
- 	ubd_dev->tag_set.queue_depth = 64;
- 	ubd_dev->tag_set.numa_node = NUMA_NO_NODE;
--	ubd_dev->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	ubd_dev->tag_set.driver_data = ubd_dev;
- 	ubd_dev->tag_set.nr_hw_queues = 1;
- 
-diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index cbc8bbde3a2bb..95c587bc9c3cc 100644
---- a/block/blk-mq-debugfs.c
-+++ b/block/blk-mq-debugfs.c
-@@ -181,7 +181,6 @@ static const char *const alloc_policy_name[] = {
- 
- #define HCTX_FLAG_NAME(name) [ilog2(BLK_MQ_F_##name)] = #name
- static const char *const hctx_flag_name[] = {
--	HCTX_FLAG_NAME(SHOULD_MERGE),
- 	HCTX_FLAG_NAME(TAG_QUEUE_SHARED),
- 	HCTX_FLAG_NAME(STACKING),
- 	HCTX_FLAG_NAME(TAG_HCTX_SHARED),
-diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index 451a2c1f1f321..7442ca27c2bf1 100644
---- a/block/blk-mq-sched.c
-+++ b/block/blk-mq-sched.c
-@@ -351,8 +351,7 @@ bool blk_mq_sched_bio_merge(struct request_queue *q, struct bio *bio,
- 	ctx = blk_mq_get_ctx(q);
- 	hctx = blk_mq_map_queue(q, bio->bi_opf, ctx);
- 	type = hctx->type;
--	if (!(hctx->flags & BLK_MQ_F_SHOULD_MERGE) ||
--	    list_empty_careful(&ctx->rq_lists[type]))
-+	if (list_empty_careful(&ctx->rq_lists[type]))
- 		goto out_put;
- 
- 	/* default per sw-queue merge */
-diff --git a/drivers/block/amiflop.c b/drivers/block/amiflop.c
-index 7a53ee1d18d84..347f0cf1d4f65 100644
---- a/drivers/block/amiflop.c
-+++ b/drivers/block/amiflop.c
-@@ -1872,7 +1872,6 @@ static int fd_alloc_drive(int drive)
- 	unit[drive].tag_set.nr_maps = 1;
- 	unit[drive].tag_set.queue_depth = 2;
- 	unit[drive].tag_set.numa_node = NUMA_NO_NODE;
--	unit[drive].tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	if (blk_mq_alloc_tag_set(&unit[drive].tag_set))
- 		goto out_cleanup_trackbuf;
- 
-diff --git a/drivers/block/aoe/aoeblk.c b/drivers/block/aoe/aoeblk.c
-index 2028795ec61cb..00b74a8453288 100644
---- a/drivers/block/aoe/aoeblk.c
-+++ b/drivers/block/aoe/aoeblk.c
-@@ -368,7 +368,6 @@ aoeblk_gdalloc(void *vp)
- 	set->nr_hw_queues = 1;
- 	set->queue_depth = 128;
- 	set->numa_node = NUMA_NO_NODE;
--	set->flags = BLK_MQ_F_SHOULD_MERGE;
- 	err = blk_mq_alloc_tag_set(set);
- 	if (err) {
- 		pr_err("aoe: cannot allocate tag set for %ld.%d\n",
-diff --git a/drivers/block/ataflop.c b/drivers/block/ataflop.c
-index 4ba98c6654be2..110f9aca2667d 100644
---- a/drivers/block/ataflop.c
-+++ b/drivers/block/ataflop.c
-@@ -2088,7 +2088,6 @@ static int __init atari_floppy_init (void)
- 		unit[i].tag_set.nr_maps = 1;
- 		unit[i].tag_set.queue_depth = 2;
- 		unit[i].tag_set.numa_node = NUMA_NO_NODE;
--		unit[i].tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 		ret = blk_mq_alloc_tag_set(&unit[i].tag_set);
- 		if (ret)
- 			goto err;
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index 56e9901b4b468..f1dc62565ea5f 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -4596,7 +4596,6 @@ static int __init do_floppy_init(void)
- 		tag_sets[drive].nr_maps = 1;
- 		tag_sets[drive].queue_depth = 2;
- 		tag_sets[drive].numa_node = NUMA_NO_NODE;
--		tag_sets[drive].flags = BLK_MQ_F_SHOULD_MERGE;
- 		err = blk_mq_alloc_tag_set(&tag_sets[drive]);
- 		if (err)
- 			goto out_put_disk;
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index de111d0d47c21..739aae0d9e1e4 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -2001,8 +2001,7 @@ static int loop_add(int i)
- 	lo->tag_set.queue_depth = hw_queue_depth;
- 	lo->tag_set.numa_node = NUMA_NO_NODE;
- 	lo->tag_set.cmd_size = sizeof(struct loop_cmd);
--	lo->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_STACKING |
--		BLK_MQ_F_NO_SCHED_BY_DEFAULT;
-+	lo->tag_set.flags = BLK_MQ_F_STACKING | BLK_MQ_F_NO_SCHED_BY_DEFAULT;
- 	lo->tag_set.driver_data = lo;
- 
- 	err = blk_mq_alloc_tag_set(&lo->tag_set);
-diff --git a/drivers/block/mtip32xx/mtip32xx.c b/drivers/block/mtip32xx/mtip32xx.c
-index 86a9c557a5d64..29ae6c279ab8f 100644
---- a/drivers/block/mtip32xx/mtip32xx.c
-+++ b/drivers/block/mtip32xx/mtip32xx.c
-@@ -3415,7 +3415,6 @@ static int mtip_block_initialize(struct driver_data *dd)
- 	dd->tags.reserved_tags = 1;
- 	dd->tags.cmd_size = sizeof(struct mtip_cmd);
- 	dd->tags.numa_node = dd->numa_node;
--	dd->tags.flags = BLK_MQ_F_SHOULD_MERGE;
- 	dd->tags.driver_data = dd;
- 	dd->tags.timeout = MTIP_NCQ_CMD_TIMEOUT_MS;
- 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 958bd115a3417..0c083b9d93b2b 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1855,8 +1855,7 @@ static struct nbd_device *nbd_dev_add(int index, unsigned int refs)
- 	nbd->tag_set.queue_depth = 128;
- 	nbd->tag_set.numa_node = NUMA_NO_NODE;
- 	nbd->tag_set.cmd_size = sizeof(struct nbd_cmd);
--	nbd->tag_set.flags = BLK_MQ_F_SHOULD_MERGE |
--		BLK_MQ_F_BLOCKING;
-+	nbd->tag_set.flags = BLK_MQ_F_BLOCKING;
- 	nbd->tag_set.driver_data = nbd;
- 	INIT_WORK(&nbd->remove_work, nbd_dev_remove_work);
- 	nbd->backend = NULL;
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index a0086307b4606..ae2c286fc7e93 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1811,7 +1811,6 @@ static int null_init_global_tag_set(void)
- 	tag_set.nr_hw_queues = g_submit_queues;
- 	tag_set.queue_depth = g_hw_queue_depth;
- 	tag_set.numa_node = g_home_node;
--	tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	if (g_no_sched)
- 		tag_set.flags |= BLK_MQ_F_NO_SCHED;
- 	if (g_shared_tag_bitmap)
-@@ -1837,7 +1836,6 @@ static int null_setup_tagset(struct nullb *nullb)
- 	nullb->tag_set->nr_hw_queues = nullb->dev->submit_queues;
- 	nullb->tag_set->queue_depth = nullb->dev->hw_queue_depth;
- 	nullb->tag_set->numa_node = nullb->dev->home_node;
--	nullb->tag_set->flags = BLK_MQ_F_SHOULD_MERGE;
- 	if (nullb->dev->no_sched)
- 		nullb->tag_set->flags |= BLK_MQ_F_NO_SCHED;
- 	if (nullb->dev->shared_tag_bitmap)
-diff --git a/drivers/block/ps3disk.c b/drivers/block/ps3disk.c
-index b5b00021fe37d..8892f218a8147 100644
---- a/drivers/block/ps3disk.c
-+++ b/drivers/block/ps3disk.c
-@@ -438,8 +438,7 @@ static int ps3disk_probe(struct ps3_system_bus_device *_dev)
- 
- 	ps3disk_identify(dev);
- 
--	error = blk_mq_alloc_sq_tag_set(&priv->tag_set, &ps3disk_mq_ops, 1,
--					BLK_MQ_F_SHOULD_MERGE);
-+	error = blk_mq_alloc_sq_tag_set(&priv->tag_set, &ps3disk_mq_ops, 1, 0);
- 	if (error)
- 		goto fail_teardown;
- 
-diff --git a/drivers/block/rbd.c b/drivers/block/rbd.c
-index 46f9f85400867..5d156195bb9ed 100644
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -4966,7 +4966,6 @@ static int rbd_init_disk(struct rbd_device *rbd_dev)
- 	rbd_dev->tag_set.ops = &rbd_mq_ops;
- 	rbd_dev->tag_set.queue_depth = rbd_dev->opts->queue_depth;
- 	rbd_dev->tag_set.numa_node = NUMA_NO_NODE;
--	rbd_dev->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	rbd_dev->tag_set.nr_hw_queues = num_present_cpus();
- 	rbd_dev->tag_set.cmd_size = sizeof(struct rbd_img_request);
- 
-diff --git a/drivers/block/rnbd/rnbd-clt.c b/drivers/block/rnbd/rnbd-clt.c
-index 5be0581c3334d..6c96112623c62 100644
---- a/drivers/block/rnbd/rnbd-clt.c
-+++ b/drivers/block/rnbd/rnbd-clt.c
-@@ -1209,8 +1209,7 @@ static int setup_mq_tags(struct rnbd_clt_session *sess)
- 	tag_set->ops		= &rnbd_mq_ops;
- 	tag_set->queue_depth	= sess->queue_depth;
- 	tag_set->numa_node		= NUMA_NO_NODE;
--	tag_set->flags		= BLK_MQ_F_SHOULD_MERGE |
--				  BLK_MQ_F_TAG_QUEUE_SHARED;
-+	tag_set->flags		= BLK_MQ_F_TAG_QUEUE_SHARED;
- 	tag_set->cmd_size	= sizeof(struct rnbd_iu) + RNBD_RDMA_SGL_SIZE;
- 
- 	/* for HCTX_TYPE_DEFAULT, HCTX_TYPE_READ, HCTX_TYPE_POLL */
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index 16953341e5013..dc5a41dfea30a 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -853,7 +853,7 @@ static int probe_disk(struct vdc_port *port)
- 	}
- 
- 	err = blk_mq_alloc_sq_tag_set(&port->tag_set, &vdc_mq_ops,
--			VDC_TX_RING_SIZE, BLK_MQ_F_SHOULD_MERGE);
-+			VDC_TX_RING_SIZE, 0);
- 	if (err)
- 		return err;
- 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 9a8362a90f036..a9b67ca9577f2 100644
+index a9b67ca9577f2..429c8499393d5 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -846,7 +846,7 @@ static int swim_floppy_init(struct platform_device *pdev)
+@@ -211,7 +211,6 @@ enum head {
  
+ struct swim_priv {
+ 	struct swim __iomem *base;
+-	spinlock_t lock;
+ 	int floppy_count;
+ 	struct floppy_state unit[FD_MAX_UNIT];
+ };
+@@ -537,12 +536,10 @@ static blk_status_t swim_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 				  const struct blk_mq_queue_data *bd)
+ {
+ 	struct floppy_state *fs = hctx->queue->queuedata;
+-	struct swim_priv *swd = fs->swd;
+ 	struct request *req = bd->rq;
+ 	blk_status_t err;
+ 
+-	if (!spin_trylock_irq(&swd->lock))
+-		return BLK_STS_DEV_RESOURCE;
++	mutex_lock(&swim_mutex);
+ 
+ 	blk_mq_start_request(req);
+ 
+@@ -560,7 +557,7 @@ static blk_status_t swim_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 
+ 	err = BLK_STS_OK;
+ out:
+-	spin_unlock_irq(&swd->lock);
++	mutex_unlock(&swim_mutex);
+ 	return err;
+ 
+ }
+@@ -842,11 +839,9 @@ static int swim_floppy_init(struct platform_device *pdev)
+ 		return -EBUSY;
+ 	}
+ 
+-	spin_lock_init(&swd->lock);
+-
  	for (drive = 0; drive < swd->floppy_count; drive++) {
  		err = blk_mq_alloc_sq_tag_set(&swd->unit[drive].tag_set,
--				&swim_mq_ops, 2, BLK_MQ_F_SHOULD_MERGE);
-+				&swim_mq_ops, 2, 0);
+-				&swim_mq_ops, 2, 0);
++				&swim_mq_ops, 2, BLK_MQ_F_BLOCKING);
  		if (err)
  			goto exit_put_disks;
  
-diff --git a/drivers/block/swim3.c b/drivers/block/swim3.c
-index 90be1017f7bfc..9914153b365b6 100644
---- a/drivers/block/swim3.c
-+++ b/drivers/block/swim3.c
-@@ -1208,8 +1208,7 @@ static int swim3_attach(struct macio_dev *mdev,
- 	fs = &floppy_states[floppy_count];
- 	memset(fs, 0, sizeof(*fs));
- 
--	rc = blk_mq_alloc_sq_tag_set(&fs->tag_set, &swim3_mq_ops, 2,
--			BLK_MQ_F_SHOULD_MERGE);
-+	rc = blk_mq_alloc_sq_tag_set(&fs->tag_set, &swim3_mq_ops, 2, 0);
- 	if (rc)
- 		goto out_unregister;
- 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index f89b36017d979..a07dfd0336e74 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2311,7 +2311,6 @@ static int ublk_add_tag_set(struct ublk_device *ub)
- 	ub->tag_set.queue_depth = ub->dev_info.queue_depth;
- 	ub->tag_set.numa_node = NUMA_NO_NODE;
- 	ub->tag_set.cmd_size = sizeof(struct ublk_rq_data);
--	ub->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	ub->tag_set.driver_data = ub;
- 	return blk_mq_alloc_tag_set(&ub->tag_set);
- }
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 43884773dc3a8..3d574f4bb3ce8 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1481,7 +1481,6 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	vblk->tag_set.ops = &virtio_mq_ops;
- 	vblk->tag_set.queue_depth = queue_depth;
- 	vblk->tag_set.numa_node = NUMA_NO_NODE;
--	vblk->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	vblk->tag_set.cmd_size =
- 		sizeof(struct virtblk_req) +
- 		sizeof(struct scatterlist) * VIRTIO_BLK_INLINE_SG_CNT;
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index 914d89aa051f4..dddd87f89914c 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -1131,7 +1131,6 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
- 	} else
- 		info->tag_set.queue_depth = BLK_RING_SIZE(info);
- 	info->tag_set.numa_node = NUMA_NO_NODE;
--	info->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	info->tag_set.cmd_size = sizeof(struct blkif_req);
- 	info->tag_set.driver_data = info;
- 
-diff --git a/drivers/block/z2ram.c b/drivers/block/z2ram.c
-index 4b7219be1bb86..8c1c7f4211ebe 100644
---- a/drivers/block/z2ram.c
-+++ b/drivers/block/z2ram.c
-@@ -354,7 +354,6 @@ static int __init z2_init(void)
- 	tag_set.nr_maps = 1;
- 	tag_set.queue_depth = 16;
- 	tag_set.numa_node = NUMA_NO_NODE;
--	tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	ret = blk_mq_alloc_tag_set(&tag_set);
- 	if (ret)
- 		goto out_unregister_blkdev;
-diff --git a/drivers/cdrom/gdrom.c b/drivers/cdrom/gdrom.c
-index 71cfe7a85913c..bf6ce49b97ca1 100644
---- a/drivers/cdrom/gdrom.c
-+++ b/drivers/cdrom/gdrom.c
-@@ -777,7 +777,7 @@ static int probe_gdrom(struct platform_device *devptr)
- 	probe_gdrom_setupcd();
- 
- 	err = blk_mq_alloc_sq_tag_set(&gd.tag_set, &gdrom_mq_ops, 1,
--				BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_BLOCKING);
-+				BLK_MQ_F_BLOCKING);
- 	if (err)
- 		goto probe_fail_free_cd_info;
- 
-diff --git a/drivers/md/dm-rq.c b/drivers/md/dm-rq.c
-index 29d6ee68d4dfb..b1c8e331af4d7 100644
---- a/drivers/md/dm-rq.c
-+++ b/drivers/md/dm-rq.c
-@@ -553,7 +553,7 @@ int dm_mq_init_request_queue(struct mapped_device *md, struct dm_table *t)
- 	md->tag_set->ops = &dm_mq_ops;
- 	md->tag_set->queue_depth = dm_get_blk_mq_queue_depth();
- 	md->tag_set->numa_node = md->numa_node_id;
--	md->tag_set->flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_STACKING;
-+	md->tag_set->flags = BLK_MQ_F_STACKING;
- 	md->tag_set->nr_hw_queues = dm_get_blk_mq_nr_hw_queues();
- 	md->tag_set->driver_data = md;
- 
-diff --git a/drivers/memstick/core/ms_block.c b/drivers/memstick/core/ms_block.c
-index 84d9b7975b3be..b78dbe1491dc4 100644
---- a/drivers/memstick/core/ms_block.c
-+++ b/drivers/memstick/core/ms_block.c
-@@ -2098,8 +2098,7 @@ static int msb_init_disk(struct memstick_dev *card)
- 	if (msb->disk_id  < 0)
- 		return msb->disk_id;
- 
--	rc = blk_mq_alloc_sq_tag_set(&msb->tag_set, &msb_mq_ops, 2,
--				     BLK_MQ_F_SHOULD_MERGE);
-+	rc = blk_mq_alloc_sq_tag_set(&msb->tag_set, &msb_mq_ops, 2, 0);
- 	if (rc)
- 		goto out_release_id;
- 
-diff --git a/drivers/memstick/core/mspro_block.c b/drivers/memstick/core/mspro_block.c
-index 49accfdc89d61..9c7678afa5183 100644
---- a/drivers/memstick/core/mspro_block.c
-+++ b/drivers/memstick/core/mspro_block.c
-@@ -1139,8 +1139,7 @@ static int mspro_block_init_disk(struct memstick_dev *card)
- 	if (disk_id < 0)
- 		return disk_id;
- 
--	rc = blk_mq_alloc_sq_tag_set(&msb->tag_set, &mspro_mq_ops, 2,
--				     BLK_MQ_F_SHOULD_MERGE);
-+	rc = blk_mq_alloc_sq_tag_set(&msb->tag_set, &mspro_mq_ops, 2, 0);
- 	if (rc)
- 		goto out_release_id;
- 
-diff --git a/drivers/mmc/core/queue.c b/drivers/mmc/core/queue.c
-index 73814b7529f6e..ac3787149737e 100644
---- a/drivers/mmc/core/queue.c
-+++ b/drivers/mmc/core/queue.c
-@@ -452,7 +452,7 @@ struct gendisk *mmc_init_queue(struct mmc_queue *mq, struct mmc_card *card,
- 	else
- 		mq->tag_set.queue_depth = MMC_QUEUE_DEPTH;
- 	mq->tag_set.numa_node = NUMA_NO_NODE;
--	mq->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_BLOCKING;
-+	mq->tag_set.flags = BLK_MQ_F_BLOCKING;
- 	mq->tag_set.nr_hw_queues = 1;
- 	mq->tag_set.cmd_size = sizeof(struct mmc_queue_req);
- 	mq->tag_set.driver_data = mq;
-diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
-index 47ead84407cdc..ee7e1d9089861 100644
---- a/drivers/mtd/mtd_blkdevs.c
-+++ b/drivers/mtd/mtd_blkdevs.c
-@@ -329,7 +329,7 @@ int add_mtd_blktrans_dev(struct mtd_blktrans_dev *new)
- 		goto out_list_del;
- 
- 	ret = blk_mq_alloc_sq_tag_set(new->tag_set, &mtd_mq_ops, 2,
--			BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_BLOCKING);
-+			BLK_MQ_F_BLOCKING);
- 	if (ret)
- 		goto out_kfree_tag_set;
- 	
-diff --git a/drivers/mtd/ubi/block.c b/drivers/mtd/ubi/block.c
-index 60d0155be869f..2836905f0152a 100644
---- a/drivers/mtd/ubi/block.c
-+++ b/drivers/mtd/ubi/block.c
-@@ -383,7 +383,7 @@ int ubiblock_create(struct ubi_volume_info *vi)
- 	dev->tag_set.ops = &ubiblock_mq_ops;
- 	dev->tag_set.queue_depth = 64;
- 	dev->tag_set.numa_node = NUMA_NO_NODE;
--	dev->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_BLOCKING;
-+	dev->tag_set.flags = BLK_MQ_F_BLOCKING;
- 	dev->tag_set.cmd_size = sizeof(struct ubiblock_pdu);
- 	dev->tag_set.driver_data = dev;
- 	dev->tag_set.nr_hw_queues = 1;
-diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index 6606d7644186d..9f6570062febf 100644
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -1290,7 +1290,6 @@ static int apple_nvme_alloc_tagsets(struct apple_nvme *anv)
- 	anv->tagset.timeout = NVME_IO_TIMEOUT;
- 	anv->tagset.numa_node = NUMA_NO_NODE;
- 	anv->tagset.cmd_size = sizeof(struct apple_nvme_iod);
--	anv->tagset.flags = BLK_MQ_F_SHOULD_MERGE;
- 	anv->tagset.driver_data = &anv->ioq;
- 
- 	ret = blk_mq_alloc_tag_set(&anv->tagset);
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 37dc942af0d20..9206ad4e33508 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4721,7 +4721,6 @@ int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 		/* Reserved for fabric connect */
- 		set->reserved_tags = 1;
- 	set->numa_node = ctrl->numa_node;
--	set->flags = BLK_MQ_F_SHOULD_MERGE;
- 	if (ctrl->ops->flags & NVME_F_BLOCKING)
- 		set->flags |= BLK_MQ_F_BLOCKING;
- 	set->cmd_size = cmd_size;
-diff --git a/drivers/s390/block/dasd_genhd.c b/drivers/s390/block/dasd_genhd.c
-index 6da47a65af610..28e92fad0ca1f 100644
---- a/drivers/s390/block/dasd_genhd.c
-+++ b/drivers/s390/block/dasd_genhd.c
-@@ -56,7 +56,6 @@ int dasd_gendisk_alloc(struct dasd_block *block)
- 	block->tag_set.cmd_size = sizeof(struct dasd_ccw_req);
- 	block->tag_set.nr_hw_queues = nr_hw_queues;
- 	block->tag_set.queue_depth = queue_depth;
--	block->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	block->tag_set.numa_node = NUMA_NO_NODE;
- 	rc = blk_mq_alloc_tag_set(&block->tag_set);
- 	if (rc)
-diff --git a/drivers/s390/block/scm_blk.c b/drivers/s390/block/scm_blk.c
-index 3fcfe029db1b3..91bbe9d2e5acd 100644
---- a/drivers/s390/block/scm_blk.c
-+++ b/drivers/s390/block/scm_blk.c
-@@ -461,7 +461,6 @@ int scm_blk_dev_setup(struct scm_blk_dev *bdev, struct scm_device *scmdev)
- 	bdev->tag_set.cmd_size = sizeof(blk_status_t);
- 	bdev->tag_set.nr_hw_queues = nr_requests;
- 	bdev->tag_set.queue_depth = nr_requests_per_io * nr_requests;
--	bdev->tag_set.flags = BLK_MQ_F_SHOULD_MERGE;
- 	bdev->tag_set.numa_node = NUMA_NO_NODE;
- 
- 	ret = blk_mq_alloc_tag_set(&bdev->tag_set);
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index ecc37da9b2449..6528596647169 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -2110,7 +2110,6 @@ int scsi_mq_setup_tags(struct Scsi_Host *shost)
- 	tag_set->queue_depth = shost->can_queue;
- 	tag_set->cmd_size = cmd_size;
- 	tag_set->numa_node = dev_to_node(shost->dma_dev);
--	tag_set->flags = BLK_MQ_F_SHOULD_MERGE;
- 	tag_set->flags |=
- 		BLK_ALLOC_POLICY_TO_MQ_FLAG(shost->hostt->tag_alloc_policy);
- 	if (shost->queuecommand_may_block)
-diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-index 959f8f82a6509..0c997069cf218 100644
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -668,7 +668,6 @@ struct blk_mq_ops {
- 
- /* Keep hctx_flag_name[] in sync with the definitions below */
- enum {
--	BLK_MQ_F_SHOULD_MERGE	= 1 << 0,
- 	BLK_MQ_F_TAG_QUEUE_SHARED = 1 << 1,
- 	/*
- 	 * Set when this device requires underlying blk-mq device for
 -- 
 2.53.0
 
