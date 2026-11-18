@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042847;
-	b=ZhXhM0jmKBJRYeOSO7ISU58t/goE44T4QyxoMOlxfduLb4VgFtXfZgZAFNY3GUruHZhn
-	 A8hyZlpUJ1hD3VF59Ty+7kZ6Lakg2CFRd7maWni+ZOptMsY9rFnqSMhNBKOIkc67XRZl8
-	 TlNSRKmxQ7AksYoxuF9NeLRVVPhxERZqMvsYIViwUwpJ4mloD5Gz4n/HqenzpedAkmine
-	 xuff4KPMlaiIFgGhyqz0B9a5k7rayTzsjYBSCLHk7LLFR65o03kEoIOhJYmb/oY9l3JQJ
-	 wf9XLKJzeJQVmOoZSgbgOW5UkNwRWvJVKc3vZXD4Nm5Xa8hVPTQmiyFkHECF8BtMABg==
+	t=1795042849;
+	b=2ijQQ5IGxKU3kp3WkntiEC5Jiq5RskDnhlEE/Pr6RNw6+yrWIGwLyyHYhbdF75P2e3Lc
+	 GG4OL5fD5He9GrQWvpY54dEBqr8cxcTvOM2W8enMl8bQgGfo5VxK45I8HE9krBdZmRF9R
+	 NseyJd28FTakZzJEpWB+mBpCq6Ln+uhNuR1eboRMyaFGdPLJnAIQtBrG9n+p1FvcshsPV
+	 HJ9GIbk/5rYFa53QlyM8k3rFMAKyMp7ocVkt3l2mdJaoHY0cP/85LMJ7ZAqfIMOc2lP5M
+	 Zawz6fze9YWsnjuFbS6AupWBATEsfIs9Ax5p8bdGfZl8pHQqPs+CWDEQpO2Uxyit0Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042847;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NvBj/80cUmmIMpD6CgDdN+u/FVEJJ3BB1rNp4BOAOUw=;
-	b=DhQk9vpzmqMNLNXWug3cnsPUgbaL3uM3WcaeylLgrAbg7rrWe1167Jnf0hXy0T6WaaSk
-	 rgfJI11z7eQKiz7mSCkdx/YV21kc4e0wENGDpoGaXiYZj6+srQaFVie2GJxS1zRcz+Njv
-	 VFW+HQHV/Ti7MrBq/fo4Lzj/hVX1zvNkWv+JR0rPcOvY68BPU4WGutiEOhLm3DD8sEpfU
-	 CBkaa1BL2ra7igF38ZkJziBTsxAJsc+1u8qrNai7dXX15arAB8A5HRE6XrVJ+LO5tPfP7
-	 DnrLsTOKC7RP3vEiqIx3jZC+TKpvV+LXuPaGTWEP3CA5t4MTeg6bWlpUO+tlks7edQQ==
+	bh=v+3natxy8gh4p3BMsYcMCG4ndykVTzX5jTYABFdVc3M=;
+	b=emMCn01pNuGipgZwMWn4bPIZ0Bnf5tvHHr8KeC3gA0pbmd0DQDZodf8dVjQssuSKLAlD
+	 xL3sRCr5PETL6eZX1uO1Tl5xQd+bo3/hvPVIKThjwzdQ4VZmMFBfMVIMvIFIPY0ddCPyU
+	 UmPKk5AjT25mWOYC3fcFGamw3+xWdp+KXZSl2aRsi65yE3dHOMHILgf09Leggw5f0N2a1
+	 n4tv6I/k/fsZNoi7g5hr7eoFXFk3+3Khq2etEq8ckD0585i0bDsO1rX+rrjbiqlhDM9qs
+	 35YwfamiANUsqBOnXJGZDL7UkdCD8fhq0awLQUyDaGOH47uLNLmlhu+SxLH0mLdD+Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jbpnKH1g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SNRhf+Go;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF68B606A31C;
-	Wed, 18 Nov 2026 23:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DE9606A31C;
+	Wed, 18 Nov 2026 23:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jbpnKH1g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529CF1F000C4;
-	Wed, 18 Nov 2026 23:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SNRhf+Go
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E19D1F000C4;
+	Wed, 18 Nov 2026 23:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042846;
-	bh=NvBj/80cUmmIMpD6CgDdN+u/FVEJJ3BB1rNp4BOAOUw=;
+	s=korg; t=1795042849;
+	bh=v+3natxy8gh4p3BMsYcMCG4ndykVTzX5jTYABFdVc3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jbpnKH1g3QP9H8ZUQv7hbeKqtkft5kAHMUyvRnpyE8MT2G38o48uhORMSQwMyaFN2
-	 +1ATvAL1C6NLFooKri0Ek2uAxCdHeVbbRaQWbMOpJYMeXkaDRgf/gk4svaG4sOcZcp
-	 z5nu3taqefTl+h7uYVagn3zi/WcSN5OK+70d2dvs=
+	b=SNRhf+GoOinir9K56yhiKMnzQcy7ElZ7Hn6h99N9+gHRV4uyPCsp1Ea3VKfcyjIpF
+	 jKXbaTLOMNWDpwGPDaRib1Wvz4HLsaSZxTz5tR1DiPzUtOmB9ddH0QyWk4SqCR9Hmz
+	 xv5BhnNs3AZ9lqwGWtxgYpXkkct9/9Ok0vBOdMMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.6 3315/3318] kconfig: initialize sym->curr.tri to no for all symbol types again
-Date: Wed, 18 Nov 2026 16:05:37 +0100
-Message-ID: <20261118150459.023044374@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 6.6 3316/3318] clk: samsung: Revert "clk: Use device_get_match_data()"
+Date: Wed, 18 Nov 2026 16:05:38 +0100
+Message-ID: <20261118150459.049878585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,57 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit bfef491df67022c56aab3b831044f8d259f9441f upstream.
+commit aacb99de1099346244d488bdf7df489a44278574 upstream.
 
-Geert Uytterhoeven reported that commit 4e244c10eab3 ("kconfig: remove
-unneeded symbol_empty variable") changed the default value of
-CONFIG_LOG_CPU_MAX_BUF_SHIFT from 12 to 0.
+device_get_match_data() function should not be used on the device other
+than the one matched to the given driver, because it always returns the
+match_data of the matched driver. In case of exynos-clkout driver, the
+original code matches the OF IDs on the PARENT device, so replacing it
+with of_device_get_match_data() broke the driver.
 
-As it turned out, this is an undefined behavior because sym_calc_value()
-stopped setting the sym->curr.tri field for 'int', 'hex', and 'string'
-symbols.
+This has been already pointed once in commit 2bc5febd05ab ("clk: samsung:
+Revert "clk: samsung: exynos-clkout: Use of_device_get_match_data()"").
+To avoid further confusion, add a comment about this special case, which
+requires direct of_match_device() call to pass custom IDs array.
 
-This commit restores the original behavior, where 'int', 'hex', 'string'
-symbols are interpreted as false if used in boolean contexts.
+This partially reverts commit 409c39ec92a35e3708f5b5798c78eae78512cd71.
 
-CONFIG_LOG_CPU_MAX_BUF_SHIFT will default to 12 again, irrespective
-of CONFIG_BASE_SMALL. Presumably, this is not the intended behavior,
-as already reported [1], but this is another issue that should be
-addressed by a separate patch.
-
-[1]: https://lore.kernel.org/all/f6856be8-54b7-0fa0-1d17-39632bf29ada@oracle.com/
-
-Fixes: 4e244c10eab3 ("kconfig: remove unneeded symbol_empty variable")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/all/CAMuHMdWm6u1wX7efZQf=2XUAHascps76YQac6rdnQGhc8nop_Q@mail.gmail.com/
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 409c39ec92a3 ("clk: Use device_get_match_data()")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20240425075628.838497-1-m.szyprowski@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240430184656.357805-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/kconfig/symbol.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/samsung/clk-exynos-clkout.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -364,6 +364,8 @@ void sym_calc_value(struct symbol *sym)
+--- a/drivers/clk/samsung/clk-exynos-clkout.c
++++ b/drivers/clk/samsung/clk-exynos-clkout.c
+@@ -13,9 +13,9 @@
+ #include <linux/io.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm.h>
+-#include <linux/property.h>
  
- 	oldval = sym->curr;
+ #define EXYNOS_CLKOUT_NR_CLKS		1
+ #define EXYNOS_CLKOUT_PARENTS		32
+@@ -84,17 +84,24 @@ MODULE_DEVICE_TABLE(of, exynos_clkout_id
+ static int exynos_clkout_match_parent_dev(struct device *dev, u32 *mux_mask)
+ {
+ 	const struct exynos_clkout_variant *variant;
++	const struct of_device_id *match;
  
-+	newval.tri = no;
-+
- 	switch (sym->type) {
- 	case S_INT:
- 		newval.val = "0";
-@@ -376,7 +378,7 @@ void sym_calc_value(struct symbol *sym)
- 		break;
- 	case S_BOOLEAN:
- 	case S_TRISTATE:
--		newval = symbol_no.curr;
-+		newval.val = "n";
- 		break;
- 	default:
- 		sym->curr.val = sym->name;
+ 	if (!dev->parent) {
+ 		dev_err(dev, "not instantiated from MFD\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	variant = device_get_match_data(dev->parent);
+-	if (!variant) {
++	/*
++	 * 'exynos_clkout_ids' arrays is not the ids array matched by
++	 * the dev->parent driver, so of_device_get_match_data() or
++	 * device_get_match_data() cannot be used here.
++	 */
++	match = of_match_device(exynos_clkout_ids, dev->parent);
++	if (!match) {
+ 		dev_err(dev, "cannot match parent device\n");
+ 		return -EINVAL;
+ 	}
++	variant = match->data;
+ 
+ 	*mux_mask = variant->mux_mask;
+ 
 
 
