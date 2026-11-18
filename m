@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030414;
-	b=hKs+UpcYnrKJ/dptuPQ3CbLiXJXrmwUQxkOqEhCmh8ibYUEMeI5QI5k+Y3QAQNsjBqQO
-	 02gSVssLkz1mLqjt1bVK/hswx2mgBnwzhocitL6h3H3y8Q9nLVkjkIyT36sKOdRv7T/l8
-	 68ZYQsGbWYzcaDEwiCbNWpshoJQwMhm3cMWwcmYDw0z/62b1WLWSHQSBeJ/0vjVklDSVh
-	 CuTI2iKrwCl0JXctjXl7XpPIhGpzN8L2UED/4AF/XUd+BgpdZaLqfZLL5eew9fM8yK5Nr
-	 am8Ow3/UJPRGIt8YfIcame3nP5BE8paSD6hrcGsFA0GoVT56TjfNZIKdeS+kHY6Tt9w==
+	t=1795030417;
+	b=3w2x8MWr5hzbUnJXqFobncppPiAsD8T9nBunFrlPtnVD/8BGK2YNs6feh4YUFFk4B7cf
+	 i7sZMGtg7mCgfA20r0BogkZtUuSS3fbPA3m6+KRSH+jC9IPnnIVYYkTDHAeVe3F5oWtMQ
+	 ZNj3iBHFc7ovk2souN9l+h4WInc8BYfGuEByGR4nrPriotO1XQ13F1OHWk94HrG5vUxR7
+	 YvuA205Ld9V3p0Jmlat/qc1aAJZ5aBQ626ymeYVc7Qbj6wp/WWil37rFe7aLYcP83FIql
+	 bVov8oxSGpqoWvehdZdTLiFca5ICM1HuMm/906uFyF4jT9thune+mE27Qs67KdrbDWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6oDNG4yHjSD0skGOoxDizLgOfkv1qwmpctq419h/AUE=;
-	b=3YbnLdS9hBCyPDcXlibMGmi8f31EyWejGJJeWlEkFziXGuCkKvM1L0NvuWkI32ZrtDGe
-	 1qIipPtBaCd/3wcDykAIzL4iFZWyiI4d5FkowFikgw21GItU1mUBRdSSVB++nkE9YQtdO
-	 qBEMZCuxB3IKzqtDUf+Y8uYYTYWNsR7PPvzMvvfEgxMSgg31uvE6wxAmCybehdrMANX8J
-	 qx+dfdOUsB0whbbCAMfFwSBynFN8JiiTnkOu+wPTsfMKbi4XYMeK5nOQ8ZccHjuOG9gsH
-	 WyfmIX/tIfI/IdeLizSQ0OxhV++VkG6Ww9GiU5vUuhBa7DEUzY2O8UmmzKOAVqlEPhw==
+	bh=7P+R9hUO1NH8Cl+oXdwTRd/WQmSquUkPr1n87tkyf6k=;
+	b=Qji2/hdc2purkEsvRZYW+HF25/iOR1hIMT/3rAv/p7Yc7nYfpyVtuW8jJLbdWDdqqQuv
+	 1uIWttqAariVfcTtnatfoxCtIoBCz+l5ZpaarGM/iu7Kcr3ljw5S7OAuJkI/XQCn8KKGv
+	 AVf2MULm3YSUGvLpgGYi6gxKSTYRypceOVEeziI0GJnpaD/i+KkoPQ2PWeeKHdWOm5sES
+	 sQbXt/IL2ovFhj5f+4vuOQE9S48ncZn29k6rM8mbD+WiNQTMbD305Xj2mj4uEi/lCcqpE
+	 NfKtvHMsKPCWTBT/HLxiNWBnJjEW4afgwvhG4cN/vGeWc9JrEi2Ni0jOyJ9r+L9WsEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JRTwPnwz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4OoGSFM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00EB606A336;
-	Wed, 18 Nov 2026 19:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945F3606A336;
+	Wed, 18 Nov 2026 19:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JRTwPnwz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F3E1F000C4;
-	Wed, 18 Nov 2026 19:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v4OoGSFM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30EF1F000C4;
+	Wed, 18 Nov 2026 19:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030414;
-	bh=6oDNG4yHjSD0skGOoxDizLgOfkv1qwmpctq419h/AUE=;
+	s=korg; t=1795030417;
+	bh=7P+R9hUO1NH8Cl+oXdwTRd/WQmSquUkPr1n87tkyf6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JRTwPnwz10rS9Akga/C79QoVmoeB3NCR5c4Zeb+vGrNFSRadW9g7pkt7T6Sc1rIg6
-	 kji8tPJjLD8fFye+ZbHJtgw8q8FeTfM123PbuKQkJUvnZXI6kT8m3O6F3Oh9sI3C3q
-	 aN4n2h7zmOmZjdiRWc6Nwp83hkPg9c+47vqAuHs0=
+	b=v4OoGSFMbFC8QQSnDfC79c9e05Zmos6CDWfh2Ci6ZXLHHGBvjiA/KTR2Rp1gWL1gn
+	 yGh9Qd+lQa8NNuMdByPUxhZS4At7a70Z9qhKLFp2IJYrCtC9m/orGETNvHeclGFfXa
+	 kB72arSEpVa1473GNffVG+kTSj2RqXt6o0p6taC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0645/1756] ASoC: mediatek: mt8192: fix APLL mux error handling
-Date: Wed, 18 Nov 2026 15:46:12 +0100
-Message-ID: <20261118150034.502272920@linuxfoundation.org>
+Subject: [PATCH 6.12 0690/1756] IB/mad: fix UAF and double-free in RMPP receive reassembly
+Date: Wed, 18 Nov 2026 15:46:57 +0100
+Message-ID: <20261118150036.684102562@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,173 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-[ Upstream commit e8c263e0ef957fd8286e299b2be9266b902cec16 ]
+[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
 
-Propagate errors from clock operations in the enable path and clean up
-previously enabled clocks when a later operation fails.
+mad_rmpp_recv.state is protected by two locks that do not exclude
+each other: recv_timeout_handler() (port workqueue) uses agent->lock,
+continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
+the check-then-set sequence on the state word:
 
-For the disable path, continue disabling all clocks even if a clock
-operation fails. Log the error without returning it, so the disable path
-can perform as much cleanup as possible.
+  T1 (CQ softirq)              T2 (port workqueue)
+  continue_rmpp()
+    lock(rmpp_recv->lock)
+    state == ACTIVE  [passes]
+                               recv_timeout_handler()
+                                 lock(agent->lock)
+                                 state = TIMEOUT
+                                 list_del(&rmpp_recv->list)
+                                 unlock(agent->lock)
+                                 destroy_rmpp_recv()
+                                   wait_for_completion()
+                                   [blocks on T1's ref]
+    state = COMPLETE
+    unlock(rmpp_recv->lock)
+    complete_rmpp()
+      queue cleanup_work (+10s)
+    deref()
+                               [unblocks]
+                               kfree(rmpp_recv)
+                               ib_free_recv_mad(done_wc)
 
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
+        freed rmpp_recv -> UAF write and double free; nothing can
+        cancel that cleanup_work anymore, the entry is already off
+        agent->rmpp_list. done_wc is also returned to
+        ib_mad_complete_recv() and freed again -> UAF read and
+        double free.
+
+Reaching this requires sending MADs to a kernel RMPP agent from the
+InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
+manager responses whose SLID/GID/TID are not authenticated on the
+fabric, and legacy user_mad agents registered without
+IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
+MAD with an attacker-chosen TID, no in-flight send required. The
+attacker controls segment timing and can run many transactions in
+parallel (agent->rmpp_list has no cap), so landing the
+microseconds-wide receive critical section on the 40-second timeout
+boundary is a matter of patience, not luck.
+
+Unify state transitions under rmpp_recv->lock in
+recv_timeout_handler(), keeping list manipulation under agent->lock
+(which preserves the agent->lock -> rmpp_recv->lock ordering used
+by continue_rmpp()). State check/set in both paths is then
+serialized, so the loser of the race always observes the final
+state and bails out. recv_cleanup_handler() needs no change: with
+transitions serialized, a cleanup_work can only be pending after
+COMPLETE, in which case the timeout handler exits early.
+
+The race is as old as the RMPP implementation itself.
+
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: LLM
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 54 +++++++++++++---------
- 1 file changed, 32 insertions(+), 22 deletions(-)
+ drivers/infiniband/core/mad_rmpp.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index 416aff7262539..bd778e5663b56 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -87,7 +87,7 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 		if (ret) {
- 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_1], ret);
--			goto EXIT;
-+			return ret;
- 		}
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_1],
- 				     afe_priv->clk[CLK_TOP_APLL1_CK]);
-@@ -95,7 +95,7 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_1],
- 				aud_clks[CLK_TOP_APLL1_CK], ret);
--			goto EXIT;
-+			goto err_disable_mux_aud_1;
- 		}
+diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
+index 8af0619a39cda..2bdebd011dac5 100644
+--- a/drivers/infiniband/core/mad_rmpp.c
++++ b/drivers/infiniband/core/mad_rmpp.c
+@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
+ 	struct ib_mad_recv_wc *rmpp_wc;
+ 	unsigned long flags;
  
- 		/* 180.6336 / 4 = 45.1584MHz */
-@@ -103,7 +103,7 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 		if (ret) {
- 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1], ret);
--			goto EXIT;
-+			goto err_set_parent_mux_aud_1;
- 		}
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1],
- 				     afe_priv->clk[CLK_TOP_APLL1_D4]);
-@@ -111,31 +111,36 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1],
- 				aud_clks[CLK_TOP_APLL1_D4], ret);
--			goto EXIT;
-+			goto err_disable_mux_aud_eng1;
- 		}
- 	} else {
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1],
- 				     afe_priv->clk[CLK_CLK26M]);
--		if (ret) {
-+		if (ret)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
--		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1]);
- 
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_1],
- 				     afe_priv->clk[CLK_CLK26M]);
--		if (ret) {
-+		if (ret)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_1],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
--		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_1]);
+-	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
++	spin_lock_irqsave(&rmpp_recv->lock, flags);
+ 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
+-		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
++		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
+ 		return;
  	}
- 
--EXIT:
-+	return 0;
+ 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
++	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
 +
-+err_disable_mux_aud_eng1:
-+	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1]);
-+err_set_parent_mux_aud_1:
-+	clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_1],
-+		       afe_priv->clk[CLK_CLK26M]);
-+err_disable_mux_aud_1:
-+	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_1]);
-+
- 	return ret;
- }
- 
-@@ -149,7 +154,7 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 		if (ret) {
- 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_2], ret);
--			goto EXIT;
-+			return ret;
- 		}
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_2],
- 				     afe_priv->clk[CLK_TOP_APLL2_CK]);
-@@ -157,7 +162,7 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_2],
- 				aud_clks[CLK_TOP_APLL2_CK], ret);
--			goto EXIT;
-+			goto err_disable_mux_aud_2;
- 		}
- 
- 		/* 196.608 / 4 = 49.152MHz */
-@@ -165,7 +170,7 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 		if (ret) {
- 			dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2], ret);
--			goto EXIT;
-+			goto err_set_parent_mux_aud_2;
- 		}
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2],
- 				     afe_priv->clk[CLK_TOP_APLL2_D4]);
-@@ -173,31 +178,36 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2],
- 				aud_clks[CLK_TOP_APLL2_D4], ret);
--			goto EXIT;
-+			goto err_disable_mux_aud_eng2;
- 		}
- 	} else {
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2],
- 				     afe_priv->clk[CLK_CLK26M]);
--		if (ret) {
-+		if (ret)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
--		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2]);
- 
- 		ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_2],
- 				     afe_priv->clk[CLK_CLK26M]);
--		if (ret) {
-+		if (ret)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_2],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
--		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_2]);
- 	}
- 
--EXIT:
-+	return 0;
-+
-+err_disable_mux_aud_eng2:
-+	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2]);
-+err_set_parent_mux_aud_2:
-+	clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD_2],
-+		       afe_priv->clk[CLK_CLK26M]);
-+err_disable_mux_aud_2:
-+	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_2]);
-+
- 	return ret;
- }
++	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
+ 	list_del(&rmpp_recv->list);
+ 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
  
 -- 
 2.53.0
