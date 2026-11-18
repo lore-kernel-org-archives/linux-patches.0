@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041899;
-	b=MUqNdxjamNhtj+iwSNcOYNsU2ge26abhTG1ZxJ5V8gh9BfDpOM4jVNLVT2l69kOpKXwu
-	 ajwThnrV6NfjFRyjQFXFNRpWNcdhkah7qjKTyn7iEwANUrPz0o6uDyene45m9Bi+PV3a7
-	 FOhqazJ1rsALmP0zDN7as6KelkaOtOCt5qRAOp7lqq9jZUu2YqdhZIxr8ZWUvoS3mP+ZW
-	 PAyQ+CTH0Dfs1nqbE7d/UF586XHfXzhcn/ME1PloKtgwgrCcbbEslZNtrIGE8E4Id6suX
-	 IpCjmCcgutRFjgOPL+Ov7qUOs8v/nzH15pfBsKN4NCWenIhdU+FoJLb7+WELWswZxAw==
+	t=1795041902;
+	b=3+hJZ2ElndkRAh2zVtW8FNxhyq7qU+ID0C/3gDinFJ+OyHQIKLieKur2oH7mPS2xNwoQ
+	 TkXMfvhzdHYDuIIA5SOUyWt7KhBHkx/MiL/+PMnYGr5MHc3p002AhV44g+RrznP+uTlvp
+	 LkOMIYgdsfsIqMG4cWnX16A85EKURF5ZEsERqcvQqgxS2FVvoSjdIsOfMA+vTu5XstEsb
+	 bZllY6BwiLZVFSrDVuBh0yqCwFDUbtJ4Oiv5WoSDgi5aCWIkZb9l1l8hatoLNe4u/ithI
+	 63SlaSmipKaCliTtT6yE75PzYv/BgXzay/XX6ppTXWV0ezYTCeg9rF6batH9bw1XqPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SOJ6rPlHX/gP8Kvzw3Xk1DcEpMZzY/6VH7KZz2vVPdU=;
-	b=zP4DWy/GTX1k23qI5oliH5Ez3Djtpeouk14F868D2Em46iYRuC5RmlzP108Hedd8kzuw
-	 BJ9tgntHKLu20yIPs7Zu8nJPNvwwagU49ROx9MguG2qnRNn31q5kvADc0AFEsBQrXt980
-	 J5hDbEAkk1Kck13JWPIYAUmqSkK5FefE0j0rkW4/A/RRBr0t5oKCtwdHMldYIf3a6hXKA
-	 LHjmAtpnoQWpTgm/qDT0xgmOhMXB81xZkv5MPO1h4wdRffEKfyYW6ZMwFhMbqhqn5KGez
-	 9fdLEDRI7lUizozDEgZ+cT4uNvBnO6TrO0UTi+OK9DSLMUOXvV/yw1uoNPvylVoScfg==
+	bh=EH4+c9bMpkIdVRiBVl0tsPaxrLTeQyoCb2AhcjLFufg=;
+	b=TUY5xzAa7JMajlMape5ENqax1oQRm7fVKW3k+ITJlma6Cb3HNHW4Yir3YbvkW/VEeDS3
+	 tmvDaFKqS6gBs6xyP6GvyQPFJgTPHhhyaoAwHJ5aUhg7fx9RKYDFl+es+OdKORolO/GTi
+	 eGJu4UZ9O72G0TTYZ9zqRBTPdE3IVzdsX7ct9BlUzHgcyIN6dAZcj2atk0f9XsBI8lHv+
+	 Kt6+yIX3VZgqhhmq4JX0KbippLU3Xifc5Q+7NJ62maFlkVNKFE6v7I8yKIPABADl3oVlO
+	 f7dWQzwNsB5pfxrImKEqdMfzhFR1xRCdg1m9pUMgn6MMyQ76q6EsAzS1CKgRmikbMuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzldABql;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ioAbJkbr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF520606A31C;
-	Wed, 18 Nov 2026 22:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620DB606A32A;
+	Wed, 18 Nov 2026 22:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lzldABql
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109821F000C4;
-	Wed, 18 Nov 2026 22:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ioAbJkbr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6EA1F000C4;
+	Wed, 18 Nov 2026 22:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041899;
-	bh=SOJ6rPlHX/gP8Kvzw3Xk1DcEpMZzY/6VH7KZz2vVPdU=;
+	s=korg; t=1795041902;
+	bh=EH4+c9bMpkIdVRiBVl0tsPaxrLTeQyoCb2AhcjLFufg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lzldABqlj1FLAYtakxfrUfVvhkttoS8jEIUKbbVT7vmJGfEQt0RJfiRSiDgMBaw+A
-	 VHqSCFxf4BocwTlr2ID2/u0p1y3QP/G4ymLEfz/rYIdRL76vddnOkM4QL8MdEMTwyc
-	 6GkVfVuDFX1pXL/9VGcEpO1vHm6cMMHif4pH5GdA=
+	b=ioAbJkbrJ0I7moDOXA/fdpXHxOiPl0n/kyWWtdzznyqpymi7bHpVwHsxOGH7sgzKX
+	 87BuGL9N0NJ36PTrslL7Cho7DzFfbCIMDz7FFp3qaZiNRDpK4WQIV181UUhHT5kdI6
+	 wJjTyMb9sNoupcQrjdcVxCovlbnWkACgD9TEMpG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com,
+	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2976/3318] ALSA: vmaster: Protect follower lookup and setup
-Date: Wed, 18 Nov 2026 15:59:58 +0100
-Message-ID: <20261118150449.560861577@linuxfoundation.org>
+Subject: [PATCH 6.6 2977/3318] HID: wacom: fix wacom_intuos_irq NULL pen_input deref
+Date: Wed, 18 Nov 2026 15:59:59 +0100
+Message-ID: <20261118150449.589796194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,181 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
 
-[ Upstream commit db2db2dec96e24d067cc5692ac5eec35830ee8d9 ]
+[ Upstream commit 2f985de0afbe9366af9d322ea20589712c1dc8fe ]
 
-A control selected by snd_ctl_add_followers() must remain alive until
-_snd_ctl_add_follower() has copied it and installed its wrapper. The
-lookup returns a raw pointer without retaining the control, and neither
-the short-lived list lookup lock nor the fast lookup protects later use.
+Currently, wacom_intuos_irq() passes the parent of wacom_wac's
+pen_input to the dev_dbg() in the unknown report path. However,
+pen_input can be NULL on interfaces without a pen, causing a
+NULL pointer dereference.
 
-If a kernel client adds followers to a live virtual master while another
-client removes or replaces a published follower, the following order is
-possible, with the card and master kept alive:
+Get the HID device from the enclosing struct wacom and use hid_dbg()
+instead.
 
-  Follower setup                      Control removal
-  snd_ctl_add_followers()
-    snd_ctl_find_id_mixer()
-      return follower
-                                      snd_ctl_remove()
-                                        down_write(controls_rwsem)
-                                        __snd_ctl_remove()
-                                          unlink follower
-                                          snd_ctl_free_one(follower)
-                                        up_write(controls_rwsem)
-    _snd_ctl_add_follower()
-      read follower->count
-
-Removal completes after lookup returns and before setup reads the
-control. Since setup holds neither controls_rwsem nor a reference, the
-count read and subsequent control copies can access freed memory.
-
-Hold controls_rwsem for writing across the lookup and follower setup.
-This prevents removal or replacement from freeing the selected control
-until wrapper installation is complete. Write ownership also excludes
-control callbacks while setup changes the callback and private fields.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in _snd_ctl_add_follower+0x452/0x520
-    Read of size 4 at addr ffff888107957d50 by task loadmodule/491
-
-    CPU: 3 UID: 0 PID: 491 Comm: loadmodule Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-    Tainted: [O]=OOT_MODULE
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? _snd_ctl_add_follower+0x452/0x520
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? _snd_ctl_add_follower+0x452/0x520
-     kasan_report+0xe0/0x110
-     ? _snd_ctl_add_follower+0x452/0x520
-     _snd_ctl_add_follower+0x452/0x520
-     snd_ctl_add_followers+0x153/0x2b0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_snd_ctl_add_followers+0x10/0x10
-     ? __might_fault+0x135/0x190
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __might_fault+0x14e/0x190
-     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
-     fixture_write+0x174/0x1f0 [pmbd_vmaster_fixture]
-     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
-     ? __pfx___might_resched+0x10/0x10
-     proc_reg_write+0x1fb/0x2d0
-     vfs_write+0x25a/0x1010
-     ? __pfx_proc_reg_write+0x10/0x10
-     ? kmem_cache_free+0x242/0x580
-     ? __pfx_vfs_write+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? putname+0x93/0xe0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_sys_openat2+0x12a/0x1b0
-     ? __pfx_do_sys_openat2+0x10/0x10
-     ksys_write+0x111/0x200
-     ? __pfx_ksys_write+0x10/0x10
-     ? irqentry_exit+0xbe/0x820
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f0b835a9687
-    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    RSP: 002b:00007ffc82ea0360 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-    RAX: ffffffffffffffda RBX: 00007f0b83517780 RCX: 00007f0b835a9687
-    RDX: 0000000000000005 RSI: 0000564f8a21d074 RDI: 0000000000000003
-    RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
-    R13: 00007ffc82ea04f0 R14: 00007f0b83755000 R15: 0000564f8a21ed78
-     </TASK>
-
-    Allocated by task 485:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_noprof+0x2d7/0x770
-     snd_ctl_new+0x51/0x190
-     snd_ctl_new1+0x13c/0x650
-     0xffffffffc04011b5
-     do_one_initcall+0xf3/0x4e0
-     do_init_module+0x281/0x8e0
-     load_module+0x658c/0x7cc0
-     init_module_from_file+0x15b/0x180
-     idempotent_init_module+0x22d/0x770
-     __x64_sys_finit_module+0xd2/0x160
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 492:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     __snd_ctl_remove+0x2ac/0x3d0
-     snd_ctl_remove+0x46/0x70
-     fixture_write+0x1ae/0x1f0 [pmbd_vmaster_fixture]
-     proc_reg_write+0x1fb/0x2d0
-     vfs_write+0x25a/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff888107957d00
-     which belongs to the cache kmalloc-192 of size 192
-    The buggy address is located 80 bytes inside of
-     freed 192-byte region [ffff888107957d00, ffff888107957dc0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x107957
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000423c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000100010 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff888107957c00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff888107957c80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff888107957d00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                     ^
-     ffff888107957d80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888107957e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-    ==================================================================
-
-Fixes: ae07eb9bf23e ("ALSA: vmaster: Add snd_ctl_add_followers() helper")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-6c0b7e841529ddd0b21a-v2-b53dbcd593a7a4bd9582@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: eb71d1bb270e ("Input: wacom - use dev_xxx() instead of naked printk()s and dbg()s")
+Reported-by: syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b5a7cd83622c747977de
+Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/vmaster.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/wacom_wac.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
-index 94bfcdd29c3cd..584ad528c86e4 100644
---- a/sound/core/vmaster.c
-+++ b/sound/core/vmaster.c
-@@ -288,6 +288,8 @@ EXPORT_SYMBOL(_snd_ctl_add_follower);
-  *
-  * Adds the multiple follower kcontrols with the given names.
-  * Returns 0 for success or a negative error code.
-+ *
-+ * Note that this function takes card->controls_rwsem lock internally.
-  */
- int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
- 			  const char * const *list)
-@@ -295,6 +297,7 @@ int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
- 	struct snd_kcontrol *follower;
- 	int err;
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index d7aabed4b555a..8b34ec796b9fb 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1073,10 +1073,10 @@ static int wacom_intuos_general(struct wacom_wac *wacom)
+ 	return 2;
+ }
  
-+	guard(rwsem_write)(&card->controls_rwsem);
- 	for (; *list; list++) {
- 		follower = snd_ctl_find_id_mixer(card, *list);
- 		if (follower) {
+-static int wacom_intuos_irq(struct wacom_wac *wacom)
++static int wacom_intuos_irq(struct wacom_wac *wacom_wac)
+ {
+-	unsigned char *data = wacom->data;
+-	struct input_dev *input = wacom->pen_input;
++	unsigned char *data = wacom_wac->data;
++	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
+ 	int result;
+ 
+ 	if (data[0] != WACOM_REPORT_PENABLED &&
+@@ -1087,23 +1087,23 @@ static int wacom_intuos_irq(struct wacom_wac *wacom)
+ 	    data[0] != WACOM_REPORT_CINTIQ &&
+ 	    data[0] != WACOM_REPORT_CINTIQPAD &&
+ 	    data[0] != WACOM_REPORT_INTUOS5PAD) {
+-		dev_dbg(input->dev.parent,
++		hid_dbg(wacom->hdev,
+ 			"%s: received unknown report #%d\n", __func__, data[0]);
+                 return 0;
+ 	}
+ 
+ 	/* process pad events */
+-	result = wacom_intuos_pad(wacom);
++	result = wacom_intuos_pad(wacom_wac);
+ 	if (result)
+ 		return result;
+ 
+ 	/* process in/out prox events */
+-	result = wacom_intuos_inout(wacom);
++	result = wacom_intuos_inout(wacom_wac);
+ 	if (result)
+ 		return result - 1;
+ 
+ 	/* process general packets */
+-	result = wacom_intuos_general(wacom);
++	result = wacom_intuos_general(wacom_wac);
+ 	if (result)
+ 		return result - 1;
+ 
 -- 
 2.53.0
 
