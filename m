@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017594;
-	b=jSN284fJAdQsOo2lz22rDWT97GNiEkE183mDcjMHHCWNfBpRrVvUS2Ey42+zNbPsr+Vw
-	 8jgTVtecbuLjDv0PAu78n54z13PFF+6gR4+VsDElbbGrdvdMAX8al8F2eMZIQ47Dxw4wA
-	 zOxKpzuBdAtwfD02uEJgGyI6sVian6clKbUobba05wQRkLvSpxUqnJ+Ik38omwa51KQ0x
-	 RizUVcSsWUZVUe3Suk9quhiDzzPik2HPp+oFYvPnUmsdXDMed5NRX6+Rzoe9X0USTfjHb
-	 VYacXDfKiWPxALiMUITFJUgzwurYBPFgae3dk92enWf9ATsAIVbuOWUX3YWjtVEenGg==
+	t=1795017597;
+	b=UsSwlJcVER36Vt1Ey6yYprqUZh97OMTKXkNR/cANJjTPnlHrU9YN/mooxtwMjGJ1ATkn
+	 upF+jivbpcNkpfDWyTADLiHEdoSekCwaR9XZwvz6PFezJS40ooeSG/PtN4S20lc4Er+pS
+	 XLAJVTc1kLjG9nr43ykp5xZ9O3PLrZgAWHRfMUZUl2kLfe8b3HKZi4tSan4pzJ5rcG2dz
+	 6+41cJCk7PCsSCvJOwLzSk6IWpUon9k7EBCPbdRyai1H96UmQxdObiKK523fc2Uk7Jmdu
+	 9EmE6zvdN37X87YYs6lZLHOpIhwGIctNJ/HbgcG2Bhm7CXv/d8RCTKbg4iGBGweVfgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NGeZxGKHKgopfBqSFpk3yn60jj5hG6wkEb7nopEsuxw=;
-	b=4p8CZw0aXtPi3URRbpk8kaQOluMZGKX6iCyqIoNvMvtaCOb1V56kQ/Yd3Ych/fxu5u86
-	 s9kyes/LhMr6KLtxQbxehbd69AH3vTbBueo0utr8XZ+pl1rRFf3CEwLVcqpynSJrRk4Xp
-	 wN0ADlwe6KMqXt3PpsTzU5ykPpy2Q8asiq6cD7+LTvBO5Bfuk6gXlJBrJyTDIU6zQ05gw
-	 /h6shSvFOVX9gkI2zWBEdAvNb9TefWYwZXdcExHneNAQT03bllr2hilPJcaY3i044eQs2
-	 96gHe7gLXETTQMH7E3ZUnVTxW/SuzTc+HIaV93HtrROvdRZA0bm4iwpmKXawZT7Giaw==
+	bh=i8LnCxykpuIulq1QvKaU/PuGK2X5W439nkWckg5eBQ0=;
+	b=yrWGzebMfHxvXd+GNVrsngf5Iai3k8rJW+YLsXwVuaM1rKcrIXlxa4JaBMMgdNTfLV9B
+	 J6dfaRbIPeduIOnw9CfWDeKPQrN/XFDqHSw4pCrRoKSK8vyQkVkHjoo3eTOwDLSc5laf3
+	 CSPFogeepe8GpMA5elJAeczNoGcycOmU8oXYro9STgYHa2GqZbeJOHfBlh6z8hVmWbLW2
+	 LgJ0PUA861IuaFWbOXc1ta3oV1cgshBKFq3Tg2Zyz7SQqO45R5aDAExeIfEgJwbZYx2cJ
+	 3soHicYFIGLQFax3AYwVSAli0WjHaCejp9vjYiyAwwcv8gCA5gXmwNxgmmhxiMg80KQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfp5BE5J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNMuXZ6x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D567606A31C;
-	Wed, 18 Nov 2026 15:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E3A606A320;
+	Wed, 18 Nov 2026 15:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kfp5BE5J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A3A1F000C5;
-	Wed, 18 Nov 2026 15:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNMuXZ6x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C971F000C5;
+	Wed, 18 Nov 2026 15:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017594;
-	bh=NGeZxGKHKgopfBqSFpk3yn60jj5hG6wkEb7nopEsuxw=;
+	s=korg; t=1795017597;
+	bh=i8LnCxykpuIulq1QvKaU/PuGK2X5W439nkWckg5eBQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kfp5BE5JQqG0o/T6V2tHDTwc3Mn5S5PUEhiyex0kRGLJfMXjtFOKEnQTIXFM+ZXC0
-	 2g3HhXpyma96PnCYxkF0PT0ZElitdokB88GuJ3UtpHLPkFskeqK8uzJWveEd1XLSeB
-	 Imdv/64SmWxkSHGinFY1ojPG4LfUJ67HuVT6WY5s=
+	b=HNMuXZ6xQYK9LsmBX/yWFw1MH9vxBG/1gdeViFlhfd6JOHm0t3YEBQw9/IyLFG/IL
+	 XRLFZYSL3Xu9DoZ0DxW6RD64izOyHU3QwEIkEJpw+U2EW79+EZ/uXbUjN4X09TrJki
+	 OSiCoFzC8fzh6O2Itr//5mtgChADH/LXzmAfIBH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 7.3 0913/2651] kbuild: keep .modinfo when vmlinux is linked with --gc-sections
-Date: Wed, 18 Nov 2026 15:35:53 +0100
-Message-ID: <20261118150320.759845635@linuxfoundation.org>
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 0940/2651] RDMA/mlx5: Set RQ event handler for raw-packet QP
+Date: Wed, 18 Nov 2026 15:36:20 +0100
+Message-ID: <20261118150321.719955438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,62 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit a98db7418797bc27bef53c861b97ac748f598414 ]
+From: Yishai Hadas <yishaih@nvidia.com>
 
-Builds with CONFIG_LD_DEAD_CODE_DATA_ELIMINATION=y, such as arm
-allmodconfig, now fail while extracting modules.builtin.modinfo:
+[ Upstream commit a4fa6497002c80b55ebe597242a1bba2ff268886 ]
 
-  arm-linux-gnueabihf-objcopy: vmlinux.unstripped: can't dump section
-  '.modinfo' - it does not exist: file format not recognized
-  /bin/sh: 1: cannot open modules.builtin.modinfo: No such file
+create_raw_packet_qp() creates a separate firmware RQ object but never
+assigned rq->base.mqp.event. Any firmware event on this resource (e.g.
+WQ_CATAS_ERROR, WQ_ACCESS_ERROR) calls through a NULL pointer.
 
-or, with LLVM:
+Set the event pointer before the RQ is inserted into the resource table.
 
-  llvm-objcopy: error: 'vmlinux.unstripped': section '.modinfo' not
-  found
-
-Nothing references the MODULE_INFO() strings, so --gc-sections
-discards every .modinfo input section and vmlinux.unstripped ends up
-with no .modinfo data. This is not new: ever since
-modules.builtin.modinfo started being extracted from
-vmlinux.unstripped, these builds have silently produced an empty
-file, losing the modinfo of every built-in module. An arm
-multi_v7_defconfig build with LD_DEAD_CODE_DATA_ELIMINATION on current
-mainline yields a 0 byte modules.builtin.modinfo. The switch to
---dump-section only turned that into a build error.
-
-Wrap the input section in KEEP() so that the linker retains it. The
-output section is still (INFO), so nothing is allocated for it. With
-the same arm config, modules.builtin.modinfo now has 14119 entries,
-and on x86_64 defconfig, where nothing is garbage collected, it is
-byte-identical before and after this change.
-
-Found by KernelCI builds of the linus-next tree.
-
-Fixes: 39cfd5b12160 ("kbuild: extract modules.builtin.modinfo from vmlinux.unstripped")
-Fixes: 5fe4dd596641 ("kbuild: do not allocate .modinfo in vmlinux")
-Assisted-by: LLM
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20260927161227.1179863-1-sashal@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 0fb2ed66a14c ("IB/mlx5: Add create and destroy functionality for Raw Packet QP")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260915140933.40580-13-yishaih@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/vmlinux.lds.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/qp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index a6730d34e8c67..7a3e9f00d6283 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -855,7 +855,7 @@
- 		KLP_SYMID
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index a19572bfaf8af..0f95898182e3d 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -1647,6 +1647,7 @@ static int create_raw_packet_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
+ 		}
  
- #define MODINFO								\
--		.modinfo (INFO) : { *(.modinfo) }
-+		.modinfo (INFO) : { KEEP(*(.modinfo)) }
+ 		rq->base.container_mibqp = qp;
++		rq->base.mqp.event = mlx5_ib_qp_event;
  
- #ifdef CONFIG_GENERIC_BUG
- #define BUG_TABLE							\
+ 		if (qp->flags & IB_QP_CREATE_CVLAN_STRIPPING)
+ 			rq->flags |= MLX5_IB_RQ_CVLAN_STRIPPING;
 -- 
 2.53.0
 
