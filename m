@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035235;
-	b=s13wiv3LELFNUvNrW1bi1lYzsf3Aaubufq+3QPsI3MZEmkU9BIpgejlgQ3ql8STfWWPK
-	 0dc6NsrADUsxDWaB6S3hHryGN7o1LMzHURm+W+DBEH7TVMOkbIrt8BC/Gd3VF/MW7MikK
-	 bxohbK/IHxiI3/dsK1281Uuh89hMovDqBwokm4KRFl5GVl0p+RszBQXHZezW9+r0iz/tq
-	 OjcSWH5Oax3eEEDMJKWY2hWCx032uPj3o+RH6TQvKIivNwMxf1D/wdVwRI1GX3OSgah+9
-	 pGL/q1nNDXD+z1/Enc0S1LLIJNJ7r8NlkZZNDlZtdq7zDsDRzaiDYrcd3WztPHKqnfg==
+	t=1795035238;
+	b=jK0/3XGF1FYSEJWpkO6+5QwX1RG41KnYGN4m/CxCXk2APrVP4WVf54oxAEdu27vRKMJM
+	 ZcEITZAMhWcvSu5L61w7P664+oz6FNd/+NolX45wlorp0oB5NktQgb/GTL+w7FJaR4voB
+	 B7Eok1q58AK8cRkqRniLQNmgwgjoVMZbbX6JfUK/7sShc+i9PtB33i2RrlZtxN8QAr63W
+	 nrmNW4qvnACiuD/MnBCcd5yECoPkdXC7vohucvn5UzAmaDuRUg7I7tU1VgU7cWe7Q02FF
+	 VTpYfq1EIg89YeMwWwDZrSNlQaXvWywy04B1YwHZOx/rh79yiZk/RJdjgcY+0mqpp5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kwmbstO6uI0/TxBpyeggjxGcQFTVrEhW1BxuE+kxy7Y=;
-	b=ZXCjaN3a8YDHcuakfANPYH+I5PV/BMK3z2WX+CLtZdBSfIULpiONK9JOkanb5IPmJIsg
-	 xdcXXkc1d+EI4ja0OZtamfREtmmAJwsLIQcfLI9zUPYlfTzR1Ah6Mk5PkhNnJ9jEM37W7
-	 RCeo39K/bZGDORF9bc/IRPxNepimCMkCY4IgbRSUbvNwylebaIJZ8kAUbLp0Vr8OyNFhj
-	 BU3k44f6kxYU3DvHWAd09pxkko28UY3h7K8FqUFMPQ3YHSDhxXds1m24Uktn3JE5aOf/0
-	 UdrH/2p1QW5h7dqpXOC1dURrfN2cHxYDe1ZCgQpxvg8SsL0ab36KE7J9pfybkwGB+TQ==
+	bh=8Jvao30bTbH4WagoUSVd4nmnfYLucpgLuowjSuAE0Kc=;
+	b=O17mTIHo5P6bL+Rhiv5s/NbmwpIouqYaO1iPOuNBmtHMUF2WgtuII8+3cgPmcsi222Fz
+	 5Bg92wdLQCcgoBnFKcf4TvW/zmHMxanfxWRFueiR71XuyO3nWIGgTepMcfUPrB2dYfzsm
+	 3uK6Z+5zFJyZhdYlDX3qtb9owogApXyKB7pW/Vx5XQNHzWkOBd8Q/v73GkWBff5leVybT
+	 gdA6IFjTmUG0jhNEtgkrdd6qEMu2xR3JCW8nh/77kvjpWFVKUxWxD9zZE/L3JT1F9Pcem
+	 u35PxJIpMAV6lj9z9hpPN+IdwoJMCPlCE8mL+NS0WyEfnVPqfNQN76BLjYUhtDdz8aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOVuKM15;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odRDDTKg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A65606A332;
-	Wed, 18 Nov 2026 20:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B2E606A320;
+	Wed, 18 Nov 2026 20:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOVuKM15
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBF01F000C4;
-	Wed, 18 Nov 2026 20:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odRDDTKg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4845A1F000C4;
+	Wed, 18 Nov 2026 20:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035235;
-	bh=kwmbstO6uI0/TxBpyeggjxGcQFTVrEhW1BxuE+kxy7Y=;
+	s=korg; t=1795035237;
+	bh=8Jvao30bTbH4WagoUSVd4nmnfYLucpgLuowjSuAE0Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOVuKM15v11JSMItBc8if0ASU0tb8yttR8pDcjVIHGc8M9RsIoXYOCAVQ6Mgv5NI8
-	 3rB14Kmkm9b2Vu6IVA8qciePk2pWXdiDG5G5wbCzS7SxxOuSxSiibnlrwr4yWzSgLz
-	 jtYhrSqigwSQW+9hpRISRNpi/ILgobh3+gEQbxzs=
+	b=odRDDTKgRm7pViDWEFI1JpebuhetRiN5t5HNSeN54P488vzFJMJFOXb5z8lnmFMvP
+	 B+zfjdfAletckYE7vVVDiSW555q3rTpnXc811KybXdsEcZooE1/oOBE/odneIT8Uiu
+	 VL53EQRNvTkNbV2ze4pVyecdfMClyXqJV/uS/ap0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.6 0654/3318] xfs: fix unnecessary dapos truncation in xchk_dir_walk
-Date: Wed, 18 Nov 2026 15:21:16 +0100
-Message-ID: <20261118150337.649259399@linuxfoundation.org>
+Subject: [PATCH 6.6 0655/3318] xfs: assign an owner to scrub_stats_fops
+Date: Wed, 18 Nov 2026 15:21:17 +0100
+Message-ID: <20261118150337.686337027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,38 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit f60a2ef8d8a7ac6dedf4d0c3325cc3fc2fe0d948 upstream.
+commit fe67a493c7a76cf75556152af24285a114f69d34 upstream.
 
-LOLLM points out that the all the implementations of xchk_dirent_fn can
-handle a signed @dapos parameter, so the truncation here breaks the
-information captured in scrub tracepoints if the directory is very
-large.  I don't think it ever made sense to do the truncation for the
-VFS readdir code for programs that can handle 64-bit offsets, but commit
-15440319767942 has been around for 17 years without complaints so I'll
-leave that alone.
+LOLLM complains that file_operations structs for debugfs files are
+supposed to have an owner set so that the module can't get unloaded if
+someone's sitting on a debugfs file long after unmount/rmmod.  Fix that.
 
-Stumbled-over: 15440319767942 ("[XFS] truncate readdir offsets to signed 32 bit values")
-Cc: stable@vger.kernel.org # v6.4
-Fixes: 4c233b5c4f29df ("xfs: streamline the directory iteration code for scrub")
+Cc: stable@vger.kernel.org # v6.6
+Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/readdir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/stats.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/xfs/scrub/readdir.c
-+++ b/fs/xfs/scrub/readdir.c
-@@ -239,7 +239,7 @@ xchk_dir_walk_leaf(
- 		dep = bp->b_addr + offset;
- 		length = xfs_dir2_data_entsize(mp, dep->namelen);
+--- a/fs/xfs/scrub/stats.c
++++ b/fs/xfs/scrub/stats.c
+@@ -286,6 +286,7 @@ out:
+ }
  
--		dapos = xfs_dir2_byte_to_dataptr(curoff) & 0x7fffffff;
-+		dapos = xfs_dir2_byte_to_dataptr(curoff);
- 		ino = be64_to_cpu(dep->inumber);
- 		name.name = dep->name;
- 		name.len = dep->namelen;
+ static const struct file_operations scrub_stats_fops = {
++	.owner			= THIS_MODULE,
+ 	.open			= simple_open,
+ 	.read			= xchk_scrub_stats_read,
+ };
+@@ -313,6 +314,7 @@ xchk_clear_scrub_stats_write(
+ }
+ 
+ static const struct file_operations clear_scrub_stats_fops = {
++	.owner			= THIS_MODULE,
+ 	.open			= simple_open,
+ 	.write			= xchk_clear_scrub_stats_write,
+ };
 
 
