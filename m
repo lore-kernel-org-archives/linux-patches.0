@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060299;
-	b=XlM3CXvSx5mu8Iu01UBkro3Lnjnj4VlKYu0iyPBDdL4q26esSD/M2oEpA2RK3+UQP0AZ
-	 APPJFQhPJ5rWWcxWKqV29RjghJsSzHcDZgMBary4FssTNx170SIkN3cZ55rwZYfZ6EO8a
-	 p38TNNj+3SkdBZr0gPZaGZKSdd+bPsCPoapnkAC8pFRLyxHOKl7bJFTZJaQpFyPMMpLmC
-	 Ni/GsOrveYYx/pLbhLPQKISaCDv01a/ZzlwtCV7T968UiBkcB2aBVn/ldH0L5nWs77iR7
-	 NWEigwmLHXkZ4DVkIQ97lRqEEWJek+GVWpQpfm7c9Hk583okKVDq42iaBirbHgoprzw==
+	t=1795060301;
+	b=gy8wNSwVIRjyxjknLzor85OfxNLSqqrnIrywjIyKWwBQMKOQDud4vLfmcNmLc378Nv7M
+	 nt6A/eigdnSXlPV22URdaz84l0YVSmn1hFhVOxCla5KZstFhO6IucJ+MaOEZmbnxQAjma
+	 DsnbBKRK66nvjCk7Sm4j5SAFIcwm1O3H3Rrdfjr6HVuFsNlosOVJO13O8cbGpHgrxLDHa
+	 hQ2YO5q+wdDOzfr7Q4Q+jBiRE2nxppHpQib74+LPMs95ymXJb7FVMMFWjkksszNNwjKvQ
+	 nnWtmuDFBHSz746yhVZsNcmVsqj7Lb+6qxOvJqDLzJeIvfcfkr96Q7LVroTBI9HY6Qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060299;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060301;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=GjQ/Ki/GP4y2VhhDaocScTUomj9xdYechvjh9sb196k=;
-	b=k4XFZyeeT6YUACyvvOy0vqP4K5Xcx+IQmTT4gUq/mxNJnBJzhRk6f00S2TzL1okfVrlH
-	 HddwSk+wh5ti4Zth8wFVpZI/SY8B8XG+BggsDkDDM/T2+MUMWzCcEyuMsrQJMARAivFQu
-	 CLf7i4muCYCesPhF+PUspocoV0f6XGzCjJYWwo6jE3VGpyBV9xIiUe21nHlMs0yFj8Xxc
-	 iWYe/BTpiptP1Pg0w0kaTArIGj+UVU/3WEVu64aYgTB8BDS3Pdu72v9XmVU8lOoDm8qsR
-	 44VpUncE/pNZE9xwUQT2Rt1n/gVxG6MiZg+TN7KxYuSu7hfmcz8tgavXcRCeV+Jnssg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=rbf2vD35AoWiUa2QIgrxyB4vfLkN1g/KHoOzXUblWP8=;
+	b=htbkqCP4B6Ixo6+XZIJ8f0BNnef3WLMa4LM9QZBLG9C3qO6StgrZfNyJhkNw2ojN41Kg
+	 5rKi0NjLjcKaPbJzC2b5nI7MclI5gK8qCRLmjC7X6ajla8AP/TEsB1ay+O5UlZayj+Igw
+	 BZQNOaM94BrasHjYAvyYbidU0drlgx67uH+V3rWGCBVAp/Ziru8IIJJ0/5C4h+9MYGark
+	 smdustb4mN3yRDNm6BUCpHNSdgRzT8Kuyc2E3oiH0d7gSnPqb/LlBvRE+LVXlAFZ6EkEW
+	 RAmn7XliozR2yvPpWJIiqXgPxg6qmf2PXVbPEw1jdh7TIl1EkF81Fpnb/n68bMsQVJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DD3GAExe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aKffxBK8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2039B606A320;
-	Thu, 19 Nov 2026 03:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAD5606A325;
+	Thu, 19 Nov 2026 03:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DD3GAExe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716BF1F000C4;
-	Thu, 19 Nov 2026 03:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aKffxBK8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3C51F000C4;
+	Thu, 19 Nov 2026 03:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060299;
-	bh=GjQ/Ki/GP4y2VhhDaocScTUomj9xdYechvjh9sb196k=;
+	s=korg; t=1795060301;
+	bh=rbf2vD35AoWiUa2QIgrxyB4vfLkN1g/KHoOzXUblWP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DD3GAExeILxZLM9ZBh5JdvCohZ3Q42lkySbJAOPPyvGSUdLUtPqoXR6ymGXu1uYNF
-	 QS33t4I3R+yT0Bp6cih1aL/DUuy0OaQ1XNGqxOUIWcWDnxdQr1N1f2sUHxHaC0t+OP
-	 fADGN2TtWrt0zbCiWoPFNZgN8bWr/ZpuXaPwJN4A=
+	b=aKffxBK8zy/kumuRwstH6vQW92xPAvSL/5o+IShjaJWcik3nCR3jPyKcBOZ+ZV2As
+	 +058FmKs5zVqSNpCeV8dFpofWSeqrNl+/c+we77eeeqZUoZXvPobizp3U8f4/+T3R3
+	 tiPZd/X8Tp775B8siLW7zCA5rnKLL8WlGU62LZO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1147/1848] remoteproc: qcom_q6v5_adsp: Fix double jiffies conversion in adsp_start()
-Date: Wed, 18 Nov 2026 15:53:05 +0100
-Message-ID: <20261118150007.766931330@linuxfoundation.org>
+Subject: [PATCH 5.10 1148/1848] pwm: renesas-tpu: Implement .apply() callback
+Date: Wed, 18 Nov 2026 15:53:06 +0100
+Message-ID: <20261118150007.805101225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,54 +63,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit f559ef6316971fe39dc5f5edd6a483429ba03768 ]
+[ Upstream commit ec00cd5e63f05461ab48128775c73c851c3c2b18 ]
 
-adsp_start() computes 5 * HZ, an already-converted jiffies count, and
-passes it into msecs_to_jiffies(), which expects milliseconds --
-reinterpreting the value and shrinking the intended timeout. Every
-other caller (q6v5_start() in qcom_q6v5_mss.c, qcom_pas_start() in
-qcom_q6v5_pas.c) passes msecs_to_jiffies(5000) directly, matching
-qcom_q6v5_wait_for_start()'s kerneldoc, which documents @timeout as
-already being in jiffies.
+To eventually get rid of all legacy drivers convert this driver to the
+modern world implementing .apply().
 
-On CONFIG_HZ=250 this shrinks the intended 5 second timeout to
-~1.25 seconds, causing a DSP that legitimately takes 2-3 seconds to
-signal ready to be spuriously torn down as a boot failure.
+As pwm->state might not be updated in tpu_pwm_apply() before calling
+tpu_pwm_config(), an additional parameter is needed for tpu_pwm_config()
+to not change the implemented logic.
 
-Fix by passing msecs_to_jiffies(5000) directly, matching every other
-caller.
-
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Fixes: dc160e449122 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260831-b4-adsp_start_jiffies_fix_upstream-v1-1-9f8cf85ea220@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 62cff15fbf2b ("pwm: renesas-tpu: Fix runtime PM reference leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pwm/pwm-renesas-tpu.c | 44 ++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index c39138d39cf07..03f258d9c23a8 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -230,7 +230,7 @@ static int adsp_start(struct rproc *rproc)
- 		goto disable_adsp_clks;
- 	}
+diff --git a/drivers/pwm/pwm-renesas-tpu.c b/drivers/pwm/pwm-renesas-tpu.c
+index 81ad5a551455e..7f5d2bc3d5dda 100644
+--- a/drivers/pwm/pwm-renesas-tpu.c
++++ b/drivers/pwm/pwm-renesas-tpu.c
+@@ -242,7 +242,7 @@ static void tpu_pwm_free(struct pwm_chip *chip, struct pwm_device *_pwm)
+ }
  
--	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5 * HZ));
-+	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
- 	if (ret == -ETIMEDOUT) {
- 		dev_err(adsp->dev, "start timed out\n");
- 		goto disable_adsp_clks;
+ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
+-			  int duty_ns, int period_ns)
++			  int duty_ns, int period_ns, bool enabled)
+ {
+ 	static const unsigned int prescalers[] = { 1, 4, 16, 64 };
+ 	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
+@@ -293,7 +293,7 @@ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
+ 	pwm->duty = duty;
+ 
+ 	/* If the channel is disabled we're done. */
+-	if (!pwm_is_enabled(_pwm))
++	if (!enabled)
+ 		return 0;
+ 
+ 	if (duty_only && pwm->timer_on) {
+@@ -366,13 +366,45 @@ static void tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *_pwm)
+ 	tpu_pwm_timer_stop(pwm);
+ }
+ 
++static int tpu_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
++			 const struct pwm_state *state)
++{
++	int err;
++	bool enabled = pwm->state.enabled;
++
++	if (state->polarity != pwm->state.polarity) {
++		if (enabled) {
++			tpu_pwm_disable(chip, pwm);
++			enabled = false;
++		}
++
++		err = tpu_pwm_set_polarity(chip, pwm, state->polarity);
++		if (err)
++			return err;
++	}
++
++	if (!state->enabled) {
++		if (enabled)
++			tpu_pwm_disable(chip, pwm);
++
++		return 0;
++	}
++
++	err = tpu_pwm_config(pwm->chip, pwm,
++			     state->duty_cycle, state->period, enabled);
++	if (err)
++		return err;
++
++	if (!enabled)
++		err = tpu_pwm_enable(chip, pwm);
++
++	return err;
++}
++
+ static const struct pwm_ops tpu_pwm_ops = {
+ 	.request = tpu_pwm_request,
+ 	.free = tpu_pwm_free,
+-	.config = tpu_pwm_config,
+-	.set_polarity = tpu_pwm_set_polarity,
+-	.enable = tpu_pwm_enable,
+-	.disable = tpu_pwm_disable,
++	.apply = tpu_pwm_apply,
+ 	.owner = THIS_MODULE,
+ };
+ 
 -- 
 2.53.0
 
