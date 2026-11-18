@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046262;
-	b=1hxTVPmB8JCS1hJFc6m2tWwPw4Qhu6n9Dwv4eZc61MkQBlpshzL5RNqvCm5OCBvHmnrl
-	 oN9OMJXmcUyj5bGyvih6AAplGH8SQ83i9eJipieDE3wwGXbrAIDMWc044yyGcXhhmKBiM
-	 fFs5RHSYlL2hlxAmGbO5aCHI+S30wiAuUCD3qCLk4DMP6K1XR+Ek4oc2iHTn+WJVrOaGY
-	 mo3/FEVDdIgWEniZ3dJKTjsgLwQhOWwI3nSPS/+AjT7EAuHb52WOt2t3RyhBwi2CGrvpy
-	 LaSrPjLhdTcpaOSiPOnyLUp1Dr0gy5GHPhPekBUxE7HAkkev1DBrEw4A9lNgGrWNcCg==
+	t=1795046265;
+	b=VG4M9vtThBqxlpiYrjahYc8kh80TQLqfsCqFGCTZ8U19TuUAg/wb7uxTB6i+1deq+Qz3
+	 e0JG1unYiBFJclKWFEvttz81YY69dvtk5Fu7i+KbsjTpNNSXg4W/Cuabyb22QWtojwqH6
+	 41MT/KS+zq1fMWV8jOcIgzcuaWKNuFUuGGlpNmZ9GqVLh/xl4ucGDDhZQMdwFuVszYPst
+	 Aj8UtP9OZ4r+FQVIwGSSOoVOv/43OovLZLf2qNCGshvKm3op7SyoyuECadp0jTMj+8SJk
+	 NvVGpl5t+YTvmisVEMjbajfOnGBkq+Xa4f3Aq/GqUWE2ngPzCDPVUx2UOq5cukXrMgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cHmcT4NW5eE7PX4FHccyT+1kLhZq9WHZGtu7LQaPeBA=;
-	b=hSwWt2rXZ5cwLUfIlUSJTh7Fh0kaBh0Xp0c8V2YyUAM0R05fuZTO8OglCO2yGUnKVPUH
-	 Uj9zAIG7vc8bivlbZgXLr5yTj8T6UGAUweIkDvGidRK4M3OzcKEhFTS07Ql8LbOKf6PzM
-	 dBAFbnMUcsudNet41PylrF6BnaNuPj57zNSJZCwh0FwPagyF/Jafxwlrst+VohwZp/qzt
-	 f4p88jll7Qrlx1Uc2gpgVu9Fp8mB5IjzcOaKI7+hWW7dua4+d+4Xge5ECQBd3gkQy+H1x
-	 oCYmAxB4nKpEDOndcjpYSb3pMu1n7dJceO/DL4nYlPqmuXP1FlBwWnAAh7k2BBx5pgg==
+	bh=+wXkdTsD1YhflRa2eaD3PiIpyUBBUoyF+4ysUqu28SY=;
+	b=ykE/4B+4AsFKnPjulHZMrxU1PR3TeO2irhWw6ohRrTCx9+giRo46DO04Dbz98H8ngYxM
+	 9VuWd1p25sFPQ3+mjAjsLhztWo7uTIInM7tlQv3eQPta9FPE8BhgJKHvEhpRVe/USfkE2
+	 bFQigq4Eynd0u0kPZyhzvmvfzqBOZjngvttPDtw7kEWf7bgin54QMBnbODB6cbbKIPBx9
+	 p46PhWne569aZGdmb1cFgn0LeTj2r4W2ZntBDkKtKfRw5l58Q8WdEu9r4J1NQ2z4dsjtB
+	 G2S7jak8eR1RkD048CJe3EGysejlosbJ0/TrlWRjBAAIhp9Sx4F2g8dNqnpGbeD/Gmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUfRwMrs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wx7EsqKU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731BA606A325;
-	Wed, 18 Nov 2026 23:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BAA606A325;
+	Wed, 18 Nov 2026 23:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rUfRwMrs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C457E1F000C4;
-	Wed, 18 Nov 2026 23:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wx7EsqKU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA941F000C4;
+	Wed, 18 Nov 2026 23:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046262;
-	bh=cHmcT4NW5eE7PX4FHccyT+1kLhZq9WHZGtu7LQaPeBA=;
+	s=korg; t=1795046265;
+	bh=+wXkdTsD1YhflRa2eaD3PiIpyUBBUoyF+4ysUqu28SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rUfRwMrsucevVFoaahL39VA7WVfjtzZc6GBt+veMIfT33T0+HNAcXO+f6qyMR3Y2Y
-	 xJINWx92yZk1ayvgqT3wH9SDRQK3WpaFK9t6RTUMp8zRTovZmHERjHVaapOgPIJEMO
-	 TIAkFfzrI0ZOdxiybuQFKUh1TOSGPIGaMMyEnshU=
+	b=Wx7EsqKUJnUXfSm2fzmyRVUGDuK+rhvCV27s8YbhhJ902V7vzVMLJscIUqXS67SoE
+	 CdmtAdrItqnfFLRiqU/oUwEroBKouKw3nrK5eSmNC8x7gpTMZHSDPSZ7f+0NolxVdH
+	 FmDG8DE2nKuweV+7nJZRF644DXMjzacFo24X3DcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1219/2857] bpf: Fix skb_pull() BUG in __bpf_redirect_neigh()
-Date: Wed, 18 Nov 2026 15:37:33 +0100
-Message-ID: <20261118150245.468135579@linuxfoundation.org>
+Subject: [PATCH 6.1 1220/2857] ksmbd: require DELETE access for delete-on-close opens
+Date: Wed, 18 Nov 2026 15:37:34 +0100
+Message-ID: <20261118150245.502730049@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,143 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit 23503acb214cbefaf3945d05ab9667ff11ae3de9 ]
+[ Upstream commit 1dd91081ba3c692565f9c1f884149178d5a06d1e ]
 
-The issue:
-This is a follow-up to the short link-layer header fixes from Eric.
-After vlan pop_eth, a privileged SCHED_ACT BPF program can call
-bpf_skb_change_head(skb, 1, 0) and then bpf_redirect_neigh().
+smb2_open() accepts FILE_DELETE_ON_CLOSE on an existing file without
+DELETE in DesiredAccess. When the request asks only for
+FILE_READ_ATTRIBUTES or READ_CONTROL, it also skips inode_permission()
+and the parent directory MAY_WRITE | MAY_EXEC check that delete-on-close
+is meant to get. The file is then marked for deletion by a caller who
+could not delete it.
 
-__bpf_redirect_neigh() calls skb_pull(skb, sizeof(*ethh)) after checking
-only that mac_header < network_header.  Nothing verifies that the MAC
-header is long enough, that it is linear, or that the IP header the
-redirect goes on to read is linear either.
+The unlink happens later, in __ksmbd_inode_close(), when the last handle
+on the inode is closed, and it runs with the credentials of that handle.
+If the caller closes last, the unlink fails. If another user who can
+write the parent directory, such as the file's owner, still has the file
+open, the file is deleted when that user closes it. Until then new opens
+of the file fail with STATUS_DELETE_PENDING. So a user with only search
+permission on a directory can delete a file in it, or block opens of it,
+while the owner has it open.
 
-A SCHED_ACT BPF program can do:
+A MAXIMUM_ALLOWED open that also requests DELETE has the same problem.
+The requested access is replaced with the maximal access, which does not
+include DELETE when the caller cannot write the parent directory, and the
+later permission checks are skipped as already done.
 
-    bpf_skb_change_head(skb, 1, 0);
-    bpf_redirect_neigh(lo, NULL, 0, 0);
+MS-FSA 2.1.5.1 requires an open with FILE_DELETE_ON_CLOSE and without
+DELETE in DesiredAccess to fail with STATUS_INVALID_PARAMETER, and Samba
+does the same. Add that check to the CreateOptions validation, using
+the generic-mapped DesiredAccess so that GENERIC_ALL still qualifies.
+This also refuses MAXIMUM_ALLOWED with FILE_DELETE_ON_CLOSE but no
+explicit DELETE, as MS-FSA and Samba do. When MAXIMUM_ALLOWED is
+requested with DELETE but the maximal access does not include DELETE,
+fail with STATUS_ACCESS_DENIED. With DELETE requested, delete-on-close
+opens go through the existing parent directory check.
 
-after vlan pop_eth.  The skb then has mac_len == 1 and only one byte of
-linear data; skb_pull(ETH_HLEN) trips the skb->len < skb->data_len BUG in
-__skb_pull():
-
-    kernel BUG at ./include/linux/skbuff.h:2839!
-    RIP: skb_pull+0x40/0x50
-    Call Trace: skb_do_redirect -> packet_xmit -> packet_sendmsg
-    Kernel panic - not syncing: Fatal exception in interrupt
-
-The v4 and v6 paths read ip_hdr() and ipv6_hdr() as soon as the MAC
-header is gone.  On the AF_PACKET frame below that leaves headlen == 0
-after the pull, so the network header sits at skb->tail and the route
-lookup reads ip4h->protocol, ip4h->saddr and ip4h->daddr past the linear
-area.
-
-The Fix:
-Use skb_network_offset(), which is the MAC header span, instead of
-skb->mac_len.  mac_len is zero for locally generated tc egress and netkit
-packets, while the span still rejects the one-byte header produced by
-pop_eth + bpf_skb_change_head(skb, 1, 0).  The single check also covers
-the mac_header >= network_header test it replaces.
-
-Use pskb_may_pull() to make the Ethernet header linear before it is read
-or pulled, and to make the IP header linear in both the v4 and the v6
-path before ip_hdr()/ipv6_hdr() is read.  The header pointers are taken
-after the pull, since pskb_may_pull() may reallocate skb->head.
-
-Conditions to recreate the bug:
-On x86-64 with 4 KiB pages, enable CONFIG_PACKET, CONFIG_BPF_SYSCALL,
-CONFIG_NET_SCH_INGRESS, CONFIG_NET_CLS_MATCHALL, CONFIG_NET_ACT_VLAN and
-CONFIG_NET_ACT_BPF.  Run as root with BPF loading, network administration
-and raw-packet privileges.  Bring lo up and attach a SCHED_ACT program
-that calls bpf_skb_change_head(skb, 1, 0), then returns
-bpf_redirect_neigh(skb->ifindex, NULL, 0, 0):
-
-  ip link set lo up
-  tc qdisc add dev lo clsact
-  tc filter add dev lo egress matchall action vlan pop_eth pipe \
-      action bpf object-file neigh_chghead.o section action
-
-Send an untagged ETH_P_IP frame of ETH_HLEN + 8192 bytes through an
-AF_PACKET/SOCK_RAW socket bound to lo, without PACKET_VNET_HDR or
-PACKET_QDISC_BYPASS.  Use a unicast destination MAC.  The sender's skb
-has a 14-byte linear Ethernet prefix and a fragmented payload; pop_eth
-removes that prefix and change_head restores only one linear byte.
-The unfixed neighbor redirect then tries to pull 14 bytes and BUGs.
-
-Sending the same frame without pop_eth and change_head leaves the IP
-header in the frags, which is the route lookup reading past skb->tail.
-
-Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/20261027082604.1485903-1-edumazet@kernel.org/
-Link: https://lore.kernel.org/all/2a0f5ff1d8db81b07fc4b344b8e68e3505fcbf36f72a471d1678b2f1cecd881b@mail.kernel.org/
-Link: https://lore.kernel.org/netdev/DMII4JGTEUEG.2WRJPT6ODT6J0@gmail.com/
-Link: https://patch.msgid.link/bpf_redirect_neigh_short_linear.v3.r0.20261031153053-1@mojatatu.com
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/smb/server/smb2pdu.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index cb62f24cb4a18..73c64a1a57064 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2255,9 +2255,13 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
- static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
- 				   struct bpf_nh_params *nh)
- {
--	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
- 	struct net *net = dev_net(dev);
- 	int err, ret = NET_XMIT_DROP;
-+	const struct ipv6hdr *ip6h;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 56c173bdd020a..069ecc1d90b52 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2925,6 +2925,14 @@ int smb2_open(struct ksmbd_work *work)
+ 				req->CreateOptions = ~(FILE_NO_COMPRESSION_LE);
+ 			}
+ 		}
 +
-+	if (unlikely(!pskb_may_pull(skb, sizeof(*ip6h))))
-+		goto out_drop;
-+	ip6h = ipv6_hdr(skb);
++		/* MS-FSA 2.1.5.1: delete-on-close requires DELETE access */
++		if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE &&
++		    !(smb_map_generic_desired_access(req->DesiredAccess) &
++		      FILE_DELETE_LE)) {
++			rc = -EINVAL;
++			goto err_out2;
++		}
+ 	}
  
- 	if (!nh) {
- 		struct dst_entry *dst;
-@@ -2361,9 +2365,13 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
- static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
- 				   struct bpf_nh_params *nh)
- {
--	const struct iphdr *ip4h = ip_hdr(skb);
- 	struct net *net = dev_net(dev);
- 	int err, ret = NET_XMIT_DROP;
-+	const struct iphdr *ip4h;
+ 	if (le32_to_cpu(req->CreateDisposition) >
+@@ -3105,6 +3113,13 @@ int smb2_open(struct ksmbd_work *work)
+ 		maximal_access = daccess;
+ 	}
+ 
++	/* MAXIMUM_ALLOWED may not have granted the requested DELETE */
++	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE &&
++	    !(daccess & FILE_DELETE_LE)) {
++		rc = -EACCES;
++		goto err_out;
++	}
 +
-+	if (unlikely(!pskb_may_pull(skb, sizeof(*ip4h))))
-+		goto out_drop;
-+	ip4h = ip_hdr(skb);
- 
- 	if (!nh) {
- 		struct flowi4 fl4 = {
-@@ -2413,15 +2421,14 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
- static int __bpf_redirect_neigh(struct sk_buff *skb, struct net_device *dev,
- 				struct bpf_nh_params *nh)
- {
--	struct ethhdr *ethh = eth_hdr(skb);
--
--	if (unlikely(skb->mac_header >= skb->network_header))
-+	if (unlikely(skb_network_offset(skb) < ETH_HLEN ||
-+		     !pskb_may_pull(skb, ETH_HLEN)))
- 		goto out;
- 	bpf_push_mac_rcsum(skb);
--	if (is_multicast_ether_addr(ethh->h_dest))
-+	if (is_multicast_ether_addr(eth_hdr(skb)->h_dest))
- 		goto out;
- 
--	skb_pull(skb, sizeof(*ethh));
-+	skb_pull(skb, ETH_HLEN);
- 	skb_unset_mac_header(skb);
- 	skb_reset_network_header(skb);
- 
+ 	open_flags = smb2_create_open_flags(file_present, daccess,
+ 					    req->CreateDisposition,
+ 					    &may_flags,
 -- 
 2.53.0
 
