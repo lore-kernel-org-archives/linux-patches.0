@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044609;
-	b=nqy8H8XYgDG36piz3wNWX3OM/dXHTT+jAlomvq72CiTVEpszDxcGxqDnT5r+JecvX/b5
-	 Qzo4LK/o79GY5M/SsaTFCBqCsr7kSXsPgbGkB9vwD43pYt9H60p39EYLjIkH3d9rfrdL8
-	 hey6yIPmAP1QGtECRhdY99J+7hkJyBELLKMLgYLvFakN3Z9gwTFtWMeu5d4TsvQ8zQ9xZ
-	 IE2krPjqi7xRYfOIxqsBTvugUI6wgw+VXPugd39YjRWVmntiG2uNZ/vvInJI+MYNeg5Em
-	 oM4ERhokWGB2gLndxGJehf/IlIPN5Xv2vw9zneNpjHwP0dflCJBcChRkKUDrLaxifOA==
+	t=1795044612;
+	b=2bLcybAxpUbi5/VtDGZYYkV8EiAAIlcJKvPS+Pbx1eBJI8q0ucDu4GcsLXCDye1b6eTu
+	 8TlRiBxlBEBUKQlp6IxW81ht2qEDRxpQTvLXWB7vcCbCpzo39WrJBaCnVc+eTsRflgDBX
+	 VKlV63mmOi8R6bP5WgKkZOA6OR4cr2U0EIb5fftR9Qgti2rrrExSkj77WZhSqmauHxbK1
+	 nmWTyUwlHIFfinnQcnf7OTPNxac0clgtDXzLp0YOJL8LQV+7kaVmlEdTrHuhlPeo39MYH
+	 0YcaIRPNKhe3GoULOz9h+tFBnkpqRTUzyWABN2zUB5lwKRLtDoaQFliAiuAx8iYk9bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044612;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aGWjuvnwH6KS0PPh8emE7jqfyBza5XdakCnfhFLWrYk=;
-	b=CK73LDIGjSxblcGEfGOZnDTtusY4Tl08hbSExbTfFF/Cl21t/xzS87o0tOXkhc42HM6X
-	 0MhwvH72OJQ3ipuBcp8koqCg5SVQNHFD1l9qFDYjDTrjw+oeMVvHnIZe3Psz5GCHnD7uW
-	 BsxA0sH1LuqrWgjMlcBlVpehnN9ENRCNgmH5HxZm1oZiPzsYNmh8oPPn8AGqWGPtauK+u
-	 6J7EY/oUAh0mPqP58N+GMheOtvVyQCk+Yc8G4iTYQFM5Crr4OB9yR897Pe+MGBcwj4HO4
-	 i3IDeKhGlUbIneAD13IwnpknPer04nyT4HTtXp60Gh1hHvhwnSlll/bZOVcMXoI9PQA==
+	bh=UFxg+0cQhd85QDQQ/1P0mL9nYYOn2kjaOjGJbbc4rKw=;
+	b=x8z8FXwm079SUF+/VthWDTwozVnot/YL8Ji+awC9y9K9rsoU3fUHvtrT9cg994EIKOE3
+	 3xXAXk1OjOCMjWghX/5Cz1letBjVacO/lYLNS0CmbRb4x3a0M9q0irBzZkO3D0kVm0VXc
+	 QDBl2gpMhODkifzUIN7pEf97BUkaIRHln4V72vmLKCydQ7eGbcVnAj5cOOsjZnA9ttd8m
+	 Gom6GB0x8GHzzQZRJZwSQj3tiIkQYxU4SVOT6Py1mNpUztjRTcRI7J/TSPrhQNjMEaiHo
+	 +XezisJhbuL11VvKzauiwwhdUPyS+nOEn0H0rOV/NxlTq56gspQaUBsasD5gOLezNMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4pGr8bV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ul/+dxwc";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F44B606A325;
-	Wed, 18 Nov 2026 23:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38BF606A32A;
+	Wed, 18 Nov 2026 23:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4pGr8bV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843921F000C4;
-	Wed, 18 Nov 2026 23:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ul/+dxwc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EDF1F000C4;
+	Wed, 18 Nov 2026 23:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044609;
-	bh=aGWjuvnwH6KS0PPh8emE7jqfyBza5XdakCnfhFLWrYk=;
+	s=korg; t=1795044611;
+	bh=UFxg+0cQhd85QDQQ/1P0mL9nYYOn2kjaOjGJbbc4rKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f4pGr8bVuoym2bxmsWhCjBOMvhqD0c/w+6PjunfXccpCM7y52JEp3jA1tAulXcRqE
-	 BCqnuLL8Idum1lrDXIwVKCP/7oq5FEmQfWPnIAG8sJPKzS4y4V/NdAWmV2mMz9e4f+
-	 BCxkX4IKaSLqzdplJRt64KtItazjwdW+3HGQXYmg=
+	b=Ul/+dxwcX55j9nAtZU/sd8aB8rI2PKm5HAAjQ1N2ytbAUUrMn5OB8JETY7iue+aVZ
+	 XlgESvkjLlDyC/D2TBmeWZ/k1vqgAPAOIRuGzDJmYDZeSZXpFrZ3VJmqhE7vLDRMp9
+	 fq+38RvMKxyYLIGjcJjBaVtSJA6DnG3qpWZNoEfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.1 0578/2857] ovl: fix a torn path in ovl_get_redirect()
-Date: Wed, 18 Nov 2026 15:26:52 +0100
-Message-ID: <20261118150222.296273447@linuxfoundation.org>
+	Weigang He <geoffreyhe2@gmail.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 6.1 0569/2857] media: rc: fintek-cir: process a full RX buffer instead of overflowing it
+Date: Wed, 18 Nov 2026 15:26:43 +0100
+Message-ID: <20261118150221.974071305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,73 +67,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit 2001cd7ca5560198131e46c6ca3c3472b06145c2 upstream.
+commit d1febef1bcfa7bbc401729f994c375b91a833911 upstream.
 
-A hard link of a metacopy file that races with a rename of an ancestor
-stores a redirect to the wrong lower file.
+fintek_get_rx_ir_data() drains the CIR RX FIFO into fintek->buf[], which
+holds RX_BUF_LEN (32) bytes, for as long as CIR_STATUS reports pending
+RX data:
 
-Each component of an absolute redirect must be the name that a dentry
-has in the parent that the walk continues with. ovl_get_redirect()
-copies the name under d_lock and calls dget_parent() after the unlock,
-and the callers for a hard link hold no lock that stops a rename across
-directories. A rename between the two steps combines the old name with
-the new parent.
+	do {
+		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+		...
+		fintek->buf[fintek->pkts] = sample;
+		fintek->pkts++;
+		...
+	} while (status & rx_irqs);
 
-With delays in ovl_get_redirect(), an unprivileged user hard-linked a
-metacopy file while renaming its ancestor to another directory, the
-stored redirect named another lower path, and after a remount the file
-showed the data of a root-only file.
+Nothing bounds fintek->pkts. If the hardware reports data for more than
+RX_BUF_LEN reads in one interrupt, the loop writes past the end of
+buf[], starting with the pkts counter that follows it in struct
+fintek_dev.
 
-Fix this by taking the parent first and checking it again under d_lock.
+Hand a full buffer to fintek_process_rx_ir_data(), which parses the
+samples and resets fintek->pkts, before storing the next sample. This
+keeps the parser state consistent and drops no samples. The loop still
+relies on the status register to terminate.
 
-Fixes: e04527fefba6 ("ovl: fix dentry leak in ovl_get_redirect")
+The driver does not document the hardware FIFO depth, so it is not
+known whether a working device can trigger this.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 9bdc79ea07d9 ("[media] fintek-cir: new driver for Fintek LPC SuperIO CIR function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/dir.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/media/rc/fintek-cir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -991,7 +991,19 @@ static char *ovl_get_redirect(struct den
- 		const char *name;
- 		int thislen;
+--- a/drivers/media/rc/fintek-cir.c
++++ b/drivers/media/rc/fintek-cir.c
+@@ -340,6 +340,10 @@ static void fintek_get_rx_ir_data(struct
+ 		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+ 		fit_dbg("%s: sample: 0x%02x", __func__, sample);
  
-+		/*
-+		 * A rename can move d to another directory at any time.  Hold
-+		 * d_lock to copy the name that d has in this very parent, or
-+		 * else the path mixes the old name with the new parent.
-+		 */
-+		tmp = dget_parent(d);
- 		spin_lock(&d->d_lock);
-+		if (unlikely(tmp != d->d_parent)) {
-+			spin_unlock(&d->d_lock);
-+			dput(tmp);
-+			continue;
-+		}
++		/* Process a full buffer before storing the next sample. */
++		if (fintek->pkts >= RX_BUF_LEN)
++			fintek_process_rx_ir_data(fintek);
 +
- 		name = ovl_dentry_get_redirect(d);
- 		if (name) {
- 			thislen = strlen(name);
-@@ -1004,13 +1016,13 @@ static char *ovl_get_redirect(struct den
- 		if (thislen + (name[0] != '/') > buflen) {
- 			ret = ERR_PTR(-EXDEV);
- 			spin_unlock(&d->d_lock);
-+			dput(tmp);
- 			goto out_put;
- 		}
+ 		fintek->buf[fintek->pkts] = sample;
+ 		fintek->pkts++;
  
- 		buflen -= thislen;
- 		memcpy(&buf[buflen], name, thislen);
- 		spin_unlock(&d->d_lock);
--		tmp = dget_parent(d);
- 
- 		dput(d);
- 		d = tmp;
 
 
