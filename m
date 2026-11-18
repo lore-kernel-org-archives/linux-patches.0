@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057030;
-	b=sFf8J0VBI/bYnh+pwqpvAI5eY5WAdKgLJ6pylCqhhTJQFwJur1j/gZfbvpkF1U2aZViC
-	 KSuwjI8SHF1R96V9XVq8/ZJuWjW4XR0dOQAhv9BVhYvoRkvvd1XjFwtTfTrn9vPVGVk69
-	 ln8vQFx1r1uCB8DhZXuWVd4/LLkmtjeRdfgQixBeGWFToUhgAe+V9aEtdcBvN9ObkAgrU
-	 tRdh/KOxBe0U3LRrFIxscMVu9XBRUyYNEql27MIgN915s9veaMkK7ZlEgnR7p2aFf0YX8
-	 j5V86HaOJtRmUrXI2RH6Uwdh5NIk8YD5gRyL6jFUgirzZRnZtNmZ7BEoGFw9Tfh+Diw==
+	t=1795057033;
+	b=JPsBC+bGifZ3z7PDloITawDmH/zOpHQY9eYnIB3rZ6u2KK42MJp2j9Z+6sW/JYu6pHRs
+	 UgPg3h3xgKT23TPO07CkxtamzCyWZK8L8dCdP3UnzITYWVdgIytmq0GZOh35C/DoE7lNz
+	 p2GwKLgz7IPS8+i2CRv7X9uEDCzqjcy5O/8pSQsyMeeKOrva8gtDbdVtaPLKpBNHMf96G
+	 0YEt1rBjllpCocGS0+HGv8jDfWmSzTq0TEgejPP76D3FG+agCBM8iJK57LHEoJkT6Lboh
+	 xAm3QlK6GQMW3+cTbotzkeVpXZtQNYbNaWFtxYSGU3ibcRr+OUAL4Ga7sqv9pvtv5nw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nymIuwX15qE0wz+hE/DYFhvl++SOs/gWNItByddNyPE=;
-	b=rKlv0+nhnaBFSMcCBlf9rZgiF+5rHBrCIocz1jc/4mtJgcqHmGsNoGtxTN3XJ31PFFjO
-	 eYBkcG0ddhopqfX2CQmEORkizyjYFGialCUuvyX/o0B1WX4l+poo/hqyG447xXZqRfheQ
-	 lrRVxDbEdlop6LUgyvPtJRs7djmiRhaFAVUa837hLl73gL27AMG11BWAZPy02knx+BzEf
-	 pxn8GVqpppJAShXLU0McPIhSLhpJEE2EBeekMwCWuyWmcwg41As3XTI39kKyndaQIk21u
-	 38qHheEn/WklCsN8mOjdxDc/vDhKb5L/PNNlOujiYw+wig0E778+xXKbMXhh+H39j+Q==
+	bh=uLN/PWIOAmtK4YDtZpP6CVNeO9HxNGfbE1r8Xpq7hFo=;
+	b=SdewsIZDCOK/MDyVTAHKa+k3wK2kiKH7W/upV1cMC+4GmXPRAW+ToBpr0kw1GkjetgIr
+	 vqH69nHgoqa0QmMUxwLvCcj7uUBaMQr0jdevLz9czESpQuGaSOfAHIDDq1khKf8DDA8uU
+	 u2mc370dHNNOUQPEXPYd68UDMQhFiUKDigwL+/KKIaHBhqi3jdK0/OMMrQijIu9L6/q/7
+	 oBsL0FYLxRI0rPsdZkpE8/qgjMlW9tolQt85SFnAvFv4r4vTvRSEyu8gAEdH9N+I/LAun
+	 zpWuXGC6W3vkLTVuVZBci7lKrILRlS8U93UwIBMZPx+HNcLb9KLXjTxAPDYyjHFDqCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iiST9kKn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbgWAVPL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF561606A330;
-	Thu, 19 Nov 2026 02:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEA1606A31C;
+	Thu, 19 Nov 2026 02:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iiST9kKn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA131F000C4;
-	Thu, 19 Nov 2026 02:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CbgWAVPL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53ED1F000C4;
+	Thu, 19 Nov 2026 02:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057030;
-	bh=nymIuwX15qE0wz+hE/DYFhvl++SOs/gWNItByddNyPE=;
+	s=korg; t=1795057033;
+	bh=uLN/PWIOAmtK4YDtZpP6CVNeO9HxNGfbE1r8Xpq7hFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iiST9kKnx8tpreliTBy70cW4J48CcATsWimJvp07gqZxEVMeG+47Q5zvOOBh6dXqX
-	 4IOt7s4zpAncKaTJaX4uzkg/RHJFTWO18KXlabMTx45iB4jiHnY1Glxi2rbVaia5dk
-	 m+R2STxyIi/t38VW+Tuq2cRIvI3I3dmkKsQ0BIe4=
+	b=CbgWAVPLfgFT2SFbMZmrYrcSotYDgM/cdffAuFByjC8YWMeYnooPebugo71lrdFWF
+	 S5u0Dgc2U9PcqZe/paGQO8Tot2OLLtyXKgRgNasC5l8cur2ZM+81XmfA7to0o9rI7o
+	 ALmCiBmiQ2KG56SEbkPbWlIU6mVdSmzyAEn2j20U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 2198/2214] irqchip/gic-v3-its: Fix over allocation in itt_alloc_pool()
-Date: Wed, 18 Nov 2026 16:04:34 +0100
-Message-ID: <20261118150138.223886642@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	kernel test robot <lkp@intel.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 2199/2214] tracing/histogram: Wrap remaining shell snippets in code blocks
+Date: Wed, 18 Nov 2026 16:04:35 +0100
+Message-ID: <20261118150138.261033683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,37 +70,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-commit bc88d44bd7e45b992cf8c2c2ffbc7bb3e24db4a7 upstream.
+commit a2ff84a5d1e65c7d1178f24ecf39fc55283fbd14 upstream.
 
-itt_alloc_pool() calls its_alloc_pages_node() to allocate an individual
-page to add to the pool (for allocations <PAGE_SIZE). However the final
-argument of its_alloc_pages_node() is the page order not the number of
-pages. Currently it allocates two pages and leaks the second page.
-Fix it by passing 0 instead (1 << 0 = 1 page).
+Most shell command snippets (echo/cat) and their output are already in
+literal code blocks. However a few still isn't wrapped, in which the
+htmldocs output is ugly.
 
-Fixes: b08e2f42e86b ("irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor")
-Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/1f6e19c4-1fb9-43ab-a8a2-a465c9cff84b@arm.com
-Closes: https://lore.kernel.org/r/ed65312a-245c-4fa5-91ad-5d620cab7c6b%40nvidia.com
+Wrap the remaining unwrapped snippets, while also fix recent kernel test
+robot warnings.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230129031402.47420-1-bagasdotme@gmail.com
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/linux-doc/202301290253.LU5yIxcJ-lkp@intel.com/
+Fixes: 88238513bb2671 ("tracing/histogram: Document variable stacktrace")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/trace/histogram.rst |  103 +++++++++++++++++++-------------------
+ 1 file changed, 52 insertions(+), 51 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -264,7 +264,7 @@ static void *itt_alloc_pool(int node, in
- 		if (addr)
- 			break;
+--- a/Documentation/trace/histogram.rst
++++ b/Documentation/trace/histogram.rst
+@@ -1863,7 +1863,7 @@ A histogram can now be defined for the n
+ The above shows the latency "lat" in a power of 2 grouping.
  
--		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 0);
- 		if (!page)
- 			break;
+ Like any other event, once a histogram is enabled for the event, the
+-output can be displayed by reading the event's 'hist' file.
++output can be displayed by reading the event's 'hist' file::
  
+   # cat /sys/kernel/debug/tracing/events/synthetic/wakeup_latency/hist
+ 
+@@ -1910,7 +1910,7 @@ output can be displayed by reading the e
+ 
+ 
+ The latency values can also be grouped linearly by a given size with
+-the ".buckets" modifier and specify a size (in this case groups of 10).
++the ".buckets" modifier and specify a size (in this case groups of 10)::
+ 
+   # echo 'hist:keys=pid,prio,lat.buckets=10:sort=lat' >> \
+         /sys/kernel/debug/tracing/events/synthetic/wakeup_latency/trigger
+@@ -1947,7 +1947,7 @@ that range ends and can be smaller than
+ 
+ To save stacktraces, create a synthetic event with a field of type "unsigned long[]"
+ or even just "long[]". For example, to see how long a task is blocked in an
+-uninterruptible state:
++uninterruptible state::
+ 
+   # cd /sys/kernel/tracing
+   # echo 's:block_lat pid_t pid; u64 delta; unsigned long[] stack;' > dynamic_events
+@@ -1992,7 +1992,8 @@ uninterruptible state:
+   => kthread+0xe9/0x110
+   => ret_from_fork+0x2c/0x50
+ 
+-A synthetic event that has a stacktrace field may use it as a key in histogram:
++A synthetic event that has a stacktrace field may use it as a key in
++histogram::
+ 
+   # echo 'hist:delta.buckets=100,stack.stacktrace:sort=delta' > events/synthetic/block_lat/trigger
+   # cat events/synthetic/block_lat/hist
+@@ -2185,11 +2186,11 @@ The following commonly-used handler.acti
+               wakeup_new_test($testpid) if comm=="cyclictest"' >> \
+               /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/trigger
+ 
+-    Or, equivalently, using the 'trace' keyword syntax:
++    Or, equivalently, using the 'trace' keyword syntax::
+ 
+-    # echo 'hist:keys=$testpid:testpid=pid:onmatch(sched.sched_wakeup_new).\
+-            trace(wakeup_new_test,$testpid) if comm=="cyclictest"' >> \
+-            /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/trigger
++      # echo 'hist:keys=$testpid:testpid=pid:onmatch(sched.sched_wakeup_new).\
++              trace(wakeup_new_test,$testpid) if comm=="cyclictest"' >> \
++              /sys/kernel/debug/tracing/events/sched/sched_wakeup_new/trigger
+ 
+     Creating and displaying a histogram based on those events is now
+     just a matter of using the fields and new synthetic event in the
+@@ -2322,48 +2323,48 @@ The following commonly-used handler.acti
+     resulting latency, stored in wakeup_lat, exceeds the current
+     maximum latency, a snapshot is taken.  As part of the setup, all
+     the scheduler events are also enabled, which are the events that
+-    will show up in the snapshot when it is taken at some point:
++    will show up in the snapshot when it is taken at some point::
+ 
+-    # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
++      # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
+ 
+-    # echo 'hist:keys=pid:ts0=common_timestamp.usecs \
+-            if comm=="cyclictest"' >> \
+-            /sys/kernel/debug/tracing/events/sched/sched_waking/trigger
+-
+-    # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0: \
+-            onmax($wakeup_lat).save(next_prio,next_comm,prev_pid,prev_prio, \
+-	    prev_comm):onmax($wakeup_lat).snapshot() \
+-	    if next_comm=="cyclictest"' >> \
+-	    /sys/kernel/debug/tracing/events/sched/sched_switch/trigger
++      # echo 'hist:keys=pid:ts0=common_timestamp.usecs \
++              if comm=="cyclictest"' >> \
++              /sys/kernel/debug/tracing/events/sched/sched_waking/trigger
++
++      # echo 'hist:keys=next_pid:wakeup_lat=common_timestamp.usecs-$ts0: \
++              onmax($wakeup_lat).save(next_prio,next_comm,prev_pid,prev_prio, \
++	      prev_comm):onmax($wakeup_lat).snapshot() \
++	      if next_comm=="cyclictest"' >> \
++	      /sys/kernel/debug/tracing/events/sched/sched_switch/trigger
+ 
+     When the histogram is displayed, for each bucket the max value
+     and the saved values corresponding to the max are displayed
+     following the rest of the fields.
+ 
+     If a snapshot was taken, there is also a message indicating that,
+-    along with the value and event that triggered the global maximum:
++    along with the value and event that triggered the global maximum::
+ 
+-    # cat /sys/kernel/debug/tracing/events/sched/sched_switch/hist
+-      { next_pid:       2101 } hitcount:        200
+-	max:         52  next_prio:        120  next_comm: cyclictest \
+-        prev_pid:          0  prev_prio:        120  prev_comm: swapper/6
+-
+-      { next_pid:       2103 } hitcount:       1326
+-	max:        572  next_prio:         19  next_comm: cyclictest \
+-        prev_pid:          0  prev_prio:        120  prev_comm: swapper/1
+-
+-      { next_pid:       2102 } hitcount:       1982 \
+-	max:         74  next_prio:         19  next_comm: cyclictest \
+-        prev_pid:          0  prev_prio:        120  prev_comm: swapper/5
+-
+-    Snapshot taken (see tracing/snapshot).  Details:
+-	triggering value { onmax($wakeup_lat) }:        572	\
+-	triggered by event with key: { next_pid:       2103 }
+-
+-    Totals:
+-        Hits: 3508
+-        Entries: 3
+-        Dropped: 0
++      # cat /sys/kernel/debug/tracing/events/sched/sched_switch/hist
++        { next_pid:       2101 } hitcount:        200
++	  max:         52  next_prio:        120  next_comm: cyclictest \
++          prev_pid:          0  prev_prio:        120  prev_comm: swapper/6
++
++        { next_pid:       2103 } hitcount:       1326
++	  max:        572  next_prio:         19  next_comm: cyclictest \
++          prev_pid:          0  prev_prio:        120  prev_comm: swapper/1
++
++        { next_pid:       2102 } hitcount:       1982 \
++	  max:         74  next_prio:         19  next_comm: cyclictest \
++          prev_pid:          0  prev_prio:        120  prev_comm: swapper/5
++
++      Snapshot taken (see tracing/snapshot).  Details:
++	  triggering value { onmax($wakeup_lat) }:        572	\
++	  triggered by event with key: { next_pid:       2103 }
++
++      Totals:
++          Hits: 3508
++          Entries: 3
++          Dropped: 0
+ 
+     In the above case, the event that triggered the global maximum has
+     the key with next_pid == 2103.  If you look at the bucket that has
+@@ -2441,15 +2442,15 @@ The following commonly-used handler.acti
+     $cwnd variable.  If the value has changed, a snapshot is taken.
+     As part of the setup, all the scheduler and tcp events are also
+     enabled, which are the events that will show up in the snapshot
+-    when it is taken at some point:
++    when it is taken at some point::
+ 
+-    # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
+-    # echo 1 > /sys/kernel/debug/tracing/events/tcp/enable
++      # echo 1 > /sys/kernel/debug/tracing/events/sched/enable
++      # echo 1 > /sys/kernel/debug/tracing/events/tcp/enable
+ 
+-    # echo 'hist:keys=dport:cwnd=snd_cwnd: \
+-            onchange($cwnd).save(snd_wnd,srtt,rcv_wnd): \
+-	    onchange($cwnd).snapshot()' >> \
+-	    /sys/kernel/debug/tracing/events/tcp/tcp_probe/trigger
++      # echo 'hist:keys=dport:cwnd=snd_cwnd: \
++              onchange($cwnd).save(snd_wnd,srtt,rcv_wnd): \
++	      onchange($cwnd).snapshot()' >> \
++	      /sys/kernel/debug/tracing/events/tcp/tcp_probe/trigger
+ 
+     When the histogram is displayed, for each bucket the tracked value
+     and the saved values corresponding to that value are displayed
+@@ -2472,10 +2473,10 @@ The following commonly-used handler.acti
+       { dport:        443 } hitcount:        211
+ 	changed:         10  snd_wnd:      26960  srtt:      17379  rcv_wnd:      28800
+ 
+-    Snapshot taken (see tracing/snapshot).  Details::
++      Snapshot taken (see tracing/snapshot).  Details:
+ 
+-        triggering value { onchange($cwnd) }:         10
+-        triggered by event with key: { dport:         80 }
++          triggering value { onchange($cwnd) }:         10
++          triggered by event with key: { dport:         80 }
+ 
+       Totals:
+           Hits: 414
 
 
