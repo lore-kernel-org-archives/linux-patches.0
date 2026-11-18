@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048969;
-	b=juqTZB8zAclm5bilXuwyyuhbhJveKk6l4kKSeIxrqTNENdPQ4IsmdCxVEYNpwiH7608k
-	 G7LfI0OWPYSr8mvhwoxa1sm9GLb+kT4+dskvIpiY0W9HASQ2qo9YgAnBLsxT4jtslz9DI
-	 UtIMd1BK5YdhlOBohtSN63xxQnGQVA3z8xFXqkYMjK0xywiIrelUHhrOk1Np1Fhk9RuR7
-	 e1oM0MkqAJf8Je9lw8t67ticsJ/eeg38MjoT1YBaCsvJ94rJzDBqy8qFr1XVZNP3GSZoZ
-	 rWgAWv+Hv7Lpt81qQCP1IgGNBCu+y9Zo3YZ00nv62tiOFQVxYB3jrJixrnpo1to8N8Q==
+	t=1795048972;
+	b=aeoD1+DizO4a/f86JDvZRvPRh2hrgidbexKTAK/UWCGSnpBYFHtQ110rd36d5QEoZYDr
+	 6JtB2eI2B+kBVIpC/fvcQ5dWk7ph4MbiZrKfnSFBrj5IwrmOudzo97tpNPOhi0aljP1Dm
+	 CqLhF67kpC4G8v/xPKDyperjEhiAmXkX1+SY1n5YQqcsqdh42oiwYmUGeyterzsfw9hOd
+	 ANhZ6yUWb6mlCN9HicOPSkHrYMhLEuCr97CRMa7qSZnhfVxE2UwHVBPwFNnbZIBiARTun
+	 C0dSXnaMjCfdd+URt7888iKnHus1NH9kPPmnefHuKg2doQ51zEKquS+sIw+3ds/OIYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zLhGjGDyqEJkpWrStAf7kslft5R6fI8irk1thAbmZaE=;
-	b=y63Ua250vybTfjf2Y+3sxndUHcshESpQPgQfQ7f0i3+5ds2oZyGG6FOs6zKiCPSzD64U
-	 o6w5ajv9e5aTuTAXjIrJ1tTYERAAmJ+arbRNzmMzDrj+MH/mNAlwBOinClWZ2oAPG17v9
-	 /HlCP1O+Ye1AvNT287OAHl+PBCxrj4s/iQfgo54lWbMw+a4bPN+G9mQIAPjf+uxYP/bbU
-	 DeHq2450TNm2Jj9Q4uMlXVF2lyFD+rj+jw3abyj9rQInbnT0TT7iLoFSuYvGm81y81u8M
-	 1EYGU0vtnhG5xD9f16OP3221K2uzbQn2SkJ/fSvg70HqhmLTth+QuyNBXP5JlcTQm1A==
+	bh=W6rKeN/GnKk88um1KxfDekS5Th7M6wXTg1bq5UYWxAM=;
+	b=TJhpFFnTsDVxmUCBGUmgThZmiQHWqgB7BCqgA805XFecCjW5DF150yQNjT5sTTC3YuHr
+	 d4yERq2tgr02VS+Z1eMqquAIJxhCGjOrPOCHCjIy5XHdai1CnmP1YA9IYAqJMJ82dJ8U+
+	 moJ+8XmHktiIKsMTMZMTaXRb8vWHVcC5u7eLMC3wSImugB9J7ndEtvClG8CSuCN4pHnDT
+	 eC+Gnme1cslKUt46SjKFAWPA5N3DISYlarQD9Kx1Ef2UOgelsVkAEAbh67/JOZpWolqZD
+	 9fBFH1HxRrNgOoWAH4NfU9mtzjrL5gWGz0L6Tqbj51tUFwgzbI5RBEdc0+cJIeFbdDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/dRzzQ2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT2owDWw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B338B606A325;
-	Thu, 19 Nov 2026 00:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EDC606A320;
+	Thu, 19 Nov 2026 00:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/dRzzQ2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1408E1F000C4;
-	Thu, 19 Nov 2026 00:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT2owDWw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA66A1F000C4;
+	Thu, 19 Nov 2026 00:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048969;
-	bh=zLhGjGDyqEJkpWrStAf7kslft5R6fI8irk1thAbmZaE=;
+	s=korg; t=1795048972;
+	bh=W6rKeN/GnKk88um1KxfDekS5Th7M6wXTg1bq5UYWxAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/dRzzQ2CheDKbrOF+1tdbKiybmVnphE06SR/PvySjKtdbr7lMJswJsYuHrlVbPuQ
-	 jpt+tnotjaDI8nRQnFzIj+ppACRYNYhWKiaDL9Jm1C+WImuTlEIUCGv4EnGwq2i9pQ
-	 sqJ8M6+Gz7sKam7Ff4/ExQPD3brUV3MK+8bsm4VQ=
+	b=qT2owDWwcnm06VqIeFsCmw6YYBVB0qPrZvb7JNHBd1IzT86z43HtFxWV3XuMySMNo
+	 /WzaoMdX4Uzha/6B3+J14gIZWxpYVaQCKB8v3x+EhKC+kKR2xDgj1ajCG1pU/1vXfn
+	 cNkJajCHtZ5ooiFW2l9TbGyukjoWPk7rRMQaYewo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2167/2857] drm/tegra: Dont pass an ERR_PTR to drm_syncobj_replace_fence()
-Date: Wed, 18 Nov 2026 15:53:21 +0100
-Message-ID: <20261118150319.426681893@linuxfoundation.org>
+Subject: [PATCH 6.1 2168/2857] drm/tegra: Drop reference on postfence
+Date: Wed, 18 Nov 2026 15:53:22 +0100
+Message-ID: <20261118150319.463000474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,32 +70,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 7fce3d34eddfff6361cb4de2c5b8789b88a552b6 ]
+[ Upstream commit 5ba3dfe724448f308ad7b28ef8d4f41bca4896ae ]
 
-When host1x_fence_create() fails, avoid trying to attach the error
-pointer to the out syncobj.
+drm_syncobj_replace_fence() calls dma_fence_get() on the parameter
+fence, so we need to drop ours. Add a call to dma_fence_put() to do
+that.
 
 Fixes: 13abe0bb15ce ("drm/tegra: Implement job submission part of new UAPI")
 Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260730-b4-host1x-syncobj-wait-v1-2-afa730410392@nvidia.com
+Link: https://patch.msgid.link/20260730-b4-host1x-syncobj-wait-v1-3-afa730410392@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/gpu/drm/tegra/submit.c | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/tegra/submit.c b/drivers/gpu/drm/tegra/submit.c
-index 31b54bfb5c9cc..3f2253236a606 100644
+index 3f2253236a606..af0c5632a7bf0 100644
 --- a/drivers/gpu/drm/tegra/submit.c
 +++ b/drivers/gpu/drm/tegra/submit.c
-@@ -668,6 +668,7 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
- 		if (IS_ERR(fence)) {
- 			err = PTR_ERR(fence);
- 			SUBMIT_ERR(context, "failed to create postfence: %d", err);
-+			goto put_job;
+@@ -672,6 +672,7 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
  		}
  
  		drm_syncobj_replace_fence(syncobj, fence);
++		dma_fence_put(fence);
+ 	}
+ 
+ 	goto put_job;
 -- 
 2.53.0
 
