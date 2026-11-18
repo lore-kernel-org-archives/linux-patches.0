@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055968;
-	b=3NCh6DdqUVU0Zgs89LPOJZLwo7sgjZmzwkmL8+oNldYoiPqW2NB5Q5rVjgF/Wj+gYNQR
-	 vVqAr1R86/aTpUmgYnsU+gcnioIP3PxlQwyMcHCm8WORR4XXWoDRSJc5rnw9aWqTPp6JY
-	 abCDCtHTyX0kdkBRqoDZQLlAhQ3W0KvYxYkr/XXq3XKDlr99J47Lc4yC6pF23MSQH37qk
-	 2/6tG2NDRLR0R44ibCWqogc/K5CThdN93B0lW4xy3eefEkgDXYB5PfXE8nQd/b+fz0bae
-	 bvWFIZCJ2bP0mEYt+Fi1gxgekpnHdw26ngT1mh/zPGG/Ce2uArowdKxRYiP4Mwib/WA==
+	t=1795055970;
+	b=IR5q66XV0Cz4+qa4fD8ZS91BAEWtFcbowlOXwW8QcNlMD4aH6Jm4azw8x5xxGBAeYtHe
+	 4e4x+ta7Tz88q/VOdoWWnEOwJv567KQOz/WxAVFKg9wYad1583EmcaksQ0YZm9niTQabn
+	 S17qMJJbTuOhQxxLJsokEBU66S4d9sAcC/EeY9MyeJPZtRzlRol7eZPMV28BmdyG7DThR
+	 2IexvWhsebfFf7i5lm7OqJMJ1OJ2mF4bopKGgz+ulaW3grbSnLhOviBDb+mxe7PYSyGGX
+	 zMHFfn9TZMkFFJ4QpV0SUmnW6vhgtPjUrCL+t6NcEHvhUG2iCk74Rn8NtaT8RFowrYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lwNcgAwKnFta8J54Gluv2iDsA4uHO/ZgEVmtzkFZi9k=;
-	b=w8ZihdrL94yXvNK697sD/JN03KWJvK3qumiKCNp8yUn4Nmo7OgpdI10FgT6NXAPre9sI
-	 mY5diYQDBjsNNAUAlDE+YM9XusBbBYVz/PqO0pG8FWN4g6OxJVNPCAr6M0q1bDTUs0MdB
-	 Q2qbVyxG/bUaAy9AVjScSAUC6FOAADOM72tiXKCzNhIvXUSbnEKy/GjcyZIL+DK54mtOM
-	 IJUq3VAQVoN8EPZiiikmA3m+TQfhoA+zTcTYGbPNvVWuTmG6OPy2foyQZ6qifAyxGK8sX
-	 GBtCaK+JZkHXH973yoqUYsjf0X9bgtm6CdLtI+53tiEsbnrBGndvkUFqTK6AHjU0vJQ==
+	bh=LoztX/2S5Yc01m+Nih4wadIACawTYY7mFU604qFtbUU=;
+	b=BarqDa/QJyCr4auC6Zv3rkH/Ya+98IHglhE/AGkCJN+mMnA4Bu6dVmCqnPOxI34klIOO
+	 Eo97VaJ0BSmLXsAiWakAnebbRDWLUwkz76LnMOSMjNrJNtMeoifr+ef9BRfO04p4Za/bc
+	 EqpiENdnvUoUQMkWrooGwKF8loIf+G5MAIpE/L8jWBP5YZe8Kpa0PZD+DavQ4QF2gLTaZ
+	 uTk2DhZUQNCJg9ZiHHyiV+fz9qX6nCEJfL2nPjgGUrXvfW0LBbiwAY5GG4fHyOEG8q6Aj
+	 EpI9Ql3e+u2q0lVrTLyVUmFw3UfrfW6vgoV6YZXPDrlwtfxovGgttwfeDBohZXiVdUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NdSZ2V6z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS8qlwt9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7978606A325;
-	Thu, 19 Nov 2026 02:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B14606A325;
+	Thu, 19 Nov 2026 02:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NdSZ2V6z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7D31F000C4;
-	Thu, 19 Nov 2026 02:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CS8qlwt9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8421F000C4;
+	Thu, 19 Nov 2026 02:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055967;
-	bh=lwNcgAwKnFta8J54Gluv2iDsA4uHO/ZgEVmtzkFZi9k=;
+	s=korg; t=1795055970;
+	bh=LoztX/2S5Yc01m+Nih4wadIACawTYY7mFU604qFtbUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NdSZ2V6zTV7BPE9TRv/xjue5TKtEjdJQLHZHNZT4dH4+uH+Z5D0FiCASTpcQr1maF
-	 ix9pfi2zQJ5FCut3HWCJx44PY+WC5nE0XIae9jrWJq5ebump75pPf2y6IptBrhcXTV
-	 5F1ST+4lhF+ofbm0kZFZzNKO/dYsNcAAn4UBd8cI=
+	b=CS8qlwt9SLbZxLWMPreGhaaXVGC7VuJ7Ubyotl3kucGkOWMNL/KKavGxu7m3/cftV
+	 Zojlv8IpY4UHkDzSJp6P87xrH8LyU0OjjMyEqloH69PGXa6kNYv1HtqDEXspPlQsAt
+	 iHKh5FstXkxhOwcjHV5SNrorm+GTmLjbBYkUR8sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Clemens Ladisch <clemens@ladisch.de>,
 	Takashi Iwai <tiwai@suse.de>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1813/2214] ALSA: core: Add missing barriers for power_ref vs card->shutdown
-Date: Wed, 18 Nov 2026 15:58:09 +0100
-Message-ID: <20261118150124.003087165@linuxfoundation.org>
+Subject: [PATCH 5.15 1822/2214] sound: usb: remove third argument of usb_maxpacket()
+Date: Wed, 18 Nov 2026 15:58:18 +0100
+Message-ID: <20261118150124.347422297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,54 +71,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit a6913835735469751f56473f5212eb291a4805e7 ]
+[ Upstream commit 80b2b03bacfc071ceaac034fa81d535d27d57b31 ]
 
-snd_power_ref_and_wait() increments card->power_ref and then reads
-card->shutdown (and the power state) locklessly, while
-snd_card_disconnect() sets card->shutdown and then waits for
-power_ref to drop to zero via snd_power_sync_ref().  Due to the
-missing barrier on both sides, the caller proceeds with shutdown still
-seen as false, while the disconnect side sees a zero refcount and
-continues tearing down incorrectly.
+The third argument of usb_maxpacket(): in_out has been deprecated
+because it could be derived from the second argument (e.g. using
+usb_pipeout(pipe)).
 
-For addressing the potential race, add smp_mb__after_atomic() after
-the refcount increment and smp_mb() before snd_power_sync_ref() in
-snd_card_disconnect().
+N.B. function usb_maxpacket() was made variadic to accommodate the
+transition from the old prototype with three arguments to the new one
+with only two arguments (so that no renaming is needed). The variadic
+argument is to be removed once all users of usb_maxpacket() get
+migrated.
 
-Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-9-tiwai@suse.de
+CC: Jaroslav Kysela <perex@perex.cz>
+CC: Takashi Iwai <tiwai@suse.com>
+CC: Clemens Ladisch <clemens@ladisch.de>
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/r/20220317035514.6378-8-mailhol.vincent@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e2ef553dfe92 ("ALSA: line6: Reject too small max packet sizes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/line6/pcm.c           | 4 ++--
+ sound/usb/midi.c                | 4 ++--
+ sound/usb/usx2y/usb_stream.c    | 6 +++---
+ sound/usb/usx2y/usbusx2yaudio.c | 2 +-
+ sound/usb/usx2y/usx2yhwdeppcm.c | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index a1976a0c60ef1..8fb8f3b64d5a2 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -542,6 +542,8 @@ void snd_card_disconnect(struct snd_card *card)
- 	clear_bit(card->number, snd_cards_lock);
- 	mutex_unlock(&snd_card_mutex);
+diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
+index c785f73718ade..7325482dcaebb 100644
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -560,10 +560,10 @@ int line6_init_pcm(struct usb_line6 *line6,
  
-+	/* order card->shutdown store against power_ref read */
-+	smp_mb();
- 	snd_power_sync_ref(card);
- }
- EXPORT_SYMBOL(snd_card_disconnect);
-@@ -1145,6 +1147,8 @@ EXPORT_SYMBOL(snd_card_file_remove);
- int snd_power_ref_and_wait(struct snd_card *card)
+ 	line6pcm->max_packet_size_in =
+ 		usb_maxpacket(line6->usbdev,
+-			usb_rcvisocpipe(line6->usbdev, ep_read), 0);
++			usb_rcvisocpipe(line6->usbdev, ep_read));
+ 	line6pcm->max_packet_size_out =
+ 		usb_maxpacket(line6->usbdev,
+-			usb_sndisocpipe(line6->usbdev, ep_write), 1);
++			usb_sndisocpipe(line6->usbdev, ep_write));
+ 	if (!line6pcm->max_packet_size_in || !line6pcm->max_packet_size_out) {
+ 		dev_err(line6pcm->line6->ifcdev,
+ 			"cannot get proper max packet size\n");
+diff --git a/sound/usb/midi.c b/sound/usb/midi.c
+index 70084be58f0fa..e0020956a100f 100644
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -1361,7 +1361,7 @@ static int snd_usbmidi_in_endpoint_create(struct snd_usb_midi *umidi,
+ 		pipe = usb_rcvintpipe(umidi->dev, ep_info->in_ep);
+ 	else
+ 		pipe = usb_rcvbulkpipe(umidi->dev, ep_info->in_ep);
+-	length = usb_maxpacket(umidi->dev, pipe, 0);
++	length = usb_maxpacket(umidi->dev, pipe);
+ 	for (i = 0; i < INPUT_URBS; ++i) {
+ 		buffer = usb_alloc_coherent(umidi->dev, length, GFP_KERNEL,
+ 					    &ep->urbs[i]->transfer_dma);
+@@ -1450,7 +1450,7 @@ static int snd_usbmidi_out_endpoint_create(struct snd_usb_midi *umidi,
+ 		pipe = usb_sndbulkpipe(umidi->dev, ep_info->out_ep);
+ 	switch (umidi->usb_id) {
+ 	default:
+-		ep->max_transfer = usb_maxpacket(umidi->dev, pipe, 1);
++		ep->max_transfer = usb_maxpacket(umidi->dev, pipe);
+ 		break;
+ 		/*
+ 		 * Various chips declare a packet size larger than 4 bytes, but
+diff --git a/sound/usb/usx2y/usb_stream.c b/sound/usb/usx2y/usb_stream.c
+index 992eec233675d..7f6075059ac23 100644
+--- a/sound/usb/usx2y/usb_stream.c
++++ b/sound/usb/usx2y/usb_stream.c
+@@ -51,7 +51,7 @@ static int init_pipe_urbs(struct usb_stream_kernel *sk,
  {
- 	snd_power_ref(card);
-+	/* order power_ref increment against card->shutdown read */
-+	smp_mb__after_atomic();
- 	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
- 		wait_event_cmd(card->power_sleep,
- 			       card->shutdown ||
+ 	int u, p;
+ 	int maxpacket = use_packsize ?
+-		use_packsize : usb_maxpacket(dev, pipe, usb_pipeout(pipe));
++		use_packsize : usb_maxpacket(dev, pipe);
+ 	int transfer_length = maxpacket * sk->n_o_ps;
+ 
+ 	for (u = 0; u < USB_STREAM_NURBS;
+@@ -171,7 +171,7 @@ struct usb_stream *usb_stream_new(struct usb_stream_kernel *sk,
+ 	out_pipe = usb_sndisocpipe(dev, out_endpoint);
+ 
+ 	max_packsize = use_packsize ?
+-		use_packsize : usb_maxpacket(dev, in_pipe, 0);
++		use_packsize : usb_maxpacket(dev, in_pipe);
+ 
+ 	/*
+ 		t_period = period_frames / sample_rate
+@@ -187,7 +187,7 @@ struct usb_stream *usb_stream_new(struct usb_stream_kernel *sk,
+ 	read_size += packets * USB_STREAM_URBDEPTH *
+ 		(max_packsize + sizeof(struct usb_stream_packet));
+ 
+-	max_packsize = usb_maxpacket(dev, out_pipe, 1);
++	max_packsize = usb_maxpacket(dev, out_pipe);
+ 	write_size = max_packsize * packets * USB_STREAM_URBDEPTH;
+ 
+ 	if (read_size >= 256*PAGE_SIZE || write_size >= 256*PAGE_SIZE) {
+diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
+index 85cbb799ded70..9dc312729413d 100644
+--- a/sound/usb/usx2y/usbusx2yaudio.c
++++ b/sound/usb/usx2y/usbusx2yaudio.c
+@@ -422,7 +422,7 @@ static int usx2y_urbs_allocate(struct snd_usx2y_substream *subs)
+ 
+ 	pipe = is_playback ? usb_sndisocpipe(dev, subs->endpoint) :
+ 			usb_rcvisocpipe(dev, subs->endpoint);
+-	subs->maxpacksize = usb_maxpacket(dev, pipe, is_playback);
++	subs->maxpacksize = usb_maxpacket(dev, pipe);
+ 	if (!subs->maxpacksize)
+ 		return -EINVAL;
+ 
+diff --git a/sound/usb/usx2y/usx2yhwdeppcm.c b/sound/usb/usx2y/usx2yhwdeppcm.c
+index bcf5d2242c5f9..2ea3396438689 100644
+--- a/sound/usb/usx2y/usx2yhwdeppcm.c
++++ b/sound/usb/usx2y/usx2yhwdeppcm.c
+@@ -321,7 +321,7 @@ static int usx2y_usbpcm_urbs_allocate(struct snd_usx2y_substream *subs)
+ 
+ 	pipe = is_playback ? usb_sndisocpipe(dev, subs->endpoint) :
+ 			usb_rcvisocpipe(dev, subs->endpoint);
+-	subs->maxpacksize = usb_maxpacket(dev, pipe, is_playback);
++	subs->maxpacksize = usb_maxpacket(dev, pipe);
+ 	if (!subs->maxpacksize)
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
