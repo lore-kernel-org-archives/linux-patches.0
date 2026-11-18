@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039734;
-	b=a9yExpnttelLT6Ia78ksrT1reYI471bzjc2jAGjpjf01omJPkC2C9JE+Nf8OkGWNLZlY
-	 H2zpxW9LgyGz7J9Xusuixi1Sct3PNFd1ydRaMdn4KnlkpkIMqaAq6EUt78VBSBjMaBXtV
-	 AgjT85GaAvSvx5yu2gtdyF+jKLC0QjLHeHkpbIaoz7AFUobEpqWKGTddPqQwvZUY3zF26
-	 PBhTxjwKpLx08Z218ApbvK+sl4w+7Syka22iqT+aKrBY4y/gNqCTaEz0opDCIFzAZc5+A
-	 OCmuwxv9I9dc/HY/8Z28tvACOVs0W4iw2FMkziDikJUdW6UXVw35TTL4XXMhQ0dhsFA==
+	t=1795039737;
+	b=2ItbJMVBChBrOyZkJnY770h6V0YppnyE31hX5itmVBs6WUZ88ZElIrBEwKUEZxaVKKKT
+	 lqa1N3NI7CfjG7KwR3/noGLZ2QLriR6NDLR0LxC/qNhr7BELIcMspWo076dj+yOSKyyWI
+	 ajcBjQbl0J3eotfvH98+VgrCArbV/VaGMeoBtS0TzNAmDBO5K1rKIDaggFNo4ppLy1lc4
+	 pbQiiR41os+5VFUVq6UWccfG+l9nJo6DreUuR+CZKgjHnGx4NtnO48VWy1Oa0h4JTrF49
+	 hy62X7xKBMQmHvch2Au9ncj1WpSzX0KffaXf7s6plJAdGDxnYfDQLu2x5l+ccNZVpVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2cegOGqCFFVIfzv32Dk2gu21S9J7/WhV1yR3VTPtLSw=;
-	b=XkKnRndc6+GpcneQsItAUvQzopyQdFU9rfOZFwjLbnbRCXmFgtG4hw8zSj8ui85AATGt
-	 v+/peB+uxAOOJxaAmvKjxpkzZjRgIPmE0mV00UyjlQLwQsjzgtID+TN1YfGt3OlH80Ytx
-	 Cm3Z5OsXlWR2YInF02x3N87V/DHnVgkcJja+9x0J5MqCy2KQO5GDeJHC8si9GCfS2FdpW
-	 ES7qmDNs+90o0v2Gvxr/8CPa2EVn0SoQwh7nv6vbgBCwKIVLDPhPszQG7fqeDHYhEx3HV
-	 yA8OMpKm19JdKmYVCWgslUAsJb7nBCZEjM6Yg0apP7/wcRwpAUz3V/QjQ4U9dH0x/sQ==
+	bh=sTsOSZYTC9rhJfqFpYyz1iwU736j5wseewktTFDM3XU=;
+	b=Y1hfwpM2OSBgDnaxntSsHXQZWO5+9EXbysH25OKq5Y5qmhbmd0pABOysxYEsQGYiu4mX
+	 luW4VsnF/wCxrzLW/WJadBU2IAIN79RjufdeC16UPB15tFK97XJIm9hDuhcvBsqI0egFC
+	 HL7R4iNS4nn+5LpDZkB3VL87dlLxlx4JsqdDVkjvLW8HuRhdllgfxXVSLgdkwY8Xr1Nzh
+	 DtY4erl3eAkEvIDuqq3PjUT1kkCz82zi9GGef+zx75ShkUqku/SbZV4hFrbJeUeaKCcOp
+	 GWn66X3pOxeQ6IpqdTYsLQNe4KFVoNP5gWMm6pXOZkrHT3ixdDl/oVcu0tMtn4n8hMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ih27dDYU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1sXHapv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B2606A32C;
-	Wed, 18 Nov 2026 22:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8C1606A31C;
+	Wed, 18 Nov 2026 22:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ih27dDYU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182871F000C4;
-	Wed, 18 Nov 2026 22:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m1sXHapv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38EE1F000C4;
+	Wed, 18 Nov 2026 22:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039734;
-	bh=2cegOGqCFFVIfzv32Dk2gu21S9J7/WhV1yR3VTPtLSw=;
+	s=korg; t=1795039737;
+	bh=sTsOSZYTC9rhJfqFpYyz1iwU736j5wseewktTFDM3XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ih27dDYUXH1qNdaCIvZNNycIh60ESr8WpaTBFTFf11fJ1tvDnaQhhCJZqbMKA4SaA
-	 GKTQpHkWEywbtpm+oHl7Uq4KMsN3ZfogVj3/ttW+APfgnI5efZDFxLRpUKaU2Tsgia
-	 EAHyVRS9uPbU3YjJcHfjlRZgrt8y5EHm+cg+dL8g=
+	b=m1sXHapvEl/g+m4bdvdLPzbpTvXaGkErHEa/b0HNuOb3ZE/1BucHXYwojIc1xJhGO
+	 45lhx0Q1jIFi2iu3YaY5b03GkS7+Wy4z2MOtWTCArGY/+ttJjHsJafiMoES8oQUr6l
+	 n8aee8dwbfdEXnDLYJMT9s4GhBZor2dW9YyXVWYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2206/3318] ntfs: Do not kmap page cache pages for compression
-Date: Wed, 18 Nov 2026 15:47:08 +0100
-Message-ID: <20261118150428.103381074@linuxfoundation.org>
+Subject: [PATCH 6.6 2207/3318] fs/ntfs3: zero frame pages on read error
+Date: Wed, 18 Nov 2026 15:47:09 +0100
+Message-ID: <20261118150428.131160666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 953b79a7a124c3dae86544cea581a5bc7655aa13 ]
+[ Upstream commit a32e893a077a4b0d3b04c86cb7f69e354a187995 ]
 
-These pages are accessed through vmap; they are not accessed
-by calling page_address(), so they do not need to be kmapped.
+ni_read_frame() marks every frame page uptodate at the 'out:' label
+regardless of the return value. The pages come from ntfs_lock_new_page()
+and are not zeroed, and several error paths reach 'out:' before anything
+is written to them (e.g. a failed decompress_lznt()/decompress_lzx_xpress()
+on a corrupted chunk, or an allocation failure).
 
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+A page marked uptodate is served directly from the page cache, so a later
+read() of the file returns the uninitialized page contents to userspace.
+On a crafted compressed image this leaks kernel memory, including pointers.
+
+Zero each page on the error path before marking it uptodate. The success
+path is unchanged.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Stable-dep-of: a32e893a077a ("fs/ntfs3: zero frame pages on read error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ fs/ntfs3/frecord.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index efe20e6b8d078..32317e127f5a9 100644
+index 32317e127f5a9..3e3c9caaddf54 100644
 --- a/fs/ntfs3/frecord.c
 +++ b/fs/ntfs3/frecord.c
-@@ -2501,9 +2501,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- 	 * To simplify decompress algorithm do vmap for source
- 	 * and target pages.
- 	 */
--	for (i = 0; i < pages_per_frame; i++)
--		kmap(pages[i]);
--
- 	frame_size = pages_per_frame << PAGE_SHIFT;
- 	frame_mem = vmap(pages, pages_per_frame, VM_MAP, PAGE_KERNEL);
- 	if (!frame_mem) {
-@@ -2760,7 +2757,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+@@ -2757,6 +2757,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
  out:
  	for (i = 0; i < pages_per_frame; i++) {
  		pg = pages[i];
--		kunmap(pg);
++		if (err)
++			clear_highpage(pg);
  		SetPageUptodate(pg);
  	}
  
-@@ -2847,9 +2843,6 @@ int ni_write_frame(struct ntfs_inode *ni, struct page **pages,
- 		goto out1;
- 	}
- 
--	for (i = 0; i < pages_per_frame; i++)
--		kmap(pages[i]);
--
- 	/* Map in-memory frame for read-only. */
- 	frame_mem = vmap(pages, pages_per_frame, VM_MAP, PAGE_KERNEL_RO);
- 	if (!frame_mem) {
-@@ -2915,11 +2908,7 @@ int ni_write_frame(struct ntfs_inode *ni, struct page **pages,
- 
- out3:
- 	vunmap(frame_mem);
--
- out2:
--	for (i = 0; i < pages_per_frame; i++)
--		kunmap(pages[i]);
--
- 	vunmap(frame_ondisk);
- out1:
- 	for (i = 0; i < pages_per_frame; i++) {
 -- 
 2.53.0
 
