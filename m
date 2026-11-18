@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022984;
-	b=47+XjvFdkSH4YcD7w3Ons+Qvj9J4nzm489h5KJlLEK3Hjnqx0FdT2RV95m1WX/bSz9t2
-	 C2XjbrkXpgUsjfsjrT9phrygIrdJv7or6T1O7p7v5oHQwBdaskGb1mEwDllsdW0keGBbJ
-	 4NOaz7sNKJF/+GfhraXXgp9J7166/rgkeOkVFxo97yIud4c3bROEnXdiT9VNzXO7Zj+0O
-	 eedyzoVyvTz1CIcytMiRBy6NFDtENo0VC/WQYoLiDThpcrtyraMcWH9bsPMygedNq5ANC
-	 ImBBtE0P5WWdJ0yBSBu/yLdg9ECgXuTiIGJZmhgYTh81W2szydywDXNhfZG381k/S+Q==
+	t=1795022987;
+	b=EvFd5cgVA0a+6d8ga8UKaLk55jF+gPyxXsmsnFyjUWay6LOxcVzhFQiYbrz/E8rfC+NH
+	 OR1kcQgWyyaYSerbXciXf6NsDOEuhdx8MfqmxOMrJ2400OtZsNmiMS7DtdvYoiRa2Dr8S
+	 JvV12YUahVfWibnHcCNV6dSEaFrJXKzHgFKH24DGTEYRulqhDnsbVhSvdH5JNOj5styGD
+	 t1hMHKUstzXR/aElmtUyAA0kzkWeH257/t6OcNZu8bHTPQKlXSp7DAynAf51JY15Fvpvl
+	 1eOlSD2MG8D5s3HH1eCs4wglwr75v34AwSNu5ogdn7nPiv/E0TvQNxI/0cX/5LTE6HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022984;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022987;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vboQe7ZR13xIl3IDog+n6gEkbIoN0rnb3C1VM9kn6ws=;
-	b=IaeY6GP2/b0U7TNLmbRU6yZP+GR97hE8VNW6BR9u8Olib57FQSBG4+YHolQF8vNdpJNt
-	 7URcDs+73VHYpFjEmmsVdVW++uHWdRgMbn2ABcxvcF4ptJ1UXvezj/9Yw+kKLEaLTAYdf
-	 ExMWuorBTAWBMrTPn3pHoPzVTvy1fppOpVu8bxrzkqQbJ8392MZUulpWl7SB9/WdVX4nF
-	 v/4MuxeDtlQMz0SxQdDXsgeVAlJ/0n5uXSdJUckJrH3p0VCrs9JtPNmCeLdbqrIAkEqaE
-	 ugXKI6g06ArLHmnWnUSKG73M0sBbv3l89oYZUWi1W01HsyfQEKbArbq7fjKNzBCtyQQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=NzGbzI9OXjjdN9q1L6aYSCiieQws2VOsEL8S43MJg3c=;
+	b=DEW3E0nIQDxmy20+hlU3P2yOfgWDn7PZIbNdLRC0fA0xc0O96a0HAy53NmUv/tcHFujH
+	 fLJ3+JBDrrGKz8DMYvRe+XgLP8kiI5yRBS6OgSN6F75+G97kzokEc9/hYHKqUJwjq1+kX
+	 wA9v+0LARjkSP67EflCPrN+vi5oysMnPE2ZSiKAi/BS0/1eIyQmi0iE0KPoJPcdQEJv0I
+	 N3RhdWu7bWcdSZBVjBb0Sdc1R8iFhpRMyzr/IzWRHT2+ehXI6jOjrztuJjyD+YASodeft
+	 vxz8t6O4WkMh8DZf6+vWH/Ex4AMRxnC/y4nQ3+nLuKhb79fH1frWL6q4SlYHgUCIbOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkZeCJf1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4bwU9vf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17BF606A31C;
-	Wed, 18 Nov 2026 17:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F24D606A31C;
+	Wed, 18 Nov 2026 17:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkZeCJf1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62111F000C4;
-	Wed, 18 Nov 2026 17:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y4bwU9vf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80ACC1F000C4;
+	Wed, 18 Nov 2026 17:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022984;
-	bh=vboQe7ZR13xIl3IDog+n6gEkbIoN0rnb3C1VM9kn6ws=;
+	s=korg; t=1795022987;
+	bh=NzGbzI9OXjjdN9q1L6aYSCiieQws2VOsEL8S43MJg3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GkZeCJf1ixMrj7mGnN2ESRJ+uDry4gVnyUEZmje2IC+tTy+kiiIWEZW91wAp1U3Gd
-	 O4YPRGBnJa0qY1h1UpnQPvDzlG1xQuz3FDR2WA07+6U3H1LeoO1CezVAAm7anNjwIh
-	 qw695K6YfO0bpJofhGEDSr5rP068m+6N/Msn7Gwg=
+	b=y4bwU9vfuCtzF6k953EAOYXOOPQy3i3X5xNu03TK7aoqisjRs6zlzznMMQ+Q7W4po
+	 v80KMXsxRuiA72UQ8MIim24/egPQPVOgcRDtXvIVrdV4tz5b4iG9B14eLMp6WhsZut
+	 gcREUa1rlG8ZbMheoNqfr6/oAXSBZxMJZCIY1DBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0207/2151] bpftool: Set BPF_F_XDP_DEV_BOUND_ONLY flag non-destructively
-Date: Wed, 18 Nov 2026 15:32:22 +0100
-Message-ID: <20261118150129.322267077@linuxfoundation.org>
+Subject: [PATCH 6.18 0208/2151] PCI: endpoint: pci-epf-vntb: Pass PF/VF number when BAR programming
+Date: Wed, 18 Nov 2026 15:32:23 +0100
+Message-ID: <20261118150129.359767993@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,49 +63,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 06d6f845c4bda857a6ae864690f35321b878e827 ]
+[ Upstream commit afe2aa9dc93d904730bab63f5ccb514a318e6464 ]
 
-When setting the XDP hints ifname, bpftool would set the
-BPF_F_XDP_DEV_BOUND_ONLY without looking at the existing program flags,
-overriding any other flag values. This was always a destructive action,
-but after we change libbpf to carry the frags section flag in
-prog_flags, this can impact bpftool loading of XDP frags programs.
+vntb_epf_mw_set_trans() programs the memory-window BAR through
+pci_epc_set_bar() with hardcoded function numbers (0, 0), so the BAR
+lands on the wrong function whenever the vNTB EPF is bound to anything
+but PF0. The other BAR programming sites in the vNTB driver already pass
+the EPF's own numbers.
 
-Change the flag setting to be non-destructive by OR'ing it with the
-existing flags.
+Pass the EPF's own func_no/vfunc_no here as well.
 
-Fixes: f46392ee3dec ("bpftool: Specify XDP Hints ifname when loading program")
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/bpf/20260901-libbpf-frags-flags-v3-1-4eb6f14968b0@redhat.com
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260728172306.2751813-2-den@valinux.co.jp
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/prog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 6daf19809ca4a..86ea90cd45408 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -1769,7 +1769,7 @@ static int load_with_options(int argc, char **argv, bool first_prog_only)
- 		}
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 39d9844873f53..eef9d0e724381 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -1156,7 +1156,8 @@ static int vntb_epf_mw_set_trans(struct ntb_dev *ndev, int pidx, int idx,
+ 	epf_bar->barno = barno;
+ 	epf_bar->size = size;
  
- 		if (prog_type == BPF_PROG_TYPE_XDP && xdpmeta_ifindex) {
--			bpf_program__set_flags(pos, BPF_F_XDP_DEV_BOUND_ONLY);
-+			bpf_program__set_flags(pos, bpf_program__flags(pos) | BPF_F_XDP_DEV_BOUND_ONLY);
- 			bpf_program__set_ifindex(pos, xdpmeta_ifindex);
- 		} else {
- 			bpf_program__set_ifindex(pos, offload_ifindex);
+-	ret = pci_epc_set_bar(ntb->epf->epc, 0, 0, epf_bar);
++	ret = pci_epc_set_bar(ntb->epf->epc, ntb->epf->func_no,
++			      ntb->epf->vfunc_no, epf_bar);
+ 	if (ret) {
+ 		dev_err(dev, "failure set mw trans\n");
+ 		return ret;
 -- 
 2.53.0
 
