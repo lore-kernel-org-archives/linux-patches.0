@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038632;
-	b=iL4/I2f/Gbax46sly90uri/ZqI7+XzNckoKHFrOazvRyrHahGokXRrBNiwNIaN3eYB8l
-	 MPzWwFO4VlsJBArw6zPVEpROEX0lpDK9ndMgNyDGSnppoLrAyT973dnQ+dyB+myoia8h5
-	 aUdoU7I48gOZsRJRRyW+x7gBty154NpR3RQa19EwZ3puaXR3ATccgowK3Dhz/Zy8BMHsC
-	 mScrUQlD0mbZ5txgEnV/c8Cd2LcIUjK51lMsRI8Hrt5zhsI49HOupBFC7UkIhqwAKhEwh
-	 nXJcWlytNuUIL1KWJzB6yTR2AZPCsGQIXbT0o8HySbUAreLlgNyafO+39B7xTa0q6mg==
+	t=1795038635;
+	b=G/2fTjCCMVQ1b6BpV+a/XX26BIPFMXGZDVz5ZoQJ/Py1idRBElp1EJYB6ezf3hQ4V+Ur
+	 AtU44dmyya5ZsdC34aE7WIUhZfm1VGFAwNLq1e6AL8bKo4rpWN1xZPnwYvgXnwhSTdo1e
+	 54PlImVcDVaZd06bhs8NgA2F4SeAb/WKy6rh8dJExKQVp/atU/s5X09OnmdRe1Rl/JOpO
+	 Y6gqJXGCgXeCkBVV79dzA6taYbjgeZ+XvE15dk0eKYGHfNNkFf4gHNP/LRn7pfT0KjHvq
+	 WE/1Jg9MVVliHGjS8xCQEcLGlUu8WUKRkIHL4KpFyajmD4PQrEHIlb8UIXpGPDCljOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038635;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vWnFWAa6IXXk01aG9XZl/LDiUksfg5m0xDd6bvQqOtM=;
-	b=Vqy2Q2mkuhGWsD0VWX29Hd4Lhmy/ZUqdlLV8vCWC0bMEGyB4S0Wfhytzjf9bI6XWybSF
-	 IIoTzlF07D9ypY17dJX863Thni3rk7I6fPdL4OBEthWiY4cc4DT6RD4Ex0zz7dnLztAkA
-	 4cvc1Wkq9/XX1cJ9MakoYPa+iEGj2WCwTvsmMy5iE0GGmtl83s9X9ZxGwIMCKHC2kpAJP
-	 T62SKFAPG9zesPhR2nZ0W4Tl+ikJiQ3Gm1TbTg9ejJAJmCqvWAjpq5RMAj69/SMBNUmmV
-	 FjdsLmPhw9J9EWLuaD8vgs1wkZH+qT+C5iHXtsTpvMElk+CeadtT1TOql5vP3jLudNA==
+	bh=YMIG0h0imVsXBng66e2mHRkFDcNmxYYR3TfusOvf4Ok=;
+	b=sw3BjbAOJ+S3wRU29YYL9dKbXE3WRVpMwXF5xvQvYFPVL4jZpI2PRFxF/7U814lZpF/2
+	 erwuDPYmXkbgJgs1ePNOLWhBi2dzGpVU/hahVYSh/WO2d4qMMOnHV71/NWXmzHWtZWopN
+	 ZyemQljuIsj/RyVkmK7joLhbq11AzDl4+G3d4/0JbmzvW0Iz1xEkttEaLB8WAAyTjLUSH
+	 g1ZtRrv0zSiutrujxn00FlYtLWxVzwJHu4DLHY8yOGHbmvBXrxoizZOwuaGnYgZc44J8c
+	 L3R8W/T1qUsCYjlIphlGZEKYsohhmbVWF0O3710qcEU+SU7xPG7Vt3ZmOgqGIIrySGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g5RCPP5V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZwTdbuZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1974606A320;
-	Wed, 18 Nov 2026 21:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980EA606A31C;
+	Wed, 18 Nov 2026 21:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g5RCPP5V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339511F000C4;
-	Wed, 18 Nov 2026 21:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZwTdbuZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC17E1F000C4;
+	Wed, 18 Nov 2026 21:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038632;
-	bh=vWnFWAa6IXXk01aG9XZl/LDiUksfg5m0xDd6bvQqOtM=;
+	s=korg; t=1795038635;
+	bh=YMIG0h0imVsXBng66e2mHRkFDcNmxYYR3TfusOvf4Ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g5RCPP5V27jOetYJRw8Uqfe0pJCVOOTERqpr0p5Nb2umljKMyWm5UM1w9Nu9PKKEb
-	 CltEWWrZ8KEDmtD8Ttof5fqvws7xUzIIZKkuvZ7g+cXP/dxF92Z7eRk4HhE1pk234+
-	 NXMt78nzsy7Z2OrAwT8FVyl+qD6vwkChyBI6GpJ4=
+	b=RZwTdbuZVKvpE5chRPL3onH9uDwNxBJxdrQBVXzATAAm5Dam6D1C/H9L2JjtUgQ5o
+	 TWioRE52wSRZN6QtybKzCnRMuXoBY3O5bN8mWjCzlOgf/6lXtS4FQ9RECv9HqL/YGt
+	 t3EZ0WAbtRSkeWTvhWcGEk5jPbFt6dLPMFSbu7gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1811/3318] PCI: dwc: Set DMA_BYPASS bit in outbound IATU CTRL2 register
-Date: Wed, 18 Nov 2026 15:40:33 +0100
-Message-ID: <20261118150416.184087293@linuxfoundation.org>
+Subject: [PATCH 6.6 1812/3318] clk: nuvoton: ma35d1: Keep the clock count in the driver
+Date: Wed, 18 Nov 2026 15:40:34 +0100
+Message-ID: <20261118150416.214927441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,73 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit efadda401c5c8e2390ba66508eba154dbd0db5a9 ]
+[ Upstream commit 26ec588063d9b6c70773b8729372e2bf6d3ea95a ]
 
-An outbound iATU region matches any local (AXI/application-side)
-address that falls within its Base/Limit window and rewrites it to
-the PCIe-side address programmed in that region's Target Address
-Registers before the transaction goes out on the link. This matching
-does not distinguish CPU-initiated transactions from ones issued by
-the internal DMA engine (eDMA/HDMA).
+The number of clocks is not a binding since this is a value that can
+change. As such, in order to support the missing watchdog clocks and
+allow the deprecation and removal of CLK_MAX_IDX from the bindings, we
+need to switch to a local definition first.
 
-Example: outbound region 0 is programmed with Base/Limit covering
-local addresses 0x8000_0000-0x8000_0FFF and Target 0x1_0000_0000, for
-CPU-initiated accesses. The DMA engine is later given a descriptor
-whose destination is the host address 0x8000_0080, which happens to
-fall inside region 0's Base/Limit range. The iATU matches the DMA
-transaction against region 0 too and rewrites it to 0x1_0000_0080
-instead of passing 0x8000_0080 through unchanged. The transaction
-then lands on the wrong host address, causing data corruption or an
-IOMMU fault when the rewritten address has no valid mapping.
-
-Set the DMA_BYPASS bit (bit 27) in PCIE_ATU_REGION_CTRL2 when
-programming outbound iATU regions so only CPU/AXI-initiated
-transactions are matched against the region; DMA engine transactions
-bypass the translation and go out on the PCIe link with their
-original address.
-
-Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260908-dma_bypass-v2-1-c3c81d408c0c@oss.qualcomm.com
-[ sashal: adapted the outbound control update to the older helper by initializing val from PCIE_ATU_ENABLE before writing CTRL2 ]
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-1-48937ee6c9bb@bootlin.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Stable-dep-of: 1dc3871ce7ec ("clk: nuvoton: ma35d1: Add missing WDT/WWDT parent clocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 5 ++++-
- drivers/pci/controller/dwc/pcie-designware.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/nuvoton/clk-ma35d1.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 504450a8b6a45..86326116d85ca 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -506,7 +506,10 @@ static int __dw_pcie_prog_outbound_atu(struct dw_pcie *pci, u8 func_no,
- 		val = dw_pcie_enable_ecrc(val);
- 	dw_pcie_writel_atu_ob(pci, index, PCIE_ATU_REGION_CTRL1, val);
+diff --git a/drivers/clk/nuvoton/clk-ma35d1.c b/drivers/clk/nuvoton/clk-ma35d1.c
+index 9f65d0623517a..6aa42a3e1be3b 100644
+--- a/drivers/clk/nuvoton/clk-ma35d1.c
++++ b/drivers/clk/nuvoton/clk-ma35d1.c
+@@ -17,6 +17,7 @@
+ static DEFINE_SPINLOCK(ma35d1_lock);
  
--	dw_pcie_writel_atu_ob(pci, index, PCIE_ATU_REGION_CTRL2, PCIE_ATU_ENABLE);
-+	val = PCIE_ATU_ENABLE;
-+	if (dw_pcie_ver_is_ge(pci, 460A))
-+		val |= PCIE_ATU_DMA_BYPASS;
-+	dw_pcie_writel_atu_ob(pci, index, PCIE_ATU_REGION_CTRL2, val);
+ #define PLL_MAX_NUM		5
++#define	MA35D1_CLK_COUNT	236
  
- 	/*
- 	 * Make sure ATU enable takes effect before any subsequent config
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 1ffa31797a17c..bb481205e23b5 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -154,6 +154,7 @@
- #define PCIE_ATU_REGION_CTRL2		0x004
- #define PCIE_ATU_ENABLE			BIT(31)
- #define PCIE_ATU_BAR_MODE_ENABLE	BIT(30)
-+#define PCIE_ATU_DMA_BYPASS		BIT(27)
- #define PCIE_ATU_FUNC_NUM_MATCH_EN      BIT(19)
- #define PCIE_ATU_LOWER_BASE		0x008
- #define PCIE_ATU_UPPER_BASE		0x00C
+ /* Clock Control Registers Offset */
+ #define REG_CLK_PWRCTL		0x00
+@@ -467,12 +468,12 @@ static int ma35d1_clocks_probe(struct platform_device *pdev)
+ 	int ret;
+ 
+ 	ma35d1_hw_data = devm_kzalloc(dev,
+-				      struct_size(ma35d1_hw_data, hws, CLK_MAX_IDX),
++				      struct_size(ma35d1_hw_data, hws, MA35D1_CLK_COUNT),
+ 				      GFP_KERNEL);
+ 	if (!ma35d1_hw_data)
+ 		return -ENOMEM;
+ 
+-	ma35d1_hw_data->num = CLK_MAX_IDX;
++	ma35d1_hw_data->num = MA35D1_CLK_COUNT;
+ 	hws = ma35d1_hw_data->hws;
+ 
+ 	clk_base = devm_platform_ioremap_resource(pdev, 0);
 -- 
 2.53.0
 
