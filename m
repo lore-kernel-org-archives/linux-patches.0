@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043975;
-	b=Yy8puaj6JTBKbMjHKjrMfLiOaZCbevVAYQNzMu2iBKSWXhtqQd77D32OLnub7NTOIMQ4
-	 VJN9qPo1kKlhbgsQPSOkWhpb4YDiIn1SANJ182eqfzYbrjJYPBumgk0Y4ZgNoSP5K0zL7
-	 GmgPnMLdbMKhVz1RYDVqR0KZakG3W2u4A7G/KgTNHRh6qox9XwQh9XVPJV4RqLOujb8o+
-	 hMD76Dpn9AtA4BbnRyKwZOrG27VmaVF57vMjZxGtgik3OH/acqMaLd5pi+wIFlUdSUMNE
-	 CMG4ybnxmoDFQ1uGN4ie3YyBvFSDCJuGnMNI/xRVpn5IsO8F7LxRzoz7S8TZtDUXyaQ==
+	t=1795043978;
+	b=gX7jwWDDzl9ErmIwSeXR9vl1dhnICePdN8lYscBYnZMqwbXYoPyXHlD2qJQur14xmdns
+	 A4XjuzoEcwnipL7AgR4jRQZ6ghl1TX7ONHiZEVkfuuSXoSf6L/GD5Hcczl4rbISZvLcwW
+	 lH0plyH+TBiy2bKG+szbmDiP//YF44XMleO52rpzm1mmO9vYfiHWRFBFn5bba+6Cl27Y1
+	 bjgWTHH0jwww8qlylovd2Sy+BdSRsOr2FWjnxzW26sKUp6RtQvwRGR1izF++VUWYKuR74
+	 MWe86tb1xc9Ca/D82BnMahqts8V/jhFDUitl3mXcXy/GO4futC5kQAjVs1ziaThKd0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uYZGUPCFwKoDS+eUb/yRgJ0GAVWrDziHvUqC0bmy7eo=;
-	b=5o3ugaDbeL0y+bSfx44LlhcS+AicMgpNktUM+kJfYyw59r829jvKlis3t4CemYKfbcd4
-	 NRcR54F4/n0AjRrz8Wz/DO2ZtQaFyv7qC0AJyUwk3M9UCGLXVGLlzY41B4aOzwMCkKb75
-	 sSKMgG+wMO2I03PZEqVFLvIgandpT0Mq2C5/iP9EQ7vShwHOKBgkNncLz9ue3Nn9aeMfK
-	 zLwy8nCwTCoZbx3pUu40vKSSkpcHOVXg9gZLLElgGydoUSdDHT9onmF0VjIWkdPhV8arD
-	 Y+LXjoMrTjTl41pO0wGoaOgAIcFzMDLDS//yqgP+xahZvJLyTXlH/4ee2okLi+30R8w==
+	bh=6jQv/NvOsF60d4VLneFcE3LAPKG0l32Q7Pdfmk6SXmg=;
+	b=Vm1xXbyzotvZE7p3uwXZlL3lFoMymxLE+kkm8sbiDOD49cDaeLYIRx8FlmdUoJF01K0v
+	 vSClfI+vRq/08VlxpYHMPktfasSA3YF0XMMEaR5xNXVV7OGa9UU5hvF+WEDtyIzQncEkO
+	 Mhv8eKfv1Ln4w73RCs7YYMBUVwcS5BE2s95itRzQZdiHMqYxLNkJF6BtH+L9hXsvP38HD
+	 MH8A44bxTRjOWY226COEBNFhPoswG7HHUpQ6w3JmrFqAwcfQiwsvOfdyD6dytvQC2c392
+	 c0e8GHag5MrjOdW02rCg0h9M51RhtfDGki4CkthHUSkLFneOUWtJ82Edb1uXEnKeuKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnsJcnHx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGQ9K0mW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAE1606A31C;
-	Wed, 18 Nov 2026 23:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7696606A325;
+	Wed, 18 Nov 2026 23:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnsJcnHx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6C51F000C4;
-	Wed, 18 Nov 2026 23:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGQ9K0mW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C291F000C4;
+	Wed, 18 Nov 2026 23:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043975;
-	bh=uYZGUPCFwKoDS+eUb/yRgJ0GAVWrDziHvUqC0bmy7eo=;
+	s=korg; t=1795043977;
+	bh=6jQv/NvOsF60d4VLneFcE3LAPKG0l32Q7Pdfmk6SXmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnsJcnHxxDewucQwtaegZOzwoM8bfOWVc6Pj+5sLHM8mo7Qm7AEqSmurazzg711iX
-	 B8Jxa1OGyyZWX30FMaEk0ckmof4yARH50iiA10GMVe0UAw+fFgYWhDSkfMwNxJq2YU
-	 crctGcHlS9XJfAl4xATs+5K9P/SFRvFmvkoKW3dI=
+	b=AGQ9K0mWCjHtA36DnCJ+0Z/57LCoY+neEBrCKYSj9edocV0ggPgI4Qd3Byd2nV9IA
+	 gRdOednnKw0YrQ2as0GTaxCP0JEzL7DUYhWCnxiBLx6pZRrCO4MY9FiQ5WyDTTMk83
+	 EC5dPPemGoEOYcuuBPgRdIVmTGofo8dk9XXz2uqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ju Nan <junan76@163.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0401/2857] irqchip/stm32mp-exti: Fix the unit of the hwspinlock timeout
-Date: Wed, 18 Nov 2026 15:23:55 +0100
-Message-ID: <20261118150215.828920873@linuxfoundation.org>
+Subject: [PATCH 6.1 0402/2857] ALSA: usbusx2y: validate URB actual_length in interrupt callback
+Date: Wed, 18 Nov 2026 15:23:56 +0100
+Message-ID: <20261118150215.863119929@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,73 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ju Nan <junan76@163.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit d31fbbade43f880b7e59e2b3a72722fe2725d93f ]
+[ Upstream commit 8f5ef203abda9dd36b2af473c7b737d544f807bd ]
 
-HWSPNLCK_TIMEOUT is passed to hwspin_lock_timeout_in_atomic(), whose
-timeout argument is in milliseconds, not microseconds:
+i_usx2y_in04_int() processes the interrupt URB data without checking
+urb->actual_length.  A short transfer from a malfunctioning device
+would cause the handler to process uninitialized heap data from the
+kmalloc-allocated in04_buf, which is then copied to the mmap-accessible
+ctl_snapshot[] array.
 
-  atomic_delay += HWSPINLOCK_RETRY_DELAY_US;
-  if (atomic_delay > to * 1000)
-          return -ETIMEDOUT;
+Fix by using kzalloc() for in04_buf to zero-initialize the buffer,
+and adding an actual_length check to skip processing on short
+transfers while still resubmitting the URB.
 
-So stm32mp_exti_set_type() asks for a 1 second timeout where the comment
-next to the macro says it wants 1 millisecond. The semaphore is polled
-with udelay() from a section that holds chip_data->rlock, a
-raw_spinlock_t, so preemption stays disabled for the whole wait on every
-configuration, PREEMPT_RT included.
-
-The hwspinlock core documents this explicitly:
-
-  If the mode is HWLOCK_IN_ATOMIC (called from an atomic context) the
-  timeout is handled with busy-waiting delays, hence shall not exceed
-  few msecs.
-
-Fixes: 5257169ade8c ("irqchip/stm32-exti: Use the hwspin_lock_timeout_in_atomic() API")
-Signed-off-by: Ju Nan <junan76@163.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821024756.24927-2-junan76@163.com
-[ sashal: Applied the change to irq-stm32-exti.c, the older combined driver, and renamed the macro for both of its call sites instead of upstream's single one. ]
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260904205826.4071119-2-tristmd@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Adjusted context around the new length check because this tree still has a commented-out printk line that upstream had already removed. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-stm32-exti.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/usx2y/usbusx2y.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-stm32-exti.c b/drivers/irqchip/irq-stm32-exti.c
-index dc6f67decb022..2b3135b9bc147 100644
---- a/drivers/irqchip/irq-stm32-exti.c
-+++ b/drivers/irqchip/irq-stm32-exti.c
-@@ -24,7 +24,7 @@
+diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
+index f6ab927490b4b..10d2575f8149d 100644
+--- a/sound/usb/usx2y/usbusx2y.c
++++ b/sound/usb/usx2y/usbusx2y.c
+@@ -190,6 +190,10 @@ static void i_usx2y_in04_int(struct urb *urb)
+ 	}
  
- #define IRQS_PER_BANK 32
+ 	//	printk("%i:0x%02X ", 8, (int)((unsigned char*)usx2y->in04_buf)[8]); Master volume shows 0 here if fader is at max during boot ?!?
++
++	if (urb->actual_length < USX2Y_IN04_SIZE)
++		goto resubmit;
++
+ 	if (us428ctls) {
+ 		diff = -1;
+ 		if (us428ctls->ctl_snapshot_last == -2) {
+@@ -254,6 +258,7 @@ static void i_usx2y_in04_int(struct urb *urb)
+ 	if (err)
+ 		snd_printk(KERN_ERR "in04_int() usb_submit_urb err=%i\n", err);
  
--#define HWSPNLCK_TIMEOUT	1000 /* usec */
-+#define HWSPNLCK_TIMEOUT_MS	1
++resubmit:
+ 	urb->dev = usx2y->dev;
+ 	usb_submit_urb(urb, GFP_ATOMIC);
+ }
+@@ -306,7 +311,7 @@ int usx2y_in04_init(struct usx2ydev *usx2y)
+ 		goto error;
+ 	}
  
- struct stm32_exti_bank {
- 	u32 imr_ofst;
-@@ -363,7 +363,7 @@ static int stm32_irq_set_type(struct irq_data *d, unsigned int type)
- 	irq_gc_lock(gc);
- 
- 	if (hwlock) {
--		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
-+		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
- 			goto unlock;
-@@ -567,7 +567,7 @@ static int stm32_exti_h_set_type(struct irq_data *d, unsigned int type)
- 	raw_spin_lock(&chip_data->rlock);
- 
- 	if (hwlock) {
--		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT);
-+		err = hwspin_lock_timeout_in_atomic(hwlock, HWSPNLCK_TIMEOUT_MS);
- 		if (err) {
- 			pr_err("%s can't get hwspinlock (%d)\n", __func__, err);
- 			goto unlock;
+-	usx2y->in04_buf = kmalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
++	usx2y->in04_buf = kzalloc(USX2Y_IN04_SIZE, GFP_KERNEL);
+ 	if (!usx2y->in04_buf) {
+ 		err = -ENOMEM;
+ 		goto error;
 -- 
 2.53.0
 
