@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018734;
-	b=rysbhkBiYUsjcHO7DdQYkBPQiDUR6vYvzwhdSYRdSYqlZl35Aeilt40GgKOxokz/OdOa
-	 UdgPUIW70rs2ydUWBITUu14Q/4fyutWDxiNHzylhuWM83xhmr82frzRnRSjdWTY7U1/p+
-	 1c75BtD+rPmxASKhVUvW/3EKAi25ymxWkYVP63YhB0UPEu6ioJBy+5GQ4/NFkUobhGJFC
-	 YWVRUEB63b1zGad4e/7DCTJt8IY7antSJGbQSVSrmQwuBKlnQ7SSBZHd0LZ1kJR6gDgll
-	 mh9NKadfY1p0O2vfk/n3Uj+7kmZUGcBHlRD6xdIpQ1dZzkSif8EOiOMd3LcAM6+knBg==
+	t=1795018737;
+	b=JN9YRfUoitvi/NmeRLVEUa3XdimJ7Vk+uY0yjsNWx/ukG9EMAoFUqfiy1EBqKELZXexI
+	 LCFOHhUmPrSNIUhhXBnuc7YxYY5uG1YPd0nYj2lGwwxqhVA0qShpEuloAu8G56nE+SS+j
+	 3pttwUH+UDdyGGTaY8Psou+8pRczws2YvKbxMm5QCf2DBty7/7p0cEFiYjRCowwu/EHY7
+	 QqLsllHqW2y9OVqXrNtLLUC2g98sUYQjTXW/Nmc/K/qcDdVx6pyigSqprUHWWA/GkA1M4
+	 yKaUDVlumra2iWNjqvI1tbZ5eyxaN8OvrieOBh3jL9lSqpdlXiBUpFbcDYcMvs5UN9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018734;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gKaiekWELwsBSpoirdYRlwNm6QWzJUr97dLMAjwofr4=;
-	b=Y+LVLNLi5MHsjGh0jg+zXtbQ+8oQNQOadLGsh2F6N9kfw9zElHh2XI9WHij7ENXlNs6/
-	 ZzwnpGRV31AesvkDxJYZzdFYQJDUzPQSo2zMJLVRn77X2HkrB24XgDeXz9SKAND0OAZrl
-	 QfXtCE0YUd9nZhlvgAFLqCGNuH5fMiXppeHj43pi37+vFkCJE2Rgz5252L3ePQljklsy0
-	 TG14rAUSUSyyervOQccyApRKfix1aDtPSBLDJjOv39lX2KNNAwtV9g71R9c4fcCZukwOg
-	 eCWISv60cgNGeHgr9LoxkpvF26mQ25IanPrTcNQDS5U3W2t6cwhDn3QuuCKUJFNqPwA==
+	bh=K0CyBkWdkQpeJ++BFFQGr2dQxg9YN49pjM+edLr2a88=;
+	b=VkkTCzPW7X0wZmhZFgnWD9yJ0uIybUcyFp5LjtRLIZWqu4m5tUFKJ2Lq8tGVcybPTZ4J
+	 6Lme9Aq6d9CvegD849pXUnEhhzEwD2BR3gsT/TEX2vpbMDgn+94l4O+BjBoW3oEsFxlvr
+	 NulcoVwmMvza0ZZWGKKYkPhSKjhp2gQqegGAJyMG6C5gQGinTBycZQvwgUGIK5hQQVbWO
+	 nUsAHGy8OpPfVdnkX6GeD8+/fpFSssDy7vyx1+mcpwUYD0NDUV53bviY6r0nyp6mtmEZi
+	 HNWZ5gruco3L4XKJxxdUPEwPs+RmGVZop0D9AlvVON2e/qE8AfQH0K9sN4042LzKENQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Blw0zdRo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdlXz3Uu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D02606A32A;
-	Wed, 18 Nov 2026 16:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38894606A337;
+	Wed, 18 Nov 2026 16:18:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Blw0zdRo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D1B1F000C4;
-	Wed, 18 Nov 2026 16:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdlXz3Uu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1511F000C4;
+	Wed, 18 Nov 2026 16:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018734;
-	bh=gKaiekWELwsBSpoirdYRlwNm6QWzJUr97dLMAjwofr4=;
+	s=korg; t=1795018736;
+	bh=K0CyBkWdkQpeJ++BFFQGr2dQxg9YN49pjM+edLr2a88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Blw0zdRoZOamRDp2JrvtXwMCdRMbJ9rwPJ1MxUFqRCabdw+xi7QiWbHcxeIlDbs3F
-	 bwm8dMrofcZz2enH1L7rQklk4b5CIQbHg7bb1FU3YgASa5C8a2rLgrFpAD3shgwJL5
-	 3BZ0Pc07agXyhtxzm0vE5LucPXLbugre9u0NPeHk=
+	b=cdlXz3Uuxo5xDQOCffNZ01edd/0AYVMrp2iLwUxnhYLWffraWeygMY7RhCj7o4PXE
+	 Pc840CkbDsAncvHpBWR8KX5VDUjhTzxZHWNcty5zhrZvqpCJn9Pp7DkYU3VOEveZ/1
+	 B6V21Rq20CYUDfg1Kp9QixDLk5sV6WAa+npnm0nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominic White <github@singe.za.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1308/2651] wifi: cfg80211: allow zero HE OBSS PD offsets
-Date: Wed, 18 Nov 2026 15:42:28 +0100
-Message-ID: <20261118150335.066125559@linuxfoundation.org>
+Subject: [PATCH 7.3 1344/2651] dmaengine: ste_dma40: Fix probe LCLA free
+Date: Wed, 18 Nov 2026 15:43:04 +0100
+Message-ID: <20261118150336.412223911@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,51 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominic White <github@singe.za.net>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit d9ecaa0a31732014a128e3b03243de54bbbd8394 ]
+[ Upstream commit 750dfcdb7a406bdd52d604099a631bbe96ddda91 ]
 
-IEEE Std 802.11 permits the OBSS PD offset fields in the Spatial Reuse
-Parameter Set element to have a value of zero. (IEEE Std 802.11-2024,
-26.10.2.4)
+When LCLA is placed in ESRAM, d40_probe() stores a devm_ioremap()
+address in lcla_pool.base and leaves base_unaligned unset. The
+destroy_cache error path can then pass the ioremap address to
+free_pages().
 
-The standard specifies the offsets as unsigned values added to -82 dBm,
-with field presence signalled independently. The valid offset range is
-therefore 0..20.
+Only free lcla_pool.base with free_pages() when the driver allocated the
+LCLA pool from normal memory. The ESRAM mapping is devm-managed.
 
-nl80211 currently rejects zero for all three HE OBSS PD offset
-attributes during nested netlink policy validation, before the values
-reach cfg80211 or the driver. Allow zero while retaining the upper bound
-and the existing minimum/maximum relationship validation.
-
-Fixes: 796e90f42b7e ("cfg80211: add support for parsing OBBS_PD attributes")
-Signed-off-by: Dominic White <github@singe.za.net>
-Link: https://patch.msgid.link/20260903081804.96532-1-github@singe.za.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 339f5041089a ("dmaengine: ste_dma40: Use managed resources")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
+Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-13-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma/ste_dma40.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 3f3c341967ee0..7acab4fd2860b 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -529,11 +529,11 @@ nl80211_pmsr_attr_policy[NL80211_PMSR_ATTR_MAX + 1] = {
- static const struct nla_policy
- he_obss_pd_policy[NL80211_HE_OBSS_PD_ATTR_MAX + 1] = {
- 	[NL80211_HE_OBSS_PD_ATTR_MIN_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_MAX_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_NON_SRG_MAX_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_BSS_COLOR_BITMAP] =
- 		NLA_POLICY_EXACT_LEN(8),
- 	[NL80211_HE_OBSS_PD_ATTR_PARTIAL_BSSID_BITMAP] =
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 58bc08c2ed0fb..e3756d8edc618 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3906,7 +3906,8 @@ static int __init d40_probe(struct platform_device *pdev)
+ 				 SZ_1K * base->num_phy_chans,
+ 				 DMA_TO_DEVICE);
+ 
+-	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
++	if (!base->plat_data->use_esram_lcla &&
++	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
+ 		free_pages((unsigned long)base->lcla_pool.base,
+ 			   base->lcla_pool.alloc_order);
+ 
 -- 
 2.53.0
 
