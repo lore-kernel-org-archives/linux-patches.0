@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022774;
-	b=Ae1vICat1kd/e2C3DxspGvl6Grcif6vakKJ3CfamFsGJNvxr/4QUt47LTmCEMwDlY4F0
-	 OYNohWWGokh0dtocxYcsgVZ1XF8tDSNVgxwy9MqLOzYLP4RxTtQCOV6QHq0rXbqwsZvYj
-	 4mpLTsuKIzhSQiijfeWXAdBcNfXcy3csxceXfZIhXXXWs/6zJYtrBB74vJGPQZ3Ypd5JD
-	 su1zd4l4Y3fYznPLjYT6WdtItJv1n03nnskRLzyibTbdJe0OmycQZZf6IMn8UCxWnEjtd
-	 1Wf9cYpJZc9w70ImZBA4zG14bYYKOxCsNWVN7j5cyCHIp8+NMGIS6IkfzmHcg7NJKQg==
+	t=1795022777;
+	b=qahB5tKL2ngaF6RKmzkeO2ZTu4LLMipi3o+4kHb18R2e7nY/H5Xo8zW+/5BXE0zU+KHr
+	 qFYHIqtnMGijzE/QM2iPM739FqaNLKf9IeSAtn3K8zkWePyE4iUmi7lB2Y0ZQhzRWYULg
+	 twUZb9Lw4qtMVK5/TxPtAxjnTwn6h6nkMDAw2YcZ7tGEnPpsq6Sje3MZ1p/2AV93Uz071
+	 PZ/56E3t3rthY+j+PS1xHdhiwXDq/BhE6Iek0XOqBUVGPuaxt2RhXbr+W9BgJpH8TjaJX
+	 L+h1GCqdSdPj5YfGW3z8sM+MJ9TOlkuzC9XahFl+Iy7DXPUlEyG1U7RnEA0hjuh5ykg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022774;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022777;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bp1QoaV8ZpwFXUxOTMZ38MmEr3fPEhr9lcTn9NrdOZk=;
-	b=pLREDJD+fiCzYtSv1iSjYNJDLnFJvbmbmpNnMMHjhvGEjoo7xO9n0ZYJFFskBMOxInEN
-	 /ZIr3+P8b3k6UVFj0tNuIsBLx/kKR4ZJRFYbxfBEwxUmFwgOl8uxyNd7XenASp2Y5iSgW
-	 1aKrz11GIR9nhAT3J+9BOcEyFlTZ4C8bYpldAVdB4jilbcY2wAlIx5KF9KgT6Oc5O7M6m
-	 F+U04WlVuhtIdAXguOIs9NFNSy4TXdrU/gWNsss5uqAEUnySstE63CMJuBhOIeIF2K4mS
-	 25e1slkm7iAU/WcEGN/uZaAeuXGWleU83JryxfLrNF1QCKr6QZFb7SBllWP7rArNhWw==
+	bh=msxL4SwUOYQwo6eXUvVwQL6WseISh8qbqPk5ZcPwp28=;
+	b=R8VT0AIsbKn3VC9vzOfDWuwz4uwfpdPwz24vi8F/Sm+g2Xw+fYUfskwUWR75A5gs86nJ
+	 hcGc2yDjEOFFrNpre3IKI85aaBGzDcEi04GvMAaTxKgCRSc8LFUcKvPUauZPH4/cNWNpM
+	 lBYC6jxKNPc3yWeaD11XRKNxoFrbnWH6KbTWhRpJqZgPfM8u8VQKnO+g7XAl2Xj6LP+hl
+	 /qLg7Rv2VUVfRzjzXtmFuEf2UfFRANgrsgObhv70RMDIa+Kza/B8alElMu/g45UYIEC3l
+	 lMM+8cJhBoDLl7So/Eik3t+VJrpOayWL6bAWAICHLuyz0BCmuUnkNg0Ui/p1ntCvgqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ryf3ZBrS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lYVRdpCf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFE760A3803;
-	Wed, 18 Nov 2026 17:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CCC60A263A;
+	Wed, 18 Nov 2026 17:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ryf3ZBrS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C15D1F000C4;
-	Wed, 18 Nov 2026 17:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lYVRdpCf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BAB1F000C6;
+	Wed, 18 Nov 2026 17:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022774;
-	bh=Bp1QoaV8ZpwFXUxOTMZ38MmEr3fPEhr9lcTn9NrdOZk=;
+	s=korg; t=1795022777;
+	bh=msxL4SwUOYQwo6eXUvVwQL6WseISh8qbqPk5ZcPwp28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ryf3ZBrSeyJnOsRcipZJ3rcGX6DOYb3BBAC2pAMLIew2vkMWNPkiQGxhEqL+h1Uqk
-	 A4EgZ559GOAvRqKc5VvNlx6MMl2IGhyhZJC+ktVaIfvyBFURHy/9PFb8rltBb1nnq4
-	 49D3l+9gjJ7MVL9q4rsr3Y3R7W65zGdayzvACt38=
+	b=lYVRdpCfcKmPwXNCbt0bLuhU9XQy743tWMyM+UlJsizFxX1u4kIJ/lVBe7O9YMqkM
+	 WnYQcOT147D3WzUjzf80mgAWNbs08KTkul0horQwUqlkEInfFNMlUW94wey+J4peZQ
+	 RoBYsl337v9ULTetPYJaaPM4XG84J/qogL2dD6Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Maxime Ripard <mripard@kernel.org>,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0131/2151] drm/omap: dsi: avoid sending bta sync all the time in writes
-Date: Wed, 18 Nov 2026 15:31:06 +0100
-Message-ID: <20261118150126.563790617@linuxfoundation.org>
+Subject: [PATCH 6.18 0132/2151] drm: of: Fix drm_of_get_data_lanes_count_ep() return value documentation
+Date: Wed, 18 Nov 2026 15:31:07 +0100
+Message-ID: <20261118150126.599570666@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,152 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 20207f78382ff339f3a7f7c5db2c0219b157d32a ]
+[ Upstream commit e3eca845ef7d6cd8c407f9b42beb45af94ff096b ]
 
-Some chips need configuration commands to be sent first, before they can
-send data. TC358762 for example needs PPI_LPTXTIMECNT configured
-and PPI_STARTPPI set to 1 to be able to transmit anything. To be able to
-configure such chips, do not send bta sync during writes if no acks are
-requested. Instead just wait for the packet to be sent to avoid FIFO
-overflows. There might be more to do about acks, but there seem to be
-virtually no users of that flag.
+Update drm_of_get_data_lanes_count_ep() return value documentation
+to match the drm_of_get_data_lanes_count() return value documentation.
+The drm_of_get_data_lanes_count_ep() is only a wrapper around the
+drm_of_get_data_lanes_count() and therefore returns the same error
+codes.
 
-This came to light when fiddling with the Epson Moverio BT-200 display
-which consists of 2 TC358762 bridges with SPI funneled through
-to the unknown display chip. With that patch the bridge can be accessed,
-Reading back registers works, when the above-mentioned registers are set.
+Simplify the return code description of drm_of_get_data_lanes_count()
+and drm_of_get_data_lanes_count_ep() to -ENODATA and -EINVAL.
 
-In Command-Mode update, there was a nop sent, apparently the most
-relevant part was the bta sync to actually force low power mode.
-
-Video mode panel at OMAP4 (BT-200) and video mode at OMAP5 was tested.
-
-Fixes: e70965386353e ("drm/omap: dsi: simplify write function")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260629-vm-upstr-v4-1-9f0c62d8808e@kemnade.info
-Link: https://patch.msgid.link/20260628-vm-upstr-v3-1-9e9add93378b@kemnade.info
-Link: https://patch.msgid.link/20260529-vm-upstr-v2-1-24c30671719f@kernel.org
-Link: https://lore.gitlab.freedesktop.org/drm-ai-reviews/review-patch1-20260529-vm-upstr-v2-1-24c30671719f@kernel.org/
-Link: https://patch.msgid.link/20260528-vm-upstr-v1-1-fb93ef8cbe47@kernel.org
-Link: https://patch.msgid.link/20260804-vm-upstr-v6-1-1bf3748b2fa3@kemnade.info
+Fixes: fc801750b197 ("drm: of: Add drm_of_get_data_lanes_count and drm_of_get_data_lanes_ep")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patch.msgid.link/20260305205840.95978-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/dss/dsi.c | 63 +++++++++++++++----------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/drm_of.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
-index 7bfd7eb32eba3..8aa0609e5c99b 100644
---- a/drivers/gpu/drm/omapdrm/dss/dsi.c
-+++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
-@@ -58,9 +58,6 @@ static void dsi_uninit_dispc(struct dsi_data *dsi);
- 
- static int dsi_vc_send_null(struct dsi_data *dsi, int vc, int channel);
- 
--static ssize_t _omap_dsi_host_transfer(struct dsi_data *dsi, int vc,
--				       const struct mipi_dsi_msg *msg);
--
- #ifdef DSI_PERF_MEASURE
- static bool dsi_perf;
- module_param(dsi_perf, bool, 0644);
-@@ -2189,28 +2186,45 @@ static int dsi_vc_send_null(struct dsi_data *dsi, int vc, int channel)
- static int dsi_vc_write_common(struct omap_dss_device *dssdev, int vc,
- 			       const struct mipi_dsi_msg *msg)
- {
-+	DECLARE_COMPLETION_ONSTACK(completion);
- 	struct dsi_data *dsi = to_dsi_data(dssdev);
-+	u32 err;
- 	int r;
- 
-+	/* wait for IRQ for packet transmission confirmation */
-+	r = dsi_register_isr_vc(dsi, vc, dsi_completion_handler,
-+				&completion, DSI_VC_IRQ_PACKET_SENT);
-+	if (r)
-+		return r;
-+
- 	if (mipi_dsi_packet_format_is_short(msg->type))
- 		r = dsi_vc_send_short(dsi, vc, msg);
- 	else
- 		r = dsi_vc_send_long(dsi, vc, msg);
- 
--	if (r < 0)
-+	if ((!r) && wait_for_completion_timeout(&completion,
-+				msecs_to_jiffies(500)) == 0)
-+		r = -EIO;
-+
-+	dsi_unregister_isr_vc(dsi, vc, dsi_completion_handler,
-+			      &completion, DSI_VC_IRQ_PACKET_SENT);
-+	if (r)
- 		return r;
- 
--	/*
--	 * TODO: we do not always have to do the BTA sync, for example
--	 * we can improve performance by setting the update window
--	 * information without sending BTA sync between the commands.
--	 * In that case we can return early.
--	 */
-+	/* TODO: find out if more needs to be done for MIPI_DSI_MSG_REQ_ACK */
- 
--	r = dsi_vc_send_bta_sync(dssdev, vc);
--	if (r) {
--		DSSERR("bta sync failed\n");
--		return r;
-+	if (msg->flags & MIPI_DSI_MSG_REQ_ACK) {
-+		r = dsi_vc_send_bta_sync(dssdev, vc);
-+		if (r) {
-+			DSSERR("bta sync failed\n");
-+			return r;
-+		}
-+	} else {
-+		err = dsi_get_errors(dsi);
-+		if (err) {
-+			DSSERR("Error while sending: %x\n", err);
-+			return -EIO;
-+		}
- 	}
- 
- 	/* RX_FIFO_NOT_EMPTY */
-@@ -3228,21 +3242,6 @@ static int _dsi_update(struct dsi_data *dsi)
- 	return 0;
- }
- 
--static int _dsi_send_nop(struct dsi_data *dsi, int vc, int channel)
--{
--	const u8 payload[] = { MIPI_DCS_NOP };
--	const struct mipi_dsi_msg msg = {
--		.channel = channel,
--		.type = MIPI_DSI_DCS_SHORT_WRITE,
--		.tx_len = 1,
--		.tx_buf = payload,
--	};
--
--	WARN_ON(!dsi_bus_is_locked(dsi));
--
--	return _omap_dsi_host_transfer(dsi, vc, &msg);
--}
--
- static int dsi_update_channel(struct omap_dss_device *dssdev, int vc)
- {
- 	struct dsi_data *dsi = to_dsi_data(dssdev);
-@@ -3263,13 +3262,13 @@ static int dsi_update_channel(struct omap_dss_device *dssdev, int vc)
- 	DSSDBG("dsi_update_channel: %d", vc);
- 
- 	/*
--	 * Send NOP between the frames. If we don't send something here, the
-+	 * Transition to LP here. If we don't send something here, the
- 	 * updates stop working. This is probably related to DSI spec stating
- 	 * that the DSI host should transition to LP at least once per frame.
- 	 */
--	r = _dsi_send_nop(dsi, VC_CMD, dsi->dsidev->channel);
-+	r = dsi_vc_send_bta_sync(dssdev, VC_CMD);
- 	if (r < 0) {
--		DSSWARN("failed to send nop between frames: %d\n", r);
-+		DSSWARN("failed to send bta sync between frames: %d\n", r);
- 		goto err;
- 	}
- 
+diff --git a/drivers/gpu/drm/drm_of.c b/drivers/gpu/drm/drm_of.c
+index 4f65ce729a473..e99645103b23d 100644
+--- a/drivers/gpu/drm/drm_of.c
++++ b/drivers/gpu/drm/drm_of.c
+@@ -507,8 +507,8 @@ EXPORT_SYMBOL_GPL(drm_of_lvds_get_data_mapping);
+  *
+  * Return:
+  * * min..max - positive integer count of "data-lanes" elements
+- * * -ve - the "data-lanes" property is missing or invalid
+- * * -EINVAL - the "data-lanes" property is unsupported
++ * * -ENODATA - the property does not have a value.
++ * * -EINVAL - the "data-lanes" property is missing or invalid
+  */
+ int drm_of_get_data_lanes_count(const struct device_node *endpoint,
+ 				const unsigned int min, const unsigned int max)
+@@ -539,8 +539,8 @@ EXPORT_SYMBOL_GPL(drm_of_get_data_lanes_count);
+  *
+  * Return:
+  * * min..max - positive integer count of "data-lanes" elements
+- * * -EINVAL - the "data-mapping" property is unsupported
+- * * -ENODEV - the "data-mapping" property is missing
++ * * -ENODATA - the property does not have a value.
++ * * -EINVAL - the "data-lanes" property is missing or invalid
+  */
+ int drm_of_get_data_lanes_count_ep(const struct device_node *port,
+ 				   int port_reg, int reg,
 -- 
 2.53.0
 
