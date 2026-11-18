@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047992;
-	b=sDpHbFKvg8iZDx7Sh53YZtwRCvV8135v8pPK1DVJDpjfaqOzzlK5KFu3arLZ7nN2ApvE
-	 hGXOhoIPsH6S7vvR09DTMHdKyj7E+0wO1Wsbi8tIzVMbCg0S5drccnCm72rRJO6Rg2f2k
-	 ccgefdORJMnaStF6SN8lUMMnxvgl7NM7QaQsVxIrN1z4Gfay9a20ekT8woULpzc2CtOUh
-	 FQaVS4J0N+d+g8wZEiSEvX8Uvtsw35PHVOSD9bEqyH+ulh5Ajn4XMr27yh7uCrpcI9v2P
-	 7ugf3BpYwa/UvA6FWo+j7ZICZnWSfoNMtPBnRxtF3q3bchQZgpW0eB46qbCRYQ6NHtQ==
+	t=1795047995;
+	b=Set1FcSklY4GsGDp72HJr27i7xv/YgfE8JSdrZ97udZMHUYcQjF7plgRJbkVyLxwUazT
+	 Ryw0LSCtT1VgVQd9FKlgIkKA9mnTpw0S9V9DiY9Blet104B/6SErVdcJHOrNoj7Yo+K46
+	 tE07ksYPKuVhRV6MK6QGU5MTRnNueQX1N2iGi5Q8TNysnMKJg0+HrU8O3d4Ex/ludw1IG
+	 CClOfhETNniGnogOBiI94j4A/whH+Mf3vEaWzOre+SOnfAqcFNQtiSPownCX4ERIOWmdi
+	 jjwOFG8AiN/yvqEh32KmYKY5lYqEN6AyKr8PXHNGdQjeJMMuMXyJ+RteS4UvC+HJ/2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=031vcKU/l67pSZvS2kPvO0h36iWwMo0Wr+Eq8TZ2Nl8=;
-	b=2tYoi6bTcNRf5qhYAooUUr43XoCOBtD4MWxV5cYfnVt/NfbCbyhCbtoyzkWpXb5E6r2q
-	 +Ek6K6yfcitsNXEG8zgNRjKLUWzmJsYTLwrp03wieKGYuvuZOH6SnPlNRcPCaKrPg4Urr
-	 XbIy9qsZtWwL2RgV3Uun44JO8RErATV2I7jrzs++EC8FbKpgsZksGMjk+tQcB+4qFhfaJ
-	 NumO/ozrJemRdreSyDolLMaXqwAMTXFLBvGno/a5WOKcW4CsY9a6OEo/BfdHE7gmxA7sl
-	 uD3CTlWSEqh3/jen1SajQXXnT8lJwVnCnQcWF5HSP3ZlCPKbsOmfxArtoV0tNXkVcVA==
+	bh=Zc9QYqEP4wAkl/lj+oury4fFTXlx0L6SRl/THySk+VQ=;
+	b=Oa51azHo3ZkvbptcJN1AQVi4s0LypU4ljT8uC+cCzJszbz6BTUzSqrmkYck+tpcnNhv2
+	 HHeIsOGB7WQAiw5HQhzK/y85fUplRqEEMMKqbZtMtvMfdYW06CYv4pGibJceuIm435qmo
+	 viaLdvrdTFtcbD+jLBIQDI8whrjEEM1RPplTkmqp51GvG110iLKWqtOgZwozQYrkyvlQP
+	 Ln85zSccXyvSL+zam0a3E7GbfI/vl4O3wg8n0KsnzsIhtKGMcykyePTzXUSX0zChU2MGx
+	 /pvO+4xeycDrrMuucxpReg+bUoKZO1HX6MxM6UaF3PrZOgdcwjyfDE0k1aobqw5tDtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QShRhYvw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUwkhBEo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DFC606A325;
-	Thu, 19 Nov 2026 00:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8997D606A32C;
+	Thu, 19 Nov 2026 00:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QShRhYvw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B361F000C4;
-	Thu, 19 Nov 2026 00:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUwkhBEo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88E91F000C4;
+	Thu, 19 Nov 2026 00:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047992;
-	bh=031vcKU/l67pSZvS2kPvO0h36iWwMo0Wr+Eq8TZ2Nl8=;
+	s=korg; t=1795047995;
+	bh=Zc9QYqEP4wAkl/lj+oury4fFTXlx0L6SRl/THySk+VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QShRhYvw8BmQiAQRbAkT3F5zcWo7GRtCNVKcvpP0hvv8Trkn0H5D38UaSI0IkQcPI
-	 7ZaaGZlt45m4cqH/yGGqPNUxawmfBQeVbgCp9mE8L2Ew5gwGfww1fynz4M0yw1V3Hx
-	 xSZ3f421oDRUNLCiwXFbs1eufpQTQSWTOguKtchU=
+	b=sUwkhBEolOImmobKWtLXGDTzQ3LmmHGgWTtfvPSaneV0NjZxIQIWzQ/m7c14YKqNe
+	 JfptFKBhEkL7hS+T7D05p7JDKnT2PmBS7Q9qo7OMrQiIhj7pcP/S1tdQGndhsXQZaK
+	 4knUjFfQlZVhL0za9cZWLM/U/UKPLMObxwWJGnFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Peixin Xie <peixin.xie@linux.spacemit.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1836/2857] ACPI: scan: Stop calling acpi_bus_init_power() early
-Date: Wed, 18 Nov 2026 15:47:50 +0100
-Message-ID: <20261118150307.357038543@linuxfoundation.org>
+Subject: [PATCH 6.1 1837/2857] ACPI: utils: Adjust message printing macros for ACPI objects
+Date: Wed, 18 Nov 2026 15:47:51 +0100
+Message-ID: <20261118150307.392612164@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,268 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 2f4ddf2bd1baf0ee3c8542ec6f382a3585cae607 ]
+[ Upstream commit 78ddbfaa72d68acc98cd5ba12eca071d452702c4 ]
 
-There is a problem, introduced by commit 9d9bcae47fd5 ("ACPI: delay
-enumeration of devices with a _DEP pointing to an INT3472 device")
-inadvertently, that devices with missing dependencies may be put
-into power state D0 prematurely [1].
+The majority of acpi_handle_<level>() macros use neither pr_fmt() nor
+dev_fmt() and acpi_handle_debug() uses pr_fmt() like dev_fmt(), but
+only if dynamic debug is compiled in.
 
-Namely, acpi_bus_init_power() called by acpi_bus_get_power_flags()
-during the early initialization of ACPI device objects, may discover
-that all of the power resources needed by the given device to be in
-power state D0 are initially on, so it will reference count those
-power resources and transition the device into D0.  Later, if
-acpi_bus_attach() running for that device notices that it has missing
-dependencies, the enumeration of it will be deferred and its
-power_manageable flag will be cleared, even though it is still in D0
-at that point.
+For more consistency, redefine all of the macros in question to use
+dev_fmt() because they are more similar to the analogous dev_*()
+family of macros than to the pr_*() ones and make all of them use it
+in the same way.
 
-After the dependencies in question have been met, acpi_bus_attach()
-runs again for the device and now it calls acpi_bus_init_power() that
-takes additional references to the power resources used by the device
-in D0.  These additional references prevent the power resources from
-being turned off when the device goes into D3hot/D3cold.
+While at it, rephrase the comment documenting those macros for more
+clarity.
 
-Another problem, related to the previous one, is that ACPI power state
-initialization may be carried out for devices whose parents are not
-ready for enumeration which may lead to initialization ordering issues.
-
-To address both, stop calling acpi_bus_init_power() from
-acpi_bus_get_power_flags(), but also take the initialization of
-PCI devices into account, which needs to be done because they
-are initialized and bound to their ACPI companions before
-acpi_bus_attach() is called for the latter.
-
-To that end, notice that acpi_power_up_if_adr_present() is used for
-powering-up PCI devices in D3cold before walking the bus in order to
-discover them and the initial ACPI power state of those devices needs
-to be known for this purpose, so add an acpi_bus_init_power() invocation
-to that function.  [The debug statement printed by it duplicates the
-debug statements printed during the acpi_bus_init_power() execution, so
-drop it.]
-
-Moreover, since the ACPI companions of PCI devices are associated with
-the corresponding PCI devices found on the bus before acpi_bus_attach()
-is called for them, it is not necessary or even useful to skip them in
-acpi_bus_attach() due to an ACPI status mismatch, so avoid doing that
-and complain if the ACPI status does not match the observed situation.
-
-Also use the ACPI power state tracking to decide whether or not
-the device's power state needs to be initialized in acpi_bus_attach()
-instead of using the "initialized" flag of the ACPI device object
-for this purpose, which is fragile and inconvenient, and clear the
-power_manageable flag on failure in acpi_bus_init_power() (additionally,
-poison the device ACPI power state as "invalid" if the initialization of
-it fails).  That allows the clearing of the power_manageable flag for
-devices with unmet dependencies to be dropped.
-
-While at it, add a debug message pringing statement to
-acpi_bus_init_power() to facilitate diagnostics.
-
-Fixes: 9d9bcae47fd5 ("ACPI: delay enumeration of devices with a _DEP pointing to an INT3472 device")
-Link: https://lore.kernel.org/linux-acpi/20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com/ [1]
+Fixes: 45fef5b88d1f ("ACPI: add dynamic_debug support")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Peixin Xie <peixin.xie@linux.spacemit.com>
-Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/2295263.irdbgypaU6@rafael.j.wysocki
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/2300525.irdbgypaU6@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_pm.c | 62 ++++++++++++++++++++++++++++++++--------
- drivers/acpi/scan.c      | 40 +++++++++++++++++---------
- 2 files changed, 76 insertions(+), 26 deletions(-)
+ include/linux/acpi.h | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
-index 37ff39f1f7f6a..e02622bcc7c11 100644
---- a/drivers/acpi/device_pm.c
-+++ b/drivers/acpi/device_pm.c
-@@ -23,6 +23,8 @@
- #include "fan.h"
- #include "internal.h"
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index e4e7b2cfe72af..f4373d64ff289 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1168,34 +1168,34 @@ void __acpi_handle_debug(struct _ddebug *descriptor, acpi_handle handle, const c
+ #endif
  
-+#define ACPI_D_STATE_INVALID	ACPI_D_STATE_COUNT
-+
- /**
-  * acpi_power_state_string - String representation of ACPI device power state.
-  * @state: ACPI device power state to return the string representation of.
-@@ -293,24 +295,28 @@ int acpi_bus_set_power(acpi_handle handle, int state)
- }
- EXPORT_SYMBOL(acpi_bus_set_power);
+ /*
+- * acpi_handle_<level>: Print message with ACPI prefix and object path
++ * acpi_handle_<level> - Print a message with ACPI prefix and object path
+  *
+- * These interfaces acquire the global namespace mutex to obtain an object
+- * path.  In interrupt context, it shows the object path as <n/a>.
++ * In thread context, the global namespace mutex is acquired to obtain the
++ * object path.  In interrupt context, the object path is shown as <n/a>.
+  */
+ #define acpi_handle_emerg(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_EMERG, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_EMERG, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_alert(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_ALERT, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_ALERT, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_crit(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_CRIT, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_CRIT, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_err(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_ERR, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_ERR, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_warn(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_WARNING, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_WARNING, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_notice(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_NOTICE, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_NOTICE, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #define acpi_handle_info(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_INFO, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_INFO, handle, dev_fmt(fmt), ##__VA_ARGS__)
  
--int acpi_bus_init_power(struct acpi_device *device)
-+static int acpi_device_init_power(struct acpi_device *device)
- {
- 	int state;
- 	int result;
- 
--	if (!device)
--		return -EINVAL;
--
--	device->power.state = ACPI_STATE_UNKNOWN;
--	if (!acpi_device_is_present(device)) {
--		device->flags.initialized = false;
--		return -ENXIO;
--	}
--
- 	result = acpi_device_get_power(device, &state);
- 	if (result)
- 		return result;
- 
-+	/*
-+	 * If the current power state of the device is D0 and it has a parent
-+	 * whose power state is not ignored, and the parent's power state
-+	 * initialization has failed, the parent's power state can be updated to
-+	 * D0 for consistency.
-+	 */
-+	if (!device->power.flags.ignore_parent && state == ACPI_STATE_D0) {
-+		struct acpi_device *parent = acpi_dev_parent(device);
-+
-+		if (parent && parent->power.state == ACPI_D_STATE_INVALID)
-+			parent->power.state = ACPI_STATE_D0;
-+	}
-+
- 	if (state < ACPI_STATE_D3_COLD && device->power.flags.power_resources) {
- 		/* Reference count the power resources. */
- 		result = acpi_power_on_resources(device, state);
-@@ -340,9 +346,36 @@ int acpi_bus_init_power(struct acpi_device *device)
- 		state = ACPI_STATE_D0;
- 	}
- 	device->power.state = state;
-+
-+	acpi_handle_debug(device->handle, "Initial power state: %s\n",
-+			  acpi_power_state_string(state));
-+
- 	return 0;
- }
- 
-+int acpi_bus_init_power(struct acpi_device *device)
-+{
-+	int result;
-+
-+	if (device->power.state != ACPI_STATE_UNKNOWN)
-+		return 0;
-+
-+	/*
-+	 * The ACPI device power state can be only initialized once.  If this
-+	 * fails, ACPI power management will not be used for the device going
-+	 * forward.
-+	 */
-+	result = acpi_device_init_power(device);
-+	if (result) {
-+		device->flags.power_manageable = 0;
-+		device->power.state = ACPI_D_STATE_INVALID;
-+		acpi_handle_info(device->handle,
-+				 "Initial power state undetermined, ACPI PM disabled\n");
-+	}
-+
-+	return result;
-+}
-+
- /**
-  * acpi_device_fix_up_power - Force device with missing _PSC into D0.
-  * @device: Device object whose power state is to be fixed up.
-@@ -451,8 +484,13 @@ static int acpi_power_up_if_adr_present(struct acpi_device *adev, void *not_used
- 	if (!(adev->flags.power_manageable && adev->pnp.type.bus_address))
- 		return 0;
- 
--	acpi_handle_debug(adev->handle, "Power state: %s\n",
--			  acpi_power_state_string(adev->power.state));
-+	/*
-+	 * This is done during the PCI root initialization which occurs before
-+	 * acpi_bus_attach() is called for the device, so the ACPI power state
-+	 * of the device needs to be initialized here.
-+	 */
-+	if (acpi_bus_init_power(adev))
-+		return 0;
- 
- 	if (adev->power.state == ACPI_STATE_D3_COLD)
- 		return acpi_device_set_power(adev, ACPI_STATE_D0);
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 12c3a5984bf18..14d1ded63f075 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -17,6 +17,7 @@
- #include <linux/kthread.h>
- #include <linux/dmi.h>
- #include <linux/dma-map-ops.h>
-+#include <linux/pci.h>
- #include <linux/platform_data/x86/apple.h>
- #include <linux/pgtable.h>
- #include <linux/crc32.h>
-@@ -1081,8 +1082,7 @@ static void acpi_bus_get_power_flags(struct acpi_device *device)
- 			device->power.states[ACPI_STATE_D3_COLD].flags.valid = 1;
- 	}
- 
--	if (acpi_bus_init_power(device))
--		device->flags.power_manageable = 0;
-+	device->power.state = ACPI_STATE_UNKNOWN;
- }
- 
- static void acpi_bus_get_flags(struct acpi_device *device)
-@@ -2183,38 +2183,50 @@ static int acpi_scan_attach_handler(struct acpi_device *device)
- static int acpi_bus_attach(struct acpi_device *device, void *first_pass)
- {
- 	bool skip = !first_pass && device->flags.visited;
-+	struct pci_dev *pci;
- 	acpi_handle ejd;
- 	int ret;
- 
- 	if (skip)
- 		goto ok;
- 
-+	device->flags.initialized = true;
-+
- 	if (ACPI_SUCCESS(acpi_bus_get_ejd(device->handle, &ejd)))
- 		register_dock_dependent_device(device, ejd);
- 
- 	acpi_bus_get_status(device);
--	/* Skip devices that are not ready for enumeration (e.g. not present) */
--	if (!acpi_dev_ready_for_enumeration(device)) {
--		device->flags.initialized = false;
-+	/*
-+	 * If the given ACPI device object has been already associated with a
-+	 * PCI device found on the bus, its status is effectively "present and
-+	 * enabled", and dependencies are not tracked for PCI devices, so it is
-+	 * not necessary or even useful to check the device's readiness in that
-+	 * case.
-+	 */
-+	pci = acpi_dev_get_pci_dev(device);
-+	if (pci) {
-+		acpi_handle_debug(device->handle, "PCI companion %s found\n",
-+				  pci_name(pci));
-+
-+		if (!acpi_device_is_present(device))
-+			pci_info(pci, FW_BUG "ACPI status differs from reality\n");
-+
-+		pci_dev_put(pci);
-+	} else if (!acpi_dev_ready_for_enumeration(device)) {
-+		/* The device is not ready (e.g. not present), so skip it. */
- 		acpi_device_clear_enumerated(device);
--		device->flags.power_manageable = 0;
- 		return 0;
- 	}
-+
- 	if (device->handler)
- 		goto ok;
- 
- 	acpi_ec_register_opregions(device);
- 
--	if (!device->flags.initialized) {
--		device->flags.power_manageable =
--			device->power.states[ACPI_STATE_D0].flags.valid;
--		if (acpi_bus_init_power(device))
--			device->flags.power_manageable = 0;
-+	acpi_bus_init_power(device);
- 
--		device->flags.initialized = true;
--	} else if (device->flags.visited) {
-+	if (device->flags.visited)
- 		goto ok;
--	}
- 
- 	ret = acpi_scan_attach_handler(device);
- 	if (ret < 0)
+ #if defined(DEBUG)
+ #define acpi_handle_debug(handle, fmt, ...)				\
+-	acpi_handle_printk(KERN_DEBUG, handle, fmt, ##__VA_ARGS__)
++	acpi_handle_printk(KERN_DEBUG, handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #else
+ #if defined(CONFIG_DYNAMIC_DEBUG)
+ #define acpi_handle_debug(handle, fmt, ...)				\
+ 	_dynamic_func_call(fmt, __acpi_handle_debug,			\
+-			   handle, pr_fmt(fmt), ##__VA_ARGS__)
++			   handle, dev_fmt(fmt), ##__VA_ARGS__)
+ #else
+ #define acpi_handle_debug(handle, fmt, ...)				\
+ ({									\
 -- 
 2.53.0
 
