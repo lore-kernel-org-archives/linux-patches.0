@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045630;
-	b=pu+jiFRL0eMtCHP6zmj0uOnpEDdgcns6IgmHP09Y/LUBLizmGED06yTyTGIJ8DqPuBjR
-	 k8ZYmuMNGAV4cuFaU11B3rdOCSyE10qiXMTMOtCBgWeLSA/Tktx0Y8Z5+QVyxJi2oIFpR
-	 jOewR+B7TQwmnvkL6oz9wDOGgeU1QGi6pbAA99+oq3ua1bmXxLxOZqZEhh6AQwNEauLje
-	 lJF+8gkJyPV2mLeTnW4mamZHG1fnS4YvPhxW+ceCbkN6VicqUcczDR+BWHH0G1Z2BTVA5
-	 wl5shrV0dXdNXL5QAC5XoWwOXiC3hFDTefslU+F9SbCo4y6e1iiIcC0TlY40EpaoIog==
+	t=1795045633;
+	b=D3JFH1aShZN7FGXrN2nixDrsyWXe5M7Krr+5q9kXPTh5DNAWN1xp3C46ElrGRJ2XDp1f
+	 Skb2YfxVuk97s1HMJzeJuOYzaVHrJqdYZLksrGZFesrCJS/YD5xWTwFGcRKgTZcrfOg8D
+	 0FE1rAahg41anGE1NypLb4pQmvs+PcJTD+By5UMMcIHCDPC/59BdyjDzVASMwys+RE0f/
+	 bkHFoDlQd3qqeOW6ceHAK8xobgZOxX16O/OPtCEUu0gFSXnGFvo2j5WehkEVlfScLkdsO
+	 eBUiMfTVvnEow+LfwauCSdgq9Gq5KCExHG7gC6RWEcHaqlOzsmnDMpnXnXc/uF52GDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045633;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hWDtk7muw5Zkz+YJDZamsEJOwvVSFPaVov6piR/sde8=;
-	b=iyxV5PRE38CaVR0MEdxoUZogHKc04+eINgAMWvyVswY5IMNlIWxQit1mR2xosDn+Obas
-	 Q3cIzOFV7M0RnT1WiTU3WJpNVI0K9iDsnwSJSYloUbbU0MrTYmng0AkG2oDmoi502HFKj
-	 hab1UYl/rFjecdQW3ceRnTU1EKDM2jwWaXwfUF+0oD+K8CoX/CI5ZocISCqfk/aiOsjpK
-	 LgadA2Zro/yHR52HOoxGx7IeDlSBKqFJftYU4u33ar8bNx7PWkcZuEbCZ6mt4CYL41D0m
-	 qptf75KuX/GS3RQ8fLiFZJ2f7JNKdQ8AvVDPxXg0T10Uso/nmby/FcWyXVXwb6lvM2g==
+	bh=bLYvNI8e+gRZwIVDMuIHlGir2OYKCz9BjtCloFVce+0=;
+	b=tg7xDxcJ+w9MJR3Jib1fWodHYvs69aNq9CX0Dd3VgPfKcZju0nBtDCNJUyNDuds/VP1k
+	 FWFDaKOxDD6vZrw01h+WLTaw8as9TpSqLRgCJSf+WkHGamyweXkZ8kWK4WmIAfAiFYlvd
+	 zddiCnXLlqFQBAp78o4Qmra6sR3DkdPl5hAODblxctLAxUbHJhZiGF17MclRU9DKAIYDs
+	 2gIwdQJh6om5PLCX4UNypZXMtSvC0aIeq5QcXveausRxoVoyFVFWZGwOcc6BSNNaEfw7+
+	 6zy0pmg6CXeLoK8zlr4qSV1ZUyUh6WLILSzTLpewY6eza+s6yUCIR9uurvpOS02T6DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvXjHJNn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEYV8ifI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C249B606A31C;
-	Wed, 18 Nov 2026 23:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C06F606A325;
+	Wed, 18 Nov 2026 23:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvXjHJNn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC9D1F000C4;
-	Wed, 18 Nov 2026 23:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEYV8ifI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89461F000C4;
+	Wed, 18 Nov 2026 23:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045630;
-	bh=hWDtk7muw5Zkz+YJDZamsEJOwvVSFPaVov6piR/sde8=;
+	s=korg; t=1795045633;
+	bh=bLYvNI8e+gRZwIVDMuIHlGir2OYKCz9BjtCloFVce+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvXjHJNnNHTQonWmfmd0IFbwvhpLDYYMlbvehwsXpG8PsjiK9qmfV1+kog7vonETq
-	 CgwrtTe8CAWspQMpG0lASaz88kPrqxgE5QFKrCoY5kHyPWhxro0GJA8vL1eKJ+MR6+
-	 QnnMcmxDtHF3lmgnn2PBf5azDKl8VEatHgfck70k=
+	b=tEYV8ifIq5hoYCWTEKhvIHSSefbbbI74lKLIswKnTDD9TxuNimVHvUmxeakZVc5yX
+	 dFahr3VBeY3PsdRd727sqCBpmr37gIuTL9mnI4+xl0RQ0yBJgRAqmSD4DuSqLolS/a
+	 +dWcGD7wOI+2QfJnIMlJlWeRiesDuWcc7penhDv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com,
-	Sanan Hasanov <sanan.hasanov@ucf.edu>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sorah Fukumori <her@sorah.jp>,
+	Chase Hiltz <me@chasehil.tz>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0985/2857] hwmon: (corsair-cpro) Make wait_input_report_lock IRQ safe
-Date: Wed, 18 Nov 2026 15:33:39 +0100
-Message-ID: <20261118150237.070806501@linuxfoundation.org>
+Subject: [PATCH 6.1 0994/2857] net: gro: dont chain linear parts larger than gso_size into frag_list
+Date: Wed, 18 Nov 2026 15:33:48 +0100
+Message-ID: <20261118150237.393816311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,86 +71,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanan Hasanov <sanan.hasanov@ucf.edu>
+From: Sorah Fukumori <her@sorah.jp>
 
-[ Upstream commit e4fdc82f55cf0e3d5df5c88278da5baa76a109d1 ]
+[ Upstream commit 679f6929a66db9f5a6611dad37545fbd705962d5 ]
 
-ccp_raw_event() is the HID ->raw_event() callback and takes
-wait_input_report_lock with a plain spin_lock(). This callback can run
-in very different contexts depending on the transport: from process
-context (e.g. uhid, via a write() to /dev/uhid) with softirqs and
-interrupts enabled, and from URB completion, which is softirq context
-for HCDs using HCD_BH and hard interrupt context for HCDs that do not
-(e.g. OHCI, UHCI).
+skb_gro_receive() chains an skb into the frag_list of the held packet
+when its payload cannot be attached as page frags: when its head is
+not a page fragment and still holds payload, or when its head and
+frags would overflow the frags[] array of the last packet. Since commit
+5eddb24901ee ("gro: add support of (hw)gro packets to gro stack"), that
+skb may itself be a GSO packet whose linear part holds several
+gso_size segments. skb_segment() cannot split the linear part of a
+frag_list member across segments, so segmenting the aggregate in
+software, e.g. when forwarding it to a device without NETIF_F_FRAGLIST,
+hits
 
-Taking the lock from process context with softirqs enabled while the
-same lock is also taken from softirq context can deadlock if the
-softirq interrupts the lock holder on the same CPU. Lockdep reports:
+  BUG_ON(skb_headlen(list_skb) > len);
 
-  WARNING: inconsistent lock state
-  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
-  ...
-   spin_lock include/linux/spinlock.h:347 [inline]
-   ccp_raw_event+0x51/0x110 drivers/hwmon/corsair-cpro.c:161
-   __hid_input_report+0x41c/0x580 drivers/hid/hid-core.c:2175
-   hid_irq_in+0x492/0x710 drivers/hid/usbhid/hid-core.c:287
-   __usb_hcd_giveback_urb+0x378/0x540 drivers/usb/core/hcd.c:1657
-   dummy_timer+0xa91/0x4cc0 drivers/usb/gadget/udc/dummy_hcd.c:2023
+Fully linear GSO packets come from generic XDP. When the program does
+not support frags, netif_skb_check_for_xdp() linearizes any nonlinear
+skb with pskb_expand_head() and skb_linearize() and keeps its GSO
+metadata. GRO on the device runs before generic XDP, so each aggregate
+passed by the program carries all of its payload in a kmalloc'ed head.
+A tunnel that decapsulates these packets and runs GRO again through
+gro_cells then builds the bad frag_list. This was first seen on a
+router that forwards TCP received over VXLAN, with a non-frags XDP
+program attached in SKB mode to the underlying bond because one slave
+lacks native XDP:
 
-For the same reason, the spin_lock_bh() in send_usb_cmd() is not
-sufficient when ccp_raw_event() is called from hard interrupt context.
+  kernel BUG at net/core/skbuff.c:4917!
+  RIP: 0010:skb_segment+0xbb6/0xf40
+  Call Trace:
+   tcp_gso_segment
+   ipv6_gso_segment
+   skb_mac_gso_segment
+   __skb_gso_segment
+   validate_xmit_skb
+   __dev_queue_xmit
+   ip6_output
+   ip6_sublist_rcv_finish
+   ipv6_list_rcv
+   netif_receive_skb_list_internal
+   gro_complete
+   dev_gro_receive
+   gro_receive_skb
+   gro_cell_poll
+   __napi_poll
+   net_rx_action
 
-Use spin_lock_irqsave() in ccp_raw_event(), since it may be called with
-interrupts already disabled, and spin_lock_irq() in send_usb_cmd(),
-which always runs in process context.
+It reproduces with three network namespaces: TCP sent over VXLAN on an
+IPv6 veth link to a router namespace that has an XDP_PASS program
+without frags support attached to the underlay veth in generic mode
+and GRO enabled on its VXLAN device, and forwards to a veth with
+tx-scatter-gather-fraglist disabled.
 
-Fixes: d02abd57e794 ("hwmon: (corsair-cpro) Protect ccp->wait_input_report with a spinlock")
-Reported-by: syzbot+0f98b0c0bdeaab2dc2fd@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0f98b0c0bdeaab2dc2fd
+A program with frags support in generic mode gives similar packets.
+skb_pp_cow_data() rebuilds the skb with up to about a page of linear
+data in a page_pool head_frag and keeps the GSO metadata, so once
+frags[] is full the next such packet is chained through frag_list
+with more than gso_size bytes in its head as well.
+
+Refuse the merge when the linear part to be chained exceeds the held
+packet's gso_size. tcp_gro_receive() then flushes the held packet and
+the skb starts a new GRO packet as its head, whose linear length
+skb_segment() handles.
+
+Fixes: 5eddb24901ee ("gro: add support of (hw)gro packets to gro stack")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanan Hasanov <sanan.hasanov@ucf.edu>
-Link: https://patch.msgid.link/20261008205310.30832-1-sanan.hasanou@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: claude-opus-5-5
+Signed-off-by: Sorah Fukumori <her@sorah.jp>
+Tested-by: Chase Hiltz <me@chasehil.tz>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20261013130250.3643916-1-her@sorah.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/core/gro.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 62f9372f2d355..e0cf92896bc66 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -128,9 +128,9 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- 	 * the raw event parsing and marked the ccp->wait_input_report
- 	 * completion as done.
- 	 */
--	spin_lock_bh(&ccp->wait_input_report_lock);
-+	spin_lock_irq(&ccp->wait_input_report_lock);
- 	reinit_completion(&ccp->wait_input_report);
--	spin_unlock_bh(&ccp->wait_input_report_lock);
-+	spin_unlock_irq(&ccp->wait_input_report_lock);
- 
- 	ret = hid_hw_output_report(ccp->hdev, ccp->cmd_buffer, OUT_BUFFER_SIZE);
- 	if (ret < 0)
-@@ -149,15 +149,16 @@ static int send_usb_cmd(struct ccp_device *ccp, u8 command, u8 byte1, u8 byte2,
- static int ccp_raw_event(struct hid_device *hdev, struct hid_report *report, u8 *data, int size)
- {
- 	struct ccp_device *ccp = hid_get_drvdata(hdev);
-+	unsigned long flags;
- 
- 	/* only copy buffer when requested */
--	spin_lock(&ccp->wait_input_report_lock);
-+	spin_lock_irqsave(&ccp->wait_input_report_lock, flags);
- 	if (!completion_done(&ccp->wait_input_report)) {
- 		memcpy(ccp->buffer, data, min(IN_BUFFER_SIZE, size));
- 		ccp->buffer_recv_size = size;
- 		complete_all(&ccp->wait_input_report);
+diff --git a/net/core/gro.c b/net/core/gro.c
+index a5ce969c9f71c..bb0e87fb569c5 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -256,6 +256,10 @@ int skb_gro_receive(struct sk_buff *p, struct sk_buff *skb)
  	}
--	spin_unlock(&ccp->wait_input_report_lock);
-+	spin_unlock_irqrestore(&ccp->wait_input_report_lock, flags);
  
- 	return 0;
- }
+ merge:
++	/* skb_segment() cannot split the linear part of a frag_list member. */
++	if (unlikely(headlen > offset + skb_shinfo(p)->gso_size))
++		return -E2BIG;
++
+ 	/* sk ownership - if any - completely transferred to the aggregated packet */
+ 	skb->destructor = NULL;
+ 	skb->sk = NULL;
 -- 
 2.53.0
 
