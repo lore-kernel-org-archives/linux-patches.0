@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021998;
-	b=ewYZMf0ZNbTOCqgRhg68metKqw6fdUWmsIcot4ACkk3WlBIvx437S4UjFBbmlPYLq7AB
-	 Jiag93J1fBYiUx4cW2BAvADKZeGxAw3PU/kztgrIz/UW9B8/dCoUcY2PLUxAFmJnPVnuY
-	 3hENd2uJgxxsXDTbyaJhNOzpKTHovjTqTRqK2O3rqsassxNzJRRM2qSTTu6l9UJpJi+g0
-	 5K4J/tnJuYbl0n0wNZgliGuetZvuMo5eTIrtisGT0q6/3+0HMpX+0yCA6rp6gYFn35FPW
-	 XVTWH4m5v2SHHr8Hahsy50cJwUPO2AquD52jCpA/OwfOgmUx3iBTj59XgD/178h9NZA==
+	t=1795022001;
+	b=49K/5hKFU8EvTxIWhN2qorRSjfylgsQaF9CUfZ5AjaPDcQ6m/TzSAsLaiT+D53yN1kKh
+	 esEyug2CKv+GB98zzHPKoCtKCDG8OMa5+KmCiw7krKIDepWcgUIUjFUFCezrB8aXPlfa+
+	 Ig1GHd3ApKNyrdRzq/GnprIQATlgXWEuDRLjPrq4Wo4nGhI6Kk1Muqk3WKkEh4ADdWBne
+	 PJePN7Bl+IMPoG7CCwGFA2TVqUlSf/CWavEbGuXwePbt30p5APeS7norNVz/k5EJIrxAp
+	 VXK63IsGxU88e9QkG6KbNhcLhGeOMSsYvVVdsO9rIZJ/JQ3jMCYiDmNdho3HPMfMGtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kLIWQXXXMK56aBLN9ZV49wzMEyR2kC8hjfB7k/g61DI=;
-	b=1zW1ZCC2jUbc9yrK+5sVd9kIGOgRZiyz1NmBOTM0Szos0sWIj4FXOyANyNUhHBFVDxM7
-	 eiCuJBi5lFK9A8J4PIogmAhEhI00V0VvKLiBqQK3WuToiJhkMI6KyujbNkKpL4D5XiJMf
-	 aHk42dt06yAnXUDCNlaTrK81XGP643MypVZKaA54YBgyGDJg4MD9gN7jUb7WAnmk2Er+j
-	 2g6sNk+LfjKU5N+6uD+c9yER/MeIk2JMeIpZAp6NNa2Mq7km7z1gBqCsdBBhdE4AYIQxD
-	 dKc+5eUrssoAOSOn1NdCxDJynYq1W3PLLrPwdPnCesTxVTuSYhTBVOGqwbCfS4QOoAA==
+	bh=gdBZyhvStUvcw9/k/0pLS9BYLl7x66YyyM+HRsZtfrk=;
+	b=TUDShIRuoXvjezpFjb4rQIbuM+iftAUpbgNW/wY9zZWZkyuPN7jd39/0cbYUV50/3ELo
+	 KuhQn8VihtxbFcAtUZQwQypVWm59L2PLqSE7hqI55oPNpP1FER5+LbOvjwuV4iSrJex3X
+	 Sv9RpJa6AAuSL/mBuoQJ8CKzy5i4JrTnWQUjtKdHOpm6fvum1vs/e11OvAFNvd+xMD1pi
+	 M6a125BKU7+wgNG4h8h/he8UxS7kNa2EgBQ3xBFgh/ck0yT8bLKiT4QxnQG6RHNlcwwk5
+	 02b7btB6jS1Tz0CRDHhef4ktGimAz0tjkGGr+Hqf6kdYdes1EDxDk7ss/TrpNLBGsmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NpXi/k3U";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwWozU4x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4293B606A320;
-	Wed, 18 Nov 2026 17:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1532F606A31C;
+	Wed, 18 Nov 2026 17:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpXi/k3U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D211F000C4;
-	Wed, 18 Nov 2026 17:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwWozU4x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA6B1F000C4;
+	Wed, 18 Nov 2026 17:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021998;
-	bh=kLIWQXXXMK56aBLN9ZV49wzMEyR2kC8hjfB7k/g61DI=;
+	s=korg; t=1795022000;
+	bh=gdBZyhvStUvcw9/k/0pLS9BYLl7x66YyyM+HRsZtfrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NpXi/k3UF9cdXElAIai1HWqDcyPxUpRIuBqvXaBWsLsHjxmHNvDRSVRk5OssrnuJo
-	 cmKLPCmUERy4JcqZJ2SUksYzM6oNXmLogTYGDnKXbmbewDuVSAF3HKbx0SPS/i1YOx
-	 wEK2nd7Q/cGYS+fyUk7zZWIny7hYO7s+O+LKB+vQ=
+	b=fwWozU4xPc0LZS9w0H4V2PBYbzR/lS+MRjaAe1i2+QcFvpQ78kD4ab6LU0gl355au
+	 ttSGH8wlCd+ijjg7EDGe+2EYbiktOTu/vUgqa1RQT0DWmmr7rxBGuuDvG+Rh0VR+Bx
+	 i+Qd/Es3Xj7tWYM2r3+kW8H8IzJ75VjTIrbzuxV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Wang Zhaolong <wangzhaolong3@outlook.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Zhewei Yuan <yzwlhm@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2507/2651] ksmbd: fix named-pipe reply loss with small output buffers
-Date: Wed, 18 Nov 2026 16:02:27 +0100
-Message-ID: <20261118150415.022261226@linuxfoundation.org>
+Subject: [PATCH 7.3 2508/2651] tcp: Fix fastreuse cache initialization on first bind
+Date: Wed, 18 Nov 2026 16:02:28 +0100
+Message-ID: <20261118150415.049995091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,343 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Zhaolong <wangzhaolong3@outlook.com>
+From: Zhewei Yuan <yzwlhm@gmail.com>
 
-[ Upstream commit 2d5c7afbb1d19f51f76c0865b4cb2e4e8347ade6 ]
+[ Upstream commit 947ccedf683ed6cc53c1f88ac9eb8747e4567ed6 ]
 
-FSCTL_PIPE_TRANSCEIVE copies at most MaxOutputResponse bytes from an RPC
-reply and reports STATUS_BUFFER_OVERFLOW when it does not fit. It then
-frees the complete IPC reply, including the bytes that were not returned.
-The client cannot recover those bytes with a subsequent READ, so an RPC
-call can fail even though userspace produced a complete reply. Pipe READ
-also ignores the requested Length when copying an IPC reply.
+inet_csk_update_fastreuse() initializes the reuse caches only when
+tb->bhash2 is empty, but both inet_csk_get_port() and
+__inet_inherit_port() link tb2 before calling it, so the first-bind
+branch is never taken.
 
-In the reproduced Windows NetShareEnum case, a 2632-byte reply is limited
-to 1024 bytes of SMB output. The remaining 1608 bytes are discarded
-instead of being available to the follow-up READ. Increasing the
-application-level enumeration budget does not change that SMB output
-limit.
+As a result, SO_REUSEADDR binds never get fastreuse=1 and keep
+scanning existing owners, and SO_REUSEPORT starts in STRICT instead
+of ANY.
 
-Keep unread reply data on the pipe and respect each operation's output
-limit. Preserve it until successfully included in a response: response
-preparation failures and later input must not discard output that the
-client has yet to receive. Treat a failed IPC exchange as an I/O error,
-rather than reporting an empty read or acknowledging a write without
-an IPC reply. Additional RPC reply queueing remains userspace's
-responsibility.
+Initialize the caches when tb2 is the only entry in tb->bhash2 and has
+no owners. Timewait sockets are also linked on tb2->owners, so this is
+equivalent to the old hlist_empty(&tb->owners) test.
 
-Reject TRANSCEIVE with STATUS_PIPE_BUSY while cached reply data remains.
-Do this before contacting userspace, without accepting new input or
-consuming cached output. The client can drain the reply with READ and
-explicitly resubmit the transaction. A successful positive-length READ
-that leaves a suffix of the same cached reply reports
-STATUS_BUFFER_OVERFLOW.
+Found by manual code inspection and confirmed with GDB. Binding 16000
+SO_REUSEADDR sockets to one address/port in a KVM guest takes 4.18 s
+before and 19.4 ms after this patch. Existing bind/reuse selftests
+pass. Analysis and testing were assisted by an AI tool (Codex).
 
-Keep cached bytes on failed requests, and consume them only after the
-response is pinned successfully. Release the original reply
-when drained or when its pipe is closed, logged off or disconnected.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=222196
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610260610.5prVfJss-lkp@intel.com/
-Signed-off-by: Wang Zhaolong <wangzhaolong3@outlook.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 8002d44fe84d ("tcp: Check hlist_empty(&tb->bhash2) instead of hlist_empty(&tb->owners).")
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Zhewei Yuan <yzwlhm@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Link: https://patch.msgid.link/20261026095208.58504-1-yzwlhm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c |   1 +
- fs/smb/server/mgmt/user_session.h |   3 +
- fs/smb/server/smb2pdu.c           | 154 +++++++++++++++++-------------
- 3 files changed, 92 insertions(+), 66 deletions(-)
+ net/ipv4/inet_connection_sock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 1fc4ddc8b448f..260fc07709c46 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -305,6 +305,7 @@ static void ksmbd_session_rpc_free(struct ksmbd_session_rpc *entry)
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index a1fe2531cb590..71b0c344579f3 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -446,7 +446,8 @@ void inet_csk_update_fastreuse(const struct sock *sk,
  {
- 	if (refcount_dec_and_test(&entry->refcount)) {
- 		ksmbd_rpc_id_free(entry->id);
-+		kvfree(entry->pending);
- 		kfree(entry);
- 	}
- }
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index 38073ea9089d5..5f0f6276e3168 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -19,6 +19,7 @@
- #define PREAUTH_HASHVALUE_SIZE		64
+ 	bool reuse = sk->sk_reuse && sk->sk_state != TCP_LISTEN;
  
- struct ksmbd_file_table;
-+struct ksmbd_rpc_command;
- struct ksmbd_work;
- 
- struct ksmbd_session_rpc {
-@@ -27,6 +28,8 @@ struct ksmbd_session_rpc {
- 	struct mutex		lock;
- 	refcount_t		refcount;
- 	bool			closed;
-+	struct ksmbd_rpc_command *pending;
-+	unsigned int		pending_offset;
- };
- 
- struct channel {
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 11d3750747ee4..f2a4854d2c224 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -8966,6 +8966,17 @@ static __le32 smb2_pipe_error_status(int err, __le32 fallback)
- 	}
- }
- 
-+static void smb2_pipe_response_done(struct ksmbd_session_rpc *rpc,
-+				    unsigned int nbytes)
-+{
-+	rpc->pending_offset += nbytes;
-+	if (rpc->pending_offset == rpc->pending->payload_sz) {
-+		kvfree(rpc->pending);
-+		rpc->pending = NULL;
-+		rpc->pending_offset = 0;
-+	}
-+}
-+
- /**
-  * smb2_read_pipe() - handler for smb2 read from IPC pipe
-  * @work:	smb work containing read IPC pipe command buffer
-@@ -8974,12 +8985,14 @@ static __le32 smb2_pipe_error_status(int err, __le32 fallback)
-  */
- static noinline int smb2_read_pipe(struct ksmbd_work *work)
- {
--	int nbytes = 0, err;
-+	unsigned int nbytes = 0, length;
- 	u64 id;
- 	struct ksmbd_rpc_command *rpc_resp;
- 	struct ksmbd_session_rpc *rpc;
- 	struct smb2_read_req *req;
- 	struct smb2_read_rsp *rsp;
-+	void *aux_payload_buf;
-+	int err;
- 
- 	WORK_BUFFERS(work, req, rsp);
- 
-@@ -8998,46 +9011,61 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
- 	rpc = ksmbd_session_rpc_get(work, id);
- 	if (IS_ERR(rpc)) {
- 		err = PTR_ERR(rpc);
--		rpc_resp = NULL;
- 		goto out;
- 	}
--	rpc_resp = ksmbd_rpc_read(work->sess, rpc);
--	if (rpc_resp) {
--		void *aux_payload_buf;
- 
-+	length = le32_to_cpu(req->Length);
-+	if (!length)
-+		goto empty;
-+
-+	if (!rpc->pending) {
-+		rpc_resp = ksmbd_rpc_read(work->sess, rpc);
-+		if (!rpc_resp) {
-+			err = -EIO;
-+			goto out_put;
-+		}
- 		if (rpc_resp->flags != KSMBD_RPC_OK) {
-+			kvfree(rpc_resp);
- 			err = -EINVAL;
- 			goto out_put;
- 		}
-+		rpc->pending = rpc_resp;
-+	}
- 
--		aux_payload_buf =
--			kvmalloc(ALIGN(rpc_resp->payload_sz, 8),
--				 KSMBD_DEFAULT_GFP);
--		if (!aux_payload_buf) {
--			err = -ENOMEM;
--			goto out_put;
--		}
-+	rpc_resp = rpc->pending;
-+	nbytes = min(length, rpc_resp->payload_sz - rpc->pending_offset);
-+	if (!nbytes) {
-+		smb2_pipe_response_done(rpc, 0);
-+		goto empty;
-+	}
- 
--		memcpy(aux_payload_buf, rpc_resp->payload, rpc_resp->payload_sz);
--		if (rpc_resp->payload_sz & 7)
--			memset(aux_payload_buf + rpc_resp->payload_sz, 0,
--			       ALIGN(rpc_resp->payload_sz, 8) -
--			       rpc_resp->payload_sz);
-+	aux_payload_buf = kvmalloc(ALIGN(nbytes, 8), KSMBD_DEFAULT_GFP);
-+	if (!aux_payload_buf) {
-+		err = -ENOMEM;
-+		goto out_put;
-+	}
-+	memcpy(aux_payload_buf, rpc_resp->payload + rpc->pending_offset, nbytes);
-+	if (nbytes & 7)
-+		memset(aux_payload_buf + nbytes, 0, ALIGN(nbytes, 8) - nbytes);
- 
--		nbytes = rpc_resp->payload_sz;
--		err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
--					     offsetof(struct smb2_read_rsp, Buffer),
--					     aux_payload_buf, nbytes);
--		if (err) {
--			kvfree(aux_payload_buf);
--			goto out_put;
--		}
--		kvfree(rpc_resp);
--	} else {
--		err = -EIO;
-+	err = ksmbd_iov_pin_rsp_read(work, rsp,
-+				     offsetof(struct smb2_read_rsp, Buffer),
-+				     aux_payload_buf, nbytes);
-+	if (err) {
-+		kvfree(aux_payload_buf);
- 		goto out_put;
- 	}
-+	smb2_pipe_response_done(rpc, nbytes);
-+	if (rpc->pending)
-+		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
-+	goto done;
- 
-+empty:
-+	err = ksmbd_iov_pin_rsp(work, rsp,
-+				offsetof(struct smb2_read_rsp, Buffer));
-+	if (err)
-+		goto out_put;
-+done:
- 	rsp->StructureSize = cpu_to_le16(17);
- 	rsp->DataOffset = 80;
- 	rsp->Reserved = 0;
-@@ -9053,7 +9081,6 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
- 	rsp->hdr.Status = smb2_pipe_error_status(err,
- 						STATUS_UNEXPECTED_IO_ERROR);
- 	smb2_set_err_rsp(work);
--	kvfree(rpc_resp);
- 	return err;
- }
- 
-@@ -9651,7 +9678,7 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
- 	if (IS_ERR(rpc)) {
- 		err = PTR_ERR(rpc);
- 		rsp->hdr.Status = smb2_pipe_error_status(err,
--							STATUS_INVALID_HANDLE);
-+							 STATUS_INVALID_HANDLE);
- 		smb2_set_err_rsp(work);
- 		return err;
- 	}
-@@ -11082,14 +11109,21 @@ static int fsctl_pipe_transceive(struct ksmbd_work *work, u64 id,
- 	struct ksmbd_rpc_command *rpc_resp;
- 	struct ksmbd_session_rpc *rpc;
- 	char *data_buf = (char *)req + le32_to_cpu(req->InputOffset);
--	unsigned int nbytes;
--	int err;
-+	unsigned int nbytes = 0;
-+	int ret;
- 
- 	rpc = ksmbd_session_rpc_get(work, id);
- 	if (IS_ERR(rpc)) {
--		err = PTR_ERR(rpc);
--		rsp->hdr.Status = smb2_pipe_error_status(err,
--							STATUS_INVALID_PARAMETER);
-+		ret = PTR_ERR(rpc);
-+		rsp->hdr.Status = smb2_pipe_error_status(ret,
-+						 STATUS_INVALID_PARAMETER);
-+		smb2_set_err_rsp(work);
-+		return 0;
-+	}
-+
-+	if (rpc->pending) {
-+		ksmbd_session_rpc_put(rpc);
-+		rsp->hdr.Status = STATUS_PIPE_BUSY;
- 		smb2_set_err_rsp(work);
- 		return 0;
- 	}
-@@ -11104,39 +11138,36 @@ static int fsctl_pipe_transceive(struct ksmbd_work *work, u64 id,
- 	}
- 
- 	if (rpc_resp->flags == KSMBD_RPC_SOME_NOT_MAPPED) {
--		/*
--		 * set STATUS_SOME_NOT_MAPPED response
--		 * for unknown domain sid.
--		 */
- 		rsp->hdr.Status = STATUS_SOME_NOT_MAPPED;
- 	} else if (rpc_resp->flags == KSMBD_RPC_ENOTIMPLEMENTED) {
- 		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
--		goto error;
-+		goto free_resp;
- 	} else if (rpc_resp->flags != KSMBD_RPC_OK) {
- 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
--		goto error;
--	}
--
--	nbytes = rpc_resp->payload_sz;
--	if (rpc_resp->payload_sz > out_buf_len) {
--		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
--		nbytes = out_buf_len;
-+		goto free_resp;
- 	}
- 
- 	if (!rpc_resp->payload_sz) {
- 		rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
--		goto error;
-+		goto free_resp;
- 	}
--
--	memcpy((char *)rsp->Buffer, rpc_resp->payload, nbytes);
--	err = smb2_ioctl_rsp(work, rsp, FSCTL_PIPE_TRANSCEIVE, nbytes);
-+	rpc->pending = rpc_resp;
-+	nbytes = rpc_resp->payload_sz - rpc->pending_offset;
-+	if (nbytes > out_buf_len) {
-+		rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
-+		nbytes = out_buf_len;
-+	}
-+	memcpy(rsp->Buffer, rpc_resp->payload + rpc->pending_offset, nbytes);
-+	ret = smb2_ioctl_rsp(work, rsp, FSCTL_PIPE_TRANSCEIVE, nbytes);
-+	if (!ret)
-+		smb2_pipe_response_done(rpc, nbytes);
- 	ksmbd_session_rpc_put(rpc);
--	kvfree(rpc_resp);
--	return err;
-+	return ret;
- 
--error:
--	ksmbd_session_rpc_put(rpc);
-+free_resp:
- 	kvfree(rpc_resp);
-+	rsp->hdr.Status = smb2_pipe_error_status(-EINVAL, rsp->hdr.Status);
-+	ksmbd_session_rpc_put(rpc);
- 	smb2_set_err_rsp(work);
- 	return 0;
- }
-@@ -11450,7 +11481,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 	case FSCTL_PIPE_TRANSCEIVE:
- 		out_buf_len = min_t(u32, KSMBD_IPC_MAX_PAYLOAD, out_buf_len);
- 		ret = fsctl_pipe_transceive(work, id, out_buf_len, req, rsp);
--		if (ret < 0)
-+		if (ret)
- 			goto out;
- 		return 0;
- 	case FSCTL_VALIDATE_NEGOTIATE_INFO:
-@@ -11831,16 +11862,7 @@ int smb2_ioctl(struct ksmbd_work *work)
- 		goto out;
- 	}
- 
--	rsp->CtlCode = cpu_to_le32(cnt_code);
--	rsp->InputCount = cpu_to_le32(0);
--	rsp->InputOffset = cpu_to_le32(112);
--	rsp->OutputOffset = cpu_to_le32(112);
--	rsp->OutputCount = cpu_to_le32(nbytes);
--	rsp->StructureSize = cpu_to_le16(49);
--	rsp->Reserved = cpu_to_le16(0);
--	rsp->Flags = cpu_to_le32(0);
--	rsp->Reserved2 = cpu_to_le32(0);
--	ret = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_ioctl_rsp) + nbytes);
-+	ret = smb2_ioctl_rsp(work, rsp, cnt_code, nbytes);
- 	if (!ret)
- 		return ret;
- 
+-	if (hlist_empty(&tb->bhash2)) {
++	if (hlist_is_singular_node(&tb2->bhash_node, &tb->bhash2) &&
++	    hlist_empty(&tb2->owners)) {
+ 		tb->fastreuse = reuse;
+ 		if (sk->sk_reuseport) {
+ 			tb->fastreuseport = FASTREUSEPORT_ANY;
 -- 
 2.53.0
 
