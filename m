@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061448;
-	b=5OoAABdJmr4xfVQ3Ydd3xpuzfGtqBKUeFqVLSGL57mnx/NtI2uLPn84QgWzw2NviWjX0
-	 ExnK+jvgj0jewiGCo44dQlcjtm1UDylp8Nz/eTRnZ7d3UyiJeSFygyW24RWbNdUz5l/Rd
-	 wNisDmUO63HJD7hpAjabzQOJueXPm9yehsR7xC3BO8U2BvsLBjQn/YDaKRO2k3DmoxKyW
-	 g7o0Dizzcbv3pSLk5gA+e46CJ90MuvjqorV/WqQ+xu0f264++aMHNVCDzOZmVIZ4OpP8N
-	 3am/hJpyxEBM20rbzCSEDjzGWK3R+V2cM4KT+vXJge+Tzpwds024+nxVzEP8FLqhN/Q==
+	t=1795061451;
+	b=l5VG2LR+5Fv6oAtVuPAwryL4PagA+oSeFktpPpsuSX2djVpYJ1XChSUr4qItUbvmru4w
+	 w7yN3VNV547GqOvKAytejAoNADcisWe7sgaz6bMuoOjIm9jj9lgY9L5aNrCqsON4yjBkm
+	 ydWzj0mhDD2rnFT+SKXesBb6dxDDlpdxL6tdOHkangjKbvNagd0jzj0d3gFEppk3Dk7fM
+	 jkGwTaQW5v9X/ijcLvfzPRVIxWIVMjT6S5XLvb3rc1AywbVIBerAenQN3BFX6QCDHD8cU
+	 4KvFDW1oWx/D+L4jpYDwnTcRQr0T4tSJ3an/HppF2Rr27iiBPvPk8qFwRawHMaiqxNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061451;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5a65ChJBy/80/zkM6B3RCNMrbGlJAcN1SBUPfzY9LKU=;
-	b=l9rUfwbF5g7saEwcW6V8Q7tIl6uy+w/xOFCmdHbehH7WZeV2NhP0NUsGgEerjGeS3ZaB
-	 Cz4XTUeLH5INSvEORDTDFV1kGfoAREV4Qswqtdu+ytxEsm5J6s8odUcow9mPIyCjI1HWh
-	 NR+3U6/rud8x0enJ2rRxmXGN8PHDDoI6tTJMo30pvQF7utHRbxy53/LFpDnx6MgXkThMh
-	 spE7+k3qHdljDoGUnb9Q+TATI0iULzz4LC/ajHqvfhPQmiqpLAId1+JliGAEOa8/BOIgC
-	 gSAGtmjKflZwTzL0oiF/uY3dOJKTmD54Jvfjgdb9fTihOwveH6011DU96esSb6TudIw==
+	bh=oGkgnugEtTle+giHd8qE5/yM/JkXzPrK239SXNC9fF8=;
+	b=DIycCC9Uz5X9jYq4tqpOMn3VC9IVS1uzrx6hMqHuMhjSi1oiUNwOgesQfoPhKZ7L7FjJ
+	 apJ7WXpJY+KSjjBstLhZsA/aNzIDxzuREBiwLKUzgwCEGjGEvc6/tOiM59NkkFDIu1msY
+	 l/pK7CMktIBbuS7MkCuEFM+Zo5NKeXsZBE9jpcOdlzhR49ij8g1CbCJb7OBPibO9OEVgP
+	 ufWqbmfy8t4eScod2SBXz4IQ5S0lKwlgLvctRs7Ny5LS3U9QeBR/nsZMaq1826KFVxzgn
+	 5PYXYc6fK0ew7QDqm7VJhTKmZCxo+cGnHVyPolfcuWthC0NKPNSg4fMAOmAr19szK+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zf8X0v57;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mWIjvJf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33A3606A330;
-	Thu, 19 Nov 2026 04:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3E3606A335;
+	Thu, 19 Nov 2026 04:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zf8X0v57
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95061F000C4;
-	Thu, 19 Nov 2026 04:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2mWIjvJf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969141F000C5;
+	Thu, 19 Nov 2026 04:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061448;
-	bh=5a65ChJBy/80/zkM6B3RCNMrbGlJAcN1SBUPfzY9LKU=;
+	s=korg; t=1795061451;
+	bh=oGkgnugEtTle+giHd8qE5/yM/JkXzPrK239SXNC9fF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zf8X0v577ST3Lqp410DuXJ4Ya7Lo+XnAnsErquZkhQR/eK+rI+gEFxmrcTUA/nFIl
-	 TjEgrI5bIzIIdz572XwtNTt9O3AQACkcOu4v7X9bdhtalR2y1yGD7TeqkAiPm6u93v
-	 dRtOCD4pv1kj3gjtIiCWdozjQKid0pBG043sSOAY=
+	b=2mWIjvJfxHt6b5tzgADZjk+IH3yYp0yBVcoVHVon5yqOwbACLMj6IRC8PcbHU/7tm
+	 m7c3fAFgCPZ3sEf4rHZXy+Ok4C63W7oJFF8YOMGrlU+E02jgpInGgxILKtRjAmyZpS
+	 2VJaWbH8F6CcjjKgGYPlmnJ1fh1yBej5Dstjz7sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <pvorel@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andy Whitcroft <apw@canonical.com>,
-	Dwaipayan Ray <dwaipayanray1@gmail.com>,
-	Joe Perches <joe@perches.com>,
-	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Julia Lawall <Julia.Lawall@inria.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1515/1848] checkpatch: skip CamelCase cache for --no-tree without root
-Date: Wed, 18 Nov 2026 15:59:13 +0100
-Message-ID: <20261118150022.713288399@linuxfoundation.org>
+Subject: [PATCH 5.10 1506/1848] dmaengine: ste_dma40: fix typo in comment
+Date: Wed, 18 Nov 2026 15:59:04 +0100
+Message-ID: <20261118150022.382175266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -72,49 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Vorel <pvorel@suse.cz>
+From: Julia Lawall <Julia.Lawall@inria.fr>
 
-[ Upstream commit d41ebc7f9e2cc80cb57139c05e71415a79582ab0 ]
+[ Upstream commit a71da24ce1f8f6844c6378ae394b5c4b31ff5725 ]
 
-Running outside tree (--no-tree) without git root (--root DIR) is not
-doable because we have no include/ directory which could be cached.  But
-3445686af721 expected that we are always in Linux tree (w/a git).  But
---no-tree does not require --root.  Therefore skip whole caching in that
-case.
+Spelling mistake (triple letters) in comment.
+Detected with the help of Coccinelle.
 
-This fixes perl and find errors when running checkpatch.pl *with*
---no-tree --strict and *without* --root:
-
-    No structs that should be const will be found - file 'scripts/const_structs.checkpatch': No such file or directory
-    Use of uninitialized value $root in concatenation (.) or string at scripts/checkpatch.pl line 1213.
-    find: `/include': No such file or directory
-
-Link: https://lore.kernel.org/20260810161159.1044160-1-pvorel@suse.cz
-Fixes: 3445686af721 ("checkpatch: ignore existing CamelCase uses from include/...")
-Signed-off-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andy Whitcroft <apw@canonical.com>
-Cc: Dwaipayan Ray <dwaipayanray1@gmail.com>
-Cc: Joe Perches <joe@perches.com>
-Cc: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Signed-off-by: Julia Lawall <Julia.Lawall@inria.fr>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20220521111145.81697-17-Julia.Lawall@inria.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 0ac4a90c4805 ("dmaengine: ste_dma40: Validate memcpy configuration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/checkpatch.pl | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/ste_dma40.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 2dd453c3ecd25..b82e992e59c72 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -933,6 +933,8 @@ sub seed_camelcase_includes {
- 		my $git_last_include_commit = `${git_command} log --no-merges --pretty=format:"%h%n" -1 -- include`;
- 		chomp $git_last_include_commit;
- 		$camelcase_cache = ".checkpatch-camelcase.git.$git_last_include_commit";
-+	} elsif (not defined $root) {
-+		return;
- 	} else {
- 		my $last_mod_date = 0;
- 		$files = `find $root/include -name "*.h"`;
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 1fd8ee3bafd2c..991e72f6831f7 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -2075,7 +2075,7 @@ static int d40_config_memcpy(struct d40_chan *d40c)
+ 		   dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_phy;
+ 
+-		/* Generate interrrupt at end of transfer or relink. */
++		/* Generate interrupt at end of transfer or relink. */
+ 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
+ 
+ 		/* Generate interrupt on error. */
 -- 
 2.53.0
 
