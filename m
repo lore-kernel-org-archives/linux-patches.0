@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062085;
-	b=xXddyyDt5qf9L1uIyo+y4MV+mtxToEfIj5H3dWUpnfaRdi6QjK5jYTVZLkBnCFh5COUO
-	 thkLsIGniaXY940FU79mSDg5OIRa3fvhtglcKqga4MkxnE5hwAERO5sjHPeb5kKSZT2do
-	 bY1vdD7xffp08yIAeZ4FycVw3IRuI7XDFtjn6ppwp/mrKZkFZ8Hp7YmtAmN/kqR+0cs9t
-	 LrDW8FzyGSU2P8esMyHIXZ9Ow3kvxehsCri73v7ZJL9nx13ucJRjO2tAWdBDwlTTWVCu8
-	 lmyt4Y61ZGMXxYoqGEBT2w1l2ypGbi4U3mTljIQ9oiDkhsU8VPSOdPEz5kRyJnOy9Dg==
+	t=1795062088;
+	b=WRy9eEIZ9Z8rCH85tWQY1wFjMV/Os7+l2vzm18YE3jt2gDoSFZHSgWRtK9txlVwZP9mj
+	 Jp22ExTWb7NOIII81vgA3VtYKas9kdRi3BbNvTqI1iDM58bs9bXUWadem86+RLStiUw5/
+	 c3VX3WOaTDtnzEHJvpckO/wzWYDc5TSY1A8/Oswyka4sE9ufrmiCF2TK3CVln9C6yYNze
+	 7h7OpNaZ/MZAuStoT6/5MVk94GOF0ybUVvuT7Nm7D671u1tzBnJbsaaoFXR3lbGrCYcCH
+	 S6OM1WZH+uJXbf3Ofc+xoZ6JPuDBHDqIcGAO5Mvv9J2B0FkU5A/nfMVInJ30sqTvaMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VGI/55mOj8yC52O05YW6J7nSn4SySFk46aIamBp8kYQ=;
-	b=dQESHDgnOQafGKCs/I2fBPNBeKaTwmoUEoi4ccscdZxKv2twx1jg/ADz1wqTS+4B4OXf
-	 qgg+1+yHtcBifZqspqTRKARPqzH9eyI3VAYWRRYEyiVwaahtYuiKW7Z750JQsUCfwuubv
-	 SmNrZWgyu8/557b4e4ELqLC7T/o4xHhEaVXTgrdzey+kLREQI08IXpudQcB0rVyRvLFq9
-	 yhlKv+6vfXc05BRwXxg87Nos0wd65bsn7+fXCUN1cgkw/KRwZ4BgqXNu/x1J6L6GtEdq1
-	 OoE6D45VaPhxTHQ3M8r/3J5G+DfUHjnZgHaUYRyJ8bjgrvdTP2nDuBGqmf6RrgtgAtg==
+	bh=q/uxnKl38DMvQVk7gC496sVzs286HKkPrvqbPjsqmlc=;
+	b=dMOap60KiG8ymw/xST6aO33v9q2tXWPOagLjJe2F0UrwIQxYtadeWrBs53hhbKjrYe5j
+	 KaW/66kpsatGodPklDCbvoRS2Dp7q5x2OBli2XKcwsZejzj2/LNpCj/KBXxMcxOv4FINy
+	 /GyQ8olqi5kgay9Mc38Qe5juD2rHs+5xr+ONIo71frsV0NfHwyZmUgUV2GzR8vM5yyki4
+	 OCafP4xnaWXZznXjJ0x0CRg6vMmQ3nM0BW4jJWWyHUIJqMojjKHEOotT1l0B547R5hAvp
+	 8o1S40DUR+DtuYdbZ2uIVOC6RuX6JeSkSzgisBPj30MUnLFuPX/Hg5qwx7va4sC1Mbw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNWClI17;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqZHPR38;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAAF606A320;
-	Thu, 19 Nov 2026 04:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8107E606A326;
+	Thu, 19 Nov 2026 04:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNWClI17
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE271F000C4;
-	Thu, 19 Nov 2026 04:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqZHPR38
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43021F000C4;
+	Thu, 19 Nov 2026 04:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062085;
-	bh=VGI/55mOj8yC52O05YW6J7nSn4SySFk46aIamBp8kYQ=;
+	s=korg; t=1795062088;
+	bh=q/uxnKl38DMvQVk7gC496sVzs286HKkPrvqbPjsqmlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNWClI17M485HXjV75MXw4wUODUsW6desTtrBCJtmDFplrCO1dXP2CxW+spS2GxRh
-	 W3P4OkSSbQhIn9ETqaF91ROEL3nKChK3T90vd9o7MRJFG6oGoyU3kSfKw8TVTO0LrC
-	 FQ3adw570AvInor2TC4L3iWUg/qqxCDhgGbTKIpQ=
+	b=zqZHPR38aRwy5t31WHrRKzwNo49xpU/zOPuXYLdtKOfaCp6/IpN345WR3KMfxmj9C
+	 zkcHbz+xdCBAcvmdGxsA8cOkfH92l76+gQwNdMwYmwBfSxANmP0O2g0iDv/wRCl1HJ
+	 BfFHSg6zL3zxhzqDSQt0HjWu2gAC/dSnSrBoq29Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sally Marcher <me@gry.sh>,
-	Takashi Iwai <tiwai@suse.de>,
+	Cheng Yongkang <teel4res@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1785/1848] ALSA: usb-audio: Add correct datainterval in the quirks-table for Microbook II
-Date: Wed, 18 Nov 2026 16:03:43 +0100
-Message-ID: <20261118150034.048433893@linuxfoundation.org>
+Subject: [PATCH 5.10 1786/1848] net: tun: hold napi_mutex when deleting NAPI in tun_detach_all()
+Date: Wed, 18 Nov 2026 16:03:44 +0100
+Message-ID: <20261118150034.085557951@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,45 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sally Marcher <me@gry.sh>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-[ Upstream commit a09c2f3b267e47767b8937f65930567edbb88d44 ]
+[ Upstream commit 6c799b4998c87bb44574bb090b8728bb3b3dbc47 ]
 
-This patch fixes playback issues on the Microbook II.
-The correct value was in the older driver for this device
-(https://github.com/manuel-rhdt/snd-microbookii/blob/dd304c097bb6a9d52276ac29c6969fa02bc7674a/audio.c#L914).
+With IFF_NAPI_FRAGS, tun_get_user() takes tfile->napi_mutex, gets the
+skb from napi_get_frags() and copies the user data into it before it
+enters the RCU read-side section around napi_gro_frags().
 
-Datainterval needs to be set explicitly.
+tun_detach_all() waits with synchronize_net() and then calls
+tun_napi_del() without napi_mutex.  netif_napi_del() frees napi->skb
+through napi_free_frags().  A writer that is still copying has not yet
+entered its RCU section, so synchronize_net() does not wait for it, and
+deleting the device frees the skb while the writer is using it:
 
-Fixes: a634090a0f24 ("ALSA: usb-audio: Add quirk for MOTU MicroBook II")
-Signed-off-by: Sally Marcher <me@gry.sh>
-Link: https://lore.kernel.org/d5dfd044-69f6-4fc3-9884-6599d88afb55@student.tugraz.at
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  BUG: KASAN: slab-use-after-free in skb_copy_datagram_from_iter+0x175/0x720
+  Read of size 8 at addr ffff888077def990 by task br029-poc/9406
+  Call Trace:
+   skb_copy_datagram_from_iter+0x175/0x720
+   tun_get_user+0xb42/0x3d00
+   tun_chr_write_iter+0x113/0x200
+  ...
+  Freed by task 9405:
+   kmem_cache_free+0x184/0x670
+   __netif_napi_del_locked+0x2bb/0x3c0
+   tun_net_uninit+0x566/0xa70
+   unregister_netdevice_many_notify+0x1a26/0x2090
+   rtnl_dellink+0x514/0x710
+
+__tun_detach() also calls tun_napi_del() without the mutex, but only
+from tun_chr_close(), when no write on that file can be in flight.
+
+Take napi_mutex around tun_napi_del() in tun_detach_all() for both
+attached and disabled queues.
+
+Fixes: 90e33d459407 ("tun: enable napi_gro_frags() for TUN/TAP driver")
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/179268538303.70821.16548460883330758972@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/tun.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
-index 3ae8f8cd22d94..65d733c4ef546 100644
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -3496,6 +3496,7 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
- 					.rates = SNDRV_PCM_RATE_96000,
- 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
- 						   USB_ENDPOINT_SYNC_ASYNC,
-+					.datainterval = 1,
- 					.rate_min = 96000,
- 					.rate_max = 96000,
- 					.nr_rates = 1,
-@@ -3519,6 +3520,7 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
- 					.rates = SNDRV_PCM_RATE_96000,
- 					.ep_attr = USB_ENDPOINT_XFER_ISOC |
- 						   USB_ENDPOINT_SYNC_ASYNC,
-+					.datainterval = 1,
- 					.rate_min = 96000,
- 					.rate_max = 96000,
- 					.nr_rates = 1,
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 1fd13ed1c1c2f..d706c7fd6adee 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -748,14 +748,18 @@ static void tun_detach_all(struct net_device *dev)
+ 	synchronize_net();
+ 	for (i = 0; i < n; i++) {
+ 		tfile = rtnl_dereference(tun->tfiles[i]);
++		mutex_lock(&tfile->napi_mutex);
+ 		tun_napi_del(tfile);
++		mutex_unlock(&tfile->napi_mutex);
+ 		/* Drop read queue */
+ 		tun_queue_purge(tfile);
+ 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
+ 		sock_put(&tfile->sk);
+ 	}
+ 	list_for_each_entry_safe(tfile, tmp, &tun->disabled, next) {
++		mutex_lock(&tfile->napi_mutex);
+ 		tun_napi_del(tfile);
++		mutex_unlock(&tfile->napi_mutex);
+ 		tun_enable_queue(tfile);
+ 		tun_queue_purge(tfile);
+ 		xdp_rxq_info_unreg(&tfile->xdp_rxq);
 -- 
 2.53.0
 
