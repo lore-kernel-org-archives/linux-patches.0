@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050703;
-	b=EOuaQgWn7Uz7JQgpdXPF6xmkGaWDc2avHYilTEQ+UKdB/om/5vAbu6FPJ95y+06a1dAZ
-	 jllYgwbnzv3zJ+wfjLc9CAOs3x+lzGy7ndU0L8+t5V7t9PBEv50INajKUxen1Brm2Tv17
-	 oEEQXGOXuZ464K1aPJ1+j/tM2AYlaG757AY1OkA+ezyRfQxsZJVDi0mPU7xdjfe59cHT4
-	 s73t5ClvH1tKCw++xYW/V5j09azDfoOhEOmEMJPemLTrFa3caPrkzULLatTS98/IdcMZE
-	 C7C577icynCm7e1lvc+Qb+ZjXGM+zBw1IFR5oofOn5JVVWB9YQ2RGJG9sp1schxrDYg==
+	t=1795050706;
+	b=hGVhKMk5eLOEWLiCZG4DrSlg+zAYIn3WyQToEupU/wb9OrAikMvMyOBJCGJr9minfHZs
+	 XtbpV43kA5vCZNTBuPr4fEncV6qgm36K1smBd9R3sZetuQ7w04ugT27kLswjPEqC9HAGv
+	 myIaPGfEX8gQUbU20FBwbjyTCEy21nnvJh8nNgmug/np+qzbcey9lRXgZcuH+XGZ23SPc
+	 HQAQ6akE0O6Nk5HDz+6OZFfCWzhpc+WETYeW0LdPTUCCL3w2ta8b8L8gSlqqYWs5ViG8b
+	 GQYcsmm9D4vGjRnmoxXnOJm8e8s6l8RhdRHnUWdbdH2oyzlcCGuVq3nitefUxQMa1jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vEsvtVOwe20yE/zhp9njML+tnYfzG4IuQYPe2ikRhkM=;
-	b=fgCxxVczme/9wIvsTHslW+coFkJxUJu0ji1tWheEhyhnjGfdMPXyUPrEUGpsnpVVlVYA
-	 JWC+2ccxPywwC9gal2ID0eyepelaYDAYzegL+7sdwYODdynka6+LBD0cSEeJiDqXJeGb2
-	 8icRRd6UT3qMSsRqYt9+1HaEZLG27D3iYGPxYqMCA3RU52Ikvxq8QsErPjXmMeLCPTPZR
-	 sAdDqj/XSEeC3tGCPatUX9KgOofk3QSkFhMKxNU680xEXRpajH4uK4xSXJsRa1f3kqcpW
-	 jg8ITn+wROmLwwWBDpvyKOltAHQ4UqlC8qplJ1oWUPi/c4cvFDhM2C41j5hxU81bnSw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Go1ZxZbd27JewLI/b6ADO37Gr+a8rdnRfpj0TxP2F8E=;
+	b=FDrJlm7joz1+KRvA4N1+YL6dc3SChNpEsM+PEyb33bJpPc4ofrdRUiGvCgxrcG01S2/n
+	 t/oXagzgH4SKkPje3xIUery/SGph6KioWWmBby80x7XGtR9CHd3seFVgPtQ49i+NX5xBO
+	 2zuk/mtZaek9marP0tDydy5e+C98WpQ4epgenbHDItkAMxJ6YGXp5Vbk+zz+bkMAA01eF
+	 PQ2nqXwQRK0tSDwUW0PsHwCyejKKW8UuKt3Afm4MKbSUzEE3HzFi3nopF/imXRgr0Xjqg
+	 LH/RxajhipB+mNz5ZWXFlupTyYbP94RHPuT9DZkDGeL/k6R70WfP/+LF53TONMDlU1w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1D5KNM6P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UezwDZ7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F35B606A32F;
-	Thu, 19 Nov 2026 01:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8A1606A31C;
+	Thu, 19 Nov 2026 01:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1D5KNM6P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD6E1F000C5;
-	Thu, 19 Nov 2026 01:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0UezwDZ7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837B31F000C4;
+	Thu, 19 Nov 2026 01:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050703;
-	bh=vEsvtVOwe20yE/zhp9njML+tnYfzG4IuQYPe2ikRhkM=;
+	s=korg; t=1795050706;
+	bh=Go1ZxZbd27JewLI/b6ADO37Gr+a8rdnRfpj0TxP2F8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1D5KNM6Pd8XSw5H8wElpBlJ5Q24bZKMGhEiRPwAkcWZZlV3s8xpRoxHRbjwl2mSaZ
-	 wTYUbISrWjh0W3gt5lzoKXNVk8+YUHBXWzLICSl0jLj7wYmFZm4fdYGsX8yvX98Bpz
-	 EJUR6qqbnzTFbQNnrm7HV3NapbWKvQT6wPO4tq2E=
+	b=0UezwDZ7mMvllcQ48UTvzA+bCi9eWCttkNVlT7zIBbg2/RTQjQY4IPSjeJsWjLABM
+	 jO81Hr52k5bbvpY0ZeyLkJ31qTR1DA/unfDbYWuXFumDE//1TqfrEKpi3KyT9nIRdS
+	 GVXGqEYV7zfuGVi2YrIC2yGMpSYGW0fO40m+qziU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Mahe Tardy <mahe.tardy@gmail.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2761/2857] usbnet: fix EVENT_RX_PAUSED race in usbnet_skb_return()
-Date: Wed, 18 Nov 2026 16:03:15 +0100
-Message-ID: <20261118150341.017657730@linuxfoundation.org>
+Subject: [PATCH 6.1 2762/2857] bpf: Fix out-of-bounds btf->types write for split BTF
+Date: Wed, 18 Nov 2026 16:03:16 +0100
+Message-ID: <20261118150341.053208447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,86 +64,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ömer Mete Kaya <omermetekaya0@gmail.com>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 67ae1b80cf73f592b35e4b5e5001a24d6d6c8637 ]
+[ Upstream commit 6c476d2b73056ed151c3f8b884c627c75999ed7c ]
 
-On SMP, usbnet_skb_return() can observe EVENT_RX_PAUSED as set on CPU0
-while usbnet_resume_rx() clears the flag and drains rxq_pause on CPU1.
-The skb can then be queued after the drain has completed and remain
-stranded until the next MTU change or device stop.
+btf_add_type() stores the types of a BTF in btf->types[], which can hold at
+most BTF_MAX_TYPE entries.  The types of a split BTF get IDs start_id ..
+start_id + nr_types - 1, so only BTF_MAX_TYPE - start_id of them fit, but
+neither the limit check nor the size used to grow the array accounts for
+start_id: the check is an equality test against BTF_MAX_TYPE
+('start_id + btf->types_size == BTF_MAX_TYPE') and the new size is clamped
+to BTF_MAX_TYPE.
 
-Synchronize the EVENT_RX_PAUSED state transition and paused-queue
-dequeue operations with rxq_pause.lock. In usbnet_resume_rx() splice
-the paused queue into a local queue under the lock, then drain the
-local queue lock-free. In usbnet_skb_return() use a double-check
-pattern under rxq_pause.lock on the slow path, keeping the normal
-RX fast path lock-free. Use spin_lock_irqsave() to match the lockdep
-class shared with other sk_buff_head locks taken from hardirq context
-in defer_bh().
+The check therefore only fires if the array happens to grow to exactly
+BTF_MAX_TYPE - start_id entries.  Otherwise, if the module has more than
+BTF_MAX_TYPE types, the array is filled up to BTF_MAX_TYPE entries.  The
+next type that needs to be added reallocates the array to the same size,
+after which btf->types_size no longer equals btf->nr_types and the growth
+path is not taken anymore, so every following type is written past the end
+of the array:
 
-Discovered by Sashiko, not triggered, not tested on real hardware.
+  BUG: unable to handle page fault for address: ffffc90006200000
+  RIP: 0010:btf_add_type+0x74/0x270
+  Call Trace:
+   btf_check_all_metas
+   btf_parse_module
 
-Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
-Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
-Link: https://patch.msgid.link/20261024084538.256596-1-omermetekaya0@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Bound both the array size and the limit check by BTF_MAX_TYPE - start_id.
+Base BTF (start_id == 0) is unaffected.
+
+Fixes: 951bb64621b8 ("bpf: Add in-kernel split BTF support")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://patch.msgid.link/20261028031933.277550-1-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ kernel/bpf/btf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index ba8f02b115f34..04fd300613b0e 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -332,9 +332,14 @@ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
- 	unsigned long flags;
- 	int	status;
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 11ea48f12bb1d..d3934136af85a 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -1549,15 +1549,16 @@ static int btf_add_type(struct btf_verifier_env *env, struct btf_type *t)
+ 		/* Expand 'types' array */
  
--	if (test_bit(EVENT_RX_PAUSED, &dev->flags)) {
--		skb_queue_tail(&dev->rxq_pause, skb);
--		return;
-+	if (unlikely(test_bit(EVENT_RX_PAUSED, &dev->flags))) {
-+		spin_lock_irqsave(&dev->rxq_pause.lock, flags);
-+		if (test_bit(EVENT_RX_PAUSED, &dev->flags)) {
-+			__skb_queue_tail(&dev->rxq_pause, skb);
-+			spin_unlock_irqrestore(&dev->rxq_pause.lock, flags);
-+			return;
-+		}
-+		spin_unlock_irqrestore(&dev->rxq_pause.lock, flags);
- 	}
+ 		struct btf_type **new_types;
+-		u32 expand_by, new_size;
++		u32 expand_by, new_size, max_size;
  
- 	/* only update if unset to allow minidriver rx_fixup override */
-@@ -703,13 +708,20 @@ EXPORT_SYMBOL_GPL(usbnet_pause_rx);
+-		if (btf->start_id + btf->types_size == BTF_MAX_TYPE) {
++		if (btf->start_id + btf->types_size >= BTF_MAX_TYPE) {
+ 			btf_verifier_log(env, "Exceeded max num of types");
+ 			return -E2BIG;
+ 		}
  
- void usbnet_resume_rx(struct usbnet *dev)
- {
-+	struct sk_buff_head q;
- 	struct sk_buff *skb;
-+	unsigned long flags;
- 	int num = 0;
++		max_size = BTF_MAX_TYPE - btf->start_id;
+ 		expand_by = max_t(u32, btf->types_size >> 2, 16);
+-		new_size = min_t(u32, BTF_MAX_TYPE,
++		new_size = min_t(u32, max_size,
+ 				 btf->types_size + expand_by);
  
-+	__skb_queue_head_init(&q);
-+
- 	local_bh_disable();
-+	spin_lock_irqsave(&dev->rxq_pause.lock, flags);
- 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
-+	skb_queue_splice_init(&dev->rxq_pause, &q);
-+	spin_unlock_irqrestore(&dev->rxq_pause.lock, flags);
- 
--	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
-+	while ((skb = __skb_dequeue(&q))) {
- 		usbnet_skb_return(dev, skb);
- 		num++;
- 	}
+ 		new_types = kvcalloc(new_size, sizeof(*new_types),
 -- 
 2.53.0
 
