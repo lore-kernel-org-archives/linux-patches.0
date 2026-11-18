@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032102;
-	b=fohxdngGodFQgp4MCcloUec+PNFwhejcfDkTE4etBVzs0WmUv+PORLyDNrI9Zhu/fJd0
-	 2BPhS4w6EG1KA25KADrbIUj4FfgAG/z0poU2v/Au8h3IZQNEkvea45BPFOPQK9J0uyGho
-	 PrycslXjknpuDQngPcqZt1B3jEKP/9TNjnbZXwzf3RDVDIJVV+uvwaxm9k1pGF5xl0sob
-	 4JcJ9QwSmTpDyVncoMcIjMJoxfyxqwCKQcooCt/AF+3a9rEFX1+vggR/F/yiuoEpO1nFK
-	 u24w5G95kVgsCUQ6s4p22veuDUqZCmv+WYHRkXrMawIBICKwVmIUWdhgJ/10e9PqK7w==
+	t=1795032105;
+	b=XLXfJoxHcpyTMckrHypseRznu9zwx6mGrp+pmDVhYlYiOmwI5842TBWdVOTtyjdzCMFx
+	 7ar2+/MweNXZAv4BuZEaOhtq6CXewidCdo62q/bxqjr9XvTL7W7x11DMsPcjDHEsEAY9a
+	 zOZ/hAzam/OnzfN6PnhX56jyrN5paKLLNiHzza+LQ6zU7JoE46tJ+b/qFEfz9oca2WCkd
+	 6FaQb8WxqaIKgJfQeUiT7KmKiw4hjiEOgo9nSrUvXQYY9NpBe4pyyrXVnK1E86GnkRT/j
+	 d3yeL5IxvHrM/aVvYPgTJp63qgnCzaWsfvjJaCtI7bjDvwaSPxak6ecwgUo1QqNV0CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pPWZB6rlP5/avmTbLZo+FVXAGr9iU++3sApEpQiMpR4=;
-	b=3jtsgUlPvnuXkA54Ghq1INbjQn4ag66Yq5crPt9YpJis9xKNQzAIlQowVEkgLW0ZLxqg
-	 odc8F209U4Bravni3Uto28NVLY+Bw2pCwLjBturj/K6gQMZDxtL8qBOrN5rYCD2tI80m1
-	 1en+YmLy9lXyDLW2/zR6fOLRUnws9xIdYMMNSL64qkc06rbd667tgwI1tnuOrYyODg1/d
-	 GKUo+HibBR4wbRkkjzNmN9DgTZApJj19GDBTNKC3nV5exWyb7c3EzOD5QHXssU9njTTEM
-	 gWQhn4E58c7AUdeTCxjqw2C3i/H6VsgFINZZB9OIvLzpClmABWojgGkPmkGGfIyVhzQ==
+	bh=W2TtHZJEWZby5LJ6wK+LksH/LKIFgVBy2Cqw7orkWU8=;
+	b=49rblUtb1r4vt4cFvmZaSO2otaNbjx9hBLpWlkiRImVWf8tUBS4u3RT7hKQrMVB8+oSD
+	 RiZsTIFcAjh2AlWeD1KJTLT+RbRce9zIfrqcG3QQpwEjeFAkHu0KL42ylIBf1zt4oEzLh
+	 ZiYs4wvakyubACW5cnLbZ2dEY7i1msoNwhLqGYkNrhQBHuURm//0quULF2Ebj88+iWWic
+	 dqbVNlTKXHkomPyguSw6vgNyFuSVXX6clZEMLlZzQ0dsIfC9aRs5AHupw2m4eEg7XFBNC
+	 u5u1tKEYpnINYdKWweWy3B/CXLev9pOEY2gHG8WEEiwCX7CBFw/tmy2xZacQaAd0t8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/+kALse";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRMLxMXy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3C3606A31C;
-	Wed, 18 Nov 2026 20:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7A2606A31C;
+	Wed, 18 Nov 2026 20:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/+kALse
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9208A1F000C4;
-	Wed, 18 Nov 2026 20:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRMLxMXy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDC11F000C4;
+	Wed, 18 Nov 2026 20:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032102;
-	bh=pPWZB6rlP5/avmTbLZo+FVXAGr9iU++3sApEpQiMpR4=;
+	s=korg; t=1795032105;
+	bh=W2TtHZJEWZby5LJ6wK+LksH/LKIFgVBy2Cqw7orkWU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/+kALseX1qsyl9Fjz+v7yeeMR7H3xpZYDbmTKjmmcp2D7Z/oRXQKxkJP4VoU8UHm
-	 AC/D9pbdK+mUoTaaUSTP2IzvoysJgBXHnZ4UNxFObjfMjd6m+tGgFvHGX7twL5th9Y
-	 SKQHaN3zw2N7WWO3d+joMUgbMxjC4vRzkRpyz8d4=
+	b=DRMLxMXy8agkg/91lBIlb6olcJBGJo61+ZDsCeVsBx4RG5FhReJ+nwNffHZO/TX75
+	 QImtmNUBNr68iYsW6RQHpays4oJUrKLTPJa+1QnUBMjvoCWXgxETX3V/RgCqueyfir
+	 mHjIn87BpyfRNmUEcUX8uvjX84pwzj6RQmsj+YA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abraham Zukor <abe@maticrobots.com>,
+	Hongbo Li <lihongbo22@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1294/1756] spi: tegra114: initialize native chip selects inactive
-Date: Wed, 18 Nov 2026 15:57:01 +0100
-Message-ID: <20261118150101.051661765@linuxfoundation.org>
+Subject: [PATCH 6.12 1295/1756] ASoC: remove unused substream in macro soc_link_mark_pop
+Date: Wed, 18 Nov 2026 15:57:02 +0100
+Message-ID: <20261118150101.086899214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,113 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abraham Zukor <abe@maticrobots.com>
+From: Hongbo Li <lihongbo22@huawei.com>
 
-[ Upstream commit f8334fdfd858c27f090ce597806794e4a08c9f4f ]
+[ Upstream commit 2f12d0de77b99f0f35755d16efeb12e6f45e5710 ]
 
-tegra_spi_probe() initializes SPI_COMMAND1 with only SPI_M_S, leaving
-CS_POL_INACTIVE clear for every chip select. This drives every native
-active-low chip select low until tegra_spi_setup() runs for that device.
+The soc_link_mark_pop don't need substream, therefore we can
+remove it.
 
-SPI children are registered and probed one at a time. A synchronous
-probe of an earlier child can therefore transfer while a later child's
-chip select is still asserted. On a Tegra234 system with active-low
-devices on CS0 and CS1, this caused both devices to be selected when the
-CS1 device probed first. Its initialization then intermittently failed.
-A logic analyzer showed CS0 remained low throughout the CS1 transfer and
-went high only after the CS1 probe failed.
-
-Walk the controller's device tree children before SPI_COMMAND1 is
-written and set CS_POL_INACTIVE for each valid chip select without
-spi-cs-high. That way the line is already deasserted when the first
-child transfers and does not change level when setup runs.
-
-Disabled children are walked too. The core only registers available
-children, so tegra_spi_setup() never runs for a disabled one and probe
-is the only chance to park its chip select at the level its hardware
-needs.
-
-If an enabled child shares a chip select with disabled ones, its
-polarity takes priority. If only disabled children use a chip select
-and they disagree, warn and leave the line inactive high.
-
-Fixes: f333a331adfa ("spi/tegra114: add spi driver")
-Assisted-by: Claude:Opus-5
-Signed-off-by: Abraham Zukor <abe@maticrobots.com>
-Link: https://patch.msgid.link/20261010195503.623287-1-abe@maticrobots.com
+Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
+Link: https://patch.msgid.link/20240821070815.2326534-5-lihongbo22@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 7ef99fcfbbac ("ASoC: soc-link: Correct stream stop operations in snd_soc_link_trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 49 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ sound/soc/soc-link.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index 622bcaa0fe6e9..8a6bdccde5a47 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -1308,6 +1308,9 @@ static int tegra_spi_probe(struct platform_device *pdev)
- 	struct resource		*r;
- 	int ret, spi_irq;
- 	int bus_num;
-+	u32 conflicting_cs;
-+	u32 enabled_child_cs_polarity = 0, disabled_child_cs_low = 0, disabled_child_cs_high = 0;
-+	u32 enabled_cs_mask = 0;
+diff --git a/sound/soc/soc-link.c b/sound/soc/soc-link.c
+index fee4022708bc7..7f1f1bc717e2c 100644
+--- a/sound/soc/soc-link.c
++++ b/sound/soc/soc-link.c
+@@ -35,7 +35,7 @@ static inline int _soc_link_ret(struct snd_soc_pcm_runtime *rtd,
+  * In such case, we can update these macros.
+  */
+ #define soc_link_mark_push(rtd, substream, tgt)		((rtd)->mark_##tgt = substream)
+-#define soc_link_mark_pop(rtd, substream, tgt)		((rtd)->mark_##tgt = NULL)
++#define soc_link_mark_pop(rtd, tgt)		((rtd)->mark_##tgt = NULL)
+ #define soc_link_mark_match(rtd, substream, tgt)	((rtd)->mark_##tgt == substream)
  
- 	host = spi_alloc_host(&pdev->dev, sizeof(*tspi));
- 	if (!host) {
-@@ -1407,6 +1410,52 @@ static int tegra_spi_probe(struct platform_device *pdev)
- 	udelay(2);
- 	reset_control_deassert(tspi->rst);
- 	tspi->def_command1_reg  = SPI_M_S;
-+
-+	/*
-+	 * SPI_COMMAND1 is written before any child is registered, so a chip
-+	 * select with CS_POL_INACTIVE clear stays asserted until
-+	 * tegra_spi_setup() runs for that device. Program the level the
-+	 * device tree asks for up front instead.
-+	 *
-+	 * Disabled children are included deliberately. The core never
-+	 * registers them, so this is the only chance to park their chip
-+	 * select at the level their hardware needs. An enabled child on the
-+	 * same CS takes priority.
-+	 */
-+	for_each_child_of_node_scoped(pdev->dev.of_node, np) {
-+		u32 cs;
-+		u32 polarity_bitmask;
-+		u32 cs_polarity = 0;
-+
-+		if (of_property_read_u32(np, "reg", &cs))
-+			continue;
-+
-+		if (cs >= MAX_CHIP_SELECT)
-+			continue;
-+
-+		polarity_bitmask = SPI_CS_POL_INACTIVE(cs);
-+		if (!of_property_read_bool(np, "spi-cs-high"))
-+			cs_polarity = polarity_bitmask;
-+
-+		if (of_device_is_available(np)) {
-+			enabled_cs_mask |= polarity_bitmask;
-+			enabled_child_cs_polarity |= cs_polarity;
-+		} else {
-+			if (cs_polarity)
-+				disabled_child_cs_low |= polarity_bitmask;
-+			else
-+				disabled_child_cs_high |= polarity_bitmask;
-+		}
-+	}
-+	conflicting_cs = disabled_child_cs_low & disabled_child_cs_high & ~enabled_cs_mask;
-+	for (u32 cs = 0; cs < MAX_CHIP_SELECT; cs++) {
-+		if (SPI_CS_POL_INACTIVE(cs) & conflicting_cs)
-+			dev_warn(&pdev->dev,
-+				 "Conflicting CS polarity on disabled nodes at cs %u\n", cs);
-+	}
-+
-+	tspi->def_command1_reg |= enabled_child_cs_polarity |
-+		(disabled_child_cs_low & ~enabled_cs_mask);
- 	tegra_spi_writel(tspi, tspi->def_command1_reg, SPI_COMMAND1);
- 	tspi->spi_cs_timing1 = tegra_spi_readl(tspi, SPI_CS_TIMING1);
- 	tspi->spi_cs_timing2 = tegra_spi_readl(tspi, SPI_CS_TIMING2);
+ int snd_soc_link_init(struct snd_soc_pcm_runtime *rtd)
+@@ -94,7 +94,7 @@ void snd_soc_link_shutdown(struct snd_pcm_substream *substream,
+ 		rtd->dai_link->ops->shutdown(substream);
+ 
+ 	/* remove marked substream */
+-	soc_link_mark_pop(rtd, substream, startup);
++	soc_link_mark_pop(rtd, startup);
+ }
+ 
+ int snd_soc_link_prepare(struct snd_pcm_substream *substream)
+@@ -138,7 +138,7 @@ void snd_soc_link_hw_free(struct snd_pcm_substream *substream, int rollback)
+ 		rtd->dai_link->ops->hw_free(substream);
+ 
+ 	/* remove marked substream */
+-	soc_link_mark_pop(rtd, substream, hw_params);
++	soc_link_mark_pop(rtd, hw_params);
+ }
+ 
+ static int soc_link_trigger(struct snd_pcm_substream *substream, int cmd)
+@@ -175,7 +175,7 @@ int snd_soc_link_trigger(struct snd_pcm_substream *substream, int cmd,
+ 			break;
+ 
+ 		ret = soc_link_trigger(substream, cmd);
+-		soc_link_mark_pop(rtd, substream, startup);
++		soc_link_mark_pop(rtd, startup);
+ 	}
+ 
+ 	return ret;
+@@ -209,7 +209,7 @@ void snd_soc_link_compr_shutdown(struct snd_compr_stream *cstream,
+ 	    rtd->dai_link->compr_ops->shutdown)
+ 		rtd->dai_link->compr_ops->shutdown(cstream);
+ 
+-	soc_link_mark_pop(rtd, cstream, compr_startup);
++	soc_link_mark_pop(rtd, compr_startup);
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_link_compr_shutdown);
+ 
 -- 
 2.53.0
 
