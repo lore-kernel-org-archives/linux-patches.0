@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043411;
-	b=tgrIpZtnDbQ4x05Xbva+h8vSGWBRhQacCEPb/haHjNCojRTUQet4wizLQfS/ihHzd5Al
-	 mv7B8Vy/o6Pre+0E6aYdgdraUqjcBVmoR0Zos9SJHOE2dfqYsgxM6XQGu8pNs1toa3zLR
-	 l1H1d4uFuBXOVE5C1tKlUJJrzscXfExPg5KAl4IBdb3yjkv3X7snNTq7qV0Y96XD7/gGh
-	 WQhGX6GhjpZolA8SfAIQCh5kGr0ppRfpCWiSWkDWyL5yKfin3ZSIsblVMwMDsP46ODDFw
-	 fPTXK9GOPZO8O35BkMVnOBP0Da+Sq1d005Yy7TtAomDmHGh9pdFtSJh60SQYvCRIERQ==
+	t=1795043414;
+	b=s9d4oOpZkBMLcRLla8PhxPSN1FF29tLTOFpTwv6WJhW1ezn+dBOsrrYo1h7wj/AZcq/9
+	 znpvewVQP5Q+rqtj0kcEbJbw3+Oadv5ejyIrPc7A+0cUbCQwWNO9gJWNSwPi/ASCyhIh9
+	 zbwgTg1m/loew6iW9Ymk5tVx415191VOvfITfdOn1jAB+ZwaZyiGmOxmdyYkn/QOlJ4l8
+	 FxJTlxZT7EqJqlTCYUbQhx54UUok2uRmXyMWh5rxApeqodPdqphlKgBWFpMdOgsAJd0aE
+	 PLPH55B5Wwpf6ghYshad0x0GX5j0TaxUVoIHhq8720f2l9IA4a44Xo3QOnwD2+3TwtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=EMZgcMiQYlSuu18wVtUpMlWK0qL8TI7fnK9J2X2Puko=;
-	b=HUPrImkXkS+aI1v2OkA0uFmBp3JuSIoMX0h+VOu6a0S0JELepWCTYVuBZnKKxGXxwDlf
-	 iEdLWIuuro+DDdiGNNjqL/VrueA+Eb8tm/kWdt0TzGdTP3YJSfJ0GVV2PNELXOEbxVhUH
-	 5k4FckaapHsXN8Lr2S6A1jaCZrQee0KtX0eo9kKWD9caXZZlRHJCr0k3cw4s7BAmVncJ1
-	 W/YdvZ/DnPA671Ca8F9oHFtEm9UOLS1D41OGJJerezlVBnKUItstoydUc1BqIxQ1NWEJz
-	 eSe5+80EhLGDUUQhcc/nJUIbNw43a8S7W8Nt7TKzw8ZpqjxURI2XMmO8HZ3RRhQ1QKg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=STUB0uqCQbFUEd88gwEYnPd856UaJs535dmQv6Eio+A=;
+	b=PUpp5GVozQBCgYz7mBw9mPGCz13bUuPYCjZ6nwU9fuowDmzN0iJDIz3m9jRy9lPYiddm
+	 qfIDvP2rpGXaM+MSZT/h7FjNvdHUFz8WJ8TuPKnA+FiQSeRGVc6mOyUf3HOCMmGAHqxiy
+	 yTTVn3CsL7LvVRHKWW0P1Adi7vHkXohSDBju9BCHvLKBBpnnsZnJhBT9ppASzCce8RT+K
+	 7NIlG0LDutM/hdH6D6A0u+pLxymPTkPZCKxL6HK5+zuDvC7GNkhoo7wWQmJLMDLyK7XzS
+	 otAES2eH+551L4WOzttdj/faizngy2ARRfSjpVB5U+OTHFmd1Q8j71RCnRrJCPtUxZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcplPAlP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RuZGSki8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD6E606A335;
-	Wed, 18 Nov 2026 23:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88EB606A330;
+	Wed, 18 Nov 2026 23:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcplPAlP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AB41F000C8;
-	Wed, 18 Nov 2026 23:10:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RuZGSki8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70601F000D0;
+	Wed, 18 Nov 2026 23:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043411;
-	bh=EMZgcMiQYlSuu18wVtUpMlWK0qL8TI7fnK9J2X2Puko=;
+	s=korg; t=1795043414;
+	bh=STUB0uqCQbFUEd88gwEYnPd856UaJs535dmQv6Eio+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcplPAlPpPQvH+EYb8DACBA3eB8AQzRLsDjik62iVGI45yY3a19L7n1Jxm9h0a3ss
-	 mIjJh5GWhRilGAgWmV5cNnytFvYhFtfNZ9cFj9EkWRvRLgbN4YS/PJV3yfJ2WF/dBf
-	 Hy+13NveX3Ss2VCujx+UKGWskrgvrLdsicRJUrfs=
+	b=RuZGSki8pDOm1bSNgnlmwwS3GD/R6bGK6QO3SkWLFfyEr8ZzwVzAYZpegOotnpo83
+	 hIwWABYaDwQ4aLWdbIwjZ5KMCaytgG5KLvDofSg0dNuEPqR/8tS1IUEHzjMcIyiH94
+	 DlLIV2+Sm++9gVgCV+Yyq7wAADe0gmIjXc2+XnCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liulhong617 <liulhong617@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0202/2857] arm64: mm: fix accidental linear mapping of no-map reserved memory
-Date: Wed, 18 Nov 2026 15:20:36 +0100
-Message-ID: <20261118150208.623702986@linuxfoundation.org>
+Subject: [PATCH 6.1 0203/2857] HID: rmi: check report length before trimming sentinel bytes
+Date: Wed, 18 Nov 2026 15:20:37 +0100
+Message-ID: <20261118150208.660486142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,90 +62,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: liulhong617 <liulhong617@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7ace06a01efaba1ec585630aa4c98ac39b38452a ]
+[ Upstream commit 28a3e326fad2451bdb66b747dd1f7ccbb900eed6 ]
 
-When reserved-memory regions with the "no-map" property are not
-page-aligned, the kernel may accidentally map them into the linear
-mapping, contradicting the no-map semantics.
+rmi_check_sanity() trims trailing 0xff sentinel bytes, but its loop
+reads data[valid_size - 1] before checking that valid_size is non-zero.
 
-The root cause is a mismatch between /proc/iomem's address boundaries
-and the actual page table mapping boundaries:
+Reverse the condition so the length is proved before the last byte is
+inspected.
 
-1. /proc/iomem derives its ranges from memblock via
-   memblock_region_reserved_base_pfn/memblock_region_reserved_end_pfn,
-   which perform PFN rounding so the displayed boundaries are
-   page-aligned. This gives the impression that the no-map region
-   occupies whole pages.
-
-2. However, memblock_mark_nomap() splits memblock.memory regions at
-   exact byte boundaries (memblock_isolate_range preserves raw DT
-   base/size with no alignment). When for_each_mem_range iterates the
-   non-NOMAP regions adjacent to a no-map region, it returns start/end
-   values that are NOT page-aligned — they are the precise byte
-   boundaries from the memblock split.
-
-3. These sub-page-aligned values are passed to
-   __create_pgd_mapping_locked(), which does:
-     phys &= PAGE_MASK;
-     addr = virt & PAGE_MASK;
-     end = PAGE_ALIGN(virt + size);
-   The downward rounding of phys via PAGE_MASK extends the mapped
-   range backward into the adjacent no-map region, effectively
-   including no-map memory in the linear mapping.
-
-For example, with 64K pages, reserved_region@A2000000 (base=0xA2000000,
-size=0x8000, no-map) causes for_each_mem_range to return
-start=0xA2008000 for the next mappable region. After phys &= PAGE_MASK,
-the actual mapping starts at 0xA2000000 — the entire no-map region is
-incorrectly mapped.
-
-Fix this by rounding the mappable range inward to PAGE_SIZE boundaries
-before passing it to __map_memblock: start is rounded UP and end is
-rounded DOWN. This ensures the mapped area never overlaps with adjacent
-no-map regions. The cost is at most one page of unmapped gap at each
-boundary, which is preferable to violating no-map semantics.
-
-Signed-off-by: liulhong617 <liulhong617@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/hid/hid-rmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index 72fb70f2bfb20..fb6a731970028 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -623,6 +623,20 @@ static void __init map_mem(pgd_t *pgdp)
- 	for_each_mem_range(i, &start, &end) {
- 		if (start >= end)
- 			break;
-+		/*
-+		 * for_each_mem_range may return sub-page-aligned boundaries
-+		 * after memblock_mark_nomap() splits regions at byte precision.
-+		 * __create_pgd_mapping_locked aligns phys down to PAGE_MASK,
-+		 * which could accidentally map no-map memory on the boundary.
-+		 * Round the mappable range inward: start UP, end DOWN, so
-+		 * that the mapped area never overlaps with adjacent no-map
-+		 * regions. The cost is at most one page of unmapped gap at
-+		 * each boundary.
-+		 */
-+		start = PAGE_ALIGN(start);
-+		end = end & PAGE_MASK;
-+		if (start >= end)
-+			continue;
- 		/*
- 		 * The linear map must allow allocation tags reading/writing
- 		 * if MTE is present. Otherwise, it has the same attributes as
+diff --git a/drivers/hid/hid-rmi.c b/drivers/hid/hid-rmi.c
+index 8788192c09561..cd3173af5d7bf 100644
+--- a/drivers/hid/hid-rmi.c
++++ b/drivers/hid/hid-rmi.c
+@@ -386,7 +386,7 @@ static int rmi_check_sanity(struct hid_device *hdev, u8 *data, int size)
+ 	 * such reports here.
+ 	 */
+ 
+-	while ((data[valid_size - 1] == 0xff) && valid_size > 0)
++	while (valid_size > 0 && data[valid_size - 1] == 0xff)
+ 		valid_size--;
+ 
+ 	return valid_size;
 -- 
 2.53.0
 
