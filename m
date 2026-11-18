@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027310;
-	b=z2MydsGY8rUaOI109Nn9JsMZVt6jYVfMAzLhFNojddXOpbhCqsxb53ELC50H6hRiDRrH
-	 YZQaRQD+0GhWSqPijIdSVntt/iXMbYzmF8PXN40jiX/qWHEg9/QXhOm3Aj5VMiuhLFoBZ
-	 Yst3n4vCEUezKwfzBwLdw90dOPCi0tvm19GjZKAn3vg24qFV0vNGvlK4poRpA31hJWGI5
-	 erxR5P7J/3YYY5AaNljXJlSrGzB3kiyv0lX3srEs28TlrWOkME6N5yBhWpCOZTtabtYVR
-	 qvPn8O0WPehioiiHd5Vt8wbTLX5tSuAczMHESc/ULGANdTJd8Jb52WMTJYyEsmdxrDA==
+	t=1795027313;
+	b=w4vEkEBLwUvegpEDVkAw9pBwe1DM4pUG23pqm+vRX0PX9lBjer45Nmg8HEoeSA/APvAA
+	 EWw8Drt3YaV1DJrs9lei3VgdBfk7koH5g4TgGPliaw2VRrDZtnE8qIVTJNjnXNbgwbji5
+	 +oQh4CHD/w/wBzUsMqemKZ3TsIJ34ap3dUJYL6T653USrghkMW9LDZwGq8pvIHCZzZ/s6
+	 mCkCSlzAVdvQnn1/WZ8rhITYXDRpL0njl+CEPjjLhZtSdZqyeTrzwNmZQVSgQF4Nj86PI
+	 MCTXw3coxttr4D7zI3SxHVgMOfVnXD2zU2rwOnW0wPm611K+tEif+pxcyVgoR23Vyfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D3xefLC4fmXClJpGowlHwRfdC5JrWISXVXkKheNMzJg=;
-	b=2dGibAYMU1ri1y8Ia7MYG+JlrklzVyAl+pE60fDWt1lpKt/2XdwEDBoo4H653tXaMazK
-	 1x5krhgt2/O7YPPObjRrlgHlop7YiZCE4ev3+lg0BBEfmFyyeQotP3NdtglJK47AirZRW
-	 4niwqr69SanBKNgWVEky77VtUQMpEEbjHW+q2vYgLW9Dw85LVobDvzb3uOuZYJIqcTcQr
-	 wGgxNZP4ip2vRbmXYZB55cGOMrQD8bs273lQAwQUf1NWdEywrBOneNfKGkPWuMPfcgjvM
-	 vk5MvZc0+MqFPCDSC9+e7AJ4fnqseN5yFPBhQ2ZZBbSmopNqZ/2Pt2YIubU2EiUL91Q==
+	bh=LbP4h4ViuAW3gxRxn5sQjzRWXr1BPAyRbssg30nd5Z4=;
+	b=NgSMd/m/G7qz+BLHVZ8cbI4mgBsqHF1rmqnFVh2bWBVXKIRK6K63YipZvGcjBEN+LcQz
+	 dBVcE+e6t4iCucnBVfDOM+yMwMmVF0gwFpsDW056fg+Ajvc87qeBWFTrE8jTnLnu9Cw08
+	 rXQh3blqETmIWgenalaHFy5HzAKMBNR3Er1n5xSvxIR3DZKQ6tnCm+iQ/0/lVtsXlw6xM
+	 e9Aadbf3h5TSG1onyvReXAUo5YQbACB7XJFGgTxAyZciyVXAI2wTilqSs9AKvSRGEBWY1
+	 pPca63MoYs+VVpLbfb13A2Zp9vmEAn+h6Kvbsn4gxwulLMNnbH01o8C1ehit93FqgJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptuu+t3d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvNz0vjM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87C8606A336;
-	Wed, 18 Nov 2026 18:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF2B606A33B;
+	Wed, 18 Nov 2026 18:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptuu+t3d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F551F000C4;
-	Wed, 18 Nov 2026 18:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvNz0vjM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F631F000C5;
+	Wed, 18 Nov 2026 18:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027310;
-	bh=D3xefLC4fmXClJpGowlHwRfdC5JrWISXVXkKheNMzJg=;
+	s=korg; t=1795027313;
+	bh=LbP4h4ViuAW3gxRxn5sQjzRWXr1BPAyRbssg30nd5Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptuu+t3d36TJ5tWvcQlAWCIj43Zb1p1tZCTeDDKdgQwwy1FB8KIwT65bprPBAD0bM
-	 Lmw+oKLYe0ujrJ7kCh4GAv4a903t2PMLLhmkxnMQpw4lsUXBNDjPMl6tgJqpMeh9yL
-	 IfyqCGeMnWc1liMs2KeF8neTSN+ceW1Lzdm7zjHg=
+	b=uvNz0vjMGYUw3RuyJzyeud6Hc2ojl/2UKKI8rqXkTvL4X/sFnVamtQXQLC7x+xP+D
+	 JaqZvDcPCSxFw2/xwtxQaYC7bEu2yrpfWRPaFod6179Pwl19NFsAeewc6ewd8vESRS
+	 2oZ63dtjQtTHvrI1uchXfsUsS+snxevQ3feV2j10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1745/2151] bpf: Follow the head if an skb is written from a slice
-Date: Wed, 18 Nov 2026 15:58:00 +0100
-Message-ID: <20261118150225.424912158@linuxfoundation.org>
+Subject: [PATCH 6.18 1746/2151] bpf: Use memmove() to store bytes in an skb
+Date: Wed, 18 Nov 2026 15:58:01 +0100
+Message-ID: <20261118150225.461229086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,77 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 1c19f2b3b2f3b55c8017092257634cb8229b7d97 ]
+[ Upstream commit 1db084f42884c5af881fedf3df4777fe2095b20b ]
 
-The source of bpf_dynptr_write() may be a slice of the skb which is
-written to, that is a pointer into its head. bpf_dynptr_copy() does it by
-itself for a copy inside of one skb, if the source is linear and the
-destination is not.
-
-__bpf_skb_store_bytes() and __bpf_skb_meta_store_bytes() make the skb
-writable first. If that reallocates the head, the source points to the old
-one, and freed memory is copied into the packet.
-
-The offsets in the head do not change when it is reallocated here. Move
-the source along with the head.
+Through bpf_dynptr_write() and bpf_dynptr_copy() the source of
+bpf_skb_store_bytes() can be a slice of the same skb which overlaps the
+destination. memcpy() then reads bytes which it has overwritten already. On
+x86 with FSRM it repeats the first bytes of the source instead of copying
+it. Local, ringbuf and skb metadata dynptrs are written with memmove() for
+that reason.
 
 Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
-Fixes: f38499ff45f5 ("bpf: Unclone skb head on bpf_dynptr_write to skb metadata")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-14-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-15-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ net/core/filter.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index ea3e98e2d42da..b6780339ae857 100644
+index b6780339ae857..d79a51ba69824 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -1717,6 +1717,24 @@ static inline void bpf_pull_mac_rcsum(struct sk_buff *skb)
- 		skb_postpull_rcsum(skb, skb_mac_header(skb), skb->mac_len);
- }
+@@ -1751,7 +1751,8 @@ BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
+ 	if (flags & BPF_F_RECOMPUTE_CSUM)
+ 		__skb_postpull_rcsum(skb, ptr, len, offset);
  
-+/*
-+ * The source of a write through a dynptr may be a slice of the same skb.
-+ * Making the skb writable can move its head: follow the move.
-+ */
-+static int bpf_try_make_writable_from(struct sk_buff *skb, u32 write_len,
-+				      const void **from)
-+{
-+	const void *head = skb->head;
-+	bool in_head = *from >= head &&
-+		       *from < (const void *)skb_end_pointer(skb);
-+	int err;
-+
-+	err = bpf_try_make_writable(skb, write_len);
-+	if (!err && in_head)
-+		*from = skb->head + (*from - head);
-+	return err;
-+}
-+
- BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
- 	   const void *, from, u32, len, u64, flags)
- {
-@@ -1726,7 +1744,7 @@ BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
- 		return -EINVAL;
- 	if (unlikely(offset > INT_MAX))
- 		return -EFAULT;
--	if (unlikely(bpf_try_make_writable(skb, offset + len)))
-+	if (unlikely(bpf_try_make_writable_from(skb, offset + len, &from)))
- 		return -EFAULT;
+-	memcpy(ptr, from, len);
++	/* through a dynptr the source may be an overlapping slice of the skb */
++	memmove(ptr, from, len);
  
- 	ptr = skb->data + offset;
-@@ -12104,7 +12122,7 @@ int __bpf_skb_meta_store_bytes(struct sk_buff *skb, u32 offset,
- {
- 	if (unlikely(flags))
- 		return -EINVAL;
--	if (unlikely(bpf_try_make_writable(skb, 0)))
-+	if (unlikely(bpf_try_make_writable_from(skb, 0, &from)))
- 		return -EFAULT;
- 
- 	memmove(bpf_skb_meta_pointer(skb, offset), from, len);
+ 	if (flags & BPF_F_RECOMPUTE_CSUM)
+ 		__skb_postpush_rcsum(skb, ptr, len, offset);
 -- 
 2.53.0
 
