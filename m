@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022297;
-	b=icqT0n+i+vZNourbo4dAeGpF7yOzXicRNHuaTPDjbeiQQyEGmzJRvcKuhv0TFQHQu4/L
-	 yQDdXPm4jOvRDj8ehLcT1mE/ESFQtbEbJupfhwazyKotDdPDFOXGqfEwNanpwObekqhyx
-	 +IKsWBfmBYC1rmbTqCtUQJ4JY0jjeWxSK9pCRaxtLsNQHq6P2M8IVkMZ1qlPfkIi55xE9
-	 Aqlv8WEZqJCzLL6WIee6mpkCbYHepaYJWyQJmhtC+PblkCkUCgQhUF+ECoJbUO6qsSVL5
-	 JcZbcv27rf2EPMpFBeCl4/pbAXB4gpB8Iz/8MaoX35c9DQO1OvS2Xio2ls8q7Q7P8uQ==
+	t=1795022300;
+	b=VaXMIHMPpoLTbx1bUWk9yhd0XQdQkDLMpqFEoSOfHBVBfS3R07DWXo9w9z6SP71QHwE0
+	 JUVIlcT+PIr6foz7C/EOnaMmCxrXtg1A5AWWCxPDaOawKMKG2cLb5m/rGLClHgWj7mcr5
+	 ooWqS/0WqTblcLhwKNLD/cEsU6ayhOirY6M2sKIpInH6XIO6dxoi15UpANcH4q5pkaYUN
+	 pl8Y+GXr1Zvph2aH6s1/IHxluZFLB2DDxwyqgvTRxKHlo/SUT5zRhqvkp1+nI23QmZ+sG
+	 Ke0vhX/3bKluSKBLJoePgXUoZK6vrPgzFxJLp7ZqTpFG5Z/sE/L9myHnp4jC3n/yVmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ppaLjOXDdkIyCfaZ57lSI5sD4zQHf8TKBVVtuien+Uk=;
-	b=gjLPwF7tmeWcqpVj7iRN19hBv/Lyr/rOadODkokFUNe5iqPP+80IDfAt0NhUQVYadQGH
-	 rYoGAujvbf4DrlAs3SArqWP34anL/weyM6IHYl4GSqZLiLhRUrhBycI0dd2VI0FYy1ldf
-	 t6dNu/NQiyY/2v25CUXW3oZx1wz2RlnD+Ls6N5R/hi8kqrcWAYLQGbT38H2001xf7Ajxd
-	 mDuOOWpwgIqC2xaYVVQSRYb8xa6pVummF9bnN/hykKFj74bsbGS2rnOTsKrGkoEwZTGyr
-	 iOmC5MpXbH307AfUtUQw5WYepa0PlcJ/696D6mz898wIl+c0J3hUYAs6Csf3xbsX5Cg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WxH6uZmYNupq/q4Ck+ejV6J63yAq8yxbTXS1al9UrFc=;
+	b=PwzZWV27VYt2PmjghkCI5aXeOptM7CW6ulY6FkztHNvJV/YHXo4TNqoVqIU+b6Z7SBwA
+	 MB3OJLwuausQWY4tMp2mDGuM1MtH97UgYaxanNnwkx1978HaUKjbprBPef5zW8Nf5u+1Z
+	 c/mt6kYnZJx7AF0HglRuH4+pmEhPlTJFbYaDvgaJ1oNc1A9/OgRvtHeVnQFyduHGtAJHA
+	 fkYl1cf04HWF1HDOEArdDbAmO0cn56nxGkYrazICMtwrTPfZJAjEkkxbwe4vOhY/4HWpH
+	 tQ7H18mq25K1NG+wl2C8gHJ2sZnSopFgmKPyxRtMszK5SuOAxTE63bJbeaAH3jS3RtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvyOaYoO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z6KF2osZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82FD606A31C;
-	Wed, 18 Nov 2026 17:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA0D606A320;
+	Wed, 18 Nov 2026 17:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KvyOaYoO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033A91F000C4;
-	Wed, 18 Nov 2026 17:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z6KF2osZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C201F000C4;
+	Wed, 18 Nov 2026 17:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022297;
-	bh=ppaLjOXDdkIyCfaZ57lSI5sD4zQHf8TKBVVtuien+Uk=;
+	s=korg; t=1795022300;
+	bh=WxH6uZmYNupq/q4Ck+ejV6J63yAq8yxbTXS1al9UrFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KvyOaYoOTNDOiOkQ4U1u/HWQhVYM0wLaY6a9zESmCInkPQW6M+tmUfSIWbEVX0I8h
-	 5CZdC6WyTc6BymOhyPhOG7hEbTPXJPAuipp4wMQOUAlnwChg+QAsyx1QMSFbmzyfiD
-	 slEkTR6vVHWlIxEFOdIWJrui7lvPmK1QQMa03i8A=
+	b=Z6KF2osZrI3KiYMrK5UI//Imzcr6xDGqBGY8hEQxU5NmG/NHTsDl05CyZOf73xVBu
+	 MGPLekPnNmvexLbUzvMhtmUfqXeFL4oMS8gjmyfEJkxtbPIHgZvxANRNzQsPl6zB8V
+	 QiVV+l6diWI4RHraFLgWRmRjq/ckGTVvuPtVHN7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2611/2651] apparmor: Fix namespace reference leak in __aa_find_or_create_ns()
-Date: Wed, 18 Nov 2026 16:04:11 +0100
-Message-ID: <20261118150418.246045026@linuxfoundation.org>
+Subject: [PATCH 7.3 2612/2651] apparmor: check connect permission for SCTP
+Date: Wed, 18 Nov 2026 16:04:12 +0100
+Message-ID: <20261118150418.276124984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,50 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 8f1f7f664c1822af34c5465f9820b4e39146786b ]
+[ Upstream commit 2f764c08bb191a8c8f4051926dba0d25d195f39b ]
 
-When the namespace already exists, the reference taken by aa_get_ns() is
-overwritten with ERR_PTR(-EEXIST) without being released. The caller in
-apparmorfs.c clears ns on IS_ERR() and so cannot drop it either, leaking
-the reference on raced mkdir of an existing namespace.
+SCTP can start an association through sendmsg() or CONNECTX. These paths
+call the SCTP-specific sctp_bind_connect hook instead of the normal socket
+connect hook, but AppArmor does not register it. As a result, a profile can
+deny connect and allow send or setopt, yet a task can still create an SCTP
+association.
 
-Release the reference before returning -EEXIST.
+Register the SCTP hook. Ask for connect permission when SENDMSG_CONNECT
+or CONNECTX creates an association.
 
-Fixes: 73688d1ed0b8 ("apparmor: refactor prepare_ns() and make usable from different views")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Fixes: 56974a6fcfef ("apparmor: add base infastructure for socket mediation")
+Assisted-by: LLM
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_ns.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ security/apparmor/lsm.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
-index ae9168c1a85e7..7d5c768493e88 100644
---- a/security/apparmor/policy_ns.c
-+++ b/security/apparmor/policy_ns.c
-@@ -265,10 +265,12 @@ struct aa_ns *__aa_find_or_create_ns(struct aa_ns *parent, const char *name,
- 	/* try and find the specified ns */
- 	/* released by caller */
- 	ns = aa_get_ns(__aa_find_ns(&parent->sub_ns, name));
--	if (!ns)
-+	if (!ns) {
- 		ns = __aa_create_ns(parent, name, dir);
--	else
-+	} else {
-+		aa_put_ns(ns);
- 		ns = ERR_PTR(-EEXIST);
-+	}
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index d502ad0ac26f5..dba078c73abc6 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -15,6 +15,7 @@
+ #include <linux/mount.h>
+ #include <linux/namei.h>
+ #include <linux/ptrace.h>
++#include <linux/sctp.h>
+ #include <linux/ctype.h>
+ #include <linux/sysctl.h>
+ #include <linux/sysfs.h>
+@@ -1405,6 +1406,18 @@ static int apparmor_socket_connect(struct socket *sock,
+ 	return aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sock->sk);
+ }
  
- 	/* return ref */
- 	return ns;
++static int apparmor_sctp_bind_connect(struct sock *sk, int optname,
++				      struct sockaddr *address, int addrlen)
++{
++	switch (optname) {
++	case SCTP_SOCKOPT_CONNECTX:
++	case SCTP_SENDMSG_CONNECT:
++		return aa_sk_perm(OP_CONNECT, AA_MAY_CONNECT, sk);
++	}
++
++	return 0;
++}
++
+ static int apparmor_socket_listen(struct socket *sock, int backlog)
+ {
+ 	AA_BUG(!sock);
+@@ -1823,6 +1836,7 @@ static struct security_hook_list apparmor_hooks[] __ro_after_init = {
+ 	LSM_HOOK_INIT(socket_getsockopt, apparmor_socket_getsockopt),
+ 	LSM_HOOK_INIT(socket_setsockopt, apparmor_socket_setsockopt),
+ 	LSM_HOOK_INIT(socket_shutdown, apparmor_socket_shutdown),
++	LSM_HOOK_INIT(sctp_bind_connect, apparmor_sctp_bind_connect),
+ #ifdef CONFIG_NETWORK_SECMARK
+ 	LSM_HOOK_INIT(socket_sock_rcv_skb, apparmor_socket_sock_rcv_skb),
+ #endif
 -- 
 2.53.0
 
