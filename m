@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022377;
-	b=SH0jEU/AFU83osv6qZ9KeGh0FDAjwlu2916nJk9sqkb8LcnlllR8VTSIgSjtWRgwdSYZ
-	 tdM4KmA+pBPSeVojKJxUcAHn5Gur5WffhFG9brDMWEPmeC5hMj6HpdlS2Ewmwfo77B1ko
-	 mlkykScZ+XTlJZ57GNpvGzQD8lRrmSAU7udyAZdy4JdAmAxqeFXOSd69CNw3Y6mP8tvga
-	 gCBygwTNqeG2zwgLiExxtTFbDRbmw0/gL5diM6mZLqQio/8cW+XBxMI9+VssPZGFLQiku
-	 Igph98CPGvQwRLyqgYeMB8LaCnj7abXQ6c0mq837brP/C6kgTPzsjKP0dDHRmP05/bg==
+	t=1795022380;
+	b=KX/5qlrZD21r5veWRNmp8nQKP6nEBwmsauAkULcRSEjOEpHSIySouSjJo+X3617DqynQ
+	 W8/tyIZY8WulJmnpcAie6RJU1sMNDQV6qARxDvrOTO1dxwMGj+bTXi95BJilBCCi+RUCK
+	 2g02K4ovY4AuTtdM3bm6Odb1wXI+l9Ow94tOfJ2cPjiSHzunK191b35nMQLGG/eQumU/j
+	 UfaUH56AI7lrlvv713ArR1Z3oSz/kR7QiNYJLh1My6JgbDf4cW8GNXBu8iqf+ug7Bfb2b
+	 PlNbMsNAh1XAMfc257QLV374iHxixzHw9gFHsAStg+37w/GNWaUg3cwMa5O9zQ/mzig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022377;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022380;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TJRqnqty6XQhB+dpcM2BEyLcCU0N+GmmAaLOZ0+fCfo=;
-	b=0HeW96qZGxSvuY3bbvyeTz9d8GYx5Cxse2S1dF+ITOzRr50DMQV9fde+M5XWNOwv2EYa
-	 X9J+RzwgVXEeSeH1Kv4q9jkYmgbkx89a2Utru8DF43A7K/QDcnxltoT8liUOnn+qRUg7F
-	 QiQe0BPxgI2WNZYVjVUstOSx9+bu4FnzhzM7GxNBUaX65StAAooEAY/18xtX2DvHOtMli
-	 biXx+4k3PDV4JD+9ToUZScGxcAwGpM5FLIYscaZnBPadxu7gnLFUAPsz7fCt/ncVDOJRi
-	 2lzUg4QOSORRQpo1Dtvts0GUfE0em847yxExnEivMC1oA/hXIUPtNpoaIIfkVWx7pQg==
+	bh=Rh/OnJ/4fu6O5KMn7GwxlXQ+Aq9JBiJ7H0q2XZvfF+8=;
+	b=KQIsw+G9NhoDXIvFyWElSzIQCRs/6UCei08I0zTyzKpcpzup9lG3EWAXI43gCMQeMcwz
+	 /0i24yi9eYFBpZvz07Yj43sWIS4D2txUmVjt2o0LixfJ+3Bd68qomPYtktuUL0PhiX54O
+	 Pe72lesRUIAStMhrzuNhlOpu4HSjN+icnYox+jB7XSzsCtlOdFG+SCXgQuKt6b6bJ202i
+	 PjnO6HsjKf6B0vHZC98ilIRvCofSouCdFs2PFcnJo+sYqAxnDBQl56O+JAGII1xtwZV3x
+	 e8B4p20Vomx5xJxvcU/rDqsnTRkY8+vuHFLzY8yj0OMsJ58cGXg0fQl8eZI9tGyo2cA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xur8nmqs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=St4LA72a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A04606A320;
-	Wed, 18 Nov 2026 17:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B686606A31C;
+	Wed, 18 Nov 2026 17:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xur8nmqs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186901F000C4;
-	Wed, 18 Nov 2026 17:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=St4LA72a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBAD1F000C4;
+	Wed, 18 Nov 2026 17:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022377;
-	bh=TJRqnqty6XQhB+dpcM2BEyLcCU0N+GmmAaLOZ0+fCfo=;
+	s=korg; t=1795022380;
+	bh=Rh/OnJ/4fu6O5KMn7GwxlXQ+Aq9JBiJ7H0q2XZvfF+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xur8nmqsZZ7nlyKPFUOXyIVlpLYtO/8JVRg0aoAGmIAKtXaHmdGYXyx2vUDG6oGO9
-	 b7lkq7hTZv2IO/eZVwvp/o56j8bPZOvPeScCLJchq+jzSX29AfIyQJZ9dwg99O5uEZ
-	 VfGKVOee5/BdystAEvk2ltrHNV8KCay8audCdCt0=
+	b=St4LA72aA4CEsXbYLGzWvEmNNttZm4NxChNxw2GI9jrp9yG+AsfyKdjND2/1KOrBW
+	 GHFW7ZHZAOF+LsdsRwUN9O7Wtu5EQokdKNLQ0VAdIl77McvdJlwgz0UH2gIF604uOC
+	 KV2r1EPujngQgiUOrRjJ+fcUWmIoCGDJ85lCDEeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2623/2651] tcp: initialize mapped children before route lookup
-Date: Wed, 18 Nov 2026 16:04:23 +0100
-Message-ID: <20261118150418.632924220@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 7.3 2641/2651] vdpa_sim: disable page faults around vringh_need_notify_iotlb()
+Date: Wed, 18 Nov 2026 16:04:41 +0100
+Message-ID: <20261118150419.186360771@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,67 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit b7ff0e7a9ae3df2f123807a7e670bc348b1e1b9d ]
+[ Upstream commit 05fb07c40e0013ba5ae373c6ea1bcc622eaea7f0 ]
 
-IPv4 passive opens on a dual-stack listener go through
-tcp_v4_syn_recv_sock() with tcp_v6_mapped_child_init() as the optional
-initializer. The callback currently runs after the output route lookup.
-If that lookup fails, tcp_done() destroys a clone whose pinet6 and
-ipv6_fl_list still refer to the listener's state.
+When vdpa_sim runs with use_va (the default), its rings live in user
+memory, and vringh reads the ring's flags and event index with
+__get_user() through the user address.  The net and block simulators
+call vringh_need_notify_iotlb() with bottom halves disabled, so those
+reads happen in atomic context.
 
-With the flowlabel list head in inet_sock, fl6_free_socklist() walks
-the clone's list and RCU-frees its nodes without unlinking them from the
-live listener. Subsequent flowlabel operations can use or free the nodes
-again. Commit 858d2a4f67ff ("tcp: fix potential race in
-tcp_v6_syn_recv_sock()") moved the initializer before ehash insertion,
-but did not cover this error path.
+That only works today because __get_user() has no might_fault() check: a
+fault is not handled in atomic context and simply comes back as -EFAULT.
+Make that explicit with pagefault_disable() around the call, so vringh
+can use the normal user accessors without complaint.  Only the
+notification check needs this: the rest of the ring processing runs in
+the same kthread without bottom halves disabled, and can fault normally.
 
-Invoke the existing initializer after the IPv4 fields it consumes have
-been set, but before route lookup can fail. It needs neither the
-destination nor sk_setup_caps(), and all later disposal paths remain
-covered.
-
-Fixes: 1c17f4373d4d ("ipv6: Move ipv6_fl_list from ipv6_pinfo to inet_sock.")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261028154101.2153360-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-and-acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 9 ++++++++-
+ drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index a38cafcc553b6..b414313381020 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -1723,6 +1723,12 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reflect_tos))
- 		newinet->tos = tcp_rsk(req)->syn_tos & ~INET_ECN_MASK;
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+index 76dd5b0828d7a..4d3e36fb59d50 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
++#include <linux/uaccess.h>
+ #include <linux/blkdev.h>
+ #include <linux/vringh.h>
+ #include <linux/vdpa.h>
+@@ -343,11 +344,17 @@ static void vdpasim_blk_work(struct vdpasim *vdpasim)
+ 			continue;
  
-+#if IS_ENABLED(CONFIG_IPV6)
-+	/* Detach IPv6 state before a route lookup can fail. */
-+	if (opt_child_init)
-+		opt_child_init(newsk, sk);
-+#endif
+ 		while (vdpasim_blk_handle_req(vdpasim, vq)) {
++			bool notify;
 +
- 	if (!dst) {
- 		dst = inet_csk_route_child_sock(sk, newsk, req);
- 		if (!dst)
-@@ -1732,10 +1738,6 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
- 	}
- 	sk_setup_caps(newsk, dst);
+ 			/* Make sure used is visible before rasing the interrupt. */
+ 			smp_wmb();
  
--#if IS_ENABLED(CONFIG_IPV6)
--	if (opt_child_init)
--		opt_child_init(newsk, sk);
--#endif
- 	tcp_ca_openreq_child(newsk, dst);
+ 			local_bh_disable();
+-			if (vringh_need_notify_iotlb(&vq->vring) > 0)
++			/* The ring may be in user memory, and we can't take faults here */
++			pagefault_disable();
++			notify = vringh_need_notify_iotlb(&vq->vring) > 0;
++			pagefault_enable();
++			if (notify)
+ 				vringh_notify(&vq->vring);
+ 			local_bh_enable();
  
- 	tcp_sync_mss(newsk, dst4_mtu(dst));
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+index a6514b5ccd865..543a58abcdb8c 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
++#include <linux/uaccess.h>
+ #include <linux/etherdevice.h>
+ #include <linux/vringh.h>
+ #include <linux/vdpa.h>
+@@ -68,6 +69,8 @@ static struct vdpasim_net *sim_to_net(struct vdpasim *vdpasim)
+ 
+ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+ {
++	bool notify;
++
+ 	/* Make sure data is wrote before advancing index */
+ 	smp_wmb();
+ 
+@@ -77,7 +80,11 @@ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+ 	smp_wmb();
+ 
+ 	local_bh_disable();
+-	if (vringh_need_notify_iotlb(&vq->vring) > 0)
++	/* The ring may be in user memory, and we can't take faults here */
++	pagefault_disable();
++	notify = vringh_need_notify_iotlb(&vq->vring) > 0;
++	pagefault_enable();
++	if (notify)
+ 		vringh_notify(&vq->vring);
+ 	local_bh_enable();
+ }
 -- 
 2.53.0
 
