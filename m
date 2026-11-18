@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019528;
-	b=VghRzXVhkxQv3qY3aC8QD2Mh3EMbHXtKaX5HNOkkVSKopWF3U2/2T8cyulmI5E875bgZ
-	 esUAzpV8OC2oriTeOdZQYduoovG0thlNDysrNZxrWY/1+k+qLC7WlrcyY4oifNW6jeQNC
-	 r7k1FVcoNdJ5Om+C/xZI2CiuVG5QYcclfhQlc0Px6CvotGvVb/Z30Xi+U16f/5gmSBYd9
-	 +8ueOMT1wNPKmMWWgGFN+c7HRGq5lIkLxz6SWCp6bHSR1o6e9E5a+xsfd9moUogQAtkcj
-	 h28WORwggW9P7hit5xFIGIZ9xDK6oUpOJ0P6TVOF9MFP6H/tHqBs2X7yS5Tfq1/8KVA==
+	t=1795019531;
+	b=nYGIlGKdMPAgIiGCmWO9AirarSp5o3lIFLMWV6T/6As8nL4rjeojrDLhBCCd57Z0Zbrb
+	 wgED51b1jBFllnoq5lV8FWc8UPfP6TVMyvi08UlXj0Tez11/oZ5HEg5WmLEyBQVJgLhZQ
+	 ZddndLyxfzbhpKTR6w/GkkQ4l0R2SiRddDwoyiiM3InTWQQylg8FwV5PI1gXLOqXmZPpK
+	 vtPKznBSXfWnYxXIlrU3HMx5lfLtZO/y0lg+x4SWpp9VK2RXbn8UqwPWoyJWq6K0dHXWT
+	 SFNHY4MleVdZ1mQvg1CyyLxKAY6CirTxCnCshj3kkOoMwY7JBALqtx95bkI+q4kRcmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019531;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=+n4Jd1l4jQ0OqDGrC5KubxffDsNS4o/QISdGyOWHefQ=;
-	b=iaFBo4fsUN2gXoJRyBbiyDOlK9nMqiQaeVkdJfiNCEUyr7bGVoQVg683wcPdSmGm+Izm
-	 oVjboJhYKEfFiZi7jVQI802x+axpk9ZFUjAl8B14OeZajcCZO4ukup3/qzdXXEuLltRw6
-	 nQq8E7o3juEIQ+XlY9p7u7fn4shWjhoAxqjT5ZqXs3YrreX1x3J4UCfHkrP6FBx//WCF8
-	 HF7LRQhT+1lWhQTK2hC6mrHDWIyT2ToK3UnjPOUm2TJnokj9hQqkIEnsk4CPTsTmiEaHX
-	 E1b6LkmnjD7wk7uABknf1uVjxeXhWw1dcqIXXfqxZ5Fh4w/yIc2kpWIwwbtOb+HCXnw==
+	bh=oZJDUTwTauVJF2aFam0ZFFckzcPbhZEWa9kWy9TpdBw=;
+	b=UB7oy7Icq0RhSiUep3QXrRwTZ4bl0XdtSl42WLasVPR9TR8nxIk9GB1NczZujKcIK6NW
+	 lXlAAtOhj79DO8oQtzl0OO7ZXzuJc//ktok6fsIwdJDJHD/Yfct+7xlHOp71ubfH0Fkd5
+	 upOkp61Qvbw+osqo2i8wyyf94BgvtHZOR3ivBKY6rj0sevj6zy7F5YYQuUxo/0ZwietYW
+	 rizZLUv5WNWRIDvNgltH8PcKCXl/qySwqrmEcDExmbDTUDeqzT5fM7xZti7VQU/y/xSoy
+	 g3xUAQRJRNZ/WBCKzthZCSZ1tMys7rhRIIKVcBxKMwEI/72pFLhzTsPqhS1P01ju3CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UUkD99Xn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CfYwKMK9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B25E606A33A;
-	Wed, 18 Nov 2026 16:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A82606A7C5;
+	Wed, 18 Nov 2026 16:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UUkD99Xn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1ED81F000C4;
-	Wed, 18 Nov 2026 16:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CfYwKMK9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E001F000C4;
+	Wed, 18 Nov 2026 16:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019528;
-	bh=+n4Jd1l4jQ0OqDGrC5KubxffDsNS4o/QISdGyOWHefQ=;
+	s=korg; t=1795019530;
+	bh=oZJDUTwTauVJF2aFam0ZFFckzcPbhZEWa9kWy9TpdBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UUkD99Xn/cuBLYuuPksl8fynJ6ZrgttaBuk7Il0CpU4qN1nh6W6lddxnHmqHLM2hi
-	 ruOnvXhFCOY9TCyRJCYPk9B5tGIAhs9zXwQfcuyXfW9fGQZA+jrsgYypXQjywvSPiD
-	 FCILLm6EtCp1wU/lVCYdsrUEJiNat9Z6K1e75AZc=
+	b=CfYwKMK9RqWBWnKh10XMv9e1PCcVv3ukyF0sIUVA7ljDo8L/DkjwOFW5GIXJ6oTQx
+	 pbD0mmtKezRSAg6ufEicLGQ8Id3p8KvUCM3MISKsNg9b+T6JBkNFIZYbUbIVKfXsn2
+	 bRbKTSYAgle7q4otxDIbOGtoqNEYyrOtsLbY1VEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Steven Price <steven.price@arm.com>,
 	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1629/2651] drm/panfrost: Fix PM refcnt and autosuspend issues at device probe/remove
-Date: Wed, 18 Nov 2026 15:47:49 +0100
-Message-ID: <20261118150346.501985417@linuxfoundation.org>
+Subject: [PATCH 7.3 1630/2651] drm/panfrost: Explicitly enable MMU interrupts at device init
+Date: Wed, 18 Nov 2026 15:47:50 +0100
+Message-ID: <20261118150346.537341017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,89 +72,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit e9672bf9382ff80be21d586f88e50339b85f5766 ]
+[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
 
-During device probe(), failure to do a PM get() will leave the usage_count
-set to 0, which is the value assigned at device creation time. That means
-when the autosuspend delay expires, runtime suspend callback won't be
-invoked, so the device will remain powered on forever.
+Because the device must be in a position to accept jobs between the time
+drm_dev_register() is called and autosuspend first kicks in, there's a very
+narrow window inbetween during which jobs targeting the tiler buffer
+object would time out, since the device's PM status is 'Active', but no MMU
+interrupts were enabled at device initialisation time.
 
-On top of that, failure to call PM put() during device unplug means
-Panfrost device's PM usage_count increases monotonically for every new
-module reload.
-
-The outcome of both of the above meant that:
-
-- Devfreq OPP transition notifications would be printed all the time,
-  even when no jobs are being submitted. This quickly fills the kernel
-  ring buffer with junk.
-- Because MMU interrupts are only enabled when the device is reset,
-  the very first job targeting the tiler heap BO after device probe()
-  would always time out, since the driver's PM runtime resume callback
-  would not be invoked.
-
-To fix the above:
-- Manually adjust the PM refcnt at device probe and removal time.
-- Ensure pm_runtime_dont_use_autosuspend is called in the wind-down path.
-- Call pm_runtime_put_autosuspend() when device is ready to accept jobs
-
-Fixes: 635430797d3f ("drm/panfrost: Rework runtime PM initialization")
-Fixes: 876b15d2c88d ("drm/panfrost: Fix module unload")
 Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
 Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20261012-claude-fixes-v15-6-bc0a6c498553@collabora.com
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
 Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_drv.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index 130ec763343bb..b7eecbfc3b5e6 100644
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -989,6 +989,11 @@ static int panfrost_probe(struct platform_device *pdev)
- 		goto err_out0;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index 4a3162c3b659f..bb6c1614964b1 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -336,6 +336,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
+ 	WARN_ON(atomic_read(&mmu->as_count) < 0);
+ }
+ 
++static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
++{
++	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
++	mmu_write(pfdev, MMU_INT_MASK, ~0);
++}
++
+ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ {
+ 	struct panfrost_mmu *mmu, *mmu_tmp;
+@@ -355,8 +361,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ 
+ 	spin_unlock(&pfdev->as_lock);
+ 
+-	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
+-	mmu_write(pfdev, MMU_INT_MASK, ~0);
++	panfrost_mmu_enable_interrupts(pfdev);
+ }
+ 
+ static size_t get_pgsize(u64 addr, size_t size, size_t *count)
+@@ -970,6 +975,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
+ 		return err;
  	}
  
-+	/* The reason we must manually set the PM status and usage counter is
-+	 * we have just powered the device up but did not go through the PM
-+	 * runtime resume callback, so we need to update these ourselves.
-+	 */
-+	pm_runtime_get_noresume(pfdev->base.dev);
- 	pm_runtime_set_active(pfdev->base.dev);
- 	pm_runtime_mark_last_busy(pfdev->base.dev);
- 	pm_runtime_enable(pfdev->base.dev);
-@@ -1003,13 +1008,16 @@ static int panfrost_probe(struct platform_device *pdev)
- 	if (err < 0)
- 		goto err_out1;
- 
-+	pm_runtime_put_autosuspend(pfdev->base.dev);
- 
- 	return 0;
- 
- err_out1:
-+	pm_runtime_dont_use_autosuspend(pfdev->base.dev);
- 	pm_runtime_disable(pfdev->base.dev);
- 	panfrost_device_fini(pfdev);
- 	pm_runtime_set_suspended(pfdev->base.dev);
-+	pm_runtime_put_noidle(pfdev->base.dev);
- err_out0:
- 	return err;
- }
-@@ -1021,9 +1029,12 @@ static void panfrost_remove(struct platform_device *pdev)
- 	drm_dev_unregister(&pfdev->base);
- 
- 	pm_runtime_get_sync(pfdev->base.dev);
-+	pm_runtime_dont_use_autosuspend(pfdev->base.dev);
- 	pm_runtime_disable(pfdev->base.dev);
- 	panfrost_device_fini(pfdev);
- 	pm_runtime_set_suspended(pfdev->base.dev);
-+	pm_runtime_put_noidle(pfdev->base.dev);
++	panfrost_mmu_enable_interrupts(pfdev);
 +
+ 	return 0;
  }
  
- static ssize_t profiling_show(struct device *dev,
 -- 
 2.53.0
 
