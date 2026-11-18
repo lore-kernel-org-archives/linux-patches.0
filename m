@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016050;
-	b=lp4pJpakWHt8vygT7R6kDCcfqv3b3AbRX6mx6P/rEncp1CeC+L7I++a5RVE3zyKH4A8I
-	 achfC2X7ss1TMPRIo7zlfhreg1YuuKaT9W8uMAQYqLeWdXdjJyvmxrhxChma/K+NYhDhU
-	 tfh6+/e0AvGTdVVr9JTQ2fkSQXTs3PkQt9HDGrFBzHHFMm+n1qitlFapwyr2iCetLynzH
-	 msDKZcjtODBFsCUw9FD9GhG3jKposmcq1H0Ozm0ZCydfbtWQ/C39TLOXS7s1ITk35k4++
-	 j8NJx3VnV7707p/W7RvUx9yjoWIgQal0W/v7juvGTydX0DuKrxVhqiEpoyUDWGeYF5g==
+	t=1795016053;
+	b=4G7HgHNoBRTECtOzCuP0kwakM/X8fo4zL37MN8vZ9+N+dqQGC9ajpjs7ioGeJE23BJMt
+	 SK56EAtnHIOF7BgBbmSnL+79JAVd/segnvVZXwZf1V3ktWi4Ps5sfAFgawtYhaQBjpV5R
+	 I69M2Gtxj0tVZyjY4otBKDpgbgydWQvMppVodWGva/51IxVWntDNq+eOUMG0pC2hpttN4
+	 gwmhZD+6HYStl5IPcD3YWGsjDj7sWWatHSn8J43Acx4jbAgoMOaHqnIN5pcmrbbsC4RmJ
+	 3ibnujSep8pChLQL800Fl2oH8sItOe0/5M14eqcNFIn96eBkhAkbud/bYtOVPKMx22A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D4QFmnUPH0vh3TivkfSf31JwhDpO2UNGfhodORje4Qs=;
-	b=v8wiHEQZN2ygepIv5Hao4oYqtZb/xaoMFFtlrXKCfOe6Ur65uf9sxJr95Sy4bFtDSbmC
-	 q4DoVCXJqV7lJ8ydAcCa6k0SCcJqm1d27KxIPFG3IDWiZQv5k7ygeS50DTCAOFp3qm8Zj
-	 2yETXnA7ocdYB/7MBr8QaMnPVyo6ymNXy2HJwXrj8a+udxrUMCO7wVpmwRCREIW/5xYHU
-	 99CGKD39WioJMD1ZQ2HrKCE+lgLSZ8I9gyA2FNPxZINii8Yuvg95/aDFKUhpMNJ2yXb2Z
-	 35TlIpPMULaZ2dziYb1UldekgwidRi+h2EPargakS98dGwZ7Oi2qokwM6LgzN03aZCQ==
+	bh=aJ61tzRN4SRrokKg503yW+rw2Qi+rnhcqRIoK7XDOAU=;
+	b=rSGQFc1szniuRJRfDebR6ktyWe/KAtls2QMqudfRPSqcvpPz7HaSF6w+O0KV+xQXcRLA
+	 CkcHNk2gJBjvNOV2NmL1Q2mPEBde4cwksLnXcQelG9rNVa/RE+/jr6XFmI7rTZySh1OAl
+	 PH0vLq5jPKc6WRqS4A/SjeiWjuF4d9UQ0gPCH+GAYFvfS2KJsXxHXMdtPk6yVxnizphJq
+	 BeUGxWrJDeYm4xxADWMUeiWyVPbdMnUFIAw2BeQMjp05dw9d+3w5J90vDhwo2AnKPD9kh
+	 VkkeBdyBMZMnEc+YE9Xm27YyVAqPgQDrfOeF8snbXuLh7hKq+eKV23XUYTdguWYRFPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psSXCn4R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U4oTRXtB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76666606A320;
-	Wed, 18 Nov 2026 15:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4309C606A31C;
+	Wed, 18 Nov 2026 15:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psSXCn4R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CF81F000C5;
-	Wed, 18 Nov 2026 15:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U4oTRXtB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BB91F000C5;
+	Wed, 18 Nov 2026 15:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016050;
-	bh=D4QFmnUPH0vh3TivkfSf31JwhDpO2UNGfhodORje4Qs=;
+	s=korg; t=1795016053;
+	bh=aJ61tzRN4SRrokKg503yW+rw2Qi+rnhcqRIoK7XDOAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psSXCn4Rq1HrslV0FAHg9Phj4BlMsc1h/9htv3KVMDoMtIXvxk726ye4noQ1XX6Zj
-	 7qTR4ILdrAejE/WKnN1T4ywNppwqNoKErSeW8wVTkzjt8Y7wMKC1ReB4i8lBRXGOzu
-	 a1GXSVyBfaIuJcaeNsIUFuvDDrGko7WPeF46dT4k=
+	b=U4oTRXtBXtC3GNTTQ2PBDE4TWrR+SCL6lAvuagqmd+0DXIq+AUSJoxXJ7zxChtDJf
+	 O9A+7o72V76ITLR0iDTyIiddjvSBiMvTESgLPmuAnTe/97Ou0qa9meyeCPqtCxu/pN
+	 ZPZ8hpa2y1eTr9XTOTNkRDsBxnOly7cEdfFvt16I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0392/2651] crypto: qat - avoid OOB read when stripping RSA leading zeros
-Date: Wed, 18 Nov 2026 15:27:12 +0100
-Message-ID: <20261118150301.950157981@linuxfoundation.org>
+Subject: [PATCH 7.3 0393/2651] crypto: qat - release instance on DH fallback allocation failure
+Date: Wed, 18 Nov 2026 15:27:13 +0100
+Message-ID: <20261118150301.985506848@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,65 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit ac508238898058f0b09b18a7891fb31279617781 ]
+[ Upstream commit 307e27d3e07f58b6d42a8c64d31304aa614ab7d2 ]
 
-The logical AND operator uses short-circuit evaluation: the first
-operand is always evaluated, while the second is evaluated only if
-the first is true. Because the first operand dereferences a pointer,
-it may cause an out-of-bounds access before the bounds check in the
-second operand is evaluated.
+qat_dh_init_tfm() acquires a QAT crypto instance before allocating the
+software fallback transform. If fallback allocation fails, the instance
+reference is leaked and the device remains permanently in use.
 
-Resolve this by checking the vlen prior to the pointer being dereferenced.
+Release the instance before returning the allocation error.
 
-Fixes: a990532023b9 ("crypto: qat - Add support for RSA algorithm")
+Fixes: 5d5bd24f4155 ("crypto: qat - implement dh fallback for primes > 4K")
 Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
 Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_asym_algs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/crypto/intel/qat/qat_common/qat_asym_algs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-index 75c15c8e41dba..aa2ea563f25fa 100644
+index aa2ea563f25fa..1049c583f84f1 100644
 --- a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
 +++ b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
-@@ -987,7 +987,7 @@ static int qat_rsa_set_n(struct qat_rsa_ctx *ctx, const char *value,
- 	const char *ptr = value;
- 	int ret;
+@@ -535,8 +535,10 @@ static int qat_dh_init_tfm(struct crypto_kpp *tfm)
+ 		return -EINVAL;
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1018,7 +1018,7 @@ static int qat_rsa_set_e(struct qat_rsa_ctx *ctx, const char *value,
- 	struct device *dev = &GET_DEV(inst->accel_dev);
- 	const char *ptr = value;
+ 	ctx->ftfm = crypto_alloc_kpp(alg, 0, CRYPTO_ALG_NEED_FALLBACK);
+-	if (IS_ERR(ctx->ftfm))
++	if (IS_ERR(ctx->ftfm)) {
++		qat_crypto_put_instance(inst);
+ 		return PTR_ERR(ctx->ftfm);
++	}
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1044,7 +1044,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
- 	const char *ptr = value;
- 	int ret;
+ 	crypto_kpp_set_flags(ctx->ftfm, crypto_kpp_get_flags(tfm));
  
--	while (!*ptr && vlen) {
-+	while (vlen && !*ptr) {
- 		ptr++;
- 		vlen--;
- 	}
-@@ -1067,7 +1067,7 @@ static int qat_rsa_set_d(struct qat_rsa_ctx *ctx, const char *value,
- 
- static void qat_rsa_drop_leading_zeros(const char **ptr, unsigned int *len)
- {
--	while (!**ptr && *len) {
-+	while (*len && !**ptr) {
- 		(*ptr)++;
- 		(*len)--;
- 	}
 -- 
 2.53.0
 
