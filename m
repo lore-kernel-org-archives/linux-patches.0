@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027103;
-	b=w9wQRNYm2oVGLRI8LhvignwuLZIfYpMDSVWaJaUOHaHFJ699C1dSCxOPeIH90n/CWsvn
-	 Ipbg0F6lpj6dOR3csdEqQXdNweYegFURvZwuLjOIuqE0yCsjrQitFVYFnIa8DJjgDE1F6
-	 g415zwxCEUPOk5oLdex97eG+qfGYBsvKhYZVPqeiHkekLbrf9VdFRdB2voJO30ZlaCo8A
-	 UofBKlKkhcGxvkUg3l0iPqWJaSvbtZLmNcsKCEPOxfo6YkFBcibe75ehHO2LxAy/Dw1uo
-	 Gwv6KUOgdy9MS74Mm7YPARY4yPBnNaOGGllM8Y1jQqPEQ3WgwivqF6iljOm+sBDx4VQ==
+	t=1795027106;
+	b=M7SEJ+0Bb8jdnU/dR1ppkIQKT+zY8+emFZzbfI8/x230nooaOakD2P7sB9SwiMDm+Coe
+	 vRoSelZIyfPvGWmx+bHzZQeLwpkSCTcYKfA3JIvhgcmAtGyFhj59uiA2wmX/EAqph2cv4
+	 MSpMmfKWMv9R0k1BlUcRVrYPFHcIjACbbviqi55GLARYle4HPE/HWGHVMUiws0MF9fFj3
+	 h7GmkKQglbvIN+mno94Thd7s/ZGxx2k60EsQGYSOYglJEK5Tq2bNlvZcC+xARYmPc/m4u
+	 YqwgzfOFWDXH0MU0tT9B5wPJSmiRrC3qv6y478jcE0BTO+Py0i4J+EJDsNqgfOtIPDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027106;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CoKW0/4vxMWRAdVR2cWQqntMUrytjfqxvw4Eh2FRSVE=;
-	b=UOwWkgnwSHV8fNpv5twQmC82EyjfX0Z6VpPe5VluSIYiyKsTqwQkz1GpVrWd0VFXw2kx
-	 I0tKNj/RNtDHK0Ur3S1SRqflcGC1YUGP6gsM2OdRNfbSoRYybOIyf4tJXSDtMagG+vlnN
-	 IEYK0rAsOcC7oJoLrS0OGjn/St25z5V+TpRwZ6AotR7eFUFKEyF5M1MIRiPkKuDzhTGtb
-	 JC+n9VsMuLyHUdlDFonkftReDL+Gc4ysQwRF9EFhN3dfWI5xTka2bQ225t6Fa0UewyBL4
-	 dg/GKa3WF6Y736+BP+q5SEA0Qb7r3wOyA3pOFOyj3X053dcJXCyg0tm8GqDxZ5bOF2Q==
+	bh=si6/1z3j52Q3C5Kl9UjfE4v3uVJHkM21xb18bu3wNMU=;
+	b=5tXokdaTEyhoUB2rOivl/MSzdpjKKpl/Gnp9gIFiDmDUZQ3qrQWarftfAfDo/IqJ2LIQ
+	 oKPwJyaATmqQadeOztcHrcO83KpCU5HkgysADsYVib6O7i3OizJpGzQCrJ4glver66KOq
+	 gQ+H/85EvcdMzDw1mBhnHUz7q3CVhZdbVS57saCoom9hgr4s/2IqLMiG5y+FljEGUZZ89
+	 u3yXw4xytX1V/oVPDB+d+bj0TNeifAaMYrKRxLVUx/whkC4gMksPIQUrzwrtdOmZNhQNJ
+	 pIwsYTyCctkyonAIYYJz0Ym5/s0EnuCkk2F+CTfJNWe/zdvVyFDiGEFTOvgL75byVyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0jwh2TF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C2ZQLpKY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D553D606A31C;
-	Wed, 18 Nov 2026 18:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B676260A2600;
+	Wed, 18 Nov 2026 18:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w0jwh2TF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311841F000C5;
-	Wed, 18 Nov 2026 18:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C2ZQLpKY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FBB1F000C7;
+	Wed, 18 Nov 2026 18:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027103;
-	bh=CoKW0/4vxMWRAdVR2cWQqntMUrytjfqxvw4Eh2FRSVE=;
+	s=korg; t=1795027106;
+	bh=si6/1z3j52Q3C5Kl9UjfE4v3uVJHkM21xb18bu3wNMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w0jwh2TFDDllOSBLih0VkH8mugOav2p4lsDjU3GAjFTbwb3TKirH/NKp6A5/yLdZF
-	 jk3uYQSR6YVr2iUF0q/ivmPRu1aQcr/U6oyT5shzOulb8OrDcGzN86m3xqpZnY97Da
-	 LqZ7KAxEJNx18xunkVXb9Jzi8zm0zvrNsNCw7RxU=
+	b=C2ZQLpKY01h5EaY9+c8HmYvUptY+Pbuf0Tgsth9opHzgq2MZMCUiIffbo10S8GPUo
+	 secwm8Ms0HZFCfzJKhtYdfHeciQvtqHoDjVLU+Eb0NsuwZHfix2fXN7EmIr9//LqdG
+	 eOA65ZAjE7uLERCyiPKVE8hybmrzW2LPIT/n1/XE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	syzbot+5ad4fc9c8360b68e353f@syzkaller.appspotmail.com,
+	Nehuen Lian Bova <nehuenlian.kernel@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1671/2151] selftests/bpf: Record only the test ICMP echo in tc8 of tc_netkit_scrub
-Date: Wed, 18 Nov 2026 15:56:46 +0100
-Message-ID: <20261118150222.705282400@linuxfoundation.org>
+Subject: [PATCH 6.18 1672/2151] HID: magicmouse: fix null pointer dereference in magicmouse_event()
+Date: Wed, 18 Nov 2026 15:56:47 +0100
+Message-ID: <20261118150222.740631408@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,69 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Nehuen Lian Bova <nehuenlian.kernel@gmail.com>
 
-[ Upstream commit 17f6fc3ad257b0ad7a11f276a5c0f57e0bdf3f4a ]
+[ Upstream commit 5b66b65cfd6f697b1addb6159cbece53d20db2fc ]
 
-tc_netkit_scrub attaches tc8 to the primary netkit device, sends an ICMP
-echo with a mark and a priority through it, and checks the mark and the
-priority that tc8 saw against what the scrub mode lets through.
+Add a guard clause to check if 'msc' and 'msc->input' is NULL
+before attempting to access its fields, preventing a general
+protection fault.
 
-tc8 records the mark and priority of every packet it sees, and the
-device also carries what the system sends on its own once the device
-is up, like IPv6 neighbor discovery or the mDNS of avahi-daemon. When
-such a packet goes out after the echo, it overwrites what tc8 recorded,
-and the test finds a mark and a priority of 0. Record only IPv4 ICMP
-packets in tc8.
-
-tc_netkit_scrub run 100 times on a bpf-next kernel with KASAN enabled,
-x86_64 VM with 32 vCPUs and avahi-daemon running, before and after this
-patch:
-            before                                  after
-  outcome   2 of 100 failed (mark and priority 0)   0 of 100 failed
-
-Fixes: 716fa7dadf11 ("selftests/bpf: Extend netkit tests to validate skb meta data")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261016-selftests-bpf-tc-netkit-scrub-v2-1-b484a7ce2a63@gmail.com
+Fixes: b8d56ef91cc3 ("HID: magicmouse: Apple Magic Mouse 2 USB-C support")
+Reported-by: syzbot+5ad4fc9c8360b68e353f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5ad4fc9c8360b68e353f
+Signed-off-by: Nehuen Lian Bova <nehuenlian.kernel@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_tc_link.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/hid/hid-magicmouse.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_tc_link.c b/tools/testing/selftests/bpf/progs/test_tc_link.c
-index 630f12e51b075..2a91793674dd5 100644
---- a/tools/testing/selftests/bpf/progs/test_tc_link.c
-+++ b/tools/testing/selftests/bpf/progs/test_tc_link.c
-@@ -4,6 +4,8 @@
- 
- #include <linux/bpf.h>
- #include <linux/if_ether.h>
-+#include <linux/in.h>
-+#include <linux/ip.h>
- #include <linux/stddef.h>
- #include <linux/if_packet.h>
- #include <bpf/bpf_endian.h>
-@@ -119,11 +121,19 @@ SEC("tc/egress")
- int tc8(struct __sk_buff *skb)
+diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
+index 0480e7d216bc4..cf92c9c9ab2df 100644
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -553,6 +553,10 @@ static int magicmouse_event(struct hid_device *hdev, struct hid_field *field,
+ 		struct hid_usage *usage, __s32 value)
  {
- 	struct net_device *dev = BPF_CORE_READ((struct sk_buff *)skb, dev);
-+	struct iphdr iph = {};
- 
-+	if (skb->protocol != __bpf_constant_htons(ETH_P_IP))
-+		goto out;
-+	if (bpf_skb_load_bytes(skb, sizeof(struct ethhdr), &iph, sizeof(iph)))
-+		goto out;
-+	if (iph.protocol != IPPROTO_ICMP)
-+		goto out;
- 	seen_tc8 = true;
- 	mark = skb->mark;
- 	prio = skb->priority;
- 	headroom = BPF_CORE_READ(dev, needed_headroom);
- 	tailroom = BPF_CORE_READ(dev, needed_tailroom);
-+out:
- 	return TCX_PASS;
- }
+ 	struct magicmouse_sc *msc = hid_get_drvdata(hdev);
++
++	if (!msc || !msc->input)
++		return 0;
++
+ 	if ((msc->input->id.product == USB_DEVICE_ID_APPLE_MAGICMOUSE2 ||
+ 	     msc->input->id.product == USB_DEVICE_ID_APPLE_MAGICMOUSE2_USBC) &&
+ 	    field->report->id == MOUSE2_REPORT_ID) {
 -- 
 2.53.0
 
