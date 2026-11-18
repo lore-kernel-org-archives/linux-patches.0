@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036381;
-	b=WVMIaCZYHwX+yoI0rDgCGUhvPkVePR1v2w1V71qsxVSMm8goYjE1awCoMPHna4MieM+w
-	 KrtN/+5D7coW9zxCbHOquFJloabLtmh7dlsUICIHNDQW7oEdAV9kre2lM/IxRaMtOkDhR
-	 PU6AqgAylGtz40BV7TWfqKA17Zw46J9BfH9dKaoiARH3xa/pS8fk2ZFvgN/Iose+6+Iml
-	 cf6xB/Y+cj6hxJ59g+emwMYtUWcHH6hHTgjD+3IjEF578kfwXHO9egMQ51HPSWA013bvO
-	 yIG0ea4lalSj+8fiZlusIpCir6WdkrxT5a3gwKA3koXZpnnLJ6NjXTuakv3QmjamLWA==
+	t=1795036384;
+	b=0um7ZTD0fIUU1EokOzebsRr2+LdNz/Oecq7Jq4Rl2ABB2nKo7GXPHSLpZTeL8HXi7JOJ
+	 rAuaTqjZlijTNYkP2AaqB6+Jdl313jsHUz4uJTbhKZUd5lvZGfVYjWWbCC+zyN4GIKgEU
+	 FZ51hkE7B1sG5/zAOUd9d8UbZdfo+vN11d2KzTlAM8oZ+ZI9TEGh8TTVKWTydluqB5dp5
+	 8QkuQJzqpofqdmrxIi0N3l3yDsEuDC2sFdOgs+KkOChUyPpDXwkKfJ0FjViks22T8VnoI
+	 hMAvVbaTcUIxXnzn93IYPXnt+pOLpTXDgYhplL+52m6zNoGUGfqAXZJYp68kpiJrC0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036381;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036384;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pkn0VDVeqjYpXA/Oakmcmu1P28Nuod0zBs4v405TSxU=;
-	b=D2Ai5CekX/nMzgOeOQ9fJAN3Skcnvf4s9ud5YArOv1XCxdlCVcC74gNOvUhvrQThNJ/r
-	 Hqf/HKBubG08pP/oq8PQ/QXTNblTopirTzGQ4NByINDrhmQSoCLs+lyk45h+x5/oewvfx
-	 iI2IjW0GkigWnpXGdIlAbRSzDbeGgflaldFeaUWF+kIEtdazbxV0o8/HCZNS/Gnbg5l9x
-	 F6VBOLNuqsnn3CwhYlX1hlfZXq0qm4L0kbh31z8ZSbVT2Y3HuE1xxWHKK4sQspBGeChRF
-	 +1BRm2U29YaETcKQAI/2KjawnJ6YNSWGXE2K03OrNx0hbdhQsnMXMDo+tr9NtBaRZkQ==
+	bh=+gi92q44KzXH/EEIb61NM1OHinrogwi7QNReTy6KwsM=;
+	b=pceCh+XNfhLNzvO5edwTd5/5wthvum15K4StoAEk5ujqmoWkb1YIP76Ufw0GtC0T7c0l
+	 t/QvkYjQWJJTMYDwemtjqQgjXylCwNYeSIZD88PvowHKJE3LM4bmuuBZPRxdc5hXu9OAa
+	 +1OQ3Ep433doErZiezGdgGAkSzeRfOtlxzZe2InSA5to4B/+oWAdrTThvz2vNdGlGY0PH
+	 DQJo6wzXJGCckiB58HTjjy6yBLx/eWpdE1GFNixY88Oc2FgKGEF39TDhCPPjRnMJmSRtJ
+	 Zo4PaJB/MJf8StVWcdTOOH1SZRf45hNDBd/RkAfjQ5MVopHorfsBctcgqEvCuZI0Hjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JapP+LFW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nh8P/EMP";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4144E606A33E;
-	Wed, 18 Nov 2026 21:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AE5606A31C;
+	Wed, 18 Nov 2026 21:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JapP+LFW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6091F000CA;
-	Wed, 18 Nov 2026 21:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nh8P/EMP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D271F000C4;
+	Wed, 18 Nov 2026 21:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036381;
-	bh=pkn0VDVeqjYpXA/Oakmcmu1P28Nuod0zBs4v405TSxU=;
+	s=korg; t=1795036383;
+	bh=+gi92q44KzXH/EEIb61NM1OHinrogwi7QNReTy6KwsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JapP+LFW3h2TR3TfeNUvtKr7OEj0ztM5gYSrR04AZSJEllsGjN0A7HIsQC1y8HMtd
-	 H8lAtyHNGRsNJzQ7/HZyMkKtSOuXDT1erMYagojrBRw9UMWJ4TYxov6PoNUsQAbQ4F
-	 ttaIwLrkOJYZKPnUM6tWsU/ngPANtEOW02SYEbzM=
+	b=nh8P/EMPLO9mOSfWXiFyIhUBtlwDs3lyoKzu6CRbWcE8fc3WK89txXXe2Rlo54mJ0
+	 FCGgPUe/Lje5do/HzmV/ZjPrKLE5XWNIr0Aq9pp6/tr4KlYFURRMU/6sFtIkvs0KZW
+	 RS1gZv7EyGa66CvH6euMMB391+vblRgnXEgWvlDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com,
-	Hemanth Selam <hemanth.selam@gmail.com>,
+	Alexander Monakov <amonakov@ispras.ru>,
 	Jan Kara <jack@suse.cz>,
-	Jun Nie <jun.nie@linaro.org>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1039/3318] ext4: skip extra isize expansion while unmounting
-Date: Wed, 18 Nov 2026 15:27:41 +0100
-Message-ID: <20261118150351.075185396@linuxfoundation.org>
+Subject: [PATCH 6.6 1040/3318] ext4: dont report delalloc data as a hole on indirect-mapped inodes
+Date: Wed, 18 Nov 2026 15:27:42 +0100
+Message-ID: <20261118150351.105842390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,80 +71,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hemanth Selam <hemanth.selam@gmail.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 418adcde99032194416248168df810535a1a93f9 ]
+[ Upstream commit aed43f47e1edeee1454eea86006a8c09480e5ed3 ]
 
-syzbot reports a WARN from ext4_xattr_inode_create() reached through the
-unmount path:
+When a plain lookup finds no block, ext4_ind_map_blocks() sizes the hole
+it reports by counting the empty subtrees under 'partial' in the on-disk
+indirect tree.  That count knows nothing about delayed allocation, so a
+range holding delalloc data that has not been written back yet is
+reported as a plain hole.  The extent-mapped path does not have this
+problem: it trims the hole it found at the first delayed extent before
+returning it.
 
-  EXT4-fs warning (device loop0): ext4_xattr_inode_create:1485: refuse to
-  create EA inode when umounting
-  WARNING: fs/ext4/xattr.c:1486 at ext4_xattr_inode_lookup_create
-   ext4_xattr_block_set
-   ext4_expand_extra_isize_ea
-   __ext4_expand_extra_isize
-   __ext4_mark_inode_dirty
-   ext4_dirty_inode
-   __mark_inode_dirty
-   sync_lazytime
-   iput
-   dentry_kill
-   shrink_dentry_list
-   shrink_dcache_for_umount
-   generic_shutdown_super
-   kill_block_super
-   ext4_kill_sb
+ext4_map_blocks() consults the extent status tree before it calls into
+the mapping layer, so a query that starts exactly on the delayed block
+still finds it.  A query that starts earlier does not, because the hole
+reported for the earlier block already spans the delayed one.  On a
+4k-block filesystem, lseek(SEEK_DATA) from offset 0 on a file whose only
+data block is at logical block N and is still dirty returns:
 
-shrink_dcache_for_umount() clears s_root before generic_shutdown_super()
-clears SB_ACTIVE, so during the dcache shrink the last iput() of a
-lazytime inode still redirties it and reaches the isize expansion.  The
-expansion can move xattrs out to a block, and creating the EA inode for
-them needs s_root, which ext4_xattr_inode_create() refuses without.
+  N = 0..11      direct blocks                 N << 12
+  N = 12         first single-indirect block   N << 12
+  N = 13..1035   inside that indirect block    -1 ENXIO
+  N = 1036       first double-indirect block   N << 12
 
-ext4_try_to_expand_extra_isize() already declines to expand when the
-superblock is not active, but that test does not cover this window.
-Decline while s_root is gone as well.  The expansion is best effort and
-__ext4_mark_inode_dirty() ignores its return value, so nothing else
-changes; the inode can be expanded on a later mount.
+Blocks 12 and 1036 survive because the query lands on the delayed block
+itself.  Blocks 13..1035 are swallowed by the 1024-block hole reported
+for block 12.  fiemap loses the same data for the same reason.
 
-Running the syzbot reproducer for 60 seconds produced 3583 splats before
-this change and none after it, with the same number of mount cycles.
+An ext3 filesystem mounted as ext4 hits this during ordinary use: ext3
+inodes stay indirect mapped, while mount -t ext4 turns on delayed
+allocation even though mounting ext3 with -o delalloc is explicitly
+rejected.  install(1) from coreutils uses SEEK_DATA to locate data in
+its source file, so installing a sparse file that has not been written
+back silently produces a destination of the right size holding none of
+the data:
 
-Cc: stable@kernel.org
-Reported-by: syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4b03894b6ec5753ddf24
-Fixes: f31173c19901 ("ext4: refuse to create ea block when umounted")
-Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+  truncate -s 1G img && mkfs.ext3 -F img && mount -t ext4 img mnt
+  echo | dd of=mnt/src bs=1 count=1 seek=64K
+  install mnt/src mnt/dst
+  cmp mnt/src mnt/dst        # differ: char 65537
+
+Reconciling a hole with the extent status tree does not depend on how
+the hole was found, so instead of open coding it a second time, split
+the delalloc handling out of ext4_ext_determine_insert_hole() into
+ext4_determine_insert_hole(), which takes the hole the caller located,
+and call that from ext4_ind_map_blocks() as well.  All the special cases
+and the comments explaining them stay in one place.
+
+Two things change for indirect-mapped inodes.  They now cache the holes
+they report, as the extent-mapped path already does: ext4_punch_hole()
+already puts EXTENT_STATUS_HOLE on such inodes, ext4_map_blocks() and
+ext4_da_map_blocks() already handle a cached hole, the latter by
+replacing it with the delayed extent, and consecutive hole entries
+merge, so the tree does not grow with the length of a scan.  And when a
+delayed extent covers the queried block itself - a race, since
+ext4_map_blocks() found nothing in the tree just before - the hole is
+now reported only up to the end of that extent instead of in full.
+
+The indirect path passes hole_start == lblk, so the "delalloc extent in
+front of the queried range" case cannot be reached there:
+__es_tree_search() never returns an extent ending before the block it
+was searched for.
+
+With this the sweep above returns N << 12 for every N, while the
+nodelalloc and extent-mapped controls are unchanged.  generic/225,
+generic/285, generic/448 and generic/490 pass on ext4 made both with and
+without the extent feature.  generic/286 and generic/436 pass on
+extent-mapped ext4 and are skipped without it, since they need
+fallocate.
+
+Fixes: facab4d9711e ("ext4: return hole from ext4_map_blocks()")
+Reported-by: Alexander Monakov <amonakov@ispras.ru>
+Closes: https://lore.kernel.org/linux-ext4/594c17d9-c00f-e485-96fb-cedf27ce3aa3@ispras.ru/
+Suggested-by: Jan Kara <jack@suse.cz>
+Cc: stable@vger.kernel.org
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Jun Nie <jun.nie@linaro.org>
-Link: https://patch.msgid.link/20260824094512.2436628-1-hemanth.selam@gmail.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260827084829epcms2p6ecc0c39a71d0c3eebf9cb1ade77314f6@epcms2p6
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/ext4/ext4.h     |  3 +++
+ fs/ext4/extents.c  | 26 +++++++++++++-------------
+ fs/ext4/indirect.c | 17 +++++++++++++++++
+ 3 files changed, 33 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index b59857780c8fe..bc709e37c047f 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -6055,8 +6055,14 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
- 	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
- 	 * s_writepages_rwsem, causing a deadlock with the caller's active
- 	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
-+	 *
-+	 * Skip it while unmounting as well.  shrink_dcache_for_umount()
-+	 * clears s_root before generic_shutdown_super() clears SB_ACTIVE, and
-+	 * the last iput() of a lazytime inode in that window redirties it and
-+	 * lands here.  Moving xattrs out to a block then needs a new EA inode,
-+	 * which ext4_xattr_inode_create() refuses without s_root.
- 	 */
--	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
-+	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE) || !inode->i_sb->s_root))
- 		return -EBUSY;
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index 46b4cac899008..5a9a05d62f549 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3697,6 +3697,9 @@ extern void ext4_ext_tree_init(handle_t *handle, struct inode *inode);
+ extern int ext4_ext_index_trans_blocks(struct inode *inode, int extents);
+ extern int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 			       struct ext4_map_blocks *map, int flags);
++ext4_lblk_t ext4_determine_insert_hole(struct inode *inode, ext4_lblk_t lblk,
++				       ext4_lblk_t hole_start,
++				       ext4_lblk_t hole_len);
+ extern int ext4_ext_truncate(handle_t *, struct inode *);
+ extern int ext4_ext_remove_space(struct inode *inode, ext4_lblk_t start,
+ 				 ext4_lblk_t end);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 98e9c4804f084..4e58f266076ba 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -4143,21 +4143,19 @@ static int get_implied_cluster_alloc(struct super_block *sb,
+ }
  
- 	/*
+ /*
+- * Determine hole length around the given logical block, first try to
+- * locate and expand the hole from the given @path, and then adjust it
+- * if it's partially or completely converted to delayed extents, insert
+- * it into the extent cache tree if it's indeed a hole, finally return
+- * the length of the determined extent.
++ * Adjust the hole [@hole_start, @hole_start + @hole_len) the caller found
++ * around the queried block @lblk if it's partially or completely converted
++ * to delayed extents, insert it into the extent cache tree if it's indeed a
++ * hole, finally return the length of the determined extent starting at
++ * @lblk.  @hole_start must not be behind @lblk.
+  */
+-static ext4_lblk_t ext4_ext_determine_insert_hole(struct inode *inode,
+-						  struct ext4_ext_path *path,
+-						  ext4_lblk_t lblk)
++ext4_lblk_t ext4_determine_insert_hole(struct inode *inode, ext4_lblk_t lblk,
++				       ext4_lblk_t hole_start,
++				       ext4_lblk_t hole_len)
+ {
+-	ext4_lblk_t hole_start, len;
++	ext4_lblk_t len = hole_len;
+ 	struct extent_status es;
+ 
+-	hole_start = lblk;
+-	len = ext4_ext_find_hole(inode, path, &hole_start);
+ again:
+ 	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, hole_start,
+ 				  hole_start + len - 1, &es);
+@@ -4319,9 +4317,11 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 	 * we couldn't try to create block if create flag is zero
+ 	 */
+ 	if ((flags & EXT4_GET_BLOCKS_CREATE) == 0) {
+-		ext4_lblk_t len;
++		ext4_lblk_t hole_start = map->m_lblk, len;
+ 
+-		len = ext4_ext_determine_insert_hole(inode, path, map->m_lblk);
++		len = ext4_ext_find_hole(inode, path, &hole_start);
++		len = ext4_determine_insert_hole(inode, map->m_lblk,
++						 hole_start, len);
+ 
+ 		map->m_pblk = 0;
+ 		map->m_len = min_t(unsigned int, map->m_len, len);
+diff --git a/fs/ext4/indirect.c b/fs/ext4/indirect.c
+index d18a5bee10215..2841ac785586c 100644
+--- a/fs/ext4/indirect.c
++++ b/fs/ext4/indirect.c
+@@ -586,6 +586,23 @@ int ext4_ind_map_blocks(handle_t *handle, struct inode *inode,
+ 		for (i = partial - chain + 1; i < depth; i++)
+ 			count = count * epb + (epb - offsets[i] - 1);
+ 		count++;
++
++		/*
++		 * The count knows nothing about delayed allocation, so let
++		 * the common helper reconcile it with the extent status
++		 * tree.  Only when the lookup really did find a hole:
++		 * ext4_get_branch() also returns a non-NULL partial when it
++		 * failed, and caching a hole for a range it could not read
++		 * would answer every later read from that cache instead of
++		 * retrying.  Clamp the count first, a subtree can be bigger
++		 * than the logical block space when the block size is large.
++		 */
++		if (!err) {
++			count = umin(count, EXT_MAX_BLOCKS - map->m_lblk);
++			count = ext4_determine_insert_hole(inode, map->m_lblk,
++							   map->m_lblk, count);
++		}
++
+ 		/* Fill in size of a hole we found */
+ 		map->m_pblk = 0;
+ 		map->m_len = umin(map->m_len, count);
 -- 
 2.53.0
 
