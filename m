@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038193;
-	b=LTNNquBZujNz7YdTgyibZjB8xon1Xgnc0E7slnr0hGXysMeXrxxntdiZw5pL2en9+ZBz
-	 RJOerPWUEl0zmJzlj/YAwlfca3sQ3OPfWO5nxzrsInLHuxUqMNz+JYMlde0CyMxRa8WRX
-	 A72JiuS98A8PZb69dY7C1514N2j9VKBWb7puzcfp+cXo7yb4ahvSq7OSegLSbdKOor1vh
-	 8vRsDFnY1jsMzkBrzGC1nQ4A0jzWnGs877ZUlRFrDxYF1H/b81Pt6BbHy2LMCcxz7hELW
-	 dMNYcQ5eOVsdDKqcHyAFQhkNf13gxQREKb+2ztebZod61uyLy+c3/bE8lN7dlYOic7A==
+	t=1795038196;
+	b=favbhoaIwV6s1f1KVIaPrDMJJVBXcaDDSk1HXjpuQF4/oaKCvrudHPOZwr1ll/C9Tp8U
+	 cwPHYoDzjL4Lnzzgr5Fdm7qIDYc4L6V3RXYs+R9tDEs1AvGoY0VUcCG/c9M4C+MvGwVlw
+	 pgTCsh+a/21ZVTZu0eOIugMrN2XkrbGheNRU8pm/QRxCnu4erJdFuysaDI5mxL4CnSIY5
+	 IUVpYTCUxMuVM11ovvb0sW2QFtP2p+wkRceLwEcSv8pWLf1BrEC5FVI+CPwpRMSMlFQrd
+	 J4R5hF8iySxUP2wVXZylZ+npUnOwrOyOTCpI2/bkQVq5FzXAN9oSiSqgH4CZEFIkomw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bBjaK/Gwn0EdqmwHUgo5e1zBDcoht5YPvsFHBki8ZC0=;
-	b=bU86czBLm6d9ryk/oLDTucRjfzHqcLwdnTOZK2ySQLsadSNlTTPleTWHml3GkhHib6kq
-	 lc6nEkr1sIS3bbQmkx6ARianD9/CoFAHYcvwnMLmacsF4Dmktoegnh1k+HoDg+Yg1Lmry
-	 TWgHyh4ryM+fxYDH2ZSQiweAfi8b19q23iqHU8s+l/KPOVMM8lupbqKTBXSj2tVQu7R6b
-	 hCOxD5LVOXWRVxeN1cCBmOWpH/2cTOdjuor+RAOuQGdypAnelDVdvkOkE3kLBxN9fxoPB
-	 ABTNyT4Vsv9G69I62GxP/c5TzdOa5e5ALXeNM96UEL0C7+mDr+D33jolE3ijuSK23Tw==
+	bh=UDYrwHFCykR6jC9QApnnqK//AqZztnwQblpCYve1P3U=;
+	b=sqJjX3HbWhmWiwc7/Ne7cxj+kUt2jMyKb1AZ49DRx5ORse3oQYCP6D+k5qaC/vg7zZRj
+	 7t5nYR7nAW/kl+O6LE7C90AYQZShtBrdKTbEPoNy0kk7F5YdkmnY2SjDpZJ9kYEnKPxzN
+	 UFqhf15Xm6CJ7d8fIy4IrDfi7FgkHo8vO45J1ATzHxCnyN5ZXcmuRYHskgqPYCpPdROHC
+	 3WwxF1QfGs5qgry8HejqTNKo+q+QUDoCRCFa8nGqEnMxSslq1CvrVGIvJgPb5AbHyDzbQ
+	 PEklB/4F/KfUD/XJ/XfOQ7N0ayZD8ol6Hiy+RxDX5rKcdfekVfBGWeZbBc7W5exUK9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWt7OLve;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqjFz1xO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B671606A320;
-	Wed, 18 Nov 2026 21:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCBD606A31C;
+	Wed, 18 Nov 2026 21:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWt7OLve
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67751F000C4;
-	Wed, 18 Nov 2026 21:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqjFz1xO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733C21F000C4;
+	Wed, 18 Nov 2026 21:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038193;
-	bh=bBjaK/Gwn0EdqmwHUgo5e1zBDcoht5YPvsFHBki8ZC0=;
+	s=korg; t=1795038196;
+	bh=UDYrwHFCykR6jC9QApnnqK//AqZztnwQblpCYve1P3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWt7OLveTnqXBzjajo8/0vGv8i2BI4b+FR9AobhyMo0fRzndEruCJUUppr6ZC3qPe
-	 RsNiu/TbdgdZeB2wBhwauTVPVlAin6rRyXQzWGwmmY/udboJsTS7F7+id1FfMRAf/G
-	 hu7BZL9stxau4cTo/vMZ2xJIKxnQxA4RBrdaFrhs=
+	b=nqjFz1xOBh2U5vNX7cyWIX/YEtjP1ihqfKIj7Tb18AmIWgTRZlyzrfW8TZ1E1gKjJ
+	 q3NALEyPsyxoV2vEDsPJm/laltiRw1YRTQcnqsXcoPlBOsr9bMCEP1NhEipUPqquEd
+	 qCG8IyuUzCxgzWhsgB57hnkSHz6UmefwlkOaNjeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Sinan Turunc <enscrpt@pm.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1659/3318] KVM: arm64: Validate the host vCPUs VM before reading it under pKVM
-Date: Wed, 18 Nov 2026 15:38:01 +0100
-Message-ID: <20261118150411.544673961@linuxfoundation.org>
+Subject: [PATCH 6.6 1660/3318] ALSA: usb-audio: Bound packet copies by the PCM buffer size
+Date: Wed, 18 Nov 2026 15:38:02 +0100
+Message-ID: <20261118150411.575103145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,167 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit cf533b4d3630b229d78ad55567c5db2f365052a2 ]
+[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
 
-On an MTE-capable host under pKVM, enter_exception64() reads the VM's
-MTE flag through vcpu->kvm, which for a host vCPU is a host-writable
-pointer nothing validates. The host can point it at any address in the
-hyp linear map and read back bit 1 of that word through PSR_TCO in the
-vCPU's CPSR, or panic the hypervisor with an unmapped one.
+retire_capture_urb() and prepare_playback_urb() assume that one USB
+packet never carries more data than the whole ALSA ring buffer. Nothing
+enforces that: the packet size comes from the device (wMaxPacketSize,
+and curpacksize == maxpacksize when the class-specific endpoint
+descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
+require 64-byte periods, two periods and a period time of one data
+interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
+full-speed device can send 1023-byte packets into it.
 
-Get the VM through a get/put pair around the read: a loaded vCPU's is
-the hyp VM, an unloaded host vCPU's is read once and pinned, and a
-pointer the host never shared leaves TCO clear.
+On the first oversized packet hwptr_done is wrapped once and stays
+beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
+the wrap arithmetic in the copy path computes
 
-Fixes: ea7fc1bb1cd1b ("KVM: arm64: Introduce MTE VM feature")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260914070536.877D91F000FF@smtp.kernel.org/
-Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Joey Gouly <joey.gouly@arm.com>
+    bytes1 = subs->buffer_bytes - oldptr
+
+with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
+runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
+
+  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
+  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
+
+and for playback, where copy_to_urb() has the same shape:
+
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
+  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
+   prepare_playback_urb+0x98a/0x1fc0
+
+Truncate an oversized capture packet to the buffer size, and stop
+filling a playback URB once it holds a whole buffer. With bytes <=
+buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
+in both copy paths stay inside the buffer. A device whose packets do
+not fit the buffer at all was never going to play correctly anyway.
+
+Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
+isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
+wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261001135711.1640520-3-fuad.tabba@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: replaced unavailable pkvm_get_loaded_hyp_vcpu() with a NULL-checked lookup through host_ctxt->__hyp_running_vcpu. ]
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
+[ sashal: adjusted indentation to match the less-nested packet loop in prepare_playback_urb() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/exception.c             |  5 ++-
- arch/arm64/kvm/hyp/include/hyp/adjust_pc.h | 28 ++++++++++++++
- arch/arm64/kvm/hyp/include/nvhe/pkvm.h     |  2 +
- arch/arm64/kvm/hyp/nvhe/pkvm.c             | 43 ++++++++++++++++++++++
- 4 files changed, 77 insertions(+), 1 deletion(-)
+ sound/usb/pcm.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/hyp/exception.c b/arch/arm64/kvm/hyp/exception.c
-index 424a5107cddb5..e20979138305a 100644
---- a/arch/arm64/kvm/hyp/exception.c
-+++ b/arch/arm64/kvm/hyp/exception.c
-@@ -92,6 +92,7 @@ static void enter_exception64(struct kvm_vcpu *vcpu, unsigned long target_mode,
- 			      enum exception_type type)
- {
- 	unsigned long sctlr, vbar, old, new, mode;
-+	struct kvm *kvm;
- 	u64 exc_offset;
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 5aadd1221f725..dd7554cde865d 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1292,6 +1292,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
+ 			bytes -= adj;
+ 			subs->stream_offset_adj -= adj;
+ 		}
++		/*
++		 * A packet can be as large as the endpoint's maxpacksize, which
++		 * the device chooses, while the ring buffer can be as small as
++		 * two 64-byte periods. The hwptr_done wrap below handles one
++		 * wrap only, so never take more than one buffer from a packet.
++		 */
++		if (unlikely(bytes > subs->buffer_bytes)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "%u-byte packet exceeds %u-byte buffer, truncating\n",
++					     bytes, subs->buffer_bytes);
++			bytes = subs->buffer_bytes;
++		}
+ 		frames = bytes / stride;
+ 		if (!subs->txfr_quirk)
+ 			bytes = frames * stride;
+@@ -1505,8 +1517,14 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
- 	mode = *vcpu_cpsr(vcpu) & (PSR_MODE_MASK | PSR_MODE32_BIT);
-@@ -131,8 +132,10 @@ static void enter_exception64(struct kvm_vcpu *vcpu, unsigned long target_mode,
- 	new |= (old & PSR_C_BIT);
- 	new |= (old & PSR_V_BIT);
- 
--	if (kvm_has_mte(kern_hyp_va(vcpu->kvm)))
-+	kvm = vcpu_get_kvm(vcpu);
-+	if (kvm && kvm_has_mte(kvm))
- 		new |= PSR_TCO_BIT;
-+	vcpu_put_kvm(vcpu, kvm);
- 
- 	new |= (old & PSR_DIT_BIT);
- 
-diff --git a/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h b/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h
-index 4fdfeabefeb43..f55950ee2a7e4 100644
---- a/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h
-@@ -13,6 +13,34 @@
- #include <asm/kvm_emulate.h>
- #include <asm/kvm_host.h>
- 
-+#ifdef __KVM_NVHE_HYPERVISOR__
-+#include <nvhe/pkvm.h>
-+
-+/* Under pKVM a host vCPU's ->kvm is host-writable. */
-+static inline struct kvm *vcpu_get_kvm(struct kvm_vcpu *vcpu)
-+{
-+	if (is_protected_kvm_enabled())
-+		return pkvm_vcpu_get_kvm(vcpu);
-+
-+	return kern_hyp_va(vcpu->kvm);
-+}
-+
-+static inline void vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm)
-+{
-+	if (is_protected_kvm_enabled())
-+		pkvm_vcpu_put_kvm(vcpu, kvm);
-+}
-+#else
-+static inline struct kvm *vcpu_get_kvm(struct kvm_vcpu *vcpu)
-+{
-+	return vcpu->kvm;
-+}
-+
-+static inline void vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm)
-+{
-+}
-+#endif
-+
- static inline void kvm_skip_instr(struct kvm_vcpu *vcpu)
- {
- 	if (vcpu_mode_is_32bit(vcpu)) {
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/pkvm.h b/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
-index 82b3d62538a61..d8efb924d57fd 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
-@@ -64,5 +64,7 @@ int __pkvm_teardown_vm(pkvm_handle_t handle);
- struct pkvm_hyp_vcpu *pkvm_load_hyp_vcpu(pkvm_handle_t handle,
- 					 unsigned int vcpu_idx);
- void pkvm_put_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu);
-+struct kvm *pkvm_vcpu_get_kvm(struct kvm_vcpu *vcpu);
-+void pkvm_vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm);
- 
- #endif /* __ARM64_KVM_NVHE_PKVM_H__ */
-diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-index fd3e0b2891c60..471cef3e29df6 100644
---- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-+++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -258,6 +258,49 @@ void pkvm_put_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
- 	hyp_spin_unlock(&vm_table_lock);
- }
- 
-+static struct pkvm_hyp_vm *pkvm_get_loaded_hyp_vm(struct kvm_vcpu *vcpu)
-+{
-+	struct kvm_cpu_context *host_ctxt = &this_cpu_ptr(&kvm_host_data)->host_ctxt;
-+	struct kvm_vcpu *running_vcpu = host_ctxt->__hyp_running_vcpu;
-+	struct pkvm_hyp_vcpu *hyp_vcpu;
-+
-+	if (!running_vcpu)
-+		return NULL;
-+
-+	hyp_vcpu = container_of(running_vcpu, struct pkvm_hyp_vcpu, vcpu);
-+
-+	if (vcpu == &hyp_vcpu->vcpu || vcpu == hyp_vcpu->host_vcpu)
-+		return pkvm_hyp_vcpu_to_hyp_vm(hyp_vcpu);
-+
-+	return NULL;
-+}
-+
-+/*
-+ * A loaded vCPU's VM is the hyp VM. An unloaded host vCPU's is mapped at
-+ * EL2 only while pinned, so it's read once and pinned; the pin fails for
-+ * memory the host isn't sharing.
-+ */
-+struct kvm *pkvm_vcpu_get_kvm(struct kvm_vcpu *vcpu)
-+{
-+	struct pkvm_hyp_vm *hyp_vm = pkvm_get_loaded_hyp_vm(vcpu);
-+	struct kvm *kvm;
-+
-+	if (hyp_vm)
-+		return &hyp_vm->kvm;
-+
-+	kvm = kern_hyp_va(READ_ONCE(vcpu->kvm));
-+	if (hyp_pin_shared_mem(kvm, kvm + 1))
-+		return NULL;
-+
-+	return kvm;
-+}
-+
-+void pkvm_vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm)
-+{
-+	if (kvm && !pkvm_get_loaded_hyp_vm(vcpu))
-+		hyp_unpin_shared_mem(kvm, kvm + 1);
-+}
-+
- static void unpin_host_vcpu(struct kvm_vcpu *host_vcpu)
- {
- 	if (host_vcpu)
+ 	for (i = 0; i < ctx->packets; i++) {
+ 		counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
++		/*
++		 * Bound by the ring buffer as well as by the URB:
++		 * copy_to_urb() wraps hwptr_done once, so one URB must
++		 * never carry more than the whole buffer.
++		 */
+ 		if (counts < 0 ||
+-		    (frames + counts) * stride > ctx->buffer_size)
++		    (frames + counts) * stride > ctx->buffer_size ||
++		    (frames + counts) * stride > subs->buffer_bytes)
+ 			break;
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[i].offset = frames * stride;
 -- 
 2.53.0
 
