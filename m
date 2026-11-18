@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048390;
-	b=UaZ56k8P7aV1TxXuWJlj34j3PdATxE7k3srwNQWoRABwmks5YSfBmL7n9ddCMopE3m5N
-	 dhOI+TRsip6MLtReaadW4GK0e5q90UsmB1mT8a/ZUmNgU+mJxJlpIC+8nMyGGFf3PoTvw
-	 BFKDoMhW+Dapi19uNQDW0zaMzMhfP1JUt/t4gv8snALmjeIb2eaVsR3+Vb2KRpB1oOcVK
-	 PMF+xg0JKmEEGWCkLP+OB/Eu2mbynvNWnXj2CfF/EFQAcoPu61ouMg6NuwtomgIr9hTa2
-	 rkrd3iDGsUtlk5uEQyAlGnDw5F5T9YcGAIpVpgBj85WBW/oV9aum2u9Mva4Fi7If29w==
+	t=1795048392;
+	b=iDF284Ke2ljETEze8IHuj8GZlxPeI5lb4q2Ob3lz0mQ38BKQ/MQsHT9YZEIbZh10gkoq
+	 2Pqd3rtrE3DkFiCOlOSNtoSt1un+iFpuXk4DUWeDSnDDRfQZ/Q6DkhmApcDPYKseK4aed
+	 3Dwaxv3STyhr1Akj2MU73t7koN6Kla1HY3P/LpP61a090HaaLbRwiFJQ7fzm/308fwVWd
+	 No6TpOLPlJO1XvJvu6edsBk7m5x+sj2ssUxslAgkn/OZ1nePj1WRnbXnBqakr6Id1YHxO
+	 5i29sQY9Ci2VKvrwIiF3ejANpQfrHPLj4TfSpDe7PWh7NOnPWj18qx1/mi1Hyg8tPoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ljwIkING6P3UQ5leQLz/grkaS4zlfOyDmUA0VAY8wuY=;
-	b=cM0x1/0QUZf0TTBiQr6mndPLGEzjZu0IgRWAok3lGQyA85UPgMuLXL6H+fMJ7HM3h+UC
-	 w1Y1gRK2LnwEyLS+LDcX1G6bonvt9FMmEOsUOg/Yi6lHgwIRfxI0ZVUtEb4Hgjr327MRc
-	 MJB1BDO3XuIdUkwCy4koILYpJaPCKRIFK8/IU6vpejpMelgj8SL5DsCsfjy+XJM4hN4SW
-	 J0kwYNW0Oa54h86lf1UiyXU6UHYG3aw0CLiRrTk1K0qQwj3avacDkUjwb0RKGWAwlldG2
-	 wUPJnMlliZKR14x8iUdEh3r8iQUydiImjtf1unNPVDFSrVB31FGtpG8IGvOhMQHUa2g==
+	bh=rePSK+Bywl9VT1rQ4nlEmP75GYxkTv3jeGAT3wkWbWc=;
+	b=EPZvXlhwbuca1KaFG9fkyNFFILiTbdd+Cm9EZYN1PCZpMjlXG8+tNLRKtiDfcBJA/eU3
+	 MSoy2KjtQ6HvENdQvX6HV/nsMvYEnUsy8yzZWbHfWrc2mA6gZ2Klic7IsSPSyJGoaIrJx
+	 MQHul7IvmI/9UZt/o1ok7vewKj3BglyNV31FCpm4KzyYta0g88K6Hd5x7atokOd3c1RA5
+	 v9QedqTZQEV2a0GPtgUY7R3Fm2FKdq4fTG3bGzYV3qxJTyDPvMxFECY3O03TTj1yzhNKx
+	 ksyXaKSpjG5DqbrQRlpNlUL/ELlhC5V+LpUNAUWEGPfljauNelbcZA0Swjap5gpgUbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oEkfXU/y";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjzhrifZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F1660A383B;
-	Thu, 19 Nov 2026 00:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800C060A3803;
+	Thu, 19 Nov 2026 00:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oEkfXU/y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7171F000C6;
-	Thu, 19 Nov 2026 00:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UjzhrifZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D560A1F000C4;
+	Thu, 19 Nov 2026 00:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048389;
-	bh=ljwIkING6P3UQ5leQLz/grkaS4zlfOyDmUA0VAY8wuY=;
+	s=korg; t=1795048392;
+	bh=rePSK+Bywl9VT1rQ4nlEmP75GYxkTv3jeGAT3wkWbWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oEkfXU/yTjsagXqtQdU9me8MpitKiaHIMAabg6f9u0BIrvPxt01qiA3picVGodBHy
-	 EDmbedtM758WIdB4UKpZJwvWvOeeiJVs/q8s0rHg2cU3R2pTn3RkViUSm6D7qPlXQS
-	 d/3CuPYO6Noa7O6WGUqs/9b1WXrMxnE2W+Ij1V9g=
+	b=UjzhrifZan5D/Cykdt2hefDniZFDjynYOav20zsUQLm/lEoRLjr5ljKEYV2c8W//L
+	 17Mr9s+MP8IsOyhDB6B+J71pVsyqBORBujDZJyVfhEQ4B714s4iMZgBwThktzFkH+s
+	 Byw2Dl2Y8kT4XGQ6glSed5Nir88kExviw/YNpdN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1976/2857] clk: versatile: clk-icst: Fix node reference leak in of_syscon_icst_setup()
-Date: Wed, 18 Nov 2026 15:50:10 +0100
-Message-ID: <20261118150312.535867892@linuxfoundation.org>
+Subject: [PATCH 6.1 1977/2857] bpf, lsm: Reject writes into the BPF LSM program context
+Date: Wed, 18 Nov 2026 15:50:11 +0100
+Message-ID: <20261118150312.569835272@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,56 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit c90a50d07f0c38c62ce13a60806ab5e3b841f70f ]
+[ Upstream commit c42da1d3ba9d5067cf3f0676b98bcb3f5f9e3ce1 ]
 
-of_get_parent() takes a reference on the syscon parent node. The
-reference is intentionally kept on the success path, but the error paths
-return without dropping it, leaking the node reference. Release the
-reference before returning on the error paths.
+The verifier types a load from a tracing-style context by its offset
+alone: btf_ctx_access() looks the offset up in the attach hook's
+prototype, and check_mem_access() stamps the resulting type onto the
+destination register. Nothing tracks what the slot actually holds.
+That is sound only as long as the context is read-only, and for BPF LSM
+it is not. lsm_verifier_ops wires ->is_valid_access() straight to
+btf_ctx_access(), which never looks at enum bpf_access_type, so a store
+into the context passes verification. Every other user of the helper
+either goes through bpf_tracing_btf_ctx_access() or open-codes the same
+type != BPF_READ test first; BPF LSM is the only one that does neither.
 
-Fixes: d430819d69a5 ("clk: versatile-icst: add device tree support")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+A program can therefore store a scalar of its choosing into a context
+slot, read the slot back, and get a register the verifier believes is a
+trusted pointer of the hook's argument type. Handing that to a kfunc or
+helper which dereferences a trusted argument turns it into an arbitrary
+kernel access. Route BPF LSM through bpf_tracing_btf_ctx_access() like
+everyone else.
+
+Fixes: fc611f47f218 ("bpf: Introduce BPF_PROG_TYPE_LSM")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260915150739.284189-3-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/versatile/clk-icst.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/bpf/bpf_lsm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/versatile/clk-icst.c b/drivers/clk/versatile/clk-icst.c
-index d5cb372f0901c..9c1fbfd2c6557 100644
---- a/drivers/clk/versatile/clk-icst.c
-+++ b/drivers/clk/versatile/clk-icst.c
-@@ -498,16 +498,19 @@ static void __init of_syscon_icst_setup(struct device_node *np)
- 	map = syscon_node_to_regmap(parent);
- 	if (IS_ERR(map)) {
- 		pr_err("no regmap for syscon ICST clock parent\n");
-+		of_node_put(parent);
- 		return;
- 	}
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index e7e195a2e5f98..f26faa9a35db1 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -381,6 +381,6 @@ const struct bpf_prog_ops lsm_prog_ops = {
+ };
  
- 	if (of_property_read_u32(np, "reg", &icst_desc.vco_offset) &&
- 	    of_property_read_u32(np, "vco-offset", &icst_desc.vco_offset)) {
- 		pr_err("no VCO register offset for ICST clock\n");
-+		of_node_put(parent);
- 		return;
- 	}
- 	if (of_property_read_u32(np, "lock-offset", &icst_desc.lock_offset)) {
- 		pr_err("no lock register offset for ICST clock\n");
-+		of_node_put(parent);
- 		return;
- 	}
- 
-@@ -534,6 +537,7 @@ static void __init of_syscon_icst_setup(struct device_node *np)
- 		ctype = ICST_INTEGRATOR_CP_CM_MEM;
- 	} else {
- 		pr_err("unknown ICST clock %pOF\n", np);
-+		of_node_put(parent);
- 		return;
- 	}
- 
+ const struct bpf_verifier_ops lsm_verifier_ops = {
+-	.get_func_proto = bpf_lsm_func_proto,
+-	.is_valid_access = btf_ctx_access,
++	.get_func_proto		= bpf_lsm_func_proto,
++	.is_valid_access	= bpf_tracing_btf_ctx_access,
+ };
 -- 
 2.53.0
 
