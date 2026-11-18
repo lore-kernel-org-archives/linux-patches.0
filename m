@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022481;
-	b=YbgG2E89CWCYpr7IUUBkmu3KKPgK55Y7YT8GrLpfyLtGuSHOFPK7gLN9eAJ30GSgZ63d
-	 K4dqeRLq+Z7YXVjkGk9r9+ekpe1cD69VnJySbYY9kv0YkzTQXPkDOdzC3e6uiUnPZZpLD
-	 RT1Ukn+SaVX/NRMseQxHKVyHXYteoifQcjD0/P1tIEc2yGgltiXoFg+xbhM13Pi22jwaH
-	 DR5YKpQvWDRJW7i0+qtzycYx6K2foR6ZfmW4rvCHwFm7pF/AV+dkyWSPRUirtb735yj8c
-	 c6bMmFD5V+hg/hf7FYqokycrJBbH9QLlKFQv1iQTgmwpyOpkzUAnk2yI3AgAGq3lv/Q==
+	t=1795022483;
+	b=3WE7+L5YLoTo05PbnV+h6gm95il+P331nLEIly5eRzWwR+wUnTKEaiwVr3aJ5glRhPlE
+	 nK4KsGUvTCyjLZOsgQpjsKDYE/o0KMuzfr4aLOtZI7IKrpW9mlI65YhSXBou1T7lG5KeX
+	 ZNpn5A2XfUU2TZtE5UIQ/bAP80jTl2HwuKLJLZRPlLhOYcyS7wWsMTuGl3Ux4TNLkf62l
+	 eMTSGyKqXJnILdJdc3uHieoM0IPbNYLLb0VUi/D7ckGtsQCcpSJCePDNGqRZGCckIE75h
+	 PB1SxItoU8NU8cXa5TpNbTp1x4L2F8wHEPY81cSRtjTZuxB2xzUqcPoE+PVO66IzwkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022481;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zoQpz3HxgwqC+2+dOEclW6nEs7jNYpBbOcb3uRjOesc=;
-	b=LceoTAHp7T5sVBBWN8T1GMTGgYXpQXQimydYD4xzyCwj83nvxwU+uBwKDb4feZTjndXq
-	 +GXAe/YO78ZyewGMcsZJD1+tSzF/9V/TZ7y9k3nEY/YE65HZjuY/+2SGB4kzVQcQG6LDm
-	 aukutEx3v6HRIq1RddAIiYxtvhbYtK83L8hs0m3w8C8TJz6VuTJ12npHn/cvRrIqJplPw
-	 GIImE1PcezIbeQSGHGax/IrK7pcBM3R2r+i3Fi+WXRC3Nd2g8MObpgAN0elseY/wT7lG6
-	 6zPiVK0/MAMt8zN8ar/IKPmyxFwiN8e6mUNOfNVq6JQCxTUdFAeKw28EFghccniFktg==
+	bh=cHRGQcId369MUg/agCpG3yau2GULOcmj2iZFGJA1rc0=;
+	b=2B8v5WaJV516BQBoCMCPfGIk0v8oH83F90MKMR5vsLtr/ZDWZcvC0PlLJBzYbe4404y/
+	 QNHrYDdcn+5XhSpnARpR6FN/SXM8zUzhe0Tu1ELAl72EubpdF+7atlCGEgxORIu1IypxQ
+	 9NDrjfa++QsEEr/kEBLv4zKPRtIH7thHa14MRdVx+VburaCVdtJJlO1WvCvF8LewBbB+s
+	 ZlG+ViY4Dw7h1mChGkoXekhrOmbWSV2olK5yZp4GUA69eqPngZ7lEIK+mx671ETPY3zUJ
+	 bOmI42c5mo0O0hVe6nEry4jBNntaAM+v4/ajnHgwlTUn02ND50VwHMUkYIcFjUbJsqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrLLUtrJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsFDKFbf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D454606A320;
-	Wed, 18 Nov 2026 17:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FB5606A320;
+	Wed, 18 Nov 2026 17:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrLLUtrJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F43A1F000C6;
-	Wed, 18 Nov 2026 17:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CsFDKFbf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315791F000C4;
+	Wed, 18 Nov 2026 17:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022480;
-	bh=zoQpz3HxgwqC+2+dOEclW6nEs7jNYpBbOcb3uRjOesc=;
+	s=korg; t=1795022483;
+	bh=cHRGQcId369MUg/agCpG3yau2GULOcmj2iZFGJA1rc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wrLLUtrJYOhq8cFcD/HgGC3S9LqVZztpx8rHmYi3evlDUrEzMmUR4yuINv9pX9Txb
-	 x2dh8KMqAT4/4u7rpq6WGGsFaY4xjdludmcRHZEcVDbtM/qiQ/4jbjCods1rGh8UlD
-	 FA/DUx2ijXprZHXyk1sBzSIfS8wnuyv9+mXjWGtY=
+	b=CsFDKFbfMlaGmbOm2cgwJWXroV+cJAFZ8Cdt75HCouRSkoitlV4jrI1H1cHWFXOR9
+	 gNHmRdV250nrrxVGGdW5bdRJtzpkd4uO8ENOsSvTm9WMjQ5+8EP5K7NkKXb05XPsDn
+	 HmZ94KeaYuu9+2cDQbOq5LHEX6SGRUCSecyTqd6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HOYOUNG SEO <hy50.seo@samsung.com>,
-	Stanley Jhu <stanleyjhu@google.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0028/2151] scsi: ufs: core: Change the error check sequence for auto hibern8
-Date: Wed, 18 Nov 2026 15:29:23 +0100
-Message-ID: <20261118150122.680110225@linuxfoundation.org>
+Subject: [PATCH 6.18 0029/2151] hwmon: chipcap2: fix IRQ teardown ordering
+Date: Wed, 18 Nov 2026 15:29:24 +0100
+Message-ID: <20261118150122.718404954@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,71 +68,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HOYOUNG SEO <hy50.seo@samsung.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 6b2ff2b3eafa381db9b4c8a6ed98b353b2a09f39 ]
+[ Upstream commit d2a66c515d7730fd453485ffb306c412f1f46d72 ]
 
-Auto-hibern8 enter and exit are performed by the host controller without a
-UIC command, and the auto-hibern8 idle timer only runs while no UIC command
-is outstanding. An auto-hibern8 error (IS.UHES or IS.UHXS) is therefore
-usually reported while hba->active_uic_cmd is NULL.
+The threaded IRQs are currently requested before the hwmon device
+is registered. Since devres releases resources in reverse order,
+the hwmon device is unregistered before the IRQs are freed during
+driver teardown. An IRQ may therefore still run after the hwmon
+device has been released and access the stale data->hwmon pointer.
 
-Since commit fcd8b0450a9a ("scsi: ufs: core: Make ufshcd_uic_cmd_compl()
-easier to analyze"), ufshcd_uic_cmd_compl() returns early when
-hba->active_uic_cmd is NULL, before ufshcd_is_auto_hibern8_error() is
-called. Such auto-hibern8 errors are no longer recorded in hba->errors, so
-ufshcd_check_errors() is not called for them and the error handler is not
-scheduled.
+Separate IRQ discovery from IRQ registration so that the IRQ numbers
+and alarm visibility flags are initialized before registering the
+hwmon device while the IRQs are released before the hwmon device
+during devres cleanup.
 
-Check for auto-hibern8 errors before checking for an active UIC command, as
-was done before that commit, but keep returning early when there is no
-active UIC command so that a NULL cmd is never dereferenced. Only report
-the missing UIC command if no auto-hibern8 error was found.
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-5-27ebfc2c5b9e@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 
-Fixes: fcd8b0450a9a ("scsi: ufs: core: Make ufshcd_uic_cmd_compl() easier to analyze")
-Cc: stable@vger.kernel.org # v6.13+
-Signed-off-by: HOYOUNG SEO <hy50.seo@samsung.com>
-Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20261027110357.3649301-1-hy50.seo@samsung.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: used host_lock directly because it is already a pointer ]
+Reuse the existing IRQ helpers for discovery and ready IRQ registration,
+and request alarm IRQs directly from probe after hwmon registration. This
+keeps the number of helper functions unchanged. Omit the unrelated label
+property read because label support is absent.
+
+Stable-dep-of: 4724ac5556ce ("hwmon: chipcap2: disable device after hwmon teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/hwmon/chipcap2.c | 69 ++++++++++++++++++++--------------------
+ 1 file changed, 35 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index d595072f7c0a4..572c0510d6bb4 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5581,15 +5581,22 @@ static irqreturn_t ufshcd_uic_cmd_compl(struct ufs_hba *hba, u32 intr_status)
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index 5f4b0fd535af8..8ba706ecd4012 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -636,60 +636,41 @@ static int cc2_write(struct device *dev, enum hwmon_sensor_types type, u32 attr,
+ 	}
+ }
+ 
+-static int cc2_request_ready_irq(struct cc2_data *data, struct device *dev)
++static int cc2_request_data_ready(struct cc2_data *data, struct device *dev)
  {
- 	irqreturn_t retval = IRQ_NONE;
- 	struct uic_command *cmd;
-+	bool ah8_err;
+ 	int ret = 0;
  
- 	guard(spinlock_irqsave)(hba->host->host_lock);
-+
-+	/*
-+	 * Auto-hibern8 is performed without a UIC command, so check for
-+	 * auto-hibern8 errors before checking for an active UIC command.
-+	 */
-+	ah8_err = ufshcd_is_auto_hibern8_error(hba, intr_status);
-+	if (ah8_err)
-+		hba->errors |= (UFSHCD_UIC_HIBERN8_MASK & intr_status);
-+
- 	cmd = hba->active_uic_cmd;
- 	if (!cmd)
- 		goto unlock;
+-	data->irq_ready = fwnode_irq_get_byname(dev_fwnode(dev), "ready");
+-	if (data->irq_ready == -EPROBE_DEFER)
+-		return data->irq_ready;
+-	if (data->irq_ready > 0) {
+-		init_completion(&data->complete);
++	if (data->irq_ready > 0)
+ 		ret = devm_request_threaded_irq(dev, data->irq_ready, NULL,
+ 						cc2_ready_interrupt,
+ 						IRQF_ONESHOT |
+ 						IRQF_TRIGGER_RISING,
+ 						dev_name(dev), data);
+-	}
  
--	if (ufshcd_is_auto_hibern8_error(hba, intr_status))
--		hba->errors |= (UFSHCD_UIC_HIBERN8_MASK & intr_status);
+ 	return ret;
+ }
+ 
+-static int cc2_request_alarm_irqs(struct cc2_data *data, struct device *dev)
++static int cc2_get_irqs(struct cc2_data *data, struct device *dev)
+ {
+-	int ret = 0;
++	data->irq_ready = fwnode_irq_get_byname(dev_fwnode(dev), "ready");
++	if (data->irq_ready == -EPROBE_DEFER)
++		return data->irq_ready;
++	if (data->irq_ready > 0)
++		init_completion(&data->complete);
+ 
+ 	data->irq_low = fwnode_irq_get_byname(dev_fwnode(dev), "low");
+ 	if (data->irq_low == -EPROBE_DEFER)
+ 		return data->irq_low;
+-	if (data->irq_low > 0) {
+-		ret = devm_request_threaded_irq(dev, data->irq_low, NULL,
+-						cc2_low_interrupt,
+-						IRQF_ONESHOT |
+-						IRQF_TRIGGER_RISING,
+-						dev_name(dev), data);
+-		if (ret)
+-			return ret;
 -
- 	if (intr_status & UIC_COMMAND_COMPL) {
- 		cmd->argument2 |= ufshcd_get_uic_cmd_result(hba);
- 		cmd->argument3 = ufshcd_get_dme_attr_val(hba);
++	if (data->irq_low > 0)
+ 		data->rh_alarm.low_alarm_visible = true;
+-	}
+ 
+ 	data->irq_high = fwnode_irq_get_byname(dev_fwnode(dev), "high");
+ 	if (data->irq_high == -EPROBE_DEFER)
+ 		return data->irq_high;
+-	if (data->irq_high > 0) {
+-		ret = devm_request_threaded_irq(dev, data->irq_high, NULL,
+-						cc2_high_interrupt,
+-						IRQF_ONESHOT |
+-						IRQF_TRIGGER_RISING,
+-						dev_name(dev), data);
+-		if (ret)
+-			return ret;
+-
++	if (data->irq_high > 0)
+ 		data->rh_alarm.high_alarm_visible = true;
+-	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static const struct hwmon_channel_info *cc2_info[] = {
+@@ -735,13 +716,13 @@ static int cc2_probe(struct i2c_client *client)
+ 		return dev_err_probe(dev, PTR_ERR(data->regulator),
+ 				     "Failed to get regulator\n");
+ 
+-	ret = cc2_request_ready_irq(data, dev);
++	ret = cc2_get_irqs(data, dev);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to request ready irq\n");
++		return dev_err_probe(dev, ret, "Failed to get IRQs\n");
+ 
+-	ret = cc2_request_alarm_irqs(data, dev);
++	ret = cc2_request_data_ready(data, dev);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to request alarm irqs\n");
++		return dev_err_probe(dev, ret, "Failed to request ready irq\n");
+ 
+ 	data->hwmon = devm_hwmon_device_register_with_info(dev, client->name,
+ 							   data, &cc2_chip_info,
+@@ -750,6 +731,26 @@ static int cc2_probe(struct i2c_client *client)
+ 		return dev_err_probe(dev, PTR_ERR(data->hwmon),
+ 				     "Failed to register hwmon device\n");
+ 
++	if (data->irq_low > 0) {
++		ret = devm_request_threaded_irq(dev, data->irq_low, NULL,
++						cc2_low_interrupt,
++						IRQF_ONESHOT |
++						IRQF_TRIGGER_RISING,
++						dev_name(dev), data);
++		if (ret)
++			return dev_err_probe(dev, ret, "Failed to request alarm irqs\n");
++	}
++
++	if (data->irq_high > 0) {
++		ret = devm_request_threaded_irq(dev, data->irq_high, NULL,
++						cc2_high_interrupt,
++						IRQF_ONESHOT |
++						IRQF_TRIGGER_RISING,
++						dev_name(dev), data);
++		if (ret)
++			return dev_err_probe(dev, ret, "Failed to request alarm irqs\n");
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
