@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052962;
-	b=mwPMK9nvw/ZHr9REaNKyzR/dRSg3mhymeDtgy69mfESK7YD/p0Qce0nQS4VK089FHK7h
-	 Eqm40tjWdL85jeu8ox6yLaJLBT6JT1ER0IgizIhhFqn9HZIDsqEZqMDIdCj+6Ml62VsOY
-	 tejOqsnGxjYPBVQcJz9LybFihfFxcyMxuuOwkjS//UoGNckCVwKRHInGSnVfaIwvGQxWS
-	 9DwEbUDgz+Kxs7njKGuaRq4/mfLjV3/089H8jl/7oiyKuLLe+KbtoY8/PRp1TjcfUfIzl
-	 g/FTUnG2mjqRtjHMmIA0DxKE2fh5/0GPTf9+TEJx8HigdF55voPoA5QRxGpKV5/Jjkg==
+	t=1795052965;
+	b=dLPt6JQiBbZ3Foc83g7H4TSUzbjjWIcpkcd4D7mxmxGJ/9fdpoBoSXwswZQ7qLGLlL/t
+	 2zq6aZsijT6ZuGq/tv/2f9iScqhkJUZpsFR8mYLL7lZ66LdynocAN3CFuK4ylSA1ew6UO
+	 cZqLSxP9c2itOz9TcnqSgQgemhPt9ufTbIDPVfUmcI2CujAygTzoYuMPRUUzlCwE9qgBh
+	 GK7LckyNqJz7ECQstEQgCknAECaZddmaGKwaZd/Rp5MDYO+6SmeH99Yq3Sc1fu3Lu9728
+	 /MuF4TppbnS7lq3RaI391TOs1UQS0DLazYOsKnmI17/whlcSvybIGRbyJz//WiCyyfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JOpRzWmBJ/7HWUoUxS2aQPzzlwbhYWe4W833ty4m+b4=;
-	b=LPw1e+jbh9KvCqDHJT0BitWHSgmZrRLS5K0bLgd8RW4PnY4k6hHshaCJt85yFUqQA66P
-	 fz+F5bZrW/WY++y3q7WGMY0WBcc65IECSIAvZu692vnjbNIeBs1CXQfPjcn3rkDJTKemv
-	 i/9DXtl+LKc4GuzTzMFYQa4vOy6wTR5Ou3x58tK5Fg7WQ9NEzqCSALnyejEp4p/q1dsw9
-	 xuW0wOIdp+y8v8BWgXAAZcmoPahYgjWlW1HoBrMstBgno0wVjTw6+rd3O/F8XZQLlnWKk
-	 emmE3IR7/bq+Kfi/aGt8dEykKip/BZWm2GeTAiWV4RqidYC9zO2UQPUi93T6HSFQvtQ==
+	bh=Gj1OF0OG1BDufT0CGeKVElj9nSOWlhSXnewoCnN4EG8=;
+	b=wIpTn3yH8mYNxgVi96W7+cGolAQWGzd36Y69WGUNQVyu/TucBoiWBOK74fY0/ILQKTLe
+	 2YkmrcWpUbxIChgJKeyCZsuw0M8hHjjQ8LMEFOriYIV8/UNIku+iCVgHcUTlzOGq9ULQM
+	 zHz8wGTj3ujqIiGza9uKzdlH0fKaFVFQ1xa8s0A+9qFjudkxDopIEgJlsURr3bzcbCD5p
+	 vALkLz6wEA7AMwZqXE9EEPgxEv6FcNmO0VSjK9W2ct2DSzO+gSbnJxFVncOuLd3wmCwsb
+	 OofxZZr67qYFyIKqV3jTUKeZvkxaiL3aK5hbzynA4f02mBLajvXKMRbNQ/n4mPF8Daw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m9MqlqrF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BhVdHhZo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCEA606A320;
-	Thu, 19 Nov 2026 01:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45F9606A31C;
+	Thu, 19 Nov 2026 01:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m9MqlqrF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30F11F000C4;
-	Thu, 19 Nov 2026 01:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BhVdHhZo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4521F000C5;
+	Thu, 19 Nov 2026 01:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052962;
-	bh=JOpRzWmBJ/7HWUoUxS2aQPzzlwbhYWe4W833ty4m+b4=;
+	s=korg; t=1795052965;
+	bh=Gj1OF0OG1BDufT0CGeKVElj9nSOWlhSXnewoCnN4EG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m9MqlqrFXy2pOFpRC/HoE44DEQUIoTHHJi7EoLT2SfT1mG4h3wzTIBpc9YZCpAqMw
-	 dXBLufGOBjl4pknbvTMoYdFF88ipNYj97KeAaVX5Xdv+jr62ueMYAaFynssFt1cjd+
-	 /LM8NED2F/dENNTG719DTzCdoMfMoLQY1zpE+hiw=
+	b=BhVdHhZoB8JtUzZXWH/QYyWjul38rMKPQ/N4BGLjENgykpWJMK0BIKVOjAS757kTc
+	 6HcjclTgMcF0xAt1mS6pGJGliE5HO7LiatEHAODXB9KDnArSJhlecMlWdXJO/n6Ngc
+	 lZaK94qGBedEH0+aKpi4m2DTMu4YIn9v8vFF4ryw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Hyeontae Lee <wonju345@naver.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0751/2214] fs: skip copy_file_range write limits when there is no data
-Date: Wed, 18 Nov 2026 15:40:27 +0100
-Message-ID: <20261118150041.812853977@linuxfoundation.org>
+Subject: [PATCH 5.15 0734/2214] fs/ntfs3: bound CreateAttribute asize against record_size in do_action
+Date: Wed, 18 Nov 2026 15:40:10 +0100
+Message-ID: <20261118150041.191324913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,53 +68,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Hyeontae Lee <wonju345@naver.com>
 
-[ Upstream commit 81dfa035891f0502674332ee97db348a16486de0 ]
+[ Upstream commit fb0f0ef7b5a6bc761b372ce00764d4b6e0b91a47 ]
 
-generic_copy_file_checks() reduces count to zero for a source offset at
-or beyond EOF, but still checks the destination write limits. If pos_out
-is at RLIMIT_FSIZE, this sends SIGXFSZ and returns -EFBIG even though
-there is no data to write.
+In do_action()'s CreateAttribute case (fslog.c:3286), attr2 points into
+the on-disk log record and asize = le32_to_cpu(attr2->size) is therefore
+attacker-controlled on mount.  The guard bounds asize only against the
+log record itself,
 
-For example, GNU cat copying a 1024-byte regular file to another regular
-file with RLIMIT_FSIZE=1024 copies all bytes and is then killed by its
-next copy_file_range() call at EOF. A zero-length request can fail in
-the same way.
+	Add2Ptr(attr2, asize) > Add2Ptr(lrh, rec_len)
 
-Check write limits only when count is nonzero, as the ordinary write
-checks already do. Keep the other copy validation in place.
+where rec_len is the client data length, and separately bounds dlen
+against the MFT record.  Nothing bounds asize against record_size, but
+all three writes that follow are into rec, a kmalloc(sbi->record_size)
+buffer allocated by mi_init() (record.c:105):
 
-Fixes: 96e6e8f4a68d ("vfs: add missing checks to copy_file_range")
+	memmove(Add2Ptr(attr, asize), attr, used - roff);
+	memcpy(attr, attr2, asize);
+	rec->used = cpu_to_le32(used + asize);
+
+With record_size 0x400, roff 0x38, used 0x160 and asize 0x800 the memcpy
+writes 2048 bytes at rec + 0x38, 0x438 bytes past the allocation, and
+rec->used is left at 0x960.  dlen is 0x18 here, so the existing
+dlen check passes: dlen bounds nothing about the size of the copy.
+
+The equivalent non-replay path already refuses this.  mi_insert_attr()
+performs the same insert and starts with (record.c:488):
+
+	if (used + asize > sbi->record_size)
+		return NULL;
+
+Apply the same bound, spelled as a subtraction to match the neighbouring
+clause.  used <= record_size holds here because check_file_record()
+validates it (fslog.c:2826) and is called on this record at fslog.c:3172;
+roff <= used - 4 follows from check_if_attr() together with the ATTR_END
+check at fslog.c:2844, so bounding used + asize bounds both copies.
+
+The sibling WriteEndOfFileRecordSegment case does the equivalent check
+against record_size at fslog.c:3277.
+
+Reproduced by mounting a crafted image on v7.2-rc5 under KASAN:
+
+  BUG: KASAN: slab-out-of-bounds in do_action.isra.0+0x41f6/0x83a0
+  Write of size 2048 at addr ffff888005c74838 by task mount/69
+
+  CPU: 0 UID: 0 PID: 69 Comm: mount Not tainted 7.2.0-rc5-00300-g8ba098e6b6ff #2
+  Call Trace:
+   kasan_report+0xce/0x100
+   kasan_check_range+0x105/0x1b0
+   __asan_memcpy+0x3c/0x60
+   do_action.isra.0+0x41f6/0x83a0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+   get_tree_bdev_flags+0x2ef/0x550
+   vfs_get_tree+0x82/0x2f0
+   fc_mount+0x10/0x1b0
+   path_mount+0x517/0x1df0
+   __x64_sys_mount+0x20b/0x270
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  Allocated by task 69:
+   __kasan_kmalloc+0x8f/0xa0
+   __kmalloc_noprof+0x1b4/0x460
+   mi_init+0x81/0x110
+   mi_get+0x6a/0x220
+   do_action.isra.0+0x1db4/0x83a0
+   log_replay+0x920a/0xd300
+   ntfs_loadlog_and_replay+0x3ef/0x510
+   ntfs_fill_super+0x1d23/0x4550
+
+  The buggy address belongs to the object at ffff888005c74800
+   which belongs to the cache kmalloc-1k of size 1024
+  The buggy address is located 56 bytes inside of
+   allocated 1024-byte region [ffff888005c74800, ffff888005c74c00)
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261026015738.46230-1-dennylin0707@gmail.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Hyeontae Lee <wonju345@naver.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/read_write.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ntfs3/fslog.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/read_write.c b/fs/read_write.c
-index da1bb81355a9f..b2d9a27a7414d 100644
---- a/fs/read_write.c
-+++ b/fs/read_write.c
-@@ -1446,9 +1446,11 @@ static int generic_copy_file_checks(struct file *file_in, loff_t pos_in,
- 	else
- 		count = min(count, size_in - (uint64_t)pos_in);
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 74581f3cf8fc0..02b2fb1899586 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3307,10 +3307,15 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+ 		asize = le32_to_cpu(attr2->size);
+ 		used = le32_to_cpu(rec->used);
  
--	ret = generic_write_check_limits(file_out, pos_out, &count);
--	if (ret)
--		return ret;
-+	if (count) {
-+		ret = generic_write_check_limits(file_out, pos_out, &count);
-+		if (ret)
-+			return ret;
-+	}
++		/*
++		 * attr2->size is taken from the log record and is bounded only
++		 * by the log record length, not by the MFT record.  Refuse an
++		 * attribute that does not fit, as mi_insert_attr() does.
++		 */
+ 		if (!check_if_attr(rec, lrh) || dlen < SIZEOF_RESIDENT ||
+ 		    !IS_ALIGNED(asize, 8) ||
+ 		    Add2Ptr(attr2, asize) > Add2Ptr(lrh, rec_len) ||
+-		    dlen > record_size - used) {
++		    dlen > record_size - used || asize > record_size - used) {
+ 			goto dirty_vol;
+ 		}
  
- 	/* Don't allow overlapped copying within the same file. */
- 	if (inode_in == inode_out &&
 -- 
 2.53.0
 
