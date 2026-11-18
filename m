@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031563;
-	b=A++ChenzxVlI81S7d8Og25WGOTrRZ3393M6vWnjSq6tSfhkdLjIuqMW7tcizFpxOzeBW
-	 rHYVpW7kpRd+24hdTMRIefSDcvyJ02dTDdq9M1kfyIjetSsJiNHzTcflHS9vzPosm+Eqr
-	 zR3fybxv1wldV0UPXmFT8AnZtrueNliTnbUJZrIKVRvdNU1POHCTc9miT4Nf+4fB80r2c
-	 azyj83FOaXTuK0CR1tzPitHUCRZBS78i/Bu+BkhDSdA8W2NpwHu28DR1TiDhFDmA3T+8e
-	 cPWPSAzkBgTAj5PGnTsKQrjlWxx+yzo8r5lZrQq3lFoWLaawSuSENgn2zICm3R6Lagw==
+	t=1795031566;
+	b=mOik/uN0W3al5ZwEpnlHjA3hio7Re0vcxpkXZ2mVEKpPF+VLpaQmkt5qNWJlmkEcodQ1
+	 c9gjd0VCo7jt+gh4Bvm9A+Av+IoWCsJ3R+a8nxJ5lYEKb+3xyoNHkHcgDYXL2bY84xTZN
+	 7dsybCBukhMzymmM+PmIlX9rVzM+SGjgt/eZqFqeoQNVNw9kCcCwbkOJXYNfrkD+80dlt
+	 yTxhsyBYOfUH9f/MIbZiBA+cDu8kbZ9QYE+UGS62j0VBLR7cn5wASOUKtPX27rWcMEPxy
+	 gjJxVBs4D/0aLgiHBk8GX9dN49UQxALLTxWk+ELZ95DWfUfy+1Tvfdh+pjBYyPQ06mA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031563;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=id/mHi2PtfIokhrq6PVU5VPzHw0/cDP4vbkwc2ZLYdg=;
-	b=LZYSV8P9fiHsxWeuoB9aj6d/qNErnl11GFy5DJFJ/TcQrdVIWPcRzpx+1XF723A7bFVx
-	 YGwNBcIdIZUOJK33Hjr189RWqma30uArTzClgD7hXMeceU5G+Z6upW4n0pao0oXAidroA
-	 0OKw3wTB688VcjNPinxpyNaDd7eTPVFbwjag0xGT6ZL+DDUg6JfL9XbiHZ8segsaQSRCQ
-	 BU2jpWlE1l/mYSsfK8PIpLeUCaXGG4YV3a4H/Xvjs4zidbtWRQD5jK+1YiO5mhvS8ygK+
-	 BzEyUnaueB6dbgWZI2aoCvmytWxDqrUHL18K9OpzSwABcdXdRCmLO4IR2kJbbI7XR6g==
+	bh=h3q9b6Byjxh7oeJ7mZlJZXKPd9a0rQzFh3lsvQWr6+w=;
+	b=dlI3HQkgOlbAdORfv+x2ac1F5oI2oLr2QPkuls8oKoNpk2MaVpnHV4uAuxC0TOkTeAUV
+	 qA1Hb3fsO1YRyVzfJ+7+XX7hspU0HW2hlcTwQBIzf18Id+rGGH3IdelkYdNG6kD/eFDod
+	 EOjQhG0xHXN/2m2QcsKh1ax/jls2e0E0/fzE9j4I/gYrs+zaN9C6gYBnSH896JXVRR1Pc
+	 tBBI9Lmis4KQSa25B2BiWF0tzay6uObczI2dyuU2AV2T1pLZqFR6dVJDn2dtM1X/XD+0U
+	 NY/rgEGEUjMJKWKZ6nQJNL/vlTbkT8RN3mFg1eYnZdS6AiV66Jj6/DGleUPqCCoeGZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LxZm/TuN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kn6+5eYe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2744606A320;
-	Wed, 18 Nov 2026 19:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A70C606A31C;
+	Wed, 18 Nov 2026 19:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LxZm/TuN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F375E1F000C4;
-	Wed, 18 Nov 2026 19:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kn6+5eYe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B686B1F000C4;
+	Wed, 18 Nov 2026 19:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031563;
-	bh=id/mHi2PtfIokhrq6PVU5VPzHw0/cDP4vbkwc2ZLYdg=;
+	s=korg; t=1795031566;
+	bh=h3q9b6Byjxh7oeJ7mZlJZXKPd9a0rQzFh3lsvQWr6+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LxZm/TuNVZ61ML18rJRjsoZ9aOf7wMN+OHAsZycxWXZIkkyHXHob212MLELNYD4Iu
-	 rT7hw3OAdE8z9ne6/25ITHB/aEBJiN4XXOMLbi5/su/iBqHHAUxDQmv5UcSoV2lIuf
-	 ubz5T3mRAj8U/50OB8mD3uj+uFNek/d/LM622znY=
+	b=Kn6+5eYewiRCpdQP3B7ygYM3hYuXvL/sDSENnYsikq3XW864JLpVyUATWOoE0sRyc
+	 /j1ygwdjZTswaSB7hyFBzCZ54f97blKOIrBIrhHAFKQZwe2UtTnahcCbIu3XL9T4p/
+	 rW4JyGg0/5wduPJ3ctp2ZsMb+stDy/AGpJ9BW0jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1100/1756] ALSA: rawmidi: Drain input work before freeing the runtime
-Date: Wed, 18 Nov 2026 15:53:47 +0100
-Message-ID: <20261118150053.990260277@linuxfoundation.org>
+Subject: [PATCH 6.12 1062/1756] block: use iomap_dirty_folio for block devices
+Date: Wed, 18 Nov 2026 15:53:09 +0100
+Message-ID: <20261118150052.540459141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,63 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 8c3529f0a8faaac7d73333486f69da1617ecc579 ]
+[ Upstream commit be1e33eda3e6699e57ed3fe6e34078f115b4a1ec ]
 
-The input runtime embeds event_work, so the work must be drained before
-close_substream() frees the runtime. The cancellation in
-snd_rawmidi_input_trigger() runs before close clears substream->opened,
-leaving a window for snd_rawmidi_receive() to enqueue more work.
+With CONFIG_BUFFER_HEAD=n, block devices are written back through iomap,
+but def_blk_aops uses filemap_dirty_folio, which only sets PG_dirty. It
+does not set the per-block dirty bits in the folio's iomap_folio_state,
+so iomap_writeback_folio() finds no dirty range, submits no I/O and
+clears PG_dirty, resulting in data loss.
 
-With a sequencer subscription to a USB MIDI input port, an in-flight
-completion can overlap the last subscription's midisynth_unsubscribe():
+Other iomap users set .dirty_folio to iomap_dirty_folio, which marks the
+folio's blocks dirty before calling filemap_dirty_folio().
 
-1. snd_usbmidi_input_data() observes input_triggered and is delayed
-   before calling snd_rawmidi_receive().
-2. Unsubscribe enters close_substream(), clears input_triggered through
-   the provider trigger callback and returns from cancel_work_sync().
-   The substream is still opened.
-3. The completion resumes. snd_rawmidi_receive() takes substream->lock,
-   sees opened set and queues runtime->event_work before dropping the
-   lock.
-4. Close clears opened under that lock, closes the provider and frees
-   the runtime. Stopping USB URBs does not drain the raw-MIDI work.
-5. The queued work runs and snd_rawmidi_input_event_work() reads event
-   or substream from the freed runtime, causing a use-after-free.
+This is only observable with block size < folio size. With a single
+block there is no iomap_folio_state to get out of sync and
+iomap_writeback_folio() marks the whole folio dirty itself. For a
+page-aligned device, this may require using the BLKBSZSET ioctl to set
+the block size, which requires CAP_SYS_ADMIN. A device whose size is not
+page aligned already gets a sub-page block size from
+set_init_blocksize(), so no ioctl and no privilege is needed.
 
-Cancel input event_work again after clearing opened, before closing the
-provider or releasing the runtime's private data. Receive holds
-substream->lock through its opened check and work enqueue, so once close
-has cleared opened under that lock, no further receive can queue work.
-The final cancellation therefore drains any late work before the
-runtime is freed. Keep it outside the spinlock so a running callback can
-finish.
+To reproduce, on a device with a sub-page block size, write a known
+pattern with O_DIRECT, mmap the same range, store to it, msync() and
+fsync(), then read it back with O_DIRECT. A reproducer is available at
+[1].
 
-Fixes: b3c705aa9e91 ("ALSA: rawmidi - Use workq for event handling")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-98489078ab56528d8e4a-v2-9408ce8c8f3c70b5c10d@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[1] https://gist.github.com/tzussman/18ab05cba4b3fdc79cce0a69d1fd05b4
+
+Fixes: 925c86a19bac ("fs: add CONFIG_BUFFER_HEAD")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260730-blk-dontcache-v7-0-3e8e6850068d%40columbia.edu?part=5
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-1-307939c387df@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/rawmidi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/fops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
-index 1eb234250c58a..98367c319b266 100644
---- a/sound/core/rawmidi.c
-+++ b/sound/core/rawmidi.c
-@@ -557,6 +557,9 @@ static void close_substream(struct snd_rawmidi *rmidi,
- 		substream->opened = 0;
- 		substream->append = 0;
- 	}
-+	/* Drain input work queued after the earlier cancellation. */
-+	if (substream->stream == SNDRV_RAWMIDI_STREAM_INPUT)
-+		cancel_work_sync(&substream->runtime->event_work);
- 	substream->ops->close(substream);
- 	if (substream->runtime->private_free)
- 		substream->runtime->private_free(substream);
+diff --git a/block/fops.c b/block/fops.c
+index d4b1d942f2700..df724f6b572f6 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -515,7 +515,7 @@ static int blkdev_writepages(struct address_space *mapping,
+ }
+ 
+ const struct address_space_operations def_blk_aops = {
+-	.dirty_folio	= filemap_dirty_folio,
++	.dirty_folio		= iomap_dirty_folio,
+ 	.release_folio		= iomap_release_folio,
+ 	.invalidate_folio	= iomap_invalidate_folio,
+ 	.read_folio		= blkdev_read_folio,
 -- 
 2.53.0
 
