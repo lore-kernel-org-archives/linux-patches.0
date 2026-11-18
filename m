@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048468;
-	b=2MsojE/wo3TLbolhxNe5P+9gui3+79a4dhVCHmKo2xpP+0WR6nncNLvgIfizkWv5o3N7
-	 5S9ymmP6Tnfj1rocIpRdmXSytxBJyFL7U2MfK3u4IlOE3B/EqaSFkHkL+GmQmHLurJ6oy
-	 ZK2PNzhzyhFwpQI+G+UqwdFV4QSmo1JsVqvqYLWPT0cAcYrjfyZ9fxWlGzUSc9nadnQgp
-	 RslSNQLuWMOeupX9qFllMFaXqyUcm9ilcaJjlVaJu4dnHqXcbWaiU6nKCEyzLug8ZcWkq
-	 WE8XMQVpeAHyF+bT1UzHb+KnIP+nRYcHXqJzRXEFheP+5MmeBAvhn3ZlBk3ZZU9YMgw==
+	t=1795048471;
+	b=pSe26h0+RONkc6PINkA4tbFStCU7WUD4jAdrLen2y/WGU7LNbRh/kyZlXTyA8eIQkSma
+	 puWALmW27gIKaYil7Ssl5+0HDBPDzmUxBYZi0sUJlDfyCIIPl5U8zDQ3YWLKQKKX3Q5jl
+	 oq6/I7LSYJgI1ooO4CEtIl7JEaZyyc3/cqj20PkO9xXgA5zfW5mVfx++HT3nF7MgZMiBN
+	 B8LJAIsJ3MxVidzWpI7mXzMyB5Bj68KXCCrZSt6r/BfO8bv8pePx00qpLv21LmfhsKMLn
+	 K/I/h4XiTQBbnOT44eFReruRWmpREAztlzIiXMO1SIZbpYO1pQOeDX/pDXsEiAXTdBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VNOY6Y7zcM4zCW7jKb6bC4jse5T5ivA20/UdsK2z/ZM=;
-	b=lt65Xc1UNnrWK03WeDTYDe73scmBblRJ4srFdtQcZ7wvO5aVT8flstbl6aTOZzx77lOO
-	 WNqLGC7u3BEWoHFY/f8VxBPWg4AsV9BhaGTTel1lkZuMAqnC3s+zFX4i+Vhvvcp51Gs64
-	 cQRqk+gsDVqSeXis5bqJ7RmF2jyO5M8agbWucJO5ECC2L1vkx5GWGIDzJBly7qBtWnnoZ
-	 0PpExsTdQAwRM7RvLMB6P/xYMrV2asxcxkVVOWV1d+6spxB87yFOQYiBymXFnoUN3Z+sR
-	 9jLOLSE4ec9wgZRatBSlL0I9mWqfbMOrFyEUWG0j2N3ERlqN+Tf9z4lacuD4iSQoS9Q==
+	bh=mvqG7uIGDHWSQhZKEGZleUw0IskAEdehCYeUa8y9sCc=;
+	b=yuzgt7kRkY6JIjoxOJpwFeYzJhnH16fv3o4gjeCtW1bsyGV+Yv6BOrS/7HYmC0Br33tn
+	 UL4EJLIMklsi21u+Hdehu+PCgs2FrD9NqEyEg5wFyYzOTZ8MHx6hq8LMwGa0kBxNSjvTZ
+	 nna9OnhZLnKea9f4Wp/9aimSz08fJIo8AXsOTaOILO6wm5qSYgt2mFscvb8NsdEJvnhH7
+	 QtnVHSHKBLaA9o0xBxakKz5b6jLO9BhvuZiP8ORQrUZDO5mBwEdqrCkB+AXOuIdWr5Sx/
+	 NtKB45Pw5NHL7rZWTqibTMpuyefDz51/+YwOeJSTeHssHSP3dLC2OAyR7CDSflNv7sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3cMgEtR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jMT3c/Vt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B457606A31C;
-	Thu, 19 Nov 2026 00:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDD4606A31C;
+	Thu, 19 Nov 2026 00:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k3cMgEtR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C48E1F000C4;
-	Thu, 19 Nov 2026 00:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMT3c/Vt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628DB1F000C4;
+	Thu, 19 Nov 2026 00:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048468;
-	bh=VNOY6Y7zcM4zCW7jKb6bC4jse5T5ivA20/UdsK2z/ZM=;
+	s=korg; t=1795048470;
+	bh=mvqG7uIGDHWSQhZKEGZleUw0IskAEdehCYeUa8y9sCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k3cMgEtR57/VP+wQDMg3NxWCVtzkVPNU42KtDW6zQoMMxwjZI2j6iYo0yuSCyEPNJ
-	 fh28G7GCdlEULh03CILuQ3QSXrOYjha66/bUPvtsMiOd3s3NveE5TktBB4CevKsPZh
-	 xpqeIAjAy7Gj1Juzk7+rmq8WVqdiMt6cQAG7biJs=
+	b=jMT3c/Vth2org5NK+wMhx7m51dQ7ehNV6Hx+HdSHNG2mtJCcb8cQpO/dT1ELEAwUP
+	 V2cF/1/J6/2OrtsPzarO/mx7SKX65E/tTQqM2Xzeli+hxKtB7aAWUX7Ep+1tn44S8b
+	 zRiYhIyA/VOie56dVGgMv31PJCmTnzDKEOfJayxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2006/2857] crypto: hisilicon/hpre - remove dma_free_coherent on NULL req->dst in ECDH
-Date: Wed, 18 Nov 2026 15:50:40 +0100
-Message-ID: <20261118150313.628285838@linuxfoundation.org>
+Subject: [PATCH 6.1 1989/2857] KMSAN: fix memset() when using fortify-source, again
+Date: Wed, 18 Nov 2026 15:50:23 +0100
+Message-ID: <20261118150312.990600529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,36 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5b87f619cc5c0a55dcd85ce97974e3f5b9333b7b ]
+[ Upstream commit 3555409e524a0279845f91273ba714998658c163 ]
 
-In hpre_ecdh_hw_data_clr_all(), req->dst is always NULL because
-hpre_ecdh_dst_data_init() sets hpre_req->dst = NULL before mapping
-the user buffer with dma_map_single(). The dma_free_coherent() call
-on req->dst is therefore dead code. Remove it.
+Both kmsan and fortify-source replace the memset function. When both
+are enabled at the same time, the kmsan version gets used, which triggers
+a warning about fortify-source being nonfunctional:
 
-Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+warning: unsafe memset() usage lacked '__write_overflow' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow-memset.c
+warning: unsafe memset() usage lacked '__write_overflow_field' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow_field-memset.c
+
+Commit 78a498c3a227 already tried to address this, but this seems
+to only have worked for memcpy() and memmove() but not memset(),
+which is still lacking the macro definition when KMSAN is enabled.
+
+Remove the incorrect #ifndef check around the memset() macro.
+
+Fixes: ff901d80fff6 ("x86: kmsan: use __msan_ string functions where possible.")
+Fixes: 78a498c3a227 ("x86: fortify: kmsan: fix KMSAN fortify builds")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260618142951.1739694-1-arnd@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 --
+ include/linux/fortify-string.h | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index d13e8c228b702..d874490180bfc 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -1441,8 +1441,6 @@ static void hpre_ecdh_hw_data_clr_all(struct hpre_ctx *ctx,
- 	if (unlikely(dma_mapping_error(dev, dma)))
- 		return;
+diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
+index 5001a11258e4d..0fe311013efa2 100644
+--- a/include/linux/fortify-string.h
++++ b/include/linux/fortify-string.h
+@@ -341,10 +341,8 @@ __FORTIFY_INLINE void fortify_memset_chk(__kernel_size_t size,
+  * __struct_size() vs __member_size() must be captured here to avoid
+  * evaluating argument side-effects further into the macro layers.
+  */
+-#ifndef CONFIG_KMSAN
+ #define memset(p, c, s) __fortify_memset_chk(p, c, s,			\
+ 		__struct_size(p), __member_size(p))
+-#endif
  
--	if (req->dst)
--		dma_free_coherent(dev, ctx->key_sz << 1, req->dst, dma);
- 	if (dst)
- 		dma_unmap_single(dev, dma, ctx->key_sz << 1, DMA_FROM_DEVICE);
- }
+ /*
+  * To make sure the compiler can enforce protection against buffer overflows,
 -- 
 2.53.0
 
