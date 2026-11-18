@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050205;
-	b=gkVoFWFO6Cnh3+5rE+eXCVo0Te2CStFg7+ASjoD7SpWSNapTJW/N8VXZNLwuzNSouLoo
-	 qLAexnckcdHZxCn8xZckpI8WAPMvxXOndG/zPD6VtGq+FqlUQ+6zHlY3CgOXiD7F2LZcq
-	 zFGRFjGmLjLOgZyUFtf75MSkQZFyVWe9RpM+xEzRRMDI4WYrN4dYcQzTEB7dogLtuFo1F
-	 oPHSIio3qEEpqEuHPkHsoTfvelLm/p9RqBwG+o4ZIxn2IDnCZ4apXyqL2JCRgf93vEsHQ
-	 uhB29RvDkaIFonRi7/Q1XSQF9UVtONs3Eoc1SE5K5pnAA268ICA7XbQySroOv0GQ54g==
+	t=1795050208;
+	b=lcHF8tqgfs4KyDN+M3cxsKic8i0r4b6f7KkBZyAOxWZSyY2s81mOlzdOqqDGs1tub4MH
+	 TMXJj8VgS1k095ds2b+qmmIu59769fpJnAyXT3Of1VFEu0GvoyEMeHiV6CGp5B/zZeDbt
+	 95S2ooyFiTmcre0GpX3TksrMJz63m8/DjtM4A05z9PxQLtwWNG7nHiikmLEjDkUs2l4Zi
+	 9nmzRsCwszxIDe0xrQJwjGJQQ2AfG5QcPfu6OXiZWCTuzChpArqvRmlOWaxVIWCuOsWKP
+	 lBJeJeitpBaN1VhzehGDZsIge7kmKiaktzPfYDqk9jigd+lDnt69HKtYVFgLxcNWO0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050208;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y0jXxdtuQR5Rft5PFhvVfAIikxxGDWAHORc8JIYEEg4=;
-	b=KwSgNoh3UWIRwjysp7aa6B7juOnrQhbTmlLIK+qA8WV0NiG7e1LNUN9Ix9RzEmF7ru0v
-	 3unvEpVEBtS7Rn9NRIPxNDIaJUAyEOKXy3TXRMeJu+WGsyKvmS0EpPj7JkjeeYMgCc3Xe
-	 ozySjkJlnku0DwALxBOrmhSoN7TnROEYu89R/+CDZ37WaxSU8M/YOyn58qJPH6ZFA9SMd
-	 c4gRsdHKP4q/GcJQtx4maxVJYriE/Dp5mi79/b+n25bhotTgYJQFcPvHnmA+RttpSfoWM
-	 yUhx52Dr6kpggvvtZit+G4soOmEboVN7oxmHqDTCQh9D4swcVOmBBSSIVloP+rjCiFA==
+	bh=+OUrYpdwZ2ZyWNAvWTdUqXxV3EbuKeQxxkANcAAatck=;
+	b=st8WsuEeIaMWK4kf0orqk+BkPp8OBWCwSS4a7KsJ0IZu1kd2Au9fpyTMx//54PDc3o2n
+	 g6p5jFEoMeEXqbd5p1nyORZkgGK4qZJ1Y+YYIuIhOn6j8zEdtgECOV93IFisOCdsaD8wO
+	 R5XTEa6QcmHrv3ghf1ZlOlU+43v5h6lYNE7Xa/JJv941ozYfkdKqRcePEIuN0PYF8p9PS
+	 +ijoHCTS8t7MMSPAyQC3RWSX1rF6XZMv+ghnIXxfF1ZrgbaLVpmTAk9z375NRMorBEVvB
+	 279hmAObQQPEsbP6sjzSSblugMHgM20WI4beLt5Vg6apSlb2ukNlrFPeBUrOuBOhA2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJPuFjoW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBAT62mk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7265E606A33B;
-	Thu, 19 Nov 2026 01:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E09606A333;
+	Thu, 19 Nov 2026 01:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJPuFjoW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06CE1F000C4;
-	Thu, 19 Nov 2026 01:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBAT62mk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3581F000C5;
+	Thu, 19 Nov 2026 01:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050205;
-	bh=y0jXxdtuQR5Rft5PFhvVfAIikxxGDWAHORc8JIYEEg4=;
+	s=korg; t=1795050208;
+	bh=+OUrYpdwZ2ZyWNAvWTdUqXxV3EbuKeQxxkANcAAatck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FJPuFjoW7MuTPrFlWWGczyJOHUMWYBntaqvAdZFC414/9UQlkkGH5cKTsSvgpTPpd
-	 hrKkv049jT8Or+c2arAOYp3eFSL8J2PkRwNVhjUy80K9FB0JKOIPq3lvqTtFA2NEZi
-	 RTQNghUD1O4ybsDHzXkD7gKSnlOC7zhGh66jBcBc=
+	b=ZBAT62mkAtDPiVUc2jcxCfOGmbc4B+HYs0yJBWF6BZ3XlupzShZLeOcGAI/W86Uld
+	 jMGcchLOoSNFh3ivdLI33F8sO/wlq+zmi/15Fu2m3WBm8v8rrGU2x7OnjaCZT5jXli
+	 CiF34Nz7EFX6FDKz0GJjJU9zZ1142s+xQq2YnLnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2584/2857] bpf: Fix verifier WARN on narrow read of bpf_tcp_sock u64 fields
-Date: Wed, 18 Nov 2026 16:00:18 +0100
-Message-ID: <20261118150334.547308688@linuxfoundation.org>
+Subject: [PATCH 6.1 2585/2857] net: Helper to move packet data and metadata after skb_push/pull
+Date: Wed, 18 Nov 2026 16:00:19 +0100
+Message-ID: <20261118150334.585722198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,56 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit af873495cbcb066ab029f7f63b94410d4db47628 ]
+[ Upstream commit 8989d328dfe7c7a3b9f4b9f0ef60006d277f81cc ]
 
-A BPF program can read the middle of a u64 field in struct bpf_tcp_sock:
+Lay groundwork for fixing BPF helpers available to TC(X) programs.
 
-	tp = bpf_tcp_sock(listener);
-	/* +0x54 is in the middle of the u64 bytes_received */
-	unsigned hi = *(unsigned *)((char *)tp + 0x54);
+When skb_push() or skb_pull() is called in a TC(X) ingress BPF program, the
+skb metadata must be kept in front of the MAC header. Otherwise, BPF
+programs using the __sk_buff->data_meta pseudo-pointer lose access to it.
 
-bpf_tcp_sock_is_valid_access() allows this 4-byte read (the default case
-only checks size == 4), but bpf_tcp_sock_convert_ctx_access() only knows
-the field starts and has no idea how to handle such an offset. It emits
-no instruction, cnt stays 0 and the fixup pass trips verifier_bug():
+Introduce a helper that moves both metadata and a specified number of
+packet data bytes together, suitable as a drop-in replacement for
+memmove().
 
-	verifier bug: error during ctx access conversion (0)
-
-Just disallow the narrower access by matching the whole u64 range of the
-two fields, so it is turned down at check time:
-
-	invalid tcp_sock access off=84 size=4
-
-Fixes: 655a51e536c0 ("bpf: Add struct bpf_tcp_sock and BPF_FUNC_tcp_sock")
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017143819.209510-1-jiayuan.chen@linux.dev
-Closes: https://lore.kernel.org/bpf/7a8ff335.1024c.1a14395f3e5.Coremail.kaiyanm@hust.edu.cn/
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20251105-skb-meta-rx-path-v4-1-5ceb08a9b37b@cloudflare.com
+Stable-dep-of: 12d07c38e1b0 ("bpf: Don't let bpf_skb_adjust_room() use up the MSS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/skbuff.h | 75 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 73c64a1a57064..cce48847d931d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7094,8 +7094,8 @@ bool bpf_tcp_sock_is_valid_access(int off, int size, enum bpf_access_type type,
- 		return false;
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index 1a5e463502a95..f4c5411eae275 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -4352,6 +4352,81 @@ static inline void skb_metadata_clear(struct sk_buff *skb)
+ 	skb_metadata_set(skb, 0);
+ }
  
- 	switch (off) {
--	case offsetof(struct bpf_tcp_sock, bytes_received):
--	case offsetof(struct bpf_tcp_sock, bytes_acked):
-+	case bpf_ctx_range(struct bpf_tcp_sock, bytes_received):
-+	case bpf_ctx_range(struct bpf_tcp_sock, bytes_acked):
- 		return size == sizeof(__u64);
- 	default:
- 		return size == sizeof(__u32);
++/**
++ * skb_data_move - Move packet data and metadata after skb_push() or skb_pull().
++ * @skb: packet to operate on
++ * @len: number of bytes pushed or pulled from &sk_buff->data
++ * @n: number of bytes to memmove() from pre-push/pull &sk_buff->data
++ *
++ * Moves @n bytes of packet data, can be zero, and all bytes of skb metadata.
++ *
++ * Assumes metadata is located immediately before &sk_buff->data prior to the
++ * push/pull, and that sufficient headroom exists to hold it after an
++ * skb_push(). Otherwise, metadata is cleared and a one-time warning is issued.
++ *
++ * Prefer skb_postpull_data_move() or skb_postpush_data_move() to calling this
++ * helper directly.
++ */
++static inline void skb_data_move(struct sk_buff *skb, const int len,
++				 const unsigned int n)
++{
++	const u8 meta_len = skb_metadata_len(skb);
++	u8 *meta, *meta_end;
++
++	if (!len || (!n && !meta_len))
++		return;
++
++	if (!meta_len)
++		goto no_metadata;
++
++	meta_end = skb_metadata_end(skb);
++	meta = meta_end - meta_len;
++
++	if (WARN_ON_ONCE(meta_end + len != skb->data ||
++			 meta_len > skb_headroom(skb))) {
++		skb_metadata_clear(skb);
++		goto no_metadata;
++	}
++
++	memmove(meta + len, meta, meta_len + n);
++	return;
++
++no_metadata:
++	memmove(skb->data, skb->data - len, n);
++}
++
++/**
++ * skb_postpull_data_move - Move packet data and metadata after skb_pull().
++ * @skb: packet to operate on
++ * @len: number of bytes pulled from &sk_buff->data
++ * @n: number of bytes to memmove() from pre-pull &sk_buff->data
++ *
++ * See skb_data_move() for details.
++ */
++static inline void skb_postpull_data_move(struct sk_buff *skb,
++					  const unsigned int len,
++					  const unsigned int n)
++{
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++	skb_data_move(skb, len, n);
++}
++
++/**
++ * skb_postpush_data_move - Move packet data and metadata after skb_push().
++ * @skb: packet to operate on
++ * @len: number of bytes pushed onto &sk_buff->data
++ * @n: number of bytes to memmove() from pre-push &sk_buff->data
++ *
++ * See skb_data_move() for details.
++ */
++static inline void skb_postpush_data_move(struct sk_buff *skb,
++					  const unsigned int len,
++					  const unsigned int n)
++{
++	DEBUG_NET_WARN_ON_ONCE(len > INT_MAX);
++	skb_data_move(skb, -len, n);
++}
++
+ struct sk_buff *skb_clone_sk(struct sk_buff *skb);
+ 
+ #ifdef CONFIG_NETWORK_PHY_TIMESTAMPING
 -- 
 2.53.0
 
