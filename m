@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048015;
-	b=dP6ShjUSWPYQwWzWZeSIZF8HkxKRB0nAioTwZ78+3zpJLGGTvTjOs64QW93/ZPJ9BoLj
-	 227SA4KeEoyzVhiG50A2nJuSshD3HEaEfDKtGFMkPmGKnrH/3mInzZF+zvrjU1jmGP1KG
-	 yVhW85ImRbF/NG5fB0NimEkplhfRMvOWL8E2qfder2hI2qW2IBtY5syhnERV80utky/s5
-	 tMSg+NexPPwJsVERaKJlMnGrGJ/0+8TwzO8DZQAQGYtesKvVrMu0qzfHa1Pd91j9sDZ0b
-	 uDT/0FpbGIRisVg5+oiBoHRWjd3sjMHzY9anCZG8LGo0hrZtd+dqt/474fS4OXCnZNg==
+	t=1795048017;
+	b=3nt7mIqVMhgBz+OmwRRTtFVDpGkf8ayPKCbwT1l40DOAtsRPTNhK5prqp8pC4sK3S6p2
+	 um4nGkoxWmkYjvMrIYpJwF47nspxx99VFYaVSDC2G4V2JIjIwxPmsxJdg+dqpfXqC2uKZ
+	 RTq2ikT5fiiKtztLdJWUVRU85GBmi9NPpEg4PkiF37uldslgMWoDt8xJhAKry9T0FB6Pc
+	 vnlXFE1O2Kad8j2EXADmq6MUGf1FKgG3zPOpuPidsfJRsYelbuijulkuAMqTFyizgJt0K
+	 M3W0v4ZBU6tjrO1WD7EDy36UHfDh4rszZQSFMXTVC56XECpDPjnT2CyoZ/SfthdsSJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rOaKKrkEwb7A/GATUcfKrpbbso7HXqZu6bnm+hSahG0=;
-	b=SSzXIK8r9lEXfeo37uiknOZUWOBH1MP4Uhrgp6i2CIpFVaEi3pJUXnjgKSdFHgTHghTD
-	 zdKMEbDarlye/1DadctZ7h98PqblYGsnh6MiQzxe/5cmddIcq0Q1rgF8dm/Xvjl+bLhVR
-	 NLl+2OaW7xEOfTeUXHTrAR78BhR4270Q/RGDuS2jVRWHVI6ta0T+p/GeqW2GT+I+EOdD8
-	 1ZzU55F1jDm+p8TuL2LnYOjYV/fT25GrtTgb3zcFShVa2/K0E9gJmnswEf5GyuIep6GgN
-	 AafJzeHfHkGKYgbYYPfXsTQ6p2/khtd7i3U94IfjZyzPlEyrrj0SA+T0IEnzWPauXRw==
+	bh=v4TraJanzhMF8KmdQ4IG41ZWt9GjRvJL1KzZBScLZ0Q=;
+	b=qJw8tkRF47iuz/zK0ruP0TpTDUgpiZvzZvex8SVTgmt5ni4eJXJKL9AjquRPYR7fhxVL
+	 NgWec2VT9jEsJU02UXzy0WFSBBIKslF23lB2pJCmIajQje2lvi1bmJg3x82nvwscE2ZWE
+	 KtPCK376ySVcVyRtFdXnPRi4IqttlStrXgLSKYNvRBMhGpooW8NiViuMOZ7Zkldf1+QwL
+	 SmJKqpDwDBAVSeYljbGkOmTgSXLfMFU222Pm5vw6l0bKngPW2lxOfjByQ/fZYR4lmthgK
+	 H3KeB6LSnp4V+fWNMfUenQl6F4EdLMEsGsZs22AyE7ClCNkrh75klCASM2GTgDebzjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZl7aJYm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zF1GKwgZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEBC606A31C;
-	Thu, 19 Nov 2026 00:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4665606A320;
+	Thu, 19 Nov 2026 00:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZl7aJYm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB251F000C6;
-	Thu, 19 Nov 2026 00:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zF1GKwgZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC2D1F000C4;
+	Thu, 19 Nov 2026 00:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048015;
-	bh=rOaKKrkEwb7A/GATUcfKrpbbso7HXqZu6bnm+hSahG0=;
+	s=korg; t=1795048017;
+	bh=v4TraJanzhMF8KmdQ4IG41ZWt9GjRvJL1KzZBScLZ0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZl7aJYmYFDQ2kum8vvdjmvlor+cOPX4xsjRoZ+xUtovVua+tO0xb9DbW7dpT6b6I
-	 DzYWQ3YEKrf1h40badPdP+NAaYg8RJkRnFZNEsEzX6XHyNYwNaUKCu4d/dhUIggxgw
-	 m7Fkx+yNsUHVO+9IwotN7VpWdyFdDhooOriImRzM=
+	b=zF1GKwgZCVqGCXLlsgNN32q7Sy1cyN/N2SvJd4YerrRKjED0AMJuEche4Et0aX+ij
+	 Gku3s+BnNBY8aHZ9qMSxFv1VO5sii9ISJlffZxE6HilVRo9SJVWhNjp06gAKRPe+Ny
+	 qs2na0byRFiDThN6YjJmx++tJ2K4LfG073JJi57I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ryan Brue <ryanbrue.dev@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1843/2857] PM: sleep: wakeirq: Introduce device-managed variant of dev_pm_set_wake_irq()
-Date: Wed, 18 Nov 2026 15:47:57 +0100
-Message-ID: <20261118150307.608466082@linuxfoundation.org>
+Subject: [PATCH 6.1 1844/2857] power: supply: bq24190_charger: use the wake irq API
+Date: Wed, 18 Nov 2026 15:47:58 +0100
+Message-ID: <20261118150307.642996330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,84 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Ryan Brue <ryanbrue.dev@gmail.com>
 
-[ Upstream commit fd8318a32573d73eb20637a0c80689de0dc98169 ]
+[ Upstream commit ece9baab2a6e79224d3f591893be23b540b1625f ]
 
-Add device-managed variant of dev_pm_set_wake_irq which automatically
-clear the wake irq on device destruction to simplify error handling
-and resource management in drivers.
+bq24190_probe() calls enable_irq_wake() on the charger interrupt and
+never calls disable_irq_wake(). That is wrong in three ways.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20250103-wake_irq-v2-1-e3aeff5e9966@nxp.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: ece9baab2a6e ("power: supply: bq24190_charger: use the wake irq API")
+It is unbalanced. free_irq() does not touch desc->wake_depth -- only
+irq_set_irq_wake() does -- so after the driver is unbound the descriptor
+is still one wake reference deep and the irqchip is still configured for
+wake, forever, for an interrupt nobody owns any more.
+
+It ignores the device's wakeup policy. The chip is made a system wake
+source whether or not anyone asked for it, and because
+device_init_wakeup() is never called there is no power/wakeup attribute
+for userspace to say otherwise. A board that would rather not be woken
+by its charger has no way to express that.
+
+And it arms the interrupt for wake permanently, from probe onwards,
+rather than for the sleep it is meant to cover.
+
+Use the wake irq API instead: devm_device_init_wakeup() to make the
+device wakeup-capable and enabled -- preserving today's behaviour -- and
+devm_pm_set_wake_irq() to hand the interrupt to the PM core, which arms
+it in dpm_suspend_noirq() (only if device_may_wakeup(), immediately
+before suspend_device_irqs()) and disarms it on resume. Both are unwound
+by devm, so the reference is balanced on unbind, and userspace gets the
+power/wakeup control it should have had.
+
+No intended change in behaviour: charger events still wake the system by
+default.
+
+The same conversion was made to another charger driver for the same
+reason, in commit 6c5393771c50 ("power: supply: qcom_pmi8998_charger: fix
+wakeirq").
+
+Fixes: f385e6e2a153 ("power: bq24190_charger: Use PM runtime autosuspend")
+Assisted-by: LLM
+Signed-off-by: Ryan Brue <ryanbrue.dev@gmail.com>
+Link: https://patch.msgid.link/20260908-rbrue-suez-upstreaming-bq24190_charger-use-wake-irq-api-v1-1-c3f10ae2a34a@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeirq.c | 26 ++++++++++++++++++++++++++
- include/linux/pm_wakeirq.h   |  6 ++++++
- 2 files changed, 32 insertions(+)
+ drivers/power/supply/bq24190_charger.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/wakeirq.c b/drivers/base/power/wakeirq.c
-index ddbe9cc91d23d..c0809d18fc540 100644
---- a/drivers/base/power/wakeirq.c
-+++ b/drivers/base/power/wakeirq.c
-@@ -106,6 +106,32 @@ void dev_pm_clear_wake_irq(struct device *dev)
- }
- EXPORT_SYMBOL_GPL(dev_pm_clear_wake_irq);
+diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
+index 0d3db227b63a7..92fcab074bf97 100644
+--- a/drivers/power/supply/bq24190_charger.c
++++ b/drivers/power/supply/bq24190_charger.c
+@@ -10,6 +10,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/delay.h>
+ #include <linux/pm_runtime.h>
++#include <linux/pm_wakeirq.h>
+ #include <linux/power_supply.h>
+ #include <linux/power/bq24190_charger.h>
+ #include <linux/regulator/driver.h>
+@@ -1883,7 +1884,13 @@ static int bq24190_probe(struct i2c_client *client,
+ 	if (ret < 0)
+ 		goto out_charger;
  
-+static void devm_pm_clear_wake_irq(void *dev)
-+{
-+	dev_pm_clear_wake_irq(dev);
-+}
+-	enable_irq_wake(client->irq);
++	ret = devm_device_init_wakeup(dev);
++	if (ret < 0)
++		goto out_charger;
 +
-+/**
-+ * devm_pm_set_wake_irq - device-managed variant of dev_pm_set_wake_irq
-+ * @dev: Device entry
-+ * @irq: Device IO interrupt
-+ *
-+ *
-+ * Attach a device IO interrupt as a wake IRQ, same with dev_pm_set_wake_irq,
-+ * but the device will be auto clear wake capability on driver detach.
-+ */
-+int devm_pm_set_wake_irq(struct device *dev, int irq)
-+{
-+	int ret;
-+
-+	ret = dev_pm_set_wake_irq(dev, irq);
-+	if (ret)
-+		return ret;
-+
-+	return devm_add_action_or_reset(dev, devm_pm_clear_wake_irq, dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_set_wake_irq);
-+
- /**
-  * handle_threaded_wake_irq - Handler for dedicated wake-up interrupts
-  * @irq: Device specific dedicated wake-up interrupt
-diff --git a/include/linux/pm_wakeirq.h b/include/linux/pm_wakeirq.h
-index d9642c6cf8521..25b63ed51b765 100644
---- a/include/linux/pm_wakeirq.h
-+++ b/include/linux/pm_wakeirq.h
-@@ -10,6 +10,7 @@ extern int dev_pm_set_wake_irq(struct device *dev, int irq);
- extern int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq);
- extern int dev_pm_set_dedicated_wake_irq_reverse(struct device *dev, int irq);
- extern void dev_pm_clear_wake_irq(struct device *dev);
-+extern int devm_pm_set_wake_irq(struct device *dev, int irq);
++	ret = devm_pm_set_wake_irq(dev, client->irq);
++	if (ret < 0)
++		goto out_charger;
  
- #else	/* !CONFIG_PM */
- 
-@@ -32,5 +33,10 @@ static inline void dev_pm_clear_wake_irq(struct device *dev)
- {
- }
- 
-+static inline int devm_pm_set_wake_irq(struct device *dev, int irq)
-+{
-+	return 0;
-+}
-+
- #endif	/* CONFIG_PM */
- #endif	/* _LINUX_PM_WAKEIRQ_H */
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
 -- 
 2.53.0
 
