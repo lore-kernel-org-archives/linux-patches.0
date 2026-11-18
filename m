@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054715;
-	b=LwWJzjG/u5ZSH4H05amYXJIHCoDqEFlKN4pERZURHUNNBk9b7h6IHGW3DGQBs/sfTXUC
-	 h7Q8WQWm2uQduF9mghZK+4t768uXUKkbdWM18VLwCsqstsYnDzJt6t0dg6W+/kgJTbB7u
-	 5VV6eQN7AbwL5HDisDoUmEG03oQMtQgv808I/B4Dxmq2PW/YzCwwaA2RDfNQUcfD/aJyn
-	 fIuM8L3gdqTt7s35I6sjxjiwrMpynLB1mMDGLf9oFWd/RQMO+q5lvWLV94IdhycpYpDz6
-	 uUsAlfttAPzzTl7UQCAZkUaA1iZxp5XH/2V43FH6wzlD4Dtf0fZxE8l39wRwNDK1Xug==
+	t=1795054717;
+	b=Og3js3Q1GS8sdTdOmf+cjYsHtJuHoiIkR7lx1JI+NvSQmf93fxG2iBa/690AglALwEOq
+	 kOsRnHGd8Ov78hKI5nTmjElg2nfgFHDogw6oP91vOm3v3BscGrViYny6lqYD2iNmBiYvx
+	 m02RrfH8vocMYawfj4qxWe1NPzf2AHrGGPhxLU2c0RjTMKpA/C1NwByyILZhipaezzU5U
+	 5YhFNMm2TiaXr6NnA7bZEQjkNYAh2nCnwz6+tMdNizA9hDNfwVdo+2Q5LivEpzHgb3gec
+	 12vpDh6Fuqqvfr51QtEHiAD87QOBYo78uLs08TYrUZFbzW9VdZiHL6cJt4LM+cKXVlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=tofDP7l7T+Mgtc9MzbNbCHqlEvrP1Rpop14rwwJua5c=;
-	b=lIgt60ISeI3uYAvg5j8zap+HBvV3udzGKiuxnfqc8cbf5de9g7p41lm4lB4Dz04qNODb
-	 shLMgBcJMg2XHY8yON4MEgu5vZigOeR87Wi82yce038A/DzvOwScvlrGjWDxbHlayhtRS
-	 ZMbpvKeSl5fHuEkdrr5Myr8BdKFu5kzg5hqJmRUL/F0tZbKn3IKFoNUv6jisDJ+TFDk06
-	 8P9eFvir6HTcrvr6KEivKVfyhhhwgAmt6075GK4V4+gm47FT48azaAQK5C62P1lvi73y7
-	 WUrFAhsgsBMdMGvGxMKQeZ/1g1DfgjYCFfEvglB1fcneDPBXYabzAqwdAZsGkUMjzrQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=fUINW4mPtbvSquwo2et42s2F+b4hKZWUfEca2v5a60Y=;
+	b=BY09tvjpwKxOWsbS/tufNwJGm0u8dVFNVIGYLP3lpR+Id5eD0P5EBurDviMaiKaZCwY8
+	 H1iETX8ZVhgUqgz6ESQI6AXcagnriU1jEii46MHluk7gd57fsOknfat4cl+NUah8hsQh8
+	 eMR8EJMnKo9hU0pTrB+dw258MZX4PAHwdML4cBvmdi5E3eaHQYcZRNIJjkC30O5RYOD2B
+	 0OizsQPTOUEM0jGtuAst2vVtAtb79tD5jyq9NDYZKOR9y43KHuzTnqczy55l/3uJjpx+G
+	 rR1EUSkFuIhL9P2dr2tga2X1mYS7rQgNXbHk76V6XkLUgZ+h4iYQtjXm0OeAEvF5Y3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yko727Nd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJb6H+ug;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D125606A320;
-	Thu, 19 Nov 2026 02:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF87A606A31C;
+	Thu, 19 Nov 2026 02:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yko727Nd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B441F000C4;
-	Thu, 19 Nov 2026 02:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nJb6H+ug
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350C11F000C4;
+	Thu, 19 Nov 2026 02:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054715;
-	bh=tofDP7l7T+Mgtc9MzbNbCHqlEvrP1Rpop14rwwJua5c=;
+	s=korg; t=1795054717;
+	bh=fUINW4mPtbvSquwo2et42s2F+b4hKZWUfEca2v5a60Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yko727NdNyiGEgSIuFQP7KFw4TaMpLqvNrSfxnTA5O2vT7nCHP1hCHfRL8YUv51HH
-	 nC/CUqgatuj0XiGCioxlKkgSbdpH2Kfzik9BhQD4RFDH2hTVCmFqwduZbbvpLMAZhp
-	 7fI+gZwvEVLjR0bmlDnppKWt6xKWO6TxEC1Bc0Eo=
+	b=nJb6H+ugQbgHO/A51dcJBlddL7G0FHtmHD1WM3YUqasbjbq6sdF2p9InQEXP3S5ZO
+	 pnXpC+D/DEoy5vrRxetB2LQ8oc9OBc3bkSnPDPNspMxXuCIariXkW9q280Txm4ZhD9
+	 4j2GeRMoKsSqioazWIqOAm/YAJxL8Cid5Mg35+Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1371/2214] microblaze: CCF: fix refcount leak
-Date: Wed, 18 Nov 2026 15:50:47 +0100
-Message-ID: <20261118150106.266199031@linuxfoundation.org>
+Subject: [PATCH 5.15 1372/2214] microblaze: prevent ptrace writes to MSR and pt_mode
+Date: Wed, 18 Nov 2026 15:50:48 +0100
+Message-ID: <20261118150106.299868532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,40 +62,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit aeedf85beac51c7cd8f7bf4c918a0104dfdb8b78 ]
+[ Upstream commit 8518fd17ccef4a7d77877ccb0403b722106ad1a4 ]
 
-Every value returned from of_clk_get() is supposed to be cleaned up
-via clk_put() once not needed anymore.
+arch_ptrace() accepts PTRACE_POKEUSR for every aligned offset below
+PT_SIZE. This includes the saved machine status register and pt_mode,
+which are kernel-owned execution state rather than general registers.
 
-Fixes: c1120542b99a ("microblaze: Add support for CCF")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Link: https://patch.msgid.link/20260526184105.18962-4-grandmaster@al2klimov.de
+On return from an exception, rtbd copies MSR_UMS to the live MSR_UM bit.
+An unprivileged same-UID tracer can therefore clear MSR_UMS in its
+tracee's saved register frame and make the tracee resume in supervisor
+mode. pt_mode also controls whether later entry paths classify the frame
+as kernel or user state.
+
+Reject PTRACE_POKEUSR writes to both fields while retaining read access.
+
+Fixes: 2b4384542691 ("microblaze_v8: ptrace support")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20260821103026.3627292-2-Jeremy.Jean@oss.cyber.gouv.fr
 Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/cpu/cpuinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/microblaze/kernel/ptrace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/microblaze/kernel/cpu/cpuinfo.c b/arch/microblaze/kernel/cpu/cpuinfo.c
-index cd9b4450763b0..32c508e85408a 100644
---- a/arch/microblaze/kernel/cpu/cpuinfo.c
-+++ b/arch/microblaze/kernel/cpu/cpuinfo.c
-@@ -133,6 +133,7 @@ void __init setup_cpuinfo_clk(void)
- 		cpuinfo.cpu_clock_freq = fcpu(cpu, "timebase-frequency");
- 	} else {
- 		cpuinfo.cpu_clock_freq = clk_get_rate(clk);
-+		clk_put(clk);
- 	}
- 
- 	if (!cpuinfo.cpu_clock_freq) {
+diff --git a/arch/microblaze/kernel/ptrace.c b/arch/microblaze/kernel/ptrace.c
+index badd286882ae6..e6b6b1983e2d5 100644
+--- a/arch/microblaze/kernel/ptrace.c
++++ b/arch/microblaze/kernel/ptrace.c
+@@ -102,6 +102,9 @@ long arch_ptrace(struct task_struct *child, long request,
+ 			} else {
+ 				rval = -EIO;
+ 			}
++		} else if (request == PTRACE_POKEUSR &&
++			   (addr == PT_MSR || addr == PT_MODE)) {
++			rval = -EIO;
+ 		} else if (addr < PT_SIZE && (addr & 0x3) == 0) {
+ 			microblaze_reg_t *reg_addr = reg_save_addr(addr, child);
+ 			if (request == PTRACE_PEEKUSR)
 -- 
 2.53.0
 
