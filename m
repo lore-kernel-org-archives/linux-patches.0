@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046570;
-	b=kDTPoQxVwvjxllrBYRpt1hKkCTQPz8Rx5n/wrbWi8mt9EhXDAiEj6fqwl6z5YlM+M17k
-	 RWXTYMchn02oBSufvwSc24w2KBdTjO0XH+o2rwFaWI2ReSFK+IDuV9c1h421IJSdmvNOO
-	 p9Smpwn/QFPpz7Hkbk6qqTfkiwksvBcRv72BYcY+IbzoD0+mEDhskQpWhRI37Fut9Z7D1
-	 +Xeh4mjzFUF5H/FtSZhgvP9VOilTcFryGHOxba7rqMTTQmnJyvfz7jxDADWCR2Y33tdUK
-	 nEWQ2SSEhxeN9bo90C5iTqB7k+8OPCFz6Yt4mLjT/NfiqatWEYawVXbVpoB2YEtWDCQ==
+	t=1795046572;
+	b=e/c/jeT3ykk6lWCSOtGV7kc7REQz9dKDYaKME3oetivF7d9rK25YaHk2wLUpsuirvLni
+	 TdssJ1s7EzOqAHa3fHNERvo1Ko3TwOFOPs7TOljfNUdfr59Q+RXRr5Z44w2c/9nsB0XXr
+	 qQ/QkkJZ/SfXFvvl+AxB0fWifRoE7Az2sRXQrsYoqJnwiFJpYL36AYQ9XN+h0ACl7p8x6
+	 FXPSZwtFuHyBZjXfAWMQiktH2Mz4bi0YTc4rP4HR0WtMQAcTzUvQc5WKGe//gBYsTY+z4
+	 qpZnNW2Yasp4hhkC4B2yj9WhFhwW/rWqWys6vJmXZ95JOtezFQbct7MZQp26iEGPk2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046570;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xy9pgr5chcpHJZGhRZMJqiW1FfKPpZABdQBMSNva1M4=;
-	b=NYiruY0Wl9Cwp2yLUHFa4I+EaXObsGp+xIOwmQTmeetPYy5f2vCIbO+L7AjniAG+W+fx
-	 1bMJF9d2fMjYNK1bGC3mFaOmrXMXY3K6pwyaS5o5Oi6JbQZqpy0zAV727t9ztOw+owcY6
-	 2q1p1NfdGu/EjJluYwoqSU8vAaTfpIbfRKqUEniUV0X2fRhI8xjOPh+FaE6NLW80Re/j7
-	 j9R72XRXzN8KXrf8/v22RnbbmCjxE+T/JtsYWov+zvg2WWZLwq2Td7LX7W+6qOfQYj5Fx
-	 hkWwkQesTQBkrs6gy4ld86Fl4M4iSL9oDK3HdLNRXSkK/DcBsXUmsgxc7Jj1tpfC7Wg==
+	bh=hjUV8bSPIkHg2JpBP4T9cXIn0dUJ6UicawunedaCXvQ=;
+	b=1v95Ptbi8a1qyu2TngO4XeDY44d9p2qkeL4dqqDy7yWSqrYvdDIPdhltqEzpk/v+4B7i
+	 yDLI/xvOVnYwBuqZbesQGmA9Ggh7nRymHP6T+mptRS+ZQktQY0LHRVDNJdeDUPPiD7uNf
+	 uTpd39E8Wc7A0djuH9/biHvRKH+ddnodk7LDy7/viGnSUMFvgqH9RZ/xUrkGDen6I1cds
+	 srvNU0HQz7/p3GMVxF1L9o9o8dAUDKvUhItIAElE+AGd8h8filUkM3dqO83gyqahl1cUi
+	 +FlCt2IxNTTa6euhM30iVJaC9ObV2cL5p27IWDh8KyH1SPQu2Zdl1y0I+Av9Wm0z1OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YACdCJBj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNNCjA6r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E71606A333;
-	Thu, 19 Nov 2026 00:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28BA606A333;
+	Thu, 19 Nov 2026 00:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YACdCJBj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2FD1F000C4;
-	Thu, 19 Nov 2026 00:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNNCjA6r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF701F000C4;
+	Thu, 19 Nov 2026 00:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046569;
-	bh=xy9pgr5chcpHJZGhRZMJqiW1FfKPpZABdQBMSNva1M4=;
+	s=korg; t=1795046572;
+	bh=hjUV8bSPIkHg2JpBP4T9cXIn0dUJ6UicawunedaCXvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YACdCJBjRse/qm+mleVj1MDuTaz61oGvNMYpD+YMFNnBTDRp3qet5o9APiacuuvvD
-	 3+8PM/ss+yETYG3OCk7tRmzffSKsk8j/3bTTr+V/XkcJTHtFYuO0OiNu81ogC1UpSR
-	 XFko6WBeeqKAZ+GPuCs9vuLp+aP1vH34U4U9jlcQ=
+	b=wNNCjA6rrZ2fvEWXVT3m8E11eKZ2ib4GefvE4jb4OpBb1+9sfkSCdJF865Kx9TiCj
+	 HmlGEHXMmSMz1tm7KRekAm5LfmXt7MUUDY3dCoQLGPv6F9xxyLdnAp3upWXhsEQQUA
+	 iKnVWFni+jscqdVO9RE2a5IOPOwBtzCHmSY7uv3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	SeongJae Park <sjpark@amazon.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1327/2857] mm/damon/core: move static variable last_nr_regions to damon_ctx
-Date: Wed, 18 Nov 2026 15:39:21 +0100
-Message-ID: <20261118150249.218657465@linuxfoundation.org>
+Subject: [PATCH 6.1 1328/2857] can: raw, isotp: copy socket options outside of lock_sock()
+Date: Wed, 18 Nov 2026 15:39:22 +0100
+Message-ID: <20261118150249.254142570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,85 +68,272 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c ]
+commit 43c973a0887d3d7b2ee0a446603c97bf0f38c58e upstream.
 
-kdamond_split_regions() uses a static variable last_nr_regions, to infer
-if the region boundaries are too stable.  If it looks too stable, it
-does a more aggressive region split because it might be a fake stability
-coming from non-aggressive split.  Because the variable is static, the
-inference can be racy and wrong when multiple kdamonds are running in
-parallel.
+The CAN_RAW and CAN_ISOTP specific socket options are copied from and
+to user space while holding lock_sock(). A copy that faults or stalls,
+e.g. on a userfaultfd or FUSE backed mapping, holds lock_sock() for its
+whole duration.
 
-The user impact is not critical.  No crash, no leak.  DAMON's
-best-effort monitoring accuracy can be degraded when multiple kdamonds
-are used in parallel and the workload has certain access patterns. Still
-it is a bug that is better to fix.
+raw_notify() and isotp_notify() take lock_sock() of a socket that is
+bound to the vanishing device while holding RTNL. As the CAN_RAW
+options can also be changed on a bound socket, a stalled copy can block
+RTNL on an unregistration or namespace change of the bound device.
+Before "can: protect the receive lists with a per-device lock",
+raw_setsockopt() even held RTNL itself during the copy. CAN_ISOTP only
+copies its options for unbound sockets, which isotp_notify() skips
+without taking lock_sock().
 
-Move the variable into the damon_ctx struct to fix the problem.
+Keep the user space copies out of the locked sections: Check the option
+name and length and copy the option values, including the CAN_RAW_FILTER
+filters, to kernel memory before lock_sock(). raw_setsockopt_locked()
+and isotp_setsockopt_locked() get the copied values directly and drop
+their now redundant length checks and copies. As a side effect, a
+failing copy can not leave partially overwritten options behind
+anymore. In raw_getsockopt() duplicate the filters under lock_sock() and
+copy them to user space after release_sock().
 
-Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
-Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: SeongJae Park <sjpark@amazon.de>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: SJ Park <sj@kernel.org>
+As the option name and length are now checked before lock_sock(), the
+order of the checks in isotp_setsockopt() and accordingly the order of
+the returned error values changes. This is in line with POSIX, which
+does not define an order in which multiple error conditions are
+detected and reported.
+
+The generic SOL_SOCKET options in sk_setsockopt() are not affected by
+this patch.
+
+Fixes: c18ce101f2e4 ("[CAN]: Add raw protocol")
+Fixes: 1e5185c09058 ("can: raw: add locking for raw flags bitfield")
+Cc: stable@vger.kernel.org # depends on "can: protect the receive lists with a per-device lock"
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-4-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[ backport to 6.1: This tree has no raw_setsockopt_locked() from commit
+  1e5185c09058 ("can: raw: add locking for raw flags bitfield").
+  raw_setsockopt() already copies all option values from user space
+  before lock_sock() here, so only the raw_getsockopt() and isotp parts
+  apply. raw_getsockopt() uses copy_to_user() and put_user() instead of
+  the getsockopt_iter interface in this tree. Duplicate the filters
+  under lock_sock() and copy them with copy_to_user() after
+  release_sock(). Also move the put_user() of the needed filter space
+  for -ERANGE behind release_sock(), which upstream writes to the kernel
+  side opt->optlen. ]
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/damon.h | 6 ++++++
- mm/damon/core.c       | 5 ++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ net/can/isotp.c | 100 +++++++++++++++++++++++++++---------------------
+ net/can/raw.c   |  25 +++++++++---
+ 2 files changed, 76 insertions(+), 49 deletions(-)
 
-diff --git a/include/linux/damon.h b/include/linux/damon.h
-index 0387d86b56697..0b63617106416 100644
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -465,6 +465,12 @@ struct damon_ctx {
- 
- 	struct list_head adaptive_targets;
- 	struct list_head schemes;
-+/* private: */
-+	/*
-+	 * number of regions after last merge.  Read kdamond_split_regions()
-+	 * for more details.
-+	 */
-+	unsigned long last_nr_regions;
- };
- 
- static inline struct damon_region *damon_next_region(struct damon_region *r)
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 01f93146b92fe..afc0f06ea88d5 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1101,7 +1101,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- {
- 	struct damon_target *t;
- 	unsigned int nr_regions = 0;
--	static unsigned int last_nr_regions;
- 	int nr_subregions = 2;
- 
- 	damon_for_each_target(t, ctx)
-@@ -1111,14 +1110,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
- 		return;
- 
- 	/* Maybe the middle of the region has different access frequency */
--	if (last_nr_regions == nr_regions &&
-+	if (ctx->last_nr_regions == nr_regions &&
- 			nr_regions < ctx->attrs.max_nr_regions / 3)
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
- 		damon_split_regions_of(t, nr_subregions);
- 
--	last_nr_regions = nr_regions;
-+	ctx->last_nr_regions = nr_regions;
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index b89469e69d6b2..ad72d93570036 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1648,8 +1648,8 @@ static int isotp_getname(struct socket *sock, struct sockaddr *uaddr, int peer)
+ 	return ISOTP_MIN_NAMELEN;
  }
  
- /*
+-static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
+-			    sockptr_t optval, unsigned int optlen)
++static int isotp_setsockopt_locked(struct socket *sock, int optname,
++				   const void *val)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct isotp_sock *so = isotp_sk(sk);
+@@ -1660,11 +1660,7 @@ static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
+ 
+ 	switch (optname) {
+ 	case CAN_ISOTP_OPTS:
+-		if (optlen != sizeof(struct can_isotp_options))
+-			return -EINVAL;
+-
+-		if (copy_from_sockptr(&so->opt, optval, optlen))
+-			return -EFAULT;
++		memcpy(&so->opt, val, sizeof(so->opt));
+ 
+ 		/* no separate rx_ext_address is given => use ext_address */
+ 		if (!(so->opt.flags & CAN_ISOTP_RX_EXT_ADDR))
+@@ -1689,55 +1685,37 @@ static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case CAN_ISOTP_RECV_FC:
+-		if (optlen != sizeof(struct can_isotp_fc_options))
+-			return -EINVAL;
+-
+-		if (copy_from_sockptr(&so->rxfc, optval, optlen))
+-			return -EFAULT;
++		memcpy(&so->rxfc, val, sizeof(so->rxfc));
+ 		break;
+ 
+ 	case CAN_ISOTP_TX_STMIN:
+-		if (optlen != sizeof(u32))
+-			return -EINVAL;
+-
+-		if (copy_from_sockptr(&so->force_tx_stmin, optval, optlen))
+-			return -EFAULT;
++		so->force_tx_stmin = *(const u32 *)val;
+ 		break;
+ 
+ 	case CAN_ISOTP_RX_STMIN:
+-		if (optlen != sizeof(u32))
+-			return -EINVAL;
+-
+-		if (copy_from_sockptr(&so->force_rx_stmin, optval, optlen))
+-			return -EFAULT;
++		so->force_rx_stmin = *(const u32 *)val;
+ 		break;
+ 
+-	case CAN_ISOTP_LL_OPTS:
+-		if (optlen == sizeof(struct can_isotp_ll_options)) {
+-			struct can_isotp_ll_options ll;
+-
+-			if (copy_from_sockptr(&ll, optval, optlen))
+-				return -EFAULT;
++	case CAN_ISOTP_LL_OPTS: {
++		const struct can_isotp_ll_options *ll = val;
+ 
+-			/* check for correct ISO 11898-1 DLC data length */
+-			if (ll.tx_dl != padlen(ll.tx_dl))
+-				return -EINVAL;
++		/* check for correct ISO 11898-1 DLC data length */
++		if (ll->tx_dl != padlen(ll->tx_dl))
++			return -EINVAL;
+ 
+-			if (ll.mtu != CAN_MTU && ll.mtu != CANFD_MTU)
+-				return -EINVAL;
++		if (ll->mtu != CAN_MTU && ll->mtu != CANFD_MTU)
++			return -EINVAL;
+ 
+-			if (ll.mtu == CAN_MTU &&
+-			    (ll.tx_dl > CAN_MAX_DLEN || ll.tx_flags != 0))
+-				return -EINVAL;
++		if (ll->mtu == CAN_MTU &&
++		    (ll->tx_dl > CAN_MAX_DLEN || ll->tx_flags != 0))
++			return -EINVAL;
+ 
+-			memcpy(&so->ll, &ll, sizeof(ll));
++		memcpy(&so->ll, ll, sizeof(*ll));
+ 
+-			/* set ll_dl for tx path to similar place as for rx */
+-			so->tx.ll_dl = ll.tx_dl;
+-		} else {
+-			return -EINVAL;
+-		}
++		/* set ll_dl for tx path to similar place as for rx */
++		so->tx.ll_dl = ll->tx_dl;
+ 		break;
++	}
+ 
+ 	default:
+ 		ret = -ENOPROTOOPT;
+@@ -1751,13 +1729,49 @@ static int isotp_setsockopt(struct socket *sock, int level, int optname,
+ 
+ {
+ 	struct sock *sk = sock->sk;
++	union {
++		struct can_isotp_options opt;
++		struct can_isotp_fc_options rxfc;
++		struct can_isotp_ll_options ll;
++		u32 stmin;
++	} val;
++	unsigned int size;
+ 	int ret;
+ 
+ 	if (level != SOL_CAN_ISOTP)
+ 		return -EINVAL;
+ 
++	/* copy the option values from user space before lock_sock() */
++	switch (optname) {
++	case CAN_ISOTP_OPTS:
++		size = sizeof(val.opt);
++		break;
++
++	case CAN_ISOTP_RECV_FC:
++		size = sizeof(val.rxfc);
++		break;
++
++	case CAN_ISOTP_TX_STMIN:
++	case CAN_ISOTP_RX_STMIN:
++		size = sizeof(val.stmin);
++		break;
++
++	case CAN_ISOTP_LL_OPTS:
++		size = sizeof(val.ll);
++		break;
++
++	default:
++		return -ENOPROTOOPT;
++	}
++
++	if (optlen != size)
++		return -EINVAL;
++
++	if (copy_from_sockptr(&val, optval, size))
++		return -EFAULT;
++
+ 	lock_sock(sk);
+-	ret = isotp_setsockopt_locked(sock, level, optname, optval, optlen);
++	ret = isotp_setsockopt_locked(sock, optname, &val);
+ 	release_sock(sk);
+ 	return ret;
+ }
+diff --git a/net/can/raw.c b/net/can/raw.c
+index 537e82717488d..9138fbcd0027c 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -776,31 +776,44 @@ static int raw_getsockopt(struct socket *sock, int level, int optname,
+ 		return -EINVAL;
+ 
+ 	switch (optname) {
+-	case CAN_RAW_FILTER:
++	case CAN_RAW_FILTER: {
++		struct can_filter *filter = NULL;
++		int fsize = 0;
++
+ 		lock_sock(sk);
+ 		if (ro->count > 0) {
+-			int fsize = ro->count * sizeof(struct can_filter);
++			fsize = ro->count * sizeof(struct can_filter);
+ 
+ 			/* user space buffer to small for filter list? */
+ 			if (len < fsize) {
+ 				/* return -ERANGE and needed space in optlen */
+ 				err = -ERANGE;
+-				if (put_user(fsize, optlen))
+-					err = -EFAULT;
+ 			} else {
+ 				if (len > fsize)
+ 					len = fsize;
+-				if (copy_to_user(optval, ro->filter, len))
+-					err = -EFAULT;
++				/* copy to user space after release_sock() */
++				filter = kmemdup(ro->filter, len, GFP_KERNEL);
++				if (!filter)
++					err = -ENOMEM;
+ 			}
+ 		} else {
+ 			len = 0;
+ 		}
+ 		release_sock(sk);
+ 
++		if (err == -ERANGE) {
++			if (put_user(fsize, optlen))
++				err = -EFAULT;
++		} else if (filter) {
++			if (copy_to_user(optval, filter, len))
++				err = -EFAULT;
++			kfree(filter);
++		}
++
+ 		if (!err)
+ 			err = put_user(len, optlen);
+ 		return err;
++	}
+ 
+ 	case CAN_RAW_ERR_FILTER:
+ 		if (len > sizeof(can_err_mask_t))
 -- 
 2.53.0
 
