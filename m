@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033194;
-	b=yZmS5xfhcwZ0k0XmLUP0RoHUXBgJio9usdvfPortM5eZrywEItQZIFnrp4En4hPqvKYh
-	 2UXSzOr0gXvqfbEZ6sEhAV3VFnj7eMwRhSEsnszkTR53OrJt8E8JXgzmUtWJOQcpzuj8w
-	 m0Z2xDWZ+bUpqBEkWbqd6kxX6hEBEboGzhIFBuOA/EaAfY/fr+aXTqnPY2LXjdacAsq9d
-	 xD9INHot4KnQHKCBk5HkldRY19y2Qyb2jG0DqP7CJ8QwBvPyZ0bUNQcHvRGkSe5xOTDXy
-	 CYnLTsGhBYlfi6aqTeu6n+ZlpATgnZuSb0ygdgA9RUc6yjjFj4eXhbp9onw8fwCUgdw==
+	t=1795033197;
+	b=zx3GJ4rVPbTF9CMoaAVKifwyllN3WRWAgt5KyGNQDw3mEMzVPeXfAmYmTF5YJJ01bwcH
+	 FV5PUzzO9EDHwtt6erd/g9plPt8kcw/dcZ0DD0R+yw2o3NuNChgLfpufwggVg1zQ+w5sJ
+	 hPJLD00gZam0p/IA6V/EM1JGs8D04p/TtD4XsIHd6eVlJo85XRhTUWF06hPOUSLtwVBr/
+	 0ziElNAwrRgwWzpolvV96Aj/OOTKWRDlR7mgSdNA/2JdIR4mmbCgdoq/tS1/pUZrcwuMs
+	 o/bj0VlnURsgLmMydKHjManIylLQQQOLMJyNTqoG3MeAO74tt6auugLDIw0Q9z0c/4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033197;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C0A8XTNMfdzKsEMSKJ+/CDFza2nfyw3ETveURuyOC8E=;
-	b=aSeOvGSwyk7WoVxoe8bHJ1onhIMJQrvqbAYefeTYR/e/Vtapo9ZvsPzU7Yy8hT56Cgp3
-	 leyt+5G9Wy4Ju2FWCElAiRyT9PbBlbIai24X0LGegbh5PRJhLksBARexqOdapNJzi8wv2
-	 s0BukOrAkintuvDd0td4xZ/4AFpE+9cW3XkWzCOSJ78Wsw4NGJqV4EQpIL6a9NaoAq5AL
-	 h8MZLzI/eBGtxggdJ5RqcOsunU6nCWhKq3e9GrMK5uuhow3c8WhuvSyoJHf+m7DWq2P8F
-	 2IHQsOl9igyp+0P3MxJNoct9VIQwGBEQDtRBxRgolwjJgEpp237+2Tt9bQL1NxW983A==
+	bh=zLnmYXonDqeSo/2aPDOH3bqwjkOuQzxBE4hW/2Va/pc=;
+	b=gcnCL6c0a1tV+ny4vGMvTQBjIZChekmxXm0v/6OK68uo8iPHPT7tKs1B07wkHIM0f3OW
+	 +qXs6j1VMG7nHSUJhr2mFUXaIcfWw9s7o4wwsaPRvYYuGTCzQSai6P3jaaPs6pO/803Iw
+	 nKcGk0l4bSp7nuQaZLMorGCbDVFhC9nxUfbHCk1d1vakF7mWG/E1KCZxcL1sjoQ5j7ktr
+	 GwblNaomqVb3XB+RO6l0e/AoyeJ2nLLjZTfP++PThlZhQKrbghIRwKPANWkOVfZMnSlIg
+	 nnKfpLVseSfxSjdT/RDB4nRRtdyVc4HHdc8AH2KKVUcNsKHK+ziFsD3OFumAaufp+gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tmmwufEm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bdl9wU/T";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81671606A338;
-	Wed, 18 Nov 2026 20:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076B1606A332;
+	Wed, 18 Nov 2026 20:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tmmwufEm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C85B1F000C4;
-	Wed, 18 Nov 2026 20:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bdl9wU/T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D88B1F000C4;
+	Wed, 18 Nov 2026 20:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033194;
-	bh=C0A8XTNMfdzKsEMSKJ+/CDFza2nfyw3ETveURuyOC8E=;
+	s=korg; t=1795033196;
+	bh=zLnmYXonDqeSo/2aPDOH3bqwjkOuQzxBE4hW/2Va/pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmmwufEmpDW57rRBDGmPCGi9LBoXNYLLRiK5jwHHUYzzmxXbLfpgHawp9CfK2tJeN
-	 83ofePakj+AR3s8G60PT7pAZYskjuOD2MHuBESulHi1LLRwNimA78F7UmgeXT1elr7
-	 U3dvxtJWiyzXvr8DI6dqLXtSvu0W5BeWdyelmNqQ=
+	b=bdl9wU/TuXaf/3nSLZ3XDM5bq/xm1Ll8QHalIEodzvQX74uGBtaii7jdNUR4MVUx9
+	 rPXG0P3oYlv0qbOnGiOnw/X9er27acdvmqGkNG9ecxiJspceMlMtqlvT4atixkjGvk
+	 soHg8ZiCVtq9p6Ck3FI5neDGY9cvgxE6ax2cgwTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
 	Jack Wang <jinpu.wang@ionos.com>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1680/1756] block/rnbd-srv: drop the sess_dev kobject unlocked
-Date: Wed, 18 Nov 2026 16:03:27 +0100
-Message-ID: <20261118150116.581377838@linuxfoundation.org>
+Subject: [PATCH 6.12 1681/1756] rnbd-srv: fix use-after-free on two CLOSE messages
+Date: Wed, 18 Nov 2026 16:03:28 +0100
+Message-ID: <20261118150116.621273859@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,93 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 81941915d53ef3384ab4e4b68e92673e66cf66d7 ]
+[ Upstream commit 4912dab88baa5f7034dc9e38807804d470ae5438 ]
 
-rnbd_srv_create_dev_session_sysfs() drops the kobject reference when it
-fails. The release function is rnbd_destroy_sess_dev(), which takes
-srv_dev->lock, and the caller holds that lock: the worker deadlocks on
-itself. A client opening one device as "ram0" and "./ram0" gets there
-through -EEXIST from kobject_add().
+process_msg_close() looks the sess_dev up with a kref, drops it right
+away, and only then takes the session mutex for the teardown. A session
+has several connections handled by different workers, so two CLOSE
+messages for the same ID both finish the lookup before either one tears
+the sess_dev down, and the second one works on freed memory. Any host
+that can open a device on the server can do that.
 
-Have process_msg_open() drop the reference after releasing the lock, and
-leave the rest of the cleanup to the release function.
+Take the mutex first and look the ID up with xa_load() under it. The
+second CLOSE then finds nothing.
 
-Fixes: 8cee532f469b ("block/rnbd: server: sysfs interface functions")
-Fixes: d3a95ccaaf4d ("block/rnbd: call kobject_put in the failure path")
+Fixes: 2de6c8de192b ("block/rnbd: server: main functionality")
 Cc: "Md. Haris Iqbal" <haris.iqbal@ionos.com>
 Cc: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261028164415.1262013-18-axboe@kernel.dk
+Signed-off-by: Chris Mason <mason@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-40-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv-sysfs.c | 12 ++++++------
- drivers/block/rnbd/rnbd-srv.c       |  8 +++++++-
- 2 files changed, 13 insertions(+), 7 deletions(-)
+ drivers/block/rnbd/rnbd-srv.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/block/rnbd/rnbd-srv-sysfs.c b/drivers/block/rnbd/rnbd-srv-sysfs.c
-index 33d5d1738be5a..9d00c42f2624c 100644
---- a/drivers/block/rnbd/rnbd-srv-sysfs.c
-+++ b/drivers/block/rnbd/rnbd-srv-sysfs.c
-@@ -193,6 +193,10 @@ static const struct kobj_type rnbd_srv_sess_dev_ktype = {
- 	.release	= rnbd_srv_sess_dev_release,
- };
- 
-+/*
-+ * On failure the caller has to drop the reference of the kobject. The release
-+ * function takes the lock of the device, which the caller holds here.
-+ */
- int rnbd_srv_create_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev)
- {
- 	int ret;
-@@ -200,17 +204,13 @@ int rnbd_srv_create_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev)
- 	ret = kobject_init_and_add(&sess_dev->kobj, &rnbd_srv_sess_dev_ktype,
- 				   sess_dev->dev->dev_sessions_kobj, "%s",
- 				   sess_dev->sess->sessname);
--	if (ret) {
--		kobject_put(&sess_dev->kobj);
-+	if (ret)
- 		return ret;
--	}
- 
- 	ret = sysfs_create_group(&sess_dev->kobj,
- 				 &rnbd_srv_default_dev_session_attr_group);
--	if (ret) {
-+	if (ret)
- 		kobject_del(&sess_dev->kobj);
--		kobject_put(&sess_dev->kobj);
--	}
- 
- 	return ret;
- }
 diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index 441a6512616a6..8895862f55839 100644
+index 8895862f55839..dc944a194cc3d 100644
 --- a/drivers/block/rnbd/rnbd-srv.c
 +++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -589,6 +589,7 @@ rnbd_srv_create_set_sess_dev(struct rnbd_srv_session *srv_sess,
- 		return sdev;
+@@ -359,14 +359,15 @@ static void process_msg_close(struct rnbd_srv_session *srv_sess,
  
- 	kref_init(&sdev->kref);
-+	INIT_LIST_HEAD(&sdev->dev_list);
+ 	trace_process_msg_close(srv_sess, close_msg);
  
- 	strscpy(sdev->pathname, open_msg->dev_name, sizeof(sdev->pathname));
+-	sess_dev = rnbd_get_sess_dev(le32_to_cpu(close_msg->device_id),
+-				      srv_sess);
+-	if (IS_ERR(sess_dev))
+-		return;
+-
+-	rnbd_put_sess_dev(sess_dev);
++	/*
++	 * Each teardown of a sess_dev runs under srv_sess->lock and erases the
++	 * ID, so an entry that is found under the lock is alive.
++	 */
+ 	mutex_lock(&srv_sess->lock);
+-	rnbd_srv_destroy_dev_session_sysfs(sess_dev);
++	sess_dev = xa_load(&srv_sess->index_idr,
++			   le32_to_cpu(close_msg->device_id));
++	if (sess_dev)
++		rnbd_srv_destroy_dev_session_sysfs(sess_dev);
+ 	mutex_unlock(&srv_sess->lock);
+ }
  
-@@ -787,7 +788,12 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
- 		rnbd_srv_err(srv_sess_dev,
- 			      "Opening device failed, failed to create dev client sysfs files, err: %d\n",
- 			      ret);
--		goto free_srv_sess_dev;
-+		/*
-+		 * rnbd_destroy_sess_dev() undoes everything down to the open
-+		 * of the block device.
-+		 */
-+		kobject_put(&srv_sess_dev->kobj);
-+		goto free_path;
- 	}
- 
- 	list_add(&srv_sess_dev->dev_list, &srv_dev->sess_dev_list);
 -- 
 2.53.0
 
