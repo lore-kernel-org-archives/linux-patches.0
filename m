@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018146;
-	b=AyMCGrCAsKdBNRPHi+JUGb0gaSyvokOa6Kbo8o6ictbTrFl9L07ARJzy3ijCMH0napYr
-	 1w1Pipu4WlgIlfGRV/B3Lh01J5IAnh+jrHlx5PqUvVPv64EL3cgkJBehn7Gswdf3NYdpa
-	 A1ysW1H/b1giHIzmn+oKU7yn9eZFAuS8j6+wXbAV3Y5XiB0yYQENa5g7GhRamhV02xO5K
-	 hEinGj9fFWq1UGWz+XCD9Xb77ViKzRk9SRiEbPUhCQW1o1kZZ5mJ9jg9JGHjtSN2hMEaI
-	 khmhSowpV7oeWZA/uR0AVdNxrV82UYcB2Ef+sjqlQpQRvncolNU/2BI5E02s5WNXddw==
+	t=1795018149;
+	b=0IVcc/oZj8jrrBTHCfAWlh/Z9Blp+qW67Ww6bhNsyeyNsdm4Vo103ox/CiaMIhvE6Rsr
+	 +eJpDM1PytG/ZJxbIyCeFDRXQp+Vo975/Orx0wV3f2Ton6B8uXWlXLznhzHjGE1BZK8wH
+	 FOZMuzR7dqbqEZiAOXR6/HO1XJrPzQe23nrl8C/YN/Oo1QjVTuBKl0kxUbaRe4j+nMubB
+	 lACMDEGZ0auy75Ez0L/IUNOCLY0u0UAUkSgfpzcdPwYlijpN/2YASDtrPeWn5GL2v1zuH
+	 jqFr8ZZrKLv+FCBylB+/90fHJvP8RxhJjrBzh1jj7nCf5GpVEdCxs4p8Oam3AqRUs6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018146;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018149;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hddxXSngRISwhB6bRjtpzKwXWNnQc9qZarJheJdqbAQ=;
-	b=mPj4JLvNaNpQc6OyY/gEvvGQOGMYQnEN0lqe1DHVYkvkbfBCMM7Hru4h4KcQ5qq+JGtg
-	 2ivPwtVM7xwEpiP24++TpGV7O5qO6WUv8MFFRJqyZpESf2U0IDU7W2H3KM3Xn1T331ZPT
-	 AjyDhGQaEXY4nZQKLG7/STFGl+R3RihWt3MzP3xKj0eMB2Jok4rAVrU3iHorALywYXMIA
-	 Fz8cDl2K9DYhlaStT379LYDPGzlf2V7vVPY+I/44ry5Ahzg8Slw5h+Tia662Q0iGXuoBX
-	 OkfkE3bST1+o2tcMWnv2HRnGI5hbxxYqH1PrY+wMgBNmLVSe/r1eS5DR0dSHfvSj6Fw==
+	bh=4mnhEiRtXz5KR+466qpEgrbQV5Erx/lNC5ulLIy2bsI=;
+	b=2wmCHf0XC6l2rS/VvN8t8K3bGc4ddfueCjSLmvfD5Qv+rz7ipwcxaIDdKBYh84BaZFWm
+	 oF1/GedDaQyBD+j5/wpOdC4mf8SP8VRhW+VAr0i7PihZSqI5ywqpGffbR3dl/D7UjJKzu
+	 eGYVQiDWjiayd0WgLNH8surJ04/j+T8g3+OzJ22BYyU5W9ie7MDhQAJFHCVi6igrepz3J
+	 fup2Azj1BFLCJvF2YD2wFFHsJDG0F4o7UTykGK9PCHhUWAoX3/6e4dIxKWLRf38OplZ4x
+	 W/5RBoT/tDgvy5h4L749ZRLgHaTuWNBaYrf3il9UEk3ZPxnh8wj9ZEGBJjas7jwxyQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj2wUK8D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTdkvwRl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440CF606A32C;
-	Wed, 18 Nov 2026 16:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC582606A31C;
+	Wed, 18 Nov 2026 16:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cj2wUK8D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958C11F000C4;
-	Wed, 18 Nov 2026 16:09:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTdkvwRl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E501F000C4;
+	Wed, 18 Nov 2026 16:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018146;
-	bh=hddxXSngRISwhB6bRjtpzKwXWNnQc9qZarJheJdqbAQ=;
+	s=korg; t=1795018148;
+	bh=4mnhEiRtXz5KR+466qpEgrbQV5Erx/lNC5ulLIy2bsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cj2wUK8D6HcHn7myayrhzBz7fBIk2jvSo7P8GeB2VtALwrskxErKph2f6xulZgvC1
-	 CDuPVgkorXJL5l4LTKLo4r9Z8EO6oRZfU8ijtdss2YC4nymiWw43IyQgt8aIbuqbym
-	 53PcKwxbV/Khrk1GSipyhgyuuSMWObNO+g+oFpA8=
+	b=dTdkvwRlzXqzDstSZcBERfLqLNfuDkJqIl17AQRCgIi1zZmTDoRthJMFC+RLbt/5Z
+	 CY6Ql9p4NMKnmwVjk9h/VU70+IzhnAD+JrjWHqcOk6FUktqv4XNRCVT7b3hNVULp71
+	 WdZSezi15Os4GFUDIlymk3tMceEOhJUOCYgqE5Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Ramadan <omar@blockcast.net>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	YiPeng Chai <YiPeng.Chai@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1112/2651] amt: pull the AMT header behind the transport header in amt_parse_type()
-Date: Wed, 18 Nov 2026 15:39:12 +0100
-Message-ID: <20261118150328.030087857@linuxfoundation.org>
+Subject: [PATCH 7.3 1130/2651] drm/amd/ras: use __le32 pointer type to resolve the sparse warnings
+Date: Wed, 18 Nov 2026 15:39:30 +0100
+Message-ID: <20261118150328.694869902@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,58 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Ramadan <omar@blockcast.net>
+From: YiPeng Chai <YiPeng.Chai@amd.com>
 
-[ Upstream commit eb0c18404c8943356f4aa164e5db9067b79ea93c ]
+[ Upstream commit 7296103acacda6a7514a6215279ef5337a0e19b2 ]
 
-A gateway's encap socket passes ICMP errors to amt_err_lookup(), which
-calls amt_parse_type() on the quoted datagram to see which AMT message
-failed. On that path skb->data points at the quoted IP header and the
-transport header at the quoted UDP header, and icmp_socket_deliver()
-only guarantees the quoted IP header plus 8 bytes, that is, up to the
-end of the UDP header.
+Use __le32 pointer type to resolve the sparse warnings.
 
-amt_parse_type() pulls sizeof(struct udphdr) + sizeof(struct amt_header)
-bytes from skb->data, which on this path stays inside the quoted IP
-header, and then reads the AMT header behind udp_hdr(skb). An ICMP error
-that quotes only the IP and UDP headers of a Request, the minimum RFC 792
-asks for, therefore makes it read past the pulled data, and past the end
-of the packet when nothing follows.
+sparse warnings:
+ ras/core/eeprom.c:275:15: sparse: expected unsigned int [usertype]
+ ras/core/eeprom.c:275:15: sparse: got restricted __le32 [usertype]
 
-Pull up to the transport header plus the UDP and AMT headers, as
-vxlan_err_lookup() does. amt_rcv() is called with the transport header
-at skb->data, so the pull on the receive path does not change.
+ ras/core/eeprom.c:277:15: sparse: expected unsigned int [usertype]
+ ras/core/eeprom.c:277:15: sparse: got restricted __le32 [usertype]
 
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
-Signed-off-by: Omar Ramadan <omar@blockcast.net>
-Reviewed-by: Eric Dumazet <edumazet@@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20260928181557.85796-1-omar@blockcast.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ ras/core/eeprom.c:288:33: sparse: sparse: cast to restricted __le32
+ ras/core/eeprom.c:289:33: sparse: sparse: cast to restricted __le32
+ ras/core/eeprom.c:290:33: sparse: sparse: cast to restricted __le32
+ ras/core/eeprom.c:291:33: sparse: sparse: cast to restricted __le32
+
+ ras/core/eeprom.c:333:15: sparse: expected unsigned int [usertype]
+ ras/core/eeprom.c:333:15: sparse: got restricted __le32 [usertype]
+ ras/core/eeprom.c:343:15: sparse: sparse: cast to restricted __le32
+
+Fixes: 5c3be5defc92 ("drm/amd/ras: Add eeprom ras functions")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202609101657.kczNjTnY-lkp@intel.com/
+Signed-off-by: YiPeng Chai <YiPeng.Chai@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/ras/core/eeprom.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index b53f8ec556615..faa21015b34de 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -1292,8 +1292,12 @@ static int amt_parse_type(struct sk_buff *skb)
+diff --git a/drivers/gpu/drm/amd/ras/core/eeprom.c b/drivers/gpu/drm/amd/ras/core/eeprom.c
+index 7afaac81f37a1..08409881a7eda 100644
+--- a/drivers/gpu/drm/amd/ras/core/eeprom.c
++++ b/drivers/gpu/drm/amd/ras/core/eeprom.c
+@@ -269,7 +269,7 @@ static void
+ __encode_table_header_to_buf(struct ras_eeprom_table_header *hdr,
+ 			     unsigned char *buf)
  {
- 	struct amt_header *amth;
+-	u32 *pp = (uint32_t *)buf;
++	__le32 *pp = (__le32 *)buf;
  
--	if (!pskb_may_pull(skb, sizeof(struct udphdr) +
--			   sizeof(struct amt_header)))
-+	/* skb->data is the UDP header on receive, but the quoted IP header
-+	 * when amt_err_lookup() parses an ICMP error, so pull up to the
-+	 * transport header rather than from skb->data.
-+	 */
-+	if (!pskb_may_pull(skb, skb_transport_offset(skb) +
-+			   sizeof(struct udphdr) + sizeof(struct amt_header)))
- 		return -1;
+ 	pp[0] = cpu_to_le32(hdr->header);
+ 	pp[1] = cpu_to_le32(hdr->version);
+@@ -282,7 +282,7 @@ static void
+ __decode_table_header_from_buf(struct ras_eeprom_table_header *hdr,
+ 			       unsigned char *buf)
+ {
+-	u32 *pp = (uint32_t *)buf;
++	__le32 *pp = (__le32 *)buf;
  
- 	amth = (struct amt_header *)(udp_hdr(skb) + 1);
+ 	hdr->header	      = le32_to_cpu(pp[0]);
+ 	hdr->version	      = le32_to_cpu(pp[1]);
+@@ -324,7 +324,7 @@ static void
+ __encode_table_ras_info_to_buf(struct ras_eeprom_table_ras_info *rai,
+ 			       unsigned char *buf)
+ {
+-	u32 *pp = (uint32_t *)buf;
++	__le32 *pp = (__le32 *)buf;
+ 	u32 tmp;
+ 
+ 	tmp = ((uint32_t)(rai->rma_status) & 0xFF) |
 -- 
 2.53.0
 
