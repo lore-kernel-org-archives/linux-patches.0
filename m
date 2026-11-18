@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035762;
-	b=Cc0nvn5tbx9y0VW1zCpBpxCPs9OSjIkx9xB52ahM6uWeH6XCB2+wsHRzn5yeVLEH7GYE
-	 sdxq7MBrkLVl5fUHrnkR1Taq+ZaVIhYS3UxNmipy0ZodBaVsu/0esQMEI+EP7QrSF5Ilu
-	 New2KjoprNIgj11pg/oqhW+h9mtXq2AILSAjN5RVByW7JbBp1OPZV0RuV/kdd8HUdoJms
-	 z/53+ZKGwwHTJ98WxDyYjQbF8tKagg7ftIQfTw3y44uH9YRPmuBUTAD9Se+wWmjAS/Gl9
-	 aSP4Y9MXA0i7iRr2QW41/TulH1NB4LxSoIlH2SAiJJ4cr1hBKhtCx6h88AqbLhxDIxg==
+	t=1795035765;
+	b=u46HJ+L67jE545e/bguqCXxoC0ogj/jguRykLzC8is7hhT1LwMKNvuEPLSUx1HenPcPa
+	 A9kd93PMRhyExExrIewsugt9sUTrhiwuEv8bzysySnPUDyJlYiZlEm1QzmwWX+QLNMmYr
+	 SBKWY0/lfNLxxwjZ0pkEU742O1fBiji7LXt3nIF9W3ThW0b/qSN6Q6tcKT5eD4EGh6hiG
+	 fOsFQmgiBZGwRB1INeAjsG8+0JaxBwXNH+aRufeXO8wyE0MD2QZSp9IlM7YlavvAuON7Q
+	 SmhLF529D3quwK6Z5JqliFE1nzQrKnRZHI/ehu6BzPlM2vkO/hXtZ2/NFl17FlwqNMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+xnR40TJSXmHNXPVHxDDQGiuwlR9UBgzEwRWroAnhXU=;
-	b=CsGzN3jeoAxCq8FvjXQZ5GFVjeqHTDKPeho4UoDks2jGhha3UBtEd2jb7J49UuzoiYuw
-	 Z3vLTPy+g2e5eZPyeJIvL0zKSXsX2kReMGBP3AKynsnPJmFHgddwVYG88pCZfZpDQLEcQ
-	 ITStf175eOig+ulZ7SOBBM2m1PFKrcVY1zmk5x+1aarBurjV50cWOOXLadYV89Bsk8l2R
-	 105NQAFgd3ZOukI/6enavu4qW1tLlDAbowHe7RLVB0gojqWDcUK9aZopnd8SItXeJ6cLj
-	 9BHEIwWIanC9G9ogN4Xb3XhsOB0EAtKTKMymKpUOJifSungyBuCqhyLlIAs/8PtCVWQ==
+	bh=SBxH2H7x7NpaWNKevsT2FlVb7hz3catau7b/llAZ4ug=;
+	b=tEc+6AKL9s3yXqX36pHYxA1dHiXtTJ/2sZ1nZS5+QugvLS4Tlo2teTY4JV03mGWCbUQS
+	 9oHr3q8DW9CN+ZBtuTGM4u1oH2XHZ4qwwCYs23rfz/0k1l4sn8z32dh8P1YukUYle2pPL
+	 vtVQ+66H3OBnBOnxUmkW6BWJKfXe3jRY84XoWG7hcmWdwsaOchdBn2hB3yUQSmUvcAZde
+	 ZXnhVsh0K1zg/BgPUCGXBcZGKNxZL8MdSmDcFLy/96o03tq9a6CDlbVVvYojBlwzHeh9V
+	 WbtC3WibqRx0P6rrO5lLisWs+s6Mea8/G/mIlS7IZo0U/184Q1zpuVnJ3hMBxPNkkSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AIq/cr9a";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwiS7u+E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C3E606A325;
-	Wed, 18 Nov 2026 21:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0F4606A325;
+	Wed, 18 Nov 2026 21:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AIq/cr9a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35861F000C4;
-	Wed, 18 Nov 2026 21:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwiS7u+E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A961F000C4;
+	Wed, 18 Nov 2026 21:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035762;
-	bh=+xnR40TJSXmHNXPVHxDDQGiuwlR9UBgzEwRWroAnhXU=;
+	s=korg; t=1795035765;
+	bh=SBxH2H7x7NpaWNKevsT2FlVb7hz3catau7b/llAZ4ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AIq/cr9aSxgbIaR1YScFZ1jhYUU4Y8D81+vVUWC8fUL7HW5JKVote/1P9zu6WUQO+
-	 2ktOr0j6FPZKhxdlUcdxKIXwjR0j5pvZrmzgOq0ghdILUspTXbQUjZopMWVJw4XGop
-	 0gzeQNbZWQDNr3990tUVHmOodTx0q+F2wDYdVrk4=
+	b=TwiS7u+EgTgrJ1bR9tBIJEtpy5Cl7pKcnJ2Ljhc+u7J+uavyt0UzBStGFdILCCkKN
+	 2JP4k2GJzkgq3Ch9R8iPTlqQdwbdC3AwIFimFFJidT33pnqgshcLubpoCF4DeEFbEv
+	 NElH9sHjiRI+2N1OOnCQr0f68+/wXsg7X6/1/PLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hanzhijian <hanzhijian1991@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0817/3318] clk: mstar: msc313-mpll: fix off-by-one in clock array allocation
-Date: Wed, 18 Nov 2026 15:23:59 +0100
-Message-ID: <20261118150343.546407873@linuxfoundation.org>
+Subject: [PATCH 6.6 0818/3318] bpf: Fix queue/stack map u32 index overflow
+Date: Wed, 18 Nov 2026 15:24:00 +0100
+Message-ID: <20261118150343.577023939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,49 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hanzhijian <hanzhijian1991@gmail.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 712b75152c00a8ab0c56dbfe34caf88e3870ddde ]
+[ Upstream commit 802a30c5db726639df7f93b3a1982ecc64202abe ]
 
-The hws array of mpll->clk_data is allocated with struct_size() using
-ARRAY_SIZE(output_dividers) as the element count, giving it 7 elements.
-But the probe function stores the MPLL clock at hws[0] and one
-fixed-factor clock for each output divider at hws[i + 1] for i in
-[0, ARRAY_SIZE(output_dividers)), writing 8 elements in total.  The
-final write to hws[7] is past the end of the allocation.
+The queue/stack map addresses elements[] with the product of a u32
+head/tail index and value_size, but the storage itself is allocated in
+64-bit arithmetic.  When max_entries * value_size reaches or exceeds
+U32_MAX, the product wraps and push/peek/pop operate on the wrong
+element, corrupting map data and leaking stale values to user space.
+max_entries == U32_MAX would also make the u32 capacity counter
+qs->size (max_entries + 1) wrap to 0 and permanently break the map.
 
-clk_data->num is also set to NUMOUTPUTS (8), so the clock framework
-reads hws[0..7], again accessing hws[7] out of bounds.
+The original bound check was removed by commit a37fb7ef24a4 ("bpf:
+Eliminate rlimit-based memory accounting for queue_stack_maps maps"),
+which deleted the bpf_map_charge_init() call and with it the
+U32_MAX - PAGE_SIZE check that had earlier been moved into
+bpf_map_charge_init() by c85d69135a91.  Oversized queue/stack maps can
+therefore be created again.
 
-Use NUMOUTPUTS as the element count so the allocation matches the
-number of clocks actually stored and exposed.
+Restore the bound in queue_stack_map_alloc_check() with a single
+comparison that rejects any max_entries/value_size combination whose
+element storage would reach or exceed U32_MAX bytes, keeping the u32
+index multiplication overflow-free and the capacity counter valid.
 
-Found by smatch:
-  drivers/clk/mstar/clk-msc313-mpll.c:134 msc313_mpll_probe()
-  error: buffer overflow 'mpll->clk_data->hws' 7 <= 7
-
-Fixes: bef7a78da716 ("clk: mstar: MStar/SigmaStar MPLL driver")
+Fixes: a37fb7ef24a4 ("bpf: Eliminate rlimit-based memory accounting for queue_stack_maps maps")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: hanzhijian <hanzhijian1991@gmail.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Link: https://lore.kernel.org/bpf/20260831063226.621309-2-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mstar/clk-msc313-mpll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/queue_stack_maps.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/mstar/clk-msc313-mpll.c b/drivers/clk/mstar/clk-msc313-mpll.c
-index 61beb4e875250..bd45aa0aec011 100644
---- a/drivers/clk/mstar/clk-msc313-mpll.c
-+++ b/drivers/clk/mstar/clk-msc313-mpll.c
-@@ -105,7 +105,7 @@ static int msc313_mpll_probe(struct platform_device *pdev)
- 		return PTR_ERR(mpll->loop_div_second);
+diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
+index 36384342d7d89..d97aaa82d4271 100644
+--- a/kernel/bpf/queue_stack_maps.c
++++ b/kernel/bpf/queue_stack_maps.c
+@@ -58,6 +58,9 @@ static int queue_stack_map_alloc_check(union bpf_attr *attr)
+ 		 */
+ 		return -E2BIG;
  
- 	mpll->clk_data = devm_kzalloc(dev, struct_size(mpll->clk_data, hws,
--			ARRAY_SIZE(output_dividers)), GFP_KERNEL);
-+				NUMOUTPUTS), GFP_KERNEL);
- 	if (!mpll->clk_data)
- 		return -ENOMEM;
++	if (attr->max_entries >= U32_MAX / attr->value_size)
++		return -E2BIG;
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
