@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044561;
-	b=uOwTQjvkp0VSURXyWELe3YDNsJspq6NWfJl9ozh7D6eu1iHPWo1zQdfE4kTi48BoLlBP
-	 oJJsFJ5sEW3G+a1uSnNVLiKhRa1INXbvqZ0wEV2sR3RtVRHm/qWakvLrATttdsaJ16wgO
-	 ao3JcuU63D8LWIqq086eZiKP21KplVPVYC8t0xzUA72LPnY9+PaE2xOM5i0ileZVTfWxp
-	 2mya8n/Bnjh8xA9JfSlSje+OIj7eQZg97PQpKUMQ+j4gutN8RmMlTYGiFOtulRIANAQhv
-	 dnq3k9z3huMSltGSHmRweRobGt8Ak4cIk/mKADMQYLgnG/m5i51uc91KwDXWmoRZ8YA==
+	t=1795044564;
+	b=s8rbCWoiC/B0gVMJiX5xZyg94faP1orsPRgvGhWvlWKkljtU+58/KZKC/eCWukTMeWQf
+	 8RNoy0L7ENPusDoP232ovpPKTHDdXyn/02X7lrCyyNY09um2AP2PTbT+RQ0I83KcnCO6H
+	 WqdOS45aO88X60Jsdq65FuEZIFrZ6VAxTQrWWSIePBJ9JUHU89fdRYKHZKxZmkQI2J/Nl
+	 AVb0yGMnUfbTeu3W4oU5zeL7WlFcYCIau7B3M38BZCxwdceNNztpSXayR7JwOG5EHa+sL
+	 11VJUrJaTryDkkt5WpmHfq7u8f88YTJn7T3x7Mc+ORSUZe0znBJC19KW/thCawTLKTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044564;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=837315ff1xFB3VbMK7DzpONsWLKbibNgMmRXMv5p/cw=;
-	b=FI2j59Gf5l2sOUD2+8vd7tvldLLxjZdn/WyGXZFuF5Ps2Q6Aw1GGHDvsQCSXP7hpDzD9
-	 n/yyo8LmMljV4n7s/CrXyf36Clx6N/tcJDj8uPg2rZ1zWfhmj5Ee/0BvaddMihVY+6cow
-	 dTFKJebHhVxJepXhOT9NQrA1uE8YziWTEJ8CohhcJPuC9a98Qam0Z+N03+cQJNWbJZRrU
-	 zCKJr/wHu/ZIh0JddDi1hZrPueTPb63lcQXlrMv80vQHKY2c2McvDc9uo9m1Rn2m+0Wt1
-	 XprbXRgvmeLu0LGO/0EvD62CxH40WTBRC07GojVPvM1CAh0WXC40yMpC6MFhsHRwn8g==
+	bh=0EXHz7VP6B6LBK2R275KLngfnYe1SiqPhUT76XnL1OU=;
+	b=w35ZIjVG8ETJRBIcqIZaQF9F7o1lqSThtNXNKGy+gyl3JPtvpBH00XQNN8Gtpz29Lj6W
+	 cLr2H0jStUuA3sPhVhFt9EsZYRN6jQ9ML+yAikPKa4uwRnzmcFM1MKBVU4a+ztuy0X/K7
+	 HeWs29Xsc1PFRTO2EeQtXpmxml2/2gHf75CHSX/DqjE7CHC7LDKgUdgAVtQTZ5377+5fC
+	 iyQqzSeixVG6aA3d0M9iKKedMngAdjDEBbtlKe+mWulyIOk6/7xoxzvky609MsolPIDvu
+	 3wqS6CXwPEujpCE3f1mpmZQ+3YH6vXEE9lfQQZQOPgc/MC+GQNgwfUm2+BD0DA33jCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YCbt0dze;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fC6lNez3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0360606A320;
-	Wed, 18 Nov 2026 23:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F5A606A31C;
+	Wed, 18 Nov 2026 23:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YCbt0dze
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046D71F000C4;
-	Wed, 18 Nov 2026 23:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fC6lNez3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A141F000C4;
+	Wed, 18 Nov 2026 23:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044561;
-	bh=837315ff1xFB3VbMK7DzpONsWLKbibNgMmRXMv5p/cw=;
+	s=korg; t=1795044564;
+	bh=0EXHz7VP6B6LBK2R275KLngfnYe1SiqPhUT76XnL1OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YCbt0dzetwt+FkOVjy19iVtvRLtUb6yesNCV6AQ0nIgOkVw9eOrhJA54Nf+cmrLZZ
-	 spSBckxAvSnkIoUSAdHjMXd7fDYDHAqhb0SmniuPJcVtuCF3k5ezhJ2NNn95al0/rO
-	 M8EFCLhYk3/BJBI2TpU5eNHJ9Bu+TY7gn4Flyb+k=
+	b=fC6lNez3kPs/oImtM8LuQr1mFu6+0eftNrB4tuwiYLHDFcHncEtdnMt98EmjoRENP
+	 gJyYFHkIzV1pwgUiZ9ruKC7aM6A4MfDccEq6HPlt9tdJfAbdH6s+FMLywAf3yoepV3
+	 A9cwlMcDb7cS/A0XF6nTxVyBN9qt9EjHqzqpzYCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Jeff Layton <jlayton@kernel.org>,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <blbllhy@gmail.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0609/2857] nfsd: Fix id-to-name cache entry leak in idtoname_parse()
-Date: Wed, 18 Nov 2026 15:27:23 +0100
-Message-ID: <20261118150223.418713057@linuxfoundation.org>
+Subject: [PATCH 6.1 0610/2857] nfsd: hold cl_lock in client_has_openowners()
+Date: Wed, 18 Nov 2026 15:27:24 +0100
+Message-ID: <20261118150223.453941158@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
 
-commit 8ca3b74c0c447af17d0e27e76658a3d4cae3c5ba upstream.
+commit 5336899b5491eaa2ac22c2925d87daab2b140eb3 upstream.
 
-idtoname_lookup() returns the id-to-name cache entry with a new
-reference. The name is parsed between the lookup and the update call,
-and when the parsed name is malformed (negative length or longer than
-IDMAP_NAMESZ), idtoname_parse() jumps to the error label without
-dropping the reference returned by idtoname_lookup(), leaking the cache
-entry.
+client_has_openowners() walks clp->cl_openowners and reads so_stateids
+without clp->cl_lock. nfs4_put_stateowner() unhashes that openowner under
+cl_lock and then frees it, so a concurrent EXCHANGE_ID with mismatched
+creds can use-after-free the nfs4_openowner.
 
-Release the reference with cache_put() before taking the error exit.
+BUG: KASAN: slab-use-after-free in client_has_state+0x10a/0x140
+  fs/nfsd/nfs4state.c:3718 client_has_openowners()
+  nfsd4_exchange_id
+  nfsd4_proc_compound
+  nfsd_dispatch
+  svc_process
 
-Fixes: f9ecc921b5b5 ("[PATCH] knfsd: Use new cache code for name/id lookup caches")
+Take clp->cl_lock while client_has_openowners() walks the openowner
+list.
+
+Fixes: 4eaea1342507 ("nfsd: improve client_has_state to check for unused openowners")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260917163154.2162438-1-vulab@iscas.ac.cn
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Cc: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <blbllhy@gmail.com>
+Link: https://patch.msgid.link/20260828041925.36758-1-blbllhy@gmail.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4idmap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -252,8 +252,10 @@ idtoname_parse(struct cache_detail *cd,
- 	/* Name */
- 	error = -EINVAL;
- 	len = qword_get(&buf, buf1, PAGE_SIZE);
--	if (len < 0 || len >= IDMAP_NAMESZ)
-+	if (len < 0 || len >= IDMAP_NAMESZ) {
-+		cache_put(&res->h, cd);
- 		goto out;
-+	}
- 	if (len == 0)
- 		set_bit(CACHE_NEGATIVE, &ent.h.flags);
- 	else
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -3351,12 +3351,18 @@ nfsd4_set_ex_flags(struct nfs4_client *n
+ static bool client_has_openowners(struct nfs4_client *clp)
+ {
+ 	struct nfs4_openowner *oo;
++	bool found = false;
+ 
++	spin_lock(&clp->cl_lock);
+ 	list_for_each_entry(oo, &clp->cl_openowners, oo_perclient) {
+-		if (!list_empty(&oo->oo_owner.so_stateids))
+-			return true;
++		if (!list_empty(&oo->oo_owner.so_stateids)) {
++			found = true;
++			break;
++		}
+ 	}
+-	return false;
++	spin_unlock(&clp->cl_lock);
++
++	return found;
+ }
+ 
+ static bool client_has_state(struct nfs4_client *clp)
 
 
