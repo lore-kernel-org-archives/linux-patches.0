@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055194;
-	b=hCP1aEMYzkWxOWLcEwASCeDiGdueGvP6TkzPaCVM8TlUx9OEp4yKG/k/Q4yfd9gXUjjv
-	 0WOZN0NV4x0O/qU4ELSSShyT633XijxuzTg/phOGZm2mPwWFsGwh97GIypU2ueA1HO2t8
-	 2aeFCMXxpl+rWSLU6KCgbP14/ehE3bl99gEcHD0nKGhl0Srzr4sLxSQFFjUnQKAzxTq4b
-	 +r2gNzjz1dglYslSPH6LPk3p/ux4WNVQRWMO9HsiUYnhE1V30OEWE1ohJ4yeyobnPgQ3D
-	 wBj45tFWWY9od6jWMVCoFFbk0bjsZM7WucJoQZzFGbaknl/m4tbWOsfF5bLdrPX2Mag==
+	t=1795055197;
+	b=3DhxMfwfqIfP5t9e6m5ZcqiIrpi9CWmupWsriNIsZA3FBiaSKYVhe1Jlg5b1bc/7i/Jv
+	 zwZqLz/cCyW9eXOo0GyozmZZvHDm9ch0suZW9dtHrLCrpl+Wtc2KR2LG6n6iLj7SLOdi3
+	 nEM6xdAmqu3QRYB6ZtOxSH3WNBzv/uLpa/xtAr0ivLURWvullgaxNAT9b93YYIS/pYE+i
+	 ObrC/uZgFshMkL+JQ6VKWmWkN/oC9TmCqB7pUiBLCqycO+xgoimuSSF19eeIQ4fPwpzOF
+	 nC4UTqmDhEaTeiXYSytyQ9lMnEItL7AATjymG9Cp7gOztuvJInGTMO3C1U6s0FXYgzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055197;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zHAj16kY74KugsgajIL2/yegySUezbeoxZPzJ0nBFS4=;
-	b=tWXdnvQs0Zv48Pd0TCVh7VXe9ohSWADU9enwZ35hLEcLUhorCtp1lyl3ukbY5kwcho1A
-	 Vm6VjsixijSz0Q75plNebvK/9NYjhrCjymvYYXUTQ6lhSuUDTvf+nxIdfJPFwXWWf7iqf
-	 OSVmfBt4VhW+BoZleI42nlKz3OLBqYVFRkWC9h1HQ7S/suGF3ckYij/rK4XLF5nE0+Gji
-	 b50d3BXhPAILwb0qz2SaVTSrKHRwro5N4Ueey55iQg91qE18ZDg8RhKXqmXpgvzTblKLT
-	 DY56lCuRLjgj70CBYveUi+onGSNKst+EnDp95fUYY5xrJoGPYef/bSmpNdYnyVuDWJQ==
+	bh=32Tnwwc72HM+APLIN+0XoBUdRySSttJJJtmpNQRQxcg=;
+	b=sarS9t1ipWJ2z+o3qiYA/HJJzEdAm6ydbvwKutGZBkOMaRq2DkTidM3lEIO6FsdBqTH/
+	 hMyc5HzL5R/EGmAC3Tc3JCz4+d3/SE3RyM021duaNHOV+2HbQMIKnndWNQ4J79Air2oqg
+	 tyYK3gmqLukp63GUwu4ZWTWXWKxhfiwb9smu1dqlDC+wSwhbCBjXOh351KtrzZL/r7qf7
+	 PCnih9WsoYGngScmK4M7stHrsyvNOzkbNYRiKpg7kWXDSVUogolv357tN3hpTj+sFAFb0
+	 Xjzh6WkMe+tHI6KJzRBEnfqezFoRKNqTlYaqWf46NsK5FK68OpqkAPwu7MdnDE7Jzfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTBek7kF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGVcldo2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D08606A31C;
-	Thu, 19 Nov 2026 02:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD62606A320;
+	Thu, 19 Nov 2026 02:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTBek7kF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB981F000C6;
-	Thu, 19 Nov 2026 02:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yGVcldo2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264E51F000C5;
+	Thu, 19 Nov 2026 02:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055193;
-	bh=zHAj16kY74KugsgajIL2/yegySUezbeoxZPzJ0nBFS4=;
+	s=korg; t=1795055196;
+	bh=32Tnwwc72HM+APLIN+0XoBUdRySSttJJJtmpNQRQxcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTBek7kFz/JKh7JFNodmbOsW0860DRDT8qI+g7JocuyXO4G8GQBF+o0/bHjpSkX3U
-	 Wf8SKUORnOX0YSOCCXrDvjV1xmhs0IJ+xAtBqlEB0c6mdlZQm8y6Li8sDDPO5pWCpI
-	 8ODtXVT5Q+qyT9pgQKJjVpJ0hFfQluCl6E/C2LQA=
+	b=yGVcldo2ViHi/TIlYIxFYicOLr9mxrO0EHIRB5e66/48DJOaG6/gN/gQvmanRGiN4
+	 4RCFpsxYTo4yG3xSklnyYZeN75QXJLgCxEpRvhvpsruMLgq+dqbC9iTCgLauTm2HDq
+	 RPEfJYjL6HZB2K4KER/SJabgBmuyuchkRA82FxjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1543/2214] dt-bindings: vendor-prefixes: add vendor prefix for Nexperia B.V.
-Date: Wed, 18 Nov 2026 15:53:39 +0100
-Message-ID: <20261118150113.867647629@linuxfoundation.org>
+Subject: [PATCH 5.15 1544/2214] pstore: dont leave an ERR_PTR in the ramoops zone pointer
+Date: Wed, 18 Nov 2026 15:53:40 +0100
+Message-ID: <20261118150113.904994024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,35 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 819a3e62d37a2fe73c1e7f241f2ac086042e7757 ]
+[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
 
-Document the vendor prefix for the semiconductor company Nexperia B.V.
+ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
+returns the error without clearing it when initialization fails.
+ramoops_probe() then cleans up through ramoops_free_przs(), which hands
+*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
+and dereferences it, crashing the kernel.
 
-The company website is https://www.nexperia.com/
+Clear *prz before returning so that cleanup sees a NULL zone.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260921-topic-sm8x50-nex10000ub-v2-1-eeeaf9b0c913@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/pstore/ram.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 2ca68ee8602cf..fd2d25d7fa51b 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -802,6 +802,8 @@ patternProperties:
-     description: Guangdong Neweast Optoelectronics CO., LTD
-   "^nexbox,.*":
-     description: Nexbox
-+  "^nexperia,.*":
-+    description: Nexperia B.V.
-   "^nextthing,.*":
-     description: Next Thing Co.
-   "^newhaven,.*":
+diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+index e15b4631364a8..1e28b1fdcde16 100644
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -590,6 +590,7 @@ static int ramoops_init_prz(const char *name,
+ 	if (IS_ERR(*prz)) {
+ 		int err = PTR_ERR(*prz);
+ 
++		*prz = NULL;
+ 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
+ 			name, sz, (unsigned long long)*paddr, err);
+ 		return err;
 -- 
 2.53.0
 
