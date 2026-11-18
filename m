@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048297;
-	b=FU3mhEZIlFoJHHh7hgfl4cQ1jdEFnASHo7SWXtF93o+PX5q0l07tuEsT5az451+g4OVC
-	 6urM1Lcfa3Yq4vG4Qm5fvcIg6Aipu8iS/0fZscUsDq83cg2HUGVmfQ4UpvOinx7/HqSUT
-	 dAnU2XplLh66BAa1W7nUJLcvPlbm6is7fC9of2ksc2cpy4u7ACNceKtii4LphJ5+hI1Qs
-	 f6T/fZzrWPxAscevwimgWWpwU/H6E7mi/pQkq3Sf9RLdHzLfTMceU+5+a+t0QyZnbQCou
-	 7xe/QCcE0VGLdeFMif/th9vELZBBTyl3cC7OIOlsVfvvDR5yy+LEwJrXP7Iv7hMpFZQ==
+	t=1795048300;
+	b=s8rjGRWpWIiIae9ayAhbPgO3bnisTlmqTMXGdUnCxzZq0tT63QAXS3NUTDF7nT2/lQyq
+	 h16c3M9jcNUwdnRkxE4XoQVhdZOiqtvtxhiwY/dbcv8JMnMVkgEHpmvdX8Gw6U+6f6pp9
+	 Tmns2R79M27CcimdSXz/kfn1UC/Lb/OXgWrhln8Sz7/ZHyj4Fwc++/rKNDCsWNRUQ58P5
+	 3OA9DwNrMDfmWLxa1Cj2XnoJPungUH6cZRboTkM/2u17wXZ6RSsdxV2F+VuTmfCKJJyrs
+	 duwJczrakPaNtJSaipE8J4i+NpwtA2rXosmRE6mLD5HlfOSUn6vZBBQF3TsWeklNe8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yGZQeqRdonOuwzggWiSPW5upeMrjaEK9jtiDK4ZPWKA=;
-	b=XdwbA77wTCLFFYyLytc4tdEymkvOiWngUoBdWI25yNvTrQ0eAb+DHdf/zQym7xZThskB
-	 d8K2TLZie1NtMp7PhIfm0fDQ6PC2CO0Fp4cK1i6K04CdWwKo8XKT3wOx5H3Wr2fbZ99JL
-	 9Aekc8Z8PqeqKjbLVxXIC1yqq+3xHDfuHj/l3m/8I28vZlShE0n3hEa3cNPHCu5BJSBkW
-	 KUMxO4LVMJoyww8oZxAnC7KDG6yykq6GtaKaUWfZ1Tlw7cCTWp96NAOpUsJClk0EdjG4m
-	 8DOkpT9G2BX6+2OISvWyQRvYrNIYqg5Pb/L5CS1jKR2ceGXwky3y9u8voiBR07ATWbQ==
+	bh=8sZF3SstyPrEUvxG4cLNl15YHO0EdTm0AXt/cmimYHg=;
+	b=13IIH3s88C4t7nR+6Fzm8PuGsv8FCKgtWqw2pM1BamdqA2An0o47djpdRvdA3n/OJjzu
+	 Tz/IcMWNtS9MOD9k4hx2qDRfv1WpPSyi2RHSVeqwJWT6KE55KrfN4jR+KHaQ7EuBpJIcp
+	 y171NrOHJDslXfLEXX00mw/x3bfTxjIQ/v4s3u8+hy8K4R6bSStH1OpxKztHCUZV65RM/
+	 cXJPhVS6O9o4R5zWj8YefzUHVemCtFl45QsX+MTeAkODsG6X6R8P7kTJIkeD5O9LByw+f
+	 CJZQe7E/czLvIUuS95VFEUwJj4MBDJGkZ+i3zgXw405Be0w2MRmoHn6L2J2j6eOGHtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQVWbWuA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJot51gk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F96B606A31C;
-	Thu, 19 Nov 2026 00:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3961B606A320;
+	Thu, 19 Nov 2026 00:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQVWbWuA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743F41F000C4;
-	Thu, 19 Nov 2026 00:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJot51gk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450631F000C4;
+	Thu, 19 Nov 2026 00:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048297;
-	bh=yGZQeqRdonOuwzggWiSPW5upeMrjaEK9jtiDK4ZPWKA=;
+	s=korg; t=1795048299;
+	bh=8sZF3SstyPrEUvxG4cLNl15YHO0EdTm0AXt/cmimYHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQVWbWuAgbzQlIPZhc1NUSn51D/XGjS2Gd5le2gCWCbGlIiRZQbkPxy73MEFEuh/D
-	 8XCS9/R3MLWcNxxKscFY8g7QV4UaH9Et+k2kO7PXDBBC7uYY/UQN0+EtOHcpwV1H4r
-	 wdLdgwkVyHYlgjO7d7j/dL/oAjzoe0r0DhHmAZrQ=
+	b=cJot51gkGjJZNEf1Z56RecGlVRBDLqrs9zppvUMSb4hqLB+fNc0iWwwT0HDwcGvGH
+	 q16CL9TicfKKHsJK432dQnEo+9BodzOxkBN/8mtGUbxmzE+A1I0Q3PlJ0ARoRFNwLY
+	 c/CUk4u+6ZGkWJB7rxOnAD7fO2PY9NMB/3k3gqaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1942/2857] RDMA/uverbs: Make CQ handle mandatory for WQ creation
-Date: Wed, 18 Nov 2026 15:49:36 +0100
-Message-ID: <20261118150311.138144826@linuxfoundation.org>
+Subject: [PATCH 6.1 1904/2857] ARM: dts: stm32: lxa-mc1: change stdout-path baud rate from 9600 to 115200
+Date: Wed, 18 Nov 2026 15:48:58 +0100
+Message-ID: <20261118150309.780111148@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,59 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
+[ Upstream commit fc3c0ffefc169719316eddb8c36e2427e11ce713 ]
 
-UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
-method definition, so the mandatory attribute bitmap does not enforce
-its presence.  When userspace omits it, uverbs_attr_get_obj() returns
-ERR_PTR(-ENOENT) and the handler stores that error pointer into
-wq_init_attr.cq without validation.
+The default baud rate when none is specified is up to the DT consumer.
 
-The bogus cq pointer is then passed to the driver's create_wq callback.
-In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
-container_of to the ERR_PTR value, producing a near-NULL pointer.  The
-subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
-dereference:
+In the case of the Linux STM32 serial driver, it defaults to 9600 baud,
+which differs from the 115200 baud that this board's barebox bootloader
+configured.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000296
-  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
-  Call Trace:
-   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
-   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
-   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
-   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
-   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
+This went unnoticed, because barebox automatically fixes up a console=
+command-line option that looks like this on the LXA boards:
 
-A WQ without a CQ was never valid; the legacy write path always required
-one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
-attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
-when the CQ handle is missing, before the handler ever runs.
+  console=ttySTM0,115200n8
 
-Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This had precedence over the 9600 fallback baud rate.
+
+But when EFI booting a kernel via GRUB, we run into this issue, because
+the barebox-provided command-line is disregarded by GRUB.
+
+Fix this by explicitly setting the baud rate to the correct 115200.
+
+Fixes: 666b5ca85cd3 ("ARM: dts: stm32: add STM32MP1-based Linux Automation MC-1 board")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-1-59b60a5069ff@pengutronix.de
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
+ arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
-index 7ded8339346f3..c23f455231bf0 100644
---- a/drivers/infiniband/core/uverbs_std_types_wq.c
-+++ b/drivers/infiniband/core/uverbs_std_types_wq.c
-@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
- 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
- 			UVERBS_OBJECT_CQ,
- 			UVERBS_ACCESS_READ,
--			UA_OPTIONAL),
-+			UA_MANDATORY),
- 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
- 		       UVERBS_OBJECT_ASYNC_EVENT,
- 		       UVERBS_ACCESS_READ,
+diff --git a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
+index cb00ce7cec8b1..410e45cf538dd 100644
+--- a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
++++ b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
+@@ -33,7 +33,7 @@ backlight: backlight {
+ 	};
+ 
+ 	chosen {
+-		stdout-path = &uart4;
++		stdout-path = "serial0:115200n8";
+ 	};
+ 
+ 	led-controller-0 {
 -- 
 2.53.0
 
