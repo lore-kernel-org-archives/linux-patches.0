@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053030;
-	b=BnGJo80p6SeOg0KBYOjMOPIRi7yREev8qJkXMQ4ryezMWBdMx+m/5v09O8AHm3zRoQ+7
-	 pt7UTW3t2/VfMuzpl9xGsTrYBfWnS7mi+cFNiUX9w7l1TcitH8m60nD5lVwAylEVOB0Ju
-	 LTSkchW/UU1BqZmXU24aRmIZE6+FivBODcR02Y6ZVjbe78ifppiNO1wK4THX0sfVYVIh5
-	 2GSMF1OHDIEc1FfL5v/R/M7JQCJRcO0FoOImxDu45W9HFmeYJrclzkGL3JARsasBHbnHM
-	 kTv0ZsoWZiVWmdxmuiunO/lYxw9Tm0Q0cbFuMg/Tjjpx7QJ0JZ9NTlgrDNrZY7pnqOg==
+	t=1795053032;
+	b=fJX9kO+EQWWekZO0Od8XBnaCD9w3tfZHt2gZqI4DayXwDcDXNRUyt2l9Cm7PGcsxB2cD
+	 M96o5jT+9GjRtUgKJeF2l9FTjf5rbZbuF3dUUfQ0qA24nl207nnnhEAikOL8gdWMEu39v
+	 xGX+4pARaNewDRHMdo3mvrutSGGVBFihD1KriN8kZY0DuIHNvoJHm4iipfUlHKjUAJYEB
+	 qZM4wenK2CMrFI7BjpdM2RzHnIsvnVbGOblFPBQnIeRixJLUW9y+1ezq9IjYZnD+udFMj
+	 +o4C/jUXsDGyQ4IGH8tTojU9YkDF5FcA40RS2DSZDzz1kYR5RMuA8jktmMFd02YmHtg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cr5VuvsN4al45xdsdymBUO1r6C4gYLH+o1HF7c2x8IM=;
-	b=0CXfJaSfSbEKcS5bBrC9+77+75OvA9pxDePkyo1646Mb8d4gS68q2vM3Ls3wPYR/uLQV
-	 3Rx8TclsbFU+CKnrMt3Kg8yvBeAW9gQl8zAPHbAf1CGxbKO5D8LThLzpKZEyOwNiPls6W
-	 WlOdfk1khSIKLpLqSTsdrJIDvXziLZbrh3NI7Jjqn0r88kg/WMionA88+iOkRlMcWp44R
-	 JtQq3CPHtta3zkqhW31G7MKI8FKzpA2d1FmN31EyH47yrYgjc8iEPyJnLGEfX5bZKQrmL
-	 DR2PyfdQVBDTDVB48kpzddiBYv04bN+jidxBwJXROlUa05EOl3qE9sNk4zrZ98Yj4rQ==
+	bh=5iv1Nq15iEjKsHl8I8usPW+EN+ZKZRR0f7CJK//N7XM=;
+	b=5H6VXxRC/nsolEdbyexkOPWgcIW2CSH8lbreklMwyEJ4rBeJLr1pRoNTy3zhVyS/t1tw
+	 tzyd9xBmkxm6vRTRO6WxCqHi6w/VrPqXa95T56IuFGw7vGEYO1wrwnxbcFqPBfLBLTZp8
+	 4xaJc+ditCUWpCDIiP0+ttognU9iTNXylWpUNrCgoKSSxExclG+WuBYaoYhYZNblqRGgA
+	 DLlgpwcUzzWlJt5xrWgbMc8bczlA+T6ry9UXwG1Swr6jqWOrNYTQZgIgxbwcQBl0P5ysK
+	 TCHJnm0iFCs2BoLWt0CxoE91OYCF09zcr6T6SbmgdY7TUCqCATYbuzdVxSOnRlnwS2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNqKwmA5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmE5TLL5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18C7606A31C;
-	Thu, 19 Nov 2026 01:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D52606A320;
+	Thu, 19 Nov 2026 01:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bNqKwmA5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5581F000C4;
-	Thu, 19 Nov 2026 01:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmE5TLL5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8BA1F000C4;
+	Thu, 19 Nov 2026 01:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053029;
-	bh=Cr5VuvsN4al45xdsdymBUO1r6C4gYLH+o1HF7c2x8IM=;
+	s=korg; t=1795053032;
+	bh=5iv1Nq15iEjKsHl8I8usPW+EN+ZKZRR0f7CJK//N7XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bNqKwmA5LGf6G3BrjLCXvk0q8QLnhuY6MLC8IXlKpky4LlrDL/5Y44HnqwRBYJcOr
-	 LMUA8mqrSx83w7luMsH8l17DswQInvqmo9fyqYY+WkdXULPx2Iqny0hfatsflR/b6U
-	 5G9HFhHvvCN82ft6H9vamLwx/N0zN/rKoCzNcIy0=
+	b=vmE5TLL5guVyiZJXrX22/b6mmsVn5GcPXXwG6utqeEr/pRc8ELQijahF6iO+6+HUS
+	 oVVzwxZXQVnHA3X1OHICaAiqbjLfg8R0H6Wosao148lSMgssyzRpFtSCgJ63pGknaR
+	 aC66hAQgJQbIptYgIF4d3auHsBxheKzB5GmVyKKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VeroFess <coderzeng@hotmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0772/2214] smb: server: size directory name conversion buffer correctly
-Date: Wed, 18 Nov 2026 15:40:48 +0100
-Message-ID: <20261118150042.553811946@linuxfoundation.org>
+Subject: [PATCH 5.15 0773/2214] smb: client: fix fiemap wild read on empty truncated response
+Date: Wed, 18 Nov 2026 15:40:49 +0100
+Message-ID: <20261118150042.589971811@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,57 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VeroFess <coderzeng@hotmail.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-[ Upstream commit f1f37834eaba5904103af1f18afe3510c7e9dc71 ]
+[ Upstream commit f5baa17a0f316c235d61623ac8e8fb32c2b3c0cc ]
 
-A 2048-byte ASCII directory name needs 4098 bytes when converted to
-UTF-16, including the terminator. ksmbd_convert_dir_info_name() caps
-its allocation at PATH_MAX and writes past the end of that buffer.
+smb3_fiemap() treats -E2BIG from SMB2_ioctl() as a truncated range blob
+and loops for the next chunk. If the server reports
+STATUS_BUFFER_OVERFLOW with OutputCount == 0, SMB2_ioctl() returns
+-E2BIG with out_data == NULL and out_data_len == 0, and the existing
+length checks accept the empty result. The loop then evaluates
 
-Allocate space for one UTF-16 code unit per input byte plus the
-terminator. Use kmalloc_array() to check the size calculation.
+	next = out_data[num - 1].file_offset + ...
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+with num == 0, reading 16 bytes before NULL.
+
+Reject a truncated range blob that contains no range, so the resume
+offset is never computed from an empty response. Also require the last
+range in a truncated blob to advance the resume offset without
+overflowing, and to stay within the requested range; a malicious or
+broken server could otherwise make no progress or underflow len and loop
+forever. Free the previous response buffer before retrying.
+
+Reproduced on 6.6.87.2 with a malicious SMB2 server that answers
+FSCTL_QUERY_ALLOCATED_RANGES with STATUS_BUFFER_OVERFLOW and
+OutputCount == 0; an FS_IOC_FIEMAP ioctl on the mount oopses in
+cifs_fiemap() with CR2 = fffffffffffffff8. The code path is unchanged
+on mainline.
+
+Fixes: 2f3ebaba13ce ("cifs: add fiemap support")
 Cc: stable@vger.kernel.org
-Assisted-by: gpt 6 sol with daybreak blue
-Signed-off-by: VeroFess <coderzeng@hotmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: replaced KSMBD_DEFAULT_GFP with GFP_KERNEL to preserve the existing allocation policy ]
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/misc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/cifs/smb2ops.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ksmbd/misc.c b/fs/ksmbd/misc.c
-index 11314f7c622a6..42fa55c0027d6 100644
---- a/fs/ksmbd/misc.c
-+++ b/fs/ksmbd/misc.c
-@@ -322,12 +322,13 @@ char *ksmbd_convert_dir_info_name(struct ksmbd_dir_info *d_info,
- 				  int *conv_len)
- {
- 	char *conv;
--	int  sz = min(4 * d_info->name_len, PATH_MAX);
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 348168c9b7617..2f2789243729d 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -4167,6 +4167,15 @@ static int smb3_fiemap(struct cifs_tcon *tcon,
+ 		goto out;
+ 	}
  
--	if (!sz)
-+	if (d_info->name_len <= 0)
- 		return NULL;
++	/*
++	 * A truncated range blob must contain at least one range, otherwise
++	 * there is no offset to resume from and out_data is NULL.
++	 */
++	if (!last_blob && out_data_len == 0) {
++		rc = -EINVAL;
++		goto out;
++	}
++
+ 	num = out_data_len / sizeof(struct file_allocated_range_buffer);
+ 	for (i = 0; i < num; i++) {
+ 		flags = 0;
+@@ -4187,10 +4196,25 @@ static int smb3_fiemap(struct cifs_tcon *tcon,
+ 	}
  
--	conv = kmalloc(sz, GFP_KERNEL);
-+	/* One UTF-16 code unit per input byte, plus the terminating NUL. */
-+	conv = kmalloc_array((size_t)d_info->name_len + 1,
-+			     sizeof(__le16), GFP_KERNEL);
- 	if (!conv)
- 		return NULL;
+ 	if (!last_blob) {
+-		next = le64_to_cpu(out_data[num - 1].file_offset) +
+-		  le64_to_cpu(out_data[num - 1].length);
+-		len = len - (next - start);
++		u64 last_start, last_len;
++
++		last_start = le64_to_cpu(out_data[num - 1].file_offset);
++		last_len = le64_to_cpu(out_data[num - 1].length);
++
++		if (check_add_overflow(last_start, last_len, &next) ||
++		    next <= start) {
++			rc = -EINVAL;
++			goto out;
++		}
++		if (next - start >= len) {
++			rc = 0;
++			goto out;
++		}
++
++		len -= next - start;
+ 		start = next;
++		kfree(out_data);
++		out_data = NULL;
+ 		goto again;
+ 	}
  
-@@ -336,7 +337,6 @@ char *ksmbd_convert_dir_info_name(struct ksmbd_dir_info *d_info,
- 				      d_info->name_len, local_nls, 0);
- 	*conv_len *= 2;
- 
--	/* We allocate buffer twice bigger than needed. */
- 	conv[*conv_len] = 0x00;
- 	conv[*conv_len + 1] = 0x00;
- 	return conv;
 -- 
 2.53.0
 
