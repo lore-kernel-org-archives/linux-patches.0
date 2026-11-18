@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037605;
-	b=0mW842HPoDdI6Tye9dpk7+1XrxWCxdl2u+DFZIS2qKk/y0TWhNvYWdGDLQpKiWdMhd10
-	 MewItvDUmHSTpjDIrUWmURFdJzuX7n79WYt+rMJQU/1JdcNPco5VTNIjlLhwe5ldMvbkf
-	 ejahsgs5vv/Xs9fnAx+7HjbS2k98wMu3WPG6spFgAC4y79/i1E1OqU9OZwBiqomzGUS78
-	 QfX4O+GmqibMXs0vf43RPWgIVo45U+hxT6GyWp0j4TQObrIdMDYw0UJ85ncTW6IyTN2F+
-	 IEcp/xmW4+1NQhRbRP1XJqaKSbDS2WOuyj7C2Tx6VI1/aJAKEAdODDvAd/oHkh3Mmqg==
+	t=1795037608;
+	b=DzZjfFEHtYtQMwQWFbymXmE0hdAqDEHcTd2ohK+JPYRSM4m5Mo+8q/y4tPI8vyA8YTEw
+	 zsG7fGjcrND0quajZeIMzvEjsjtwBlSozPobZpWlZXVYDn4HXL644zg/V7sr+iqu45RSz
+	 65j83oZ2wbYoV9OfGV+DmURuOtqs8k1FOYs7/KemxNMfZF1lcWb7YueBh2xfYuSy5qd2w
+	 CsRwFnmIy9gF/Z8fTdwvf1nSA8nIyaD6QiFZPbiPigpg2vurai44aLJd1guy90XJFQmTw
+	 qs133OIiS7gU+k8KQc91w22mmpVhUpAUj5t/g3sQPQCE2CB+LwLRTHKo5OrAa8YyLYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4r/aQW+3aaF8FXN2qQIrvPGxtLBdd2ErGtpXQ7pGTQ8=;
-	b=rnzsCuacqTGaZp6w82y/6TJgvJWMIxcF6XToWcVtNJZyiyvXQtJ/xr4oYurjZnz2hABI
-	 NFpqHI4ILny06Zrj85A9IiGYeWKq/2Ttisv8jNyJfQr4hxw+729MwofW525Grmcwh3Cc7
-	 z/xQdu7tUGoAC464a8JlFjNUZoka8fdCu0MRHnLsTZaawhq+EQglJxFy+Uf2enPh5No40
-	 ckAXWsmVZRzz+goprah9nBhgMgal2CivgkkSb8y+ILWE7W4hd0xFVnhZuSOVKwcbWu8O1
-	 q4jPKZw1z5VexJkbu884rBTqA945FmV+CYBh0qpFCBq5Wr4ebm2v467eUXNC5h0dtRw==
+	bh=v7my5SIJZPiPkGkP9Z0vIKIfQ8sFo7AViNxh+gVDhRc=;
+	b=1mSXTSXzHn+667cM2DfVvfHfCO0pvEV2DxRV1Iwl3u0upwdXP9hFLnfGXw4v/xn6L4nJ
+	 kNhuQPerY14Vkr9o4WmXPH7R9KTWcvb/jb0UeD/6UmjuX+mXS72BZGD35OkI9rfYRYuAI
+	 IDwmHLw3miajeoy1G/7nNvVOWMtMLvU5FtxmGpvmnIuFFQ22p1piPl86EeYvWA9g4q4UL
+	 SqcTVLbz1h77/p/vOuSAAAIRN1+w1KAeGmGaov29FMHopsZ+bbYTc5GCV2gFLnK2JSC+z
+	 V6mc6saIpO2QbQ/J6i3L1EL8oUwOF1Wutd5YmqmKHKfR8QVxvkNOcfKoWDTx3QNIRkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0lwPH/zr";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6yeS5Rs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD1C606A325;
-	Wed, 18 Nov 2026 21:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AD4606A31C;
+	Wed, 18 Nov 2026 21:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0lwPH/zr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD421F000C4;
-	Wed, 18 Nov 2026 21:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X6yeS5Rs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22B41F000C4;
+	Wed, 18 Nov 2026 21:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037605;
-	bh=4r/aQW+3aaF8FXN2qQIrvPGxtLBdd2ErGtpXQ7pGTQ8=;
+	s=korg; t=1795037608;
+	bh=v7my5SIJZPiPkGkP9Z0vIKIfQ8sFo7AViNxh+gVDhRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0lwPH/zrdE/H+y+98gU2hzKlvlVR0u2dOx2I0jKi5HHKYWCJQHJLbSVr3NAbJQBIf
-	 aYKvRt3NqK/PpyMEuXxe5PBChjqATUb1AGHCHA5+a8lkTCUVh8OVMUCm1sC/pZ7R6I
-	 PiJux5pORUG3zyNDAq43UJBEuwChTvfM1HcKrcpQ=
+	b=X6yeS5Rsrot4/d0bJDsl2q+Lf1RdG/ULe7VgLrQWGkI7Vj8xBsiXBSOgkImc0ILzB
+	 7VRa0BGvUiIYetslB0t1V8CzX8JbnP+GtmmjzAnf+Byu+VAekQVap1kZYnrWRDBzF0
+	 HHGLkaBUKAm/3XZoFj5RKOFGAGhfFFQZ8KDpHJeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Aleksa Savic <savicaleksa83@gmail.com>,
+	Jack Doan <me@jackdoan.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1455/3318] hwmon: (corsair-cpro) Cache fan target only after a successful command
-Date: Wed, 18 Nov 2026 15:34:37 +0100
-Message-ID: <20261118150404.545343592@linuxfoundation.org>
+Subject: [PATCH 6.6 1456/3318] hwmon: (aquacomputer_d5next) Check maxcollection when probing AQUAERO devices
+Date: Wed, 18 Nov 2026 15:34:38 +0100
+Message-ID: <20261118150404.573945311@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e2c26431b4e47892378582a414b4bbaa9edf1798 ]
+[ Upstream commit b7743c6dbe3ab94045164ef298f65cfb9b0b450a ]
 
-set_target() updates the cached fan target before sending the command.
-If the command fails, subsequent fanN_target reads report the failed
-request instead of the previous value. For example, after successfully
-setting 1200 RPM, a rejected request for 1800 RPM returns an error but
-leaves fanN_target reporting 1800. A failed request also replaces
--ENODATA when no target has been successfully set.
+When a USB HID device matching USB_PRODUCT_ID_AQUAERO presents a
+malformed report descriptor, an out-of-bounds array access occurs in
+aqc_probe() due to an unchecked index into the parsed collections array.
+During device initialization, the driver distinguishes between the
+multiple logical interfaces exposed by the Aquaero device by evaluating
+the type of the second element in the collection array. The driver
+unconditionally accesses hdev->collection[1] without verifying that
+hdev->maxcollection is greater than 1. Because the collection array is
+dynamically allocated by the HID core based on the number of collections
+found in the report descriptor, a crafted device exposing fewer than two
+collections causes an immediate heap out-of-bounds read or NULL pointer
+dereference. This leads to a kernel panic during the device probe phase.
 
-Update the target cache under the existing mutex only after
-send_usb_cmd() succeeds, as set_pwm() already does when invalidating
-the target. Preserve the previous cached value and return the original
-error on failure.
+Add the missing check to fix the problem.
 
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
+Fixes: 2c55211104b4 ("hwmon: (aquacomputer_d5next) Support sensors for Aquacomputer Aquaero")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Link: https://patch.msgid.link/20261020160941.36787-1-pocj8ur4in@gmail.com
+Cc: Aleksa Savic <savicaleksa83@gmail.com>
+Cc: Jack Doan <me@jackdoan.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/aquacomputer_d5next.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 197d7b6a00b7e..2f4db6ce11516 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -208,10 +208,11 @@ static int set_target(struct ccp_device *ccp, int channel, long val)
- 	int ret;
- 
- 	val = clamp_val(val, 0, 0xFFFF);
--	ccp->target[channel] = val;
- 
- 	mutex_lock(&ccp->mutex);
- 	ret = send_usb_cmd(ccp, CTL_SET_FAN_TARGET, channel, val >> 8, val);
-+	if (!ret)
-+		ccp->target[channel] = val;
- 
- 	mutex_unlock(&ccp->mutex);
- 	return ret;
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index 023807859be72..e9207cd6063ee 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -1533,7 +1533,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		 * they present. The two other devices have the type of the second element in
+ 		 * their respective collections set to 1, while the real device has it set to 0.
+ 		 */
+-		if (hdev->collection[1].type != 0) {
++		if (hdev->maxcollection < 2 || hdev->collection[1].type != 0) {
+ 			ret = -ENODEV;
+ 			goto fail_and_close;
+ 		}
 -- 
 2.53.0
 
