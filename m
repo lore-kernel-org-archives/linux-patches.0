@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053853;
-	b=gUI7g1pSylzCn1v5hdPMaaIzpzvCIaWWgprYLQG6tTPLs2hOCg3PQcbRCLU1Ys9EdRDm
-	 M+bVNxfxGhWBtLbcrYhGwCfZpsUpbzgJo5gih2wzU9bXvErO7wA22mZOYubT7vzPEywUs
-	 FBkXW/1U8EV/TwNlWU++DU6FsEjl2JBzyBIAmeDLQhLzv+dx+Bh6ll2t9DAnqmAKBBp5Y
-	 5bmD/kga/VAmdvivJuWGHiBuV8x7LDaB9We0um/3mBS20ZVaXFdWs3oivHyS2VS81K94r
-	 iM1yikckOTAlbQkbbBQN/B+16LRuLWVxHyIkUhyWQ9kX+2yVAE7Oa2mo1OzBzk71u5A==
+	t=1795053856;
+	b=eBHVOQUzLI0V38wH2OIQqUZ5FkLWG+lIPeW6u/hoPWMQpu61ymO4NpfISQST0zj12Wb/
+	 5xzz02N8x/d3VaXbFfo3RvGrxpOtowFv0/2IiaPVm/jBKh1Yq61dSt/7lV/2vRGtjE7YJ
+	 aDoP/qd6sFW8zfY0LAdzZZPz169ItcLn7BXw9aSkXDbvlui5xovwGenDjdw0JgOQvTkII
+	 Mv0nnSqmz6l4BdcZaZk65i4W0F6cl2x/kyzv6lkdrtTM4kq6OGCIMndiE+lpakEz3wRyJ
+	 IAvklx+2zJQRfgE9wRdFVjriB7AI9xnl0MhGOKGaPoZhEXeQG6jbrwDTgkbqlhERtkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oHcykKdbWCCf6KXfotvmo/7+xKu39VwDXCAK77zuqkY=;
-	b=r9lHylWN95WWCHjQ4FZfmTTwD/ri+UyA26WTr7i2NZAWZ7Hq4xjMS1Mb7KnC0og1Vbpg
-	 MwXjzi7igtzxNYpmqE2XXs3Y3c09CFXnRtp9k5hIML+ga3k+Y1+5Yr+jL3wFpMoM0Fy9B
-	 vd97a5WDne3EGasH0EiyP6RJf0M9YE+7zToPSC+gyKsjZVk3JHr2mpjxHeJ/3r8uisIXu
-	 1WJUE64vr7wSUAG6QbNCJK0OM97bI1/mI8Sw9nF/W5MheLEK+9GlILySy4mexp4YbUTse
-	 KzwdyJuL4cRjCcQuY3LGvhqHwGnIK8XboruO7aW/3EZImQ9dLHKgHymAYNngkE9Eepg==
+	bh=r9Zk8yIdJwfBYp/t9Mt/5SMUnLxNEv5JnMqKRpDOa3Q=;
+	b=H6P/AZ3LF/OTj49wBt+KayjZLCq+1Gm2I2trobkkUgufhjYzFA4NLLe7p5nS0HmmjE6X
+	 HJa2FCRHlR84QLML6VhwN1zHjY+WE3oriWPqarYfu46CJnQxi1NQigiACLWMR2RQ8o/QN
+	 KkkdIVstmLn6bJXCuIJZGZE5F+S63K7G4hK0wNmtF5KSslBYUKqYmsDFC9SYmV1p4EUQT
+	 J9wuyQZKSb0TyBvxrUKlEeBEFV/qR35ByItt0XUdHWS+KBpu58I6+2XyQQ+gSo2zQNYg7
+	 u1O1N7Yrq1ou53fJnfdM7ICPQ9P8VCF391ooSyi9xVf6N4JBukAytudKp+4onooHDkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcWYWNMR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="QAbZ0G/O";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96D0606A325;
-	Thu, 19 Nov 2026 02:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF84606A32C;
+	Thu, 19 Nov 2026 02:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcWYWNMR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDCC1F000C5;
-	Thu, 19 Nov 2026 02:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAbZ0G/O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2405D1F000C4;
+	Thu, 19 Nov 2026 02:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053852;
-	bh=oHcykKdbWCCf6KXfotvmo/7+xKu39VwDXCAK77zuqkY=;
+	s=korg; t=1795053855;
+	bh=r9Zk8yIdJwfBYp/t9Mt/5SMUnLxNEv5JnMqKRpDOa3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JcWYWNMRAY2ceh7v3Vzb71RvIgG8GGCQyTNAAbT4ihRpowXijJ87g0kdlb5Es8+EU
-	 0Db0WnYInB/NBubP/6ktnQ62/i7m1xBSJzmQ513EZyb0op2YZaL6cwv01ud1eSd0Y2
-	 CDVYR12Ye7o8fFhrEA6GCu9O996lVcOKXPmIbU4Q=
+	b=QAbZ0G/OR6MBBr0P47z4fQgPCSL0FjexKTfoDQGnTdj7VAo9VbzMF6/le+jcI0iR+
+	 yA5aErzTI68TKcIp7Bmu/2xAhX9AIYYFfavPjccxU+axqzYlu5mkYA8vRIiMifugW+
+	 yFdJjbCBmRI5Frq3pyxQcpbI1ohyXhsDMwD0AOs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Schumacher <ts@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Xu Xin <xu.xin@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1064/2214] s390/pci: Add error cleanup in zpci_directed_irq_init()
-Date: Wed, 18 Nov 2026 15:45:40 +0100
-Message-ID: <20261118150054.852347805@linuxfoundation.org>
+Subject: [PATCH 5.15 1026/2214] mm/madvise: fix data loss from MADV_FREE on a KSM page
+Date: Wed, 18 Nov 2026 15:45:02 +0100
+Message-ID: <20261118150053.389416437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,83 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Schumacher <ts@linux.ibm.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 769f66f595c11185c66913ea5d96420504bfebc3 ]
+[ Upstream commit 22d043c1da48d6c7274f9dd900714b6d58b7b9c6 ]
 
-If per-CPU airq_iv allocation fails in the loop, previously allocated
-vectors and arrays leak. Add proper error path to release all resources
-on failure.
+MADV_FREE can clear the dirty flag of a singly mapped KSM folio. The
+folio remains in the stable tree and can gain new mappings without being
+dirtied again. Once marked lazyfree, reclaim can discard data that those
+mappings still need.
 
-The error path frees zpci_sbv, but SIC_IRQ_MODE_DIRECT has already
-programmed its address into the hardware. Set the directed interrupt
-mode only after all allocations have succeeded, so a failed init leaves
-no freed memory registered with the hardware.
+KSM always marks a folio dirty when converting it to a KSM folio in
+try_to_merge_one_page(). Marking a folio lazyfree clears PG_swapbacked
+but leaves PG_dirty unchanged. Preserving PG_dirty makes reclaim restore
+PG_swapbacked instead of discarding the folio. This also protects folios
+that were already lazyfree when KSM converted them.
 
-Fixes: e979ce7bced2 ("s390/pci: provide support for CPU directed interrupts")
+Skip KSM folios before clearing their dirty flag, checking under the
+folio lock to serialize with KSM conversion.
+
+Fixes: 854e9ed09ded ("mm: support madvise(MADV_FREE)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tobias Schumacher <ts@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-[ sashal: adapted the changes to existing zpci_ibv naming and older s390 allocation and IRQ-control interfaces ]
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Xu Xin <xu.xin@linux.dev>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-34-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adapted the folio-based KSM guard to the existing page-based APIs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_irq.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ mm/madvise.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index 3823e159bf749..5281772424e86 100644
---- a/arch/s390/pci/pci_irq.c
-+++ b/arch/s390/pci/pci_irq.c
-@@ -411,15 +411,10 @@ static int __init zpci_directed_irq_init(void)
- 	if (!zpci_sbv)
- 		return -ENOMEM;
- 
--	iib.diib.isc = PCI_ISC;
--	iib.diib.nr_cpus = num_possible_cpus();
--	iib.diib.disb_addr = (u64) zpci_sbv->vector;
--	__zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
--
- 	zpci_ibv = kcalloc(num_possible_cpus(), sizeof(*zpci_ibv),
- 			   GFP_KERNEL);
- 	if (!zpci_ibv)
--		return -ENOMEM;
-+		goto out_free_sbv;
- 
- 	for_each_possible_cpu(cpu) {
- 		/*
-@@ -431,13 +426,30 @@ static int __init zpci_directed_irq_init(void)
- 					       AIRQ_IV_CACHELINE |
- 					       (!cpu ? AIRQ_IV_ALLOC : 0));
- 		if (!zpci_ibv[cpu])
--			return -ENOMEM;
-+			goto out_free_ibv;
- 	}
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 3079da08c19de..668d2fa835d4e 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -651,6 +651,15 @@ static int madvise_free_pte_range(pmd_t *pmd, unsigned long addr,
+ 		if (PageSwapCache(page) || PageDirty(page)) {
+ 			if (!trylock_page(page))
+ 				continue;
++			/*
++			 * KSM pages can gain new mappings at any time, so we must
++			 * not clear their dirty flag.
++			 */
++			if (PageKsm(page)) {
++				unlock_page(page);
++				continue;
++			}
 +
-+	iib.diib.isc = PCI_ISC;
-+	iib.diib.nr_cpus = num_possible_cpus();
-+	iib.diib.disb_addr = (u64) zpci_sbv->vector;
-+	__zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
- 	on_each_cpu(cpu_enable_directed_irq, NULL, 1);
- 
- 	zpci_irq_chip.irq_set_affinity = zpci_set_irq_affinity;
- 
- 	return 0;
-+
-+out_free_ibv:
-+	for_each_possible_cpu(cpu) {
-+		if (zpci_ibv[cpu])
-+			airq_iv_release(zpci_ibv[cpu]);
-+	}
-+	kfree(zpci_ibv);
-+	zpci_ibv = NULL;
-+out_free_sbv:
-+	airq_iv_release(zpci_sbv);
-+	zpci_sbv = NULL;
-+	return -ENOMEM;
- }
- 
- static int __init zpci_floating_irq_init(void)
+ 			/*
+ 			 * If page is shared with others, we couldn't clear
+ 			 * PG_dirty of the page.
 -- 
 2.53.0
 
