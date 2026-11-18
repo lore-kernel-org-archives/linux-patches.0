@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032878;
-	b=ebQaQ0hzc/H95RpPpKOHIrzkhy7uaztl8IJmTcDEYZ/iwOb/m+aCWn8ecoQZKPWkXGvB
-	 exdxvi+VQQKML4O+yO1LFsVMRMA0Q3IvRAoqXlfOKK0HR2pcoTnZVL1tQIHQOLylX1wqX
-	 Yhp5lwNsjJNY4egOxcVEJeQNZfw//QJniw1p9JNuSR14lzvAsKfwGmZ3n9mysSLsgQgaX
-	 Wle+Yz3DOzLToPQc3wtuVT4WWhR862t+mpkZTp8DNA0OAx73RYDOraEi2yAqezrs57UJx
-	 vinDD/XLtn846gA4U1tc6PKV4m4pFHf8eHk1zW1SsrlOKK+prHU4rWvgYn2tsPKkayQ==
+	t=1795032881;
+	b=sQm+3aAWl+uZzM74B5KGmEBGhQu4hM6y4GQlMlKlWUJ4yDTQv/B0WV/yEr1uWhknKlBo
+	 y3zm18MM/OBxx3/A4eWcSpLJb6UHDWiJjALxy079dYJZqRk73XFlLM9YqNwnG/aDAgHPD
+	 pJI047QFjD4TVKofoLPInIoyqFAcc71kS8/9y+5L/iN2dreCX/Q5o8rDJoGbAkQvOMCtn
+	 KpF2N67aw37v8MRKMLMoep0v1s7Zj3Y5wHp3eUY3+3GNnC6NlKf2EF3qSqnvRf6MzuzYK
+	 KbsObPnIIgFIvWhrHOdMezFTrtSfpTotuSLToIXNMdFXCgNUtbHjp7vh8HurIMBLvnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032881;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DhaHRGCmJmhYBhZXWzchGHKr4b3hcRUDruvIPMoN21c=;
-	b=Kjy3P3xsexf2QghMACz6uVsOfZvlgF4fSaO0mqcJus9sGLL8hTm2BYE+Df3OXh4FkoT5
-	 XQjPsbci2cE/hvqWZjjVNJhu4+Pu6IpPs51OU621BdWzN0eAcwsupEqtykwsRVAOcGCVn
-	 xyjG5ge+TlVVtRUCA/6BvJ8I6PMNqJtCWBPSGk5/++gxvtWIg/+yPEGWL9/7CXFZbfHcb
-	 MGdkEKrU30uW5MUDoH94OPx+YgyLErQcoBNaYatrrhWacYNfLVUoKSGO+5kBgeFZpOwad
-	 FrO4SAfiJ2zLgpZXTDSuejXH2Qkx/lRZ2eeVgf5XrTl1FZJI3ukgkzOadlIjSn87YLA==
+	bh=X0gLy+PuyQouFVH4NMy3LEj15Geh3eNKenrdW3rjqNo=;
+	b=c3cu4dqlva7gPXzuQgPVD9icLFoJnDHg5W2TDAugW4T9htA63Ny1RmwG9fpHKHrF4VSt
+	 EE38Qc7UVNl8zYIzRYh0I2qHLDW26n5FceBKQwPR+r44+KU7DtDi+v+V7toB8XYzo1DZy
+	 nWRHaZYwHAjTfVY7bokN/G1MibB9c1vUMMLLgNKp75uW+AHfV2u537sQL8wDEstoJ65tg
+	 h/3z+Qz2LJnzkl18JWUjQ7qPDtJSBj3unAsAU0+wuHPYrZmNteRhbAnMJwIQJw7VZ6rqg
+	 2b0i4D6h36EuUuo17GGHlnz7rY4FTfdqZzQx1CV65eOkEEHqFUt/vWuXrVnGAvmXWBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DKtvC0pa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tx1R+82N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E0E60A260F;
-	Wed, 18 Nov 2026 20:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1141606A33F;
+	Wed, 18 Nov 2026 20:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DKtvC0pa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088E51F000C4;
-	Wed, 18 Nov 2026 20:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tx1R+82N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCE61F000C4;
+	Wed, 18 Nov 2026 20:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032878;
-	bh=DhaHRGCmJmhYBhZXWzchGHKr4b3hcRUDruvIPMoN21c=;
+	s=korg; t=1795032881;
+	bh=X0gLy+PuyQouFVH4NMy3LEj15Geh3eNKenrdW3rjqNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DKtvC0paAx9rMXxn2GIMaqeXsCj3wsK+In6pskF6k/jOA9w4mud3SSwgO+Sc+ithj
-	 TIpTO2vcDd/e1C8dFnkh1L+u895JX9wy3FUDDxEbxq5VAtNSMiZo7l2MoM3PP2VphE
-	 Vsh+tADW/tEmX36rji4NGffeQZeoH5rOucmPjYFw=
+	b=tx1R+82NvMDqAL/aRB3tZmXRy3+KpfbdzD5RdtKDbg5QCAfHk5gI7pI49No3O68ve
+	 6uIWrm2aSxBD9ajLr1TFfdh1nWf6mPRf12kW0g6a7meLzR9FBsXOacV42yXSTxK8GC
+	 PjB0Q/pEsrLka8Hrb5TiVkL5XCYK94l15J4nWAgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
 	Tal Zussman <tz2294@columbia.edu>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1569/1756] ceph: fix writeback_count leak when a bounce page allocation fails
-Date: Wed, 18 Nov 2026 16:01:36 +0100
-Message-ID: <20261118150112.156992619@linuxfoundation.org>
+Subject: [PATCH 6.12 1570/1756] ceph: dont clear write_congested when collecting folios
+Date: Wed, 18 Nov 2026 16:01:37 +0100
+Message-ID: <20261118150112.225544671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,55 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 7807710d88ad03e7ca9b5f79f518f040db2a4e09 ]
+[ Upstream commit 77ff2ba4630b9e9e9f73bbaaeb675638b2c20dd0 ]
 
-ceph_process_folio_batch() calls is_write_congestion_happened(), which
-increments fsc->writeback_count, before calling
-move_dirty_folio_in_page_array(). If the fscrypt bounce page allocation
-there fails, the folio is redirtied and never makes it into the page
-array, but the count is never dropped.
+ceph_process_folio_batch() assigns the result of
+is_write_congestion_happened() to fsc->write_congested for every folio
+it collects. The code it replaced only ever set write_congested to true
+here, leaving the decrement paths to clear it once writeback_count
+drops below CONGESTION_OFF_THRESH. The unconditional assignment means
+that a sync writeback that runs while the count sits between the off and
+on thresholds clears the flag on its first folio, and background
+writeback resumes early.
 
-write_congested is only cleared when a decrement falls below
-CONGESTION_OFF_THRESH, so the leaked counts set congestion early and
-eventually leave write_congested set for good. Every WB_SYNC_NONE
-writeback then returns 0 and background writeback stops entirely.
+Only set the flag here, as before.
 
-Bump the count only once the folio is in the page array.
-
-Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260902-remove-wait-on-page-writeback-v5-0-0b512e77e75b%40columbia.edu?part=1
+Fixes: ce80b76dd327 ("ceph: introduce ceph_process_folio_batch() method")
 Assisted-by: Claude:fable-5.1
 Signed-off-by: Tal Zussman <tz2294@columbia.edu>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ceph/addr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index cb791f468d376..3edb0f7097aab 100644
+index 3edb0f7097aab..947932a51aa0f 100644
 --- a/fs/ceph/addr.c
 +++ b/fs/ceph/addr.c
-@@ -1387,8 +1387,6 @@ int ceph_process_folio_batch(struct address_space *mapping,
- 		doutc(cl, "%llx.%llx will write folio %p idx %lu\n",
- 		      ceph_vinop(inode), folio, folio->index);
- 
--		fsc->write_congested = is_write_congestion_happened(fsc);
--
- 		rc = move_dirty_folio_in_page_array(mapping, wbc, ceph_wbc,
- 				folio);
- 		if (rc) {
-@@ -1401,6 +1399,8 @@ int ceph_process_folio_batch(struct address_space *mapping,
+@@ -1399,7 +1399,8 @@ int ceph_process_folio_batch(struct address_space *mapping,
  			break;
  		}
  
-+		fsc->write_congested = is_write_congestion_happened(fsc);
-+
+-		fsc->write_congested = is_write_congestion_happened(fsc);
++		if (is_write_congestion_happened(fsc))
++			fsc->write_congested = true;
+ 
  		ceph_wbc->fbatch.folios[i] = NULL;
  		ceph_wbc->len += folio_size(folio);
- 	}
 -- 
 2.53.0
 
