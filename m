@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061489;
-	b=nzlKs59rJ+b8kmvT8JlTbltJzYuszpd2KggjZLvSMiNNKY0aVPKTID0d/dhEyCZbcm8D
-	 IgkD40u+sqd7PSWwIfH08a3JjNE+InOQd+fOZACkcpJ8ykYKzppYZvDL6cIfOfKNAuzjx
-	 PK+rhnR4fGoQyRKXy9HEiIt2/dt5m6li4Syy8nAOke021SzoUeWkdn+snJ0HvR+wvWk4q
-	 5OEMB7+RGh0iOzcbNVG8V6sWNHTN64csHTI5ymFP1YgnnewV2uF7PgjLlExQGh0JiWPu4
-	 EaxybDtsVYDlxYH/UP7iTZJaZF4reyGyPywlTLf+t6a2gNx4Fm449fxTUMUhb/kzijw==
+	t=1795061492;
+	b=jg3GuSdzc0aSjS33hMYMDaRMdMkZAeex+Vrl9dk97xw3iOI8Utmzq9gixn52gzqdsOoP
+	 BBwjMB9wUyze0s5pOwCBWqzdjPoZUOh0rWT+kDBDm9ljMXt0Tenms9Vdk69AWxtI8H899
+	 uqpSNHKzCuf81aSMV3qA69nNNrs6FlW0DbFiHfmLEfkSX8/ic7xYNVUGfwqKswO1j5m30
+	 el1Xk47G0Qia1e6/pzm6I4afGk3lHng6QCmlwy9xYFm6iLsQQFlE3nYWWND6hx1dP+ppX
+	 WsbjQSdxplC25cr4zq4Or4QnSmQYi16XF3leVZ/Zq1a4oK0VL1F5PqyxVEOquxRqbVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ei/J9Y0U/1CZOAcGzsCr2GB9JPMrIY7II2sUTxmLTFA=;
-	b=jyEYeaqyLhkKCEDVKVq698yRzjI8WUNaV0cG80VRFzhZjuUhC5PQW/eTau8kqjuoy1BL
-	 kKWwuhwje0Og/EV7H+ZhTTG/LdlP8HIkoxDvEAbQ4NzYXflS0SHMnHy24DISn4oBRD+9e
-	 o8xh0N2hrpU+LRi1MPTbXOY9j347VLJuzi60Q54Zl8L8nuZebTFDqs1WfLOVjkDCxkIL5
-	 8TcEPZj4vqz0arcUtwD/SI+XT5WC2y3xBCYhoDPiUbwp4T0f1JyElrBygl5QInCoBCJUg
-	 hfDkw16KguyhIk6q1VDIHJ9XcgXxtSlN8ZO9WnVgCuALR/iiXexuK5V3z5KF3JG7r5A==
+	bh=r0GKlXLML1V4tohw/hPK4aGsUH7NM+ibDDCWzPwAAso=;
+	b=hImoliBzC2q1RPFHmImjioq57gyRDAa2nZJFJc4MWmgtkoZSirCfasAiV8SnmIS8xrjz
+	 fsPj/LZn8FtBkabmudIm2M4b1M+QR19fAHJY8XO1CN1x3Dp6fgTXMBF/CqCCwMG9IuIcB
+	 uOEZY4AzUF2xwT4D9WiAjltwqSWkJNR4YiqFAEaXz5hlKJapTpNc4kE0kNMwme5z+hj3v
+	 iZE6T5XB9gwlEXE8usYwpDd+uSy3877ndq01AiaAC8UVYXhBqzxvuroFfij6o/gNS2ZWN
+	 RGEn/tQUVBcG6UtSiU7hSFLunIPx6EHxKI9o4sK48Q0n0lK10KkJQ/zvhdkEV9mJMXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDnctuLV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkLB9BL4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC543606A33E;
-	Thu, 19 Nov 2026 04:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2899606A33F;
+	Thu, 19 Nov 2026 04:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mDnctuLV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341F31F000C4;
-	Thu, 19 Nov 2026 04:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wkLB9BL4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CDF1F000C4;
+	Thu, 19 Nov 2026 04:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061489;
-	bh=Ei/J9Y0U/1CZOAcGzsCr2GB9JPMrIY7II2sUTxmLTFA=;
+	s=korg; t=1795061492;
+	bh=r0GKlXLML1V4tohw/hPK4aGsUH7NM+ibDDCWzPwAAso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mDnctuLVhDH7iqLh+VH6kiWrDHr5q9u1hC9PrbfzJ4sYDpaIPSv1TMe6LDe/s3V+x
-	 Phkth5D7O8qbOrYAR334OSZIxcSdPrRg0sitgqfD0YOQv9/OinyfAG8bIaM63dZecK
-	 n1kR/Hg2ckbg1Mzdo9rkmyAo3d7EGQIgtrPqmEis=
+	b=wkLB9BL4OCHVu7wAE30NqTeRrHe9jDX4BcrF/VFqgQlvAhVeCd92qG4KjDcPFiROK
+	 C3uc8uNEdOwMXQ/gxoYVACI6zJqzdvYp2fbwSPgn21UR43iwonmTn4AUMfaxcVEiPL
+	 AaMTUrNR9c2Loc+S4W/T2ufSvD7fxXbx0tm1Lu0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jerome Glisse <jglisse@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1571/1848] wifi: ath11k: avoid IDR mutation during vif mgmt TX cleanup
-Date: Wed, 18 Nov 2026 16:00:09 +0100
-Message-ID: <20261118150025.322899483@linuxfoundation.org>
+Subject: [PATCH 5.10 1572/1848] mm/hmm/test: reject overflowing page counts
+Date: Wed, 18 Nov 2026 16:00:10 +0100
+Message-ID: <20261118150025.357336698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,72 +74,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit dc29226dada34a6d19af77b4b51e90f8a3a8de34 ]
+[ Upstream commit b59925301211ccc351d98d70b11f6d1b2c63150f ]
 
-ath11k_mac_op_remove_interface() walks txmgmt_idr with idr_for_each(),
-and its callback removes each entry belonging to the interface. Removing
-the current entry can invalidate the radix-tree iterator retained by
-idr_for_each().
+The number of pages comes directly from userspace.  Shifting a value
+larger than ULONG_MAX >> PAGE_SHIFT discards its high bits before the
+existing end-address check.  A request for a huge number of pages can
+therefore be accepted and processed as a much smaller request.
 
-Move the walk into a helper that uses idr_for_each_entry(). It performs a
-fresh lookup for every iteration, so each matching entry can be removed
-through the locked removal helper without retaining iterator state across
-the removal.
+Reject page counts that cannot be represented as a byte size before
+performing the shift.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-4-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+So far as ChatGPT and I can tell this doesn't cause an issue in practice
+but preventing this integer overflow is the correct thing to do.
+
+Link: https://lore.kernel.org/6f0d39089e938d4f53dc72632eb84aca34de7015.1789457465.git.error27@gmail.com
+Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Assisted-by: ChatGPT:gpt-5
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Jerome Glisse <jglisse@redhat.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Wei Yongjun <weiyongjun1@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ lib/test_hmm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index bd1a9b15e0ac8..a2a33dceae82c 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -3928,16 +3928,18 @@ void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar)
- 		ath11k_mac_tx_mgmt_free(ar, buf_id);
- }
+diff --git a/lib/test_hmm.c b/lib/test_hmm.c
+index e602053ec3ca0..dcfe420701a18 100644
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -930,6 +930,8 @@ static long dmirror_fops_unlocked_ioctl(struct file *filp,
  
--static int ath11k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-+static void ath11k_mac_vif_txmgmt_cleanup(struct ath11k *ar,
-+					  struct ieee80211_vif *vif)
- {
--	struct ieee80211_vif *vif = ctx;
--	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB((struct sk_buff *)skb);
--	struct ath11k *ar = skb_cb->ar;
--
--	if (skb_cb->vif == vif)
--		ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	struct ath11k_skb_cb *skb_cb;
-+	struct sk_buff *skb;
-+	int buf_id;
+ 	if (cmd.addr & ~PAGE_MASK)
+ 		return -EINVAL;
++	if (cmd.npages > ULONG_MAX >> PAGE_SHIFT)
++		return -EINVAL;
+ 	if (cmd.addr >= (cmd.addr + (cmd.npages << PAGE_SHIFT)))
+ 		return -EINVAL;
  
--	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, skb, buf_id) {
-+		skb_cb = ATH11K_SKB_CB(skb);
-+		if (skb_cb->vif == vif)
-+			ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	}
- }
- 
- static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
-@@ -4716,8 +4718,7 @@ static void ath11k_mac_op_remove_interface(struct ieee80211_hw *hw,
- 
- 	ath11k_peer_cleanup(ar, arvif->vdev_id);
- 
--	idr_for_each(&ar->txmgmt_idr,
--		     ath11k_mac_vif_txmgmt_idr_remove, vif);
-+	ath11k_mac_vif_txmgmt_cleanup(ar, vif);
- 
- 	for (i = 0; i < DP_TCL_NUM_RING_MAX; i++) {
- 		spin_lock_bh(&ab->dp.tx_ring[i].tx_idr_lock);
 -- 
 2.53.0
 
