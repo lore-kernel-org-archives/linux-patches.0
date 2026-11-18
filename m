@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028466;
-	b=5PwmhHBjofx7USBt5RLzMwwhmmzyPiwklgqWLtYP9o3Le7ornlYbLVfBXv/8+g5M7YkC
-	 zQcCVnjYRbsmSLJaHs9UkXFawE5qXCJXTNS1E1Gi/Oqm75bLju+0WKOhlR0Mip2A4OrJ0
-	 DJlllCwKTsP2LlVk51tWL/WjWXcG9zQBeME8nowSRoOTM3zN4r+eTzi64p0Fm2qWXafMA
-	 udgkceNhZQ4kyEYzmhd7oFrzhWvDf82NLa6TTGJMaTLTssOxJjEfP+HmbP+N78YZdYD21
-	 DqsbIsk/sgbbtROzVmu5a0XtvxquLt3Eru87NJQYGEuZQe1g66/3y5hRT2dyLtk99Hw==
+	t=1795028469;
+	b=M+ZcoHrTNLf61+537LshWWnZrfM2YM3YAjo8CJgjc6fNLi042KuAOJ4cHtpRcK45cQKh
+	 V0T2fD4Y0a5faDb7bZlYfJxFo3sAPS+0aWEYLb+NfPRpd4K6B8Himzmm/Ewp9+BxYllfS
+	 nJArZQl1krLQN0ej68py5Yf/EaKkSYwgcZngqHWXXFLsvlLCSteUWDO7KJaoCOxNzSliA
+	 sYwTS/M0ZdgYQJetCbNZpOgmtc9bqMyFUoIQCa34f41e9hjRda984kK2mDuBFtlkJHbRW
+	 0UDtbibqul1ZMaFtGn2SA/9VbkyBfn7EkaSSnlPRNM3JlglzX9E9fa9FQWVjfuSFn1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028466;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=FKpiB57BZt999fRgSOqvLgL6Ktrus0zAxgd4t9BjqlI=;
-	b=JNZ5fDwPq3K79m1GRGP089sfowGLBDOq0bvDghZsIRZ6C2s2ZoNtxDW5oselK30TzZQZ
-	 GJ5HKnOfqn+pIXysfFPiBdSEjXVi46kLdTTVnft8Gy9Lnl02wiAqE3zflfBkoO/pwYE/y
-	 BKNneghlXIjbnedxfvOUOhalJdRYL536Il5mClcu00bMOaC6XeNAjcMRB+Wa9I4mR0n4b
-	 gzbSfF4KhD0J/YRuAGstYLFtSLA7CRHxQzagHStekisRFjocO2fPEYxoeLHt/6YonOm36
-	 /Fp/DN8KGVRAGN9Ff+ffWFJz1rI+ox2EXKTSjZmvi+CJ6kUUCb3T7t5JJPPmXjFL1lg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=j6BCfzezr5X596b7rLI9NYZM79pECxcPWmuAybixAV0=;
+	b=Of4sNiwI60uGfWVz4bySZc/Vnmg45qynJYrs0+ggOpe7GjzVNXLR0pH4+X4W3/hjZZaM
+	 Yz6kvIcy0NZwTzgL9JXpwX8WV6pQDshvd7vsAH/HY/tloDRe5/Sa/yuaYMZ/qfDr2gYo3
+	 atLjev+bSBgber4EWw4pTPV8EGfaBC8lwL1pixFmh7xthI/drJBhhRbF+cZIyPcflI6xj
+	 zYC9rx5N4v3vezF9ubQA8eg8PLPiVAxIVCjk3C/BW/rT5tizv9HqWIKhQ80YMEtfLA4cJ
+	 +oMiRPvkuFROJcjBQMbTNziJV17uihj9A6jF9DTJQV2W1foNY/WxC1+FOB5dvW73sNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wKSR/FJb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSfkPk9Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F92606A330;
-	Wed, 18 Nov 2026 19:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C97D606A332;
+	Wed, 18 Nov 2026 19:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKSR/FJb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67DF1F000C4;
-	Wed, 18 Nov 2026 19:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSfkPk9Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30901F000CE;
+	Wed, 18 Nov 2026 19:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028466;
-	bh=FKpiB57BZt999fRgSOqvLgL6Ktrus0zAxgd4t9BjqlI=;
+	s=korg; t=1795028469;
+	bh=j6BCfzezr5X596b7rLI9NYZM79pECxcPWmuAybixAV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wKSR/FJbxm2OSEn96An1edgpMuOa+IvnXWeicgIRe5dwyvYEPOUlVCGcR02EwbdY2
-	 Ru8Pw5Y8nYgbsLa3V8yd6gtROdff7gXit67o3mE14tDYtUNBaX0k1FIwGR69+joUBH
-	 xCxDZjHHP0dpxpNbjQdGWgxcaVZbGabk7W1Y9kKA=
+	b=mSfkPk9Qdb5yZWeM6hNmNLYExea8Bqji2rZf/crG8CXB3U0aZC9DvkKfQ1G3VaOmm
+	 jWk6JUKka5bxx6CKHhL2+ojWXN7zYoPkFTemJ8H8cxeybzGLmj3Z2Yy2IpzVNa9gz1
+	 +nfMn2ersN/tr5+6B19NKmy3TAqP0NHPhqrnejSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@kernel.org>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 2136/2151] nvmet-auth: reject incomplete DHCHAP messages
-Date: Wed, 18 Nov 2026 16:04:31 +0100
-Message-ID: <20261118150239.486498665@linuxfoundation.org>
+	Brian Norris <briannorris@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 2137/2151] PM: runtime: Only queue an idle check for RPM-linked suppliers (part 2)
+Date: Wed, 18 Nov 2026 16:04:32 +0100
+Message-ID: <20261118150239.521147547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,51 +61,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Brian Norris <briannorris@chromium.org>
 
-commit 29e027774324dbd5321a67bbd16840e8f7bcd189 upstream.
+commit bd56424ce808fb1f92a4dc5bdeedc45b85c5d6cd upstream.
 
-Commit c9359401036e ("nvmet-auth: reject undersized AUTH_SEND
-payloads") only ensures that AUTH_SEND has auth_type and auth_id
-before nvmet_execute_auth_send() starts parsing the payload, but the
-DHCHAP path reads t_id before it verifies message lengths. A two-byte
-DHCHAP NEGOTIATE payload can therefore still trigger an OOB read that
-KASAN reports as:
+Commit be5755f023e7 ("PM: runtime: Only queue an idle check for
+RPM-linked suppliers") was incomplete. There are two other cases where
+we perform idle checks on non-DL_FLAG_PM_RUNTIME suppliers -- in
+pm_runtime_set_suspended(), and in cases where we failed to resume
+suppliers.
 
-  BUG: KASAN: slab-out-of-bounds in nvmet_execute_auth_send
-  Read of size 2 at addr ffff8880030d8364
-
-Require the payload to cover the minimum DHCHAP message length
-before parsing it.
-
-Fixes: c9359401036e ("nvmet-auth: reject undersized AUTH_SEND payloads")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: be5755f023e7 ("PM: runtime: Only queue an idle check for RPM-linked suppliers")
+Fixes: 5244f5e2d801 ("PM: runtime: Defer suspending suppliers")
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+Link: https://patch.msgid.link/20261103141442.v2.1.If69ddc515c2e9fd4338441e87688b9d690d2ef36@changeid
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/power/runtime.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -303,7 +303,7 @@ void nvmet_execute_auth_send(struct nvme
- 		nvmet_check_transfer_len(req, tl);
- 		return;
- 	}
--	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
-+	if (tl < sizeof(struct nvmf_auth_dhchap_failure_data)) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
- 			offsetof(struct nvmf_auth_send_command, tl);
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -343,6 +343,9 @@ static void __rpm_put_suppliers(struct d
+ 
+ 	list_for_each_entry_rcu(link, &dev->links.suppliers, c_node,
+ 				device_links_read_lock_held()) {
++		if (!device_link_test(link, DL_FLAG_PM_RUNTIME))
++			continue;
++
+ 		pm_runtime_release_supplier(link);
+ 		if (try_to_suspend)
+ 			pm_request_idle(link->supplier);
 
 
