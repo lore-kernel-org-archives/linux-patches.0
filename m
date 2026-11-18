@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049652;
-	b=EunF9Gb4W2BdczYuE7Hpy5PsxQfyb+QfQRJ/pB6uKdqTWjiLaQYnPvIOrKPknMcZQaf3
-	 RKdcmrJHOO/EdJqrycW93CyxNQ+PfJ8uKXK6r+EzmGYRJRamKd6EHC4A3k2Qg/S5+LPWK
-	 hMN+T9ofJYClBzGSveymhzEEyjgR4PYNVi/eRgdGOjVkg11qZr9HEQ8od4coipHvo1du4
-	 vF+durYdAUazqsbEirziqciChj0TpuXzanH6ojJucsmoNhnpMmO8v5RmWlQkLoNj5ad68
-	 F2hFpVDwJoyXlgY2wD1huEMGFkXdQKUVeqkRb4tW0Uqfx5gc1S3O6M3ddezWZso0fNA==
+	t=1795049655;
+	b=sAzJas5o6kk+Vd2pSw0JpL0pw+m0UKi7x23HXrDasn4BdCJBMKFBPrzPqpuXSBy1DA8+
+	 O6VYddexYQosS6FwAbCrUPZdCzQwVUyvEHGH8UiPljx8rPtWYQZvlQF6SRkNXgH9vz8uO
+	 CFe03/xaq/EU34iq5NITpC4ZrRUE0tniI53Zk4cQ+3Smk0udglHyvzX/H6mVlwwU1M9u/
+	 w1wuCOvh5z55jM5jYZXjqO0LGgxO0dGRSg2asr+kzWFHAux7FHA/tN9krqIdj8FyNu9Wl
+	 8XUOnOOr6x2Tzn2AgiM2nT0aFkGp+Dpw5pT+tWCE0wasypuahq/xOulAQVuRSPRyIVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1aNnSspcvn+NUqn9BzvbXfGXt2Q60NYcsA3rotpktus=;
-	b=BeQN5BGej0Q7AjO3iVZvo+cevcdSgOk49T0PHaBR5XzOArlN5ostBRUZCorrEOJH6Hcz
-	 j88ZXiyFrpHScEFkaxYPJVTX6qOfVOzVwC42t1Iayzdo+UqAbJUP+Wf/yGfIH74oZtNdH
-	 VMwctvOmT0tD/NouCFefcM8d8riYY4lFMl+MUvFrhUQcOFcnvCQAT9yU+RrA9uCUrst4X
-	 lbUjJyKoUUe+JNhvbxgP+0Nom0mnvrXlEboarj3zNdkFcW5xgqSpX/+TfeisdLH8z6sat
-	 xBv2QYopMa2ri0dXK6motbeaQ1siCf52lAR7gRycVCCAtPiJsyMMP7IzXq9UQ252SjQ==
+	bh=GKFiA5fNLMkInFHlutQ3bHhW6fvuUGmjL13weXLurYw=;
+	b=BaI6CU50UcD3ruxEQGDbL1GcKhqlPXU1ASWG92GGvI9IssCT6XIIhEfRzTh4JBuhNNkC
+	 5ZcZk4/33x7kFwGGrCad/DeImdbuGcNRNa40gjTVlJVSvtpK0W7Mnhl2pHwqcg4Caq/mq
+	 TGuhi5ZBL6Fp8vsq/UKYaJK4ufK0fZiRGcYLVkR/IYo66YXcfnzff38Eqs3pqC7tNtzQ6
+	 GLSuNna0nGldmTuxU3Ages7MpkoRWmNt4TND0XAXILtXBNAOMcUEYW7zrUYRIOHWidSRg
+	 8eUdQ0AVFxqroxj1IdzotBCAZvidogW8JXvCamb3TxzHDSD+04qkkoHBpXyWdeScinw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mWVhO/af";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2VCIp+Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A96606A320;
-	Thu, 19 Nov 2026 00:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AAF7606A31C;
+	Thu, 19 Nov 2026 00:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mWVhO/af
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A767F1F000C5;
-	Thu, 19 Nov 2026 00:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P2VCIp+Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8CC1F000C4;
+	Thu, 19 Nov 2026 00:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049652;
-	bh=1aNnSspcvn+NUqn9BzvbXfGXt2Q60NYcsA3rotpktus=;
+	s=korg; t=1795049655;
+	bh=GKFiA5fNLMkInFHlutQ3bHhW6fvuUGmjL13weXLurYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWVhO/af1OisDQvLZx/fYmxiFolISrw3lUh7nKRlDsgowobkcxXiupdBI9UXkIF+g
-	 09vFlBOJR0M3G+I552XE9Aqf1ciICWgngYEJOF3D7RjWcgFcIGwfWrMCQOc/n0wCcB
-	 ZrBybAmi3p1tNzNY3wmBEfVSsIm6ta3j3CW4pIiI=
+	b=P2VCIp+YAYPSwsGhu+9haK9ltvZHxQSvWlbp/gAPfGGP4paJvDSHkv67QfL+lZ2JD
+	 Ps1EYdSFr6zpn0ASOFsMWT6GebjwLJDcQgOKzLB/yCaX1201gtJ8xhlUP0sndJYW6d
+	 QuUY752CCg82ZetEjWE1trBOz5lgPeslDbOJ23/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2428/2857] s390/uprobes: Fix off-by-one bug in emulated PER handling
-Date: Wed, 18 Nov 2026 15:57:42 +0100
-Message-ID: <20261118150328.982718092@linuxfoundation.org>
+Subject: [PATCH 6.1 2429/2857] nvme: tcp: split controller bringup handling
+Date: Wed, 18 Nov 2026 15:57:43 +0100
+Message-ID: <20261118150329.024219029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,38 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 2ba01cf7b2598571486425a0605f1434909b532d ]
+[ Upstream commit 10fd7fb676d71482b64bc61f5058b1011133f984 ]
 
-The uprobes code emulates some instructions, and with that also
-PER storage-alteration handling, in case a debugger is attached.
+Drivers must call nvme_uninit_ctrl after a successful nvme_init_ctrl.
+Split the allocation side out to make the error handling boundary easier
+to navigate. The nvme tcp driver's error handling had different returns
+in the error goto label's, which harm readability.
 
-The PER storage-alteration handling contains an off-by-one bug, which
-may lead to PER traps which should not happen. Adjust the comparison
-in sim_stor_event() to fix that.
-
-Fixes: 8d1a2427d8fc ("s390/uprobes: fix user space PER events")
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 87a1ac965502 ("nvme-tcp: store and use the caller's network namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/uprobes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/tcp.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/arch/s390/kernel/uprobes.c b/arch/s390/kernel/uprobes.c
-index b88345ef8bd9e..b8f09483c355f 100644
---- a/arch/s390/kernel/uprobes.c
-+++ b/arch/s390/kernel/uprobes.c
-@@ -248,7 +248,7 @@ static void sim_stor_event(struct pt_regs *regs, void *addr, int len)
- 		return;
- 	if (!(current->thread.per_user.control & PER_EVENT_STORE))
- 		return;
--	if ((void *)current->thread.per_user.start > (addr + len))
-+	if ((void *)current->thread.per_user.start > (addr + len - 1))
- 		return;
- 	if ((void *)current->thread.per_user.end < addr)
- 		return;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 6dea467719256..883fe959d5507 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2714,7 +2714,7 @@ nvme_tcp_existing_controller(struct nvmf_ctrl_options *opts)
+ 	return found;
+ }
+ 
+-static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
++static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
+ 		struct nvmf_ctrl_options *opts)
+ {
+ 	struct nvme_tcp_ctrl *ctrl;
+@@ -2790,6 +2790,24 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
+ 	if (ret)
+ 		goto out_kfree_queues;
+ 
++	return ctrl;
++out_kfree_queues:
++	kfree(ctrl->queues);
++out_free_ctrl:
++	kfree(ctrl);
++	return ERR_PTR(ret);
++}
++
++static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
++		struct nvmf_ctrl_options *opts)
++{
++	struct nvme_tcp_ctrl *ctrl;
++	int ret;
++
++	ctrl = nvme_tcp_alloc_ctrl(dev, opts);
++	if (IS_ERR(ctrl))
++		return ERR_CAST(ctrl);
++
+ 	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING)) {
+ 		WARN_ON_ONCE(1);
+ 		ret = -EINTR;
+@@ -2815,11 +2833,6 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
+ 	if (ret > 0)
+ 		ret = -EIO;
+ 	return ERR_PTR(ret);
+-out_kfree_queues:
+-	kfree(ctrl->queues);
+-out_free_ctrl:
+-	kfree(ctrl);
+-	return ERR_PTR(ret);
+ }
+ 
+ static struct nvmf_transport_ops nvme_tcp_transport = {
 -- 
 2.53.0
 
