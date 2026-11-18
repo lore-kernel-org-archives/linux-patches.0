@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033594;
-	b=jwjIbzW+M0l1I1I8m7nmiwuTmprxY5LBiNaH2SgABpKoKXeWe67x1w2DwSmKhrg5U/GN
-	 9yAYD4wUlwlvNzcNi+Ld2g2/uKVB6QD+rp+qAN4OWp7sog+LsJcHOQ9sTnW9VJpJYh6PO
-	 IxeiD1JWO50RNhF3AFfitjc003uSlY2GrodXAiKD2HETYJqg1+G0JjCeN66w2jWJBvScW
-	 0Puvy/rd+WDcMWGCwzFEJLuixpfzIuJGmbpfDmoiwQngUx82zzCpipOUepvHYpLRIYwB1
-	 cKnxAotpSjEbPupPMn5D8xkk9hVjh/YhdmP01aGJPuR+cOS12BxtvV2QdaPclWqXodQ==
+	t=1795033597;
+	b=1888zzyw1/Va8kQQ5d9RabNb7eQZctK/qzM+tR/8SdVdRF3hONj0ROo42gPTZTPMk2Pt
+	 v62CmtBTLBegAkZHujl5BMNNh6slqBbCLCG9Jn72n9r8Kt0Tj/ZzmxuIdmJRVoKlcsmRX
+	 NlZ70Lo+sVvrj/JZJqELP8G7rzaRbDB16bDOiYjWCxNcO73+3IgdnC9cop+iqhEz+XEJd
+	 gQI/gVwq0I+mI+fesGSaVhHiy8x+9WmIghWWj/xLUP0Tj6KK41zkLj14EM0YBotwh6cnQ
+	 Tx0XzVFTCSLmcplIEj3S/NrIZ5t0MUOabEbTvCOONsgi4f3mi4COe5M3GN8r4uJSD0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M6m+jBuxAQJ9gnqE5ppptzANWiqZqGyTHCzyrxGrX5Q=;
-	b=0L8l5G1rENTZntrbdCc3daaT8RzswEHQMGJ1eDvM6t+q2Xo6TSvobk/ck3z7VFOVEpv0
-	 zIIXlYOTrhGAoUwhAbxQAdWySQF/b9Z7nFY6pGC7laZaT271wxkRyuQwWb6BlhqHtLyFF
-	 TXtwhad3VPW3hAJiOmK7cUFYfcVzqpIkGYZjFv1ygAinGkfZNkbt7T9WlYn7vAir9xWx0
-	 kp7XtR6iMLfbHud04qUHvndiwyhqiIujVm/3iGOQ4VrTx+mO/CIwA1XieOHJIpk4qo3YS
-	 uaMuy2GRcZFaHPZUBg7zVIGuDV28yPpHVwBMs+fJziw+C3y4ZnCBGZOJ1AQSzA4TI1g==
+	bh=aRwhcvf7K2Mr+Kn+9I5xdsEtJ7me2hLeXvAQTWtmnHM=;
+	b=sP6ScTFYhTinzDUR7QX2CCn92TE1ahWye9byljTDTvH65rTgk6sh8C2xFiFXojSqrFha
+	 qfLVKAzyaPcbeahEjhNWAC8t8V6/LUvzITNYposB35XjTwIxLUnrdwkIaRwxhyReilxP+
+	 kRPCdDkQtv2A191DrO8ptJJMVEWPiw+r15fiVzj7ftQWTbX91TdT5NoDmbBly2Ncsw7O2
+	 acAK2OfOGuquJ5butP+WDudyhftamlxD6fmK/qoHtcvB5Qlt3bAwh/Om4ZU7G+faqOHPz
+	 9Eg4c8kcTsn4L/znpRfkegV5kK4UnGVwBYOVgQEUxYHTtwF9C5YV8DwuIMHvHq3f9IQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjOEZVj1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwX9pFlI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87647606A320;
-	Wed, 18 Nov 2026 20:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B2B606A31C;
+	Wed, 18 Nov 2026 20:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjOEZVj1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20201F000C4;
-	Wed, 18 Nov 2026 20:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwX9pFlI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC701F000C4;
+	Wed, 18 Nov 2026 20:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033594;
-	bh=M6m+jBuxAQJ9gnqE5ppptzANWiqZqGyTHCzyrxGrX5Q=;
+	s=korg; t=1795033597;
+	bh=aRwhcvf7K2Mr+Kn+9I5xdsEtJ7me2hLeXvAQTWtmnHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cjOEZVj1ohrqv2iGwt/Gq1P1xQmjCN940JcWQBfUnYoSBWVzlCNXKAdWlArE8LtZ/
-	 C1sCAFweY1TAWaKz1KRKsmPH+YZekD3ngyuLDL6pLkcURg35RJkhZoZlQHDWlUEmfm
-	 YYux+/7I0qfzsBb1Vuv3lRXxtlBbNGqOBvBqLArw=
+	b=WwX9pFlILZpTTFLrT4Yk/LTkQjg33DAKO9QA95P+hv6W+7nsGT8urvpDblhEz6DC/
+	 d66wu79pbbj8zmUBTfo31BpOjGQkbkUr3zHCzyL2GbAbLEJ0JEAqh7ibXVQbOhasaS
+	 oHTQwb3oiyTYL5BNoP/unQc0J0dHA146Kw20dukg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Zhiwei Zhang <202275009@qq.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0068/3318] RDMA/rxe: Check PDs for memory window binds
-Date: Wed, 18 Nov 2026 15:11:30 +0100
-Message-ID: <20261118150316.056257953@linuxfoundation.org>
+Subject: [PATCH 6.6 0029/3318] ASoC: sma1303: remove fault-check sysfs group on remove
+Date: Wed, 18 Nov 2026 15:10:51 +0100
+Message-ID: <20261118150314.657224723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,70 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiwei Zhang <202275009@qq.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fbbe1d5cd7d400a98afcf337969cfdb808cb198f ]
+[ Upstream commit ce3733792d38ade8df8ce288a96ff0c6ad858bf3 ]
 
-The IBTA Software Transport Verbs specification requires the QP,
-Memory Window and Memory Region for a Bind Memory Window operation
-to belong to the same HCA and protection domain.
+sma1303_i2c_probe() creates a sysfs group that exposes the fault-check
+controls. The check_fault_status store callback can queue
+check_fault_work.
 
-rxe only checked the QP and MW protection domain for type 2 MWs.
-Move the QP/MW PD check to the common bind path and also reject
-binding an MW to an MR from a different PD.
+sma1303_i2c_remove() only cancels the delayed work. It does not remove
+the sysfs group, so the controls can remain published after remove while
+their callbacks still use the driver data and can queue the work again.
 
-Invalid bind requests continue to fail with IB_WC_MW_BIND_ERR.
+Remove the sysfs group before cancelling the delayed work.
 
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Zhiwei Zhang <202275009@qq.com>
-Link: https://patch.msgid.link/tencent_FD4FB25AA4FFA845E63F5AC36CF4A46CDC0A@qq.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260615064456.28615-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mw.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ sound/soc/codecs/sma1303.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
-index 379e65bfcd49a..bddb7a2578313 100644
---- a/drivers/infiniband/sw/rxe/rxe_mw.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mw.c
-@@ -72,13 +72,6 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 			return -EINVAL;
- 		}
+diff --git a/sound/soc/codecs/sma1303.c b/sound/soc/codecs/sma1303.c
+index 7b9abbc1bd945..5cd9e0d32dc43 100644
+--- a/sound/soc/codecs/sma1303.c
++++ b/sound/soc/codecs/sma1303.c
+@@ -1787,6 +1787,8 @@ static void sma1303_i2c_remove(struct i2c_client *client)
+ 	struct sma1303_priv *sma1303 =
+ 		(struct sma1303_priv *) i2c_get_clientdata(client);
  
--		/* C10-72 */
--		if (unlikely(qp->pd != to_rpd(mw->ibmw.pd))) {
--			rxe_dbg_mw(mw,
--				"attempt to bind type 2 MW with qp with different PD\n");
--			return -EINVAL;
--		}
--
- 		/* o10-37.2.40 */
- 		if (unlikely(!mr || wqe->wr.wr.mw.length == 0)) {
- 			rxe_dbg_mw(mw,
-@@ -87,10 +80,21 @@ static int rxe_check_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
- 		}
- 	}
++	if (sma1303->attr_grp)
++		sysfs_remove_group(sma1303->kobj, sma1303->attr_grp);
+ 	cancel_delayed_work_sync(&sma1303->check_fault_work);
+ }
  
--	/* remaining checks only apply to a nonzero MR */
-+	/* C10-72 */
-+	if (unlikely(qp->pd != rxe_mw_pd(mw))) {
-+		rxe_dbg_mw(mw, "attempt to bind MW with qp with different PD\n");
-+		return -EINVAL;
-+	}
-+
- 	if (!mr)
- 		return 0;
- 
-+	/* remaining checks only apply to a nonzero MR */
-+	if (unlikely(qp->pd != mr_pd(mr))) {
-+		rxe_dbg_mw(mw, "attempt to bind MW/QP to MR with different PD\n");
-+		return -EINVAL;
-+	}
-+
- 	if (unlikely(mr->access & IB_ZERO_BASED)) {
- 		rxe_dbg_mw(mw, "attempt to bind MW to zero based MR\n");
- 		return -EINVAL;
 -- 
 2.53.0
 
