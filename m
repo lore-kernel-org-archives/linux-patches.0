@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018348;
-	b=zVhpTQf5gkkZRDXqfgmga2/XfHvFM1ZA/bs6UQNt+2q8qTPiHI6OtDJIuCvpBw6oHv8g
-	 5UpbveXge9WVrLcIm2AQrITBmVDjnEOfIROc6x1UMwcgwZrRd9uGjrS0KoQw9+ApAvloN
-	 LBiAhJB+oo2Xu+tRYDbOs60ROZEdVk1RkEVai03oZyWTP/64ZAqnm/fWvPum/27b+arli
-	 yXG8fY8oS/RxRcYGI+yL4ZiBWXOD4/2GaJ54zzAJkij2v7FOEfYVF+Z+M2iq4+VijV1ko
-	 OvwkAc7nZketG6pucn+wpvB0ZnZKOuomLYxKLhlHOwJjSxhiJnANDZWWayg4VW/416w==
+	t=1795018351;
+	b=ofRzBngw1C8VC+3bwzYcmiWkBfukigeB+40xuf4+1tiax9D1+hnQbzqoZFIJ9Lj7AfyW
+	 eb66lOaFq6PvU314uWzQtbtHJtCkE5WsMnz+4l8Q/FfaliGl+XB9r+CSnfQIN3TXJiXdT
+	 tYw4xGTcsJ370ebyLp3jnElELTbGbRCDJkuL3wZOZ727Mnad17xOUwG7Wc9honmWTWkXJ
+	 nDw1JYDpTr9Z16zyzQ3PkMz9zC7xpROxXS7eAWWhQBFEfFa/v/fxX3KuC6v156+eIa37s
+	 NhQa8yeETbHUigofk80/9z2h0l4YCZPXJaOY1TGA/i1U2YXYKrnTEdRIlcYOjqsctWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/QW4BGzPuwW4ZSc9jCcqjja3YLGgV60nz/T0NSwO0s0=;
-	b=te8OzjSSs2VCxOpfcjIGRsZSF0vyyORwyTpyGkCRvTCLobPYaikgvFQcUfvf1bYkKdh3
-	 rrrzDLzTT35MixlFOB1buQXmkj32NA+/RX3R8byltlo5LOJhd9uk8aViefqeFiahPpYm+
-	 4sq63i05dKXB1QmaaLKYBiMNgW2K5ChYF/QiVQsZaLzZ429V61CZwInIoUPA4DhiEbWNy
-	 ua+keeVSQxIS8lGtBHDpPqJ/Z7KELc9xCX46u9x8qf3cLxis90gzP5YNpdNQxnFuz2NWY
-	 GT+X2dnDyvFBfJA0/abeOjPxJa34EdP/87JaXWhW66HOhqGDvk6uFBY/XmAWX7pQAgA==
+	bh=XR+KdZimLkKilw6DzTCmgBJfYV/BbHN/rSL6Kr5Y1EE=;
+	b=0/GLEAJxUIwOnnvdBjHSLDbK7VO0a+SMGiCFCwqnGRjGhteg0hjNeMkAD1HkViCF/Rrt
+	 ToNhC+T5qT9u0jsGjGRcxA9sHLPI4Qs3MDRp91nBJUKcBttInwURRXwRhL1t94rVk25Av
+	 6NodJjAKltslaly/SJkKtSSxoCh4/3Jzj9MnRJjbSY+263/LmNPllhikOPUCF0wvY/QyV
+	 3v7XqsaWQcZyf5dzs5bCk65hSX51Y1oTn+3mCvrVMFL3cCBqr7jq1Q2Y6GVtl37LUBF+1
+	 sSx/3nE9Q7f9H5Sf6a7RU+2ADs9y3olyFMuKk1bH7UR/JwM1FDccXwp/xKSYvdTCRaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+x4tE+n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0GTeLsD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93408606A31C;
-	Wed, 18 Nov 2026 16:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAC3606A31C;
+	Wed, 18 Nov 2026 16:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+x4tE+n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB251F000C4;
-	Wed, 18 Nov 2026 16:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0GTeLsD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93AC1F000C4;
+	Wed, 18 Nov 2026 16:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018348;
-	bh=/QW4BGzPuwW4ZSc9jCcqjja3YLGgV60nz/T0NSwO0s0=;
+	s=korg; t=1795018351;
+	bh=XR+KdZimLkKilw6DzTCmgBJfYV/BbHN/rSL6Kr5Y1EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+x4tE+n7wtaqwk6kYZJnlS+87NxWJMhGhU/rVWW4GeX045rHMJX1F0ow7R/CTPpD
-	 XCcK1TA5e3sV3Jxy8p/iDix8qbrt6pxxldyEDRGCcbt608+/wFsvyzZqkrT05muGKu
-	 449W5ddaKDNtxWneVl3XH+aRAxuQSAt8eRxT/Exk=
+	b=L0GTeLsD8MPNyk6XhiUJkBB3oE8RaIteudQ1XEQXnA2Eu73xi1L0qkM0RplmcFRjG
+	 fVRIpCzVC6BFYvryLg6JSkqqDfXgZrAe+YOLQ4sAsYWK7fklWPS33PfvS5Rxw+EDkb
+	 mJvnLCIGZ0XRBOMVyU9FqAdizciI9LGDxg4I6QzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.3 1207/2651] phy: rockchip: usbdp: Drop seamless DP takeover
-Date: Wed, 18 Nov 2026 15:40:47 +0100
-Message-ID: <20261118150331.446351513@linuxfoundation.org>
+Subject: [PATCH 7.3 1208/2651] phy: rockchip: usbdp: Limit DP lane count to muxed lanes
+Date: Wed, 18 Nov 2026 15:40:48 +0100
+Message-ID: <20261118150331.480248770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,92 +73,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 1ab628ce8f3ab694c28dcfcd5b1eec0cf9f499b8 ]
+[ Upstream commit 443997ca8d797375ff35e8f3ad3828799e88f71b ]
 
-Right now the DRM drivers do not support seamless DP takeover and I'm
-I'm not aware of any bootloader implementing this feature either.
+In theory the DP controller could request 4 lanes when the PHY is
+restricted to 2 lanes as the other half is used by USB3.
 
-In any case this feature would be limited to boards using the USBDP PHY
-for a DP or eDP connection instead of the more commonly USB-C connector.
-With USB-C's DP AltMode a seamless DP takeover requires handing over the
-state of the TCPM state machine from the bootloader to the kernel. This
-in turn requires a huge amount of work to keep the state machine
-implementations synchronized. It's very unlikely we will see somebody
-implementing that in the foreseeable future.
-
-As the current code is obviously buggy and untested, let's simply drop
-support for seamless DP takeover. It can be re-implemented cleanly once
-somebody adds all missing bits.
+With the current user (DW-DP) this cannot happen, but as the check is
+cheap and users might change in the future protect things accordingly.
+Not doing so would corrupt USB3 usage by the following code configuring
+the voltages.
 
 Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-phy/20260612164107.C7DB21F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/linux-phy/20260612165546.98E1F1F000E9@smtp.kernel.org/
 Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-6-80e2c11d1ce8@collabora.com
+Link: https://lore.kernel.org/linux-phy/20260612165546.98E1F1F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-12-80e2c11d1ce8@collabora.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 31 -----------------------
- 1 file changed, 31 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index 93364728bca43..ce2b74a288017 100644
+index ce2b74a288017..d3ebd9ed56dde 100644
 --- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
 +++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -451,11 +451,6 @@ static int rk_udphy_reset_assert_all(struct rk_udphy *udphy)
- 	return reset_control_bulk_assert(udphy->num_rsts, udphy->rsts);
- }
- 
--static int rk_udphy_reset_deassert_all(struct rk_udphy *udphy)
--{
--	return reset_control_bulk_deassert(udphy->num_rsts, udphy->rsts);
--}
--
- static int rk_udphy_reset_deassert(struct rk_udphy *udphy, char *name)
+@@ -1101,6 +1101,9 @@ static int rk_udphy_dp_phy_verify_link_rate(struct rk_udphy *udphy,
+ static int rk_udphy_dp_phy_verify_lanes(struct rk_udphy *udphy,
+ 					struct phy_configure_opts_dp *dp)
  {
- 	struct reset_control_bulk_data *list = udphy->rsts;
-@@ -923,28 +918,6 @@ static int rk_udphy_parse_lane_mux_data(struct rk_udphy *udphy)
- 	return 0;
- }
- 
--static int rk_udphy_get_initial_status(struct rk_udphy *udphy)
--{
--	int ret;
--	u32 value;
--
--	ret = clk_bulk_prepare_enable(udphy->num_clks, udphy->clks);
--	if (ret) {
--		dev_err(udphy->dev, "failed to enable clk\n");
--		return ret;
--	}
--
--	rk_udphy_reset_deassert_all(udphy);
--
--	regmap_read(udphy->pma_regmap, CMN_LANE_MUX_AND_EN_OFFSET, &value);
--	if (FIELD_GET(CMN_DP_LANE_MUX_ALL, value) && FIELD_GET(CMN_DP_LANE_EN_ALL, value))
--		udphy->status = UDPHY_MODE_DP;
--	else
--		rk_udphy_disable(udphy);
--
--	return 0;
--}
--
- static int rk_udphy_parse_dt(struct rk_udphy *udphy)
- {
- 	struct device *dev = udphy->dev;
-@@ -1494,10 +1467,6 @@ static int rk_udphy_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	ret = rk_udphy_get_initial_status(udphy);
--	if (ret)
--		return ret;
--
- 	mutex_init(&udphy->mutex);
- 	platform_set_drvdata(pdev, udphy);
- 
++	if (dp->lanes > udphy->dp_lanes)
++		return -EINVAL;
++
+ 	switch (dp->lanes) {
+ 	case 1:
+ 	case 2:
 -- 
 2.53.0
 
