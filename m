@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021713;
-	b=NFNqI/hfpvyee6YzIYLPx8z9TqiL1GT3qMjdBUpR7DJN48J9GBZEV1f4xUzNS9W9VGqX
-	 mdLNHDkoS5wqREJLgHme13TX6ANn3VUhbupIc0c+iLlyYqHUc/cbEyPZJyIHf70atlcWA
-	 FrvF0DCZRNsyyvw4b50KXox+XKfecAIE5gHFxP/mMznipR9rwqASVRVK/q+bsf7iVgysa
-	 jnJR/CNfjYMSTFZuDt9M297+83RX48taiMfj+oUc9WwQyCjOO6b58CfjLdL6Qo9l2Ll5P
-	 HvD+yyLwVWV9KlOBf/IMHaDbkLNIjL8io3+KkJkqSPmyDNoXbSvCkqQlYVBhVee2Azg==
+	t=1795021715;
+	b=2c6GKBK1/72B6kWOH2yejRxusRTaSl8tS7npfYX0VG+5prNDMFjjYn/Syrem6mVpY/wG
+	 B8Tw6zIE8mHIrVDnXHhyFyxZoiTRPoBpHHBZiNc5qZ2+qPsrv3y7c/jv/Y5bzr4cpPDGw
+	 6odwG43mCEC/hr3JlOACA+MwM0jq9Kf2uCBrSiI0tLG3kkds/T3UfGYPzrUCyG7XmwSIV
+	 F0sUQ/kvlnyq94F4CPelY1QLF4EH/bi5OghXudn1BqWt3NimdvO2QIIeWErI0pb/VeuM+
+	 SqH9WEvYhVWBtsXC7XSA88gYWVsOTscHyaThDMAQi1EKu11B9knnNML+kIZWcSHnv1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021715;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xPUMmzCs/xn7isiyd/peFF9png/29xRHqLzD9D/5aKg=;
-	b=zAUbqg4D9A1iwP2Qsh1nWyl/AnLJbLvV9zZt6qAW+l0DaQE9BjgGXkKI8LOnUsMoG7L8
-	 2vvq5KFyONv9yOl8B+QmY5i+aOZxbKmbFglekyietvDVHX7Woh8tDow9V77Meq39yfily
-	 QaDJSBJJ+fdZ5OPhfp+9TTqfDqijPzU2ttM6Q99VIxaPa4clN0mdyPkXZ0xtn6+BKinLD
-	 zUn+EMNAuzVNPq5Hvrvn8uvE7NvcViUeI9hHBwlg7tDNjIb0ukKqiIAx6mekeV2n7Wb/1
-	 I26A5jjdUNGUQjXnCnM4zW38YAJ8OkzGq8yDsh4AAcXsrJ73/2SykmgYWUffG5wb/bg==
+	bh=ukGz5AdW56GXfMYYkq/Pk15Ya9Z4QvyCg6Imqe6bChs=;
+	b=zmgGrv8VUcQ2n1WGOsVfE5BKGGatwCHhebJmq5tjwfxFm6zLOusSi9EqfUpzn2iG/X1o
+	 GaxaKxUA7a+CR65XrO9Ao1uUjpIFcXfcvXf0TrjrFVHy3H8Wy1uDEETZtLtTUCg3DfJQY
+	 KNpR7xd/VtrEQxiFw5NDQl5pPPYvHsiHXAKb8nlzLsj8CZCspddfFxLJ7Stj4OokHN0on
+	 D08eoZSlxWM2BzgS7sseqH8nljkmUP9/W3JYrktsHRKZ//eimgN51SEXc2M7dVydAJ/9N
+	 91shCPnhQPz7dekGUSKJeDCoEOuDlHpDelnuq0fW3LxKibHaapY7FxKkFvvx9vEL5QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMjEercz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+j+Rfbv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3ACF606A333;
-	Wed, 18 Nov 2026 17:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4CA606A320;
+	Wed, 18 Nov 2026 17:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMjEercz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEF61F000C4;
-	Wed, 18 Nov 2026 17:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+j+Rfbv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCAC1F000C4;
+	Wed, 18 Nov 2026 17:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021712;
-	bh=xPUMmzCs/xn7isiyd/peFF9png/29xRHqLzD9D/5aKg=;
+	s=korg; t=1795021715;
+	bh=ukGz5AdW56GXfMYYkq/Pk15Ya9Z4QvyCg6Imqe6bChs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AMjEercz8WL+ZfiWb2eQedTQ0+pVSavc2YTn7L1eH/w4C4iPfL2vYk2YRC9AMdx4J
-	 Ie+Hg2GhwQzaNDk3W+Pm+1T5R/TXCkPMaSQqg+TPdOttRO5gUJa6HsaQsHiZTMv48H
-	 Ly1UoWD3WlrvoeYyU8AQCpXkeaUYFR4/5S/POQwQ=
+	b=Q+j+RfbvSlikrUiy7/2G0b2etriJ+GUQNqA99KW2vGiEJ4HcHkl3IUADpVQ/X0j7A
+	 kM91isVJ7LGYBmuHhly2Ocw1tyRuvejoAKpvSyBWk/UVIb+tzderq4SF/0b/XTNNZJ
+	 f2GxXhP+KiC9FTm6NF4NFrCH7m5RvB+tD2L56hqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-reviews <sashiko-bot@kernel.org>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2364/2651] ASoC: amd: raven: Fix memory leak in acp3x_dma_close()
-Date: Wed, 18 Nov 2026 16:00:04 +0100
-Message-ID: <20261118150410.644319485@linuxfoundation.org>
+Subject: [PATCH 7.3 2365/2651] cpuidle: haltpoll: Only define guest_halt_poll_ns tracepoint when used
+Date: Wed, 18 Nov 2026 16:00:05 +0100
+Message-ID: <20261118150410.675342386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,40 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit e0b17f84f6e3fa1201b8e2857094023c42ce5636 ]
+[ Upstream commit 107b87efc8fcd6a597f1b534f116385620770e56 ]
 
-acp3x_dma_open() allocates a struct i2s_stream_instance for
-each substream, but acp3x_dma_close() never frees it, leaking
-it on every open/close cycle.
+Tracepoints that are defined take up around 5K each, even if they are not
+used. When a tracepoint is used only in code when a specific config is
+enabled, their definition must also be only defined when the same config
+is enabled otherwise it wastes memory.
 
-Free it in acp3x_dma_close().
+The tracepoint guest_halt_poll_ns is only used when CONFIG_CPU_IDLE_GOV_HALTPOLL
+is enabled. Guard the definition of that tracepoint with the same config.
 
-Fixes: 9f7041b71a2f ("ASoC: amd: closing specific instance.")
-Reported-by: sashiko-reviews <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-173760@kernel.org/
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261016085047.535265-1-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20261022153359.2433474b@gandalf.local.home
+Fixes: 0da11bf0cab90 ("cpuidle: haltpoll: Add trace points for guest_halt_poll_ns grow/shrink")
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/raven/acp3x-pcm-dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/trace/events/power.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/amd/raven/acp3x-pcm-dma.c b/sound/soc/amd/raven/acp3x-pcm-dma.c
-index 072f3dc35d402..01e6ac75f35bf 100644
---- a/sound/soc/amd/raven/acp3x-pcm-dma.c
-+++ b/sound/soc/amd/raven/acp3x-pcm-dma.c
-@@ -354,6 +354,8 @@ static int acp3x_dma_close(struct snd_soc_component *component,
- 		}
- 	}
+diff --git a/include/trace/events/power.h b/include/trace/events/power.h
+index 370f8df2fdb4b..4d17eb307b6ab 100644
+--- a/include/trace/events/power.h
++++ b/include/trace/events/power.h
+@@ -497,6 +497,7 @@ DEFINE_EVENT(dev_pm_qos_request, dev_pm_qos_remove_request,
+ 	TP_ARGS(name, type, new_value)
+ );
  
-+	kfree(ins);
++#ifdef CONFIG_CPU_IDLE_GOV_HALTPOLL
+ TRACE_EVENT(guest_halt_poll_ns,
+ 
+ 	TP_PROTO(bool grow, unsigned int new, unsigned int old),
+@@ -525,6 +526,8 @@ TRACE_EVENT(guest_halt_poll_ns,
+ 	trace_guest_halt_poll_ns(true, new, old)
+ #define trace_guest_halt_poll_ns_shrink(new, old) \
+ 	trace_guest_halt_poll_ns(false, new, old)
++#endif /* CONFIG_CPU_IDLE_GOV_HALTPOLL */
 +
- 	return 0;
- }
+ #endif /* _TRACE_POWER_H */
  
+ /* This part must be outside protection */
 -- 
 2.53.0
 
