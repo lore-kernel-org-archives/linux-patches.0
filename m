@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037880;
-	b=g9VmBAr894ovxMOvf2JT/GuLV+4mYp4HA7WPWd6L2495cWHn/AedD9bYs05FW2jUU0+2
-	 gltuyGa07v7tjL7fGIKD5s9AzzjPSztddWvDqTHrXLLx4QTfmmpW5gAml+TX/VYq3Rvp9
-	 bLQpZ7pZdShLXTn32JR7UOxgV7GuVp6wucnP0tLjzG8glENBk6P+f6g7T9LKoQ9ivzBoK
-	 zgUKe29cFyCp2VqFv3+Q6U87GeQG1fB94fBG5YcIvgExrq40Rwcfh1XGi0OahZoIicCm5
-	 soKSDcIFdYtFz7QXfAJ2jGHr3h1nIcSezAMdEf+DfikeSRh8+haldju5Ws1v18aC+4A==
+	t=1795037883;
+	b=Q//92fiUIPNNCtTo04jvbpj5Ns3z4Ax7at5Ro9tLAY0oJ3NbCC2ZK1EY0LyeW5x9f934
+	 PKzH56n5xR8qRXzpp2I4pbChmW+xrqYLoJ6zFNZnz2/oc/AviAGZ+DpVJ7IUFV6yuPjN9
+	 NlOwoHqCqZUPi3n622Xb2boi30oS7m6Cd8vMl7NsMUB0pky8RIIxWmlXHOaYq3VJwp13V
+	 vbrbi/nvhGTMeikzyFPOt98BWdc8OiSgzhAIK0KhyX3BjiLEX4+36viJygqQvmQjQ8WAJ
+	 opmM52wSpKQ8QM8bYHIAdD5Tawh9Ax2g85BIKKBGsxbaSwlIAo2gMVRf+lCtPdifWoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037880;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/TnRdd6xrHnnj8Dft4eJvDYenH13vUU8l7iU5EGPimk=;
-	b=RzuMmRKPvNUbuEQ/4vjd/S9cYnYazEcHvtGSRiqjiJd3pEUA17WYkFotfcxIA3F0MwWd
-	 rWwwyLI0oEfBZx7EbwCkjEYcurxlBRQw59vaUTXabLPu4Bi2ZSLs5zig9omY+wP3S+1hw
-	 8mOJHaxR7SigNTEWKiKpr68CNgfmGKmV4MuZyPCEVl7ED2yAm7QUuqsuiovO/voyRxwXM
-	 g4b1ZEg84SzQt1SnTOahajK0JcfwWbPUtbXlujmpdhL+H4T+lNkeuYOqjDlqqYWRUlK59
-	 UV9Py7vT23Lm/1oNkZOVCA/KoigSeznnushJHqaYJaleG9UPxrI1JnpfpyszyoIMraA==
+	bh=Q6P4F0u7JOqIKPalY7aIGFVU2dCySkHPQW6BokwBmRI=;
+	b=iEYTMVbXit3WoHcZZXMn3cYaziNA6BVfs8rJ52bcIPIKaO214kWnKzFj+6mwLG3BRa5S
+	 5oAw6pNde0CTskK1JKwem2kW6n2WDpXgDU11Mn1v6FrZHzD0orHTKbhDdO/2xjrsDK9Nm
+	 BLcpo0OnDQItLFab/4sYS7wtmpEM1PmGkJ/Xa050ZEiLXuq5R6Kjg9+4muCvk8XUaGI1a
+	 ndTdHRjVC2sVTVt5c7MVVvTAR4sGfNP9nJyfip9+admq2GuClHh1LKLVixaBoPk4NHOAF
+	 /JR6kk/QDYKgpATuS9Dbjw11TMNh1d6oAOn6Ro7h+GMt7uBaXqFvGIhBr0xHC7lVGGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q35LsNFK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvYazLAU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC6D60A2607;
-	Wed, 18 Nov 2026 21:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D156B606A320;
+	Wed, 18 Nov 2026 21:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q35LsNFK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D761F000C4;
-	Wed, 18 Nov 2026 21:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JvYazLAU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D91F000C4;
+	Wed, 18 Nov 2026 21:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037880;
-	bh=/TnRdd6xrHnnj8Dft4eJvDYenH13vUU8l7iU5EGPimk=;
+	s=korg; t=1795037883;
+	bh=Q6P4F0u7JOqIKPalY7aIGFVU2dCySkHPQW6BokwBmRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q35LsNFK0+WvAB+81y5vYWA0tf/E/5kiaJK4GPIMqYI5dS/EqBGGvQjx6KdgLvuSu
-	 kHYlnohos0uQiZS8ranm2HW6CHVpaOvUK9mCGHElpBk6QRERRQinMwbS5fXaSwVsGL
-	 NbcKquwX8Yf0wMcOSZ9Pidl3nhE9hivXfptyTjoU=
+	b=JvYazLAUMz5Acu0XJqKUmDUd2zo/0ugjIVJasBi7qaNh3xbs7z4dYClSkkWC2Lo7J
+	 WpcOwzHAoIGPw6t4YEUKBPGomwI1hXqx4N9bakxtBQIwOJYkfPk7Rr18KpX1DiNq/E
+	 6kWUvwjp27RvLeZbXBS1UjIaX5cdsS2OnArUIdrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1549/3318] ext2: preserve IOMAP_F_DIRTY for extending direct writes
-Date: Wed, 18 Nov 2026 15:36:11 +0100
-Message-ID: <20261118150407.471500684@linuxfoundation.org>
+Subject: [PATCH 6.6 1550/3318] net/smc: dont spin in smc_rx_recvmsg() while a pipe holds spliced data
+Date: Wed, 18 Nov 2026 15:36:12 +0100
+Message-ID: <20261118150407.505529539@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,66 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 4f91b042af212ca0b610e43f9a975ddc7f0d0923 ]
+[ Upstream commit 8288ba942cfd20621c05e16978b7c3da91513ae1 ]
 
-ext2_iomap_begin() sets IOMAP_F_DIRTY for writes that may extend i_size,
-but clears the flag after ext2_get_blocks(). When the write uses an
-existing mapped block, iomap can then use FUA and skip
-generic_write_sync(), even though ext2_dio_write_end_io() updates the
-inode size. An O_DSYNC write can therefore return without persisting
-the new size.
+While bytes spliced off the RMB are still in a pipe, recvmsg() waits
+for the pipe to release them before it copies the data behind them.
+The path to that wait skips the timeout and signal checks, and
+smc_rx_wait() returns at once on RCV_SHUTDOWN. With a signal pending,
+after SHUT_RD, or once the peer closes or shuts down writing,
+recvmsg() spins on a CPU until the pipe is drained, and SIGKILL cannot
+stop it. MSG_DONTWAIT and an expired SO_RCVTIMEO wait there too
+instead of returning -EAGAIN.
 
-For example, on a FUA-capable device, a 512-byte O_DIRECT|O_DSYNC write
-at offset 512 into a fsynced one-byte file returns successfully and
-extends the in-memory size to 1024, while an immediate read of the
-on-disk inode still shows size 1. An explicit fsync persists the new
-size.
+Check the timeout and signals before that wait, and end it when the
+pipe releases the data or the connection is killed, not on RCV_SHUTDOWN.
+A zero-length read returns 0 without waiting for the pipe; a
+non-blocking one returns -EAGAIN while poll() still reports the socket
+readable (splice() can still take those bytes). The wait sets
+SOCKWQ_ASYNC_WAITDATA like smc_rx_wait(), so a byte arriving behind
+the pipe raises no SIGIO on a reader already asleep for it, and a full
+barrier orders its wait queue entry before its read of splice_pending,
+so no wake is lost.
 
-Move setting of IOMAP_F_DIRTY after the initialization.
-
-Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
+Fixes: 9014db202cb7 ("smc: add support for splice()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261029013616.97194-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-b4-disp-da7f8e6a-v2-1-9052904adf72@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/inode.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ net/smc/smc_rx.c | 39 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
-index e93db18b14664..f4e4eb9396766 100644
---- a/fs/ext2/inode.c
-+++ b/fs/ext2/inode.c
-@@ -824,6 +824,12 @@ static int ext2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 	    (first_block << blkbits) < i_size_read(inode))
- 		create = 0;
+diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
+index 374886f332287..06680e9016fd0 100644
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -286,6 +286,27 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
+ 	return rc;
+ }
  
-+	ret = ext2_get_blocks(inode, first_block, max_blocks,
-+			&bno, &new, &boundary, create);
-+	if (ret < 0)
-+		return ret;
++/* Wait for the pipe to release the spliced data. Unlike smc_rx_wait()
++ * it does not end on shutdown or sk_err, the data is already in the
++ * RMB; smc_conn_kill() wakes it and the caller checks conn->killed.
++ */
++static void smc_rx_wait_splice(struct smc_sock *smc, long *timeo)
++{
++	DEFINE_WAIT_FUNC(wait, woken_wake_function);
++	struct smc_connection *conn = &smc->conn;
++	struct sock *sk = &smc->sk;
 +
-+	iomap->flags = 0;
- 	/*
- 	 * Writes that span EOF might trigger an IO size update on completion,
- 	 * so consider them to be dirty for the purposes of O_DSYNC even if
-@@ -831,13 +837,6 @@ static int ext2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 	 */
- 	if ((flags & IOMAP_WRITE) && offset + length > i_size_read(inode))
- 		iomap->flags |= IOMAP_F_DIRTY;
--
--	ret = ext2_get_blocks(inode, first_block, max_blocks,
--			&bno, &new, &boundary, create);
--	if (ret < 0)
--		return ret;
--
--	iomap->flags = 0;
- 	iomap->offset = (u64)first_block << blkbits;
- 	if (flags & IOMAP_DAX)
- 		iomap->dax_dev = sbi->s_daxdev;
++	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
++	add_wait_queue(sk_sleep(sk), &wait);
++	/* pairs with the smp_mb() in wq_has_sleeper(): the release drops
++	 * splice_pending, then looks for a sleeper
++	 */
++	smp_mb();
++	sk_wait_event(sk, timeo, !atomic_read(&conn->splice_pending), &wait);
++	remove_wait_queue(sk_sleep(sk), &wait);
++	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
++}
++
+ static int smc_rx_recv_urg(struct smc_sock *smc, struct msghdr *msg, int len,
+ 			   int flags)
+ {
+@@ -443,7 +464,23 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 		/* could be just 1 byte, even after waiting on data above */
+ 		readable = smc_rx_data_available(conn, peeked_bytes);
+ 		splbytes = atomic_read(&conn->splice_pending);
+-		if (!readable || (msg && splbytes)) {
++		if (msg && splbytes) {
++			/* a pipe holds bytes ahead of these; the copy path
++			 * skips the timeout and signal checks
++			 */
++			if (!read_remaining)
++				break;
++			if (!timeo || signal_pending(current)) {
++				if (!read_done)
++					read_done = timeo ?
++						    sock_intr_errno(timeo) :
++						    -EAGAIN;
++				break;
++			}
++			smc_rx_wait_splice(smc, &timeo);
++			continue;
++		}
++		if (!readable) {
+ 			if (splbytes)
+ 				func = smc_rx_data_available_and_no_splice_pend;
+ 			else
 -- 
 2.53.0
 
