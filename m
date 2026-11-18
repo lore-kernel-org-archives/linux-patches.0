@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028603;
-	b=XrSSbYQBe4Ifr1x/TQlRvJMsXJSzdUzqe7eh4dSS/D1RFs3mknuvhXFWUdP/y+ZPAI6N
-	 dhrz6K7fLDK0aOvqhpHob/1V5udSVRmriIpMP4j0LOTzFE9DHH4HMsYPvixgdvmFL4MFI
-	 tzbamphMYAixCEN95TB09EeXeETP1rp8CjtPtzKUvwRM3KiY9ltios79vgQVhnNFuGOI6
-	 tEGD1w4mBDAbhO5G/dga/AvojDMoSyqL1Gv8cYRL4Gozd/N9r/eQ9Dd07+rso+YkV6EhW
-	 kh0ebBiUWS9FwDe2J5gq+DjmCkyLY+aX2Nzqyw6SgeHZFuZGjsn+S4680I6XtEEw8rw==
+	t=1795028606;
+	b=Nct4xy7YCuCGOEA095Okj2rvpY45J7f9Z678WTAPGYKUqFWU57+vOxc/axHmAD+Yw7RP
+	 8nSzRMCKM4XggGyAgHjlexBeh5qd4yPYfZveJ5JUNiczjZNb7jt2qUartdwi2zuERfajt
+	 GdFYEaBUtPONlWdUcvt5ULh8PlZVFs3iUw6ZY0pKRJHcWVydJOh+CTEpxGcIC88nt4P9v
+	 h2Jk9sH62+wOcAdTDfnlq4OuM68tRBxwi6WdrfdD/HbwnJsfco+l4lAAjtNnXMPXfwlK2
+	 BJKYAeeHxE75g41WIYI7gy4nMKJfpupwmtl4oF2VsPyxQwDQNSHimUlLQs+VAHAJEdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xYLhGVq2i0iNloIlBhnjG3cTSVWBBNy8OoWIYZnIIn8=;
-	b=Co/t+IgIK8+EuGzv5b/zcSALHXDU1zi3bxGJVUW/CLQdVM3ifj+PZdsPed0vyPRIiLMh
-	 ONvltbS4PHtgZMf4Kolyj39Rk6mNIEa9OUkAgiAX9DRfVC9+LowYMiNPVZqQUzfu4r3GH
-	 9yx1Bjm8tVxVIJEAVt9IjTUGTiqaP5FGTbQSM2P74O7b1QwQJr1ZpKYL+dy/KPliFlmkO
-	 BkujkbWBRrAvOqw0hmGd8Yg70eGGsGnDXJKw3axeVtI80ozxzDch8k3kqmfohoxgW79Dz
-	 tJKpn3/KMxPOoMskhp4fNRuJowqRyKpwcNWdYktnwGuAQ/bzGZkQc100RQvu7DuNjKg==
+	bh=PNKoy+v7vSkFthuccA5bGJTdM07tajyXwKeBYz/vll0=;
+	b=zFf/CaOPgK7zX3TnFicBnh/pDGQiXlfSJYyVChcoIvn9R16uQDaeiHc4djPJHKFiZf/+
+	 kYMYv8dLgX+PjzpGc64nsmKYhH6aK+VZezaimXmvZwwGMhyRydX6+nIiuIf5z/pROS3Md
+	 GopvcQuN7nzGlAoUWQXNJvPWTcyGCiJX2Swagd4HLftScukI0740F8YekzGzdr1XDzB6B
+	 7qZCCMBFHHRycYZhi7a0db1KiSnnhy4L2lcMbRZdTsKf28UJR4dQQfqND7Iuvz23teYvQ
+	 bfGs7OM9480Mc5RjVgdLtmLROWhcc9KfEI5g9Pt9N1Jjj54nBYnKy8w1tvQq5IrC/Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XM+aBoKx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SFxi4VDs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5568A606A320;
-	Wed, 18 Nov 2026 19:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABAD606A325;
+	Wed, 18 Nov 2026 19:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XM+aBoKx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32871F000C4;
-	Wed, 18 Nov 2026 19:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SFxi4VDs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5ED1F000C5;
+	Wed, 18 Nov 2026 19:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028603;
-	bh=xYLhGVq2i0iNloIlBhnjG3cTSVWBBNy8OoWIYZnIIn8=;
+	s=korg; t=1795028606;
+	bh=PNKoy+v7vSkFthuccA5bGJTdM07tajyXwKeBYz/vll0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XM+aBoKxZNrCCMCeYve9PDFmo4o3Ii7aQ9Zns6uhJByM5gBzrC/1tacF9eCrYKg8O
-	 MHOcxEgod4CIw8nSLwHrR8IOW2ii0FPxxjnyvQ1XE6/FuNtdx9hQYNRze15+QVQGcp
-	 8E1UoBaa89e/e8SlXhDgYa4jy5SAniyE7zf20LCU=
+	b=SFxi4VDs23Jwcd64uZQxumphsCD/gIhYe0mHBBoExv5uOkiNVSnRJ9+2EtjYgsDqo
+	 vRM+SIdI/MkR2PuubeG1u/l87/hz3hiVYqUpcSyli5/cN4zb770C+gIfBdc++wUmo9
+	 tLZHl3bRVWr89Hyc5Ur2PCh3Cbdt/Xky9+K7NdxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0053/1756] hugetlbfs: enforce F_SEAL_EXEC in setattr
-Date: Wed, 18 Nov 2026 15:36:20 +0100
-Message-ID: <20261118150010.491665988@linuxfoundation.org>
+Subject: [PATCH 6.12 0054/1756] drm/msm/hdmi: Handle msm_hdmi_power_on() errors during .atomic_pre_enable()
+Date: Wed, 18 Nov 2026 15:36:21 +0100
+Message-ID: <20261118150010.528621379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -74,56 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit b7f570e7cea761ec7eb4a3a9557a3a082d14e88c ]
+[ Upstream commit dd6ecace57851878e62367a6f1a26dd5b9aa217f ]
 
-F_SEAL_EXEC is enforced by shmem_setattr(), but hugetlbfs_setattr() does
-not check it. As a result, fchmod() can change the execute bits of a
-sealed hugetlbfs memfd.
+Properly handle power up failures during .atomic_pre_enable() by
+aborting the .atomic_pre_enable() to avoid accessing registers why
+blocks did not bring up.  Otherwise this could lead to imprecise aborts
+when accessing MMIO while entire power domain is off.
 
-Use memfd_check_seals_mode() in hugetlbfs_setattr() to reject changes
-to execute bits when F_SEAL_EXEC is set.
-
-This also fixes the memfd_test hugetlbfs SEAL-EXEC subtest, where
-fchmod() incorrectly succeeded after applying F_SEAL_EXEC.
-
-Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Link: https://patch.msgid.link/20260629180247.2343229-1-eva.kurchatova@virtuozzo.com
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-[ david: use common helper; fixup Fixes:; check only regular files ]
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-5-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced the unavailable memfd_check_seals_mode() helper call with its equivalent inline check. ]
+Cc: <stable@vger.kernel.org>
+Fixes: ba3d7bf3a7ab ("drm/msm/hdmi: Convert PHY files according to new design")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752652/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-2-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[ sashal: adapted atomic_pre_enable() error handling to pre_enable() with explicit regulator and multiple-clock cleanup ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 +++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index 1a12932b58806..2856c3bbc38d4 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -932,6 +932,12 @@ static int hugetlbfs_setattr(struct mnt_idmap *idmap,
- 	if (error)
- 		return error;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+index b4abac49f5d96..4b874b1c846ad 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+@@ -11,7 +11,7 @@
+ #include "msm_kms.h"
+ #include "hdmi.h"
  
-+	if (S_ISREG(inode->i_mode) && (ia_valid & ATTR_MODE)) {
-+		if ((info->seals & F_SEAL_EXEC) &&
-+		    ((inode->i_mode ^ attr->ia_mode) & 0111))
-+			return -EPERM;
+-static void msm_hdmi_power_on(struct drm_bridge *bridge)
++static int msm_hdmi_power_on(struct drm_bridge *bridge)
+ {
+ 	struct drm_device *dev = bridge->dev;
+ 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
+@@ -19,11 +19,15 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
+ 	const struct hdmi_platform_config *config = hdmi->config;
+ 	int i, ret;
+ 
+-	pm_runtime_get_sync(&hdmi->pdev->dev);
++	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
++	if (ret)
++		return ret;
+ 
+ 	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
+-	if (ret)
++	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %d\n", ret);
++		goto err_pm_put;
 +	}
+ 
+ 	if (config->pwr_clk_cnt > 0) {
+ 		DBG("pixclock: %lu", hdmi->pixclock);
+@@ -39,8 +43,19 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to enable pwr clk: %s (%d)\n",
+ 					config->pwr_clk_names[i], ret);
++			goto err_clk_unprepare;
+ 		}
+ 	}
 +
- 	if (ia_valid & ATTR_SIZE) {
- 		loff_t oldsize = inode->i_size;
- 		loff_t newsize = attr->ia_size;
++	return 0;
++
++err_clk_unprepare:
++	for (; i > 0; i--)
++		clk_disable_unprepare(hdmi->pwr_clks[i - 1]);
++	regulator_bulk_disable(config->pwr_reg_cnt, hdmi->pwr_regs);
++err_pm_put:
++	pm_runtime_put(&hdmi->pdev->dev);
++	return ret;
+ }
+ 
+ static void power_off(struct drm_bridge *bridge)
+@@ -135,8 +150,13 @@ static void msm_hdmi_bridge_pre_enable(struct drm_bridge *bridge)
+ 	DBG("power up");
+ 
+ 	if (!hdmi->power_on) {
+-		msm_hdmi_phy_resource_enable(phy);
+-		msm_hdmi_power_on(bridge);
++		if (msm_hdmi_phy_resource_enable(phy))
++			return;
++
++		if (msm_hdmi_power_on(bridge)) {
++			msm_hdmi_phy_resource_disable(phy);
++			return;
++		}
+ 		hdmi->power_on = true;
+ 		if (hdmi->hdmi_mode) {
+ 			msm_hdmi_config_avi_infoframe(hdmi);
 -- 
 2.53.0
 
