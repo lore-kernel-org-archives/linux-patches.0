@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037808;
-	b=3AY+Sb9/ojAv/Pf0iwlvQkIuDTbgCFDCHhuuBhfCCCy/RDzI3Uz5021idiBT4dX/nyld
-	 RrXRiZ6ttdcsJz/S8bF01vr6MJahtSueE/9Q4YXuy9Gpw0ColVxvc8B2tF45jMFA2atFJ
-	 6L66eou/ky28rk8SPexp+J4WukhGmHzoB8aOAQi3scW0qrGR9sNX15R5rhAYBS++ms4vv
-	 fyvGP2VDes+uOWS/rziDtGUJIjjUCiE2u1GcNbS/ACtIfzZkR3umajfFfAImzqCn3QfDl
-	 Sz86NunXWQNWk9h208U6YEGQlbRgQaD3cmfPy9AhmYTjvbQVe5iqS8fms3+7E/vfUPg==
+	t=1795037811;
+	b=ZhKCknb6FRxg0aCx1FMKJPLjK7dET7F4L6TdUq5spoYZDqZtQlzw7yOiXXi19HfB0Vza
+	 K6+Oy9bgtk++0KfHoOtgcsyocpDnU2NAUIR289JC/Z3bTM8PWvKoyPDiceLXt0NAZ0Kui
+	 anh9QrgSlvd3rGojeFMymENs3VpbI4Pi+xupaxSlusOE3+PFIT+38TwiDpzwnUS0oZpQf
+	 R601VtYe50HiXMlWEk7JhBWjoppyCTSopROsrcX741AVMFeCG67IjcRLbc/Loqoymsaad
+	 Rr+D2dfU/qixQv4/0hyq0qy8tcTDhZ0nw7E58Tiw5rzkJOTcSGHTpXHMHnb5Fw1hAdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=V0ZHzhct95hj3hQlxZyjVTbygHNSywWH8U+BkyPgqdk=;
-	b=ZdZNyac2nXZ5IOCoHaTZU96qC5+bsaU4PxYkpKqfHUXpN7Tq12Hnk1Ck9tkz7nOSs82T
-	 Yiv0tUeR5FOZk+smtq2BhzZFD+4eq6E4lh/edhZPBlxzioq6a0wceshwoOul6DZDozpyi
-	 6N36/aL3pABPzTo9aodzoRPpV9JuWQqCvwTp6BnoiF97xU2KAcyxpuqXr52q03HnjfCgC
-	 uL6OWv3lt23kgi061rn20bikj0+e5ay/Hd+WRS6S7Vghl2ys7E0iOTOmQtSKA0CPY3q+u
-	 Lvxb/idFISevyoqgTJxvCh3ac7Co3LD78nIljaCBflwjOTlEMLow3/ZsN+5baV3gSgQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WCn+I6Kx4ixlVztHgz3jFSxb9RKvJmEx9K8iNGQUO/A=;
+	b=nrHPFWro8hIoz0jHnNYFhNJSKR01ziL//YYGCJ0wrKIrI9VBN3rGBwPCRwFWfuZVdKmF
+	 Zp06QCl9+/UIoqfoGT7sNzcQYOq9ID1gBnWdt6ot8h2APh3hQDS7LqfhHPhH/kpOUiYhH
+	 AdqCGYC0JqoGWB5rvXFkoS2SbScoqZHDIT6QQdRFrAUcuBpkQ7uI4mZyqs/XrOwcORGiU
+	 BHhJ68X3bbFkM4ITDmZhT48uNCxP/eHj+myTAQ2xacocb1FCcKtxiQ3HV/iSdzO/VxQt1
+	 D28k54I6lYE4V9NE8PFSaZrjqa3ZJjg1NXh07uUAJwN6ZCW2HZrzqdf0QYjivDRDswg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tG2d1djb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxMFu8eq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795CC606A31C;
-	Wed, 18 Nov 2026 21:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD01D606A320;
+	Wed, 18 Nov 2026 21:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tG2d1djb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09A61F000C7;
-	Wed, 18 Nov 2026 21:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uxMFu8eq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDA21F000C4;
+	Wed, 18 Nov 2026 21:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037808;
-	bh=V0ZHzhct95hj3hQlxZyjVTbygHNSywWH8U+BkyPgqdk=;
+	s=korg; t=1795037811;
+	bh=WCn+I6Kx4ixlVztHgz3jFSxb9RKvJmEx9K8iNGQUO/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tG2d1djbYp63HsR4LNkVg5hUzXRnTnHIIYMPB2NXEL+PirQX0jru0XvBMaYK+eAqw
-	 +0Oe6CTt5EVLuzzsvoO3mZJIYcVx53zDqcYHOfolNntTxLys1luAMA5O5Cc+6u5TaU
-	 q23rX6Uw1qPqiHj7+RVbAWkHKOFbIDsYlflzywHw=
+	b=uxMFu8eqXzurbCUiWF4DqY9747NLvdE3ktBX0wjd78usdBpxC3tff2JzLzDfCk7Sd
+	 a8c5uz+ZwKWHabTFy3VJS4W4cl/eMSTt+/WRsAgx0tEsB3ebkbkZtGWxTPvSLXazu6
+	 LBeWnUvPFvxFqzeckyqW7pdAFiVRy1dujQcx1piE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1526/3318] drm/amdgpu: parse CS IBs at the BO offset their VA mapping starts at
-Date: Wed, 18 Nov 2026 15:35:48 +0100
-Message-ID: <20261118150406.744906140@linuxfoundation.org>
+Subject: [PATCH 6.6 1527/3318] drm/amdgpu: keep the CS user fence BO in GTT
+Date: Wed, 18 Nov 2026 15:35:49 +0100
+Message-ID: <20261118150406.776071640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -70,45 +72,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 63a59637517682a920f86da1a189a3e639dd4fb3 ]
+[ Upstream commit 7a56d929dc2304edaa6231e1eb5eb82b7e8b74a9 ]
 
-For rings which parse or patch the IBs on the CPU, like JPEG and VCN,
-the CS looks the IB up through its VA mapping and maps the BO, but
-ignores the offset in the BO the mapping starts at. It then parses
-other data than the GPU executes. On navi31, an IB of JPEG NOPs in the
-second page of a BO, mapped with offset_in_bo 4096, is parsed from the
-zeros in the first page and rejected:
+The CS ioctl hands the GPU the GART address of the user fence BO, but
+since the BO keeps its own preferred and allowed domains, it no longer
+makes sure the BO is in GTT. A user fence in a VRAM BO, which only needs
+to be a page in size, gets its address from amdgpu_bo_gpu_offset(), which
+warns about non-contiguous VRAM. On navi31, a CS with a user fence in a
+4K VRAM BO, or in one created with AMDGPU_GEM_CREATE_VM_ALWAYS_VALID:
 
-  amdgpu 0000:03:00.0: Invalid packet [0x00000000]!
+  WARNING: amdgpu_object.c:1531 at amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu], CPU#11: cs_gem_checks/18393
+  RIP: 0010:amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu]
+  Call Trace:
+   <TASK>
+   amdgpu_cs_parser_bos.isra.0+0x4eb/0x850 [amdgpu]
+   amdgpu_cs_ioctl+0x97e/0x2510 [amdgpu]
+   drm_ioctl_kernel+0xac/0x110 [drm]
+   drm_ioctl+0x2c6/0x5b0 [drm]
+   __x64_sys_ioctl+0xa0/0xf0
+   do_syscall_64+0xa3/0x4d0
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-while the same IB submitted through a mapping of the whole BO works.
+and BOs which can't be in GTT at all, like GWS or OA ones of a page in
+size, pass the checks as well.
 
-Add the mapping offset when locating the IB in the BO.
+Only take BOs which can't be anywhere else than in GTT as user fence,
+which the CS then validates there along with its other BOs. While at it,
+detect userptrs with amdgpu_ttm_tt_is_userptr(); amdgpu_ttm_tt_get_usermm()
+returns NULL once the task which created the userptr is gone.
 
-Fixes: 4802ce117786 ("drm/amdgpu: fix UVD/VCE VM emulation")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+v2: only take BOs which can only be in GTT instead of special casing the
+    user fence BO in the validation, use amdgpu_ttm_tt_is_userptr()
+    (Christian)
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 74ba1d87d67d0a38d8248928241c3e1c73d0d53b)
+(cherry picked from commit f16989def9561d04d0f2e77216f5319112d29bf1)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 6709041c4b94a..3150b9d064235 100644
+index 3150b9d064235..efbd297f4cc43 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1084,7 +1084,7 @@ static int amdgpu_cs_patch_ibs(struct amdgpu_cs_parser *p,
- 		if (r)
- 			return r;
+@@ -159,7 +159,12 @@ static int amdgpu_cs_p1_user_fence(struct amdgpu_cs_parser *p,
+ 	if (size != PAGE_SIZE || data->offset > (size - 8))
+ 		return -EINVAL;
  
--		kptr += va_start - (m->start * AMDGPU_GPU_PAGE_SIZE);
-+		kptr += va_start - (m->start * AMDGPU_GPU_PAGE_SIZE) + m->offset;
+-	if (amdgpu_ttm_tt_get_usermm(p->uf_bo->tbo.ttm))
++	if (amdgpu_ttm_tt_is_userptr(p->uf_bo->tbo.ttm))
++		return -EINVAL;
++
++	/* The GPU writes the user fence through the GART */
++	if (p->uf_bo->preferred_domains != AMDGPU_GEM_DOMAIN_GTT &&
++	    p->uf_bo->allowed_domains != AMDGPU_GEM_DOMAIN_GTT)
+ 		return -EINVAL;
  
- 		if (ring->funcs->parse_cs) {
- 			memcpy(ib->ptr, kptr, ib->length_dw * 4);
+ 	*offset = data->offset;
 -- 
 2.53.0
 
