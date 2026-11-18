@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015780;
-	b=kKsk4f9rEScLKAS86EGo+THxsUcS/BmbzJTmsCH7cqwg04eLprPM4xKbpVQQ6TEbtpzr
-	 1m2ArwJugjPDBOMxXA7kxP5cwJHNBZg4SvQZWJK97W/dtAMHO7OfffJfug3NbtVRgp09W
-	 mocN4bflejLIYNSpZ472Owg9rE1abX5MpfgivIOmSdkX82c9uoMS2uFvAUjUmPaTLPEuk
-	 BHvEVmeTpxz73QBHTqRGDxAAjlSN9YlAsSVXT+dRGKxqH0xnLP2f9+W6x3uAaBCQGdRZU
-	 6k9D6LYmGCGOSPPQqPzJoLlP/wwOEfP4DFs5RQUxCoax17t7wWw3JQRFcbXwl8LhEsg==
+	t=1795015783;
+	b=p4Jc14SuQ+HU4stYlsVOrZYWDFMmMHGXgbuswjKnKhDKmw92AAs7nZdtpmRTSdhqhrM8
+	 +R7erc47wU5Plyw0Woqszn/jIrVKCHD/9AimOHF4ywO3o3Nz2RWf72ggvXFp1P1tfcSF2
+	 0TvZhj2zXFflZDc4eiCubRotA+BxVG5S/7+4hlnMzwMT763srgUs7UhiDifU8JI4fzcDP
+	 14tzgp6IA0LBeEJ9YbuwDisH8z6qGxLM8nmSsN4496eAoLtrai41JnUBa6PaNsggLz1to
+	 BkRzi41zPKt2GTv+B2PPdtmBo2MFTixpYbLKU7VKIXUqC/QOBk6+TTHjIrKk4km1J2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015780;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015783;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0JcdPDFbh3YTbgBCDetL00LdfPp2EqeT+M56HFQZrcY=;
-	b=Bo0ZrCHINMatUEbTfFmRMcD10yqOVSN7/sJa7ZWN0Yq0s4sYxsdctlLaJhx+/QKMzaV3
-	 v75HN1FDOnp+d6exYmdrr7nwSrxI31qYSbh5iYzHK0EaCrDya8qHZyLE9Idag3aM7orb3
-	 ttbz999wMK/QhXI58PHH39c6fgF1/6nxYcM/S9sCavrFxJ+BquenfkbnDWp/zzfn6u39N
-	 7675W/dLJ4zehllpzmG6qtsDSkHohN3vnECPO3JiytROeZmwnWdCEQnva39F3jgx6iKBL
-	 c4jAsnphEvpmARIwqPUyxWfTe0etSpW21I9pm8oSX7QW53Tbvf9+y3jkZn0tvEUXl8w==
+	bh=hGnEW3m7PFvv2w0n0ZrIYFxYc4kQ/QqPE1ZmtXlUcWg=;
+	b=BacnYZRlxdFD8BgiZqB/CDUExG51dJDOQ/C2+sECLY3Z2lpaA9ZFUBIE3M1h92quvYik
+	 Oz6gtXjKTlwU8BH+0bcNFit9QLbQaLEnlg6GR47xFbNAni07ODYpp5RC3BY8YP2JyIuMu
+	 elA2WW06ZUABivwgUocyhY3QTLQR89fj3LalpQJMcqq8lOvwct6Q6k+KQRyM2twC6uNF3
+	 zd8UNwI6j8iM46DgxCdh/jYOEdWq0LATUPOO+YIZqGNT/S3/ns48H53ljnyD9Gq95nzlq
+	 cVfnyQKgMfMm48d/r8UIy3690TfQWq43uqynT2dlw/Y6Pjc8VvlVtdIfEcjJ0O5iLPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l2jZ/pew";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e2/6L3/W";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED15606A320;
-	Wed, 18 Nov 2026 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA63606A33A;
+	Wed, 18 Nov 2026 15:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l2jZ/pew
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7651F000C5;
-	Wed, 18 Nov 2026 15:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e2/6L3/W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E0B1F000C4;
+	Wed, 18 Nov 2026 15:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015780;
-	bh=0JcdPDFbh3YTbgBCDetL00LdfPp2EqeT+M56HFQZrcY=;
+	s=korg; t=1795015783;
+	bh=hGnEW3m7PFvv2w0n0ZrIYFxYc4kQ/QqPE1ZmtXlUcWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2jZ/pew4wC9Bjg+3soUHnDqe9c8CYirx/TFKScwTer42RQUnqz25gT/IhHE4SL7l
-	 P0/t7GXxUJ2MNTN+5ssMKXTOIL0ZIY7w5DjbxZDU/ohyMZTExPARve9kY5IPxJTwKE
-	 Dtr0wmEtnb4XdALKHerptkeRHPua9DJXZ95p4Z3Q=
+	b=e2/6L3/W2ICfkuvQ7CTjhgDB8ih205jNkejNTrYBkkHJMh72ZWsyUSmwnLOKYcdv5
+	 mYy6lwItjBxxLmpxyHv2LYg55A+JwGP6UhSV+uSODVSWbXqGBDLAMmu9CTSGoHqcA2
+	 wstHPr85G0d3DyFp5QEqMnv0UhMZrr4zzTyoNGCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keguang Zhang <keguang.zhang@gmail.com>,
+	Surendra Singh Chouhan <kr494167@gmail.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0253/2651] pwm: loongson: Reload PWM configuration through counter reset
-Date: Wed, 18 Nov 2026 15:24:53 +0100
-Message-ID: <20261118150256.967593798@linuxfoundation.org>
+Subject: [PATCH 7.3 0254/2651] pwm: ipq: Prevent potential 32-bit integer overflow in hi_div calculation
+Date: Wed, 18 Nov 2026 15:24:54 +0100
+Message-ID: <20261118150257.005833803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,50 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keguang Zhang <keguang.zhang@gmail.com>
+From: Surendra Singh Chouhan <kr494167@gmail.com>
 
-[ Upstream commit 0de9b836a3bc1cd30578ae2c4463d09afd85ed3d ]
+[ Upstream commit a662d944da1e9236a99355aa3e8a93735d8b3521 ]
 
-The Loongson PWM controller latches the LOW and PERIOD registers only at
-the start of each PWM period. After disabling and re-enabling the PWM,
-the controller resumes from the previous counter value and completes the
-current period before re-latching the updated LOW and PERIOD values.
+In ipq_pwm_get_state(), hi_div was calculated as:
+  hi_div = hi_dur * (pre_div + 1);
 
-Reset the PWM counter when disabling the PWM and release it when
-enabling the PWM so that the updated LOW and PERIOD values are latched
-before the PWM starts running again.
+hi_dur and (pre_div + 1) are both unsigned int (32-bit) values.
+Evaluating their multiplication using 32-bit arithmetic before assigning to
+the 64-bit u64 hi_div variable can overflow 32-bit unsigned math.
 
-Fixes: 2b62c89448dd ("pwm: Add Loongson PWM controller support")
-Signed-off-by: Keguang Zhang <keguang.zhang@gmail.com>
-Link: https://patch.msgid.link/20260715-pwm-loongson-fix-v3-2-0aab2847eaa7@gmail.com
-[ukleinek: Note LOW refers to the register currently named
-LOONGSON_PWM_REG_DUTY. That name is wrong, the fix is still under
-discussion.]
+While effective_div explicitly uses (u64)(pwm_div + 1) * (pre_div + 1) to
+prevent overflow, hi_div was missing the (u64) cast.
+
+Fix this by casting hi_dur to (u64) before multiplication, matching the
+precision used for effective_div.
+
+Fixes: c436e3e9c265 ("pwm: Driver for qualcomm ipq6018 pwm block")
+Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
+Link: https://patch.msgid.link/20260724044854.33274-1-kr494167@gmail.com
 Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-loongson.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pwm/pwm-ipq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-loongson.c b/drivers/pwm/pwm-loongson.c
-index f2fb35b7af2b3..98c809bde2b30 100644
---- a/drivers/pwm/pwm-loongson.c
-+++ b/drivers/pwm/pwm-loongson.c
-@@ -99,6 +99,7 @@ static void pwm_loongson_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
+diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
+index 6b7aec566f7eb..3e1231b212b10 100644
+--- a/drivers/pwm/pwm-ipq.c
++++ b/drivers/pwm/pwm-ipq.c
+@@ -186,7 +186,7 @@ static int ipq_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	state->period = DIV64_U64_ROUND_UP(effective_div * NSEC_PER_SEC,
+ 					   ipq_chip->clk_rate);
  
- 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
-+	val |= LOONGSON_PWM_CTRL_REG_RST;
- 	val &= ~LOONGSON_PWM_CTRL_REG_EN;
- 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
- }
-@@ -109,6 +110,7 @@ static int pwm_loongson_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct pwm_loongson_ddata *ddata = to_pwm_loongson_ddata(chip);
- 
- 	val = pwm_loongson_readl(ddata, LOONGSON_PWM_REG_CTRL);
-+	val &= ~LOONGSON_PWM_CTRL_REG_RST;
- 	val |= LOONGSON_PWM_CTRL_REG_EN;
- 	pwm_loongson_writel(ddata, val, LOONGSON_PWM_REG_CTRL);
+-	hi_div = hi_dur * (pre_div + 1);
++	hi_div = (u64)hi_dur * (pre_div + 1);
+ 	state->duty_cycle = DIV64_U64_ROUND_UP(hi_div * NSEC_PER_SEC,
+ 					       ipq_chip->clk_rate);
  
 -- 
 2.53.0
