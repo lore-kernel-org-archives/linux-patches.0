@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050386;
-	b=QfKTcpx4gMhaetlZ3/Uj2dDzytdN5Cq/06WBwYiV7CdZ5/C4qjk5sCiKSACx/33LolMW
-	 YdavgjupGPGpy79LCBGIDI9Y+WuASeCFXiaydLsUdO7aTaOiKyvGG54iE1r+YtMt4NseG
-	 vPjdZ8N0euJCyPIyksWO2LC4Kx/5MfcYEzdX9g5MRaWjM7RjeuFeswcXuPxtW14857Qdc
-	 ftoVSXOtr+tvsg7I+iy8k8wU+TAVw66RCD7D85e+VNdjdhnSmHsHbYQBJAsZdCaO0IG8E
-	 biWVdscQ8tGf+7OE31uuo7goETe0ITxpvAofx1hQvBxWVX4fkgZuugp41kUl6q65NNw==
+	t=1795050389;
+	b=4E8vBMm5sKTYbuVA3Q0cXuGinELHoEURWGFnmp9oxZQp2yhYwCR6voBQdP3sBw1rQhpa
+	 TBnxtGskIzlpLaFKt9Pr6nyRmxHQxAu57q37YA2FKLCvfyyYPRgpAbz4vKz/nMazMUkks
+	 AUcliooKKzH9/BpILfSKpZlWBMrEpK0xR8wAHpbqHE/xJDMPVF6lY7GWioV192VGVi4E9
+	 9mHsXQizv2c0hjOzCP08WCgh1MaLBic5aqDfTj0v8k5KHgZFMyXgiiEvnXG45CzCrqVA7
+	 PsywHkb34WFA3h/aImpUS/SbDGikV1eicVZPtm/ts54rXHlOWYjps9QbSJGl2MAZMLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+3B5ZH4fYWdxXMq0ML9b0dEG85M8Rjv2SikDYo+hDFw=;
-	b=YdnBFqKadp8Q8iUycXtNw1wT16hq+1yDnXNgbaz9bzdECQ32buPxwY31gf+cNoZHXmA4
-	 MqXI1FOTExqTzl/SXRNSpDnjxJAWheWz4fyyz2IrYkDUCS48sFgUKwaihn6ODOYoDaw4D
-	 ZGJjr3L7AVLkuTLGvdv6ntKrY/XG7rj2b/Jsk6w/ujp442gaE4DxmYxcztv27A8Z3r9iR
-	 iza+OmeVecxFJAjLn2jvQKShtg0d2AUmqlZJTPK2wXiq0LvShIxyIPcUohw12AfrEvvVv
-	 k7O0zQIT0sz41n/gHkZzegLujC1Vo40ze8sXUJac25opFupg/5LVHmDjyZkmvGncJ2Q==
+	bh=0bp3yFe109NAZ5Deetn0t+CN4b1muBDKg4uNoJZPoGk=;
+	b=mhgXqn9eU/ZFxmZnPxSOA8O05kZcQjkudZCUrNIX0LF7aXhYXWbE8eFAi7+gxKr7buGk
+	 TB6qjmPW0WTzT3QrOlwDFFJBFvWn/NmFqgwEGNF2+vwjqBcBEuu+oFYoM5MmHK/lZYSRv
+	 SSNBkyefqzx/IYmVfL6MpQyzkfdI8yy6LGot3U8+jPDfILFHiVJ3cMU8apZAyAt2VhfpX
+	 bXG42pAL1E/hFtZfupBnKp8/UcI6dCfxGbL+AEokrep4IYDC0VhV1yK/tH+QxWf1450Wi
+	 yTVA0C0qTQg+H2KmXGCixLu3PdpAJNP1VUS83dHHqY1vzYPaqdPzkYGVdqogixif9Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xykeRvKF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJmmz5Tk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2E4606A32C;
-	Thu, 19 Nov 2026 01:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F83606A325;
+	Thu, 19 Nov 2026 01:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xykeRvKF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D110C1F000C4;
-	Thu, 19 Nov 2026 01:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJmmz5Tk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21F91F000C4;
+	Thu, 19 Nov 2026 01:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050386;
-	bh=+3B5ZH4fYWdxXMq0ML9b0dEG85M8Rjv2SikDYo+hDFw=;
+	s=korg; t=1795050389;
+	bh=0bp3yFe109NAZ5Deetn0t+CN4b1muBDKg4uNoJZPoGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xykeRvKFq4ekeKvQvTashDJvQ2HCTKpY94lvcsqdlo7y9kuQ4998RYIfRSCTbGQqS
-	 7Fjvcb26SO1OsiYL8Xh0SYU8/s7Izd34IRACxr03lKPF+GwD/37FIB5o8WEXZQ4F/x
-	 mcbipJnDhpNq23fAjBiFQO8RsEKz6stNsWK7YQz0=
+	b=qJmmz5TkVinaTSttprVI8pA1J7xpvAXdXn5mFvxR1oipsN2L8i9U3pZQ5XxuS9DuX
+	 bsuhpEsh1aG9AkhV5RgDuwYLLMrR5qAtf5zmQ9Aar/s7WdVAGMJXk7TAR5n5cJ95d/
+	 vf5imiELtVd+Sy/tGoeFUx3GeZJRcs0VFyr9jzYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianyi Gao <tianyi@cloudflare.com>,
-	Mohsin Bashir <hmohsin@meta.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Stephan Lipp <Stephan@adalogics.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2689/2857] veth: schedule the peers NAPI after XDP_TX when only GRO is enabled
-Date: Wed, 18 Nov 2026 16:02:03 +0100
-Message-ID: <20261118150338.389629564@linuxfoundation.org>
+Subject: [PATCH 6.1 2690/2857] net: shrink the payload-only part of skb dataref to one bit
+Date: Wed, 18 Nov 2026 16:02:04 +0100
+Message-ID: <20261118150338.422499760@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,50 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianyi Gao <tianyi@cloudflare.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit f16b8c6a656e62bfa7bb6a3b876f9ccdaf53bd43 ]
+[ Upstream commit 4957ea03bf2696f5da12c09144f48d040696ecc2 ]
 
-veth_xdp_xmit() queues XDP_TX frames on the peer's ring if the peer has
-NAPI. A peer with GRO enabled and no XDP program also has NAPI.
+skb_shinfo(skb)->dataref is split in two 16-bit halves: the lower
+one counts all references, the upper one the payload-only (nohdr)
+references.
 
-veth_xdp_flush() then schedules the peer's NAPI, but only if the peer's
-xdp_prog is set, so for such a peer the frames are never processed.
-Nothing else schedules that NAPI by default.
+__skb_clone() increments dataref without bound, and skb_cloned()
+only checks the low 16 bits. With 65,537 references the low half
+reads 1, the head looks private, and pskb_expand_head() (or
+skb_unclone(), skb_cow(), ...) frees it while clones still point
+to it.
 
-Once the ring is full, every XDP_TX frame is dropped, and so are the
-skbs that veth_xmit() queues on the same ring.
+An unprivileged user can reach this from a user and network namespace:
+about 32,770 AF_PACKET sockets on lo bring dataref to 0x10001, then
+any pskb_expand_head() on the receive path (here a pull of a large
+IPv6 Hop-by-Hop header) frees the shared head:
 
-Commit 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before
-xmit of XDP frame") changed the check in veth_xdp_xmit() but not the one
-in veth_xdp_flush(). Make veth_xdp_flush() check the napi pointer
-instead of xdp_prog, as veth_xdp_xmit() does.
+BUG: KASAN: slab-use-after-free in _copy_to_iter+0x187/0x1330
+Read of size 1590 at addr ff110001104a9002 by task dataref_wrap/87
+ skb_copy_datagram_iter+0x60/0x190
+ packet_recvmsg+0x1f5/0x12b0
+ __sys_recvfrom+0x18d/0x290
+Freed by task 87:
+ kfree+0xf3/0x3b0
+ pskb_expand_head+0x344/0xeb0
+ __pskb_pull_tail+0xf9/0x1bf0
+ ipv6_parse_hopopts+0x377/0x4f0
+ ip6_rcv_core+0xc67/0x1620
 
-Fixes: 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before xmit of XDP frame")
-Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
-Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/20261016214217.16942-2-tianyi@cloudflare.com
+The upper half never holds more than 1. It is only set by
+__skb_header_release(), with atomic_set() on an skb owning its head
+(TCP/SCTP output, and GRO which never sees cloned skbs).
+__skb_clone() clears nohdr, and __copy_skb_header() does not copy it.
+
+Move SKB_DATAREF_SHIFT to 30, so that the reference count gets 30 bits,
+and dataref stays positive. Wrapping it would need 2^30 live clones of
+a single skb, which socket buffer limits and memory make unreachable.
+
+This issue was found by Anthropic using Claude, and validated by
+Ada Logics.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Stephan Lipp <Stephan@adalogics.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261020151954.22953-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/skbuff.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index b8a2b3be2767e..b460c021c0ef5 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -555,7 +555,7 @@ static void veth_xdp_flush(struct veth_rq *rq, struct veth_xdp_tx_bq *bq)
- 	rcv_priv = netdev_priv(rcv);
- 	rcv_rq = &rcv_priv->rq[veth_select_rxq(rcv)];
- 	/* xdp_ring is initialized on receive side? */
--	if (unlikely(!rcu_access_pointer(rcv_rq->xdp_prog)))
-+	if (unlikely(!rcu_access_pointer(rcv_rq->napi)))
- 		goto out;
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index f60bfeeb85285..c19077b1e18a0 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -610,9 +610,9 @@ struct skb_shared_info {
+  *
+  * Transport layers send out clones of payload skbs they hold for
+  * retransmissions. To allow lower layers of the stack to prepend their headers
+- * we split &skb_shared_info.dataref into two halves.
+- * The lower 16 bits count the overall number of references.
+- * The higher 16 bits indicate how many of the references are payload-only.
++ * we split &skb_shared_info.dataref into two parts.
++ * The lower 30 bits count the overall number of references.
++ * Bit 30 indicates whether one of the references is payload-only.
+  * skb_header_cloned() checks if skb is allowed to add / write the headers.
+  *
+  * The creator of the skb (e.g. TCP) marks its skb as &sk_buff.nohdr
+@@ -632,7 +632,7 @@ struct skb_shared_info {
+  * Having multiple payload-only skbs with different lengths of hdr_len is not
+  * possible. The payload-only skbs should never leave their owner.
+  */
+-#define SKB_DATAREF_SHIFT 16
++#define SKB_DATAREF_SHIFT 30
+ #define SKB_DATAREF_MASK ((1 << SKB_DATAREF_SHIFT) - 1)
  
- 	__veth_xdp_flush(rcv_rq);
+ 
 -- 
 2.53.0
 
