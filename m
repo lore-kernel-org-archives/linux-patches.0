@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029550;
-	b=BSOIH56g52bXkIHSznt4HT+qzcyH/oN2LaKFrq0HH+FxcVnemvWH8OF4ertQ0CtoW3MS
-	 UNYOpURJ5bqaw6ElpYujf9viJci+DppXTO4etG85hGUKY7zJDwezHSv7cve/dslNVaXMa
-	 Yd3fhJDT+pFu6Ufooykh0KY+x76+hc3TwRTv9ehSZnuY8chZ5k1JnKrgmtMvzUwonZQN8
-	 9QABSSGCwVehP5dwVOxI80c3P+yQvN5WKBXUPKq2IknrzSt2n9BAh3tKwyWghtjOdT5mH
-	 DEm3Le9kEXsY7DdOP9yoAkW8ozHn2aGTvdn7WpkyVtK6wzBeLauGVovhAK23Iqs3QOA==
+	t=1795029553;
+	b=gCq7o3tGzpeEBV7+LWFiFEafXI1caBVA1ARMlLYWsczb6OTzTK+HojK0HgCwnbZkrMXF
+	 TkIU+DJYr3B6Vj2lqTQ+F8HijItap2CbX3/rWOI6pAqjRQAqJjL71uAxoHbyWHALrGD2H
+	 wf36SB1UlW43+i2Q7DpVCzZFl928PNWrgNKXpEHGUszIodTjZ/HoCu1luyF/K7h/IxK6T
+	 vOND1+YAuKFY4hwSAPKy+110UZj6R7kIvbqaYOUbAXIoDSMIEBjf42wfcmmFHRJo6ERVP
+	 rJ7jgwhgPL0r6AZhAzbX2fOmj2WKu8dcF4upgk+oE/XTEyDMos1ckZhnuNF86U6Qpjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029550;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029553;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P1bdpiNWGRO3dFNuWu/KLPrmdJK5WS4xUJMcyVSMICw=;
-	b=yDoka/1BRrXhKzyhMcxbG2VVHG+wQ6XaFzjt7pTisB0qSq8B+6tPwjPBOdtC+/Y3gWth
-	 TLpJ5osJ/1iHNKUqP2JBxuoroawwPRrSBm9zJs8PPWMbZDl1nkd+9Iyv5PBUUHLSjmI/z
-	 JNY152c601KB7ffrUpRxEvZc31yRc6OQQmwFCGm8nK+kS9IFKMgiRykSiIDntOIsw7Cqm
-	 lsMJTwaC3+WqopUzbswhlgeKEva3nFecutf1mdKB4F+IOFqsfPemYQMahKnswj/U0Irng
-	 8AokVkHfTtUpI3+zTE5S5GImXA9sNIort+xvunO/NKlfgzMeMgDfVYYyK0UVgKLVpMw==
+	bh=oCob0vAs7b6DbRuIP4em7a5SgVj3ZmywNa6aNeS8T2U=;
+	b=RK0ph6M/srGjxUZDvaBJFCDyWNgh6KbRohT4ZxI/AjGGulN5fslMRDjMwCac19o+tG18
+	 QPV5h3P0q3hsIS+IBesj2ywLlJYGyfqmIyYnibtTdJtX8nmX/PrvOkX4TLJMTHxfkASj2
+	 TbMCRaOQs6HNk/diQaaHM5XmSvNHElY9dRcFtNX7ZndX8lO0c8s0UpGS1GZWZyC3YkkU9
+	 ahLSK5biW4H/CEs2JK3I5TzIHZhy8rjqwEuZzPEnljjApFCMZdWGd7G4W0cMgpMLvLyCM
+	 bmvgl8XVZ49tMqMzF31e6Lc7trnMwbaHSazrHUmsbiZ7J35UFZQ2uTxpY557giqFK+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnLOl854;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ku17Go/f";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BBB606A31C;
-	Wed, 18 Nov 2026 19:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1628606A32C;
+	Wed, 18 Nov 2026 19:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HnLOl854
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248461F000C4;
-	Wed, 18 Nov 2026 19:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ku17Go/f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6F11F000C4;
+	Wed, 18 Nov 2026 19:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029550;
-	bh=P1bdpiNWGRO3dFNuWu/KLPrmdJK5WS4xUJMcyVSMICw=;
+	s=korg; t=1795029553;
+	bh=oCob0vAs7b6DbRuIP4em7a5SgVj3ZmywNa6aNeS8T2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HnLOl8547qm+Pkb3lam2dYB6NuLmbsqf6Dv6ew52I4e6gxkgnAxeeeJCYwkl2lw8t
-	 S4Bx0YFIlaywIztZ6vzMOTBDRCcB/KEkoWdUtCFRUUf7zLOXfsPngPkZIpzmPFtFlz
-	 XR+SeFWWQRzmAbiIjrb8PkxGQjo5wvdZsOAV0C90=
+	b=ku17Go/fJznpRhKqgqKyN8YBm44CWcDKn6qphDmZDvrritnLc1mHVaNU2cI/f9MZi
+	 yaCpgDlypPStxKjJfnp5h6bcGnf7G4kH412bo4n95f8g1ca/lj4XLC8iMP3cO3zGvA
+	 QOhJygBZS2BMqFPaieT1LMgiWtgd20s8OUcv49E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0391/1756] libbpf: fix log level propagation for light skeleton loaders
-Date: Wed, 18 Nov 2026 15:41:58 +0100
-Message-ID: <20261118150024.259613539@linuxfoundation.org>
+Subject: [PATCH 6.12 0392/1756] fs/ntfs3: take run_lock when freeing offs_folio in ni_decompress_file
+Date: Wed, 18 Nov 2026 15:41:59 +0100
+Message-ID: <20261118150024.322163865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,54 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahe Tardy <mahe.tardy@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit e18e82ba9ed53f60acce5f9995ee357a9f7ab91d ]
+[ Upstream commit ad39d8d90fa0fd99b2714d4c84c6f4e1c399f1f4 ]
 
-bpftool's -d option is documented to enable bpf_trace_printk() messages
-from the generated syscall loader when used with -L as specified in
-commit d510296d331a ("bpftool: Use syscall/loader program in "prog load"
-and "gen skeleton" command.")
+attr_wof_frame_info() allocates, caches and dereferences
+ni->file.offs_folio under down_write(&ni->file.run_lock).
+ni_decompress_file() frees the same folio with folio_put() without
+taking run_lock. When a WOF externally-compressed file is opened for
+write, ni_decompress_file() can drop the last reference while a
+concurrent O_RDONLY reader is dereferencing the folio in
+attr_wof_frame_info(), leading to a use-after-free:
 
-However commit b59e4ce8bcaa ("bpftool: Switch bpf_object__load_xattr()
-to bpf_object__load()") changed bpftool to use bpf_object__load() which
-call the internal bpf_object_load with extra_log_level to 0 instead of
-bpf_object__load_xattr with the user request log_level.
+ BUG: KASAN: use-after-free in attr_wof_frame_info (fs/ntfs3/attrib.c:1619)
+ Read of size 4 at addr ffff8880120c9000 by task exploit
+ Call Trace:
+  attr_wof_frame_info (fs/ntfs3/attrib.c:1619)
+  ni_read_frame (fs/ntfs3/frecord.c:2421)
+  ni_read_folio_cmpr (fs/ntfs3/frecord.c:1916)
+  ntfs_read_folio (fs/ntfs3/inode.c:648)
+  read_pages (mm/readahead.c:181)
+  page_cache_ra_unbounded (mm/readahead.c:292)
+  force_page_cache_ra (mm/readahead.c:364)
+  page_cache_sync_ra (mm/readahead.c:573)
+  filemap_get_pages (mm/filemap.c:2688)
+  filemap_read (mm/filemap.c:2806)
+  generic_file_read_iter (mm/filemap.c:2994)
+  ntfs_file_read_iter (fs/ntfs3/file.c:842)
+  vfs_read (fs/read_write.c:574)
+  __x64_sys_pread64 (fs/read_write.c:773)
 
-All the plumbing was still there to generate the bpf_trace_printk()
-instructions from the generator but was now unreachable because
-bpf_gen__init() was called with extra_log_level to 0, leaving
-gen->log_level at 0.
+Take run_lock around the folio_put(), as is done for every other
+access to ni->file.offs_folio.
 
-This uses the obj->log_level field introduced in commit e0e3ea888c69
-("libbpf: Allow passing user log setting through bpf_object_open_opts")
-set from reading verifier_logs in do_skeleton(). This preserves both
-object-level and explicit load-time logging settings.
-
-Fixes: b59e4ce8bcaa ("bpftool: Switch bpf_object__load_xattr() to bpf_object__load()")
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Mahe Tardy <mahe.tardy@gmail.com>
-Link: https://lore.kernel.org/r/20260907170536.9996-1-mahe.tardy@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/frecord.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 68de6bc7ad74a..e43dad57c1125 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -8590,7 +8590,8 @@ static int bpf_object_load(struct bpf_object *obj, int extra_log_level, const ch
- 	 * permit cross-endian creation of "light skeleton".
- 	 */
- 	if (obj->gen_loader) {
--		bpf_gen__init(obj->gen_loader, extra_log_level, obj->nr_programs, obj->nr_maps);
-+		bpf_gen__init(obj->gen_loader, obj->log_level | extra_log_level,
-+			      obj->nr_programs, obj->nr_maps);
- 	} else if (!is_native_endianness(obj)) {
- 		pr_warn("object '%s': loading non-native endianness is unsupported\n", obj->name);
- 		return libbpf_err(-LIBBPF_ERRNO__ENDIAN);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index ab8615abb981b..f3d8483c9f543 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2395,10 +2395,13 @@ int ni_decompress_file(struct ntfs_inode *ni)
+ 
+ 	/* Clear cached flag. */
+ 	ni->ni_flags &= ~NI_FLAG_COMPRESSED_MASK;
++	/* offs_folio is accessed under run_lock in attr_wof_frame_info(). */
++	down_write(&ni->file.run_lock);
+ 	if (ni->file.offs_folio) {
+ 		folio_put(ni->file.offs_folio);
+ 		ni->file.offs_folio = NULL;
+ 	}
++	up_write(&ni->file.run_lock);
+ 	mapping->a_ops = &ntfs_aops;
+ 
+ out:
 -- 
 2.53.0
 
