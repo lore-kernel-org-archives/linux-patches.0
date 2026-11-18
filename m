@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016592;
-	b=IOKEKfK9YSwbENcU5zEGGfR9ldRkI6bVbYwcjGZ+K+Is4/E6pAQ5+lcOGJvATN5eDlot
-	 g3K/EC1TPbGfdUIhyYSGHWZaXFvlrIoLatoFX2Y5haZKs/0h7IcLcCnvtkQH9EjGTnX8Q
-	 Rx09TAEkIgr8Hn4LAQdWA64PNuqioYav/NGuWHTqdq5GZQ3EUdCFZsfnabxANtKgC/QZU
-	 uEwlfBte4S94jvwWps6nMErUFk/NtudwUO46L89T6ru4HNTOMvGAHPSu3lFR1omhwFBKg
-	 HnDlK92f/gvKdNtkcpGxKY8Qa2QunYC+BNMY3MPx1VWS3uCJFlO2lW4p2+TJ9RQ0uSw==
+	t=1795016595;
+	b=BA909ijrS2E0JPm2HzewmyyNBa1i1p3Drisz1jcdxVMuPhi8o+mew6wTCLyXAhHsq8qf
+	 Pj1T9PgjUI1FptPJkgV7TyOb5/ypRWNP1JQjtaE8UsZDkIzLboETZ0k/L7VFDCqubHuNX
+	 pi9SHjgjkmQSryzePHEhYxzSKx4BL6Fz2y2+TgzmKOkXKu824Vo7kqq55zQ7qDlwwCN/S
+	 oi1MPPmgstBR0K2vmvDitfaHjPhswP2eDbn59j6XT4m/AyyQhbADtJpYBAeE5PGwcWFOo
+	 Jg8aSWcX6gEuWhGe9Ge0tcW8YWMFSI1zM2lviY3a6JkAqJ67OWDtuW1hzAHb8LZVWxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=sDawJke/Ysn6YqAiLTJ7jsyOqMoAm/LlqXtPoX4TGxM=;
-	b=y6fxWaVeXEC/QFd+FGEicVxjT50R8J709AI2yds456D+REiYwyidMwL92VyaF7lAfsfl
-	 jbMJshhrluk5g1KylLREfeHN6yNGz9qtam5ppbx+1v1y1Q5dymPKLeR2/Fp3GA1d5nrIo
-	 xoj5pJfXWNTzJwLVmCYGDoDww+VhnHUH3UGrKla9aP7PUTuXeAJSLoSVrQ18rLX08Vi1j
-	 i/YYKT6FxBLJovwvVqHFoEQqKY6cAGwYYx0h6+w25OVEOohraIBRcqwKHUtM0R4+CdL1O
-	 zQok/bgqC/bFyl7dt17D+0E6ivEpuXSMIuaxOGVSqey+vra7+XATodEwqxYp9O45Iag==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=RN6UTtssbTMFmjbmIrAQUr4JM3704eSnID1VpTTAzeE=;
+	b=kZFcIV+lbhq+qq1wAeCPXO8zeUaPIYIA0rAS1QaS6/aIrntR3nyP1hxmeyiglc+xQbtd
+	 W3HfamB/ni/1FvBSt8oxIDi/yERLuDEDas/W1MfnmbzWsQmq8SZx2bOKndvD3Dmn6KDHV
+	 ScZwRjywNL+j3clT5prxslHWgJrJDKtZ1kflvQzs8TIoRKAFWxJYCB/Bz9rKja8l4Myrf
+	 YvBlC1L+WAYKvjVI52ru58zpGC91MYCWs7HWc/+6zuwrzjxO282nZDdJ7jFGyYrRSUZE1
+	 TjuAh315nsr4p+OTQcJLE/GFadhIRm4gopH3SPCkxC8e0EUdYKvSnbHRZOlbwQd3Kfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WFMMJT19;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vrZ/36B8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5462606A330;
-	Wed, 18 Nov 2026 15:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912C660A260C;
+	Wed, 18 Nov 2026 15:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WFMMJT19
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02161F000C4;
-	Wed, 18 Nov 2026 15:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrZ/36B8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9931D1F000C5;
+	Wed, 18 Nov 2026 15:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016592;
-	bh=sDawJke/Ysn6YqAiLTJ7jsyOqMoAm/LlqXtPoX4TGxM=;
+	s=korg; t=1795016595;
+	bh=RN6UTtssbTMFmjbmIrAQUr4JM3704eSnID1VpTTAzeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WFMMJT193C+KstUksCQXWVM1kIkFt0S9JWJ/bcO7oBmtqp5m7oE8kc8DqiLdUrNPj
-	 cSzqNQVsispuHpKo+P6qbkyLYDADGBVuveBY4EiP8QoHu7fX1vJJ6p8e46dZwJKHEy
-	 g3lmxA4W2WviR4urjoi8B+x4P3cquaVglDVPrd90=
+	b=vrZ/36B8wuTzSUOezwC1tKPTRPZ9QlJjK+/cnkEWm3WqFjf3ggmcOPqFmLrH28afE
+	 1MQAJcKWvsTkGJ9SWLIvMuVopnaaj4GmYGEfednBVm3eZSAGKY8zMNgD/EUonnVXv4
+	 fgrpm/ciMpDe7N72QGsJW0pt1qFIUl7KdOssaBJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Arvind Yadav <arvind.yadav@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Varun Gupta <varun.gupta@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0583/2651] RDMA/uverbs: Drop restrack ref on ib_init_ucontext() failure in GET_CONTEXT
-Date: Wed, 18 Nov 2026 15:30:23 +0100
-Message-ID: <20261118150308.715722304@linuxfoundation.org>
+Subject: [PATCH 7.3 0584/2651] drm/pagemap: Prevent CPU stalls during unbounded pagemap teardown
+Date: Wed, 18 Nov 2026 15:30:24 +0100
+Message-ID: <20261118150308.751563127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,60 +65,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Varun Gupta <varun.gupta@intel.com>
 
-[ Upstream commit 9dcacdc41083cccff74292851bf9fde999e0731a ]
+[ Upstream commit b66b036c959f49decd2202db4026d3ae21e01388 ]
 
-The UVERBS_METHOD_GET_CONTEXT handler allocates the ucontext via
-ib_alloc_ucontext(), which calls rdma_restrack_new() (initialising the
-kref to 1) and rdma_restrack_set_name(NULL), the latter attaching the
-current task and taking a task_struct reference.  When ib_init_ucontext()
-subsequently fails, the error path only does:
+drm_pagemap_dev_unhold_work() processes an unbatched llist of pagemaps
+on the system workqueue. This creates potential latency traps during
+heavy teardown cycles due to two compounding factors:
 
-	kfree(attrs->context);
-	attrs->context = NULL;
+1. The loop contains a per-item drm_dbg() trace. If dynamic debug is
+enabled on a slow serial console, synchronous print latency scales
+linearly with the batch size and can block worker execution.
+2. The llist can accumulate large batches during intensive unmap
+operations, monopolizing worker resources without yielding.
 
-without first calling rdma_restrack_put() on &attrs->context->res.  The
-kref therefore never reaches zero, restrack_release() is never invoked,
-and put_task_struct() is never called, so the task_struct reference taken
-during set_name is leaked permanently.
+This causes below log warning:
+"workqueue: drm_pagemap_dev_unhold_work [drm_gpusvm_helper] hogged CPU
+for >10000us 19 times, consider switching to WQ_UNBOUND"
 
-A local user with access to an RDMA device can repeat this path (e.g. by
-hitting an RDMA cgroup limit or supplying invalid ucaps) and leak one
-task_struct reference per attempt, eventually preventing those processes
-from being reaped or exhausting memory.
+Fix this by implementing a latency mitigation strategy:
+- Move the teardown work to system_unbound_wq to avoid tying up
+  per-CPU bound worker pools.
+- Add cond_resched() inside the teardown loop to yield the CPU during
+  large batch teardowns, ensuring system responsiveness.
+- Convert the drm_dbg() trace to drm_dbg_ratelimited() to mitigate
+  serial console bottlenecks while preserving debuggability.
 
-The legacy ib_uverbs_get_context() path already handles this correctly
-at its err_ucontext label, where rdma_restrack_put() precedes kfree().
-Mirror that ordering here.
+v2:
+  - Changed workqueue from deprecated system_unbound_wq to system_dfl_wq.
+    (Arvind Yadav)
 
-Fixes: a1123418ba10 ("RDMA/uverbs: Add ioctl command to get a device context")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260916085529.1838-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: a26084328ac4 ("drm/pagemap, drm/xe: Manage drm_pagemap provider lifetimes")
+Reviewed-by: Arvind Yadav <arvind.yadav@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Varun Gupta <varun.gupta@intel.com>
+Link: https://patch.msgid.link/20260918081320.30389-2-varun.gupta@intel.com
+Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_pagemap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
-index ce0a7de004056..db65032e80b4a 100644
---- a/drivers/infiniband/core/uverbs_std_types_device.c
-+++ b/drivers/infiniband/core/uverbs_std_types_device.c
-@@ -272,6 +272,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_GET_CONTEXT)(
- 		return ret;
- 	ret = ib_init_ucontext(attrs);
- 	if (ret) {
-+		rdma_restrack_put(&attrs->context->res);
- 		kfree(attrs->context);
- 		attrs->context = NULL;
- 		return ret;
+diff --git a/drivers/gpu/drm/drm_pagemap.c b/drivers/gpu/drm/drm_pagemap.c
+index a0546955d0b9f..c66c58f85c345 100644
+--- a/drivers/gpu/drm/drm_pagemap.c
++++ b/drivers/gpu/drm/drm_pagemap.c
+@@ -1079,7 +1079,7 @@ static void drm_pagemap_release(struct kref *ref)
+ 	dpagemap->dev_hold = NULL;
+ 	drm_pagemap_shrinker_add(dpagemap);
+ 	llist_add(&dev_hold->link, &drm_pagemap_unhold_list);
+-	schedule_work(&drm_pagemap_work);
++	queue_work(system_dfl_wq, &drm_pagemap_work);
+ 	/*
+ 	 * Here, either the provider device is still alive, since if called from
+ 	 * page_free(), the caller is holding a reference on the dev_pagemap,
+@@ -1102,10 +1102,11 @@ static void drm_pagemap_dev_unhold_work(struct work_struct *work)
+ 		struct drm_device *drm = dev_hold->drm;
+ 		struct module *module = drm->driver->fops->owner;
+ 
+-		drm_dbg(drm, "Releasing reference on provider device and module.\n");
++		drm_dbg_ratelimited(drm, "Releasing reference on provider device and module.\n");
+ 		drm_dev_put(drm);
+ 		module_put(module);
+ 		kfree(dev_hold);
++		cond_resched();
+ 	}
+ }
+ 
 -- 
 2.53.0
 
