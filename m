@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033569;
-	b=yvWvoXQZgfhPHxXdBNlqwnZrrxZn82DZ99xtPKJUiKeWxxHqBRpay9a2mXzLkGIIqvQW
-	 t6F1xV1BdOBzDhmzKPrlfVEAoWDRFaMUtq65Kx0q3rv4Qci6Cik6tUxMozekm69ksBiyu
-	 o7KFdr6RlpHPJxCgeruTcRKepZZMrYyhe/fGvEvLS61enbsJ2djEFGo3rO1GLSUCUUOwn
-	 oWJYP3GQE5QHeSoiKJPPXYciZeYrcc8iami33bYTIzT1ggRwtKUmiDkbZcUSzXcnSBlen
-	 55K6dkOII2CyEIDcaZoknVH0esjXSD84xbjTPdFRua5kTx39R42vMYM4Fmp7HBudUag==
+	t=1795033572;
+	b=hjnY87RZ83Vui0GHEhF+2HOgpzuDm1LMU2/T47MNJfsW7WpU6abdSl+3aE+CXnzbQAAx
+	 DlPMQ7Zyc/hYsnJw0EHgPO+R/RfOvwRda3xTPOhKDNuEY4L9B/o/KZ9le/m+LfGpB/tG+
+	 39dTjCULfdnPAVXBynlAATjZ2l05a7e3nJx0rCPQZkVcKasyQ/Ylbhu3ro2IiBUUphSPi
+	 ws8SHHpTLgPfueAgoJt1d0BwVfQgrWGyJMPf9J18XLL03mfJIZDoQYqZFzShRL26x48ev
+	 SfdMbFb1oTVI6usjQeG7ih/PZJ/KHB9OBhPNlv6XlgGUzcKdyw4gvlQuLNObcHGz75A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5RlgFpbB9prjd5bxO5lLke5vpCPGrxWpg/UfCEDxEgc=;
-	b=tHJCQgBTgzqFLW437t86oQfRT548TjOINp78P1QoDWvS6sQ+NKSsZrEiZhyyHtCUz6+4
-	 Ed1P6U90PIpyQAKzH2Kfa3RoSimT8UrUHf9J0LhY2EQc/5jjhYJw54S3RQgoruwwTzb9u
-	 V7i6C70kqPgZod4LlilH/vH71DJpdvP3OdIdsAkrg0hn6OG3/PLvK+sOXB7YdFqr/jdu/
-	 6/lETkR7F+VpJHDG66WScpwp9kuNnR7yQ7U5/SIGDwDGouo03sonwjZ0Y6Ow8cW8SP6q0
-	 LqUWhA99FQvPEUFqkzTKLpGfWjFfUdOel0i2UBRDHqwmKYC+3cAaa8RC0t16uwsltbw==
+	bh=6IV0kAmmMpGHtiyP6keuUuiJIHeWmpJLHFDeTV6SmEc=;
+	b=MXmDGBQOrJ4kmVgN2amnm4EelQw2mSynDSucHjN1KBIVBtT3VkcaUmxz2fe8Hgu+HZNR
+	 z1rFqfVCmZwG5/QPmKCpvOtwRTYEOXudnd6ruyoS6H6Z8ZsmRcfdRHgYeSq2HvLQ54Z9u
+	 Q70bfaoyqACWntLu70K7jLzIVCPXVhHKTA3r1YmJEfoNNE6Nqx2sNBPwxchrGWofbY5TK
+	 otj9PvrFSnv1ZoMvIAIpolpB6CPQIpbgj8laOKdlsTrllBB7cEyG70EqChTIcFvSE2aUM
+	 nQ76txMjZYUnynVpXN9YE3LjlUPmvuFUMexxxHswiY/UBxiiDRPxHBoHjZeUDwFpe6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/syO0vH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmhiBH8w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B624F60A2604;
-	Wed, 18 Nov 2026 20:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A89B606A31C;
+	Wed, 18 Nov 2026 20:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/syO0vH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 134451F000CA;
-	Wed, 18 Nov 2026 20:26:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmhiBH8w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE8C1F000C5;
+	Wed, 18 Nov 2026 20:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033569;
-	bh=5RlgFpbB9prjd5bxO5lLke5vpCPGrxWpg/UfCEDxEgc=;
+	s=korg; t=1795033572;
+	bh=6IV0kAmmMpGHtiyP6keuUuiJIHeWmpJLHFDeTV6SmEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/syO0vHFgNzUJ0O/2mAkKtWlgBbOKFjiKSvYw2jvueG9uQiO0PCyv4dGjYhZaFk6
-	 XkbylzDzsk5eK+jWz/BVacBUdy4BZxqzToCgGKfPjRWS1qGUHZNquE6Wlh9yO2Aa39
-	 S5OMBmyaYmAN9eVl322Oz3+JjNK/8DEZrNvL3sPI=
+	b=HmhiBH8wpFvJbgAjEIrC4S3lXtuWBC7htEXpQMiEudUOb2+kyofflKE41HygVvwYP
+	 39Wqq5BMH4gQ9HZqRgHZ/4wMEWHDqvo1HwUcWt/bpVZEBTSiI4NZad9WbDE1giQiQo
+	 phI3jAuaGRNbPb6DZLlxHVmJEI41rdSSGpb4qiWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Vinod Koul <vkoul@kernel.org>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0060/3318] dmaengine: pl330: remove debugfs file on teardown
-Date: Wed, 18 Nov 2026 15:11:22 +0100
-Message-ID: <20261118150315.771837959@linuxfoundation.org>
+Subject: [PATCH 6.6 0061/3318] net: mvneta_bm: add suspend/resume support to prevent crash after resume
+Date: Wed, 18 Nov 2026 15:11:23 +0100
+Message-ID: <20261118150315.807298036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,74 +68,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 0d3e3376b289cdaff5b3b6c1581999926ff1000f ]
+[ Upstream commit 140be217df577961bea1ca36240439a463026cbd ]
 
-init_pl330_debugfs() creates a debugfs file with struct pl330_dmac as
-private data. pl330_remove() then unregisters the DMA device and frees
-the PL330 channel/thread state without removing that file.
+The mvneta driver uses the hardware Buffer Manager (BM) for RX buffer
+allocation. During suspend, mvneta disables its clock, causing BM to
+lose all buffer address state. On resume, mvneta_bm_port_init() re-
+attaches the BM pool to the NIC, but BM hardware returns stale/garbage
+buffer addresses. When NAPI poll processes these buffers, DMA cache
+sync hits an invalid virtual address causing a kernel panic:
 
-Keep the debugfs dentry and remove it before tearing down the DMAC state
-used by the debugfs show callback.
+ Unable to handle kernel paging request at virtual address b0000080
+ PC is at v7_dma_inv_range
+ Call trace:
+  v7_dma_inv_range from arch_sync_dma_for_cpu+0x94/0x158
+  arch_sync_dma_for_cpu from __dma_sync_single_for_cpu+0xc4/0x15c
+  __dma_sync_single_for_cpu from mvneta_rx_swbm+0x6c8/0xf48
+  mvneta_rx_swbm from mvneta_poll+0x6fc/0x70c
+  mvneta_poll from __napi_poll.constprop.0+0x2c/0x1e0
+  __napi_poll.constprop.0 from net_rx_action+0x160/0x2c4
+  net_rx_action from handle_softirqs+0xd8/0x2b8
+  handle_softirqs from run_ksoftirqd+0x30/0x94
+  run_ksoftirqd from smpboot_thread_fn+0x100/0x204
+  smpboot_thread_fn from kthread+0xf4/0x110
+  kthread from ret_from_fork+0x14/0x28
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260615091645.28878-1-pengpeng@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fix by adding suspend/resume callbacks to the BM driver:
+
+- suspend: drain all buffers (with DMA unmapping), free the BPPE
+  regions, and reset pool state to FREE before stopping BM and gating
+  the clock.
+
+- resume: enable the clock, reinitialize BM defaults, and restore pool
+  read/write pointers and size registers. Pool allocation and buffer
+  refill are handled by mvneta_resume() through the normal
+  mvneta_bm_port_init() path, which sees pools as FREE and performs
+  full initialization identical to probe.
+
+Add a device_link (DL_FLAG_AUTOREMOVE_CONSUMER) in mvneta_probe to
+guarantee BM resumes before mvneta and suspends after mvneta. If the
+link cannot be created, fall back to SW buffer management to avoid a
+potential crash on resume due to unordered PM transitions.
+
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260630060311.4072140-1-yun.zhou@windriver.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/pl330.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/mvneta.c    | 18 ++++++
+ drivers/net/ethernet/marvell/mvneta_bm.c | 72 ++++++++++++++++++++++++
+ 2 files changed, 90 insertions(+)
 
-diff --git a/drivers/dma/pl330.c b/drivers/dma/pl330.c
-index 3cf0b38387ae5..a33fb061fbd06 100644
---- a/drivers/dma/pl330.c
-+++ b/drivers/dma/pl330.c
-@@ -502,6 +502,7 @@ struct pl330_dmac {
- 	struct dma_pl330_chan *peripherals; /* keep at end */
- 	int quirks;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index eb7b13b66ea35..800b06d092300 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -5643,6 +5643,24 @@ static int mvneta_probe(struct platform_device *pdev)
+ 					 "use SW buffer management\n");
+ 				mvneta_bm_put(pp->bm_priv);
+ 				pp->bm_priv = NULL;
++			} else if (!device_link_add(&pdev->dev,
++						    &pp->bm_priv->pdev->dev,
++						    DL_FLAG_AUTOREMOVE_CONSUMER)) {
++				/*
++				 * Link guarantees BM resumes before mvneta.
++				 * Without it, BM may not be ready when
++				 * mvneta_bm_port_init() runs on resume,
++				 * causing stale buffer addresses and a crash.
++				 * Fall back to SW management to be safe.
++				 */
++				dev_warn(&pdev->dev,
++					 "failed to link to BM, use SW buffer management\n");
++				mvneta_bm_pool_destroy(pp->bm_priv,
++						       pp->pool_long, 1 << pp->id);
++				mvneta_bm_pool_destroy(pp->bm_priv,
++						       pp->pool_short, 1 << pp->id);
++				mvneta_bm_put(pp->bm_priv);
++				pp->bm_priv = NULL;
+ 			}
+ 		}
+ 		/* Set RX packet offset correction for platforms, whose
+diff --git a/drivers/net/ethernet/marvell/mvneta_bm.c b/drivers/net/ethernet/marvell/mvneta_bm.c
+index 46c942ef2287f..e6489f5772493 100644
+--- a/drivers/net/ethernet/marvell/mvneta_bm.c
++++ b/drivers/net/ethernet/marvell/mvneta_bm.c
+@@ -129,6 +129,7 @@ static int mvneta_bm_pool_create(struct mvneta_bm *priv,
+ 	if (!IS_ALIGNED((u32)bm_pool->virt_addr, MVNETA_BM_POOL_PTR_ALIGN)) {
+ 		dma_free_coherent(&pdev->dev, size_bytes, bm_pool->virt_addr,
+ 				  bm_pool->phys_addr);
++		bm_pool->virt_addr = NULL;
+ 		dev_err(&pdev->dev, "BM pool %d is not %d bytes aligned\n",
+ 			bm_pool->id, MVNETA_BM_POOL_PTR_ALIGN);
+ 		return -ENOMEM;
+@@ -139,6 +140,7 @@ static int mvneta_bm_pool_create(struct mvneta_bm *priv,
+ 	if (err < 0) {
+ 		dma_free_coherent(&pdev->dev, size_bytes, bm_pool->virt_addr,
+ 				  bm_pool->phys_addr);
++		bm_pool->virt_addr = NULL;
+ 		return err;
+ 	}
  
-+	struct dentry		*dbgfs;
- 	struct reset_control	*rstc;
- 	struct reset_control	*rstc_ocp;
+@@ -479,6 +481,75 @@ static int mvneta_bm_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static int mvneta_bm_suspend(struct device *dev)
++{
++	struct mvneta_bm *priv = dev_get_drvdata(dev);
++	int i;
++
++	/* Drain buffers and free pool resources while BM is still clocked */
++	for (i = 0; i < MVNETA_BM_POOLS_NUM; i++) {
++		struct mvneta_bm_pool *bm_pool = &priv->bm_pools[i];
++		int size_bytes;
++
++		if (bm_pool->type == MVNETA_BM_FREE)
++			continue;
++
++		mvneta_bm_bufs_free(priv, bm_pool, bm_pool->port_map);
++		if (bm_pool->hwbm_pool.buf_num)
++			dev_warn(&priv->pdev->dev,
++				 "pool %d: %d buffers not freed\n",
++				 bm_pool->id, bm_pool->hwbm_pool.buf_num);
++
++		mvneta_bm_pool_disable(priv, bm_pool->id);
++
++		if (bm_pool->virt_addr) {
++			size_bytes = sizeof(u32) * bm_pool->hwbm_pool.size;
++			dma_free_coherent(&priv->pdev->dev, size_bytes,
++					  bm_pool->virt_addr,
++					  bm_pool->phys_addr);
++			bm_pool->virt_addr = NULL;
++		}
++		/*
++		 * Safe to destroy: device_link guarantees all mvneta ports
++		 * have already suspended, so no hwbm_pool_add() can be in
++		 * progress holding buf_lock.  Pairs with mutex_init() in
++		 * mvneta_bm_pool_use() on resume.
++		 */
++		mutex_destroy(&bm_pool->hwbm_pool.buf_lock);
++		bm_pool->type = MVNETA_BM_FREE;
++	}
++
++	mvneta_bm_write(priv, MVNETA_BM_COMMAND_REG, MVNETA_BM_STOP_MASK);
++	clk_disable_unprepare(priv->clk);
++	return 0;
++}
++
++static int mvneta_bm_resume(struct device *dev)
++{
++	struct mvneta_bm *priv = dev_get_drvdata(dev);
++	int i, err;
++
++	err = clk_prepare_enable(priv->clk);
++	if (err)
++		return err;
++
++	/* Reinitialize BM hardware; pools are refilled by mvneta_resume() */
++	mvneta_bm_default_set(priv);
++
++	/* Restore pool registers lost during clock gating */
++	for (i = 0; i < MVNETA_BM_POOLS_NUM; i++) {
++		mvneta_bm_write(priv, MVNETA_BM_POOL_READ_PTR_REG(i), 0);
++		mvneta_bm_write(priv, MVNETA_BM_POOL_WRITE_PTR_REG(i), 0);
++		mvneta_bm_write(priv, MVNETA_BM_POOL_SIZE_REG(i),
++				priv->bm_pools[i].hwbm_pool.size);
++	}
++
++	mvneta_bm_write(priv, MVNETA_BM_COMMAND_REG, MVNETA_BM_START_MASK);
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(mvneta_bm_pm_ops, mvneta_bm_suspend, mvneta_bm_resume);
++
+ static const struct of_device_id mvneta_bm_match[] = {
+ 	{ .compatible = "marvell,armada-380-neta-bm" },
+ 	{ }
+@@ -491,6 +562,7 @@ static struct platform_driver mvneta_bm_driver = {
+ 	.driver = {
+ 		.name = MVNETA_BM_DRIVER_NAME,
+ 		.of_match_table = mvneta_bm_match,
++		.pm = pm_sleep_ptr(&mvneta_bm_pm_ops),
+ 	},
  };
-@@ -2957,14 +2958,24 @@ DEFINE_SHOW_ATTRIBUTE(pl330_debugfs);
  
- static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
- {
--	debugfs_create_file(dev_name(pl330->ddma.dev),
--			    S_IFREG | 0444, NULL, pl330,
--			    &pl330_debugfs_fops);
-+	pl330->dbgfs = debugfs_create_file(dev_name(pl330->ddma.dev),
-+					   S_IFREG | 0444, NULL, pl330,
-+					   &pl330_debugfs_fops);
-+}
-+
-+static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
-+{
-+	debugfs_remove(pl330->dbgfs);
-+	pl330->dbgfs = NULL;
- }
- #else
- static inline void init_pl330_debugfs(struct pl330_dmac *pl330)
- {
- }
-+
-+static inline void deinit_pl330_debugfs(struct pl330_dmac *pl330)
-+{
-+}
- #endif
- 
- /*
-@@ -3213,6 +3224,8 @@ static void pl330_remove(struct amba_device *adev)
- 	struct dma_pl330_chan *pch, *_p;
- 	int i, irq;
- 
-+	deinit_pl330_debugfs(pl330);
-+
- 	pm_runtime_get_noresume(pl330->ddma.dev);
- 
- 	if (adev->dev.of_node)
 -- 
 2.53.0
 
