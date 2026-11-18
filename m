@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015451;
-	b=PHNH+Dg7LAtPZ6rzWb03tbM6PaMFWrkFtGyz5XQWLqwiKLDLPc+xgt/IBewj/IvL6HFm
-	 NMWbU9rx4Ntnf1lDK6TA09ELvGquFVnO6mijESqKchw9nUyqpDGeMlb3rZGHYztngOby7
-	 FoORQsSNyF3w1vcvQYBZrmEblTqhmcrbY2KAM9kDPYK3WuRyllNWAh6sQMzEjTMDFzvV/
-	 SxB+vKAOW7iwmC34vgmOiBzTDQ2GDo/hGSqEca9oWohU51MxUUXnJFymPKwDgTYTrbXU/
-	 f7lf8NFH/vIUFCa7ciSc7IorFXRREbkC/M7gaXNr4b7DL/Ma+nQqsjPH1RdBlma03Rw==
+	t=1795015455;
+	b=OmvgWSOeEUkWKst08QKTtkKR9LgnG8lZGEXM7NKPt3wx1iGVGPZFI9JQ61uVSAv0DSBk
+	 Vb3odc8qavrAaEuoEPeq1vLzr7hU6yBPl+MZ6wxGgtmebnkQMpmqeNufdxX4J4lqFY4LM
+	 BDg5eLrd/qcmq5cqCRJX567EeRSMvmN6kcx0BVyEA18dLU5J2BQ4gsUU1OiTEybPnX6gR
+	 FlUrpZW2Sd65X93iOIrsxqnUaKZDJEm+JujXEQToFufeLK7mCIsbuaee0qQFlc2EsqzW/
+	 YzQuDzMJCKQEr2PE7a69V1QnjUyJzP4dKvhklYSEZCKKqS3CdpEkBEShvAs+I6qE3DQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=U1o5X/clf3lcpTF/wfsRG1ghs8FEKKTBCqf4w2o0JB4=;
-	b=1fy57uc9oTWtm9aUKgFOfxPN/KrGchwNnDp177Cp3V2aUPElc7dEfj02q1qjCaZjZcgp
-	 yFaTYTwU3xu4COjfG6kgAwaqcZC0X+EGHtlaxX0paXUPwYbnVT/SGKMTaqQqtPk/d4t+3
-	 xvg+bh9u5hkkBMm7P6nLXJL7czkF2DxDDeQ3sugsIeQbSNyejJ5VnBbXLsjwYjfEkmHaO
-	 9xlx0zlPlczKrQidBeMxax00Vbg8VGB8Wn1wSVlX4wodzZmKANSYBF8h3Lh4dFONyXS8v
-	 gABrCb46AqXAZQ8dSu0rU3rHq4NYz08AqXas6k0ukPIYL7UW+WBcP3eexBeyHP1Fdrg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CPEHp+mOLFtV3w4FgrLjEAO9Nk8YvR+GrSXpAQ7n8tU=;
+	b=d+YqhP8mCUnV7ng3Z3yz+tDwex2vSGYuDGGz7KFiAgjr7fC3uv5HGZsc+5k3s+zWh9Z7
+	 vrek9nz5YqzIdmLHVjAYMpqfYNZDFV2hlVD7eze8mb+q9myQwzHvrJEPy1K6Qyjk+7B7I
+	 94K0SjaAgJx/Ww8zyTHSns+xZjZ1sCLBDOBEGJY+YcaBz3Wg8aKOCleawmXWzxHw8IX4+
+	 01ZwqhI7w4eXVvxE8BL/YqTq02gAWmib+/H87OrUkz5/vzpADhBFUzo7ekTEo07re5zMz
+	 dBIcDjSvG4EmVyXkc/pz3lnEJbeg5XqrRynSIRu6zCXLfTxr8mauA97ZpWbnBGszePg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mF7q/ob9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPBMDrOf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B363960A2627;
-	Wed, 18 Nov 2026 15:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9A606A325;
+	Wed, 18 Nov 2026 15:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mF7q/ob9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38751F000C9;
-	Wed, 18 Nov 2026 15:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPBMDrOf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57AC1F000C4;
+	Wed, 18 Nov 2026 15:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015451;
-	bh=U1o5X/clf3lcpTF/wfsRG1ghs8FEKKTBCqf4w2o0JB4=;
+	s=korg; t=1795015454;
+	bh=CPEHp+mOLFtV3w4FgrLjEAO9Nk8YvR+GrSXpAQ7n8tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mF7q/ob9nsEFdXofRX/OZnybB5HMUVmFyWZnEZ5KcrhpWxLwWENEOm3M3x2gomoci
-	 FlYXWnoXK1JcE8SCmzal0gdMdKWJQOLLchNNPGu9pXrVpUgXIJkJ6lUAqOjmjiZoGX
-	 MQ2k3fkr6fiYT03+mmi0V52vq8sE+DI3wp88keTY=
+	b=CPBMDrOfsP6kQdpnixlHSkLOTesnpzyNupNU0Pb21s9rqz1KIay+YbUAsxbGfgDks
+	 tOL3dKCL5LVr9IaWR7hz+I9l4zLGrJORHXeFJilfMLsK/fAf9TIg3bNhUECwUrcvo9
+	 dBjmdfTuk6QpxmWPHi9Ciwvf2RkYFLWFPqbzB0So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	John Stultz <jstultz@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0161/2651] sched/core: Dont steal a proxy-exec donor
-Date: Wed, 18 Nov 2026 15:23:21 +0100
-Message-ID: <20261118150253.649557349@linuxfoundation.org>
+Subject: [PATCH 7.3 0179/2651] bpftool: Set BPF_F_XDP_DEV_BOUND_ONLY flag non-destructively
+Date: Wed, 18 Nov 2026 15:23:39 +0100
+Message-ID: <20261118150254.310037450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,54 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit 3dd95f077371f5def65a91c4bb13bd574a62bc3a ]
+[ Upstream commit 06d6f845c4bda857a6ae864690f35321b878e827 ]
 
-try_steal_cookie() avoids stealing src->core_pick and src->curr before
-moving a task with the same cookie via move_queued_task_locked().
+When setting the XDP hints ifname, bpftool would set the
+BPF_F_XDP_DEV_BOUND_ONLY without looking at the existing program flags,
+overriding any other flag values. This was always a destructive action,
+but after we change libbpf to carry the frags section flag in
+prog_flags, this can impact bpftool loading of XDP frags programs.
 
-With proxy-exec, src->donor is the current scheduling context and may
-differ from src->curr. Stealing it migrates a task that the source rq
-still treats as current, leaving src's scheduler state for that task
-stale. For CFS this means cfs_rq->curr points at the stolen entity,
-and the next pick on the source rq hits the WARN_ON_ONCE in
-put_prev_entity().
+Change the flag setting to be non-destructive by OR'ing it with the
+existing flags.
 
-Commit 7de9d4f94638 ("sched: Start blocked_on chain processing in
-find_proxy_task()") tweaked the fair class logic so that the donor task
-isn't migrated away while we're running the proxy. Do it similarly for
-try_steal_cookie() and skip src->donor as well.
-
-Fixes: 7de9d4f94638 ("sched: Start blocked_on chain processing in find_proxy_task()")
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260807035232.1881495-3-jstultz@google.com
+Fixes: f46392ee3dec ("bpftool: Specify XDP Hints ifname when loading program")
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://lore.kernel.org/bpf/20260901-libbpf-frags-flags-v3-1-4eb6f14968b0@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 2 +-
+ tools/bpf/bpftool/prog.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 1754d9f95f2cf..f4166e36a8f9e 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6517,7 +6517,7 @@ static bool try_steal_cookie(int this, int that)
- 		return false;
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index a9f730d407a92..8c2f9255b36d7 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -1769,7 +1769,7 @@ static int load_with_options(int argc, char **argv, bool first_prog_only)
+ 		}
  
- 	do {
--		if (p == src->core_pick || p == src->curr)
-+		if (p == src->core_pick || p == src->curr || p == src->donor)
- 			goto next;
- 
- 		if (!is_cpu_allowed(p, this))
+ 		if (prog_type == BPF_PROG_TYPE_XDP && xdpmeta_ifindex) {
+-			bpf_program__set_flags(pos, BPF_F_XDP_DEV_BOUND_ONLY);
++			bpf_program__set_flags(pos, bpf_program__flags(pos) | BPF_F_XDP_DEV_BOUND_ONLY);
+ 			bpf_program__set_ifindex(pos, xdpmeta_ifindex);
+ 		} else {
+ 			bpf_program__set_ifindex(pos, offload_ifindex);
 -- 
 2.53.0
 
