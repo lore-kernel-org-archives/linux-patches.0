@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026208;
-	b=NhJWhMG/f8qDnZ+X6+ZLPVzY7xHIRJqXN2fQCDDwqQqazCYbWToVYbWcpPO6BqYGMofv
-	 ADQRrhW1DZgSqEfZdAW4pdABh8E6DxRh3RWOPnrzqB1/SDGCC+TOELbd36LBenZuxYdUv
-	 Se0a8YRIw8GLLgtnkAKT7iWwz4oXk524hmXibbhYfW2vI8/8avgMUqjKGI2uAxsO8dQqK
-	 zRNGrFInqCd5AI9o8nnufxq31rvdyYMsP+c1xrHvy42Al4w4XjQbW7I87eAwh2YwSQiZS
-	 +FxXBjJpXrrfrcoPG002cvbjO+lXxEQRCFT3t25RxIrqchVIixeEp0weVwoCp+6kFDQ==
+	t=1795026210;
+	b=izhw43xkv748F32UyvO9t8Q7p6xj0F7bpAh/dJ3qbykQtElD/+NVYqPj0x7Da6Vymr4z
+	 JMYqnxk+/UkfSP0okpCXdRoY+iTionSYVpjmPm0yP4lbwJpXSWxBthtfPwMN43XDCZLAb
+	 erQbvV2di0+gHGk5lbtQ2cX5Lnnd/uaNIDdixRvba/NrItXT4qrmkBCcDesKP1C9RA7Zh
+	 8coSdKIHv1Z9Lp7Q3kTat6MT3y7c7q1nM5zKSe/ClKBzA/wTUT1O+Wn6ZnSH/+NKJOqXC
+	 2VKq5TiIgj4DtZNIl8OMLuy90XAhuvMx4IKD8LJxvkhvyBXy36BffScmX43l783a5vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6MnUZXSkD4zS2/RijQcw5/vSyewlmNHvNUkrjh1goXA=;
-	b=ReNEPAhItvJcLJJesv4e9u57KDeTwkdM5X8YPbpN9KZwbZ1EOmS1+IHegdRqNwRAydww
-	 a+LgGv5TZB7ZLpSukwPogVCHiVepDcjy01c9/rpJMzxJ/ZgrK78znfhv+l37pFLOUZs6l
-	 9Xwl7ww23gdQgS34qRsuaR3g053P8/fjKNIuQnTGepnTTaGckKCa78Hf3AxmGmz0Okfy1
-	 luAucDcAPLxFCVzy7FGjXk+3yyMgx97Qdw+T9zuztPFh8QxlO12fOO6y/bB+2lPmOwXk0
-	 ISTtVj+8a7uGi0CMaEeahw/ZlMbOvhGoQQQ+JwOinHFE5VSlRffHeGVw7HJIM1nFv5g==
+	bh=g/pxFJYj0XfnNLQxsWwUOolcv9h7jx95j1HOrt2Nmzc=;
+	b=BA3gLAzykXWIkKrpU27aymZORt4pxREHIyCXyJmRg3jHO5MTeSO5Z23JFbLI5bDRSuOu
+	 OmW+UBR+Vw7aAKQQDqI9UdJ0+vf5s3ptI/JvhJfwWimmjLZFYlY1vShBrXehnzieS+wOH
+	 iiJ8F279nLoEmKSOWcIZauF6SlRvvnTwracC+2bA0yIA5CtjZ1CPLslb95kwRIvwXr+P2
+	 Mi4tfwTMK2bysipc8IW8ZYDZEa+owVM+GIQnkHcqlzPJMdtUMY8+RwFZ3J1l8x6oT2QJ3
+	 AiQHmWcPWHPJb4CiUQpAhjNipVfUlADach9Rqxb+OyYmpCbOvpg9Ju4sU4/OAYgWp6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BqgLWHTA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgnllnuz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F68A606A331;
-	Wed, 18 Nov 2026 18:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9F3606A32F;
+	Wed, 18 Nov 2026 18:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BqgLWHTA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBF21F000C4;
-	Wed, 18 Nov 2026 18:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgnllnuz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0351F000C5;
+	Wed, 18 Nov 2026 18:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026207;
-	bh=6MnUZXSkD4zS2/RijQcw5/vSyewlmNHvNUkrjh1goXA=;
+	s=korg; t=1795026210;
+	bh=g/pxFJYj0XfnNLQxsWwUOolcv9h7jx95j1HOrt2Nmzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BqgLWHTAQCX9fFusADd3awncYAmvA6IYI+cc6J6hia2jDK2T71VydDeQ1GWi2B/uD
-	 nsSTLDHa3Ak0F2FpB4kcz+PcGSmeu3hY2F+23BF6uMQEM2Sd/dgZ197EGQdou1vShi
-	 0jYWujzFAVTo12houYIOIMNm/rQKZFTdvQGxvH7U=
+	b=lgnllnuzIV6qJCZmAdoDgqtBLjRLQb/iLGD7gEOMrHwg0t+0DL36TRW1gR2JazXzE
+	 SW8C9+3yurZjqrYcafZrLmwxPwtu6oZV5aBhPLEA4Pkf6VRAAyrkIA7nh6tFTE6v7g
+	 NEHoa6YRWuMs0xmJP+Mhe5FvVpj/322ATNFi2rC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
+	Guanghui Yang <3497809730@qq.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1353/2151] btrfs: update per-profile available estimation
-Date: Wed, 18 Nov 2026 15:51:28 +0100
-Message-ID: <20261118150211.319513880@linuxfoundation.org>
+Subject: [PATCH 6.18 1354/2151] btrfs: roll back sprout setup after device add failure
+Date: Wed, 18 Nov 2026 15:51:29 +0100
+Message-ID: <20261118150211.356646472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,149 +69,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-[ Upstream commit c84053d9f7f758c79320716caa098cafc70a74da ]
+[ Upstream commit f5166f53b60b4d1ee9957c0baccd3b09735001d4 ]
 
-This involves the following timing:
+btrfs_init_new_device() calls btrfs_setup_sprout() before creating the
+first writable chunks for a seed filesystem. That moves the seed devices
+out of fs_info->fs_devices, clears the seeding state and installs a new
+fsid for the sprout filesystem.
 
-- Chunk allocation
-- Chunk removal
-- After Mount
-- New device
-- Device removal
-- Device shrink
-- Device enlarge
+If a later step fails, the error path removes the new device but leaves
+fs_info->fs_devices in the partially initialized sprout state.  The
+mounted filesystem can then be left with no open devices after the
+failed device add.
 
-And since the function btrfs_update_per_profile_avail() will not return
-an error, this won't cause new error handling path.
+Add the inverse of btrfs_setup_sprout() and use it from the error path
+so the mounted seed filesystem is restored before the temporary
+seed_devices copy is released.
 
-Although when btrfs_update_per_profile_avail() failed (only ENOSPC
-possible) it will mark the per-profile available estimation as
-unreliable, so later btrfs_get_per_profile_avail() will return false and
-require the caller to have a fallback solution.
-
-The function btrfs_update_per_profile_avail() will be executed with
-chunk_mutex hold, thus it will slightly slow down those involved
-functions, but not a lot.
-
-As all the core workload is just various u64 calculations inside a loop,
-without any tree search, the overhead should be acceptable even for all
-supported 9 profiles.
-
-For 4 disks (which exercises all 9 profiles), the execution time of that
-function will still be less than 10 us.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Fixes: 2b82032c34ec ("Btrfs: Seed device support")
+Assisted-by: Codex:gpt-5
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+[ Fix a conflict with per-profile available space, revert sprout before
+  updating per-profile available space estimation. ]
 Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: f5166f53b60b ("btrfs: roll back sprout setup after device add failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ fs/btrfs/volumes.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
 diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index ebf9132a295b6..a0984d6332dca 100644
+index a0984d6332dca..5d55e55bb8244 100644
 --- a/fs/btrfs/volumes.c
 +++ b/fs/btrfs/volumes.c
-@@ -2339,6 +2339,7 @@ int btrfs_rm_device(struct btrfs_fs_info *fs_info,
- 		mutex_lock(&fs_info->chunk_mutex);
- 		list_del_init(&device->dev_alloc_list);
- 		device->fs_devices->rw_devices--;
-+		btrfs_update_per_profile_avail(fs_info);
- 		mutex_unlock(&fs_info->chunk_mutex);
- 	}
+@@ -2728,6 +2728,41 @@ static void btrfs_setup_sprout(struct btrfs_fs_info *fs_info,
+ 	btrfs_set_super_flags(disk_super, super_flags);
+ }
  
-@@ -2450,6 +2451,7 @@ int btrfs_rm_device(struct btrfs_fs_info *fs_info,
- 		list_add(&device->dev_alloc_list,
- 			 &fs_devices->alloc_list);
- 		device->fs_devices->rw_devices++;
-+		btrfs_update_per_profile_avail(fs_info);
- 		mutex_unlock(&fs_info->chunk_mutex);
- 	}
- 	return ret;
-@@ -2937,6 +2939,7 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 	 */
- 	btrfs_clear_space_info_full(fs_info);
- 
-+	btrfs_update_per_profile_avail(fs_info);
- 	mutex_unlock(&fs_info->chunk_mutex);
- 
- 	/* Add sysfs device entry */
-@@ -2947,6 +2950,7 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 	if (seeding_dev) {
- 		mutex_lock(&fs_info->chunk_mutex);
- 		ret = init_first_rw_device(trans);
-+		btrfs_update_per_profile_avail(fs_info);
- 		mutex_unlock(&fs_info->chunk_mutex);
- 		if (unlikely(ret)) {
- 			btrfs_abort_transaction(trans, ret);
-@@ -3033,6 +3037,7 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
++static void btrfs_rollback_sprout(struct btrfs_fs_info *fs_info,
++				  struct btrfs_fs_devices *seed_devices)
++{
++	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
++	struct btrfs_super_block *disk_super = fs_info->super_copy;
++	struct btrfs_device *device;
++	u64 super_flags;
++
++	lockdep_assert_held(&uuid_mutex);
++	lockdep_assert_held(&fs_devices->device_list_mutex);
++
++	list_del_init(&seed_devices->seed_list);
++	list_splice_init_rcu(&seed_devices->devices, &fs_devices->devices, synchronize_rcu);
++	list_for_each_entry(device, &fs_devices->devices, dev_list) {
++		device->fs_devices = fs_devices;
++	}
++
++	fs_devices->seeding = true;
++	fs_devices->num_devices = seed_devices->num_devices;
++	fs_devices->open_devices = seed_devices->open_devices;
++	fs_devices->missing_devices = seed_devices->missing_devices;
++	fs_devices->rotating = seed_devices->rotating;
++	fs_devices->latest_dev = seed_devices->latest_dev;
++
++	memcpy(fs_devices->fsid, seed_devices->fsid, BTRFS_FSID_SIZE);
++	memcpy(fs_devices->metadata_uuid, seed_devices->metadata_uuid, BTRFS_FSID_SIZE);
++	memcpy(disk_super->fsid, seed_devices->fsid, BTRFS_FSID_SIZE);
++
++	super_flags = (btrfs_super_flags(disk_super) | BTRFS_SUPER_FLAG_SEEDING);
++	btrfs_set_super_flags(disk_super, super_flags);
++
++	seed_devices->opened = 0;
++	free_fs_devices(seed_devices);
++}
++
+ /*
+  * Store the expected generation for seed devices in device items.
+  */
+@@ -3037,6 +3072,8 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
  				    orig_super_total_bytes);
  	btrfs_set_super_num_devices(fs_info->super_copy,
  				    orig_super_num_devices);
-+	btrfs_update_per_profile_avail(fs_info);
++	if (seeding_dev)
++		btrfs_rollback_sprout(fs_info, seed_devices);
+ 	btrfs_update_per_profile_avail(fs_info);
  	mutex_unlock(&fs_info->chunk_mutex);
  	mutex_unlock(&fs_info->fs_devices->device_list_mutex);
- error_trans:
-@@ -3126,6 +3131,7 @@ int btrfs_grow_device(struct btrfs_trans_handle *trans,
- 	if (list_empty(&device->post_commit_list))
- 		list_add_tail(&device->post_commit_list,
- 			      &trans->transaction->dev_update_list);
-+	btrfs_update_per_profile_avail(fs_info);
- 	mutex_unlock(&fs_info->chunk_mutex);
- 
- 	btrfs_reserve_chunk_metadata(trans, false);
-@@ -3495,6 +3501,7 @@ int btrfs_remove_chunk(struct btrfs_trans_handle *trans, u64 chunk_offset)
- 		}
- 	}
- 
-+	btrfs_update_per_profile_avail(fs_info);
- 	mutex_unlock(&fs_info->chunk_mutex);
- 	trans->removing_chunk = false;
- 
-@@ -5023,6 +5030,7 @@ int btrfs_shrink_device(struct btrfs_device *device, u64 new_size)
- 		atomic64_sub(free_diff, &fs_info->free_chunk_space);
- 	}
- 
-+	btrfs_update_per_profile_avail(fs_info);
- 	/*
- 	 * Once the device's size has been set to the new size, ensure all
- 	 * in-memory chunks are synced to disk so that the loop below sees them
-@@ -5138,6 +5146,7 @@ int btrfs_shrink_device(struct btrfs_device *device, u64 new_size)
- 	WARN_ON(diff > old_total);
- 	btrfs_set_super_total_bytes(super_copy,
- 			round_down(old_total - diff, fs_info->sectorsize));
-+	btrfs_update_per_profile_avail(fs_info);
- 	mutex_unlock(&fs_info->chunk_mutex);
- 
- 	btrfs_reserve_chunk_metadata(trans, false);
-@@ -5850,6 +5859,8 @@ static struct btrfs_block_group *create_chunk(struct btrfs_trans_handle *trans,
- 	check_raid56_incompat_flag(info, type);
- 	check_raid1c34_incompat_flag(info, type);
- 
-+	btrfs_update_per_profile_avail(info);
-+
- 	return block_group;
- }
- 
-@@ -8389,7 +8400,14 @@ int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info)
- 	}
- 
- 	/* Ensure all chunks have corresponding dev extents */
--	return verify_chunk_dev_extent_mapping(fs_info);
-+	ret = verify_chunk_dev_extent_mapping(fs_info);
-+	if (ret < 0)
-+		return ret;
-+
-+	mutex_lock(&fs_info->chunk_mutex);
-+	btrfs_update_per_profile_avail(fs_info);
-+	mutex_unlock(&fs_info->chunk_mutex);
-+	return 0;
- }
- 
- /*
 -- 
 2.53.0
 
