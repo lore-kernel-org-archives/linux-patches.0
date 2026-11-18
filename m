@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048188;
-	b=Av2Es+rWCYoQLf/QPuYVKF//KQkRRwVkRRL1aInFAwW+UagYojgjMFh9zi3qjvJalWJF
-	 WTrrQI1JQIS+5+PlHNLzWH7ajs7DAtvVIhnRkQuVXpt9D4L8k9h4EzMVO+XuU0i841THW
-	 ikknUTpPi6JNfNMAUjguhgWUo2r8qp8mG1QgZVwetk80JzE6/tGF2R0Gm45tcGdB+PTd8
-	 OeILPP6mOagEyn/4sbf08VKc/L+loWrqLOvARgVR/D+iHl8EiBCEO9JBZcIP5LsohEJ0U
-	 Gi2uZcMHf4FALomHLq+65pY0WFR9BCaZfT9SBc7cjVJycGviH19lfxQoJGge0Vsu9pA==
+	t=1795048191;
+	b=f7MNGPjCczOG8JwGdqWjcXf09NjCygSNCrahK+I9imsZ7Z/ulgMWFqnqd8209BHW/Fza
+	 pxZ+Zx2QfC0g1fCW6/AIeHEvpdSL55SPTQoDbslBve5TsOQKK5lbIxvcLP20Xs8lODQss
+	 24kgD/kzlYXaNFEJcjizfgDqsuaKCslVuNIGyiV4kCg3huz4wEWD1VZBjRl2fh19sRtDj
+	 QuyRpwy7TkJPwRUK7miGqdWHcAJPxFoYVhTBrFSgPYfTknNfDDQnNGvALBGKsRPmvobst
+	 AWzNLhq7ID/sLvni8jQPfByRfVzr6nwr9OhIltkIfqdViyI2R3bKb3zilI+Neuah5Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048188;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vFXUyjU8th5cLJYSUcHb/HwibP7Tg4xBn0Y8mUtFqDo=;
-	b=Ciw71SzuWN9rFvtc7EGDP8rVr/yS1L/uRwmlC8IAg9SYzKOuYKXk83ECe36/zHEUgzPr
-	 DdZuJ2Qh5QyLStN4uIDzh9juSI22f1XtG6pR1cFFaHCIHmRa6ekg7X+odeB0PxHqtnBWh
-	 ZBShpSzQV9blE0QXOpMm7gjbTErPHRyjKtKU2af1p3liUORa5oJMBDNZ1kfyUa93poB4y
-	 mdIUcoF+Mu782gBZyrdEEkPcnlIwifinAgXwAMb3wZKXdJuu1JScI2VjBJ31Wn1btG3g3
-	 qDyI5KegXZac4LnCwafFM1aRlUHF5TM68Uc9ZWhbCoYjcpkkyYbG8QZilHu+YxGYJTw==
+	bh=9hC0h3DlOMNTxKrtEi5KLRxrC6Fi4uoLpwZaSg3mEXo=;
+	b=V4CXzbRIKQaSLGAil2rmbQBHN65Tt+PATxF6VCr4sf+LoUibJGNvduFbbddzMlKVb+Zt
+	 Jbi3/4sCpBQ74/h7e71qVZgOtUK7tpjkXuxdSKfp48R3AIkCIzcpPT+7YbQKhPFwa82gz
+	 HIhcAxCT997FgRVXZX803a0iO03aucYGrjiUrwxTr6CWWquMVSmyYwL5ddQUI7y0hTRVA
+	 EWaRKIFULl70lMlUtM804t8TAXewVuSSHXDC5gNXM5PmQTvqcud4ZQtAcBulu/IzxtvyU
+	 B9JdRMN3a2Bd1FWVeA2o7l91MFugeD9s+hdPTaSah0dN5K1nRGpI39lGgdk+EJFZvdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X90p2by2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3nYLTqO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F142606A320;
-	Thu, 19 Nov 2026 00:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEA7606A31C;
+	Thu, 19 Nov 2026 00:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X90p2by2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835511F000C4;
-	Thu, 19 Nov 2026 00:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3nYLTqO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5E41F000C4;
+	Thu, 19 Nov 2026 00:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048188;
-	bh=vFXUyjU8th5cLJYSUcHb/HwibP7Tg4xBn0Y8mUtFqDo=;
+	s=korg; t=1795048190;
+	bh=9hC0h3DlOMNTxKrtEi5KLRxrC6Fi4uoLpwZaSg3mEXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X90p2by2NN8zJWi4QCMDy+8PbzK5QdqLZj0PM4VuxONhNnQy026Q5X3Pjv6g0wW+n
-	 gTrcyzOMr+rZyl0kzsuc7O2BwKx4BoZFY6tRigEufoN3SWBhTtg8v66JUHVXx3DHQM
-	 bimV2l9ElZXpxdvEBoNk23wzTDMOu6O1t1XOtbAE=
+	b=t3nYLTqOIOrJgHGyuxur5C8BfIA4FhlIZK7guPKIH3bSHmtYk3vPhY7/I3+c2QuAD
+	 jbhkWTQ2IvnPebeIfhaQi3vqtKaRZ0ish8Z+bKySYr3nWWS7mfxPm5IObz9OVWBQm7
+	 1kW8xRWkZU7QSAlHlOyIWTck2GN6t/mVAkcZzXZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1856/2857] scsi: mpi3mr: Fix out-of-bounds read in SAS topology change events
-Date: Wed, 18 Nov 2026 15:48:10 +0100
-Message-ID: <20261118150308.070531839@linuxfoundation.org>
+Subject: [PATCH 6.1 1900/2857] firewire: core: remove unused link field in fw_packet structure
+Date: Wed, 18 Nov 2026 15:48:54 +0100
+Message-ID: <20261118150309.645514384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,62 +67,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 9e220ce4bd0468e47cc9eea07e40799ebae6eda8 ]
+[ Upstream commit 00d4d31e4fdfe51312f0184f8d162b8d4de172dc ]
 
-The number of entries in a SAS topology change event is used to walk the
-entry array without being compared against the amount of event data that
-was received, so the walk can run past the end of the buffer.
+The link field in fw_packet structure has never been used since it was
+added.
 
-Work out how many entries the payload can hold and skip the event if it
-claims more.
-
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-11-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
+Link: https://lore.kernel.org/r/20260911141602.3288806-1-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ include/linux/firewire.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 6a19af5e66495..51e390c44784e 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2561,12 +2561,28 @@ static void mpi3mr_sastopochg_evt_th(struct mpi3mr_ioc *mrioc,
- 	struct mpi3_event_data_sas_topology_change_list *topo_evt =
- 	    (struct mpi3_event_data_sas_topology_change_list *)event_reply->event_data;
- 	int i;
--	u16 handle;
--	u8 reason_code;
-+	u16 handle, avail_len;
-+	u8 reason_code, max_entries, num_entries;
- 	struct mpi3mr_tgt_dev *tgtdev = NULL;
- 	struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data = NULL;
+diff --git a/include/linux/firewire.h b/include/linux/firewire.h
+index 980019053e541..b7cbdef08b9bc 100644
+--- a/include/linux/firewire.h
++++ b/include/linux/firewire.h
+@@ -311,7 +311,6 @@ struct fw_packet {
+ 	 */
+ 	fw_packet_callback_t callback;
+ 	int ack;
+-	struct list_head link;
+ 	void *driver_data;
+ };
  
--	for (i = 0; i < topo_evt->num_entries; i++) {
-+	avail_len = event_reply->event_data_length * 4;
-+	if (avail_len < offsetof(struct mpi3_event_data_sas_topology_change_list, phy_entry)) {
-+		ioc_err(mrioc, "SAS topology event: event data too small (%u bytes)\n",
-+			avail_len);
-+		return;
-+	}
-+	max_entries = (avail_len -
-+		      offsetof(struct mpi3_event_data_sas_topology_change_list, phy_entry)) /
-+		      sizeof(struct mpi3_event_sas_topo_phy_entry);
-+	num_entries = topo_evt->num_entries;
-+	if (num_entries > max_entries) {
-+		ioc_err(mrioc, "SAS topology event: num_entries(%d) exceeds max(%d)\n",
-+			num_entries, max_entries);
-+		return;
-+	}
-+
-+	for (i = 0; i < num_entries; i++) {
- 		handle = le16_to_cpu(topo_evt->phy_entry[i].attached_dev_handle);
- 		if (!handle)
- 			continue;
 -- 
 2.53.0
 
