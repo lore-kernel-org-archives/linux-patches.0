@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040833;
-	b=dHW4Q0ErN4iRuZyrPCW/fMDd3ix+ftBmzyJQX1qLWcJEx+56r2rkvNbnycd68Q2khL/B
-	 iXvsg9UAWnYFotXQhO0AbQykya44tX+HCo1hzBTnrPyQR1BhCX3mxjJFAlOVDp9s9Zi8G
-	 Lll0b2Hcpl3zKpf74hVtRe7dAilnP8S0/m/vLtd8OUWFtvkYcu0IcmF1egOZvi+Zy8WNL
-	 WGnGgCdQNXr/v3JsCD4dft9S5hXl19GJPrR0zH+QMyfCpLjtRfUsrz1ycjUP58xpWmTl6
-	 Fpwhv3OnpjqqHkbzG7qi/ThSAKrCvc/wPIhvi6nqwhF034QB0nVVYy+bmfeEF0oMdvw==
+	t=1795040836;
+	b=wCkUCLW+i57/qae8+VpC/0pY/b9Q+FqX1qCTxz03HVMTZkC6TAYtxueV6jkvXpLsUI3K
+	 B4c9ipqq+ukDy8RQE/jQFS37XPXF/9uzVWDZS/Z4lYKFvsQXugKK+aTuHlbtaaayPBtnn
+	 9ANY53YYLBS+cAL7/UNtpu3IkBxQpQgaHh3r4O7nBjr0qtBN5uY+XmUm3Uo79GBj76iPq
+	 gv48F3zJpYzIB+/5rkvlAN/DlF7kUsrQPJKU8gC65tJNYzOXQ7f3g0Z49EZPNYPrPE3eL
+	 XXhcbD/OiXtdcnk18HzJIJJ0Nhf7w5Qq5n/hi3t23UOSamxIbxOuweiSQd3GFqrEDkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nb/xlBzyijW8v7KFQfroDfQNN9GDfaMvIOSgBliDYFs=;
-	b=a50RlTjneT+KZSNmfy4UsBDM2KhEfBw2uc/gOrLFlU3i75kiRC7qb5XgCGBt+6BRAOUD
-	 FNF9wFVgts7qLKc9B9Dbb/zLOnHlwziZf6FxaUCE5aU48ixbqCqmw9j85mO/ghNjzFnYK
-	 Odq0IsPo/RmKeBiItwOAaSe6rZcDBLMmohFxdmXrcnebuN5+6U4aE2a2VzTcX6shxvYND
-	 4tXdos5zr1GWERGTXGpgigUuy5RAexu+6I/Ns0Vo6gq8Y8M2G+wP3/CHAusEeC0qHAt3O
-	 8ZNNYR4z0gndbCjCvd2VviOXxnc+Vcyi6WLXL80kfiv6P088S0zzjbgwvN0KtjcvSew==
+	bh=aA33ruZ8ErfYqnAZsWzVAkiB32EcldsYCc1t6ca4ixU=;
+	b=Ewm29OSbjQvJz3jZm8RWah5mqpih2WVSLWf4ng+ub9l43sXWDC4b6Lhido7lvg4VOwtF
+	 cBDYueJlVEEC5Z4fRotuSUP5pTf+qOJKNPTrCjt9cLhy+vFxtOB+WUIqg9fQF/vDFb1fU
+	 VvA8UBh9KFO8z12/58Tpf3IL5bgynx4TKqAv0NTkV5cb0pUyDT/eTKhtpSRao3VHrbhsx
+	 Jh7i4yChlcCPNLIYmlLeqUxjj0PTcOFTRhDMMQoOFWTQETRVARzrBSqEjOBAkBtT3qhPz
+	 c+AVxurToRRyST0Vu+AQ8vVdvNLZQ1e1NUKVjVsjZbENi/RK+UYdrA4wSPwzX9AsC+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UAMT0mIZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heYrXhsN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8448D606A31C;
-	Wed, 18 Nov 2026 22:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EB3606A32A;
+	Wed, 18 Nov 2026 22:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UAMT0mIZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A4A1F000C4;
-	Wed, 18 Nov 2026 22:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=heYrXhsN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82DE1F000C4;
+	Wed, 18 Nov 2026 22:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040833;
-	bh=nb/xlBzyijW8v7KFQfroDfQNN9GDfaMvIOSgBliDYFs=;
+	s=korg; t=1795040836;
+	bh=aA33ruZ8ErfYqnAZsWzVAkiB32EcldsYCc1t6ca4ixU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UAMT0mIZj4ccpvF7+Zwia8dvHDXzxV2+Ts3UKv0/kB9SvZp2Mutw3c2kLUd/wpC7L
-	 Aryb0cjumVwuNL6O4tppI4fKJ9Lk7dOmZ8Mx6rxtcZWf0h+zgL4igt81yLgUuuYk9H
-	 mT+7uIIqU+efyqvkkda+jxJbN+F0L8FKKjXN5NH0=
+	b=heYrXhsN7aBR1QMmBLzWBmxFphvxH8rGCIW0dQVGUG/W8w3X3izhX9Bg2LOkqjCVK
+	 NcfPGJRI9y5LqgqI4GuDNkAsxCvqO+0+qsaZlG3sz/ixICbS/4E5H4zu1wOy5TBkHv
+	 L1rqHcUWSxix2SL8hFNkO8HV8Ern+nr08l5WoEZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Demidov <roman.demidov.nn@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2599/3318] drm/msm/a6xx: fix use-after-free of OPP in a6xx_pm_resume
-Date: Wed, 18 Nov 2026 15:53:41 +0100
-Message-ID: <20261118150439.138192712@linuxfoundation.org>
+Subject: [PATCH 6.6 2600/3318] dmaengine: ste_dma40: Fix physical cyclic capability
+Date: Wed, 18 Nov 2026 15:53:42 +0100
+Message-ID: <20261118150439.166095186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,46 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Demidov <roman.demidov.nn@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 8128ae7af6b4dc95e486c5c0a80839a069df578e ]
+[ Upstream commit 11101a8e3e42273a5910a149f6324040b88f4747 ]
 
-The OPP reference obtained via dev_pm_opp_find_freq_ceil() is dropped
-with dev_pm_opp_put() before being passed to dev_pm_opp_set_opp(). If
-the reference count reaches zero, the OPP object may be freed, leading
-to a use-after-free when dev_pm_opp_set_opp() dereferences it.
+d40_dmaengine_init() configures dma_both for physical channels that can
+handle both slave and memcpy transfers. Physical DMA40 channel setup has
+supported cyclic LLIs since cyclic transfer support was added, but the
+DMA_CYCLIC capability is set on dma_slave a second time instead of
+dma_both.
 
-Fix the order of calls: first use the OPP to set the required
-performance state, then release the reference.
+Set DMA_CYCLIC on dma_both so d40_ops_init() installs
+device_prep_dma_cyclic and physical channels advertise cyclic support.
 
-Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757104/
-Message-ID: <20260929142103.81854-1-roman.demidov.nn@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 0c842b551063 ("dma40: cyclic xfer support")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-1-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ drivers/dma/ste_dma40.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 58233ca8d1d39..fe223823deae8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1948,10 +1948,10 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
- 		ret = PTR_ERR(opp);
- 		goto err_set_opp;
- 	}
--	dev_pm_opp_put(opp);
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 002833fb1fa04..29a5cabb8f778 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -2909,7 +2909,7 @@ static int __init d40_dmaengine_init(struct d40_base *base,
+ 	dma_cap_zero(base->dma_both.cap_mask);
+ 	dma_cap_set(DMA_SLAVE, base->dma_both.cap_mask);
+ 	dma_cap_set(DMA_MEMCPY, base->dma_both.cap_mask);
+-	dma_cap_set(DMA_CYCLIC, base->dma_slave.cap_mask);
++	dma_cap_set(DMA_CYCLIC, base->dma_both.cap_mask);
  
- 	/* Set the core clock and bus bw, having VDD scaling in mind */
- 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
-+	dev_pm_opp_put(opp);
- 
- 	pm_runtime_resume_and_get(gmu->dev);
- 	pm_runtime_resume_and_get(gmu->gxpd);
+ 	d40_ops_init(base, &base->dma_both);
+ 	err = dmaenginem_async_device_register(&base->dma_both);
 -- 
 2.53.0
 
