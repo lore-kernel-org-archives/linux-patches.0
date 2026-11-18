@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024227;
-	b=xZGLPxcETlKxXYtPhkXyW8aVF1l2G1vGFCs0VRfdeR9OPE2EqtsHvAbCJmD7ilH9/CTd
-	 usfWWaTI+wQ5xj/KJSMNLivdJlAvWtufHr8VOUmLEhyBV/uBHQAVzGk3hUqD7fPLKbA67
-	 fRGlOXpmmXxumJu93hqMCudlSMs3aU//a89DrPkkBw/WR0Z0KS3daB/5RzJxa8V+6Habx
-	 YCuoMOIHdjUadvVv/SqADcpfjGO9AYUiDgfjAnqWPZtckdAeTWcAVkadG9VcYLJZ7edVA
-	 AmFPk4fiG8z1ZqF0jyI6kqe4ib1ZO0peAs4hsAkp2UfBDBh57LZW5IKn8clfw8RR/Fg==
+	t=1795024229;
+	b=EgVnv4h7AQZxlFcR8txJEXuaLWlu3xvbbZuTWLPW2fy40autVypKROfy46pfBdIMmEDX
+	 YdFXrOaEyVB0uQcqx+OPY+pxuqHUwG/sBrzhvwqkv7EtEXs5wVK/R/hBNtAP/+wcsG6Lb
+	 TXOpoyIsa5FhrHmORXcf8flgA8AzmTxFEqp+yyYW+CFhh1l4nWHTnS5MxTPlp+FEVlryx
+	 HTSRPI3DEuX1u6n0iN3n3V5I9jn3YWOnKH3G5avajJ9iXtxC61pS49tmnzRswF7NLAvnk
+	 Tkn/+e/1NwPf+owsyNnqb1kMw+HbSFgzoGuayqRpW9A9GPom2ELMvXFEsGH/mh7RKqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sr5kS/QKQ5xS01QX33SCcxFPSqMJR3/RD6C/sTx4o7Y=;
-	b=ybgU4CrtnjNd0Ryd6OsbiWfNckrQ1Bt3A9L5RU4A3ylMHrBWOt2nRlv99DTndqqAz/Vb
-	 OZelmEUV7F60271x1JzCvfPaANkwdzmgpUTw3BX3vVgzjmvvrDcFuiQcradWK8XI/Tji3
-	 MI2GHkGC/vqh28ZQyOzdSjPKZSFBngXygklxlJeWCYbeUPnbhYui2C+8IVECZZTVDchrl
-	 FKbULu2BogCYjNf+5QxEVqB45574jefwzRcIcNlnFHR5j2qy0hVUcOG6yvzOXlIIG64DO
-	 nq9icp6DhID/TxSeL8pxaDpQuSYLZR6QhhaPuVcBOYtP6PbxhHk3PpZFUEZ406ThZuQ==
+	bh=Q+sfAR/usd4Ku9YOY7bs188VhZlWbBFokjVI2PdViaI=;
+	b=3B8Dc4l9olQb1uV9BbmQ7s1k7XcME+zd11VPhrgLYnbEv8LS9dipHZzPck1M1+Nw9b+T
+	 7Vl2aTLiz9n+to6979tLAuNEer/vTmRE8oM2YDT1EQ5t1vARlO+Ke4NBPcZzVyKyCgHCa
+	 LYD6Jp1ojLzBjnoHJJ5tFCbu+uqCYpPzrkynYRKjrMdoopDFAz4JscEzt7jVE5+VroRh7
+	 fil3zDaKVhWn58sDdlUNfm3+a/sVdbM9BZJ6xt7HUPyGYtzufbeS2TwY5q2A9T2PDuC1s
+	 /sTP1AcjDTW9Se//nNQs5jNRFHSwzvUsGfT4DZ2cWnEfx1lBT/JO7/LwllMpf7e3JcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbs6qkVR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HiDPGbsS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E55606A325;
-	Wed, 18 Nov 2026 17:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD24E606A31C;
+	Wed, 18 Nov 2026 17:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vbs6qkVR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5493F1F000C7;
-	Wed, 18 Nov 2026 17:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HiDPGbsS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD361F000C6;
+	Wed, 18 Nov 2026 17:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024226;
-	bh=sr5kS/QKQ5xS01QX33SCcxFPSqMJR3/RD6C/sTx4o7Y=;
+	s=korg; t=1795024229;
+	bh=Q+sfAR/usd4Ku9YOY7bs188VhZlWbBFokjVI2PdViaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vbs6qkVRLVT2IDEL9OStZHq2lBVoOo551qMVeH6ywb7L79vrU7YFdHwOHEau7HdvX
-	 LyBoQF7tEbl+yr/T1ctUAaHR4uNb1wHfqUF/1dvjWgrs7+nchpjzhNBNtDKvKG4rbV
-	 b57xO9pytZOJC7bpNju3q8a55cHza8qE8kNjrZCk=
+	b=HiDPGbsSm3jSJq0JQR13c7HXTTVbRKRR+TmZx8svB+vSPlu2BSKkLDZtxYsF0FSvY
+	 c2Dvi1ahI+PSnwOG/bCiLuArNwfcDSk6vFNgaMc8hwp0uMbaLtnr01sFLcZUdHCcI/
+	 vZI/WSdK3mV8z4PznvNjCYzwLgW3fQk9m3XCKz00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Mauricio Faria de Oliveira <mfo@igalia.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0609/2151] x86/boot: Remove redundant "cc" clobber in memcmp() and document it
-Date: Wed, 18 Nov 2026 15:39:04 +0100
-Message-ID: <20261118150144.116173618@linuxfoundation.org>
+Subject: [PATCH 6.18 0610/2151] x86/asm: Introduce inline memcpy and memset
+Date: Wed, 18 Nov 2026 15:39:05 +0100
+Message-ID: <20261118150144.150145206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,51 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@igalia.com>
+From: Peter Zijlstra (Intel) <peterz@infradead.org>
 
-[ Upstream commit 94509668fccfa098e0a3d57e7093a9afd88aea9f ]
+[ Upstream commit d9a96cc18bec65c39822ee0a1672d7dc3fda150a ]
 
-The "cc" clobber remains recognized for source compatibility, but it has
-no meaning anymore; it is automatically generated without condition-code
-constraints:
+Provide inline memcpy and memset functions that can be used instead of
+the GCC builtins when necessary. The immediate use case is for the text
+poking functions to avoid the standard memcpy()/memset() calls because
+objtool complains about such dynamic calls within an AC=1 region. See
+tools/objtool/Documentation/objtool.txt, warning #9, regarding function
+calls with UACCESS enabled.
 
-  https://lore.kernel.org/all/57b0d188-b256-bde4-43e6-99dae4f59d60@suse.de
+Some user copy functions such as copy_user_generic() and __clear_user()
+have similar rep_{movs,stos} usages. But, those are highly specialized
+and hard to combine or reuse for other things. Define these new helpers
+for all other usages that need a completely unoptimized, strictly inline
+version of memcpy() or memset().
 
-Comment out the redundant "cc" clobber for documentation purposes.
-
-  [ bp: Massage commit message. ]
-
-Fixes: a8c171c107c0 ("x86/boot: Add volatile, clobbers and zero-length test in memcmp()")
-Reported-by: "H. Peter Anvin" <hpa@zytor.com>
-Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20260921-pvh-kasan-inline-v10-1-08da47943d8e@igalia.com
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Sohil Mehta <sohil.mehta@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://patch.msgid.link/20251118182911.2983253-4-sohil.mehta%40intel.com
+Stable-dep-of: b24bc9dec9c8 ("x86/pvh: Really inline memcmp() and memset() to fix unbootable VMs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/string.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/string.h | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/arch/x86/boot/string.c b/arch/x86/boot/string.c
-index 3a2bba7c25e9d..fa9623988826b 100644
---- a/arch/x86/boot/string.c
-+++ b/arch/x86/boot/string.c
-@@ -36,11 +36,15 @@ int memcmp(const void *s1, const void *s2, size_t len)
- 	/*
- 	 * Make sure ZF is properly set in the len==0 case because in it,
- 	 * RCX==0 and the REPE; CMPSB won't get executed.
-+	 *
-+	 * The "cc" clobber has no meaning anymore, just source compatibility.
-+	 * On x86 the flag status bits are automatically added to the clobber
-+	 * set when there are no =@ccXY constraints. Keep it as documentation.
- 	 */
- 	asm volatile("test %3, %3\n\t"
- 		     "repe cmpsb"
- 		     : "=@ccnz" (diff), "+D" (s1), "+S" (s2), "+c" (len)
--		     : : "cc", "memory");
-+		     : : /* "cc", */ "memory");
- 	return diff;
- }
- 
+diff --git a/arch/x86/include/asm/string.h b/arch/x86/include/asm/string.h
+index c3c2c1914d657..9cb5aae7fba9f 100644
+--- a/arch/x86/include/asm/string.h
++++ b/arch/x86/include/asm/string.h
+@@ -1,6 +1,32 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _ASM_X86_STRING_H
++#define _ASM_X86_STRING_H
++
+ #ifdef CONFIG_X86_32
+ # include <asm/string_32.h>
+ #else
+ # include <asm/string_64.h>
+ #endif
++
++static __always_inline void *__inline_memcpy(void *to, const void *from, size_t len)
++{
++	void *ret = to;
++
++	asm volatile("rep movsb"
++		     : "+D" (to), "+S" (from), "+c" (len)
++		     : : "memory");
++	return ret;
++}
++
++static __always_inline void *__inline_memset(void *s, int v, size_t n)
++{
++	void *ret = s;
++
++	asm volatile("rep stosb"
++		     : "+D" (s), "+c" (n)
++		     : "a" ((uint8_t)v)
++		     : "memory");
++	return ret;
++}
++
++#endif /* _ASM_X86_STRING_H */
 -- 
 2.53.0
 
