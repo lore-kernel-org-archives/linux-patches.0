@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059714;
-	b=dI8ocmECXPMfId6mDMrDH0EzqP8We39jsCsVJ/wtDhv+RwJqf03dB93Qsqnj08gdp6+s
-	 YOPKVHtkuKAp5kbMU9vbm4XQXjCadMAW+e3VxXj8vUQAJhhxbARDPCVTEpkuBHhrmcoo4
-	 1DrbnLXtXiS1UYLpD8XWUcVnPDHNy2XVMwk+kaFwTfaUiU9Vn6jFyDov253icz2LMKUYM
-	 N8yvDfQZJG7KYGx9PfsCoEOjUDswNicXA1nSJawKCPY+VWbKw3iW9i6a/+M4vfP3SKDcg
-	 AA5ymMYpIoQWEkd6yO0hBWbVxZ0ife6zpZTb9LM8QMLrbeUreH/f6GerIR/RWr+XyOw==
+	t=1795059716;
+	b=bo38CaMbcbSb5Iyi22/qBbuJ5Ea44BRpA2drsTpYKo8olDhOYYQ3w5xQtI+Ap+FwHOlV
+	 9SQwhF82QulbeafVqbd9AyRxc57Vkx5koD0WlL2OwA95zU2c/jJf8HPlJAjKQHENyguKK
+	 W7C5i9IZOt+nHIKfNZX8MTjL35hfQVoRQYuPiUJC5rjIzF16PQjRTg8X5ytjXJDdct4Ms
+	 chVdv2mEkpmkCE6Y6ql8lJ69SMzWQsIDtoQsVBRsXUf+QCJChhNlxAmwggelE4VjVtriM
+	 vYZkbNBt5YriD3GsLZR0ho1qZVOAndTxrz1VqskcuLsrvumw8HgC/xyOkY8rdp796Uw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wMFYTics+CRn+fhADhyVs5vr3CoIFV9z+KJotTs4mvI=;
-	b=tYUoT1FtQxbL4jZMvTqb/z9vTK/r6uRz543gqkZClJqS5Hz/lRxFDjMNlfM53kpYy8T4
-	 iaEv6yHqA3EFZvTJONs8DSe02FGnmTYLA+bEIxfjprOodLv4CbdPim5zf4ZLswBSCgW9N
-	 sEIGRnYvo6vwUF/Rw2AppMYuzIQh+EB4utMH81lqAKSjSVsIjBzQZ6BswK2LG/26wOOKz
-	 PHHEGksL4H4g4lqOF5eeyKoc3ho6fxQG8pIzokfYTIfxnaxjcI27vOn1cWg1Xi+0rlQ2s
-	 eU2xnTaXLKw5pRVMNztzMGf4rtfBJp7R4jam3awaZy5FYVRP08ChiiYrlbRYYxqsh8A==
+	bh=QAcbxhLRb1a4BzJ1iU0oqqk3n164YD4l6esFDLwPewc=;
+	b=xVKSEg3Ixjw2QZuzrGnmVhEsgWz9edTw7mV+qhMkeIBI0EF+DDLrDjn8wvTbA/0G3CRl
+	 062MeNiPge+0uwcREiD8tm6yYiCnyfa8OzM0tdzsYOb9tyOGT+dgnSMXMkwHQbu1THM3C
+	 WDsrOCOTWPuAJ9IXxByYzU6h8QC2czcl2sE2b3m2437exA3kq+ouJcF99ay4bNSFjLhc+
+	 Dt44l9GbCGl2DXIUISz588qaQX47rJQMQQNOipsICzW0CbW7Gn2NCoTU1dbRTZ28e7MIz
+	 DcJMD3ImHEM3Xlb2S4vzB+iICqbHj4s2E/7XUgcPE3l/pN1gD9k3W3Ffu/3uoqAV/aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fgn/kSKM";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ADA96HS5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8BF606A326;
-	Thu, 19 Nov 2026 03:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17F8606A320;
+	Thu, 19 Nov 2026 03:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fgn/kSKM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335611F000C4;
-	Thu, 19 Nov 2026 03:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ADA96HS5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0E81F000C4;
+	Thu, 19 Nov 2026 03:41:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059713;
-	bh=wMFYTics+CRn+fhADhyVs5vr3CoIFV9z+KJotTs4mvI=;
+	s=korg; t=1795059716;
+	bh=QAcbxhLRb1a4BzJ1iU0oqqk3n164YD4l6esFDLwPewc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fgn/kSKMFXqWeXz1QkAXwGVLd8iCh5fPSaeZitGYiL4pTUvqVdB1o0STA6c6a5glk
-	 /bxGCLTotbTRCB34c/sVHnJQN1mVZF9brbBhHzFzHidk5CYL4tfsorPv0Q7FURgTDb
-	 4EVhoxadUMM9nVDjsZL9QI3VI7atqKDe0KexgxB0=
+	b=ADA96HS5+mBRi+mP7rurAnV0dwdJB/bWhDw3FJ7yUsZIDBQvR9jcFJJEjKE0cc91M
+	 oeKEfjkdkkw2BO79oIELUUj88XkgfJk/wPigCGVwyYGk7tIEOBZ//q1co5JQuBd92j
+	 Dn0RaaKpa0Sf11v/YwuWlyZr+uKGYxNZEWTu4sAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Tingjie Zhong <catme0w@live.cn>,
-	Helge Deller <deller@gmx.de>,
+	Lee Jones <lee@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0941/1848] fbdev: bitblit: Fix glyph clipping when fbcon pans
-Date: Wed, 18 Nov 2026 15:49:39 +0100
-Message-ID: <20261118145956.374673417@linuxfoundation.org>
+Subject: [PATCH 5.10 0942/1848] mfd: da903x: Cancel IRQ work during teardown
+Date: Wed, 18 Nov 2026 15:49:40 +0100
+Message-ID: <20261118145956.425859753@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,72 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingjie Zhong <catme0w@live.cn>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 06fccf840640d8f6b0e08a1756f8d2f0435b4cbe ]
+[ Upstream commit fd2258999ecdc7164ef0cda2d4102e4558a5660f ]
 
-Commit 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix
-vmalloc-out-of-bounds") made bit_putcs() clip glyphs to var.yres. When
-fbcon scrolls by panning, it draws text rows up to var.yres_virtual,
-so after the first pan most new text is not drawn until the next full
-redraw. This affects fbdev drivers that set FBINFO_HWACCEL_YPAN or
-FBINFO_HWACCEL_YWRAP, such as vesafb with the ypan option, when
-CONFIG_FRAMEBUFFER_CONSOLE_LEGACY_ACCELERATION=y.
+The IRQ handler disables the IRQ and schedules irq_work. Releasing the
+IRQ does not drain that work, which can continue to use the devm-allocated
+chip and notifier state.
 
-Clip to GETVYRES() instead, which fbcon_ud.c and fbcon_ccw.c already
-use as the drawing area height. When fbcon does not pan, GETVYRES()
-returns var.yres, keeping the existing bound. When fbcon pans, it
-returns var.yres_virtual, which the framebuffer memory must cover
-anyway for panning to work.
+Manage both IRQ-work cancellation and subdevice removal with devres.
+Register the subdevice-removal action before requesting the IRQ, then add
+the IRQ-work action after the request. This avoids leaving a live IRQ
+without work cancellation if action registration fails. Devres cleanup
+then disables the IRQ and drains the work before releasing the IRQ and
+removing child devices. Register both actions before creating the children
+so partial probe failures use the same ordering.
 
-Fixes: 3637d34b35b2 ("fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds")
-Reported-by: Thomas Zimmermann <tzimmermann@suse.de>
-Closes: https://lore.kernel.org/linux-fbdev/b8b52ffd-ecec-4fba-b432-ba32135c2f99@suse.de/
-Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
+This issue was found by the author's in-house static analysis tool.
+The patch was reviewed by the author against the latest mainline tree.
+
+Fixes: 26b8f5e1e2d1 ("mfd: add base support for Dialog DA9030/DA9034 PMICs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tingjie Zhong <catme0w@live.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
-[ sashal: Changed struct fbcon_par to the older struct fbcon_ops type. ]
+Suggested-by: Lee Jones <lee@kernel.org>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260814153019.1114-1-getshell@seu.edu.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
+[ sashal: adapted da903x_remove() deletion to its int return type by also removing the return 0 statement ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/bitblit.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/mfd/da903x.c | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index c36f92965e0de..fbc05fbbd82a2 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -18,6 +18,7 @@
- #include <linux/console.h>
- #include <asm/types.h>
- #include "fbcon.h"
-+#include "fbcon_rotate.h"
+diff --git a/drivers/mfd/da903x.c b/drivers/mfd/da903x.c
+index a818fbb559888..3ff1a00b409c3 100644
+--- a/drivers/mfd/da903x.c
++++ b/drivers/mfd/da903x.c
+@@ -421,6 +421,14 @@ static irqreturn_t da903x_irq_handler(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
  
- /*
-  * Accelerated handlers.
-@@ -151,7 +152,9 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 		      const unsigned short *s, int count, int yy, int xx,
- 		      int fg, int bg)
++static void da903x_cancel_irq_work(void *data)
++{
++	struct da903x_chip *chip = data;
++
++	disable_irq(chip->client->irq);
++	cancel_work_sync(&chip->irq_work);
++}
++
+ static const struct da903x_chip_ops da903x_ops[] = {
+ 	[0] = {
+ 		.init_chip	= da9030_init_chip,
+@@ -456,6 +464,13 @@ static int da903x_remove_subdevs(struct da903x_chip *chip)
+ 	return device_for_each_child(chip->dev, NULL, __remove_subdev);
+ }
+ 
++static void da903x_remove_subdevs_action(void *data)
++{
++	struct da903x_chip *chip = data;
++
++	da903x_remove_subdevs(chip);
++}
++
+ static int da903x_add_subdevs(struct da903x_chip *chip,
+ 					struct da903x_platform_data *pdata)
  {
-+	struct fbcon_ops *par = info->fbcon_par;
- 	struct fb_image image;
-+	u32 vyres = GETVYRES(par->p, info);
- 	u32 width = DIV_ROUND_UP(vc->vc_font.width, 8);
- 	u32 cellsize = width * vc->vc_font.height;
- 	u32 maxcnt = info->pixmap.size/cellsize;
-@@ -168,10 +171,10 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 	image.height = vc->vc_font.height;
- 	image.depth = 1;
+@@ -484,7 +499,6 @@ static int da903x_add_subdevs(struct da903x_chip *chip,
+ 	return 0;
  
--	if (image.dy >= info->var.yres)
-+	if (image.dy >= vyres)
- 		return;
+ failed:
+-	da903x_remove_subdevs(chip);
+ 	return ret;
+ }
  
--	image.height = min(image.height, info->var.yres - image.dy);
-+	image.height = min(image.height, vyres - image.dy);
+@@ -520,6 +534,11 @@ static int da903x_probe(struct i2c_client *client,
+ 	chip->ops->mask_events(chip, chip->events_mask);
+ 	chip->ops->read_events(chip, &tmp);
  
- 	if (attribute) {
- 		buf = kmalloc(cellsize, GFP_ATOMIC);
++	ret = devm_add_action_or_reset(&client->dev,
++				       da903x_remove_subdevs_action, chip);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_irq(&client->dev, client->irq, da903x_irq_handler,
+ 			IRQF_TRIGGER_FALLING,
+ 			"da903x", chip);
+@@ -529,15 +548,12 @@ static int da903x_probe(struct i2c_client *client,
+ 		return ret;
+ 	}
+ 
+-	return da903x_add_subdevs(chip, pdata);
+-}
+-
+-static int da903x_remove(struct i2c_client *client)
+-{
+-	struct da903x_chip *chip = i2c_get_clientdata(client);
++	ret = devm_add_action_or_reset(&client->dev, da903x_cancel_irq_work,
++				       chip);
++	if (ret)
++		return ret;
+ 
+-	da903x_remove_subdevs(chip);
+-	return 0;
++	return da903x_add_subdevs(chip, pdata);
+ }
+ 
+ static struct i2c_driver da903x_driver = {
+@@ -545,7 +561,6 @@ static struct i2c_driver da903x_driver = {
+ 		.name	= "da903x",
+ 	},
+ 	.probe		= da903x_probe,
+-	.remove		= da903x_remove,
+ 	.id_table	= da903x_id_table,
+ };
+ 
 -- 
 2.53.0
 
