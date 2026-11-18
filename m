@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039122;
-	b=Z2a+wKQq+p2Xn2YBPY8KFhss1ca0wSnrtBGGQjHio3JmMgTxgVZLanZH2nRwsAVI1x2Q
-	 /VADgnXJ6F+aG7HNqc6LMW35kjbt52YOY2aMKOScj5fZA7+McPWWOSw6WNQNVtixfuC1H
-	 d2rUnLZiIqzQPrf8qnCIhkpE0BY3HjaFOG/4++M9pUH9GcO3N0d7d2NNpZqqtvrxZ26dD
-	 27cZ/QIzx0p6TUOrdGHU/KhNTtw6BY+z+CI/cCSH7UdAs+yiHllRa2fMR3i5D0b30XED1
-	 JDUQHZbablNid2yg4dlB/awwbanNo1BKzg+e1L+eERj76ngANn17m+PufeOVs8G+fHw==
+	t=1795039125;
+	b=V5NR8KRQOBq2TsyzxEMVcnqOD8HiMn8w9slBfSQUIa4iUSPMogZKP2thqK2tY0N+TRWV
+	 O6AUMuoJz2zI9nLpRykb+ynUzuWVESAXZMQDE6Q01ZAP8pOLjMRCKwYIOMNxp6DPmAzkW
+	 CUG32RrGeNomUU6SswOWQK1s8r18yMjWUhneOJtr0t4d5vT5XKmtqPq3pfMnKd8rm50NP
+	 lEr46zRtEVjBZZ76/nefHykRYEarWkvXd+Dn9nRud9Pa8qQuj+6+O/tK1MvrtoWSxmwWz
+	 jSl/wP/7gWtkFxT98zcxOWnRLA267iePB7GsQo9B1AbZxr+UzqP4D3l0MtTv17eR50g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039125;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4ayDpKPbSeHTEOkcQtG/DRA8KRHgaddnmgtucnDsf4A=;
-	b=3YmgN90kDoa3kDUm44o1o2OLnlX4zta5M41rMNyCcfOFJ52J2xN9bQkDWZzbWy0nKYBY
-	 7HvUw2WWN8h/+daFDLKuyRIVoP4TNM06KmT/IQ1FolFANGaTEhRY24S3ryTQnG40/2OSU
-	 yNLg5jMVpTV1EML/TrwLm3ik2AUENTCPMsjYL2OuWwu70lXLd/QpiN/4c/T10aUakyqQY
-	 ZwbDbSjm5tkukp7Mpv+sZ/MclUMAzJhdGQEcvhn77EAmZrVlW5QtkHqFGx7zQcyCNPiV/
-	 8qtJQgSv0yIxQ+tIU4EpX6/XSBh606bz0uGNewVb2dtHxAaLEaXkgRJ5KwNNbbyhLLg==
+	bh=uVf0msdjAetA90oN8r5XpkYSh1F2y6ZsYeszI1kiHm0=;
+	b=unXUpDyNo/sPUwYYZiRZoxp6Ez3KIRg+E0GBagMzJ51nifJMXG9eqjgazMyLzuRal7k7
+	 myRh5S/TTvJjJEH0jOJCSDput/EiJ8TAaWHxPzkcZaxLLfL3CL1lUgEPE5lA1+n/tBtde
+	 yUfv11l+VfmCw9Ry0Rg1a8xH+IXjoCg2+qA9rrBZMlQQQCa8jt+aV1TtmmmqhrnwtxZxn
+	 uxaKuiu00iDlHasWxFbFrFuRhKzSvVZ/SyQUq0/DIEMJmot5OjcEK6YhFhhw5ZEsOOCPK
+	 ahBBX7K+JKyF8eSAy7L1ji/4R3+GoZ1gyavZSfF3P93E+dI8uv3jKk4ukCpqRhC4kEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H3NjzTY+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6qWg4Xk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1907606A31C;
-	Wed, 18 Nov 2026 21:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E88606A320;
+	Wed, 18 Nov 2026 21:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H3NjzTY+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9871F000C4;
-	Wed, 18 Nov 2026 21:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6qWg4Xk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 960011F000C7;
+	Wed, 18 Nov 2026 21:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039122;
-	bh=4ayDpKPbSeHTEOkcQtG/DRA8KRHgaddnmgtucnDsf4A=;
+	s=korg; t=1795039125;
+	bh=uVf0msdjAetA90oN8r5XpkYSh1F2y6ZsYeszI1kiHm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H3NjzTY+6F4/PMArxFUndbC3nV2PVs4EoQ8ZrbjG7x+dCDhhEg/pFkMs+Jj7BL5RO
-	 WIghIN4tvwnDJB04J2bjEpluA1KIPpAlT9Z8ydXFsXrRUbtIy+CLHH6yIKmCF+CRl+
-	 JujoyYD2ntz0yhuqjQ4E/VP0d1kYG9GS9DmAExOk=
+	b=K6qWg4XkOri6vwvOzLFKgL7pf94CD33u+2Kp8XhgzEN0egWF+hUCQVSajQjmvc694
+	 lhz63LVoxCsM3p0xFl/KQkt1LEhiBj2aetSZiRtvgxT7pDnfp8z31xEAdRfpR7RguN
+	 OW1Tf6vl85G1N8jCqHcBl54yne+VZgEA1oOh/cPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bfc9e55cf4f98183c636@syzkaller.appspotmail.com,
-	Chandradhar Kumar <chandradhar.2003@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1987/3318] regulator: fixed: reject incompatible platform devices
-Date: Wed, 18 Nov 2026 15:43:29 +0100
-Message-ID: <20261118150421.675370034@linuxfoundation.org>
+Subject: [PATCH 6.6 1988/3318] spi: sh-msiof: SITMDR1/SIRMDR1 bitfield conversion
+Date: Wed, 18 Nov 2026 15:43:30 +0100
+Message-ID: <20261118150421.705973336@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,55 +68,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandradhar Kumar <chandradhar.2003@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit f7396c2dbbc1bed6c2c554d1ddf80d16e4780a7d ]
+[ Upstream commit 6bae252a9452ca8496670230a7821c34450763a2 ]
 
-The fixed regulator driver expects non-DT platform devices to provide
-their configuration through platform_data as a struct fixed_voltage_config.
+Convert MSIOF Transmit and Receive Mode Register 1 field accesses to use
+the FIELD_PREP() bitfield access macro.
 
-An explicitly bound driver can bypass the normal platform device/driver
-matching and attach the fixed regulator driver to an unrelated platform
-device. This causes the driver's platform_data to be interpreted as a
-struct fixed_voltage_config even though it contains data for a different
-device.
+This gets rid of explicit shifts.
 
-Reject non-DT platform devices whose name does not match the fixed
-regulator driver before accessing their platform data.
-
-Fixes: 4b74ff651249 ("regulator: add support for fixed regulators.")
-Reported-by: syzbot+bfc9e55cf4f98183c636@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=bfc9e55cf4f98183c636
-Signed-off-by: Chandradhar Kumar <chandradhar.2003@gmail.com>
-Link: https://patch.msgid.link/20260822065519.112441-1-chandradhar.2003@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/9685c54e752b8ef4256c9b281e9d8292e71d222e.1747401908.git.geert+renesas@glider.be
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 152867998da9 ("spi: sh-msiof: propagate setup runtime-PM errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/fixed.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-sh-msiof.c | 45 ++++++++++++++++++++------------------
+ 1 file changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
-index 4477bdeb9e60f..8a92257668458 100644
---- a/drivers/regulator/fixed.c
-+++ b/drivers/regulator/fixed.c
-@@ -28,6 +28,7 @@
- #include <linux/regulator/of_regulator.h>
- #include <linux/regulator/machine.h>
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index 6d0376b6e5323..ea94891023da8 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -7,6 +7,7 @@
+  * Copyright (C) 2014-2017 Glider bvba
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/bitmap.h>
  #include <linux/clk.h>
-+#include <linux/string.h>
+ #include <linux/completion.h>
+@@ -83,20 +84,19 @@ struct sh_msiof_spi_priv {
  
+ /* SITMDR1 and SIRMDR1 */
+ #define SIMDR1_TRMD		BIT(31)		/* Transfer Mode (1 = Master mode) */
+-#define SIMDR1_SYNCMD_MASK	GENMASK(29, 28)	/* SYNC Mode */
+-#define SIMDR1_SYNCMD_SPI	(2 << 28)	/*   Level mode/SPI */
+-#define SIMDR1_SYNCMD_LR	(3 << 28)	/*   L/R mode */
+-#define SIMDR1_SYNCAC_SHIFT	25		/* Sync Polarity (1 = Active-low) */
+-#define SIMDR1_BITLSB_SHIFT	24		/* MSB/LSB First (1 = LSB first) */
+-#define SIMDR1_DTDL_SHIFT	20		/* Data Pin Bit Delay for MSIOF_SYNC */
+-#define SIMDR1_SYNCDL_SHIFT	16		/* Frame Sync Signal Timing Delay */
+-#define SIMDR1_FLD_MASK		GENMASK(3, 2)	/* Frame Sync Signal Interval (0-3) */
+-#define SIMDR1_FLD_SHIFT	2
++#define SIMDR1_SYNCMD		GENMASK(29, 28)	/* SYNC Mode */
++#define SIMDR1_SYNCMD_SPI	2U		/*   Level mode/SPI */
++#define SIMDR1_SYNCMD_LR	3U		/*   L/R mode */
++#define SIMDR1_SYNCAC		BIT(25)		/* Sync Polarity (1 = Active-low) */
++#define SIMDR1_BITLSB		BIT(24)		/* MSB/LSB First (1 = LSB first) */
++#define SIMDR1_DTDL		GENMASK(22, 20)	/* Data Pin Bit Delay for MSIOF_SYNC */
++#define SIMDR1_SYNCDL		GENMASK(18, 16)	/* Frame Sync Signal Timing Delay */
++#define SIMDR1_FLD		GENMASK(3, 2)	/* Frame Sync Signal Interval (0-3) */
+ #define SIMDR1_XXSTP		BIT(0)		/* Transmission/Reception Stop on FIFO */
+ /* SITMDR1 */
+ #define SITMDR1_PCON		BIT(30)		/* Transfer Signal Connection */
+-#define SITMDR1_SYNCCH_MASK	GENMASK(27, 26)	/* Sync Signal Channel Select */
+-#define SITMDR1_SYNCCH_SHIFT	26		/* 0=MSIOF_SYNC, 1=MSIOF_SS1, 2=MSIOF_SS2 */
++#define SITMDR1_SYNCCH		GENMASK(27, 26)	/* Sync Signal Channel Select */
++						/* 0=MSIOF_SYNC, 1=MSIOF_SS1, 2=MSIOF_SS2 */
  
- struct fixed_voltage_data {
-@@ -181,6 +182,9 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
- 	enum gpiod_flags gflags;
- 	int ret;
+ /* SITMDR2 and SIRMDR2 */
+ #define SIMDR2_BITLEN1(i)	(((i) - 1) << 24) /* Data Size (8-32 bits) */
+@@ -340,8 +340,9 @@ static u32 sh_msiof_spi_get_dtdl_and_syncdl(struct sh_msiof_spi_priv *p)
+ 		return 0;
+ 	}
  
-+	if (!pdev->dev.of_node && strcmp(pdev->name, "reg-fixed-voltage"))
-+		return -ENODEV;
-+
- 	drvdata = devm_kzalloc(&pdev->dev, sizeof(struct fixed_voltage_data),
- 			       GFP_KERNEL);
- 	if (!drvdata)
+-	val = sh_msiof_get_delay_bit(p->info->dtdl) << SIMDR1_DTDL_SHIFT;
+-	val |= sh_msiof_get_delay_bit(p->info->syncdl) << SIMDR1_SYNCDL_SHIFT;
++	val = FIELD_PREP(SIMDR1_DTDL, sh_msiof_get_delay_bit(p->info->dtdl)) |
++	      FIELD_PREP(SIMDR1_SYNCDL,
++			 sh_msiof_get_delay_bit(p->info->syncdl));
+ 
+ 	return val;
+ }
+@@ -360,16 +361,18 @@ static void sh_msiof_spi_set_pin_regs(struct sh_msiof_spi_priv *p, u32 ss,
+ 	 *    1    0         11     11    0    0
+ 	 *    1    1         11     11    1    1
+ 	 */
+-	tmp = SIMDR1_SYNCMD_SPI | 1 << SIMDR1_FLD_SHIFT | SIMDR1_XXSTP;
+-	tmp |= !cs_high << SIMDR1_SYNCAC_SHIFT;
+-	tmp |= lsb_first << SIMDR1_BITLSB_SHIFT;
++	tmp = FIELD_PREP(SIMDR1_SYNCMD, SIMDR1_SYNCMD_SPI) |
++	      FIELD_PREP(SIMDR1_FLD, 1) | SIMDR1_XXSTP |
++	      FIELD_PREP(SIMDR1_SYNCAC, !cs_high) |
++	      FIELD_PREP(SIMDR1_BITLSB, lsb_first);
+ 	tmp |= sh_msiof_spi_get_dtdl_and_syncdl(p);
+ 	if (spi_controller_is_target(p->ctlr)) {
+ 		sh_msiof_write(p, SITMDR1, tmp | SITMDR1_PCON);
+ 	} else {
+ 		sh_msiof_write(p, SITMDR1,
+ 			       tmp | SIMDR1_TRMD | SITMDR1_PCON |
+-			       (ss < MAX_SS ? ss : 0) << SITMDR1_SYNCCH_SHIFT);
++			       FIELD_PREP(SITMDR1_SYNCCH,
++					  ss < MAX_SS ? ss : 0));
+ 	}
+ 	if (p->ctlr->flags & SPI_CONTROLLER_MUST_TX) {
+ 		/* These bits are reserved if RX needs TX */
+@@ -564,12 +567,12 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
+ 		return 0;
+ 
+ 	/* Configure native chip select mode/polarity early */
+-	clr = SIMDR1_SYNCMD_MASK;
+-	set = SIMDR1_SYNCMD_SPI;
++	clr = SIMDR1_SYNCMD;
++	set = FIELD_PREP(SIMDR1_SYNCMD, SIMDR1_SYNCMD_SPI);
+ 	if (spi->mode & SPI_CS_HIGH)
+-		clr |= BIT(SIMDR1_SYNCAC_SHIFT);
++		clr |= SIMDR1_SYNCAC;
+ 	else
+-		set |= BIT(SIMDR1_SYNCAC_SHIFT);
++		set |= SIMDR1_SYNCAC;
+ 	pm_runtime_get_sync(&p->pdev->dev);
+ 	tmp = sh_msiof_read(p, SITMDR1) & ~clr;
+ 	sh_msiof_write(p, SITMDR1, tmp | set | SIMDR1_TRMD | SITMDR1_PCON);
 -- 
 2.53.0
 
