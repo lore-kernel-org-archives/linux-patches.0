@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052699;
-	b=D1h/sJ5e3YOabHJFr9pucdW9UWmt+lRV8VoVAdc2GGZd615bOv6DqXgDBjaMEWc4XY5m
-	 FHALtPrl8lgIPhpl8CeuoUhRvEeqXoj4msNY9q6NzSPnjcoijBC3bDRhekHUYqMp7ikEb
-	 8o2kgL593zYkgKwjE6DScIJXsCMMUuc9XLY0fvu5nDeecR7nhPeB6TKheurNbIvmcoG33
-	 E+vsgi92ydPJoG+JydMBFsRDbtg/VK0PbJuYNu7n3QIDSUeUI2EDVyH2fAweIxqhWdqAD
-	 7V9dnZZqGUcapwC0XRNX//Yw8MuzV6Z7Czff1Ij6G3TJOoeZyvkNIHNkzj9lovapOtg==
+	t=1795052702;
+	b=3wW4IM+MFEW+ACHF/XQv79NBEqIecSz5p8Qs7mW3jYi2Q8Q3GrsVtw8+PdBLD+XAgvNP
+	 Acadh30jH/sAE3SdU9JwOML/lz2RPkpcILFaXSFFgY+CiBAgUhNEPtM4ioXFDUObT0GvN
+	 oQyodKS4ypj0xx6J2WeN//M0XAQCNWyZt5kdeE9Lro00pjdQ10ppUj0fuLbEuifeb4Jhf
+	 CocKYtosWeAaOuK+3jQEKMe7jrVPXwuI4D23zWrwa7HAUn/21WTXugLNhXpoC+LCMpIpJ
+	 GMJc9ElBRipYgWtdfcjlON5MELMjpspqiJ107FumB6BUZonA85Wj0Ra4BsH4smllSJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052702;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oXx04cTkE/dJyB9mnsXWQg5XIUH47SzUo3Shq33idcU=;
-	b=yRuoBNSnbvwy3bidTZLOSv6f5poyd1/5K3bTa9qh7OWMY9NjDfT1TL/E4Goe1vDe3/1l
-	 FryhkZlvThRzfYLzgO5HoNn1QanK0khIAg1+DVhdg9auasB1glyNKjUxjbXBT4agsFpMT
-	 OiQeaXcoCCPSg6cWCHtn3Cj5rvR5YjT75erwLngYlbULVecpMhZoPfZrUWA2AyQn4aLb6
-	 M3WzoyAwgZk0G14GYaP1fo87F5sQJrWN247eZkgGkjH3UdzdSf4do+jJ0gh2OcvvEp0v1
-	 fgw4Wr6Px3mwvM2veyclkDYLaEytnVOBMR+ILnU8OLyRXneNAmVqC1kdnwoOQBLkS/w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=E8wrb0DpDakoF3x1kCnLwHf/OKbaW6+g+pSDAUxeau8=;
+	b=249jkW4xWP/p5vPage7TEiu3YayWtMO1xS2LeqSWI3NfklTrRjg/pmVF/Eui+Vd1U046
+	 2A7F7Ye8DSBPUsdM97UKx5akW6f3J+vNPRkSS53zC1YXGU99NbZuH87r1g/fiA2In59vF
+	 G9EV2uKl4nvRtweVWV/xYUEvg5OeVGtmP9o7qK6Ebhm9PFA92s1wZV97bjevPfojW8Kll
+	 u6Ug0mMyArQPUIcw1HIwy3Ho/jBKnSiZQNoShnyALwEqVmF3ry3zCMEtIYrReaH2umcgG
+	 0edRa3NS/FZOS9Tt2ayQgrsIjaOTlK2F4GL1EYm0IwvAMOo1gMIbgMwMceQYgfH8now==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QqMXW8Ka;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aVeiSmu2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC90F606A32F;
-	Thu, 19 Nov 2026 01:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AA9606A32A;
+	Thu, 19 Nov 2026 01:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QqMXW8Ka
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C7E1F000C4;
-	Thu, 19 Nov 2026 01:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aVeiSmu2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64D81F000C4;
+	Thu, 19 Nov 2026 01:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052699;
-	bh=oXx04cTkE/dJyB9mnsXWQg5XIUH47SzUo3Shq33idcU=;
+	s=korg; t=1795052702;
+	bh=E8wrb0DpDakoF3x1kCnLwHf/OKbaW6+g+pSDAUxeau8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QqMXW8Ka+0QYZ1uviPcmrT3OVdtZng6ITNHa9p0MSvhMQhnsckrGLLVGpziMSExz6
-	 4tfvuO0zCp4nayisdzRtYT21RQ7NcoOWlmENgihZvukxkJkXxGy6x9z4QQ1G8zOqz1
-	 F0s17qALvWKRfu4xyl2AdSUN1djuomTYXbQNImR8=
+	b=aVeiSmu2ft9tpcsY57PVFhTfupfZ7VAkv2WM+HbFdgAi55Dbhd7W4BgABbXUGdunA
+	 vbqAQcjjeedmXqOgeiTfK25yRdJb1iod7vhVPq9bqxJYAgpd0YdhNxAadbQkSDaXIx
+	 /4CquMq4wEll+ocboJse1wtH/reDrCJaeLYky+gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Keith Busch <kbusch@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0630/2214] nvmet: free the bvec on file namespace range errors
-Date: Wed, 18 Nov 2026 15:38:26 +0100
-Message-ID: <20261118150036.563987176@linuxfoundation.org>
+Subject: [PATCH 5.15 0657/2214] alpha: run check_mmu_context() from finish_arch_post_lock_switch()
+Date: Wed, 18 Nov 2026 15:38:53 +0100
+Message-ID: <20261118150037.850912315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,53 +62,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit 9d820d55b3cb4859c7cf42a74dc78f6154f97398 ]
+[ Upstream commit 020d2e70b7538b66eee3c3480d2b8921fb182f0c ]
 
-nvmet_file_execute_rw() allocates the bvec before
-nvmet_file_execute_io() checks whether the request fits in the backing
-file. If the request extends beyond the file, nvmet_file_execute_io()
-calls nvmet_req_complete() to return an error. This skips
-nvmet_file_io_done(), so the allocated memory is never freed. Repeated
-requests can exhaust memory.
+check_mmu_context() clears asn_lock and acts on need_new_asn, but it
+runs only as the tail of switch_to(), after alpha_switch_to() returns.
 
-Use nvmet_file_io_done() to free the bvec before returning the range
-error to the client.
+A newly forked user task never gets there: its first context switch
+resumes at ret_from_fork and reaches schedule_tail() without returning
+to the code following alpha_switch_to().
 
-Fixes: 50a909db36f2 ("nvmet: use IOCB_NOWAIT for file-ns buffered I/O")
+asn_lock is left set on that CPU, so the new user task can run with
+interrupts enabled while shootdown IPIs keep taking the deferred path.
+The handshake meant to complete those invalidations never runs.
+
+New kernel threads also reach schedule_tail(), but context_switch()
+does not call switch_mm() for a task without an mm. They therefore do
+not set asn_lock in the first place and are not affected by this bug.
+
+Move check_mmu_context() to finish_arch_post_lock_switch(), which is
+called by finish_task_switch() for both existing and newly created tasks.
+Drop the now redundant call from switch_to().
+
+The hook runs after finish_lock_switch() releases the rq lock and enables
+interrupts. An IPI arriving before asn_lock is cleared retires the slot
+through flush_tlb_other(); an IPI arriving afterwards can flush directly,
+since PAL_swpctx has already installed the incoming context.
+
+Set need_new_asn whether ev5_switch_mm() reuses or allocates an ASN. An
+IPI in that interval can zero either slot. Without this, the allocated
+case can return to user space with a live ASN but a zero context slot,
+which a later context-based shootdown shortcut could mistake for an
+inactive CPU. check_mmu_context() reloads only when the slot is zero.
+
+Call the hook unconditionally. Alpha selects ARCH_NO_PREEMPT, and neither
+kthread_use_mm() nor sched_force_init_mm() sleeps between the direct
+switch and this hook. RCU_STRICT_GRACE_PERIOD can enable PREEMPT_COUNT,
+but cannot make those callers migrate there. Testing preemptible() would
+only leave asn_lock set in that configuration.
+
+This requires the preceding direct-switch fix, "alpha: load the MMU
+context when switch_mm() switches the current task". It installs the
+borrowed context before kthread_use_mm() reaches this hook, so clearing
+asn_lock cannot expose a targeted invalidate against the wrong context.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20261010142533.974797-3-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/io-cmd-file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/alpha/include/asm/mmu_context.h | 15 +++++++++++++--
+ arch/alpha/include/asm/switch_to.h   |  1 -
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index f576a959e36c9..dd5337b08d7f0 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -140,8 +140,8 @@ static bool nvmet_file_execute_io(struct nvmet_req *req, int ki_flags)
- 
- 	pos = le64_to_cpu(req->cmd->rw.slba) << req->ns->blksize_shift;
- 	if (unlikely(pos + req->transfer_len > req->ns->size)) {
--		nvmet_req_complete(req, errno_to_nvme_status(req, -ENOSPC));
--		return true;
-+		ret = -ENOSPC;
-+		goto complete;
+diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
+index 4eea7c6169925..7aeee0846dc9d 100644
+--- a/arch/alpha/include/asm/mmu_context.h
++++ b/arch/alpha/include/asm/mmu_context.h
+@@ -152,8 +152,8 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 		next_mm->context[cpu] = mmc;
  	}
+ #ifdef CONFIG_SMP
+-	else
+-		cpu_data[cpu].need_new_asn = 1;
++	/* A deferred shootdown can also invalidate a newly allocated ASN. */
++	cpu_data[cpu].need_new_asn = 1;
+ #endif
  
- 	memset(&req->f.iocb, 0, sizeof(struct kiocb));
+ 	/* Always update the PCB ASN.  Another thread may have allocated
+@@ -201,6 +201,17 @@ do {								\
+ #define check_mmu_context()  do { } while(0)
+ #endif
+ 
++/*
++ * Also called from kthread_use_mm() with preemption enabled. Alpha has
++ * no kernel preemption, so the task is still on the CPU that ran
++ * switch_mm().
++ */
++#define finish_arch_post_lock_switch finish_arch_post_lock_switch
++static inline void finish_arch_post_lock_switch(void)
++{
++	check_mmu_context();
++}
++
+ __EXTERN_INLINE void
+ ev5_activate_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm)
+ {
+diff --git a/arch/alpha/include/asm/switch_to.h b/arch/alpha/include/asm/switch_to.h
+index 762b7f975310c..35c4b2c9d9923 100644
+--- a/arch/alpha/include/asm/switch_to.h
++++ b/arch/alpha/include/asm/switch_to.h
+@@ -9,7 +9,6 @@ extern struct task_struct *alpha_switch_to(unsigned long, struct task_struct *);
+ #define switch_to(P,N,L)						 \
+   do {									 \
+     (L) = alpha_switch_to(virt_to_phys(&task_thread_info(N)->pcb), (P)); \
+-    check_mmu_context();						 \
+   } while (0)
+ 
+ #endif /* __ALPHA_SWITCH_TO_H */
 -- 
 2.53.0
 
