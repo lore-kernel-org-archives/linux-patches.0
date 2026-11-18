@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017338;
-	b=Nb8PQrE/aTzStIjGLZTptIkf5+TH/Rp7aNlaxjpWdbXgQoIbsPdRjCIyBtw2XFNwUm/p
-	 VaSkonAiaF2VggCC3WW1Sv6eLj6udcpXPK9MyTQNik99/cXVQSESiImGhwKC1/HZhGDHX
-	 4XRK8NZMkfRHQFd0T8duH38gbnC0Bjd6tAMKLJAE68xtEEQNoDQJDD888BX7gFja9GE3o
-	 BQBF4v10ZQNA2WI6kujoxDJ7KW9vgx3/uo0VkdkssOu6OPZvuk+IHgzIUtZKdNl+RVe/F
-	 cR0rUWgWRFBkjKLdU9hIp15eZHPsN3WXBU8xei6cujVm8VxTWPMYP9nAZXkymruPkkw==
+	t=1795017344;
+	b=Ok6MiithYCPva5CDoBh7ZrtW8B5B0RrRewEPDSvw7665/KSJbCT/UPo2nPI3qFBkFKXD
+	 YC5P4+9jCLI616JreW0wAOE4y2MUlGkFjig9QqvDwtZD59/S6pJ0cY5rXNWAFeiK75IkC
+	 Fi9PSsj3LW0CSFLh8nXfe3WQgpQ5YHqfHHwj4KqvS8xKahOQDHAIKAoZvqxktKyRmI5C4
+	 h7frTjCp++WvbOe1nJ3hgy+evBIW7OYfJjTLJcyEw7wA84tUAbNqPc3I7PxDyFHT2Hais
+	 tJ9kb8WzmjmzytifvpjWyU8BMCFWwtkWxp8yBsyO2Sr08dgkTqfSfdkeqFRyn3TBrQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017344;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GHE/2XC88oBCS7HWAze3HZoLEZKeHMBUigCPuVDuT24=;
-	b=lbLWG14moYmxN4DNG3UUvLVFbKwxhyd3xL5WaGZiJxZoeegLhvGiVIV/wRssbt7b671s
-	 l+gCH4xwY5TItG/+vfJWU2D7LEz+H4VJj1rP7Z1CHGGFBY5rvnDveGlQmpUGG5TfzHZZ3
-	 5ZoaEpcye9i86aCPcEz0KFMLr95wo4sbu90+NVxLs+tTItVW2gbOR1Tk0dI9WwiVct0Ld
-	 vrYABi1SoeiPugv71OKfUaBbwnwkyxkMrieGEao3VlibOQw0VvaQM8HK2mAOofuOrT61a
-	 XCDOtM9U+vO1YuTGVF65WJvyIj50lK0zGAoGbtzUD8B/+hLr8hJSQuu2XHl/27DQYcQ==
+	bh=x8m4Lq2f1xDWte5y1lS1jAYCubPc5YLWyf6bX6/QnNw=;
+	b=v/OoQ5Pqmf+cV4bOGs2r3YYmx+Uw8nj30UM9vPn777VURTO7QPQi11X81DUqEJcFbmlD
+	 beBH+M5C5EP/97kXlXuIF1gP5vp8+FDBtgljQ20Jq7G+imO5EM8yD/lChVPI9OTKkgmud
+	 4OF5ouo236ifhpb35Xmeabod2iArEqrdvAoxyRLRuDGlm+/Nw2/1DL5pDcOygzAVpcSti
+	 WXWweFoRbNZxRQRHDPgVeXSf/xK58hIMlJibWnrfiwEwXaFGqvuDZdlKMb7n5BQizS/pd
+	 a4swB+E1DoYYwsUQ1zbP870ozyfZyQtlM6E4CEbHWNJgsiOkUbfYBdqKI/NPVC8S1Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kc8bHbvG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TMzappc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40CC606A331;
-	Wed, 18 Nov 2026 15:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B88606A31C;
+	Wed, 18 Nov 2026 15:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kc8bHbvG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326261F000C4;
-	Wed, 18 Nov 2026 15:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TMzappc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03A81F000C4;
+	Wed, 18 Nov 2026 15:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017338;
-	bh=GHE/2XC88oBCS7HWAze3HZoLEZKeHMBUigCPuVDuT24=;
+	s=korg; t=1795017344;
+	bh=x8m4Lq2f1xDWte5y1lS1jAYCubPc5YLWyf6bX6/QnNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kc8bHbvGd7785UL7lLfkIFRbbUILMj/YjxDLshXrEEgv6ydS9/VGa5wnwpOw4B+fL
-	 OqWSeQQWIVZGcxNmejJgPCQdlrxJlHwIg/zcLIyzTUuFE1xckwDPyan9yQaLlMf+tH
-	 JecNGAMlk1zo7/NacsHXCYjJvNr2+5wBhC6ra7Ds=
+	b=1TMzappcDF4GTVsMYwQH4/KTNhp9igfp76N2Obozj17NUJ2V2I5wqi79gdefyGqcH
+	 U9GdxwKjK/aP4jJ4pVKJytd++GewsNFeJCy0xnIYOiW7wJulYVpCivdr7aRNAUAtsv
+	 hE4R6wOh4pelZfIYWSe37ARV+UH+UmR7RRgDy+E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0849/2651] mtd: block: prevent reclaim I/O during request processing
-Date: Wed, 18 Nov 2026 15:34:49 +0100
-Message-ID: <20261118150318.443509507@linuxfoundation.org>
+Subject: [PATCH 7.3 0851/2651] ASoC: amd: acp: add EFI dependency for selecting TAS2783
+Date: Wed, 18 Nov 2026 15:34:51 +0100
+Message-ID: <20261118150318.509600609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,72 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d498b2ddda99eed28cde177b1620dbcea246a1c4 ]
+[ Upstream commit 4d2b92b82ee82f0008179cd795b02256144064e1 ]
 
-The blktrans request callbacks run under dev->lock and may allocate
-memory with GFP_KERNEL. For example, mtdblock_writesect() uses vmalloc()
-to allocate its eraseblock cache. Direct reclaim can then recurse into
-block I/O and deadlock on resources held by the request being processed.
-syzbot reports a circular locking dependency involving the device mutex
-and fs_reclaim.
+The TAS2783 codec requires EFI support, so it cannot be selected
+unless that is also enabled:
 
-Commit d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC") removed PF_MEMALLOC
-from the MTD request thread. That flag had prevented direct reclaim,
-so its removal made allocations during request processing eligible for
-reclaim without excluding I/O.
+WARNING: unmet direct dependencies detected for SND_SOC_TAS2783_SDW
+  Depends on [n]: SOUND [=m] && SND [=m] && SND_SOC [=m] && SOUNDWIRE [=m] && SND_SOC_SDCA [=m] && EFI [=n]
+  Selected by [m]:
+  - SND_SOC_AMD_LEGACY_SDW_MACH [=m] && SOUND [=m] && SND [=m] && SND_SOC [=m] && SND_SOC_AMD_ACP_COMMON [=m] && X86 [=y] && PCI [=y] && ACPI [=y] && SOUNDWIRE [=m]
 
-Wrap request processing in mtd_queue_rq() in a NOIO scope. This covers
-both the request and background callbacks, including allocations made
-by lower MTD drivers, and prevents reclaim from initiating filesystem
-or block I/O.
+Add this as a dependency for SND_SOC_AMD_LEGACY_SDW_MACH, assuming
+that this is only needed on modern x86 machines that require EFI
+support already. It would likely be possible to do something more
+complex to still allow SND_SOC_AMD_LEGACY_SDW_MACH to be used without
+TAS2783 when EFI is disabled, but I cannot see a usecase for that.
 
-Fixes: d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC")
-Assisted-by: Codex:gpt-6-astra
-Reported-by: syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e08e0a15269eefa87790
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 28114992dd2f ("ASoC: amd: acp: enable TAS2783 and add RT712-VB SoundWire machine")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260925131137.146638-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtd_blkdevs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/amd/acp/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
-index 4d2e7b7774e90..42f250344f0cd 100644
---- a/drivers/mtd/mtd_blkdevs.c
-+++ b/drivers/mtd/mtd_blkdevs.c
-@@ -18,6 +18,7 @@
- #include <linux/spinlock.h>
- #include <linux/hdreg.h>
- #include <linux/mutex.h>
-+#include <linux/sched/mm.h>
- #include <linux/uaccess.h>
+diff --git a/sound/soc/amd/acp/Kconfig b/sound/soc/amd/acp/Kconfig
+index 6433876430f04..b7b7b4f4a55ca 100644
+--- a/sound/soc/amd/acp/Kconfig
++++ b/sound/soc/amd/acp/Kconfig
+@@ -167,7 +167,7 @@ config SND_SOC_AMD_SOF_SDW_MACH
  
- #include "mtdcore.h"
-@@ -167,6 +168,7 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
- 				 const struct blk_mq_queue_data *bd)
- {
- 	struct mtd_blktrans_dev *dev;
-+	unsigned int noio_flags;
- 
- 	dev = hctx->queue->queuedata;
- 	if (!dev) {
-@@ -174,10 +176,13 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
- 		return BLK_STS_IOERR;
- 	}
- 
-+	/* Reclaim must not recurse into I/O while processing requests. */
-+	noio_flags = memalloc_noio_save();
- 	spin_lock_irq(&dev->queue_lock);
- 	list_add_tail(&bd->rq->queuelist, &dev->rq_list);
- 	mtd_blktrans_work(dev);
- 	spin_unlock_irq(&dev->queue_lock);
-+	memalloc_noio_restore(noio_flags);
- 
- 	return BLK_STS_OK;
- }
+ config SND_SOC_AMD_LEGACY_SDW_MACH
+ 	tristate "AMD Legacy(No DSP) Soundwire Machine Driver Support"
+-	depends on X86 && PCI && ACPI
++	depends on X86 && PCI && ACPI && EFI
+ 	depends on SOUNDWIRE
+ 	select SND_SOC_AMD_SDW_MACH_COMMON
+ 	select SND_SOC_SDW_UTILS
 -- 
 2.53.0
 
