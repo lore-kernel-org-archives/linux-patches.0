@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030811;
-	b=2j+uWnp4nrh0ZQ7cgL7+JhzFoZEytQieDNTC6A56hVzSEYrT24aUJ93AWufS2kwC7Fcy
-	 ZfGp+kQTRtf8WUwkVoBgrx2mUw+lJRmFpGoBUvUUEUWZvmcPJ8lNKxzlXN0TxgVNeBbx+
-	 rl5+QZ4QjjsJ1LgdYLwhmsxu8D9GFSOR5O3j9CUNa8hn7yEPBcXVO5c74M9ZnQWbbcg+e
-	 0Lno+djp68HAV0HmYHOIixpT0YlzCqtKQNcZuzQxLtnzcQ6w+B9ACs/iNYfneBHjLLuZZ
-	 IJIwvIqQm/zcHek+Oe88YIqCwLNh44jXWulaym/G132JyqXMb2XjHaIRg3Hy6PpKJ6Q==
+	t=1795030814;
+	b=jf9AaO2Zo7q0UsIizX0MqtGP2WALs3dheSTFQoqVDwJQhyIPV3J1N7Hx3nA25ErQ+Lj4
+	 w4vt0dshqATte9ehUJcaG4GR0LYg2WyqsJH0sqqG3wrv9yrUXIpBDlF7oP8hKYuqK1p+4
+	 v4g1X86D56HBkLlMwwjedBfcj7fU2hB+LJaBz2wG8zRpwVBy3CK9xxpZdh9s6/KNaJq1a
+	 5hLRr4VMoCYU/a5aVo/5oxLuU+woTUkdAZj6GCv2H/pRfui8UhuYxGcC9Eic8X7AQ6lsH
+	 HpZZDKK0pogET8WfpFfHLtqthNYoviXxCoLuo9nYHJqoQmTZF9lQBtktsYaTuT4LnWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DLSKDMr47Fh+bWJcEzHhjAbOc7VhVRtUnbJaYIjKhNI=;
-	b=XMOuXjAxmL2Ee0RTG0R7KsLEknogY/jamt85MgrhANlNklKmXHma+M9HYuatN8YmFV7z
-	 83JBoUVqGCmWG+N6+MlPXU3i1ZADFgzGPjZwdfx9hSRF1dnoKTJ0QPv5+WjAjW+TjZ/jT
-	 8v+WgqUwPrZzo86tvFHlfcBEqbZHR6wI/cAK4X7rfYAXcHQg5SFipMrmqv73OaAFpP35c
-	 TttdjAsjUo/7t/OUEyn4F3pgzVk+dTzMFwu8/SSxVf8pTiF1zrl5uK2NYQRT7K/5SGkzg
-	 uEWFxliiBrZuBh6xNMkwtVObTDRcrkrt6OwtZRh+8pIurYnqJE7kzFWlZ5u6JGpvcBQ==
+	bh=Mi3qj1scnhLI75NeVm8W480wdL95L913YPe0Pr6Mans=;
+	b=4Xf0TxSS9r/+zKYDIlNtFwea5kso8M9jUQlt+BUaH4IWTD2bAQ1hf8HI8OQNLfZplG5u
+	 PAKFLCfEActFgNJEJnm60nU1kxtVkStwXiiM0ldx4zUd5QM+mzFK9UAGcBg5sIxpUlZKB
+	 aTe0rbxiRrP82LWCeQGbXuziaheapKvkk322NQNxaPXmnPLWIhJUQkYGGmT88VC5CKZd2
+	 hDro9M13whKw81p6hrBg1wADwsu49pADZOu1oI2EW2H0ZoFlhF2YV9zDvrP2iGsrcX+GN
+	 lwuFIAFVauWHsmcruJoglw97K1GffOuOIif/2ZwOu7wIgW8dzO2toDqGTCd2g/r3+WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0QsL+rk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lBQFj7SE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D47606C71C;
-	Wed, 18 Nov 2026 19:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93AA606A92E;
+	Wed, 18 Nov 2026 19:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0QsL+rk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9DE1F000C4;
-	Wed, 18 Nov 2026 19:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lBQFj7SE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ED21F000C4;
+	Wed, 18 Nov 2026 19:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030811;
-	bh=DLSKDMr47Fh+bWJcEzHhjAbOc7VhVRtUnbJaYIjKhNI=;
+	s=korg; t=1795030814;
+	bh=Mi3qj1scnhLI75NeVm8W480wdL95L913YPe0Pr6Mans=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0QsL+rkfNTi593Ao0FGVAyrN1WfwHQrDbFGrzGCENHfEcjuU+fUtaJv8p08cIPGR
-	 +AzrY3j5Us0mb/mbjcWt//NhLEr7lR4i2Gt091suyhOfCbC3ne3vRexnUZASkUzgAy
-	 V6p3lV7Qctoarx/tca3a7ZNABVbHdmeu6jL+a1e8=
+	b=lBQFj7SEftj6pc+0YHfTenVIOXZyM8jqwz4gqOHQqYveZh8guPmCuJP9a/8ywUqdz
+	 F2pVGv/ZyWaxppbEATqp2GGP1KTwDDSRREH3z6SA7L4hlze3F8Uewx++cqOoa3w7xe
+	 YUECvGuqK4GRHg20kg2iX0Z6psSsjiDZZ0fu1qVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.garry@linux.dev>,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0796/1756] scsi: scsi_debug: Map the region written by WRITE ATOMIC (16)
-Date: Wed, 18 Nov 2026 15:48:43 +0100
-Message-ID: <20261118150041.389153982@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 6.12 0787/1756] phy: rockchip: usbdp: Properly handle TYPEC_STATE_SAFE and TYPEC_STATE_USB
+Date: Wed, 18 Nov 2026 15:48:34 +0100
+Message-ID: <20261118150041.046777078@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,72 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 491bd55c35cbb1ce059f22e7f3c6284551970fef ]
+[ Upstream commit b1ca8de219ae6e4d9eec22acfbe4357d8addd94c ]
 
-When logical block provisioning is enabled, every command that writes user
-data calls map_region() so that GET LBA STATUS reports the region as
-mapped. resp_atomic_write() does not, so GET LBA STATUS keeps reporting a
-region as deallocated after a WRITE ATOMIC (16) has written it.
+Handle TYPEC_STATE_SAFE and TYPEC_STATE_USB Type-C state events,
+so that the muxing is properly updated when exiting DP AltMode.
 
-Call map_region() the way resp_write_dt0() does, holding the zone metadata
-write lock across the access. That lock is what serialises the map against
-resp_unmap(), which does nothing unless logical block provisioning is
-enabled.
-
-Assisted-by: LLM
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-27-cassel@kernel.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/message/20260619155020.CC7361F000E9%40smtp.kernel.org
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-5-8d507cb1174f@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 961496432fcb3..1d9947dc14351 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -4173,6 +4173,11 @@ static unsigned int map_state(struct sdeb_store_info *sip, sector_t lba,
- 	return mapped;
- }
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index 71d144af18a76..05edd03761c37 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -1274,18 +1274,27 @@ static const struct phy_ops rk_udphy_usb3_phy_ops = {
+ 	.owner		= THIS_MODULE,
+ };
  
-+/*
-+ * Callers may map the whole range of a write without checking how much of
-+ * it was written. SBC-6 4.7.4.6.2 allows a deallocated LBA to become mapped
-+ * at any time, and only requires an LBA that was written to be mapped.
-+ */
- static void map_region(struct sdeb_store_info *sip, sector_t lba,
- 		       unsigned int len)
++static bool rk_udphy_is_supported_mode(struct typec_mux_state *state)
++{
++	/* Handle Safe State and USB State */
++	if (state->mode < TYPEC_STATE_MODAL)
++		return true;
++
++	/* Handle DP AltMode */
++	if (state->alt && state->alt->svid == USB_TYPEC_DP_SID)
++		return true;
++
++	return false;
++}
++
+ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
+ 				  struct typec_mux_state *state)
  {
-@@ -5335,6 +5340,7 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
- 	u8 *cmd = scp->cmnd;
- 	u16 boundary, len;
- 	u64 lba, lba_tmp;
-+	bool lbp = scsi_debug_lbp();
- 	int ret;
+ 	struct rk_udphy *udphy = typec_mux_get_drvdata(mux);
+ 	u8 mode;
  
- 	if (!scsi_debug_atomic_write()) {
-@@ -5387,7 +5393,15 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
- 	if (scsi_bufflen(scp) < len * sdebug_sector_size)
- 		return DID_ERROR << 16;
+-	/*
+-	 * Ignore mux events not involving DP AltMode, because
+-	 * the mode field is being reused, e.g. state->mode == 4
+-	 * could be either TYPEC_MODE_USB4 or TYPEC_DP_STATE_C.
+-	 */
+-	if (!state->alt || state->alt->svid != USB_TYPEC_DP_SID)
++	/* Ignore mux events not involving USB or DP */
++	if (!rk_udphy_is_supported_mode(state))
+ 		return 0;
  
-+	if (lbp)
-+		sdeb_meta_write_lock(sip);
-+
- 	ret = do_device_access(sip, scp, 0, lba, len, 0, true, true);
-+	if (lbp) {
-+		map_region(sip, lba, len);
-+		sdeb_meta_write_unlock(sip);
-+	}
-+
- 	if (unlikely(ret == -1))
- 		return DID_ERROR << 16;
- 	if (unlikely(ret != len * sdebug_sector_size))
+ 	mutex_lock(&udphy->mutex);
 -- 
 2.53.0
 
