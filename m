@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028680;
-	b=WUirmNVRKDS6xt1NP/8XfbWT5R6nTx9vUVpWu5kZgiUzAWV0y6U439BclMHdh4Dxtb8H
-	 6ihB+tsELOvkQ7zvqjmyiiXwNkvCFebxv4/uIYwrGKKgnQnMJ4qBduvvIWX/0nEUqpD4D
-	 KtJFnoQyKg4ivf+7IXWEoo2YDndBD4tAjYTkJKofn8LZBYkQXXNszUrduse3AyswU09Ok
-	 CKrEs7rdh+cyzNvJReMaQt0Up3u7whULr4jPVwHFP7yv6TEf5Ydg/FberV3O0dmUI9lZY
-	 i/NP7y7bjRMxrddPnSmtI8eLoWnx/RgKYK/RuMAg+a4/QcKYAexlOJOkDhy8UpC4Wog==
+	t=1795028682;
+	b=PlrRX8tSrsv/DHvfETVvztUWjM69BNwLTWLV2V0alYpNh6xzlQoEI/BXxKMEw+ucmZq3
+	 az2MY6bDi+7uZSN6V9lUPhTRHM8XBiNn2cK0r6K/Ednfg+Vo4dqpHKHfKv0EMN6TGthT3
+	 TFETW5qmJKISlTnWG+pzwXZFoOIxyO64AXG3gJjmd8k3JFFqdqjo12ZsjiEMuTTT9QmxC
+	 wnSFD0Ok4GOhgH7h8NnimzO79yCuaLxNGogMRCE18cJFEbAmW2F53Ua+Q8AAY8sg5jr6g
+	 eJQ/3CcsHAKjWKN3v50XDgrhZEQEDME+imnAS4iz6oqFOM+/s3kPNRC9RnTqjwJbuYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028682;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=N2+rkuDFeQuDKfQJlxjp2yCue1EXLnIp/Mebdj1Ybuo=;
-	b=Ad6+pKp0jEvxr5t9TzRmkKt66CHHl5YUH06Df6wcDO84sWdIqSAzv4XVBOPkBIh4Xbok
-	 gmDCJtKR3wDuFWgK6cIV1Q64fq3WyCQI0B6ksRf7q+R3b3sPvCgdnslN6HDjGzn0QVY+M
-	 u1n+Q9mMz1mf9BF6KZ4U3jaF7bko+eWfHr9SZnKqMzrcf7FO1fcbUQcT1/rSYiWvoHkDo
-	 GIV4fPrEwNnq75vbLY7F4jDvv/W9Fp/AH8/gxeXdTqNMhT8qx3A9eoUO4czDB0dMa/d7x
-	 2BvXpPUb1ZXErqgBsGW6TNuE4giXgR+IBPfk2/fKDqIpm366QcoVk3+tnkXM5LefQ/g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=VdG0LZIMQiPpn3OIUzdwBn7R5CWxR5NXwFSVOPC5RS4=;
+	b=3wNk78lwbo0vGgv6ZHfQVeZHcgOhNg9NgrRdu1N4K0KFhk/sz8+DQvzGy2HZQdzIYyYP
+	 fULwIka6AnsvXZRpN2rJqNjZfkbWv4AADd23cDtLSSYg7w6wjx3sK2kkNRtrhTSavt17+
+	 YeBh58Bay6P+s6jQmJFe9/BoA5Jh8YkcTWFnSFr9zQqTS/jV7FbGTo6S+jUTEvUJ345bX
+	 x3aIXrVObGwKbiVtHuX0y3Uorub/FySmqqY/H8crXmnVUM8EuHDJkz2Hp9O9rJBrULH8V
+	 KQ+OlEx99no9nBUBUVd+tZUJGZgFUUffH89791L4r5oSMaLc9Fln9lA6h6fKS/EK/dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="y/Y9SWsb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMV3bwRk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057CC606A31C;
-	Wed, 18 Nov 2026 19:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980F6606A320;
+	Wed, 18 Nov 2026 19:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y/Y9SWsb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122831F000C5;
-	Wed, 18 Nov 2026 19:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMV3bwRk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64BE1F000C7;
+	Wed, 18 Nov 2026 19:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028679;
-	bh=N2+rkuDFeQuDKfQJlxjp2yCue1EXLnIp/Mebdj1Ybuo=;
+	s=korg; t=1795028682;
+	bh=VdG0LZIMQiPpn3OIUzdwBn7R5CWxR5NXwFSVOPC5RS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y/Y9SWsb+686SahlWkKyN7TPn3TbdV5eLBhoSI/xfS9hBk5OpkKwb2tJgPBCkI/d6
-	 jYGhBzleeGMDsS/F2DY0pibOGQ7tjRpO9pvG9ySVNdOlaPCHo06C+Y+vLe+UWVt+Fx
-	 wwk1JJS8JsicJGlHCv5vGlZXMnFs2RSSrlrleh58=
+	b=AMV3bwRk9s2V/PXnnKkKGcOEGTsIeEs0hNlyA5k27f8B11O7UfTzqGnOI11JuIKaT
+	 +c3syi6jnyaAon45RKBeEnBErnL9lQ7nVaaV9cY5jT59JSSNj19nBDj6yUed8SBBfI
+	 eASkK6nVxjZaEF85243cbsKkyP3TcnwJIEEdTRkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0082/1756] hwmon: (coretemp) Fix 32-bit jiffies wraparound in show_temp()
-Date: Wed, 18 Nov 2026 15:36:49 +0100
-Message-ID: <20261118150011.539559921@linuxfoundation.org>
+Subject: [PATCH 6.12 0083/1756] hwmon: (tmp108) Add helper function tmp108_common_probe() to prepare I3C support
+Date: Wed, 18 Nov 2026 15:36:50 +0100
+Message-ID: <20261118150011.577167418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,91 +62,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 9a6aa085c94c7f2817c4d50a7264e6fb51286f40 ]
+[ Upstream commit 700f3250198d51093884254220a96777a922dd47 ]
 
-show_temp() rate-limits MSR reads by storing tdata->last_updated as an
-unsigned long and comparing it against jiffies using
-time_after(jiffies, tdata->last_updated + HZ).
+Add help function tmp108_common_probe() to pave road to support i3c for
+P3T1085(NXP) chip.
 
-time_after() relies on signed long subtraction, which only produces the
-expected result while the two timestamps are within LONG_MAX jiffies of
-each other. On 32-bit kernels, if tempX_input is not read for more than
-LONG_MAX jiffies (~24.85 days at HZ=1000), the signed difference flips
-sign and time_after() evaluates to false. Because tdata->last_updated is
-only refreshed when time_after() succeeds, subsequent reads remain
-blocked from refreshing for another ~24.85 days until jiffies wraps
-past tdata->last_updated + HZ again, returning either a stale cached
-temperature or -ENODATA if the sensor had never been read since
-initialization.
+Use dev_err_probe() to simplify the code.
 
-Store tdata->last_updated as a u64 and use get_jiffies_64() with
-time_after64(), which does not wrap in any practical uptime.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: bebe467823c0 ("hwmon: New coretemp driver")
-Cc: stable@vger.kernel.org
-Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Message-ID: <20241112-p3t1085-v4-1-a1334314b1e6@nxp.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Adjusted show_temp() context to retain rdmsr_on_cpu() and the TjMax read before the refresh condition. ]
+Stable-dep-of: 7cd60538073e ("hwmon: (tmp108) Fix initial conversion delay and wait until ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/hwmon/tmp108.c | 39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 7f8ff6dd16bfa..13c0b4c47501e 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -77,7 +77,7 @@ struct temp_data {
- 	int temp;
- 	bool temp_valid;
- 	int tjmax;
--	unsigned long last_updated;
-+	u64 last_updated;
- 	unsigned int cpu;
- 	int index;
- 	u32 cpu_core_id;
-@@ -407,7 +407,7 @@ static ssize_t show_temp(struct device *dev,
+diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
+index 18e7c9d9bcbb8..d95957d808e1b 100644
+--- a/drivers/hwmon/tmp108.c
++++ b/drivers/hwmon/tmp108.c
+@@ -323,33 +323,19 @@ static const struct regmap_config tmp108_regmap_config = {
+ 	.use_single_write = true,
+ };
  
- 	tjmax = get_tjmax(tdata, dev);
- 	/* Check whether the time interval has elapsed */
--	if (time_after(jiffies, tdata->last_updated + HZ)) {
-+	if (time_after64(get_jiffies_64(), tdata->last_updated + HZ)) {
- 		rdmsr_on_cpu(tdata->cpu, tdata->status_reg, &eax, &edx);
- 		/*
- 		 * Bit 31 indicates whether the reading is valid. Some CPUs
-@@ -416,7 +416,7 @@ static ssize_t show_temp(struct device *dev,
- 		 */
- 		tdata->temp_valid = (eax >> 31) & 1;
- 		tdata->temp = tjmax - ((eax >> 16) & 0xff) * 1000;
--		tdata->last_updated = jiffies;
-+		tdata->last_updated = get_jiffies_64();
+-static int tmp108_probe(struct i2c_client *client)
++static int tmp108_common_probe(struct device *dev, struct regmap *regmap, char *name)
+ {
+-	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct tmp108 *tmp108;
+-	int err;
+ 	u32 config;
+-
+-	if (!i2c_check_functionality(client->adapter,
+-				     I2C_FUNC_SMBUS_WORD_DATA)) {
+-		dev_err(dev,
+-			"adapter doesn't support SMBus word transactions\n");
+-		return -ENODEV;
+-	}
++	int err;
+ 
+ 	tmp108 = devm_kzalloc(dev, sizeof(*tmp108), GFP_KERNEL);
+ 	if (!tmp108)
+ 		return -ENOMEM;
+ 
+ 	dev_set_drvdata(dev, tmp108);
+-
+-	tmp108->regmap = devm_regmap_init_i2c(client, &tmp108_regmap_config);
+-	if (IS_ERR(tmp108->regmap)) {
+-		err = PTR_ERR(tmp108->regmap);
+-		dev_err(dev, "regmap init failed: %d", err);
+-		return err;
+-	}
++	tmp108->regmap = regmap;
+ 
+ 	err = regmap_read(tmp108->regmap, TMP108_REG_CONF, &config);
+ 	if (err < 0) {
+@@ -383,13 +369,30 @@ static int tmp108_probe(struct i2c_client *client)
+ 		return err;
  	}
  
- 	valid = tdata->temp_valid;
-@@ -528,11 +528,8 @@ init_temp_data(struct platform_data *pdata, unsigned int cpu, int pkg_flag)
- 	tdata->cpu = cpu;
- 	tdata->cpu_core_id = topology_core_id(cpu);
- 	tdata->attr_size = MAX_CORE_ATTRS;
--	/*
--	 * A zero timestamp does not look stale on 32-bit, where jiffies
--	 * starts just short of wrapping. Backdate it instead.
--	 */
--	tdata->last_updated = jiffies - HZ - 1;
-+	/* Backdate to force a refresh on the first read */
-+	tdata->last_updated = get_jiffies_64() - HZ - 1;
- 	mutex_init(&tdata->update_lock);
- 	return tdata;
+-	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
++	hwmon_dev = devm_hwmon_device_register_with_info(dev, name,
+ 							 tmp108,
+ 							 &tmp108_chip_info,
+ 							 NULL);
+ 	return PTR_ERR_OR_ZERO(hwmon_dev);
  }
+ 
++static int tmp108_probe(struct i2c_client *client)
++{
++	struct device *dev = &client->dev;
++	struct regmap *regmap;
++
++	if (!i2c_check_functionality(client->adapter,
++				     I2C_FUNC_SMBUS_WORD_DATA))
++		return dev_err_probe(dev, -ENODEV,
++				     "adapter doesn't support SMBus word transactions\n");
++
++	regmap = devm_regmap_init_i2c(client, &tmp108_regmap_config);
++	if (IS_ERR(regmap))
++		return dev_err_probe(dev, PTR_ERR(regmap), "regmap init failed");
++
++	return tmp108_common_probe(dev, regmap, client->name);
++}
++
+ static int tmp108_suspend(struct device *dev)
+ {
+ 	struct tmp108 *tmp108 = dev_get_drvdata(dev);
 -- 
 2.53.0
 
