@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043507;
-	b=21xUvWEfVL0SOKNPD9h3kLYHJDBpmG0pJoHm7VjaBbJ+T/+8vvywVyWD/5yAbCB7Cuvy
-	 ZCaAFVB9wpMdr/L/XkaZnfI5COk9GG2ctj1BR2W6TdLbrN7Tddct/r2UjX57qfzDdo8MA
-	 dsKSP3NQyZPFVD76qF1p/R943SfG2oInnUHRAWlQwI/nmrXI2Ueeo4Pav5LzSI9rag66d
-	 B9Ykd7F1jjS4ar0VV2ywZNzUUY+J+X7U4Btiv3Ay3IvQqTpu6kAr5A6+TXjiZDJ6CetLh
-	 meK4RcH83wl0Y0lk903sakDYLbmcSfonr/AFVD6ik5MdxSYh8TlO/R3i5DRLKpngd7w==
+	t=1795043511;
+	b=1OtnOtMBt9AABcSGYYi1A7p4+Z7doW6bvbvGPD1e5HlDeLLd897syP9Z67SaApGNxlFO
+	 /ap8HTYSAPxWNPRjQRa8Icf+q2OzTt5RJHqUI8NlbRRISiLLjuZbijy7rO4BgYXWDnw+J
+	 JcrPaPasbUhYrWvLZE0m0S1jmbE4xyD7ERKH1jnkG97FZ+FmtFN+g/WCB+/T2d5Qpx/vF
+	 KnHsT1eRj7XjKhAlraGVm8YCR9IYQhV97BHaM50zXy2QQtdj+lVYgrsA7CbL+ul3l2CQy
+	 VxK1pZ4k/iHvhxjHY3WJnmSmw6D7KvMMqpAV6UrvTTGjzlCf5PwkNVtZEmCcNzpqmSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043511;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iUnVd+TdjphOIJ7rmhigM1javg5xPNa7cquhzrbwcWA=;
-	b=aC3e0NZMuewy8nDS854A5RoziZg5bQepoC2vcDd3uARNjbLYflczmPgoms0+0p+W9vu/
-	 NCHAfJk0mYhjqg4S1oyJOpQX5yYn3ZERly42i+CiYAZuTOyWw3BD9HQ80MODoOxaaDLgX
-	 1Gmle7mOlwYAElmdYtqlwDtPdZehpYHpiEh0cKBBKlrDkRIBEVGzurUTw32EiGPeyiG/e
-	 GAbks502+eOlVOwCHnG2hXMY/vCH8sxR3rvG0M3Vfpk8jrv6FL2whV8dGdJu09OE6Hzbl
-	 W1O22W9aZb+85w4LzspxWy74kPiDOOUtCP3L5LXvB1FIQsnr8fhr7EdpIZAL0KqBnAw==
+	bh=TkA3utOPOEv/AaIqG+VIhLthCl/FRlugCB3Se59zW5E=;
+	b=Q6+JyQtAouONNr02qKoQ+OQ+z7PWGJ14L4sX9csucYMF96geJ9g3SmWG5bw8lMDweNUe
+	 W/pw2ktzIiLUUoIYPGnaClGwwZ93P6F9u339Sa1luGsPPB/YeuRHbVv9+g0rt2BSWF+OG
+	 HwDU56UZ7Be2x7cILaJWpKMbkzruSX05CXkiO1guBsj2rsHkgoRUVyI2eV0SdhFqBfvrb
+	 V3JHPQ0hayeFTzawC/3FKlhFZIAd+5anA1leV+X71oQm3/eElaRI66BK2v8EfKl5ZiajT
+	 ZsTZ3MqhlwaxdNaz10Sow7Ht2Ka7HHZXtgddVgZoWzMViUBggxTrvmznWgPjQATFnOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CuUqb6b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v+WrUoyk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A52606A31C;
-	Wed, 18 Nov 2026 23:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBA8606A32F;
+	Wed, 18 Nov 2026 23:11:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CuUqb6b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F941F000C4;
-	Wed, 18 Nov 2026 23:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v+WrUoyk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138691F000C4;
+	Wed, 18 Nov 2026 23:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043507;
-	bh=iUnVd+TdjphOIJ7rmhigM1javg5xPNa7cquhzrbwcWA=;
+	s=korg; t=1795043510;
+	bh=TkA3utOPOEv/AaIqG+VIhLthCl/FRlugCB3Se59zW5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CuUqb6b8HNZ22b2Ojsv6xtNaiAmpMPp4pjwi97Ioi9uI4xHK2jdDv82BLyMkJkoO
-	 bHWsBEhA1/1ExeSE4V7A7T71BfV3/pnF+MiUyvdOwGXGATL5WLe5HhuL9Ye2cDMlN9
-	 q5JPTEZGkyjs6DYrI2dKxThHXJqQxygqPxDx5mkU=
+	b=v+WrUoykPaOtJ3awP2LPAOH4QECWTqPeXXmlSEYzIihyYcbdPzOpxjQjZuH1eFSTf
+	 ljqRKfSDHCo/xu51b1yCVLvdIV17ZxLmdj23XJJ6Kd6+8pvJCdOF+8REZWL6XjMuHb
+	 nIPMr7sUjc9ZCetKiaEmbqk+/yH+6L2/BThk2nB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carl Quist <equalizerjr@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sebastian Reichel <sre@kernel.org>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0199/2857] ALSA: hda/realtek: Enable mute LED on HP Laptop 15-dy0xxx
-Date: Wed, 18 Nov 2026 15:20:33 +0100
-Message-ID: <20261118150208.518296886@linuxfoundation.org>
+Subject: [PATCH 6.1 0200/2857] opp: Use clk_get_optional() to avoid leaving opp_table->clk as an error pointer
+Date: Wed, 18 Nov 2026 15:20:34 +0100
+Message-ID: <20261118150208.552585230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,51 +69,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carl Quist <equalizerjr@gmail.com>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-[ Upstream commit eb2b516900f2cff6c931a0d664a625ee93855779 ]
+[ Upstream commit 84f05af0975c9f9c8ffee0361d6f7cbb1f289231 ]
 
-The mute LED on the HP Laptop 15-dy0xxx (PCI SSID 103c:864f, Realtek
-ALC236) does not work, because the machine has no entry in the quirk
-table. No fixup is applied, so no mute LED classdev is registered and
-nothing ever drives the LED.
+_update_opp_table_clk() uses clk_get(dev, NULL) to acquire the
+device's clock. On platforms where the perf domain device has no
+Linux clock and is instead managed entirely by firmware via
+devm_pm_opp_of_add_table() (through
+of_genpd_add_provider_simple()/onecell()), clk_get() returns
+-ENOENT. That case is treated as valid (the OPP table can still
+have entries sourced from firmware), but opp_table->clk is left
+holding ERR_PTR(-ENOENT) rather than being reset to NULL:
 
-The LED is controlled by COEF index 0x07, bit 0. This was verified on
-the hardware with hda-verb: setting the bit lights the mute LED and
-clearing it turns the LED off.
+	opp_table->clk = clk_get(dev, NULL);
+	ret = PTR_ERR_OR_ZERO(opp_table->clk);
+	...
+	if (ret == -ENOENT) {
+		opp_table->clk_count = 1;
+		return opp_table;   /* opp_table->clk is still ERR_PTR(-ENOENT) */
+	}
 
-  hda-verb /dev/snd/hwC0D0 0x20 SET_COEF_INDEX 0x07
-  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x1     # LED on
-  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x200   # LED off
+Consumers that only check IS_ERR(opp_table->clk) treat this as a
+valid clk and pass it straight into the clk consumer API. In
+particular, dev_pm_opp_set_rate() calls
+clk_round_rate(opp_table->clk, target_freq), and clk_round_rate()
+only guards against a NULL clk, so it dereferences the error pointer
+to read clk->exclusive_count and crashes:
 
-That is exactly what ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 configures, and
-the closely related HP Laptop 15-dw0xxx (103c:85f0) already uses it.
-Bit 9 (0x200) is set by default on this board and is preserved by the
-fixup's read-modify-write.
+  Unable to handle kernel NULL pointer dereference at virtual
+  address 000000000000002e
+  ...
+  pc : clk_round_rate+0x3c/0x188
+  ...
+  Call trace:
+   clk_round_rate+0x3c/0x188 (P)
+   dev_pm_opp_set_rate+0x114/0x33c
 
-Tested on an HP Laptop 15-dy0xxx (SKU 7FU54UA#ABA, board 864F,
-BIOS F.40).
+Rather than teaching every clk consumer API to special-case
+ERR_PTR(-ENOENT), fix it at the source: use clk_get_optional()
+instead of clk_get() in _update_opp_table_clk(), which already
+translates -ENOENT into a NULL clk. This documents that the clock is
+genuinely optional for such devices, and keeps opp_table->clk holding
+either a valid clk or NULL, never a lingering -ENOENT error pointer.
+_opp_config_clk_single() is only wired up via opp_table->config_clks
+when a clk was actually found, and every other opp_table->clk
+consumer already tolerates NULL through the standard clk API (which
+treats a NULL clk as a no-op), so no other call site needs to change.
 
-Signed-off-by: Carl Quist <equalizerjr@gmail.com>
-Link: https://lore.kernel.org/CAOtcGaxXndKxTK5MVSEcmF-LUy+V51K7fhE=qvLA+VvW5ZyCNA@mail.gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Sebastian Reichel <sre@kernel.org>
+Reviewed-by: Sebastian Reichel <sre@kernel.org>
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/opp/core.c | 54 +++++++++++++++++++++-------------------------
+ 1 file changed, 24 insertions(+), 30 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 68ddad4689fd3..5fbc25888f3ac 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9941,6 +9941,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
- 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
-+	SND_PCI_QUIRK(0x103c, 0x864f, "HP Laptop 15-dy0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index 0ba25aba48abf..8290554ff9477 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -1472,8 +1472,6 @@ static struct opp_table *_update_opp_table_clk(struct device *dev,
+ 					       struct opp_table *opp_table,
+ 					       bool getclk)
+ {
+-	int ret;
+-
+ 	/*
+ 	 * Return early if we don't need to get clk or we have already done it
+ 	 * earlier.
+@@ -1482,39 +1480,35 @@ static struct opp_table *_update_opp_table_clk(struct device *dev,
+ 	    opp_table->clks)
+ 		return opp_table;
+ 
+-	/* Find clk for the device */
+-	opp_table->clk = clk_get(dev, NULL);
++	/*
++	 * There are few platforms which don't want the OPP core to manage
++	 * device's clock settings. In such cases neither the platform
++	 * provides the clks explicitly to us, nor the DT contains a valid
++	 * clk entry. The OPP nodes in DT may still contain "opp-hz" property
++	 * though, which we need to parse and allow the platform to find an
++	 * OPP based on freq later on.
++	 *
++	 * This is a simple solution to take care of such corner cases, i.e.
++	 * make the clk_count 1, which lets us allocate space for frequency
++	 * in opp->rates and also parse the entries in DT. Use
++	 * clk_get_optional() instead of clk_get() so opp_table->clk stays
++	 * NULL for such devices, instead of holding an ERR_PTR(-ENOENT) that
++	 * consumers must remember to special-case.
++	 */
++	opp_table->clk = clk_get_optional(dev, NULL);
+ 
+-	ret = PTR_ERR_OR_ZERO(opp_table->clk);
+-	if (!ret) {
+-		opp_table->config_clks = _opp_config_clk_single;
+-		opp_table->clk_count = 1;
+-		return opp_table;
++	if (IS_ERR(opp_table->clk)) {
++		dev_pm_opp_put_opp_table(opp_table);
++		dev_err_probe(dev, PTR_ERR(opp_table->clk), "Couldn't find clock\n");
++		return ERR_CAST(opp_table->clk);
+ 	}
+ 
+-	if (ret == -ENOENT) {
+-		/*
+-		 * There are few platforms which don't want the OPP core to
+-		 * manage device's clock settings. In such cases neither the
+-		 * platform provides the clks explicitly to us, nor the DT
+-		 * contains a valid clk entry. The OPP nodes in DT may still
+-		 * contain "opp-hz" property though, which we need to parse and
+-		 * allow the platform to find an OPP based on freq later on.
+-		 *
+-		 * This is a simple solution to take care of such corner cases,
+-		 * i.e. make the clk_count 1, which lets us allocate space for
+-		 * frequency in opp->rates and also parse the entries in DT.
+-		 */
+-		opp_table->clk_count = 1;
+-
+-		dev_dbg(dev, "%s: Couldn't find clock: %d\n", __func__, ret);
+-		return opp_table;
+-	}
++	if (opp_table->clk)
++		opp_table->config_clks = _opp_config_clk_single;
+ 
+-	dev_pm_opp_put_opp_table(opp_table);
+-	dev_err_probe(dev, ret, "Couldn't find clock\n");
++	opp_table->clk_count = 1;
+ 
+-	return ERR_PTR(ret);
++	return opp_table;
+ }
+ 
+ /*
 -- 
 2.53.0
 
