@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022650;
-	b=tSh973cvqXSlD3b97udjAzjmgl389cDD+JmqKc8WqzAlQnEKTo+kojOpxlnVFFMFIU0o
-	 ApOXAdI8yuZXkT4/HT+PjtwEXJf145tw9aW1wrt+nDxEHnMAGxyKzKMfzGQr/K/QcJ7Ho
-	 ctKTOoa5gSuxzP0gnMV9mQFCLPST6oMmy1QTlw1m8wOo2mbYAq2xALUR2g1PjUSetlT53
-	 8oOHpGZA1W094iYxgrDGJKX/jloEiezqr2dw2hndCqpeYQdZ5RSwUJV+BncC2h0ciZ3sp
-	 0AuwVYUbPDQrSRGTG1gJVr/fOBYs7Xwzmh+Wa1Vm5vGrRf6T2hEwXU0PMc2tE+XhEQQ==
+	t=1795022652;
+	b=Jt8rQiIOF0Q6dN4oSESmOZvTV+3NwArALswqioaCc6Pv+OhviU4gzmtnpR0GMpAR40pm
+	 ALZ5YqbUHtvY+u4XW+Q+WH0ysI/8jYjhZUZ6yOv4UIiJLBT41vUkf9kuRAhBnoQAolgXR
+	 ZoIWCiGJn9cBTdHZ3tHIzNqai6ibuh7y501NE/xunQr5hTLirDYO3Vzl+HJsNJablqUJ/
+	 UQqUr0IZQ0vcUfYHqYIuICxknf+ffOHXg6ZF6aHjNGoYxaslGfnaun9qXahQPLOe5nui5
+	 qN2b59odZsjWGmhq139siASKEapKDPo+iENIopxE3xn2tvTzQSifBbXdSO7SvlB1EvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022650;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EmNvydQ875RMrauadephmuVyFuFB3m9UATS3k1dS9Mk=;
-	b=2og5ci+yymwtPabEnwZdLv9OBwv+wygvHRoNom7r9L1SKk4EWggz5caOAMp335zYJfC3
-	 8ual4M+MW/wEPzwfKaxE2RaQdoE6ap7Jg0R53UmwJYsG9IQheG3VMM9IZe/iJE9d5HWP4
-	 C5X35ccwxDCOogw44ffdska6RyFvwxETZPRJAJByfZTGC8Ns+zJ03BRpWhtTturC3agZI
-	 SH9alT0MGXEglmFDXMPzHQZk1VWRSpYsi/6eP48KzMntqfNXlqLiPpd2iy76JhDLqwgn2
-	 yaXkQvRQg1HzqTQbMv866z6aDmE1P2t6/17SgsKRUvEf4Ec9DilNeafs+IdmC2wnzZQ==
+	bh=ViJa3js2CgwMTLQgjhNIsgV8iu+29kX2et/CgtnSdb0=;
+	b=uPGMyvX0oSy5Hx6FaoKJ0HbwBwmwH6Ypvku6pRcy3Gb+tm3vP1gDPpO/jdISnUS6jIh3
+	 VsGFYwE+HWRxyORMpW6CFm3AYkK/QCV52/4D9ru7IcnAHv3JbPI8YGGue9dRpsqr/xam7
+	 1iur6US7tWrnSxmOlR11fxbkzdR8CIjjxAnrEmNJqf8YPe35U1GfGvuZs4vr5utP+PEMv
+	 nP+hSsmUEPTZOl6RCku7DVA7UADaDhzr4r9TtnsltfLkA6mAqT8dJpM46qx3z6+Z6/HZ1
+	 SEeXZeK9rdbXkeH1lpKU7Rjx0dzIiIrqb5jfF5Mrygr+PiEAfH807DyOC2CqIuhSveg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KKafuqYQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUsN61cJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2988B60A260A;
-	Wed, 18 Nov 2026 17:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE62606A31C;
+	Wed, 18 Nov 2026 17:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KKafuqYQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D36E1F000C9;
-	Wed, 18 Nov 2026 17:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUsN61cJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381CB1F000C5;
+	Wed, 18 Nov 2026 17:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022650;
-	bh=EmNvydQ875RMrauadephmuVyFuFB3m9UATS3k1dS9Mk=;
+	s=korg; t=1795022652;
+	bh=ViJa3js2CgwMTLQgjhNIsgV8iu+29kX2et/CgtnSdb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KKafuqYQkl3w2G/FMRYTrESQyzBgCkRZ9DPxLGPkicyULc/D064fRUlgO+GRxMlW5
-	 uT2/xZZWqiV+4zyDDRdaJsY6bi0Qw8qcW2Or56iqsGQ/9gkR4l5SF59hKwst67RhY6
-	 ujiHjYNAXM5Ixz3AjpqfIR3j7A60chILvovrkEpw=
+	b=KUsN61cJ6sZdfP9yIrNwSsLdbW79Ni8SoqnG+woqYPIHvadaO05PqmUZg3X5Pp6XV
+	 +2xQxlpLlntyRyC/8mnJjNT68PmSdFCKEWTo/lcIrgKa24ftt4GxLsreyHzWivFCuS
+	 Sk/+sCR4k9Kmvl28pOcp/vqesRjwqQVj52YwI60I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Tsvetinskiy <andrew.tsvetinskiy@gmail.com>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Harry Yoo (Meta)" <harry@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0051/2151] Bluetooth: btusb: drop BROKEN_EXT_SCAN quirk for 0bda:a728
-Date: Wed, 18 Nov 2026 15:29:46 +0100
-Message-ID: <20261118150123.593325419@linuxfoundation.org>
+Subject: [PATCH 6.18 0087/2151] mm/vma: dont leak the charge for stack growth
+Date: Wed, 18 Nov 2026 15:30:22 +0100
+Message-ID: <20261118150124.967070424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,77 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit df5e35f1663abc2702cf9f9e7eba024129ac5df1 ]
+[ Upstream commit b1ee87802111156e27557e82acc31fa7dfc76e2a ]
 
-Commit 5ead2063611a ("Bluetooth: btrtl: fix RTL8761B/BU broken LE
-extended scan") set HCI_QUIRK_BROKEN_EXT_SCAN on every RTL8761B, and
-commit ca0583c24661 ("Bluetooth: btusb: limit RTL8761B BROKEN_EXT_SCAN
-quirk to 0bda:a728") kept it on 0bda:a728 on the assumption that the
-USB id separates dongles with broken extended scan from those with a
-broken legacy scan path. It does not. An 0bda:a728 unit (RTL8761BUV,
-fw 0xdfc6d922) on 6.18.51 fails the same way the UB500 and 0bda:8771
-did: LE Set Scan Enable (0x200c) times out with -110 and btusb resets
-the device. With the flag removed from the table entry, scanning works
-on that unit.
+acct_stack_growth() charges stack expansion even without VM_ACCOUNT.
+This can happen for read-only or MAP_NORESERVE mappings created with
+MAP_GROWSDOWN. Unmapping these VMAs does not release the charge, leaking
+Committed_AS.
 
-Two dongles with the same USB id need opposite settings, so the device
-table cannot key the quirk either. The costs are not symmetric. Without
-the quirk, the unit it was written for gets -EBUSY on LE Set Extended
-Scan Enable (0x2042) while a connection is up. With it, 0x200c times
-out and btusb resets the device on three reported units, two of them in
-a re-enumeration loop.
+Only check and charge growth for VM_ACCOUNT VMAs, matching mremap().
+Unaccounted growth skips the overcommit check while remaining subject
+to the other stack-growth limits.
 
-Remove the flag and the table entry. 0bda:a728 matches the generic
-Realtek entry again and runs without the quirk, as before v7.2.
-
-Reported-by: Andy Tsvetinskiy <andrew.tsvetinskiy@gmail.com>
-Closes: https://lore.kernel.org/all/CAE4bxw+ofDFVx0aTHqCrzns9oP1CRQDm_wzeyHPeMBYOhSpcuA@mail.gmail.com/
-Fixes: 5ead2063611a ("Bluetooth: btrtl: fix RTL8761B/BU broken LE extended scan")
-Fixes: ca0583c24661 ("Bluetooth: btusb: limit RTL8761B BROKEN_EXT_SCAN quirk to 0bda:a728")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ sashal: Adapted the patch to the Bluetooth USB driver's original source filename. ]
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Harry Yoo (Meta) <harry@kernel.org>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-44-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Replaced vma_test() using VMA_ACCOUNT_BIT with the equivalent vma->vm_flags & VM_ACCOUNT check. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 8 --------
- 1 file changed, 8 deletions(-)
+ mm/vma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 5b8b71efffac9..1ee552949b95f 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -67,7 +67,6 @@ static struct usb_driver btusb_driver;
- #define BTUSB_INTEL_NO_WBS_SUPPORT	BIT(26)
- #define BTUSB_ACTIONS_SEMI		BIT(27)
- #define BTUSB_BARROT			BIT(28)
--#define BTUSB_BROKEN_EXT_SCAN		BIT(29)
+diff --git a/mm/vma.c b/mm/vma.c
+index e7914cd6d901d..d4146631eb3fe 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -3089,7 +3089,8 @@ static int acct_stack_growth(struct vm_area_struct *vma,
+ 	 * Overcommit..  This must be the final test, as it will
+ 	 * update security statistics.
+ 	 */
+-	if (security_vm_enough_memory_mm(mm, grow))
++	if ((vma->vm_flags & VM_ACCOUNT) &&
++	    security_vm_enough_memory_mm(mm, grow))
+ 		return -ENOMEM;
  
- static const struct usb_device_id btusb_table[] = {
- 	/*
-@@ -633,10 +632,6 @@ static const struct usb_device_id quirks_table[] = {
- 	{ USB_DEVICE(0x0489, 0xe130), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 
--	/* Realtek 8761BU Bluetooth devices */
--	{ USB_DEVICE(0x0bda, 0xa728), .driver_info = BTUSB_REALTEK |
--						     BTUSB_BROKEN_EXT_SCAN },
--
- 	/* Realtek Bluetooth devices */
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x0bda, 0xe0, 0x01, 0x01),
- 	  .driver_info = BTUSB_REALTEK },
-@@ -4349,9 +4344,6 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (id->driver_info & BTUSB_INVALID_LE_STATES)
- 		hci_set_quirk(hdev, HCI_QUIRK_BROKEN_LE_STATES);
- 
--	if (id->driver_info & BTUSB_BROKEN_EXT_SCAN)
--		hci_set_quirk(hdev, HCI_QUIRK_BROKEN_EXT_SCAN);
--
- 	if (id->driver_info & BTUSB_DIGIANSWER) {
- 		data->cmdreq_type = USB_TYPE_VENDOR;
- 		hci_set_quirk(hdev, HCI_QUIRK_RESET_ON_CLOSE);
+ 	return 0;
 -- 
 2.53.0
 
