@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054010;
-	b=cepfyFBih9aAk6x/iRo9SaxS04oF2kfusZ0AafvzAzH+XnzUaneJ0mt8nxcAHqRafet4
-	 HMiCHwRpwSGzOeDKYJQw4KLjJxln0qXW68+rYMI8oLbLnPRGmlHf48lSpooTIWKs9+dRq
-	 m1VYX2PGIEK8wIP5S5l0mIMkNXp5SAq2qQzyP1zZKKq541aIRopwouSxo9hr8y+6OKe1o
-	 DnsOKhX6KhFw/bAG99gV6pNH5mDI0HX2x9kX8lsBVgs6v4MFebhkVOOB7D9eZdOyxuzwF
-	 0im5PcBvMerJWjsxBrOLW2uSS/EDZLb64B1NDqMI6gYldJ1/+wHUiD+4yJ1RfuTYh6Q==
+	t=1795054013;
+	b=yIawon12zq6zhm1UrucwFbxVZCfPEuThUzeAYVVBKj5k4hbbv0W9VRzc7qBSHZ8dq2N0
+	 uuo7QpEmPvxOOJtFUqfWd8wmooXxo4yoaBsjbZEzruKMOQ8y181GZ5d7iCiA1Ha9DWe7v
+	 ZhisPu8Ngc5AqZIN+koZzvYoU8DPe6N5kOBXpV215WGzGmFE7XoV89Bz9vk+J4UPNLifu
+	 BR4LqdGVxjwQvSvKMaJ4xtqekEWuq/0CGeItCxsNEUAtaiEI7wevVAXpa65z8mHh+zQD7
+	 YAN6eTBXZryozKmh6bRNGkkm6KYcCJpd2xj5VHhkGJbSuJ/j5YVXMPHCu+IFqUbEhIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KxXDy8GbPl0X0mf4vfm3UaCqaYdkLNgCa85Lc3YVJZU=;
-	b=lbqmTQLSNFauZR4fSZrOOkoid4kZMwJyErEyAAYHy+720Xm9KZ4TV1/kJRsZ9qHMOAlS
-	 W3pRKsiDPerpKuINzulhV8Ft5GDvd33M4LVm66EXhy1ifGcGSF+Y/wFUF17UCK0dOshbZ
-	 sZ11xgb8GacDJzvicCZBhcOHYoSj7A8VURCLJWnj7rn5fsZNpKcsnt29YyBNHqArz7BGf
-	 quouQ4gH+VDax7eqtTrUKTn6JhnHrccwaCeqLyP8YyCKBel/PmfJbuvNr4k8ISaAsbC7j
-	 MKQoVMCXvXDr/bwlfUPqIi/ImNqn6YuDNJEDHjCzfsIuJ/yP7feTfT9ueI73uyNqNaw==
+	bh=WRMjwiMeoE4KEDO6vjiievSHxX/4XXxBj9k0FDDweB0=;
+	b=zPDScTZwhgWRn3q1qI7mbqv4GAnFAbkjDekZS6Pej5qxDTskDhYfzXoqrAs4Ch76dj1h
+	 H5X/6OOWxkAyfc9d7zhTYcAibZjRvFQPr/rk52qPD1IcRMafKQ6Rcx97cnC8akiqhA/7V
+	 t99nnym1lbiO8I3K2goqojXv6Tk66/tlN9MKdhxUfJIz1dnb6wSkCZRB9VlvVqPdejnRH
+	 5DjjpZRxdLS61lkXUtaaHYQIe10gqtXY3syDnmyBSstcgiRbicuGBgSiUL5HYoiKw/zny
+	 kABp60hGSBvOLPhFKnEJnBlJyNZ73qnCcPtNRikmmcOEBXp9et+lItPOphSjk7q8d6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xr4dfpPa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ieePCvLk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE72606A325;
-	Thu, 19 Nov 2026 02:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C2E606A33A;
+	Thu, 19 Nov 2026 02:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xr4dfpPa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E9A1F000C4;
-	Thu, 19 Nov 2026 02:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ieePCvLk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F76C1F000C8;
+	Thu, 19 Nov 2026 02:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054010;
-	bh=KxXDy8GbPl0X0mf4vfm3UaCqaYdkLNgCa85Lc3YVJZU=;
+	s=korg; t=1795054013;
+	bh=WRMjwiMeoE4KEDO6vjiievSHxX/4XXxBj9k0FDDweB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xr4dfpPapCXQ/a5FeraYhWjkTac5kI2+uRz+IgcMbmNdllyUZqajGbBNUhuSSYMRf
-	 FWHFMwb71JkdiGZLOHba362ELtqXs4mF82nFi4JiTCYtIAZtPPlns+Mx/cvY5C2W/A
-	 X8dkBx7TwXLaTJPtov7SAALX8HenEG6UAxo3oCQA=
+	b=ieePCvLk0BubJHBJmWvBWWBilVaWp3AzAZxrGDomir82DhkjWkaXHl0vqN7WJ/fqN
+	 V0KI+toB6nEDe10759gD0AFrqZ2xnVuNiccyiTryeiJWNpspsGkFq+xIUrlMzC927Q
+	 NYMrGvhLVMRlK4mYVqIXe4Gm4OY0y+YRMt6op+gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Robert Foss <robert.foss@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1124/2214] hwmon: (lm70) Fix rounding of negative temperatures
-Date: Wed, 18 Nov 2026 15:46:40 +0100
-Message-ID: <20261118150057.047990038@linuxfoundation.org>
+Subject: [PATCH 5.15 1125/2214] media: camss: vfe: Dont read hardware version needlessly
+Date: Wed, 18 Nov 2026 15:46:41 +0100
+Message-ID: <20261118150057.086231607@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,61 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Robert Foss <robert.foss@linaro.org>
 
-[ Upstream commit eddb0aaacce4baa9d8176eb2f4bd9e99e867f8fc ]
+[ Upstream commit 8cc80c606bd1db7febd43d900fc129520580beab ]
 
-temp1_input_show() drops the low bits of the temperature register by
-dividing the raw value (raw / 32 on the LM70). These bits are not part
-of the temperature: the LM70, LM71, LM74 and TMP122/TMP124 always
-return some of them as 1, and the TMP125 fills them with copies of the
-temperature LSB. Division rounds toward zero, so a negative temperature
-with any of these bits set is reported one LSB too high.
+vfe_set_power() is invoked a few times, which causes a lot of
+VFE HW version prints.
 
-For example, the TMP122 returns 0xffff for -0.0625 degrees C, which the
-driver reports as 0. The LM70 returns 0xf39f for -25 degrees C, which
-the driver reports as -24750.
+Secondly there is no real reason for calling hw_version_read() from
+this location specifically, since it does nothing more than print
+the VFE HW version.
 
-Use an arithmetic right shift instead, which drops the low bits and
-rounds down.
+A better location for the hw_version_read() call would be somewhere
+which is only executed once per VFE unit.
 
-Fixes: e1a8e913f97e ("[PATCH] lm70: New hardware monitoring driver")
-Fixes: a86e94dc946d ("hwmon: (lm70) Add support for LM71 and LM74")
-Fixes: cd929672a9ef ("hwmon: (lm70) Add ti,tmp125 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260924205326.1739229-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Omitted the TMP125 hunk because TMP125 support is absent. ]
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: e5d4b0e69a40 ("media: qcom: camss: vfe: Fix VFE reset while another line is streaming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm70.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/lm70.c b/drivers/hwmon/lm70.c
-index d2a60de5b8de9..0a9d7bdd0d3c1 100644
---- a/drivers/hwmon/lm70.c
-+++ b/drivers/hwmon/lm70.c
-@@ -90,17 +90,17 @@ static ssize_t temp1_input_show(struct device *dev,
- 	 */
- 	switch (p_lm70->chip) {
- 	case LM70_CHIP_LM70:
--		val = ((int)raw / 32) * 250;
-+		val = ((int)raw >> 5) * 250;
- 		break;
- 
- 	case LM70_CHIP_TMP121:
- 	case LM70_CHIP_TMP122:
- 	case LM70_CHIP_LM74:
--		val = ((int)raw / 8) * 625 / 10;
-+		val = ((int)raw >> 3) * 625 / 10;
- 		break;
- 
- 	case LM70_CHIP_LM71:
--		val = ((int)raw / 4) * 3125 / 100;
-+		val = ((int)raw >> 2) * 3125 / 100;
- 		break;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 8beea27004ca3..72a26dea84212 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -714,8 +714,6 @@ static int vfe_set_power(struct v4l2_subdev *sd, int on)
+ 		ret = vfe_get(vfe);
+ 		if (ret < 0)
+ 			return ret;
+-
+-		vfe->ops->hw_version_read(vfe, vfe->camss->dev);
+ 	} else {
+ 		vfe_put(vfe);
  	}
+@@ -1302,6 +1300,7 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 		return -EINVAL;
+ 	}
+ 	vfe->ops->subdev_init(dev, vfe);
++	vfe->ops->hw_version_read(vfe, dev);
+ 
+ 	/* Memory */
  
 -- 
 2.53.0
