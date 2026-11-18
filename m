@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016356;
-	b=p/YPmWIAS8mcqtn9rHZoKnZ1q1fCbmR67SJs80KcgayXdS1/RvtQFEf1BmxtQdZrwc1Q
-	 dVdQCYoh8dsD0y9nXLR6ZvmzrL2gbMsK4bSEO58YE+FQcJGEjm/wFzIPAwgxiDfPgpPoH
-	 yptcOLXFxi8JX6EZeQtNk4HftTXiCqIZKVhoCWU7OAGZ+r0El65g7wOcMUX2y5HF53Vug
-	 Hxgr2GQRvJ5aeY9UC9ekOQPyNuCcGk89iQ3l184qZ9TEqsNDxqcMUFFjN26GqimF3+G9D
-	 erkRTqm8m4sUWF43Qvu8MVJKfYLV2GH/kZ35upRxMAXKbJnJunbcBZOghIJHPSJ0B5Q==
+	t=1795016359;
+	b=mck6zrGZ07Dej2ea/8WJdT0ILQzrrKPwBEIlE3boEOiyQ69BLjlT9zAttdtlyDm13x7Y
+	 4iLMMf0ucwJf4PnGEoLAzpBhTZUrtaPc0l3Nq3G8/KV8S01BCrG3s3TdaRaWTi+g9CaLi
+	 fxNbuxJlyJsCD3U8J1IBpqUTvFC07izn5wPEImUwg1NwgvwsPISKVbJ40KktDoZKcjpPN
+	 DQNejkdxOiY/FE8SfJP25l+JRYsS6rFnygh99rq+z0eAAenduAztCRZDYQE7VsquEk1oD
+	 eQE3e0qM1qzozysYSQ78tUXkcZmUQI6h0Qa+NdjGjiwOj+tViKY76zNaMDInvxNnz+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M2eabZMAzhMdiryLpIY1TIl93LsEG0dN9mbgkQD6mHM=;
-	b=q1CQzyZaRtA2aRcSqoQP8fQ+Fx22rXjf3FCMsFQL/nkVEgk5imnOjdBZWTsqLtp3mEdt
-	 Rzk7gUdtQcqiyp7DTsStCRuowpMWGsS13AxV5hXjGXpV/gZcobg6/8KBFt4G8Zi3FeuED
-	 IGtQyxoHngerp5KZtfUwmM8l7EtCk74oOZ49QJFcDS3XXikz4sqEFpzpjL8ZhjIy/BURG
-	 RF7mYYoTuqIUSFRVaC0asLJvMdv4qlTg3M4+rVhfkZvhh/9nzFUkaLkzVRWB4g2KBWgUr
-	 n/HVSqcPGH8SY+o6DaXSNbJqa3X3izrV1yw4XnAfq2a0ETzwA+sSH1tAvVjO9kc1ADg==
+	bh=XZ2uC2tYpGpZgOJ5cFfB+M3vEJcl7YWoORaxStC4a94=;
+	b=ih+AN+KDUMn3EOLHkIBLSHH8Vm8M5/G5pWIueJFxWMadgmpKFPNJ3z0w5FAFkaDSqMox
+	 ujTE3UplF/rvMMLbwsF8EUng/xCbE/1EDObEFMyyAQ58ejhQPToU4A189kWrRfz9ZYO3i
+	 v9epTSAcCkOTw29SUGCLzTvZ3lX4UWwC/rldJnF8S14258CCHUSpWrwWuryslsWwkVgya
+	 DVpS47QjAEj18MMiwox3jMNLe3NP3cyNJi1fO0QLBepl3LqSlmW82YvNXXI3Bvc3r31t4
+	 gulsfG2b4W8vhCJy7R0Sy+1YweaXTl2MvB8c9+fzsAN/hthId/idTTqL6Ks9decCOpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4w2khOu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n1m+yeBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC97F606A333;
-	Wed, 18 Nov 2026 15:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8FB60A260A;
+	Wed, 18 Nov 2026 15:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4w2khOu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FB81F000C4;
-	Wed, 18 Nov 2026 15:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n1m+yeBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEC71F000C5;
+	Wed, 18 Nov 2026 15:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016356;
-	bh=M2eabZMAzhMdiryLpIY1TIl93LsEG0dN9mbgkQD6mHM=;
+	s=korg; t=1795016359;
+	bh=XZ2uC2tYpGpZgOJ5cFfB+M3vEJcl7YWoORaxStC4a94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4w2khOudbZ4x5ya3mo5GU4pgfunxKAZzKAU1QqZcFc7rBxWnyhCWM4BYMj5LPkez
-	 rChtStcFrys8Cf12f+R8RElt5w3myuy+bQ38exgcZ5kCz9p/0lnXspbOTB14uhnPvv
-	 HtMZx4983wm/AtZQemAhHFhsl0RYJjXjAWG1iUIg=
+	b=n1m+yeBD142RHg/DCXJnwHQmJvACHlXLPg6fRWx+igrO53qOXCS/ReKPJv2wGTpCd
+	 f4XZpc4k0H4L3/kNpK6dssiF3cwNbZ6cuDLLqSpfJTsudo6nO76gE+2klLYdehYSpN
+	 B58c0GJHLgZBK3pNP1uGqz/uuufpbQaOXD9/M/98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Richard Cheng <icheng@nvidia.com>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Li Ming <ming.li@zohomail.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0499/2651] cxl/hdm: Reject switch decoder interleave ways that overflow targets
-Date: Wed, 18 Nov 2026 15:28:59 +0100
-Message-ID: <20261118150305.732444267@linuxfoundation.org>
+Subject: [PATCH 7.3 0500/2651] cxl/hdm: Make switch decoder target parsing endian-safe
+Date: Wed, 18 Nov 2026 15:29:00 +0100
+Message-ID: <20261118150305.767210379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,114 +71,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 3696326ca14cf018788d64232a068fdf26b1ff31 ]
+[ Upstream commit 3f846646b3d3b5699139e686e1107d231a725860 ]
 
-Switch decoder enumeration validates that the interleave ways encoding
-is legal, but not that the resulting number of ways fits the available
-targets. This can overrun the target array (target_list.target_id[])
-during enumeration of 12 or 16 way interleaves.
+Switch decoder target IDs are stored one per byte, starting with
+target 0 in the least significant byte. The current code accesses
+those bytes in memory order, which only matches register order on
+little-endian hosts.
 
-Bound the target count where it is established rather than at each use.
-Reject an HDM capability whose reported target count is zero or exceeds
-the target list register capacity, and reject a zero target switch
-decoder allocation in cxl_switch_decoder_init(). Enumeration is then
-left with a single check: reject a decoder whose interleave ways exceed
-the targets it has.
+On big-endian hosts, the target IDs are reversed and the decoder is
+associated with the wrong downstream ports.
 
-Add a clarifying comment that target_count is a direct count, not
-0-based like decoder_count.
+Place the register values in a byte array in little-endian order and
+index the target IDs from there, so the target mapping is independent
+of host endianness.
 
-Link: https://sashiko.dev/#/patchset/20260711180755.1779002-1-alison.schofield@intel.com?part=1
 Fixes: d17d0540a0db ("cxl/core/hdm: Add CXL standard decoder enumeration to the core")
-Tested-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
 Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Li Ming <ming.li@zohomail.com>
-Link: https://patch.msgid.link/af094094813d7f51d86cbf608936270b7d85526e.1786143520.git.alison.schofield@intel.com
+Link: https://patch.msgid.link/b0526825b3c3ffdb78837563e178d9aa27b6bbb8.1786143520.git.alison.schofield@intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c  | 24 ++++++++++++++++++++++++
- drivers/cxl/core/port.c |  2 +-
- drivers/cxl/cxl.h       |  2 ++
- 3 files changed, 27 insertions(+), 1 deletion(-)
+ drivers/cxl/core/hdm.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 0c80b76a5f9b4..c394b3d54d362 100644
+index c394b3d54d362..fc22d515b6389 100644
 --- a/drivers/cxl/core/hdm.c
 +++ b/drivers/cxl/core/hdm.c
-@@ -76,6 +76,8 @@ static void parse_hdm_decoder_caps(struct cxl_hdm *cxlhdm)
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
+ #include <linux/seq_file.h>
++#include <linux/unaligned.h>
+ #include <linux/device.h>
+ #include <linux/delay.h>
  
- 	hdm_cap = readl(cxlhdm->regs.hdm_decoder + CXL_HDM_DECODER_CAP_OFFSET);
- 	cxlhdm->decoder_count = cxl_hdm_decoder_count(hdm_cap);
-+
-+	/* target_count is a direct count (1h..8h), not 0-based like decoder_count */
- 	cxlhdm->target_count =
- 		FIELD_GET(CXL_HDM_DECODER_TARGET_COUNT_MASK, hdm_cap);
- 	if (FIELD_GET(CXL_HDM_DECODER_INTERLEAVE_11_8, hdm_cap))
-@@ -1084,6 +1086,16 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
- 		cxld->interleave_ways, cxld->interleave_granularity);
- 
- 	if (!cxled) {
-+		struct cxl_switch_decoder *cxlsd = to_cxl_switch_decoder(&cxld->dev);
-+
-+		if (cxld->interleave_ways > cxlsd->nr_targets) {
-+			dev_err(&port->dev,
-+				"decoder%d.%d: interleave ways: %d exceeds targets: %d\n",
-+				port->id, cxld->id, cxld->interleave_ways,
-+				cxlsd->nr_targets);
-+			return -ENXIO;
-+		}
-+
- 		lo = readl(hdm + CXL_HDM_DECODER0_TL_LOW(which));
- 		hi = readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which));
- 		target_list.value = (hi << 32) + lo;
-@@ -1161,6 +1173,18 @@ static int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
- 	int i;
- 	u64 dpa_base = 0;
- 
-+	/*
-+	 * Per CXL 4.0 8.2.4.20.1 Target Count is the number of target ports
-+	 * per decoder, max 8. Endpoint decoders have no targets.
-+	 */
-+	if (!is_cxl_endpoint(port) &&
-+	    (cxlhdm->target_count < 1 ||
-+	     cxlhdm->target_count > CXL_HDM_DECODER0_TL_TARGETS)) {
-+		dev_err(&port->dev, "Invalid decoder target count: %u\n",
-+			cxlhdm->target_count);
-+		return -ENXIO;
-+	}
-+
- 	cxl_settle_decoders(cxlhdm);
- 
- 	for (i = 0; i < cxlhdm->decoder_count; i++) {
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index cd9e58d8144f1..25ef2c3e9f5d4 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -2016,7 +2016,7 @@ static int cxl_switch_decoder_init(struct cxl_port *port,
- 				   struct cxl_switch_decoder *cxlsd,
- 				   int nr_targets)
+@@ -975,15 +976,12 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
+ 			    u64 *dpa_base, struct cxl_endpoint_dvsec_info *info)
  {
--	if (nr_targets > CXL_DECODER_MAX_INTERLEAVE)
-+	if (nr_targets < 1 || nr_targets > CXL_DECODER_MAX_INTERLEAVE)
- 		return -EINVAL;
+ 	struct cxl_endpoint_decoder *cxled = NULL;
++	u8 target_id[CXL_HDM_DECODER0_TL_TARGETS];
+ 	u64 size, base, skip, dpa_size, lo, hi;
+ 	bool committed;
+ 	u32 remainder;
+ 	int i, rc;
+ 	u32 ctrl;
+-	union {
+-		u64 value;
+-		unsigned char target_id[8];
+-	} target_list;
  
- 	cxlsd->nr_targets = nr_targets;
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index cab8ce39f4653..b6853bc8fd818 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -67,6 +67,8 @@ extern const struct nvdimm_security_ops *cxl_security_ops;
- #define   CXL_HDM_DECODER0_CTRL_HOSTONLY BIT(12)
- #define CXL_HDM_DECODER0_TL_LOW(i) (0x20 * (i) + 0x24)
- #define CXL_HDM_DECODER0_TL_HIGH(i) (0x20 * (i) + 0x28)
-+/* Target list capacity, i.e. max interleave ways for a non-endpoint decoder */
-+#define CXL_HDM_DECODER0_TL_TARGETS 8
- #define CXL_HDM_DECODER0_SKIP_LOW(i) CXL_HDM_DECODER0_TL_LOW(i)
- #define CXL_HDM_DECODER0_SKIP_HIGH(i) CXL_HDM_DECODER0_TL_HIGH(i)
+ 	if (should_emulate_decoders(info))
+ 		return cxl_setup_hdm_decoder_from_dvsec(port, cxld, dpa_base,
+@@ -1096,11 +1094,12 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
+ 			return -ENXIO;
+ 		}
  
+-		lo = readl(hdm + CXL_HDM_DECODER0_TL_LOW(which));
+-		hi = readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which));
+-		target_list.value = (hi << 32) + lo;
++		put_unaligned_le32(readl(hdm + CXL_HDM_DECODER0_TL_LOW(which)),
++				   &target_id[0]);
++		put_unaligned_le32(readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which)),
++				   &target_id[4]);
+ 		for (i = 0; i < cxld->interleave_ways; i++)
+-			cxld->target_map[i] = target_list.target_id[i];
++			cxld->target_map[i] = target_id[i];
+ 
+ 		return 0;
+ 	}
 -- 
 2.53.0
 
