@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044370;
-	b=uZfb/fumdNUXDrTA5h3g01Ky5IpzqAWwpKWbKSrWKtI7yYxl1bOTVa8OFt7yFFyICXvp
-	 SWkUlQtH4zLnxKcTT76KxCBjrphCrBasRO+cQ3Zm6tTcP86x+lOj6LUs2EBd1RXQvH7ta
-	 qyTXjtTOArsXGBxTiiOQ76P+O5YI2MFNFhE4Gb7ny0TkEwEXNbvj4SrqpD7QBqUnriY1j
-	 KIO1/R2Jb7NQtUIROgBLJWYuCk5YBrf5w/evt5L18DUXBaaI0psQOI3WQ1IYeMFBaJTDj
-	 2zETQWrohV6mA+ZG1sv4mvjJ7L/wuzjOiH+f5eIHooTFrhvEEXcCMAgMCCMVvXJARMQ==
+	t=1795044373;
+	b=ea538Ypncwt450VUA+5rl/4QCbrb5k/LKthSCpy0kCtxqPCQJQNpKiDxQWh3sC1SWSDp
+	 JawqOB4PxcSfrRaINRB8PekJAHJv9HYw1s9ld6zPv+yltWRzd8ViJW9uYMbd6heRuA5C1
+	 uPol2OodONn7wDoDZ8QYFuMdt3t0V1BJ7EtpU/ygotKI0Wxa8957ItCVlRlqkHu7k47ZU
+	 qptEqIA0+UPmKMa19gkV80FhWAT1uHNoKfYTj5n3FzH3u0JLEnr8NhqjLKVJpkSFn638Y
+	 LdXHvaFa22DDsAcC4BHpYQeFBaLhZX5lNxd7ltBDnHBnCRuIA92HopJgSZQ88I4KB+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FOigbaOW9nT8iD8pupsznI4I5n886oEoqqED3d/9iu4=;
-	b=ijN18O1vp7JIWmN3eYMzWiw0Qbf4hNehKRPwllEG+oifyEMBG6ohe2QqkmZaxL33wT3z
-	 Ya9XJzWlVUWclXW4gMdd/p+sns+e+uq+HsG0fQbKO/xdP8D36ltUH8wi5vZS+YROiI+vL
-	 U5i/9dieAwFBFrxnhsRMbkbVWzdECxBOrU8znR7T2QWwyXLoc16+YPpWm4RBEJHFNDPLP
-	 KOvyw1GzS5E3T6P9oRikqEenBG9aw2siEo1BdYPnCOLB6FMX1BRc5O8Z8KvXlfuLgb/7Y
-	 83DPsFe1EKCwmuTx/cd5dF83MxlgWVPwj31D0/ImWLknaXdwZJ150pOfQpYwHJylsag==
+	bh=PSDoRWBlwVG2BfyZV35Yj6l8NCsmQ6xBdXUj2cHVaWU=;
+	b=ujJ/L4Ebx5XZThY0HTv+g6eB4jx1csC7mIPWoSaw/1Z5JuKCCopb3fCvPcXKCtYJHUuU
+	 3qmtmi1NeKtUN1M0djxwxUhcTn/aTrWMoNpLLQFct/in/9fR/OHg52CEs5eEBcY4v9JpY
+	 ZXf3Le8MMsbXxjgFwUyaPUD+Ti7m74emIM0iOhZfvOJVPvxT0bMRATV/tXaNFlnuwgC+k
+	 GHNs4qJUsFVGAO4dlEZ4ITabZqdTMmvQOhsEpxM2UrFXgiJvwLT45EO9rSdR8mPL/M/Nl
+	 JeFLRGcK5v1vS/o6/zmF632gcoxYSQn0MR/zUJqVSs6mitj5dZQqtVyl53nRRKxmu2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TScT7Oen;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxxrWcbc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894EB606A31C;
-	Wed, 18 Nov 2026 23:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AC9606A325;
+	Wed, 18 Nov 2026 23:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TScT7Oen
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DEC1F000C4;
-	Wed, 18 Nov 2026 23:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxxrWcbc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671571F000C4;
+	Wed, 18 Nov 2026 23:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044370;
-	bh=FOigbaOW9nT8iD8pupsznI4I5n886oEoqqED3d/9iu4=;
+	s=korg; t=1795044372;
+	bh=PSDoRWBlwVG2BfyZV35Yj6l8NCsmQ6xBdXUj2cHVaWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TScT7OentyR2uGyZx06daZazz4IauS9+twCMc8PNs0bg53MPB/qxVc3n491KI884i
-	 L32w1ZQggj1hCtCL5nYLaKkj54S40nqrHUj+8pgtXp0Wr3F3/gmlIr1LhdZC8lNoo7
-	 4oAmVYj+QCfiO57K6KdvQQzfxkzrsHSLb+BzPuJI=
+	b=nxxrWcbcqRe0f4KMxwFO/icXxp2dDW41jj9Bou1dmgJHoRgv9FE7KpqqHD+WtXt/U
+	 tdEIaX4jKtJ3zdyf8PlxiFa+XWRn6ur9D344zXSovvpJz0vAUpsObSQtoP5NsJNIeQ
+	 2P+/yd6eTHpfDiJnyjCSdORBV3FqCy1eQVhsoHQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.1 0543/2857] s390/signal: Fix incorrect return address in signal frame
-Date: Wed, 18 Nov 2026 15:26:17 +0100
-Message-ID: <20261118150221.037548965@linuxfoundation.org>
+Subject: [PATCH 6.1 0544/2857] s390/zcrypt: Fix out-of-bounds ptr advance in cca_query_crypto_facility()
+Date: Wed, 18 Nov 2026 15:26:18 +0100
+Message-ID: <20261118150221.073843492@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -66,77 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit adc9e872f7350e3ac29c1818d8c68b0760b4ba23 upstream.
+commit 9fd7fca66735307fd7afa3450882a55ef80f2add upstream.
 
-exit_to_user_mode_loop() can call arch_do_signal_or_restart() multiple
-times when signals are pending.
+The FQ reply parser code blindly advanced the walk pointer by a length
+value read directly from the hardware reply payload without checking
+that the advance stayed within the allocated reply buffer. A corrupt
+or malicious device response could push ptr beyond the cprbmem region,
+causing an out-of-bounds dereference or kernel memory exposure via the
+subsequent memcpy().
 
-If the first call set up a vDSO system call restart by saving the real
-user return address and adjusting psw.addr so it points to the vDSO stub,
-a second call builds the signal frame with the wrong return address.
+Fix this by tracking the remaining reply buffer space in a variable
+and validating each device-supplied length field against it before
+advancing or dereferencing the pointer.
 
-Restore psw.addr from arch_data, and set the return code to -EINTR before
-building the signal frame.
-
-This requires restart_block.arch_data to be properly initialized for all
-tasks. Move the initialization in copy_thread() in front of the kernel
-thread check, so that it also covers kernel threads and their children
-(PID 1, usermode helpers). Only PID 0 is left uninitialized, since it
-never returns to user space.
-
-Fixes: df29a7440c4b ("s390/signal: switch to using vdso for sigreturn and syscall restart")
+Fixes: 2004b57cde6b ("s390/zcrypt: code cleanup")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/process.c |   12 ++++++------
- arch/s390/kernel/signal.c  |    6 +++++-
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/s390/crypto/zcrypt_ccamisc.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kernel/process.c
-+++ b/arch/s390/kernel/process.c
-@@ -134,6 +134,12 @@ int copy_thread(struct task_struct *p, c
- 	p->thread.hardirq_timer = 0;
- 	p->thread.softirq_timer = 0;
- 	p->thread.last_break = 1;
-+	/*
-+	 * s390 stores the svc return address in arch_data when calling
-+	 * sigreturn()/restart_syscall() via vdso. 1 means no valid address
-+	 * stored.
-+	 */
-+	p->restart_block.arch_data = 1;
+--- a/drivers/s390/crypto/zcrypt_ccamisc.c
++++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+@@ -1583,6 +1583,7 @@ int cca_query_crypto_facility(u16 cardnr
+ 		u8  subfunc_code[2];
+ 		u8  lvdata[0];
+ 	} __packed * prepparm;
++	size_t datalen;
  
- 	frame->sf.back_chain = 0;
- 	frame->sf.gprs[5] = (unsigned long)frame + sizeof(struct stack_frame);
-@@ -177,12 +183,6 @@ int copy_thread(struct task_struct *p, c
- 			p->thread.acrs[1] = (unsigned int)tls;
+ 	/* get already prepared memory for 2 cprbs with param block each */
+ 	rc = alloc_and_prep_cprbmem(parmbsize, &mem, &preqcblk, &prepcblk);
+@@ -1628,27 +1629,44 @@ int cca_query_crypto_facility(u16 cardnr
+ 	prepcblk->rpl_parmb = (u8 __user *)ptr;
+ 	prepparm = (struct fqrepparm *)ptr;
+ 	ptr = prepparm->lvdata;
++	datalen = parmbsize - 2 * sizeof(u8);
+ 
+ 	/* check and possibly copy reply rule array */
+ 	len = *((u16 *)ptr);
++	if (len > datalen) {
++		ZCRYPT_DBF_ERR("%s reply rule array len %u exceeds datalen %zu\n",
++			       __func__, len, datalen);
++		rc = -EIO;
++		goto out;
++	}
++	datalen -= sizeof(u16);
++	ptr += sizeof(u16);
+ 	if (len > sizeof(u16)) {
+-		ptr += sizeof(u16);
+ 		len -= sizeof(u16);
+ 		if (rarray && rarraylen && *rarraylen > 0) {
+ 			*rarraylen = (len > *rarraylen ? *rarraylen : len);
+ 			memcpy(rarray, ptr, *rarraylen);
  		}
++		datalen -= len;
+ 		ptr += len;
  	}
--	/*
--	 * s390 stores the svc return address in arch_data when calling
--	 * sigreturn()/restart_syscall() via vdso. 1 means no valid address
--	 * stored.
--	 */
--	p->restart_block.arch_data = 1;
- 	return 0;
- }
- 
---- a/arch/s390/kernel/signal.c
-+++ b/arch/s390/kernel/signal.c
-@@ -491,7 +491,11 @@ void arch_do_signal_or_restart(struct pt
+ 	/* check and possible copy reply var array */
+ 	len = *((u16 *)ptr);
++	if (len > datalen) {
++		ZCRYPT_DBF_ERR("%s reply var array len %u exceeds datalen %zu\n",
++			       __func__, len, datalen);
++		rc = -EIO;
++		goto out;
++	}
++	datalen -= sizeof(u16);
++	ptr += sizeof(u16);
+ 	if (len > sizeof(u16)) {
+-		ptr += sizeof(u16);
+ 		len -= sizeof(u16);
+ 		if (varray && varraylen && *varraylen > 0) {
+ 			*varraylen = (len > *varraylen ? *varraylen : len);
+ 			memcpy(varray, ptr, *varraylen);
  		}
- 		/* No longer in a system call */
- 		clear_pt_regs_flag(regs, PIF_SYSCALL);
--
-+		if (!(current->restart_block.arch_data & 1)) {
-+			regs->psw.addr = current->restart_block.arch_data;
-+			current->restart_block.arch_data = 1;
-+			regs->gprs[2] = -EINTR;
-+		}
- 		rseq_signal_deliver(&ksig, regs);
- 		if (is_compat_task())
- 			handle_signal32(&ksig, oldset, regs);
++		datalen -= len;
+ 		ptr += len;
+ 	}
+ 
 
 
