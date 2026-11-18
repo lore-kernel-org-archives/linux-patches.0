@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061021;
-	b=TaVYSFDahYKNOLAJflg1Je5rWq9uwDorx9XWGv82AGtR5xg8nmfO6M9Re/ttwp8NBBhi
-	 u+FPSHDnpzrCMhgwTU/KevdKsDyC4RUoNdBM0NQoLB7QOc5VPn+PEpCWsS7sxS7s0cfsX
-	 9MGdAVMg62sSt2AkJIuGiXblToRSCMBCd71MX9ArYxLDb+YU+Ce2c15MqdsPo6Cv2F9vX
-	 x3zGZ0C2EVNSWGPrR+jmJ36j1tPlrBu8u53e2kAoXYe/5EjGdywI9JHCQ10rS6OyuJHEM
-	 ow5nDiGPLJ8N/59pWMIjDO5LuRU6sQTVo/HjrMJdmYaLdBT5XkBrClRxGL8pOa6rUGg==
+	t=1795061024;
+	b=d0iH5PxtEE5vMGd/1T02q4E07ExYKw0D/7rwFeZJFdOPyk2UXgKKeFdpaCMW7mY5NFQK
+	 fwTaOwfTstjjY2zw2y8YQ4awQwvqz1SqFI6HyivSI9/xLiNZZI4zdASHRb715PF2EU4oa
+	 POTfor1GGLvhqC+MOJEhDUy4MaMT7EN8j0u54pjbaKK0+0ljVS31RyEe7MdTKvIQ1V7l5
+	 AI8TLNBVaJMnij21h8Z5VsZ53enu/6bb492whT48AA92cqJMhmmWYXa6t9iqreXC8X7gi
+	 /fc1kCCruWtpsNKD5OIRb9hFln6XtL8eC8mWIIGR4UWSTzH3G1V+nRt3S90v3pMIX1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bCyjNl9jbkDQJKuIV26WHi20MKbUEAvq1IXs3YLk99k=;
-	b=xAU8iGCPpa26Nnj91ZNrg9rKVGLT0Pa8JKSc5ayYBAymwrQIHV06fwDNiSl77DWkxPXV
-	 S7By2XCykxegsMfUhX2geXjH2w1t7XYIowUfCvBtNrJeBXLuiraIfjtpYjQW8Rxxg2AdD
-	 2UeKFynNuaD4y17L6tIxw0mHn24HeaxIDj55VZzubaDTwuL6dyhenthQSck6blptU6igy
-	 zksp6kz4BFksKmO81HpRx2l4NlFvdHQoTQxxdkUn5K1StN3uu1ZkmBA7EvJI8b6mbdbiq
-	 7+UY13NBXdOkCuq0k15B2VedwvYJVXpPM6P3DPmDblFnKpKU05+2n/2nVvSKLCOdWpw==
+	bh=IS6+QCaJLCwcWqI9B2HX55UDvyRv7yivkAg2thcQPl8=;
+	b=2IaWRf+5VjgTiECSBy5bK8IJ/WDCNij33djqlkTLkHj/X1Rs6Co3xLa9VEsE4rmjYRb1
+	 VKUQURG2+wssLUVYn8EZ023ATEb82h79IXqGEX1UxtKKaap0eOXZCR3uIleWujpbD1j/y
+	 PaDbbNEO1XH9pzqAb4Dt9k+pl4rb07g/pZXYOTjEppkfItX6ujrilZ2UCQbWFyC2EO92Y
+	 cOX0LTJJ50KQwflkds3CeUxxA0C1yW1+xP9R3ZclKqU8QLsrBoOs6gT+X5cv1XLM2+z3N
+	 fXMmtiNqTT1sVkCtmlKR2Snjqw/+Qi/X/SMh7n8yW0lHSbdO39vKHDLAw7yaBYRlO1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDmHf88s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkcbIgT5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676B1606A320;
-	Thu, 19 Nov 2026 04:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBC3606A320;
+	Thu, 19 Nov 2026 04:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDmHf88s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B6E1F000C5;
-	Thu, 19 Nov 2026 04:03:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkcbIgT5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F98B1F000C4;
+	Thu, 19 Nov 2026 04:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061021;
-	bh=bCyjNl9jbkDQJKuIV26WHi20MKbUEAvq1IXs3YLk99k=;
+	s=korg; t=1795061023;
+	bh=IS6+QCaJLCwcWqI9B2HX55UDvyRv7yivkAg2thcQPl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDmHf88sdPKwXfvBBRzrFFCrWgdpqrd295DhwaY6kSV6v/TFtTXzu8tBktgZsTXs1
-	 5cK7hwDAGMMdk4pNeI92DW4O2x8DOx6nnI+jBQc//ZWl1XIfCNT945N/8qXYBllQlN
-	 IhH2+6tQ3drgIyjVR8huhddIX4a+mBdeaigm94sA=
+	b=lkcbIgT5p1gonHcIIDxedE3Yp2WJUk3rCtqOKGBAQ9LFFqnZOhNITr2V69xeKXnU3
+	 lJhkUUlwP8X8lZfdWOac/1+EkvhFjlqCFRpP4Ynn1TFeyemWEsY84N0469MLwtLQxL
+	 yyEQ8d/hVhTHUWl83+kBlxAbqdwYHfZ+U2wMGMfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yili Zhang <zhangyili01@baidu.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Quanye Yang <quanyeyang@proton.me>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1404/1848] RDMA/nldev: Fix NULL deref in dumps of objects abandoned by DRIVER_FAILURE
-Date: Wed, 18 Nov 2026 15:57:22 +0100
-Message-ID: <20261118150018.295359970@linuxfoundation.org>
+Subject: [PATCH 5.10 1405/1848] RDMA/rtrs-clt: Reject invalid queue_depth from the peer
+Date: Wed, 18 Nov 2026 15:57:23 +0100
+Message-ID: <20261118150018.330268832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,103 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yili Zhang <zhangyili01@baidu.com>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 9f4c322be27bf617cad2f4a15f6c6024a69e220c ]
+[ Upstream commit 724cd362162ca7ca5a250bec65efd74f7dad9f5c ]
 
-fill_res_cq_entry() dereferences cq->uobject->uevent.uobject.context->res.id
-unconditionally for user resources.
+queue_depth is taken from the server's CM private_data and later
+used as a session invariant.  A peer can send 0, which the client
+stores and then trips WARN_ON() in create_con_cq_qp() when the
+next connection is set up.
 
-This is normally safe by ordering: destroy_hw() removes the resource
-from the restrack before uverbs_destroy_uobject() clears ->context,
-and the XA_ZERO_ENTRY marker set by rdma_restrack_begin_del() hides
-the entry from concurrent netlink dumps.
+Reject a zero queue_depth on ESTABLISHED, same as a bad
+magic or version, and fail the handshake with -ECONNRESET.
 
-The ordering breaks when a driver keeps failing to destroy an object
-during ucontext teardown. uverbs_destroy_ufile_hw() then falls back to
-__uverbs_cleanup_ufile(RDMA_REMOVE_DRIVER_FAILURE), which
-abandons the object in place: the HW object and its restrack entry
-are intentionally leaked, while the uobject bookkeeping is torn down
-and ->context is explicitly set to NULL by uverbs_destroy_uobject().
-rdma_restrack_del() is never reached, so the orphaned entry stays in
-the device restrack with a valid kref, reachable by any subsequent
-netlink dump.
-
-Observed on 6.1.52 with MLNX_OFED 24.10, after an mlx5 FW failure
-left a process unable to tear down its CQ (destroy_cq FW command
-failing during FD close):
-
-  WARNING: ... uverbs_destroy_ufile_hw+0xe3/0x100
-  BUG: kernel NULL pointer dereference, address: 0000000000000058
-  RIP: 0010:fill_res_cq_entry+0x15e/0x180 [ib_core]
-   res_get_common_dumpit+0x304/0x530 [ib_core]
-   nldev_res_get_cq_dumpit+0x1a/0x20 [ib_core]
-
-The faulting chain maps to the source (CR2 = 0x58):
-  cq->uobject            (struct ib_cq +0x08, res at +0x98)
-  uobject->context       (struct ib_uobject +0x10, NULL after abandon)
-  context->res.id        (struct ib_ucontext +0x58)
-
-The recent restrack rework (8d186210677c and its series) moved the
-restrack deletion to the start of the destroy flow and thus fences
-concurrent dumps from an object being destroyed, but it does not
-cover this case: when destroy fails, rdma_restrack_abort_del()
-restores the entry, and the RDMA_REMOVE_DRIVER_FAILURE sweep still
-never removes it from the restrack.
-
->From the fallback until the device is unregistered, any "rdma res
-show cq" deterministically takes the NULL pointer dereference; this
-is a long-lived state, NOT A RACE. The dump path holds neither the
-restrack lock (dropped before the fill callback runs) nor
-ufile->hw_destroy_rwsem, and rdma_restrack_get() only guarantees
-that the res memory stays alive, not that ->context is still valid.
-
-Fix the dump side: check the uobject context directly instead of the
-rdma_is_kernel_res() marker. A non-NULL uobject already implies a
-user resource, so kernel resources keep being skipped, and the
-additional ->context check skips the RES_CTXN attribute for
-orphaned entries instead of crashing the dump. The orphaned resource
-itself remains visible in "rdma res show" (cqn/cqe/usecnt/pid),
-which is what an operator needs after the accompanying uverbs WARN
-to diagnose the driver destroy failure.
-
-fill_res_pd_entry() has the same pattern (pd->uobject->context->res.id)
-and is fixed the same way; a PD can even reach the fallback without
-its own driver callback failing, e.g. uverbs_free_pd() returns -EBUSY
-while another object that failed to destroy still holds the PD usecnt.
-
-Fixes: c3d02788b45a ("RDMA/nldev: Provide parent IDs for PD, MR and QP objects")
-Signed-off-by: Yili Zhang <zhangyili01@baidu.com>
-Link: https://patch.msgid.link/20260923131239.6521-1-zhangyili01@baidu.com
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Closes: https://lore.kernel.org/linux-rdma/CA+0ovCg_sG8gaZXXj9zmOrpxRt=8+-x9wvycVNUKwWmMbr6-Yg@mail.gmail.com
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Link: https://patch.msgid.link/20260922-rtrs-fix-warning-rtrs-clt-rdma-cm-handler-v1-1-2076c0ee1455@proton.me
+Acked-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 1475069aa4285..c94fc38fb7d30 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -606,7 +606,8 @@ static int fill_res_cq_entry(struct sk_buff *msg, bool has_cap_net_admin,
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index adeb2782d70b0..a4aa4c8bf35fc 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -1727,6 +1727,10 @@ static int rtrs_rdma_conn_established(struct rtrs_clt_con *con,
+ 	}
+ 	if (con->c.cid == 0) {
+ 		queue_depth = le16_to_cpu(msg->queue_depth);
++		if (!queue_depth) {
++			rtrs_err(clt, "Invalid queue depth %u\n", queue_depth);
++			return -ECONNRESET;
++		}
  
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CQN, res->id))
- 		return -EMSGSIZE;
--	if (!rdma_is_kernel_res(res) &&
-+
-+	if (cq->uobject && cq->uobject->uevent.uobject.context &&
- 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
- 			cq->uobject->uevent.uobject.context->res.id))
- 		return -EMSGSIZE;
-@@ -693,7 +694,7 @@ static int fill_res_pd_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, res->id))
- 		goto err;
- 
--	if (!rdma_is_kernel_res(res) &&
-+	if (pd->uobject && pd->uobject->context &&
- 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
- 			pd->uobject->context->res.id))
- 		goto err;
+ 		if (sess->queue_depth > 0 && queue_depth != sess->queue_depth) {
+ 			rtrs_err(clt, "Error: queue depth changed\n");
 -- 
 2.53.0
 
