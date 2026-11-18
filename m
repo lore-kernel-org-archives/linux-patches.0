@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039826;
-	b=KgKSPSOFzxooZV19oMf3RF5SpKXjQj6MYtqVJpG/1t/SeSLQ6RvI8of0wRZBJmsRB4EZ
-	 fm7gIzJ4xSm38Fz/7XtlQA4JEv8OA67XPHXIjgz8UP/rvqwrzt14Ml3BsZweHk/7PJ2wc
-	 7lNt4djVd4sO83DLJdJhWHArHTjsdvaenamEv0gU26QeWhk4OMIXFx3KOBJ9qYJC36JYc
-	 pAMnxakXq85R5zrwSnAQqtc6qhoVht/qbjtwgG3zAX/pk2Vg++4wzwr83qr8AFSCb6eak
-	 AmIhRSEMVT5z/jaMOvF9q+HXprrW06xVQKixYy6YdAmu8rID5lJ4z+pDigm4gvjfGZg==
+	t=1795039829;
+	b=45P4iE+nLOwyENK3pBjHE9H1j+xA8tXJcY8Xu2bLj4fZYRobaKRs21PFcGIWpOcNazzI
+	 7gWcVtG2fa4IKMORQCY/074dbeXVFIkyw/srPwfefNlnHRKYL6WkIyGfQ7xOqrXQY5w7d
+	 cdYqKB0M2nHx+7ttVeXT9SosqjYi1Ch8f3zKn3x4ZKPk7SuaIgPx0eEz5vqmHvMe7hJk7
+	 ay8yKzZn4ySU9bd4FPRQma/a3cq71I4AgHoZwQyvnYf0XGw4fqM1GyaYq+byvEQotbcNN
+	 6nxCWR7d4iHEExziHMwBxXbhBHQyUTFkr2oyRRmvOSGhRR/M23UM+lXVVWFBPaMY27g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PYtlHfzfV826aNH56AzcPFwBTPfyK4ShqLWEBYTrUjY=;
-	b=tQaVHpZ9hGoJLHfFdYlyC+fq1ZsM9X+qc5FBt3mbyAIUE3G0vwv7P/vejg00Zo5P+4oa
-	 ZsgMtXPAprbERgZCNLkqQjeXqqLQc0Tpklx7zTZ1Vl393P4ziOwo2i6mpFJ11UV13d+hD
-	 h+9uwvhho7cufzV3tKnOa10GOBJxv+6FcUgcYyasiHf7hboqEvj5+BB0X3Gx7iY4dH+SA
-	 7uJqf8g7DIsy4U1BN2o+WBh6ES3rN4fYGE4gc57Oe83hzz7heGP/3Z20/GD2n13nCFZu/
-	 s6cTsRFQLOMQDrVm0oLwRMlJa0NVj/b6LA4LZQudsR3BAKa52qdZymcaoeciVFgrm5A==
+	bh=QwA2PQLPo4RTrsP0rD0RzblmJws6Zz2WLoRWqORBvlc=;
+	b=K2nmk/lcGta+qC+2V+CKqdmp/zgQIeSld1PhI54XPcY9ha68cwZXVFLcVxWDA3GKC2a6
+	 OyqfL0HRft8O+3EjnHDpalVlPO/xXnFZxummOqeTIjWtK+WUWlXAxQ57yui8SJto2xf9R
+	 OECnYx0zrbTE7JmbZjEAU7WnLFlPdxfH+sLPbUxe87sfil3C7BAEZcoeimxmJEnUaRYuD
+	 swOXMtbc8F7k5b9lqZP0aIOSOX/IlSG4MvDMGA9x73qniRhnedjZ9U2lZXH+owltGMBZD
+	 be29z+YP8Bbv5Dm7TYy/xq3/O3cbqjZFVSV2RE20fdpcPk9c4kYp4J1StNR2o9ryDYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZrBTGgq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRj6SHfu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B959606A325;
-	Wed, 18 Nov 2026 22:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3998C606A31C;
+	Wed, 18 Nov 2026 22:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZrBTGgq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B7F1F000C4;
-	Wed, 18 Nov 2026 22:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRj6SHfu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8651F000C4;
+	Wed, 18 Nov 2026 22:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039826;
-	bh=PYtlHfzfV826aNH56AzcPFwBTPfyK4ShqLWEBYTrUjY=;
+	s=korg; t=1795039829;
+	bh=QwA2PQLPo4RTrsP0rD0RzblmJws6Zz2WLoRWqORBvlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZrBTGgqUUm2SXGyX3N2spVRmWaLByrkuNbUGyZwduzAeDOjp9a5PR/8e2b17L8Vi
-	 YaHUChtMcblkDbt+zfjbS+w3WQc6DYnATrR+BTCRFxyJx/tcSJhDxHfrXBWKJTY4A4
-	 J35j6RzRsxJPV/hcPRxHZVT/8piJ9TLqjfWuBwj8=
+	b=wRj6SHfuMtoCyiqyxSg3NTIrQaqrCifNGeFNmknzynbgdm6RrgXgyIlodfLWYzi89
+	 fguQr8sera+xkF/cp8Lrm4tXe9DMUOT+fjF3weEfe06HATt99YaF/jR4kRXFdVSaW6
+	 MUbS7L+AFQMrQ5HQlSj/R7ZZ7FcvU7jvqI4L8B4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdelnasser Hussein <abdelnasserhussein11@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2240/3318] staging: iio: adc: ad7816: Fix DMA safety issues in SPI transfers
-Date: Wed, 18 Nov 2026 15:47:42 +0100
-Message-ID: <20261118150429.055508730@linuxfoundation.org>
+Subject: [PATCH 6.6 2241/3318] md/raid10: fix missing wakeup in wait_barrier_nolock
+Date: Wed, 18 Nov 2026 15:47:43 +0100
+Message-ID: <20261118150429.082332595@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,63 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 69fa76f0af3414cc189c3b0b807cb59e327ecc00 ]
+[ Upstream commit f00eb0ff45793383d5a62db2d2aea63ada0ccdbd ]
 
-The SPI operations in this driver are not DMA safe:
-1. spi_read() uses a stack-allocated buffer.
-2. spi_write() in ad7816_spi_read() uses a struct member that shares a
-   cacheline with other variables.
-3. spi_write() in ad7816_spi_write() passes a stack parameter by
-   reference.
+Fuzz testing triggered a hung raid10d thread:
 
-Fix these violations by replacing all spi_read() and spi_write() calls
-with spi_write_then_read(). This safely handles DMA by internally
-allocating a bounce buffer for the transfers, avoiding cacheline
-sharing issues without needing dedicated aligned buffers.
-This implicitly corrects the size argument in read to sizeof(buf).
+INFO: task md0_raid10 blocked for more than 120 seconds.
+Call Trace:
+ raid10d
+ md_thread
+ kthread
 
-Fixes: 7924425db04a ("staging: iio: adc: new driver for AD7816 devices")
-Signed-off-by: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+wait_barrier_nolock() speculatively increments nr_pending. If a
+concurrent writer changes resync_lock's sequence, it rolls the count back
+with atomic_dec_and_test(). The rollback currently wakes wait_barrier only
+when nr_pending reaches zero.
+
+freeze_array() can be waiting for nr_pending == nr_queued + extra while
+array_freeze_pending is set. If the rollback changes nr_pending from 2 to
+1, the condition becomes true but no wakeup is sent, leaving raid10d
+blocked indefinitely.
+
+Also wake wait_barrier when array_freeze_pending is set, matching
+allow_barrier().
+
+Fixes: b9b083f9044a ("md/raid10: convert resync_lock to use seqlock")
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Reviewed-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://patch.msgid.link/20260817033340.418119-3-wozizhi@huawei.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/adc/ad7816.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/raid10.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/staging/iio/adc/ad7816.c b/drivers/staging/iio/adc/ad7816.c
-index 081b17f498638..a46ca0559b6a2 100644
---- a/drivers/staging/iio/adc/ad7816.c
-+++ b/drivers/staging/iio/adc/ad7816.c
-@@ -69,7 +69,7 @@ static int ad7816_spi_read(struct ad7816_chip_info *chip, u16 *data)
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 2f06b406d9147..90849d282adc5 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1014,7 +1014,8 @@ static bool wait_barrier_nolock(struct r10conf *conf)
+ 	if (!read_seqretry(&conf->resync_lock, seq))
+ 		return true;
  
- 	gpiod_set_value(chip->rdwr_pin, 1);
- 	gpiod_set_value(chip->rdwr_pin, 0);
--	ret = spi_write(spi_dev, &chip->channel_id, sizeof(chip->channel_id));
-+	ret = spi_write_then_read(spi_dev, &chip->channel_id, sizeof(chip->channel_id), NULL, 0);
- 	if (ret < 0) {
- 		dev_err(&spi_dev->dev, "SPI channel setting error\n");
- 		return ret;
-@@ -91,7 +91,7 @@ static int ad7816_spi_read(struct ad7816_chip_info *chip, u16 *data)
+-	if (atomic_dec_and_test(&conf->nr_pending))
++	if (atomic_dec_and_test(&conf->nr_pending) ||
++	    READ_ONCE(conf->array_freeze_pending))
+ 		wake_up_barrier(conf);
  
- 	gpiod_set_value(chip->rdwr_pin, 0);
- 	gpiod_set_value(chip->rdwr_pin, 1);
--	ret = spi_read(spi_dev, &buf, sizeof(*data));
-+	ret = spi_write_then_read(spi_dev, NULL, 0, &buf, sizeof(buf));
- 	if (ret < 0) {
- 		dev_err(&spi_dev->dev, "SPI data read error\n");
- 		return ret;
-@@ -109,7 +109,7 @@ static int ad7816_spi_write(struct ad7816_chip_info *chip, u8 data)
- 
- 	gpiod_set_value(chip->rdwr_pin, 1);
- 	gpiod_set_value(chip->rdwr_pin, 0);
--	ret = spi_write(spi_dev, &data, sizeof(data));
-+	ret = spi_write_then_read(spi_dev, &data, sizeof(data), NULL, 0);
- 	if (ret < 0)
- 		dev_err(&spi_dev->dev, "SPI oti data write error\n");
- 
+ 	return false;
 -- 
 2.53.0
 
