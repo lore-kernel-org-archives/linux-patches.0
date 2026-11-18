@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041394;
-	b=fVWiWF8kwrvNNSTJm1/mJyrEWDUmy2AoRPIsONj6ne7eft+cPm+X9PvzY9j/N9Tm+xOw
-	 9sdSS/dj0fnkkwLbEycsnHdUi6Y0YrwmerzEfKdSbIreX9sjAX5EzStprLybgDIXSg6FK
-	 2qwfKe9DLgNjuZLgd8W5tlEAXliWMCNs5wUiRpScp15wVlVkap24jK6hRw8chlYpVr10H
-	 AjLj8V1WLZvI4Lux77m8EU4nFlt2vHwo7B74WuWX89cY0+YKcSv0la5kt5LZJ2nxnjjB2
-	 F401AHwSSGQrefgVb2E+qNawF9JfR20afX6W74CtNTEXtP2IMu/OTSvOxkr0bOveEYA==
+	t=1795041397;
+	b=nD2YvTckhpJNAoXvUt35xmSYMVLxlJ59oVnvGVOEXKCHmVN9L4I9WQcHbItIpF92AEUQ
+	 6N4GK7ee/s0f/dNhwDIIznx9Dbcz7Lzhr7/J/FmGsEK7QZWLINygW/pljrOYytOCvdD6U
+	 foUiQCyiyD23ihmwf5AHVHCYldEYhWm7gZH58Xe7ekvqc1F0aNpuz6iqUqJt3PdHGVWhQ
+	 5Wm61F40v7XSyIzSD76cqcmMW6Vl9hY2oDAj98mu+HV7m8opDhbEfdHYhSNBmBdFAmdFO
+	 DXje2w1LlHQtNLO3pJF4k45akqlnLYw798qK7veAgtauigDQIGROK/+V6ugPzDIKnfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uFHs1ttSZPEnGUjgpOvhkJuD/QlExflbT3z42LsSIug=;
-	b=JnFp0PxUAMpBc7llEz33cuWg5ZbcNyL1BUD2CQEZXu0koYHNBMRS2g5fQ5tFVAziE9t8
-	 VgfhkXvc1cxFjaxu64XkyEQk4LwhgKRKnlRXQlizvlPvazfoAOD3IOR0fJfiwi2pDqoSe
-	 t+Z4LL+nWJslDYfG4WlQgSIUml5VDcz2GZkK8yRnybHeT9W1xx0xf7rrVIVu0GquSWhzT
-	 77R53TnjDL14f0MpTwayv+Esg4DfiE9axCdqL0Utt4/GTCz16PsmojZNHyGH3LywVUw2g
-	 d5vBA/0sHsLFlW/v0xmbmI95oUDEnAMnu8tr+YtUFezI7DXnot7M8R3djFSnBxG+c7g==
+	bh=171/YKBL3bZKHrsnHW7L4OXR3dtZ8f5oSqYZ66bgxXI=;
+	b=nU629ouavh3tury9AE7UnuIyBpBp2K3TbSaMO4vDY/vbAkpsDCvFIojCecESwZN7rDvB
+	 73DeLIJKiHzLtLD6DXqxC0REIVvnp+pIqNHpsZv7GeUICXNs24uStJyJHgq+ayNV5BwmX
+	 rNyMJsGL4EJGrfTFq2eijW3NcMxzVI2XI5QXL0ghrXmpCF9HZNk+BGtLPDZ+jC/WJsIZt
+	 R7WvVcODyIRtraqGj3eH/CdCF5MgKM7ojx+EL8fGU7dw+bLBKlcU5MwwIJ4Nis0LyL6C3
+	 dTQon8zQXMOSsdhiZNbF7h6hYEjwRTAjOSYHLSeAbBGKIF4WWUpPHUIJaI8zIsfS7Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i5tVPf0m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hqEs6arc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A06606A32A;
-	Wed, 18 Nov 2026 22:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6823606A320;
+	Wed, 18 Nov 2026 22:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i5tVPf0m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694551F000CA;
-	Wed, 18 Nov 2026 22:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hqEs6arc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CB51F000CE;
+	Wed, 18 Nov 2026 22:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041393;
-	bh=uFHs1ttSZPEnGUjgpOvhkJuD/QlExflbT3z42LsSIug=;
+	s=korg; t=1795041396;
+	bh=171/YKBL3bZKHrsnHW7L4OXR3dtZ8f5oSqYZ66bgxXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i5tVPf0mIDt+h4KRsLsYTml8SB8TlfTBzW7Nan4NvIx5Xqdzm+/AG7O7IxT7tHZHg
-	 KycYS0eZzqPVNkOY7V6NW0PGw7kQUnaOAO026H0u20Vkd9crnvXMXkocKfaWRI4zdn
-	 79wfZaJtDt4zxldAMfuwY82SJE/h3FgKkDESqb5Q=
+	b=hqEs6arc5ljLR1m1jT+WpApg2YLs5+53u0yN0/d6tgwvfM06dEj1F8zVj5Uw17sFP
+	 RYG9dNLt0OF3sXL8T8d6glp7NKajPw8KSu9eQKUGhCVrj1O1AZrbk8sF3OaPz7ELDw
+	 2sjuPb/vJ15Wk8PdQlLOyt6Yqo9fvWXiRw5xaz4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2761/3318] wifi: ath11k: avoid IDR mutation during vif mgmt TX cleanup
-Date: Wed, 18 Nov 2026 15:56:23 +0100
-Message-ID: <20261118150443.556684602@linuxfoundation.org>
+Subject: [PATCH 6.6 2797/3318] comedi: pcmmio: validate the IRQ supplied by userspace
+Date: Wed, 18 Nov 2026 15:56:59 +0100
+Message-ID: <20261118150444.592602262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,72 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit dc29226dada34a6d19af77b4b51e90f8a3a8de34 ]
+[ Upstream commit 23c6fc62e754f8bc412ceb5c0d9aaa14f2c9ff31 ]
 
-ath11k_mac_op_remove_interface() walks txmgmt_idr with idr_for_each(),
-and its callback removes each entry belonging to the interface. Removing
-the current entry can invalidate the radix-tree iterator retained by
-idr_for_each().
+comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
+it->options[1] is a number chosen by userspace. pcmmio passes it to
+request_irq() without checking it first, which lets an interrupt owned by
+another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
+claimed for this board. When the owner of that interrupt is later
+released the descriptor is freed while this driver's handler is still
+installed on it.
 
-Move the walk into a helper that uses idr_for_each_entry(). It performs a
-fresh lookup for every iteration, so each matching entry can be removed
-through the locked removal helper without retaining iterator state across
-the removal.
+The board's interrupt is routed in software rather than jumpered, and the
+driver notes that "any IRQ from 1-15 is OK", so the ISA range is exactly
+the right bound.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-4-yaojiale02@163.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Bound the value before requesting it, as das16m1.c already does. An
+out-of-range value is ignored rather than rejected, so the board still
+attaches without interrupt support, exactly as it does today when
+request_irq() fails.
+
+Fixes: 6baef150380d ("Staging: comedi: add pcmmio and pcmuio drivers")
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260909104848.1763-6-yogeshgaur.83@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/comedi/drivers/pcmmio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 5b0be210f98ba..2661d2bc8f259 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -5855,16 +5855,18 @@ void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar)
- 		ath11k_mac_tx_mgmt_free(ar, buf_id);
- }
+diff --git a/drivers/comedi/drivers/pcmmio.c b/drivers/comedi/drivers/pcmmio.c
+index db9cb3fedb48d..cd8b02e6ddc04 100644
+--- a/drivers/comedi/drivers/pcmmio.c
++++ b/drivers/comedi/drivers/pcmmio.c
+@@ -683,7 +683,8 @@ static int pcmmio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
  
--static int ath11k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-+static void ath11k_mac_vif_txmgmt_cleanup(struct ath11k *ar,
-+					  struct ieee80211_vif *vif)
- {
--	struct ieee80211_vif *vif = ctx;
--	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB((struct sk_buff *)skb);
--	struct ath11k *ar = skb_cb->ar;
--
--	if (skb_cb->vif == vif)
--		ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	struct ath11k_skb_cb *skb_cb;
-+	struct sk_buff *skb;
-+	int buf_id;
+ 	pcmmio_reset(dev);
  
--	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, skb, buf_id) {
-+		skb_cb = ATH11K_SKB_CB(skb);
-+		if (skb_cb->vif == vif)
-+			ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	}
- }
- 
- static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
-@@ -6889,8 +6891,7 @@ static void ath11k_mac_op_remove_interface(struct ieee80211_hw *hw,
- 
- 	ath11k_peer_cleanup(ar, arvif->vdev_id);
- 
--	idr_for_each(&ar->txmgmt_idr,
--		     ath11k_mac_vif_txmgmt_idr_remove, vif);
-+	ath11k_mac_vif_txmgmt_cleanup(ar, vif);
- 
- 	for (i = 0; i < ab->hw_params.max_tx_ring; i++) {
- 		spin_lock_bh(&ab->dp.tx_ring[i].tx_idr_lock);
+-	if (it->options[1]) {
++	/* the irq is configured in software, so any ISA irq is OK */
++	if (it->options[1] >= 1 && it->options[1] <= 15) {
+ 		ret = request_irq(it->options[1], interrupt_pcmmio, 0,
+ 				  dev->board_name, dev);
+ 		if (ret == 0) {
 -- 
 2.53.0
 
