@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030660;
-	b=M2KPLfczehgdUocsgmlcXZQQoLwrn9A8kGRVkkrmBmRx+mVELEGZchLb4HxxNPHIgBJm
-	 XevvKgMldoD0eORZRjqm2XYSdfYNzSHmhROUE3aMLySDOikIJLHe08I92rsT5LkVBavmI
-	 NjPoUczXuLPUSP4dttV39xeJLx6xTYQJt+6KBSTO3apY6gfv7C8v1Z6DgY0ls/TqHsdXR
-	 uYk2fB+jGFrNYZyZAy4IQTSaVjMJmtGFg4PwvMQaPzwL8K/x7CyMId4ikb9QCcfMZb4Ey
-	 iyLxEtZgvJYzB2hwZQI1Wpq3DZUGJnEyhIZjQBxFcvf4nqEmKmx/055DgfZttmldedQ==
+	t=1795030662;
+	b=1w6d+rvuHEf43hd72jia8pwpurxxAYmPVpVTCc8kzI/7xE4Jd5ARrqciwDm4hg1jIfSY
+	 7eXJVGjHAs2GZhiVqXlgPsm1szzNr9Ba+iix0ts856yyOgsquKnG9uK0/m4F7Ll15mqnP
+	 CkpXn+FbMBfCvYGcjyEr5xWFVJs+YE56mv1ICqQlXEMBt7l9H2rAglrnRbPplg5loXIL0
+	 DtNrg7HIUoZ3iwMxMdMTof0Olx3Qiw+W/n4vKasKMzV0q+xp6aEwHRNyny9L+FMwWXuue
+	 1SqsGhgrWM8GKvW4UQ5AGf35A2IHQsiRlcqBf3+llc/cK60J0lqzuPstDh6j3+ejklQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XWTNe5/kTEMVAWmraBCihoB7RmXxlhC2nK1QiOtq+9k=;
-	b=vyRvLKw2IfxY5/h/EDalj5H9zGw6iJ3WWxcD460kPjwkquK8jcezKfoUU3SLYPPK6IZL
-	 9yWJ8XCr0/SXR4D3DiXj1JLD3eNQ93goxjaar/VCBCo2/IuvLMGxww5GupMt7K5jHhIYe
-	 TRdisqGoubMPL6nEQOknd4pMteabBideJqv/phao5fXmiTHKsxtZ2cW8nwbP6x1a2LkOT
-	 Bo1LB47U6JhrEy+OcVZbAf9b8o9IeqKAOeSl5v6INgAlK7Mx670vp+QWLNMXzP/hQCVVz
-	 bHUqfpoxG8DwwGQrq2Yn1KZODL98FLQKd2+POSADaJT3/iTxf+8bjB/Nk6OVt71fjDA==
+	bh=xBpo0kMmACi2LsFL36vyJ6in+lyXCOj7mUirqXDFMWw=;
+	b=ZaTudgwI0Jo/DAqhShhhHL/1xwBFQUzdFKFD0V09WQ0Upbmwumts7aq0CZCiCImjzX4h
+	 xoAnYpgyDw3SAnword6ms+NLmmYfCk0aT77OvkTa7LfX+/obnwqvrENft1f9NFX5yQJWh
+	 RhQ7I5R+ce3QKR2Wnm6CzSabc3s9QFjUepiUP8/G86gkrBvyuRK8CGoDm5KzjvnqmR+8N
+	 D5Jiwvg3imDQqpxSLcWLidl5Z5488pj4vKbGjHw7vXnCozqibcKvOh6M2keorPpCus2SK
+	 wwTkVHjVmy92opFQWrTIB91a9dX0LN82ZS/VxN1Ft443wyccOtvPWiZ5JMBSmKVk57Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QwJHAOA7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaSloevF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B70606A331;
-	Wed, 18 Nov 2026 19:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE005606F518;
+	Wed, 18 Nov 2026 19:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QwJHAOA7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C421F000C5;
-	Wed, 18 Nov 2026 19:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaSloevF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DC41F000C5;
+	Wed, 18 Nov 2026 19:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030659;
-	bh=XWTNe5/kTEMVAWmraBCihoB7RmXxlhC2nK1QiOtq+9k=;
+	s=korg; t=1795030662;
+	bh=xBpo0kMmACi2LsFL36vyJ6in+lyXCOj7mUirqXDFMWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwJHAOA7vsXfVZjo2bzNTzuXNKLiQkibcq22KuOynJUvic488O9zSZo9SH3MWgyIb
-	 dnMVArTtvOvaW1yON2TxGaIlVtsUFxNhKUp7i8+vxbAlpg53QiIYnpgTx6ubgbBLR1
-	 fJ7CUSbQFUTOiqQ2sH5uHDW8Jx8Fmi47Vu1WlGTY=
+	b=eaSloevF36SmxVfJMITvYhyI8NJt9/Y+z+iPhmIv7/e9HsSIhdv9TuEY27jSor5QE
+	 01/5j6sJ0OxHdP2igNN0mnLT1Hk0lqw17KIXej9t32TATtzlsusBFia8J13+Em96R3
+	 EJyprRUFvpj5SBbsTHVZ8FF2Uz9dOB0fSXBFZbSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0746/1756] cpufreq: amd-pstate: Propagate cppc_set_auto_sel() errors on mode change
-Date: Wed, 18 Nov 2026 15:47:53 +0100
-Message-ID: <20261118150039.281739283@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 6.12 0782/1756] phy: rockchip: usbdp: Limit DP lane count to muxed lanes
+Date: Wed, 18 Nov 2026 15:48:29 +0100
+Message-ID: <20261118150040.742082631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,56 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 8de705037124dd1cd49bd8cae6536d63ec4e1807 ]
+[ Upstream commit 443997ca8d797375ff35e8f3ad3828799e88f71b ]
 
-amd_pstate_change_mode_without_dvr_change() iterates over the online CPUs
-and calls cppc_set_auto_sel() to enable or disable hardware autonomous
-selection, but discards its return value and unconditionally returns 0.
+In theory the DP controller could request 4 lanes when the PHY is
+restricted to 2 lanes as the other half is used by USB3.
 
-If the firmware rejects the request, the failure is hidden: the cpufreq
-core records the mode transition as successful while the hardware stays in
-its previous autonomous-selection state.  The software mode and the actual
-hardware behaviour then disagree, breaking the expected frequency scaling.
+With the current user (DW-DP) this cannot happen, but as the check is
+cheap and users might change in the future protect things accordingly.
+Not doing so would corrupt USB3 usage by the following code configuring
+the voltages.
 
-Check the return value of cppc_set_auto_sel() and propagate the first
-error to the caller so the sysfs write reports the failure.
-
+Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-d114a94a-655b-43a6-91b1-9484889726c9
-Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20260921190235.3651688-2-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Closes: https://lore.kernel.org/linux-phy/20260612165546.98E1F1F000E9@smtp.kernel.org/
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-phy/20260612165546.98E1F1F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-12-80e2c11d1ce8@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index c80eed5e93529..0f195c15147a8 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1220,6 +1220,7 @@ static int amd_pstate_unregister_driver(int dummy)
- static int amd_pstate_change_mode_without_dvr_change(int mode)
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index 022218e64f48e..fa6446c1c6c0e 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -1102,6 +1102,9 @@ static int rk_udphy_dp_phy_verify_link_rate(struct rk_udphy *udphy,
+ static int rk_udphy_dp_phy_verify_lanes(struct rk_udphy *udphy,
+ 					struct phy_configure_opts_dp *dp)
  {
- 	int cpu = 0;
-+	int ret;
- 
- 	cppc_state = mode;
- 
-@@ -1227,7 +1228,9 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
- 		return 0;
- 
- 	for_each_online_cpu(cpu) {
--		cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+		ret = cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	return 0;
++	if (dp->lanes > udphy->dp_lanes)
++		return -EINVAL;
++
+ 	switch (dp->lanes) {
+ 	case 1:
+ 	case 2:
 -- 
 2.53.0
 
