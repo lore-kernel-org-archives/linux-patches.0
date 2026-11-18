@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017951;
-	b=34hUvviJvdbUBW9QkM1KmHkZwtKkIvgLFovxLGTJ1hQeXgoLfsTgGqhvIxkDMJV8Icqm
-	 26QrkPFC7/w1GlMaBUJ0Lr68yLSvGBJndWb12MwhefQbAljuSSdjbZdl+TbRIbm6rlU4F
-	 Ws0zw81ReYL6stlAyLpYY9W5IOORNlacVeFxR1Qas9Tr0WSLW/SZak7VcHVUo+rcZ7yhO
-	 USAmZsRQC6u+X/8uuOoLypj7YwAhwAnJdgos2aeyrB+q0/Ll1QmY/hhUbixRtEoaDLmzA
-	 KgNG+Zug8MNRFsM0rhRAlT9F+pI5qXEHEbNH3Ucv+kK7KZeWE124DnZqc8NaxuUOK3Q==
+	t=1795017954;
+	b=pgPpc4+48rchO8796JgfKrn6ZG9VfHgBvqOuXMsIbGuLc5gZ26jM6Z56TPJ4MkZkFuH1
+	 vOnd+4xyq/Ev5zPyom1daPjD+CN9zHUF6jOskSSyzH53RjtKtBqsqrARnAlFgQoOZxZ2h
+	 DlQBeSyasMsoE7jGsDGgMs+dc0osYlH6Cnx8OlRJSoQhDsjO6gj7UAKmXUzkEmfh2m4ii
+	 rdtgEZqWzoIu7xX52yRxrqrmRqAcIJhlD2b6D0zTFOqMgCumuVVhgOF0G6YSyCKWDK91E
+	 oAT3cveBvfli5sclJbRXIT1dXYXbX3vUOZNrUfpuSh4C3A1qdfHWJgTyyxTwpGKQZMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r6bNgVKzI495r0UcdlRG6GzYT7IvPYo7ouInt1tljqY=;
-	b=xG/TfUhfQqa4QwURKeaV5Y7Qf995rIa/H+/9HZuo/ZWbIEl8a38GdDmNO/qdBc60M7TN
-	 z8eHdhHILalQDuMvWAdOA4b22qiwrN7Hw47Xnivp3+nf3+/8Xf50onBMqk832/AG3d1FG
-	 SJ0hySMSjxZHnXLGcoHwCJ5GaYdiam/ZkgbrF3x0y41kioYQF9f/CtNc0TqCDIejv+vjt
-	 yjinzKaBqds1pCn2P9QFlw5bPJ2BePG5a47/+PbFJwkv7yiInH9aFB//Nvaa01mAxlM3d
-	 +GjudkoCHyPOy+njGO+FiD5voIXcDhVAcOI+0cYnKSvhVKwVCYgqSOIPezGsxcKjVKg==
+	bh=4SaDvTZvca9MlOA4/1F4QyvDiwvsHtkic/ev13b4F3I=;
+	b=PZRZQUePNFYCllR4cRElTevWjlHrGhYArVlfFszkotP8u3n12oui/1hpWwm268HkCZQG
+	 AIlztR84aTymw1vYfJCMgB8TujOxljx5TJV+uYJR/P/zHUOgVQsBFz4rzAC1hLoKnCOsJ
+	 /EzrvFkDuFyH5xLt1uGIiFwiHJ+08Nn4BMXLg+v/PghgRrAccsq1U/uIAJxImaTKSrh1f
+	 CCeBAmKIyPBMd7nRJEACu9jC7ZnuXdZ5Y8ODgbLt8zOX9Ywe3BePoxsrVCsbZuyQrIBvh
+	 N/3uCtaBpgT/vyv9AUiswIFHaUhDUtqfOpZ1BGvZBlCHzjCSTTa1AwY7USbyC0VHutg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkfVSHzC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i41KvhiI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E9E606A320;
-	Wed, 18 Nov 2026 16:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 024D3606A31C;
+	Wed, 18 Nov 2026 16:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DkfVSHzC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773C71F000C4;
-	Wed, 18 Nov 2026 16:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i41KvhiI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534D31F000C4;
+	Wed, 18 Nov 2026 16:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017951;
-	bh=r6bNgVKzI495r0UcdlRG6GzYT7IvPYo7ouInt1tljqY=;
+	s=korg; t=1795017953;
+	bh=4SaDvTZvca9MlOA4/1F4QyvDiwvsHtkic/ev13b4F3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DkfVSHzCyihyz8PdmwT+Ckl26Cszqr7HzT0nqcCX9x9w4yAmFFFANA3Sv7nn2FP1z
-	 p41XAcxLohmdirX6wJ98vC/h3i3MAIkz++BqLi99O2xWeOhrV7zTG2w87hZkaLVdpG
-	 mJKDf4YoTfgtNbDoXklgcnq7IZUARVQopLu+2pFk=
+	b=i41KvhiIw07niLf9mVYiFrjyNqcm354RhQ2eT45hSfppfSMzpsqm5yuATPiY0UF1l
+	 6Mgz74SAgy64ye1h0/vj346/gqY966o23SNh7m3tHi7RiHlxQuhwDhpuTunn/fuacj
+	 DoF3hCKqKq7TH268e5HR+k3qG2FdTtc4vInPZxJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1067/2651] spi: spi-qpic-snand: set qpic_version2 flag
-Date: Wed, 18 Nov 2026 15:38:27 +0100
-Message-ID: <20261118150326.395074145@linuxfoundation.org>
+Subject: [PATCH 7.3 1068/2651] f2fs: quota: fix unused-label warning
+Date: Wed, 18 Nov 2026 15:38:28 +0100
+Message-ID: <20261118150326.429854743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,39 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 52efc89ccf664dcfa331fbdf2f5c8d3acd45a863 ]
+[ Upstream commit 4faeea625cf730bb20f609f061ff81c9b6852931 ]
 
-The kerneldoc of 'struct qcom_nandc_props' says this about the
-'qpic_version2' member of the structure:
+The newly added label causes a warning when QUOTA is turned off:
 
-  "flag to indicate QPIC IP version 2"
+fs/f2fs/super.c: In function '__f2fs_remount':
+fs/f2fs/super.c:3142:1: error: label 'restore_holder' defined but not used [-Werror=unused-label]
+ 3142 | restore_holder:
+      | ^~~~~~~~~~~~~~
 
-Since the SNAND controller is based on QPIC v2, set the flag in
-the device specific properties.
-
-Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20260924-qpic-snand-set-qpic_version2-v1-1-a0a9a3e0d06a@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3f140a60c92a ("f2fs: quota: fix stale lock holder on remount failure")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qpic-snand.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 684c3b9486b77..48628ae6e70f4 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -1701,6 +1701,7 @@ static void qcom_spi_remove(struct platform_device *pdev)
- static const struct qcom_nandc_props ipq9574_snandc_props = {
- 	.dev_cmd_reg_start = 0x7000,
- 	.bam_offset = 0x30000,
-+	.qpic_version2 = true,
- 	.supports_bam = true,
- };
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 17e00d5003b02..ec7ac09079cb7 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3126,7 +3126,9 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
+ 	sbi->mount_opt = org_mount_opt;
+ 	sb->s_flags = old_sb_flags;
  
++#ifdef CONFIG_QUOTA
+ restore_holder:
++#endif
+ 	sbi->umount_lock_holder = NULL;
+ 	return err;
+ }
 -- 
 2.53.0
 
