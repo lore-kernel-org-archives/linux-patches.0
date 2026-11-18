@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016231;
-	b=QqZuIquNL7RZ+dXMlErAu+q5grdVA+P2BARpHvzcFy/xzOgEnejU8pXX69qU9FMRNWqO
-	 UOQOBacsfQtiOMAfYHbuxtdOjdsfAEk0HTTzbbh72OXaZke/XGxS92grndhGKw5e9kVTs
-	 z7kE6f+SDZRt6vPu4QWkRorHtFCSFCWf3T/HY7Q+sNrpGU27rU6jEyj6dL7eyGq2Xk6A1
-	 kMIu56PXUrErnrIBFyu44tzriG8C24wIuZm+QpCwXFQSl5K5Fcc0Cd7TOtKXgw6foX+Z6
-	 qygMkNHgAPJ4lD7txyyMI+JLUmsTpSGg1NWSI2UbPoOQSmice7CxYNAODSh+jSajL5g==
+	t=1795016234;
+	b=C4FlgP9Z6xlP0Bbl83/Oigt8/iseYr6w5pHyGKijUPshPaLlHXtEh6yny0wLHvpyDnUJ
+	 Boevi7355prQQGa+xkM5DbwFkR5WyVYDTgsAPZeeBihdtoS4YUUzRM8nGsNYONukDd/2+
+	 LPBgIb1GvK5CE47ptunbxjsOZnQUtNF+4tHPxNMJyrU9NnY8fR0GTzmEfoN2wLRyAW4d0
+	 Gyfat0hNRT/AkYxRingIL+ezASGwjHJg2YWLoHb3F61gbHGHeubj503ZGUU7i9B59d2HD
+	 XYBBvhAgiNnWDB2XCc6md+Uv9OFj5hQd8hA7MMjrm6ZV20qlFd84LUhB3RvkgNYQgwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7Y91qhOGPApGeQN+auz7LYxAg/fyE3lg0M4s0lPbO4U=;
-	b=JLmyE1UGbyBoM4AxBCBxqr6UroAK6RZZOA7w/nsmCu7DxDqebihpIEQAFynkugUQX/CH
-	 MbPB9lakTne/S9ka2HBQRAjjG4RnvmOJe57QxTLO9FiaVV3rZhH1e0KsM4gSg2ptzSpNj
-	 0G+D/V4admvWrdRr0JyfL+PtTXJ0V0MFeVQ+Bow82a4e+XVOAPuCDk7h13jYTuV7ytZcE
-	 IA1OjI7+POrrT9Sz6KJ73WLmKjQ/Za1MXoBtJoTpk5M2gRdNON7CIvYhyktKYzzlfmW4O
-	 aGNWaJtdQAFMGKEO1xL997+7X247QfYOwA/49hWk+iEtIByIspZ6ZqJrfZQhx713ytw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=oqBYs0LdFhs+IP6I8nG44Wq1lDnXMHYSLwihprS0jio=;
+	b=g19nKu5yBfX/Gg0acbmHyM9w6c8Ta2yLTpy8WW1SXxhjZ9KrHJUmAGKTgDeSESdL0ThP
+	 6yWiia276dwi0nFf8I5bVylQfVl3IkJwFqA7Bi8bvgXQYFEMxXZ117vmKH2t4ZJuIXQoN
+	 BkFuxCjARAJvAkYLmxesUz8LZTDfT6wR8sGKTFdiA7B7UMmMVnIgIvH8cdg5iWbJrVAo4
+	 fOLuhkUVOKndDTX4l/dKszZSONifq568yZu8ggKsUI3Q6gicmuJPgRl9v3cB+nfck+TAk
+	 qxH56cvh2lNHnZTcJw+Q609woKH2lirNLFlyWsc59IClukgGg8e+nC+NzeBEsos4E1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZiT9HV0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHVcInRm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0D0606A320;
-	Wed, 18 Nov 2026 15:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A67606A320;
+	Wed, 18 Nov 2026 15:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZiT9HV0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9163E1F000C5;
-	Wed, 18 Nov 2026 15:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHVcInRm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA981F000C5;
+	Wed, 18 Nov 2026 15:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016231;
-	bh=7Y91qhOGPApGeQN+auz7LYxAg/fyE3lg0M4s0lPbO4U=;
+	s=korg; t=1795016233;
+	bh=oqBYs0LdFhs+IP6I8nG44Wq1lDnXMHYSLwihprS0jio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZiT9HV0YA07qWziAVxOWLWCmZqhqoofM5j8oK710mgQHEm+ZV5Pep9unkBIiTSHP
-	 23ChGP65hRqANDtavVpYIARDpjFFMFUvk+zh8WRDC4IgGwpS63iJlrSIS4hueQQcMu
-	 LHDza+AG1bJCC0OoUh7zBrbuVsSusGlYKX598F90=
+	b=ZHVcInRm4sL1RhJ2MFDBnbBLVjEwX/OvUUiPaTkASt9QkMthBYZk4C8uWhmKCVmG/
+	 bvpjkx96Us5GbDb1C7gu5WPk9RFUD78HMHsdzumBT/4X0l530gzt03VGzBsOgrk6oD
+	 QVtUMoVqAaRVGRiJ5CVt1LF5csHWsxgEzC9uONd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jared McArthur <j-mcarthur@ti.com>,
-	Nishanth Menon <nm@ti.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0428/2651] arm64: dts: ti: k3-j784s4-j742s2-evm-common: Set ACSPCIe refclk to MAIN_PLL2_HSDIV4 for pcie1
-Date: Wed, 18 Nov 2026 15:27:48 +0100
-Message-ID: <20261118150303.233855163@linuxfoundation.org>
+Subject: [PATCH 7.3 0455/2651] microblaze: Pass -m{big,little}-endian through KBUILD_CPPFLAGS
+Date: Wed, 18 Nov 2026 15:28:15 +0100
+Message-ID: <20261118150304.185516802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,67 +62,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jared McArthur <j-mcarthur@ti.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 7e4b4f799bd043cb5b30176ddbe690a0fb5788bc ]
+[ Upstream commit b9eababe8c0b9f71ce7f35f903879a7fcb6daebe ]
 
-Commit e3dfcf482d07 ("arm64: dts: ti: k3-j784s4-j742s2-evm-common:
-Enable ACSPCIE0 output for PCIe1") enabled the ACSPCIE0 buffers
-to provide the PCIe refclk for PCIe1, but introduced a bug
-where the clock is remporarily disabled during initialization.
-The ACSPCIe reference clock is muxable between multiple
-sources: SERDESx_REF_DER_OUT_CLK, MAIN_PLL2_HSDIV4_CLKOUT, and
-SERDESx_REF_OUT_CLK [0]. On reset, the refclk is set to the
-SERDESx_REF_DER_OUT_CLK. In the J742S2 and J784S4, "the SerDes PCIe
-Reference Clock Output will be temporarily disabled when changing Data
-Rates to or from 8.0 GT/s in Derived Refclk mode" [1]. Some external PCIe
-devices cannot tolerate the reference clock being disabled and will
-therefore fail to link.
+These parameters are also necessary for preprocessed files which do not
+contain code. One example is arch/microblaze/kernel/vmlinux.lds.S which
+inspects __MICROBLAZEEL__ for the definition of 'jiffies_64'.
+As currently the endianness is not passed from the build system for this
+file, the preprocessor will instead use the default endianness of the
+toolchain. When a default big-endian toolchain is used to build a
+little-endian kernel, that kernel will hang during delay calibration
+as 'jiffies' never changes.
 
-This advisory is described in more detail as: i2242 of the J784S4
-Silicon Revision 1.0 (Rev. B) document [1].
+Make sure all preprocessor invocations know about the correct endianness
+by passing it through KBUILD_CPPFLAGS. This will also be inherited by
+CFLAGS and AFLAGS.
 
-The refclk for devices connected to PCIe1 is provided by the ACSPCIe
-buffers in the J742S2XH01EVM [2] and J784S4XEVM [3]. Work around
-the advisory by setting the ACSPCIe reference clock source to
-MAIN_PLL2_HSDIV4_CLKOUT. Use the TI SCI clock controller to assign the
-clock's source [4].
-
-[0] https://www.ti.com/lit/zip/spruj52
-[1] https://www.ti.com/lit/pdf/SPRZ536
-[2] https://www.ti.com/lit/zip/SPAC001
-[3] https://www.ti.com/lit/zip/SPRR458
-[4] https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/j784s4/clocks.html
-
-Fixes: e3dfcf482d07 ("arm64: dts: ti: k3-j784s4-j742s2-evm-common: Enable ACSPCIE0 output for PCIe1")
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Jared McArthur <j-mcarthur@ti.com>
-Link: https://patch.msgid.link/20260908185903.404451-1-j-mcarthur@ti.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 02b08045a030 ("microblaze: Add support for little-endian Microblaze")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://patch.msgid.link/20260914-kunit-microblaze-v2-2-7d5756e858f8@weissschuh.net
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/microblaze/Makefile | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
-index ff3a85cbc524a..7c085663c8880 100644
---- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
-@@ -1206,6 +1206,8 @@ &pcie1_rc {
- 	status = "okay";
- 	clocks = <&k3_clks 333 0>, <&serdes0 CDNS_TORRENT_REFCLK_DRIVER>;
- 	clock-names = "fck", "pcie_refclk";
-+	assigned-clocks = <&k3_clks 415 0>;
-+	assigned-clock-parents = <&k3_clks 415 2>;
- 	num-lanes = <2>;
- 	reset-gpios = <&exp1 2 GPIO_ACTIVE_HIGH>;
- 	phys = <&serdes0_pcie1_link>;
+diff --git a/arch/microblaze/Makefile b/arch/microblaze/Makefile
+index 02e6be9c5b0dc..9087a366ce789 100644
+--- a/arch/microblaze/Makefile
++++ b/arch/microblaze/Makefile
+@@ -34,12 +34,10 @@ CPUFLAGS-$(CONFIG_XILINX_MICROBLAZE0_USE_BARREL) += -mxl-barrel-shift
+ CPUFLAGS-$(CONFIG_XILINX_MICROBLAZE0_USE_PCMP_INSTR) += -mxl-pattern-compare
+ 
+ ifdef CONFIG_CPU_BIG_ENDIAN
+-KBUILD_CFLAGS += -mbig-endian
+-KBUILD_AFLAGS += -mbig-endian
++KBUILD_CPPFLAGS += -mbig-endian
+ KBUILD_LDFLAGS += -EB
+ else
+-KBUILD_CFLAGS += -mlittle-endian
+-KBUILD_AFLAGS += -mlittle-endian
++KBUILD_CPPFLAGS += -mlittle-endian
+ KBUILD_LDFLAGS += -EL
+ endif
+ 
 -- 
 2.53.0
 
