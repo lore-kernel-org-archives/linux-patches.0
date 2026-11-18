@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016595;
-	b=BA909ijrS2E0JPm2HzewmyyNBa1i1p3Drisz1jcdxVMuPhi8o+mew6wTCLyXAhHsq8qf
-	 Pj1T9PgjUI1FptPJkgV7TyOb5/ypRWNP1JQjtaE8UsZDkIzLboETZ0k/L7VFDCqubHuNX
-	 pi9SHjgjkmQSryzePHEhYxzSKx4BL6Fz2y2+TgzmKOkXKu824Vo7kqq55zQ7qDlwwCN/S
-	 oi1MPPmgstBR0K2vmvDitfaHjPhswP2eDbn59j6XT4m/AyyQhbADtJpYBAeE5PGwcWFOo
-	 Jg8aSWcX6gEuWhGe9Ge0tcW8YWMFSI1zM2lviY3a6JkAqJ67OWDtuW1hzAHb8LZVWxw==
+	t=1795016598;
+	b=Um+yHH2h+Q64uFlZl1aRDEI3YyDmVDV6jRNMs79HccMoq0Fy/HYCE4MfnGK3K0u13P+6
+	 AtIqXzeDZpTEsuJ6wNZdyxmJaz0t192qRxiKRdaw3TdNpMqlrrdsCzYQabsQccvX8ZB5b
+	 xU5OaBkGek3+yRf/sQJiEzbHDGG2hYZ7WbcjtlmRxq82pmMIckCFKHnq5P0n/HaiKJBat
+	 JHqQjTl654XENp4YhVMozv4+8vtWpW4LcXu0CAwbft9XF7LMRgKkLEx3xsiBnNWItLRfa
+	 iGztWtmzcHVEzoScjaPOvf/lMFnAEWHo+1S1/eFfplPOEWFPxQpTFQn0/gXOnPDNzVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=RN6UTtssbTMFmjbmIrAQUr4JM3704eSnID1VpTTAzeE=;
-	b=kZFcIV+lbhq+qq1wAeCPXO8zeUaPIYIA0rAS1QaS6/aIrntR3nyP1hxmeyiglc+xQbtd
-	 W3HfamB/ni/1FvBSt8oxIDi/yERLuDEDas/W1MfnmbzWsQmq8SZx2bOKndvD3Dmn6KDHV
-	 ScZwRjywNL+j3clT5prxslHWgJrJDKtZ1kflvQzs8TIoRKAFWxJYCB/Bz9rKja8l4Myrf
-	 YvBlC1L+WAYKvjVI52ru58zpGC91MYCWs7HWc/+6zuwrzjxO282nZDdJ7jFGyYrRSUZE1
-	 TjuAh315nsr4p+OTQcJLE/GFadhIRm4gopH3SPCkxC8e0EUdYKvSnbHRZOlbwQd3Kfw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=n7RskBsrUcbIOut3hGMFDPLvMEJlBrCn8lbu18tvwS8=;
+	b=Do1Q1yREI6CaSGsUiAqlC0HbLZjhSgMqbGepU96KfZGkUmZBhFRBMb7lSrH4Eh8pQTol
+	 eBBJaUia5ZzzI04R1IaygpERphfJvRV1MAHxG6q/4/+6rsxpnKCdBJmbZoIeBcLP2W+Di
+	 EhpED+Uy0AegQf4iX9a9gJ+xLI4aXdfqHqb0h+G037bvTcCx229wJy8qBKAsS1uIb4iq2
+	 2X5z9Mrs19dHOrF5EbZ59/AsoK3NAjh8LHofLrlIu9C3/AFoWPTiLhyxKvbBeXeHJ8x0l
+	 A/Pd/pl2EccL32LmQ5AaNEtlDrWtiXRQ6I5rVZ62MzSSCvND1sgkgOl9dZH8T5FR6Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vrZ/36B8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nbpzcs9I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912C660A260C;
-	Wed, 18 Nov 2026 15:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E702606A32C;
+	Wed, 18 Nov 2026 15:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrZ/36B8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9931D1F000C5;
-	Wed, 18 Nov 2026 15:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nbpzcs9I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779331F000C9;
+	Wed, 18 Nov 2026 15:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016595;
-	bh=RN6UTtssbTMFmjbmIrAQUr4JM3704eSnID1VpTTAzeE=;
+	s=korg; t=1795016598;
+	bh=n7RskBsrUcbIOut3hGMFDPLvMEJlBrCn8lbu18tvwS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrZ/36B8wuTzSUOezwC1tKPTRPZ9QlJjK+/cnkEWm3WqFjf3ggmcOPqFmLrH28afE
-	 1MQAJcKWvsTkGJ9SWLIvMuVopnaaj4GmYGEfednBVm3eZSAGKY8zMNgD/EUonnVXv4
-	 fgrpm/ciMpDe7N72QGsJW0pt1qFIUl7KdOssaBJw=
+	b=Nbpzcs9IbO+zDq0fPQgMpyc7Q8/bcNJbficZZzAOGE5l1IwdTtXNUo82uyy9k+Gcy
+	 OPbPiHg1zvmjeE79FYQ9I0mF3Pd+qqPoeb5sy/Uxt4/O5lnHEVyRJSLm0feCp7UeXL
+	 xQjc24+aeg1rIqDh88ZcxrKhij25FAdwcHcfNfgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Varun Gupta <varun.gupta@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0584/2651] drm/pagemap: Prevent CPU stalls during unbounded pagemap teardown
-Date: Wed, 18 Nov 2026 15:30:24 +0100
-Message-ID: <20261118150308.751563127@linuxfoundation.org>
+Subject: [PATCH 7.3 0585/2651] cxl/region: Create node access attributes for CFMWS-only NUMA nodes
+Date: Wed, 18 Nov 2026 15:30:25 +0100
+Message-ID: <20261118150308.785806746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -65,81 +65,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Varun Gupta <varun.gupta@intel.com>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit b66b036c959f49decd2202db4026d3ae21e01388 ]
+[ Upstream commit ef71014055f7b4959e4cb023ca8a18258cb5641c ]
 
-drm_pagemap_dev_unhold_work() processes an unbatched llist of pagemaps
-on the system workqueue. This creates potential latency traps during
-heavy teardown cycles due to two compounding factors:
+A NUMA node that only backs a CXL fixed memory window and is not
+enumerated by SRAT has no memory_target in the HMAT code, so
+hmat_callback() exits early at find_mem_target() and never creates
+the node's accessN attributes:
+/sys/devices/system/node/nodeX/accessN/initiators/* stays missing.
 
-1. The loop contains a per-item drm_dbg() trace. If dynamic debug is
-enabled on a slow serial console, synchronous print latency scales
-linearly with the batch size and can block worker execution.
-2. The llist can accumulate large batches during intensive unmap
-operations, monopolizing worker resources without yielding.
+Commit debdce20c4f2 ("cxl/region: Deal with numa nodes not enumerated
+by SRAT") had the CXL region notifier call node_set_perf_attrs()
+directly for such nodes, but commit 2e454fb8056d ("cxl, acpi/hmat:
+Update CXL access coordinates directly instead of through HMAT")
+replaced it with node_update_perf_attrs(), which only updates
+attributes that already exist and thus does nothing for these nodes.
 
-This causes below log warning:
-"workqueue: drm_pagemap_dev_unhold_work [drm_gpusvm_helper] hogged CPU
-for >10000us 19 times, consider switching to WQ_UNBOUND"
+Create the attributes with node_set_perf_attrs() when the node is not
+backed by a real SRAT pxm.
 
-Fix this by implementing a latency mitigation strategy:
-- Move the teardown work to system_unbound_wq to avoid tying up
-  per-CPU bound worker pools.
-- Add cond_resched() inside the teardown loop to yield the CPU during
-  large batch teardowns, ensuring system responsiveness.
-- Convert the drm_dbg() trace to drm_dbg_ratelimited() to mitigate
-  serial console bottlenecks while preserving debuggability.
+Tested on a QEMU CXL topology with a CFMWS window not described by
+SRAT or HMAT: node1/access0/initiators/{read,write}_{bandwidth,latency}
+appear with the calculated coordinates once the region's first memory
+block comes online.
 
-v2:
-  - Changed workqueue from deprecated system_unbound_wq to system_dfl_wq.
-    (Arvind Yadav)
-
-Fixes: a26084328ac4 ("drm/pagemap, drm/xe: Manage drm_pagemap provider lifetimes")
-Reviewed-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Varun Gupta <varun.gupta@intel.com>
-Link: https://patch.msgid.link/20260918081320.30389-2-varun.gupta@intel.com
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 2e454fb8056d ("cxl, acpi/hmat: Update CXL access coordinates directly instead of through HMAT")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260917024632.1397380-1-kanie@linux.alibaba.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_pagemap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/cxl/core/region.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_pagemap.c b/drivers/gpu/drm/drm_pagemap.c
-index a0546955d0b9f..c66c58f85c345 100644
---- a/drivers/gpu/drm/drm_pagemap.c
-+++ b/drivers/gpu/drm/drm_pagemap.c
-@@ -1079,7 +1079,7 @@ static void drm_pagemap_release(struct kref *ref)
- 	dpagemap->dev_hold = NULL;
- 	drm_pagemap_shrinker_add(dpagemap);
- 	llist_add(&dev_hold->link, &drm_pagemap_unhold_list);
--	schedule_work(&drm_pagemap_work);
-+	queue_work(system_dfl_wq, &drm_pagemap_work);
- 	/*
- 	 * Here, either the provider device is still alive, since if called from
- 	 * page_free(), the caller is holding a reference on the dev_pagemap,
-@@ -1102,10 +1102,11 @@ static void drm_pagemap_dev_unhold_work(struct work_struct *work)
- 		struct drm_device *drm = dev_hold->drm;
- 		struct module *module = drm->driver->fops->owner;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 27e63e6dab7c8..9a5fd3da539d9 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright(c) 2022 Intel Corporation. All rights reserved. */
++#include <linux/acpi.h>
+ #include <linux/memregion.h>
+ #include <linux/genalloc.h>
+ #include <linux/debugfs.h>
+@@ -2630,7 +2631,19 @@ static bool cxl_region_update_coordinates(struct cxl_region *cxlr, int nid)
  
--		drm_dbg(drm, "Releasing reference on provider device and module.\n");
-+		drm_dbg_ratelimited(drm, "Releasing reference on provider device and module.\n");
- 		drm_dev_put(drm);
- 		module_put(module);
- 		kfree(dev_hold);
-+		cond_resched();
+ 	for (int i = 0; i < ACCESS_COORDINATE_MAX; i++) {
+ 		if (cxlr->coord[i].read_bandwidth) {
+-			node_update_perf_attrs(nid, &cxlr->coord[i], i);
++			/*
++			 * A CFMWS-only node (not backed by a real SRAT pxm)
++			 * has no HMAT memory_target, so hmat_callback()
++			 * never created the access attributes for it:
++			 * create them here instead of only updating them.
++			 * This is called at most once per node (see
++			 * nodemask_region_seen), so the attributes are not
++			 * created twice.
++			 */
++			if (!acpi_node_backed_by_real_pxm(nid))
++				node_set_perf_attrs(nid, &cxlr->coord[i], i);
++			else
++				node_update_perf_attrs(nid, &cxlr->coord[i], i);
+ 			cset++;
+ 		}
  	}
- }
- 
 -- 
 2.53.0
 
