@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038132;
-	b=Pr+7pCVKWTF4avbCEFiMFvt7MqQfBKZGOlpFqueEWA8fBHO3Bz1kdJ1U3Oh0rR7yEp+n
-	 v/uTRcBJpDQ+9HXkg08sObMO3vyrsrajfkhGEHLMmnyl/nCv7oGFy6rYCHhIpzAJMHQd1
-	 T3zJmKYMfnakoLtvyszPc0tp4xt00xhBVi65orknhIbd7F4ee2GSGOh9MftSO7a/N4AA3
-	 rykiSWLZYCydJDOaB3QM420EFoAsTCBfkEOJdGbGXGMc+GWR5N/aqQz3lZemFhnbIHvf8
-	 isYBw3B2+W54y6BnIMJU22xb84+Xd97zWpNzF6nglBf5dxi4AzxQndB3DoED6utIWew==
+	t=1795038135;
+	b=HNYcnuAeHq7KtjT+e0Qffa1A2LUSLDSoUjboB5RW+XncN9xarpaAxaJuiN7ugYsp+xp4
+	 6ZsS/7pYjiDybMZ+YVa7eoMXqtThjOtiA4j3Y+vsHr/FHcfscd9HasiPe9nHwa1wnrRPA
+	 YcNUGXcOF46zWN6uAh29VHyV1leDLiEOQ5VynQx3fi1V/cWk6sgGYBFDVdVkKLZ1ZEsAr
+	 zcL5+WjvjgSrJPo6srj1FMM8cYJWXyDv2t0wlmiGjQ7vbwOos2HDpttKna4DZiysBHR7X
+	 lW0S+QO3Ewh5zmlWUuk8+1ChE7RycAyNzjuR5H9fWHFd8xq328B+jVg7tv0lkmKNOEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f4uisT8p9JnTzIe9pr/uUPydYs8VxJnSgEI5rr4e6vQ=;
-	b=hUinGibc3JrJgxTKl7ADkuweHA9hQnP+sI0PvrqqRPnUukt1GhQL83W1mfGyQiImg/X3
-	 G6QucGN8O4i4k+w1RxtS+k7OiR3ZfDX1gT0wCeSwq8tAlxlljS7UecydeeIcVBMO6y3Bp
-	 rewIy9T3aJ5MWIvSswSECuuL47+TroVudKpot7ZGu3r2qZNHb28o+ugNw/xfJk9e+WuSQ
-	 qqAUuUqqpTIlitdX7e8q2760b+sMI20eRdTS4dLgr68LkZbGv+Xw83sZTy5tpcHx3XVBR
-	 hIUwHEkju4Ux3AzPcGuiLl6UEWLvn+8SmcjMh/qE/rRnJTXM8IRnq7TmvWJMIKuwqJQ==
+	bh=vcfc7mIeQmwb+q3gMH8dfNph42et8DWk5aQRLmasjSQ=;
+	b=EnupHguXkh70vPVmk0zxHlCHcvYVjXD+j5DM0G3fo1wAVRlSolV/OcAJ2uEClE1Qz9Cj
+	 oaLVYyfDTU+Q1DVDPYsF9GMdlrzWVw1W1r6myKUlccvLaYg6eHGBeheQM0C1SxoOW8uU/
+	 3yD08MWuQ7N6vIuiMfdKiZw6Sjyl5P2LnyFdstp81AOFD5q8ymV0DwVWnS21aGguqxK2q
+	 4omq248XnUzcH3sY5A3HxvI5aUq22lwzXCWKrn2q1IunxiXJ9DKxi6HvwUfctyydlyAEC
+	 o0IqJxgEmk17Gu8yNRouJh1QXwXLSnuRwZC7Sc4dTbtfono7OlaqsUxQgYOxZ7pgN+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZz2YK9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TyKJ6Hym;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCC5606A32C;
-	Wed, 18 Nov 2026 21:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86268606A325;
+	Wed, 18 Nov 2026 21:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZz2YK9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF1C1F000C4;
-	Wed, 18 Nov 2026 21:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TyKJ6Hym
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFAF1F000C4;
+	Wed, 18 Nov 2026 21:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038132;
-	bh=f4uisT8p9JnTzIe9pr/uUPydYs8VxJnSgEI5rr4e6vQ=;
+	s=korg; t=1795038135;
+	bh=vcfc7mIeQmwb+q3gMH8dfNph42et8DWk5aQRLmasjSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZz2YK9GFPE12FQfGN2whj4kYhIO3LtPZZ8Dgt2QLo+p9XknjywjXIZj5IXgnQRMR
-	 FE9Q9QGggSKWVQW42MIWNy1KaUTo/ruh2rM4cSVBdMcPVucZLb2yj3PBdgtuwfBdrL
-	 SvCB6ZbLlEBK2J7iVl5e+GT7yfjKoJRKsuUtL9Kk=
+	b=TyKJ6HymXBZxCpU8Egn283ZSROApHEW0htGpwIm8L9LouDebtL/G0twZBFGorYA1L
+	 O/yyfAQsIX3WQzRTm3FdffymOUnaby06gVNaiNQ/sKeNk2qTB681HSNNYGdkdp72l3
+	 V4zu2RMSY1C56HZjbA+VHFKGByTbn0vj2w9RwuGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
 	Anusha Srivatsa <asrivats@redhat.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1636/3318] drm/panel: Add new helpers for refcounted panel allocatons
-Date: Wed, 18 Nov 2026 15:37:38 +0100
-Message-ID: <20261118150410.833912073@linuxfoundation.org>
+Subject: [PATCH 6.6 1637/3318] panel/ebbg-ft8719: Use refcounted allocation in place of devm_kzalloc()
+Date: Wed, 18 Nov 2026 15:37:39 +0100
+Message-ID: <20261118150410.865173472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,94 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Anusha Srivatsa <asrivats@redhat.com>
 
-[ Upstream commit ed9c594d495deb676825489032cee0a03ce29bf9 ]
+[ Upstream commit b30a15a4e7e54b676d6c395e71daf5f286997731 ]
 
-Introduce reference counted allocations for panels to avoid
-use-after-free. The patch adds the macro devm_drm_bridge_alloc()
-to allocate a new refcounted panel. Followed the documentation for
-drmm_encoder_alloc() and devm_drm_dev_alloc and other similar
-implementations for this purpose.
+Move to using the new API devm_drm_panel_alloc() to allocate the
+panel.
 
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Anusha Srivatsa <asrivats@redhat.com>
-Link: https://lore.kernel.org/r/20250331-b4-panel-refcounting-v4-1-dad50c60c6c9@redhat.com
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20250401-b4-drm-panel-mass-driver-convert-v1-9-cdd7615e1f93@redhat.com
 Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Stable-dep-of: 4eeeac9d7c36 ("drm/panel: ebbg-ft8719: Set prepare_prev_first")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel.c | 25 +++++++++++++++++++++++++
- include/drm/drm_panel.h     | 22 ++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ drivers/gpu/drm/panel/panel-ebbg-ft8719.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-index 98df4788d096f..ea1f42cee44dc 100644
---- a/drivers/gpu/drm/drm_panel.c
-+++ b/drivers/gpu/drm/drm_panel.c
-@@ -336,6 +336,31 @@ struct drm_panel *of_drm_find_panel(const struct device_node *np)
- }
- EXPORT_SYMBOL(of_drm_find_panel);
+diff --git a/drivers/gpu/drm/panel/panel-ebbg-ft8719.c b/drivers/gpu/drm/panel/panel-ebbg-ft8719.c
+index e85d63a176d04..74b56ee42fa49 100644
+--- a/drivers/gpu/drm/panel/panel-ebbg-ft8719.c
++++ b/drivers/gpu/drm/panel/panel-ebbg-ft8719.c
+@@ -198,9 +198,11 @@ static int ebbg_ft8719_probe(struct mipi_dsi_device *dsi)
+ 	struct ebbg_ft8719 *ctx;
+ 	int i, ret;
  
-+void *__devm_drm_panel_alloc(struct device *dev, size_t size, size_t offset,
-+			     const struct drm_panel_funcs *funcs,
-+			     int connector_type)
-+{
-+	void *container;
-+	struct drm_panel *panel;
-+
-+	if (!funcs) {
-+		dev_warn(dev, "Missing funcs pointer\n");
-+		return ERR_PTR(-EINVAL);
-+	}
-+
-+	container = devm_kzalloc(dev, size, GFP_KERNEL);
-+	if (!container)
-+		return ERR_PTR(-ENOMEM);
-+
-+	panel = container + offset;
-+	panel->funcs = funcs;
-+
-+	drm_panel_init(panel, dev, funcs, connector_type);
-+
-+	return container;
-+}
-+EXPORT_SYMBOL(__devm_drm_panel_alloc);
-+
- /**
-  * of_drm_get_panel_orientation - look up the orientation of the panel through
-  * the "rotation" binding from a device tree node
-diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-index 10015891b056f..daaa259ef898f 100644
---- a/include/drm/drm_panel.h
-+++ b/include/drm/drm_panel.h
-@@ -269,6 +269,28 @@ struct drm_panel {
- 	bool enabled;
- };
+-	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+-	if (!ctx)
+-		return -ENOMEM;
++	ctx = devm_drm_panel_alloc(dev, struct ebbg_ft8719, panel,
++				   &ebbg_ft8719_panel_funcs,
++				   DRM_MODE_CONNECTOR_DSI);
++	if (IS_ERR(ctx))
++		return PTR_ERR(ctx);
  
-+void *__devm_drm_panel_alloc(struct device *dev, size_t size, size_t offset,
-+			     const struct drm_panel_funcs *funcs,
-+			     int connector_type);
-+
-+/**
-+ * devm_drm_panel_alloc - Allocate and initialize a refcounted panel.
-+ *
-+ * @dev: struct device of the panel device
-+ * @type: the type of the struct which contains struct &drm_panel
-+ * @member: the name of the &drm_panel within @type
-+ * @funcs: callbacks for this panel
-+ * @connector_type: the connector type (DRM_MODE_CONNECTOR_*) corresponding to
-+ * the panel interface
-+ *
-+ * Returns:
-+ * Pointer to container structure embedding the panel, ERR_PTR on failure.
-+ */
-+#define devm_drm_panel_alloc(dev, type, member, funcs, connector_type) \
-+	((type *)__devm_drm_panel_alloc(dev, sizeof(type), \
-+					offsetof(type, member), funcs, \
-+					connector_type))
-+
- void drm_panel_init(struct drm_panel *panel, struct device *dev,
- 		    const struct drm_panel_funcs *funcs,
- 		    int connector_type);
+ 	for (i = 0; i < ARRAY_SIZE(ctx->supplies); i++)
+ 		ctx->supplies[i].supply = regulator_names[i];
+@@ -231,9 +233,6 @@ static int ebbg_ft8719_probe(struct mipi_dsi_device *dsi)
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
+ 			  MIPI_DSI_CLOCK_NON_CONTINUOUS;
+ 
+-	drm_panel_init(&ctx->panel, dev, &ebbg_ft8719_panel_funcs,
+-		       DRM_MODE_CONNECTOR_DSI);
+-
+ 	ret = drm_panel_of_backlight(&ctx->panel);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
 -- 
 2.53.0
 
