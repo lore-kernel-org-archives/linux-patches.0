@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017647;
-	b=pubY/SPrXrQCgI13jgnGaMSeBHgnw6iXSFO/hcN3H3z8FuGKBtoWcbBJxkWwqcZCEDyg
-	 wdvGywYsmb8H+HWss0to2IxhqO5gsLC1IU42+K+uR4YbkuPS4ZpfaZb6z2/tSXjtxuyvQ
-	 +H3RuCXhmfDBIXwLrLbJxgEZ25ysJeNl/ouwa36ubRx3w96JOPPxhPHloFmnep2mmxMjW
-	 ZTf0N+MVVi/D6fRuNj3aVKt/HL9RyWGgLdRpC4MzNPNOjooP0agGM0oGc+Q7jJ5ej2ok2
-	 LGRRmfTubyHSFgs03rb3aoJjUUc5BxRJRqhLCcABVAzaffSq77Pxj3mGfmxndt4kprg==
+	t=1795017650;
+	b=QvZ+rMQ1xI6QahM4yu65uD620otpHNysNCAESn8A6i4LgC68l4oJP19AYcR1s5qh+hNy
+	 yti9Mm+zIyKeABxOwUnBWX6ZbelAm6P5oZ0u1ngkQIl8TWq7KQXYBLMfJzBUYTEoadqXQ
+	 HtDlRG2jC17ePknhEtMKkkjTq1e7lABlpqmDiDnPcFASakQ6N9tD28+kWJj5rhXNhGP4o
+	 iDhCeZh0ZQBX+BPVOWzpV5U8XCJnIjqjiUh2IhaYThMKw9aVq9BXVLosvnwH3FmPeN2gM
+	 HYI7jTIV4iSqve4UL3yp1BNk43rsUwIY/grr0j1E/Ay8FgJvrG/sVb6fWmZgxYCTo1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017647;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017650;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QjRq6KbwouGiDKbC3QHThLjtnu2WV9rJKhs7YFJgraw=;
-	b=RAg3LeRc5VAKgK9jaAofO82LY85rtddACafI7tspTPfc6HuSUjVQZsUJPVaCJKlhXp8m
-	 dKlFOW0+DwneNur0ERxhBX0pZ7gFaJwRhE6moIDdbmMnnfNfTFhnWtHJ9/Oa2jPqUQYoL
-	 pwyO/IETpASE2mJmKWhkr07n2mGB1G5zTwt46rychYtioPNltL2cIExizTAaSWeezmIL0
-	 U7Xy4xr0rTvbvEgmZR0Q4hV0UBzRg/7IQ0JzT7mcohLwD4eXpT0zrI6cX/FYYBLpgmVBI
-	 Bg11+DX2SpbocaC4qm8kKfDduAdX2YR34LMp6S5gmOTv1nLonZym55LW2MgeKmEo5BQ==
+	bh=Pmrw+n4oc0ORVUEclBs6aqMoosDTr/+ffhQOj22w4LM=;
+	b=JiHkifZaiEb/3QkVJSAhOBtLUvKaLK7v+3/7cLh6o0vanqIcMWDDsmgm6a/E7edAbXzI
+	 McoxWB6K/LWiZ4MHPjRZLFFIM1rL5ukNqDgUchiIPc1GE/B6U6DLUReUEzE5iTzS7wKaP
+	 1eIP2s8avDN1XEnywGMQbMzkT1bDcHWGJ1A3Yc4AVJCvdZ/Hz3Z7rzwO/JXhxpTxr8v8V
+	 n0Ku+PRDVTbVKAwBs6De5NWEiGPL4F4KgQGfApy5H9BmML8wqz2949jC0jjbVdfWRNfjb
+	 ooxa0L7H5i2eZj6bG7oUhH4R954BrLTfgfuIojXpDHLtZTNgr3CYRt5Hx1OffWu07TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqI9krRn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCs0uYNo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A18F606A334;
-	Wed, 18 Nov 2026 16:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CD9606A31C;
+	Wed, 18 Nov 2026 16:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jqI9krRn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C945F1F000C5;
-	Wed, 18 Nov 2026 16:00:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCs0uYNo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DB71F000D1;
+	Wed, 18 Nov 2026 16:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017647;
-	bh=QjRq6KbwouGiDKbC3QHThLjtnu2WV9rJKhs7YFJgraw=;
+	s=korg; t=1795017650;
+	bh=Pmrw+n4oc0ORVUEclBs6aqMoosDTr/+ffhQOj22w4LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jqI9krRnRTqHZFlyI0W06jw/GZeFqjbZpeVYV3ltKJpYOajDzuN1ox2SV3ie38BtF
-	 MRFOjYCQVPo6rWl95AL33ZB2HcciOizvuXl6HHJzvOJMoGZLWp5qe2527blHEUstbN
-	 8zpJwIVlRXRItAsHzShqxTWZRVy19j0G5MLnC604=
+	b=MCs0uYNo15QcNCK2nfdwvwOeJNUYTTRGJQkxZ2SSqVyq51yHPmrL1MlnHBMQtUrTY
+	 7ZCUpCkKkv1NXZqVs++c+73UZI5gS5NkcK5Lx94fdve0kP6eE4H/J6QoV2NAw3j3Aq
+	 iWJEq5oek4P157FgLf0ezcY+qdPF1+1NyAF4H5c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Liu <xin.liu@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0918/2651] arm64: dts: qcom: hamoa-iot-evk: use on-board crystal for PS8830 retimers
-Date: Wed, 18 Nov 2026 15:35:58 +0100
-Message-ID: <20261118150320.943055522@linuxfoundation.org>
+Subject: [PATCH 7.3 0919/2651] PCI: aardvark: Disable PHY on probe failures
+Date: Wed, 18 Nov 2026 15:35:59 +0100
+Message-ID: <20261118150320.979104245@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,68 +69,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Liu <xin.liu@oss.qualcomm.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 723ce02feb131a81224a281872028d584b69b0ca ]
+[ Upstream commit 28cc5bc5a6c6cffbe7ba27c0acbfbe06747fa173 ]
 
-On the Hamoa IoT EVK, each of the two existing PS8830 retimers has its
-own 25 MHz crystal wired to the retimer's XI/XO pins. The reference
-clock does not come from the PMIC, so the RPMH_RF_CLK4/5 references in
-the retimer nodes are wrong: they keep those RF clocks enabled for
-nothing and describe a connection that does not exist on the board.
+advk_pcie_setup_phy() initializes and powers on the PHY before the
+emulated bridge and IRQ domains are created.  If any of those later
+initialization steps or pci_host_probe() fails, probe returns without
+powering off or exiting the PHY.
 
-Fixes: c11645afb0e2 ("arm64: dts: qcom: Add base HAMOA-IOT-EVK board")
-Signed-off-by: Xin Liu <xin.liu@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260914101233.981643-3-xin.liu@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Replace the direct returns with staged cleanup labels.  Remove IRQ
+domains in reverse order, release the emulated bridge allocation only
+after successful initialization, and disable the PHY on every failure
+after advk_pcie_setup_phy() succeeds.  A setup_phy() failure still
+returns directly, so its partial internal cleanup is not repeated.
+
+Fixes: 366697018c9a ("PCI: aardvark: Add PHY support")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260910221725.91980-1-mhun512@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-aardvark.c | 31 ++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-index 9fa86bb6438ec..b8bb9bb70db72 100644
---- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
-@@ -35,6 +35,18 @@ mcp2518fd_osc: clock-40000000 {
- 			clock-frequency = <40000000>;
- 			#clock-cells = <0>;
- 		};
+diff --git a/drivers/pci/controller/pci-aardvark.c b/drivers/pci/controller/pci-aardvark.c
+index ecb81ac730199..2bbdb73cfb45b 100644
+--- a/drivers/pci/controller/pci-aardvark.c
++++ b/drivers/pci/controller/pci-aardvark.c
+@@ -1864,28 +1864,25 @@ static int advk_pcie_probe(struct platform_device *pdev)
+ 	ret = advk_sw_pci_bridge_init(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register emulated root PCI bridge\n");
+-		return ret;
++		goto err_disable_phy;
+ 	}
+ 
+ 	ret = advk_pcie_init_irq_domain(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize irq\n");
+-		return ret;
++		goto err_cleanup_bridge;
+ 	}
+ 
+ 	ret = advk_pcie_init_msi_irq_domain(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize irq\n");
+-		advk_pcie_remove_irq_domain(pcie);
+-		return ret;
++		goto err_remove_irq_domain;
+ 	}
+ 
+ 	ret = advk_pcie_init_rp_irq_domain(pcie);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to initialize irq\n");
+-		advk_pcie_remove_msi_irq_domain(pcie);
+-		advk_pcie_remove_irq_domain(pcie);
+-		return ret;
++		goto err_remove_msi_irq_domain;
+ 	}
+ 
+ 	bridge->sysdata = pcie;
+@@ -1893,14 +1890,22 @@ static int advk_pcie_probe(struct platform_device *pdev)
+ 	bridge->map_irq = advk_pcie_map_irq;
+ 
+ 	ret = pci_host_probe(bridge);
+-	if (ret < 0) {
+-		advk_pcie_remove_rp_irq_domain(pcie);
+-		advk_pcie_remove_msi_irq_domain(pcie);
+-		advk_pcie_remove_irq_domain(pcie);
+-		return ret;
+-	}
++	if (ret < 0)
++		goto err_remove_rp_irq_domain;
+ 
+ 	return 0;
 +
-+		clk_rtmr1_xo: clock-rtmr1-xo {
-+			compatible = "fixed-clock";
-+			clock-frequency = <25000000>;
-+			#clock-cells = <0>;
-+		};
-+
-+		clk_rtmr2_xo: clock-rtmr2-xo {
-+			compatible = "fixed-clock";
-+			clock-frequency = <25000000>;
-+			#clock-cells = <0>;
-+		};
- 	};
++err_remove_rp_irq_domain:
++	advk_pcie_remove_rp_irq_domain(pcie);
++err_remove_msi_irq_domain:
++	advk_pcie_remove_msi_irq_domain(pcie);
++err_remove_irq_domain:
++	advk_pcie_remove_irq_domain(pcie);
++err_cleanup_bridge:
++	pci_bridge_emul_cleanup(&pcie->bridge);
++err_disable_phy:
++	advk_pcie_disable_phy(pcie);
++	return ret;
+ }
  
- 	wcd938x: audio-codec {
-@@ -745,7 +757,7 @@ typec-mux@8 {
- 		compatible = "parade,ps8830";
- 		reg = <0x08>;
- 
--		clocks = <&rpmhcc RPMH_RF_CLK5>;
-+		clocks = <&clk_rtmr2_xo>;
- 
- 		vdd-supply = <&vreg_rtmr2_1p15>;
- 		vdd33-supply = <&vreg_rtmr2_3p3>;
-@@ -860,7 +872,7 @@ typec-mux@8 {
- 		compatible = "parade,ps8830";
- 		reg = <0x8>;
- 
--		clocks = <&rpmhcc RPMH_RF_CLK4>;
-+		clocks = <&clk_rtmr1_xo>;
- 
- 		vdd-supply = <&vreg_rtmr1_1p15>;
- 		vdd33-supply = <&vreg_rtmr1_3p3>;
+ static void advk_pcie_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
