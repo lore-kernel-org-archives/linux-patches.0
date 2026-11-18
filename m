@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059041;
-	b=ZLfFO1upUMF9NVJ63Q+yBERFLaSWymmxAmoaiLIfw04vzr6my4nh1FDFwR8iAC95f+ax
-	 JdV7CuTD9s3Fqutgu1fAS7BdAFl52pjnGhd3Q3NZ1L85FBRTUa1kyigp/STvedrqS+Axi
-	 8Wi7UiN1wfrQoJGyL6K3mA8TEpAfSh+zXr8ogewNfD6GFikL0I+zIbbYJcYe951gtFsQt
-	 P4izGdNMlLf0ayDPxOt9KQNKxZPgGkiORIMAnVxEo1Xeo8T4hot84SFZeAIJgrT1jmt+O
-	 MSYO0ldrJlQutxC8W2juQbfX45LVo7zAOCGTnKocdS0TqKpoJMNu0XVYHX/ech0ITBw==
+	t=1795059044;
+	b=EZmjenYp8PUbcT037R5Woz5kxFq095d3Y/OxCIiyjKvFoFk3emdI7vAUyviTSHEabc8C
+	 Ixt/iR/tZG0M+FJImfvx0uYuTaa5hI5CGj5wTPmOdwkVALLPltEVNIuzUqBUUteWk9Ot4
+	 XP+SiYrmmRZRtXwkRR4BtD59Ju3CAO7naUJFza67YZ/vrgv4bYehDdfGK+0sy4MpEfu1c
+	 59hBTkut0ih+Xo+d+rPfT0JlInn5vd5Mu0MZ+sytQSw7jLOI8X0m0zPq42Fv+9VdwmRUu
+	 OYYUDFDFG/kE9kAfnAYpbwNeTwRK1oVWldfERG6c7LXJiNGHO33dNuibJgvrXctcemg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6JgkootdIALNeA4iVoeZ1RH8LiEvjDXPVONX7ql5Us8=;
-	b=WNP8IpEQtBeIXlMSMMeHqbFmIZ3IY7jHYspoU6s9qMbOsi47rV+MEj6wlZpJgUJw36xl
-	 VNQFABk9PRwfyaLAyxiJUb9A69X5f1rPKfyFlYUIQYR4tyfnwE/zjeLEsDHjrL9ginHDf
-	 75e9zwK4RP2W9CfHo/mlq+5Q+221Xzy+ze8cEKk1nH+xbFv3/TsFCw4cTkomJ9oeOoS72
-	 St7jFypif7pXZXxoVBz5990lgy4cwUO4sZk+MpqFfTsIiV07fCuDsyyKlaVKgdjkT583k
-	 3tXUaufqjG5RIWW9nLh40DkqqCKXxLe+Dlj+bY08DcwU7eHxjXgBCu0jDODLocRmwhA==
+	bh=ZOYilem7dTjHmFQVXvdx/V5Ry1Iy0CrBrql28ZdrNdc=;
+	b=nzVdPpwee+OK4W07Wvz+G8JHokxkqu1mAbR4ORmWfYLsC8q1y3FHysov7o2gOU7+VktS
+	 IJeaYNMGQEc4rAg26UCKpA2o4Fr/NKZMRMSIf8Mn4QVbrzm/2WMHXzH5hVBIP9YOOstkC
+	 /E8urULugitywY3yCn40cvkNiymiGkd5U22E2gEvI8OnARUtS5+jRc08LjXWLjiy0iynO
+	 VB3QW+x2n4ib6YTEM5HI9CkeXGvBUo6w5kLkG2Jhs238NIltGCjhxYbfI76VS59afzdzm
+	 vsmnnAv0uwQXvKROHIiy/WtIyPb280FDPR4SlvID9gW18R5UnQjNpHTNbPs5D8ldbDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iIPWhzIY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HXGJsqqk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE2D606A320;
-	Thu, 19 Nov 2026 03:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F400E606A31C;
+	Thu, 19 Nov 2026 03:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iIPWhzIY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9031B1F000C4;
-	Thu, 19 Nov 2026 03:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HXGJsqqk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A371F000C4;
+	Thu, 19 Nov 2026 03:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059041;
-	bh=6JgkootdIALNeA4iVoeZ1RH8LiEvjDXPVONX7ql5Us8=;
+	s=korg; t=1795059043;
+	bh=ZOYilem7dTjHmFQVXvdx/V5Ry1Iy0CrBrql28ZdrNdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iIPWhzIYZL1w6ynIVz57T3FV50pSqr1jYZUC89ZoqJYNvpf75kPeX+29wuhFVhFzw
-	 bDldtPiv5zEY9+YcHrp0L7XgMimhJYeoLR3lgr4zpMEdgU5NAzKpZd9ccd4XcDplau
-	 vwUORM6ri21nG5yRXpYzBYqJvAGKBIep1I7j/Xlo=
+	b=HXGJsqqkDUJ5CXP5bAspBQWwjOQf3Ppo0y0KspYYNhfIbBA9Dj9TORkyL4yG8VLi4
+	 you3PUooOFFHrW4hBloTor0pYrKzcUxBFVU3okRmmlQzJ7lZP0+H9MuPwRsc7VasbH
+	 Q/fN9m9OjNjV24uEWG6xr9KXr1CJwSLgSVj/LVjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0699/1848] vringh: reject empty / undersized indirect descriptor tables
-Date: Wed, 18 Nov 2026 15:45:37 +0100
-Message-ID: <20261118145945.136909640@linuxfoundation.org>
+Subject: [PATCH 5.10 0700/1848] hwmon: (corsair-cpro) Cache fan target only after a successful command
+Date: Wed, 18 Nov 2026 15:45:38 +0100
+Message-ID: <20261118145945.172224305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,52 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 60a792b97933a686316737838cd007d27963011e ]
+[ Upstream commit e2c26431b4e47892378582a414b4bbaa9edf1798 ]
 
-move_to_indirect() validates an indirect descriptor table only with
-"len % sizeof(struct vring_desc)".  A descriptor flagged
-VRING_DESC_F_INDIRECT with len == 0 passes that test, so *desc_max is
-set to 0 while *descs points at the empty table.  __vringh_iov() then
-copies one struct vring_desc from descs[0] -- 16 bytes past the end of
-the table -- before the "indirect_count > desc_max" loop detection
-aborts the walk.  The over-read value is discarded when the walk aborts
-and is never used to map anything, but the access itself is out of
-bounds.
+set_target() updates the cached fan target before sending the command.
+If the command fails, subsequent fanN_target reads report the failed
+request instead of the previous value. For example, after successfully
+setting 1200 RPM, a rejected request for 1800 RPM returns an error but
+leaves fanN_target reporting 1800. A failed request also replaces
+-ENODATA when no target has been successfully set.
 
-Reject any len smaller than one descriptor, alongside the existing
-stride check, so an empty table is refused with -EINVAL and no
-descriptor is ever fetched from it.
+Update the target cache under the existing mutex only after
+send_usb_cmd() succeeds, as set_pwm() already does when invalidating
+the target. Preserve the previous cached value and return the original
+error on failure.
 
-Fixes: f87d0fbb5798 ("vringh: host-side implementation of virtio rings.")
+Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Message-ID: <20260926160755.21485-1-fangxy@xiaopeng.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261020160941.36787-1-pocj8ur4in@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index ba2c680b940a1..d7096bd8e4c8d 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -170,8 +170,9 @@ static int move_to_indirect(const struct vringh *vrh,
- 	}
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 05bf1bbdc4c0a..06b48599fa660 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -208,10 +208,11 @@ static int set_target(struct ccp_device *ccp, int channel, long val)
+ 	int ret;
  
- 	len = vringh32_to_cpu(vrh, desc->len);
--	if (unlikely(len % sizeof(struct vring_desc))) {
--		vringh_bad("Strange indirect len %u", desc->len);
-+	if (unlikely(len < sizeof(struct vring_desc) ||
-+		     len % sizeof(struct vring_desc))) {
-+		vringh_bad("Invalid indirect len %u", desc->len);
- 		return -EINVAL;
- 	}
+ 	val = clamp_val(val, 0, 0xFFFF);
+-	ccp->target[channel] = val;
  
+ 	mutex_lock(&ccp->mutex);
+ 	ret = send_usb_cmd(ccp, CTL_SET_FAN_TARGET, channel, val >> 8, val);
++	if (!ret)
++		ccp->target[channel] = val;
+ 
+ 	mutex_unlock(&ccp->mutex);
+ 	return ret;
 -- 
 2.53.0
 
