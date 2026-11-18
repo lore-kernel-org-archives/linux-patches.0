@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055703;
-	b=hMlyq7qOLo/YKh/Qtblz+dnpwLyYxPIl1WZfOTjdq9KuxXX+ZQukh0rQsn3DUWJzykWA
-	 1i/LWsSFDnQPAWAtX1kn/LfSpFjx9KvLarz6E/4UVGKlKYidHcYZaNAWGU5bV+rOb7MCN
-	 2IB8H+LyGxnMaCPhpvJzGVL7LSy5tREJ7AdnO0dTe4Ou0xkh1KsNeoM55iuJ2jBkB4FYu
-	 H5W1ISG11gyuxaVhIB9iTi+z0chSF5+vfYdRHR/oRNfBu86WUoUc0GDAL9ZR6hog7uzYd
-	 Y8fSIbVEG8g25LSnqSq9uqYdq9jBdT9Nwdocefja+IewwPEhFpLlb0+gIoi1oujNFxQ==
+	t=1795055706;
+	b=IDGQEPzRM4k3d9WFzo4tnHOeoIF82emMxb8FxZM9f1sRvL1JQNZ29SXXcTJMnRcPokaR
+	 MaeFivN3JpQomaiXAJLZ/iJfIc1ya1fzg+zae8asZwCOnQVpkFMbPLMT7FD02i8xTAKw5
+	 wAL5UOl8g2lGYJuOztnXk+rYc+RieUx2ECVcnZRMGqfmLurah27pv23F/5QDGlKOJAEjo
+	 hpil7EkTft3y1BIOJyAr0c5yqeObhY1u1gm1XhylHQHjDhJ+ibeCpclbUExY/lypKfn9z
+	 cw7FE5gw2Xgtf0cVhG0+uQu3r/Y0vilxK4VNxAhtiUlhy8xF5DAi7xncaUep8ajlFoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1CYH6NTUFRnZOsu9j8qU27mj8R3db7hEFd07HFrzD4Y=;
-	b=2AvVzihAOfc1qKEd2fa39AeTTBb3b4N8wsNmOGiHySHzs+1ERioor5eRjzxYEVvuvPvL
-	 couaMKhs7AZCYnngbWZ+VviVgnNXQMQj44ehjluZvcBtZBGLqQpUhaJq+mSdM+XaLo5BY
-	 0mXJ2w0IfwLfByLN/wjnbFIUPi+Jv8gTZtGWGmoaOqBmcQ5v6bWcfmqeAW/UkvDXM0gY5
-	 3TDtwozRWjtDXVd97cSpW+Medl8HA7CN6reknRA5uBtsdGqg/yzEglRRwVQJ58QX8mn84
-	 M0RkKyHH+5oJoqtvev8bQg+JVJMOlhl3ODk/HVU9Cdn6aoGGKLv5Igb2l0K8+0sP5AQ==
+	bh=MD5nbL5dXPJvp16Wp/sq6wBn08jbF2K1Qj+X49YNNDs=;
+	b=e25VOvci777mjMj5e49009uHaCM5vGwQ8XsB9vn3FjHMS3AZdsgKpdXf2emZPMMqgu/I
+	 Pyf9EAq7gxWjA6faO+9kNi3yJfwUM50UJJ+OKt0a+YaQ1ww5xPVqxfFU8tRtyZBXMkVRf
+	 5mrmzeWpiYzQT1Ri+JkSwISlGtNLDofIQBv/sxeCv41OFwJYqea5fzLo4H+HyIIRjwzNa
+	 V6GQoMwz3ysYEckg8OjyI6PAWOIKSlxknrMTWrOt0FH3h7a+wGvztzmXcxd4bcg5rv/4D
+	 GLhdYOuDQWx6bkN1yU14FOsZWzOiNFIjRKtKxKV0Qg6htwIW41JWl+KMPhI0psoMElQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W440+NUV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njj8ubTU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8673606A32A;
-	Thu, 19 Nov 2026 02:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0A606A31C;
+	Thu, 19 Nov 2026 02:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W440+NUV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09EB51F000C4;
-	Thu, 19 Nov 2026 02:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=njj8ubTU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F621F000C4;
+	Thu, 19 Nov 2026 02:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055703;
-	bh=1CYH6NTUFRnZOsu9j8qU27mj8R3db7hEFd07HFrzD4Y=;
+	s=korg; t=1795055706;
+	bh=MD5nbL5dXPJvp16Wp/sq6wBn08jbF2K1Qj+X49YNNDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W440+NUVU8e8gI90HAYi0ug4XeQUXgtmBQyqDsnhfeRc8XcoSjWAvlfEepd+C6r7p
-	 2CwDr3qz3KFIrYNIcMjjbt8lUBOTrjyEOGdlzaZ9bSjkPyjfxzu55meG4kZ6K8s0zx
-	 J8JGGYhUOPh45DMiHhvDApuV+WcTdpw1p5pX71t8=
+	b=njj8ubTUsKil87WDNTQRITvR6Qc9Vd8Q9LkLTcK/IN9eECFzJRXKfF/ZEe6t/NqKW
+	 I30McP4HKOll6RXHYKFSE1tOTnMMN9+qSBzorDu8lBy0h0bc7WB6OudCgGgCiYoKaS
+	 SfOqXzwM0uB9zTm6bEnsSgj80e+mLpY8cl1/KTpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Icenowy Zheng <uwu@icenowy.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1684/2214] rtc: bd70528: properly enable wakeup
-Date: Wed, 18 Nov 2026 15:56:00 +0100
-Message-ID: <20261118150119.200366039@linuxfoundation.org>
+Subject: [PATCH 5.15 1685/2214] dt-bindings: vendor-prefixes: add Source Parts and Lctech names
+Date: Wed, 18 Nov 2026 15:56:01 +0100
+Message-ID: <20261118150119.239919997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,47 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-[ Upstream commit cb8a6249236fd970fc3418d5d2b27dc37376f3ff ]
+[ Upstream commit eef696356f58a4f5c17ec5d7cb1d495f75edf62e ]
 
-Wakeup on RTC alarm now only accidentially works when wakeup for the power
-button connected to the same PMIC is also enabled. Fix that by properly
-specifying the wakeup irq.
+Source Parts Inc. [1] is a company that makes a series of SBCs, SoMs,
+etc under a brand called Popcorn Computer [2].
+Shenzen LC Technology [3] makes various boards and related products
+around IoT and AI technology. They used the "Cherry Pi" brand name before.
 
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 32a4a4ebf768 ("rtc: bd70528: Initial support for ROHM bd70528 RTC")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260922-rtc-bd-v3-1-7f2580c55d58@kemnade.info
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Add both companies' names to the vendor prefixes list.
+
+[1] https://source.parts/
+[2] https://popcorncomputer.com/
+[3] http://www.chinalctech.com
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20230319212936.26649-4-andre.przywara@arm.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Stable-dep-of: 538f8ec6b9c7 ("dt-bindings: vendor-prefixes: Add Sophos")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-bd70528.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/rtc/rtc-bd70528.c b/drivers/rtc/rtc-bd70528.c
-index 59b627fc1ecfa..7f10f2f4f468b 100644
---- a/drivers/rtc/rtc-bd70528.c
-+++ b/drivers/rtc/rtc-bd70528.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_wakeirq.h>
- #include <linux/regmap.h>
- #include <linux/rtc.h>
- 
-@@ -318,6 +319,10 @@ static int bd70528_probe(struct platform_device *pdev)
- 	device_set_wakeup_capable(&pdev->dev, true);
- 	device_wakeup_enable(&pdev->dev);
- 
-+	ret = devm_pm_set_wake_irq(&pdev->dev, irq);
-+	if (ret)
-+		return ret;
-+
- 	rtc = devm_rtc_allocate_device(&pdev->dev);
- 	if (IS_ERR(rtc)) {
- 		dev_err(&pdev->dev, "RTC device creation failed\n");
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index afe41204f4a56..42e6bb3df8d8e 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -649,6 +649,8 @@ patternProperties:
+     description: Lantiq Semiconductor
+   "^lattice,.*":
+     description: Lattice Semiconductor
++  "^lctech,.*":
++    description: Shenzen LC Technology Co., Ltd.
+   "^leadtek,.*":
+     description: Shenzhen Leadtek Technology Co., Ltd.
+   "^leeco,.*":
+@@ -1132,6 +1134,8 @@ patternProperties:
+     description: Solomon Systech Limited
+   "^sony,.*":
+     description: Sony Corporation
++  "^sourceparts,.*":
++    description: Source Parts Inc.
+   "^spansion,.*":
+     description: Spansion Inc.
+   "^sparkfun,.*":
 -- 
 2.53.0
 
