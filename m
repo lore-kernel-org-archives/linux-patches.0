@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058951;
-	b=cEX37tx9LC+96ycX7TCqNNxLOOiEEedghwAuo6FlLVHpFOXOhHrDF7K/eZ5kPYPkAQoq
-	 hYlJJCbT64TsnE9jxR/2JGAl6MkrKNixyJLy6oAWdPnv9oY9enAd4/hXFtCIFDbKWJVEx
-	 8DFmRd5YbgSAV5WTbCmV4jXKXGTgrx821hbfuqM7kJIFHiLgfk52d/XaoEOdgIWB8ZhC8
-	 8k0nWTuHciMbOgdYXYgQFaY1fFzpCnZ+uh+aDT2BtwCeOF7spDlJtcjH+9W5d5FqXQbhP
-	 PSEeKo8gao59h8MV1hm0UWySY9p7SWZ1HsjaAHtO+FZP8+SP0Uz4idxCyL3i08w5MXA==
+	t=1795058954;
+	b=EbUQP3pS771EloR1X2oBwlysDRhR0Xn8aTjipiLqabSonyBkMgtLPnihfh+CigvN/usg
+	 izpt0iXKcgkZFrR2ADosBMDhy7+k+Mptw0vE8VYFN1N0nB4YVKSp8FxbJS1z8RDzLzTk+
+	 KZQgfO9COHPC01q2EL/gh7NN6ImVzczBZGFATfSzcQetG8JCxA1bkjpNjC8gu0Y00FOIC
+	 Upif1EGGPO7OEUT8wEL3uXGBHX2s+diDyIUVm8walFUWmV9x0BSwbnUcZffdni9WRrIFB
+	 gfB8e6jtGqe/GnAIOVMgz4aJ041JKWaid7IZ+pZGSghVXdU1D6cxy0n6dx7wTx1lucg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6gcRc9JuaHao65SIeN7NFFTtBe30F9GKUsP6EGkrXR4=;
-	b=ND5vXAWQZwZI0jAhtVYxRuLqwWMrrsBoDJ2v5uXTsHyAnvsduMgQNB1e3OLVTM9n17y7
-	 38VJFi1N56qngPDpwZPFNOrOAX9tSij5Gwafaav+e0P383UsJveZ5kInqbCJCsUAmgiYY
-	 hwTRvk/BZRo5Z6lPPUX0kF0EgQKJziMD6LGBeywJ/XSCQpk2qHu4aKMT+V0Z/1DO7uGos
-	 W4GQiV351oj6Y+YravPKU9wrPbtjf4NnHlYWPi3r5FozPKLOBPGzl1u2DbGLJm2qJooNA
-	 Wht6Cle/Df//mPsTXcmiIEAaxPetuaQuciOO+pSOqU2vyrfOBOumUdrf+h9zuNBGhSQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CqtMg9BS9Fk88cqT74MdffB8YyByFwK+ApwkMVZrgAU=;
+	b=EHJIBI/pie7HmFxG71OPOlUwwH994BK6yJNrANnd8TQBTiXlpTPophSbqkPOMu7/LsJR
+	 hdMtr6ZrmMdvXJ7yZWKeLqvD6ypf2/grY1OM2Nii7OFEkeV1b5cm9NakbY/jaX23IUxXe
+	 /kldPAJYKAr1K54un7jyhmfvuNPalGUQ1bFMLOEdVqFD8v2IdiALjEZtJ/3oFk7qstb4b
+	 GkXt2FPh6bwTPV2PgXCDBSFyj+XJvZEsIVibD5PuBNu7IXFuGnyiD2nvaQXuiHn9IMl5N
+	 9LW/G1KIw4feDTwBauVlBzN6sLDNszxhPiWliWyLyPOsntg9n6gjT84dZRCLjkcDvfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m3eD5jLp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8a8cZcW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4E2606A320;
-	Thu, 19 Nov 2026 03:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DD0606A320;
+	Thu, 19 Nov 2026 03:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m3eD5jLp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF241F000CB;
-	Thu, 19 Nov 2026 03:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O8a8cZcW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FFC1F000C5;
+	Thu, 19 Nov 2026 03:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058951;
-	bh=6gcRc9JuaHao65SIeN7NFFTtBe30F9GKUsP6EGkrXR4=;
+	s=korg; t=1795058953;
+	bh=CqtMg9BS9Fk88cqT74MdffB8YyByFwK+ApwkMVZrgAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m3eD5jLp1bfaZJDQ8pRIi68bGLKKSSyqe+EQy70ZPT3Rq9CD3BA85vUfYNwPnSp60
-	 FeHDw1mXPEehw28GGKC0oHVlSujI96bYD5uqRDEDNF0EWz9YTx2/GYKu7qIsiZgnXm
-	 ekFOH75QT5TgREqTx9zz/ZpTNxdkHXrEp1xStx8E=
+	b=O8a8cZcWcTf6fuTkHUF8+B9qDjopO8AffUWju6+bJLDVYmXIQPzFHl0hHue72/kRS
+	 avh1NN62V5DP7gSFYfhpVxw30McUHo+zDV8eR27z2rZ7JfbWu3LtRkz8qI41LIIbrZ
+	 7N3o3stIgyM5o34vyQp4QQbC+kZe8gjXWsaeN7Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0617/1848] ovl: take a snapshot of the name for copy up
-Date: Wed, 18 Nov 2026 15:44:15 +0100
-Message-ID: <20261118145941.107269354@linuxfoundation.org>
+Subject: [PATCH 5.10 0663/1848] pwm: tiehrpwm: Clear period on disable to allow reconfiguration
+Date: Wed, 18 Nov 2026 15:45:01 +0100
+Message-ID: <20261118145943.515465201@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,98 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 65bf000962a33ec9d2488e4e1797b6cf630abcbb ]
+[ Upstream commit e74b9a7ee50071aad25d3989bf985292f90b0c6e ]
 
-The copy up of a directory reads a freed dentry name when a lookup
-moves the directory at the same time.
+Both channels share one period register, so ehrpwm_pwm_config() rejects a
+period differing from the sibling's period_cycles[]. That value was cleared
+only in .free(), not in .disable(), so a stopped channel kept blocking the
+sibling from switching to a new frequency. Clear it in .disable() too.
 
-A pointer to the name of a dentry is only valid while something stops
-a move of the dentry. ovl_do_copy_up() keeps a plain copy of
-c->dentry->d_name in c->destname, and ovl_copy_up_start() only keeps
-ovl_rename() away. When a lookup finds the same directory under another
-name after a change to the lower layer, d_splice_alias() moves the
-dentry and frees its external name.
+Testcase:
 
-With a delay in ovl_do_copy_up(), a chmod of a lower-only directory with
-a 60 byte name raced with a rename of that directory in the lower layer
-and a stat of the new name, and KASAN reported a use-after-free in
-lookup_noperm_common().
+  cd /sys/class/pwm/pwmchip0; echo 0 > export; echo 1 > export
+  for p in pwm0 pwm1; do
+    echo 1000000 > $p/period; echo 500000 > $p/duty_cycle
+    echo 1 > $p/enable; echo 0 > $p/enable; echo 2000000 > $p/period
+  done
+  echo 1 > pwm0/enable	# before: -EINVAL, after: succeeds
 
-Fix this by using take_dentry_name_snapshot() for c->destname.
-
-Fixes: 829c28be9bb9 ("ovl: use d_splice_alias() in place of d_add() in lookup")
+Fixes: 01b2d4536f02 ("pwm: pwm-tiehrpwm: Fix conflicting channel period setting")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: adapted snapshot handling to caller-side destination-name initialization and direct-return error paths ]
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20260929120806.2790355-1-alexander.sverdlin@siemens.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-tiehrpwm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 07772f54e24f2..01baaa941b5f1 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -709,6 +709,7 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
- {
- 	int err;
- 	struct ovl_fs *ofs = c->dentry->d_sb->s_fs_info;
-+	struct name_snapshot name;
- 	bool to_index = false;
+diff --git a/drivers/pwm/pwm-tiehrpwm.c b/drivers/pwm/pwm-tiehrpwm.c
+index d799537f320c8..e3bb8d54ce153 100644
+--- a/drivers/pwm/pwm-tiehrpwm.c
++++ b/drivers/pwm/pwm-tiehrpwm.c
+@@ -386,6 +386,9 @@ static void ehrpwm_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
  
- 	/*
-@@ -737,13 +738,23 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
- 		/* Disconnected dentry must be copied up to index dir */
- 		return -EIO;
- 	} else {
-+		/*
-+		 * ovl_copy_up_start() keeps ovl_rename() away from c->dentry,
-+		 * because ovl_rename() calls ovl_copy_up() on source and target
-+		 * dentry.  It does not stop d_splice_alias() from moving a
-+		 * directory that a lookup found under another name after a
-+		 * change to the lower layer.  That move frees an external name,
-+		 * so take a snapshot.
-+		 */
-+		take_dentry_name_snapshot(&name, c->dentry);
-+		c->destname = name.name;
- 		/*
- 		 * Mark parent "impure" because it may now contain non-pure
- 		 * upper
- 		 */
- 		err = ovl_set_impure(c->parent, c->destdir);
- 		if (err)
--			return err;
-+			goto out;
- 	}
- 
- 	/* Should we copyup with O_TMPFILE or with workdir? */
-@@ -775,6 +786,8 @@ static int ovl_do_copy_up(struct ovl_copy_up_ctx *c)
- out:
- 	if (to_index)
- 		kfree(c->destname.name);
-+	else
-+		release_dentry_name_snapshot(&name);
- 	return err;
+ 	/* Disable clock on PWM disable */
+ 	pm_runtime_put_sync(chip->dev);
++
++	/* A disabled channel must not constrain the sibling's period */
++	pc->period_cycles[pwm->hwpwm] = 0;
  }
  
-@@ -895,7 +908,6 @@ static int ovl_copy_up_one(struct dentry *parent, struct dentry *dentry,
- 	if (parent) {
- 		ovl_path_upper(parent, &parentpath);
- 		ctx.destdir = parentpath.dentry;
--		ctx.destname = dentry->d_name;
- 
- 		err = vfs_getattr(&parentpath, &ctx.pstat,
- 				  STATX_ATIME | STATX_MTIME,
+ static void ehrpwm_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
 -- 
 2.53.0
 
