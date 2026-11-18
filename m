@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046430;
-	b=j0KN4jgWtyv7FbuW15l6Q1wnNNpEr2+BJEzJWuHKtdINp2ZCNXyWqK4a5pgc15GtFFRp
-	 kY/dtDn8se0zIFn0KIFnVtahvO6M6jWueAGpvIxXpTNOTVLMcSKSThvHcphgDAXpN1yZz
-	 cLOlNpOqGqrer9iJswS4FFtmkWaSw+9E3Ei705q5WLNjuOaxjqfd+Z+q+OwtVipudVY+n
-	 9C0q3SzCunJwMhfo2I3+bgT4oA9+Jehxg18zSkSjkVTOP6cVslSwpvrIAmHU1VMK8nxah
-	 Ec5oVJzsE/wguEk4hdK3+XTtAyzTn6Qy2STRv3/KX3YWs/+Z+Q1rh0YAQYy9fW0jqOA==
+	t=1795046433;
+	b=0XjhMzs74TBytmemX8nmtY/OnS2eo1jVGyT1Zt1KIm9dyjHpfQCBCx5y79FAMVFv32ra
+	 XvpQxybiB2UC/cBzguymxcE89UMmAvrb9hPWVdwsxzEA9c6GRn1WFb2AvAZIzT1Do9s7j
+	 XFQNlF40yXg5C7cdqIBNTmlRLoYZn3ZhfrSseqHZOP8HaFyRAHuNS41cdSpjpbuSCf1UD
+	 EeRdN+ZRqcbVY1QL3reXFgS3cixsGP1cfSPjDP3Nut1VrvmKB3e6m8IFkH+QWVIZeFNch
+	 YM24p3atPBQzVQhQbXeyQuOOvlbqPr0LUBOB7WXNnSJg2UySHHj8valOA5ofW2eylyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nWox2xw0xZ8J1jBOfQFC663YXF5/ktK4CzgxCs80mq8=;
-	b=EsNuGMgeRmZt7Ir0cqD1O/7Coi7zuU51ICtbWaoR8DxpDJyWfqtVPKhJWsQZNaztDDwt
-	 IqsdvFfC/NmaEj9JqBJ/AtaW+DUL/tTscgFF+wDC5oEximvWov6Sk2YoP79RBkkYTvvZA
-	 TM+1OA1m+0ZSDTw94HkpGfbcIIml1Un9IqUOQaWTy4ZrqqpVcMyakK1dI0/1gPyoJ+8/C
-	 n8U7SGiyoD03xb2u6oYalzfFwbV6y89oLhLiAnC7R/7Khv2m2YzXYecZPJpjky9c/UMPL
-	 Qv85vZSQUH+k6QJs71oJjf4AjzaRvY9GXidwKo8gYCo5waMfUcu3rMmCEefl7uwR+uA==
+	bh=WqBFFM2hv+YCIhwXBgKWK68NBCVid2FaekZUIUK4Ii4=;
+	b=PS6a6+fFc8zJE2vgN4ZzXZ1MmsyFyOerMt/CZFpAiKaksLLJZV4UuxBFjWshhXqspIvW
+	 2nmzmf0BDiBS9Fjl16GKE1rKNUhuRQHBTYhgoInRQo2ON8NUJ8e44Tjzd6+UdDe1IfIB3
+	 kAoviVXyC0/fjylleT72J0dul2idbFVf16cC5gKPASZtC/mSjCKmJlH/qmdh9GXAz+0hz
+	 qwGYj39IlXzJ1NKIowQzOZ5cBjKEsvoJxm+qDsX0eBlhUxnr4D8MGaeYu25JowgtFxygs
+	 Hh1dcS/1JjQeNhGOG3WWMeEjm4GqABVLQxMu8oPOaVrnuj61q0MWDyZ0wfw54VtMy3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yreu0mlb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r10IGuAI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B09606A320;
-	Thu, 19 Nov 2026 00:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9389606A332;
+	Thu, 19 Nov 2026 00:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yreu0mlb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365561F000C4;
-	Thu, 19 Nov 2026 00:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r10IGuAI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122501F000C5;
+	Thu, 19 Nov 2026 00:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046430;
-	bh=nWox2xw0xZ8J1jBOfQFC663YXF5/ktK4CzgxCs80mq8=;
+	s=korg; t=1795046433;
+	bh=WqBFFM2hv+YCIhwXBgKWK68NBCVid2FaekZUIUK4Ii4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yreu0mlb86jeXVViFXqaOBZXKYGyXahx2pSvph2zf0r2P9YXTYEmRC5ihVE2IEpBa
-	 RkTe1yZCWtWtGWpFvQmAWJi/yregr1wbwgWBw/l6dQjjBoJZ56p2GBjvX4ksu+zFI4
-	 vXW4Togs4HbwUjxFkly0dvsHoI4imna/73VyQTU8=
+	b=r10IGuAIFYq3AVfF2pMzW4ZVftODRWGU5J+3e0E8fHeCKChsAmkhfnDFeqozWsE1/
+	 M5K07KHwDgxnCnzxcMOy0mjqdlN2kXqL4l4+gt7n7W1hF/UW+RVk0wqHWbgCKU1Z14
+	 pJnTI21Np3RmyVXVVJ9KkWJCUGGJNmet96RJvcbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Quchaosheng <quchaosheng000406@163.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Cunhao Lu <1579567540@qq.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1277/2857] can: isotp: check the frame type, not just the length
-Date: Wed, 18 Nov 2026 15:38:31 +0100
-Message-ID: <20261118150247.491915100@linuxfoundation.org>
+Subject: [PATCH 6.1 1278/2857] can: dev: can_put_echo_skb(): free skb on invalid echo index
+Date: Wed, 18 Nov 2026 15:38:32 +0100
+Message-ID: <20261118150247.526514177@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,61 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Cunhao Lu <1579567540@qq.com>
 
-[ Upstream commit 933bf0fcb325e67b19c86c9c4da7f029878d5170 ]
+[ Upstream commit b4ebcbbf66ba6c5816dfe229effb4641c46e4b4c ]
 
-isotp_rcv() separates Classic CAN from CAN FD by skb->len alone:
+can_put_echo_skb() consumes the skb on all paths except when the echo
+index is out of bounds. This leaves ownership with the caller on -EINVAL,
+unlike the other error paths, and can leak the skb if the caller expects
+consistent semantics.
 
-	if (skb->len != so->ll.mtu)
-		return;
+Free the skb before returning -EINVAL so that all return paths consume it.
 
-	cf = (struct canfd_frame *)skb->data;
-
-A CAN XL frame with cxl->len 4 is CAN_MTU bytes, so it passes, and is then
-read as a canfd_frame whose len comes out of canxl_frame.flags: at least
-0x80.
-
-Of the paths that follow, only the flow control one uses that length
-without bounding it first, so check_pad() walks to 255 over a 16-byte
-frame and the caller reports EBADMSG on an unrelated socket.
-
-bcm_rx_handler(), j1939_can_recv(), can_can_gw_rcv() and raw_rcv() check
-the frame type here, and can_dropped_invalid_skb() switches on
-skb->protocol on the transmit side. isotp_rcv() is the gap.
-
-Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Reviewed-by: Quchaosheng <quchaosheng000406@163.com>
-Link: https://patch.msgid.link/20260920035626.2581040-1-kaixuanli0131@gmail.com
+Fixes: 6411959c10fe ("can: dev: can_put_echo_skb(): don't crash kernel if can_priv::echo_skb is accessed out of bounds")
 Cc: stable@vger.kernel.org
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/tencent_683AA16E643DE00211CD2FB62991264DC605@qq.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+
+---
+
+FAQ:
+
+Q: `can_skb_init_valid()` directly modifies `skb->data` without checking if
+   the SKB is cloned or shared. Is this violating SKB shared buffer rules and
+   causing data corruption?
+
+A: The finding about can_skb_init_valid() modifying skb->data on a
+   potentially shared buffer is not relevant for this (correct) patch.
+
+   The FDF-flag write in can_skb_init_valid() only matters for PF_PACKET
+   use: PF_CAN allocators already set CANFD_FDF. The write exists to
+   normalize frames for PF_PACKET observers (tcpdump/Wireshark) so they can
+   distinguish classic CAN from CAN FD at the netdev level, and to
+   compensate for PF_PACKET senders that omit the bit. That normalization
+   is functionally required.
+
+   The shared-buffer concern only becomes realistic through a specific
+   chain: a PF_PACKET sender injects a CANFD-sized frame, the CAN driver's
+   loopback puts an echo skb back into can_rcv(), and cgw (without
+   modfuncs) clones it for forwarding to another interface. Only on that
+   second can_skb_init_valid() call is the skb cloned. By then the bit was
+   already set on the exclusive skb during the initial xmit path, so the
+   flags |= CANFD_FDF write is strictly idempotent for any parallel
+   consumer of the shared buffer - no memory-safety or
+   information-disclosure consequence. It's a formal violation of the skb
+   sharing rules without an observable effect, so the current code can stay
+   as-is.
+
+Link: https://lore.kernel.org/all/54a3cc01-abcf-4a33-b932-39bb1f68cdd5@hartkopp.net/
+[mkl: convert Oliver's mail to FAQ section]
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/can/dev/skb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 5a0ecbc4f6b94..f81543405f2ac 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -722,6 +722,14 @@ static void isotp_rcv(struct sk_buff *skb, void *data)
- 	if (skb->len != so->ll.mtu)
- 		return;
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index 3ebd4f779b9bd..6fb1f9b2a9e20 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -52,6 +52,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
+ 	if (idx >= priv->echo_skb_max) {
+ 		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
+ 			   __func__, idx, priv->echo_skb_max);
++		dev_kfree_skb_any(skb);
+ 		return -EINVAL;
+ 	}
  
-+	/* check for correct CAN CC/FD frame content */
-+	if (so->ll.mtu == CAN_MTU) {
-+		if (!can_is_can_skb(skb))
-+			return;
-+	} else if (!can_is_canfd_skb(skb)) {
-+		return;
-+	}
-+
- 	cf = (struct canfd_frame *)skb->data;
- 
- 	/* if enabled: check reception of my configured extended address */
 -- 
 2.53.0
 
