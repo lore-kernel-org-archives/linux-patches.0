@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016787;
-	b=CHUZ6TS9RkuCdycyNbapGgxo/1xjaGPyH+1lYhrfyghR8baaR/fzxgle4gHgcXQ0mejY
-	 EylrIRgb3+b6fmXrVo1gmo+EEiXK67KmTlpdUvKDxkRjE2iakzdbd/ui9OmWtbB3i8JY4
-	 Gi5HuU6I2yIy54FSqsUFIZnN5CtPH/ODSiFbwx4oahfAg+q1VMRS8gUx94C+qB5ezORPE
-	 7Oa7CtkUWgOf+a1zOqbbhPTKZndGsF3ffm7I37QjatEU8Z8iq3RWZ7F4Fl+c5vKQZHY5C
-	 fC9ebjbWC5HvSZpwzPI66npaOvkHwx+hXTwUDFeam1Xph25kxPc8eI9ZJs86tt2/YgA==
+	t=1795016790;
+	b=ULOnOtDz1VFa1VGF8scrOMDLVnUj0PmHSbHAuy5h5HOnCYhjrrT1B34cQD77pQyTCOCl
+	 57ndxkYFt9EKjH2F6Oz4izeroVqkpRd0SZM9KIiplxej8gxnslq1DG8GqdAaQC3qtHZog
+	 WNqNLleiOrywhgNkI5ELqNSmpexapDWaOsz5xsHr3oAESkU4sT5PUg3SUwowuIFwMFTJn
+	 EKu1ITuU5iUSFHhgrjTrXmEuFkUIWqN9YdY8tOXOVmqRUVk0jJy2P6U9QOQTiQtEo1gMA
+	 yHO4dsB9E+78TiN1ORSRHTMjDAWlNpnQGNisCWipP4/ql/N4kSUk3pLoxixDX9GrDRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lsOlx5Mbnez3RX9sZypn9Wue02/9lSEBlcLJYoW1tSY=;
-	b=j8mFgy6S7xGgG8J8eiROCfKUWVvVqfWZYkRBOjvuA6JpyH/5xuHNtzBrxeMWO9aX0pr4
-	 olQTLZOwgd9XLGdtn4yxh+ZZ8dtkOdoTRzLkLFla/ctBprSorx5gMpZ+o1hBBjDkfpkgZ
-	 nGueBMDBW6FTiUNf5GTs1Q3wN246SYM4rHkESYMqixz/2Q+O9I1umAlIGow4r0YxI/FOR
-	 DiSL6w1U8mIk8sviLAN6sI8DOnGc0DeYHZRoV/ybScTnw0fYniMFLwoNhNHg4YRj0bqZy
-	 teXiwHr/l34rliCF+gRe14Y3V0Lh5VWUpPnxcc3eyflujstq3MV0q1Izhbsh8g/x3yQ==
+	bh=zKlmA0TV9A/Fp2uVQct8MU2esIXQX02fK16eEEGbBlE=;
+	b=3LdDnSqc1FOeoncb6tDk6sPOzBMXeGDqpjrV1gkdfM8uL1/NZk/moUZHOvuOqxz4xQqV
+	 hPTgWzPg3SV/M/TUCwUdUvIE//acvgu8yTbsDAf2IO8eJcHRamKySMvLZqY//rcNMx9Tw
+	 k8dJPgrdpm2vN7Cf+yq03Gv+7PJ8jsa8JT0PsiFEvn4HXaaNEQjWBA15L/pjYn42qnTun
+	 FBSlM8i27t5taNW2+EUuDEMzdOUPB6AizGK25NCnxUb2gAyFZvSdmzrjF50lG03oNWeku
+	 FBGGVnKCHYeYqtOYCZqk1D40T/xYxqd10BvMLzg5/bGwqXtaXhzCUngg6E5+S3SgNBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXm7wUqt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuqXohpy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD84606A338;
-	Wed, 18 Nov 2026 15:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE4A606A331;
+	Wed, 18 Nov 2026 15:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXm7wUqt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335801F000C8;
-	Wed, 18 Nov 2026 15:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SuqXohpy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46711F000C4;
+	Wed, 18 Nov 2026 15:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016787;
-	bh=lsOlx5Mbnez3RX9sZypn9Wue02/9lSEBlcLJYoW1tSY=;
+	s=korg; t=1795016790;
+	bh=zKlmA0TV9A/Fp2uVQct8MU2esIXQX02fK16eEEGbBlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BXm7wUqth7A/t+7D/aqTdxQ0k7mOTr3bLLXVPVR3AZc+VG5pCP7EVrsGhtznXRNMv
-	 FhV3FK4rD6ZM9FyD9DmfZvp9Y2BpWCB1wCU0YTVff9S7mB2rEiAJSOeIjkEI6DmkEz
-	 FcbbzMwQW+pn0pXy2R8pk6VC1h1T2n5R2y6DoPDk=
+	b=SuqXohpyLqtEcA8FyZ8RuLelpW15lEh8GvvFeSfftplauFveopOX/HbsRbtf532hw
+	 ylHX9+kzTIwLXn3LEH32c2CgRxHZUOfNmN7OGRrBahkqFAQD7BKWnuXGvRs+mg4Ke8
+	 KvHPv6zvgLTRB757QeKOK9i/TtrffYVzCBOj6eic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Andrew Gaylard <ag@ffroot.co.za>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0612/2651] pmdomain: renesas: r8a78000: Fix lockdep false positive
-Date: Wed, 18 Nov 2026 15:30:52 +0100
-Message-ID: <20261118150309.747197631@linuxfoundation.org>
+Subject: [PATCH 7.3 0603/2651] pinctrl: fix PINCTRL_SPPCTL=m
+Date: Wed, 18 Nov 2026 15:30:43 +0100
+Message-ID: <20261118150309.431480659@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,63 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Andrew Gaylard <ag@ffroot.co.za>
 
-[ Upstream commit ddacdefc38200bafa35e79925bbc1f4b1fdf41a8 ]
+[ Upstream commit 7dcf87d2dbbe8c9c1efb69fe9be728a3dfd51d3d ]
 
-Lockdep reports a possible circular locking dependency when attaching
-devices to an MDLC PM domain:
+The PINCTRL_SPPCTL option is defined as a tristate in Kconfig, and the
+help text suggests that the user can build it as a module by setting to
+'m'.
 
-  - During creation of the singleton PM domain:
-      A. r8a78000_genpd_always_on_singleton() takes r8a78000_mdlc_lock,
-      B. pm_genpd_init() takes gpd_list_lock.
+However, it cannot currently be set to 'm', because SOC_SP7021, the only
+platform that supports it, is a bool option that uses 'select' on it.
+Also, the SP7021 requires this driver to be built in, in order to boot.
 
-  - During attachment of devices to PM domains:
-      A. pm_genpd_add_device() takes gpd_list_lock,
-      B. r8a78000_mdlc_attach_dev() takes r8a78000_mdlc_lock.
+Change the tristate to bool and fix the help text.
 
-As the former is done only once, before any devices are attached, such a
-AB-BA deadlock cannot really happen.  Fix this false positive by
-introducing a separate lock to protect the creation of the singleton
-domain.
+Tested on linux-next-2026-09-14 on a LTPP3G2 board.
 
-Fixes: 9f79f93963b0 ("pmdomain: renesas: Add R-Car X5H MDLC driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+This impossible tristate was detected by kconfirm, a static analysis tool
+for Kconfig, by Julian Braha <julianbraha@gmail.com>.
+
+Fixes: aa74c44be19c ("pinctrl: Add driver for Sunplus SP7021")
+Signed-off-by: Andrew Gaylard <ag@ffroot.co.za>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pmdomain/renesas/r8a78000-mdlc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/sunplus/Kconfig | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pmdomain/renesas/r8a78000-mdlc.c b/drivers/pmdomain/renesas/r8a78000-mdlc.c
-index 2668fc2ac9cbd..1fd71bb3da776 100644
---- a/drivers/pmdomain/renesas/r8a78000-mdlc.c
-+++ b/drivers/pmdomain/renesas/r8a78000-mdlc.c
-@@ -45,8 +45,9 @@ struct r8a78000_mdlc_priv {
- };
+diff --git a/drivers/pinctrl/sunplus/Kconfig b/drivers/pinctrl/sunplus/Kconfig
+index 69f82590f6d24..aa9435d023d84 100644
+--- a/drivers/pinctrl/sunplus/Kconfig
++++ b/drivers/pinctrl/sunplus/Kconfig
+@@ -4,8 +4,8 @@
+ #
  
- static struct generic_pm_domain *r8a78000_genpd_always_on;
-+
- static HLIST_HEAD(r8a78000_mdlc_list);
--static DEFINE_MUTEX(r8a78000_mdlc_lock);	/* protects the two above */
-+static DEFINE_MUTEX(r8a78000_mdlc_lock);	/* protects the list above */
- 
- static struct generic_pm_domain *r8a78000_genpd_xlate(
- 			const struct of_phandle_args *spec, void *data)
-@@ -191,10 +192,11 @@ static void r8a78000_genpd_del_provider(void *data)
- 
- static int r8a78000_genpd_always_on_singleton(struct device *dev)
- {
-+	static DEFINE_MUTEX(singleton_lock);
- 	struct generic_pm_domain *genpd;
- 	int ret;
- 
--	guard(mutex)(&r8a78000_mdlc_lock);
-+	guard(mutex)(&singleton_lock);
- 
- 	if (r8a78000_genpd_always_on)
- 		return 0;
+ config PINCTRL_SPPCTL
+-	tristate "Sunplus SP7021 PinMux and GPIO driver"
+-	depends on SOC_SP7021
++	bool "Sunplus SP7021 PinMux and GPIO driver"
++	depends on SOC_SP7021 || COMPILE_TEST
+ 	depends on OF && HAS_IOMEM
+ 	select GENERIC_PINCTRL_GROUPS
+ 	select GENERIC_PINMUX_FUNCTIONS
+@@ -16,6 +16,4 @@ config PINCTRL_SPPCTL
+ 	help
+ 	  Say Y here to support Sunplus SP7021 pinmux controller.
+ 	  This driver requires the pinctrl framework.
+-	  GPIO is provided by the same driver.
+-	  To compile this driver as a module, choose M here.
+-	  The module will be called sppinctrl.
++	  This driver also provides GPIO.
 -- 
 2.53.0
 
