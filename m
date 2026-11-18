@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015292;
-	b=Up3oTfQM2zzvYM1VqTjZqtbEO9erOA3qQAK+WayOugo72/9vZcjaClFZQAg+TPsc3vSv
-	 hG8Z4MmiyOR+cgye+cC/L0ofRoAxSmNPIVehXc44rlIfBTVre93CWhtFij1yJzvAHiXkB
-	 FEX/Sg/vv56ooX9HOfSMItcfiKntGrnIjee1MggV4UKO1JOERparDY+5qpgy09ZCcQ5iF
-	 QXazoNnIcaeOLq7VwH1evAyIBIm9HrMUjMpNicf6rPh81TaLg9zRSyysOh9EOptT04UPV
-	 Uipwzh+mmTkHmCROPFqXG9XTGy+Tge3HC+wcW2VOR+mENN8RFRp/NDX+iie+RhfysuA==
+	t=1795015294;
+	b=aaTif+f+Ps6MA9eMkFXPHAOY23rL4IllEWkF1xLvvrA89Zo31WsaHtKPUYQ4iPOrP8JI
+	 8jcgYSQAPiM9yUWcVnpuXriRnB2GLdme/o6oxFCZn9ELqdedGfxbfUJ909gs+pypyEwtz
+	 3TaCmecxAJd+qLs9gT+m62tW/LQua92IENS0YaRc8xRjsozuLZaqiyuwJZcGwGn7gSB2x
+	 +vf903wEakDfO8gu4gwZMl66KLpQLbycx7H9q0BBBIMDHtOZLObcGWoB8xlCynVShAwYQ
+	 4Zvxzgpyck5XTxQt9NdU40eKlA37rLfXv/LH3CEl6/uNF7w1o0FjQRCjZaX8N0EJ4aA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rrw7uFW+lQnae3P3fs9opryv9f6OlY7kSBJz0+ZQsdM=;
-	b=qR4iSz3tzraZAUfnGAmkFpeZTG7hpUf88aHqN4b0w7Q1uLEXiSFK1SKXmxKnkHGFmM3w
-	 lE+0sEE1zFfDUppSY4SLeFBwFumSoFNNdE6UtzQY3Dk4Vz3jVNMrNzTf/rsSeQ/gD/Cje
-	 uReCUD9/Qbj5TiT2JV4nowBKg/QdWEQsW5UjdWWWGciED9hhAl60Or4bFfWh90OGOXIqV
-	 7sgRxC4eBQw0VcaTCJos0piE30EfbcBWXpKLoKFE6/ZDTqomPjJCGoeB49oCVKLOH4v0q
-	 AF0DDEHFnm3TXCs2jq7HNbVfzV5h14graZ+lxqLYvxlihMsOVzomCFRZfStSO6WX1jg==
+	bh=004IqgnevRlMEmsN70K/x0McxLtF2USPhPwg57Hox6g=;
+	b=LtIixVs7L+SYLU3/7Ua7uMdG2cI0dPPZLNSTq83aDiZ/T5ZaY7oeo6yL8FAsrEE2XrcX
+	 eu9Pr183KSNvNtIzkFJngxGYOVvbhMfagwCS0uqARJpVfB7AwrqCjUN75iyufy/T55s/1
+	 FxmTJJaETyDltdSwDGOKb47Ko68FLndDKiYEnvBApNn9IZv+cyoyfVLj9y3Cnc4g1H+Qt
+	 T2RvmM5v7El6UOUDofuxrpB3Dod/nZIzjpUQojZ411ahn0bDtcpw012eirWeLmlfEjSh3
+	 RMMV5DpCG4Sp+DRQpw3NizHZKikOn39ozPVT+nNHzRIcAbqjmcK4i7h1pDZJ4SoOGqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yCEhpP43;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ4RQlUa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B64F606A320;
-	Wed, 18 Nov 2026 15:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DA5606A325;
+	Wed, 18 Nov 2026 15:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yCEhpP43
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803311F000C4;
-	Wed, 18 Nov 2026 15:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XZ4RQlUa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A80D1F000C4;
+	Wed, 18 Nov 2026 15:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015292;
-	bh=rrw7uFW+lQnae3P3fs9opryv9f6OlY7kSBJz0+ZQsdM=;
+	s=korg; t=1795015294;
+	bh=004IqgnevRlMEmsN70K/x0McxLtF2USPhPwg57Hox6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yCEhpP43ppdEb+9ZBqUtPAMWgwfrMnK7m5LqHRqiX7mvaOcTeJp/1+S3tXV6/6VI4
-	 edPmS+Renfs7qDveySkNnvXN4yfeTFGmh8Lcik16gdroeLidy7g7r7BFY4oszasGnF
-	 OPEF316Ahfo/N+N4v/CfkEPDFaqq9BI0lVkFgXCw=
+	b=XZ4RQlUa19oNc/OzgMQYfVdhDk+q7YUmSzIxHSgpcrVe1ey+G8O0OGaghJF/g+sqM
+	 r9ZzFfEs5vO+9CF5tGuxlzcgVWSwylBHYg6mmVAceiVsPliyLkZpXxupiirousaXSF
+	 3gI/B6Xp2ouHErId/k6iYR3kVmGZtqoCUutWPu/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0079/2651] libbpf: Fix usdt attach failure when nop10 crosses page boundary
-Date: Wed, 18 Nov 2026 15:21:59 +0100
-Message-ID: <20261118150250.767897506@linuxfoundation.org>
+Subject: [PATCH 7.3 0070/2651] gpu: nova-core: write initial RPCs before booting GSP-RM
+Date: Wed, 18 Nov 2026 15:21:50 +0100
+Message-ID: <20261118150250.458900230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,49 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit 8b94878b2572f0f41e6002d0fe2cc4086ddc2a47 ]
+[ Upstream commit 6556f7556d622dbbc5c936df9d39c2f33600adfb ]
 
-The kernel refuses to attach to a nop10 that crosses a page boundary,
-since it can't be atomically rewritten:
+Make sure that the two setup RPCs, SetSystemInfo and SetRegistry, are in
+the command queue before booting GSP-RM.  These message are expected to
+already be present, because GSP-RM will process the queue early in boot
+but will silently ignore the error if absent.  GSP-RM then continues
+booting, but since the registry is not set up, it fails to initialize.
 
-	/* can_optimize(), arch/x86/kernel/uprobes.c */
-	/* We can't do cross page atomic writes yet. */
-	return PAGE_SIZE - (vaddr & ~PAGE_MASK) >= OPT_INSN_SIZE;
-
-Whether the nop10 crosses a page is purely up to the binary layout, so
-this does happen in practice. libbpf doesn't check for it and blindly
-shifts the uprobe onto the nop10, and the attach then fails with
--ENOTSUPP. Just keep the uprobe on the preceding 1-byte nop in that
-case, it works everywhere as a regular int3 uprobe.
-
-Fixes: ee2862439e5c ("libbpf: Change has_nop_combo to work on top of nop10")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260825150444.31603-1-jiayuan.chen@linux.dev
+Fixes: 0e42ec83d46a ("gpu: nova-core: gsp: shuffle boot code a bit to keep chipset-specific parts close")
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Link: https://patch.msgid.link/20260810181243.3036669-1-ttabi@nvidia.com
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/usdt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/nova-core/gsp/boot.rs | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index 2e56e3ab5b6cc..ee9d1b614883c 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -608,8 +608,12 @@ static bool has_nop_combo(int fd, long off)
- 	unsigned char nop_combo[11] = {
- 		0x90, 0x66, 0x2e, 0x0f, 0x1f, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00,
- 	};
-+	long page_sz = getpagesize();
- 	unsigned char buf[11];
+diff --git a/drivers/gpu/nova-core/gsp/boot.rs b/drivers/gpu/nova-core/gsp/boot.rs
+index e03700ee7beaf..874f6e9499f01 100644
+--- a/drivers/gpu/nova-core/gsp/boot.rs
++++ b/drivers/gpu/nova-core/gsp/boot.rs
+@@ -44,6 +44,11 @@ pub(crate) fn boot(
  
-+	/* the kernel can't attach to a nop10 that crosses a page boundary */
-+	if ((off + 1) % page_sz + 10 > page_sz)
-+		return false;
- 	if (pread(fd, buf, 11, off) != 11)
- 		return false;
- 	return memcmp(buf, nop_combo, 11) == 0;
+         let gsp_fw = KBox::pin_init(GspFirmware::new(dev, chipset), GFP_KERNEL)?;
+ 
++        self.cmdq
++            .send_command_no_wait(bar, commands::SetSystemInfo::new(pdev, chipset))?;
++        self.cmdq
++            .send_command_no_wait(bar, commands::SetRegistry::new(ctx.vgpu.state())?)?;
++
+         // Perform the chipset-specific boot sequence, and retrieve the unload bundle.
+         let unload_bundle = hal.boot(&self, &mut ctx, &gsp_fw)?.or_else(|| {
+             dev_warn!(dev, "The GSP won't be able to unload properly on unbind.\n");
+@@ -73,11 +78,6 @@ pub(crate) fn boot(
+ 
+         dev_dbg!(pdev, "RISC-V active? {}\n", gsp_falcon.is_riscv_active(),);
+ 
+-        self.cmdq
+-            .send_command_no_wait(bar, commands::SetSystemInfo::new(pdev, chipset))?;
+-        self.cmdq
+-            .send_command_no_wait(bar, commands::SetRegistry::new(ctx.vgpu.state())?)?;
+-
+         hal.post_boot(&self, ctx, &gsp_fw)?;
+ 
+         // Wait until GSP is fully initialized.
 -- 
 2.53.0
 
