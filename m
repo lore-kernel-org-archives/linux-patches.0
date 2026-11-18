@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025860;
-	b=RqXHUCqC/tEdMI1ZOYF5aza3un36Nz2AdFZodc1pQ+B/3f3lvx5YgP6sSjs0dxtYEkA8
-	 jIJNP6xaaRso1RkZy4H9/4ro3YxwlPJg3KnzZDrOe3zICfJuCrnQ5mld74eWAnOtn9W+t
-	 i1spOwU1CNhR5RvdrRhku19aLzgOU5D9Du9t6+k92SB8Dp6orB7/srpoSMks3h8nLudVM
-	 TnddAIMKn4xKlHzpzqYJZFfFvnryPRYvc1ttg1el+8fyjiz88URE7q3Jtk8Yc2nzFj+hJ
-	 HIwtJRsDlmmPpqKrmRCTlV2uoI6EmJV94ZyMYou4CIWASHTHyuuA71TQXq3tWCzJ//A==
+	t=1795025863;
+	b=dMJXjin+euDfPzTEFP/yRnGS3O0SKDc6VYQ7pckSLdCbcHtzMN6ud3ULlyRZPpwT1WO5
+	 1L/qk/My/83MQ4TY8CGRPpaI1e4KT/FlNrVhL/FJdiItv8wNMrXwefBn4mFjvvITUrXhk
+	 JBwtoG9Nnnp/vDWVp9qdgVTaCjRrhH5uRwYGhSH+voQXAb7bNxwz+88xcvMMjjiIHJxP4
+	 9PMN5WeuWH10Q3BnL6TYwtseUJt8HJEMd4LyWT7ixRjUsi5iGVXzyTmNi6DpOi8kObt6H
+	 kS2V12bqQ7Q/PGADKVXFziC5RRo/z1oG/Dv2B0jmYipqckjDVQ4pd4s5PooEuEJR+fA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kOGfRyu3QsZ88HGOWpXsO3ME+uNjPhjxwjLvSTn4YJg=;
-	b=jsN9BLKOZmJflHUaxiPM5USA30/ZyFFsYEy5VOCxDQ4ClrOQZJ8LCXNbr2xgDA6m3i26
-	 uiF+kIiCR1aGhSBX8hGOLsDYZUu4QTB+rAUuRv5BPp7VzFhDErb8cneDDzjNi/c1xc2la
-	 vicFoNG5ZWUsRbCrnmgbOQLkzcJVdonW1twELAWhhfiJxOXgPPMRGHBGMIwNUuxqHVkzw
-	 HMBiXVVqQD5h9wfxnIYSJo411KDcBO8fiTlG6gzDvW/nY1r0Tk+YdJ3C77vMwavABA9Qo
-	 6F/pmw/TC8y7tXAnifk2Wq7mnfGoTqD1UFtjf3szVn5yg/GM+MYevMRlhbs7LCA12SQ==
+	bh=iopnfnlxUdLAtqb3yuFybixL5EDPKVafvroXM2Gq6dM=;
+	b=aA9L4vhE5x3o1UaGZ0exEgtLl1+J1qrVu4/uzKt5Xf51w8mlYAFYxgLwrtj9b+3ydECs
+	 OAsf74MxIHYgbACEMUYYm5350EuDh6tN9wVMlEqoAJVOU3ZCFh8W05mS+1LKcpvNHP6xq
+	 entXvtTxVRI5J2C3VR2l2AvRGzC0q+6sfN3qJ8XwwQ0EQKrFErrRZsxXQ3GYkXiBLkXwQ
+	 d21L8549ReulbpMl2Gwy+7bsxfwtdh3NsUM6Rw88TkkXfzVIRv3b/GUrDbOLDHTJBjMtg
+	 PXGSzIba2uXag/JhBE5ZoKDQnWbHLMnkcjCs+W1WmaH278gL3nkgCGczeMnYFBvhBRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r85mYWdA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIoszn0Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C3D606A31C;
-	Wed, 18 Nov 2026 18:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C26606A320;
+	Wed, 18 Nov 2026 18:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r85mYWdA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2D21F000C4;
-	Wed, 18 Nov 2026 18:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIoszn0Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A90C1F000C4;
+	Wed, 18 Nov 2026 18:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025860;
-	bh=kOGfRyu3QsZ88HGOWpXsO3ME+uNjPhjxwjLvSTn4YJg=;
+	s=korg; t=1795025863;
+	bh=iopnfnlxUdLAtqb3yuFybixL5EDPKVafvroXM2Gq6dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r85mYWdAwn7kO6h0D2NPc3Vmvv45ctD7cT8bhU7+25ce65tqfPTDQ99rnhs5C52QX
-	 mQlwxQvdkfRl1Vd9HEEm8UolVjkfJF9cpOMCgiFsSZld18e005XGBVx5xvoZu67bzv
-	 wOySN/+hCg4Ez1+n6kWkjMBdVLvqTimRgDEt80YE=
+	b=nIoszn0Qoe4RX3Krpcjq1wi0sFQtfdjF3MuLwVOOV/YVxuiZlLuSemS3UgznYRu6m
+	 r8F7Zr8bybqONBy9neogf2icqAOcBugkOSTXGOSWayD24i+IeRKqRp6aiMpPcw6txj
+	 vt+3TlIMZ+uTkVSLNsZjmeqJjz5JYbhnG0jn9Uug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1228/2151] wifi: mt76: mt7996: upload only the keys of the link being set up
-Date: Wed, 18 Nov 2026 15:49:23 +0100
-Message-ID: <20261118150206.921138841@linuxfoundation.org>
+Subject: [PATCH 6.18 1229/2151] wifi: mt76: mt7996: report station statistics from the primary link
+Date: Wed, 18 Nov 2026 15:49:24 +0100
+Message-ID: <20261118150206.957519740@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,42 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 2ec14ab42dfd195976bd834fecbcea00ae7da600 ]
+[ Upstream commit a9792846fbc62af2290552ab66b5a855415acaa8 ]
 
-mt7996_vif_link_add() and mt7996_vif_link_destroy() walk the vif keys
-through mt7996_key_iter(), which passes every group key to
-mt7996_set_hw_key() for the link being set up. On an MLD interface each
-group key belongs to one link, as key->link_id says, so a new link gets
-the GTK and BIGTK of the other links written to its group WTBL entry,
-and its hw_key_idx set to their key index.
+mt7996_sta_statistics() and mt7996_ethtool_worker() read the TX rate,
+the TX counters and the ACK signal from msta->deflink. That is the
+msta_link of the first link of the station, not of its primary link.
+When the first link of an MLD station is removed, msta->deflink keeps
+the values of the removed link, and the station reports them until it
+is removed.
 
-Skip keys that belong to a different link, as mt7996_set_key() already
-does for keys that mac80211 installs.
+Read them from the link that deflink_id selects.
 
-Fixes: eddc7286f6bb ("wifi: mt76: mt7996: fix key add/remove imbalance")
-Link: https://patch.msgid.link/20261006205936.669125-7-nbd@nbd.name
+msta->deflink also holds the RX reorder state, the TX aggregation
+state and the def_wcid target of all links. These are state of the
+whole station, and wcid_to_sta() needs def_wcid at the start of
+drv_priv, so they stay there.
+
+Fixes: f520eceacd24 ("wifi: mt76: mt7996: Add mt7996_mac_sta_change_links callback")
+Link: https://patch.msgid.link/20261006205936.669125-9-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c |   20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index c18ac44968c37..ed6f704a27cbc 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -288,6 +288,9 @@ mt7996_key_iter(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	if (sta)
- 		return;
- 
-+	if (key->link_id >= 0 && key->link_id != it->link_id)
-+		return;
+@@ -1753,9 +1753,16 @@ static void mt7996_sta_statistics(struct
+ {
+ 	struct mt7996_dev *dev = mt7996_hw_dev(hw);
+ 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
+-	struct mt7996_sta_link *msta_link = &msta->deflink;
+-	struct rate_info *txrate = &msta_link->wcid.rate;
++	struct mt7996_sta_link *msta_link;
++	struct rate_info *txrate;
 +
- 	WARN_ON(mt7996_set_hw_key(hw, it->cmd, vif, NULL, it->link_id, key));
++	rcu_read_lock();
+ 
++	msta_link = mt7996_sta_link(msta, msta->deflink_id);
++	if (!msta_link)
++		goto out;
++
++	txrate = &msta_link->wcid.rate;
+ 	if (txrate->legacy || txrate->flags) {
+ 		if (txrate->legacy) {
+ 			sinfo->txrate.legacy = txrate->legacy;
+@@ -1798,6 +1805,9 @@ static void mt7996_sta_statistics(struct
+ 		sinfo->rx_packets = msta_link->wcid.stats.rx_packets;
+ 		sinfo->filled |= BIT_ULL(NL80211_STA_INFO_RX_PACKETS);
+ 	}
++
++out:
++	rcu_read_unlock();
  }
  
--- 
-2.53.0
-
+ static void mt7996_link_rate_ctrl_update(void *data,
+@@ -2084,11 +2094,15 @@ static void mt7996_ethtool_worker(void *
+ {
+ 	struct mt76_ethtool_worker_info *wi = wi_data;
+ 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
+-	struct mt7996_sta_link *msta_link = &msta->deflink;
++	struct mt7996_sta_link *msta_link;
+ 
+ 	if (msta->vif->deflink.mt76.idx != wi->idx)
+ 		return;
+ 
++	msta_link = mt7996_sta_link(msta, msta->deflink_id);
++	if (!msta_link)
++		return;
++
+ 	mt76_ethtool_worker(wi, &msta_link->wcid.stats, true);
+ }
+ 
 
 
