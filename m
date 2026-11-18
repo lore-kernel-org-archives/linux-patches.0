@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052101;
-	b=rim5lcdUAFR7S+sYdqgvso9OIwEFhs0boMIwv0fj+wjx5UVWIgQzvpVRW068/wE6kQB1
-	 5b/KjMn18MNXwXGCnbaId2r6zf7uB+Rz8xeCN7Ph/XVl/bxDKspWg/BwaH8kHDKzR03Lm
-	 Q4D15hjBzz2CeAOvaVmgBwZPRZ/faIN6ZwJvkHYjKR9UCZE2D1JXfSIt3wYb3XSc7uqDr
-	 KswzAjf5pmfZZtDEoMogcmJgLZvj3RNK8SqhhV0RxHmjrMIHlVqAWICUK+vn6T6OwiAeo
-	 nadeqOw1cI2QYfPF03lKpg2cMrI9/aUp7//FufLp2kMc1bT7xISr9hk+PP5IrCbRcdQ==
+	t=1795052103;
+	b=upSKotW7GwQf+/8iCbQs+v0vNy5e/IiHOrQBD4AfpO9k1U16kW3iNtyIdeVWrzgeoqw1
+	 Ijy68ujO9MW4lN9poCGoKjd4+wiGIa/fHN5PyypwyZ0WbmDduplQvWI61bR54c34D0kXm
+	 PG8kU++uIKvGUOxj9NM7cAMP2OTOYgYoaX5LJSu8hWWHdHXPH8WGXRomq2qrYPu6x4/bO
+	 9QaP/jcw2rlYDwUiZ2h6aGRCtkPmJdUa1HBT9BwcuH73TlnBtDfJ/hsPkfBNh7noKQdVe
+	 LEdLaCnmmRnvlKX4Jb5O82OJqpytQ5jj+GruNst3Ro/GZ8irqBBEIQ/4yfYUolLZQvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lnfzv/M2ntJJJptaLxw1hnghbv8XSUfBVDX6OKMPk2s=;
-	b=f6Le7ZKHLWC/G72QdgQyDEgAiGnwVIxrKKwEFwqqf22MK/gQ0z0McLmN/qYvr6tRAosz
-	 /0q6O3SzRL3dIYvFTfXebT8HkyrtzMia/xGNe1wgRqE/Z6HID24wkY+g6ki1RVASJ6Wf/
-	 B6qOmlqPlKHbY/y2+qg5QsrPwmDArxrqJZjk+Q8Rmh6ZackH3n6m1K2CQw76BNJJudUbn
-	 sRiAVF5xyUi+d+ncchPOzwQfvNeWzPlcNQKudG6yK+T3yrQgY+H1cRMHZrSEHTELqZNXb
-	 f4JVfzYOEAXn/pIkLLR2iFECkTwW15yml9fKOiznnh0/OXKwDdbyYVFVK+3YEWNMM/A==
+	bh=vqK6FIfV/3tSUqbks6KHiR8XqcvV5z+ZB7NrB8G9Gjw=;
+	b=p5PmP+Mpq//vK8FaIasRW2wJ+7YN0F6Iv56Gc4B9U4nohNt82WQwKTZtO2vZNz00ykt4
+	 JKp5agu21eRAbSaiRts4x7o2wd53lRk0MpkUx86Zz2SJVhL7VO0acDsVGxQSmTX7wsCE+
+	 AwIfRm5pD8mGr+W9bUsJB/jDp9EdxHvSpo0lXAbEBV1uW7l4a7jjtQYa4hKFpSEUBsh2L
+	 l4k9tMB+6mJE4aL/SxNORNzQF/zsCodQHRZBAadWFhBEYDli1Sr4PB9LESZRJEI82xCmM
+	 La5mAa4Pa+e2lUZznkDzJe2tnxI6ihu0o6o1STUIKPbOt8nsMRVZLk71io9pHDfRD3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ss/xlztS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04avoxWJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477E3606A31C;
-	Thu, 19 Nov 2026 01:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9644606A31C;
+	Thu, 19 Nov 2026 01:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ss/xlztS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8201F000C4;
-	Thu, 19 Nov 2026 01:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04avoxWJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CD61F000C4;
+	Thu, 19 Nov 2026 01:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052100;
-	bh=Lnfzv/M2ntJJJptaLxw1hnghbv8XSUfBVDX6OKMPk2s=;
+	s=korg; t=1795052103;
+	bh=vqK6FIfV/3tSUqbks6KHiR8XqcvV5z+ZB7NrB8G9Gjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ss/xlztS8Ug77/B3MKGRNLdEg1lwTDnwH+0cCm+t9aT6iRpW3yfXhUoaJU17Lgdod
-	 5AvCtaY5450jCdunpje2SK4rrjtXs5mKNTsMBeSAX6wGhtJTsMWVF0MEq8SMp1OgtF
-	 hJ0hwXLNMtAMkHcjntErDjTcb86VV1gAidqRP6qg=
+	b=04avoxWJGn2Ru6FEYhhiTj+sPJWKEZq00tY7tC2Zqecd+QF/jwm2h52np6dKUZ+Iy
+	 MWB4LI1A9im6uK04si80KaqZK5+biH7hKzs2CjhRJGkiGaJy46Tyclci0oWoa7vk9i
+	 /QwIMDubbz96t6khBfwAYSgOQ3Po6NQpNz7idZ1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0444/2214] remoteproc: elf_loader: Bound the section header table
-Date: Wed, 18 Nov 2026 15:35:20 +0100
-Message-ID: <20261118150028.840290964@linuxfoundation.org>
+Subject: [PATCH 5.15 0418/2214] smb: client: fix warning in CIFSFindNext()
+Date: Wed, 18 Nov 2026 15:34:54 +0100
+Message-ID: <20261118150027.583406097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,81 +68,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit b32177ead5f8925aa66ceed2bd533a85196f4f0c ]
+[ Upstream commit 215533f888dcf18f7cfbbf520bdd52e67ac6265a ]
 
-The rproc_elf_sanity_check() only checks the image is big enough to hold
-one section header. But find_table() walks e_shnum of them, and first
-dereferences the header at e_shstrndx to locate the section name table.
-Both fields are u16 and both come from the image, so an e_shstrndx of
-65535 reads about 4 MB past the buffer.
+This fixes the following warning reported by kernel test robot
 
-The commit 9f9967fed9d0 ("soc: qcom: mdt_loader: Ensure we don't read
-past the ELF header") added the same check to the MDT loader, and says
-the header "is sanitized beforehand" under remoteproc. That is what this
-patch makes true.
+  fs/smb/client/cifssmb.c:4216 CIFSFindNext() warn: missing error
+  code? 'rc'
 
-Check e_shoff against the image size first, so the two bounds can use
-size_add() without an e_shoff above SIZE_MAX wrapping on 32-bit. The
-bounds are separate because e_shnum may be zero while find_table() still
-reads the e_shstrndx header.
-
-Fixes: 400e64df6b23 ("remoteproc: add framework for controlling remote processors")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://lore.kernel.org/r/20260724025322.2341205-1-sammiee5311@gmail.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Link: https://lore.kernel.org/all/202306170124.CtQqzf0I-lkp@intel.com/
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 59131dd72f62 ("smb: client: fix use-after-free infoleak via the readdir resume name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_elf_loader.c | 23 ++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ fs/cifs/cifssmb.c | 111 +++++++++++++++++++++-------------------------
+ 1 file changed, 51 insertions(+), 60 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_elf_loader.c b/drivers/remoteproc/remoteproc_elf_loader.c
-index d635d19a5aa8a..ad001643f7b0c 100644
---- a/drivers/remoteproc/remoteproc_elf_loader.c
-+++ b/drivers/remoteproc/remoteproc_elf_loader.c
-@@ -46,8 +46,9 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
- 	struct elf32_hdr *ehdr;
- 	u32 elf_shdr_get_size;
- 	u64 phoff, shoff;
-+	size_t shend;
- 	char class;
--	u16 phnum;
-+	u16 phnum, shnum, shstrndx;
+diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
+index 36ed6906066ea..5b1fb3216f238 100644
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -4484,11 +4484,12 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 	TRANSACTION2_FNEXT_REQ *pSMB = NULL;
+ 	TRANSACTION2_FNEXT_RSP *pSMBr = NULL;
+ 	T2_FNEXT_RSP_PARMS *parms;
+-	char *response_data;
+-	int rc = 0;
+-	int bytes_returned;
+ 	unsigned int name_len;
++	unsigned int lnoff;
+ 	__u16 params, byte_count;
++	char *response_data;
++	int bytes_returned;
++	int rc = 0;
  
- 	if (!fw) {
- 		dev_err(dev, "failed to load %s\n", name);
-@@ -90,9 +91,27 @@ int rproc_elf_sanity_check(struct rproc *rproc, const struct firmware *fw)
- 	phoff = elf_hdr_get_e_phoff(class, fw->data);
- 	shoff = elf_hdr_get_e_shoff(class, fw->data);
- 	phnum =  elf_hdr_get_e_phnum(class, fw->data);
-+	shnum = elf_hdr_get_e_shnum(class, fw->data);
-+	shstrndx = elf_hdr_get_e_shstrndx(class, fw->data);
- 	elf_shdr_get_size = elf_size_of_shdr(class);
+ 	cifs_dbg(FYI, "In FindNext\n");
  
--	if (fw->size < shoff + elf_shdr_get_size) {
-+	/* keeps shoff in size_t range for the two bounds below */
-+	if (shoff > fw->size) {
-+		dev_err(dev, "Section header table is out of bounds\n");
+@@ -4533,8 +4534,8 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 		pSMB->ResumeFileName[name_len] = 0;
+ 		pSMB->ResumeFileName[name_len+1] = 0;
+ 	} else {
+-		rc = -EINVAL;
+-		goto FNext2_err_exit;
++		cifs_buf_release(pSMB);
 +		return -EINVAL;
-+	}
-+
-+	if (shnum) {
-+		shend = size_add(size_mul(elf_shdr_get_size, shnum), shoff);
-+		if (shend > fw->size) {
-+			dev_err(dev, "Section headers are out of bounds\n");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	/* find_table() reads the header at shstrndx even with no sections */
-+	shend = size_add(size_mul(elf_shdr_get_size, (size_t)shstrndx + 1), shoff);
-+	if (shend > fw->size) {
- 		dev_err(dev, "Image is too small\n");
- 		return -EINVAL;
  	}
+ 	byte_count = params + 1 /* pad */ ;
+ 	pSMB->TotalParameterCount = cpu_to_le16(params);
+@@ -4545,71 +4546,61 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 	rc = SendReceive(xid, tcon->ses, (struct smb_hdr *) pSMB,
+ 			(struct smb_hdr *) pSMBr, &bytes_returned, 0);
+ 	cifs_stats_inc(&tcon->stats.cifs_stats.num_fnext);
++
+ 	if (rc) {
++		cifs_buf_release(pSMB);
+ 		if (rc == -EBADF) {
+ 			psrch_inf->endOfSearch = true;
+-			cifs_buf_release(pSMB);
+ 			rc = 0; /* search probably was closed at end of search*/
+-		} else
++		} else {
+ 			cifs_dbg(FYI, "FindNext returned = %d\n", rc);
+-	} else {                /* decode response */
+-		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
+-
+-		if (rc == 0) {
+-			unsigned int lnoff;
+-
+-			/* BB fixme add lock for file (srch_info) struct here */
+-			if (pSMBr->hdr.Flags2 & SMBFLG2_UNICODE)
+-				psrch_inf->unicode = true;
+-			else
+-				psrch_inf->unicode = false;
+-			response_data = (char *) &pSMBr->hdr.Protocol +
+-			       le16_to_cpu(pSMBr->t2.ParameterOffset);
+-			parms = (T2_FNEXT_RSP_PARMS *)response_data;
+-			response_data = (char *)&pSMBr->hdr.Protocol +
+-				le16_to_cpu(pSMBr->t2.DataOffset);
+-			if (psrch_inf->smallBuf)
+-				cifs_small_buf_release(
+-					psrch_inf->ntwrk_buf_start);
+-			else
+-				cifs_buf_release(psrch_inf->ntwrk_buf_start);
+-			psrch_inf->srch_entries_start = response_data;
+-			psrch_inf->ntwrk_buf_start = (char *)pSMB;
+-			psrch_inf->smallBuf = false;
+-			if (parms->EndofSearch)
+-				psrch_inf->endOfSearch = true;
+-			else
+-				psrch_inf->endOfSearch = false;
+-			psrch_inf->entries_in_buffer =
+-						le16_to_cpu(parms->SearchCount);
+-			psrch_inf->index_of_last_entry +=
+-				psrch_inf->entries_in_buffer;
+-			lnoff = le16_to_cpu(parms->LastNameOffset);
+-			if (CIFSMaxBufSize < lnoff) {
+-				cifs_dbg(VFS, "ignoring corrupt resume name\n");
+-				psrch_inf->last_entry = NULL;
+-				return rc;
+-			} else
+-				psrch_inf->last_entry =
+-					psrch_inf->srch_entries_start + lnoff;
+-
+-/*  cifs_dbg(FYI, "fnxt2 entries in buf %d index_of_last %d\n",
+-    psrch_inf->entries_in_buffer, psrch_inf->index_of_last_entry); */
+-
+-			/* BB fixme add unlock here */
+ 		}
++		return rc;
++	}
+ 
++	/* decode response */
++	rc = validate_t2((struct smb_t2_rsp *)pSMBr);
++	if (rc) {
++		cifs_buf_release(pSMB);
++		return rc;
+ 	}
++	/* BB fixme add lock for file (srch_info) struct here */
++	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
++	response_data = (char *)&pSMBr->hdr.Protocol +
++		le16_to_cpu(pSMBr->t2.ParameterOffset);
++	parms = (T2_FNEXT_RSP_PARMS *)response_data;
++	response_data = (char *)&pSMBr->hdr.Protocol +
++		le16_to_cpu(pSMBr->t2.DataOffset);
+ 
+-	/* BB On error, should we leave previous search buf (and count and
+-	last entry fields) intact or free the previous one? */
++	if (psrch_inf->smallBuf)
++		cifs_small_buf_release(psrch_inf->ntwrk_buf_start);
++	else
++		cifs_buf_release(psrch_inf->ntwrk_buf_start);
+ 
+-	/* Note: On -EAGAIN error only caller can retry on handle based calls
+-	since file handle passed in no longer valid */
+-FNext2_err_exit:
+-	if (rc != 0)
+-		cifs_buf_release(pSMB);
+-	return rc;
++	psrch_inf->srch_entries_start = response_data;
++	psrch_inf->ntwrk_buf_start = (char *)pSMB;
++	psrch_inf->smallBuf = false;
++	psrch_inf->endOfSearch = !!parms->EndofSearch;
++	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
++	psrch_inf->index_of_last_entry += psrch_inf->entries_in_buffer;
++	lnoff = le16_to_cpu(parms->LastNameOffset);
++	if (CIFSMaxBufSize < lnoff) {
++		cifs_dbg(VFS, "ignoring corrupt resume name\n");
++		psrch_inf->last_entry = NULL;
++	} else {
++		psrch_inf->last_entry =
++			psrch_inf->srch_entries_start + lnoff;
++	}
++	/* BB fixme add unlock here */
++
++	/*
++	 * BB: On error, should we leave previous search buf
++	 * (and count and last entry fields) intact or free the previous one?
++	 *
++	 * Note: On -EAGAIN error only caller can retry on handle based calls
++	 * since file handle passed in no longer valid.
++	 */
++	return 0;
+ }
+ 
+ int
 -- 
 2.53.0
 
