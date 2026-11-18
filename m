@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055728;
-	b=3j1qv9wqtfa0wuv9OfqVBWstsHZdtVNb0mUtmwsJ58Mx8Ifo6JkznAdlb3hpI8fCt7FH
-	 P6I1BssY8kTfYgvjpXPazz0CiSZNgpfjXtkdCJ36Dv/yQqRkurmQ3PanGf+0LH3jEy/Ir
-	 PUj5FSTb1U2rmfoSj4l3dyPeKnOyuSSCoVQKRFgfcqMzVNc214JJXyFHcTULH17anj9vi
-	 TD1y7/CIw12oA/rO9ht4Hm9GZTsvOE69pjG9iRfW7X5j/bgagLXscCn2UXcs13udUSfpZ
-	 NF14YmdRUYUlS67aZDw564yT824UQHSJm9UV/k64Ipvr43zo14ygdcln9hgrKv1qUnA==
+	t=1795055731;
+	b=wUkJ6+HFoQ9+BUg7k3BuGDp2GLziZo0IkkunVmcYrOHkuxR5f3P/LVSIQTLo6rU6+oAw
+	 zJ75LlfZL4RS+eFYRV+5nLJyLbOH/Z+qjk4N5pNesHB0aggzFS2OrYR4B/F8mKfeBoDT7
+	 7Agunfc4xSVNhLPWc0Q/EKsuEX3ZzAs14BqmrqosDkKBhef0DEX4dTjw3nNEAPeT9Bz8s
+	 zXRGPIFjAFcLNX+1dNhmbWsq/f1zbx9FRkPNmgg9J/gpf8Wy2dctP4jd9MyZB+0SYRT+8
+	 07sUIKSWuNDy0d20M+a5H5djP0IzZ63SxkZABzYQz6BtwEErDfpPMAkfRffHxf+NOcQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iUw0qj2n1A4gP4JJeW0mHVf0UPw98RBemu7LroXBL6I=;
-	b=oF43TcW2fRmhiMBXft1n3tQm5A90emG+tRoQfM+4krFE4rchcwqsuR7/2RWSV4o7cg3v
-	 3/ZHaYvfZI9waRrUlQaWadMTy5Qxndl+PYAW2pSdcEyFVxcYT+b2pOCc+1z390NtCY/+M
-	 iIgeUdLs7pPeT7/rRITDskGyZsKc5yximy8ZDMKOCTy12MwdnR3KXRjbElIICSRAYSxoz
-	 RozZAbqZClbys8F/ZPgBlSPPxXXYAuDAuf4HJSGOhKPpWE3K9W3y1HL2ko+0V6aAQpQ0v
-	 VdWwp83WB+EZs/ITs3RdkXlVeKU9X2gVZNQaMAT5HHFFOJOv+RkUg3kRjIJmisUV5Mg==
+	bh=hP7boeuan2NhIb21zDTp1aZKXlo0MDo4PU3/QDDsCmI=;
+	b=pKY2hcCTD1QC11/yiP57g+kTDkpQgBn8UwkgCTGAV4WIYLXOn1UXR5LibcMbplU93KuL
+	 qdb009BjmxV3pHs1Q8nNRp1LurjCLCyNlch+rVMEM8tfs+1eOJuFsvPB5FlVsS9RyiLfO
+	 hzMAFEYa8t+dPMByFIoDf2owCWQHuXRNF0sXpDUw+9SkcI81Qff7P4pH9UU2zkTVcrs5U
+	 MABvYTRZ/wj1L0dyW1mCbqdMBlptu/J+Hvz/Bs7ID9Vga4zrcsY76gxuo9zgQJqvoi/ZM
+	 wAaGM4t+iH393bs2r9yFkEJ9Ln08rajjl8YxrnLgYXPmaGvZ2Y/0NYNyYHz4WA4QZgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+SGelVi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBkQkbGV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1E2606A32A;
-	Thu, 19 Nov 2026 02:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A7C606A320;
+	Thu, 19 Nov 2026 02:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w+SGelVi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD2C1F000C4;
-	Thu, 19 Nov 2026 02:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBkQkbGV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44CA1F000C4;
+	Thu, 19 Nov 2026 02:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055728;
-	bh=iUw0qj2n1A4gP4JJeW0mHVf0UPw98RBemu7LroXBL6I=;
+	s=korg; t=1795055731;
+	bh=hP7boeuan2NhIb21zDTp1aZKXlo0MDo4PU3/QDDsCmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w+SGelViMejte23G5cJGjwhOsDT+pV+TTTowt2kT/rLjNx+j2Gku1dzw4pJL+YOR0
-	 dmNsjq+H7RKEma10Aelz2Gc0BwC1ReclUtqSMgWYaEVKAfWGmCx2a5kKEdOyKzfDCI
-	 Uy53ioIQQb8rKHpuWXQuKpg4KnheoSnkYbSC9SGM=
+	b=uBkQkbGVjgpIyWti24fnkJEm6PrZ2Zuh7eEwepDFVgv6Cc9pxftqSnyyKqICsgEpv
+	 pu9GG6ELDQLczJgRaUSDARPf617gejDJ2Jb4TzSUWt0USCSTgKvMUeiIsmo3hj5AQc
+	 RD9yUYZqRrCMGUeoHLwyoI7jLHj/mrFWitjaGeqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1736/2214] ARM: dts: AB8505: Enable charging options
-Date: Wed, 18 Nov 2026 15:56:52 +0100
-Message-ID: <20261118150121.114448300@linuxfoundation.org>
+Subject: [PATCH 5.15 1737/2214] ARM: dts: ux500: Use AB8505 charger compatible
+Date: Wed, 18 Nov 2026 15:56:53 +0100
+Message-ID: <20261118150121.151104338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,56 +67,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 1afc8a287fbd72b5380ed037ab19fdaf448755ef ]
+[ Upstream commit ff1501cbb825de117267124ecb8898112b4051c5 ]
 
-These are not disabled on the AB8500 and after testing we
-see they work fine, so enable them on AB8505 too.
+Identify the AB8505 charger using its variant-specific compatible and
+retain the AB8500 compatible as a fallback for the existing driver. This
+selects the AB8505 interrupt constraints from the binding.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: ff1501cbb825 ("ARM: dts: ux500: Use AB8505 charger compatible")
+The AB8505 interrupt table explicitly omits the five interrupt sources
+belonging to the AB8500 main charger. Remove these nonexistent interrupts
+from the AB8505 charger node, leaving its nine USB charger interrupts.
+
+Fixes: bc324d447fba ("ARM: dts: ux500: Add interrupts to charger")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ste-ab8505.dtsi | 4 ----
- 1 file changed, 4 deletions(-)
+ arch/arm/boot/dts/ste-ab8505.dtsi | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
 diff --git a/arch/arm/boot/dts/ste-ab8505.dtsi b/arch/arm/boot/dts/ste-ab8505.dtsi
-index 8d018701a680c..ad40bd52311f6 100644
+index ad40bd52311f6..9926f99718d80 100644
 --- a/arch/arm/boot/dts/ste-ab8505.dtsi
 +++ b/arch/arm/boot/dts/ste-ab8505.dtsi
-@@ -98,7 +98,6 @@ ab8500_battery: ab8500_battery {
- 				};
- 
- 				ab8500_fg {
--					status = "disabled";
- 					compatible = "stericsson,ab8500-fg";
- 					interrupts = <24 IRQ_TYPE_LEVEL_HIGH>,
- 						     <8 IRQ_TYPE_LEVEL_HIGH>,
-@@ -116,7 +115,6 @@ ab8500_fg {
- 				};
- 
- 				ab8500_btemp {
--					status = "disabled";
- 					compatible = "stericsson,ab8500-btemp";
- 					interrupts = <20 IRQ_TYPE_LEVEL_HIGH>,
- 						     <80 IRQ_TYPE_LEVEL_HIGH>,
-@@ -136,7 +134,6 @@ ab8500_btemp {
+@@ -134,13 +134,9 @@ ab8500_btemp {
  				};
  
  				ab8500_charger {
--					status = "disabled";
- 					compatible = "stericsson,ab8500-charger";
- 					interrupts = <10 IRQ_TYPE_LEVEL_HIGH>,
- 						     <11 IRQ_TYPE_LEVEL_HIGH>,
-@@ -175,7 +172,6 @@ ab8500_charger {
- 				};
- 
- 				ab8500_chargalg {
--					status = "disabled";
- 					compatible = "stericsson,ab8500-chargalg";
- 					battery = <&ab8500_battery>;
- 				};
+-					compatible = "stericsson,ab8500-charger";
+-					interrupts = <10 IRQ_TYPE_LEVEL_HIGH>,
+-						     <11 IRQ_TYPE_LEVEL_HIGH>,
+-						     <0 IRQ_TYPE_LEVEL_HIGH>,
+-						     <107 IRQ_TYPE_LEVEL_HIGH>,
+-						     <106 IRQ_TYPE_LEVEL_HIGH>,
+-						     <14 IRQ_TYPE_LEVEL_HIGH>,
++					compatible = "stericsson,ab8505-charger",
++						     "stericsson,ab8500-charger";
++					interrupts = <14 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <15 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <79 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <105 IRQ_TYPE_LEVEL_HIGH>,
+@@ -149,12 +145,7 @@ ab8500_charger {
+ 						     <22 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <21 IRQ_TYPE_LEVEL_HIGH>,
+ 						     <16 IRQ_TYPE_LEVEL_HIGH>;
+-					interrupt-names = "MAIN_CH_UNPLUG_DET",
+-							  "MAIN_CHARGE_PLUG_DET",
+-							  "MAIN_EXT_CH_NOT_OK",
+-							  "MAIN_CH_TH_PROT_R",
+-							  "MAIN_CH_TH_PROT_F",
+-							  "VBUS_DET_F",
++					interrupt-names = "VBUS_DET_F",
+ 							  "VBUS_DET_R",
+ 							  "USB_LINK_STATUS",
+ 							  "USB_CH_TH_PROT_R",
 -- 
 2.53.0
 
