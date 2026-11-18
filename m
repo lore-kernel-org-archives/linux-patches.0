@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023526;
-	b=g2QhanHJs3oTCzW8sZ4bN0LvCH6f/9CNsrDfHS6PljCffQlPSLEvOiP6dRk/k7+xuzpd
-	 pSQDYC0+r7mQWL7AJZCjTgDvM/DwnxflG5aejKsKqOlNKhN/X6Cdab14LQQbrO9vEzy30
-	 2gXhXK1RsDNbkkXmbuNvxorcf4Elp8MZF2TcMvsaMtp0i8Jw2Dp8lXBYA5hWGP7udURei
-	 zW+OoY62w/bjwd71lBKbmPuDhrgSfsIPbTm/qR/5G/xOiaEh+b3gRFNSDAIo7x1sLyz6N
-	 vCDcbXY06sXw7SLD5ZDZRXXwYqREd3trhJc5z0MdqGCdDislngeRNTv4V+lNkUVYjGA==
+	t=1795023529;
+	b=tTyLSJZqqMtoeWyR41JG6WodTN+WJf7obeN3D+/sAH2YIDS6C5O+xOT4N4ZYLN02dVqG
+	 ZIJFaMevyL9HEY13LnwIgwUXkWdlCcNUYHujoB6w+L5Fm3LUN/G7Dq6ZUokfxMYn22P3A
+	 9+UPNQ4VO6zKrADyF4Su5QMq5xucMjGhwMxo/GKX1PqMJnNyE8wSq3UlQX4fRv7/SFZOT
+	 SqXHfettU41KzSVi6p4T37gMOXULBNYil9B4Y3OHHbqkmvtgNDmRkGZqPpcFAKU/Fk/n2
+	 RLQR+azYhV+CtVHVdMdqDRWObtxKoHLzivCSN80Tv9JiHm3rSAVelMFHcN8ZK9Vmy1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BRt47phaDlJNd/nREShc+oDV2PU7TRq1AVn+xGpkM9U=;
-	b=f8Cc20tEnA5dAPS6QVOAnr2HXvZKZYx6WHL+QhErSB0q9xeKP8KStveIWtQOY80W+/oP
-	 eER6UCDce4+gZhSNJoDoh5v389xwVIkuo5H2OHTHulXy5nEYQSjle6fHFM6R/XuSi/mvr
-	 2MkertG2iDY6TIInOUVH8g6jUpC9zfGF83FD7K9v6Kfeig/d4Brkc4nXv38vmawzb1gME
-	 0npKSZmG5L7qAv+E/BXuCS+DDZFnvzqVbkfIFq3yh+gj5mwNLRykbZ2sQeD7ttqw8vix8
-	 qlwhz+oZ6MGGEFCAyawS4E5jZNOjwSXDrpdvaSEDSTJ5vpVSweRd4qhgj2biZWDMrjw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=uU+fBORdd8w+7FN7rQ5uW8Inw3AIloRVHG5YLMttDOU=;
+	b=uN69Gvx1jkbJzZ11OL0Cw74hd68gEBPh5p4jHvWn6w1zYlH85Zz4yFeyM+Rypqu2RfnC
+	 b9tla7SRU7Qms2RgXiyou8RMZZ+njyz2LougbH6S4xFOg15EWc0fpkV7e4qSw2jho/eXD
+	 ps+iUQ76IpoEzUNEDp45UgkOUyNB3t4t/6JKWkWmKuCDzcp4+qVKlumx16FdmmO9cdiR7
+	 wsSffE5qijDRdw1/rK1UB+xmXxqc+HcCTYviqZ9BHhyXIaGMeIOk8d3nUbeGJFC1H90i7
+	 bGZ2QCJ8vr5EEgUmj4hV7XNPzNTdlK8RJOlH/gTAikAQ75A2pFmXhmKnhZI45xAlU5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EyL3c4Dd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iWRzOX/f";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D667F606A31C;
-	Wed, 18 Nov 2026 17:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CCD606A320;
+	Wed, 18 Nov 2026 17:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EyL3c4Dd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AA61F000C4;
-	Wed, 18 Nov 2026 17:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWRzOX/f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2791F000C4;
+	Wed, 18 Nov 2026 17:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023526;
-	bh=BRt47phaDlJNd/nREShc+oDV2PU7TRq1AVn+xGpkM9U=;
+	s=korg; t=1795023529;
+	bh=uU+fBORdd8w+7FN7rQ5uW8Inw3AIloRVHG5YLMttDOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EyL3c4DdibgVFcDNFWVgQFSRO//lYy3hQ69Lbg9QeZH/B1Ws9YC1S4TfQvcNxoq46
-	 fXumVHE45c7ctjsFbhoN68YWdPMOrBeJa8fPhUMuA1b+W6PEBfIUubx8rvQeOHq197
-	 AqSvPsl67epo0YrqQh2hIunaRtgl2BKgZOQz6dcQ=
+	b=iWRzOX/fkbIx26caXZZPKo2/JIQsvqobpKd3nwrCBDnHkBhDmq0F9WkQywIctQmsq
+	 mGYeaGQTwhCW8ADHOQlVibzkUsReoTgx9lU1q+QzAAgqbI1xk2C1Hh1ni07Lm+FNOr
+	 0iCZ6vdLekGGu9wUYH885DlLU08cDA+XzOZEELhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Sudhakar Kuppusamy <sudhakar@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0384/2151] crypto: rsassa-pkcs1 - reject undersized keys when signing
-Date: Wed, 18 Nov 2026 15:35:19 +0100
-Message-ID: <20261118150136.063604178@linuxfoundation.org>
+Subject: [PATCH 6.18 0402/2151] cpuidle: teo: Do not return a disabled idle state
+Date: Wed, 18 Nov 2026 15:35:37 +0100
+Message-ID: <20261118150136.707175364@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,59 +63,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 4cf50332b5384ea13f6f896d5cf84e05b5b6484a ]
+[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
 
-rsassa_pkcs1_sign() subtracts 11 from the unsigned key size before
-checking that the key is large enough for PKCS#1 v1.5 padding:
+If idle state 0 is disabled and none of the enabled idle states satisfies
+the PM QoS latency constraint, constraint_idx in teo_select() stays at its
+initial value of 0, because the loop that updates it starts at state 1,
+and so the candidate state index is capped at state 0, which is disabled,
+and that state is returned to the caller.
 
-	if (slen + hash_prefix->size > ctx->key_size - 11)
-		return -EOVERFLOW;
+The cpuidle core does not validate the returned state index against the
+per-state disable flags, so the CPU ends up entering the disabled state 0.
 
-If the RSA modulus is shorter than 11 bytes, the subtraction wraps.
-With a one-byte key and hash=none, the padding memset() writes past
-the output buffer.
+To address this, ensure that constraint_idx is at least equal to the index
+of the first enabled idle state (idx0), so that the candidate state is
+never capped to a disabled one.
 
-KASAN reports:
-
-    BUG: KASAN: slab-out-of-bounds in rsassa_pkcs1_sign+0x1ad/0x3b0
-    Write of size 4294967294 at addr ...
-    The buggy address is located 0 bytes to the right of
-     allocated 1-byte region [...]
-
-Reject keys shorter than the minimum encoded message size.
-
-Fixes: 3d5b1ecdea6f ("crypto: rsa - RSA padding algorithm")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Sudhakar Kuppusamy <sudhakar@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/rsassa-pkcs1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/governors/teo.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/crypto/rsassa-pkcs1.c b/crypto/rsassa-pkcs1.c
-index 94fa5e9600e79..d0e4a885397f4 100644
---- a/crypto/rsassa-pkcs1.c
-+++ b/crypto/rsassa-pkcs1.c
-@@ -169,7 +169,7 @@ static int rsassa_pkcs1_sign(struct crypto_sig *tfm,
- 	u8 *in_buf;
- 	int err;
+diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
+index 8078eca72ca53..f5b987022470a 100644
+--- a/drivers/cpuidle/governors/teo.c
++++ b/drivers/cpuidle/governors/teo.c
+@@ -413,6 +413,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		}
+ 	}
  
--	if (!ctx->key_size)
-+	if (ctx->key_size < 11)
- 		return -EINVAL;
- 
- 	if (dlen < ctx->key_size)
++	/*
++	 * If the latency constraint does not allow any of the enabled idle
++	 * states to be used, the candidate state index will be capped to 0
++	 * by the check below, but state 0 may be disabled.  To prevent the
++	 * selection of a disabled state in that case, ensure that
++	 * constraint_idx is at least equal to the index of the first
++	 * enabled idle state.
++	 */
++	if (constraint_idx < idx0)
++		constraint_idx = idx0;
++
+ 	/*
+ 	 * If there is a latency constraint, it may be necessary to select an
+ 	 * idle state shallower than the current candidate one.
 -- 
 2.53.0
 
