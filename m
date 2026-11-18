@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033976;
-	b=zPdAHE1eyahJduoMVz3S6AsGVJnvTRN/NJsL4IPuKJJOYVpufhwUe18YpMtLEDo/hQE6
-	 hWJBKymtHdllS6ICkM+R5MxKqrrA2X96X8tNgzFtZux28Q4TNuQUE7tEgrkaj790U6JL4
-	 rtwNgRJMP1wR4mbAUBLZHtF4U6ypR5zSiPJnor3p3FX9eQiifGPlTw0qlYtbOA9Ln+7tY
-	 G5kO+bdZ0DFEqd9glxueC2etoqva3njsu+0t7IglwgiZe3e9Zp7JaCc53WEhlksbbL125
-	 8RZqCzxo7T3OKT7f+ud1aCZzt6wxoN8h+8T0/r07BT6FOutZ4OQ5a8qL5w4OCppAc1A==
+	t=1795033979;
+	b=YjwfgXF6YI7A+bcMsgRSUElOTvyqYLp1CftfMnjjgW623gHNmlckfs1LXKZFMqXzuOFY
+	 N1i+dr4dzqDTz1jbWPYxsyh7mT+lVxNJXpDBCd3TIgRM310cmmgxvNvmkj+4MVEjPG9wn
+	 kSP+pgZWdOg93UPCliLdJKGGwyqARe+zLAaWzGWRdM4ZbA+yN7rSxhOR8nEHetDhUJdfI
+	 PB4C3gbRSzccRIoxeFWFFhU870FykcA8T/TjjMMIc+fTQCn0C81ggHvHxWBfHMNbOPrsV
+	 3cv3b8yD8zKvETf0tOBhTPyES9Z8YGTrJVDTEkxDejWLMPEPG2lfo4NXxNfAEvVKyuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033976;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033979;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NTEpRDYZD2EIosGevGw4xp7LpienjBhPtJ/TEsA7A4Y=;
-	b=OBPRE2JwFFbzcS//nNWAtcIaPT6yykWlSkqLP39VClzBoSTerDEeCb0pvEhXzl0+2GTA
-	 RQj6iPmcvUgJoCb/4JikNuQqMSRLmU2QjcZv8b+iDnC7orgkQzsQNWOFgaRs14gnQiYta
-	 hG57Ba8kA3j+20pmhFCNEGiU/+dPO3cwHh/FyTh9M3NP0FCgNnxTFak7KAQCnHwdsy2F1
-	 FqtXXPTFeLF5CssVrltC+CdoYotnGcPJxGSPCWAaNJz6JASPGb3xh4IlyDHS/ayuz6M+e
-	 lHWe38hLnHPhggd2yAQQauR1DIjCIRXX0SDaRxoT/4qNQ2lJZWBWZMEvAzCSlEcxNsw==
+	bh=6n6Taq2HksIMXWnMMZa8IE2AcxERzePWaSY7BMXg0T4=;
+	b=lb/jTEEHOtnutKsuD2Yll7nkqDjI6rSiHC+zSBKaSeLjmOogSV2Pbe6KFhUJUDk/B6AV
+	 JziiwgXkJvhAKTufsCbvMsCKzedECBzxiCWeO62DJlcPrVEvYgjzgEa8AHSDR1a9QIoOB
+	 qpWkBmK7B8FLHRyuTVTHNqzGj2ftjPKUeIi47rFgcUTIG3BdmseQqV+xKNpYDow0xmvda
+	 Th2n6J2eEJ0jjXTw2VsiqGX5CTrx510uA7CidQ+FapvGDw3fY3anrBtPLkN6HxDFjJ+Fv
+	 aeWanRzyUkLNaAsynvxphh9D2B97NkX7gZVpH7wANkK6As0/cTsqFGEfEG0qDBQsW7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QceRa9kO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvLb3NCJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DFC606A336;
-	Wed, 18 Nov 2026 20:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A860606A32A;
+	Wed, 18 Nov 2026 20:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QceRa9kO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D801F000D3;
-	Wed, 18 Nov 2026 20:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvLb3NCJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D61C1F000D1;
+	Wed, 18 Nov 2026 20:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033976;
-	bh=NTEpRDYZD2EIosGevGw4xp7LpienjBhPtJ/TEsA7A4Y=;
+	s=korg; t=1795033979;
+	bh=6n6Taq2HksIMXWnMMZa8IE2AcxERzePWaSY7BMXg0T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QceRa9kORd6G2a4K721UOF6U5HnuWAuQVs+t8owSjJlR77GmlVPzz/59AjInllcqT
-	 +r11fm7C3ygwbaLk5LyXeDNoRuznolyMq2y97NMuaDqx21p7z3OKlp9IwQZSCUtEHa
-	 jnVIxBGBGrlDAZ4bxEXNlZMNGkNUJ9/b7toOIG9k=
+	b=hvLb3NCJ/t+yMsogGXhbhXd0zGsTwuQ+uDtV5orLHUj9EsX1qVVDQEbxM9CBrxtq9
+	 VrJ8EQKOuYO8sqzzRgSuwKdFLe9qUsoBolxWXqxrBgUXyNT2QldjTGpxBbgEKUAhYZ
+	 X/EOGHXGheuNF+hBvq4SztolCcQJ1Y4WetkZPxhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0165/3318] iommu/qcom: Publish pgtbl_ops before releasing init_mutex
-Date: Wed, 18 Nov 2026 15:13:07 +0100
-Message-ID: <20261118150319.553794221@linuxfoundation.org>
+Subject: [PATCH 6.6 0166/3318] wifi: ath11k: validate regulatory capability phy_id
+Date: Wed, 18 Nov 2026 15:13:08 +0100
+Message-ID: <20261118150319.591861822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,47 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a05b67cd45ad09a19f41b2d37255da714512e0ca ]
+[ Upstream commit f8729a40ebcc94d164be8f154483a21669f3ab52 ]
 
-qcom_domain->pgtbl_ops was assigned after mutex_unlock(). Another thread
-calling qcom_iommu_init_domain() would see qcom_domain->iommu already set
-(domain fully initialized) and skip re-initialization under the mutex.
-If it then called qcom_iommu_map() before the first thread set pgtbl_ops,
-it would observe a NULL ops pointer and return -ENODEV for valid mappings.
+ath11k_wmi_tlv_ext_hal_reg_caps() copies firmware regulatory
+capability records into soc->hal_reg_cap[] using reg_cap.phy_id as
+the destination index.  The loop count is bounded by num_phy, but the
+phy_id embedded in each record is not checked against the fixed
+MAX_RADIOS-sized destination array.
 
-Move the assignment to before mutex_unlock() so that once the mutex is
-released the domain is fully visible to concurrent operations.
+Reject firmware records whose phy_id does not fit soc->hal_reg_cap[]
+before copying the parsed capability.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260704011040.26233-1-pengpeng@iscas.ac.cn
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 3de5a7847978d..65a1529bdcf26 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -318,13 +318,12 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 		ctx->domain = domain;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 2fc9b7a86b8c6..3845f51b1ae5f 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -4709,6 +4709,12 @@ static int ath11k_wmi_tlv_ext_hal_reg_caps(struct ath11k_base *soc,
+ 			return ret;
+ 		}
+ 
++		if (reg_cap.phy_id >= ARRAY_SIZE(soc->hal_reg_cap)) {
++			ath11k_warn(soc, "invalid reg cap phy_id %u\n",
++				    reg_cap.phy_id);
++			return -EINVAL;
++		}
++
+ 		memcpy(&soc->hal_reg_cap[reg_cap.phy_id],
+ 		       &reg_cap, sizeof(reg_cap));
  	}
- 
--	mutex_unlock(&qcom_domain->init_mutex);
--
- 	/* Publish page table ops for map/unmap */
- 	qcom_domain->pgtbl_ops = pgtbl_ops;
- 
--	return 0;
-+	mutex_unlock(&qcom_domain->init_mutex);
- 
-+	return 0;
- out_clear_iommu:
- 	qcom_domain->iommu = NULL;
- out_unlock:
 -- 
 2.53.0
 
