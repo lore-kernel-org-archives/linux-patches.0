@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034177;
-	b=SDc6zc5KVEpFXBFJD3B0GvAlpEEf8nw6U9BM5XRAr6xMQc9RkSQoSupOx5TOs98d/Dn8
-	 nMbK8wCNKwnTWUlhQEI+sWy0M5c9U7BwRsUiBtFslGSDNnNFAdLstdK6CtHfFFUQrYz+v
-	 uHra+B8cTwU5aFH7nwK1EymXPjpR2EbomW4bxBmPVrK//IvDTrIon9XiRBWIAayqChUX9
-	 IW5wk7DNgD3Rt/joLZlRTPKk8OjwP2XirQUW6Vi0xQ6u98tf5FuqMxMA9Q8kA2n1q9mMO
-	 Q7GcVeQbiXpLoMHuIZDDIQnsL0dJGpQpua0cN2ofrwsxrBDCm8Wn9NsN6xSaZSm9AEg==
+	t=1795034180;
+	b=eyl7MJbbsIaRhtp6Z7cyHxcnpuIW1ASo5VyCo3GriFaWstD9RavvsWgUWlu/9RDt3HOi
+	 8m8ST4bbdQu+XkUEM1WAdWGTULW0ra5LHOroiZzA7De16JyGlvnrSZEVuXxbFxLYQomee
+	 ifnQanbTuGGKOopdeOYVkPdxoTYhtm7CnCe8Fmndqflz49q3R+yS1U8cqLdbEliWzZhg9
+	 lI/syhzUM66zr85pBPAOjyEsznoFoTS39gpUPOw753npQpsMeCohw+zDNJ5Xd6i55dl6A
+	 ZT8FNNxI1m1FFWCkjgtIi/HfW42zUZB/p+K3Ki4oTbXqksSymca/huPgo0U66VvjZtQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034177;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034180;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BzL9FrMtMmxsR46CTyIUc0unDaI4OumVkb3QbYKNclc=;
-	b=ykAL5WtYwYn3KWpLL7zaCBYzTWUI+9URdtov2nhk57e4EzI1bxGeTZrzgk5yd74pW6IX
-	 YLbWeItOBmfg613NAczZ2rieSBaO2dAy8RyrhfAH4rn6tXHbIYihAIRyvGmq3hNJFHRjc
-	 xmzrKeG3mKNCmEgpa+YDAkWHWjDYlvOeBV4s+HBVgMnoF3jf4Q4NMNnlEoSSsezYFPuVm
-	 XeVUxWPhy91hC3BwiC6VuWFgcPOibdW1eOsPVbyjhU8UpTC8vMGk+760IQt8yx7vxBp1X
-	 9HLnLOv0j5cw56YRxM84/vv5MwYQcFVL8okn+4rHuy2RRFByonPo5N+7Sy6UUj+ELyg==
+	bh=c0timLJs66uC95i+dv/Fqt/EFHoJou+wb+mAUiOo6Ks=;
+	b=AKGdZptc4kaM7cK+cCt10zjCWDqXo67Tiwth9V+nQiJ0FOnTxGxqX2tUq+Lao7AvRCEM
+	 yYi1k/DZMZ5EppbSEIQL9cEsfGmnNLBPrRxEumloh+qa8eaGUMZzO6C4Cx2OApPMK8HyP
+	 G0L04fs3sbBvyhWbrEJ3zqraXPRLdMLh0cJn14hwnBjoNNgfXSH2QTAcSJwKXCv471MJ3
+	 BT1OhG+CD2OzeFzwdDA/xmy0E5O/ngpj3IKBggnxHS9XkU/GUGCGFEdQ5Hd/93SOoGpM9
+	 m2Q4r3H4uYgtCmTWTgHO23Zc0XNlfG7kwa8j3PuJaDmOEeIdUmkzG4Yd1du8mNdAkhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNIyTJ6w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6SlUz9S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAD6606A33F;
-	Wed, 18 Nov 2026 20:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AB3606A331;
+	Wed, 18 Nov 2026 20:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNIyTJ6w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707E41F000C4;
-	Wed, 18 Nov 2026 20:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w6SlUz9S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444051F000C5;
+	Wed, 18 Nov 2026 20:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034177;
-	bh=BzL9FrMtMmxsR46CTyIUc0unDaI4OumVkb3QbYKNclc=;
+	s=korg; t=1795034179;
+	bh=c0timLJs66uC95i+dv/Fqt/EFHoJou+wb+mAUiOo6Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNIyTJ6ws704pJdj4D+NJZUVBT2PovUv5luTqAAR8l7Qp1Ut5vexG2I4kH2pwMWbr
-	 lJ5XUciMHqOGQzhL6kBsc5H8/MbjRAdasIiYWcYVIq8duLz+JBAggYPhVabmjkNyDr
-	 J5e5ks8H1PBzYOQEwGtbiQ3cKWQoOa1CHI3hmgDs=
+	b=w6SlUz9SR5Gp+NPOPnEpsGPAheaP086iG4y3JXiFuEHHybu9mNTb0rSBlowfV8nqz
+	 97MPe3qf3EJ4OaOCjhT1Xtbz9Fqym9qsS4w0/HPhF5F1gDAxFpuEDyT6RrNiatsVac
+	 /RRoQCoJm5EFgbs+qfBTrrnh/yWofNPnhpFX/cJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
+	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0276/3318] PCI: Avoid saving config space state if inaccessible
-Date: Wed, 18 Nov 2026 15:14:58 +0100
-Message-ID: <20261118150323.768720167@linuxfoundation.org>
+Subject: [PATCH 6.6 0277/3318] ALSA: hda/intel: Add sanity check for BAR0 size
+Date: Wed, 18 Nov 2026 15:14:59 +0100
+Message-ID: <20261118150323.805459279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,74 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit e18d1abc3bff0a24a5299f3c150ab9546e9439aa ]
+[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
 
-The current reset process saves the device's config space state before
-reset and restores it afterward. However errors may occur unexpectedly and
-it may then be impossible to save config space because the device may be
-inaccessible (e.g. DPC). This results in saving invalid values that get
-written back to the device during state restoration.
+The recent reports from syzkaller showed that we can bind any wild PCI
+device to HD-audio controller, and if PCI BAR of the device is too
+small, it may lead to a crash, as the driver believes as if the full
+register range were accessible.
 
-With a reset we want to recover/restore the device into a functional state.
-So avoid saving the state of the config space when the device config space
-is inaccessible.
+For avoiding such a problem, add a safeguard before the actual probe
+to check the available BAR0 size.
 
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-[bhelgaas: comment]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260805165518.794-4-alifm@linux.ibm.com
+Note that the threshold (0x200) is chosen to cover all needed
+registers at probing.  But this doesn't mean that it would cover fully
+for all features including the extended ones.
+
+Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
+Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
+Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ sound/pci/hda/hda_intel.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index e8186da64463b..ba6eccd699ef4 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -783,6 +783,28 @@ u16 pci_find_dvsec_capability(struct pci_dev *dev, u16 vendor, u16 dvsec)
- }
- EXPORT_SYMBOL_GPL(pci_find_dvsec_capability);
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 059693e03fd96..c96253e591f21 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2164,6 +2164,15 @@ static int azx_probe(struct pci_dev *pci,
+ 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
+ 	}
  
-+static bool pci_dev_config_accessible(struct pci_dev *dev, char *msg)
-+{
-+	u32 val;
-+
-+	/*
-+	 * If a device's config space is inaccessible, reads typically
-+	 * return ~0.  Since Device and Vendor ID are always ~0 for VFs,
-+	 * check the Command and Status registers instead.
-+	 *
-+	 * N.B. This is racy because the device may become inaccessible
-+	 * before the next access.
++	/* A sanity check against wild device binding;
++	 * here the range 0x200 is enough for the registers used at probe,
++	 * but it doesn't mean covering all HD-audio registers
 +	 */
-+	pci_read_config_dword(dev, PCI_COMMAND, &val);
-+	if (PCI_POSSIBLE_ERROR(val)) {
-+		pci_warn(dev, "Device config space inaccessible; unable to %s\n",
-+				msg);
-+		return false;
++	if (pci_resource_len(pci, 0) < 0x200) {
++		dev_err(&pci->dev, "Too small PCI BAR0\n");
++		return -EINVAL;
 +	}
 +
-+	return true;
-+}
-+
- /**
-  * pci_find_parent_resource - return resource region of parent bus of given
-  *			      region
-@@ -5334,6 +5356,9 @@ static void pci_dev_save_and_disable(struct pci_dev *dev)
- 	 */
- 	pci_set_power_state(dev, PCI_D0);
- 
-+	if (!pci_dev_config_accessible(dev, "save state"))
-+		return;
-+
- 	pci_save_state(dev);
- 	/*
- 	 * Disable the device by clearing the Command register, except for
+ 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+ 			   0, &card);
+ 	if (err < 0) {
 -- 
 2.53.0
 
