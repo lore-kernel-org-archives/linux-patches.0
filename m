@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042382;
-	b=xIwmxr0f2hrDLN6A3XRKqKUzEwuBHh3cdf5RJiLRZdmWtGCYhg3HSGpjTOEmieGhvrIe
-	 +J2vokR/tlrIDDWkZEnTKDVWApCXqGHTr0fjG9i/N065LB5BJpfIKfcP9NsHYoRV9JcN9
-	 C4PtDdTJT3eFLt2M3oq631dgT4zH+JOS7HaWehAPFiDn8cuk0Cwtwinz+OsMRLg5UVqt0
-	 pnpTT/NPE8TI/PYIdNaQUT+YqiS9z1BMlRvy9uocaFVkvIQSp1SC4YEEbFbO+CezAnKQ+
-	 xnnLRT+lZd4BzIXYNtDcTi7o7/JJrvOozl7KmTC6oexBT5OuJC1bdWDX5LH88s+dpmw==
+	t=1795042385;
+	b=r0m8h3+h4B4LS7BfqW3huEQlAEkgy5F1TNMds0bZ+Mxtz1S/ypyEeEhGXFqrKDCwEc16
+	 LF14HXITUtP3bK3zYtPOzyc32SkqfKY/1KTKQ0FV/DMxodYK6NuQrs00gvMUMomndRWq7
+	 dqSkR4FlHCVDZqR7YFGd3dd29SItkRHgQbCO9uspa9V9DGYU5UurAiFzFRkw7Hmg2HiBQ
+	 9LzCKXCGGktVYI9EgRVc04mTbrm0jETgksFuCF84MaD3Ygzv9Bm9aFk3ihYEPngj7l81Y
+	 XygBxng4E2Ls/RkJB/YkxARfim3/e4EpeWkdSzYM+k9BMC1f2VK2+c+XElW/PuPN4Jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042382;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042385;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jJ7Rt/9bo8NepgnHsHeUv5+zMtPsRNPILTPlx9df+1I=;
-	b=QLZQSVOM52WHFF8JSO6FJeQKMAt9cSExLRsdZ5o32FHqMZM+84HfQ7q3CBE4/DuJyvWW
-	 vCIX3IcFPG/q8CvaINBgJBC0V2kwJga5X7jaglWGnnkDisuMwMhNDHi8Xv435wJvwHCkX
-	 6ByoadN3jkQCbRWi9KPUvCchllyUZl4yqpZbEBpq8/nSS5XcmIkN6AvquOjOSi7I++isO
-	 1asau0TX/cegscVdJoDZHT1WhxuPzAi3ILUiyelF18IInD7Rdoa8DsPuMLSmHu4N/CkEw
-	 FdzD16Y4Rz5fCaykEU/dL5AOcmDIQG/KzgSA9Ivm6hg8BQg/l0Ak7qKLe4dDCUhf+2g==
+	bh=crh7UO3HYchVa6SY5q5AYT0iSYOA+Z61tfRSXi/sbNw=;
+	b=FkpFbLaToQAJdW9xeN5Cx6Y5/O9rjsiGPSfpdGlc+IgIhGT85nYl8dqtauRkRmjzTNSY
+	 itkK5E/p5XfuiAXKRrJxJEYu7xvid2qQZdb8N5bDEN1l7clze6HzWP2wzQFnc3ZFgLRvX
+	 Z1DRDNKiclIRLwXPmjgSlh4+7q4i0he5rJfLa+FulkRRMgI8Qjbv90XCjTtCocBLsM+vJ
+	 FFAS6MY4eesjsk/6XowO1uo5a+gDqiNf8+yvCRsvB3zAYDv3/8CQjeszsfrs3lcmVfUfO
+	 qGH4ZNPxeqXs9z/So9wTqNVLUzd6Y+26+fbhsPalu/Dj5AgRWmPfcR1chru3yQIoirQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qRbQW+UZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyPtMwHy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7D3606A31C;
-	Wed, 18 Nov 2026 22:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA5F606A31C;
+	Wed, 18 Nov 2026 22:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qRbQW+UZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185441F000C4;
-	Wed, 18 Nov 2026 22:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OyPtMwHy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06D71F000C4;
+	Wed, 18 Nov 2026 22:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042382;
-	bh=jJ7Rt/9bo8NepgnHsHeUv5+zMtPsRNPILTPlx9df+1I=;
+	s=korg; t=1795042385;
+	bh=crh7UO3HYchVa6SY5q5AYT0iSYOA+Z61tfRSXi/sbNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qRbQW+UZlfiwiGUoz6MvZrZIVtgICayYw9lx6FTbdh6aF7+1Y6v7X9OjswUJGVp2A
-	 CtKwlEgXnn6k5oQ/7IUB896icwgcjStWhH+Hef9Z9tcB8WjKV/Xg1tUlxixneisN3Y
-	 CwV7wJHdWSrxjAmIwy4lHmhJXblQnnfe9UJuFJ2A=
+	b=OyPtMwHyi2klkKNP1IpIp60EVuTqyeRyQ8dHYmzoBOZBTC+nqiYgiraGYa++SDdLq
+	 esDnOx1NnNNXXDEqOsDbxXE19mcJDU23XGY4Bv4szmnbPOOTLvf+Ck542sIPl+dNoh
+	 qU8K6Ek4j2O0F2YFw19DJm5ZFycUhHn6VPgc2g38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3150/3318] net: tls: Pass union tls_crypto_context pointer to memzero_explicit
-Date: Wed, 18 Nov 2026 16:02:52 +0100
-Message-ID: <20261118150454.364488799@linuxfoundation.org>
+Subject: [PATCH 6.6 3115/3318] ASoC: samsung: Use snd_soc_substream_to_rtd() for accessing private_data
+Date: Wed, 18 Nov 2026 16:02:17 +0100
+Message-ID: <20261118150453.402916825@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,73 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 0d9e699d3421b5db83eb0cb7a708882440ee78ef ]
+[ Upstream commit 3e726593107d134221f666b4f2be612b278c3ddb ]
 
-Pass union tls_crypto_context pointer, rather than struct
-tls_crypto_info pointer, to memzero_explicit().
+Do not open-code snd_soc_substream_to_rtd().
 
-The address of the pointer is the same before and after.
-But the new construct means that the size of the dereferenced pointer type
-matches the size being zeroed. Which aids static analysis.
-
-As reported by Smatch:
-
-  .../tls_main.c:842 do_tls_setsockopt_conf() error: memzero_explicit() 'crypto_info' too small (4 vs 56)
-
-No functional change intended.
-Compile tested only.
-
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240708-tls-memzero-v2-1-9694eaf31b79@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c43c1c24f3cd ("tls: avoid field-spanning write when copying crypto info")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240430-asoc-snd-substream-clean-v1-12-6f8a8902b479@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d9c23ac1217a ("ASoC: samsung: midas_wm1811: run FLL1 at the AIF1 configured rate when idle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/samsung/midas_wm1811.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index d57336820ef0b..9d5c99f1e4e7c 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -589,6 +589,7 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 	struct tls_crypto_info *alt_crypto_info;
- 	struct tls_context *ctx = tls_get_ctx(sk);
- 	const struct tls_cipher_desc *cipher_desc;
-+	union tls_crypto_context *crypto_ctx;
- 	int rc = 0;
- 	int conf;
+diff --git a/sound/soc/samsung/midas_wm1811.c b/sound/soc/samsung/midas_wm1811.c
+index 2ec7e16ddfa21..9ac5452b537e8 100644
+--- a/sound/soc/samsung/midas_wm1811.c
++++ b/sound/soc/samsung/midas_wm1811.c
+@@ -129,7 +129,7 @@ static int midas_stop_fll1(struct snd_soc_pcm_runtime *rtd)
+ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
+ 				struct snd_pcm_hw_params *params)
+ {
+-	struct snd_soc_pcm_runtime *rtd	= substream->private_data;
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	unsigned int pll_out;
  
-@@ -607,13 +608,15 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 		return -EINVAL;
- 
- 	if (tx) {
--		crypto_info = &ctx->crypto_send.info;
-+		crypto_ctx = &ctx->crypto_send;
- 		alt_crypto_info = &ctx->crypto_recv.info;
- 	} else {
--		crypto_info = &ctx->crypto_recv.info;
-+		crypto_ctx = &ctx->crypto_recv;
- 		alt_crypto_info = &ctx->crypto_send.info;
- 	}
- 
-+	crypto_info = &crypto_ctx->info;
-+
- 	/* Currently we don't support set crypto info more than one time */
- 	if (TLS_CRYPTO_INFO_READY(crypto_info))
- 		return -EBUSY;
-@@ -716,7 +719,7 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 	return 0;
- 
- err_crypto_info:
--	memzero_explicit(crypto_info, sizeof(union tls_crypto_context));
-+	memzero_explicit(crypto_ctx, sizeof(*crypto_ctx));
- 	return rc;
- }
- 
+ 	/* AIF1CLK should be at least 3MHz for "optimal performance" */
 -- 
 2.53.0
 
