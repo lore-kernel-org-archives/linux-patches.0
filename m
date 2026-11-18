@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018703;
-	b=KyLTeT7fCDwm6iC90g5WoispTrcv8p5PgTubKvchpAOIyo7Io8/JqwKhgRh4HMawrIhb
-	 BnTbPaz7gK8GRbydOCGS1sv9qJ33qai4bYrS06yXONwsoi3EroaUD2sjQwLQo9jaU0XG3
-	 bIHxnW4wGuulbemQlTGaE/WTNGiqyW/n9NWQbKqY/ehl3YvTN98cT3iG9k/S3VeF5MHdq
-	 Li19GjjHPRXpVjuo64OhtRmF3wHBR25cRPWYm42WmzZ3+9SRIr+TTBT9JzlTpQoB5r+H1
-	 dsjIYYzIn2fCd9+hZQrsE4nG9CjzbS3rpR2slPIAZ/+88hmc/kKQCurrReyhrkj1NLw==
+	t=1795018706;
+	b=MhfzpcFHOdEF5QdypGKoawkSKzd8K0diirfpSm1gBRFecc47DMPAhYkmLDhB+rsCm/Yv
+	 7rm930KGMen1g5M/vD9KOadqfCkclyj5Jj9xYVV5fcAz0S/h0JS9fiVreCiHaW7s2YkmV
+	 NUFG6HEl5hDFuMspohT3uPQ2nq9+EWJfRyRvpBJ9bNaA0he65XryyPA47c4L7MeZ6GvSx
+	 FsOH2JF2J+AH4YvX7n+Wv4afd6dZTeeYuwxP3V74G28jfjlyg7bUFD8N46/7L+uhgy3FT
+	 WNUwzBEr71ymvna0Iw+6xmAGo0Ethv4SP2C6nfS5qsJw0wxX8eYWnWIc+GUtTgWJf9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z0wtvvOlHZvgsPsktNNwlS4SPzY3YS08ao+KqbDCiac=;
-	b=H8aZC+GYGeZoSf5lvw8bHREUTPBn1WJ4eaR8OTBzTcg5B0gF7o3yHa21rQGrUwK45hNm
-	 hyUb5gxPYvoMJYMEXlxVjAmo7/AuW+9h4g2rtw0fot+7rzmTql56oGNQd2WAoqH2R/sGy
-	 GETEzsN3mL4noEKrcH7fP0Lk8s/zOj/TYJg5jarMSnDb2BXRJP9H6qP9zuQPbpmJnMR0f
-	 zQuMtVsNR0V7pooi8EyZadNdLPeIueF/qJMkEST1hwYoDqVvWLnOVVqs6WWTp4bf4OqIW
-	 XyZvbpZNK5lSreLGkowKe88WlhIpIguUFPYkc5GJuNHUgacdEPkhr/2Hgdl5u2SgGFw==
+	bh=Gic0ICne5snvgOd1kSpg3ExPMMmWSDoEF7J5PF+ulWU=;
+	b=rDoaDLe4O07+FBKz55m2UW69GRGfelJMbeVA5X0n9bIsDwnhr+SXnjj/LU5eBEjN95UP
+	 gOC7Bc6YksXMVDVh9orIE4zmS8e1En7iimcbrr7W6LIBAntwZJX1QkILZxqK5XD9TxhHT
+	 3i4gT5IeFFfgREcTdmjDPXbxzpd9JpnzTyUNGoIR/ZSyFPC9ftbY7cuIdRPnVy9+Etv9W
+	 ZOY642NTOtPvisnPcAN2JbLIjSv5cexZAiQYSuQmUwHagkTvxhJFm+UQ09EAanmB1NJ21
+	 lhaX2J120Xn0WPF+5awZKHnl+NvwPR4XVqQRzxpMBRppUi+s7nT4UbOxhvUielUYDww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7FHv6OR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdVBU1gm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747E1606A32A;
-	Wed, 18 Nov 2026 16:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE39606A325;
+	Wed, 18 Nov 2026 16:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7FHv6OR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9F41F000C5;
-	Wed, 18 Nov 2026 16:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BdVBU1gm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A801F000C4;
+	Wed, 18 Nov 2026 16:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018703;
-	bh=Z0wtvvOlHZvgsPsktNNwlS4SPzY3YS08ao+KqbDCiac=;
+	s=korg; t=1795018706;
+	bh=Gic0ICne5snvgOd1kSpg3ExPMMmWSDoEF7J5PF+ulWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a7FHv6ORgJNfaZHdy7x/25i38EC9jdoQlE4AqHrXBj00kCkFv+hcbeIFYa4GaMS5X
-	 wbbhIC/Kw4tmq8uwMAEUXyrlvFl1CrPT0CcmFD8g6ttl+IIiZ3ILbv7lR4rVnfuhoC
-	 FaoiKaHPg8sCFjW2RAPFcGpRdykxhzWh56MGA/Os=
+	b=BdVBU1gm3AZ2mXJqrGRFTWZJQIh4Ch51fYu/b5j8VkSJsa3rcRqhN9sgcHTfkhddP
+	 h6/UlUQQqEgHpjEQ3zKpyQ15xeS8hdTAPpgNmc8EB9RxjzTra/MDOlxzQSFNcOFTjw
+	 Z2x/W68ethR9Ww5P0e6SYmBQIo7IN079od1R0/Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1307/2651] ASoC: codecs: es8375: use devm_clk_get_optional() for mclk
-Date: Wed, 18 Nov 2026 15:42:27 +0100
-Message-ID: <20261118150335.028835611@linuxfoundation.org>
+Subject: [PATCH 7.3 1334/2651] dmaengine: ste_dma40: Recover coalesced cyclic callbacks
+Date: Wed, 18 Nov 2026 15:42:54 +0100
+Message-ID: <20261118150336.035385215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +69,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 58e7bca5cf264e910ad9199cfc40246e0a2834f4 ]
+[ Upstream commit db28400d92cd97005065dad230b8a5d72ab121cb ]
 
-es8375_read_device_properities() gets "mclk" with devm_clk_get() and
-then tests the result for NULL to print "assuming static mclk". A
-missing clock makes devm_clk_get() return -ENOENT, so the probe fails
-before that test can match.
+DMA40 has one terminal-count status bit per channel, so cyclic period
+interrupts can coalesce.
 
-The binding does not require clocks, its example has none, and
-everest,mclk-src lets the codec run from SCLK instead of MCLK. Use
-devm_clk_get_optional(), as es8311, es8316, es8323, es8326 and es8389
-do for the same clock.
+Use the memory-side pointer displacement to queue the minimum observable
+number of callbacks. If sampling fails, queue one callback and invalidate
+the saved position; the next successful sample resynchronizes without
+recounting it.
 
-Found with an experimental clang warning about NULL tests on functions
-that return error pointers. Tested only in QEMU with i2c-stub in place
-of the codec, not on real hardware.
+The pointer is modulo the cyclic buffer: a displacement of d periods can
+mean d plus n complete iterations of the buffer. Report d, so the driver
+could have missed n iterations of the buffer; DMA40 has no counter to
+recover them. For an unchanged pointer, report one callback rather than
+risk a spurious full-buffer burst.
 
-Fixes: de2b3119f9f7 ("ASoC: codecs: add support for ES8375")
+This condition has not been seen in practice and is only a product of
+review comments that the buffer can miss interrupts.
+
+The preceding cyclic-residue fix ensures that every cyclic period fits in
+one LLI, so each boundary corresponds to one client callback.
+
+Fixes: 0c842b551063 ("dma40: cyclic xfer support")
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20261003190738.77564-1-kmehltretter@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-3-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8375.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ste_dma40.c | 69 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 68 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/es8375.c b/sound/soc/codecs/es8375.c
-index 2c58225feddd9..8a3e3a6a748f3 100644
---- a/sound/soc/codecs/es8375.c
-+++ b/sound/soc/codecs/es8375.c
-@@ -665,7 +665,7 @@ static int es8375_read_device_properities(struct device *dev, struct es8375_priv
- 		return ret;
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index eab9c09b4bfec..4b138aa313c83 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -384,11 +384,14 @@ struct d40_lli_pool {
+  * @cyclic_dma_addr: Start address of the cyclic buffer.
+  * @cyclic_buf_len: Length of the cyclic buffer.
+  * @cyclic_residue: Last valid cyclic residue sample.
++ * @cyclic_period_len: Length of one cyclic period.
++ * @cyclic_callback_pos: Position after the callbacks already queued.
+  * @txd: DMA engine struct. Used for among other things for communication
+  * during a transfer.
+  * @node: List entry.
+  * @is_in_client_list: true if the client owns this descriptor.
+  * @cyclic: true if this is a cyclic job
++ * @cyclic_callback_pos_valid: Whether cyclic_callback_pos is reliable.
+  *
+  * This descriptor is used for both logical and physical transfers.
+  */
+@@ -405,12 +408,15 @@ struct d40_desc {
+ 	dma_addr_t			 cyclic_dma_addr;
+ 	size_t				 cyclic_buf_len;
+ 	size_t				 cyclic_residue;
++	size_t				 cyclic_period_len;
++	size_t				 cyclic_callback_pos;
+ 
+ 	struct dma_async_tx_descriptor	 txd;
+ 	struct list_head		 node;
+ 
+ 	bool				 is_in_client_list;
+ 	bool				 cyclic;
++	bool				 cyclic_callback_pos_valid;
+ };
+ 
+ /**
+@@ -1487,6 +1493,61 @@ static bool d40_cyclic_offset(struct d40_chan *d40c, struct d40_desc *d40d,
+ 	return false;
+ }
+ 
++static unsigned int d40_cyclic_periods_elapsed(struct d40_chan *d40c,
++					       struct d40_desc *d40d)
++{
++	size_t current_pos;
++	size_t delta;
++	size_t offset;
++	unsigned int periods;
++
++	if (!d40d->cyclic_period_len)
++		return 1;
++
++	if (!d40_cyclic_offset(d40c, d40d, &offset)) {
++		d40d->cyclic_callback_pos_valid = false;
++		return 1;
++	}
++
++	current_pos = rounddown(offset, d40d->cyclic_period_len);
++	if (!d40_residue(d40c) && current_pos != offset)
++		current_pos += d40d->cyclic_period_len;
++	if (current_pos == d40d->cyclic_buf_len)
++		current_pos = 0;
++
++	if (!d40d->cyclic_callback_pos_valid) {
++		/*
++		 * The previous interrupt was reported without a pointer
++		 * sample. Resynchronize without using the stale position,
++		 * which would count that callback again.
++		 */
++		d40d->cyclic_callback_pos = current_pos;
++		d40d->cyclic_callback_pos_valid = true;
++		return 1;
++	}
++
++	/*
++	 * The pointer wraps with the cyclic buffer, so its displacement is
++	 * only the minimum number of elapsed periods. Complete buffer laps
++	 * are not observable.
++	 */
++	delta = (current_pos + d40d->cyclic_buf_len -
++		 d40d->cyclic_callback_pos) % d40d->cyclic_buf_len;
++	periods = delta / d40d->cyclic_period_len;
++	if (!periods) {
++		/*
++		 * The TC status is a single latched bit. An unchanged pointer
++		 * cannot distinguish a complete lap from a repeated interrupt,
++		 * so do not amplify it into a buffer's worth of callbacks.
++		 */
++		periods = 1;
++	}
++
++	d40d->cyclic_callback_pos = current_pos;
++
++	return periods;
++}
++
+ static bool d40_tx_is_linked(struct d40_chan *d40c)
+ {
+ 	bool is_link;
+@@ -1609,6 +1670,7 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
+ static void dma_tc_handle(struct d40_chan *d40c)
+ {
+ 	struct d40_desc *d40d;
++	unsigned int callbacks = 1;
+ 
+ 	/* Get first active entry from list */
+ 	d40d = d40_first_active_get(d40c);
+@@ -1633,6 +1695,8 @@ static void dma_tc_handle(struct d40_chan *d40c)
+ 			if (d40d->lli_current == d40d->lli_len)
+ 				d40d->lli_current = 0;
+ 		}
++
++		callbacks = d40_cyclic_periods_elapsed(d40c, d40d);
+ 	} else {
+ 		d40_lcla_free_all(d40c, d40d);
+ 
+@@ -1653,7 +1717,7 @@ static void dma_tc_handle(struct d40_chan *d40c)
+ 		d40_desc_done(d40c, d40d);
  	}
  
--	es8375->mclk = devm_clk_get(dev, "mclk");
-+	es8375->mclk = devm_clk_get_optional(dev, "mclk");
- 	if (IS_ERR(es8375->mclk))
- 		return dev_err_probe(dev, PTR_ERR(es8375->mclk), "unable to get mclk\n");
+-	d40c->pending_tx++;
++	d40c->pending_tx += callbacks;
+ 	tasklet_schedule(&d40c->tasklet);
  
+ }
+@@ -2638,6 +2702,9 @@ dma40_prep_dma_cyclic(struct dma_chan *chan, dma_addr_t dma_addr,
+ 		desc->cyclic_dma_addr = buf_addr;
+ 		desc->cyclic_buf_len = buf_len;
+ 		desc->cyclic_residue = buf_len;
++		desc->cyclic_period_len = period_len;
++		desc->cyclic_callback_pos = 0;
++		desc->cyclic_callback_pos_valid = true;
+ 	}
+ 
+ 	kfree(sg);
 -- 
 2.53.0
 
