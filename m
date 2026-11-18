@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030104;
-	b=4X5q2z+FI+68fnLoWPADhnV2LPCKuQRXsyiCnOmX6UtiMLnF2P4OsF3kP+ZF/95+/WNd
-	 cvFyFuppvhoCe+L4jnt1r5R+JIvAcmcd8LxMJMmBiN9DljWKMZnJXQywPhiEkw01p4jQQ
-	 TCFu1+ovTLbuEMXI4ZoM36Z352AHfwzQQLmpCr/mK7kLATrr8NR6D62jSFxUtR9E/Mb+7
-	 jMysqXZsMhAE87aHeTbI3EXto4v5ADzu2WpMO7O4fi+uqEFnoC8UIro0mDsL+Rw1iLCdn
-	 9GmoanfA0p1RLo/l+KPAlC+UCf8qbgW/pt98ah77OGEGQIl9IjlHClcnlRGKIcZJVuA==
+	t=1795030107;
+	b=1X69n12hSG7zUJjzAl/woErBoktl1ec7Jx+A+9lRwcZlL69N2Xg2TTXaMjjaesjPin1B
+	 QkYDBf2CSsc914d26WTyqGCwSfDEisInJfGlf3GA1shN/fbnH7s2OI7BZipUlMM1xYj78
+	 7Y6SlbWBjurUfn+z4tljlJ+M/qjFdb03+/IkXzphTmhSQgFbs+rCpeFHuloMg8HWkxzQl
+	 hdXauadG08ilcMjwiIAzrZsBS9gtx56dgzBdzDi+rKeleLRNTueDVjqdjZa5plz8CpBxF
+	 g9aQYtBjQYvM/tY43npnw16EDdPmMnBpNqiZx3wnHHHZ0cm4TMO8KXU2o+qZNnyK2FA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ky+vqAjgJMTc7v1KrfkqHovODDbb4u/jhNCmOsRszrU=;
-	b=HKa4rQ8ns2DBwjkmT5alVCGwsuZSsB/6JYTz79WX7/33G0ns3TXeAfJYE30ytV1N3Wo2
-	 h0GpkyHeYOHPHxpWFV/AIyt95bB8F+v01zzid2sCqtsRMUN7hOb/mSK6nLqVeSRybyKcI
-	 VYh78HNl2+Av1dY4yBkSa3s4wDTfyso1WUHEdPQbzFSbyOaDmZ3l1VYQHYVNTz/ys3TBg
-	 b/U51LLL2zn3F4vbEuOL4RpOjr9GL0qNoaJTTrUKFPj4LwlvfiaUn4EbzUhgQgmYFB2+P
-	 CpY3K/wbuKydQ1kvWlRhVhmS3F7PZT/TNvOAMp4dZ0/HoIsCaI2sDiadfVzrUvm6DWw==
+	bh=ucQZR9ddsyQnrP1V4D1hGhnO6cGJrDtQX2/wpQgXVjw=;
+	b=P86nrQPOPW+AdjFCD5307arek0cZ7o6PVGU6KLCIkMNefTca4oRKb2hmGC29nYiO06Xi
+	 rfTmSUXyFmu8I/pp+2kQV7fUl2k2dtt4iQPVg6NUhrDxW4EJdX6XpFjk/dwYywH1abdqL
+	 gtwfOgtu2mOcBnAhncP5XPlXj4/ANbChAJwsvcQyj6V0H4fosdHg7pkRqB4l2ArLnT0XX
+	 Z8Ga09IMj/qH9jRLIoLVyeBrmcDB9gyVquvmN7J+cG721D2gPhVgzjqDDJjh7SOfsrwXt
+	 LW+dGMLQ0L49Mh+qoWRaCQMb1MQqTvN+VGCdsjxo7PCbZeRyjf9aQfyqiNn5hE7qO/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sO2tPe8q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BBWwFzG5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D5E606FF6E;
-	Wed, 18 Nov 2026 19:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8742A60A6F78;
+	Wed, 18 Nov 2026 19:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sO2tPe8q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D5C1F000C5;
-	Wed, 18 Nov 2026 19:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BBWwFzG5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3161F000C6;
+	Wed, 18 Nov 2026 19:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030104;
-	bh=ky+vqAjgJMTc7v1KrfkqHovODDbb4u/jhNCmOsRszrU=;
+	s=korg; t=1795030107;
+	bh=ucQZR9ddsyQnrP1V4D1hGhnO6cGJrDtQX2/wpQgXVjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sO2tPe8qIhdnN/Gd3CxlEzOly1WzhJ06I376aBa1cyn8WSU7o7v63fcIbhqNt2gng
-	 u2j/unH6is2ke81PxgoiRE2c/p4/DSuQkvrRSZUk4xBnksokTV8ZYUF8i47nQcCD7I
-	 xOX6xIpo5aX4X+IB2QnxBkhZCX1j7vo7Qtja2S8w=
+	b=BBWwFzG5yXSDSsJ3UTQJWiZwqBbNVocPDKlqC+aSJF999kCXItQinxsMPk9G8QqRH
+	 w4vslNNI5M0jUILLXgOEQcafGnZ8vkYe+HO9VDoJxAIx9IeU8COa2gp8nJWQVk5J4z
+	 YUfWhWGReQadrGWKFL97ZBktyLP9vdGTZ7dCINWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Muzaffer Kadir <muzafferkadir@mainlining.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0559/1756] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
-Date: Wed, 18 Nov 2026 15:44:46 +0100
-Message-ID: <20261118150031.343589154@linuxfoundation.org>
+Subject: [PATCH 6.12 0586/1756] dt-bindings: vendor-prefixes: Add General Mobile
+Date: Wed, 18 Nov 2026 15:45:13 +0100
+Message-ID: <20261118150032.348158320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,48 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Muzaffer Kadir <muzafferkadir@mainlining.org>
 
-[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
+[ Upstream commit 7034bec693b752bcd7ebb4fa00dc3b429b4dc4f7 ]
 
-After a warm reboot the REG_ASRCSR register may not be in its hardware
-reset state. regmap caches the register value as 0 (the assumed default),
-so when the desired clock source index is also 0, regmap_update_bits()
-skips the actual hardware write because it believes the register already
-holds the correct value. This leaves a stale clock source in the hardware.
+Add vendor prefix for General Mobile.
+Link: https://www.generalmobile.com
 
-Replace regmap_update_bits() with regmap_write_bits() so that the masked
-fields are always written to hardware regardless of the cached value.
-
-Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
-Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Muzaffer Kadir <muzafferkadir@mainlining.org>
+Link: https://patch.msgid.link/20260921-msm8952-initial-support-v3-6-b96fd3fe298b@mainlining.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_asrc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
-index ffd4a6ca5f3cb..f68b53ba17dd7 100644
---- a/sound/soc/fsl/fsl_asrc.c
-+++ b/sound/soc/fsl/fsl_asrc.c
-@@ -521,10 +521,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
- 			   ASRCTR_USR(index));
- 
- 	/* Set the input and output clock sources */
--	regmap_update_bits(asrc->regmap, REG_ASRCSR,
--			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
--			   ASRCSR_AICS(index, clk_index[IN]) |
--			   ASRCSR_AOCS(index, clk_index[OUT]));
-+	regmap_write_bits(asrc->regmap, REG_ASRCSR,
-+			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
-+			  ASRCSR_AICS(index, clk_index[IN]) |
-+			  ASRCSR_AOCS(index, clk_index[OUT]));
- 
- 	/* Calculate the input clock divisors */
- 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 600b42d555eb5..442eb7e493088 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -569,6 +569,8 @@ patternProperties:
+     description: Gemei Digital Technology Co., Ltd.
+   "^gemtek,.*":
+     description: Gemtek Technology Co., Ltd.
++  "^generalmobile,.*":
++    description: General Mobile Fzc.
+   "^genesys,.*":
+     description: Genesys Logic, Inc.
+   "^geniatech,.*":
 -- 
 2.53.0
 
