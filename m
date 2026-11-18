@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024280;
-	b=20e/oGqt+lbgdLZuL08QGWm9fUbHXJ7hrx87BijYg+pwEOH+MCxHRGRNCl+LoTPWbWSx
-	 0/LN9WQeBFLx5DEOqEYhufYgiPMU2yTS3vN3J2wAmmYO1U2Dh1+GTwVjCc/Iz2jsMrlor
-	 z2E8Drkxm5tZ1uFCK0oQw3oWTL6AVRHnfC900S3AQ6qzP4689PDcsTzaDlu4ivUSDQ9Yg
-	 MMnQFgPlPqitlDGobcC2QJp8+xjiez/xSDbenaMHfACAxKMBPZZ8QuIFK1YaWYmlEcOPu
-	 aE81tAM+uAebrn+F0MWaAgpYe3b6acLOpq5vVSzg8GA2WvZviNVOFr/1QnAz3awhiOQ==
+	t=1795024283;
+	b=y2233kVA5NE9ZmZScoi94dUDBku5ifqwSlYgRdGBwXdArMy67Lpzo+sPIRvWh6NBBoih
+	 nVpmqQNYb7Vit1odk3mcU1CwZm+pEvAWmDr8xa5FVrFe72UmkWrrdPXPhFrlfIJvoNeKm
+	 b60WLyXBRlLAxSSE4MjI4+2PpB4tqDRoRIjrk2VgislvRU7tcPkri4PkZ06oVPY0PeheI
+	 bKna+EHQtBqUcfJraZAmpkm/+SqXV3nj92ENiJyn0LosHn0g7WVW6wiXYKNBwYAZ3RsPy
+	 kGV0FrmIXSFRBZQQvsCFSDk8DK+jlFPshN/MCJYOzu8gcz24ORNhUxBRzn6gS8bOTTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WbRWVz1WpM4yAubmo2N2EF7HqM1ZNrTSwE32OaycNEc=;
-	b=xQEWvC/r+rxd2IDVb7o054hjheK5vQvT/WAuiVStz87+byeMOgEOPkb2eOT3xkQf9ej7
-	 kgFdlERBQqS4/wN1PP5iS4smFWlUKDF9WUqq3oxIaJqOphd4SFCGUoJ3FKOo/QCzNFqNP
-	 GOskAwEfVfFdqBoTgg8cWA6py33XEMEcXud7GczAACYVl+cbx2g2qPPmdxXtIhUkJzazr
-	 /jP3CLxq96HP1If3gbi4UvlATjovgLqSh617tyTTmHYYmmJH2EnOItSY5odw9SrBlJ9QK
-	 qLUtiams1cKu+NYpm6oVRJ7ZqfJLH34mIxzgf5urI5NetS9JdWgzoEAQJgSnaIZ7Y/g==
+	bh=0ntIps/DShshIakJ9MDbrk8LYPbMqxzRCsCwaZm+Ti0=;
+	b=u+bSPXeK8JQk6WcyOWGKjsb1FwENIT4bsf2NEdz/T0eb00og0+C+Ufnc7Ee74Y4UGLt/
+	 1FvYZd5hJi+hnfGTr/ih16xGtXX4HYHuJyAFM1vqI4V6VrjRemr91AVQTbYzVl93CPwmt
+	 KLL8XahQuldMtKHYJPywFt3qok5s400Pci1oD0MO695ghKYMx17x3qqK1RIuego4nSB8Z
+	 xFw4NhGCYoUUsWe59atV8Ab8fERdE62YheVIw8MTyg+pR/yHTyypFklqQcwDxMGELJCWj
+	 MJhaJ6lznVCd3dCcJVJBgmheR/Ceaiv6Th8LT/OtbYuVnJBNSuil9QZynmam3zzR9Mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0AXZr0C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIPbVkuX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E38E606A32C;
-	Wed, 18 Nov 2026 17:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4909D606A31C;
+	Wed, 18 Nov 2026 17:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y0AXZr0C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432271F000C4;
-	Wed, 18 Nov 2026 17:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sIPbVkuX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207D21F000C4;
+	Wed, 18 Nov 2026 17:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024279;
-	bh=WbRWVz1WpM4yAubmo2N2EF7HqM1ZNrTSwE32OaycNEc=;
+	s=korg; t=1795024282;
+	bh=0ntIps/DShshIakJ9MDbrk8LYPbMqxzRCsCwaZm+Ti0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y0AXZr0ClGA1R2256z7I5AHzydtKJhyuTsjVUzLwQOptO2wgI8fNI30BHpYntVjCz
-	 V1L6kdp4oUhUiPI0f9axfo3gJ+nS++dqnuGCDPk/DV7OeBYnw5VquKyIozfmSXnt16
-	 Sy0IT5ZSBylgHmTkGPX1DXYZEQK0D9VGHIGECMao=
+	b=sIPbVkuX8eaRsje/QPxB7gxLGdCK+C+uD7bF8430bOytal2EPHW29eGhbF4CGanas
+	 RtMaYl92Ahhv8HEXeRs+ZzZMzWS/tMA7QeIn9Nya+0h+TBe04nMN5aGVmN3rP+hE77
+	 5IuRlP/HpVlO2WBntA2dGRs4OzdYK44hMZDAO8DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Vincent Jardin <vjardin@free.fr>,
+	Oualid Derouiche <oualid.derouiche@kontron.de>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0669/2151] dt-bindings: vendor-prefixes: add Free Mobile
-Date: Wed, 18 Nov 2026 15:40:04 +0100
-Message-ID: <20261118150146.194044421@linuxfoundation.org>
+Subject: [PATCH 6.18 0670/2151] arm64: dts: imx8mp-kontron: Fix LVDS clock frequency for DL device
+Date: Wed, 18 Nov 2026 15:40:05 +0100
+Message-ID: <20261118150146.224770045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,34 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Oualid Derouiche <oualid.derouiche@kontron.de>
 
-[ Upstream commit aa906abf611c7f37c0fe9171c1d33c40270aa5fe ]
+[ Upstream commit a5f316e602d3f5852fe2f88226fe64c8a495f479 ]
 
-Free Mobile is a French mobile network operator. Add its vendor
-prefix, used by the Nodebox v3 CPU Module (freemobile,nbxv3).
+The panel needs a pixel clock of 50 MHz, which means the LDB
+serializer has to run at 50 MHz * 7 = 350 MHz. The LDB rate itself
+is set by the fsl-ldb driver, but VIDEO_PLL1 needs to be pinned to
+700 MHz, so that both the LDB clock (/2) and the pixel clock (/14)
+can be derived from it exactly.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Fixes: 946ab10e3f40 ("arm64: dts: Add support for Kontron OSM-S i.MX8MP SoM and BL carrier board")
+Signed-off-by: Oualid Derouiche <oualid.derouiche@kontron.de>
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 9066860061f66..e6fa43a510329 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -588,6 +588,8 @@ patternProperties:
-     description: Freebox SAS
-   "^freecom,.*":
-     description: Freecom Gmbh
-+  "^freemobile,.*":
-+    description: Free Mobile
-   "^frida,.*":
-     description: Shenzhen Frida LCD Co., Ltd.
-   "^friendlyarm,.*":
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso b/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
+index 7131e9a499ae1..7a7d7ea21110d 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
++++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
+@@ -6,6 +6,7 @@
+ /dts-v1/;
+ /plugin/;
+ 
++#include <dt-bindings/clock/imx8mp-clock.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include "imx8mp-pinfunc.h"
+ 
+@@ -98,6 +99,16 @@ &ldb_lvds_ch0 {
+ 
+ &lvds_bridge {
+ 	status = "okay";
++	/*
++	 * The video PLL clock frequency needs to be configured manually.
++	 * The panel needs a LVDS clock of 50 MHz * 7 = 350 MHz.
++	 * IMX8MP_CLK_MEDIA_LDB = IMX8MP_CLK_MEDIA_DISP2_PIX * 7
++	 * IMX8MP_VIDEO_PLL1 = IMX8MP_CLK_MEDIA_LDB * 2
++	 */
++	assigned-clocks = <&clk IMX8MP_CLK_MEDIA_LDB>,
++			  <&clk IMX8MP_VIDEO_PLL1>;
++	assigned-clock-parents = <&clk IMX8MP_VIDEO_PLL1_OUT>;
++	assigned-clock-rates = <0>, <700000000>;
+ };
+ 
+ /* redefine to remove touch controller GPIOs */
 -- 
 2.53.0
 
