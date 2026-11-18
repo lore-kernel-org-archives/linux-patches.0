@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034926;
-	b=1E74pNYJvBCamh26ixtAeDGbs1HG1T3d2XcB7oOvOjAKp4TAPiYiEVLR9oKdhS7sUkcU
-	 xSLsjzvy87STE8yy18177Dk3Y3oFE0m+CcuGGDkk4QbcTwJFwvrm48epKa7Kk065ByILC
-	 +EttzvscsGq/u0CVnwveyioKhhSE2PmgQKO3JRrGjOjpo2PcKyX9qBxf8NGPl8m7R4tKo
-	 +h9EdcofE/2Ol7pYIK62ANPHA5mjWgvrcCVDC+B9TogMeTKqYXianmSFxTSo9qQ8t1ynm
-	 oDAt83YPtDiqPvWAzRGic3ec0Wg/UXWAY4FPz/4tzGBJ7R9HtfLSK28pFncasjXL/Fw==
+	t=1795034929;
+	b=PITw+2VEBs4Uf1nQp/4Vu/I1Ev347K/o8WvEiof2bhgVEwDpoWFHD3Jlmo3xf5aD9aNx
+	 t9dEcg7sqaUJSlMtTb7f+F1ugilgujsWgnQlTKhiK1AoSqyoykZhEKtt34wckEdPQ8YVJ
+	 X3R/OnMMogO++96Le8FHfd2dE2bex5jSvYfC4S/rg8OOQApo21j4948EPtoCwd2om1RsK
+	 3hivwBkLUcnRYO0qaJHze/cqGFBuqw+hEC0iGvOtTdYXZrlDxtK5Fq3VSyPM/UoLcb8DD
+	 OIxph6l42HVTKi/P376iY4CoBhtA+oCyA87xg+OPio90WDScr0LThfrMXvhKD4ENYUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034926;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034929;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IQA3rcd5MfoqyFyRBBvSKUe6EyurfZRPhAp7NtFNAS8=;
-	b=uCOxO/XgF2zQI+LinRk195jylGWrssPwIQruvfC72Je/pOwBW/0Nw/5IbcSVgnlumeCJ
-	 In7476CtxBYCr6xV7VRCCtkyjvwVri1qAXjFOeyuXpJJ8+jbIGvUlzVkvixQzAn0SYL80
-	 PPbQGOyPZaLdnW04zmMaypBjCWUBRQjd/WBpVNJdes/SaPkOX+LcjOqgeW3kRDilE161S
-	 HOZU+xA6xvLsWX9nJlL1JX5lpjZkD2176iJY2kG1ifFiGKAbb2MCRRkUPW0tb/7iMVdYd
-	 Y+O3oLvhd8mfgMnx3PWq51R4Z4C/l48FQEa4VpB339GV8NO6CV4Jh1YWAcLZLEQ/Z6A==
+	bh=SAPXvB93uj6UQ91EorxAKdoVJ9VP2wZ9Nn0kpGoTGbA=;
+	b=0/JPIgqcY59T659vFOMq+CU5kkNJCt4IKjaeGBoizzYZ6dIBz0PDNb0QFGERJZBLtCUI
+	 0P5AtG5mMhzlV9fL6AofQkB9iC2yEyIyLiTyFtbKnzUaYWxEBBhntHlv6eRPdWgeR4KmR
+	 zuQuLadDZWRF+J+YOd4vRLiVyJibDT3nCRrvuGQism1td/7Mtpqi0eQPveuzI4rDHlFx3
+	 Vecm9KYiLD9Ug9VkH52CnVUgRCuA4fAFpKjX5uPYI1fyMh7P0cHwzy3olPMD+CGVweJXE
+	 Zy1ExhKKYbApTgbhK1PhF5bS87nt2IXHlFylTnZq7gbl9Ouo3evV9VR9vtHmyvlV0VA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZDl4V3d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x035zr/V";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA3F606A31C;
-	Wed, 18 Nov 2026 20:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00C8606A320;
+	Wed, 18 Nov 2026 20:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IZDl4V3d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762E31F000C4;
-	Wed, 18 Nov 2026 20:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x035zr/V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDB61F000C4;
+	Wed, 18 Nov 2026 20:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034926;
-	bh=IQA3rcd5MfoqyFyRBBvSKUe6EyurfZRPhAp7NtFNAS8=;
+	s=korg; t=1795034928;
+	bh=SAPXvB93uj6UQ91EorxAKdoVJ9VP2wZ9Nn0kpGoTGbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZDl4V3dknDJCq2I9Ivana7OLIlCrtXy8CZoJqhvpCAZA5k8bei2V11QdZGFGjRv6
-	 s64tc1eS/bmYxYQvfNUgRPyH0YViXochdTZoOpJIkefF+SD6A6jDE5fJINSedEs8Dg
-	 LVa2IR/huGhBCE9knfPJ/aiuYrnYQXyl/QY10D+4=
+	b=x035zr/VN9Rc2UB4TV9QHQgF2vtv2+uIG/wNa0GKlmRnQrrJ6q7zijjbqob4+Cc9O
+	 qHt0llbLaELIM+pTYLNvVKEd5yTEIDzgdBmtmKQN31KJxqD6Qp3Ek9YNwrTD9yYDIM
+	 rIcnGB58/Q/LvsKEd/l2t81HU91nYRdKdU1opkVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0483/3318] ata: libahci_platform: Simplify code with for_each_child_of_node_scoped()
-Date: Wed, 18 Nov 2026 15:18:25 +0100
-Message-ID: <20261118150331.453689793@linuxfoundation.org>
+Subject: [PATCH 6.6 0537/3318] x86/kvm: Use separate percpu variable to track the enabling of asyncpf
+Date: Wed, 18 Nov 2026 15:19:19 +0100
+Message-ID: <20261118150333.363571272@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,98 +68,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-[ Upstream commit aa3ca1faf3222af7aaa194a910995820135fc54e ]
+[ Upstream commit ccb2280ec2f9e805d70f57a3a1c5deff0d532cb3 ]
 
-for_each_child_of_node_scoped() can put the device_node automatically.
-So let's use it to make the code simpler by avoiding the need to
-explicitly call of_node_put().
+Refer to commit fd10cde9294f ("KVM paravirt: Add async PF initialization
+to PV guest") and commit 344d9588a9df ("KVM: Add PV MSR to enable
+asynchronous page faults delivery"). It turns out that at the time when
+asyncpf was introduced, the purpose was defining the shared PV data 'struct
+kvm_vcpu_pv_apf_data' with the size of 64 bytes. However, it made a mistake
+and defined the size to 68 bytes, which failed to make fit in a cache line
+and made the code inconsistent with the documentation.
 
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Link: https://lore.kernel.org/r/20240810023426.110624-1-zhangzekun11@huawei.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Stable-dep-of: 0d1cb83337f1 ("ata: libahci_platform: Fix device reference leak in ahci_platform_get_resources()")
+Below justification quoted from Sean[*]
+
+  KVM (the host side) has *never* read kvm_vcpu_pv_apf_data.enabled, and
+  the documentation clearly states that enabling is based solely on the
+  bit in the synthetic MSR.
+
+  So rather than update the documentation, fix the goof by removing the
+  enabled filed and use the separate percpu variable instread.
+  KVM-as-a-host obviously doesn't enforce anything or consume the size,
+  and changing the header will only affect guests that are rebuilt against
+  the new header, so there's no chance of ABI breakage between KVM and its
+  guests. The only possible breakage is if some other hypervisor is
+  emulating KVM's async #PF (LOL) and relies on the guest to set
+  kvm_vcpu_pv_apf_data.enabled. But (a) I highly doubt such a hypervisor
+  exists, (b) that would arguably be a violation of KVM's "spec", and
+  (c) the worst case scenario is that the guest would simply lose async
+  #PF functionality.
+
+[*] https://lore.kernel.org/all/ZS7ERnnRqs8Fl0ZF@google.com/T/#u
+
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/r/20231025055914.1201792-2-xiaoyao.li@intel.com
+[sean: use true/false instead of 1/0 for booleans]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 81d99abe2bd8 ("x86/kvm: Don't consume async #PF flags on a kernel #PF in NMI context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci_platform.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ Documentation/virt/kvm/x86/msr.rst   |  1 -
+ arch/x86/include/uapi/asm/kvm_para.h |  1 -
+ arch/x86/kernel/kvm.c                | 11 ++++++-----
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
-index 1153b9f7ff12a..91d44302eac92 100644
---- a/drivers/ata/libahci_platform.c
-+++ b/drivers/ata/libahci_platform.c
-@@ -419,7 +419,6 @@ static int ahci_platform_get_regulator(struct ahci_host_priv *hpriv, u32 port,
- static int ahci_platform_get_firmware(struct ahci_host_priv *hpriv,
- 				      struct device *dev)
+diff --git a/Documentation/virt/kvm/x86/msr.rst b/Documentation/virt/kvm/x86/msr.rst
+index 9315fc385fb0b..f6d70f99a1a73 100644
+--- a/Documentation/virt/kvm/x86/msr.rst
++++ b/Documentation/virt/kvm/x86/msr.rst
+@@ -204,7 +204,6 @@ data:
+ 		__u32 token;
+ 
+ 		__u8 pad[56];
+-		__u32 enabled;
+ 	  };
+ 
+ 	Bits 5-4 of the MSR are reserved and should be zero. Bit 0 is set to 1
+diff --git a/arch/x86/include/uapi/asm/kvm_para.h b/arch/x86/include/uapi/asm/kvm_para.h
+index 6e64b27b2c1ee..605899594ebb8 100644
+--- a/arch/x86/include/uapi/asm/kvm_para.h
++++ b/arch/x86/include/uapi/asm/kvm_para.h
+@@ -142,7 +142,6 @@ struct kvm_vcpu_pv_apf_data {
+ 	__u32 token;
+ 
+ 	__u8 pad[56];
+-	__u32 enabled;
+ };
+ 
+ #define KVM_PV_EOI_BIT 0
+diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+index b5ef2c2899f2a..20059d236ff7f 100644
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -65,6 +65,7 @@ static int __init parse_no_stealacc(char *arg)
+ 
+ early_param("no-steal-acc", parse_no_stealacc);
+ 
++static DEFINE_PER_CPU_READ_MOSTLY(bool, async_pf_enabled);
+ static DEFINE_PER_CPU_DECRYPTED(struct kvm_vcpu_pv_apf_data, apf_reason) __aligned(64);
+ DEFINE_PER_CPU_DECRYPTED(struct kvm_steal_time, steal_time) __aligned(64) __visible;
+ static int has_steal_clock = 0;
+@@ -244,7 +245,7 @@ noinstr u32 kvm_read_and_reset_apf_flags(void)
  {
--	struct device_node *child;
- 	u32 port;
+ 	u32 flags = 0;
  
- 	if (!of_property_read_u32(dev->of_node, "hba-cap", &hpriv->saved_cap))
-@@ -428,14 +427,12 @@ static int ahci_platform_get_firmware(struct ahci_host_priv *hpriv,
- 	of_property_read_u32(dev->of_node,
- 			     "ports-implemented", &hpriv->saved_port_map);
+-	if (__this_cpu_read(apf_reason.enabled)) {
++	if (__this_cpu_read(async_pf_enabled)) {
+ 		flags = __this_cpu_read(apf_reason.flags);
+ 		__this_cpu_write(apf_reason.flags, 0);
+ 	}
+@@ -295,7 +296,7 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_kvm_asyncpf_interrupt)
  
--	for_each_child_of_node(dev->of_node, child) {
-+	for_each_child_of_node_scoped(dev->of_node, child) {
- 		if (!of_device_is_available(child))
- 			continue;
+ 	inc_irq_stat(irq_hv_callback_count);
  
--		if (of_property_read_u32(child, "reg", &port)) {
--			of_node_put(child);
-+		if (of_property_read_u32(child, "reg", &port))
- 			return -EINVAL;
--		}
+-	if (__this_cpu_read(apf_reason.enabled)) {
++	if (__this_cpu_read(async_pf_enabled)) {
+ 		token = __this_cpu_read(apf_reason.token);
+ 		kvm_async_pf_task_wake(token);
+ 		__this_cpu_write(apf_reason.token, 0);
+@@ -362,7 +363,7 @@ static void kvm_guest_cpu_init(void)
+ 		wrmsrl(MSR_KVM_ASYNC_PF_INT, HYPERVISOR_CALLBACK_VECTOR);
  
- 		if (!of_property_read_u32(child, "hba-port-cap", &hpriv->saved_port_cap[port]))
- 			hpriv->saved_port_cap[port] &= PORT_CMD_CAP;
-@@ -483,7 +480,6 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
- 	int child_nodes, rc = -ENOMEM, enabled_ports = 0;
- 	struct device *dev = &pdev->dev;
- 	struct ahci_host_priv *hpriv;
--	struct device_node *child;
- 	u32 mask_port_map = 0;
- 	u32 max_port;
- 
-@@ -605,7 +601,7 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 		wrmsrl(MSR_KVM_ASYNC_PF_EN, pa);
+-		__this_cpu_write(apf_reason.enabled, 1);
++		__this_cpu_write(async_pf_enabled, true);
+ 		pr_debug("setup async PF for cpu %d\n", smp_processor_id());
  	}
  
- 	if (child_nodes) {
--		for_each_child_of_node(dev->of_node, child) {
-+		for_each_child_of_node_scoped(dev->of_node, child) {
- 			u32 port;
- 			struct platform_device *port_dev __maybe_unused;
+@@ -383,11 +384,11 @@ static void kvm_guest_cpu_init(void)
  
-@@ -614,7 +610,6 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ static void kvm_pv_disable_apf(void)
+ {
+-	if (!__this_cpu_read(apf_reason.enabled))
++	if (!__this_cpu_read(async_pf_enabled))
+ 		return;
  
- 			if (of_property_read_u32(child, "reg", &port)) {
- 				rc = -EINVAL;
--				of_node_put(child);
- 				goto err_out;
- 			}
+ 	wrmsrl(MSR_KVM_ASYNC_PF_EN, 0);
+-	__this_cpu_write(apf_reason.enabled, 0);
++	__this_cpu_write(async_pf_enabled, false);
  
-@@ -632,18 +627,14 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
- 			if (port_dev) {
- 				rc = ahci_platform_get_regulator(hpriv, port,
- 								&port_dev->dev);
--				if (rc == -EPROBE_DEFER) {
--					of_node_put(child);
-+				if (rc == -EPROBE_DEFER)
- 					goto err_out;
--				}
- 			}
- #endif
- 
- 			rc = ahci_platform_get_phy(hpriv, port, dev, child);
--			if (rc) {
--				of_node_put(child);
-+			if (rc)
- 				goto err_out;
--			}
- 
- 			enabled_ports++;
- 		}
+ 	pr_debug("disable async PF for cpu %d\n", smp_processor_id());
+ }
 -- 
 2.53.0
 
