@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024932;
-	b=lT7ezrvMxDSndSkoy75S0w1HKAjvsT3bKSCS3hQ6Je0mhHNsAGL5JbAG05fyU4ecG1OY
-	 85tdFwiuFyyK1UwAc/I6X133GB7HjBDq7HQ0bXdi2L0AaPmHO/MlZxF2ZLUXsmPuicSAk
-	 Hak1eH9bCzZNsP4nq650Vjf0Vt2Yb0TZFiFjaq6cGTlJ4+H6NN3gbQFKtYYq9cpK36wpI
-	 YJO+qZK4YzgB65y2bkTluWWlK9vGQOEpYXS08TMtXUXiiL0Ct95NAScwb8kjfEzG7nn1i
-	 JvVRqeZ/0+sNi1q2b1KNOYo7QxeHpaVkcdx1BIvqKCm5/xSa1WjB0+fdvXXKLgtDZYw==
+	t=1795024935;
+	b=iDbh+u/SJ6DNGIUBJ1FLsOxo2khtUj2Ob2kkfzdirnFgeV6gtvTiLNNp0Ieezu+T796w
+	 5yJDnhez3f/ZulZ1Pc7+tyLu1bjC3yvOtwc54+m8pVJJwWif1XdQCLLDrlavzYuggxEj2
+	 xks7Xfa8NzYblIo6+DBeZtieCV+SLIueCTxEFyzOksrfwYvdwNXqerGNh4HiBXRd/E+4i
+	 Pq9ZqI9TLnfqJnzSB7J40cjf0dpFAt8AuXmctX0DMVgRJ5iM84zZq/Gt2mu0hezjkJLRu
+	 /ylLAt6NHgT+0kKgJiSx0ugDXZ+hiMFU+8VIV3as5KiuXzumDatic5DGeRe18t0P4sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=rwH72d7rnOTiTW3qloK9UXkS8v481qCTAFA4O6qhNGE=;
-	b=TfoqEdNLp0EBUQJDrejEcff+hF5gwSVAw1hsIn2Y8lGlmaWgPf6gB8n2FEWVuM94LNPG
-	 /vnp1m17twSyPexao2cnSpUhCLd70nxYEsTVEb++FfKDIZaDGWZ0u+wODAzD5EnRLhPCT
-	 F+LwQdjC/ODrjcZlRDRu57xJ71bmOadWsIO0AVYP95ZWjOxGWlIsbzkpGcZlluXMKofLZ
-	 CHNNxKhRvEusruL3KjrK/xMAc/MNtXNUAgucYtkVhNatoHebOqsCqQapvAyF0WtnxAu6t
-	 3Y3r4nR3l6EgbJJV90De8t3IR4nRxZi3PIOYxzMDaw4C9RDzyvLaBaTLmFH+fQOjNWw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=RyN+nxtIAXJRK2EcWSuZ2PzO+aBWj5LYoEIoNtfDtOc=;
+	b=hJIUF67BcNnzrEHfojDUQ7T/2APF1TA9xwkHfJgg1z6qkNRknsOxYw4bmn1FXOn3/8qL
+	 xo7BSRZIw0hJu9mzcpIrip1wn4RJGJErYf/SUutye6OalLXBAeVGhROCVp+nF/XOQlbAO
+	 fOTmip9t2jd38LM6B9fjyNehe382rVrhPoVkyN9j30GOBKsQl/KwcghH3WvqRqJrdaHss
+	 hLh+ENXj9+yqVmjw4ZOC60IH0qZ2wfEx2i0l7HszaV7w9PIaoSgoRcuZMG143HYehD+ba
+	 Zvx4R/IWGu9PTVZ1WrSHZvl0wC5fnj1OvWaPo3qO/d5VTdqQfy2fWBlcul/zqlHwiAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T/LzKxYP";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc9ooAhN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC45606A31C;
-	Wed, 18 Nov 2026 18:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A10606A31C;
+	Wed, 18 Nov 2026 18:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T/LzKxYP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05E71F000C4;
-	Wed, 18 Nov 2026 18:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc9ooAhN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D239F1F000C4;
+	Wed, 18 Nov 2026 18:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024932;
-	bh=rwH72d7rnOTiTW3qloK9UXkS8v481qCTAFA4O6qhNGE=;
+	s=korg; t=1795024935;
+	bh=RyN+nxtIAXJRK2EcWSuZ2PzO+aBWj5LYoEIoNtfDtOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T/LzKxYPczvZHydKFR4Qhx3uX7NV/GJ2PeUJ4PKvRgtwEg9tqj9oSd2X1hs4yvZW4
-	 bgVczy0SvtgOj5dLCFpRV9e7dJOJVyIXSKYS91SvcDhh7QJuVdHMFxpZRplOEr5Ahx
-	 /Q1ldILGUeYE+s6sot9naKcMq9RzKIkNtdP4NlfA=
+	b=hc9ooAhNqmg6wWDSOTYC7iLUletGeTR/et3I6GSB8wcrp7aSGPQBIBV+ufVI8LwDC
+	 VlfyBKg8IPST/2NMN9gHYBdhW/rfrJ1VHF2HIeecNnyJpkHY1ZWmWnTXcjLoMkOsPk
+	 wuHPAn36G5P1WskGK3khFFrkYPRiNdptGQIEFe9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nguy=E1=BB=85n=20V=C4=83n=20Cao=20Nguy=C3=AAn?= <nguyennvc@greennode.ai>,
-	Leon Romanovsky <leon@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0899/2151] RDMA/irdma: Do not move a fresh RoCE QP to ERROR on RESET
-Date: Wed, 18 Nov 2026 15:43:54 +0100
-Message-ID: <20261118150155.042181388@linuxfoundation.org>
+Subject: [PATCH 6.18 0900/2151] rtc: bd70528: properly enable wakeup
+Date: Wed, 18 Nov 2026 15:43:55 +0100
+Message-ID: <20261118150155.077931711@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,67 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nguyễn Văn Cao Nguyên <nguyennvc@greennode.ai>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 6de34bfb56ad8c24bf63b243b5f32b345d9cdd4d ]
+[ Upstream commit cb8a6249236fd970fc3418d5d2b27dc37376f3ff ]
 
-irdma_modify_qp_roce() handles IB_QPS_RESET like IB_QPS_ERR and moves
-the QP to ERROR. On a QP that was never moved to INIT, this makes the
-following RESET->INIT fail with -EINVAL, while ibv_query_qp() still
-reports RESET.
+Wakeup on RTC alarm now only accidentially works when wakeup for the power
+button connected to the same PMIC is also enabled. Fix that by properly
+specifying the wakeup irq.
 
-RESET->RESET is a valid transition. The Mooncake transfer engine
-resets every new QP before INIT, so it cannot connect over an E810,
-while mlx5 accepts the same sequence:
-
-  ibv_create_qp(RC)        -> RESET
-  ibv_modify_qp(RESET)     -> 0
-  ibv_modify_qp(INIT, ...) -> -EINVAL
-
-Skip the hardware modify when the QP has not been moved to INIT yet
-(iwarp_state is IRDMA_QP_STATE_INVALID), as there is nothing to flush.
-RESET after INIT still goes to ERROR.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Assisted-by: LLM
-Signed-off-by: Nguyễn Văn Cao Nguyên <nguyennvc@greennode.ai>
-Link: https://patch.msgid.link/20260930-irdma-reset-fresh-qp-v1-1-065327274e2b@greennode.ai
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 32a4a4ebf768 ("rtc: bd70528: Initial support for ROHM bd70528 RTC")
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260922-rtc-bd-v3-1-7f2580c55d58@kemnade.info
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-bd70528.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 950950038763f..9ee59f0ca9c79 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -1537,9 +1537,17 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 			issue_modify_qp = 1;
- 			iwqp->suspend_pending = true;
- 			break;
-+		case IB_QPS_RESET:
-+			/*
-+			 * A QP that was never moved to INIT has nothing to
-+			 * flush, so skip the hardware modify. Moving it to
-+			 * ERROR would make the following INIT fail.
-+			 */
-+			if (iwqp->iwarp_state == IRDMA_QP_STATE_INVALID)
-+				break;
-+			fallthrough;
- 		case IB_QPS_SQE:
- 		case IB_QPS_ERR:
--		case IB_QPS_RESET:
- 			if (iwqp->iwarp_state == IRDMA_QP_STATE_ERROR) {
- 				iwqp->ibqp_state = attr->qp_state;
- 				spin_unlock_irqrestore(&iwqp->lock, flags);
+diff --git a/drivers/rtc/rtc-bd70528.c b/drivers/rtc/rtc-bd70528.c
+index 954ac4ef53e83..82e0c1044cf04 100644
+--- a/drivers/rtc/rtc-bd70528.c
++++ b/drivers/rtc/rtc-bd70528.c
+@@ -10,6 +10,7 @@
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_wakeirq.h>
+ #include <linux/regmap.h>
+ #include <linux/rtc.h>
+ 
+@@ -315,6 +316,10 @@ static int bd70528_probe(struct platform_device *pdev)
+ 	device_set_wakeup_capable(&pdev->dev, true);
+ 	device_wakeup_enable(&pdev->dev);
+ 
++	ret = devm_pm_set_wake_irq(&pdev->dev, irq);
++	if (ret)
++		return ret;
++
+ 	rtc = devm_rtc_allocate_device(&pdev->dev);
+ 	if (IS_ERR(rtc)) {
+ 		dev_err(&pdev->dev, "RTC device creation failed\n");
 -- 
 2.53.0
 
