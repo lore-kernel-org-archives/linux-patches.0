@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037074;
-	b=P0SAwD5NGGQOwYEwOL6aVl5H2ybMpBB5f2GXDVZp2kPJzKC1KdjsygHe6wkjVzJT+O4d
-	 bZUorCqNhEwXvrTyTM7Cwsl3ZWa0DVUx5ftrTlYcu9j3LMcbOKDPkQQuIlj7Y2MrDKOdZ
-	 sfVYF0PMjKW+5ytfZPOwIeIOa+vPY/u2eDbtNp7hLBe/y7yJUgAKgEVbuQMxW+/yuMVZd
-	 Cr2klDCmkrxDN8KFzMpHfR/Mfu87qdUnJwXqf4YoB93SiXINhPsed16ai/KflkKLve9ON
-	 hx2oASedxxAkASDQlpdbLWkyKabJhqksjOT+TuTqHQ7H57Hp0sE/wpI8rVho67WAF4Q==
+	t=1795037077;
+	b=Qu4PtgcNDoT+FX5WsuGuxOzPruyqjNjBP/TT6kgz6QUCTi4dXfRgPDa6qzk8bvtuxs3C
+	 DftkGdUa6frzxuQdWEnyMCBir/TvcCDMTulQDLkGtxsSFPPlLazgoA1W9OuKGi/8H+wAz
+	 KssYbquiNCYUVfJH+1nopdEXU7G7W8QHxIDI3eVNmyjfs5fELkesKJyanxqc5fQfIKvcQ
+	 SM+XyfIhZfflj93NnredndaeXziNTSgV9e2zCUB338+pe4sFU1a+H44TY2mBOrpETW9Bj
+	 HsloSL2O73eircR4rS4ggEIfqveFe7zfUL6dEbqumWbOu4MUeJ94OdBuTPsLErkWqOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037077;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xGwOBddSdnP97bUtJFYTBARfjJ0/bD191iUIKKVaM6I=;
-	b=rPRAzb0v1jpwa2GT2cXceDCqoU0Rw1/X0PSYKFzgw3PG54jjuB8VnVvriHg8RdY9nS3m
-	 8RHWKQIcz/G2PPVynhlW+VEJ/RBxNZnv7EsNY1Q5KwzMpMNj4cCXkhJF+udn/eVsilcaV
-	 ZAi/VCIYRY8u1+kbDZ+hzrAT2DcssYQYfDph8fELyblSHFr5rzHfS9Wn85sgPNOTRBnpY
-	 pndIiMP0dJY2o+JPrJV1XHPHTnQ/5sPN3p4S6508/4OJkaMc9iq1cWBPV3s1D+piOpEdM
-	 JRlwD8UGsfnXUR8Vm8hxl9ecLcGXN8FMIQwkSDhaki/Opr1XXBFt+0bRhgQHnuw14tA==
+	bh=+ccY4BddrIo2F+7xD93MVEUrYc6gTX8hhhnAr8xPBEE=;
+	b=5puHEtEe05yRvdAzmkkpDGynF4aI+pGblaXeQl8nAbp7lnI+gDNO3zgzPsqTeu2XaDBm
+	 71R+KHdDf+l5Acilf2zd1rYS54ffqg4jhkWNRAUxROVF4mFlJ/4zjA3aMZ0XxPMlyQosX
+	 8MeLrcSUhtvmY79DZ7HnVyMOobVWWbP8vGbnewpdw6TJzpAH0sEELW+aVyJPuMWr8rFR6
+	 SdUeYl83I5nPwB5m45B0WIjgds5fZmuIe6PbGpmZEwnLS2lmLUDvUy7xRNNc+W4xmoKsu
+	 QEpeKQrUqKv/juSRPT9KOtqmWL9Hecr5PRUYjNV9l9N0TPshk1KFWN3np9CNaXTHgrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dlx7za8s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSlU51pv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48866606A31C;
-	Wed, 18 Nov 2026 21:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5815606A32A;
+	Wed, 18 Nov 2026 21:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dlx7za8s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697901F000C4;
-	Wed, 18 Nov 2026 21:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NSlU51pv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD6B1F000C4;
+	Wed, 18 Nov 2026 21:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037073;
-	bh=xGwOBddSdnP97bUtJFYTBARfjJ0/bD191iUIKKVaM6I=;
+	s=korg; t=1795037076;
+	bh=+ccY4BddrIo2F+7xD93MVEUrYc6gTX8hhhnAr8xPBEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dlx7za8smJd62LKu6nZQ5nUSquneTGPabRANhiA7V5jtu2Ur65y50yATqWI6q/oA6
-	 +prm3U8+3GtgAakzk2K+ZKaereGHU2blhVBG4Ba0tkDEPY7j6ZyZoVRyj7sibON0O6
-	 15ePl3YIhRlke99vnqhq8jIOJRZcF7bpprKOJ3Us=
+	b=NSlU51pv1PYxBo3YuMkdldmWHhEDPAuydZohgKL8IBGQWPYEu85WYCBufJI7P4gG3
+	 d3+gRQzdm+0advWKASSPPhYs663vS1vsJfi254xAwFsJ+Y55ZXAr7J4LTroG+6l9uQ
+	 pMgYuc7ZmhzpmLDbDzy9QVGzMlk+TpzgQl1/1ZWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1247/3318] bonding: fix out-of-bounds read of arp_ip_target
-Date: Wed, 18 Nov 2026 15:31:09 +0100
-Message-ID: <20261118150357.601544075@linuxfoundation.org>
+Subject: [PATCH 6.6 1283/3318] mount: refuse setns() with a shared fs_struct again
+Date: Wed, 18 Nov 2026 15:31:45 +0100
+Message-ID: <20261118150358.736433770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,66 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a81513bf5bdf29cf00c0a11f56be515c1ec260f4 ]
+[ Upstream commit 948e604aca8af30490accf7d46d44814ffa26f80 ]
 
-arp_ip_target is a module parameter array with BOND_MAX_ARP_TARGETS
-entries. In the loop parsing it in bond_check_params(), arp_ip_count is
-the number of accepted targets, while i is the index into
-arp_ip_target. Invalid and duplicate entries are skipped without
-bumping arp_ip_count, so bounding the loop with arp_ip_count lets i run
-past the end of arp_ip_target, e.g. 16 targets with one duplicate:
+mntns_install() refuses to switch the mount namespace of a task that
+shares its fs_struct, since root and cwd of the others would move to a
+namespace they are not in.  It looks at nsset->fs for that.  If more
+than the mount namespace is asked for, that is a private copy made by
+prepare_nsset(), which has one user by definition; commit_nsset() then
+writes root and cwd of the copy to the fs_struct of the task.
 
-  BUG: KASAN: global-out-of-bounds in bond_check_params.constprop.0+0x1148/0x1440
-  Read of size 8 at addr ffffffff96e9ee00 by task swapper/0/1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x91/0xf0
-   print_report+0xd1/0x630
-   kasan_report+0xf3/0x130
-   __asan_report_load8_noabort+0x14/0x30
-   bond_check_params.constprop.0+0x1148/0x1440
-   bonding_init+0x13/0xe0
-   do_one_initcall+0xe7/0x5b0
-   kernel_init_freeable+0xa91/0x1120
-   kernel_init+0x24/0x220
-   ret_from_fork+0x5b3/0x820
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+A thread of a process with two threads, pidfd of a task in another
+mount namespace:
 
-  The buggy address belongs to the variable:
-   arp_ip_target+0x80/0xa0
+	setns(pidfd, CLONE_NEWNS)			-EINVAL
+	setns(pidfd, CLONE_NEWNS | CLONE_NEWUTS)	0
 
-Bound the loop with i instead. arp_ip_count never exceeds i, so it
-stays within BOND_MAX_ARP_TARGETS too.
+and after the second call the other thread, still in the old mount
+namespace, has lost its cwd (/tmp became /) and sees the mounts of the
+other namespace under /.
 
-Fixes: 5a5c5fd48e3b ("bonding: arp_ip_count and arp_targets can be wrong")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20261023104528.232427-1-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Look at the fs_struct that is going to be changed.  The second call then
+fails with -EINVAL like the first one.
+
+Fixes: 303cc571d107 ("nsproxy: attach to namespaces via pidfds")
+Cc: stable@vger.kernel.org # v5.8+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
+ fs/namespace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index e480c692513f0..7acf6afb29b03 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -6282,7 +6282,7 @@ static int __init bond_check_params(struct bond_params *params)
- 	}
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 7b6366a807e6e..7d96beb50e835 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -5088,7 +5088,7 @@ static int mntns_install(struct nsset *nsset, struct ns_common *ns)
+ 	if (is_anon_ns(mnt_ns))
+ 		return -EINVAL;
  
- 	for (arp_ip_count = 0, i = 0;
--	     (arp_ip_count < BOND_MAX_ARP_TARGETS) && arp_ip_target[i]; i++) {
-+	     (i < BOND_MAX_ARP_TARGETS) && arp_ip_target[i]; i++) {
- 		__be32 ip;
+-	if (fs->users != 1)
++	if (current->fs->users != 1)
+ 		return -EINVAL;
  
- 		/* not a complete check, but good enough to catch mistakes */
+ 	get_mnt_ns(mnt_ns);
 -- 
 2.53.0
 
