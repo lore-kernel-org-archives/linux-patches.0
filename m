@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030722;
-	b=pTKFSZNeU5VClQLcMdN7jnysQTFjXmWLqUakLMllP+hF5GjST1EjrHwYS3kgECdu8IPE
-	 HdTWSSjk02UGx7uDeh20SvOSOE2xKqxFo/giUPH9YLuTif+j4oqWd5i+XyqZ94iLqoshZ
-	 T4T4wANj106XV55WWI5WeYNAMnxmheZBp/+7zoS/g7uWhB5oUNYI5nyZTVhQKZQqz/3be
-	 i2pz2CotaIkRZoUNvnVgCCHHCE6Ae2zJR9aHr+pYB25QtLymDv5qPgVDNrRCeAmW70UFU
-	 YAc85Z+qTgl9Civf4KDAUZRxi5yyYv5/GURHTHQ8Nhmcnb1El4Zn4a8iuzXHYVSgboQ==
+	t=1795030725;
+	b=EBePVw3/pXhHrS1ybzPLbaZ2JcTJFEmqOuOwbXpR7dqBTwePLy+tO1kJFY35rxE9rFbk
+	 IvKbqmUKFK7zeg3Hqogr4CCX6B4X7wwuZ3ycCncAO0l4Umeqj3T9759uSNyASJNyyo5/H
+	 Ib/NgcbMMFxR/QSYExM7Ln9qhC9d2zs+k7QM5iQppAkHK+9Dy0Le0S20qYA1iQml5ymFX
+	 4cJF0ruwzofsFYvDgMhmynqCnjgrD3JFJ9ygPIxVh23qJM5sTXJsyNaENj8sq5Bib0iYx
+	 CMGLYWbSh9pI9j878NVEn+Vy37BbRM8VprleSaLahxpZpjKzxMxu7cd9TsB9Sf5l70g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GvKKNYTlBz1fjZFWsWphY9iDljiKEYiyL/md2y5ILw0=;
-	b=lWW+QJCrQOSCldD2bMeWON+Y2kJHro3IkUlCuW+CcoKB8RwbMGopqsUyHqOxoH1QbXYr
-	 GfbzC72YVxkhUQ9anhritQXPtHVpNtc0ns2A3geVX7AJAMfHFAKodeG/ab0PyFfTsbhs1
-	 QZgH/P9TqKTzonw0Hcar4/v11fY5Igiik1+loQWVOAf9FJvBzqkh5/xj0JCxAKK2H2Vnt
-	 faF8cztM2jd51vBwzR99MLGuzy2ewrqXFGUg+kMtwDzzS6q3u9tyQkF9uoJqw0iAS6qwD
-	 JWpfHBj1sN3guj8EPpCCA5fP9dk8oyZLRu4oEj4b49+jGWhs+czDT7djkQmDI39G4NA==
+	bh=crFoxFanT2/9FWLE2u2nxcotxqQqV2rgC5ojBYDwVm4=;
+	b=tnDMD2CYdxMKreEiEWva1UjI2CdAfENiqq96YTPL/fwB1CqTD5PR4JgtOnz5f2o//4w3
+	 8MYatONssJCV419H3951gBT1ATNhPBDr0v3YV69WxBsMaW6VhcoZivqDWbknPx6IHN8QR
+	 e9vsaS3KIWLlPOAav+zjbW32iT63P9IT4KGIw48bytDRP2t0eJex6qPMEFqjL2PChTE7h
+	 W9r0eEzIPB0nF5WpkYj0euEibyAUqvBUbVm7Dg1Sl018MyZYQJt0Fz/DajJLbivrc+K02
+	 iEHuv7W/OlFmlw9hHMNauhb806b9vrA5RfVsMQKWd+7XkT2vlVQe0le8BMRy1QUpJZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eNg5t/fj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ue6Zv1fB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB60B606A333;
-	Wed, 18 Nov 2026 19:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7335A606A333;
+	Wed, 18 Nov 2026 19:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNg5t/fj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8B81F000C4;
-	Wed, 18 Nov 2026 19:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ue6Zv1fB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C813C1F000C4;
+	Wed, 18 Nov 2026 19:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030722;
-	bh=GvKKNYTlBz1fjZFWsWphY9iDljiKEYiyL/md2y5ILw0=;
+	s=korg; t=1795030725;
+	bh=crFoxFanT2/9FWLE2u2nxcotxqQqV2rgC5ojBYDwVm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNg5t/fjMdDo5h0PValZ0IcTFEg6jNRb3N7hKtwzjyH8p70v7XdlfFCuPhaIpvScV
-	 LJvB0kFu/R5ma75OFxrQHZY7jHzT+LENDqHfvM0OFDdCHwE3yy3Wx0pmetRyzAoBlq
-	 CxRatIuWupZV3lutD5pWWqLzwTt+36L3bLH+4ZAw=
+	b=Ue6Zv1fBh8ojSYx9m/y+eQJR84A+tYDCmrNWTa0ZRH3cy/jN3E+j74IQNnT+/flbp
+	 5K+axo5tLwAMda7aCNugvVCsUHjPTWAx++wlLjwuwTnpjdQ86WLXsJczdsuCr1xz4I
+	 89U2x2m3lNGDlvMXSDzNHi/Vjjh0RPjzIQwZ6s30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6a132745caefcf42cb0d@syzkaller.appspotmail.com,
-	Li Youhong <liyouhong@kylinos.cn>,
-	Yu Kuai <yukuai@fygo.io>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0806/1756] md/raid5: drain released_stripes before destroying the cache
-Date: Wed, 18 Nov 2026 15:48:53 +0100
-Message-ID: <20261118150041.734514978@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Igor Paunovic <royalnet026@gmail.com>
+Subject: [PATCH 6.12 0789/1756] phy: rockchip: usbdp: Rename mode_change to phy_needs_reinit
+Date: Wed, 18 Nov 2026 15:48:36 +0100
+Message-ID: <20261118150041.121663143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,76 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit af560e357a81964544be40c549e241b032ef7565 ]
+[ Upstream commit fbce9cc28cadb24026a6c061819d42e50d3bfea0 ]
 
-grow_one_stripe() calls raid5_release_stripe() for each new stripe.
-When mddev->thread is already set, that queues the stripe on
-conf->released_stripes and wakes the thread. Only raid5d moves that
-list onto inactive_list.
+Right now the mode_change property is set whenever the mode changes
+between USB-only, DP-only and USB-DP. It is needed, because on any
+mode change the PHY needs to be re-initialized. Apparently at least
+DP also requires a re-init when the cable orientation is changed,
+which is currently not being done (except when the orientation switch
+also involves a mode change). Prepare for this by renaming mode_change
+to phy_needs_reinit.
 
-Takeover calls setup_conf() while mddev->thread still belongs to the
-previous personality, so those stripes stay on released_stripes. If
-setup_conf() then fails, shrink_stripes() only frees inactive_list and
-kmem_cache_destroy() warns that objects remain.
-
-Move stripes still queued on released_stripes onto inactive_list
-before shrink_stripes() frees them.
-
-Fixes: 773ca82fa1ee ("raid5: make release_stripe lockless")
-Reported-by: syzbot+6a132745caefcf42cb0d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-raid/6ab6b743.7eec07f4.c25c.0006.GAE@google.com/T/#t
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-Link: https://patch.msgid.link/20260929083916.50620-1-dayou5941@163.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-2-8d507cb1174f@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: cf3aa34e6f07 ("phy: rockchip: usbdp: Avoid xHCI SErrors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 99660cf51f533..84b3d60605189 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2706,6 +2706,37 @@ static int drop_one_stripe(struct r5conf *conf)
+diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+index f611018171e34..b256672b3405b 100644
+--- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
++++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
+@@ -170,7 +170,7 @@ struct rk_udphy {
  
- static void shrink_stripes(struct r5conf *conf)
- {
-+	struct list_head temp[NR_STRIPE_HASH_LOCKS];
-+	int i;
-+
-+	/*
-+	 * grow_one_stripe() parks new stripes on released_stripes when
-+	 * mddev->thread is already set. Takeover leaves the previous
-+	 * personality's thread there, so raid5d never moves them to
-+	 * inactive_list. Drain them before the cache is destroyed.
-+	 * slab_cache is assigned only after device_lock and the hash
-+	 * lists exist; earlier abort paths have nothing to drain.
-+	 */
-+	if (conf->slab_cache) {
-+		for (i = 0; i < NR_STRIPE_HASH_LOCKS; i++)
-+			INIT_LIST_HEAD(&temp[i]);
-+
-+		spin_lock_irq(&conf->device_lock);
-+		release_stripe_list(conf, temp);
-+		spin_unlock_irq(&conf->device_lock);
-+
-+		for (i = 0; i < NR_STRIPE_HASH_LOCKS; i++) {
-+			if (list_empty(&temp[i]))
-+				continue;
-+			spin_lock_irq(conf->hash_locks + i);
-+			if (list_empty(conf->inactive_list + i))
-+				atomic_dec(&conf->empty_inactive_list_nr);
-+			list_splice_tail_init(&temp[i],
-+					      conf->inactive_list + i);
-+			spin_unlock_irq(conf->hash_locks + i);
-+		}
-+	}
-+
- 	while (conf->max_nr_stripes &&
- 	       drop_one_stripe(conf))
- 		;
+ 	/* PHY status management */
+ 	bool flip;
+-	bool mode_change;
++	bool phy_needs_reinit;
+ 	u8 mode;
+ 	u8 status;
+ 
+@@ -590,7 +590,7 @@ static void rk_udphy_mode_set(struct rk_udphy *udphy, u8 mode)
+ 	if (udphy->mode == mode)
+ 		return;
+ 
+-	udphy->mode_change = true;
++	udphy->phy_needs_reinit = true;
+ 	udphy->mode = mode;
+ }
+ 
+@@ -963,8 +963,8 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 
+ 		if (udphy->mode & UDPHY_MODE_USB)
+ 			rk_udphy_u3_port_disable(udphy, false);
+-		udphy->mode_change = false;
+-	} else if (udphy->mode_change) {
++		udphy->phy_needs_reinit = false;
++	} else if (udphy->phy_needs_reinit) {
+ 		if (udphy->mode == UDPHY_MODE_DP)
+ 			rk_udphy_u3_port_disable(udphy, true);
+ 
+@@ -972,7 +972,7 @@ static int rk_udphy_power_on(struct rk_udphy *udphy, u8 mode)
+ 		ret = rk_udphy_setup(udphy);
+ 		if (ret)
+ 			return ret;
+-		udphy->mode_change = false;
++		udphy->phy_needs_reinit = false;
+ 	}
+ 
+ 	udphy->status |= mode;
 -- 
 2.53.0
 
