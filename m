@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026360;
-	b=X7nMHaNCiq9d9A5cdnEgMkEKyhPL28j4PPP8F2nOA4SlNosgoGwNcksxhqYGERzNRRF4
-	 1nskrIMeZjn5Oy6Ib4REtgqMCcRWv4GNi3757CbTYV93LgnA4SsfNSmopMe+U7KpszNa0
-	 +fp9JeiLEPUu6RX/Vj43RpipELAf8tjBTrqaVBWdNiyuad+ioz+5+Qw43JOfkndgnQcDt
-	 0Ny90sO6X0i0wu+aWJ3zcGya1HeM6ATKvxU76jHl8txnnVS+btxgWQw8yArEtTZcUIEXT
-	 p4YimPiu1b1v8qs46L9t9L2kEs9HUs1Yq5zrDQqVpnCGOmZspYcFDofx5pH1lg6pkyw==
+	t=1795026362;
+	b=HgrhnIRkNyQk1pCL5fg4KxMn0TRbJdCPQROvQ8WC0JmsXpgNavshqnm8953R6ggGQh+M
+	 SXBXhpyqarwue0os0K7fCTZ6JoECAppONnu7snJOIZk+NDkDqtTr1+9sb7jQcrTRKKQU6
+	 o/I+kWV2KbvPhlX0xxe4H1N25PVR9OUINrdaHrbMvCafZUpaqRoLaVabzH5SoP9uvDXik
+	 MLywH/5oS3u8vxagv2eOF5LWiTovddrIajqNT8mc6TuBaon79FSAyC8aVTe0FhxT0pZos
+	 hT2JKzq9/sudy19JLsQJ4piFD8qCVvUJceSWm6IKOcQJ3VKIA1WH2N+aDpCyBzK940g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g/2rsuuWNaiiHj3c/rVHc5ffmZZPWhYbcyGXqCorx6c=;
-	b=Tn4auP0Ce5WRikR08YHEmcPlRKcr4taiJg+rsECxEHnvu8Z6gwy6WWAEL1Y8jMl4QQnQ
-	 UgUzvqhfGQii+5jzcjXd+hND7YI4iUmdMaCr46lESyeFwa9WoyaN1IKtRDrbWIUl1G9GS
-	 uX1EcuKc3j5WCh+2e323YVXXlzVvcyM8/TA2WOU5VblXSep8/g9BVG46maSwgYH8oK58I
-	 R3rOIQr1gH29pmIvavHDdeHYJrjhD8V4GvNQEFlqqaVIi1SlikWpIw6oVyfWNu16lnKpa
-	 GCK/oIwP3bH6gRw07h+I05GZ69oQYLUwlZkwStAuYvaxK7EkGNozM6MbtLIi1CjObDA==
+	bh=E59ZsW0vQ+ds+FHjioIL9B6mq1vKEfu+pNRBHrfTs5o=;
+	b=FIsSD9KfOL6ZeU/G5mEGa9VIf1yObqB/v1NtCxQZsw2XOJsgzrvgebpNloHlVROBisQa
+	 l/nNITNZ5odE940c4+MlMzc0g7jVr4MnAQW/pSfD9+98l2Of2WDF26RTwHDdXbCvwlwb6
+	 7qde1k8X6xdz4v3epvaOj6ggq/bGH0leuauSdyRuceM8mCqGO109Ht+M9T8oJqcMhxH2b
+	 oy9ZSy/xsJ1EvTHDQYgtoyTg8GZZqReSRUQJqfvgq946ZUghnwINcRIa8GBrRZ+Qq0/Uk
+	 IgtsG58BX9lN/y/VeDTiSOGeH3FgZWtthuiDNIHDPFJHl9DUOg1gwJglGiyoPKg/zBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOs1J8DM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oo9Gp+7X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8315606A31C;
-	Wed, 18 Nov 2026 18:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05C7606A325;
+	Wed, 18 Nov 2026 18:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LOs1J8DM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562E51F000C6;
-	Wed, 18 Nov 2026 18:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oo9Gp+7X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D2C1F000C4;
+	Wed, 18 Nov 2026 18:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026359;
-	bh=g/2rsuuWNaiiHj3c/rVHc5ffmZZPWhYbcyGXqCorx6c=;
+	s=korg; t=1795026362;
+	bh=E59ZsW0vQ+ds+FHjioIL9B6mq1vKEfu+pNRBHrfTs5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LOs1J8DM7JLS7Zio5ytgaKdM7HHxGD97Q2Q0My7is5RKParXNBqd+67nos1mFihii
-	 yFppziVGa080taTzWTrFQ6puErvmasxAMLwg6+rD5GVjk4BBcLxz6cZgA5Gnmoysgb
-	 W9+SouTx+QPecB77nY9tQ5UUOfpJBZgfIeMo7yVA=
+	b=Oo9Gp+7XSwzoBeKRhXr7SIZEOtl9bxO9yB9HTO8wsWXLbD9NFTXJx7JgDpZtNztDY
+	 +Cn3WfX4320vARXPgKF6iriwmAkczX6wtLOod/y2kubsqFOOLdWCR8rbYdWs1xzCvK
+	 VQ75CENsQwhQ4scxPd2BUlt63g0MDxGBgf8WudSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tapio Reijonen <tapio.reijonen@vaisala.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1406/2151] serial: max310x: register GPIO controller before adding UART ports
-Date: Wed, 18 Nov 2026 15:52:21 +0100
-Message-ID: <20261118150213.198275044@linuxfoundation.org>
+Subject: [PATCH 6.18 1407/2151] serial: max310x: support active-low RTS on the hardware path
+Date: Wed, 18 Nov 2026 15:52:22 +0100
+Message-ID: <20261118150213.232658096@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,119 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Tapio Reijonen <tapio.reijonen@vaisala.com>
 
-[ Upstream commit 25b51d1fd3268a219e43608b165098fff7cd9dcd ]
+[ Upstream commit 7b07356e820e9543cb5b64d009c345303aad0c65 ]
 
-The MAX310x exposes four GPIOs per UART port via an in-driver
-gpio_chip. devm_gpiochip_add_data() used to run after the per-port
-uart_add_one_port() loop, so a device-tree consumer referencing one of
-the chip's own GPIOs (for example rs485-term-gpios = <&max310x 0 ...>)
-could not resolve it during port registration: the GPIO provider it
-waits for is the very driver still trying to register, and the lookup
-returns -EPROBE_DEFER on its own provider, deferring probe forever.
+The chip's auto-RTS engine asserts the RTS_ pin high while data is
+shifting out, so a transceiver with an active-low driver-enable could
+not use the hardware RS485 path at all: SER_RS485_RTS_AFTER_SEND is
+not in the supported flags and the core normalizes it away with
+"invalid RTS setting, using RTS_ON_SEND instead".
 
-Split the per-port setup into two passes around the gpio_chip
-registration:
+The output stage is invertible: program IRDA.RTSINVERT when the
+requested polarity is active-low and advertise SER_RS485_RTS_AFTER_SEND
+in rs485_supported. A break already drives break_state onto the RTS
+bit unadjusted, which remains correct because RTSINVERT inverts the
+output stage itself, not the register value.
 
-  1. Initialise per-port state - port struct fields, regmap binding,
-     IRQ disable, work queues. The gpio_chip callbacks dereference
-     s->p[i].regmap via to_max310x_port() and become callable as soon
-     as the chip is visible to gpiolib, so every entry must be
-     populated first.
-  2. devm_gpiochip_add_data() - register the gpio_chip.
-  3. Allocate a line, uart_add_one_port(), set_bit(), max310x_power().
-     Keeping line allocation, registration and set_bit() together
-     preserves the existing "bit set <=> port registered" rollback
-     invariant that out_uart relies on.
-
+Assisted-by: Claude:claude-fable-5
 Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Link: https://patch.msgid.link/20260615-b4-max310x-rs485-dt-v3-1-7e79f064bdd7@vaisala.com
+Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-6-6ba881f81e1f@vaisala.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 33632215e1bb ("serial: max310x: drive RTS in software when hardware delays are too short")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c |   54 ++++++++++++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 21 deletions(-)
+ drivers/tty/serial/max310x.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -1504,17 +1504,12 @@ static int max310x_probe(struct device *
+@@ -162,6 +162,7 @@
+ /* IRDA register bits */
+ #define MAX310X_IRDA_IRDAEN_BIT		(1 << 0) /* IRDA mode enable */
+ #define MAX310X_IRDA_SIR_BIT		(1 << 1) /* SIR mode enable */
++#define MAX310X_IRDA_RTSINVERT_BIT	(1 << 2) /* Invert RTS output */
  
- 	dev_dbg(dev, "Reference clock set to %i Hz\n", uartclk);
+ /* HDPIXDELAY accessor macros */
+ #define MAX310X_HDPIXDELAY_SETUP(val)	(((val) & 0x0f) << 4)
+@@ -923,7 +924,7 @@ static void max310x_set_rts_ctl_params(s
+ 	const unsigned int max_bit_dly = 15;
+ 	struct uart_port *port = &one->port;
+ 	unsigned int setup = 0, hold = 0;
+-	u8 mode1 = 0;
++	u8 mode1 = 0, irda = 0;
  
-+	/*
-+	 * Set up each port's state before registering the gpiochip,
-+	 * since the gpiochip callbacks will read s->p[i].regmap as
-+	 * soon as gpiolib exposes the controller.
-+	 */
- 	for (i = 0; i < devtype->nr; i++) {
--		unsigned int line;
--
--		line = find_first_zero_bit(max310x_lines, MAX310X_UART_NRMAX);
--		if (line == MAX310X_UART_NRMAX) {
--			ret = -ERANGE;
--			goto out_uart;
--		}
--
--		/* Initialize port data */
--		s->p[i].port.line	= line;
- 		s->p[i].port.dev	= dev;
- 		s->p[i].port.irq	= irq;
- 		s->p[i].port.type	= PORT_MAX310X;
-@@ -1544,20 +1539,16 @@ static int max310x_probe(struct device *
- 		INIT_WORK(&s->p[i].md_work, max310x_md_proc);
- 		/* Initialize queue for changing RS485 mode */
- 		INIT_WORK(&s->p[i].rs_work, max310x_rs_proc);
--
--		/* Register port */
--		ret = uart_add_one_port(&max310x_uart, &s->p[i].port);
--		if (ret)
--			goto out_uart;
--
--		set_bit(line, max310x_lines);
--
--		/* Go to suspend mode */
--		max310x_power(&s->p[i].port, 0);
+ 	if (port->rs485.flags & SER_RS485_ENABLED) {
+ 		/* Convert milliseconds to bit-times, rounding up. */
+@@ -935,6 +936,12 @@ static void max310x_set_rts_ctl_params(s
+ 		hold  = min(hold,  max_bit_dly);
+ 
+ 		mode1 = MAX310X_MODE1_TRNSCVCTRL_BIT;
++		/*
++		 * The auto-RTS engine asserts RTS high on send; for an
++		 * active-low RTS let IRDA.RTSINVERT invert the output stage.
++		 */
++		if (!(port->rs485.flags & SER_RS485_RTS_ON_SEND))
++			irda = MAX310X_IRDA_RTSINVERT_BIT;
  	}
  
- #ifdef CONFIG_GPIOLIB
--	/* Setup GPIO controller */
-+	/*
-+	 * Register the GPIO controller before adding the UART ports so
-+	 * that consumers referencing the chip's own GPIOs from device
-+	 * tree (for example rs485-term-gpios = <&max310x ...>) can
-+	 * resolve them at uart_add_one_port() time instead of receiving
-+	 * -EPROBE_DEFER from their own provider.
-+	 */
- 	s->gpio.owner		= THIS_MODULE;
- 	s->gpio.parent		= dev;
- 	s->gpio.label		= devtype->name;
-@@ -1575,6 +1566,27 @@ static int max310x_probe(struct device *
- 		goto out_uart;
+ 	max310x_port_write(port, MAX310X_HDPIXDELAY_REG,
+@@ -952,6 +959,8 @@ static void max310x_set_rts_ctl_params(s
+ 
+ 	max310x_port_update(port, MAX310X_MODE1_REG,
+ 			    MAX310X_MODE1_TRNSCVCTRL_BIT, mode1);
++	max310x_port_update(port, MAX310X_IRDA_REG,
++			    MAX310X_IRDA_RTSINVERT_BIT, irda);
+ }
+ 
+ static void max310x_break_ctl(struct uart_port *port, int break_state)
+@@ -968,7 +977,9 @@ static void max310x_break_ctl(struct uar
+ 	 * The chip's auto-RTS asserts the transceiver only while FIFO data is
+ 	 * shifting out, and a break is not FIFO data. Disable auto-RTS for the
+ 	 * break duration and drive RTS manually so the break reaches the wire;
+-	 * restore auto-RTS when the break ends.
++	 * restore auto-RTS when the break ends. For an active-low RTS,
++	 * IRDA.RTSINVERT already inverts the RTS_ output stage, so break_state
++	 * is driven as it is.
+ 	 */
+ 	if (break_state) {
+ 		if (!(port->rs485.flags & SER_RS485_ENABLED))
+@@ -1399,7 +1410,8 @@ static int max310x_gpio_set_config(struc
  #endif
  
-+	for (i = 0; i < devtype->nr; i++) {
-+		unsigned int line;
-+
-+		line = find_first_zero_bit(max310x_lines, MAX310X_UART_NRMAX);
-+		if (line == MAX310X_UART_NRMAX) {
-+			ret = -ERANGE;
-+			goto out_uart;
-+		}
-+		s->p[i].port.line = line;
-+
-+		/* Register port */
-+		ret = uart_add_one_port(&max310x_uart, &s->p[i].port);
-+		if (ret)
-+			goto out_uart;
-+
-+		set_bit(line, max310x_lines);
-+
-+		/* Go to suspend mode */
-+		max310x_power(&s->p[i].port, 0);
-+	}
-+
- 	/* Setup interrupt */
- 	ret = devm_request_threaded_irq(dev, irq, NULL, max310x_ist,
- 					IRQF_ONESHOT | IRQF_SHARED, dev_name(dev), s);
+ static const struct serial_rs485 max310x_rs485_supported = {
+-	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RX_DURING_TX,
++	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND |
++		 SER_RS485_RTS_AFTER_SEND | SER_RS485_RX_DURING_TX,
+ 	.delay_rts_before_send = 1,
+ 	.delay_rts_after_send = 1,
+ };
 
 
