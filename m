@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046747;
-	b=F7vdN5FCpd0nisoEY1f6ZO+9QXc5JE1o4Krk954MzpHafJixMPEYeq3UqEyfsx3T7bNp
-	 8EW3nI7uDXGUKTkJhI7dxAb0A3PugTz7F2pcH6VQPNrurWY5i5zZdogZJ6u47P51S2Zd2
-	 gm7YEAlYPPwBkaRx0kIsEPc+2XV4R4qsisWrWDaoP7Y9pHX+w4FiajE5KLXFmAXIKzayM
-	 x2PH40PHIsZlAm3bvUmmTmsc4pyqHzKZ8+TcOJ9PZERTY3hjdCHqMU1HBa8YTdCtpq8aa
-	 L2LFLYgwPeGq5SIjQkSMsf/+qOJ2KhDSYT4/omohX3LEIZe5Y8WRa737hcsGSEmQvIw==
+	t=1795046750;
+	b=nZLEbAkEJIdwxHBh5K1OdNHyd8zKAJWzuA1kDUQq9tgmWPWhp5bvhj7YC+oZcLOB/7Hn
+	 +ep8CmIZ5bioUyh6kzqHap4z2SaycUyixedHLXSGoWVaEQ/7Ap2kMQWM1mftFYz6oxCSc
+	 5vE9/mxcsge9XY4tvOJKYcWcHVL1PIbhnjkY5nP9zcW7aVEKnlSlvbT3+vTwgt/TF7r7g
+	 9nnyyoNNp94XyvH14Sw2CKAcMiR25C626km5nIwuwH1YJcRHttJrSnuSD4Sz2WP/9FDYM
+	 7qU53g8E481v0ZgUV9s/I7woJ7TK2x7LYKpvIcaOLm9RbdDaGme+VtozsyWQMp7GLcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046747;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K9V4W2E1pkJ8eSy34RHu0Rx/mRQE/Hd8BWf3DoqylyY=;
-	b=CFuVJxEkCdmvB9PSHs0mknad3DbBOKLZgr2RPqw0oPKXQBD/Ix3ZJtwrljinLiKC2v6+
-	 0kHoNCirMh+vzXQyhv0c/eXuYkKMsC2eFrxkF7S0u4GJQPLVm25bcyX9pTf6aymKCnqHr
-	 rga+t7poq3W7ymJqDMEWv5fAxJ/Xx4MOYFFSvBNOZl8znabp9N79LgEo3DzpirjLrstjm
-	 D55pe4+Zlsd1LDU6LkagMdJ2BGSxDEPej4eLDCuT6KjaeW6AcC4QxIRbMILtiqMLZHYq3
-	 +8ya03su4L1h8JPMQWfXOXHORqfmD5u0ilPmlyqdmbVQ3zlBgPPxsBjXys0aq30bltQ==
+	bh=A11InhuBp2QL2gKbzGheufhXjwuypHip5vNCTD/sfrg=;
+	b=1f/3iWCLkulsEyY6dQoD48hrBZElnVIm2W369e0xusL7vIk4i7QhR2m0g40vcgZRhs41
+	 p/CnnRM5tZUH09x3G1TbDRYJsOACcn1WyWsukK+0u7Ayv/zXY0oFpU8q7QSe4H+clC19P
+	 tvGVU1H9rLKPAYTAFJ2iyWGf+bZJtldx/sSMDBhNKOMOgiamuUAlo4kD2sOavfvN6vAmJ
+	 k65mZZzITiQDbRl0ifEOA0K3BqOjecf2BwEazkJdFTUYzMdLpQ0wi2Ud9MW8UcN+W7XzJ
+	 STeWZuonzjfdTQY7j17zknXTqX1zZ3mhKfHkwEDDyfp/pioBT/L+kY02f1Zi1JgrlzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qeWqZbfp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ogn/TYSN";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BD0606A337;
-	Thu, 19 Nov 2026 00:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DF7606A31C;
+	Thu, 19 Nov 2026 00:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qeWqZbfp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBF81F000CC;
-	Thu, 19 Nov 2026 00:05:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ogn/TYSN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2A51F000C6;
+	Thu, 19 Nov 2026 00:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046746;
-	bh=K9V4W2E1pkJ8eSy34RHu0Rx/mRQE/Hd8BWf3DoqylyY=;
+	s=korg; t=1795046749;
+	bh=A11InhuBp2QL2gKbzGheufhXjwuypHip5vNCTD/sfrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qeWqZbfp4ODYepb+/PTEc78SO2SxUlyjkW4XfTYh9ZErT5etgjzAfZGxJZzVznPbs
-	 1/WkQwxiDE95QUb0Byu+ifZIbUsmNmZmTDC4ky+vYUfuNyQVZPVXaUVM4b81vygtV9
-	 0l5o/T3Pzw8kA/lM7WPGWlWQIu6LaZ0bhVd+2PHs=
+	b=Ogn/TYSNDUysaB0y3Iy7I/4rt2oy7mvCHelQrRbbhvcdIO1awzg0iSRVyB22zTKCe
+	 9CSfCBBww9N87Ylc4GFnzNhs5lOiezCKZcCpcQvEZo3dLbLCmgf4An/dsTJnyNUBeC
+	 mcgKUW1q+B+2UcuNF0bzFjYpQk57IX6dqKSoQHrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Wagner <dwagner@suse.de>,
+	Martin Belanger <martin.nvme.dev@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1392/2857] sctp: re-point retained control chunks on association migration
-Date: Wed, 18 Nov 2026 15:40:26 +0100
-Message-ID: <20261118150251.478648959@linuxfoundation.org>
+Subject: [PATCH 6.1 1393/2857] nvme: make the DH-HMAC-CHAP secret attributes readable by root only
+Date: Wed, 18 Nov 2026 15:40:27 +0100
+Message-ID: <20261118150251.512856280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,160 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Martin Belanger <martin.nvme.dev@gmail.com>
 
-[ Upstream commit 52ffeaa358d1f3d91aa87a26ad90d77769cff74b ]
+[ Upstream commit bbca7c312ab25efd0024eb87545c51a76ab2ea39 ]
 
-sctp_sock_migrate() transfers DATA chunk ownership but leaves retained
-control chunks pointing at the old socket. A later retransmission can
-therefore access the socket after it has been freed.
+The dhchap_secret and dhchap_ctrl_secret sysfs attributes have mode
+0644. Their show functions return the secret, so any local user can
+read the DH-HMAC-CHAP secrets of a connected controller.
 
-Extend the migration walk to cover retained control chunks and use
-sctp_control_set_owner_w() to assign their new owner. Reuse the DATA
-ownership check so each chunk is processed once per pass, even when it
-is reachable through multiple lists or retained pointers.
+Define them with DEVICE_ATTR_ADMIN_RW(), which sets mode 0600. The
+macro takes the show and store functions from the attribute name, so
+rename them. Writing the attributes was already limited to root and is
+not changed.
 
-Preserve a control chunk's existing authentication key across migration
-so its final release can still generate SCTP_AUTH_FREE_KEY when needed.
-
-Fixes: d04adf1b3551 ("sctp: reset owner sk for data chunks on out queues when migrating a sock")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261009074244.3718-3-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Cc: stable@vger.kernel.org
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Assisted-by: LLM
+Signed-off-by: Martin Belanger <martin.nvme.dev@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ sashal: Applied the changes to the NVMe core code because the sysfs attributes have not been moved to a separate file. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sctp/sm.h    |  1 +
- net/sctp/sm_make_chunk.c |  5 ++--
- net/sctp/socket.c        | 53 ++++++++++++++++++++++++++++++----------
- 3 files changed, 44 insertions(+), 15 deletions(-)
+ drivers/nvme/host/core.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/sctp/sm.h b/include/net/sctp/sm.h
-index f37c7a558d6dd..0355dbef9881d 100644
---- a/include/net/sctp/sm.h
-+++ b/include/net/sctp/sm.h
-@@ -256,6 +256,7 @@ struct sctp_chunk *sctp_make_fwdtsn(const struct sctp_association *asoc,
- 				    struct sctp_fwdtsn_skip *skiplist);
- struct sctp_chunk *sctp_make_auth(const struct sctp_association *asoc,
- 				  __u16 key_id);
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk);
- struct sctp_chunk *sctp_make_strreset_req(const struct sctp_association *asoc,
- 					  __u16 stream_num, __be16 *stream_list,
- 					  bool out, bool in);
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 4f3133bd649a9..521c0ab4d4da1 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -95,7 +95,7 @@ static void sctp_control_release_owner(struct sk_buff *skb)
- 	}
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 26233e6a50da9..9521126738940 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3847,7 +3847,7 @@ static ssize_t dctype_show(struct device *dev,
+ static DEVICE_ATTR_RO(dctype);
+ 
+ #ifdef CONFIG_NVME_AUTH
+-static ssize_t nvme_ctrl_dhchap_secret_show(struct device *dev,
++static ssize_t dhchap_secret_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+ {
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -3858,7 +3858,7 @@ static ssize_t nvme_ctrl_dhchap_secret_show(struct device *dev,
+ 	return sysfs_emit(buf, "%s\n", opts->dhchap_secret);
  }
  
--static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk)
+-static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
++static ssize_t dhchap_secret_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
  {
- 	struct sctp_association *asoc = chunk->asoc;
- 	struct sk_buff *skb = chunk->skb;
-@@ -108,7 +108,8 @@ static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- 	 *  For now don't do anything for now.
- 	 */
- 	if (chunk->auth) {
--		chunk->shkey = asoc->shkey;
-+		if (!chunk->shkey)
-+			chunk->shkey = asoc->shkey;
- 		sctp_auth_shkey_hold(chunk->shkey);
- 	}
- 	skb->sk = asoc ? asoc->base.sk : NULL;
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 04c3b8a8d2dd2..6b24b4fe7b396 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -155,9 +155,24 @@ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -3899,10 +3899,9 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
  
- static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
+ 	return count;
+ }
+-static DEVICE_ATTR(dhchap_secret, S_IRUGO | S_IWUSR,
+-	nvme_ctrl_dhchap_secret_show, nvme_ctrl_dhchap_secret_store);
++static DEVICE_ATTR_ADMIN_RW(dhchap_secret);
+ 
+-static ssize_t nvme_ctrl_dhchap_ctrl_secret_show(struct device *dev,
++static ssize_t dhchap_ctrl_secret_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
  {
--	sctp_set_owner_w(chunk);
--	if (chunk->shkey)
--		sctp_auth_shkey_release(chunk->shkey);
-+	struct sctp_shared_key *shkey = chunk->shkey;
-+
-+	if (chunk->msg)
-+		sctp_set_owner_w(chunk);
-+	else
-+		sctp_control_set_owner_w(chunk);
-+
-+	if (shkey)
-+		sctp_auth_shkey_release(shkey);
-+}
-+
-+static void sctp_process_tx_chunk(struct sctp_association *asoc,
-+				  struct sctp_chunk *chunk, bool clear,
-+				  void (*cb)(struct sctp_chunk *))
-+{
-+	if ((clear && asoc->base.sk == chunk->skb->sk) ||
-+	    (!clear && asoc->base.sk != chunk->skb->sk))
-+		cb(chunk);
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -3913,7 +3912,7 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_show(struct device *dev,
+ 	return sysfs_emit(buf, "%s\n", opts->dhchap_ctrl_secret);
  }
  
- #define traverse_and_process()	\
-@@ -165,17 +180,14 @@ do {				\
- 	msg = chunk->msg;	\
- 	if (msg == prev_msg)	\
- 		continue;	\
--	list_for_each_entry(c, &msg->chunks, frag_list) {	\
--		if ((clear && asoc->base.sk == c->skb->sk) ||	\
--		    (!clear && asoc->base.sk != c->skb->sk))	\
--			cb(c);	\
--	}			\
-+	list_for_each_entry(c, &msg->chunks, frag_list)	\
-+		sctp_process_tx_chunk(asoc, c, clear, cb);	\
- 	prev_msg = msg;		\
- } while (0)
- 
--static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
--				       bool clear,
--				       void (*cb)(struct sctp_chunk *))
-+static void sctp_for_each_tx_chunk(struct sctp_association *asoc,
-+				   bool clear,
-+				   void (*cb)(struct sctp_chunk *))
- 
+-static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
++static ssize_t dhchap_ctrl_secret_store(struct device *dev,
+ 		struct device_attribute *attr, const char *buf, size_t count)
  {
- 	struct sctp_datamsg *msg, *prev_msg = NULL;
-@@ -198,6 +210,21 @@ static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
+ 	struct nvme_ctrl *ctrl = dev_get_drvdata(dev);
+@@ -3954,8 +3953,7 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
  
- 	list_for_each_entry(chunk, &q->out_chunk_list, list)
- 		traverse_and_process();
-+
-+	list_for_each_entry(chunk, &q->control_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->asconf_ack_list, transmitted_list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->addip_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	if (asoc->strreset_chunk)
-+		sctp_process_tx_chunk(asoc, asoc->strreset_chunk, clear, cb);
-+
-+	if (asoc->addip_last_asconf)
-+		sctp_process_tx_chunk(asoc, asoc->addip_last_asconf, clear, cb);
+ 	return count;
  }
+-static DEVICE_ATTR(dhchap_ctrl_secret, S_IRUGO | S_IWUSR,
+-	nvme_ctrl_dhchap_ctrl_secret_show, nvme_ctrl_dhchap_ctrl_secret_store);
++static DEVICE_ATTR_ADMIN_RW(dhchap_ctrl_secret);
+ #endif
  
- static void sctp_for_each_rx_skb(struct sctp_association *asoc, struct sock *sk,
-@@ -9700,9 +9727,9 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
- 	 * paths won't try to lock it and then oldsk.
- 	 */
- 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
--	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
-+	sctp_for_each_tx_chunk(assoc, true, sctp_clear_owner_w);
- 	sctp_assoc_migrate(assoc, newsk);
--	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
-+	sctp_for_each_tx_chunk(assoc, false, sctp_set_owner_w_migrate);
- 
- 	/* If the association on the newsk is already closed before accept()
- 	 * is called, set RCV_SHUTDOWN flag.
+ static struct attribute *nvme_dev_attrs[] = {
 -- 
 2.53.0
 
