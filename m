@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026066;
-	b=OwBKSlG+x8K4PO01+V4abw5ZDU9QAHJgttE1QBhnblJgFKtNfI/zltYJ4Ih04/iAVLIz
-	 fzlLRiv+KZkqAamLO4INa53sgfTHk8cxz3B2zZeJkw0aECs1niXmd/6qK0kHQ1hf98cny
-	 CujficVH60tb5Nkkq/Zpr/7q0obD1INed5AqjMSlkilDb+vwDi/qTmc04Bj5Ebf/WWA+7
-	 Yl8VaERvTFLAd1G4cP5EAHSIO5Y4MTDQE2tPSXEAVjIy839SD7MLbrKItcsnflNJMu6dc
-	 BHbZmbJMOUQ+DlQmGPyBRMkVQ5mzFbY52hy+EPikZdt/Rel9Jzw7FTnJcYxCqwiDw4Q==
+	t=1795026068;
+	b=wRWlwCt9DfWTgISr8cVdPWRQoN3+T4wlzvAxq9d5oCKeDurkzBkPuI0AIVAejjt7j94q
+	 3q6ZqfjrTJe7VRhj+J56KgzKq/P2s/EkhALCEl4848t/2i7I368aEgIhoFmCV4XlZH7cs
+	 CMVtrGA20oTTP7fT7tBTv3uibeTc/oV7Oad47uYt+U3yDn3ok4EmufjDeVzDKo6auascY
+	 Z4xQrFJGc7Lk2AdT2tJwdEwR8V992ZXFPpR+t4Usb3LTmjHcJfnbBevCREg1uIyzMF0L6
+	 dU71XMVSYj8z42zY1noUr+6wIp9WGHO4+AszgBb4MB6vgBZYdIcUs8pDameTdS0YeJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dpgYfwLPhp8COPTBp8sLvrq7di6Ku9VUUdGm9LRSXkM=;
-	b=4tNVR0JHQY29Kq4D1cMgVi4Pa0WxFuU6TpFVd47madlM9DY3tQxNKpL/L4yEinKRdI7V
-	 rtJb8FcQTVtulG9JopYsCgcC7CvhaHHLvrypKjWnniqwiodYC8ecZp1hWr53XoNnabV5a
-	 qL74yllJOoyb5tI8prVPvFa6d3n1iWv8zD1VYB/aHpj8o5xa8fJIDoInUT8rdwsnSnOP4
-	 V7s5yqnPJWABrHmFnSoqnA0lh0BIsM297b4M0TuELzUf1aJsILS3JL+gjtMAUDG4i5bob
-	 CcuSvBzz7aEhLpaO+kZr7ecAeo8FubNPhyILgrBR0sURKCNWan0nSCqtOfg7KEonLGQ==
+	bh=5w2iei0bkl57wjO8gXKTtyecaEcjkx4drB5l2owrie4=;
+	b=DfpMC5YI7B/9Oy8vAyhMEJWgY5NRJFAxNyR1b2mDMZOxkxr52atutJyUiu1ncnQwypqw
+	 CxuqC8L1d4hsL2a+ks0rp8GBKETDkjmOLl02xy/dhiS8iGz1KWQcuXzGXyC67kD1UScZI
+	 ecMM1HS78qt2tHJIcDdzZRgcnXsDJI19DXmEjdfEHhtH+/4BKUe1dpGhbOLwaC0Zd1s7l
+	 UmG3wpJ4pn2G+mroaW728ean8TrHphv9wz6TwbUmJwqBOJr/02l/cYrHLK89/7aofcQ/r
+	 ttF+9IFTVrg68A3YS5qavgG6ONxBnFtPSPG/yrM2igGkb4K5fRdXQ8aVhNWANYJpJWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mw1CjCoh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6tA9kV7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E48606A331;
-	Wed, 18 Nov 2026 18:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D857D606A325;
+	Wed, 18 Nov 2026 18:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mw1CjCoh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717701F000C5;
-	Wed, 18 Nov 2026 18:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6tA9kV7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEDB1F000C6;
+	Wed, 18 Nov 2026 18:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026066;
-	bh=dpgYfwLPhp8COPTBp8sLvrq7di6Ku9VUUdGm9LRSXkM=;
+	s=korg; t=1795026068;
+	bh=5w2iei0bkl57wjO8gXKTtyecaEcjkx4drB5l2owrie4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mw1CjCohhMMZNmL6AEStC/lYUKlPANY1QPEnimcD79BN9Nn0hpd1W2mxGHdAt77LP
-	 pm4IU6JT2FNLwv17MdQunNSFkBwibhVi3aVp4/Tmf17z6h/94kV93s2MCmIjEOKIOE
-	 Dinf/bBtISOJ4GCcnGw7wL2SjlPERZchubj+nlrU=
+	b=j6tA9kV7Z3jz13tZIvCvbsKlZrGTdf+FOUUtzUGRLSykJElWiWxPwA2vJ+CnV4wqk
+	 VfqqHWNL5sZEyXPLah7aTK0sRpyUPV94daIaniDJZrWq2WNtBR22yYZ1NPufQC0lMp
+	 xWbeAcl5fI4dGzdEXz0yYyjSSOEOLO2n0ihrBdYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Logan Gunthorpe <logang@deltatee.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1303/2151] PCI/P2PDMA: Do not tear down the allocate attribute on registration failure
-Date: Wed, 18 Nov 2026 15:50:38 +0100
-Message-ID: <20261118150209.568289635@linuxfoundation.org>
+Subject: [PATCH 6.18 1304/2151] PCI/P2PDMA: Safely terminate ACS redirect lists
+Date: Wed, 18 Nov 2026 15:50:39 +0100
+Message-ID: <20261118150209.604627743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,84 +73,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 7c4d6505a1f8a1ebe8019b7f988ed494b696653b ]
+[ Upstream commit fa291d6429ebc1efb7fab011f643b842ae5f23f1 ]
 
-pci_p2pdma_add_resource() installs pci_p2pdma_unmap_mappings() as a devres
-action with the devres allocated p2p_pgmap as its data, and only then adds
-the range to the pool:
+seq_buf marks an overflow by setting len to size + 1. The ACS diagnostic
+path unconditionally writes a terminator to buffer[len - 1], so a path with
+enough ACS ports to fill the 128-byte buffer writes one byte beyond the
+buffer when verbose diagnostics are requested.
 
-  error = devm_add_action_or_reset(&pdev->dev, pci_p2pdma_unmap_mappings,
-                                   p2p_pgmap);
-  if (error)
-          goto pages_free;
+Use seq_buf_str() to terminate truncated output safely and remove the final
+semicolon only when the buffer did not overflow.
 
-  p2pdma = rcu_dereference_protected(pdev->p2pdma, 1);
-  error = gen_pool_add_owner(p2pdma->pool, ...);
-  if (error)
-          goto pages_free;
-
-The action removes the allocate attribute for the whole device, which tears
-down existing userspace mappings of every BAR already registered on it.
-Both failures here get that wrong, in opposite ways.
-
-devm_add_action_or_reset() runs the action when it cannot allocate its
-devres node, so an -ENOMEM while registering a second BAR unmaps the first
-one. Use devm_add_action() and let the error path unwind only what this
-call created.
-
-gen_pool_add_owner() allocates a chunk and can also fail with -ENOMEM.
-There the action is registered, and the error path frees p2p_pgmap with
-devm_kfree() while leaving the action pointing at it. On unbind devres
-runs the action and pci_p2pdma_unmap_mappings() dereferences
-p2p_pgmap->mem->owner->kobj, which is freed memory. Give that failure its
-own label and drop the action with devm_remove_action(), which removes it
-without running it.
-
-Fixes: 7e9c7ef83d78 ("PCI/P2PDMA: Allow userspace VMA allocations through sysfs")
-Fixes: f58ef9d1d135 ("PCI/P2PDMA: Separate the mmap() support from the core logic")
+Fixes: 52916982af48 ("PCI/P2PDMA: Support peer-to-peer memory")
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Tushar Dave <tdave@nvidia.com>
 Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-1-5044e8dfbe2e@nvidia.com
+Link: https://patch.msgid.link/20260830-batch-p2p-fixes-v1-4-5044e8dfbe2e@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/p2pdma.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pci/p2pdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-index 1004a4f055dfe..751b3897ea18f 100644
+index 751b3897ea18f..f988178b5d5d1 100644
 --- a/drivers/pci/p2pdma.c
 +++ b/drivers/pci/p2pdma.c
-@@ -346,8 +346,8 @@ int pci_p2pdma_add_resource(struct pci_dev *pdev, int bar, size_t size,
- 		goto pgmap_free;
+@@ -658,11 +658,13 @@ calc_map_type_and_dist(struct pci_dev *provider, struct pci_dev *client,
  	}
  
--	error = devm_add_action_or_reset(&pdev->dev, pci_p2pdma_unmap_mappings,
--					 p2p_pgmap);
-+	error = devm_add_action(&pdev->dev, pci_p2pdma_unmap_mappings,
-+				p2p_pgmap);
- 	if (error)
- 		goto pages_free;
+ 	if (verbose) {
+-		acs_list.buffer[acs_list.len-1] = 0; /* drop final semicolon */
++		/* Drop the final semicolon; the list is not empty here */
++		if (!seq_buf_has_overflowed(&acs_list))
++			acs_list.buffer[acs_list.len - 1] = '\0';
+ 		pci_warn(client, "ACS redirect is set between the client and provider (%s)\n",
+ 			 pci_name(provider));
+ 		pci_warn(client, "to disable ACS redirect for this path, add the kernel parameter: pci=disable_acs_redir=%s\n",
+-			 acs_list.buffer);
++			 seq_buf_str(&acs_list));
+ 	}
+ 	acs_redirects = true;
  
-@@ -357,13 +357,15 @@ int pci_p2pdma_add_resource(struct pci_dev *pdev, int bar, size_t size,
- 			range_len(&pgmap->range), dev_to_node(&pdev->dev),
- 			&pgmap->ref);
- 	if (error)
--		goto pages_free;
-+		goto mappings_remove;
- 
- 	pci_info(pdev, "added peer-to-peer DMA memory %#llx-%#llx\n",
- 		 pgmap->range.start, pgmap->range.end);
- 
- 	return 0;
- 
-+mappings_remove:
-+	devm_remove_action(&pdev->dev, pci_p2pdma_unmap_mappings, p2p_pgmap);
- pages_free:
- 	devm_memunmap_pages(&pdev->dev, pgmap);
- pgmap_free:
 -- 
 2.53.0
 
