@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053800;
-	b=tiIv9aeOFM39s4pG9LjWuFDLVSGAcDx+HS3BNwwjrO1lmjcJQKkQk4Gy5BJ4TDsgoYa6
-	 8aUE0es+w3Q8jSp7TpFSmtPibLnKPDK3bsp0WQVC15t9MK0VCGQVMuFRuejc1XyIwyfUg
-	 VHDpkymIAL3ujXAk7WTyaE1kMorlokCxuBF+16AKNcbS+OUqKiJyEuh/Z8tH166g8tDfd
-	 2xhku7t0/HvDv/8hVX+3S6L2WS+N9jjzNtZSLVxnEdThGqfcZXfkOSIXePhNGH1AlJaW8
-	 gmzpBTV7B8mvzCt6eyR2W7tkAiKaV88QyYs+HEgUvDWqyfu7DDqploInNqX2fcWefqw==
+	t=1795053803;
+	b=en7VVKB1zdWjaTuGLUZbnLiJ5P3FwV1q3UzWGDPkQou2pfc4zSyaAB7Hr6RsjGCF+L3M
+	 bow95fbSKfV1b+R+pulY9z9Ciq2DwIjRz5VDgMw9mN7+SiQkBBBl3Tnn8sLQpRlZAf+JV
+	 7YRmwUfBoVQvBososyKP4MiEf46OjHMsjhoCzqK+AlwUM3YgNw5PyIr3YSLEdkaJLjBxU
+	 m3LDjcTUPqiYHTQiJwL+n+ZQQKaVOKImN5yqTQ1FJirN31Bz3XJPliVBFI8dOcVVk7E8m
+	 YPinHpaMB6ZfZ3G/atOISShDLVsZkv0BGu4bGM9SW8Mn9EnSos4yi9NU1KMGpcVeHcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=F1fG7YvprbTOLw8mEqEXDsmlRtqY0sFqNJH+a05pc/o=;
-	b=AvKZuzjNCHToqJHOYqoFvIajrUIdTeTcQozxsXhRJap9W4twvNyY5SZLQyBMxyFrFZQe
-	 RVnawmDuQJbrRdtTPwC41WKp1LDK12K5QPdHKQt7FX2e/sU7XB3y110r0dvxJlmyKtNw2
-	 lpUleDDARKAxcPwxj2U148bGRrz9zmoGcOBkr3aS+4rlNiFfvEWq2uV95oAtGZrtfW0JG
-	 +BTU+cV09dux81L9jn600/ewYy8RulCTF5aemFvQIe4/jGWHsNfGA9MGzh4Phm3NH1USH
-	 bTvC1la+Erz5Gk3Partu4uiBFK/xY+99ecC9xzi2TRxjXLzwJlVTOCTixVsTSBnEPFQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=z0wwI6aIFqCkZWqO7tc+Bo0qN00iiOxbDYoJ2lcWBU4=;
+	b=Cph1GxTw1AfKrDrcBienQLWbbNw6WZ+SpqnP7bmz6XrGdOqkv79bt5rADA6wGb0xoC7j
+	 NXuUaVPFW1ncaWehnHEj4M7hd9mo1bdCQP7gTb+i9MwC3cPCf31iNhCFmrwVQYFJOqogH
+	 OtCFZo/QDTokBIVHKQDjQTwjsCMz1x3YrHT2Kb2g/UBIM5hrWW7/L9datvIYf8CkKlaxq
+	 w26hpmtuBN+M5PnNEOi9GIdVF+d5vgIoU4cEmdBEk+13YgLFnajCA4FBKDvxRVtEP6VaE
+	 9tzqEOd+g9MGeq496oxGZOeZd1XyDskdrYmgfHlqALTaHcOfS9QPqxJXkpBtHR+m5cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciSe6MpF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1CMIGQo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39166606A31C;
-	Thu, 19 Nov 2026 02:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10382606A32A;
+	Thu, 19 Nov 2026 02:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ciSe6MpF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895611F000C4;
-	Thu, 19 Nov 2026 02:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1CMIGQo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605711F000C4;
+	Thu, 19 Nov 2026 02:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053800;
-	bh=F1fG7YvprbTOLw8mEqEXDsmlRtqY0sFqNJH+a05pc/o=;
+	s=korg; t=1795053802;
+	bh=z0wwI6aIFqCkZWqO7tc+Bo0qN00iiOxbDYoJ2lcWBU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ciSe6MpF0TTWIxNiDlv4GMCiGuWqGUusmGxlbIgdJKA7NhbTsFx270kxlVEFpD6st
-	 RjlER+Zf1L6Oxq2wA03q23hLsKjW3Osq86IG9dtJIPr9AJxo53QSqPXS1o/pQGx9a3
-	 BS90yR+4rLJiI2hdY1tCnBM5ro7b1vv1f6e1UsbA=
+	b=D1CMIGQou7dDR1eRdbSRfb28iK7vPoQkJGkJT4jZxBYN8ziMu1/8weWKgRuV21Mux
+	 FJpCMfgJHto0a05lLrFVhJGgRopd4+83PsOqPowrZ7Ghfvx2LTy4UWErxELGW35JMD
+	 4MjlgZo05jpuic2vPjWHLG87WAmHlZQ/BQQ+/02c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Marc Zyngier <maz@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lee Jones <lee.jones@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1047/2214] KVM: arm64: vgic-v3: Roll back assignments from the new region
-Date: Wed, 18 Nov 2026 15:45:23 +0100
-Message-ID: <20261118150054.215094803@linuxfoundation.org>
+Subject: [PATCH 5.15 1048/2214] mfd: twl: Remove platform data support
+Date: Wed, 18 Nov 2026 15:45:24 +0100
+Message-ID: <20261118150054.252082283@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,102 +62,474 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit a32c01324eb494dda811912eb847b0e907cd7270 ]
+[ Upstream commit 4a346a03a63cb45f7766d9d6559cf3fee783e926 ]
 
-A failed REDIST_REGION write unregisters the redistributor iodevs of every
-vCPU processed before the failure. This includes vCPUs assigned to older
-regions. Their assignments remain cached, so a retry does not register the
-iodevs again.
+There is no in-tree machine that provides a struct twl4030_platform_data
+since commit e92fc4f04a34 ("ARM: OMAP2+: Drop legacy board file for
+LDP"). So assume dev_get_platdata() returns NULL in twl_probe() and
+simplify accordingly.
 
-The vCPU whose registration fails has no assignment to roll back. For vCPUs
-processed earlier, limit rollback to those assigned to the new region. The
-region is removed on failure, so its free_index does not need restoring.
-
-Resetting assignments from older regions is unsafe because a vCPU can own
-one before kvm_for_each_vcpu() can see it. Rollback could then move
-free_index behind that live assignment.
-
-kvm_vgic_addr() holds slots_lock across the REDIST_REGION write. vCPU
-creation takes the same lock before assigning a redistributor. A concurrent
-vCPU cannot acquire an assignment from the new region before rollback
-completes. The lock also keeps rdreg valid across the config_lock drop
-required by MMIO-bus registration.
-
-Fixes: c011f4ea106b ("KVM: arm/arm64: Check vcpu redist base before registering an iodev")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260831081005.41346-3-kmehltretter@gmail.com
-[maz: moved helper into the sole caller]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: adapted rollback to the existing reverse vCPU loop protected by slots_lock and kvm->lock ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Link: https://lore.kernel.org/r/20220614152148.252820-1-u.kleine-koenig@pengutronix.de
+Stable-dep-of: 3c5c55d979dd ("mfd: twl-core: Unregister the auxiliary platform device on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/mfd/twl-core.c  | 323 +---------------------------------------
+ include/linux/mfd/twl.h |  55 -------
+ 2 files changed, 5 insertions(+), 373 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index c3c0204b3eb1e..eafdb3b3e1114 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -763,7 +763,8 @@ void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
- 	kvm_io_bus_unregister_dev(vcpu->kvm, KVM_MMIO_BUS, &rd_dev->dev);
+diff --git a/drivers/mfd/twl-core.c b/drivers/mfd/twl-core.c
+index 289b556dede28..ae5f101167b45 100644
+--- a/drivers/mfd/twl-core.c
++++ b/drivers/mfd/twl-core.c
+@@ -656,309 +656,6 @@ static inline struct device *add_child(unsigned mod_no, const char *name,
+ 		can_wakeup, irq0, irq1);
  }
  
--static int vgic_register_all_redist_iodevs(struct kvm *kvm)
-+static int vgic_register_all_redist_iodevs(struct kvm *kvm,
-+					   struct vgic_redist_region *rdreg)
- {
- 	struct kvm_vcpu *vcpu;
- 	int c, ret = 0;
-@@ -779,7 +780,13 @@ static int vgic_register_all_redist_iodevs(struct kvm *kvm)
- 		mutex_lock(&kvm->slots_lock);
- 		for (c--; c >= 0; c--) {
- 			vcpu = kvm_get_vcpu(kvm, c);
-+			if (vcpu->arch.vgic_cpu.rdreg != rdreg)
-+				continue;
-+
- 			vgic_unregister_redist_iodev(vcpu);
-+
-+			vcpu->arch.vgic_cpu.rdreg = NULL;
-+			vcpu->arch.vgic_cpu.rd_iodev.base_addr = VGIC_ADDR_UNDEF;
- 		}
- 		mutex_unlock(&kvm->slots_lock);
- 	}
-@@ -876,21 +883,21 @@ void vgic_v3_free_redist_region(struct vgic_redist_region *rdreg)
- 
- int vgic_v3_set_redist_base(struct kvm *kvm, u32 index, u64 addr, u32 count)
- {
-+	struct vgic_redist_region *rdreg;
- 	int ret;
- 
- 	ret = vgic_v3_alloc_redist_region(kvm, index, addr, count);
- 	if (ret)
- 		return ret;
- 
-+	rdreg = vgic_v3_rdist_region_from_index(kvm, index);
-+
- 	/*
- 	 * Register iodevs for each existing VCPU.  Adding more VCPUs
- 	 * afterwards will register the iodevs when needed.
- 	 */
--	ret = vgic_register_all_redist_iodevs(kvm);
-+	ret = vgic_register_all_redist_iodevs(kvm, rdreg);
- 	if (ret) {
--		struct vgic_redist_region *rdreg;
+-static struct device *
+-add_regulator_linked(int num, struct regulator_init_data *pdata,
+-		struct regulator_consumer_supply *consumers,
+-		unsigned num_consumers, unsigned long features)
+-{
+-	struct twl_regulator_driver_data drv_data;
 -
--		rdreg = vgic_v3_rdist_region_from_index(kvm, index);
- 		vgic_v3_free_redist_region(rdreg);
- 		return ret;
+-	/* regulator framework demands init_data ... */
+-	if (!pdata)
+-		return NULL;
+-
+-	if (consumers) {
+-		pdata->consumer_supplies = consumers;
+-		pdata->num_consumer_supplies = num_consumers;
+-	}
+-
+-	if (pdata->driver_data) {
+-		/* If we have existing drv_data, just add the flags */
+-		struct twl_regulator_driver_data *tmp;
+-		tmp = pdata->driver_data;
+-		tmp->features |= features;
+-	} else {
+-		/* add new driver data struct, used only during init */
+-		drv_data.features = features;
+-		drv_data.set_voltage = NULL;
+-		drv_data.get_voltage = NULL;
+-		drv_data.data = NULL;
+-		pdata->driver_data = &drv_data;
+-	}
+-
+-	/* NOTE:  we currently ignore regulator IRQs, e.g. for short circuits */
+-	return add_numbered_child(TWL_MODULE_PM_MASTER, "twl_reg", num,
+-		pdata, sizeof(*pdata), false, 0, 0);
+-}
+-
+-static struct device *
+-add_regulator(int num, struct regulator_init_data *pdata,
+-		unsigned long features)
+-{
+-	return add_regulator_linked(num, pdata, NULL, 0, features);
+-}
+-
+-/*
+- * NOTE:  We know the first 8 IRQs after pdata->base_irq are
+- * for the PIH, and the next are for the PWR_INT SIH, since
+- * that's how twl_init_irq() sets things up.
+- */
+-
+-static int
+-add_children(struct twl4030_platform_data *pdata, unsigned irq_base,
+-		unsigned long features)
+-{
+-	struct device	*child;
+-
+-	if (IS_ENABLED(CONFIG_GPIO_TWL4030) && pdata->gpio) {
+-		child = add_child(TWL4030_MODULE_GPIO, "twl4030_gpio",
+-				pdata->gpio, sizeof(*pdata->gpio),
+-				false, irq_base + GPIO_INTR_OFFSET, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_KEYBOARD_TWL4030) && pdata->keypad) {
+-		child = add_child(TWL4030_MODULE_KEYPAD, "twl4030_keypad",
+-				pdata->keypad, sizeof(*pdata->keypad),
+-				true, irq_base + KEYPAD_INTR_OFFSET, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_TWL4030_MADC) && pdata->madc &&
+-	    twl_class_is_4030()) {
+-		child = add_child(TWL4030_MODULE_MADC, "twl4030_madc",
+-				pdata->madc, sizeof(*pdata->madc),
+-				true, irq_base + MADC_INTR_OFFSET, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_RTC_DRV_TWL4030)) {
+-		/*
+-		 * REVISIT platform_data here currently might expose the
+-		 * "msecure" line ... but for now we just expect board
+-		 * setup to tell the chip "it's always ok to SET_TIME".
+-		 * Eventually, Linux might become more aware of such
+-		 * HW security concerns, and "least privilege".
+-		 */
+-		child = add_child(TWL_MODULE_RTC, "twl_rtc", NULL, 0,
+-				true, irq_base + RTC_INTR_OFFSET, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_PWM_TWL)) {
+-		child = add_child(TWL_MODULE_PWM, "twl-pwm", NULL, 0,
+-				  false, 0, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_PWM_TWL_LED)) {
+-		child = add_child(TWL_MODULE_LED, "twl-pwmled", NULL, 0,
+-				  false, 0, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_TWL4030_USB) && pdata->usb &&
+-	    twl_class_is_4030()) {
+-
+-		static struct regulator_consumer_supply usb1v5 = {
+-			.supply =	"usb1v5",
+-		};
+-		static struct regulator_consumer_supply usb1v8 = {
+-			.supply =	"usb1v8",
+-		};
+-		static struct regulator_consumer_supply usb3v1 = {
+-			.supply =	"usb3v1",
+-		};
+-
+-	/* First add the regulators so that they can be used by transceiver */
+-		if (IS_ENABLED(CONFIG_REGULATOR_TWL4030)) {
+-			/* this is a template that gets copied */
+-			struct regulator_init_data usb_fixed = {
+-				.constraints.valid_modes_mask =
+-					REGULATOR_MODE_NORMAL
+-					| REGULATOR_MODE_STANDBY,
+-				.constraints.valid_ops_mask =
+-					REGULATOR_CHANGE_MODE
+-					| REGULATOR_CHANGE_STATUS,
+-			};
+-
+-			child = add_regulator_linked(TWL4030_REG_VUSB1V5,
+-						      &usb_fixed, &usb1v5, 1,
+-						      features);
+-			if (IS_ERR(child))
+-				return PTR_ERR(child);
+-
+-			child = add_regulator_linked(TWL4030_REG_VUSB1V8,
+-						      &usb_fixed, &usb1v8, 1,
+-						      features);
+-			if (IS_ERR(child))
+-				return PTR_ERR(child);
+-
+-			child = add_regulator_linked(TWL4030_REG_VUSB3V1,
+-						      &usb_fixed, &usb3v1, 1,
+-						      features);
+-			if (IS_ERR(child))
+-				return PTR_ERR(child);
+-
+-		}
+-
+-		child = add_child(TWL_MODULE_USB, "twl4030_usb",
+-				pdata->usb, sizeof(*pdata->usb), true,
+-				/* irq0 = USB_PRES, irq1 = USB */
+-				irq_base + USB_PRES_INTR_OFFSET,
+-				irq_base + USB_INTR_OFFSET);
+-
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		/* we need to connect regulators to this transceiver */
+-		if (IS_ENABLED(CONFIG_REGULATOR_TWL4030) && child) {
+-			usb1v5.dev_name = dev_name(child);
+-			usb1v8.dev_name = dev_name(child);
+-			usb3v1.dev_name = dev_name(child);
+-		}
+-	}
+-
+-	if (IS_ENABLED(CONFIG_TWL4030_WATCHDOG) && twl_class_is_4030()) {
+-		child = add_child(TWL_MODULE_PM_RECEIVER, "twl4030_wdt", NULL,
+-				  0, false, 0, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_INPUT_TWL4030_PWRBUTTON) && twl_class_is_4030()) {
+-		child = add_child(TWL_MODULE_PM_MASTER, "twl4030_pwrbutton",
+-				  NULL, 0, true, irq_base + 8 + 0, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_MFD_TWL4030_AUDIO) && pdata->audio &&
+-	    twl_class_is_4030()) {
+-		child = add_child(TWL4030_MODULE_AUDIO_VOICE, "twl4030-audio",
+-				pdata->audio, sizeof(*pdata->audio),
+-				false, 0, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	/* twl4030 regulators */
+-	if (IS_ENABLED(CONFIG_REGULATOR_TWL4030) && twl_class_is_4030()) {
+-		child = add_regulator(TWL4030_REG_VPLL1, pdata->vpll1,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VIO, pdata->vio,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VDD1, pdata->vdd1,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VDD2, pdata->vdd2,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VMMC1, pdata->vmmc1,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VDAC, pdata->vdac,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator((features & TWL4030_VAUX2)
+-					? TWL4030_REG_VAUX2_4030
+-					: TWL4030_REG_VAUX2,
+-				pdata->vaux2, features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VINTANA1, pdata->vintana1,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VINTANA2, pdata->vintana2,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VINTDIG, pdata->vintdig,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	/* maybe add LDOs that are omitted on cost-reduced parts */
+-	if (IS_ENABLED(CONFIG_REGULATOR_TWL4030) && !(features & TPS_SUBSET)
+-	  && twl_class_is_4030()) {
+-		child = add_regulator(TWL4030_REG_VPLL2, pdata->vpll2,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VMMC2, pdata->vmmc2,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VSIM, pdata->vsim,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VAUX1, pdata->vaux1,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VAUX3, pdata->vaux3,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-
+-		child = add_regulator(TWL4030_REG_VAUX4, pdata->vaux4,
+-					features);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_CHARGER_TWL4030) && pdata->bci &&
+-			!(features & (TPS_SUBSET | TWL5031))) {
+-		child = add_child(TWL_MODULE_MAIN_CHARGE, "twl4030_bci",
+-				pdata->bci, sizeof(*pdata->bci), false,
+-				/* irq0 = CHG_PRES, irq1 = BCI */
+-				irq_base + BCI_PRES_INTR_OFFSET,
+-				irq_base + BCI_INTR_OFFSET);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	if (IS_ENABLED(CONFIG_TWL4030_POWER) && pdata->power) {
+-		child = add_child(TWL_MODULE_PM_MASTER, "twl4030_power",
+-				  pdata->power, sizeof(*pdata->power), false,
+-				  0, 0);
+-		if (IS_ERR(child))
+-			return PTR_ERR(child);
+-	}
+-
+-	return 0;
+-}
+-
+ /*----------------------------------------------------------------------*/
+ 
+ /*
+@@ -987,8 +684,7 @@ static inline int unprotect_pm_master(void)
+ 	return e;
+ }
+ 
+-static void clocks_init(struct device *dev,
+-			struct twl4030_clock_init_data *clock)
++static void clocks_init(struct device *dev)
+ {
+ 	int e = 0;
+ 	struct clk *osc;
+@@ -1018,8 +714,6 @@ static void clocks_init(struct device *dev,
  	}
+ 
+ 	ctrl |= HIGH_PERF_SQ;
+-	if (clock && clock->ck32k_lowpwr_enable)
+-		ctrl |= CK32K_LOWPWR_EN;
+ 
+ 	e |= unprotect_pm_master();
+ 	/* effect->MADC+USB ck en */
+@@ -1067,7 +761,6 @@ static struct of_dev_auxdata twl_auxdata_lookup[] = {
+ static int
+ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ {
+-	struct twl4030_platform_data	*pdata = dev_get_platdata(&client->dev);
+ 	struct device_node		*node = client->dev.of_node;
+ 	struct platform_device		*pdev;
+ 	const struct regmap_config	*twl_regmap_config;
+@@ -1075,7 +768,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 	int				status;
+ 	unsigned			i, num_slaves;
+ 
+-	if (!node && !pdata) {
++	if (!node) {
+ 		dev_err(&client->dev, "no platform data\n");
+ 		return -EINVAL;
+ 	}
+@@ -1165,7 +858,7 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 	twl_priv->ready = true;
+ 
+ 	/* setup clock framework */
+-	clocks_init(&client->dev, pdata ? pdata->clock : NULL);
++	clocks_init(&client->dev);
+ 
+ 	/* read TWL IDCODE Register */
+ 	if (twl_class_is_4030()) {
+@@ -1213,14 +906,8 @@ twl_probe(struct i2c_client *client, const struct i2c_device_id *id)
+ 				 TWL4030_DCDC_GLOBAL_CFG);
+ 	}
+ 
+-	if (node) {
+-		if (pdata)
+-			twl_auxdata_lookup[0].platform_data = pdata->gpio;
+-		status = of_platform_populate(node, NULL, twl_auxdata_lookup,
+-					      &client->dev);
+-	} else {
+-		status = add_children(pdata, irq_base, id->driver_data);
+-	}
++	status = of_platform_populate(node, NULL, twl_auxdata_lookup,
++				      &client->dev);
+ 
+ fail:
+ 	if (status < 0)
+diff --git a/include/linux/mfd/twl.h b/include/linux/mfd/twl.h
+index 8871cc5188a09..e426938eafd56 100644
+--- a/include/linux/mfd/twl.h
++++ b/include/linux/mfd/twl.h
+@@ -694,61 +694,6 @@ struct twl4030_audio_data {
+ 	unsigned int irq_base;
+ };
+ 
+-struct twl4030_platform_data {
+-	struct twl4030_clock_init_data		*clock;
+-	struct twl4030_bci_platform_data	*bci;
+-	struct twl4030_gpio_platform_data	*gpio;
+-	struct twl4030_madc_platform_data	*madc;
+-	struct twl4030_keypad_data		*keypad;
+-	struct twl4030_usb_data			*usb;
+-	struct twl4030_power_data		*power;
+-	struct twl4030_audio_data		*audio;
+-
+-	/* Common LDO regulators for TWL4030/TWL6030 */
+-	struct regulator_init_data		*vdac;
+-	struct regulator_init_data		*vaux1;
+-	struct regulator_init_data		*vaux2;
+-	struct regulator_init_data		*vaux3;
+-	struct regulator_init_data		*vdd1;
+-	struct regulator_init_data		*vdd2;
+-	struct regulator_init_data		*vdd3;
+-	/* TWL4030 LDO regulators */
+-	struct regulator_init_data		*vpll1;
+-	struct regulator_init_data		*vpll2;
+-	struct regulator_init_data		*vmmc1;
+-	struct regulator_init_data		*vmmc2;
+-	struct regulator_init_data		*vsim;
+-	struct regulator_init_data		*vaux4;
+-	struct regulator_init_data		*vio;
+-	struct regulator_init_data		*vintana1;
+-	struct regulator_init_data		*vintana2;
+-	struct regulator_init_data		*vintdig;
+-	/* TWL6030 LDO regulators */
+-	struct regulator_init_data              *vmmc;
+-	struct regulator_init_data              *vpp;
+-	struct regulator_init_data              *vusim;
+-	struct regulator_init_data              *vana;
+-	struct regulator_init_data              *vcxio;
+-	struct regulator_init_data              *vusb;
+-	struct regulator_init_data		*clk32kg;
+-	struct regulator_init_data              *v1v8;
+-	struct regulator_init_data              *v2v1;
+-	/* TWL6032 LDO regulators */
+-	struct regulator_init_data		*ldo1;
+-	struct regulator_init_data		*ldo2;
+-	struct regulator_init_data		*ldo3;
+-	struct regulator_init_data		*ldo4;
+-	struct regulator_init_data		*ldo5;
+-	struct regulator_init_data		*ldo6;
+-	struct regulator_init_data		*ldo7;
+-	struct regulator_init_data		*ldoln;
+-	struct regulator_init_data		*ldousb;
+-	/* TWL6032 DCDC regulators */
+-	struct regulator_init_data		*smps3;
+-	struct regulator_init_data		*smps4;
+-	struct regulator_init_data		*vio6025;
+-};
+-
+ struct twl_regulator_driver_data {
+ 	int		(*set_voltage)(void *data, int target_uV);
+ 	int		(*get_voltage)(void *data);
 -- 
 2.53.0
 
