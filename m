@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023501;
-	b=a2IyNiOauRlp2CiaPA5MGWV1cocx1I4N606LXW67yjAoGAOIvDNRFqEPxlG4U/MMQ4QX
-	 M4XTkwL5gobsir2UjZpna74ViLaOTprKxTan1VukYKB+p7cdVgKsYba6UhffzJG43ytVM
-	 ZTDcK92z/GAWqR4kReda2o+tGF1ahW8fzQNZt1cgryMy5nb8dQ63HC7d0y4G8E6pEqAyO
-	 +IuSnsHekoDl/9xJJw03TtedRCZ9GtrbZIq99M67ifAwpgMVbhcdqvyPi3TQliVy3YVsl
-	 xzGWJbhfyfZIZmy/Gbvxqas4IvA0kyOWq/sQbCU6yXTLh8jZI5Z9w+wrt7GwrEkVK0A==
+	t=1795023504;
+	b=zLAoGMhK9tmxWHg3iUtFAqU78KCNRU49NleGoQB/Mi8s0xhGKw9yjMCz3pnSSraSAvYk
+	 4ra3edc2N5d+eeqU9QHXF9MfUKtGbFHKYszd7asL/Vnkxkr7Sd2exwSmpsU56oRGpkhsb
+	 koYsoId9qnHW0HrCzdSUncvna5aiCw/b6flo7D5SE9rue7Hnok83G6j0Bjsnd8gVIIwJ6
+	 bSTiIx73s5eE3fPPfLjHo5dYbauAAt4ZfOdk35k/LHw+rBVifl98XtbN7GQOBe1ylH2ca
+	 yCiSEw0n1WNVDEj5K+Dke2/NsUCEp9UWoaWT+kLsEbjX9C1Db7F0MLkFe6+Xxe98WDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023504;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G/puEVfCiRX0DXQhhMSXtOF2azLj958UfD912Ivufp0=;
-	b=Tciuke6itGnblgE6sHDT7Dy3dG7tKbm4D9pZXQZDzDD8SB2YISjdyCRAG7vubswjyde3
-	 1W/2NA3QXWb525HBSi+iWx18ScoViZ7SEE/QZFtycbgRQssV6poW8uB4/P3KALvPoBZpm
-	 q5EiMPc/1/FlbO7M7NnVT9TNiu5qxTuaSfensavzB73Jdb6VLxUPxCtaMQce+f8rKamat
-	 xbbg0mIWkudzHbhXUI32Eu97NYs7TFEOHi9CaJ6XzPEb6oFXGg9ZqovtdfdKoZE30n2g4
-	 IQlbSs+YGVeuq0qYJIpRtiV5Szo9eaUZxXxO9s6UTKUNDHNUUryOcP8Z8EJLwp7yMfw==
+	bh=le0GdVjprmROTk/JzbpkkaUGHB+Khp9qNY+Km0O9dAA=;
+	b=LDW0gDsay0n9t39eZiWYrWIY8StSQFlRJI5NZdlxcbVRSBpe8PGy0g7JesHNIPtHJcYK
+	 7J8jrYDxLkhGYGSXGuaoKGK0m9g2j5Yo3SCRdZj0q7dLmJ2mmdkD/+ekGo6w8cOO8M1BG
+	 WNQhhXWza7AvqWp74TlfetzkHXKb5FRNCfWr3JvRNguREW4ueY6FLGVd1n4G2sjypGbbn
+	 0GiIZc+zQouIUkLl+LKSy1QD9OGKCrhg9QahaA+p8jtpvy2XwywYWApCJt7Trwp5shPmG
+	 lYciCSrm3TcCL/teVKtS32mKwNtS3IYekUMZT8Leb7eBLjgU7wnd2Wszll2xgPbySEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZpnvI9yu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLTUZ97O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDB760A2613;
-	Wed, 18 Nov 2026 17:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4951E60A260B;
+	Wed, 18 Nov 2026 17:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZpnvI9yu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6201F000CC;
-	Wed, 18 Nov 2026 17:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DLTUZ97O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3401F000C8;
+	Wed, 18 Nov 2026 17:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023501;
-	bh=G/puEVfCiRX0DXQhhMSXtOF2azLj958UfD912Ivufp0=;
+	s=korg; t=1795023504;
+	bh=le0GdVjprmROTk/JzbpkkaUGHB+Khp9qNY+Km0O9dAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZpnvI9yurtpAJF64fXQlbd2vJe5VqV87Yu5RYZHDqQEhd6sNl0ZSJR1iFuv2rl+/u
-	 wdKPLr+lu64MWfsMgm/lrmesJw8ou0Cj0Ta2/Jx99/uuxMxILezd6TQRAPxv+I+8IS
-	 EArStRfTeEAle9O+H1vEQ0kD0QDbbYKP1b+AF8bw=
+	b=DLTUZ97Oi8kxdOFI+MnJwTqsRqWZ6b8C05uGfxp+nwaWNuHeWvZWY08qtkwcbtJOl
+	 yLuTQzwKDRK4woEh1uzDTz6ZTGYwV9ac7lEF3QWqouzd8pG1esbTzAvR1gnom43DMr
+	 QsnUUobDOXlO2wDYCpEwx25n/e1QiiSXLrDc4BOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
 	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0393/2151] firewire: cdev: Fix FW_CDEV_IOC_CREATE_ISO_CONTEXT references in kernel-doc
-Date: Wed, 18 Nov 2026 15:35:28 +0100
-Message-ID: <20261118150136.381861145@linuxfoundation.org>
+Subject: [PATCH 6.18 0394/2151] firewire: core: remove unused link field in fw_packet structure
+Date: Wed, 18 Nov 2026 15:35:29 +0100
+Message-ID: <20261118150136.415530966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,51 +67,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 0a6cf2b7adcbd362039e9d282f73aff3f24022ca ]
+[ Upstream commit 00d4d31e4fdfe51312f0184f8d162b8d4de172dc ]
 
-The fw_cdev_event_iso_interrupt and fw_cdev_event_iso_interrupt_mc
-comments refer to FW_CDEV_CREATE_ISO_CONTEXT, but the ioctl is named
-FW_CDEV_IOC_CREATE_ISO_CONTEXT.
+The link field in fw_packet structure has never been used since it was
+added.
 
-Correct both references. The misspellings were introduced separately
-with the userspace interface documentation and multichannel reception
-support.
-
-Fixes: 7ada60e36764 ("firewire: Document userspace ioctl interface.")
-Fixes: 872e330e3880 ("firewire: add isochronous multichannel reception")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/r/20260911222807.7673-1-kmehltretter@gmail.com
+Fixes: 3038e353cfaf ("firewire: Add core firewire stack.")
+Link: https://lore.kernel.org/r/20260911141602.3288806-1-o-takashi@sakamocchi.jp
 Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/firewire-cdev.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/firewire.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/uapi/linux/firewire-cdev.h b/include/uapi/linux/firewire-cdev.h
-index 05e3aa8fa8bcb..4f83d6babc921 100644
---- a/include/uapi/linux/firewire-cdev.h
-+++ b/include/uapi/linux/firewire-cdev.h
-@@ -293,7 +293,7 @@ struct fw_cdev_event_request3 {
- /**
-  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
-  * @closure:	See &fw_cdev_event_common;
-- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
-+ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
-  * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
-  * @cycle:	Cycle counter of the last completed packet
-  * @header_length: Total length of following headers, in bytes
-@@ -353,7 +353,7 @@ struct fw_cdev_event_iso_interrupt {
- /**
-  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
-  * @closure:	See &fw_cdev_event_common;
-- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
-+ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
-  * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
-  * @completed:	Offset into the receive buffer; data before this offset is valid
-  *
+diff --git a/include/linux/firewire.h b/include/linux/firewire.h
+index 6d208769d4562..4743023b1f9ff 100644
+--- a/include/linux/firewire.h
++++ b/include/linux/firewire.h
+@@ -321,7 +321,6 @@ struct fw_packet {
+ 	 */
+ 	fw_packet_callback_t callback;
+ 	int ack;
+-	struct list_head link;
+ 	void *driver_data;
+ };
+ 
 -- 
 2.53.0
 
