@@ -1,63 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021552;
-	b=oE2KyNqixtup7JsR9OLwPvyEJBl4xhDUdgsmTrzZQ4B4pz/Zihiwln7CWqV25M+m0Iav
-	 iVyFynCvoPfR/87RpZJnu5qV/IbGXju7VRSkMOgKh8Olpb4IWRlrsB+6Yt0fz1Sp7Mr4X
-	 ydI+/FscbHcgXiMuSO5LAsr6rEGoFaSmwqDQ5KAc1H2uvQlo++0Kxgm4E41CB7EG/p9RV
-	 Xt3UbABgsTlm+rZGb0lrgdWQBtGDhuWo/OtIWPDxdVIm0T9MXPzjTczd8tBqJotsdbiz2
-	 gskMnGTK+ocJ1kKR6Nvxh+Dd2exsWQZJSEHWijPTtkSc0AZrNiss+t21bGDhXGe1nlw==
+	t=1795021553;
+	b=5OC6gHXw3cOFzbldR+mIMJujbDqgYFDquBH+sFTx5SWEcz7MBpOqztFiEK7dj+x6lIde
+	 5WJiJfUF7pYQ3VDjqftdHjYMK3leXqsO5yqmZpnoix0nZRu68pzmJ8+fv6OQWru3tKAXB
+	 2rO2sqwwN6DwLnaH9N2Ypbr9XOArmFbgF5F2zBv6GUkJfwjiD1Q+8HhMN7UY1n8/Ksbf2
+	 Cd1pE8lQke3tqdZ0/MtGs7jqiju0ErueDzysrpAiktIn946TAJ/WEjPIthOF7yy95rysV
+	 XzZPvv2BbVSvaNmr0i/UyDGzSjEvQ4496KyStRKMi0WggSofoUq5mk0LIgjTnaCAojQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021552;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Last-TLS-Session-Version;
-	bh=BzhgYa1unzhI3g0jhwkxjiti8vrG+zesnQxHS14lDbA=;
-	b=HQstHuhnBH0wlrHO6p7JDpa7LqFNRqthnTO+JxlsEcEJ9O3TIfVi/yv/PERrnl11R2UM
-	 ueVnFbP1uvbrEMEtN5zZjKtdONQ62+CcGJ0puTHfxSNpSfEhn1kcy1WFPqRuSty9k65Mq
-	 vesRuNWoIANA4TFKQ704ICoNYNQDZblnDUaVEOm86ZgkQISj2M6Hba6EVK+FkAdBXhrXi
-	 Eyy5pJ3sIXZJykEKnaJ/Qp/cBUkXNL4bdPH98ClBfYAmqe1fThJKacoOsfatpaddNTwc8
-	 FD5Krf/GJUaQ7r7QrLz0wm3LgSA3uRm8tFir0RCTZBX8AX369d1istAu2/+nCb7ECYg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021553;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=APtmEWEhIZB9y1mddNoh67ca/T10993DRV2VcOQE7aE=;
+	b=l13Sa/r3ciw7vnTljCXl45jLOHJZ4/Gvid2jmJBZzCTbUniorf5pZQkJ1bggeZ9XPSRU
+	 nAeDuLbK8yashdo07B3LaKkU2Lh/+gYJKMl+WFjp32oLaV+yRlRLxgC9ysvdzQfPqAC3P
+	 XS0cUsHRgj9ImJtKYKq6h5CuRdRM8s4ZIaQvoWYXv5nzsD1nWidmMJaHYEYDfQEdIwxPl
+	 ZZpDX4bCuNfQwKBqTkyzph4zXtRyuj5SEi+lCne2UchbUWEKalyIMumYXdYuA1Y3I5lI0
+	 agwanbGlN/3ETdy/f85d6dbHfu7TZdC1IhOunqAHsARSfdIU5xdM/pDeNmrtLBmBVWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nabladev.com;
-	spf=pass smtp.mailfrom=nabladev.com;
-	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=TSRLCAOJ;
-	arc=none smtp.remote-ip=178.251.229.89
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIEgZmjq;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9EA606A33F
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:05:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3A9EA606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE31606A33F;
+	Wed, 18 Nov 2026 17:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=TSRLCAOJ
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1E05C10DF33;
-	Wed, 18 Nov 2026 18:05:36 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1795021539;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=BzhgYa1unzhI3g0jhwkxjiti8vrG+zesnQxHS14lDbA=;
-	b=TSRLCAOJxjhntG42pMnFewcIYIBx0ST9rWAgpGOdJOOL5mvLoVM0L8icYCWEzi1+FKetDm
-	5cS5gKSsbOQ6D2EFBvd5xRP0CnkSzyq9mpL/vR2YgiroKo8+V2FB3+7lYMHp9j1vdNpTcW
-	RZFaWub47zVxDnzyq8FcBhjd3dmy7ElqjDOIOqBGcksv4mCXK5DIaaLPLoE8KCJsv09XM2
-	IeeSYYomlhjZ07FDvLI2LGJHOk01hngYyNUPpy7NkwtyDKX6GCJAD+Pk2V0pHfdDkvgkYY
-	ROkE3IGvBDNI2pW1CVGZreCuRJnkjRLgVrOi81kZdG/QB73f0M3LGF3eW6drCg==
-Date: Wed, 18 Nov 2026 18:05:35 +0100
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.10 0000/1848] 5.10.275-rc1 review
-Message-ID: <av3a38u7mlLN6yJL@duo.ucw.cz>
-References: <20261118145911.150052362@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIEgZmjq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660B01F000C6;
+	Wed, 18 Nov 2026 17:05:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795021552;
+	bh=APtmEWEhIZB9y1mddNoh67ca/T10993DRV2VcOQE7aE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=QIEgZmjqs3gs2Td/76jgwS4JTds406urg7FpgQv5l/boEkT+Jauu5pL74QgfQOdRh
+	 N5N51mXzIIr/xj5qOnLldOVeIiK2lmvxUUnbf3EU9ywWAiFKKNfqWH4Q6QWA/JazjS
+	 jt7CMHkjgQPD5XI6/QmqwtdDFbGoqoREP47i8Gps=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2347/2651] gpiolib: Propagate emulated drive errors when setting arrays
+Date: Wed, 18 Nov 2026 15:59:47 +0100
+Message-ID: <20261118150409.562185124@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,83 +61,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ih/tdEP5PrTSaNaH"
-Content-Disposition: inline
-In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+7.3-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+
+[ Upstream commit 15665047024e30f9c2227563d03034061c99ac2c ]
+
+gpiod_set_array_value_complex() ignores errors from the open-drain and
+open-source emulation helpers. If a direction change fails,
+GPIO_V2_LINE_SET_VALUES_IOCTL still reports success, including when
+updating a single line.
+
+Return the first emulation error after freeing the temporary bitmaps.
+Keep updates already made to earlier lines and stop processing the
+remaining lines, as for errors from gpiochip_set_multiple().
+
+Fixes: 8ce258f62f90 ("gpiolib: make value setters have return values")
+Signed-off-by:
+Link: https://patch.msgid.link/20261020172601.221861-1-pocj8ur4in@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpio/gpiolib.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 9c05d36ccd74f..90731a547ed63 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -3950,9 +3950,13 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 			 * open drain and open source outputs are set individually
+ 			 */
+ 			if (test_bit(GPIOD_FLAG_OPEN_DRAIN, &desc->flags) && !raw) {
+-				gpio_set_open_drain_value_commit(desc, value);
++				ret = gpio_set_open_drain_value_commit(desc, value);
++				if (ret)
++					goto cleanup_bitmap;
+ 			} else if (test_bit(GPIOD_FLAG_OPEN_SOURCE, &desc->flags) && !raw) {
+-				gpio_set_open_source_value_commit(desc, value);
++				ret = gpio_set_open_source_value_commit(desc, value);
++				if (ret)
++					goto cleanup_bitmap;
+ 			} else {
+ 				__set_bit(hwgpio, mask);
+ 				__assign_bit(hwgpio, bits, value);
+-- 
+2.53.0
 
 
---ih/tdEP5PrTSaNaH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> This is the start of the stable review cycle for the 5.10.275 release.
-> There are 1848 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-We get build failures here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/3=
-084757694
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.10.y
-
-Best regards,
-								Pavel
-
-drivers/dma/ste_dma40.c: In function 'd40_handle_interrupt':
-2300
-15:17:13
-drivers/dma/ste_dma40.c:1695:8: error: too few arguments to function 'pm_ru=
-ntime_get_if_active'
-2301
-15:17:13
- 1695 |  ret =3D pm_runtime_get_if_active(base->dev);
-2302
-15:17:13
-      |        ^~~~~~~~~~~~~~~~~~~~~~~~
-2303
-15:17:13
-In file included from drivers/dma/ste_dma40.c:19:
-2304
-15:17:13
-=2E/include/linux/pm_runtime.h:42:12: note: declared here
-2305
-15:17:13
-   42 | extern int pm_runtime_get_if_active(struct device *dev, bool ign_us=
-age_count);
-2306
-15:17:13
-      |            ^~~~~~~~~~~~~~~~~~~~~~~~
-2307
-15:17:13
-drivers/dma/ste_dma40.c: In function 'd40_hw_detect_init':
-2308
-15:17:13
-  CC      drivers/clk/imx/clk-pllv3.o
-2309
-15:17:13
-drivers/dma/ste_dma40.c:3306:11: warning: returning 'int' from a function w=
-ith return type 'struct d40_base *' makes pointer from integer without a ca=
-st [-Wint-conversion]
-2310
-15:17:13
- 3
-=20
-
---ih/tdEP5PrTSaNaH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCav3a3wAKCRAw5/Bqldv6
-8pM8AJ9aZwC1BB337UtjjjfB5jxxK3RzUQCeO5mPImVqPf7Vn0RuWN/BwJJwjIw=
-=XRvI
------END PGP SIGNATURE-----
-
---ih/tdEP5PrTSaNaH--
