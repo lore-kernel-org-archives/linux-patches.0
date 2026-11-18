@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031301;
-	b=Vp76T7gLSPImkKB6feTdN1ERZPEKSimunu32nLf/2ZfvqnEkFjkW7yXQMtcY+OfMHmpr
-	 xUyLYC64mjqXlFEqNZP9CTt6Tm79okIJeSv5NMBGFjw/gvmL3fqD7EqvCZPaMbhjeQnkw
-	 2Ay1AjuimXY4a5tzp2sQqVYgx2R6GU8uXhHiOIom6XEjf5VGQ3Z9I7cdx3HNXDaX4N0ox
-	 O4zYQ44UNlFdhqez6Tr8caEctV661/vDdO55JfOsMMHjPJxdnrefLioKLFZbGivffuJfb
-	 1sbSNv2CfBfvz85HhnDOyeuc7XKW4I73xRksO1B21E+dc+GDzIdB/8cGxAXzhDztOhQ==
+	t=1795031304;
+	b=YfEF7l9jKvPtWsU+cynLzsjqq7APdzv09z9Bej/5gsj1nAhGlduGAuI9CpUY40WivnG8
+	 BHu9qBoZ4iL0ViUL7hbh9WPJNgSjtWBnTS5iQZtr36sxhj+8LtgRjV9T1EgAwA7LE4QY9
+	 NAU2tC7qGRZ0C3OjQMkcUOV9BR8laK845N0nYCcISuXpWaTpKRFuT7eyrgEsl8367mGC2
+	 ZwzmgtDFSNasxU5SAiFGvooe+ZFe3u3z2qjJVPaFyyrt+ebnwgSJakZLX72wlkBhScAp5
+	 hCMNdDXMxlRXyxf8L4BwwpbKNlYPISje/ip/zA6s/DAqMt8sD0poKNyFsZGmZmvDwWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iFbtqLU7FlAsT5ABIV5izpnMOPF41xIVLnUtyv+GjmU=;
-	b=UKvgULSzDDX5fvMIbBl22ZzTB55nUfbSgqguy3K3qw4Kxx+nEjtHl0AfmBLRgxNdCURj
-	 kAip0TCipvQG8pmEVakGcX23IL73H6/1UOkOfy9z4pGgyMj8twCsjndwod7UoK+oWpDtB
-	 66nKItdq/FokP2fxj/0+u4KsGqjkOergibrHHzY/cQVT7p4CbXpT3tsrb457Va4UIVkQT
-	 iVXOKvLOdvu9/isDJu3wWey/plEv4duapUZ1pkqKt9LkmRs55tNh3NsUXaoE9n55dGqhO
-	 vj93GrQg97DFLb/+eizGIZeyiBxKFosBzt6QfKqWMNuKMHvJECmOOFB2kvYX/CxhlJA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zmjaqdPESVZmzCY8uZGrvNSjdlQuCevJi0mTHhvBT9I=;
+	b=cbvgxJN0jMMz/9H16Mh1Lj7B/e/gLsTH6WUXquGCf/SswxgNSR0RhFiJSJ6ebHvqF6Of
+	 RvB9UKlK0ub12FpGsPoyXfGmu0a0uMk5j3ZjviOTF17ZhJhZx/Yqp1xRc5mqARdGRjoGz
+	 LOt2YyXlBPZXhJCXD3qVpyJCxAC+QbwZ4SjH9ayePaERj+REf4kuc5Jt6ax7QRR1zg2UI
+	 pmeS9z06vQBq7IHf3CnC0o7/hnajOJarvmUDF7HwSl85ayexulSJJe8pD28ZG3uzhzlFA
+	 fvdjJeECPfJ+oQwj4dHTK/W9w6mG8C9N9IiuDNY/Hwd1LivKqwaDmeSq1/8+qKIkWZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssxPDF+W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnqJByP9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96AE606A32F;
-	Wed, 18 Nov 2026 19:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7288D606A31C;
+	Wed, 18 Nov 2026 19:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssxPDF+W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15F11F000C4;
-	Wed, 18 Nov 2026 19:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnqJByP9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30991F000C4;
+	Wed, 18 Nov 2026 19:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031301;
-	bh=iFbtqLU7FlAsT5ABIV5izpnMOPF41xIVLnUtyv+GjmU=;
+	s=korg; t=1795031304;
+	bh=zmjaqdPESVZmzCY8uZGrvNSjdlQuCevJi0mTHhvBT9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ssxPDF+Wzo20MtwxkVNMPQj3xr5hBebn4NHwMPiYzsg+J1tTr5XIUHq84+3RVuhR2
-	 ncayE6FRNfahlPzGQH+++38KYhcPCQ+SGBBfywk1LdOvhXJgQm9l3XmlGVNYjSkEJQ
-	 A3tWZ1TUDjdONOPx2OIvLyJ4ih3428084FYt8r98=
+	b=wnqJByP96+wict4Qr3CCIQOKoLUMu1q8STyyPLw1UNhOfV2uRT5vWWBXj1gc1ghXf
+	 jQU8JchE6VvJ4+OROr8+Yd3apYCgj3qruhiuhDnj7NOyP5NKcLZ/Zj7E+e8cpzWkE6
+	 cZ5nxOPelxzJkeKy1lj5yw2/zu5mNAKiYQOje+xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Kope=C4=87?= <michal@nozomi.space>,
-	Mark Brown <broonie@kernel.org>,
+	Jake Labelle <southampton.jake.labelle@gmail.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1008/1756] ASoC: mediatek: mt8188: Constrain UL8 FE to its back ends capabilities
-Date: Wed, 18 Nov 2026 15:52:15 +0100
-Message-ID: <20261118150050.275014861@linuxfoundation.org>
+Subject: [PATCH 6.12 1009/1756] nilfs2: reject non-regular inodes in dsync recovery
+Date: Wed, 18 Nov 2026 15:52:16 +0100
+Message-ID: <20261118150050.313202790@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,51 +63,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Kopeć <michal@nozomi.space>
+From: Jake Labelle <southampton.jake.labelle@gmail.com>
 
-[ Upstream commit 76775717c4adc283d5e7aed469468c8fa1ada4a7 ]
+[ Upstream commit ef2ccb1554df254eb4066171ce93e6d5fb1af2e3 ]
 
-UL8 advertises up to 24 channels, but its only back end, ETDM1_IN,
-supports at most 16, and its bit clock is limited to 24.576 MHz.
-Without merged constraints, userspace can open UL8 with 48 kHz, 24
-channels and 32-bit slots, which then fails in hw_params:
+During roll-forward recovery, nilfs_recover_dsync_blocks() obtains the
+inode designated by fi_ino of a dsync log without checking its type.
+If a corrupted image designates a special inode (e.g. a device node)
+there, the inode's embedded bmap was never initialized:
+__nilfs_read_inode() calls nilfs_bmap_read() only for regular files,
+directories and symlinks.  The subsequent nilfs_get_block() then
+dereferences the uninitialized bmap->b_ops and jumps through it,
+crashing the kernel or worse.
 
-  mtk_dai_etdm_configure bck rate 36864000 not support
-  ASoC error (-22): at snd_soc_dai_hw_params() on ETDM1_IN
+Regular files, directories, and symlinks are the only inode types
+with data blocks to recover; reject anything else before touching
+its block mapping.
 
-Set dpcm_merged_chan/rate/format, as the DL front ends already do, so
-the FE only offers configurations the back end can accept.
+[ryusuke: conformed AI tag to guidelines]
 
-Fixes: 96035d46d4b4 ("ASoC: mediatek: mt8188: add machine driver with mt6359")
-Signed-off-by: Michał Kopeć <michal@nozomi.space>
-Link: https://patch.msgid.link/20261003194501.832558-4-michal@nozomi.space
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0f3e1c7f23f8 ("nilfs2: recovery functions")
+Assisted-by: Claude:claude-mythos-5
+Signed-off-by: Jake Labelle <southampton.jake.labelle@gmail.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-mt6359.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nilfs2/recovery.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
-index 13e9a32e50c4b..8ff93f0026ca3 100644
---- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
-@@ -1089,6 +1089,9 @@ static struct snd_soc_dai_link mt8188_mt6359_dai_links[] = {
- 		},
- 		.dynamic = 1,
- 		.capture_only = 1,
-+		.dpcm_merged_chan = 1,
-+		.dpcm_merged_rate = 1,
-+		.dpcm_merged_format = 1,
- 		SND_SOC_DAILINK_REG(capture8),
- 	},
- 	[DAI_LINK_UL9_FE] = {
+diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
+index e6e044f8f7b81..d0c4caa2f07ca 100644
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -519,6 +519,23 @@ static int nilfs_recover_dsync_blocks(struct the_nilfs *nilfs,
+ 			goto failed_inode;
+ 		}
+ 
++		/*
++		 * Regular files, directories, and symlinks are the only
++		 * inode types with data blocks and an initialized bmap;
++		 * a crafted image can reference some other inode type
++		 * here, whose i_bmap_data was never set up by
++		 * __nilfs_read_inode().
++		 */
++		if (!likely(S_ISREG(inode->i_mode) || S_ISDIR(inode->i_mode) ||
++			    S_ISLNK(inode->i_mode))) {
++			nilfs_warn(sb,
++				   "%s: invalid inode type (ino=%lu, mode=0%o)",
++				   __func__, (unsigned long)rb->ino,
++				   inode->i_mode);
++			err = -EINVAL;
++			goto failed_inode;
++		}
++
+ 		pos = rb->blkoff << inode->i_blkbits;
+ 		err = block_write_begin(inode->i_mapping, pos, blocksize,
+ 					&folio, nilfs_get_block);
 -- 
 2.53.0
 
