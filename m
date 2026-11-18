@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027736;
-	b=RWfOABuLyIW5fNKu0i7jaLi/f0M2I+VWMbHbPpW+5cy0XJhG9HJEClLdu/nqXQHHEs6m
-	 QnBYh+WSPRVb1GkocyH+2ahp1QwcRR9bPmpWs7zFay8ZwhAZ9zoHL3niYhywgNqaZ9q61
-	 Y9W+2UsejxaN/WKwG6hFXm3//qSybQHdjrLSjNLHidqL1LVcbiYdH/6u1oKQKq1hCN/ir
-	 PB6OCYnhkVu6kwd2UtZ/snKiiAIWDOpgN44VGIH7Iy7ybNA7HbgrZDTIxYECqy22/Z0Gm
-	 5xIyR8i7XHTOIp3c2VyQox9mkRL4R6vyzVdux4GhhXi2XrWTYY+cKtj83GNBxws8+eQ==
+	t=1795027739;
+	b=gVyaX1+KN71XTLLTxgegN6zAvGT5ZXeDLh8it8mQSSqJhsQYyI+YLXh/4DOPfRtl1Y/7
+	 sdfxTzozxa98o7OuNCTYZf8XCdFP3ie160s9UhEgg+OAbVIxiBnBBjtRINwKyEyHGFPbb
+	 XMWkbNseE8zeUAHDmhOf6EDS8n63Khfh+DvFQYQsSeK+B9j5WgwX9NYAujg6d1jqjiabW
+	 40pjAtSE4pX5GCxHCFz+DamXb8nxmQX2eHbQSOiOGoLPSewzMkPjryFKjP+ruSbCR/u4G
+	 9+VyRjeBgNgck/aBMu3K9orK7Nro+wWctqxgF0D03eAoqvZ5BKSE2yhIrHLbeFY2Ipw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TZ5z8p3W6bogVGRE8EjGjNOlmTUUwnB5jM6P+R1k0b4=;
-	b=4dPZteuLbJDhEJtqyJHzI663KEizKS87TsvNnXMkt3O9P6ZUGNdnj7ITXUkntl9L3lZ0
-	 Nd4Nrqjxc7z1mcoeXe802IkSHR8Gj2xALyW3FO+FQd2mgXn1laSC+jmqU3bK+iaWKlJTz
-	 3vgpGtmJC8fecxPl+uKDNTJ/oL+Pkd91qB8a7yoUpZ9dAQdJuAVch4w8Rg264yo8uC/6u
-	 tkANrSvkMhvXreKp+PIFTvWPq/dKVDHvGQFx7+82yJmdBaODmbRGXUyLT5qfcRK4JHXqp
-	 Ev3DjfQy4rjU3HnJZl8xPr6DdEkNcTEOgbZV6zoS2rhlp8Ei0jmSmA6a48Q48UPCsFQ==
+	bh=roorL8QSchoeuLk2uM3E5Z4zUQp2wPd3io/WR4WpTe4=;
+	b=am8SawziGFbGHPxo7J+YgiQF/s20Fsq91v88w3Q5XlJVy2BfPWpvllebGBhkX4FjbTIs
+	 CGqM8FwCT/BBJ/scbB29RuwLH65+k+cbn7ThrDXNaz5ig4Fv0rQUAm+9GwMcJ0FIDwwPL
+	 C7fuIWI2rszuYb79BHl1xe+MxTRd9GuaLWzxber4XO5WErQVIrDv99/rNT3kJKglA2ZHS
+	 Nbdl7sO2PNTmVm+yvz/ZIiG6rbprsxG1EBypQjgQYWPqXWREYASJsdKKq84dio484wGRm
+	 W3oopXJEhvqgRGtIcQeB5/IhvjYfjxGmdFRcepv+MechampKoXHIibAW8X6tHUtCvhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZHq47bp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UKwuM5/a";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BD0606A32F;
-	Wed, 18 Nov 2026 18:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4433C606A32F;
+	Wed, 18 Nov 2026 18:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZHq47bp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E891F000C5;
-	Wed, 18 Nov 2026 18:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKwuM5/a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA2D1F000C6;
+	Wed, 18 Nov 2026 18:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027736;
-	bh=TZ5z8p3W6bogVGRE8EjGjNOlmTUUwnB5jM6P+R1k0b4=;
+	s=korg; t=1795027739;
+	bh=roorL8QSchoeuLk2uM3E5Z4zUQp2wPd3io/WR4WpTe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZHq47bpFiXxnuK6lTbdHyOmoCidYNWEkGREcPd8Jw3aKUsozfsxPpF0lRORiW9Vj
-	 ufOMAqkAd4xO1WNtiABdZA67SsroupdkOK1AytjrrkyVpMw7Hv5A/Ye8GsLHHb5e7m
-	 snl1Igt8Oiy8FiGWZVfORf0MUo3aq9+eP2fBtfi4=
+	b=UKwuM5/ak7+7Kc1xvM6fszsHhEgxThx4lTnAwZs1wSQJxLOzClDFZTr+5Qs45PAx6
+	 ePp2AqNHdIlcMuSGvWuBMSA52ZxitbxAnyVw2Ir8csIsEH1BLb7chNRpyn1BNrrRQw
+	 kI8LgewnssjwseN+Ddh7XtSSiQQFAO0aAumMkDG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1868/2151] selftests: ALSA: pcmtest: Make room for the longest fill pattern
-Date: Wed, 18 Nov 2026 16:00:03 +0100
-Message-ID: <20261118150229.844923864@linuxfoundation.org>
+Subject: [PATCH 6.18 1895/2151] net/mlx5e: Stop asserting for RTNL when closing channels
+Date: Wed, 18 Nov 2026 16:00:30 +0100
+Message-ID: <20261118150230.824472397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,44 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit c338e77291d6b1b6aee6d45b3cc523f97199a011 ]
+[ Upstream commit e0a958ddfc89f2e1c43448cdaeb5b30e54e19448 ]
 
-The driver accepts fill patterns of up to 4096 bytes, as pcmtest.rst
-documents. The test reads each pattern into a 1024-byte buffer, using
-the length the driver reports. So a pattern longer than 1024 bytes
-overflows the buffer into the next pattern and past the array.
+mlx5e_close_channels() has an ASSERT_RTNL() from the time when RTNL was
+required for closing channels.
+But the driver has been switched to using the netdev lock a while back,
+and this fired from a flow which was forgotten during the conversion:
 
-Size the buffer to the driver's maximum.
+mlx5e_tx_timeout_work()
+  -> mlx5e_reporter_tx_timeout()
+  -> mlx5e_health_report()
+  -> mlx5e_tx_reporter_timeout_recover()
+  -> mlx5e_safe_reopen_channels()
+  -> mlx5e_safe_switch_params()
+  -> mlx5e_close_channels()
 
-Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/7cbbcef84d2c14a2f0ec0ad2ba55c6ba0a15a8d8.1792390197.git.sammiee5311@gmail.com
+The RTNL is not acquired here, but the netdev lock is, and it is enough.
+
+Rather than switching to netdev_assert_locked(), simply drop the assert.
+Upper layers (networking core, ethtool core) provide locking and lower
+layers (NAPI helpers) assert that the netdev lock is held.
+
+Fixes: 8f7b00307bf1 ("net/mlx5e: Convert mlx5 netdevs to instance locking")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20261020153659.3440902-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/test-pcmtest-driver.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-index 5bba17434a6bc..e025a7bac26b7 100644
---- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
-+++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-@@ -10,9 +10,11 @@
- #include "kselftest_harness.h"
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index fa87f36f0b887..3bbb19712a586 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -2997,7 +2997,6 @@ void mlx5e_close_channels(struct mlx5e_channels *chs)
+ {
+ 	int i;
  
- #define CH_NUM 4
-+/* The driver accepts patterns of up to 4096 bytes */
-+#define MAX_PATTERN_LEN 4096
- 
- struct pattern_buf {
--	char buf[1024];
-+	char buf[MAX_PATTERN_LEN];
- 	int len;
- };
- 
+-	ASSERT_RTNL();
+ 	if (chs->ptp) {
+ 		mlx5e_ptp_close(chs->ptp);
+ 		chs->ptp = NULL;
 -- 
 2.53.0
 
