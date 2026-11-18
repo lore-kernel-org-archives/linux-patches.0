@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058861;
-	b=nL+sGZJKfg1AKeFFpGZ6LpObEyEWa92VXsSH5go6m2WDl/vmVxuzRYph9haWRb/OGt9Z
-	 WsserTFAahMJbUCDyyOQx2FOkR5FzhQG0avVwiujswisQ68N1EAEPvPQhwWNf+9Nfq+U/
-	 JdN/whenHHD/cCG3dDkgB7Mb6elWAu2jkstkSULSVqeNO62dYNYy45j51emPU4vmqQ8uw
-	 e1Q0DoHgCjAKo9d3TI4FlxB6fl0L3EOeGJVdWP6sMZ3aKUL8YgFN/BDmpHKMfxGKQg/87
-	 A8x9GL1C/YzbK4d7pTgaVO2G98fq12K3tf1p4ldvpxfW/E02waPTU2b5KX1SoE+vkdA==
+	t=1795058864;
+	b=ujmPI8fko0HdwtopIJQOsRo/S4BLG/rof/FYa8yK4WgK0p+rD+DfQqYsHjUoJja0vigs
+	 fPNiuC0vU7f1oThUjdDeydPcVBw5VlTJsei713nmnwrmwU+LH3VBXMRQa1a5aWWWrFByg
+	 oRkteuuMoHUoesIW7sS446LyKBf268t/EtpVqLp9V+FCHk3l5s4fGsScNSi+CXssjfQee
+	 bDeaB+8PWE1tjnmW2Bqle8gxzV7/3x9Dxl0KpSF0mF81W4OluVoP5dElAtXB0LyiU11aj
+	 bzjGJAlo/BusfJVvuTaB2zWGC7jGW/uYg8drLmxU03vnUraxcPVml2/A+j6Tbpu5QCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xSA5Go4EjNcPa6EF9wUurHJN4SMw8qOTn2i6C+VvfL0=;
-	b=wGn/fEZIbBFcWN7/fZhFO26m3xi7fxV1m4BN3dc6ttdikB2RH2YcUySNROOZjJEgaf33
-	 jb+QvDP20swEhkKUsztR30woInV/vVS99m2plfz7f9hyyQHfJ315I3knWQ6nl7PHVwzOD
-	 bjcR6iqM+FQFUUoN61mAqnJWyiT0UWIW9nc52NJZnRjdwGPdnUGgwRLfkIeI1enzE7HNn
-	 302rz3zjp7pCF5bmU5Ss6H6GCajxY6LBTrjwBzYT0hbLMuo/5eldJ6Ov6f/y0bW2wgsjr
-	 AkqmpgUgCKh3TEe5Aa9aR+tLKVJ7s6ZjAUhHfnukDPXWZ2fdIh0VUMD+fI1y5cqIPZw==
+	bh=DUPS5QKUANUr/tNUQlkRvlVJN0CtvGMMt6TZ5TtsNwc=;
+	b=GAKrq+LphSsNkgPm0vHuJsT/7UMkFES5BUm7fqEFUd11LmWetNo2JTt3lsHym0MOYrWe
+	 lg75VvKqK3TjVCK9C4exFXQ1N8cK44eqmw7JNVsNSlM4I1q3tusA+z7PvaXUYAUvsbttX
+	 bq4yPrie21+ETIqGfsiv3Qddao9pBNQrqpkqTL8rRdCVxlrZeBDW6eLiJaxR9VBexKSiq
+	 crckooupji5DWsHWYhq1lAzxDZ6KwdDC1oMBqwO1738/Cq+2k72xJmHi3U5ytaP/F/UfJ
+	 LqNriukZ5uMeKC1+u/Mx2/gngxiIAiaIdx/n4fMQYio+MSoZtg5z4VIyjM8uPMOxThA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ChZ5dni5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3iyPHII;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD6A606A320;
-	Thu, 19 Nov 2026 03:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF5A606A320;
+	Thu, 19 Nov 2026 03:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ChZ5dni5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD0C1F000C4;
-	Thu, 19 Nov 2026 03:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3iyPHII
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F1A1F000C4;
+	Thu, 19 Nov 2026 03:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058861;
-	bh=xSA5Go4EjNcPa6EF9wUurHJN4SMw8qOTn2i6C+VvfL0=;
+	s=korg; t=1795058863;
+	bh=DUPS5QKUANUr/tNUQlkRvlVJN0CtvGMMt6TZ5TtsNwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ChZ5dni5zbpeadbP98r/yTjY9e82hX23z+jmbf8boiwTWCQJZrDOyNPAAstx2mQSz
-	 91f7NolFoX+wHf70+Fs+pAb8TZ98JX9gXyqcOTTB2BIuRQZZ3xgzRvUeSv7SsOjYHZ
-	 ClrtN66YP8xYYCojjqV749zze7bQtKsmbMBW9tzA=
+	b=B3iyPHIIw0DYMWqBEXUvDdeF6SvKL1+FJveDUqzT1y1zzRhstHVKeFRUzJvYSr5jJ
+	 AnRQvwNQoTh5PxDNS+0Qv5yu8tHLl9UhKsEP4c7Bo4pbfqjHBmsPMiSXZvymvzV8SR
+	 cSHeyCMTXhJiQOSMafGFEyllMrRrO4l/JFDAm294=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Stefan Teodorescu <fane@google.com>,
+	Qinguang Chen <chenqinguang@kuaishou.com>,
+	Zhiping Du <duzhiping@kuaishou.com>,
+	Keqiang Duan <duankeqiangcym@gmail.com>,
+	Chao Gao <chao.gao@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0637/1848] KVM: nSVM: Reject KVM_SET_NESTED_STATE if L1 has EFER.LMA=1 && EFER.LME=0
-Date: Wed, 18 Nov 2026 15:44:35 +0100
-Message-ID: <20261118145942.421000132@linuxfoundation.org>
+Subject: [PATCH 5.10 0638/1848] KVM: x86: Clear hardware HLT state when userspace makes a vCPU not-halted
+Date: Wed, 18 Nov 2026 15:44:36 +0100
+Message-ID: <20261118145942.457478176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,55 +71,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Keqiang Duan <duankeqiangcym@gmail.com>
 
-[ Upstream commit 5dc500a354cc8e109df678076ae3488094649468 ]
+[ Upstream commit 883719f57f5d3898637b130d6db4742471cad618 ]
 
-Reject KVM_SET_NESTED_STATE if the incoming L1 host state has what is
-effectively an impossible EFER combination of LMA=1 but LME=0, i.e. if the
-state says long mode is active but not enabled.  Unlike VMX, SVM doesn't
-have an explicit consistent check for the illegal combination; presumably
-hardware simply ignores EFER.LMA if EFER.LME=0.
+Force a vCPU out of its hardware-tracked halted state when userspace puts
+the vCPU into any state other than HALTED via KVM_SET_MP_STATE, i.e. clear
+VMCS.GUEST_ACTIVITY_STATE if it says the vCPU is halted.  Add an optional
+kvm_x86_ops hook to do the clearing, as SVM has no equivalent VMCB field.
 
-Unfortunately, KVM doesn't ignore EFER.LMA in this case and consumes the
-illegal state when constructing the shadow MMU for L2.  E.g. if userspace
-also clears CR4.PAE, then kvm_calc_cpu_role() will compute a role with 4 or
-5 levels of paging, but shadow_mmu_init_context() will wire up the MMU to
-use the paging32 template, which maxes out its levels at 2.
+When HLT-exiting is disabled for a VM (KVM_CAP_X86_DISABLE_EXITS with
+KVM_X86_DISABLE_EXITS_HLT, e.g. QEMU's "-overcommit cpu-pm=on"), a guest
+HLT halts the physical CPU instead of exiting to KVM, and hardware saves
+GUEST_ACTIVITY_STATE=HLT into the VMCS on the next VM-Exit.  That field is
+sticky: it survives VM-Exit/VM-Enter and is only cleared by vmx_clear_hlt()
+on event injection, or by vmx_vcpu_reset() on INIT / vCPU creation.
 
-Note, the "real badness" is effectively the same as what happened with the
-nVMX bug fixed by commit 112e66017bff ("KVM: nVMX: add missing consistency
-checks for CR0 and CR4").  Unfortunately, the sanity check added by commit
-72e2fb24a0b0 ("KVM: x86/mmu: Bug the VM if a vCPU ends up in long mode
-without PAE enabled") doesn't work for this case, since L2 state is active
-at the time of the page fault, but it's L1 that has the bad state.
+Nothing clears it on a userspace-driven state change.  KVM_SET_REGS only
+writes the software register cache and KVM_SET_MP_STATE only writes
+vcpu->arch.mp_state; kvm_vcpu_running() likewise consults software state
+only.  A VMM that emulates a machine reset therefore ends up with a vCPU
+that KVM happily VM-Enters while hardware refuses to fetch instructions.
 
-Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+Reproduce with a Linux guest by triggering a panic/kdump on a non-boot
+vCPU: nmi_shootdown_cpus() parks the other vCPUs -- including vCPU0 -- in
+crash_nmi_callback(), which does local_irq_disable() followed by a bare
+HLT.  The capture kernel then resets the machine via port 0xCF9.  QEMU
+rewrites RIP to 0xfff0 and sets mp_state to RUNNABLE, but vCPU0's
+GUEST_ACTIVITY_STATE is still HLT, so the BSP never executes the reset
+vector, never sends SIPIs, and the entire VM hangs at "reboot: machine
+restart" forever.  Only destroying and recreating the VM recovers it.
+
+Key off "not HALTED" rather than "is RUNNABLE" as HALTED is the only target
+state for which retaining the hardware halted state is meaningful; every
+other transition either can't be reached on VMX, e.g. AP_RESET_HOLD, or
+goes through vmx_vcpu_reset(), which stuffs GUEST_ACTIVITY_ACTIVE anyways.
+This also captures the intent more directly: KVM only ever drops the
+hardware halted state, it never installs it.
+
+Hook KVM_SET_MP_STATE rather than the VM-Enter path so that the clearing
+is driven by an explicit userspace declaration, and so that no work is
+added to vmx_vcpu_run().  Gate the call on kvm_hlt_in_guest() even though
+vmx_clear_hlt() checks it as well, as the check is cheap and makes it
+obvious in common code when the hardware state can exist at all.
+
+Do nothing for TDX vCPUs as TDX doesn't support disabling HLT-exiting and
+KVM cannot access a TD's VMCS, i.e. the VMCS used to run the vCPU can't
+in HALTED state, and even if it were, KVM can't change it.
+
+Fixes: caa057a2cad6 ("KVM: X86: Provide a capability to disable HLT intercepts")
 Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Reported-by: Stefan Teodorescu <fane@google.com>
-Link: https://patch.msgid.link/20260902232028.2767071-2-seanjc@google.com
+Tested-by: Qinguang Chen <chenqinguang@kuaishou.com>
+Signed-off-by: Zhiping Du <duzhiping@kuaishou.com>
+Signed-off-by: Keqiang Duan <duankeqiangcym@gmail.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Link: https://patch.msgid.link/20260820123512.87236-1-duankeqiangcym@gmail.com
+[sean: drop claim that spurious wakeups are ok, massage changelog]
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: placed the EFER condition in the standalone paging check because the consolidated validation block is absent ]
+[ sashal: adapted clear_hlt dispatch to a NULL-checked kvm_x86_ops call after the existing MP-state assignment. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/kvm_host.h |  7 +++++++
+ arch/x86/kvm/vmx/vmx.c          |  1 +
+ arch/x86/kvm/x86.c              | 13 +++++++++++++
+ 3 files changed, 21 insertions(+)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index 5dbb4a742aa4b..a87df5804a766 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -1232,7 +1232,8 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
- 	 * nested_svm_check_permissions).
- 	 * TODO: validate reserved bits for all saved state.
- 	 */
--	if (!(save->cr0 & X86_CR0_PG))
-+	if (!(save->cr0 & X86_CR0_PG) ||
-+	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)))
- 		goto out_free;
- 	if (!(save->efer & EFER_SVME))
- 		goto out_free;
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index d13db9173603e..950e8796ad7fb 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1171,6 +1171,13 @@ struct kvm_x86_ops {
+ 	int (*nmi_allowed)(struct kvm_vcpu *vcpu, bool for_injection);
+ 	bool (*get_nmi_mask)(struct kvm_vcpu *vcpu);
+ 	void (*set_nmi_mask)(struct kvm_vcpu *vcpu, bool masked);
++	/*
++	 * Force the vCPU out of any hardware-tracked halted/inactive state so
++	 * that it will fetch and execute instructions on the next VM-Enter.
++	 * Only needed by VMX, where VMCS.GUEST_ACTIVITY_STATE persists across
++	 * VM-Exit/VM-Enter; SVM has no equivalent VMCB field.
++	 */
++	void (*clear_hlt)(struct kvm_vcpu *vcpu);
+ 	void (*enable_nmi_window)(struct kvm_vcpu *vcpu);
+ 	void (*enable_irq_window)(struct kvm_vcpu *vcpu);
+ 	void (*update_cr8_intercept)(struct kvm_vcpu *vcpu, int tpr, int irr);
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 0fb9cdc012124..a814de8e3dc53 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7862,6 +7862,7 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
+ 	.nmi_allowed = vmx_nmi_allowed,
+ 	.get_nmi_mask = vmx_get_nmi_mask,
+ 	.set_nmi_mask = vmx_set_nmi_mask,
++	.clear_hlt = vmx_clear_hlt,
+ 	.enable_nmi_window = enable_nmi_window,
+ 	.enable_irq_window = enable_irq_window,
+ 	.update_cr8_intercept = update_cr8_intercept,
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 1b8860a1c7c28..6f5a6fe42d874 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9893,6 +9893,19 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
+ 		set_bit(KVM_APIC_SIPI, &vcpu->arch.apic->pending_events);
+ 	} else
+ 		vcpu->arch.mp_state = mp_state->mp_state;
++
++	/*
++	 * Force the vCPU out of any hardware-tracked halted state, e.g. VMX's
++	 * GUEST_ACTIVITY_STATE=HLT, when userspace puts the vCPU into a state
++	 * other than HALTED.  The hardware state is sticky across VM-Exit and
++	 * VM-Enter and is not touched by any other ioctl, so a vCPU that halted
++	 * with HLT-exiting disabled stays wedged even after userspace rewrites
++	 * its registers, e.g. when a VMM emulates a machine reset.
++	 */
++	if (kvm_hlt_in_guest(vcpu->kvm) &&
++	    mp_state->mp_state != KVM_MP_STATE_HALTED && kvm_x86_ops.clear_hlt)
++		kvm_x86_ops.clear_hlt(vcpu);
++
+ 	kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 
+ 	ret = 0;
 -- 
 2.53.0
 
