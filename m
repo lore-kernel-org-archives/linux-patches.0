@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037958;
-	b=AtWJ8ZN62u7q88/IMpOLmjj8a65yxpC83ybBsZH3uEY9UdaHY4bVU0F2UeCQL0X52oOa
-	 19pz9WbWtH30S3KLPzM0d0MxgdLc4xfannofb44TKxvYMW36DgURKxfJp4lEvLbXmbEUd
-	 8mFsPt0MATySKz8ZuOsv1Ltrqstq6ouNdxhu9uqG5c4bQjP09HDcKTIyBYFhLk7AU3tJq
-	 cCORtX42ZvNWsM6DrLKHo7AWpR87aDQOMq87PGiGStCa+Y98ysol8y6ar3V7ld3E+E34Q
-	 K8MNffC96ilN9QWkfX2ipZoOTy7RbzElIluiMWgT7z8UxejkgJjTrN3I3bV/Qg6FFpw==
+	t=1795037961;
+	b=IJGRRV6u1dpN3UdoM1GfZYdhKE7A2hEWvsVGYywQyrSGqrSC5tvLmQd7qvuetRMrigVQ
+	 iLSvFFmhDmeZyvHR9V7WxNR7+Fl4/JzJHF47JnEK3gjS6J3JHdz2cq1lEDC6TDJ0zg8YH
+	 S/mRO+ZJOchO6kNt6tTwZTIe6XJ+96dMcdoInGASjp5lhd9dfO8wS0OAmLSBi+SU9ZaxC
+	 /FVkfmKnN2W71vCosX530nLulmfdSlR/MJ+WxBgzSLZM85V8/LbMQ7f7igrypD6dO3goO
+	 ld2+AXIin+IR3x4hRKNRkxjma8Aq5CdJZL7WcsY0uvH8oprhoOMG50diAKisLoujn3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+oXO43TIJpEWur4L11OFkxAYVdc6GtFdCDoiGsRPr4E=;
-	b=cBdcmk5NWmPUfrQGpv/2sIgLp6vcdqO46M9EJoaCdz/iEh1l9ZJYp1meWG6WWEcx+mne
-	 tdn8LgJ8kKdgEuggr/aJ1p+MpkXN30Ur/EHf/sdJIcNuRWzQ8iqMrHTdbCmz25ou3Cw1v
-	 WcWar+7FJFGJ6Vqel0zmEJrx6kFvH2sLnSbDIAh4vrT0GsGRjPYc4p8LYrswVIvGGi5kL
-	 Mhtf/ysAMqMTTw6AouVcwsNAywnYLdqpU/fnhtJk7i3h7M3hN8iCgZxR1dfhS4YukCYVd
-	 VIaOzV2+yYC6deAQsFl5xe3kLxEbgJYHut7KFFVnQl1VU8adeCtcFQtjg53DX8b6haw==
+	bh=EatHtv+dOnlLSbDftOuckMRI1ZC7Ki2DRWiuEyy2okk=;
+	b=UD6QV3oEMDmQ7pcAlKxXo1u2DaG9JIRoJ2Gf4LjNj2m/c18ZD7gsBFnU9WQQqJLE+CjD
+	 IKwRKtfjUSHt+0yXria0e6EJAWzB9SW1XUupiF2MqEZwMmT0JV7KmcdpzRUQM4TBHYXKt
+	 9Z5beefpEb5J07ryX4wdp5FtJBcnt5R3/AnseA5OgN6I/ugVw0Yy6/NK18q5k1EI2BYY9
+	 p6nIakY3BbNopoD/Vw7B/BQQzchUC0BxsG9T5TolC2epHWhYT/u76CxE7qKqBYLp64aFS
+	 GynLss7H13IUQhFl3APC7gJN0B0uajTB/O+SxlvyS1UFzpb+BJQUE+hsSjljCOdyd5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zUlUgnpN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1HzCIE4x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D20F606A325;
-	Wed, 18 Nov 2026 21:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D71606A320;
+	Wed, 18 Nov 2026 21:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zUlUgnpN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E6D1F000C4;
-	Wed, 18 Nov 2026 21:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1HzCIE4x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1811F000C4;
+	Wed, 18 Nov 2026 21:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037958;
-	bh=+oXO43TIJpEWur4L11OFkxAYVdc6GtFdCDoiGsRPr4E=;
+	s=korg; t=1795037961;
+	bh=EatHtv+dOnlLSbDftOuckMRI1ZC7Ki2DRWiuEyy2okk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUlUgnpNBshoNxmIYO4uQ+zbSdcW9Xo2+jLZOjPzruLDfzIbYWK8BEuTXk2nFcUNc
-	 qXCklBxJFybAyCr6rgy4c8JfDEyYYEJrZlbT9T+yRsjxF9RACrMMBRPF+H0SOvk2yL
-	 N+tZjfU6w1RDcNdU5the+BbKPqEtff4IjqkyHqDc=
+	b=1HzCIE4xI96pJgNtEWIOxpRuWTiGpz7gMkWI1nzyGZy0GK4anAeTiDZeP8PkfrkCg
+	 k6Kjt4RQj9nO0Ql2J0aBME93qKy1miQtgg3tPqNlJw1Sb6drQ2wsYE1j1GRegh+qq2
+	 YWzDqvopOYMrgabJTRyoEmtTrxj0WGu87WVabbFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1577/3318] can: raw, isotp: copy socket options outside of lock_sock()
-Date: Wed, 18 Nov 2026 15:36:39 +0100
-Message-ID: <20261118150408.427326780@linuxfoundation.org>
+Subject: [PATCH 6.6 1578/3318] ata: libata-scsi: reject data-in commands with a data-out buffer
+Date: Wed, 18 Nov 2026 15:36:40 +0100
+Message-ID: <20261118150408.457767697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,272 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-commit 43c973a0887d3d7b2ee0a446603c97bf0f38c58e upstream.
+[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
 
-The CAN_RAW and CAN_ISOTP specific socket options are copied from and
-to user space while holding lock_sock(). A copy that faults or stalls,
-e.g. on a userfaultfd or FUSE backed mapping, holds lock_sock() for its
-whole duration.
+SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
+scatterlist can then contain pages pinned without write access.
+ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
+in the reported case, the copy tried to write the shared zero page
+and faulted in the kernel.
 
-raw_notify() and isotp_notify() take lock_sock() of a socket that is
-bound to the vanishing device while holding RTNL. As the CAN_RAW
-options can also be changed on a bound socket, a stalled copy can block
-RTNL on an unregistration or namespace change of the bound device.
-Before "can: protect the receive lists with a per-device lock",
-raw_setsockopt() even held RTNL itself during the copy. CAN_ISOTP only
-copies its options for unbound sockets, which isotp_notify() skips
-without taking lock_sock().
+The same mismatch can affect SG_IO commands translated by libata.
+ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
+the receive buffer even if the drive aborts the command. For ATAPI,
+the successful INQUIRY completion also rewrites the buffer in
+atapi_fixup_inquiry().
 
-Keep the user space copies out of the locked sections: Check the option
-name and length and copy the option values, including the CAN_RAW_FILTER
-filters, to kernel memory before lock_sock(). raw_setsockopt_locked()
-and isotp_setsockopt_locked() get the copied values directly and drop
-their now redundant length checks and copies. As a side effect, a
-failing copy can not leave partially overwritten options behind
-anymore. In raw_getsockopt() duplicate the filters under lock_sock() and
-copy them to user space after release_sock().
+Reject these mismatched commands before the buffer is written or the
+command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
+the CDB itself can be valid; the supplied transfer direction is wrong.
 
-As the option name and length are now checked before lock_sock(), the
-order of the checks in isotp_setsockopt() and accordingly the order of
-the returned error values changes. This is in line with POSIX, which
-does not define an order in which multiple error conditions are
-detected and reported.
+Backport notes: Use the older five-argument ata_scsi_set_sense()
+interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
+The older ata_scsi_rbuf_fill() takes struct ata_scsi_args;
+get the device and command from args, and reject before copying.
 
-The generic SOL_SOCKET options in sk_setsockopt() are not affected by
-this patch.
-
-Fixes: c18ce101f2e4 ("[CAN]: Add raw protocol")
-Fixes: 1e5185c09058 ("can: raw: add locking for raw flags bitfield")
-Cc: stable@vger.kernel.org # depends on "can: protect the receive lists with a per-device lock"
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-4-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[ backport to 6.6: This tree has no raw_setsockopt_locked() from commit
-  1e5185c09058 ("can: raw: add locking for raw flags bitfield").
-  raw_setsockopt() already copies all option values from user space
-  before lock_sock() here, so only the raw_getsockopt() and isotp parts
-  apply. raw_getsockopt() uses copy_to_user() and put_user() instead of
-  the getsockopt_iter interface in this tree. Duplicate the filters
-  under lock_sock() and copy them with copy_to_user() after
-  release_sock(). Also move the put_user() of the needed filter space
-  for -ERANGE behind release_sock(), which upstream writes to the kernel
-  side opt->optlen. ]
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 100 +++++++++++++++++++++++++++---------------------
- net/can/raw.c   |  25 +++++++++---
- 2 files changed, 76 insertions(+), 49 deletions(-)
+ drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 69366f9575070..ad99d1543b164 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1681,8 +1681,8 @@ static int isotp_getname(struct socket *sock, struct sockaddr *uaddr, int peer)
- 	return ISOTP_MIN_NAMELEN;
- }
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index ebbed8bb5e8e3..5f8548a4f3a8f 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1836,6 +1836,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	if (xlat_func(qc))
+ 		goto done;
  
--static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
--			    sockptr_t optval, unsigned int optlen)
-+static int isotp_setsockopt_locked(struct socket *sock, int optname,
-+				   const void *val)
- {
- 	struct sock *sk = sock->sk;
- 	struct isotp_sock *so = isotp_sk(sk);
-@@ -1693,11 +1693,7 @@ static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
- 
- 	switch (optname) {
- 	case CAN_ISOTP_OPTS:
--		if (optlen != sizeof(struct can_isotp_options))
--			return -EINVAL;
--
--		if (copy_from_sockptr(&so->opt, optval, optlen))
--			return -EFAULT;
-+		memcpy(&so->opt, val, sizeof(so->opt));
- 
- 		/* no separate rx_ext_address is given => use ext_address */
- 		if (!(so->opt.flags & CAN_ISOTP_RX_EXT_ADDR))
-@@ -1722,55 +1718,37 @@ static int isotp_setsockopt_locked(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case CAN_ISOTP_RECV_FC:
--		if (optlen != sizeof(struct can_isotp_fc_options))
--			return -EINVAL;
--
--		if (copy_from_sockptr(&so->rxfc, optval, optlen))
--			return -EFAULT;
-+		memcpy(&so->rxfc, val, sizeof(so->rxfc));
- 		break;
- 
- 	case CAN_ISOTP_TX_STMIN:
--		if (optlen != sizeof(u32))
--			return -EINVAL;
--
--		if (copy_from_sockptr(&so->force_tx_stmin, optval, optlen))
--			return -EFAULT;
-+		so->force_tx_stmin = *(const u32 *)val;
- 		break;
- 
- 	case CAN_ISOTP_RX_STMIN:
--		if (optlen != sizeof(u32))
--			return -EINVAL;
--
--		if (copy_from_sockptr(&so->force_rx_stmin, optval, optlen))
--			return -EFAULT;
-+		so->force_rx_stmin = *(const u32 *)val;
- 		break;
- 
--	case CAN_ISOTP_LL_OPTS:
--		if (optlen == sizeof(struct can_isotp_ll_options)) {
--			struct can_isotp_ll_options ll;
--
--			if (copy_from_sockptr(&ll, optval, optlen))
--				return -EFAULT;
-+	case CAN_ISOTP_LL_OPTS: {
-+		const struct can_isotp_ll_options *ll = val;
- 
--			/* check for correct ISO 11898-1 DLC data length */
--			if (ll.tx_dl != padlen(ll.tx_dl))
--				return -EINVAL;
-+		/* check for correct ISO 11898-1 DLC data length */
-+		if (ll->tx_dl != padlen(ll->tx_dl))
-+			return -EINVAL;
- 
--			if (ll.mtu != CAN_MTU && ll.mtu != CANFD_MTU)
--				return -EINVAL;
-+		if (ll->mtu != CAN_MTU && ll->mtu != CANFD_MTU)
-+			return -EINVAL;
- 
--			if (ll.mtu == CAN_MTU &&
--			    (ll.tx_dl > CAN_MAX_DLEN || ll.tx_flags != 0))
--				return -EINVAL;
-+		if (ll->mtu == CAN_MTU &&
-+		    (ll->tx_dl > CAN_MAX_DLEN || ll->tx_flags != 0))
-+			return -EINVAL;
- 
--			memcpy(&so->ll, &ll, sizeof(ll));
-+		memcpy(&so->ll, ll, sizeof(*ll));
- 
--			/* set ll_dl for tx path to similar place as for rx */
--			so->tx.ll_dl = ll.tx_dl;
--		} else {
--			return -EINVAL;
--		}
-+		/* set ll_dl for tx path to similar place as for rx */
-+		so->tx.ll_dl = ll->tx_dl;
- 		break;
-+	}
- 
- 	default:
- 		ret = -ENOPROTOOPT;
-@@ -1784,13 +1762,49 @@ static int isotp_setsockopt(struct socket *sock, int level, int optname,
- 
- {
- 	struct sock *sk = sock->sk;
-+	union {
-+		struct can_isotp_options opt;
-+		struct can_isotp_fc_options rxfc;
-+		struct can_isotp_ll_options ll;
-+		u32 stmin;
-+	} val;
-+	unsigned int size;
- 	int ret;
- 
- 	if (level != SOL_CAN_ISOTP)
- 		return -EINVAL;
- 
-+	/* copy the option values from user space before lock_sock() */
-+	switch (optname) {
-+	case CAN_ISOTP_OPTS:
-+		size = sizeof(val.opt);
-+		break;
-+
-+	case CAN_ISOTP_RECV_FC:
-+		size = sizeof(val.rxfc);
-+		break;
-+
-+	case CAN_ISOTP_TX_STMIN:
-+	case CAN_ISOTP_RX_STMIN:
-+		size = sizeof(val.stmin);
-+		break;
-+
-+	case CAN_ISOTP_LL_OPTS:
-+		size = sizeof(val.ll);
-+		break;
-+
-+	default:
-+		return -ENOPROTOOPT;
++	/*
++	 * A data-out request may contain pages pinned without write access.
++	 * Reject a translated data-in command before issuing it, since its
++	 * completion handler may write to the buffer even if the device fails.
++	 */
++	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
++		     ata_is_data(qc->tf.protocol) &&
++		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
++		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		goto done;
 +	}
 +
-+	if (optlen != size)
-+		return -EINVAL;
-+
-+	if (copy_from_sockptr(&val, optval, size))
-+		return -EFAULT;
-+
- 	lock_sock(sk);
--	ret = isotp_setsockopt_locked(sock, level, optname, optval, optlen);
-+	ret = isotp_setsockopt_locked(sock, optname, &val);
- 	release_sock(sk);
- 	return ret;
- }
-diff --git a/net/can/raw.c b/net/can/raw.c
-index ead9e2713a27d..d3c8bf057ccee 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -777,31 +777,44 @@ static int raw_getsockopt(struct socket *sock, int level, int optname,
- 		return -EINVAL;
+ 	return ata_scsi_qc_issue(ap, qc);
  
- 	switch (optname) {
--	case CAN_RAW_FILTER:
-+	case CAN_RAW_FILTER: {
-+		struct can_filter *filter = NULL;
-+		int fsize = 0;
-+
- 		lock_sock(sk);
- 		if (ro->count > 0) {
--			int fsize = ro->count * sizeof(struct can_filter);
-+			fsize = ro->count * sizeof(struct can_filter);
+ done:
+@@ -1872,6 +1884,12 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
+ 	struct scsi_cmnd *cmd = args->cmd;
+ 	unsigned long flags;
  
- 			/* user space buffer to small for filter list? */
- 			if (len < fsize) {
- 				/* return -ERANGE and needed space in optlen */
- 				err = -ERANGE;
--				if (put_user(fsize, optlen))
--					err = -EFAULT;
- 			} else {
- 				if (len > fsize)
- 					len = fsize;
--				if (copy_to_user(optval, ro->filter, len))
--					err = -EFAULT;
-+				/* copy to user space after release_sock() */
-+				filter = kmemdup(ro->filter, len, GFP_KERNEL);
-+				if (!filter)
-+					err = -ENOMEM;
- 			}
- 		} else {
- 			len = 0;
- 		}
- 		release_sock(sk);
- 
-+		if (err == -ERANGE) {
-+			if (put_user(fsize, optlen))
-+				err = -EFAULT;
-+		} else if (filter) {
-+			if (copy_to_user(optval, filter, len))
-+				err = -EFAULT;
-+			kfree(filter);
-+		}
-+
- 		if (!err)
- 			err = put_user(len, optlen);
- 		return err;
++	/* A data-out request may contain pages pinned without write access. */
++	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
++		ata_scsi_set_sense(args->dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return;
 +	}
++
+ 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
  
- 	case CAN_RAW_ERR_FILTER:
- 		if (len > sizeof(can_err_mask_t))
+ 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
+@@ -2747,6 +2765,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
+ 
+ 	qc->complete_fn = atapi_qc_complete;
+ 
++	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
++	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
++	    scmd->cmnd[0] == INQUIRY) {
++		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return 1;
++	}
++
+ 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
+ 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
+ 		qc->tf.flags |= ATA_TFLAG_WRITE;
 -- 
 2.53.0
 
