@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025627;
-	b=kvHsVzOpyj9B1uqM1HUjPE3kQyq1IqoYkWJ+uy5EKK9mt11JJYLq+yIe18cMr2W+RZ2D
-	 aQ2/yDbFZboAlmUf4fHcVQY28budANa+2ZBaIX2Aa9oaW7yfrDYhenm128fnCscKb0OSA
-	 NVUT7sXaaSeF5Py54cgFcpI6j2PxQTCXbrJAL8EPb/i7NZrqNz+rrgNs51p0ptSPQh9L4
-	 QWkxG97S+pY+K1BnnTbnqzN1q6GtdwZGSBNnNo3KEz0eRkFivKlnPj8FzpEa4v1fYpvKc
-	 JvjFvcEL/nPwX8X7GIjhvRrJo/DFVczNkH0DbNwNtTQlOnF8ksRav+dVDJfx6feKpEQ==
+	t=1795025630;
+	b=Ut4svLXIjUbZqzD7bJx93d/F1CfzshTv10U0kYNPSe8RfZfECBVTruczEAH7FH0dfLsn
+	 XfZmkJ1xo+CClz7vy+DWOuoCVRLbqnZJad5WLXfv5XiiWaWhwAir8QOcuxBToR7uhweX0
+	 Lv1hbdu0xdqkhsoMk1SACnaSTq4UoEMyrj8GKTUsSJJsHiwum8WA+IdNx43R6fn6TuD1m
+	 EtCOu3wpXoguJ+8TVoLWW4FvW14qX6QSf+BQeCV5dI64rlRApcA0/km8stJsoBh5IdpnI
+	 Bx9lU+W7XOuNrnLIOshA5uw1FqnMf8GbOlsjHSYCmeS52D2bu+/Fcb4U4RkWo6Zrpow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JwrqRm2AaJ073at3GwlemOOUlSIaAlvDdKBo3g7zeJY=;
-	b=KDq+7k0Gv2TPqZ5fE88NoU0k9La6ZwJB2LxBUWHRjIQHFVl5qRqyCaAt4lYZFZLLOXem
-	 ULVawZF5CSYr5BCZD+e1q0+j3oDzaZCRocn70TTICKxEmT8pK8qfqd5tAhW5+PjPDg2Yw
-	 ffthWcvqcBk0/mIgBeeAOZFJ3zo8wAKHVPEFAiFNOEAFtEPvZcB0V6bYcYFZJE7iORBB4
-	 Xak4h3yEGZMG5I5nhJBwQvqBMtJNnnDdqRBcfrHnhTjrZLM7lBdu+nES8SdM+KGJhWP1q
-	 0hbj5/r29zPyhAS3o2DCPIV666Ee2Cm1DV7yfJ3DRwBpA70WCQXMIMLlaryLkckzGTA==
+	bh=Qpj4Zz4fN/j5YbWZW8FcAJXB2Txd43fVXgzIXihXmJI=;
+	b=g3IwyLSiGoTKM7zdEijqHRS7zB6fbFMDVonjntPK4d5MKEzuJV+wE6dc+1/QSDC9y73Q
+	 5ogxCWTKTzRnwgjzBq0b78dRLNXlGz0AiW/i9mcIK0FGoPgymuqtPT70XuQyO+o7F9rmH
+	 V9Diw+w5CInXRXIg4lfqJPhqGNQfa8V27hNn7QRdxBJUsW5ShltkGuppYjxRKclC7uR7f
+	 M0jvMme92RA7heVyJYTQzD8h07CbyQ1xylhHrH3Doug4CDXwKmxmZGRnjSZP62v1nWnVy
+	 Zy7odsOFFyDnjH+WqCYI6dnQJAxrMUitRUwjPKjaR5k5zaHGOenq9bBKocunwQWM1Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1cJyDK7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rHoFU0bY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453EE606A31C;
-	Wed, 18 Nov 2026 18:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BCE606A31C;
+	Wed, 18 Nov 2026 18:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1cJyDK7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935BE1F000C4;
-	Wed, 18 Nov 2026 18:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rHoFU0bY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7019B1F000C7;
+	Wed, 18 Nov 2026 18:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025627;
-	bh=JwrqRm2AaJ073at3GwlemOOUlSIaAlvDdKBo3g7zeJY=;
+	s=korg; t=1795025630;
+	bh=Qpj4Zz4fN/j5YbWZW8FcAJXB2Txd43fVXgzIXihXmJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1cJyDK7iOa1fgK1gLzci7gpemnbAKCxbY1yywnmv4nyo52dhYdFwRMUwZ2WevmOb
-	 qxV6wdG4XgG2GqYKUQFWCXuCzom6+XaUi6qz8AOgFlLieVVh0bVcZmWZxUbEIWoukO
-	 gNU6/J3K50Zw/VTTVmBl64zBCAAvwbmCvmLR1GCQ=
+	b=rHoFU0bYiHf4sbpAs+Ws6WNxz+kDXr1aFX6PAApUMu4rEt+m5+qEINSEMXVprAGiV
+	 gRxk7NwptpAaeMW8Ux5/hj7j6b424MKEX1RU5eD4fM7q6nGQ59ubmjcy1M1Y2wFdhl
+	 JWX5jAqFEZ+lvHIv+JAg9fsU1qAe8y+3j3ftlUq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Roman Demidov <roman.demidov.nn@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1145/2151] tcp: populate inet->cork.fl.u.ip6 in tcp_v6_connect()
-Date: Wed, 18 Nov 2026 15:48:00 +0100
-Message-ID: <20261118150203.900432304@linuxfoundation.org>
+Subject: [PATCH 6.18 1110/2151] drm/msm/a6xx: fix use-after-free of OPP in a6xx_pm_resume
+Date: Wed, 18 Nov 2026 15:47:25 +0100
+Message-ID: <20261118150202.673111485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,134 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Roman Demidov <roman.demidov.nn@gmail.com>
 
-[ Upstream commit 19bdb267f733ac92dcf5cf126bfcec1f9281c8c5 ]
+[ Upstream commit 8128ae7af6b4dc95e486c5c0a80839a069df578e ]
 
-Instead of using private @fl6 and @final variables
-use respectively inet->cork.fl.u.ip6 and np->final.
+The OPP reference obtained via dev_pm_opp_find_freq_ceil() is dropped
+with dev_pm_opp_put() before being passed to dev_pm_opp_set_opp(). If
+the reference count reaches zero, the OPP object may be freed, leading
+to a use-after-free when dev_pm_opp_set_opp() dereferences it.
 
-As explained in commit 85d05e281712 ("ipv6: change inet6_sk_rebuild_header()
-to use inet->cork.fl.u.ip6"):
+Fix the order of calls: first use the OPP to set the required
+performance state, then release the reference.
 
-TCP v6 spends a good amount of time rebuilding a fresh fl6 at each
-transmit in inet6_csk_xmit()/inet6_csk_route_socket().
-
-TCP v4 caches the information in inet->cork.fl.u.ip4 instead.
-
-After this patch, active TCP ipv6 flows have correctly initialized
-inet->cork.fl.u.ip6 structure.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260206173426.1638518-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 86a19284425f ("net: psp: require an established connection for association setup")
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/757104/
+Message-ID: <20260929142103.81854-1-roman.demidov.nn@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/tcp_ipv6.c | 47 +++++++++++++++++++++++----------------------
- 1 file changed, 24 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 761cafdc8d2e8..022e67db27198 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -136,15 +136,15 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- {
- 	struct sockaddr_in6 *usin = (struct sockaddr_in6 *) uaddr;
- 	struct inet_connection_sock *icsk = inet_csk(sk);
--	struct in6_addr *saddr = NULL, *final_p, final;
- 	struct inet_timewait_death_row *tcp_death_row;
- 	struct ipv6_pinfo *np = tcp_inet6_sk(sk);
-+	struct in6_addr *saddr = NULL, *final_p;
- 	struct inet_sock *inet = inet_sk(sk);
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	struct net *net = sock_net(sk);
- 	struct ipv6_txoptions *opt;
- 	struct dst_entry *dst;
--	struct flowi6 fl6;
-+	struct flowi6 *fl6;
- 	int addr_type;
- 	int err;
- 
-@@ -154,14 +154,15 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- 	if (usin->sin6_family != AF_INET6)
- 		return -EAFNOSUPPORT;
- 
--	memset(&fl6, 0, sizeof(fl6));
-+	fl6 = &inet_sk(sk)->cork.fl.u.ip6;
-+	memset(fl6, 0, sizeof(*fl6));
- 
- 	if (inet6_test_bit(SNDFLOW, sk)) {
--		fl6.flowlabel = usin->sin6_flowinfo&IPV6_FLOWINFO_MASK;
--		IP6_ECN_flow_init(fl6.flowlabel);
--		if (fl6.flowlabel&IPV6_FLOWLABEL_MASK) {
-+		fl6->flowlabel = usin->sin6_flowinfo & IPV6_FLOWINFO_MASK;
-+		IP6_ECN_flow_init(fl6->flowlabel);
-+		if (fl6->flowlabel & IPV6_FLOWLABEL_MASK) {
- 			struct ip6_flowlabel *flowlabel;
--			flowlabel = fl6_sock_lookup(sk, fl6.flowlabel);
-+			flowlabel = fl6_sock_lookup(sk, fl6->flowlabel);
- 			if (IS_ERR(flowlabel))
- 				return -EINVAL;
- 			fl6_sock_release(flowlabel);
-@@ -210,7 +211,7 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index f56ac2e0adbe1..62fa7252d7724 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2225,10 +2225,10 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+ 		ret = PTR_ERR(opp);
+ 		goto err_set_opp;
  	}
+-	dev_pm_opp_put(opp);
  
- 	sk->sk_v6_daddr = usin->sin6_addr;
--	np->flow_label = fl6.flowlabel;
-+	np->flow_label = fl6->flowlabel;
+ 	/* Set the core clock and bus bw, having VDD scaling in mind */
+ 	dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
++	dev_pm_opp_put(opp);
  
- 	/*
- 	 *	TCP over IPv4
-@@ -258,24 +259,24 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- 	if (!ipv6_addr_any(&sk->sk_v6_rcv_saddr))
- 		saddr = &sk->sk_v6_rcv_saddr;
- 
--	fl6.flowi6_proto = IPPROTO_TCP;
--	fl6.daddr = sk->sk_v6_daddr;
--	fl6.saddr = saddr ? *saddr : np->saddr;
--	fl6.flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
--	fl6.flowi6_oif = sk->sk_bound_dev_if;
--	fl6.flowi6_mark = sk->sk_mark;
--	fl6.fl6_dport = usin->sin6_port;
--	fl6.fl6_sport = inet->inet_sport;
--	if (IS_ENABLED(CONFIG_IP_ROUTE_MULTIPATH) && !fl6.fl6_sport)
--		fl6.flowi6_flags = FLOWI_FLAG_ANY_SPORT;
--	fl6.flowi6_uid = sk_uid(sk);
-+	fl6->flowi6_proto = IPPROTO_TCP;
-+	fl6->daddr = sk->sk_v6_daddr;
-+	fl6->saddr = saddr ? *saddr : np->saddr;
-+	fl6->flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
-+	fl6->flowi6_oif = sk->sk_bound_dev_if;
-+	fl6->flowi6_mark = sk->sk_mark;
-+	fl6->fl6_dport = usin->sin6_port;
-+	fl6->fl6_sport = inet->inet_sport;
-+	if (IS_ENABLED(CONFIG_IP_ROUTE_MULTIPATH) && !fl6->fl6_sport)
-+		fl6->flowi6_flags = FLOWI_FLAG_ANY_SPORT;
-+	fl6->flowi6_uid = sk_uid(sk);
- 
- 	opt = rcu_dereference_protected(np->opt, lockdep_sock_is_held(sk));
--	final_p = fl6_update_dst(&fl6, opt, &final);
-+	final_p = fl6_update_dst(fl6, opt, &np->final);
- 
--	security_sk_classify_flow(sk, flowi6_to_flowi_common(&fl6));
-+	security_sk_classify_flow(sk, flowi6_to_flowi_common(fl6));
- 
--	dst = ip6_dst_lookup_flow(net, sk, &fl6, final_p);
-+	dst = ip6_dst_lookup_flow(net, sk, fl6, final_p);
- 	if (IS_ERR(dst)) {
- 		err = PTR_ERR(dst);
- 		goto failure;
-@@ -285,7 +286,7 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
- 	tcp_death_row = &sock_net(sk)->ipv4.tcp_death_row;
- 
- 	if (!saddr) {
--		saddr = &fl6.saddr;
-+		saddr = &fl6->saddr;
- 
- 		err = inet_bhash2_update_saddr(sk, saddr, AF_INET6);
- 		if (err)
+ 	pm_runtime_resume_and_get(gmu->dev);
+ 	pm_runtime_resume_and_get(gmu->gxpd);
 -- 
 2.53.0
 
