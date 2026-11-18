@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049699;
-	b=JgM8LBzTnfh7HWsxj6S7IcGiAXc2uLdcHOVcII5bzccNKv3SwkMZjsWmO9qTVuw6jhHl
-	 69b7oWuU8EgJNg64lNt6eqjTSnuVt6iPtUvaE/N9CALElROLB/mWoI/iPRLDK0/lu5uLH
-	 QwuSKgXmFbD6lvdhod8nOS5wDmkWN9Kp2Dn/t6ZZJt3Tb0yCehlDTZJj/5vVwtnRLfpGe
-	 K3GhM8U+twZ7xcyuoQpK8MG1S7HLf1sECM2P5RXeUgxbw3qKNUYDM2Dh5VgCm69OaVHDG
-	 97L2Zcj/r5J4QBpLoPsVBZp8JvL7DXkzIheYmOoWDX8mnmklzW4Gf7rTTa1D+txeY5g==
+	t=1795049702;
+	b=SG7qq0mITzGMIYqiuCLkhokfp0hhKW7PHjvUAWcwHNP7ytJi27GsGyR/bXH+RYkurQAR
+	 ZIYQhAmeLXTPUvyjiw1nR5GFAssgtbL0cfoNh5QJ2PzpVIOrnbU3V5Q8Gkp/KfxReCgNI
+	 eqaVJHFVIlu7F8yJipV/NKlcGfEf2Aks8DzoyVR0niRagL18V/enGQvzp5nSr5b/VyCJH
+	 Ts0zH5IA7vgHF3xpw2j3s/oDOlu3Hz29kT9lrZ7sQ1FfkOXCrrGYyWHQV2xegHqOi/p+j
+	 keRPZGfrtHttPiatggQUfepQZ8IO0k+sqEHc10dtc35Kt8I+QVYzKPtbUrq55Z1m/XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049702;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5t8argUo/SUyl5Y4f9hu8AYLL+la6zRAb9q5xI20kwc=;
-	b=g2LT23ZGGIGagYcSl16aGoKkEzg8ddBiQkULYYDSytH2yWnfRIsAlgnlhnpIIv9m3rA+
-	 37PgspNix+CJ4Taic9apOvVuwAyGSK4hhJ5BSoG9YP166ydvlTmzFpx/+xocI2kVDpSES
-	 HN7AG2Ti1G+7fhPFPEvsiP1RRQmItl7Wjs94+U1y16wHlkobekMrWE4TejJJXbbzD7cmZ
-	 8BYLwJhLJwEIlYZSIP5zLWdRKmwj+xwOhVbqeWBQWJDpFxJ+Vm8xIeeZomBpgeoWIQJXA
-	 CLa3KSjCT323w/d0K/23YrieLqeRmawCp4fZSkEgr3CBnJ43IwZPvKByn4jRsOuB4jw==
+	bh=SjXb2QjBM75S74DpRNZfY9RiyyIQoqvjBI9jlp5huZ4=;
+	b=cSEJZpLt+TMuXE6ZUHl8MZNtbe4voq2Uimaokr9H3sDs6ZVRr3UzeVZYJ0UvYlAUlx68
+	 wSZ3xn8i18hVnFovrTuZ3m/c62Xguf4ZmtsQXPYf13UCDPJgm7KoPWu+SVddwLSrEPby4
+	 4xAsL3I3mqLCdkU5923CIjft1kNpExd3NIqbnKEI3/CTXuQyLkzOaHDQeYZqA9dq5GCje
+	 A287GIuimKczf8HEM11isOC5YeVcFQhla8dJgHkx0D9YJYDFrGRluQjZ0UF+aOTzN2O+U
+	 70Goa2PbSXzSTwJkLqWkLtarJEF99VaTgLjFdvIN7x5TVQo3yZhQGb90wrhlWj3GpKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgoWkCL6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvpujp1Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C4E606A325;
-	Thu, 19 Nov 2026 00:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A39606A32A;
+	Thu, 19 Nov 2026 00:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jgoWkCL6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8BE1F000C5;
-	Thu, 19 Nov 2026 00:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cvpujp1Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C611F000C4;
+	Thu, 19 Nov 2026 00:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049699;
-	bh=5t8argUo/SUyl5Y4f9hu8AYLL+la6zRAb9q5xI20kwc=;
+	s=korg; t=1795049702;
+	bh=SjXb2QjBM75S74DpRNZfY9RiyyIQoqvjBI9jlp5huZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jgoWkCL6NMcyNRygZS0flw0pf0Qhm1Fhuqy9AgHVJ8AZIPGL4hENZERv1ezjEQzXk
-	 sJ5lbAt92EJXyPJdsO0nmuQoOlnM4qLqrBLW5LyzXAjqXD57GTMgpY/3/U18Yv5TxG
-	 zMf3Z8NtuufOx9Hl1+JR5ZFgFBff6obtiSR/zpNI=
+	b=cvpujp1Z+DvGor6mZWLM9cd1hA77wHI4S73oZJYS90wvdAT9BlsLNUbx8puDa9u5y
+	 rRjByan6PhlCPw77WDvR1JTA9HUs2zl3DHVqtDomfSVfDu8vjdzMFkWGbtX8thia/H
+	 JdYAtTQmpZfSj8gjEO1/sBZ/g3ZqQuSLbT9tW0DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2443/2857] ASoC: intel: atom: Use __free(kfree) for stream pointer
-Date: Wed, 18 Nov 2026 15:57:57 +0100
-Message-ID: <20261118150329.531750387@linuxfoundation.org>
+Subject: [PATCH 6.1 2444/2857] ASoC: Intel: atom: Use scoped_guard() for scoped locking
+Date: Wed, 18 Nov 2026 15:57:58 +0100
+Message-ID: <20261118150329.564972365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,77 +71,110 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 4889a8a73f65b8e4feb49ea434b8a41806513574 ]
+[ Upstream commit 08d2d5e683e85a7dc33c1abfd50fdc380bfafb5a ]
 
-Declare 'stream' with __free(kfree) so it is automatically freed when
-leaving scope. This allows direct returns from error paths and removes
-the explicit kfree(stream) call.
-Set 'stream' to NULL after ownership has been transferred to
-runtime->private_data to prevent it from being freed on the success path.
-
-This cleanup is a preparation step for upcoming locking changes.
+Clean up the code using scoped_guard() for mutex locks.
+Merely code refactoring, and no behavior change.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260626082904.32344-4-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260626082904.32344-6-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: e3bb57581104 ("ASoC: intel: atom: Fix .shutdown() being skipped on rollback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/atom/sst-mfld-platform-pcm.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ sound/soc/intel/atom/sst-atom-controls.c     | 38 ++++++++++----------
+ sound/soc/intel/atom/sst-mfld-platform-pcm.c | 20 ++++-------
+ 2 files changed, 27 insertions(+), 31 deletions(-)
 
+diff --git a/sound/soc/intel/atom/sst-atom-controls.c b/sound/soc/intel/atom/sst-atom-controls.c
+index fd59b35a62bae..cad68699cdbd3 100644
+--- a/sound/soc/intel/atom/sst-atom-controls.c
++++ b/sound/soc/intel/atom/sst-atom-controls.c
+@@ -761,27 +761,29 @@ int sst_handle_vb_timer(struct snd_soc_dai *dai, bool enable)
+ 			return ret;
+ 	}
+ 
+-	mutex_lock(&drv->lock);
+-	if (enable)
+-		timer_usage++;
+-	else
+-		timer_usage--;
+-
+-	/*
+-	 * Send the command only if this call is the first enable or last
+-	 * disable
+-	 */
+-	if ((enable && (timer_usage == 1)) ||
+-	    (!enable && (timer_usage == 0))) {
+-		ret = sst_fill_and_send_cmd_unlocked(drv, SST_IPC_IA_CMD,
+-				SST_FLAG_BLOCKED, SST_TASK_SBA, 0, &cmd,
+-				sizeof(cmd.header) + cmd.header.length);
+-		if (ret && enable) {
++	scoped_guard(mutex, &drv->lock) {
++		if (enable)
++			timer_usage++;
++		else
+ 			timer_usage--;
+-			enable  = false;
++
++		/*
++		 * Send the command only if this call is the first enable or last
++		 * disable
++		 */
++		if ((enable && timer_usage == 1) ||
++		    (!enable && timer_usage == 0)) {
++			ret = sst_fill_and_send_cmd_unlocked(drv, SST_IPC_IA_CMD,
++							     SST_FLAG_BLOCKED,
++							     SST_TASK_SBA, 0, &cmd,
++							     sizeof(cmd.header) +
++							     cmd.header.length);
++			if (ret && enable) {
++				timer_usage--;
++				enable  = false;
++			}
+ 		}
+ 	}
+-	mutex_unlock(&drv->lock);
+ 
+ 	if (!enable)
+ 		sst->ops->power(sst->dev, false);
 diff --git a/sound/soc/intel/atom/sst-mfld-platform-pcm.c b/sound/soc/intel/atom/sst-mfld-platform-pcm.c
-index c75616a5fd0ab..086160592aa50 100644
+index 086160592aa50..9e8af69a438f3 100644
 --- a/sound/soc/intel/atom/sst-mfld-platform-pcm.c
 +++ b/sound/soc/intel/atom/sst-mfld-platform-pcm.c
-@@ -11,6 +11,7 @@
-  */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+@@ -313,15 +313,14 @@ static int sst_media_open(struct snd_pcm_substream *substream,
+ 	spin_lock_init(&stream->status_lock);
  
-+#include <linux/cleanup.h>
- #include <linux/slab.h>
- #include <linux/io.h>
- #include <linux/module.h>
-@@ -304,7 +305,7 @@ static int sst_media_open(struct snd_pcm_substream *substream,
- {
- 	int ret_val = 0;
- 	struct snd_pcm_runtime *runtime = substream->runtime;
--	struct sst_runtime_stream *stream;
-+	struct sst_runtime_stream *stream __free(kfree) = NULL;
+ 	/* get the sst ops */
+-	mutex_lock(&sst_lock);
+-	if (!sst ||
+-	    !try_module_get(sst->dev->driver->owner)) {
+-		dev_err(dai->dev, "no device available to run\n");
+-		ret_val = -ENODEV;
+-		goto out_ops;
++	scoped_guard(mutex, &sst_lock) {
++		if (!sst ||
++		    !try_module_get(sst->dev->driver->owner)) {
++			dev_err(dai->dev, "no device available to run\n");
++			return -ENODEV;
++		}
++		stream->ops = sst->ops;
+ 	}
+-	stream->ops = sst->ops;
+-	mutex_unlock(&sst_lock);
  
- 	stream = kzalloc(sizeof(*stream), GFP_KERNEL);
- 	if (!stream)
-@@ -330,7 +331,7 @@ static int sst_media_open(struct snd_pcm_substream *substream,
+ 	stream->stream_info.str_id = 0;
  
- 	ret_val = power_up_sst(stream);
- 	if (ret_val < 0)
--		goto out_power_up;
-+		return ret_val;
+@@ -356,11 +355,6 @@ static int sst_media_open(struct snd_pcm_substream *substream,
  
- 	/*
- 	 * Make sure the period to be multiple of 1ms to align the
-@@ -347,12 +348,19 @@ static int sst_media_open(struct snd_pcm_substream *substream,
- 	snd_pcm_hw_constraint_step(substream->runtime, 0,
- 			   SNDRV_PCM_HW_PARAM_PERIODS, 2);
+ 	stream = NULL;
  
--	return snd_pcm_hw_constraint_integer(runtime,
--			 SNDRV_PCM_HW_PARAM_PERIODS);
-+	ret_val = snd_pcm_hw_constraint_integer(runtime,
-+						SNDRV_PCM_HW_PARAM_PERIODS);
-+
-+	if (ret_val < 0)
-+		return ret_val;
-+
-+	stream = NULL;
-+
-+	return ret_val;
-+
- out_ops:
- 	mutex_unlock(&sst_lock);
--out_power_up:
--	kfree(stream);
-+
+-	return ret_val;
+-
+-out_ops:
+-	mutex_unlock(&sst_lock);
+-
  	return ret_val;
  }
  
