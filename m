@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021828;
-	b=ul+es0b408ccmFDtU7cCtol9OlBqgMhZzkB5/A1/apELC+Sd7h3I41iILdJG9CuUJzhB
-	 3z4/rc5ceLBhnOIfpYnhRg/FcsdYMIWdhW+pnM95aNHvYNUj53yK7xR5OqrPx9iWRA1CM
-	 ARXWDzF9kmiJDqHX6aIS8YByN0XgjkGA7OKHrPl3nlJr+YxJ7TF2Zr5rSDIKNupgiMi1f
-	 bWg0vDCozeahndzEoCuRtKeO4dIwB0c4JQSlYJeDgC8sqYn3e7nbnWIVQvTvqEkBbkVDA
-	 dx5HdkVQJ0qquKqMGEtsQ2nJ92S2x2yXNn70uOpR45VqPNNyiGfJwBaeOW3NU7b0Crg==
+	t=1795021830;
+	b=liNwVTJ9R/gGuEvI/7UbfIMs24u6t9aM61c4RLffQlJgyk7CMcwHcTLHr05TAzjBlr2g
+	 gideaZ6orFWBcHSPTiP7fuzc3d3k/Z0O7IiUfa/42vGFnBISfL/MFqb1tO3H4Vjyos6gb
+	 J6mLHXj/6n0p0fSjSBAAtrBgF71jJd1GpW1MIdLx+LWAUTsc4sUWrgddQxONrC4P3h0tJ
+	 VX3mMMnaOjm021+Ns644pp5neokb+W6NMHSSp4iVTFTY1R32VJn0t8IYa2s6yKS8yqRo5
+	 9UxNKbU3SNntY7/76hhwiCyFCXlG4srpcd7adIaCo78yqDTm7PVy+21buIHlqEFyXeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qxa1yy7Z/T8PbS5b82KquJ2sZ2vzjPEoOgd7AR16Nxs=;
-	b=ZSuxmEp8zOS9DCPKEvVfMihOeAI7ygCH2M5QXyeXCGqZ7udYzpeaPzwivSjY2UZWtz/1
-	 kw/Qt56HcdprTPg6mJWKY++S0YlLMymPsv5qT0X/J5lvo8LBbJyvQuead3qi8bHBPZBKZ
-	 3hYsg20w/0qXeSZFruLGdUBef+7Sn6WnQug0nJ6W6UljR9e7oU0lZROxTYGLDB+tUJ2Ab
-	 O72wq1ZNNOa8WzQfAWm1ZfdZSro0PPyBiLzqICDW5R8c2zWM1Dh/ceFWndpMtpiMSRp3E
-	 qqWDFoDng4FU5oQyZ5a55K7jqdRSD1E8rsOH9bSsG7fsNX6OwpfPSCZfZJENb3UCNbA==
+	bh=IoMqjaz3gB2iO2fQI7dFnTGfp9sR61nqd19+pBvmbj0=;
+	b=ozPgEVOnV4cUqsvumDKyPIHs4LWl5Mw/u9R7PGelF+1SIfNTLILpLGx5PXHfhusic7fh
+	 wPbUq77yVmAM3V+i5dv8RDzRGw4DDf1cLVxQbc/MIT/7FnGcaqDGxX0I9WUuRo+jQ0VWU
+	 AFpMwNLNM24eOQWcPuvI9kPwJv1RNrb/uCv535Nz3EtlWjWwhTyQWjbXLHhBDE0R6DPdV
+	 LFX8JJMuAM8uYcJ15kZ/0TYjLGpfM7/hVVhcwe2Xd0C1oJT2QsaW2kQZzl6a/fryrP039
+	 09dxOzADZyjcYMcIcOCv1F3dTd+H7J9I5CTtqb1o5HYnNy/+uRpqE7XjqkvnMXBcp3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gmVpLDz/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qPII08zR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B30C606A32F;
-	Wed, 18 Nov 2026 17:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7503606A320;
+	Wed, 18 Nov 2026 17:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmVpLDz/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F6F1F000C4;
-	Wed, 18 Nov 2026 17:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qPII08zR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F401F000C4;
+	Wed, 18 Nov 2026 17:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021827;
-	bh=Qxa1yy7Z/T8PbS5b82KquJ2sZ2vzjPEoOgd7AR16Nxs=;
+	s=korg; t=1795021830;
+	bh=IoMqjaz3gB2iO2fQI7dFnTGfp9sR61nqd19+pBvmbj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmVpLDz/zd6ekDTPx8SRQwByY2Y9u/OX+9qZPhK1AFzW8XoxSY65YrU032EQo6GIo
-	 03FUdZO8nLHsaJsh/RNzCoD+5v43sfMDjdvvot4h3SX1eCFq17k1Bk+ly3iFDPvnU+
-	 qO5RNyddUBtAVtfpX6N59GXQolImYqjpzfB5X1do=
+	b=qPII08zRWdbbnSV+EQhp8esfSOCtvCMSdSVNPYVvIJCCAn7kUSW2KcHmY5cuwZEO0
+	 BuDXQT52PTBlnQA1PE3zkQdbyAAfD0dc4KxCZg36lfPxXsRJA/cIGLFho2fL8fD3Nb
+	 e8WUzSL2R9dRI+dCJoUYBAB50FSSiUZkR7Pcrrbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Prashant Sengar <prashantsengar25031@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2443/2651] net/sched: gred: keep the qdisc lock while updating the table
-Date: Wed, 18 Nov 2026 16:01:23 +0100
-Message-ID: <20261118150413.106647837@linuxfoundation.org>
+Subject: [PATCH 7.3 2444/2651] net: usb: lan78xx: avoid NULL PHY dereference in WoL setup
+Date: Wed, 18 Nov 2026 16:01:24 +0100
+Message-ID: <20261118150413.137463799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,80 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Prashant Sengar <prashantsengar25031@gmail.com>
 
-[ Upstream commit 306f788134a21a3d60c1eb872d0ec0ce7c7e09bc ]
+[ Upstream commit dacb77e32e2bba78f90a8637fd27e13e2c9775dd ]
 
-gred_change_table_def() publishes table->DPs/def/red_flags under
-sch_tree_lock(), drops the lock, and then keeps writing state the
-datapath reads without it:
+LAN7801 supports fixed-link configurations without an attached PHY.
+However, lan78xx_set_wol() unconditionally passes netdev->phydev
+to phy_ethtool_set_wol(), causing a NULL pointer dereference when
+a userspace WoL request reaches this path.
 
-  - gred_enable_rio_mode()/gred_disable_rio_mode()/gred_disable_wred_mode()
-    set/clear table->flags;
-  - the red_flags_changed loop writes table->tab[i]->red_flags;
-  - the shadowed-VQ loop frees table->tab[i] and clears the slot.
+Report no WoL capabilities when no PHY is attached, and return
+-EOPNOTSUPP from lan78xx_set_wol() before modifying the wakeup
+configuration. Keep the existing phylib WoL handling for devices
+with an attached PHY.
 
-gred_enqueue() and gred_dequeue() read those same fields (test_bit on
-table->flags, q->red_flags, t->tab[]/t->DPs) under the same root lock on
-another CPU, so the post-unlock writes race with the enqueue path:
+The issue was reproduced using USB Raw Gadget and dummy_hcd in QEMU.
+An ETHTOOL_SWOL ioctl triggered a kernel Oops with the original
+driver. With this change, the PHY-less configuration no longer
+advertises unsupported WoL operations, avoiding the crash.
 
-  BUG: KCSAN: data-race in gred_change_table_def [sch_gred] / gred_enqueue [sch_gred]
-  read (marked) to 0xffff000007ad3b00 of 8 bytes by task 110 on cpu 0:
-   gred_enqueue+0x88/0xc60 [sch_gred]
-   dev_qdisc_enqueue+0x4c/0x19c
-   __dev_queue_xmit+0x10a4/0x1ea4
-
-The comment justifying the early unlock only covers the DP-vs-DPs check,
-which the shadowed-VQ free loop relies on; it does not cover the scalar
-mode bits and per-VQ red_flags written afterwards.  Move the unlock below
-those updates so everything the datapath reads is published under the
-lock that protects it.
-
-Fixes: 6639607ed9de ("[PKT_SCHED]: GRED: Use a central table definition change procedure")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261021155434.66572-1-phx0fer@gmail.com
+Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
+Signed-off-by: Prashant Sengar <prashantsengar25031@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20261020201537.2465655-1-prashantsengar25031@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_gred.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/net/usb/lan78xx.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
-index f04f425c6c449..f3d9a7252949d 100644
---- a/net/sched/sch_gred.c
-+++ b/net/sched/sch_gred.c
-@@ -442,13 +442,6 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
- 	red_flags_changed = table->red_flags != sopt->flags;
- 	table->red_flags = sopt->flags;
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 2fed938fc7f41..af845623bf609 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1767,6 +1767,12 @@ static void lan78xx_get_wol(struct net_device *netdev,
+ 	u32 buf;
+ 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
  
--	/*
--	 * Every entry point to GRED is synchronized with the above code
--	 * and the DP is checked against DPs, i.e. shadowed VQs can no
--	 * longer be found so we can unlock right here.
--	 */
--	sch_tree_unlock(sch);
--
- 	if (sopt->grio) {
- 		gred_enable_rio_mode(table);
- 		gred_disable_wred_mode(table);
-@@ -474,6 +467,15 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
- 		}
- 	}
- 
-+	/*
-+	 * Keep the lock until every field the datapath reads (the
-+	 * RIO/WRED mode bits, the per-VQ red_flags and the tab[] slots)
-+	 * has been updated: gred_enqueue()/gred_dequeue() read them under
-+	 * the same lock, so publishing them after the unlock races with
-+	 * the enqueue path.
-+	 */
-+	sch_tree_unlock(sch);
++	if (!netdev->phydev) {
++		wol->supported = 0;
++		wol->wolopts = 0;
++		return;
++	}
 +
- 	gred_offload(sch, TC_GRED_REPLACE);
- 	return 0;
- }
+ 	if (usb_autopm_get_interface(dev->intf) < 0)
+ 		return;
+ 
+@@ -1798,6 +1804,9 @@ static int lan78xx_set_wol(struct net_device *netdev,
+ 	if (wol->wolopts & ~WAKE_ALL)
+ 		return -EINVAL;
+ 
++	if (!netdev->phydev)
++		return -EOPNOTSUPP;
++
+ 	ret = usb_autopm_get_interface(dev->intf);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
