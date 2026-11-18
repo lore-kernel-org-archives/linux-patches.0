@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056888;
-	b=V3+Xuo5VcGzcBgBz0Ksvx9LjLajfBY3a1gKXLcsdiWLxO9YgZlHd+hgw+xj5wwDRGTHR
-	 2db2Dyd0yrpynt/pvruiunkJoLpGRTd+Gb4ISUYrZrw2NRz7P+swW6ANs0/w6pEIMg7dw
-	 RwBb2EquNMI4gK7E521UC9EubfT91iHs8s5CiM3u4uKXfmSrmiavov7b8SPSyNTVMQpa/
-	 FyrgWr6cqyu66FX2A+JqgXiX2m0f9Swc4SLqTXPOnw8NgQFmegf3g3uoiDxHa3f4N00iU
-	 tbvtKBBg06nwy49/kw5K/5rfSnzwCgM4b0sNvlY+oReEzgDj83lyb7SJDpL4s2lXx2g==
+	t=1795056891;
+	b=39X+7EKx+I3BbUA95sne4G9Rof1vwlpbs/K2Qq5J+E2Oz2iMBNgp0GAZw3WidFCDrt3h
+	 GvUwyJdGcQf8tsmWE5dQhdtV4YzhIAIGxpPwTyDLSql8Os3R6UTM8McXcO1rK2BBS03VU
+	 fNAog1aVYnOjyP1zKCuCLIdJnWE29yGjsFk6xPRSdTS6mFFCzvonqCgTh/+KNArBWSnma
+	 SZ82+eKnxhnvW0KMpTqG7MycJ1tsidsEAIeZqNjOC1tFYPkK7q7CBpJXB9hqmYTTGXWhF
+	 yAAZJau6kH8OFTH7vNJI/qTuCaJAi/oeiCAriyB5PHg1Ei9pn80WDhMVmg68/sPBMoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056888;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0mSIwImKNyA1qfLs3bE/WVKOwKU3sct/li2uRNgtxaM=;
-	b=F5NKYL234r64LPUiUCrETKNnQDhYCyIjLWjc3SB+Qe0FXKJSWYiwt4Zs+hsRU5ZXjXLx
-	 cbIHVkMvP8kpvaHL8sLG5uMKUHmjOGs6/+L5nyPw5xCVrejE5C6AESsmVP47W3W7BrdpE
-	 MYiZRilVbtwwdI0kXUsp3Tix9oQtPulDYiOrz6U3hSoXprGHQQeoIqvO47vuKJ801aOmx
-	 Yx5OudhywF84oVru2znr9ta+zocEsyOXwLoYn7JN8iB/fBxisId9G6ckRX/Di5liy8MCT
-	 mqMSqVZRhB8KsEqlwAxD4/pJkIDUTt+3bjYSQP7w1WFfcJY0GcQXcBLXsSTxDgARE0A==
+	bh=p4gYoWekrV1imPjvrCUXFAki0TwldYsMJb5t1CDHT3Q=;
+	b=OS2O19PgnxNKI/uVMiUC3FqqEZfpiyZCsCP9uu9Qnr1rFeByZx7VfW9O6IX0Lxoj0iuY
+	 AsKCg2pkI/dDn/t+R3jnveWH4NBuY8ptNEG1GGadWv74hRx1KRMmiK/vhMZEJHq1QlMaV
+	 pRlBb3lrdca8YVNDkKsUCQf8LcsWbFRAntAv6+VXXPJo5GlkiNquG1bzIomgRXs5J7RZI
+	 5s7wFTaIiFoMuYgIPvoPwx0BiXsIu3X1OoZFYSB/7hmkcPTDxGX+E3kR31ZlqRlvrGWmb
+	 5I2mWSuADr535N7YkT3XYqnoxGlpF54zWAZN5kPGh4wGkJK07M73S0PjJ6eJfy6CN+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMusUHnV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zPoieMuH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7271E606A31C;
-	Thu, 19 Nov 2026 02:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BF3606A31C;
+	Thu, 19 Nov 2026 02:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMusUHnV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11AB1F000C5;
-	Thu, 19 Nov 2026 02:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zPoieMuH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7621F000C4;
+	Thu, 19 Nov 2026 02:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056888;
-	bh=0mSIwImKNyA1qfLs3bE/WVKOwKU3sct/li2uRNgtxaM=;
+	s=korg; t=1795056891;
+	bh=p4gYoWekrV1imPjvrCUXFAki0TwldYsMJb5t1CDHT3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMusUHnVRISJzjjFvPpjeBq/qf6ChbN+AoyMJZ8DzK2PvdO5uNG2SvS9QB6MFeqg1
-	 ZRYpvbGVoFnCQT8v++fRCODYu84C9/r/0dk1RKtXTWxy/o+xEDMycfnccv9lMArFrS
-	 5Qv3V2Ylv9PAK6DFLoDj5zXD5FLWSl9zs7JY1xpA=
+	b=zPoieMuH+TXi5I31AJZQpJRPm0bz2/x2+xYMLptcIbrxAr6qPkplf/BwewiRUkqkn
+	 SzwB3GV7zYFqLAidWeiKTzBHF4xaG8fcAFoDQ8FMIg5VPRBQYYCtfOLadL2mpzu9Z0
+	 OHsFYxSRCmqeKreEifjMY6sdLOWxde/GlKNDtVVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Mahe Tardy <mahe.tardy@gmail.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	"Gaddipati, Naveen" <naveen.gaddipati@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2148/2214] bpf: Fix out-of-bounds btf->types write for split BTF
-Date: Wed, 18 Nov 2026 16:03:44 +0100
-Message-ID: <20261118150136.399695986@linuxfoundation.org>
+Subject: [PATCH 5.15 2149/2214] ASoC: xilinx: formatter_pcm: Fix read-modify-write of AUD_CTRL in hw_params
+Date: Wed, 18 Nov 2026 16:03:45 +0100
+Message-ID: <20261118150136.435036068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,70 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 6c476d2b73056ed151c3f8b884c627c75999ed7c ]
+[ Upstream commit 3b54e739273752b370e49b09976da152fa3b802c ]
 
-btf_add_type() stores the types of a BTF in btf->types[], which can hold at
-most BTF_MAX_TYPE entries.  The types of a split BTF get IDs start_id ..
-start_id + nr_types - 1, so only BTF_MAX_TYPE - start_id of them fit, but
-neither the limit check nor the size used to grow the array accounts for
-start_id: the check is an equality test against BTF_MAX_TYPE
-('start_id + btf->types_size == BTF_MAX_TYPE') and the new size is clamped
-to BTF_MAX_TYPE.
+xlnx_formatter_pcm_hw_params() does a read-modify-write on XLNX_AUD_CTRL
+but only ORs in the new data width and active channel values without
+clearing the old ones. If hw_params is called more than once on an
+open stream, these fields may retain bits from the previous configuration,
+resulting in an incorrect sample width or channel count.
 
-The check therefore only fires if the array happens to grow to exactly
-BTF_MAX_TYPE - start_id entries.  Otherwise, if the module has more than
-BTF_MAX_TYPE types, the array is filled up to BTF_MAX_TYPE entries.  The
-next type that needs to be added reallocates the array to the same size,
-after which btf->types_size no longer equals btf->nr_types and the growth
-path is not taken anymore, so every following type is written past the end
-of the array:
+Clear both fields before writing the new values, and use FIELD_PREP() so
+the values cannot spill into neighbouring bits.
 
-  BUG: unable to handle page fault for address: ffffc90006200000
-  RIP: 0010:btf_add_type+0x74/0x270
-  Call Trace:
-   btf_check_all_metas
-   btf_parse_module
-
-Bound both the array size and the limit check by BTF_MAX_TYPE - start_id.
-Base BTF (start_id == 0) is unaffected.
-
-Fixes: 951bb64621b8 ("bpf: Add in-kernel split BTF support")
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://patch.msgid.link/20261028031933.277550-1-yangfeng59949@163.com
+Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Gaddipati, Naveen <naveen.gaddipati@amd.com>
+Link: https://patch.msgid.link/20261023102818.523331-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sound/soc/xilinx/xlnx_formatter_pcm.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 8e9674f625c97..eb11231428f1d 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -1444,15 +1444,16 @@ static int btf_add_type(struct btf_verifier_env *env, struct btf_type *t)
- 		/* Expand 'types' array */
+diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
+index 74a7c8e5998df..d0d1d17dadd63 100644
+--- a/sound/soc/xilinx/xlnx_formatter_pcm.c
++++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
+@@ -6,6 +6,7 @@
+ //
+ // Author: Maruthi Srinivas Bayyavarapu <maruthis@xilinx.com>
  
- 		struct btf_type **new_types;
--		u32 expand_by, new_size;
-+		u32 expand_by, new_size, max_size;
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/io.h>
+ #include <linux/module.h>
+@@ -57,8 +58,8 @@
+ #define CFG_S2MM_XFER_SHIFT	29
+ #define CFG_S2MM_PKG_MASK	BIT(28)
  
--		if (btf->start_id + btf->types_size == BTF_MAX_TYPE) {
-+		if (btf->start_id + btf->types_size >= BTF_MAX_TYPE) {
- 			btf_verifier_log(env, "Exceeded max num of types");
- 			return -E2BIG;
- 		}
+-#define AUD_CTRL_DATA_WIDTH_SHIFT	16
+-#define AUD_CTRL_ACTIVE_CH_SHIFT	19
++#define AUD_CTRL_DATA_WIDTH_MASK	GENMASK(18, 16)
++#define AUD_CTRL_ACTIVE_CH_MASK		GENMASK(22, 19)
+ #define PERIOD_CFG_PERIODS_SHIFT	16
  
-+		max_size = BTF_MAX_TYPE - btf->start_id;
- 		expand_by = max_t(u32, btf->types_size >> 2, 16);
--		new_size = min_t(u32, BTF_MAX_TYPE,
-+		new_size = min_t(u32, max_size,
- 				 btf->types_size + expand_by);
+ #define PERIODS_MIN		2
+@@ -509,28 +510,29 @@ static int xlnx_formatter_pcm_hw_params(struct snd_soc_component *component,
+ 	writel(high, stream_data->mmio + XLNX_AUD_BUFF_ADDR_MSB);
  
- 		new_types = kvcalloc(new_size, sizeof(*new_types),
+ 	val = readl(stream_data->mmio + XLNX_AUD_CTRL);
++	val &= ~(AUD_CTRL_DATA_WIDTH_MASK | AUD_CTRL_ACTIVE_CH_MASK);
+ 	bits_per_sample = params_width(params);
+ 	switch (bits_per_sample) {
+ 	case 8:
+-		val |= (BIT_DEPTH_8 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_8);
+ 		break;
+ 	case 16:
+-		val |= (BIT_DEPTH_16 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_16);
+ 		break;
+ 	case 20:
+-		val |= (BIT_DEPTH_20 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_20);
+ 		break;
+ 	case 24:
+-		val |= (BIT_DEPTH_24 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_24);
+ 		break;
+ 	case 32:
+-		val |= (BIT_DEPTH_32 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_32);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 
+-	val |= active_ch << AUD_CTRL_ACTIVE_CH_SHIFT;
++	val |= FIELD_PREP(AUD_CTRL_ACTIVE_CH_MASK, active_ch);
+ 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
+ 
+ 	val = (params_periods(params) << PERIOD_CFG_PERIODS_SHIFT)
 -- 
 2.53.0
 
