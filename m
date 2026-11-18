@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052072;
-	b=GVAP+vfVdTFvHJMIcjvrrn0rpf4cijOWlpnjiXwbbMNnBOELsaR/2/oYso/6z/lWoYuA
-	 08r8dym+vAi1Nai4pEfU1PwC4tOj0rqNP4xaTSof1/XP9Bcoqk13qQVx81egl62tAQ6cW
-	 lTBn9diYCZSlcClPkC81hGwQGFZeDWytj68eEAR8qz1i4h+HCWWTyHuqhh09QPmMCRHzw
-	 LYPCGoTRaL9OQX5A/pvVLTryFkA9HCRaZO1oUhwOTHI4JN2uU7A5mL5nrq2LlcbcrkraZ
-	 Fv2UI845O8YnGXXk/iA3/IHhGxIZUorzhsLvBkpPPzjc3Y8tS/7OTGvPVGxBveviF2g==
+	t=1795052075;
+	b=cn0zTGYG8gLYN3LG3SkssG//+DZdmBtSJRP1E7eiXu3M2F7vw0qzPZA0Hqgx97abDElY
+	 vFXJCgn6o+rYDqlzhetGlzy3GQzD6vOurnPVqoPMV1cofzyNi0k5o9WWd7Svd1n9aamrw
+	 SCDu47LI3Fxqr3doyMBZpEkIpOYOESBFNNWJ83ow4Jq3NIMNtLodfU9xpfnYchWbwbURv
+	 6U2c1kSVTtvbuF4jYSN/FzSnYi/xXzVF1ti5evOiXA1uZ/difexpkGEmQsH/tEoej0w0P
+	 0vlA0tyuTibcbuGDZd45jNBJlvbf4IQBG+b/zOesuavtcUgMRczDVsKTkUX23+ZxfiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7sOr08JGbKt7PZzdlnBUA2fQZBCigpICW/vJithZXLY=;
-	b=dU76gbcvC568Swanlz9ELjtfMFtC24hAToA8fgw1IG5xq6XIH6ZOd7EgSRj85y521Chs
-	 X7asl/sdHZAqiTxQoJXzutffDhpNQIebk/6I1wob3XGl5ges+4UgZa3GIP3MWFjwaCi57
-	 pgTL0RwnIFC1P2evhYAcySvBcnEWFml7MQ8rQgVBZOZ/IK+RQl8vK2CHb2/fPn9bhNv49
-	 2dR4Kne7Zcj+ga+Pu75ahyb665KkOtWrCjMjsGwNF0tWNns8FGMW0Y6NZA2VBam+Ua4mq
-	 SpzkZHDbmt50zhfnv57X+Xi0BEUBcQzMMe8Y45fFfXbWrbVBWRWEf3DlQj3IO9ZwC5Q==
+	bh=UsuurhDOPqi3OOl8/FrMbiqYafkxF9wxkF/3gWlpKrs=;
+	b=o4aUyPdn0CxIx/a3/pqCZOa4HUFawuQ1gwxgFu0a/boOk7gCtX/pW8zbjBdGBxWKCixB
+	 BtLkPs00ZEBAHwCYct+BJH0jbTWaJ1zWZYX8J0QAvThIr9ELsydUx8awRomxmZvP56Rxu
+	 lMCZUL9hVb8fCIxeiaY9lhgMQnXMGAKEv7FmvboyKdREZBsg11/bxvWrgt/kZcMZo/uao
+	 HZiZsFXq0wSleGYrfJ11sr0HnBqFK417SS2eb1OjKdL06UikVrvocWAILuglX3yxWnYWw
+	 SC/2hKjCZEl3hJeFTbscYGF6GOoaObZ/PzQvQSs64o7JQQxikDyt6QLZAvMD157s9tQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkrYAmIR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iDP0vTr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD901606A31C;
-	Thu, 19 Nov 2026 01:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8138A606A325;
+	Thu, 19 Nov 2026 01:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lkrYAmIR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCEC1F000C4;
-	Thu, 19 Nov 2026 01:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iDP0vTr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC861F000C4;
+	Thu, 19 Nov 2026 01:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052072;
-	bh=7sOr08JGbKt7PZzdlnBUA2fQZBCigpICW/vJithZXLY=;
+	s=korg; t=1795052075;
+	bh=UsuurhDOPqi3OOl8/FrMbiqYafkxF9wxkF/3gWlpKrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lkrYAmIRC/AjWDQvRDbStKSc7KvfpMjmoEFkdSNseC/HuJSck/su1I3Pfqv6zcFLA
-	 Kl8VaBif0i42DyIctjkkbUfarsXVqXqmnBg/7JEFDDVGdBmoov0GZOFBANXfDSCVDJ
-	 IgMCSf2BjjKUjnWdNph/bSLUgMMwaIf/rfQGdUQQ=
+	b=iDP0vTr8gVZRZa+dp2v3K3KIa/V8Aw868GnAQ5bxgi8UalHpYEISQaMlVc0pDj9h/
+	 cotjySZsQS9wgWerHPoc6XOGgi3Qoztu7Wo98dh4+zHWxfS9HJ4EC6ja33kI0ponoX
+	 xgxAOr+52W11r4In9BnWYQycKyyHN8TGMggbNBbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0417/2214] smb: client: fix warning in CIFSFindFirst()
-Date: Wed, 18 Nov 2026 15:34:53 +0100
-Message-ID: <20261118150027.540309156@linuxfoundation.org>
+Subject: [PATCH 5.15 0435/2214] ocfs2: snapshot dentry names in file and setattr traces
+Date: Wed, 18 Nov 2026 15:35:11 +0100
+Message-ID: <20261118150028.414017918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,146 +74,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 032137fe136a6073dcc699ee15fa3fd05fd77f21 ]
+[ Upstream commit 8cd3ff30659775a6831c66687a69d2b83d163591 ]
 
-This fixes the following warning reported by kernel test robot
+Patch series "ocfs2: stabilize dentry names in file and setattr traces",
+v4.
 
-  fs/smb/client/cifssmb.c:4089 CIFSFindFirst() warn: missing error
-  code? 'rc'
+Snapshot names at all six users of ocfs2__file_ops and at the separate
+setattr event. Patch 1 handles the five ordinary file-operation callers
+and setattr. Patch 2 handles release separately to preserve its locked
+open-count sample and take the snapshot outside that critical section.
 
-Link: https://lore.kernel.org/all/202306170124.CtQqzf0I-lkp@intel.com/
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 59131dd72f62 ("smb: client: fix use-after-free infoleak via the readdir resume name")
+The release explanation distinguishes its existing RCU lifetime coverage
+from name/length consistency. It does not claim that the ordinary
+callers' external-name UAF interleaving crosses the held inode spinlock.
+The release source change is unchanged from v3.
+
+Patch 1 also removes the read callback's redundant NULL-inode check.
+The two patches apply independently and leave trace formats unchanged.
+
+This patch (of 2):
+
+The open, fsync, read, write and splice-read trace calls pass the live
+dentry name and length to the shared ocfs2__file_ops event class.
+ocfs2_setattr() passes the same unprotected arguments to its own event.
+Both events size and copy a __string field separately. A reference to
+the dentry does not pin the external storage backing an individual name.
+
+With an event enabled, a caller can be preempted after loading the name
+pointer. A long-to-short rename can then replace the name and reclaim its
+old external allocation before the trace callback sizes or copies it,
+provided no other snapshot retains that allocation.
+
+The setattr inode lock does not exclude every rename: a same-directory
+rename of a source directory need not take that directory's inode lock.
+It can therefore change the dentry name while setattr records its event.
+Inline names and separately loaded lengths can also change during trace
+record sizing and copying.
+
+Take a dentry name snapshot around each of these six trace calls and
+pass both the string and length from the snapshot. Check event enablement
+before taking a snapshot. Keep the event classes and formats unchanged.
+
+Also remove the redundant NULL-inode check in the read callback.
+file_inode() returns the open file's inode, which is already used by the
+trace call above the check.
+
+The historical report below is from the read path.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
+    Read of size 1 at addr ffff88810a5b2b18 by task python3/496
+
+    [CPU and host details omitted.]
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? strlen+0x85/0xa0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? strlen+0x85/0xa0
+     kasan_report+0xe0/0x110
+     ? strlen+0x85/0xa0
+     strlen+0x85/0xa0
+     trace_event_raw_event_ocfs2__file_ops+0xf0/0x480
+     ? __pfx_trace_event_raw_event_ocfs2__file_ops+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? pmbd_probe_hit_cookie+0xe7/0x1c0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_pmbd_probe_hit_cookie+0x10/0x10
+     ocfs2_file_read_iter+0x6cd/0xb30
+     ? __pfx_ocfs2_file_read_iter+0x10/0x10
+     ? selinux_file_permission+0x11d/0x540
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? security_file_permission+0x26/0x80
+     vfs_read+0x7d2/0xc20
+     ? __pfx_vfs_read+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_do_sys_openat2+0x10/0x10
+     ksys_read+0x111/0x200
+     ? __pfx_ksys_read+0x10/0x10
+     ? irqentry_exit+0xbe/0x820
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on_prepare+0x11d/0x150
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    [User register dump omitted.]
+     </TASK>
+
+    Allocated by task 489:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_noprof+0x2de/0x780
+     __d_alloc+0x5fc/0x8c0
+     d_alloc_parallel+0x106/0x11d0
+     lookup_open+0x3ff/0x13e0
+     path_openat+0x95e/0x2020
+     do_file_open+0x21e/0x470
+     do_sys_openat2+0xf4/0x1b0
+     __x64_sys_openat+0x136/0x1e0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 0:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     __rcu_free_sheaf_prepare+0x65/0x2a0
+     rcu_free_sheaf_nobarn+0x1d/0x50
+     rcu_core+0x6be/0x1ed0
+     handle_softirqs+0x1fa/0x8d0
+     __irq_exit_rcu+0x113/0x1e0
+     irq_exit_rcu+0xe/0x20
+     sysvec_apic_timer_interrupt+0x6c/0x80
+     asm_sysvec_apic_timer_interrupt+0x1a/0x20
+
+    The buggy address belongs to the object at ffff88810a5b2b00
+     which belongs to the cache kmalloc-rcl-192 of size 192
+    The buggy address is located 24 bytes inside of
+     freed 192-byte region [ffff88810a5b2b00, ffff88810a5b2bc0)
+
+    [Page and shadow-memory dumps omitted.]
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-0@gmail.com
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0088-v7-6324344256f0c3b1c3d8-1@gmail.com
+Fixes: 468eedde23d6 ("ocfs2: Remove mlog(0) from fs/ocfs2/file.c")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: omitted the ocfs2_file_splice_read() changes because the callback is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifssmb.c | 94 +++++++++++++++++++++--------------------------
- 1 file changed, 42 insertions(+), 52 deletions(-)
+ fs/ocfs2/file.c | 84 +++++++++++++++++++++++++++++++------------------
+ 1 file changed, 53 insertions(+), 31 deletions(-)
 
-diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
-index 11a400663b9f2..36ed6906066ea 100644
---- a/fs/cifs/cifssmb.c
-+++ b/fs/cifs/cifssmb.c
-@@ -4333,11 +4333,12 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 	TRANSACTION2_FFIRST_REQ *pSMB = NULL;
- 	TRANSACTION2_FFIRST_RSP *pSMBr = NULL;
- 	T2_FFIRST_RSP_PARMS *parms;
--	int rc = 0;
-+	struct nls_table *nls_codepage;
-+	unsigned int lnoff;
-+	__u16 params, byte_count;
- 	int bytes_returned = 0;
- 	int name_len, remap;
--	__u16 params, byte_count;
--	struct nls_table *nls_codepage;
-+	int rc = 0;
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index e35d735e551d0..cb8a40a73adeb 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -84,10 +84,17 @@ static int ocfs2_file_open(struct inode *inode, struct file *file)
+ 	int mode = file->f_flags;
+ 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
  
- 	cifs_dbg(FYI, "In FindFirst for %s\n", searchName);
- 
-@@ -4428,63 +4429,52 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 			 (struct smb_hdr *) pSMBr, &bytes_returned, 0);
- 	cifs_stats_inc(&tcon->stats.cifs_stats.num_ffirst);
- 
--	if (rc) {/* BB add logic to retry regular search if Unix search
--			rejected unexpectedly by server */
--		/* BB Add code to handle unsupported level rc */
-+	if (rc) {
-+		/*
-+		 * BB: add logic to retry regular search if Unix search rejected
-+		 * unexpectedly by server.
-+		 */
-+		/* BB: add code to handle unsupported level rc */
- 		cifs_dbg(FYI, "Error in FindFirst = %d\n", rc);
--
- 		cifs_buf_release(pSMB);
--
--		/* BB eventually could optimize out free and realloc of buf */
--		/*    for this case */
-+		/*
-+		 * BB: eventually could optimize out free and realloc of buf for
-+		 * this case.
-+		 */
- 		if (rc == -EAGAIN)
- 			goto findFirstRetry;
--	} else { /* decode response */
--		/* BB remember to free buffer if error BB */
--		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
--		if (rc == 0) {
--			unsigned int lnoff;
--
--			if (pSMBr->hdr.Flags2 & SMBFLG2_UNICODE)
--				psrch_inf->unicode = true;
--			else
--				psrch_inf->unicode = false;
--
--			psrch_inf->ntwrk_buf_start = (char *)pSMBr;
--			psrch_inf->smallBuf = false;
--			psrch_inf->srch_entries_start =
--				(char *) &pSMBr->hdr.Protocol +
--					le16_to_cpu(pSMBr->t2.DataOffset);
--			parms = (T2_FFIRST_RSP_PARMS *)((char *) &pSMBr->hdr.Protocol +
--			       le16_to_cpu(pSMBr->t2.ParameterOffset));
--
--			if (parms->EndofSearch)
--				psrch_inf->endOfSearch = true;
--			else
--				psrch_inf->endOfSearch = false;
-+		return rc;
-+	}
-+	/* decode response */
-+	rc = validate_t2((struct smb_t2_rsp *)pSMBr);
-+	if (rc) {
-+		cifs_buf_release(pSMB);
-+		return rc;
+-	trace_ocfs2_file_open(inode, file, file->f_path.dentry,
+-			      (unsigned long long)oi->ip_blkno,
+-			      file->f_path.dentry->d_name.len,
+-			      file->f_path.dentry->d_name.name, mode);
++	if (trace_ocfs2_file_open_enabled()) {
++		struct dentry *dentry = file->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_open(inode, file, dentry,
++				      oi->ip_blkno,
++				      name.name.len, name.name.name,
++				      mode);
++		release_dentry_name_snapshot(&name);
 +	}
  
--			psrch_inf->entries_in_buffer =
--					le16_to_cpu(parms->SearchCount);
--			psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
--				psrch_inf->entries_in_buffer;
--			lnoff = le16_to_cpu(parms->LastNameOffset);
--			if (CIFSMaxBufSize < lnoff) {
--				cifs_dbg(VFS, "ignoring corrupt resume name\n");
--				psrch_inf->last_entry = NULL;
--				return rc;
--			}
-+	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
-+	psrch_inf->ntwrk_buf_start = (char *)pSMBr;
-+	psrch_inf->smallBuf = false;
-+	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol +
-+		le16_to_cpu(pSMBr->t2.DataOffset);
+ 	if (file->f_mode & FMODE_WRITE) {
+ 		status = dquot_initialize(inode);
+@@ -173,11 +180,17 @@ static int ocfs2_sync_file(struct file *file, loff_t start, loff_t end,
+ 	tid_t commit_tid;
+ 	bool needs_barrier = false;
  
--			psrch_inf->last_entry = psrch_inf->srch_entries_start +
--							lnoff;
-+	parms = (T2_FFIRST_RSP_PARMS *)((char *)&pSMBr->hdr.Protocol +
-+					le16_to_cpu(pSMBr->t2.ParameterOffset));
-+	psrch_inf->endOfSearch = !!parms->EndofSearch;
+-	trace_ocfs2_sync_file(inode, file, file->f_path.dentry,
+-			      oi->ip_blkno,
+-			      file->f_path.dentry->d_name.len,
+-			      file->f_path.dentry->d_name.name,
+-			      (unsigned long long)datasync);
++	if (trace_ocfs2_sync_file_enabled()) {
++		struct dentry *dentry = file->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_sync_file(inode, file, dentry,
++				      oi->ip_blkno,
++				      name.name.len, name.name.name,
++				      (unsigned long long)datasync);
++		release_dentry_name_snapshot(&name);
++	}
  
--			if (pnetfid)
--				*pnetfid = parms->SearchHandle;
--		} else {
--			cifs_buf_release(pSMB);
--		}
-+	psrch_inf->entries_in_buffer = le16_to_cpu(parms->SearchCount);
-+	psrch_inf->index_of_last_entry = 2 /* skip . and .. */ +
-+		psrch_inf->entries_in_buffer;
-+	lnoff = le16_to_cpu(parms->LastNameOffset);
-+	if (CIFSMaxBufSize < lnoff) {
-+		cifs_dbg(VFS, "ignoring corrupt resume name\n");
-+		psrch_inf->last_entry = NULL;
-+	} else {
-+		psrch_inf->last_entry = psrch_inf->srch_entries_start + lnoff;
-+		if (pnetfid)
-+			*pnetfid = parms->SearchHandle;
+ 	if (ocfs2_is_hard_readonly(osb) || ocfs2_is_soft_readonly(osb))
+ 		return -EROFS;
+@@ -1129,15 +1142,19 @@ int ocfs2_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
+ 	int had_lock;
+ 	struct ocfs2_lock_holder oh;
+ 
+-	trace_ocfs2_setattr(inode, dentry,
+-			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
+-			    dentry->d_name.len, dentry->d_name.name,
+-			    attr->ia_valid,
+-				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
+-				attr->ia_valid & ATTR_UID ?
++	if (trace_ocfs2_setattr_enabled()) {
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_setattr(inode, dentry, OCFS2_I(inode)->ip_blkno,
++				    name.name.len, name.name.name, attr->ia_valid,
++				    attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
++				    attr->ia_valid & ATTR_UID ?
+ 					from_kuid(&init_user_ns, attr->ia_uid) : 0,
+-				attr->ia_valid & ATTR_GID ?
++				    attr->ia_valid & ATTR_GID ?
+ 					from_kgid(&init_user_ns, attr->ia_gid) : 0);
++		release_dentry_name_snapshot(&name);
++	}
+ 
+ 	/* ensuring we don't even attempt to truncate a symlink */
+ 	if (S_ISLNK(inode->i_mode))
+@@ -2383,11 +2400,17 @@ static ssize_t ocfs2_file_write_iter(struct kiocb *iocb,
+ 	int direct_io = iocb->ki_flags & IOCB_DIRECT ? 1 : 0;
+ 	int nowait = iocb->ki_flags & IOCB_NOWAIT ? 1 : 0;
+ 
+-	trace_ocfs2_file_write_iter(inode, file, file->f_path.dentry,
+-		(unsigned long long)OCFS2_I(inode)->ip_blkno,
+-		file->f_path.dentry->d_name.len,
+-		file->f_path.dentry->d_name.name,
+-		(unsigned int)from->nr_segs);	/* GRRRRR */
++	if (trace_ocfs2_file_write_iter_enabled()) {
++		struct dentry *dentry = file->f_path.dentry;
++		struct name_snapshot name;
++
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_write_iter(inode, file, dentry,
++					    OCFS2_I(inode)->ip_blkno,
++					    name.name.len, name.name.name,
++					    (unsigned int)from->nr_segs);
++		release_dentry_name_snapshot(&name);
++	}
+ 
+ 	if (!direct_io && nowait)
+ 		return -EOPNOTSUPP;
+@@ -2533,17 +2556,16 @@ static ssize_t ocfs2_file_read_iter(struct kiocb *iocb,
+ 	int direct_io = iocb->ki_flags & IOCB_DIRECT ? 1 : 0;
+ 	int nowait = iocb->ki_flags & IOCB_NOWAIT ? 1 : 0;
+ 
+-	trace_ocfs2_file_read_iter(inode, filp, filp->f_path.dentry,
+-			(unsigned long long)OCFS2_I(inode)->ip_blkno,
+-			filp->f_path.dentry->d_name.len,
+-			filp->f_path.dentry->d_name.name,
+-			to->nr_segs);	/* GRRRRR */
+-
++	if (trace_ocfs2_file_read_iter_enabled()) {
++		struct dentry *dentry = filp->f_path.dentry;
++		struct name_snapshot name;
+ 
+-	if (!inode) {
+-		ret = -EINVAL;
+-		mlog_errno(ret);
+-		goto bail;
++		take_dentry_name_snapshot(&name, dentry);
++		trace_ocfs2_file_read_iter(inode, filp, dentry,
++					   OCFS2_I(inode)->ip_blkno,
++					   name.name.len, name.name.name,
++					   to->nr_segs);
++		release_dentry_name_snapshot(&name);
  	}
--
--	return rc;
-+	return 0;
- }
  
- int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
+ 	if (!direct_io && nowait)
 -- 
 2.53.0
 
