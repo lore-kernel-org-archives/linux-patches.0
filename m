@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021702;
-	b=BhZS/TEqueZ0251qS0beb5JIj7z6Rwh3dqsowl4wLT0n+LDXmLJ70ioj7kr5uKxETZCv
-	 +iBOUdPkfo3PFYiHl8td+btUJnh5kVOYWK4DKeQGyOa7z6mLNxVud3lShZfSwQKk8Yj5m
-	 s1004Cs4TCApTt8dxjHdRsqDUoDBrqBGmDqbNgzstvgr5WJpvQoCfaU/Pdf5j10UZYLqG
-	 IYRC1FFT7JAKT0gONe5C6YbIcshfH9AD3OJzcHvQQLXCHbt6POSML360NuqinEEIjXGHr
-	 cclEGbi+HQMXN7P+eSFLXVKIcu3OhIuCo5v25oR+fgOUNjkoe2iVAuLVKPvwG+dz6/A==
+	t=1795021704;
+	b=3LHftCBhZqA8K4/iRMHzSIctgfiBGWzx9V1U3/1VLccCu9TMsX7kXD2yXN7+2mn6pVOt
+	 n772DrP63B85wZyDGjwtJyjaK45S3goN6ZBAQ41GvXhDbh8UJ3JLV+1yVxZ9SL6eHvBT9
+	 2wfEhdLGiDURHXC4T3c2CoqxziVur2EbXWfnuFkxoE/GxX+gIK/EWD+JwKdVMEvVoCvGE
+	 IIEwuch6595jjiTjgbJljIWslJdiOReJMpdECpzr8gVTphXyeS4lfN0Pchp8a8Wt/DDIU
+	 o61Pl85XcvvGbPjU20u+O/Cx4yXlHYiEKftWuPLN3bnIV7yxSdP6lqvWPbsh+Z2lGjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021704;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u6TqfuwI0w1EsRPXhOpKxz1nbPmwEGIdCmdFNmutubE=;
-	b=KvbxiSDqp//nIS1dlmCbndllV79a5feT5v7DPvwh0E+6FmSGYrq1TfA/KcksU1AcbUJi
-	 XKZMxETMKPXcpdJrKSqjIfCaLbbsnmUiGXqphZzvRQih1b1dzoTc3vrkg8ixh9o1j/pP2
-	 MUUlIw9RTKZ/Hdkx4M05Acn1I/onGd+OZN1Yv63ZQpRL8ef7pduRafBxKNqHmjRBcRGsS
-	 BkGf77JcADQyhgRK7LGXaXkQfqche7a9dz0l/UJcY7CN/TbZaHjCcsWNKUNueFSJmoUPr
-	 1p6AP24w2+XjSDJTBwGRnLE3OtKW4l+IRKCl0pkH7Zcmr/e2pjTPQtvwnQMfJ2JSwlQ==
+	bh=INWPiVcf4GWx7MjCTzeAHBdRCQLxN+8SEkW8YFMkoA8=;
+	b=2y08A3WrhemWI3vm07BV6dZ2rbZLBAukFsSAT0s6A6+/ZKMvWahOByAbQ6f1xJKLgiy7
+	 CJHx1JEBR9LHRwTfMQg+VutFHPRWJUFeMM11/IVfEL5w69OktSenjPee47ZGnlDwdkj1H
+	 EBWHTdTn80C/2oBFRLYM6lXBvRHAlHVssN7LF7SXCL09vQIG4ZiMVxqvtlj33PTde+L1F
+	 reFDGfPHBwJJwSq39wNINn5tf4HgC5Ax6pwNvCIigT81tWrPg8iqxzkHjlE8OyL4+rMmX
+	 KJGbEjhWbxVCeDeIcpHvHnXz1KbukrG5oh6zLjg6Tv76yIj38jwq2CBuim1Mx2OdV6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAYzd2Ov;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWhPyrfl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D8C606A333;
-	Wed, 18 Nov 2026 17:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAC0606A320;
+	Wed, 18 Nov 2026 17:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAYzd2Ov
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B191F000C4;
-	Wed, 18 Nov 2026 17:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xWhPyrfl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E87A1F000C4;
+	Wed, 18 Nov 2026 17:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021701;
-	bh=u6TqfuwI0w1EsRPXhOpKxz1nbPmwEGIdCmdFNmutubE=;
+	s=korg; t=1795021704;
+	bh=INWPiVcf4GWx7MjCTzeAHBdRCQLxN+8SEkW8YFMkoA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wAYzd2OvXQMKAGmf3/64/Vg3Splo4Y/M9cWIEDrKHVizCVQG/LniPzH5SZdTMW6/Z
-	 gNXm9csLxBhX7s3Gl1AdRa0wbSppl9jXKP7w5qNbKbTSN4XToMroL+xEIzIpid+UaQ
-	 2YIx+mYAQ2dYHUptz6sdzoBBgROzcgfYwKlQVHd8=
+	b=xWhPyrflPf3mBSRaA6HxQZ5VkoPD2bJTY/aRBqw2kBow/+Qt/ZgwHlYKEiM3iUqGG
+	 kdVwoebTM5VZxMWHp2pZSKzVKX3WAovp9JwMMlP1flRtzGwbNsuZNkJv+8BS/HfYlM
+	 I9jEC9seoxM57TTjYLKaaVIPVC71H5XJBFb/dqNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Ren Tamura <ren.tamura.oss@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	David Carlier <devnexen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2399/2651] ALSA: us122l: mark hwdep mappings VM_MIXEDMAP
-Date: Wed, 18 Nov 2026 16:00:39 +0100
-Message-ID: <20261118150411.729498101@linuxfoundation.org>
+Subject: [PATCH 7.3 2400/2651] tools/cgroup: sum shrinker object counts across NUMA nodes
+Date: Wed, 18 Nov 2026 16:00:40 +0100
+Message-ID: <20261118150411.759536240@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,56 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Ren Tamura <ren.tamura.oss@gmail.com>
 
-[ Upstream commit bbde9d5bdd2d7cf94707b2a8bb466f2e074f9db2 ]
+[ Upstream commit ae2514c95518b39b36fa463d855c74f29c91d064 ]
 
-mm has recently moved to a strict model which requires any driver which
-clears VMA_MAYWRITE_BIT to be mapping non-mm-managed memory
-(VMA_PFNMAP_BIT or VMA_MIXEDMAP_BIT), failing any such mmap() with an
-error and a kernel warning - see "mm/vma: only allow mmap to clear
-VMA_MAYWRITE_BIT if not mm-managed".
+Each row of a memcg-aware shrinker's debugfs count file contains the
+cgroup ID followed by one object count per NUMA node.  memcg_shrinker.py
+uses only the first count when sorting and displaying entries.
 
-However, simultaneous to this, commit 71c610aeb177 ("ALSA: us122l: Prevent
-write upgrades for read mappings") updated us122l to clear
-VMA_MAYWRITE_BIT without marking the region with either VMA_PFNMAP_BIT or
-VMA_MIXEDMAP_BIT.
+This undercounts objects on NUMA systems.  An entry with counts of 0 and
+23 is treated as zero and omitted from the output, even though its total
+is 23.
 
-vm_insert_pages() and friends set this automatically, however this driver
-maps its pre-allocated pages from a fault handler, so never calls these.
+Sum all count fields after the cgroup ID so that the displayed totals and
+sort order account for every node.  Single-node input retains the same
+result.
 
-Simply set the flag in usb_stream_hwdep_mmap() to resolve the issue.  This
-correctly marks the mapping as one whose pages core mm does not manage,
-which has no meaningful impact for this driver beyond preventing the
-mmap() from failing.
-
-Link: https://lore.kernel.org/20261023-fix-us122l-mixedmap-v1-1-e7bdd053850f@kernel.org
-Fixes: 71c610aeb177 ("ALSA: us122l: Prevent write upgrades for read mappings")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Link: https://lore.kernel.org/179074810112.139422.9274126921568167859@gmail.com
+Fixes: d261ea23533b ("tools: add memcg_shrinker.py")
+Signed-off-by: Ren Tamura <ren.tamura.oss@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: David Carlier <devnexen@gmail.com>
-Closes: https://lore.kernel.org/20261018025905.201296-1-devnexen@gmail.com
-Acked-by: Takashi Iwai <tiwai@suse.de>
-Cc: Kazuki Hanai <hnkz.64@gmail.com>
-Cc: Jaroslav Kysela <perex@perex.cz>
+Assisted-by: LLM
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/us122l.c | 2 +-
+ tools/cgroup/memcg_shrinker.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
-index 9b4ec9bdc1383..6e491736ca5ba 100644
---- a/sound/usb/usx2y/us122l.c
-+++ b/sound/usb/usx2y/us122l.c
-@@ -204,7 +204,7 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
- 	}
+diff --git a/tools/cgroup/memcg_shrinker.py b/tools/cgroup/memcg_shrinker.py
+index e81c3017ada96..714772449c6ba 100644
+--- a/tools/cgroup/memcg_shrinker.py
++++ b/tools/cgroup/memcg_shrinker.py
+@@ -31,7 +31,7 @@ def scan_shrinkers(shrinker_debugfs):
+                     items = line.split(' ')
+                     ino = int(items[0])
+                     # (count, shrinker, memcg ino)
+-                    shrinkers.append((int(items[1]), shrinker, ino))
++                    shrinkers.append((sum(map(int, items[1:])), shrinker, ino))
+     return shrinkers
  
- 	area->vm_ops = &usb_stream_hwdep_vm_ops;
--	vm_flags_set(area, VM_DONTDUMP);
-+	vm_flags_set(area, VM_MIXEDMAP | VM_DONTDUMP);
- 	if (!read)
- 		vm_flags_set(area, VM_DONTEXPAND);
- 	area->vm_private_data = us122l;
+ 
 -- 
 2.53.0
 
