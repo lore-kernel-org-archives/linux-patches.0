@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018351;
-	b=ofRzBngw1C8VC+3bwzYcmiWkBfukigeB+40xuf4+1tiax9D1+hnQbzqoZFIJ9Lj7AfyW
-	 eb66lOaFq6PvU314uWzQtbtHJtCkE5WsMnz+4l8Q/FfaliGl+XB9r+CSnfQIN3TXJiXdT
-	 tYw4xGTcsJ370ebyLp3jnElELTbGbRCDJkuL3wZOZ727Mnad17xOUwG7Wc9honmWTWkXJ
-	 nDw1JYDpTr9Z16zyzQ3PkMz9zC7xpROxXS7eAWWhQBFEfFa/v/fxX3KuC6v156+eIa37s
-	 NhQa8yeETbHUigofk80/9z2h0l4YCZPXJaOY1TGA/i1U2YXYKrnTEdRIlcYOjqsctWg==
+	t=1795018354;
+	b=WCLzDoTGD96zID3ONTzBPvBIk5vq/uwODXN7dAVNhGJjkmcCwivVcUsi/J2CIiIoMhMX
+	 nWpwhcMe2Pf/99uDFDsv/9Z+Z4qa8udsNVrwZ4p1XjH1nYt9j89pAzsodkNjOKxg7oI6A
+	 qEuu2tB7t5rw3t8ApP29NxCUl/fZlbHFR++j3ol0Ea18QwxvnPVcxNk+JMlVPV5LF4yy+
+	 MgFqI4UqKfvV5PszeL9ncUpKT5kukIfMAJoN4YRHvFObkQahNqnzneiEqqyb6Ip14BBG8
+	 eDyfKgxrYYFTD4EpxFBZIOFSKBfb3PCidUrRxQm/x6f822YvkmKikJs4vZC5nB2aAjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018351;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XR+KdZimLkKilw6DzTCmgBJfYV/BbHN/rSL6Kr5Y1EE=;
-	b=0/GLEAJxUIwOnnvdBjHSLDbK7VO0a+SMGiCFCwqnGRjGhteg0hjNeMkAD1HkViCF/Rrt
-	 ToNhC+T5qT9u0jsGjGRcxA9sHLPI4Qs3MDRp91nBJUKcBttInwURRXwRhL1t94rVk25Av
-	 6NodJjAKltslaly/SJkKtSSxoCh4/3Jzj9MnRJjbSY+263/LmNPllhikOPUCF0wvY/QyV
-	 3v7XqsaWQcZyf5dzs5bCk65hSX51Y1oTn+3mCvrVMFL3cCBqr7jq1Q2Y6GVtl37LUBF+1
-	 sSx/3nE9Q7f9H5Sf6a7RU+2ADs9y3olyFMuKk1bH7UR/JwM1FDccXwp/xKSYvdTCRaw==
+	bh=NrEq7CssJenvXRakUQvt0FTUFT8ddIt2cv5QNQXrjxY=;
+	b=XoCs8TzY1qbFOCeWJ6j3GIgqIBvbi/tPzqaaQiCXqiS08Ej+oksRSeK3weQDAbHg4HxK
+	 FJ9U7ZdDtMbOaK9kV5NrCvWXpZrmnBFuOeY8V4udM2RfBB/8s+qyCVrEy1UfNOLVQgM4f
+	 9BVchsABbMktQ5Re4lADS7dv13/PiRLr2ic0LW6Uz8rvnaCnyd6gUl4yjEUoAxACNVANY
+	 sJ84OacZyO1tepXgQ8QLjJxj9f/rs8qHJymDDeN+OkEwGPmj9L7ONiQDS5DNLEUS95rT0
+	 JQp/IS3esQstv7Q8SCnAaUoqz2HA+x0htzkBGoNNf8i81Cmp8Cz9lOFvB6i61+/uSPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0GTeLsD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HC6lBLw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAC3606A31C;
-	Wed, 18 Nov 2026 16:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8434C606A325;
+	Wed, 18 Nov 2026 16:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0GTeLsD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93AC1F000C4;
-	Wed, 18 Nov 2026 16:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HC6lBLw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973141F000C4;
+	Wed, 18 Nov 2026 16:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018351;
-	bh=XR+KdZimLkKilw6DzTCmgBJfYV/BbHN/rSL6Kr5Y1EE=;
+	s=korg; t=1795018354;
+	bh=NrEq7CssJenvXRakUQvt0FTUFT8ddIt2cv5QNQXrjxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L0GTeLsD8MPNyk6XhiUJkBB3oE8RaIteudQ1XEQXnA2Eu73xi1L0qkM0RplmcFRjG
-	 fVRIpCzVC6BFYvryLg6JSkqqDfXgZrAe+YOLQ4sAsYWK7fklWPS33PfvS5Rxw+EDkb
-	 mJvnLCIGZ0XRBOMVyU9FqAdizciI9LGDxg4I6QzA=
+	b=2HC6lBLwH/CSISxGHnH9cl1W4taCy6GIwsNVD3s8+EOtKatlh15CdEgoF14GKdD5E
+	 nFKjP0eldOsjNVzXtCcC6DuXOWqrgrtNjqYGB0F2EAnCqU+YHmoVhmxyWcTtclMuYU
+	 baBtw2ZMJ0qVcE8nLcbPcX+tAn2tjkGDqI7/CFGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.3 1208/2651] phy: rockchip: usbdp: Limit DP lane count to muxed lanes
-Date: Wed, 18 Nov 2026 15:40:48 +0100
-Message-ID: <20261118150331.480248770@linuxfoundation.org>
+Subject: [PATCH 7.3 1209/2651] phy: rockchip: usbdp: Add missing mode_change update
+Date: Wed, 18 Nov 2026 15:40:49 +0100
+Message-ID: <20261118150331.518610514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,44 +73,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 443997ca8d797375ff35e8f3ad3828799e88f71b ]
+[ Upstream commit 5def5d61ea5ac6f391364f6fdcff13a27a52026e ]
 
-In theory the DP controller could request 4 lanes when the PHY is
-restricted to 2 lanes as the other half is used by USB3.
+rk_udphy_set_typec_default_mapping() updates the available modes,
+but does not set the mode_change as required. This results in
+missing re-initialization and thus non-working DisplayPort.
 
-With the current user (DW-DP) this cannot happen, but as the check is
-cheap and users might change in the future protect things accordingly.
-Not doing so would corrupt USB3 usage by the following code configuring
-the voltages.
+Fix this issue by introducing a new helper to update the available
+modes.
 
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-phy/20260612165546.98E1F1F000E9@smtp.kernel.org/
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://lore.kernel.org/linux-phy/20260612165546.98E1F1F000E9@smtp.kernel.org/
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-12-80e2c11d1ce8@collabora.com
+Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-v15-10-80e2c11d1ce8@collabora.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: b1ca8de219ae ("phy: rockchip: usbdp: Properly handle TYPEC_STATE_SAFE and TYPEC_STATE_USB")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-usbdp.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index ce2b74a288017..d3ebd9ed56dde 100644
+index d3ebd9ed56dde..fd11f294be074 100644
 --- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
 +++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -1101,6 +1101,9 @@ static int rk_udphy_dp_phy_verify_link_rate(struct rk_udphy *udphy,
- static int rk_udphy_dp_phy_verify_lanes(struct rk_udphy *udphy,
- 					struct phy_configure_opts_dp *dp)
- {
-+	if (dp->lanes > udphy->dp_lanes)
-+		return -EINVAL;
+@@ -615,6 +615,15 @@ static void rk_udphy_dp_hpd_event_trigger(struct rk_udphy *udphy, bool hpd)
+ 	rk_udphy_grfreg_write(udphy->vogrf, &cfg->vogrfcfg[udphy->id].hpd_trigger, hpd);
+ }
+ 
++static void rk_udphy_mode_set(struct rk_udphy *udphy, u8 mode)
++{
++	if (udphy->mode == mode)
++		return;
 +
- 	switch (dp->lanes) {
- 	case 1:
- 	case 2:
++	udphy->mode_change = true;
++	udphy->mode = mode;
++}
++
+ static void rk_udphy_set_typec_default_mapping(struct rk_udphy *udphy)
+ {
+ 	if (udphy->flip) {
+@@ -645,7 +654,7 @@ static void rk_udphy_set_typec_default_mapping(struct rk_udphy *udphy)
+ 		gpiod_set_value_cansleep(udphy->sbu2_dc_gpio, 1);
+ 	}
+ 
+-	udphy->mode = UDPHY_MODE_DP_USB;
++	rk_udphy_mode_set(udphy, UDPHY_MODE_DP_USB);
+ }
+ 
+ static int rk_udphy_orien_sw_set(struct typec_switch_dev *sw,
+@@ -1363,10 +1372,7 @@ static int rk_udphy_typec_mux_set(struct typec_mux_dev *mux,
+ 			usleep_range(750, 800);
+ 			rk_udphy_dp_hpd_event_trigger(udphy, true);
+ 		} else if (data->status & DP_STATUS_HPD_STATE) {
+-			if (udphy->mode != mode) {
+-				udphy->mode = mode;
+-				udphy->mode_change = true;
+-			}
++			rk_udphy_mode_set(udphy, mode);
+ 			rk_udphy_dp_hpd_event_trigger(udphy, true);
+ 		} else {
+ 			rk_udphy_dp_hpd_event_trigger(udphy, false);
 -- 
 2.53.0
 
