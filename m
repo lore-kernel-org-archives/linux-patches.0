@@ -1,65 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046966;
-	b=clYUwdlac8UKQCdmxY7XVeUBlAUk5YIpxryflJ/XVLyt48c7imQH15R0vKsxA0CoSaQZ
-	 LFLYM3sYAVJKj/mEwNM9JL0JJ6FOJzv8WUTJy5313Alp5WOlKSFyu7I6XxKTuZEaiDEwl
-	 +335r1C1m46wuxxMSZ5x9QXLRz01lzRWr154sJiWsz0r9br+EQEu4Cb9KbUamwqSUEujL
-	 OfySZzbxHJcAn+H1Yl5hycfcweCyjajzYLI1XADZao+Ru/kQ8jrNaCUKb7Xj/4YNdI8lW
-	 kbJDRZw2CdH/ah2qj1csVjESVl2CkLj+f+/KgYjUVY63BrSFycoYa4MX1XC5K4Batag==
+	t=1795046969;
+	b=wqdN4Mef9AuRsj+Cz/W37JJ+JBT8n+yMxVfdGCTHbQjnHVkX3UGWITYcZ4Tl7JNtDI6N
+	 Muz8893Pa+/eadtLptkfCRlff3A2ZjImLbgUwVHzT3s/s09nZw5Ckt5rkO2txf/ow5OKW
+	 6sH4m1LWYGgt0+8ql1Pq18VW9O+kWDSwnTfOhOeWDgusb2Uu022JBxFXADR1YWv7MBE+2
+	 24AAjITF7NJKUfrbSXznWzshRpc0pz+8E6KxBeX83yJmWhKTgBZBuh7pbqRdiWIazKB5u
+	 Ju3ofiqNJVDkqV/oeEpwnOv70NjNWdRKNTQRrnvLlOvrWqAvBjAz83zsanVVcLQQGkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bzI7Ic6G8uW3IRP6gV3DAdT2aJUv9Xd9PywTqo7WT4g=;
-	b=lJoEzHsLqkxEhg3vPLQpf112PYk2kYZgbamdlXPLNxfWIjmywxy5daEnOTgu/dXhIV7D
-	 oh5XDXG03ut2xia2AhOt3MQoF/mrphsBwVBvgoTK1L3s3AO8x0XIsAZ1Uh1GiIOvHZGoo
-	 iL4TZxZ3idj9SuIvYL5mXMlx20KGiVdMqr2Lv8HntRUXxyrFZTK1h/7zAlGzEEGI9n7TH
-	 +XUbhxRpw7py5d2Fyq/u1Y0GiGWyxqjImMh1CyPIUyg6nKKdYZ6TkhVfDFzpUiR0SK2PT
-	 AQod7qg60RmrtrWm6t/gtrEyhExQQAZDmYPGkWJxxrEQkFx47PGa78pG4ivGQ1AXMtg==
+	bh=T0q3A0webdV+bBNvXxldaKvMSh5Z+MCqf/Gj27JsZPs=;
+	b=WxEmeP+ULyxHV6/OtDRIYYupL8MqPQRt5ej3DLxlnZUkgkF3l8OyFN6+GseSXEesC5Q+
+	 sZYR+RuD3ysuKMWGmk/IFy32n2dA26pmBuwWSXatJoQGmiV7D/6SFzPIvMRhES7IdtV8b
+	 xL376Lv6HzLy2mUFbZksAkmUp0E1KaHej7Yj4EguMGvRfzPI2WDSEQCpz4FANoAhnCUi+
+	 aFMmgTZHPBm951/PwWkyXKRMbnJZbqanirMy3oUGSxn+akEg7JZ6XBFKU3SaUqcAz4P+X
+	 ae5M0be5Q19CjHuJq1nGrLEewuXBAPXFURBZk4vyc98gstGrSdj69o1H5Smlsiox86Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r3NCF4gr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iEK0tlwz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46567606A325;
-	Thu, 19 Nov 2026 00:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AB9606A320;
+	Thu, 19 Nov 2026 00:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r3NCF4gr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7696F1F000CE;
-	Thu, 19 Nov 2026 00:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iEK0tlwz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8491F000CA;
+	Thu, 19 Nov 2026 00:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046966;
-	bh=bzI7Ic6G8uW3IRP6gV3DAdT2aJUv9Xd9PywTqo7WT4g=;
+	s=korg; t=1795046968;
+	bh=T0q3A0webdV+bBNvXxldaKvMSh5Z+MCqf/Gj27JsZPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r3NCF4gr2BdZX6s++uenFMyzGGEGgh4vdX7dRSCTGr8SHhvuidonGPll21YB0Afky
-	 TVSOUZgrbpA0c7ERGqT3CazE20V/Kd143h9xUoiVs/Jh4QCu55H1xl132hsHt9n2dW
-	 UMJA8ZVxI5RU3ktMW9cdJPSW0LEO1VcCWHeMOAwQ=
+	b=iEK0tlwzev2sR6bIrqVdc/7pqNjT+NHBWpSAFGeNIFeyr4KNPbKb8iFrnSWGiw/QY
+	 NqLV7s3TekI0GEDrGRwlk04iUBjvCVkh0E9Ws9qfCM8XSKb7ARXbSZ0qD+mtNschPl
+	 DUUhn962jYup7GjTlefh47XZHySmc8ZUjWbZEXy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	odys.yuan@gmail.com,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1419/2857] mm/migrate: untag addresses when querying page nodes
-Date: Wed, 18 Nov 2026 15:40:53 +0100
-Message-ID: <20261118150252.416742986@linuxfoundation.org>
+Subject: [PATCH 6.1 1464/2857] serial: sc16is7xx: add comments for lock requirements
+Date: Wed, 18 Nov 2026 15:41:38 +0100
+Message-ID: <20261118150254.027124299@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -81,56 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 7d8746d7dc9cc4003661011424e5880ea7ae364b ]
+[ Upstream commit 42405cb77fd35b5acc0e5a11d74eef68c2afa484 ]
 
-When move_pages() is used with nodes == NULL, do_pages_stat_array()
-uses each page address as-is for its VMA lookup. A valid tagged address
-therefore gets -EFAULT in its status entry instead of the NUMA node
-reported for the corresponding untagged address.
+Indicate why lock needs to be asserted when accessing
+MSR register, as this is not immediately obvious when looking at this
+register in the device datasheet.
 
-Strip the tag before the VMA lookup while holding the mmap read lock.
-Use untagged_addr(), the helper available in 6.1 and already used by
-the migration path.
-
-Link: https://lore.kernel.org/20261026195330.46757-1-dennylin0707@gmail.com
-Fixes: 057d3389108e ("mm: untag user pointers passed to memory syscalls")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/r/20260721183257.706661F000E9@smtp.kernel.org
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <odys.yuan@gmail.com>
-Cc: <stable@vger.kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://patch.msgid.link/20251027142957.1032073-15-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1c41d09dcd07 ("serial: sc16is7xx: declare MCR and IER as volatile registers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/sc16is7xx.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 72ee6896a2cb2..09acee0c43569 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2168,7 +2168,7 @@ static void do_pages_stat_array(struct mm_struct *mm, unsigned long nr_pages,
- 	mmap_read_lock(mm);
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index ccac831bc69e2..c55cad61ff0bd 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -530,10 +530,10 @@ static const struct sc16is7xx_devtype sc16is762_devtype = {
+ static bool sc16is7xx_regmap_volatile(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+-	case SC16IS7XX_RHR_REG:
+-	case SC16IS7XX_IIR_REG:
+-	case SC16IS7XX_LSR_REG:
+-	case SC16IS7XX_MSR_REG:
++	case SC16IS7XX_RHR_REG: /* Shared address space with THR & DLL */
++	case SC16IS7XX_IIR_REG: /* Shared address space with FCR & EFR */
++	case SC16IS7XX_LSR_REG: /* Shared address space with XON2 */
++	case SC16IS7XX_MSR_REG: /* Shared address space with TCR & XOFF1 */
+ 	case SC16IS7XX_SPR_REG: /* Shared address space with TLR & XOFF2 */
+ 	case SC16IS7XX_TXLVL_REG:
+ 	case SC16IS7XX_RXLVL_REG:
+@@ -768,6 +768,7 @@ static void sc16is7xx_update_mlines(struct sc16is7xx_one *one)
+ 	unsigned long flags;
+ 	unsigned int status, changed;
  
- 	for (i = 0; i < nr_pages; i++) {
--		unsigned long addr = (unsigned long)(*pages);
-+		unsigned long addr = (unsigned long)untagged_addr(*pages);
- 		unsigned int foll_flags = FOLL_DUMP;
- 		struct vm_area_struct *vma;
- 		struct page *page;
++	/* Lock required as MSR address is shared with TCR and XOFF1. */
+ 	lockdep_assert_held_once(&one->lock);
+ 
+ 	status = sc16is7xx_get_hwmctrl(port);
 -- 
 2.53.0
 
