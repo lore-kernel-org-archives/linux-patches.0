@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059065;
-	b=cv1ulY9sy92pBPjDJ4TJC/VhP2ndsluhmwlv6dgT1RiQh0t4Bmlet89lG1At/9M4R63w
-	 IrzUIVRfon8oqvPzAwl0MxLusi+BNG7bEB0sDmF1eM/JGCFxYlkeaLFO+eOsKMs0kJLuN
-	 Nm2NBDriT4bKiU6Vrzg1afmBvA2ml+aWxm+IYLUxesvyKQlxdB6DarQx8C8dbXNMrhrRX
-	 brkyNw4crlgDWLmnBSsx+JtJIHt/mJJuQgREokZOmwfNT8GPS5UEdIuwo6jHHTe6JUOP6
-	 vQgYuULlqGXa2w5VJ+ZCA3IMHk8sxAL0t5/3/c84ATC3G8iYJ07fsOiVATPaO9UZiqQ==
+	t=1795059068;
+	b=EeOBkGpawRDv7iDH5uOJ87fysSRPUmRSvM8cZEdetb3dgFFekBplTU+lDHGcFuMHt9Ej
+	 cNS4PjZEeYeppFyGXM67N2EpT5zXpxaUAcgkkdk8HdpDpVSofwTtyPy4jAWe64Tt8AaTb
+	 TsA9kJUxVdRaFMMOO3GDTK7vrnNlo0ygMed6gcfdaNqSHYeBK6jE7JiqrxKGt0izbTm4w
+	 9uGzDWAefMFhZvEA67SlXO1k8vYpQ1oQeRQY5xiydnEYeR6fUyjYz+5keh9W3Mkqn+XDT
+	 qkrg3AQ3KLjsJH++gbA54etjSN+o/Laov/WdeqjY60gTdOsTtPgV901urSWMUxSnq4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w2wcI4Zsa6BLmlI7YChjvs7JdG3gsV11ZDDMaHsO6LQ=;
-	b=jJv+YN5us2NkEzhslhgImYls9sURUVrjT5ishBHCgl91krPlWMvZvFn4p46vL7X9QQbE
-	 YWaCaNjNE4J6AUaACFIOA60IcI0OzxibiFQYpnfskkeWJGoR292rG7RhQGfFxQMOu729i
-	 8u+JoMBf+WYL8XDeXb5d4vh0UNlLbmAUJGYPIN+KXNHz462t0p8YdyHsCS8D3a0+66NfY
-	 KXas9ow0dHCuJoWbfhGzKrGAO4ZN1xaWYHjapFyPX7f7cQdxq4vXEWqDLhwuDieWPXjc1
-	 6XJe+gyF52PIXiwBpLAXzeTbuKV93WdkaOucvDf94VOMz8VuJ6ukAk8xxkIL6b9JmuQ==
+	bh=Tsm1myuMFx86yAuxlVhEDH/ksfbzRp8ZPhNxSddsL3s=;
+	b=TxnLR/r2TCZPNbftJq6569Fx+rIvzRMVuSioyVX3nV2iR7EaPvyfVIUffpSvP62gw0kM
+	 jbXZxd6ohp6oJHtbBnmOU+PwKLKI9y5auQ7l2sl81BxwEuOBbryaSQZ9A6HJNNDZP0YcC
+	 pOQ+uhreG9te6x7GWwyPSrolCHyMHKnrZgPa8csTTFHo4FBog/CK9lRpan1lLKXbVIdnF
+	 ecCC/8EQUuyo1N5fQ8ZChkOWZi/2vXaTc2fllIqaMxiBDvnRN01uwfFmyhfB9RgQ8HAzZ
+	 vTTEl4RBzZ434fJZZcqOMlEJXJz0h2zZN5+oYmjKMtjA34zAEtR/IG77v51IJdHCxAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kmtQnXKS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g22rJKnq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA34F606A31C;
-	Thu, 19 Nov 2026 03:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B61606A320;
+	Thu, 19 Nov 2026 03:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kmtQnXKS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5711F000C4;
-	Thu, 19 Nov 2026 03:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g22rJKnq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC1A1F000C4;
+	Thu, 19 Nov 2026 03:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059065;
-	bh=w2wcI4Zsa6BLmlI7YChjvs7JdG3gsV11ZDDMaHsO6LQ=;
+	s=korg; t=1795059068;
+	bh=Tsm1myuMFx86yAuxlVhEDH/ksfbzRp8ZPhNxSddsL3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kmtQnXKSTS1NisuGfib9L2OfLE9j04nzz5GFogsf8xHTl8NUoGUiF5POQ0AcqcHQm
-	 hQBp1e9TEFX3lL6D0FWffqJ1I0EaCHgOoSX2dqabD3ylxQwJBRw6CcN2zcGXLNHo8X
-	 uFCPXWrVrLxHiMMePRfm5ePH4g5KtTwqlFSs/8IQ=
+	b=g22rJKnqBGlrI3qpj3uHzvtmDrKCXwxHxBUvObtMuFloGmy1NPPCAmDCVlWo+gtma
+	 EoVWWbtmswdRdtWRoAHFVATA41KpvLt2XWNz5289+hMbnyX1DcDGD1epCMQMHNM/2i
+	 aOWRYsc6YedzsFRtOTj0MZz6H2LLabr8apZcw6Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Bui Viet Dung <dungvn2345@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0667/1848] media: mediatek: jpeg: Avoid context access after job finish
-Date: Wed, 18 Nov 2026 15:45:05 +0100
-Message-ID: <20261118145943.809962076@linuxfoundation.org>
+Subject: [PATCH 5.10 0668/1848] Bluetooth: selftest: Pin module for selftest debugfs file operations
+Date: Wed, 18 Nov 2026 15:45:06 +0100
+Message-ID: <20261118145943.846102424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,55 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: Bui Viet Dung <dungvn2345@gmail.com>
 
-[ Upstream commit 7c7f31405b76acd95a628c834ee8a2d6da439782 ]
+[ Upstream commit 64aabf94ecccb1120a63b4ee5a6761871a181a41 ]
 
-v4l2_m2m_job_finish() publishes job completion and wakes waiters
-before it returns. A concurrent file release can therefore finish
-v4l2_m2m_ctx_release() and free the context while the single-core IRQ
-handler continues with its tail.
+An open debugfs file retains its file_operations pointer in the
+debugfs proxy state. However, test_smp_fops in net/bluetooth/smp.c and
+test_ecdh_fops in net/bluetooth/selftest.c have no .owner set to
+THIS_MODULE.
 
-Both handlers only need the device for the matching runtime PM put.
-Use the IRQ-owned jpeg pointer instead of dereferencing ctx after
-completion has been published. This preserves the get/put pairing and
-removes the post-completion context access.
+As a result, full_proxy_open_regular() calls fops_get() which succeeds
+without taking a reference to the bluetooth module. When CONFIG_BT=m
+and selftests are enabled, a userspace process can open either
+/sys/kernel/debug/bluetooth/selftest_smp or
+/sys/kernel/debug/bluetooth/selftest_ecdh and keep the file descriptor
+open while the module is unloaded (rmmod bluetooth).
 
-Fixes: 45f13a57d813 ("media: platform: Add jpeg enc feature")
-Fixes: 5827e4b14ee7 ("media: platform: Improve power on and power off flow")
+When the userspace process subsequently closes the descriptor,
+full_proxy_release() accesses the already unmapped file_operations
+structure, triggering a kernel oops in full_proxy_release():
+
+  BUG: unable to handle page fault for address: fffffbfff8056f03
+  #PF: supervisor read access in kernel mode
+  Oops: 0000 [#1] SMP KASAN NOPTI
+  RIP: 0010:full_proxy_release+0x8e/0x140
+  Call Trace:
+   <TASK>
+   __fput+0x39f/0xa60
+   fput_close_sync+0xff/0x200
+   __x64_sys_close+0x8c/0xf0
+   do_syscall_64+0x115/0x6a0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   </TASK>
+
+The issue was discovered via manual code audit of net/bluetooth/smp.c
+and net/bluetooth/selftest.c.
+
+Set .owner = THIS_MODULE on test_smp_fops and test_ecdh_fops so that
+debugfs keeps the module pinned until the file descriptors are closed.
+
+Fixes: 64dd374eac15 ("Bluetooth: Export SMP selftest result in debugfs")
+Fixes: 6de50f9fdb60 ("Bluetooth: Export ECDH selftest result in debugfs")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Bui Viet Dung <dungvn2345@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/selftest.c | 1 +
+ net/bluetooth/smp.c      | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c b/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
-index 3519c2252ae88..22de897ea30d6 100644
---- a/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
-@@ -1096,7 +1096,7 @@ static irqreturn_t mtk_jpeg_enc_done(struct mtk_jpeg_dev *jpeg)
- 	v4l2_m2m_buf_done(src_buf, buf_state);
- 	v4l2_m2m_buf_done(dst_buf, buf_state);
- 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
--	pm_runtime_put(ctx->jpeg->dev);
-+	pm_runtime_put(jpeg->dev);
- 	return IRQ_HANDLED;
+diff --git a/net/bluetooth/selftest.c b/net/bluetooth/selftest.c
+index f49604d44b877..6abf70c14f598 100644
+--- a/net/bluetooth/selftest.c
++++ b/net/bluetooth/selftest.c
+@@ -191,6 +191,7 @@ static ssize_t test_ecdh_read(struct file *file, char __user *user_buf,
  }
  
-@@ -1163,7 +1163,7 @@ static irqreturn_t mtk_jpeg_dec_irq(int irq, void *priv)
- 	v4l2_m2m_buf_done(src_buf, buf_state);
- 	v4l2_m2m_buf_done(dst_buf, buf_state);
- 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
--	pm_runtime_put(ctx->jpeg->dev);
-+	pm_runtime_put(jpeg->dev);
- 	return IRQ_HANDLED;
+ static const struct file_operations test_ecdh_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= test_ecdh_read,
+ 	.llseek		= default_llseek,
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 9ebf350a28d40..5466b1f1add9e 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -3783,6 +3783,7 @@ static ssize_t test_smp_read(struct file *file, char __user *user_buf,
  }
  
+ static const struct file_operations test_smp_fops = {
++	.owner		= THIS_MODULE,
+ 	.open		= simple_open,
+ 	.read		= test_smp_read,
+ 	.llseek		= default_llseek,
 -- 
 2.53.0
 
