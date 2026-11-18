@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043030;
-	b=u+bK1ncpbbzcp0Tth21SRGUX9r4aIJh6iMsWau8O2/iNBIX1eFZ826Ckdb35LAFWH847
-	 QD1avBS+XaNRSjpEdIgJjJSuXHH7fYL+eDsAj4TGp736zZlCKavW2mcLGt0xZabU2mnqo
-	 k/0tRlce8Vxq8hyGrHOt9Bmzvy6doKfw1opGpZv0cv5r5wZMnAme7rfoKvMhW6//+Q2as
-	 u84lkNAeZMMF3Jnl44u+jNGPVCpDp6DkxDE+ulZ74PcP+qtke4mZeJ7/Fg61YeKTI3PhI
-	 NxqsjNJxngSBTX3o2n4fr1FzEfP3Z0lzy0lMR/8FBia9Nx+5G+8KKiQPDhv1AXHzq/A==
+	t=1795043033;
+	b=Zt5ofR5nsLh6Q3BWnEILU1cEmviUkbKGpcuEZnv79558DS7iD6b25fPs00R7BmXRZdbN
+	 I0gPGeMm3K6axlZk/lbkUR0TBHKImsGVv0LYrs+1NYPo0H9F/fYKQ/rho04jvW+WFshod
+	 KVT0psD2PNVIigGp9xRESj4d8WoQfrV+J/crFoo/O6atbWfOGecmK/OsSZBGbb94JijUk
+	 9Kx8BLqW58lF8DWlCSw0KZSmTLJLC1toa31e9m3yWGqM2qDS28+qUjrqAaqD9sjaPV5/H
+	 6kEFpYlU0EDRWFwg8xjlt41E/SMSQo2UU8yFUSE6HPVb8O0pGUbaWXIstS84qbuGLuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043030;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=BtXQAuCEgutbhOFVbhOL15BFvSmeFMKr3dvDGimkpXA=;
-	b=lSlhjvvkHZ/hE79jcjJ6d2NHER49uLB9K/d8YkxKa2kbcGCoIRqz1Zx2VpgwMPnbgZHy
-	 0gC4V+o3u3dvTy1e5kewwp1Pw9Rdw8mu0p0SMQzeC/EEWffoGEYesyAlQLedyM9SEe69y
-	 Zm2nhyVZLu9NGHYid2clRqWMNDohwwoFtWT4/TNUSD5W6b4gAF8hbPEFIubIlXgI8upCC
-	 lKb8npSuYKRRdbaYiJjIAE7ZoXFr1aAh9uYWGDpL7eFYRybqpvUwiyAJjPuzlMUQXZcj0
-	 dc0SKPr7xA4AHC0zfkCnNxhGx87fTs01dY0GChAiZFZI+OhXp1lP48aXbJ/JyyQoQug==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CJQX/eUqelb9MM0OpJ8BdDH8ZDAzmn3GGz7bGfanHAg=;
+	b=0Wn/oR2hKmok7SYj5W32rddaMmiVGuno+sJnyfC7W2Jw5Lg7d3kuzumWZjRHT2lg/1VH
+	 8iZ4V2OuHf43jdM8BlNYxetDLrLe8MlRSYsS8UXeh0JvwHNfW120oicJpWQrmZn8sPYJ2
+	 v+YtOap9UPrDl+AGEeqokqsC2cV0tnsEmLmZpAlKqTOZmMczYA3oWQAvkpwEBAd6VGeJo
+	 ypZsSwtXRE3oZ0fRQLpbVoiZsO/Ps7q4fkWlZDBByndfR0v94/NJHkICVS1GAA9ciHMLG
+	 H3knPDlKH+0cZ9IE14YMqh3C0RtCw0dg9+s5j4JIO301a8k6x9T4brM+t+enLnPxklA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPab96vt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bZF8iE8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6420360A2606;
-	Wed, 18 Nov 2026 23:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F2F60A3816;
+	Wed, 18 Nov 2026 23:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sPab96vt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFD61F000C5;
-	Wed, 18 Nov 2026 23:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0bZF8iE8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874BD1F000CF;
+	Wed, 18 Nov 2026 23:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043030;
-	bh=BtXQAuCEgutbhOFVbhOL15BFvSmeFMKr3dvDGimkpXA=;
+	s=korg; t=1795043033;
+	bh=CJQX/eUqelb9MM0OpJ8BdDH8ZDAzmn3GGz7bGfanHAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sPab96vtN135gOXhRlvDIfhUSl/mSTCPcKIkGYj7lFNaETNQrO0zkFXfZhQ4lFoe3
-	 o44FOIPciOXalIcaJ4EFGcchiP7/yF6QJstrX757KlBsZlM1Xg53JAfgUZFCnec9aw
-	 8Ep6fGANE3WBVtElIu6gnHktiz8TTp2HX6FmXDLM=
+	b=0bZF8iE8nqk8H/3VFT4h81ATIni4E/+qSXFncs60PMM7daupMtiRyyRxs3PTfH4zZ
+	 Rzmamjg23upGA7sNdRapqd3a5DsUrYOOHk+F+LTLkL8NomxcuS6Am+4+GeBwshH6Cw
+	 jB5OzJYQrMcyqKLXr81SK07c3rHja/DwJXb5gqrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.1 0013/2857] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
-Date: Wed, 18 Nov 2026 15:17:27 +0100
-Message-ID: <20261118150201.787384708@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulfh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0059/2857] mmc: dw_mmc: stop and complete DMA also in STATE_DATA_BUSY state
+Date: Wed, 18 Nov 2026 15:18:13 +0100
+Message-ID: <20261118150203.432637063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,87 +63,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
+[ Upstream commit cb3fcb8d118b874178251d1f02613f60d25e4ddc ]
 
-When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
-next update contains an odd number of full 16-byte blocks, it processes
-one leading block through poly1305_mult() so that the remaining NEON
-work has an even block count.  That requires converting the accumulator
-to the base 2^64 form used by poly1305_mult().  The final ADC of that
-conversion stores the carry into d2, but the following accumulation and
-poly1305_mult() use h2.  If the conversion carries across bit 128, the
-carry is dropped and the emitted tag is wrong.
+When transfer was stopped in STATE_DATA_BUSY state, there was no call to
+dma_ops->cleanup function, so the DMA mapped buffer was never properly
+unmapped. Fix this by calling dw_mci_stop_dma() function also in that
+state to ensure proper cleanup call when DMA transfer was used.
 
-This was introduced by Cryptogams commit 03dc4adf91c8
-("arm/poly1305-armv*.pl: optimize branches."), which removed the
-reduction that consumed d2 shortly before Linux imported the code.
-OpenSSL's copy did not take that change.
-
-The carry is possible because the NEON code stores the accumulator [h0,
-h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
-carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
-2^26 - 1.  For example, the reachable state
-
-  h0 = 4
-  h1 = 2^26
-  h2 = 2^26 - 1
-  h3 = 2^26 - 1
-  h4 = 2^24 - 1
-
-represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
-(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
-(bit 24 of h4) not being set; the extra comes from the h1 limb being
-above the normal base 2^26 range.  When this value is converted into the
-non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
-of h2) is necessary to preserve the value.
-
-Given the above bounds, a carry into bit 128 happens exactly when
-h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
-
-Store the carry into h2, matching the other base 2^26 to base 2^64
-conversions in poly1305_blocks() and poly1305_emit().
-
-This bug causes an incorrect tag to be emitted.  However, this is
-unlikely to happen in practice where Poly1305 is used with a random key,
-since the random key tends to distribute the accumulator values
-throughout their valid range.  There isn't an obvious way for an
-attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
-land on the precise values where this bug occurs.
-
-[EB: Rewrote the commit message to more clearly describe the bug and
- its impact, and simplified explanation about why there's a carry bit.]
-
-Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/crypto/poly1305-armv8.pl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/crypto/poly1305-armv8.pl
-+++ b/arch/arm64/crypto/poly1305-armv8.pl
-@@ -372,7 +372,7 @@ poly1305_blocks_neon:
- 	adc	$h1,$h1,xzr
- 	lsr	$h2,x14,#24
- 	adds	$h1,$h1,x14,lsl#40
--	adc	$d2,$h2,xzr		// can be partially reduced...
-+	adc	$h2,$h2,xzr		// preserve carry into top limb
+diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+index 0822493c949e8..c2920001510c2 100644
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -2209,6 +2209,7 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
+ 			}
  
- 	ldp	$d0,$d1,[$inp],#16	// load input
- 	sub	$len,$len,#16
+ 			dw_mci_stop_fault_timer(host);
++			dw_mci_stop_dma(host);
+ 			host->data = NULL;
+ 			set_bit(EVENT_DATA_COMPLETE, &host->completed_events);
+ 			err = dw_mci_data_complete(host, data);
+-- 
+2.53.0
+
 
 
