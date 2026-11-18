@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047625;
-	b=hPItxIQdBTGFaE8oC/nVZY9KSGUzCYsZ0zXjo2TJCGsz9hokiQuFg/BB5OAZMaD3BGtI
-	 gws63eVFMD/x3lwoHPYqfU2ciNkdfuJLOKjQrCaMro5blfAR7LlSloZH/piFATUNz2R8X
-	 Swxayrau/mIjw5xVmrig1JDNrLc2jsrFNSuV2E1sGBnx35gPscUzC+Vnq1CjKFzkf5Vqg
-	 YJmNlnHOMlAL8LDNbXjqkzkIvio7ESUTJtC75uaPB5SbPWdByXa0dmLn24zYWGNUyquyp
-	 zZkJ/FdVlOiT2xmt71izwVxDkVsfNqNvI3onAnnbcjWLcLia5nMqABgkykMDOlvbJrw==
+	t=1795047628;
+	b=CerIsvDzUBHmeE946uwfy8YeIE2OduFQJ7P0brEetnWLjTbSZP/NiIVoZTN/gt+w6dE5
+	 V0gkaIWRouyq7I/QqS55Fw4NY7i1YhPxhjqAypmDYgwjBMRkpZWjNBYrGvVOZOPH7oxxY
+	 9CgA21c76tYZ76Pk8kdHuhbRv6qhRhweuSlbakgm8YefyLGyyu4sZ8kaFXhFFeOG/Y3TC
+	 mxy0l5k7uiUywZ4fASlxUbDDautABd45+rleJDbZDPsszjludT6KgSI525KSkCfspuEt0
+	 z9usNDEG5VDeSm3tm315lsO06pe8z5VU0smN99Xx9nKT/WcUeUHu7fH9ReUc2lPz0Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047625;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047628;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tpqkz/y9h2dupSahLde0iT07rNs9eJJvU8JScVf5p/s=;
-	b=UfNxuBtsSk5W5P4gDh6kPgltpV0Y2ER5opCVCZ3LITKDb+tmMSu4wz/tVVoZdvLCqPkM
-	 XBS9L00/ugha6G5hknOS8CxhyMRLTj/PzMmdgnpK+cCT5u7VVXyCUTfnjSM6/NpmnWTpR
-	 USv2EGZAzGcVfrtPf7iw4wpdnEeiJouIE1yzmDsB3TfSPcs8BkdRjl3g/rfelVGHTMFqW
-	 LhCoQHs+uTF2/4FQn4PJPlW8p2F+xx7nof+sRXrN4/S8bo85k5WZ807wJx2d8g0o/vASk
-	 BOx3A1pJihcnF++vgRnxKq47XC13FjCNlmV07JSRBCOmbWp6Vl4NSLcuchDa9Kbwrhw==
+	bh=TbP/LeeQAUHkeJWvbIZDXR/lU/TWdiT1l+2CjNDX/vE=;
+	b=FSUqp1V3msDtnWJ86w+c1QAhCm2rKvINl3P2bTr4t+Ll+/bGsuxh2/88PeZbOl9FUV5D
+	 VoQGbEVaxretK4UJAb9JGhXj5LOk3xSJPQULY+Q5sMfh5F0maBXjlElAMP3MVMyByi3SA
+	 DowTYbYONjcKeTQv35ysHxRJ6nh/Z4+GOBAq0XaAGx1H4dyhnFc4LXxxa+J13pwtyOpZU
+	 loU/WFsjuP7Lq6U3KIc+lxEk5zOvY/z/tGPFnR1jtxoIHlLJOSPEU/JxlZZdbPwGjSagN
+	 UxfrB3LAtAmxEONwMc0xVqr0+8CWF+WlMUb1NKglVv5giYHCAcOQnD4ioWvulV6cosw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqpVqEuj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mRIvPj9v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86436606A31C;
-	Thu, 19 Nov 2026 00:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60080606A31C;
+	Thu, 19 Nov 2026 00:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tqpVqEuj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57B31F000C4;
-	Thu, 19 Nov 2026 00:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mRIvPj9v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10871F000C4;
+	Thu, 19 Nov 2026 00:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047625;
-	bh=tpqkz/y9h2dupSahLde0iT07rNs9eJJvU8JScVf5p/s=;
+	s=korg; t=1795047628;
+	bh=TbP/LeeQAUHkeJWvbIZDXR/lU/TWdiT1l+2CjNDX/vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tqpVqEujyDN7FwSILLGYD1oN2wsyZx62f0YLvpcBXTRNHSfVo8OnBF+ZHBOuB/BrV
-	 6qL7pqsTXmiIL6Jn1f/KRzEppJZdHl9B8sDE/WtU8gGYVJ2/EIrSuP53wH5/PtJfzQ
-	 hmt7QWWOVYq5EpmPJZjiwJg82KbUt8Se4LIkbt3A=
+	b=mRIvPj9vL6LqsQIKb1x5JhRqz09+qgnnZcrQd9s8eu+WHyR0lk33MXI9N6o1nB1ky
+	 H4bOLHJW2W04VxD9fLewfJ+cUmf0nnEUbN8us2CVxxPrm2fqTUv786pUJdDaYHtyUr
+	 SQMNXTFSwocvu/8BoVQIox6BuEfYa6Fv+Z8B2Dzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1705/2857] mm/filemap: finish fault cleanup before dropping the fault lock
-Date: Wed, 18 Nov 2026 15:45:39 +0100
-Message-ID: <20261118150302.722942612@linuxfoundation.org>
+Subject: [PATCH 6.1 1706/2857] mm/shmem: make shmem_file() check the files inode
+Date: Wed, 18 Nov 2026 15:45:40 +0100
+Message-ID: <20261118150302.758499792@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -72,107 +72,116 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 97156a6c355c21f7122421915f05461bd11699a4 ]
+[ Upstream commit d3710111839d11339e414b1bb3fea3d05ab83f6e ]
 
-On a retried fault, a fatal signal interrupting the folio lock wait
-makes lock_folio_maybe_drop_mmap() drop the fault lock without pinning
-the file. However, filemap_fault() may still need to release
-mapping->invalidate_lock. A concurrent munmap() can release the last
-file reference and free the mapping before that unlock.
+shmem_file() only checks if file->f_mapping is a shmem mapping. This
+mapping can belong to another file, however, as with a Coda file backed
+by a tmpfs container after mmap().
 
-Defer dropping the fault lock to filemap_fault()'s retry cleanup, after
-releasing invalidate_lock. If the fault lock was already dropped for
-I/O, release the existing file reference instead. Keep the fault lock
-held for FAULT_FLAG_RETRY_NOWAIT as before.
+So it does not guarantee that the file inode is an actual shmem inode.
 
-Fixes: 730633f0b7f9 ("mm: Protect operations adding pages to page cache with invalidate_lock")
+Seal handling and memfd preservation use this check before accessing
+shmem inode state, so they can access an inode of the wrong type.
+
+Let's make shmem_file() check the inode's file operations instead, to
+identify shmem inodes reliably. This will identify regular shmem inodes,
+including memfds and ordinary tmpfs files, independently of wrapper file
+operations.
+
+Use shmem_mapping() in collapse_file() instead to not change the behavior
+of collapse_file(): it operates on the page cache and uses mapping->host
+for shmem inode operations. Focusing on the file does not seem relevant.
+
+Fixes: c49fcfcda8b5 ("mm/shmem: update file sealing comments and file checking")
+Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
 Cc: stable@vger.kernel.org
 Reported-by: Chris Mason <mason@kernel.org>
-Reviewed-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-8-d6437171ecc3@kernel.org
+Suggested-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-3-d6437171ecc3@kernel.org
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced release_fault_lock(vmf) with mmap_read_unlock(vmf->vma->vm_mm) for mmap-only fault locking. ]
+[ sashal: adjusted surrounding context to preserve the existing inline shmem_mapping() implementation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c | 36 +++++++++++++-----------------------
- 1 file changed, 13 insertions(+), 23 deletions(-)
+ include/linux/shmem_fs.h | 15 ++++++---------
+ mm/khugepaged.c          |  2 +-
+ mm/shmem.c               |  5 +++++
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 61581b59d0ff3..08bdf85a97c09 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3078,11 +3078,11 @@ loff_t mapping_seek_hole_data(struct address_space *mapping, loff_t start,
-  * @folio - the folio to lock.
-  * @fpin - the pointer to the file we may pin (or is already pinned).
-  *
-- * This works similar to lock_folio_or_retry in that it can drop the
-- * mmap_lock.  It differs in that it actually returns the folio locked
-- * if it returns 1 and 0 if it couldn't lock the folio.  If we did have
-- * to drop the mmap_lock then fpin will point to the pinned file and
-- * needs to be fput()'ed at a later point.
-+ * Returns 1 with the folio locked, or 0 if locking failed.
-+ *
-+ * On both entry and return, a non-NULL *fpin means the fault lock has
-+ * already been dropped and the caller must eventually fput() the file.
-+ * Otherwise the fault lock is still held, including on failure.
-  */
- static int lock_folio_maybe_drop_mmap(struct vm_fault *vmf, struct folio *folio,
- 				     struct file **fpin)
-@@ -3099,20 +3099,9 @@ static int lock_folio_maybe_drop_mmap(struct vm_fault *vmf, struct folio *folio,
- 		return 0;
- 
- 	*fpin = maybe_unlock_mmap_for_io(vmf, *fpin);
--	if (vmf->flags & FAULT_FLAG_KILLABLE) {
--		if (__folio_lock_killable(folio)) {
--			/*
--			 * We didn't have the right flags to drop the mmap_lock,
--			 * but all fault_handlers only check for fatal signals
--			 * if we return VM_FAULT_RETRY, so we need to drop the
--			 * mmap_lock here and return 0 if we don't have a fpin.
--			 */
--			if (*fpin == NULL)
--				mmap_read_unlock(vmf->vma->vm_mm);
--			return 0;
--		}
--	} else
--		__folio_lock(folio);
-+	if (vmf->flags & FAULT_FLAG_KILLABLE)
-+		return !__folio_lock_killable(folio);
-+	__folio_lock(folio);
- 
- 	return 1;
+diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
+index d500ea967dc73..19a1965ff1175 100644
+--- a/include/linux/shmem_fs.h
++++ b/include/linux/shmem_fs.h
+@@ -75,12 +75,18 @@ extern unsigned long shmem_get_unmapped_area(struct file *, unsigned long addr,
+ 		unsigned long len, unsigned long pgoff, unsigned long flags);
+ extern int shmem_lock(struct file *file, int lock, struct ucounts *ucounts);
+ #ifdef CONFIG_SHMEM
++bool shmem_file(struct file *file);
+ extern const struct address_space_operations shmem_aops;
+ static inline bool shmem_mapping(struct address_space *mapping)
+ {
+ 	return mapping->a_ops == &shmem_aops;
  }
-@@ -3231,7 +3220,7 @@ static struct file *do_async_mmap_readahead(struct vm_fault *vmf,
-  * vma->vm_mm->mmap_lock must be held on entry.
-  *
-  * If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
-- * may be dropped before doing I/O or by lock_folio_maybe_drop_mmap().
-+ * may be dropped before doing I/O or when aborting an interrupted wait.
-  *
-  * If our return value does not have VM_FAULT_RETRY set, the mmap_lock
-  * has not been released.
-@@ -3374,9 +3363,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
- 
- out_retry:
- 	/*
--	 * We dropped the mmap_lock, we need to return to the fault handler to
--	 * re-find the vma and come back and find our hopefully still populated
--	 * page.
-+	 * With fpin set, the fault lock was already dropped. Otherwise it is
-+	 * still held. Release invalidate_lock before dropping either protection.
- 	 */
- 	if (folio)
- 		folio_put(folio);
-@@ -3384,6 +3372,8 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
- 		filemap_invalidate_unlock_shared(mapping);
- 	if (fpin)
- 		fput(fpin);
-+	else if (!(vmf->flags & FAULT_FLAG_RETRY_NOWAIT))
-+		mmap_read_unlock(vmf->vma->vm_mm);
- 	return ret | VM_FAULT_RETRY;
+ #else
++static inline bool shmem_file(struct file *file)
++{
++	return false;
++}
++
+ static inline bool shmem_mapping(struct address_space *mapping)
+ {
+ 	return false;
+@@ -123,15 +129,6 @@ static inline struct page *shmem_read_mapping_page(
+ 					mapping_gfp_mask(mapping));
  }
- EXPORT_SYMBOL(filemap_fault);
+ 
+-static inline bool shmem_file(struct file *file)
+-{
+-	if (!IS_ENABLED(CONFIG_SHMEM))
+-		return false;
+-	if (!file || !file->f_mapping)
+-		return false;
+-	return shmem_mapping(file->f_mapping);
+-}
+-
+ /*
+  * If fallocate(FALLOC_FL_KEEP_SIZE) has been used, there may be pages
+  * beyond i_size's notion of EOF, which fallocate has committed to reserving:
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index f21b78228cb40..c9ee735a2b1d9 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -1774,12 +1774,12 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+ 			 struct collapse_control *cc)
+ {
+ 	struct address_space *mapping = file->f_mapping;
++	const bool is_shmem = shmem_mapping(mapping);
+ 	struct page *hpage;
+ 	pgoff_t index, end = start + HPAGE_PMD_NR;
+ 	LIST_HEAD(pagelist);
+ 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
+ 	int nr_none = 0, result = SCAN_SUCCEED;
+-	bool is_shmem = shmem_file(file);
+ 	int nr;
+ 
+ 	VM_BUG_ON(!IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) && !is_shmem);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 9db6a2488f456..1ed9c1e9abb99 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -239,6 +239,11 @@ static const struct inode_operations shmem_special_inode_operations;
+ static const struct vm_operations_struct shmem_vm_ops;
+ static struct file_system_type shmem_fs_type;
+ 
++bool shmem_file(struct file *file)
++{
++	return file && file_inode(file)->i_fop == &shmem_file_operations;
++}
++
+ bool vma_is_shmem(struct vm_area_struct *vma)
+ {
+ 	return vma->vm_ops == &shmem_vm_ops;
 -- 
 2.53.0
 
