@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038832;
-	b=gY6jpRyAadydqCXF7eJEPf/JXHzWwZL6NFYxAagqrwVJnd4UGOMFvXFEIlcayH9YQSWx
-	 x7QTb0cocIwUzp4BUDHxvxcruuj8X2qJzr8o7mCRzR1e0eyR2AJDf428lc9bX7d23gctJ
-	 RMvX1Qt5hRyPlTsY5h2tuq8U4QwqqztQYr5gYYU9Qjdxc5EAJ0l1Taiut4UVbBsQPey7S
-	 LBokI5x5sPDYtxwFLDglJ+Qm7b9cDfdx81IIjv7UjmsJuw0V45pplJE2pt21urdCH3snB
-	 uL0Q+jX7+4bIxc3CN4+C8LNXGuHYdpT2sBwwk6HJNhhijY/FX2vRKwFB9VsCukuEA9g==
+	t=1795038835;
+	b=gftd5VIvQo1gBTvF5ldh5bt9GBHX8CiziGWjQophfLredPu1oelcGaWP5s4k+0i3Q1Td
+	 aQVWo6jQ1zWSiGbKGub+IUPr5/ixZC94juiExW9KCgn1Ti4gEQ9cBgisEOWjwKN9jq7B5
+	 7duT5kCZoSHEV9vQtDWf15jKt5O/+4p1xYtTauBHsbR/4/0N1z+x8/Cnp8iF8KbDfUgYM
+	 wznetgUeTmVfbV/paaEseq7mLm67KX5bEwgIxkH299Y6FayisRW3JMcnpKlN4w/nzsE4f
+	 kcHzUavT8IrAMQP5k3zFjKre/GYKtilUjrHWcJSzZRa5y/1UaIhxVJNT04foj+D8gzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038832;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=JRKXE+ozSocNbb70bm970fi+6myXEEFRicWvESl5C+c=;
-	b=0quUEJwuOimAyBI0Tc11j4hYYrNXSBnIWzM/z8pg9J7wSPPBAqTeh1WXiZXVd/J2Sta4
-	 ZojLZd1LYHPAJ1a/lcXC87yMbaZxD2aNJr+zw8xAyrOiuWWC5k8h8k//vW3g3QYeFC7ug
-	 Z+9YekbnwWEqYdbjdyjXqbmpJ3namoLrrGQ7KSnLzZgmsSboc+VImc6xRS3vHSAotjvtV
-	 /iA7T9LVKRY8o8sxq3RR97CJ1NyrNgemk2QSATjCyhCPQDg0UcPO05dGewNIHOHD23YeZ
-	 Na556Zjd3e6eLtFZvswHxn2DhRBtcW0aX8/x9VoNhS4KJYunDvvmlBvwqHOSeYocjGg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=163XBoJqGVAeUmo1Md3jaITOP73IvwMrvy0ng/ORlZU=;
+	b=XdhS9HP45bK++/i9peuTdfWGPOJ4HiuzfdHcdYxx9CgFISuXZ8W6UILbxTtP6N1f1Poe
+	 OM8ukbhnFOlGZ+L0VR2CB0F28fccf2mztyP8tqnomOH0Thsjbpi1RHZ2+JdWetI6KBF1a
+	 Syx5bbHjWQA/LaoFQLBcUD3rL0hK0jfmVSn1wNzcBP+QR0V8m745NsqrQcdylT5NAwfic
+	 iJzkdOjLERXYptseP+/Gqcs3q5C+oByc3DcTAEvRvo74U7cbPoTBpNGShfXbPrNrPDzS8
+	 U9t9ADmeVbTAsRK2CRk68bFnPYMDmU7K2wQFA6vW+W3mXlc6U7RMlFUUfcRTx9ZyY0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMttFV33;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mQbLBaEY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C4C606A31C;
-	Wed, 18 Nov 2026 21:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED11606A31C;
+	Wed, 18 Nov 2026 21:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VMttFV33
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961B71F000C4;
-	Wed, 18 Nov 2026 21:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mQbLBaEY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1501F000C4;
+	Wed, 18 Nov 2026 21:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038832;
-	bh=JRKXE+ozSocNbb70bm970fi+6myXEEFRicWvESl5C+c=;
+	s=korg; t=1795038835;
+	bh=163XBoJqGVAeUmo1Md3jaITOP73IvwMrvy0ng/ORlZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VMttFV33KGqbDgDb2Hm8D1ADbtz7a6UvM3Cbwr0fSOfJupnTo9cWSSHOSfc3oKwHZ
-	 71Kch//lfeJ8VjUrVAjF/VcXBwpR5cebMTViYJIoRqN9TYsJYkMKuD2rkat5CuWzNy
-	 QC5f+p4GL5tlUtNv/iGx4JpRnuzNQ62lgoRuMqpc=
+	b=mQbLBaEY+J5zcaAeOxwzybhol5BaG8iEfC3yAdColXUFd4A4HbUiWk0eEwQfVqaH0
+	 5eF309bcUUYt+sXySLLGMbM0Bp3Vnrg2TbEWnWqH5dkyAgnbAQFgvCaqRKdVepIjWH
+	 uxy4bMIqbzUgVYe918oVV3hJ4B1hqY+qSwNqd6Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Luiz Capitulino <luizcap@redhat.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Jann Horn <jannh@google.com>,
-	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1884/3318] mm/vma: fix expansion of VMA_MIXEDMAP_BIT VMAs
-Date: Wed, 18 Nov 2026 15:41:46 +0100
-Message-ID: <20261118150418.512114004@linuxfoundation.org>
+Subject: [PATCH 6.6 1885/3318] drm/amdgpu: finish GPU recovery callbacks before restarting schedulers
+Date: Wed, 18 Nov 2026 15:41:47 +0100
+Message-ID: <20261118150418.543710454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,94 +63,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 8146c6478224d8f6395c6b08a19c344a56d79867 ]
+[ Upstream commit 733389cb31e2c55e355410759fdc68afe74a4582 ]
 
-Commit ca3d76b0aa80 ("mm: add merging after mremap resize") combined
-merging with expansion of mremap()'d VMAs, however it also unintentionally
-disallowed the expansion of unmergeable VMAs.
+Run GPU post-reset callbacks, including KFD and display-audio resume,
+before restarting DRM scheduler workqueues. IP hardware initialization
+already happens inside ASIC recovery; this change orders the remaining
+callbacks before new scheduler submissions. Preserve the emergency-stop
+and guity job completition path's callbacks without starting schedulers,
 
-Previously it was possible to expand a mixed mapping which mremap() had
-already ensured was a legal expansion.
-
-This is clearly seen in the mremap() logic, as it checks
-vma_is_fixed_mapping() to determine legality of an expansion rather than
-vma_can_merge().
-
-Additionally, copy_vma() allows for a failed merge to result in a new VMA
-being instantiated if MREMAP_MAYMOVE is specified.
-
-However, this is not attempted, as a failure in vma_merge_extend() is
-assumed to be an -ENOMEM failure.
-
-Since vma_merge_extend() is used exclusively by mremap() to perform a merge
-and/or expansion, resolve the issue by invoking vma_expand() for
-unmergeable VMAs there.
-
-Explicitly assert that the VMA is both non-fixed and a mixed mapping.
-This provides double insurance against broken changes in future.
-
-Note that khugepaged_enter_vma() (which vma_merge_new_range() runs) is
-redundant in this case, as a mixed mapping is not subject to khugepaged.
-
-Also update the VMA userland tests to add a required predicate.
-
-Link: https://lore.kernel.org/20261023-vma-expansion-fix-v1-1-6142baf1f46b@kernel.org
-Fixes: ca3d76b0aa80 ("mm: add merging after mremap resize")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Luiz Capitulino <luizcap@redhat.com>
-Closes: https://lore.kernel.org/all/20261023023106.515365-1-luizcap@redhat.com/
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jakub Matěna <matenajakub@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: Adapted vma_merge_extend() changes to the inline mremap() implementation using the older vma_expand() interface. ]
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1f6433e2b264e75c56ae95f187788806201bdbc3)
+Cc: stable@vger.kernel.org
+[ sashal: Adapted helper reordering to inline code in amdgpu_device_gpu_recover() because the upstream recovery helpers are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mremap.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 47 +++++++++++-----------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/mm/mremap.c b/mm/mremap.c
-index 26d3cb46f6ec1..ea57f3095076b 100644
---- a/mm/mremap.c
-+++ b/mm/mremap.c
-@@ -1133,10 +1133,21 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
- 			 * the next vma if it becomes adjacent to the expanded
- 			 * vma and  otherwise compatible.
- 			 */
--			vma = vma_merge(&vmi, mm, vma, extension_start,
--				extension_end, vma->vm_flags, vma->anon_vma,
--				vma->vm_file, extension_pgoff, vma_policy(vma),
--				vma->vm_userfaultfd_ctx, anon_vma_name(vma));
-+			if (!(vma->vm_flags & (VM_PFNMAP | VM_DONTEXPAND |
-+					      VM_MIXEDMAP))) {
-+				vma = vma_merge(&vmi, mm, vma, extension_start,
-+					extension_end, vma->vm_flags, vma->anon_vma,
-+					vma->vm_file, extension_pgoff, vma_policy(vma),
-+					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
-+			} else {
-+				/* Mixed mappings are permitted to be expanded, not merged. */
-+				VM_WARN_ON_ONCE(vma->vm_flags & (VM_PFNMAP | VM_DONTEXPAND));
-+				VM_WARN_ON_ONCE(!(vma->vm_flags & VM_MIXEDMAP));
-+				vma_prev(&vmi); /* Reposition to start of VMA. */
-+				if (vma_expand(&vmi, vma, vma->vm_start,
-+					       extension_end, vma->vm_pgoff, NULL))
-+					vma = NULL;
-+			}
- 			if (!vma) {
- 				vm_unacct_memory(pages);
- 				ret = -ENOMEM;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 2cdbee6700ecd..41fac9d273622 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5511,7 +5511,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 	}
+ 
+ 	if (need_emergency_restart)
+-		goto skip_sched_resume;
++		goto post_resume;
+ 
+ 	/*
+ 	 * Must check guilty signal here since after this point all old
+@@ -5522,7 +5522,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 	if (job && dma_fence_is_signaled(&job->hw_fence.base)) {
+ 		job_signaled = true;
+ 		dev_info(adev->dev, "Guilty job already signaled, skipping HW reset");
+-		goto skip_hw_reset;
++		goto post_resume;
+ 	}
+ 
+ retry:	/* Rest of adevs pre asic reset from XGMI hive. */
+@@ -5567,7 +5567,28 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 			goto recover_end;
+ 	}
+ 
+-skip_hw_reset:
++post_resume:
++	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
++		/* unlock kfd: SRIOV would do it separately */
++		if (!need_emergency_restart && !amdgpu_sriov_vf(tmp_adev))
++			amdgpu_amdkfd_post_reset(tmp_adev);
++
++		/* kfd_post_reset will do nothing if kfd device is not initialized,
++		 * need to bring up kfd here if it's not be initialized before
++		 */
++		if (!adev->kfd.init_complete)
++			amdgpu_amdkfd_device_init(adev);
++
++		if (audio_suspended)
++			amdgpu_device_resume_display_audio(tmp_adev);
++
++		amdgpu_device_unset_mp1_state(tmp_adev);
++
++		amdgpu_ras_set_error_query_ready(tmp_adev, true);
++	}
++
++	if (need_emergency_restart)
++		goto recover_end;
+ 
+ 	/* Post ASIC reset for all devs .*/
+ 	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
+@@ -5603,26 +5624,6 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
+ 		}
+ 	}
+ 
+-skip_sched_resume:
+-	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
+-		/* unlock kfd: SRIOV would do it separately */
+-		if (!need_emergency_restart && !amdgpu_sriov_vf(tmp_adev))
+-			amdgpu_amdkfd_post_reset(tmp_adev);
+-
+-		/* kfd_post_reset will do nothing if kfd device is not initialized,
+-		 * need to bring up kfd here if it's not be initialized before
+-		 */
+-		if (!adev->kfd.init_complete)
+-			amdgpu_amdkfd_device_init(adev);
+-
+-		if (audio_suspended)
+-			amdgpu_device_resume_display_audio(tmp_adev);
+-
+-		amdgpu_device_unset_mp1_state(tmp_adev);
+-
+-		amdgpu_ras_set_error_query_ready(tmp_adev, true);
+-	}
+-
+ recover_end:
+ 	tmp_adev = list_first_entry(device_list_handle, struct amdgpu_device,
+ 					    reset_list);
 -- 
 2.53.0
 
