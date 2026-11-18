@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020397;
-	b=2ZUi4e/t4VBM3eKLaShASEygpoeUrD9KrmcmXTGOJ/Z7TmYnXDJzjGcScmsZDDTWvDqt
-	 QRkdZ4jVRWFBzvU8Jk0zR0iM5xu1OLi1CYaxCbEX7cN4nzBf20lKGSBiVeUicLrLHjyOT
-	 cUeluxtbabDNHlaL6BFoSt14Vam7CxM0ub5r/IU+srRZ/YQHTkNbUXpzklsGMpRg5IIoR
-	 kozOMTJVrs79BGY2dwfya1dbzJPNZt8mXwkiUDJndKMXWuCBJWXGvPcKOTzx48lRUPp+a
-	 I8/HnvDdIX2UOfQN4SvxhuURsSTy//oSjbArEDuMmr2NEPnez7TOdKmY5XILH5zdAuQ==
+	t=1795020400;
+	b=s+NLK8v0h+5wHc6OhYMzHG5GhzKl2+unC2M5rC5C9jBKIp+pTvh7RCjrEWTFMNi4oI+k
+	 j9h9R8UtuceU1w/oFWEtPoqT5dzKpHth1MyMY5/cc/d+ri3KlhYaJT3a2CTRlh5QQWUF0
+	 TS7KuUt2IW74q8cfzKEPuX66XDTcd9Qpig6GFtYxra2IkWNRsVL9Xw1+FdnwTui3qgMKp
+	 gW1oDucavTpL9b0mSH5MCZEhb1itFMqIhRt0+rE258w3TJucqE3rJl34SSoWLlRaVYmVV
+	 OiKKllkL1tPGF9h5olMk6Tlq9KS3zxYrprEHLKF8iGyXEsqiuU7HcKNO0Q0CHvrWPqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020400;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zXLbW4uUpCGdigYQwEEF4CvDweqQaLvPt8fTTO80AdU=;
-	b=L5EkqRUxZ0+RKVAQYJ7CnxwYjIDfF3rxzGs6qoKGpLWrwSG5E6VECKzU1C+J/I+I8cJb
-	 eIVDFecfw51L/ULB3a4Bt0gHM8ogE4fLnNIpJO/JoGCYWmkxcLpwzn80dGL3XGJQIIwKv
-	 HvqzGApxMjmfuOfYCqLiwjgsxXSu1MHtJSPDFlngZ86PudoZSJY68coTlsEwtZiMuPixl
-	 QNvIrAU9/W9VTNZTNLs4/WY55UWxh7HWCLZ4sTVHiKsOlVqbfHL7a6MjEK6+93MlTjbOl
-	 HDgkOnj5OCdmtXNn3BIIk3S4mcXQnjeXn14ml21OCGd3w57gAIf3GUKSUXAZrTZdQwQ==
+	bh=6jBy4AmgTIpTlQogAw1EiklmalM2dw6i/0i1BMXa8qw=;
+	b=PkTtHyXfHCcPWRq/ZqIUM4xOL7LGUeSNnDnZheDaqPUcYnmzvh5BixopBJ7ING63hfOQ
+	 9hhEKvdAXUNNpWYD4Q41HdC+7R5MwU4C5sYEctd67HfLpioZO/stln6LGIyDtbNe58jNr
+	 /lYmU+NfEmh9bxLN3aF6P2u91lUTTS09lXzlRBBewRGa1qlT20YTXx8EJF6vx+3MCCUSg
+	 YO5d+U4qRQBuSHEOEFFl1rgYzeUvWTJRoz2jnboSiZ1rDw/HiG8xCrrptDQobb5unzcVW
+	 FdaJ8DIdFTPKjsD7tF/OhSuMioSLouxjB6OGqgWabyAJ/a4rE6MnDkwnVvxYFPjKiLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUNQXkOT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pbkVDunB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099D2606A31C;
-	Wed, 18 Nov 2026 16:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AB6606A320;
+	Wed, 18 Nov 2026 16:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pUNQXkOT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B9F1F000C4;
-	Wed, 18 Nov 2026 16:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pbkVDunB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A441F000C4;
+	Wed, 18 Nov 2026 16:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020396;
-	bh=zXLbW4uUpCGdigYQwEEF4CvDweqQaLvPt8fTTO80AdU=;
+	s=korg; t=1795020399;
+	bh=6jBy4AmgTIpTlQogAw1EiklmalM2dw6i/0i1BMXa8qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pUNQXkOTszLwsPINQ0y6riKmBadNRvVmo6LdryxbDoqy6/DNUVKu6rjfpcK9/5oj9
-	 Aq+kbMeq+czccTjGq64OV0Il2P7ZTmUEBezKDtols//zXzaZrAiR/6p3EX7JBw+749
-	 RqcD/YV+0qc/GqsVW5+9KfBSTLjLKHp/EwNZNGpA=
+	b=pbkVDunB4awC3LZP1GjGQl+53ZNCTmoL2vTm1eqAjZhAG4+nxDS+CkCjKCOxCuTSi
+	 cpnQVT5AvtgLCim8HhgNmLXc4Rp+LYgkrEMFqkc8yT2c144duw+2Nb7xmbPdxgqWzB
+	 a5Q8vAMf57DgKgqudmSXl2zQAgDmQ8CkU5ScNCwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
 	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1938/2651] irqchip/gic-v3: Release the partition node in gic_irq_get_fwspec_info()
-Date: Wed, 18 Nov 2026 15:52:58 +0100
-Message-ID: <20261118150356.411259222@linuxfoundation.org>
+Subject: [PATCH 7.3 1939/2651] irqchip/gic-v3-its: Clear vpt_page after freeing the pending table
+Date: Wed, 18 Nov 2026 15:52:59 +0100
+Message-ID: <20261118150356.439961099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,53 +73,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 0773b76611e9c596c825076d422d372697da9940 ]
+[ Upstream commit 0d604b1e4617d18dbb5573290ba447d7369251d1 ]
 
-gic_irq_get_fwspec_info() never puts the node it takes from
-of_find_node_by_phandle(), so every lookup from a four-cell PPI or EPPI
-specifier naming a partition leaks one.
+its_vpe_teardown() frees vpt_page without clearing it, so its
+vpt_page == NULL guard only holds the first time it runs on a vPE.
+struct its_vpe outlives a failed KVM_DEV_ARM_VGIC_CTRL_INIT, so a retry
+that fails again frees the pending table and the vPE ID a second time.
 
-The node is only used for the comparison against gic_data.parts[], and
-the mask returned points into gic_data, so it can go out of scope with
-the lookup.
-
-Fixes: 68905ea65ceff ("irqchip/gic-v3: Add FW info retrieval support")
+Fixes: 325ff3e78c64c ("irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()")
 Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Marc Zyngier <maz@kernel.org>
 Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260908142632.2795308-2-fuad.tabba@linux.dev
+Link: https://patch.msgid.link/20260908142632.2795308-4-fuad.tabba@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-index 6e1fa5b247fc4..b0142b0a93fa4 100644
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -1728,8 +1728,6 @@ static int gic_irq_get_fwspec_info(struct irq_fwspec *fwspec, struct irq_fwspec_
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 1bef7ecd3090c..4083265750b6b 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -4600,6 +4600,7 @@ static void its_vpe_teardown(struct its_vpe *vpe)
+ 	its_vpe_db_proxy_unmap(vpe);
+ 	its_vpe_id_free(vpe->vpe_id);
+ 	its_free_pending_table(vpe->vpt_page);
++	vpe->vpt_page = NULL;
+ }
  
- 	/* If the specifier provides an affinity, use it */
- 	if (fwspec->param_count == 4 && fwspec->param[3]) {
--		struct fwnode_handle *fw;
--
- 		switch (fwspec->param[0]) {
- 		case 1:			/* PPI */
- 		case 3:			/* EPPI */
-@@ -1738,7 +1736,10 @@ static int gic_irq_get_fwspec_info(struct irq_fwspec *fwspec, struct irq_fwspec_
- 			return 0;
- 		}
- 
--		fw = of_fwnode_handle(of_find_node_by_phandle(fwspec->param[3]));
-+		struct device_node *np __free(device_node) =
-+			of_find_node_by_phandle(fwspec->param[3]);
-+		struct fwnode_handle *fw = of_fwnode_handle(np);
-+
- 		if (!fw)
- 			return -ENOENT;
- 
+ static void its_vpe_irq_domain_free(struct irq_domain *domain,
 -- 
 2.53.0
 
