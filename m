@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015947;
-	b=kWkLKZH7wgPQEuWBvjm3+d7K1dRr5BwrobW2fzOlGXkHpi2vg9LbmQM2DVCW8PnHKL3v
-	 0OZf6vBPM964S23EinODb1fIa4m0kG80sdIlBXC5UYBHc/3KqY9cfNzzBwii19myZkGIh
-	 cSxlnIEiwCzpAn16nRcMnkXTzyEms4MJpEvGH0R26V0D0QE6UgVoQy4WATv9BBx7xodKB
-	 klqn1ei2bkJWrWQmqUI/0d9/Y5zkOLeCBC7ibvGiT5vZw11veMAvt2prIP7cW8SK0BNlc
-	 BTH6tlHlFJ5gOFZb+QUfK/EVR1TwrN3+5Amnm9KWkGABMdgTW7NLpJksoLlLOZt26rg==
+	t=1795015950;
+	b=a5R7h6rQyyJFuueg4gWZ66t8bPhsaLKWFl+YKFLusdAraSoRKbK5igg+6DakV63DxUDr
+	 vBFVnScGW5FOAZYu3Oq3qSNT3JvQupeeHY+JFu+KTW5gwARMyD1B5Bd7fBv+a4+Jrrp3Y
+	 ObgQumrO1KdfWd+R44WbNjzOqItyHGDH1s8k/ahINDw8lkdnt6VR/06SUVZ/qjtVSt+3q
+	 448d+0LJ4tpB4bvJI1FEOl4BiNs+2ckWr6QKGPkK5B0m29GL20KLzimFf+3+wfX6NjB2t
+	 Ev1SokezwTQFqKNY6Lq3ID58y61t2qi7ddkrDrhn412Liu4koHxHrAjVjsBOc71FyYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015947;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015950;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U11Q247YRHJDkxrZmeVNs10Eny7TvfSqcdI4lUkCb6c=;
-	b=P445gtLnCua61z1FBFELC+EbZovARuvnOxyssYF7EWYzk+ORm3TegRxN1rC7ydXjhWj5
-	 gziZxL8nwqlyNOHKKI+XCrnHqNTgwUnQ0WW1VH8CzKF7vO7sgbHXUt6rRJbHV16B9+TfQ
-	 LugabGyfDlv3IfHsP71r449y6UbayhB4lh9JjyuRel6guLJtrfszp0APjuEKQ/WXmEpTm
-	 DdZK3q37jFDNaejXRe6lFOQtTtqkja2crcYRpgAp9BYZAhbWs9hYk9KkzvNsjNaPRa/e5
-	 ABwkK0WwHq2OdYiWzYQCx7ntqB/mrGXm+90gpYO5UXowqiN4Dv9zvwUflLYHCnpeMKg==
+	bh=YoJQdLYMQZjx98X8+P1ETRHqOtKdYCF7nOrC6EjxpBM=;
+	b=QSnJLDuID+hOhrcLtJRQRdwIievYPWRl5fZJ/VxnrsVRva5gsuLejreAv0G92lFHZvm0
+	 CnzwvPVK8a6LKOghb3sXXEJtyOqaq/ProFi5HPSUfhivSFcDNrwxPfHed8a/UxSpPvJbs
+	 62GJ6nwqf2x6RB750GMo7i22pgpvgd2yPkX9ZlX3SMmGCA98WyEw46XXDV3czRygriMAi
+	 cZvFaWiTqtds+WFYsriG19AY8pOG7BAbfnRddRZB8fA/z0eMovVHr5DDWpX5FOfV4YnVj
+	 HZbZKciWYBoykojbMJ6b8iPqonsJIWq6GSw5LvZmZZJ0B21OG15WPiwy2I7L9q4V6Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvaRMP0g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV07UQao;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B88C60A2608;
-	Wed, 18 Nov 2026 15:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CDA606A330;
+	Wed, 18 Nov 2026 15:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvaRMP0g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E47F1F000C4;
-	Wed, 18 Nov 2026 15:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV07UQao
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4464F1F000C4;
+	Wed, 18 Nov 2026 15:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015946;
-	bh=U11Q247YRHJDkxrZmeVNs10Eny7TvfSqcdI4lUkCb6c=;
+	s=korg; t=1795015949;
+	bh=YoJQdLYMQZjx98X8+P1ETRHqOtKdYCF7nOrC6EjxpBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvaRMP0g9ow8F6xeQmmC/qF2TRFaTxlXGA94YKztJoXMTeuTNMmSrFFBDVPyQlgf4
-	 S1fzxrg0XmyK5wHvLgQ9dV9flOuJAaiiG7Wk7V+LfVopzRvu2r8YvTgBE087X3R6tK
-	 jHVREUyUTxmzAL2RXGR1Kpbu3HfQu70Q5q7Wt8T0=
+	b=UV07UQao0LOXjVyWb4XCmqxlpL2a7J/hXYQ+x1qxxcvOFGUp+zPgvH3G3gp3W/6ae
+	 KRnQ/joQ3jWa/RDRPgjhEamE7hOIrLv+QlhPC271C8giowaNm3gdT66AFCRu0pDTG+
+	 cQROd2gZspfvrtBR6pG+9nf/j1zAE/y7VYnLrWkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
-	Oliver Neukum <oneukum@suse.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0355/2651] usb: image: microtek: stop SG processing after transfer errors
-Date: Wed, 18 Nov 2026 15:26:35 +0100
-Message-ID: <20261118150300.618933048@linuxfoundation.org>
+Subject: [PATCH 7.3 0338/2651] scsi: mpi3mr: Fix target device reference leak in device removal handshake
+Date: Wed, 18 Nov 2026 15:26:18 +0100
+Message-ID: <20261118150300.020241058@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,41 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit d937ca39cc44a01ce64865dd25b1e205a05ae3a0 ]
+[ Upstream commit a04b0f3a17e32aa449fd896163a7b40efc29c4f5 ]
 
-When an SG URB completes with an error, mts_do_sg() calls
-mts_transfer_cleanup(), which completes the SCSI command through
-scsi_done(). However, the callback continues advancing the scatterlist
-and may submit another URB for a command that has already been
-completed.
+The device removal handshake looks up the target device to update its state
+but never drops the reference that the lookup takes.
 
-Return immediately after the cleanup so that no further processing is
-performed on the completed command.
+Drop it once the state has been updated.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260723195654.152104-1-diegomancera.dev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-10-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/image/microtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/image/microtek.c b/drivers/usb/image/microtek.c
-index 1f0b3c44d3881..787cf5aba55de 100644
---- a/drivers/usb/image/microtek.c
-+++ b/drivers/usb/image/microtek.c
-@@ -475,6 +475,7 @@ static void mts_do_sg (struct urb* transfer)
- 	if (unlikely(status)) {
-                 set_host_byte(context->srb, (status == -ENOENT ? DID_ABORT : DID_ERROR));
- 		mts_transfer_cleanup(transfer);
-+		return;
-         }
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index f146c1b7bf8d5..6cfec6ae82f22 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2561,6 +2561,9 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
+ 		tgtdev->state = MPI3MR_DEV_REMOVE_HS_STARTED;
+ 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
  
- 	context->curr_sg = sg_next(context->curr_sg);
++	if (tgtdev)
++		mpi3mr_tgtdev_put(tgtdev);
++
+ 	if (drv_cmd)
+ 		goto issue_cmd;
+ 	do {
 -- 
 2.53.0
 
