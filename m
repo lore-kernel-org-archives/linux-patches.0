@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019489;
-	b=km1KLnbMpQwlTlYpC4EgNM3MZfa9SH30XQ14YHwmRQl0nAtlY/TFOJdcQGoc6ttxCok8
-	 ly9mAPE3rOSKiPJ9+47DWkYnjipell/n9iN8gshoe850uIQgBpXNjdUm9PMU8rMy9y0Ow
-	 wVda4cfb5p2C0/rUcGIsiA/+Mmu2GT33xnFCs4cjVyZXj5cc9cvNnO2p6SFxZzf/Kdye1
-	 uOwbEpyGbzl4T8efFJjGefOfMAC7G2rOfT7qLtyyflE9pAyv78Xzm27+iqTjAme9sIyr4
-	 2I3ws8+NdZiJ6mDSDeW3IJ0OeIxKEmfplYJPz86tdHpWoGfxti5eEaP6BGqCDfHJvSA==
+	t=1795019492;
+	b=uFfm/zQd24xr5fgado29ho0LAbcxhKDtlUKQjdcYU/xyDwy45h5Cj/ZRbYfa5qdOtZ++
+	 1mlxNcCaKKv3hgD7JLg9EgcfoHsJWWL9ePGiw8PCUaNWWOwSanhBo7JWVK61aYH0kTNLT
+	 E2V5cvrYj0NyWUmoexG/MoT8HcWWKHdzLtXnuMnexprceS7fr2rgr1Wu0zr0OpB2R1D3C
+	 TqwcUDJVsPq98Auz1qMC1eupouRizMVuWQvT/MoeBlcsQlP4vEYWSIQ8P5X0ogCLRffF+
+	 ZfVI+z7KF4jUWnjXUOs0qxwEUsZbfks7L0yJ0kKqZHBKCI5p9ImW07h9cS7PIlf1Uhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019489;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019492;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=39AXncB2MXrfOACL69A+UXfMUdrpLHlnbnfJKEScvf0=;
-	b=nzElb897iqly0o8scyDEAsLHyOiA6KwCYOOhWz9XKT5yTeld2+ClJvWq5M2ywulFeWsL
-	 8tR6tYU66r56IHNKkJJcovRvDn2Dv3XKZ+5CQ1F5DkzVGLinh5jVhhw/Voo46/h8GRCNL
-	 OM5oHRhv4lSWLEPzX+Yhwt/3qT8Z3bGJ23NZ1jhdKLOGd3h8uHPMnUB9n15y1/bIvuNHg
-	 cAPADdEbYgBK3g/ieoblPH+fZ8cefWwRAaIKlB3FoD4LyN2nWFvUyeVSEv4cdcul/Xopd
-	 gSIzJ6zAagOJvWqE+WKYKCGGTac2uEtzZ0IT1EBZzBEvxZxCkzIyg6PrX8UC/7qWEAw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=J4Rx3zlCR+1K67Jg417bux17NU/GbAV6VCepPXNBROA=;
+	b=haaSgexbn5nZeAMamgdfF+PHz0Jb2w7w1x0RKGZpcaXsfJnvXffkwwaLtLZlLZt96KtF
+	 3dr3n6xG9VXH4hJnm173ldto60qNpsv9SIjWQ0rNWdNoSu5XcCwu4z3PtjVcMXOWPcrqz
+	 ic0unUb+3wGqd2VvoQzF2TIifaALBrb6TsfB6ntXcAdVRQoOrJbGKGlx22bGDiGA8TSZS
+	 NmdiUuJoC8edpA/+kWGrbMtgTi20N/UH4cl5HExWDewBK5JWSTZQ8SrkriWwQ71+FHZfb
+	 CrzZKfHszLu4hNuCXgy1Hxa1PwvXe1SbanBgMiTmfCXGPQOGbpfJudkpM6vRAw1sp3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUmb2SGe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJpeY5Yb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E01E606A7C4;
-	Wed, 18 Nov 2026 16:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44759606A7F3;
+	Wed, 18 Nov 2026 16:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AUmb2SGe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8016E1F000C5;
-	Wed, 18 Nov 2026 16:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJpeY5Yb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4475B1F00927;
+	Wed, 18 Nov 2026 16:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019489;
-	bh=39AXncB2MXrfOACL69A+UXfMUdrpLHlnbnfJKEScvf0=;
+	s=korg; t=1795019491;
+	bh=J4Rx3zlCR+1K67Jg417bux17NU/GbAV6VCepPXNBROA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AUmb2SGekFKmLgXsfzdklavJnqRi4GRzzDM0M/IYZG5KDRrGXHI8kx2v/u5zWiu2c
-	 UcqGSj4E95qOk4ZVaCeeztxlT3QDmLqHpysDUeGCZfMtq5IxBY39+rc/X6xb1et82c
-	 0DJOEoZvzPOr+OwIawEDXG+kLkbrj7lGrMI2mjLI=
+	b=pJpeY5Ybj0B40wmHG18gwIZZeyGsIZ6byEmxjB5c/quRrIOWOEBQdoGUhZ3FnIfgU
+	 IRftAvz6Xo8B8jqcOCpG8etq+O+mG92S2BufVYMxahXtody9qk5JQKNuvoa7qOeLKh
+	 igLj5R1WKSCnKnfVlJqrsabjUrie6dohvz1u1TEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
 	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1612/2651] powerpc: fix NMI exit ordering: restore soft masks after irqentry_nmi_exit()
-Date: Wed, 18 Nov 2026 15:47:32 +0100
-Message-ID: <20261118150345.874661288@linuxfoundation.org>
+Subject: [PATCH 7.3 1613/2651] powerpc/kasan: fix r2 corruption in mem*() on GENERIC_ENTRY with old compilers
+Date: Wed, 18 Nov 2026 15:47:33 +0100
+Message-ID: <20261118150345.914646665@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -72,114 +72,339 @@ Content-Transfer-Encoding: 8bit
 
 From: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
 
-[ Upstream commit 8fa763bc3ee9bd215476ab91ee480c649eaa4b29 ]
+[ Upstream commit de5a7fedf5061bdf6823eb509353bd7c128e34b5 ]
 
-When running with CONFIG_PPC_IRQ_SOFT_MASK_DEBUG=y and LOCKDEP=y, an
-Oops is triggered during NMI exit:
+commit bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature") introduced
+a bug that, when CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX is not
+set, expand to two consecutive ELFv2 global entry points for the
+same function body:
 
-  [  202.258332] Oops: Exception in kernel mode, sig: 4 [#1]
-  NIP [000000000003e178] 0x3e178
-  LR  [c00000000003e174] arch_local_irq_restore+0x2a4/0x328
-  TRAP: 0700  MSR: 0000000000081000 <ME>
+  _GLOBAL_TOC_KASAN(memcpy) expands to:
+    _GLOBAL_TOC(memcpy);
+    _GLOBAL_TOC(__memcpy)
 
-The faulting instruction at NIP is a 'trap' (0fe00000) inside the
-rfi_flush_fallback trampoline at a userspace-looking low address, reached
-after a bad rfid caused by an incorrect SRR0 value.
+On powerpc64le this produces:
 
-Root cause:
-DEFINE_INTERRUPT_HANDLER_NMI used to call arch_interrupt_nmi_exit_prepare()
-*before* irqentry_nmi_exit(), giving this sequence:
+  memcpy:
+    addis r2,r12,(.TOC.-0b)@ha     <- global entry, sets up r2
+    addi  r2,r2,(.TOC.-0b)@l
+    .localentry memcpy,.-memcpy    <- local entry at memcpy+8
+  __memcpy:
+    addis r2,r12,(.TOC.-0b)@ha    <- memcpy+8: __memcpy global entry
+    addi  r2,r2,(.TOC.-0b)@l
+    .localentry __memcpy,.-__memcpy
 
-  arch_interrupt_nmi_enter_prepare()   // saves irq_soft_mask, irq_happened
-  irqentry_nmi_enter()                 // __nmi_enter() -> nmi_count++, in_nmi()=true
-  ____func(regs)                       // NMI handler body
-  arch_interrupt_nmi_exit_prepare()    // RESTORES irq_soft_mask=0 (IRQS_ENABLED)
-                                       // RESTORES irq_happened with pending bits
-  irqentry_nmi_exit()                  // instrumentation block runs here...
-    trace_hardirqs_on_prepare()        //   ...with in_nmi()==true still
-    lockdep_hardirqs_on_prepare()      //   ...and irq_soft_mask already restored to 0
-      -> arch_local_irq_restore(0)     // mask=0 -> enable path entered
-           WARN_ON_ONCE(in_nmi())      // FIRES: __nmi_exit() hasn't run yet
-    __nmi_exit()                       // nmi_count-- (too late)
+The assembler sets memcpy's st_other field so its local entry offset is
+8 bytes past the global entry point.  The linker resolves same-TOC
+calls to the local entry, so every same-TOC caller of memcpy() lands
+at memcpy+8 — which is the beginning of the __memcpy global-entry TOC
+prologue.  That prologue uses r12 as the base to recompute r2, but r12
+holds whatever the caller left in it (not the address of memcpy+8).
+The result is r2 pointing at garbage on return.  Same-TOC callers do
+not reload r2 after the call, so the first TOC-relative access after
+returning from memcpy() or memmove() crashes or silently corrupts data.
 
-arch_interrupt_nmi_exit_prepare() restores irq_soft_mask to whatever
-the interrupted thread had (IRQS_ENABLED / 0) and restores irq_happened
-with any pending deferred-interrupt bits that were present when the NMI
-fired.  This is correct and necessary before rfid back to the interrupted
-context, but it must not happen until irqentry_nmi_exit() has fully
-completed.
+With GENERIC_ENTRY selected, mm/kasan/shadow.c no longer provides its
+own memcpy()/memmove()/memset() wrappers, so on a toolchain without
+-mllvm -asan-kernel-mem-intrinsic-prefix=1 (e.g. GCC 9) every
+instrumented file resolves mem*() directly to the assembly symbols and
+hits this corrupt-r2 path.  This manifests as an early boot hang unique
+to powerpc with GCC 9 and CONFIG_KASAN=y.
 
-With irq_soft_mask=0 and pending bits in irq_happened, the
-trace_hardirqs_on_prepare() call inside irqentry_nmi_exit()'s
-instrumentation block reaches lockdep_hardirqs_on_prepare() which
-calls __trace_hardirqs_on_caller(), which eventually calls
-arch_local_irq_restore(0) (the IRQS_ENABLED / enable path).
+Fix this by removing the dual-entry macros entirely.  The assembly
+files in mem_64.S, memcpy_64.S and copy_32.S now use plain
+_GLOBAL()/_GLOBAL_TOC() for memset/memcpy/memmove, emitting a single
+correct ELFv2 entry point.  The __mem* aliases required by mm/kasan
+(used in mm/kasan/shadow.c and mm/kasan/generic.c as raw backends to
+bypass KASAN checking) are provided entirely through the #define
+redirections in asm/string.h, which already handles both the
+CC_HAS_KASAN_MEMINTRINSIC_PREFIX and non-prefix cases in C.
 
-arch_local_irq_restore() with mask=0 hits the CONFIG_PPC_IRQ_SOFT_MASK_DEBUG
-guards at irq_64.c:217:
+As a consequence the _GLOBAL_KASAN(), _GLOBAL_TOC_KASAN() and
+EXPORT_SYMBOL_KASAN() macros have no remaining users and are removed
+from asm/kasan.h.  The has_renamed_memintrinsics() branch in
+prom_init_check.sh, which conditionally whitelisted __memcpy/__memset
+when CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX was absent, is dead code
+after this change and is removed; the whitelist now unconditionally
+lists memcpy and memset.
 
-  WARN_ON_ONCE(in_nmi());   // TRUE: __nmi_exit() not yet called
-
-The WARN_ON_ONCE fires a 'trap' instruction (tw 31,0,0 / 0fe00000) in
-kernel mode with MSR_PR=0, MSR_IR=0 (real-mode).  The program check
-handler (TRAP 0700) takes the sig:4 (SIGILL) path via do_program_check()
-and calls die(), producing the Oops.
-
-The RESTART_TABLE mechanism in arch_local_irq_restore then causes the
-bad rfid that lands at the userspace-looking address visible in the NIP.
-
-The bug is invisible with LOCKDEP=n because trace_hardirqs_on_prepare()
-is a no-op when CONFIG_TRACE_IRQFLAGS is not set (TRACE_IRQFLAGS is
-selected by PROVE_LOCKING which selects LOCKDEP).
-
-Fix:
-Move arch_interrupt_nmi_exit_prepare() to after the irqentry_nmi_exit()
-block, so that:
-
-  irqentry_nmi_exit()                 // __nmi_exit() -> nmi_count--, in_nmi()=false
-  arch_interrupt_nmi_exit_prepare()   // now safe to restore soft mask state
-
-The instrumentation inside irqentry_nmi_exit() now executes while
-in_nmi() is still true (nmi_count not yet decremented), but
-irq_soft_mask is still IRQS_ALL_DISABLED (NMI-entry value), so
-arch_local_irq_restore() is never called with mask=0 from that path.
-After __nmi_exit() returns, arch_interrupt_nmi_exit_prepare() restores
-the pre-NMI soft mask and irq_happened, which is the correct state for
-the rfid back to the interrupted context.
-
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/all/d4cccba9-ce5c-424b-864c-2248fb0d99e6@linux.ibm.com/
 Fixes: bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature")
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/96dae110-f79b-4e54-8a9b-514369019b5d@linux.ibm.com
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+[Maddy: Fixed commit message to avoid checkpatch error]
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20261003094509.3408190-1-mkchauras@gmail.com
+Link: https://patch.msgid.link/20261003094006.3404731-1-mkchauras@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/interrupt.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/kasan.h       | 15 ---------------
+ arch/powerpc/include/asm/string.h      | 21 +--------------------
+ arch/powerpc/kernel/cputable.c         | 14 +++-----------
+ arch/powerpc/kernel/prom_init.c        | 10 ++--------
+ arch/powerpc/kernel/prom_init_check.sh | 15 +--------------
+ arch/powerpc/lib/copy_32.S             | 10 +++-------
+ arch/powerpc/lib/mem_64.S              |  7 ++-----
+ arch/powerpc/lib/memcpy_64.S           |  4 +---
+ 8 files changed, 13 insertions(+), 83 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/interrupt.h b/arch/powerpc/include/asm/interrupt.h
-index 355f6bbf9894d..c7d0e71eac839 100644
---- a/arch/powerpc/include/asm/interrupt.h
-+++ b/arch/powerpc/include/asm/interrupt.h
-@@ -302,7 +302,6 @@ interrupt_handler long func(struct pt_regs *regs)			\
- 		state = irqentry_nmi_enter(regs);			\
- 	}								\
- 	ret = ____##func (regs);					\
--	arch_interrupt_nmi_exit_prepare(regs, &nmi_state);		\
- 	if (mfmsr() & MSR_DR) {						\
- 		/* nmi_exit if relocations are on */			\
- 		irqentry_nmi_exit(regs, state);				\
-@@ -318,6 +317,7 @@ interrupt_handler long func(struct pt_regs *regs)			\
- 	} else {							\
- 		irqentry_nmi_exit(regs, state);				\
- 	}								\
-+	arch_interrupt_nmi_exit_prepare(regs, &nmi_state);		\
- 									\
- 	return ret;							\
- }									\
+diff --git a/arch/powerpc/include/asm/kasan.h b/arch/powerpc/include/asm/kasan.h
+index a690e7da53c27..599a9e02af023 100644
+--- a/arch/powerpc/include/asm/kasan.h
++++ b/arch/powerpc/include/asm/kasan.h
+@@ -2,21 +2,6 @@
+ #ifndef __ASM_KASAN_H
+ #define __ASM_KASAN_H
+ 
+-#if defined(CONFIG_KASAN) && !defined(CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX)
+-#define _GLOBAL_KASAN(fn)			\
+-	_GLOBAL(fn);				\
+-	_GLOBAL(__##fn)
+-#define _GLOBAL_TOC_KASAN(fn)			\
+-	_GLOBAL_TOC(fn);			\
+-	_GLOBAL_TOC(__##fn)
+-#define EXPORT_SYMBOL_KASAN(fn)			\
+-	EXPORT_SYMBOL(__##fn)
+-#else /* CONFIG_KASAN && !CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX */
+-#define _GLOBAL_KASAN(fn)	_GLOBAL(fn)
+-#define _GLOBAL_TOC_KASAN(fn)	_GLOBAL_TOC(fn)
+-#define EXPORT_SYMBOL_KASAN(fn)
+-#endif /* CONFIG_KASAN && !CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX */
+-
+ #ifndef __ASSEMBLER__
+ 
+ #include <asm/page.h>
+diff --git a/arch/powerpc/include/asm/string.h b/arch/powerpc/include/asm/string.h
+index 1981bd4036b54..161b949683b39 100644
+--- a/arch/powerpc/include/asm/string.h
++++ b/arch/powerpc/include/asm/string.h
+@@ -29,29 +29,10 @@ extern void * memchr(const void *,int,__kernel_size_t);
+ void memcpy_flushcache(void *dest, const void *src, size_t size);
+ 
+ #ifdef CONFIG_KASAN
+-/* __mem variants are used by KASAN to implement instrumented meminstrinsics. */
+-#ifdef CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX
++/* Used by mm/kasan as raw backends to bypass KASAN checking. */
+ #define __memset memset
+ #define __memcpy memcpy
+ #define __memmove memmove
+-#else /* CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX */
+-void *__memset(void *s, int c, __kernel_size_t count);
+-void *__memcpy(void *to, const void *from, __kernel_size_t n);
+-void *__memmove(void *to, const void *from, __kernel_size_t n);
+-#ifndef __SANITIZE_ADDRESS__
+-/*
+- * For files that are not instrumented (e.g. mm/slub.c) we
+- * should use not instrumented version of mem* functions.
+- */
+-#define memcpy(dst, src, len) __memcpy(dst, src, len)
+-#define memmove(dst, src, len) __memmove(dst, src, len)
+-#define memset(s, c, n) __memset(s, c, n)
+-
+-#ifndef __NO_FORTIFY
+-#define __NO_FORTIFY /* FORTIFY_SOURCE uses __builtin_memcpy, etc. */
+-#endif
+-#endif /* !__SANITIZE_ADDRESS__ */
+-#endif /* CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX */
+ #endif /* CONFIG_KASAN */
+ 
+ #ifdef CONFIG_PPC64
+diff --git a/arch/powerpc/kernel/cputable.c b/arch/powerpc/kernel/cputable.c
+index 6f6801da9dc1e..4731e27bb7bcf 100644
+--- a/arch/powerpc/kernel/cputable.c
++++ b/arch/powerpc/kernel/cputable.c
+@@ -35,12 +35,7 @@ void __init set_cur_cpu_spec(struct cpu_spec *s)
+ 	struct cpu_spec *t = &the_cpu_spec;
+ 
+ 	t = PTRRELOC(t);
+-	/*
+-	 * use memcpy() instead of *t = *s so that GCC replaces it
+-	 * by __memcpy() when KASAN is active
+-	 */
+-	memcpy(t, s, sizeof(*t));
+-
++	*t = *s;
+ 	*PTRRELOC(&cur_cpu_spec) = &the_cpu_spec;
+ }
+ 
+@@ -53,11 +48,8 @@ static struct cpu_spec * __init setup_cpu_spec(unsigned long offset,
+ 	t = PTRRELOC(t);
+ 	old = *t;
+ 
+-	/*
+-	 * Copy everything, then do fixups. Use memcpy() instead of *t = *s
+-	 * so that GCC replaces it by __memcpy() when KASAN is active
+-	 */
+-	memcpy(t, s, sizeof(*t));
++	/* Copy everything, then do fixups. */
++	*t = *s;
+ 
+ 	/*
+ 	 * If we are overriding a previous value derived from the real
+diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
+index eb9f556b0937e..e8e071024da51 100644
+--- a/arch/powerpc/kernel/prom_init.c
++++ b/arch/powerpc/kernel/prom_init.c
+@@ -1362,14 +1362,8 @@ static void __init prom_check_platform_support(void)
+ 	int prop_len = prom_getproplen(prom.chosen,
+ 				       "ibm,arch-vec-5-platform-support");
+ 
+-	/*
+-	 * First copy the architecture vec template
+-	 *
+-	 * use memcpy() instead of *vec = *vec_template so that GCC replaces it
+-	 * by __memcpy() when KASAN is active
+-	 */
+-	memcpy(&ibm_architecture_vec, &ibm_architecture_vec_template,
+-	       sizeof(ibm_architecture_vec));
++	/* First copy the architecture vec template */
++	ibm_architecture_vec = ibm_architecture_vec_template;
+ 
+ 	prom_strscpy_pad(ibm_architecture_vec.vec7.os_id, linux_banner, 256);
+ 
+diff --git a/arch/powerpc/kernel/prom_init_check.sh b/arch/powerpc/kernel/prom_init_check.sh
+index 3090b97258ae0..3155cc722e484 100644
+--- a/arch/powerpc/kernel/prom_init_check.sh
++++ b/arch/powerpc/kernel/prom_init_check.sh
+@@ -13,21 +13,8 @@
+ # If you really need to reference something from prom_init.o add
+ # it to the list below:
+ 
+-has_renamed_memintrinsics()
+-{
+-	grep -q "^CONFIG_KASAN=y$" "${KCONFIG_CONFIG}" && \
+-		! grep -q "^CONFIG_CC_HAS_KASAN_MEMINTRINSIC_PREFIX=y" "${KCONFIG_CONFIG}"
+-}
+-
+-if has_renamed_memintrinsics
+-then
+-	MEM_FUNCS="__memcpy __memset"
+-else
+-	MEM_FUNCS="memcpy memset"
+-fi
+-
+ WHITELIST="add_reloc_offset __bss_start __bss_stop copy_and_flush
+-_end enter_prom $MEM_FUNCS reloc_offset __secondary_hold
++_end enter_prom memcpy memset reloc_offset __secondary_hold
+ __secondary_hold_acknowledge __secondary_hold_spinloop __start
+ logo_linux_clut224 btext_prepare_BAT
+ reloc_got2 kernstart_addr memstart_addr linux_banner _stext
+diff --git a/arch/powerpc/lib/copy_32.S b/arch/powerpc/lib/copy_32.S
+index 933b685e7ab68..97eb9ca0cc23f 100644
+--- a/arch/powerpc/lib/copy_32.S
++++ b/arch/powerpc/lib/copy_32.S
+@@ -10,7 +10,6 @@
+ #include <asm/errno.h>
+ #include <asm/ppc_asm.h>
+ #include <asm/code-patching-asm.h>
+-#include <asm/kasan.h>
+ 
+ #define COPY_16_BYTES		\
+ 	lwz	r7,4(r4);	\
+@@ -87,7 +86,7 @@ EXPORT_SYMBOL(memset16)
+  * We therefore skip the optimised bloc that uses dcbz. This jump is
+  * replaced by a nop once cache is active. This is done in machine_init()
+  */
+-_GLOBAL_KASAN(memset)
++_GLOBAL(memset)
+ 	cmplwi	0,r5,4
+ 	blt	7f
+ 
+@@ -147,7 +146,6 @@ _GLOBAL_KASAN(memset)
+ 	bdnz	9b
+ 	blr
+ EXPORT_SYMBOL(memset)
+-EXPORT_SYMBOL_KASAN(memset)
+ 
+ /*
+  * This version uses dcbz on the complete cache lines in the
+@@ -160,12 +158,12 @@ EXPORT_SYMBOL_KASAN(memset)
+  * We therefore jump to generic_memcpy which doesn't use dcbz. This jump is
+  * replaced by a nop once cache is active. This is done in machine_init()
+  */
+-_GLOBAL_KASAN(memmove)
++_GLOBAL(memmove)
+ 	cmplw	0,r3,r4
+ 	bgt	backwards_memcpy
+ 	/* fall through */
+ 
+-_GLOBAL_KASAN(memcpy)
++_GLOBAL(memcpy)
+ 1:	b	generic_memcpy
+ 	patch_site	1b, patch__memcpy_nocache
+ 
+@@ -241,8 +239,6 @@ _GLOBAL_KASAN(memcpy)
+ 65:	blr
+ EXPORT_SYMBOL(memcpy)
+ EXPORT_SYMBOL(memmove)
+-EXPORT_SYMBOL_KASAN(memcpy)
+-EXPORT_SYMBOL_KASAN(memmove)
+ 
+ generic_memcpy:
+ 	srwi.	r7,r5,3
+diff --git a/arch/powerpc/lib/mem_64.S b/arch/powerpc/lib/mem_64.S
+index 6fd06cd20faa0..40eaedd314865 100644
+--- a/arch/powerpc/lib/mem_64.S
++++ b/arch/powerpc/lib/mem_64.S
+@@ -8,7 +8,6 @@
+ #include <asm/processor.h>
+ #include <asm/errno.h>
+ #include <asm/ppc_asm.h>
+-#include <asm/kasan.h>
+ 
+ #ifndef CONFIG_KASAN
+ _GLOBAL(__memset16)
+@@ -29,7 +28,7 @@ EXPORT_SYMBOL(__memset32)
+ EXPORT_SYMBOL(__memset64)
+ #endif
+ 
+-_GLOBAL_KASAN(memset)
++_GLOBAL(memset)
+ 	neg	r0,r3
+ 	rlwimi	r4,r4,8,16,23
+ 	andi.	r0,r0,7			/* # bytes to be 8-byte aligned */
+@@ -95,9 +94,8 @@ _GLOBAL_KASAN(memset)
+ 	stb	r4,0(r6)
+ 	blr
+ EXPORT_SYMBOL(memset)
+-EXPORT_SYMBOL_KASAN(memset)
+ 
+-_GLOBAL_TOC_KASAN(memmove)
++_GLOBAL_TOC(memmove)
+ 	cmplw	0,r3,r4
+ 	bgt	backwards_memcpy
+ 	b	memcpy
+@@ -139,4 +137,3 @@ _GLOBAL(backwards_memcpy)
+ 	mtctr	r7
+ 	b	1b
+ EXPORT_SYMBOL(memmove)
+-EXPORT_SYMBOL_KASAN(memmove)
+diff --git a/arch/powerpc/lib/memcpy_64.S b/arch/powerpc/lib/memcpy_64.S
+index b5a67e20143f8..0cedd455231a2 100644
+--- a/arch/powerpc/lib/memcpy_64.S
++++ b/arch/powerpc/lib/memcpy_64.S
+@@ -7,7 +7,6 @@
+ #include <asm/ppc_asm.h>
+ #include <asm/asm-compat.h>
+ #include <asm/feature-fixups.h>
+-#include <asm/kasan.h>
+ 
+ #ifndef SELFTEST_CASE
+ /* For big-endian, 0 == most CPUs, 1 == POWER6, 2 == Cell */
+@@ -15,7 +14,7 @@
+ #endif
+ 
+ 	.align	7
+-_GLOBAL_TOC_KASAN(memcpy)
++_GLOBAL_TOC(memcpy)
+ BEGIN_FTR_SECTION
+ #ifdef __LITTLE_ENDIAN__
+ 	cmpdi	cr7,r5,0
+@@ -227,4 +226,3 @@ END_FTR_SECTION_IFCLR(CPU_FTR_UNALIGNED_LD_STD)
+ 	blr
+ #endif
+ EXPORT_SYMBOL(memcpy)
+-EXPORT_SYMBOL_KASAN(memcpy)
 -- 
 2.53.0
 
