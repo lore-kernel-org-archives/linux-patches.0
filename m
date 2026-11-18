@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062199;
-	b=PTNS3HYRthtJ8rJHb6ufKFJPb6x+zFHMJVqSp4NpZdw9Jw6gb6FTLWd9KTjRKGsDwgwz
-	 Wk6liJ9CceVoFGlnHn0oU9fzMqdRhqC1KSEIW7R0RtNi1LFDSq9V02hx+W3AeL65oAs03
-	 3u7dBwsP5XXqKhm8uh1FnssoB95UVCyybIqy1A8XhWthwkXfAybL9lw4p8jRel14oxLFg
-	 fMi1V+ddHXoJD4TPeFgd6DesoJMMnf679hOgcGVQZGIFPZO2Tltd0wGicn3kUDh5V+0wD
-	 MYXSkcKitYPLyXB6nlQmxjMt14A9Ql8IlXZx/cLI5u3CM8WTrLSymn2XGOLp1rAB96A==
+	t=1795062202;
+	b=gFr87wvVM9P9TYZ22sCQ40nYXKxkAP5q4kWcN5ceHslrph86Vjul90jba6+RnIDZJbYU
+	 ZSjQZQm4IeVQlG75p5qkRWSZS7GZYK6HGh++gbXsWfyGapQmckkZ3iOfmgSUGDZZQ2pl8
+	 Z+bY+ccLPrNClHXyoNvmjMwCVFy+iGTtV2VXKMAxShXKGBgQ6FjZgowkFiUKhCxPRQsUb
+	 pkvHneIbpp86btRP3DLgU1d+iS1COdwEGL8D5Jk6W2Tdb9DgZKDdZgKQJk/uDTxVQF8II
+	 5TFFS9LXsoY8MJ3QGttV84aEg9VJgeMZJxkcdGnxLzkEqNiieCh8z3a5n28gqvAHXow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D4SmyaJ0VqygRAOlZWTKg1mN+dEF/Qr/vW0f89PwB18=;
-	b=XSIMBWDSV/p+Bemi7KggaIX4zOI4ExF3azqajgWd0lwfNz6pQ8kc5ofSyM7aW/tb/kzA
-	 aU8asw2sKy+q7EkUwAykatgsJvQiEHLartix+uj5/A//UHGV/Lvt0TvT9yAGGdIEx94CZ
-	 x0UJzEEm/pKY1x0M7BWLM1kwkLllnCQN3z7CMuINJRMWZc5Cp8gyj3agyqv0SFw6jidov
-	 MckH/khyaZoeVD7woc7UlPfXlp1RMRyync01ORywxJ41LW0kXKdOan1eJcj47epAiGPJ7
-	 XEVwX7JyQFnyy39BgiGX5gzN+qvTfe4DK/zuXVOi58C4QvpRifl+55MAj/wIGYVgFrA==
+	bh=tMF7FCGlL1OX668XlZGadA+eaeyRyS4Nu+IvVj0qg5Q=;
+	b=eU33vpF0CcdVWRxJEjLVxD5noDoG2PlkeX3pcGBuin94784OT69SAdmWCRpa9MryrXwZ
+	 VOMcnuYh/HZKViDX9hN/qeGu6yzOhbdaUIPjKEdGGfokLGDm/cfxQaEmDHwy/iUy95R+s
+	 XmygLYfdxbBDWA5CTh/ESciFnnwz60wKFu7jVb2KkkBsy6S/nK00KLSezHsTFKAY1WPqJ
+	 nTDzh0l1aWkKZ6MhYEYzDkXdVtY06T46tL0qEslSS2tKfMrHgja0D58YXf6zYhQiCAE5H
+	 eQhaGRN2bPnrUwgG1QWheWvo0O2omEa6xWny3Sf+VDH1lmIqO2Vg31XXYiYb9wezBTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=karlSESS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h+/+arj3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89996606A325;
-	Thu, 19 Nov 2026 04:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF4C606A326;
+	Thu, 19 Nov 2026 04:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=karlSESS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E491F000C7;
-	Thu, 19 Nov 2026 04:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+/+arj3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD8C1F000C5;
+	Thu, 19 Nov 2026 04:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062199;
-	bh=D4SmyaJ0VqygRAOlZWTKg1mN+dEF/Qr/vW0f89PwB18=;
+	s=korg; t=1795062202;
+	bh=tMF7FCGlL1OX668XlZGadA+eaeyRyS4Nu+IvVj0qg5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=karlSESSQYZopKRDuQsNXlQQWyiPQRTxwtcdhApWnl/sDaCJdRra9t6GGMDF26B7P
-	 p2OPp6FBHuOeF9gHav1GVXITzQ3Zn2eMO+rNui69HVPBpPUG5S/DEYO5+TiiqdCZqF
-	 REE3mlJyvoMxRPHTGbfjGhRdQ/U+QNUKke6yhmjY=
+	b=h+/+arj3J27JFSHImgRMPf+zI4uPZQwB/RnSrrLX7VdRlMYwQotCzM+jMB4nk160s
+	 7m0OXHkW37recI+8Zz9eLU4jQDEoZwgPDcxa1tCvtXzqF9BgCqhWtD68sby++Ml43A
+	 jR0vlr5PkDGzx5PzgPBoOfji1TcjJG971ms8NVB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1818/1848] net: bgmac: fix TX DMA unmapping and slot cleanup
-Date: Wed, 18 Nov 2026 16:04:16 +0100
-Message-ID: <20261118150035.647928861@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 1827/1848] dmaengine: ste_dma40: use correct print specfier for resource_size_t
+Date: Wed, 18 Nov 2026 16:04:25 +0100
+Message-ID: <20261118150036.150722335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,126 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Vinod Koul <vkoul@kernel.org>
 
-[ Upstream commit 4f45e97b3aac2282f2b436d97338c9c2c484d093 ]
+commit ef1e1c41a11d37069029bc0563c2fa6915d9880b upstream.
 
-When mapping a fragment fails, bgmac_dma_tx_add() unwinds with the
-wrong slots. It passes the failed fragment's slot->dma_addr, which
-holds the mapping error, to dma_unmap_single() for the head. The
-fragment loop indexes from ring->end instead of ring->end + 1, so it
-unmaps the head a second time as a page and leaves the last mapped
-fragment mapped. None of the affected slots get their dma_addr cleared
-either, which includes the head slot when mapping the head fails.
+We should use %pR for printing resource_size_t, so update that fixing
+the warning:
 
-bgmac_dma_tx_ring_free() unmaps every slot with a non-zero dma_addr,
-so tearing down the ring unmaps these addresses again. It also frees
-the skbs of pending TX slots but leaves slot->skb and slot->dma_addr
-set. The slots survive a down/up cycle, and bgmac_dma_tx_add() only
-sets slot->skb on the last slot of a packet. If a slot with a stale
-pointer is later used for the head or a fragment of a scatter/gather
-packet, bgmac_dma_tx_free() frees the old skb a second time when that
-slot completes.
+drivers/dma/ste_dma40.c:3556:25: warning: format specifies type 'unsigned int'
+but the argument has type 'resource_size_t' (aka 'unsigned long long') [-Wformat]
 
-bgmac_dma_tx_ring_free() also picks dma_unmap_single() or
-dma_unmap_page() by looking at slot->skb, which is set on the last slot
-of a packet, while the head was mapped with dma_map_single() and the
-fragments with skb_frag_dma_map().
-
-In the error path, unmap the head and each mapped fragment from their
-own slots, and clear dma_addr on every slot the failed packet touched.
-In bgmac_dma_tx_ring_free(), choose the unmap function by the SOF flag
-of the descriptor like bgmac_dma_tx_free() does, unmap every slot
-before freeing any skb, since a packet can wrap around the end of the
-ring with its skb on the last slot, and clear both fields.
-
-This was found through code inspection by an LLM while hitting other
-bugs on an Asus RT-N16. It did not hit these ones specifically.
-
-Fixes: 9cde94506eac ("bgmac: implement scatter/gather support")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261028164839.28605-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230517064434.141091-1-vkoul@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 47 +++++++++++++++++----------
- 1 file changed, 30 insertions(+), 17 deletions(-)
+ drivers/dma/ste_dma40.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 19177f90c2329..34d260637c49f 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -208,19 +208,24 @@ static netdev_tx_t bgmac_dma_tx_add(struct bgmac *bgmac,
- 	return NETDEV_TX_OK;
- 
- err_dma:
--	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
--			 DMA_TO_DEVICE);
-+	slot->dma_addr = 0;
- 
- 	while (i-- > 0) {
--		int index = (ring->end + i) % BGMAC_TX_RING_SLOTS;
--		struct bgmac_slot_info *slot = &ring->slots[index];
--		u32 ctl1 = le32_to_cpu(ring->cpu_base[index].ctl1);
--		int len = ctl1 & BGMAC_DESC_CTL1_LEN;
--
--		dma_unmap_page(dma_dev, slot->dma_addr, len, DMA_TO_DEVICE);
-+		index = (ring->end + 1 + i) % BGMAC_TX_RING_SLOTS;
-+		slot = &ring->slots[index];
-+		dma_unmap_page(dma_dev, slot->dma_addr,
-+			       skb_frag_size(&skb_shinfo(skb)->frags[i]),
-+			       DMA_TO_DEVICE);
-+		slot->dma_addr = 0;
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3647,8 +3647,8 @@ static int __init d40_probe(struct platf
  	}
+ 	base->lcpa_size = resource_size(&res_lcpa);
+ 	base->phy_lcpa = res_lcpa.start;
+-	dev_info(dev, "found LCPA SRAM at 0x%08x, size 0x%08x\n",
+-		 (u32)base->phy_lcpa, base->lcpa_size);
++	dev_info(dev, "found LCPA SRAM at 0x%08x, size %pR\n",
++		 (u32)base->phy_lcpa, &base->lcpa_size);
  
-+	slot = &ring->slots[ring->end % BGMAC_TX_RING_SLOTS];
-+	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
-+			 DMA_TO_DEVICE);
-+
- err_dma_head:
-+	slot->dma_addr = 0;
-+
- 	netdev_err(bgmac->net_dev, "Mapping error of skb on ring 0x%X\n",
- 		   ring->mmio_base);
- 
-@@ -535,17 +540,25 @@ static void bgmac_dma_tx_ring_free(struct bgmac *bgmac,
- 		unsigned int len = ctl1 & BGMAC_DESC_CTL1_LEN;
- 
- 		slot = &ring->slots[i];
--		dev_kfree_skb(slot->skb);
- 
--		if (!slot->dma_addr)
--			continue;
-+		if (slot->dma_addr) {
-+			if (le32_to_cpu(dma_desc[i].ctl0) & BGMAC_DESC_CTL0_SOF)
-+				dma_unmap_single(dma_dev, slot->dma_addr,
-+						 len, DMA_TO_DEVICE);
-+			else
-+				dma_unmap_page(dma_dev, slot->dma_addr,
-+					       len, DMA_TO_DEVICE);
-+			slot->dma_addr = 0;
-+		}
-+	}
- 
--		if (slot->skb)
--			dma_unmap_single(dma_dev, slot->dma_addr,
--					 len, DMA_TO_DEVICE);
--		else
--			dma_unmap_page(dma_dev, slot->dma_addr,
--				       len, DMA_TO_DEVICE);
-+	/* A packet can wrap around the end of the ring with its skb on the
-+	 * last slot, so free the skbs only once every slot is unmapped.
-+	 */
-+	for (i = 0; i < BGMAC_TX_RING_SLOTS; i++) {
-+		slot = &ring->slots[i];
-+		dev_kfree_skb(slot->skb);
-+		slot->skb = NULL;
- 	}
- }
- 
--- 
-2.53.0
-
+ 	/* We make use of ESRAM memory for this. */
+ 	val = readl(base->virtbase + D40_DREG_LCPA);
 
 
