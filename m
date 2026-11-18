@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059994;
-	b=BUnPBSVEfnOy6+j7c+CLBRpBU/VP1368M8km0nOBkspSo0cGMi5ZqcvbGI3CMOkqSsXi
-	 w9oMXxsN1NrU1AuPsY5NWKCnQwN8f+UpaB2g/tC2O2zKwXWrr2lqHuSGfFqvsDtKzUYn1
-	 5rTItfX/qVeoOOnfoCNPENW/FSMZcUMYhzoEAmhyzLmgfbhQ4t3jk48aFGIrnrcNMpHCP
-	 5qfFWxVNPDQmXPS1dTF+5gLIQ6PTLCFw0xj6IrUCtTSLas1o24egzaRwr50R7Ix5JpjV+
-	 AWqITwLxPqmgf2b0k30+ndLcfR3BTZcakWq6cZ5n2rLR2Mm5ML38HswXnkfgKPkvfsg==
+	t=1795059996;
+	b=KZTj/sFho+5nfh8hMkXRD01UAoFYX/4mUwIdN98SLaI8SEhKUeLotpd6zqPWp40K271R
+	 k65HdRBlQMIoWkN8T3BANkVLUoqRZxy35ispj388nZz73DoeFFV4yniiboO1My/lkmChK
+	 8qTZcdXvwf6r3yU3z8czSxi/MDiAUwUWlISBqs4QXWB2qXBYgDNesPapW4pzg13SbV8h1
+	 5Nu3R2KxPhnvG/VQAqxA1AsFp3l72vqvjtQGqXUjUEOnjAwlphN0AiKECyybiGEcfjBuX
+	 V7u7G1kxHBgZIiM9P+DoMCFh0RWAabfnDrPOEvh8nsHtZ2h/YjZA9aAe4BWn9tQzLaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nBywqN1rja6qGvybprP8tVbViqbUAVjuYPaVFzaVebk=;
-	b=e7FITOHy+EDBockfaAijecIvObbmcFgCdkidwksXZ8Hh7jyHV7c/KMZh1ch7v4KItdbN
-	 szLwnSq3c0WWnVALUlCCHnVZyWDR0/OFVwy9ejMZHY0xL5FR3bFJVr5FC27pSJv7R0x7M
-	 UPkjITClE9YJuvnXo4e//SF7Nzy+qeefb7FTocFXsBVtaUUKv4PNG2dKCEft48IAmQnvm
-	 8QcBnWeSKJJvUHs5aeFMtfqLyt/rxwdiEPDnx4F65751SuhObQeNv0BkjcFOBtPQo8yH1
-	 IuSzChOR6JFcc1T0LD7CbqfMshy98wjlgu0x9JMoUcNaod0oTK2+CpnblcAm3SDw2OA==
+	bh=HkR/Sz+GDeZryTIcugQlpPOukWThvrMdoLWOzOezBTg=;
+	b=m4ONvvgCYgWV9Kn8gm+gBm/f+U9REbPD+AY6vrUZ3ezlPMPvu13AR2IIe2UftSmkYQYL
+	 7tVRSWP6tYAmzuPPI+j1qxAhZWeG+kKNm1kIcZ4OYOnAV9Ct9HhoZfE9+pdbMZW5APC/u
+	 zpP7nWhRRV3JF/AsvOCj2IKBzM7xE+qe2QPYjr/CyhOi5KTGOGoxXF515cdfwG9PJICpB
+	 J9fxAtXavTZLbqp04AVSwwJvkP0OPhxENHEoFw+BeBOCV49RxiNSBc9aqjPB0mTtCVrp0
+	 16OvjpZuaxNRkxTopqYEN5VI6DGK4Gw5d5kDdg9PTHOBDsYRZA4/999bpSXF2sdUTpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UoTeEPDZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pSFn6cn0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4646D606A325;
-	Thu, 19 Nov 2026 03:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59CE606A325;
+	Thu, 19 Nov 2026 03:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UoTeEPDZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8351F000C5;
-	Thu, 19 Nov 2026 03:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pSFn6cn0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3455A1F000C4;
+	Thu, 19 Nov 2026 03:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059993;
-	bh=nBywqN1rja6qGvybprP8tVbViqbUAVjuYPaVFzaVebk=;
+	s=korg; t=1795059996;
+	bh=HkR/Sz+GDeZryTIcugQlpPOukWThvrMdoLWOzOezBTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UoTeEPDZbaxrD28kQS2yaMvowxp2wucrncjgedRfKqW0wSYjTaSdR7Ez36LoMBtVR
-	 Rrm4x8NfBhrM8jqF4Qxxri4M1xrXq+ZXWjVLqStrNVSr0Bsjy7y4E/72cVM2KrSMgm
-	 MQ3J9vWl2IccitLD5NWmSY9N/l8JDYt2o8kIGCUA=
+	b=pSFn6cn0ZJ05iLm7K2RuDLala0VcpkdBSnoV7VaiWYEduSjb3KVTdwIvVebNfSUcr
+	 sUClHj+saPlRLDWR25q5Mv0AGu3Eh1EEZVkGFUBgVkrzopYc+XlHB4WH7DaV32jQkO
+	 bEFYGI3nrghrHfr3zKIVSzIN/NlaJYQ5aMgCqUrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Edvard Conrad <edvard@tuta.io>,
-	Amir Goldstein <amir73il@gmail.com>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1040/1848] ovl: inherit FMODE_NONOTIFY when opening directory realfiles
-Date: Wed, 18 Nov 2026 15:51:18 +0100
-Message-ID: <20261118150000.883125919@linuxfoundation.org>
+Subject: [PATCH 5.10 1041/1848] f2fs: fix to fetch ino via ino_of_node() under cache lock
+Date: Wed, 18 Nov 2026 15:51:19 +0100
+Message-ID: <20261118150000.919510186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,70 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 323899b4ed233d5b6e2fc160c16fbf39cf0317da ]
+[ Upstream commit cd6d8b1891395b681f2060916a4b83880b765698 ]
 
-When fanotify hands a listener an fd for a permission event on an
-overlay directory, ovl_dir_open_realfile() opens the real directory via
-dentry_open(), not backing_file_open(), so the lower open could still
-raise FS_OPEN_PERM and deadlock a listener that also marks the backing
-filesystem.
+In f2fs_writeback_node_caches(), it's better to fetch ino via ino_of_node()
+under cache lock, otherwise, node cache content may become stale after cache
+is unlocked due to racing w/ truncation.
 
-Export dentry_open_nonotify() and call it from ovl_path_open_realfile()
-when the overlay user file must not generate events.  Ordinary
-ovl_path_open() callers are unchanged.
+Commit 493b9dc8b52c ("f2fs: cache: use node cache") fixes similar issue in
+f2fs_flush_inline_data() introduced in commit 34c061ad85a2 ("f2fs: Avoid double
+lock for cp_rwsem during checkpoint").
 
-Reported-by: Christian Brauner (Amutable) <brauner@kernel.org>
-Closes: https://lore.kernel.org/all/20261030-welpen-anbinden-nullen-b2432cee1d10@brauner/
-Fixes: 130fdbc3d1f99 ("ovl: pass correct flags for opening real directory")
-Cc: stable@vger.kernel.org
-Tested-by: Edvard Conrad <edvard@tuta.io>
-Link: https://lore.kernel.org/ltp/P5Iny41--F-9@tuta.io/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: passed __FMODE_NONOTIFY through ovl_path_open() flags instead of calling dentry_open_nonotify() ]
+Cc: stable@kernel.org
+Fixes: 2049d4fcb057 ("f2fs: avoid multiple node page writes due to inline_data")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Adapted node-cache operations in f2fs_writeback_node_caches() to page operations in f2fs_sync_node_pages(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/readdir.c | 10 +++++++++-
- fs/overlayfs/util.c    |  2 +-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ fs/f2fs/node.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index abfe17068b7d6..e3ff8828b5a8c 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -845,9 +845,17 @@ static struct file *ovl_dir_open_realfile(const struct file *file,
- {
- 	struct file *res;
- 	const struct cred *old_cred;
-+	int flags = O_RDONLY | (file->f_flags & O_LARGEFILE);
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index fc1f0d3bf6ed7..b50ee5482cec5 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1958,9 +1958,11 @@ int f2fs_sync_node_pages(struct f2fs_sb_info *sbi,
+ 
+ 			/* flush inline_data */
+ 			if (is_inline_node(page)) {
++				nid_t ino = ino_of_node(page);
 +
-+	/*
-+	 * Inherit FMODE_NONOTIFY from a fanotify permission fd so a listener
-+	 * that also watches the real filesystem does not deadlock.
-+	 */
-+	if (file->f_mode & FMODE_NONOTIFY)
-+		flags |= __FMODE_NONOTIFY;
+ 				clear_inline_node(page);
+ 				unlock_page(page);
+-				flush_inline_data(sbi, ino_of_node(page));
++				flush_inline_data(sbi, ino);
+ 				goto lock_node;
+ 			}
  
- 	old_cred = ovl_override_creds(file_inode(file)->i_sb);
--	res = ovl_path_open(realpath, O_RDONLY | (file->f_flags & O_LARGEFILE));
-+	res = ovl_path_open(realpath, flags);
- 	revert_creds(old_cred);
- 
- 	return res;
-diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
-index 26f29a3e5ada0..4146ab82dcda6 100644
---- a/fs/overlayfs/util.c
-+++ b/fs/overlayfs/util.c
-@@ -485,7 +485,7 @@ struct file *ovl_path_open(struct path *path, int flags)
- 	struct inode *inode = d_inode(path->dentry);
- 	int err, acc_mode;
- 
--	if (flags & ~(O_ACCMODE | O_LARGEFILE))
-+	if (flags & ~(O_ACCMODE | O_LARGEFILE | __FMODE_NONOTIFY))
- 		BUG();
- 
- 	switch (flags & O_ACCMODE) {
 -- 
 2.53.0
 
