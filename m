@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020493;
-	b=sQKC07NHx8n1ZKXNsiRY5XBxuYBRB5mobSjehkdR6req1/VgYMnfamUCeJttnwbb2QHH
-	 xhM/NnWbzdExnllU8Nlmf2MBmD8poowasOxK5cAh76UP+RS75qp86D4ec6hMLwGRGSWpk
-	 CO5XS+90iBFGDF0Vph+6ExNgC13nUDUmrHaX8f7OQz0z+AdK6CUYeVXHJIiaLR4POXVb7
-	 xPrmeD0BWHRFaqdMyu99+diU/CISnw1CmfHAIq4jh/Jo7FbWdF71QYlkf4k9AjTI0Fsmq
-	 s+DFvqVMZ1zZSx5M+FMqR3JHOuXsPj2pEqWpT0pxryaknor+u9wouobpsrcJzaxAcQw==
+	t=1795020496;
+	b=r7Cir1fMWulu3wVWxVOgvBre6T4yxAJNhmQ1hEU36mL2PUuP9vQ7T4Mam80kAfJwaEy4
+	 emeCXr5ovI7UChP5EnOswIQ1dKcJlHS4k5G0y/h11YMuD/REPiaRqZ6Jmc6Gg6yn23vvv
+	 tp8ldHvsdywR58H9X91Msa1Jg81gwWLTGb2Y5yVwmVQQ7iG4nlAof2v4ie93mtRw7anmR
+	 ptc5w3b2SfkXr3muzzbr0ajIogAvzvBCjcGoiZzmpswGnMOOQCIDCGF7cw7YFpdyKPLh4
+	 0n1GzUmku8F3tKjiYjUvaBE7kRKTAk0BrLnQmFQLfeGrwrtnrlJUHsGjeWd+gQp7Srw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020493;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gBDQXghYHO7Hd+UCCT6+LEtHHfZEUyUno+NvbcoIDOc=;
-	b=TKgqtzr5nB3CJFW1esTM0vL/kCDznV7FRS9WRCsfd/B9chE9jUFM8PTwALdqUK39UP53
-	 E5WphlBOx6INi0A0cBsmCYA/10aRxlRwP4S0C9NjrCFz5STHEn45Vf2dCi5W+uW6Oqbw+
-	 2z9vwV6nkIAZpZYuXcmFkNUfvfDeLKJM7UodW7dWQMUQROqSx3m7pAiI4ilhP8hZv8nQJ
-	 aLAIYdxev79EUObFNp5stNiEkwNojnERq/0N9Ss9Ip68lqwaURLz1C6jemsp/CfO9VIU5
-	 0QgFwcVH8IQw6tyl1dJkWddb7EP94lJY0qEveYMh9uTUWciz2HsnYbYhOdAym4j89DA==
+	bh=SK3W3UG6ltOt2PIXcSaFIM54ISQIJmSLR248Phklzqg=;
+	b=BKVxXk8Mj/DyyUvanAh6Q0/JUnOvxw8cjofmzWssuDSX2d2YpvNfUB2A6bM4JdYk8pP4
+	 BV7j0sigLpFULpLl3pAKjcgXhN32KRF5tTo/4+UTHQsLaFzG20tkFY8KbmA4lznXRy95j
+	 oH0P3cbP2Mc9ra3bAAHjaF6FLqgfAZFfGYfPFM8fNXkD6+ec6UGzEWHA44kxbW/dmTrHi
+	 GXhIlb7LbvfarPRugR3fyx9Wy/fIryeCeEAQqlVvzr4Fqa9NWisT15Ex0evT63T3BNcei
+	 DaHFJsoNMdaqaLOBJpxGgxZlac+6dTAb4bn1Iy8idnPtn6y0jhmpY1+CwdndJ3azmnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnzi0i0P;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdo0OGl0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88965606A31C;
-	Wed, 18 Nov 2026 16:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE3A606A320;
+	Wed, 18 Nov 2026 16:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cnzi0i0P
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24531F000C4;
-	Wed, 18 Nov 2026 16:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdo0OGl0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397D61F000C4;
+	Wed, 18 Nov 2026 16:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020493;
-	bh=gBDQXghYHO7Hd+UCCT6+LEtHHfZEUyUno+NvbcoIDOc=;
+	s=korg; t=1795020496;
+	bh=SK3W3UG6ltOt2PIXcSaFIM54ISQIJmSLR248Phklzqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cnzi0i0PHL3GT+isfd6kHF14A15A7ItOAdRGRRnG3ZXM78/rgFzxjZDgprrXf6SRJ
-	 rqr3MfXBCuyPkU5nrgBZCOEYx8V5JzwCu5XFQ4ReG1sYkgUzXIIQVn4KqkSXcM2S+X
-	 GYxgOdweh74c2+hSmhUMm8AIoeIzDbkhVGkD0/Xc=
+	b=vdo0OGl0XpHpCswg/H/ux4lNX2Ekjv7EnYCKiLE0ke78kWnLiyy61UWBhO2oGVbrI
+	 WPp2qvxOAFQB/B96PnE6kVAuun03VSSZgfkq9mkoNQrWFO7v5ToAKgNX1fLDrSnvPC
+	 yi7bU4QcumFqHFV8M9XoYT175RiUa1VZ92JOu6cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1930/2651] selftests/bpf: Report a failure to register the session key in test_progs
-Date: Wed, 18 Nov 2026 15:52:50 +0100
-Message-ID: <20261118150356.169595819@linuxfoundation.org>
+Subject: [PATCH 7.3 1921/2651] spmi: mtk-pmif: Add workaround for FSM lockup/error in read operation
+Date: Wed, 18 Nov 2026 15:52:41 +0100
+Message-ID: <20261118150355.902216215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +68,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 66fd5eb9da12ef4ed089ed1974160d07ff034a19 ]
+[ Upstream commit 84c72fc05f73df3473b3bfac89c0a7eae765513a ]
 
-test_progs adds the key that verifies signed programs to the session
-keyring before it runs any test, and exits when that fails.
+The SPMI PMIF in some SoCs like MT8196 is affected by a hardware
+issue that makes the first read operation on each SID to fail as
+the FSM locks up after sending the read command, and this happens
+at least in the following conditions:
+ - At boot, after bootloader handoff; and
+ - At every suspend->resume cycle.
 
-It exits with 255 without printing anything. pam_keyinit revokes the
-session keyring on logout, so a test_progs started in the background
-from an ssh session that has been closed since leaves nothing but an
-empty log behind, with no hint of what went wrong.
+This critical bug may produce unwanted issues in regulator drivers
+which may fail to set voltages, making the platform to end up in a
+undervoltage or, a bit more critically, an overvoltage condition,
+producing instability or ... worse.
 
-Print the error before exiting.
+In order to work around this issue, add a retry mechanism into the
+pmif_spmi_read_cmd() callback which will resend the read command
+up to 3 times in the following conditions:
+ - Software Interface returns an error; or
+ - Software Interface never gets in WFVLDCLR state.
 
-Fixes: b720903e2b14 ("selftests/bpf: Enable signature verification for some lskel tests")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20261008-selftests-bpf-test-progs-session-key-v1-1-ec48e793639b@gmail.com
+As to avoid uselessly blocking for too much time, only during the
+read-retry loop, the maximum SWINF polling time for each trial is
+reduced to PMIF_TIMEOUT_US / 2: this was tested on multiple SoCs
+and seems to always be enough, as when any read succeeds it will
+always take less than 40ms.
+In any case, this is still allowing 1.5 times the previous maximum
+polling time, reaching a total maximum (for 3 retries) of 150ms.
+
+Worst case testing that I performed saw a third retry only 3 times
+out of ~100 reboots.
+
+Fixes: 1f5be2d7f743 ("spmi: mtk-pmif: Add support for MT8196 SPMI Controller")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spmi/spmi-mtk-pmif.c | 38 +++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 46eb201b96a38..168d84cf4eb76 100644
---- a/tools/testing/selftests/bpf/test_progs.c
-+++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -2065,8 +2065,11 @@ int main(int argc, char **argv)
- 	libbpf_set_print(libbpf_print_fn);
- 	err = register_session_key((const char *)test_progs_verification_cert,
- 				   test_progs_verification_cert_len);
--	if (err < 0)
-+	if (err < 0) {
-+		fprintf(stderr, "Failed to add libbpf_session_key to the session keyring: %s\n",
-+			strerror(errno));
- 		return err;
-+	}
+diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
+index 1048420b5afb6..61c916edaec4c 100644
+--- a/drivers/spmi/spmi-mtk-pmif.c
++++ b/drivers/spmi/spmi-mtk-pmif.c
+@@ -21,6 +21,7 @@
+ #define SWINF_WFVLDCLR	0x06
  
- 	traffic_monitor_set_print(traffic_monitor_print_fn);
+ #define GET_SWINF(x)	(((x) >> 1) & 0x7)
++#define GET_SWINFERR(x) (((x) >> 18) & 0x1)
  
+ #define PMIF_CMD_REG_0		0
+ #define PMIF_CMD_REG		1
+@@ -349,6 +350,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 	struct pmif *arb = to_mtk_pmif(ctrl);
+ 	struct ch_reg *inf_reg;
+ 	int ret;
++	u8 retry = 0;
+ 	u32 data, cmd;
+ 	unsigned long flags;
+ 
+@@ -385,17 +387,35 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
+ 		return ret;
+ 	}
+ 
+-	/* Send the command. */
+ 	cmd = (opc << 30) | (sid << 24) | ((len - 1) << 16) | addr;
+-	pmif_writel(arb, pbus, cmd, inf_reg->ch_send);
++	do {
++		/* Send the command. */
++		pmif_writel(arb, pbus, cmd, inf_reg->ch_send);
++
++		/*
++		 * Wait for Software Interface FSM state to be WFVLDCLR or to
++		 * return an error.
++		 *
++		 * If this is WFVLDCLR, read the data and clear the valid flag;
++		 * If error or timeout, retry for a maximum of 3 times as a
++		 * workaround for an hardware issue.
++		 */
++		ret = readl_poll_timeout_atomic(pbus->base + arb->data->regs[inf_reg->ch_sta],
++						data,
++						GET_SWINF(data) == SWINF_WFVLDCLR ||
++						GET_SWINFERR(data),
++						PMIF_DELAY_US, PMIF_TIMEOUT_US / 2);
++		if (ret < 0)
++			continue;
++
++		if (GET_SWINFERR(data)) {
++			ret = -EIO;
++			continue;
++		}
++
++		break;
++	} while (++retry < 3);
+ 
+-	/*
+-	 * Wait for Software Interface FSM state to be WFVLDCLR,
+-	 * read the data and clear the valid flag.
+-	 */
+-	ret = readl_poll_timeout_atomic(pbus->base + arb->data->regs[inf_reg->ch_sta],
+-					data, GET_SWINF(data) == SWINF_WFVLDCLR,
+-					PMIF_DELAY_US, PMIF_TIMEOUT_US);
+ 	if (ret < 0) {
+ 		raw_spin_unlock_irqrestore(&pbus->lock, flags);
+ 		dev_err(&ctrl->dev, "failed to wait for SWINF_WFVLDCLR\n");
 -- 
 2.53.0
 
