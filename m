@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034160;
-	b=e88RoenvkR5PmneckkOwZlyJTNICC5bYql7NzqEf+U76SGeKP62odqgeBhIB3v/vKrg3
-	 lG0FYCFC6GXMRgB7Ulroud6lmJv2nWmQpDn07V1/fQYJ19j/3bxJNzFDMe86XfU1UsnPW
-	 kNCzl38QLS0BwqYrgT7o0sY9PqQs6puaU3glwXFmjKSkFI9mSbxWNZUghqQAz/ANkvZza
-	 zM4P4wh2J8e61/zzJuXWuSBqbMqaBnzLzdyGZzH0GtANxWnxNP7eW/dfQzUSFgCk7CWZL
-	 9ajl/W9dvll6nwBX7iblZCQkurlOEOPt1ZBl1BdUcvRWMaAwLKf1QslB32AkTtuyl+g==
+	t=1795034163;
+	b=0mbU4Z+Id656lgi5QPGRH45QbIvWkF0L8ncIkq6FgLfRzaFdfb4izxq2phPM6OAhWzEz
+	 FJoSRK5cwOxZXWATC2GNDkY0w2MxArw9JwxbeF9GtqZnbdV3gOlzS6lIO06FY7LbV/OrU
+	 op3rjc8VSQImEMPkQfWFRixpUOjaSaIsW9KWTjVycrKjnRLURlwlZ+okPzAY7JtgQxP1b
+	 LPfqyKaRhViU7v6jQYFVEAC8l1PlTkX5dxxfqmqbdlNd2rI7brQsSKWLzIC1eQQAmfU6b
+	 QAR2m5SuvHF/DKrtb98NzLDWUddxa/sU6Um9Jjjg+tWVOHHILbXV3gJnsW/P1IhiKOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034160;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034163;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xI9Z65mybUSXghorgEYb/yAsRYputr/9hoj9zGgmm7Y=;
-	b=nJ8a80RR4Cz3Aod7MfFhR/Ctq798Wbo0RDTAf//eKVwj84CSVMp1J1O3GRc5WasNPMXX
-	 9yD4gEPtTUc0Etkx388AOpRBu1kAoXkZkxfN4swgpd8XLknjWZYS6GNYaMRGeYLHJ2fBu
-	 s0QnRw4zIBAwwTcsvImsq+kUuo3C991flb/Zx61K/3PzEC7qSAQwPxASL8Rff9WwamEMD
-	 PLZwF5lyYFLk4179H05c6GIZTjdaUk2P2ynYyTqdmvtKpDRnAF77vtiYdjVIj2voNrM6E
-	 4xqAmFq28OTK2V65yd1CMMStVvVjYCxS+/5ceOiY1mjU1UNJ1lYjfnHGOdUHw3qWAzw==
+	bh=l1Y6OkeSfnP9gLhyV4mxUUIPixfXmUaKIHHJ8JHhje4=;
+	b=P3hc0ZzSmw+Vw1MfWPHfik/0F3HxtKg1uL36GE6FzwkXOIQ4cobFpQbGuQLmPUdoIuVO
+	 OcJILYgIyJkoVHf6thb0k9EjvY022XHqhFrckLRvYYo91+/JYyfDYazY+DlavYEH6SS71
+	 14Av1sBk4bje/1GPXypCBTd4tI6aLVXG0yIcEZXtsMwOp/VHiZ1OhkD6Nm/pzsPiIyg9i
+	 W7qHi+86iFJeNqTDuR/6UBGMpd70liSyPk81NYQjT9pUUyXb+JK1ohWwiU/9PRMuY6Dkl
+	 ae/FpfSaokspbKmle15wwN7lapx+SPfWWIOoYro72FTJaVifXd3nKF9hX4gBBSIrqWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWCV7cD3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EjQcNzH2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717FE606A31C;
-	Wed, 18 Nov 2026 20:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5452F60A261A;
+	Wed, 18 Nov 2026 20:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWCV7cD3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C774A1F000C4;
-	Wed, 18 Nov 2026 20:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EjQcNzH2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45AF1F000C8;
+	Wed, 18 Nov 2026 20:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034160;
-	bh=xI9Z65mybUSXghorgEYb/yAsRYputr/9hoj9zGgmm7Y=;
+	s=korg; t=1795034163;
+	bh=l1Y6OkeSfnP9gLhyV4mxUUIPixfXmUaKIHHJ8JHhje4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QWCV7cD3vyEIFMF/BIXpOsxGO0qtg941gdITKlN+vkuZRPd2dPlsx0J5olwrBoaS9
-	 wN87psskvEt6yvpoWJsXiuyGktEMZ+sKCSwHK9b8VNoKNOPDWHQQE88qLhMiWsoo/i
-	 oFxPODg1MO6PUZPnE2kCXjZAhUYS78TmlEz+grTc=
+	b=EjQcNzH2fuO84K8iCodzKLJQlJ2OIeDknWYiio3n9gfaY6H6jKMAQI8CLHInwCBcd
+	 54UCLvpdquQIB9LwkLiUD5QEUZ26sxXmrxC8qGZuUTQsLMGx1TK6808fWo+aDg3IOz
+	 3fgPWMniCa/0LpZQFl1/f4BmCbGPK6QWbGoLNyg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmytro Moroziuk <dmorozyk1@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0271/3318] ALSA: hda/conexant: Add mute LED quirk for HP ProBook 440 G5
-Date: Wed, 18 Nov 2026 15:14:53 +0100
-Message-ID: <20261118150323.575699470@linuxfoundation.org>
+Subject: [PATCH 6.6 0272/3318] hfsplus: validate extent record length before writing it back
+Date: Wed, 18 Nov 2026 15:14:54 +0100
+Message-ID: <20261118150323.610926579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,34 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmytro Moroziuk <dmorozyk1@gmail.com>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit 191fe151eb85ff6cb24189fc88c970745497c057 ]
+[ Upstream commit 627b7865c062ff642c0000f3a4775f1a44b986a4 ]
 
-The HP ProBook 440 G5 requires the CXT_FIXUP_MUTE_LED_GPIO quirk to
-properly toggle the physical mute and mic-mute LEDs via the CX8200 codec.
-Without this quirk, the LEDs remain permanently dark.
+__hfsplus_ext_write_extent() writes the cached extent record back into a
+B-tree node using fd->entrylength as the length, and fd->entrylength is
+derived in __hfs_brec_find() from two on-disk values:
 
-Signed-off-by: Dmytro Moroziuk <dmorozyk1@gmail.com>
-Link: https://patch.msgid.link/20260812121856.30353-1-dmorozyk1@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+	fd->entrylength = len - keylen;
+
+A crafted image can keep both len and keylen valid but make fd->entrylength
+negative (keylen > len). __hfsplus_ext_write_extent() doesn't check
+fd->entrylength before consuming it, and hfs_bnode_write() takes the length
+as u32, so the negative value turns into a huge one. The copy then reads
+data past the end of hip->cached_extents, which is only
+sizeof(hfsplus_extent_rec) bytes long, and leaks kernel memory into the
+image.
+
+Reject an fd->entrylength that does not match sizeof(hfsplus_extent_rec) in
+__hfsplus_ext_write_extent(), mirroring the check already performed in
+__hfsplus_ext_read_extent().
+
+Link: https://lore.kernel.org/lkml/cbd7003314c530d4f910eacf019ff80adad6687e.camel@dubeyko.com/
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260810092422.1691377-1-r772577952@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/hfsplus/extents.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 7000245f083d5..8674ef6edf04d 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -1111,6 +1111,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x103c, 0x829a, "HP 800 G3 DM", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x82b4, "HP ProDesk 600 G3", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x836e, "HP ProBook 455 G5", CXT_FIXUP_MUTE_LED_GPIO),
-+	SND_PCI_QUIRK(0x103c, 0x837b, "HP ProBook 440 G5", CXT_FIXUP_MUTE_LED_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x837f, "HP ProBook 470 G5", CXT_FIXUP_MUTE_LED_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x83b2, "HP EliteBook 840 G5", CXT_FIXUP_HP_DOCK),
- 	SND_PCI_QUIRK(0x103c, 0x83b3, "HP EliteBook 830 G5", CXT_FIXUP_HP_DOCK),
+diff --git a/fs/hfsplus/extents.c b/fs/hfsplus/extents.c
+index f6ac98b0d44ff..b3f98abd064ec 100644
+--- a/fs/hfsplus/extents.c
++++ b/fs/hfsplus/extents.c
+@@ -110,6 +110,8 @@ static int __hfsplus_ext_write_extent(struct inode *inode,
+ 	} else {
+ 		if (res)
+ 			return res;
++		if (fd->entrylength != sizeof(hfsplus_extent_rec))
++			return -EIO;
+ 		hfs_bnode_write(fd->bnode, hip->cached_extents,
+ 				fd->entryoffset, fd->entrylength);
+ 		hip->extent_state &= ~HFSPLUS_EXT_DIRTY;
 -- 
 2.53.0
 
