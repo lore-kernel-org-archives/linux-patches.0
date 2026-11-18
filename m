@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053641;
-	b=UsI/4uD2Pvb8hUZEZskA1oHvfKDmm8CUacrCV9181BmDNBXG3WFz0lpXnLvUtPwGhv/S
-	 EM6yzhTiI0VDUOMmiv1ZL7cs+n7dGtLssqNRmg+Ft8FsyXj/ZMzSXFaKNHxTvFC4ZG6Mh
-	 GTrUWmsnkP6kdKP9FGEL0qQiAvJui8y07I14lDwXBLE9GdfIgrs9ACJoEFWCIMrsJFDS+
-	 0MZoCODU2QwTuuv988YpdX1KKOWZp6088Ob2UZVWZzCKZuc6en3mwhx8xl9NiOnBW1kET
-	 DhMyIq3GMNpoE1QlsSXCLyV3FRBhdXdQeu8oAZJbRFgBSgQ+r9NtjYIpBXrkuNF/HJQ==
+	t=1795053643;
+	b=NNcxMYSTxceJYbZzGlGjOPCL5uc4U2cEKWyoSFrXGOE0evEIuWNzt57WX7d1iKcPm/nX
+	 JgKJuI2RG5/ynv2TFOeT6nAPdQlRLViTiLBbN+FAUM4nFk4UuYv8kqiYFGinCalSEvWg8
+	 qTW9ob0pdzollXEPCbenraeEg4SecutjjBjuPh43Obd92Ghg3vBGFSKULxWYwfTF+5xHX
+	 0P0y4y26XX9KqjNTD3R4k8rQo4GoAonLtKFmajnyD9G798kUqO70S+1HMhEXAXVp4GmEY
+	 d+TauOtEldNnygZFeId+lG2Zg9O3bNHhCtQgv00FRsuGOXY8Z/iY8UU1gzbyZhwoTuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053643;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ojNXWTd09BZ4uLT2HaZsAUSPkof/88SiF0iKWaPLvwI=;
-	b=Mks1ezde0DCCr2BQG970H2EaVTkBnU84LOnQLk/PaHa8eU9JrPUF30C/SGrRQvxOgjDK
-	 QDoyDUUZOfp8RMso/DWNEVluTHvxk0+8xV9bokd7CkRYP5/8reXR+NsANgjtvFz/z+q4I
-	 zV03tCHEnTVlB26B42hSK6nxz9wzEHkzgZqhMa2C0hHdpKBdXaOUHnzjEEWMV2IRsbZaT
-	 FA3z42aC7RV/voKYTapSas6xRHxlnV74DLJVTVKM33XdhB1cqN1PyD0Zxks7/xiV4iO6G
-	 4XW/ssfq8SD2ehhc54SKdEOH8HnszHftzYSZinsX4qMWVIsfAz3pa7vmUmQZLbfRysg==
+	bh=p0tAEOvQHdb/9KxrTwcj2Lu2Exajn2LX+eQvWDpkbF0=;
+	b=BhNQ5EVGpDuCjBjHT3643JvyhnV9Yd8CkHgrjw8TsHIcfuTppHktaILk75l+yJidvioG
+	 1st3EhR3BOr1dCpApnLg+O0cDSKf9bulRvjTyRqBiYkO0NbSi6Lz+7k0C1VoXiS5oEIj4
+	 t/nhGpKMhKRzPew3BF29ANawOwfwckocz6XK3u7iEFSSova/8BbGMpjSYU/8PU0nfFxJE
+	 1qRqAoHfS2UYRijG3/bEgVf8AJl0dLytzATUGTtZLs4L9w2rL16MZx9R47AWdx101Fz0e
+	 uCWKm/P6pUB06pWiAFdDApenpjq4Nh+uNhPXFQn25h6NB74Rq8sMILlJO97i7TSdC2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VF0rDwkQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ymMQMtOj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6235606A31C;
-	Thu, 19 Nov 2026 02:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79E606A330;
+	Thu, 19 Nov 2026 02:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VF0rDwkQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E92F1F000C4;
-	Thu, 19 Nov 2026 02:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ymMQMtOj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4A61F000C5;
+	Thu, 19 Nov 2026 02:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053640;
-	bh=ojNXWTd09BZ4uLT2HaZsAUSPkof/88SiF0iKWaPLvwI=;
+	s=korg; t=1795053643;
+	bh=p0tAEOvQHdb/9KxrTwcj2Lu2Exajn2LX+eQvWDpkbF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VF0rDwkQhvfnPBaXMdPvCPkvUt1NV4Ndvym9dXYXNDc/7SeN+Ul+FYNf+RnKMLi5s
-	 RIVAaIfkVRvPPMnjBhb2gmbVOytFWRr2S6kra/Y1tKm2QBjlYp2Q6SBSL4Qd/bJiEs
-	 Mo+56Jw3ZayvRBMNWkffKHvjtAiYzOWY5AsRAFXQ=
+	b=ymMQMtOjY/xsIS7CB1LxhRK5VoY/2ykDjJ3N+fb3JQshXGKpXtty+gyWZX9spr0QQ
+	 0w6nQIVU3Y+09INSd5bNRi/gVp9KlXTFSK+tDxW0MtQfVQVL+aSzxFSKrQiNqhMhIU
+	 Hbr3mbxHLyTafQ0Wy9MwTrTaWOKuQXdh1GZKWmpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0992/2214] iio: light: ltr501: Power down chip if request irq fails
-Date: Wed, 18 Nov 2026 15:44:28 +0100
-Message-ID: <20261118150052.054616920@linuxfoundation.org>
+Subject: [PATCH 5.15 0993/2214] media: redrat3: Error path leaves device in transmitting state
+Date: Wed, 18 Nov 2026 15:44:29 +0100
+Message-ID: <20261118150052.094502641@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,39 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 8a9bcd587d7d768e6c8e9fff88bb89645e412731 ]
+[ Upstream commit 8024d5e84531d828535365718278f1cf0ce67db0 ]
 
-In case devm_request_threaded_irq() failed, we were leaving the chip
-powered instead of powering it down again. Power down the chip switching
-ALS and PS modes to standby.
+In the allocation failure error path, the transmitting boolean is not
+cleared. If this error path is followed the transmitter cannot be
+used again until the device is replugged or the module reloaded.
 
-Fixes: 7ac702b3144b ("iio: ltr501: Add interrupt support")
+Fix the error path by moving the assignment statement.
+
+Remove the check for the transmitting state in transmit, since rc-core
+ensures there is never a reentrant call to the driver transmit function;
+the transmit function is always called with dev->lock held.
+
+The transmitting boolean is only used for interpretting firmware errors.
+
+Fixes: fac59136bc22 ("[media] RedRat3: Return directly after a failed kcalloc() in redrat3_transmit_ir()")"
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Acked-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: adjusted context for the existing IRQ request failure logging block ]
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Adjusted allocation context for kcalloc() instead of kzalloc_objs(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/ltr501.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/redrat3.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iio/light/ltr501.c b/drivers/iio/light/ltr501.c
-index f0bd0ad34f222..a5275165d7fe2 100644
---- a/drivers/iio/light/ltr501.c
-+++ b/drivers/iio/light/ltr501.c
-@@ -1510,7 +1510,7 @@ static int ltr501_probe(struct i2c_client *client,
- 		if (ret) {
- 			dev_err(&client->dev, "request irq (%d) failed\n",
- 				client->irq);
--			return ret;
-+			goto powerdown_on_error;
- 		}
- 	} else {
- 		indio_dev->info = data->chip_info->info_no_irq;
+diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
+index e0a59a2b0f995..f095ad8d74370 100644
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -773,17 +773,9 @@ static int redrat3_transmit_ir(struct rc_dev *rcdev, unsigned *txbuf,
+ 	u8 curlencheck = 0;
+ 	unsigned i, sendbuf_len;
+ 
+-	if (rr3->transmitting) {
+-		dev_warn(dev, "%s: transmitter already in use\n", __func__);
+-		return -EAGAIN;
+-	}
+-
+ 	if (count > RR3_MAX_SIG_SIZE - RR3_TX_TRAILER_LEN)
+ 		return -EINVAL;
+ 
+-	/* rr3 will disable rc detector on transmit */
+-	rr3->transmitting = true;
+-
+ 	sample_lens = kcalloc(RR3_DRIVER_MAXLENS,
+ 			      sizeof(*sample_lens),
+ 			      GFP_KERNEL);
+@@ -796,6 +788,9 @@ static int redrat3_transmit_ir(struct rc_dev *rcdev, unsigned *txbuf,
+ 		goto out;
+ 	}
+ 
++	/* rr3 will disable rc detector on transmit */
++	rr3->transmitting = true;
++
+ 	for (i = 0; i < count; i++) {
+ 		cur_sample_len = redrat3_us_to_len(txbuf[i]);
+ 		if (cur_sample_len > 0xffff) {
 -- 
 2.53.0
 
