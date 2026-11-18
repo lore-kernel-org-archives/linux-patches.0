@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028171;
-	b=skmdHz+Fe+AOqBc+C5MNIq3CQsKAUAQ9C5pMyDaJMaNaoWB4ifbV6Z6DfjbMWZcvOBWF
-	 aqhqHkYi7dmsAq45jMGTRe7Cel9rx51DwQbIBn+EyVdp0zgyPs7kjtzLStThMP2aZPvrs
-	 BnRNX6jXPsUJSEhhHss/DKwIeP+2EB7mOJ52FIDdbzLCxsOROPaWdFaGIsMU9Glyn6J9f
-	 5mgVfoVLRNLdRJy2G4/1R/4Oihr3DuI7pk1fOtfTyzmD4jaeCbHjcAO98lQyc/jVwsjzA
-	 AuT7UKAbUUVMo8wFG1M6OiGaVnonKmWE0qhbZvNJXw5br4heXIcnZlIeYGtzF0nGtdQ==
+	t=1795028174;
+	b=CRhRAooF1tZVmWwdxd/AZKyB5xFQURKvN2medJuQU9xwYQ6Cq0mlLuKnH3baKGkAsXqp
+	 ouS7ezJ1OKpv1kfS5S+ovkAim4mHLJvdv/WLxYlP4ogdZNttmBhW/FWqiw4RVUD+Z1y5x
+	 tV/GnwtrdGOkiGJ22mcDO3s5zh1nrwaAcoS7KeWL8Nge1D0KErd/mtKcKrGMecHUlNXYn
+	 43k5wGPMtCvIZNQctb05mrY5vduTaje/TMi37LzGMUiFF7RKCrBMBpbvLaq5igJPApe6R
+	 XvjsR9qQ1yt9R8763djKGlDb20Lc9awNas7T4EVqcrgY3KhJF82RW0m207GmkGjDZOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rulNhpIBRUxG797qfrxPsAUvYYVDyQJAA/+xHOCEf5Q=;
-	b=ElFnq0TR9ZI27lyQg8gNyIWT7utX4h5vqUoMmy8/2yVV/foOgskD/dr3H6+8a/5w4QF6
-	 IW+SOLQYMsJBjPhYjPMW+QDC/B9dBi2GqywFLOIWU2i0rcqEmAoiWxoJlhLIWRyhkMaU1
-	 9mJ+rLyVji3CUimWhnVE8U7QcG/ddlcUU/UMCZ8czj+qH2VREXlmuLNEdqULOby1ukMGb
-	 VACyCjXNYGFJdaJkQ1MyfQq9TcYnck608Lbly1TtE2pBvOqinenvF1FBHgAOMIKj+AKeG
-	 yTfSWgQVhKYhGMAZBT+ZGLtH1HpCli0E0zQUmJ20H1wOc34snJN2m9ngfuD+MwTJhSg==
+	bh=fNjni6CoFtfxcMnZliwC+jbVriHBfDAzp+Ok3jwWxfs=;
+	b=t6cdt70A6K/5bbVl/VFFAEKIGY4wMQZPtu1bPOjdGdxoWE3E7Ife1k750f6kQ119qzaA
+	 rbYaXtDXQk+1oW2CggZobTXMjZfzSYQmJxnKgtFrbdtG3qUJEnorA3nShDVUlLfRrFHNN
+	 RL2/SObkfHPqWL8OvqwM3gHqKtEnaxWSxJY4wequrdXazbhLpxvEHsG9V6c2JN19WElcS
+	 eiYOHz8tSgpRSa2SEoq9HkzKBnXdCInos1rDO5dCmorerxhbnlLYmfWtvE9iTQ1F0GhXg
+	 wzokLMbMxqQ/vN3Euh0DusdmuLxGedHWFhq9Z0gq+5DI1ewrPrrIIfujkrF32twQ59Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQwKFpJF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbfrtuMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A53606A320;
-	Wed, 18 Nov 2026 18:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30A6606A325;
+	Wed, 18 Nov 2026 18:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQwKFpJF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E110C1F000C4;
-	Wed, 18 Nov 2026 18:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RbfrtuMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF261F000C4;
+	Wed, 18 Nov 2026 18:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028171;
-	bh=rulNhpIBRUxG797qfrxPsAUvYYVDyQJAA/+xHOCEf5Q=;
+	s=korg; t=1795028174;
+	bh=fNjni6CoFtfxcMnZliwC+jbVriHBfDAzp+Ok3jwWxfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQwKFpJFCs7/OK9suN+rGxwbicjrpfVP3rWItzZSTifxtBR5Si8h9jSREj4sxj/Vi
-	 /WPOBfuLDtsPLwH2xQQFXiZ2Ut8Mw8UCGdUBUvR2Ggcpv6ihOX515q0GqI1u5y2B+b
-	 NvB3V6mZARW9XBxbkL7Hj87rLMwQ7q6C99MAS9IQ=
+	b=RbfrtuMjxAS/87DahjJgIqlOBqOe/49LJiTzc6OG5gQxQaRb3bwZ7ja4tPe7By92J
+	 aKWzHGedrdP3iB7aV431kUw0u3WIbvWQT3ivCFfxfvDX4K7nuTdMgyWWEau6uwvR+O
+	 mAJzDgS4u1H4pnOj1uyi5NpMZ0WphC5q5C1hO7KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Eric Woudstra <ericwouds@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2043/2151] blk-throttle: make blkio.reset_stats reset I/O counts
-Date: Wed, 18 Nov 2026 16:02:58 +0100
-Message-ID: <20261118150236.147997104@linuxfoundation.org>
+Subject: [PATCH 6.18 2052/2151] bridge: No DEV_PATH_BR_VLAN_UNTAG_HW for dsa foreign
+Date: Wed, 18 Nov 2026 16:03:07 +0100
+Message-ID: <20261118150236.473982971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,52 +69,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Eric Woudstra <ericwouds@gmail.com>
 
-[ Upstream commit ac81a07a0bd5e75e8edc0eb5be563be1b2d56554 ]
+[ Upstream commit 96450df197bda7de927b51372c13f1002d0e76e3 ]
 
-blkio.throttle.io_service_bytes and io_serviced were reset by
-blkcg_reset_stats() while the counters were part of the blkg. Now that
-they live in the throtl_grp, add a pd_reset_stats_fn for them.
+In network setup as below:
 
-Fixes: 7ca464383aec ("blk-throtl: stop using blkg->stat_bytes and ->stat_ios")
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-27-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+             fastpath bypass
+ .----------------------------------------.
+/                                          \
+|                        IP - forwarding    |
+|                       /                \  v
+|                      /                  wan ...
+|                     /
+|                     |
+|                     |
+|                   brlan.1
+|                     |
+|    +-------------------------------+
+|    |           vlan 1              |
+|    |                               |
+|    |     brlan (vlan-filtering)    |
+|    |               +---------------+
+|    |               |  DSA-SWITCH   |
+|    |    vlan 1     |               |
+|    |      to       |               |
+|    |   untagged    1     vlan 1    |
+|    +---------------+---------------+
+.         /                   \
+ ----->wlan1                 lan0
+       .                       .
+       .                       ^
+       ^                     vlan 1 tagged packets
+     untagged packets
+
+br_vlan_fill_forward_path_mode() sets DEV_PATH_BR_VLAN_UNTAG_HW when
+filling in from brlan.1 towards wlan1. But it should be set to
+DEV_PATH_BR_VLAN_UNTAG in this case. Using BR_VLFLAG_ADDED_BY_SWITCHDEV
+is not correct. The dsa switchdev adds it as a foreign port.
+
+The same problem for all foreignly added dsa vlans on the bridge.
+
+First add the vlan, trying only native devices.
+If this fails, we know this may be a vlan from a foreign device.
+
+Use BR_VLFLAG_TAGGING_BY_SWITCHDEV to make sure DEV_PATH_BR_VLAN_UNTAG_HW
+is set only when there if no foreign device involved.
+
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Eric Woudstra <ericwouds@gmail.com>
+Link: https://patch.msgid.link/20260317110347.363875-1-ericwouds@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: fcc00b15cb21 ("net: bridge: netlink: do not clear the vlan info dump error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/net/switchdev.h   |  1 +
+ net/bridge/br_private.h   | 10 ++++++++++
+ net/bridge/br_switchdev.c | 15 +++++++++++++++
+ net/bridge/br_vlan.c      |  7 ++++++-
+ net/switchdev/switchdev.c |  2 +-
+ 5 files changed, 33 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index 43d33adf21d69..36f8dc324d79f 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1690,6 +1690,14 @@ static void throtl_pd_offline(struct blkg_policy_data *pd)
- 	}
- }
+diff --git a/include/net/switchdev.h b/include/net/switchdev.h
+index 8346b0d29542c..ee500706496b0 100644
+--- a/include/net/switchdev.h
++++ b/include/net/switchdev.h
+@@ -15,6 +15,7 @@
+ #define SWITCHDEV_F_NO_RECURSE		BIT(0)
+ #define SWITCHDEV_F_SKIP_EOPNOTSUPP	BIT(1)
+ #define SWITCHDEV_F_DEFER		BIT(2)
++#define SWITCHDEV_F_NO_FOREIGN		BIT(3)
  
-+static void throtl_pd_reset_stats(struct blkg_policy_data *pd)
-+{
-+	struct throtl_grp *tg = pd_to_tg(pd);
-+
-+	blkg_rwstat_reset(&tg->stat_bytes);
-+	blkg_rwstat_reset(&tg->stat_ios);
-+}
-+
- struct blkcg_policy blkcg_policy_throtl = {
- 	.dfl_cftypes		= throtl_files,
- 	.legacy_cftypes		= throtl_legacy_files,
-@@ -1699,6 +1707,7 @@ struct blkcg_policy blkcg_policy_throtl = {
- 	.pd_online_fn		= throtl_pd_online,
- 	.pd_offline_fn		= throtl_pd_offline,
- 	.pd_free_fn		= throtl_pd_free,
-+	.pd_reset_stats_fn	= throtl_pd_reset_stats,
+ enum switchdev_attr_id {
+ 	SWITCHDEV_ATTR_ID_UNDEFINED,
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index d1d8e94c333b3..ba379e65c5687 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -182,6 +182,7 @@ enum {
+ 	BR_VLFLAG_MCAST_ENABLED = BIT(2),
+ 	BR_VLFLAG_GLOBAL_MCAST_ENABLED = BIT(3),
+ 	BR_VLFLAG_NEIGH_SUPPRESS_ENABLED = BIT(4),
++	BR_VLFLAG_TAGGING_BY_SWITCHDEV = BIT(5),
  };
  
- void blk_throtl_cancel_bios(struct gendisk *disk)
+ /**
+@@ -2231,6 +2232,8 @@ void br_switchdev_mdb_notify(struct net_device *dev,
+ 			     int type);
+ int br_switchdev_port_vlan_add(struct net_device *dev, u16 vid, u16 flags,
+ 			       bool changed, struct netlink_ext_ack *extack);
++int br_switchdev_port_vlan_no_foreign_add(struct net_device *dev, u16 vid, u16 flags,
++					  bool changed, struct netlink_ext_ack *extack);
+ int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid);
+ void br_switchdev_init(struct net_bridge *br);
+ 
+@@ -2314,6 +2317,13 @@ static inline int br_switchdev_port_vlan_add(struct net_device *dev, u16 vid,
+ 	return -EOPNOTSUPP;
+ }
+ 
++static inline int br_switchdev_port_vlan_no_foreign_add(struct net_device *dev, u16 vid,
++							u16 flags, bool changed,
++							struct netlink_ext_ack *extack)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid)
+ {
+ 	return -EOPNOTSUPP;
+diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
+index b5c6e314204f9..958dc2602ffdb 100644
+--- a/net/bridge/br_switchdev.c
++++ b/net/bridge/br_switchdev.c
+@@ -189,6 +189,21 @@ int br_switchdev_port_vlan_add(struct net_device *dev, u16 vid, u16 flags,
+ 	return switchdev_port_obj_add(dev, &v.obj, extack);
+ }
+ 
++int br_switchdev_port_vlan_no_foreign_add(struct net_device *dev, u16 vid, u16 flags,
++					  bool changed, struct netlink_ext_ack *extack)
++{
++	struct switchdev_obj_port_vlan v = {
++		.obj.orig_dev = dev,
++		.obj.id = SWITCHDEV_OBJ_ID_PORT_VLAN,
++		.obj.flags = SWITCHDEV_F_NO_FOREIGN,
++		.flags = flags,
++		.vid = vid,
++		.changed = changed,
++	};
++
++	return switchdev_port_obj_add(dev, &v.obj, extack);
++}
++
+ int br_switchdev_port_vlan_del(struct net_device *dev, u16 vid)
+ {
+ 	struct switchdev_obj_port_vlan v = {
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 76da4f580d4c4..021f2470bcaa9 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -109,6 +109,11 @@ static int __vlan_vid_add(struct net_device *dev, struct net_bridge *br,
+ 	/* Try switchdev op first. In case it is not supported, fallback to
+ 	 * 8021q add.
+ 	 */
++	err = br_switchdev_port_vlan_no_foreign_add(dev, v->vid, flags, false, extack);
++	if (err != -EOPNOTSUPP) {
++		v->priv_flags |= BR_VLFLAG_ADDED_BY_SWITCHDEV | BR_VLFLAG_TAGGING_BY_SWITCHDEV;
++		return err;
++	}
+ 	err = br_switchdev_port_vlan_add(dev, v->vid, flags, false, extack);
+ 	if (err == -EOPNOTSUPP)
+ 		return vlan_vid_add(dev, br->vlan_proto, v->vid);
+@@ -1491,7 +1496,7 @@ int br_vlan_fill_forward_path_mode(struct net_bridge *br,
+ 
+ 	if (path->bridge.vlan_mode == DEV_PATH_BR_VLAN_TAG)
+ 		path->bridge.vlan_mode = DEV_PATH_BR_VLAN_KEEP;
+-	else if (v->priv_flags & BR_VLFLAG_ADDED_BY_SWITCHDEV)
++	else if (v->priv_flags & BR_VLFLAG_TAGGING_BY_SWITCHDEV)
+ 		path->bridge.vlan_mode = DEV_PATH_BR_VLAN_UNTAG_HW;
+ 	else
+ 		path->bridge.vlan_mode = DEV_PATH_BR_VLAN_UNTAG;
+diff --git a/net/switchdev/switchdev.c b/net/switchdev/switchdev.c
+index 4d5fbacef496f..bf252d116ed38 100644
+--- a/net/switchdev/switchdev.c
++++ b/net/switchdev/switchdev.c
+@@ -760,7 +760,7 @@ static int __switchdev_handle_port_obj_add(struct net_device *dev,
+ 	/* Event is neither on a bridge nor a LAG. Check whether it is on an
+ 	 * interface that is in a bridge with us.
+ 	 */
+-	if (!foreign_dev_check_cb)
++	if (!foreign_dev_check_cb || port_obj_info->obj->flags & SWITCHDEV_F_NO_FOREIGN)
+ 		return err;
+ 
+ 	br = netdev_master_upper_dev_get(dev);
 -- 
 2.53.0
 
