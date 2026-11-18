@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019520;
-	b=MGzX3wj9IEjy3xbnCb59BJi8fvIgsUO1x1sv+JtaHfAh/uOSAmo7p3dvQIRhzmSk5bP+
-	 gTJw8WHsOvpREYRnbcCjnz0VctpppqCubTGqR+yq0g1YQ9o1tXogpnGZZdgwsDqP8s4hP
-	 /QBF7jdOEGfIzLWddbEvCZ80eLLrBHXWSIncmoDcrDfu5FXnmPos19jgtyIkS7tSFhdOz
-	 8zDBQV50a10uHfefCXyrqcC5Y/17ozxtjKuwMFB/Z4paD//kSUAPPvkiuYE9XtQ6PSBE3
-	 Fm5RoxUW5c5EBY72Gcerp65sgzhJLc1W9jHXY5zCzmGo0YlJalrI593Cmk65gCj8QUA==
+	t=1795019522;
+	b=kFZqgWwjrO2yXIQsUNsWlw9Vn0jf3LM5UIQ7tu87zoLTlUlj9q0xhGk0kqW5ZZlDiz/P
+	 viL3S11ZcIkEwCQIjH4Yi+dYNZZesalC7rR47N56wcxaSosBaH+3Hxc3jxZhDpEr/VKfg
+	 bShu77ddSzmqZyQC5f5DiyCZH8C3/KUI7Z9pKtf8k2ls7sph/Gxzv9r3XTwTx1sjNpxUV
+	 20KR2ZozaVV2o2ZBJ07mDQNClQs/1KmGQ6C3pnRY/Gql8l095DO+f0m+Cyfuh4J+D/UTP
+	 diyeAhtQ4J3tIDyMMWx9m0w9axOKkjWvc2MBT61K4HXl2cP8bRrYrkax0BCV43BHSqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019520;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qsr5aWZP4fwilHG4EhztbHCLbBpvxDDmOjXyN++Z1ko=;
-	b=0HCqEHAT2/oL9HTVXAqGQb0OHUUA2/LTKsUWPuwnhmz7q6qrtsKJgw+tS1Y8RK78V/p3
-	 /rQza6jwvgi97xU263eH8dJ91P06Rag57T69/IDCPcOELCDmafpp3yCfkL0GKoXlwELwA
-	 ITEW6RN7EyKwABxx0Ui5Eeatul+J6czOROAc0lVkb65gk3B5vPojVYW1dRxsy7EYt/NNT
-	 LM4cIuN6TJDhWOnwdiTsIFT454wuTdm+H00CC5HVfgo8xn2yC9+qI2SMcZuqHilAciXdm
-	 glMZOn/prOQs3KrzUXCiBOSyo+LqFq7CbMHZKP/eip1C0sGXfg5d6JbXbdFkQ745sIQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=FOTDkEbVN2pXpEPLcYcSa109ilpZhoBklpdnb1Na9SY=;
+	b=hM7jF8yy+c5jTgZoTOnoSXgR4UFlYvPjRz2dIVnmDMgsCJe+MuZFvquD+pBa8zMNK4fW
+	 2ZXMKL7uph8xFRSQqZASQ7dYsCGZqqHun0Iwt3vmQB/uHWPjFMTFPSDP8K/VadduVJ+6M
+	 kHFyinTxR2BhC31SGLrxmZNSk56Bw+id1pG4SF3VRlnPWE9fmrGo+NX8CiYnLmboLZyvu
+	 OUX59oDKLlDnvo4D9CWap01g6BwgkeE6GM3V81qMjuYEU4gzY7ENlXPNGIs6+clQUhHQE
+	 pGwV9s2okqoFPRn7ASXIMskQGRwVIKgtylvBEbsb/WgHAwVw90uxbpAojJiUFIQFZGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1pJc4JG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xv0TeZxc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199AA606A33A;
-	Wed, 18 Nov 2026 16:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8030606A7C7;
+	Wed, 18 Nov 2026 16:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1pJc4JG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF801F000C6;
-	Wed, 18 Nov 2026 16:31:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xv0TeZxc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380871F000C8;
+	Wed, 18 Nov 2026 16:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019520;
-	bh=Qsr5aWZP4fwilHG4EhztbHCLbBpvxDDmOjXyN++Z1ko=;
+	s=korg; t=1795019522;
+	bh=FOTDkEbVN2pXpEPLcYcSa109ilpZhoBklpdnb1Na9SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H1pJc4JGhcqODtJwghs/tZN3qYehhheaLKSRsd3N90Cy2xImmTT2FHqLY0xzylQ/H
-	 gWItyPBxJF6voatTZoZgKrgxxw6x2w2q7Lbo55FBmFwS8UDodILjZ2vWUmS14d4mi9
-	 wXVb5HjFoycjla4oBGZ6n4BMEKj+HXS7N1wHc6eo=
+	b=xv0TeZxcP7V/7S5jy6hEoniRZGU0C24hWAbZbaCuQKAoGdCiyXRvK6mDhyvU0xH2T
+	 uJbjwO0x6BbvPSDRpM80n8znniql4xqL+FOpA61jtOZLuDIm1sK4Nhd5DBCaTYiv7N
+	 ejvxLcG0dtsNoiH9amt9xZQIqmtQfuE1+HnuWHa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaifeng Wang <kaifengw@google.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1626/2651] net: devmem: check uid and netns in net_devmem_get_binding()
-Date: Wed, 18 Nov 2026 15:47:46 +0100
-Message-ID: <20261118150346.396262824@linuxfoundation.org>
+Subject: [PATCH 7.3 1627/2651] ALSA: control_led: Fix deadlock between sysfs writes and card disconnect
+Date: Wed, 18 Nov 2026 15:47:47 +0100
+Message-ID: <20261118150346.434594531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,130 +62,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaifeng Wang <kaifengw@google.com>
+From: Ali Ahmet Memiş <aliamemis@disroot.org>
 
-[ Upstream commit 3a82195416fd71fdd6cb4ff80f611ec28073be16 ]
+[ Upstream commit 682d6bb5f783adea7fa2a5b05166bff01b338081 ]
 
-NETDEV_CMD_BIND_TX is unprivileged, and dmabuf binding IDs are allocated
-from a single global xarray. Currently net_devmem_get_binding() looks up
-the binding by ID without checking whether the sending socket belongs to
-the same user or network namespace that created the binding.
+snd_ctl_led_disconnect() removes the ctl-led sysfs files while
+holding card->controls_rwsem. device_unregister() waits for running
+sysfs callbacks which can deadlock when a concurrent write causes
+the attach or detach callback to wait for controls_rwsem.
 
-Record the creating netlink socket's network namespace and UID on the
-binding, and verify both in net_devmem_get_binding() before checking the
-route destination device. Return -EINVAL on mismatch so callers cannot
-distinguish non-existent IDs from bindings owned by other users.
+Break kernfs active protection in the attach, detach and list
+callbacks and hold a module reference instead.
 
-Fixes: bd61848900bf ("net: devmem: Implement TX path")
-Signed-off-by: Kaifeng Wang <kaifengw@google.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a135dfb5de15 ("ALSA: led control - add sysfs kcontrol LED marking layer")
+Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
+Link: https://patch.msgid.link/20261011180627.1594051-1-aliamemis@disroot.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/devmem.c      | 7 ++++++-
- net/core/devmem.h      | 5 +++++
- net/core/netdev-genl.c | 5 +++--
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ sound/core/control_led.c | 62 ++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 57 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/devmem.c b/net/core/devmem.c
-index 7cac0dab8ea87..87f238020c911 100644
---- a/net/core/devmem.c
-+++ b/net/core/devmem.c
-@@ -161,6 +161,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 		       enum dma_data_direction direction,
- 		       unsigned int dmabuf_fd, unsigned int niov_shift,
- 		       struct netdev_nl_sock *priv,
-+		       const struct sock *nl_sk,
- 		       struct netlink_ext_ack *extack)
+diff --git a/sound/core/control_led.c b/sound/core/control_led.c
+index ec0e6c7ad6577..501387287ae69 100644
+--- a/sound/core/control_led.c
++++ b/sound/core/control_led.c
+@@ -563,12 +563,43 @@ static ssize_t set_led_id(struct snd_ctl_led_card *led_card, const char *buf, si
+ 	return count;
+ }
+ 
++/*
++ * snd_ctl_led_disconnect() removes these files with card->controls_rwsem
++ * held. so don't let the removal wait for a callback that takes it.
++ */
++static struct kernfs_node *snd_ctl_led_sysfs_enter(struct device *dev,
++						   struct device_attribute *attr)
++{
++	struct kernfs_node *kn;
++
++	if (!try_module_get(THIS_MODULE))
++		return NULL;
++	kn = sysfs_break_active_protection(&dev->kobj, &attr->attr);
++	if (!kn)
++		module_put(THIS_MODULE);
++	return kn;
++}
++
++static void snd_ctl_led_sysfs_exit(struct kernfs_node *kn)
++{
++	sysfs_unbreak_active_protection(kn);
++	module_put(THIS_MODULE);
++}
++
+ static ssize_t attach_store(struct device *dev,
+ 			    struct device_attribute *attr,
+ 			    const char *buf, size_t count)
  {
- 	struct net_devmem_dmabuf_binding *binding;
-@@ -191,6 +192,8 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
+-	return set_led_id(led_card, buf, count, true);
++	struct kernfs_node *kn;
++	ssize_t ret;
++
++	kn = snd_ctl_led_sysfs_enter(dev, attr);
++	if (!kn)
++		return -ENODEV;
++	ret = set_led_id(led_card, buf, count, true);
++	snd_ctl_led_sysfs_exit(kn);
++	return ret;
+ }
  
- 	binding->dev = dev;
- 	binding->vdev = vdev;
-+	write_pnet(&binding->net, sock_net(nl_sk));
-+	binding->uid = sk_uid(nl_sk);
- 	binding->niov_shift = niov_shift;
- 	xa_init_flags(&binding->bound_rxqs, XA_FLAGS_ALLOC);
- 
-@@ -347,7 +350,9 @@ struct net_devmem_dmabuf_binding *net_devmem_get_binding(struct sock *sk,
- 	int err = 0;
- 
- 	binding = net_devmem_lookup_dmabuf(dmabuf_id);
--	if (!binding || !binding->tx_vec) {
-+	if (!binding || !binding->tx_vec ||
-+	    !net_eq(sock_net(sk), read_pnet(&binding->net)) ||
-+	    !uid_eq(sk_uid(sk), binding->uid)) {
- 		err = -EINVAL;
- 		goto out_err;
- 	}
-diff --git a/net/core/devmem.h b/net/core/devmem.h
-index 6ed16b4b4687e..71c7bd9d6e395 100644
---- a/net/core/devmem.h
-+++ b/net/core/devmem.h
-@@ -10,6 +10,7 @@
- #ifndef _NET_DEVMEM_H
- #define _NET_DEVMEM_H
- 
-+#include <net/net_namespace.h>
- #include <net/netmem.h>
- #include <net/netdev_netlink.h>
- 
-@@ -27,6 +28,8 @@ struct net_devmem_dmabuf_binding {
- 	 * dereferenced.
- 	 */
- 	void *vdev;
-+	possible_net_t net;
-+	kuid_t uid;
- 	/* Protect dev */
- 	struct mutex lock;
- 
-@@ -88,6 +91,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 		       enum dma_data_direction direction,
- 		       unsigned int dmabuf_fd, unsigned int niov_shift,
- 		       struct netdev_nl_sock *priv,
-+		       const struct sock *nl_sk,
- 		       struct netlink_ext_ack *extack);
- struct net_devmem_dmabuf_binding *net_devmem_lookup_dmabuf(u32 id);
- void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding);
-@@ -165,6 +169,7 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 		       unsigned int dmabuf_fd,
- 		       unsigned int niov_shift,
- 		       struct netdev_nl_sock *priv,
-+		       const struct sock *nl_sk,
- 		       struct netlink_ext_ack *extack)
+ static ssize_t detach_store(struct device *dev,
+@@ -576,7 +607,15 @@ static ssize_t detach_store(struct device *dev,
+ 			    const char *buf, size_t count)
  {
- 	return ERR_PTR(-EOPNOTSUPP);
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index 33b9f4eb9565a..847814e3df3fd 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -1094,7 +1094,7 @@ int netdev_nl_bind_rx_doit(struct sk_buff *skb, struct genl_info *info)
+ 	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
+-	return set_led_id(led_card, buf, count, false);
++	struct kernfs_node *kn;
++	ssize_t ret;
++
++	kn = snd_ctl_led_sysfs_enter(dev, attr);
++	if (!kn)
++		return -ENODEV;
++	ret = set_led_id(led_card, buf, count, false);
++	snd_ctl_led_sysfs_exit(kn);
++	return ret;
+ }
  
- 	binding = net_devmem_bind_dmabuf(netdev, NULL, dma_dev, DMA_FROM_DEVICE,
- 					 dmabuf_fd, niov_shift, priv,
--					 info->extack);
-+					 NETLINK_CB(skb).sk, info->extack);
- 	if (IS_ERR(binding)) {
- 		err = PTR_ERR(binding);
- 		goto err_rxq_bitmap;
-@@ -1243,7 +1243,8 @@ int netdev_nl_bind_tx_doit(struct sk_buff *skb, struct genl_info *info)
- 	binding = net_devmem_bind_dmabuf(bind_dev,
- 					 bind_dev != netdev ? netdev : NULL,
- 					 dma_dev, DMA_TO_DEVICE, dmabuf_fd,
--					 PAGE_SHIFT, priv, info->extack);
-+					 PAGE_SHIFT, priv, NETLINK_CB(skb).sk,
-+					 info->extack);
- 	if (IS_ERR(binding)) {
- 		err = PTR_ERR(binding);
- 		goto err_unlock_bind_dev;
+ static ssize_t reset_store(struct device *dev,
+@@ -594,10 +633,8 @@ static ssize_t reset_store(struct device *dev,
+ 	return count;
+ }
+ 
+-static ssize_t list_show(struct device *dev,
+-			 struct device_attribute *attr, char *buf)
++static ssize_t snd_ctl_led_list(struct snd_ctl_led_card *led_card, char *buf)
+ {
+-	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
+ 	struct snd_ctl_led_ctl *lctl;
+ 	size_t l = 0;
+ 	struct snd_card *card __free(snd_card_unref) =
+@@ -620,6 +657,21 @@ static ssize_t list_show(struct device *dev,
+ 	return l;
+ }
+ 
++static ssize_t list_show(struct device *dev,
++			 struct device_attribute *attr, char *buf)
++{
++	struct snd_ctl_led_card *led_card = container_of(dev, struct snd_ctl_led_card, dev);
++	struct kernfs_node *kn;
++	ssize_t ret;
++
++	kn = snd_ctl_led_sysfs_enter(dev, attr);
++	if (!kn)
++		return -ENODEV;
++	ret = snd_ctl_led_list(led_card, buf);
++	snd_ctl_led_sysfs_exit(kn);
++	return ret;
++}
++
+ static DEVICE_ATTR_WO(attach);
+ static DEVICE_ATTR_WO(detach);
+ static DEVICE_ATTR_WO(reset);
 -- 
 2.53.0
 
