@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050317;
-	b=v3prw7nQLTxBQc/eKRGc4z7SEYo9PyziKOPYstg0pvX9ukIFZtH+BXZMuCz+jkYo/tNJ
-	 WhENaG/lrYl9reja/t7DV+Yk9f9JJAK/BSiE1sv9X8eNQJTGqsTzIlt7zPJruvYxq2iJT
-	 mYiygoAI29GaFLzxGd6uTxSHv6Omdcsk5I3Tl7ptDtuXMDlul4lLIwJkCTFSiWz6iO41K
-	 oRlXaxx2zsFkNLcK8te6TvmPlr8YiiFI+a5p4XuNPl8VSg2a557erZ7sQETSJyG/FDb2q
-	 8+5pMEKj/Jm6FjYerwVNhuojXOVi/QGCMIHulU/45pKLiAzy8WZqo5gSK4Ciu0u3YgA==
+	t=1795050320;
+	b=BOvAf2sKfh7qG/odcUKXPNh6TcsWFFf76ELYaAG3A3yUe0cPPiiw/qp1vCxf184R50HC
+	 8x1+q5bLJKzPRFmy3jgmbGaaCRbZz735Io3qcOYYfuOtPsJZuvF3LEIoWAmzSrSS/M9V7
+	 iRQUWTEKbCHN59mEHn1wG06zoYKG7v1nOyXo8Q+qRZhJDluAtpwe8prmst2MvaETJH/b+
+	 l0rMxwK5/g7I50esucw+ogecQ4J6M09HFs6ABBzcUJkuo/sr//1RszmkSX6Fsk4tdKyUX
+	 ypOYBuaoqn6S1ILs+LuZDNefd74RfH9QL122crsPoVkwgfWw0wTBpwAamtF7qKXak/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nWA+TWr0OkiOHBsnesYcDQwxCmgJw/SLFNkm3WoP30g=;
-	b=wiCCUBINTQyCNrvjTgo9Nu48l0YlcZj4CtQepIhVSDNrVbLDfF3jEyz6sg24UA23AGSR
-	 hyQ2ZJJpZheI6un1Pa/L1kk956DJ7FsLO1HOB0fVQlV1D7X2rrA0nd2RLo1m3YwjMh4o3
-	 gk2r6pMrtEiFQedDRB0oh3VhktgYhIc98z7oK1WteDVVw34bG6gUQrnXwZ05nBVVcllOx
-	 uE4aXIfltxjUnHnYh+HFfvqQQpecDbRmTGKP0Vt1A5FptVRCd4Iuk42Kaapq/pOgI1tfl
-	 FkiKauTR0P3gSQh1X35aVtXHV6eUU0p5PSAJi47VImGCH2jdp8HEd+21eSNAfUH8FsA==
+	bh=sJySJXKkn9Njurt2XK7qEeVNh7L5d/ps0XtNMOL5zGM=;
+	b=vprvU3l5QXnFr1FiKPoCiJesM8yxgD6ToftyZ4qb26z2I7PaaSY4deX055NepJF6SM0U
+	 3wJnzV8Iouit8dOjemFlpWBd88FXdUx2QN885dLrJJLl2cEAfuVDkVWZJUzQWSP7gwHer
+	 1bOfs0A6jxq3yqVWWqxCpEtpw34mI1CXLyrmHdaj7a/lrv9cFmx/4NfzGdBCOfTgDzfnc
+	 KM7VPoUmOeuI7jrCaCoSBTRIOLr9ep1WSosj7Jprr4BKaxhcExPZYmPM1XyQatYLuEOYj
+	 XFh8Kk/bwyHi0sGWRt76dkKfYi2TO9gZHnsdi+L1tMNKk426ZzC/mLWjRjA6GWYYCTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8LL7imH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5bDCWN4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48784606A330;
-	Thu, 19 Nov 2026 01:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D3F606A32F;
+	Thu, 19 Nov 2026 01:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8LL7imH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E1E1F000C4;
-	Thu, 19 Nov 2026 01:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5bDCWN4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A241F000C5;
+	Thu, 19 Nov 2026 01:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050317;
-	bh=nWA+TWr0OkiOHBsnesYcDQwxCmgJw/SLFNkm3WoP30g=;
+	s=korg; t=1795050319;
+	bh=sJySJXKkn9Njurt2XK7qEeVNh7L5d/ps0XtNMOL5zGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8LL7imHbzjFLzAMA62Y7xzjg/OuQ5wew+vvq03dfJ1TcMO5rvtOmmJOhRIPbkhcr
-	 N+HkJRe3435sR7DURLUELyx4rD1BXBO7+6zzwW6uRzRPGCp3kZOc9qvqmpTwDv53K9
-	 4iV9b7TSuWjwbYjge6THlfcREkjM9x4JZRVSRj6w=
+	b=x5bDCWN4Pi5Q6Ae5dyWae0O17iFlmbVX2GLlme9klbjlx64ZP5ovJXFkqBK90yxDi
+	 iQOTQM3V3pKY9VN1IrIRWVUpfV/Wu5BhDKa/Uh6qZeIKDYaF+nE2/d7y8O0cOyyNdg
+	 e2q6lJkqu09QfYQBuWAub/55b56N8vGvlpann46Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Mohammed Alquraini <mohammed.saad.alquraini@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2663/2857] smb/server: fix trailing period in generated short names
-Date: Wed, 18 Nov 2026 16:01:37 +0100
-Message-ID: <20261118150337.462434304@linuxfoundation.org>
+Subject: [PATCH 6.1 2664/2857] ksmbd: reject foreign RPC pipe handles on IPC$ read and write
+Date: Wed, 18 Nov 2026 16:01:38 +0100
+Message-ID: <20261118150337.498468170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,49 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Mohammed Alquraini <mohammed.saad.alquraini@gmail.com>
 
-[ Upstream commit e8486c5cfbdd07811afa4196060bafbf78ccdae2 ]
+[ Upstream commit da25995071e5e0f3aa9a41160b00b2f833127b3e ]
 
-Reproducer:
+RPC pipe handles on IPC$ are allocated from a single server-global IDA,
+and ksmbd.mountd looks a pipe up by handle alone, with no session
+information.  smb2_read_pipe() and smb2_write_pipe() take the handle
+straight from the client request (VolatileFileId) and pass it to the
+daemon without checking that the requesting session opened it.  An
+authenticated user can therefore issue an SMB2 READ or WRITE on IPC$
+with another session's handle and receive that session's in-flight
+DCERPC response, or write attacker-chosen bytes into its pipe stream.
+A tree connect to IPC$, which every RPC client already has, is the only
+requirement.
 
-  1. touch /mnt/file
-  2. smbinfo filealternatenameinfo /mnt/file
-     Alternate Name: FILE~9!.
-
-See MS-FSCC 2.1.5.2.1. The base filename MUST be 1-8 characters in length
-and MUST NOT contain a "." period character.
+Validate ownership before the transfer, the way the sibling pipe paths
+already do: under sess->rpc_lock, ksmbd_session_rpc_method() returns 0
+for a handle the session did not open.  smb2_get_info_file_pipe() and
+the FSCTL_PIPE_TRANSCEIVE ioctl already reject such handles; read and
+write were the remaining gap.  Reject them with STATUS_FILE_CLOSED, as
+the ioctl path does.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Assisted-by: LLM
+Signed-off-by: Mohammed Alquraini <mohammed.saad.alquraini@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb_common.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/smb/server/smb_common.c b/fs/smb/server/smb_common.c
-index 87e95f34ee0d3..85e29f63813e2 100644
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -491,8 +491,6 @@ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
-  * @shortname:	destination short filename
-  *
-  * Return:	shortname length or 0 when source long name is '.' or '..'
-- * TODO: Though this function conforms the restriction of 8.3 Filename spec,
-- * but the result is different with Windows 7's one. need to check.
-  */
- int ksmbd_extract_shortname(struct ksmbd_conn *conn, const char *longname,
- 			    char *shortname)
-@@ -556,7 +554,7 @@ int ksmbd_extract_shortname(struct ksmbd_conn *conn, const char *longname,
- 	if (dot_present)
- 		memcpy(out + baselen + 4, extension, 4);
- 	else
--		out[baselen + 4] = '\0';
-+		out[baselen + 3] = '\0';
- 	smbConvertToUTF16((__le16 *)shortname, out, PATH_MAX,
- 			  conn->local_nls, 0);
- 	len = strlen(out) * 2;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 7a54dc3bf0165..8956e548b7f70 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6463,6 +6463,16 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 
+ 	id = req->VolatileFileId;
+ 
++	lockdep_assert_not_held(&work->sess->rpc_lock);
++	down_read(&work->sess->rpc_lock);
++	if (!ksmbd_session_rpc_method(work->sess, id)) {
++		up_read(&work->sess->rpc_lock);
++		rsp->hdr.Status = STATUS_FILE_CLOSED;
++		smb2_set_err_rsp(work);
++		return -ENOENT;
++	}
++	up_read(&work->sess->rpc_lock);
++
+ 	rpc_resp = ksmbd_rpc_read(work->sess, id);
+ 	if (rpc_resp) {
+ 		void *aux_payload_buf;
+@@ -6773,6 +6783,16 @@ static noinline int smb2_write_pipe(struct ksmbd_work *work)
+ 		goto out;
+ 	}
+ 
++	lockdep_assert_not_held(&work->sess->rpc_lock);
++	down_read(&work->sess->rpc_lock);
++	if (!ksmbd_session_rpc_method(work->sess, id)) {
++		up_read(&work->sess->rpc_lock);
++		rsp->hdr.Status = STATUS_FILE_CLOSED;
++		smb2_set_err_rsp(work);
++		return -ENOENT;
++	}
++	up_read(&work->sess->rpc_lock);
++
+ 	data_buf = (char *)(((char *)&req->hdr.ProtocolId) +
+ 			   data_offset);
+ 
 -- 
 2.53.0
 
