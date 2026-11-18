@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060394;
-	b=LjTcJfDP2YdmrmQhqAaron90zLq90NZNyZTs9BnfdEWLah/xe+PziQhxxaqvKQHcvybC
-	 Y0PQfL5S0uwrJNcrEsOZMj7nlWLqMHmc9zh1Bmu38mrUrFgee/Lu7Q6Q7QlMqZZWZO6RE
-	 Kg72ztUaJ4Iq7kgUc0C2V4KHeyOauCFJE7qhwkfMfypgf5SHWbeq+aV1uc1pI+cw9RSoV
-	 0Vhk6uRNbNnBApjfk4V4rR21h39CwxjCHtpfoGwLOdkDCLBQViWHGMH6LRDmyvWdi1jBF
-	 J2EFrehRQirJ1uHR/1RgiKBLftpUol97HCwZg6nZWNkGGG85Hwu4A5BElT3saM2t2dQ==
+	t=1795060396;
+	b=1z4LCLlh+8vb3Mu3dqOPUn5DNEMKb4lM9uyPLz23YU+OvirmlK4Jfiq6z9rJr8VoA9xS
+	 0d+UkESFM6v8aIdvWHbnhG8uH8Z5X34PCIGltkZXuy3JZvnS6+JSdw0XZrA/myUAjHFr1
+	 gK1z/f+OM3gm79HyBgDf1MlFp9WQ1I04EknBvSz4ezSrr9xu3u8X8ZwJd/+sm7DzfVVi4
+	 yg+o2NH0O/0DaSVX8Aoe7RbgzXUOsY/+v+Mb+QxTOXZvVEPvj/8HOTrqxNn60uRW6ZvFq
+	 tXWvHNEHCZc85dVVU2/fK1Le7K67MDKtSirL96nx/bML6QYTf0BilRUGTy82JkVZEcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Btv/rmx5rAqddR6JSmSwnCqvmS2ioY3lrKmoZob4N5U=;
-	b=NgjqArYk2ZmGabCExss/5W375JT4fWuG/XatyoxhkiXIf/eeGmBCC042ZlONmRXNL3LT
-	 F2mMdSqG+yosVkCWT3AOCd0mdEai15dTTk/TriZxPfN1eZsC8Q7piYML0G7yGSOXFozYd
-	 5zRlIkH+TGZuwiik5KxVYFKVtYSLkEjuif5vBPYeKkYXa2iu5deCqUZ5ZBBgkyUXxTR5x
-	 t0UdybID1gTIPy9SqZzrcO1So6uqj71vsHv6TRUABJ7PDTF9TdhV3JGu4C6deXZP04yOc
-	 8FIrxYjn0dLs6Ou+6elGcVVJ3NYrpbuWgJwnI+93sJxnBVV5kyE3xIQ2qWEkPsbYMXg==
+	bh=8y6TkBLUmagVweaGCjFQ4aG+W2uYyvFxRhdv9b+M5dA=;
+	b=SC7NAn7b/cnrhsrSFxXy8JPiJ6IJIIrowgrYCci6fCQbGEFZJz5bS3opsQm3qnRDfqgU
+	 znNXHBfl2d0JbU5m8WHlZ1OvO0kgcXcEtul4Tsi6BB1Het476rtoc6S8YW9vSKY+4tSa/
+	 bOCx+OCnxIHRzmsBsP1nAKwW1HaYaIu/ibTdBXzTJ+o6e+thoQta6+QDTiPwkojrrZTu9
+	 yNZzNn9VgFxzcEDKQBY7VJeJsyd10XxXW4lZcy9tNZJTXlv6KrYniaCCqyH4eX1d++fw8
+	 NnP0DRPLu/AGgAbIESu3wrk9nZFXKrsYNwNF27pHYDkvOxDYfa3hY4T9HBsutO6pYvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUWAzn4r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syKEbmm9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB2E606A326;
-	Thu, 19 Nov 2026 03:53:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA415606A326;
+	Thu, 19 Nov 2026 03:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUWAzn4r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3601F000C4;
-	Thu, 19 Nov 2026 03:53:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syKEbmm9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DEB1F000C4;
+	Thu, 19 Nov 2026 03:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060393;
-	bh=Btv/rmx5rAqddR6JSmSwnCqvmS2ioY3lrKmoZob4N5U=;
+	s=korg; t=1795060396;
+	bh=8y6TkBLUmagVweaGCjFQ4aG+W2uYyvFxRhdv9b+M5dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUWAzn4rsfDHbBtwJ5GQet/iHvii5wX56yHF6mz+WzJvCUcmBWs+AL3vnQ9Yl2BDG
-	 oSci6Zx7MXmKDgR1erjfOVkuNng6VK7bK0usASsx9ziYfwNkBzuUTu+Jerj34LkUq6
-	 garUGQUmsYM6hNaufFoeWNq/oV/PCJCy3BP+0Tk4=
+	b=syKEbmm9eX9ktzyPCFoaCbydEmxTuRpxstIOeEwEOk/ac4iSOflF4JwX+kdDtaZbE
+	 H2UYdPF0r7JWIs5ywiiR4A55AU9y0rc2bZ/Nzj0A3zej2XUy21pMDRpSPNEY4uWyjn
+	 F7DDiqxA9EF98SNKjxqZYqlGJ0gR/B9B6y//G+5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <maxime@cerno.tech>,
-	Samuel Holland <samuel@sholland.org>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1182/1848] dmaengine: sun6i: Do not use virt_to_phys
-Date: Wed, 18 Nov 2026 15:53:40 +0100
-Message-ID: <20261118150009.030329677@linuxfoundation.org>
+Subject: [PATCH 5.10 1183/1848] dmaengine: sun6i-dma: Fix use-after-free in error handling paths
+Date: Wed, 18 Nov 2026 15:53:41 +0100
+Message-ID: <20261118150009.064580922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,123 +70,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel@sholland.org>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 9aa48806edb8c37e82532dbc6098b03f6bd4245e ]
+[ Upstream commit f472919f4c0650d7fb22bb230eacaada0c6ee951 ]
 
-This breaks on RISC-V, because dma_pool_alloc returns addresses which
-are not in the linear map. Instead, plumb through the physical address
-which is already known anyway.
+In error handling paths, the for loop frees v_lli in the loop body,
+then accesses v_lli->v_lli_next and v_lli->p_lli_next in the
+increment expression, which is use-after-free.
 
-Acked-by: Maxime Ripard <maxime@cerno.tech>
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Link: https://lore.kernel.org/r/20220424172759.33383-3-samuel@sholland.org
+Fix by refactoring the cleanup into a helper function sun6i_dma_free_desc()
+that saves both the next virtual and physical pointers before freeing the
+current node, preventing the use-after-free.
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Suggested-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260727061142.44195-1-zenghongling@kylinos.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: f472919f4c06 ("dmaengine: sun6i-dma: Fix use-after-free in error handling paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/dma/sun6i-dma.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index 5652c8ba1b942..dd358971f9506 100644
+index dd358971f9506..21e0d0db8cd66 100644
 --- a/drivers/dma/sun6i-dma.c
 +++ b/drivers/dma/sun6i-dma.c
-@@ -241,9 +241,7 @@ static inline void sun6i_dma_dump_com_regs(struct sun6i_dma_dev *sdev)
- static inline void sun6i_dma_dump_chan_regs(struct sun6i_dma_dev *sdev,
- 					    struct sun6i_pchan *pchan)
- {
--	phys_addr_t reg = virt_to_phys(pchan->base);
--
--	dev_dbg(sdev->slave.dev, "Chan %d reg: %pa\n"
-+	dev_dbg(sdev->slave.dev, "Chan %d reg:\n"
- 		"\t___en(%04x): \t0x%08x\n"
- 		"\tpause(%04x): \t0x%08x\n"
- 		"\tstart(%04x): \t0x%08x\n"
-@@ -252,7 +250,7 @@ static inline void sun6i_dma_dump_chan_regs(struct sun6i_dma_dev *sdev,
- 		"\t__dst(%04x): \t0x%08x\n"
- 		"\tcount(%04x): \t0x%08x\n"
- 		"\t_para(%04x): \t0x%08x\n\n",
--		pchan->idx, &reg,
-+		pchan->idx,
- 		DMA_CHAN_ENABLE,
- 		readl(pchan->base + DMA_CHAN_ENABLE),
- 		DMA_CHAN_PAUSE,
-@@ -387,17 +385,16 @@ static void *sun6i_dma_lli_add(struct sun6i_dma_lli *prev,
+@@ -397,16 +397,12 @@ static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
+ 		v_lli->len, v_lli->para, v_lli->p_lli_next);
  }
  
- static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
--				      struct sun6i_dma_lli *lli)
-+				      struct sun6i_dma_lli *v_lli,
-+				      dma_addr_t p_lli)
+-static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
++static void sun6i_dma_free_desc(struct sun6i_dma_dev *sdev,
++				struct sun6i_desc *txd)
  {
--	phys_addr_t p_lli = virt_to_phys(lli);
+-	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
+-	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
+ 	struct sun6i_dma_lli *v_lli, *v_next;
+ 	dma_addr_t p_lli, p_next;
+ 
+-	if (unlikely(!txd))
+-		return;
 -
- 	dev_dbg(chan2dev(&vchan->vc.chan),
--		"\n\tdesc:   p - %pa v - 0x%p\n"
-+		"\n\tdesc:\tp - %pad v - 0x%p\n"
- 		"\t\tc - 0x%08x s - 0x%08x d - 0x%08x\n"
- 		"\t\tl - 0x%08x p - 0x%08x n - 0x%08x\n",
--		&p_lli, lli,
--		lli->cfg, lli->src, lli->dst,
--		lli->len, lli->para, lli->p_lli_next);
-+		&p_lli, v_lli,
-+		v_lli->cfg, v_lli->src, v_lli->dst,
-+		v_lli->len, v_lli->para, v_lli->p_lli_next);
+ 	p_lli = txd->p_lli;
+ 	v_lli = txd->v_lli;
+ 
+@@ -423,6 +419,17 @@ static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
+ 	kfree(txd);
  }
  
- static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
-@@ -447,7 +444,7 @@ static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
- 	pchan->desc = to_sun6i_desc(&desc->tx);
- 	pchan->done = NULL;
- 
--	sun6i_dma_dump_lli(vchan, pchan->desc->v_lli);
-+	sun6i_dma_dump_lli(vchan, pchan->desc->v_lli, pchan->desc->p_lli);
- 
- 	irq_reg = pchan->idx / DMA_IRQ_CHAN_NR;
- 	irq_offset = pchan->idx % DMA_IRQ_CHAN_NR;
-@@ -672,7 +669,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_memcpy(
- 
- 	sun6i_dma_lli_add(NULL, v_lli, p_lli, txd);
- 
--	sun6i_dma_dump_lli(vchan, v_lli);
-+	sun6i_dma_dump_lli(vchan, v_lli, p_lli);
- 
++static void sun6i_dma_free_desc_virt(struct virt_dma_desc *vd)
++{
++	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
++	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
++
++	if (unlikely(!txd))
++		return;
++
++	sun6i_dma_free_desc(sdev, txd);
++}
++
+ static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
+ {
+ 	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vchan->vc.chan.device);
+@@ -752,10 +759,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
  	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
  
-@@ -748,14 +745,16 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
+ err_lli_free:
+-	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
+-	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
+-		dma_pool_free(sdev->pool, v_lli, p_lli);
+-	kfree(txd);
++	sun6i_dma_free_desc(sdev, txd);
+ 	return NULL;
+ }
+ 
+@@ -821,10 +825,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
+ 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 
+ err_lli_free:
+-	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
+-	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
+-		dma_pool_free(sdev->pool, v_lli, p_lli);
+-	kfree(txd);
++	sun6i_dma_free_desc(sdev, txd);
+ 	return NULL;
+ }
+ 
+@@ -1354,7 +1355,7 @@ static int sun6i_dma_probe(struct platform_device *pdev)
+ 		struct sun6i_vchan *vchan = &sdc->vchans[i];
+ 
+ 		INIT_LIST_HEAD(&vchan->node);
+-		vchan->vc.desc_free = sun6i_dma_free_desc;
++		vchan->vc.desc_free = sun6i_dma_free_desc_virt;
+ 		vchan_init(&vchan->vc, &sdc->slave);
  	}
  
- 	dev_dbg(chan2dev(chan), "First: %pad\n", &txd->p_lli);
--	for (prev = txd->v_lli; prev; prev = prev->v_lli_next)
--		sun6i_dma_dump_lli(vchan, prev);
-+	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
-+	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
-+		sun6i_dma_dump_lli(vchan, v_lli, p_lli);
- 
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (prev = txd->v_lli; prev; prev = prev->v_lli_next)
--		dma_pool_free(sdev->pool, prev, virt_to_phys(prev));
-+	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
-+	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
-+		dma_pool_free(sdev->pool, v_lli, p_lli);
- 	kfree(txd);
- 	return NULL;
- }
-@@ -822,8 +821,9 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (prev = txd->v_lli; prev; prev = prev->v_lli_next)
--		dma_pool_free(sdev->pool, prev, virt_to_phys(prev));
-+	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
-+	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
-+		dma_pool_free(sdev->pool, v_lli, p_lli);
- 	kfree(txd);
- 	return NULL;
- }
 -- 
 2.53.0
 
