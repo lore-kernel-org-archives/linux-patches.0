@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045931;
-	b=IcWFViyaUYwKUVFFIk4zsjPIR8EzjSaj2nxSI5eWOVwRNsVRz3vVDL063DkOfuaxDLNf
-	 nNvD2DTSqgUaxdvv3dtK7gPkW9CYNefgub2r34A696pTU1/5yQtUQhPIax7r9Os1YfMqW
-	 dGkIW+x8tuObxk63nyI9YgHrLuh5qRlD2Pg+9ivZLq7thmrQKgbp2w3FV2Xcrb1m5BHci
-	 W4B6j3l7OxIwRDZoF5an8JQoCdWZUb6u+JkWI5fKBIzUOW8MELk3/K1fznWR3BBkIQuVl
-	 q1Ky0Kcuk6xwWdq2rbGQweUTOGpeuZOnD74Fj5p9QS/t2t6HdMCMyV6+5ppjmBHs8fg==
+	t=1795045934;
+	b=EC51Fqhh3J50AhkAc43JwxhZVWIc8Ha77Cc9ouGowGGiuDdevJxiI+kViOQHhKTTDQAz
+	 ovxe+1dWb1VilEFwQIrXdE5dtfe200GeTnWYbbvWWtlAqVgKsbzxYGqr4haFQiN2PNRCk
+	 txfBdoqZ99ZS0Meo7j+t0VmDuRr+g3Z7XzD1b7gwuYlYdqHr8sKVH+vk/DFwdtMUMILgY
+	 49Qo7/FpgtH9UKq51pqBb047KmVnRWgdQMfDSfwpWq9BvkB5a7qxtXP/0woSam40HFyZz
+	 jCZ85TyGYVHn+sivKVnmzIOOdxiC/rWUrO/rKkY/Q8C/ysvhl1trBBmT1E1y6+WaBJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045931;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RTUmZbBXF3WVwT4BTq/cykRgBYqylbgWtO37BgeWTPs=;
-	b=tIITp3SO74J0weLiKLNA0p43pI5BUivc1Er0aiBAHNWDzVVB+hWW5IagpuoHlqoAa8PG
-	 k9Hd/5i76V5qoH9uqENWCVgQTw0gudHidQIV9FIOKfRE3T0Obc5LGLcoeX66Mo1KxwCaD
-	 UTgNfkpHzooIjOoYMN4SijhUjeLxcU5c1z3b7Le6/Lrxw8szgEw3l6hmcPmQGM0tIH2r/
-	 cRBPqRVYKfQSn7VSZkzsSMxBW0leyaoHgK5mt30iKnmIKHhUrJZZ5ZcyZLInHYVi86YjH
-	 HPuTcqK0MmLggblULU+OM9laaXyGY99M3Dlob5fqwv4ED70VRfSJrAf45AV+NInj/8g==
+	bh=E38nJHxANc+xMnXyKkTKN8HutjaJ3UatripRWuZtzyc=;
+	b=34d+cs5SFf1GbiJbDz8i7P0NAFG9IHgk2tLtU39d+6/pabuTxVtXb9JbGf/TvveM5T6f
+	 1ajtW3Fjlb2siRSBqrwAUnfP7VIEdNZENV3LiKgI9CQDQS0KGQCyUjS5r5rCXhAGYXvhY
+	 hitfEXwaMFb0FZooPumzIpg0/TsEBf3X/6DNnbHM1gYzRlUj3OdSUIduWEl3y7FOt2XQr
+	 IxBZ8tefgSo69e9qOKEptTbPgxT43QfJCWPuc6KMRAyf6/UrZxYOEhS2T9PiupOCbaDCN
+	 He9RiTWC6cqIvP+QYyfB6c8yURnX/rgNIqNRMxmwfzpOp9M2fXMUIKhxLcKFcFXUnJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xtu+tjGU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHycmcpX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5572606A31C;
-	Wed, 18 Nov 2026 23:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EBD606A31C;
+	Wed, 18 Nov 2026 23:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xtu+tjGU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282F61F000C4;
-	Wed, 18 Nov 2026 23:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FHycmcpX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84031F000C4;
+	Wed, 18 Nov 2026 23:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045931;
-	bh=RTUmZbBXF3WVwT4BTq/cykRgBYqylbgWtO37BgeWTPs=;
+	s=korg; t=1795045934;
+	bh=E38nJHxANc+xMnXyKkTKN8HutjaJ3UatripRWuZtzyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xtu+tjGUdzs9GBTgcA6gGUzlHTGhpwOWQLRmXjUo9K5zwxTiwcliIMYGF2bwz1Vzz
-	 Z6YS4sFh6e+C6ThGPKwWZ3Ac2GcfEtrr/rsmVRuGnBtq501g5PDh8v0lEcBehYwigX
-	 uhdJ/gRsyPqGAm/bFb1hq2ZR08ZjxZrhPHv3u97g=
+	b=FHycmcpX2OTRplt6M/iYg+ctVhXAioDHu3z6tSphId61L/fiAssAVp7XcaPQPspgC
+	 jWmAlBr2BxKFDV00xwxTG8SwStdO9vnIGQEE0BMn01ev11OSrx0GP+Y/2Wbe5V2Yyl
+	 1skTjEZpBAIN+8NkdanF/tPS06WLuEUPny/aUDHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1100/2857] apparmor: on failed load ensure profile files are removed before parent
-Date: Wed, 18 Nov 2026 15:35:34 +0100
-Message-ID: <20261118150241.241511752@linuxfoundation.org>
+Subject: [PATCH 6.1 1074/2857] macvlan: fix passthru promiscuity accounting while down
+Date: Wed, 18 Nov 2026 15:35:08 +0100
+Message-ID: <20261118150240.280243570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,45 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Xia Yan <yanxia@cmss.chinamobile.com>
 
-[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
+[ Upstream commit b6743653d134c9ef8436e2db1be1ad4c1e0d0091 ]
 
-The load interface does not guarantee the order profiles are loaded.
-When a parent is loaded after its child, and the load fails, the
-current code will issue a warning, and leak a dentry.
+macvlan_changelink() adjusts the lower device's promiscuity count when
+NOPROMISC changes, even if the passthru macvlan is down. The reference
+is acquired in macvlan_open() and released in macvlan_stop(), so a down
+interface has no reference to change.
 
-For the loaded set of profiles, ensure that on failure list is ordered
-is traversed in reverse so any children processed after their parent
-is freed first. We do not need to deal with the cases where the
-children are processed before their parent, because either a parent
-outside the list already exists or a dummy parent outside of the list
-is created, and the list walk will not put those parents before their
-children.
+Clearing NOPROMISC while down leaves an extra reference after the next
+open/stop cycle. Setting it while down can remove a reference held by
+another user of the lower device.
 
-Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Guard the count adjustment with netif_running(dev). Keep storing the
+requested flags while down so the next open uses the new setting.
+
+Comparing changelink with open/stop exposed the unmatched count changes;
+the same issue was also described in earlier macvlan reviews. A netlink
+test on UML reproduced both DOWN cases before the fix and verified the
+expected counts afterwards. Repeated flag updates, two open/stop cycles,
+deletion and bidirectional small-frame delivery were also checked.
+
+Full x86_64 builds completed with WERROR disabled for allmodconfig, and
+WERROR and KASAN disabled for allyesconfig, including the resulting
+dependency changes. Neither comparison showed new diagnostics.
+
+Fixes: df8ef8f3aaa6 ("macvlan: add FDB bridge ops and macvlan flags")
+Link: https://lore.kernel.org/netdev/179170088566.434549.4699134797461783473@kernel.org/
+Link: https://lore.kernel.org/netdev/20261016003009.2692872-1-kuba@kernel.org/
+Cc: stable@vger.kernel.org
+Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261022090809.12019-1-yanxia@cmss.chinamobile.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/macvlan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index c129f13fdeec6..dac3fb515814d 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1182,8 +1182,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	 * them yet, and leaving them behind would leak the new profiles
- 	 * (their dents pin the proxy) and make the next load at the same,
- 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
-+	 * ensure children (which are at the end of the list are removed
-+	 * before their parent
- 	 */
--	list_for_each_entry(tmp, &lh, list) {
-+	list_for_each_entry_reverse(tmp, &lh, list) {
- 		if (!tmp->old)
- 			__aafs_profile_rmdir(tmp->new);
- 	}
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index b18d5178cd0eb..dd3daf2f7f3a5 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1602,7 +1602,8 @@ static int macvlan_changelink(struct net_device *dev,
+ 	if (data && data[IFLA_MACVLAN_FLAGS]) {
+ 		__u16 flags = nla_get_u16(data[IFLA_MACVLAN_FLAGS]);
+ 		bool promisc = (flags ^ vlan->flags) & MACVLAN_FLAG_NOPROMISC;
+-		if (macvlan_passthru(vlan->port) && promisc) {
++		if (macvlan_passthru(vlan->port) && promisc &&
++		    netif_running(dev)) {
+ 			int err;
+ 
+ 			if (flags & MACVLAN_FLAG_NOPROMISC)
 -- 
 2.53.0
 
