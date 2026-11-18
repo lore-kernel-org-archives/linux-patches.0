@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049641;
-	b=ZYyiT4nyAYsUXaVMW089NudaCIiIJnebf5gS7i5mFDkApdyzh8kuCDqhKVbb6IN/k4Ul
-	 Dj64teYeYep/BR5bVuC8ZS3YMRhU5PAil/axLIwPYA8xOlCP+7JhYamOCih/Xp5VRwhKW
-	 L3E2iZLUbjI3qfsDlgqJ0tDZ0tydpA9JiPq5i4itE9joHByZIS7J1trTV4yGtJQmxXwvY
-	 Uu/T1lxyRbs5D008QmSjBeDse2nVIcmxudp25Xy4nz2iRv1rgbFAEbQidesTegfM/xMJM
-	 AgU3umw76TpOp58Vf6n1qL30f4a/xuwpKUlppal2fOIajMvuUZEjOSG39a1h5hdYorg==
+	t=1795049644;
+	b=g6DE5gkKGLZ0yUsUhsXqqHpnEncAZRrv1ZHovB4uAcs236pZNyitXvm2GjH5nyoIxtgx
+	 y6p9u1/koRvtwMDQH8b9cpxQDH6dZOMHNACk5cXRo7YbfhfhdGb9J+8KIFESQPxwYaW6i
+	 RFhuN8QTgpZZqZLbfqtjCVwM0lduBkIGyFUVZbWodnL82cNitkUmscNfBxzVLxitk2PRV
+	 mQ3cilrGGWjIzfpBK20GYvoMYojwKOjMSG+GbHdEBQCOenHC4cbfyKZF6kPi/kAWdbzoh
+	 52IuZ6rlpa4x4cOTyTp6XRu1p9RQfNTasHLzmQ6P+shUQIXbgZKriqylZKxN+1Y7W6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=liQf+9TlZ3lmBRvWJFDlDbjanpz5GUEndNBdtHqh5Xo=;
-	b=mHe0HQKlHcEhTaEG9HcHvI1eJm/LbwIGcAHb4Kmz8davxGIgC+QVlSBq+e/z7EbrKNud
-	 Y0fKqexcKTcAx4vrtEBu+CMW5WTMzZ+TySXYkKPixMa6rqLLu+NVsnPaP6h0+foMUxK1J
-	 T+rj53lE4rAQSY87+6zyoPI1AH9mf9jz8vwstwuh906AxvCD/91SqcXcRqUdbhWK2pg/R
-	 Mo/5wTQPI5vPrtBRkYqSjPpcQdbVlJzy/iUVrLkWUfitwrzvCIY3+b9AtS/WnQ7zgsnUQ
-	 ecJYZ8mJHocZst7+9jG6+fHJF2JuosFSKyhLH/iG6sV+RHiujwd6UoDnR6SPD9UMwIg==
+	bh=mpV3PmqTuXgyJ3OpuNndGpLhRr038Bx9DWVNnnXyUGY=;
+	b=cpywPkOt7aCyHAFrFbpaYPwqbs5WAHA3+3+MwhxF2TRrnSPQSvwnYeUZIU2JNKrj6COn
+	 QjM0SJYkkZLipESdBJzLveQB5FYwjmlVntDO3N9JHMDcO3S3PAzfqL6nmQ9MfKnN0TQcv
+	 cHxHuS15q7mFNrUkmDHLjfJv1GdKh2HpB4i5uKeyOAUJPXLZddGv7/H6BOelxAnpqGVps
+	 hW6thZszunVXYPP/osR1Wgcb9ntdesj76MP6kpHG0djmqzRDkGiDSRw9mU/bdInSlCXDZ
+	 FY1UtWfZ/WY+oHivmimjf24EFOsFhZKE/aP0KckQwLV0atzkhLO3xDN7mjyWrsJbAyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FmmEUuSG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IF4xIHzg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F955606A31C;
-	Thu, 19 Nov 2026 00:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DAE606A325;
+	Thu, 19 Nov 2026 00:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FmmEUuSG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB7A1F000C4;
-	Thu, 19 Nov 2026 00:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IF4xIHzg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F6F01F000C4;
+	Thu, 19 Nov 2026 00:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049641;
-	bh=liQf+9TlZ3lmBRvWJFDlDbjanpz5GUEndNBdtHqh5Xo=;
+	s=korg; t=1795049643;
+	bh=mpV3PmqTuXgyJ3OpuNndGpLhRr038Bx9DWVNnnXyUGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FmmEUuSGSlf/XjzQ5DKqq8OdH0aVeATfWIHjO3kYju/Q0SJtpPobPF5VlHq1OGZxw
-	 /BFsEXyJ61Xze0WiDH13d4fx8eflu+XdTksBkV9O7XgfMWwxIFzZNdvUIdw5r+Fui2
-	 y6GnB9oyYxt5RvAI178UgCtgpjpF1osg46oN3bvs=
+	b=IF4xIHzgtNnMMRXNzPv+sC6t//Y6U5wRMEM4HCqm4CqPSypVCNMXhgkdDGVip1nnX
+	 74gCPYcinZn0RfBCS9JqWYbQcJ3iKt1oF4j1QINBKdulefCQTVm7TWbADqGjtOPxVy
+	 WHGqm9T2exXIZaE7iFPml+zejQ10ppAf/iJIeRIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2424/2857] clk: qcom: mmcc-sdm660: Fix MDSS AHB clock HWCG register offset
-Date: Wed, 18 Nov 2026 15:57:38 +0100
-Message-ID: <20261118150328.831872851@linuxfoundation.org>
+Subject: [PATCH 6.1 2425/2857] clk: qcom: rcg2: Initialize shared floor clock state
+Date: Wed, 18 Nov 2026 15:57:39 +0100
+Message-ID: <20261118150328.868133243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,44 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit c5f338329a2d0d60f7874aa7a1addaa0e4e75a3b ]
+[ Upstream commit 72f34d429f6e51b0ef8c43ab7667c4fb4099dd46 ]
 
-The MDSS AHB clock HWCG bit resides in the same register as the branch
-enable and halt status bits, at offset 0x2308. The current HWCG register
-offset of 0x8a004 exceeds the regmap maximum of 0x40000, so regmap rejects
-the read in clk_branch_in_hwcg_mode(). Since the read error is ignored,
-the helper uses an uninitialized value to decide whether to skip the
-halt status check.
+Shared floor RCGs use the cached parked_cfg whenever CCF considers the
+clock disabled. Unlike the other shared RCG variants, their ops do not
+initialize that cache, leaving it zeroed until the first disable or rate
+change. This can make registration report an undivided XO configuration
+instead of the boot-programmed parent and divider.
 
-Correct the HWCG register offset so the helper reads the actual hardware
-clock gating state.
+Initialize parked_cfg from CFG_REG without parking or otherwise changing
+the hardware. Propagate read failures so a clock with unknown initial
+state is not registered.
 
-Fixes: 5db3ae8b33de ("clk: qcom: Add SDM660 Multimedia Clock Controller (MMCC) driver")
+Fixes: aec8c0e28ce4 ("clk: qcom: rcg2: add clk_rcg2_shared_floor_ops")
 Assisted-by: LLM
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916-clk-qcom-mmcc-sdm660-fix-mdss-ahb-hwcg-offset-v1-1-30dcf09d907c@oss.qualcomm.com
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-1-5531cb00514b@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-sdm660.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/clk-rcg2.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-sdm660.c b/drivers/clk/qcom/mmcc-sdm660.c
-index 4d187d6aba734..fc2fc74d1c01d 100644
---- a/drivers/clk/qcom/mmcc-sdm660.c
-+++ b/drivers/clk/qcom/mmcc-sdm660.c
-@@ -2022,7 +2022,7 @@ static struct clk_branch csiphy_ahb2crif_clk = {
- static struct clk_branch mdss_ahb_clk = {
- 	.halt_reg = 0x2308,
- 	.halt_check = BRANCH_HALT,
--	.hwcg_reg = 0x8a004,
-+	.hwcg_reg = 0x2308,
- 	.hwcg_bit = 1,
- 	.clkr = {
- 		.enable_reg = 0x2308,
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 12ab7708014f3..9560d4254e4f9 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1205,7 +1205,20 @@ const struct clk_ops clk_rcg2_shared_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
+ 
++static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++
++	/*
++	 * Read the config register so that the parent is properly mapped at
++	 * registration time.
++	 */
++	return regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG,
++			   &rcg->parked_cfg);
++}
++
+ const struct clk_ops clk_rcg2_shared_floor_ops = {
++	.init = clk_rcg2_shared_no_init_park,
+ 	.enable = clk_rcg2_shared_enable,
+ 	.disable = clk_rcg2_shared_disable,
+ 	.get_parent = clk_rcg2_shared_get_parent,
+@@ -1217,19 +1230,6 @@ const struct clk_ops clk_rcg2_shared_floor_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_rcg2_shared_floor_ops);
+ 
+-static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
+-{
+-	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+-
+-	/*
+-	 * Read the config register so that the parent is properly mapped at
+-	 * registration time.
+-	 */
+-	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->parked_cfg);
+-
+-	return 0;
+-}
+-
+ /*
+  * Like clk_rcg2_shared_ops but skip the init so that the clk frequency is left
+  * unchanged at registration time.
 -- 
 2.53.0
 
