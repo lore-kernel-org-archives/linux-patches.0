@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053891;
-	b=CgEXEM5nvEL6SKflVj/LEBzWlc2q3bJ8xIt49NikV0eLNhdkKt/Fpuy2nf3ySyAEDfJG
-	 g+leT0vmK3qTRRgOD9clY9OMkfzHVcckRMHwgkw1BAIfmhEOT66PPhhiV4KyYvA0l9+Oj
-	 NA0Msaqfvc385nSUA7MNkqlqBt8UbT5MkC6wxQnKx5OFMz9fMfMs0ZBi7E5GkjZKEXTEC
-	 5mNRmEeve0lepMyExuwgeV2Wjd88GuKbfOJRA5Su0YaA6yxTzg4kcxO9zJUPhs/cZ5TC8
-	 34+A2VNhzuwKuFWxOa/w8djrIBsS+pzneaFdMPMm58fFPClvSp0fHFOPNG80COQKncQ==
+	t=1795053894;
+	b=F69hyg++xRXjn5DrUftDRzfW0zRcgNvLzx85ZS95YGAyTiScV90qJZpwygahMYsYzyI3
+	 vK6OysgBDfx57ZfOLOp10KdPHzHEcAbhkuRXYz9i4yzJhgXE1ypgT29AHfpYvwUyPe9B7
+	 2pbmYGM77znu7E+6fd9ml47mvJBrUTw9aVe/ijNkNyGWwSmZbsxA40XhgLL4yIq+C4o59
+	 jOlVudK94/YgUeA5iBkrNJLcrNH1gHWluWJ1SBVgl4QL+5HMzReDGQ2Sodu4vGn05DI7N
+	 8dw/n/+cCncC5p5DXghF62jyW/ylN70DkMEg2vHOBbwtteiwrzfD7dhc++4xZ16dtQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cqb6ciz/jXFPyBdqcn0ecSQcQvO37jMznAPCUV65kwc=;
-	b=Xg26zXEpgORQkmvqOv4daIGPect4gJpnEoyHDepzlNWKusvfXvX+EfJ+LMmzqo4Y0Haa
-	 rGveicaqTSFu07zbZfQ7dZuLa6h1K3Tcq4n2BcDVwFSTpG+J/JGDkeYEDr3Puj1ZIZL4X
-	 m3DqUMw5Kd7EoNN2CIlqDNAuoWD00wkdZrlLXsiGWF9WD7PJ3TpnMbEhx/FeFy9w+Pe8y
-	 ijfdjTZfQHCdMAnAGCLJRW50OJMHfablq3PFgBsl3GdfEBDqH8JqFBvdVopoe1LVg/0J1
-	 HJurww8aJjto8YVTLTWcG3MfPZIdzyXWExQgZHtJLRbnFzj0e5oMbK5NIxYdmNKHAhw==
+	bh=gVr1373ex3d4wc9i1kEqCkB7UpU/LXhIj9U0otpfppM=;
+	b=nZ9Hl6JvXpYWdrfnHafef2GC+uyccyjH2IdHRwmwCbacPjfCP9Uzp4Z/SZOY6hUd4pWy
+	 bMaQ8V5a+tQWCSczeDBMeDFNzZH4iuHASU7c0XAeM1B/Dl8OuzY71jvoSRz4Y2O7FdOie
+	 cVZmSShG9nhgHBRIPY7AW7mkDTGGRuCd/DMftdCi9MDmA5C2tf8HET/ae4unVilS/8N51
+	 tR569D0k5nYQx8eOQTOmVn2fff/VaVb5Js0lVn82d7Il6oiQLMnoFQL6Vyhq26fVgbWG7
+	 n+Uguj6KbVnyFK7Oo8+GSocy7SYyzhzaw7GosA1WkUhcM/E3GDkNVnquvuxRh5oykYQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPG4t5bF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZvfDDhi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A512C606A31C;
-	Thu, 19 Nov 2026 02:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67038606A337;
+	Thu, 19 Nov 2026 02:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPG4t5bF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067F01F000C5;
-	Thu, 19 Nov 2026 02:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OZvfDDhi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2A71F000C7;
+	Thu, 19 Nov 2026 02:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053891;
-	bh=cqb6ciz/jXFPyBdqcn0ecSQcQvO37jMznAPCUV65kwc=;
+	s=korg; t=1795053894;
+	bh=gVr1373ex3d4wc9i1kEqCkB7UpU/LXhIj9U0otpfppM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZPG4t5bFb6fzBNalMNzvHe4n/H3/mE24KKl1E7lREZr0Apvu4VDNzxamZdSOqqniC
-	 VSYFLAmDS5XYU7fnf1lUP5T1YdyTjV+iupUr9mRKxXJsZ2RxHt1sFvyolrB//KN5l1
-	 +GX09ftn7M3sFjdNd0DQhdox9xZ9QmL4IB0O3TZU=
+	b=OZvfDDhib8XbArxHjNRBRCWBwCVVt3xok4zcbwdpvqTr9KzoUJMM9vJ9G5iVw6DWG
+	 ynxSINJZuk0CqlHQ876imMSrXV8utf9xL+835ahy6+5J6brlZ1znyDnCu9nQiyLhJm
+	 aksMVI/H6R+QRFS7qFmt7YRVNgt+JMiNlGANT5Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Neal Gompa <neal@gompa.dev>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1081/2214] wifi: brcmfmac: cfg80211: Report port_authorized for 4-way HS offload
-Date: Wed, 18 Nov 2026 15:45:57 +0100
-Message-ID: <20261118150055.486581750@linuxfoundation.org>
+Subject: [PATCH 5.15 1082/2214] mptcp: fix subflow bitfield misuse
+Date: Wed, 18 Nov 2026 15:45:58 +0100
+Message-ID: <20261118150055.527256095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,70 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 6fff9de5c5b425817588eeed42bd56d665751c13 ]
+[ Upstream commit 7538fa33bb2f66b8b809ff39d58308be48e197a0 ]
 
-Since commit 416386060 ("Mark authorization completed on driver
-indication during 4-way HS offload") [0] wpa_supplicant expects
-NL80211_CMD_PORT_AUTHORIZED to complete the authentication when the
-driver supports 4-way handshake offload.
-This was apparently never tested with the upstream brcmfmac driver as it
-does not report this. This broke authentication on Apple silicon devices
-(BRCM4378, BRMC4387, BRMC4388) and other devices when wpa_supplicant
-2.11 was released [1]. This was initially dealt with by reverting the
-commit in Fedora [2] and other Linux distributions.
-Instead of carrying the revert over to wpa_supplicant 2.12 add the
-expected NL80211_CMD_PORT_AUTHORIZED when the connection is established.
+The subflow status bitfield is protected by the subflow socket lock,
+with one notable exception: the `close_event_done` bit is actually under
+the msk socket lock protection.
 
-The "Fixes:" tag is not fully accurate as this has only became an issue
-after userspace changes years after the change. Since the change is
-expected to be required in all active stable branches for wpa_supplicant
-2.11 / 2.12 compatibility it is helpful even though
-BRCMF_PROFILE_FWSUP_SAE did not exists then.
+As reported by Clashiko [1], flipping the latter bit may corrupt other
+entries in the same bitfield.
 
-Link: https://github.com/zephyrproject-rtos/hostap/commit/41638606054a09867fe3f9a2b5523aa4678cbfa5 [0]
-Link: https://lists.infradead.org/pipermail/hostap/2024-August/042893.html [1]
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2302577 [2]
-Link: https://lore.kernel.org/linux-wireless/20260911065656.1269623-5-Jason.Huang2@infineon.com/ [3]
+Move the `close_event_done` outside the bitfield, in a 32bit hole.
+
+Link: https://lore.kernel.org/178959153492.22033.1944011998010756543@kernel.org
+Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
 Cc: stable@vger.kernel.org
-Fixes: b8a64f0e96c2 ("brcmfmac: support 4-way handshake offloading for WPA/WPA2-PSK")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260915-brcmfmac-4way-handshake-offload-authenticated-event-v2-1-fbb9cc7ac177@jannau.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: replaced the authorization helper with an inline PSK/SAE check using the three-argument cfg80211_port_authorized() API ]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-2-932c9b182fc7@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: adjusted __unused from 10 to 11 instead of 8 to 9 to match the existing mptcp_subflow_context layout ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mptcp/protocol.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-index 13ea5f0c8e1e1..aec1c0b9ef08c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -6029,6 +6029,7 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
- 	struct brcmf_cfg80211_profile *profile = &ifp->vif->profile;
- 	struct brcmf_cfg80211_connect_info *conn_info = cfg_to_conn(cfg);
- 	struct cfg80211_connect_resp_params conn_params;
-+	bool authorized;
- 
- 	brcmf_dbg(TRACE, "Enter\n");
- 
-@@ -6049,7 +6050,12 @@ brcmf_bss_connect_done(struct brcmf_cfg80211_info *cfg,
- 		conn_params.req_ie_len = conn_info->req_ie_len;
- 		conn_params.resp_ie = conn_info->resp_ie;
- 		conn_params.resp_ie_len = conn_info->resp_ie_len;
-+		authorized = completed &&
-+			     (profile->use_fwsup == BRCMF_PROFILE_FWSUP_SAE ||
-+			      profile->use_fwsup == BRCMF_PROFILE_FWSUP_PSK);
- 		cfg80211_connect_done(ndev, &conn_params, GFP_KERNEL);
-+		if (authorized)
-+			cfg80211_port_authorized(ndev, profile->bssid, GFP_KERNEL);
- 		brcmf_dbg(CONN, "Report connect result - connection %s\n",
- 			  completed ? "succeeded" : "failed");
- 	}
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index 7fd7ee90c0e50..0e1136783873e 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -446,11 +446,13 @@ struct mptcp_subflow_context {
+ 		disposable : 1,	    /* ctx can be free at ulp release time */
+ 		stale : 1,	    /* unable to snd/rcv data, do not use for xmit */
+ 		valid_csum_seen : 1,        /* at least one csum validated */
+-		close_event_done : 1,       /* has done the post-closed part */
+ 		resetting : 1,	    /* subflow is resetting */
+-		__unused : 10;
++		__unused : 11;
+ 	enum mptcp_data_avail data_avail;
+ 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
++	bool	close_event_done;   /* has done the post-closed part,
++				     * protected by msk socket lock
++				     */
+ 	u32	remote_nonce;
+ 	u64	thmac;
+ 	u32	local_nonce;
 -- 
 2.53.0
 
