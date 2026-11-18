@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052050;
-	b=J53M5UaC3OBR5eS5rk0MPQ9ZcEbhh9sAToWxlPFxGU4+vZ7DssTkFrSBaaPdEeM2IQgw
-	 5jZ7nWYOTBHn80l93qmpP+t1vOLfN4sa+KzXt1LsuQuls1EQ18FzPrIeHIGedHb2L/Iwi
-	 6HIjZUNWQFwnZ1qFulaMvWFqdVQ+DFraSqo5f5OyPkM+T8oGUbbODjwL2f2f7PKzcxfSB
-	 VntZg95cs3U85lxqufHvI9JusmhWJCJRpb9atIyBVdgTb076Yj4cuKiUN/J8/reELYO08
-	 xieCPL8ITDXaFUcEXSZPVHC/f9Kp3G09HMJkWAaj+JswPzk7E5rP/5LhpRMpPgkMzQw==
+	t=1795052053;
+	b=ZWCEjSHmo4TrQuDFzORgQo4H+HmGib6X8QIygwkv5eJNlbFYdz+nCvSMvaCRItmkxVGq
+	 g+s7+/K5yK/yNRVflIayi+rOJNkHUp69vZFuYJGkXs/2EVUvepDpIyOvqbfGMF8PVV5Ws
+	 7l/jA7GxTU2vMHXpWk271HmTcGEBjJq8SBIQ6vOuFGcMEu0SpmqLxzevDHZJst666OWmQ
+	 dNcgRateMK4gLNuEIHUwGgkmGvAeAfSXXYQbf0GubMkebEc4ZrqWYnvjsjFfzT5rEi1m1
+	 Ze3RrV3bz79vVC2TIyfHptfqD0lzgo2UUVwLwmKygZ9ZXaCKfgi/eJxLRm8ABNM02Kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z3qbWTKEYUby4CANDHdbbYZIW08n1aVsU73uVd2ldns=;
-	b=NxDUOvWDoDftjGUUPITilhP9n1XBiGQToESpud1T7pz33hv7cJuBL2nHEjAMUbjfZPDE
-	 JwTaOM1ToSOFtfgGhCy9NLpjrVu7O3CrlLSF5CHkc166I1raPtLityTHI+em2BvkrulDb
-	 PTKE1bgu/UDIaQA7Ij6yMl2rA+d7UMXH0ESKIB4fm1zEbAXqyCclqFNyYbM7gy/Phka7Y
-	 yutTF3tVNNR/kC6eom978On6uiTAxGNJMdZtbv8MNLXHLJ/6HlRJ28W8yG1b1UvZ5VSZi
-	 Np4lZzFKsNwf32xL9Etgww+1mZRoEgzOtkvCqWe1ToPJ9qNw5hLqpMtNtmquQZlbTmQ==
+	bh=Gf+O6iS2PqB17/7hTB43YPiLzNET6GCw5UfxiQn5WSk=;
+	b=puYEwARQQVsfvAkdL2/NdfmwQBF+ep4Q/EWIVBPCrJyj37oBdH3UECrVPD0fV50UkTA6
+	 9A2teq+dSioAsamHDepieXShB+3d72DonRH8CcxS4bunmLpUV0a0Zwwycgxm2fItiV5X4
+	 VIQWoMel2Zyda4apv7tVDFR8UpNrWVdQfGDVVO49lUa3S9k5h/nerki3BF9RzTFswM9eZ
+	 sPA7eMsloxXsT6N8e2x0ArCDbKrrkfyPfFFtrQ/Cnq3YepX40qtnS6+OeOzPrRwm4Uf9t
+	 9I0T8XBkUZym9H2LMI5XLYgzl6+reJE3UqPhakRzOqD4dFKrIKd25aX6uSCsMqYXmAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qaxl12S7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlFOUZCC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6EE606A32A;
-	Thu, 19 Nov 2026 01:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1534A606A31C;
+	Thu, 19 Nov 2026 01:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qaxl12S7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0FB1F000C4;
-	Thu, 19 Nov 2026 01:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlFOUZCC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7D11F000C4;
+	Thu, 19 Nov 2026 01:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052050;
-	bh=z3qbWTKEYUby4CANDHdbbYZIW08n1aVsU73uVd2ldns=;
+	s=korg; t=1795052052;
+	bh=Gf+O6iS2PqB17/7hTB43YPiLzNET6GCw5UfxiQn5WSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qaxl12S7g0P0ABZZNqLjpHK61UqncxdDQDgwkLbvGSCS2LegIKT2/05n2infqMqTQ
-	 x9NrWdXGRHpOOBPm/cfxpeW37O6KW3XtCnf09gl/utY5C+9bzkzmavVU+EKoZcnNbM
-	 ExDFaD36e1nYMd41W+JLTtKsY1QzPhQBiEO4/csc=
+	b=hlFOUZCCKldlIQ99F3WfNQ3IdJg60TFGthxaf6ho8LSOFR172I/8HrbmhNX727CWZ
+	 5X5MfSDI3HHyY6aYG8LlkZ69dnI2Q2DrWRcSuGwn3vqhT+GrqTY9RX02gesqPmiDqE
+	 DjYsjrn8gCnprR0nivBCy09MxSa/GWVqikh43pi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0427/2214] ovl: set OVL_WHITEOUTS before publishing the upper dir
-Date: Wed, 18 Nov 2026 15:35:03 +0100
-Message-ID: <20261118150027.972476097@linuxfoundation.org>
+Subject: [PATCH 5.15 0428/2214] s390/cpum_cf: Check session mask before cpu offline
+Date: Wed, 18 Nov 2026 15:35:04 +0100
+Message-ID: <20261118150028.008580788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,74 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-[ Upstream commit cbec8610ec5aaf35df50094ff639febc23f20773 ]
+[ Upstream commit 99a95985dfc85eecad97f0991a2401d2fcef294c ]
 
-Listing a directory while it is copied up causes a use-after-free of
-the readdir cache.
+cfset_offline_cpu() stops counter sets for every active session without
+checking whether the outgoing cpu belongs to the session mask.
 
-A merge directory must never be iterated as a real upper directory:
-that mode frees the cache in OVL_I(inode)->cache without looking at
-its refcount, while files opened in merged mode still use it.
-ovl_copy_up_workdir() publishes the upper dentry before it sets
-OVL_WHITEOUTS, and ovl_dir_open() samples both without a lock, so an
-open between the two stores finds the upper directory and takes it
-for a real one.
+For example, run an hwctr session on cpu0 and a cpu bound perf event on
+cpu1:
 
-With a delay between the two stores, an unprivileged process that
-listed a directory during its copy-up saw only "." and "..", and its
-next getdents freed the readdir cache of another descriptor.
+lshwc -l 9999 -i 5 0:b
+perf stat -C 1 -e cpum_cf/CPU_CYCLES/ sleep 120
+chcpu -d 1
+chcpu -e 1
 
-Fix this by setting OVL_WHITEOUTS before ovl_inode_update(), so that
-ovl_dir_reset() agrees with ovl_dir_open(), and by testing
-OVL_TYPE_MERGE() of the path type in ovl_dir_open(), so that an open
-that observes the upper dentry never iterates a merge dir as a real
-dir, regardless of the order in which it observes the flag.
+Although the hwctr session does not include cpu1, cfset_offline_cpu()
+decrements its counter set reference count. The subsequent perf teardown
+decrements it again, causing it to underflow.
 
-Fixes: b79e05aaa166 ("ovl: no direct iteration for dir with origin xattr")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: test OVL_TYPE_MERGE() instead of smp_rmb() in ovl_dir_open()]
-Link: https://lore.kernel.org/linux-unionfs/CAOQ4uxh-1J2OBjnDVbrrrjy1puSOW0kABvghN85ih6dtKUBTyA@mail.gmail.com/
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: Adjusted context to preserve existing inode initialization and cleanup while replacing the dentry-based ovl_dir_is_real() call. ]
+The perf event keeps the percpu state alive across hotplug. When cpu1
+comes online, the hwctr session is started there and the reference count
+moves from -1 to 0. Stopping the hwctr session then decrements it to -1
+again, so the zero triggered counter set disable path is skipped.
+
+Check the session mask before stopping counter sets on the outgoing cpu.
+This prevents the unmatched decrement and the resulting reference count
+underflow.
+
+Fixes: a029a4eab39e ("s390/cpumf: Allow concurrent access for CPU Measurement Counter Facility")
+Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: stable@vger.kernel.org # v5.14+
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+[ sashal: adapted the per-session CPU-mask check to the existing if condition for the single global cfset_request. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c | 2 +-
- fs/overlayfs/readdir.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/s390/kernel/perf_cpum_cf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 4c7ef60dbaac0..dadca83b41a69 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -711,9 +711,9 @@ static int ovl_copy_up_workdir(struct ovl_copy_up_ctx *c)
- 	if (!c->metacopy)
- 		ovl_set_upperdata(d_inode(c->dentry));
- 	inode = d_inode(c->dentry);
--	ovl_inode_update(inode, temp);
- 	if (S_ISDIR(inode->i_mode))
- 		ovl_set_flag(OVL_WHITEOUTS, inode);
-+	ovl_inode_update(inode, temp);
- unlock:
- 	unlock_rename(c->workdir, c->destdir);
+diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
+index d2a2a18b55808..f7b270d2404cc 100644
+--- a/arch/s390/kernel/perf_cpum_cf.c
++++ b/arch/s390/kernel/perf_cpum_cf.c
+@@ -1223,7 +1223,8 @@ int cfset_offline_cpu(unsigned int cpu)
+ 	struct cfset_call_on_cpu_parm p;
  
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index 666cc62578f65..ed4c34366c5c0 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -942,7 +942,8 @@ static int ovl_dir_open(struct inode *inode, struct file *file)
- 		return PTR_ERR(realfile);
- 	}
- 	od->realfile = realfile;
--	od->is_real = ovl_dir_is_real(file->f_path.dentry);
-+	od->is_real = !OVL_TYPE_MERGE(type) &&
-+		      !ovl_test_flag(OVL_WHITEOUTS, inode);
- 	od->is_upper = OVL_TYPE_UPPER(type);
- 	file->private_data = od;
- 
+ 	mutex_lock(&cfset_ctrset_mutex);
+-	if (cfset_request.ctrset) {
++	if (cfset_request.ctrset &&
++	    cpumask_test_cpu(cpu, &cfset_request.mask)) {
+ 		p.sets = cfset_request.ctrset;
+ 		cfset_ioctl_off(&p);
+ 		cpumask_clear_cpu(cpu, &cfset_request.mask);
 -- 
 2.53.0
 
