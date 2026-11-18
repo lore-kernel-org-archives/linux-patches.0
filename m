@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040413;
-	b=devVXVF1FUngZJCS5tJ/Hbs8SyYUOcLifl0Jp54Bsw1/1I4jTM1/duVAe0CREdRhor8V
-	 CZ0wzPD595TLSbp8KFqFuYxjGbDKYmCbV0hpp8oAtgMLGTwO/o3PSrYAwSjihK0YRMm4X
-	 wRoGuDhWeLAExe2NB650VPfrhzM+zZyGwXFVZ1eAShmtVaYvkzgZwrRMuDaWhl6up2FQH
-	 bKwttPrSjSzPUFEOgtHBxo4lklJL6rb1U3wLYoxHq5jUZWdI+3qTz6r99IdKZUWzFsagN
-	 M5PI1795MGk1d9Cdy7DRInJzYscNk2Ow0Er+KVK/gNANef+pTP1jX66BL8Z0tuL+fCA==
+	t=1795040416;
+	b=z1x0v9Mpq9O5V6HQeCSyfkrYIKOOKU6UNbutt71a1TkAtMiJMx43QNAR7sQvu8rTG8ro
+	 IxbzDHXwqpyeHik7v9Zu1357/IsDhnfoav0RRqnGFzCkzhucyDcMDyww0MwUucWXeso47
+	 KRwIyYEo9q9JozHe3013EBeBYPWvhKttP+6QY5wQAIzU6Z0FgZyfHG9lYjll7BY0LMVZ9
+	 6zgdOIJ1n2vBI73p3NLHkzzqXtboBgRnympTSzlH/J6bkP8TZLT2UHaTS+IVl7eY7r5Et
+	 FcBjwa1D3O6Rfzo0fmygrXPdWm7zCwg1JZm7JRlvcCooWktsjNqklnB53a72HjXBYow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040413;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040416;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=al6pPgqU46dbl5IR7jwf4hnC/vFLrOGmAUb0NPWp5Ao=;
-	b=lv+jdvKWHciBYxJfpBobHBwwNIo0UZEdX3J++SqO90m/rZzg8oTuSbcswIFBypIpRhVX
-	 Y7vG6D5CT9s1+gMoK8ozU2aJon0BTu2I3MEOCqQIm2YEze91zcGJaEADSsFe9gxRT7wZh
-	 DynnZ2HnwFWwawlqQhrZx8sOB7llNy9n2cbPLyHLZu5gmJg6kPKIsJ2uP8Fvz0OUAwwvi
-	 tGfbhHexlARJT5vWWyiqnFh9E+T0Tb2Mo7wBOpTR7jBdbsTuMBstFParFaQoHFXmwdWt9
-	 hFI46TknF5PxjjQUnjMyMqMNDBYWmfBKMowfN7MbV60AGG4d/KlQNmRdbtaR0b+7StA==
+	bh=oyF+Ep8oVTT6qkkGzbpPNNgW1wZPuF8ye83zqsZL1Ss=;
+	b=OwKeWstYorSv7y2EappW/ZOrzxeJhdo5AqbQVJ9dPqujBpxPCHLKMxuzKv3l8hZ9v/iu
+	 uc0b3Pib765ki62nSJRNuYOvsK4+Js6m9MO9xqOKGJfqBbSDH/qPe+BH5XZmPIFY6DqBw
+	 Jd5txUNfvr773O4hcYeLQCRm53j6UYSxyqB2THTL902FlBbqRH8BcL0DXHyAZ3OCFdAFR
+	 IN74DLuJvfwnmD694lMlVfEvPi2kTzbhlfAo5b5UJ/O6DZZorihLkE9ZzXx+/vrEDSpOZ
+	 wS9MfQHW0fUTWlavwqmbR41BnYFSoMpzO8h97wvwbAa7QNja9SqyWbX3PzIhhr/0MTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJHgq1gB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sBREgku4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5ABD606A31C;
-	Wed, 18 Nov 2026 22:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D2606A325;
+	Wed, 18 Nov 2026 22:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJHgq1gB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290E01F000C4;
-	Wed, 18 Nov 2026 22:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sBREgku4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFDD11F000C4;
+	Wed, 18 Nov 2026 22:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040413;
-	bh=al6pPgqU46dbl5IR7jwf4hnC/vFLrOGmAUb0NPWp5Ao=;
+	s=korg; t=1795040416;
+	bh=oyF+Ep8oVTT6qkkGzbpPNNgW1wZPuF8ye83zqsZL1Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CJHgq1gBCMhVfQJ8aRRkTcRmqgxx8AaPLbLYK3KKPiZEonGyVVVaxFdvKKULs8ouG
-	 FECfhOkCYZd8v79v1p+AUxETkTP55YqAJ+XQ+aSWslqDLJSobMN4tenPMxA/5iIfeM
-	 ICQLD/HkQlLZTbp13NgDsY8q5sU3AdLETORzS8jM=
+	b=sBREgku4tnU+nMbF+HG9oN84db0w82J5sdiq3J8jxmYcQJ62AA6AoFXoWuE6EtOGM
+	 2Ww2HTZNVDd5OTHCIdzFH71m/WHj9bDzXOE+8ybhUtknj9y56IOxH1NG/a/9wSu4rT
+	 1i4nDp2y2ejspEy8t0QuPWMJhqCOfUJCfXPnipKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2407/3318] ALSA: oxygen: use helper to activate the SPDIF PCM control
-Date: Wed, 18 Nov 2026 15:50:29 +0100
-Message-ID: <20261118150433.702947637@linuxfoundation.org>
+Subject: [PATCH 6.6 2408/3318] ALSA: via82xx: use helper to activate DXS controls
+Date: Wed, 18 Nov 2026 15:50:30 +0100
+Message-ID: <20261118150433.732956141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,83 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 5bdc232c3094304a7e17df5ddb66dcdacbead6bf ]
+[ Upstream commit aee7c43126e3184d7eefde6545b3b88628e5591a ]
 
-oxygen_open() and oxygen_close() modify the SPDIF PCM control access
-flags while holding chip->mutex. Direct access changes bypass the control
-core locking and notification path.
+The VIA DXS playback callbacks modify control access flags directly when
+a stream opens or closes. This bypasses the control core locking and
+notification path.
 
-Move the access transition outside the driver mutex and use
-snd_ctl_activate_id(), which serializes the control update with the control
-core.
+Use snd_ctl_activate_id() for both transitions so access changes are
+serialized by the control core and reported with the expected info event.
 
-Fixes: d0ce9946c52e ("[ALSA] add CMI8788 driver")
+Fixes: 3d00941371a7 ("sound: via82xx: deactivate DXS controls of inactive streams")
 Assisted-by: LLM
 Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260927121709.742840-1-runyu.xiao@seu.edu.cn
+Link: https://patch.msgid.link/20260927141447.788664-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/oxygen/oxygen_pcm.c | 37 +++++++++++++++--------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ sound/pci/via82xx.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/sound/pci/oxygen/oxygen_pcm.c b/sound/pci/oxygen/oxygen_pcm.c
-index 8b4f7269753ad..dda8d9897b4ad 100644
---- a/sound/pci/oxygen/oxygen_pcm.c
-+++ b/sound/pci/oxygen/oxygen_pcm.c
-@@ -171,16 +171,14 @@ static int oxygen_open(struct snd_pcm_substream *substream,
- 	snd_pcm_set_sync(substream);
- 	chip->streams[channel] = substream;
- 
--	guard(mutex)(&chip->mutex);
--	chip->pcm_active |= 1 << channel;
--	if (channel == PCM_SPDIF) {
--		chip->spdif_pcm_bits = chip->spdif_bits;
--		chip->controls[CONTROL_SPDIF_PCM]->vd[0].access &=
+diff --git a/sound/pci/via82xx.c b/sound/pci/via82xx.c
+index d8666ff7bdfae..372061c5a2a4a 100644
+--- a/sound/pci/via82xx.c
++++ b/sound/pci/via82xx.c
+@@ -1251,11 +1251,7 @@ static int snd_via8233_playback_open(struct snd_pcm_substream *substream)
+ 				VIA_DXS_MAX_VOLUME - (dxs_init_volume & 31);
+ 		chip->playback_volume[stream][1] =
+ 				VIA_DXS_MAX_VOLUME - (dxs_init_volume & 31);
+-		chip->dxs_controls[stream]->vd[0].access &=
 -			~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
 -		snd_ctl_notify(chip->card, SNDRV_CTL_EVENT_MASK_VALUE |
 -			       SNDRV_CTL_EVENT_MASK_INFO,
--			       &chip->controls[CONTROL_SPDIF_PCM]->id);
-+	scoped_guard(mutex, &chip->mutex) {
-+		chip->pcm_active |= 1 << channel;
-+		if (channel == PCM_SPDIF)
-+			chip->spdif_pcm_bits = chip->spdif_bits;
+-			       &chip->dxs_controls[stream]->id);
++		snd_ctl_activate_id(chip->card, &chip->dxs_controls[stream]->id, 1);
  	}
-+	if (channel == PCM_SPDIF)
-+		snd_ctl_activate_id(chip->card,
-+				    &chip->controls[CONTROL_SPDIF_PCM]->id, 1);
- 
  	return 0;
  }
-@@ -220,19 +218,16 @@ static int oxygen_close(struct snd_pcm_substream *substream)
- 	struct oxygen *chip = snd_pcm_substream_chip(substream);
- 	unsigned int channel = oxygen_substream_channel(substream);
+@@ -1342,10 +1338,7 @@ static int snd_via8233_playback_close(struct snd_pcm_substream *substream)
  
--	guard(mutex)(&chip->mutex);
--	chip->pcm_active &= ~(1 << channel);
--	if (channel == PCM_SPDIF) {
--		chip->controls[CONTROL_SPDIF_PCM]->vd[0].access |=
+ 	stream = viadev->reg_offset / 0x10;
+ 	if (chip->dxs_controls[stream]) {
+-		chip->dxs_controls[stream]->vd[0].access |=
 -			SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--		snd_ctl_notify(chip->card, SNDRV_CTL_EVENT_MASK_VALUE |
--			       SNDRV_CTL_EVENT_MASK_INFO,
--			       &chip->controls[CONTROL_SPDIF_PCM]->id);
--	}
--	if (channel == PCM_SPDIF || channel == PCM_MULTICH)
--		oxygen_update_spdif_source(chip);
-+	scoped_guard(mutex, &chip->mutex) {
-+		chip->pcm_active &= ~(1 << channel);
-+		if (channel == PCM_SPDIF || channel == PCM_MULTICH)
-+			oxygen_update_spdif_source(chip);
- 
--	chip->streams[channel] = NULL;
-+		chip->streams[channel] = NULL;
-+	}
-+	if (channel == PCM_SPDIF)
-+		snd_ctl_activate_id(chip->card,
-+				    &chip->controls[CONTROL_SPDIF_PCM]->id, 0);
- 	return 0;
+-		snd_ctl_notify(chip->card, SNDRV_CTL_EVENT_MASK_INFO,
+-			       &chip->dxs_controls[stream]->id);
++		snd_ctl_activate_id(chip->card, &chip->dxs_controls[stream]->id, 0);
+ 	}
+ 	return snd_via82xx_pcm_close(substream);
  }
- 
 -- 
 2.53.0
 
