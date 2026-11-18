@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047837;
-	b=sd6e8Tt2j0RjHtPknk3nrsB+5fZkyM97pz9uHOkP+dktBxIGPivTaQ3cJ0tFVG91J3Ot
-	 N+rkUuACi6RPm/tKnu1VLZNTvP3cd+8xobePjTLqzD/mngh5g9PHGWHR1lYFzD2UAJOeB
-	 LbdFceExDLkkDYmCgO0/K0GYMCWjkVrPHrOzGuGSdZHqjBpHKn1zD61D4gOV1b1bnNwrI
-	 4Lq0VW3Pjucnl93DB0zXh47p69mD1WH4PULE73V2ux9usYxfu1dfzJ3iLZwEpbpeAtLQ1
-	 OnWNcVyHmauCdzA6CWeSuwT4Mt4dh6ZyPZTep8KQZJGPGDNVRKAl39RoxlbnCNvj4Pw==
+	t=1795047840;
+	b=jQAMejYM7Ih+/mW6z4eRoh4kl7eWIWd3OQf4RakxjnDZQ/H5AEIfvQcYZp8f3xySo7eP
+	 hUiic30OANdzlgTQubAYoQjP/To4EyGRd9nr4khrp1Ssqoz9orNpuUm58pHE7jxYWUC3e
+	 5R9C958iKFhbvPQQLh1siUwoeRhDG0fe2593XBDxc31n4AHYqm1Mm8ICZ+8S4msdQAlLE
+	 bM3m4QjO344wZEGVOQX/QUmvOZiT/O4rSVT1bgk23Pmk/8DFWFOwdejwzNvj2cp3I4PtL
+	 rzmOjoHdSctXJZaeQtIrTeg/WEhjNXaR4UzNY0I00bQ0V8STBeY8fDsLOSdLqS4Gx4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047840;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CKH9b7u6pAHBEUOJOMVKNeHE3rWPetFKrgCVnWT4r4w=;
-	b=kao6Vj1AhMiysa7xUGSHXg/c5v1YMjClyR9H7DopVcZ6ncVTpUky/mSmtRpZTfMp8MSh
-	 UzL8iSzwh5OHqkfB10Q8N8oe3z8ZzCekZXL1Vj33xLWcl9trZb04we6o8ggu8PwMbn0C6
-	 1H+huRK3GJo8Vmzaxid3+0WTfFdHdpW9g3Xa775v3Qx/A7eNzO9r3/cpegLA803+kenft
-	 dba36K7HGwGoe9aUcQvIU63HkmOZjRsX9kGAovSprpI09tTTR4AosQnJE/ZrBXRdwRe5n
-	 STLG/xRe/SQIIyZ4psPksaydvEozP1DMzh73DWIimhL8OGBdIX+zzhuJzf722b/p1AA==
+	bh=0u7b6dLB5PJAGNefcPfZddkZLOsa4qBdKQlfP23mN68=;
+	b=J7q3lw8rsCggzSD6jI2BZfIQ/j6SpYZtpf0mZKubyDBEsNt09syHssvYCvWObVgR3C6a
+	 ebXqam5bXZqjtANgLtxwbv6eRg5s6+rQYWD4IfPAx1RI8x45PRtnGynQ9mGqF8otZxKoL
+	 xa44wlh23vzTnNkqe7bNJqtLSUrfkN4AcaG4lOwLghIJGpmd9Smlfa98qQCO74dOzzgt+
+	 k9+6AQLjtBKjKF07ztlPIK3LKD+weST8By5py9GkZT6sc6723xewliw0gds9rT6KWIoMx
+	 IDbDJHum6wJGqkG1CAxDVBA0MLE/iIYdbhEFy0wy2QtZg9aFdDnP1JZWQwx1+li8vKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MjNmJpDY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6kKmkwn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9EB606A320;
-	Thu, 19 Nov 2026 00:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212FE606A32A;
+	Thu, 19 Nov 2026 00:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MjNmJpDY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18F91F000C4;
-	Thu, 19 Nov 2026 00:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a6kKmkwn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACDB1F000C4;
+	Thu, 19 Nov 2026 00:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047837;
-	bh=CKH9b7u6pAHBEUOJOMVKNeHE3rWPetFKrgCVnWT4r4w=;
+	s=korg; t=1795047840;
+	bh=0u7b6dLB5PJAGNefcPfZddkZLOsa4qBdKQlfP23mN68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MjNmJpDYtuIZ8aQa88cW3FCXkiCfS3IttYkwVCDTA80LupAGsIXqLX+b1x5Ns1oAy
-	 HuwYVJOACWaKm0rH7i1O/GRFuGNjEiSr0i4ZzOFs6CCB/bfJgaGSUIzcRrWf3REwnI
-	 5Bl7CCAiaIP2RWM5oEOQ/YiKpb+JqixqIWsMZ47w=
+	b=a6kKmkwn6aBaoHfqF9dbtP7rTb67XLWsh8e3PaddKQKNJH1OfJIrM2WLogEuwQi/5
+	 x96ytj/dx/gWAIDNRxgFNjleTEAblguxAxEVaWtuDl6+iBWmbHcEa/AdpLvW38vEtB
+	 MSci7Cu6QKKRiOfMVI3K3VEB0Q6EPM8/vn0UFWfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Faure <boris@fau.re>,
-	Vinod Koul <vkoul@kernel.org>,
+	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1782/2857] soundwire: intel: initialise quirk_mask before reading it
-Date: Wed, 18 Nov 2026 15:46:56 +0100
-Message-ID: <20261118150305.439995854@linuxfoundation.org>
+Subject: [PATCH 6.1 1783/2857] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
+Date: Wed, 18 Nov 2026 15:46:57 +0100
+Message-ID: <20261118150305.475470038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Faure <boris@fau.re>
+From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
 
-[ Upstream commit ee8a8cfe4e8d3c67456e554c988017c252710a25 ]
+[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
 
-sdw_master_read_intel_prop() declares quirk_mask without an initialiser
-and ignores the return value of fwnode_property_read_u32(). When a BIOS
-does not describe "intel-quirk-mask" for a link, the property read leaves
-the variable untouched and stack garbage decides whether
-SDW_INTEL_QUIRK_MASK_BUS_DISABLE is honoured, so the link may be marked
-hw_disabled at random.
+Reading the rsvd_page debugfs entry before writing a page offset and
+count to it calls vzalloc() with a size of zero, because
+rsvd_page.page_num defaults to 0.  vmalloc warns about this:
 
-Initialise it to 0, matching is_link_enabled() in
-sound/hda/core/intel-sdw-acpi.c.
-Found by code inspection, not observed at run time.
+  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
+  ...
+  Call Trace:
+   __vmalloc_node_noprof+0x4c/0x70
+   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
+   seq_read_iter+0x132/0x4b0
+   seq_read+0x12e/0x1c0
+   full_proxy_read+0x6f/0xc0
+   vfs_read+0xdd/0x490
 
-Fixes: 395713d8ca43 ("soundwire: intel: handle disabled links")
-Signed-off-by: Boris Faure <boris@fau.re>
-Link: https://patch.msgid.link/20260820212220.226912-1-boris@fau.re
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+rtw_fw_dump_fifo() would reject the zero size anyway, but only after
+the allocation.  Check for a zero buffer size first and print a short
+usage hint instead of allocating.
+
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/intel_auxdevice.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
-index 96c6b2112feb6..766bda681c736 100644
---- a/drivers/soundwire/intel_auxdevice.c
-+++ b/drivers/soundwire/intel_auxdevice.c
-@@ -65,7 +65,7 @@ static int sdw_master_read_intel_prop(struct sdw_bus *bus)
- 	struct sdw_master_prop *prop = &bus->prop;
- 	struct fwnode_handle *link;
- 	char name[32];
--	u32 quirk_mask;
-+	u32 quirk_mask = 0;
+diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
+index 017783a1c2d9a..3a514aa8b211f 100644
+--- a/drivers/net/wireless/realtek/rtw88/debug.c
++++ b/drivers/net/wireless/realtek/rtw88/debug.c
+@@ -310,6 +310,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
+ 	int i;
+ 	int ret;
  
- 	/* Find master handle */
- 	snprintf(name, sizeof(name),
++	if (!buf_size) {
++		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
++		return 0;
++	}
++
+ 	buf = vzalloc(buf_size);
+ 	if (!buf)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
