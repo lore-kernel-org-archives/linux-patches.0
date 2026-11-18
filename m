@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047090;
-	b=pHwBGFxNXqCf0Wij/a+6ZZvEXpp5k8QSf2Hz7qh+gxsitAz5V2a1rUV5+ZJnyHqSMLXh
-	 JPGDCP12/WBAHOcoVjjokqkUH86YUw1Wco8zhCNbZBZqTmAubvu6dBnUaG+8yfGzOcgqm
-	 YrJ+pVeuRy1DuXCcImUnyKiGJRXIM5sCGdyLNTW/EQH7oOJadvnqNhFgtgxiydv6kHMVj
-	 PlZ4n2eYCl4M5rHyeczpQv27RjDf1okyJFKYPcxUrniUtU/NUkqYZ7vSLnZVmKxIrHnzR
-	 DHSoWIPHqZrL+W+yZQx5mjHi7sl8AJqQ7QMUC90DILwAHdwrD28lBYb8aL1FwokroFA==
+	t=1795047092;
+	b=GLV8Q0To7/o86q0OA06P1957Bzf1ugm0ZieCYVgfG8gu6j9CzHEa1PELI3KPgGuJxjU0
+	 iWF9fqLM7XB+yaBVI/j0B9kEOsFfOv2vZ0DGRN6SURMtnj32CxcIqlY3+YePlysZledIm
+	 m1pw8NgVXk8KRVNqBYAhoLBfFyPsrzE+stFpsaIPqm/7stTbcUP3Q3wETInYAVH5/1aQ3
+	 EHwxDu9OY/cI3Ge0KUSMt88K907XZfAYCMbLgd6I0rtV2kRW8rq3K2MQTGnt0Ym2RZHWC
+	 DRcXmFtPFHbqMPMCdi0/nnWQ2MpAe5MeIm1afIc2AJZKukw6IAvQf6jXvEiPoal1wLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047090;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=kXXnM1k2UHiLuSPga9h+hw1PSO3Aiyy770SQO+HxHg4=;
-	b=lvHRn2bPoTxBpL+OZSTxIqHWcLL09Qpfb0eVt2wI9izZqwbne1/dyOnPvZf53xJ5TI4P
-	 3AO/qHdex4iN9Cm1v70bzH46yMD6B4ERfF0w6Ser1LER3Ijor3aam36j5UOnzl8nR+yL7
-	 W9kDW+q4MRZnPGWJMnOijBYRQ6vL1e3SH9I6NxejUKJrBjo29MV31QBxCY4xASwtMcn1D
-	 ocZLBvxhw69tTh3UhB+lIkxBzW++2u85vXHpMGSWTsUyIO2EDGTPQUz1N0CN/lPH3+14s
-	 dqw1x7HarQQAdzhwll/JIBczyCT/BwFQwF3wicTnIKjbpp0r4zsEJjvibT9e4kjWrDw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=til+vCZDNt1YDexKtzoDwEeVwy88PwNShMOf54Ib8gg=;
+	b=HYL1dMbGsq44ArxeqjqAlax7wQLsCwrHEVWXh9UmZ7lYyjfmB3FC1ZhQahcCMAsFh4P4
+	 y4P6Fssl02s8tUUcQumMI+4lsKGiI94GglyweWypMnlKPwCZr5/WhTb5IQltsp9qMfuyI
+	 uycQSmcWjAFEAhPgf1juaTV2ZwpUl02kBgNZ24JeB+M2uogU7tdACqSv3s3g+Qa+oYxmX
+	 bpSowdejlVJeE5oHuIExc1ze//osNR57qM3QLd0YpMSrTp4dFu0EdIac10tYce6ES1hX7
+	 5RKYhlLS3KvlteHfsn9pODQn+3LcbE7uHdV4nozr9Tk8ladvfCc+2tuSVzjz62dL2Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xS2pyzdi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QK+W8Yfj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EB4606A32A;
-	Thu, 19 Nov 2026 00:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50DD606A31C;
+	Thu, 19 Nov 2026 00:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xS2pyzdi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7150B1F000C4;
-	Thu, 19 Nov 2026 00:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QK+W8Yfj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F051F000C4;
+	Thu, 19 Nov 2026 00:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047090;
-	bh=kXXnM1k2UHiLuSPga9h+hw1PSO3Aiyy770SQO+HxHg4=;
+	s=korg; t=1795047092;
+	bh=til+vCZDNt1YDexKtzoDwEeVwy88PwNShMOf54Ib8gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xS2pyzdiWntLmQHkC3o48elr2hOQkwW//A3uo+/NWJIsIRl3dyPbpR0jFwb1RN6i0
-	 qBRFFbygEL3vKXxi/U3YuLtknf+Y1oTBs5z6MAG7/JdaPxkORrLVb9MdPE5rTYIdCL
-	 83QLXsqMbioZ6AaCpWCy9OUUTWtkMwVxXPq+089E=
+	b=QK+W8YfjA3jm8JXFnGggtCjR4HFsZDoA3xSekvJaDmFC+cWhyOA28/2AIXs6xVopL
+	 8RKZKDmDmGcENnfnTyb1+3apfsP31o++iqnEDvD2gjuQi78I55WFbMuxVzG6IETTkU
+	 MpEn+For1nXqJ9itIURBCELyf3HjZphD9gql/zq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1507/2857] drm/amdgpu: reject CS chunks too large for kvmalloc()
-Date: Wed, 18 Nov 2026 15:42:21 +0100
-Message-ID: <20261118150255.595240737@linuxfoundation.org>
+Subject: [PATCH 6.1 1516/2857] drm/amdgpu: reset SI ASIC on MacBookPros with VRAM at 0
+Date: Wed, 18 Nov 2026 15:42:30 +0100
+Message-ID: <20261118150255.913590761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,55 +62,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Maciej Kucharek <qchcio@gmail.com>
 
-[ Upstream commit ba4c3c202919405f461a393e823e4b72c8518494 ]
+[ Upstream commit 5b56ede880317bd912f914d5cd38ba1d357677fa ]
 
-The CS ioctl copies every chunk with vmemdup_array_user() before it
-looks at it, for whatever length_dw userspace gives. kvmalloc() warns
-about allocations above INT_MAX when called without __GFP_NOWARN, so any
-process with the render node can trigger a warning. On navi31, a CS with
-a chunk of length_dw 0x20000000 returns -ENOMEM after:
+On MacBookPros with switchable graphics, the firmware puts VRAM at MC
+address 0 when the iGPU is enabled.  The EFI stub enables the iGPU on
+these machines through apple_set_os().  On a MacBookPro11,5 (Radeon R9
+M370X, 1002:6821, subsystem 106b:0149), the driver adopts this layout
+at init:
 
-  WARNING: mm/slub.c:6841 at __kvmalloc_node_noprof+0x5a5/0x7d0
+  MC_VM_FB_LOCATION=0x007f0000, HDP_NONSURFACE_BASE=0
+  VRAM at 0x0-0x7fffffff, GART table at 0x1400000
 
-Reject such chunks with -EINVAL before trying to copy them.
+The driver posts the ASIC again on S3 resume and after a GPU reset.
+The VBIOS asic_init table then moves VRAM back to the VBIOS default:
 
-Fixes: 2098105ec65c ("drm: drop drm_[cm]alloc* helpers")
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+  MC_VM_FB_LOCATION=0xf47ff400, HDP_NONSURFACE_BASE=0xf4000000
+
+gmc_v6_0 does not reprogram these registers.  The GART table is then
+no longer in VRAM, and the gfx ring test times out:
+
+  amdgpu: ring gfx test failed (-110)
+  amdgpu: resume of IP block <gfx_v6_0> failed -110
+
+Reset and post the ASIC at driver load on Apple boards with VRAM at 0.
+The driver then uses the VBIOS layout (VRAM at 0xf400000000) from the
+start, and later posts keep it.  After the reset, FB_BASE is not 0, so
+a module reload does not reset the ASIC again.
+
+The test is the same one that commit c54e4d105077 ("drm/amdgpu: make
+Mac FB workaround generic") uses: an Apple subsystem vendor and VRAM at
+0.  The VI quirk for the MacBookPro14,3 resets at load for the same
+reason:
+
+  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+
+Other Apple SI boards get the same reset if FB_BASE reads 0 at load.
+
+Tested on a MacBookPro11,5 with 7.2.5 and this patch: the panel comes
+up at boot, and 4 of 4 deep S3 cycles resume.  Without the patch, S3
+resume fails every time.  The GPU reset path is not tested.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5978
+Assisted-by: Claude:claude-opus-5-5
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dab5f5280406088591645f499f048dcfefab8d7d)
+(cherry picked from commit 60dd16ae10f286cb9cce5b6027b2d5ee869637af)
 Cc: stable@vger.kernel.org
+[ sashal: Replaced the unavailable MC_VM_FB_LOCATION__FB_BASE_MASK macro with its equivalent literal 0xFFFF. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/si.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 37782e2b6cf18..894989f453fff 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -227,6 +227,12 @@ static int amdgpu_cs_pass1(struct amdgpu_cs_parser *p,
+diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
+index fd34c2100bd96..c63f1b7162d34 100644
+--- a/drivers/gpu/drm/amd/amdgpu/si.c
++++ b/drivers/gpu/drm/amd/amdgpu/si.c
+@@ -1509,6 +1509,16 @@ static bool si_need_full_reset(struct amdgpu_device *adev)
  
- 		size = p->chunks[i].length_dw;
- 
-+		if (size > INT_MAX / sizeof(uint32_t)) {
-+			ret = -EINVAL;
-+			i--;
-+			goto free_partial_kdata;
-+		}
+ static bool si_need_reset_on_init(struct amdgpu_device *adev)
+ {
++	/*
++	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
++	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
++	 * the vbios default, so reset and post on load to start with the
++	 * vbios layout.
++	 */
++	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
++	    !(RREG32(mmMC_VM_FB_LOCATION) & 0xFFFF))
++		return true;
 +
- 		p->chunks[i].kdata = vmemdup_array_user(u64_to_user_ptr(user_chunk.chunk_data),
- 							size,
- 							sizeof(uint32_t));
+ 	return false;
+ }
+ 
 -- 
 2.53.0
 
