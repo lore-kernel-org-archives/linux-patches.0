@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049969;
-	b=FraKonh5CyiVPd+PzmYacMWGDJC9t0X/vCvMvKyNF/mPoDxUBsVzcFN+qdhC+6VAjHng
-	 n6ngKkUS6ZquENsqFbDd6qFC1h96dI91QrDp1gM2GXHCejRuRjO/PuOM+KmbKnvfLe9mq
-	 UXr78xAmp2kfhUUAl6NKAT0A+TP0YUFBhr81LcnH2xPZ+zWSVmXLYE/Tw4lJbOPw5YzEA
-	 oP+kFk3K/WHZRVMdjXj7Yy0P8VB9i1BE/7spOFUlzC3mmHciyoLjWyNyQ4qtEBBvfWRYY
-	 tm+HOUvwfeZc5ab+pv5vhsmxYThf20WThOcErRs7nxlEhxXGo+EAAUCwMKAGyuc5dhQ==
+	t=1795049972;
+	b=J5YEhO01lwtDVNVm/DEEfrCvMaw2momsUXuZ9yEWjxOCAmhDHjs81aKJ/g5IFSEIRGLi
+	 XTT9qxpnR+xdAB+yiMHL5J4yZYAfF0lmyZvxnWq6fqnlPFdgH37bxwiDtaXFC+WX9lDsn
+	 x9x5nNQ9OiZuAITEO3SqnjMnRU9W0aDBddjVp/qGLUVZk8r1mj7E6/0ABExMjAoAik5IM
+	 DFokp3VBAHYMMirLGaiBxlOeqVUjT+kEDvuxhvTtH7/Ld5Td16UX7Y7IFNWgY2rFh6uC1
+	 PS5XMrjNuspLJ8op8Ou3irNqRjodtL8BJ1DA3a1IwJ9tfPkALJ1t5VLcnIRc/wFD7iA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049972;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e8iiXOq1nXZAnFfJDrfBNMH7TOVNOutJBqfZ4cpxjmI=;
-	b=5ez8tGEK9gJ5YFX/wcO19gnOIFozi/36hHEBMU2QVai9rjrgnJeheT0DWAzRIsxJWKR3
-	 RC/GblYSyXUxKlRuAZPQxK0aOTogDuWzzhMfxkqwe2wmRF8qNWscjfyx9f7D0fIwt1B1j
-	 ucjeG0JkGUsN0wZ0VxRcW7vZX2CVSng5nx8dgdEXYZzho7J9QlNwIXZjQIrXV2+9LrU6R
-	 O4qq3cfI9msih1Lhwwpav+GT+uew2CIFWQL6u4lvrq/vdBn8hRWoNJBwuezEfVj081VpN
-	 ScU/9ztwxlJG7JHr26bHIOaSJfwpl7UmyZA1MTT7vj2noBT3NWzD1xD8h/ZUJzWLqdQ==
+	bh=S7Ue++U1YppdgiAZFo0rDM5v2fMrcotYjLKpgyeV6tc=;
+	b=tTpeKl9QSmoxfc2hdjad8mp4oT7ndTmRUaNzF2g+4ye6hGSgFRlcqq7mnwa1wnZNGcke
+	 3yJ1j+ooUBlppus/io1Ne3OxXC1Bo/u1cVzJziAMfwDMuBMLDnamXeYBKmfr10IrgaPNJ
+	 eX0fA0cxTrfs1LV9o2AuBqhUv6l0rf6hhEMOW0fnftpIwKpxg0g8m/JUoLEePMD3qghxf
+	 4d6AlG04UXd43ERJ4geSeD/FnG5HBH4jZ2NKWfF3PwzAA8t36BuEZNouJ+uig4Q8XnBag
+	 DsHbENBHxg8py3Esw4PY+XOAjQV4x8pcjWsHOei0xj1UTF9T2frEueOrTN3YP+S18ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iT8vjvCN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCZgCj7D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F98C606A31C;
-	Thu, 19 Nov 2026 00:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFE4606A31C;
+	Thu, 19 Nov 2026 00:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iT8vjvCN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F241F000C4;
-	Thu, 19 Nov 2026 00:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCZgCj7D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F36F1F000C4;
+	Thu, 19 Nov 2026 00:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049969;
-	bh=e8iiXOq1nXZAnFfJDrfBNMH7TOVNOutJBqfZ4cpxjmI=;
+	s=korg; t=1795049972;
+	bh=S7Ue++U1YppdgiAZFo0rDM5v2fMrcotYjLKpgyeV6tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iT8vjvCNWOS90MVIlYkd23OST4nrfCDe2ROItu+fCsKJKotv5FKtx+T3Q20kunW7U
-	 FUk1XVJFJGX7UrtCwE7ONbR/SGR+SxT3SVlRxj/CLK9OkbhcMYiPelQtivVxbR6aV0
-	 XPl2XZEDEgLYVaJEs19Fnr9PKpglQNsojNwj6+40=
+	b=QCZgCj7D1JXcjOQ3+R1ou920uaSOc5LVfjHI/FBQpq0HWejpChIo93Bwwb0nKjDW2
+	 cmugaZRqA3FIp7lyZT2aUTVDsaE0RoEinrJ0201ktp+s1kO7K+4+/6ooKmgrqVGc80
+	 E7+xQFcZwYvMhKHss+M6pVb8ORh7FqyON+uikcTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2500/2857] Bluetooth: msft: Lock failed probe cleanup against feature readers
-Date: Wed, 18 Nov 2026 15:58:54 +0100
-Message-ID: <20261118150331.572215313@linuxfoundation.org>
+Subject: [PATCH 6.1 2491/2857] Bluetooth: HCI: Fix tracking of instances sharing handle 0x00
+Date: Wed, 18 Nov 2026 15:58:45 +0100
+Message-ID: <20261118150331.257920518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,189 +67,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 21895f20fedc4504474bcb1022850b532ea4358e ]
+[ Upstream commit 1bfecdbd031711e5205ae78f3b8c296e5a53bc55 ]
 
-The MSFT data must remain allocated while msft_get_features() reads
-its features. read_adv_mon_features() protects that access with
-hdev->lock, but msft_do_open() clears hdev->msft_data and frees the
-object without that lock when read_supported_features() fails.
+When the controller supports a single advertising set, instance 1 uses
+handle 0x00 which is the same handle used by instance 0 (Global
+Advertising), but hci_cc_le_set_ext_adv_enable would lookup the instance
+using the handle as instance identifier, marking instance 0 as
+enabled/disabled instead of instance 1, leaving its state out of sync.
 
-After a successful probe, the data survives a normal close. A later
-open can fail the probe while a management feature request is running.
-hci_mgmt_cmd() permits requests during HCI_INIT, and the opener's
-hdev->req_lock does not serialize the management reader:
+Fix this by matching instances by handle and, for handle 0x00, using
+hdev->cur_adv_instance, now set when enabling an instance, to determine
+which instance owns the set. Also disable the instance sharing the
+advertising set of instance 0 before overriding it.
 
-  Management feature request            HCI open
-                                        hold hdev->req_lock
-                                        msft_do_open()
-  hold hdev->lock
-  msft_get_features(): save msft
-                                        read_supported_features() fails
-                                        hdev->msft_data = NULL
-                                        kfree(msft)
-  read msft->features
-  release hdev->lock                     release hdev->req_lock
-
-The saved pointer then refers to freed memory, causing a use-after-free
-read. Advertisement reporting through mgmt_device_found() also reads
-the features with hdev->lock held.
-
-Take hdev->lock around clearing and freeing msft_data in the failure
-branch. An existing feature reader finishes before the free, while a
-reader starting after cleanup sees NULL. Keep the synchronous probe
-outside this critical section, following the existing req_lock to
-hdev->lock ordering.
-
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in msft_monitor_supported+0xa9/0xb0
-    Read of size 8 at addr ffff88811573ee00 by task mgmt-read-adv-m/532
-
-        CPU: 2 UID: 0 PID: 532 Comm: mgmt-read-adv-m Not tainted
-    7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-        Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps
-    fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? msft_monitor_supported+0xa9/0xb0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? msft_monitor_supported+0xa9/0xb0
-     kasan_report+0xe0/0x110
-     ? msft_monitor_supported+0xa9/0xb0
-     msft_monitor_supported+0xa9/0xb0
-     read_adv_mon_features+0xdf/0x640
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_read_adv_mon_features+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_raw_read_unlock+0x49/0xe0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? _raw_read_unlock+0x23/0x40
-     hci_sock_sendmsg+0x12b5/0x2270
-     ? __pfx_hci_sock_sendmsg+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? selinux_socket_sendmsg+0x160/0x280
-     __sys_sendto+0x425/0x470
-     ? __pfx_hci_sock_sendmsg+0x10/0x10
-     ? __pfx___sys_sendto+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __sys_setsockopt+0x119/0x180
-     __x64_sys_sendto+0xe5/0x1c0
-     ? lockdep_hardirqs_on_prepare+0xea/0x1a0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f9ceb04a687
-        Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48
-    83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b>
-    c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    RSP: 002b:00007ffe6ab96a70 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
-    RAX: ffffffffffffffda RBX: 00007f9ceafb8780 RCX: 00007f9ceb04a687
-    RDX: 0000000000000006 RSI: 00007ffe6ab96aea RDI: 0000000000000003
-    RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000003
-    R13: 00007ffe6ab96d50 R14: 00007f9ceb1f6000 R15: 00005625e427dd68
-     </TASK>
-
-    Allocated by task 506:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     msft_register+0x54/0x260
-     hci_register_dev+0x6b7/0xc80
-     __vhci_create_device+0x330/0x840
-     vhci_write+0x287/0x440
-     vfs_write+0x637/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 529:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     msft_do_open+0x604/0x9e0
-     hci_dev_open_sync+0x94a/0x2110
-     hci_dev_do_open+0x2f/0xb0
-     hci_dev_open+0x17d/0x300
-     hci_sock_ioctl+0x3c6/0x710
-     sock_do_ioctl+0x120/0x2b0
-     sock_ioctl+0x41b/0x670
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff88811573ee00
-     which belongs to the cache kmalloc-256 of size 256
-    The buggy address is located 0 bytes inside of
-     freed 256-byte region [ffff88811573ee00, ffff88811573ef00)
-
-    The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
-    pfn:0x11573e
-    head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-    flags: 0x200000000000040(head|node=0|zone=2)
-    page_type: f5(slab)
-        raw: 0200000000000040 ffff888100042b40 dead000000000100
-    dead000000000122
-        raw: 0000000000000000 0000000000100010 00000000f5000000
-    0000000000000000
-        head: 0200000000000040 ffff888100042b40 dead000000000100
-    dead000000000122
-        head: 0000000000000000 0000000000100010 00000000f5000000
-    0000000000000000
-        head: 0200000000000001 ffffffffffffff81 00000000ffffffff
-    00000000ffffffff
-        head: 0000000000000000 0000000000000000 00000000ffffffff
-    0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88811573ed00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-     ffff88811573ed80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-    >ffff88811573ee00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                       ^
-     ffff88811573ee80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff88811573ef00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-    ==================================================================
-
-Fixes: 5031ffcc79b8 ("Bluetooth: Keep MSFT ext info throughout a hci_dev's life cycle")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Fixes: e77f43d531af ("Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1")
+Assisted-by: OpenCode:claude-opus-5.5
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_event.c | 47 ++++++++++++++++++++++++++++++---------
+ net/bluetooth/hci_sync.c  | 35 ++++++++++++++++++++++++++++-
+ 2 files changed, 70 insertions(+), 12 deletions(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index c27e137a23475..5fa89c2a294dd 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -524,8 +524,10 @@ void msft_do_open(struct hci_dev *hdev)
- 	msft->features = 0;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index b9688be5a6348..1fd012fa118f4 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -1571,6 +1571,39 @@ static u8 hci_cc_le_set_adv_enable(struct hci_dev *hdev, void *data,
+ 	return rp->status;
+ }
  
- 	if (!read_supported_features(hdev, msft)) {
-+		hci_dev_lock(hdev);
- 		hdev->msft_data = NULL;
- 		kfree(msft);
-+		hci_dev_unlock(hdev);
- 		return;
++/* Update the enabled state of the instance(s) using the advertising set
++ * identified by handle.
++ *
++ * Instances may share handle 0x00 with instance 0 (Global Advertising), e.g.
++ * when the controller supports a single advertising set, in which case the
++ * set is owned by the instance last enabled (hdev->cur_adv_instance) and any
++ * other instance sharing it shall be considered disabled.
++ */
++static void hci_le_ext_adv_set_enabled(struct hci_dev *hdev, u8 handle,
++				       bool enable)
++{
++	struct adv_info *adv;
++	bool owned = false;
++
++	list_for_each_entry(adv, &hdev->adv_instances, list) {
++		if (adv->handle != handle)
++			continue;
++
++		adv->enabled = enable &&
++			       (handle ||
++				adv->instance == hdev->cur_adv_instance);
++		owned |= adv->enabled;
++	}
++
++	if (handle)
++		return;
++
++	if (enable && !owned)
++		hci_dev_set_flag(hdev, HCI_LE_ADV_0);
++	else
++		hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
++}
++
+ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+ 				       struct sk_buff *skb)
+ {
+@@ -1592,18 +1625,13 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+ 
+ 	hci_dev_lock(hdev);
+ 
+-	if (cp->num_of_sets)
+-		adv = hci_find_adv_instance(hdev, set->handle);
+-
+ 	if (cp->enable) {
+ 		struct hci_conn *conn;
+ 
+ 		hci_dev_set_flag(hdev, HCI_LE_ADV);
+ 
+-		if (adv)
+-			adv->enabled = true;
+-		else if (!set->handle)
+-			hci_dev_set_flag(hdev, HCI_LE_ADV_0);
++		if (cp->num_of_sets)
++			hci_le_ext_adv_set_enabled(hdev, set->handle, true);
+ 
+ 		conn = hci_lookup_le_connect(hdev);
+ 		if (conn)
+@@ -1612,10 +1640,7 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+ 					   conn->conn_timeout);
+ 	} else {
+ 		if (cp->num_of_sets) {
+-			if (adv)
+-				adv->enabled = false;
+-			else if (!set->handle)
+-				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
++			hci_le_ext_adv_set_enabled(hdev, set->handle, false);
+ 
+ 			/* If just one instance was disabled check if there are
+ 			 * any other instance enabled, including instance 0,
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 9327bf897951b..7b3b256adf276 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1196,6 +1196,30 @@ int hci_update_random_address_sync(struct hci_dev *hdev, bool require_privacy,
+ 	return 0;
+ }
+ 
++/* Check if the advertising set with handle 0x00 is in use, either by instance
++ * 0 or by an instance sharing its advertising set.
++ */
++static bool hci_ext_adv_handle_0_enabled(struct hci_dev *hdev)
++{
++	struct adv_info *adv;
++	bool enabled;
++
++	hci_dev_lock(hdev);
++
++	enabled = hci_dev_test_flag(hdev, HCI_LE_ADV_0);
++
++	list_for_each_entry(adv, &hdev->adv_instances, list) {
++		if (!adv->handle && adv->enabled) {
++			enabled = true;
++			break;
++		}
++	}
++
++	hci_dev_unlock(hdev);
++
++	return enabled;
++}
++
+ int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
+ {
+ 	struct hci_cp_le_set_ext_adv_enable *cp;
+@@ -1203,7 +1227,7 @@ int hci_disable_ext_adv_legacy_instance_sync(struct hci_dev *hdev)
+ 	u8 data[sizeof(*cp) + sizeof(*set) * 1];
+ 	u8 size;
+ 
+-	if (!hci_dev_test_flag(hdev, HCI_LE_ADV_0))
++	if (!hci_ext_adv_handle_0_enabled(hdev))
+ 		return 0;
+ 
+ 	memset(data, 0, sizeof(data));
+@@ -1447,6 +1471,9 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance)
+ 			return -EINVAL;
+ 		}
+ 	} else {
++		/* Disable the advertising set with handle 0x00, including any
++		 * instance sharing it, since it is going to be overridden.
++		 */
+ 		err = hci_disable_ext_adv_legacy_instance_sync(hdev);
+ 		if (err)
+ 			return err;
+@@ -1710,6 +1737,12 @@ int hci_enable_ext_advertising_sync(struct hci_dev *hdev, u8 instance)
+ 		set->duration = cpu_to_le16(duration / 10);
  	}
  
++	/* Track which instance owns the advertising set since the handle
++	 * alone is ambiguous when instances share handle 0x00, see
++	 * hci_cc_le_set_ext_adv_enable.
++	 */
++	hdev->cur_adv_instance = instance;
++
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_ENABLE,
+ 				     sizeof(*cp) +
+ 				     sizeof(*set) * cp->num_of_sets,
 -- 
 2.53.0
 
