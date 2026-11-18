@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056430;
-	b=z6b21yD8sX6x7HjZmF31sAguA5Iv040vdtudxzArJuppjrkSlHV8XKIa1LfpUy/rpqoG
-	 UM9Wh6h/L4edjArWPtJRuHC0gMCBQxP4UgXdQHCnVYdCrzDGiRcWrGy5m+vNrAPfPgWWF
-	 miw4Zvrvy0wpCrSt6L9sJA5EO6eYueBNqYzV+4S3dBn5Wpoma8QTn8NWmp6OE1geNj+vc
-	 gCEASBOvD1N+HIIZN6wk98+VbJ12T+/i2SSsRP2DssuChEqc/vmv24xUhIspb4WxKs9/k
-	 etoSlpCrTC2joTo07/0hAjJROKeXIW9IdAknbwWXg6Gp8GI60K58GPXAGl2GJqaGk8A==
+	t=1795056432;
+	b=Pd9/uRglae6fX+ddiwkv35cXSotdlipdAtE/4vTDJTkMQN0dh1EUVBP5ND6ETfZE5qqu
+	 2bC0ubaofmAUGhNMeliYFhN/NLEIqzEIOP37pJKqwaT3E5bqSRVcAx7ucRqOEVtuUokxG
+	 rCmKDhynyACFt1Y+70Awg//YIUsb4IY2/IY1BrNgdq9slCgZkPQuDYwAp7ysmmkNb+3L4
+	 GBUlq96M5uo12iDZTx+WhWj4NW8skmjZFIm0bVVPz/3+xeMvhVkeSHDnheGlZYMKK3/er
+	 j032l4ChlaFsEtg2jc7p71Sr71MS3zJjAO3k2jh36MjePJ/99sred06tfm7haKgeN/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056432;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9QIJcpM8L3NsTc3uzqwN/VNW4K18SPuTxDIxrVFyQiU=;
-	b=DmCX/lNmVUqHFdOsHQCTvIgYYAV4FeDfSnabrsd7Elrn9KuNnjgmORX2payTVAarnqtG
-	 yWA49jecWVErL7990v9ipqivPNGsdqo+GZLsYA68MYs7nwVEH2mJwZ0ba9TDl3dH5zFLO
-	 lb0S0eaY/B+JmP+F336EQR8GoB+Ul2HtMjRo4XxmBtFfQTda9PNgxHRviFm3qOhZ0fh+7
-	 pyWX2fs+zIQfoSkv+nbS5uNZU0PR8TIMTFO6Qk7q2JPHOCx6CCB9tO9M7IF/RpMvaCJLL
-	 oplo7dXSB/0A3WOG4vpSTfqR46gkEZs4bTFcxEeVPzwC7QQ53iMiFWuvYnA/+6mUERw==
+	bh=Fcg0Rp2oO4nD67z/dW8vh3UJZI93qq+iz6vxFe1wLWw=;
+	b=xhzKawI0nhpuOIzRqW/VIQu8KwUeBZST9MxhMbzBeA3HLbVtSXtUVeztEnJde+Jlw0qX
+	 sDmaqU24qD3sLCJ55iLtRmGk76Od/aUu2Ojj5yPh98gnKraDOlv7cgdgz658SIEaTWAIV
+	 HSFe9tY2TQ+Dg5d+/mVG1O4m0pcR5y23rseBxm7Jlnrprqin+mpYKXwAIiNueDa0zrIsU
+	 buB6iqrz09mhQacqdEXxsHvJAAUU8pE/Y+HGsMp3RXgrjPdqhFiU4h8j4YHSvBCz+ERYa
+	 +QvayBYHDHndne9czUWvOktU27GRGuXpVDTiiY1YRLCatb/IopFAbA8fr87l2B+EVCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRlz6Fm7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZZge783;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DC8606A320;
-	Thu, 19 Nov 2026 02:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C350A606A320;
+	Thu, 19 Nov 2026 02:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zRlz6Fm7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3D51F000C4;
-	Thu, 19 Nov 2026 02:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qZZge783
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241431F000C4;
+	Thu, 19 Nov 2026 02:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056429;
-	bh=9QIJcpM8L3NsTc3uzqwN/VNW4K18SPuTxDIxrVFyQiU=;
+	s=korg; t=1795056432;
+	bh=Fcg0Rp2oO4nD67z/dW8vh3UJZI93qq+iz6vxFe1wLWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zRlz6Fm7sSkWaG3q0Em5iQv1pkeZqgzgCseABTamdWpgQNO66XytCl9Ut7XNBQyTa
-	 2vPAg2Ysus09NM5NtY62haHn8OCM2Ir90ESynaH26r0njZeqn47ACWSsPOXODXh9Ka
-	 LsJLwONB8QYnboaiZSlw+aVMznRyvnqn4XtLXchg=
+	b=qZZge783tV8aCTjN1F+r7ZPaGpHcoHOmBHKY/9ClIE3aUZnOPjeCo5onSZDy+vdCb
+	 dFwjBirlo0AOE8QDQP62Z4Zs7HPFb2rvqHv/kh2fOXf0hNkvuYReKovC4UpjJIa7F+
+	 Pqmdbdj1NCmFw9ToWzeQLC8LUi18mw84Jc4H+uLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	John Popplewell <john.popplewell@nmc2.ai>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1984/2214] ASoC: mediatek: mt8195: Fix timing system clock error handling
-Date: Wed, 18 Nov 2026 16:01:00 +0100
-Message-ID: <20261118150130.223706352@linuxfoundation.org>
+Subject: [PATCH 5.15 1949/2214] IB/IPoIB: Cancel normal flush work on device stop
+Date: Wed, 18 Nov 2026 16:00:25 +0100
+Message-ID: <20261118150128.963135920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,65 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit f18c0a8e528eb8844ee362324220ab8df3664afe ]
+[ Upstream commit 66196a559be5963b1ced18418c876caf9bfb76e6 ]
 
-Check the return value of mt8195_afe_enable_clk() when enabling the
-timing system clocks.
+ipoib_ib_dev_flush_normal() can race with ipoib_stop() because the normal
+flush work does not run under RTNL.
 
-If enabling a clock fails, disable the clocks that were already
-enabled and propagate the error to the caller. In
-mt8195_afe_enable_main_clock(), return the error instead of continuing
-with AFE clock enable.
+Before commit a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in
+ipoib_stop()"), ipoib_stop() flushed ipoib_workqueue after clearing
+IPOIB_FLAG_ADMIN_UP and before calling ipoib_ib_dev_down(). This ensured
+that any in-flight flush work completed before ipoib_ib_dev_down()
+performed the final clear of IPOIB_FLAG_OPER_UP.
 
-Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-5-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+After that commit removed the workqueue flush to avoid a deadlock with
+workqueue tasks taking RTNL, a normal flush can continue running
+concurrently with ipoib_stop() after IPOIB_FLAG_ADMIN_UP has been
+cleared.
+
+The flush may observe IPOIB_FLAG_ADMIN_UP set and continue running while
+ipoib_stop() clears IPOIB_FLAG_ADMIN_UP and brings the device down. The
+flush can then call ipoib_ib_dev_up() and set IPOIB_FLAG_OPER_UP again
+after the device has already been stopped:
+
+  flush_normal (ipoib_workqueue)    ipoib_stop() (RTNL held)
+  ------------------------------    ------------------------
+  test_bit(ADMIN_UP) == 1
+                                    clear_bit(ADMIN_UP)
+                                    ipoib_ib_dev_down()
+                                      clear_bit(OPER_UP)
+  ipoib_ib_dev_up()
+    set_bit(OPER_UP)
+
+This leaves the interface with ADMIN_UP clear and OPER_UP set. During
+device removal, ipoib_ndo_uninit() waits in destroy_workqueue() while
+holding RTNL, while ipoib_mcast_carrier_on_task() may keep retrying
+rtnl_trylock() as long as OPER_UP remains set, resulting in a deadlock.
+
+Cancel the normal flush work from ipoib_stop() after clearing
+IPOIB_FLAG_ADMIN_UP and before bringing the device down. A pending normal
+flush is canceled, while an already running flush is allowed to finish
+before ipoib_ib_dev_down() performs the final transition to OPER_UP
+clear.
+
+Only the normal flush needs this synchronization. The heavy flush is
+already serialized with ipoib_stop() by RTNL, while the light flush does
+not bring the device back up and therefore cannot recreate this race.
+
+Fixes: a77a57a1a22a ("IPoIB: Fix deadlock on RTNL in ipoib_stop()")
+Reported-by: John Popplewell <john.popplewell@nmc2.ai>
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Edward Srouji <edwards@nvidia.com>
+Link: https://patch.msgid.link/20261014-ipoib-cancel-work-v1-1-6c0faac016b8@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-index e5c90f4efde80..6199ce4fd8f99 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-@@ -383,7 +383,7 @@ static int mt8195_afe_disable_afe_on(struct mtk_base_afe *afe)
- static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
- {
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
--	int i;
-+	int i, ret;
- 	static const unsigned int clk_array[] = {
- 		MT8195_CLK_AUD_A1SYS,
- 		MT8195_CLK_AUD_A2SYS,
-@@ -394,13 +394,22 @@ static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
- 		MT8195_TOP_CG_26M_TIMING,
- 	};
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+index e956513943c60..b275dfd3bf3c8 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+@@ -189,6 +189,13 @@ static int ipoib_stop(struct net_device *dev)
  
--	for (i = 0; i < ARRAY_SIZE(clk_array); i++)
--		mt8195_afe_enable_clk(afe, afe_priv->clk[clk_array[i]]);
-+	for (i = 0; i < ARRAY_SIZE(clk_array); i++) {
-+		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[clk_array[i]]);
-+		if (ret)
-+			goto err_disable_clk;
-+	}
+ 	clear_bit(IPOIB_FLAG_ADMIN_UP, &priv->flags);
  
- 	for (i = 0; i < ARRAY_SIZE(cg_array); i++)
- 		mt8195_afe_enable_top_cg(afe, cg_array[i]);
- 
- 	return 0;
++	/* Normal flush runs without RTNL and may bring the device back
++	 * up. Cancel it before the device down transition.
++	 * Heavy flush is already serialized by RTNL and must not be
++	 * waited on here while RTNL is held.
++	 */
++	cancel_work_sync(&priv->flush_normal);
 +
-+err_disable_clk:
-+	while (--i >= 0)
-+		mt8195_afe_disable_clk(afe, afe_priv->clk[clk_array[i]]);
-+
-+	return ret;
- }
+ 	netif_stop_queue(dev);
  
- static int mt8195_afe_disable_timing_sys(struct mtk_base_afe *afe)
+ 	ipoib_ib_dev_down(dev);
 -- 
 2.53.0
 
