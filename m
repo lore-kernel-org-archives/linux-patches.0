@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026891;
-	b=z0v4PJvimTap7/sINllWccyI0seg2KlZ3LGbiedzXF2E1v3M2tMSPAHAaGzRGVOqszib
-	 wULV2S2WLLymvZjdm8iQQkmHf8WOkRXZ1gn1YyWSz+fnyBeTnUK5m5XhxEE5aY75hZpMB
-	 bpzUHpxlKKrPdTHYdnzVUPo3Xqt2eoDRF+ASd7sh7Eak1Ue3x6pZ+6x3kjnHGxm2Ewq30
-	 EuB4d38lkdpWX4Dcud9FPCyDJsfODbAANa//UnxwMRz7GgIvRdo2Rdz3RJscdWduw/oz6
-	 mPq5oXFcWlOOuswboa9h9PgAEw2xpbwFgOnbufYi4BEFUlKaNUtXR9xnHlot9slT1nA==
+	t=1795026894;
+	b=xZIgwv5KxMqvNcRKokgy00UOIiKi7EVDsxpJIOYNNUD3epL5D58JN+fIkDTmaL9GimJ2
+	 Rn3zsrTkd02NBGBqDhgsT2CaSoqEitsENX1C1Uebjpu9ebuAuhZqxbbzpKFBkHO5AFU5J
+	 fjmfTAiqDklvlggymarLEewHbhiyHGRZVj2b3UDuG8ju9GzA6YXGMtSBNa63ASGU6lwVg
+	 tpXS3tQxkPYBwWIKUEfBxV0oWw2ZRzHjzzSbIN9SnjNe/VlhbPrnzc4Gx2GC+/3WUmaMm
+	 ZwKCofkrqQQvioqsIWV0yYdkNhYrE/Zp8YO7UaFvM2rfYRTJkR3qfDKFbXDqgO3XUQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rlW4hhjCDf3IcDzFdnOBzlb8KukiowVwNsRoD0QiNHM=;
-	b=rr47Q4247HL+ecISJpcvCY3O9NyJyA5QD49Nu5wtLR/7ZxiGBLHE3P4xtt9KpTjngapv
-	 Xf3WhtU8rMpdtPfaVeHWzpI+EE4iMZZVlNcpEGJzFkNOmcF7p9IO7AHvlNgTFUpu1bKSg
-	 Y4GYJu803yyJ6Tb1dv/NPpo32U/iK0QOyGTC9PKH/wKIsjVOXwPzU00p2Y8xjl/1sKflh
-	 CN8v7jZRkvQwKXNE1J/w9mMllCGJIaHtGwYIj518YekcATuRH2sUr851IvMuumQuD5DOX
-	 VMYKCCNXmVQhERVZqS+9s78sm1eHXDFtej0a9qsqiGoLKAlfqoJnNGI4GpwjoXHrGHA==
+	bh=RxgqkUwO4YAYoLrnFjAFyNuvFfglHoYdkbLrbAyRPu0=;
+	b=MxSWLUAzYGz9eiM3DPsl6nVU3dZPsCHqWwV9pJqBMDzbYy/SIoCkFi7kRt/ucHFqvg2T
+	 ndrS4fE9T3kkNPONOyil4NoUo0qLyUGaQxoJkbj8ZMxFELsWTuXt994WMl9ShaWNIKaWn
+	 dmrTqiEJqB/4PsNAhQBLNz2v79Nc0VoPZbLZFoYkhD/+QGVVuR5yBUXu+k3TdOw/PSxGB
+	 abDk+tQ5YXjMYwRBauSLwgHUm+XS4JvWboTqy+GN1EIUq6+zDEbGR5UKRDl1KQ1Bt6bGi
+	 QZqubQiCVDCys5rXzPYVWZnjsNeDjfjexYHYtJdGb3eFwyHVwi51atz+QMAtsfFhl9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFmObuUt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+BPplZQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF33606A325;
-	Wed, 18 Nov 2026 18:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53412606A320;
+	Wed, 18 Nov 2026 18:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFmObuUt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7951F000C6;
-	Wed, 18 Nov 2026 18:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J+BPplZQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEA11F000C4;
+	Wed, 18 Nov 2026 18:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026891;
-	bh=rlW4hhjCDf3IcDzFdnOBzlb8KukiowVwNsRoD0QiNHM=;
+	s=korg; t=1795026893;
+	bh=RxgqkUwO4YAYoLrnFjAFyNuvFfglHoYdkbLrbAyRPu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MFmObuUtcYZrdmW6mqn5R9H+AsoSlnx0y6cgH71Ue+XwOaeiMNNKfd8MYb9T6H0Ax
-	 m4OLS7ZSww+r4j0dPxFS75j8xiEQYro7e1jcXZVOdhvzT5z/DIkWpzF9jJGTMkPqGr
-	 lKNskn+tz2cgCyj9LCNpGUuYK3Any3+ruP1gJgiw=
+	b=J+BPplZQx7kabIC8gd5fEQ39b3BZ5+SJcIzT1KnHGc0ca8a2LEz9gkuQfTHMP4Vta
+	 EhvgwdRj4BcdPLZ89ueVglPzXEWFjii8GHrrOTF6yiSJB/w+7qbs+oGOQ8aBeDTBq7
+	 IiYUbm25StgnWKYQaxtRJP+YqF6GYyYMJ4ApEjMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <cassel@kernel.org>,
-	zhoumin <teczm@foxmail.com>,
+	Julian Sun <sunjunchao@bytedance.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1594/2151] ata: ahci: preserve preset port masks
-Date: Wed, 18 Nov 2026 15:55:29 +0100
-Message-ID: <20261118150219.945811694@linuxfoundation.org>
+Subject: [PATCH 6.18 1595/2151] block: reject NOWAIT buffered write fallback
+Date: Wed, 18 Nov 2026 15:55:30 +0100
+Message-ID: <20261118150219.983532804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,100 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhoumin <teczm@foxmail.com>
+From: Julian Sun <sunjunchao@bytedance.com>
 
-[ Upstream commit 014c29a8e3bdcaad8c6fdfcf1af2fdbbab3fc323 ]
+[ Upstream commit a08bf4b9f87898628e70882430b8dd4260730dba ]
 
-ahci_get_port_mask() returns zero for absent or unmatched parameters,
-overwriting the mask set by the Marvell PATA quirk.
+blkdev_write_iter() rejects NOWAIT buffered writes, but does not
+enforce this restriction when direct I/O falls back to buffered I/O.
+Successful fallback waits for writeback, violating NOWAIT semantics.
 
-Update the mask in place only when parsing a global value or a matching
-device entry. Leave the mask unchanged on parsing errors.
+Reject NOWAIT requests in blkdev_buffered_write() with -EAGAIN.
 
-Fixes: 70c1595c181c ("ata: ahci: Allow ignoring the external/hotplug capability of ports")
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: zhoumin <teczm@foxmail.com>
-Link: https://lore.kernel.org/r/tencent_26064A115A53E4C6D00433C89E1894E2D808@qq.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: c35fc7a5abae ("block_dev: support RFW_NOWAIT on block device nodes")
+Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
+Link: https://patch.msgid.link/20261015091105.1315605-2-sunjunchao@bytedance.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 31 +++++++++++--------------------
- 1 file changed, 11 insertions(+), 20 deletions(-)
+ block/fops.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index d287c84ce80e0..8c3d54caa5857 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -714,34 +714,27 @@ MODULE_PARM_DESC(mask_port_ext,
- 		 "where <pci_dev> is the PCI ID of an AHCI controller in the "
- 		 "form \"domain:bus:dev.func\"");
+diff --git a/block/fops.c b/block/fops.c
+index 17cdecf39398c..c7cd9f89c352c 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -757,6 +757,10 @@ blkdev_direct_write(struct kiocb *iocb, struct iov_iter *from)
  
--static u32 ahci_port_mask(struct device *dev, char *mask_s)
-+static void ahci_port_mask(struct device *dev, char *mask_s, u32 *mask)
+ static ssize_t blkdev_buffered_write(struct kiocb *iocb, struct iov_iter *from)
  {
--	unsigned int mask;
--
--	if (kstrtouint(mask_s, 0, &mask)) {
-+	if (kstrtou32(mask_s, 0, mask))
- 		dev_err(dev, "Invalid port map mask\n");
--		return 0;
--	}
--
--	return mask;
- }
- 
--static u32 ahci_get_port_mask(struct device *dev, char *mask_p)
-+static void ahci_get_port_mask(struct device *dev, char *mask_p, u32 *mask)
- {
- 	char *param, *end, *str, *mask_s;
- 	char *name;
--	u32 mask = 0;
- 
- 	if (!mask_p || !strlen(mask_p))
--		return 0;
-+		return;
- 
- 	str = kstrdup(mask_p, GFP_KERNEL);
- 	if (!str)
--		return 0;
-+		return;
- 
- 	/* Handle single mask case */
- 	if (!strchr(str, '=')) {
--		mask = ahci_port_mask(dev, str);
-+		ahci_port_mask(dev, str, mask);
- 		goto free;
- 	}
- 
-@@ -776,13 +769,11 @@ static u32 ahci_get_port_mask(struct device *dev, char *mask_p)
- 			param++;
- 		}
- 
--		mask = ahci_port_mask(dev, mask_s);
-+		ahci_port_mask(dev, mask_s, mask);
- 	}
- 
- free:
- 	kfree(str);
--
--	return mask;
- }
- 
- static void ahci_pci_save_initial_config(struct pci_dev *pdev,
-@@ -808,10 +799,10 @@ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
- 	}
- 
- 	/* Handle port map masks passed as module parameter. */
--	hpriv->mask_port_map =
--		ahci_get_port_mask(&pdev->dev, ahci_mask_port_map);
--	hpriv->mask_port_ext =
--		ahci_get_port_mask(&pdev->dev, ahci_mask_port_ext);
-+	ahci_get_port_mask(&pdev->dev, ahci_mask_port_map,
-+			   &hpriv->mask_port_map);
-+	ahci_get_port_mask(&pdev->dev, ahci_mask_port_ext,
-+			   &hpriv->mask_port_ext);
- 
- 	ahci_save_initial_config(&pdev->dev, hpriv);
++	/* Buffered fallback waits for writeback, which NOWAIT cannot allow. */
++	if (iocb->ki_flags & IOCB_NOWAIT)
++		return -EAGAIN;
++
+ 	return iomap_file_buffered_write(iocb, from, &blkdev_iomap_ops, NULL,
+ 			NULL);
  }
 -- 
 2.53.0
