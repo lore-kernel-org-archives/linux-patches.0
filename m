@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022190;
-	b=QmE6E+aElwKrisTe25JER59ATI34eCaI5eD7fGWnE98aG6QRWeIY1DefJUw5k1+g5Kn6
-	 bN9++0INVZkzBNy471QoDHflaGhv49DTKttkNVMXWMul1qj9CQBZRP9JAg3vYuoGjOnMh
-	 b4QP/k37QC+EzHmsWuGugiv8nEsKFPeK2N7VSEbypArZ0xuo9xzRf3I6NsjIYeATm4Cz6
-	 y8u0LqRYyZrYRltMAy4JKk5GpxJ8ukb+n1PidKAyJhaJiVoJgaVvUX5zrxducVoOulJ1X
-	 3S0MHWvStm5XXt0SbE6WId7HVt1rNCk7xS8XmIi36TQzuLeeoJAvH6VZ7niIejqKXrQ==
+	t=1795022196;
+	b=qAOmIhdse+k0Wem5X1C6XdlMcylqiyujFtBiTRK/exKXpdvysgCQcteWBNqTYp0NbQO3
+	 ppAPxGPjnRN3VY4a5D3mnEV6pRYl0TuDO9kjDD02ebB/esYuakGQo1UUTLxsWdkEz0zox
+	 iJcDWe5db8Rnd5GR8gtrEDp8JZkChQOP/2jhAzcqMl3QInmiyXOOO97z2JlWbYibg6tl8
+	 UQgtrhMPgnXhXAZsAzKLsM/0tioLnX2+Mj8v/k+RXEw+vEyg7JPNlr4qytg/FWES/na3H
+	 GD/3dSzTjF+Y9gElXZ/h6n4G9vF5g+76LMI09s9zzckDud/3SdPCUnbTzGRSKP+wVDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g9OYcfmkqL85X11W3LtmMsvZyAMBGFTYVWIQNRVHfec=;
-	b=rWUsb7RIjsM2j/8o7PftE5ozc4aGn5Wm34oiM2aCkJFsguEiSSbE2xE/ua3pRJAyKqcX
-	 eTNc6B9esxVDGJRoCVHipk+gqK+3JG8IoUF3TfePbYmAMYHart50eRVUAOeT+JjZajc5W
-	 ixijSkKHdPd0qdyrCRG3v6j8Z/ZZfDoMJttV7XCiza+s0xF0WfIkOayKMnZBVCYde9fAG
-	 qBIR/utBW7q4TEDzYL+QlsCEEn5YCw7+/fqYUr9rWBOgX6IwdMtZszpWPZ8va2JMZttrw
-	 vMJ1eusA/3qwvcOFKF3ArS//hFxF1CEYFrJwIpNGIQzLnac08WcTBj1j0qwQZz3VVmA==
+	bh=XAPndJCNiFr1so/2PC02lQgiDXp8nwm4chhEJojPtuY=;
+	b=vxM2W/5iYYr8PC3EeFLcKPM32NcH6E6UTjdMHaTyJjBixu0pkq75vRanU9CjWHFlbHO3
+	 OfMkMYlR2u1t+H0G3uF4oR3S9O2JcKJbrqGtIf9osBtv3QxGWSGOCtlKSqLoyXwrX9yHS
+	 JKaEG0XtTTUrBS9LyeB9B1nz/8Wfa+8f7zc3aVV7eShQBTGlMuGpIjFS5kgyXsrmwcGcR
+	 Dc8a9bp/ENaqmc8XEN5DNd09KtSqceHtBo6rbX5wWmiy+mEOIGSlXFBVp4ixFTslpXT9R
+	 vJe1PdiXrEsxwsIUt9C4yFELrYeu9ksceatD9NdYLr+qmgWeQbByB/QAI3TCHrz06og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hWaVx4H7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI5+Rb+r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC790606A31C;
-	Wed, 18 Nov 2026 17:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB2C606A31C;
+	Wed, 18 Nov 2026 17:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hWaVx4H7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A1C1F000C5;
-	Wed, 18 Nov 2026 17:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI5+Rb+r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752F31F000C4;
+	Wed, 18 Nov 2026 17:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022190;
-	bh=g9OYcfmkqL85X11W3LtmMsvZyAMBGFTYVWIQNRVHfec=;
+	s=korg; t=1795022196;
+	bh=XAPndJCNiFr1so/2PC02lQgiDXp8nwm4chhEJojPtuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWaVx4H7tK3tT+BUdxh83uwi+jl3ccTubmPCFkqf8BMXldF7/8Od3xlPMunQPh/rq
-	 8L4JfwGZK4+bE1woz91DvDU6DulUUxxkwwpO0qr2Nys+aPihXMpASBz/30IGjNBNLq
-	 IlTXiqlD7b7Wp9c3MS2gQeseX3usJcskRyZi6S2g=
+	b=DI5+Rb+rv7XlET2YNm12FvjlvlE7OKgAjnhjJf6MlOSH+WpE52M8/OZC8G6BZn3yX
+	 Qr80htzEBH03vCLOphhs4u+kOGY36XX7COC8mQywWpvmxnmfaKoNDbhvM4aocFGolf
+	 ODvO/fUYN4dgKoxfT7XTdYo8e0+4EBrxFhvq09ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2573/2651] octeontx2-pf: pass the skb to otx2_dma_unmap_skb_frags()
-Date: Wed, 18 Nov 2026 16:03:33 +0100
-Message-ID: <20261118150417.000164416@linuxfoundation.org>
+Subject: [PATCH 7.3 2574/2651] fork: Let nobody keep a task that may not come to life
+Date: Wed, 18 Nov 2026 16:03:34 +0100
+Message-ID: <20261118150417.027854199@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,122 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 92cb8653970e4efaa7d2c2e2819c6d050b25e462 ]
+[ Upstream commit 5cf0881344cfa0a3b558107741884d8f43269d7b ]
 
-After a DMA mapping error, the unmap reads an skb pointer that is not
-set yet. It can be NULL or left over from an earlier packet.
+dup_task_struct() sets rcu_users to 2.  From then on bpf_task_acquire()
+hands out references to the new task, which BPF programs see as a trusted
+pointer long before it is sure to live: in the task_alloc LSM hook and in
+ops.init_task() of sched_ext.
 
-Fixes: 195c3d463181 ("octeontx2-pf: map skb data as device writeable")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Acked-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20261027-nb-otx2-ipsec-tx-fixes-net-v1-2-2114c4f10c36@tipi-net.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+If copy_process() fails later on, it undoes what it has done and frees
+the task without a look at the count.  A program that has stored its
+reference in a map is left with a pointer to freed memory:
+
+  BUG: KASAN: slab-use-after-free in put_task_struct_rcu_user+0x22/0x90
+
+The program is loaded by the administrator, but any user can make a fork
+fail, for example at the pids.max of a cgroup.
+
+Honouring the count would not do: the task would stay behind with its mm,
+files and credentials freed.  Leave rcu_users at zero until copy_process()
+cannot fail any more.  bpf_task_acquire() returns NULL until then, which
+its callers have to be prepared for, and which they get for init_task,
+whose count has always been zero.  The other users of rcu_users deal with
+tasks that have run.
+
+Fixes: 90660309b0c7 ("bpf: Add kfuncs for storing struct task_struct * as a kptr")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c   |  2 +-
- .../net/ethernet/marvell/octeontx2/nic/otx2_common.c   |  5 ++---
- .../net/ethernet/marvell/octeontx2/nic/otx2_common.h   |  3 ++-
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c | 10 +++++-----
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ kernel/fork.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c
-index 3920cd0985831..4434356087814 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_ipsec.c
-@@ -1037,7 +1037,7 @@ bool cn10k_ipsec_transmit(struct otx2_nic *pf, struct netdev_queue *txq,
- 	cn10k_cpt_inst_flush(pf, &inst, sizeof(struct cpt_inst_s));
- 	return true;
- drop:
--	otx2_dma_unmap_skb_frags(pf, &sq->sg[sq->head]);
-+	otx2_dma_unmap_skb_frags(pf, &sq->sg[sq->head], skb);
- 	sq->sg[sq->head].skb = (u64)NULL;
- 	atomic_long_inc(&pf->hw.dev_stats.tx_discards);
- 	dev_kfree_skb_any(skb);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index b11389a841d15..07c43a4fcb4ef 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -2140,13 +2140,12 @@ dma_addr_t otx2_dma_map_skb_frag(struct otx2_nic *pfvf,
- 	return otx2_dma_map_page(pfvf, page, offset, *len, dir);
- }
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 48d7ca0644042..ddd3dbc0850b7 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -971,10 +971,10 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
+ 	dup_user_cpus_ptr(tsk, orig, node);
  
--void otx2_dma_unmap_skb_frags(struct otx2_nic *pfvf, struct sg_list *sg)
-+void otx2_dma_unmap_skb_frags(struct otx2_nic *pfvf, struct sg_list *sg,
-+			      struct sk_buff *skb)
- {
- 	enum dma_data_direction dir = DMA_TO_DEVICE;
--	struct sk_buff *skb = NULL;
- 	int seg;
+ 	/*
+-	 * One for the user space visible state that goes away when reaped.
+-	 * One for the scheduler.
++	 * Nobody can keep the task while copy_process() may still fail, which
++	 * frees it no matter what.
+ 	 */
+-	refcount_set(&tsk->rcu_users, 2);
++	refcount_set(&tsk->rcu_users, 0);
+ 	/* One for the rcu users */
+ 	refcount_set(&tsk->usage, 1);
+ #ifdef CONFIG_BLK_DEV_IO_TRACE
+@@ -2522,6 +2522,12 @@ __latent_entropy struct task_struct *copy_process(
  
--	skb = (struct sk_buff *)sg->skb;
- 	if (unlikely(xfrm_offload(skb)))
- 		dir = DMA_BIDIRECTIONAL;
+ 	/* No more failure paths after this point. */
  
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-index 44cd56a0c2c4c..9a80450857f89 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -1253,7 +1253,8 @@ static inline int mcam_entry_cmp(const void *a, const void *b)
- 
- dma_addr_t otx2_dma_map_skb_frag(struct otx2_nic *pfvf,
- 				 struct sk_buff *skb, int seg, int *len);
--void otx2_dma_unmap_skb_frags(struct otx2_nic *pfvf, struct sg_list *sg);
-+void otx2_dma_unmap_skb_frags(struct otx2_nic *pfvf, struct sg_list *sg,
-+			      struct sk_buff *skb);
- int otx2_read_free_sqe(struct otx2_nic *pfvf, u16 qidx);
- void otx2_queue_vf_work(struct mbox *mw, struct workqueue_struct *mbox_wq,
- 			int first, int mdevs, u64 intr);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-index 8d2d607bc92f9..66dc8cc154861 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-@@ -160,7 +160,7 @@ static void otx2_snd_pkt_handler(struct otx2_nic *pfvf,
- 
- 	*tx_bytes += skb->len;
- 	(*tx_pkts)++;
--	otx2_dma_unmap_skb_frags(pfvf, sg);
-+	otx2_dma_unmap_skb_frags(pfvf, sg, skb);
- 	napi_consume_skb(skb, budget);
- 	sg->skb = (u64)NULL;
- }
-@@ -872,7 +872,7 @@ static int otx2_dma_map_tso_skb(struct otx2_nic *pfvf,
- 	}
- 	return 0;
- unmap:
--	otx2_dma_unmap_skb_frags(pfvf, sg);
-+	otx2_dma_unmap_skb_frags(pfvf, sg, skb);
- 	return -EINVAL;
- }
- 
-@@ -1252,7 +1252,7 @@ bool otx2_sq_append_skb(void *dev, struct netdev_queue *txq,
- 		ret = otx2_sqe_add_sg(pfvf, sq, skb, num_segs, &offset);
- 
- 	if (!ret) {
--		otx2_dma_unmap_skb_frags(pfvf, &sq->sg[sq->head]);
-+		otx2_dma_unmap_skb_frags(pfvf, &sq->sg[sq->head], skb);
- 		return false;
- 	}
- 
-@@ -1344,7 +1344,7 @@ void otx2_cleanup_tx_cqes(struct otx2_nic *pfvf, struct otx2_cq_queue *cq)
- 		if (skb) {
- 			tx_bytes += skb->len;
- 			tx_pkts++;
--			otx2_dma_unmap_skb_frags(pfvf, sg);
-+			otx2_dma_unmap_skb_frags(pfvf, sg, skb);
- 			dev_kfree_skb_any(skb);
- 			sg->skb = (u64)NULL;
- 		}
-@@ -1399,7 +1399,7 @@ void otx2_free_pending_sqe(struct otx2_nic *pfvf)
- 			if (skb) {
- 				tx_bytes += skb->len;
- 				tx_pkts++;
--				otx2_dma_unmap_skb_frags(pfvf, sg);
-+				otx2_dma_unmap_skb_frags(pfvf, sg, skb);
- 				dev_kfree_skb_any(skb);
- 				sg->skb = (u64)NULL;
- 			}
++	/*
++	 * One for the user space visible state that goes away when reaped.
++	 * One for the scheduler.
++	 */
++	refcount_set(&p->rcu_users, 2);
++
+ 	/*
+ 	 * Copy seccomp details explicitly here, in case they were changed
+ 	 * before holding sighand lock.
 -- 
 2.53.0
 
