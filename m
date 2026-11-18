@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029720;
-	b=x6Ya8Ouc0ZrwN6cYkXFv5/Zy5gqItgEkphSn3/1fuyEpFIU200F4nhXQzTIoUrErltBg
-	 OIDxmLNYT/y+Mrnil95kGI+7XvFDqsWFZQLxWGQTuIsabX0EzEf4uwMotq5SCmSaulrWx
-	 rYFxHxoPeRF0sKvkPcHrNlbPgheHc2a/ZpFYKfjATqxLf7w+Y3Dd7lB0/IaA5vapcqvV+
-	 fsYCzw47uB/erpNvGxZKI9FnukKZiNuT/KKIz7HcEGfaLNGl4nxM31QG/uRi13qZkgF5T
-	 DnvhbAB79B2QlOTZT1q5A0BWc80BWFQQR2a12zQjPKaNbyqaYj1Gdi6ACdhjZPFItKA==
+	t=1795029723;
+	b=L7Mps07XZrWX5pG9RSU4oUF8cy6YplU7Z9mm7X9R4f912YJJOgi2JREO9K182S7qKVXi
+	 Mu2gG6Yfy+lKRbhb/a/g+myz1WG/E7Ix7LSD4sOKD1H4X/AkLYkgqOG1l6U/7tLSjyAG0
+	 DZ7eMAqXryyo8B/QECTecVNwPrufRVgyHvQGrO1f1bVTCI2igj133yE1VAShBXaA3KlhT
+	 yo2UORUVUBYTZ2DuY4Xlv7g5wp3slz9G8y+U+wxoJ8SgoHcIdm7HoiP5w5c+bHPta9Y+Q
+	 IJAmvJm3nlWJZq1x8TNwjWXH4GOByFA7GhIPRaKzKejVJ7txR01cd+3pqdGMORGvIUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029720;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029723;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H2wbO4KKpmLAtsnpDU/MSamyrn1qbxPCpB5IoBejPvI=;
-	b=X+rAAtEq4zP+W8NTXOsBPp906YVwIosM3IbpdZcg5N+NoNvRIXGStIFRhAUhrC5MTgT5
-	 RCsC2x66rFgfbBCeP6TRHKhkU8hp2X4ZZ488pVyFYudELFYgpJkcaX+UmQsGH+ZIrw3zB
-	 j9f5fjL5BcysjUZUr4rE4eg5kY+m16Y3LBLMpyiVHxQHKOb1ioOPUKrSeMoxQPLydUQcu
-	 HBlmOoJ5jPCGV0CbQwTD7ObpN8toYlLNFLk9Yn03RZ49pLGgt03eFYxVXrsr5wFI/mZ12
-	 OauCaVpmif7/Zx3uiAuWy+jpLd3XAyt92Y4coi2E1TS/XaNS5bg2FJG2BFFC1G07hOg==
+	bh=HdZ+SCU/3TaVhq6s6Jvyv3bKySVd31ylOcXNdp43h8s=;
+	b=jcvhGhyetCeLGOSXSfF2bTYT+U/GAWpdNW7czV9vXf3nwKI0c/V1626Xn6wzQtmPI+23
+	 PuSUVoAZM6cSWuQnXPS8cbzt88CLjLTHkZFYq18IywCMzhN9HuXItPdq2T8rCooRmr8Jf
+	 +sarlL91RwTeypoG1D3FxNALl2c+nxoRopGUUaFBmzD9OOzz/6Un/SYH3HXu1ZgEIcoJf
+	 q7byEZqEZRr9i5ZhPwJ3ilEyIs6DZxEyQBH+jiVYhX4mq79lS2fwOSNXqbKElo4wr+l4/
+	 J/dPOFeMjsF+/S8oeHWji34+wW9FEy9kvfA2asdYB339qH/OYd2Avu9dqaQTY3CqklQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orTQzZXM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JR+uc/ud";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9107B606A33A;
-	Wed, 18 Nov 2026 19:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF9F606A32A;
+	Wed, 18 Nov 2026 19:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orTQzZXM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B2C1F000CC;
-	Wed, 18 Nov 2026 19:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JR+uc/ud
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CAE1F000C5;
+	Wed, 18 Nov 2026 19:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029720;
-	bh=H2wbO4KKpmLAtsnpDU/MSamyrn1qbxPCpB5IoBejPvI=;
+	s=korg; t=1795029723;
+	bh=HdZ+SCU/3TaVhq6s6Jvyv3bKySVd31ylOcXNdp43h8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=orTQzZXMih7MzxThVTkZhr7eGalilCzBQpXCJR27beCvAHQR7n6e4lCQ9Z80SbpeB
-	 2Ua+Yu0GDxI1bSWIrADswtt8hj+3t/TD+GZZ2j9BFlWGca+w6meycj+TkWo9GkpBn4
-	 CpgIj/CaQgcQjprXbTbVIi7AOVrJO1lGslC6cCXM=
+	b=JR+uc/udCRIJlV3fxUCyPhzesyqd8nfutxlAqLMhpgWr4hOvZ9mtSRykx7JCva4dm
+	 mRU4XUl6JL5j14SmBVRLp1fDTsmLGP1yIEGZBvyxRb+6QAFslmH8VrTc3HMeR4to2D
+	 Xe7Dj8BOJfUYv6n26S6F8UDuPWAkAr2yvfVjk2us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usamaarif642@gmail.com>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0450/1756] Revert "rcu/nocb: Fix rcuog wake-up from offline softirq"
-Date: Wed, 18 Nov 2026 15:42:57 +0100
-Message-ID: <20261118150026.718525267@linuxfoundation.org>
+Subject: [PATCH 6.12 0424/1756] ACPI: tables: handle failed initrd override mappings
+Date: Wed, 18 Nov 2026 15:42:31 +0100
+Message-ID: <20261118150025.640795429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,52 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit b95d15980a0f2727a421392ebb50fc6338e43b02 ]
+[ Upstream commit 047c834d939df75386cfc0603c7ddeaa23a349a4 ]
 
-This reverts commit f7345ccc62a4b880cf76458db5f320725f28e400.
+The runtime AML table-loading path can invoke initrd override after
+permanent mappings are enabled. Mapping bookkeeping can then fail.
 
-swake_up_one_online() has been removed because hrtimers can now assign
-a proper online target to hrtimers queued from offline CPUs. Therefore
-remove the related hackery.
+Return AE_NO_MEMORY in that case to prevent a NULL pointer dereference
+when attempting to read the table length.
 
-Link: https://lore.kernel.org/all/20241231170712.149394-4-frederic@kernel.org/
-Reviewed-by: Usama Arif <usamaarif642@gmail.com>
-Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Stable-dep-of: 4c714f015d9e ("rcu: fix shrink budget underflow in lazy_rcu_shrink_scan")
+Detected by static analysis and reviewed with AI-assisted source auditing.
+
+Fixes: b2a35003dfbc ("ACPI: Implement physical address table override")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+[ rjw: Added empty code line after conditional, changelog edits ]
+Link: https://patch.msgid.link/20260913125123.109803-1-bolin.liu@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_nocb.h | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/acpi/tables.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index a1a5942d70170..9db8a88e9e6dc 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -554,19 +554,13 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
- 			rcu_nocb_unlock(rdp);
- 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_LAZY,
- 					   TPS("WakeLazy"));
--		} else if (!irqs_disabled_flags(flags) && cpu_online(rdp->cpu)) {
-+		} else if (!irqs_disabled_flags(flags)) {
- 			/* ... if queue was empty ... */
- 			rcu_nocb_unlock(rdp);
- 			wake_nocb_gp(rdp, false);
- 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
- 					    TPS("WakeEmpty"));
- 		} else {
--			/*
--			 * Don't do the wake-up upfront on fragile paths.
--			 * Also offline CPUs can't call swake_up_one_online() from
--			 * (soft-)IRQs. Rely on the final deferred wake-up from
--			 * rcutree_report_cpu_dead()
--			 */
- 			rcu_nocb_unlock(rdp);
- 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE,
- 					   TPS("WakeEmptyIsDeferred"));
+diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
+index 9e1b01c350702..75f570d66ece7 100644
+--- a/drivers/acpi/tables.c
++++ b/drivers/acpi/tables.c
+@@ -559,6 +559,9 @@ acpi_table_initrd_override(struct acpi_table_header *existing_table,
+ 	while (table_offset + ACPI_HEADER_SIZE <= all_tables_size) {
+ 		table = acpi_os_map_memory(acpi_tables_addr + table_offset,
+ 					   ACPI_HEADER_SIZE);
++		if (!table)
++			return AE_NO_MEMORY;
++
+ 		if (table_offset + table->length > all_tables_size) {
+ 			acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
+ 			WARN_ON(1);
 -- 
 2.53.0
 
