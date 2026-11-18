@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045575;
-	b=wc61wdrYdv3B/mq0UVN94RAFZPxvJXBrlNM+NARQiqj6KaJD78QwKrwOyiOPxMK2AhF/
-	 6b1mJuqIJkguvK6GD0wnRoY2aI5RZgJsf0bJeoctBq9KnKCJHxDVxsRXh7jSzDXZwYTuV
-	 DN2RdwPnsDQB6eGtRaPpXrCHyBZNecXsez138pzBY11TBskZ04ABdZ6ajrRlrdbHISFQA
-	 gz1dQKLPL6k8fhQKm2J6WznHd0kSTKALrcqRtrN7buLHJVzS7//9f4QphrggI3QacNsz2
-	 a3phINIsy8qG3q8rIfV4OFV7VWzvL7IzCbIM2xhT/gemAFLY6+J1QSrr84/e82vp0gg==
+	t=1795045578;
+	b=GGxfySJPJV658IEd4qXhI5R0E6gR+06uKjcwVIdQnnplJzkIbJA5x5cKbydkeSw7lu+9
+	 sjQ/ql1+rmVyX5hWtnu2KzjI0QThbmrmSvLd7e/ow4gD8Pmsw9wOW5FW+Zw3UO9jWN4lH
+	 r9bVUtuiANjujY5io3yxyGBOUggBFk2ubVkl6ozb2ZJSbXe6ndcBC656rdezv+jlGJhMD
+	 1WGoZftSaptTa9Uz0iPryeNjhcHLpKBw0B2cv3/jj2L21ayMXADbkV00TDb+MIRKuoTHp
+	 AMJ9dkyZpcPr/yQkwGqzpKv5S42SceSPTxqTbxCuHSHMjBNmIJzjGjXsrJg5QIicENQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=erLZSidE3agK/oa1IKFVdfClJmU1+YsJ8cLq6R/kRgw=;
-	b=4W0lv0GT8HlyAfVlvXRDC5Md9F0hvSeZ2d28BjROCIE3rKMBZHfGrKseLCH/rFOqIgZz
-	 afY2PrBp+xiCaf/uekHAOwBLBbf2uhCUZxn+wa8/zPnQJipsd4ipv4mxxVe7rHHIm1Yxy
-	 gOdKTvkYaqVd197eBlaCUTPq/H/XXL7oTcx6VhTBpr2LdMfogYBzxfR0hm5D3ZMKRAY3g
-	 LuwX1QuIKDRzaV9HeLBxI6XhC3TnNX0KAobGn5ypywtIO71g3FTzpx5pc2djS1pkBXy0Y
-	 3mgzrKmt77t65CjaWjo81D20yqfzW+jDqjKic8cZXWn+oDAJ8T+3S4O+qUSVU5Y1OPA==
+	bh=brChdI4n0m31BwnMl9ZXFFeqvN19HN+5ZoDBid6Jbxw=;
+	b=yaSDbl0JY05dRRB1jKwR91pI2ZdvHkCYx36mXa9eAeqS62c5Ixd+7HOU++zsHzNJUeOc
+	 dwGd1GHnb1a31v4nzfbAqWYRMdqzcZgEOjaZ+XLq5Xi9wN0G/fGMnluS5882kSWpPFq1f
+	 6XQg7dxLQ7kl2sc/hj8YaRSJ3b4qH8JGHx6h8k9wZ/A0HX8xM3ztIMjLe6R5TrSrxzreo
+	 kb397wCtD3YUcGK3vhvTZaGDp4cibkHJ7RY4bdfSZMY1b7zhCujKnNh52LbXHBvBavz/M
+	 4c/+oKigOl//fNQv7aFfCoGhfla82ZWZcguhWFvm8CFHyewfR/GlSKG0I8VzdL7w2xA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VhpB5d7q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AaTCms0y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0D4606A32A;
-	Wed, 18 Nov 2026 23:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC45C606A32A;
+	Wed, 18 Nov 2026 23:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VhpB5d7q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928821F000C4;
-	Wed, 18 Nov 2026 23:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AaTCms0y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E41B1F000C4;
+	Wed, 18 Nov 2026 23:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045575;
-	bh=erLZSidE3agK/oa1IKFVdfClJmU1+YsJ8cLq6R/kRgw=;
+	s=korg; t=1795045577;
+	bh=brChdI4n0m31BwnMl9ZXFFeqvN19HN+5ZoDBid6Jbxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VhpB5d7qXivukOOGdrgtz9V727kIGQls6uCEYaxmPLrUedw+iBhQ/zXAC2Us7fKkq
-	 feUWdqowRmMhl0mHlS6VQchLLtmNFcpIIHB12t9Bvs3Pfxj9PKZsME8zRMNUnDWFLZ
-	 rRvlZKdGKC1vuIG+HzjDhRjWY3xSC/JF/s3UiNxk=
+	b=AaTCms0ybadZNoxcaZ5vRpYGe7y/7WPNBZKCEhHAOEuxlP5dn6647itWTOZdd7dwV
+	 AicB0eMPd0bQuDUwTxFwwUbH5+BbCtQEpXbBDteSd290KuCIkMGR7Zd7fXlnH0T+yQ
+	 QPk6YR4Xg9mc9vEMH3XJ3U3iodcGp9PjGfPiRSLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0971/2857] dax: fix dax_range_compare_iter() to use correct size and address offset
-Date: Wed, 18 Nov 2026 15:33:25 +0100
-Message-ID: <20261118150236.571311810@linuxfoundation.org>
+Subject: [PATCH 6.1 0972/2857] net: skbuff: dont BUG() on a bad csum_start in skb_copy_and_csum_dev()
+Date: Wed, 18 Nov 2026 15:33:26 +0100
+Message-ID: <20261118150236.606317522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,75 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a4bfbfb4e98a62b589ac7ca9e73e9612bfe8cab7 ]
+[ Upstream commit 56453199d28f0072a8196fba14b2d702632e2219 ]
 
-dax_range_compare_iter() has two bugs in how it calls
-dax_iomap_direct_access() and uses the returned addresses:
+skb_copy_and_csum_dev() copies everything up to the checksum start out
+of the linear area, and BUG()s if the checksum start is past the end of
+the linear area.  It misses the other direction: a CHECKSUM_PARTIAL skb
+that has been pulled past its csum_start gives a negative offset, which
+gets past the check and becomes a ~4GB copy.  It also trusts
+csum_offset when it stores the folded checksum.  So far
+skb_copy_and_csum_bits() BUG()ing on a short skb has covered for that,
+but once it returns instead, a bad csum_offset would write past the end
+of the caller's buffer.
 
-1. The size argument passed to dax_iomap_direct_access() is
-   ALIGN(pos + len, PAGE_SIZE), which is an absolute file offset
-   rather than a length. This causes the underlying dax_direct_access()
-   to request a massively inflated nr_pages via PHYS_PFN(size).
+The function returns void and its callers are drivers copying a frame
+into a bounce buffer just before handing it to the hardware.  There's
+nothing for them to back out of, so check both ends of csum_start and
+that the checksum field fits in the frame, and if not, copy the whole
+frame with skb_copy_bits() without filling in the checksum, with a
+DEBUG_NET_WARN_ON_ONCE() for debug kernels.  The frame
+goes out with a bad checksum and is dropped by the receiver.  If even
+that copy fails, zero the buffer so the driver doesn't send stale bytes.
 
-2. The addresses returned by dax_iomap_direct_access() are page-aligned
-   starting addresses, but memcmp() compares from saddr/daddr directly
-   without adding the page-in-page offset of pos1/pos2. When pos1/pos2
-   are not page-aligned, this compares the wrong data.
-
-Fix the size by computing ALIGN(len + offset_in_page(pos), PAGE_SIZE),
-matching the pattern used in dax_iomap_copy_around(). Fix the address
-by adding offset_in_page(pos1)/offset_in_page(pos2) to saddr/daddr in
-the memcmp() call.
-
-Fixes: 6f7db3894ae2 ("fsdax: dedup file range to use a compare function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20261011064840.1296-1-jianyungao89@gmail.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Cc: stable? The trailers only have Assisted-by: and Signed-off-by:. No
+Link: https://patch.msgid.link/20261007-b4-skbuff-bug-on-v2-5-b9a5f732895b@toxicpanda.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/core/skbuff.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/dax.c b/fs/dax.c
-index 2ebe70de35ec3..0c6e44793c247 100644
---- a/fs/dax.c
-+++ b/fs/dax.c
-@@ -1957,6 +1957,7 @@ static loff_t dax_range_compare_iter(struct iomap_iter *it_src,
- 	const struct iomap *dmap = &it_dest->iomap;
- 	loff_t pos1 = it_src->pos, pos2 = it_dest->pos;
- 	void *saddr, *daddr;
-+	size_t size1, size2;
- 	int id, ret;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index f6140e0453ef4..78a0d1a4d8f45 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3392,7 +3392,18 @@ void skb_copy_and_csum_dev(const struct sk_buff *skb, u8 *to)
+ 	else
+ 		csstart = skb_headlen(skb);
  
- 	len = min(len, min(smap->length, dmap->length));
-@@ -1972,17 +1973,18 @@ static loff_t dax_range_compare_iter(struct iomap_iter *it_src,
- 	}
+-	BUG_ON(csstart > skb_headlen(skb));
++	if (unlikely(csstart < 0 || csstart > skb_headlen(skb) ||
++		     (skb->ip_summed == CHECKSUM_PARTIAL &&
++		      csstart + skb->csum_offset + sizeof(__sum16) >
++		      skb->len))) {
++		DEBUG_NET_WARN_ON_ONCE(1);
++		/* Send the frame without the checksum filled in, or send
++		 * zeroes if we can't even copy it.
++		 */
++		if (skb_copy_bits(skb, 0, to, skb->len))
++			memset(to, 0, skb->len);
++		return;
++	}
  
- 	id = dax_read_lock();
--	ret = dax_iomap_direct_access(smap, pos1, ALIGN(pos1 + len, PAGE_SIZE),
--				      &saddr, NULL);
-+	size1 = ALIGN(len + offset_in_page(pos1), PAGE_SIZE);
-+	ret = dax_iomap_direct_access(smap, pos1, size1, &saddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
+ 	skb_copy_from_linear_data(skb, to, csstart);
  
--	ret = dax_iomap_direct_access(dmap, pos2, ALIGN(pos2 + len, PAGE_SIZE),
--				      &daddr, NULL);
-+	size2 = ALIGN(len + offset_in_page(pos2), PAGE_SIZE);
-+	ret = dax_iomap_direct_access(dmap, pos2, size2, &daddr, NULL);
- 	if (ret < 0)
- 		goto out_unlock;
- 
--	*same = !memcmp(saddr, daddr, len);
-+	*same = !memcmp(saddr + offset_in_page(pos1),
-+			daddr + offset_in_page(pos2), len);
- 	if (!*same)
- 		len = 0;
- 	dax_read_unlock(id);
 -- 
 2.53.0
 
