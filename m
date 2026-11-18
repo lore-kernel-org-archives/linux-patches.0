@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017998;
-	b=hqPFBZxj9KQjX+FvGbDsr5FvUJoJ97AmaAV84+A/7kgOY3Uy/zkBaaLuZ718xQV5cvin
-	 PkDIPrenglHC0+GZYLPnU13BNKoE/qDfK1T2uSWKi5dHep4fAcKkTfY3ZyXp55lkXTroC
-	 1EjY0CPRv7PVhFdBZ1l8gqcnVRLu3HwM9fV2w/XCqVBmifsYnHAZnVR28+r8quPtYDR+A
-	 fil6LtlR/3lGckhspYHH/I7eVbriPk24QHc2GhVLwtkTeDlJM+eCmDaFxCkHFZxQaT/mY
-	 f0DO3X17Q+0Wl6YlBvGkU88sVBXcuZXCSMss+7huq13GRh/N5wc3olUS03G7aWXMUgA==
+	t=1795018001;
+	b=i5NB+cZOZjDXKdh+/uHxXuAZinhvlnzGWWfc/XiAFKKbH6J3TKpu17AvaDdiXI4um3cT
+	 VOu8W7louPR24wtVOfr7B8J0qthi7eZacztNKLQRSW+xDB/R739jFGBoiglXG6C/lyBJb
+	 vqCSabTfhNNxdCR3K9/ctciKI9jwv4p6icl0orCNUBShkRI6Rjx8h/N06S3jk7RPUhvmu
+	 WRa7gRJrIvTawItrR47Mf5K/YMR8YpaQCDN++wAH84rLXWCP0CtEsh28HeNRJbnS5EDB+
+	 msIpgh71LSSIy2cyz8Vxo3gkOrXye5v+Yqx/Qu4zNn91eE6u/HFMlD3mVyBw7IZM36g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aEu5JFW/sazKyuNzSb7CxRc4j2cAHM8VVqTVM11sEXI=;
-	b=wv4kqAdOa4djyHg4hRRciwQeWoHiOkO+P8CR+99NsVbBfhvIWc8bDXP4CKJBd8etm8Yv
-	 GQLns7RZ1H13CNxHDGLekYlK5lHPXBpDYbYP4T4PnoMHKgPP4mEhC0Qa72A0xJxbUq7J3
-	 /PEgNyrGBDbG7+UmemhMkzNMGZiLXzn6yOLRzx9S1Ag9I5Ded3yuKVwTAjJfk5+RpmOcf
-	 jd3aQ4NuRtUJuSqVA8RtAEzf2wLG8RN/bF7owI4PDLj6azIo/vYj5dEwyClBH4Am/KCfo
-	 H6On9dyMpD5YPU8MkVPZlf5N2XkGOBipuhGg21B6vRt4fskosoF0Gp11DO1E/R5pb0w==
+	bh=X3WqVCUjqIwIbMY5baR/ktbKM2Ac6Jl5o2uVCBrE8n8=;
+	b=l7JZS9fHz+L0zDc7hQpa8HqSJKTC9YQ2iPme0b5mEU1Hc1EQpGvBQCym6Ycupf3wxUw2
+	 q6/S/5Y8OXlGZKe10XdpfwQljXxnL2XxnETdmklRwpOupG9I2BOkz5oc1rsCRuaiC5Lvo
+	 JZmLskE/EceX4iu9Jwz1WlxipTZXQLb2UDu5IKoq92AEv3p1NFzdgMC/+F9z+A+9evf+P
+	 YFMH1Woy6apS7EL+oMeJCiKLdNsn0Fy9i3nkbOXSK8GitXct9Ndqy+T9LdmXQLKY3moOg
+	 e0obGPEkInKcNXiYM8letvjpvmrYOH7g6vS55mOzizDoI5V3zkVH6RTPBL3/R7qBilw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fYmWi4xQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Txo//6cw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA06606A33D;
-	Wed, 18 Nov 2026 16:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D398606A31C;
+	Wed, 18 Nov 2026 16:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fYmWi4xQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5541F000C8;
-	Wed, 18 Nov 2026 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Txo//6cw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4EB21F000C6;
+	Wed, 18 Nov 2026 16:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017998;
-	bh=aEu5JFW/sazKyuNzSb7CxRc4j2cAHM8VVqTVM11sEXI=;
+	s=korg; t=1795018001;
+	bh=X3WqVCUjqIwIbMY5baR/ktbKM2Ac6Jl5o2uVCBrE8n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fYmWi4xQVi2/mUegLrdK+DIkld33wP7aOYcy8UmiSyy/j+99n8ujg0mg1IpXN4YCF
-	 tljUiVQrOaPi16dGHaPXpf/V+yCA1GnTbvJnPaqQRVw64u8fwNMW+RaivIb77zuozc
-	 jt4IhsbyjsmCSV0KHewc0VH2m7WW01a5XXlKHJj0=
+	b=Txo//6cwjis9OP3KAFcfHms3BCJEkNcX4qwSoFpvk3ZCRQXAAF9tE1uCid6hWAf6o
+	 a6hFkvnStG6WUAhs2uzeG/1Bzj7r7YcQZf/6Mu9ebWoNoWLo/g6nMpnPKeQ8eafJSQ
+	 3WNn7riOPdjye3B52iEWlDF7LXrOmRaOhMsfkBxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1082/2651] ice: extract __ice_vsi_free_stats()
-Date: Wed, 18 Nov 2026 15:38:42 +0100
-Message-ID: <20261118150326.950934461@linuxfoundation.org>
+Subject: [PATCH 7.3 1083/2651] ice: extract ice_vsi_new_stat_arrays()
+Date: Wed, 18 Nov 2026 15:38:43 +0100
+Message-ID: <20261118150326.987711174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,152 +71,102 @@ Content-Transfer-Encoding: 8bit
 
 From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit db61b199031c614d1a98e844af00e3c426fc9d5f ]
+[ Upstream commit ed3cbc4430c2f365281623b8c9fa81e47f4e8d31 ]
 
-Record the length of each ring stats array in struct ice_vsi_stats, so
-that freeing the array entries no longer needs the owning VSI. Keep the
-new fields in sync in both places that size the arrays.
+Split the allocation of a struct ice_vsi_stats and its two ring stats
+arrays out of ice_vsi_alloc_stat_arrays(), which is left with just the
+lookup and the store into pf->vsi_stats[].
 
-With that, the body of ice_vsi_free_stats() becomes independent of the
-VSI and can be split out as __ice_vsi_free_stats(). The @free_entries
-parameter is always true here; a later commit adds a caller that frees
-only the array container, after its entries have been handed over to a
-freshly allocated stats structure.
+The sole caller keeps passing the very same queue counts as before,
+vsi->alloc_txq and vsi->alloc_rxq. A later commit adds a second caller
+in the rebuild path, which cannot use vsi->alloc_* because it has to
+size the arrays before the VSI is reconfigured.
 
-The free path now stops at the recorded length instead of the VSI queue
-count, so it follows the real allocation rather than a number that can
-disagree with it. Sizing still does not: "ice: rebuild ring stats arrays
-instead of reallocating them in place" starts using the lengths to carry
-entries over, and only "ice: size ring stats arrays from the final queue
-count" makes them authoritative for the allocation path.
+Note that the error path no longer clears pf->vsi_stats[vsi->idx]; the
+early return above guarantees it is already NULL.
+
+No functional change intended.
 
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Link: https://patch.msgid.link/20260925132636.123300-3-przemyslaw.kitszel@intel.com
+Link: https://patch.msgid.link/20260925132636.123300-4-przemyslaw.kitszel@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: f1c3b87896e6 ("ice: size ring stats arrays from the final queue count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h     |  2 +
- drivers/net/ethernet/intel/ice/ice_lib.c | 52 ++++++++++++++----------
- 2 files changed, 33 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 47 +++++++++++++-----------
+ 1 file changed, 25 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index db3c7015c56c4..fadfe94bf1c8c 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -328,6 +328,8 @@ enum ice_vsi_state {
- struct ice_vsi_stats {
- 	struct ice_ring_stats **tx_ring_stats;  /* Tx ring stats array */
- 	struct ice_ring_stats **rx_ring_stats;  /* Rx ring stats array */
-+	u16 tx_ring_stats_len;  /* Length of the Tx ring stats array */
-+	u16 rx_ring_stats_len;  /* Length of the Rx ring stats array */
- };
- 
- /* struct that defines a VSI, associated with a dev */
 diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 31af378aa0e7a..1414127d32cd8 100644
+index 1414127d32cd8..ed32ae2667c5f 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -330,6 +330,32 @@ static void ice_vsi_free_arrays(struct ice_vsi *vsi)
- 	vsi->rxq_map = NULL;
+@@ -519,6 +519,30 @@ static irqreturn_t ice_msix_clean_rings(int __always_unused irq, void *data)
+ 	return IRQ_HANDLED;
  }
  
-+/* free single stats memory */
-+static void __ice_vsi_free_stats(struct ice_vsi_stats *vsi_stat, bool free_entries)
++static struct ice_vsi_stats *ice_vsi_new_stat_arrays(int txq, int rxq)
 +{
-+	if (!vsi_stat)
-+		return;
++	struct ice_ring_stats **tx_ring_stats;
++	struct ice_ring_stats **rx_ring_stats;
++	struct ice_vsi_stats *vsi_stat;
 +
-+	if (free_entries) {
-+		for (int i = 0; i < vsi_stat->tx_ring_stats_len; i++) {
-+			if (vsi_stat->tx_ring_stats[i]) {
-+				kfree_rcu(vsi_stat->tx_ring_stats[i], rcu);
-+				WRITE_ONCE(vsi_stat->tx_ring_stats[i], NULL);
-+			}
-+		}
-+		for (int i = 0; i < vsi_stat->rx_ring_stats_len; i++) {
-+			if (vsi_stat->rx_ring_stats[i]) {
-+				kfree_rcu(vsi_stat->rx_ring_stats[i], rcu);
-+				WRITE_ONCE(vsi_stat->rx_ring_stats[i], NULL);
-+			}
-+		}
++	vsi_stat = kzalloc_obj(*vsi_stat);
++	tx_ring_stats = kzalloc_objs(*tx_ring_stats, txq);
++	rx_ring_stats = kzalloc_objs(*rx_ring_stats, rxq);
++	if (!vsi_stat || !tx_ring_stats || !rx_ring_stats) {
++		kfree(vsi_stat);
++		kfree(tx_ring_stats);
++		kfree(rx_ring_stats);
++		return NULL;
 +	}
 +
-+	kfree(vsi_stat->tx_ring_stats);
-+	kfree(vsi_stat->rx_ring_stats);
-+	kfree(vsi_stat);
++	vsi_stat->tx_ring_stats = tx_ring_stats;
++	vsi_stat->rx_ring_stats = rx_ring_stats;
++	vsi_stat->tx_ring_stats_len = txq;
++	vsi_stat->rx_ring_stats_len = rxq;
++
++	return vsi_stat;
 +}
 +
  /**
-  * ice_vsi_free_stats - Free the ring statistics structures
+  * ice_vsi_alloc_stat_arrays - Allocate statistics arrays
   * @vsi: VSI pointer
-@@ -338,7 +364,6 @@ static void ice_vsi_free_stats(struct ice_vsi *vsi)
- {
- 	struct ice_vsi_stats *vsi_stat;
- 	struct ice_pf *pf = vsi->back;
--	int i;
+@@ -537,33 +561,12 @@ static int ice_vsi_alloc_stat_arrays(struct ice_vsi *vsi)
+ 	/* realloc will happen in rebuild path */
+ 		return 0;
  
- 	if (vsi->type == ICE_VSI_CHNL)
- 		return;
-@@ -346,26 +371,7 @@ static void ice_vsi_free_stats(struct ice_vsi *vsi)
- 		return;
+-	vsi_stat = kzalloc_obj(*vsi_stat);
++	vsi_stat = ice_vsi_new_stat_arrays(vsi->alloc_txq, vsi->alloc_rxq);
+ 	if (!vsi_stat)
+ 		return -ENOMEM;
  
- 	vsi_stat = pf->vsi_stats[vsi->idx];
--	if (!vsi_stat)
--		return;
+-	vsi_stat->tx_ring_stats =
+-		kzalloc_objs(*vsi_stat->tx_ring_stats, vsi->alloc_txq);
+-	if (!vsi_stat->tx_ring_stats)
+-		goto err_alloc_tx;
+-	vsi_stat->tx_ring_stats_len = vsi->alloc_txq;
 -
--	ice_for_each_alloc_txq(vsi, i) {
--		if (vsi_stat->tx_ring_stats[i]) {
--			kfree_rcu(vsi_stat->tx_ring_stats[i], rcu);
--			WRITE_ONCE(vsi_stat->tx_ring_stats[i], NULL);
--		}
--	}
+-	vsi_stat->rx_ring_stats =
+-		kzalloc_objs(*vsi_stat->rx_ring_stats, vsi->alloc_rxq);
+-	if (!vsi_stat->rx_ring_stats)
+-		goto err_alloc_rx;
+-	vsi_stat->rx_ring_stats_len = vsi->alloc_rxq;
 -
--	ice_for_each_alloc_rxq(vsi, i) {
--		if (vsi_stat->rx_ring_stats[i]) {
--			kfree_rcu(vsi_stat->rx_ring_stats[i], rcu);
--			WRITE_ONCE(vsi_stat->rx_ring_stats[i], NULL);
--		}
--	}
--
--	kfree(vsi_stat->tx_ring_stats);
--	kfree(vsi_stat->rx_ring_stats);
--	kfree(vsi_stat);
-+	__ice_vsi_free_stats(vsi_stat, true);
- 	pf->vsi_stats[vsi->idx] = NULL;
- }
- 
-@@ -539,11 +545,13 @@ static int ice_vsi_alloc_stat_arrays(struct ice_vsi *vsi)
- 		kzalloc_objs(*vsi_stat->tx_ring_stats, vsi->alloc_txq);
- 	if (!vsi_stat->tx_ring_stats)
- 		goto err_alloc_tx;
-+	vsi_stat->tx_ring_stats_len = vsi->alloc_txq;
- 
- 	vsi_stat->rx_ring_stats =
- 		kzalloc_objs(*vsi_stat->rx_ring_stats, vsi->alloc_rxq);
- 	if (!vsi_stat->rx_ring_stats)
- 		goto err_alloc_rx;
-+	vsi_stat->rx_ring_stats_len = vsi->alloc_rxq;
- 
  	pf->vsi_stats[vsi->idx] = vsi_stat;
- 
-@@ -3055,6 +3063,7 @@ ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi)
- 		vsi_stat->tx_ring_stats = tx_ring_stats;
- 		return -ENOMEM;
- 	}
-+	vsi_stat->tx_ring_stats_len = req_txq;
- 
- 	if (req_rxq < prev_rxq) {
- 		for (i = req_rxq; i < prev_rxq; i++) {
-@@ -3074,6 +3083,7 @@ ice_vsi_realloc_stat_arrays(struct ice_vsi *vsi)
- 		vsi_stat->rx_ring_stats = rx_ring_stats;
- 		return -ENOMEM;
- 	}
-+	vsi_stat->rx_ring_stats_len = req_rxq;
- 
+-
  	return 0;
+-
+-err_alloc_rx:
+-	kfree(vsi_stat->rx_ring_stats);
+-err_alloc_tx:
+-	kfree(vsi_stat->tx_ring_stats);
+-	kfree(vsi_stat);
+-	pf->vsi_stats[vsi->idx] = NULL;
+-	return -ENOMEM;
  }
+ 
+ /**
 -- 
 2.53.0
 
