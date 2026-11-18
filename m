@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034829;
-	b=j9UTEmj3D7teMiUBqOPnA491MxL+PozggYLcLS47vScP4GtVso7LTv+eD10Dy6z//Eu6
-	 +2mBklmF1T3YisbI//DmT/lYKvY+/Wgm9CFMs7VD/FO1RGdkjNhmUwtFJ/WJ8iDJu7eeQ
-	 91TfusUH6UEjcekeY16qlI4impnn5wciWVJU6ODzJBOnbFoRWNDbOHk0aaVYt/75WdUBO
-	 zjiAWgQwEvM4xEMfWa+f3xM423BOCIdmaFOBUW16EglPaYa8fIZseB5yXEp3bKZeDgKxJ
-	 8ihg1E3dfZ8DLaRdj4doLPbBWy68hKxD2p6R7Vq+U/1oQ9422lVzY2DBNyKMYPd0c0Q==
+	t=1795034833;
+	b=k1/EEL2+lywyjry0RtNBVUPiQA5caynFRQ0XKC01jkkoVuZhJeTDqrw01PgFN7JVtn3X
+	 1g2LR+usBKgl7YT7bIXQ0Sljq2FBRY+xDxukVGzFGVJgzLDORw9qs0Boio0h+FPKGHhnP
+	 aW+rRaI7pJ4FyX3lLvL2VzqTlVPpHaSJ73iO1gwzv8GZduOnOjkUe9jPTx9+8HH9KYBIy
+	 4OLHmDFoIwt1UtvejC2cWuf3hJP1+gJ9dNC6pv6vK2whloOWPsi3yhwjmX2Sg5gaxBy3T
+	 XVdmUiydihbMqzRpzcy/1sQ5P3jf4AKs+QKk5Mwh+bl8nTNuSZnuWUTKWmYHPeGyzuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034829;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I7AyqWPrtW0fO2JNJ0vQjtCy4iroxfamYa1ywKVDsKI=;
-	b=CTqQShbXrG7GWfMgQZDStAwvl+CmwX1eImUjXykTTfvwr1TOwc2H0g4uTBbOJznvIe6Y
-	 JM8rcG+Jst4sZddTZlNpc1YlowTaQ9sGDMPHFHMOBlTzmk5DJapsB2NhI3ca17hPzts00
-	 Qo+fEklcpjOZfX6WeFV3LMr1GTSBKF3WTgWeZ8G/AwWNUgy2f2Brf+54HDHByXk9iogx6
-	 7c0K5NpL7bFAeF2gTzt21h/udPY7fXNDkt0LhiVGIOfooo85jhGcSy/nnSbiL3piMQ9r/
-	 4Gy7cZQb9WgnVt35vgjTxUCUARs4jLnKxnUqEV4N1fFh53ZJS21oqXINqT6MEp45PJQ==
+	bh=fiCoBNQvR5AGfRaoC1+pisRbsAY0Ni775J+o1wsZrtg=;
+	b=cLzIGXjjX6UoXuZFVFYa2c3kSx3JQgOa5fVi3qd2qOYL7NIqIzT847Z1R9Z5zczUOkDw
+	 I50UNWMgZAtjWixI44Ri1+9E14L2uYianmzsrJk0BzNYYtdtZ2+CYHLQ7Kj2KAMfdYmkU
+	 zACrAPRsIGgWvN0Y6o6hQJp7M7blJSxMCqkh+i7LOHuxvhdWuI2/QDgV+EKFNEX90DHWw
+	 PWydKrBsYHnpyYvAjXUfCVtvNUyphXtz8kyMpVkhlo1IHPb7r0i74eUmqV03sxiC3Rw4r
+	 TGlFAYwD8imIKe/XLXhCaVvOIkpa8JXGaE2/Y0yfWgOZQPZ801ZG2u5X4w5RRcZEsHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5bX3EtU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssWFWBvI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60F1606A31C;
-	Wed, 18 Nov 2026 20:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3946606A31C;
+	Wed, 18 Nov 2026 20:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5bX3EtU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E6B1F000C4;
-	Wed, 18 Nov 2026 20:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ssWFWBvI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC781F000C4;
+	Wed, 18 Nov 2026 20:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034829;
-	bh=I7AyqWPrtW0fO2JNJ0vQjtCy4iroxfamYa1ywKVDsKI=;
+	s=korg; t=1795034832;
+	bh=fiCoBNQvR5AGfRaoC1+pisRbsAY0Ni775J+o1wsZrtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A5bX3EtUeobSmnofZue9j5EWfV6wXo+dLBmW1PQpwC/W37IkzdZgz5RlBEm6ogXBQ
-	 9FAqmiYUKG3bEBWCKB671vHOIC7CObPkFLL5EiAs48g2iBzgVDzZYzs44tcj9PO/AY
-	 +hYStIesgbABiC+ycRZ3/26mrM8Rg41sA6n2Owk8=
+	b=ssWFWBvIHMN97nQ2/ZACclHS6RNbjfO94pJ3C8Q3pcRyDaqpWeFYugkJn9qwH4GuY
+	 WCM4jLpqQrgtrG1f7rOS/cwo3x977cxYla3BdarMjiswrYLRWT4stAAFmiZlSk7vu3
+	 fu69tBUEclIY3lFITe7YPL7s2r/sXqSbCK+TK1c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Hui Peng <benquike@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0509/3318] mctp: route: iterate socket tag list in mctp_lookup_prealloc_tag()
-Date: Wed, 18 Nov 2026 15:18:51 +0100
-Message-ID: <20261118150332.376873119@linuxfoundation.org>
+Subject: [PATCH 6.6 0510/3318] net/sched: act_ct: remove add_helper dead code
+Date: Wed, 18 Nov 2026 15:18:52 +0100
+Message-ID: <20261118150332.411527230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,53 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 26cc0e69cce062cd3aa6fae33074684669c35a71 ]
+[ Upstream commit 00df72e39f306e2f7adb68528a5c92109da6a0a9 ]
 
-When a socket transmits a packet with MCTP_TAG_PREALLOC set,
-mctp_lookup_prealloc_tag() iterates over the per-netns &mns->keys list
-and matches netid, req_tag, peer_addr, and manual_alloc, without
-checking whether tmp->sk == &msk->sk. This allows any MCTP socket in the
-same network namespace to use and consume another socket's preallocated
-tag.
+This variable can only become 'true' when the connection is not
+confirmed, but it is only checked when it is confirmed.  So, it can be
+treated as being always false and just removed.
 
-Iterate the socket's own tag list (&msk->keys via sklist) instead of the
-namespace-wide &mns->keys list in mctp_lookup_prealloc_tag(), ensuring
-that only tags allocated by msk are matched.
-
-Tested in QEMU against Linux 7.3.0-rc3 by allocating a manual tag
-(0x18) on socket A via SIOCMCTPALLOCTAG for peer EID 9 and sending a
-4-byte message with MCTP_TAG_PREALLOC from socket B in the same network
-namespace. On the unfixed kernel, sendto(sock_b) using socket A's
-preallocated tag succeeds (ret = 4); with this patch applied,
-sendto(sock_b) fails with -ENOENT (errno = 2) while sendto(sock_a)
-succeeds (ret = 4).
-
-Fixes: 63ed1aab3d40 ("mctp: Add SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control")
-Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Fixes: a21b06e73191 ("net: sched: add helper support in act_ct")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Link: https://patch.msgid.link/20260921051002.1656692-1-benquike@gmail.com
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260921145655.3167436-6-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Applied the condition change to the already-relocated helper-call block instead of the upstream location, since this tree's layout differs and the conflicting hunk was dropped. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_ct.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 53580774334b0..12a9e2af8cbc4 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -764,7 +764,7 @@ static struct mctp_sk_key *mctp_lookup_prealloc_tag(struct mctp_sock *msk,
- 
- 	spin_lock_irqsave(&mns->keys_lock, flags);
- 
--	hlist_for_each_entry(tmp, &mns->keys, hlist) {
-+	hlist_for_each_entry(tmp, &msk->keys, sklist) {
- 		if (tmp->net != netid)
- 			continue;
- 
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index d0fd701067672..950ed925e69c9 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -980,7 +980,6 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 	struct nf_hook_state state;
+ 	int nh_ofs, err, retval;
+ 	struct tcf_ct_params *p;
+-	bool add_helper = false;
+ 	bool skb_is_ours = false;
+ 	bool skip_add = false;
+ 	bool defrag = false;
+@@ -1090,7 +1089,7 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 		err = __nf_ct_try_assign_helper(ct, p->tmpl, GFP_ATOMIC);
+ 		if (err)
+ 			goto drop;
+-		add_helper = true;
++
+ 		if (nat && !nfct_seqadj(ct)) {
+ 			if (!nfct_seqadj_ext_add(ct))
+ 				goto drop;
+@@ -1109,7 +1108,7 @@ TC_INDIRECT_SCOPE int tcf_ct_act(struct sk_buff *skb, const struct tc_action *a,
+ 	 * or if we're about to commit.  This has to be done after all the
+ 	 * extensions are already added.
+ 	 */
+-	if (nf_ct_is_confirmed(ct) ? ((!cached && !skip_add) || add_helper) : commit) {
++	if (nf_ct_is_confirmed(ct) ? (!cached && !skip_add) : commit) {
+ 		if (nf_ct_helper(skb, ct, ctinfo, family) != NF_ACCEPT)
+ 			goto drop;
+ 	}
 -- 
 2.53.0
 
