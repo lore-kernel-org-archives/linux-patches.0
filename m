@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048862;
-	b=SOO5Zvw5sgrPbnsoZRbDQodlHLSIrXumUImIXN9JQwf2w3Wdjj72i8Nn9oUPqA+7Wvxb
-	 I2RLOJVylWoErRkdfHPWxpQm9mmM0iifi1mIBvHuuCpFDRNq7t3mbQXnbernvLHF+1wSp
-	 yuLixw2wsA0ChHGD8iFx0GLaXjpZc2SJRwqP7GKQcEqf+aq+nbDlMqw+6IY/SoGsMwdl2
-	 CQ3BmD+29D1xnKQBS8f2uXU7iT85ZnBCO+lrP53/yBTr53MmBKaKK7786QSTM8cIvKWQW
-	 iSNEwL4A9PKbjVkxaMuqjCpn5Wh2hFWdUqJ7XTQyl2qu0JOBij1B2cMe/fUh+ySP1ZQ==
+	t=1795048865;
+	b=w4LE69e4wnSzQz4UtLmXH+EgGrJLfo1/UWbzVlfkOQAd7RNoLqRzuptUNTtSEx0c/SoS
+	 Fz6vQ2Gk+KhB1R5DbfNuBoxmAAp9yVNAuOtICtiE5451U/R6e1zoN1wg8RKrQ1BtQAzs9
+	 dK2b2LQQdkkJrp4KPNuHR/adFkNuL0C5FSIAzK43mgKiQrq4kLVfwAGoNbNmC4yKkZ/Zo
+	 Oola32nfd2IZfG9Czb7Csbdvub0KtfP9j9ND0IgRMxqgYMbUZHleBpfdz41Vr5TKaMW0M
+	 LvDlflEw/k1tDGuj9/ME1TD4jTnhIhjhA/+85QbA1d+tivrdpvs8dGVn3gxLMivN78w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048862;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=aFTgSxgWgHABNtLTZO7RpnbJH4wEtgvnvWjCZvs4400=;
-	b=W9vaj72Hy+jkWkrtBCuZz6tQdCKMXOXLkzmNOcu+G1u05/Ekrprd/h5e0NRa9VGfgpYI
-	 +aqTYpXHnhYDAYHpPWvI9EGvP523Gem/tcWbTuM7DoR4X9Im+kfCcCoTnE4ZhglYCfP7i
-	 nUpOEM34E7JfwEpguZFhvnkmbPNwHASUBYL9OizAITDqPOaz1oBPUAmvW1skeEUE+FIAg
-	 jp2/5O1M82TjkkuL9bY9N/mKGCMsuAaBTgNYM0oqOHHdrQDtaf2NrNLEVqf51GYW5oGiG
-	 mw9WkXMuPWG5AImorll1DZvIt8oG1WyQ0i4plmiNkAo2gFaJ9gjExyg88lAHdDNqGBQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=UK8r3qfxlmR5Qf13ZbeeQM2kKpNfbuxtLtf/cO+kwoE=;
+	b=DSqth7MUJ80o+zCxCQITm0w1PzrozoaTwqKxGSYZZ6Rj4Ri4uZmqVAUXAvuIuABG7KeJ
+	 ndYAW+7wmMKqTPVvNQbwSjqG/WbCgz3giymtB1x3GAnYP7gvQADmfBebQeIjiMSUXfrfR
+	 nt+InXdms4bd5iMnf3aNxtNuKGD3jCXRvnH73+GihPz8oXikFw+yhMaU8WWQdTopoFe4a
+	 /I9le2KyhjvTMDfsSVizBk0NwERYNG/GZzJXc724LDW8h2T14CNvYunI5HT44UnsLJdGb
+	 vC8YFEhZisbAyztvvd1wXt7CPUel0m+9yy5Teim7dGxRr/1bMi3VeyI/0vFG9zUM+mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9OBoMHc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPKgNl6P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB566606A320;
-	Thu, 19 Nov 2026 00:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B290F606A320;
+	Thu, 19 Nov 2026 00:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J9OBoMHc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A901F000C4;
-	Thu, 19 Nov 2026 00:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FPKgNl6P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9941F000C4;
+	Thu, 19 Nov 2026 00:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048862;
-	bh=aFTgSxgWgHABNtLTZO7RpnbJH4wEtgvnvWjCZvs4400=;
+	s=korg; t=1795048865;
+	bh=UK8r3qfxlmR5Qf13ZbeeQM2kKpNfbuxtLtf/cO+kwoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J9OBoMHcXv6Kuv0ncTRJ4COY3prJZxudn635WbmXHI6Pb/ugIZEZiJ/KqC9LfXjjZ
-	 zqizT0lvMrFqfgP29UTe4fMBJ0NCvzsyK9k2JclBvz16seVl2nhCqifJFPQrOEv+xs
-	 Jjdg4flFWXt84VVVuXuntJwz2HPSUkdMio50VgQ4=
+	b=FPKgNl6PiImNoGxzBQRSQva/4YPH/KfO33a562Hm3cuWGYvgHCtGQtGS5gK0MYzHi
+	 TjYG6ky7YfbHPfxFTLd3Ym+avAYubADu0O89oHL0o6rmCE0gbDeLxpM5VTpxhbF3rc
+	 m/MHTYSI557FSUWTT/L5nQkMteOrKqZWu6gS5CbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2146/2857] rtc: bd70528: properly enable wakeup
-Date: Wed, 18 Nov 2026 15:53:00 +0100
-Message-ID: <20261118150318.667771376@linuxfoundation.org>
+Subject: [PATCH 6.1 2147/2857] tools/nolibc: stop rounding malloc() sizes up to 4096 bytes
+Date: Wed, 18 Nov 2026 15:53:01 +0100
+Message-ID: <20261118150318.701995489@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,53 +63,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit cb8a6249236fd970fc3418d5d2b27dc37376f3ff ]
+[ Upstream commit b7db3ba9434cbad3d15f62500104525bfa28a304 ]
 
-Wakeup on RTC alarm now only accidentially works when wakeup for the power
-button connected to the same PMIC is also enabled. Fix that by properly
-specifying the wakeup irq.
+malloc() rounds the size of each mapping up to a multiple of 4096,
+presumably to align it to a page boundary. But the page size is not 4096
+on all architectures, and mmap() and munmap() round the length up to the
+page size themselves.
 
-Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 32a4a4ebf768 ("rtc: bd70528: Initial support for ROHM bd70528 RTC")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://patch.msgid.link/20260922-rtc-bd-v3-1-7f2580c55d58@kemnade.info
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Drop the rounding. As heap->len is no longer rounded up, growing a block
+with realloc() now always creates a new mapping.
+
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Reviewed-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260926152414.251214-2-danishkhateeb03@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Stable-dep-of: 2111eb4273e7 ("tools/nolibc: check for overflow in malloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-bd70528.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/include/nolibc/stdlib.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-bd70528.c b/drivers/rtc/rtc-bd70528.c
-index 59b627fc1ecfa..7f10f2f4f468b 100644
---- a/drivers/rtc/rtc-bd70528.c
-+++ b/drivers/rtc/rtc-bd70528.c
-@@ -10,6 +10,7 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_wakeirq.h>
- #include <linux/regmap.h>
- #include <linux/rtc.h>
+diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
+index c0c3854b3f35b..059af4207c93c 100644
+--- a/tools/include/nolibc/stdlib.h
++++ b/tools/include/nolibc/stdlib.h
+@@ -113,9 +113,7 @@ void *malloc(size_t len)
+ {
+ 	struct nolibc_heap *heap;
  
-@@ -318,6 +319,10 @@ static int bd70528_probe(struct platform_device *pdev)
- 	device_set_wakeup_capable(&pdev->dev, true);
- 	device_wakeup_enable(&pdev->dev);
- 
-+	ret = devm_pm_set_wake_irq(&pdev->dev, irq);
-+	if (ret)
-+		return ret;
-+
- 	rtc = devm_rtc_allocate_device(&pdev->dev);
- 	if (IS_ERR(rtc)) {
- 		dev_err(&pdev->dev, "RTC device creation failed\n");
+-	/* Always allocate memory with size multiple of 4096. */
+ 	len  = sizeof(*heap) + len;
+-	len  = (len + 4095UL) & -4096UL;
+ 	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
+ 		    -1, 0);
+ 	if (__builtin_expect(heap == MAP_FAILED, 0))
 -- 
 2.53.0
 
