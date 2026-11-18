@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024494;
-	b=e8NoFFT8lU611GJaSfuzo1cn2OfKtM0ECP72hOt75rm79ZW0FQnWGGAa4gQpsyHQtZyj
-	 BtHGHHN1LAS+BiHS+ktalgy75KcBxf9cyEVWjyOih/IgHNgH3FQaGDe8SLMhkh3XDpcnu
-	 gGcdb4TRFHpg0jKleaGeTLn4bCPIBGx6Iz+P8D5Cgy2s5uduoVXHcNh29GM/bGPOEItrV
-	 ZVoaUQSXHU0rSrJEgsXjbGE/OLqzz89NkKqIKUdQ2Z/pREVeRsPf6bDGHxKl9HaQbaI9/
-	 LyVwLbyLs7NfMq/DHidwSJ84q7c1qb1RBXHXpXdIL+iojN6/PR7RwIuQSJ0dUxWpNtg==
+	t=1795024497;
+	b=UZcK/zE0T042uxZUJXLRaHmj6+bG71tlac1b/L+HOvX6A3A27+3NcP7Zanmahi3BSyTP
+	 Fbn4ziSLBSsUyWsIwRL/MygRWjbbSNr38eZa6afPCn4yVfwDMclaWYrPO/cHl/bcj+T3a
+	 SlV9bOEhzOs3DLijsRqiqj8OX2jWQipdq4KJF5eXX9Qa4e01Ouys7f9C9fibdigh0D2u3
+	 Ug0ZP04+v19ji4DeaKpvRgZTDsW1HTuyhnT0AIPuijy5T4NABA8Qeac5ZIZhyETnMuYj3
+	 8ILkarV/TgrHoaCna3aecQGoKe91l/lrREtXwa6TM4K0w7BHkIlsB+04OZ3hkH1yVjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A3+LZPwo71ZdB90jzVFn6lX6Wdxn0nyhjV8iHtA9GO0=;
-	b=BUSHeooS2nTUzQ03I2rr6H2BQdGMSnCMYNlpJARknNTuvttjhj5kQTQSHCFsDoxeeLjL
-	 E7RCjTJoMt007Cg9/b9md0biBzcRBwnC8JcAud/59D/+TPpCPjaxc86bJ5Z8wYu4utmUZ
-	 mCGwUAWZZtebplIVUcGDxIX2N3d2f8tSp6nWbe7o0LsKjrcq8aOSTAaPDCrHwzJxxucNL
-	 6CXNTSJd90d1l5M7ajUnKyP+zjmCUWuLnN2pLMUKBDckPD7TTw5HRNMcgKf8/AJEA/4bw
-	 5uiWGvXaX8kCHnNyQI8Pn+UEyA1WZCjiBcQke1j+jIDwG6mgahBumKQwS1FhKDBjEUg==
+	bh=QJt61AH+vWFJrmGfZy0jjHb9v61pQoxdydwuwOJTHhg=;
+	b=ceHQtBgrLWEWxo+xcJjPtZzZ67XOeu0HAC8XCxu53CsZLjoz8SNoAYOwJizMp9s4GT0b
+	 B0Oz1LT6nVnkvIiJcKGwE4gX5BZa9Zx0bYWHc2UX3jI9a5zWAGz/lpm/gp9BGXdqyNWCB
+	 TGKy4+3pyqhXK+ZkcWzGnn60o19IG/wbqplXC48AJOiQnR7KKKAO00xcmPgCuOIMh2tT9
+	 v3P3328eIcN7waTeO5+2suHYCaVlj56OD5bC5Jar/ZuKRzculFMVJOteJZvwWXCxYhYld
+	 pKxMiFnTv+GhFRsmd0C4PTboWgD5/hVKVSQkIOoFT9RCRnE+ZwVzCwvvFZ7vly8eRNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ku2T6oJQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owG4FA21;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6380606A320;
-	Wed, 18 Nov 2026 17:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FBC606A32A;
+	Wed, 18 Nov 2026 17:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ku2T6oJQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85D11F000C6;
-	Wed, 18 Nov 2026 17:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owG4FA21
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC911F000C4;
+	Wed, 18 Nov 2026 17:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024494;
-	bh=A3+LZPwo71ZdB90jzVFn6lX6Wdxn0nyhjV8iHtA9GO0=;
+	s=korg; t=1795024497;
+	bh=QJt61AH+vWFJrmGfZy0jjHb9v61pQoxdydwuwOJTHhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ku2T6oJQSL443Pt59gE04OyzquZB/xGFC8r3NWDsruTRcsexwDEEFwHRUQTSEXD9N
-	 qccUwLkXDAraECpb418f4OC9T9ezyhaZiB/Oj5l5JjsEIQ+hjFVMH/VefOsGWA/1yo
-	 jtVdrSi9UFUl2WAbaebBh6zSUZ5N5eR0npzOO1MM=
+	b=owG4FA21UHIz0OL8C6eTRcJLcbMGcTMAoRGO8iH55oAwkNm4fWNbclvPRr1ZzEvbI
+	 najGfkTGClasXQ6VCf2epxLtGpZwuzt4nCQc36g1+QjrD847Q1RYsApqaZX4WLpv5P
+	 T5OQznkbf22EReQahpa3m9NZcfjrKW6Hia8vWs3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0746/2151] ACPI: PCC: Preserve shared memory signature in OpRegion handler
-Date: Wed, 18 Nov 2026 15:41:21 +0100
-Message-ID: <20261118150149.205744977@linuxfoundation.org>
+Subject: [PATCH 6.18 0747/2151] ASoC: mediatek: mt8183: Fix wrong clock cleanup on clk_set_parent() failure
+Date: Wed, 18 Nov 2026 15:41:22 +0100
+Message-ID: <20261118150149.238081199@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,110 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 46c263c213876bdc2297ef61aa90f0b210ebac73 ]
+[ Upstream commit 7f05596bd4047e4623eeb1f3c6921d6f71481c3b ]
 
-ACPI 6.3 introduced PCC OperationRegions. Section 5.5.2.4.7.3,
-"Declaring message fields within a PCC OperationRegion", states that,
-for all PCC subspace types, the PCC Operation Region pertains to the
-region of PCC subspace that succeeds the PCC signature. Its length
-therefore excludes the 4-byte signature.
+In mt8183_afe_enable_clock(), when clk_set_parent() fails, the current
+error path incorrectly cleans up the previously enabled clock instead of
+the clock used by clk_set_parent().
 
-The PCC address space handler currently copies the OperationRegion
-buffer to and from the start of the shared memory. This overwrites or
-exposes the platform-populated signature and omits the final four bytes
-of the OperationRegion.
+Fix the error path to clean up the correct clock when clk_set_parent()
+fails.
 
-Offset the copies by the size of the signature and reject an
-OperationRegion that does not fit in the remaining shared memory.
-
-The example added by commit 77e2a04745ff ("ACPI: PCC: Implement
-OperationRegion handler for the PCC Type 3 subtype") incorrectly
-included the signature as an OperationRegion field. A Type 3
-OperationRegion containing a 100-byte communication area is declared
-as follows:
-
-OperationRegion (PFRM, PCC, 2, 0x70)
-Field (PFRM, ByteAcc, NoLock, Preserve)
-{
-    FLGS,   32,
-    LEN,    32,
-    CMD,    32,
-    DATA,   800
-}
-
-This contains three 32-bit fields followed by a 100-byte DATA field.
-The fields correspond to the Type 3 shared memory layout in ACPI 6.3,
-Table 14-372, after excluding its 4-byte signature.
-
-Fixes: 77e2a04745ff ("ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype")
-Reviewed-by: Huisong Li <lihuisong@huawei.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20260922144302.3847593-3-sudeep.holla@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903045203.175337-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pcc.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpi_pcc.c b/drivers/acpi/acpi_pcc.c
-index e3f302b9dee5f..683924a708ba0 100644
---- a/drivers/acpi/acpi_pcc.c
-+++ b/drivers/acpi/acpi_pcc.c
-@@ -28,6 +28,7 @@
-  * to PCC commands
-  */
- #define PCC_CMD_WAIT_RETRIES_NUM	500ULL
-+#define PCC_SIGNATURE_SIZE		sizeof(u32)
- 
- struct pcc_data {
- 	struct pcc_mbox_chan *pcc_chan;
-@@ -74,6 +75,14 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
+diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+index cc4f8f4d3dab9..6ab0734ad1365 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
++++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+@@ -137,7 +137,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIO],
+ 			aud_clks[CLK_CLK26M], ret);
+-		goto CLK_MUX_AUDIO_ERR;
++		goto CLK_MUX_AUDIO_INTBUS_ERR;
  	}
  
- 	pcc_chan = data->pcc_chan;
-+	if (pcc_chan->shmem_size < PCC_SIGNATURE_SIZE ||
-+	    ctx->length > pcc_chan->shmem_size - PCC_SIGNATURE_SIZE) {
-+		pr_err("PCC channel-%d shared memory is too small.\n",
-+		       ctx->subspace_id);
-+		ret = AE_AML_REGION_LIMIT;
-+		goto err_free_channel;
-+	}
-+
- 	if (!pcc_chan->mchan->mbox->txdone_irq) {
- 		pr_err("This channel-%d does not support interrupt.\n",
- 		       ctx->subspace_id);
-@@ -97,14 +106,17 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
- 			       u32 bits, acpi_integer *value,
- 			       void *handler_context, void *region_context)
- {
--	int ret;
- 	struct pcc_data *data = region_context;
-+	void __iomem *pcc_opregion;
- 	u64 usecs_lat;
-+	int ret;
-+
-+	pcc_opregion = data->pcc_chan->shmem + PCC_SIGNATURE_SIZE;
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
+@@ -153,7 +153,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
+ 			aud_clks[CLK_TOP_SYSPLL_D2_D4], ret);
+-		goto CLK_MUX_AUDIO_INTBUS_ERR;
++		goto CLK_AFE_ERR;
+ 	}
  
- 	reinit_completion(&data->done);
- 
--	/* Write to Shared Memory */
--	memcpy_toio(data->pcc_chan->shmem, (void *)value, data->ctx.length);
-+	/* Write to the PCC OperationRegion after the shared memory signature. */
-+	memcpy_toio(pcc_opregion, (void *)value, data->ctx.length);
- 
- 	ret = mbox_send_message(data->pcc_chan->mchan, NULL);
- 	if (ret < 0)
-@@ -125,7 +137,7 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
- 
- 	mbox_chan_txdone(data->pcc_chan->mchan, ret);
- 
--	memcpy_fromio(value, data->pcc_chan->shmem, data->ctx.length);
-+	memcpy_fromio(value, pcc_opregion, data->ctx.length);
- 
- 	return AE_OK;
- }
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
 -- 
 2.53.0
 
