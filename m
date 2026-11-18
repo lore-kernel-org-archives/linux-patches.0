@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023170;
-	b=FLclFTrz9wRS8K0wBNT+Vy2f6rrtHC1FDD+Hknds7t/NA/6wzIKDJFeq/7GJMqMvAkPa
-	 xHsZ9/Jjw+JnDLg0DZfX98aKpB8JNKoclAc7x66fy9+kgP4bt/7z/GRHxiIUsKYfmOV3S
-	 oh39CJ1eiZ/WKEMbbd9EcNv8L4MxuGsZjJgFtBsHz0CnRMWyXhUkkqvizJyPrg7qL2n2t
-	 OV53xK2d+fMpCMaJskCFsjGvHLr18iDZil3AsWMFOzJALBPqfZGsePOn6qHSXZ0liRqV7
-	 c6UXWrttCgXzQd5FmoYnYukNL6nyp0PSTuFu0i2X9wUxDxJOjFNT9sEc4303qdhdhjw==
+	t=1795023173;
+	b=Z/dJBVuzb2NBcNUd4OKUcgviyseQHSVxLtScKi1+FEvsAh3SU2DgdpdcbN4UP/VcSfHM
+	 mTSoq60caZ4BVlQLE/UqQGYsqLe2MReuFPqabqQLG4ZegBrqmWufsMeCjowE61ohv58hj
+	 Itp1pnBKRFvh6A+0LdYxIGDRRenmLwMWQ75rcUhnqTHGJIMO3/y1ZFGliUzYUK7ylHC9F
+	 XtPhbajmodQJXM+eXl2/06iiS96+fEWY6rMQwN9vMOzjW7lSC3df6osMPCD/sv/9QDMww
+	 mOBMtaw1+26w4ts2u7X2Dn9iXXNTb81iTuErczhSXhDvh9SKyDdY6AoRbRktiJLn7Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023170;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R3nbfC3pYnSKsdxnAiXQItPmuXAR2s+t7gvO+65BqT4=;
-	b=uBvHg9YQmYEdvNcn1Gwv2Xv0jJX5MNBgjLYC68XopFTYEx8T5B/4CkZfqMunC4QcPr16
-	 flPcejaebZRPxm+zJKtvNEmyWpraOuuAZ5IRFXzeGCzlmpMrCEXMFdbqd8JcsYvZdeXZ/
-	 DQZFW3o0WCxU3/Mq6N/6IUo4LaIwUq27tp6UZEghMdavBRDFveSKg7TQwJRNrmJioyQr3
-	 jFjcvS1mtJXLU5FTiUwkBWvGsC5/GELRK5K7LCL9ud621tM8Sz22Ja9GTTpy3nabCYjid
-	 WL9SNbajVYyUnE+hXEm48VkcVMV/Dw5KHwScHlS4YMBPT3EnL+173HBfYBTHbOAw9zw==
+	bh=LrDinabDi66V7W5PtRG0SoV9aGvKdj/kz+SxEIkfu/4=;
+	b=2sWX31OT+GHjnZjrzV/FUOHHLEhzdzKEvonSWU28SHWgrfEGAFTxw7sn0yN8UCQX10Gy
+	 r4Q4j9UF+KPg2NtN65MBlg2i9RoIPfIPKemiyMNs2Los+sd9ZgJ1kDkt5V7dCk9K+qquj
+	 XIiT0cr4tf0SuNU9dssZs0fGGB8RxuBWnRJW+QrcC78mZLWQzFiHSccZMydwPwnTf7jhx
+	 svR6sf6SqO9jUFvxvxHQS7aVXO+64ClMhEApRREKM3tf46v40mXiC8fUDZdBbOBxLhzF9
+	 QownAkqcDN34m76ZFZjly6yQsGs3cXb1/rDXC4Bf5Jo+hC56cSJJnDifb8DlSKrJCUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXoK8Hd1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uVE8Xxvd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F2B606A31C;
-	Wed, 18 Nov 2026 17:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD93606A325;
+	Wed, 18 Nov 2026 17:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXoK8Hd1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E98C1F000C4;
-	Wed, 18 Nov 2026 17:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uVE8Xxvd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788011F000C4;
+	Wed, 18 Nov 2026 17:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023170;
-	bh=R3nbfC3pYnSKsdxnAiXQItPmuXAR2s+t7gvO+65BqT4=;
+	s=korg; t=1795023173;
+	bh=LrDinabDi66V7W5PtRG0SoV9aGvKdj/kz+SxEIkfu/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JXoK8Hd1hzYm01/Wm1xRj1zjChiZ6pv2Rg/lZ3u7Nvq+rESMDIVfUylA+gNK4XdDc
-	 +FXKRSRdgszWWAe1YTInNrHVjrXgFU9qqQjlUG0XY6hfMdMYHRjUvhP1VnVMLCLgTS
-	 3cSEcRYglrsI+J+NTpg6om5XK+0UqiStkfom41No=
+	b=uVE8XxvdVwaQBMMFsTF00Kk8mFa+46Nj2evygCb7Yxj+GT0/Opt5Vebk1JFhwSL25
+	 4oQEG2ZH9DOGYLglo5bbSoFV503S7HjZgY3Cy1YkcaY+BLcACXIC/aUZFtuAWYUW1F
+	 vnglIH4/xHXcbSFAm3o+9/oQaSWYb/JBLt9yjYlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Belwon <igor.belwon@mentallysanemainliners.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0273/2151] arm64: dts: mediatek: mt6893-pinfunc: Fix pinctrl header path
-Date: Wed, 18 Nov 2026 15:33:28 +0100
-Message-ID: <20261118150131.802036287@linuxfoundation.org>
+Subject: [PATCH 6.18 0274/2151] virtio_ccw: fix synchronize_cbs() after interrupt fallback
+Date: Wed, 18 Nov 2026 15:33:29 +0100
+Message-ID: <20261118150131.842860943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,34 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 863d48714194bfcdb917b2ec35531e40df40cb87 ]
+[ Upstream commit 6e484b870b71eb6acb3fa7a10b8e71098e242033 ]
 
-The header resides in the dt-bindings directory and not in the
-dts/mediatek directory. Fix it as to avoid a build failure.
+virtio_ccw_synchronize_cbs() assumes the device uses adapter interrupts
+when vcdev->airq_info is not NULL. If registering adapter indicators
+fails, virtio_ccw_find_vqs() falls back to classic interrupts but can
+leave airq_info set.
 
-Fixes: c0f1fd9eeb317 ("arm64: dts: mediatek: Add MT6893 pinmux macro header file")
-Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+With VIRTIO_HARDEN_NOTIFICATION enabled,
+virtio_ccw_int_handler() invokes callbacks under vcdev->irq_lock.
+synchronize_cbs() instead takes the indicator area lock, so it does
+not synchronize with those callbacks.
+
+Use vcdev->is_thinint, which the fallback clears, to select the lock.
+Keep the airq_info check because is_thinint can be set before the
+first find_vqs() call, when airq_info is still NULL.
+
+Fixes: 3a232277c1ac ("virtio-ccw: implement synchronize_cbs()")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260908053817.26065-2-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h | 2 +-
+ drivers/s390/virtio/virtio_ccw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h b/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h
-index 982bc95c471cc..7cda5c73fb684 100644
---- a/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h
-+++ b/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h
-@@ -7,7 +7,7 @@
- #ifndef __MT6893_PINFUNC_H
- #define __MT6893_PINFUNC_H
+diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
+index 4904b831c0a75..98b62bc18228b 100644
+--- a/drivers/s390/virtio/virtio_ccw.c
++++ b/drivers/s390/virtio/virtio_ccw.c
+@@ -1061,7 +1061,7 @@ static void virtio_ccw_synchronize_cbs(struct virtio_device *vdev)
+ 	struct virtio_ccw_device *vcdev = to_vc_device(vdev);
+ 	struct airq_info *info = vcdev->airq_info;
  
--#include "mt65xx.h"
-+#include <dt-bindings/pinctrl/mt65xx.h>
- 
- #define PINMUX_GPIO0__FUNC_GPIO0 (MTK_PIN_NO(0) | 0)
- #define PINMUX_GPIO0__FUNC_SPI6_CLK (MTK_PIN_NO(0) | 1)
+-	if (info) {
++	if (vcdev->is_thinint && info) {
+ 		/*
+ 		 * This device uses adapter interrupts: synchronize with
+ 		 * vring_interrupt() called by virtio_airq_handler()
 -- 
 2.53.0
 
