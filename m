@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038690;
-	b=sFN6vKmhMTPAedYeQ0lg3c/cBznUaIiQ/Ja7652nGylNG3wrAbcrAp6mIOU/oktmyL/T
-	 y7vEvXsR9ToZoClSQZViS6FxKORpqDEF+aLVkYionyRvVRsMFgn0xOVOSe94786vYVu1Z
-	 6rD9NOoVBJSevXtFHiFQ54u2VXl8fQbGR3t+y0aXFTQp/S7WZAzMuU5kBqLGpzPBhb1u7
-	 TBeqiol1oqAUNhSx+2ZrtB2GkXycGOezEJ0t98ptG9cz7/G5Yt79cZXbVF3UT+DbDoluK
-	 gT7OGG/zJs6f1rGTBCqZ01rAK99GXwLFBsuRNCQ9KunvYC9UQ94YrHIwv+iYOxoLE4Q==
+	t=1795038693;
+	b=2Evmdj9BoJQTFOZBeifC/Pv1En0of+pEZv5mDcbDOcYWpPbnR3/vzQFXVN0cgjfjAkYD
+	 7PJdsfa+Z6WulhiUwxFMGk2h+Y2LuyQfD6Wh11vXQ4g9j5bayV7OBQnhXGkH9o6q0/L+W
+	 IQF/PfkYiP5pNuyWInQHC7KwK3HtUtc3mIOdTzlQkXom8oCRxn6cCZ5Q1mGanfyEpblLN
+	 uFtM0IVutdzV/dbwlgLVDWDWGzR6jcZiDNXHSDrZNNgUqkIwwURKOLGRKkF7BJUlsyEt9
+	 dohazueveY9UdVURd88iQ8Fy+mgRgD6DYAopDtaXCD6THF9h3y/ggpFVA6fpW6S71UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038690;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038693;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ycVP1Rb5f2wcVNQt9ZITjAPQ4LhUI3geEpOeJzULxq8=;
-	b=IGPbIMBK8F764P5J3JhM7uBRxxYyG1YvnqcTfyCC1qep0MbbSVOFRk0cFbynZJDxxsfP
-	 uCnVEwCS1PXW7rcu0x5NTSawLOeKSTCKnGoAF99SR3Xr42RFza2QY2XdxNOerYmnxjbSL
-	 IDBWNeEimZEwlg6VqsYcs39aAStvkbY88fUgGCLNNZrQ/WLGJQng1YKqGpjKfUF+Vb5PZ
-	 5Twq7sGyIys1AxVdqtgg2PWQtpnDLUjl7KbbMsNOgW7IaFVD1vSd123h9bVPtq8JehLE0
-	 0L6USsM6PgeZtu+RGe5u7w2FVBnQLK2v0aLchkJs5v4hsOy2OfZMMdlNiHErMBCCykA==
+	bh=MC7s4tOtt8LdRSNwtLf8e4xvCDY1E7qlQ9/NHRkjLJ4=;
+	b=lMJWyA+rHeco76QuDUMKqsn3y9S3hDtLrpRRHEykojLs8OJdBiKc5IoDS3oYROvJni9h
+	 KslJEjKhg1dHKWYegN/Mxx3fODDBZRNzZ6+JZu38D2MtcAfAd1b4VdoCADU25ejdRNzdf
+	 p+bhhaVaExGmWQvFQpbfmcJ7TSobeTePtiLNx6oRyWGDcTSzLQCog/oKp6sy1lbkmvZbI
+	 1tpZPTzKUFT+PSkc4CadBpF8f4o8W29DtiouWqHe4fzsbgZwCJxYLTk2kPBXjVzLx6M5d
+	 SVPQCKGG/4n5vT2EsgNjaqnBc1E4fnzLxFMHG+3/tfnAqRqbDjQ0A9eLkcnmBLb3Hng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Qit/FPPv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3VuzpWz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7263606A31C;
-	Wed, 18 Nov 2026 21:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9506E606A31C;
+	Wed, 18 Nov 2026 21:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qit/FPPv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6C51F000C4;
-	Wed, 18 Nov 2026 21:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3VuzpWz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9F01F000C4;
+	Wed, 18 Nov 2026 21:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038690;
-	bh=ycVP1Rb5f2wcVNQt9ZITjAPQ4LhUI3geEpOeJzULxq8=;
+	s=korg; t=1795038693;
+	bh=MC7s4tOtt8LdRSNwtLf8e4xvCDY1E7qlQ9/NHRkjLJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qit/FPPv+QLGYvXlpKXxaKxhhypnwnhk8nIAj7RAIWt5OPEGOub+1FFNxsS402oph
-	 r4O4sqoVH0MjccD2IH/9ZnPc9o+5qeHhY8X93mf++sU6qFIQfsG287jsv0Ua1SUU3X
-	 VhGRg0mAK6XYgCq6UZL4b0bDHDwqkjKSnOgSe1zg=
+	b=g3VuzpWzyUsSZY3yewdz2C92KKUlXdkV++5JqOS6oLWzygGU2swCYop1fvJoz6ieR
+	 hXXCl3fpZ7IlymVM00ZVa1kqdOVDlpgnOnKRInJTPf9jVSFryziu5X2wolDPkw3eAE
+	 D4O5zzrm73v9ewwpNqQdvSjKly5dgBf1EVdWetP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1781/3318] gpio: pca953x: Handle direction register read errors in IRQ paths
-Date: Wed, 18 Nov 2026 15:40:03 +0100
-Message-ID: <20261118150415.290616444@linuxfoundation.org>
+Subject: [PATCH 6.6 1827/3318] ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200
+Date: Wed, 18 Nov 2026 15:40:49 +0100
+Message-ID: <20261118150416.673439107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,87 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
+[ Upstream commit 874323b68c93c6808e034dc0113681e822e6fb42 ]
 
-Three IRQ paths ignore the result of reading the direction registers
-and then use the destination bitmap. pca953x_read_regs() does not populate
-that bitmap when regmap_bulk_read() fails, leaving the callers to use
-uninitialized stack data.
+The C200 (046d:0802) reports a mic capture volume range of
+1536..7680 with a resolution of 1 (6144 steps), triggering
+"Warning! Unlikely big volume step count (=6144), linear volume or
+wrong cval->res?" at probe and exposing a uselessly fine-grained
+mixer control.  This is the same firmware behavior as the other
+UVC-era Logitech webcams already carrying QUIRK_FLAG_MIC_RES_384
+(C500, C600, C210, C270, C310, C510, C525, ...), so apply the same
+quirk: CTL_MSG_DELAY_1M (which the Logitech VENDOR_FLG would provide
+if the device-specific entry did not short-circuit the lookup) plus
+MIC_RES_384.
 
-This can select incorrect GPIOs for direction changes during IRQ bus
-synchronization, corrupt the saved input state during IRQ setup, or
-produce incorrect pending interrupt decisions.
+Verified on real hardware: with the quirk the warning disappears and
+the driver logs "set resolution quirk: cval->res = 384".
 
-Check the read result at all three sites. Release irq_lock without
-changing GPIO directions on failure, leave the IRQ history untouched
-when pending detection fails, and propagate the error from IRQ setup.
-The read helper already logs the error.
-
-Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261008230844.11246-1-olivier.kaloudoff@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 6384c0760e0ee..dacb936ead643 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -763,6 +763,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	DECLARE_BITMAP(irq_mask, MAX_LINE);
- 	DECLARE_BITMAP(reg_direction, MAX_LINE);
- 	int level;
-+	int ret;
- 
- 	guard(mutex)(&chip->i2c_lock);
- 
-@@ -777,7 +778,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	}
- 
- 	/* Switch direction to input if needed */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		goto out;
- 
- 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
- 	bitmap_or(irq_mask, irq_mask, chip->irq_trig_level_high, gc->ngpio);
-@@ -789,6 +792,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	for_each_set_bit(level, irq_mask, gc->ngpio)
- 		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
- 
-+out:
- 	mutex_unlock(&chip->irq_lock);
- }
- 
-@@ -883,7 +887,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
- 	}
- 
- 	/* Remove output pins from the equation */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		return false;
- 
- 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
- 
-@@ -984,7 +990,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 	 * interrupt.  We have to rely on the previous read for
- 	 * this purpose.
- 	 */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		return ret;
- 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
- 	mutex_init(&chip->irq_lock);
- 
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 302736f271932..321eaaf9fa334 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2060,6 +2060,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
+ 	DEVICE_FLG(0x045e, 0x070f, /* MS LifeChat LX-3000 Headset */
+ 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
++	DEVICE_FLG(0x046d, 0x0802, /* Logitech Webcam C200 */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
+ 	DEVICE_FLG(0x046d, 0x0807, /* Logitech Webcam C500 */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
+ 	DEVICE_FLG(0x046d, 0x0808, /* Logitech Webcam C600 */
 -- 
 2.53.0
 
