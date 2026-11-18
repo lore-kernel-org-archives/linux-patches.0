@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037238;
-	b=lOIS5rfcPcNYP4H3yclmBiWHeM4gAa/VOpX50sCNinrVP6b8698P8Kbmw3Wqt6vbODVo
-	 Jofm1i1BSU5WQQWVTNJ2g/lYv2nwZzjiwts3M7ENUW5/OokZh+yFVQU0fg/3E67ObLZ7W
-	 NHCwB42dvCnvOyCF536EaO0Dpko5YEySRWQHQNthotmIQa/YM0Hqdj5VCap0kRcNsL15W
-	 tl9OtkHChKRzadPyScT4sURwl70L92vMNj+aaeqqm7IRYf64WgQxmWby+BtVkXIVtzYrT
-	 7l9xSbc/PmNMIc9CEqw5QyNgFnwS+Kndk3vaIdZFr6Nyfo/XzLfJkalE9ma00dc6A6g==
+	t=1795037241;
+	b=InDwCBVSRyy8qfksxJrYCkpzQ/8ObODYBW8msl585mCx5rytBe0szwcmXNqXkYMKeovl
+	 eVWnZbwPPHmk3JEu1LCC76rQz+HChck9FYxxGAxlN/wYOO7eWa6VDq9txiQkpYnkIMFvf
+	 iWXQBWxc0B5rIV0eeVm2X72cDB+eJ5TKRUah48ZqDy/3jt4Pli8Cu+1v6DK7hfx86I2j/
+	 TKwgZQKyf1ldo+fJpQm3+XOEUpRoZz4knZgl6Y/j+QLzgifCPK/aymNOPIC9HnzlwTQY2
+	 obQF6NJLo4ylDPt5l+eRXRE/N1f2iU22x4DGinwNKxADGNOxf28sCr4328pb43I97yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AMHh9THdRbcBIOalqqSqfBn5JWC0XnY1cw5woWGxpg4=;
-	b=oOSoXxm6/Viod4ojGZhNnCRsEQhNRiZ16zL3P9+QeRNbdjXnHPPYqtrhT4L1d1koEBqM
-	 6/MJTm5CSuahXUNfjnMQ5Kv2i2Rwfw6sym9Z975nOmiUX3RY3Qt14fJkgnFPb095rvk5J
-	 7ssWbdBbKykDwy/Sjv/i1S9hPA+uoWTUlt1QqxaKUhCIcTvqb0EZOdMzvyIBVOKUZxyt9
-	 /UcQD65ZikUQxd2XOfK9pZMQCdD59gDnvAV4JNxhabFMS/c8+pxoTbCTYA0PaX4ftMs+4
-	 p1QEnDdr1r5B7JTSX8zq5wLt2HlmKVAyjtqwL8IX7IGhLoqv3gLH9PdTYJXjw32GVug==
+	bh=JBOM1t2Eg3tx58HB4p7shY+4xfoktoAlyEQE//tv9ho=;
+	b=2EO0PBgpqKF/A9YFYMCw3OZpAQfECXppuSnBF827m29bILOJMEcE9qvqKaOQ3NhrZS8T
+	 ATQ7PjvzH5CzwM9kcltjavxt8JShENzColHME/o9cpmK67ItSJlOEBB8ALv5EUEkqtMtD
+	 +1cNDoA31EBW6hMEl5GgLjygIppwFMCkauFLaL81pQBYhhJLBq268ny7ZUrLFRpmkD/Ca
+	 +69X2rLj3bgpsfXGb6NNRc6lfHSPTB+/DP72y5riwQZfvoVmyQi/JNruzPhTHjQ4wp+oA
+	 bpAJk2hXfDc7u9GMI4p9rtw0V1gGv/3PWnQQRWiR/jAhv7dTvHWLZuks8mzK9zhQMfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHz7Zvd7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nA5pMCKc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138FF606A325;
-	Wed, 18 Nov 2026 21:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD94606A320;
+	Wed, 18 Nov 2026 21:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OHz7Zvd7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC551F000C4;
-	Wed, 18 Nov 2026 21:27:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nA5pMCKc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9804C1F000C4;
+	Wed, 18 Nov 2026 21:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037237;
-	bh=AMHh9THdRbcBIOalqqSqfBn5JWC0XnY1cw5woWGxpg4=;
+	s=korg; t=1795037241;
+	bh=JBOM1t2Eg3tx58HB4p7shY+4xfoktoAlyEQE//tv9ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OHz7Zvd7DZIP1gKpJ2jaH2IhD4inKIaTNQzTjEKVT1QOMLPWjQrR2vb4WFx9ObEla
-	 as70v7w5Ov499DsQ52ITMeHq8hAWwpSE/H1FtczWy/0VvvPk1dn28PQJmOgOWFsTfH
-	 I9MHiUDSAlIK4usEoXtWtDp+NlXqqHsakyXQVFQU=
+	b=nA5pMCKcRlAVymsvJXV70JK6sdGuGYK2kCs61HFXya8WA9eqhcmjoLED/0opfn9q9
+	 y8sgbg9ETB5HwNH4ScaOq6hmzTIE2E6a8q8+KaCL9WyvINSpr0HCR5DWO38IDg0nmn
+	 Nq9Xt7QW72ip1K7lbuGNEVANv3u4BgKP8N5vMcBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1296/3318] mtd: rawnand: pl353: Fix debug prints
-Date: Wed, 18 Nov 2026 15:31:58 +0100
-Message-ID: <20261118150359.147053833@linuxfoundation.org>
+Subject: [PATCH 6.6 1297/3318] ocfs2: read the xattr entry hash before defragmenting the bucket
+Date: Wed, 18 Nov 2026 15:31:59 +0100
+Message-ID: <20261118150359.176716747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,53 +71,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
+[ Upstream commit f48151da595e74efdc23d83d8d6d142207b8c731 ]
 
-They are partially incorrect since "software" engine does not mean
-hamming, the "none" cae is also falling into this print, and on-die
-means there is some kind of hardware support; we prefer to use the
-wording on-host vs. on-die.
+Patch series "ocfs2: fix stale xattr entry pointers and empty header
+reads", v1.
 
-Fix all those prints.
+Five defects in the ocfs2 extended attribute code, plus one robustness
+measure that belongs with them, all on the paths that move entries
+between a block, a bucket and an index tree.  They fall into two groups.
 
-Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
-Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Stale entry pointers (patches 1 to 3)
+
+ocfs2_xa_set() writes through a pointer into xh_entries[] that two of
+its callers invalidate first.  Defragmenting a bucket ends in a sort()
+on xe_name_hash, and lib/sort.c is an unstable heapsort, so entries that
+share a hash can trade slots.  Copying a block into a bucket changes the
+order outright, since a block holds its entries in insertion order while
+a bucket holds them by hash, yet ocfs2_xattr_update_xattr_search()
+relocates the search by the index the entry had in the block.  Neither
+path compares the entry's name with the one being set, so setxattr() can
+replace a neighbouring attribute's value and still report success, or
+trip ocfs2_xa_reuse_entry()'s BUG_ON.  Patch 1 takes the hash before the
+sort; patches 2 and 3 look the entry up again afterwards.
+
+Reads of an empty entry array (patches 4 to 6)
+
+A block and a bucket may both hold no entries: ocfs2_xa_remove_entry()
+keeps the last slot when it removes the only one, so an empty bucket
+still carries the hash it is keyed by.  Three sites index xh_entries[]
+without checking xh_count and so read xh_entries[-1], which lands on the
+header and comes back as xh_count | xh_free_start << 16.  Nothing
+faults, but the value is acted on: the collision check reports no
+collision for an empty bucket, the divide commits a sentinel hash that
+hides part of the key space from ocfs2_xattr_bucket_find(), and the
+block to bucket copy claims storage the bucket does not hold.  Patches 4
+to 6 guard each site and keep the one read of xh_entries[0] that
+ocfs2_xa_remove_entry() documents as intentional.
+
+This patch (of 6):
+
+ocfs2_xattr_set_entry_index_block() takes the hash a bucket split has to
+work with out of xs->here, but only after ocfs2_xattr_set_entry_bucket()
+has tried and failed to fit the entry.  That call defragments the bucket
+when it runs out of room, and ocfs2_defrag_xattr_bucket() finishes by
+sorting the entry array by name hash.  lib/sort.c is not stable, so two
+entries sharing a hash may trade slots and xs->here is left naming an
+entry other than the one the search found.
+
+The hash value itself survives the permutation -- the array is already
+sorted, so a slot can only exchange with an equal-hash neighbour -- but
+there is no reason to depend on that.  Pick the hash up before the set,
+where xs->here is unambiguously the entry the search landed on.
+
+No functional change intended.
+
+Link: https://lore.kernel.org/20261024151012.1059683-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20261024151012.1059683-2-joseph.qi@linux.alibaba.com
+Fixes: e39baff18b85 ("ocfs2: use the stored hash when checking xattr bucket collision")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ocfs2/xattr.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-index 771bda7612864..140428fff8f1a 100644
---- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
-+++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
-@@ -972,17 +972,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index c5251cccb479a..89b454eaff68f 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -5907,6 +5907,22 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
  
- 	switch (chip->ecc.engine_type) {
- 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
--		dev_dbg(nfc->dev, "Using on-die ECC\n");
-+		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
- 		/* Keep these legacy BBT descriptors for ON_DIE situations */
- 		chip->bbt_td = &bbt_main_descr;
- 		chip->bbt_md = &bbt_mirror_descr;
- 		fallthrough;
- 	case NAND_ECC_ENGINE_TYPE_NONE:
-+		dev_dbg(nfc->dev, "Using no ECC engine\n");
-+		break;
- 	case NAND_ECC_ENGINE_TYPE_SOFT:
--		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
-+		dev_dbg(nfc->dev, "Using software ECC\n");
- 		break;
- 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
--		dev_dbg(nfc->dev, "Using hardware ECC\n");
-+		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
- 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
- 		if (ret)
- 			return ret;
+ 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
+ 
++	/*
++	 * An existing entry keeps the hash it was stored under, and that is
++	 * the hash a split has to work with.  A new entry is stored under the
++	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
++	 *
++	 * Read it before the set below.  Filling the bucket may defragment it,
++	 * and ocfs2_defrag_xattr_bucket() re-sorts the entry array, so
++	 * afterwards xs->here only denotes whichever entry the sort left in
++	 * that slot.
++	 */
++	if (xs->not_found)
++		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
++						  xi->xi_name_len);
++	else
++		name_hash = le32_to_cpu(xs->here->xe_name_hash);
++
+ 	ret = ocfs2_xattr_set_entry_bucket(inode, xi, xs, ctxt);
+ 	if (!ret)
+ 		goto out;
+@@ -5922,17 +5938,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 	 * the maximum number of collisions we will allow for then is
+ 	 * one bucket's worth, so check it here whether we need to
+ 	 * add a new bucket for the insert.
+-	 *
+-	 * An existing entry keeps the hash it was stored under, and that is
+-	 * the hash a split has to work with.  A new entry is stored under the
+-	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
+ 	 */
+-	if (xs->not_found)
+-		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
+-						  xi->xi_name_len);
+-	else
+-		name_hash = le32_to_cpu(xs->here->xe_name_hash);
+-
+ 	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
+ 	if (ret) {
+ 		mlog_errno(ret);
 -- 
 2.53.0
 
