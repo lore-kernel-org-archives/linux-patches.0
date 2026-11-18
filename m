@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043966;
-	b=WhPyOJIROzE2Ht/mVqwgsWApfB8C00sRfT5VWiT0gpJ+tzytPI5+igkKo0YZKG6m6A3u
-	 KG980gaIFEUhBPWWdD92R9XVkDZeWlDgs1iz8xqOMIHocPcgxzSBKZDVfnlqBOYmAPODL
-	 WxO0/P8iloJsMxJdlOxK5JO/HR4bhB2caGMHjm489vHMXBJj7z47ictFoTIMlz3Ehkkmr
-	 BWFOQq/FD8MrrjOhf9E7pD7W3SRXSvboYnTYUTOmtug5BH/Wg/L+TQ3ha4dL9zSQE/3pk
-	 4VOtDTOOPdEbq4Bc1ub4QPo6SNkebkCT8U15WccsHFievBPHBXr1SPzWykN7dFfNN1g==
+	t=1795043969;
+	b=f6tw164raG/ScAmZ3ZL4tD4jmuFIFEPz8p1gDjvkUAvNalG1UR1r6fQkYqTj6yGFkEiw
+	 +9QbehD964P9FJUF8iomd0ymAM/Sn9qTAouH4p+CoxJE/+Q9mbPbW1OPmblEaq3fSDfo4
+	 2Mq1wB1iVc8GOFfhM41sLUqHNRnGHyzQiagSss84AoSGDQlxdEKGhqaVVX4M8mfTQULPx
+	 jG0+huj1AKPF7284WgXo8G4jMCRcJME26J2haRo7VX0wfwVvlI2VhX1SE/apg3EoyVI73
+	 sbrJbQwN4TOEJizhlNMcNH15dl6PFHsBUEJvEyva782xXSOBdMAPehqIIyiekfLj2Jw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FmhQr+RDh94lDpl3I9O6NUxdeHJ9n7bV/2rTOP07Ek0=;
-	b=AF9wZ7PWEsT0jSbS5eiE2arCe0EdZNxH4PsRQWVPfIurWbeeH59n5DkeVQ9ZkdWOFAXh
-	 b+lBA+RfcwPNJAsr4z06qwU0bl+BTMip6BEBFgP1bvKVlQDlFt/r2O4+eyyOGGWitmA9f
-	 ZFP1q7llDT38p1bhP+fEoMx4PiaFh566s+hyMECgNxLpfMpDzsQ6cMBDbwK49xMGT75jn
-	 KEwqv0B8jgRMNduM4tIRDbh0zJQKCz4It7FH63yXuOPhh5873mhbQSPLybsuhhS+0hxP8
-	 VqDmvfKQp2AnjCUiugMI+wr5eOrBxQpay7uT02xmugGFhuhDJmf0trHi0QKKpg12gQg==
+	bh=HJ/any6BxJ3uiqAX4Q/B5GzzmE7Zy7bjFYumWrWwxxU=;
+	b=SlfwRCLNOsrSiZcpkOAgW1kskNxBEulAX5/x9SJ+hBjeqUMsnPI+IPmkt6qSR9DoWPTr
+	 sucRNhGPeOKOObDCj344VrsrxTriucicmiCRJyjfM5SYypJ4VQ65kzahFDjCw/S+4IZye
+	 0kLvzzUV9EFurEMJBSjYCYkhnh/DBrfK45g+vBiLb1LooUvHRtse7HU9Kqj6UmGSmw/cy
+	 KnTczMkOioqfsyVlJEeBmCu/jLuIJAeUJ1YU+Zk1iQid5P7xP6kcH8JzUzcQJkZ/jXVCf
+	 pBgdIL8XneJkzA3a3cpw+eRrlhsKcfu2tFewgNmGrv505pTHm9iJD39nqnwovszumVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cm/LdcbA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pgVPNEZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B14606A320;
-	Wed, 18 Nov 2026 23:19:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B514606A32A;
+	Wed, 18 Nov 2026 23:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cm/LdcbA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF1D1F000C4;
-	Wed, 18 Nov 2026 23:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0pgVPNEZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C421F000C4;
+	Wed, 18 Nov 2026 23:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043966;
-	bh=FmhQr+RDh94lDpl3I9O6NUxdeHJ9n7bV/2rTOP07Ek0=;
+	s=korg; t=1795043969;
+	bh=HJ/any6BxJ3uiqAX4Q/B5GzzmE7Zy7bjFYumWrWwxxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cm/LdcbAofsP3AlxkHaCRF2QYWvzfI/eiOrwOXtydb3qHexpBrI7gt3a62G0IIZYs
-	 2mlkNFEopDyGJFCm1xUVuRNu+Jm30ZWk/4bWbU6ZL2v64eFISfEm5Kz3+yQj615k0S
-	 K6RF/PX+YOBlfm9jneiVIxe4BVPNdEWGs7PttfyI=
+	b=0pgVPNEZzRYcn/XYdK8IbxJgqiHiOsIiRFQ55C5o65rVmPfnIxE+g1fsTtTAzNqeN
+	 jcKfoX/mUvKILrWR6F6figUtYZhUpkcVoo1jK1oZph/sn1d5E4vTDdBIwNclo/hukg
+	 n1yXFBpvT958UHboIfaTZgLPfSDoXPg/2FOAboiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Wenchao Chen <wenchao.chen@unisoc.com>,
+	Michael Wu <michael@allwinnertech.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0398/2857] smb: client: pin DFS superblock in iterator callback
-Date: Wed, 18 Nov 2026 15:23:52 +0100
-Message-ID: <20261118150215.722816450@linuxfoundation.org>
+Subject: [PATCH 6.1 0399/2857] mmc: mmc-hsq: Use fifo to dispatch mmc_request
+Date: Wed, 18 Nov 2026 15:23:53 +0100
+Message-ID: <20261118150215.756909336@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,73 +69,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Michael Wu <michael@allwinnertech.com>
 
-[ Upstream commit d806d5a85dcbe2a0f181b2f0f9f61ddfbefa1818 ]
+[ Upstream commit e026a3f9172f5c9aacff270b929a166c3ea1b6f7 ]
 
-tcon_super_cb() stores a raw superblock pointer, but __cifs_get_super()
-takes its active reference only after iterate_supers_type() has dropped
-s_umount and its passive reference. Concurrent DFS automount expiry can
-therefore free the superblock before cifs_sb_active() uses it.
+Current next_tag selection will cause a large delay in some requests and
+destroy the scheduling results of the block scheduling layer. Because the
+issued mrq tags cannot ensure that each time is sequential, especially when
+the IO load is heavy. In the fio performance test, we found that 4k random
+read data was sent to mmc_hsq to start calling request_atomic It takes
+nearly 200ms to process the request, while mmc_hsq has processed thousands
+of other requests. So we use fifo here to ensure the first in, first out
+feature of the request and avoid adding additional delay to the request.
 
-A deterministic KASAN test reproduces the race as:
-
-  BUG: KASAN: slab-use-after-free in cifs_sb_active+0x77/0x80
-
-The same test passes with this change applied.
-
-Take the active reference in the callback while iterate_supers_type()
-still holds s_umount shared. cifs_put_tcp_super() remains the matching
-release.
-
-Fixes: bacd704a95ad ("cifs: handle prefix paths in reconnect")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Applied the fix to tcp_super_cb() and its tcp_super match condition, since tcon_super_cb() and its DFS matching logic don't exist in this tree. ]
+Reviewed-by: Wenchao Chen <wenchao.chen@unisoc.com>
+Signed-off-by: Michael Wu <michael@allwinnertech.com>
+Link: https://lore.kernel.org/r/20221128093847.22768-1-michael@allwinnertech.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 5d132990475f ("mmc: hsq: Fix use-after-free in retry work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/misc.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/mmc/host/mmc_hsq.c | 40 ++++++++++++++------------------------
+ drivers/mmc/host/mmc_hsq.h |  5 +++++
+ 2 files changed, 20 insertions(+), 25 deletions(-)
 
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index fb841235617c1..0dd57b5d6a0ab 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -1379,8 +1379,14 @@ static void tcp_super_cb(struct super_block *sb, void *arg)
+diff --git a/drivers/mmc/host/mmc_hsq.c b/drivers/mmc/host/mmc_hsq.c
+index 9d35453e7371b..424dc7b07858f 100644
+--- a/drivers/mmc/host/mmc_hsq.c
++++ b/drivers/mmc/host/mmc_hsq.c
+@@ -13,9 +13,6 @@
  
- 	cifs_sb = CIFS_SB(sb);
- 	tcon = cifs_sb_master_tcon(cifs_sb);
--	if (tcon->ses->server == server)
-+	if (tcon->ses->server == server) {
-+		/*
-+		 * Take the active reference while iterate_supers_type() still
-+		 * holds s_umount shared.
-+		 */
-+		cifs_sb_active(sb);
- 		sd->sb = sb;
-+	}
- }
+ #include "mmc_hsq.h"
  
- static struct super_block *__cifs_get_super(void (*f)(struct super_block *, void *),
-@@ -1396,15 +1402,8 @@ static struct super_block *__cifs_get_super(void (*f)(struct super_block *, void
+-#define HSQ_NUM_SLOTS	64
+-#define HSQ_INVALID_TAG	HSQ_NUM_SLOTS
+-
+ static void mmc_hsq_retry_handler(struct work_struct *work)
+ {
+ 	struct mmc_hsq *hsq = container_of(work, struct mmc_hsq, retry_work);
+@@ -73,7 +70,6 @@ static void mmc_hsq_pump_requests(struct mmc_hsq *hsq)
  
- 	for (; *fs_type; fs_type++) {
- 		iterate_supers_type(*fs_type, f, &sd);
--		if (sd.sb) {
--			/*
--			 * Grab an active reference in order to prevent automounts (DFS links)
--			 * of expiring and then freeing up our cifs superblock pointer while
--			 * we're doing failover.
--			 */
--			cifs_sb_active(sd.sb);
-+		if (sd.sb)
- 			return sd.sb;
--		}
+ static void mmc_hsq_update_next_tag(struct mmc_hsq *hsq, int remains)
+ {
+-	struct hsq_slot *slot;
+ 	int tag;
+ 
+ 	/*
+@@ -82,29 +78,12 @@ static void mmc_hsq_update_next_tag(struct mmc_hsq *hsq, int remains)
+ 	 */
+ 	if (!remains) {
+ 		hsq->next_tag = HSQ_INVALID_TAG;
++		hsq->tail_tag = HSQ_INVALID_TAG;
+ 		return;
  	}
- 	return ERR_PTR(-EINVAL);
+ 
+-	/*
+-	 * Increasing the next tag and check if the corresponding request is
+-	 * available, if yes, then we found a candidate request.
+-	 */
+-	if (++hsq->next_tag != HSQ_INVALID_TAG) {
+-		slot = &hsq->slot[hsq->next_tag];
+-		if (slot->mrq)
+-			return;
+-	}
+-
+-	/* Othersie we should iterate all slots to find a available tag. */
+-	for (tag = 0; tag < HSQ_NUM_SLOTS; tag++) {
+-		slot = &hsq->slot[tag];
+-		if (slot->mrq)
+-			break;
+-	}
+-
+-	if (tag == HSQ_NUM_SLOTS)
+-		tag = HSQ_INVALID_TAG;
+-
++	tag = hsq->tag_slot[hsq->next_tag];
++	hsq->tag_slot[hsq->next_tag] = HSQ_INVALID_TAG;
+ 	hsq->next_tag = tag;
  }
+ 
+@@ -233,8 +212,14 @@ static int mmc_hsq_request(struct mmc_host *mmc, struct mmc_request *mrq)
+ 	 * Set the next tag as current request tag if no available
+ 	 * next tag.
+ 	 */
+-	if (hsq->next_tag == HSQ_INVALID_TAG)
++	if (hsq->next_tag == HSQ_INVALID_TAG) {
+ 		hsq->next_tag = tag;
++		hsq->tail_tag = tag;
++		hsq->tag_slot[hsq->tail_tag] = HSQ_INVALID_TAG;
++	} else {
++		hsq->tag_slot[hsq->tail_tag] = tag;
++		hsq->tail_tag = tag;
++	}
+ 
+ 	hsq->qcnt++;
+ 
+@@ -339,8 +324,10 @@ static const struct mmc_cqe_ops mmc_hsq_ops = {
+ 
+ int mmc_hsq_init(struct mmc_hsq *hsq, struct mmc_host *mmc)
+ {
++	int i;
+ 	hsq->num_slots = HSQ_NUM_SLOTS;
+ 	hsq->next_tag = HSQ_INVALID_TAG;
++	hsq->tail_tag = HSQ_INVALID_TAG;
+ 
+ 	hsq->slot = devm_kcalloc(mmc_dev(mmc), hsq->num_slots,
+ 				 sizeof(struct hsq_slot), GFP_KERNEL);
+@@ -351,6 +338,9 @@ int mmc_hsq_init(struct mmc_hsq *hsq, struct mmc_host *mmc)
+ 	hsq->mmc->cqe_private = hsq;
+ 	mmc->cqe_ops = &mmc_hsq_ops;
+ 
++	for (i = 0; i < HSQ_NUM_SLOTS; i++)
++		hsq->tag_slot[i] = HSQ_INVALID_TAG;
++
+ 	INIT_WORK(&hsq->retry_work, mmc_hsq_retry_handler);
+ 	spin_lock_init(&hsq->lock);
+ 	init_waitqueue_head(&hsq->wait_queue);
+diff --git a/drivers/mmc/host/mmc_hsq.h b/drivers/mmc/host/mmc_hsq.h
+index ffdd9cd172c34..1808024fc6c5d 100644
+--- a/drivers/mmc/host/mmc_hsq.h
++++ b/drivers/mmc/host/mmc_hsq.h
+@@ -2,6 +2,9 @@
+ #ifndef LINUX_MMC_HSQ_H
+ #define LINUX_MMC_HSQ_H
+ 
++#define HSQ_NUM_SLOTS	64
++#define HSQ_INVALID_TAG	HSQ_NUM_SLOTS
++
+ struct hsq_slot {
+ 	struct mmc_request *mrq;
+ };
+@@ -17,6 +20,8 @@ struct mmc_hsq {
+ 	int next_tag;
+ 	int num_slots;
+ 	int qcnt;
++	int tail_tag;
++	int tag_slot[HSQ_NUM_SLOTS];
+ 
+ 	bool enabled;
+ 	bool waiting_for_idle;
 -- 
 2.53.0
 
