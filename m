@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039629;
-	b=pcARChx7U9pMrVWfXTlyQS/raASsw7hmVH29bbMgiz+BSOn7rc6Q8U+UZ1Lhq1+1vQsN
-	 H1mhWwQilNNdDBGPWcdSWUxRG/biFhTGI6gjlszo2fdyq1t3aXjXqxxonhUSdGxLUx+H3
-	 i3yLxRVqYZAi+Qyvd+360whgfROUdHmqKysZNyEMZQIyLaTPAQ0PGkj/DiwbckURp3W3G
-	 VE4Lp6kUlvMVAAK9DwI23XC8X0wUJ7KMXDTN2gjSx7v78Du6uABXrVqU0i+dNHgEbk3pu
-	 Z0d2Uh+Dxo9m9wGDKYkAaKc7fplXg8C7uzbuSF/p/ka9DftGKde1s8421P6Sm8QeFzg==
+	t=1795039632;
+	b=o5ZpJLGgL33tg5b8QtC9eWDuSCFDBEgL1kRLTTvghSObyICd+5lQjdeAJg1N0jw9jZWx
+	 cMYbX7/c1VQ835u9iBx/OrNiCVkabs2NoKrR2K0kW0B8Zbg63btlVipwIvc628dKt8eBe
+	 KG1pNaYnf2GH5evRRlj4my4B76tflE8dIWiKmkyTavUvD5knhJHNZMQaKrVcCZQtuSJ7B
+	 snmjctbZbIDMgAi0Adh7GjRanrSfIhjtbZGRRwcPKpCz7LH7zcdO1cgDlMrxf2SuQeW/n
+	 5kfXRxmVxb1R+NKnbhIH6mXywpZtX/SqPFgHq3U1j3+8tCsaOpNYr2+hW/rcW3sw0dQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cTKP+e6Y3qdQJvc48HES1j4Xk9zTlb3FT1z/CRGFC9g=;
-	b=X3DJ7slEXxWCOfr+RW9S9el8uFD/2j9L9PhH5/x66GW0TaG72LqlwugjuCeVzBwQAXM8
-	 LHq0RcRHP21SZ+oBqNx3BiZxbSD/D2CF7KHbLj/0hviFZ0yhJ6rHZUoC75MTWPQuNU6ik
-	 8U/X1h5GZIgWuvMAPSuNenYuKSeHnnbBYBSgN8HGmAkG0oq0mH+skv3UEzj/ZwaBrWn3t
-	 YYxMYxLAI/niMezLfxNDLMkfSfRapBxAeQWlGFxp9BYf/kkJvkZlTh9/yukBUfAacauC3
-	 OVuwgfJTjkBa0QKfIY3EWNllTpnoCzHECBIsfR5QKIlfMemhcYYAcS/iZ2xmUt/H7Gw==
+	bh=iO+bLuNkcPAQusGpPCK1u45iMTRoHv9zz89U6EcN6lM=;
+	b=ISNpExbxpm8+Oj4lK1mQuwFHu+rTGXBaeGLtJRiH/8TJSDJRfB9lRR7/NtHqMD/zj54e
+	 mODyYWCerFqOaKP6T+/yYIds6faaORq4cMUOCHHUNu5egiMEDN/egnzsBqrKiNDOS5sC5
+	 o46Hz3BHrFzNfUGCHDWnlVuA7vWkQI9v0PI3R+8ApGer5BeAFoV2NRnaNrxiQH0MQzTfR
+	 9W2/BM4jDbnfSO6+A6bOt4u8PksjYIangQMOIpdL258t+UJlR+WnyR1q8YgE2uiHCw/t9
+	 +fI3gcpC0Rb92kG0ZLqpjpcGBQ6w2Sq/i+/cDTx0QMb5Y1D+C4h0yF+M630dEx+94NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdgXLhIU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0AcGjo44;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0BA606A320;
-	Wed, 18 Nov 2026 22:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DE0606A31C;
+	Wed, 18 Nov 2026 22:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdgXLhIU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFD21F000C4;
-	Wed, 18 Nov 2026 22:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0AcGjo44
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72F11F000C4;
+	Wed, 18 Nov 2026 22:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039629;
-	bh=cTKP+e6Y3qdQJvc48HES1j4Xk9zTlb3FT1z/CRGFC9g=;
+	s=korg; t=1795039632;
+	bh=iO+bLuNkcPAQusGpPCK1u45iMTRoHv9zz89U6EcN6lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdgXLhIUpTHMKGNGgAYciZflrC+9kv7g0ZNUccc3+zpkAhGVTzlgpfs52Yo9v/CMB
-	 bjMRrRHVpOBAsJlVeh/67RjRuE1Q2tnNddg7WI+DQqpmowK+D4lPzgHx08OVHKzVv/
-	 14oeZ/HTd35ivTXGc9Bp4L6mh+uLFYQpgmHwJmto=
+	b=0AcGjo44n79hKniV2eQXWPpgj/b5rL8BEaL3IgTe0n5UHcWL8YsbWxzayJp3k2FCD
+	 vWqRF+i2Us+ArsffgpXDzOmwfvJTvYDPwJG55pp/cc6A2CWkL+1oGPEMZL3TF/AE+X
+	 lRx6FoaGWFY0Kni6sYqzXPiC+Uc+JI1sFwDWMUfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2168/3318] ip_tunnel: use WRITE_ONCE in ip_tunnel_encap_setup
-Date: Wed, 18 Nov 2026 15:46:30 +0100
-Message-ID: <20261118150427.035579020@linuxfoundation.org>
+Subject: [PATCH 6.6 2169/3318] crypto: amlogic - Fix DMA memory leak in cipher error path
+Date: Wed, 18 Nov 2026 15:46:31 +0100
+Message-ID: <20261118150427.061889219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,60 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-[ Upstream commit 88b84cae6b94087d3a9679845fe28ad19c7bef8b ]
+[ Upstream commit 6c2373dd818b777d0a81eb02acebc03940552dcd ]
 
-Update ip_tunnel_encap_setup() to use WRITE_ONCE() when writing
-to encap fields (type, sport, dport, flags) and hlen fields.
-This ensures that concurrent lockless readers (like fill_info)
-do not see torn writes.
+A DMA memory leak occurs in meson_cipher() on the mapping error paths.
+The driver jumps to the end of the function without unmapping the
+previously mapped source scatterlist and key/IV buffer when the
+destination apping fails.
 
-Also remove the unsafe memset() on t->encap which could cause
-concurrent readers to transiently see zeroed fields.
-Removing it also fixes a bug where t->encap was left cleared
-even if ip_encap_hlen() failed, resulting in partial configuration.
+Additionally, a memory leak occurs when a scatterlist mapping succeeds
+but the returned count exceeds the driver's MAXDESC limit. In this case,
+the driver rejects the mapping without unmapping it. The BIDIRECTIONAL
+mapping branch also lacks the required 'MAXDESC -3' upper bound check.
 
-Fixes: 56328486539d ("net: Changes to ip_tunnel to support foo-over-udp encapsulation")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260907075846.2913645-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by introducing proper error labels, error_src and error_keyiv
+and unmap resources immediately inside the calidation checks to ensure
+all successfully mapped resources are cleaned up before returning the
+error.
+
+Fixes: 48fe583fe541 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/crypto/amlogic/amlogic-gxl-cipher.c | 25 ++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index d250ed84f32b4..77376d0241232 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -490,19 +490,17 @@ int ip_tunnel_encap_setup(struct ip_tunnel *t,
- {
- 	int hlen;
+diff --git a/drivers/crypto/amlogic/amlogic-gxl-cipher.c b/drivers/crypto/amlogic/amlogic-gxl-cipher.c
+index 3308406612fcd..9073c9dc30367 100644
+--- a/drivers/crypto/amlogic/amlogic-gxl-cipher.c
++++ b/drivers/crypto/amlogic/amlogic-gxl-cipher.c
+@@ -177,10 +177,13 @@ static int meson_cipher(struct skcipher_request *areq)
+ 	if (areq->src == areq->dst) {
+ 		nr_sgs = dma_map_sg(mc->dev, areq->src, sg_nents(areq->src),
+ 				    DMA_BIDIRECTIONAL);
+-		if (!nr_sgs) {
+-			dev_err(mc->dev, "Invalid SG count %d\n", nr_sgs);
++		if (!nr_sgs || nr_sgs > MAXDESC - 3) {
++			dev_err(mc->dev, "Invalid BIDIR SG count %d\n", nr_sgs);
+ 			err = -EINVAL;
+-			goto theend;
++
++			if (nr_sgs)
++				dma_unmap_sg(mc->dev, areq->src, sg_nents(areq->src), DMA_BIDIRECTIONAL);
++			goto error_keyiv;
+ 		}
+ 		nr_sgd = nr_sgs;
+ 	} else {
+@@ -189,14 +192,20 @@ static int meson_cipher(struct skcipher_request *areq)
+ 		if (!nr_sgs || nr_sgs > MAXDESC - 3) {
+ 			dev_err(mc->dev, "Invalid SG count %d\n", nr_sgs);
+ 			err = -EINVAL;
+-			goto theend;
++
++			if (nr_sgs)
++				dma_unmap_sg(mc->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
++			goto error_keyiv;
+ 		}
+ 		nr_sgd = dma_map_sg(mc->dev, areq->dst, sg_nents(areq->dst),
+ 				    DMA_FROM_DEVICE);
+ 		if (!nr_sgd || nr_sgd > MAXDESC - 3) {
+ 			dev_err(mc->dev, "Invalid SG count %d\n", nr_sgd);
+ 			err = -EINVAL;
+-			goto theend;
++
++			if (nr_sgd)
++				dma_unmap_sg(mc->dev, areq->dst, sg_nents(areq->dst), DMA_FROM_DEVICE);
++			goto error_src;
+ 		}
+ 	}
  
--	memset(&t->encap, 0, sizeof(t->encap));
--
- 	hlen = ip_encap_hlen(ipencap);
- 	if (hlen < 0)
- 		return hlen;
- 
--	t->encap.type = ipencap->type;
--	t->encap.sport = ipencap->sport;
--	t->encap.dport = ipencap->dport;
--	t->encap.flags = ipencap->flags;
-+	WRITE_ONCE(t->encap.type, ipencap->type);
-+	WRITE_ONCE(t->encap.sport, ipencap->sport);
-+	WRITE_ONCE(t->encap.dport, ipencap->dport);
-+	WRITE_ONCE(t->encap.flags, ipencap->flags);
- 
--	t->encap_hlen = hlen;
--	t->hlen = t->encap_hlen + t->tun_hlen;
-+	WRITE_ONCE(t->encap_hlen, hlen);
-+	WRITE_ONCE(t->hlen, hlen + t->tun_hlen);
- 
- 	return 0;
- }
+@@ -251,6 +260,12 @@ static int meson_cipher(struct skcipher_request *areq)
+ 						 ivsize, 0);
+ 		}
+ 	}
++	goto theend;
++
++error_src:
++	dma_unmap_sg(mc->dev, areq->src, sg_nents(areq->src), DMA_TO_DEVICE);
++error_keyiv:
++	dma_unmap_single(mc->dev, phykeyiv, keyivlen, DMA_TO_DEVICE);
+ theend:
+ 	kfree_sensitive(bkeyiv);
+ 	kfree_sensitive(backup_iv);
 -- 
 2.53.0
 
