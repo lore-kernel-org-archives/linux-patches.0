@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027567;
-	b=HvXhzLDvu7W772gb7EWUGjH645TT3N5cH/dbu6Ink038px9kJK1oDtTGWrtTjOQIinrj
-	 dXBvPIY3TOhYMSAU9VfensRayQINQKlxqnBV+mdnVFRtkU1dikhxFsV/Q3oCit7U22775
-	 3ILsIsyRED3YZO1ssy+FbwGHP1iwuv+LZRzNoDcJhQS8Ck7UWp/Twe9Wt0RWU/X3OaVMB
-	 vDdCjYKtxWRiQ2SvpUOGdajusRHSbOjRuNPLtw6bZHLpHiu04NnyK4j4ZTDv5BvSrLX4U
-	 JNqv/PlplYNldH20w5sqypRtAV6HzTWH7ebKGOViu3x7v0pBPj5KBFWeI6FpcYVLOCg==
+	t=1795027570;
+	b=knobRZIB3GrQgg6898Avbe8+E3QJhYYGY2aZSehVxUYRBCdQrKuRWwnwHf+aUJ4Il5a9
+	 Ykl6lIqw5YFKCrb3eU/Wl4VoDokCL4RR7KHDFbpOgJkH2PyEZCW2iIZB4Ei9xdhHckfR+
+	 A9usYiPLpe925aRxdZdEfXI6GBfU+xp30iLMdSJQrRh2l5u+RZhpdI6pFeCGupyw/CZj2
+	 RQA55Y3Pc4Bu0OPSc0x5UngpDKeZG4zA7InenTv4rA/CK+qmcaZXtmv03FJMsfsXCC32I
+	 DxFRiHAeOk0OPVDvoF8qP9ODsoXRbtjwg62htfQoRpURQKjlL1ePRjRXVMTTzi4/6Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027570;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fdH24ulKXpSVrv+bf3rein71oBA5NOnASntHRJJX0TQ=;
-	b=27vaK22fjT4IiO734hag6VV2kfnLN40Scc96F/dJ44cd4oAjQNUEFUdkAHEEsXvPQ+ic
-	 t4MYAK1OpfHS30uEVujdN44H/0X3VjlTbGTS1Dv89C5AVX1uTdmV0Pyz7+gwNtf702MNe
-	 K7Vv5NzGnLjA62YY/lvx6c1+HYTlMgD6xrM0L6EUh+stsJhSlKTejyY5DvF1Aa9edRA1n
-	 HAFze+V8C/FUopYXf1b0CLDl5753zMA/iuFfPSD6scmaSJo5uYpPoQXhV7YmkZNfGTnKJ
-	 QCTQsRD4jeUAB5UbyLy3acFwAjn1HR27pbmIXGJ3ocxU9ZPCF/SQlA9VYoAbDtjydxg==
+	bh=OzmYP2JccwjmFlVjCabtt75N4Lvf96vSBitDmpzsRxw=;
+	b=ddCtI+Ub6N0qKNUD9wD+9aHH/VB/d7Ku5xOz02o8VnO8HYY/QNFUyufrAGmCx80sFjPk
+	 WJMKnWdYhq/fgAjU6XI9RJJlUsqiSvaa7j/T1/COxgkEufsaZcm3C3vJ4rI8SSQYTFPGx
+	 LL63labQwMJ+sEBWv0sWQfktKyGIautR/Sixq5fNNbVacZOU5qAd8Xw99KvdWPCUm91P3
+	 m3rjhsPZGBtM4di7C4QLzfFQkiAd1CBiXgvUnLBu4pYwTfe25oazSCQV91a0+CoK9Ld5W
+	 l9ulDKvurdTTVtJ+ggGJRUz+co1yZ7+jSaFHfL4lnBS4kufBWoz/0cR2QboUedSwbqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGDMz1XD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCEGk3Tf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AFA60A2604;
-	Wed, 18 Nov 2026 18:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D33606A331;
+	Wed, 18 Nov 2026 18:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nGDMz1XD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08211F000C4;
-	Wed, 18 Nov 2026 18:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZCEGk3Tf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B4D1F000C4;
+	Wed, 18 Nov 2026 18:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027567;
-	bh=fdH24ulKXpSVrv+bf3rein71oBA5NOnASntHRJJX0TQ=;
+	s=korg; t=1795027570;
+	bh=OzmYP2JccwjmFlVjCabtt75N4Lvf96vSBitDmpzsRxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nGDMz1XDh6j27lhz0Yazd6PoHNK1ezZr6yuBe8H8lN03sm4FJR6hQv5vWnDxWUEIP
-	 RjmKPa8D5KELNplGD7RK/FVum3JmLmqOIm28hYF3TdQaJyLlKoHDz6tIX3CkjRZC4y
-	 ltZWVgys/aFL7YeP7E2I5Md+5aH1CHsJ/eogZBTc=
+	b=ZCEGk3TfccnRFBDq+bLeOdhWryUesDepvKr7oFs57FXmM+/IIwwyfLB8ILW0LAOUk
+	 iuOKjWuxTtnwlo4suLfiqtpyZvTENj/8kg810GLdDjR9a1MOf7GB1dOdXi4ZvEukav
+	 y+SXuDwaIh1ibtqTlF0ivdcQnBqWSpOSrx+WFsQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mingming Cao <mmc@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1836/2151] ibmveth: return the error when set_channels cannot add TX queues
-Date: Wed, 18 Nov 2026 15:59:31 +0100
-Message-ID: <20261118150228.681380655@linuxfoundation.org>
+Subject: [PATCH 6.18 1837/2151] ibmveth: wait for in-flight transmits in ibmveth_close()
+Date: Wed, 18 Nov 2026 15:59:32 +0100
+Message-ID: <20261118150228.716229774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,60 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 16abfa871dc840e55f1726408c5994c66a9773e2 ]
+[ Upstream commit c807573ea58e615339a9c72675c45c157ffe245c ]
 
-When ibmveth_set_channels() cannot allocate a TX buffer for a new
-queue, it falls back to the old queue count, and the successful
-netif_set_real_num_tx_queues() call then overwrites rc. ethtool -L
-reports success while the queue count is unchanged.
+ibmveth_close() frees the TX buffers after netif_tx_stop_all_queues(),
+which does not wait for an ibmveth_start_xmit() already running on
+another CPU. That transmit can copy into a freed buffer and hand PHYP
+a stale DMA address.
 
-Return the allocation error when the fallback succeeds.
+MTU, csum/TSO and buffer pool changes call ibmveth_close() directly
+while traffic flows. ifdown and the reset work go through dev_close(),
+which waits for running transmits only when the qdisc has an enqueue
+function, so with noqueue they race the same way.
+
+Use netif_tx_disable(), which waits for running transmits.
 
 Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection. Tested on a POWER10 LPAR with the TX buffer allocation
-forced to fail by a test-only module parameter (not part of this patch):
-ethtool -L tx 8 now fails with -ENOMEM and the device keeps its four
-queues and passes traffic. No kernel selftests cover ibmveth.
+code inspection; the race was not reproduced. Tested on a POWER10 LPAR
+with MTU changes during a ping flood, with no warnings. No kernel
+selftests cover ibmveth.
 
-Fixes: 10c2aba89cc0 ("ibmveth: Ethtool set queue support")
+Fixes: d6832ca48d8a ("ibmveth: Copy tx skbs into a premapped buffer")
 Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-7-mmc@linux.ibm.com
+Link: https://patch.msgid.link/20261013182926.30417-8-mmc@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ibm/ibmveth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 2d6f61bfb4953..8fddded94a5b6 100644
+index 8fddded94a5b6..6a0751c862cf4 100644
 --- a/drivers/net/ethernet/ibm/ibmveth.c
 +++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1177,7 +1177,7 @@ static int ibmveth_set_channels(struct net_device *netdev,
- 	struct ibmveth_adapter *adapter = netdev_priv(netdev);
- 	unsigned int old = netdev->real_num_tx_queues,
- 		     goal = channels->tx_count;
--	int rc, i;
-+	int rc, i, alloc_rc = 0;
+@@ -835,7 +835,7 @@ static int ibmveth_close(struct net_device *netdev)
  
- 	/* If the device is not open (including a failed close/open with
- 	 * IFF_UP still set) then don't allocate, just set desired
-@@ -1203,6 +1203,7 @@ static int ibmveth_set_channels(struct net_device *netdev,
- 		/* if something goes wrong, free everything we just allocated */
- 		netdev_err(netdev, "Failed to allocate more tx queues, returning to %d queues\n",
- 			   old);
-+		alloc_rc = rc;
- 		goal = old;
- 		old = i;
- 		break;
-@@ -1213,6 +1214,8 @@ static int ibmveth_set_channels(struct net_device *netdev,
- 			   old);
- 		goal = old;
- 		old = i;
-+	} else if (alloc_rc) {
-+		rc = alloc_rc;
- 	}
- 	/* Free any that are no longer needed */
- 	for (i = old; i > goal; i--) {
+ 	napi_disable(&adapter->napi);
+ 
+-	netif_tx_stop_all_queues(netdev);
++	netif_tx_disable(netdev);
+ 
+ 	h_vio_signal(adapter->vdev->unit_address, VIO_IRQ_DISABLE);
+ 
 -- 
 2.53.0
 
