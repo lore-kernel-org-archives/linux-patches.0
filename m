@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044100;
-	b=q97ad5iSzT9hKRJ31XlJwlr3yqHrCHQpwTL+E8xlzAMDUquuupYDdGlpcwIvPWJT6R22
-	 pJADSlhijtX7Sd4Us7M5mUnXY7F4ByViHmsYKXk6V3LUr2qOMrSXL/11yzYCmEpSNcwZU
-	 HS0n/gNGpJBHWgZCNouu188XTrn3zRYB1jWpuMpQuA21mLySOB3JwY4zlxpgiXLWrecVx
-	 tcPjmeOKDbJvAfQ7VCWQu5lU53nJSoYhVJs01uuLBAkx5isD1gx/Nuh7Uw9J4avuSeAn4
-	 d01lORYhgsRVg4hNYh5yvm4KtBNCFINrvWHmQPjimlCAeZMweuth12ycjLP8xrtV9gA==
+	t=1795044103;
+	b=AzvSZ9OPOgWwaM7pDaTL6G9XVgLRp3vOUtZC1H8ATAWzxLlk4cvZx3JqkdROIpeh1q6r
+	 tgikh0G3s9daXwCgCGFw6SiZPTR6NaQpnktEnz7mBBrkPe+hgncJECK8dFXLHl8LFLnXb
+	 eSY97VhWjZtVTQRN2xqJb63qv8w/TVAFnTUwZyrnwIJGj8bhkf/g4QnoqXFQcd3CLMO4Z
+	 TBsLCr6DZV8lBZS7RViDenB6c3R9+jc7/cQlT9+I/aM3rMvyONU/nS7nDDtwOUC3NiOPm
+	 8D5mOdQMVspkP0TyDw0Woa1UA+XzozCUEj35x6AfgVz4hBVtk5ZjgO2lzSXF63QLd+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044100;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XUFa2wJb9Q3pt/xFSXFZnbiGw8itGqOpZMpl5XMFOaQ=;
-	b=0n99ipQ4aS7xfJBtrBVGKNnDs7hNkir+W8dFLfLSgNpLCcXQSuj266860T1uEEzUk8Ha
-	 XWGo8Lp7TL1Pl8Rmg1b8IAIq57815m6+eIuFnpxwBYj1/DwRlg+/7YTaRKsF6uXk4fB41
-	 TxrR/GmlK74aYrFE7wO84/glptxYKsyQR4tArGxeM8gTOb0vbuRO2M4LC7aufnCYjpLUQ
-	 THQOpuNs3IVyEnyQgYEyguMPvla25/zUU8fWe9KgVm8+JX6CcBWf87gQCzYYzvNeokkQH
-	 i7TuKXOaBlsPr8nWoiVydUGKlZqU3dmQ2QKX1dw8t8zoUB5JRnfI0IJe82Uiv6TtCrA==
+	bh=qb72L4vec3wYo5zIOUMODj8N8qPXlisqnruFTjisIw8=;
+	b=mZrklgQmkhgR+lRjiu0vccUJHQ9fGL5scWgUGaQ14p4jaU7OyucK+M4W/tGflq6+uiv4
+	 wZAw5Kna7u8gYoDmmzvb45+Fo0lGV5kMbK1hdpxFU/R47FpMDNDdrHfusqhg1n5qQPXr5
+	 ZBmk+4z5E6EL8DdcHuzVwQSA/mCWQoYidOe6saA0Fi/rzifZ0/BVBiXZMjfGcFhlMRi+s
+	 XJajzZYup0rPMTmI+4RmjC0cuTuLJJToi58cHovyu/FIJyFG7Xoom1qSELv8nRcFIUtX0
+	 EUP+IViNr5BKkAMnGG/OBG3wtm5mb8EOALUx0OTU3hQaSyI67knZuoRqrOML+5HLsZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZxvoDO5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cbwvm90s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F14606A32C;
-	Wed, 18 Nov 2026 23:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61E3606A31C;
+	Wed, 18 Nov 2026 23:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZxvoDO5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857F31F000C4;
-	Wed, 18 Nov 2026 23:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cbwvm90s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDBB1F000C4;
+	Wed, 18 Nov 2026 23:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044100;
-	bh=XUFa2wJb9Q3pt/xFSXFZnbiGw8itGqOpZMpl5XMFOaQ=;
+	s=korg; t=1795044102;
+	bh=qb72L4vec3wYo5zIOUMODj8N8qPXlisqnruFTjisIw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kZxvoDO5Gwn0PYFBZRUnxtuUna3f8F+2XpcnBL/ek9CkWifPTMJ0tzxMWZ9iM/KAD
-	 Y9tiB08x04WMLrTa50KKjg3E+AR5e7pP9bbYAf2/nFZKFkg8XoVGSAwRN50Aj8X4Oc
-	 tWAm3OGCcECxvZxjEFYC56AR4hLwBnugRyeO7cls=
+	b=Cbwvm90sxLFC2oQFe6Pi1krCQPNt6brqfp/5OK0DRyEReuTZKGb90lUEFl7SCtRGX
+	 N6hhfbbtBoh8yrwlCi/bZbcgThYJ3TxWoqu45JQjdvQd7jy6h84SzlxvrNXXQUn1gB
+	 6oBmvVOOC6xz+MHhVpeq3KmNLfQkJ2HzyFULwgdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Liu Zhenlong <dragonliu2018@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0446/2857] i2c: qcom-cci: fix device_node refcount leak in cci_probe()/cci_remove()
-Date: Wed, 18 Nov 2026 15:24:40 +0100
-Message-ID: <20261118150217.434575623@linuxfoundation.org>
+Subject: [PATCH 6.1 0447/2857] smb: client: clean up failed cached directory opens
+Date: Wed, 18 Nov 2026 15:24:41 +0100
+Message-ID: <20261118150217.473114721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,106 +71,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Zhenlong <dragonliu2018@gmail.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-[ Upstream commit 7362a1553eb09a8cdf8be7e509bd5309a8342486 ]
+[ Upstream commit d2ff5fb93ea83034025850266b5eed391f96b825 ]
 
-The of_node_put() matching of_node_get() runs after i2c_del_adapter(),
-whose trailing memset() zeroes adap->dev and thus adap->dev.of_node,
-making the put a no-op and leaking the node on every adapter removal
-and error cleanup.
+open_cached_dir() sends CREATE and QUERY_INFO as a compound request. If
+the CREATE succeeds but a later command returns an error, the function
+must retain the CREATE FID so common cleanup can issue SMB2_close(). It
+also must not treat a response error as a valid CREATE.
 
-Use a devm action: the pointer is captured at registration, out of
-reach of that memset(), and devres runs the put once on probe failure
-and detach, replacing the three manual of_node_put() calls.  The
-setup loop uses the scoped iterator form so the child node is released
-automatically if devm_add_action_or_reset() fails mid-loop.
+Validate the CREATE response before using its fields, record the FIDs, and
+mark the handle open before handling errors from later compound commands.
+Move the -EREMCHG reconnect handling before response validation so a
+missing response does not hide the reconnect request. Count the handle
+when it is marked open; confirmed close responses decrement the counter,
+while existing close retry behavior remains best effort on transport
+failures.
 
-Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: 02a4a69667a2 ("i2c: qcom-cci: don't put a device tree node before i2c_add_adapter()")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Liu Zhenlong <dragonliu2018@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.17+
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260818175750.4205-1-dragonliu2018@gmail.com
+Fixes: b0f6df737a1c ("cifs: cache FILE_ALL_INFO for the shared root handle")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: LLM
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Tested-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Kept rc = -EINVAL; before the non-lease oplock check and changed the smb2status.h include to the local header path, since this tree lacks the earlier cleanup and the common/ header location. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ fs/smb/client/cached_dir.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 16c2b7d9069de..aebc552f0f4b2 100644
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -520,10 +520,14 @@ static const struct dev_pm_ops qcom_cci_pm = {
- 	SET_RUNTIME_PM_OPS(cci_suspend_runtime, cci_resume_runtime, NULL)
- };
+diff --git a/fs/smb/client/cached_dir.c b/fs/smb/client/cached_dir.c
+index 3ff56321b7a1e..f770615418b8f 100644
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -8,6 +8,7 @@
+ #include <linux/namei.h>
+ #include "cifsglob.h"
+ #include "cifsproto.h"
++#include "smb2status.h"
+ #include "cifs_debug.h"
+ #include "smb2proto.h"
+ #include "cached_dir.h"
+@@ -277,24 +278,37 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 	rc = compound_send_recv(xid, ses, server,
+ 				flags, 2, rqst,
+ 				resp_buftype, rsp_iov);
+-	if (rc) {
+-		if (rc == -EREMCHG) {
+-			tcon->need_reconnect = true;
+-			pr_warn_once("server share %s deleted\n",
+-				     tcon->tree_name);
+-		}
+-		goto oshr_free;
++	if (rc == -EREMCHG) {
++		tcon->need_reconnect = true;
++		pr_warn_once("server share %s deleted\n",
++			     tcon->tree_name);
+ 	}
+-	cfid->is_open = true;
  
-+static void cci_put_of_node(void *data)
-+{
-+	of_node_put(data);
-+}
+-	spin_lock(&cfids->cfid_list_lock);
++	if (!rsp_iov[0].iov_base || rsp_iov[0].iov_len < sizeof(*o_rsp)) {
++		if (!rc)
++			rc = -EIO;
++		goto oshr_free;
++	}
+ 
+ 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
++	if (o_rsp->hdr.Status != STATUS_SUCCESS) {
++		if (!rc)
++			rc = -EIO;
++		goto oshr_free;
++	}
 +
- static int cci_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *child;
- 	struct resource *r;
- 	struct cci *cci;
- 	int ret, i;
-@@ -539,7 +543,7 @@ static int cci_probe(struct platform_device *pdev)
- 	if (!cci->data)
- 		return -ENOENT;
+ 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
+ 	oparms.fid->volatile_fid = o_rsp->VolatileFileId;
+ #ifdef CONFIG_CIFS_DEBUG2
+ 	oparms.fid->mid = le64_to_cpu(o_rsp->hdr.MessageId);
+ #endif /* CIFS_DEBUG2 */
++	cfid->is_open = true;
++	atomic_inc(&tcon->num_remote_opens);
++
++	if (rc)
++		goto oshr_free;
++
++	spin_lock(&cfids->cfid_list_lock);
  
--	for_each_available_child_of_node(dev->of_node, child) {
-+	for_each_available_child_of_node_scoped(dev->of_node, child) {
- 		struct cci_master *master;
- 		u32 idx;
- 
-@@ -560,6 +564,9 @@ static int cci_probe(struct platform_device *pdev)
- 		master->adap.algo = &cci_algo;
- 		master->adap.dev.parent = dev;
- 		master->adap.dev.of_node = of_node_get(child);
-+		ret = devm_add_action_or_reset(dev, cci_put_of_node, child);
-+		if (ret)
-+			return ret;
- 		master->master = idx;
- 		master->cci = cci;
- 
-@@ -634,10 +641,8 @@ static int cci_probe(struct platform_device *pdev)
- 			continue;
- 
- 		ret = i2c_add_adapter(&cci->master[i].adap);
--		if (ret < 0) {
--			of_node_put(cci->master[i].adap.dev.of_node);
-+		if (ret < 0)
- 			goto error_i2c;
--		}
+ 	rc = -EINVAL;
+ 	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE) {
+@@ -367,7 +381,6 @@ int open_cached_dir(unsigned int xid, struct cifs_tcon *tcon,
+ 		free_cached_dir(cfid);
+ 	} else {
+ 		*ret_cfid = cfid;
+-		atomic_inc(&tcon->num_remote_opens);
  	}
- 
- 	return 0;
-@@ -645,10 +650,8 @@ static int cci_probe(struct platform_device *pdev)
- error_i2c:
- 
- 	for (--i ; i >= 0; i--) {
--		if (cci->master[i].cci) {
-+		if (cci->master[i].cci)
- 			i2c_del_adapter(&cci->master[i].adap);
--			of_node_put(cci->master[i].adap.dev.of_node);
--		}
- 	}
- 
- 	disable_irq(cci->irq);
-@@ -673,7 +676,6 @@ static int cci_remove(struct platform_device *pdev)
- 	for (i = 0; i < cci->data->num_masters; i++) {
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
--			of_node_put(cci->master[i].adap.dev.of_node);
- 			cci_halt(cci, i);
- 		}
- 	}
+ 	kfree(utf16_path);
+ 	return rc;
 -- 
 2.53.0
 
