@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038784;
-	b=OJFmnF09hL3XsOBnVeJN/0VdZ00u/d/YVbpXCC2uERE6Se+yp006YwJP90pS+3BNRUj4
-	 Ghg4HGoTzHNEH8XEkQl27cLwfrJ9fARXcFHaTli3QMddU6aVvtBoiCuY4ie8EdouB/Jbw
-	 q0M8fRzRfqHwnV7FDzAFxzwhaGGpX2LlJGvYZUkdLp2h2TDbCc1WFllXOZ2wkH6bfmW6k
-	 mHQ8VUwzEXH8ybdPSJmjbSTBOyQzSWbNdm4GIpthjl3dIusHh4+bwPK0E6p25YQPRea11
-	 TbmOPy6EAOWn8G31orN3kEb0gPUcm6HktBpfMIqPXZhkLN6A2eZVNVA+C7+A1WjQgVw==
+	t=1795038787;
+	b=3R/dzpxhj0ky70/5VAzD05RFSOlHcdYiN2oLZyiD9/0s4TC8hi2m+Lk34lW8MAZumbjV
+	 dPBdd3OdjEzcLlpAJk/OEIjTmJMOWwzoZp3pm4pDOWMd4bsm+mnzLu3Kg+dWhkEgC1SWG
+	 ULXI5bKsBWIHWZuOZMu4qJ9A3yC6Mi/kw6+ARKookuaow+dkE96Iq/5L9WF3UfmP1YJGm
+	 jHRUMFXLvc7nXKQ6RiLxms80kDtfFBFePdny8feGg//PuPqpL0E5UqG43JCI2QcQqR+OK
+	 sxDRjld+96N+xTj7oaEooIFs+4aPlfASXN9N5fzcJgddYv640M79XUUtUmOTDO0YuyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038784;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038787;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n1O2V7Y9rJM2mq6q8FgWHEHu7OiDenkKm7JcbSVvAps=;
-	b=wWJbWZhNZDpERUaBnxIUpuaqTZVlSgtCys9CwKH8HXsQaviHHbI2DwZRZdcHZ6WbEqEj
-	 AnyYHVmyisZxxnbJlB5VpR9YY3ZDA2LPKNzCVtwSFcpnIBt5ihJsB45YVnVUtVzejdrAP
-	 adoaWT/zeFmseZV8fOx5qftgPF0pkir4DzoUoWjHfQh5mePtMvKxVE1ZYrVu1P290WDuu
-	 yvw3Ii1VnEJMXEuM5QOLREM82iRj0ZStlKfiRlFclIZ1019MQ5THwPdZzT3LTMmCjeomg
-	 mT8/eXe5+TkTqVIcV9F4i6/ttvUDKpehBe7shRPVB13rUaXJQu3niCwQuuBBMNTuRsw==
+	bh=PN/ec074xOKp6e+GqcIgnPYzi+RRqY5WJlj1zWgmo70=;
+	b=O80HnBs7BwN8ejVBHkYruvYUU2UpdKWmZkIj/MjFhwesNvd3VWod+LbpNskBUdO4pxrn
+	 ruaZt8bPg2foduwlV3ZsKl9bpc4zKCgEIwTWmnGOZWnPn1d6lpKYJP6PXdgQk2+hbC+DG
+	 CVE9WLdahySGATCyI8B3fPd7fL7pAga5ODJBH94xF/I9ZOprFR5BlukC40I3zdY445DYX
+	 6L5Z5a+ruKMPStG1cA+itYXBbG5IRJXzUo6JhdkEUPLiAZv4yuTLoAuSAY1vYd+JfF5y7
+	 vrpDDtMRrQd8IBBXKc94sUbomuUoCqexOnwpddCAvNffT1fQrqcF/rEW36AasC1fJYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UOy/9+e3";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=swbe3jKb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA735606A320;
-	Wed, 18 Nov 2026 21:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A38606A31C;
+	Wed, 18 Nov 2026 21:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UOy/9+e3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9E81F000C4;
-	Wed, 18 Nov 2026 21:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=swbe3jKb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC77C1F000C4;
+	Wed, 18 Nov 2026 21:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038784;
-	bh=n1O2V7Y9rJM2mq6q8FgWHEHu7OiDenkKm7JcbSVvAps=;
+	s=korg; t=1795038787;
+	bh=PN/ec074xOKp6e+GqcIgnPYzi+RRqY5WJlj1zWgmo70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UOy/9+e329AM3Eno7pPSdDWgZo6JuFghhnkK9okqDxcHyjei7LWLa7URsG4bDxBeO
-	 ARFc3vsKcgNumkhxr7toGIHcdI4jp+MDyBJ8gMMMV27wf1FNMIqL7SBQRNwgvdqjol
-	 Hz3rIoPHBhPuMhqD88a9xCU3lKksluXtPiLf/nq0=
+	b=swbe3jKbfxuo6REMjCd3MRNdT4OyQguKLyaBuByrKWa8RjgSmyg9qDCwkBeMQvRvy
+	 1GpDEYKlXs+er3mmNyhOB9NzdPlX8HYqEDzNl6ZmCNy+M3qQIRYqov9t7j0FmrozDb
+	 6NO+2GF9j8FTjQNvyxoJkad16K0Pla3cvdRm+oII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1865/3318] ksmbd: enforce the read-only share flag when creating a stream
-Date: Wed, 18 Nov 2026 15:41:27 +0100
-Message-ID: <20261118150417.878058321@linuxfoundation.org>
+Subject: [PATCH 6.6 1830/3318] ata: libahci: Free the IRQs when activating a multi-IRQ host fails
+Date: Wed, 18 Nov 2026 15:40:52 +0100
+Message-ID: <20261118150416.762249394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,47 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 09139429fab3a5114c18d7c15fb161511d4d66c9 ]
+[ Upstream commit 34a4a34431ed81d85d14f8fb8035e5a25214ad39 ]
 
-When a share is read-only, smb2_open() rejects opens that would create
-or truncate a file. Creating a named stream on an existing file with
-streams_xattr sets neither O_CREAT nor O_TRUNC, so it passes this check,
-and smb2_set_stream_name_xattr() then creates the stream. On a Time
-Machine share, opening a missing AFP_AfpInfo stream also writes one. A
-user who can write a file at the filesystem level can therefore add
-streams to it through a read-only share.
+ahci_host_activate_multi_irqs() requests one IRQ per port, but it does
+not free them when requesting one of them, or when registering the host,
+fails. The IRQs are only freed by the driver core, when it releases the
+devres of the device after probe() has returned, while the caller of
+ahci_host_activate() releases the resources of the host in its probe()
+error path, e.g. ahci_probe() disables the clocks, regulators, resets and
+PHYs of the host. An IRQ handler running in that window would access the
+MMIO of a host which is no longer clocked.
 
-Do not create a stream or synthesize AFP_AfpInfo when the share is not
-writable. Existing streams still open normally, and a missing stream
-opened with FILE_OPEN still returns STATUS_OBJECT_NAME_NOT_FOUND.
+ahci_host_activate_multi_irqs() did free the IRQs until commit
+0a142b26921c ("ahci: cleanup ahci_host_activate_multi_irqs"), which
+removed the explicit free because devm makes it unnecessary. That is true
+for freeing the IRQs as such, but not for the window described above:
+devres is only released after probe() has returned, i.e. after the error
+path of the caller has released the resources of the host.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: eaff8e924f60 ("ksmbd: synthesize empty AFP_AfpInfo xattr on first probe")
+Note that this window cannot be hit with the current users: the only user
+of AHCI_HFLAG_MULTI_MSI is the AHCI PCI driver, which does not release
+any resource in its probe() error path, and the ports of the host are
+still frozen, i.e. their interrupts are masked, when ata_host_register()
+fails.
+
+Free the IRQs explicitly again, like ata_host_activate() does, so that
+the IRQ handlers cannot run once ahci_host_activate() has failed.
+
+Fixes: 0a142b26921c ("ahci: cleanup ahci_host_activate_multi_irqs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: omitted the writable check for the AFP_AfpInfo special case ]
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260915084127.692494-12-cassel@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ata/libahci.c | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 984e194d83f85..146a911718ee0 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2546,6 +2546,9 @@ static noinline int smb2_set_stream_name_xattr(const struct path *path,
- 		return -EBADF;
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index 1056d536a60cb..d18876c6052ae 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -2735,11 +2735,33 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
+ 				0, pp->irq_desc, host->ports[i]);
+ 
+ 		if (rc)
+-			return rc;
++			goto free_irqs;
+ 		ata_port_desc_misc(host->ports[i], irq);
  	}
  
-+	if (!test_tree_conn_flag(fp->tcon, KSMBD_TREE_CONN_FLAG_WRITABLE))
-+		return -EACCES;
+-	return ata_host_register(host, sht);
++	rc = ata_host_register(host, sht);
++	if (rc)
++		goto free_irqs;
 +
- 	rc = ksmbd_vfs_setxattr(idmap, path, xattr_stream_name, NULL, 0, 0, false);
- 	if (rc < 0)
- 		pr_err("Failed to store XATTR stream name :%d\n", rc);
++	return 0;
++
++free_irqs:
++	/*
++	 * Free the IRQs which have been requested, so that the handlers can no
++	 * longer access the MMIO of the host once we return, e.g. after the
++	 * caller has disabled the clocks of the host.
++	 */
++	while (--i >= 0) {
++		struct ahci_port_priv *pp = host->ports[i]->private_data;
++
++		if (!pp)
++			continue;
++
++		devm_free_irq(host->dev, hpriv->get_irq_vector(host, i),
++			      host->ports[i]);
++	}
++
++	return rc;
+ }
+ 
+ /**
 -- 
 2.53.0
 
