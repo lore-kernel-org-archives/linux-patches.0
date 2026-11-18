@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016278;
-	b=auQXYllIUxeNItvqup8uAPES2Vs1sNZJDdGSxZEq3p8+ossOWeabd7lD66gwtKes5Gmo
-	 STDV48iYKmdUCwb9BEScda/DPbB0j+sxg5A7uFHPwFFpBTmIkGqimQIxCFkdpNB0rI9Wp
-	 wHCCZtiZdBbwWfyEBuSfgCNZ4nzsJPYXLICmtFYUtINTHKYytqyVEKToWdA3fOLE2gPYZ
-	 UaLqOcYFuAWFDds84W2JmT2oLp29Qz1d5iS5kicQ/rhoZCKC9xhzB1nN69qpcSflPnTDo
-	 4cQa55ccPhGR10yZgTww2dJoiritj9f23cDWXyhgrRKFfrJC7F4aGXAwKll+nWl6cBg==
+	t=1795016281;
+	b=VSBITIl6xmc8mIkevZsIyossYzD4Fb49JOoQr5fWOxUX6QkdzWastnF5H70jgfzemGcZ
+	 FPxfzGjbdH/ES4wHxxwEJrp7l35cVm/7pLLWP9Lb8AILVNZ1+/J5eYbeR+9q+O64ohaNa
+	 8Ptj5P8sFcuvPujWy+esyaCw3U1AOpenLfIGByKyr1mhhnt2K3VDbb6K2IiMjKPNeIQPa
+	 jcsdqg+/7U1W2ZVNm8x4B9+UNfY+SLvGBAox/AJ5DyrBRb4Rjf5E7iDkr9Um90G0sg6eA
+	 WEYOLQQGmfDQ7Xz0PHrVCppv+fgM3TMspqpNzoO/kt64IHviO+llCSfAQ7eAC5NjAXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016278;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7LoHxm0pvytWROy1OdBX5OrvY4A4GDPR5EVvV7oLhMU=;
-	b=1dOp9HNvT9dGim9KVyGoGut8zRp521WUYjr8djkJn2nfMmR4ecdzPrQRF4n2532Ku4zb
-	 A+ORvHRbaCtOPynpjb5mQG9XGtQQwDaU1yZfKQmNi/PJhKxsfcaIk8EA6ZPh+H83NSCoF
-	 XW3OBZx1nSXTNbO2k7oLiqboqCGZnBM9WdHUqHlGHxq9C+4xSbDcKe8Y8mZTr2oLxWdRO
-	 sKZOS2/nxSw+Akjf3miqfztfnd/LWk/p3Usq/dmjxMGLmmTR+M6PhGG8hbd5f5RmUKHHt
-	 w3g1MtUmkkzBOqK8Sh/QhbH9pDEi9Ai+99G7I7qgfnjjUGomzAs0tVkGZTeD413ILLQ==
+	bh=jqM0kBjdaarWkjaUy+XtrUxNVaFoLWsOLaw477i59iE=;
+	b=eApuFhy9GdmfeIO3pz0urCpmRBe9tjWZU0S0r8hZTOobLE3jQMTuQ4AN3FAqDxZjxBBo
+	 CFuFj0daRtIPFla06waIDJeUBj7Oys7CkhKPOg6xh4P2HkcSf89HaFZDeTF9wBV3jXjB/
+	 i/c04tfM/l2FUwDUBf3LIecZGWEE1RW3szTN6WDSPwOUCI/MSb4+YoC0yv5ETVBIT696S
+	 1zzd+wuOVORslEHod5CLx+M02c8ohIUq8GLBNHOIbPkFR1dtDKO3/mVgujjxcPDiUmxt4
+	 GHHGjRHe3/0/32bPoRZ+nxMrFwWKFlEETCEFOK2d1jUNcY5Yi4QzoANlQlz5Bl29EcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B+ZRUgbB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDo9AAq7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEA160A262E;
-	Wed, 18 Nov 2026 15:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889EA60A380F;
+	Wed, 18 Nov 2026 15:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B+ZRUgbB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72731F000C4;
-	Wed, 18 Nov 2026 15:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JDo9AAq7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B201F000C5;
+	Wed, 18 Nov 2026 15:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016278;
-	bh=7LoHxm0pvytWROy1OdBX5OrvY4A4GDPR5EVvV7oLhMU=;
+	s=korg; t=1795016281;
+	bh=jqM0kBjdaarWkjaUy+XtrUxNVaFoLWsOLaw477i59iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B+ZRUgbBZdBHBFQlz4fxr1Iv9Rkcy6fMlzhZMEp/M5XpqNZIIdzC9QvrDNDyaeGM4
-	 I4gK375NMUSzoLUSII6ORyzzWNHMBXFfMPI/J+abo4VtH/XTc6kDxNBiGQkMX6wxgo
-	 vkF7K466cVjXv5fNmekU9Ot1msZ3Wxe654eZWJV8=
+	b=JDo9AAq7TDZihOFjOUUpGLAKzpMAkp2iU6v4irZZc8p9cdK3B1wTrmCTW+koy3eg8
+	 vt61USs2ggtrZ8cmEPwdWFbcMbGH+9MKSGtx2tLZBQf719rkODLRHZF++SshLZHOye
+	 piI7CjsIhHnS4gqh93QT+/ARij9wfoNE09rdFXWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Pengpeng Hou <hppiscas@163.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0431/2651] clk: rs9: Add clock index range check to rs9_of_clk_get()
-Date: Wed, 18 Nov 2026 15:27:51 +0100
-Message-ID: <20261118150303.341283624@linuxfoundation.org>
+Subject: [PATCH 7.3 0432/2651] clk: s2mps11: Propagate OF provider registration failures
+Date: Wed, 18 Nov 2026 15:27:52 +0100
+Message-ID: <20261118150303.377048334@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,41 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit a2ef401bdfd19aa41d0e3e1b630a12fbc01ac184 ]
+[ Upstream commit 276741aac3b56ba50bef59715ba18ba3f0b953a2 ]
 
-rs9_of_clk_get() does not validate the clock index in the passed
-DT clock specifier.  If DT specifies an incorrect and out-of-range
-index, this will access memory beyond the end of the clk_dif[] array.
+s2mps11_clk_probe() ignores of_clk_add_hw_provider() failures, stores
+driver data and returns success even though DT consumers cannot acquire the
+registered clocks.
 
-Fix by this adding a range check to rs9_of_clk_get().
+Return the provider error through the existing lookup cleanup path. Skip
+empty lookup slots while unwinding because S2MPS14 omits its CP clock.
 
-Fixes: 892e0ddea1aa6f70 ("clk: rs9: Add Renesas 9-series PCIe clock generator driver")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+The issue was found by our static-analysis tool and manually reviewed.
+
+Fixes: b228fad50c00 ("clk: s2mps11: Migrate to clk_hw based OF and registration APIs")
+Assisted-by: LLM
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-renesas-pcie.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/clk-s2mps11.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk-renesas-pcie.c b/drivers/clk/clk-renesas-pcie.c
-index 564550c803896..f3376c29007aa 100644
---- a/drivers/clk/clk-renesas-pcie.c
-+++ b/drivers/clk/clk-renesas-pcie.c
-@@ -276,6 +276,11 @@ rs9_of_clk_get(struct of_phandle_args *clkspec, void *data)
- 	struct rs9_driver_data *rs9 = data;
- 	unsigned int idx = clkspec->args[0];
+diff --git a/drivers/clk/clk-s2mps11.c b/drivers/clk/clk-s2mps11.c
+index fa5ac8f673f6e..94969d97d6e99 100644
+--- a/drivers/clk/clk-s2mps11.c
++++ b/drivers/clk/clk-s2mps11.c
+@@ -192,8 +192,10 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
+ 		clk_data->hws[i] = &s2mps11_clks[i].hw;
+ 	}
  
-+	if (idx >= rs9->chip_info->num_clks) {
-+		pr_err("%s: Invalid clock index %u\n", __func__, idx);
-+		return ERR_PTR(-EINVAL);
+-	of_clk_add_hw_provider(s2mps11_clks->clk_np, of_clk_hw_onecell_get,
+-			       clk_data);
++	ret = of_clk_add_hw_provider(s2mps11_clks->clk_np,
++				     of_clk_hw_onecell_get, clk_data);
++	if (ret)
++		goto err_reg;
+ 
+ 	platform_set_drvdata(pdev, s2mps11_clks);
+ 
+@@ -201,8 +203,10 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
+ 
+ err_reg:
+ 	of_node_put(s2mps11_clks[0].clk_np);
+-	while (--i >= 0)
+-		clkdev_drop(s2mps11_clks[i].lookup);
++	while (--i >= 0) {
++		if (s2mps11_clks[i].lookup)
++			clkdev_drop(s2mps11_clks[i].lookup);
 +	}
-+
- 	return rs9->clk_dif[idx];
- }
  
+ 	return ret;
+ }
 -- 
 2.53.0
 
