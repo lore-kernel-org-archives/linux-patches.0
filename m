@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046015;
-	b=GYucihLkf+CuXedXWF+Z0WlkAwaRNIzrGpcLk7I0Ssj/fddE6WvnzmhEp3q/5WExLyg4
-	 sPUbP8fT5cAaTUeufEsR3YddLGDTvuq7CEk8sFm3kus7NmstfyUiw7RMDJdXLRbJLamHt
-	 8tttvf/csIdy+cPAFiGkcU7EqWlnk1ydjvruFm5cp7/2KmEjChZKDh5B/7K+BLpViQFnc
-	 8HYD2qoan5Gg9nNcw2joLWcBmj8wim9CcBbOVpWaaKODAw3VfPtxkxtNU/jQLye7uO8UP
-	 7cosYrjrO2ZBNI46TJyeKGSrDHOWv6z8Y9iDZYKYWhS+AykdRK9UWmtTGST0SkZr+3g==
+	t=1795046018;
+	b=XiUQVArdm14xsCGEvGlLNsveoyrhXmgONYSEY8S1KrNOTCdHmEs1HxBFtDyRLt0BlG5q
+	 Ey76UMQm3lfjr8eNwDBOl2sEpFuFOsZtP1yJbpO4hxRLgIq+jfg6VFghL5THjBS09mdyr
+	 aocI2vZYYiSXQ4yupCNhFx7P5qPXKWwkc6gTBTKLSzm6dQ3oZGgLBNLZ7ZTwh28Y7P7SP
+	 PnwLzOKtzzbCjcWwowF+C6jLnEERnbm38phOu6L5JNB278UOBl62APg3RlE1QlsESk+OB
+	 Xe347FwwwfYIe9BSZo6GrI5DvcDRNT20fO/MlX6zNZclI1uiJpZ9g61vas79nRJ38Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i6kFVu5tKpZX820+ZdMD5A/ubj+5vx0aAUNzUNDYhsU=;
-	b=T9IBil1IBq2iumLpoD2269s76RDqlrf86dsArE1sEvzz16bRHVGn0IAZgRBdOzZ1DjHS
-	 IrP+4oZm8QLFWJQaVRTMBpCNNDCuOTN80VhFoLG00wLgPTj/v5jGQ0u+bP/hRNVgnWiUM
-	 3FhZmIcXwvLowQm/j0sOWOLrV6XNODd6Fg8w7AnrbT0udtboX/5BLuASaRzV99oh01clC
-	 UmGpo07Aj0wEH7FE/V1C850OUKMkm+ENKt7P4S2nphFzzBHgna7ZVUXXS1x7BaCQora3n
-	 tCavbeaMwjC/5rgWCZZtx/Y8CSsVf1vnyWT0CJ72D2JPOoTNIcb2wWVQCN3YKcwavug==
+	bh=DfPjoiBs0cW3ClfsEl7kisLlFGL5p4UA8Khzdr2hPQI=;
+	b=KilicRBfz7vk5nJ/DlFdrNOfIriKvD8G7PU1823IzkL0Z86dNbZxP2FCSgP/bkq6/WFp
+	 x2UB0nX4fr3G7jebJVgplofO08At18WxhX1OreL7wjVjC8ffOjRszn+vHklVeGMvNacVr
+	 1L1fdhCncTF3gld+QTOTPea1NVWCJCIadmzCjEFHRkym2X0wh4J+22mTuiYlDV8CT5sJS
+	 8pYblHTcfI0p+adzQMnjCgqdeOmgLPc0RGIcpMfh+UGCdPq25IZiNSZheuYNN9WgcOyFt
+	 Ps0HooqZvE19d+MeJxsDfLUjUb9XrSkl2H9y5p7quZpHHxlU9Cl58sI4qfenWFgEjuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+tstQsw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvU3ty8h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D4F606A325;
-	Wed, 18 Nov 2026 23:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D6A606A320;
+	Wed, 18 Nov 2026 23:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+tstQsw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BB61F000C4;
-	Wed, 18 Nov 2026 23:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvU3ty8h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CB81F000C4;
+	Wed, 18 Nov 2026 23:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046015;
-	bh=i6kFVu5tKpZX820+ZdMD5A/ubj+5vx0aAUNzUNDYhsU=;
+	s=korg; t=1795046017;
+	bh=DfPjoiBs0cW3ClfsEl7kisLlFGL5p4UA8Khzdr2hPQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+tstQswhH/qMPYB+qv88a/6UxYf4aFKId1Wp2lO9g1gJeqvZQx9i4WGaoqprMG5g
-	 /Sbg3NJo8w+65XwAzfaCwDse5FAuJld5FryOuj0degHlju2vDOARmoqfeGAoo0NHly
-	 rmvHuNnMIuyU3RWHxvCfVnjiAmYUFZqIg++UsODQ=
+	b=AvU3ty8hQi3JAEYgv43wq6CvobnbFVeqBZAn2fDeP7c5nYLfsTxYdrWT9lVzxx+2l
+	 zWSTC9E9Ybnl8wB/V+QTWEgKNLNEX/WO83/4QM9CJSbPsCO8m+vu8dzc/4BQ6eClZj
+	 6uOJy7sA/5jNcP+fNSMR6uGxq/13qJbFXH3VS1V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
+	Yosry Ahmed <yosry@kernel.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1131/2857] afs: Fix afs to abort the rxrpc call on send error
-Date: Wed, 18 Nov 2026 15:36:05 +0100
-Message-ID: <20261118150242.321823729@linuxfoundation.org>
+Subject: [PATCH 6.1 1132/2857] KVM: nSVM: Reject KVM_SET_NESTED_STATE if L1 has EFER.LMA=1 && EFER.LME=0
+Date: Wed, 18 Nov 2026 15:36:06 +0100
+Message-ID: <20261118150242.358916026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -74,103 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 3e6af08a571fe2943a006acf3e890f36322602bc ]
+[ Upstream commit 5dc500a354cc8e109df678076ae3488094649468 ]
 
-Fix afs_send_empty_reply() and afs_send_simple_reply() to always try to
-abort the rxrpc call rather than just aborting on -ENOMEM and otherwise
-abandoning it.  If the call is already complete due to network failure or a
-received abort, this will do nothing.
+Reject KVM_SET_NESTED_STATE if the incoming L1 host state has what is
+effectively an impossible EFER combination of LMA=1 but LME=0, i.e. if the
+state says long mode is active but not enabled.  Unlike VMX, SVM doesn't
+have an explicit consistent check for the illegal combination; presumably
+hardware simply ignores EFER.LMA if EFER.LME=0.
 
-Also make afs_make_call() always abort on send error; again, it does
-nothing if the rxrpc call is already dead.
+Unfortunately, KVM doesn't ignore EFER.LMA in this case and consumes the
+illegal state when constructing the shadow MMU for L2.  E.g. if userspace
+also clears CR4.PAE, then kvm_calc_cpu_role() will compute a role with 4 or
+5 levels of paging, but shadow_mmu_init_context() will wire up the MMU to
+use the paging32 template, which maxes out its levels at 2.
 
-Fixes: 08e0e7c82eea ("[AF_RXRPC]: Make the in-kernel AFS filesystem use AF_RXRPC.")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-6-dhowells@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adapted RxRPC calls to the older API with explicit send lengths and three-character abort reasons ]
+Note, the "real badness" is effectively the same as what happened with the
+nVMX bug fixed by commit 112e66017bff ("KVM: nVMX: add missing consistency
+checks for CR0 and CR4").  Unfortunately, the sanity check added by commit
+72e2fb24a0b0 ("KVM: x86/mmu: Bug the VM if a vCPU ends up in long mode
+without PAE enabled") doesn't work for this case, since L2 state is active
+at the time of the page fault, but it's L1 that has the bad state.
+
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+Cc: stable@vger.kernel.org
+Cc: Yosry Ahmed <yosry@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Link: https://patch.msgid.link/20260902232028.2767071-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ sashal: adjusted context for __nested_vmcb_check_save() instead of nested_vmcb_check_save() with its extra false argument ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rxrpc.c | 34 ++++++++++++----------------------
- 1 file changed, 12 insertions(+), 22 deletions(-)
+ arch/x86/kvm/svm/nested.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index 0658523bd7865..501a98583e810 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -435,10 +435,9 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
- 	return;
- 
- error_do_abort:
--	if (ret != -ECONNABORTED) {
--		rxrpc_kernel_abort_call(call->net->socket, rxcall,
--					RX_USER_ABORT, ret, "KSD");
--	} else {
-+	rxrpc_kernel_abort_call(call->net->socket, rxcall,
-+				RX_USER_ABORT, ret, "KSD");
-+	if (ret == -ECONNABORTED) {
- 		len = 0;
- 		iov_iter_kvec(&msg.msg_iter, ITER_DEST, NULL, 0, 0);
- 		rxrpc_kernel_recv_data(call->net->socket, rxcall,
-@@ -857,6 +856,7 @@ void afs_send_empty_reply(struct afs_call *call)
- {
- 	struct afs_net *net = call->net;
- 	struct msghdr msg;
-+	int ret;
- 
- 	_enter("");
- 
-@@ -869,20 +869,12 @@ void afs_send_empty_reply(struct afs_call *call)
- 	msg.msg_controllen	= 0;
- 	msg.msg_flags		= 0;
- 
--	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
--				       afs_notify_end_reply_tx)) {
--	case 0:
--		_leave(" [replied]");
--		return;
--
--	case -ENOMEM:
--		_debug("oom");
-+	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
-+				     afs_notify_end_reply_tx);
-+	if (ret < 0) {
- 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM, "KOO");
--		fallthrough;
--	default:
--		_leave(" [error]");
--		return;
-+					RXGEN_SS_MARSHAL, ret, "KSE");
-+		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
- 	}
- }
- 
-@@ -917,11 +909,9 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
- 		return;
- 	}
- 
--	if (n == -ENOMEM) {
--		_debug("oom");
--		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM, "KOO");
--	}
-+	rxrpc_kernel_abort_call(net->socket, call->rxcall,
-+				RXGEN_SS_MARSHAL, n, "KSE");
-+	afs_set_call_complete(call, n, RXGEN_SS_MARSHAL);
- 	_leave(" [error]");
- }
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index 5cf789f744bad..86ac990d7a0ef 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1653,6 +1653,7 @@ static int svm_set_nested_state(struct kvm_vcpu *vcpu,
+ 	if (!(save->cr0 & X86_CR0_PG) ||
+ 	    !(save->cr0 & X86_CR0_PE) ||
+ 	    (save->rflags & X86_EFLAGS_VM) ||
++	    ((save->efer & EFER_LMA) && !(save->efer & EFER_LME)) ||
+ 	    !__nested_vmcb_check_save(vcpu, &save_cached))
+ 		goto out_free;
  
 -- 
 2.53.0
