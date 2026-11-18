@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030039;
-	b=YH+8pFguliJfLgKUp0NHOaiMBjhsC2xJlUFSoPhTR6wa5QwfQCH9gs5kNDik/XfYn4TC
-	 XSfDV6kAXf1+oNHKYB+LoViZ8PEtzuq3Knts/9CRqqA7N3W/407u64fZMUqpvjljRxk9A
-	 YtZLJ0fiutWsE2vaAj3p1cxRlvAa8OEbjrcPLItXMR4NCw7rE3uYlhsmYUmx/XgIGRGRF
-	 4UFHO/k0dwZLP719L03VkQ19BKBGOgRfJ/oova3iZ+Y0vEy++6Qmq3zrBqnjuVnMd9+xB
-	 eCx84dRcYoErTNFSAw+48Ro1g7g07gNersFxnPG2ZWGf+5yIUJiMBRPP2ehyFBnbqIA==
+	t=1795030042;
+	b=CE/Wih1bg17kyUc+YoUW7y0rjS/DvKgSAj25XTEKJ3WJ/xJtfczVCY1RpEgNtEv7HER2
+	 qm/6Q/pY3kovEMQVlMZk/hVbVqKZnKKbf2JQzyqzOMgCo42PMPzXIBRPhWdd2f/n+3aAu
+	 WDE+OvcQueouU2FyQ+v5K3ftprRgrLXibbqTdOgKiu+NQQUP+Q9+fW2T86+S5+AK2TgBH
+	 p3RftBG734X2zA2K+pOEhoW+hiVjmAoP+QPuTWH8Vusu5P8lN7YoJnG0Zih2UgwuCZUlM
+	 FIPTjuV610OpWm1zUwKEnQ0pK2AZ9BxS8iKdhSP2T1MXLxkNzph+FxMeW2l/56QaGrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030039;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030042;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oHpVtW3jFDCi/KYmxVJIwipwhfimyVg+ouFQSuK0U1A=;
-	b=MxwmA8Bz4xq15XEqZxlHJd1pHr6Z/P/9nZtuaCm3SmJ2ilYjzfPTQHP9sltVEfOrbsec
-	 ntxSy08yCVPjezEtjwAC1HkrBChG1aLJuYK2dyU/Iz8xqHMHxHXp6RIwXvCs8fym6PB9A
-	 IKuq9c3CruBX00JXhshASKAOSfRamUHpgnaWPTu3XSADyf9XK96I7edcSKRWguRY5HmSk
-	 nJ4UemaLM17pEyW/3TmJOuKaDDouQRPLnSAFaBOEF2NPrmVpLB7HzyW/U7n4udG4ufYtJ
-	 /t0kfpA/hMWpoq93blKmGa7amAiLYBOLGe2LD/67lCxTsGO3xGXs7UWxAtC+abdHOMg==
+	bh=Gzlf5sPXIMlKFXKZFcOqymE9Tw8M0jRDYEywsJGHR4M=;
+	b=0cm2SG9JrFWu6rsfBuoV8RLcRMT1VeR5t9NGSrUnH5xHp2DpoCOCjLs2I3NUtpNFKhoc
+	 TSZ9ABEM3WDIQQyUhT6cTJ0SjNmZnRRsF4bw+0xaOpoh/QpnEzRXVUjjra+yud59SdZ/U
+	 KF4CfIoXHtA4Nzok66zWcjiiFu5Zm7vsiEjakl+CI3kA/StmxsEHoDDDpORTEnhkQZgF9
+	 Ny4ZAlRrIozL3Gz1WtJyNB6KsGQAOBPKV/Q6/DN0oFV2Yb9Vebnni7H+Zpo+kZYDPilM+
+	 DnHj6MKHbOv8qO6oOeoRMmQ0LVjnAvm5Z8/4JDgQEJUKLOqb3SX44/TnkuztlBXIT1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFlauz1y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KuEpu8Ay;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C341E606A32C;
-	Wed, 18 Nov 2026 19:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8178860A2600;
+	Wed, 18 Nov 2026 19:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tFlauz1y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F041F000C9;
-	Wed, 18 Nov 2026 19:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KuEpu8Ay
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8F81F000D4;
+	Wed, 18 Nov 2026 19:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030039;
-	bh=oHpVtW3jFDCi/KYmxVJIwipwhfimyVg+ouFQSuK0U1A=;
+	s=korg; t=1795030042;
+	bh=Gzlf5sPXIMlKFXKZFcOqymE9Tw8M0jRDYEywsJGHR4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tFlauz1yQvXM0kOKvflNQ3Pcnf7A9yNAykquYnJOlFU+SyfE17gwU6GbpuLvNpF1q
-	 s/VTtBd4FVkxW0QTJb8eNl6qT2ocSG3fXFugoUwEtPOWHcrIBNy8BH9eX6Vq/XaFLp
-	 IEqQoy0cAcFh4d0dDnQhM8z47aCvjSyuCfBpn+lo=
+	b=KuEpu8AyyJebjr2DSdF6Dh7sl4p00xsxzz/PEwURaYjz/zR4xD8A45FBOGS+r+JaZ
+	 HfdjSVWh5tpSkG4+qCgPaxfYfVWdsLnAHEJsfj5BcFyIzuYWjhim8FmHQKGYGRHYdp
+	 lpjCz0uHjeYrKnS4DxPTvsY2Fe3KhfTI+CQkl0IU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0511/1756] crypto: starfive - handle clock enable failures
-Date: Wed, 18 Nov 2026 15:43:58 +0100
-Message-ID: <20261118150029.529570878@linuxfoundation.org>
+Subject: [PATCH 6.12 0557/1756] mfd: da9150: Balance IRQ wake on teardown
+Date: Wed, 18 Nov 2026 15:44:44 +0100
+Message-ID: <20261118150031.273807368@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 5358248961ae23f7253d010ddfde1cfd2556ce22 ]
+[ Upstream commit ef464f82f3aecad4071af71074b2ceb77ffbb609 ]
 
-Return error from failed clock enable.
+DA9150 enables IRQ wake after registering its regmap IRQ chip, but does not
+disable it on a later probe failure or driver removal. This leaves the wake
+depth elevated after the handler is removed, and repeated bind attempts can
+accumulate the imbalance.
 
-starfive_cryp_probe ignores clk_prepare_enable return for hclk/ahb, then
-remove/error paths unconditionally clk_disable_unprepare both clocks.
+Remember whether enabling IRQ wake succeeded and balance only a successful
+call. Remove MFD children first so their nested IRQ users are gone, then
+disable wake before removing the regmap IRQ chip. Preserve the existing
+non-fatal behavior when IRQ wake cannot be enabled.
 
-Check consecutive clk_prepare_enable(cryp->hclk)/cryp->ahb returns in
-starfive_cryp_probe.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: c8acdd77a623 ("crypto: starfive - propagate clock and reset errors")
+Fixes: b8fce55c09d3 ("mfd: Add support for DA9150 combined charger & fuel-gauge device")
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260923021936.957065-1-mhun512@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/starfive/jh7110-cryp.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/mfd/da9150-core.c       | 8 ++++++--
+ include/linux/mfd/da9150/core.h | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
-index e4dfed7ee0b01..a373eba869cc1 100644
---- a/drivers/crypto/starfive/jh7110-cryp.c
-+++ b/drivers/crypto/starfive/jh7110-cryp.c
-@@ -126,8 +126,15 @@ static int starfive_cryp_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(cryp->rst),
- 				     "Error getting hardware reset line\n");
+diff --git a/drivers/mfd/da9150-core.c b/drivers/mfd/da9150-core.c
+index 5c59cc869fb3e..19325d72a27e7 100644
+--- a/drivers/mfd/da9150-core.c
++++ b/drivers/mfd/da9150-core.c
+@@ -450,7 +450,7 @@ static int da9150_probe(struct i2c_client *client)
  
--	clk_prepare_enable(cryp->hclk);
--	clk_prepare_enable(cryp->ahb);
-+	ret = clk_prepare_enable(cryp->hclk);
-+	if (ret)
-+		return ret;
-+
-+	ret = clk_prepare_enable(cryp->ahb);
-+	if (ret) {
-+		clk_disable_unprepare(cryp->hclk);
-+		return ret;
-+	}
- 	reset_control_deassert(cryp->rst);
+ 	da9150->irq_base = regmap_irq_chip_get_base(da9150->regmap_irq_data);
  
- 	spin_lock(&dev_list.lock);
+-	enable_irq_wake(da9150->irq);
++	da9150->irq_wake_enabled = !enable_irq_wake(da9150->irq);
+ 
+ 	ret = mfd_add_devices(da9150->dev, -1, da9150_devs,
+ 			      ARRAY_SIZE(da9150_devs), NULL,
+@@ -463,6 +463,8 @@ static int da9150_probe(struct i2c_client *client)
+ 	return 0;
+ 
+ mfd_fail:
++	if (da9150->irq_wake_enabled)
++		disable_irq_wake(da9150->irq);
+ 	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
+ regmap_irq_fail:
+ 	i2c_unregister_device(da9150->core_qif);
+@@ -474,8 +476,10 @@ static void da9150_remove(struct i2c_client *client)
+ {
+ 	struct da9150 *da9150 = i2c_get_clientdata(client);
+ 
+-	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
+ 	mfd_remove_devices(da9150->dev);
++	if (da9150->irq_wake_enabled)
++		disable_irq_wake(da9150->irq);
++	regmap_del_irq_chip(da9150->irq, da9150->regmap_irq_data);
+ 	i2c_unregister_device(da9150->core_qif);
+ }
+ 
+diff --git a/include/linux/mfd/da9150/core.h b/include/linux/mfd/da9150/core.h
+index d116d5f3ef561..369698036d1aa 100644
+--- a/include/linux/mfd/da9150/core.h
++++ b/include/linux/mfd/da9150/core.h
+@@ -65,6 +65,7 @@ struct da9150 {
+ 	struct regmap_irq_chip_data *regmap_irq_data;
+ 	int irq;
+ 	int irq_base;
++	bool irq_wake_enabled;
+ };
+ 
+ /* Device I/O - Query Interface for FG and standard register access */
 -- 
 2.53.0
 
