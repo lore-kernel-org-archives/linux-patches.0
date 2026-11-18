@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047885;
-	b=0f0mbsq9OCAwiiluuldW4RxGzGzzbaEL/BP4V+hApLQ+cyTk27fuM1964uvCWkLkDn1B
-	 ZyJcsg24dRZFEK84faTpNeoH7ee/R04KrhAeEkv1NEPcxNlYlFuRmJjs4Dh0SOoTAxkRn
-	 NTG7ZFmHo6IMCb/HTFpQJo7t7QPzL4up9SOiuUJuuU1hzcRV98uCR3qFcwfsn3fOYg0kT
-	 gtZB5w63ZPGyIgQG+sZnO8/L0/pvnjMmtlrJfiu40r0SZC9RI97oQyc6c43P0/Nf3RJwu
-	 pAMMSgl4Wpst/AV5X4xDaAz/Bqma4D/NKN6t1mRlVG6yAQiOwXefoKHAaQ0bgV4Vu1w==
+	t=1795047887;
+	b=omSmiUtLVCtjXIb8DCGg4JWaJS2GjjyFaKkrJQ2ZiHxSsPiPKWa0QoJJztZU5ospmdoP
+	 iDkRZyRZ3wF0aqcqIVreZoyCuVU2lbNWFtsp0mAklwohFe7RZZQFKbHkYTbZdKKIyNBRg
+	 dLRn6YnOeu/KdJyHXELlcdErinoLl0NkRlLSGns5wLdRG15AsrPOgCkQaowmGR7YjYk7A
+	 VraB//khO29+0ECKdeypamutvFqxshWGRljy9jKHMYCpS3iI79SoAjGaGex9KagzXeInV
+	 3DK6PmMoUG4ZFsiYc7NMkg3x+rgWiFt4wSAJbds4VNbeP/sYjUVXxz90CRjVbfQMzpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047885;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0y/apcLYCuWdyAbh5gDZu1SWSieUEb3lb+nwCmo5eAA=;
-	b=2QdBpszEvq6yo1vjKIhs7XBe1yJa1AQn5PU+ywPXJz2cn51p501lOC35YSEHXXxCIBBu
-	 YG8zFqEt4taZcAfkrWAtO/s4V5NXOBaonV5k7v2WDHb+jQ2TZXuKql5/dX0w2A7x+M0T1
-	 g5BS28AoSG35CiifWk4oVOxmBndwre3nGLsoE46x4qFouqjK+ksQc6KDqflsYIf6VMo6I
-	 ldRQNuOHOf5Rv5Y9hgJtbCLsPw7SHo4AZErmfzb/EWDPEakkCdQ+KhqAqGefYP6dIJaHd
-	 3qF8JQSa06f9VA7FLFZSJKhTByU9viZ6JWFD0qBVXkgg9FKqNi+eKhCHCEqKmm1UCBw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=LkD9phZiFbxEmjj3N2YW0ycp7bnp7Oaa34aAmBLAuY8=;
+	b=CA+PbGNXiXnWlANzf5AnoDkpS+BLwdfDA6mI01UZJcIdwoey/l9KqNQKnYbCYbQrIlMV
+	 njUV0aSjh7fdmQjmsPMXRQIv07ca9BBMUHZ9Cnl0G+SoDv1mdEi1Ea2qGaFnlhGLa756T
+	 neNifaRwd8sGMyBOyj0+tWLRjhQrhPkNmIMkf51bJFZ65Tv0CRisrj2HwwtMrDR4rBVIN
+	 mSqxq8OhnE6PbnK+NB50XpogVwXufpRSSD4amGAgDOFHDpbR3LmEBVG6TqHjag0EgIvHX
+	 2SVvvBXZiYxVYnMKIrEpLn69PGsK1j2sbojNBEcu1WAoDacKhVXV5mzeXUABtAjXrQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Cp+/QTha";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unqSbQaq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF60C606A320;
-	Thu, 19 Nov 2026 00:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A805B606A320;
+	Thu, 19 Nov 2026 00:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cp+/QTha
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8881F000C4;
-	Thu, 19 Nov 2026 00:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unqSbQaq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088481F000C4;
+	Thu, 19 Nov 2026 00:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047884;
-	bh=0y/apcLYCuWdyAbh5gDZu1SWSieUEb3lb+nwCmo5eAA=;
+	s=korg; t=1795047887;
+	bh=LkD9phZiFbxEmjj3N2YW0ycp7bnp7Oaa34aAmBLAuY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cp+/QThaYZ13oyEw6D1hJCCtifQNBrHIDrmNV5YpqMtgoUon8sE7L/4wA0PKIXr9w
-	 L5k0hjJNAJzNo8kgAPZ0P1UvQi8Pn4IPDrDlLUAWscuXjIGcpbDrlImPBBLHMe3bZw
-	 LvjCnOBx61MfWDnrIrflRnl83G5RgMyYU959JA4U=
+	b=unqSbQaqwVQxyO7P9qaLZrbWYlA7G3tGpvzpjTqHoYO6y3X4KBhTK9D1ZZ6LX4a7t
+	 dd3WCPm3TrqBwzjWwDgv9ZXXEF04XynauUltbGywO+94bj5WnW7a7gMp7124Pdqwoy
+	 yqWlaZEMrLquECjZrMagn8f0ZdutttUkswnIP8WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Julius Bairaktaris <julius@bairaktaris.de>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1798/2857] wifi: mac80211: fix swapped fq_overlimit/fq_overmemory in aqm debugfs
-Date: Wed, 18 Nov 2026 15:47:12 +0100
-Message-ID: <20261118150305.996974106@linuxfoundation.org>
+Subject: [PATCH 6.1 1772/2857] clk: fix self-consuming provider module pinning
+Date: Wed, 18 Nov 2026 15:46:46 +0100
+Message-ID: <20261118150305.083879827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,46 +62,260 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julius Bairaktaris <julius@bairaktaris.de>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 25f3f2ff88ae604a3b473b501fc55d58fcb0f5eb ]
+[ Upstream commit a1c8d531c694e193dc48ef2428877d5ea2e35134 ]
 
-The two scnprintf arguments for fq_overlimit and fq_overmemory are in the
-wrong order, which results in the aqm debugfs file showing the overmemory
-count under the fq_overlimit label and vice versa.
+clk_hw_get_clk() lets a provider get a struct clk for one of its own
+struct clk_hw.
 
-Fixes: 2a4e675d887b ("mac80211: Export fq memory limit information in debugfs")
-Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
-Link: https://patch.msgid.link/20260904090626.92727-1-julius@bairaktaris.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+When a struct clk is created, the module usage count of the provider
+is unconditionally increased. For a self-consuming provider, this means
+it pins itself and the module can never be unloaded.
+
+Increasing the module usage count should only be done when the consumer
+lives in a different module from the provider. Use THIS_MODULE to
+capture caller's module and increase the module usage count accordingly.
+
+It is OK for consumer-only APIs such as clk_get() or of_clk_get() to
+pass a NULL owner. As a result, any provider module will get pinned,
+same as before.
+
+Fixes: 30d6f8c15d2c ("clk: add api to get clk consumer from clk_hw")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk.c            | 46 ++++++++++++++++++++----------------
+ drivers/clk/clk.h            |  5 ++--
+ drivers/clk/clkdev.c         |  4 ++--
+ include/linux/clk-provider.h | 22 ++++++++++++++---
+ 4 files changed, 50 insertions(+), 27 deletions(-)
 
-diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
-index f345c61cfd62f..315323c670df8 100644
---- a/net/mac80211/debugfs.c
-+++ b/net/mac80211/debugfs.c
-@@ -98,8 +98,8 @@ static ssize_t aqm_read(struct file *file,
- 			"RW fq_quantum %u\n",
- 			fq->flows_cnt,
- 			fq->backlog,
--			fq->overmemory,
- 			fq->overlimit,
-+			fq->overmemory,
- 			fq->collisions,
- 			fq->memory_usage,
- 			fq->memory_limit,
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 5a01ba04e47cf..060777087d7bb 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -108,6 +108,7 @@ struct clk {
+ 	unsigned long max_rate;
+ 	unsigned int exclusive_count;
+ 	struct hlist_node clks_node;
++	bool pinning;
+ };
+ 
+ /***           runtime pm          ***/
+@@ -4033,13 +4034,15 @@ static void free_clk(struct clk *clk)
+  * @hw: clk_hw associated with the clk being consumed
+  * @dev_id: string describing device name
+  * @con_id: connection ID string on device
++ * @owner: reference to the module creating the clock
+  *
+  * This is the main function used to create a clk pointer for use by clk
+  * consumers. It connects a consumer to the clk_core and clk_hw structures
+  * used by the framework and clk provider respectively.
+  */
+ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+-			      const char *dev_id, const char *con_id)
++			      const char *dev_id, const char *con_id,
++			      struct module *owner)
+ {
+ 	struct clk *clk;
+ 	struct clk_core *core;
+@@ -4054,7 +4057,13 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+ 		return clk;
+ 	clk->dev = dev;
+ 
+-	if (!try_module_get(core->owner)) {
++	/*
++	 * Pin the provider module only when the consumer lives in a different
++	 * module. A provider getting a clk from its own clk_hw would otherwise
++	 * pin itself and could never be unloaded.
++	 */
++	clk->pinning = owner != core->owner;
++	if (clk->pinning && !try_module_get(core->owner)) {
+ 		free_clk(clk);
+ 		return ERR_PTR(-ENOENT);
+ 	}
+@@ -4065,24 +4074,19 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+ 	return clk;
+ }
+ 
+-/**
+- * clk_hw_get_clk - get clk consumer given an clk_hw
+- * @hw: clk_hw associated with the clk being consumed
+- * @con_id: connection ID string on device
+- *
+- * Returns: new clk consumer
+- * This is the function to be used by providers which need
+- * to get a consumer clk and act on the clock element
+- * Calls to this function must be balanced with calls clk_put()
++/*
++ * Internal helper backing the clk_hw_get_clk() macro, which passes the caller's
++ * module via THIS_MODULE.
+  */
+-struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id)
++struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
++			     struct module *owner)
+ {
+ 	struct device *dev = hw->core->dev;
+ 	const char *name = dev ? dev_name(dev) : NULL;
+ 
+-	return clk_hw_create_clk(dev, hw, name, con_id);
++	return clk_hw_create_clk(dev, hw, name, con_id, owner);
+ }
+-EXPORT_SYMBOL(clk_hw_get_clk);
++EXPORT_SYMBOL(__clk_hw_get_clk);
+ 
+ static int clk_cpy_name(const char **dst_p, const char *src, bool must_exist)
+ {
+@@ -4246,8 +4250,9 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
+ 	INIT_HLIST_HEAD(&core->clks);
+ 
+ 	/*
+-	 * Don't call clk_hw_create_clk() here because that would pin the
+-	 * provider module to itself and prevent it from ever being removed.
++	 * Don't call clk_hw_create_clk() here because it would systematically
++	 * add a consumer to the hw clock and all clocks would appear to have
++	 * consumer in the clock summary.
+ 	 */
+ 	hw->clk = alloc_clk(core, NULL, NULL);
+ 	if (IS_ERR(hw->clk)) {
+@@ -4589,7 +4594,7 @@ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
+ 	if (!clkp)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	clk = clk_hw_get_clk(hw, con_id);
++	clk = __clk_hw_get_clk(hw, con_id, dev->driver->owner);
+ 	if (!IS_ERR(clk)) {
+ 		*clkp = clk;
+ 		devres_add(dev, clkp);
+@@ -4636,7 +4641,8 @@ void __clk_put(struct clk *clk)
+ 
+ 	owner = clk->core->owner;
+ 	kref_put(&clk->core->ref, __clk_release);
+-	module_put(owner);
++	if (clk->pinning)
++		module_put(owner);
+ 	free_clk(clk);
+ }
+ 
+@@ -5157,7 +5163,7 @@ struct clk *of_clk_get_from_provider(struct of_phandle_args *clkspec)
+ {
+ 	struct clk_hw *hw = of_clk_get_hw_from_clkspec(clkspec);
+ 
+-	return clk_hw_create_clk(NULL, hw, NULL, __func__);
++	return clk_hw_create_clk(NULL, hw, NULL, __func__, NULL);
+ }
+ EXPORT_SYMBOL_GPL(of_clk_get_from_provider);
+ 
+@@ -5184,7 +5190,7 @@ static struct clk *__of_clk_get(struct device_node *np,
+ {
+ 	struct clk_hw *hw = of_clk_get_hw(np, index, con_id);
+ 
+-	return clk_hw_create_clk(NULL, hw, dev_id, con_id);
++	return clk_hw_create_clk(NULL, hw, dev_id, con_id, NULL);
+ }
+ 
+ struct clk *of_clk_get(struct device_node *np, int index)
+diff --git a/drivers/clk/clk.h b/drivers/clk/clk.h
+index 2d801900cad59..5009380863a9d 100644
+--- a/drivers/clk/clk.h
++++ b/drivers/clk/clk.h
+@@ -23,13 +23,14 @@ struct clk_hw *clk_find_hw(const char *dev_id, const char *con_id);
+ 
+ #ifdef CONFIG_COMMON_CLK
+ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
+-			      const char *dev_id, const char *con_id);
++			      const char *dev_id, const char *con_id,
++			      struct module *owner);
+ void __clk_put(struct clk *clk);
+ #else
+ /* All these casts to avoid ifdefs in clkdev... */
+ static inline struct clk *
+ clk_hw_create_clk(struct device *dev, struct clk_hw *hw, const char *dev_id,
+-		  const char *con_id)
++		  const char *con_id, struct module *owner)
+ {
+ 	return (struct clk *)hw;
+ }
+diff --git a/drivers/clk/clkdev.c b/drivers/clk/clkdev.c
+index ee37d0be6877d..22e572b0a0805 100644
+--- a/drivers/clk/clkdev.c
++++ b/drivers/clk/clkdev.c
+@@ -88,7 +88,7 @@ static struct clk *__clk_get_sys(struct device *dev, const char *dev_id,
+ {
+ 	struct clk_hw *hw = clk_find_hw(dev_id, con_id);
+ 
+-	return clk_hw_create_clk(dev, hw, dev_id, con_id);
++	return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
+ }
+ 
+ struct clk *clk_get_sys(const char *dev_id, const char *con_id)
+@@ -105,7 +105,7 @@ struct clk *clk_get(struct device *dev, const char *con_id)
+ 	if (dev && dev->of_node) {
+ 		hw = of_clk_get_hw(dev->of_node, 0, con_id);
+ 		if (!IS_ERR(hw) || PTR_ERR(hw) == -EPROBE_DEFER)
+-			return clk_hw_create_clk(dev, hw, dev_id, con_id);
++			return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
+ 	}
+ 
+ 	return __clk_get_sys(dev, dev_id, con_id);
+diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
+index 94fcfefb52f3c..fc3fb1045441d 100644
+--- a/include/linux/clk-provider.h
++++ b/include/linux/clk-provider.h
+@@ -37,6 +37,7 @@ struct clk;
+ struct clk_hw;
+ struct clk_core;
+ struct dentry;
++struct module;
+ 
+ /**
+  * struct clk_rate_request - Structure encoding the clk constraints that
+@@ -314,8 +315,9 @@ struct clk_init_data {
+  * @core: pointer to the struct clk_core instance that points back to this
+  * struct clk_hw instance
+  *
+- * @clk: pointer to the per-user struct clk instance that can be used to call
+- * into the clk API
++ * @clk: pointer to the per-user struct clk instance. This will be removed at
++ * some point in the future, Please consider the field obsolete and do not use
++ * it. Use clk_hw_get_clk() to get a per-user struct clk from a struct clk_hw.
+  *
+  * @init: pointer to struct clk_init_data that contains the init data shared
+  * with the common clock framework. This pointer will be set to NULL once
+@@ -1286,10 +1288,24 @@ static inline struct clk_hw *__clk_get_hw(struct clk *clk)
+ }
+ #endif
+ 
+-struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id);
++struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
++			     struct module *owner);
+ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
+ 				const char *con_id);
+ 
++/**
++ * clk_hw_get_clk - get clk consumer given a clk_hw
++ * @hw: clk_hw associated with the clk being consumed
++ * @con_id: connection ID string on device
++ *
++ * Return: new clk consumer
++ * This is the function to be used by providers which need
++ * to get a consumer clk and act on the clock element
++ * Calls to this function must be balanced with calls to clk_put()
++ */
++#define clk_hw_get_clk(hw, con_id) \
++	__clk_hw_get_clk((hw), (con_id), THIS_MODULE)
++
+ unsigned int clk_hw_get_num_parents(const struct clk_hw *hw);
+ struct clk_hw *clk_hw_get_parent(const struct clk_hw *hw);
+ struct clk_hw *clk_hw_get_parent_by_index(const struct clk_hw *hw,
 -- 
 2.53.0
 
