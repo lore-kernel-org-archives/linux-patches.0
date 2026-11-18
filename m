@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030279;
-	b=4jZKGsjHmifgJUhcEV57rCD5wa1iiQtR+0Bq2JdND9WRPOk6840z5rlA+gbIX2HsJTL2
-	 NiKI3c3QVKiejVrmPChpqJOj/SKPOgQY5DFU0kmenlsdvm4ZoDU3r8yIfZvOrxbXbIpIl
-	 fR5e4ObfIVOKiZH+VceXYQcOVCLNCfuUEAn2zlgDzPp1X9DcE48HNg+luPULIF+G9V8U7
-	 i+fC6NeBH42Q5xBeusWMNUUrxdNPaOQ45GUEvVwbpuVswpQCBuYHLlhh8T6YPJf1coLQN
-	 kFZEBrmCbxNCKzrDLzejf4kFmGqQnhsGODPdeDzsQcYvzCu8HiSlqId+kel1Id7DRaw==
+	t=1795030281;
+	b=0NlAUjhwmt6GSYe6zsGkAHyIsUAbNpKHttfJQT8a18OAwLEm+EnidBsDtRrIWDni7hLS
+	 ZeMNg46PuonM3UmPmqrDb9iMJPFKsOX57AmZZQOn6UK2tqmQrWt2NrlJbr9R3y2/TPtFD
+	 Umi+Dbk0jTgqdgH6+wr1321REAxcQvaU8siB+paz/rIRLQN2LxJ6ql2GG8Wc+XpmlpeEn
+	 D2ZBEdaIT9uInPQB2GvuknS3AHLv4f4rmTxf7jOtnA3D6zZcd5CR4g6ZJUOuAm8YPIQop
+	 uQti1dd/78mxXzzcbRsaiomBhnCkHjj3ZFRIaG2LCXhzfzOnMLI5oQY8ft0mYEKF5hQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030279;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=n0nM4QU97QiOQ0SG/Lg151JlO/aKk9Gu1ZEcBTE7KT0=;
-	b=cwj5URpR5SoWqNfcfMLXpLOryJBnLO63LVBcn+WQAMukt/xGihTx8FVLKpvmd5JonEB9
-	 jVaPeMpNsu9ogqgzjdCOSI00e73IHXMRRi1xkvQHPe23QEnfXrqDnn9PzC5nvTSpXxX6R
-	 HfFZbSCw10dVZwmK2BYY/+1UDthBaQqfS33GZJK5qPeCcjqshAu/MkXLTwW5V4LVKhnUk
-	 njhLwcx0bGkepsJwhRmRa9SO3dvySMZ25W9cmmUNWnBaf3BmPMEHqkO/U4r+kqvEl3DKm
-	 8VglVtGF8I0DvFibdWgPvViqrAmEcKU5EuFdqcPIYl4uahVZqMlEkzZHR88hrPfj5dA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=yI3N22e5DL8syIlA4OxMf3U6IHH/eet9MoRxh5bw8Ac=;
+	b=OjbWCVLJgCDxZHYnxC/w/Y3qh17gAlfehsQvQ5E2yZI+LKtx/H7HyKiBvJhTpsnlxhuV
+	 gThdYiHwJz8yIaZFDvO0aezoY+TKeZetuhRdbNMBE3ZTg/V8qEUJu4RJTGZKuW3DYBSAO
+	 98eSFKEMesJrnFf6O0eaE+k0UZwDWEf87p5FPg4J9Hoh1LdSlsqKdj/PMpcjX57fw66WN
+	 CzRQklNsNgUTE10ZEr67gdjU99nI1O6zWStDAETr5KBKYxa87dGNKa8JKh4JdFoqyjv/x
+	 IQWEitD2zxj99FRO/maDpPHxUWZfP0JIkZocb2oeqGaJJ9IQrg6joTexfgXTqjOSE6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cWgONK5x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zjqOpKQp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AD4606A7CF;
-	Wed, 18 Nov 2026 19:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B638606A7CF;
+	Wed, 18 Nov 2026 19:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cWgONK5x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F35F1F000C4;
-	Wed, 18 Nov 2026 19:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zjqOpKQp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43321F000C4;
+	Wed, 18 Nov 2026 19:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030278;
-	bh=n0nM4QU97QiOQ0SG/Lg151JlO/aKk9Gu1ZEcBTE7KT0=;
+	s=korg; t=1795030281;
+	bh=yI3N22e5DL8syIlA4OxMf3U6IHH/eet9MoRxh5bw8Ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cWgONK5xjL6UpYZxRYvkwKHkhHOiSU/fLJUb/MbnlXmBgGiI4OuSkHB2TGxwLwo7Y
-	 3vUB7GQFTS8yAOUnib2NqzoexFUT+vSSHf/9/Frm0JJFLQ6fJIg4Yfji89izAWAacR
-	 dMPCJAmCHFhDKRnfKL0wPsMNhfHEqRPWd5Qe2R4I=
+	b=zjqOpKQpXuWYck9uWygkph0hzbuKJOoWVlmACL5kSr6G1p37iETs3YbqUDJcvtxVQ
+	 NU06fpeBp53Bl0MTHeF6FjNlSMySL5n05lASUAiEMCkVBC53nXllarNH1FcZ66+3U+
+	 af+CqT6/ykhrO8Yp2wwAZmB9blhE7X2rVgMHFiyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0607/1756] dt-bindings: vendor-prefixes: Add Retronix Technology Inc.
-Date: Wed, 18 Nov 2026 15:45:34 +0100
-Message-ID: <20261118150033.125451525@linuxfoundation.org>
+Subject: [PATCH 6.12 0608/1756] dt-bindings: vendor-prefixes: Add Retroid Pocket
+Date: Wed, 18 Nov 2026 15:45:35 +0100
+Message-ID: <20261118150033.164328640@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,45 +63,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit da076d5562d2fc99138ff8ab04ff82eee7a4a3d8 ]
+[ Upstream commit ea55bba4c68a49fcb527da6c71dd48879b705fd1 ]
 
-Add vendor prefix for Retronix Technology Inc.
-https://www.retronix.com.tw/en/about.html
+Add an entry for Retroid Pocket (https://www.goretroid.com/)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Link: https://lore.kernel.org/20250420173829.200553-2-marek.vasut+renesas@mailbox.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: ea55bba4c68a ("dt-bindings: vendor-prefixes: Add Retroid Pocket")
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://patch.msgid.link/20260829-rp-qcs8550-v3-1-198d5b2fc475@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 10038744243b2..a5202c82e7f21 100644
+index a5202c82e7f21..633d540e504b3 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
 @@ -1248,6 +1248,8 @@ patternProperties:
      description: Renesas Electronics Corporation
    "^rervision,.*":
      description: Shenzhen Rervision Technology Co., Ltd.
-+  "^retronix,.*":
-+    description: Retronix Technology Inc.
++  "^retroidpocket,.*":
++    description: Retroid Pocket
+   "^retronix,.*":
+     description: Retronix Technology Inc.
    "^revotics,.*":
-     description: Revolution Robotics, Inc. (Revotics)
-   "^rex,.*":
 -- 
 2.53.0
 
