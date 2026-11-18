@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049627;
-	b=14GULenBHzzkmE6Hl0IcPp9AEgRH9q7VXzni2e0oDdKi+yt8oEjGeVrIa03iIvnw/Sh8
-	 2r5sau7nmu5w5FsuwaKDB+RteMikFsFkua2Wu+97wADSEn4UQAnFHDFCNLYi7LjUx853m
-	 xCdG4ZviQqR7efxIrPwRlyUIjKb3z/4vdKaDEvcZ9XofC9DbuAqqpLd/vA5yinDAieURY
-	 2pQ8TGnB1B7WzE6Oc+m+s9QGkMcKdsnNEoIDxuqiUJuaspQGKn5BPuXQHSBRq4PeY7JAb
-	 ALTFqXd1lE1OQ0kloM4we93NoVEA/cOWklWQgGJ2sk29hSyrAziPFXLwnE4V6hICXVg==
+	t=1795049630;
+	b=wpZ0UJTT7gf7gy70FDjY1ngPFFlDbemL6v15mq9BYy+tT7nKz4K+C5H1nihO6DKElh2b
+	 7645IFk4EmAi2j0MOXK3+XZmOAUrJZbBG7K5h68IbYCFCIqk/iVN7P6FGZg/g1kuTL9tt
+	 fjscPyabY3LoFHad2CBB9Ejp+k0eoowa9E/UowYMaazBSTcaIh+9yrBveAw1WTWi/dUvl
+	 oNiGOOphaciJR3wJAn4BNiqTqOOrQmIxVKBse86UXC8DPskjpTtoDPw62/ejNrCPrOF28
+	 cw5WRSsQvUQwrzWaj+xWSauC71gzkrTStXe8jn5lEQzRXe2eEU8SvlQIi7fSXGjlbNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049627;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tQQ6qDi9jGow6eublhV0G4v0FA6dhVuPuGKpNA0WiDQ=;
-	b=t2LEPpA4pTgTsJfRoXb7CKXXBQZYJ7i+eHhRpGYla5SccEmpe64+jqpmvdxMVLgIBDfu
-	 L9MZdWlmXcCK1eHdsg7sASmVll2TcEwgqS/vfuYra2WMYGVG5Vw9ZsAs1K134VRPivgor
-	 yjK7YWAKAInzNVj8wZnrd+2or6PeyizkzoVL7ESxmDeuIezMn+smgFP5AnJcErFsb8hJL
-	 esQ9A/smDMRdvcMMqjs3w97kvwpF0btdr/L8/H7YmZcbIfvOYDoHeJkvGa3zg1cKWj1fu
-	 P6GlWwDlj5i1WxywOoRmf4qRtbnWJRhjXM6i96afB7CW/RZvsxQs7/9EKXLhBtfhc9g==
+	bh=FTFjPoxQqgrwcD7zigcvHlacsddjENNIcRO8uLOSiRg=;
+	b=tdXbVzvzm5nXysMvMwzUdTWW5H0FILNLC4NPd1mkXMWLfsZegEcQZHcQ3M/AGny+QaMZ
+	 Bu4dEiA9Sao/5YVyxknl4R5y2MwuGCc7xM1jRCwTQa1yG+3z1h+e8ngP811As2ciMxjll
+	 xFYzaPwziZqbqDoUk6PmSH5Eb/4mGir2P63hnjfCww0bSrgumdG7JflRG/XD5P044niXE
+	 hfnr7/olJxWeJ/B+SclC8t78TlTP0fQqLriq8PmR+dbEgQS+ww6AsNIfgB9FBv0b13FEM
+	 lNNHTLKrK3XkaWxTfR4uQEYFd0et1m1UC8b6kltVwEzzSlh9ig3m5QPwDmgvRS3z0bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HoVmslR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K/IhpqVk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348FA606A325;
-	Thu, 19 Nov 2026 00:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA333606A31C;
+	Thu, 19 Nov 2026 00:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2HoVmslR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAA91F000C4;
-	Thu, 19 Nov 2026 00:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K/IhpqVk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8EC1F000C4;
+	Thu, 19 Nov 2026 00:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049627;
-	bh=tQQ6qDi9jGow6eublhV0G4v0FA6dhVuPuGKpNA0WiDQ=;
+	s=korg; t=1795049629;
+	bh=FTFjPoxQqgrwcD7zigcvHlacsddjENNIcRO8uLOSiRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2HoVmslRT+P2km9iVkDr1U1h/17jxKj07upEx21Vm0ZQC/CSQ/5AF1j5t8YKBoq2K
-	 rW5a3zbLocoldDr+q0ljeqyqHdSjSw1ol9eiyUtdtR3Df5fnmmeAV6+WklNCaIXGBk
-	 hMpyWBHu8b66ARauBVJzgvRuKTEkzl6kzhNRlBkg=
+	b=K/IhpqVkKmHkN0Ix2qILZcqdwr3f8moiw7PczHmv+MIbG01Iyjzr1QV4noN+9gU5c
+	 r5zfu5EBQ/pfIv2q5mIew5suKSOBqfGID67wDyGeDoORzZ7NzvGWOa9ukum7RbJrg7
+	 R0xVXbbzKd6ITuJY6fuNwfMfolH/Jj71wMXA70/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
+	Yuho Choi <oss.patchbox@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2420/2857] char: scx200_gpio: check cdev_add() return value
-Date: Wed, 18 Nov 2026 15:57:34 +0100
-Message-ID: <20261118150328.689139415@linuxfoundation.org>
+Subject: [PATCH 6.1 2421/2857] bus: arm-cci: Drop CPU node reference in cci_ace_init_ports()
+Date: Wed, 18 Nov 2026 15:57:35 +0100
+Message-ID: <20261118150328.725976862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,48 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit fe26c195c265c033e474d015061a0183c7a02193 ]
+[ Upstream commit 41d6c0fcd4d75bf78c304c6660d60fcf757885ce ]
 
-cdev_add() can fail. The driver currently ignores the return value and
-reports probe success even when the cdev was not registered, leaving a
-chrdev region allocated with no working file operations.
+cci_ace_init_ports() looks up each possible CPU's node with
+of_get_cpu_node(), which returns the node with its reference count
+raised, but never releases it: neither when the CPU has no ACE port nor
+after the port has been recorded.  Before the commit below the loop used
+for_each_child_of_node(), which manages the references itself.
 
-Check the return value, emit an error, and unwind the chrdev region and
-platform device on failure.
+The node is only needed for the port lookup, so drop the reference right
+after __cci_ace_get_port().
 
-Fixes: 635adb6cd25c ("[PATCH] scx200_gpio: use 1 cdev for N minors, not N for N")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Link: https://patch.msgid.link/20260803015450.2050900-1-gonglinkai@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 78b4d6e0fd26 ("drivers/bus: arm-cci: avoid parsing DT for cpu device nodes")
+Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
+Link: https://lore.kernel.org/r/20260923163536.596107-1-oss.patchbox@gmail.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/scx200_gpio.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/bus/arm-cci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/scx200_gpio.c b/drivers/char/scx200_gpio.c
-index 9f701dcba95c7..4f6b1039417d6 100644
---- a/drivers/char/scx200_gpio.c
-+++ b/drivers/char/scx200_gpio.c
-@@ -108,10 +108,16 @@ static int __init scx200_gpio_init(void)
- 	}
+diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
+index b8184a9035837..ab9b49451f8f2 100644
+--- a/drivers/bus/arm-cci.c
++++ b/drivers/bus/arm-cci.c
+@@ -199,6 +199,7 @@ static void cci_ace_init_ports(void)
+ 			continue;
  
- 	cdev_init(&scx200_gpio_cdev, &scx200_gpio_fileops);
--	cdev_add(&scx200_gpio_cdev, devid, MAX_PINS);
-+	rc = cdev_add(&scx200_gpio_cdev, devid, MAX_PINS);
-+	if (rc) {
-+		dev_err(&pdev->dev, "cdev_add err: %d\n", rc);
-+		goto undo_chrdev_region;
-+	}
+ 		port = __cci_ace_get_port(cpun, ACE_PORT);
++		of_node_put(cpun);
+ 		if (port < 0)
+ 			continue;
  
- 	return 0; /* succeed */
- 
-+undo_chrdev_region:
-+	unregister_chrdev_region(devid, MAX_PINS);
- undo_platform_device_add:
- 	platform_device_del(pdev);
- undo_malloc:
 -- 
 2.53.0
 
