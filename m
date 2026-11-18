@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020172;
-	b=AUcSTVPWgh4oyI67YuKa1y3KIRUoPknoqSH3259TJsfIxiYhmzSwFZFNGJGf7J7WzyHF
-	 iqyKDsZu0eqOo3R9MkYDsE3j0MSOdoPWnU5GRfnjMZbct+SUwG4Qcr+3rcR4LiwU13yEr
-	 wH3fOMRqrdWEaxbZ09izBanR6p9dJm5YhRPltPOwtYu0UiRCiofQc6taOh69dowLlYt4E
-	 v8eTlWWkXVf+5q6d5B9NA1+4tmw6hxMOTno32x0qOdMoFOxsfSW+7pQWq0Jq5RCeXNbM5
-	 ZBEXPONZ1d30fujrA504Gx937Nqshyf/Tu2rdTU0cfQgpdIThkGOaA1ou0Pxw1mG0CA==
+	t=1795020175;
+	b=cVuHfKlRej5Cb8kMDP7D3ajikRCPtpK4Hxca8c3c7If2PmOf7lbdRRnTHhrCT/UsQXK/
+	 C4Afbg7ydOqSuoJYhICorinpVUhrkicyEiY4V9eYuASZ6skGITmVzat6r/qLNe4YOUx6h
+	 OeGL/gS8zdCmQG7/o1f29BfZF4MSdXg9UtsDdBtIYv1HwKtPJ5H+c5kgo/NBa+EA2rzPG
+	 /9YwqmyMjM0rqepE/lwlX2Wmd1lVVuR/orF0P1l+2aYFKxNEDR9vkdjwSe+R5auaH0sG8
+	 QIFj2n+QBaL8UeWI3m2o2n3IEv1cOPISpB/Kn5UunD0BYENIGvjvFcLC4+hF59lL9uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q8fgbhg+uyFigy0hDmGVkEWb2IxfpxThuLJggRqHrvg=;
-	b=P7zg7p5Rw/eWnANMZlGemptpndrlG/xARrdsV9ROBPNPf9h6rKcHoH44LNi9dSqnDsqj
-	 gHv2yqnoYvehaifw1mLSUQr5EVM5RWocyuiJHN10cb5uIAJF412EdcJhJ5LKowI3nFpy9
-	 gsjGF4jv61u1RLrhUMOfrRI8IKRYnJ2/7wN5JjvrJmtJ0Ge8Buwl+me0w8wyJxkV4mcS7
-	 nPlmlwynY7s+02D0gwxnnrsxrOobApF3nDoxpBUyUgspP1O7V810RZ0j3XK1G245/xry9
-	 qSjvrF20si5fI1d4GflqXMMJIal79aPup4bOjkNeICQAMNh3lBDV57AkL/OT06T0ftg==
+	bh=csDRKMQ3AwoMyIvDjo/UgIG97kjODSGENRuZJWIrwfY=;
+	b=nhVhXld5Swk0XX8C3XETw8ECv5ZhuFbAkaGXxF6iLNrdRDMTPK7cjDMG8vDqOM8CcsIG
+	 eqwdaMqnsxNtSWBwxPshZhXXjnbCrh/J2fy7fEDJ41m/mAovEajGKzSmyniNq73RoGKe8
+	 ERK3WrsC8rs45lMamFjws3JsKF6YJhosHKojFrL3SvKlP45KePwsB/9cEi4WP5gaCm+zH
+	 6JgOOiIyCzvV+Wb/l3zBS+dvT01F644Po8VLTvABXbaOrQ8dGRvqNzkeBmOw6iSk48Tin
+	 vEz/Dr7XLGNUL5G2Gnn2aQNAltARgO8NZ780OZT7P++F94id/cw7k50Kx5A5B8zktCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djRu2KV0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezNBy9n7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260D9606A336;
-	Wed, 18 Nov 2026 16:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3FC606A33B;
+	Wed, 18 Nov 2026 16:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=djRu2KV0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF0E1F000C4;
-	Wed, 18 Nov 2026 16:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ezNBy9n7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C6B1F000C6;
+	Wed, 18 Nov 2026 16:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020171;
-	bh=Q8fgbhg+uyFigy0hDmGVkEWb2IxfpxThuLJggRqHrvg=;
+	s=korg; t=1795020174;
+	bh=csDRKMQ3AwoMyIvDjo/UgIG97kjODSGENRuZJWIrwfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=djRu2KV0+j+Nlytsm4ZCW03Q+DXXH6F+ybDdJ7vsEdmr5xaHKTImaz//6F0+O+Gkt
-	 63A4lUh2LDxfKM63rEV6S+Poclgp4ftwoM1rHPV9uliWY1KPz6S/dZ6/rVVSL5VKDG
-	 YzUyV6JZF5oCuvMc0Opxx0AJYTOl6iWYtw7kmnwM=
+	b=ezNBy9n7+2qGm6Yrl15C78lynXKzSzy/xvfYrKGx8U9BWDAHkCnWOPJAdf0XR+tkd
+	 fDiOoazgteAoZXFCQE7JOK9DIwebrAd9jE/ul+gwJuBsZZzzxgBUm6Znq0FtEbJOYj
+	 Qo4/AsBEicWL0zk6eYT6tqFkEYr6/5nULbzXlkgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1857/2651] ASoC: codecs: wm8737: Fix definition of zero cross switches
-Date: Wed, 18 Nov 2026 15:51:37 +0100
-Message-ID: <20261118150353.869002948@linuxfoundation.org>
+Subject: [PATCH 7.3 1858/2651] ASoC: codecs: wm5100: Fix definition of EQ3 Band 1 Volume control
+Date: Wed, 18 Nov 2026 15:51:38 +0100
+Message-ID: <20261118150353.897616940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,46 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 121963197200ca89050f05a704f53c281702ec16 ]
+[ Upstream commit 96d30816a9a4fa6b3cc470f82d0f53e8a6425ab9 ]
 
-The mic (xMZC) and PGA (xPZC) zero cross bits are bits 3 and 2 of each
-channel's Audio Path register. SOC_DOUBLE takes one register and two
-shifts, so both controls only write the left register. Use
-SOC_DOUBLE_R, as the Mic Boost Switch next to them does.
+The EQ3 band 1 gain is in WM5100_EQ3_1, not in WM5100_EQ1_1, which
+holds the EQ1 band 1 gain.
 
-Fixes: 2a9ae13a2641 ("ASoC: Add initial WM8737 driver")
+Fixes: 6d4baf084f4d ("ASoC: Add WM5100 driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/36cab58287bd24955e73bfe3a6fb24cae8fad7b8.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/d7f690e391feda7a6d8f38d0b238b165bc1f4fe2.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8737.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/codecs/wm5100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8737.c b/sound/soc/codecs/wm8737.c
-index 33a3f88fffb3c..0734f6032c8d9 100644
---- a/sound/soc/codecs/wm8737.c
-+++ b/sound/soc/codecs/wm8737.c
-@@ -148,13 +148,13 @@ SOC_DOUBLE_R_TLV("Mic Boost Volume", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
- 		 6, 3, 0, micboost_tlv),
- SOC_DOUBLE_R("Mic Boost Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
- 	     4, 1, 0),
--SOC_DOUBLE("Mic ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
--	   3, 1, 0),
-+SOC_DOUBLE_R("Mic ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
-+	     3, 1, 0),
+diff --git a/sound/soc/codecs/wm5100.c b/sound/soc/codecs/wm5100.c
+index 2fe937a93026c..d0f5c4e89556a 100644
+--- a/sound/soc/codecs/wm5100.c
++++ b/sound/soc/codecs/wm5100.c
+@@ -658,7 +658,7 @@ SOC_SINGLE_TLV("EQ2 Band 4 Volume", WM5100_EQ2_2, WM5100_EQ2_B4_GAIN_SHIFT,
+ SOC_SINGLE_TLV("EQ2 Band 5 Volume", WM5100_EQ2_2, WM5100_EQ2_B5_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
  
- SOC_DOUBLE_R_TLV("Capture Volume", WM8737_LEFT_PGA_VOLUME,
- 		 WM8737_RIGHT_PGA_VOLUME, 0, 255, 0, pga_tlv),
--SOC_DOUBLE("Capture ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
--	   2, 1, 0),
-+SOC_DOUBLE_R("Capture ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
-+	     2, 1, 0),
- 
- SOC_DOUBLE("INPUT1 DC Bias Switch", WM8737_MISC_BIAS_CONTROL, 0, 1, 1, 0),
- 
+-SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ1_1, WM5100_EQ3_B1_GAIN_SHIFT,
++SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ3_1, WM5100_EQ3_B1_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
+ SOC_SINGLE_TLV("EQ3 Band 2 Volume", WM5100_EQ3_1, WM5100_EQ3_B2_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
 -- 
 2.53.0
 
