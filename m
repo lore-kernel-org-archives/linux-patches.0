@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051769;
-	b=i6yj6Fan87Lk/NNOHTkxJDRhl6M/AlxAu4gdruJuxFvTvl1qCk/GV68SESUtxuWj3utS
-	 qmDuyX3otJ+PzGAQ4JTGrewY7dHPYvGK9ypdCHlgSKKF0zzUIPLWVGuGo0Efqm0QdXBHt
-	 uQ7QOtAbu7Ds5KCqgrRB4lZV3X+vED/uXh6fPFXpn8tlXwgFCA/o+oOdGKeo7VZAobNG5
-	 Qp7zPxQ52ficva7pxGPK1pVclTERYUMWt5csrFP2lg+2pkRoF0J7UGutxgpVcIGheo2hB
-	 5u9/BT40ZI7xHHdTon4w68vwVy4AhhKmVWWyxm3bO5xn6NL3Ol8VeEOppyQ5w5vUJvg==
+	t=1795051772;
+	b=QIjYWFUSiKLoRAqVMwfawSjWeCs8mJsAjdz85krN6hcJ9VqsjLFtbFCDk03o2eQ5EbYu
+	 QNivxbyyXGIfshKn5Xs8wS8qSJzg3N4dvId8dHf6i1XiyQc4CWB+IQQHaIVrfMH3lYjQi
+	 g9KYzFxar5G1lY3LgxKMGvVizRbdA/fW/lkyGmvghz+EItdqZypv6VvpD+X2xH/LLybu+
+	 SwWOnEZwaLoIaNq9slV6q/IkmA93I4sNK3T9oCStSVkltQin/bHoee9kxEkxUKKtcRKLh
+	 psB21Q5QveOoY/azQLAG3lex3QpSUIgaWnHD6Y1XWlsukyZYPSr0eh/CTYPcHp2TYVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Os33ECVvj31bSyv48Wrb9Uy3XwxrA7JQRGNTTnvLJYo=;
-	b=yjXTLfgg6HtDlq4xTAwX6sZ2QEIbUN5YYKwVDWdOt4Fa+d1agqithShj6lxfko41YC/3
-	 jSR66/rraSv3xzQ3iNfKkOvCCLZRrSYauFc5B6hTwCgL1s2FZYxBZt3Z3Yzn/B1qS2I5f
-	 nLTxSxeIoz0zDuTThsuHBXZJQ+kSWST0ywXd++y8V4IQT/upC5aC5oNThbe7fqCH5iDTP
-	 a4sHhIe1Li4FC0dcjFbqHZPBF7S77FW++kiawSr1WOQO9wEgSsucf01GS5pXrdbuzD+lc
-	 FmWhDDQmb9hTK+aA/ThuHAqVvDCyA6F2iUMs/EQZEoQQezviWFaHRv2hFz26RSbwmGw==
+	bh=2HwPJ+VZdXnmlDbvLmDuhpsW4Of7eYYxzmat+XI2GN8=;
+	b=KP9jMJKL1mHT9X8XCyRkoqBAUA+IlAJf42FPVUo0XxOyk+gcU0ac+tlMnDO+swS5nSnn
+	 43ERu4dloxVDXF5+tes8h0nLnbcxfa6FXdSnb4Ole+5IOlLZ/hsYL7VVNQDKMXZ1EJlG5
+	 ckY/fQLCidMqMNagG36OeLdcMpvPfrXgEOmexJxYUG3p4brXCK8GXI2eye6sgKHfoiz9f
+	 1b2B47I7mvsBo7WARecZvyXHbWEil4QViTAKP5Z5VoWKyBU65CiI+kdQxZDh1PMhWwFn3
+	 a27GNVRAm7qAmLjdbqvyjGVAAM7TxhHrvCEWzxn1SfC3jC0rPMJ6r0vdWTq+Xtje/DA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lr+UEsW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIXqMunn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F778606A31C;
-	Thu, 19 Nov 2026 01:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ABF606A32F;
+	Thu, 19 Nov 2026 01:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lr+UEsW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20751F000C4;
-	Thu, 19 Nov 2026 01:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIXqMunn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB95F1F000C5;
+	Thu, 19 Nov 2026 01:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051769;
-	bh=Os33ECVvj31bSyv48Wrb9Uy3XwxrA7JQRGNTTnvLJYo=;
+	s=korg; t=1795051772;
+	bh=2HwPJ+VZdXnmlDbvLmDuhpsW4Of7eYYxzmat+XI2GN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lr+UEsW7tYul2P3hOspfpTOwxA4dtDhFT/Eul6SAcN3LSSge04MYZGIz8472LXGKR
-	 Me8AOBw+5Aszu7deXfKPUS8LFlv8NXIchdPnfHbKdkvsj5Uw0RpGrwEt7OSPwSol7r
-	 Bafo6hFsfSVl36dtv3566ryYA3vGrIFtdLK9bC3E=
+	b=SIXqMunnokTdr8EkohfaXWNeW+PRRKNPGUuh/gfCG3f0QSwj8wfhsFf0bMBtBRAx3
+	 vV6Y0zsuxMEBnpiZqJMpc+bg8Yr8NWg/Wy6fq4HbjRoxmNJ9KuJO6BZKFpZSHyaaS4
+	 JwNI6ZT8UrjCsDVDrVpgEhE2eaOffV62quLRenLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
 	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 5.15 0327/2214] ovl: fix a torn path in ovl_get_redirect()
-Date: Wed, 18 Nov 2026 15:33:23 +0100
-Message-ID: <20261118150023.405098021@linuxfoundation.org>
+Subject: [PATCH 5.15 0328/2214] ovl: read the nlink xattr of every indexed non-dir
+Date: Wed, 18 Nov 2026 15:33:24 +0100
+Message-ID: <20261118150023.445038506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,71 +69,146 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-commit 2001cd7ca5560198131e46c6ca3c3472b06145c2 upstream.
+commit eb644ed5c6d9afdb1554c41cef1f39d150fbc554 upstream.
 
-A hard link of a metacopy file that races with a rename of an ancestor
-stores a redirect to the wrong lower file.
+With nfs_export=on, data written through a file handle to a lower file,
+i.e. a file that exists only in a lower layer of the overlay, can be
+lost on the next mount. A lookup of the file by name then returns -EIO.
+Also, a file with one name reports st_nlink 2 once it has been copied to
+the upper layer. After such a file is removed, its file handle can still
+open it until the next mount.
 
-Each component of an absolute redirect must be the name that a dentry
-has in the parent that the walk continues with. ovl_get_redirect()
-copies the name under d_lock and calls dget_parent() after the unlock,
-and the callers for a hard link hold no lock that stops a rename across
-directories. A rename between the two steps combines the old name with
-the new parent.
+Before a lower file is changed for the first time, overlayfs copies it
+to the writable upper layer. This is called copy up.
 
-With delays in ovl_get_redirect(), an unprivileged user hard-linked a
-metacopy file while renaming its ancestor to another directory, the
-stored redirect named another lower path, and after a remount the file
-showed the data of a root-only file.
+The index directory is $workdir/index, where $workdir is the directory
+given by the workdir= option. Each entry is named after the file handle
+of a lower inode, so that overlayfs can get from the handle to the
+copied up inode.
 
-Fix this by taking the parent first and checking it again under d_lock.
+With nfs_export=on, copy up indexes every non-directory: it copies the
+file to an entry in the index directory and then hard links that entry
+into the upper directory. The index entry is an extra link to the upper
+inode, so overlayfs stores the link count that users should see in the
+overlay.nlink xattr.
 
-Fixes: e04527fefba6 ("ovl: fix dentry leak in ovl_get_redirect")
+A file can also be opened by handle, either by an NFS client or by a
+process with CAP_DAC_READ_SEARCH calling open_by_handle_at(). If the
+file is not in the dcache, its overlay dentry is disconnected, i.e. it
+has no parent yet. Copy up then creates the index entry but no hard link
+in the upper directory. The index entry has i_nlink 1 and holds the only
+copy of the data written to the file.
+
+ovl_get_nlink() reads the stored count. Its caller passes a default,
+which the function returns if there is no stored count. If the lower
+inode has i_nlink 1, the function returns the default without reading
+the xattr. That was correct as long as only lower files with multiple
+links were indexed.
+
+On the next mount, ovl_verify_index() looks for orphans, i.e. index
+entries of files whose last name was removed. For an index entry with
+i_nlink 1, it passes a default of 0 to ovl_get_nlink() and treats a
+result of 0 as an orphan. Here the lower inode also has i_nlink 1, so
+the result is the default. ovl_indexdir_cleanup() then replaces the
+entry with a whiteout, which in the index marks a file as deleted. The
+written data is lost.
+
+A lookup by name then returns -EIO, because a whiteout as the index
+entry of a lower file that still exists is a bad index.
+
+ovl_get_inode() gets the wrong count the same way. Its default is the
+i_nlink of the upper inode, which includes the index entry, so a copied
+up file with one name reports st_nlink 2.
+
+When that name is removed, the count drops to 1 rather than 0.
+ovl_nlink_end() replaces the index entry with a whiteout only at a count
+of 0, so the entry stays, and the handle of the removed file still opens
+it.
+
+Reproduced by writing through open_by_handle_at() to an uncached lower
+file with one link. After a remount the data was lost, and the name
+returned EIO.
+
+Fix this by adding an argument to ovl_get_nlink() that says whether the
+caller found an index entry, and by skipping the xattr only if the
+caller found none.
+
+Known gaps:
+- An index entry that a kernel without this patch left behind for a
+  removed file now stays, and the handle of that file keeps working. The
+  entry has i_nlink 1 and a stored count of 1, just like the entry of a
+  file that was only written by handle. Without this patch, the next
+  mount treated it as an orphan.
+
+Fixes: fbd2d2074bde ("ovl: index all non-dir on copy up for NFS export")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/dir.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/overlayfs/inode.c     |   14 +++++++++++---
+ fs/overlayfs/namei.c     |    2 +-
+ fs/overlayfs/overlayfs.h |    2 +-
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
---- a/fs/overlayfs/dir.c
-+++ b/fs/overlayfs/dir.c
-@@ -995,7 +995,19 @@ static char *ovl_get_redirect(struct den
- 		const char *name;
- 		int thislen;
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -903,7 +903,7 @@ int ovl_set_nlink_lower(struct dentry *d
+ }
  
-+		/*
-+		 * A rename can move d to another directory at any time.  Hold
-+		 * d_lock to copy the name that d has in this very parent, or
-+		 * else the path mixes the old name with the new parent.
-+		 */
-+		tmp = dget_parent(d);
- 		spin_lock(&d->d_lock);
-+		if (unlikely(tmp != d->d_parent)) {
-+			spin_unlock(&d->d_lock);
-+			dput(tmp);
-+			continue;
-+		}
+ unsigned int ovl_get_nlink(struct ovl_fs *ofs, struct dentry *lowerdentry,
+-			   struct dentry *upperdentry,
++			   struct dentry *upperdentry, bool indexed,
+ 			   unsigned int fallback)
+ {
+ 	int nlink_diff;
+@@ -911,7 +911,15 @@ unsigned int ovl_get_nlink(struct ovl_fs
+ 	char buf[13];
+ 	int err;
+ 
+-	if (!lowerdentry || !upperdentry || d_inode(lowerdentry)->i_nlink == 1)
++	if (!lowerdentry || !upperdentry)
++		return fallback;
 +
- 		name = ovl_dentry_get_redirect(d);
- 		if (name) {
- 			thislen = strlen(name);
-@@ -1008,13 +1020,13 @@ static char *ovl_get_redirect(struct den
- 		if (thislen + (name[0] != '/') > buflen) {
- 			ret = ERR_PTR(-EXDEV);
- 			spin_unlock(&d->d_lock);
-+			dput(tmp);
- 			goto out_put;
- 		}
++	/*
++	 * A lower inode with one link is not indexed on copy up, unless all
++	 * files are indexed for NFS export.  If the caller found an index entry,
++	 * then the xattr holds the union nlink, whatever the lower nlink is.
++	 */
++	if (!indexed && d_inode(lowerdentry)->i_nlink == 1)
+ 		return fallback;
  
- 		buflen -= thislen;
- 		memcpy(&buf[buflen], name, thislen);
- 		spin_unlock(&d->d_lock);
--		tmp = dget_parent(d);
+ 	err = ovl_getxattr(ofs, upperdentry, OVL_XATTR_NLINK,
+@@ -1162,7 +1170,7 @@ struct inode *ovl_get_inode(struct super
+ 		/* Recalculate nlink for non-dir due to indexing */
+ 		if (!is_dir)
+ 			nlink = ovl_get_nlink(ofs, lowerdentry, upperdentry,
+-					      nlink);
++					      oip->index, nlink);
+ 		set_nlink(inode, nlink);
+ 		ino = key->i_ino;
+ 	} else {
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -593,7 +593,7 @@ int ovl_verify_index(struct ovl_fs *ofs,
+ 		if (err)
+ 			goto fail;
  
- 		dput(d);
- 		d = tmp;
+-		if (ovl_get_nlink(ofs, origin.dentry, index, 0) == 0)
++		if (ovl_get_nlink(ofs, origin.dentry, index, true, 0) == 0)
+ 			goto orphan;
+ 	}
+ 
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -516,7 +516,7 @@ static inline bool ovl_dir_is_real(struc
+ int ovl_set_nlink_upper(struct dentry *dentry);
+ int ovl_set_nlink_lower(struct dentry *dentry);
+ unsigned int ovl_get_nlink(struct ovl_fs *ofs, struct dentry *lowerdentry,
+-			   struct dentry *upperdentry,
++			   struct dentry *upperdentry, bool indexed,
+ 			   unsigned int fallback);
+ int ovl_setattr(struct user_namespace *mnt_userns, struct dentry *dentry,
+ 		struct iattr *attr);
 
 
