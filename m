@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031321;
-	b=2k0yzHKGjmz9orp5iWsckWE64fc0JmPI20pPHQHQK13Zd95WJvSuKsfMCyohwL4gVP9a
-	 H6hFC0ahvJeXY2fhFu8kuOzYSKNGzDrB9i16FT/Zz/DCFDnMSPwHPHV1mAMbWhB36/28E
-	 OhsjI/PhLuEUtMjTfDw8Hp4wP+OXt0VCEQK5xEhEmXqOg8r/UcFXJRXPnjVXfmt2i7RYc
-	 gawrINqCwoOp3XuJBA3FjgEwQNU3Tg/c5yF8KRHsMBycx/6QOTNGS6luCKyzU6E4//t+T
-	 Ztmzyf4+C8NNpNLxW36EMVdAcJsNr9FBVPNRVLrVqzJJaS4J+duz0po4aR89lakeFjg==
+	t=1795031323;
+	b=LB++16Bh1Rql+du8KEeTUQL46PuASICUwg+KfbAgWzlkezqws8IFCYwFPFaBx787DQ4A
+	 kJIZ6zq9MJYe5Mxr+Yx7+TFqQdYIMukxD4rd+1fM7mNo3vhbNkhy/mQshhrc5ZmAgVnpy
+	 BkObWQsLRrcCX9uIsbTheMGBDB/IF5RVIW3cworlokiCP64zyJohggwkjSxp8vF9PreGB
+	 81s8KfRk7s0q83mKGpyTsh1uVFfT8uuhk3GsDT1e+CMKgJ6fFC5jf3z9mQl5YrrdzUehU
+	 fl42O1FZkXEech+FvizwNIHdMUnwGJ0TjBI+p6FFCT6rGkhe5Vsez64ng5H7YOsENIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031321;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031323;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1A9lLRfiD2wYT4mrFMg6F/QlMiae2HurPoi5eJjiCkU=;
-	b=H9QwkylpQCo48wMLiGP7RDNwzV0bPVswmFQT6EeJzg8rVbAsj2nqC4rpoASkWcZaUgUf
-	 bCwG0mekk7i+vKmEdFCdC/1DI5leQmhYnhiEZA/S0LlkGZmur4KJGfEYknX0FAPP5rSO5
-	 H7KhsRDbAxu/81Ay0I9citKrWGGWRlXnkqkO1a0evdIxUnons7MaNb3XFyywLcW+dy70h
-	 k0BA6WrNhotDHsCdlLU2p8mx+SJE6bRb05PJaIf3tWg+/aSHV1WbU1UfrEs6vR2GnM930
-	 muKm95VV1U9QgD+URzQD5FjUHZHkSuLuU0kxtmj5M8apNhGNpDyKp1noTjeI8g/5HxQ==
+	bh=k164Lg/F3I6RSWZwGlSGKeoM5oiAtIHx1cgIGWuz2uw=;
+	b=nNNLaOFfDlAwrj7Rkp1Gp5xvGCeB9jPyahH0cdcleoGbyQm0YhSYXFO3fO7ddFoY6nyh
+	 7ZbTcQJfAx8ItrmtcYRnzRyppQOkOR0oqQathLjdfpveEF71NbVPyWHsCaCdDvV6XhTHI
+	 NUi+o+ZNb+FfGgu+b6br6YfzEOo0f6qBRgyHkaNIeLahFhJ2QpP6qvv2TtDtyI6aUj5lS
+	 CFeL+y1XkGpf71rMPAVtbdnbGH3a4HcHe/H3VD5GSQUOAy9hATLQ2dXZfyed0yjntWaOR
+	 UNUYzZEmyKJsgzbCbZb4QWgaPDOKv/OBoB0zq8ioBLw1zLnrloOIfXvqNGM7Mupv1HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/Bmi49E";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D3Lnd6bQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3638606A325;
-	Wed, 18 Nov 2026 19:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B821F606A336;
+	Wed, 18 Nov 2026 19:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/Bmi49E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565001F000C5;
-	Wed, 18 Nov 2026 19:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D3Lnd6bQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199C81F000C5;
+	Wed, 18 Nov 2026 19:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031320;
-	bh=1A9lLRfiD2wYT4mrFMg6F/QlMiae2HurPoi5eJjiCkU=;
+	s=korg; t=1795031323;
+	bh=k164Lg/F3I6RSWZwGlSGKeoM5oiAtIHx1cgIGWuz2uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u/Bmi49ELX9IEv1XUSwCvLRU1SpmLGGvQ+k7BlGt3krXA1ZQiQNzSdt+wHHySzhk/
-	 MZz9vojE7mGOAxGYkApVu5UjrxopyFetWwHtmMeDgfzyDsD0on7KQx0AH5XFVTbVbb
-	 Qtl68ChaWTwxRAOtku/B+htNhZf1HZ5banVZESU0=
+	b=D3Lnd6bQz6Wo4bLC7gvOyCjk0T3EX7R7kgrAIuUwXFTg5+o1n+yyiMnRbd7w7m9Qj
+	 SVeslMkxpRTOzDwSo5lr1whAEgrHaJH0075JC2zvhS3XCU7rXfsQJq/3AeaCs3ocUr
+	 yPhwc974Hif784+FD6rFxnb0/v9a7dAEqopnu0y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Crispin <john@phrozen.org>,
+	Mark Junker <fubar-coder@live.de>,
+	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0975/1756] wifi: mt76: mt7996: disable the RX NAPIs before the DMA cleanup
-Date: Wed, 18 Nov 2026 15:51:42 +0100
-Message-ID: <20261118150048.956198933@linuxfoundation.org>
+Subject: [PATCH 6.12 0966/1756] wifi: mt76: mt7925: keep the join ROC until the station is authorized
+Date: Wed, 18 Nov 2026 15:51:33 +0100
+Message-ID: <20261118150048.599714277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,55 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Crispin <john@phrozen.org>
+From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
 
-[ Upstream commit 7a5a3843178c61d99d939b231318692d08fff79b ]
+[ Upstream commit ac22c8c723c62013dd45b74e32249fc877c86fe0 ]
 
-mt7996_unregister_device() leaves the RX NAPIs enabled, so
-mt76_dma_cleanup() deletes enabled NAPIs and destroys page pools that
-are still bound to them. On rmmod, the kernel warns in
-__netif_napi_del_locked() for every RX queue and in
-page_pool_disable_direct_recycling(). Until the IRQ tasklet is disabled,
-an interrupt can still schedule a NAPI that was already deleted.
+When a non-MLO station associates, mgd_complete_tx() aborts the join ROC
+as soon as the association succeeds, which is right before the supplicant
+sends message 2 of the 4-way handshake. With the abort that close to
+message 2, the adapter acknowledges nothing the AP sends for the next
+several ms: the AP sends message 3 and its seven retries within about
+5 ms, none is acknowledged, and the handshake ends with reason 15
+(4WAY_HANDSHAKE_TIMEOUT).
 
-Disable every RX NAPI that was added before the MCU exit and the DMA
-cleanup. This includes the host RRO queues: mt76_dma_init() skips them,
-but mt7996_dma_rro_start() adds their NAPIs later when WED is not
-active, so a check for mt76_queue_is_wed_rro() would miss them.
+Keep the ROC after a successful (re)association on a non-MLD station
+interface and release it when the station is authorized, on
+disassociation, or when the station is removed. The ROC timer still ends
+it if none of that happens. MLD interfaces keep the old behaviour: there
+the ROC that is active at this point is the MLO ROC set up by
+mt7925_mac_set_links(), and holding it makes mt7925_set_mlo_roc() fail
+with -EBUSY in the link activation work, which leaves one link instead of
+two.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: John Crispin <john@phrozen.org>
-Link: https://patch.msgid.link/20261006205936.669125-27-nbd@nbd.name
+Tested by a reporter on an MT7925U (USB) against a FRITZ!Box 5690 Pro on
+a 6 GHz-only, non-MLO SSID, kernel 7.2.3, from traces and monitor
+captures taken in separate runs:
+
+                       handshakes   first M3 acked   abort before M2
+  unpatched               8 of 84         0 of 83           84 of 84
+  this patch             30 of 30        31 of 31            0 of 30
+
+With the patch the AP sends message 3 once and the adapter acknowledges
+it straight away; the ROC is released right after the station is
+authorized. A 20 ms delay after the abort instead of this change gave
+15 of 15, which points at the abort timing and not at the delay.
+
+Tested here on an MT7925 and an MT7927 (PCIe), kernel 7.3.0-rc4: on a
+non-MLO SSID neither build showed the failure (1 stalled handshake in 110
+unpatched, none patched), so no effect could be measured there. On an MLO
+connection the change is inert: 16 of 16 link activations succeeded in
+two rounds per build, with two active links and the same ROC order as
+before.
+
+Not tested: other APs, other USB parts, MT7927 over USB, MLO connections
+beyond the check above.
+
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Reported-by: Mark Junker <fubar-coder@live.de>
+Closes: https://github.com/morrownr/mt76/issues/106
+Tested-by: Mark Junker <fubar-coder@live.de>
+Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20261006031425.20922-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7925/main.c  | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 6da42d9411656..80b1df96c9ee4 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1403,6 +1403,8 @@ int mt7996_register_device(struct mt7996_dev *dev)
- 
- void mt7996_unregister_device(struct mt7996_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 2ab8b8e527086..49bdd15d9427f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1134,6 +1134,13 @@ int mt7925_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 			 struct ieee80211_sta *sta, enum mt76_sta_event ev)
  {
-+	int i;
+ 	struct ieee80211_link_sta *link_sta = &sta->deflink;
++	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
 +
- 	cancel_work_sync(&dev->dump_work);
- 	cancel_work_sync(&dev->wed_rro.work);
- 	cancel_work_sync(&dev->reset_work);
-@@ -1413,6 +1415,10 @@ void mt7996_unregister_device(struct mt7996_dev *dev)
- 	mt7996_coredump_unregister(dev);
- 	mt76_unregister_device(&dev->mt76);
- 	mt7996_wed_rro_free(dev);
-+	for (i = 0; i < ARRAY_SIZE(dev->mt76.napi); i++) {
-+		if (dev->mt76.napi[i].dev)
-+			napi_disable(&dev->mt76.napi[i]);
++	if (mvif->roc_join_held && !sta->tdls &&
++	    (ev == MT76_STA_EVENT_AUTHORIZE || ev == MT76_STA_EVENT_DISASSOC)) {
++		mvif->roc_join_held = false;
++		mt7925_abort_roc(mvif->phy, &mvif->bss_conf);
 +	}
- 	mt7996_mcu_exit(dev);
- 	mt7996_tx_token_put(dev);
- 	mt7996_dma_cleanup(dev);
+ 
+ 	if (ev != MT76_STA_EVENT_ASSOC)
+ 		return 0;
+@@ -1287,6 +1294,7 @@ void mt7925_mac_sta_remove(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 		struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 
+ 		mvif->wep_sta = NULL;
++		mvif->roc_join_held = false;
+ 		ewma_rssi_init(&mvif->bss_conf.rssi);
+ 	}
+ }
+@@ -1899,6 +1907,19 @@ static void mt7925_mgd_complete_tx(struct ieee80211_hw *hw,
+ {
+ 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
+ 
++	/* Keep the join ROC until the station is authorized, so that it
++	 * covers the 4-way handshake. mt7925_mac_sta_event() releases it.
++	 * On MLD, the active ROC is the MLO ROC, which must be released
++	 * before the link activation work sets its own.
++	 */
++	if (vif->type == NL80211_IFTYPE_STATION && !ieee80211_vif_is_mld(vif) &&
++	    info->success &&
++	    (info->subtype == IEEE80211_STYPE_ASSOC_REQ ||
++	     info->subtype == IEEE80211_STYPE_REASSOC_REQ)) {
++		mvif->roc_join_held = true;
++		return;
++	}
++
+ 	mt7925_abort_roc(mvif->phy, &mvif->bss_conf);
+ }
+ 
 -- 
 2.53.0
 
