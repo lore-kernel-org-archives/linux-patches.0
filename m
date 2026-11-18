@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017140;
-	b=fLYSQ8LJo0bfhrODZHOv5E+7rBEHz/zybF3gJ7oopaBz0Q+zmowrnssKKxoMJlDBFEgf
-	 pDXo+QzVblN9Y2mUcF8S9lVTIWxWTOFwLLQvrOFce9ctvFkxIVgrPpd5AtXxRbyap2sy0
-	 ttV95Yby5VVWYeNvvnxk7V4XRj4mrKQeCk2hXZshBlZdyOR+uVFY5Iu63ogVHqLpO2cDs
-	 56SYleqJoCNqq99cSZSTs7TZu8074eOfZpN7ig5w4/rMeF52wuY5a9HLXA9rJkxMPF9Bi
-	 PVjazAhfc2rFXVUDdjOsZDe3kOIR1TVPMgenIg38sc2iq+26udYmXTG5AISfINuHbEA==
+	t=1795017143;
+	b=Hbyz0vhxAP03NYwrT6owvibK935f5G4YVV9Lj7AqBphRHY0H7oEAqmowMoGbiwuiHu3s
+	 6V3+wYPZL2InxBRejptDmCRCR6b0z65EQLOuf8izAxW4G4ZYynKXAh5d7lxqhgxqd/Ece
+	 gWqX+OpH49pXiOAWqnhEb0bwKo3bP+LVWWUICkxPqe7SW2Yu7mW3HwN4LDN+XrUppUTPI
+	 L+LrgpXcoaq4M092aZMajOw77dyLtJV4DzbrRri4c3z/447cpQ4dEJISCWs9BN3h7QsG2
+	 69wifNj2kNDFkWc15X/UlMDfFOohbT2xBZEln487jxuCN3HJlqyDOVfvXKsgKtDyvmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QGwYKEODoeZ/Vn3UlndMNV6dMz5aEC8kKA6o50++hag=;
-	b=CJQ4ZyHa9L9mxKUgxPQf1q8FyQ5eN3DIJWh24jql/zDTL1uZLzqGzmvP6PLYMtLcBr2Y
-	 +bCuGe5uTGjftA7b9f8PhEIjfq91k8FzwbIwtqk5DMxmJK8wLTFi+XIoovYz5FaW9+4/t
-	 laVT8DcRJZMYbgRqdYshsAf7hv03k9AltzG7wbObhH+0OjSqTWsltZTv+PD/fuNNEnQvz
-	 /hDCMe/ovYXRAvK9gH8EQekvJZBjmSlt8VCBeoZxXK9T//b/WA8sGlCoqJ8blyY+krnRn
-	 6fa96PRGDdNZqtkTJ2WCaauYBS7/vl5pI3m8OJwE51PXmYcbtewOjRIaabbIRfJGwKw==
+	bh=5Wp9+1ecCBY/OYmw3V2sIgrF0FhdXb+kUrj/AHgEI3U=;
+	b=sHb/4hwwbpOc7Bh1KpterDGVbthkjU+F+J6jDdK86eKZdToHn0NBULXhJjlLBShfZqk9
+	 Cmge7gWKZiBtSGE0H82YPJ6RGozXAJjfBrwJotMDkJTdpOcEtlbUJ8S/NmKKeD4sZh6xM
+	 Az2SDBiF2rpcnnDQZgKG/Rc47jSV1BD9h8iMlGNJYZOsWoi9bEFPLTNg0guLTlQh7ulZt
+	 p1d+h41TfeXpzOvjEb0TZHFN8O+qYPsMgr9Q9XFkNZbmCNcz1YlK1oL0+MVanJ71XhhY7
+	 BqGllE/4eC8jqTvT2C358PFiJw82YeYca0ZF4vhZm7uXYcOYN69M+oWb1yZYNDY633A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fn5eI/YO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXIRFNFi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B388A606A31C;
-	Wed, 18 Nov 2026 15:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698F9606A338;
+	Wed, 18 Nov 2026 15:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fn5eI/YO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F2F1F000C4;
-	Wed, 18 Nov 2026 15:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXIRFNFi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A291F000C5;
+	Wed, 18 Nov 2026 15:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017140;
-	bh=QGwYKEODoeZ/Vn3UlndMNV6dMz5aEC8kKA6o50++hag=;
+	s=korg; t=1795017143;
+	bh=5Wp9+1ecCBY/OYmw3V2sIgrF0FhdXb+kUrj/AHgEI3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fn5eI/YOBugl4rJy1Ap9Uv7cQuikcfgaF9tFoG8p4J96x1VrA5CFPw9awpXtLiId+
-	 klsA9Z7UK/z4umeM5UAIUw74SM+RtEzCVYGnK6MS8v1iFVlSCnunfWQM/kdc+3Cn6m
-	 Y/juxUy6tqJALAbMFIKe5oG3cUzovB+2JIyPIPq4=
+	b=xXIRFNFigY3aCOTqXmo3d+Qi3DJel3tPUTdPjOf9/xc8VMyQzBWzwg4lBaFtEB8OS
+	 E9mCqKQlYtTtqOSP7MZ7wnqOVuPwuVxZbxtfTCp8NEoM3pRyWTO3ZnlVlrzYbdlNvX
+	 ImWEX9wrF0/Uxn0B+Counhk9lKpn+gIZetseqP40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Matteo Kloiber <kernel@matt3o12.de>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0776/2651] um: Add definition of __NR_close_range for older host OSs
-Date: Wed, 18 Nov 2026 15:33:36 +0100
-Message-ID: <20261118150315.824854753@linuxfoundation.org>
+Subject: [PATCH 7.3 0777/2651] rust: scatterlist: honor the devices maximum segment size
+Date: Wed, 18 Nov 2026 15:33:37 +0100
+Message-ID: <20261118150315.863750962@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,50 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Matteo Kloiber <kernel@matt3o12.de>
 
-[ Upstream commit 03dcf7bd302c9bae0c75a21a3004a44b4940317e ]
+[ Upstream commit c15c5befd6d6150e92ab7c6c7fde1088e0f543e6 ]
 
-__NR_close_range was introduced with
-278a5fbaed89dacd04e9d052f4594ffd0e0585de ("open: add close_range()")
-which is present in Linux >= 5.9. Older hosts running a kernel version
-prior to that range currently fail to build due to that missing system
-call number definition.
+SGTable::new() caps segment length at dma_max_mapping_size() only, which
+limits the DMA mapping path (e.g. swiotlb), not the device itself. The
+per-device limit from dma_set_max_seg_size() is ignored, so contiguous
+page segments can be longer than the declared max segment size,
+potentially causing problems for future drivers that use this
+abstraction.
 
-Fixes: f82a9e7b9fa9 ("um: fix execve stub execution on old host OSs")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260812173249.98435-1-florian.fainelli@broadcom.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 05aa6fb1c21d ("rust: scatterlist: Add abstraction for sg_table")
+Signed-off-by: Matteo Kloiber <kernel@matt3o12.de>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20260913210828.125655-3-kernel@matt3o12.de
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/shared/skas/stub-data.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ rust/helpers/dma.c         |  5 +++++
+ rust/kernel/scatterlist.rs | 12 ++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/um/include/shared/skas/stub-data.h b/arch/um/include/shared/skas/stub-data.h
-index 27db38e95df91..1230a325debcd 100644
---- a/arch/um/include/shared/skas/stub-data.h
-+++ b/arch/um/include/shared/skas/stub-data.h
-@@ -9,11 +9,20 @@
- #define __STUB_DATA_H
- 
- #include <linux/compiler_types.h>
-+#include <asm/unistd.h>
- #include <as-layout.h>
- #include <sysdep/tls.h>
- #include <sysdep/stub-data.h>
- #include <mm_id.h>
- 
-+#ifndef __NR_close_range
-+# if defined(__alpha__)
-+#  define __NR_close_range 546
-+# else
-+#  define __NR_close_range 436
-+# endif
-+#endif
+diff --git a/rust/helpers/dma.c b/rust/helpers/dma.c
+index 9fbeb507b08c6..ff8f24dae9df4 100644
+--- a/rust/helpers/dma.c
++++ b/rust/helpers/dma.c
+@@ -49,3 +49,8 @@ __rust_helper void rust_helper_dma_set_max_seg_size(struct device *dev,
+ {
+ 	dma_set_max_seg_size(dev, size);
+ }
 +
- #define FUTEX_IN_CHILD 0
- #define FUTEX_IN_KERN 1
++__rust_helper unsigned int rust_helper_dma_get_max_seg_size(struct device *dev)
++{
++	return dma_get_max_seg_size(dev);
++}
+diff --git a/rust/kernel/scatterlist.rs b/rust/kernel/scatterlist.rs
+index b83c468b5c633..44eeafed05e39 100644
+--- a/rust/kernel/scatterlist.rs
++++ b/rust/kernel/scatterlist.rs
+@@ -350,15 +350,23 @@ fn new(
+             page_vec.push(page.as_ptr(), flags)?;
+         }
  
++        // Cap segments at both the DMA mapping-path limit and the device's declared
++        // max segment size.
++        //
+         // `dma_max_mapping_size` returns `size_t`, but `sg_alloc_table_from_pages_segment()` takes
+         // an `unsigned int`.
+         //
+         // SAFETY: `dev.as_raw()` is a valid pointer to a `struct device`.
+-        let max_segment = match unsafe { bindings::dma_max_mapping_size(dev.as_raw()) } {
++        let max_mapping_size = match unsafe { bindings::dma_max_mapping_size(dev.as_raw()) } {
+             0 => u32::MAX,
+-            max_segment => u32::try_from(max_segment).unwrap_or(u32::MAX),
++            max_mapping_size => u32::try_from(max_mapping_size).unwrap_or(u32::MAX),
+         };
+ 
++        // SAFETY: `dev.as_raw()` is a valid pointer to a `struct device`.
++        let max_seg_size = unsafe { bindings::dma_get_max_seg_size(dev.as_raw()) };
++
++        let max_segment = max_mapping_size.min(max_seg_size);
++
+         Ok(try_pin_init!(&this in Self {
+             // SAFETY:
+             // - `page_vec` is a `KVec` of valid `struct page *` obtained from `pages`.
 -- 
 2.53.0
 
