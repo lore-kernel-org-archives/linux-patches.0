@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057460;
-	b=MQeQ0+kSgHtZtr1SNQwRvehHeaWdLwCTRZYv0p79lHr/A8H8CHCjqFqE67LalhuxxOJ4
-	 QyLAqS8x7rQsZ+ZB9bCeHLIjWC1+T5ozLWelRfWUU52d7eC2FG3a67IkarLVyA7G2Sp6y
-	 O1Ag4K6R+ir801P/B8HNAgbyyJFOzvz1K/QzsOtbKm4xZaLBDiiW6rf5LBZAVWbc90kWN
-	 VoV79pcw8XJ9EE0kmxDGB+NxtpUVxvEsH8e9aSfGxe+/2DPqvaasprUjS0QpVKnJkxj0k
-	 XSFpsfw5AOwwDNqaNPunqpdk6hl7oAMUzKQPAwQU44/MWR+Tth0RBiVTHGp/uSoLyDA==
+	t=1795057463;
+	b=u40nnBWG+X8A+9UWFCQyx9ygX/uoJjnbNf8PluJ9OwNDdBbRfa6hdvRiXTq79hunr3FL
+	 wA/9qCGS+giaMaUaAu08wi/l84rD0JQauH4POOQ2oa5CmdCc4kpqFjfDGDwmKBGL4pAdf
+	 Olf64lJjfv9nEm/RW21FPkw+/PD2yBqZ4FU+Y5jh4XI+hsaqYM0NXvSwbY/zHkKNXnUQ9
+	 xDzug212uBTyUl2/mXYryXiLPJALinnL2m2gY/EcqxBGWptbCBEqO7CxjZzudzK6Oz/v6
+	 05jSI9A6GWsccDrQX50gWO2S8RSDzB2Zwx7LJDEYvVa8muUssAbHrAXo5ZhXzbJe0pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ka1VOZqyVQexNxqgStwuaYcVp6KEWGtmwpAEPVdVIXA=;
-	b=w6UWpzTW1265kv/IP8mZi9zQy+OWWuDWJFUZ+WIzHY4D/troe7cWWrpwNKFgV5SGKQG5
-	 HUQJL2cPF2cFBxwPaAdfSMaZ4mOyoZWKk4iwta5gB1mFlv94QLxOHOHR1ZlrJMmEIMNw2
-	 YIRm0Gl5F1bVhRZZ3VaoUA3MxD8CpONOj59SreJK3ALQUjsqQGk0z3nhVTmWJGF3gTCij
-	 eAro5I6z+vJvUQU0rmG88KrhqXmYKKweVcdIF8uw9i8FRkxzhrQ6veT7nR+/MWVzlkhMc
-	 Rw92GPy+aU+I2lv2qKbaRIV8hiZOz+mRawNqycUW3PakxZDXPKPZl6I+kSyMPedlB3A==
+	bh=ZK4nt9MweIKn0K11bLyxAwxlcPcnoWo0sF0RVbGTc6w=;
+	b=Yd7WG1g5SBQ6RdMs2r7RwwjHVmtzeLY6Omeh2dxnjC9RTmMLaTbjEQKSW4ua0F8EuGut
+	 B7FydKqOdW9Hs31rlvAAm78wwgqrQNtmWaxTuvC/VTSvVJTRhghfCauD8blP7ItGLPMJY
+	 7cH9fWXNrIMpRk4MpqUNX85krI/68+lEpQgr7pbjhWFBLtfkyqU6H7HiaET8VM0gTTqQV
+	 bNXaLYE9m+M9ue8bFFAgrGV4TvokSnxyrs7Z1AsN2wPeBPkvroQwOCwnAcPLiC+dy9pG5
+	 itKU4TftQzuUPiKwMNTNwAPUmVI3LB+q5uAosXSue8ZVwjJMg2vLdto9f7YqxZMWKZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXUaqZQp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CTlKOUpf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF23606A335;
-	Thu, 19 Nov 2026 03:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494A960A2615;
+	Thu, 19 Nov 2026 03:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXUaqZQp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B571F000C7;
-	Thu, 19 Nov 2026 03:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CTlKOUpf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12871F000C4;
+	Thu, 19 Nov 2026 03:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057460;
-	bh=ka1VOZqyVQexNxqgStwuaYcVp6KEWGtmwpAEPVdVIXA=;
+	s=korg; t=1795057463;
+	bh=ZK4nt9MweIKn0K11bLyxAwxlcPcnoWo0sF0RVbGTc6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LXUaqZQpmJGnkHC1wWEQT5+CBP+QQuequnV0N6P3JuR9xndP3bNG7VFHRe7DEWWzM
-	 d3k0QTXKdktN51Qqmiz6GFNOCPGZFzXUB3D9xLvT6ICaJMY2Jm95NGk4LhO6T51S0E
-	 x721UG7vbLXkM6GAb6laeJX24FOsRsV3CvjFdeaA=
+	b=CTlKOUpfYBdDbIVNJ+6J729DOlpBAvOqTkiDgQZvDfHrv4yqp09bSEN4xns9bEq2b
+	 56SOXY2BXp07pQ93usCoN5yD3IR0roX6ger1TxfKY5RatlwQ6ZnBCHoyZwfWotbF8/
+	 b+Kwllqy58mowdrTqfBpX/wFZZ1MT9Hselrzk99o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>,
-	Jianjun Chen <jianjun@tsinghua.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0136/1848] netfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets
-Date: Wed, 18 Nov 2026 15:36:14 +0100
-Message-ID: <20261118145916.948630171@linuxfoundation.org>
+Subject: [PATCH 5.10 0098/1848] media: go7007: s2250: propagate control I/O failures
+Date: Wed, 18 Nov 2026 15:35:36 +0100
+Message-ID: <20261118145915.187521099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,69 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit bf80e6802273a900311b44e47c9b1a59c6d2473c ]
+[ Upstream commit 59dc14a6cb5ff1ae5ce2f6ebf51fe0139e1c0623 ]
 
-Commit be0502a3f2e9 ("netfilter: conntrack: tcp: only close if RST
-matches exact sequence") keeps an established conntrack entry in
-ESTABLISHED when an in-window RST does not match the expected sequence
-number exactly, so the endpoint can validate the RST with a challenge
-ACK.
+The brightness and contrast paths use oldvalue after read_reg_fp()
+without checking whether the read succeeded.  A failed read leaves
+oldvalue uninitialized and can write arbitrary reserved register bits.
 
-The timeout selection nevertheless uses the CLOSE timeout for every RST
-packet.  The bug is that timeout selection is based on the packet type,
-not on the state transition result: even when RST validation keeps
-new_state in ESTABLISHED, the timeout is still forced to
-TCP_CONNTRACK_CLOSE.
+Return read and write errors from every control path so failed hardware
+access cannot be reported as a successful control update.
 
-Linux TCP independently rate limits challenge ACKs per socket.  A second
-non-exact RST can therefore arrive after the first challenge ACK has
-restored the timeout but before the rate limit expires.  The second RST
-lowers the timeout to 10 seconds again while the endpoint suppresses the
-second challenge ACK, allowing the conntrack entry to expire while both
-TCP endpoints remain established.
-
-Using the ESTABLISHED timeout for such RSTs would avoid this short
-expiration window, but it could also retain stale entries for the
-five-day default because conntrack cannot reliably match the endpoint's
-exact TCP state.
-
-Use the UNACK timeout for RST packets that leave the conntrack entry in
-TCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet
-trains still fall through to timeouts[new_state], which preserves the
-CLOSE timeout when conntrack accepts the RST as closing the flow.
-
-This avoids the aggressive 10-second expiration window for non-exact
-RSTs while preserving the short timeout for RSTs that conntrack accepts
-as closing the flow.
-
-Suggested-by: Florian Westphal <fw@strlen.de>
-Reported-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Reported-by: Jianjun Chen <jianjun@tsinghua.edu.cn>
-Signed-off-by: Minghao Zhang <zhangmh25@mails.tsinghua.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/usb/go7007/s2250-board.c | 54 ++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 7ddc751f979eb..fc6cf4b12154d 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1134,8 +1134,9 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 	if (ct->proto.tcp.retrans >= tn->tcp_max_retrans &&
- 	    timeouts[new_state] > timeouts[TCP_CONNTRACK_RETRANS])
- 		timeout = timeouts[TCP_CONNTRACK_RETRANS];
--	else if (unlikely(index == TCP_RST_SET))
--		timeout = timeouts[TCP_CONNTRACK_CLOSE];
-+	else if (unlikely(index == TCP_RST_SET &&
-+			  new_state == TCP_CONNTRACK_ESTABLISHED))
-+		timeout = timeouts[TCP_CONNTRACK_UNACK];
- 	else if ((ct->proto.tcp.seen[0].flags | ct->proto.tcp.seen[1].flags) &
- 		 IP_CT_TCP_FLAG_DATA_UNACKNOWLEDGED &&
- 		 timeouts[new_state] > timeouts[TCP_CONNTRACK_UNACK])
+diff --git a/drivers/media/usb/go7007/s2250-board.c b/drivers/media/usb/go7007/s2250-board.c
+index 2e5913bccb38f..e09ecd29754de 100644
+--- a/drivers/media/usb/go7007/s2250-board.c
++++ b/drivers/media/usb/go7007/s2250-board.c
+@@ -365,36 +365,48 @@ static int s2250_s_ctrl(struct v4l2_ctrl *ctrl)
+ 	struct s2250 *state = container_of(ctrl->handler, struct s2250, hdl);
+ 	struct i2c_client *client = v4l2_get_subdevdata(&state->sd);
+ 	u16 oldvalue;
++	int ret;
+ 
+ 	switch (ctrl->id) {
+ 	case V4L2_CID_BRIGHTNESS:
+-		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
+-			     ctrl->val | (oldvalue & ~0xff));
+-		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
+-			     ctrl->val | (oldvalue & ~0xff));
+-		write_reg_fp(client, 0x140, 0x60);
+-		break;
++		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
++				   ctrl->val | (oldvalue & ~0xff));
++		if (ret)
++			return ret;
++		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
++				   ctrl->val | (oldvalue & ~0xff));
++		if (ret)
++			return ret;
++		return write_reg_fp(client, 0x140, 0x60);
+ 	case V4L2_CID_CONTRAST:
+-		read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_CONTRAST0,
+-			     ctrl->val | (oldvalue & ~0x3f));
+-		read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_CONTRAST1,
+-			     ctrl->val | (oldvalue & ~0x3f));
+-		write_reg_fp(client, 0x140, 0x60);
+-		break;
++		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST0,
++				   ctrl->val | (oldvalue & ~0x3f));
++		if (ret)
++			return ret;
++		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST1,
++				   ctrl->val | (oldvalue & ~0x3f));
++		if (ret)
++			return ret;
++		return write_reg_fp(client, 0x140, 0x60);
+ 	case V4L2_CID_SATURATION:
+-		write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
+-		break;
++		return write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
+ 	case V4L2_CID_HUE:
+-		write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
+-		break;
++		return write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
+ 	default:
+ 		return -EINVAL;
+ 	}
+-	return 0;
+ }
+ 
+ static int s2250_set_fmt(struct v4l2_subdev *sd,
 -- 
 2.53.0
 
