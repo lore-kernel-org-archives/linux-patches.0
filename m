@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045216;
-	b=UqgoadQOL0FwD6QBNWEwQ5mlK8AXv19JRCLnKwTY98f9P/Nd7ldzb2O+1XOk9Yc7qGbo
-	 Nro98kQ6OBisadlcouzvUQcXNi0qwW5OH9mk0tjMB4GGjsuxVMnmrBgZofzgIUEW/tUqK
-	 m0Hofq/KhiDe0vWpPdjM1eP0Vaf4d2Eyl1M2XX2yaHtxY5aveOzHtBZWmPmgJkeNI6s6Z
-	 lr/QnDALQC4u8MHjfmmeleDjb23CUx4FCIwWaXTklyW6k47UXJwfd9BgxlVd2y6XNTJPS
-	 PuzL869LbFXDTJTaYqCBHag01zSJPj3XLYhRYcdZS+C3aXyxryGa5ZuUYbSams3WeZA==
+	t=1795045219;
+	b=uaUNScXY7/SJEidVB0df9k5UXiDTP5iyoN5VJt6aZMIbXhGZSMgbGNXqcaBmtBa/xm0B
+	 /ab/XVK2L9fJoutkWbgWOIUvMu3Q51mXYIywzKxUq0/fkxhWiuRx8kWt1mvcj8BfNZZfd
+	 UyvSRM+/W71Ha/bQ+SNaBy3qaJiS2yowUcee2Mo5HYTWTf8/O/+YMwL7szDK7hc0jRDJg
+	 +bO3bqdQ+5BgMSSMYBuGW+VLwVr837ZyuyfTS3XuQPav1uAc2G8BI1sDk5QXBZ5lEizh6
+	 511DAeu8eYkwrRb+nOpYv3ZP1yqLwI9MiBwAb4huhhtQw9CZOFXHio3LLvwsJJs84Vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wd8fDRKkJ91AJH0jhKFazuby5XLCUYrjVvEhuPw2aI4=;
-	b=a1CWhfuARILHbw5aSxmggovzopBe5zjdwbVi+DQnqL3WbK8wPNpLe+zRrtpEFdgWIJ6S
-	 hpM7n1Uhf35ksSypUSCcO0HHwKxxRy3A78hmJIalNRLbKTRRF8u2me0pIp5HiZ3Lj8rpF
-	 KIuXEUj5NVF0HB1FuLKd3ziS7UIK5h6425OSA4K9l9bBXo23e5wjnJ/bqyWurYYwRk5IY
-	 TTXVTFY5eksU4Y18y5lgrGsFAsXu0Er1U3SZiAOtlfkMRKNqx7lwK79TzGd2D4+2YcEoH
-	 c29nzj9fVDz3es0XaiHP7josaM9Lg5j8qISb2/PFA0+mmm4ogN1Qe4X8OpcfNBfySJg==
+	bh=bt4HmxQSx3UCSC3i0hvf5w71i/BhpPcbC56/aeJfX9g=;
+	b=yXLfxvzb8rJxfrsYQ0Y0Oq608AzpE8Z7NJWgWwGg0v1299br3qvYWSHC5GlSbirLLzwP
+	 76iHRQujW18Ej0Q9ENQ0w/m/tRHlvEFfzBuxK+2Sku1mzqjKYxs/Sq0b0b0n9JgWnkUaJ
+	 9yaushw/gpwKL9TNC9eDMfxaTEPtxIsoteA4p3iQzOXb93uUd3xzxhyKcfCW7FlkqQRMq
+	 Roa9isOMFJQ2uPm3cgDMKRrtqHyVtrCg7ujTYl1440VfUfyx9H1d5f6UuzKKFLDvnwOgn
+	 pX3EsrLxkfH6s93fRm2nVKNesKZXgYEn83dioKNyK6AqojxqSNr6vYwKmXfkqHQ74HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2o0E+iaX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xM3Kuc0e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE46606A31C;
-	Wed, 18 Nov 2026 23:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15782606A325;
+	Wed, 18 Nov 2026 23:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2o0E+iaX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCB91F000C5;
-	Wed, 18 Nov 2026 23:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xM3Kuc0e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6865B1F000C4;
+	Wed, 18 Nov 2026 23:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045216;
-	bh=wd8fDRKkJ91AJH0jhKFazuby5XLCUYrjVvEhuPw2aI4=;
+	s=korg; t=1795045218;
+	bh=bt4HmxQSx3UCSC3i0hvf5w71i/BhpPcbC56/aeJfX9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2o0E+iaXgkhFjlopbhtKfLKyBMZnm+wqP5XBJWWH8LeuirGcmwddUneE/GYfa5+b3
-	 6shWIDCc7krQdrYUe0O4Re3C9PHJkFTu0QT8t4cd63eQavwb3x5dclq7NKudkka4kt
-	 mMWeH3mKbH2xqX8qGBsliwVlzDqZXZS4VmTmrXBo=
+	b=xM3Kuc0emrUPgMxwtBjqBPyoSIiuKFjEePDtB+RA9PbHL72XxvHxpJ94ncGqvISpG
+	 IGWPBoobWpVzUNLRnX/mNkJ0O8obrPtZB6F6rHZpCYZG2SZTIl/5lcNGtT+MG9nPXK
+	 mlq2wzZEAN+0Y27PpwGBKDxbyu50X05dnxUfVmUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Hitesh Patel <hitesh@ebytelogic.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0837/2857] media: qcom: camss: vfe-17x: Fix write master buffer done being dropped
-Date: Wed, 18 Nov 2026 15:31:11 +0100
-Message-ID: <20261118150231.707636547@linuxfoundation.org>
+Subject: [PATCH 6.1 0846/2857] media: tw686x: fix V4L2 device lifetime on probe failure
+Date: Wed, 18 Nov 2026 15:31:20 +0100
+Message-ID: <20261118150232.035628567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,56 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hitesh Patel <hitesh@ebytelogic.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit eed550a8191c2f6984047a1b794b313d1bacf77d ]
+[ Upstream commit ce6c6dd632b3b4a2c2bfc9efd8f656f4d2137dbd ]
 
-The VFE 17x interrupt handler reads and clears the bus status
-registers on every interrupt, but only acts on the per write master
-BUF_DONE bits when bit 9 of IRQ_STATUS_0 is set as well. Bit 9 is the
-ping-pong flag of image master 1. It has nothing to do with the other
-write masters, and it is not guaranteed to be set in the same
-interrupt in which a write master reports a completed buffer.
+tw686x_video_init() registers the V4L2 device, which initializes its
+reference count. Successfully registered video devices take additional
+references to the V4L2 device as well.
 
-The bus status is read-to-clear. When a buffer done arrives while bit
-9 is not set, the handler clears the status and never calls
-wm_done() for it. The buffer stays queued in the driver and the video
-node never receives that frame.
+The probe failure paths currently tear down the PCI resources and then
+free the channel arrays and the tw686x device directly. This bypasses
+the V4L2 device reference count and the tw686x_dev_release() callback.
 
-With one RDI streaming this is rare. With two RDIs streaming on the
-same VFE, for instance two virtual channels demultiplexed by the CSID,
-the interrupt rate doubles and one of the two lines loses buffer done
-events continuously.
+If a video device still holds a reference, its eventual release will
+drop a reference to the already freed V4L2 device. Even when no extra
+references remain, directly freeing the device bypasses the lifetime
+management established by v4l2_device_register().
 
-Act on the bus status alone, as the other gen2 VFE handlers do.
+After cleaning up the PCI resources, check whether the V4L2 device was
+registered. If so, mark the hardware unavailable and drop the driver's
+V4L2 device reference, letting tw686x_dev_release() free the backing
+objects when the final reference is released. Keep the existing direct
+free path for failures that occur before V4L2 device registration.
 
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
+This issue was found by manual code inspection.
+
+Fixes: 704a84ccdbf1 ("[media] media: Support Intersil/Techwell TW686x-based video capture cards")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe-170.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/pci/tw686x/tw686x-core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index f9492b1d16e3e..a6625aa050b66 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -379,9 +379,8 @@ static irqreturn_t vfe_isr(int irq, void *dev)
- 			vfe->isr_ops.comp_done(vfe, i);
+diff --git a/drivers/media/pci/tw686x/tw686x-core.c b/drivers/media/pci/tw686x/tw686x-core.c
+index c53099c958ca8..dc6a2cc433d3a 100644
+--- a/drivers/media/pci/tw686x/tw686x-core.c
++++ b/drivers/media/pci/tw686x/tw686x-core.c
+@@ -241,6 +241,7 @@ static int tw686x_probe(struct pci_dev *pci_dev,
+ 			const struct pci_device_id *pci_id)
+ {
+ 	struct tw686x_dev *dev;
++	unsigned long flags;
+ 	int err;
  
- 	for (wm = 0; wm < MSM_VFE_IMAGE_MASTERS_NUM; wm++)
--		if (status0 & BIT(9))
--			if (vfe_bus_status[1] & STATUS1_WM_CLIENT_BUF_DONE(wm))
--				vfe->isr_ops.wm_done(vfe, wm);
-+		if (vfe_bus_status[1] & STATUS1_WM_CLIENT_BUF_DONE(wm))
-+			vfe->isr_ops.wm_done(vfe, wm);
- 
- 	return IRQ_HANDLED;
- }
+ 	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+@@ -352,6 +353,15 @@ static int tw686x_probe(struct pci_dev *pci_dev,
+ 	pci_release_regions(pci_dev);
+ disable_pci:
+ 	pci_disable_device(pci_dev);
++	if (dev->v4l2_dev.dev) {
++		spin_lock_irqsave(&dev->lock, flags);
++		dev->pci_dev = NULL;
++		spin_unlock_irqrestore(&dev->lock, flags);
++
++		v4l2_device_put(&dev->v4l2_dev);
++		return err;
++	}
++
+ free_audio:
+ 	kfree(dev->audio_channels);
+ free_video:
 -- 
 2.53.0
 
