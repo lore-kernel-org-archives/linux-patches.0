@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017901;
-	b=23tRkV8DleQ0CYs9GKwVwr1ljgdhPSkJvMBkiReuDMCKngGJTvl+J3Nzw4byEBE6ijDb
-	 ohpJcHZEDstjZVT8B2+6z+iCTPMKA2NrzC1U+2hV938w4TxlbZ1KNanpKG9l+I4hYrxfB
-	 +7xngtaQlVp/Oeb6cQC7W9rQOab5IE5GfYP5U70SC03KScqd64XPhcnJcFvI3+yR6nFLv
-	 QCT4WxgSCIHPhHJgvX5/PTWzZwSxKLfdtasUg2t3vd9xcKIg/GQJiiZTAcUpBdN4udpaW
-	 WxMqyYqVcJMGVXOzW1TvwEkIxphdVOKWXVQ21ICVhwmeXkJmXjs1JCuXoVX2muRdq/w==
+	t=1795017903;
+	b=VtIK+lVAtUZLRuIbZ7ksUmGVRWh1ZDeWfbFcs7IN1TtWdGob9QDqRLyrot6t0RxLgJFW
+	 Vm2TfaVXPtVpfRjhFzDjqBqtgd50VUBDWbNyE+ULWP5Kbe3cLrdgZX1GGte/ckhTPIOU6
+	 th2yRb8w8S6GyZcyTVF5WGg1Gh2BihXdr/X8LqL4pnxgSIPOfIJ1m54JKJNizibBnhlkA
+	 HMhQyHiGwLkRNLEf82S6mH4b31zWdJfNUIWskgUI7EUiFrHzaLGEyKZJLyokvof9IpdBO
+	 CpJrVZv5m0fA9SIZs9hENnaTk12XMj5yg5+GRnFHPO5/eBGy7doKkh/obJF80duseCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e5u2OWF4P53gnYAOEmm2CL2PKujmQui7uJvK/6AEWx4=;
-	b=NfSdVE1WTwyxgFvf/SQ7schKpjF2iBK9BSjC5pjT381268NgDaH+FiH7yoLSo2n3mzOv
-	 NohT1n0F+dOI2TQsthfJLmL93Y+w96lUjELCo1YB37o9n09kMmsjcvCIZBkKeaYGG3FAQ
-	 jlZCzofJOkKc8Jucu5W3gzJiOpa0jliiODPwzGNcA8npLAQs7M7hsDF9UTGbWOAq0FxL2
-	 kjeLkMTz1ZtnO/g47/CtK3D3nw1q1nMgYUcaDF1kr2oaZAEm3DEs17kT+lAF/w/EjxUlF
-	 GGVjke5IkNd2+26kiedg26UNnofpkqvTLKaNUqveY6UGNdbDweBlqXafRjH7AiBNRZg==
+	bh=XMUmXd/y9hxYP3gRZwSYEKo55lJw/Pcu19XR7n0v3W4=;
+	b=l8pvs37D0Z91Thi8bzKjoETsVxNqSYhDXbCGXHoY9q1JBYjNQSHjlqix1V6G+EionEDY
+	 W+7EQ+7iNXVS6u/m208LXZpzP8JVtu/Ze5tcl00ZvZUIFIDGcSJSxyjNsAwRAmPw4UDyo
+	 5WZCL1SrjcIZf+RXv+5axFV4WHJ0DwozlqngcJMufjR1pDXjXTQTgq9YwasMT5Gyec19/
+	 OyU5tPuyq20A+aM5bO+ZBYA9//ZFvEdVRyfAJTQef/krwa1au8qxTGALw+fEtsqqS5m8Q
+	 71LxB0+n53CLd4TqoapjVKpGRc7NhUQuequU/t3AZ5Qc7pxLpDtpDealhgBfdgo4qxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FK5rRaUR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJCAa2EX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA883606A31C;
-	Wed, 18 Nov 2026 16:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA7E606A31C;
+	Wed, 18 Nov 2026 16:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FK5rRaUR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D35C1F000CA;
-	Wed, 18 Nov 2026 16:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJCAa2EX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0561F000C4;
+	Wed, 18 Nov 2026 16:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017900;
-	bh=e5u2OWF4P53gnYAOEmm2CL2PKujmQui7uJvK/6AEWx4=;
+	s=korg; t=1795017903;
+	bh=XMUmXd/y9hxYP3gRZwSYEKo55lJw/Pcu19XR7n0v3W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FK5rRaURDCkZ6wfisE0dclktPCY/9DiNUJtH7yw2qiAt2aOf4qSZBrb1nLMKsoACe
-	 HMio+7WXchMC1XJXtG3FyynrMG34E5EZhaOcG3D+O7p+fWpuZdRKOg427ZNTwfOKii
-	 e+i9/Hklkfh5YTojoOChp2RHVsOKny7LK+tdu0k0=
+	b=MJCAa2EXiAJbg9fHwzoTyJP4rfbcCpZ5qRLUMX3XQwpb5crGmu2SeQWQIdZyoDtnt
+	 xRszk1W+9qfrpuPOmvtjbJ5m2q07nOuU9mNzEdhEUt4jAVQaFlP7Do8MnJpDUtKWS6
+	 4z3VcnDuTGa7DrmG7khs4UmMlFz43R079s11OxAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Thomas Gleixner <tglx@kernel.org>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1042/2651] perf pmu: Fix race with concurrent tracepoint creation and removal in perf list
-Date: Wed, 18 Nov 2026 15:38:02 +0100
-Message-ID: <20261118150325.476174253@linuxfoundation.org>
+Subject: [PATCH 7.3 1051/2651] selftests/timers: clocksource-switch: Fix unchecked open()/read()
+Date: Wed, 18 Nov 2026 15:38:11 +0100
+Message-ID: <20261118150325.806388386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,127 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Qingshuang Fu <fuqingshuang@kylinos.cn>
 
-[ Upstream commit ab20a3090d338c4f161cb1a68e64a7f8914569ea ]
+[ Upstream commit 348f54c435bf3177baa78201952810b255d44b30 ]
 
-perf_pmus__print_pmu_events() first counts events via
-perf_pmu__num_events() to allocate the aliases array, then populates it
-via perf_pmu__for_each_event(). When dynamic tracepoints (such as
-kprobes or uprobes during 'perf test' runs) are concurrently created or
-removed between the two passes:
-- If an event is removed, state.index is smaller than the allocated len,
-  leaving trailing zeroed entries in aliases[] with name == NULL and
-  pmu == NULL, which causes qsort(cmp_sevent) or the print loop to crash
-  with SIGSEGV.
-- If a dynamic tracepoint subsystem directory is removed while scanning
-  /sys/kernel/tracing/events, tp_pmu__for_each_tp_event() returns
-  -ENOENT and aborts enumeration of all remaining tracepoint subsystems.
-- If an event is added, perf_pmus__print_pmu_events__callback() aborts
-  enumeration when state->index reaches state->aliases_len.
+get_clocksources() and get_cur_clocksource() open and read the
+clocksource sysfs files without checking the return values and without
+NUL-terminating the buffer.
 
-Grow state->aliases dynamically via realloc() when needed, use
-state.index as the actual populated length for sorting and printing, and
-ignore -ENOENT when a tracepoint subsystem directory disappears during
-enumeration.
+If open() fails, read() is called on fd -1 and returns -1, which is
+stored in a size_t as SIZE_MAX.  The token-scanning loop in
+get_clocksources() then walks past the uninitialized stack buffer,
+reading and writing out of bounds.  Even on success the buffer is not
+NUL-terminated, so a fully read buffer makes the inner scan run past the
+data, and get_cur_clocksource() lets change_clocksource() call strlen()
+on a non-terminated buffer.
 
-Fixes: c3245d2093c16c60 ("perf pmu: Abstract alias/event struct")
-Fixes: 45b6e281cb0648ac ("perf tp_pmu: Add event APIs")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Check the open()/read() results, use ssize_t for the read length,
+NUL-terminate the buffer, and close the fd in get_cur_clocksource().
+
+Fixes: 7290ce1423c3 ("selftests/timers: Add clocksource-switch test from timetest suite")
+Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260825064605.472889-1-fffsqian@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/pmus.c   | 21 +++++++++++++++++----
- tools/perf/util/tp_pmu.c |  8 ++++++--
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ .../selftests/timers/clocksource-switch.c     | 23 ++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
-index e0a4cb2428ca4..1355b317f3eda 100644
---- a/tools/perf/util/pmus.c
-+++ b/tools/perf/util/pmus.c
-@@ -8,6 +8,7 @@
- #include <sys/types.h>
- #include <ctype.h>
- #include <pthread.h>
-+#include <stdlib.h>
- #include <string.h>
- #include <unistd.h>
- #include "cpumap.h"
-@@ -571,7 +572,7 @@ static int cmp_sevent(const void *a, const void *b)
- 	}
- 
- 	/* Order by event name. */
--	return strcmp(as->name, bs->name);
-+	return strcmp(as->name ?: "", bs->name ?: "");
- }
- 
- static bool pmu_alias_is_duplicate(struct sevent *a, struct sevent *b)
-@@ -581,7 +582,7 @@ static bool pmu_alias_is_duplicate(struct sevent *a, struct sevent *b)
- 		return false;
- 
- 	/* Don't remove duplicates for different PMUs */
--	return strcmp(a->pmu_name, b->pmu_name) == 0;
-+	return strcmp(a->pmu_name ?: "", b->pmu_name ?: "") == 0;
- }
- 
- struct events_callback_state {
-@@ -597,8 +598,18 @@ static int perf_pmus__print_pmu_events__callback(void *vstate,
- 	struct sevent *s;
- 
- 	if (state->index >= state->aliases_len) {
--		pr_err("Unexpected event %s/%s/\n", info->pmu->name, info->name);
--		return 1;
-+		size_t new_len = max_t(size_t, 16, state->aliases_len * 2);
-+		struct sevent *new_aliases;
-+
-+		new_aliases = realloc(state->aliases, new_len * sizeof(struct sevent));
-+		if (!new_aliases) {
-+			pr_err("Unexpected event %s/%s/\n", info->pmu->name, info->name);
-+			return 1;
-+		}
-+		memset(&new_aliases[state->aliases_len], 0,
-+		       (new_len - state->aliases_len) * sizeof(struct sevent));
-+		state->aliases = new_aliases;
-+		state->aliases_len = new_len;
- 	}
- 	assert(info->pmu != NULL || info->name != NULL);
- 	s = &state->aliases[state->index];
-@@ -654,6 +665,8 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
- 		perf_pmu__for_each_event(pmu, skip_duplicate_pmus, &state,
- 					 perf_pmus__print_pmu_events__callback);
- 	}
-+	aliases = state.aliases;
-+	len = state.index;
- 	qsort(aliases, len, sizeof(struct sevent), cmp_sevent);
- 	for (int j = 0; j < len; j++) {
- 		/* Skip duplicates */
-diff --git a/tools/perf/util/tp_pmu.c b/tools/perf/util/tp_pmu.c
-index c2be8c9f9084d..5ac732e068412 100644
---- a/tools/perf/util/tp_pmu.c
-+++ b/tools/perf/util/tp_pmu.c
-@@ -151,7 +151,9 @@ static int for_each_event_cb(void *state, const char *sys_name, const char *evt_
- 
- static int for_each_event_sys_cb(void *state, const char *sys_name)
+diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
+index db62a764c29e6..2e86f56d953eb 100644
+--- a/tools/testing/selftests/timers/clocksource-switch.c
++++ b/tools/testing/selftests/timers/clocksource-switch.c
+@@ -40,16 +40,23 @@
+ int get_clocksources(char list[][30])
  {
--	return tp_pmu__for_each_tp_event(sys_name, state, for_each_event_cb);
-+	int ret = tp_pmu__for_each_tp_event(sys_name, state, for_each_event_cb);
+ 	int fd, i;
+-	size_t size;
++	ssize_t size;
+ 	char buf[512];
+ 	char *head, *tmp;
+ 
+ 	fd = open("/sys/devices/system/clocksource/clocksource0/available_clocksource", O_RDONLY);
++	if (fd < 0)
++		return 0;
+ 
+-	size = read(fd, buf, 512);
++	size = read(fd, buf, sizeof(buf) - 1);
+ 
+ 	close(fd);
+ 
++	if (size <= 0)
++		return 0;
 +
-+	return ret == -ENOENT ? 0 : ret;
- }
++	buf[size] = '\0';
++
+ 	for (i = 0; i < 10; i++)
+ 		list[i][0] = '\0';
  
- int tp_pmu__for_each_event(struct perf_pmu *pmu, void *state, pmu_event_callback cb)
-@@ -176,7 +178,9 @@ static int num_events_cb(void *state, const char *sys_name __maybe_unused,
+@@ -74,11 +81,21 @@ int get_clocksources(char list[][30])
  
- static int num_events_sys_cb(void *state, const char *sys_name)
+ int get_cur_clocksource(char *buf, size_t size)
  {
--	return tp_pmu__for_each_tp_event(sys_name, state, num_events_cb);
-+	int ret = tp_pmu__for_each_tp_event(sys_name, state, num_events_cb);
-+
-+	return ret == -ENOENT ? 0 : ret;
- }
++	ssize_t len;
+ 	int fd;
  
- size_t tp_pmu__num_events(struct perf_pmu *pmu __maybe_unused)
+ 	fd = open("/sys/devices/system/clocksource/clocksource0/current_clocksource", O_RDONLY);
++	if (fd < 0)
++		return -1;
++
++	len = read(fd, buf, size - 1);
++
++	close(fd);
++
++	if (len <= 0)
++		return -1;
+ 
+-	size = read(fd, buf, size);
++	buf[len] = '\0';
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
