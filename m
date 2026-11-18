@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056371;
-	b=Y/7thrGQ45Ha0vZvhB8a91hId2Sy/nuQO514FgA4uPyDnAydf6ZagLSPUJqAljlVpw0t
-	 trm1Ho0ZVzv+3nKuaUNwXN8jUUAVblfg1XMZNsUHinjfSnZ2eCixACdO5M245OPR14lYR
-	 mya8iI5Xz5t3k69JQnN4CJLElPSMuvbK/m/lDnxUMdjNKPqEfRe4bDRA3XlCyNSlur1HN
-	 YUvhILx0T85ya1wdBdGfBuTtyh+BEVqxERTIbvmG0JOoi3Hm/kCVbrSmk0HqTqG6TTJZc
-	 vh+76QYrUYWB7y2ZUbyPW7XbyQLxW5iYOpLkRvPbfb+zQQWO0kvV+HQhqthv5CtBobA==
+	t=1795056374;
+	b=gmKkALglKHt/6IJh3uFcN02h1ZnJVEQ7PZ2/AZQfQ7ILzNPGznSK98xZ/Mn44MsI0zsn
+	 OkpwqfLYxKl8jVjjawTsx2rV4OFQZBKq0nhUgvO9HI9aWzHKqerspvWvAz89qg6aNvgRi
+	 x8uxTmszWQj+MAUbJpGcPYaG88muhstj898O838CMkDV5dQTFc+ArCkOykkn5NH+I+6OU
+	 QTYJ1vHz1cK+I/u74SXAMhzAG7C+IRjaDfugIeeau5MKZL4xGzt9s0Kr5O8Gqh/GwxGAT
+	 97pa1P0kAMEAlJm12CvQIgJz7sIxyB5r6pXy6rA74uCV7gYodeYBe9d4ayKSnZeyEaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zj5Om+Iuz+KQe9ZDI0CIlac9h3A2WCa0P739fqGEoMg=;
-	b=gcn1TktagOZxA5792O4j7WV8JrVZVvfvH3ilH+UY5sOgI57+th4vFnxCIcn2zaL8VWan
-	 oEEyn53FoHC03dF6xjjYvPLdQPIv9NNmucno8IL0ipXNmn3cVDq3DOmM8xR7T3cFuyC3j
-	 FiaiBRfagxvD+0H/TioI2lnJ+4+blRuJlRRYIG1pvCapUBjFUWaq2tNuChInO6keMlZ60
-	 iSaqC2vU1ICR5jlR3mJj79xXrbbq76MCL4Mgyp4e4AnBC7dGOWm7eHtNIQ9GLRf0pUEQV
-	 da+c4B41nQbkWPG8bjLtPwPDfhIpXKs7q0vY4xQJzuvymaCN5raOxJugklVQFddOQAA==
+	bh=XioNVX+LGTGzeSM7/XIFyg+wP+TB+qqmJYviKu5OP/4=;
+	b=qURxi1Zl34wUpx4V8CO0RE9sAhd9+1kVYfhTmjhf7VIyFOYL483YXl9psGf1f/fWhhfA
+	 fGPdt2yGWq4PMjYkGroSOmEBbOGZZV8CfCxdJH3WrjobjyniUpU+qN3PGAkQOVQcWa/Ul
+	 h2p7K4NEZr8SwV6DFcsbuVMshjuIgi89YgSKTEx0Vex43EZFkL8kIuIkQO6r/gpsZP/Lr
+	 jQJig+WWBp6AxnOjkxrNkY+h18+ZXSxh4SCs9bvI3usLlu4zAxyph/fF/1xc7RwQqVHui
+	 hPKNnXo9TTbX9XFBAFljxPxwr12lNqMO0fjak4of/SzOYB3NNjOCJKhGBudPa86wLHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VE0vT5IV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjQoFvmf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C17606A32A;
-	Thu, 19 Nov 2026 02:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14166606A32A;
+	Thu, 19 Nov 2026 02:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VE0vT5IV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53831F000C4;
-	Thu, 19 Nov 2026 02:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NjQoFvmf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691171F000C4;
+	Thu, 19 Nov 2026 02:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056371;
-	bh=Zj5Om+Iuz+KQe9ZDI0CIlac9h3A2WCa0P739fqGEoMg=;
+	s=korg; t=1795056373;
+	bh=XioNVX+LGTGzeSM7/XIFyg+wP+TB+qqmJYviKu5OP/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VE0vT5IVM9CnSRxFZfVjEgl1AB4uAEQSWirHpWhSYORuZTXDuRlHdFq3ikoCo3v7D
-	 Zbx68iCO2qEG+o9G5Y1bVXodalgChCjL63GdtPBCksQPEdW1PGBMuXhHaFkQJZhR/Z
-	 2/On8a48ZIfa70l9Biy7eQZg9nF0vfEg34BkUrNc=
+	b=NjQoFvmfjmHbu+vxlsq69VZK2wyOiT2vjlCYoHXGFZB3UbgmO7Hv8k1JEWckO3qPK
+	 jevfyJB1JzPd6z66KBsGf06LazyjNisPQH8E30n/9O+px77S96+rZFQMtiNee6uI0O
+	 AME59kS9aJaKpAbJiT+Qz1PaGnZs6D9mlua9HF2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyrylo Biryuk <illofspeed@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1947/2214] ata: libahci: re-enable FBS after error handling on a port multiplier
-Date: Wed, 18 Nov 2026 16:00:23 +0100
-Message-ID: <20261118150128.884403352@linuxfoundation.org>
+Subject: [PATCH 5.15 1965/2214] RDMA/rxe: Replace ah->pd by ah->ibah.pd
+Date: Wed, 18 Nov 2026 16:00:41 +0100
+Message-ID: <20261118150129.540312713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,64 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyrylo Biryuk <illofspeed@gmail.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 23eab9e877497397a0e2394ee9174d576816209e ]
+[ Upstream commit 4da698eabf0f7c1c1806670d3fd3895512fdf43b ]
 
-ahci_do_softreset() disables FBS before resetting a device behind a port
-multiplier, as required by AHCI 1.2 section 9.3.9, and re-enables it only
-when that softreset succeeds. If it fails, for example because a
-hot-plugged drive is still spinning up ("softreset failed (device not
-ready)"), EH escalates to a hardreset of the PMP link, and nothing turns
-FBS back on: only ahci_pmp_attach() does, which runs at the next boot.
-The port keeps working with command-based switching until then.
+The pd field in struct rxe_ah is redundant with the pd field in the
+rdma-core's ib_ah. Eliminate the pd field in rxe_ah and add an inline to
+extract the pd from the ibah field.
 
-Seen on a Marvell 88SE9235 (1b4b:9235) with Marvell 88SM9705 port
-multipliers (1b4b:9705, in a Synology DX1222 expansion unit): after
-hot-plugging a drive, the kernel logged "FBS is disabled" followed by
-"softreset failed (device not ready)" and a PMP hardreset, and never
-"FBS is enabled" again (twice, on two different ports).
-
-At the end of ahci_error_handler(), re-enable FBS if a PMP is still
-attached and FBS is supported but disabled.
-
-Fixes: 89dafa20f3da ("ahci: disabled FBS prior to issuing software reset")
-Assisted-by: LLM
-Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261012103917.389-1-illofspeed@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20211007204051.10086-5-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 47a9c0338f2e ("RDMA/rxe: validate inline sge_offset in finish_packet() before indexing inline_data[]")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_verbs.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index 1c010687a3f13..07a15b36d9990 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -2096,6 +2096,21 @@ void ahci_error_handler(struct ata_port *ap)
- 
- 	sata_pmp_error_handler(ap);
- 
-+	/*
-+	 * ahci_do_softreset() turns FBS off before resetting a fan-out link
-+	 * and turns it back on only if that reset succeeds. When it fails
-+	 * (e.g. a hot-plugged drive is still spinning up), EH escalates to a
-+	 * PMP hardreset, which never re-enables FBS, so the port would keep
-+	 * command-based switching until the PMP is attached again (reboot).
-+	 * Restore FBS once recovery is done and the PMP is still attached.
-+	 */
-+	if (sata_pmp_attached(ap) && ata_dev_enabled(ap->link.device)) {
-+		struct ahci_port_priv *pp = ap->private_data;
-+
-+		if (pp->fbs_supported && !pp->fbs_enabled)
-+			ahci_enable_fbs(ap);
-+	}
-+
- 	if (!ata_dev_enabled(ap->link.device))
- 		hpriv->stop_engine(ap);
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
+index 446d14903cec5..eaadff1d543c6 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -46,7 +46,6 @@ struct rxe_pd {
+ struct rxe_ah {
+ 	struct ib_ah		ibah;
+ 	struct rxe_pool_entry	pelem;
+-	struct rxe_pd		*pd;
+ 	struct rxe_av		av;
+ 	bool			is_user;
+ 	int			ah_num;
+@@ -471,6 +470,11 @@ static inline struct rxe_mw *to_rmw(struct ib_mw *mw)
+ 	return mw ? container_of(mw, struct rxe_mw, ibmw) : NULL;
  }
+ 
++static inline struct rxe_pd *rxe_ah_pd(struct rxe_ah *ah)
++{
++	return to_rpd(ah->ibah.pd);
++}
++
+ static inline struct rxe_pd *mr_pd(struct rxe_mr *mr)
+ {
+ 	return to_rpd(mr->ibmr.pd);
 -- 
 2.53.0
 
