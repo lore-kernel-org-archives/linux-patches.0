@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028668;
-	b=y29LgBxA9LShEcRvCcpKgKG2aRxAn4vO5gBPiBnr5WTOdwxFu7o6O6yyQK58KMs+xPp5
-	 cw9RWXTkabK8yfHM/Wyit+ACmABSm5j/uGrcJGOlAESCpvA7U8YjEC04jg5OCNaNZoz1R
-	 g8zBlUzeEyjmwbgdTX59zLceLmxuCSWcS7DD/O/Xx0s/WPg92rNFROKN9ccxiXFzDHVF1
-	 Zgijz7w70G15pTDPI9ici4NBeEIz39vBIczIH45exkuUc+tk5VdTTYFr4s51Np9pr64Ku
-	 ZVkYUmnnJGdKGQsJ4Kk2Whxbbc9ikxmo30WeRV9JM+Ogdeb3xWNyEDZKUxm7S1Hh+Fg==
+	t=1795028671;
+	b=nwxi/rTkKg252i72Vj+Wo5CTr3AbvYPgfKRsqsC0jmdtHEYej7ygrv8q//o0eq8HPxb6
+	 mOHFZK6iWEjcVPZ37bd9rgsx1dh17nObWLeiQCLRQyT3EywgcDk1ckrwM7rbmWFwn3lLZ
+	 ysgNGdxLut79wql+6HbKaqPmzG8MQc2Al7hyGTMiWGC1NhXOAMWyCEH15uZPMUUmlikTP
+	 umjc7P0WQ840PyD2AIsruKwn8lUkN7aGWRJII5AVLZJrudcMPLkd739+ZY986PoL6FWaz
+	 bfir1bZlIg8MHr/UQwQNPwZ7db857aqclyZ9PRIg+8sWXSyl0Go8MpUqsd1ca9ry++A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6HAKdrMhCN03vki/HjH1ziUgpJPmQhpvShe17kay24U=;
-	b=AWSmxf3rtEwWoDg+PRPIX2mq4zleILltFeGBzoaBHvlFiZF7qIlhNN+OM8L/gKnNhP9q
-	 f3eUUUggcD1XyeNRkBXpFjSqsvnUMjT85nD4AbtnZlxSlwiDa9C+FEP/sAYSKBoHF87fR
-	 u7hvAYKJY21NxfxFxp29tcIe3QydDdNYFeAmchX31PJFM5OXCmYAayMZxVVa/ioKPYZ5u
-	 yfhrrY9e5C4nPHMJVitZV9OZnjjxSXrmtHmr4i01EWC3VNqk7jBLIEAiwyWCaGMkrx1/n
-	 v/W/5ajaTA5w3tNa3AxgcGIUAt4RXJ8kCXeaWsAQo4JzchqMU9C6UMtDdCUrEG9Jh9A==
+	bh=Obi5FjjIhbZBc1uIJrsHvlM5M6raM0L3TomSRP/gw9c=;
+	b=QXWzmg2M2LD6nodmj8ydQcCFA/StJjr84dLF1w3lxuXHw3s8hhBsSGAviOISwv500FYm
+	 ZTwQ240WydOG9tk8epw1MYj6FABlbivw5DdJwO7SbAK53n4MX3G286hoGCd/AY+cK9/LF
+	 h/+A+7Fay1BUI+6GAjUOvMPpe7AL6cECTdxQA2vPOpKBmJroMnTdQDrZJqkOT6qVayCRM
+	 4N0zTwZkTCV3hRikf2d3Agn32Bh1YwZgM1h19skYPqjWVnXB/FvL5Q784P/dfDxJYPDRi
+	 bllaLp7PRWS286pqmwvrcpaCVdZBQ8/bdE7iwNufJC/FYMYoSp8XBZ8D0M+LzPDovvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rabuz539;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQUZ82Tx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B9D606A334;
-	Wed, 18 Nov 2026 19:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19841606A320;
+	Wed, 18 Nov 2026 19:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rabuz539
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DA51F000C4;
-	Wed, 18 Nov 2026 19:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQUZ82Tx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682591F000C6;
+	Wed, 18 Nov 2026 19:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028668;
-	bh=6HAKdrMhCN03vki/HjH1ziUgpJPmQhpvShe17kay24U=;
+	s=korg; t=1795028671;
+	bh=Obi5FjjIhbZBc1uIJrsHvlM5M6raM0L3TomSRP/gw9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rabuz539itA+P5YmyRq1EcqwtYe2BsQjO5vy81NOO5wYJlpLw26TuW6NGgoz0FHsr
-	 pUzKGtlWndlMuD6xLKG2W8qPCsBd6cIL2iyxjy6KeitbntqKorU6HCXwqG+Je7o+SY
-	 hPAzmUpZyOibsoDiEp28VoFSkGpK362Tz1s6sBxE=
+	b=cQUZ82Txg+dcNFhXlTRLEpzjznoUN0jeWp+EBw6aGlyWycldiTrKPYishvQyC+LK4
+	 mG1jjiYrnVODTq6+dHODd+wxFCiVWJNvAcUJja+MtIfHVRlLsDgMbRUYXN1O9b1aDm
+	 QwBlYKInsrrLWv9VMjoTn6jppHbXix9i/LJBBDcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0078/1756] mm/huge_memory: fix truncate racing with PMD zapping
-Date: Wed, 18 Nov 2026 15:36:45 +0100
-Message-ID: <20261118150011.396017024@linuxfoundation.org>
+Subject: [PATCH 6.12 0079/1756] fbdev: kyro: Use devm_ioremap() for mmio registers
+Date: Wed, 18 Nov 2026 15:36:46 +0100
+Message-ID: <20261118150011.431803537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,69 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
 
-[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
+[ Upstream commit e0bf12a43243e6afc5a03fc55c58ec48aba48088 ]
 
-zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
-If this was the last mapping, truncation can skip unmapping the folio
-and proceed without waiting for the PMD lock, racing with dirtying.
+Replace the manual ioremap() call for the MMIO registers with the
+device-managed devm_ioremap() variant.
 
-ifs_set_range_dirty() can oops if MADV_DONTNEED races with
-ftruncate() on XFS, when we get the folio set dirty after it was found
-to not be mapped anymore.
+This simplifies the driver's resource management by ensuring the memory is
+automatically unmapped when the driver detaches from the device.
 
-Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
-matching the PTE zap path. This keeps the folio mapped while updating
-its state, so truncation must wait for the page table lock.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify comment and description ]
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted to inline zap_huge_pmd() logic with flush_needed replacing the is_present || is_device_private check ]
+Signed-off-by: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/kyro/fbdev.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index ce4d17871ff43..6cd88cd4b33be 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2128,8 +2128,6 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 			struct page *page = pmd_page(orig_pmd);
+diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
+index cf6062210c8bb..c026600d5963b 100644
+--- a/drivers/video/fbdev/kyro/fbdev.c
++++ b/drivers/video/fbdev/kyro/fbdev.c
+@@ -718,13 +718,14 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	kyro_fix.mmio_len   = pci_resource_len(pdev, 1);
  
- 			folio = page_folio(page);
--			folio_remove_rmap_pmd(folio, page, vma);
--			WARN_ON_ONCE(folio_mapcount(folio) < 0);
- 			VM_BUG_ON_PAGE(!PageHead(page), page);
- 		} else if (thp_migration_supported()) {
- 			swp_entry_t entry;
-@@ -2154,6 +2152,15 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 				folio_mark_dirty(folio);
- 		}
+ 	currentpar->regbase = deviceInfo.pSTGReg =
+-		ioremap(kyro_fix.mmio_start, kyro_fix.mmio_len);
++		devm_ioremap(&pdev->dev, kyro_fix.mmio_start,
++			     kyro_fix.mmio_len);
+ 	if (!currentpar->regbase)
+ 		goto out_free_fb;
  
-+		/*
-+		 * Only present folios are rmappable. Remove the rmap after
-+		 * transferring young+dirty to the folio.
-+		 */
-+		if (flush_needed) {
-+			folio_remove_rmap_pmd(folio, &folio->page, vma);
-+			WARN_ON_ONCE(folio_mapcount(folio) < 0);
-+		}
-+
- 		spin_unlock(ptl);
- 		if (flush_needed)
- 			tlb_remove_page_size(tlb, &folio->page, HPAGE_PMD_SIZE);
+ 	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
+ 	if (!info->screen_base)
+-		goto out_unmap_regs;
++		goto out_free_fb;
+ 
+ 	if (!nomtrr)
+ 		currentpar->wc_cookie = arch_phys_wc_add(kyro_fix.smem_start,
+@@ -772,8 +773,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ out_unmap:
+ 	iounmap(info->screen_base);
+-out_unmap_regs:
+-	iounmap(currentpar->regbase);
+ out_free_fb:
+ 	framebuffer_release(info);
+ 
+@@ -796,7 +795,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
+ 	deviceInfo.ulOverlayOffset = 0;
+ 
+ 	iounmap(info->screen_base);
+-	iounmap(par->regbase);
+ 
+ 	arch_phys_wc_del(par->wc_cookie);
+ 
 -- 
 2.53.0
 
