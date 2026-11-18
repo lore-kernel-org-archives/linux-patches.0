@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046651;
-	b=SNChGstYZJR/jHOBBGQzAGzXqs/Rw3d6OlawiMekzv22Q1tvRxFjeaGSw+asTOh+fgfW
-	 XOyAOqa3Poc7kTkLEwinTrpa1r5yqkZXg/yafGIDhjR2Cfj0jRWEbIlrMEcjWEx4xuEBE
-	 tNqs2gFjAuR3tDMPnE7ux4eYpbuNL9x8e5eOiDqaI6ixoRmbkC/65RsdjT4yyJNaaHFFF
-	 70VlmBJ2auudO6W8fExOQ4xnk9nGJn40HyExu26wJCDCqRPAMFzLxvJv46pQWeqgW7lyO
-	 MZCOAcYYkTBBToPx0Bg8Yj483zAGXK+6SoHGs9vesljL5YzVeYhTKLHMdwqtCq0PB9A==
+	t=1795046653;
+	b=g3Vn++mh72yX6izviZZeobr8ih9JVy+5hApBgzVPJGy38BXU47e3LnpZDMduYb9Hcx0A
+	 XFFzGMps1B+Pnwx+jZ3cmUm/tjpHny4v9jEgi063gB4Jd24s2M/Vt+isGR+DRTuGPeqki
+	 ZZqjLtnF1ik9OUu63aEeqUAn6ayPXHaccGiWMR6qHzvFLtqOfJ7J1YdlChyZJPP2bhs+x
+	 DLFdZLBasywo60NCXiYQBOkuFZuXqM9S+3AWfRc7EPiVl0etZuIeHd7sUpOSi/RPhHyhK
+	 Gld8LiS7OyhwXWk1HhuKmV2JXhL+a1vfUDs7HSHd+mgxJDYV12Grq47Lza1P9LasfKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046651;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046653;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P+zQ3e/hS01s9Uhd7Etgka9cU/8lz/tGNDD+ze4y0i8=;
-	b=J/yXClVvAtVmMNnwbynTWBTBat/qxFFQFBBMK/eVxfDpgFwXoViv0VvpkFSGCsuZ3RO/
-	 OeO7NDgU2/8OoefZu35Y91rm3ObVMBzgftLvjHnREth/0U2YJ2JWtkeV5hM0H2ufvMaLJ
-	 23+GyRIKKwHIReH8rly6/Su14Lm6mGnjD2ynbMWb4xja1IprYro+UFUUt1RQfjE9s02G8
-	 8Qlh3TbHdQmQK/aVqLz/9USfdFBetFRFtZT8D8fr7BPg73hYzTAU8PR+TyGOLFOe+zdXQ
-	 OthONnUYln69MT9PEUKLDbxdaDTakghe+AyHzpZU9huX9y81N25yHCivm0Eti09JR/g==
+	bh=Ia5aX2ijDR3u/nq9EmJxnFGw24hfcVYMelH1XkPg0Ko=;
+	b=RsQIYa6M9NI1+l4jF3MU2rnbzQAAl0h24ogv/GeOgLiCeiDq/V45ixI4vGneZ8Uthw+e
+	 Eo5bgQkuwaaynjoypoiNXU+TA7fPuz9sKaXzJ5+HQz8VvGG4hP32rR/jgZs0eNgRPFImq
+	 4mGaZwL2nJc8gk0xHuxXwLqNOuGYzjF0zs5kAaHu/4+6GJDpM5mGJD1ueul1gp6A2+VJS
+	 JtE9LYixGKHD1QHAgVzXiIWrOGFbbMktiHAWANyGTlUGGgDnp+WW4/DgG3vrKpAi0aHuu
+	 XtUNvesXf84EhdpdvZ6vM4nr/6/PtH16outFvt6hlgRb9NVab9ccwPTJL6ZgX8PmChQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ne4dWZ09;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQ9AAGxl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47920606A320;
-	Thu, 19 Nov 2026 00:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C52A606A320;
+	Thu, 19 Nov 2026 00:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ne4dWZ09
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCD71F000C4;
-	Thu, 19 Nov 2026 00:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sQ9AAGxl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FE11F000C4;
+	Thu, 19 Nov 2026 00:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046650;
-	bh=P+zQ3e/hS01s9Uhd7Etgka9cU/8lz/tGNDD+ze4y0i8=;
+	s=korg; t=1795046653;
+	bh=Ia5aX2ijDR3u/nq9EmJxnFGw24hfcVYMelH1XkPg0Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ne4dWZ09DJIPD1BO8b9dEHaeCl/5AnetPbDY1xkBxMeWkEQyuqxtEXv4rFCp5twkQ
-	 FcqCJ+eHlBYBn9Vj+VzwCB1xFDvSCj9P2DipFsu2EQjqMYz2tdvKu+GXJRriBA9VlI
-	 emwkPRRQkQWmwQVwRGBFcgeDbBZ/Ik110G8FkJ58=
+	b=sQ9AAGxlLRfgQf1WJOOLH+nlg6C8LqrRwx0O1wxlamp0pJzxugHBYNUBOtftO3Ser
+	 +//BX91k7Oj6A/A0diKHkvTv+J5ClPhpv+RFq68lH/gXYyFOPpsX6+utyVuMHsGWGw
+	 F/YMC1dPh9v4a6N+znHOSJ6idLD/WbeAm0mzK6/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Kexin Sun <kexinsun@smail.nju.edu.cn>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1357/2857] wifi: mac80211: update outdated comment
-Date: Wed, 18 Nov 2026 15:39:51 +0100
-Message-ID: <20261118150250.266778012@linuxfoundation.org>
+Subject: [PATCH 6.1 1358/2857] wifi: mac80211: queue frames while off-channel
+Date: Wed, 18 Nov 2026 15:39:52 +0100
+Message-ID: <20261118150250.302962551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,45 +68,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kexin Sun <kexinsun@smail.nju.edu.cn>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-[ Upstream commit b8a57b979a7c2069081ed0bf88a727b17d85ac96 ]
+[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
 
-The function ieee80211_start_scan() was refactored and replaced by
-__ieee80211_start_scan() in commit f3b85252f081 ("mac80211: fix scan
-races and rework scanning"). Update the comment in
-ieee80211_tx_h_check_assoc() accordingly.
+Drivers without FAST_XMIT and hardware scan support currently drop TX
+frames during software scanning while being off-channel. This happens
+in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
 
-Additionally, remove the broken gmane.org link in the comment.
+Move the off-channel check to invoke_tx_handlers_late(), after
+ieee80211_queue_skb(). Frames can then remain queued and be transmitted
+when the interface returns on-channel. This how TX works currently when
+code goes via ieee80211_xmit_fast() path.
 
-Suggested-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Assisted-by: unnamed:deepseek-v3.2 coccinelle
-Signed-off-by: Kexin Sun <kexinsun@smail.nju.edu.cn>
-Link: https://patch.msgid.link/20260228061944.887-1-kexinsun@smail.nju.edu.cn
+Below is rt2x00 driver ping output example while scanning, before and
+after the fix. After the fix, packets are no longer lost. Some have
+increased latency, what is expected behavior.
+
+BEFORE:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
+64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
+64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
+
+AFTER:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
+64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
+64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
+64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
+64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 13e51269b665 ("wifi: mac80211: queue frames while off-channel")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/mac80211/tx.c | 52 +++++++++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 51cf8c4e0e90a..36ea274efd051 100644
+index 36ea274efd051..028e5d25d005f 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -300,10 +300,7 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
- 		 * active scan) are allowed, all other frames should not be
- 		 * sent and we should not get here, but if we do
- 		 * nonetheless, drop them to avoid sending them
--		 * off-channel. See the link below and
--		 * ieee80211_start_scan() for more.
--		 *
--		 * http://article.gmane.org/gmane.linux.kernel.wireless.general/30089
-+		 * off-channel. See __ieee80211_start_scan() for more.
- 		 */
- 		return TX_DROP;
+@@ -282,7 +282,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
+ static ieee80211_tx_result debug_noinline
+ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ {
+-
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 	bool assoc = false;
+@@ -290,20 +289,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
+ 		return TX_CONTINUE;
  
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
+-	    !ieee80211_is_probe_req(hdr->frame_control) &&
+-	    !ieee80211_is_any_nullfunc(hdr->frame_control))
+-		/*
+-		 * When software scanning only nullfunc frames (to notify
+-		 * the sleep state to the AP) and probe requests (for the
+-		 * active scan) are allowed, all other frames should not be
+-		 * sent and we should not get here, but if we do
+-		 * nonetheless, drop them to avoid sending them
+-		 * off-channel. See __ieee80211_start_scan() for more.
+-		 */
+-		return TX_DROP;
+-
+ 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
+ 		return TX_CONTINUE;
+ 
+@@ -829,6 +814,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
+ 	return TX_CONTINUE;
+ }
+ 
++static ieee80211_tx_result debug_noinline
++ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
++{
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
++
++	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
++		return TX_CONTINUE;
++
++	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
++	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
++	    !ieee80211_is_probe_req(hdr->frame_control) &&
++	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
++		/*
++		 * When software scanning only nullfunc frames (to notify
++		 * the sleep state to the AP) and probe requests (for the
++		 * active scan) are allowed, all other frames should not be
++		 * sent and we should not get here, but if we do
++		 * nonetheless, drop them to avoid sending them
++		 * off-channel. See __ieee80211_start_scan() for more.
++		 */
++		return TX_DROP;
++	}
++
++	return TX_CONTINUE;
++}
++
+ static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
+ {
+ 	u16 *seq = &sta->tid_seq[tid];
+@@ -1887,6 +1899,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
+ 		goto txh_done;
+ 	}
+ 
++	CALL_TXH(ieee80211_tx_h_check_offchannel);
+ 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
+ 	CALL_TXH(ieee80211_tx_h_sequence);
+ 	CALL_TXH(ieee80211_tx_h_fragment);
+@@ -4552,10 +4565,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 		skb_get_hash(skb);
+ 	}
+ 
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
+-		goto out_free;
+-
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	if (unlikely(!skb))
+ 		return;
+@@ -4617,11 +4626,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 		info->control.hw_key = &key->conf;
+ 
+ 	ieee80211_tx_8023(sdata, skb, sta, false);
+-
+-	return;
+-
+-out_free:
+-	kfree_skb(skb);
+ }
+ 
+ netdev_tx_t ieee80211_subif_start_xmit_8023(struct sk_buff *skb,
 -- 
 2.53.0
 
