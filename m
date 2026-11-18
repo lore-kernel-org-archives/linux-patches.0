@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056180;
-	b=TekDJ742VjRiTEg00nIqFxKVcoMQCW3M+l9xoXfjCbvnELtJ+o/3jvCjUkNiEsiIX2uM
-	 98vaXPrUnm6jJ1afXVmbvQovxv5qTFb9K13zCTTo6fgqnhkB2i+ts6fQDUkdMzOPoz/im
-	 prFh4gnT/BZTV91fL7oIcqCfjPmT4VWVgQVavBu6ierKZF2zUhXD8pkk50/wvW8++1LEE
-	 YpEG6bQHxcuNg6b1zl5vCZSQw/amAbiMbUYlMtJyf7vtknEOCh7nJroLuXYiEiJCidqv8
-	 C4sePH+4vlgyj2kw6GeqDrOBtncWj4drvVzk5Xgmh0utmMh/YFrpnkE3oJbii/ocSGw==
+	t=1795056183;
+	b=EOX56i8yYnjIPP/kNZfQtY+cZkSSWXI+tc3yULDDbivgnKDQ2w3cLmpF9kUQyUkImron
+	 kBh9VhxmlqOd5+DceFaU/vVOuWtcC4M7hC4HOzltiEYYsPAsrrxk7OrqfjmbHYb7+Luax
+	 LXrQU1/wiaYxKWtcJHPeLZjHl1mVmGrqZf9RM1z/GL0WwEBtoDJ/FI8WAMN9JpRAvqOVw
+	 b/wji45g3To0RhzySD26JGCMVhPVCzrJWWGvniy4LTWe327SLAimiUtJ86ijG3uISL9rS
+	 iQwMjZn7RWJXyVpQWFZMKaaqu9mCVz3P8+xpBLXOnRRCJxsLpoLVhI7V+EW0fjPuSWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056183;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lPzCSvU1uLYziVRNNThWbFcWcbjHs2QG92iR6Abo4i0=;
-	b=UApz0F5cgO3o2Hr4Huh1RVa98oPouqzaiSC7WpS2PuzAuzfVaioiigR7mShkYfCDWFAR
-	 ppbZIDRYaFRSnMVLKzBgUV08cEO1PjMimt55OfdtB45Ge+7TSAsZroijI9Nsu+WDKLB/b
-	 /PetgdIWfMn1hAscMreZcwMKW3uPrH3YB9Cml4u41cy0eKnKy1POlsn53l4REioOq9qIR
-	 Wue0m6OXt9HKNc641EWf0boyiCro9wpU9Njl4tAFuxc0962OlKvI0O93gCBffiSm8fkOk
-	 QqA8TLHRVcHYCoN318Jzhc7LOhBcG/nZv/AJo0ZK/dmiUK+iOEYSjIvJ23Rva0Qylag==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=mV6/FpWhRE140qMOBghh3BclwtsImMQveydvaU1f/Xk=;
+	b=DCmuxFEEHeHwogmT6MBapk2u4sLsi13c0gF9cCDNVbfGNN3p6FkCpwEKF8u6MuoYi4I5
+	 9Kj4mwxcHcnQymFCqeL0rluPsFRY7NdKC86zQf7PnjTzQ91zNCd7zwr16qcvKakuMZoHZ
+	 KdU1eoVnLd1uXdlyZXNX/rJdq5hMB++rxJSdGB0PNfmyxkdnlgOP2lHnvd0QY0BUBr0sa
+	 sihK9+0AhPR4V1WIA+R4bBTczUMgR5/2gF0Ueu39/53M4dBlMGw+pGsvfhW65IuCvb7+J
+	 7MiuZ3XWiyIQXikMmuyqFjgI2OdEfrBasPnAxTUbYb81ri7+UJh/J+5N7a0SxYFflAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jqt2LWXI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjnb8Wqs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB1D606A325;
-	Thu, 19 Nov 2026 02:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C5A606A320;
+	Thu, 19 Nov 2026 02:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jqt2LWXI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2B41F000C4;
-	Thu, 19 Nov 2026 02:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hjnb8Wqs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBEB1F000C4;
+	Thu, 19 Nov 2026 02:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056180;
-	bh=lPzCSvU1uLYziVRNNThWbFcWcbjHs2QG92iR6Abo4i0=;
+	s=korg; t=1795056183;
+	bh=mV6/FpWhRE140qMOBghh3BclwtsImMQveydvaU1f/Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jqt2LWXISO+7umfm0ehBs86OYP2cdi747MWM8f06pV+K9jbJOcUixAlOh5hSU6QLZ
-	 Hv/5i8987WZiaXsY7iuRXy114oM+btrpfNEIK4nS2csd/+EK3AtGb0p8yZNlTDek+0
-	 D86i16p+qUh+5/Hs2FhKecfItcUyFwj7q9ILliHc=
+	b=Hjnb8Wqs+RW7tczV0uDq65OCFTRTJpLg9Z0oFF/4yRb42FFLJ4x1+HI16xsgtjtLD
+	 kB0X1NW9uJbMa23qEbADzLyKf3KxhOZg2m0SeVF3bXtnBT7ndYy8CcBcLFd5zZWPRV
+	 6ke4jbvbLAJRqO28wXJ5eSXMambZmEbyR/HvyaA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1895/2214] ASoC: atmel-i2s: fix MCK generator error handling
-Date: Wed, 18 Nov 2026 15:59:31 +0100
-Message-ID: <20261118150126.985512055@linuxfoundation.org>
+Subject: [PATCH 5.15 1860/2214] platform/olpc: Reserve space for a string terminator
+Date: Wed, 18 Nov 2026 15:58:56 +0100
+Message-ID: <20261118150125.748306361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,60 +62,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 2e2da92de9bffd2cdbb9a2558fe60de7f1bb09e3 ]
+[ Upstream commit 1fe88b1741ff655bb59e4fd78178fe2c557b9185 ]
 
-Disable the gclk and reset the MCK configuration when an error occurs
-while enabling the MCK generator.
+ec_dbgfs_cmd_write() copies user input into a zero-initialized stack
+buffer and passes it to sscanf(). A write that overwrites the entire
+buffer leaves no terminator, so the subsequent parsing can read beyond
+the buffer.
 
-This prevents the gclk from remaining enabled after a failed clock
-configuration.
+Limit the copy to leave room for the trailing NUL.
 
-Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6cca83d498bd ("Platform: OLPC: move debugfs support from x86 EC driver")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260926121250.3258285-2-yaojiale02@163.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/platform/olpc/olpc-ec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index 4cb0605f6daa2..cc447fd7bc842 100644
---- a/sound/soc/atmel/atmel-i2s.c
-+++ b/sound/soc/atmel/atmel-i2s.c
-@@ -466,11 +466,21 @@ static int atmel_i2s_switch_mck_generator(struct atmel_i2s_dev *dev,
- 	mr |= ATMEL_I2SC_MR_IMCKMODE_I2SMCK;
- 	ret = regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, mr);
- 	if (ret)
--		return ret;
-+		goto err_disable_gclk;
+diff --git a/drivers/platform/olpc/olpc-ec.c b/drivers/platform/olpc/olpc-ec.c
+index 921520475ff68..9e9d20343faab 100644
+--- a/drivers/platform/olpc/olpc-ec.c
++++ b/drivers/platform/olpc/olpc-ec.c
+@@ -269,7 +269,7 @@ static ssize_t ec_dbgfs_cmd_write(struct file *file, const char __user *buf,
  
- 	/* Finally enable the I2S Master Clock generator. */
--	return regmap_write(dev->regmap, ATMEL_I2SC_CR,
--			    ATMEL_I2SC_CR_CKEN);
-+	ret = regmap_write(dev->regmap, ATMEL_I2SC_CR, ATMEL_I2SC_CR_CKEN);
-+	if (ret)
-+		goto err_reset_mr;
-+
-+	return 0;
-+
-+err_reset_mr:
-+	regmap_update_bits(dev->regmap, ATMEL_I2SC_MR, mr_mask, 0);
-+err_disable_gclk:
-+	clk_disable_unprepare(dev->gclk);
-+
-+	return ret;
- }
+ 	mutex_lock(&ec_dbgfs_lock);
  
- static int atmel_i2s_trigger(struct snd_pcm_substream *substream, int cmd,
+-	size = simple_write_to_buffer(cmdbuf, sizeof(cmdbuf), ppos, buf, size);
++	size = simple_write_to_buffer(cmdbuf, sizeof(cmdbuf) - 1, ppos, buf, size);
+ 
+ 	m = sscanf(cmdbuf, "%x:%u %x %x %x %x %x", &ec_cmd_int[0],
+ 			&ec_dbgfs_resp_bytes, &ec_cmd_int[1], &ec_cmd_int[2],
 -- 
 2.53.0
 
