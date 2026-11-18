@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037079;
-	b=xdAp3cDBIar/cJzgbBLBGPDdlKgKiaPe8JlFp1MjaptAlt3mDrRrhlNjocSUn0vQ0/6Q
-	 tByEnbKujNgzDwATaBWdxJ/vb/YVMlzKhDgwlujHYMT8xtIQguiFc+LYqB6oshVUoePqw
-	 1eoSU3zCaKwm5qlEqMdnMwuRlHLrrfBzAWnk/31CzvR8gGOK8XMb1LHVt4gHq+D047tVh
-	 2O6Ji4CpSMp898GlWdr6X0Br+r2Mn8ohCKa7JMCb/zwj/FCuQ0cJlk8KsgBbFN49ymEqR
-	 LubjO6MMlsARZ1YX34CzNvhFFPY7ZfdrSiBc4oh+Lbs5EiGBsg/x+OWShxNQexRRzRw==
+	t=1795037082;
+	b=cf8iGuSQ+IEE3GUWBjq6mm8dY+HsIDKrdvpuejhk1aZWrYwoZN8wc58yhxsGv8L6/mUJ
+	 0zdlqyEPZTs0w264rDjXmlo35i/iyXctLq6Vz6arkHLN/iO3wM3Vk3oRV3Qr5uEi1JWII
+	 HZCORpzoGGyt7SbFTSMfn0g35juPYPiOhTnk98erN2sfC8eiG99sEeg1O8ExehPEkFGhR
+	 AJZoTJmLxoZkVetUZXn1UT92/P3rhMaXjz/ImLcSYqKH5secxawuylmhNnJDvgOxgDGjV
+	 xDVelh+3vvpB6c+KJywAz9w3WaJPoYDx1chqR7QBzu0plSmbZwC675Wot15VAUedVPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/PMTriGXTP24NG+zgcZdJpUt+FjiTet7RI7KnTY/LQw=;
-	b=HlxwZ7SrNQUnYi38NIwAYyNRpDdX9uS2CLcX3e1MUpRpzJHDOnlBMIiU8IQFJ67RkRrU
-	 hEConcgMY5IXLZLBFmWcRJMU9Gnke7Yc73Avvmc6Mh5l/PDgfig/yaf1FDZH4zd05avr5
-	 WVgU00UNwXSXWtv85PnKneS/3POlEERvBH+OJ6oEw6CaaXZO0BtLh4ZB8btsBGWjb8lYF
-	 mO7NUZEayjZDh0z1KGQJ1TaoAnMiDsyu2+TINDSc0HdBE2ux7jnafGp6fQsHfW+1buXsx
-	 1YoguO5zTZpNc7M/R9QTQqTQDm82twoNK40yZ0Zjy/RIZsw9C85P6P3BshT+kM9uAJg==
+	bh=4UGlE8oGLqk6MI0HYDttR15bcCtiExwRE0rEUSPKlYU=;
+	b=K4e2q4YePkboo9Mh0gr3rqgl5MTaT7JR3mWnHxboPz5w7SsOZAoXlpkUS5H1RymkdK3y
+	 6nrbyYfOIF64+Il60Fmv7mFHhrqYWGozddsd27wA+pB1E6UXvicMezudWa4fs/xe7C5id
+	 /8QWjEQGVmBvNrADMN81wCNg0bh1mnw0HPriaSxghW+PPK6tBwBQN4JUt6Qs/MjftBgZP
+	 V1M/NQKJ69TLuvmCzmdIKLvr8RWyJSaFaM/PL/Sf1I6EqSl1tZNkPwO3MzFMf3ctR0irK
+	 6I+MLV/lTo/tu4pwZQYNCqGxeM1xaN6LfSTvSLzMjLI6/uHNgUdjxO/9B0Y1jpqX7KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=asPndKhy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rva/Ywyi";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9245606A320;
-	Wed, 18 Nov 2026 21:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75785606A320;
+	Wed, 18 Nov 2026 21:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=asPndKhy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1D01F000C4;
-	Wed, 18 Nov 2026 21:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rva/Ywyi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFB31F000C4;
+	Wed, 18 Nov 2026 21:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037079;
-	bh=/PMTriGXTP24NG+zgcZdJpUt+FjiTet7RI7KnTY/LQw=;
+	s=korg; t=1795037082;
+	bh=4UGlE8oGLqk6MI0HYDttR15bcCtiExwRE0rEUSPKlYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=asPndKhyV0akMi1UuNvkFeY9o9SxoydS9LdSWPyfXNfmeiIWZWKb/ZIuZjmP1xSua
-	 aKIrUad11UE/EHpegX4UVKpRl9YM27hNQxQPghsLO2BtSjkbSIHGf360davrrsAHS3
-	 8MuGEIX9oThhJyCoSSDZjSfgn6i4rbZqanYug42A=
+	b=rva/YwyiZo62OLOIkhSJN7PhsBrX9qNjrre8EsoihkFnie5vIMxCa+dapcArTD8xa
+	 WY5rIfGaxIDs+b9s5MtEwIqSmP8Tk+O+CqWYyUXf0OGpxrM/gkX4xDRdI9GSNzyGzm
+	 PjiYAuEdXfaJ7mvJAyo2eAjgHq7QKp0w4JuCq6Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunhai Dai <daikunhai@didiglobal.com>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Vega <vega@nebusec.ai>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1284/3318] blk-iocost: abort weight transfer on invalid donation weights
-Date: Wed, 18 Nov 2026 15:31:46 +0100
-Message-ID: <20261118150358.767307051@linuxfoundation.org>
+Subject: [PATCH 6.6 1285/3318] tcp: check congestion control restriction first
+Date: Wed, 18 Nov 2026 15:31:47 +0100
+Message-ID: <20261118150358.803799869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,56 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunhai Dai <daikunhai@didiglobal.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit c810ee88cdab27f443c32270dc7c0eaad2cca3f8 ]
+[ Upstream commit dda51b73721684637ab8e9bd97c78228b99c4bd2 ]
 
-transfer_surpluses() warns and then keeps going when the donation
-calculation produced invalid weights.  The following propagation can then
-divide by a zero hweight_inuse, so the warning is immediately followed by a
-divide error.
+tcp_set_default_congestion_control() takes a reference to an algorithm
+before checking whether a non-init network namespace may select it. A
+rejected request returns -EPERM without dropping the reference.
 
-When the check trips, abandon this period's donation transfer and release
-the walk lists.  This trades one period without donation for not crashing;
-the invalid state is not expected on the normal path.
+This affects module-backed algorithms too; BPF is not required. For
+example, after root loads tcp_bbr, a user with CAP_NET_ADMIN in a
+non-init network namespace can repeatedly request it as the default
+although it is not in tcp_allowed_congestion_control. Each rejected
+write leaks a module reference. Since module->refcnt is an atomic_t,
+2^31 such writes can make it negative; later module_put() calls warn,
+and rmmod can hit the BUG_ON() in try_release_module_ref().
 
-Developed with assistance from Claude Code (Anthropic): the assistant
-analysed the failure path, drafted the change and ran the checks listed
-below.  The author reviewed the result and remains responsible for it.
+Check the namespace restriction before acquiring the reference, as
+tcp_set_congestion_control() already does.
 
-Fixes: e08d02aa5fc9 ("blk-iocost: implement Andy's method for donation weight updates")
+Fixes: 8d432592f30f ("net: Only allow init netns to set default tcp cong to a restricted algo")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kunhai Dai <daikunhai@didiglobal.com>
-Tested-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261019125412.3123895-2-daikunhai@didiglobal.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/71c142b2d45af6a2fe7fc6cd4a5ca52c53afbe23.1793075984.git.zhilinz@nebusec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/tcp_cong.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index d96113c421be9..99efec392dec6 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1965,6 +1965,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
- 			pr_cont(": active=%u donating=%u after=%u\n",
- 				iocg->hweight_active, iocg->hweight_donating,
- 				iocg->hweight_after_donation);
-+			goto out;
- 		}
- 	}
- 
-@@ -2063,6 +2064,7 @@ static void transfer_surpluses(struct list_head *surpluses, struct ioc_now *now)
- 		__propagate_weights(iocg, iocg->active, inuse, true, now);
- 	}
- 
-+out:
- 	/* walk list should be dissolved after use */
- 	list_for_each_entry_safe(iocg, tiocg, &inner_walk, walk_list)
- 		list_del_init(&iocg->walk_list);
+diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
+index 2959243e98f06..f9c5bea3fd3ae 100644
+--- a/net/ipv4/tcp_cong.c
++++ b/net/ipv4/tcp_cong.c
+@@ -289,12 +289,12 @@ int tcp_set_default_congestion_control(struct net *net, const char *name)
+ 	ca = tcp_ca_find_autoload(name);
+ 	if (!ca) {
+ 		ret = -ENOENT;
+-	} else if (!bpf_try_module_get(ca, ca->owner)) {
+-		ret = -EBUSY;
+ 	} else if (!net_eq(net, &init_net) &&
+ 			!(ca->flags & TCP_CONG_NON_RESTRICTED)) {
+ 		/* Only init netns can set default to a restricted algorithm */
+ 		ret = -EPERM;
++	} else if (!bpf_try_module_get(ca, ca->owner)) {
++		ret = -EBUSY;
+ 	} else {
+ 		prev = xchg(&net->ipv4.tcp_congestion_control, ca);
+ 		if (prev)
 -- 
 2.53.0
 
