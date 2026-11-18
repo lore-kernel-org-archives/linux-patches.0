@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036683;
-	b=suHAMnRCF7LZY+VrwoExSNQsmjpScK/MAHGhusyBigCwkbn4szrGNTG4AZZd77mGtF/w
-	 Vur1T7+iIXvXKjcTrTc0F1Nuowrp0v6BpzClA9Ugnel8AXiabQtbVLAu3RGOB1IzR1Stq
-	 PdSLobQq5xVQAZ5Z7a5kIt5vV6WJ+o/FHWajbu71AHDJQm08yj1rDEwi+Rq3VB/Xe9ofu
-	 f03FVq4/T89ZqZF+dD/67qlMMg36BQ0ckW6dS37E0VR0fhZF2GNAyxBQ70wYP1/LwAfZg
-	 FeluEMyB5NDrDKiAt1w6eB8Bz3UBoifQLniuOVOeA3hQlJq3R1jxhqHCCTYxXptf72w==
+	t=1795036685;
+	b=cRYHxFrXRNE+HimWd9MhjZ8c/3XUVTb5WW8Kx9T2s+tWSDCraM5yFeo7YZcPq3lg1tvx
+	 hcuHu9Q5mCTMh+fpqG2qryV+1QoA/H5r2v2X3u76l4SdbgTYKqal3JiTRMsUO559hzkED
+	 9LAoQxbdlgrZWqk/fG8XEklia8rNZxEk51AIypNaZqZ9//b9aC33Ut8XzmSNlCbJOcBDj
+	 nidc4bCIg/5rvM5ncOi5InNpOlk6OGnmD3mGY4a8weP/1DkAhcGEGyGF8txym19KEVCwB
+	 eXVci36CN2IyPudxxswZ6L/kHltACNrnhHRqE/yhOTYSNz/yfCcdjjQmOvjxCgprsFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kyGwritq25r2grpr6HkbHu8Dlb5fch16pCkC2dMx5ig=;
-	b=EPwe3hbWzWV7xA4x1NcKVZ0APA5Lj9/c4pNnG7mFrmMJCtEP76O5Dl8hTQcPN28O63Cp
-	 WV5JK8RL0N9cmY6Me5W8PbAGIPKhj2s4CvPr/ssAOLGNi84D1DmFdxVoLIWU5mHOFjlj7
-	 +ROezk73nDrt13GGbaCiMpV07dDJ5YDI3NfKU7k4ekkSFxch/mSulxhNBOg4YKgX7tRSF
-	 cS0PhCvEzSXNr2lqskVK5PmE6FmnCI4gx2FaeovQZfb0vELQkcpI9XC3DszVk/w8DAG2J
-	 n2v9KJW3t/IiONsW872HwsQ1qjw2SjoTRXpQKasHeXcpCSDVfWNd422f6SwGtdi4MSg==
+	bh=zcNwdfLwXj0ZMG/hAH1VcNFwZIqZZYo+XloRKn/oDvo=;
+	b=iYW7bLxT1dMRMXoHU44fS5uwUHgVBG9aYIMOdSzZo81ZSDOCfGZOAtyC49gPEH+6AAJ1
+	 3y3wfCh+aTibfmedjGEZ5PuVxRlTzTobatIVvXeh3GcEfpEF29GF7QmWuVlSzm67zGFNs
+	 ZSbwyVYVuFmnE/89mUmpVa5YgVwO4c90PBr4WAEBqm4T4U9nG/ERgqbv1IauTzNv/ntcH
+	 X3bQQV5jVUxHEk69tZf9dbMhopUnL1RRVvH3E84rEaFJyYBWuuGse3qzWXUb547TEchPf
+	 cBHxpGyqJRZVOnuQkfwXWjFJSEY7XULHvYd+qVz+sGeYshCrQ3nE+Yp6jfX5ipPwJdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lJ8/bKd0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmu8lOKw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6F9606A320;
-	Wed, 18 Nov 2026 21:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C369C606A325;
+	Wed, 18 Nov 2026 21:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lJ8/bKd0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9C61F000C4;
-	Wed, 18 Nov 2026 21:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cmu8lOKw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278F71F000C4;
+	Wed, 18 Nov 2026 21:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036682;
-	bh=kyGwritq25r2grpr6HkbHu8Dlb5fch16pCkC2dMx5ig=;
+	s=korg; t=1795036685;
+	bh=zcNwdfLwXj0ZMG/hAH1VcNFwZIqZZYo+XloRKn/oDvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJ8/bKd0BW/hr2qMCqXBzdTswGgHVcPwX2znbs9kMy9SG1ltfebQGoc5aab07SKpJ
-	 PAbNVpKxJXEZh6KGRIUFrkcWDmXxEqjXIYscOWiPYRpxrDSb6brms7lqAai849CzRG
-	 ctbEHLZibGRgqNxq9PGYNctjMO55xVhDJ4fNoP8g=
+	b=cmu8lOKwiirmY9XeMW5E9mEhFDA6A6LNpC5/PiIlVC2sMl3pSv3k/WnLESy252nPU
+	 xTTgDg56caHYOQNid7k+NmmZ4iQJzKUM/COPM6lrrwptliffg4e087Md2QSRtDk0z5
+	 /HIjVvkVErWo5j8O3E4sMPjSqHnZvkO0rwkByfDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1110/3318] ARM: 9488/1: smp: set current pointer in assembly before jumping into C
-Date: Wed, 18 Nov 2026 15:28:52 +0100
-Message-ID: <20261118150353.300620066@linuxfoundation.org>
+Subject: [PATCH 6.6 1146/3318] alpha: run check_mmu_context() from finish_arch_post_lock_switch()
+Date: Wed, 18 Nov 2026 15:29:28 +0100
+Message-ID: <20261118150354.457468008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,125 +68,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Magnus Lindholm <linmag7@gmail.com>
 
-[ Upstream commit f6e551e7d515579b952422c93415470fb672d848 ]
+[ Upstream commit 020d2e70b7538b66eee3c3480d2b8921fb182f0c ]
 
-With CONFIG_KCOV_INSTRUMENT_ALL=y, secondary CPUs fail to come online
-on ARMv6K/ARMv7 SMP:
+check_mmu_context() clears asn_lock and acts on need_new_asn, but it
+runs only as the tail of switch_to(), after alpha_switch_to() returns.
 
-  CPU1: failed to boot: -38
+A newly forked user task never gets there: its first context switch
+resumes at ret_from_fork and reaches schedule_tail() without returning
+to the code following alpha_switch_to().
 
-The compiler inserts a call to __sanitizer_cov_trace_pc() at the entry
-of secondary_start_kernel(), before set_current(task). The KCOV hook
-dereferences current while TPIDRURO is still uninitialized, causing a
-data abort before cpu_init() has installed the exception stacks. The
-secondary CPU consequently never completes startup.
+asn_lock is left set on that CPU, so the new user task can run with
+interrupts enabled while shootdown IPIs keep taking the deferred path.
+The handshake meant to complete those invalidations never runs.
 
-Initialize current in the secondary assembly handoff, as
-__mmap_switched already does for the boot CPU.
+New kernel threads also reach schedule_tail(), but context_switch()
+does not call switch_mm() for a task without an mm. They therefore do
+not set asn_lock in the first place and are not affected by this bug.
 
-With current set in assembly, the set_current() call in
-secondary_start_kernel() is redundant. Drop it together with the
-function and the task argument. The hotplug resuscitate path in
-arch_cpu_idle_dead() needs no hand-off either, as smp_ops.cpu_die()
-can only return if the CPU kept its register state, TPIDRURO included.
+Move check_mmu_context() to finish_arch_post_lock_switch(), which is
+called by finish_task_switch() for both existing and newly created tasks.
+Drop the now redundant call from switch_to().
 
-Assisted-by: Claude:claude-fable-5
+The hook runs after finish_lock_switch() releases the rq lock and enables
+interrupts. An IPI arriving before asn_lock is cleared retires the slot
+through flush_tlb_other(); an IPI arriving afterwards can flush directly,
+since PAL_swpctx has already installed the incoming context.
 
-Fixes: 50596b7559bf ("ARM: smp: Store current pointer in TPIDRURO register if available")
+Set need_new_asn whether ev5_switch_mm() reuses or allocates an ASN. An
+IPI in that interval can zero either slot. Without this, the allocated
+case can return to user space with a live ASN but a zero context slot,
+which a later context-based shootdown shortcut could mistake for an
+inactive CPU. check_mmu_context() reloads only when the slot is zero.
+
+Call the hook unconditionally. Alpha selects ARCH_NO_PREEMPT, and neither
+kthread_use_mm() nor sched_force_init_mm() sleeps between the direct
+switch and this hook. RCU_STRICT_GRACE_PERIOD can enable PREEMPT_COUNT,
+but cannot make those callers migrate there. Testing preemptible() would
+only leave asn_lock set in that configuration.
+
+This requires the preceding direct-switch fix, "alpha: load the MMU
+context when switch_mm() switches the current task". It installs the
+borrowed context before kthread_use_mm() reaches this hook, so clearing
+asn_lock cannot expose a targeted invalidate against the wrong context.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20261010142533.974797-3-linmag7@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/smp.h   |  2 +-
- arch/arm/kernel/head-nommu.S |  1 +
- arch/arm/kernel/head.S       |  1 +
- arch/arm/kernel/smp.c        | 15 ++-------------
- 4 files changed, 5 insertions(+), 14 deletions(-)
+ arch/alpha/include/asm/mmu_context.h | 15 +++++++++++++--
+ arch/alpha/include/asm/switch_to.h   |  1 -
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/include/asm/smp.h b/arch/arm/include/asm/smp.h
-index 8c05a7f374d8b..84aa6a663e816 100644
---- a/arch/arm/include/asm/smp.h
-+++ b/arch/arm/include/asm/smp.h
-@@ -43,7 +43,7 @@ extern void set_smp_ipi_range(int ipi_base, int nr_ipi);
-  * Called from platform specific assembly code, this is the
-  * secondary CPU entry point.
-  */
--asmlinkage void secondary_start_kernel(struct task_struct *task);
-+asmlinkage void secondary_start_kernel(void);
+diff --git a/arch/alpha/include/asm/mmu_context.h b/arch/alpha/include/asm/mmu_context.h
+index 4eea7c6169925..7aeee0846dc9d 100644
+--- a/arch/alpha/include/asm/mmu_context.h
++++ b/arch/alpha/include/asm/mmu_context.h
+@@ -152,8 +152,8 @@ ev5_switch_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm,
+ 		next_mm->context[cpu] = mmc;
+ 	}
+ #ifdef CONFIG_SMP
+-	else
+-		cpu_data[cpu].need_new_asn = 1;
++	/* A deferred shootdown can also invalidate a newly allocated ASN. */
++	cpu_data[cpu].need_new_asn = 1;
+ #endif
  
+ 	/* Always update the PCB ASN.  Another thread may have allocated
+@@ -201,6 +201,17 @@ do {								\
+ #define check_mmu_context()  do { } while(0)
+ #endif
  
- /*
-diff --git a/arch/arm/kernel/head-nommu.S b/arch/arm/kernel/head-nommu.S
-index b9d6818f1ee16..f80bbfbd3a6f8 100644
---- a/arch/arm/kernel/head-nommu.S
-+++ b/arch/arm/kernel/head-nommu.S
-@@ -116,6 +116,7 @@ ENTRY(secondary_startup)
- 	ldr	r7, __secondary_data		@ reload r7
- 	ldr	sp, [r7, #12]			@ set up the stack pointer
- 	ldr	r0, [r7, #16]			@ set up task pointer
-+	set_current r0, r1
- 	mov	fp, #0
- 	b	secondary_start_kernel
- ENDPROC(secondary_startup)
-diff --git a/arch/arm/kernel/head.S b/arch/arm/kernel/head.S
-index f22c50d4bd417..a22403a629efa 100644
---- a/arch/arm/kernel/head.S
-+++ b/arch/arm/kernel/head.S
-@@ -442,6 +442,7 @@ ENTRY(__secondary_switched)
- 	adr_l	r7, secondary_data + 12		@ get secondary_data.stack
- 	ldr	sp, [r7]
- 	ldr	r0, [r7, #4]			@ get secondary_data.task
-+	set_current r0, r1
- 	mov	fp, #0
- 	b	secondary_start_kernel
- ENDPROC(__secondary_switched)
-diff --git a/arch/arm/kernel/smp.c b/arch/arm/kernel/smp.c
-index 3431c0553f45c..f548ada379afb 100644
---- a/arch/arm/kernel/smp.c
-+++ b/arch/arm/kernel/smp.c
-@@ -371,12 +371,9 @@ void __noreturn arch_cpu_idle_dead(void)
- 	 */
- 	__asm__("mov	sp, %0\n"
- 	"	mov	fp, #0\n"
--	"	mov	r0, %1\n"
- 	"	b	secondary_start_kernel"
- 		:
--		: "r" (task_stack_page(current) + THREAD_SIZE - 8),
--		  "r" (current)
--		: "r0");
-+		: "r" (task_stack_page(current) + THREAD_SIZE - 8));
- 
- 	unreachable();
- }
-@@ -397,23 +394,15 @@ static void smp_store_cpu_info(unsigned int cpuid)
- 	check_cpu_icache_size(cpuid);
- }
- 
--static void set_current(struct task_struct *cur)
--{
--	/* Set TPIDRURO */
--	asm("mcr p15, 0, %0, c13, c0, 3" :: "r"(cur) : "memory");
--}
--
- /*
-  * This is the secondary CPU boot entry.  We're using this CPUs
-  * idle thread stack, but a set of temporary page tables.
-  */
--asmlinkage void secondary_start_kernel(struct task_struct *task)
-+asmlinkage void secondary_start_kernel(void)
++/*
++ * Also called from kthread_use_mm() with preemption enabled. Alpha has
++ * no kernel preemption, so the task is still on the CPU that ran
++ * switch_mm().
++ */
++#define finish_arch_post_lock_switch finish_arch_post_lock_switch
++static inline void finish_arch_post_lock_switch(void)
++{
++	check_mmu_context();
++}
++
+ __EXTERN_INLINE void
+ ev5_activate_mm(struct mm_struct *prev_mm, struct mm_struct *next_mm)
  {
- 	struct mm_struct *mm = &init_mm;
- 	unsigned int cpu;
+diff --git a/arch/alpha/include/asm/switch_to.h b/arch/alpha/include/asm/switch_to.h
+index 762b7f975310c..35c4b2c9d9923 100644
+--- a/arch/alpha/include/asm/switch_to.h
++++ b/arch/alpha/include/asm/switch_to.h
+@@ -9,7 +9,6 @@ extern struct task_struct *alpha_switch_to(unsigned long, struct task_struct *);
+ #define switch_to(P,N,L)						 \
+   do {									 \
+     (L) = alpha_switch_to(virt_to_phys(&task_thread_info(N)->pcb), (P)); \
+-    check_mmu_context();						 \
+   } while (0)
  
--	set_current(task);
--
- 	secondary_biglittle_init();
- 
- 	/*
+ #endif /* __ALPHA_SWITCH_TO_H */
 -- 
 2.53.0
 
