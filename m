@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024966;
-	b=WMa6f0Cvlln22hkN3jNXsuk522BH3iJ+NIGrrVil9B0Ny0uLno0lpLxn1x6pJpvLYLD0
-	 OrxgTN7bKUZWZ1p6O33BNj/yWuEqYtp6w2kvmJv4CHtP0nazMxup3VCAi70uqPP2OWwS+
-	 SKELyIJ5FB91ZrwEdxgGfsI3LSdoB4V1Z4Xi9WUq7ek8VI90tl+z7n8lRIq8sg0dFjB8X
-	 XCZa0X0xN2xF+a7kpEG/DowXQiS8hGWSXccaEKFK8DamrxEHOT4W1R7t6xzIL78e6u7qD
-	 IiikLwIeX4U+ioRZ+ULh95TYp4tfTCxxsV53hXyEo5PmDPCPbH0cwAmfzwNv6s1NcHQ==
+	t=1795024969;
+	b=i0o6yoBeIXmR7kvG0KldJOZ+IyyjdL9HmOvk/OzddwU5SJUkMWx5XexDqBgRkitGeyxA
+	 8Ra3rwHDYogyxQRkVo/gC/13Fb0nXNEYBFklq6lP7rpXCMXhG1xeXKOejr4qTCw/Ne1k7
+	 7iak6e4hhx9OkGZdz6pHXTlIR26joHUxYY7fYsyVXBFAb1b0ZbOG6LkwIKNlCS6SYQEVW
+	 fl5XL4Nde5/H46YlNeJ3Ei7va/AygGHpIr4JdaqXNMi5wSPZNHK7D4+n2upDrrjYcOZ37
+	 VboCHCEm/Ms9DvHA3Io/nKhnT90jT1hwWvGIcpmYmXcxUoGzr0Dt4udMR3SpLwGSIMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024966;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024969;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ot+5VaIsEGHo7DP8NRWeOFH/QIiL+EgW/+mUYP+7pWs=;
-	b=CoG9F9BsNqGl3zCy6783XOJGngfXWea6wcNuWBb1qBVj1/hslQFj6wqOnIiDKbju2rgK
-	 PeMufQu1v+LT7fjPEPW+rHTU0D4EfeUNkYmttHY6U83s7/o1tkbP/D09euhZNBScSnJZ9
-	 kvH7LKiX4yNXCfzD6GDJA/CRp7GNehwu0qVR4EJcGkd+5PLub4/q9Cban1/IZTwolqFMr
-	 y1nBG8kbaaTcaNisQzF6VebkoKhmKRIWssE0yNF7EVVa/zRZ5Ys3yS9d9mQ1hD2qzVRY1
-	 fgUNreyqwCVI3S66vZBXsHZRvLkNcdxrCFeei590n0xrMgPqR/DKmntPgdS3ubJBJCg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PKm1ZogRg6Nqw/u/M2hOAvb7mEzu7ffeYutZZqASpE8=;
+	b=r/SGt0NQavPwR2Sl2wnhvLEbPOuxNYb+6RgDv9GowUSHqxVEz0l9e2Uo9+UVoAiZ+NeU
+	 it2vQ4ivsQZfM++9vlqHW7k+nSkQS7ppn6N8wYMItdIlaoIVp3xwJJ7JOkGV9/v6BkRsL
+	 x6MCaugFjo4h6StJ0pDfN4INXzngbhUxs4/Vo/UCgtjbPv5E/3B7KgIZSlTRexbo9CN/C
+	 3HPXYVPbXrq7GzLVMloRXu6Rpgc0hOM6gh1Hdn+YYYmd/CT2qN4HyTW/npgOve3fJwb2J
+	 E1g9Y5gvBBh9+YAreu55CYitQdJfAb8eDods8yA43lvQtNkXYUp6JiyhmtCoaTL+QvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9JcV72K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mZQKsHbE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B7F606A336;
-	Wed, 18 Nov 2026 18:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F4D606A337;
+	Wed, 18 Nov 2026 18:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9JcV72K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5BD31F000C4;
-	Wed, 18 Nov 2026 18:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mZQKsHbE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927251F000C4;
+	Wed, 18 Nov 2026 18:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024966;
-	bh=Ot+5VaIsEGHo7DP8NRWeOFH/QIiL+EgW/+mUYP+7pWs=;
+	s=korg; t=1795024969;
+	bh=PKm1ZogRg6Nqw/u/M2hOAvb7mEzu7ffeYutZZqASpE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h9JcV72KLHS/zH7yVUdxkeH7x0sltsKcXyT+Oiq9bwF1WiONg7YvSABkJ00rydNrP
-	 hZfDODUzdhQO4medkPHzbWl+TqzF2vJMkNPqQVbOvh2OToM2kGDfNCFl0OJ8ZHY3b6
-	 ZYJItaa8BtV7jHauEzpF2DCdEO7zjFFqJhnIKhpM=
+	b=mZQKsHbEP6yjO8d8eYn/JbqBsEDQJhI0OwM/l87g7v2O7k1/9/sg4HUkK2sJgUQ6K
+	 MyYF0x4R9RxdPbLgP+PQDoSifnxL7lmxCV0aU3FpxD11Fn6HdfhCPsG+ca/cxy1bFp
+	 oQOEzq6DM1YgZZjVqZX1ywCQyjiUlEnfZnWZOcSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0871/2151] IB/mad: fix UAF and double-free in RMPP receive reassembly
-Date: Wed, 18 Nov 2026 15:43:26 +0100
-Message-ID: <20261118150153.930456279@linuxfoundation.org>
+Subject: [PATCH 6.18 0872/2151] pwm: Allow 32-bit tasks to use the character device
+Date: Wed, 18 Nov 2026 15:43:27 +0100
+Message-ID: <20261118150153.963712762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,103 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dairui Zhang <zhangdairui@gmail.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
+[ Upstream commit 45c3d07e3f18cff2b3ea8b797387451a3df9d421 ]
 
-mad_rmpp_recv.state is protected by two locks that do not exclude
-each other: recv_timeout_handler() (port workqueue) uses agent->lock,
-continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
-the check-then-set sequence on the state word:
+pwm_cdev_fileops has no .compat_ioctl, so every ioctl on /dev/pwmchipN
+fails with -ENOTTY for 32-bit tasks on a 64-bit kernel, e.g. armhf
+userspace on arm64.
 
-  T1 (CQ softirq)              T2 (port workqueue)
-  continue_rmpp()
-    lock(rmpp_recv->lock)
-    state == ACTIVE  [passes]
-                               recv_timeout_handler()
-                                 lock(agent->lock)
-                                 state = TIMEOUT
-                                 list_del(&rmpp_recv->list)
-                                 unlock(agent->lock)
-                                 destroy_rmpp_recv()
-                                   wait_for_completion()
-                                   [blocks on T1's ref]
-    state = COMPLETE
-    unlock(rmpp_recv->lock)
-    complete_rmpp()
-      queue cleanup_work (+10s)
-    deref()
-                               [unblocks]
-                               kfree(rmpp_recv)
-                               ib_free_recv_mad(done_wc)
+struct pwmchip_waveform has the same layout for 32-bit and 64-bit tasks,
+so compat_ptr_ioctl() is enough. PWM_IOCTL_REQUEST and PWM_IOCTL_FREE
+take an integer rather than a pointer, which is fine too: compat_ptr()
+only changed the value on s390, which dropped compat support in v6.19.
 
-  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
-        freed rmpp_recv -> UAF write and double free; nothing can
-        cancel that cleanup_work anymore, the entry is already off
-        agent->rmpp_list. done_wc is also returned to
-        ib_mad_complete_recv() and freed again -> UAF read and
-        double free.
-
-Reaching this requires sending MADs to a kernel RMPP agent from the
-InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
-manager responses whose SLID/GID/TID are not authenticated on the
-fabric, and legacy user_mad agents registered without
-IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
-MAD with an attacker-chosen TID, no in-flight send required. The
-attacker controls segment timing and can run many transactions in
-parallel (agent->rmpp_list has no cap), so landing the
-microseconds-wide receive critical section on the 40-second timeout
-boundary is a matter of patience, not luck.
-
-Unify state transitions under rmpp_recv->lock in
-recv_timeout_handler(), keeping list manipulation under agent->lock
-(which preserves the agent->lock -> rmpp_recv->lock ordering used
-by continue_rmpp()). State check/set in both paths is then
-serialized, so the loser of the race always observes the final
-state and bails out. recv_cleanup_handler() needs no change: with
-transitions serialized, a cleanup_work can only be pending after
-COMPLETE, in which case the timeout handler exits early.
-
-The race is as old as the RMPP implementation itself.
-
-Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Fixes: 9c06f26ba5f5 ("pwm: Add support for pwmchip devices for faster and easier userspace access")
 Assisted-by: LLM
-Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
-Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Link: https://patch.msgid.link/20260928184422.380520-1-danishkhateeb03@gmail.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad_rmpp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pwm/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
-index 1c5e0eaf1c942..28d51b4844856 100644
---- a/drivers/infiniband/core/mad_rmpp.c
-+++ b/drivers/infiniband/core/mad_rmpp.c
-@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
- 	struct ib_mad_recv_wc *rmpp_wc;
- 	unsigned long flags;
+diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
+index 462c91a034c8e..04af765e29926 100644
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -2389,6 +2389,7 @@ static const struct file_operations pwm_cdev_fileops = {
+ 	.release = pwm_cdev_release,
+ 	.owner = THIS_MODULE,
+ 	.unlocked_ioctl = pwm_cdev_ioctl,
++	.compat_ioctl = compat_ptr_ioctl,
+ };
  
--	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
-+	spin_lock_irqsave(&rmpp_recv->lock, flags);
- 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
--		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
-+		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
- 		return;
- 	}
- 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
-+	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
-+
-+	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
- 	list_del(&rmpp_recv->list);
- 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
- 
+ static dev_t pwm_devt;
 -- 
 2.53.0
 
