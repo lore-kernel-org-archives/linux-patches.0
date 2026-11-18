@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036297;
-	b=v32Qz5n1JMi5kdhD667yBK7rs1v9Kp2Eqw/MipMggEz+HEgjIE+l21aTzC2hX3z2TeH7
-	 +HLGDReaQJzCklD3CMGWf6lbkBZeQWX+a/ROhGnXLnekoS+7eiBN9rrVIyuyGdXdW024s
-	 f6J3m255PD+S1gob8r4boxQEzFiNLFFO2AtfC98Ux5OZFnH47LT3L39jK6+NaFkM7s+Ol
-	 sN/looq9Teu4QEo3ReVtuwdpIKSnYt79Ak8cgYIgwLrhZex9sKd8O9adO0dG8rY9XzehN
-	 MnKUx044Gwz/omBMamoEEmv2L5ImX8PWNdQQtQAOQHo0zqzSBFogP4roATTw1YhF0pw==
+	t=1795036300;
+	b=kvcihNR+owCVg2z56+HdfSsZdbo0b6VYal1C2VCvo7id7pUIqEf0bRK+RwlJrcqoafTR
+	 mn3WOoHNAUHkJVU4h5acOd+FjOiv2156zdX8mpIKuaamzxLjzyCdY2QsShgTLhUuJnuYv
+	 O06My+aXrG9GFhM3GlVxgLpD7ArDvDGrF78uFFRfWGY6EgMUpQQXA048Zo0hTxQd73qXO
+	 f7nFoGkENFt5xj7wYmj1tZzt8w1/YJJi9xAMQHAgdKmMOGlhNyQeYS5B080oInNMIU32M
+	 +JeOsbBU7B+Ac4JfDuXsVxUqK3YX6Dcrl/5Z2+O8ueWIPScqBOk9MkgpBWE3c2vbY+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FR7VLvXksrjgVEDL9JtTXYCYHQgqU+qj6Ma5YcaJ9oA=;
-	b=rrHd/5ZIGcHnGlIOkVFL4IA/qKLF7xE0yIquM8CDaXPmW2iPrZ+UzGhT1mVexL8wJge2
-	 sJ15DgHD5Y8aObDi8gVx1Dd1EByz9cmjkL0JrjOlPmCmYObj973eKxlYsfb7dFZZVIazA
-	 vQWm7Zb1g0D+Xqw9fLzT2/910FMWlkAEtG0AZoxw3GcWOosmMuCMvBbAErX+xffo+Z7x5
-	 7XatJJ9votBWu5AdHyHbLohI/qBb+FaxUWbzLntQX+FW5ZeCTlvY5PWTloF6sTmrJYw22
-	 /e0M85KsddjoWD0LmengW9seLYooljXXbh/2pYbFGzQTH9rarxgqFnc9Bp+tpVGkWTA==
+	bh=wLOEj7DMUWiNJ03NvhOv31PIx9/SEX3WBuNqPzpuLEA=;
+	b=BrpqqmQOCjt3nms0nesytKqGgTHlQQaXCoHzJTSmFANEHgSUFIuRUyrMiXJVwzCkCWtI
+	 3yHl6apNxSE78GPAqmaV3an/hIh6MTkrtIo13B/mtI9JHJzZ7xl7auE8M7HhanDJXDSBn
+	 k6+c4Goq1bJbh19bwB8SI0hCKwbnX8nm39/d/VSFCX2x6bM7D/Jc1jX5y0S0c1aeMI+J7
+	 265vIheaA9sFqtNaBqpqwnBfDnsUUKQ/2oKTe5VKQmuXdzrOaaWJ3ScD1CikMcHRjBNzg
+	 ltp3WNuVRnptwyxahB+HQvq1KyIEy7ewIfJqZZOa61hLQ7Xho6wbqT7bCccfger3I6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTzzcXs2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANaRXMpD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CD860A2606;
-	Wed, 18 Nov 2026 21:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9857D606A31C;
+	Wed, 18 Nov 2026 21:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTzzcXs2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC101F000C7;
-	Wed, 18 Nov 2026 21:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANaRXMpD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B11B1F000C4;
+	Wed, 18 Nov 2026 21:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036297;
-	bh=FR7VLvXksrjgVEDL9JtTXYCYHQgqU+qj6Ma5YcaJ9oA=;
+	s=korg; t=1795036300;
+	bh=wLOEj7DMUWiNJ03NvhOv31PIx9/SEX3WBuNqPzpuLEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTzzcXs2mi4ehu4abIKDtjXUD8kCrKIyfOkD4EgM7IzbliL7/ADi5L42Dc+hw+ePi
-	 aWbIIdMH1EX2G1Ahfd+G+n5KNrTAj3apc5Gnvw9iZwmWbIUXd3K9W1v/7npgiln4wS
-	 wU5R+zzEA44QDEBS09rHxzBSp03A1jdQHXYgh58c=
+	b=ANaRXMpDdfspIpLWpPH0z9O7O/5UkvNdKz+Vyae2EQ9z7/rjk+r2tsMMDH9aLAObC
+	 5ezUwMy0ka5qCMo4Wfhyb2m3KbRMZvPymYuA1bC43wfyws1Ys7mj7QSUAvs5kKjJdq
+	 eX16O23F2QNGcLGgWYN4hcGxk/joqis1FxyAmgHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Ming Qian <ming.qian@nxp.com>,
+	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1007/3318] media: amphion: fix runtime PM imbalance on probe failure
-Date: Wed, 18 Nov 2026 15:27:09 +0100
-Message-ID: <20261118150350.089087667@linuxfoundation.org>
+Subject: [PATCH 6.6 1008/3318] media: hantro: disable runtime PM before hardware teardown
+Date: Wed, 18 Nov 2026 15:27:10 +0100
+Message-ID: <20261118150350.119325222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,44 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
 
-[ Upstream commit 0cabf27cf1e6f7ee5f3c5893c0f1930814d949af ]
+[ Upstream commit 8e26d4c20ed218db6c3123480a4a4e2545680566 ]
 
-vpu_core_probe() enables runtime PM before calling
-pm_runtime_resume_and_get().
+Removing the Hantro driver may trigger an SError on RK3588:
+	SError Interrupt on CPU6, code 0x00000000be000011 -- SError
+	...
+	do_serror+0x5c/0x74
+	el1h_64_error_handler+0x34/0x50
+	el1h_64_error+0x6c/0x70
+	regmap_mmio_read32le+0x10/0x20 (P)
+	_regmap_bus_reg_read+0x6c/0xb4
+	_regmap_read+0x60/0xdc
+	regmap_read+0x4c/0x80
+	rockchip_pd_power+0xe4/0x600
+	rockchip_pd_power_off+0x1c/0x60
+	_genpd_power_off+0x98/0x198
+	genpd_power_off.part.0+0x178/0x288
+	genpd_runtime_suspend+0x210/0x300
+	__rpm_callback+0x48/0x1e0
+	rpm_callback+0x74/0x80
+	rpm_suspend+0x10c/0x580
+	rpm_idle+0x134/0x1b8
+	update_autosuspend+0x30/0xc4
+	__pm_runtime_use_autosuspend+0x48/0x64
+	hantro_remove+0x8c/0xa8 [hantro_vpu]
+	...
 
-If pm_runtime_resume_and_get() fails, it has already dropped the runtime PM
-usage counter that it acquired before trying to resume the device.  Calling
-pm_runtime_put_noidle() again on this error path drops the counter one
-extra time.
+hantro_remove() currently asserts the device resets before disabling
+runtime PM.
 
-Remove the extra put and keep the existing cleanup that marks the device
-suspended before disabling runtime PM.
+Calling pm_runtime_dont_use_autosuspend() causes an idle device to be
+runtime-suspended immediately. At that point the Hantro hardware has
+already been torn down, while the generic power-domain genpd code
+still performs the power-off sequence. genpd regmap_mmio_read causes panic
+subsequently because the reset lines were asserted.
 
-Fixes: 9f599f351e86ac ("media: amphion: add vpu core driver")
+Disable runtime PM before asserting the reset lines so that no runtime-PM
+transition can race with hardware teardown.
+
+Apply the same ordering to the probe error paths as well.
+
+Fixes: ea71631b7129 ("media: hantro: add support for reset lines")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Reviewed-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/media/platform/verisilicon/hantro_drv.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index 321f319d14a6a..d6e3b5042ec24 100644
---- a/drivers/media/platform/amphion/vpu_core.c
-+++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -689,7 +689,6 @@ static int vpu_core_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	ret = pm_runtime_resume_and_get(dev);
+diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
+index 6ebab13712af3..d30a3e37e9861 100644
+--- a/drivers/media/platform/verisilicon/hantro_drv.c
++++ b/drivers/media/platform/verisilicon/hantro_drv.c
+@@ -1207,7 +1207,7 @@ static int hantro_probe(struct platform_device *pdev)
+ 	ret = clk_bulk_prepare(vpu->variant->num_clocks, vpu->clocks);
  	if (ret) {
--		pm_runtime_put_noidle(dev);
- 		pm_runtime_set_suspended(dev);
- 		goto err_runtime_disable;
+ 		dev_err(&pdev->dev, "Failed to prepare clocks\n");
+-		goto err_rst_assert;
++		goto err_pm_disable_assert_reset;
  	}
+ 
+ 	ret = v4l2_device_register(&pdev->dev, &vpu->v4l2_dev);
+@@ -1261,8 +1261,11 @@ static int hantro_probe(struct platform_device *pdev)
+ 	v4l2_device_unregister(&vpu->v4l2_dev);
+ err_clk_unprepare:
+ 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
+-err_rst_assert:
++err_pm_disable_assert_reset:
++	pm_runtime_dont_use_autosuspend(vpu->dev);
++	pm_runtime_disable(vpu->dev);
+ 	reset_control_assert(vpu->resets);
++	return ret;
+ err_pm_disable:
+ 	pm_runtime_dont_use_autosuspend(vpu->dev);
+ 	pm_runtime_disable(vpu->dev);
+@@ -1282,9 +1285,9 @@ static void hantro_remove(struct platform_device *pdev)
+ 	v4l2_m2m_put(vpu->m2m_dev);
+ 	v4l2_device_unregister(&vpu->v4l2_dev);
+ 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
+-	reset_control_assert(vpu->resets);
+ 	pm_runtime_dont_use_autosuspend(vpu->dev);
+ 	pm_runtime_disable(vpu->dev);
++	reset_control_assert(vpu->resets);
+ }
+ 
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
