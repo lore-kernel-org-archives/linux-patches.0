@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042685;
-	b=Rp2TKGvgsodhJRVzJLQYmtAUtCuYGWNXcLjFFZrw6l8qe9YtJimrwD5mMaWfVPB4nZuK
-	 oaP73nHryEYJ5yuCWerWVO0RbXNtQbLjHsv3EpTaVWPpYCtenmxWK1oq3XiZt8C3+M+jN
-	 xzpy1AmGaQuA/CEzoCrcBA/KrVgEExNOOJgLvUlQxr/AQ25ESmp6cxMACIcD50eADZPG5
-	 IJnXWk5xTqEIOjQNe0LrltVRLPis3MxR0g12CtoNPwY4s+eJ4OtXOEt1Xierw8nmWRgIm
-	 Kkj6rwILhj32CJklONGUOFWU63DY0G2Ty38AloClWjf4gUYBffMIQjjFv3W1BBBtqSg==
+	t=1795042688;
+	b=zEWUqmkTCT+d48PXmCLVBgucOeTCVO6w5CeKw8W+hK5d1hryOkKHRd8j6xj9pWQoQl8L
+	 KpK7li9LsvNdKhEUVGFeQHSRd+5SDfw2UoIOKcIzkxL3SNoNqQYp2w11tR915ok6si6iu
+	 W0cx0Kaj+FDU/I+8a41+QeuE15j8ZLDIboLG5TcbzYViHqBnRsgVkamL935n6SBfUDQb7
+	 52dgKn/jItWX5rNqnfhh6akNXhhxGQ8Xqfd7vsbQQlbGFO84mvsiadGFmMfGaayk1SV9O
+	 SgHQity5+afxUAXDQeowATuSUpmIav57rrq+uOK1O0i9INkiRtHT1+Cbv5kco/toGlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042688;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uDzdxzwwMaxHm2Rip0yL5JTHyU/IXFUtHs5H4dAwRNw=;
-	b=R+wNGYEACTdxI04Dl+5DVE8E19qBJe8tJMe7yN0MAUcZDxe9VZCD9P+oCzea3bLTmaZs
-	 BLfAInA771cyFcwdHjSMnYPhYi2LCbF4P1dJ6WCTpmuExFx6EMd5Qpa1vHTyo9pwyfNNW
-	 LIyO9Ufw5G3hs5K9TBUK1z+WxtoVOWcQJV5Fb8onkKdTLvrs71w3T06A32uvHwRU9rS3v
-	 Ozbl4bhtC700f5xFDtFph4yTco0rO7FpnBcS1wJ9yNHyqjyRdiU0KvJACxx5eGK/uQU1Z
-	 4j+4B41ZJ/DQRyRv5dwVSg9tvVpZQvvbj6iOWucPp9G3W5Jj/Ya5HKm39Bc0U4H40nw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xUAOtdm99KeL8DdtCyjBKLinHzGbVFcsDdjbhTDPJsk=;
+	b=p7yJjDQ35gxkmqM/9T5u9fqBCMKb1hoy+flcLsAdWpxqqGYePvEBiZoUwkFdfKUMKfxT
+	 bgLBiaAAASATV9qRqVdUZsmFQRCAkZBrbp+rowwG1Z9OnBnGVh54l+Yt+dPf08N9ZK8io
+	 dy3zbP8qGne77eJEYQPAfOGO/PGVuyRVViPM3VYk6RRlOaBR40yJkDbRYAYBrQIBVa8bD
+	 GwnOX4zs2Xaxjn/J+Gt5sBhRtc4m6AaE2Ys04TyS44fiQJGvHogzNpBruRo81iA+HRSY+
+	 aSoJ3bI8nBxjOmnUNP5DwRbZqLUohApay8p10NfbUL2bZpgLy04escZzQzY+gIAS4yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05zr9pNj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1F9oDTNl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7DB606A320;
-	Wed, 18 Nov 2026 22:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF49606A320;
+	Wed, 18 Nov 2026 22:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=05zr9pNj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035B51F000C4;
-	Wed, 18 Nov 2026 22:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1F9oDTNl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72D21F000C4;
+	Wed, 18 Nov 2026 22:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042685;
-	bh=uDzdxzwwMaxHm2Rip0yL5JTHyU/IXFUtHs5H4dAwRNw=;
+	s=korg; t=1795042688;
+	bh=xUAOtdm99KeL8DdtCyjBKLinHzGbVFcsDdjbhTDPJsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=05zr9pNjeVt9i1VNUfAI5QvsmVerZ7OygjE/VBWSzr9q5sRgMjo4cEkbT+mhGTNkL
-	 n8jn1OzjKDIr6SpExZgn3hINrsmWR2e7Sso2UuDrm9u63uR2ts6iGB/dkU5MrfvhrO
-	 yHX8RTn2rwL2rgO686M90qisYFprIWwkGSKyd8xs=
+	b=1F9oDTNlsH2/vQyvF6RASTRp/J2J+/T6kbsw03iPWPADdeje4mgCI5UiF46pZ7HE/
+	 hW4rqmeGC1Q2rmyrdRr2VCCJKyDiCX4D85J5ri1X1x5+f1ZnSeJBQ9ztT+0z64/VWL
+	 299u3CO5PhT82cankabgeLcFPM9mhZaBfwL/cZGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Philipp Reisner <philipp.reisner@linbit.com>,
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3260/3318] block: partitions/mac: compute the sectors in 64 bits
-Date: Wed, 18 Nov 2026 16:04:42 +0100
-Message-ID: <20261118150457.420569355@linuxfoundation.org>
+Subject: [PATCH 6.6 3261/3318] drbd: stop the start_resync timer of a dying device
+Date: Wed, 18 Nov 2026 16:04:43 +0100
+Message-ID: <20261118150457.449394768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,6 +65,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -70,37 +74,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 6c55f94317249bc195e197f6a8730c843e72ea8c ]
+[ Upstream commit a439d3fe3ec2bfe0b4ccb77973ae97949bcf46ec ]
 
-start_block and block_count are converted to 512 byte sectors in 32-bit
-arithmetic, although put_partition() takes a sector_t. With a block size
-above 512 bytes anything beyond 2TiB wraps and the partition lands on
-top of another one.
+start_resync_timer gets armed for up to a second and nothing ever
+deletes it, so drbd_destroy_device() can free the device with the timer
+pending. Shut it down where request_timer is shut down.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 370a43e7982d ("drbd: Work on the Ahead -> SyncSource transition")
+Cc: Philipp Reisner <philipp.reisner@linbit.com>
+Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
+Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261028164415.1262013-43-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-13-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/drbd/drbd_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/partitions/mac.c b/block/partitions/mac.c
-index 6415213cd184e..f07f01dfe6287 100644
---- a/block/partitions/mac.c
-+++ b/block/partitions/mac.c
-@@ -95,8 +95,8 @@ int mac_partition(struct parsed_partitions *state)
- 		if (be16_to_cpu(part->signature) != MAC_PARTITION_MAGIC)
- 			break;
- 		put_partition(state, slot,
--			be32_to_cpu(part->start_block) * (secsize/512),
--			be32_to_cpu(part->block_count) * (secsize/512));
-+			(sector_t)be32_to_cpu(part->start_block) * (secsize/512),
-+			(sector_t)be32_to_cpu(part->block_count) * (secsize/512));
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 102cc3034412d..31a846262cbb0 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2197,6 +2197,7 @@ void drbd_destroy_device(struct kref *kref)
+ 	struct drbd_peer_device *peer_device, *tmp_peer_device;
  
- 		if (!strncasecmp(part->type, "Linux_RAID", 10))
- 			state->parts[slot].flags = ADDPART_FLAG_RAID;
+ 	timer_shutdown_sync(&device->request_timer);
++	timer_shutdown_sync(&device->start_resync_timer);
+ 
+ 	/* paranoia asserts */
+ 	D_ASSERT(device, device->open_cnt == 0);
 -- 
 2.53.0
 
