@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043436;
-	b=RLwHAqzsnV94tOHakqUfpClIHxtwf1sgGh9mQ3dWnUV+J9NO+qCJyt3OuCxy09LmlSbY
-	 FvpiDBgvUJhM8OjL13y2ox0alfey0RU4dim5b1kDcTvBrGnr2xHl5N4asKO/Bs0NZFnHW
-	 MKa2Z4NHlpiKwDScgAm3yk8oFBolX7G+GMPT8K4EZnAzjRBXbyzlWfP8A3Nvkga0a5H2L
-	 YsPK4Id2G9Iv+StwH0uddudfd1AwJ/96PX39j1U4F82aiz6Qq9/1cipYeaSQ7cy9AE+9U
-	 fb81HTsh0T1gfU3rrdn6wXzPcr0pbrUjOgyxgAak7kVTbg9lIM4GdoV9jBueKkRtNGA==
+	t=1795043439;
+	b=zi1odwdrqXN5S/i+aqK0+eXPx6G3jP04aWExNNdecPQLtvdwVT5LFxqSQleVoKoWLcz2
+	 rp2q4DtiHPu7gLXfJGEbQgB/Mx9wRp3iC3cS0b1LcNk2vcezwJk2ujDv1ttRuut3MbNCD
+	 5k0RCLpu5sJ6BmoClqYI49NUPaG5OYk3Ume1Yi4Xt6qMxvMF+IPfkl/ryIoMj6pKq1JVL
+	 uRonJgVt+jnz/Y4ssmirrdB51ReTUDlORcTGYcwMXD1rTmx9csTR3ZAEWipjJZYPQpAUt
+	 AolSOyLDINEZKWd7LPZwCSvo/9+octB/y65KCvMymxMk5jrc49Q6HouOeE8cob412jA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2fukq3xVJk0mjOHFdxkEewMb2S7P5MSJrxsUKbGkh2I=;
-	b=v0rjrIlrAZqx+uiPnHvtDOS6fBsZCjGOZPG2h6LQHJUs/+hOcjtYb5+2RY0yxManHFPf
-	 lySo9B43f7qmSUCBn3gSBSJpCzqhzxlrA7qoTAVbyLtu1SKqbmwlct4IcCdmPVtGNGUOp
-	 n2X4fDqY7jUaurpYQuYcEoGsW0R5eNGqKnu1z9sIkv17v2Ucqa8Eo8d3GTwlBNlWnQ/0I
-	 23xkOEuE2U2JdDdj29wLF/ZRjcFapRy0cFhU0qKsnfszW0vfibzDkVMtSFdMaSJ19ixxp
-	 GyxTyYfH4Ymg46eGX/z7uRapG2X8crtCNNADVYET0IoGV1MIqdbLFM6juwrEWfXIoFw==
+	bh=2FAinZCchJHxGsA1Gbl/IGlpjBOzC5K1yNITP6dioW4=;
+	b=FQ+Mhx6F+HnreRQDNArLdmSnWwH17SGYittwgEYXzG3d3Dpo6ffu3+7XnUrKZ/rQmpZd
+	 9TpyvzaY4ookJeMIBOEZQZFahIjZwoPHBDRgWViMkzh4zSwRsC3OzlkwIeYVbZRq0VL/W
+	 dLLKUXvav4eAO2LblnOzs6KGvBrwT1P/ymXqJdZW0FhGvLXdaz6BJ+HIq6xgihSPi4Icn
+	 nfWOcKZ4KfS/lNiUtHax6TalNQnuWxrJpXGfMlqp7RBxy6Fa4zU8EJnSNLNn9Q/X+u84g
+	 L6CsAx3UhnqmV7Kx/9QjMXAOQrg/U3nGSlLsZi9IokTlxKaibaNwHhOL2hRYtux6B/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTKz5com;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AilcUojx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B03860A2622;
-	Wed, 18 Nov 2026 23:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A57D60A380F;
+	Wed, 18 Nov 2026 23:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTKz5com
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1391F000C5;
-	Wed, 18 Nov 2026 23:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AilcUojx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762F01F000C8;
+	Wed, 18 Nov 2026 23:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043436;
-	bh=2fukq3xVJk0mjOHFdxkEewMb2S7P5MSJrxsUKbGkh2I=;
+	s=korg; t=1795043439;
+	bh=2FAinZCchJHxGsA1Gbl/IGlpjBOzC5K1yNITP6dioW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTKz5comzjivk3cd9AlHHSMFVIypfArbQSZRtwoRYcKBJLIXqh0n66sUQZ7+1YgMh
-	 URATxmKSqe5PMmDQMTo1YqBRhgbO4uAnQjgSbI1Y/A5ezLmps6W9v0YIDojF/NhN5B
-	 S23ThupFy3kupmYV4dCtqzsv9RGxeayW1A2yELyk=
+	b=AilcUojxzQkll6k5fvrh0UIMjzXLlPJpxswxMtx+dxcn8FsyS7nL93KGWIAFqjEzC
+	 cYR5CiusCEsVo+3kgAVPwdSrhtxi15C8gIv0ELx+i/VHhdpgGdUdnejX7UKXeRAiSe
+	 II7x/Cz9QDazQlhrC0N8pJhNC1PfT5GjkymOZjOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0211/2857] btrfs: fix memory barrier order in reloc_root_is_dead()
-Date: Wed, 18 Nov 2026 15:20:45 +0100
-Message-ID: <20261118150208.963599346@linuxfoundation.org>
+Subject: [PATCH 6.1 0194/2857] net/rds: unpin MR pages with unpin_user_pages_dirty_lock()
+Date: Wed, 18 Nov 2026 15:20:28 +0100
+Message-ID: <20261118150208.340616084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,81 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 6f1c97695a6e230ee15c9e052e1933bdccfd5fa3 ]
+[ Upstream commit a507023e6ff1d0b4e7aac49b2f547fed0c21ea4e ]
 
-When we set a root's reloc_root to NULL, we do it like this:
+The pages backing an RDS memory region are pinned in __rds_rdma_map()
+with rds_pin_pages(), which uses pin_user_pages_fast(): each page's
+refcount is biased by GUP_PIN_COUNTING_BIAS to account the pin.  The
+scatterlist is then handed to the IB transport, and the transport
+releases the pages in __rds_ib_teardown_mr() with
 
-   static void clear_reloc_root(struct btrfs_root *root)
-   {
-       root->reloc_root = NULL;
-       /*
-        * Need barrier to ensure clear_bit() only happens after
-        * root->reloc_root = NULL. Pairs with have_reloc_root().
-        */
-        smp_wmb();
-        clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
-   }
+	set_page_dirty(page);
+	put_page(page);
 
-So that a NULL reloc_root is always seen before seeing that the bit
-BTRFS_ROOT_DEAD_RELOC_TREE was cleared.
+put_page() drops a single reference instead of removing the pin bias,
+so every MR teardown permanently strands the remaining references and
+the pages are never freed - a userspace-triggerable memory leak of up
+to RDS_MAX_MSG_SIZE per RDS_GET_MR/RDS_GET_MR_FOR_DEST call.
 
-But on the read side we have:
+The conversion to the pin API updated the unpin sites in rdma.c but
+missed this one on the transport side.  Release the pages with
+unpin_user_pages_dirty_lock(), which removes the pin bias and also
+dirties the page under the folio lock, closing the truncation race
+that a bare set_page_dirty() leaves open.
 
-   static bool reloc_root_is_dead(const struct btrfs_root *root)
-   {
-        smp_rmb();
-        if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
-            return true;
-        return false;
-   }
+Dirtying under the folio lock can sleep, which is safe in every path
+that reaches __rds_ib_teardown_mr(): the registration-reuse path
+(rds_ib_map_frmr()) runs in syscall context, and the pool flush
+(rds_ib_unreg_frmr()) runs under pool->flush_lock, a mutex, and
+already sleeps in rds_ib_post_inv().  The WARN_ON that guarded the
+old irq-context set_page_dirty() case is dropped along with it.
 
-And then callers of reloc_root_is_dead() access root->reloc_root.
-
-Because the read memory barrier is placed before testing the bit, the CPU
-is completely free to speculatively reorder those two loads. It can read
-root->reloc_root before it actually checks the dead tree bit.
-
-Sashiko reported this as an existing problem in another patch review, see
-the link in the Link tag below.
-
-Fix this by moving the read memory barrier to happen after testing the bit
-and update the comment to reflect current reality.
-
-Link: https://sashiko.dev/#/patchset/cf84f1a217c719e25b6b69e4298dd7afd36c9427.1781194426.git.fdmanana%40suse.com
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260730041629.3512480-5-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/relocation.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/rds/ib_rdma.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 6b81a41c4a532..faf9bacfde916 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -293,14 +293,15 @@ static int update_backref_cache(struct btrfs_trans_handle *trans,
+diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
+index 468fd60d818ff..feff3e9190c46 100644
+--- a/net/rds/ib_rdma.c
++++ b/net/rds/ib_rdma.c
+@@ -255,9 +255,7 @@ void __rds_ib_teardown_mr(struct rds_ib_mr *ibmr)
  
- static bool reloc_root_is_dead(struct btrfs_root *root)
- {
-+	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
-+		return true;
- 	/*
--	 * Pair with set_bit/clear_bit in clean_dirty_subvols and
--	 * btrfs_update_reloc_root. We need to see the updated bit before
--	 * trying to access reloc_root
-+	 * Pairs with set_bit/clear_bit in clear_reloc_root() and
-+	 * btrfs_update_reloc_root(). We need to see the updated bit before
-+	 * trying to access root->reloc_root in our callers.
- 	 */
- 	smp_rmb();
--	if (test_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state))
--		return true;
-+
- 	return false;
- }
+ 			/* FIXME we need a way to tell a r/w MR
+ 			 * from a r/o MR */
+-			WARN_ON(!page->mapping && irqs_disabled());
+-			set_page_dirty(page);
+-			put_page(page);
++			unpin_user_pages_dirty_lock(&page, 1, true);
+ 		}
+ 		kfree(ibmr->sg);
  
 -- 
 2.53.0
