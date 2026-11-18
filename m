@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055714;
-	b=KPOy6vfxGZHCG3jnFG+R0fa5UKPVy28wywOQCdDOAFJrMJu0rB00NxUX2z/udj1gvPuM
-	 iZB+Vn6eHetsp9tydJwJ6rnYn+LYSKdrQ2wiN3mxiWJU7jvElY4zGBY2qD1Pj1q6o2HxF
-	 DyAdbU8VL3OEYLKZ9TCYK/QhFScj+h/JXXLMVjfZh5uqdMI2LIkJUdjy6FkgbcPmS1mJU
-	 o7CbUUmS2ifKVV5hmtcK3GPURt4e1z1VG8fvt6/OHO+pu6Wb+kKKAW5J9r8/heA1d8Ugf
-	 d/SN6WpFnJ996nrHmETGgkjuy4/9IUUOWl+ILQ5krfmXV4THIy9t31vmjNwwCuREXSA==
+	t=1795055717;
+	b=HGMSRt/qDFixfBN4WpqLDwYXBvoSIaPQKoVaII6rlMn7KMa/Z4OuKf+4dAE+xjzc0Imm
+	 qdyCC/zN3j7Lmmdrdh5VomjtI5dQ2njkkkdMfjE1ODkiEF6ZUxQmCv8V/VnHFTBsUlUcb
+	 ZA3/EW4AbQCFr6cOb58pG4Hn+TMP4xdXZL1m1UwbvypFyv2BTysR4BhSGgSCsgUmomIn+
+	 iMuBj4U6DfIARx+0WdKLMNQfPzxqcMTWCSYKBD7pH+xT4Ym4g7PiCVxmtykb2b4uF0iup
+	 xdwkP/xGlB1CD0st6eXZQRqNXoYq//XZuhymhYKtIyiKa7k+UOT0XQP76yURRxAychQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055714;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055717;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bidgj/W/TwDrSrvnFGg1IqGRTD6k851HK/3ktRkzI4k=;
-	b=2uIlAIsz45fLNeSgkvm4DqhJMspH22WB9nNTmRV7jYA9wsVaP9+c8OX6VDNfGVYRP//T
-	 pQl39PJPLO8cP5EVDNVzvzhCzTy1Oz/mGfDe7K9FHCj7VAGeABggij0e3Kcg9neFKUy35
-	 bssKSZr/5Iwx7M5qpPoVEj+8xJGB8a4BfNEnSfiXqgSDXObwW7YMhbSl7HDrso4gtfa5G
-	 wPd9HDeql0i/R5MrfXnGdG9HCdNlsuE0n4+neSxepSb1lOlMxvcdHvFTkzxpsc23ltQyj
-	 hBXSDoD4XROxtOsMDdULjSgwRenzuqgadCOPW6v5xRVWQe7rkeY1lR7smrAbaBjwdvw==
+	bh=b8lbdclHlJaq4naQE+umDq5mmgLqxgkI91Qp75YYZ9g=;
+	b=G0YLcXutWImQhzi8ch9wCa9qSC5S+GeUJMOPiCVqSY2z9rRtGVw6VwkDRkb1H3BeoPiJ
+	 sSPNXewt+/63/k1kDm20QI06C5ug9lN+0FZx+QSOtsD+4N2XfGj/gAaBCvPpryORfKAAJ
+	 Jtiylq42BCuvr+tTYL4XK8dJh1J7iH6SWR94XXDTD32E/uIVPP7BusA3CaoMLkHm4fE/0
+	 e2l/IAyQZMVeaw8n2oWNpgFppOxSwFJ5cwRNUpDar/Nva9kgmDAUqjMIROzJqrmlH2k5o
+	 OOtUQYYDIw7Ddzvh86aAkwFDOSddd1pnueGHbvnb6E3KoNG/bDtmb7st+xOwlstOkrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syb1IGH+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEiAuL0T;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC0D606A333;
-	Thu, 19 Nov 2026 02:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD4B606A320;
+	Thu, 19 Nov 2026 02:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syb1IGH+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8C31F000C4;
-	Thu, 19 Nov 2026 02:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZEiAuL0T
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7E31F000C4;
+	Thu, 19 Nov 2026 02:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055714;
-	bh=Bidgj/W/TwDrSrvnFGg1IqGRTD6k851HK/3ktRkzI4k=;
+	s=korg; t=1795055717;
+	bh=b8lbdclHlJaq4naQE+umDq5mmgLqxgkI91Qp75YYZ9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=syb1IGH+FFyEAUQZmbGod3A2UISPl9FrSzYvx2b1sZZ1ovZkmm7qIS7+/Ta86Q2nc
-	 TCct5kmrLtsx/t/ECbySz+ioyAWUXWNGNpdz7N5zzsYChrYuEWmxpjJrC+WbM0Z1MN
-	 +vD5KJ55VGMTrWLQMSSDDYviMoKBBPGZNrzMpKtM=
+	b=ZEiAuL0T6bH28nQP1r7N3CsMi3t1LrlYr8g7i0s69Q7zbDdeTWUpqZofrucG5rnWQ
+	 P0Z9BBCE7kasHinnp0Bt8tVqkYfOJDkldXkOfvlHt5a4qaDo/vZNIF1jsnf1FuGQZN
+	 Da/0v84GPfiW9HVCGvvDBFgN8pjzYS3hoIK0sHAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Ricci <io@r-ricci.it>,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1688/2214] x86/hibernate: Ignore page-zero RAM in E820 checksum
-Date: Wed, 18 Nov 2026 15:56:04 +0100
-Message-ID: <20261118150119.353922926@linuxfoundation.org>
+Subject: [PATCH 5.15 1679/2214] RDMA/siw: Fix length of first chunk in siw_try_1seg()
+Date: Wed, 18 Nov 2026 15:55:55 +0100
+Message-ID: <20261118150118.997802098@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,141 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit 29671cabfc09afb1ee2426b21173cdde276a95ac ]
+[ Upstream commit aac27aa8c5cfe3c3c6029b9c0f1113e0a53329de ]
 
-The legacy kexec_load path reconstructs the E820 map exported through
-sysfs.  kexec-tools leaves the first 1 KiB unavailable for the real-mode
-transition, so a kernel entered through kexec_load can see conventional
-RAM starting at 0x400.  A subsequent firmware boot reports the same RAM
-range starting at zero.
+When a short-single SGE payload crosses a page boundary, siw_try_1seg()
+computes the length of the first chunk as the amount that spills into
+the second page instead of the amount left in the first page
 
-The hibernation E820 checksum compares those byte representations and
-rejects the image, even though the maps agree from page one onwards.
-A QEMU guest showed this transition:
+	part = bytes - (PAGE_SIZE - off);
 
-  firmware:     RAM [0-0x9fbff]
-  kexec_load:   gap [0-0x3ff], RAM [0x400-0x9fbff]
-  firmware:     RAM [0-0x9fbff]
+Use the remaining length of the first page as the first chunk.
 
-The checksum covers e820_table_firmware, which trim_bios_range() leaves
-alone.  The nosave regions come from e820_table instead, where
-trim_bios_range() has already turned conventional RAM in page zero into
-reserved memory, so page zero never occurs in the image, whatever the
-firmware map says about it.
-
-Canonicalise only the conventional-RAM portion below PAGE_SIZE before
-calculating the checksum.  Preserve RESERVED, ACPI, NVS, UNUSABLE, PMEM
-and all other E820 types so that changes to exceptional mappings remain
-detectable.
-
-This is deliberately narrower than Marco Scardovi's June proposal to
-checksum only RAM and its opt-in relaxed_memmap successor.  Rafael
-noted that ignoring non-RAM changes could hide moved ACPI or UEFI
-regions still used by the resumed kernel.  This patch preserves every
-non-RAM entry and ignores only RAM within page zero, which common setup
-already reserves and excludes from the image.
-
-Bump RESTORE_MAGIC, since the checksum semantics change, so that an
-image written by a kernel without this change is refused by the magic
-check instead of being compared under different rules.
-
-In the same guest, with the page-zero difference kept, hibernation and
-resume now work after both a direct boot and a kexec_load boot.  An
-image written by an unpatched kernel is refused at resume with
-"Unrecognized hibernate image header format!", and the firmware-booted
-kernel carries on.
-
-Fixes: 62a03defeabd ("PM / hibernate: Verify the consistent of e820 memory map by md5 digest")
-Reported-by: Roberto Ricci <io@r-ricci.it>
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://lore.kernel.org/all/Z-hYWc9LtBU1Yhtg@desktop0a/
-Link: https://lists.openwall.net/linux-kernel/2025/04/04/1372
-Link: https://lore.kernel.org/all/CAJZ5v0jmOj0WBtMTvbnaD+2b0bTFowA=JWrqRzaaCYpHpai1Nw@mail.gmail.com/
-Link: https://lore.kernel.org/all/20260623165724.10753-1-scardracs@disroot.org/
-Link: https://patch.msgid.link/20260926052117.3613637-1-matthias.goergens@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
+Link: https://patch.msgid.link/r/20260927115351.12245-1-serhatkumral1@gmail.com
+Assisted-by: LLM
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/power/hibernate.c | 51 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 45 insertions(+), 6 deletions(-)
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/power/hibernate.c b/arch/x86/power/hibernate.c
-index e94e0050a583a..7391da986d938 100644
---- a/arch/x86/power/hibernate.c
-+++ b/arch/x86/power/hibernate.c
-@@ -62,6 +62,25 @@ struct restore_data_record {
- 	unsigned long e820_checksum;
- };
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 6bb9e9e81ff4c..d7bf73c2530e6 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -81,7 +81,7 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
+ 			if (likely(PAGE_SIZE - off >= bytes)) {
+ 				memcpy(paddr, buffer + off, bytes);
+ 			} else {
+-				unsigned long part = bytes - (PAGE_SIZE - off);
++				unsigned long part = PAGE_SIZE - off;
  
-+static bool trim_e820_page_zero_ram(struct e820_entry *entry)
-+{
-+	u64 lowmem_size;
-+
-+	/*
-+	 * Page zero is BIOS-owned and registered as nosave.  Boot loaders may
-+	 * therefore omit part of its conventional RAM entry without changing
-+	 * any memory available to the image.  Preserve all other E820 types.
-+	 */
-+	if (entry->type != E820_TYPE_RAM || entry->addr >= PAGE_SIZE)
-+		return true;
-+
-+	lowmem_size = min_t(u64, entry->size, PAGE_SIZE - entry->addr);
-+	entry->addr += lowmem_size;
-+	entry->size -= lowmem_size;
-+
-+	return entry->size;
-+}
-+
- /**
-  * compute_e820_crc32 - calculate crc32 of a given e820 table
-  *
-@@ -69,18 +88,38 @@ struct restore_data_record {
-  *
-  * Return: the resulting checksum
-  */
--static inline u32 compute_e820_crc32(struct e820_table *table)
-+static u32 compute_e820_crc32(struct e820_table *table)
- {
--	int size = offsetof(struct e820_table, entries) +
--		sizeof(struct e820_entry) * table->nr_entries;
-+	struct e820_entry entry;
-+	u32 crc = ~0;
-+	u32 nr_entries = 0;
-+	u32 i;
-+
-+	for (i = 0; i < table->nr_entries; i++) {
-+		entry = table->entries[i];
-+		if (trim_e820_page_zero_ram(&entry))
-+			nr_entries++;
-+	}
-+
-+	crc = crc32_le(crc, (unsigned char const *)&nr_entries,
-+		       sizeof(nr_entries));
-+
-+	for (i = 0; i < table->nr_entries; i++) {
-+		entry = table->entries[i];
-+		if (!trim_e820_page_zero_ram(&entry))
-+			continue;
-+
-+		crc = crc32_le(crc, (unsigned char const *)&entry,
-+			       sizeof(entry));
-+	}
- 
--	return ~crc32_le(~0, (unsigned char const *)table, size);
-+	return ~crc;
- }
- 
- #ifdef CONFIG_X86_64
--#define RESTORE_MAGIC	0x23456789ABCDEF02UL
-+#define RESTORE_MAGIC	0x23456789ABCDEF03UL
- #else
--#define RESTORE_MAGIC	0x12345679UL
-+#define RESTORE_MAGIC	0x1234567AUL
- #endif
- 
- /**
+ 				memcpy(paddr, buffer + off, part);
+ 				kunmap_local(buffer);
 -- 
 2.53.0
 
