@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060988;
-	b=pMIf4ZiZmFGP3BT/+626cD1P7WXJl+p9glocPsj0Pmdz8ygRWestVHrrpyBesdqI/68I
-	 KGpEtXsCufjjsBuwFowp04ubPZz2I+kv4lFzPrX4ykULeWf1koorElCZS3O07cN2AIqlC
-	 G+kXv7KAZ+TEaBuUXlf/2fSr+0cR9HxohI2mfKAVDv6KwXxPsj0FzaMk6+y6vrYVcbpj8
-	 LM4Y3vdDd5kltzP8dNpVHayruXtDh615ghRdzZHRb96PcEwf8EYjBrSRdSwz9czfFTLhj
-	 FLsv6rFLbT9kgg+GNANq9mYKrsAvbj8lM9PD+/SOCXKXA+jiTEPJXRH6KCzzshwoZmA==
+	t=1795060998;
+	b=N93PmTDAlJLXPWQjS82puIxmOezqvKYILbjYq+omT3yzzP1zkYGVrvz7IgUFGgZ6N+Gl
+	 InihQA7eZjD5l8pE0phGVwv2tc5aWmOHV2BOsTUIZQRLc8lQ3Ta3ZzS8FHtt66xb60wkE
+	 mVkafb/9CrlDqlamoCVsK+EzJu7PWU7gbvK0eSe4WYoaA8yMi2nCbME0pR1xmlMS8G5Q7
+	 v4schnuPX/zGHBwpQmaqKC49ysA7LnPpi4ycXwOoOnECZaTDM8TXMPHJdkiiy8UK4Wbwg
+	 7cEQz4UyRGqAQqu723hzEn/BJ1kziR6oiPT1puI5QlwTrgjPkba3bzU+KI91gTYvptg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060988;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/t75wy0G8WfebSnt+QqVgjifOkMa2OxFZxvWkq5L6pU=;
-	b=c0taDg07eY/rjQIjWUb/mp6v8NsTEuiKGzZ6hGrCRr/sSzkfiZom1GPjKApsZ0x3XN5L
-	 lojI9UI86/gX9mJUWE3t/JQr1enY4CJES52BsDEFhgxnj7i6yzwHRrzSqNZ8lbwqdF18k
-	 7CfRZc63dsvndf2FP7/+mXO5zsDe45ZAI+NwFKkd9MVKxfQwXPrr7rSBPCjFSC43zdPfe
-	 uBLfvbIb72FRe8UTp9nCSurpqvqmX2aidw2iVTda48AxPegSEx1Z8RwWuuwaKq3LKl0+Y
-	 A+trnTwLB+iSAE5awIfq6lwSUX1MHK5kAvUkXQG+8RXa+IRH63WKsYXNJ0PgPKI1oDg==
+	bh=minkgpzHccS0wjuqnU1xjypjkyghrWpy/Pc9Nw8fkNo=;
+	b=PouKIWMi/sWPsyzgXhGrQshEoOTTDOChYLcVpduFYAvEOrLNJITCaUaPsKulGU6SeqqB
+	 2BFaWVThE6XvgwxkT4hp9rqt9mM/eyyFB3pQPHNSrn37l/6CT9wW6HNwNqjpSj4D7LN5H
+	 2fuPtWbcop2MdGKP7P07MT+WzbwamD0G6ipIrARm+MHF41JjSRjPoXBamThqfWDi52ssd
+	 ZX/aVvOCOWXuygaZmWXS74V21BtKYdletPZ7bj230oxb61N1ZFXtGqZJIMkGp2F7nXjJH
+	 QZNJU83TkeatRCH0yaODL1+KRho1mVBE/cBugeVhhXjpQgtXF2nz0TJTOGWc53pltfQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uMbvQn19;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBa68guk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4578606A32A;
-	Thu, 19 Nov 2026 04:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CA7606A325;
+	Thu, 19 Nov 2026 04:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uMbvQn19
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181271F000C6;
-	Thu, 19 Nov 2026 04:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zBa68guk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE841F000C5;
+	Thu, 19 Nov 2026 04:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060988;
-	bh=/t75wy0G8WfebSnt+QqVgjifOkMa2OxFZxvWkq5L6pU=;
+	s=korg; t=1795060997;
+	bh=minkgpzHccS0wjuqnU1xjypjkyghrWpy/Pc9Nw8fkNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uMbvQn19FSjXNuUkJ8dTEkBCMRerAr2cfvbVO0/106iGb8oFncDmrJ+Xpdu0t2xfF
-	 fGpOR1dc+Y8A22bcVlWS1wreeAi32nC7yDMca8r/slQP+4K4PdB98Lu1AWRXXRqEhR
-	 A0dstKFJjDoup7m8iuiXzYT6HLIshzynZqseXCFE=
+	b=zBa68gukn4TDuE58lOXbiWOeZNKWIfEy2AqYXllzaPrbMR92NbVUrJaDnS5PIOTu2
+	 XknVFm6jf9uFjUWcEJojrZ5RMCBrNPLldhgAiyMrHmwKMDK9yUvlgNwz2xTeY6zbGb
+	 3xDBy81+0mvF/yryhL4JFCDvfwqdHE8L+We6/5Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1396/1848] swim3: Fix FDEJECT ioctl for exclusive open
-Date: Wed, 18 Nov 2026 15:57:14 +0100
-Message-ID: <20261118150017.957641995@linuxfoundation.org>
+Subject: [PATCH 5.10 1397/1848] RDMA/bnxt_re: Fix integer overflow in send payload size computation
+Date: Wed, 18 Nov 2026 15:57:15 +0100
+Message-ID: <20261118150017.992658479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,52 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit ce054fbe9a4bf4ffefef0f8e2504ea54da058ed2 ]
+[ Upstream commit 3483cbbd7487163345b4b4d5eb8cad8540d1c3ba ]
 
-The eject command from the util-linux package does not work with the
-swim3 driver: the drive doesn't eject anything and the command fails.
-Apparently, ioctl(fd, FDEJECT) returns -EBUSY after fd was opened O_EXCL.
-Fix this by checking ref_count for either 1 or -1. Either value means that
-the caller is the sole user of the disk.
+bnxt_re_build_sgl() summed SGE lengths into a signed int, which could
+overflow. Make it return u32, and have bnxt_re_copy_wr_payload() report
+the size via a u32 out-parameter with the return value carrying only
+the error status, instead of overloading a signed int with both.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://patch.msgid.link/f4cb43726ee6f1cf159a6208f77b4cceea670a3c.1790641175.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim3.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 44 +++++++++++++-----------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/block/swim3.c b/drivers/block/swim3.c
-index c2d922d125e28..f9f0e946bcf85 100644
---- a/drivers/block/swim3.c
-+++ b/drivers/block/swim3.c
-@@ -869,7 +869,6 @@ static int floppy_locked_ioctl(struct block_device *bdev, fmode_t mode,
- 			unsigned int cmd, unsigned long param)
- {
- 	struct floppy_state *fs = bdev->bd_disk->private_data;
--	int err;
- 		
- 	if ((cmd & 0x80) && !capable(CAP_SYS_ADMIN))
- 		return -EPERM;
-@@ -880,10 +879,9 @@ static int floppy_locked_ioctl(struct block_device *bdev, fmode_t mode,
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index c9037bb4d4047..822610f87c135 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -104,10 +104,11 @@ static enum ib_access_flags __to_ib_access_flags(int qflags)
+ 	return iflags;
+ };
  
- 	switch (cmd) {
- 	case FDEJECT:
--		if (fs->ref_count != 1)
--			return -EBUSY;
--		err = fd_eject(fs);
--		return err;
-+		if (fs->ref_count == -1 || fs->ref_count == 1)
-+			return fd_eject(fs);
-+		return -EBUSY;
- 	case FDGETPRM:
- 	        if (copy_to_user((void __user *) param, &floppy_type,
- 				 sizeof(struct floppy_struct)))
+-static int bnxt_re_build_sgl(struct ib_sge *ib_sg_list,
++static u32 bnxt_re_build_sgl(struct ib_sge *ib_sg_list,
+ 			     struct bnxt_qplib_sge *sg_list, int num)
+ {
+-	int i, total = 0;
++	u32 total = 0;
++	int i;
+ 
+ 	for (i = 0; i < num; i++) {
+ 		sg_list[i].addr = ib_sg_list[i].addr;
+@@ -2531,17 +2532,22 @@ static int bnxt_re_copy_inline_data(struct bnxt_re_dev *rdev,
+ 
+ static int bnxt_re_copy_wr_payload(struct bnxt_re_dev *rdev,
+ 				   const struct ib_send_wr *wr,
+-				   struct bnxt_qplib_swqe *wqe)
++				   struct bnxt_qplib_swqe *wqe,
++				   u32 *payload_sz)
+ {
+-	int payload_sz = 0;
++	int rc;
+ 
+-	if (wr->send_flags & IB_SEND_INLINE)
+-		payload_sz = bnxt_re_copy_inline_data(rdev, wr, wqe);
+-	else
+-		payload_sz = bnxt_re_build_sgl(wr->sg_list, wqe->sg_list,
+-					       wqe->num_sge);
++	if (wr->send_flags & IB_SEND_INLINE) {
++		rc = bnxt_re_copy_inline_data(rdev, wr, wqe);
++		if (rc < 0)
++			return rc;
++		*payload_sz = rc;
++	} else {
++		*payload_sz = bnxt_re_build_sgl(wr->sg_list, wqe->sg_list,
++						wqe->num_sge);
++	}
+ 
+-	return payload_sz;
++	return 0;
+ }
+ 
+ static void bnxt_ud_qp_hw_stall_workaround(struct bnxt_re_qp *qp)
+@@ -2564,7 +2570,8 @@ static int bnxt_re_post_send_shadow_qp(struct bnxt_re_dev *rdev,
+ 				       struct bnxt_re_qp *qp,
+ 				       const struct ib_send_wr *wr)
+ {
+-	int rc = 0, payload_sz = 0;
++	int rc = 0;
++	u32 payload_sz = 0;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&qp->sq_lock, flags);
+@@ -2580,11 +2587,9 @@ static int bnxt_re_post_send_shadow_qp(struct bnxt_re_dev *rdev,
+ 			goto bad;
+ 		}
+ 
+-		payload_sz = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe);
+-		if (payload_sz < 0) {
+-			rc = -EINVAL;
++		rc = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe, &payload_sz);
++		if (rc)
+ 			goto bad;
+-		}
+ 		wqe.wr_id = wr->wr_id;
+ 
+ 		wqe.type = BNXT_QPLIB_SWQE_TYPE_SEND;
+@@ -2612,7 +2617,8 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
+ {
+ 	struct bnxt_re_qp *qp = container_of(ib_qp, struct bnxt_re_qp, ib_qp);
+ 	struct bnxt_qplib_swqe wqe;
+-	int rc = 0, payload_sz = 0;
++	int rc = 0;
++	u32 payload_sz = 0;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&qp->sq_lock, flags);
+@@ -2629,11 +2635,9 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
+ 			goto bad;
+ 		}
+ 
+-		payload_sz = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe);
+-		if (payload_sz < 0) {
+-			rc = -EINVAL;
++		rc = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe, &payload_sz);
++		if (rc)
+ 			goto bad;
+-		}
+ 		wqe.wr_id = wr->wr_id;
+ 
+ 		switch (wr->opcode) {
 -- 
 2.53.0
 
