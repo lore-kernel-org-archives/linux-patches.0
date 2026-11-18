@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046697;
-	b=CIU/lW51OP/rSCShJwZdKn7Bo/eqTzqh84IX+vpymQRTh79/X9tgMWtydyKc+tURWUnB
-	 fKKksYtZ9cM1pmEUGZ1Ga8erhvX64A423k/dGqyyNJyod8Hfganwmfou/81UnBnavcbUL
-	 Ye2l4N9SE1Y3A2+EejP9sS7aWZthexGNiZ0CW9kJkfPvD1SH0RV4zJ0mJ9eX7Tpq89Tg/
-	 pKVRFSkYa1+ZJ98v9Wu7aM0xfUqUZdKjJ2x9z8xzxYOe3jIUnHRv4TDa2EnKbhb6PgNm0
-	 ntgeXXQolkQPRcgDq5MmBvoNJpnfDQ6M1msNI//TbYfYSoLTO0FQALpt0N3TtDPA6vw==
+	t=1795046700;
+	b=L9+abfPgrYk6x6G1ei31bOzACvdNBUqrWBBp7O+nGYGXbEvpyFP5sVMqMnCm05DSuyXz
+	 JX1Ev11qIkYgLNU+2wqjYWVRWan6kcA8nQ4qopHd7Ckb+RUjiK8g1yUjwx+gyScqkn9N/
+	 /8gPCu65r/am0k/7pLXATFXG/CBK/1nCoxSH8ORySGlm9Uf3UF5oijWsmjhgAoVhsYvMo
+	 tDXRFC6TekoSX8VN0oZ3NpD359+8N9dFMLLndbUehMSPjn7AK84hb875Te/Vobko1EvuG
+	 Zsx62kHCyUYSSEBONAXfurEn3uk35Oqqgsy/8pVEDXKRQ/FoqNml2ozr7jpX35e8CpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4eg+yHQ6N0lG+64rc69V7BHa7xk2b43T/ql148UpKM4=;
-	b=mK/Pp4h4Id1phpirezpiwVSkvsJJoepf9EBN+oF0JVFz2/Vfq8HbvPGg3cmFHJPJYNQ9
-	 kRs9tmbpKX1lpfFZUftHj0kcTilsW1w+CyPx7sw+NdAME3X+uENZl7I6TbksYr9OV1SsF
-	 DgfwzHVIRCoK+cOJqyjZOuT1fAxyTFqBaxhbpLOyYG3iOvcHxDLXnGqqSaxzvKPIfpRkt
-	 +WJnR1bTavwXOYZWqrxQ+r4FtuJ7WAjgxxmC3Vzy91wxfCLOxK4jgvVTlAx0NwidbzvCq
-	 hgYgHCUxSrGRgREoEInHN+UTqZbJziC+42GYzJBZLjkszFzn+gqIMDETULKx780R8Hw==
+	bh=kKD1Yqb6yUtR9ZNGKIJ07O40h1sPMmYIRvnQTTD2GoQ=;
+	b=kn0A+zepQYXvXQ4F32h1I9VM1BSj2mlBvuWoAdKSfw9Uq9DFgJIe/CADE0jktO5VsbQV
+	 3qHNWQMiMn7O3K4SOeqd9F7tY0fGm5cw5yVp/jK4tRBgXe74gmFRxSCSSSehlihSnA9Xx
+	 gF3kVjSIAuBbU02ZdkTcivLQVQmqDMseCjlxOizLYvlh5Q9+GuWNGUiOosEa0TCEKqftH
+	 jQMVLF5UMDbdrcA1qiVx77YO6yK5UWOnshMxTITXo6dcIucbCFroS5kSWJdsDflCbeg2Z
+	 RjMbJvwUWfHM/2FBXn60jCYE1iBHlOkKoBQ3JjiARiSVRMFVONWfhEq9tvYF/D7qD5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KK8wWPUt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMACK2yi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7966F606A320;
-	Thu, 19 Nov 2026 00:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4829A606A31C;
+	Thu, 19 Nov 2026 00:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KK8wWPUt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFAC1F000C4;
-	Thu, 19 Nov 2026 00:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMACK2yi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A162D1F000C4;
+	Thu, 19 Nov 2026 00:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046697;
-	bh=4eg+yHQ6N0lG+64rc69V7BHa7xk2b43T/ql148UpKM4=;
+	s=korg; t=1795046700;
+	bh=kKD1Yqb6yUtR9ZNGKIJ07O40h1sPMmYIRvnQTTD2GoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KK8wWPUt5u0hwiH+0UGO31DF2eSw2s7yN2cO9TSGZ9PjDuzNmlIAbICriUx5VRWZ0
-	 dnpAa138cAD6R9xPHNefy3nufozIipXZUBfTFfqnUhn3j7PjR8dVd1e9zrmbN6P5No
-	 PhqYvlRiQkyaczN/HglreZHmqMezD4eSEefn4+Qs=
+	b=KMACK2yiSO/dd9VrZwy+2U1OlMbI0p7d2WrOm4yewNdOWbpiRdhSDpI0eYt5pW2vK
+	 3oX1lGkAZ8k5rwUofMVx/F8yu/voEnWgxp0/FwbjBKYQZ8nfz0Jo2YthBRyjN6k3JE
+	 QTjKqSt63kV3GS9MQI9odnKdeu13TiyVQc0axOZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Michal Pecio <michal.pecio@gmail.com>,
-	stable <stable@kernel.org>,
-	Nikhil Solanke <nikhilsolanke5@gmail.com>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1372/2857] usb: core: Add quirk for 255-bytes initial config read
-Date: Wed, 18 Nov 2026 15:40:06 +0100
-Message-ID: <20261118150250.787823579@linuxfoundation.org>
+Subject: [PATCH 6.1 1337/2857] udf: Make sure theres enough space for LVID implementation use field
+Date: Wed, 18 Nov 2026 15:39:31 +0100
+Message-ID: <20261118150249.568950053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,189 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil Solanke <nikhilsolanke5@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 152f174a13618bec1f842d2deb69245cb2ace51f ]
+[ Upstream commit a61fb39759d719a4f4966742b4d28387e33d81c4 ]
 
-Certain third-party USB game controllers exposing (or spoofing) an Xbox
-360-compatible interface (VID:PID 045e:028e) fail to enumerate under Linux.
-The device disconnects from the bus without responding to the initial
-GET_DESCRIPTOR(CONFIGURATION) request, and the kernel logs 'unable to read
-config index 0 descriptor/start: -71'.
+udf_lvid_valid() verifies that the LVID has enough space for all the
+tables and the reported length of ImplementationUse field. However it
+doesn't make sure the reported length is large enough to contain
+logicalVolIntegrityDescImpUse structure which OSTA specification
+requires. This can thus lead to accesses beyond the end of LVID buffer
+for suitably corrupted UDF filesystem. Add the length check.
 
-The device then falls back to a secondary Android HID mode (with a
-different VID:PID), losing XInput functionality including rumble support.
-The failure reproduces across multiple machines, host controller types, and
-kernel versions including current mainline and LTS. The device enumerates
-correctly and remains in XInput mode under Windows. Notably, the device
-enumerates correctly in Android mode when the same 9-byte request
-is issued for that mode's configuration descriptor, confirming the firmware
-bug is specific to the XInput mode.
-
-usbmon traces from Linux and Wireshark/USBPcap traces from Windows are
-identical up to the point of failure, with no visible protocol-level
-difference explaining the divergence. The root cause was identified when
-Michal Pecio discovered via a QEMU bus-level capture that Windows does not
-use wLength=9 for the initial config descriptor request; it uses
-wLength=255. Alan Stern subsequently confirmed this with a bus
-analyzer on a different USB 2.0 device, and Michal verified the behavior
-goes back to Windows 95 OSR2.1.
-
-So, add a new quirk flag USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE which causes
-usb_get_configuration() to issue a 255 byte sized configuration request
-instead of USB_DT_CONFIG_SIZE (9) for the initial
-GET_DESCRIPTOR(CONFIGURATION) request, mimicking long-standing Windows
-behavior.
-
-This patch intentionally does not add any new VID:PID entries using this
-quirk. Some affected Xbox 360-compatible controllers spoof Microsoft's
-VID:PID, while genuine Microsoft controllers already enumerate correctly
-and do not require this quirk. Other affected clone devices use their own
-VID:PID pairs and can be added individually as they are identified.
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Suggested-by: Michal Pecio <michal.pecio@gmail.com>
-Closes: https://lore.kernel.org/linux-usb/CAFgddh+JWdT4LLwMc5qjM8q_pBu-fRo2qADR5ovAKoGHWMQrRw@mail.gmail.com/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Nikhil Solanke <nikhilsolanke5@gmail.com>
-Link: https://patch.msgid.link/20260728195158.65162-2-nikhilsolanke5@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 40224df29729 ("USB: quirks: add USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE for GameSir G7 SE")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: 781d2a9a2fc7 ("udf: Check LVID earlier")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |  5 +++
- drivers/usb/core/config.c                     | 32 ++++++++++++++-----
- drivers/usb/core/quirks.c                     |  4 +++
- include/linux/usb/quirks.h                    |  3 ++
- 4 files changed, 36 insertions(+), 8 deletions(-)
+ fs/udf/super.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 33744e931489a..67eb9eba78f47 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -6646,6 +6646,11 @@
- 				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
- 					claims zero configurations,
- 					forcing to 1);
-+				r = USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE (Device
-+					fails during initialization when asked for
-+					9-bytes configuration descriptor request.
-+					Ask for 255-bytes request instead to mirror
-+					Windows' behavior);
- 			Example: quirks=0781:5580:bk,0a5c:5834:gij
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index b091cc98406b4..f924a814874b3 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1581,7 +1581,10 @@ static bool udf_lvid_valid(struct super_block *sb,
  
- 	usbhid.mousepoll=
-diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
-index 7d57fb5a1ec7e..a1c592a11c494 100644
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -891,6 +891,18 @@ int usb_get_configuration(struct usb_device *dev)
- 	unsigned char *bigbuffer;
- 	struct usb_config_descriptor *desc;
- 	int result;
-+	size_t usb_config_req_size;
-+
-+	/*
-+	 * We usually start by grabbing the first 9-bytes descriptor so we know
-+	 * how long the whole configuration is. Some devices with quirky
-+	 * firmware will fail enumeration, so if the quirk is set, use 255 instead,
-+	 * mirroring the behavior of Windows.
-+	 */
-+	if (dev->quirks & USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE)
-+		usb_config_req_size = 255;
-+	else
-+		usb_config_req_size = USB_DT_CONFIG_SIZE;
- 
- 	if (ncfg > USB_MAXCONFIG) {
- 		dev_notice(ddev, "too many configurations: %d, "
-@@ -917,15 +929,13 @@ int usb_get_configuration(struct usb_device *dev)
- 	if (!dev->rawdescriptors)
- 		return -ENOMEM;
- 
--	desc = kmalloc(USB_DT_CONFIG_SIZE, GFP_KERNEL);
-+	desc = kmalloc(usb_config_req_size, GFP_KERNEL);
- 	if (!desc)
- 		return -ENOMEM;
- 
- 	for (cfgno = 0; cfgno < ncfg; cfgno++) {
--		/* We grab just the first descriptor so we know how long
--		 * the whole configuration is */
- 		result = usb_get_descriptor(dev, USB_DT_CONFIG, cfgno,
--		    desc, USB_DT_CONFIG_SIZE);
-+		    desc, usb_config_req_size);
- 		if (result < 0) {
- 			dev_err(ddev, "unable to read config index %d "
- 			    "descriptor/%s: %d\n", cfgno, "start", result);
-@@ -935,16 +945,14 @@ int usb_get_configuration(struct usb_device *dev)
- 			dev->descriptor.bNumConfigurations = cfgno;
- 			break;
- 		} else if (result < 4) {
--			dev_err(ddev, "config index %d descriptor too short "
--			    "(expected %i, got %i)\n", cfgno,
--			    USB_DT_CONFIG_SIZE, result);
-+			dev_err(ddev, "config index %d descriptor too short (asked for %zu, got %i)\n",
-+			    cfgno, usb_config_req_size, result);
- 			result = -EINVAL;
- 			goto err;
- 		}
- 		length = max((int) le16_to_cpu(desc->wTotalLength),
- 		    USB_DT_CONFIG_SIZE);
- 
--		/* Now that we know the length, get the whole thing */
- 		bigbuffer = kmalloc(length, GFP_KERNEL);
- 		if (!bigbuffer) {
- 			result = -ENOMEM;
-@@ -954,6 +962,13 @@ int usb_get_configuration(struct usb_device *dev)
- 		if (dev->quirks & USB_QUIRK_DELAY_INIT)
- 			msleep(200);
- 
-+		/* Skip the second read if we already got everything */
-+		if (result >= length) {
-+			memcpy(bigbuffer, desc, length);
-+			goto store_and_parse;
-+		}
-+
-+		/* Get the whole thing */
- 		result = usb_get_descriptor(dev, USB_DT_CONFIG, cfgno,
- 		    bigbuffer, length);
- 		if (result < 0) {
-@@ -968,6 +983,7 @@ int usb_get_configuration(struct usb_device *dev)
- 			length = result;
- 		}
- 
-+store_and_parse:
- 		dev->rawdescriptors[cfgno] = bigbuffer;
- 
- 		result = usb_parse_configuration(dev, cfgno,
-diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
-index 6ed3805994055..23d5c30332ffb 100644
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -143,6 +143,10 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
- 				break;
- 			case 'q':
- 				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
-+				break;
-+			case 'r':
-+				flags |= USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE;
-+				break;
- 			/* Ignore unrecognized flag characters */
- 			}
- 		}
-diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
-index b3cc7beab4a3c..a4043b33c2c2a 100644
---- a/include/linux/usb/quirks.h
-+++ b/include/linux/usb/quirks.h
-@@ -81,4 +81,7 @@
- /* Device claims zero configurations, forcing to 1 */
- #define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
- 
-+/* Use a 255 bytes config descriptor request mirroring windows behavior */
-+#define USB_QUIRK_WINDOWS_CONFIG_REQ_SIZE	BIT(19)
-+
- #endif /* __LINUX_USB_QUIRKS_H */
+ 	parts = le32_to_cpu(lvid->numOfPartitions);
+ 	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
+-	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
++	if (sizeof(struct logicalVolIntegrityDescImpUse) > impuselen ||
++	    impuselen >= sb->s_blocksize)
++		return false;
++	if (parts >= sb->s_blocksize ||
+ 	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
+ 	    2 * parts * sizeof(u32) > sb->s_blocksize)
+ 		return false;
 -- 
 2.53.0
 
