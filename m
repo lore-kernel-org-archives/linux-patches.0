@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032551;
-	b=iUkYlOGLgWTVvFJAkBKM0YA2LIOQx444wSqSGl4Wp4H2wbnV4AS2QHgRPRM02hwWtIJI
-	 Dw4zNYdQTwmGbYl4/qrkIm1wZBam4NFmcHtVgl3qNr18MYxogpvZRBywYkzehEt6/KkCT
-	 i8CRF74YujaNULfVgI5PL5m5BWi1Kzy5g8DygL8hSPLWha1unwuTbbCQ+JZTZ8OBcF619
-	 Tg/y/UPLXEKZrK8SWQdqGBnCjS32BUWqDApiLulg3+iFch6W58cV4AhO+pidMwYS2oKXN
-	 6Vg/zIDOSXYkFjomsxJB+FtXtRZMS8Od4XbougRyJzAoiMPzTVpe/nOQK4uDNWow1nw==
+	t=1795032554;
+	b=WxUdMLf5yLVXftQcXrFZDxgSjB0jQQKMMCH9pU+Dy4INQckfmSd/m4Yi+qYG/fWqCk17
+	 16CWuEOwKwEwchj+u/JE+CBoDwiWsm3FCC1MnIsTGZX2o50CcK+zu54/Pe3k5AcPcdB5L
+	 k1n/GbogYPDPfZ1KImsdjmA/TgiMo6UY/Qe3Ju43Mg82TZHQLBEnTmbDVTdXRvd7W6RHY
+	 OEW+yBfVdW99f6ZVLUo3V+H1Iks7MG9l0pW/PLYKup0h1P3v8OIqXaa4fkjDA7lT/qYJ8
+	 UnflB7T4CI3MtK7G6edrI/NwqVOa0ywere81GvQFn1z5LLAKoEjZWCJ7EnY4qZi6jRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032554;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BD+JGBhjZqnqrhNT3TH0WLKDN27gz5pI2yGdrNEMfGk=;
-	b=w/hp4EvL+2XLdvJwm8k8J2nFWoIJ39Tpe7vCKL9jslAutPIybJtjMNDn+tvxm9IOyBLG
-	 rPND+sh4O54siuQAy81jzXZ5q0enMXOoiuLuivFWaMZBem4LtHjmPqa3uwigzsEMT98/F
-	 TUxOlYwHr54wRq8blcpwOdC7lq6VlcZKfIbI373w2Fxh35/PA/uJcAxlkjSaQ1qsEL86A
-	 ctm2T+q004343J8jthghL8cUyUScv6wUzDE6g3wMNYXzID/r6IJ4X4UEdh3SmQiHYvli4
-	 XogvStNDKr9x+NYhKvpRv5Lx//ef/m12Xx9gyvXE03VGX3cPabNNzhJKjdCTF/+o8Sg==
+	bh=4MjQt3joNPSCBcV9zFHtV+h118qsy+4eMCUjlGbdkeI=;
+	b=NPY/XLQvpZ4+ZKhlEnu/F6VEPsHr8ZvZjOELs9ovHmzP6kRmRPiAHZ8y5NA/TblWGXRv
+	 PudLHB2ZNRYW4XpqVWl1JmAR3YYLr0w2D6y2nfDQ8sYWPwIGjzBfMe5JhXdtz+TmXITRp
+	 XyHsxpxAZDnPBr/Y/KTdQchSubjUbRRxe6EowRNtfRUFnGB+IDk8Z8NwPCh9lKK/WHobK
+	 Yr3bjrFMkBUci51peABA8w1hdhJ5N/dWJ9MiTONoFtpBsHK2S75dTEI82u+26kxxUMrIY
+	 +NX/RoW4NL1xAh+qVLQiF8QlVc9A00gNoa+h2YPdTWi6ib7DEdZjfWL6eZ5tFwp8vtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7lgzZVz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VpSbIkGR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1697060A2607;
-	Wed, 18 Nov 2026 20:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37A060A2600;
+	Wed, 18 Nov 2026 20:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h7lgzZVz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667261F000C4;
-	Wed, 18 Nov 2026 20:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VpSbIkGR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410051F000C4;
+	Wed, 18 Nov 2026 20:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032550;
-	bh=BD+JGBhjZqnqrhNT3TH0WLKDN27gz5pI2yGdrNEMfGk=;
+	s=korg; t=1795032553;
+	bh=4MjQt3joNPSCBcV9zFHtV+h118qsy+4eMCUjlGbdkeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h7lgzZVzNWf7T8tcY1k9966J87kPfcPh5OI5iFqOI18g2p9kqjw8YyxnHf8kcnCR7
-	 /xVbbgvhg1yJ2nUK0be6DPkyy8bQCD9TCy8hNxL8zznZYK6e4tJte0bsm5HBZ0fiD4
-	 yNMuuCcMrCH7O07cfYRBPlfla3zrdobbswyM7bCk=
+	b=VpSbIkGRcTgA+adB7YaQLTv5sqYzTwp6zJ5dZPTk0Wh5PHYngwsqjUUaRlZ99TXc9
+	 57bts0Vql2BP+bBt9wl+ZbcAGhleKKc6qV6qMnmVC7Ft/PeCFTRv/ITfE7ijx9uGqy
+	 x24yboH62Ud5bzQEDFfQ9SoXIKTcbl94i3nHUZwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jijie Shao <shaojijie@huawei.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1450/1756] net: hix5hd2: serialize timeout recovery with interface teardown
-Date: Wed, 18 Nov 2026 15:59:37 +0100
-Message-ID: <20261118150106.831147862@linuxfoundation.org>
+Subject: [PATCH 6.12 1451/1756] net: bcmasp: fix mib counters struct alignment with ethtool stats
+Date: Wed, 18 Nov 2026 15:59:38 +0100
+Message-ID: <20261118150106.866978557@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,84 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 87cce46329a811ea3fe108ac721e0a2400d0a3bb ]
+[ Upstream commit db45c15c98134f5ebd13c4dc5b6be5d1cd3fc706 ]
 
-The timeout worker calls the driver's close and open methods without
-RTNL or a running-state check. A timeout queued before an interface is
-closed can call close again after ndo_stop has disabled NAPI. The second
-napi_disable() can then wait indefinitely. The worker can also race with
-an ongoing close.
+When EDPKT stats were removed in commit e9f31435ee7d ("net: bcmasp: Add
+support for asp-v3.0"), the corresponding entries were removed from
+bcmasp_gstrings_stats in bcmasp_ethtool.c, but the edpkt_* fields were
+left at the beginning of struct bcmasp_mib_counters in bcmasp.h.
 
-Take RTNL and skip recovery when the interface is no longer running.
-Use the netdev core close and open helpers so a failed reopen leaves the
-interface down, rather than leaving it marked running with NAPI disabled.
+Because bcmasp_update_mib_counters() and bcmasp_get_ethtool_stats() index
+into struct bcmasp_mib_counters sequentially based on the order of
+bcmasp_gstrings_stats, this 16-byte offset caused ethtool to read from
+shifted offsets: the first four software counters read unused fields and
+reported 0, the next four software counters reported the values of
+alloc_rx_skb_failed, tx_dma_failed, mc_filters_full_cnt, and
+uc_filters_full_cnt, while filters_combine_cnt, promisc_filters_cnt,
+tx_realloc_offload_failed, and tx_timeout_cnt were never reported.
 
-After unregister_netdev() has stopped the watchdog, drain the worker
-before releasing its MDIO and descriptor resources. This wait is outside
-RTNL, allowing an already queued worker to take RTNL, observe the down
-state, and finish.
+Remove the obsolete edpkt_* fields from struct bcmasp_mib_counters so
+that it aligns with bcmasp_gstrings_stats.
 
-This issue was identified as part of our ongoing research while
-reviewing kernel code.
-
-Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/179203116093.2621539.3718842986255459438.G202@gmail.com
+Fixes: e9f31435ee7d ("net: bcmasp: Add support for asp-v3.0")
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Reviewed-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261013204439.3494046-2-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-index cc1d04d05e4b3..907709becf75e 100644
---- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-+++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-@@ -12,6 +12,7 @@
- #include <linux/of_net.h>
- #include <linux/of_mdio.h>
- #include <linux/reset.h>
-+#include <linux/rtnetlink.h>
- #include <linux/clk.h>
- #include <linux/circ_buf.h>
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.h b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
+index e238507be40af..65ce944a01911 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp.h
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
+@@ -249,10 +249,6 @@ struct bcmasp_intf_stats64 {
+ };
  
-@@ -890,8 +891,13 @@ static void hix5hd2_tx_timeout_task(struct work_struct *work)
- 	struct hix5hd2_priv *priv;
- 
- 	priv = container_of(work, struct hix5hd2_priv, tx_timeout_task);
--	hix5hd2_net_close(priv->netdev);
--	hix5hd2_net_open(priv->netdev);
-+
-+	rtnl_lock();
-+	if (netif_running(priv->netdev)) {
-+		dev_close(priv->netdev);
-+		dev_open(priv->netdev, NULL);
-+	}
-+	rtnl_unlock();
- }
- 
- static void hix5hd2_net_timeout(struct net_device *dev, unsigned int txqueue)
-@@ -1283,6 +1289,7 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
- 	struct hix5hd2_priv *priv = netdev_priv(ndev);
- 
- 	unregister_netdev(ndev);
-+	cancel_work_sync(&priv->tx_timeout_task);
- 	mdiobus_unregister(priv->bus);
- 	mdiobus_free(priv->bus);
- 
-@@ -1290,7 +1297,6 @@ static void hix5hd2_dev_remove(struct platform_device *pdev)
- 		hix5hd2_destroy_sg_desc_queue(priv);
- 	hix5hd2_destroy_hw_desc_queue(priv);
- 	of_node_put(priv->phy_node);
--	cancel_work_sync(&priv->tx_timeout_task);
- 	free_netdev(ndev);
- }
- 
+ struct bcmasp_mib_counters {
+-	u32	edpkt_ts;
+-	u32	edpkt_rx_pkt_cnt;
+-	u32	edpkt_hdr_ext_cnt;
+-	u32	edpkt_hdr_out_cnt;
+ 	u32	umac_frm_cnt;
+ 	u32	fb_frm_cnt;
+ 	u32	fb_rx_fifo_depth;
 -- 
 2.53.0
 
