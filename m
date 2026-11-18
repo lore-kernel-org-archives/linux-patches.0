@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026708;
-	b=BWe+TvybKodvqKjHVUfCNTkz5ZZvSKQhHKmW7N5pE3Eq2AFs7lYjz/6GXW2fhi6Diab7
-	 Lv2PiGeJwGTPhsBOUiZkzvKtFZbU+QMbn9BIfFyfrCS5x7IMF8ZPh6ZcnSB8MiP42QOJl
-	 KmiOlr1rWTM1xgi78P03HOK0IJTQ1ZIPa059QbXh2lNaXDGvj6n2QQshRCVWLq3EKtbjy
-	 oIBPa0dNIg+08V3TTeM/0kFKdNTXiQTk72F/SsE8oYKRw3nglImUKOfga8NqpVV+PcwQt
-	 /FXkgmn44T8OytK23kg1vCqXTxxQUaNbcpjRj8ww20A2TM2Dij6MGfVa8VtbHmi1uYg==
+	t=1795026711;
+	b=MT6nfA1CdH9WTvgvrZnscW/JmF9ByoxB60WGow5ah000TkNwoe+9Yz+BrXLubl148A9b
+	 Kd0xYqfECdmqFeV/PKRmjOXRzjOdiW8R3jjHTfCa1pJuObqTnWd1Z8IYOiTr01T/3CgxD
+	 iYgqyNw5SSh+k/8tT3NFeXYl//HQ3Qde5MToCDY+Dx4x9M1K3DF3W5DiDNKCYNgAZLKZb
+	 3fCRebkPJ3GQ9jepXRMdWvyW9zhhl+aOe2vi9yujYa9BPhFEEiSnxc/JWFyaB1aTw6SjM
+	 cmjM+gZioJXLyTkrFR1MmLVJcnYPslpc4dKwj/bMBLN7EzuV2sPB/Cb+MT3esIePPvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026711;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kojsyxm7pRYZldprCNbLIF/oQG7S9MlcYgTJS/JndZs=;
-	b=UrVWKXvR4d+hkBsns8+1wDXgkSS5T4rE7Z10ogkQ/HGjAdano3G1L8gQZrVvNh59qVWb
-	 EyuvKRw/ilDVtdBCIcngNPduo8P8eBv6hJWI2ziUJiyVt+LTvxReG/2+6CUmPvcDj/+KO
-	 8HwNKB8zeHWs7DZC62vdhsZHHb2R3+nhpz9g14LejgWVLLGjg3tPMlnSc4kO7vyRVxDF3
-	 rnDdunuu2u3s05ka0AerBUH/zrEDWZsjw0wWKRjoQeR10Gh1hAOKhGsR2WXGgpkyrOCC/
-	 DeQ2W35/X/8TSLmbu1tQuJXQqDKPnbF82VoLRtYw2jqyZ+tHzqdrGYrfO9vdBm3RPEA==
+	bh=Ng6OZf38MCPFtmEKwC6y8/3FhPx4ik2S96I2W0oeXCc=;
+	b=puSul7HEqAgA5Cj4O2Zd9dc3+iAervTT4iNiNIAQI1ZyJPNNqepj5d/Us1VeU0DVG1ey
+	 /mVlgRVqs93zIUxpo2R3o5Qd8NzviT9h6vTQRxX25XLowM8yyIIlDyf78ClPUiTTAtNA4
+	 H+igHY8RmnbxI3c+MabAnM3Hey9+BqcuG9yccMMwGE5uCZ0j7QaR6k+9u/v1VX+Do4Cyt
+	 8ZkMTM5XM5jEBPRIj5oVOXOIA9sy0Pv5NDr/vLFnP8TVQetmtJ5NSaM//Jl7yKkCqaLUH
+	 uvrH8/Jx8f6hWQkSeHN3hySXQykEanNJZrx+aia9DE7HQIAPogk+3z9L2MCVStCuSiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oUcT/J8l";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTJPt7ot;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDD9606A31C;
-	Wed, 18 Nov 2026 18:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCEB606A325;
+	Wed, 18 Nov 2026 18:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUcT/J8l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2092F1F000C4;
-	Wed, 18 Nov 2026 18:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LTJPt7ot
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C921F000C4;
+	Wed, 18 Nov 2026 18:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026708;
-	bh=kojsyxm7pRYZldprCNbLIF/oQG7S9MlcYgTJS/JndZs=;
+	s=korg; t=1795026711;
+	bh=Ng6OZf38MCPFtmEKwC6y8/3FhPx4ik2S96I2W0oeXCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUcT/J8lfOsnckHYOX8lVbj/qYChNkJwrgkD604+K0baVRfSlvE9UUeRPB3mvanxK
-	 QP0bYTLWj6GyDcFlY4KIzKLwz2ZQ2ymKDEzjexAK6qf5w9TWOu4KXOcgL56CQAN8wN
-	 aG2aWa1QSLqwhcfl+SE5wja8I/m6rkqFpVGTwLps=
+	b=LTJPt7ot2mTFXTcniIgJbSN96EbIKhFujNhlkLBw578eUULBkP9D1ngWnh9DTqK84
+	 UUCJl+fbKUOs1ls/y3bgV+ryqWtSQuX7GX5/Dl/Zwa7oM9pXfLtnc3FYJBNtya5TTb
+	 Nec6YQpkhGhrKXju+iA8qswzGGp52YnxnejC5Vzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1531/2151] Bluetooth: btusb: Preserve event and ACL packet ordering
-Date: Wed, 18 Nov 2026 15:54:26 +0100
-Message-ID: <20261118150217.595429129@linuxfoundation.org>
+Subject: [PATCH 6.18 1532/2151] Bluetooth: hci_sync: fix mesh adv timeout units
+Date: Wed, 18 Nov 2026 15:54:27 +0100
+Message-ID: <20261118150217.631833723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,48 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit fa96916cfd05ceb1c26af0b2ea73daf5481cad2d ]
+[ Upstream commit 8a8d51eeedebfa5aaaae7720f2fb2aa1a67b8587 ]
 
-When force_poll_sync is enabled, commit 800fe5ec302e ("Bluetooth:
-btusb: Add support for queuing during polling interval") defers ACL
-delivery to the RX worker. The event path currently wakes that worker
-before delivering the event, so queued ACL data can reach HCI first.
+Mesh adv instance timeout and duration are in milliseconds, see
+mesh_send_sync, hci_add_adv_instance.  hci_schedule_adv_instance_sync()
+and hci_enable_ext_advertising_sync() ignore this, and scale the timeout
+wrong.
 
-Deliver the event before waking the worker. This preserves the intended
-event-first ordering and the event callback's return value.
+Fix for mesh instances by using msecs_to_jiffies() in
+hci_schedule_adv_instance_sync and fixing the scaling in
+hci_enable_ext_advertising_sync.
 
-Fixes: 800fe5ec302e ("Bluetooth: btusb: Add support for queuing during polling interval")
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Fixes BlueZ "Mesh - Send cancel" test failures.
+
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
+Assisted-by: opencode:qwen3.8-flash-next sashiko
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 509da5c2efcd6..6143414711c5d 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1217,13 +1217,16 @@ static inline void btusb_free_frags(struct btusb_data *data)
- static int btusb_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct btusb_data *data = hci_get_drvdata(hdev);
-+	int err;
-+
-+	err = data->recv_event(hdev, skb);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 9cb1cdbff3fd2..8bedfab14cdf2 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1694,7 +1694,8 @@ int hci_enable_ext_advertising_sync(struct hci_dev *hdev, u8 instance)
+ 	 * scheduling it.
+ 	 */
+ 	if (adv && adv->timeout) {
+-		u16 duration = adv->timeout * MSEC_PER_SEC;
++		u16 duration = adv->mesh ? adv->timeout :
++					   adv->timeout * MSEC_PER_SEC;
  
- 	if (data->intr_interval) {
- 		/* Trigger dequeue immediately if an event is received */
- 		schedule_delayed_work(&data->rx_work, 0);
+ 		/* Time = N * 10 ms */
+ 		set->duration = cpu_to_le16(duration / 10);
+@@ -2124,7 +2125,8 @@ int hci_schedule_adv_instance_sync(struct hci_dev *hdev, u8 instance,
+ 		hdev->adv_instance_timeout = timeout;
+ 		queue_delayed_work(hdev->req_workqueue,
+ 				   &hdev->adv_instance_expire,
+-				   secs_to_jiffies(timeout));
++				   adv->mesh ? msecs_to_jiffies(timeout) :
++					       secs_to_jiffies(timeout));
  	}
  
--	return data->recv_event(hdev, skb);
-+	return err;
- }
- 
- static int btusb_recv_intr(struct btusb_data *data, void *buffer, int count)
+ 	/* If we're just re-scheduling the same instance again then do not
 -- 
 2.53.0
 
