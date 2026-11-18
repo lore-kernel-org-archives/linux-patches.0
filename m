@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028253;
-	b=SAV7TyUiEvHDEWl8RDbl8ERBN9b8M6KZ/Iif9TSzylkl89kL3CDC6nL/ScZ1IQl40c/H
-	 G0w2cb5DAhAi8WB0+wRctXSTNg1fibmoLoTTIhSmeOuuLsQzr1SDfE77xR6GytuMgH/8t
-	 +wylBhP17XjJ/m5ft8UDtIVr1PJzvjyOOcvANhfnUxyl8xSSGtEtnBOj5NEe3zSHIuFbn
-	 cOMs71anVma9qekk1bgN5imxQUoRRkDYBJhkOy4cXBxLgWwqG//4uAPwzOSBRiQLJaYRw
-	 m1f1DkFm8ruk5fHMWYv5kEH4XMZrlg1C79U/OHBi4xIxQod/nfkRaMhaGMx3XkPgA6A==
+	t=1795028255;
+	b=BebIL82VYIeGGflvMONFr4W2oaM/nAFJK9Lu1+H5QjsZIln4mPyhwpuPhPK1aHS8eZZF
+	 qVi7qJJFcJEtjX9x+nIpa8+fIX/RYd4LfrldMygVeqN6pAw6uhg7/+kHqatPr2jJui9YP
+	 bWA8MJRenPfsC3TM9n0IjxAYRYsCnRE9caZIlZsb7bUcY+nXSYYo4yGv1XIJx126LJkGT
+	 MfGIa2a5mSySZ218fbOViqsrNQAsMOCaFdcd7Bb86n9a5j3Ot9wm917kqX4RFhDh7BQck
+	 PpC/nICtQL24lXaimRmFI75GQ26Mjz06ex7PkPb3Nn77C5aiyYGy382x1gmtVy84fXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=b0985g1HehxfySsGLyUUSHiaC31s7nYuaz/vmAqLr1M=;
-	b=y3TFvIBtA7agrhkWMPmkW1sSx/rrSDHwBZ3GgHhSZKxOEZuhGJACm8WWGqF+xvBsdRVo
-	 e1L4MkH7CrloCBuVgw9LcwhXQxfFUwtFpg9jrUMuWCKNfO2VOHEmmehtN2nQUsB3c2ETn
-	 pVoIh5bX41lhrzhaKAmUdr+mbvKey3GntO/Y78+bPfq5oe34SnKNwXxHdq7mCEZqb5nUS
-	 tQ9HdBGnlPfff9rg4OKO+mQ4ljNJ0MPc+DsVSvvArqiijLDWbNF4UTYbjeX9I31PF4r+C
-	 89qggoIb1dlkaraOqacqxBycpx2VvOewVSOBuN+cexJjBp3l3w8mRSSwWBH+tTPLXhQ==
+	bh=Ph4aVTfFZXU7GxmpoHvSmAvJYv/9yhFY4JyOyL1ZTLE=;
+	b=D+CpoKaWwNTzebI10YvD/OiI0RNw2vffsPdz3wUJDnEaBHtCWWfBud6dMCeU1WQ2BEnT
+	 lrSFhL97S8buTpF3SYzYjAu+sVG+/qlN9Y3b3B79xMAq4Ey+l7ljGojL9k5LTM0iqPp4p
+	 IKZgS/pPNYQiFUCBfYA4GZsksnsceINJVW5fbkeY7m/BGjWelw5qIHXDJDHyhZjxtB2KW
+	 oJmgZHZkwSPjr+ZdOfGhluTvVPpfi16peX7UhONd4b9lcf3dpKYX0NctZ/R5/y277EF0e
+	 QGbhxkjBrrH39AIt1UY+idG1MUTJOBiyjyq3wTAsaDpVilcyFnbThfdEmD4xLB1yFkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LkOV1heM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOoAoHLa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF1A606A31C;
-	Wed, 18 Nov 2026 18:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A643F606A31C;
+	Wed, 18 Nov 2026 18:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LkOV1heM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133911F000C4;
-	Wed, 18 Nov 2026 18:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOoAoHLa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EFA1F000C4;
+	Wed, 18 Nov 2026 18:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028252;
-	bh=b0985g1HehxfySsGLyUUSHiaC31s7nYuaz/vmAqLr1M=;
+	s=korg; t=1795028255;
+	bh=Ph4aVTfFZXU7GxmpoHvSmAvJYv/9yhFY4JyOyL1ZTLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkOV1heMS68inUROHCNPQIU06fbR4dVCdpas01AV0jgWIQDIOGzpfsmWltFx6gruk
-	 Wy7ULc6k1q6FcGTWBLZTkgTw3f/ZT2iBGfFRyIPGD64YM5DMaChGqS6Oks9A16POQk
-	 4y29O6XMAoXeA2+8uGA0/sOiL8RP3BgDtyqqMJYA=
+	b=uOoAoHLatDluqM3lR5RzLZ2+jMY4FxCNU7dw38pOKd2k8YrC6UnZ3F5MJgciVz5dd
+	 KqvVoJDxu/ZzTl6q3mB5UHwvOGD/DlzC/M/pUJATsyKePW8OocWNC/hjwrjzDMYx//
+	 5I63ZKw+dBE1BZnouUytBr5L6M+Str1zyYi/dsmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2078/2151] blk-mq: set up a queue under tag_list_lock
-Date: Wed, 18 Nov 2026 16:03:33 +0100
-Message-ID: <20261118150237.410608270@linuxfoundation.org>
+Subject: [PATCH 6.18 2079/2151] block: partitions/mac: compute the sectors in 64 bits
+Date: Wed, 18 Nov 2026 16:03:34 +0100
+Message-ID: <20261118150237.445287168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,92 +70,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 4fcc499ea9bc31b02393904a1903e794d146f5f7 ]
+[ Upstream commit 6c55f94317249bc195e197f6a8730c843e72ea8c ]
 
-blk_mq_init_allocated_queue() only takes tag_list_lock at the end, when
-it adds the queue to the set. Before that it sizes the queue by
-set->nr_hw_queues, hands out set->tags[], maps by set->map[], and
-blk_mq_map_swqueue() frees tags of the set. An update clearing the maps
-at that time makes the new queue free tags that all the other queues
-share. An NVMe controller reset during a namespace scan does exactly
-that.
+start_block and block_count are converted to 512 byte sectors in 32-bit
+arithmetic, although put_partition() takes a sector_t. With a block size
+above 512 bytes anything beyond 2TiB wraps and the partition lands on
+top of another one.
 
-Take the lock before the first look at the set. An update can be part of
-error handling, so the allocations under the lock must not wait for IO:
-memalloc_noio_save(), as in add_disk_fwnode().
-
-Fixes: 868f2f0b7206 ("blk-mq: dynamic h/w context count")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://patch.msgid.link/20261028164415.1262013-39-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-43-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ block/partitions/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 2b76b8150d882..7bdc9b1d7b746 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4362,7 +4362,7 @@ static void blk_mq_add_queue_tag_set(struct blk_mq_tag_set *set,
- {
- 	unsigned int i;
+diff --git a/block/partitions/mac.c b/block/partitions/mac.c
+index b02530d986297..f3bd95ee104f1 100644
+--- a/block/partitions/mac.c
++++ b/block/partitions/mac.c
+@@ -97,8 +97,8 @@ int mac_partition(struct parsed_partitions *state)
+ 		if (be16_to_cpu(part->signature) != MAC_PARTITION_MAGIC)
+ 			break;
+ 		put_partition(state, slot,
+-			be32_to_cpu(part->start_block) * (secsize/512),
+-			be32_to_cpu(part->block_count) * (secsize/512));
++			(sector_t)be32_to_cpu(part->start_block) * (secsize/512),
++			(sector_t)be32_to_cpu(part->block_count) * (secsize/512));
  
--	mutex_lock(&set->tag_list_lock);
-+	lockdep_assert_held(&set->tag_list_lock);
- 
- 	/*
- 	 * Check to see if we're transitioning to shared (from 1 to 2 queues).
-@@ -4387,8 +4387,6 @@ static void blk_mq_add_queue_tag_set(struct blk_mq_tag_set *set,
- 			blk_mq_quiesce_queue_nowait(q);
- 	}
- 	spin_unlock(&set->quiesce_lock);
--
--	mutex_unlock(&set->tag_list_lock);
- }
- 
- /* All allocations will be freed in release handler of q->mq_kobj */
-@@ -4661,6 +4659,8 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
- int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
- 		struct request_queue *q)
- {
-+	unsigned int memflags;
-+
- 	/* mark the queue as mq asap */
- 	q->mq_ops = set->ops;
- 
-@@ -4679,6 +4679,16 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
- 	INIT_LIST_HEAD(&q->unused_hctx_list);
- 	spin_lock_init(&q->unused_hctx_lock);
- 
-+	/*
-+	 * Keep blk_mq_update_nr_hw_queues() away until the queue is on
-+	 * set->tag_list: it changes the number of hardware queues, the tags and
-+	 * the maps, and blk_mq_map_swqueue() allocates and frees tags of the set.
-+	 * An update can be part of the error handling of a driver, so it must
-+	 * not have to wait for somebody who waits for I/O.
-+	 */
-+	memflags = memalloc_noio_save();
-+	mutex_lock(&set->tag_list_lock);
-+
- 	blk_mq_realloc_hw_ctxs(set, q);
- 	if (!q->nr_hw_queues)
- 		goto err_hctxs;
-@@ -4698,9 +4708,14 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
- 	blk_mq_init_cpu_queues(q, set->nr_hw_queues);
- 	blk_mq_map_swqueue(q);
- 	blk_mq_add_queue_tag_set(set, q);
-+
-+	mutex_unlock(&set->tag_list_lock);
-+	memalloc_noio_restore(memflags);
- 	return 0;
- 
- err_hctxs:
-+	mutex_unlock(&set->tag_list_lock);
-+	memalloc_noio_restore(memflags);
- 	blk_mq_release(q);
- err_exit:
- 	q->mq_ops = NULL;
+ 		if (!strncasecmp(part->type, "Linux_RAID", 10))
+ 			state->parts[slot].flags = ADDPART_FLAG_RAID;
 -- 
 2.53.0
 
