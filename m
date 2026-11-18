@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018252;
-	b=KvTlt/6PU9SGMfYhpwpPstNpcRVzMrunLob14UF6KmzmEmymjFJ7NmAq+I3AYmrcEkID
-	 0i/x+rNqi9te4PbmblBxzySHMoG4+zheFGTaAPmioVCZmvuFN0jzxPp2atrhg7rNBfDwG
-	 FDotDbq2jlhcd2n5aNMLvog0Sg+dZhmdJVz21SfARyXZY1vTGtfTYYaCG84pQBB0fNKxS
-	 ooph8UAOWtbXNef6sZXQ2vqnnvbR1uBqqpwK0E2lBgjQk5xS25sujTmpvbNpsr4Om3B0c
-	 G7A4vqF6BX5p19HVS+x6VvMLi3pV9tm/pXCBYE9Wp+v2UCZU7Hj7RWYylwHI1lbfCXw==
+	t=1795018255;
+	b=AOSEBj96Vk1IZ+ygJ1MCeCFPoB7UOcKID548ydXAFUaRfkjNoi4PzYSAq536BrUwWOdf
+	 Alsu8nMov8GenxuaGIQyctyGVOoQ45Ai13/6TwI1e8KeCnDz9u4aLXvbJbgdOowJnS4RI
+	 1zuhPWJJxHuoYB0zhUv/CZVUiHzvhgd7KaBU80QXYqmPKruC9JxemXa0y5qSslrdkyJLc
+	 m1lmz4jPtaAM9UVnkD56A48YkCnqegcYwkWvcZ5/FibXcmJM96Kqw08NIUk5Cn/sekJ/o
+	 f8jfjqDTY3Kp1eXGmc6Lne1LS/6G39IGanCnUpZ1iu1EUztUHhzW/DhaFdtNtr1RqZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OmkOTPXocfxFgNZJFzkyIJPjzRROjhImA38d8MmSAvI=;
-	b=IvTBp+bu7rdpj361/rkcW+4rhJxoqUjs1WbSeW0aGYYe/tmO4Tw6igYPKjSnm9Fz91Ul
-	 Dv9A0/dd9X1txK71U6tAYD2cGgsDNg1qiktzK0DqyYRcBenjLh5d/nJBvNYBIja2A7n2h
-	 MJBuiRD8kEdp6KUkGt9IBc3XRsDrBaJJ/qra8llnxmpLWD+EqJV95/LBNwJ36RtklW9eH
-	 qZTTWVA3q3Q/JHY01UA/32Cyn48RV1ISqcPwrLmqn360i5gzkCpF0aKDZUOeUzwaGtFwU
-	 7se5lp8I6QXJVHXiAhgWu3oOTrJzVZQ7eAK0SOLwLiEucJvOFAdr+7E4DfWv0b+ZGYw==
+	bh=vlRFFaqGY4mcj+nuzxB6bnMxXmH9H6aupiHJQQUfoDE=;
+	b=kHU7LbmEMnxX8zfdtY2KMz7qCSWeqs1UnPcmM/5fWCsaO8kv82xSahiV20xzNyLFCJZg
+	 DnAcaUgvUUKWuZrWoEiAH0XbW7cyMBut70iTfQcOss0ny74gf/Pd8HIQzWpWKCHZaetTF
+	 RB4MDLIjtksHEoYlxlMgDkjAbchTgXfd+SqZcyH4BcAa4vRDxtxzmqiu60MtA1qUC4s53
+	 JNVXw3/s+ZMQ+9pJaUQggzlhmL9SJ/gvVgRZaEewDUGeeWmuBPSVxU2FbDsXJIRAgd2Ja
+	 G5BAjaF6mkoJuToHrFBzuZgr8i9PfftJOT7f8jBGfbMPM2yUan3T/sGjKHb59gXlXlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+Bv3pEp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JGUQCuU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E3A606A320;
-	Wed, 18 Nov 2026 16:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D0A606A320;
+	Wed, 18 Nov 2026 16:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g+Bv3pEp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870EA1F000C4;
-	Wed, 18 Nov 2026 16:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JGUQCuU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BA71F000C4;
+	Wed, 18 Nov 2026 16:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018252;
-	bh=OmkOTPXocfxFgNZJFzkyIJPjzRROjhImA38d8MmSAvI=;
+	s=korg; t=1795018254;
+	bh=vlRFFaqGY4mcj+nuzxB6bnMxXmH9H6aupiHJQQUfoDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g+Bv3pEpfCsszJ5cR4DqjsYSvY+Nzfy6JOjsbvmAqyXbe1nJOwqGgpHNRsWrlEowW
-	 rWUWT5TZr0OT/zl4Fyy3XEtpDJUl6YUAIlEHbMbXPoH0VhRB3U3dp8mXJV7Nlaqh0K
-	 MtCWXDPiv1JieztBLEtSyCIEwiqn7FZNMhpihyuA=
+	b=1JGUQCuUHwNy6LiyPZMYradlL4c9FP11MFZO8cpIu1N7tYxvvQkxoxDLKW00LdDz3
+	 ud1hgl8gZoKtXT+gLMKsJDqqMA/T+fhJ17YZCYhvypZvJrAlWsGTN7mvZ2KMEBLoU8
+	 MSP11yoLa0OByESl5BkqBwIcqmbNZI72ubbX7kqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1172/2651] bpf: Add sleepable arena page allocation path
-Date: Wed, 18 Nov 2026 15:40:12 +0100
-Message-ID: <20261118150330.204530283@linuxfoundation.org>
+Subject: [PATCH 7.3 1134/2651] cpufreq: amd-pstate: Propagate cppc_set_auto_sel() errors on mode change
+Date: Wed, 18 Nov 2026 15:39:34 +0100
+Message-ID: <20261118150328.831890374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,158 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tsalapatis <emil@etsalapatis.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 5316ede1f5d07653a669285ca715a24152d729c6 ]
+[ Upstream commit 8de705037124dd1cd49bd8cae6536d63ec4e1807 ]
 
-The bpf_arena_alloc_pages() function currently only allocates pages
-inside a spinlock critical section with IRQs off. This forces the use of
-alloc_pages_nolock() in the BPF allocator, even when the caller is a
-sleepable BPF function. This in turn causes allocation failures even in
-cases where falling into the allocator slow path and possibly sleeping
-would eventually succeed. This can be triggered consistently by heavy
-BPF arena users like scx.
+amd_pstate_change_mode_without_dvr_change() iterates over the online CPUs
+and calls cppc_set_auto_sel() to enable or disable hardware autonomous
+selection, but discards its return value and unconditionally returns 0.
 
-Allocate the arena pages before taking the critical section and pass
-whether the caller can sleep to bpf_alloc_pages(). This lets sleepable
-callers use the blocking allocator while non-sleepable callers retain
-the no-lock allocation behavior.
+If the firmware rejects the request, the failure is hidden: the cpufreq
+core records the mode transition as successful while the hardware stays in
+its previous autonomous-selection state.  The software mode and the actual
+hardware behaviour then disagree, breaking the expected frequency scaling.
 
-Fixes: b8467290edab ("bpf: arena: make arena kfuncs any context safe")
-Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261002105218.6171-4-emil@etsalapatis.com
+Check the return value of cppc_set_auto_sel() and propagate the first
+error to the caller so the sysfs write reports the failure.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-d114a94a-655b-43a6-91b1-9484889726c9
+Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20260921190235.3651688-2-mario.limonciello@amd.com
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 73 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 46 insertions(+), 27 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index c556df7730c4e..0ff707707da04 100644
---- a/kernel/bpf/arena.c
-+++ b/kernel/bpf/arena.c
-@@ -713,6 +713,27 @@ static u64 clear_lo32(u64 val)
- 	return val & ~(u64)~0U;
- }
- 
-+static int arena_adjust_tree(struct bpf_arena *arena, long uaddr, long page_cnt, long *pgoff)
-+{
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index b40482430d437..8cfc8eb5c05c5 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1712,6 +1712,7 @@ static int amd_pstate_unregister_driver(int dummy)
+ static int amd_pstate_change_mode_without_dvr_change(int mode)
+ {
+ 	int cpu = 0;
 +	int ret;
-+
-+	/* Special case where user is requesting specific range. */
-+	if (uaddr) {
-+		ret = is_range_tree_set(&arena->rt, *pgoff, page_cnt);
+ 
+ 	cppc_state = mode;
+ 
+@@ -1719,7 +1720,9 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
+ 		return 0;
+ 
+ 	for_each_online_cpu(cpu) {
+-		cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
++		ret = cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
 +		if (ret)
 +			return ret;
-+		return range_tree_clear(&arena->rt, *pgoff, page_cnt);
-+	}
-+
-+	ret = range_tree_find(&arena->rt, page_cnt);
-+	if (ret < 0)
-+		return ret;
-+
-+	*pgoff = ret;
-+
-+	return range_tree_clear(&arena->rt, *pgoff, page_cnt);
-+}
-+
- /*
-  * Allocate pages and vmap them into kernel vmalloc area.
-  * Later the pages will be mmaped into user space vma.
-@@ -730,6 +751,7 @@ static long arena_alloc_pages(struct bpf_arena *arena, long uaddr, long page_cnt
- 	unsigned long flags;
- 	long pgoff = 0;
- 	u32 uaddr32;
-+	long addr = 0;
- 	int ret;
- 
- 	if (node_id != NUMA_NO_NODE &&
-@@ -747,8 +769,12 @@ static long arena_alloc_pages(struct bpf_arena *arena, long uaddr, long page_cnt
- 			/* requested address will be outside of user VMA */
- 			return 0;
  	}
--
- 	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
-+
-+	ret = bpf_alloc_pages(node_id, page_cnt, &pages, sleepable);
-+	if (ret)
-+		goto out_memcg;
-+
- 	data.arena = arena;
- 	data.pages = &pages;
- 	data.i = 0;
-@@ -756,25 +782,14 @@ static long arena_alloc_pages(struct bpf_arena *arena, long uaddr, long page_cnt
- 	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
- 		goto out_free_pages;
  
--	if (uaddr) {
--		ret = is_range_tree_set(&arena->rt, pgoff, page_cnt);
--		if (ret)
--			goto out_unlock_free_pages;
--		ret = range_tree_clear(&arena->rt, pgoff, page_cnt);
--	} else {
--		ret = pgoff = range_tree_find(&arena->rt, page_cnt);
--		if (pgoff >= 0)
--			ret = range_tree_clear(&arena->rt, pgoff, page_cnt);
-+	ret = arena_adjust_tree(arena, uaddr, page_cnt, &pgoff);
-+	if (ret) {
-+		raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
-+		goto out_free_pages;
- 	}
--	if (ret)
--		goto out_unlock_free_pages;
- 
- 	uaddr32 = (u32)(arena->user_vm_start + pgoff * PAGE_SIZE);
- 
--	ret = bpf_alloc_pages(node_id, page_cnt, &pages, false);
--	if (ret)
--		goto out;
--
- 	/*
- 	 * Earlier checks made sure that uaddr32 + page_cnt * PAGE_SIZE - 1
- 	 * will not overflow 32-bit. Lower 32-bit need to represent
-@@ -787,26 +802,30 @@ static long arena_alloc_pages(struct bpf_arena *arena, long uaddr, long page_cnt
- 				  page_cnt << PAGE_SHIFT, apply_range_set_cb, &data);
- 	mapped = data.i;
- 	if (ret)
--		goto out;
-+		goto out_unmap;
- 
- 	flush_vmap_cache(kern_vm_start + uaddr32, mapped << PAGE_SHIFT);
- 	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
--	bpf_map_memcg_exit(old_memcg, new_memcg);
--	return clear_lo32(arena->user_vm_start) + uaddr32;
--out:
-+
-+	addr = clear_lo32(arena->user_vm_start) + uaddr32;
-+	goto out_memcg;
-+
-+out_unmap:
-+	/* Error handling: Undo partial mappings. */
-+	flush_vmap_cache(kern_vm_start + uaddr32, mapped << PAGE_SHIFT);
- 	range_tree_set(&arena->rt, pgoff + mapped, page_cnt - mapped);
- 	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
--	if (mapped) {
--		flush_vmap_cache(kern_vm_start + uaddr32, mapped << PAGE_SHIFT);
-+	if (mapped)
- 		arena_free_pages(arena, uaddr32, mapped, sleepable);
--	}
--	goto out_free_pages;
--out_unlock_free_pages:
--	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
-+
- out_free_pages:
-+	/* Error handling: Free back any unmapped pages. */
- 	bpf_free_pages(&pages);
-+
-+out_memcg:
- 	bpf_map_memcg_exit(old_memcg, new_memcg);
--	return 0;
-+
-+	return addr;
- }
- 
- /*
+ 	return 0;
 -- 
 2.53.0
 
