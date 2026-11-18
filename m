@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050512;
-	b=Kk7TtAsD7Fi9WXkr4CVZnuLsl7N0Z9BSbyxpllVbIxqj4pISPkR9V/4NvJ6YS4aWTYDb
-	 IaWxwCgpai9F38aseFHg51BWXIFa6IQH/iIrgLTIypSPrJ8tA/T7cYMwQshyq7BFbK4NJ
-	 o9Xd3Oioay5QVwwwzqlVfIc6k9hnoi4mcmT9oMhQ6rihlQ1iV3rx1c27iBlWvub4SsUer
-	 DGf9ZQfL6YYiwhtbVFacRgr0E76JSAXQEMGNpJKQktT3s0pVuMz8h/qnFQ0iNbnfGRimB
-	 m6DEMNUjr7vN1654xceVFu27OkhAwI4bkf09XvlhN5AJgpnH5h0GazELyji6/O4YSrQ==
+	t=1795050515;
+	b=1PdU7ma3D0/dToS50JRg2tS1WiVApku5/y6WdFeGY1s3K9dgNlJDpajru8WqaLE/vPAl
+	 mJBLfvaZxG77UpoXTZJJFC/r6FPqtcAmCA16BWtxSR7tR4uB/X2+RQXc9PvZx/xusgeJ8
+	 TMjmEh4Kldu0BPsIc9CrNN7sY8YYW+rCEny0Lv0jI1eP+bPEIKcUpZyQClxUR8wZ6WRvB
+	 3XoImOeTY/0VvFSfUvj0sFtd+hZbZZdigoZgorIqJ5q+5CxaT4aWxWplM67bMG13hmA8z
+	 SGSyi05MCFukCdGHXdfz3EyeDANLKZpdV2zrWPhqqTxCw/TWxjDvHGUIl2AZTygttaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2TqZVc2to0x1bZDS9zPjuAVpoxKUeXAmtXMJ7rFfAtw=;
-	b=OfpCpVcB4OxriGJvV7orHRHacsHYmq4uKZWEwUyF1b/oDWPuzsb5K/e6FZdMBI1ZKimH
-	 esaote/8ZGagyLPmLddXkAA3+wKORdHqyVJF+M21L4X1SS6pKN8HnHA0folIO8afsFyV3
-	 0U3WHHUr0DSTkcCyYWTct6P38soCfsDCf2ZNIgnFf9uvpqEDUt8/zY9lSrBLOIDBRvcXX
-	 tW8J9sO20e1Nxx7OqQmdEuwDgvBf5izlP924LnTJsoYW1aNYLsb1EK5sHZ1+GcATVHIr2
-	 /O2HulwFlbDTobmkckn+rLUlgFfAxeLLxyzSpvLbs8+tnfRcCb6DRIUglar43BZby0g==
+	bh=sEDaQgAPqYavEaqvEa26QN/lw0QK82/Cx8XJi1QeW9s=;
+	b=XPGCqXEbkzJQEkI94vG1Y9LeRg2FlemAGqIPF4uT9VbHa69Zd6nECYUbiQdy+VFl63mu
+	 +IjnJaupgBdLeQfrFLdwCzvgPrLSxk+LvUFMEf6eKmVjd1HKcOdIvO9oDBDfQqsAiflDq
+	 E4G32yAUX1KYURsBBriJuw2sE5hjyk9fkScycoZwXwuBF2nNI816kFaJBaIyFvG7gQvwc
+	 R/bKwRbXBqhyNoOVbradKGiLSxXBmDzUIv/7R18IrdR33VPmqhvyBtW7F+v/VOyJShO8s
+	 vNmmHJp7ng2eGmqmM499qB8VWoie6XvEAos5Usu1VMidzwmpNYsoEYJeMAqEYbNHKcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEntPLiG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fG7zAhPy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F34606A325;
-	Thu, 19 Nov 2026 01:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E354606A320;
+	Thu, 19 Nov 2026 01:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEntPLiG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DBB1F000C4;
-	Thu, 19 Nov 2026 01:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fG7zAhPy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838AF1F000C4;
+	Thu, 19 Nov 2026 01:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050512;
-	bh=2TqZVc2to0x1bZDS9zPjuAVpoxKUeXAmtXMJ7rFfAtw=;
+	s=korg; t=1795050515;
+	bh=sEDaQgAPqYavEaqvEa26QN/lw0QK82/Cx8XJi1QeW9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DEntPLiGViT0Z2DLGBBXpo11vdQ9WuXYAuTcQ0AuV7lRMvahb8cYJ63209dOPzle7
-	 EuTSNqYtWwv4jtsipXRZE/pVuSVg8jvbUKnHyfUj244Ef3QCXwHwT6xF6iIVlhwBgR
-	 oILJ+sfar0j/Mp1zfkkOEH9N6wULI22DdHv4zqSk=
+	b=fG7zAhPye6ymtNvxva1DeyXTT5J5o5IRYBnPXxf76w24+iaW6eDUj1tYjKr8xoiM5
+	 W1kJC6HV4yI7c8lLeBRqWMqL3aggTfv5bsBL+RrtL8IwQFodOWZUzYPBJZ+pHG2p+R
+	 ukGVj3uTRngeGTzYtMrulgPlSVYln2O5fgCPTMJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Zhang Yi <zhangyi@everest-semi.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2734/2857] ASoC: codecs: wsa883x: disable runtime PM on unbind
-Date: Wed, 18 Nov 2026 16:02:48 +0100
-Message-ID: <20261118150340.065813316@linuxfoundation.org>
+Subject: [PATCH 6.1 2735/2857] ASoC: codecs: es*: Modify the registers related to ALC RECOVERY
+Date: Wed, 18 Nov 2026 16:02:49 +0100
+Message-ID: <20261118150340.097894478@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,42 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Zhang Yi <zhangyi@everest-semi.com>
 
-[ Upstream commit ea63182d71956dc33c6f08dc4171f1052f8409a9 ]
+[ Upstream commit dd64271fe1b935252cf454a72a558cbdb7be57c5 ]
 
-Probe enables runtime PM but nothing disables it on unbind, or when
-registering the component fails. A pending autosuspend can then run
-wsa883x_runtime_suspend() after the devm-managed regmap is freed, and
-dereference NULL, as seen on wsa884x.
+The register related to "ALC Capture Recovery Level" is ES8326_ALC_RECOVERY,
+not ES8326_ALC_LEVEL.
 
-Use devm_pm_runtime_enable() so runtime PM is disabled before the regmap
-is freed.
-
-Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261023171316.819857-6-srinivas.kandagatla@oss.qualcomm.com
+Fixes: 5c439937775d ("ASoC: codecs: add support for ES8326")
+Reviewed-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+Link: https://patch.msgid.link/20261026054837.13618-2-zhangyi@everest-semi.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa883x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/es8326.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index 94ac6729cb016..8b50a0b351884 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -1449,7 +1449,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		goto err;
- 
- 	ret = devm_snd_soc_register_component(&pdev->dev,
- 					      &wsa883x_component_drv,
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index 555125efd9ad3..83be78b4fd712 100644
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -91,7 +91,7 @@ static const struct snd_kcontrol_new es8326_snd_controls[] = {
+ 	SOC_SINGLE_TLV("ADC PGA Gain Volume", ES8326_PGAGAIN, 0, 10, 0, adc_analog_pga_tlv),
+ 	SOC_SINGLE_TLV("ADC Ramp Rate", ES8326_ADC_RAMPRATE, 0, 0x0f, 0, softramp_rate),
+ 	SOC_SINGLE("ALC Capture Switch", ES8326_ALC_RECOVERY, 3, 1, 0),
+-	SOC_SINGLE_TLV("ALC Capture Recovery Level", ES8326_ALC_LEVEL,
++	SOC_SINGLE_TLV("ALC Capture Recovery Level", ES8326_ALC_RECOVERY,
+ 			0, 4, 0, drc_recovery_tlv),
+ 	SOC_ENUM("ALC Capture Winsize", alc_winsize),
+ 	SOC_SINGLE_TLV("ALC Capture Target Level", ES8326_ALC_LEVEL,
 -- 
 2.53.0
 
