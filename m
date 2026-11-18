@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036669;
-	b=TBGNnsLU6iE+QsHxGecCQsu6cYZqIwfdDHJFX/TGeCYOy/NJ+vi+lVnY9lPWBHM4Tj0f
-	 U1g4M9aTJ2BF5FnyKBNLVVstXrGzLrZjaLRaGisNb1t7puylT2s627LhYpr6voKKPZbzB
-	 JIIiYtxkHqTkSqlsL9QFihs791TB8bPM6p9Dc8SHE1gD2epn9KmGQQj1quvGw7Pfz422E
-	 3/FJluJ/GP/Rb+OIc4Qmmg5b2tBgAfbxqManc2DtKMAlD4sJafiYG9YxbZ1bw4B2pH0uY
-	 qSJ7t5xAMHE9jd2F3GaVsoZRebBtGPLyoKE8U2DnpxSQYvcnLJLCnfkn5dV7MCeWdlw==
+	t=1795036671;
+	b=F4vGccSMlN/uDCesrCqgaO3rPXej6ofzQ4q6TiCI5rVAnS6TQ1Na1jg0qiCr59ra4Sug
+	 dMStiG09lWds1dTHRHJgUdVu69P4W2UBSle34/ej4bxnM3zU56NavL8mNev5mwjgj8UPg
+	 Ba613E4x8jZzgLDj69pDY0vnabQg4U4TOvqCUuakerP66R4bVwglgtS7zABA12AhFyUt6
+	 8vsvTR5IJRQuOleXlSdKMtqQ/9tFeCos89VjULXMZF2vOD4oJ7bUll7X9PMG1UtRs8puP
+	 o59QuspUa5R6zF+TgB31duQlvSSH2/QHgLhXFMxz+Tx8npjOF+uKxrv2jJ4rjBzvs0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yrc65Iop/FbSvPAJ/z00iQLRY76jUZrHYH/0qFVuAAk=;
-	b=qqmwJz67ETw+crhq00L9fr/Xcq+Bf1F/Ad0FVdWbZ6n0tj+pC3a6zGssNY3ULZS2mQMH
-	 kNGQRthUBOTfgggCwXslkpl1gAdUOu25vuFugt3GqkcEzZ4m6f21bg5w5pl1XYbGjCNiT
-	 RF9SLgJ9hfElON1TtMQMJSFHgerfbqJkFZ6JIjdk2G6lUR8PzoJBc64944Qui8/6Mdaii
-	 x2i/w4I0qLpOS1MVAWltHpUYlFR7nVPv1rITO1JSCW1dZXpNA5vuRdoCr+UGHE5nDLme5
-	 05NgTyNjLFFYM7hewZhA5+riQCIbv38joqphB7R5SgtBbIdLaEFWbn4FOzrKJBiFYUg==
+	bh=E58r34CWScoteNkO7vieDSRm6v21dR75A7rZ2cu+JTA=;
+	b=BIhAV4YMOkC4HPvdB9cQqGk/GVNbhKHgV0dSz01sRd2juM/BlTv5/dgSgOvs0YevxYxw
+	 YoMGFuSMvJRyH3vsRQrVeXR+ulLEG0IJpt+cVjjLBY49cWLp7k6FGrzVumk2zO99zzENX
+	 VjiMtX1XHbGl9lo4JZNhoBnt964CUFyWsBGdcgm+6/iokgQJAggr54Nmezzq4h6dsgjSy
+	 gYXRg3fxZuvrai9HmvNPKMsxh978veDSnfaCjw/V6qMkFZhYEXLRJWPyvZp6pjyXffcAh
+	 NVTxF2imEeQPtEL1WO5xouBmquiRgqpEg6h2eWrl70ZmK0kph1neT89tiR4kL7jmdvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XgaM0E/m";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZcqcf8p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2320B606A31C;
-	Wed, 18 Nov 2026 21:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F04606A320;
+	Wed, 18 Nov 2026 21:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XgaM0E/m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0D31F000C5;
-	Wed, 18 Nov 2026 21:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tZcqcf8p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B121F000C4;
+	Wed, 18 Nov 2026 21:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036669;
-	bh=Yrc65Iop/FbSvPAJ/z00iQLRY76jUZrHYH/0qFVuAAk=;
+	s=korg; t=1795036671;
+	bh=E58r34CWScoteNkO7vieDSRm6v21dR75A7rZ2cu+JTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XgaM0E/mxFVAT9xzxTFmQ1EW9HpNhoW5BZXJ5CQS/5LZD8W7KKsv0NXhZe1E+xuE4
-	 CwoRqwK+RieABtSTCTqGarC2xW085OuCHoOLx7wHsJNlHshzYOqPo6+0o8YVnJU7go
-	 HYB+Pt06FqN2vmbh1xnudQlHowADLySMZt/1jFFE=
+	b=tZcqcf8pGeLIGZfqwfkExJ5GzNcMUNDao7qFB8IEAiN9xxmEQk7Ai4G+VXB3SoqbA
+	 LIkIL18iB3fPQxs9ZoViVZAP5hdJnAo8FHatXmvFgT1jCjDXCTIH10AyBfqnsN8EJH
+	 QTTaOK0CkqgNjwoZpAXtgMsI84YHDUUzZ78/nVC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sungbyeongchan <tjdqudcks0424@naver.com>,
-	Giovanni Vignone <gio@octane.security>,
-	Robert van Eijk <robert@octane.security>,
-	Paolo Gentry <paolo@octane.security>,
-	Shubham Antil <shubham@octane.security>,
-	Allison Henderson <achender@kernel.org>,
+	Quanye Yang <quanyeyang@proton.me>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1141/3318] RDS/IB: validate receive fragment completions
-Date: Wed, 18 Nov 2026 15:29:23 +0100
-Message-ID: <20261118150354.295848575@linuxfoundation.org>
+Subject: [PATCH 6.6 1142/3318] mptcp: reset msk state on early connect failure
+Date: Wed, 18 Nov 2026 15:29:24 +0100
+Message-ID: <20261118150354.327408417@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,82 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Antil <shubham@octane.security>
+From: Quanye Yang <quanyeyang@proton.me>
 
-[ Upstream commit 65cf6863606b0507a7c3bd1711317e4f5d6b8b7e ]
+[ Upstream commit 29afe67082b2d33ab2e90c56c337235d725f023f ]
 
-rds_ib_process_recv() accounts every receive fragment as contributing
-min(i_recv_data_rem, RDS_FRAG_SIZE) bytes, regardless of the completion
-length. When a completion is shorter than the header-declared amount,
-receive accounting can advance beyond the payload supplied by the
-completion.
+mptcp_connect() can fall back before the subflow SYN is sent, for
+example when the netns is in an MPTCP blackhole, token allocation fails,
+or MD5SIG is in use. If the subsequent subflow connect() fails
+immediately (EAFNOSUPPORT, ENETUNREACH, ...), __inet_stream_connect()
+returns while the socket is still SS_UNCONNECTED and never calls
+->disconnect(). This was reported by Clashiko [1].
 
-Only an IB_WC_RECV completion has the buffer layout expected by this
-receive path. Other successful completion opcodes must not be interpreted
-as ordinary receive completions.
+The error path only dropped the token and moved the msk back to
+TCP_CLOSE. MPTCP_FALLBACK_DONE, allow_subflows and
+request_mptcp were left as after early fallback, so a later
+connect() on the same fd stayed TCP-only.
 
-Reject successful completions with any other opcode before processing
-their length. For ordinary receive completions, require enough payload
-to cover the amount accounted to the fragment before linking its page
-into the incoming message.
-
-This is compatible with the current transmit paths. MSG_ZEROCOPY is
-restricted to RDS/TCP, while RDS/IB copied and page-vector messages use
-full-sized non-final scatterlist entries.
-
-Found during an LLM-assisted source audit and validated under KMSAN with
-a malformed short receive completion.
-
-Reported-by: sungbyeongchan <tjdqudcks0424@naver.com>
-Closes: https://lore.kernel.org/netdev/20261006205204.1322102-1-tjdqudcks0424@naver.com/
-Reported-by: Giovanni Vignone <gio@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Reported-by: Robert van Eijk <robert@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Reported-by: Paolo Gentry <paolo@octane.security>
-Link: https://lore.kernel.org/netdev/8a6ee1d5336ae65b8ffdc8c40a1135657207e204.camel@kernel.org/
-Fixes: 1e23b3ee0e94 ("RDS/IB: Receive datagrams via IB")
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/633 [1]
+Fixes: 0235d075a592 ("mptcp: mark as fallback even early ones")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shubham Antil <shubham@octane.security>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261013025729.40815-1-shubham@octane.security
+Signed-off-by: Quanye Yang <quanyeyang@proton.me>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-1-932c9b182fc7@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_recv.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/ib_recv.c b/net/rds/ib_recv.c
-index 7310ac4d4be48..7f918fb377de4 100644
---- a/net/rds/ib_recv.c
-+++ b/net/rds/ib_recv.c
-@@ -949,6 +949,12 @@ static void rds_ib_process_recv(struct rds_connection *conn,
- 		}
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 7b08b5899ef39..331a10fc46eb5 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3952,9 +3952,16 @@ static int mptcp_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
+ 	 * subflow_finish_connect()
+ 	 */
+ 	if (unlikely(err)) {
+-		/* avoid leaving a dangling token in an unconnected socket */
+ 		mptcp_token_destroy(msk);
+ 		mptcp_set_state(sk, TCP_CLOSE);
++
++		spin_lock_bh(&msk->fallback_lock);
++		msk->allow_subflows = true;
++		msk->allow_infinite_fallback = true;
++		clear_bit(MPTCP_FALLBACK_DONE, &msk->flags);
++		spin_unlock_bh(&msk->fallback_lock);
++
++		mptcp_subflow_ctx_reset(mptcp_subflow_ctx(ssk));
+ 		return err;
  	}
  
-+	if (data_len < min_t(u32, ic->i_recv_data_rem, RDS_FRAG_SIZE)) {
-+		rds_ib_conn_error(conn,
-+				  "fragment shorter than header-declared length; forcing reconnect\n");
-+		goto done;
-+	}
-+
- 	list_add_tail(&recv->r_frag->f_item, &ibinc->ii_frags);
- 	recv->r_frag = NULL;
- 
-@@ -1004,7 +1010,12 @@ void rds_ib_recv_cqe_handler(struct rds_ib_connection *ic,
- 	 * event is processed.
- 	 */
- 	if (wc->status == IB_WC_SUCCESS) {
--		rds_ib_process_recv(conn, recv, wc->byte_len, state);
-+		if (wc->opcode != IB_WC_RECV)
-+			rds_ib_conn_error(conn,
-+					  "recv completion had unexpected opcode %u, disconnecting and reconnecting\n",
-+					  wc->opcode);
-+		else
-+			rds_ib_process_recv(conn, recv, wc->byte_len, state);
- 	} else {
- 		/* We expect errors as the qp is drained during shutdown */
- 		if (rds_conn_up(conn) || rds_conn_connecting(conn))
 -- 
 2.53.0
 
