@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054630;
-	b=UP0oEXvRMDjiA170H3cpjxQWHNbRNU3445zpjxsYlMXap4wRqEQMwaOIA4zbrGdNJcFG
-	 GUEHXis3v96ad5ogHUl3gaFQqzpCSYV+QZoUva7PoHbyjW1V+mkVT4wsoIWV9BR9oASbS
-	 Tu7RKUz/Jd3A8Y2BIlURqlcbKMHZCMa6DBQe1/7O42mZ3c6bjkY3/40i8V/zSnfnlo1Fe
-	 QMVJrT2h4IzHaHlFPnAs9CKQQ0mNb9QVqgpt9cwRZh6XFmwZ7lgqUsbm0MXx+FNGHA3Dl
-	 45T2dDcKlFqDuW6ujUcyxzlFMoOwtvBJGJ2WZsZemc8AjBVWRNzZiHADOFbV3pH3wvg==
+	t=1795054633;
+	b=1VETfTcTjCLN/lPOZLlmiWRB13G7WiDBNeeJ3vzSWnciCyL8LSsoY49Cs3MjJat36ruV
+	 WBmvi2YixhAtrF7eXQRa6nZ5wm7MZ4PkpPXtWgXKd8QkA0qpFQhyd4Bq5uXQ1htA5HcOx
+	 2ermyvBHNfgsh2BeTBA58IRjKfwpQxUQ01RV8De4t8NQ70ujwdV+iW574e6JjcZqUM8vI
+	 ruPnmt55a8tlUYocJ2IVWNHdUkZmk0oqHzc1r40vAY9ypuVl5XJLs2P7xnoxJX541m0ri
+	 ilLZU9swo1nlzrx0Sne3OOniSnvIchQ2oGsNBtJ4P8yTgcuGxj5RY63ER11UiOMvZMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054633;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tvGlKjYe6MEstCnd9PHa+/gQFhflOUMrt/eUakRBM9U=;
-	b=yao/hPwJrMC2z3QDkeISmZHwweKDVPDIE/FH2U/gPugnxenPEWcoC6k7npkA86R6EkK3
-	 iilkvHVQL2TezzfoAfLeY7ndb22rS27DG4PXlSdsvND3DskdBD9T9WF0fNe/d3blHaIPw
-	 3s48aup28lvivo7btUzj8Liv2Xc8e66RHwa2O6lLPVjJdVe7KyHQys4eLCbYflYt42ZWw
-	 sDsvVTiAsa5YQQK+XCn+D5QhIWSNrZAdUzfnyZywKq3uyKY5zS6WeeXCM5Pj14jZJ1oeb
-	 8xwNoUF44MoDrIYloQO98U7318xycCVVMHn8sz5NFTncwD2HkeTVTMJTDSXVYN0aRHw==
+	bh=TJDWI4NzfrNd5+WGQ8n4eZRrGro6RrfG3Ra3ntXx1eg=;
+	b=hKvUfLCkXU4iglyiZLXdltMBkowc1Bq82jdW6cxX8TcNHDHZm21UxIDx72WXotyDngpi
+	 KMMBuZKtk/fy5K3tVkIt3gSgN+CTZDJj7pWduvQrl+0vJcUFw7stJ6u2YQm7B6vUkD/ph
+	 Zmln5ssu+kxBGJrPHpWRHfOXRNsefxQmcoDB8SNxVTcBRoo8aw9Ah5VpyjP+NTRoUuqgT
+	 boCFzgIHR/osWqnqS2pkbdIxv0V6wnGw7HH4xz/Z6o7X41wB9fLzPUnRyiuvCVCQs1maX
+	 JGacxQlUqYvuuLCVfjSAtvZzIzsW2vo11tJ3/i9PcUEbLhDuQs3liqXqai70RcsGfQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6G2X0f+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpzxfQuF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DBC606A320;
-	Thu, 19 Nov 2026 02:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F4C606A325;
+	Thu, 19 Nov 2026 02:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6G2X0f+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915BF1F000C4;
-	Thu, 19 Nov 2026 02:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpzxfQuF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B95A1F000C4;
+	Thu, 19 Nov 2026 02:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054630;
-	bh=tvGlKjYe6MEstCnd9PHa+/gQFhflOUMrt/eUakRBM9U=;
+	s=korg; t=1795054633;
+	bh=TJDWI4NzfrNd5+WGQ8n4eZRrGro6RrfG3Ra3ntXx1eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q6G2X0f+fUQx0XQCgKQzodV6+0VTJOndDictiNXzT0YXSbguNO79rq9ZtFGHAlJyV
-	 jAH0+m93iYBDThkkdf2ScOQA4s0Jn6ZKhks3ItlitEdS/Eu2dzFtEMdP3oGiimBBaB
-	 8mJdXLTGzRhwRPY8ryEjh0pTCmnDWuvClSedKM3s=
+	b=vpzxfQuF+NYzkLbOtr4ZljyYVKiCpIfsL9fsweN6piJx3Re6BRV53PgIlTMdOtfP/
+	 ORoRKropfQ8D/shabuym3O6HSZ9uDcTaOprJPqPLjITdpsDN+Jspl/WHzgAqQ2/CK/
+	 uFG79sYSJTHmQj7akQMtD6X2lcg+LJLFEo3gPa1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,11 +44,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot <sashiko-bot@kernel.org>,
 	Ian Rogers <irogers@google.com>,
 	Stephane Eranian <eranian@google.com>,
+	Stefano Sanfilippo <ssanfilippo@chromium.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1344/2214] perf jitdump: Validate code_size against total_size in code load
-Date: Wed, 18 Nov 2026 15:50:20 +0100
-Message-ID: <20261118150105.214669131@linuxfoundation.org>
+Subject: [PATCH 5.15 1345/2214] perf jitdump: Prevent integer underflow in debug info size calculation
+Date: Wed, 18 Nov 2026 15:50:21 +0100
+Message-ID: <20261118150105.265506939@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,61 +73,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 06c7cf7a072fcd52e68471628c56630d2bdcc650 ]
+[ Upstream commit dfe8fe96efca3c32979dc0859f88e15b677d25f1 ]
 
-jit_repipe_code_load() reads code_size from the jitdump record and uses
-it to compute a pointer to the code blob:
+jit_repipe_debug_info() and jit_repipe_unwinding_info() compute payload
+sizes by subtracting the fixed header size from total_size:
 
-  code = (unsigned long)jr + jr->load.p.total_size - csize;
+  sz = jr->prefix.total_size - sizeof(jr->info);
 
-An oversized code_size underflows the pointer arithmetic, causing OOB
-reads into earlier heap memory.  Validate that code_size fits within the
-record (total_size - sizeof(jr->load)) before the pointer computation.
+When total_size is smaller than the header struct (from a truncated or
+corrupted jitdump record), the subtraction underflows to a massive
+value, causing an oversized allocation followed by an OOB memcpy.
 
-code_size is uint64_t but csize is int; values above INT_MAX wrap
-negative when narrowed into csize, which defeats the bounds check and
-sends the code pointer past the end of the record.  Reject those too.
+Validate that total_size covers at least the fixed header before the
+subtraction in both functions.
 
-Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
+Fixes: 598b7c6919c7 ("perf jit: add source line info support")
+Fixes: 0284fecd13b6 ("perf jit: Add unwinding support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: Stephane Eranian <eranian@google.com>
+Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
 Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/perf/util/jitdump.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 8157d0c295cf6..4ba0a87f5facd 100644
+index 4ba0a87f5facd..e15cf845fa86d 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -9,6 +9,7 @@
- #include <fcntl.h>
- #include <unistd.h>
- #include <inttypes.h>
-+#include <limits.h>
- #include <byteswap.h>
- #include <sys/stat.h>
- #include <sys/mman.h>
-@@ -455,6 +456,16 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	csize = jr->load.code_size;
- 	usize = jd->unwinding_mapped_size;
- 	addr  = jr->load.code_addr;
-+
-+	/* code blob lives at the end of the record, validate it fits */
-+	if (jr->load.p.total_size < sizeof(jr->load) ||
-+	    jr->load.code_size > jr->load.p.total_size - sizeof(jr->load) ||
-+	    jr->load.code_size > INT_MAX) {
-+		pr_warning("jitdump: invalid code_size %" PRIu64 " (total_size=%u) in code_load record\n",
-+			   (uint64_t)jr->load.code_size, jr->load.p.total_size);
+@@ -655,6 +655,10 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!(jd && jr))
+ 		return -1;
+ 
++	/* total_size must cover at least the fixed header */
++	if (jr->prefix.total_size < sizeof(jr->info))
 +		return -1;
-+	}
 +
- 	sym   = (void *)((unsigned long)jr + sizeof(jr->load));
- 	code  = (unsigned long)jr + jr->load.p.total_size - csize;
- 	count = jr->load.code_index;
+ 	sz  = jr->prefix.total_size - sizeof(jr->info);
+ 	data = malloc(sz);
+ 	if (!data)
+@@ -683,6 +687,10 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!(jd && jr))
+ 		return -1;
+ 
++	/* total_size must cover at least the fixed header */
++	if (jr->prefix.total_size < sizeof(jr->unwinding))
++		return -1;
++
+ 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
+ 	unwinding_data = malloc(unwinding_data_size);
+ 	if (!unwinding_data)
 -- 
 2.53.0
 
