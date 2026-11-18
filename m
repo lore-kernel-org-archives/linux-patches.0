@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016527;
-	b=Fac9gTow9KJlNwI7c2bLbv+dyZ/79se7yFoxT8+eIDwQ/Wfbr1VJToXUoC1Qic/roZTn
-	 V3TWjmdeMUa6RV0byjyoYwvrfFwCrLMP6YgoebcvQcE1m7tukavoSmO0n+z+gWjG5g78A
-	 5h62Gt40n+NDhxQCAO9AFWbX/10YMIeFzjcwQa/mvsvuNUANmu3Ez+SjEKQ+v4YyoBmec
-	 rkTSOSF591WKXu6Fh8JD3NGm0i90AYiiBvZvI3RODE6X3nYunFSrgRu+khdspoRf4GciL
-	 oNOwmJWebctKfTIcV7JzqYpEUN79RUQjf1fzCaGuHOevnGpysRU3/M4s45YD+9TEqOg==
+	t=1795016530;
+	b=ntlKv6IwKzwhCNnHFu1kgzUHgWEuMWT64x3i11DYVXUL7H5UBBdWdbG9b1KgzEH395vj
+	 PhrYcYTN3Sd5qMGhw86VYseNN7GNt/qWs+p7GhoxRY/RlfYkQ7qv8pXu/HWspr7687tGo
+	 zzUCT3Qx6PgCSf5ZurHgoNlumy8SaQvWS1CfHerunBR4XgVDPT3p9xv/cPe32Pl/7ZnoG
+	 UbacuhaPCVoAQOtQbqqOAnzM8mMx0lehTJD3J34aoB5ZInN3b5t5ioDLI1kkUag84cr/X
+	 8b0ZIHSuTdt9k7tqUM0U9GaD5tvHEs0turXCQuS2O/BZBRipAKnZtAIORQxNXuKMVpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HC6TyYZsgqO5V9FzzrLx+q9lphpPm/mhhzE8cBvapgk=;
-	b=Xs+FgGweWd+VJtImzx1hEb94++0/Vc+NsqelJH3UmBr6U+ehfFNaAV9bRM/6ibWx5Ram
-	 9YkEy6vRcUfMn+ATbWXMQUVWC/58NxvQL/twB2VxVi1goiD/KhQ3tE4jLfJ+UMDZgvgVR
-	 NYjrqLO55WM2KXJBEBssmjKBmWzgwVVC3E2URfpeCEJxiNE76idpvEJmpq9SicY7usWQ6
-	 wcuuw0LWRzfTcoUgDrj+y5nLUVNCXAWF/gc80wc4w1hb/AcbHNoDC6e/HkQY8gMn0RUnV
-	 ITdFiaAFB70xOIFp9p/VVuuQnfXY8WGTnzy6XzAWG7XXBFPTeN/2O6x81dDxSJDuSRg==
+	bh=t3Jj1Pp+y2Cmj7NXr/dIDRUX/4ytNNfN9f/VC8iRAJg=;
+	b=lRiSr069a1vdYegEKzGzthBUH6tCL86GKTKMQWN0UTwLt7mhjRc3G3gMpBfZJmcyoZyJ
+	 cUfO7TuXfQIFF4sUkIGlPCtr6BAaimO9964guf1AFhCDVt3ObnD07hfqlfE6ey+EZ3Jha
+	 HyqGFhXma0o9QnaTlSjDtFLHRu77dVHoQdxGYI+kSIGAoVdRinujEaG5Bo0NTiYBvd4gB
+	 wSWW8OTrTQPWfpewCfpMFj78vL5ED8KPnTkVWAMQspc8RPIZc9e6Dpvly580Jsh1whQo0
+	 jnPzQSgKpxrkh/CvjUxAd9qv8PfaMp81DQfxbBW/r6SYkT9r6zgGi0R2ywzmBqDPrKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLwy5Aiz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W44hW1hQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FCE606A320;
-	Wed, 18 Nov 2026 15:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38D2606A31C;
+	Wed, 18 Nov 2026 15:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLwy5Aiz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40AA1F000C4;
-	Wed, 18 Nov 2026 15:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W44hW1hQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0D31F000C4;
+	Wed, 18 Nov 2026 15:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016527;
-	bh=HC6TyYZsgqO5V9FzzrLx+q9lphpPm/mhhzE8cBvapgk=;
+	s=korg; t=1795016530;
+	bh=t3Jj1Pp+y2Cmj7NXr/dIDRUX/4ytNNfN9f/VC8iRAJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZLwy5AiztMUGjpNxqMwwT+y3mJ8yIP7sBiM/uZAT2/WmwVQRpiGem79IHkMWmj2zH
-	 /NfyYncZIjwRdXsEo7MLwkBFdm0mKbD+gLiU7eeMc9HOYjjrcZtv6pRmLio++2d4+B
-	 NVPv/6VmwIobHCY2KDwF/Mj9aFpY8HKeobc+7PdM=
+	b=W44hW1hQaS9pymLVPG1gIQyn5TaW5j1o2KAyaucWygqJe2k3+z0rbKMWSEmvix1NF
+	 jSdSPOAc5CEJ3PpMBb0idBO5HluEQa/Xt/xIMl/nj9PHuW9whsiLJByOwowdVfwND8
+	 mr/Zv8lA2XnoN01XczDDR/n4qndu0HqXpf70ZFec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Aksh Garg <a-garg7@ti.com>,
+	syzbot+50f9bc7ab8eb224b7629@syzkaller.appspotmail.com,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0558/2651] PCI: dra7xx: Remove device links to PHY
-Date: Wed, 18 Nov 2026 15:29:58 +0100
-Message-ID: <20261118150307.831424360@linuxfoundation.org>
+Subject: [PATCH 7.3 0518/2651] md/raid5: reject a per-device size smaller than one chunk
+Date: Wed, 18 Nov 2026 15:29:18 +0100
+Message-ID: <20261118150306.398483882@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,86 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: vladimir.oltean@nxp.com <vladimir.oltean@nxp.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 52cd9bb3772e82d792cb0def3c2a5a9b6bd24ffb ]
+[ Upstream commit 370ca0760b18c64592a258bcb057ff0a2531aabf ]
 
-This is a full revert of commit 7a4db656a635 ("PCI: dra7xx: Create
-functional dependency between PCIe and PHY").
+Both raid5_run() and raid5_resize() align the per-device size down to a
+whole multiple of the chunk size:
 
-The trouble with this is that a PHY consumer driver dereferences fields
-from struct phy, which will become no longer possible.
+	mddev->dev_sectors &= ~(chunk_sectors - 1);
 
-Since commit 987351e1ea77 ("phy: core: Add consumer device link support")
-from 2019, the PHY core also adds a device link to order PHY provider and
-consumer suspend/resume operations. The reverted functionality is from 2017
-and is redundant with the PHY core now.
+Neither checks the result, so a size smaller than one chunk silently
+becomes zero.
 
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Aksh Garg <a-garg7@ti.com>
-Link: https://patch.msgid.link/20260912161440.1032188-3-vladimir.oltean@nxp.com
-Stable-dep-of: 768e5d0936d0 ("PCI: dra7xx: Fix clock enable leak on probe failure")
+In raid5_run() that is harmless: the array size is derived from the same
+zero, so the disk just ends up with no capacity.
+
+In raid5_resize() it leaves the array inconsistent -- mddev->dev_sectors
+becomes zero, while mddev->array_sectors and the gendisk capacity keep the
+previous. A later raid4/raid5 -> raid0 takeover copies the zero into every
+rdev->sectors (raid0_takeover_raid45()), so create_strip_zones() builds a
+strip zone table whose zone_end is zero. Any read then passes
+bio_check_eod() against the stale capacity and hits the BUG() in
+find_zone():
+
+ kernel BUG at drivers/md/raid0.c:318!
+ Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+ Call Trace:
+   raid0_make_request
+   md_handle_request
+   submit_bio_noacct_nocheck
+   block_read_full_folio
+   read_part_sector
+   bdev_disk_changed
+   bdev_open
+
+Reject a size smaller than one chunk in both functions, so that a running
+raid4/raid5 array always has mddev->dev_sectors >= one chunk.
+
+The check is done where the value takes effect, not where it is assigned.
+mddev->dev_sectors is written from several places, and none of them can
+tell whether the value is usable: the chunk size may still change later.
+raid5_run() and raid5_resize() are where every input is final, so one check
+in each covers them all.
+
+Fixes: eea136d69f9f ("md: fix buglet in RAID5 -> RAID0 conversion.")
+Reported-by: syzbot+50f9bc7ab8eb224b7629@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=50f9bc7ab8eb224b7629
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260916095137.1157801-1-wozizhi@huaweicloud.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-dra7xx.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/md/raid5.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-index 6ae5b27e27b32..6c9e881776002 100644
---- a/drivers/pci/controller/dwc/pci-dra7xx.c
-+++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-@@ -9,7 +9,6 @@
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 45b00c9904215..fbc356e442458 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -8213,6 +8213,12 @@ static int raid5_run(struct mddev *mddev)
  
- #include <linux/clk.h>
- #include <linux/delay.h>
--#include <linux/device.h>
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-@@ -680,7 +679,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
- 	int i;
- 	int phy_count;
- 	struct phy **phy;
--	struct device_link **link;
- 	void __iomem *base;
- 	struct dw_pcie *pci;
- 	struct dra7xx_pcie *dra7xx;
-@@ -728,10 +726,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
- 	if (!phy)
- 		return -ENOMEM;
+ 	/* device size must be a multiple of chunk size */
+ 	mddev->dev_sectors &= ~((sector_t)mddev->chunk_sectors - 1);
++	if (!mddev->dev_sectors) {
++		pr_warn("md/raid:%s: device size is smaller than one chunk\n",
++			mdname(mddev));
++		ret = -EINVAL;
++		goto abort;
++	}
+ 	mddev->resync_max_sectors = mddev->dev_sectors;
  
--	link = devm_kcalloc(dev, phy_count, sizeof(*link), GFP_KERNEL);
--	if (!link)
--		return -ENOMEM;
--
- 	dra7xx->clk = devm_clk_get_optional(dev, NULL);
- 	if (IS_ERR(dra7xx->clk))
- 		return dev_err_probe(dev, PTR_ERR(dra7xx->clk),
-@@ -746,12 +740,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
- 		phy[i] = devm_phy_get(dev, name);
- 		if (IS_ERR(phy[i]))
- 			return PTR_ERR(phy[i]);
--
--		link[i] = device_link_add(dev, &phy[i]->dev, DL_FLAG_STATELESS);
--		if (!link[i]) {
--			ret = -EINVAL;
--			goto err_link;
--		}
- 	}
- 
- 	dra7xx->base = base;
-@@ -853,10 +841,6 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
- 	pm_runtime_disable(dev);
- 	dra7xx_pcie_disable_phy(dra7xx);
- 
--err_link:
--	while (--i >= 0)
--		device_link_del(link[i]);
--
- 	return ret;
- }
- 
+ 	if (mddev->degraded > dirty_parity_disks &&
+@@ -8546,6 +8552,8 @@ static int raid5_resize(struct mddev *mddev, sector_t sectors)
+ 	if (raid5_has_log(conf) || raid5_has_ppl(conf))
+ 		return -EINVAL;
+ 	sectors &= ~((sector_t)conf->chunk_sectors - 1);
++	if (!sectors)
++		return -EINVAL;
+ 	newsize = raid5_size(mddev, sectors, mddev->raid_disks);
+ 	if (mddev->external_size &&
+ 	    mddev->array_sectors > newsize)
 -- 
 2.53.0
 
