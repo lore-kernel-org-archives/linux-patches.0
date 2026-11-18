@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046634;
-	b=LJGx2zO8+JK7jKusYOsEq1wgt8DMMILNR6Ybf7VHw1rVb3qf7cxxaDQMdVpNTgNT4OLg
-	 xcpzvvOXcodTOwY1oj6d0aqPlKpwyS2A2ITs94iQxa3fK+KIcmqNkDYCn4wXnxePoziJ9
-	 aZbn87DPIIa2m6f2h16rMeOzFJPkPIojWdUlZKJBhs+qkzh2J1L4ghrgjY9QBapY2tl9j
-	 SbPD3OUQw6MdktBQzDYf17FLVVulZvzRtTwEYYddNQChHUoJ8S6nb8tdjiGjZvNrO6CJL
-	 7ROiKfmwAqYbm5c39/4BMONKf5yRtEKxB3Xq7Ae6Dtvk21azWNLy4G3inAkLqet3/RQ==
+	t=1795046636;
+	b=ufObfH/jcAn+YLUY+p7Rh1ixTqdNZQ3HfQ1kfGRscG3DFhrfTrLbAP2vSL5iHrekDOMH
+	 hRYn0N2N51WVAoyKY4sTXUaC5LPK+/9jvCBRH/L91GVri7Fs64K25G+3qWHYA+svcWvYn
+	 XBmYC671slhT4akE2aQtLG1oWBIjuAwxXdS1PSb04pxLq++W3YTqudatLvsDuPvaoaF/v
+	 wnsQyj8xWLwgZ9B2lWHfo9NgC2qv0M54aYNWQFDkl2tnM3Fale78ZSB8B3g3P5yA0HcTP
+	 sGGTahmTrpDSwMv6WlN/BUhJl7mK2cQJNbzGXQwGB9K8vXw5NyOxwEIU+kZv8NnDscA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046634;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sKblxi+Og98OMKviW8s6NJAs0KCYQJuG4N5W7qJoNKg=;
-	b=w/XUJnMnTqXTpmu7IIlR5+nQ1m/4JMkBPV1xM66N//M/Zm81tdcdANulfyQ2HzIsgVis
-	 d1eX4br1o998EoXqH3jQPbXamvlGg3BG1OPiwwwQAo8FfKNLsMeV81/uhK2xP7wfuPhp7
-	 omnCAkFw3hExD5vsYPJ/uoiAKN0g80OrRz9ROej2DKaDPTf2JhUgmQmGl+2D4m+LxIrl6
-	 RshMJXzGDzOq+WHz6OK6Pf4c/xD8CsFTr0qOJhyoB1/YPIOuQPeMZv93EFC2nfuwZdNaq
-	 svQOudoM3k9OhOqTJ2t2Uo/xf8ckniRDptH4SKdU2BgPtD2z3wIJcTavgC3mhU2z8Xg==
+	bh=2H/zG4A38PxsvNfSy5FTF/CJdyEaM+mfHYG9rgmJ6Ww=;
+	b=r4ZUMqKACGhHhgZB9jPgeQfm6Y5ma/jLpUlWPWdPmFCsN1NUuVUQBw5TrlnAZhzBvakG
+	 6iNnF4atjHy4oZU+OG2e+lIubu7uFRA79Lt1Qa2Brq1Jp1/RnlGRcplj2QD11+oDLaqq/
+	 lye/97n8Hz6vI+SJCV+glECnN41LIjYo2Ixr2RlC0W7OsQA8aHhvlrZNr2slTQWT/5xAr
+	 RRAnUlSqIvKl+EEAyTFsx2bKWfBMHX9vV+hRkiYSYyl3a6hoffp2EHOUj+QZGtSwTvqI8
+	 jpAZIWrp7TS6kLyJt/uFHPqqCOnsDb+xma+pLK/fO9Tu6X951TFAEsYWNyT0pLTByGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOx9pwDt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLRcsowG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2316606A31C;
-	Thu, 19 Nov 2026 00:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A3B606A320;
+	Thu, 19 Nov 2026 00:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eOx9pwDt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AD71F000C4;
-	Thu, 19 Nov 2026 00:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lLRcsowG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B131F000C4;
+	Thu, 19 Nov 2026 00:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046633;
-	bh=sKblxi+Og98OMKviW8s6NJAs0KCYQJuG4N5W7qJoNKg=;
+	s=korg; t=1795046636;
+	bh=2H/zG4A38PxsvNfSy5FTF/CJdyEaM+mfHYG9rgmJ6Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eOx9pwDt9VR3k+xMwWP4NHmFfQTsVIg2cccqPfkemYXEQSsGuveJhWHdq4fx+KLKr
-	 QOlCrPofKX8YfZqzz+FHuBHzO9mhuhzlDMpq9Xr43ZpbIXTlcW9gRFy/j+L+FgkcBF
-	 zFQouJCjkhxHx0VQeih399JdKPkYItQ0iwK00upQ=
+	b=lLRcsowGJf5+RfTvo+SNfOAtIDVDtvtMCDR4AztamtiByNa8pOdV12RHC7arYmUSB
+	 iUumIHC+9NKh/NjB9e4SNKMHeeiukE7Vh2uNrOJBwbA5CieFk+tboKzOEy+GZoH9iP
+	 bGd+CXl4eoHaBP7o6wv/atKQ0JVzMwQkR1RyTSGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Zhenhao Wan <whi4ed0g@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1352/2857] ALSA: usx2y: Refuse a retried DSP load after a failure
-Date: Wed, 18 Nov 2026 15:39:46 +0100
-Message-ID: <20261118150250.095248079@linuxfoundation.org>
+Subject: [PATCH 6.1 1335/2857] drm/nouveau/svm: drain fault handler before freeing svmm
+Date: Wed, 18 Nov 2026 15:39:29 +0100
+Message-ID: <20261118150249.499910926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,74 +69,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-[ Upstream commit 1f8101b6adc87a3ddbd51fcb6609251591758026 ]
+[ Upstream commit b46ddaf0823405f81e681eb26ec98508f3eb9a07 ]
 
-snd_usx2y_hwdep_dsp_load() sets up the asynchronous sequence URBs and
-the interrupt URB when the FPGA firmware image with index 1 is loaded,
-and then creates the ALSA devices.  If usx2y_in04_init() or
-usx2y_create_alsa_devices() fails, the URBs that were already set up
-are left in place.
+The SVM fault handler nouveau_svm_fault() looks up each fault's
+nouveau_svmm under svm->mutex, caches it in the fault array, then drops
+svm->mutex and dereferences the svmm across blocking faults
+(mmu_interval_notifier_insert(), hmm_range_fault()).
 
-The core keeps the index unloaded when the callback fails, so user
-space may issue the same request again.  The second attempt then enters
-usx2y_async_seq04_init() or usx2y_in04_init() with the URBs still
-allocated and trips WARN_ON(usx2y->as04.buffer) or
-WARN_ON(usx2y->in04_urb).
+nouveau_svmm is not refcounted. On DRM file close nouveau_svmm_fini() ->
+mmu_notifier_put() frees it asynchronously via call_srcu() without
+waiting for the handler, and mmget_not_zero() pins the mm, not the svmm.
+flush_work() on the fault buffer otherwise runs only at device removal
+and suspend, never on close, so a fault handled concurrently with a close
+can dereference a freed svmm.
 
-The URBs cannot be released at this point: the card may already have
-registered PCM devices that user space can still open, and the
-disconnect handler accesses the URBs without holding the DSP lock.
-Mark the chip as hung instead, so that a retried request is refused
-with -ENODEV and the assertions keep their meaning.  The URBs are
-released by snd_usx2y_card_private_free() when the card is freed.
+The instance is already unlinked by nouveau_svmm_part() earlier in the
+same close, so no new fault can resolve to it. Drain the handler in
+nouveau_svmm_fini() before the free, guarding the flush with a NULL check
+on drm->svm: on device teardown nouveau_svm_fini() runs first and frees
+drm->svm (NULL) after blocking the notify and flushing the buffer, so the
+handler is already drained; on per-client close drm->svm is alive and the
+flush runs.
 
-A failing usx2y_async_seq04_init() still releases its own URBs, so that
-path remains retryable.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: eeaf06ac1a55 ("drm/nouveau/svm: initial support for shared virtual memory")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261031191557.8460-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260814-nouveau-svm-svmm-uaf-v2-1-8e6590519f07@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usX2Yhwdep.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_svm.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
-index c0293af448fe7..89c7ff597a442 100644
---- a/sound/usb/usx2y/usX2Yhwdep.c
-+++ b/sound/usb/usx2y/usX2Yhwdep.c
-@@ -185,6 +185,9 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
- 	int lret, err;
- 	char *buf;
- 
-+	if (priv->chip_status & USX2Y_STAT_CHIP_HUP)
-+		return -ENODEV;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
+index d0bff13ac758d..75218519c29e0 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_svm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
+@@ -306,6 +306,19 @@ nouveau_svmm_fini(struct nouveau_svmm **psvmm)
+ {
+ 	struct nouveau_svmm *svmm = *psvmm;
+ 	if (svmm) {
++		struct nouveau_svm *svm = svmm->vmm->cli->drm->svm;
 +
- 	snd_printdd("dsp_load %s\n", dsp->name);
- 
- 	buf = memdup_user(dsp->image, dsp->length);
-@@ -209,11 +212,13 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
- 		err = usx2y_in04_init(priv);
- 		if (err) {
- 			snd_printk(KERN_ERR "usx2y_in04_init error\n");
-+			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
- 			return err;
- 		}
- 		err = usx2y_create_alsa_devices(hw->card);
- 		if (err) {
- 			snd_printk(KERN_ERR "usx2y_create_alsa_devices error %i\n", err);
-+			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
- 			return err;
- 		}
- 		priv->chip_status |= USX2Y_STAT_CHIP_INIT;
++		/* The fault handler caches svmm pointers under svm->mutex and
++		 * dereferences them after dropping it, across blocking faults.
++		 * The instance is already unlinked (nouveau_svmm_part), so drain
++		 * the handler before the free to release any in-flight reference.
++		 *
++		 * On device teardown nouveau_svm_fini() ran first and freed
++		 * drm->svm (NULL) after draining the buffer; nothing to flush.
++		 */
++		if (svm)
++			flush_work(&svm->buffer[0].notify.work);
++
+ 		mutex_lock(&svmm->mutex);
+ 		svmm->vmm = NULL;
+ 		mutex_unlock(&svmm->mutex);
 -- 
 2.53.0
 
