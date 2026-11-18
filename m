@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026286;
-	b=COVyMdW+p98XU0hmWxt4lO0TiAhYkkWm9Qi+tLBvni6X4ENWCmGmrm+NJq3RDXyiA+2r
-	 6V0zsNLo/Mf3zVsAbrCAb5SwWWHLP3eJC9SLvcRBxXxk9xB5qBZQ2f4RS00vxjpXhszNv
-	 4kgf5pXcjZ9wmgfxBTlo+UL8o2lvgPkqwND4+aXcJFykwhXOc9YA2e4KcED7Biv5mUmsF
-	 w0lzbmgYP9AkYQ0d9rQaoWpLJ04blSdnXTN+qPp0WGQEFG7QusUi4EK+cw9g811X/Ir5z
-	 IMGQ8PPHD4N9ELjgQi6t1P3fqHgVyjumHh+g2U1XzXIauXSPH6JoA93EmudfERz4W8Q==
+	t=1795026289;
+	b=rZ6XFzcaFH1OCS4Ua2OcNVomOuDTYDx7h4Fl/lgZ9rW2dFKe2PmXozR0sk0wA/k2+AYY
+	 jtEeYLltr+vy3pv/StNnjdSEo+L3cwUQjGzIbfxoWmSK2h44ZS4M3pkFhlBOaNf5Jpqjv
+	 18+MZcA9NWt8dbJWE2f4CyDsORqvzEBSed//mkfLVCuP3l0j/I5o76LAI8bICV1MFf3iT
+	 qvtuza5md223NHJh5RU9MbTdejNLpNluZv6sQQbuhUPMKTUirL5JFvtyq+HVIuw1JZhhE
+	 PNBFcUNjAsDQHtYzfVjXVSuUMXuiUckU1dhcqgrhsQ3NXcITbpDeFbwW7P4/nh31UPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=uadz7bt82yyKxdiiy7lScBgLP+76x2j0xlX6BCdl2UA=;
-	b=ALkLr6WBPl64Ec1xmRxiFONGockl+QwslAO6HZ7NoxibT/SvL8hgOQmaKDxbI3dQDWWH
-	 Or4fxRte+Jf4Lbm73bANOnxfvEVumSCWMj7ksAxb2oxzZZJf3V33ZVx+EcMnSjvOjY/9t
-	 zaxKCdOSaO3U6LX7z5oQ1xNham2vsT43alDtNTKImNjtjGD092rkQsRIHgjg1wVudOboW
-	 oYD+qA62YxcGKek/KLeHYH3Av0XoMgqT3cqsW4tKzhONwAzuHtTfU8b+QQZ834nrM8KhJ
-	 cV7mL9yYKk6kEPAzyezMnmmubnSbbwM/jQZx3iW/mjYqZ/kbTz+cP6iRH7yzZMIReuw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vgBllYzht2Y5JSpaCQ0AF5TbTeM257erwNBMYKizARU=;
+	b=TNp1JpOw7b3j3rNgwFOVWTOMCd9FnwLKc3i2Fsf9otvqfSe5KNoix5jEWvoCrcW2mDcB
+	 knneZys5vU7D9POFPSECKMZrAb8fWjg5TPKWSoQAX3eBkDuuVjT2YSHtJ1ODlYym4qiTk
+	 30zmckx9e68KBMJl/Zvvc00HpRwkJXLmMuG2oWk8317+OSN3hMha6xG2vs2n9NFf6WPW9
+	 xixn2M2HLxhqe6CSuk+LnC3gGymJ4P/3t8zVddPO3+j8QwBXJUU0gNuU6Us81jhl4EWE0
+	 FHaGarFAJfh/rtO7Z9M3q5CF6BQma3PmwjynPu8L4KALkD26F9gomh6GE6yavLfHB5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kaGJ7W/w";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mE1pEdyT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9334C606A32F;
-	Wed, 18 Nov 2026 18:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBEB606A32A;
+	Wed, 18 Nov 2026 18:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kaGJ7W/w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DED1F000C4;
-	Wed, 18 Nov 2026 18:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mE1pEdyT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B601F000C4;
+	Wed, 18 Nov 2026 18:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026286;
-	bh=uadz7bt82yyKxdiiy7lScBgLP+76x2j0xlX6BCdl2UA=;
+	s=korg; t=1795026289;
+	bh=vgBllYzht2Y5JSpaCQ0AF5TbTeM257erwNBMYKizARU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kaGJ7W/wKTug62AlVy6EQ7pSuNTub3wyI4p3Lf/fewvHSYGH5F0CF2Wa0Qc9Xy9jr
-	 KWlVh4lN6srfDKUY75QyGFVtcsGdp+d7F5k6rrIObA1jOls5H9lAFzBm9gGkBshdCI
-	 /ZfJlRUPD3GzqHd/vf7YE43AlM8cer/0opAQdHAo=
+	b=mE1pEdyTo5cxWf9M5mBNbbD1jitMcliqVwLVblUrDoG2mlU44l0OCEnnWjo/gudq5
+	 JW3oLl8fq6+RDTa10NefmjzqFTfPwLFBw1UnTQro/LiEt+quTSzA/xBkmg2geBb/qR
+	 IvCbEgm2ihEB4P02WeZ3yLNuLURfEkvYLirrTT2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1339/2151] drm/panfrost: Explicitly enable MMU interrupts at device init
-Date: Wed, 18 Nov 2026 15:51:14 +0100
-Message-ID: <20261118150210.832032347@linuxfoundation.org>
+Subject: [PATCH 6.18 1330/2151] seq_buf: Do not print an empty line from an overflowed seq_buf_do_printk()
+Date: Wed, 18 Nov 2026 15:51:05 +0100
+Message-ID: <20261118150210.519856039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,68 +61,214 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
+[ Upstream commit a09fb764832dd7dbb9ccc38a9830f7294889c8ae ]
 
-Because the device must be in a position to accept jobs between the time
-drm_dev_register() is called and autosuspend first kicks in, there's a very
-narrow window inbetween during which jobs targeting the tiler buffer
-object would time out, since the device's PM status is 'Active', but no MMU
-interrupts were enabled at device initialisation time.
+seq_buf_do_printk() prints a buffer line by line, then prints whatever
+follows the last newline. When a string has overflowed at exactly a
+newline, an empty line is printed since the pointer hasn't reached the
+overflow mark of the seq_buf. Switch to just check if the string is
+already empty and only print if not.
 
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+The only caller is the memory cgroup OOM report, so this could only ever
+add a blank line to a report whose statistics already did not fit.
+
+Add a test that registers a console to count the records that
+seq_buf_do_printk() emits. It counts the records carrying the test's
+marker, and the records holding nothing but a line feed that arrive
+after one, so that unrelated kernel messages do not disturb it. Both
+states that reach the flaw are covered: exactly full, and overflowed.
+
+Tests passed under qemu on ARCH=x86_64 with GCC 16.2.0 and CONFIG_KASAN=y,
+and on big-endian ARCH=s390 with GCC s390x-linux-gnu 16.2.0.
+
+Fixes: 96928d9032a7c ("seq_buf: Add seq_buf_do_printk() helper")
+Assisted-by: LLM
+Link: https://patch.msgid.link/20261005155708.1471260-1-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ lib/seq_buf.c             |   2 +-
+ lib/tests/seq_buf_kunit.c | 132 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 133 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-index f6b91c052cfbc..fcb3bac8fd458 100644
---- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
-@@ -330,6 +330,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
- 	WARN_ON(atomic_read(&mmu->as_count) < 0);
- }
- 
-+static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
-+{
-+	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
-+	mmu_write(pfdev, MMU_INT_MASK, ~0);
-+}
-+
- void panfrost_mmu_reset(struct panfrost_device *pfdev)
- {
- 	struct panfrost_mmu *mmu, *mmu_tmp;
-@@ -349,8 +355,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
- 
- 	spin_unlock(&pfdev->as_lock);
- 
--	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
--	mmu_write(pfdev, MMU_INT_MASK, ~0);
-+	panfrost_mmu_enable_interrupts(pfdev);
- }
- 
- static size_t get_pgsize(u64 addr, size_t size, size_t *count)
-@@ -911,6 +916,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
- 		return err;
+diff --git a/lib/seq_buf.c b/lib/seq_buf.c
+index b59488fa8135c..5161987fc8916 100644
+--- a/lib/seq_buf.c
++++ b/lib/seq_buf.c
+@@ -128,7 +128,7 @@ void seq_buf_do_printk(struct seq_buf *s, const char *lvl)
  	}
  
-+	panfrost_mmu_enable_interrupts(pfdev);
-+
- 	return 0;
+ 	/* No trailing LF */
+-	if (start < s->buffer + s->len)
++	if (*start)
+ 		printk("%s%s\n", lvl, start);
  }
+ EXPORT_SYMBOL_GPL(seq_buf_do_printk);
+diff --git a/lib/tests/seq_buf_kunit.c b/lib/tests/seq_buf_kunit.c
+index eb466386bbefb..0934dfb602ff6 100644
+--- a/lib/tests/seq_buf_kunit.c
++++ b/lib/tests/seq_buf_kunit.c
+@@ -6,7 +6,9 @@
+  */
+ 
+ #include <kunit/test.h>
++#include <linux/console.h>
+ #include <linux/seq_buf.h>
++#include <linux/string.h>
+ 
+ static void seq_buf_init_test(struct kunit *test)
+ {
+@@ -216,6 +218,135 @@ static void seq_buf_putmem_hex_overflow_test(struct kunit *test)
+ 	KUNIT_EXPECT_STREQ(test, seq_buf_str(&s), expected);
+ }
+ 
++/*
++ * Counters for the console that seq_buf_do_printk_test() registers while it
++ * runs. Only records carrying the marker are counted, so unrelated kernel
++ * messages do not disturb them.
++ *
++ * An empty record carries nothing to recognize it by, so count one only
++ * where the flaw puts it: directly after a record of ours, with nothing in
++ * between. That still misreads a bare line feed printed by another CPU in
++ * exactly that gap, but no longer counts one printed at any point while the
++ * console happens to be registered.
++ */
++#define SEQ_BUF_PRINTK_MARKER	"sbdpkx"
++
++static unsigned int seq_buf_printk_marked;
++static unsigned int seq_buf_printk_empty;
++static bool seq_buf_printk_last_was_ours;
++
++static void seq_buf_printk_capture(struct console *con,
++				   const char *s, unsigned int count)
++{
++	const char *text = s;
++	const char *prefix;
++
++	/*
++	 * Skip what printk() puts in front of the message: a timestamp,
++	 * and the caller id as well under CONFIG_PRINTK_CALLER, so strip
++	 * every bracketed group rather than just the first.
++	 */
++	while (count && text[0] == '[') {
++		prefix = memchr(text, ']', count);
++		if (!prefix)
++			break;
++		count -= prefix + 1 - text;
++		text = prefix + 1;
++		if (count && text[0] == ' ') {
++			text++;
++			count--;
++		}
++	}
++
++	if (strnstr(text, SEQ_BUF_PRINTK_MARKER, count)) {
++		seq_buf_printk_marked++;
++		seq_buf_printk_last_was_ours = true;
++		return;
++	}
++
++	if (seq_buf_printk_last_was_ours &&
++	    (count == 0 || (count == 1 && text[0] == '\n')))
++		seq_buf_printk_empty++;
++
++	seq_buf_printk_last_was_ours = false;
++}
++
++static void seq_buf_printk_run(struct console *capture, struct seq_buf *s)
++{
++	seq_buf_printk_marked = 0;
++	seq_buf_printk_empty = 0;
++	seq_buf_printk_last_was_ours = false;
++
++	/*
++	 * register_console() will not take an unmatched console without
++	 * CON_ENABLED, and unregister_console() clears it, so set it on
++	 * every run to keep the test repeatable.
++	 */
++	capture->flags = CON_ENABLED;
++	register_console(capture);
++	seq_buf_do_printk(s, KERN_INFO);
++	unregister_console(capture);
++}
++
++static void seq_buf_do_printk_test(struct kunit *test)
++{
++	/*
++	 * A registered console is a global object: printk() reaches it
++	 * through the console list from any CPU, and the console code writes
++	 * back into it, so keep it out of this function's stack frame the
++	 * way every other console in the tree does.
++	 */
++	static struct console capture = {
++		.name = "sbufcap",
++		.write = seq_buf_printk_capture,
++		.index = -1,
++	};
++	DECLARE_SEQ_BUF(s, 8);
++	DECLARE_SEQ_BUF(t, 16);
++	DECLARE_SEQ_BUF(u, 8);
++
++	/*
++	 * Fill the buffer exactly, so that the NUL takes the place of the
++	 * last byte and the string ends with the line feed before it.
++	 */
++	seq_buf_puts(&s, SEQ_BUF_PRINTK_MARKER);
++	seq_buf_putc(&s, '\n');
++	seq_buf_putc(&s, '!');
++	KUNIT_ASSERT_FALSE(test, seq_buf_has_overflowed(&s));
++	KUNIT_ASSERT_EQ(test, seq_buf_used(&s), 8);
++	KUNIT_ASSERT_EQ(test, strlen(seq_buf_str(&s)), 7);
++
++	seq_buf_printk_run(&capture, &s);
++
++	/* The one line that was written, and nothing after it. */
++	KUNIT_EXPECT_EQ(test, seq_buf_printk_marked, 1);
++	KUNIT_EXPECT_EQ(test, seq_buf_printk_empty, 0);
++
++	/* Check that lines without a trailing newline are shown. */
++	seq_buf_puts(&t, SEQ_BUF_PRINTK_MARKER "\n" SEQ_BUF_PRINTK_MARKER);
++	KUNIT_ASSERT_FALSE(test, seq_buf_has_overflowed(&t));
++
++	seq_buf_printk_run(&capture, &t);
++
++	KUNIT_EXPECT_EQ(test, seq_buf_printk_marked, 2);
++	KUNIT_EXPECT_EQ(test, seq_buf_printk_empty, 0);
++
++	/*
++	 * The buffer above was exactly full, where "len" equals the size. A
++	 * buffer that actually overflowed reaches the same bug by the other
++	 * route the old test had, with "len" one past the size.
++	 */
++	seq_buf_puts(&u, SEQ_BUF_PRINTK_MARKER "\n");
++	KUNIT_EXPECT_EQ(test, seq_buf_puts(&u, "yy"), -1);
++	KUNIT_ASSERT_TRUE(test, seq_buf_has_overflowed(&u));
++	KUNIT_ASSERT_EQ(test, u.len, u.size + 1);
++
++	seq_buf_printk_run(&capture, &u);
++
++	KUNIT_EXPECT_EQ(test, seq_buf_printk_marked, 1);
++	KUNIT_EXPECT_EQ(test, seq_buf_printk_empty, 0);
++}
++
+ static struct kunit_case seq_buf_test_cases[] = {
+ 	KUNIT_CASE(seq_buf_init_test),
+ 	KUNIT_CASE(seq_buf_declare_test),
+@@ -228,6 +359,7 @@ static struct kunit_case seq_buf_test_cases[] = {
+ 	KUNIT_CASE(seq_buf_get_buf_commit_test),
+ 	KUNIT_CASE(seq_buf_putmem_hex_test),
+ 	KUNIT_CASE(seq_buf_putmem_hex_overflow_test),
++	KUNIT_CASE(seq_buf_do_printk_test),
+ 	{}
+ };
  
 -- 
 2.53.0
