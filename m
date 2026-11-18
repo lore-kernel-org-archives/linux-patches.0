@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036613;
-	b=VsQwsqbPS9aTfLhRWH+9MuGjrSiM3BSIJXox/dIU6GLmoqv0k9zE59YxYgq3l6LjeLbm
-	 LLyRF9SWz7Qh77cdzYs9TsFURbTxzZ9nhNEvjQKu6AuFVUHUOhB01pYsX19wItgSAo9EJ
-	 C1dmZHSNMT05bphTJhOk7qIfmlGEJOEw/+/xQYjF0VPdZBLEmGUqkwykXXPcoKZwx7aow
-	 tvx7HEa1UyAymzpIMXEsDDJmwCslE3SCGbtl2IETqUAz3KMje5R5nOS0HlBA8bsLkL+VQ
-	 Xmgcz+P5P5KwfT5hYoqNELt0/upqwoE0Oa8ZMPm9hG7gfaAl4xFQJoGrfERNUcTd7Ew==
+	t=1795036616;
+	b=d+KcrUtHkj0VJ3xm7pwX1ZP4Yf3bsk04BnkOlxStcpp20MUP+NsgHN1aSUMvMlEksVQ+
+	 yq2peComhPS7qs4qdbg6WoSpGnNCsfx/WgV3R4dxFuKGXWbuDAIHX/2bBaDei12idasQ/
+	 swM4JTIAHDXLP5LvmT+spKPX3mTiAbN1RvDhqjUMG9gocpmeqZb+gY1alZkShv184Oc3a
+	 s6KUmYomrt8IgAv0dbMszywSvuhlz8IfSzGxN3LHsBM2yYQhXquu9rCZebAEwTKDvMmhe
+	 sxCTAHc9Kdv9v/OgGc3Y91wBsc764rOTRy9eKQsSbgvKVZ8krbcAXLcIrrZAEsC6YLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kc0DiB3N7q3dqw+bkT4MHkrVZZ6f9KRA9/5ejHAzzGQ=;
-	b=W/sDQGnG9oy1tcDZ8+Ge9W7yF/qopou73KaVa1bjBPsQNJl/XEVTVU8jTfHFAwab3bEi
-	 t66TZVnriK2flbDiplkw0i7POrW/peQ+tI6FlomBckC6WrbtuIE1ZJgml5e9JI2VyMdwA
-	 +j2pz0SN1VHLG91jWsNXNClz4Ur8mLlOw/SqT9WX8MHgac6LNDj6E2Dwr9pUDkaud7gZf
-	 U4GHxE7Q6h3mWz+GLZl69BN0jZ/BO0saCYCWpelVWl7qBXRLPr/fgQoTvaLuIJisAXLbb
-	 QUnW6eFexX7n8igjdO2hTpt6HBxtLHM4GNWQ+rNsTMpkQ/WxFiBFIyC1esIu1WE/FSQ==
+	bh=MCgjnNqEicz8vVNid0nsq/uXowo8ntpw6YlhPv71JVE=;
+	b=fpWP53k3phb7/bKw1Lkm6toYhW4EC1NR0gsBrxlMKHgbSrOppHSNWihNqvArQ6S2xZGS
+	 tL9k2SHaFFEU549KKiUeql6epc3s6+9iqfnMsnJt8O0zGTTF15v7dRKHyL3HxK80P35oD
+	 t2Sr89DZhk97b2z/BI93Cjc8ZgO863A7x6NJJpe+HlnKzPyshzM8QjAK4Tp44tg1fR+Bw
+	 OEIYO6o7ntpBJ5Kyvq3KYzKMFyWEC7oCT2ddq74xfj70mSeksHTX9lB5Otg5QTABxdn1v
+	 8V5o1TLRcwWTn6uDY/OcWIR61EaGo7Fa2ScDzAwZjVDz+ylQ1JZ3xF02EiB1JiUaQ1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z9/Mw7Uu";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uj7TPnEp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBB9606A320;
-	Wed, 18 Nov 2026 21:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAA7606A31C;
+	Wed, 18 Nov 2026 21:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z9/Mw7Uu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EE81F000C4;
-	Wed, 18 Nov 2026 21:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uj7TPnEp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665151F000C5;
+	Wed, 18 Nov 2026 21:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036613;
-	bh=kc0DiB3N7q3dqw+bkT4MHkrVZZ6f9KRA9/5ejHAzzGQ=;
+	s=korg; t=1795036615;
+	bh=MCgjnNqEicz8vVNid0nsq/uXowo8ntpw6YlhPv71JVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z9/Mw7UuNwTReE56EHRUZGtn25nvhHqNPFviUHQnLkYUqdLnT5Ic8NHVcwTIJ1P7f
-	 0H7yG7QCLDfuK6aQYS5Zm4tVuTBHpGboa1qoCvysawruCUIUNilIMcnzvGce9nUv5F
-	 3/PsrGRjbDxYJweyGjsILD7kBZSyN8j6V8he5nAc=
+	b=uj7TPnEpOGYRyLCR5cIa99t+dLQackCrAhS3+b3V0GWgHCdQkrdZFRaQUoRrcoCtD
+	 ETDnAgEGALbvL91c46SOWnmWV0zSzIqNdpysmU+piPzx/EcCptUtt7rK10OQaKNaUP
+	 GZ9A8K0kKkIWKDVUT65Uhd7E7gVBdfZx3PP67FKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tal Zussman <tz2294@columbia.edu>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1123/3318] gfs2: fix the escaped block copy in gfs2_before_commit()
-Date: Wed, 18 Nov 2026 15:29:05 +0100
-Message-ID: <20261118150353.724996108@linuxfoundation.org>
+Subject: [PATCH 6.6 1124/3318] spi: jcore: fix divide-by-zero when speed_hz is zero
+Date: Wed, 18 Nov 2026 15:29:06 +0100
+Message-ID: <20261118150353.754947826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 1a4aeb6d6a08af1a2e2c52c84170561625819377 ]
+[ Upstream commit 7db773075501248893c22b11bedc6745d6d0be45 ]
 
-Commit d68d0c6c3fc7 ("gfs2: Use memcpy_{from,to}_page where
-appropriate") made the escaped buffer copy read from the mempool page
-it had just allocated instead of from the buffer, so the block written
-to the log is whatever the pool page last held. If the journal is
-replayed after a crash, the block is restored from that and the file's
-data is corrupted. Only escaped buffers are affected: jdata blocks
-whose first four bytes match GFS2_MAGIC. Copy from the buffer's folio
-instead.
+jcore_spi_baudrate() computes hw->clock_freq / 2 / speed without
+validating speed. The SPI core fills transfer.speed_hz from
+spi->max_speed_hz when it is zero, and jcore_spi_probe() never sets
+host->max_speed_hz, so the clamp in __spi_setup() is skipped. A
+spi_device created via the sysfs new_device interface (or a DT node
+without spi-max-frequency) therefore has max_speed_hz == 0, and any
+SPI_IOC_MESSAGE transfer reaches jcore_spi_baudrate() with speed == 0,
+causing a division by zero and a kernel panic.
 
-Fixes: d68d0c6c3fc7 ("gfs2: Use memcpy_{from,to}_page where appropriate")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Clamp speed to a minimum of 1 Hz before the division so the divisor is
+never zero. The computed divider then truncates to the register field
+width and the transfer simply runs at the slowest supported rate.
+
+Verified by inspection of the __spi_setup() clamp and
+__spi_validate()'s speed_hz handling; the division-by-zero path
+requires the J-Core controller, which was not available.
+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Fixes: 2cb1b3b3ac0a ("spi: add driver for J-Core SPI controller")
+Cc: stable@vger.kernel.org # 4.9+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261014-spi-jcore-divzero-v1-1-a8205d30f2d1@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/lops.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-jcore.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/gfs2/lops.c b/fs/gfs2/lops.c
-index 483f698070622..2978952208173 100644
---- a/fs/gfs2/lops.c
-+++ b/fs/gfs2/lops.c
-@@ -700,7 +700,9 @@ static void gfs2_before_commit(struct gfs2_sbd *sdp, unsigned int limit,
- 
- 				page = mempool_alloc(gfs2_page_pool, GFP_NOIO);
- 				p = page_address(page);
--				memcpy_from_page(p, page, bh_offset(bd2->bd_bh), bd2->bd_bh->b_size);
-+				memcpy_from_folio(p, bd2->bd_bh->b_folio,
-+						  bh_offset(bd2->bd_bh),
-+						  bd2->bd_bh->b_size);
- 				*(__be32 *)p = 0;
- 				clear_buffer_escaped(bd2->bd_bh);
- 				unlock_buffer(bd2->bd_bh);
+diff --git a/drivers/spi/spi-jcore.c b/drivers/spi/spi-jcore.c
+index e37ca22e04ba6..2bde899eb2b49 100644
+--- a/drivers/spi/spi-jcore.c
++++ b/drivers/spi/spi-jcore.c
+@@ -84,6 +84,8 @@ static void jcore_spi_baudrate(struct jcore_spi *hw, int speed)
+ {
+ 	if (speed == hw->speed_hz)
+ 		return;
++	if (speed <= 0)
++		speed = 1;
+ 	hw->speed_hz = speed;
+ 	if (speed >= hw->clock_freq / 2)
+ 		hw->speed_reg = 0;
 -- 
 2.53.0
 
