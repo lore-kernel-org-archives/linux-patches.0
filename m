@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027925;
-	b=TDu8OzOrSQCfciQSoN7Mcpih6dc6UZjfVYBLxvHjFGVAxLGcb7t8qmciHF1ekwta2O70
-	 /HX8FAMFXbHjZfhQbepjU6aW+4JPB4Hx23mkfS/4lWWFvkbarpPC8oWP+7993InwZEtsu
-	 3K+ax+euQoGqiN5BI7U5arDTRS5KvRNQydDSPIwMrSaZyXQ/b3GDwYWmT5qtQb+11to9/
-	 lotT2P1jkaUA3ONAu5HvRo1aiQdvrXVXpLSVfeBs3XyDeSeis1VSGqghmvAea3bZO9Tyh
-	 CGlWDvbXcBey/1f6FHodOqU/Icf0Zyzie/A00q1XGTMMR+kLK2fabWQGETZ+pJenkTg==
+	t=1795027928;
+	b=2WmmiKCGiT9fDXgGacCNts66gEWyNipRTI9YhEghtmEg+esKHhSudb9Q+VttkJ0O7MdG
+	 HRMjODA5zQuSZ2cY6ncaW/gI3nU5cBA/jRAh5qF4sV92/4r0fbE4HTbPqSyYWJrOjE9H+
+	 4VUoLPbakg/bQig6eda+pObx2IMRmobUgyWr5Qd4d71Kzi29/trYdvcau0DZxSXY3a55f
+	 FMLqquvx4RJC9SCvKBdD0tUFFR3EaQXT5M11YGX/rVD72IDXkyc4WJl56CYmEO+RQd9GS
+	 GrIuM0cXpNWsHnGhJQRTo+bwDNo9uI/yfZH8r/kS19FTHGLdBnengci8cV7uWbIN4sA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YuTKXkktnIfmYDbwazWYJS8dkwSZR59etjJ2BQVHDUM=;
-	b=HV7vHfjnwFRGUK5afF1rOCWjyll2ECNo9fXnjr7VLfqDHFKSpchThz7bqwC6b28b7zsl
-	 ryqXBy9ClhEjYHod+a4GU4U7jV8X5Vcdhnkc1eU7gxKB0lg2Ned34Ub16gT7EOe4qn2/3
-	 5zv/wYdZnOVhEwvyOcpnHfVrmDIkJ2xcn2CiQ6llMsdH/pu8EuQaaTSJlxhDGX36VX32b
-	 001l3dEjCL2EJvHsmTbZN6+lJIHn52VYqm9hITMLdBU5o8W+r0sfmcQtNKAc0Og9BMR1Y
-	 cCFdAZ8jGNgpM1g1kXV5fE+w31W4RUsHUFIF8hVWr8Q/5ihjtJRdqV9XNCOu+dw1D3Q==
+	bh=6clbrUfLXIDVgyKY81Y56mkOWZrF9VHDxrMbRxKLuPI=;
+	b=CWs1u8duBwsmU1mqfaZSrylppbcjDWZPC8YbnS8uqNzrChxiLG0fS27iN7KycveXu470
+	 fIO3l2XblJfA4ff8qG2+ZzWkLBAggYrtADblXcPupzP+CLxx/JodPH+arFJmTJqhjk98j
+	 e9o7KEWwtqGLs04EPiGtm/odTvboQuVJt0p7k2iXCdpG0QbDMi6QdrmeH/IM0lO2pXdF/
+	 S0GRQdNbq2S8zfq4V3fGnH6ltCmF+hzME/eYXHYwjjbrViX4KNlEfJbRBu08JOFtcK5+n
+	 sO3Ew88tLxwhyOQpQNtUTftG4ykxyQ/v+MTEuWrVcy0JTk22TCorpaJ+fp4MH+Z+pRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hYPVJVDx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhvbF2nj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858BD606A320;
-	Wed, 18 Nov 2026 18:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B1E606A31C;
+	Wed, 18 Nov 2026 18:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hYPVJVDx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D718B1F000C4;
-	Wed, 18 Nov 2026 18:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhvbF2nj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983171F000C4;
+	Wed, 18 Nov 2026 18:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027925;
-	bh=YuTKXkktnIfmYDbwazWYJS8dkwSZR59etjJ2BQVHDUM=;
+	s=korg; t=1795027928;
+	bh=6clbrUfLXIDVgyKY81Y56mkOWZrF9VHDxrMbRxKLuPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hYPVJVDx/zwmbEJyThDu2NpQPG6qgnjbzaFq1vUtfgmp8OiVX1j44An8liu6yHlSn
-	 TmRqu8aQWVBzoO2wbToz/MVMmHYjp/N3EbYPWmAIXFlcW5wMj8FR6w3UblP50PsvMc
-	 VmONpJDEBvb1A42Dr77IzOgAzRYLyRFdVT2ftnIo=
+	b=dhvbF2njSbYTw684SukNf/5Pu5t0MbMCG2+Y/dENhsGiDlbGKnIrKPjI5V71waK6f
+	 s+9W379075p35sAAP0BvzdRrHmBD9tNhWjFlnj3UWXtNvylJMIvIcpinylr5mPWZQ7
+	 MZe8EJ/UO2mtjZqNGK3hWfByJeF/2qXAlW6yQtb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tal Zussman <tz2294@columbia.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1955/2151] ceph: fix writeback_count leak when a bounce page allocation fails
-Date: Wed, 18 Nov 2026 16:01:30 +0100
-Message-ID: <20261118150232.979086547@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 1964/2151] selftests/thermal: allow cross builds of the Intel tests
+Date: Wed, 18 Nov 2026 16:01:39 +0100
+Message-ID: <20261118150233.296345522@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,57 +67,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tal Zussman <tz2294@columbia.edu>
+[ Upstream commit ff4194e54f840b4df4eb2489c63ee88283895efc ]
 
-[ Upstream commit 7807710d88ad03e7ca9b5f79f518f040db2a4e09 ]
+The power_floor and workload_hint Makefiles build nothing when
+CROSS_COMPILE is set, even for an x86 target, and they include lib.mk
+only on x86. Other architectures therefore have no install or
+emit_tests rules for these suites, and their installation fails with a
+missing target.
 
-ceph_process_folio_batch() calls is_write_congestion_happened(), which
-increments fsc->writeback_count, before calling
-move_dirty_folio_in_page_array(). If the fscrypt bounce page allocation
-there fails, the folio is redirtied and never makes it into the page
-array, but the count is never dropped.
+Select the x86 tests from the target ARCH when it is given and from the
+host's SUBARCH otherwise, and include lib.mk unconditionally so that the
+suites install and emit an empty runlist on other architectures. Use a
+private ARCH_PROCESSED instead of the ARCH override added by
+commit 5a1292137e89 ("selftests: fix ARCH normalization to handle
+command-line argument"): the override changed the value lib.mk uses to
+pick the clang target, whereas leaving ARCH unset lets lib.mk use the
+compiler's native triple. A command-line ARCH such as x86_64 is still
+normalized for the selection, while an ARCH spelling that lib.mk does
+not know, such as i686 with LLVM=1, is rejected as in other selftests.
 
-write_congested is only cleared when a decrement falls below
-CONGESTION_OFF_THRESH, so the leaked counts set congestion early and
-eventually leave write_congested set for good. Every WB_SYNC_NONE
-writeback then returns 0 and background writeback stops entirely.
-
-Bump the count only once the folio is in the page array.
-
-Fixes: d55207717ded ("ceph: add encryption support to writepage and writepages")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260902-remove-wait-on-page-writeback-v5-0-0b512e77e75b%40columbia.edu?part=1
-Assisted-by: Claude:fable-5.1
-Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 27801542b2b8 ("selftests/thermel/intel: Add test to read workload hint")
+Fixes: d4d27e5a1a88 ("selftests/thermel/intel: Add test to read power floor status")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patch.msgid.link/20261014200127.1363472-4-sashal@kernel.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../selftests/thermal/intel/power_floor/Makefile     | 12 +++++-------
+ .../selftests/thermal/intel/workload_hint/Makefile   | 12 +++++-------
+ 2 files changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index c10a7a32e5c5e..9e123f8e72720 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1408,8 +1408,6 @@ int ceph_process_folio_batch(struct address_space *mapping,
- 		doutc(cl, "%llx.%llx will write folio %p idx %lu\n",
- 		      ceph_vinop(inode), folio, folio->index);
+diff --git a/tools/testing/selftests/thermal/intel/power_floor/Makefile b/tools/testing/selftests/thermal/intel/power_floor/Makefile
+index 07463c2160e09..16d26eab55652 100644
+--- a/tools/testing/selftests/thermal/intel/power_floor/Makefile
++++ b/tools/testing/selftests/thermal/intel/power_floor/Makefile
+@@ -1,12 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
+-ifndef CROSS_COMPILE
+-ARCH ?= $(shell uname -m 2>/dev/null || echo not)
+-override ARCH := $(shell echo $(ARCH) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
++top_srcdir = ../../../../../..
++include $(top_srcdir)/scripts/subarch.include
++ARCH_PROCESSED := $(shell echo $(or $(ARCH),$(SUBARCH)) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
  
--		fsc->write_congested = is_write_congestion_happened(fsc);
+-ifeq ($(ARCH),x86)
++ifeq ($(ARCH_PROCESSED),x86)
+ TEST_GEN_PROGS := power_floor_test
++endif
+ 
+ include ../../../lib.mk
 -
- 		rc = move_dirty_folio_in_page_array(mapping, wbc, ceph_wbc,
- 				folio);
- 		if (rc) {
-@@ -1423,6 +1421,8 @@ int ceph_process_folio_batch(struct address_space *mapping,
- 			break;
- 		}
+-endif
+-endif
+diff --git a/tools/testing/selftests/thermal/intel/workload_hint/Makefile b/tools/testing/selftests/thermal/intel/workload_hint/Makefile
+index 49e3bc2b20f9d..e53d6ecd9f8de 100644
+--- a/tools/testing/selftests/thermal/intel/workload_hint/Makefile
++++ b/tools/testing/selftests/thermal/intel/workload_hint/Makefile
+@@ -1,12 +1,10 @@
+ # SPDX-License-Identifier: GPL-2.0
+-ifndef CROSS_COMPILE
+-ARCH ?= $(shell uname -m 2>/dev/null || echo not)
+-override ARCH := $(shell echo $(ARCH) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
++top_srcdir = ../../../../../..
++include $(top_srcdir)/scripts/subarch.include
++ARCH_PROCESSED := $(shell echo $(or $(ARCH),$(SUBARCH)) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
  
-+		fsc->write_congested = is_write_congestion_happened(fsc);
-+
- 		ceph_wbc->fbatch.folios[i] = NULL;
- 		ceph_wbc->len += folio_size(folio);
- 	}
+-ifeq ($(ARCH),x86)
++ifeq ($(ARCH_PROCESSED),x86)
+ TEST_GEN_PROGS := workload_hint_test
++endif
+ 
+ include ../../../lib.mk
+-
+-endif
+-endif
 -- 
 2.53.0
 
