@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060692;
-	b=N9qj3mMNIypE99R3NCnrJ7Qt6WPYzGm04XnBchi0lmp+aOvVPe+aBo0OyOZwQA2JbjS9
-	 U1iDHvNG9TEOV91ogyjxdKRgs6okX+Ti0ftq0c993nT6BWVej800xvu4wDldYIkG71nTf
-	 CSGNvxXlJ4NwvICqEPyTdrDa+bSLF5aVi1zjzeohGQUmIbGP1gCBCkGi/twvFZpanZOuv
-	 iIFSphCzMviU+lGy8ho1PYuc5iw1JTM30esvtn5L+z/lWrWSefG9cO5SoboXbv35xwpKO
-	 ZygRDrX0FSfIXVENACQT/NFlxMmeWao0XnlyAE1fiCFUXPBfGm7fmcJGSHWiRlXm7sA==
+	t=1795060695;
+	b=3uqVkIiM4Jp/fm3RFFkjXs9ueBPehvOrhiVVCukcenqQCOI9ABDaR4SrX11xKxy7P2N+
+	 9Lzt61NwkOA6+j7ugFBvcegvjAFxj/gWLe9/gGXxQKqfqHcSXcHvSgbR9d6lAfPjWAdxR
+	 aXvd148DlTtOTBsx3493w0dlUCOiqMik8Gbt683lNAxLB/m7VCexyint88LaEYY81E3Rq
+	 MCeoY1dXh8fFpkj3GYkOR7Ax+bEFDYdeMlMGMrDrcSx+smxTzKiBkYI5Hcy7kzq5YdO13
+	 dKNYfgKfRssd3w5x7f1yBxFvrFSpmpFMuN0975AfX1iwSya+rk89/M1kHEOMEYp/vmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LzOBUyXc12OQ4iPODB9jOPdBLYnKpLxoTX2wJPtD6QY=;
-	b=Tv4ctNqdq6672kRH8GZoU2N34a1OLzLnamGbbPWhQa0lFlc1AyAUSVRx+Buv8UFUi8qO
-	 vBVrPLhSxi909O6HtMyQeAmCXNJavj12aDTH7CQZvqm+KuLnLCnoGTe1R4CH94WWzDiGL
-	 1Z/frngc7sYTtUHytbHmIMDTZM0I6klsLl1dLgfSR/WdxFii7XWhlSKvOg6dF1cSNUHTC
-	 sgqgSNKX5tOQ6oOeIdZPrib1wdmhfSxfthrYckH++0R/a0LuaRQlkKfzbsbsnnIwm3Vis
-	 vcPU8pnWYkECbYggBxlC07k2cnb5F3LHDa8Z431Zmdc5e6u9JxJBuJ1Q+jb1RDsM1Xg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YhU+Hh0iFk1DyxdJAJYVSU5+RFg49izFdg/ar/52CNc=;
+	b=4VCPPeecek7ZgJKAxtMQAhsF56TqSLC51AlOzCpP3t+MgiZ6KwZpe/+Fe+K1XTFt0X2C
+	 Z5QklUNR3gfBCRD/srBUFwMgS8RTiO4Dud0s1ppspvsHne+Frvl2ebX2s5SiXM9g8sjsJ
+	 u2I+8rmq6w1BuUnugLyWcBdNG/j2+SMabDFmvVn0ljTAM7W9OoYlOFggDOG+0OH0SLqW+
+	 SSUA/9wbDXWI41+d7IK6unJQCgUKRgJRT9m2mlQvvSuJLvxbTwgwekSGoa7s/1HNgqAQs
+	 At/nnlP/gkgW4vKsShpBz20SwsEen3x+9JRRzX3Nft5RdLDbmvFmud/BSzttLffM8ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="o4sr1oX/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FziTLYY8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4F5606A320;
-	Thu, 19 Nov 2026 03:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CED6606A320;
+	Thu, 19 Nov 2026 03:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4sr1oX/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61E11F000C4;
-	Thu, 19 Nov 2026 03:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FziTLYY8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C7F1F000C4;
+	Thu, 19 Nov 2026 03:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060692;
-	bh=LzOBUyXc12OQ4iPODB9jOPdBLYnKpLxoTX2wJPtD6QY=;
+	s=korg; t=1795060695;
+	bh=YhU+Hh0iFk1DyxdJAJYVSU5+RFg49izFdg/ar/52CNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4sr1oX/MsCzknv4aZ51Xh2OE2MN9LTQKJPFOmt4AYQCKR3LsO/cXeH59QVqA9Ux9
-	 G8RrWdNK6oNAopsZKbSuLi4GvK8QDzejhSIOn4pE38wd/sQElRvvWwTrQBXCyDakzS
-	 OMKeK4CW0y8AHL6aDNzYIHIgjwHEbN6t2umxuekI=
+	b=FziTLYY84hWqVGfX/CN+e/xpL3VjnbUWpEUhjgsifDBXeT6ItG1gi1hs1mQIqFrYO
+	 AnYcITOl6S6uNSggM2Pch5ky+QdzVNNBPcMm39Fe7EkgXje7ie5kibKEri5e3+3XfX
+	 aUaqCbToSZonNBryjvCX3T3xaWzfWKFFaMiPOWWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	David Gow <david@davidgow.net>,
-	Michal Simek <michal.simek@amd.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1248/1848] microblaze: uaccess: Zero out destination on failed get_user()
-Date: Wed, 18 Nov 2026 15:54:46 +0100
-Message-ID: <20261118150012.045801594@linuxfoundation.org>
+Subject: [PATCH 5.10 1239/1848] ARM: dts: stm32: lxa-mc1: change stdout-path baud rate from 9600 to 115200
+Date: Wed, 18 Nov 2026 15:54:37 +0100
+Message-ID: <20261118150011.715742422@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,49 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 54c35131e628e1a18f02365495a24a73a1fb515e ]
+[ Upstream commit fc3c0ffefc169719316eddb8c36e2427e11ce713 ]
 
-On failure get_user() is supposed to zero out the destination variable.
-This is documented in the kdoc of the microblaze get_user()
-implementation and validated in lib/tests/usercopy_kunit.c.
+The default baud rate when none is specified is up to the DT consumer.
 
-Currently that zeroing is missing.
+In the case of the Linux STM32 serial driver, it defaults to 9600 baud,
+which differs from the 115200 baud that this board's barebox bootloader
+configured.
 
-Add it.
+This went unnoticed, because barebox automatically fixes up a console=
+command-line option that looks like this on the LXA boards:
 
-Fixes: 0d6de9532663 ("microblaze_mmu_v2: uaccess MMU update")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: David Gow <david@davidgow.net>
-Link: https://patch.msgid.link/20260914-kunit-microblaze-v2-1-7d5756e858f8@weissschuh.net
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+  console=ttySTM0,115200n8
+
+This had precedence over the 9600 fallback baud rate.
+
+But when EFI booting a kernel via GRUB, we run into this issue, because
+the barebox-provided command-line is disregarded by GRUB.
+
+Fix this by explicitly setting the baud rate to the correct 115200.
+
+Fixes: 666b5ca85cd3 ("ARM: dts: stm32: add STM32MP1-based Linux Automation MC-1 board")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-1-59b60a5069ff@pengutronix.de
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/include/asm/uaccess.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/include/asm/uaccess.h b/arch/microblaze/include/asm/uaccess.h
-index 7c5d92e2915ca..da376aa705a31 100644
---- a/arch/microblaze/include/asm/uaccess.h
-+++ b/arch/microblaze/include/asm/uaccess.h
-@@ -162,7 +162,8 @@ extern long __user_bad(void);
- #define get_user(x, ptr) ({				\
- 	const typeof(*(ptr)) __user *__gu_ptr = (ptr);	\
- 	access_ok(__gu_ptr, sizeof(*__gu_ptr)) ?	\
--		__get_user(x, __gu_ptr) : -EFAULT;	\
-+		__get_user(x, __gu_ptr) :		\
-+		((x) = 0, -EFAULT);			\
- })
+diff --git a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
+index 1e5333fd437fe..32c173d2e2404 100644
+--- a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
++++ b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
+@@ -33,7 +33,7 @@ backlight: backlight {
+ 	};
  
- #define __get_user(x, ptr)						\
+ 	chosen {
+-		stdout-path = &uart4;
++		stdout-path = "serial0:115200n8";
+ 	};
+ 
+ 	led-act {
 -- 
 2.53.0
 
