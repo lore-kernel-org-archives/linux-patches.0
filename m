@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032044;
-	b=mKqBrdrf9k6TV9RGa31Yb8ZlCU+6HklDIVwTDSUVy8PZi9ezGTGGSRNKu+uz6zWx26r6
-	 Nm1KXuhPvU62jbAyxZiYllPxHUxmLPms4tH6dE0qEB+yOHqLb1qyU6z9nAhCqxAABlQJ0
-	 yTzVAnRILFTHGBK362F6v9Ini89cyNbTdZBP4tm2IJskyF0k4E2OOnaaeyGCjCxV9AeGU
-	 0/eDQm9bETLeVvu5YPbPuA4CpMaSz4eLGCHqDZE3Z95FG2tD88PGxytWXb0c6d3C4qV/f
-	 mTz0fTGWYcjSvQUTT4GtBospxPG6R4zBo5AUXtTwXYhRs1GhPLY6oc2yHKNMrHTvLzw==
+	t=1795032047;
+	b=0I9q3aVkc7dJW/dLdUr1T+Qhpz75s4ovkF50DtW3r229F+xjFxjnL3OjTwCLzTnDiUA1
+	 elEv8+N8gpmVfQh9CNrP05Jb2jV44RZ7nQi8anq1P/8pH6yqPyxVigGakosicZawUdpsf
+	 0sC4H7MEgIgQ/+GGt/VLdhL86NFS0/dszurcv9Yvk4o8P226/1u2cYHjeOwhhkt2XR4WR
+	 d7poSO0ALvc69TmAXANu9vIJvYxTtTy161yHNLFPMGo8eKmdUmiVWFQbkhjrZdJ9Ktmca
+	 NHTGk8a1YsxFlZa5bkcTtGRN2GV7e8bbte2JIszABYBGIUgYGmMpbG1OHWgVQWl5GBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+B1rOdCTb9IbjFMoWiEI8Lk/SKltmubVXBG4GPl/f7I=;
-	b=wbjCUhkg2kUSc+ZpbWhz80NJfagL09WcePDeNKuYXt6N6poNImg/KH9s4apeXsqYzWko
-	 IHN2tLAvsQbhGzZ6vSxydHXAKCBa6c6GATcL8bbhdpZ60bkKsTYQJQR3hXZFEdevfWs8H
-	 o8QEcYFfWkhQoN2IounmSqjzTCLibmDgu7Nl2h4dDKgBMuyHAnaw5ddMwlHgK7FgU7Jtr
-	 VjV9KThl3PjHF8ij2M6omAJ1sh10L/aCeSB1tHuXsKAdGyAP4IM6NJdKVaVQd3TIgZT5D
-	 60CLyZYqFFYxl8cl8ohii/LFHO3uv8ajHX7R3YkshGAqbL2t8vuaJDzqfF83n6NNH6Q==
+	bh=xh6HCYMKVpPkBizao3a/9qYnDMw/1ANokxD1sA7LgA0=;
+	b=RppunyWki1UEzxicHk2nYYzoZ+bbBuSwRdPJQ5j9DBM0R1hA1IG4Es8O+0NflBibYy81
+	 hFuksIAxQgUe4FzJ2K3V78EvYBMGOqxeUPEdJJmO8NAsr5tkL17gcHJbq8nWkxHmJTycT
+	 wCxiQodcVWtd+Qlhf3rVZFJL/dEMcTNw8fu5R8FEXi1igrY6IPg5leRo9QwIxSIr5lONn
+	 Z4XFfvODkmnYNzAJN9+zoSv61aPglOi0AykURDzXo8LOHKRh0BA+aHArcxJNa9V47CHmf
+	 2wy0spdDpKDcLT1yvCTA0qgaKr+SR/nA8drK3v1nczyM0CNRkAud7IsDMh/KyzOVmSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8lhRaVl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuCxGhmI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205F5606A339;
-	Wed, 18 Nov 2026 20:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1011606A337;
+	Wed, 18 Nov 2026 20:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8lhRaVl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7157B1F000C4;
-	Wed, 18 Nov 2026 20:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuCxGhmI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C9D1F000C6;
+	Wed, 18 Nov 2026 20:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032044;
-	bh=+B1rOdCTb9IbjFMoWiEI8Lk/SKltmubVXBG4GPl/f7I=;
+	s=korg; t=1795032046;
+	bh=xh6HCYMKVpPkBizao3a/9qYnDMw/1ANokxD1sA7LgA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m8lhRaVlk8Gee60ZNMXr+O7VYa2Uym1w3nsjuiSA6MdjOyYkLSnnAN5FBG/FDM/jN
-	 6sjFNApjxc1s0Nt0eDVJRHbMWBdcCa+w3DhUTodgjUJ22Vm1BjJGESiNs29chQKx4x
-	 Z5OITilyAxQueC9TXeq0OanAubVY9W0LhHKOC7Eo=
+	b=CuCxGhmIYde3faQ1GosRbt8AKf5F4q/9IQn+OkXPPtKX7ukELVp0YBQPjXQJ1Ktm2
+	 PBN/4GYuMtYPqy0tjNxZJblZYXtADRA7ZwvwzaXOQLEP8Oyx8ponRzEv5U49byWl3X
+	 bhm9HKjV8HqkojECH84CjXTrhzbuiOQnh+toQ1Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1271/1756] ALSA: pcm: Add refcount for races between drain and unlink
-Date: Wed, 18 Nov 2026 15:56:38 +0100
-Message-ID: <20261118150100.230885510@linuxfoundation.org>
+Subject: [PATCH 6.12 1272/1756] spi: omap2-mcspi: handle DMA setup failures
+Date: Wed, 18 Nov 2026 15:56:39 +0100
+Message-ID: <20261118150100.262411389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,168 +68,450 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 91d0048a97e0fdc0a071caa0ba59e659bc6f84df ]
+[ Upstream commit c126e07bde21c518f1356937ac240500d1bc81c0 ]
 
-We added a workaround for the case where a linked substream gets
-unlinked during the drain operation by another substream of the same
-linked group in the commit 9b1dbd69ba6f ("ALSA: pcm: fix
-use-after-free on linked stream runtime in snd_pcm_drain()").
-There, we just cached the parameters of the draining substream for
-avoiding UAF.
+The DMA paths ignore failures from dmaengine_slave_config(), descriptor
+preparation and dmaengine_submit(), and carry FIXME comments about
+falling back to PIO. A failed setup can leave a half-started transfer
+or wait for a completion that never arrives.
 
-Then, we check the draining substream (to_check) again in the loop and
-remove it from the queue only when it's still present.  It means,
-however, that the wait queue entry won't be removed if the substream
-went out of the link beforehand, hence a stale wq entry remains.
-Later on, this can be woken up, and this may hit a UAF, too.
-The problem surfaced more due to the recent change to call
-snd_pcm_unlink() earlier.
+Check each step and clean up with dmaengine_terminate_sync() on error.
+Prepare both descriptors before issuing either channel. Fall back to
+PIO only for host-mode transfers that have a TX buffer, when no DMA has
+been started and cleanup succeeded. RX-only and target-mode transfers
+return the error instead, since the bus may already be clocking.
 
-For properly handling both cases above, in this patch, we introduce a
-refcount to the snd_pcm_runtime that indicates the substream is being
-accessed / used, then at snd_pcm_release_substream(), it's synced
-before the actual resource release via snd_refcount_sync().  This
-guarantees that the accessors are finished, and safe to release
-memories.  Along with the introduction of a refcount, the comments and
-the code changes by the former fix were partially reverted as they
-don't fit with the updated code flow any longer.
+The FIFO is enabled before the DMA attempt, but the PIO path polls
+per-word TXS/RXS and does not expect FIFO mode. Disable the FIFO, with
+the channel off while its bits change, before falling back.
 
-Last but not least, the setup of wait queue entry and
-prepare_to_wait() call are moved before the group unref.  With this
-change, we can avoid the race between the enqueue and the wakeup, too.
+Tested on an AM642 board with a TI 6.12.57 vendor kernel built with
+this patch and booted from RAM. On a McSPI bus using DMA, 200
+iterations of 4096-byte TX and 1024-byte RX spidev transfers completed
+with no errors, timeouts or kernel warnings. With a temporary change
+that fails every DMA-sized TX setup, 60 spidev writes fell back to PIO
+with no errors or timeouts. That test used a bus with no device
+attached and did not show a difference with and without the FIFO
+disable, which is based on reading the code.
 
-Fixes: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()")
-Link: https://patch.msgid.link/20261015071838.31082-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 53741ed8f0a3 ("spi: omap2-mcspi: add DMA engine support")
+Link: https://lore.kernel.org/r/20250914022132.319227-1-alex.t.tran@gmail.com
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Link: https://patch.msgid.link/20261015064341.1100422-1-sahaj123.sc@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/pcm.h     |  2 ++
- sound/core/pcm.c        |  1 +
- sound/core/pcm_native.c | 54 ++++++++++++++++-------------------------
- 3 files changed, 24 insertions(+), 33 deletions(-)
+ drivers/spi/spi-omap2-mcspi.c | 236 ++++++++++++++++++++++++----------
+ 1 file changed, 167 insertions(+), 69 deletions(-)
 
-diff --git a/include/sound/pcm.h b/include/sound/pcm.h
-index 43586392b6134..73a79fe341aed 100644
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -8,6 +8,7 @@
-  *                   Abramo Bagnara <abramo@alsa-project.org>
-  */
+diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
+index b84b1b67d9693..62a5e9765ba38 100644
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -415,10 +415,11 @@ static void omap2_mcspi_tx_callback(void *data)
+ 	complete(&mcspi_dma->dma_tx_completion);
+ }
  
-+#include <sound/core.h>
- #include <sound/asound.h>
- #include <sound/memalloc.h>
- #include <sound/minors.h>
-@@ -416,6 +417,7 @@ struct snd_pcm_runtime {
- 	snd_pcm_uframes_t twake; 	/* do transfer (!poll) wakeup if non-zero */
- 	wait_queue_head_t sleep;	/* poll sleep */
- 	wait_queue_head_t tsleep;	/* transfer sleep */
-+	struct snd_refcount refcnt;	/* refcount for draining, etc */
- 	struct snd_fasync *fasync;
- 	bool stop_operating;		/* sync_stop will be called */
- 	struct mutex buffer_mutex;	/* protect for buffer changes */
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 18979f88f7159..bc4f90874ce3a 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -963,6 +963,7 @@ int snd_pcm_attach_substream(struct snd_pcm *pcm, int stream,
+-static void omap2_mcspi_tx_dma(struct spi_device *spi,
+-				struct spi_transfer *xfer,
+-				struct dma_slave_config cfg)
++static int omap2_mcspi_tx_dma(struct spi_device *spi,
++			      struct spi_transfer *xfer,
++			      struct dma_slave_config cfg)
+ {
++	int ret;
+ 	struct omap2_mcspi	*mcspi;
+ 	struct omap2_mcspi_dma  *mcspi_dma;
+ 	struct dma_async_tx_descriptor *tx;
+@@ -426,31 +427,31 @@ static void omap2_mcspi_tx_dma(struct spi_device *spi,
+ 	mcspi = spi_controller_get_devdata(spi->controller);
+ 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
  
- 	init_waitqueue_head(&runtime->sleep);
- 	init_waitqueue_head(&runtime->tsleep);
-+	snd_refcount_init(&runtime->refcnt);
+-	dmaengine_slave_config(mcspi_dma->dma_tx, &cfg);
++	ret = dmaengine_slave_config(mcspi_dma->dma_tx, &cfg);
++	if (ret)
++		return ret;
  
- 	__snd_pcm_set_state(runtime, SNDRV_PCM_STATE_OPEN);
- 	mutex_init(&runtime->buffer_mutex);
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 3f977f4d62600..8f023ef792213 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2156,9 +2156,6 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
- 	for (;;) {
- 		long tout;
- 		struct snd_pcm_runtime *to_check;
--		unsigned int drain_rate;
--		snd_pcm_uframes_t drain_bufsz;
--		bool drain_no_period_wakeup;
- 
- 		if (signal_pending(current)) {
- 			result = -ERESTARTSYS;
-@@ -2173,45 +2170,35 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
- 			runtime = s->runtime;
- 			if (runtime->state == SNDRV_PCM_STATE_DRAINING) {
- 				to_check = runtime;
-+				/* pin the draining substream */
-+				snd_refcount_get(&to_check->refcnt);
+ 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_tx, xfer->tx_sg.sgl,
+ 				     xfer->tx_sg.nents,
+ 				     DMA_MEM_TO_DEV,
+ 				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+-	if (tx) {
+-		tx->callback = omap2_mcspi_tx_callback;
+-		tx->callback_param = spi;
+-		dmaengine_submit(tx);
+-	} else {
+-		/* FIXME: fall back to PIO? */
+-	}
+-	dma_async_issue_pending(mcspi_dma->dma_tx);
+-	omap2_mcspi_set_dma_req(spi, 0, 1);
++	if (!tx)
++		return -EIO;
 +
-+				init_wait_entry(&wait, 0);
-+				prepare_to_wait(&to_check->sleep, &wait,
-+						TASK_INTERRUPTIBLE);
-+				if (to_check->no_period_wakeup) {
-+					tout = MAX_SCHEDULE_TIMEOUT;
-+				} else {
-+					tout = 100;
-+					if (to_check->rate) {
-+						long t = to_check->buffer_size *
-+							1100 / to_check->rate;
-+						tout = max(t, tout);
-+					}
-+					tout = msecs_to_jiffies(tout);
-+				}
- 				break;
- 			}
- 		}
- 		snd_pcm_group_unref(group, substream);
- 		if (!to_check)
- 			break; /* all drained */
--		/*
--		 * Cache the runtime fields needed after unlock.
--		 * A concurrent close() on the linked stream may free
--		 * its runtime via snd_pcm_detach_substream() once we
--		 * release the stream lock below.
--		 */
--		drain_no_period_wakeup = to_check->no_period_wakeup;
--		drain_rate = to_check->rate;
--		drain_bufsz = to_check->buffer_size;
--		init_wait_entry(&wait, 0);
--		prepare_to_wait(&to_check->sleep, &wait, TASK_INTERRUPTIBLE);
- 		snd_pcm_stream_unlock_irq(substream);
--		if (drain_no_period_wakeup)
--			tout = MAX_SCHEDULE_TIMEOUT;
--		else {
--			tout = 100;
--			if (drain_rate) {
--				long t = drain_bufsz * 1100 / drain_rate;
--				tout = max(t, tout);
--			}
--			tout = msecs_to_jiffies(tout);
--		}
- 		tout = schedule_timeout(tout);
++	tx->callback = omap2_mcspi_tx_callback;
++	tx->callback_param = spi;
++
++	return dma_submit_error(dmaengine_submit(tx));
+ }
+ 
+-static unsigned
++static int
+ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+-				struct dma_slave_config cfg,
+-				unsigned es)
++		   struct dma_slave_config cfg, unsigned int es,
++		   unsigned int *count, bool *rx_submitted, bool *dma_started)
+ {
+ 	struct omap2_mcspi	*mcspi;
+ 	struct omap2_mcspi_dma  *mcspi_dma;
+-	unsigned int		count, transfer_reduction = 0;
++	unsigned int		transfer_reduction = 0;
+ 	struct scatterlist	*sg_out[2];
+ 	int			nb_sizes = 0, out_mapped_nents[2], ret, x;
+ 	size_t			sizes[2];
+@@ -463,7 +464,8 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 
+ 	mcspi = spi_controller_get_devdata(spi->controller);
+ 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
+-	count = xfer->len;
++	*count = xfer->len;
++	*rx_submitted = false;
+ 
+ 	/*
+ 	 *  In the "End-of-Transfer Procedure" section for DMA RX in OMAP35x TRM
+@@ -477,14 +479,16 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 	l = mcspi_cached_chconf0(spi);
+ 
+ 	if (word_len <= 8)
+-		element_count = count;
++		element_count = *count;
+ 	else if (word_len <= 16)
+-		element_count = count >> 1;
++		element_count = *count >> 1;
+ 	else /* word_len <= 32 */
+-		element_count = count >> 2;
++		element_count = *count >> 2;
+ 
+ 
+-	dmaengine_slave_config(mcspi_dma->dma_rx, &cfg);
++	ret = dmaengine_slave_config(mcspi_dma->dma_rx, &cfg);
++	if (ret)
++		return ret;
+ 
+ 	/*
+ 	 *  Reduce DMA transfer length by one more if McSPI is
+@@ -495,7 +499,7 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 
+ 	if (transfer_reduction) {
+ 		/* Split sgl into two. The second sgl won't be used. */
+-		sizes[0] = count - transfer_reduction;
++		sizes[0] = *count - transfer_reduction;
+ 		sizes[1] = transfer_reduction;
+ 		nb_sizes = 2;
+ 	} else {
+@@ -503,44 +507,56 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 		 * Don't bother splitting the sgl. This essentially
+ 		 * clones the original sgl.
+ 		 */
+-		sizes[0] = count;
++		sizes[0] = *count;
+ 		nb_sizes = 1;
+ 	}
+ 
+ 	ret = sg_split(xfer->rx_sg.sgl, xfer->rx_sg.nents, 0, nb_sizes,
+ 		       sizes, sg_out, out_mapped_nents, GFP_KERNEL);
+ 
+-	if (ret < 0) {
++	if (ret) {
+ 		dev_err(&spi->dev, "sg_split failed\n");
+-		return 0;
++		return ret;
+ 	}
+ 
+ 	tx = dmaengine_prep_slave_sg(mcspi_dma->dma_rx, sg_out[0],
+ 				     out_mapped_nents[0], DMA_DEV_TO_MEM,
+ 				     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+-	if (tx) {
+-		tx->callback = omap2_mcspi_rx_callback;
+-		tx->callback_param = spi;
+-		dmaengine_submit(tx);
+-	} else {
+-		/* FIXME: fall back to PIO? */
++	if (!tx) {
++		ret = -EIO;
++		goto out_free_sg;
+ 	}
+ 
++	tx->callback = omap2_mcspi_rx_callback;
++	tx->callback_param = spi;
++	ret = dma_submit_error(dmaengine_submit(tx));
++	if (ret)
++		goto out_free_sg;
++
++	*rx_submitted = true;
++	if (mcspi->target_aborted) {
++		ret = -EINTR;
++		goto out_free_sg;
++	}
++	*dma_started = true;
++	if (xfer->tx_buf) {
++		if (spi_controller_is_target(mcspi->ctlr))
++			mcspi_write_reg(mcspi->ctlr, OMAP2_MCSPI_IRQENABLE,
++					OMAP2_MCSPI_IRQSTATUS_EOW);
++		dma_async_issue_pending(mcspi_dma->dma_tx);
++		omap2_mcspi_set_dma_req(spi, 0, 1);
++	}
+ 	dma_async_issue_pending(mcspi_dma->dma_rx);
+ 	omap2_mcspi_set_dma_req(spi, 1, 1);
 -
- 		snd_pcm_stream_lock_irq(substream);
--		group = snd_pcm_stream_group_ref(substream);
--		snd_pcm_group_for_each_entry(s, substream) {
--			if (s->runtime == to_check) {
--				finish_wait(&to_check->sleep, &wait);
--				break;
--			}
+ 	ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_rx_completion);
+-	if (ret || mcspi->target_aborted) {
+-		dmaengine_terminate_sync(mcspi_dma->dma_rx);
+-		omap2_mcspi_set_dma_req(spi, 1, 0);
+-		return 0;
+-	}
++	if (ret || mcspi->target_aborted)
++		goto out_free_sg;
+ 
+ 	for (x = 0; x < nb_sizes; x++)
+ 		kfree(sg_out[x]);
+ 
+ 	if (mcspi->fifo_depth > 0)
+-		return count;
++		return 0;
+ 
+ 	/*
+ 	 *  Due to the DMA transfer length reduction the missing bytes must
+@@ -567,9 +583,9 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 		} else {
+ 			int bytes_per_word = mcspi_bytes_per_word(word_len);
+ 			dev_err(&spi->dev, "DMA RX penultimate word empty\n");
+-			count -= (bytes_per_word << 1);
++			*count -= (bytes_per_word << 1);
+ 			omap2_mcspi_set_enable(spi, 1);
+-			return count;
++			return 0;
+ 		}
+ 	}
+ 	if (!mcspi_wait_for_reg_bit(chstat_reg, OMAP2_MCSPI_CHSTAT_RXS)) {
+@@ -584,19 +600,27 @@ omap2_mcspi_rx_dma(struct spi_device *spi, struct spi_transfer *xfer,
+ 			((u32 *)xfer->rx_buf)[elements] = w;
+ 	} else {
+ 		dev_err(&spi->dev, "DMA RX last word empty\n");
+-		count -= mcspi_bytes_per_word(word_len);
++		*count -= mcspi_bytes_per_word(word_len);
+ 	}
+ 	omap2_mcspi_set_enable(spi, 1);
+-	return count;
++	return 0;
++
++out_free_sg:
++	if (!ret)
++		ret = -EINTR;
++	for (x = 0; x < nb_sizes; x++)
++		kfree(sg_out[x]);
++	return ret;
+ }
+ 
+-static unsigned
+-omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
++static int omap2_mcspi_txrx_dma(struct spi_device *spi,
++				struct spi_transfer *xfer,
++				unsigned int *count,
++				bool *pio_fallback)
+ {
+ 	struct omap2_mcspi	*mcspi;
+ 	struct omap2_mcspi_cs	*cs = spi->controller_state;
+ 	struct omap2_mcspi_dma  *mcspi_dma;
+-	unsigned int		count;
+ 	u8			*rx;
+ 	const u8		*tx;
+ 	struct dma_slave_config	cfg;
+@@ -604,10 +628,13 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
+ 	unsigned es;
+ 	void __iomem		*chstat_reg;
+ 	void __iomem            *irqstat_reg;
+-	int			wait_res;
++	bool			tx_submitted = false, rx_submitted = false;
++	bool			dma_started = false, terminate_failed = false;
++	int			ret, wait_res;
+ 
+ 	mcspi = spi_controller_get_devdata(spi->controller);
+ 	mcspi_dma = &mcspi->dma_channels[spi_get_chipselect(spi, 0)];
++	*pio_fallback = false;
+ 
+ 	if (cs->word_len <= 8) {
+ 		width = DMA_SLAVE_BUSWIDTH_1_BYTE;
+@@ -620,7 +647,7 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
+ 		es = 4;
+ 	}
+ 
+-	count = xfer->len;
++	*count = xfer->len;
+ 
+ 	memset(&cfg, 0, sizeof(cfg));
+ 	cfg.src_addr = cs->phys + OMAP2_MCSPI_RX0;
+@@ -638,31 +665,39 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
+ 	reinit_completion(&mcspi_dma->dma_rx_completion);
+ 	reinit_completion(&mcspi->txdone);
+ 	if (tx) {
+-		/* Enable EOW IRQ to know end of tx in target mode */
++		ret = omap2_mcspi_tx_dma(spi, xfer, cfg);
++		if (ret)
++			goto out;
++		tx_submitted = true;
++	}
++
++	if (rx) {
++		ret = omap2_mcspi_rx_dma(spi, xfer, cfg, es, count,
++					 &rx_submitted, &dma_started);
++		if (ret)
++			goto out;
++	} else if (tx) {
++		if (mcspi->target_aborted) {
++			ret = -EINTR;
++			goto out;
++		}
+ 		if (spi_controller_is_target(spi->controller))
+-			mcspi_write_reg(spi->controller,
+-					OMAP2_MCSPI_IRQENABLE,
++			mcspi_write_reg(spi->controller, OMAP2_MCSPI_IRQENABLE,
+ 					OMAP2_MCSPI_IRQSTATUS_EOW);
+-		omap2_mcspi_tx_dma(spi, xfer, cfg);
++		dma_started = true;
++		dma_async_issue_pending(mcspi_dma->dma_tx);
++		omap2_mcspi_set_dma_req(spi, 0, 1);
+ 	}
+ 
+-	if (rx != NULL)
+-		count = omap2_mcspi_rx_dma(spi, xfer, cfg, es);
+-
+-	if (tx != NULL) {
+-		int ret;
+-
++	if (tx) {
+ 		ret = mcspi_wait_for_completion(mcspi, &mcspi_dma->dma_tx_completion);
+-		if (ret || mcspi->target_aborted) {
+-			dmaengine_terminate_sync(mcspi_dma->dma_tx);
+-			omap2_mcspi_set_dma_req(spi, 0, 0);
+-			return 0;
 -		}
--		snd_pcm_group_unref(group, substream);
-+		finish_wait(&to_check->sleep, &wait);
-+		/* unpin the draining substream again now */
-+		snd_refcount_put(&to_check->refcnt);
++		if (ret || mcspi->target_aborted)
++			goto out;
  
- 		if (card->shutdown) {
- 			result = -ENODEV;
-@@ -2763,6 +2750,7 @@ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ 		if (spi_controller_is_target(mcspi->ctlr)) {
+ 			ret = mcspi_wait_for_completion(mcspi, &mcspi->txdone);
+ 			if (ret || mcspi->target_aborted)
+-				return 0;
++				goto out;
+ 		}
  
- 	snd_pcm_drop(substream);
- 	if (substream->hw_opened) {
-+		snd_refcount_sync(&substream->runtime->refcnt);
- 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
- 			do_hw_free(substream);
- 		substream->ops->close(substream);
+ 		if (mcspi->fifo_depth > 0) {
+@@ -696,7 +731,43 @@ omap2_mcspi_txrx_dma(struct spi_device *spi, struct spi_transfer *xfer)
+ 				dev_err(&spi->dev, "EOT timed out\n");
+ 		}
+ 	}
+-	return count;
++	return 0;
++
++out:
++	if (!ret)
++		ret = -EINTR;
++	if (rx_submitted) {
++		wait_res = dmaengine_terminate_sync(mcspi_dma->dma_rx);
++		if (wait_res) {
++			dev_err(&spi->dev, "failed to terminate RX DMA: %d\n",
++				wait_res);
++			terminate_failed = true;
++			ret = wait_res;
++		}
++		omap2_mcspi_set_dma_req(spi, 1, 0);
++	}
++	if (tx_submitted) {
++		wait_res = dmaengine_terminate_sync(mcspi_dma->dma_tx);
++		if (wait_res) {
++			dev_err(&spi->dev, "failed to terminate TX DMA: %d\n",
++				wait_res);
++			terminate_failed = true;
++			ret = wait_res;
++		}
++		omap2_mcspi_set_dma_req(spi, 0, 0);
++	}
++	if (spi_controller_is_target(mcspi->ctlr))
++		mcspi_write_reg(mcspi->ctlr, OMAP2_MCSPI_IRQENABLE, 0);
++
++	*pio_fallback = !dma_started && !terminate_failed;
++	return ret;
++}
++
++static bool omap2_mcspi_can_pio_fallback(bool cleanup_ok,
++					 const struct spi_transfer *xfer,
++					 bool is_target)
++{
++	return cleanup_ok && xfer->tx_buf && !is_target;
+ }
+ 
+ static unsigned
+@@ -1209,6 +1280,8 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
+ 
+ 	if (t->len) {
+ 		unsigned	count;
++		bool		pio_fallback;
++		int		ret;
+ 
+ 		if ((mcspi_dma->dma_rx && mcspi_dma->dma_tx) &&
+ 		    spi_xfer_is_dma_mapped(ctlr, spi, t))
+@@ -1222,10 +1295,31 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
+ 					+ OMAP2_MCSPI_TX0);
+ 
+ 		if ((mcspi_dma->dma_rx && mcspi_dma->dma_tx) &&
+-		    spi_xfer_is_dma_mapped(ctlr, spi, t))
+-			count = omap2_mcspi_txrx_dma(spi, t);
+-		else
++		    spi_xfer_is_dma_mapped(ctlr, spi, t)) {
++			ret = omap2_mcspi_txrx_dma(spi, t, &count,
++						   &pio_fallback);
++			if (ret) {
++				bool is_target = spi_controller_is_target(ctlr);
++				bool fallback;
++
++				fallback = omap2_mcspi_can_pio_fallback(pio_fallback, t,
++									is_target);
++				if (!fallback) {
++					status = ret;
++					goto out;
++				}
++
++				dev_warn(&spi->dev,
++					 "DMA setup failed, falling back to PIO\n");
++				/* PIO does not use the FIFO enabled for DMA */
++				omap2_mcspi_set_enable(spi, 0);
++				omap2_mcspi_set_fifo(spi, t, 0);
++				omap2_mcspi_set_enable(spi, 1);
++				count = omap2_mcspi_txrx_pio(spi, t);
++			}
++		} else {
+ 			count = omap2_mcspi_txrx_pio(spi, t);
++		}
+ 
+ 		if (count != t->len) {
+ 			status = -EIO;
+@@ -1241,8 +1335,12 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
+ out:
+ 	/* Restore defaults if they were overriden */
+ 	if (par_override) {
++		int restore_status;
++
+ 		par_override = 0;
+-		status = omap2_mcspi_setup_transfer(spi, NULL);
++		restore_status = omap2_mcspi_setup_transfer(spi, NULL);
++		if (!status)
++			status = restore_status;
+ 	}
+ 
+ 	omap2_mcspi_set_enable(spi, 0);
 -- 
 2.53.0
 
