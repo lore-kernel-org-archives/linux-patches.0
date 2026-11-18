@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017438;
-	b=o5CKEp44+5OGB4jkrr5HOoAjtbizsa8p510PjmAd7+MILN7JaVH+ICzzZRuFhwL4eWmj
-	 nuXxU64Mr/DwvLFo+BAeaWO0o1jbZlq6QpqxC2BDzxfx27Q4vsF3Vy8mVa8yMBy/zEFeD
-	 P1/nOkX6EypRrySM9hLRa44zXh7YkzemcQlxJGk8v5spTKDWqvEEnjzcEB2M7t17A7toW
-	 WClw4pz0R5xMcjWuR3cvgOX+dWduXoaGDwlqVWSts0yqDkU/e4jMBJVLdo+06cogPp/5+
-	 0+nzMS4Z0boNswh/7mJFSlklmQRS3RU8Eim6XMSajN6BtDPrFnQmG4YcU7ydNGxPdrw==
+	t=1795017441;
+	b=INjECw9bArr2x2S25yvixDlo110imbKNUMVd2DuFaO5Hfqfo2h+AomGX7XloWzqGsX2e
+	 WUJW4syMg2CnrnORnO2PQRJJCQ9IfW0hQCaRXecdvH9CeIuLzztEBXFJa9/YpD2zfk6m7
+	 rNJUdA/2dVlLnIv0JrmF9smEA6irytNlVgz1o4IEmP5Hk4NEm/qznDJCTRXYRphSnN0uH
+	 TVKU4H83ge4UtQ93AQ5ETZ3XlI3nhiUleICqNHd9nw8H8swR2jFKsjMAWt4LIrNnfE4JI
+	 XmBG+AoaY1mPQYZidEq9uKKizM+5gPXGpgNwfe/ABwnm0x2XzvSpF+l3FrwSl8kCr8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017441;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hZIiBUCEQdoRiXdd1J290vHgVgA8kxQPBc9HupEyUhU=;
-	b=fhyVIZ1TK0X7niLt4jzuMhz14xsarPjHsvgvEjiXA+iVdRh0vGfnbYNwAsdo7bahZ735
-	 +0EsM2r/l9Xd5V+tNZNPrDn15FZEDFOBZs3UE6aZJISi3GY9CU40/jEXvltnj1vmLtfGj
-	 +bijMdKE20+K76etqNSNiLgvjt0J/upnpMrUd7qsx1xjefd719e+FO/VDqQHfD8OCSURp
-	 W195MhxnwC3oqE5Dxb2XnDzGEISbcln+WvQmCNLbAMVtP52D8cjW/a1u8XPsfGlLcC7Kk
-	 P2MJdx5Wb8ljgTZpQHI88k7xK1sHT+Scii6wJFAKvJmtdvhg1DMVdfAnsYKSqMDsatA==
+	bh=4r1iWbF6YJV17tw5D1GXRpKHh9duMtOuaBcb8qBZszY=;
+	b=etji2QLyEckqrmuqRPua8pS2Qb1swfIiOJp7gLrI//8guhjgzt1CFDT61tFX4IBWNMCV
+	 sEUD9VUeWR7xPjYyClgJAz3mQGzAq8uyIhw9mz0FHpsn5WxWFIwNpa+iCks280uKUK6Gg
+	 SDKaPN2A23DD1AUXms/lvkZzf6Ms6M75JfgVh2sD75ywLSfBK9UP+vwZ4UYMnVjmYvDrr
+	 I4LdTgg8sqfSXtmS/MwIRFz0jkyTAv5usZic9D7gmcsYqRTwT1AdxikPZaJDq6uQF2luM
+	 cJLZqI3JL/KHeS64g+gRysVGNiokRq2o0Fy3ZkvIV6JEuTAR7QdqtZgPHdw1Ouhf+gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+m+fM8r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPqobHuR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244B5606A31C;
-	Wed, 18 Nov 2026 15:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275BF606A31C;
+	Wed, 18 Nov 2026 15:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+m+fM8r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C2C1F000C4;
-	Wed, 18 Nov 2026 15:57:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPqobHuR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F41B1F000C4;
+	Wed, 18 Nov 2026 15:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017438;
-	bh=hZIiBUCEQdoRiXdd1J290vHgVgA8kxQPBc9HupEyUhU=;
+	s=korg; t=1795017440;
+	bh=4r1iWbF6YJV17tw5D1GXRpKHh9duMtOuaBcb8qBZszY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+m+fM8radnQJPrlAu4pk9VZOq180FA4mczXMzlGvitHQUhQ+xfRrrFMZzTTpmz7S
-	 7F2GJsay/NVzfYu20/DN5/Scz5SQ1zB34in9owPB+4WQRhN06/DBpuzQvdFj6WWhZc
-	 MdOABgHqsnmju1JziZ3vpo4o3FQIBBN2CCH9PYrI=
+	b=mPqobHuR+GhpSPiZxBb0g0TXev8XEm2ZkPfy8fd7FzjB/+Q0xkfzuUZPvjAwgK48/
+	 8JXlpd+EN2u9HTwO8XO2e6C0b7y0kMAEYowSHAOhIHRO+9atQqgn3icTksMX6YHF7Q
+	 +rPX35RmpX0cA30CfKvGTlsniAeFSw/bnwTKy9Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0885/2651] bpf: Rebase the exception callback subprog when dead subprogs are removed
-Date: Wed, 18 Nov 2026 15:35:25 +0100
-Message-ID: <20261118150319.717315862@linuxfoundation.org>
+Subject: [PATCH 7.3 0868/2651] ASoC: mediatek: mt8183: Fix wrong clock cleanup on clk_set_parent() failure
+Date: Wed, 18 Nov 2026 15:35:08 +0100
+Message-ID: <20261118150319.105399425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,43 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 8608ec8e981974b18834e2d67ed39638a9ec2e63 ]
+[ Upstream commit 7f05596bd4047e4623eeb1f3c6921d6f71481c3b ]
 
-adjust_subprog_starts_after_remove() compacts subprog_info[] and the
-func_info when whole subprograms are removed as dead code, but leaves
-env->exception_callback_subprog alone, so an exception callback declared
-through the exception_callback decl tag which sits behind a removed
-subprogram keeps its old index. jit_subprogs() then takes the exception
-callback from func[] at that index, which is past the end when the
-callback was the last subprogram, or another subprogram otherwise.
+In mt8183_afe_enable_clock(), when clk_set_parent() fails, the current
+error path incorrectly cleans up the previously enabled clock instead of
+the clock used by clk_set_parent().
 
-Rebase the index along with the entries it refers to.
+Fix the error path to clean up the correct clock when clk_set_parent()
+fails.
 
-Fixes: b9ae0c9dd0ac ("bpf: Add support for custom exception callbacks")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20260925175244.1136329-4-daniel@iogearbox.net
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903045203.175337-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/fixups.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
-index 64f088bc6f256..f8d9b30815f69 100644
---- a/kernel/bpf/fixups.c
-+++ b/kernel/bpf/fixups.c
-@@ -478,6 +478,9 @@ static int adjust_subprog_starts_after_remove(struct bpf_verifier_env *env,
- 			 * in adjust_btf_func() - no need to adjust
- 			 */
- 		}
-+		/* The exception callback is live, so it cannot sit inside the removed range. */
-+		if (env->exception_callback_subprog >= j)
-+			env->exception_callback_subprog -= j - i;
- 	} else {
- 		/* convert i from "first prog to remove" to "first to adjust" */
- 		if (env->subprog_info[i].start == off)
+diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+index cc4f8f4d3dab9..6ab0734ad1365 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
++++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+@@ -137,7 +137,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIO],
+ 			aud_clks[CLK_CLK26M], ret);
+-		goto CLK_MUX_AUDIO_ERR;
++		goto CLK_MUX_AUDIO_INTBUS_ERR;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
+@@ -153,7 +153,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
+ 			aud_clks[CLK_TOP_SYSPLL_D2_D4], ret);
+-		goto CLK_MUX_AUDIO_INTBUS_ERR;
++		goto CLK_AFE_ERR;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
 -- 
 2.53.0
 
