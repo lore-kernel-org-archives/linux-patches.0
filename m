@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044022;
-	b=AkyaoFrM/bt2nZciXcObWFV/f0ojfCQOU31N6Wi+27Kf8ri5+qIeyVx9lQ74Jvy1eHTj
-	 vrAKGdP5ev3ski2MCAy0ipcdkt25IUuMroDWG27xd8rm+pw8WU2vF1QeAFy9UDFCEfAEz
-	 mxY8CfNOW6hlWijBH7lg311lQNREkcwIP/KDa6xWLy5UHi2nY9tLdKw2uATrzlMnJREhx
-	 pZUa76G/j1gzsQVojg5P1xO6DsGwlXKWSZkU1Ugdm97fmL+dhPu/Rkcu4a/SCmuI2niYD
-	 EeMhQiBizS3A5TRzw1Hwxn7XljC7XXWohtdsgXeasg4efxZ1xfxQjz4MhdVYwlUS/6g==
+	t=1795044025;
+	b=LvVOAm+U7P0TIAgtm7CB6cAObCyVyXtgH0VxaS41/P1TaOWYyo3+36GjtExY+n7rin9J
+	 wOgIXTIAPlNq8dRpQAS4RLUZmwABmZtA36fdwHeT4VsedRFMDyOATkR3nDwLoMo9Icxyl
+	 FFBtJS4W3AiiJeHwEzWxUc6dQ6nYcqSBnjo8ZdpkQCvyZ0PTbmCRQZlgqFJK+Pf1mA7Mb
+	 6iwHImhWAbHf3U52Lv6GBtPrTFg8dHZfqVE/AgAb9b9YcX2hmMOp4E+7Y1z9PIUaZAchH
+	 NPVizmZk2XCkTAeRpXbIORGLOyH/6n9b2FxzgkmbSNvDJmqzUX5VouXSYKxsSEpqrZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TMgAtUXNjs3cK5LRngDQIFgUOKG6hj9/oS+/ZVPA/dI=;
-	b=u2RNd9jNdM/3D++gJE4yvk0xp4mN/mEv4BmUDgPBsbfgcWv56R3X3+3sgLDZEcL21EqN
-	 nQHLgPt87aj8MHZT/i1NUfM0TarRMIxIAO/EcZtN2rR2JG2VS8b41ZwohvhWaqPWjwG8/
-	 Iz+6FrS4CosQHR5gprFvnj9JTLuhecGpPVWQgU4Iy8CSW8POEEElYDlovujZrgQEa0Uk8
-	 Gy8Y0P5co1pXldRZ5iKMc9yUWAAwUrLFqfEcowivzpb4Oxqv9y8TGdjv3+2a8yTnaviX9
-	 4JUIcK2wwjO2Ljj4gfQjXO3w7GjArnEG+c2JG06MGYcZ0DAPiuSkGCfLaBfVHN9yxMg==
+	bh=4eZkM3i/KKDisrwNEFgBQ56AEkgKnDfXwW+1JnG2crA=;
+	b=x7R61whHf9LyPT+0ce7CvrkHq+R6JqYUeDnW2xKfgJUTwwjhSRmlL98yQTw4UgBOaUTo
+	 wRpB/XhXdeXf/Xj7W5VWqwQTN/n7a9dKNLY+zs+ZC+YL40cs11UoOvqKq7aexCLTSslX5
+	 0uuh+CK4LxzNs8xEx8QTpUtwiJFM/0b9yuCECsVaQc+g4PfCfgpqUwn2yHdN7kubZkYEn
+	 v0h57+p3rMY2TY+BW4i0C7xfHswixMv9HvSnY6nWTsVgah2L0gcTpFdiHMHk3Q6Ox1+gn
+	 dc7nT1KcDqD7vxZzyoBwwIPU8ycHXXcEW4hnV3+T/FtA/EEHhv3LlSTVTkNHFYCOyIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTBBf0Wl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iuvg+Oi6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66408606A31C;
-	Wed, 18 Nov 2026 23:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EB8606A31C;
+	Wed, 18 Nov 2026 23:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTBBf0Wl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2211F000C4;
-	Wed, 18 Nov 2026 23:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iuvg+Oi6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EF41F000C4;
+	Wed, 18 Nov 2026 23:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044022;
-	bh=TMgAtUXNjs3cK5LRngDQIFgUOKG6hj9/oS+/ZVPA/dI=;
+	s=korg; t=1795044025;
+	bh=4eZkM3i/KKDisrwNEFgBQ56AEkgKnDfXwW+1JnG2crA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTBBf0WlFmYe/1ErL7FlZ4pEgmO9ksZ0mCdWq5b0rG0TpZaMuaM4xX0IIMUFS9mZ6
-	 lJLm8k7smnBQ/zl86x4wBRQnRrQooJYfhzdOwSWfduuHOo02PEbLOTYplxQydKl9Bg
-	 Ckz6r+HbOMi4rROqigv77ViIEg5EVSeBISagfNmo=
+	b=Iuvg+Oi6JdtU5vT7eYJPctcr0i1ycPe5DSJnvdOAZ6loUeftX9aBhOE9+oJvzjleQ
+	 jYgVtz+XkC0jqY6ywTDtCVtTailY3oL69LjGYl9l6Kr4+0HszmliaF1vaHY6DsWiz0
+	 EMlTOn0gWbd3y4EG7x5ur7Ke+U+NPTMcgQ8q8DOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0412/2857] swiotlb: use the adjusted address for the highmem page lookup
-Date: Wed, 18 Nov 2026 15:24:06 +0100
-Message-ID: <20261118150216.221134602@linuxfoundation.org>
+Subject: [PATCH 6.1 0421/2857] tools/bootconfig: Fix integer overflow and truncation in size checks
+Date: Wed, 18 Nov 2026 15:24:15 +0100
+Message-ID: <20261118150216.538847031@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,66 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit b7d7914a9ae3097e63d113007e4fb44d33d515b1 ]
+[ Upstream commit 462d0b066b613103f579793031429db2ca23abc0 ]
 
-swiotlb_bounce() reads the page frame number from the slot's recorded
-orig_addr, then advances orig_addr by tlb_offset to reach the address
-the caller asked about. The highmem branch mixes the two: the offset
-within the page comes from the adjusted address, the page from the value
-before it.
+Sashiko reported that on 32-bit systems, if an attacker crafts size in
+the bootconfig footer such that adding BOOTCONFIG_FOOTER_SIZE wraps around
+(for instance, if size is 0xFFFFFFFF), the size check in
+load_xbc_from_initrd() can be bypassed:
 
-Once the adjustment crosses a page boundary the pair no longer describes
-one location, and the whole copy lands one page below the intended one
-for a positive tlb_offset, one above for a negative one. DMA_FROM_DEVICE
-writes the device data over the wrong page and leaves the intended one
-stale, DMA_TO_DEVICE feeds the device from a page the mapping may not
-cover. Partial syncs through dma_sync_single_range_for_*() are what make
-tlb_offset non-zero.
+    if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
+        pr_err("bootconfig size is too big\n");
+        return -E2BIG;
+    }
 
-The branch test is picked the same way, so a slot recorded in lowmem can
-be adjusted into highmem and the lowmem path then hands a highmem
-address to phys_to_virt().
+Furthermore, on 64-bit systems with an initrd > 4.29 GB, comparing a
+corrupted 32-bit size (e.g. 0xFFFFFFFF) against
+stat.st_size - BOOTCONFIG_FOOTER_SIZE can also bypass the check if
+size is not bounded. Similarly, load_xbc_file() passes 64-bit stat.st_size
+directly into the 32-bit int size parameter of load_xbc_fd(), truncating
+large standalone files (>= 2GB).
 
-Take both from orig_addr once it is final and keep pfn in the branch
-that uses it. PhysHighMem() asks the question straight from the address,
-as dma-debug already does.
+In both cases, passing 0xFFFFFFFF to load_xbc_fd() truncates to -1,
+resulting in malloc(0), an integer overflow in read(), and an
+out-of-bounds null-byte write.
 
-Fixes: 5f89468e2f06 ("swiotlb: manipulate orig_addr when tlb_addr has offset")
+Fix this by:
+1. Rejecting size > XBC_DATA_MAX or
+   size > stat.st_size - BOOTCONFIG_FOOTER_SIZE in load_xbc_from_initrd().
+2. Rejecting stat.st_size > XBC_DATA_MAX in load_xbc_file() before passing
+   it to load_xbc_fd().
+3. Checking size < 0 || size > XBC_DATA_MAX defensively in load_xbc_fd().
+
+Link: https://lore.kernel.org/all/178905332413.213925.3179977110281463499.stgit@devnote2/
+
+Fixes: 950313ebf79c ("tools: bootconfig: Add bootconfig command")
 Cc: stable@vger.kernel.org
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20260905084210.148255-1-donggeunyoo.kernel@gmail.com
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-[ sashal: Replaced the missing PhysHighMem(orig_addr) helper with PageHighMem(pfn_to_page(PFN_DOWN(orig_addr))), which tests the same adjusted address. ]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260909161113.16C691F00A3A@smtp.kernel.org/
+Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.8-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/swiotlb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/bootconfig/main.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index b5c8ba23ff625..946366828c7b4 100644
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -556,7 +556,6 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
- 	int index = (tlb_addr - mem->start) >> IO_TLB_SHIFT;
- 	phys_addr_t orig_addr = mem->slots[index].orig_addr;
- 	size_t alloc_size = mem->slots[index].alloc_size;
--	unsigned long pfn = PFN_DOWN(orig_addr);
- 	unsigned char *vaddr = mem->vaddr + tlb_addr - mem->start;
- 	unsigned int tlb_offset, orig_addr_offset;
+diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
+index f1a20f85a669d..5429a7674b35f 100644
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -139,6 +139,9 @@ static int load_xbc_fd(int fd, char **buf, int size)
+ {
+ 	int ret;
  
-@@ -590,7 +589,8 @@ static void swiotlb_bounce(struct device *dev, phys_addr_t tlb_addr, size_t size
- 		size = alloc_size;
++	if (size < 0 || size > XBC_DATA_MAX)
++		return -EINVAL;
++
+ 	*buf = malloc(size + 1);
+ 	if (!*buf)
+ 		return -ENOMEM;
+@@ -167,6 +170,13 @@ static int load_xbc_file(const char *path, char **buf)
+ 		return ret;
  	}
  
--	if (PageHighMem(pfn_to_page(pfn))) {
-+	if (PageHighMem(pfn_to_page(PFN_DOWN(orig_addr)))) {
-+		unsigned long pfn = PFN_DOWN(orig_addr);
- 		unsigned int offset = orig_addr & ~PAGE_MASK;
- 		struct page *page;
- 		unsigned int sz = 0;
++	if (stat.st_size > XBC_DATA_MAX) {
++		pr_err("%s size is too big\n", path);
++		ret = -E2BIG;
++		close(fd);
++		return ret;
++	}
++
+ 	ret = load_xbc_fd(fd, buf, stat.st_size);
+ 
+ 	close(fd);
+@@ -217,7 +227,8 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	csum = le32toh(csum);
+ 
+ 	/* Wrong size error  */
+-	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
++	if (size > XBC_DATA_MAX ||
++	    size > stat.st_size - BOOTCONFIG_FOOTER_SIZE) {
+ 		pr_err("bootconfig size is too big\n");
+ 		return -E2BIG;
+ 	}
 -- 
 2.53.0
 
