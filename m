@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036286;
-	b=WmIyuqMb9otyM8h7xuV5C8IhKZs18MvjrGhatXUR3er+QYb1j1SfTVu3bbhY2AaMQbtE
-	 QnpRbrku/zFlKG94RONTLE3+F0ZaZ8D0hNLmMyPEKrgGY4zs0MYWwo9ZPcOWY3ew6HOGu
-	 VjTkbat8StJtkmNkVIm1RtFrKs4qbkigzitEaCEzpQiHSblVS4JtByGaM5HD4+UPpot3Z
-	 zQKBAvcaEnIPkbuVCzlR1rg9ieVLyABWIAX27jUwWuPiw8tSXBPfBra4UsycDEeD740Fl
-	 +lrDNxbnxXfUsDlWC/C5fRVuvxmi6msZ3x4un0tQiXeK8EzWPBei63TeXgwsheSza5g==
+	t=1795036289;
+	b=hSAYNu1e0h7+jt5dkDlk5qQyNZCY+prWo3wj9RYdq9cw6/l/Cyo7uPS0zDxuEh6cpZ8m
+	 oOzhsCXevY4tWXuLLV0zf03odYsDCAxWQu7erhAi3TIAfg5qh6hODI0S6CcMOAjILrNWu
+	 w8nIBjctEwdfAch22tZs5AnRNoc/AY4tsgrw6z+JeEfuQOwH9eEXM+/Snl5Hy4F1s0laJ
+	 eHI3ZWhUkYIa6b0u6F7JGvjNQbtbtdYPnFhmfHnW+DOMBUpH86C4dYgJEkqbCn/m2yQCG
+	 igj2GeE+NoM5FetvnIW/UcCTUK1tEHglnth7ITiXzAP01D4UAVclZI+Ti6XMvcQLkeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CmXrbXVmxFmZkLQZMG1vUDq8oCcHURY7p6wgOCHZULA=;
-	b=unWQOBP8LlJYLeLeFnVoBb16ZerQzaUUkCryV7/1xZNYDJbCsv8gyaCKXQR3WBXjdsHG
-	 OSzbMqoxJrsthKOlkEbd34Aj3ERoNNDRppD9bwx4XgMLUeLcz7QPEvu9tOuAcL6WLERB0
-	 6rCGddKT8IGrCkZd/nd3RqotK34VJJhr9cuyJLGp5PpGsPrzT3OUWG8OJ5XNBm6OW1Dpe
-	 Mv3nNvfWdMuCpVuYiju9eDD9GRCrwGZVI9TQyOrzvfQsfgKvu4nK6wHuAPKWxKIQ/b4Vt
-	 mic5obINwnRJ2wuFYsZnf/CRwXNsQOmFrVNVbrRLTAAgatO+p/pUwJEkpJ7FdaRt40Q==
+	bh=SRlds88ie6KEBFdLsW//YhnGIpZ9x4SaCn+ntEhOcK8=;
+	b=Xdovfw5PYR/XMlgTw+C4ekVF0d3t6adwL7O8ntNgXDfhiMaK/RzB1LRP76CFslFnTVVF
+	 t4rqxwYlnId5drKocKOlvxWY/LjqtLC/pHO3vSMji4ozSKwoxQ7EKzzz5F8HSNVtKfIFv
+	 ZhLdmsQwNrmBNHq88mrGBWnQv6Sc3XnNdOsPN6BOtHjWKLedxdgSksafZTTv3AmhTAw+U
+	 rlzOb6X68txEnbgvBSs/UTu1hqs0KgeEVea8CFBhDNFFZMtQziS6M/fVN7BbVsIzMpAwa
+	 OSVYkCkF4vMZBpo5Loh1+L6uyK5uKGlQan/mfRl44G5K7KHroL8TC9j7t8PZci+1cEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iPlqkGqc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u1t7eXcK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D838B606A332;
-	Wed, 18 Nov 2026 21:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5393606A32A;
+	Wed, 18 Nov 2026 21:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iPlqkGqc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76931F000C5;
-	Wed, 18 Nov 2026 21:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u1t7eXcK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48CD1F000C5;
+	Wed, 18 Nov 2026 21:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036286;
-	bh=CmXrbXVmxFmZkLQZMG1vUDq8oCcHURY7p6wgOCHZULA=;
+	s=korg; t=1795036289;
+	bh=SRlds88ie6KEBFdLsW//YhnGIpZ9x4SaCn+ntEhOcK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iPlqkGqcVg/e8FmuJJzSWwpJi1tFAR3yahwyilmpQSOyPOzu3Mhu1uMmi40CRWujS
-	 UypNCQLNWcZ36tC0EdC74zSMUeEb4lmEhqJu1orqeP9lTVWeT1+ac1eVaGoxvTn3ar
-	 JTQ8rsOMxBx/vtbU9ZonZcNC3jdoeGAXSXs5JI9w=
+	b=u1t7eXcKTOZis+qwcb2hvSRp3/A8dvAPAGmZYxEklzV/LG5R1ZXmTupIvKaEINpmX
+	 QB8mDN4A6SIfuLUrZOvf0ciFtzfQ0/gXz5HoMx4eKoCvA3wRAqA5xMKc88QSLR941t
+	 i/HhtK36sEmMxfpQX48eip7rDU+FpW5P0fq4gFAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1004/3318] media: mediatek: jpeg: retry HW selection after successful wait
-Date: Wed, 18 Nov 2026 15:27:06 +0100
-Message-ID: <20261118150349.999565311@linuxfoundation.org>
+Subject: [PATCH 6.6 1005/3318] media: vicodec: fix NULL deref on oversized frame
+Date: Wed, 18 Nov 2026 15:27:07 +0100
+Message-ID: <20261118150350.029362277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,56 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit eb0bbd0ad679bf363387e3b8be8892cfbedabb72 ]
+[ Upstream commit c657eb609197e289b054bc2c4e86a0fc32dd7ebe ]
 
-wait_event_interruptible_timeout() returns a positive value when its
-condition becomes true before the timeout. mtk_jpegdec_worker() treats
-every nonzero result as a failure, so a normal decoder wakeup finishes
-the mem2mem job as though no hardware became available.
+job_ready() only honours the is_header_valid() verdict when
+ctx->comp_has_frame is set, and comp_has_frame is only set once
+comp_size reaches the full frame size. Since the copy is clamped to
+ctx->comp_max_size, a header advertising a larger size leaves comp_size
+stuck at comp_max_size, so comp_has_frame stays false and the failed
+validation is discarded.
 
-Handle interrupted waits and exhausted timeout retries separately, and
-retry hardware selection after a successful wakeup. Increment the retry
-count only for actual timeouts. The encoder uses
-wait_event_interruptible(), whose successful return is zero, so its
-existing check is correct; leave that separate no-timeout policy
-unchanged.
+Control then falls into the resolution change branch, which calls
+update_capture_data_from_header(). That function re-derives info via
+info_from_header(), assigns it to q_dst->info and dereferences it as
+q_dst->info->sizeimage_mult, with no NULL check of its own.
+is_header_valid() does check that same info_from_header() result --
+if (!info) return false which is precisely the false verdict
+job_ready() discarded above. info_from_header() returns NULL whenever the
+header flags resolve to no supported pixel format.
 
-Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
+Drop the comp_has_frame conjunct so an invalid header always bails out.
+The resolution change path is unaffected, as it is entered with a valid
+header. Oversized frames are then rejected by device_process(), which
+already returns -EINVAL when comp_frame_size exceeds comp_max_size.
+
+Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 5a1ae5cd44b95..48ed4e3ae633c 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1709,9 +1709,15 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 		ret = wait_event_interruptible_timeout(jpeg->hw_wq,
- 						       atomic_read(&jpeg->hw_rdy) > 0,
- 						       MTK_JPEG_HW_TIMEOUT_MSEC);
--		if (ret != 0 || (i++ > MTK_JPEG_MAX_RETRY_TIME)) {
--			dev_err(jpeg->dev, "%s : %d, all HW are busy\n",
--				__func__, __LINE__);
-+		if (ret < 0) {
-+			dev_err(jpeg->dev, "decoder HW wait interrupted: %d\n",
-+				ret);
-+			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
-+			return;
-+		}
-+
-+		if (!ret && i++ > MTK_JPEG_MAX_RETRY_TIME) {
-+			dev_err(jpeg->dev, "all decoder HW are busy\n");
- 			v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
- 			return;
- 		}
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index 66d7b626b04de..fb825b96c7337 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -650,7 +650,7 @@ static int job_ready(void *priv)
+ 	 * if the header is invalid the device_run will just drop the frame
+ 	 * with an error
+ 	 */
+-	if (!is_header_valid(&ctx->state.header) && ctx->comp_has_frame)
++	if (!is_header_valid(&ctx->state.header))
+ 		return 1;
+ 	flags = ntohl(ctx->state.header.flags);
+ 	hdr_width_div = (flags & V4L2_FWHT_FL_CHROMA_FULL_WIDTH) ? 1 : 2;
 -- 
 2.53.0
 
