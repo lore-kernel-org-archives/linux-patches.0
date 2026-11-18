@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015986;
-	b=S6QB9KqF4fMkloKhxZHTf6cHQ2YeL+uOgmLo1sRLFKFyc0FG0N9F+Kw0n6MlvZC+jz1+
-	 jDjWnk9wuf9qakCxXV4MGe19v72OMDTdK8E0J22TrxuWDhD/lLG+eKM16UOHHnGQRXUzZ
-	 JuXQ8wpon/IuFk9RdcML7D+8FfxgZSv863DMyPot7Vd3WboQk4jQQJZgJQZu/QWiD/XSj
-	 4MymxF+Ts+2s5IV1tLbpzHLr14wTWopWcQnYkKj7AU9ZKNFSFuAgxmVLV9eVl4LgesiUr
-	 g9H3yBuUxTbIALLKawzIOAEaZlmKrkxWKYj2o7yqHZHidwpp3EuyS/57JzXobzPDNgw==
+	t=1795015988;
+	b=m3TJOAEQVJDm1UootFrrGqaw0mCPmzG9W3qzfCYzCds7HzbFMge5Ky8GBiZAoSI79qnx
+	 9PMpwqn5PqfuQh0IS83KScua5waijJCUa/dC/tcign/A8nEaIGuIJmfBwnne+CoxKJ0Id
+	 uNozRNDzRT7ir0iVHeBO0tiJxNzOHdX+sgLNVPf1ZgE+TtrzTyoKv6b/ZT0o1qaiBDQDK
+	 UiJPYuA0dDYX3yKo2XlpYfYGL4+u0PvLEIm7iugY+UeXKtyTn50L1l5foUzMUpFGdo1X1
+	 Zgvbpv/w3FJc4zZVqTONrQHoIQMzRz9b3XG74/FUaK+24lq2O0byhPpE/L84RHCjLoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XcQDZeDThpdF6F9cQlKbtvXXSFdMLbyI1KILEMFF3ao=;
-	b=3Z+ZZu/AxwNG8VuAaQsd+3R8I4QBHlBLDWotoujFUUyvAbkkk3ShXHZyWQgpkkjWsmiY
-	 YTi0rNTM5Uz6hrMJHqDWIYs+EU3WIoa1haJHG/ruLrBjVoj0lfGdvMeBrg9AV0cak3ioZ
-	 KcdJUV8wT3f1WdBuKYDr3l6o6MflJcZb8K+hCP7KG7Ldtzbl8UVnmIjrXVfiQt/jS8VUo
-	 y3vKZ/i79OoH3QtaSO8V4797ascZAij6spMcwqmGDBdXYQ8LucTOqeuRvyjq4X6/OiV+7
-	 A0cGvdzj/JBeGDSlrsahIqRQkg8dRRhI++GHRNGmIUbxLdYjlPL+kP9WMpiRLRxZW2g==
+	bh=/E59Wfgi6jhyxP9dHQIurkMxZxDf8DteNn6DMAQrd68=;
+	b=lykhwnpyeh9dEu4mm52nafeWMwBNEuLFdT81h3/NjkjilTUYsxbZowDKkrkWMYLYdV+Z
+	 QevdItHkjA6apY9QEw/wr8sRlpFbAypb8rfX71/1OKbl1WY1TuIlp1NFNwDDFgmViN+g3
+	 6EhDmbsnqvyPwebYSQyxAVLcoyqNoN6GrFY6MyK3zdbi1MAHR/N8uT37tCLQS3uJFQbPK
+	 r/2Nwrn2DXwsVQoYIoD/rZEk5vhAkpSNwhHztJUFpOMrM8ZijBiVdtjQE8W/WkMXxqBUt
+	 vAHxVjfhPhe2Y/u85Zor9/hyxiNGdmosaqYtseYhgVBJG8HvvqH3RPvvIKZYmiZlBXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Mbu/Tug9";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k79tkrkX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1A9606A32F;
-	Wed, 18 Nov 2026 15:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C09606A31C;
+	Wed, 18 Nov 2026 15:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mbu/Tug9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C851F000C4;
-	Wed, 18 Nov 2026 15:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k79tkrkX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193011F000C4;
+	Wed, 18 Nov 2026 15:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015985;
-	bh=XcQDZeDThpdF6F9cQlKbtvXXSFdMLbyI1KILEMFF3ao=;
+	s=korg; t=1795015988;
+	bh=/E59Wfgi6jhyxP9dHQIurkMxZxDf8DteNn6DMAQrd68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mbu/Tug9IgqvB1pyJBhgf0Gd7nN0lDI/q/ZcVFDez70ne//j2PbXrgmaKXBlEGZTK
-	 iL4T4rFg+xwbNjX2En2jxWc8sHfeE/S8m5OyVgyDeflz0f/ed/MeWdbMLTAwyEmvK1
-	 mlgu6fPtuyczoy0bSzgNYoUvi2yW6qqx0pjyc7BU=
+	b=k79tkrkX46e7LP4GuD6Y7OcL/Q01DSsTYHfQWlbJBThOJvboES9uAe4rgb/hQIhHw
+	 d9lLDpqBBksOr+vdvF5z1SGiFmuVFAcC43r4RQmZILEgPninnGy+pCdCQGZ6NJCg04
+	 gzZqbvAJs0hOhF2v9nhWwBJE2USznOn/65svKfJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Roland Dreier <rolanddreier@rivian.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	syzbot+a83a5a1ba9ff57935171@syzkaller.appspotmail.com,
+	Keisuke Tsukuda <tkdkei@outlook.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0367/2651] firmware: arm_scmi: Fix error path leak in scmi_raw_message_send()
-Date: Wed, 18 Nov 2026 15:26:47 +0100
-Message-ID: <20261118150301.048024465@linuxfoundation.org>
+Subject: [PATCH 7.3 0368/2651] usb: gadget: composite: avoid warning on aborted delayed status
+Date: Wed, 18 Nov 2026 15:26:48 +0100
+Message-ID: <20261118150301.082525247@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,37 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roland Dreier <rolanddreier@rivian.com>
+From: Keisuke Tsukuda <catnyaaan@outlook.com>
 
-[ Upstream commit 1adabdce41b93ee6f72f29daa1d3e1750e7b7bd1 ]
+[ Upstream commit 048884b782b137229399b9f727b6437d9b4f1071 ]
 
-When the is_transport_polling_capable() check fails in scmi_raw_message_send(),
-it returns -EINVAL without doing scmi_xfer_raw_put(), which will leak a
-struct scmi_xfer.
+A SET_CONFIGURATION request that disables the current configuration, or a
+disconnect, can abort a control transfer whose status stage was delayed by
+a function driver. The asynchronous function work can nevertheless finish
+later and call usb_composite_setup_continue() after reset_config() has
+cleared delayed_status.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260909-scmi-async-done-race-v2-0-cc5dec25c6be%40rivian.com
-Fixes: 07cb8c324b63 ("firmware: arm_scmi: Add polling support to raw mode")
-Signed-off-by: Roland Dreier <rolanddreier@rivian.com>
-Link: https://patch.msgid.link/20260909-scmi-raw-v1-1-de3fa75d2c6f@rivian.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+This is an expected consequence of aborting the old control transfer, and
+does not require a kernel warning. Keep the diagnostic available under
+dynamic debug and ignore the obsolete completion as before.
+
+Fixes: 2bac51a1827a ("usb: gadget: composite: reset delayed_status on reset_config")
+Reported-by: syzbot+a83a5a1ba9ff57935171@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a83a5a1ba9ff57935171
+Signed-off-by: Keisuke Tsukuda <tkdkei@outlook.jp>
+Link: https://patch.msgid.link/20260908203348.95825-2-tkdkei@outlook.jp
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/raw_mode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/composite.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/raw_mode.c b/drivers/firmware/arm_scmi/raw_mode.c
-index 5ee21f6b70015..f01bf2f6ce1d4 100644
---- a/drivers/firmware/arm_scmi/raw_mode.c
-+++ b/drivers/firmware/arm_scmi/raw_mode.c
-@@ -711,6 +711,7 @@ static int scmi_raw_message_send(struct scmi_raw_mode_info *raw,
- 		} else {
- 			dev_err(raw->handle->dev,
- 				"Failed to send RAW message - Polling NOT supported\n");
-+			scmi_xfer_raw_put(raw->handle, xfer);
- 			return -EINVAL;
- 		}
- 	}
+diff --git a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
+index df39e3487c1f3..1b2238147cfe3 100644
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2740,7 +2740,7 @@ void usb_composite_setup_continue(struct usb_composite_dev *cdev)
+ 	spin_lock_irqsave(&cdev->lock, flags);
+ 
+ 	if (cdev->delayed_status == 0) {
+-		WARN(cdev, "%s: Unexpected call\n", __func__);
++		DBG(cdev, "%s: Ignoring obsolete call\n", __func__);
+ 
+ 	} else if (--cdev->delayed_status == 0) {
+ 		DBG(cdev, "%s: Completing delayed status\n", __func__);
 -- 
 2.53.0
 
