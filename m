@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018600;
-	b=AHSoULNh0VYstsdJUeq7nf0EjiAnTMmVk2HXPNFgKniXOsLJN1ohwfa9WZpoBDlBj/fQ
-	 qBsvbLW5KGCgGbuSO3HQ3DCFYfaTBL75Vl16/Rr/nU8hPvKvyJY3Ogzymqrda4jZ+E1pG
-	 JxwsvqpdiMVU8iSqgX870DgOIZGd/5GX9jQcmeyvMl00Tl3UujQBMAzZxWuWCTqFjvqcH
-	 D0PZnqrHAjRuuHRNYrjhIBFPZv9MRcUTbKrD2RzyjWlt6bAVgw5eJF4MXSzWDrTDTFSNh
-	 xFoZsrMUX2MFocr7f16e3NSroglSKcg17VGgq6MnxmODIoJLETA4p2+26zoMD7CpwUg==
+	t=1795018603;
+	b=0eRzmPyFy0sskdAz4aWxQPvdhV2fI7KKzuWGqUbvUQPlWqCylTeRX7SNbu7Hb+jGkc7v
+	 e8Ma4+3zr6FfedyLZxYHCmnmcWiKCtJq2b1iPsj3srR8aawFa3HnnTCwjC9AqQRuGgTA8
+	 2lksV3MP4t5pJCArBTqomvB3BaDoOCWNVLsHhJt6ylwqdQzuylHsGO3PHyJGaujFYsn7N
+	 8Jx7Eh0QslL6jrv4ny0Rc8fuULJDhZUFzeSCDQlN5kNl3Tdi+MuL9QyVMt+3sS4RL+Sat
+	 F33Ynmpbw+2i1JuICFTpValDyYEU5hotE6FHbLkTunROn+XAhFnFFveA/BFUoTXIgGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U6J0J0hTb3QEGmdeFNQtLdWb91vD/DPBeYy0FqJSs6Y=;
-	b=4AaEszmxAmed01b5DBx6oIxw4KeIytbHEgcaCzB1nLGHMcwHi8X2+UmrJHRDSO9oAmSc
-	 u9DKMEQMCdV0ONbxMQkDL/OEpLzCFP+nYIJvTKnrtEhMKfSV6tIdMlypd7fVh1QqHAlnc
-	 PZHadU24KOuzQ2g9o+2J3rPBo99K5uEOW6jyqSjIqE2wKw9v0JwF9SNFDIKXQBkPuY7Ul
-	 z7hHumscB4VKMTz6s7Txhw5Fzxv4WDDalZZGu/bpHX6Oza1XQIN4igD54XwNUy6XqnvFk
-	 ey8cuU5A67BYwvqf866H/wPKV1q7PZKGwAtMpcjZlsrbmP52p0jHX19BqFS0TS3dM0A==
+	bh=okVhr1SOFGr+zqfILWxek54GgR6CyUCz0glltgb+uaU=;
+	b=lrVfxF+olRkowm8GABh1eDlMXTj7lK3ONsa4IT1V+oxA8bmRH2EYzieYulPxZoAi7rBN
+	 RVFBLgQEWmOnfia+qVDfsgBl7/gaEH+/ndYc/L+JEEie6cl9Qtl/xIWgleKb3e0svIKfV
+	 UxmrXGwdsOoGCZ5ke+k1XgP6zyau9iUBhTesnOhkPcTttO0evK/ovmX10XK/31+tACFt/
+	 qZsETD6bzgrtZtlFlyHkg+fKGDndR9te8Knj3eQBDAtLkf/7cgkvYNUITtp4tEo5jfN11
+	 bxx7pQP4brNDhkEn3TVWivSxexPcHPseCvNSYP0ZWIEbi/nSREWTfvpxRq5iyykIbMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vnc6KsNh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqWYDTl5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607E6606A31C;
-	Wed, 18 Nov 2026 16:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA42606A320;
+	Wed, 18 Nov 2026 16:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vnc6KsNh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14071F000C5;
-	Wed, 18 Nov 2026 16:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iqWYDTl5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB271F000C4;
+	Wed, 18 Nov 2026 16:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018600;
-	bh=U6J0J0hTb3QEGmdeFNQtLdWb91vD/DPBeYy0FqJSs6Y=;
+	s=korg; t=1795018603;
+	bh=okVhr1SOFGr+zqfILWxek54GgR6CyUCz0glltgb+uaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vnc6KsNh1IByPJsc2PDp8tO+1FLuvOGIrMiNKwCoW4XndiW8oonodkinaEn5qveTs
-	 H3JfP+h/aXjYZPC7IXhM1OzUe0hEjDjnXnAtfgdtNSbsR/52vVLQkImmEJDTAdBoRk
-	 nn9lj7uc26XdfzqB3M/8mIYI/ABTbqJ9yOLq8TLc=
+	b=iqWYDTl5LHR//DG1l/YKHWz0DKTikW15AYXSxEkRl3UNL/hBH8k7fTG4/003gMiKL
+	 fYTcnAm0pKM13VYh4bStDBkMadP5VinpYKHzbfVZvCpvtkdCrBvJdVKRF86pTTNRLX
+	 Au2XHWP/7DsEjyhOj5Ft8nfnHjbC0KwFAe3YzYhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Sumit Gupta <sumitg@nvidia.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1297/2651] cpufreq: sparc-us2e: fix frequency table index copy-paste error
-Date: Wed, 18 Nov 2026 15:42:17 +0100
-Message-ID: <20261118150334.654596755@linuxfoundation.org>
+Subject: [PATCH 7.3 1298/2651] cpufreq: tegra194: fix double-pointer error in get_cpu_ndiv
+Date: Wed, 18 Nov 2026 15:42:18 +0100
+Message-ID: <20261118150334.695346749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,53 +71,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit e5b33fa47792375ca7fc49ccadee87d8e4b72929 ]
+[ Upstream commit f0a750dad7da1c653e85f0698063235453b43831 ]
 
-In us2e_freq_cpu_init(), the last two frequency writes both use
-index [2] instead of [3] and [4] respectively, and the terminator
-uses [3] instead of [5].  This is a copy-paste error where the index
-was not incremented, causing the divider-6 and divider-8 entries to
-overwrite the already-written divider-4 entry.
+ndiv is already a u64 pointer, passing &ndiv to smp_call_function_single()
+results in a u64** being written to instead of the caller's u64 variable,
+so the caller always reads back an uninitialized ndiv.  Drop the spurious
+'&'.
 
-As a result, only three frequency steps (div 1, 2, and 4) are actually
-available to the cpufreq core, while the intended dividers 6 and 8 are
-silently lost.  The struct us2e_freq_percpu_info::table[6] has room for
-5 entries plus a terminator, matching the 5 hardware dividers.
-
-Fix the indices so all five frequency steps are correctly populated:
-table[0]=div1, table[1]=div2, table[2]=div4, table[3]=div6,
-table[4]=div8, table[5]=TABLE_END.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 0839ed1fd7ac ("cpufreq: tegra194: add soc data to support multiple soc")
 Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/sparc-us2e-cpufreq.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/cpufreq/tegra194-cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/sparc-us2e-cpufreq.c b/drivers/cpufreq/sparc-us2e-cpufreq.c
-index a68706406b880..5cda391ad03bb 100644
---- a/drivers/cpufreq/sparc-us2e-cpufreq.c
-+++ b/drivers/cpufreq/sparc-us2e-cpufreq.c
-@@ -282,12 +282,11 @@ static int us2e_freq_cpu_init(struct cpufreq_policy *policy)
- 	table[1].frequency = clock_tick / 2;
- 	table[2].driver_data = 2;
- 	table[2].frequency = clock_tick / 4;
--	table[2].driver_data = 3;
--	table[2].frequency = clock_tick / 6;
--	table[2].driver_data = 4;
--	table[2].frequency = clock_tick / 8;
--	table[2].driver_data = 5;
--	table[3].frequency = CPUFREQ_TABLE_END;
-+	table[3].driver_data = 3;
-+	table[3].frequency = clock_tick / 6;
-+	table[4].driver_data = 4;
-+	table[4].frequency = clock_tick / 8;
-+	table[5].frequency = CPUFREQ_TABLE_END;
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index c6375e14d445d..1eb96e9f3310d 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -367,7 +367,7 @@ static void tegra194_get_cpu_ndiv_sysreg(void *ndiv)
  
- 	policy->cpuinfo.transition_latency = 0;
- 	policy->cur = clock_tick;
+ static int tegra194_get_cpu_ndiv(u32 cpu, u32 cpuid, u32 clusterid, u64 *ndiv)
+ {
+-	return smp_call_function_single(cpu, tegra194_get_cpu_ndiv_sysreg, &ndiv, true);
++	return smp_call_function_single(cpu, tegra194_get_cpu_ndiv_sysreg, ndiv, true);
+ }
+ 
+ static void tegra194_set_cpu_ndiv_sysreg(void *data)
 -- 
 2.53.0
 
