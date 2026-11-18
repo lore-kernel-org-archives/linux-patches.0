@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015977;
-	b=rCnswUXUIvyz6v+fKgr+hB5iDTYkLGOhoDBjHsP4JFQ0i3PAyhX95xVwuxPM5LP0hIAo
-	 gHEh/rpIVMT+Xz1nzrsUEOUNoOlhHm2u0CxHdeHNAqncpYpYXz7Esk2mbtOamqLWqZzzC
-	 nvR6MQSh6PTm9yp9pOFQB/YBlxLuvuRMFXVSRmcxgVob0inbXDwvwK6FdJwXlWE4QN+Fg
-	 KZKepJTyiguX0l7XetYX+eSG1OrRCG3ktkl9IQPQmg8BS6suVSjY/rBtFRwTVelldLCB+
-	 0U3IyOSj1bkE8Mm1RD2SPWxubbsk41CKdyt7Aee14yTGWXvqtp9Zi9jS0lx/bN3+suQ==
+	t=1795015981;
+	b=nGzfjOPTnjtDoZ6luOOdtI+fgI3lSLDLTeVMTX4YpkNjVoTfXcBs+VECWxJ2VHhUaW34
+	 dUK+iZDw4Bu7aJLAdMy85uaU45slX+EZcivWmAupln/IEV+mc3d4/Jn8jQC7i0lB7tOZ8
+	 SyRKhqZ2iEc3C0dA2HvyEH5agOxspT4sCh0jXhQgiohi8+SI7j50aICryzgVhhe5VrMKT
+	 Fm4RcLvnGvDAQfu5Ys22/27QEGTxtmdXrwLkR51xUCd6idOkDIB/jSaBp9I4NiYgAVek5
+	 c7FHCzZKS81irvdPUCeuQz1YN4hNRvTuGiJKV5PnEqMGx3xqX63Gl+nByOLUg8bii3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015981;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7ufjRQf3Q9whFJzDniP3ipYxGynUjktFdwVE6uTQlCE=;
-	b=N/4eoEqhoet4kyPr5yNOouPZwHDCfbbDjyzJcUNJwiy2q7mjdJiY2kPQD9Pw/TX2O9W3
-	 xTW7fLP23oUpJS9ZdV1I6l6xFIRLudmVyHtH2yEOOkZZI/tCvKuNhgGeojTA6A7aI1afP
-	 CB32yYyxDjCTzwIykQ3PSPtomurP/6RGe4cs1rd0VKbJ1IaXZAmc3hmwBBvGQhziFNuXo
-	 XIc33rYpLCdYk437aQhPlD/K/YWqmnK/C3CmYQLYPgOABx4IPCdN+0vCZhSSsycHTNcDv
-	 BZhg5t3wDbbsl3VlaxYLEJwFR/FQL5RAxyXH2RQIe+6O6FmAd/2ktKAuKnFBCslSY0w==
+	bh=l92YDFp/Bw9a4O6yT4NhwKiLTBeUtT6M9aOKQ6/2ilw=;
+	b=AalbEKNIs2rA4F+Zy6bmQdwX2cxrkq97FF3wzxf4j0w3PT8JptaFH0lreVtsEs1OlcbO
+	 1Nrywt+WBtgxYAWjDCscpifDn7ZMDUOZRgpN5Cf0zDrX51Ti+RiBxVUGt8Ob809ghX2+1
+	 vjZiZTg+PisoPElR9O+2ZMaQLioGA9QLKPZl+e18zEsNHXrBiP+mCYmdAbAuSBwa1lBpU
+	 5xcd3ds7GHjA3lCTjxZRiu3VdZnHE7NT8dwSk2v9V1NDwaSgGfHxzHggJ1Y912p/G/4xk
+	 F/OKOqmHupIWK3hK6EoRaOj8jm9Vv+3Wd+iugNBjtgvf9hjQGLcvwKL7K52lMyjMKAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdSAV4hc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABp5gy2A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC57C606A32F;
-	Wed, 18 Nov 2026 15:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35DE60A261D;
+	Wed, 18 Nov 2026 15:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdSAV4hc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDF11F000C4;
-	Wed, 18 Nov 2026 15:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ABp5gy2A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EC71F000C4;
+	Wed, 18 Nov 2026 15:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015977;
-	bh=7ufjRQf3Q9whFJzDniP3ipYxGynUjktFdwVE6uTQlCE=;
+	s=korg; t=1795015980;
+	bh=l92YDFp/Bw9a4O6yT4NhwKiLTBeUtT6M9aOKQ6/2ilw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdSAV4hc9++1+TcktvHsxu54YJOlnOWbeE8dtHuTN96gEfjhqoHpvLWUN/30Qazdl
-	 nMyzqNfKOT63OXLjkEcMdfhzwVqAmzsLmDh0LvmILwjyRa/05PxXLCj2OYYYamth30
-	 cW1Pd+x14PaxVkj5R+i2AS4tCqfhCg5DsXIwB7Qk=
+	b=ABp5gy2Af/N+twDKjAJ7YYzLcQCC0b1ocC7O4RzwxGj7b/MuwsToy2au8VbIAYZCQ
+	 c9szO0ovlkOsnehfQ5SxDx6VkKAOweeswVqM0ZDD9+DlIyawSJDWAzfZLz4S+8IF1y
+	 bpLhqSJMfQA/7/V2m+kWWCpBKQFgcJU9L2NEnGyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roland Dreier <rolanddreier@rivian.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0365/2651] firmware: arm_scmi: Protect xfer->async_done with xfer->lock
-Date: Wed, 18 Nov 2026 15:26:45 +0100
-Message-ID: <20261118150300.978744505@linuxfoundation.org>
+Subject: [PATCH 7.3 0339/2651] scsi: mpi3mr: Fix out-of-bounds read in SAS topology change events
+Date: Wed, 18 Nov 2026 15:26:19 +0100
+Message-ID: <20261118150300.053410627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,240 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roland Dreier <rolanddreier@rivian.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 49fc5bc04eec2b7687d49ccceb7adf6ace640a3b ]
+[ Upstream commit 9e220ce4bd0468e47cc9eea07e40799ebae6eda8 ]
 
-Asynchronous SCMI commands are completed by a delayed response. The RX
-path signals the response with complete(xfer->async_done). Unlike
-xfer->done, xfer->async_done is a pointer to a completion owned by
-whoever is waiting for the delayed response, and it stays valid only for
-as long as that waiter is still waiting.  In do_xfer_with_response() it
-is a DECLARE_COMPLETION_ONSTACK() in the caller's stack frame.
+The number of entries in a SAS topology change event is used to walk the
+entry array without being compared against the amount of event data that
+was received, so the walk can run past the end of the buffer.
 
-Nothing serialises the RX path against a waiter that gives up on a
-timeout. scmi_msg_response_validate() does read xfer->async_done
-under xfer->lock, and documents that as a requirement, but the lock is
-dropped again before scmi_handle_response() dereferences the pointer,
-and neither the arming nor the disarming side takes it at all. So a
-delayed response arriving just as the wait times out can be signalled
-on a completion that is already gone:
+Work out how many entries the payload can hold and skip the event if it
+claims more.
 
-  waiter                                RX path (IRQ context)
-  ------                                ---------------------
-  do_xfer_with_response():
-    xfer->async_done = &async_response
-    do_xfer(xfer)
-    wait_for_completion_timeout(xfer->async_done, tmo)
-    /* returns 0, gives up */
-                                        /* response receive interrupt */
-                                        scmi_handle_response():
-                                          scmi_xfer_command_acquire()
-                                            lock xfer->lock
-                                            validate: async_done != NULL
-                                            unlock xfer->lock
-    xfer->async_done = NULL
-    return -ETIMEDOUT
-    /* async_response goes out of scope */
-                                          complete(xfer->async_done)
-
-That last complete() has two possible bad outcomes: it either dereferences
-the NULL just stored by the waiter or - if that store is not yet visible
-on the RX CPU - it takes a lock and writes to a stack frame that the
-waiter may already have returned from.
-
-Fix this by making xfer->lock cover xfer->async_done end-to-end. Add
-helpers to arm and disarm it under the lock, use them on both the regular
-and the raw paths, and have the RX path read and signal the completion
-under that same lock. A waiter that is timing out then either completes
-its disarm before the RX path looks, in which case the delayed response is
-dropped, or blocks in the disarm until the RX path is done with the
-completion, in which case the completion is still alive.
-
-Log the dropped case, so every path where a delayed response that was
-matched to a pending xfer and then discarded produces an error. (This is
-the same treatment scmi_msg_response_validate() already gives a
-delayed response that arrives after the waiter has disarmed the xfer)
-
-Fixes: 58ecdf03dbb9 ("firmware: arm_scmi: Add support for asynchronous commands and delayed response")
-Signed-off-by: Roland Dreier <rolanddreier@rivian.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Tested-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://patch.msgid.link/20260909-scmi-async-done-race-v2-1-cc5dec25c6be@rivian.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-11-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/common.h    | 22 ++++++++++++++++
- drivers/firmware/arm_scmi/driver.c    | 37 +++++++++++++++++++++++----
- drivers/firmware/arm_scmi/protocols.h |  9 ++++---
- drivers/firmware/arm_scmi/raw_mode.c  |  4 +--
- 4 files changed, 62 insertions(+), 10 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/common.h b/drivers/firmware/arm_scmi/common.h
-index fe8c22cfb9f7d..a5492dd90b417 100644
---- a/drivers/firmware/arm_scmi/common.h
-+++ b/drivers/firmware/arm_scmi/common.h
-@@ -284,6 +284,28 @@ static inline bool is_polling_enabled(struct scmi_chan_info *cinfo,
- 		is_transport_polling_capable(desc);
- }
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 6cfec6ae82f22..6677f39b8c8f0 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2852,12 +2852,28 @@ static void mpi3mr_sastopochg_evt_th(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3_event_data_sas_topology_change_list *topo_evt =
+ 	    (struct mpi3_event_data_sas_topology_change_list *)event_reply->event_data;
+ 	int i;
+-	u16 handle;
+-	u8 reason_code;
++	u16 handle, avail_len;
++	u8 reason_code, max_entries, num_entries;
+ 	struct mpi3mr_tgt_dev *tgtdev = NULL;
+ 	struct mpi3mr_stgt_priv_data *scsi_tgt_priv_data = NULL;
  
-+/**
-+ * scmi_xfer_async_response_arm  - Arm the delayed response completion
-+ *
-+ * @xfer: A reference to the xfer to arm
-+ * @async_done: The completion to signal upon reception of a delayed response,
-+ *		or NULL to disarm @xfer.
-+ */
-+static inline void scmi_xfer_async_response_arm(struct scmi_xfer *xfer,
-+						struct completion *async_done)
-+{
-+	unsigned long flags;
+-	for (i = 0; i < topo_evt->num_entries; i++) {
++	avail_len = event_reply->event_data_length * 4;
++	if (avail_len < offsetof(struct mpi3_event_data_sas_topology_change_list, phy_entry)) {
++		ioc_err(mrioc, "SAS topology event: event data too small (%u bytes)\n",
++			avail_len);
++		return;
++	}
++	max_entries = (avail_len -
++		      offsetof(struct mpi3_event_data_sas_topology_change_list, phy_entry)) /
++		      sizeof(struct mpi3_event_sas_topo_phy_entry);
++	num_entries = topo_evt->num_entries;
++	if (num_entries > max_entries) {
++		ioc_err(mrioc, "SAS topology event: num_entries(%d) exceeds max(%d)\n",
++			num_entries, max_entries);
++		return;
++	}
 +
-+	spin_lock_irqsave(&xfer->lock, flags);
-+	xfer->async_done = async_done;
-+	spin_unlock_irqrestore(&xfer->lock, flags);
-+}
-+
-+static inline void scmi_xfer_async_response_disarm(struct scmi_xfer *xfer)
-+{
-+	scmi_xfer_async_response_arm(xfer, NULL);
-+}
-+
- void scmi_xfer_raw_put(const struct scmi_handle *handle,
- 		       struct scmi_xfer *xfer);
- struct scmi_xfer *scmi_xfer_raw_get(const struct scmi_handle *handle);
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index a666ad39acdf1..005ff6da19f0f 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -1064,6 +1064,29 @@ static inline void scmi_xfer_command_release(struct scmi_info *info,
- 	__scmi_xfer_put(&info->tx_minfo, xfer);
- }
- 
-+/**
-+ * scmi_xfer_async_response_complete  - Signal a received delayed response
-+ *
-+ * @xfer: A reference to the xfer whose delayed response was received
-+ *
-+ * Return: True if a completion was still armed on @xfer and has been
-+ *	   signalled, false if a waiter has already disarmed it due to
-+ *	   timeout or other error.
-+ */
-+static bool scmi_xfer_async_response_complete(struct scmi_xfer *xfer)
-+{
-+	unsigned long flags;
-+	struct completion *async_done;
-+
-+	spin_lock_irqsave(&xfer->lock, flags);
-+	async_done = xfer->async_done;
-+	if (async_done)
-+		complete(async_done);
-+	spin_unlock_irqrestore(&xfer->lock, flags);
-+
-+	return !!async_done;
-+}
-+
- static inline void scmi_clear_channel(struct scmi_info *info,
- 				      struct scmi_chan_info *cinfo)
- {
-@@ -1167,8 +1190,12 @@ static void scmi_handle_response(struct scmi_chan_info *cinfo,
- 
- 	if (xfer->hdr.type == MSG_TYPE_DELAYED_RESP) {
- 		scmi_clear_channel(info, cinfo);
--		complete(xfer->async_done);
--		scmi_inc_count(info->dbg, DELAYED_RESPONSE_OK);
-+		if (scmi_xfer_async_response_complete(xfer))
-+			scmi_inc_count(info->dbg, DELAYED_RESPONSE_OK);
-+		else
-+			dev_err(cinfo->dev,
-+				"Delayed Response for %d (protocol 0x%X msg 0x%X) received after waiter was disarmed, dropping\n",
-+				xfer->hdr.seq, xfer->hdr.protocol_id, xfer->hdr.id);
- 	} else {
- 		complete(&xfer->done);
- 		scmi_inc_count(info->dbg, RESPONSE_OK);
-@@ -1510,7 +1537,7 @@ static int do_xfer_with_response(const struct scmi_protocol_handle *ph,
- 	int ret, timeout = msecs_to_jiffies(SCMI_MAX_RESPONSE_TIMEOUT);
- 	DECLARE_COMPLETION_ONSTACK(async_response);
- 
--	xfer->async_done = &async_response;
-+	scmi_xfer_async_response_arm(xfer, &async_response);
- 
- 	/*
- 	 * Delayed responses should not be polled, so an async command should
-@@ -1522,7 +1549,7 @@ static int do_xfer_with_response(const struct scmi_protocol_handle *ph,
- 
- 	ret = do_xfer(ph, xfer);
- 	if (!ret) {
--		if (!wait_for_completion_timeout(xfer->async_done, timeout)) {
-+		if (!wait_for_completion_timeout(&async_response, timeout)) {
- 			dev_err(ph->dev,
- 				"timed out in delayed resp(caller: %pS)\n",
- 				(void *)_RET_IP_);
-@@ -1532,7 +1559,7 @@ static int do_xfer_with_response(const struct scmi_protocol_handle *ph,
- 		}
- 	}
- 
--	xfer->async_done = NULL;
-+	scmi_xfer_async_response_disarm(xfer);
- 	return ret;
- }
- 
-diff --git a/drivers/firmware/arm_scmi/protocols.h b/drivers/firmware/arm_scmi/protocols.h
-index 15ad5162e37a9..8583159059e6b 100644
---- a/drivers/firmware/arm_scmi/protocols.h
-+++ b/drivers/firmware/arm_scmi/protocols.h
-@@ -100,7 +100,10 @@ struct scmi_msg_hdr {
-  *	message. If request-ACK protocol is used, we can reuse the same
-  *	buffer for the rx path as we use for the tx path.
-  * @done: command message transmit completion event
-- * @async_done: pointer to delayed response message received event completion
-+ * @async_done: pointer to delayed response message received event completion,
-+ *		or NULL when no delayed response is expected. Protected by
-+ *		@lock, since the completion is owned by the waiter and can
-+ *		vanish once the wait times out.
-  * @pending: True for xfers added to @pending_xfers hashtable
-  * @node: An hlist_node reference used to store this xfer, alternatively, on
-  *	  the free list @free_xfers or in the @pending_xfers hashtable
-@@ -121,7 +124,7 @@ struct scmi_msg_hdr {
-  *	    - SCMI_XFER_SENT_OK -> SCMI_XFER_DRESP_OK
-  *	      (Missing synchronous response is assumed OK and ignored)
-  * @flags: Optional flags associated to this xfer.
-- * @lock: A spinlock to protect state and busy fields.
-+ * @lock: A spinlock to protect state, busy and async_done fields.
-  * @priv: A pointer for transport private usage.
-  */
- struct scmi_xfer {
-@@ -147,7 +150,7 @@ struct scmi_xfer {
- #define SCMI_XFER_IS_CHAN_SET(x)	\
- 	((x)->flags & SCMI_XFER_FLAG_CHAN_SET)
- 	int flags;
--	/* A lock to protect state and busy fields */
-+	/* A lock to protect state, busy and async_done fields */
- 	spinlock_t lock;
- 	void *priv;
- };
-diff --git a/drivers/firmware/arm_scmi/raw_mode.c b/drivers/firmware/arm_scmi/raw_mode.c
-index 1f6e51670208d..8751cff5fa4eb 100644
---- a/drivers/firmware/arm_scmi/raw_mode.c
-+++ b/drivers/firmware/arm_scmi/raw_mode.c
-@@ -346,7 +346,7 @@ scmi_xfer_raw_waiter_get(struct scmi_raw_mode_info *raw, struct scmi_xfer *xfer,
- 
- 		if (async) {
- 			reinit_completion(&rw->async_response);
--			xfer->async_done = &rw->async_response;
-+			scmi_xfer_async_response_arm(xfer, &rw->async_response);
- 		}
- 
- 		rw->cinfo = cinfo;
-@@ -361,7 +361,7 @@ static void scmi_xfer_raw_waiter_put(struct scmi_raw_mode_info *raw,
- 				     struct scmi_xfer_raw_waiter *rw)
- {
- 	if (rw->xfer) {
--		rw->xfer->async_done = NULL;
-+		scmi_xfer_async_response_disarm(rw->xfer);
- 		rw->xfer = NULL;
- 	}
- 
++	for (i = 0; i < num_entries; i++) {
+ 		handle = le16_to_cpu(topo_evt->phy_entry[i].attached_dev_handle);
+ 		if (!handle)
+ 			continue;
 -- 
 2.53.0
 
