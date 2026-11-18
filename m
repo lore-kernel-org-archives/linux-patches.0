@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016396;
-	b=Vhk+a3Yob7EAWXLIOHKuR2AOxkt4rJ6tOPdmdkMI+KGLxVmuDNG6Ukw6sqf5DkIE91zb
-	 io/3pB2EOYzsZ0U7mBVbMW0uKsGpdUoWAln48ofJ0b8vc7EejDcYhNdtFi1f+alMZJ7a+
-	 BM96qbHztBO7MIyTp3BwvPxG1kOwsFN7MWZKLL2NzhWd7HuRV5Za6bVJIEZmAH4IFdcxA
-	 gq6DIK9TKbpHHhdbVmBGEjBEK5xhqxWfRkTF2z+6J9UwrmKsyXLNO/HbcFGG6FReTpPFw
-	 g2YxKoMb+eBBTTf2pryMKy9pZhU25n4lxhfdOdNG+PlnKUVREoa7pq02996etOee1uA==
+	t=1795016399;
+	b=Dze4HVGAlcGClSoNEcDBehQbe8IlS21Qz1POUzqdOOUmqnvRIEbVTvZoZ8sElN6cqMGd
+	 wqm2sOXYJejJqmU9NDFp0ZBUzczaalxFu7grA+QyIhDQ0RqMZcRxGEm7I4Ou+YvxFVFBx
+	 mxrUHCxZersfgTIq59qRB/eytMS7se4jIUqR3T2nrU3Xmg0M6fPIsLXDJhCGoK7FmrBay
+	 qvyEsF3TY8Oy9VD3TgiMW+RlZBqR+nLOmeOZRgxecG7zbodI4sBzoU9vqQNRS/Sfbbt/1
+	 qmRxo0+7S+fHDl22nu3VcY507i3El2Aga/XgtfG0J5o5NDVa6kDaTGx21ECry2O5Auw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pwe7FkRSYBpVRXvopJQWFDF1YTSKUaWY73VguAkUBIs=;
-	b=JhYVG1nlKGSOkX/jGl2bNunCG0aD+ucAdvKWyXVIA+WX5R6kIxoOkf+3pzE+DShLAQsc
-	 RPnEgp1o9CWKlKNAh8gwoejXV6ASmIR44ttqHKJxHPu5jqbO+JPstzkMgTlSyPFLWZEoE
-	 gRLqbVdmgVNORWVInVH3d3rnTbdyInT1VBAGvG3FTV8vkPDkUm6KckuS1WqWw/wK/XnlV
-	 eshofffiOnAp0OKZt8ZfDznaff4hCW5E4bwRhcihBbzlP+pyT30J1nMHEg67hBcj4CSjK
-	 crD877608SYp/bm9mKNvseRbpDa6laasVnhKnmNBis/cm5G4IL5J75gKPAk7kTtbHag==
+	bh=mQ3iTiHb4JLuoG5MgAndRNWgt+Te0vWMcuwrtN3FdMk=;
+	b=U9/l6Lw3pnxNs/BZtRKs3jqEDTuELyOsfFrWiwHdqAAAwJw9yYXcQ3TsK3wGqb42UE+f
+	 RMiJ/Bpb+QOQ181Nnrjf1bpksJqg0Qm4V2luTd/vyTeKwjNNn2mFOZhjjtcBZIyvJ2yH7
+	 GLgF3w5OCgCtdLuA6iN66V4SnbDHZ4ZUseoVETgiFgeU3oE0lejLuhPNLIvCPgUMIeoyM
+	 gbNrIz9WcHYkM+kJsGCHGJhUgl0EIe3Wl5NDtKLD/uDd3CtqaqkIFtFoinHDyYK7CQ9x9
+	 ZLMpRDoRVgGytu+tcocP2u70BXYhUc1xINi3nIFmYsTurq5YzuzkPq+1n88VnZQTIhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z07gVijQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BG4GFqrV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB4560A260F;
-	Wed, 18 Nov 2026 15:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4084460A2631;
+	Wed, 18 Nov 2026 15:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z07gVijQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBF21F000C4;
-	Wed, 18 Nov 2026 15:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BG4GFqrV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE231F000C5;
+	Wed, 18 Nov 2026 15:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016396;
-	bh=Pwe7FkRSYBpVRXvopJQWFDF1YTSKUaWY73VguAkUBIs=;
+	s=korg; t=1795016399;
+	bh=mQ3iTiHb4JLuoG5MgAndRNWgt+Te0vWMcuwrtN3FdMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z07gVijQAxrZvT1bRSHM1mJyeKWGmEMak10aXvKpJx5J4hEJ7Mnnod2wVP6KD1pIR
-	 N7mNxcDsYR0/62IWiwvHpgg0tc0iq1rHhrnU05oHwqBX8OG7VwWApBAQUPhDlOZMPW
-	 EsiWKZ3biuIY9xW/yUUPXLzHrdy7euvQFBvY/L3k=
+	b=BG4GFqrVV2bwCg2zw1ht+p7RJGl8TX2NOoNX5PrlrCjn4hgOxF6AO2JnHdqffpdHt
+	 vHZRMaPkHkAar1QZd7k2OUr21EWAG4z2eK+DERGG82uZdKunTZt66EycAduoaOUsBI
+	 xH/HK/ml5NaDHC/Fs0lpFxo8yJsmdGygU1UFawSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Li RongQing <lirongqing@baidu.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0512/2651] md/raid10: fix missing wakeup in wait_barrier_nolock
-Date: Wed, 18 Nov 2026 15:29:12 +0100
-Message-ID: <20261118150306.184705136@linuxfoundation.org>
+Subject: [PATCH 7.3 0474/2651] RDMA/uverbs: Make CQ handle mandatory for WQ creation
+Date: Wed, 18 Nov 2026 15:28:34 +0100
+Message-ID: <20261118150304.855370850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,55 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit f00eb0ff45793383d5a62db2d2aea63ada0ccdbd ]
+[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
 
-Fuzz testing triggered a hung raid10d thread:
+UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
+method definition, so the mandatory attribute bitmap does not enforce
+its presence.  When userspace omits it, uverbs_attr_get_obj() returns
+ERR_PTR(-ENOENT) and the handler stores that error pointer into
+wq_init_attr.cq without validation.
 
-INFO: task md0_raid10 blocked for more than 120 seconds.
-Call Trace:
- raid10d
- md_thread
- kthread
+The bogus cq pointer is then passed to the driver's create_wq callback.
+In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
+container_of to the ERR_PTR value, producing a near-NULL pointer.  The
+subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
+dereference:
 
-wait_barrier_nolock() speculatively increments nr_pending. If a
-concurrent writer changes resync_lock's sequence, it rolls the count back
-with atomic_dec_and_test(). The rollback currently wakes wait_barrier only
-when nr_pending reaches zero.
+  BUG: kernel NULL pointer dereference, address: 0000000000000296
+  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
+  Call Trace:
+   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
+   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
+   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
+   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
+   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
 
-freeze_array() can be waiting for nr_pending == nr_queued + extra while
-array_freeze_pending is set. If the rollback changes nr_pending from 2 to
-1, the condition becomes true but no wakeup is sent, leaving raid10d
-blocked indefinitely.
+A WQ without a CQ was never valid; the legacy write path always required
+one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
+attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
+when the CQ handle is missing, before the handler ever runs.
 
-Also wake wait_barrier when array_freeze_pending is set, matching
-allow_barrier().
-
-Fixes: b9b083f9044a ("md/raid10: convert resync_lock to use seqlock")
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Link: https://patch.msgid.link/20260817033340.418119-3-wozizhi@huawei.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 1093c798d9dde..186e17e0a6357 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1010,7 +1010,8 @@ static bool wait_barrier_nolock(struct r10conf *conf)
- 	if (!read_seqretry(&conf->resync_lock, seq))
- 		return true;
- 
--	if (atomic_dec_and_test(&conf->nr_pending))
-+	if (atomic_dec_and_test(&conf->nr_pending) ||
-+	    READ_ONCE(conf->array_freeze_pending))
- 		wake_up_barrier(conf);
- 
- 	return false;
+diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
+index 7ded8339346f3..c23f455231bf0 100644
+--- a/drivers/infiniband/core/uverbs_std_types_wq.c
++++ b/drivers/infiniband/core/uverbs_std_types_wq.c
+@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
+ 			UVERBS_OBJECT_CQ,
+ 			UVERBS_ACCESS_READ,
+-			UA_OPTIONAL),
++			UA_MANDATORY),
+ 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
+ 		       UVERBS_OBJECT_ASYNC_EVENT,
+ 		       UVERBS_ACCESS_READ,
 -- 
 2.53.0
 
