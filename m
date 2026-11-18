@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053646;
-	b=KnO8x/1ZoL6PxO+Z1t/owUb7uETI8K8VvFPzpQDV/6Srd2v2L7JnCb8XgE6AklYrchV+
-	 ILkOWypQBWvao7tXkrbMAtuJELr1y04zZaKLH6Y0HJLYb9X1Yi5xq4Vix7cpU8OBxCnf2
-	 ySuhjFPu4/TwXLCqlAJh3rBpzoGIEBuKuhCsZllQzskkJc7VMphaodQjLndpakOOpk295
-	 99wRkGSwcHDdq8FNqOdwC5MuFPcC3rXHPkZfyR2P4UPYwijXAZ8coEyxxHpxEBFk55Dn9
-	 JbprCuqYh0pGpvJBtiZNcZFy5tW/QgyzhKpZQULebfZpvKDfubutWIdXS/3/+UE6Ugg==
+	t=1795053649;
+	b=ER/A9fHBiDtwQDb5k5jYUdNQzG0uwzF8CunVNaXeCg3J5zH8PEd050o5uWFV+lZx+nqJ
+	 HfWDeA2zNaADYPeuwY/xDrJyks5b8zevqIRcIOwLerIb6qDsFRZ+7QuEjWasG3QAQ8FoM
+	 VEjh0yU6JclPJMywERDoWcnnsLDrtG7e4mp8vrA1SEnAm7LixH7SYzzr1UfFn7XH8ktWK
+	 Y29XpnSsBhAxYppFlDgbmWUozShKa9ycMct8GYxtvRB/4BFgFUxFnE1QPvdO+qkve1Hfs
+	 wr+eAuS/2o7CR8313BHZ6xVl35q3+09Z5rnaprB+1LB7OYx3Il1RRxpLF2qwuyRG5Ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gZLciSqteqzgex5Ub4IGQcAJ3XroLC52dsl5IVnCRTI=;
-	b=lHhP0X5QStPDeutsjxDZXT/1r1eM7BFUundKCXjqXs7S/Knfjh4EuC3TlDDBY8lx/vqs
-	 Te/NDUpU/6L7WuZ5IzJske/eVqtIDxWQz1m9wBiuabJr4JUKCAT85ZmAdO7qKH3V8gJ5V
-	 K4L/+o1+qmvxhfyJ54rgjX0hHPrXkNrncVXaM4AtAcoi60W9Uel6cmykJfN8uPQDsGOdc
-	 tclsNh/ORJOwXovmBN9Pk7gGSKEkyFHhNxusQnzUow2YgOmgzzwG8ZQJu07AgA26gQrhX
-	 lDhbcHAe0OAgRkWe/bFgu1as4FHMGAfE6yTc2FwIe+j4ixmKDPmZoLuz7PRmRxEjLzA==
+	bh=j9RljnpDxBd8NsyfY8gLyKjYS8+dqMlnoWcB1E1Aja4=;
+	b=fWf11O6dzia6JJAEBg40otNkNTnI14qK3dLROVWpVdx0wbLIxT+2q7bjbyojssW1vHQ5
+	 CXXvsVeIKSvLj1uW7PeOv0FYeKz8zj0P3ub+ZkOmzUQbccRUlM6U+/O6zxcXAmLAwtGWC
+	 AmrXiE4APk+zPcsQKli1FrVvH4x5x+DPWNGLvCKhMBydLEGCuruVpxxjt+4XDIGSFP4mO
+	 E7bZzv+jHdXUrABt1FTwdIwLVRMD7y0DrFPOsKaVkPPUMSGDqdUIeq700dK0tKup4/pjo
+	 gJhWVbMf/L1COqWIN0wL3iisMai94ap/klaBOpTS6G9Ot8b+50hX2N6qv7aNvy1/uHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avLcYAga;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v+A4M1Ua;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CDE606A32A;
-	Thu, 19 Nov 2026 02:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73205606A330;
+	Thu, 19 Nov 2026 02:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=avLcYAga
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36DD1F000C4;
-	Thu, 19 Nov 2026 02:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v+A4M1Ua
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13D21F000C4;
+	Thu, 19 Nov 2026 02:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053646;
-	bh=gZLciSqteqzgex5Ub4IGQcAJ3XroLC52dsl5IVnCRTI=;
+	s=korg; t=1795053649;
+	bh=j9RljnpDxBd8NsyfY8gLyKjYS8+dqMlnoWcB1E1Aja4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avLcYAgat7o+gBrOGG4Vbnn5s+2DjqKLd/WxJZNDZ7sUVg+dUUCjgwELQ7PUUOWeg
-	 3lHSPZpTr04iYOlao86elY96192BNwcDKzL3cPRMN4EpPJuCgfE2AGEEwpiF2t1Vv6
-	 jT3cWzLWAQGhqo5PyPbmMVJu2Pbqq8MRz41fsi8w=
+	b=v+A4M1UaOgroZ1YKmXpWbjm68oa+H35DXRXP2IN1Qi7CCGQiV9HGlh0QupBaZ/HyK
+	 mZwh5rdhJJLbkbLGU7Yrjhelg9FFHSWHeD0Lr7ohhw6OQN9t+X65p1wvkUcRBZ9cAi
+	 l++6rmrFZoZS/jrC8kxdTCX/OkkjcDkeHO1MAE3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihao Han <hanyihao@vivo.com>,
-	Neil Armstrong <narmstrong@baylibre.com>,
 	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0994/2214] media: meson-ir-tx: remove superfluous dev_err()
-Date: Wed, 18 Nov 2026 15:44:30 +0100
-Message-ID: <20261118150052.132007204@linuxfoundation.org>
+Subject: [PATCH 5.15 0995/2214] media: meson-ir-tx: Ensure probe error is propagated
+Date: Wed, 18 Nov 2026 15:44:31 +0100
+Message-ID: <20261118150052.177515279@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,38 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihao Han <hanyihao@vivo.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 82b4737fd001247527405b19045c25bf1622ab6d ]
+[ Upstream commit 2eb8a4cba70f521a8217021e227cfa28ba17724b ]
 
-Remove dev_err() messages after platform_get_irq*() failures.
-platform_get_irq() already prints an error.
+devm_clk_get_enabled() may return -EPROBE_DEFER which needs to be
+propagated else the probe will not be deferred, it will fail instead.
 
-Generated by: scripts/coccinelle/api/platform_get_irq.cocci
-
-Signed-off-by: Yihao Han <hanyihao@vivo.com>
-Reviewed-by: Neil Armstrong <narmstrong@baylibre.com>
+Fixes: 49be1c78d575 ("media: rc: introduce Meson IR TX driver")
 Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Stable-dep-of: 2eb8a4cba70f ("media: meson-ir-tx: Ensure probe error is propagated")
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/meson-ir-tx.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/rc/meson-ir-tx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/rc/meson-ir-tx.c b/drivers/media/rc/meson-ir-tx.c
-index 498692ef2e803..e050430ffc7b3 100644
+index e050430ffc7b3..d26fbe0b65de1 100644
 --- a/drivers/media/rc/meson-ir-tx.c
 +++ b/drivers/media/rc/meson-ir-tx.c
-@@ -327,10 +327,8 @@ static int __init meson_irtx_probe(struct platform_device *pdev)
- 		return PTR_ERR(ir->reg_base);
+@@ -295,7 +295,7 @@ static int meson_irtx_mod_clock_probe(struct meson_irtx *ir,
+ 
+ 	clock = devm_clk_get_enabled(ir->dev, "xtal");
+ 	if (IS_ERR(clock))
+-		return -ENODEV;
++		return PTR_ERR(clock);
+ 
+ 	ir->clk_rate = clk_get_rate(clock) / 3;
+ 
+@@ -328,7 +328,7 @@ static int __init meson_irtx_probe(struct platform_device *pdev)
  
  	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		dev_err(dev, "no irq resource found\n");
-+	if (irq < 0)
- 		return -ENODEV;
--	}
+ 	if (irq < 0)
+-		return -ENODEV;
++		return irq;
  
  	ir->dev = dev;
  	ir->carrier = MIRTX_DEFAULT_CARRIER;
