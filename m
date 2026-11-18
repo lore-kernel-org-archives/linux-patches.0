@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017580;
-	b=Lo12RA2R2XQBnV3ShU5dSYRAHJxiZ5gt0wS5aYR/teoLotx8AP+MhYN0A/RX9GyhIQZK
-	 cAt7y0Bs/c8YPwPtO8Ppl+hMoe9N5vm8mlaEJNZy4knAH1rkDzsULT8OR9gpT5FVmIT4G
-	 A81fW2h4N+/SJa6+6oWRU37vU44O4S13UsjQt/upEamFY3soJtk674iAwcn2aAkl4IoTc
-	 W1yQlitJH48TlDrHKoUWOsV+qN8H1ncMJUiWiOXSWb3loJhjOpO1WfXwhgWiaxDa7ZEL5
-	 0zsZTnLgdLRVn7Qr4Tp1r6qslYC/dXpiXHBQo9JPckSd3EJmCZKHY+fhJi960ot47lw==
+	t=1795017583;
+	b=RmEJ9FAvVvkgcPUVFBlwJIgQ+sMpgKAAlXMHOBuCSoaeS9wXKp8G+3bMw0kozt8R+a7X
+	 FBmP9UCYSaXQRFVHdR7JWaI53w6HNaZOTDlY27Z3XC5CyvaDONqa34o1SHkfUH3p8x6fP
+	 D6IhiryRPERciwXWA96ax7InlEFIGIxY40Dvjf6DtLMaGa6srmgj2LOzZZyNhmAiYaEom
+	 rJT3MgA0kZiBJPfGn+mxHBEGM4gAXUlr7egeubtF9U1IGkQSM8GVkrAz9VaY6fHJ0GwGP
+	 SNdznvDg44Payru7jvpfatHqlyQhbW5yv5fMc5N9DV+tP3VtCsd8o2ZDy3osgHh9uIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TJv/kkBQXpJTcpGi+K7KoFihw2/lfxZS0BT/yVfTTQg=;
-	b=y5gv+eDSPKNT4SGhlpY7c3rgEEBAuzTTgq3zz393N7wNdw5XeTmWRGaunACEJrjuMx1O
-	 iUo9XuxarFolUfGr6mCkF9Wce+Dnkrl8Nk9jRV+bIcgdTcmtqyg2UE9J0fy/C9F4UbaFv
-	 /ouIFgpV8mjWBpKy2iq6JawolUQlZ4mj1ostdAXRLxWo1VfUC/TEA3+ZdPLWpkXeZ3qqr
-	 zUawXKPL8HefXt3MvLmOTwuZCKuTeHNF8cDi8PnQB+qjrIySop7W/C908VgHgsylFQch3
-	 rTmn8HQTMLsNdt3A18f+VmW3emVYjt9a460yDPo0JqXLcfEd8VqzpoK9lM4xJfR71sQ==
+	bh=DVi9rYlv4gGeg4YvUWTnOoJFgNhnYNwtmzF5SqtiIc4=;
+	b=pu4L9S5tLjsm0Mw0WtvVdZ97ZHQH0hb2pv/gR7wXlnaeRXjTRvF+MFB+SOC4WguxDWy6
+	 1KAuVlOFlxS5uNIfQckP+yxCyEa6CZBvRtDV8hUtgjvu4LUABnwHtEbsWV7OESbhHWPkT
+	 +3JqK+uthJhmh75rLsDINi+oJVOe7DDIOQmw3ViM16664lPIhI3EuDDO1w0oEh+YAyIkd
+	 KDh4PLS2897X9kBU9W05vP4yu2LKKUw8omq4wijQJhNuz8/cNFYhAY3s3mtiaFuJb0eIC
+	 8epJZ8D9Y/uM8nlktpEmvvEzbh+2qBtmApEudFkoJKh2ZG5sdpWva0EjEY5KnNnS+9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0wh3cYr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKkMlLrX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD60F60A260C;
-	Wed, 18 Nov 2026 15:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E52D606A32A;
+	Wed, 18 Nov 2026 15:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0wh3cYr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2181F000C4;
-	Wed, 18 Nov 2026 15:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKkMlLrX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B33A1F000C4;
+	Wed, 18 Nov 2026 15:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017580;
-	bh=TJv/kkBQXpJTcpGi+K7KoFihw2/lfxZS0BT/yVfTTQg=;
+	s=korg; t=1795017583;
+	bh=DVi9rYlv4gGeg4YvUWTnOoJFgNhnYNwtmzF5SqtiIc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0wh3cYr5jSf544tptlt9rfxyWsPQUfciw92sCiVxvbdzul5nDz1w/DTXGM8MMnmf
-	 sfnsenymJq2LZwGgmBF9riL26dy6sd0y7ugrY+i8OD3XMwzM2PcXJoDScQrGpoqdZM
-	 7Gb/ECMo7ZJOFDGGmSLos/dh3XXrz7HY9MRxdgt0=
+	b=LKkMlLrXYcW4nVk929zcH9G+tTwiu+Jzd0+Ae8xp9reglLB9umj8o/jdEPtCnn+rY
+	 rjoCxs04uE2wEnZdFlvFpPkodQYYgWJdYQY900jL3JADZeaakI3LHF9LVXABS99uYg
+	 c8ivmnChkIebUsno3Zx51z8dk0pvyqlAl6QYyDDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yishai Hadas <yishaih@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0935/2651] RDMA/hns: Pin CQ buffer writable to match device DMA write access
-Date: Wed, 18 Nov 2026 15:36:15 +0100
-Message-ID: <20261118150321.543988984@linuxfoundation.org>
+Subject: [PATCH 7.3 0936/2651] RDMA/vmw_pvrdma: Pin QP and SRQ rings writable to match device DMA write access
+Date: Wed, 18 Nov 2026 15:36:16 +0100
+Message-ID: <20261118150321.579429664@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,33 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit ce29f6e741844a78ad1977f2a550ede27ecf95f8 ]
+[ Upstream commit 89abac4b60b708037595255ea2614b6967c86ee5 ]
 
-alloc_cq_buf() leaves user_access zero-initialized, but the device
-writes CQEs into the CQ buffer. Set IB_ACCESS_LOCAL_WRITE so the buffer
-is pinned writable, matching the device's write access.
+pvrdma embeds a pvrdma_ring_state header directly inside the QP and SRQ
+ring buffers, and the hypervisor writes cons_head into that header.
+Pinning with access=0 does not force a private page copy (no
+FOLL_WRITE), so the hypervisor may write into a shared page.
 
-Fixes: 744b7bdfa79e ("RDMA/hns: Support 0 hop addressing for CQE buffer")
+Pass IB_ACCESS_LOCAL_WRITE for all three rings. The SRQ ring_state is
+not currently used by the driver but is pinned writable for consistency.
+
+Fixes: 29c8d9eba550 ("IB: Add vmw_pvrdma driver")
 Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-3-yishaih@nvidia.com
+Link: https://patch.msgid.link/20260915140933.40580-4-yishaih@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_cq.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/vmw_pvrdma/pvrdma_qp.c  | 6 ++++--
+ drivers/infiniband/hw/vmw_pvrdma/pvrdma_srq.c | 3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
-index 1dd0efb5620de..ae314f1367328 100644
---- a/drivers/infiniband/hw/hns/hns_roce_cq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
-@@ -261,6 +261,7 @@ static int alloc_cq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq,
- 	buf_attr.region[0].size = hr_cq->cq_depth * hr_cq->cqe_size;
- 	buf_attr.region[0].hopnum = hr_dev->caps.cqe_hop_num;
- 	buf_attr.region_count = 1;
-+	buf_attr.user_access = IB_ACCESS_LOCAL_WRITE;
+diff --git a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_qp.c b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_qp.c
+index e939cd5ce40b0..53cc49f2b8c9f 100644
+--- a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_qp.c
++++ b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_qp.c
+@@ -270,7 +270,8 @@ int pvrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+ 				/* set qp->sq.wqe_cnt, shift, buf_size.. */
+ 				qp->rumem = ib_umem_get_va(ibqp->device,
+ 							   ucmd.rbuf_addr,
+-							   ucmd.rbuf_size, 0);
++							   ucmd.rbuf_size,
++							   IB_ACCESS_LOCAL_WRITE);
+ 				if (IS_ERR(qp->rumem)) {
+ 					ret = PTR_ERR(qp->rumem);
+ 					goto err_qp;
+@@ -282,7 +283,8 @@ int pvrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+ 			}
  
- 	ret = hns_roce_mtr_create(hr_dev, &hr_cq->mtr, &buf_attr,
- 				  hr_dev->caps.cqe_ba_pg_sz + PAGE_SHIFT,
+ 			qp->sumem = ib_umem_get_va(ibqp->device, ucmd.sbuf_addr,
+-						   ucmd.sbuf_size, 0);
++						   ucmd.sbuf_size,
++						   IB_ACCESS_LOCAL_WRITE);
+ 			if (IS_ERR(qp->sumem)) {
+ 				if (!is_srq)
+ 					ib_umem_release(qp->rumem);
+diff --git a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_srq.c b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_srq.c
+index 345ec486a223a..3252c2eb405a1 100644
+--- a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_srq.c
++++ b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_srq.c
+@@ -146,7 +146,8 @@ int pvrdma_create_srq(struct ib_srq *ibsrq, struct ib_srq_init_attr *init_attr,
+ 	if (ret)
+ 		goto err_srq;
+ 
+-	srq->umem = ib_umem_get_va(ibsrq->device, ucmd.buf_addr, ucmd.buf_size, 0);
++	srq->umem = ib_umem_get_va(ibsrq->device, ucmd.buf_addr, ucmd.buf_size,
++				   IB_ACCESS_LOCAL_WRITE);
+ 	if (IS_ERR(srq->umem)) {
+ 		ret = PTR_ERR(srq->umem);
+ 		goto err_srq;
 -- 
 2.53.0
 
