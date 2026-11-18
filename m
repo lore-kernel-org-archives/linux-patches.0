@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021808;
-	b=HGrRnI9SePay/+/oFSVsO2Oo4JZBB0ar+gz3j1sDaaxOmaWOuJnsED/bwAl91EHU9vAA
-	 FY/kwaBQat3crn2P5zBx3CWV4nS2b/J+1RL5nj+b1SQ298mTc6gpnPlXX2KnfPQvbiVhu
-	 YYr+If5FCt8PI3+5YG1xdW1ek5sKn0X30F9/70g30b2CaN9dKz6DPRvt4TqPimssbowRh
-	 FchbtTw1DsWAxPK78Cs3GFjSNkuu5Oqc1CeteV3U8tDUMXf6sQiy14jxoT6TC9igSL94Z
-	 I0TZOjo3EWnXkIeBINqNX4o1Nt5/xvuzmdFFKiYKgoU2uUxjFiMtDYAsj/34UK6lBZQ==
+	t=1795021811;
+	b=JbEoxt3xyyfYrD3kp8gc/cXl32ar0kufWAX1HdHNw4jLB94c6oscvsMubOiSlL88BdIx
+	 uAvAgB4mKlhTqete8jYhuj0MWrwuleeb2aePCi/K2KX8b9iiPXkp2pkxkril7vzXQoZDx
+	 lGxULPY/OhsBmsTmqsTERlrnHQLZYplM+1GTK7CxQ7aQpwYuEDcHE1f19ThfkzIJcClo0
+	 Y9zS+fIBRs0vhXPcESuvsEr553fUTiN1dST3S4WB+Y09pgdsfQixHkGmnmBvr668M1h4U
+	 VjtLH8x3h0VCMwJjuLoVuq1Kbik4/9fFEU2o/6DtpcajyLdr9ylIVbR3ih77kGmkD6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4RF63g/UhnAV6o70MfI3abV1XHZFkug2vTrf3DneYI4=;
-	b=5DW+T4ANQWszBzDSJq5iqBZ4cQj34BfSVgISOQ4s2xLo0fLVGR0dXeGFwAInz+i0pxUs
-	 U6VjbG96fRFwl3ghuDfQxv6LExNAC6RVdUpvLO9ReY4Eqz74Rfv8fdlKJPr18nEx9VS5g
-	 Vt4DPlIuoxBTXFznSoc0iRSnce1iW4gS5VaHKlJKeuQyWsYNfaAvgm8zdiEIfHp+PVXC1
-	 QiBdpaEKxQ6HkCRACRi8NXdCxdKuFpQrfP3EZ6ZKmyCXBqYNH6qrveqbc5u//Il3K/asn
-	 9HiMZS6L5DcsQOLT1hmz4544ahvZLDbCJ4rr0/Tu2aLXzLLsEcB4nMefpcxvNjZfABQ==
+	bh=Op6IoOVW9wFa+hO706ZPcKmnImX/o1MD+vIViTSS+w4=;
+	b=KpkQC6rtlrjdkBwt1vqd7bfnCbPJKmbJ0TBpucJPvey+i9ja7bglwoEt5vS+GLx0vGL9
+	 PCNCCm8l5YP8nu3J0RtJGwZx27wl2XaEukvytCctczE2k4F458IJapIEHn+YJ2cjxYATj
+	 1WDV+VsN0HhSLzztSXrO29dbaVegiw9/4jVIWKtGfQ9ew0ysJf8kBxyMMfDHcQz1a6SJ6
+	 8MCrFjThGLLr67fcJrWQ0EMzNB2Se1JQY0RD31qdpc0kZ4B6jGJXoEb49yUC3CBNLFfNI
+	 eSgMfrY4ysghew4j4fUzMdajCRfHh/OmCFOGxDfqOziTxIpNye/PsA8zn/mayy7nKNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoxPF07h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="I/yOL5Jo";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB5560A2628;
-	Wed, 18 Nov 2026 17:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C2B60A2603;
+	Wed, 18 Nov 2026 17:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoxPF07h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824361F000CA;
-	Wed, 18 Nov 2026 17:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I/yOL5Jo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E9A1F000CC;
+	Wed, 18 Nov 2026 17:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021808;
-	bh=4RF63g/UhnAV6o70MfI3abV1XHZFkug2vTrf3DneYI4=;
+	s=korg; t=1795021810;
+	bh=Op6IoOVW9wFa+hO706ZPcKmnImX/o1MD+vIViTSS+w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KoxPF07hARNfAQgW/qzpiVNS85XEEeeUeDsNUvp1MmO3X6l+UisxOv/WSB2zpk66v
-	 tU+WjJnxXYP8UbAzBHKphde60N/psXFUl+pqn8ok7IHvlwqowkLReTHBaJwZ78RkVi
-	 vu/PApz6UCmivdjbJ4vH72I09AObn3/jh+7GpvzA=
+	b=I/yOL5JoxlVbdwcRa4IBYeUlLoS9xOL0+H9mUSFgLNeVMm/87B2h0kOp7aLC6S71t
+	 dq2PFvgw6+ae1xR2trEgfKmbr4rtl6dCx7owRUzriDvzPAgjXltoyY+nPThh0LXsxJ
+	 XxIC7i35oqyl4tZdIhaG37FeIXOQxFCxizvmV2ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2437/2651] ASoC: codecs: wsa883x: disable runtime PM on unbind
-Date: Wed, 18 Nov 2026 16:01:17 +0100
-Message-ID: <20261118150412.921262972@linuxfoundation.org>
+Subject: [PATCH 7.3 2438/2651] ASoC: codecs: wsa884x: Fix VI sense port channel count
+Date: Wed, 18 Nov 2026 16:01:18 +0100
+Message-ID: <20261118150412.952318905@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,42 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 
-[ Upstream commit ea63182d71956dc33c6f08dc4171f1052f8409a9 ]
+[ Upstream commit a6093f98cbfc4a717ef3d1048b0e38fb2035be98 ]
 
-Probe enables runtime PM but nothing disables it on unbind, or when
-registering the component fails. A pending autosuspend can then run
-wsa883x_runtime_suspend() after the devm-managed regmap is freed, and
-dereference NULL, as seen on wsa884x.
+The VI sense port carries both the voltage and the current sense data
+of the speaker, but it is described with max_ch = 1 and, since commit
+060fac202eb8 ("ASoC: codecs: wsa884x: Correct VI sense channel mask"),
+a channel mask of 0x1, so only half of the V/I pair is transferred.
 
-Use devm_pm_runtime_enable() so runtime PM is disabled before the regmap
-is freed.
+Describe the port as two channels and set the channel mask back to 0x3.
 
-Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+Fixes: 060fac202eb8 ("ASoC: codecs: wsa884x: Correct VI sense channel mask")
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261023171316.819857-6-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20261023171316.819857-7-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa883x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wsa884x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index ccd4404c1644e..b09ee3db7ed58 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -1669,7 +1669,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		goto err;
- 
- 	ret = devm_snd_soc_register_component(dev,
- 					      &wsa883x_component_drv,
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index 3c008224d32e8..acf32af5aae3e 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -859,7 +859,7 @@ static struct sdw_dpn_prop wsa884x_sink_dpn_prop[WSA884X_MAX_SWR_PORTS] = {
+ 		.num = WSA884X_PORT_VISENSE + 1,
+ 		.type = SDW_DPN_SIMPLE,
+ 		.min_ch = 1,
+-		.max_ch = 1,
++		.max_ch = 2,
+ 		.simple_ch_prep_sm = true,
+ 		.read_only_wordlength = true,
+ 	},
+@@ -892,7 +892,7 @@ static const struct sdw_port_config wsa884x_pconfig[WSA884X_MAX_SWR_PORTS] = {
+ 	},
+ 	[WSA884X_PORT_VISENSE] = {
+ 		.num = WSA884X_PORT_VISENSE + 1,
+-		.ch_mask = 0x1,
++		.ch_mask = 0x3,
+ 	},
+ 	[WSA884X_PORT_CPS] = {
+ 		.num = WSA884X_PORT_CPS + 1,
 -- 
 2.53.0
 
