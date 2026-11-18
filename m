@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021236;
-	b=MhBhtxzMuKAOyVkzMv5hbQNrM491fD7ImVXMyp2Ui6vIdSliQJob9LlXde0CM97W3G0m
-	 JqwCHJhpqCEWTNWbOq4UMYRQMwm+1O5xfbJSc5GHw0PtzwVCEc0x5xo7M6C5mjdLbP19p
-	 upHNU51xQHO3zVEat+gb+wHVGV+mgUjnBMJQwcoobSDihJSZBBguIzcHzzHBnxuA1yfpd
-	 0UZo7qooAHC9MUGS7yFEF4nsx2fgXTJP0YG2K98GvfCV8FlVs/OW0y3xSOXuN+HoD2qFD
-	 rpwLst0LGs+S6QP6T5k3YqDEASFZRxTS7Wc19SlwhKcYnBqI1ohXIxlT4LxlZ5UcsiA==
+	t=1795021239;
+	b=GFnJCtwo9JY04sJkXGeQ/WAWlBjiLg+642UwETv26CE9lojRnA8PgTvYohMYHrui6Q06
+	 HyoXiy41zlKeRWgm029odh790+bhFusaShjboN74eeRnhzyqFsHaJ4Vzp/9zgkxYOMQ+S
+	 vIq9z4xmgNjIr/EgSXIY/lbIyOfiT05tyR4gBceF/8SKU1T46kVn/e14qign4TsraBEb8
+	 zOXga5YX7B5asx5Hob22ljjdI7w46XyTvaFi9GoytTeyx8g2Q5o0dxlCzu1e0AYtAWLbx
+	 S9aYjBIqSbToLERj07xtkN2yVYB9PafuWB/7iPXHG69gkiGvCXuLsdvMnpJtoVqn9Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021236;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021239;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ylM1/Hm5LtSAPacwjJM9TaXrn9R9A8dTuVB7YsGTdKY=;
-	b=1Dn9x5cVbkeedbBGU3aN6HTv+08B99OsHWR3tpIT1H1JdOHY3+tJDR2qoZ+MlQT+LIVl
-	 GO7I4eOspRsBbNYQZvRQzoxJCQUDKLXs+6vF5PwDUxfEY8VJ/uVcvpjdVNANHuLur8ZxU
-	 Fvfkh8wsTEUIsBgdt8Rd/Hhq4BUbo6lMRhSgPjdaQ6ax3hDqPrUqL1YcniZKrQHSI2QKS
-	 T/cIKGV/ytsmyzhJqXaTdKITWeng7bOtXkZdwWfHDiBWik7boV52euhfLmB/ZbX9oCyN8
-	 +Bhh6zZZESfZG1y/PLw1H00UOnQDv6IxpMS+qOHx6x2WVFF0xlnJhnTxvN9E/H7enFw==
+	bh=X3JSzbESkOJcZ4UoeMd/4C4Fe4byLDmVZMmMAeRjKK4=;
+	b=c+aa2XunxFVkQS8kCR+su/cIcwBmMxzURHz923tim+W+w6aItliL7rGLt61NLdMN/v3L
+	 kR841/3BM4vozh/fJORJTOgUaPIMTE20xmsjOp7CYxwHUfYHi9zzdb9sBc5UKVxgGc+Cr
+	 kljY0H0ltgQIJxn/4Melt53JUqK0Pa1Eja5VIqfdEldaHcPeKvaelJcBQlMqnU4RBZHJC
+	 HDgGf3PS06t6QJ4UgYIaqdnyu0W/ITqkcGAt8Buyz1gSLDsPzYtuLairb32mvsSCxxpe+
+	 DVfP+9Hzx+TrY5aZaJg1ZO8ixNZbnUXr/18/sWWvZdHSQl7O7U37A+Mm7Yo1GHeQTTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fj9Sh4mm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1va6jwP/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A154606A32F;
-	Wed, 18 Nov 2026 17:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB74606A31C;
+	Wed, 18 Nov 2026 17:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fj9Sh4mm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4621F000C4;
-	Wed, 18 Nov 2026 17:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1va6jwP/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7978B1F000C4;
+	Wed, 18 Nov 2026 17:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021236;
-	bh=ylM1/Hm5LtSAPacwjJM9TaXrn9R9A8dTuVB7YsGTdKY=;
+	s=korg; t=1795021239;
+	bh=X3JSzbESkOJcZ4UoeMd/4C4Fe4byLDmVZMmMAeRjKK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fj9Sh4mmIGUB0aex+qfydVJTp2Vf7fFeF9uLFybjAvrNiGjQzBQd0JGOFajaIG8Ee
-	 sUzZnp/+FvkCbxdC0LYZQXCSUrZvNW0/VGiVgG/6uZkJWrAIQKsifE9PV5FYh0dhb6
-	 lVyvFq7wGUrnQmCBk+jp+wyQVgp04Jv6xg0Pf6nI=
+	b=1va6jwP/j4eYuy8DhEFMKNPKveWtHgguiUovJ2erTqpKUg60NC3zuI3vba3+vMN6I
+	 kALUQboHUgJ9UvEw6GcsBfhboSsT8YzxiJmwqOHizq38N4bIVyX1U9nkpPAI6B9MrV
+	 UupVMXSwwJ3ZtTnAnNRLgU8Pfr5DglM8uL/kA2tE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Yongzhao Chen <yongzhao.derek@gmail.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Alex Lazar <alazar@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2228/2651] net: phy: qca83xx: read resolved QCA8337 link status
-Date: Wed, 18 Nov 2026 15:57:48 +0100
-Message-ID: <20261118150405.754433528@linuxfoundation.org>
+Subject: [PATCH 7.3 2237/2651] net/mlx5e: Fix NULL deref in PTP TX timestamp recovery warn
+Date: Wed, 18 Nov 2026 15:57:57 +0100
+Message-ID: <20261118150406.032528512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,127 +72,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongzhao Chen <yongzhao.derek@gmail.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit 42a91cbfc7a3ab99d05cb2ed0de5a24b9652cfed ]
+[ Upstream commit 0df412012a26389582b120844d098e1e961f10a6 ]
 
-After a QCA8337 SmartSpeed downshift, genphy_read_status() can report
-1000 Mbit/s from the advertised modes when the PHY is running at
-100 Mbit/s. On a Redmi AX5400 running downstream OpenWrt Linux 6.18.52,
-this caused qca8k to program the user-port MAC for 1000 Mbit/s and
-traffic failed. An earlier prototype that read the resolved speed
-from the PHY restored traffic.
+PTP SQs are allocated via mlx5e_ptp_alloc_txqsq(), which never sets
+sq->channel. The excessive port timestamp delta recovery path
+incorrectly used sq->channel->netdev for netdev_warn(), causing a NULL
+pointer dereference. Use sq->netdev instead.
 
-Wrap genphy_read_status() and use at803x_read_specific_status() to
-replace its speed and duplex result when an autonegotiated link comes
-up. Resolve pause for the resulting duplex. Until the PHY reports a
-resolved speed and duplex, report the link as down so that the next
-poll reads them again, as marvell_read_status_page_an() does. In that
-case also clear the duplex, master/slave state and link partner modes
-that genphy_read_status() read for an up link. QCA8337's register
-layout matches the helper (data sheet 80-Y0619-3 Rev. D, pages
-327-328).
-
-Keep the generic master/slave read order and the early return for a
-steady autonegotiated link. This avoids additional reads of the
-clear-on-read idle error count in MII_STAT1000. Forced mode continues
-to use BMCR. Report the MDI-X state read at link-up and invalidate it
-when the link goes down or autonegotiation is disabled. Clear
-mdix_ctrl because this driver does not implement MDI-X configuration.
-
-The QCA8327 entries keep genphy_read_status(). The AR8327 data sheet
-(MKG-15791 Rev. 1.0) lists the QCA8327-A PHY ID and documents the same
-PHY-specific status layout, with SmartSpeed enabled after a hardware
-reset, so those PHYs may have the same problem. That is untested on
-QCA8327 hardware, so limit this change to QCA8337.
-
-Fixes: b3591c2a3661 ("net: dsa: qca8k: Switch to PHYLINK instead of PHYLIB")
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Yongzhao Chen <yongzhao.derek@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261013190339.51909-1-yongzhao.derek@gmail.com
+Fixes: 391dad2e686f ("net/mlx5e: Recover SQ on excessive PTP TX timestamp delta")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20261015080218.1102172-1-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/qcom/qca83xx.c | 58 ++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/qcom/qca83xx.c b/drivers/net/phy/qcom/qca83xx.c
-index bc70ed8efd86a..2c4d085bacdba 100644
---- a/drivers/net/phy/qcom/qca83xx.c
-+++ b/drivers/net/phy/qcom/qca83xx.c
-@@ -92,6 +92,63 @@ static int qca83xx_probe(struct phy_device *phydev)
- 	return 0;
- }
- 
-+static int qca8337_read_status(struct phy_device *phydev)
-+{
-+	struct at803x_ss_mask ss_mask = {
-+		.speed_mask = AT803X_SS_SPEED_MASK,
-+		.speed_shift = __bf_shf(AT803X_SS_SPEED_MASK),
-+	};
-+	int ret, old_link = phydev->link;
-+
-+	ret = genphy_read_status(phydev);
-+	if (ret)
-+		return ret;
-+
-+	/* Keep the state resolved at link-up while the link stays up */
-+	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
-+		goto out;
-+
-+	phydev->mdix = ETH_TP_MDI_INVALID;
-+
-+	/* genphy_read_status() derives speed and duplex from the
-+	 * advertisements, which is wrong after a SmartSpeed downshift.
-+	 * Use what the PHY resolved instead.
-+	 */
-+	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete &&
-+	    phydev->link) {
-+		phydev->speed = SPEED_UNKNOWN;
-+		phydev->duplex = DUPLEX_UNKNOWN;
-+		phydev->pause = false;
-+		phydev->asym_pause = false;
-+
-+		ret = at803x_read_specific_status(phydev, ss_mask);
-+		if (ret)
-+			return ret;
-+
-+		/* Report the link down until speed and duplex are resolved,
-+		 * so that the next poll reads them again. Also clear what
-+		 * genphy_read_status() read for an up link, as the
-+		 * PHY_HALTED path of the state machine does.
-+		 */
-+		if (phydev->speed == SPEED_UNKNOWN ||
-+		    phydev->duplex == DUPLEX_UNKNOWN) {
-+			phydev->link = 0;
-+			phydev->duplex = DUPLEX_UNKNOWN;
-+			phydev->mdix = ETH_TP_MDI_INVALID;
-+			phydev->master_slave_state = MASTER_SLAVE_STATE_UNKNOWN;
-+			linkmode_zero(phydev->lp_advertising);
-+		} else {
-+			phy_resolve_aneg_pause(phydev);
-+		}
-+	}
-+
-+out:
-+	/* MDI-X configuration is not implemented */
-+	phydev->mdix_ctrl = ETH_TP_MDI_INVALID;
-+
-+	return 0;
-+}
-+
- static int qca83xx_config_init(struct phy_device *phydev)
- {
- 	u8 switch_revision;
-@@ -220,6 +277,7 @@ static struct phy_driver qca83xx_driver[] = {
- 	.flags			= PHY_IS_INTERNAL,
- 	.config_init		= qca83xx_config_init,
- 	.soft_reset		= genphy_soft_reset,
-+	.read_status		= qca8337_read_status,
- 	.get_sset_count		= qca83xx_get_sset_count,
- 	.get_strings		= qca83xx_get_strings,
- 	.get_stats		= qca83xx_get_stats,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+index 723f66a6bd634..2e1c3bb5a959c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+@@ -98,7 +98,7 @@ static void mlx5e_skb_cb_hwtstamp_tx(struct sk_buff *skb,
+ 		ptpsq->cq_stats->abort_abs_diff_ns += diff;
+ 		if (diff > (NSEC_PER_SEC >> 1) &&
+ 		    !test_and_set_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state)) {
+-			netdev_warn(sq->channel->netdev,
++			netdev_warn(sq->netdev,
+ 				    "PTP TX timestamp difference between CQE and port exceeds threshold: %lld ns, recovering SQ %u\n",
+ 				    (s64)diff, sq->sqn);
+ 			queue_work(sq->priv->wq, &ptpsq->report_unhealthy_work);
 -- 
 2.53.0
 
