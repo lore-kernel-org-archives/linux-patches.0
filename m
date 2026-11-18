@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048217;
-	b=wPfLWHZMDEaLUUn4mCMYhujIQWOHQJ+BCA3nv++atHSSGqy4iXMNBZPx6FlApJMKHxO5
-	 8AKVSby6VqGCARJd8vD9iF2PgZyYxmeWncgcQC2BKIuxplwi98vr5z6oZwUHum03AbbBK
-	 w8Vd2JuArUwgEZadURUiQlGqy0ZSIfhkYgk8u6U7bMEJU0OdmZ7yC6Slv0ZnkAdL8dB7i
-	 dlbWbveoQMyTOrTzCW2LGDrPmRW9XEwqrxGpaQU3XrRX8sp2hnP4UCINToCta4ceULXpX
-	 +i1vd8Xd+Sn1bRUA5CsYevJ8id524Xi8HmLlSIf7qtRR64UMLpUh29+19Rwt32oZILw==
+	t=1795048220;
+	b=tk2okdCktmcDsSokj3APDsCvIS+tZA7uTSCpPcssQ1RtYjs1CyeNKBIADK04EFLoZXBF
+	 JajMPi+5rLsQmay+4Mn3Nt5pGUkS4Fxtoiif2f1ruEfgod1KYhcSoClHhcnSQLII/wRR2
+	 r0bNMZt83HEVIScuhYc579z7b4nyCh8gs8G2W8Yf4LowIi+UmyuR3cDMLzLOpoJ5IREjK
+	 ple8uyzme6TnAdMRFKTJ0/kqzLIPKocW0TGoybkhB2cE9a0HaZu6UtbazStjlQyw1PuEu
+	 /1gcDoEHoJGwPY+Z6lyfjPYB4EcvHrKYz48uUx7qiSTMxb0JGWiKw76oynutNSlV2PA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048217;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048220;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x4g4orr/8xVmSfxKdoSzYrSxAR2tQZN+9FkKXIQCL2E=;
-	b=4adigumdnu3qTYh+btq/ODbzeyh6ujNe0nJr3/Uth4i/yXFYU2fi5+M46V2xOwiD2Vz9
-	 QcHo3ARcJLBztAIZr7tFSHDaNjqQXQqWfl30DKMvNxUbaOwUBNrSOxg5UbLnmrOL0tkS9
-	 PvM5f3ZO4VxfcCnNcxlOxKc3n+bTMISHsmpZ0vaBtNIaVmv/W5lhW68rnP9vyN4PwEQnJ
-	 8EguXjJx6I8kKznADYn308irhumfcQMgThgmqruDEmG6x1PDHF4rBuIhD+CU5yvyVDHPc
-	 539jeD0OySIPtdzuAcaeGi6Y5DX2VGzQmQ3ToCyvrFv7noyZlKhQtX8Hqlx28807Ujw==
+	bh=2BwtDKJp5zP7EGUPA2yapWsyeOMxs18+toz8kTFR5Aw=;
+	b=kTmTB8ndRjnaXbqZMPFKPZZbhiDS9qnmahj5v+QtQvWj06XyNtS1Oz2a5Muz7CL0lPSL
+	 IwYY4har0hRtmxM9glehoMzzW6ZQ/9XytAeXXGrC32rMmBK3Y/gckz9yaQW5NhEr22P/M
+	 hQhY9Vaq2IDD7cwh2zB5trB+RjbtmY9+w1GUA7PuDlNgUsruZoVwnzhWWEb+vL5pDZDDT
+	 ME/oqIc4ZTuFmsbb1InLMls2sSaki+oDCbaYHKbrNNXv+vJpR867PbYBsT2NRFu47566T
+	 ONNlqZSwAbhh3TwiqHm80OH7/hPy+K3oNndCIdknm+3g68kd71TOCvbXft5s9/bE8kA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vfdqi0di;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=10Az7ZVf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E564F606A337;
-	Thu, 19 Nov 2026 00:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C8160A263D;
+	Thu, 19 Nov 2026 00:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vfdqi0di
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEC81F00929;
-	Thu, 19 Nov 2026 00:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=10Az7ZVf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126071F000C5;
+	Thu, 19 Nov 2026 00:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048216;
-	bh=x4g4orr/8xVmSfxKdoSzYrSxAR2tQZN+9FkKXIQCL2E=;
+	s=korg; t=1795048219;
+	bh=2BwtDKJp5zP7EGUPA2yapWsyeOMxs18+toz8kTFR5Aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vfdqi0digrBFHxrYlWGI6H96rHsjAK0y9ebkj5MIisSACStQsIEgVh7+dMivkLdqx
-	 HPkx/Xdy4ojYYJA/slKY3/TxsGSGK5K3Mn4EW3yWXE0jKfiDx25usvrI7VxZiUu8Pp
-	 T3qiDT8bXSsCj7ZqDEXsntOWSu9ArDL/uIhQbPYo=
+	b=10Az7ZVf8LU5McyBk72a0IdzzLfIN7de0ELeO2CZTUojd7fMGraGIJmGK/lSRtMZX
+	 UGtkUomxEW5BXAktv1ZogNuHojRbcRGnAact74pl8f8psBO8vrdvZvKZHNSVRrWBpb
+	 AMQDWp4HNwpO/r1gmlQuEl0QIcYasNoieYrcZVT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1917/2857] regulator: devres: Add devm_regulator_bulk_get_exclusive()
-Date: Wed, 18 Nov 2026 15:49:11 +0100
-Message-ID: <20261118150310.236879454@linuxfoundation.org>
+Subject: [PATCH 6.1 1918/2857] regulator: fixed: add support for under-voltage IRQ
+Date: Wed, 18 Nov 2026 15:49:12 +0100
+Message-ID: <20261118150310.272679209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,214 +68,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit fd1845069711cdf1b1aaaa0f22311b7736396331 ]
+[ Upstream commit ecb6f1f456144e9ade5a492192287decbeef4cfe ]
 
-We had an exclusive variant of the devm_regulator_get() API, but no
-corresponding variant for the bulk API; let's add one now.  We add a
-generalized version of the existing regulator_bulk_get() function that
-additionally takes a get_type parameter and redefine
-regulator_bulk_get() in terms of it, then do similarly with
-devm_regulator_bulk_get(), and finally add the new
-devm_regulator_bulk_get_exclusive().
+Add interrupt support for under-voltage notification. This functionality
+can be used on systems capable to detect under-voltage state and having
+enough capacity to let the SoC do some emergency preparation.
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Link: https://lore.kernel.org/r/20221031233704.22575-2-zev@bewilderbeest.net
+This change enforce default policy to shutdown system as soon as
+interrupt is triggered.
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20231025084614.3092295-6-o.rempel@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 51d6888b51e0 ("regulator: qcom-rpmh: Fix the return value in rpmh_regulator_vrm_get_optimum_mode() kernel-doc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c           | 42 +++++++++++--------
- drivers/regulator/devres.c         | 66 ++++++++++++++++++++++--------
- drivers/regulator/internal.h       |  2 +
- include/linux/regulator/consumer.h |  2 +
- 4 files changed, 76 insertions(+), 36 deletions(-)
+ drivers/regulator/fixed.c | 50 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 94b092da4ef03..372208ce19fcf 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -4917,22 +4917,8 @@ static int _notifier_call_chain(struct regulator_dev *rdev,
- 	return blocking_notifier_call_chain(&rdev->notifier, event, data);
+diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
+index ddaff8579c889..35ee43bf275ba 100644
+--- a/drivers/regulator/fixed.c
++++ b/drivers/regulator/fixed.c
+@@ -20,6 +20,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_opp.h>
++#include <linux/reboot.h>
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/fixed.h>
+ #include <linux/gpio/consumer.h>
+@@ -31,6 +32,8 @@
+ #include <linux/clk.h>
+ #include <linux/string.h>
+ 
++/* Default time in millisecond to wait for emergency shutdown */
++#define FV_DEF_EMERG_SHUTDWN_TMO	10
+ 
+ struct fixed_voltage_data {
+ 	struct regulator_desc desc;
+@@ -107,6 +110,49 @@ static int reg_is_enabled(struct regulator_dev *rdev)
+ 	return priv->enable_counter > 0;
  }
  
--/**
-- * regulator_bulk_get - get multiple regulator consumers
-- *
-- * @dev:           Device to supply
-- * @num_consumers: Number of consumers to register
-- * @consumers:     Configuration of consumers; clients are stored here.
-- *
-- * @return 0 on success, an errno on failure.
-- *
-- * This helper function allows drivers to get several regulator
-- * consumers in one operation.  If any of the regulators cannot be
-- * acquired then any regulators that were allocated will be freed
-- * before returning to the caller.
-- */
--int regulator_bulk_get(struct device *dev, int num_consumers,
--		       struct regulator_bulk_data *consumers)
-+int _regulator_bulk_get(struct device *dev, int num_consumers,
-+			struct regulator_bulk_data *consumers, enum regulator_get_type get_type)
- {
- 	int i;
- 	int ret;
-@@ -4941,8 +4927,8 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
- 		consumers[i].consumer = NULL;
- 
- 	for (i = 0; i < num_consumers; i++) {
--		consumers[i].consumer = regulator_get(dev,
--						      consumers[i].supply);
-+		consumers[i].consumer = _regulator_get(dev,
-+						       consumers[i].supply, get_type);
- 		if (IS_ERR(consumers[i].consumer)) {
- 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
- 					    "Failed to get supply '%s'\n",
-@@ -4969,6 +4955,26 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
- 
- 	return ret;
- }
++static irqreturn_t reg_fixed_under_voltage_irq_handler(int irq, void *data)
++{
++	struct fixed_voltage_data *priv = data;
++	struct regulator_dev *rdev = priv->dev;
++
++	regulator_notifier_call_chain(rdev, REGULATOR_EVENT_UNDER_VOLTAGE,
++				      NULL);
++
++	return IRQ_HANDLED;
++}
 +
 +/**
-+ * regulator_bulk_get - get multiple regulator consumers
++ * reg_fixed_get_irqs - Get and register the optional IRQ for fixed voltage
++ *                      regulator.
++ * @dev: Pointer to the device structure.
++ * @priv: Pointer to fixed_voltage_data structure containing private data.
 + *
-+ * @dev:           Device to supply
-+ * @num_consumers: Number of consumers to register
-+ * @consumers:     Configuration of consumers; clients are stored here.
++ * This function tries to get the IRQ from the device firmware node.
++ * If it's an optional IRQ and not found, it returns 0.
++ * Otherwise, it attempts to request the threaded IRQ.
 + *
-+ * @return 0 on success, an errno on failure.
-+ *
-+ * This helper function allows drivers to get several regulator
-+ * consumers in one operation.  If any of the regulators cannot be
-+ * acquired then any regulators that were allocated will be freed
-+ * before returning to the caller.
++ * Return: 0 on success, or error code on failure.
 + */
-+int regulator_bulk_get(struct device *dev, int num_consumers,
-+		       struct regulator_bulk_data *consumers)
++static int reg_fixed_get_irqs(struct device *dev,
++			      struct fixed_voltage_data *priv)
 +{
-+	return _regulator_bulk_get(dev, num_consumers, consumers, NORMAL_GET);
-+}
- EXPORT_SYMBOL_GPL(regulator_bulk_get);
- 
- static void regulator_bulk_enable_async(void *data, async_cookie_t cookie)
-diff --git a/drivers/regulator/devres.c b/drivers/regulator/devres.c
-index f1bc8608dd2dc..7111c46e9de13 100644
---- a/drivers/regulator/devres.c
-+++ b/drivers/regulator/devres.c
-@@ -245,23 +245,9 @@ static void devm_regulator_bulk_release(struct device *dev, void *res)
- 	regulator_bulk_free(devres->num_consumers, devres->consumers);
- }
- 
--/**
-- * devm_regulator_bulk_get - managed get multiple regulator consumers
-- *
-- * @dev:           device to supply
-- * @num_consumers: number of consumers to register
-- * @consumers:     configuration of consumers; clients are stored here.
-- *
-- * @return 0 on success, an errno on failure.
-- *
-- * This helper function allows drivers to get several regulator
-- * consumers in one operation with management, the regulators will
-- * automatically be freed when the device is unbound.  If any of the
-- * regulators cannot be acquired then any regulators that were
-- * allocated will be freed before returning to the caller.
-- */
--int devm_regulator_bulk_get(struct device *dev, int num_consumers,
--			    struct regulator_bulk_data *consumers)
-+static int _devm_regulator_bulk_get(struct device *dev, int num_consumers,
-+				    struct regulator_bulk_data *consumers,
-+				    enum regulator_get_type get_type)
- {
- 	struct regulator_bulk_devres *devres;
- 	int ret;
-@@ -271,7 +257,7 @@ int devm_regulator_bulk_get(struct device *dev, int num_consumers,
- 	if (!devres)
- 		return -ENOMEM;
- 
--	ret = regulator_bulk_get(dev, num_consumers, consumers);
-+	ret = _regulator_bulk_get(dev, num_consumers, consumers, get_type);
- 	if (!ret) {
- 		devres->consumers = consumers;
- 		devres->num_consumers = num_consumers;
-@@ -282,8 +268,52 @@ int devm_regulator_bulk_get(struct device *dev, int num_consumers,
- 
- 	return ret;
- }
++	int ret;
 +
-+/**
-+ * devm_regulator_bulk_get - managed get multiple regulator consumers
-+ *
-+ * @dev:           device to supply
-+ * @num_consumers: number of consumers to register
-+ * @consumers:     configuration of consumers; clients are stored here.
-+ *
-+ * @return 0 on success, an errno on failure.
-+ *
-+ * This helper function allows drivers to get several regulator
-+ * consumers in one operation with management, the regulators will
-+ * automatically be freed when the device is unbound.  If any of the
-+ * regulators cannot be acquired then any regulators that were
-+ * allocated will be freed before returning to the caller.
-+ */
-+int devm_regulator_bulk_get(struct device *dev, int num_consumers,
-+			    struct regulator_bulk_data *consumers)
-+{
-+	return _devm_regulator_bulk_get(dev, num_consumers, consumers, NORMAL_GET);
-+}
- EXPORT_SYMBOL_GPL(devm_regulator_bulk_get);
- 
-+/**
-+ * devm_regulator_bulk_get_exclusive - managed exclusive get of multiple
-+ * regulator consumers
-+ *
-+ * @dev:           device to supply
-+ * @num_consumers: number of consumers to register
-+ * @consumers:     configuration of consumers; clients are stored here.
-+ *
-+ * @return 0 on success, an errno on failure.
-+ *
-+ * This helper function allows drivers to exclusively get several
-+ * regulator consumers in one operation with management, the regulators
-+ * will automatically be freed when the device is unbound.  If any of
-+ * the regulators cannot be acquired then any regulators that were
-+ * allocated will be freed before returning to the caller.
-+ */
-+int devm_regulator_bulk_get_exclusive(struct device *dev, int num_consumers,
-+				      struct regulator_bulk_data *consumers)
-+{
-+	return _devm_regulator_bulk_get(dev, num_consumers, consumers, EXCLUSIVE_GET);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_exclusive);
++	ret = fwnode_irq_get(dev_fwnode(dev), 0);
++	/* This is optional IRQ. If not found we will get -EINVAL */
++	if (ret == -EINVAL)
++		return 0;
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "Failed to get IRQ\n");
 +
++	ret = devm_request_threaded_irq(dev, ret, NULL,
++					reg_fixed_under_voltage_irq_handler,
++					IRQF_ONESHOT, "under-voltage", priv);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to request IRQ\n");
++
++	return 0;
++}
+ 
  /**
-  * devm_regulator_bulk_get_const - devm_regulator_bulk_get() w/ const data
-  *
-diff --git a/drivers/regulator/internal.h b/drivers/regulator/internal.h
-index 1e9c716421436..fb4433068d298 100644
---- a/drivers/regulator/internal.h
-+++ b/drivers/regulator/internal.h
-@@ -122,4 +122,6 @@ enum regulator_get_type {
+  * of_get_fixed_voltage_config - extract fixed_voltage_config structure info
+@@ -300,6 +346,10 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
+ 	dev_dbg(&pdev->dev, "%s supplying %duV\n", drvdata->desc.name,
+ 		drvdata->desc.fixed_uV);
  
- struct regulator *_regulator_get(struct device *dev, const char *id,
- 				 enum regulator_get_type get_type);
-+int _regulator_bulk_get(struct device *dev, int num_consumers,
-+			struct regulator_bulk_data *consumers, enum regulator_get_type get_type);
- #endif
-diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
-index 8d3afff87b6e3..9a2f1e9a94a85 100644
---- a/include/linux/regulator/consumer.h
-+++ b/include/linux/regulator/consumer.h
-@@ -250,6 +250,8 @@ int __must_check of_regulator_bulk_get_all(struct device *dev, struct device_nod
- int __must_check devm_regulator_bulk_get(struct device *dev, int num_consumers,
- 					 struct regulator_bulk_data *consumers);
- void devm_regulator_bulk_put(struct regulator_bulk_data *consumers);
-+int __must_check devm_regulator_bulk_get_exclusive(struct device *dev, int num_consumers,
-+						   struct regulator_bulk_data *consumers);
- int __must_check devm_regulator_bulk_get_const(
- 	struct device *dev, int num_consumers,
- 	const struct regulator_bulk_data *in_consumers,
++	ret = reg_fixed_get_irqs(dev, drvdata);
++	if (ret)
++		return ret;
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
