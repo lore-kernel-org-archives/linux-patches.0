@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018729;
-	b=uhhqvCKKrrLv0+4uc8F5YHpNiGKe/9bdk1BRTOZGe4LNkF+QUevDBiI9A7iglTWhOGbX
-	 Rn0feTTkV4kQPOmRobolGyQvXzZmvUJV445IZs98W71uR0d2SSeANZr0PQpca8YAKsFPm
-	 9WiNkZoUqftiJW004gGsn4QZczwrwiTWuXAVBGPFjmAVRCMj3RVMsaDb4GEHWpqTgRoX9
-	 xZoqi+Pr/ht/OaaRDxeJvP5oVSzThSvwM9zqJFYNJCcNFYOsMpVlwzAtspp71plTcJ6jk
-	 JZlIVJqjxDSQvy5hxHeH423+0a69mjvylsCQ0QUoCAsARJv6CVMLtZ3BYXgW7VIclRA==
+	t=1795018731;
+	b=vZ+AuqWgRGB7J/ubcqdoSOT6Hl3woJjCZsha37M8Jn8tfcn4RDs7a/s71TeIuyYUC2ZT
+	 8/NiTVLmgUoiUXjMa4oNgQUE41NJxLsbEX+y0MXl4RqMktA7tCLvLJoGUvDdI3pnF7tFI
+	 AcSMUR44zg9YzlJXvUjJXrUf4fV851c/Z3AliZippWVyGJt7891IZiawZZVl0nXHwIzyf
+	 YknudaPKv6lIA04Hv9DHZTWMPWiOoDnLNy2aUF8DrGOG0MoqHM3rYsfD61baH1Sfceiuu
+	 TOFqQeZA/cUoNtCCMQRxSEaOCSbuj9QDlAbwLuy2qGGu+IgVbBcwXAIibf1u0ktDGFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5uLaRF2fdQzxTU36ixjMuqK10U8zMm8yLoKOevqE2wQ=;
-	b=TuvWi1bXTwce60ANSfvf57FIggZfU8NQrGms9CkSVLuVdY9yZr4o4S0cnUlz8lcJHOMx
-	 4NAaxbr/FRb0kgtxnrwcIKF6XbIFQJ10IReqmDjlLtz/imwa3VOrpqqYbpfQAsYqjj2sg
-	 ZLJTJxeR+0BaPA9U9W3wpTKqZbDRz7SH19zX1r0mpsJO/x7KW/C2BQfoBcG3W9F1IZqff
-	 L6RrgFYMM2Fkr7fcM5fptCJOouYfeVS0KLBAJPDHsQQQT3ppwtjy7ptLJOALRNlGnPTYy
-	 wHb1KTYfwyTq/E5/S2A2WReEuZIxYISG24n11AlRs5u41G9iUC5a1CdIOGb6qe95YZA==
+	bh=Uj6a6Pa/k1xoaoZHqNosLge3J/Yp2piFBOp5V+Unmro=;
+	b=IpIgCOoVjzWxb9xskaS3G5kHDHVyDgLikYiMYStAUPaPNipMWnDK5p66iOTZZOMa9Qbf
+	 9r193vHncKHSLlr/w/uJaDiPfxiXWwWo69jSghaqweImmStC/yoyChSHSbEVatuvtic4V
+	 8WkAhBlUDi8po6Wui4CxTybGfgaZMZwdr9IrAkmPDAeYDyIHr22ytSABlibWm7i8WGvJ/
+	 aGFo4EwBiHEZPdbMYGiJqPzolppoBaRI0x8KhZYX+sywiL1lyA5SU0ktBv6wQXYNx5IKo
+	 ioAq8a/82/kgCTgr1PH9TvGvcjFsgUms2mE+fBiowE32zieCPhzODEI4UKN6mHbabMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=caFrtQg3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uqHKHPBn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D55606A32F;
-	Wed, 18 Nov 2026 16:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58288606A320;
+	Wed, 18 Nov 2026 16:18:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=caFrtQg3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C571C1F000C4;
-	Wed, 18 Nov 2026 16:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uqHKHPBn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919331F000C4;
+	Wed, 18 Nov 2026 16:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018728;
-	bh=5uLaRF2fdQzxTU36ixjMuqK10U8zMm8yLoKOevqE2wQ=;
+	s=korg; t=1795018731;
+	bh=Uj6a6Pa/k1xoaoZHqNosLge3J/Yp2piFBOp5V+Unmro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=caFrtQg31IA1anaAsDMYmWEnUher9wWZtvHLA93B89sPJ2uC1RhSrevr/uy9biChL
-	 Om02M9Jam0OX6qfFKp6d1dzUMtKSQJQXjgbZLcTsZ/sHbKv3sJfGU7BqXAP4nL/EyT
-	 +ipR26gYzYdpyRVvIYt4/vE8BCgkdDhAqDSTHj+k=
+	b=uqHKHPBnbZo04vkcgcrBqJNyTj7VXuRu71d9ddzS7PqEwyQ617Ngcb+Ivo2Exib+Y
+	 fV0vJGn6WV+B9luEnw658mK8zAwmOBlXeP/pced3tCsCnN8onZYYdZbuHMk93E4xfi
+	 EgF7yqET+Dzl2ROippH6x5nbV8mkb6b3nS5wMfzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	sashiko-bot@kernel.org,
-	Linus Walleij <linusw@kernel.org>,
 	Frank Li <Frank.Li@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1342/2651] dmaengine: ste_dma40: Fix DMA registration unwind
-Date: Wed, 18 Nov 2026 15:43:02 +0100
-Message-ID: <20261118150336.333993210@linuxfoundation.org>
+Subject: [PATCH 7.3 1343/2651] dmaengine: ste_dma40: Fix LCLA allocation order
+Date: Wed, 18 Nov 2026 15:43:03 +0100
+Message-ID: <20261118150336.372640681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,145 +72,130 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit f71ef686f913c8e9771a54466a76d653b83cd3dd ]
+[ Upstream commit 7d4dc355c574d414d2402ac481a2fc4ee51e2771 ]
 
-d40_dmaengine_init() registers DMAengine devices using devres-managed
-unregister actions. If probe fails after one of those registrations, the
-DMAengine devices stay visible until devres unwinds after d40_probe()
-returns.
+d40_lcla_allocate() calculates the number of pages needed for LCLA, but
+passes that raw page count as the allocation order to __get_free_pages().
+The same value is later passed to free_pages().
 
-The channel tasklets are also initialized before each DMAengine device is
-registered. An interrupt can therefore have queued a tasklet by the time a
-later registration step fails, but unregistering the DMAengine devices
-does not drain that tasklet before probe-owned storage is released.
+Store the allocation order with get_order() instead, and use a separate
+byte size for allocation diagnostics, fallback kmalloc() sizing and DMA
+mapping.
 
-Add tasklet cleanup actions to the DMAengine registration devres group.
-Install each action before publishing its DMAengine device. If action
-registration fails, those tasklets have never been exposed and cannot have
-been scheduled, so use devm_add_action() without immediate reset cleanup.
-
-On later failure, free the IRQ before releasing the group so no new
-tasklets can be scheduled, then unregister the DMAengine devices and drain
-their tasklets before freeing the remaining probe resources. Keep the
-managed registrations and cleanup actions in place on successful probe by
-removing only the temporary group markers.
-
-Fixes: 42ae6f1695be ("dmaengine: ste_dma40: Remove platform data")
+Fixes: 508849ade23c ("DMAENGINE: ste_dma40: allocate LCLA dynamically")
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
 Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-11-89f595e8851d@kernel.org
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-12-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 45 +++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+ drivers/dma/ste_dma40.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 4c545a9472642..f72d91c8d0fa6 100644
+index f72d91c8d0fa6..58bc08c2ed0fb 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3039,6 +3039,18 @@ static void __init d40_chan_init(struct d40_base *base, struct dma_device *dma,
- 	}
- }
- 
-+static void d40_kill_tasklets(void *data)
-+{
-+	struct dma_device *dma = data;
-+	struct d40_chan *d40c;
-+	struct dma_chan *chan;
-+
-+	list_for_each_entry(chan, &dma->channels, device_node) {
-+		d40c = container_of(chan, struct d40_chan, chan);
-+		tasklet_kill(&d40c->tasklet);
-+	}
-+}
-+
- static void d40_ops_init(struct d40_base *base, struct dma_device *dev)
+@@ -426,8 +426,8 @@ struct d40_desc {
+  * @dma_addr: DMA address, if mapped
+  * @base_unaligned: The original kmalloc pointer, if kmalloc is used.
+  * This pointer is only there for clean-up on error.
+- * @pages: The number of pages needed for all physical channels.
+- * Only used later for clean-up on error
++ * @alloc_order: Order used for the LCLA page allocation.
++ * Only used later for clean-up on error.
+  * @lock: Lock to protect the content in this struct.
+  * @alloc_map: big map over which LCLA entry is own by which job.
+  */
+@@ -435,7 +435,7 @@ struct d40_lcla_pool {
+ 	void		*base;
+ 	dma_addr_t	dma_addr;
+ 	void		*base_unaligned;
+-	int		 pages;
++	unsigned int	 alloc_order;
+ 	spinlock_t	 lock;
+ 	struct d40_desc	**alloc_map;
+ };
+@@ -3603,6 +3603,7 @@ static void __init d40_hw_init(struct d40_base *base)
+ static int __init d40_lcla_allocate(struct d40_base *base)
  {
- 	if (dma_has_cap(DMA_SLAVE, dev->cap_mask)) {
-@@ -3085,6 +3097,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
- 
- 	d40_ops_init(base, &base->dma_slave);
- 
-+	err = devm_add_action(base->dev, d40_kill_tasklets,
-+			      &base->dma_slave);
-+	if (err)
-+		goto exit;
-+
- 	err = dmaenginem_async_device_register(&base->dma_slave);
- 
- 	if (err) {
-@@ -3100,6 +3117,11 @@ static int __init d40_dmaengine_init(struct d40_base *base,
- 
- 	d40_ops_init(base, &base->dma_memcpy);
- 
-+	err = devm_add_action(base->dev, d40_kill_tasklets,
-+			      &base->dma_memcpy);
-+	if (err)
-+		goto exit;
-+
- 	err = dmaenginem_async_device_register(&base->dma_memcpy);
- 
- 	if (err) {
-@@ -3117,6 +3139,12 @@ static int __init d40_dmaengine_init(struct d40_base *base,
- 	dma_cap_set(DMA_CYCLIC, base->dma_both.cap_mask);
- 
- 	d40_ops_init(base, &base->dma_both);
-+
-+	err = devm_add_action(base->dev, d40_kill_tasklets,
-+			      &base->dma_both);
-+	if (err)
-+		goto exit;
-+
- 	err = dmaenginem_async_device_register(&base->dma_both);
- 
- 	if (err) {
-@@ -3714,6 +3742,7 @@ static int __init d40_probe(struct platform_device *pdev)
- 	struct d40_base *base;
- 	struct resource *res;
- 	struct resource res_lcpa;
-+	void *dmaenginem_reg_group;
- 	int num_reserved_chans;
- 	u32 val;
+ 	struct d40_lcla_pool *pool = &base->lcla_pool;
++	size_t lcla_size = SZ_1K * base->num_phy_chans;
+ 	unsigned long *page_list;
+ 	int i, j;
  	int ret;
-@@ -3844,20 +3873,32 @@ static int __init d40_probe(struct platform_device *pdev)
- 		d40_err(dev, "No IRQ defined\n");
- 		goto destroy_cache;
+@@ -3618,20 +3619,20 @@ static int __init d40_lcla_allocate(struct d40_base *base)
+ 	if (!page_list)
+ 		return -ENOMEM;
+ 
+-	/* Calculating how many pages that are required */
+-	base->lcla_pool.pages = SZ_1K * base->num_phy_chans / PAGE_SIZE;
++	base->lcla_pool.alloc_order = get_order(lcla_size);
+ 
+ 	for (i = 0; i < MAX_LCLA_ALLOC_ATTEMPTS; i++) {
+ 		page_list[i] = __get_free_pages(GFP_KERNEL,
+-						base->lcla_pool.pages);
++						base->lcla_pool.alloc_order);
+ 		if (!page_list[i]) {
+ 
+-			d40_err(base->dev, "Failed to allocate %d pages.\n",
+-				base->lcla_pool.pages);
++			d40_err(base->dev, "Failed to allocate %zu bytes.\n",
++				lcla_size);
+ 			ret = -ENOMEM;
+ 
+ 			for (j = 0; j < i; j++)
+-				free_pages(page_list[j], base->lcla_pool.pages);
++				free_pages(page_list[j],
++					   base->lcla_pool.alloc_order);
+ 			goto free_page_list;
+ 		}
+ 
+@@ -3641,7 +3642,7 @@ static int __init d40_lcla_allocate(struct d40_base *base)
  	}
-+
-+	dmaenginem_reg_group = devres_open_group(dev, NULL, GFP_KERNEL);
-+	if (!dmaenginem_reg_group) {
-+		ret = -ENOMEM;
-+		goto release_irq;
-+	}
-+
- 	ret = d40_dmaengine_init(base, num_reserved_chans);
- 	if (ret)
--		goto release_irq;
-+		goto release_dmaenginem;
  
- 	ret = of_dma_controller_register(np, d40_xlate, NULL);
- 	if (ret) {
- 		dev_err(dev,
- 			"could not register of_dma_controller\n");
--		goto release_irq;
-+		goto release_dmaenginem;
+ 	for (j = 0; j < i; j++)
+-		free_pages(page_list[j], base->lcla_pool.pages);
++		free_pages(page_list[j], base->lcla_pool.alloc_order);
+ 
+ 	if (i < MAX_LCLA_ALLOC_ATTEMPTS) {
+ 		base->lcla_pool.base = (void *)page_list[i];
+@@ -3651,10 +3652,9 @@ static int __init d40_lcla_allocate(struct d40_base *base)
+ 		 * alignment, try with allocating a big buffer.
+ 		 */
+ 		dev_warn(base->dev,
+-			 "[%s] Failed to get %d pages @ 18 bit align.\n",
+-			 __func__, base->lcla_pool.pages);
+-		base->lcla_pool.base_unaligned = kmalloc(SZ_1K *
+-							 base->num_phy_chans +
++			 "[%s] Failed to get %zu bytes @ 18 bit align.\n",
++			 __func__, lcla_size);
++		base->lcla_pool.base_unaligned = kmalloc(lcla_size +
+ 							 LCLA_ALIGNMENT,
+ 							 GFP_KERNEL);
+ 		if (!base->lcla_pool.base_unaligned) {
+@@ -3666,8 +3666,7 @@ static int __init d40_lcla_allocate(struct d40_base *base)
+ 						 LCLA_ALIGNMENT);
  	}
-+	devres_remove_group(dev, dmaenginem_reg_group);
  
- 	dev_info(base->dev, "initialized\n");
- 	return 0;
+-	pool->dma_addr = dma_map_single(base->dev, pool->base,
+-					SZ_1K * base->num_phy_chans,
++	pool->dma_addr = dma_map_single(base->dev, pool->base, lcla_size,
+ 					DMA_TO_DEVICE);
+ 	if (dma_mapping_error(base->dev, pool->dma_addr)) {
+ 		pool->dma_addr = 0;
+@@ -3909,7 +3908,7 @@ static int __init d40_probe(struct platform_device *pdev)
  
-+ release_dmaenginem:
-+	free_irq(base->irq, base);
-+	devres_release_group(dev, dmaenginem_reg_group);
-+	goto destroy_cache;
-  release_irq:
- 	free_irq(base->irq, base);
-  destroy_cache:
+ 	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
+ 		free_pages((unsigned long)base->lcla_pool.base,
+-			   base->lcla_pool.pages);
++			   base->lcla_pool.alloc_order);
+ 
+ 	kfree(base->lcla_pool.base_unaligned);
+ 
 -- 
 2.53.0
 
