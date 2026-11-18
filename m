@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029272;
-	b=kPQang8kKYvmFYpIWdiYuQeh7+VMko3kue8hhfTVe2CeqWUbb1EtSuXVbZ71hkHA97q3
-	 O7S/oTW84VrL02bSU1HaLzDSNYFnGfyEY/7Q3no/nFlibWYDKR9TcxCqeHDve5nVccckR
-	 othjGnfJQ5UJH46b+CU/hNDR0eo2E6M8riOQisqV5kIytIC8grRWlL8oSk/xTDM3BbBj6
-	 o4si38PH/34+EhYUtQ0+A52zxtuMePr9etzPs7IZAZ2JahE4mL91fpI+OuYW5QG1iK/V2
-	 Ofp/V3FhOzPc7IdgCgdpDqAwX1UnohNnKor35nyAaKCMhGHnbOyqn4C5QiIoXp9Zapg==
+	t=1795029274;
+	b=Ixa2UOhTY0cyphNWcwF0A/a4JRUjxEP80nw5JmdIkjGJ3E3Iql2gaScVXZQl8DHnPI6m
+	 GxkE7NZ+pMgDlHEFl642jywUgY0rGMe6v8KX6n+OR8t+rXRGENyaHHX5lB77j+HHfqOZM
+	 uOAESwnvu6nH0t2IChx+6zvmN70oAEt5ot6aHk/v6fUpC/423x4L82Kq2RpfepAu7LnTj
+	 1DYE9M8kMA9/rVP7KItX38sdvAg1Il5aXu07n7JBM7c7cPbC4msvUYDAeAjeloX0LKnqa
+	 iscmdpGrPQSZFEVwrfI4YMq7UJEBks3nX/apyqUIWSdhCdjZIczRxPljAGJn2APuNMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029272;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029274;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mbNr/HTyTpWhguPuM7r4hz6gwJMdciCZXmLfzWZ9BL4=;
-	b=DNcH2XMKoAUAszjSJZouFYupMLlOG9E1oIu0m9joGpVCUNUsZvvvDKkRhHmMSHd8nMem
-	 v+OAAE0oAluIDt+jVW6P/McPqDtTbdK2vYLTGyvyDCGMzWmj93r5N/SJOdxqBbrJloFPX
-	 j0OIL8xJ0Asvq9+ffBWcq1jkqVR782j0Y334b43WmElpHivnwBNW7jF26o0MfaogKoSU1
-	 DGRI0YPSaWlBISFnYnqHmKatU70Whu9dc+hs4kUBH09pHxh32HnqPiyy807Lmd2adC6vZ
-	 BimGVgJuounrp1zs28VyxXe02x/fNrkaAWNEz0SizpYgtALOW/OV9qlbcAtJmCoR3qQ==
+	bh=zB0jQZzUrjz7t1Jd4k6PZsQUcd04iozps09JA1L4Qro=;
+	b=cY58XwziEDdYgn5tTYPDn5zPSV280Z/1PFazpJ2HXwrKF8Q62JZtWuBwDwiX+pv5DoYO
+	 6Ur7xeURLJqc5FbMYbtJR45y5BCurMKtMvrX8ZGlwAFt5nSyeMxubssPWAQy4gsqjj9a2
+	 iv8wPQKNIw2cmfc+AEYxEe82eHDgI7n6mCBokFuUkclJjOTGMBtOEtrDIglz1xdOp6ECR
+	 Q9PnSK5hgY6tZ43qpDV1V2aH8yc6+SBYTJzjfaVJFtcaZ/opOOjuNPG1nyR5DL/Ftj2gs
+	 U8BdOM5JW26T5tqVH9sxcEDIpJdOoUlhohf8KsGKyvtLEdPygw4yk1gHDxdSzD/1C9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GsoHJfGl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za+83V1d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB36F606A31C;
-	Wed, 18 Nov 2026 19:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF19606A325;
+	Wed, 18 Nov 2026 19:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GsoHJfGl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447CF1F000C4;
-	Wed, 18 Nov 2026 19:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Za+83V1d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA241F000C4;
+	Wed, 18 Nov 2026 19:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029271;
-	bh=mbNr/HTyTpWhguPuM7r4hz6gwJMdciCZXmLfzWZ9BL4=;
+	s=korg; t=1795029274;
+	bh=zB0jQZzUrjz7t1Jd4k6PZsQUcd04iozps09JA1L4Qro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GsoHJfGlqJfPQ4B4b9pW1CaEyeuFzgzfhrBOzGlxWmioxWC9QY6bZA1qTZH/CxD20
-	 UYzirxdmfLAkDSDV33FHt1DR2N3FOhEJZbS7kCXMztD7iwMBs32q8Dgk6vH+DhLQKl
-	 ovPWya5gq9vezuFTmiRaaKMAFm5fpH8DQCbNYIGE=
+	b=Za+83V1d9G0YwPUOmoUslhkDQTpsOJq9lHqRiGln2Ryy6qo37GRDzzQ65zgPJYfEo
+	 FXj/uheANSxoquS9bCwaAb2yV0zqJc+GQrds+3iAZy96T8BDisOmBaQEyHZA+L1SsI
+	 UDFjoq1HslEi7/Svlaspx/4ghjuQHcgAQ6+I5aY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0291/1756] selftests: net: csum: filter packets by source address and port
-Date: Wed, 18 Nov 2026 15:40:18 +0100
-Message-ID: <20261118150019.967658196@linuxfoundation.org>
+Subject: [PATCH 6.12 0292/1756] power: supply: mp2629: Use the full batt_impedance_compensation name in the ABI document
+Date: Wed, 18 Nov 2026 15:40:19 +0100
+Message-ID: <20261118150020.001978180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,176 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 8342c68435dd34b1ecd65b02fff9745cadab2616 ]
+[ Upstream commit 1101833121a447999309a01f03d5b35bc1652e09 ]
 
-Add source address and port verification in recv_verify_packet_* and
-recv_udp: non-matching packets are skipped.
+drivers/power/supply/mp2629_charger.c creates the attribute with
+DEVICE_ATTR_RW(batt_impedance_compensation). The ABI file documents it
+under the truncated name batt_impedance_compen, which does not exist in
+sysfs.
 
-The receiver reads from PF_PACKET and UDP sockets to verify incoming
-packets to test hardware checksum offload. It did not validate the
-packet source address or source port.
+Use the full name.
 
-During tests expecting an invalid checksum (-E) or zero checksum (-Z),
-background packets can fail the test.
-
-For -Z, build_packet_udp chooses a specific source port that causes
-the checksum to sum to zero. When running in receive-only mode (-R),
-call build_packet in do_rx to compute the expected source port so
-that source port filtering can be applied to -Z as well.
-
-Also
-- add an inter-packet delay to avoid drops from bursts.
-- remove a comment that is no longer correct.
-
-Fixes: 91a7de85600d ("selftests/net: add csum offload test")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260908155537.813889-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fe27f04e0cdc ("power: supply: mp2629: Add impedance compensation config")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905101849.42830-1-kmehltretter@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/lib/csum.c | 55 +++++++++++++++++++++++---
- 1 file changed, 50 insertions(+), 5 deletions(-)
+ Documentation/ABI/testing/sysfs-class-power-mp2629 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/lib/csum.c b/tools/testing/selftests/net/lib/csum.c
-index 27437590eeb53..26c642c1f7fd3 100644
---- a/tools/testing/selftests/net/lib/csum.c
-+++ b/tools/testing/selftests/net/lib/csum.c
-@@ -2,8 +2,7 @@
- 
- /* Test hardware checksum offload: Rx + Tx, IPv4 + IPv6, TCP + UDP.
-  *
-- * The test runs on two machines to exercise the NIC. For this reason it
-- * is not integrated in kselftests.
-+ * The test runs on two machines to exercise the NIC.
-  *
-  *     CMD=$((./csum -[46] -[tu] -S $SADDR -D $DADDR -[RT] -r 1 $EXTRA_ARGS))
-  *
-@@ -236,7 +235,8 @@ static void *build_packet_udp(void *_uh)
- 		uh->source = 0;
- 		uh->source = checksum(uh, IPPROTO_UDP, sizeof(*uh) + cfg_payload_len);
- 
--		fprintf(stderr, "tx: changing sport: %hu -> %hu\n",
-+		fprintf(stderr, "%s: changing sport: %hu -> %hu\n",
-+			cfg_do_tx ? "tx" : "rx",
- 			cfg_port_src, ntohs(uh->source));
- 		cfg_port_src = ntohs(uh->source);
- 	}
-@@ -249,7 +249,8 @@ static void *build_packet_udp(void *_uh)
- 	if (cfg_bad_csum)
- 		uh->check = ~uh->check;
- 
--	fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
-+	if (cfg_do_tx)
-+		fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
- 	return uh + 1;
- }
- 
-@@ -571,15 +572,36 @@ static int recv_prepare_packet(void)
- static int recv_udp(int fd)
- {
- 	static char buf[MAX_PAYLOAD_LEN];
-+	struct sockaddr_storage addr;
-+	socklen_t addrlen;
- 	int ret, count = 0;
- 
- 	while (1) {
--		ret = recv(fd, buf, sizeof(buf), MSG_DONTWAIT);
-+		addrlen = sizeof(addr);
-+		ret = recvfrom(fd, buf, sizeof(buf), MSG_DONTWAIT,
-+			       (struct sockaddr *)&addr, &addrlen);
- 		if (ret == -1 && errno == EAGAIN)
- 			break;
- 		if (ret == -1)
- 			error(1, errno, "recv r");
- 
-+		if (cfg_family == PF_INET) {
-+			struct sockaddr_in *sin = (void *)&addr;
-+
-+			if (sin->sin_addr.s_addr != cfg_saddr4.sin_addr.s_addr)
-+				continue;
-+			if (sin->sin_port != htons(cfg_port_src))
-+				continue;
-+		} else {
-+			struct sockaddr_in6 *sin6 = (void *)&addr;
-+
-+			if (memcmp(&sin6->sin6_addr, &cfg_saddr6.sin6_addr,
-+				   sizeof(sin6->sin6_addr)))
-+				continue;
-+			if (sin6->sin6_port != htons(cfg_port_src))
-+				continue;
-+		}
-+
- 		fprintf(stderr, "rx: udp: len=%u\n", ret);
- 		count++;
- 	}
-@@ -620,6 +642,9 @@ static int recv_verify_packet_tcp(void *th, int len)
- 	if (len < sizeof(*tcph) || tcph->dest != htons(cfg_port_dst))
- 		return -1;
- 
-+	if (tcph->source != htons(cfg_port_src))
-+		return -1;
-+
- 	return recv_verify_csum(th, len, ntohs(tcph->source), tcph->check);
- }
- 
-@@ -647,6 +672,9 @@ static int recv_verify_packet_udp(void *th, int len)
- 		return recv_verify_packet_udp_encap(udph + 1,
- 						    len - sizeof(*udph));
- 
-+	if (udph->source != htons(cfg_port_src))
-+		return -1;
-+
- 	return recv_verify_csum(th, len, ntohs(udph->source), udph->check);
- }
- 
-@@ -659,6 +687,9 @@ static int recv_verify_packet_ipv4(void *nh, int len)
- 	if (len < sizeof(*iph) || iph->protocol != proto)
- 		return -1;
- 
-+	if (iph->saddr != cfg_saddr4.sin_addr.s_addr)
-+		return -1;
-+
- 	ip_len = ntohs(iph->tot_len);
- 	if (ip_len > len || ip_len < sizeof(*iph))
- 		return -1;
-@@ -680,6 +711,9 @@ static int recv_verify_packet_ipv6(void *nh, int len)
- 	if (len < sizeof(*ip6h) || ip6h->nexthdr != proto)
- 		return -1;
- 
-+	if (memcmp(&ip6h->saddr, &cfg_saddr6.sin6_addr, sizeof(ip6h->saddr)))
-+		return -1;
-+
- 	payload_len = ntohs(ip6h->payload_len);
- 	if (payload_len > len - sizeof(*ip6h))
- 		return -1;
-@@ -940,6 +974,9 @@ static void do_tx(void)
- 			cfg_payload_len = rand() % MAX_PAYLOAD_LEN;
- 			buf = build_packet(_buf, sizeof(_buf), &len);
- 		}
-+
-+		/* avoid bursting */
-+		usleep(20);
- 	}
- 
- 	if (close(fd))
-@@ -952,6 +989,14 @@ static void do_rx(int fdp, int fdr)
- 	long tleft, tstop;
- 	struct pollfd pfd;
- 
-+	if (!cfg_do_tx && cfg_zero_sum) {
-+		static char _buf[MAX_HEADER_LEN + MAX_PAYLOAD_LEN];
-+		int len;
-+
-+		/* calculate source port that causes csum to add up to zero */
-+		build_packet(_buf, sizeof(_buf), &len);
-+	}
-+
- 	tstop = gettimeofday_ms() + cfg_timeout_ms;
- 	tleft = cfg_timeout_ms;
- 
+diff --git a/Documentation/ABI/testing/sysfs-class-power-mp2629 b/Documentation/ABI/testing/sysfs-class-power-mp2629
+index 914d67caac0d7..a85f926ce9c26 100644
+--- a/Documentation/ABI/testing/sysfs-class-power-mp2629
++++ b/Documentation/ABI/testing/sysfs-class-power-mp2629
+@@ -1,4 +1,4 @@
+-What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compen
++What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compensation
+ Date:		April 2020
+ KernelVersion:	5.7
+ Description:
 -- 
 2.53.0
 
