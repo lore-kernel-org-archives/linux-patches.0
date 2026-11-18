@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054244;
-	b=TrscwDi7Dsjc4ydbrPIJgqtqS/Hovc7qcagbBhLg+ERsSJShew08Ui54mjxrObrCkS89
-	 bjjwMQf1CU3YCgY+TLaCi2hRYfgwYcnynypUfl2+wa6SQBJgyFBgw4+NEcp2XxdbpcwS5
-	 4+5vbIBi+q7qbF38mnbdzZvQx1Y/obiLOQwqyJkcAIqtUZDHENzNyBrDOb82aH15U+dYj
-	 /mcclyLFspMydFUkF1y4DQIga/w3Psl7ty/Q9fOx4WUXD5lN6UkEbrfTZWSCdRBon6nO/
-	 HCr8s0YNLvFfL3JedDUPCu03viQKsCcOLyR8rL6sZAZ639bLC/n9EI2h3SzjQPxnc3w==
+	t=1795054247;
+	b=BW6cZxD/rwo2iqH4tcB39rDmKSAOfQ96d89fBUpLWKT6273I18Dxq0P80F5Y003m1Vdj
+	 RROxH4HJoYOl4u/ItuGUKOsaGgRd77KTg4zztpeDicMGLDGe7UrC3GlBDUIXUpg9/Xt4p
+	 cgjVYTbaosYE4i1ByzeJcRqL3ldJ8zfXVVB6ACk6Q2+rQDAVPT8ls+3T+W/F+ts7cEM3o
+	 vkg4UlqZzsERdx9ndTL4w2jbJ5hkf7TNiSNhvShkyRZDanPNceQFMAPFsjszPfmkz9TwM
+	 5ghGO1VKRWfJs2igszMboWhtHXbxjfE9NeUy5+48a+7b/UBcFttTLwKfty5bOZAd4BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kFcPE9zcjx/yubkgArfclZdOZvA4v0MAwhAOD1grQ3Q=;
-	b=jutm0Jw9lXLBUT/4jx2N2BPvm7QebPC0/rXblBJ18xPP++RkODDjlD/us7eSELyKzgrE
-	 cJF2FCBpVDuI2arrwWgf2Zd7Y73GVGAjwPq2F/LPIAzPSYXFQHE1vMhYH/kXTxrdarDQj
-	 ydSn97wRr4BxXvXsexSXLGthhceIm6cR16huwU8Bz1YigP6vSdjTM2xtEd0cYunZuflut
-	 YBUnqRXE1LIpD5BcgEt8xbjcc+ptbbQe0nVP4tBB3FjTMb5CdF0c6ppPVUb06I1DfWHUs
-	 F5FSn5hIPuR4XBMzHK1lKywBFJtkZDFIOQKsvzOCDN+YdcTvOST7z1Lew+ylqbdYD1w==
+	bh=xbd/nnUHWBZPLa2XH7rPyvye30e8w0rALzjmuTDaXIY=;
+	b=31EYavv4++Vd7m1l7wR10J2dZKFu6uMRRUSVHFhGfixnmbE91AmNCcKZXppJkSS+xyZo
+	 XJpR6ToMPBfVbtRSljmDlKSS59Cv6DAILuUiS/zGCR7Rn4fvPzC9wrFYnRUb27CsnMMBN
+	 6hN+iPsoJ6azbj7WmFHDZB8ElVawqmpL5/ogzP5gHEq20O5cm9DVseDEW7tQE+yTE8nqr
+	 Mcw5d7g4JYY6TVX8jrE13FIST12FcpGY9Bl2x4jUz+o+SDi+BvMK577BkIsMwS4zhU55l
+	 HvCgrZDs8PMuUIQNJ/U+lRWEUPKRZZyL1QeEdx6X76FJqFJY7VmImi5pqmzh387kWKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rO0BHHue;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z6TgnFg2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDD0606A32A;
-	Thu, 19 Nov 2026 02:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F80606A31C;
+	Thu, 19 Nov 2026 02:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rO0BHHue
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BBF1F000C4;
-	Thu, 19 Nov 2026 02:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z6TgnFg2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA461F000C4;
+	Thu, 19 Nov 2026 02:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054244;
-	bh=kFcPE9zcjx/yubkgArfclZdOZvA4v0MAwhAOD1grQ3Q=;
+	s=korg; t=1795054247;
+	bh=xbd/nnUHWBZPLa2XH7rPyvye30e8w0rALzjmuTDaXIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rO0BHHuegdNf49MbGWP5WekxmRcwO9FBPCYkQnYsLQUyjh8v+KSXTK/n4PSE3Pa4i
-	 xCjqkNuvbuOj6jB6aPPMzxcgeD/knf0N/1c6xBUASqnA+CH0r4qSeH9hbYuP/tI1aD
-	 THOVMWWXGEWE7Akw7ddkYXnFIC3S865sjIuyHiL4=
+	b=Z6TgnFg2XetPeLx6A4wcxLXIMnZyvQ6jvA8egrtTbQbmc6DC1IbGACfGPunLcahVq
+	 pWtIQDb6LBelkArjXDhn/orWKqDEs4kTz6UQzVBkTvJYnKfJmNrnB5fv0zr2hhbZca
+	 2JMvt87esSu/BHHivJU3C+L35LTpBMZclCVx9ANQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hung-Jui Lin <alex.lin.programmer@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	stable@kernel.org,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1164/2214] posix-timers: Report zero remaining time for disarmed SIGEV_NONE timers
-Date: Wed, 18 Nov 2026 15:47:20 +0100
-Message-ID: <20261118150058.590162150@linuxfoundation.org>
+Subject: [PATCH 5.15 1155/2214] serial: amba-pl011: keep transmitter enabled when disabling RS485
+Date: Wed, 18 Nov 2026 15:47:11 +0100
+Message-ID: <20261118150058.183641084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,89 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hung-Jui Lin <alex.lin.programmer@gmail.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 141a27750ec3d91ad9d1ad1764ebb5e51b963478 ]
+[ Upstream commit 97f85204275ae4d7fb530e451f3acc65c1ec1155 ]
 
-SIGEV_NONE timers are never queued. common_timer_get() emulates their
-expiry by computing the remaining time from the stored expiry value.
-Because an armed SIGEV_NONE oneshot timer is not queued, its it_status
-stays POSIX_TIMER_DISARMED. So common_timer_get() cannot use it_status to
-skip a disarmed SIGEV_NONE timer and evaluates the stored expiry value for
-all SIGEV_NONE timers.
+Disabling RS485 on an open port calls pl011_rs485_tx_stop(), which
+turns off the transmitter. Only the RS485 TX path turns it back on, so
+any later output stays queued and tcdrain() hangs until the port is
+closed.
 
-Disarming a timer with timer_settime() and a zero it_value cancels the
-timer and sets it_status to POSIX_TIMER_DISARMED, but leaves the expiry
-value unchanged. As a consequence, timer_gettime() on a disarmed SIGEV_NONE
-timer reports the remaining time of the previous arming until that time has
-passed, instead of zero as POSIX requires for a disarmed timer. Example
-with a CLOCK_MONOTONIC timer armed with it_value = 10ms and it_interval =
-100ms, then disarmed with an all-zero itimerspec:
+pl011_rs485_tx_stop() also checks only the hardware FIFO. If a DMA
+transfer has started but has not filled the FIFO yet, the transmitter
+is turned off under the transfer and the DMA channel never recovers.
 
-  armed:    it_value = 0.009999000  it_interval = 0.100000000
-  disarmed: it_value = 0.008700792  it_interval = 0.000000000
+When leaving RS485 mode, cancel pending deferred starts and stops, leave
+the transmitter enabled and start any TX that was still waiting for
+delay_rts_before_send.
 
-SIGEV_SIGNAL timers and SIGEV_NONE CPU timers report zero in the same
-situation. All clocks which use common_timer_get() are affected, including
-the alarm timer clocks.
-
-Mark SIGEV_NONE timers as POSIX_TIMER_ARMED when they are armed, so that
-common_timer_get() returns early for every disarmed timer. Forward
-SIGEV_NONE interval timers in common_timer_get() regardless of it_status,
-as they are never queued and therefore never forwarded by the expiry code.
-
-After the change the disarmed timer above reports zero. Armed SIGEV_NONE
-oneshot and interval timers on CLOCK_MONOTONIC, CLOCK_REALTIME,
-CLOCK_BOOTTIME and CLOCK_BOOTTIME_ALARM still report their remaining time,
-and the posix_timers selftest passes.
-
-Fixes: becf8b5d00f4 ("[PATCH] hrtimer: convert posix timers completely")
-Signed-off-by: Hung-Jui Lin <alex.lin.programmer@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261023151411.28685-1-alex.lin.programmer@gmail.com
-[ sashal: adapted it_status state handling to the it_active flag ]
+Fixes: 8d479237727c ("serial: amba-pl011: add RS485 support")
+Cc: stable@kernel.org
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20261012-fix-pl011-rs485-txe-v2-1-e9bf7d218389@tipi-net.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adapted RS485 handling to the existing rs485_tx_started boolean and synchronous delays, omitting unavailable timer and deferred-start logic. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/tty/serial/amba-pl011.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index fc08d4ccdeeb9..23683372ddcb1 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -686,12 +686,8 @@ void common_timer_get(struct k_itimer *timr, struct itimerspec64 *cur_setting)
- 	if (iv) {
- 		cur_setting->it_interval = ktime_to_timespec64(iv);
- 	} else if (!timr->it_active) {
--		/*
--		 * SIGEV_NONE oneshot timers are never queued. Check them
--		 * below.
--		 */
--		if (!sig_none)
--			return;
-+		/* Nothing to update for a disarmed timer */
-+		return;
- 	}
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 7b21907cd14dd..3f74b96e7745c 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -2241,8 +2241,22 @@ static int pl011_rs485_config(struct uart_port *port,
+ 	struct uart_amba_port *uap =
+ 		container_of(port, struct uart_amba_port, port);
  
- 	now = kc->clock_get_ktime(timr->it_clock);
-@@ -901,7 +897,15 @@ int common_timer_set(struct k_itimer *timr, int flags,
- 	sigev_none = timr->it_sigev_notify == SIGEV_NONE;
+-	if (port->rs485.flags & SER_RS485_ENABLED)
++	if ((port->rs485.flags & SER_RS485_ENABLED) &&
++	    !(rs485->flags & SER_RS485_ENABLED)) {
++		u32 cr = pl011_read(uap, REG_CR);
++
++		/*
++		 * Leaving RS485 mode, which only enables the transmitter while
++		 * sending. Don't stop it, as that stalls a DMA transfer still
++		 * in flight. Keep it enabled.
++		 */
++		uap->rs485_tx_started = false;
++
++		cr |= UART011_CR_TXE | UART011_CR_RXE;
++		pl011_write(cr, uap, REG_CR);
++	} else if (port->rs485.flags & SER_RS485_ENABLED) {
+ 		pl011_rs485_tx_stop(uap);
++	}
  
- 	kc->timer_arm(timr, expires, flags & TIMER_ABSTIME, sigev_none);
--	timr->it_active = !sigev_none;
-+	/*
-+	 * SIGEV_NONE timers are not queued, but mark them armed
-+	 * so that common_timer_get() can tell them apart from
-+	 * disarmed timers. An expired SIGEV_NONE timer stays
-+	 * armed, which is harmless: common_timer_get() reports
-+	 * zero remaining time for it and it never reaches the
-+	 * signal delivery code.
-+	 */
-+	timr->it_active = 1;
- 	return 0;
- }
- 
+ 	/* Make sure auto RTS is disabled */
+ 	if (rs485->flags & SER_RS485_ENABLED) {
 -- 
 2.53.0
 
