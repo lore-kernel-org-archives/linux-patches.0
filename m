@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060036;
-	b=rtU9QRk0EcQO4PRiMy14YdE+DraqT0lIXpMGtuBgHiGQc4fcQfd2y8CccWojl240+rs/
-	 YxUNY/Jd0gVVBy2NfIIU9wY3RhsSLJPHrX9960ujJ85tdczbSizNjV4Yy3LUrITqR4MB6
-	 LfMlP8/kQBhKFmuNsCMj803eFW4OI2cjRyfDGcRzOISBgUZ0csKZDrhtVVivat5zJJqDD
-	 KXFbm/b+PyCZfiZDps+cOiVfPsOXEgXzPo3sSabS26Dok6dR5P2l3Nxnk0CVzbCqae1yA
-	 eaaE4Srhp7A9mlhYhFOfK2KcEF46qZru2T0BtCk5mdyr/ClA/itwRf47Ro1yiXf0Yag==
+	t=1795060039;
+	b=1ShSwYeC46QCV+02Mt7F4Q0TdHNqZJgDgQt0vPWmP0DD+3fPRjUxV2ONddeLOfqkBBch
+	 0K0Vu9eMi+dtZ0h6maiioJPIXWN4qD2AL897JjyCcwgkNxA9TNOoovtFMHMWjVd658Icf
+	 qg2FSt1bRgQjZ1kDhy9GoRRXeVv/AsTtS/VtUoB3EwaCC+9UVWPIVHkyVcFT8l/kznPdW
+	 hDq1CuLDMC35u0RLr353HnFknKhsy1jdkynTF0uNV5MLnOyM0poKOnUn6xVBU9z2RD1R4
+	 RgBeS8qnvLl7CexZ1XIcAWEb6p+YmRtGiArkWNtNhzPIl6XWbBVPHZDkcieCTtwaoSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060036;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060039;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dU2igYKQgprvPmT62HmPx8FjnVLKNka3ZIfnXKJJ6PM=;
-	b=GEdPe/DoOL47CSmpmxBD84SUWncs+so+6yB0ToDVgOJMBAHhTofShZdQq/spCfz6SDPm
-	 fJ8zVLbjpPSf7HYvTV8mB+hqkc87kTTZqyZWnOSz1QllfbxwXhw+WLSLSRn+9meWAHwbG
-	 fYjUfzx9w/1P0U+ZLyJE3X3Fn+bKJK2YDkUezAOhus+7f9Qbb5VgPr17VA2TvFLnXvYvo
-	 cUe/PO0/Eu5Opk1tc6zDqMc0hb2TIDT4yELy2/s8XXOaG8zAf2mDxiS7wb663w/7ZMCBf
-	 1dPglSQTVoV97tqmUARcW5dnNmVkXRSB2DUMWx17tiK2braF42WxCI7DnQiqoFb3GtQ==
+	bh=Cvydf1Yo6lLQgG1jpV0sc419tpy3sLkPmLdpp7hfffs=;
+	b=HnMK+NRxGH1rQFs5LvY6QAlBbDNBnLyXXSyJBlaAjQAclC1kU+6p2QCrOKf7mlGNPaBn
+	 2cFzsmC+E6pBlN4sx5aOsATk/Ui/RRgFx7ufhZxqloQZKj/sIFKTnpS2mTrODls3/jT14
+	 0BW1de9jnhXP3BJgiuNYAIUiEKi0IT+sTfZxtHrCNAkZ1Q7ywB0V49aH2PpYzJcBeSjNX
+	 TUhD9WsuPgYuUomXTy0qVEjxL6toxl8rr4Wsc1SFYGs4oqrPr2vkNXNaiit+2Fc+ncRB5
+	 L4EboV98bjKf+cgtfM0tjWRf2hd9/QWN64shrPC4lyQEe159OxLzRHRimU37kwQep+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjEbyg9s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7JbOxMw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A7606A325;
-	Thu, 19 Nov 2026 03:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AED606A325;
+	Thu, 19 Nov 2026 03:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JjEbyg9s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5834B1F000C4;
-	Thu, 19 Nov 2026 03:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7JbOxMw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133271F000C4;
+	Thu, 19 Nov 2026 03:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060035;
-	bh=dU2igYKQgprvPmT62HmPx8FjnVLKNka3ZIfnXKJJ6PM=;
+	s=korg; t=1795060038;
+	bh=Cvydf1Yo6lLQgG1jpV0sc419tpy3sLkPmLdpp7hfffs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjEbyg9s88qUcoue2/kC0EYgVKLwz2ccSJ8Q0GOAIYAAguxz/wWDj9DegTC7WPwhW
-	 wVjb0i5yvMFZltFUOXkj7sVUJ58efe32FtHjGNZ1E6GPWDCxezmSxXCjN49//4xiG3
-	 /xvm/aaG7rW4CSTm3v1sVbOswj3qLlM0FK+/OO1g=
+	b=P7JbOxMwNKYP0jn25rbGW6534UyHyC3amoWbrF9H8SEtALbVMQ+fbpcgWW9Gp0Oup
+	 3DRK+S8aQ2H/aAt1WDLkB1E5KhbaYBxKjnnN4aUrDrLCZs/9Kp4owvBy/yjHTNxwq+
+	 QdMmrh9htbDV+hJSKs1IO3bzkrPlXrHP+2XAa+CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Gao <gyf161023@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Chris Mason <mason@kernel.org>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1054/1848] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
-Date: Wed, 18 Nov 2026 15:51:32 +0100
-Message-ID: <20261118150001.417685931@linuxfoundation.org>
+Subject: [PATCH 5.10 1055/1848] ovl: look up the index by the decoded origin
+Date: Wed, 18 Nov 2026 15:51:33 +0100
+Message-ID: <20261118150001.553607506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,46 +68,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
+[ Upstream commit 520ef67f47f69255695859b0008281a384d0bc20 ]
 
-p9_xen_response() looks up the request for an incoming reply with
-p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
-the tag does not resolve to a request in REQ_STATUS_SENT, the function
-warns and continues the loop without dropping that reference, permanently
-leaking the p9_req_t and its msize buffers. The reply header, including
-the tag, is supplied by the backend, so a malicious or buggy 9P backend
-can leak kernel memory on every crafted response.
+A file opened by file handle on an overlay with nfs_export=on can show
+the stale lower data of a file that was copied up to the upper layer.
+While the file opened this way stays in the inode cache, a lookup of the
+copied up file by path fails with ESTALE for all users. The open can
+also succeed for a file that was removed, where it has to fail with
+ESTALE. This happens with a handle that has one byte changed. The handle
+comes from an NFS client, or from a process that calls
+open_by_handle_at() with CAP_DAC_READ_SEARCH in the initial user
+namespace.
 
-Drop the reference before continuing.
+When a file in a lower layer is about to be modified, overlayfs first
+copies it to the upper layer (copy up). With nfs_export=on, each copy up
+also creates an entry in the index directory, a directory that overlayfs
+keeps for itself on the upper filesystem.
 
-Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
+The handle of an overlay file that comes from a lower layer wraps the
+handle of its lower inode. Overlayfs calls this lower inode the origin.
+The overlay handle stays valid after a copy up.
+
+To decode such a handle, ovl_lower_fh_to_d() first decodes the wrapped
+handle to the origin. If no overlay inode is cached for the origin, it
+looks in the index directory:
+
+- An index entry there leads to the upper file.
+- A whiteout, the marker that overlayfs uses for a removed file, means
+  that the overlay file was removed.
+
+The name of an index entry is the handle that copy up encoded for the
+origin, as a hex string.
+
+ovl_lower_fh_to_d() builds the name for this lookup from the bytes that
+the caller passed in. But handles with different bytes can decode to the
+same inode:
+
+- Overlayfs ignores some flag bits of the handle.
+- A lower filesystem can accept a different fid type, extra bytes, or
+  generation 0 for any generation.
+
+Such a handle decodes to the origin but misses the index entry or the
+whiteout. So the decode returns an overlay inode that has only the lower
+file.
+
+While that inode is cached, a path lookup of a copied up file fails with
+ESTALE, since the upper file that the lookup finds does not match the
+cached inode, which has none.
+
+Reproduced on tmpfs and on ext4 with open_by_handle_at(), after a copy
+up and a mount cycle. A handle in which one flag bit, the fid type, the
+length or the generation was changed read the old lower data, and path
+lookups returned ESTALE.
+
+Fix this by re-encoding the decoded origin and building the index name
+from that handle.
+
+Fixes: f71bd9cfb692 ("ovl: decode indexed non-dir file handles")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-[ sashal: changed p9_req_put(priv->client, req) to p9_req_put(req) to match the one-argument API ]
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[ sashal: Removed the ofs argument from ovl_get_index_name() to match the existing two-argument helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/filesystems/overlayfs.rst |  3 ++-
+ fs/overlayfs/export.c                   |  4 ++--
+ fs/overlayfs/namei.c                    | 13 ++++++++++---
+ fs/overlayfs/overlayfs.h                |  2 +-
+ 4 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 45a16494bd79f..3a41984275256 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -233,6 +233,8 @@ static void p9_xen_response(struct work_struct *work)
- 		req = p9_tag_lookup(priv->client, h.tag);
- 		if (!req || req->status != REQ_STATUS_SENT) {
- 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
-+			if (req)
-+				p9_req_put(req);
- 			cons += h.size;
- 			virt_mb();
- 			ring->intf->in_cons = cons;
+diff --git a/Documentation/filesystems/overlayfs.rst b/Documentation/filesystems/overlayfs.rst
+index 137afeb3f581c..435aff7c52f65 100644
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -527,7 +527,8 @@ When decoding an overlay file handle, the following steps are followed:
+ 
+ 1. Find underlying layer by UUID and path type information.
+ 2. Decode the underlying filesystem file handle to underlying dentry.
+-3. For a lower file handle, lookup the handle in index directory by name.
++3. For a lower file handle, encode the decoded underlying inode again and
++   lookup that handle in index directory by name.
+ 4. If a whiteout is found in index, return ESTALE. This represents an
+    overlay object that was deleted after its file handle was encoded.
+ 5. For a non-directory, instantiate a disconnected overlay dentry from the
+diff --git a/fs/overlayfs/export.c b/fs/overlayfs/export.c
+index dd3e1969e6c87..d85456e3607b4 100644
+--- a/fs/overlayfs/export.c
++++ b/fs/overlayfs/export.c
+@@ -719,9 +719,9 @@ static struct dentry *ovl_lower_fh_to_d(struct super_block *sb,
+ 		}
+ 	}
+ 
+-	/* Then lookup indexed upper/whiteout by origin fh */
++	/* Then lookup indexed upper/whiteout by origin */
+ 	if (ofs->indexdir) {
+-		index = ovl_get_index_fh(ofs, fh);
++		index = ovl_get_index_origin(ofs, origin.dentry);
+ 		err = PTR_ERR(index);
+ 		if (IS_ERR(index)) {
+ 			index = NULL;
+diff --git a/fs/overlayfs/namei.c b/fs/overlayfs/namei.c
+index 11be07632d188..9b09697754f75 100644
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -655,14 +655,21 @@ int ovl_get_index_name(struct dentry *origin, struct qstr *name)
+ 	return err;
+ }
+ 
+-/* Lookup index by file handle for NFS export */
+-struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh)
++/*
++ * Lookup index by decoded origin for NFS export.
++ *
++ * The name of an index is the hex of the file handle that copy up encoded.
++ * The bytes of the handle to decode cannot be used as the name, because a
++ * lower fs may decode many handles to the same inode.  For example, it may
++ * ignore the fid type, extra fid bytes or a zero generation.
++ */
++struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin)
+ {
+ 	struct dentry *index;
+ 	struct qstr name;
+ 	int err;
+ 
+-	err = ovl_get_index_name_fh(fh, &name);
++	err = ovl_get_index_name(origin, &name);
+ 	if (err)
+ 		return ERR_PTR(err);
+ 
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index c149329d71e78..3d2e45d885df7 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -415,7 +415,7 @@ int ovl_verify_set_fh(struct ovl_fs *ofs, struct dentry *dentry,
+ struct dentry *ovl_index_upper(struct ovl_fs *ofs, struct dentry *index);
+ int ovl_verify_index(struct ovl_fs *ofs, struct dentry *index);
+ int ovl_get_index_name(struct dentry *origin, struct qstr *name);
+-struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh);
++struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin);
+ struct dentry *ovl_lookup_index(struct ovl_fs *ofs, struct dentry *upper,
+ 				struct dentry *origin, bool verify);
+ int ovl_path_next(int idx, struct dentry *dentry, struct path *path);
 -- 
 2.53.0
 
