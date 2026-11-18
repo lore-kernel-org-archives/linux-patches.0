@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029760;
-	b=ZPzmA1eDajg4e3e3EyxwzlMTwzNZ1mHwPoFaeuWSBWgyjwm+fouCUSVky07OCzVRwdPU
-	 PLpp7oCm4th5bEkVB9ilWwZv2TtJLrM58PEhWMm0ZQYEVInFTiY5MroDZlIVxTBm22SQE
-	 KmnE20mt5H7n0upsbA4YM4D5lhH1ww3BfJ7S9qn7TWYCAJFvvyq/3UgkM2KDwzTuNdhkF
-	 YhXZQHO0B5OXKRxslb+a8mx6gll5B3+vEy6SgVvom7zP21zYG5ArLYdRKdt8v4j5fdGEn
-	 2lYIOA2LK27pfVUlTq7scWYtsG/ieLbEK9wwCUvxb+tJCEZ/XgUyp4EhefNPpvmi8/g==
+	t=1795029762;
+	b=j8UllI4iq+6Gk0T8OHsFY5V6DOn+/UPOP1PSdAnbTYxBbr7hkDjXMHx1KlGbQMnP5aqF
+	 7Pl35b7Ct3IGWRZrOW8gzNU26W5tn7hBL7j9u90yYV4a5lxv7NcpMFQeo/sQbV3sm9K0F
+	 W8d54o9R4uLtJgC9aKUKm/YRboC9otDmJTowNY4f6YwiqXiEH4HUHARVhUO/cY75MKunF
+	 +HWLYJtfFgCBWRY5ZfQJspUhsk9xD1FzOfjmp49nAbAVOYs8Ud8Hcr8Bnrg4ghnFENBSc
+	 7fel/GjkXa+eU1/wRlbhcZ6OqCMUjzCxsGqXhK2sIdLBZshakHBIRcQpcsAbeFyxrzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029762;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N8LcoZKham6AS+2uaV+r6nLIs8mu2VJIy8PmhKr5aj8=;
-	b=rUe4n89L44s7oHPTxIWQlBSZOczRiZRAckaEMwZoTKI3R4al7YUL0XUeJ7yJZdEXaqLE
-	 3ZycjRX3l1N70nh/AxuyxY2FtRVizR8AdYK8C9o1SF1pk3qSMu7iO3UQ28Va5DLGhyEl7
-	 nb3fPRjNC5Z1Spod+KKGUzI4nPdZv+BIB0gGhYPOLtcUv2o6oEuRB1Qp+Y6hneGVcW6+Z
-	 Tn1J9EAnwXa8xuL/k0dus2Baa3xTlfaIINb0S+jF7Dg3R+jBMmVPf1db98qyhXA/YTgb6
-	 BmehQnLxn6XtlN1fhOos89BkH0iKJl9vqtYHWQa26AE1J+Pcx3GwHvyF1DZwqMiqNqw==
+	bh=fZbsfdzZDL7X81vsACB2LkOSr5QtLGlSEeIQhzQdvK0=;
+	b=Ojt3WG4bs1FmtshWHvii1OwZkw/DJSSeJ0t9dbXlIFhOOw4N3wkec6K+x8YDm8lZSiQd
+	 qx9NyUgUNMZquG/OEu9rwQbV4v3xckRQwyQ1EpEx7T6q8WcNdrLeDhp68QSlQ3mYswp1k
+	 A+3s1CWmWw+GXTerzUOLAgx4MvUdOIcfEXH2ZhRkl0nE5mPJiGRU4kQYbSJ96N3kRw/cL
+	 fNPIolaPot7ULnp9PyNzZPVayswB4791uUzQK0eREdbShFF+aKqFEtFu1IwreTKKmXQY7
+	 zZB7nicyb8b0/pAwNa8bzKVCxIpf/gA0amQAhoN/8ETUwPv8FPgYDmlMv1l9PeoKvUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PxU7TZvk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaQAFkms;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD20606A339;
-	Wed, 18 Nov 2026 19:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB85F606A334;
+	Wed, 18 Nov 2026 19:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PxU7TZvk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7664A1F000D3;
-	Wed, 18 Nov 2026 19:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YaQAFkms
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4929A1F000CC;
+	Wed, 18 Nov 2026 19:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029760;
-	bh=N8LcoZKham6AS+2uaV+r6nLIs8mu2VJIy8PmhKr5aj8=;
+	s=korg; t=1795029762;
+	bh=fZbsfdzZDL7X81vsACB2LkOSr5QtLGlSEeIQhzQdvK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PxU7TZvkBCCnaC4AL3WhdiQ8K4U6wy6CynmUXvkQlcJ/lGuP1fK7LtPloYlX4VBEt
-	 ACYxTx2cFWaRHfMQHmz85TPyZnz2isPT1RRuJB9/1RMYY397I9JR64kJ1ZZLohbVUk
-	 YAnzCm0dcpSYT9urOfX0D4t07ttONC/x48Ok4h+A=
+	b=YaQAFkmsckJ4xugeIu77mD8FhhM210pND9FWzX3I480GhrngDDckf+jdFr/wQ6lFO
+	 KTgrZKcql1iK6L0jwTxF/ArqOaqcpsquKtKh/oxZGgemXGkB9v/mMHl2ytuuaeNLFe
+	 7XutuXPbwH6Mpq/7xvbffxz7IEaKRDqsuUIeCCf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0462/1756] interconnect: qcom: use 64-bit SMD RPM bus votes
-Date: Wed, 18 Nov 2026 15:43:09 +0100
-Message-ID: <20261118150027.164989265@linuxfoundation.org>
+Subject: [PATCH 6.12 0463/1756] RDMA/core: Fix swapped list_add_tail() arguments in ib_add_sub_device()
+Date: Wed, 18 Nov 2026 15:43:10 +0100
+Message-ID: <20261118150027.202569301@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,82 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 24e7422ce31189502d07279c083646aaca513311 ]
+[ Upstream commit fad7b0dcb0821c0f201df3d85065145857a6f55b ]
 
-SMD RPM bus bandwidth requests carry a 64-bit bandwidth value.
-The interconnect proxy declared the KVP payload as u32, truncating
-votes above 4 GiB/s and advertising the wrong payload size to RPM.
+ib_add_sub_device() links a new sub-device into its parent's sub-device
+list with:
 
-Use a little-endian 64-bit payload and accept a u64 value in the proxy
-API. This has always been the right behavior, even on msm-3.10 and
-32-bit SoCs.
+	list_add_tail(&parent->subdev_list_head, &sub->subdev_list);
 
-Fixes: be06f8e7425d ("interconnect: qcom: Add interconnect RPM over SMD driver")
-Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260904-topic-icc_rpm_64b_req-v1-1-37e24f1991a3@oss.qualcomm.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+list_add_tail(new, head) expects the node to insert as the first
+argument and the list head as the second, so the call above does the
+opposite of what was intended: it treats the parent's list head as the
+new node and the sub-device's node as the list head.
+
+Because _ib_alloc_device() initialises subdev_list to a self-referencing
+empty head, the misplaced insertion does not crash, but it corrupts the
+parent->subdev_list_head list.  After adding two or more sub-devices,
+only the last one is reachable through the parent's head, and
+ib_del_sub_device_and_put()'s list_del() on &sub->subdev_list rewrites
+the head pointers, potentially severing earlier sub-devices from the
+chain.  During parent teardown, the reverse iteration over
+subdev_list_head then skips the orphaned sub-devices, so their
+del_sub_dev() callbacks are never invoked and ib_device_put() on the
+parent is never paired, leaking both the HW sub-devices and a refcount.
+
+Swap the arguments to match the documented intent: insert the
+sub-device node into the parent's list head.
+
+Fixes: bca51197620a ("RDMA/core: Support IB sub device with type "SMI"")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260916064435.2180-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/icc-rpm.h | 4 ++--
- drivers/interconnect/qcom/smd-rpm.c | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/core/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index f4883d43eae4d..9b1602b2d5c59 100644
---- a/drivers/interconnect/qcom/icc-rpm.h
-+++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -30,7 +30,7 @@ enum qcom_icc_type {
-  * @resource_type: RPM resource type of the clock resource
-  * @clock_id: index of the clock resource of a specific resource type
-  * @branch: whether the resource represents a branch clock
--*/
-+ */
- struct rpm_clk_resource {
- 	u32 resource_type;
- 	u32 clock_id;
-@@ -164,7 +164,7 @@ int qnoc_probe(struct platform_device *pdev);
- void qnoc_remove(struct platform_device *pdev);
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index d927270bab47c..bc9044f9978a9 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2846,7 +2846,7 @@ int ib_add_sub_device(struct ib_device *parent,
+ 	sub->parent = parent;
  
- bool qcom_icc_rpm_smd_available(void);
--int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val);
-+int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u64 val);
- int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int ctx, u32 rate);
+ 	mutex_lock(&parent->subdev_lock);
+-	list_add_tail(&parent->subdev_list_head, &sub->subdev_list);
++	list_add_tail(&sub->subdev_list, &parent->subdev_list_head);
+ 	mutex_unlock(&parent->subdev_lock);
  
- #endif
-diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
-index 3816bfb4e2f39..f48d904dde195 100644
---- a/drivers/interconnect/qcom/smd-rpm.c
-+++ b/drivers/interconnect/qcom/smd-rpm.c
-@@ -21,7 +21,7 @@ static struct qcom_smd_rpm *icc_smd_rpm;
- struct icc_rpm_smd_req {
- 	__le32 key;
- 	__le32 nbytes;
--	__le32 value;
-+	__le64 value;
- };
- 
- bool qcom_icc_rpm_smd_available(void)
-@@ -30,12 +30,12 @@ bool qcom_icc_rpm_smd_available(void)
- }
- EXPORT_SYMBOL_GPL(qcom_icc_rpm_smd_available);
- 
--int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val)
-+int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u64 val)
- {
- 	struct icc_rpm_smd_req req = {
- 		.key = cpu_to_le32(RPM_KEY_BW),
--		.nbytes = cpu_to_le32(sizeof(u32)),
--		.value = cpu_to_le32(val),
-+		.nbytes = cpu_to_le32(sizeof(u64)),
-+		.value = cpu_to_le64(val),
- 	};
- 
- 	return qcom_rpm_smd_write(icc_smd_rpm, ctx, rsc_type, id, &req,
+ 	return ret;
 -- 
 2.53.0
 
