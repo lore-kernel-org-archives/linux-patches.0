@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061235;
-	b=sf3QlFZq299IrXP3E2AZ9BA9frR1EkDf5/1lGX6zzwjCI33zUpL4adlWWJD+wl2HxHIf
-	 vytsEuR1HwdrLUmBvyY1iElv0y2jFnus8qjTW9GrqNT5qISmrabowcTRZJzIGQM+t9jV5
-	 f0rqQaq1hRe7Fx/CUqetjfZi98y1bl5+m1dgpYkL+x19iJLsorMHgSdzF/EwLMXLDyDb3
-	 +8xzeSzVg8XQQhfEAZyhcooZ9fL5OfIZd+r3sxoSv6/i7W0lzVL7q3relqMtJydQwrpeq
-	 JutDIwMkceH8Hnk3uOSOR1He3PUk3waFTV8M+wWkqc5GO34XlTbPu6elgRvJB1gjs8Q==
+	t=1795061238;
+	b=WXtX/Ng893dmxGg8GEcDXDoriGr5kWhM7lyhh+K5YLp6GiOATxxMpwfko3Frq9aNZkwB
+	 vGhC2/fUEibvxUAql9kjS99CEyYkJ6WKQo0u9v/wNGSJtBbH/LxTcG6HJC6ZhEa4ENCps
+	 KoMdyjV0xfuGc+M73nn9vKwmekIk5Af0XXDtrLaMvzEb5pNz70yErqZdSlt5fbT9zUNGr
+	 hepovh/BSS/hOzcEb/Xb8ennw2lz3XU9NUdh4nQYoafELjnKjw/37+S0+t4yrScVcfbD+
+	 Y02GmahFBhqrPotcfJiqg4JZTtd4ONGcQUlU4rjkiLBOhJxrAp2W7t3r7kYGOiNS7+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UFLDdKTgPH8YxjY9d8MKULo5UUvBi4xjYNqTc+YuDEE=;
-	b=lmabv5+bHqBTBxBH1/+dEP6fWRedK1Wob6Ado36wfwU7N9gK54QV8fR7SqOROCo5Jjaf
-	 Map/0+iUArt4VznzxokDc5iI7YuN2lpuBxQsaRJFjL7AoFM9X6w6ngv1FK96S47LMVgtM
-	 +Vke+RkShnVbWe6ujCSVEK6w80aXkOF8vTVmeG7IbOkWYlA0/Hsh1V4fpA+35PRRbePKi
-	 8XaDV1cm7sXsH+36fLPPsTj1X9UQS0Mgzgk7wdQ66udnJbWXRUO7k/DQtMzjYxZIii78u
-	 oeKp3mA9T3JcYOOYeZYlKBM/5kFgd97g9Pfti0vfRLXNJwVl33uNgcmQtO9Y7JIjGUQ==
+	bh=HMLgIhpnGtZynKRCtKUnwvcADPYNMcOLroot7WGYKAg=;
+	b=sjXshyzOW1lksGyywIBgRcLtXum39ch6oHDGQX7t/GJnycfmRT8IL//oMiUq5cWeQQg3
+	 VCXhnHHP3GRx1dQ/Bzuax9iSt8GQAjheFqXL7lZvraDB5pgPZ9ZgvThIgsO4VW2j+v3SG
+	 HW7M6Gn4yXJn2tkVRdq+dzSuZNVokQ1u1K0SVyFjcL8H5FH1MCuZ7qaT6efiO+YUQYZEl
+	 HdkbLNkvo/dhYqnr+mtWq/ExR+ff8DUHcFqwZy52V9oViWyPl7HSssPigqI9/QUUqq/2R
+	 oK62RB+SQsKB3IcK8oe7jP7uEcRJFtdtZCv9MXtBiKl6ZyNynFOV3KuHOug8aAB2BFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i2eGY2Ph;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTbyfjgQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB56D606A320;
-	Thu, 19 Nov 2026 04:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9399606A325;
+	Thu, 19 Nov 2026 04:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i2eGY2Ph
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA591F000C4;
-	Thu, 19 Nov 2026 04:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xTbyfjgQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141151F000C4;
+	Thu, 19 Nov 2026 04:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061235;
-	bh=UFLDdKTgPH8YxjY9d8MKULo5UUvBi4xjYNqTc+YuDEE=;
+	s=korg; t=1795061238;
+	bh=HMLgIhpnGtZynKRCtKUnwvcADPYNMcOLroot7WGYKAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i2eGY2Ph5RLUiy2joWGGgce0Ddx63bR3Vahs39HVlqcD4TyF63qio8CQNPFMuE9g3
-	 AUtKp5EuxSQmS5K3XOMyZPveIn/HiYy1QIeIT+MqRbLaDTr3Lyw/PhENYSpzkwoCy8
-	 DL8gcKDgmqL3GFcih7nlVzefpNgFbIsVYSGtwyhU=
+	b=xTbyfjgQyA7UnIhyP4qUeQNYuEd6S6BOpvu+d9o9kFG2DUL0kFAv8Gnq74bXwkdFI
+	 QRbvlR68JH97tsDjEd+3ndwlOqKxRo1wl5RskN2zZdp5NhN+gJjGb34OW9Vo+TYmlP
+	 KMIdSXuC7aNmUHA6+zWOzftRlkTN+weOLIc3wsGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
+	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1463/1848] power: supply: ab8500_charger: Handle detection errors
-Date: Wed, 18 Nov 2026 15:58:21 +0100
-Message-ID: <20261118150020.593130591@linuxfoundation.org>
+Subject: [PATCH 5.10 1481/1848] dmaengine: ste_dma40: Fix failed start cleanup
+Date: Wed, 18 Nov 2026 15:58:39 +0100
+Message-ID: <20261118150021.273459743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,53 +72,117 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
+[ Upstream commit 8175ead5727173d4b96d1e830e696765d75ade71 ]
 
-ab8500_charger_detect_chargers() returns either a charger bitmask or
-a negative register-access error. The probe and component-bind paths
-use a negative return value as a bitmask, making failed reads appear
-as both AC and USB connections.
+If d40_start() fails after a queued descriptor has been moved to the
+active list, d40_queue_start() currently returns NULL without unwinding
+the transfer state or clearing the channel busy flag.
 
-Propagate detection errors and release the bind-time workqueue on
-failure.
+Fix this pre-existing error path by completing the descriptor through the
+normal tasklet path, clearing the busy flag, balancing the runtime PM
+reference and returning an error pointer to distinguish the failure from
+the no-work case. Do not free the descriptor directly, since it has
+already been submitted and has a DMA cookie.
 
-Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
+When starting the next queued transfer from the completion handler, put
+the completed descriptor on the done list first. This preserves FIFO
+completion order if the new transfer fails to start and prevents the
+completed cookie from moving backwards.
+
+Use done-list membership rather than the cyclic flag to identify terminal
+descriptors in the tasklet. A cyclic descriptor that failed to start is
+then completed and removed instead of remaining permanently at the head
+of the done list.
+
+Fixes: 7d83a854a1a4 ("dma40: remove "hardware link with previous jobs" code")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Assisted-by: LLM
+Link: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-4-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/ste_dma40.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 515483d1b93ae..35612287c821a 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3330,6 +3330,10 @@ static int ab8500_charger_bind(struct device *dev)
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 5efc4ee2f242f..4513cfdd66aca 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -1510,8 +1510,15 @@ static struct d40_desc *d40_queue_start(struct d40_chan *d40c)
+ 		/* Start dma job */
+ 		err = d40_start(d40c);
+ 
+-		if (err)
+-			return NULL;
++		if (err) {
++			d40_desc_remove(d40d);
++			d40_desc_done(d40c, d40d);
++			d40c->pending_tx++;
++			d40c->busy = false;
++			pm_runtime_put_autosuspend(d40c->base->dev);
++			tasklet_schedule(&d40c->tasklet);
++			return ERR_PTR(err);
++		}
  	}
  
- 	ch_stat = ab8500_charger_detect_chargers(di, false);
-+	if (ch_stat < 0) {
-+		destroy_workqueue(di->charger_wq);
-+		return ch_stat;
-+	}
+ 	return d40d;
+@@ -1555,15 +1562,15 @@ static void dma_tc_handle(struct d40_chan *d40c)
+ 			return;
+ 		}
  
- 	if (ch_stat & AC_PW_CONN) {
- 		if (is_ab8500(di->parent))
-@@ -3618,6 +3622,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
++		d40_desc_remove(d40d);
++		d40_desc_done(d40c, d40d);
++
+ 		if (d40_queue_start(d40c) == NULL) {
+ 			d40c->busy = false;
  
- 	/* Identify the connected charger types during startup */
- 	charger_status = ab8500_charger_detect_chargers(di, true);
-+	if (charger_status < 0) {
-+		ret = charger_status;
-+		goto remove_ab8500_bm;
-+	}
- 	if (charger_status & AC_PW_CONN) {
- 		di->ac.charger_connected = 1;
- 		di->ac_conn = true;
+ 			pm_runtime_mark_last_busy(d40c->base->dev);
+ 			pm_runtime_put_autosuspend(d40c->base->dev);
+ 		}
+-
+-		d40_desc_remove(d40d);
+-		d40_desc_done(d40c, d40d);
+ 	}
+ 
+ 	d40c->pending_tx++;
+@@ -1577,20 +1584,22 @@ static void dma_tasklet(struct tasklet_struct *t)
+ 	struct d40_desc *d40d;
+ 	unsigned long flags;
+ 	bool callback_active;
++	bool from_done;
+ 	struct dmaengine_desc_callback cb;
+ 
+ 	spin_lock_irqsave(&d40c->lock, flags);
+ 
+ 	/* Get first entry from the done list */
+ 	d40d = d40_first_done(d40c);
+-	if (d40d == NULL) {
++	from_done = !!d40d;
++	if (!from_done) {
+ 		/* Check if we have reached here for cyclic job */
+ 		d40d = d40_first_active_get(d40c);
+ 		if (d40d == NULL || !d40d->cyclic)
+ 			goto check_pending_tx;
+ 	}
+ 
+-	if (!d40d->cyclic)
++	if (from_done)
+ 		dma_cookie_complete(&d40d->txd);
+ 
+ 	/*
+@@ -1606,7 +1615,7 @@ static void dma_tasklet(struct tasklet_struct *t)
+ 	callback_active = !!(d40d->txd.flags & DMA_PREP_INTERRUPT);
+ 	dmaengine_desc_get_callback(&d40d->txd, &cb);
+ 
+-	if (!d40d->cyclic) {
++	if (from_done) {
+ 		if (async_tx_test_ack(&d40d->txd)) {
+ 			d40_desc_remove(d40d);
+ 			d40_desc_free(d40c, d40d);
 -- 
 2.53.0
 
