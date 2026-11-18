@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025960;
-	b=pFSexQ7C+u1BQGs6gQeWbqjTCkUCE6z5wLpE5jOO5EioxcmGeIPvCrVlR2tCxedeqYyQ
-	 Op/+2TlmdQx1d/+0LcU+xGeVYFwIEFgSP2fD5mYbCPiT/IppYxu7M3ljSaKsuo3jsE1G4
-	 Dy3mB3bgUedWOnxhXNU8+pbGLIfQO11NLzGtWBT8xIBeJYl4HJtN673CiCJI+jixqEf0x
-	 6LxHhVdE+wj7wWLMk2DCdkVi2bEoJPhnsd7mKfhNyhHqJb2XzNVPilOo4BNQ3DFXQ9Mhj
-	 17SHbwPm8hKFMZ7uWlE7BC5UBauCZWNPm6aF44/Iw5I34lEVhcSs0RgFvvW5X1KLw7w==
+	t=1795025964;
+	b=HzMZNsTQ8KjuStaA/eYPL22EWlL3ybjS05U2hR1v4MAqGXH3x/w1msXmwVqiPs1Lt7ZR
+	 sAvM//nQt4Ixqty0AyL0C7HIdo0MJwqT8m2qxU7tuEceCit60Zk6DoOaeMRvqZVfrmgPb
+	 f/QfzqeNOEnmCSkhAQju0gYnf9qKWpdnUigNVgzqrm8SAD5okz8TZW0I4/J+GEeJYK5lc
+	 In+4dY6COxIWRPPKZK3McXUcTuYOfCySWamL71U8v/w0C2z0fihM4sdgonQu7IKeWD7o+
+	 2VKf/5qcLUBCxByYX8oCafzhJUsOdk0GW0LPED80ZqjM17271abJy5EBaNKxPJVQARA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7N5nAPh48RkRbBZNNlWPIlVJokI1bh9D+OuJntonMg8=;
-	b=afSiSDPP5W51vjw3sFbbyOF9ByisfyRASiR2g5hxKKKLW/GKaggK+vvVSPuydXopb6aN
-	 PWUWq1ypPpVeo7nfEDgS9nJs0yAncb8XwkdAjAFxWb0qmf5qrXk+RYhA4YGTrvNLhA/5Q
-	 6My82prwTftMLDiQL04GsRPevKpxm+2SQtKVcBBdocWJDyPA5E/QZnrDDqE+fHGlOr4HB
-	 rjl7xakidyOlpn86I5rsxiGiJg8SE8emKC3/+oUypKmXpEUzzSOaZA14XN5wnChxWZn8O
-	 08bDBRJTXbSe5IJWKUDz0sQadrX9KecGksTCOKbp2dGf6fxhBH2cfNTfQ1oLxy358wA==
+	bh=QuXHVat0zPl1wFELaSjAjRusurCMERxIT5fbZ+KkS8s=;
+	b=DkakB9eelxZC0vfj74Lf0FaEzkFqulopu1Unyj69MXEvWd2QoJiLIAcXENN9oxx3eGUi
+	 d14esJXzZYVkblVmh1BJYt9bNfYLnlyFH1PsO5/zN7HadCrRk5DuQJ3HgBgZdQqrmre9t
+	 tkKIy4JUkgPrnZmssu0z6wHeAFR3s+BcI8aGSJ2dZGrqmmdbRLqIsLs0DQUWJfJKJzQ5Z
+	 n+rHOwxk+9bB9xWThF/rWlVzcDNAXenuuPgldkOeiZFtgMwkZEmSkdV2PhIo0zjsDu0pc
+	 kEDwiYrOeUoX083JJ7MHmAnatXtBGb9mypNns1qKBXFKopBjVAsC5y/AudILFkDnREA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdhqgVma;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g/3VP4lh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5102606A32A;
-	Wed, 18 Nov 2026 18:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4B9606A320;
+	Wed, 18 Nov 2026 18:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wdhqgVma
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC3E1F000C4;
-	Wed, 18 Nov 2026 18:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g/3VP4lh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5381F000C4;
+	Wed, 18 Nov 2026 18:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025960;
-	bh=7N5nAPh48RkRbBZNNlWPIlVJokI1bh9D+OuJntonMg8=;
+	s=korg; t=1795025963;
+	bh=QuXHVat0zPl1wFELaSjAjRusurCMERxIT5fbZ+KkS8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wdhqgVmaDdKujBq6KXyrljGFLUjPtCH8DF9x/2rPkPA5Bv+vqR9y+yxBbU5Dmvvov
-	 71eaW3QXhMD3o4+Dob5SCyy8qtjXlUe2IER3woN3cI5kVofRgs1NXIyBUj8yCxIdwO
-	 i4arozXMhaLxu9x75Gnu3udiA+Kg4tIXyBiK/qGk=
+	b=g/3VP4lhBxcJOsYdQo2KQUGgkbpXW8IxHEQ5T/nIJucUuoN+7RulIJFjXSPPRLHNY
+	 w1HxnWM3Woyjt1YJbL78RiiYWlVTJ5MJ+vlK4crsH7mTYdGQm8OJ5rQPVEBboOLzhO
+	 Ivc1p1CSwSdevEBBgrceuuU8PfFmXV8AQ1qTDGco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1265/2151] ALSA: hda: Avoid non-operational GPU warning at regular device removal
-Date: Wed, 18 Nov 2026 15:50:00 +0100
-Message-ID: <20261118150208.226052523@linuxfoundation.org>
+Subject: [PATCH 6.18 1266/2151] ALSA: hda/intel: Move firmware loading into the probe work
+Date: Wed, 18 Nov 2026 15:50:01 +0100
+Message-ID: <20261118150208.261014343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,48 +69,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3af4ed9f927c469f23d03a76e3b438ed09715bd3 ]
+[ Upstream commit eb90ae3cca783ebec65704597027811431465de4 ]
 
-When a hda-intel driver is removed manually and it has a GPU with
-switcheroo, it always gives a warning like "GPU sound probed, but not
-operational:..." no matter whether GPU has been actually operational
-or not.  This warning was originally put for machines that really
-suffer from the non-operational GPU HDMI audio, but it's seen at the
-common path a normal device removal also goes over.
+The hda-intel driver uses request_firmware_nowait() for loading its
+patch, and tries to continue the probe directly from the fw loader
+callback.  This works in principle, but it has a few drawbacks:
 
-For avoiding a confusing warning, move the check and the warning at
-the error path of azx_probe_continue() that is the point where the
-non-functional GPU gets detected and given up.
+- The driver may be released before the firmware callback completes
+- Having two ways of async probe makes the code flow unnecessarily
+  complex
 
-Fixes: 2b360ba9a493 ("ALSA: hda: intel: Fix Optimus when GPU has no sound")
+The former issue is more severe, as it may potentially lead to a UAF,
+and there is no explicit way to cancel the pending firmware worker
+for now.
+
+This patch changes the firmware loading to be performed rather in the
+common probe work without *_nowait().  Then the pending work can be
+easily canceled, and the code becomes more straightforward.
+
+A nice bonus is that, by moving into the probe work, the firmware
+doesn't need any longer to be cached, hence we can get rid of struct
+azx.fw field, and release the firmware immediately after parsing it,
+too.
+
+Fixes: 5cb543dba986 ("ALSA: hda - Deferred probing with request_firmware_nowait()")
+Link: https://patch.msgid.link/20260415135526.1813126-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007171231.8147-1-tiwai@suse.de
+Stable-dep-of: 7e1ad3c55baa ("ALSA: hda: Don't free card at probe error in vga_switcheroo handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/controllers/intel.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/hda/common/hda_controller.h |  4 ---
+ sound/hda/controllers/intel.c     | 58 ++++++++-----------------------
+ 2 files changed, 15 insertions(+), 47 deletions(-)
 
+diff --git a/sound/hda/common/hda_controller.h b/sound/hda/common/hda_controller.h
+index c2d0109866e62..7434f38038a0b 100644
+--- a/sound/hda/common/hda_controller.h
++++ b/sound/hda/common/hda_controller.h
+@@ -127,10 +127,6 @@ struct azx {
+ 	unsigned int beep_mode;
+ 	bool ctl_dev_id;
+ 
+-#ifdef CONFIG_SND_HDA_PATCH_LOADER
+-	const struct firmware *fw;
+-#endif
+-
+ 	/* flags */
+ 	int bdl_pos_adj;
+ 	unsigned int running:1;
 diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index fd61dc8e21a53..45bdacb9a91ba 100644
+index 45bdacb9a91ba..c6e491298a859 100644
 --- a/sound/hda/controllers/intel.c
 +++ b/sound/hda/controllers/intel.c
-@@ -1366,7 +1366,6 @@ static void azx_free(struct azx *chip)
- 			 * actually stop the chip) to allow GPU to suspend via
- 			 * vga_switcheroo, and print a warning.
- 			 */
--			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
- 			pm_runtime_disable(&pci->dev);
- 			pm_runtime_set_suspended(&pci->dev);
- 			pm_runtime_enable(&pci->dev);
-@@ -2411,6 +2410,8 @@ static int azx_probe_continue(struct azx *chip)
- out_free:
- 	if (err < 0) {
- 		pci_set_drvdata(pci, NULL);
-+		if (hda->vga_switcheroo_registered)
-+			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
- 		snd_card_free(chip->card);
- 		return err;
+@@ -1385,9 +1385,6 @@ static void azx_free(struct azx *chip)
+ 	azx_free_streams(chip);
+ 	snd_hdac_bus_exit(bus);
+ 
+-#ifdef CONFIG_SND_HDA_PATCH_LOADER
+-	release_firmware(chip->fw);
+-#endif
+ 	display_power(chip, false);
+ 
+ 	if (chip->driver_caps & AZX_DCAPS_I915_COMPONENT)
+@@ -2037,24 +2034,6 @@ static int azx_first_init(struct azx *chip)
+ 	return 0;
+ }
+ 
+-#ifdef CONFIG_SND_HDA_PATCH_LOADER
+-/* callback from request_firmware_nowait() */
+-static void azx_firmware_cb(const struct firmware *fw, void *context)
+-{
+-	struct snd_card *card = context;
+-	struct azx *chip = card->private_data;
+-
+-	if (fw)
+-		chip->fw = fw;
+-	else
+-		dev_err(card->dev, "Cannot load firmware, continue without patching\n");
+-	if (!chip->disabled) {
+-		/* continue probing */
+-		azx_probe_continue(chip);
+-	}
+-}
+-#endif
+-
+ static int disable_msi_reset_irq(struct azx *chip)
+ {
+ 	struct hdac_bus *bus = azx_bus(chip);
+@@ -2118,7 +2097,6 @@ static int azx_probe(struct pci_dev *pci,
+ 	struct snd_card *card;
+ 	struct hda_intel *hda;
+ 	struct azx *chip;
+-	bool schedule_probe;
+ 	int dev;
+ 	int err;
+ 
+@@ -2223,22 +2201,7 @@ static int azx_probe(struct pci_dev *pci,
+ 		chip->disabled = true;
  	}
+ 
+-	schedule_probe = !chip->disabled;
+-
+-#ifdef CONFIG_SND_HDA_PATCH_LOADER
+-	if (patch[dev] && *patch[dev]) {
+-		dev_info(card->dev, "Applying patch firmware '%s'\n",
+-			 patch[dev]);
+-		err = request_firmware_nowait(THIS_MODULE, true, patch[dev],
+-					      &pci->dev, GFP_KERNEL, card,
+-					      azx_firmware_cb);
+-		if (err < 0)
+-			goto out_free;
+-		schedule_probe = false; /* continued in azx_firmware_cb() */
+-	}
+-#endif /* CONFIG_SND_HDA_PATCH_LOADER */
+-
+-	if (schedule_probe)
++	if (!chip->disabled)
+ 		schedule_delayed_work(&hda->probe_work, 0);
+ 
+ 	set_bit(dev, probed_devs);
+@@ -2367,11 +2330,20 @@ static int azx_probe_continue(struct azx *chip)
+ 	}
+ 
+ #ifdef CONFIG_SND_HDA_PATCH_LOADER
+-	if (chip->fw) {
+-		err = snd_hda_load_patch(&chip->bus, chip->fw->size,
+-					 chip->fw->data);
+-		if (err < 0)
+-			goto out_free;
++	if (patch[dev] && *patch[dev]) {
++		const struct firmware *fw = NULL;
++
++		dev_info(&pci->dev, "Applying patch firmware '%s'\n",
++			 patch[dev]);
++		if (request_firmware(&fw, patch[dev], &pci->dev) < 0) {
++			dev_err(&pci->dev,
++				"Cannot load firmware, continue without patching\n");
++		} else {
++			err = snd_hda_load_patch(&chip->bus, fw->size, fw->data);
++			release_firmware(fw);
++			if (err < 0)
++				goto out_free;
++		}
+ 	}
+ #endif
+ 
 -- 
 2.53.0
 
