@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034262;
-	b=WWQdpYwJL4eusBZNxwrLbfPIURdc8nPfzKGw2esbTv2PMGekg8tic60AVaYYZs+JUURJ
-	 Ksp87KTGYPqrwuOOcguK3aWnYXAgxyJVsJgRDwGVRYkjFmzy1Qod7ZBVcRLPa6fpgV0jJ
-	 3Cst7Yw6u43ailn9F8vxfba2IClaQbDsVzakdQVfSwOutq5DmQmq1NTGjxbQwxgxWLFqC
-	 7t7xJniyOTLR2iQCJyDvwo0CipueX+7nVpqJVUgJoXOQl4n/cNlm3KlfpU8a0lwkIn4TE
-	 DAoSmgEMsQMCnqBrXn7BdVy+roWhy3Di406UlKTklM06J5l+X8VEodJsUliLhsYzUgQ==
+	t=1795034264;
+	b=1vgJjYoxoasv6+07+YPmGoYFyUUqIAw9Dy8nmPbVY6bjOgHL1UW4tFNRnoEPfMED3DcF
+	 MO6Zd8toKifHWt3ustunIV8ii8yQ1dXJExathC5z9tRxDAgHXHt37vaJTI6DaMKO1gSyT
+	 KBrgCIGU/XsrfASWwcOiRNYT/P5mcDUg9DWo6jxrK+Dy6bd1gvNGB2MsJjRk6IiMkCJEO
+	 sMV5kycIWl1ctuisfLfOvCzOsetErKLz3zfaTdiQJdmQ5uG/k8dMgqC716J6hJcfCvuqB
+	 qRJKjitSfh2LnUq6VN1DCA6RxaAQRYLwZo0IxoPdxicSDdxq56Y21X7ZF2414L897UA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zJWKS/63M1j0hfyMZ9LYl4wz4wBOka2tnCunqZYOAhY=;
-	b=GzMEz8lx08NsKDNSF8dUPJDoSXU7KUoQ6YY5MWNtsHR4CPlY6A/BNcrfYGmpV68XESJf
-	 6FdxndWH/QkB/MF9N7ReatbkNlc7Yn0+oTEqUDI59QEIfukvMjHv5xFYyzrabNXouRWoo
-	 ZjklsC0ZVcs/X7HaSIu7qs/c54S9b+FoDRQNVUOCBhnCFVNwGrbqwpRq9i+XfLRFVrrzH
-	 ir4/zaCfO6Ccz38jtUbT9M7AW0xZ8oAGAmAovNLla2nQmgi0I3NEEQRoOPj25ZVpROtkb
-	 PsX45MfmCQLSFlTLtoegh1JaW3wbwTzafL2pARYKG9/StbwHwbiRowdqyQWUwSdomLg==
+	bh=cPkeWlNaOrbNe9dnmsSOwXTgMeNWx3Yguc3nN0vLE24=;
+	b=iB4htlvNacoBbeylJuKdzTtEidcot4N8Rfmjl5Aw4sXNAA9LNGSYMnbbQ1CMXNR+GNBg
+	 o07Qi2hoEd7XjFLcCzVIJ+RT+jzNjb0gaf9xQMTMZyaZ4cH88tedPsTKA6SdrWTFul2rW
+	 K/6XPj7LKzUliOYgkUcOn7MhUgpS4qPteJ2Zg7LOPQf7brWJq9TOiap4TmyNMAZWh+LNT
+	 NhnXipofklh7RDqS5ugqMb2kw8gr+lJOtH/O64hvfZxfC9sv4CRFkojuSlfFNZlsacMOi
+	 raWmdRUxhNFrWxiKrcDzGXl629AvjlNkfoFsj7SJIzl4YcZe8eDymEoEVvN2WyqqWVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6pSAF9n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+hgigGt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08AA606A32C;
-	Wed, 18 Nov 2026 20:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10EF606A325;
+	Wed, 18 Nov 2026 20:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S6pSAF9n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3431F000C4;
-	Wed, 18 Nov 2026 20:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l+hgigGt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C691F000C4;
+	Wed, 18 Nov 2026 20:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034261;
-	bh=zJWKS/63M1j0hfyMZ9LYl4wz4wBOka2tnCunqZYOAhY=;
+	s=korg; t=1795034264;
+	bh=cPkeWlNaOrbNe9dnmsSOwXTgMeNWx3Yguc3nN0vLE24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S6pSAF9n1I/1M4FVOSGyIvsN0mnMWfexS2cUyjjfWnkamCh2lTpcultmnGKpVpSgW
-	 LlhMEC4R4GORcxm/ze1T+SRHTNVXj6R3QmqFU8jM8SHxrB9rHMONqH1WrzM6N5A8YQ
-	 Gw3Tn/plVQfEhMh1QYXVcmLvRdzLbjsxZZcCXUaU=
+	b=l+hgigGtHcNzyfxBkFgBxuuuyVLarDlRjGsqOSd04Bk2c92OFzQ9sgMaWS9ivBhlG
+	 kYX8X/3idYutGf2pg9H5RPO5jxLWPXnEboUuT8wDVukjT4JDIWFOPzCZdgP6zvlG9h
+	 8cZDqAyYm3XwVIbysIoxT3XoSqqbEhlJdapC552s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@kernel.org>,
-	"Denis V. Lunev" <den@openvz.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0307/3318] virtio_balloon: warn on failed buffer add in tell_host()
-Date: Wed, 18 Nov 2026 15:15:29 +0100
-Message-ID: <20261118150324.987450884@linuxfoundation.org>
+Subject: [PATCH 6.6 0308/3318] rtc: ab-eoz9: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:15:30 +0100
+Message-ID: <20261118150325.024964683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,53 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 198eda395067b56ee605de076f0519620f4e5d90 ]
+[ Upstream commit 7490b8356e52e09c196645912f2c054f79aa5f3a ]
 
-tell_host() ignores the return value of virtqueue_add_outbuf() and goes
-on to kick the queue and wait_event() for the host's ack. The comment
-claims "We should always be able to add one buffer to an empty queue",
-but that does not hold once the virtqueue has been broken (e.g. on
-device shutdown): the add then fails with -EIO and the following
-wait_event() would block forever on a buffer the host can never return.
+The driver has a match table for the i2c bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Warn and bail out on failure, mirroring virtballoon_free_page_report().
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Suggested-by: David Hildenbrand <david@kernel.org>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260624140846.2616797-5-den@openvz.org>
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704152528.53258-1-pengpeng@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_balloon.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-ab-eoz9.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
-index b47db0e44eb52..34296c1c6bf1f 100644
---- a/drivers/virtio/virtio_balloon.c
-+++ b/drivers/virtio/virtio_balloon.c
-@@ -147,16 +147,18 @@ static void tell_host(struct virtio_balloon *vb, struct virtqueue *vq)
- {
- 	struct scatterlist sg;
- 	unsigned int len;
-+	int err;
+diff --git a/drivers/rtc/rtc-ab-eoz9.c b/drivers/rtc/rtc-ab-eoz9.c
+index 79d5ee7b818c5..5129a4c2fbfe1 100644
+--- a/drivers/rtc/rtc-ab-eoz9.c
++++ b/drivers/rtc/rtc-ab-eoz9.c
+@@ -571,6 +571,7 @@ static const struct i2c_device_id abeoz9_id[] = {
+ 	{ "abeoz9", 0 },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(i2c, abeoz9_id);
  
- 	sg_init_one(&sg, vb->pfns, sizeof(vb->pfns[0]) * vb->num_pfns);
- 
- 	/* We should always be able to add one buffer to an empty queue. */
--	virtqueue_add_outbuf(vq, &sg, 1, vb, GFP_KERNEL);
-+	err = virtqueue_add_outbuf(vq, &sg, 1, vb, GFP_KERNEL);
-+	if (WARN_ON_ONCE(err))
-+		return;
- 	virtqueue_kick(vq);
- 
- 	/* When host has read buffer, this completes via balloon_ack */
- 	wait_event(vb->acked, virtqueue_get_buf(vq, &len));
--
- }
- 
- static int virtballoon_free_page_report(struct page_reporting_dev_info *pr_dev_info,
+ static struct i2c_driver abeoz9_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
