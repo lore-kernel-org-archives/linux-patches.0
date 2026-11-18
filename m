@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040522;
-	b=ny061O3WTIqwRB6r/6ZSrXZ3BoTDb0J8wkUOL3PG7ABPr2qf2biL58PLXZu9Vn+u5XiB
-	 AvSZ00p2Yk8sA/i8+TASUWrRkfPN3YenllHfsrUYvf4Qgb5CbG7VjhJkZB6OUkn86DRtC
-	 E6BiDAXqlMf0wBdCcJKuYurr9SvMVgCfvYAzyptSnSGaix97fm4Jls2NMaShgw//ZlWHm
-	 2CjoeqgfneM7zrEYbSQZ7siTDWW9wsopUasURKkMn5ousEc0y/cyXfcZ9ZnSVJzawYn2h
-	 75oT/Dv26Ji63j6BOfPuFSyh7wd7MHesoPWruzh0QV10gqE8sv0DJqhWsCEhlEF4ieg==
+	t=1795040524;
+	b=jqrqh/nZGMg33Rba4UpWW0gOtR3ozlxiKu1JrhhF6MK/xkpHv1iUtIk/FW2OISbCyuCT
+	 OBt50nRmaq0ns2q/dl5APGEA1ZWMlwqSz9AFkZ/aRAUTjXcF16rbhh33pR7BVMeB2meaG
+	 UqGjpIG0+V4wpJ4e6gXRW/XcL237PIxO+Df8TheE7yM6GZNPZFRRUb1JS+SSy2J5r/L+U
+	 Zw5dYCH5gkLEcAiTNw83k/Kjx1W+h41Wc/9X3QeeXGd4mIGLuZmGKA69viI7wNN82nIou
+	 Y5vi2AWvCrbe+Yx9qlWlzV2rheghddQYpeSgWiys6dudMgF53ckD495rjQGZ0HYc8OQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040522;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040524;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xyPmYO9fdpz9A3+tIfOEhY7xzEa74t5L9QBsUxL+VTg=;
-	b=hsFm6spXmYtbQNSEwWpeSTXYCO8CeWC527OB4MeLXXlUWAtwOBhitoaVe2RZSX5ls0KB
-	 a8GxAVgm3863VTZhDSLvXAIJJFgkRb79CE0ByW1oV3Ho0iPDqfxb6EoPTziI9DgVtdkhm
-	 H8jPYp8MO0D9L9daAH6ERcac3OosVKkR2g7hwstlDowzknx3iNzLcZVQZIXBABvPCLvda
-	 AAl34ee3FNQ/witcioz0DoUsTmIe6J4ztJuzd4Xgj501Guy1/DbLESFqBcD/IoykOi8rv
-	 11ZInPQAaAKcCrqx2MIGhzADjVHDG8FgUpop1Zvy7/U6S05zQ1KHjK9ixW8Tel4CBfw==
+	bh=BytMfGAkfnIeL6apU9qwmmE0VHmKyLcGyirEDuBNjz8=;
+	b=lrvrbCTtBO9d0TVrhc1AF1lvaSMH2h+Hs+xYMXcCcBTDIZTnVMjBkDFOqj6bNcZkC/Qk
+	 YzAQxXF9/ysohmu5muja4G1KmwDLOoAdLTnkKxi8jbSx7UpIasoNUflV4u3Ewwwt2cYX6
+	 47Cvuavskcqu5qDBD+U0YHtbrDfvI/uNeGWJ4J0SreUO9EwIHIepI1OrSTG3vReAd4nMX
+	 4sOamX0iII5q/plO4TmGEPKiTKHUD5xx3V7j2jlOEgfB2ac//YeGcIJfdeNRWTwe/jIjg
+	 rrukj4tDdnOfy6aRTMX2APE1hALgyykTlp3AHRKneDFL1F/oiIHHWBGkJAdDtvFdZ9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RpN4+XKh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LAd2BLis;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02353606A31C;
-	Wed, 18 Nov 2026 22:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9872606A320;
+	Wed, 18 Nov 2026 22:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RpN4+XKh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575C11F000C4;
-	Wed, 18 Nov 2026 22:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LAd2BLis
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E881F000C5;
+	Wed, 18 Nov 2026 22:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040521;
-	bh=xyPmYO9fdpz9A3+tIfOEhY7xzEa74t5L9QBsUxL+VTg=;
+	s=korg; t=1795040524;
+	bh=BytMfGAkfnIeL6apU9qwmmE0VHmKyLcGyirEDuBNjz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RpN4+XKhOFPuW0vDCUuJQlrYSDXLIRyEpcV1iyY5kys96+xlxew/ldNRv80VpGual
-	 6cbeJan0kwRj8hzbIkFvPxwXTrwKROzCHBbPfJjdODEnG3YJXud+upBTIVjp/XzOYS
-	 Gv+kU9OQDvrJJwKdCUwwV/f/4X27Y2FXwmLZgb1w=
+	b=LAd2BLissJgOso2ujuqQBBYVKCK/2GYHYVoQi63xH1WST7dqUDqTZlF8d6USP7Uha
+	 kSQXBGfCgUkgtvXDXSPwIU/oZqSoTK6lyB+gLuA5/wgmxjevTv9v0Ogn7Ryax9Ygy4
+	 7YTOLYnAuyBB1tIvm2WNNqoHwInauUTZ9cAoNBw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Lucas Costa <2000.costalucas@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2450/3318] RDMA/bnxt_re: Fix the PD and DPI table size
-Date: Wed, 18 Nov 2026 15:51:12 +0100
-Message-ID: <20261118150434.945501306@linuxfoundation.org>
+Subject: [PATCH 6.6 2486/3318] staging: sm750fb: free cmap on framebuffer release
+Date: Wed, 18 Nov 2026 15:51:48 +0100
+Message-ID: <20261118150435.978020425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,66 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Lucas Costa <2000.costalucas@gmail.com>
 
-[ Upstream commit aa6c2ef821a6ba7f3fd58cfcc031b2d16f3811c6 ]
+[ Upstream commit b7c885194b81a0376d1fdb457eac40d21d6fb65f ]
 
-The PD and DPI bitmaps were sized as max >> 3 (bytes),
-but bitmap ops (set_bit(), clear_bit(), find_first_bit(),
-test_and_set_bit()) operate on whole unsigned long words,
-so whenever max isn't a multiple of BITS_PER_LONG,
-the buffer under-allocates and the top word's bitops
-read/write past the end of the kmalloc()'d buffer.
-Most exposed on the DPI table, since dpit->max comes from the
-firmware-reported dev_attr->max_dpi with no alignment guarantee.
+The cmap is allocated by lynxfb_set_fbinfo() but never freed, so it is
+leaked when the framebuffer is torn down.  This happens on every unbind,
+and on the register_framebuffer() error path in
+sm750fb_framebuffer_alloc().
 
-Fix the size of both allocations with
-BITS_TO_LONGS(max) * sizeof(unsigned long).
+Add a lynxfb_unset_fbinfo() cleanup counterpart to lynxfb_set_fbinfo()
+which deallocates the cmap, and call it on teardown.  In the alloc error
+path it is only called once lynxfb_set_fbinfo() has succeeded, so the
+cmap is only freed when it was actually allocated.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 81dee67e215b ("staging: sm750fb: add sm750 to staging")
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Lucas Costa <2000.costalucas@gmail.com>
+Link: https://patch.msgid.link/20260922142851.46724-1-2000.costalucas@gmail.com
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/staging/sm750fb/sm750.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index c360f70f1c8b9..ef1dcb60a9446 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -45,6 +45,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/if_vlan.h>
- #include <linux/vmalloc.h>
-+#include <linux/bitops.h>
- #include <rdma/ib_verbs.h>
- #include <rdma/iter.h>
+diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
+index c2202bab0ce54..c947af9beb9e1 100644
+--- a/drivers/staging/sm750fb/sm750.c
++++ b/drivers/staging/sm750fb/sm750.c
+@@ -867,6 +867,11 @@ static int lynxfb_set_fbinfo(struct fb_info *info, int index)
+ 	return ret;
+ }
  
-@@ -684,9 +685,9 @@ static int bnxt_qplib_alloc_pd_tbl(struct bnxt_qplib_res *res,
++static void lynxfb_unset_fbinfo(struct fb_info *info)
++{
++	fb_dealloc_cmap(&info->cmap);
++}
++
+ /*	chip specific g_option configuration routine */
+ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
  {
- 	u32 bytes;
+@@ -953,6 +958,7 @@ static void sm750fb_framebuffer_release(struct sm750_dev *sm750_dev)
+ 	while (sm750_dev->fb_count) {
+ 		fb_info = sm750_dev->fbinfo[sm750_dev->fb_count - 1];
+ 		unregister_framebuffer(fb_info);
++		lynxfb_unset_fbinfo(fb_info);
+ 		framebuffer_release(fb_info);
+ 		sm750_dev->fb_count--;
+ 	}
+@@ -979,12 +985,14 @@ static int sm750fb_framebuffer_alloc(struct sm750_dev *sm750_dev, int fbidx)
  
--	bytes = max >> 3;
-+	bytes = BITS_TO_LONGS(max) * sizeof(unsigned long);
- 	if (!bytes)
--		bytes = 1;
-+		bytes = sizeof(unsigned long);
- 	pdt->tbl = kmalloc(bytes, GFP_KERNEL);
- 	if (!pdt->tbl)
- 		return -ENOMEM;
-@@ -821,9 +822,9 @@ static int bnxt_qplib_alloc_dpi_tbl(struct bnxt_qplib_res *res,
- 	if (!dpit->app_tbl)
- 		return -ENOMEM;
+ 	err = register_framebuffer(fb_info);
+ 	if (err < 0)
+-		goto release_fb;
++		goto unset_fb;
  
--	bytes = dpit->max >> 3;
-+	bytes = BITS_TO_LONGS(dpit->max) * sizeof(unsigned long);
- 	if (!bytes)
--		bytes = 1;
-+		bytes = sizeof(unsigned long);
+ 	sm750_dev->fb_count++;
  
- 	dpit->tbl = kmalloc(bytes, GFP_KERNEL);
- 	if (!dpit->tbl) {
+ 	return 0;
+ 
++unset_fb:
++	lynxfb_unset_fbinfo(fb_info);
+ release_fb:
+ 	framebuffer_release(fb_info);
+ 	return err;
 -- 
 2.53.0
 
