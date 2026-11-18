@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017485;
-	b=lZCKkcUtiyHhFTVVpY4mIPqR6dtqUUTuqVOVinnuC5v/QBMZgjHnyNYbhzFkcGOlclS7
-	 xCtel8VdNSubWQp8MxxfpShywpNN5mwCmsYJu0/F4k/YHFIzh8up07WIRp39xwFExdDCH
-	 ban9JRU9lWBkg2SL1vf88S8YITEKkW2/QG3vIvXrzhw4u5MGp2zjqrrNmVVtaWyfQw0pm
-	 UAl/tEV7lEGqrKVKkH4+IHpVhZrH9xIGmHlok59y8NHm7CEJ5FiUi/xv2dL2fsDsr8GIC
-	 cfbzSharamdkcu3kBX5LJe4zwkfPaQGI3V+a3mUFRZxh7SeUrc6zwR5E+v+XFShYbUw==
+	t=1795017488;
+	b=z2zTYVllKP6H6DyoL4hbEV/pBH8vA5Q1vTzgaymJI/xoght35Ve1qczlZI9AV6PSQutN
+	 m7jQ6OZ/ZwALKcxBHjTa4mvLr7PhbyAQcFwAm/Zw27b7IjkAhFfFvQ28HbhXhR6JANU46
+	 IUTb4WJE4tjBJcwzBlWGZJkkE/PzC7WnAbkJzXVVsTdydmDxpQbclwMAY0Rc3k0OQGNzj
+	 2jBscr+wcrC9dYua7bIysWb+QHDgAW/QrR5RbsEq3QpuoKNbaqto3pUFw0GkPROCS61Q3
+	 XBgzrYWIHfgRXZe+wAy1vYmNDILUkIC6LnvfaKDYJWzkkuUn33VIZrgToGbmvoqnPSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nFPFHww9dJLUwwbn/XH/JUHsmiNKL1ZDnf1Ptcxz1p8=;
-	b=ZCyDUYrrtgc04d9OwBlx0uUwfVr6F8/8xSVcMEpJamdndh8RyMZFUYSkxRYwg70eC+qR
-	 iyDM0yY1Nr8xBlawCYCMkRkJEcRt91RjNyiHoB3WxjzfRqRGdaD92eFP7iz7FtWSmHC0O
-	 H0yjg8hkEVMwTy9tfAdWgRGbB11ZjmOEwg2e2265VnBuxKtev34A+vX7tdu63OGqicb9o
-	 ctZiRmpr7fUECQuRC0AoE+U0QDHY8VFiM4eJZTU1Ro4C/PpA92k8eNQCIJMrB5KvkxNcb
-	 U2sRn6dsQrtcNKKflbB8r5mUQ7SAVgkY9W11GjGR67C86RIiK/CgXdTso3gDDny8O7Q==
+	bh=rPDnCPPFuZXZ9b4KLyfi41jW8FBVtCgSRCKZkVmfF/k=;
+	b=IeLhlWYhZvVxXkp6RcVKelws12YPTnWU2nB5jO3jekBcJsf2VBIjA0X1mN2Maqr+asmq
+	 DcP93AGwRrDA9tY/2K2ZJnJg9eRw5XbiYbnMg61zmUFGT5hgdk6tzvHthaMsbOBAJqgbK
+	 cD0CXRy6I1W9NNxHEiiqFUuREfsl+CHmEFxPQCK6kbAXxgFdI/3Xx6KtCnsB7hPXHvhI+
+	 aQ7TUPXh+8xSvJXjA3RqCkb+E/GSsQgmMs8eXdohf+i9AH3Wr3TVkD5+R+gki7tPhY46x
+	 legwGsxfO/b+iyQVtdG3FdKNkUR33nGohGewgISgftU8zsTqk/1b94PGNH3dhEhdaVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xRkeTGrT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idNYcng9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982A2606A31C;
-	Wed, 18 Nov 2026 15:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2C8606A320;
+	Wed, 18 Nov 2026 15:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xRkeTGrT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B651F000C5;
-	Wed, 18 Nov 2026 15:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=idNYcng9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67151F000C5;
+	Wed, 18 Nov 2026 15:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017485;
-	bh=nFPFHww9dJLUwwbn/XH/JUHsmiNKL1ZDnf1Ptcxz1p8=;
+	s=korg; t=1795017488;
+	bh=rPDnCPPFuZXZ9b4KLyfi41jW8FBVtCgSRCKZkVmfF/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xRkeTGrT9v2L7PkgmEZHHnUQI1Mnkxg68DXgeX9CTsCsYcZqhiy7Zj1eVxznlm1X5
-	 0J9zZ4Zc0EtWU8vy9gXdQSNjNT0kPiN1hqf+Onn+UoFV1O+ifnoh6FExr+WAL//gmo
-	 VRCcITbJOhJZf4l16uUx0CKMbGpqFWXkzt9ZgElQ=
+	b=idNYcng9bC+qsEy+jHPC+YzgbWUm5SHVunJ0kSvUSIDD2As0Nj3iwSeN0LhyJtEpP
+	 DibssT2beY8a4wZH62rcaCwuOT6QehqgukT/ULZiuJZZhuQkgF8dYtwRrre1tjzKsP
+	 lhQx4CoQBcFYa9glixF1hCjSJFntmFhc2RVI4WPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Lu <alexandra.lu@nokia.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Shashank Mohan Jain <jain.sm@gmail.com>,
+	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0900/2651] bus: mhi: host: pci_generic: Fix runtime PM imbalance for no_m3 devices
-Date: Wed, 18 Nov 2026 15:35:40 +0100
-Message-ID: <20261118150320.269228014@linuxfoundation.org>
+Subject: [PATCH 7.3 0901/2651] bitmap: bitmap_parse(): reject non-hex character before 8 digits
+Date: Wed, 18 Nov 2026 15:35:41 +0100
+Message-ID: <20261118150320.301112256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,71 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Lu <alexandra.lu@nokia.com>
+From: Shashank Mohan Jain <jain.sm@gmail.com>
 
-[ Upstream commit 95601e9948b42f82600ff2d9e0c2f699a067d561 ]
+[ Upstream commit 7cee2fb210a198667d3d4200705215e6f315cab0 ]
 
-mhi_pci_probe() drops the runtime PM reference taken by local_pci_probe()
-only when the device supports both PME from D3hot and M3, but
-mhi_pci_remove() re-takes it based on PME capability alone, without
-checking no_m3.
+bitmap_parse() is documented to return -EINVAL for illegal characters,
+and it does so everywhere except when the illegal character directly
+precedes a chunk of exactly eight hex digits.
 
-For a device that is PME capable and has no_m3 set, probe therefore never
-drops the reference while remove takes an extra one, leaving the runtime
-PM usage count one higher after every bind/unbind cycle.  That is benign
-for the device being removed, since the PCI core resumes it to D0 on
-unbind regardless, but the struct device outlives the binding, so the
-count accumulates across repeated cycles and can end up preventing
-runtime suspend altogether.
+bitmap_get_x32_reverse() parses a chunk from right to left.  After it
+has consumed eight digits it looks at one more character: a hex digit
+means the chunk is wider than 32 bits and -EOVERFLOW is returned.  Any
+other character is silently consumed as if it were a separator, and the
+remaining input is parsed as the next chunk.  As a result:
 
-Cache no_m3 in the driver's private data, as is already done for
-reset_on_remove, and gate the removal side on it as well.  Unlike
-reset_on_remove it is cached for virtual functions too, because the probe
-side gate tests info->no_m3 for physical and virtual functions alike.
+  "x12345678"   -> 0x12345678, returns 0 (expected -EINVAL)
+  "1g12345678"  -> 0x1_12345678, returns 0 (expected -EINVAL)
+  "0x0000000f"  -> 0xf, returns 0, while "0xf" returns -EINVAL
 
-QDU100 is currently the only device that sets no_m3.
+bitmap_parse() backs cpumask_parse() and cpumask_parse_user(), so the
+same inconsistency is visible when writing masks such as
+/proc/irq/*/smp_affinity or the network queue rps_cpus/xps_cpus files.
 
-Fixes: 0494cf9793b7 ("bus: mhi: host: pci_generic: Disable runtime PM for QDU100")
+__bitmap_parse(), which this function replaced in commit 2d6261583be0
+("lib: rework bitmap_parse()"), rejected all three strings with -EINVAL,
+and a "0x" prefix is accepted today only when exactly eight digits
+follow it, so no reliably working input is lost.
+
+When the loop falls through, *end is known to be a non-separator
+character inside the buffer, so return -EOVERFLOW if it is a hex digit
+and -EINVAL otherwise.
+
+Fixes: 2d6261583be0 ("lib: rework bitmap_parse()")
 Assisted-by: LLM
-Signed-off-by: Alexandra Lu <alexandra.lu@nokia.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260807143353.1932381-1-alexandra.lu@nokia.com
+Signed-off-by: Shashank Mohan Jain <jain.sm@gmail.com>
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pci_generic.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ lib/bitmap-str.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index b636e2c23b4d6..eda00a2e242c4 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -1097,6 +1097,7 @@ struct mhi_pci_device {
- 	struct work_struct recovery_work;
- 	struct timer_list health_check_timer;
- 	unsigned long status;
-+	bool no_m3;
- 	bool reset_on_remove;
- };
- 
-@@ -1409,6 +1410,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_cntrl->mru = info->mru_default;
- 	mhi_cntrl->name = info->name;
- 
-+	mhi_pdev->no_m3 = info->no_m3;
-+
- 	if (!pdev->is_virtfn)
- 		mhi_pdev->reset_on_remove = info->reset_on_remove;
- 
-@@ -1497,7 +1500,7 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+diff --git a/lib/bitmap-str.c b/lib/bitmap-str.c
+index dd9aa0635fa56..e02c5bc80951c 100644
+--- a/lib/bitmap-str.c
++++ b/lib/bitmap-str.c
+@@ -414,8 +414,12 @@ static const char *bitmap_get_x32_reverse(const char *start,
+ 			goto out;
  	}
  
- 	/* balancing probe put_noidle */
--	if (pci_pme_capable(pdev, PCI_D3hot))
-+	if (pci_pme_capable(pdev, PCI_D3hot) && !mhi_pdev->no_m3)
- 		pm_runtime_get_noresume(&pdev->dev);
- 
- 	if (mhi_pdev->reset_on_remove)
+-	if (hex_to_bin(*end--) >= 0)
+-		return ERR_PTR(-EOVERFLOW);
++	/*
++	 * Eight digits have been consumed and the next character is not a
++	 * separator: another hex digit means the chunk does not fit in 32
++	 * bits, anything else is an illegal character.
++	 */
++	return ERR_PTR(hex_to_bin(*end) >= 0 ? -EOVERFLOW : -EINVAL);
+ out:
+ 	*num = ret;
+ 	return end;
 -- 
 2.53.0
 
