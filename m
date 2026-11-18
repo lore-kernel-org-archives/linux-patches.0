@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040822;
-	b=0S0WmuAccJnhz5Yipd+sMpKg8MJKpP9ErklM1+EvB82pSPQC9XNA10c7isOi0FgP7wB0
-	 fhMwefimzheJ6f31QutHdGJuMU5DN6ihvvosukXb7fCpgsCARf2WMsj3ymt1hohA4hlzW
-	 gl/oDWNTwBORylhziCuxUZXgcAi419N0lITN7CP7jZVDfZNpit7iqMIoDNzA73dvLI7Yc
-	 H6KTpeJRbXKBeaUg6xppp/YvPEl7ZNI+FORAPaUstQZqnrtgi3Vw9tseaNFsfPvLZAHzV
-	 18SAy27cHuUzefwrmNiR6hq9Zf8A2SqE8Nozpi++aHONCJG+hMtUnA7JqtutRY5HEGA==
+	t=1795040825;
+	b=MP88sb1kmMfpO8kWZZkqNQ6BBw84Lwv6/1YnZ1T2C8PeVzicTwX8MnmPHX30OFS1heys
+	 lGhLJvboM8X5SDbX3YexJXsZV1a3vKUp0APp3UqyR6QpuL1UuWxl/2zZl/TLBHT29uhL2
+	 1/fl9M8Tveleb7a4mjqqmE0WMSQssuMMjGZVBakLFXzVjmT4U23N22vim/5OI32uQ7HBQ
+	 9hurOipm9vCx4uvDi6t8wMk1LkB2RVxpfM29mdik2sVetb2VI+jzNahjOFmwfV0cjilYt
+	 qUV2roS3wH5JRP1g9u0Oi1/VNUiAGGOAx3fJqyKO8Jjw83ZVV8RwHqHMd78GQDU2gHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040822;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=h09sRCEOfmK/bi7GocErf1gwXJ/SURo8RGoBlq+Vx/g=;
-	b=EnJP1h/166q9vnE0ZtmuPtEWpifzSCobM1KZvYTnwZfscoKbg+oHto1KAegPdXrL1dea
-	 jgugSCtiVizpDLnVAh33Fsl0KlzyS8gyeteGY8xtUmo9gNXlIfr9y78c8UnJP6ufiUgcS
-	 7AkmSDKl6YHdyxYzABWZ2IsHh9hBoo5xfNWZNMr8kOdrP6isC98xKZ3+X1XpmJTMOKEcP
-	 kFyNRBdmcdXd68c6mlXyCYB/mVgnigGIxhZ1JpXfS6eCf0IdtCUWLfJ8KD5QEP2Asa393
-	 IF2xcbSJaGubMNCRadDPj9gpcXuWHbpIw6qPaoebkJB7W9Y3x1yWWCpcKAktVYZ/hNA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=eqJ/KUuRCGAG6vuBEjsb3M2raCRv/8CHd1h2mAnKnDw=;
+	b=ObZzLhBoPEHfBduiPtRs6zpnSpGhkrzksG5lveb++m9XJH59Wcr9f7R/+fQ5pWxQrxUc
+	 IPS3M8iAm3TEWPWgUwPua+wuJ7pRVqVjWWf/7aN/falW0TW3yCMz8Yy/7/GyMHVOThqXE
+	 wYbU4241P2QwQv4B75vqEUVBfemge/4MjKkgczMM25UkGrIORShpkfI9mY+0t3DAvhAm7
+	 cJes3QD5syWYAXkejgpGS6C8LhNXmgFfQ7aM8u+TMBw2y74kHwFEMtFV6jIUwcwntdRKS
+	 ZB/LJBTpU94zPwexlUD+oL3n9JrlNd1wJot3vwmiRoRN8teurj65C1t560M6G43ronA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mD4R+Ot+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3pbN9bw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1803606A31C;
-	Wed, 18 Nov 2026 22:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A459606A31C;
+	Wed, 18 Nov 2026 22:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mD4R+Ot+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EAB1F000C4;
-	Wed, 18 Nov 2026 22:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3pbN9bw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F59E1F000C4;
+	Wed, 18 Nov 2026 22:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040822;
-	bh=h09sRCEOfmK/bi7GocErf1gwXJ/SURo8RGoBlq+Vx/g=;
+	s=korg; t=1795040825;
+	bh=eqJ/KUuRCGAG6vuBEjsb3M2raCRv/8CHd1h2mAnKnDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mD4R+Ot+E7VREJAAWIfAnjh9AfAsQsUt0DTlXQpJOIp3o5LK9iDoXMre7LRVqkzhL
-	 60eewzjpoDpTP4irmggnc43kf2vGYOdPrSq12Pc6/N7EtKRpatVFKVmkbri9rPSHq9
-	 d2bezgDKZrXk2QM9gkAIrwyuQbVfWymNYnRVQxus=
+	b=R3pbN9bwBfh4f6IqQHiR75aq9XfsUvbgAKyXGp7pLp92y8YmPgGz2y5/KyNI7VusD
+	 oQgue/L6fzQKpGBmzj5SACOpD9JnCuLNb1TxDB9HXqiwf4sV8EHPnw3wfkEpB2pNQd
+	 UytBmrFmlyJMvSc2hMiGb7AmgAIdQ3+qi9lCePgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Denis Efremov (Oracle)" <efremov@linux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2595/3318] NFS: filelayout: calculate dense stripe width in 64 bits
-Date: Wed, 18 Nov 2026 15:53:37 +0100
-Message-ID: <20261118150439.017000870@linuxfoundation.org>
+Subject: [PATCH 6.6 2596/3318] floppy: flush pending work before releasing resources on init failure
+Date: Wed, 18 Nov 2026 15:53:38 +0100
+Message-ID: <20261118150439.045688931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,57 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 9ba13ef0e3ad033d3ddbaeb740b12d135a88363d ]
+[ Upstream commit 74c2e2eeb7e51cdeb5e3eceaf324cfcf8dcd0d32 ]
 
-filelayout_get_dense_offset() calculates the stripe width from the
-stripe unit and count, where both values are provided by the server.
-Their product is stored on 32 bits, and can wrap to zero despite
-passing individual checks. For example, a 1 GiB stripe unit (0x40000000)
-and four stripes (4) cause the following div_u64() to raise a divide
-error during the first read through the dense layout.
+do_floppy_init() probes each FDC with user_reset_fdc(), which queues a
+redo_fd_request() work item on floppy_wq that may still be pending when
+the probe finishes. When no controller is found, the error path calls
+floppy_release_irq_and_dma() to free the IRQ and DMA channel, and only
+later destroys the workqueue. destroy_workqueue() drains the queued work
+last, so it can run after the IRQ and DMA are already gone:
 
-Update u32 to u64 and use div64_u64() instead of div_u64().
-stripe_unit is a u32 and stripe_count is limited to 4096, so the
-product cannot overflow a u64.
+  floppy0: no floppy controllers found
+  work still pending
 
-Fixes: cfe7f4120f8b ("NFSv4.1: filelayout i/o helpers")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+The flush used to be here. Commit 070ad7e793dc ("floppy: convert to
+delayed work and single-thread wq") renamed the label out_flush_work to
+out_release_dma and dropped it. Restore it so the work drains before the
+IRQ and DMA are released, as floppy_module_exit() already does.
+
+Fixes: 070ad7e793dc ("floppy: convert to delayed work and single-thread wq")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260722034435.13432-1-kmehltretter@gmail.com
+Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/filelayout/filelayout.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/block/floppy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
-index fe6daf526ac0b..15446f6a863be 100644
---- a/fs/nfs/filelayout/filelayout.c
-+++ b/fs/nfs/filelayout/filelayout.c
-@@ -55,12 +55,13 @@ static loff_t
- filelayout_get_dense_offset(struct nfs4_filelayout_segment *flseg,
- 			    loff_t offset)
- {
--	u32 stripe_width = flseg->stripe_unit * flseg->dsaddr->stripe_count;
-+	u64 stripe_width = (u64)flseg->stripe_unit *
-+			   flseg->dsaddr->stripe_count;
- 	u64 stripe_no;
- 	u32 rem;
- 
- 	offset -= flseg->pattern_offset;
--	stripe_no = div_u64(offset, stripe_width);
-+	stripe_no = div64_u64(offset, stripe_width);
- 	div_u64_rem(offset, flseg->stripe_unit, &rem);
- 
- 	return stripe_no * flseg->stripe_unit + rem;
+diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
+index 790218836468d..040acaa8961b3 100644
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -4745,6 +4745,8 @@ static int __init do_floppy_init(void)
+ 		}
+ 	}
+ out_release_dma:
++	/* Drain the queued redo_fd_request() before releasing IRQ and DMA. */
++	flush_workqueue(floppy_wq);
+ 	if (atomic_read(&usage_count))
+ 		floppy_release_irq_and_dma();
+ out_unreg_driver:
 -- 
 2.53.0
 
