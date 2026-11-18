@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025743;
-	b=WO1U/bl9yov4N/pnZZOYrDbF5E3UhEj1KlFkgkBtdTB1CEucp4/2VYtabmrfmFXVFW4g
-	 aIcaa6zVttg8VBVLl/sZNkXIFBngHNWTdoOGod/nd40H5luqN5NIe1CSYNZ1MtpVO50H3
-	 hozM0ZopeHDd5jZBRqsA6qzIjn9MUXfUWTxjxE9JiQ90oDZAdjCsVXK7cUggx6Mx1PbcD
-	 WbQzDaLPPFLt0k6suTdJytpJ1F7WL33S1TohW5988wc8k6ddll/6ojJvSSz772TJ5q90s
-	 EQyLHjA8GTIhSMzMiDw2dn+HDZwzJh+5Eo0EDSPaevBtG/wGU5nBvUFdOtrG0sK4IVg==
+	t=1795025745;
+	b=OU84FwAMVHmGhIUOfMNYpslrPqrlzUOgLVSv6OomugW5VfFTHgrN9aSHZ5+dxQ5lx2Y1
+	 p+M+nvllj+tvJf/w0rCmz4JNNj0DOtDnnA/lv6XTG0D9X3X+/jgOk5mJd9+jmQmze/497
+	 12P0CadI1eRt60JdHrcyIkIBKoxEB45sEHtiotl54P0Ko6Op0s0az6ONNmzO4RvwRaEGo
+	 He6HmLCwxtT4aKp3HHdO05m/x4fP5pjAdVQ2kXH2IfqIMXgi63vd/BcsgDoNK8irS8niq
+	 pr8kqXCaZQKd8PpPvfMtc6PGgF3qx5eCD+1mExWXlKRbPjGuL9KBiidb0TLafpe+u9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025745;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sIUmXKOwwQ/feGNx6C8raEdUZqm4Dtuqtrf5GG1y0wM=;
-	b=PwFTuqMSU1TT2UeXou8EEreqjQFqzc9a93xVsgg8lj6Y50binWqS2yok9iuJ1eTXtyA2
-	 lRso5mpV6GS60L8B+8wc9gjH4f5iQEP6TSJjPxIbOMPo4jCfjCPkkaYs8RjFxwzysK3Pt
-	 kyzhHyMfevAwzf8DyXHU1VryfB3K0tZXchoxVS+i3XtevHn162vkMDaSQjIFkxLMKIRii
-	 eR3saZqyGP9a9liSp8mEO6HlJDnyW9Z5TH6Ph8YQBJ9rvMuJpGNtbSj93uaybg1dK5fdk
-	 2uAvdHWxERK6i7azyd5K1toYdWVoutSTW943KkLSA6XCf85C69nvB/IK9ZP07mgI4Pg==
+	bh=NPW7kGJ6dsSe8OOhuEzz2kDH57IqaeMe/0EnlaRsuHg=;
+	b=t60bHR1nrVvlR9H9X9/PwuyeYsgCT87FvJm35C+7hyOLw89SNl0MzMV/i8o23214cYiA
+	 4c+ePloE/mItIAlZPFT/C54U50N6SDy9mBBRL8VnC2CdLn5jhThkuyQASIPLPbB58MwOn
+	 65iq/znurX4u+Z5/b13mhbCktPooXt752hYlV3VejCn8ZZ7riZt5e7GvGzlVATTfDsiWH
+	 ME05ZF83x5qjUpLWgoHqbO2NyzUtkmsBGyKE2+g0hRWUsmpCatk/oDO7VeyWf83+gNqr/
+	 Lwsgi6Ihj/FccVnTbTPANuzF0N5edrc5rNZQjbXIIYVMuMpK+0LPXUpg+50Q/AfJx3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J3VnbSfT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axWWRP5+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EDE606A31C;
-	Wed, 18 Nov 2026 18:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE3C606A320;
+	Wed, 18 Nov 2026 18:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J3VnbSfT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588801F000C7;
-	Wed, 18 Nov 2026 18:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axWWRP5+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3759D1F000C4;
+	Wed, 18 Nov 2026 18:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025742;
-	bh=sIUmXKOwwQ/feGNx6C8raEdUZqm4Dtuqtrf5GG1y0wM=;
+	s=korg; t=1795025745;
+	bh=NPW7kGJ6dsSe8OOhuEzz2kDH57IqaeMe/0EnlaRsuHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3VnbSfT9xVV8GPmTV0ryPhRIpJ+yrcYXJL7Z7bneh2h8d9R7koEcGfEfujUNfH1m
-	 Q8y8ro5noyJMDJMcJfYYNJNhDYqjuSMX9qbJJhUzmG1WRXdzEu3Xgc6bFc1gFp3/4Z
-	 v/UyITFZb1FwL4YAEg59gl/L9eOrhjOujY84q5sk=
+	b=axWWRP5+Xreh0jtc2VTHg5GSqpw/M4Pc+o2GTxr1QatMXW5hzxqtSYy4LufDHQC6A
+	 bmE4zLGLRL0ADV0sx45hjpGatoz886qEb3c2Yh1nu7g52EybI0xj22TrgJME/jNjC/
+	 Nvf4MJm/HGVCR1ueF5g4y8W51SnWiK1m22K4zEgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leizhen Zhang <lzsx618@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1186/2151] gen_init_cpio: stop parsing on lines with a missing argument list
-Date: Wed, 18 Nov 2026 15:48:41 +0100
-Message-ID: <20261118150205.419062299@linuxfoundation.org>
+Subject: [PATCH 6.18 1187/2151] pinctrl: sprd: free maps on DT map failure
+Date: Wed, 18 Nov 2026 15:48:42 +0100
+Message-ID: <20261118150205.467393281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,50 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leizhen Zhang <lzsx618@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit c8dd1aa0274d8ad3df82ec1b064065f410ce99ed ]
+[ Upstream commit e873c665e503ebfb6dafaf9346c3956695686226 ]
 
-When a line in the cpio list consists of a file type followed only by
-whitespace and no newline (e.g. "slink " as the last line of the file),
-strtok(NULL, "\n") returns NULL. main() prints an error and sets ec, but
-then carries on and passes the NULL args pointer to the type handler,
-which hands it to sscanf() and crashes:
+sprd_dt_node_to_map() reserves map storage before adding mux and
+configuration entries.  If a later operation fails, the error path only
+frees the temporary configurations and leaves the map allocation reachable
+through the output pointer.
 
-  AddressSanitizer: SEGV on unknown address 0x000000000000
-    #4 __isoc99_sscanf
-    #5 cpio_mkslink_line usr/gen_init_cpio.c:169
+Free the partially built map on failure.  The caller ignores the output
+parameters when the mapping callback returns an error, so they do not need
+to be reset after freeing the map.
 
-Break out of the loop as is already done for the other format error, so
-that the error is reported and gen_init_cpio exits with a failure status.
-
-Found by fuzzing gen_init_cpio built with ASan/UBSan.
-
-Reproducer:
-  printf 'slink ' > list && usr/gen_init_cpio list
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Claude:claude-opus-5-5 ASan UBSan
-Signed-off-by: Leizhen Zhang <lzsx618@gmail.com>
-Link: https://patch.msgid.link/20261005085729.872402-1-lzsx618@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 41d32cfce1ae ("pinctrl: sprd: Add Spreadtrum pin control driver")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- usr/gen_init_cpio.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/sprd/pinctrl-sprd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/usr/gen_init_cpio.c b/usr/gen_init_cpio.c
-index b7296edc6626f..0f0c61ec21ca3 100644
---- a/usr/gen_init_cpio.c
-+++ b/usr/gen_init_cpio.c
-@@ -756,6 +756,7 @@ int main (int argc, char *argv[])
- 				"ERROR: incorrect format, newline required line %d: '%s'\n",
- 				line_nr, line);
- 			ec = -1;
-+			break;
- 		}
+diff --git a/drivers/pinctrl/sprd/pinctrl-sprd.c b/drivers/pinctrl/sprd/pinctrl-sprd.c
+index 16cf9d15f2470..a565d4fd4233c 100644
+--- a/drivers/pinctrl/sprd/pinctrl-sprd.c
++++ b/drivers/pinctrl/sprd/pinctrl-sprd.c
+@@ -326,6 +326,9 @@ static int sprd_dt_node_to_map(struct pinctrl_dev *pctldev,
  
- 		for (type_idx = 0; file_handler_table[type_idx].type; type_idx++) {
+ out:
+ 	kfree(configs);
++	if (ret < 0)
++		pinctrl_utils_free_map(pctldev, *map, *num_maps);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
