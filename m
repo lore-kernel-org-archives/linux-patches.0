@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050411;
-	b=Fogb1e1UYTWENMqpwf+81MwD+fdQ1zxC2bktjFnc/rPTqQRx3DNYj005xMu9oCgm4tyR
-	 Z8royXUNxcD8HiYi8bY6ehJrCakxpAnzWnbWcH3iI6UF88oOjXRcpqZtns2JAaTXcxpNb
-	 DJXNVGBlIic2Yau3H9Jl+2SyulzdsA6NbbFqmyNnvr75kNdfD4iOFHuUvEiMXOhhPIxdR
-	 xuqVHnT6naei/dJ6mzdpkc5Da6wZcHGpOt0rd2qCac0ZB5oO+5RE7woLc9p70fubc3X2N
-	 oVjJmEa+8PDr634ASCxuauGVa2AN5AaIpLzs0fc4vmeyBLtldMpamrWH752OfWd3ZcQ==
+	t=1795050414;
+	b=f3yley/07yWQAgP2WmQIQO6IGeRTK5K7lQx4CQZswN8Aw4eeFSVIJXAFMU0eJNKClYpl
+	 bc1Kag7NQF6v7WaygMz6lhkm9EdenxUN/28PwGUW2iF6aNJNhvP7afrgFxfBu0FBMIyej
+	 TYYm/WhviZZK0j3bgx4AvCbNa+7UApa1NUwp76njQtWX7nDER0LLu9Lp09Epy8jHRtS6t
+	 QxliLs2yNG9aWIOv4jsuhM3cqQQBK7l4WcY5nQ0yDhWm+Inz/zjpp+8HomYdw8uGIyHRU
+	 qvGpRJPMkD4n/ztnxoyPIXdTsg8SmxGF6hJ76WlWb/RdLhuP7pJxwQ0c4p3L6qehtJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050411;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050414;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3T9V8Ei9EdrkfF6Fyfp0g3BtlhC68PEqZkDAlBoUpwc=;
-	b=XfdXh/K+EnSCyR1uqMeQ6LVdDGJQ0WNgcoNG6kqukJsbFXz/9hSI9W7S36V6iFsFkFIg
-	 Zh8z09ZzSkzaz2TmPXulimqEUrxvqcHhfEX8kJ5fQP+WhnUra5ySbBD0vqIufYZHc8Xz3
-	 rbO9H9PdEc51xoU6wK6siKi/KZmyGRmF5iIT73iL1UrZngpKKC/b0xmPFZrqutPEEFPxm
-	 IArE0yIP+A0yqpOH16y1lMyiqIoWeO2aZEX/YWY9XO/7sRBuW8pyaBhu4WAiF/yqEHBOQ
-	 gCwUHhHZwvxLuQGCLZ4VDxD5wvriOZfrcU5kkiIIR1W5cQKYpXZOt1pLDwXYC11PTYg==
+	bh=PucCNPLJt8D3qHbvvUw5FDOHRTmfxoIw1DVcOhHAXGU=;
+	b=TQcDhuBscyNGSWW5UXVAx/GVl4vc1rVfqAVoprprIV2B6fiI6gfRH1JjO2P42Dcua168
+	 lEmYNlGdoyHErppO0tn3XOZIOGl2/eJ/fnl2xkyiFVPo4pBpSI9DWSaMmXiTOcGI33r5o
+	 bB07mI1i9xGTSO3B5+LP4W3QWKzaZNiKZ3VvGalo+YekB7G7jOWrR46b0kqeK7S3Ygf4y
+	 LcTz/pCPXjg2/YvrCAFrOgBz6oY/tSY3q6SjYoJIQnZGG9v4S1tcQ2zauOpwHWiNaFxZX
+	 xB7Z34ovCAV6q/OOcvgpZ6CghrXLAVShGJeqxllRl3wOtxDynMVIFijPidg8jFNcepg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gjlf4bJr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMdbUm9Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF47606A31C;
-	Thu, 19 Nov 2026 01:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65617606A320;
+	Thu, 19 Nov 2026 01:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gjlf4bJr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4C11F000C4;
-	Thu, 19 Nov 2026 01:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMdbUm9Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FF21F000C4;
+	Thu, 19 Nov 2026 01:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050411;
-	bh=3T9V8Ei9EdrkfF6Fyfp0g3BtlhC68PEqZkDAlBoUpwc=;
+	s=korg; t=1795050414;
+	bh=PucCNPLJt8D3qHbvvUw5FDOHRTmfxoIw1DVcOhHAXGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gjlf4bJruwPkVOwED49EQWNldpdtqXVSVtvK+2Bs7wJ9JB6gk2U/9xIovfixexMPR
-	 e8ka8mQb5k6lYfM/S7L90bGnJpotJzAVqo5I6Ug2EnGlrP8ERxq3lsSIi7weKY/9rn
-	 kpv7cOo2vDm3LHkSDSPZuN76kqYr7KCyybjZkCfM=
+	b=lMdbUm9ZJP0K30/mGrL+WtygBp8OlsDvm+idZe+4y9pZJ2xSdnyOxIXXU7RbdUyel
+	 fs8SFG6eSMAxb8HKh8IgQjHPG5RXN9iGsVAvBEbH4WkYE8vEKydT1Vlh9ocXKPWrRx
+	 +16c4GoZ0D72FFw3JpfDtbN7ToPQrxg00g3da9nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Serge Hallyn <serge@hallyn.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Ivan Hu <ivan.hu@canonical.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Leonard Lausen <leonard@lausen.nl>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2697/2857] nsproxy: Fix cred leak in the error path of prepare_nsset()
-Date: Wed, 18 Nov 2026 16:02:11 +0100
-Message-ID: <20261118150338.676016355@linuxfoundation.org>
+Subject: [PATCH 6.1 2698/2857] ACPICA: Initialize parser_state.aml_end in acpi_install_method()
+Date: Wed, 18 Nov 2026 16:02:12 +0100
+Message-ID: <20261118150338.709476320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,88 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Ivan Hu <ivan.hu@canonical.com>
 
-[ Upstream commit e08601d3a7b2236f4915497dca353dcf117bab5c ]
+[ Upstream commit ec696f34774db985841bac9a2df179c0040ef073 ]
 
-A task that calls setns() with CLONE_NEWUSER together with CLONE_NEWNS
-and at least one more namespace flag leaks a struct cred (and the
-user_namespace, ucounts and group_info references it holds) whenever the
-call fails at the fs_struct copy.  On a kernel with CONFIG_USER_NS the
-leak is one cred per failed setns(); under memory pressure, or driven by
-a fault-injecting attacker, it accumulates and pins user namespaces that
-can then never be freed.
+In AcpiInstallMethod(), the local ParserState is stack-allocated and
+only ParserState.Aml was initialized. Parser helpers called by this path
+read ParserState.AmlEnd for bounds checking: AcpiPsPeekOpcode() reads it
+before validating the first AML opcode, and AcpiPsGetNextPackageEnd()
+reads it indirectly via AcpiPsGetNextPackageLength(). The subsequent
+package-limit check also compares against ParserState.AmlEnd. Because
+AmlEnd was never set, these checks operated on an uninitialized value,
+which Coverity flagged as an uninitialized read (CID 1684785) and which
+could lead to incorrect parser bounds decisions.
 
-prepare_nsset() sets nsset->flags only on the success path:
+Coverity report:
 
-	if (flags & CLONE_NEWUSER)
-		nsset->cred = prepare_creds();
-	...
-	} else if (flags & CLONE_NEWNS) {
-		nsset->fs = copy_fs_struct(me->fs);
-		if (!nsset->fs)
-			goto out;	/* flags still 0 here */
-	}
-	nsset->flags = flags;
-	return 0;
-out:
-	put_nsset(nsset);
+*** CID 1684785:         Memory - illegal accesses  (UNINIT)
+/src/acpica/source/components/namespace/nsxfname.c: 712             in AcpiInstallMethod()
+        ParserState.Aml += AcpiPsGetOpcodeSize (Opcode);
+>>>     CID 1684785:         Memory - illegal accesses  (UNINIT)
+>>>     Using uninitialized value "ParserState.AmlEnd" when calling
+        "AcpiPsGetNextPackageEnd".
+        ParserState.PkgEnd = AcpiPsGetNextPackageEnd (&ParserState);
 
-put_nsset() decides what to release from nsset->flags:
+Initialize ParserState.AmlEnd to the end of the table
+(Buffer + Table->Length) so the parser bounds checks operate on a valid
+limit.
 
-	if (flags & CLONE_NEWUSER)
-		put_cred(nsset_cred(nsset));
-
-On the copy_fs_struct() failure arm prepare_creds() has already
-allocated the cred, but nsset->flags is still the zero from the caller's
-"struct nsset nsset = {}", so put_nsset() does not see CLONE_NEWUSER and
-never drops it.  The caller (__do_sys_setns) returns the error without
-touching nsset, so the cred is lost.
-
-Set nsset->flags at the start of prepare_nsset(), before anything can
-fail, so every error exit through put_nsset() releases what was taken.
-commit_nsset(), which clears nsset->cred on success, is unaffected.
-
-Reproduced on x86_64 under QEMU with failslab aimed at the fs_struct
-cache and kmemleak enabled: 500 calls of
-setns(pidfd, CLONE_NEWUSER | CLONE_NEWNS | CLONE_NEWUTS) each fail with
--ENOMEM and leave 851 unreferenced cred objects allocated from
-prepare_creds() via setns() before the fix, and none after (the program
-is in the notes below).
-
-Found by formal verification of kernel/nsproxy.c.
-
-Fixes: 303cc571d107 ("nsproxy: attach to namespaces via pidfds")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261017033538.793280-1-nickolai@csail.mit.edu
-Reviewed-by: Serge Hallyn <serge@hallyn.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://github.com/open-acpica/acpica/commit/19429ef91ebfb2144c918038dce13e297b4ef051
+Fixes: bdc357540129 ("ACPICA: add boundary checks in two places")
+Signed-off-by: Ivan Hu <ivan.hu@canonical.com>
+Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Signed-off-by: Leonard Lausen <leonard@lausen.nl>
+[ rjw: Subject tweaks ]
+Link: https://patch.msgid.link/20261019145421.47181-2-leonard@lausen.nl
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/nsproxy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpica/nsxfname.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/nsproxy.c b/kernel/nsproxy.c
-index eec72ca962e24..46c5da1a0460e 100644
---- a/kernel/nsproxy.c
-+++ b/kernel/nsproxy.c
-@@ -313,6 +313,7 @@ static int prepare_nsset(unsigned flags, struct nsset *nsset)
- {
- 	struct task_struct *me = current;
+diff --git a/drivers/acpi/acpica/nsxfname.c b/drivers/acpi/acpica/nsxfname.c
+index 8079364e2440e..d4ebb93ce03c3 100644
+--- a/drivers/acpi/acpica/nsxfname.c
++++ b/drivers/acpi/acpica/nsxfname.c
+@@ -503,6 +503,7 @@ acpi_status acpi_install_method(u8 *buffer)
+ 	/* First AML opcode in the table must be a control method */
  
-+	nsset->flags = flags;
- 	nsset->nsproxy = create_new_namespaces(0, me, current_user_ns(), me->fs);
- 	if (IS_ERR(nsset->nsproxy))
- 		return PTR_ERR(nsset->nsproxy);
-@@ -333,7 +334,6 @@ static int prepare_nsset(unsigned flags, struct nsset *nsset)
- 			goto out;
- 	}
- 
--	nsset->flags = flags;
- 	return 0;
- 
- out:
+ 	parser_state.aml = buffer + sizeof(struct acpi_table_header);
++	parser_state.aml_end = buffer + table->length;
+ 	opcode = acpi_ps_peek_opcode(&parser_state);
+ 	if (opcode != AML_METHOD_OP) {
+ 		return (AE_BAD_PARAMETER);
 -- 
 2.53.0
 
