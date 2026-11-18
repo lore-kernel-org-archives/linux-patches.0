@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051892;
-	b=c2QBfzD1+JV8/HSLf8tsvZDXPXjcrNGb/qAissUJ2oF+BJEj/8zD8HcPnbHHgZFchexr
-	 ksAA7VbHOz5GiJ8yKtdSVnKVRdUXBEoxCghqlPR7Cc63hKU8vV/q6wp914p1PGe8YAVcz
-	 PWuevd/wUlwvx7uLOgKBVV64LqHQof+q4AerzkaVO46XUNuEFEdy9dpUnpljdpDCeJIXQ
-	 J6y90vhVnJFgaIxzOWeDBvryqAh/6ph9QZbBuaq1xwRwwi5sRSlVaRZJTcnBLl9bhAaZg
-	 u9xuplFvrcq0OF3gihddNLEhL4IvSNYQfF+cxmaMTh/KLHQjsEuQIGtnY4nZOTctOOA==
+	t=1795051894;
+	b=g5xIIgsQRplTFOQrWWnwKamva2DzYJnvo3i2qc8QXPsSvD+2IQLh0OFp8LsdDeOGC4wI
+	 S9aFUmDFM634Z1fW0sLPzaZwcXyk7frXFPxUyh2ZD17nYDa1sdYL4dNrQAWTgtQTwgab1
+	 Q0ywaVItDMtwVs0TmGiPP6Uv9FDGKXO7K01WyQJPjCK8dCmU6D85Rw1Y9yV7PstUdp6C5
+	 M9Df7B0ervCkpibJE72S8NWv1k84WS0bJp6Ocd3l+Rwo5TXlqlhPf/EQ8gExa51WoJtlh
+	 vXrJbsecJ685DVJzcsEzXHPilyfdRKEtPXv6SB8M6tuHR/DHR5VVj9OsrmuXJYJ1OKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051894;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LCqfHNVlQzh2krHfIrk6+646Jk7IXnDXcAki/a8WBMo=;
-	b=kzoPkSe91ZVz5jQ2PT2JSOVaK1n2O4vAoE56NCv5UgkR9YVHV5hv0bJ7jDq3azxNQSjD
-	 oDpNJitQYlTYJ9mGXLcgSbCLV1qSAvz8FLB6kOzRJd2CHEhJo7KRFkjl8qhDf9R/GWhU9
-	 KwG26xKCQECZFjhhYrNBPZ+bJu/r7E1lReXebNgKZ3kldXGthZTtDJUDFatg9fFhDb0mY
-	 hRr8PW8rPAcmdAzBnNOy4Iqh5x4/CrEtdhlHU07LGXuzDdZEICkd6cTHm3wOvxB6y+dU/
-	 UEJMHJnHsijOtDNoRYlcjTXFXVD1qIw0rKFkm5V6ZxM1MQIWg2qU3fPA7+msFHdSnkA==
+	bh=M1zko1X7jaLnGgpQnWeIrPuTAepmciMLBSJPFIKGhgM=;
+	b=I0Iu2JyqpidbA/roOzpolPvDwBacMMMqZM1WZ73uw56pQlvv/0ZFLIAqIvWTLEIUKnt2
+	 rdZpOn8s+ResziH48OdIjZPGIjuLcltasK6GqmpcfC8/aVqrC2P3ugC3NF6tG4YxGx/+V
+	 T4eUhSA+kIs0uCG30Rd7HQYklUpDrsJJHuFql7QVR39jcIbuusMDeuaY6/ibBpyaNdrLQ
+	 Z3rHPHWb/R5TYy3k+0bK0RFnGaKiez/Sg9417CwfaslFCeUuOuvGZ/vwWPBzOhMG72Edd
+	 jhhw7zwVXPLKOYWnFHtgWwPTTJa4JsdpmAtPlNMLDX+nUihHx1wWXXWUUpM2PMY26FA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BPD/l429";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bi3/szlx";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4272360A3806;
-	Thu, 19 Nov 2026 01:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91E160A383F;
+	Thu, 19 Nov 2026 01:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPD/l429
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4731C1F000CA;
-	Thu, 19 Nov 2026 01:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bi3/szlx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D2C1F00929;
+	Thu, 19 Nov 2026 01:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051891;
-	bh=LCqfHNVlQzh2krHfIrk6+646Jk7IXnDXcAki/a8WBMo=;
+	s=korg; t=1795051894;
+	bh=M1zko1X7jaLnGgpQnWeIrPuTAepmciMLBSJPFIKGhgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPD/l429JM/kBIa4y7pQ98k+P4Pl1HdOVgs7i/s342PBVM10wEg40aRnq74C/PaW/
-	 4N5fLihXIXTIUGrACnUbt/4HBiqbhyFcAno8lcQYgFHl5n2gx/qai/G/5WG5uqlXvk
-	 DUM+VpYKCrz+YG5JOhk28tDEefpBYhJWc8uT6N6A=
+	b=bi3/szlxtP6x/Err+ZTRr0F/1oKyycxQpy8yKZ/LcA/PvkHFt+AeN7RraGb0oFnfr
+	 QXbaaPRE90F3wEy8Vhvx2KrWV1zzfilPVYKaDQ3HPA+QFK0uMM1Rxu6FxlOTtojoX3
+	 Eoel5exGbmgNoQVZhP865wv0NGZHv94CwIvdhnOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.15 0363/2214] SUNRPC: trace an accepted transport before publishing it
-Date: Wed, 18 Nov 2026 15:33:59 +0100
-Message-ID: <20261118150025.194527879@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 5.15 0372/2214] HID: core: Fix out-of-bounds left shift by 32 in s32ton()
+Date: Wed, 18 Nov 2026 15:34:08 +0100
+Message-ID: <20261118150025.604902837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,46 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 06f90cf104fc21ee01e7ef1eb80e092173089b9f upstream.
+commit 5fe63b415c636c7f4f6848a8e53bdd4bbf0c300d upstream.
 
-svc_handle_xprt() publishes a newly accepted transport before tracing
-it. svc_add_new_temp_xprt() places the transport on sv_tempsocks and
-clears XPT_BUSY, so another nfsd thread can dequeue it at once. If the
-peer has already closed the connection, that thread runs
-svc_delete_xprt(), which drops the list reference, the only reference
-the new transport holds. trace_svc_xprt_accept() then reads the
-transport's addresses and network namespace from freed memory.
+Syzbot reported an out-of-bounds shift (32-bit integer shifted left by
+32) in the s32ton() routine in the HID core.  This routine converts a
+signed 32-bit integer to a signed n-bit integer, and it caps the value
+of n at 32.  But when n == 32 there's no need to do anything; it can
+simply return the input value.  This will avoid calculating (1 << n)
+when n is 32, which was the cause of the invalid shift.
 
-Before publication the accepting thread owns the transport
-exclusively: XPT_BUSY is still set from svc_xprt_init() and the
-transport is on no list. Emit the tracepoint there.
-
-Fixes: 11bbb0f76e99 ("SUNRPC: Trace a few more generic svc_xprt events")
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 69c02ffde6ed ("HID: core: clamp report_size in s32ton() to avoid undefined shift")
+Reported-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/6ac9cbd8.a150a118.27e199.0025.GAE@google.com/
+Tested-by: syzbot+25a1d2907885b2182275@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Link: https://patch.msgid.link/d15495bff2247e3f9d4f9ef36df8e246a3898380.1789220778.git.zhilinz@nebusec.ai
-[ cel: trace before publication instead of taking an extra reference ]
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Link: https://patch.msgid.link/dfa0aa1c-e55e-4316-8307-f72a07383634@rowland.harvard.edu
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc_xprt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -834,8 +834,8 @@ static int svc_handle_xprt(struct svc_rq
- 		newxpt = xprt->xpt_ops->xpo_accept(xprt);
- 		if (newxpt) {
- 			newxpt->xpt_cred = get_cred(xprt->xpt_cred);
--			svc_add_new_temp_xprt(serv, newxpt);
- 			trace_svc_xprt_accept(newxpt, serv->sv_name);
-+			svc_add_new_temp_xprt(serv, newxpt);
- 		} else {
- 			module_put(xprt->xpt_class->xcl_owner);
- 		}
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1360,8 +1360,8 @@ static u32 s32ton(__s32 value, unsigned
+ 	if (!value || !n)
+ 		return 0;
+ 
+-	if (n > 32)
+-		n = 32;
++	if (n >= 32)
++		return (u32) value;
+ 
+ 	a = value >> (n - 1);
+ 	if (a && a != -1)
 
 
