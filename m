@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024553;
-	b=FNLHjMtZ+qpb1txRDdupP9BLVT7VaFIELAdPK9svV8Gp+KlBGk3ZfPqxOZZsHExDEimq
-	 i9paZOh0/8pMJdjv/ogAWiRVV2EUknrxUig+nOa+8HFvC2HR49c+KzlGesiQwYcjGQ/oT
-	 bPaTjbOyjBZB6qbDTRMDVw58gajz4J1oTi2JoxUSBpqGg1R8f81erw/B3CGqSbFLnBzDf
-	 ApVtOeMKntU9oGws1rXUs+XrDodPW+JHnUkJ81EZPJ+QgU4MWZAdXcxaI/ldHp5ySIZnm
-	 rCchHLpNx1JIdrUaicMDelY92LUD59MCl3Sp9YUBs8ekEw8twKyC4cpWFNDsykpD2dg==
+	t=1795024556;
+	b=XU9k4lgFXQoLKzs/b6GU8mhPL/lhOoI/lBqLagZg5g8jevz4yon1yJ911PQwrtlUU7t+
+	 dKl0m/bBS3Joo94Qdn/TIZX0J10S12pdCAjwFot9zwdgJrnuk4JR6wwWtbt5XN5VYT+eq
+	 Cyv3P5mmE2pk9OQ3YSijcYpkl2SWEA1WxWs/aDErERa2LEo0N0jaC2143PphBUvovnLAb
+	 R1KdYjeOsGeTEqYb2kaJFrXxFsILCSm8txmz6DsjorGcWbBonB+Nl4BAoKb2YCiNuIVcP
+	 j7XJi6LEPPYNj2gv9AR7RVZu66HNV7+HutwefD9s0vJHtj4Ok2zP2pRu7+yB33d4L6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y8ybxHXVqZsWDSTnrbUNt8kGPPrYqbTEViHgeuAD4EQ=;
-	b=eIz1V/TjcCF7CBArYdOJ8i1fR1JLmtv1pbgrywvFbshEcYpDfSlO4tW0cmjXM84SqZfS
-	 63FJelXGKL2I/28htJ3Mqs7T7SdMaDXSdNBJCYpnPdWWZUASjT3BBdfspiZYIUz/4hDAW
-	 y5BTDq78NPswbcWLV709+SOtOCm4dqSRtaQaQp3OwX2Hldeukay18+mLEkk+mt4SxdOKs
-	 IVnZPb89+k+Oa3/IAcDSiWz6oKKod+4+PY7YwvkwTFm1qqt8jZagfXpceGQW3SgMNd0bs
-	 qi9wANLtyl3veXTVlFY3LAYrWCWbHZne2ZULUVvNZI7qZluVFUUw9ecRahPowUiOsFw==
+	bh=hzASVbnHQ6QkqNxXxtyBjCTVeOBMKd8L5jipXclqfm8=;
+	b=zuyoZEGoavoMdhxMonOCn/8NAqr2F2kIe1FZz0WXr10PVtwXNx+6bAIUn/fyXT2//H3S
+	 Yfx6pNT9i9VBC4fk/sOFhZ1cLbP5wJqVSyVNXTUlOUD7x+ZbszeTK6sBfOoQFnj0OREXB
+	 uc623q8Ove2vmcLHlI8UidMZahzjk3K4du22flX/8yip7MLdQETQNbgJmOU49olABTgOa
+	 O+O9T1WInSoMnmlqML4w1ctuVsJfm2oT9BqtE51VUCAXCsPrmKWTQZDW7OQ2m2U20TlGb
+	 gVyoS+pj4qinwZiPP+hTmAukN1PzpXBmzRueb0h4z4j/DT3NG2CoNQHdWiJrinhCgZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kHjickmd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qPskozMu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308A4606A320;
-	Wed, 18 Nov 2026 17:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E55606A320;
+	Wed, 18 Nov 2026 17:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kHjickmd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3D81F000C4;
-	Wed, 18 Nov 2026 17:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qPskozMu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5471F000C4;
+	Wed, 18 Nov 2026 17:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024553;
-	bh=y8ybxHXVqZsWDSTnrbUNt8kGPPrYqbTEViHgeuAD4EQ=;
+	s=korg; t=1795024556;
+	bh=hzASVbnHQ6QkqNxXxtyBjCTVeOBMKd8L5jipXclqfm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kHjickmdYrvkfFfbObSr17EtiLjSXM5NhhqllI4kCbkB9j5Iv4I+Uqave6sJ7xHkR
-	 IHVOQjOIIy1UMxtWzFK3uBna+Ea6waDwOTC7Rez8k9TxZ3eGECZ83bPypKl7pHOS+b
-	 d0hAFZw3dlLGl+2mINpGpIGFunKmyMDcTTOfnsfM=
+	b=qPskozMuyW9jhT/fhlvKNBRSpKa2lTpqYebJdjj1yfa11vm4048z93xRP9jOmJZQr
+	 TboR1V0N65HMbXwQS+P7RP+puJgqMH2KmqcydmoHV2rVJvStYM9AVI3tRgeV1HD6kV
+	 TE+a8VMGJv/v4xw9MMPPdKgUwZTSo747OTkgnm7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Chen Linxuan <me@black-desk.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Alexandra Lu <alexandra.lu@nokia.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0765/2151] MIPS: Only check -msym32 when need-compiler
-Date: Wed, 18 Nov 2026 15:41:40 +0100
-Message-ID: <20261118150149.932067867@linuxfoundation.org>
+Subject: [PATCH 6.18 0766/2151] bus: mhi: host: pci_generic: Fix runtime PM imbalance for no_m3 devices
+Date: Wed, 18 Nov 2026 15:41:41 +0100
+Message-ID: <20261118150149.994680839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,88 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Alexandra Lu <alexandra.lu@nokia.com>
 
-[ Upstream commit 7a8f286c235f5d308208cfdcb025b2a0e0c84742 ]
+[ Upstream commit 95601e9948b42f82600ff2d9e0c2f699a067d561 ]
 
-During 'make modules_install', the need-compiler variable is null, so
-Makefile.compiler isn't included.  This results in call cc-option-yn
-returning nothing and consequently an error is issued:
+mhi_pci_probe() drops the runtime PM reference taken by local_pci_probe()
+only when the device supports both PME from D3hot and M3, but
+mhi_pci_remove() re-takes it based on PME capability alone, without
+checking no_m3.
 
-*** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
+For a device that is PME capable and has no_m3 set, probe therefore never
+drops the reference while remove takes an extra one, leaving the runtime
+PM usage count one higher after every bind/unbind cycle.  That is benign
+for the device being removed, since the PCI core resumes it to D0 on
+unbind regardless, but the struct device outlives the binding, so the
+count accumulates across repeated cycles and can end up preventing
+runtime suspend altogether.
 
-and the invocation terminated for configurations that set the Kconfig
-option named.
+Cache no_m3 in the driver's private data, as is already done for
+reset_on_remove, and gate the removal side on it as well.  Unlike
+reset_on_remove it is cached for virtual functions too, because the probe
+side gate tests info->no_m3 for physical and virtual functions alike.
 
-Previously commit a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS
-`modules_install' regression") addressed the same issue for GCC versions
-now supported for Linux compilation, but caused a build error with Clang
-because it doesn't support '-msym32'.  Then commit 18ca63a2e23c ("MIPS:
-Probe toolchain support of -msym32") fixed the issue with Clang, but
-reintroduced the 'make modules_install' error listed above.
+QDU100 is currently the only device that sets no_m3.
 
-Wrap the handling of the '-msym32' option then with ifdef need-compiler,
-fixing said error for 'make modules_install'.
-
-For more technical details on why need-compiler is null during 'make
-modules_install' and why no compiler invocation is actually needed at
-this point, please refer to commit 4fe4a6374c4d ("MIPS: Only fiddle with
-CHECKFLAGS if need-compiler") and commit 805b2e1d427a ("kbuild: include
-Makefile.compiler only when compiler is needed").
-
-NB leading 8 spaces rather than tabs required due to `make' syntax.
-
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2502120612000.65342@angie.orcam.me.uk/
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2307180025120.62448@angie.orcam.me.uk/
-Fixes: a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install' regression")
-Reported-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Closes: https://lore.kernel.org/all/alpine.DEB.2.21.2501030535080.49841@angie.orcam.me.uk/
-Co-developed-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Reviewed-by: Chen Linxuan <me@black-desk.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 0494cf9793b7 ("bus: mhi: host: pci_generic: Disable runtime PM for QDU100")
+Assisted-by: LLM
+Signed-off-by: Alexandra Lu <alexandra.lu@nokia.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260807143353.1932381-1-alexandra.lu@nokia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/bus/mhi/host/pci_generic.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/Makefile b/arch/mips/Makefile
-index d9057e29bc62b..b2968200ee008 100644
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -290,18 +290,20 @@ drivers-$(CONFIG_PCI)		+= arch/mips/pci/
- # We can always force a build with a 64-bits symbol format by
- # passing 'KBUILD_SYM32=no' option to the make's command line.
- #
--ifdef CONFIG_64BIT
--  ifndef KBUILD_SYM32
--    ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
--      KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+ifdef need-compiler
-+  ifdef CONFIG_64BIT
-+    ifndef KBUILD_SYM32
-+      ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
-+        KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+      endif
-     endif
--  endif
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index a5b47728f9aba..a5b7e1f9fcd1e 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -1030,6 +1030,7 @@ struct mhi_pci_device {
+ 	struct work_struct recovery_work;
+ 	struct timer_list health_check_timer;
+ 	unsigned long status;
++	bool no_m3;
+ 	bool reset_on_remove;
+ };
  
--  ifeq ($(KBUILD_SYM32), y)
--    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
--  else
--    ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
--      $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+    ifeq ($(KBUILD_SYM32), y)
-+      cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
-+    else
-+      ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
-+        $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+      endif
-     endif
-   endif
- endif
+@@ -1341,6 +1342,8 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	mhi_cntrl->mru = info->mru_default;
+ 	mhi_cntrl->name = info->name;
+ 
++	mhi_pdev->no_m3 = info->no_m3;
++
+ 	if (!pdev->is_virtfn)
+ 		mhi_pdev->reset_on_remove = info->reset_on_remove;
+ 
+@@ -1428,7 +1431,7 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+ 	}
+ 
+ 	/* balancing probe put_noidle */
+-	if (pci_pme_capable(pdev, PCI_D3hot))
++	if (pci_pme_capable(pdev, PCI_D3hot) && !mhi_pdev->no_m3)
+ 		pm_runtime_get_noresume(&pdev->dev);
+ 
+ 	if (mhi_pdev->reset_on_remove)
 -- 
 2.53.0
 
