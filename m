@@ -1,51 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058788;
-	b=wsEBlv0jMiTE0688V8iDujNnLN0ZIGJNB93FtaMBwnUUJ7vJobiOfP9eaSm0Xzp25QHW
-	 OxtX7DprIY1kbuR0MhvbteBsF3MpzNEm+e1jpb/YETwyh3vM11VtoQNSMogDAf5/gAutS
-	 mwgprZQy5wkJddvmut6iCj14wRYs4qVKAGotJIR2mjSkhgV2gqdpJ04bF8+k81QEZw2/9
-	 2rAnA9I2r4oQeOHxyaeX4HgiZA276N5Xs6oJvImk26SwlHEzxhTcUismhCo6l0MXgZZZr
-	 PBoSWqyDHZPR4V3JOQGcByhtQmbQDExrOdtS0/I5uAtj4EFW+XsH0F4FurQcOog1CYg==
+	t=1795058791;
+	b=BsPuwRz9LNoiznESNoORRFcQ9nxwpBvFJ8MiAkjT/aLj72EcxRJxWM5EWO9im5VXfxTF
+	 84iQLS8PKjA4wWWFssHONygz3gJbiRUQWOzxXtuV9Et+v0DxQyou37uSZT5v8I+3pWjgb
+	 8rD5nFe33/AfvM73dfdzMD+8bDBHRox1slW6Hu+tYu/Ra9WXf5QBafViAgsE0YGTQtPKa
+	 8GO6tprM6486oJ/4C+dtwEQGEN+WmcBNqr7Tad7Igt7Xg//IG+AglDGda/fiCYQrZfpzV
+	 dmVxYjEsrkrXlv7l+P7B6cnX0LW0w08KS6Tr4oeMegmWG5WxuEHyZlqg98D3Oqo7zOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1cmqN4x+fHa1vtGdfYcf7fKbgu3c3AXYVgqlan2vkTA=;
-	b=No41P9WG+UnRqhj4nRwnumr7An8EwZYjxMubtAAvK9m57WlCQ9R4E+A4txaK1TvrgJGu
-	 AT2GPysxdZquBZ0i2i4JWEgvPXQkvQtdE/hnj33WuvtSX3clqmXEJA5/WOeAH0KE5Nt8U
-	 JuZV7+KPGRNiz5FSbDlD7ZmgQOLU/QjcPulFyztOuvHKztNfj9zqxriDVlCoxNRb+mb3o
-	 EMpUKvsxyhr6UPJkywoLH13rl+6evLmPUYh8AxxeYLtaBaeMXQFpNVynQnurQ+lXXVtVS
-	 M35QXHADOnudmGx6joMM1f1xIUudoFevhjYkpMeg9mviAhGp5S86ZkTNCPYXO1arstQ==
+	bh=3e4ZKrOKs5gtGXOsNYzntQT2T0+vMcCncY7wfIefqUU=;
+	b=A0Up9/zurED9y8pWJTb6G2UCI9IpODuN4EB1dSJB6/LwApm1jlKcweWiwBw7APlmRPRj
+	 jU5+vWj18YVb0yE3DYCdNR+dvQOOQb51MiSIWtcFVYCwXGNk+1owN7G6UfQwDbjEtGO8I
+	 KGE+YZ5sA3gDlInLj2G58/boBnsP5P/HEKKsLFyLKjwkY1JHMEKvKuC3MiqyKlX5Z64xU
+	 b8hYvoBJOAGdGnlRRzweTU1yQJqdle3GYf6XW0bkliMowKZFwUnabLg108colMqsh2vXx
+	 M8lVmKGeQNi1XB9UQaD70+M6mZRtb45/SEQhgupShJk9enqaw0Zh3DrSS/xSTtdukOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gf2gK6Qi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAlwGZaq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF77E606A32C;
-	Thu, 19 Nov 2026 03:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6279C606A326;
+	Thu, 19 Nov 2026 03:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gf2gK6Qi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D25E1F000C4;
-	Thu, 19 Nov 2026 03:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MAlwGZaq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43821F000C4;
+	Thu, 19 Nov 2026 03:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058788;
-	bh=1cmqN4x+fHa1vtGdfYcf7fKbgu3c3AXYVgqlan2vkTA=;
+	s=korg; t=1795058791;
+	bh=3e4ZKrOKs5gtGXOsNYzntQT2T0+vMcCncY7wfIefqUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gf2gK6QiHeAVhfFpJ2/Dqgh7jFCpvyh0lECEux2WOoqfFq0Kwl6VJJpK9QSPHOdOe
-	 RJRYm9vrMkcrwKe+zFAeCF2BWemZ1c7/fhOTM77VZAiBvmN5DJjg4ubS+1s+VymQD6
-	 AgOCX9clFJsGQxQlQp6N141mtNWpO7BBkulsGI1w=
+	b=MAlwGZaq90Nqyiy0XDpajOo9OcCLRqVHL6/TDeB5Uvo6l0yLDo0ENGnlOlIwhv9uE
+	 FtoMBBl+GoMmQmyNE2/LJGiKO9PKVvVcxsUw/d0zwsWL8L6yA6JaHG7bFH0El978GA
+	 TcAH/KUdqjoAmL1ivIF63csxAV34BqKusGo/cLRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0610/1848] NFSD: Set nn->cld_net before registering the cld pipe
-Date: Wed, 18 Nov 2026 15:44:08 +0100
-Message-ID: <20261118145940.854860193@linuxfoundation.org>
+Subject: [PATCH 5.10 0611/1848] rxrpc: Fix update of call->tx_pending without holding lock
+Date: Wed, 18 Nov 2026 15:44:09 +0100
+Message-ID: <20261118145940.886122017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,61 +74,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 14996e662f3b734427e2d645cacffc27b779f7d1 ]
+[ Upstream commit 7801c42c3bb737cfb06194a383873fcad8daacf5 ]
 
-rpc_mkpipe_dentry() instantiates the pipe's dentry before it returns,
-so the cld pipe can be opened as soon as nfsd4_cld_register_net() has
-run. __nfsd4_init_cld_pipe() does not store the new cld_net in
-nn->cld_net until after that call. cld_pipe_downcall() reaches the
-cld_net only through that pointer and takes cn_lock without checking
-it, so a write() that lands in the window oopses.
+Currently, rxrpc_send_data() updates call->tx_pending just before it
+returns - but it won't be holding the call->user_mutex when it does this if
+a wait was interrupted by a signal.  This would allow a parallel sendmsg()
+to race.
 
-Store nn->cld_net once @cn is fully initialized and before the pipe is
-registered, and clear it again when registration fails.
+Further, both the callers of rxrpc_send_data() call it with the lock held,
+and then it returns an indication through the parameter list to say whether
+it has dropped the lock or not - after which the callers both just drop the
+lock if it's still held.
 
-Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-6-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
-[ sashal: omitted CONFIG_NFSD_LEGACY_CLIENT_TRACKING guards around cn_has_legacy initialization ]
+Fix this by:
+
+ (1) Moving the release of call->user_mutex down into rxrpc_send_data() and
+     get rid of the indicator parameter.  This makes it easier to see where
+     the lock is held.
+
+ (2) After waiting, if the attempt to reacquire the mutex is interrupted,
+     just return directly there rather than going to out_unlock
+
+ (3) Restricting the txb variable to inside the buffering loop and leaving
+     ->tx_pending set until we've queued the buffer.
+
+Note that there's a slight change in behaviour in that wait_for_space
+failure now doesn't check for completion because it doesn't hold the call
+user_mutex.  The caller, however, should re-issue the send and pick up any
+error at a second attempt.
+
+Fixes: b0f571ecd794 ("rxrpc: Fix locking in rxrpc's sendmsg")
+Closes: https://sashiko.dev/#/patchset/20260702144919.172295-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Eric Dumazet <edumazet@google.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261006133011.531806-4-dhowells@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: adapted rxrpc_txbuf handling to the existing sk_buff-based send path ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/rxrpc/sendmsg.c | 57 ++++++++++++++++++++++-----------------------
+ 1 file changed, 28 insertions(+), 29 deletions(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 742e93f15c8f5..54815ce3da035 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -1014,6 +1014,13 @@ __nfsd4_init_cld_pipe(struct net *net)
+diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
+index 0b24d09637252..b6ea5369309de 100644
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -287,11 +287,10 @@ static int rxrpc_queue_packet(struct rxrpc_sock *rx, struct rxrpc_call *call,
+ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 			   struct rxrpc_call *call,
+ 			   struct msghdr *msg, size_t len,
+-			   rxrpc_notify_end_tx_t notify_end_tx,
+-			   bool *_dropped_lock)
++			   rxrpc_notify_end_tx_t notify_end_tx)
++	__releases(&call->user_mutex)
+ {
+ 	struct rxrpc_skb_priv *sp;
+-	struct sk_buff *skb;
+ 	struct sock *sk = &rx->sk;
+ 	enum rxrpc_call_state state;
+ 	long timeo;
+@@ -325,11 +324,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 			goto maybe_error;
  	}
- 	spin_lock_init(&cn->cn_lock);
- 	INIT_LIST_HEAD(&cn->cn_list);
-+	cn->cn_has_legacy = false;
+ 
+-	skb = call->tx_pending;
+-	call->tx_pending = NULL;
+-	rxrpc_see_skb(skb, rxrpc_skb_seen);
+-
+ 	do {
++		struct sk_buff *skb = call->tx_pending;
 +
-+	/*
-+	 * The pipe's methods reach @cn through nn->cld_net, so set
-+	 * it before the pipe can be opened.
-+	 */
-+	nn->cld_net = cn;
+ 		/* Check to see if there's a ping ACK to reply to. */
+ 		if (call->ackr_reason == RXRPC_ACK_PING_RESPONSE)
+ 			rxrpc_send_ack_packet(call, false, NULL);
+@@ -386,6 +383,9 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 			       sp->remain);
  
- 	dentry = nfsd4_cld_register_net(net, cn->cn_pipe);
- 	if (IS_ERR(dentry)) {
-@@ -1022,11 +1029,10 @@ __nfsd4_init_cld_pipe(struct net *net)
+ 			skb->ip_summed = CHECKSUM_UNNECESSARY;
++			call->tx_pending = skb;
++		} else {
++			rxrpc_see_skb(skb, rxrpc_skb_seen);
+ 		}
+ 
+ 		_debug("append");
+@@ -449,13 +449,13 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 			ret = call->security->secure_packet(
+ 				call, skb, skb->mark, skb->head);
+ 			if (ret < 0)
+-				goto out;
++				goto out_unlock;
+ 
+ 			ret = rxrpc_queue_packet(rx, call, skb,
+ 						 !msg_data_left(msg) && !more,
+ 						 notify_end_tx);
+ 			/* Should check for failure here */
+-			skb = NULL;
++			call->tx_pending = NULL;
+ 		}
+ 	} while (msg_data_left(msg) > 0);
+ 
+@@ -467,45 +467,46 @@ static int rxrpc_send_data(struct rxrpc_sock *rx,
+ 			ret = call->error;
+ 		read_unlock_bh(&call->state_lock);
+ 	}
+-out:
+-	call->tx_pending = skb;
++out_unlock:
++	mutex_unlock(&call->user_mutex);
+ 	_leave(" = %d", ret);
+ 	return ret;
+ 
+ call_terminated:
+-	rxrpc_free_skb(skb, rxrpc_skb_freed);
+-	_leave(" = %d", call->error);
+-	return call->error;
++	ret = call->error;
++	goto out_unlock;
+ 
+ maybe_error:
+ 	if (copied)
+ 		goto success;
+-	goto out;
++	goto out_unlock;
+ 
+ efault:
+ 	ret = -EFAULT;
+-	goto out;
++	goto out_unlock;
+ 
+ wait_for_space:
+ 	ret = -EAGAIN;
+ 	if (msg->msg_flags & MSG_DONTWAIT)
+ 		goto maybe_error;
+ 	mutex_unlock(&call->user_mutex);
+-	*_dropped_lock = true;
++
+ 	ret = rxrpc_wait_for_tx_window(rx, call, &timeo,
+ 				       msg->msg_flags & MSG_WAITALL);
+ 	if (ret < 0)
+-		goto maybe_error;
++		goto out_nolock;
+ 	if (call->interruptibility == RXRPC_INTERRUPTIBLE) {
+ 		if (mutex_lock_interruptible(&call->user_mutex) < 0) {
+ 			ret = sock_intr_errno(timeo);
+-			goto maybe_error;
++			goto out_nolock;
+ 		}
+ 	} else {
+ 		mutex_lock(&call->user_mutex);
+ 	}
+-	*_dropped_lock = false;
+ 	goto reload;
++out_nolock:
++	_leave(" = %d [intr]", ret);
++	return copied ?: ret;
+ }
+ 
+ /*
+@@ -667,7 +668,6 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
+ 	enum rxrpc_call_state state;
+ 	struct rxrpc_call *call;
+ 	unsigned long now, j;
+-	bool dropped_lock = false;
+ 	int ret;
+ 
+ 	struct rxrpc_send_params p = {
+@@ -777,12 +777,12 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
+ 	} else if (p.command != RXRPC_CMD_SEND_DATA) {
+ 		ret = -EINVAL;
+ 	} else {
+-		ret = rxrpc_send_data(rx, call, msg, len, NULL, &dropped_lock);
++		ret = rxrpc_send_data(rx, call, msg, len, NULL);
++		goto error_put;
  	}
  
- 	cn->cn_pipe->dentry = dentry;
--	cn->cn_has_legacy = false;
--	nn->cld_net = cn;
- 	return 0;
+ out_put_unlock:
+-	if (!dropped_lock)
+-		mutex_unlock(&call->user_mutex);
++	mutex_unlock(&call->user_mutex);
+ error_put:
+ 	rxrpc_put_call(call, rxrpc_call_put);
+ 	_leave(" = %d", ret);
+@@ -810,7 +810,6 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
+ 			   struct msghdr *msg, size_t len,
+ 			   rxrpc_notify_end_tx_t notify_end_tx)
+ {
+-	bool dropped_lock = false;
+ 	int ret;
  
- err_destroy_data:
-+	nn->cld_net = NULL;
- 	rpc_destroy_pipe_data(cn->cn_pipe);
- err:
- 	kfree(cn);
+ 	_enter("{%d,%s},", call->debug_id, rxrpc_call_states[call->state]);
+@@ -828,8 +827,8 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
+ 	case RXRPC_CALL_SERVER_ACK_REQUEST:
+ 	case RXRPC_CALL_SERVER_SEND_REPLY:
+ 		ret = rxrpc_send_data(rxrpc_sk(sock->sk), call, msg, len,
+-				      notify_end_tx, &dropped_lock);
+-		break;
++				      notify_end_tx);
++		goto out;
+ 	case RXRPC_CALL_COMPLETE:
+ 		read_lock_bh(&call->state_lock);
+ 		ret = call->error;
+@@ -842,8 +841,8 @@ int rxrpc_kernel_send_data(struct socket *sock, struct rxrpc_call *call,
+ 		break;
+ 	}
+ 
+-	if (!dropped_lock)
+-		mutex_unlock(&call->user_mutex);
++	mutex_unlock(&call->user_mutex);
++out:
+ 	_leave(" = %d", ret);
+ 	return ret;
+ }
 -- 
 2.53.0
 
