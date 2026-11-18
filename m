@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049480;
-	b=wqTOQUzB89Jh84xJ+c2fiuRJlY6LPoCqkEJTzj9sP7g5rqMEKe5HMwhLpybt1KJEd8Uf
-	 /Tw4YVbDaY76NnRMRqOnw9OjklEHURe/DWY9XzkcxPCD00miu1WvTsypo3EYNrPn9MO0d
-	 jQqOn7G9gaZA9tPTNCekN4jMSeyMCLOQtn8adLyv3gK9j73Lo0f5SxMrYXXJcr9YBfkWD
-	 lyGzsVgyxsl0inVEo8uAebiMcBPuWmPR7ldVHirfJswdSHsf6c2VDFYqIpedZzqQWc0eF
-	 fn8Oq6BfBgPstjnX5VIrVUakQqmjmgEXViWUeLnZrvUWEqIFb2w0mtde4HmupOMen6g==
+	t=1795049483;
+	b=ZR21/ScgJZQncVvVUvQNAw3M1IqwGSTaB3Paao0q6MRU+8f+GDG4i4NaX40bGU0NNKjO
+	 9cIf/qZOLgG/sdjyIb3omKnkY72qk35tLvVr8JAwlHCuaOeqKQEr2MnRBnaFqiCXR00Bi
+	 vgWvBDHjL1Mqz3HkF3wtB31coTPrwhkvoBTiwFGp17C+v2jJFmv/18IAnIBQ6uZgCr6yk
+	 JSeaPvYGIdVX3YbZ3SythaHw4vTZEp2Co6Nu/5aDh5rBmpXNW+unXwdAzlE4GQRabsCnL
+	 JHQntZzABwBuIpyqfYZs8Lttk/33DJ7+bIfw5a8VMo7Je4rUYo4q1FgDkU6GOHdzhQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YdY4rjWeP9IzEQtpfWteieh5H9Qr1hIbkGHhF4xvO2Q=;
-	b=Qx0De4epQwscrn4YcVrPA7Kc1J24mIbf4Yb3zfgafNVywfUdcAvrbRksK7Tc9F1GQjZ+
-	 EhEPHDcVYH47NmbkB9Jq3ZfT/PgMZGTeL5kB4+tqTdL4s5tt9qimNEpwNSXvSEnPKBbgY
-	 j2DbuQCIJEmru5b9V3SjC4WNQ/cys3vIUhxjmCsU1jlOenOxbUB/uHVUt4+UaBh5PnZ8r
-	 cBDZFIpyX5mH3qIYlQaOL0838uB8roytG/zF/auOYnQXu0MHznJIOglUVUipPskuQKlBg
-	 35nxorBSwBE9h85k7rEQEj/vTh6c1BZXviANZ6sl4iE+VDSHu3aD4OUv20u00SD/xyg==
+	bh=Uht2sKQfz4e2XACapBy4QYDHnaxGBcyO04fGFUeB9QA=;
+	b=XMB3nUGpBirwYBj9n6M+PC074zkTm4pTFHxrYrMu0htnJYngx/a7nkWE2EisgXBMDOpl
+	 JgegUsByPukgYLJQDGs3GyaCyhlcOmDorwmxCoV6d9PDThF8mzpUUUdHT5iL4XeCHRppB
+	 wYM62ep1Jpzx4CY8s1+Q+wXXSfkVGqJiSGhHns8JJZRuJwdzO7/BZagf/OxfISoTWnrQc
+	 Qzn1mgoOShH8lHgCl2zqhZJmkwVmVEW8An4lHSOVSmBR7joKnxxAjKr6Tlzxp6yMN2UW/
+	 kw4xghWHl2lgz9mEf7RB5MFalUL3Ja8XmzKGsOkW3aMHKS/RWFhvPmxRj3NeslAjydA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=moA75z8q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9+4InSL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4E3606A320;
-	Thu, 19 Nov 2026 00:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35602606A320;
+	Thu, 19 Nov 2026 00:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=moA75z8q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4591F000C4;
-	Thu, 19 Nov 2026 00:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F9+4InSL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B17F1F000C4;
+	Thu, 19 Nov 2026 00:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049480;
-	bh=YdY4rjWeP9IzEQtpfWteieh5H9Qr1hIbkGHhF4xvO2Q=;
+	s=korg; t=1795049483;
+	bh=Uht2sKQfz4e2XACapBy4QYDHnaxGBcyO04fGFUeB9QA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=moA75z8qB9eJjZ+DSqCNSDc3FVF9NupsWtLHSxg8WM8B0Sk5KWFAR1zbFNJ2bCY2n
-	 fcARwrMULnxM+Bb1owisN9yzoQvZ8wb3ysWTaBLMoyw2xXgG20bqO16VF+4ZSPfRkJ
-	 6VHVjUg5ys0LnFhT9t3azfQQTP7SC9QE3PALN/1U=
+	b=F9+4InSLskTB6jIqQ65YMkR/Iw06UCcO5Bsje5bCYJbipxEZJaHUxcr5+ZGNwEa7w
+	 SBJoXSAVjnETqTcg3VPrrFW2R0dR0xiQU8ZKkvrO/N7Tb+TLVKWpn87ZV1gfy00ilc
+	 kDrt49cSjr2hEkKSw3CDA3WLl2BiTEsXH02tLLWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2315/2857] drm/amd/display: remove duplicated prev_p_state_change_support assignment
-Date: Wed, 18 Nov 2026 15:55:49 +0100
-Message-ID: <20261118150324.879624034@linuxfoundation.org>
+Subject: [PATCH 6.1 2360/2857] mailbox: qcom-ipcc: remove stray disable_irq_wake() call
+Date: Wed, 18 Nov 2026 15:56:34 +0100
+Message-ID: <20261118150326.495997051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,55 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 
-[ Upstream commit 11e8f72b09a6a3c0950b9558abd37559dd098698 ]
+[ Upstream commit 134ef0278d4e48bcc325a7699250dfe861c11953 ]
 
-The prev_p_state_change_support trace entry is assigned and printed
-twice, remove the unnecessary duplicates.
+Commit afaf2ba5b430 ("mailbox: qcom-ipcc: Support interrupt wake up
+from suspend") replaced enable_irq_wake() with IRQF_NO_SUSPEND on the
+IRQ request, but left the paired disable_irq_wake() in remove()
+behind.
 
-Fixes: 13b5ca42ca9c ("drm/amd/display: Add tracepoint for capturing clocks state")
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+disable_irq_wake() decrements the IRQ's wake_depth. With no matching
+enable_irq_wake() left to increment it, wake_depth stays at 0 and
+irq_set_irq_wake() reports:
+
+  WARN(1, "Unbalanced IRQ %d wake disable\n", irq)
+
+on every unbind. Since there is no enable_irq_wake() to pair it with,
+remove the stray disable_irq_wake() call; IRQF_NO_SUSPEND already
+provides the intended wake behaviour.
+
+Fixes: afaf2ba5b430 ("mailbox: qcom-ipcc: Support interrupt wake up from suspend")
+Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/mailbox/qcom-ipcc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index 048b7f9c6321e..d7813017f7c24 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -521,7 +521,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
- 			   __entry->p_state_change_support = clk->p_state_change_support;
- 			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
- 			   __entry->pwr_state = clk->pwr_state;
--			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
- 			   __entry->dtm_level = clk->dtm_level;
- 			   __entry->max_supported_dppclk_khz = clk->max_supported_dppclk_khz;
- 			   __entry->max_supported_dispclk_khz = clk->max_supported_dispclk_khz;
-@@ -531,8 +530,8 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
- 	    TP_printk("dispclk_khz=%d dppclk_khz=%d disp_dpp_voltage_level_khz=%d dcfclk_khz=%d socclk_khz=%d "
- 		      "dcfclk_deep_sleep_khz=%d fclk_khz=%d phyclk_khz=%d "
- 		      "dramclk_khz=%d p_state_change_support=%d "
--		      "prev_p_state_change_support=%d pwr_state=%d prev_p_state_change_support=%d "
--		      "dtm_level=%d max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
-+		      "prev_p_state_change_support=%d pwr_state=%d dtm_level=%d "
-+		      "max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
- 		      "bw_dppclk_khz=%d bw_dispclk_khz=%d ",
- 		      __entry->dispclk_khz,
- 		      __entry->dppclk_khz,
-@@ -546,7 +545,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
- 		      __entry->p_state_change_support,
- 		      __entry->prev_p_state_change_support,
- 		      __entry->pwr_state,
--		      __entry->prev_p_state_change_support,
- 		      __entry->dtm_level,
- 		      __entry->max_supported_dppclk_khz,
- 		      __entry->max_supported_dispclk_khz,
+diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
+index c1e0d7ef0053c..7426fc5e02e4b 100644
+--- a/drivers/mailbox/qcom-ipcc.c
++++ b/drivers/mailbox/qcom-ipcc.c
+@@ -341,7 +341,6 @@ static int qcom_ipcc_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_ipcc *ipcc = platform_get_drvdata(pdev);
+ 
+-	disable_irq_wake(ipcc->irq);
+ 	irq_domain_remove(ipcc->irq_domain);
+ 
+ 	return 0;
 -- 
 2.53.0
 
