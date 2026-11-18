@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030196;
-	b=BuFP5f9YzOCFDPxqsi32yu/8j2lDNHPeRjFVmH966R2x/zFK4AIacaQ1bCWODw4mt8zh
-	 TNUqLE4l9S+yZ4gSvLPG88fueKQOBfnn/1sIu3xCi6De/nEIdABy2iZB1ZSRmF5RS6gu1
-	 HvTJGRgi2pMN0gqAN9YQIJOVkM5oAvrXVD7DjxfBcZrA7IZggXTZMLkPzjtGHr+J4vk8e
-	 AcYNc0lbAZNU4phuL8KnRu3vIaqtvzc3RhqRMiOKZZsBy6c9AYTmK6dUsZgLARqbzkPNY
-	 t7wYWFgkEFQFvqlKyG92J01jqIHfeyVwXZJc+RAH7kGQPnUJ0RtT8eFZ3R4FS3pB0ig==
+	t=1795030199;
+	b=yZO+MWYrDX1p0rMkj0c1H5gX58mM6b8pF/gzaIsU2Pg1tpptKYdqtzbvg8C5YAmhByIE
+	 14eJ69KwLlNkpwoOGOoGLw7kZ5TO3cQTip+imKDDKN/6b5JUKT4Sp3AhMkHBqPWgv4j1K
+	 ZZsQZBdVWHpmllP+gBarzeQO/VmK1LXnJdQinc1om01VN6UUb1eFCNqIaWCNk/f+ry86C
+	 DUIVB96Bl30hmBdzb3OVMmur7drQA+S9z5JDxwX3QLAekzglXjpcyRCwklp3xMy5as3JB
+	 EMY3GW16XQDejmoSf4SIehvZX0NTg/psVVMiSchcOpoFcV98UNw6xehb/tALFG8X0TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XH0++tdVvXpCYP20ivNUcQtgueGfc7pcKc7o+DALCMA=;
-	b=yTadK+gX6gINj3IIZTpWZxc4SJVHYddtQaHuiPb1eF18p18JxsYrcwNBRfOH/QQOD0T3
-	 h9dqejXNoIhIqu0JnZiX/7bWnMK4Rn/Ok5d31UXnJ5GSmA2/B+90HLV4j0LCiE/yZKDtc
-	 Rlq7r0pXBzLuSf18B+HM2X2A5866EVhzRql0mJHo1KOW9MElsSDMdt613FlrPigNVrhTo
-	 daVPzqLpuvbZQjiAPFoY3FBWrAdiQKo3cQwY/RWnwiwFBHC7CzXuiFFl6xz+7yzfZdIHS
-	 eGm67P5ThBCd1d/l+wWbjZDnHIF5ezmMr1zdVRLepSkG84Hh/yeAp85ZGmgeD3p6zZA==
+	bh=nFikOPBd/fXkI82NF7eEAW1+H3qJ5weGMCgQrNcPTfk=;
+	b=P5iGV4ISUbeaRgATaGO2d1qxKL/9o9bmcNgvgV4aUEviudw+OJ75ASEJ1SQoV5f2dq5v
+	 WV0aKvOwmnezXwdbpeT5B4lBrcBkDmNS8TkvBuSXiPcxQ7DP50r1MTt7z3Foc1oN51g/u
+	 HIvSjtkeeIb3lZ9CdWORgsfu4sNKoCcFBrpUIGUm9/YOByE5qWPfYk79LSQq0IF80SSTB
+	 VUpzyWahpQuwbIreropKrM4G0xb4wuX/XOQS3MJWOmGSWKC7Yr+PG5f6ksLIl7m1Dw1zS
+	 Q7PRmLbCCGMKuHGivEpXpbiTegu39VRMO4iBH1Ox5Lv2r2XYbMaNvzVh6VBELyj+55A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gd12uVlh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9YlH8VA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DC2606D35D;
-	Wed, 18 Nov 2026 19:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB48606D34E;
+	Wed, 18 Nov 2026 19:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gd12uVlh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E401F000C4;
-	Wed, 18 Nov 2026 19:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9YlH8VA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD02D1F000C4;
+	Wed, 18 Nov 2026 19:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030196;
-	bh=XH0++tdVvXpCYP20ivNUcQtgueGfc7pcKc7o+DALCMA=;
+	s=korg; t=1795030199;
+	bh=nFikOPBd/fXkI82NF7eEAW1+H3qJ5weGMCgQrNcPTfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gd12uVlhjlXL7v6SoJbmqUrnKkFsieS4ja3WHEavkn1j0f4JyRdTK4RrHjPaYCHFB
-	 +8AiIV0r0BY3owmnLEmr6SVwi1TffbpWSx9WnEsRQbNSuDOCxI77G7S/329o3ZEBK+
-	 yWPiYekFPImvt6K9/29xBhk2lDX0G2ScWBb/oYWQ=
+	b=K9YlH8VAJ+g52SSAf4L7miRRuS5yrfLSR8S5shELv0M5PvG6uuducJ3G2HHCiAzZM
+	 HK+GR3LyLttrUhuzqCrf6ylhm9YJEYhWFDcbGQMAJH01uuqqR5beTygCs2e2hWCfEr
+	 vQs9YDod8x2b2P2RzAilo0g7eq4d4HqKHL07IFDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0620/1756] arm64: dts: qcom: sm8150: Use SM8150_CX for the SDHC power domain
-Date: Wed, 18 Nov 2026 15:45:47 +0100
-Message-ID: <20261118150033.591594683@linuxfoundation.org>
+Subject: [PATCH 6.12 0603/1756] ARM: dts: qcom: msm8974: Use the header with DSI phy clock IDs
+Date: Wed, 18 Nov 2026 15:45:30 +0100
+Message-ID: <20261118150032.964991815@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,38 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 475aab59d9870d250f521e202d191899c50a3ded ]
+[ Upstream commit 1afdd80d1e021f758c975d857c6beb6da5c891bd ]
 
-Replace the raw power-domain index of SDHC2 with the SM8150_CX binding
-constant, which is the correct power domain in this case.
+Use the header with DSI phy clock IDs to make code more readable.
 
-Fixes: 876644c76034 ("arm64: dts: qcom: sm8150: Add support for SDC2")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260914-qcom-tie-cx-to-gcc-v4-0-9d5a606ada33@oss.qualcomm.com?part=45
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-dts-qcom-sm8150-sdhc-use-mss-for-pd-index-v2-1-a8610199483d@oss.qualcomm.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250408-dts-qcom-dsi-phy-clocks-v2-2-73b482a6dd02@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 542991a1d77e ("ARM: dts: qcom: msm8974: add MDSS reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 0aeceffd872c0..e52c1a4677946 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -3562,7 +3562,7 @@ sdhc_2: mmc@8804000 {
- 			iommus = <&apps_smmu 0x6a0 0x0>;
- 			qcom,dll-config = <0x0007642c>;
- 			qcom,ddr-config = <0x80040868>;
--			power-domains = <&rpmhpd 0>;
-+			power-domains = <&rpmhpd SM8150_CX>;
- 			operating-points-v2 = <&sdhc2_opp_table>;
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
+index 1bd87170252df..0fd2134934b92 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
+@@ -3,6 +3,7 @@
  
- 			status = "disabled";
+ #include <dt-bindings/interconnect/qcom,msm8974.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
++#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
+ #include <dt-bindings/clock/qcom,gcc-msm8974.h>
+ #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+@@ -1871,10 +1872,10 @@ mmcc: clock-controller@fd8c0000 {
+ 				 <&gcc GPLL0_VOTE>,
+ 				 <&gcc GPLL1_VOTE>,
+ 				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
+-				 <&mdss_dsi0_phy 1>,
+-				 <&mdss_dsi0_phy 0>,
+-				 <&mdss_dsi1_phy 1>,
+-				 <&mdss_dsi1_phy 0>,
++				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
+ 				 <0>,
+ 				 <0>,
+ 				 <0>;
+@@ -1961,8 +1962,10 @@ mdss_dsi0: dsi@fd922800 {
+ 				interrupt-parent = <&mdss>;
+ 				interrupts = <4>;
+ 
+-				assigned-clocks = <&mmcc BYTE0_CLK_SRC>, <&mmcc PCLK0_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
++				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
++						  <&mmcc PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
+ 
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_AHB_CLK>,
+@@ -2032,8 +2035,10 @@ mdss_dsi1: dsi@fd922e00 {
+ 				interrupt-parent = <&mdss>;
+ 				interrupts = <4>;
+ 
+-				assigned-clocks = <&mmcc BYTE1_CLK_SRC>, <&mmcc PCLK1_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
++				assigned-clocks = <&mmcc BYTE1_CLK_SRC>,
++						  <&mmcc PCLK1_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>;
+ 
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_AHB_CLK>,
 -- 
 2.53.0
 
