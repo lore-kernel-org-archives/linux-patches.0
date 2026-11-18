@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027470;
-	b=dzIc0/IJow4qKWx8Ktv9ZXXSKJwdLweaC2Fhw/HoNXq/lf9Knzm+jwrEju5pIO5psVmi
-	 flRBWMaN0PCMj5FnMLTN+8Q3awPwGV756aJMPJ2WLkxp5UzmfWgK+WobqjuHt3vKd78C6
-	 DCddnrVspVwbKMIXpfoBsM+0zsrhOAjm1wmTSKtF4DoZZt+ss8tXz0vz7mF0RTa6cutyB
-	 QZJiy46HgL7G+MraOaDfdia7GgiookpBhfXMMOgJKkyB0BvHGL46by0wrOFuXdrQXM15U
-	 9ephtKTAMmc4ea0wBAO8MbSwedjsbBjovY4UQ89wNeXX5COxVgkRVOVlGWELE+FtwRg==
+	t=1795027473;
+	b=Rdc5nD8ius3LTHaV2gOkwhWFjZ7wtewmLZrP6AShEKhpGJy73Mw3XuYE+aOhR0m5Zan4
+	 WIOKInticuMLJ3J0Qjl2/eLZaHFAUiLYXFYFU5RssxxhV5PzkxpPwFo01Ddb4ecZnGMsV
+	 aDEVztDxf+csE9cQ9ylxYrwBN/oIA7UUSuttYS4PjRMBjsLfcubXPcln61iuCTdEpeBq/
+	 LsVZr7u8v6IRm4PswUC0cCAHU1wButjXL37ur2rpgipOLcIsWYAGHvpJM+/xRpSOo+yK3
+	 cusJzIzNkTK1MJxxJbBI052jcho8ZCUapbK4s1NqJOF8nh5+NA8YvZqMe7C6rLuyzpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fU1Rxn2CsE/lyIBg7RwXyZJxXD/G+rLVNofNCRRKKMw=;
-	b=x4kX3mZE15AWoYTuHE/xCaSNQsa4VWxA31J9Om+5Rj50Eo5+rQs37M/Jo6NaEUR2TQmW
-	 0cmW0S6/rJfOO9B1ezyJRxwmjI3NXu1YJftT1Gw9oduCoKv4abVJn8w/ex0Ur0TVx1Ku0
-	 YHcoUQKSp2FUA9anrmqkS0rGNjlNwcm0TycvN+1jmeYb3JMpjUniKDafQ8wS6S7JO+7LM
-	 zJ0RhnHRo6X2ujX3PtHjode7BNesdCtM8L8C6t3RxOLTGKV+oToz9EAthvf4IBadywt/U
-	 W+MEaSnsr4weWCZ/PusZq+c4/+7b6yV8OmtRaVAVgC8S1D2uWvsHXZexIhgNR4kGpIA==
+	bh=cgUu+Qevvv8nFLjt6U+aGsF+h1PaDWPp+uFTN9nOXz8=;
+	b=hxycM5lWrEuZob+5o3FAHfpn2jN8YZEIxDvjEYavxxTzGvNetUIsQKAjn96S66f8nZ7V
+	 wpBh8zOooTom5RBhiDbt2AnSPqAIATwDaJbpKUS3dxyWBYC8TaCu/sYoUetZpebEhmVaC
+	 rq5Mk+onLV8684qRLw4TyYqcqTZ63RjYd1uFTzQCWT3iBtLrWuAl+2WIGMGPvDDWAO5nS
+	 imXo7RkEKLhUPwBh94SnU7VxYXDRH32++7WC/vLW4IVVsLNM0oVu+t4ZZ/syILefaPfXZ
+	 qsGLgnE55hV/y93k1A2+fsUqwy/d76+MKNzPCYn8NSr5OTQoVQHAokU7zBcDMcFchzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhgtfhKO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=moMuOa2A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7722060A2607;
-	Wed, 18 Nov 2026 18:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390F4606A33E;
+	Wed, 18 Nov 2026 18:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhgtfhKO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D036B1F000C4;
-	Wed, 18 Nov 2026 18:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=moMuOa2A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906461F000C4;
+	Wed, 18 Nov 2026 18:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027470;
-	bh=fU1Rxn2CsE/lyIBg7RwXyZJxXD/G+rLVNofNCRRKKMw=;
+	s=korg; t=1795027473;
+	bh=cgUu+Qevvv8nFLjt6U+aGsF+h1PaDWPp+uFTN9nOXz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhgtfhKOpwAsQ3AczlsBDXLZp0rYqfefJdtQC8KejzqSALvCtE28+NTyccJh/U6kb
-	 dLVeX2lftXjmJF576sr935DuAhtTj6oj9CU73q3f85bjSpCM22uRLExyfJU0p8EIeb
-	 zvyQ+KZFWJLFadNfusOMBkmyg2LcU9dJ9ZqbUYWY=
+	b=moMuOa2A67y1hcoy0YAspoSZXRlwdhHx/Kz695+tbQdmROFlwn3kXDdKSNPMcibaX
+	 lxpSFrQcCIx6HGtJacmry0TEPbi0JYNm0v7z8qnwl/31nwsonEyV1pL7TMzV2IGIPP
+	 d5GtDKlEdMAeP9UCnhcSCzd0K0vm5Hrptv9b6PMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1801/2151] net: stmmac: avoid duplicate XSK TX completions
-Date: Wed, 18 Nov 2026 15:58:56 +0100
-Message-ID: <20261118150227.413982495@linuxfoundation.org>
+Subject: [PATCH 6.18 1802/2151] rtc: mpfs: Fix alarm register word order
+Date: Wed, 18 Nov 2026 15:58:57 +0100
+Message-ID: <20261118150227.449112020@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,67 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit daac93975b8ff0a0a036a5e3562236c0b40c3e36 ]
+[ Upstream commit d691a96370b6cd7e684e4da1c473c09df963611b ]
 
-stmmac_tx_clean() reports completed AF_XDP TX descriptors through
-xsk_tx_completed(), but leaves their buffer type as STMMAC_TXBUF_T_XSK_TX.
-The slots retain that type until they are reused for another buffer type.
+mpfs_rtc_readalarm() swaps the low and high words of the alarm time.
+The RTC core reads this value during device registration to initialize
+its alarm timer. This can populate the cached alarm and timer queue
+with an incorrect expiry time, or leave an enabled hardware alarm out
+of the timer queue if the decoded time appears to be in the past.
 
-On interface close or XDP teardown, dma_free_tx_skbufs() walks the entire
-TX ring, not just the dirty_tx..cur_tx range. stmmac_free_tx_buffer()
-counts the stale XSK_TX slots again, causing xsk_tx_completed() to advance
-the completion-ring producer for buffers that have already been returned.
-This publishes completion entries without matching outstanding TX
-reservations and corrupts completion accounting for a socket which stays
-bound across the teardown.
+Read the low 32 bits from ALARM_LOWER_REG and place the masked high
+11 bits from ALARM_UPPER_REG in bits 42:32. This matches the layout
+used by mpfs_rtc_setalarm() and the low/high assembly in
+mpfs_rtc_readtime(), so the RTC core imports the programmed alarm
+time correctly during device registration.
 
-Reset the XSK buffer type after counting the completion in both
-stmmac_tx_clean() and stmmac_free_tx_buffer(). XSK TX slots have a NULL
-skb pointer and no per-slot DMA mapping, so the SKB type represents an
-empty slot. Pending XSK descriptors keep their type until they are
-completed or released, and a released slot can no longer be counted
-again by a later cleanup.
-
-Fixes: 132c32ee5bc0 ("net: stmmac: Add TX via XDP zero-copy socket")
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Link: https://patch.msgid.link/20261013-submit-stmmac-xsk-tx-completion-v1-v1-1-f21b9d098e62@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0b31d703598d ("rtc: Add driver for Microchip PolarFire SoC")
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20261019151024.2232338-1-pocj8ur4in@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-mpfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 7dbb5e9bcb54b..23aed6c1cb22a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1545,8 +1545,10 @@ static void stmmac_free_tx_buffer(struct stmmac_priv *priv,
- 		tx_q->xdpf[i] = NULL;
- 	}
+diff --git a/drivers/rtc/rtc-mpfs.c b/drivers/rtc/rtc-mpfs.c
+index 60596b0ea9d80..6616ca1f02c75 100644
+--- a/drivers/rtc/rtc-mpfs.c
++++ b/drivers/rtc/rtc-mpfs.c
+@@ -131,8 +131,8 @@ static int mpfs_rtc_readalarm(struct device *dev, struct rtc_wkalrm *alrm)
  
--	if (tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_XSK_TX)
-+	if (tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_XSK_TX) {
- 		tx_q->xsk_frames_done++;
-+		tx_q->tx_skbuff_dma[i].buf_type = STMMAC_TXBUF_T_SKB;
-+	}
+ 	alrm->enabled = mode & MODE_WAKE_EN;
  
- 	if (tx_q->tx_skbuff[i] &&
- 	    tx_q->tx_skbuff_dma[i].buf_type == STMMAC_TXBUF_T_SKB) {
-@@ -2755,8 +2757,11 @@ static int stmmac_tx_clean(struct stmmac_priv *priv, int budget, u32 queue,
- 			tx_q->xdpf[entry] = NULL;
- 		}
+-	time = (u64)readl(rtcdev->base + ALARM_LOWER_REG) << 32;
+-	time |= (readl(rtcdev->base + ALARM_UPPER_REG) & ALARM_UPPER_MASK);
++	time = readl(rtcdev->base + ALARM_LOWER_REG);
++	time |= ((u64)readl(rtcdev->base + ALARM_UPPER_REG) & ALARM_UPPER_MASK) << 32;
+ 	rtc_time64_to_tm(time, &alrm->time);
  
--		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_XSK_TX)
-+		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_XSK_TX) {
- 			tx_q->xsk_frames_done++;
-+			/* Teardown must not count this slot again. */
-+			tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_SKB;
-+		}
- 
- 		if (tx_q->tx_skbuff_dma[entry].buf_type == STMMAC_TXBUF_T_SKB) {
- 			if (likely(skb)) {
+ 	return 0;
 -- 
 2.53.0
 
