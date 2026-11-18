@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017350;
-	b=FfCkCgXhWWAspcxxJEChUCy7w+fwVsSmfoeMzVPTO3xet9UBcWRaR291vFxbbJ566ou0
-	 YzwkbXp5KyJYmNQ2ZWdIZR/2cZRda1B14P2ga4U7BpfxiMv54LBp+GSLlnUt//zm+NLMj
-	 O3CZ6wBsCwqueWFsLhHGEKAu79X9LPUppEp6m5GTDWc4AHKyiBU2lJrYGbWetsCBUbgQT
-	 ITh+10CNEpUmKTvIKujrkG3RbWCtiblqmY9rdfL647ibrEeEaD4YQ1yn3K1HG9D9y2awg
-	 p5ikTG7BggWWRkmDLkaABOK8M5cSrxXrw+BgyigrybIseCX/9eRtkgQTNHSKpNr41Mg==
+	t=1795017352;
+	b=x59feUCzELVkqfPveNMDFpbADvgsf+g0EWM6f5wC0/cB4VZ6BqHvEmxZHcEkqsbsda3W
+	 Sbqc1qBkjpT0CTf3hpB6YFpg+xDy1zVYoFCbiKD4sUDccCxgxonBJTcWAwgtqiBRXq/3v
+	 uNg7OjFnTPZBX8ao0DeTsgUJx8mu+aSPIedI/Nr3YqjDcWfMsxUKdH6oFgoEIY/Kr5eJc
+	 EuVxPtfVEZJhhqY59dT7UoFYkrRZrDGABqa6UQXhSnMCqS+bX25LW3JQpBRsPd6AVgrdk
+	 LvglXw9n/6KVqUBoMOW0/6GCRewICGMDB0OWfEYSh+fll/Ulwh46/XidVcg4L64N+UA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fYW9K/ZNiut4DTzaoL4ZTgoqhyTdezUGU7+vT+2+XRY=;
-	b=XETzUhugd33Enl24vqBp/6ZdXiMrauDgHOhp35by8/DlpC6HEqZbKsh4B4cu/iG2gEcx
-	 RPb/QqcBk75C/Zwu8Z6p2z6nTjRCcj4+R29eMl2vT299RaDfh1dd45wI5HCXTV97n681m
-	 3nwQVTnNRCviscl4wPP0LzIfaT8GXTWEf/JQrH1pgvF54SBt6OR/J4BvgkReUyDsNA6zM
-	 gPF6TDxkWFAlO5iNOZBSqUis65Af6Xt/GGRUARXYPwr9CRWLQp5mDtUPsSadpaPe8XmQh
-	 +Q0KEVmIPUasDiMjDrdtNmSCGk3b/Ie37hE1XPEX9bWVTgPvNIIRJ1igbJb2usMWHXw==
+	bh=kfzbzgMjW21trUfOMkMPDgLrn7+5gzBopg8xkhZlskc=;
+	b=qmmj1bvC1VJItdSaJAPVunWJelUVMoCWta0kri5c730ZJB9lHs73HeM+hifxhkn1yzrN
+	 eueN91TXVZjZQvSRAMV9xQrL4WCZZqqhkIASZIvnKDbQ/+aEWM5LS8vSCVT4LyNPi1SRk
+	 fuYDZUNP5ykihzxhJpBcZLXJlcC0+NSnT5UF/tkKs+Lfw5eue5SjbfETGDeTcmJMhdAjx
+	 oeg+e85QcK/6aBI95ELz0YheFWOjd7ZC0gZPA2E585qTv7lf7PHiRCuV2n07IOdfK+W5F
+	 Totn4PxgTams7Zk/X5u0M9AxtqRy3ph3TRwCusUBSW8sJLm2mbfnkNcFKm0gvJIFQIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Q9i/GjQz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvorVfpG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F200A606A325;
-	Wed, 18 Nov 2026 15:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80AF60A2603;
+	Wed, 18 Nov 2026 15:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9i/GjQz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0AE1F000C5;
-	Wed, 18 Nov 2026 15:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvorVfpG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D7D1F000C6;
+	Wed, 18 Nov 2026 15:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017349;
-	bh=fYW9K/ZNiut4DTzaoL4ZTgoqhyTdezUGU7+vT+2+XRY=;
+	s=korg; t=1795017352;
+	bh=kfzbzgMjW21trUfOMkMPDgLrn7+5gzBopg8xkhZlskc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q9i/GjQz1V5+icaStAiixPvp11ZBxv0U7vm9TGKpNA+eEScq/E1n4FQXoqz75heRa
-	 tJbbzTLUIFA0lcOK+BrMMKOWeFv/O8cJoKYZfO1IaILJ1qJWZ8qH763HSSmLZVEmEC
-	 qzTad6HxrErsDP+Mfs2SnoXRkYYGdctw54Xh7w14=
+	b=FvorVfpGzMuBBAQOjKq9k5FLCN+YCKUWn34Hiz9/kY9+tk7zGGlILUkjndEguKoJJ
+	 anLOz3N6Q/7/vjzHC+6Jd1mvUmPkP38ONtsm2JHhdIUm/pviuCbEisCPiNtsB5Y39Z
+	 2yO8F31Wq31UOlXrX8XSVXh7z5vpk09j2xr0S5r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Kang Yang <kang.yang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0826/2651] perf jevents: Limit the number of JSON reading workers
-Date: Wed, 18 Nov 2026 15:34:26 +0100
-Message-ID: <20261118150317.627705837@linuxfoundation.org>
+Subject: [PATCH 7.3 0853/2651] wifi: ath12k: free pending MSDUs on duplicate mon link descriptor
+Date: Wed, 18 Nov 2026 15:34:53 +0100
+Message-ID: <20261118150318.579135226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,70 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Kang Yang <kang.yang@oss.qualcomm.com>
 
-[ Upstream commit 1a097d93caf62c4e6c834bff81609512070e5008 ]
+[ Upstream commit d8e8eac3fcffc114a79f7d07d7cb73cc16645381 ]
 
-The ProcessPoolExecutor is created without max_workers, so
-concurrent.futures defaults to one worker per CPU and forks all of them
-when the first task is submitted. Each worker costs the parent a few
-file descriptors. For systems with high core-count processors like the
-AMD EPYC 9996, the pool can easily exhaust RLIMIT_NOFILE as seen below.
+ath12k_wifi7_dp_rx_mon_mpdu_pop() aborts processing when a duplicate
+monitor link descriptor is detected.
 
-  File ".../multiprocessing/popen_fork.py", line 65, in _launch
-    child_r, parent_w = os.pipe()
-  OSError: [Errno 24] Too many open files
+Previous iterations may already have linked MSDUs onto *head_msdu
+and detached the corresponding RX buffers from their descriptors.
+Returning without completing or freeing the chain leaves those
+skbs orphaned, resulting in a memory leak.
 
-The error is reported, but jevents.py does not exit. The workers that
-did start stay blocked waiting for work and are never joined, so the
-build eventually hangs. Other targets keep building in the meantime,
-leaving the traceback several lines above the point where the build
-stalls.
+kmemleak reports these skbs in field testing:
+  kmemleak_alloc()
+  __netdev_alloc_skb()
+  ath12k_dp_rx_bufs_replenish()
+  ath12k_wifi7_dp_rx_mon_dest_process()
 
-Limit the pool instead of sizing it against the descriptor limit, which
-would mean relying on how many descriptors concurrent.futures needs for
-each worker. At least for recent AMD EPYC processors, reading the JSON
-files does not need many workers to be fast and things typically stop
-scaling beyond 32 workers. Hence, a small upper bound keeps the speedup
-and stays well inside any usable limit.
+Free the accumulated MSDU chain before returning and clear
+*head_msdu so callers observe a consistent state.
 
-Fixes: eaab2eb09dc2f86f ("perf pmu-events: Parallelize JSON and metric pre-computation in jevents.py")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
+Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260916060325.854-3-kang.yang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/jevents.py | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/pmu-events/jevents.py b/tools/perf/pmu-events/jevents.py
-index 860027bb71b26..d81fe6757915a 100755
---- a/tools/perf/pmu-events/jevents.py
-+++ b/tools/perf/pmu-events/jevents.py
-@@ -1450,6 +1450,13 @@ const char *describe_metricgroup(const char *group)
- }
- """)
- 
-+# Upper bound on the number of workers reading JSON files in parallel.
-+_max_parallel_workers = 32
-+
-+def _parallel_worker_count(num_tasks: int) -> int:
-+  return max(1, min(getattr(os, 'process_cpu_count', os.cpu_count)() or 1,
-+                    _max_parallel_workers, num_tasks))
-+
- def _parallel_read_json_events(task: Tuple[str, str]) -> Tuple[str, str, Sequence[JsonEvent]]:
-   path, topic = task
-   return path, topic, _read_json_events_impl(path, topic)
-@@ -1549,7 +1556,9 @@ struct pmu_table_entry {
-     preprocess_arch_std_files(arch_path)
-     ftw(arch_path, [], collect_json)
- 
--  with concurrent.futures.ProcessPoolExecutor(initializer=_init_worker, initargs=(_arch_std_events,)) as executor:
-+  with concurrent.futures.ProcessPoolExecutor(max_workers=_parallel_worker_count(len(tasks)),
-+                                              initializer=_init_worker,
-+                                              initargs=(_arch_std_events,)) as executor:
-     for path, topic, events in executor.map(_parallel_read_json_events, tasks):
-       _json_cache[(path, topic)] = events
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c b/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
+index ed66867466056..08f2fba3e6807 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_mon.c
+@@ -2675,6 +2675,8 @@ ath12k_wifi7_dp_rx_mon_mpdu_pop(struct ath12k *ar, int mac_id,
+ 		if (pmon->mon_last_linkdesc_paddr == paddr) {
+ 			pmon->rx_mon_stats.dup_mon_linkdesc_cnt++;
+ 			spin_unlock_bh(&pmon->mon_lock);
++			kfree_skb_list(*head_msdu);
++			*head_msdu = NULL;
+ 			return rx_bufs_used;
+ 		}
  
 -- 
 2.53.0
