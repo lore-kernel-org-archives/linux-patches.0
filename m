@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059256;
-	b=XqWOT5qYZAeRwQWV3mwahbZCIyL+jbSW6rELPambYCATTtHJaqswFlUAvrz5XA1yT6Ca
-	 orfLz91H87b/hRf5LkjH1ns+TChCQlmrF5znLaPb7wmeINdydkIMQDD7tyDn25QmH24i3
-	 bCO4aMlKOs8DgLo2YKgaYckP1asvdeKeqyKm0mqjHKV7hGzegrJsQOnypWolD42RfFyZT
-	 X/XBWu8dngK9KvrscQb/fcTMEq93ssPb+0TL+yKMVFIFwfc67CC8aSWSDRwUZKsHyF7Xy
-	 7SJmjKiGF/Pfd/lohWMfAKH6kBA4cf9o9q4BNmqkdoygLzjVFhlCdty0qZavqp2Os1Q==
+	t=1795059259;
+	b=WH5dn7Pt3tzfG/bW6TQlM56tXGI83T8gwgWVVSp4UAahphHPij7UTw90WBT/yJDhtEuN
+	 tPQLN6ZMBoN7nbesUO+RvmaV2zccrxtuECtWqb/U07ZMR8mhoMj10PNLikafytlRe8atR
+	 /J/ilDVCOrz86V7wj1HGY5Caw0w0NcANxPzFxIg6Txn63bBAwi9wzNW47SU+HvAoG3qMX
+	 WQK1ElufUJeeish2g7aYsao1TUH1JUuz4X6B+SSBKLCKn17eW61CgCcBjVhFwaHOup6qk
+	 suIJoeUY2Nr7sMV433WqmQRbxa6qbWXZO3CrO6/RDSFIhaiYT3dbcyGKU+cyAC3Izug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mVcr24KSqZwNhVdlcAwx1TkKOw02dhaOUCpktSgIyd8=;
-	b=YsnQgRbB17PoHfhp986kMgIU5ZgoO09Y15siSxLRjKWhx24Ys+eVQX04pab4PfEBgsnV
-	 fg71dBh7/nv6JB9XOm2ikJ0dxDvbZZ3tz13SSZgv18zYqpLpb/+asLYddnUpun3XKfDUp
-	 GlDMyX1zax4p9fDBCSUR+fsmbKsGvRrzLKjTNRjM09+uXb8D7CPhn17aYbUfg0iGOCPvq
-	 X+cT1497DXdb6MlBfTlvy4dFTh3B8KFIjJTVy1v4SRO4x3Nv3ApUNXTJG/e1u9dW+142v
-	 DTELd/+wa6Wi3ZlOBSPVmBFeX0Djc50+hugFmU02VqgsfMcRCFI9x6mQdvyUUN4Sq0A==
+	bh=tXzeSME9OdardCfLmhZFy7JBaG+7JL1hxjhBw/ephd4=;
+	b=RgaAI6DcsDrWOk09H1KonQWJdDK8cuCoybf/oNLMVJaO97OGy3WlDfwoM10sgKTEit8z
+	 hXsuxwXlTmRU5vGjhmcmeKlg19dyybwjOZIr25yrXCw7OFlWInaqIz9xYXzb/VBmzIEl/
+	 IrdkVfWtcMbtsBb+drNySTCIa1TcXPYE4wdqnJI+F6zKh/qJbPHOnp2ZNyM8uTPvAhsYu
+	 bu1B0ixlgbD5B5BJvtowgSnwe4fHFuwTF3CX9XkBIwr31CaQyv0SjposuhbAZ6LBer3LK
+	 J+FqdGiW8UgHxPtCfK/ptwPUMJP53e3+hqWjnQ9sFY7nP6jMNSlposjBEZxIyTwlfcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X57VpgTb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vj59BHoM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2351606A320;
-	Thu, 19 Nov 2026 03:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB74606A31C;
+	Thu, 19 Nov 2026 03:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X57VpgTb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19311F000C4;
-	Thu, 19 Nov 2026 03:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vj59BHoM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FD81F000C4;
+	Thu, 19 Nov 2026 03:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059256;
-	bh=mVcr24KSqZwNhVdlcAwx1TkKOw02dhaOUCpktSgIyd8=;
+	s=korg; t=1795059258;
+	bh=tXzeSME9OdardCfLmhZFy7JBaG+7JL1hxjhBw/ephd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X57VpgTbVVVUGW68iMrpN8/gDJIeNHoTlO5geOHOJc0Axc7H1Ss1C4KWjoo+KBJCU
-	 v3Prv20X/ptyZZO76y7LM2/ILKaG0HUsyiAosdzr15ngBwEsfMR+45RledmdFbnF51
-	 Rxlnuf0mU4xUxE1511AMCa7DZeCII5RrpdYsZcR0=
+	b=vj59BHoMkrJs0jQSh1mXglECssjwl5NlIlATLsPT9ooWePtYtECmce2gt0a0WmYbF
+	 wHXIcsboAZ3O1lXW6GryJbBGlOU49eD8ppce0h1k7dbkPLGB1Rru08hhHxQ2CaT7Ia
+	 BJr+Gyp+bLAHjvxNLkrxdoi/7Sndaq0BRhFUBTdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0777/1848] tracing/histograms: Verify event_call identity when updating synth_event refcount
-Date: Wed, 18 Nov 2026 15:46:55 +0100
-Message-ID: <20261118145949.008931589@linuxfoundation.org>
+Subject: [PATCH 5.10 0778/1848] media: uvcvideo: Disable autosuspend for Insta360 Link
+Date: Wed, 18 Nov 2026 15:46:56 +0100
+Message-ID: <20261118145949.051142494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,123 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 3403d9bb27ebc3572bd048620746b4414e073bf9 ]
+[ Upstream commit 3de6df64f92d8633eb51a5e957ffc43ebdb2156e ]
 
-In event_hist_trigger_parse() and hist_unreg_all(), the histogram
-registration and unregistration paths look up find_synth_event() using
-trace_event_name(file->event_call) and adjust se->ref if a match is
-found.
+When the device suspends, it keeps power-cycling.
 
-Because find_synth_event() only compares the event basename, registering
-or removing a histogram on a non-synthetic trace event whose basename
-matches a synthetic event erroneously modifies the synthetic event's
-reference count.  If a histogram is registered on the non-synthetic
-event before the synthetic event is created and removed afterwards,
-se->ref is decremented without a matching increment, allowing the
-synthetic event to be freed while an active histogram action still holds
-a pointer to it.
+The user notices it because the LED constanct oscillate between
+blue (ready) and no LED (off).
 
-Introduce find_synth_event_call() to verify that &se->call matches
-file->event_call before adjusting se->ref.
+<6>[95202.128542] usb 3-3-port4: attempt power cycle
+<6>[95206.070120] usb 3-3.4: new high-speed USB device number 49 using xhci_hcd
+<6>[95206.212027] usb 3-3.4: New USB device found, idVendor=2e1a, idProduct=4c01, bcdDevice= 2.00
+<6>[95206.212044] usb 3-3.4: New USB device strings: Mfr=1, Product=2, SerialNumber=<Serial: 1>
+<6>[95206.212050] usb 3-3.4: Product: Insta360 Link
+<6>[95206.212075] usb 3-3.4: Manufacturer: Amba
+<7>[95206.214862] usb 3-3.4: GPIO lookup for consumer privacy
+<7>[95206.214866] usb 3-3.4: using lookup tables for GPIO lookup
+<7>[95206.214869] usb 3-3.4: No GPIO consumer privacy found
+<6>[95206.214871] usb 3-3.4: Found UVC 1.10 device Insta360 Link (2e1a:4c01)
+<3>[95206.217113] usb 3-3.4: Failed to query (GET_INFO) UVC control 14 on unit 1: -32 (exp. 1).
+<3>[95206.217733] usb 3-3.4: Failed to query (GET_INFO) UVC control 16 on unit 1: -32 (exp. 1).
+<4>[95206.223544] usb 3-3.4: Warning! Unlikely big volume range (=32767), cval->res is probably wrong.
+<4>[95206.223554] usb 3-3.4: [9] FU [Mic Capture Volume] ch = 1, val = -32768/-1/1
+<6>[95210.698990] usb 3-3.4: USB disconnect, device number 49
+<6>[95211.963090] usb 3-3.4: new high-speed USB device number 50 using xhci_hcd
+<6>[95212.657061] usb 3-3.4: new full-speed USB device number 51 using xhci_hcd
+<3>[95212.783119] usb 3-3.4: device descriptor read/64, error -32
+<3>[95213.015076] usb 3-3.4: device descriptor read/64, error -32
+<6>[95213.120358] usb 3-3-port4: attempt power cycle
 
-Fixes: 4b147936fa50 ("tracing: Add support for 'synthetic' events")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261019120730.2342739-1-lee@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[Lee: Context conflict in event_hist_trigger_func() - no functional change]
-Signed-off-by: Lee Jones <lee@kernel.org>
+Bus 001 Device 009: ID 2e1a:4c01 Amba Insta360 Link
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass          239 Miscellaneous Device
+  bDeviceSubClass         2
+  bDeviceProtocol         1 Interface Association
+  bMaxPacketSize0        64
+  idVendor           0x2e1a
+  idProduct          0x4c01
+  bcdDevice            2.00
+  iManufacturer           1 Amba
+  iProduct                2 Insta360 Link
+  iSerial                 0
+  bNumConfigurations      1
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20221101-instal-v1-0-d13d1331c4b5@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c  | 11 +++--------
- kernel/trace/trace_events_synth.c | 10 ++++++++++
- kernel/trace/trace_synth.h        |  1 +
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index f36b793147f8e..7c3c8cfb873c1 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5666,7 +5666,6 @@ static void hist_unreg_all(struct trace_event_file *file)
- 	struct event_trigger_data *test, *n;
- 	struct hist_trigger_data *hist_data;
- 	struct synth_event *se;
--	const char *se_name;
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index c2adc6854c540..e2dab556ec996 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -2373,8 +2373,11 @@ static int uvc_probe(struct usb_interface *intf,
+ 			"supported.\n", ret);
+ 	}
  
- 	lockdep_assert_held(&event_mutex);
- 
-@@ -5679,8 +5678,7 @@ static void hist_unreg_all(struct trace_event_file *file)
- 			list_del_rcu(&test->list);
- 			trace_event_trigger_enable_disable(file, 0);
- 
--			se_name = trace_event_name(file->event_call);
--			se = find_synth_event(se_name);
-+			se = find_synth_event_call(file->event_call);
- 			if (se)
- 				se->ref--;
- 
-@@ -5703,7 +5701,6 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
- 	struct event_trigger_ops *trigger_ops;
- 	struct hist_trigger_data *hist_data;
- 	struct synth_event *se;
--	const char *se_name;
- 	bool remove = false;
- 	char *trigger, *p;
- 	int ret = 0;
-@@ -5800,8 +5797,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
- 		}
- 
- 		cmd_ops->unreg(glob+1, trigger_ops, trigger_data, file);
--		se_name = trace_event_name(file->event_call);
--		se = find_synth_event(se_name);
-+		se = find_synth_event_call(file->event_call);
- 		if (se)
- 			se->ref--;
- 		ret = 0;
-@@ -5842,8 +5838,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
- 	if (ret)
- 		goto out_unreg;
- 
--	se_name = trace_event_name(file->event_call);
--	se = find_synth_event(se_name);
-+	se = find_synth_event_call(file->event_call);
- 	if (se)
- 		se->ref++;
- 	/* Just return zero, not the number of registered triggers */
-diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
-index b126af59e61c3..e7867d02a9e92 100644
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -821,6 +821,16 @@ struct synth_event *find_synth_event(const char *name)
- 	return NULL;
- }
- 
-+struct synth_event *find_synth_event_call(struct trace_event_call *call)
-+{
-+	struct synth_event *se;
-+	const char *name;
++	if (!(dev->quirks & UVC_QUIRK_DISABLE_AUTOSUSPEND))
++		usb_enable_autosuspend(udev);
 +
-+	name = trace_event_name(call);
-+	se = find_synth_event(name);
-+	return se && &se->call == call ? se : NULL;
-+}
+ 	uvc_trace(UVC_TRACE_PROBE, "UVC device initialized.\n");
+-	usb_enable_autosuspend(udev);
 +
- static struct trace_event_fields synth_event_fields_array[] = {
- 	{ .type = TRACE_FUNCTION_TYPE,
- 	  .define_fields = synth_event_define_fields },
-diff --git a/kernel/trace/trace_synth.h b/kernel/trace/trace_synth.h
-index 077c748a8b3a6..87320dab449a8 100644
---- a/kernel/trace/trace_synth.h
-+++ b/kernel/trace/trace_synth.h
-@@ -37,5 +37,6 @@ struct synth_event {
- };
+ 	return 0;
  
- extern struct synth_event *find_synth_event(const char *name);
-+extern struct synth_event *find_synth_event_call(struct trace_event_call *call);
- 
- #endif /* __TRACE_SYNTH_H */
+ error:
+@@ -3057,6 +3060,15 @@ static const struct usb_device_id uvc_ids[] = {
+ 	  .bInterfaceSubClass	= 1,
+ 	  .bInterfaceProtocol	= 0,
+ 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_FORCE_BPP) },
++	/* Insta360 Link */
++	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
++				| USB_DEVICE_ID_MATCH_INT_INFO,
++	  .idVendor		= 0x2e1a,
++	  .idProduct		= 0x4c01,
++	  .bInterfaceClass	= USB_CLASS_VIDEO,
++	  .bInterfaceSubClass	= 1,
++	  .bInterfaceProtocol	= 0,
++	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_DISABLE_AUTOSUSPEND) },
+ 	/* Intel RealSense D4M */
+ 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
+ 				| USB_DEVICE_ID_MATCH_INT_INFO,
 -- 
 2.53.0
 
