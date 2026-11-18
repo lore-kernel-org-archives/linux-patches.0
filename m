@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042785;
-	b=yp1llJrpgO+ZajF3MYnuIlhh1ZGfWqBuu4Ojs1pA4ZujBKJ0fWWYJLCR7bdfvV5Lvepz
-	 odbyEh41WcJk6kQAhPCwEp/eysurTMZdA0nDAVsIWUxgSUp6DWjhY5RnuNPW3G/72Qb0b
-	 WsXs1VpEb36radP5INGuoal3V/R65Dt3kit/oJXTc3QmiDjm8041xLZUMom51XFu6hTe8
-	 6k4vlCltiRln25qUVNNjNLlnacjjH7hWqqBHfInGDbrraY4GI20D7mJb7Gz1ZY6qWpyu1
-	 QTz1VtcToQj5ek+k0vNL0IOh2nOPyTA/uUpSJ9ndccnmZajbSmJKmz0xYrZFs05e6NQ==
+	t=1795042788;
+	b=BS4X8WbmmD1iwlv9y/QpoS5W3i01SyJOcSn9/EYItTtN7L9hIi5D31W8RL+9t+BaoLL3
+	 oHwHCkrl9EQrE81H8hypFQubMbyggGWTQa78hMfxYLd99YBCdu4OGtQykE/N/PrB0uBsp
+	 WX9AaYchfBMOwn7Jy1x7Sq0/PGcTeJ8/igIz9FqsCoR9lXZOEVdJMjMBUDZ7nFfnODI0R
+	 anxctFZXZpCOOnTl2COuNifdy+k42mymnLNGY8cBDz+SZpZis9LyKf/O0pSr2rlDkaOU7
+	 do2B3eVglf79As7n0D/YOYefu+O8gUckAF2yVhy2NByNkGJ/vyoXcIRgn7uPdr+kNXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a8rpsze6KUyR5UYRxjEL9CnW7h8ZBi9APU6m8hxwcmo=;
-	b=pbwwP5JxE6/4hBgA55InIHm9s+2iG2rVmPxvrBp9I0YGiE3FYi/0eGvB4pqJ+hUmoryW
-	 ao4u1hJ2AyThSoXHaqYsdT5gFcXO7z7JXoDLtak0tCrE7QR7kNIJXITGqprCuu/JT5Lpa
-	 JHg6M8xGcd9TdUAYlQ8kcDG8qdQcgteyHK01oxP2uKTkmkBI4uYzFpSqUI9sK8HkT6QOk
-	 15D7iKlQ7o0AkfTmZ/AG5o+ucwZFZOEyt/cN6jxhVmC3H0Dqs2ONEdInAX9i19lZfWaVt
-	 i2hl+3iYBnjAEY28Y9VA4yGm1lfZy/EGDC/StwzB3L/uomNmLtUUu/N4fojuc0gryPA==
+	bh=EcBUH1ub3bd37h3BY/jjchskoBRJS3Nm5PG8L2SGyt0=;
+	b=Xwcn8dlduQsxjTr8Rry/NmuKLSYikQMxXele/VciXOxu1GyUuR6GZO9/LQyl3cTCOv3C
+	 hQp8gGkp1EEZc0+UQDZ9OE1RtQppMHN7kPYRFi+MkHB64lO2NGXdgaPa+DyqlYSJ539nZ
+	 HfeXC1v/QgjWR6sH4lxmoodZqMcMZpmi9Pzq3DuX5bEHyniRcNN3yr+7xkzZCeO4hZAbf
+	 go+nN4D4j5yMa5YycdU1nsN6dqLQVVVpnOOIFibhfus/wP/7nM8q0g16FbPjLMmXeWiFT
+	 Mjh8yzlq218XYeVB2qYRQ+uMHL7QSOxAh91GWZil/sXVHcr7UAECHZOS9DmbtdKxJHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xjxIUNTs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSD+lzyN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CD3606A31C;
-	Wed, 18 Nov 2026 22:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20246606A325;
+	Wed, 18 Nov 2026 22:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xjxIUNTs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67E61F000C4;
-	Wed, 18 Nov 2026 22:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSD+lzyN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C9A1F000C5;
+	Wed, 18 Nov 2026 22:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042785;
-	bh=a8rpsze6KUyR5UYRxjEL9CnW7h8ZBi9APU6m8hxwcmo=;
+	s=korg; t=1795042788;
+	bh=EcBUH1ub3bd37h3BY/jjchskoBRJS3Nm5PG8L2SGyt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjxIUNTsWitn49TZemWXuMd6016sQ08UnC5yjPmGv3+SdMF+AEsj2ZcEoqx5cpufu
-	 yTEBJukRFAEgE7Zmwn4z2i7dqeUj6u1ofNpmtsU9xsbUlVALvrKp/Db/FFusYswP79
-	 VNbvakdGP4IvK9x4HYkH7Gvm2GfKjdrfjAqXYgWA=
+	b=FSD+lzyNyIWFzHNhtelc2d2q2vpsJtZm3xFRBsTnpV+asqMAPDUyxxdHpZgoOh0M8
+	 hDFBfHuwsdk0xQ/iXhvA9E2gBmz20LxU9Rs1VN5oIZAtMHwTI430KlAqGfEBYQ3Agr
+	 qqvYl76GFLFEbpxG4wGRCZTR3sXG00JD1JhQOOls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Imre Kaloz <kaloz@kernel.org>,
-	Joshua Kinard <linux@kumba.dev>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Alan Maguire <almagui@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3295/3318] rtc: ds1685: do not sleep in the power-off handler
-Date: Wed, 18 Nov 2026 16:05:17 +0100
-Message-ID: <20261118150458.445241373@linuxfoundation.org>
+Subject: [PATCH 6.6 3296/3318] libbpf: fix cross-endian build with newer libbpf
+Date: Wed, 18 Nov 2026 16:05:18 +0100
+Message-ID: <20261118150458.474819109@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,38 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 21a829af60a7f5c7456f1f0ff9b6b0eff0ceb738 ]
+commit 087f3964f4b3 ("libbpf: Support layout section handling in BTF")
+added extra data to the BTF header.
 
-Power-off handlers run from an atomic notifier chain and must not
-sleep. Use mdelay() for the delay before setting PAB.
+This extra data is ignored in the native case, but when building with
+different endianness the bswap code in old libbpf would check for strict
+size equality, leading to build failures such as this when BTF data is
+generated with a newer version of libbpf (through pahole)
+    BTFIDS  vmlinux.unstripped
+  libbpf: Can't load BTF with non-native endianness due to unsupported header length 32
+  FAILED: load BTF from vmlinux.unstripped: Operation not supported
+  make[2]: *** [../scripts/Makefile.vmlinux:72: vmlinux.unstripped] Error 255
 
-Fixes: aaaf5fbf56f1 ("rtc: add driver for DS1685 family of real time clocks")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-169477@kernel.org/
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Acked-by: Joshua Kinard <linux@kumba.dev>
-Link: https://patch.msgid.link/20261013120208.11268-3-kaloz@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Newer libbpf versions also properly ignore trailing data in the bswap
+case, but the patch is too intrusive to backport, so take the header
+length comparison fix from it instead.
+
+Link: https://github.com/NixOS/nixpkgs/pull/570639
+Fixes: 3289959b97ca ("libbpf: Support BTF loading and raw data output in both endianness")
+Acked-by: Alan Maguire <almagui@kernel.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1685.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/bpf/btf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ds1685.c b/drivers/rtc/rtc-ds1685.c
-index dd509b3de6abc..ddfbc89e2740f 100644
---- a/drivers/rtc/rtc-ds1685.c
-+++ b/drivers/rtc/rtc-ds1685.c
-@@ -1429,7 +1429,7 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index 2e9f28cece3ff..54ad899a1e96c 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -222,14 +222,14 @@ static int btf_parse_hdr(struct btf *btf)
+ 	struct btf_header *hdr = btf->hdr;
+ 	__u32 meta_left;
  
- 		/* Set PAB to 1 in Control 4A to power the system down. */
- 		dev_warn(&pdev->dev, "Powerdown.\n");
--		msleep(20);
-+		mdelay(20);
- 		rtc->write(rtc, RTC_EXT_CTRL_4A,
- 			   (ctrl4a | RTC_CTRL_4A_PAB));
+-	if (btf->raw_size < sizeof(struct btf_header)) {
++	if (btf->raw_size < offsetofend(struct btf_header, str_len)) {
+ 		pr_debug("BTF header not found\n");
+ 		return -EINVAL;
+ 	}
  
+ 	if (hdr->magic == bswap_16(BTF_MAGIC)) {
+ 		btf->swapped_endian = true;
+-		if (bswap_32(hdr->hdr_len) != sizeof(struct btf_header)) {
++		if (bswap_32(hdr->hdr_len) < offsetofend(struct btf_header, str_len)) {
+ 			pr_warn("Can't load BTF with non-native endianness due to unsupported header length %u\n",
+ 				bswap_32(hdr->hdr_len));
+ 			return -ENOTSUP;
 -- 
 2.53.0
 
