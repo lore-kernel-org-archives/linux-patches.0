@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030135;
-	b=rVsBbpc3enhj7IwKds45tzwO09ZjmXL4XZac33zH5spFMj84yiPnqQSXda+KIr6dmvEG
-	 HyC7p9QifB7RXd8Er/15LEFRz2JQRK0xLJ4o83KjL39JbDbA3mUKnp/uLK9X32tR/isJt
-	 7TJY9yqGq9uWSUgL07+11DyGOEFwTn6btTx6o8ac6f7jpJcFL04zlCPO42vpTCyNySNXP
-	 SbZ0Gzc8BfKMqym/lFoyUiX7AgiXMcxjwsEHogG6u15b/BU9BjND+99IKX324GBEzMqC7
-	 M7gsvvvXbP7nyL9vefp0092TBoA8fHFORf6pwjgdz6Bwgvdy92K/WTQJos/U8ylKVFw==
+	t=1795030138;
+	b=QXuxjqavNj8QGZA7syd/aL9Ewi90Qp8s170rChHIYTHtbYtujHMbAXxJhLqgrYFd5T5o
+	 qeaVcW0qZ0Ysp0XlVYMemltWLKfStksNwTereeYRN0d/Uuy/Zu25/DhaMVF4CaGlYu1F1
+	 ZyUcWn23yYFIPGGXFxFz5BAY6Dua/f9GlJ4yh+ZQHvUy1xYAlqiYdg58sz4K7UqfioOD+
+	 eD9oEVcvMXcwSnUKgwRh0544BAqzEnjy8i+atCvstVZlJ30QaYPjHDHmesC+oiicJEjkp
+	 L9MpIpksIqwlRly1FFnxMPQDCOyRpv9THWlQmS9jbEb8MSBbQEQ6hvVz0adCqNCHO2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UQcnC+1nywoQuLystw8AstTNNOxe8MaAu+RHQAiiUpo=;
-	b=UVsvdiYhlfiT8lrsCMi2KWYo5We82dzbShI4/L8B/yOISAwNCDyKgNy2dld72apIKrRv
-	 OOwr+6NJtXge4Jnp2I15rxCIGnmJMJGy3Mk/pKqo26L0CFoAteiqsI7ujlqC68NV4i5n4
-	 mjV/SLAQNAgknZjJ4I1DhqMuwkVfwKPkYdcRPRIYqCqzomlArUdHxXorm0zC5s2wtyI5y
-	 PupboE/zYQhDUGYcENn5UYp7FWlenQ0tiKBeyKamnMJa7/trxQKJ+rNTwiJRlKVlvQynq
-	 Wx7yugdBecKiwgr2eqrfLhYrGW/JX/BgWcXxQysyEZggOSDA/O3q4T+Isj1eRNgj8RQ==
+	bh=2yJc4N6GOn0joh8LIZYXZA0XfmtRIfSZL0/mrRK3Nik=;
+	b=oO/JTzJEc861KJBIuuomM89qk1Cekc/GLDeRnjuRsOgrjpZ65N8UHBXpGWAtfKa9g6ja
+	 069SxJ49WjaMrFbmK/XE3syxgyKwVC76sz08w1DqwCgAJjI2VvODVMM1WU+GGQkZCKWZP
+	 NpX32lSX1i5BEBP6aHFVQSJQgDdskXFgMmilVWRWIzdqznu7Vl1hvdis3nnRpetKsIEjZ
+	 lsBZdbf3xHqeDYArcBnW5EgU12Oy6eOEOYqMqdVk+fL5Sorj9ZfbWR1HlFdNBDlAN7pzb
+	 osDW9gxVDraOhdQP5575MaVUodNxbd2htchJIdx9Hhvxs61sGHhW9JeI5EplNiWqYHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIXSxqSY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDUqiYg0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4626074EB3;
-	Wed, 18 Nov 2026 19:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D5860760A4;
+	Wed, 18 Nov 2026 19:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SIXSxqSY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691271F000C4;
-	Wed, 18 Nov 2026 19:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDUqiYg0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDAF1F000C7;
+	Wed, 18 Nov 2026 19:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030134;
-	bh=UQcnC+1nywoQuLystw8AstTNNOxe8MaAu+RHQAiiUpo=;
+	s=korg; t=1795030137;
+	bh=2yJc4N6GOn0joh8LIZYXZA0XfmtRIfSZL0/mrRK3Nik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SIXSxqSYAq4HJjwwt4mJznqDmk/jRHveL1WXOADpMbevhUDIZJBl9bOvSCBlA1zVN
-	 ezTuLHbHiqC+GX6Yin9gu5nvpun66jH7O7xqW09YGFTrC+X4m85ESZUNCubjaPX4n4
-	 ls+g71sHq3N9m3Wtd0Nq7ySnnvX5IZ0lhewZizt8=
+	b=YDUqiYg0cbsRZ9Ho/05S6dzjDvEXYJ6nY9hJbvb0IZfVwRJPAkNWakifd5FnpUQ3K
+	 CNG2Ug5d9aDVkvlgl3jpL+1e9xqG9C0Hunqut/lx1U9oLhjN2DpZSyp6QIN85KYNg+
+	 cE9Q2b79xHutvbPz9Org3EBolhqyGEY3f8q5WFc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Leo Yan <leo.yan@linux.dev>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0560/1756] perf mem: Fix size tracking for mem_lvls in perf_script__meminfo_scnprintf()
-Date: Wed, 18 Nov 2026 15:44:47 +0100
-Message-ID: <20261118150031.383140617@linuxfoundation.org>
+Subject: [PATCH 6.12 0596/1756] ASoC: mediatek: mt8183: Fix wrong clock cleanup on clk_set_parent() failure
+Date: Wed, 18 Nov 2026 15:45:23 +0100
+Message-ID: <20261118150032.705591170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,42 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Falcon <thomas.falcon@intel.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 06d5ce78e4fea2cf0738da903aa248a81101c155 ]
+[ Upstream commit 7f05596bd4047e4623eeb1f3c6921d6f71481c3b ]
 
-When printing memory info in perf script, the entire size of the
-buffer is passed to perf_mem__lvl_scnprintf() instead of the remaining
-size. Pass the remaining buffer size instead.
+In mt8183_afe_enable_clock(), when clk_set_parent() fails, the current
+error path incorrectly cleans up the previously enabled clock instead of
+the clock used by clk_set_parent().
 
-This issue was detected by sashiko during an internal code review.
+Fix the error path to clean up the correct clock when clk_set_parent()
+fails.
 
-Fixes: fdefc3750e847a91 ("perf mem: Print memory operation type")
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Leo Yan <leo.yan@linux.dev>
-Assisted-by: Sashiko:gemini-3.1-pro-preview
-Signed-off-by: Thomas Falcon <thomas.falcon@intel.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903045203.175337-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mem-events.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
-index 9c4adfb45f62b..ad93fdf5a1565 100644
---- a/tools/perf/util/mem-events.c
-+++ b/tools/perf/util/mem-events.c
-@@ -591,7 +591,7 @@ int perf_script__meminfo_scnprintf(char *out, size_t sz, const struct mem_info *
- 	i += scnprintf(out, sz, "|OP ");
- 	i += perf_mem__op_scnprintf(out + i, sz - i, mem_info);
- 	i += scnprintf(out + i, sz - i, "|LVL ");
--	i += perf_mem__lvl_scnprintf(out + i, sz, mem_info);
-+	i += perf_mem__lvl_scnprintf(out + i, sz - i, mem_info);
- 	i += scnprintf(out + i, sz - i, "|SNP ");
- 	i += perf_mem__snp_scnprintf(out + i, sz - i, mem_info);
- 	i += scnprintf(out + i, sz - i, "|TLB ");
+diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+index cc4f8f4d3dab9..6ab0734ad1365 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
++++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+@@ -137,7 +137,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIO],
+ 			aud_clks[CLK_CLK26M], ret);
+-		goto CLK_MUX_AUDIO_ERR;
++		goto CLK_MUX_AUDIO_INTBUS_ERR;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
+@@ -153,7 +153,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
+ 			aud_clks[CLK_TOP_SYSPLL_D2_D4], ret);
+-		goto CLK_MUX_AUDIO_INTBUS_ERR;
++		goto CLK_AFE_ERR;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
 -- 
 2.53.0
 
