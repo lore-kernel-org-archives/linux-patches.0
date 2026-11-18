@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051638;
-	b=bWd8Cu0pehBkNxau11MpxE7VPrckAjCNqVuA9Cbm0aIxLlXaAZSEpQ6BhZTMD0jVOjoz
-	 MAjGJnYsDaLLpbQ0Vlcsa8IeOKgnYHfgzLnWp5CAuivmbg49DmIeJso+2zxtN92LRc/sO
-	 vLt7QQ8lkSz2TlOlTxeXveS4FaRPuSIMB3ncSlS3d5w0CyyRCVdP7rdNp7rVMnobvzvRJ
-	 nzx1Doztvcw7/d4ntd/AQTiLiuTuJzhOCJkaMC79J/NkAWmvE6Lqpo+cHUVSwGhWvlNB4
-	 8SL5+acaoal9fi/132IZaXxBYWucJ74iCVQPbKL27lRxFSDOf5kYTUrJ7vymSPuxeHw==
+	t=1795051640;
+	b=NAwTo1PjDV1+rLRyn/VEgsWUUKWBD/k9aEfMvb88n/AtAMO8+LpY+MeoE6b7qMSKPyhb
+	 CLwAoD4KTJuBCSdMklhLgmX0gLDrOWrEAJX/+7daEA4nzq4ePj72XX2MK8Ewry1lVarSB
+	 BHO9BG2Hrywe5gZrS5jv2o4pE8dDqSAnWgvtfHXNu+Q+AIjE5W+C8futpcpAcLkGOMfP8
+	 1nYeSz0Z7ebdDTIhkeIpY5RpQ3w2jWQ0SYYSZ0olHHFBEFRZnd0azT1ZcGQNbPSVyDEwd
+	 s1qU5RD39P4tsb/SFrNl8rN+HPZ00cdh+KZdMu5gUigIpU5OZBZ7PZ8B6SZcQ42NR5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051638;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BGQWx7TyF2WiMZd/I/OtQ1m81a9p2ljdVy1Kr2Ayxx8=;
-	b=HWVulnGPW73wYlXGq4xkWR0cvu5W+bqpnrG0VdNfi1A/Up+j8kqR10PxoIjmC3VXxAr9
-	 R+3rgX2TgRRu+f/9hG2EfOFa0NNRyclKcBuJ0h3un4ImDyXgMDKZrAXvVHywVQmExXhz9
-	 rgRYkZBxvBIoQ6RQ8EJh5sz0PfKzs76cBSn0QHcUKP8ZXFjNv5oT8edEm/NcWn6Q4EeH4
-	 DGYDDVKBQRXtaIE5lKRwW35qoTAtTaTOIVB2CSnOnbv48NV8itiNZHHFuRhEHUHkQQMmN
-	 I/CLSBplw1nJOrHKdYvD57LjI23mjYKLf2ObdfGh1s73qYs3aX3vHH4GRgFqWdmo45w==
+	bh=SyT9QerSL+R8TdIfXukQhLW8CQ5uzMUI3NgEJZNsNrw=;
+	b=pgWZrj6ab/Wz7pM2IRdF2MveIraQumAKO3oyLHUqGixRazlce71RikBGIzuPWJpk7DK7
+	 rMm6OeQ8r/EfBDRKZ5rYifUuttf+n3/cX6lubmEi4hX0E8NNzsWp0G2uGg+R/H9WNGA7Y
+	 damOvtcMiksTC3AyPfOkOnUE9AOgIiuyVdhCLYJB5Egwx4jPT/cdb7NP9ZamXAyRM1JqH
+	 LtZpN1c5/dnkk3P4WLMhsvI6Yb6PKZ9MrGy3xwdzAi++8GLvdlZx8DMtbb/QO6auaHvgv
+	 VKVxqpx7kc2XB7oRnvt3Taq9Tq6gIXZjb3fJTUbvo7GZmYu7lVE2R+r/myeOeahNx/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PX3OrRh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N8D+v4ms;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E70606A332;
-	Thu, 19 Nov 2026 01:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26A8606A32A;
+	Thu, 19 Nov 2026 01:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1PX3OrRh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231FF1F000C5;
-	Thu, 19 Nov 2026 01:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N8D+v4ms
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37AA1F000C4;
+	Thu, 19 Nov 2026 01:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051637;
-	bh=BGQWx7TyF2WiMZd/I/OtQ1m81a9p2ljdVy1Kr2Ayxx8=;
+	s=korg; t=1795051640;
+	bh=SyT9QerSL+R8TdIfXukQhLW8CQ5uzMUI3NgEJZNsNrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1PX3OrRh2xwANP23ooex6pQxUdseMVK/peIdXI+4p/7O/4LCibAu7v8dpN5bg5VEe
-	 fqVKBjPVl7F20FSrOVLZHyTomn2MufVXEC7X7Y1deqFu7c1wWhzTLQt8MOp7/3y/dj
-	 D/OtieXJNJyemAbqSLgXcz0o+KbmBZEAVyG+MrSU=
+	b=N8D+v4msksJmW8Z8AWMpGaRU41mU1aFEgVvtmf9lZWWQlH2/3eF4yaEbtwzM1Gi8V
+	 5J5ACraQ0FhEXf0fY7C03ZGtZw92MbKPBSQFyGiqmcKf60DaE/XyReXV+y7xkUdc09
+	 uoz+aGJB2PitAZzX8iWMNnpYzMXQ2Gtf1+W4bWgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0279/2214] cxgb4: fix use after free bugs caused by circular dependency problem
-Date: Wed, 18 Nov 2026 15:32:35 +0100
-Message-ID: <20261118150021.220084632@linuxfoundation.org>
+	Antonio Quartulli <antonio@mandelbit.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 0280/2214] net/sched: fix packet reordering on requeue
+Date: Wed, 18 Nov 2026 15:32:36 +0100
+Message-ID: <20261118150021.259315442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,65 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Antonio Quartulli <antonio@mandelbit.com>
 
-[ Upstream commit e50b9b9e8610d47b7c22529443e45a16b1ea3a15 ]
+commit 14368b9aa1017fee35d2589be7b17e0485c0f93e upstream.
 
-The flower_stats_timer can schedule flower_stats_work and
-flower_stats_work can also arm the flower_stats_timer. The
-process is shown below:
+dev_requeue_skb() appends requeued skbs to the tail of q->gso_skb, while
+dequeue_skb() takes them back one at a time from the head. If the driver
+returns NETDEV_TX_BUSY again for the first of them, it moves behind the
+skbs still parked there and is sent after them.
 
------------ timer schedules work ------------
-ch_flower_stats_cb() //timer handler
-  schedule_work(&adap->flower_stats_work);
+This showed up as heavy TCP reordering while benchmarking over veth,
+which returns NETDEV_TX_BUSY whenever its ring is full since
+commit dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops").
 
------------ work arms timer ------------
-ch_flower_stats_handler() //workqueue callback function
-  mod_timer(&adap->flower_stats_timer, ...);
+Requeue the skbs at the head of gso_skb, keeping their order. With 4 TCP
+streams over a veth pair with a pfifo qdisc, this removes about 1.3M
+out-of-order segments and 15-37k retransmits per 15 seconds, and raises
+throughput from about 40 to 76 Gbit/s.
 
-When the cxgb4 device is detaching, the timer and workqueue
-could still be rearmed. The process is shown below:
-
-  (cleanup routine)           | (timer and workqueue routine)
-remove_one()                  |
-  free_some_resources()       | ch_flower_stats_cb() //timer
-    cxgb4_cleanup_tc_flower() |   schedule_work()
-      del_timer_sync()        |
-                              | ch_flower_stats_handler() //workqueue
-                              |   mod_timer()
-      cancel_work_sync()      |
-  kfree(adapter) //FREE       | ch_flower_stats_cb() //timer
-                              |   adap->flower_stats_work //USE
-
-This patch changes del_timer_sync() to timer_shutdown_sync(),
-which could prevent rearming of the timer from the workqueue.
-
-Fixes: e0f911c81e93 ("cxgb4: fetch stats for offloaded tc flower flows")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230415081227.7463-1-duoming@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Fixes: 9540d977618c ("net: sched: fix skb leak in dev_requeue_skb()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20261026153113.3275494-1-antonio@mandelbit.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_generic.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-index dd9be229819a5..d3541159487dd 100644
---- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-+++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_tc_flower.c
-@@ -1135,7 +1135,7 @@ void cxgb4_cleanup_tc_flower(struct adapter *adap)
- 		return;
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -141,8 +141,11 @@ static inline void qdisc_enqueue_skb_bad
  
- 	if (adap->flower_stats_timer.function)
--		del_timer_sync(&adap->flower_stats_timer);
-+		timer_shutdown_sync(&adap->flower_stats_timer);
- 	cancel_work_sync(&adap->flower_stats_work);
- 	rhashtable_destroy(&adap->flower_tbl);
- 	adap->tc_flower_initialized = false;
--- 
-2.53.0
-
+ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+ {
++	struct sk_buff_head requeue;
+ 	spinlock_t *lock = NULL;
+ 
++	__skb_queue_head_init(&requeue);
++
+ 	if (q->flags & TCQ_F_NOLOCK) {
+ 		lock = qdisc_lock(q);
+ 		spin_lock(lock);
+@@ -151,7 +154,7 @@ static inline void dev_requeue_skb(struc
+ 	while (skb) {
+ 		struct sk_buff *next = skb->next;
+ 
+-		__skb_queue_tail(&q->gso_skb, skb);
++		__skb_queue_tail(&requeue, skb);
+ 
+ 		/* it's still part of the queue */
+ 		if (qdisc_is_percpu_stats(q)) {
+@@ -167,6 +170,11 @@ static inline void dev_requeue_skb(struc
+ 		skb = next;
+ 	}
+ 
++	/* the skbs may come from the head of gso_skb, so put them back there:
++	 * appending them would let the ones still parked overtake them
++	 */
++	skb_queue_splice(&requeue, &q->gso_skb);
++
+ 	if (lock) {
+ 		spin_unlock(lock);
+ 		set_bit(__QDISC_STATE_MISSED, &q->state);
 
 
