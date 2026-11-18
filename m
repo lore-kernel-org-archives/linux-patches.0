@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033329;
-	b=XuOOHEwBfAiFva1QrPBEB5YWlqam4xcjD6VjWqsr2wsP/reUNFCIBG3w4cy1PRhpeOxm
-	 K8d0fCx6TDJjp3+/D4jcUJDDQWlLX5ekmPIzyqiF4MMn3s+vUSZeJTAFeXW/KIGkngI8p
-	 91jeq+Jr/C1SDXX5zfclZb/RNXgveH7zrpi7I9NiVKOOTcvaVuPnWaYw7/43PLLPbQXwi
-	 qMx3NYhlUB0zYMgkyJR1aR1ZElxVPI7+P9qGIkyHuMPChMZDgb1Q9QSivCyTIGuqnbSZw
-	 P4bMSi2y2oozsHF4VxbrhOEdnlazNVGl/N4Aj0BccIyjTWqF3AfsolB4iowvvFgJ75g==
+	t=1795033332;
+	b=TjmlAZ6g0OCiXkHlCR0Ahj14kLGCN1uBBkCR5l23qNjyqwsdFfagZ2HuXg50f8ts3+Pn
+	 hAI2KwaoBIt1V2E0HDfdTzg6q/FfEKYNsI3+dfMEmFATA9wphPwFjqdYu5Vfcx9c8F1kS
+	 eGIGnGDHAesIcgWj729hqLL+dLmz2fKhI8haPrC5LlLF2BQeYsyraJ3KiYiLcmkfXCGhI
+	 eafyHXJF805z+7uClCDG62lofLF61sdOhLfV3b9GvbDUvghq79rJ8hy9eF+VKhpupnCtR
+	 apsGOH1OQud5Lo+rfmbQ7+wjVkaGZUPmj/dTX2nT79lyZtf4pxtGEmuBSq+Ln7S/rlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033332;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6j2azQrdV58fJRKnQ+JcGcn7hvRwOWmvcjB3FgdLamo=;
-	b=LAiVJDkWTFgaZX6AS3X4aCUKy3BbcRt44TciNWnSusg30XiYiquMAbR7J1VhJQ7H9uXT
-	 BlkrZHJD/d+FJjkL89O3KwBflzuqpEDuDDR7S4svALlnH4Whz1X9dd46GVU5H5DvTyNe6
-	 CLEZVggTB5dNfSdO3lNlfOniGrzl/HCVtydhIaQIoHWHIihCMCoACizb91jG5fmSULPa/
-	 P/pa4vlqIXoBH+F5tbPqAiZuiutuLoLc9VOfs830/eaPSO1sVpaT7J3rLp0x0Qu3y+YIH
-	 56gF9YjYhvrWw1xhTATYIuWgaAwSYel7h7i3hspBRrDBlEV8wtSCibmodMvuskEANlw==
+	bh=hTHV4U179/1+liHVti+uyZVyoyy45S+eUDEQT6/Od10=;
+	b=Pki05hFU0jnwnb0LDzuuxzs0lETu2SfaYHtoOk3Waz5lnubux5cIj5Q/CWrgV30ejk9u
+	 KH1nErKQ0gdmtzfvO0ovafKV9/EtvwREaO+Cfo5g5ACRFY43hTG95QM8KLjXCP0mvrul4
+	 LOeXXqsYnRzaSSsMLOI+ASxwd4Uuk7/Y5mNPSeoBfnAUmER8DSw56ciEJGpvIr3MONKbp
+	 arW3CfiRnneddW9RXqsdDeehaY94T0dhZs2aVmJiU1Pha4OmNjWgqMQNUh59vCq0gR4ZK
+	 YoxKJHP3XZVaS0voGox8rMpKmKbkskV/fFSkQmKsYxWFXY/nW8HwjWqPpJYA8QFSQnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bAO/Bd9x";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqntuPyO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BC2606A325;
-	Wed, 18 Nov 2026 20:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A8C606A320;
+	Wed, 18 Nov 2026 20:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bAO/Bd9x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D431F000C5;
-	Wed, 18 Nov 2026 20:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WqntuPyO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E021F000C5;
+	Wed, 18 Nov 2026 20:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033329;
-	bh=6j2azQrdV58fJRKnQ+JcGcn7hvRwOWmvcjB3FgdLamo=;
+	s=korg; t=1795033331;
+	bh=hTHV4U179/1+liHVti+uyZVyoyy45S+eUDEQT6/Od10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bAO/Bd9xqn+W6cZABAIsM6QJPJTeKWZx/6EDUoV7wTzvorutyfvybfEK/+ARAvo0r
-	 59bGYfPXD0eguLFF/RBubuFDNnsrNF48hKctN7BU7B+rhi/MqalU7l9V5BtNTFBXl9
-	 z+k0xrgiZ6+4H5CEU6hO/yj7fL+2+sjuwPw/Es/g=
+	b=WqntuPyORqkVC8J6b48QdvykY4cTzIp/qwCybeRQ9lW96hLDe8pvrRl4ZyiXPEKaB
+	 yrD83A2GbJ1k6/gWGesvlWBOpcOxeXeMR3kTNSxlH+ZzxtyMqTOPyfvzeKWK+x0pDe
+	 8s0f4LOu52ioY2/grk7fWc/zALFQWW+9ZUHFASuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 1729/1756] PM: runtime: Only queue an idle check for RPM-linked suppliers (part 2)
-Date: Wed, 18 Nov 2026 16:04:16 +0100
-Message-ID: <20261118150118.404842902@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	John Johansen <john.johansen@canonical.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1694/1756] apparmor: Fix namespace reference leak in __aa_find_or_create_ns()
+Date: Wed, 18 Nov 2026 16:03:41 +0100
+Message-ID: <20261118150117.102402141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,37 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit bd56424ce808fb1f92a4dc5bdeedc45b85c5d6cd upstream.
+[ Upstream commit 8f1f7f664c1822af34c5465f9820b4e39146786b ]
 
-Commit be5755f023e7 ("PM: runtime: Only queue an idle check for
-RPM-linked suppliers") was incomplete. There are two other cases where
-we perform idle checks on non-DL_FLAG_PM_RUNTIME suppliers -- in
-pm_runtime_set_suspended(), and in cases where we failed to resume
-suppliers.
+When the namespace already exists, the reference taken by aa_get_ns() is
+overwritten with ERR_PTR(-EEXIST) without being released. The caller in
+apparmorfs.c clears ns on IS_ERR() and so cannot drop it either, leaking
+the reference on raced mkdir of an existing namespace.
 
-Fixes: be5755f023e7 ("PM: runtime: Only queue an idle check for RPM-linked suppliers")
-Fixes: 5244f5e2d801 ("PM: runtime: Defer suspending suppliers")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Link: https://patch.msgid.link/20261103141442.v2.1.If69ddc515c2e9fd4338441e87688b9d690d2ef36@changeid
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Release the reference before returning -EEXIST.
+
+Fixes: 73688d1ed0b8 ("apparmor: refactor prepare_ns() and make usable from different views")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c |    3 +++
- 1 file changed, 3 insertions(+)
+ security/apparmor/policy_ns.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -331,6 +331,9 @@ static void __rpm_put_suppliers(struct d
+diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
+index 96f49a73d681a..a6c222a6778b9 100644
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -265,10 +265,12 @@ struct aa_ns *__aa_find_or_create_ns(struct aa_ns *parent, const char *name,
+ 	/* try and find the specified ns */
+ 	/* released by caller */
+ 	ns = aa_get_ns(__aa_find_ns(&parent->sub_ns, name));
+-	if (!ns)
++	if (!ns) {
+ 		ns = __aa_create_ns(parent, name, dir);
+-	else
++	} else {
++		aa_put_ns(ns);
+ 		ns = ERR_PTR(-EEXIST);
++	}
  
- 	list_for_each_entry_rcu(link, &dev->links.suppliers, c_node,
- 				device_links_read_lock_held()) {
-+		if (!device_link_test(link, DL_FLAG_PM_RUNTIME))
-+			continue;
-+
- 		pm_runtime_release_supplier(link);
- 		if (try_to_suspend)
- 			pm_request_idle(link->supplier);
+ 	/* return ref */
+ 	return ns;
+-- 
+2.53.0
+
 
 
