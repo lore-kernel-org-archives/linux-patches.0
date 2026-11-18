@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022576;
-	b=PbOgyWOPICcM54C5sAhMvUdXhqiEao5mbgT2ADU45OpTselwIomATTHoC40LQmauRGbE
-	 WvUDp4QI6XUkJiagxM1DfPA2BGJgMHYANGjGCWrPQi3L7/43idLG4/okjcUXNLdone9xN
-	 kzPnQvLtgn8nwT308O5Oi9ilxWmtqwL15utHd2LyDNkxkvA8FPpqXzZFhfJ6tb9u+wmQ5
-	 JaF1nP5MdVsRkQKCjFTAMpT53Ai2eYoaWiBMtzClJXGMdAquW0zqG66UaADB+e18SnpHn
-	 7ehBckw5W6FR/RCBpIzyrgtNnHnZI2hE2Vf/iPzpg54a1ABqma2/Pi47El01UDVBF+A==
+	t=1795022578;
+	b=j2viRnvK/XMUMVddSRlzzA7ybq27+KQ2nstkSXm5gUyBgbDjI7oapFm+AXIz0+jt4dAP
+	 4Jui5jjdGYzLrSua4hb+4nXg+k+TvXk0cufU7/xFF00J4hoRRh+5Sq4UfkSoKyveSO3kf
+	 A04acH0lVOd4LlLcMShb3AVwDIbA2HEVENlzkghJGWG2Mn0NCYrYlB/OZvvHzmAzSRU1D
+	 dATGwUryYMnB9iourlnQEXZQm6x6kIt7FU3QU4Npb9XPaiVDKKbZC0W+cQMx2q+ZGOdel
+	 8aIPOdz2JUkgpZcGzuq/7NLtFJTdLyWh83wgYzsYZ6eB45Y8dWl77tAAPCaaxaNYAyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EsgWlpTobCjFnEejbf9NNO2aQYcDpwMiKu/Po52e7RA=;
-	b=q/dcPXEao4dy9vqBHgTVQTI4+RYD+Ed/Md+fPxbLNTfy/tvx71BDls4ZczmPCMloMslY
-	 cShGXaKA7RAUOnFWw8KLkV1/cbpbLtv3r0yn2voOXcTywRb/HtsMEH6vhmznNzGJPLQ+3
-	 nH3nbVfOiHw926vmAJlKCkN0FZnu0fMtchcN6CoUAd3f4p82iHZqRwWppAmHPqJD3O/WL
-	 Yf8DKEic76MXdHCuDi3W6eGvoxFQTYQWUdBTsv74BU3TJBUGBSOPstrL0jLR998P1xW2c
-	 OtLu4rY7Ovz/ZhdHlS4wgA8WT+YZqsjDXnv01IjH0+fes8P+cbILk3j30fOiXeu9kwA==
+	bh=Cm1UuFJnNfz2O9BEpZyTeCiT2wMCvQEVyGawLjFFYMw=;
+	b=Wp3C6DPzaGX89fAbBzQ82kQ0GLqL7XtahJ11GvQKaIBK4/46Z/5LwCahQYfMYNK9wu2n
+	 ZxIOh7DH2gXvdi/NfArBCWU/kAXOoVzTzlUBuiQc6gd+gB+mRDd7IcMSKPQfy5d1uKyjN
+	 07FVoII16Ywet9k34He2XMK18LvCacDRAZunJ1Loli8MDJJbxX6QOzL4JJmEC+P9lYk/2
+	 fW6Ef6PZunS6LhIE52NwbiFKFfrHH3Vp/Gpro4c811U3WZ+xrxCJCwrtEEbm14W65vYvA
+	 bg+zj/G9dAkTo8WveVNOeKjeWQpUDJBWyJf7i1Cgoeu5Fvs6paFutG3IWmCAxpA15zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="N49mHm/V";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuSoyTbb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C68606A32A;
-	Wed, 18 Nov 2026 17:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98040606A330;
+	Wed, 18 Nov 2026 17:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N49mHm/V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1466D1F000C4;
-	Wed, 18 Nov 2026 17:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuSoyTbb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E141F000C4;
+	Wed, 18 Nov 2026 17:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022575;
-	bh=EsgWlpTobCjFnEejbf9NNO2aQYcDpwMiKu/Po52e7RA=;
+	s=korg; t=1795022578;
+	bh=Cm1UuFJnNfz2O9BEpZyTeCiT2wMCvQEVyGawLjFFYMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N49mHm/VBPnNzCxrciVkNmqE7Z5w4OYMGCFPLLWI3ddCGIJOrq95BikBijj317rYG
-	 +MrDk9qUa1SAnSVpvXC/K8TD5B0Tmv+4Es+LfVc+PJrQd86v6vqUVrYgzo9JefXUQE
-	 jTd8fynXhyRMBWF8MU5nHCsOL0a/DGr4PWIxiP3M=
+	b=HuSoyTbbZW0t7Co8xtsNkA06RDjiF+RUszQpCRyJyJEkd78UEz0rJA5+Me+lvMUtc
+	 9f/+3l1j4R0Nt4M+jkvZfABnwSkUv1HE3fJXwwr9qF57LSEzVr/eoldZyBSnEXwNRx
+	 AC79aWEJVzTSQd3vSd9Q60Nh+z8EFMSGiX7HFsqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0063/2151] hugetlbfs: enforce F_SEAL_EXEC in setattr
-Date: Wed, 18 Nov 2026 15:29:58 +0100
-Message-ID: <20261118150124.054932919@linuxfoundation.org>
+Subject: [PATCH 6.18 0064/2151] ALSA: usb-audio: qcom: Free QMI handle
+Date: Wed, 18 Nov 2026 15:29:59 +0100
+Message-ID: <20261118150124.090965623@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,56 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit b7f570e7cea761ec7eb4a3a9557a3a082d14e88c ]
+[ Upstream commit b8ff1f3578f83dedf5feb796d97a3f67c1bea58f ]
 
-F_SEAL_EXEC is enforced by shmem_setattr(), but hugetlbfs_setattr() does
-not check it. As a result, fchmod() can change the execute bits of a
-sealed hugetlbfs memfd.
+qc_usb_audio_probe() allocates svc->uaudio_svc_hdl separately from the
+uaudio_qmi_svc object.
 
-Use memfd_check_seals_mode() in hugetlbfs_setattr() to reject changes
-to execute bits when F_SEAL_EXEC is set.
+qmi_handle_release() releases the resources owned by an initialized QMI
+handle, but does not free the memory containing the struct qmi_handle
+itself. The probe error path and the remove path currently release the
+handle and then free svc, losing the last pointer to the separately
+allocated handle.
 
-This also fixes the memfd_test hugetlbfs SEAL-EXEC subtest, where
-fchmod() incorrectly succeeded after applying F_SEAL_EXEC.
+This leaks one struct qmi_handle on each affected probe unwind and on
+each successful probe/remove cycle.
 
-Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
-Link: https://patch.msgid.link/20260629180247.2343229-1-eva.kurchatova@virtuozzo.com
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-[ david: use common helper; fixup Fixes:; check only regular files ]
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-5-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Replaced the unavailable memfd_check_seals_mode() helper with its equivalent inline condition. ]
+Free the handle after qmi_handle_release() in both paths.
+
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/9108EC860F3F87DF+20260623071308.2549182-1-raoxu@uniontech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: a3cf5ebab5f1 ("ALSA: usb-audio: qcom: Check the return value of qmi_handle_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/usb/qcom/qc_audio_offload.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index 34ed9966f2ea8..f866dbe4c198f 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -854,6 +854,12 @@ static int hugetlbfs_setattr(struct mnt_idmap *idmap,
- 	if (error)
- 		return error;
+diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
+index da2759f2ee866..62a57b8d171b8 100644
+--- a/sound/usb/qcom/qc_audio_offload.c
++++ b/sound/usb/qcom/qc_audio_offload.c
+@@ -1994,6 +1994,7 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
+ release_qmi:
+ 	qc_usb_audio_cleanup_qmi_dev();
+ 	qmi_handle_release(svc->uaudio_svc_hdl);
++	kfree(svc->uaudio_svc_hdl);
+ free_svc:
+ 	kfree(svc);
  
-+	if (S_ISREG(inode->i_mode) && (ia_valid & ATTR_MODE)) {
-+		if ((info->seals & F_SEAL_EXEC) &&
-+		    ((inode->i_mode ^ attr->ia_mode) & 0111))
-+			return -EPERM;
-+	}
-+
- 	trace_hugetlbfs_setattr(inode, dentry, attr);
+@@ -2018,6 +2019,7 @@ static void qc_usb_audio_remove(struct auxiliary_device *auxdev)
+ 	qc_usb_audio_cleanup_qmi_dev();
  
- 	if (ia_valid & ATTR_SIZE) {
+ 	qmi_handle_release(svc->uaudio_svc_hdl);
++	kfree(svc->uaudio_svc_hdl);
+ 	kfree(svc);
+ 	uaudio_svc = NULL;
+ }
 -- 
 2.53.0
 
