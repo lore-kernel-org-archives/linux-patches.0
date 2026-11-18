@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023151;
-	b=f4+5UJZ/9LmXmRFrj8Jtk9jbnNkQ7H7UaHyP/SKOQCkkrDLEsh4rza06hgGQnOiSupQn
-	 MSO3T76Mi2YwamFkhuIdTqS6q6xC6j/AFALh2parQg8lax1hnBP+voz6u9IswFgX61sj6
-	 DaZ1rPGrIWCtXxpAueamOflPqzOGaP6DFXNuQdQ+SHjaHrocUNSxRjminRe8iD8d35V+Y
-	 LhxS7JM84fP29XPy4Mvsi3enmxhES8a3GqzGcZ+f3xE2EbF/stwaPBzv/hWn+op7CP7N4
-	 t5/ehH448uazSIozDBY51GVYr8Eo+FwSAW2xxO6B3R1tRhZjGq+4GjOOjDfB55CliZg==
+	t=1795023154;
+	b=0vA62EwAchnJK13UBk8ckaVTajCddVtV+adGnbdvq1zBPI/fJwQDZSbebAa70T5O8QIQ
+	 pSbcyIGuOVYa6xYAdXpbpwe3lQvhZISi566DKTEMhOxifHZh5R+uKiYZ+rSYQNLg7aLe5
+	 LhMlgHyLTil9ZtbF0cVXndbLdXVHanmgtcktynXFC94SO+pN8ZbdDdCzKkDgB/tyh/3ur
+	 ExpFksn8QUkvNfZ+IpkEgpwP6f2uE1Honoly7GJuLXa45p6Wd33ykkZRiUxHZc9QqftsD
+	 MuBry4qsmj4sGAyb2I7jaxvsqKCyM3cmew7LKe712QsfpVzsQTsX6R0f9DlX9xU2myA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023151;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023154;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rdY5QeNcK/ay0hcdk/iQB3CU4jdwK7OkRah8eEBcbIk=;
-	b=NKn0Cx99h/5FVM+v/6YpRkTCSvNCsvbyX7cOVeFkGWb0fXY5kDQHkFfpNR3EX7RI2SUn
-	 2p0dIKS2noqPk73phmMWlKS29D09TSHLaI/IOep2yKVOLN2VM+cF+UCQnlj0mf2vkUVRO
-	 kXwXyI2fzvn5IrfKHG01Ks2vakGolykNO1i3zR+O7Wa0fQSPIps0UX3rTWXW5vYK4RXzd
-	 1JL7hu3JAJ6u8E0etPhXPUuOBs7dF5FW2yKa2QcXKEkZ+EPEkxDfdZdxmVfDJPZ/Q/ufH
-	 FCWH3DvxthZCiHEqPz822dcJOLs3vnXbJfC4zcW4blqt/XpOvMWM9UcHk/OsxRtEB3g==
+	bh=gBY4cWNzYMIYBj+nNvyCJ5GGWKXux8IlITo67m6nKrs=;
+	b=rHMIy14sQGv3Zwrg1zh3JR5PH/MJNC5frQcRiIliWk26AEDlSXe0Qxue1P2Ofz5g2oAV
+	 J8YNXWp8RFQZC/FgSwzJdnoYW8yrTvzidycgnGN+WyjwFIqIzmnlHywBIgZO4xJAJjjBJ
+	 25Xw5DT26vzyq4RHBq2SaPBa/rkrs5KMsCtgREPdBgHT9QTB85wB+0pM3siLUMJBh+R/u
+	 lkBW75JqSiJ9J+8/CnRl58RnBHq78o/U2AF4A41WmN09J65RGSGi3PoXt6vKveajEE2g0
+	 k/vwpklzycpo7tU9JvpxpD5wxp1HQTZxMctpOmr0OxG+f/JlSo/1RB7V/Z38Of8ev6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GX1sVGS3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TEr0NtRJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB89606A32C;
-	Wed, 18 Nov 2026 17:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57637606A333;
+	Wed, 18 Nov 2026 17:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GX1sVGS3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC2A1F000C4;
-	Wed, 18 Nov 2026 17:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TEr0NtRJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698AD1F000C5;
+	Wed, 18 Nov 2026 17:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023151;
-	bh=rdY5QeNcK/ay0hcdk/iQB3CU4jdwK7OkRah8eEBcbIk=;
+	s=korg; t=1795023153;
+	bh=gBY4cWNzYMIYBj+nNvyCJ5GGWKXux8IlITo67m6nKrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GX1sVGS35xVDVhtyUDpH1WsEn7WZRWnkTQDiB/IcbgOevj132O2+8vEkYJsJLxsM1
-	 AmzEXg/oGMI1CahRiW3coFCX1KeUWB/QvpW1ngRC52b4JndBAFvMR1iQvhBV+lGJu2
-	 6AqEyiF6Czj+Rs/5A4L3dimenRNKf7V9vF5UJ3lE=
+	b=TEr0NtRJY7L/iRd2uLkS4W75XzKDrqoLbywaqszD/enTOJipHoVmzL9piFnV6NdaB
+	 2IirmLoorA7xolpBZXsXW8dWt+0RjtBBaM9cEIlx6BzUlyC5eNYEDyIR/4ga9N+r9M
+	 578KomT8R5WgqX19I3R6oAZbP1qP1vw65QSx3X9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <hppiscas@163.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0267/2151] ASoC: es8326: report resume restore errors
-Date: Wed, 18 Nov 2026 15:33:22 +0100
-Message-ID: <20261118150131.538433654@linuxfoundation.org>
+Subject: [PATCH 6.18 0268/2151] ASoC: es8375: report resume restore errors
+Date: Wed, 18 Nov 2026 15:33:23 +0100
+Message-ID: <20261118150131.584010799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,67 +70,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 349e94679968785803cc32c1d2e41e000e8afd5f ]
+[ Upstream commit 8f43acfd3addf10fbde8d21dd44b1a61e1936ba7 ]
 
-es8326_resume() ignores the status-register read, the direct clock-state
-write and the register-cache replay. A read failure can also leave reg
-uninitialized before it selects the reset path, and a cache failure is
-followed by jack IRQ processing.
+es8375_resume() ignores the clock-status read, bias restoration and
+register-cache replay. A read failure can leave reg uninitialized before
+it selects the initialization path, and later resume processing cannot
+observe a failed restore.
 
-Return these errors before later resume work. The ASoC component wrapper
-reports the callback failure while retaining its best-effort resume
-contract.
+Return the fallible operation results to the ASoC component wrapper, which
+reports callback failures while retaining its best-effort resume contract.
 
 The issue was found by our static-analysis tool and manually reviewed.
 
-Fixes: 5c439937775d ("ASoC: codecs: add support for ES8326")
+Fixes: de2b3119f9f7 ("ASoC: codecs: add support for ES8375")
 Assisted-by: gpt 5
 Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Link: https://patch.msgid.link/20260906034217.85696-2-hppiscas@163.com
+Link: https://patch.msgid.link/20260906034217.85696-3-hppiscas@163.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8326.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ sound/soc/codecs/es8375.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
-index 78c4e68f60024..4cefaa1f51d99 100644
---- a/sound/soc/codecs/es8326.c
-+++ b/sound/soc/codecs/es8326.c
-@@ -1108,18 +1108,28 @@ static int es8326_resume(struct snd_soc_component *component)
+diff --git a/sound/soc/codecs/es8375.c b/sound/soc/codecs/es8375.c
+index 36b0ebdce514d..c235f91929b31 100644
+--- a/sound/soc/codecs/es8375.c
++++ b/sound/soc/codecs/es8375.c
+@@ -579,20 +579,24 @@ static int es8375_resume(struct snd_soc_component *component)
  {
- 	struct es8326_priv *es8326 = snd_soc_component_get_drvdata(component);
+ 	struct es8375_priv *es8375 = snd_soc_component_get_drvdata(component);
  	unsigned int reg;
 +	int ret;
  
- 	regcache_cache_only(es8326->regmap, false);
- 	regcache_cache_bypass(es8326->regmap, true);
--	regmap_read(es8326->regmap, ES8326_CLK_RESAMPLE, &reg);
-+	ret = regmap_read(es8326->regmap, ES8326_CLK_RESAMPLE, &reg);
- 	regcache_cache_bypass(es8326->regmap, false);
+ 	regcache_cache_only(es8375->regmap, false);
+ 	regcache_cache_bypass(es8375->regmap, true);
+-	regmap_read(es8375->regmap, ES8375_CLK_MGR2, &reg);
++	ret = regmap_read(es8375->regmap, ES8375_CLK_MGR2, &reg);
+ 	regcache_cache_bypass(es8375->regmap, false);
 +	if (ret)
 +		return ret;
-+
- 	/* reset internal clock state */
--	if (reg == 0x05)
--		regmap_write(es8326->regmap, ES8326_CLK_CTL, ES8326_CLK_ON);
+ 
+-	if (reg == 0x00)
++	if (reg == 0x00) {
+ 		es8375_init(component);
 -	else
-+	if (reg == 0x05) {
-+		ret = regmap_write(es8326->regmap, ES8326_CLK_CTL,
-+				   ES8326_CLK_ON);
+-		es8375_set_bias_level(component, SND_SOC_BIAS_ON);
+-
+-	regcache_sync(es8375->regmap);
++	} else {
++		ret = es8375_set_bias_level(component, SND_SOC_BIAS_ON);
 +		if (ret)
 +			return ret;
-+	} else {
- 		es8326_init(component);
 +	}
  
--	regcache_sync(es8326->regmap);
-+	ret = regcache_sync(es8326->regmap);
-+	if (ret)
-+		return ret;
+-	return 0;
++	return regcache_sync(es8375->regmap);
+ }
  
- 	es8326_irq(es8326->irq, es8326);
- 	return 0;
+ static int es8375_codec_probe(struct snd_soc_component *component)
 -- 
 2.53.0
 
