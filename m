@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045569;
-	b=z28Vk4sdlrudMfkSKB9BmEpZuEOce1eQPGEAKmOaz8HPswiDq0kXF2Sey3dM4Kbi7VEH
-	 dqhnRd7eSDsZlhfEIEb15Au8H7g2VgWMLq7wsA8062dEemIsfEhDavba/5Z7CQVVWCcPY
-	 PLPI9JKtnvfbqiJyttLE4IM+6CZqocLysH+oaZ1pKsdSMWmbzVLzf6h3e4a/EDyHq6Nvr
-	 7whE/qARH98ZX3poZyzFl3RIiczrcCeZeJhHpEKHP+B3V/jfqmUqWYyZa0UzQFC+oYh/n
-	 SrQ9mxa5BBZBpqkqBfe60qntEVRcUcotIHKhWoeMrWtdpk5uf5zoT4OUxMbhMvNJGFQ==
+	t=1795045572;
+	b=Co5CODwB7shc0Xzvi+Fp6R33AhMc+HUUPYsJkch1hilt3+1YM3cjpEaDdk9mwLmfK1Mc
+	 /wH/Tp4VP/9Nq3kLC15NUnd4RYrelEubwmJYMyFZiKjIfpZijLrbkW1Uqf1ZoUaVFbaGu
+	 QiwfsT4ZDCaCMinPB0IZYew213k/W1mqejCngDxpneLeglkF6K4dLRiV9N5sLDLbnA3Lg
+	 FNbnRuij9wFIAHMCzPT1eKcS7R6UlPUYm4t299EuZrYSattfJZSajEbgy6O2fRqFDvPxa
+	 EOhhpMUjGuxAYEeDCzPQKdNSuNn4b/9lBjUySRSLtqVYrypkLWtQQ2iI5I8gC0eEbww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cNHKJhErnEaxt7ynELMsPIo1kmUaKa6uQJmUjInbV70=;
-	b=RaOMwsmSe+PA8k553YlkX//AYTRAo1+YsX+Th304KVhLLWslOLSccjBJMcb5le3rWi6j
-	 kz4KzYWkUAO+sLoKq5BZXP82UkoOJ+jLBunxym9CWFqxmAVBVCYI6t2Oc9rozLRjzD8zs
-	 KUhFghdT5v9LzZxubqiUGlzZc41upF57iTQoOKk9yMNFyuzIPuNxPKM+xrIw0I7H0LDiQ
-	 ImH/DkNwau03AX2tGHWNe++QzLNY0pCByWE/7RA7LORJe9imJ1iRSunEzZB0PflZajHWo
-	 acpjyxMoMexr5dgwULeMqYfLLKjuepVymG2Fg/KqmAplK9n8LfEYBQdGikSrEpavscA==
+	bh=inJJy32N48Lw6/9ojFtCWHdo0ASdAUTTyT1MLuW0fq8=;
+	b=mdOwCFMskJUeezpZlUna6A/7O9Dytk2AMteftBqX2/UQPBxRpNXxjr1EYIjzG42YcAAf
+	 jZb/CAOtmUl1fovIpupsXtunP+bE7HsL1Fl2BfphCG0XztEGgD+4+ifaUVk8PJgLV6oPq
+	 rnoT4n0BjbcDvnFd7TLh4P/3/BF8v5tIkAHZtzsZWpAxMaHRzMtx+YREgPZHWo9JFhO+h
+	 1hnsYAwZ8On8v7R8wPR1K3vc6ZlVWo83A4rj24be5TXkzzXHhpeouqBleXTSS6sXDK/Dn
+	 qdPkJbl3q9qb3J3GuUDREfw/QtoiKg1vGTAdDrh5v0jQogkeDvq7C/OmXXZoBOqHA1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQGzy0WL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PBW0/bkI";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AE4606A33F;
-	Wed, 18 Nov 2026 23:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB68606A320;
+	Wed, 18 Nov 2026 23:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQGzy0WL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074E81F000C4;
-	Wed, 18 Nov 2026 23:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PBW0/bkI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9B11F000C4;
+	Wed, 18 Nov 2026 23:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045569;
-	bh=cNHKJhErnEaxt7ynELMsPIo1kmUaKa6uQJmUjInbV70=;
+	s=korg; t=1795045572;
+	bh=inJJy32N48Lw6/9ojFtCWHdo0ASdAUTTyT1MLuW0fq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQGzy0WLktd7xZb7TiiUG0KgENDfur//ZrKg0YQg2U5DpiVDk7aL1n5ZKh9qz/Wih
-	 EcKotAvEL8JEs2GymD2/ANigvMdWdwO5MGrMlvB05VO+z5WhInq5PO60WgKqgmUTQM
-	 eBMjIezYG6RvRnUDAKnIOlRbDOd6WmAqfznuiQjI=
+	b=PBW0/bkIx9dNxz6ZXZagKDV+3NZnaX7t3Wp/Z9zaa445kGH1zpKr+yIKtpL6DaQTY
+	 4AAhsE815d/Tq4I2NU+2TH6NqaYOcJWvCBGizA1DLlfyk4JwbqaS8KlSZKOjx/9de1
+	 yGWRmaMi1UWP8vD2tE6bX765vFPGRwm4Y50ldx1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Ma Ke <make_ruc2021@163.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0970/2857] dax: Return errors from dax_core_init()
-Date: Wed, 18 Nov 2026 15:33:24 +0100
-Message-ID: <20261118150236.535493088@linuxfoundation.org>
+Subject: [PATCH 6.1 0944/2857] pinctrl: stm32: Fix fwnode reference leak in stm32_gpiolib_register_bank()
+Date: Wed, 18 Nov 2026 15:32:58 +0100
+Message-ID: <20261118150235.596644769@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,47 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 4da700e2cadf84a6e858391d5be51d64dcba080f ]
+[ Upstream commit 54c66b5e47a9b10cbf4a1efe9b01301b7ffee205 ]
 
-dax_core_init() returns success when either the character device
-number allocation or DAX bus registration fails, even though the
-error paths have already released the initialized resources.
+stm32_gpiolib_register_bank() walks the "gpio-ranges" property with
+fwnode_property_get_reference_args().  As documented in
+drivers/base/property.c:
 
-For modular DAX, this allows the module to remain loaded despite
-failed initialization, leaving subsequent users and module removal
-to access resources that have already been released.
+ * The caller is responsible for calling fwnode_handle_put() on the
+ * returned @args->fwnode pointer.
 
-Return the error code from the failed operation so that module
-loading fails rather than reporting successful initialization
-after the resources have been released.
+The returned reference is never put.  The function calls the helper
+twice, once directly and then repeatedly in a while loop, and each
+call overwrites args, so only the last reference is even reachable
+and all the earlier ones are leaked for good.
 
-Fixes: 9567da0b408a ("device-dax: Introduce bus + driver model")
+Put the reference as soon as args.args[] has been consumed, both for
+the initial call and for every iteration of the loop.
+
+Found by code review.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20261012151857.22534-1-jianyungao89@gmail.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: bb949ed9b16b ("pinctrl: stm32: Switch to use for_each_gpiochip_node() helper")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dax/super.c b/drivers/dax/super.c
-index d34788813da74..4188307c0f64a 100644
---- a/drivers/dax/super.c
-+++ b/drivers/dax/super.c
-@@ -585,7 +585,7 @@ static int __init dax_core_init(void)
- 	unregister_chrdev_region(dax_devt, MINORMASK+1);
- err_chrdev:
- 	dax_fs_exit();
--	return 0;
-+	return rc;
- }
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index 988db6fe1174c..19ad91104cda6 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1331,8 +1331,12 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
  
- static void __exit dax_core_exit(void)
+ 		/* get the last defined gpio line (offset + nb of pins) */
+ 		npins = args.args[0] + args.args[2];
+-		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args))
++		fwnode_handle_put(args.fwnode);
++
++		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args)) {
+ 			npins = max(npins, (int)(args.args[0] + args.args[2]));
++			fwnode_handle_put(args.fwnode);
++		}
+ 	} else {
+ 		bank_nr = pctl->nbanks;
+ 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
 -- 
 2.53.0
 
