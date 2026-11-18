@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036196;
-	b=GWOAH6os+qMWihPFJT5fOycASQyHwGtyiS8pFySQUDG/ZxnZlAC9HrvS1CJVUuNQGL3b
-	 hwRQAfPA3eiFIPRdqv/lxI1WkiTXWgD7BQ1mYiRn55+ftyrpKbpUFoBEwglGgBfeXHvtG
-	 wisO1GkYecCsBuDk/wFzYLeewZmAHBWBUkrciMOsdmVGOkxwCYBwvJjDyq/FneXiL6OZS
-	 zrzixoJbLO59ZieTttvXP3T1afrrsbHbu7p7NeEL2RHvKtbXltPE0dsc47ARAUdsD69ol
-	 cOQwysYI7NCTVsAD6B/38ENM0ctU0dW8x5Bmkivj6VpXG0NxRiWVKqFBUsH2Nm9Pmdg==
+	t=1795036198;
+	b=p+Vbn22taLZ4cyOmu2eaFr87b6D3KSUFVIlAMHVGWyAfo2r4A3nO5xJi4uKapuPsnSN3
+	 G57HtMVvYdrTl+bZ3FngsADEZab3yUWrff70Ew7pDwSyhT6XO9pyeNZFb33/Ad7qrx3iY
+	 Q411ZXfFQuFm6ayrEjGRl47m/+Qc2PZS2p7cRkZ21Zqy1jcH1VsSoOd81iWP6ZfmyhMtp
+	 cPYIa6tjPqtKiYwMdZd1JBH7BvaFf6nSwYLZgKc7n+pzV7rCJN0yiaYGpwRQ1qY+pmf9K
+	 mWdXg8Ws53otVwpsobJEKqD3ifROb4lkK+JOkA4oFBVrAbSM3ob+QOtInT6MbvJhy+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+Yw+U+bcFpllhBzQlDNR3soDfwz0jxSno6kkfdWtR7o=;
-	b=VGqCvDDGxf90kgH39+UeCpLlExqmSGLPMkdDnQtyoeRtMOo3yXRQTwW9qe/l3/gGpXWG
-	 MrTQZveVOm4SFJSVdsHbhDRmiLkwCxY+OKo2rr5WJnFmnBNQ9aRXy8W2Ug1V2/+sVUZ8K
-	 rSyqrQEx36xuRtOjjQn7BEvPMEDe+lEDF3awVNsJsheUdzSxzeBDyN0GswROSLFzlvkdF
-	 8J+S3+AGr5hI0yAoopYh4Y4k5OvDu6ah8yoh3dvdFkVJbEg02Ggr1aVVvFz2vBkS1Lcnx
-	 n+1qRLTGehFITCnHBf+E4nFUQMWzSxCWpSB9fWXFp/mq9kKNSpE0bjh8mPzbhYMMzxQ==
+	bh=m7uQmt9Dru7ivbWBvw+gruRwdRDZpk0rvZkb+r2OYc4=;
+	b=bWVLulqhxaeAf0FJc1AEgwEJEOok0IA+qIqqVkVvL4hLLRxjW49JcOyDfRpAHq9Mlwka
+	 jP00XvPUFUQhQjYres/5BE8mZA5XMz0gFYk+8+xv+BZT7BZBguIOx9b21PpE71OKMsLnK
+	 3wQwTVtvJiwd8hSgLDhiBTZft2Ywhh6ESku5ZY1r7UXSY75t/yBO9kB8M86Mf4cco4UBD
+	 w+4bLcbhRButbec1VzYt4x/mRd/OiEvkGMz9f0b7cKP7G95rOGixh5GFnUtE6Bi8eCdcW
+	 Ks25OEOUH9Petxj/bKeqjaqC4ADDEs1X/1RG4hn1dMp2P2s1V1xHtLrhO4aG45WwUbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OfpvWRjX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1YU7lKJi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5924D60A2608;
-	Wed, 18 Nov 2026 21:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D773160A2617;
+	Wed, 18 Nov 2026 21:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OfpvWRjX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8EA1F000C9;
-	Wed, 18 Nov 2026 21:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1YU7lKJi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370EB1F000C8;
+	Wed, 18 Nov 2026 21:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036195;
-	bh=+Yw+U+bcFpllhBzQlDNR3soDfwz0jxSno6kkfdWtR7o=;
+	s=korg; t=1795036198;
+	bh=m7uQmt9Dru7ivbWBvw+gruRwdRDZpk0rvZkb+r2OYc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OfpvWRjXqGjI5MbNyUsFqjl96Fa145TRSQAbt9VLGppn0MKg3GKtp/YFddVjjTzOy
-	 nAC1GnAXmt/Q3XOThKD7iA6mj3iyeuJZPeg9RPT82iSoOA7OzknBU8csKFElnFr7D0
-	 DDhqZ6Sw3OU7KilTywNx6CZrwXtut2nSr0f5W82E=
+	b=1YU7lKJiPu+xj6TSgiUn2fHCtK9ipfnbWq1O3BWf0Yhv2GOvCGUAr06DaYk6kosgy
+	 +HKclDIZVdGiPWMdXjU0smXFVuOU89pBD94iXNf9EPC+dKWrlEVsxbRxAvNQxlPPTY
+	 Shqu6wqHDUaQu2zQFndYCfK1n5iO0M3BCbXxSSFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0930/3318] nilfs2: fix deadlock between nilfs_evict_inode() and find_inode()
-Date: Wed, 18 Nov 2026 15:25:52 +0100
-Message-ID: <20261118150347.445420224@linuxfoundation.org>
+Subject: [PATCH 6.6 0921/3318] media: adv7180: Initialize mutex before ancillary clients
+Date: Wed, 18 Nov 2026 15:25:43 +0100
+Message-ID: <20261118150347.161178238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,84 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit ff1227f70eead8704ecfec69259fb4c041f92cda ]
+[ Upstream commit 9d46d17a65e86010b1f5604e5cf61ce1e197f77a ]
 
-Syzbot reported a deadlock between nilfs_evict_inode(), executed via
-an asynchronous workqueue (kworker) as:
+The VPP ancillary-client error path unregisters the CSI client before
+destroying state->mutex. For I2P variants, the failure can occur before
+mutex_init(), so cleanup destroys an uninitialized mutex.
 
-  process_one_work()
-    process_scheduled_works()
-      nilfs_iput_work_func()
-        nilfs_dispose_list()
-          iput()
-            iput_final()
-              evict()
-                s_op->evict_inode()
-                  nilfs_evict_inode()
+Initialize the mutex immediately after allocating the driver state, before
+creating any ancillary clients. This keeps every cleanup path matched with
+a completed mutex initialization.
 
-and find_inode(), called via
+A QEMU x86_64 test using an i2c-stub bus instantiated an ADV7280 client
+at address 0x21 and occupied its VPP ancillary address 0x42. This forced
+i2c_new_ancillary_device() to return -EBUSY. An instrumentation oracle
+observed an uninitialized mutex on the buggy kernel and an initialized
+mutex on the fixed kernel. The failure was deliberately injected to
+exercise the error path; no natural crash was observed.
 
-  nilfs_mkdir()
-    nilfs_new_inode()
-      nilfs_insert_inode_locked()
-        insert_inode_locked4()
-          inode_insert5()
-            find_inode()
-
-When an inode is deleted (i_nlink == 0), nilfs_evict_inode() clears its
-ifile bitmap entry and then synchronously triggers the log writer via
-nilfs_transaction_commit() if IS_SYNC(inode) is true.
-
-If a concurrent directory creation via nilfs_new_inode() attempts to
-allocate the same newly freed inode number, however, find_inode() called
-just before inserting it into the inode hash, blocks waiting for the old
-inode's evict() to complete.
-
-Meanwhile, the synchronous log writer invoked from nilfs_evict_inode()
-tries to acquire a write lock on 'ns_segctor_sem' which is read locked
-by the caller of nilfs_new_inode() (in this case, nilfs_mkdir()),
-resulting in a deadlock.
-
-The synchronous log writer invocation from nilfs_evict_inode() is a
-legacy artifact; it is no longer necessary because the call itself
-(triggered by iput()) is now handled asynchronously with a kworker
-if i_nlink == 0.  It merely increases the risk of deadlock.
-
-Fix this deadlock by removing the synchronous log writer trigger from
-nilfs_evict_inode().
-
-Reported-by: syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6646318bbcf419411bc5
-Fixes: 7ef3ff2fea8b ("nilfs2: fix deadlock of segment constructor over I_SYNC flag")
-Tested-by: syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com
+Fixes: 851a54effbd8 ("[media] adv7180: Add I2P support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Assisted-by: LLM Codex
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/inode.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/media/i2c/adv7180.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
-index 8c47c13c8e716..410da542a3b90 100644
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -976,13 +976,7 @@ void nilfs_evict_inode(struct inode *inode)
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index 4778ae653ca9d..58bdb42205c2d 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -1416,6 +1416,7 @@ static int adv7180_probe(struct i2c_client *client)
+ 	if (state == NULL)
+ 		return -ENOMEM;
  
- 	nilfs_clear_inode(inode);
++	mutex_init(&state->mutex);
+ 	state->client = client;
+ 	state->field = V4L2_FIELD_ALTERNATE;
+ 	state->chip_info = (struct adv7180_chip_info *)id->driver_data;
+@@ -1456,7 +1457,6 @@ static int adv7180_probe(struct i2c_client *client)
+ 	}
  
--	if (IS_SYNC(inode))
--		nilfs_set_transaction_flag(NILFS_TI_SYNC);
- 	nilfs_transaction_commit(sb);
--	/*
--	 * May construct a logical segment and may fail in sync mode.
--	 * But delete_inode has no return value.
--	 */
- }
- 
- int nilfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	state->irq = client->irq;
+-	mutex_init(&state->mutex);
+ 	state->curr_norm = V4L2_STD_NTSC;
+ 	if (state->chip_info->flags & ADV7180_FLAG_RESET_POWERED)
+ 		state->powered = true;
 -- 
 2.53.0
 
