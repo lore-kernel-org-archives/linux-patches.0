@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048300;
-	b=s8rjGRWpWIiIae9ayAhbPgO3bnisTlmqTMXGdUnCxzZq0tT63QAXS3NUTDF7nT2/lQyq
-	 h16c3M9jcNUwdnRkxE4XoQVhdZOiqtvtxhiwY/dbcv8JMnMVkgEHpmvdX8Gw6U+6f6pp9
-	 Tmns2R79M27CcimdSXz/kfn1UC/Lb/OXgWrhln8Sz7/ZHyj4Fwc++/rKNDCsWNRUQ58P5
-	 3OA9DwNrMDfmWLxa1Cj2XnoJPungUH6cZRboTkM/2u17wXZ6RSsdxV2F+VuTmfCKJJyrs
-	 duwJczrakPaNtJSaipE8J4i+NpwtA2rXosmRE6mLD5HlfOSUn6vZBBQF3TsWeklNe8Q==
+	t=1795048303;
+	b=1YtyzJ8isNWMlcyfLikSUiUFj2QfMIW9hgeHPLgjhNlIW8qyM423YutEmWXk3sZs05RY
+	 FRzO1vAV/GJjCpz8+bv5V6BJGxHrzCnfEghed+rF7/TtXye6YlK0UM1X0lW1z2e5X2lX/
+	 vUDlMBfULCMS9LvUIiCCkxBdn/kFQHJh+c/0IsJL1G3BDwESaFpgc4LgO4I6uoLpO2zpy
+	 2MBSxvfXClXnxth3NMs1Pk8LeeaeUwtRo7NnzIVub2ffYBf1yaMbTed18D6ovSTN6Qmt6
+	 M9ViLeIaTfrr/5IyyhFvTUZ8ph2AfYizblC3iGn8uQEY+qViDBFx39w3ys4vq96Z3gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8sZF3SstyPrEUvxG4cLNl15YHO0EdTm0AXt/cmimYHg=;
-	b=13IIH3s88C4t7nR+6Fzm8PuGsv8FCKgtWqw2pM1BamdqA2An0o47djpdRvdA3n/OJjzu
-	 Tz/IcMWNtS9MOD9k4hx2qDRfv1WpPSyi2RHSVeqwJWT6KE55KrfN4jR+KHaQ7EuBpJIcp
-	 y171NrOHJDslXfLEXX00mw/x3bfTxjIQ/v4s3u8+hy8K4R6bSStH1OpxKztHCUZV65RM/
-	 cXJPhVS6O9o4R5zWj8YefzUHVemCtFl45QsX+MTeAkODsG6X6R8P7kTJIkeD5O9LByw+f
-	 CJZQe7E/czLvIUuS95VFEUwJj4MBDJGkZ+i3zgXw405Be0w2MRmoHn6L2J2j6eOGHtQ==
+	bh=C4AeTWvS3XrxD1XZgsAjMOU8LFKJQqyYCyafQbx1rvs=;
+	b=pFQ/flkSUPPma33gCo0lC1FXAWUGIEF9aBW55DUIleyBiE4V0zpWg3uIFYBnseAcmPrc
+	 0yYf9a6KYumR4dO5wVq5RrpRNkhMJxKiwT82ZlXkcpv55VokF7aKOG2+piyMPopIx2prV
+	 t5mIJbCudyERaxMByem5wPXp6L/iEROfCTYQCsoxE1M6kd8qXUfUe5z2C+Ov8SKEnwE7k
+	 cbS3wzaawcLL9DTjvUs1HtZSdkDRmgnrmUL+xPLKtsgdBNslx43D2jvKOvzVua5ptdDqV
+	 i0cXkgeUsTngxN/QGEYJITwjltAFKm41uSVByHO2+kP+ZDAtvt4ufyYmAyYQgHJakMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJot51gk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1mrAEnm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3961B606A320;
-	Thu, 19 Nov 2026 00:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089C5606A33B;
+	Thu, 19 Nov 2026 00:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cJot51gk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450631F000C4;
-	Thu, 19 Nov 2026 00:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1mrAEnm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189B71F000C4;
+	Thu, 19 Nov 2026 00:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048299;
-	bh=8sZF3SstyPrEUvxG4cLNl15YHO0EdTm0AXt/cmimYHg=;
+	s=korg; t=1795048302;
+	bh=C4AeTWvS3XrxD1XZgsAjMOU8LFKJQqyYCyafQbx1rvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cJot51gkGjJZNEf1Z56RecGlVRBDLqrs9zppvUMSb4hqLB+fNc0iWwwT0HDwcGvGH
-	 q16CL9TicfKKHsJK432dQnEo+9BodzOxkBN/8mtGUbxmzE+A1I0Q3PlJ0ARoRFNwLY
-	 c/CUk4u+6ZGkWJB7rxOnAD7fO2PY9NMB/3k3gqaM=
+	b=I1mrAEnmE4tguVQsBm9tCg1PjuQDsvIXcSnd3g3sgXyf4ZdiEWfn7XD9BOkR+88PF
+	 HVertgZGH3Wsi1jqOLgW/uU5gVVBZcm6oqLq4ydm8irZcVjin5c7ynS+Eae4n4+XMs
+	 szlsrY9jT4kqK9UD5MuOQuumMjwT60Mx8wo6iqVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1904/2857] ARM: dts: stm32: lxa-mc1: change stdout-path baud rate from 9600 to 115200
-Date: Wed, 18 Nov 2026 15:48:58 +0100
-Message-ID: <20261118150309.780111148@linuxfoundation.org>
+Subject: [PATCH 6.1 1905/2857] cpuidle: teo: Do not return a disabled idle state
+Date: Wed, 18 Nov 2026 15:48:59 +0100
+Message-ID: <20261118150309.814966819@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,50 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmad Fatoum <a.fatoum@pengutronix.de>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit fc3c0ffefc169719316eddb8c36e2427e11ce713 ]
+[ Upstream commit 60d5fca628f94f8f23398ad62d80aa284dae6571 ]
 
-The default baud rate when none is specified is up to the DT consumer.
+If idle state 0 is disabled and none of the enabled idle states satisfies
+the PM QoS latency constraint, constraint_idx in teo_select() stays at its
+initial value of 0, because the loop that updates it starts at state 1,
+and so the candidate state index is capped at state 0, which is disabled,
+and that state is returned to the caller.
 
-In the case of the Linux STM32 serial driver, it defaults to 9600 baud,
-which differs from the 115200 baud that this board's barebox bootloader
-configured.
+The cpuidle core does not validate the returned state index against the
+per-state disable flags, so the CPU ends up entering the disabled state 0.
 
-This went unnoticed, because barebox automatically fixes up a console=
-command-line option that looks like this on the LXA boards:
+To address this, ensure that constraint_idx is at least equal to the index
+of the first enabled idle state (idx0), so that the candidate state is
+never capped to a disabled one.
 
-  console=ttySTM0,115200n8
-
-This had precedence over the 9600 fallback baud rate.
-
-But when EFI booting a kernel via GRUB, we run into this issue, because
-the barebox-provided command-line is disregarded by GRUB.
-
-Fix this by explicitly setting the baud rate to the correct 115200.
-
-Fixes: 666b5ca85cd3 ("ARM: dts: stm32: add STM32MP1-based Linux Automation MC-1 board")
-Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-1-59b60a5069ff@pengutronix.de
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: c410a9a142f1 ("cpuidle: teo: Change the main idle state selection logic")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260828032457.2317326-1-luoxueqin@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/governors/teo.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
-index cb00ce7cec8b1..410e45cf538dd 100644
---- a/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
-+++ b/arch/arm/boot/dts/stm32mp157c-lxa-mc1.dts
-@@ -33,7 +33,7 @@ backlight: backlight {
- 	};
+diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
+index d9262db79cae5..8de499ca89ea7 100644
+--- a/drivers/cpuidle/governors/teo.c
++++ b/drivers/cpuidle/governors/teo.c
+@@ -445,6 +445,17 @@ static int teo_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		}
+ 	}
  
- 	chosen {
--		stdout-path = &uart4;
-+		stdout-path = "serial0:115200n8";
- 	};
- 
- 	led-controller-0 {
++	/*
++	 * If the latency constraint does not allow any of the enabled idle
++	 * states to be used, the candidate state index will be capped to 0
++	 * by the check below, but state 0 may be disabled.  To prevent the
++	 * selection of a disabled state in that case, ensure that
++	 * constraint_idx is at least equal to the index of the first
++	 * enabled idle state.
++	 */
++	if (constraint_idx < idx0)
++		constraint_idx = idx0;
++
+ 	/*
+ 	 * If there is a latency constraint, it may be necessary to select an
+ 	 * idle state shallower than the current candidate one.
 -- 
 2.53.0
 
