@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055051;
-	b=jry+jC1CBx2xdsVf7OrdkvWtNs3o79X4Krv0SBqFFK4rxzWWapHFdVxBhiIs9dhCeSNy
-	 P1MV+qcxxytXmQh0WD356x5+kdGz6/Vkti2Z1vA4coSn9hd85S7r0zEXLk2Vhqb2fbQSj
-	 gKhnyyAylsqgl3FHaEzxUSDqHd/IQatFvf97BkfdkAkOlR91G6qZQeaYDu+OGJuYmzs76
-	 GWsa48k5HJwF7EY56LFSEhp1YOkd/bFeAS74zLws+PwHLxxr0zl2okMHTqlDwW2mnhjiU
-	 h635tI8U0H+mU7H2AcZf2LvIlPvE/uxnFooHbEi3Q2O/vpN96EBO65hf9j4ho62CCNw==
+	t=1795055054;
+	b=TFvhY+XxRv27qf8IlHrNA+qKDTQHOD9DtaNvgVYMOSXaJb0e92ZcR8qEgi0l1egaRX8o
+	 Xf4q5qaYEWwX6jm6PJxYQNJ1ITjVh+d5qEY6iJDrDME8D9mwUG9GmHH35cVXlR0L+lRUD
+	 FxwNirb0j2PBO1ercM8quaw+p+PTkjXrPfFJc+V4920J9WFELrcUmhaAxl+TYhjicBFDf
+	 FtduoxDVaU96QdkjOaKj8hPT+lmDxhN+x/pEE7EDZ1kgg0ZWfBcYrNKM8VQyPwEk9tVra
+	 PKpuf3O/O/dwi6uHniunpL7eYyaei8uJp0PavUguNfESx62iyEckUp4kQPwZpR7GoIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G4Fe4NDIk4NSfuH4BDh2O60tPKO+vCvc2VJFCYtADcA=;
-	b=VmWy0J91ggS8rG+3Xbmimxs2bhKOlKo9kFb4xXbDIIRdxHrOfqJZa1E6isjHVXIjIoEY
-	 Mokxt/tX+CKHo88QgLu9uiO7f5efDSR7zUcvEHGIHLVqdyPpX1QInWM1EMYSVuaE4SmCT
-	 5BZG+RPItFRkI5xs+yiKLStPsw/KYzPz8eHp7EvBgK4L9a1zX9pxyOszQRFZZ/bOqXq5g
-	 l7Oy2taebaknK9bTGP3893w8FxKmK4aS8XmitzEnvGe3cubIKG5JOF/2+z0cyRM2wp+n1
-	 wop/eFVlMX4fUuM3uH9Jvu8r+PGSH8dADK9fhBrVBy1DdfRckV4oMeuEK5ToEaAV1xQ==
+	bh=IedkeWax+CVbd8XUekMqYWAm2R1oFY/t2qlxHpyz9zI=;
+	b=oiFAbnTVkFA+FZRk4uZTuYBhHVphy1CW6+mCnUXtrWXqZc1wEYcpnU5ZsQd/BI3kbw0C
+	 9Gaa1FbZSspRVb6satyhOUawvMHOJDEnLY5V7JnCI4W+wxymrj8RGOPl08r0Fl1DFQybz
+	 6VE2jsgjBX/gE6P9AxK715UkFZ+LlSHvnsPSRQzdA0X9G08R52HRwjiEJDy1opnF0v0uW
+	 gKVL2OGKFtPUcpdSsrLobmfngkakBkrYoNrKELF/sI0SCaIFX+WLDPbyccRHMvAm3c9sW
+	 9aJ/qhNC9JpoVQJxVnbEl2xILDKEPRQPALCC7B8l+SdJctMnw4m2eaareOrDKl1HSqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XdzSI88N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxmgMEF3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91444606A320;
-	Thu, 19 Nov 2026 02:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72198606A31C;
+	Thu, 19 Nov 2026 02:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XdzSI88N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC251F000C4;
-	Thu, 19 Nov 2026 02:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxmgMEF3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF521F000C4;
+	Thu, 19 Nov 2026 02:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055051;
-	bh=G4Fe4NDIk4NSfuH4BDh2O60tPKO+vCvc2VJFCYtADcA=;
+	s=korg; t=1795055054;
+	bh=IedkeWax+CVbd8XUekMqYWAm2R1oFY/t2qlxHpyz9zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XdzSI88N4fxt2xTXGJ8NP/yqaqy6VqB1k/qU4Tg3j0dUtzREZGgziRNZZWM3Ui01T
-	 U5L9UQ6jTV7iljNBq0cMastkTy94k78jJvVmFItUznp8918eekRLA8fch7YIcLgvvu
-	 8ARxZOpaAc2o6t8yrHlJxBV/W/ovFFJLO5rG7wVc=
+	b=SxmgMEF3xDfPkaXCokWQhzlfw5d2UpPoZVW+mybs7von6eFWN6RPaaJexGmMgaPLo
+	 PFdduO/Y+J6KZ6XwHmS1qqmknJwUGTuXIqpecWJ/SNgwnQV+hEcRXvkJHcn9LCqPPF
+	 MruXxMzbhsbQbf8jklYPpkIKkBK30dIoIm31nC94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1492/2214] gfs2: Fix the return value in gfs2_get_link() kernel-doc
-Date: Wed, 18 Nov 2026 15:52:48 +0100
-Message-ID: <20261118150111.091800166@linuxfoundation.org>
+Subject: [PATCH 5.15 1493/2214] ALSA: control: Fix virtual master creation reference in kernel-doc
+Date: Wed, 18 Nov 2026 15:52:49 +0100
+Message-ID: <20261118150111.176053677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,37 +70,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 700a0a6892f7c0c541d5d23837cfab98cc744d17 ]
+[ Upstream commit a347cc458d97ecd8adb5462b91559682a70aced6 ]
 
-gfs2_get_link() returns the link target or an error pointer, but its
-kernel-doc still describes an integer status. The mismatch dates back to
-when gfs2_readlink() was replaced by generic_readlink() and persisted
-across the removal of nd_set_link().
+The snd_ctl_add_follower() comment refers to
+snd_ctl_create_virtual_master(), but virtual master controls are created
+with snd_ctl_make_virtual_master(). Correct the helper name.
 
-Describe the returned pointer and error value.
-
-Fixes: c177c2ac8c5a ("Switch gfs2 to nd_set_link()")
+Fixes: 79c7cdd5441f ("ALSA: Add kernel-doc comments to vmaster stuff")
 Assisted-by: LLM
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Link: https://patch.msgid.link/20260912100548.86134-1-kmehltretter@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 2 +-
+ include/sound/control.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 061372f84a64c..883592c7287be 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1783,7 +1783,7 @@ static int gfs2_rename2(struct user_namespace *mnt_userns, struct inode *odir,
+diff --git a/include/sound/control.h b/include/sound/control.h
+index a1fc7e0a47d95..b35ee47f4a6ba 100644
+--- a/include/sound/control.h
++++ b/include/sound/control.h
+@@ -218,7 +218,7 @@ int _snd_ctl_add_follower(struct snd_kcontrol *master,
+  * @follower: follower element to add
   *
-  * This can handle symlinks of any size.
+  * Add a virtual follower control to the given master element created via
+- * snd_ctl_create_virtual_master() beforehand.
++ * snd_ctl_make_virtual_master() beforehand.
   *
-- * Returns: 0 on success or error code
-+ * Returns: the link target on success, an ERR_PTR() on failure
-  */
- 
- static const char *gfs2_get_link(struct dentry *dentry,
+  * All followers must be the same type (returning the same information
+  * via info callback).  The function doesn't check it, so it's your
 -- 
 2.53.0
 
