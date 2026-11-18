@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061330;
-	b=3v8xbPwCx10xnGWicbxrNrkKbN+Yqkscayj8PQz/rZBh8DkAgmqRWYXaFBr6GisFmeiE
-	 6SCYhSLBRKphWuS2glAme9TzAEM9ZEsM2wOo5zM5I6EU7KL7pPV1QWoYsdf8Ex+w2ODh7
-	 MUcy4Ef2IfShlX7M47akhUUDj8fFSuv8h+dsxaXqdwp73ADSH4MzrZfEQbGzy+DKI3xXa
-	 9ursEAo46Ac78E+2eF7tGsmnHQ5k+slxaQYV3yym+PJR/7oM2aut412qpXotMhKPK1GhR
-	 mGxWqzfkmDIPrsk3Y2O7c56EA9Wkuv8ROqx3230a4vM6xwzBlzntmrR+R5wF3PPHUSw==
+	t=1795061333;
+	b=lWD1vZmdR5Rn6JwCirf1IbpDx4uPCiee8MiGMK4LkbebQPKPqpeBudZUR2fR7veCaRcG
+	 bMRaTGZZj0z/911gtea+J8PAY+Lx26aTcF/M09J2kRj9A5C0gcmHQB9rDn89lVp+Jb2GK
+	 FyUeE3uYNnil+4H/OTkRaGXMAxBQb23UsRKDxouGevwDlMtYa+jHCGz2Sd4P0cDAIXcEW
+	 Dfi1PN+GZ8n9Bqtoy1f/vO3yC/c/Um1z/GMUy56/mYTqaZv9k1o2PqL1de9KHqOFUolje
+	 mrlY6gGUCS1pBVcxoLN/dvTLX2ME9b8qzliXDk5IpHVUq4cAILPMvp35tAz+8fYwC+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yJKtID7ZynQosSzyZYjAdLjg/HJ83/nxZSm3lTJ+o1Y=;
-	b=ftbKialag+Yg1b15JKgBunvLjnnGVYC8BrlBE9uAc2p8BJEAIeoJYD0F0oazVNHWIMkI
-	 0B7L3nOoZBKZxAbo6irwehbFhd5pXGCvel0Accf3NWyCW/ccRV1SbW9lj+JNBPfJti6d0
-	 oXwx/YO96s3GuOnBq1rJkuJtTeO0GYYPeSMvqzCJ2R8PUiBktevawhpTSMY6+DvFP8SLR
-	 KPhSWSXWRRHxYg+0J6ekgwjQsP7drGbd1WC4RBmTIpRaqds+lGyhCmAUuVnbmgBmDQi5P
-	 G2QtFPYbQ1Ehd6jHlz6X6TLs8E+2Nl9dhKf5ZnDqj/8i2xWcQO1LoO5mBaxUhGSeevw==
+	bh=82qrScbgCIQzqExXnANJKhbMRM0R5YOmVVK2tpBpPsc=;
+	b=G4UPCwEf3Qj4pb2Vo7fblmcejyT9FeWAhePLNLw2vkxnqlCC74meqrEgz8JvejV7cAAW
+	 WkCBr8VNopRNnSepwmLOk2RpIzN+uEle6TdjJhEC3J04EAO4+EdZfQ8k2HY5ncYQ7W9FS
+	 mirdj7reIWxGvKBv6CbrcyIneJLrivpl1zesX+MRF9X0bjSSn0pnJE7S2UP4AUX83JD9g
+	 8j6fn0mln0+jVNITQX9WoNk7/2SXHRNQzqIxwI3aFKimMPw8vS4W1r340L0bTSkTfoyjR
+	 dpIDl2QPynsxcIX4gvYP0/q5I2DZBAOWCeOczhEWbHaRs407ebIAhabIuZIy4WhNllQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GLAzVur9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbQSf93X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD89606A325;
-	Thu, 19 Nov 2026 04:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B73606A32C;
+	Thu, 19 Nov 2026 04:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GLAzVur9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4C11F000C4;
-	Thu, 19 Nov 2026 04:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbQSf93X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D4B1F000C4;
+	Thu, 19 Nov 2026 04:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061330;
-	bh=yJKtID7ZynQosSzyZYjAdLjg/HJ83/nxZSm3lTJ+o1Y=;
+	s=korg; t=1795061333;
+	bh=82qrScbgCIQzqExXnANJKhbMRM0R5YOmVVK2tpBpPsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLAzVur9IYK32Iepo678kmBaJvnPhPeKb2JB2OqfvbX5un/JNtOEStK+DkTDPN2Fu
-	 lMwMaeml5h1/32IhIk3xB9RgRzmuI7GHw0TTHE0kF7w5CT0QU1q7MiI9PE5/DUI8KN
-	 ly8Vy/Z0EHIhQl/GZZjEIYP+hP136Izdm1nOoxKw=
+	b=TbQSf93XHCVx1uHG70GY79NH/vUJhmmzGESexW1VAeas2PA78Yq3662xfK8NeRmu8
+	 +1KpcS9+PgUgVrCN1I4uO5YKIoG8ZgECKWzFfPp6XOTyfRFG2R4MWCkk4CPhLw6afJ
+	 denVUtCdoOR7gO8CwfD3ciOXuED7KUVxSqeee4Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1507/1848] dmaengine: ste_dma40: Validate memcpy configuration
-Date: Wed, 18 Nov 2026 15:59:05 +0100
-Message-ID: <20261118150022.416988789@linuxfoundation.org>
+Subject: [PATCH 5.10 1516/1848] ocfs2: fix deadlock in inline-data truncate transactions
+Date: Wed, 18 Nov 2026 15:59:14 +0100
+Message-ID: <20261118150022.752025661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,78 +75,304 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
+[ Upstream commit c204bf5ac3eeb66648904d0374d6f7b84d843aac ]
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+Updating an inode xattr can cause an ABBA deadlock with inline file
+truncation:
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+  ocfs2_truncate_file()
+    down_write(&oi->ip_alloc_sem)
+    ocfs2_truncate_inline()
+      ocfs2_start_trans()
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+  ocfs2_xattr_set()
+    ocfs2_start_trans()
+    ocfs2_xattr_ibody_set()
+      down_write(&oi->ip_alloc_sem)
 
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The xattr set path starts the merged transaction before the inode-body
+xattr helper acquires ip_alloc_sem, reversing the ip_alloc_sem ->
+transaction order used by the allocation and truncate paths.  The
+transaction merge in commit 85db90e77806 ("ocfs2/xattr: Merge xattr set
+transaction.") introduced this ordering.
+
+Fix it by acquiring ip_alloc_sem once in ocfs2_xattr_set(), before xattr
+preparation, allocation reservations and ocfs2_start_trans(), and removing
+the per-helper acquisition from ocfs2_xattr_ibody_find(),
+ocfs2_xattr_ibody_set() and ocfs2_xattr_create_index_block().  These
+helpers now assert via lockdep that the caller holds ip_alloc_sem.
+
+ocfs2_xattr_set_handle(), which only sets initial ACL or security xattrs
+on unpublished inodes inside the create transaction, takes ip_alloc_sem
+under a dedicated lockdep subclass so that the assertions hold without
+creating a transaction -> ip_alloc_sem cycle against the ip_alloc_sem ->
+transaction order.  The inode is unpublished, so the acquisition can never
+contend.
+
+This keeps the established ip_alloc_sem -> transaction order and makes the
+locking unconditional, so lockdep can verify a single plain ordering
+instead of conditional acquisitions.
+
+Link: https://lore.kernel.org/20260826112659.246574-1-joseph.qi@linux.alibaba.com
+Fixes: 85db90e77806 ("ocfs2/xattr: Merge xattr set transaction.")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: ZhengYuan Huang <gality369@gmail.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/ocfs2/xattr.c | 79 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 991e72f6831f7..ad4ae1b44c6d2 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1767,7 +1767,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index fd1e641195951..36bd415e5f95f 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -2685,6 +2685,9 @@ static int ocfs2_xattr_has_space_inline(struct inode *inode,
+  *
+  * Find extended attribute in inode block and
+  * fill search info into struct ocfs2_xattr_search.
++ *
++ * The inline free-space check races with truncate and allocation, so
++ * callers must hold ip_alloc_sem for writing.
+  */
+ static int ocfs2_xattr_ibody_find(struct inode *inode,
+ 				  int name_index,
+@@ -2696,13 +2699,13 @@ static int ocfs2_xattr_ibody_find(struct inode *inode,
+ 	int ret;
+ 	int has_space = 0;
  
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
++	lockdep_assert_held_write(&oi->ip_alloc_sem);
++
+ 	if (inode->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE)
+ 		return 0;
+ 
+ 	if (!(oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
+-		down_read(&oi->ip_alloc_sem);
+ 		has_space = ocfs2_xattr_has_space_inline(inode, di);
+-		up_read(&oi->ip_alloc_sem);
+ 		if (!has_space)
+ 			return 0;
  	}
-@@ -2062,12 +2063,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
+@@ -2781,6 +2784,7 @@ static int ocfs2_xattr_ibody_init(struct inode *inode,
+  *
+  * Set, replace or remove an extended attribute into inode block.
+  *
++ * Callers must hold ip_alloc_sem for writing.
+  */
+ static int ocfs2_xattr_ibody_set(struct inode *inode,
+ 				 struct ocfs2_xattr_info *xi,
+@@ -2791,16 +2795,17 @@ static int ocfs2_xattr_ibody_set(struct inode *inode,
+ 	struct ocfs2_inode_info *oi = OCFS2_I(inode);
+ 	struct ocfs2_xa_loc loc;
  
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
++	lockdep_assert_held_write(&oi->ip_alloc_sem);
 +
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
+ 	if (inode->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE)
+ 		return -ENOSPC;
  
-@@ -2075,6 +2081,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
+-	down_write(&oi->ip_alloc_sem);
+ 	if (!(oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
+ 		ret = ocfs2_xattr_ibody_init(inode, xs->inode_bh, ctxt);
+ 		if (ret) {
+ 			if (ret != -ENOSPC)
+ 				mlog_errno(ret);
+-			goto out;
 +			return ret;
+ 		}
+ 	}
+ 
+@@ -2810,13 +2815,10 @@ static int ocfs2_xattr_ibody_set(struct inode *inode,
+ 	if (ret) {
+ 		if (ret != -ENOSPC)
+ 			mlog_errno(ret);
+-		goto out;
++		return ret;
+ 	}
+ 	xs->here = loc.xl_entry;
+ 
+-out:
+-	up_write(&oi->ip_alloc_sem);
+-
+ 	return ret;
+ }
+ 
+@@ -3474,6 +3476,18 @@ static int __ocfs2_xattr_set_handle(struct inode *inode,
+ 	return ret;
+ }
+ 
++/*
++ * ip_alloc_sem subclass for inodes being initialized before publication.
++ * ocfs2_xattr_set_handle() runs inside the create transaction, so taking
++ * ip_alloc_sem there adds a transaction -> ip_alloc_sem order that would
++ * form a lockdep cycle with the ip_alloc_sem -> transaction order used
++ * elsewhere, if not for this separate subclass.  The inode is unpublished
++ * so the acquisition can never contend.
++ */
++enum {
++	OCFS2_IP_ALLOC_SEM_UNPUBLISHED = 1,
++};
 +
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
+ /*
+  * This helper is only for setting initial ACL or security xattrs on an inode
+  * that is still unpublished, unhashed, and unattached to a dentry.
+@@ -3535,6 +3549,13 @@ int ocfs2_xattr_set_handle(handle_t *handle,
+ 	xis.inode_bh = xbs.inode_bh = di_bh;
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ 
++	/*
++	 * The inode is unpublished and cannot contend, but take the
++	 * semaphore anyway so the helpers' lockdep assertions hold.
++	 */
++	down_write_nested(&OCFS2_I(inode)->ip_alloc_sem,
++			  OCFS2_IP_ALLOC_SEM_UNPUBLISHED);
++
+ 	ret = ocfs2_xattr_ibody_find(inode, name_index, name, &xis);
+ 	if (ret)
+ 		goto cleanup;
+@@ -3547,6 +3568,7 @@ int ocfs2_xattr_set_handle(handle_t *handle,
+ 	ret = __ocfs2_xattr_set_handle(inode, di, &xi, &xis, &xbs, &ctxt);
+ 
+ cleanup:
++	up_write(&OCFS2_I(inode)->ip_alloc_sem);
+ 	brelse(xbs.xattr_bh);
+ 	ocfs2_xattr_bucket_free(xbs.bucket);
+ 
+@@ -3615,30 +3637,38 @@ int ocfs2_xattr_set(struct inode *inode,
+ 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ 
+ 	down_write(&OCFS2_I(inode)->ip_xattr_sem);
++	/*
++	 * The allocation and truncate paths take ip_alloc_sem before
++	 * starting a transaction, so take it here before xattr
++	 * preparation, allocation reservations and ocfs2_start_trans()
++	 * to keep that order.  The xattr helpers below no longer take
++	 * it themselves.
++	 */
++	down_write(&OCFS2_I(inode)->ip_alloc_sem);
+ 	/*
+ 	 * Scan inode and external block to find the same name
+ 	 * extended attribute and collect search information.
+ 	 */
+ 	ret = ocfs2_xattr_ibody_find(inode, name_index, name, &xis);
+ 	if (ret)
+-		goto cleanup;
++		goto out_free_ac;
+ 	if (xis.not_found) {
+ 		ret = ocfs2_xattr_block_find(inode, name_index, name, &xbs);
+ 		if (ret)
+-			goto cleanup;
++			goto out_free_ac;
+ 	}
+ 
+ 	if (xis.not_found && xbs.not_found) {
+ 		ret = -ENODATA;
+ 		if (flags & XATTR_REPLACE)
+-			goto cleanup;
++			goto out_free_ac;
+ 		ret = 0;
+ 		if (!value)
+-			goto cleanup;
++			goto out_free_ac;
+ 	} else {
+ 		ret = -EEXIST;
+ 		if (flags & XATTR_CREATE)
+-			goto cleanup;
++			goto out_free_ac;
+ 	}
+ 
+ 	/* Check whether the value is refcounted and do some preparation. */
+@@ -3649,7 +3679,7 @@ int ocfs2_xattr_set(struct inode *inode,
+ 						   &ref_meta, &ref_credits);
+ 		if (ret) {
+ 			mlog_errno(ret);
+-			goto cleanup;
++			goto out_free_ac;
+ 		}
+ 	}
+ 
+@@ -3660,7 +3690,7 @@ int ocfs2_xattr_set(struct inode *inode,
+ 		if (ret < 0) {
+ 			inode_unlock(tl_inode);
+ 			mlog_errno(ret);
+-			goto cleanup;
++			goto out_free_ac;
+ 		}
+ 	}
+ 	inode_unlock(tl_inode);
+@@ -3669,7 +3699,7 @@ int ocfs2_xattr_set(struct inode *inode,
+ 					&xbs, &ctxt, ref_meta, &credits);
+ 	if (ret) {
+ 		mlog_errno(ret);
+-		goto cleanup;
++		goto out_free_ac;
+ 	}
+ 
+ 	/* we need to update inode's ctime field, so add credit for it. */
+@@ -3687,6 +3717,7 @@ int ocfs2_xattr_set(struct inode *inode,
+ 	ocfs2_commit_trans(osb, ctxt.handle);
+ 
+ out_free_ac:
++	up_write(&OCFS2_I(inode)->ip_alloc_sem);
+ 	if (ctxt.data_ac)
+ 		ocfs2_free_alloc_context(ctxt.data_ac);
+ 	if (ctxt.meta_ac)
+@@ -3695,7 +3726,6 @@ int ocfs2_xattr_set(struct inode *inode,
+ 		ocfs2_schedule_truncate_log_flush(osb, 1);
+ 	ocfs2_run_deallocs(osb, &ctxt.dealloc);
+ 
+-cleanup:
+ 	if (ref_tree)
+ 		ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
+ 	up_write(&OCFS2_I(inode)->ip_xattr_sem);
+@@ -4352,6 +4382,10 @@ static void ocfs2_xattr_update_xattr_search(struct inode *inode,
+ 	xs->here = xs->header->xh_entries;
+ }
+ 
++/*
++ * Caller must hold ip_alloc_sem for writing, since a new xattr block
++ * is allocated and the xattr block header is rewritten.
++ */
+ static int ocfs2_xattr_create_index_block(struct inode *inode,
+ 					  struct ocfs2_xattr_info *xi,
+ 					  struct ocfs2_xattr_search *xs,
+@@ -4368,19 +4402,14 @@ static int ocfs2_xattr_create_index_block(struct inode *inode,
+ 	struct ocfs2_xattr_tree_root *xr;
+ 	u16 xb_flags = le16_to_cpu(xb->xb_flags);
+ 
++	lockdep_assert_held_write(&oi->ip_alloc_sem);
++
+ 	trace_ocfs2_xattr_create_index_block_begin(
+ 				(unsigned long long)xb_bh->b_blocknr);
+ 
+ 	BUG_ON(xb_flags & OCFS2_XATTR_INDEXED);
+ 	BUG_ON(!xs->bucket);
+ 
+-	/*
+-	 * XXX:
+-	 * We can use this lock for now, and maybe move to a dedicated mutex
+-	 * if performance becomes a problem later.
+-	 */
+-	down_write(&oi->ip_alloc_sem);
+-
+ 	ret = ocfs2_journal_access_xb(handle, INODE_CACHE(inode), xb_bh,
+ 				      OCFS2_JOURNAL_ACCESS_WRITE);
+ 	if (ret) {
+@@ -4442,8 +4471,6 @@ static int ocfs2_xattr_create_index_block(struct inode *inode,
+ 	ocfs2_journal_dirty(handle, xb_bh);
+ 
+ out:
+-	up_write(&oi->ip_alloc_sem);
+-
+ 	return ret;
+ }
  
 -- 
 2.53.0
