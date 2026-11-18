@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028034;
-	b=O64uvGlZEFPI3/nr2e7DBnHdNyOnGSPieBAc2Et11/Ye8BDicWvUnQE6Nh8WPNEcHSeh
-	 jiwVL1t2TIWflOJLi9jhsYQnhA56kNSqfQAP2lDNRNoKl/N4WgOlk3cQAILkHCwy2FkEc
-	 0I8cNEb8lFYLVGNSX0tTFE3PIWYzK0ekkSvneuJ3Cdb+8KzfoHhB3SvwSnQUTX2xcn9NT
-	 5uh+NynsfQqTN4mx0a/PlwN+RdgmBIEBF3K/9XBx6cNVEhJfnRk5QygGnnfKsjHq8VOQN
-	 oPFTpRnvS96BlH5nia6DU4xghMuVJU728PPBYnMt2Of0K25aMX4ki5CPNtBaTtfpAXw==
+	t=1795028036;
+	b=jm0BxVaDfd6/RN8kN5f45JsxrO6T4k2cPVrB6lA+To+0ZcwJd8OQtUvJc6ZRC93p7wBh
+	 u6Wzn0ZuVQMJCHTL8ORFMnTh0P+3tX3ZnQuGVR/5NRLVjcZA8GmDYPoUGcUQIPVNUqdiJ
+	 AjjD6zjoI8MI9UPOazU6BXATVWCZYoDicyCV/32cA/Z15tOByktoPh1TKw/gvlMWLldSV
+	 l3JJrSbeEmS3JOl9+9hlxVd0UdaAff6gIcSCk2I1eNPLy9p/1QTF9zHvKDZchaBbvLKjr
+	 4G8DL3Bh2pL/KXCZ+0EL860mlrsyIKFlJND17llxivZKPEjOJYIq7RAxLw+JGiBJIrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028034;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kSQcdYSi8QfYsQU8j/lHj9q9KvBPtepUqIgFZxPfiFU=;
-	b=Oaz2yOSD71rtHKOi+ALoGYYlDhhQ9qAMgBFNh2yMQNa46lv52mKqmB7OPN+pcv+qB/NC
-	 wLCeHgXnN1E6Wi7gPyDJOEfzWIYu4SbBsVsMhDMfFjPcY3AwbtLq9JIVBSkkxVuPUyKBP
-	 kp+XYZvAJfpkalaLgacddWWCfjPt9sT3oJvzTVgZxtTDHg4g+GHe/KRXzRyDO0zenk3oC
-	 mRvQV1wAM91fXkhmXl7fV+JaQTvC0J2WKwF8ufdp2qqpyj5230eEJJJk/PQvGvgLQXcUz
-	 zqtg+jp1j6Vhx1Iwy9l1rBgl5C+1jAtjVT9XALsQc8daZFaaRGmFGbGP75q5qSAvKvA==
+	bh=az7+J7ePNUwqj26IvMLgLsSlPdWT+7eUrKCW6MEGwkM=;
+	b=qzPwffvCdatMqdhES/sA6UiR2Ju7fYVMKD0SUVL6Y4FqF+84oxTqBESogkAlO/Y5K4+u
+	 kd8jfYa9pmJaHpV4UtYbEOlx4uyiaqM8LKe/KlI9pd71EHq8uODfJlFCTIBbe6gnTlpA3
+	 P5VDVJZIxJWN1oTO+7Vv65wIWctSvZZ4plzCHmnN5fx9io0OSbq0BJqaoRCLeRz0BrCHr
+	 iPPHk6REq+AUJYfusblEN5jKOFIgeRHGVusz4GORZ8GcY/VYVVbaaZ/u9UMElUa0e5K5Y
+	 PufgnWZFtT2yJcoF9TNlvECNcsCBXz7vM5A34A2Avecl/3C3L/M8ICpZqfv+2M0haUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCXSkrj1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYV64LvQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582CC606A31C;
-	Wed, 18 Nov 2026 18:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C11606A31C;
+	Wed, 18 Nov 2026 18:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eCXSkrj1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705A51F000C4;
-	Wed, 18 Nov 2026 18:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BYV64LvQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399151F000C6;
+	Wed, 18 Nov 2026 18:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028034;
-	bh=kSQcdYSi8QfYsQU8j/lHj9q9KvBPtepUqIgFZxPfiFU=;
+	s=korg; t=1795028036;
+	bh=az7+J7ePNUwqj26IvMLgLsSlPdWT+7eUrKCW6MEGwkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCXSkrj1z1jY0HpIPzHnbfbZVOOPHOr4tv/UiofEtFkAP+X7dX7MykjRrbd670LL2
-	 ia3iLuz7Kj55HoJ25eJYNrtufXCXrGhwyldXwr+BqavIE01Z4ZhCTIt2+rX77Tv4Qg
-	 UZrN/EQGCLkmfe3XRFQKOyhv/4De8ZsJVp0MXGe4=
+	b=BYV64LvQ1XSDKuwkWUwJvTrY7Xe3S24tQ8Om2vXUQuoGWnwaLzzmiCotdhXqOs+Xt
+	 mkp/o3WA4/Ravg0+j1bKWcn75TlgZ4vGHVkw/Rs/x1SuScrBXZv0I5Y2z5I/yjg/18
+	 sx4ow7VNRzgaY80JfwT+5VTQnGb6PEGbs1X0itHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Terrence Adams <tadamsjr@google.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1960/2151] cgroup/cpuset: Make sure compute_partition_effective_cpumask() is only called for valid partition
-Date: Wed, 18 Nov 2026 16:01:35 +0100
-Message-ID: <20261118150233.155258560@linuxfoundation.org>
+Subject: [PATCH 6.18 1961/2151] block: advance iterator after copy-in for SG_DXFER_TO_FROM_DEV
+Date: Wed, 18 Nov 2026 16:01:36 +0100
+Message-ID: <20261118150233.190642754@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,61 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: TJ Adams <tadamsjr@google.com>
 
-[ Upstream commit 356a3aa7404e420e6f19c5ed42db7b8bd0c7ee9f ]
+[ Upstream commit 82e72ea18d0af724914c31a1f274c1aef452aad0 ]
 
-With visual inspection to make sure that
-compute_partition_effective_cpumask() is only called for valid partition
-root, it was found that the function can be called for an invalidated
-partition near the end of cpuset_hotplug_update_tasks(). When partcmd is
-set, update_parent_effective_cpumask() is called to either invalidate a
-valid partition or with partcmd_update to check if an invalid partition
-can be switched back to valid. In both cases, cpuset_force_rebuild()
-should be invoked. However, compute_partition_effective_cpumask()
-should only be called when an invalid partition is switched back to
-valid. When a partition is invalidated, compute_effective_cpumask()
-should be called instead.
+When a passthrough request uses transfer direction SG_DXFER_TO_FROM_DEV,
+bio_copy_user_iov() sets up a temporary iterator iter2 with
+data_source = ITER_SOURCE to copy user data into the bio pages before
+execution.
 
-Also add a WARN_ON_ONCE() in compute_partition_effective_cpumask() to
-ensure that a valid partition root is passed in.
+bio_copy_from_iter(bio, &iter2) copies the data and advances iter2, but
+the original iter is never advanced. Consequently, iov_iter_count(&i)
+remains non-zero in the caller loop in blk_rq_map_user_iov():
 
-Fixes: 72c6303acfa1 ("cgroup/cpuset: Take isolated CPUs out of workqueue unbound cpumask")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Acked-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+	i = *iter;
+	do {
+		if (copy)
+			ret = bio_copy_user_iov(rq, map_data, &i, gfp_mask);
+...
+	} while (iov_iter_count(&i));
+
+Because i is never advanced, blk_rq_map_user_iov() loops indefinitely,
+continually allocating bios and consuming map_data pages until it
+exhausts pages and fails with -EINVAL.
+
+Fix this by calling iov_iter_advance(iter, bio->bi_iter.bi_size) in the
+map_data && map_data->from_user branch after bio_copy_from_iter().
+
+Fixes: 13f3956eb568 ("block: Fix WARNING in _copy_from_iter")
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Assisted-by: LLM
+Acked-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://patch.msgid.link/20260929160813.1599129-1-tadamsjr@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ block/blk-map.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index df0d3bff50102..e90fb48cf0f9b 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2181,6 +2181,8 @@ static void compute_partition_effective_cpumask(struct cpuset *cs,
- 	struct cpuset *child;
- 	bool populated = partition_is_populated(cs, NULL);
- 
-+	WARN_ON_ONCE(!is_partition_valid(cs));
-+
- 	/*
- 	 * Check child partition roots to see if they should be
- 	 * invalidated when
-@@ -4065,9 +4067,12 @@ static void cpuset_hotplug_update_tasks(struct cpuset *cs, struct tmpmasks *tmp)
- 
- 	if (partcmd >= 0) {
- 		update_parent_effective_cpumask(cs, partcmd, NULL, tmp);
--		if ((partcmd == partcmd_invalidate) || is_partition_valid(cs)) {
-+		if (is_partition_valid(cs)) {
- 			compute_partition_effective_cpumask(cs, &new_cpus);
- 			cpuset_force_rebuild();
-+		} else if (partcmd == partcmd_invalidate) {
-+			compute_effective_cpumask(&new_cpus, cs, parent);
-+			cpuset_force_rebuild();
- 		}
- 	}
- 
+diff --git a/block/blk-map.c b/block/blk-map.c
+index 17a1dc2886786..dc61bb68277df 100644
+--- a/block/blk-map.c
++++ b/block/blk-map.c
+@@ -218,6 +218,7 @@ static int bio_copy_user_iov(struct request *rq, struct rq_map_data *map_data,
+ 		ret = bio_copy_from_iter(bio, &iter2);
+ 		if (ret)
+ 			goto cleanup;
++		iov_iter_advance(iter, bio->bi_iter.bi_size);
+ 	} else {
+ 		if (bmd->is_our_pages)
+ 			zero_fill_bio(bio);
 -- 
 2.53.0
 
