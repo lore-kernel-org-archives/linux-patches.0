@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022467;
-	b=1ulBvbbTQc4qlXpVZKBHESMk5Cq9fDzB0Z3ObitY9jSk1u6caYB5slVf30QnFEWOJiIY
-	 kPcYVphCaVrjwBFF4R/ffCIcNEG2W/1syBwuO6Z/c0IqsWfXlh8UbTwycI8ltOGZVYPFu
-	 89bZ4R/majpwcL767KDJ7j3SvYqXRZoFAwN2lq2GMy7I/J2CCZB5zyt6mvz8VLsGDr+Mp
-	 /VcD629VkFAuAN2PUzDFcXBTtP5nvxqBNedwRNdNDOTR1kuHBFn3qWJZtKrU1jyRWq/HB
-	 f3/ekB/KDpgFwrs5E9q9iflQlmVyIfDW2V4ynrgDenaMGzzgIooTdlOjH/4h5Sa/Gzg==
+	t=1795022469;
+	b=fy4KX1kG0NNIc3zvcoN+HmA6G9uNKdELF5+6XkIgEfZur4qpbS2glYguv+kFwsFOPnF2
+	 lq5vK8+D9MWD3aezKctF1JVktg+R3xGn+jJcvr9D38Ebf/zaLIzwsQJbKGgV/ZidIKWFp
+	 pZ5rNt4WYs0HWpMakyhVHHD6fYOHmH/0EMlW/SslCoLFm/dKnvCNrA6fOBJIs4rxPERlw
+	 yqL8m97IZ3ZQVz0mQ+/bkBb609H7qfDCaA/zoHE6W299QDqthTLf1bCCKwkblh+XXi1W2
+	 hoQQiV/fWqwf5dsRZS+cvGy98dSF3bynGhuoIQU4NxLVy7JLN+2ZGBJy7pU0YksCP9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022469;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=ZA9KZbvPBMldb6tTRvpPZRG4qTSpBiUcR8/gjClekWw=;
-	b=de9tQk0JyFhUB52rUyR/vo/KzNVtsPVte2wmuaG3uVbIkNJ4B8dwlnoIQeu+n2OSiyCO
-	 Gccp7fj2m4uYn7VS74+lHjsbLGMoN2nwzargICzd17OBhC3d8e1qvYc0oxQx6gaFzl1xB
-	 4wh67BR47SpBvAdRZfX8el3MJSpF4uUcLDeSYX00gVlpUE4++qdCnSm0CrW66X4yqiv2Q
-	 oArNIsp3P2yGvdDxccisjb9PpJfq+xA5DsWPEfLpTNshRWTkHEia7ynrfQ1s+oDK5up0g
-	 phok+ml5gwbabhqxbCe7AuDZ1SA9FDV961qxH+YAqMxndoK/mTrSXUeiHZ87OU1qJBQ==
+	bh=HULEC8RByCMuHtwbtJuGiOyLLV4Q3vzG8mhBRVQEFgc=;
+	b=l2Jsu9u0lfnlPMhefhnHjeQAvVGh9rGF1caaO3tfyTcHMxfZNqnKfOlV9htguFsiqZG4
+	 vl1tWRkWl3WGY/yxjRQ8UkvDQTS2TSFxgQuP56c2dIU2FTla6ziax1vrux65H5hOPJHrt
+	 uh/0CAJvXuzbHZAx3rKd9umO0UBcKKcI7+rboBWpLDZzhszNbCv70xJlZg+oW14NIA7UD
+	 Mz8LVcdaP11ww1DcqtjI7zkddXbxVn/UjLcCVus0z4XcxOJ9CjvXUr6WlAjdhWqiuJSx/
+	 g91YArwa2FnPNyfPFcUoC4BLssr9/2YgT80uDytYGMICZ4oAkiyNVnltw5Ule9AFGsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tTPmN/n2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzYQ3jew;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10116606A335;
-	Wed, 18 Nov 2026 17:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F35606A320;
+	Wed, 18 Nov 2026 17:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTPmN/n2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628D01F000C7;
-	Wed, 18 Nov 2026 17:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EzYQ3jew
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2658C1F000CA;
+	Wed, 18 Nov 2026 17:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022466;
-	bh=ZA9KZbvPBMldb6tTRvpPZRG4qTSpBiUcR8/gjClekWw=;
+	s=korg; t=1795022469;
+	bh=HULEC8RByCMuHtwbtJuGiOyLLV4Q3vzG8mhBRVQEFgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTPmN/n24vZVjmyIRJZBTi26ZbPqshC7HXSmEIQOlhiXpJiLTtwDqtcddWaVpCaa7
-	 MoRFJH9d0ObRgfbuecJAFxtId5Sxpymjfjr/EwOr8R3smdIXmYUSzZu2DxTNdp+hxw
-	 IN5ec9Dy85A0bihvNHQeQUDl3au/gSVwgga6UMbc=
+	b=EzYQ3jewfgK10XFD6TQcg5KUkVBUWkPWzJPJqg/SR6ni7VEZMk0R/05USX0moZPmS
+	 ZCRD47GI4O6uzEllJ8KVZJBrHXZVEJp/gI/rF591zfPLSNPH6z1p+EYxAmyCQ4DhkA
+	 gdTCZZ5WMQ2t9I+H/kExDJKsh7RxgCU6KRV7nrmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
 	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
 	Rong Zhang <i@rong.moe>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0023/2151] ACPI: utils: Add exclusive AML evaluation helpers
-Date: Wed, 18 Nov 2026 15:29:18 +0100
-Message-ID: <20261118150122.496329969@linuxfoundation.org>
+Subject: [PATCH 6.18 0024/2151] platform/x86: ideapad-laptop: Evaluate ACPI methods exclusively
+Date: Wed, 18 Nov 2026 15:29:19 +0100
+Message-ID: <20261118150122.533388443@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,131 +72,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Ali Ahmet Memiş <aliamemis@disroot.org>
 
-[ Upstream commit 80892972ff23bf0b9049230ef0931b34163aaed3 ]
+[ Upstream commit f91c2cd6dbcedf52e227b2eea8d7b99ecbac7552 ]
 
-ACPICA drops the interpreter lock while AML waits, for example around EC
-accesses, so two methods can run interleaved.
+On some Lenovo IdeaPad and Yoga models, the battery _BIX takes the EC
+AML mutex and then calls the serialized RDER through RDIF, while GBMD
+calls RDER first and then takes the EC mutex. When the two run
+interleaved they deadlock until the mutex acquisition in RDER times
+out, and GBMD returns garbage that is reported as both charge types
+being enabled.
 
-Some firmware relies on methods not interleaving, for instance by
-switching an EC page selector without taking the AML mutex that the
-other users of that page hold.
+Evaluate all methods with the exclusive helpers, so that GBMD never runs
+interleaved with the battery methods.
 
-Add acpi_evaluate_object_exclusive(), acpi_evaluate_integer_exclusive()
-and acpi_execute_simple_method_exclusive() which serialize the
-evaluation under a global mutex, for callers that are known to be
-affected.
-
-Suggested-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://lore.kernel.org/all/CAJZ5v0gS4agVUkCO6M=VW4Wi2y1-s+k23bpzmX9aAZ0Rsv4z9Q@mail.gmail.com/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221065
+Link: https://lore.kernel.org/all/58586fa666f09c209f9d7fe8c692a8bdda6d4410.camel@rong.moe/
 Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
 Reviewed-by: Rong Zhang <i@rong.moe>
-Link: https://patch.msgid.link/20261018122220.678822-2-aliamemis@disroot.org
+Cc: All applicable <stable@vger.kernel.org> # 80892972ff23 ACPI: utils: Add exclusive AML evaluation helpers
+Link: https://patch.msgid.link/20261018122348.679126-1-aliamemis@disroot.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: f91c2cd6dbce ("platform/x86: ideapad-laptop: Evaluate ACPI methods exclusively")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/utils.c    | 41 +++++++++++++++++++++++++++++++++++++++++
- include/acpi/acpi_bus.h |  7 +++++++
- 2 files changed, 48 insertions(+)
+ drivers/platform/x86/lenovo/ideapad-laptop.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/utils.c b/drivers/acpi/utils.c
-index 526563a0d1886..92e977fb56570 100644
---- a/drivers/acpi/utils.c
-+++ b/drivers/acpi/utils.c
-@@ -10,6 +10,7 @@
+diff --git a/drivers/platform/x86/lenovo/ideapad-laptop.c b/drivers/platform/x86/lenovo/ideapad-laptop.c
+index fcebfbaf04605..690311eb930d1 100644
+--- a/drivers/platform/x86/lenovo/ideapad-laptop.c
++++ b/drivers/platform/x86/lenovo/ideapad-laptop.c
+@@ -285,12 +285,16 @@ static void ideapad_shared_exit(struct ideapad_private *priv)
+ #define IDEAPAD_EC_POLL_MIN_US 150
+ #define IDEAPAD_EC_POLL_MAX_US 300
  
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/init.h>
- #include <linux/types.h>
-@@ -243,6 +244,28 @@ acpi_extract_package(union acpi_object *package,
- 
- EXPORT_SYMBOL(acpi_extract_package);
- 
-+static DEFINE_MUTEX(acpi_exclusive_eval_lock);
-+
-+/**
-+ * acpi_evaluate_object_exclusive - Evaluate an object without interleaving
-+ * @handle: ACPI handle of the object or its scope.
-+ * @pathname: Path of the object relative to @handle.
-+ * @arguments: Arguments to pass, or NULL.
-+ * @buffer: Buffer for the return value, or NULL.
-+ *
-+ * Same as acpi_evaluate_object(), but serialized with other exclusive
-+ * evaluations.  Use it only for methods known to break when interleaved.
++/*
++ * On some models GBMD and the battery _BIX take the EC mutex and a
++ * serialized method in opposite order, so evaluate all methods exclusively.
 + */
-+acpi_status acpi_evaluate_object_exclusive(acpi_handle handle, acpi_string pathname,
-+					   struct acpi_object_list *arguments,
-+					   struct acpi_buffer *buffer)
-+{
-+	guard(mutex)(&acpi_exclusive_eval_lock);
-+
-+	return acpi_evaluate_object(handle, pathname, arguments, buffer);
-+}
-+EXPORT_SYMBOL_GPL(acpi_evaluate_object_exclusive);
-+
- acpi_status
- acpi_evaluate_integer(acpi_handle handle,
- 		      acpi_string pathname,
-@@ -277,6 +300,16 @@ acpi_evaluate_integer(acpi_handle handle,
- 
- EXPORT_SYMBOL(acpi_evaluate_integer);
- 
-+acpi_status acpi_evaluate_integer_exclusive(acpi_handle handle, acpi_string pathname,
-+					    struct acpi_object_list *arguments,
-+					    unsigned long long *data)
-+{
-+	guard(mutex)(&acpi_exclusive_eval_lock);
-+
-+	return acpi_evaluate_integer(handle, pathname, arguments, data);
-+}
-+EXPORT_SYMBOL_GPL(acpi_evaluate_integer_exclusive);
-+
- int acpi_get_local_u64_address(acpi_handle handle, u64 *addr)
+ static int eval_int(acpi_handle handle, const char *name, unsigned long *res)
  {
+ 	unsigned long long result;
  	acpi_status status;
-@@ -685,6 +718,14 @@ acpi_status acpi_execute_simple_method(acpi_handle handle, char *method,
- }
- EXPORT_SYMBOL(acpi_execute_simple_method);
  
-+acpi_status acpi_execute_simple_method_exclusive(acpi_handle handle, char *method, u64 arg)
-+{
-+	guard(mutex)(&acpi_exclusive_eval_lock);
-+
-+	return acpi_execute_simple_method(handle, method, arg);
-+}
-+EXPORT_SYMBOL_GPL(acpi_execute_simple_method_exclusive);
-+
- /**
-  * acpi_evaluate_ej0: Evaluate _EJ0 method for hotplug operations
-  * @handle: ACPI device handle
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index 66fc14f869cb9..53aad501458f8 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -30,6 +30,12 @@ acpi_status
- acpi_evaluate_integer(acpi_handle handle,
- 		      acpi_string pathname,
- 		      struct acpi_object_list *arguments, unsigned long long *data);
-+acpi_status acpi_evaluate_object_exclusive(acpi_handle handle, acpi_string pathname,
-+					   struct acpi_object_list *arguments,
-+					   struct acpi_buffer *buffer);
-+acpi_status acpi_evaluate_integer_exclusive(acpi_handle handle, acpi_string pathname,
-+					    struct acpi_object_list *arguments,
-+					    unsigned long long *data);
- bool acpi_evaluate_reference(acpi_handle handle, acpi_string pathname,
- 			     struct acpi_object_list *arguments,
- 			     struct acpi_handle_list *list);
-@@ -46,6 +52,7 @@ acpi_evaluate_ost(acpi_handle handle, u32 source_event, u32 status_code,
- bool acpi_has_method(acpi_handle handle, char *name);
- acpi_status acpi_execute_simple_method(acpi_handle handle, char *method,
- 				       u64 arg);
-+acpi_status acpi_execute_simple_method_exclusive(acpi_handle handle, char *method, u64 arg);
- acpi_status acpi_evaluate_ej0(acpi_handle handle);
- acpi_status acpi_evaluate_lck(acpi_handle handle, int lock);
- acpi_status acpi_evaluate_reg(acpi_handle handle, u8 space_id, u32 function);
+-	status = acpi_evaluate_integer(handle, (char *)name, NULL, &result);
++	status = acpi_evaluate_integer_exclusive(handle, (char *)name, NULL, &result);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
+ 
+@@ -312,7 +316,7 @@ static int eval_int_with_arg(acpi_handle handle, const char *name, unsigned long
+ 	in_obj.type = ACPI_TYPE_INTEGER;
+ 	in_obj.integer.value = arg;
+ 
+-	status = acpi_evaluate_integer(handle, (char *)name, &params, &result);
++	status = acpi_evaluate_integer_exclusive(handle, (char *)name, &params, &result);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
+ 
+@@ -324,7 +328,7 @@ static int eval_int_with_arg(acpi_handle handle, const char *name, unsigned long
+ 
+ static int exec_simple_method(acpi_handle handle, const char *name, unsigned long arg)
+ {
+-	acpi_status status = acpi_execute_simple_method(handle, (char *)name, arg);
++	acpi_status status = acpi_execute_simple_method_exclusive(handle, (char *)name, arg);
+ 
+ 	return ACPI_FAILURE(status) ? -EIO : 0;
+ }
+@@ -382,7 +386,7 @@ static int eval_vpcw(acpi_handle handle, unsigned long cmd, unsigned long data)
+ 	in_obj[1].type = ACPI_TYPE_INTEGER;
+ 	in_obj[1].integer.value = data;
+ 
+-	status = acpi_evaluate_object(handle, "VPCW", &params, NULL);
++	status = acpi_evaluate_object_exclusive(handle, "VPCW", &params, NULL);
+ 	if (ACPI_FAILURE(status))
+ 		return -EIO;
+ 
 -- 
 2.53.0
 
