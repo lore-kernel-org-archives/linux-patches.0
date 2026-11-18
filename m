@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026762;
-	b=xkdMfhqPlDq1kpI8Ef4DSvQdmkJ/1gTIEY8QrENzVTE7ZfPaEFzVPg41x+Nq9qQuMvjH
-	 ppiN54yzKxHnZaFX7WMs8AIFdkyCH7aGmCfBprGeGaObW3m9bfn2z91pi1ar7L+EeBz20
-	 rpQ8/VATTg5YYLPfgj1jep3pjDIEGgAujhRSuL6SpfB9HsH5IPge+vi16FRkYbeUlswuB
-	 V7EnxxcfFMyBr8adMXItx8dQNCz6GbYC2uTtZ52c4hGj9PW185EHtXlusYgLRf6fGi2NB
-	 H02QIxQt1zJ2klpq5yWz0XK5DwJR/DFR30qfBkXgWuP+Fs1M8SbEfqg4huDwlV4kd8g==
+	t=1795026765;
+	b=znexs1hg0IbGaUci5WMRIDEaHQD3eoYljPVzxyo+AfjjxIjKyZ9tvsIroqFU84a/zCjV
+	 /xuEhmmcVUPzUgQ0wxAcU60N9+xHiGAkG+CpWDRzknyRpp4p+dQeOqfx/PFivRcZDe0XW
+	 yUVWar7f6vBzFQcsPw4COFZ28JM7yAA9xln8jLGoagdbosycXOT0NLizK8yJA18nQtDEO
+	 K92pmRsugcA4lpPTJrE317gRdMrXa1GFC523x91DEReWgLiO0oCZrjnD4neO3WlZq4W/C
+	 BGYWisbCs8edr8e8IYQu1mqPErqnkhTLI94GJ9n0wZe7xuMHA4/+yAAYr/iSYj3PZJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026762;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NpgKKc1x2HSJDuPV2IcXtKUqYx9IRzkYGIrH3gjQpNk=;
-	b=q3PZvX4Bl8nQfVdGD+dC29zQJtjhl+8u8xXpziEiNbqMa9eZ1pQ+Y6rrWm2OsxMdASp8
-	 Ecud2AwFkhC6PbL3RD3c//PlRQKHGNwiqzer3GrTy/QKYitVP9jByzOfgqk1W1SQvt4td
-	 6VgwFAqbv9CrnoF3nfqfKA8OeySuRggATZv3u/yJNw4gpOQs7s+2MgnrWhKCER1+SBsrL
-	 IuCoEURYyHVmpZqjsNE6POv0901Qh97U5N3Tw4pEH5O8aiRaLJB9sMQs10QWoKfayaX8N
-	 NXuTEuR5P6XD6W8oN2HkQp6ZS5K3IDkBjpby6QFyd6mY7PQkiDMvMLg5m5TC7tXDgxA==
+	bh=dRM1ktvyKEfMX2FILCFR4SSW+rMgWlDOS80izsWt/Zc=;
+	b=aIDSqBdqQQsrvZrCkj0G7CPK8zGdf/vVN/4prp0ijVO3UnzvrlKbgP1q4KmVcgBCusbO
+	 HSfAf+a7fQnyFtUCgCTEr5LUfksB2cE5bqfh9lxyEo1/HqUnP4CgWwC22x9xN0PAHUM+Y
+	 THhvl88AxDqxHcsMPkeN+L9hPwRUxGg36X3R+NWqhVreaAfa1mkC+FpY4dygZ+rxnWkwY
+	 uV/BvE0F4a5b/ovuK6i+YQ7fNzwTWIRIM9hhiy/rhPTQOgyJUitq2dpdYjgUek9QyBKZF
+	 ynuuyTkaFSPtRp6UD+Z59QRsgs6HOF0jsbKIyBW+ST77qAJ8tfiHzFu6h0zbj7YRFsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ooOP54/l";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi9p5SRu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445D4606A320;
-	Wed, 18 Nov 2026 18:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E069606A325;
+	Wed, 18 Nov 2026 18:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ooOP54/l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7641F000C4;
-	Wed, 18 Nov 2026 18:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi9p5SRu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2341F000C4;
+	Wed, 18 Nov 2026 18:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026762;
-	bh=NpgKKc1x2HSJDuPV2IcXtKUqYx9IRzkYGIrH3gjQpNk=;
+	s=korg; t=1795026765;
+	bh=dRM1ktvyKEfMX2FILCFR4SSW+rMgWlDOS80izsWt/Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ooOP54/li9aSLkzLfSepWm5FhuEqhT9pUqtKuu4uIbbSWpQMCMZmm7/8M4wa4FL9Z
-	 cRMH5fGDCfdnvaQsfo+gH+Bo0eXy/JLfVRRrZhY+2eYK+su4yNYNJNr1Vm3oxOLeuk
-	 HQifJsgJJKH5B4N9n2ZoyraeP8D8v9cHYZMW3GLo=
+	b=Fi9p5SRuyvhMzzJs33+UwmHwBSljCbaIEuK0VSbzX3wA1K6ft6nWlw+u/mg6WESoC
+	 LPw5lawpkEQZn2JxIrPF9t9zHB72L5ygNSgXN7n26fAn1larBFPE39PQM9Os/rX4/e
+	 z6FF208DyXkJU2hSQtKkDiCa4Vv0iIzu8hVxPgJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1513/2151] ASoC: codecs: wm5100: Fix definition of EQ3 Band 1 Volume control
-Date: Wed, 18 Nov 2026 15:54:08 +0100
-Message-ID: <20261118150216.969243747@linuxfoundation.org>
+Subject: [PATCH 6.18 1549/2151] Bluetooth: MSFT: Serialize handle map cleanup with event processing
+Date: Wed, 18 Nov 2026 15:54:44 +0100
+Message-ID: <20261118150218.334656030@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,37 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 96d30816a9a4fa6b3cc470f82d0f53e8a6425ab9 ]
+[ Upstream commit 56e20c3d8ad340bbfc90221c4aae1c870485fb57 ]
 
-The EQ3 band 1 gain is in WM5100_EQ3_1, not in WM5100_EQ1_1, which
-holds the EQ1 band 1 gain.
+MSFT monitor handle mappings must remain valid while vendor events look
+up and use them under hdev->lock. msft_do_close() removes and frees the
+mappings without that lock.
 
-Fixes: 6d4baf084f4d ("ASoC: Add WM5100 driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/d7f690e391feda7a6d8f38d0b238b165bc1f4fe2.1791959026.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+hci_dev_close_sync() clears HCI_UP and drains the RX workqueue before
+MSFT cleanup. However, a transport callback that already passed
+hci_recv_frame()'s state check can queue a vendor event after the drain
+returns, if no earlier shutdown callback has quiesced reception. The
+driver close callback runs after MSFT cleanup, so event processing can
+overlap the unlocked removal. msft_monitor_device_evt() can then
+traverse freed list entries or read handle_data->mgmt_handle after it is
+freed.
+
+Take hdev->lock while resetting monitor states and removing handle
+mappings in msft_do_close(), as normal monitor cancellation already
+does. An active event reader then finishes before its mapping is freed,
+and later lookups see an empty handle map.
+
+An instrumented kernel produced this KASAN report (timestamps removed
+and unrelated frames omitted):
+
+    BUG: KASAN: slab-use-after-free in msft_vendor_evt+0x1906/0x1990
+    Read of size 2 at addr ffff888104df3602 by task kworker/u17:2/502
+
+    Workqueue: hci0 hci_rx_work
+    Call Trace:
+      [...]
+      msft_vendor_evt+0x1906/0x1990
+      hci_vendor_evt+0x6f/0x90
+      hci_event_packet+0x894/0xc70
+      [...]
+      hci_rx_work+0x3f8/0xfa0
+      [...]
+
+    Allocated by task 499:
+      [...]
+      msft_add_monitor_sync+0x6a8/0x10a0
+      msft_add_monitor_pattern+0x7f/0xb0
+      hci_add_adv_monitor+0x1fa/0x2e0
+      [...]
+
+    Freed by task 499:
+      [...]
+      kfree+0x307/0x580
+      msft_do_close+0x238/0x750
+      hci_dev_close_sync+0x546/0x1380
+      [...]
+
+    The buggy address belongs to the object at ffff888104df3600
+      which belongs to the cache kmalloc-32 of size 32
+    The buggy address is located 2 bytes inside of
+      freed 32-byte region [ffff888104df3600, ffff888104df3620)
+    [...]
+
+Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm5100.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/msft.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/wm5100.c b/sound/soc/codecs/wm5100.c
-index 2d0a20f2fd8c2..05d5ecb797e46 100644
---- a/sound/soc/codecs/wm5100.c
-+++ b/sound/soc/codecs/wm5100.c
-@@ -658,7 +658,7 @@ SOC_SINGLE_TLV("EQ2 Band 4 Volume", WM5100_EQ2_2, WM5100_EQ2_B4_GAIN_SHIFT,
- SOC_SINGLE_TLV("EQ2 Band 5 Volume", WM5100_EQ2_2, WM5100_EQ2_B5_GAIN_SHIFT,
- 	       24, 0, eq_tlv),
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 1879a6771b7c6..1407225ac7520 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -683,6 +683,8 @@ void msft_do_close(struct hci_dev *hdev)
  
--SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ1_1, WM5100_EQ3_B1_GAIN_SHIFT,
-+SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ3_1, WM5100_EQ3_B1_GAIN_SHIFT,
- 	       24, 0, eq_tlv),
- SOC_SINGLE_TLV("EQ3 Band 2 Volume", WM5100_EQ3_1, WM5100_EQ3_B2_GAIN_SHIFT,
- 	       24, 0, eq_tlv),
+ 	bt_dev_dbg(hdev, "Cleanup of MSFT extension");
+ 
++	hci_dev_lock(hdev);
++
+ 	/* The controller will silently remove all monitors on power off.
+ 	 * Therefore, remove handle_data mapping and reset monitor state.
+ 	 */
+@@ -697,6 +699,8 @@ void msft_do_close(struct hci_dev *hdev)
+ 		kfree(handle_data);
+ 	}
+ 
++	hci_dev_unlock(hdev);
++
+ 	mutex_lock(&msft->filter_lock);
+ 	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
+ 				 list) {
 -- 
 2.53.0
 
