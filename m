@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028631;
-	b=t6AM/wApG48McVuo/5a6pbAInweconsMko3NqL7JkLv1QVjsiIx0JRl27crTQ28Q0OAe
-	 eusrGz9iwGMQMIC0BRKAjHEu3RViW9IO0ANB3DrDDQGDhgAc2WouAEEnV1o15/S8IbCOg
-	 SXUzLugRX7zSgDyCx9BwFaa2SD53vxG5p65YQOiQhvlmGki00dRSusBMwO2LnE3OEnl+o
-	 Fj3shrefHYR2bTeFqHRfnVmqdHfORDGHTDGOKavTEZh394le2dl7cj+ZSgPS9pJoo59MW
-	 DO+XEypflyIkVEy+GEEc/sfNNo2BI2kR/QzcFb1TXTiyEBs8tsg0Acppv3diPySSKQA==
+	t=1795028634;
+	b=BXWzDtAXIzAbitDkBxQ0f2eYSq/4LSQ9wwK6Vg3asdvXHkSsyKG5PM9QbXeDoRt613xw
+	 d7aDyCdWpkqDj+tl2snTOQo/AEXOzQiZ2DqYsluP5eWGaDXt5nk1c5b1Zn61kAtSiJsfj
+	 LnkW8fqMGnHeT99yw82UtTTlnC8CdPP3xffcjFp6sB9LW1NN+zV38DfvHdKns4V6+D8EK
+	 cqq2OlXoKGZOp8MAUBnla2K4dwn3YTzSvekVaiAWRYzeBKHCm36fgbzkqfUUpQr/MlwUD
+	 DNcbieNFyCvZsRh7m8f9YSfAp2bTTcN6fNMUxKtXX832rpcUsEsbEqhVfq0gUEKF8fg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028631;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Se/aLGidmBzKpSWqqVAYIfVJmHMWQF5zuUtMchiZJl8=;
-	b=A9hRwvbPcK5X4koVOiodYYLIG+effDYRief6U85oNm+OdsB2IHV5Q15XoF9ty4qCpfyH
-	 9vlTnx7aXeldNeGhhqdDNfYPj2eRU3zg2UE927fxFW31SIlcn18D7TOTO2AzOH9P1wdoZ
-	 4kssGaDice66GJtfiK221+SZn9JkHYOGZklQkWjBycDdaO0++Qh18MlwkM7LynaRKLJZg
-	 TvAMzfJxQ8wsKdaVUV4KsqFczsibvo9LcRx/OCo6QAZRKuWa6Ldsc3y9WbMgDpsbXk/JT
-	 n2t/Yj0Rj9GbFiegrVOfxLGJkuKK+qlBrmlKRoH/n7J1//I9QiZ7JVXFOUnIob2h1GA==
+	bh=X3ZfY5Oc6I7ME0CdJkC+nYUJcmEg0N3zLyNkh5zB0To=;
+	b=POxhUOr4P0KrrYfCZ7/C6wenbSpe/wDhzXsf7qx0YNzK0ZT2bsZgCNgAZ4e01/dn6ZJA
+	 9Oiy4MBTD6TPBgcdyuvOWOkmBElkxS/gFozrzmSilmyN1Kv6N9hwa4Cv0n5ZA7Ngic/bR
+	 ztLs6STeeVN8kAHm1Zg8FwTpLIrwjHQOJI7XFlWE8dG3xIpgNObHK+YFRhtbuza1K7TXG
+	 jdOfmgK1e4f3EoE8pknsZfO2FJuBWqcFquouLCRd8FF4dKIFpMz0+GZesxOVIJ4GjSCDY
+	 qERCF33+EtUcFNzZ0tqYcMehotnTkalsBIKd7R54rCOOcVxwGf96SJdEDIOFKWneDGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+obTus+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=08SRBfh7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F4E606A325;
-	Wed, 18 Nov 2026 19:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7E2606A31C;
+	Wed, 18 Nov 2026 19:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z+obTus+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2821F000C4;
-	Wed, 18 Nov 2026 19:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=08SRBfh7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F9D1F000C4;
+	Wed, 18 Nov 2026 19:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028631;
-	bh=Se/aLGidmBzKpSWqqVAYIfVJmHMWQF5zuUtMchiZJl8=;
+	s=korg; t=1795028634;
+	bh=X3ZfY5Oc6I7ME0CdJkC+nYUJcmEg0N3zLyNkh5zB0To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z+obTus+4OyAT+OgH1OtGuctCO4sK7tvt0Ch/tGSN7pf3sqQyHjejTz1+F4Ky6fSD
-	 Z5wM5zeUkwJFc5U1gW3glDpFt9MqljqwyeOroWjlONNV876E4wjAsPM/rVNtj6PlVY
-	 iQl482gUyO/90QCtHx0R0gL4CFALqfjOYpBgtQ4I=
+	b=08SRBfh7YfibpZmuK7B7RDuPMZPGqyAAnh81JKPHL/OkNlH+AD/9MijbshT4kJVi5
+	 H7CUB4aomsV/SAXVibPOFDppQC2GgjuctmF8b9gv7fSRrRaXoRE0zrHXhPsNDwUBDa
+	 z+TejyxgxWrVG93+qCTvI4Xyciiz10ag68AaozJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0062/1756] hwmon: chipcap2: serialize access to the alarm indicators
-Date: Wed, 18 Nov 2026 15:36:29 +0100
-Message-ID: <20261118150010.823542148@linuxfoundation.org>
+Subject: [PATCH 6.12 0063/1756] hwmon: chipcap2: synchronize ready IRQ state
+Date: Wed, 18 Nov 2026 15:36:30 +0100
+Message-ID: <20261118150010.861824354@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,159 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit bed5f0c075eb99442fca6a61c009a32752eceda2 ]
+[ Upstream commit 8c02722be2caa6604a837b81faeaba78250eda4a ]
 
-low_alarm and high_alarm are accessed from the threaded interrupt
-handlers and from sysfs without any locking, which can lead to lost
-alarms.
+The ready IRQ handler can race with reinit_completion() in the enable
+path. In particular, a handler from an earlier operation can complete
+the completion after it is reset for a new operation.
 
-Add a mutex to serialize the access to the alarm indicators and to
-process_irqs, which the handlers use to decide whether an interrupt
-belongs to an ongoing operation.
+Use irq_lock to serialize access to the completion and process_irqs.
+Disable IRQ processing and synchronize any running handler before resetting
+the completion for a new operation.
 
 Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-10-27ebfc2c5b9e@gmail.com
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-11-27ebfc2c5b9e@gmail.com
 [groeck: Dropped obsolete 'Assisted-by: tag]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/chipcap2.c | 58 +++++++++++++++++++++++++---------------
- 1 file changed, 37 insertions(+), 21 deletions(-)
+ drivers/hwmon/chipcap2.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
-index 4a9c51c792aed..8d2f7ba4c1789 100644
+index 8d2f7ba4c1789..e466f8f39d52f 100644
 --- a/drivers/hwmon/chipcap2.c
 +++ b/drivers/hwmon/chipcap2.c
-@@ -20,6 +20,7 @@
- #include <linux/i2c.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-+#include <linux/mutex.h>
- #include <linux/module.h>
- #include <linux/unaligned.h>
- #include <linux/regulator/consumer.h>
-@@ -88,6 +89,8 @@ struct cc2_data {
- 	int irq_low;
- 	int irq_high;
- 	bool process_irqs;
-+	/* protects process_irqs and the alarm indicators */
-+	struct mutex irq_lock;
- 	bool regulator_enabled;
- };
+@@ -120,6 +120,16 @@ static int cc2_enable(struct cc2_data *data)
+ {
+ 	int ret;
  
-@@ -119,7 +122,8 @@ static int cc2_enable(struct cc2_data *data)
- 
++	if (data->irq_ready > 0) {
++		scoped_guard(mutex, &data->irq_lock)
++			data->process_irqs = false;
++
++		synchronize_irq(data->irq_ready);
++
++		scoped_guard(mutex, &data->irq_lock)
++			reinit_completion(&data->complete);
++	}
++
  	/* exclusive regulator, check in case a disable failed */
  	if (data->regulator_enabled) {
--		data->process_irqs = true;
-+		scoped_guard(mutex, &data->irq_lock)
-+			data->process_irqs = true;
+ 		scoped_guard(mutex, &data->irq_lock)
+@@ -127,9 +137,6 @@ static int cc2_enable(struct cc2_data *data)
  		return 0;
  	}
  
-@@ -134,7 +138,8 @@ static int cc2_enable(struct cc2_data *data)
+-	/* clear any pending completion */
+-	try_wait_for_completion(&data->complete);
+-
+ 	ret = regulator_enable(data->regulator);
+ 	if (ret < 0)
+ 		return ret;
+@@ -159,6 +166,9 @@ static void cc2_disable(struct cc2_data *data)
+ 	scoped_guard(mutex, &data->irq_lock)
+ 		data->process_irqs = false;
  
- 	usleep_range(CC2_STARTUP_TIME_US, CC2_STARTUP_TIME_US + 125);
- 
--	data->process_irqs = true;
-+	scoped_guard(mutex, &data->irq_lock)
-+		data->process_irqs = true;
- 
- 	return 0;
- }
-@@ -151,7 +156,8 @@ static void cc2_disable(struct cc2_data *data)
- 		synchronize_irq(data->irq_high);
- 
- 	/* ignore alarms triggered by voltage toggling when powering up */
--	data->process_irqs = false;
-+	scoped_guard(mutex, &data->irq_lock)
-+		data->process_irqs = false;
- 
++	if (data->irq_ready > 0)
++		synchronize_irq(data->irq_ready);
++
  	/* exclusive regulator, check in case an enable failed */
  	if (!data->regulator_enabled)
-@@ -507,10 +513,12 @@ static irqreturn_t cc2_low_interrupt(int irq, void *data)
+ 		return;
+@@ -503,8 +513,10 @@ static irqreturn_t cc2_ready_interrupt(int irq, void *data)
  {
  	struct cc2_data *cc2 = data;
  
--	if (cc2->process_irqs) {
--		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
--				   hwmon_humidity_min_alarm, 0);
--		cc2->rh_alarm.low_alarm = true;
+-	if (cc2->process_irqs)
+-		complete(&cc2->complete);
 +	scoped_guard(mutex, &cc2->irq_lock) {
-+		if (cc2->process_irqs) {
-+			hwmon_notify_event(cc2->hwmon, hwmon_humidity,
-+					   hwmon_humidity_min_alarm, 0);
-+			cc2->rh_alarm.low_alarm = true;
-+		}
- 	}
++		if (cc2->process_irqs)
++			complete(&cc2->complete);
++	}
  
  	return IRQ_HANDLED;
-@@ -520,10 +528,12 @@ static irqreturn_t cc2_high_interrupt(int irq, void *data)
- {
- 	struct cc2_data *cc2 = data;
- 
--	if (cc2->process_irqs) {
--		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
--				   hwmon_humidity_max_alarm, 0);
--		cc2->rh_alarm.high_alarm = true;
-+	scoped_guard(mutex, &cc2->irq_lock) {
-+		if (cc2->process_irqs) {
-+			hwmon_notify_event(cc2->hwmon, hwmon_humidity,
-+					   hwmon_humidity_max_alarm, 0);
-+			cc2->rh_alarm.high_alarm = true;
-+		}
- 	}
- 
- 	return IRQ_HANDLED;
-@@ -539,11 +549,13 @@ static int cc2_humidity_min_alarm_status(struct cc2_data *data, long *val)
- 	if (ret < 0)
- 		return ret;
- 
--	if (data->rh_alarm.low_alarm) {
--		*val = (measurement < min_hyst) ? 1 : 0;
--		data->rh_alarm.low_alarm = *val;
--	} else {
--		*val = 0;
-+	scoped_guard(mutex, &data->irq_lock) {
-+		if (data->rh_alarm.low_alarm) {
-+			*val = (measurement < min_hyst) ? 1 : 0;
-+			data->rh_alarm.low_alarm = *val;
-+		} else {
-+			*val = 0;
-+		}
- 	}
- 
- 	return 0;
-@@ -559,11 +571,13 @@ static int cc2_humidity_max_alarm_status(struct cc2_data *data, long *val)
- 	if (ret < 0)
- 		return ret;
- 
--	if (data->rh_alarm.high_alarm) {
--		*val = (measurement > max_hyst) ? 1 : 0;
--		data->rh_alarm.high_alarm = *val;
--	} else {
--		*val = 0;
-+	scoped_guard(mutex, &data->irq_lock) {
-+		if (data->rh_alarm.high_alarm) {
-+			*val = (measurement > max_hyst) ? 1 : 0;
-+			data->rh_alarm.high_alarm = *val;
-+		} else {
-+			*val = 0;
-+		}
- 	}
- 
- 	return 0;
-@@ -707,6 +721,8 @@ static int cc2_probe(struct i2c_client *client)
- 
- 	i2c_set_clientdata(client, data);
- 
-+	mutex_init(&data->irq_lock);
-+
- 	data->client = client;
- 
- 	data->regulator = devm_regulator_get_exclusive(dev, "vdd");
+ }
 -- 
 2.53.0
 
