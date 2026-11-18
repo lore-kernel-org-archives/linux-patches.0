@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047201;
-	b=NlZ3n1mDWDzcKBy2+dyZGFn/6D6II2AOuAmxV6Ji5FrctRMg7I3xW5rr9p6zrnbTxKyb
-	 DlGXEpCccLIvbf5rVhIZ0tjrJqOpIOy7gMUFX77sQoKm4R9z9O96phAzCzOmuWHUDx8SC
-	 IOXIVD/+1shLDQi9XiYBn5+Iw4gdOKrvehknQzxvzKBJlX0T+lvMJzyifsd8f4K63f2I4
-	 VJ+F0uO/+LmH/rLTV8iDNcZuc2epB6AzYeUf+rBGFXaytsa7rzLTuzSqdra7WkAaUB1nk
-	 iphGG04ezr5CpcRjJGVnVsVRnMz7u2mGnl5/cY9eCqxtWvQW9VxOvCMxdc+ZKal/Wag==
+	t=1795047204;
+	b=bGY+YoZThPLaoNSthoLYlyhTbkcdnXa85idWCE5T+jw+WYTaWkjtEH5SngNPfpSu0cWS
+	 bW6KQE22fX/EmWdEwtJJiWX2NYc6WKzTDEZ0+Adpw491ILTu2gcjhhb8X6RVzaN9tneBQ
+	 jsNcLRdPIeRcM6JpmIw4QcGtVqjkagiRUtqTgsovbPIQc+uOEIWkvRBRNdWcWUY2vPSgL
+	 sFcYcYRlnekZX9pUEEx6KTmVu/r2Sz29w5sZqfH8qad+tj+KYD4fLuZqgMjaPX4+3nb74
+	 cIJRVJ+DRaeSjklQxv2MozKH8cj8zmZoivFQnBNq5A1/9cpM2Jh1bbnyKonkZfKhQqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047201;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047204;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=otB7HEICEYpb8qLXNEcYiPed1B/CUnbd0Mu+TC+ai1A=;
-	b=Kp5jC3AGuVJOG9rKSDtdlpg9HpHQX5ixRldNIAa1CrHD1TJDo6wfZPS3drlQGs9UHLth
-	 IdeTFDTi+yIIPaLHtYw1HnkQaWZD4U/nN2kQFWXBo/+6TBJYMNU24RnACn5fVepVK5UQc
-	 ZuGlVtRCsRteGufqJldEUvTN68Elfu7+SODZyXflz/pejOrkMgBC9Z6mmiPI3TqRNYOKk
-	 wTYExXdMdZrX9bN036k09xySVemY39DvG2B6q+7yAmhd/hlBd8Mc4ajsH1GbfxqIK0m7N
-	 JVCpIJp+i6fWipIMM2RuXHLBj9O8NdDCHRfJmzp/Ci+zXJzCMb7QAY/ncodIGltbtiQ==
+	bh=yfZmtx5XEcgZlcHAs+55jmAfjmDxxBUEH1dy2PlFsPE=;
+	b=f7PZ+J//j44epeYb0za1YoyFaoFpzxpMlfy9xeEdLZCujyS8O+0VHbH89d4RvssxADym
+	 vcwZ3u74DCrYaF3tGPDky031P4ZjHPfzPbfvLtDFEnvTL1Qgc8e/+SU1Auzi/0RQAEbV/
+	 Qc+ccWBnWHGYZQ2jQkqLRnTlHmd6EOvcjVqOhJBAsQ1t1tpzTE77a1IW0XJhquInIikBX
+	 z1S8YtCNGltjhrzxg9m3vrm1QBR0VdHSLUhExvoAt52Pok9otke2gIFYONNKEFkf4DE6N
+	 ik1s6V67nkGy5wzn1sl8tiGXf4U3yaaAqElWbNOlmTg/XNiihc1AUNKC2mAzM6wQBDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KR9RuM7o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NV7Wgu9F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B23E606A33A;
-	Thu, 19 Nov 2026 00:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5B260A2601;
+	Thu, 19 Nov 2026 00:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KR9RuM7o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387201F000C4;
-	Thu, 19 Nov 2026 00:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NV7Wgu9F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8B01F000C4;
+	Thu, 19 Nov 2026 00:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047200;
-	bh=otB7HEICEYpb8qLXNEcYiPed1B/CUnbd0Mu+TC+ai1A=;
+	s=korg; t=1795047203;
+	bh=yfZmtx5XEcgZlcHAs+55jmAfjmDxxBUEH1dy2PlFsPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KR9RuM7ojfTDYEOz+UschXTj6f8u41Psrwd20wAnQX8IQm4PpLXOA61DopB0biTne
-	 CgxU1FR2ihd2MNN3IEpsqvZETkmORqMAteFJYpuokPDd92YISonSZ9b1OsiDvxq+8O
-	 EVYp7q/ePtKcmEh4BAj4CAnBJT5joaRjS4sDUp7s=
+	b=NV7Wgu9FZj/xVqO4WGdx5Nu8L6aABuPE+EzxAyzNUovUgxWcfOboWmTb75Xt2+v3X
+	 GSvSAiXlsYzQL3QqKCMMFVIxPuEBjXTzszcDnRPce4CNaxqJTTLBHHxhdfe3VGJ3cX
+	 Gh5BkqBogbaZ/hvJBVoyozSihIpXXBdAUuf/eFQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexey Charkov <alchark@flipper.net>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Grant Slater <github@firefishy.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1514/2857] nvmem: rockchip-otp: Serialize reads
-Date: Wed, 18 Nov 2026 15:42:28 +0100
-Message-ID: <20261118150255.841654346@linuxfoundation.org>
+Subject: [PATCH 6.1 1515/2857] hwmon: (acpi_power_meter) Fix 18.45 TW bug
+Date: Wed, 18 Nov 2026 15:42:29 +0100
+Message-ID: <20261118150255.878036046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,100 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Charkov <alchark@flipper.net>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 9fc6a1592d844c0397f115ee8cbd935169b9a71e ]
+[ Upstream commit 0b6eda22f9ab67ddb2a872b0c3fc578ad9f4e27e ]
 
-The OTP controller is driven through a single set of registers holding a
-state machine which has to be stepped through for every word read, yet
-nothing keeps two readers out of each other's way. Concurrent reads
-interleave, and the outcome is either a reader bailing out:
+The ACPI specification says:
 
-  rockchip-otp 2a580000.otp: timeout during read setup
+"If an error occurs while obtaining the meter reading or if the value
+is not available then an Integer with all bits set is returned"
 
-or, worse, one of them silently taking delivery of the other's data.
+This integer can also be 64-bit wide on ACPI 2.0 and later systems,
+so we have to check for that too.
 
-Reading two cells in parallel from userspace on RK3576 reproduces both
-within 150 iterations - 53 read errors and 9 corrupted results, the latter
-either losing their first word or, in one case, ending in the two bytes
-which belong to the other reader's cell - whereas the same reads issued
-sequentially never fail. Concurrency is not hypothetical here, as six
-thermal sensors source their trim values from the OTP and reach the driver
-straight from asynchronous driver probing.
+Compile-tested only.
 
-Guard the read path with a mutex. Reads are the only way into the hardware,
-as the driver registers no write callback, and they always run in process
-context, so a plain mutex spanning the whole clock-enable, read,
-clock-disable sequence is enough.
-
-Fixes: 755864feb729 ("nvmem: add Rockchip OTP driver")
+Reported-by: Grant Slater <github@firefishy.com>
+Closes: https://github.com/lm-sensors/lm-sensors/issues/460
+Fixes: 1fefca6c57fb ("hwmon: (acpi_power_meter) Fix 4.29 MW bug")
 Cc: stable@vger.kernel.org
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Alexey Charkov <alchark@flipper.net>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20261002101329.1084348-2-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20261006234618.10943-1-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: adapted the power check from power_meter_read() to show_power() using resource instead of res ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/rockchip-otp.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/hwmon/acpi_power_meter.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
-index aaa044bb231b8..0fb8d6d800bbe 100644
---- a/drivers/nvmem/rockchip-otp.c
-+++ b/drivers/nvmem/rockchip-otp.c
-@@ -12,6 +12,7 @@
- #include <linux/io.h>
- #include <linux/iopoll.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/nvmem-provider.h>
- #include <linux/reset.h>
+diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
+index 2147afb725581..30872b62d7639 100644
+--- a/drivers/hwmon/acpi_power_meter.c
++++ b/drivers/hwmon/acpi_power_meter.c
+@@ -10,6 +10,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/jiffies.h>
++#include <linux/limits.h>
+ #include <linux/mutex.h>
+ #include <linux/dmi.h>
  #include <linux/slab.h>
-@@ -66,6 +67,8 @@ struct rockchip_otp {
- 	void __iomem *base;
- 	struct reset_control *rst;
- 	const struct rockchip_data *data;
-+	/* Serializes access to the OTP controller state machine */
-+	struct mutex mutex;
- 	struct clk_bulk_data clks[];
- };
+@@ -31,7 +32,12 @@
+ #define POWER_METER_CAN_NOTIFY	(1 << 3)
+ #define POWER_METER_IS_BATTERY	(1 << 8)
+ #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
+-#define UNKNOWN_POWER		0xFFFFFFFF
++/*
++ * ACPI integers can either be 32-bit or 64-bit wide, so
++ * we have to check for both values.
++ */
++#define UNKNOWN_POWER_32	U32_MAX
++#define UNKNOWN_POWER_64	U64_MAX
  
-@@ -179,16 +182,21 @@ static int rockchip_otp_read(void *context, unsigned int offset,
- 	if (!otp->data || !otp->data->reg_read)
- 		return -EINVAL;
+ #define METER_NOTIFY_CONFIG	0x80
+ #define METER_NOTIFY_TRIP	0x81
+@@ -349,7 +355,7 @@ static ssize_t show_power(struct device *dev,
+ 	update_meter(resource);
+ 	mutex_unlock(&resource->lock);
  
-+	mutex_lock(&otp->mutex);
-+
- 	ret = clk_bulk_prepare_enable(otp->data->num_clks, otp->clks);
- 	if (ret < 0) {
- 		dev_err(otp->dev, "failed to prepare/enable clks\n");
--		return ret;
-+		goto unlock;
- 	}
+-	if (resource->power == UNKNOWN_POWER)
++	if (resource->power == UNKNOWN_POWER_32 || resource->power == UNKNOWN_POWER_64)
+ 		return -ENODATA;
  
- 	ret = otp->data->reg_read(context, offset, val, bytes);
- 
- 	clk_bulk_disable_unprepare(otp->data->num_clks, otp->clks);
- 
-+unlock:
-+	mutex_unlock(&otp->mutex);
-+
- 	return ret;
- }
- 
-@@ -246,6 +254,11 @@ static int rockchip_otp_probe(struct platform_device *pdev)
- 
- 	otp->data = data;
- 	otp->dev = dev;
-+
-+	ret = devm_mutex_init(dev, &otp->mutex);
-+	if (ret)
-+		return ret;
-+
- 	otp->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(otp->base))
- 		return PTR_ERR(otp->base);
+ 	return sprintf(buf, "%llu\n", resource->power * 1000);
 -- 
 2.53.0
 
