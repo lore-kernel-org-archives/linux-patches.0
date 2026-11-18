@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049394;
-	b=PsX13GWtgWh4MQZ2UrwJzfthY4rLI29eL+v66xn0/KzwhjKB7h4Eknw73YVlybaTfq5E
-	 TsgkYUun3Tq7kOKepqVoHJ5xWEnMn/PdlcF7LTz3xG2ATEBj1KWOGyaWh8kCqjTNnYfjD
-	 7aIyDT4HuVMqNjcdMyfPZTV/AhduUZlMtRjRWRaZ3iLdzgI1Mr7CYF/OQnTJk7v9EmBNv
-	 WKMXTxQ9U97YnjhREMCoWVtaCUsKXAnqxSJE7zEF3qiLuBSqtAdL9jeX0FgU+BAbGOjg9
-	 e1pNTJpY/1bv1m5qjpaH7uqG+oGc6M5zqG2ll1pytL55xnXFGJiB8xYrBj8O9aBdKow==
+	t=1795049397;
+	b=GmUxoKDxNkmyrn2cd1whAnb643s3zWNN7Z3YahIO4ElnO9MZl7oCjS6NxHAnK5oEEhju
+	 S7u+j5gF5UbLiEEGpgb3AdKpRU4bZ9rOginXKN//Djb9lJlVk+xoUQndr4bLrcUsbmngx
+	 pbJ0BBDGJ1hL30VWilCUXq0gVoQK9fY5lzQtyXEo0sLT0811HXIvdYbV5ycH++Gzj/FZr
+	 imzpLxnF5QZEVv2Mwr214b57sG3p5x7C9Tw35/SzjZU2fA2Klzuuo/qG5FzsjPQthemh7
+	 x5KWkx06O0ThzGBXfCuMDKzmeEphqOF0yiADvBWXOKkcoQBguAvu8Bmdv2LwzLLDOFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N1Ceb8Y3q5BYNABrqTasiitheaNmSe6xNw8TuxIrTRg=;
-	b=BxGvy9cCwyyU+bEJcXqSEyu2NVDJXSN2iKZULSZdbbtxXMUBkcBj3HEdjfWLmyX7fBul
-	 uV2UXK3osF3LFwxGmPGl9oY6XxmcdyF61Unn6h2YWaHA8+TxtKp+o4fzTiaAUZ+Cw6Hyb
-	 7nanpg9cHC01QDjhcRhnzR9GypzOOTu9qbRjAWNn1FyVET5BDqdWkRqNU059rm7iKnyrM
-	 XWtvtFHJtNLbmsIH8crRWZG34pZwnGMvcIbIN1T2DwAX4FpCjN4qjXOP023MIC7TvHWqL
-	 mp47Tdu6yb5mJwfnnD8Xt7HIgOGOcgtSe6FVXDSoeX4x8zkCjVf5xnMX2IUCs0hrGsw==
+	bh=eXLvKtBLl0E3J3nYuGQNoNtxd6yvIu4BoaLJkXiQMy8=;
+	b=tYHzNQJpff8iuZCAkywWp0wjPeVO0ajqJEToWIItExh+SuBXEouTon6m1cwV7j/ZYOhM
+	 qj3ef9++0Uz6KfkPMQoPu72C3ezrJV9UKMf07aOj5CzNnvlZtFdlhi1GLAQge3lIyNYrO
+	 TdCovJMQEoVxxIsnh5MOBwhJstqzhJAdKC/zX7DCfdle26FXCu6Lrjj6KXNP1J24qQyeM
+	 HlRQ6wWUAc8QK9Qn5zbhcFZ1WWg55hbcPppUvfWe46ayVv/R9vW/IDwHY9+qus1hi1J65
+	 SqkcOlvC1GSxA4MTzpLJbzngjR0XfprG2u7yGgEONzz+oBfABXZFMziBfftbjk5gKfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ3o7I3V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1RITaWL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7635606A31C;
-	Thu, 19 Nov 2026 00:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB44606A32A;
+	Thu, 19 Nov 2026 00:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ3o7I3V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DF81F000C4;
-	Thu, 19 Nov 2026 00:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1RITaWL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3DC1F000C5;
+	Thu, 19 Nov 2026 00:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049394;
-	bh=N1Ceb8Y3q5BYNABrqTasiitheaNmSe6xNw8TuxIrTRg=;
+	s=korg; t=1795049397;
+	bh=eXLvKtBLl0E3J3nYuGQNoNtxd6yvIu4BoaLJkXiQMy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LQ3o7I3VljvDmWqiMxzCGSqnWCYKWoSTrI7cqGnRMrcxLEDBBsJl5RxveWXHIbOYb
-	 HnC+zwYav+l1rjQoeRKzQQrGhBZu8mtNgwJsMNHHmjtdnrtcFJ7RqkZq2ydpCoZrUS
-	 rBSohaBpEohUk8ttpe77jUJclLhT9vZ8hIwZ5dC8=
+	b=z1RITaWLNllEbV/svRkYAKwzLV5Y92e9sdhGWMj7VSgcdK9mwRgrxJl31f8GnFePq
+	 GvxSl6UzNdMKbrXlrbPAIYAC/foHFpjX0W1z8yVaDvI+H7TW7b60UPreDmUfsloAyS
+	 veoGLzsyydOTqAur3L2HqL6hwEif0nkuvq6ARmUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2336/2857] ALSA: caiaq: Fix races at MIDI URB and trigger accesses
-Date: Wed, 18 Nov 2026 15:56:10 +0100
-Message-ID: <20261118150325.644922141@linuxfoundation.org>
+Subject: [PATCH 6.1 2337/2857] ALSA: line6: Reject too small max packet sizes
+Date: Wed, 18 Nov 2026 15:56:11 +0100
+Message-ID: <20261118150325.681092654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,70 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 52b1213e2a086f2828500ab9c8bac45b213429bb ]
+[ Upstream commit e2ef553dfe923959632e580bcad8583d922868ac ]
 
-URB completion and rawmidi trigger callbacks can race with each other,
-which may put the state inconsistent, causing double submissions, etc.
+Although the LINE6 driver has a sanity check for the given max packet
+sizes, it still has an implicit requirement of the minimal size being
+bytes-per-frame; e.g. the impulse test signal assuming the fixed size,
+and when a too small size is specified by a malformed USB descriptor,
+this may lead to an OOB access.
 
-Guard both with a new spinlock for avoiding the races.
+Change the sanity check conditions to reject too small max packet
+sizes for avoiding the scenario above.
 
-Fixes: f3f80a9205da ("ALSA: caiaq - Fix Oops with MIDI")
+Fixes: 3450121997ce ("ALSA: line6: Fix write on zero-sized buffer")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-7-tiwai@suse.de
+Link: https://patch.msgid.link/20261008192553.300025-10-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/device.c | 1 +
- sound/usb/caiaq/device.h | 3 ++-
- sound/usb/caiaq/midi.c   | 2 ++
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/line6/pcm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
-index 0f056d155a47b..dc0c26f281fa6 100644
---- a/sound/usb/caiaq/device.c
-+++ b/sound/usb/caiaq/device.c
-@@ -448,6 +448,7 @@ static int create_card(struct usb_device *usb_dev,
- 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
- 				  le16_to_cpu(usb_dev->descriptor.idProduct));
- 	spin_lock_init(&cdev->spinlock);
-+	spin_lock_init(&cdev->midi_lock);
- 	mutex_init(&cdev->ep1_out_mutex);
- 
- 	*cardp = card;
-diff --git a/sound/usb/caiaq/device.h b/sound/usb/caiaq/device.h
-index bef5fd31dedd4..e1ec0bfdbb99a 100644
---- a/sound/usb/caiaq/device.h
-+++ b/sound/usb/caiaq/device.h
-@@ -74,7 +74,8 @@ struct snd_usb_caiaqdev {
- 	unsigned char midi_out_buf[EP1_BUFSIZE];
- 
- 	struct caiaq_device_spec spec;
--	spinlock_t spinlock;
-+	spinlock_t spinlock;	/* for PCM audio */
-+	spinlock_t midi_lock;	/* midi_x_stream, midi_out_active */
- 	wait_queue_head_t ep1_wait_queue;
- 	wait_queue_head_t prepare_wait_queue;
- 	int spec_received, audio_parm_answer;
-diff --git a/sound/usb/caiaq/midi.c b/sound/usb/caiaq/midi.c
-index 18529484c8dcc..b7d7d24937a74 100644
---- a/sound/usb/caiaq/midi.c
-+++ b/sound/usb/caiaq/midi.c
-@@ -79,6 +79,7 @@ static void snd_usb_caiaq_midi_output_trigger(struct snd_rawmidi_substream *subs
- {
- 	struct snd_usb_caiaqdev *cdev = substream->rmidi->private_data;
- 
-+	guard(spinlock_irqsave)(&cdev->midi_lock);
- 	if (up) {
- 		cdev->midi_out_substream = substream;
- 		if (!cdev->midi_out_active)
-@@ -151,6 +152,7 @@ void snd_usb_caiaq_midi_output_done(struct urb* urb)
- {
- 	struct snd_usb_caiaqdev *cdev = urb->context;
- 
-+	guard(spinlock_irqsave)(&cdev->midi_lock);
- 	cdev->midi_out_active = 0;
- 	if (urb->status != 0)
- 		return;
+diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
+index 7325482dcaebb..59b7c6beef6c5 100644
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -564,7 +564,11 @@ int line6_init_pcm(struct usb_line6 *line6,
+ 	line6pcm->max_packet_size_out =
+ 		usb_maxpacket(line6->usbdev,
+ 			usb_sndisocpipe(line6->usbdev, ep_write));
+-	if (!line6pcm->max_packet_size_in || !line6pcm->max_packet_size_out) {
++	/* reject max packet sizes smaller than bytes-per-frame;
++	 * (the magic number 6 is taken from the playback case)
++	 */
++	if (line6pcm->max_packet_size_in < 6 ||
++	    line6pcm->max_packet_size_out < 6) {
+ 		dev_err(line6pcm->line6->ifcdev,
+ 			"cannot get proper max packet size\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
