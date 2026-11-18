@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058111;
-	b=mK+Vd6ym+Ae3GXoA0voeZUsW/tnWmUT00nq1Yi7T4c8H0PBKOA36ZYIZyePhCu2zoI7u
-	 qGyMysIzO8kmdQ9QZfLl88Ze9wEKU6n0yHtbu2Fq9GX11+pnlKOtQPNksaoYDtQUXqvJk
-	 XOmIpdlqG8vDd+yBhyz4uoEQRCJfgkPjn83DScWBtCclMPFrl2eDKna9vkMN8xi6bWPyO
-	 +r0Q9vLl+Hd4/tjCM8VhYskV/Yu1bbrNAYhCdXrDcd/DGeIGbRktt/XHXygYvnRtbEIPp
-	 OAI/29uVLMNeorCIikLnUhDtQJ+jIXxlTy85QN1D4U9FNQslvAFQgV8Nee4sx9O/eHw==
+	t=1795058114;
+	b=hwp5n78/e1eC1IrEjA6b/PsnJOPwmZ2tI0uPDdA7OJZ2layCOhVBz3OUOI9a40rWo5/X
+	 akusa7jjnundjBx/jCbcJVfs57lokU3K/MFetcn7IBab9Tl6K9AKxIXS9PVCnfdBS8yvQ
+	 JKZYHTPQkV440ZejSYJFFwvNOkQrcDzXskQnthNhvKkKdlasnBfS4WGzbIGhPdzEaQkyI
+	 08MQzYi8zQRnyzDFfUhLSyab+LASTLDfR36f3o4N7YX1wc3NJucRt0nQjBnrVJ41hQpTT
+	 FvLPYtTHbwDPebWUZ1Vv6GzQFGdiDRkqxBQjaqY4UdpdemrkNSu7YUXQ7TYvdLHayMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m34i0kduLPyfJa+iCacgm66OfV06RB8TN8rf0J9S5n0=;
-	b=RL3p4iJr7i+UndpZ3VUt2kGaw9nqJfeBkQtvJ5fC7zd91bbYDfeS1m2hyyUidg5HOUHu
-	 suvs2wxqlAwJkmzqbERCyH9hM2b0Hf2k28n3u7vVXmjhvei5ae+wCh9w/AReyV2HchzgR
-	 Q0K3g5XbQXbOSMBLbVe27sfkoqgO/xG3ZtlfWgBtENx6qrLWDNVGamIbZgXxr7hL14L81
-	 ucCwUf13NCS4rQLduUuUYsg4ZvSLGZJK1eGSX0g0t0iWLs3ARFAejJrjJSBYxx+US5sSq
-	 DIc+A7dLGC3Y5T3zP2F4CJnThYx944ew076p8RLoqa9fc0E64q9Hv80BqO/a8X1aZNQ==
+	bh=I80SSz7R3v2BdoADGnWXENTR42iflCPt20EZigTFl6E=;
+	b=AfYWIGspvH99xHsYAdR7F6Xj+w9WBHnoY12DqBR1WuX9MsQc23+9clhSRMJENwW4iZgq
+	 2mZkd/f60Xr6j2BfbwgJ3xynIa9/0kO/+nCH75qdzif0y605Q44BuLjsMjgdUwP1vqP2j
+	 jYPwWaS+lKlDFBGJYAaJr7IuiN2uEipYs/RUeDCLiV0lQ0pz/Kzzy3q6VcTPNDMsMfYZJ
+	 qSwfhzv5v+wYiyjC3l/nETKQLLZVmjMc5HbqN8RqABeVmA9vBxiYoSjFibgMtsloyLeex
+	 px4nTjf9VyyRqJpSpcfGX232rcMxd2P3N5dEvFKfF2reIJR8MVuJCWbPPPoVSQK3mnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZs7I3yr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Q9DBehF/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D433606A325;
-	Thu, 19 Nov 2026 03:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C6D606A325;
+	Thu, 19 Nov 2026 03:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dZs7I3yr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C9E1F000C5;
-	Thu, 19 Nov 2026 03:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9DBehF/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E97E1F000C4;
+	Thu, 19 Nov 2026 03:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058111;
-	bh=m34i0kduLPyfJa+iCacgm66OfV06RB8TN8rf0J9S5n0=;
+	s=korg; t=1795058113;
+	bh=I80SSz7R3v2BdoADGnWXENTR42iflCPt20EZigTFl6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dZs7I3yr2cJCi5tcvCVVNWDz5tTHaqqhXdfVmalmADn/QKGiNoocXGxv/olRkqni/
-	 EsB1Au9QcbFlY4KiK71jUFAJ2nfIyd1uatY0852z5Gp+S8csXoR4kRvb16t0afT+VW
-	 eXju3rf9MpZvu7lzE60fQQ/b1opD1woAjpplR1fg=
+	b=Q9DBehF/U+/kIp6SnLf5gtQEphJpCEcXrBbwRAB8nO4k0owqQ3VQnuQu8Tch3dMMw
+	 B5DJMV10hh/PgayYGxmsHUYVxHUDV9tgbp58DZT9rLG0KwPMrVs+TKYAdcebY4rOZJ
+	 QuipEAfWSiAT0yWF9xt4azfkLMM0N/B+V2QKfUWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0352/1848] ipc/mqueue: release notification resources during inode eviction
-Date: Wed, 18 Nov 2026 15:39:50 +0100
-Message-ID: <20261118145927.477305412@linuxfoundation.org>
+Subject: [PATCH 5.10 0370/1848] media: vicodec: fix out-of-bounds write on under-rounded coded dimensions
+Date: Wed, 18 Nov 2026 15:40:08 +0100
+Message-ID: <20261118145928.896533995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,55 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit eb85469f0dd69ca145d63117450e14c31f67f698 ]
+[ Upstream commit 0183746ebca4c478027e2261b904f844f1443b19 ]
 
-mqueue_flush_file() removes an mq_notify() registration only when the
-closing task belongs to the thread group stored in notify_owner.
+A capture format whose width or height is one more than a multiple of 16
+makes the FWHT codec write one 8x8 block row, or column, past the end of
+the capture plane, and read the same block out of the reference frame for
+P-coded frames.
 
-A task in a separate thread group created with CLONE_FILES can register
-SIGEV_THREAD notification and exit without closing the shared file table.
-If another thread group then unlinks and last-closes the queue, ->flush()
-skips the registration and inode eviction loses the only pointers to its
-resources.
+vic_round_dim() is documented to round a frame dimension up so that both
+the luma and the chroma plane end up a multiple of 8, but it only rounds
+the chroma plane:
 
-The orphaned registration permanently retains the notification skb, its
-netlink socket, a pid reference and a user namespace reference. An
-unprivileged process can repeat the sequence with new queues and sockets.
+	round_up((dim) / (div), 8) * (div)
 
-No inode users remain during eviction. Remove any stale registration there
-after dropping info->lock, since netlink_sendskb() may release the final
-socket reference.
+For div == 2 the result is a multiple of 16 in every case but one: when
+dim % 16 == 1, dim / div is already a multiple of 8 and the macro returns
+dim - 1. encode_plane() and decode_plane() round the same dimension with
+round_up(dim, 8), which yields dim + 7 -- one block more than the coded
+dimension that sized the buffer.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+On a KASAN-enabled kernel, a 641x360 YUYV P-frame triggers:
+
+  BUG: KASAN: slab-out-of-bounds in add_deltas+0x450/0xcc0
+  Read of size 1 at addr ffff888009070800 by task trigger_bin/70
+
+  Call Trace:
+   add_deltas+0x450/0xcc0
+   decode_plane+0x1916/0x3390
+   fwht_decode_frame+0x173/0x620
+   v4l2_fwht_decode+0x751/0x1120
+   device_run+0x6bb/0x1850
+
+Round the dimension itself up to a multiple of 8 * div. The rounding
+changes only for div == 2 and dim % 16 == 1, and MAX_WIDTH and MAX_HEIGHT
+are both multiples of 16, so the rounded value still fits the advertised
+limits.
+
+Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20260824042359.925145-1-4ncienth@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/mqueue.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/test-drivers/vicodec/codec-fwht.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ipc/mqueue.c b/ipc/mqueue.c
-index 86969de170843..eee77f0a952ac 100644
---- a/ipc/mqueue.c
-+++ b/ipc/mqueue.c
-@@ -528,6 +528,13 @@ static void mqueue_evict_inode(struct inode *inode)
- 		list_add_tail(&msg->m_list, &tmp_msg);
- 	kfree(info->node_cache);
- 	spin_unlock(&info->lock);
-+	/*
-+	 * A shared file table can let the notification owner exit without
-+	 * running ->flush(). No users of the inode remain during eviction, so
-+	 * tear down any stale notification after dropping info->lock because
-+	 * netlink_sendskb() may release the final socket reference.
-+	 */
-+	remove_notification(info);
+diff --git a/drivers/media/test-drivers/vicodec/codec-fwht.h b/drivers/media/test-drivers/vicodec/codec-fwht.h
+index b6fec2b1cbcaf..8d2e39e7abee9 100644
+--- a/drivers/media/test-drivers/vicodec/codec-fwht.h
++++ b/drivers/media/test-drivers/vicodec/codec-fwht.h
+@@ -93,7 +93,7 @@
+  * both luma and chroma components resolutions are rounded up to
+  * a multiple of 8
+  */
+-#define vic_round_dim(dim, div) (round_up((dim) / (div), 8) * (div))
++#define vic_round_dim(dim, div) round_up(dim, 8 * (div))
  
- 	list_for_each_entry_safe(msg, nmsg, &tmp_msg, m_list) {
- 		list_del(&msg->m_list);
+ struct fwht_cframe_hdr {
+ 	u32 magic1;
 -- 
 2.53.0
 
