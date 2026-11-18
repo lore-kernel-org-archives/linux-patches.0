@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046331;
-	b=a43j6autVLEFC/XBzXQSkJe/EALy9GDmy7xqy0TYuD3FM6vxdmOPFKE7RE33xrLkxzIn
-	 1NIsobnl4TQK6R3ffpVKaJ4jRDd7PzwHHmwubKSt6qZaxmU4hBlTjmp7QPWZxpdIwC7Pi
-	 DlxGQUiVV2a5R1YWEjUnMkHwRzBnheJDw5YApgELpDL5UGxGmLlOtJ0+ezTp8+PJXa8jd
-	 UU5JgkG6N38AwhfWJBduUyAqcN4+OZVhJyv5vjljdHUFGRqn0Lamnkn/l7r9+TON3mu28
-	 WOoUs3tOCps6ZPOBtBeS3Y8/WuUrWw6yQpcT4U66MesPfuFhkItXvRTKU88Sl7MRphA==
+	t=1795046334;
+	b=uzGr7zx19ftpCI8RU1qlHLHTNSnobVtlu2h4ZT03K+knc3qQcXUYe8EBUZmkcfDB6mTr
+	 9XBgXQR9qyxMeA8JYUeUGCoMk3MVFRyCaM93HCX/ilapu4KBeitm+OCcrJSPPgQbpPtdc
+	 CXNJk5sht+DST1D1LSVvkbefbn5oVY/ExkfRg41JY9ewO6ELS7RFcgIlD50rqigHW59Xa
+	 lItiDeRaxA5SU1QEKg/G8jLrq5LcArRsTbmTaZ2ajVxmg02vEREFumegy/RN9a621eC9G
+	 CtG89mI6mXZNtzyTWWnysuIcvx0fNgttvlvA/tQh5YzzIVsFYikNnTMVPlw5YsJFBRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DwGhWB3pg9waRAfTBnvSNzlAW6OscIXLzzCPYoHj/Ic=;
-	b=TqYFasyDcBtcwXCZcuUJer7P+CtrXrHuNYo70lvgOi/YR88BteZz13cLXJ7c2O642Mvl
-	 KGIPuLS3m7Wt72Q+EWVq67IHQsE4FfE4zoag1a5OGQlCoeUfRxIsV2bRheYyA1cTKmHEV
-	 FkNumLOunA0ys83T2jEDJNIiZA21DZ2bIVKyljrYBGcojUnt50XjYksxPFGoNYmSBuhll
-	 qU7koV/N6IdwCEyyWkrx4WOvqNPWThinTcts/jr9Dd61N9lXTGyVBF1/j8dgQ+iBeCtcV
-	 chBkz+zVvdbP7mMtBuEG/dtjZYr6eExAuw0wKMdh/mz5UfbbDrFWspN/RIgMv+dwxdA==
+	bh=vPAHvZ0LIcYFyp2X0TJWF3COzKgm83DuHpACh0rEOKs=;
+	b=CqFMH5AtE1gOx0El9VNbOMnq5IFl/2MHnr0/csMt6VEKvsFqzSe0/cUhGHjiqXPjM/Wv
+	 NFZftCGtdq0/Jd1L8E0KtYbSaWKJl5k0e3LB8KSaQWcZAMHEf10awzZGAZPTDutOoOe/R
+	 5mPaLSoWpHKkOXyZVwUsufh7mcQPADnzDbM8EaCDkN3PDWatGdNOdB3EdGB1hCOydBCYx
+	 nmxRbCtyyiMiFu8RQPCelVfagTNzuI9VeFo9VrLcc2kXzLr09LblBhARqUCEFKlpOglAC
+	 6j0M6arHOJfFQBFDKiALnqlkO1GmLJM1h2N6BHFhllxjsOFlV3lr/FhnbRiPBfphy3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVrG46I7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YnD/Uk7k";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5347F606A31C;
-	Wed, 18 Nov 2026 23:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DF6606A325;
+	Wed, 18 Nov 2026 23:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVrG46I7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96CE1F000C4;
-	Wed, 18 Nov 2026 23:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YnD/Uk7k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791F91F000C4;
+	Wed, 18 Nov 2026 23:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046331;
-	bh=DwGhWB3pg9waRAfTBnvSNzlAW6OscIXLzzCPYoHj/Ic=;
+	s=korg; t=1795046334;
+	bh=vPAHvZ0LIcYFyp2X0TJWF3COzKgm83DuHpACh0rEOKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVrG46I7Qff0jsPl4vgInq64NBQjFtVE+ViKJZn6ayMw/akPhVD3WZ8uD031Qlja8
-	 EH2WGTl+Q7XWtCHMESbboGgKt9Z/yfsNVOrj2OgOef4xDf5btKWACow/YEPnRzpFw2
-	 MIFnwbF14wjsxQrmGr9haarnCAKgo77Y5fzZZ44w=
+	b=YnD/Uk7kCkTNROC19cuz3DedsvhygTI0a24EeoMXrBo5e139AsHwy3dSvP3s6B4YL
+	 yl2q7jH+mxWzzcDPUkbgWrk6RbdOPRDID9DJALcXcPcJCQSBb9nQmytX8dBNZymMhh
+	 f3kGCSa0Yac0WfNfzl4q8d6ZlHUl6JY0mNxHi+6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franck Baur <franck.baur.67@gmail.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1206/2857] net: jme: keep RX MAC clock enabled for WoL
-Date: Wed, 18 Nov 2026 15:37:20 +0100
-Message-ID: <20261118150245.022954512@linuxfoundation.org>
+Subject: [PATCH 6.1 1242/2857] hwmon: (pmbus/q54sj108a2) Add missing NULL pointer check
+Date: Wed, 18 Nov 2026 15:37:56 +0100
+Message-ID: <20261118150246.269866921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,151 +67,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franck Baur <franck.baur.67@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit ed9179fc7228315fb745dc3b111bae446e6894d2 ]
+[ Upstream commit a5802c587da97a4ff85c04aad6043fa26640fc9b ]
 
-On the JMicron JMC250 revision 03, the MAC reset performed during
-suspend leaves GPREG1_RXCLKOFF set. Although the driver enables Magic
-Packet detection, the gated RX MAC clock prevents wake-up from ACPI S3.
+When CONFIG_DEBUG_FS is enabled and per-client PMBus debugfs directory
+creation fails during pmbus_do_probe(), q54sj108a2_probe() passes the NULL
+pointer returned by pmbus_get_debugfs_dir() to debugfs_create_dir()
+without validation, creating its debugfs directory at the debugfs root
+instead of under the client directory.
 
-Keep the RX MAC clock enabled while WoL is armed. Restore the gated
-clock state immediately after disabling WoL during resume, preserving
-the RX engine initialization ordering.
+If pmbus_init_debugfs() fails to create the client directory, data->debugfs
+is left as NULL or an ERR_PTR, which pmbus_get_debugfs_dir() converts to
+NULL. Passing a NULL parent to debugfs_create_dir() places q54sj108a2_dir
+in the root of the debugfs filesystem and populates it with attribute files
+whose private data pointers reference psu->debugfs_entries. Because this
+root-level directory is outside the client debugfs hierarchy, PMBus core
+cleanup does not remove it on device unbind, leaking the debugfs entries
+and causing a use-after-free of the devm-allocated struct q54sj108a2_data
+if the orphaned files are accessed via q54sj108a2_debugfs_read() or
+q54sj108a2_debugfs_write() after device removal.
 
-Prevent concurrent link-change work from gating the clock again after
-WoL has been armed. Quiesce interrupt-driven link-change scheduling,
-synchronize pending interrupts, and cancel outstanding link-change
-work before programming WoL in suspend and shutdown paths.
+Fix the problem by adding the missing NULL pointer check.
 
-Restore the deferred processing state before requesting link
-reinitialization on resume.
-
-Tested on an ASUS K42JE with JMC250 [197b:0250] rev 03 using a
-Debian 6.12.111 kernel and an externally built module. ACPI S3 wake
-with a Magic Packet completed in 19 seconds, while a control without
-a Magic Packet resumed through the RTC alarm after 123 seconds.
-Ethernet and SSH recovered after resume.
-
-S4 and S5 wake behaviour has not been validated with this revision.
-
-Fixes: 854a2e7c331a ("jme: Safer MAC processor reset sequence")
+Fixes: d014538aa385 ("hwmon: (pmbus) Driver for Delta power supplies Q54SJ108A2")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Franck Baur <franck.baur.67@gmail.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/jme.c | 37 ++++++++++++++++++++++++++++++++-----
- drivers/net/ethernet/jme.h |  1 +
- 2 files changed, 33 insertions(+), 5 deletions(-)
+ drivers/hwmon/pmbus/q54sj108a2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
-index a718207988f2c..2fd74ae243add 100644
---- a/drivers/net/ethernet/jme.c
-+++ b/drivers/net/ethernet/jme.c
-@@ -1502,7 +1502,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
- 		 * all other events are ignored
- 		 */
- 		jwrite32(jme, JME_IEVE, intrstat);
--		schedule_work(&jme->linkch_task);
-+		if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
-+			schedule_work(&jme->linkch_task);
- 		goto out_reenable;
- 	}
+diff --git a/drivers/hwmon/pmbus/q54sj108a2.c b/drivers/hwmon/pmbus/q54sj108a2.c
+index ca492b922705d..1021c3b29d3da 100644
+--- a/drivers/hwmon/pmbus/q54sj108a2.c
++++ b/drivers/hwmon/pmbus/q54sj108a2.c
+@@ -342,6 +342,8 @@ static int q54sj108a2_probe(struct i2c_client *client)
+ 	psu->client = client;
  
-@@ -1546,7 +1547,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
- 	/*
- 	 * Re-enable interrupt
- 	 */
--	jwrite32f(jme, JME_IENS, INTR_ENABLE);
-+	if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
-+		jwrite32f(jme, JME_IENS, INTR_ENABLE);
- }
+ 	debugfs = pmbus_get_debugfs_dir(client);
++	if (!debugfs)
++		return 0;
  
- static irqreturn_t
-@@ -1892,6 +1894,7 @@ jme_powersave_phy(struct jme_adapter *jme)
- 		jme_set_100m_half(jme);
- 		if (jme->reg_pmcs & (PMCS_LFEN | PMCS_LREN))
- 			jme_wait_link(jme);
-+		jme_mac_rxclk_on(jme);
- 		jme_clear_pm_enable_wol(jme);
- 	} else {
- 		jme_phy_off(jme);
-@@ -3158,6 +3161,21 @@ jme_shutdown(struct pci_dev *pdev)
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct jme_adapter *jme = netdev_priv(netdev);
+ 	q54sj108a2_dir = debugfs_create_dir(client->name, debugfs);
  
-+	if (netif_running(netdev)) {
-+		set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
-+		netif_device_detach(netdev);
-+		netif_stop_queue(netdev);
-+		jme_stop_irq(jme);
-+		synchronize_irq(pdev->irq);
-+		jme_stop_irq(jme);
-+		cancel_work_sync(&jme->linkch_task);
-+		tasklet_disable(&jme->pcc_task);
-+		napi_disable(&jme->napi);
-+		tasklet_disable(&jme->txclean_task);
-+		tasklet_disable(&jme->rxclean_task);
-+		tasklet_disable(&jme->rxempty_task);
-+	}
-+
- 	jme_powersave_phy(jme);
- 	pci_pme_active(pdev, true);
- }
-@@ -3172,11 +3190,16 @@ jme_suspend(struct device *dev)
- 	if (!netif_running(netdev))
- 		return 0;
- 
--	atomic_dec(&jme->link_changing);
--
-+	set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
- 	netif_device_detach(netdev);
- 	netif_stop_queue(netdev);
- 	jme_stop_irq(jme);
-+	synchronize_irq(jme->pdev->irq);
-+	jme_stop_irq(jme);
-+	cancel_work_sync(&jme->linkch_task);
-+	tasklet_disable(&jme->pcc_task);
-+	napi_disable(&jme->napi);
-+	atomic_dec(&jme->link_changing);
- 
- 	tasklet_disable(&jme->txclean_task);
- 	tasklet_disable(&jme->rxclean_task);
-@@ -3215,6 +3238,7 @@ jme_resume(struct device *dev)
- 		return 0;
- 
- 	jme_clear_pm_disable_wol(jme);
-+	jme_mac_rxclk_off(jme);
- 	jme_phy_on(jme);
- 	if (test_bit(JME_FLAG_SSET, &jme->flags))
- 		jme_set_link_ksettings(netdev, &jme->old_cmd);
-@@ -3226,8 +3250,11 @@ jme_resume(struct device *dev)
- 
- 	atomic_inc(&jme->link_changing);
- 
--	jme_reset_link(jme);
-+	napi_enable(&jme->napi);
-+	tasklet_enable(&jme->pcc_task);
-+	clear_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
- 
-+	jme_reset_link(jme);
- 	jme_start_irq(jme);
- 
- 	return 0;
-diff --git a/drivers/net/ethernet/jme.h b/drivers/net/ethernet/jme.h
-index 860494ff37144..ec5dfddf73227 100644
---- a/drivers/net/ethernet/jme.h
-+++ b/drivers/net/ethernet/jme.h
-@@ -450,6 +450,7 @@ enum jme_flags_bits {
- 	JME_FLAG_SSET		= 2,
- 	JME_FLAG_POLL		= 5,
- 	JME_FLAG_SHUTDOWN	= 6,
-+	JME_FLAG_WOL_QUIESCE	= 7,
- };
- 
- #define TX_TIMEOUT		(5 * HZ)
 -- 
 2.53.0
 
