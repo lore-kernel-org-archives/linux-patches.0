@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033856;
-	b=EPQgpMV0Q0nh4SXWTey2yIFK8mYtlfmvNomrWo4ZL6xB3DOKPMQSOh//bkWD9UrH3d3p
-	 z8x2nJbd+SZn6uL3OsBOLVil9zqyo+ZuQE5wCQYE5OzL/rwjZFuhY8Fv6WidioBD1A0jU
-	 AWvKPA12NEbtxXOj9eyB9J+OHorQmuQ35DWEt19hWweJU7WYFC2IWYRkBmMK+/7XV89cD
-	 ASZCwSBxq+YgKwNMgNIdVPKKiXH17nXlaGUQsqmFUvp7NKjb+w4rEHIJZdldFZjTbcQIQ
-	 FsvVI4v0HxXObEPQrGzOYhyHjgwXGuyG+DmMH8BM5AfX3uy64ANGb5ETdF7KaXWOc4Q==
+	t=1795033859;
+	b=ZOHfNyOjjSGSq3viUfuTeToya1bdgjNadmlUsVjcMbLOhhUSvKBeTWr9lgMZbRfCTYOT
+	 Qo54AzmBW2k72DPtPelUQ9UaEvEXToKJDg/3xEn5nGqFu9BNN41bdiSXJqhJ1n85I7him
+	 VeRm5wd7XpLF+3JN7pB+wX7yo3x6cSuo3j9JQGungP1u0Y/AXfeqvSwkENYWy+Bj032+E
+	 yy35k/3w33rzS/F7QJdvvyJDsH3xJjFp0v1fIckHDsUMcKAQolAPR/Aoa7Szw250aPDyw
+	 Z+LJwXSzJU/KXA65AmqV9to/RLeT65LqSfvQan22YRo60Q8PpR3LxQFM/RQkCWxbW0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MJlX0q6kQ6wBls8+KC8r4fMqgue61L7Mz7pUGAfvRaY=;
-	b=3JCgjp4UNASh9n88OVAYTJoMOCe/DT7mafh/tj3Vf+XRc3kLcZGfiJXNU/RoPHjQREDH
-	 esyTPN3gBIEq00af+XnW57/T2a70dTZBDoE6NBzRPMHFyIt1Zj/9S7+2kD7mqEGXywkam
-	 Bl6Oz9rNP5X3FGFgOpvcsE+5CCErvadSYWOHUSHCqTctRJieKnFZPAJUGOU8i0QihwH0n
-	 +O7vRODwP1kqq0pPbSfQLEmYRkwRt2cLnuX626IzFcA3Evn0/dPGqXmomu7Pn66n0oS5h
-	 c8SywJlr+5vJSikP0xF0JScoM2q07Wm2g6YQFX3MRqFdxDQ/FX9+IMQxrBmFvKzMBXg==
+	bh=UsWQk8TTAOmELpaPtLjV+173kXJ0ptRUqo/UNBKFQpM=;
+	b=lBIG/fl1zWDyVFmecwPBxN7TrZCAUmyw/17zCDDw81ZsHIiK6ohNF9rjKGbDDmqRz/qX
+	 hFxKYQIxXXqFdHDD9akLi8M9TpXRY7YPV+GMdBXh3q2Gh1xaZb+hz+HFXf3GUNGnUzX8R
+	 OMmfN/o4Q+YQC9QtpBaCJjgtle3vSBtVr9ob4s8733xmfmF2QE7YpgtEI1lehVoCBDeTm
+	 wKvA6W70gh8tvbQXD/xviE8lUPhzLqYP0QCSrtQdQ8a2zSSRsjUBwOQNYfWniM+5vgcQ5
+	 AUXHPjhYqGhpwbwJaYglTDxEu51+i6vCGa83AeEW3WzRAZsHjlEcp9Z1b7NpDPh3qGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YAFz+Kb1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBUBho8t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791F1606A320;
-	Wed, 18 Nov 2026 20:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703A660A260E;
+	Wed, 18 Nov 2026 20:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YAFz+Kb1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CCA1F000C5;
-	Wed, 18 Nov 2026 20:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VBUBho8t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92AA11F000C5;
+	Wed, 18 Nov 2026 20:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033856;
-	bh=MJlX0q6kQ6wBls8+KC8r4fMqgue61L7Mz7pUGAfvRaY=;
+	s=korg; t=1795033859;
+	bh=UsWQk8TTAOmELpaPtLjV+173kXJ0ptRUqo/UNBKFQpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YAFz+Kb1hJ0SjFmWBHfZSBDVDCwVmLKiyDgz3Bi43vOnj8zntMVoBxITPIuncf9DJ
-	 KDgotleMaGK7M1x7N+nufMuHPLBTMqTf4huC2cQbARDswiywB/H77789nHgV6tbVMT
-	 A9jev80uo6/g1OdZSM3qlsBvaPFc4DzhGoBfFKmE=
+	b=VBUBho8tMZVcnmMrYN/MVjJXmiKSbzqpgdpAoHjWXg4gVp/SOYtxkxXoEveAdFqBt
+	 n3R3uzbdSZdnn7YZFvNvibEmcO2DWkgeOC1MF/YDVhCVmNOOKx0ILnWkgUsWYSYWor
+	 VPGB7z31XuNwcbfWqjHZHjJmAtw1meppLALNqNQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Kyungwook Boo <bookyungwook@gmail.com>,
 	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0122/3318] comedi: ni_atmio16d: Add sanity check to interrupt handler
-Date: Wed, 18 Nov 2026 15:12:24 +0100
-Message-ID: <20261118150317.998095536@linuxfoundation.org>
+Subject: [PATCH 6.6 0123/3318] comedi: ni_at_a2150: Fix sanity check in interrupt handler
+Date: Wed, 18 Nov 2026 15:12:25 +0100
+Message-ID: <20261118150318.033213720@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,43 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 13f4796223489a5349b466ce54bb868f46c9fefd ]
+[ Upstream commit e7356cdc7077a4f30fc5232a18e9fc6a4d404581 ]
 
-The driver requests an interrupt handler for the device, after setting
-device registers to disable interrupt generation.  The interrupt handler
-should not be called prematurely unless the user-configured I/O port
-base address and/or IRQ number are incorrect or the hardware is bad.
+The driver requests an interrupt handler for the device before it is
+fully set up.
 
-For safety, check the dev->attached flag in the interrupt handler to
-ensure the device has been fully set up, avoiding a possible null
-pointer dereference of dev->read_subdev.
+For safety, the interrupt handler checks the dev->attached flag to
+ensure the device is fully set up, but it currently does that after
+dereferencing various pointers which may be NULL if dev->attached is
+false.  Move the check to avoid the possible null pointer dereferences.
 
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
-Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260618102949.26607-5-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/ni_atmio16d.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/comedi/drivers/ni_at_a2150.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/comedi/drivers/ni_atmio16d.c b/drivers/comedi/drivers/ni_atmio16d.c
-index e01ab5311d235..b4c25a8b8d40e 100644
---- a/drivers/comedi/drivers/ni_atmio16d.c
-+++ b/drivers/comedi/drivers/ni_atmio16d.c
-@@ -223,6 +223,9 @@ static irqreturn_t atmio16d_interrupt(int irq, void *d)
+diff --git a/drivers/comedi/drivers/ni_at_a2150.c b/drivers/comedi/drivers/ni_at_a2150.c
+index df8d219e67234..cc106437de3c3 100644
+--- a/drivers/comedi/drivers/ni_at_a2150.c
++++ b/drivers/comedi/drivers/ni_at_a2150.c
+@@ -132,11 +132,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	struct comedi_device *dev = d;
+ 	struct a2150_private *devpriv = dev->private;
+ 	struct comedi_isadma *dma = devpriv->dma;
+-	struct comedi_isadma_desc *desc = &dma->desc[0];
++	struct comedi_isadma_desc *desc;
  	struct comedi_subdevice *s = dev->read_subdev;
- 	unsigned short val;
+-	struct comedi_async *async = s->async;
+-	struct comedi_cmd *cmd = &async->cmd;
+-	unsigned short *buf = desc->virt_addr;
++	struct comedi_async *async;
++	struct comedi_cmd *cmd;
++	unsigned short *buf;
+ 	unsigned int max_points, num_points, residue, leftover;
+ 	unsigned short dpnt;
+ 	int status;
+@@ -145,6 +145,11 @@ static irqreturn_t a2150_interrupt(int irq, void *d)
+ 	if (!dev->attached)
+ 		return IRQ_HANDLED;
  
-+	if (!dev->attached)
-+		return IRQ_NONE;
++	desc = &dma->desc[0];
++	async = s->async;
++	cmd = &async->cmd;
++	buf = desc->virt_addr;
 +
- 	val = inw(dev->iobase + AD_FIFO_REG);
- 	comedi_buf_write_samples(s, &val, 1);
- 	comedi_handle_events(dev, s);
+ 	status = inw(dev->iobase + STATUS_REG);
+ 	if ((status & INTR_BIT) == 0)
+ 		return IRQ_NONE;
 -- 
 2.53.0
 
