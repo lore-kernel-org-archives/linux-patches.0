@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058923;
-	b=JKYKcKGCo71cEkFM5o6sfZCz4IjZCetpK04I9lEq5gYqkOEADuj86nDrV+FyPRBjMuX1
-	 Btarmn0682s7mtdD5xHeEabE9wp5q+NRt655qI8Kuu5buer66vMdSdYdpJT0izWY3tOT4
-	 Thn0UERNRGhBEiTkA3pbBm8xVG37mh0T62J1+3OaYADRRCvN6VYP0HceCIKZmF15NBt4N
-	 RzJeYn9HvDZR8RUz+HE6DGBg0wRORtU96GlLd9QP9IdJnkeddmuyQOi6mjDuENlF9XSCO
-	 5CxWyXGhlR/Gao49hoJOFYHfKPy7mqmLMMT2+jMtd5hbpvDKK62v/xVKgaTsEupcdxg==
+	t=1795058926;
+	b=KJRYPV5RQ8Rkku/iLxib41de/KVagQ+Lyh6X4mbnBOxdOhDq/6SUGgwzfjzpdODHREOp
+	 a5A5n5xe7Wuo4/f/ZwvdRP8fL5mUgCvwru//kSxaNMFKhpaVhh1GR+3l4Czr7YSooSgah
+	 Fn1Ut6UEl1A4RWGl8aeIdHiHzNUwFDRz8xf61j/Gnu6s/2PHOGiEk6SUm5D0a6MpLqwxe
+	 eb5HFIVzy1c2seN6OnpTdKyDepeg1HvBgJSrbYhinViPvaDcn4EsBbujO1YTaOV4lA/ft
+	 1r467DM7+kXmDww9XmzDmms9Mh48p+X3si5gUb1hePIQuUa+lfKCdaHnvRT+XLPWfzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FrBwzl2uLub5WlNE/TGPcrqNpHthEmsOH5Oe5HxDJNk=;
-	b=XYWkvrrx0K+2KiFoWkJ7KYcjnuMrmfpWvafoYAAfvuyInuNBWRC1GSF+xgzrKQ3YOgb6
-	 uM04WiOW2kfytLsL/nflYClkWwgUljH6sANqO54rsdNkc4tXB5hN8KtnVzNqJ1ru2qWvz
-	 qtoHbF1rkRD70YpcxQqzqmxyc+723uZzAoUtZt6PUDRWlZ5VLq2yLFu83wySSWjnkG09x
-	 7NJY4RLElvMuJQDgECoLdzYJRvsDWjMwagWapH2L2OrR43mQgStPTpLR3HGXfAkMQuHza
-	 nZR/97EBAb3yro4urE8+ki/RWi1GW3rrIsv3GEcNibekQsYWmNz3xPlEZD1l+At7CPQ==
+	bh=FSAniEusGwNx0mbRh+APogkgjAXT0Vf6vHZjRYgqp74=;
+	b=goq8qLKAQZwlEyo7WbhD2x/OpmetvUo+0PJFf6Yob2igQpv++aUSyKOs7mgRgnu15CmQ
+	 T+RhjF/5JJTvrpvOhTuWxMnxAqPT/R0jXVRiSK3Q0D4wOZSKhWP+KxNGzHKO9QVn7ts+T
+	 RomoeDK90C3Rj2xmRMy3HSZb8qrJCXPYWrzycy6RGpxqaS0aw/A42O+ZS+uW9OZd46qAP
+	 AhG/zYseMoZTY+u+iN2qC7V09w5G8VTbx7uSRzHiVYqPQDSk+4yQO2jer2/Hkg9xGX7Mc
+	 034DttP8ia/3/NUR8fBibRt0xAzLrfp7CW9jdGzPhVI7pH1ghN8fPmgcUo1sC2t91Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=raPe8aZd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="M+4S9/pN";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758B6606A31C;
-	Thu, 19 Nov 2026 03:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58F1606A31C;
+	Thu, 19 Nov 2026 03:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=raPe8aZd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F031F000C4;
-	Thu, 19 Nov 2026 03:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+4S9/pN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D871F000C4;
+	Thu, 19 Nov 2026 03:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058923;
-	bh=FrBwzl2uLub5WlNE/TGPcrqNpHthEmsOH5Oe5HxDJNk=;
+	s=korg; t=1795058925;
+	bh=FSAniEusGwNx0mbRh+APogkgjAXT0Vf6vHZjRYgqp74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=raPe8aZdY9SGLrDViBI5lPAu9W3HYYkvtlPNWq+8RsoJiFzNg/ZwRL8nbIaTKwrz7
-	 I5bSPs5y/gs91LBCqnRO4dYN+uQ20qBBbJvoMIbGdY/lWQQc8vaB9ELgpyF2/86NhN
-	 j/NlPsQ2VZhigGuvI/heZMKlJg06+L8BjqVACnO4=
+	b=M+4S9/pNAvqJ7VBQ6Jtcpqc3f0YOl1uy5bGSMY9F8848HU5HCBptGQoEGMcoex/WU
+	 vE9Qd5PP126sPxD8I5ZdJeDK+xeytESVxK/XYBtgzbV6mqsN/fIQruIE18hQi+fEVG
+	 6OJLTLxkEBcW90bRAqs+waHAnNj60ejZnY4HwX4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pufan Jin <cyan2254650260@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0657/1848] spi: zynq-qspi: fix address buffer corruption and support 4-byte address
-Date: Wed, 18 Nov 2026 15:44:55 +0100
-Message-ID: <20261118145943.291974797@linuxfoundation.org>
+Subject: [PATCH 5.10 0658/1848] s390/vmcp: Initialize full session info to zero
+Date: Wed, 18 Nov 2026 15:44:56 +0100
+Message-ID: <20261118145943.326830239@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,80 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pufan Jin <cyan2254650260@gmail.com>
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-[ Upstream commit dc5ca34f5e8dc10c566ef39aa3b1a201a17ca734 ]
+[ Upstream commit f63eb4ee4a30fc5d8de07a229d92310e3c8d560c ]
 
-In zynq_qspi_exec_mem_op(), when transmitting address bytes, the driver
-iterates over op->addr.nbytes and populates xqspi->txbuf[i]. However,
-xqspi->txbuf is never re-assigned before populating the address, meaning
-it still points to (u8 *)&op->cmd.opcode from the command phase.
+The cma_alloc bit as well as the response can contain old data.
+cma_release will not free the kmalloced memory in that case and
+the response code might leak kernel stack data to CAP_SYS_ADMIN
+users.
 
-This causes two severe issues:
-1. Memory corruption: Writing into xqspi->txbuf writes past the opcode
-   buffer on the stack (which was passed as const struct spi_mem_op *).
-   If opcode is zero, xqspi->txbuf is uninitialized.
-2. In zynq_qspi_supports_op(), operations with op->addr.nbytes > 3 are
-   rejected. When paired with SPI NOR flashes larger than 16MB (such as
-   Winbond W25Q256), spi_nor_spimem_check_read_pp_op() tests 4-byte address
-   support, which fails and causes spi_nor_select_read() to drop all read
-   capabilities, failing probe with -EINVAL (-22).
-
-The Zynq-7000 QSPI controller hardware in manual I/O mode natively supports
-transmitting 1 to 4 address bytes via its TXD FIFO registers
-(ZYNQ_QSPI_TXD_00_00_OFFSET).
-
-Fix this by introducing a local opaddr[4] buffer in zynq_qspi_exec_mem_op()
-and explicitly setting xqspi->txbuf = opaddr before populating address
-bytes. Also allow up to 4 address bytes in zynq_qspi_supports_op().
-
-Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
-Link: https://patch.msgid.link/20261016130812.282624-1-cyan2254650260@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ resolved context conflict due to mem->spi->master in 5.10 ]
-Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+[borntraeger@linux.ibm.com: use kzalloc instead of kzalloc_obj for older versions]
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynq-qspi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/s390/char/vmcp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-zynq-qspi.c b/drivers/spi/spi-zynq-qspi.c
-index 99d0ad2ecadde..4ddc414ec5a24 100644
---- a/drivers/spi/spi-zynq-qspi.c
-+++ b/drivers/spi/spi-zynq-qspi.c
-@@ -231,7 +231,7 @@ static bool zynq_qspi_supports_op(struct spi_mem *mem,
- 	/*
- 	 * The number of address bytes should be equal to or less than 3 bytes.
- 	 */
--	if (op->addr.nbytes > 3)
-+	if (op->addr.nbytes > 4)
- 		return false;
+diff --git a/drivers/s390/char/vmcp.c b/drivers/s390/char/vmcp.c
+index 9e066281e2d05..d8a348fd9a640 100644
+--- a/drivers/s390/char/vmcp.c
++++ b/drivers/s390/char/vmcp.c
+@@ -105,13 +105,11 @@ static int vmcp_open(struct inode *inode, struct file *file)
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
  
- 	return true;
-@@ -535,6 +535,7 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
- 				 const struct spi_mem_op *op)
- {
- 	struct zynq_qspi *xqspi = spi_controller_get_devdata(mem->spi->master);
-+	u8 opaddr[4] __aligned(4);
- 	int err = 0, i;
- 	u8 *tmpbuf;
+-	session = kmalloc(sizeof(*session), GFP_KERNEL);
++	session = kzalloc(sizeof(*session), GFP_KERNEL);
+ 	if (!session)
+ 		return -ENOMEM;
  
-@@ -561,11 +562,12 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
- 
- 	if (op->addr.nbytes) {
- 		for (i = 0; i < op->addr.nbytes; i++) {
--			xqspi->txbuf[i] = op->addr.val >>
-+			opaddr[i] = op->addr.val >>
- 					(8 * (op->addr.nbytes - i - 1));
- 		}
- 
- 		reinit_completion(&xqspi->data_completion);
-+		xqspi->txbuf = opaddr;
- 		xqspi->rxbuf = NULL;
- 		xqspi->tx_bytes = op->addr.nbytes;
- 		xqspi->rx_bytes = op->addr.nbytes;
+ 	session->bufsize = PAGE_SIZE;
+-	session->response = NULL;
+-	session->resp_size = 0;
+ 	mutex_init(&session->mutex);
+ 	file->private_data = session;
+ 	return nonseekable_open(inode, file);
 -- 
 2.53.0
 
