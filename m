@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017903;
-	b=VtIK+lVAtUZLRuIbZ7ksUmGVRWh1ZDeWfbFcs7IN1TtWdGob9QDqRLyrot6t0RxLgJFW
-	 Vm2TfaVXPtVpfRjhFzDjqBqtgd50VUBDWbNyE+ULWP5Kbe3cLrdgZX1GGte/ckhTPIOU6
-	 th2yRb8w8S6GyZcyTVF5WGg1Gh2BihXdr/X8LqL4pnxgSIPOfIJ1m54JKJNizibBnhlkA
-	 HMhQyHiGwLkRNLEf82S6mH4b31zWdJfNUIWskgUI7EUiFrHzaLGEyKZJLyokvof9IpdBO
-	 CpJrVZv5m0fA9SIZs9hENnaTk12XMj5yg5+GRnFHPO5/eBGy7doKkh/obJF80duseCQ==
+	t=1795017906;
+	b=YMCaaNo+bnTZKYaUs64i+4ayACkv0h88klz5o6aZvWsTZf9LY7htTNr9I8py1Cqfb6hM
+	 rZL8ETEyTNMnJwUc8vnwYPrAFXMjpkcZRnek8jrgW+yynM+m4gdlswXKRk8iiQLLzaa5H
+	 n7WAGnXWpCZ/DpZGhEhhQpM7jCxNB40Ww/ALNKBFJ6npLylOZh9PZJDVNOddPvJDceYV6
+	 B+X3CyQg8Dc6Xs3kQNql6Xn/udzdNp3Q8sl+2DBtTXr0xuRGZx7ZXiChDOUNkXdZqZzZs
+	 au/jjdPV3cvisMF8S2DMyMCBH2POZ8eE+pSTced/RCkR6OfzfT8No5FY55hY/Ws7sWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017906;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XMUmXd/y9hxYP3gRZwSYEKo55lJw/Pcu19XR7n0v3W4=;
-	b=l8pvs37D0Z91Thi8bzKjoETsVxNqSYhDXbCGXHoY9q1JBYjNQSHjlqix1V6G+EionEDY
-	 W+7EQ+7iNXVS6u/m208LXZpzP8JVtu/Ze5tcl00ZvZUIFIDGcSJSxyjNsAwRAmPw4UDyo
-	 5WZCL1SrjcIZf+RXv+5axFV4WHJ0DwozlqngcJMufjR1pDXjXTQTgq9YwasMT5Gyec19/
-	 OyU5tPuyq20A+aM5bO+ZBYA9//ZFvEdVRyfAJTQef/krwa1au8qxTGALw+fEtsqqS5m8Q
-	 71LxB0+n53CLd4TqoapjVKpGRc7NhUQuequU/t3AZ5Qc7pxLpDtpDealhgBfdgo4qxg==
+	bh=emB6qpjIMtjeMPYatTyiPX0xCIic0WAMkOEZKvOEul8=;
+	b=eDUbFGuP4F6Nn9ku3B36sMSHtG0HH9QgAFJbF8V2lDRTvepelE9H1Y+lFgMcMTt/0CX8
+	 0uqDjLDFG9l9Cj9YJXhwl7b7TOvpAi5WTW0wLFr0j4bi1WPoS9VynP9WfLZtzWiU+JskW
+	 RGwDvlty4ErwTQrmWSbYvwkpi6cojFawXRQbo+KHLLALPCoiNUACzfvHuU2AcTrF2fmKR
+	 RcWDGE/sni7j4D51VeNGYEuWbrlp9bBz8Ke6pnMtM+nS5HiOXMe4s662jndxUnv2CEoZT
+	 tJBca9f6xkhknst2rzUIM7caRx2X/wr6t9IX1WWdA61AriBndrUj09USdgpolXvRTZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJCAa2EX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1hxNEuD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA7E606A31C;
-	Wed, 18 Nov 2026 16:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8901B606A31C;
+	Wed, 18 Nov 2026 16:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MJCAa2EX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0561F000C4;
-	Wed, 18 Nov 2026 16:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1hxNEuD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8881F000C4;
+	Wed, 18 Nov 2026 16:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017903;
-	bh=XMUmXd/y9hxYP3gRZwSYEKo55lJw/Pcu19XR7n0v3W4=;
+	s=korg; t=1795017906;
+	bh=emB6qpjIMtjeMPYatTyiPX0xCIic0WAMkOEZKvOEul8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MJCAa2EXiAJbg9fHwzoTyJP4rfbcCpZ5qRLUMX3XQwpb5crGmu2SeQWQIdZyoDtnt
-	 xRszk1W+9qfrpuPOmvtjbJ5m2q07nOuU9mNzEdhEUt4jAVQaFlP7Do8MnJpDUtKWS6
-	 4z3VcnDuTGa7DrmG7khs4UmMlFz43R079s11OxAo=
+	b=v1hxNEuDfw/ndnodWTKmZ11WRBVg5dY5OLExVCiQSqSC7ryUmvL4qPsf+Z/4WVka6
+	 +1zj/ZGiOJHt0ia3mrpJts1hWw3UzphvQaDr7iP8Um2YwqCr+J8JwApyTMpDlCYPbW
+	 4ZvbNwaVcS/cvF6V5vy1W0NreCZbLaLqJb8GvfOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>,
+	Askar Safin <safinaskar@gmail.com>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1051/2651] selftests/timers: clocksource-switch: Fix unchecked open()/read()
-Date: Wed, 18 Nov 2026 15:38:11 +0100
-Message-ID: <20261118150325.806388386@linuxfoundation.org>
+Subject: [PATCH 7.3 1052/2651] kbuild: Mark usr_gen_init_cpio as no-dot-config-target
+Date: Wed, 18 Nov 2026 15:38:12 +0100
+Message-ID: <20261118150325.844067276@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,88 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Nicolas Schier <nsc@kernel.org>
 
-[ Upstream commit 348f54c435bf3177baa78201952810b255d44b30 ]
+[ Upstream commit 14e2c1f5431a03478ed4bbf2e72298c769f375ac ]
 
-get_clocksources() and get_cur_clocksource() open and read the
-clocksource sysfs files without checking the return values and without
-NUL-terminating the buffer.
+Let usr/gen_init_cpio be built also if there is no kernel configuration.
 
-If open() fails, read() is called on fd -1 and returns -1, which is
-stored in a size_t as SIZE_MAX.  The token-scanning loop in
-get_clocksources() then walks past the uninitialized stack buffer,
-reading and writing out of bounds.  Even on success the buffer is not
-NUL-terminated, so a fully read buffer makes the inner scan run past the
-data, and get_cur_clocksource() lets change_clocksource() call strlen()
-on a non-terminated buffer.
+Askar Safin reported that gen_init_cpio may be of use before any kernel
+configuration is available.  Add usr_gen_init_cpio to list of targets
+that do not require a .config file.
 
-Check the open()/read() results, use ssize_t for the read length,
-NUL-terminate the buffer, and close the fd in get_cur_clocksource().
-
-Fixes: 7290ce1423c3 ("selftests/timers: Add clocksource-switch test from timetest suite")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/20260825064605.472889-1-fffsqian@163.com
+Reported-by: Askar Safin <safinaskar@gmail.com>
+Closes: https://lore.kernel.org/all/20260220191150.244006-1-safinaskar@gmail.com
+Fixes: f8e05c10631e ("kbuild: Add top-level target for building gen_init_cpio")
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260928-move-gen_init_cpio-to-scripts-v4-1-f437a33c40ac@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/timers/clocksource-switch.c     | 23 ++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/timers/clocksource-switch.c b/tools/testing/selftests/timers/clocksource-switch.c
-index db62a764c29e6..2e86f56d953eb 100644
---- a/tools/testing/selftests/timers/clocksource-switch.c
-+++ b/tools/testing/selftests/timers/clocksource-switch.c
-@@ -40,16 +40,23 @@
- int get_clocksources(char list[][30])
- {
- 	int fd, i;
--	size_t size;
-+	ssize_t size;
- 	char buf[512];
- 	char *head, *tmp;
- 
- 	fd = open("/sys/devices/system/clocksource/clocksource0/available_clocksource", O_RDONLY);
-+	if (fd < 0)
-+		return 0;
- 
--	size = read(fd, buf, 512);
-+	size = read(fd, buf, sizeof(buf) - 1);
- 
- 	close(fd);
- 
-+	if (size <= 0)
-+		return 0;
-+
-+	buf[size] = '\0';
-+
- 	for (i = 0; i < 10; i++)
- 		list[i][0] = '\0';
- 
-@@ -74,11 +81,21 @@ int get_clocksources(char list[][30])
- 
- int get_cur_clocksource(char *buf, size_t size)
- {
-+	ssize_t len;
- 	int fd;
- 
- 	fd = open("/sys/devices/system/clocksource/clocksource0/current_clocksource", O_RDONLY);
-+	if (fd < 0)
-+		return -1;
-+
-+	len = read(fd, buf, size - 1);
-+
-+	close(fd);
-+
-+	if (len <= 0)
-+		return -1;
- 
--	size = read(fd, buf, size);
-+	buf[len] = '\0';
- 
- 	return 0;
- }
+diff --git a/Makefile b/Makefile
+index 51e278ccea9c5..d0ba6f0aac017 100644
+--- a/Makefile
++++ b/Makefile
+@@ -298,6 +298,7 @@ no-dot-config-targets := $(clean-targets) \
+ 			 %asm-generic kernelversion %src-pkg dt_binding_check \
+ 			 dt_style_selftest \
+ 			 outputmakefile rustavailable rustfmt rustfmtcheck \
++			 usr_gen_init_cpio \
+ 			 run-command
+ no-sync-config-targets := $(no-dot-config-targets) %install modules_sign kernelrelease \
+ 			  image_name
 -- 
 2.53.0
 
