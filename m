@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042652;
-	b=F/594zFXpE8tPnDb3I+hKfv6XMc7seBwBxpfGFD1st6/9qc0ejR8aef6dx3auUq/A/uZ
-	 761ktNievr1Lv/oH2T7GTdJ//hWegU4+IeMxkkHjHl8necNkyvtavag13Od0C5OPJTd1p
-	 kcreH31pRrQDhQeMTjIXNTBobgv5XRxeE7Lf+qbbcfPwmvIcBc2euWvJN16MexYydhDA6
-	 lwxQPWvdZOFmRG1yhwQl7NXYGAvSf3jNlNGVXwj+iNwftE1h6PTif/CvIAnlxFX3Z7LYV
-	 2DAawCq+a66MHqQjSBupyoXH+5daNlNtimv8VwP6H9uHl7udjTwpInKHNTDHGqLrL4Q==
+	t=1795042655;
+	b=JRhfEM9CdxpVTyg3sNbYRbByyVgXAK+nF9hN2Oayp5+SxmCkgonFc9FAnRCzZsR6vY7T
+	 zFQOpPSvxjChyEpKTDFfjYDmGMws3cSkLmmAGK6xVEql670/iLVU5RGoP0o3BxVqyC9gO
+	 ckrXDG+DCZfx6V9eHrgQ5J2oiGOB+2m89QUzIeVIowOHElv2GiyJYK3e3s1lXZGsmjE22
+	 icUqe50qL/W1WDfSYyjlf69WXJXvn7SfSKDtpLwGGS88IfcEg5CIkKkLfWsqVqjgxAqpN
+	 4v1b8Qo5u3GIPC0+x2+nBccvqbKQxGHzJI5liWt1Fvx6TPeXxJ1z4mqkwIqJyDvjKYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042652;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042655;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8dLbGlMoVc0ylU9YXm8fYo70FE1xKgIIhATxHXSw4m8=;
-	b=q6HOH5iwLsJVmlEjDuZ7o+hkWBOI8jZbq4jlOiPiEjiAblVlDhKSkS0U0kXAKjrtZcbY
-	 11dkD7WUTCF5Ad5ob7J+QpAANgHTTwDILxkWAhtLgi5bJDv5Mpw3bejN4QOD0hJa+dGQK
-	 S6B6d8J1kPLd9RtYW5Wjd2FYlM716nibXiBMWAppOtLOcS+YR5je+SS7vuZ/XqWBaCvgf
-	 DK4ddgtIrY25XYUGUDVHn73K89ekqSZFiGtiAYIsWDGh0we4uME0yk95P3d8a6nojatYS
-	 PSlwAlqabgIav4ZtLaMluYlNIYVSCWykhmiRXLGJWy1+fQhkBgutzfOrBsEv7SCwctQ==
+	bh=2Zm5T+nsNoooK5wQoKSI2/FFn0wFqTAb7brnVm4Y4Pw=;
+	b=YVuz6bWJkhjejE8nkGSWj1itP2+bXTDd4xRkMHDpKrvRSoyJqz/G1ohCdeZdMfxSVQzc
+	 zKXAZt8M5adnna2u7Krn9deypO4jzLzNCqIASA2ynUH64gbLyePu/E4zMbz66gjWvK0gV
+	 JChFZGL2ImP0lOZfTi1jBHhvdVC4Uo/1A39fLtjn6JImyn2ibeUuQvJndvOf2+fwPgIU1
+	 puR76Owvo6RURh1sydqBorO+AQMmtklLuA5o6wAWCF8DYVpWy5s1wfBNiFOtnX3wnBRH3
+	 CyvmSpmcqWgZ/iV+/fWuJVotaVgH9MZDvP3+OMHCxG6SFYiiRIH5FghQJecAIxBgn/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGa7UvKq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zplE+0nu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6F9606A31C;
-	Wed, 18 Nov 2026 22:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00872606A320;
+	Wed, 18 Nov 2026 22:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGa7UvKq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCF91F000C4;
-	Wed, 18 Nov 2026 22:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zplE+0nu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516571F000C4;
+	Wed, 18 Nov 2026 22:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042652;
-	bh=8dLbGlMoVc0ylU9YXm8fYo70FE1xKgIIhATxHXSw4m8=;
+	s=korg; t=1795042654;
+	bh=2Zm5T+nsNoooK5wQoKSI2/FFn0wFqTAb7brnVm4Y4Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGa7UvKqHhtw1gwprLSwoKMrorG0MgEtt9IB2+Q5kl5VYAiuiWDixV3halapxwByk
-	 nGADSdYwuFXQFe59BiV3sfryFJdUFvjO3g27TahlrpNLcSWkatbonuw6523Kon5P78
-	 OtAZpdc733aaW3oHMTTL4ArsCE0CEC/RANGZkBKA=
+	b=zplE+0nueod/rQjCshFBk8FTXHgE3UY+m34WMqjnEKI2IjUgeUbOicRNjPeo0oItP
+	 jugm04QLNQWwbsP8l07SkAdAslQqqs/TW5jcgaa/JQyRwRSWNzzR1+iCKsmh7NCMw7
+	 0Rp+BS8aBDfqbiitOuaDStdU5Kf1uqy8NvT7+Urs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
-	Peter Morrow <pdmorrow@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	"Gaddipati, Naveen" <naveen.gaddipati@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3206/3318] net/mlx4: always create the eth and ib auxiliary devices
-Date: Wed, 18 Nov 2026 16:03:48 +0100
-Message-ID: <20261118150455.929700117@linuxfoundation.org>
+Subject: [PATCH 6.6 3207/3318] ASoC: xilinx: formatter_pcm: Fix read-modify-write of AUD_CTRL in hw_params
+Date: Wed, 18 Nov 2026 16:03:49 +0100
+Message-ID: <20261118150455.956980416@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,77 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Morrow <pdmorrow@gmail.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 557d80138618b9d17407733d4ec25b33d3971d60 ]
+[ Upstream commit 3b54e739273752b370e49b09976da152fa3b802c ]
 
-Since commit 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the
-auxiliary bus"), mlx4_core creates the "ib" auxiliary device only for
-an IB port or a device that advertises IBoE. Before it, each mlx4
-interface was offered every device and decided in its own add callback.
-mlx4_ib_add() accepted Ethernet ports without IBoE and registered them
-for raw packet QPs only.
+xlnx_formatter_pcm_hw_params() does a read-modify-write on XLNX_AUD_CTRL
+but only ORs in the new data width and active channel values without
+clearing the old ones. If hw_params is called more than once on an
+open stream, these fields may retain bits from the previous configuration,
+resulting in an incorrect sample width or channel count.
 
-ConnectX-3 VFs on Azure have an Ethernet port and no IBoE, so since
-v6.6 they get no RDMA device. DPDK's mlx4 PMD, which needs only raw
-packet QPs, then cannot open them:
+Clear both fields before writing the new values, and use FIELD_PREP() so
+the values cannot spill into neighbouring bits.
 
-  net_mlx4: cannot access device, is mlx4_ib loaded?
-
-Restore the old behaviour by creating both auxiliary devices for every
-device and letting mlx4_en and mlx4_ib decide in probe, as their add
-callbacks did. mlx4_ib_probe() returns -ENODEV when there are no usable
-ports, and mlx4_en_probe() binds a device without Ethernet ports but
-creates no netdevs, as mlx4_en_add() did.
-
-Tested on 6.12.111 on an Azure VM with two ConnectX-3 VFs: each gets an
-eth and an ib auxiliary device, and DPDK attaches both VFs and passes
-traffic through them.
-
-Fixes: 7d22b1cb9d84 ("mlx4: Connect the infiniband part to the auxiliary bus")
-Closes: https://lore.kernel.org/r/20261014133951.3219055-1-pdmorrow@gmail.com
-Suggested-by: Leon Romanovsky <leon@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Peter Morrow <pdmorrow@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Gaddipati, Naveen <naveen.gaddipati@amd.com>
+Link: https://patch.msgid.link/20261023102818.523331-1-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx4/intf.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ sound/soc/xilinx/xlnx_formatter_pcm.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx4/intf.c b/drivers/net/ethernet/mellanox/mlx4/intf.c
-index a371b970ac1e2..5bb6272968148 100644
---- a/drivers/net/ethernet/mellanox/mlx4/intf.c
-+++ b/drivers/net/ethernet/mellanox/mlx4/intf.c
-@@ -43,23 +43,12 @@ static DEFINE_IDA(mlx4_adev_ida);
+diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
+index bb1488e392b8c..13e592496001f 100644
+--- a/sound/soc/xilinx/xlnx_formatter_pcm.c
++++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
+@@ -6,6 +6,7 @@
+ //
+ // Author: Maruthi Srinivas Bayyavarapu <maruthis@xilinx.com>
  
- static bool is_eth_supported(struct mlx4_dev *dev)
- {
--	for (int port = 1; port <= dev->caps.num_ports; port++)
--		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_ETH)
--			return true;
--
--	return false;
-+	return true;
- }
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/io.h>
+ #include <linux/module.h>
+@@ -57,8 +58,8 @@
+ #define CFG_S2MM_XFER_SHIFT	29
+ #define CFG_S2MM_PKG_MASK	BIT(28)
  
- static bool is_ib_supported(struct mlx4_dev *dev)
- {
--	for (int port = 1; port <= dev->caps.num_ports; port++)
--		if (dev->caps.port_type[port] == MLX4_PORT_TYPE_IB)
--			return true;
--
--	if (dev->caps.flags & MLX4_DEV_CAP_FLAG_IBOE)
--		return true;
--
--	return false;
-+	return true;
- }
+-#define AUD_CTRL_DATA_WIDTH_SHIFT	16
+-#define AUD_CTRL_ACTIVE_CH_SHIFT	19
++#define AUD_CTRL_DATA_WIDTH_MASK	GENMASK(18, 16)
++#define AUD_CTRL_ACTIVE_CH_MASK		GENMASK(22, 19)
+ #define PERIOD_CFG_PERIODS_SHIFT	16
  
- static const struct mlx4_adev_device {
+ #define PERIODS_MIN		2
+@@ -509,28 +510,29 @@ static int xlnx_formatter_pcm_hw_params(struct snd_soc_component *component,
+ 	writel(high, stream_data->mmio + XLNX_AUD_BUFF_ADDR_MSB);
+ 
+ 	val = readl(stream_data->mmio + XLNX_AUD_CTRL);
++	val &= ~(AUD_CTRL_DATA_WIDTH_MASK | AUD_CTRL_ACTIVE_CH_MASK);
+ 	bits_per_sample = params_width(params);
+ 	switch (bits_per_sample) {
+ 	case 8:
+-		val |= (BIT_DEPTH_8 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_8);
+ 		break;
+ 	case 16:
+-		val |= (BIT_DEPTH_16 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_16);
+ 		break;
+ 	case 20:
+-		val |= (BIT_DEPTH_20 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_20);
+ 		break;
+ 	case 24:
+-		val |= (BIT_DEPTH_24 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_24);
+ 		break;
+ 	case 32:
+-		val |= (BIT_DEPTH_32 << AUD_CTRL_DATA_WIDTH_SHIFT);
++		val |= FIELD_PREP(AUD_CTRL_DATA_WIDTH_MASK, BIT_DEPTH_32);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 
+-	val |= active_ch << AUD_CTRL_ACTIVE_CH_SHIFT;
++	val |= FIELD_PREP(AUD_CTRL_ACTIVE_CH_MASK, active_ch);
+ 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
+ 
+ 	val = (params_periods(params) << PERIOD_CFG_PERIODS_SHIFT)
 -- 
 2.53.0
 
