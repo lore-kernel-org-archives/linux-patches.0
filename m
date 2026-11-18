@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058934;
-	b=RdvLHi4LBChoLnVGz5AX/Ctv47VSKXnoKqsByfkkysCDbD0gfzlQKvQiIiO3+B+rClOb
-	 Xt6e+608CnZ7D28/iPVwIy4JSb+hgqHxwmanw7ZPn8mD19/mqSn52NOgDh45q9Rbhilah
-	 fdx9s14wqHQCDTGJ+5tMXNxA5tAXyG68tLJp+2RFUbWz/HemQ0rKaPki3roApA862DkMT
-	 3j7a/BY8MVI3yaRos0OUieguOOdaTk6lw82v+UL9DCQ2V8bS4cT+MX8PqKgH8gRjL9QzS
-	 J1hlCPs2nYBthUxp3Zt4qnhDlJ/VHs2tvA5WzcQG1qDYP9jrCAKSYhzXeppoa8Ex15Q==
+	t=1795058937;
+	b=ynsL9V60Tzp4kNvN+9NvxA/yd5JTO4VVMXK02sC2JWqg1LyhBLLrwyMI27eAY1NeD9Xb
+	 OT7wLQJhHPYzpDqj7pC71SbaJO7xEdl34yCFJWrOeQ+n4WqXICJVe3zHL0J+A+4nzcFKu
+	 Ns59PL6b/d0eA2cDjMjRW3oYfhymPHLcwhtDg+/JTUai0ISiVriprCy1BuNVgznl3J8mj
+	 zd7fWpXoncIG4srxDwjtRVfdorFoUObL3WPE/NiacON4Dm1ZzNbD4OJ+3eM3e2XUk+ZPL
+	 l1sdIXdy47pClo98ca7QaOjCDARMKYLcar7TBei6KdfA3hXhGXCJE023X4cxDuze13w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058934;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lm3h2nUO/KdsdKRNUQhFaW4ceRnsqasl0LTG9RhkuSM=;
-	b=f3R7yqYUeTIkRv4SCT7jlsx9kAHhXoet+nZtrZoRbi9xoxb2uySRX4VDGAJoIAJmHYeB
-	 u7rVQntVEdflUwwJay7huB1WTvB4VbJk3A++hvKjEAQX16ZMr99RdHBu4zn5d9EVchzKt
-	 9mHF1tsJLiptqLUUCHd983Zs1HgTnYfRvG7PsIVZjYCNWpLHaO8hTm1mwpfshRZxyqXwH
-	 L2mRNuegVTtnYzB2xngUa5RZwSy8rWevDRIOeEvXeFV3oTn8qa6RE/G5qRPXBU2Jw3ipw
-	 j44UNboZEUyYhCBTrL824fN9uX9mHE2qr7BXrRgvW3GKTMMUKQH9dSQvTA+XgbnMvWQ==
+	bh=ifklS5ybcbukdsrQINsOjW0HcaDNB+RL/QMPZ+n3hls=;
+	b=19UdL/gGI9PRGwazgbcPNeqfpNAU37DHVa4aM7FhPovtyh8NgjsBkKSVVPvmfD70WLkt
+	 xZIUxdd32hlZw99GXAjCkq5m65VZE+YEgG4HkfqHEVe5rjeG8CG9Takpay3P8xI4EWkEk
+	 6q7T503qnhsT3KFdCUPfjMOcQBpjgBukeeKD8wIeRv7ycRjeF0yugt6g+7f6A8CVNj0/x
+	 u6AM4b75QuFVz12Yx9CaKrt/slszbMpqpKtYZ6Vc9LrFSBrewCkIYoLsiZhBUDvfekf+p
+	 ARVGtgZNDKbJs2ZwepgsPK/76RWcQgLMHVnMmHuR5EjRTALb30suMtgSDtwxpxEtGDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zyRsC/zG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oPqTT+yF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E256606A31C;
-	Thu, 19 Nov 2026 03:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695AF60A260C;
+	Thu, 19 Nov 2026 03:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyRsC/zG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDD91F000CD;
-	Thu, 19 Nov 2026 03:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oPqTT+yF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2581F000CE;
+	Thu, 19 Nov 2026 03:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058934;
-	bh=Lm3h2nUO/KdsdKRNUQhFaW4ceRnsqasl0LTG9RhkuSM=;
+	s=korg; t=1795058937;
+	bh=ifklS5ybcbukdsrQINsOjW0HcaDNB+RL/QMPZ+n3hls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zyRsC/zG1UQBdHfUZw951RAx4i9hQXTrDpqg9MOuUlTOyfOODS0uqdWuuIS7JRZKB
-	 J5VSu0SL2jKkNOYvJlB068r09FkTVsAIEHehH7aNeQKYxbArWdQbYzHPqdBXmqzUPA
-	 bi9AUeo2McbqVScvtXibR0UFHhFuY5XPO0MQlW4A=
+	b=oPqTT+yFiFMoAB57H5sm9sx/xB6D7RgUr3iDJD4vyBrxOEW4SjKUjhUKYBIC+mkgf
+	 NYNf7WmjpIeY11KsXYW9wKq66KOXyB/+BTB9w50+hk2xcOfx+cKLBjSSGRDrbTgMSc
+	 W/cKIz8NDVZRfR3x7E0mw8G+wT6fWvHaYpYXwZ7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yu Junzhe <junzheyu1@gmail.com>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0661/1848] jbd2: dont advance j_fc_off before the buffer is recorded
-Date: Wed, 18 Nov 2026 15:44:59 +0100
-Message-ID: <20261118145943.432890465@linuxfoundation.org>
+Subject: [PATCH 5.10 0622/1848] smb: client: fix fiemap wild read on empty truncated response
+Date: Wed, 18 Nov 2026 15:44:20 +0100
+Message-ID: <20261118145941.438146949@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,85 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Abdifatah Suruur <suruurism@gmail.com>
 
-commit 9f359c031885bb50add7d23c7a5a0e9755b134c9 upstream.
+[ Upstream commit f5baa17a0f316c235d61623ac8e8fb32c2b3c0cc ]
 
-jbd2_fc_get_buf() increments journal->j_fc_off before jbd2_journal_bmap()
-and __getblk() have had a chance to fail.  When either does, the slot
-j_fc_wbuf[fc_off] is never assigned, but j_fc_off already counts it.
+smb3_fiemap() treats -E2BIG from SMB2_ioctl() as a truncated range blob
+and loops for the next chunk. If the server reports
+STATUS_BUFFER_OVERFLOW with OutputCount == 0, SMB2_ioctl() returns
+-E2BIG with out_data == NULL and out_data_len == 0, and the existing
+length checks accept the empty result. The loop then evaluates
 
-ext4 then fails the fast commit and falls back, and the fallback path
-reaches jbd2_fc_release_bufs() via ext4_fc_commit ->
-jbd2_fc_end_commit_fallback -> __jbd2_fc_end_commit -> ext4_fc_cleanup.
-That walks down from j_fc_off - 1 and put_bh()es every slot until it
-sees NULL, so it also touches the slot that was never written.
-j_fc_wbuf comes from a plain kmalloc() and is never zeroed, so a slot
-used for the first time holds uninitialised heap data.
+	next = out_data[num - 1].file_offset + ...
 
-Advance j_fc_off only after the buffer head has been stored.  That
-restores the invariant that j_fc_off covers exactly the filled slots,
-which is what jbd2_fc_release_bufs() relies on: the live buffers of the
-current fast commit sit above the NULLs the previous one released, so
-stopping at the first NULL is correct.
+with num == 0, reading 16 bytes before NULL.
 
-Reproduced on a KASAN kernel with an ext4 fast_commit filesystem on a
-loop device, truncating the backing file under the live mount so that
-only the journal's fast-commit region falls past the end of the device.
-__getblk() then fails for the first fast-commit block while the rest of
-the journal is still addressable, so the journal is not aborted and the
-fast commit reaches the fallback path.  j_fc_wbuf was poisoned to make
-the read of the never-written slot visible:
+Reject a truncated range blob that contains no range, so the resume
+offset is never computed from an empty response. Also require the last
+range in a truncated blob to advance the resume offset without
+overflowing, and to stay within the requested range; a malicious or
+broken server could otherwise make no progress or underflow len and loop
+forever. Free the previous response buffer before retrying.
 
-  BUG: KASAN: wild-memory-access in jbd2_fc_release_bufs+0x6b/0xd0
-  Write of size 4 at addr 5a5a5a5a5a5a5ab2 by task sync/961
-   jbd2_fc_release_bufs+0x6b/0xd0
-   ext4_fc_cleanup+0x97/0x830
-   __jbd2_fc_end_commit+0x37/0xc0
-   ext4_fc_commit+0x524/0x560
-   ext4_sync_file+0x3c4/0x4b0
-   __x64_sys_fsync+0x20/0x30
+Reproduced on 6.6.87.2 with a malicious SMB2 server that answers
+FSCTL_QUERY_ALLOCATED_RANGES with STATUS_BUFFER_OVERFLOW and
+OutputCount == 0; an FS_IOC_FIEMAP ioctl on the mount oopses in
+cifs_fiemap() with CR2 = fffffffffffffff8. The code path is unchanged
+on mainline.
 
-With this patch the same run leaves j_fc_off at 0 across repeated
-__getblk() failures and completes cleanly.
-
-[ Context: in 5.10.y, jbd2_fc_get_buf() still advances j_fc_off inside
-  the if/else bounds check, so the increment is removed from there.
-  The change is otherwise the same as upstream. ]
-
-Fixes: ff780b91efe9 ("jbd2: add fast commit machinery")
-Cc: stable@kernel.org
-Reported-by: Yu Junzhe <junzheyu1@gmail.com>
-Closes: https://lore.kernel.org/linux-ext4/7e4b109d-64c3-444f-a5dc-93c2ca4576cc@gmail.com/
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260819060939epcms2p37bb8589b2f8a52a2b14bef38fadcf69d@epcms2p3
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Fixes: 2f3ebaba13ce ("cifs: add fiemap support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/journal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/smb2ops.c | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
-index 526d2971f12e5..cc2d3209a4335 100644
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -884,7 +884,6 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
- 	if (journal->j_fc_off + journal->j_fc_first < journal->j_fc_last) {
- 		fc_off = journal->j_fc_off;
- 		blocknr = journal->j_fc_first + fc_off;
--		journal->j_fc_off++;
- 	} else {
- 		ret = -EINVAL;
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index 2fe90bcc44b84..cf7c70a14730e 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -3915,6 +3915,15 @@ static int smb3_fiemap(struct cifs_tcon *tcon,
+ 		goto out;
  	}
-@@ -902,6 +901,7 @@ int jbd2_fc_get_buf(journal_t *journal, struct buffer_head **bh_out)
  
++	/*
++	 * A truncated range blob must contain at least one range, otherwise
++	 * there is no offset to resume from and out_data is NULL.
++	 */
++	if (!last_blob && out_data_len == 0) {
++		rc = -EINVAL;
++		goto out;
++	}
++
+ 	num = out_data_len / sizeof(struct file_allocated_range_buffer);
+ 	for (i = 0; i < num; i++) {
+ 		flags = 0;
+@@ -3935,10 +3944,25 @@ static int smb3_fiemap(struct cifs_tcon *tcon,
+ 	}
  
- 	journal->j_fc_wbuf[fc_off] = bh;
-+	journal->j_fc_off++;
- 
- 	*bh_out = bh;
+ 	if (!last_blob) {
+-		next = le64_to_cpu(out_data[num - 1].file_offset) +
+-		  le64_to_cpu(out_data[num - 1].length);
+-		len = len - (next - start);
++		u64 last_start, last_len;
++
++		last_start = le64_to_cpu(out_data[num - 1].file_offset);
++		last_len = le64_to_cpu(out_data[num - 1].length);
++
++		if (check_add_overflow(last_start, last_len, &next) ||
++		    next <= start) {
++			rc = -EINVAL;
++			goto out;
++		}
++		if (next - start >= len) {
++			rc = 0;
++			goto out;
++		}
++
++		len -= next - start;
+ 		start = next;
++		kfree(out_data);
++		out_data = NULL;
+ 		goto again;
+ 	}
  
 -- 
 2.53.0
