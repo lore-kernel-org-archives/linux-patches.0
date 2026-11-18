@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018854;
-	b=rVOXVBr3aegxyxx6Ce9wqaV7L1aRCgADXCSrO8sbHx+9rm1VZ445ZcbVqNJKcpNmE6ke
-	 X56grYtntX8TWqUa1hpN61Inck9g0DybPP3Jvcs7CZJVWmWqC6mCcPF9PUAjSIMxM1JBh
-	 +JjvtJ/Mmtc4d8Pi1plTOsjv9kVHPbTiNL/iFqtkMjVx/5b4n0TxoR+5v0x7v8yiuJ48I
-	 L86J+DBZ269mx3XWvH5JDqbXOJUjtP7FOwc+WG6U2X1FUm5xEv65zOclG6BwC8Ca7tvez
-	 SoSSfNV1yslS3Ggjg/9Ri/f7Ezkt1ZobNgG7ttUCMjALQ8IU60dJ+kdZxKoqHFpKBJw==
+	t=1795018857;
+	b=Z9o/XUsZ8d0B7HwO0f77dDkZKa2TLTfx+ajqYcnGKoXMM3PIyISG4r/ti0UsADdMjthp
+	 h6JOF/BfN3yB7K1rBxF6qYGthFuagNKI5OPaBniOA11ZSQmjLkc5BJ58C2r0IBO8QrFQv
+	 jHbZ7kUL/DxYWb39EeCYIjuWgDM+QTb92I7Efxms9QtnG8nRczAnhFSWg+ilumJK+fSSg
+	 ameGdG5vPR2gZkTvTqcB37qsT+8K1fRL73kFCuC9YbnzzvRE7X1xRn0vstw2LKxcupMX+
+	 vaQcp6odtOb07kHQA6HY4iryUSZEJETh1tjPKvPDsQoNdi2jSJAF+SeLX+RUHEZfV/Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nG/dcYTZSAOofmVIa3v0M644Vc6K+NPzquUihaQT04w=;
-	b=3LFZfQY9i8MlwFLwJhsCJqe7r8ZUDBG/WSMXsgus67h2Xw8gACd6BiAVG82UMfXyBi74
-	 z8kf32EGcSpzdYzQBtr/2xxuA93ZtEHJraODNyWHDuQKp4lz5/okVVYo/UBYq2krX/3P+
-	 Wgy6qWY5V1fH6gqWGkEbaFzqyKXYM7sFVBgD6ooqkkNmg1BEPcbcnTCw+qQSlIStxyk7s
-	 scrgUib74ac0y6fmBHqNesHVBSOwJrR6YUoWryzWIpQrGXZknHVniHY0yGdRgTgqaiGPl
-	 G7VD4qYt71IsI/JcxNjVROrat/HmKc4ozeMhzoN7QHzsvcnJE/NZccpbeLDFqTN8ZXQ==
+	bh=DsaRjkJvSmx6m8wjvPU5KrmzE14bD2dcxUSvYQYyjh8=;
+	b=ZYECZ5rnreH0fcIUf7k2RCusETnF6h+U6tVZvHVuyizpBVRDPBtM/M3wSoC5wwETvjKk
+	 pp5v8kyqXQLqIlcPxtSLQ2Af9mwa5BzSVwDo1uhYCHfqBMGQYpxVmsE3A4QYMj+gYLAhU
+	 utG1PSJPot5qFOX6W4v67aJ9XoszepYaOFGtstcwAxUmqm5Wer4hAA9RWnNy+pXYXjlTe
+	 eR5hcVQO/BJexj7zuYo7BwlIVD3vXeOV/a90B21ixnUYJjsCmxyLPAsFXO3DB41nKd1c+
+	 JOxR9kyPekFky7BCWsWkF9yVKhX1CMP5BRHnvuh+xnGRl+MDtcLFWt5zTJsQ5GtLOcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwdfWgC6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J/N7/9Tt";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247AC606A31C;
-	Wed, 18 Nov 2026 16:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B39F606A320;
+	Wed, 18 Nov 2026 16:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwdfWgC6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778CF1F000C5;
-	Wed, 18 Nov 2026 16:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J/N7/9Tt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F4A1F000C4;
+	Wed, 18 Nov 2026 16:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018854;
-	bh=nG/dcYTZSAOofmVIa3v0M644Vc6K+NPzquUihaQT04w=;
+	s=korg; t=1795018856;
+	bh=DsaRjkJvSmx6m8wjvPU5KrmzE14bD2dcxUSvYQYyjh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GwdfWgC6POTm/p5Xu3Uv6VZPfYCDSAuxNRS5ZTLbYd1qrkQF8toU5+ATVinJBd89z
-	 3G3Fq5OSZi20nfCDjDuA6G2KMbATUNzBr8BpM9UHoK+uA3CnAn8k3Ou3XXeR9y0zSq
-	 VJGAHZ2A4cCWf/0OdR+YRL+R+Can6eSN6XzC0h7Y=
+	b=J/N7/9Tt68F4AgaU/mbYHZaQavFZuCar1wNjKhBnawcwBk8SIH4oVpjF8oB9qcMB6
+	 ywhlqw2bQe00bcjI86W3xaBkR8M2BsMQ9A2uUQeLzUgN9I9s8rF2LOOPFDW/j+zp/t
+	 HX/3zqGKSaQjt3CTs3rmBNyiwIfN3tbGsL+tT7oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1387/2651] PCI/ACPI: Tidy _OSC control bit checking
-Date: Wed, 18 Nov 2026 15:43:47 +0100
-Message-ID: <20261118150337.950855051@linuxfoundation.org>
+Subject: [PATCH 7.3 1352/2651] dmaengine: ste_dma40: Fix V4B event group mapping
+Date: Wed, 18 Nov 2026 15:43:12 +0100
+Message-ID: <20261118150336.699698007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,86 +69,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 0a1fdf4546ccf2f02845135fa5b36ed90685b220 ]
+[ Upstream commit b36f8fce7314fed53563c60e683ff86deb8a51ae ]
 
-Add OSC_OWNER() helper to prettify checking the _OSC control bits to learn
-whether the platform has granted us control of PCI features.  No functional
-change intended.
+DMA40 physical resources are connected in pairs to event groups. The
+mapping repeats after each complete set of groups.
 
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Link: https://patch.msgid.link/20261002211828.1293177-3-sathyanarayanan.kuppuswamy@linux.intel.com
-Stable-dep-of: 4fe37866b0d9 ("PCI/ACPI: Centralize pcie_ports_native checking")
+D40_GROUP_SIZE and D40_PHYS_TO_GROUP() encode the four-group V4A layout.
+On V4B, which has five groups, resources 8 and 9 are consequently offered
+both to event groups 0 and 4. The GCC clock bookkeeping also treats these
+resources as group 0 instead of group 4.
+
+Derive the physical-resource stride and reverse mapping from the
+variant-specific number of event groups. This preserves the V4A mapping
+and gives V4B a ten-resource stride: resources 8 and 9 belong only to
+group 4, while resources 10 and 11 repeat group 0.
+
+Fixes: 3cb645dc85a0 ("dmaengine: ste_dma40: support more than 128 event lines")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-21-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pci_root.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ drivers/dma/ste_dma40.c    | 47 ++++++++++++++++++++++++++------------
+ drivers/dma/ste_dma40_ll.h |  2 --
+ 2 files changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
-index 88c65f34e3058..756dc2f055f51 100644
---- a/drivers/acpi/pci_root.c
-+++ b/drivers/acpi/pci_root.c
-@@ -993,6 +993,12 @@ static void acpi_pci_root_release_info(struct pci_host_bridge *bridge)
- 	__acpi_pci_root_release_info(bridge->release_data);
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 91dc143f9a808..a5471a9157cd4 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -85,6 +85,7 @@ struct stedma40_platform_data {
+ /* Number of event groups per hardware register layout */
+ #define D40_EVENT_GROUPS_V4A 4
+ #define D40_EVENT_GROUPS_V4B 5
++#define D40_PHYS_PER_EVENT_GROUP 2
+ 
+ /* Max number of logical channels per physical channel */
+ #define D40_MAX_LOG_CHAN_PER_PHY 32
+@@ -2027,6 +2028,12 @@ static bool d40_alloc_mask_free(struct d40_phy_res *phy, bool is_src,
+ 	return is_free;
  }
  
-+#define OSC_OWNER(ctrl, bit, flag)		\
-+	do {					\
-+		if (!((ctrl) & (bit)))		\
-+			flag = 0;		\
-+	} while (0)
++static int d40_phy_to_group(struct d40_base *base, int phy)
++{
++	return (phy / D40_PHYS_PER_EVENT_GROUP) %
++	       base->gen_dmac.num_event_groups;
++}
 +
- struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
- 				     struct acpi_pci_root_ops *ops,
- 				     struct acpi_pci_root_info *info,
-@@ -1003,6 +1009,7 @@ struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
- 	int node = acpi_get_node(device->handle);
- 	struct pci_bus *bus;
- 	struct pci_host_bridge *host_bridge;
-+	u32 ctrl, ext_ctrl;
+ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ {
+ 	int dev_type = d40c->dma_cfg.dev_type;
+@@ -2037,11 +2044,14 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 	int j;
+ 	int log_num;
+ 	int num_phy_chans;
++	int phy_group_stride;
+ 	bool is_src;
+ 	bool is_log = d40c->dma_cfg.mode == STEDMA40_MODE_LOGICAL;
  
- 	info->root = root;
- 	info->bridge = device;
-@@ -1028,21 +1035,21 @@ struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
- 		goto out_release_info;
+ 	phys = d40c->base->phy_res;
+ 	num_phy_chans = d40c->base->num_phy_chans;
++	phy_group_stride = D40_PHYS_PER_EVENT_GROUP *
++			   d40c->base->gen_dmac.num_event_groups;
  
- 	host_bridge = to_pci_host_bridge(bus->bridge);
--	if (!(root->osc_control_set & OSC_PCI_EXPRESS_NATIVE_HP_CONTROL))
--		host_bridge->native_pcie_hotplug = 0;
--	if (!(root->osc_control_set & OSC_PCI_SHPC_NATIVE_HP_CONTROL))
--		host_bridge->native_shpc_hotplug = 0;
--	if (!(root->osc_control_set & OSC_PCI_EXPRESS_AER_CONTROL))
--		host_bridge->native_aer = 0;
--	if (!(root->osc_control_set & OSC_PCI_EXPRESS_PME_CONTROL))
--		host_bridge->native_pme = 0;
--	if (!(root->osc_control_set & OSC_PCI_EXPRESS_LTR_CONTROL))
--		host_bridge->native_ltr = 0;
--	if (!(root->osc_control_set & OSC_PCI_EXPRESS_DPC_CONTROL))
--		host_bridge->native_dpc = 0;
--
--	if (!(root->osc_ext_control_set & OSC_CXL_ERROR_REPORTING_CONTROL))
--		host_bridge->native_cxl_error = 0;
+ 	if (d40c->dma_cfg.dir == DMA_DEV_TO_MEM) {
+ 		log_num = 2 * dev_type;
+@@ -2075,13 +2085,18 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 				}
+ 			}
+ 		} else
+-			for (j = 0; j < d40c->base->num_phy_chans;
+-			     j += D40_GROUP_SIZE) {
+-				int phy_num = j  + event_group * 2;
+-				if (phy_num + 1 >= num_phy_chans)
++			for (j = 0; j < num_phy_chans;
++			     j += phy_group_stride) {
++				int phy_num = j + event_group *
++					      D40_PHYS_PER_EVENT_GROUP;
 +
-+	ctrl = root->osc_control_set;
-+	ext_ctrl = root->osc_ext_control_set;
-+
-+	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_NATIVE_HP_CONTROL,
-+		  host_bridge->native_pcie_hotplug);
-+	OSC_OWNER(ctrl, OSC_PCI_SHPC_NATIVE_HP_CONTROL,
-+		  host_bridge->native_shpc_hotplug);
-+	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_AER_CONTROL, host_bridge->native_aer);
-+	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_PME_CONTROL, host_bridge->native_pme);
-+	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_LTR_CONTROL, host_bridge->native_ltr);
-+	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_DPC_CONTROL, host_bridge->native_dpc);
-+
-+	OSC_OWNER(ext_ctrl, OSC_CXL_ERROR_REPORTING_CONTROL,
-+		  host_bridge->native_cxl_error);
++				if (phy_num + D40_PHYS_PER_EVENT_GROUP >
++				    num_phy_chans)
+ 					break;
  
- 	acpi_dev_power_up_children_with_adr(device);
+-				for (i = phy_num; i < phy_num + 2; i++) {
++				for (i = phy_num;
++				     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
++				     i++) {
+ 					if (d40_alloc_mask_set(&phys[i],
+ 							       is_src,
+ 							       0,
+@@ -2100,9 +2115,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 		return -EINVAL;
  
+ 	/* Find logical channel */
+-	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
+-		int phy_num = j + event_group * 2;
+-		if (phy_num + 1 >= num_phy_chans)
++	for (j = 0; j < num_phy_chans; j += phy_group_stride) {
++		int phy_num = j + event_group * D40_PHYS_PER_EVENT_GROUP;
++
++		if (phy_num + D40_PHYS_PER_EVENT_GROUP > num_phy_chans)
+ 			break;
+ 
+ 		if (d40c->dma_cfg.use_fixed_channel) {
+@@ -2129,14 +2145,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
+ 		 * channels.
+ 		 */
+ 		if (is_src) {
+-			for (i = phy_num; i < phy_num + 2; i++) {
++			for (i = phy_num;
++			     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
++			     i++) {
+ 				if (d40_alloc_mask_set(&phys[i], is_src,
+ 						       event_line, is_log,
+ 						       first_phy_user))
+ 					goto found_log;
+ 			}
+ 		} else {
+-			for (i = phy_num + 1; i >= phy_num; i--) {
++			for (i = phy_num + D40_PHYS_PER_EVENT_GROUP - 1;
++			     i >= phy_num; i--) {
+ 				if (d40_alloc_mask_set(&phys[i], is_src,
+ 						       event_line, is_log,
+ 						       first_phy_user))
+@@ -3307,9 +3326,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
+ 			base->phy_res[i].allocated_src = D40_ALLOC_PHY;
+ 			base->phy_res[i].allocated_dst = D40_ALLOC_PHY;
+ 			base->phy_res[i].reserved = true;
+-			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
++			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
+ 						       D40_DREG_GCC_SRC);
+-			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
++			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
+ 						       D40_DREG_GCC_DST);
+ 
+ 
+@@ -3329,9 +3348,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
+ 		base->phy_res[chan].allocated_src = D40_ALLOC_PHY;
+ 		base->phy_res[chan].allocated_dst = D40_ALLOC_PHY;
+ 		base->phy_res[chan].reserved = true;
+-		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
++		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
+ 					       D40_DREG_GCC_SRC);
+-		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
++		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
+ 					       D40_DREG_GCC_DST);
+ 		num_phy_chans_avail--;
+ 	}
+diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
+index 2e30e9a94a1e3..55090cb310579 100644
+--- a/drivers/dma/ste_dma40_ll.h
++++ b/drivers/dma/ste_dma40_ll.h
+@@ -16,8 +16,6 @@
+ 
+ #define D40_TYPE_TO_GROUP(type) (type / 16)
+ #define D40_TYPE_TO_EVENT(type) (type % 16)
+-#define D40_GROUP_SIZE 8
+-#define D40_PHYS_TO_GROUP(phys) ((phys & (D40_GROUP_SIZE - 1)) / 2)
+ 
+ /* Most bits of the CFG register are the same in log as in phy mode */
+ #define D40_SREG_CFG_MST_POS		15
 -- 
 2.53.0
 
