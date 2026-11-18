@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052761;
-	b=miFMlStXHf5OZwkzcGIOstIIpmrWB2SbdwzrPGLhUNDJ0uq8QaIj3BC7eL/GfkC/qnCz
-	 YGeB8mXactHmPYiL9bV1II/RxzliA5PW2G6OFgu/pD5VuKee2tJ3YIAQZZ9CjFNMlmsDd
-	 EWZ6qS/ptT/aUCAV126lhV84G7hTOgmzMt7Oh8VLESJg5VIpPhYf9mCWHHQsrahUMwSwn
-	 6bcu8x9N23P5srE6UPKGQsswwXCqJTy0kDcK9o4cCp9OUcyFzhyn78VCeJ9DxqKLdpOcp
-	 MGwPURHDJL/EbIKDOuxva2T1OtD0lSZnrSq5pCvkbR2uNUuors9t51NXLC4ojFEYNxw==
+	t=1795052764;
+	b=zu3mYDpCb4LcS2T72ISyZkbp/rB3WijDU5nZtqAHZ/C4K7lOuh2LC8MWof8/vPO4G2Tj
+	 HRu2Y9B3rvDvuBbArEL2qPPLcLWGiuplSlmUcAHGa+FHOGEpZquu7TWBV5svEvSHx+Fh+
+	 w9jVwKKF4LS3Jpgj64aEH4ilewpPlhRPMf4fcJOqcGdLtJYgkzAm0sNVTK5Vgz9L2ZBJN
+	 4vPMwZkYb3SOJEzwXJVHVdl7mwppaVG3KpC29T36LDHM/kZo8IOR3Dl6CAdSSka781hpg
+	 ucBrTtCiA5N9yWW92zFSTZMYMqf5yvZQzXenXuOpMjhSv2hjWvTY7Td0KZftrvxdDVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=CZiWiZBxPw88NOlapOViyWkmH3SNKodYsbxnjdPXWao=;
-	b=zMaTEjcnHAVhkQ2SRcPjvoZIdD6vHf0K8GDrP1xiIaF1k4hbiNHECi8LRxmQgz4XHbRR
-	 YvIA+E79Ja1YrQZJ/k2nc2wfuuyJSf67+MiKIEciwXp0ito6EtiiBpohFipTNJTke45uf
-	 z4liwOmmMS6b/vGNpH8wdP5/eBWP0gVqDq92sm6NshfiLB6tEPduxGK97RxfnLjofGIvS
-	 ZIdK/hjZd+sxRWL2m89uMNwCxuL+D5K+Xp4lZeTLnJrlynxt1Aedw8nQRjS0AYm27dqWn
-	 PCtAwmlinR9a334llvRtuqFAc3C94bCe7Px3GvbZHzSkdQ7wPf7cMTCviPM7z2kE3FA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=16hmnJYJMbj4MRTahf0ElMHQ1/MubIYu62qTxba4m90=;
+	b=Wq5/6eMk0SOQSKRKAu52Qp/ml3cewFZHCdYguY7IbVNVopedvMh8C3uuEJlHrbRRa8su
+	 n5g9qDpxIfpRNlZUedqfhtE8lsD5Kdug7KqTzm4JibwbmlDTlBMvfWAdBojeIWkvGF6YR
+	 El3P1jXiYEolrEOyEkwCUcvrOLOXjoX7utQHdFeCUA8wUqnUI7nMbYhRBwMjZaz9bpLQ3
+	 2PvnQXjIEJzK0n2Hpzd7JblEurlBYsyMEifvHSNbuFgZiIIEk7FdpcsSfe4HcNrg+SzSB
+	 PRwL2jRycd4sCYzKUpGuzvCMLckk1TYy6beZ+prP5/MD7u/WQwUWvUvORRcYEm8VkCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3Ga0Mzc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TXt9fkj3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF19606A31C;
-	Thu, 19 Nov 2026 01:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80084606A325;
+	Thu, 19 Nov 2026 01:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B3Ga0Mzc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA39B1F000C4;
-	Thu, 19 Nov 2026 01:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TXt9fkj3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908951F000C4;
+	Thu, 19 Nov 2026 01:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052761;
-	bh=CZiWiZBxPw88NOlapOViyWkmH3SNKodYsbxnjdPXWao=;
+	s=korg; t=1795052764;
+	bh=16hmnJYJMbj4MRTahf0ElMHQ1/MubIYu62qTxba4m90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B3Ga0MzcLo2F3hPNLecl9jtBF6lGbyqi2lVVyw/STIg1cCod/ap5OpCkeq4GWtiXl
-	 Ho2+DqSX8IPvuT02sH9iKaoPMk+moZD4Z1o6CSSb0vd1XIVQWvMPkc0wHuVeTGa+A8
-	 IdEjeUK6i3XhjZzyGTOnAH/OVvu8qA/lLCzc31d0=
+	b=TXt9fkj3HuSQtLYLq8XgNRz0B9m0yeduTn9WJ/vml28SGAESjAR+tPAe4ZL0A5zso
+	 1nwG1LB9w1OYrzy7moZPaDsEeX6aW+7Fh0FMdu24/TdCDd21SdLjDUL2cDneYybjWR
+	 TZzdrqgm4pxtcmY1u3aCvG/kFXC4gr6xYmLxpztA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0632/2214] sh: intc: Sort the prio and sense lists after filling them
-Date: Wed, 18 Nov 2026 15:38:28 +0100
-Message-ID: <20261118150036.633982974@linuxfoundation.org>
+Subject: [PATCH 5.15 0677/2214] drm/amdgpu: reject ANONONLY userptrs that span multiple VMAs
+Date: Wed, 18 Nov 2026 15:39:13 +0100
+Message-ID: <20261118150038.874938690@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,83 +66,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 94a219eda3b5fb1d1753a5ecf28b171c8f308a27 ]
+[ Upstream commit d577b68a854d0f590f480777249b041507d0708c ]
 
-register_intc_controller() sorts d->prio and d->sense right after
-allocating them, with hw->nr_prio_regs and hw->nr_sense_regs as the
-element count. The lists hold hw->nr_vectors entries and are only
-filled later, by intc_register_irq().
+For AMDGPU_GEM_USERPTR_ANONONLY, amdgpu_ttm_tt_get_user_pages() only
+checks the VMA at the start of the range for a backing file, and
+amdgpu_hmm_range_get_pages() then faults in the whole range, across any
+other VMAs. The check used to reject ranges ending beyond the first VMA
+(vma->vm_end < end), which got lost when the code moved to HMM.
 
-On SH7785, sh7785-irq0123 and sh7785-irq4567 have four vectors but the
-SoC's eleven priority registers, so sort() swaps 88 bytes in a 32 byte
-kmalloc object at boot. slub_debug=FZPU reports "Right Redzone
-overwritten" in kmalloc-32, and v6.5 and v6.6 panic in
-__kmem_cache_alloc_node() while registering sh7785-irq0123.
+An ANONONLY userptr over one page of file-backed memory is rejected
+with -EPERM, but one over an anonymous page followed by the same
+file-backed page is accepted.
 
-Found with a custom QEMU model of the SH7785LCR. On it, v6.4
-sh7785lcr_defconfig boots with SLAB, the defconfig default before v6.5,
-and hangs before the console is up when built with SLUB.
+Restore the check and reject ANONONLY userptrs that cross more than one
+VMA. The second userptr is now rejected too.
 
-Sort the lists once all vectors are registered, with the number of
-entries that were added.
+v2: reject ranges spanning multiple VMAs instead of walking every VMA
+    (Christian)
+v3: cast num_pages to u64 to avoid an overflow (Christian)
 
-Fixes: b59f9f9775e6 ("sh: intc: optimize intc IRQ lookup")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Assisted-by: LLM
+Fixes: 6826cb3b92a3 ("drm/amdgpu: support userptr cross VMAs case with HMM")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Philip Yang <Philip.Yang@amd.com>
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Acked-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 75d753ed4704d5efc72164d9e546b2a282e42ae2)
 Cc: stable@vger.kernel.org
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/sh/intc/core.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/sh/intc/core.c b/drivers/sh/intc/core.c
-index b19388b349be3..590a532e75a7e 100644
---- a/drivers/sh/intc/core.c
-+++ b/drivers/sh/intc/core.c
-@@ -277,9 +277,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 			k += save_reg(d, k, hw->prio_regs[i].set_reg, smp);
- 			k += save_reg(d, k, hw->prio_regs[i].clr_reg, smp);
- 		}
--
--		sort(d->prio, hw->nr_prio_regs, sizeof(*d->prio),
--		     intc_handle_int_cmp, NULL);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index 6c541fb35a4e7..076b3698bbdcb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -706,7 +706,8 @@ int amdgpu_ttm_tt_get_user_pages(struct amdgpu_bo *bo, struct page **pages)
+ 		goto out_unlock;
  	}
- 
- 	if (hw->sense_regs) {
-@@ -290,9 +287,6 @@ int __init register_intc_controller(struct intc_desc *desc)
- 
- 		for (i = 0; i < hw->nr_sense_regs; i++)
- 			k += save_reg(d, k, hw->sense_regs[i].reg, 0);
--
--		sort(d->sense, hw->nr_sense_regs, sizeof(*d->sense),
--		     intc_handle_int_cmp, NULL);
+ 	if (unlikely((gtt->userflags & AMDGPU_GEM_USERPTR_ANONONLY) &&
+-		vma->vm_file)) {
++		     (vma->vm_file ||
++		      vma->vm_end < start + (u64)ttm->num_pages * PAGE_SIZE))) {
+ 		r = -EPERM;
+ 		goto out_unlock;
  	}
- 
- 	if (hw->subgroups)
-@@ -360,6 +354,11 @@ int __init register_intc_controller(struct intc_desc *desc)
- 		}
- 	}
- 
-+	sort(d->prio, d->nr_prio, sizeof(*d->prio),
-+	     intc_handle_int_cmp, NULL);
-+	sort(d->sense, d->nr_sense, sizeof(*d->sense),
-+	     intc_handle_int_cmp, NULL);
-+
- 	intc_subgroup_init(desc, d);
- 
- 	/* enable bits matching force_enable after registering irqs */
 -- 
 2.53.0
 
