@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021425;
-	b=VPC7Bfd2vyY+b/3iaGyd+fTCtizedYP8JrBsKqdirprUCExj/xciseJPrZt+6odjKNCg
-	 dihLOMeeB8yjjqE9s0aP4rjJyaSnNOFbhPFqGncDwajwxbQaIDayz8jvlt4j8IyQAhWNr
-	 I2AKQbizwNFQQoXvX3TSbkQMZ7v+AgdDXnrz5Ixy6/nAUM+V1W2XR2xnpBLgd9UGaMLd9
-	 GhjWel7yMiqQjD8kdAOy/uGoZi1nNLJP5QCjrxHsLo1tVWmxxbLYCUzPLYcUcunE9a4md
-	 QEH0+UhNbxgPWAiKDtAbXA/9iqdZVh2jrcnASsDG0SGxFi1XBmebgz5oczk2zkKgRQQ==
+	t=1795021427;
+	b=niNMtRy/Y4AieE8BoysoVwge8vBPGVIujmoiWBvZXmMPiJVpBoCpf6bUxTE4ty4oXSSg
+	 Fq1iBlINzzHxAfdtrWoELT0MoT9YHQBWEi39XT8lWth+hxC+7s17bXibylh0zhAClZ0aW
+	 U7zPDSpa0tfAvDsqRm+1IyVJ4ql/vHWNrZqRt9WaDMA3tZEhtD1izyvl/ESdBFfeFEo1o
+	 KDuc1dJ5Dr1lSotZd9WTduRcuASKr31aOeiLQ2qLZNAf3rNG0NY9afkZoYu6vZg+nSqyD
+	 5OYd/0ojmxauRcBlbl3qU/jHQck1BARxsAXlvdO1AylrYmwirZsyInTqQdx/kz+CMuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=bknFpjSf7gHn6e71rroekiCqiqG8ykeRZE84i1OW0Fs=;
-	b=u19Gogb2d0fSfkd4BA5nYFeskONu6nsFv6tFi3nWYUH7XvKGVPwredslnKab3rGAa03J
-	 hAZUovBSM4aV/82NwauEB688lA9q1OIflJvpWX1kJkhC0hCAiwC803hZFrf56IsbAOUIT
-	 X/BUu9Fr0m2vyiy4AnJ5Z3RGTsNnRCosUANOpGl6scBeYbNDJLF1/3zYbIx6/bTjCjukp
-	 UCD9rSJc7hooT6YLB4iYMWEw+y+T2SgXBZzXa7kKWVHc9+Z811UypdpC/b5xpb4maKl+u
-	 xiyKtkBawxY5yLCXO0PjFYsAzrHOE5NgeBrF8tdrqG6xzM8olAMZHAfAf99Sg6EYyyw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CQH6q5peKUyBwXqhwhplRoUg9/tyaPCCjy2E6zBle9Y=;
+	b=Jubm4aEMuPXWvIxpftcysAfa4E7xywA0y4vOIFkRFLo8B9rIN0gTng2uITopuNapGSDL
+	 zBEE/+E34d1OdRT/jWpL3qeYBirM9KwWzaS+vd2Sfxnzuk6fXdT9ZIScIGLyVaJ8t0jeJ
+	 Ej/DiFZvUSyF4+CbMvgRoUlpX5coMci3eKRyvKZ6otxvWBbnmOMZtwaUJUMFzh9tvTu4i
+	 rRkNZ4gpy4+Lhx1m3j1jYPYCNMQtGltK78lY+JddxEJf1q9ADtLLNBsT8mYisSwobEP2t
+	 GmGj/26ZUCWJ9etCaSZVciJVSpjz9HuSPt9Xa49Avl7apQgl8cRfjz24yK4l0gNeRnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aVXmeGC3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gF5D+0Dv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1A960A2619;
-	Wed, 18 Nov 2026 17:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2DE606A339;
+	Wed, 18 Nov 2026 17:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aVXmeGC3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726FC1F0092F;
-	Wed, 18 Nov 2026 17:03:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gF5D+0Dv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417AE1F000C4;
+	Wed, 18 Nov 2026 17:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021425;
-	bh=bknFpjSf7gHn6e71rroekiCqiqG8ykeRZE84i1OW0Fs=;
+	s=korg; t=1795021427;
+	bh=CQH6q5peKUyBwXqhwhplRoUg9/tyaPCCjy2E6zBle9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aVXmeGC3h8J7hEk0+zRnV0ZOCkaEIdZzusiPkGYGA4GrI4Nd0D8JlA/FTNcYaHp/G
-	 G7XNj4lOdT7nUIXH/HFOXZqZmP7XwvlaaidEe+BeO0W1kMoOOJt80KLrW8HMuW8yNq
-	 BgvkywJBTYs49HRADf1ANQaYunxh1PyIz/KzO9pQ=
+	b=gF5D+0DvUx6C96IxBZZfimLANS4e306nS6muJQrQ774GPvkHQbYS1LEKTjv3yZObo
+	 AKMUM+0SQQdOwErEUpZoVdZO7e4vNAn0pyXqFAvsZ7pQKtWzFQGPC5fWDiFZa7AvZk
+	 eP3qXY6cW9Rkga912EzDbWttghAvGqa/DwscSAqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Sashiko <shodan.ai@mcst.ru>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jason Xing <kerneljasonxing@gmail.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2301/2651] net: skbuff: dont copy alloc_cpu in skb header copies
-Date: Wed, 18 Nov 2026 15:59:01 +0100
-Message-ID: <20261118150408.048619413@linuxfoundation.org>
+Subject: [PATCH 7.3 2302/2651] tcp_bpf: propagate error code in tcp_bpf_sendmsg()
+Date: Wed, 18 Nov 2026 15:59:02 +0100
+Message-ID: <20261118150408.078310169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,118 +66,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 78d4bd22ec9df490135303c00e190ac43d5c334a ]
+[ Upstream commit 82e31923c0553fdbfcddcd910ca07952880ca9b9 ]
 
-Commit 68822bdf76f1 ("net: generalize skb freeing deferral to
-per-cpu lists") added alloc_cpu to struct sk_buff and placed it in the
-headers group copied by __copy_skb_header().
+In tcp_bpf_sendmsg(), the value returned by sk_msg_memcopy_from_iter()
+is checked for error but not propagated to 'out_err' label, so error
+handling may not work as expected. Fix this by assigning error value
+to 'err', thus making sure that error won't be silently ignored.
 
-This is wrong for newly allocated skbs. For example, skb_segment()
-allocates a new skb and records the current CPU in alloc_cpu, but
-__copy_skb_header() overwrites it with the value from the original skb.
-
-If the original skb was allocated on another CPU, the segment may later
-be treated as remotely allocated and unnecessarily deferred there when
-it is freed.
-
-Move alloc_cpu out of the headers group so it is preserved across
-header copies. Copy it explicitly in skb_clone(), which allocates
-the skb object directly instead of going through __alloc_skb().
-
-This was discovered while investigating a throughput regression with
-software IPsec. The load used 512 IPsec tunnels carrying traffic over
-VXLAN, with 512 parallel iperf3 flows and an MTU of 4500.
-
-Before the fix:
-
-  16.09%  queued_spin_lock_slowpath
-             |
-             --15.90%--_raw_spin_lock_irqsave
-                       |
-                       --9.37%--__slab_free
-                                 kfree
-                                 skb_release_data
-                                 napi_consume_skb
-                                 mlx5e_poll_tx_cq
-
-After the fix:
-
-   6.84%  queued_spin_lock_slowpath
-             |
-             --6.57%--_raw_spin_lock_irqsave
-                      |
-                      --5.00%--__slab_free
-                                kfree
-                                skb_release_data
-                                napi_consume_skb
-                                mlx5e_poll_tx_cq
-
-Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Reported-by: Sashiko <shodan.ai@mcst.ru>
+Fixes: 5153a75ef34b ("tcp_bpf: Fix copied value in tcp_bpf_sendmsg")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
 Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261019174152.2932829-1-cjubran@nvidia.com
+Link: https://patch.msgid.link/20261019082214.102398-1-dmantipov@yandex.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 4 ++--
- net/core/skbuff.c      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_bpf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index a3ff380d43f01..d6894f463bf43 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -1036,8 +1036,6 @@ struct sk_buff {
- 	__u16			tc_index;	/* traffic control index */
- #endif
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 2e234d155b5e6..0ce583f68d3b7 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -581,6 +581,7 @@ static int tcp_bpf_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
+ 					       copy);
+ 		if (ret < 0) {
+ 			sk_msg_trim(sk, msg_tx, osize);
++			err = ret;
+ 			goto out_err;
+ 		}
  
--	u16			alloc_cpu;
--
- 	union {
- 		__wsum		csum;
- 		struct {
-@@ -1088,6 +1086,8 @@ struct sk_buff {
- 
- 	); /* end headers group */
- 
-+	u16			alloc_cpu;
-+
- 	/* These elements must be at the end, see alloc_skb() for details.  */
- 	sk_buff_data_t		tail;
- 	sk_buff_data_t		end;
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index ea4c38dee19f5..0c1229c544d24 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1593,7 +1593,6 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	CHECK_SKB_FIELD(napi_id);
- #endif
--	CHECK_SKB_FIELD(alloc_cpu);
- #ifdef CONFIG_XPS
- 	CHECK_SKB_FIELD(sender_cpu);
- #endif
-@@ -1625,6 +1624,7 @@ static struct sk_buff *__skb_clone(struct sk_buff *n, struct sk_buff *skb)
- 	C(pfmemalloc);
- 	C(pp_recycle);
- 	n->destructor = NULL;
-+	C(alloc_cpu);
- 	C(tail);
- 	C(end);
- 	C(head);
 -- 
 2.53.0
 
