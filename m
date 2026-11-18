@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031820;
-	b=uaPSKqXcWGbcnvqdu+kAg8tWQ1tb/w+CsjbbZGcFBo4/lZ+J8kEt0sTwjTv3JT/mf835
-	 6xHSwF6H1b4kHhIBhw19ebGk1stvKvIjlrAVcRCdinxAMqCjzpg/WgoL+JGzGonLtczRJ
-	 jBKSDbochuhqzCNUOGYQr1MABrLLJb03ZGmmByMdph1Fb90yAZqP0QrFcNXkA0nnsz/LC
-	 jCw0Tfl/w296eDkUgZUremDtggIERqdwqNYOpIRoohQXoR72us9PU5pWb7AiSoNmo+piN
-	 Qke/GcU69TQbc8FzCI2Afz0KvuufvetLVFVOJEDLqba9pOJYczTEZEl0kOBns2nijUA==
+	t=1795031822;
+	b=TLBVbUhP84Fp48zwSXkMXoWcVFn91+drCNJ8iAgzs/KHmxCFWuBB8G6JGRzUCipIcejs
+	 ZD1mZUBRlMrOoRiOQXSEQ3OiaPGuL9W1kr0js8AffERDoO2hyGJA4c5q+KEcsDYjInnzn
+	 yqrU7oAD4L/fRO8jFSgHgmwxGNQEWMAGD29eb6a0JRmUW5RLxi3ilZIaFOteW7Nocsp2A
+	 QCMg6MlZBPmAioVp6U7lw1AUj8oqq+t+bRtYMMiAy773AFhL5m86ho8UQxXBd3JuyoG1U
+	 w1I0aYdhOxs+XPkAGY9afuH3o03gxm+7j7xUBvAos/OtMcuEPcB08uko4AzsQ4PqgBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vxk/WmOQYO2A1S7ZHKpdg+yWdUzqjZy6Kfgu+cdVqTA=;
-	b=1vKTzZ72UBlxgx0kNGb/mg018oSH4BHEOviEmkg26vhv25pzu9yaC8zyYp8Ma+LbQVZr
-	 V5m5AX3u5vVJvfr/1b5+PqN8aUvd+oWnoMWxSa6lGqPKazsxFfvUOpYiRuGwZ176cKW8x
-	 oW72XRsoiRlgIck4OprttLCZsgw5kJDJZacwfjxYv3GmdEDzgC1v3l7g3uMZ+8Tj9AqEu
-	 tmlSz0q4e2mmqwTq9kCLXrIo8esn6k8uSuGcXHOQnBovcIP0uPEkdOWDaUPQ0v+Edtp8D
-	 vdF1X+GR9fQgE9wLkpT5urJ+t4z0mJzBOf54tzvkTuGrAvZtsyutq5vsqAdLtBuXOyw==
+	bh=6hz+61Korzq/Lh9RRPV54uHNz40tnOkTiKcXVQksgFk=;
+	b=JjLgXc8F/LD2jIePatcjdFEyrjFJiZjLELBZ0rR/7XMFCpvjJVq6SABspAkgGfRC+Tcc
+	 DyCRVUMnYf+RuPQLAVBRB2bnNFx9yno+/qtspoz4sZB2hc0Up3+LQYIj/UuPoTwh9eGfp
+	 ADViWpAiyV+gDD2QUDd1DFZnVLnVGL9rtqbAJz6Fh2zcTLGBht8kT9DgZnGVAjNX6i+Yc
+	 knvy4toT96o7rDtKYS2NJZ2fxxH4fefV8N2038wk04T4iJgLEEdbGrolmu2Gv6PYD6Wn7
+	 cA80UAKprXVCazQtKCSnP7KWO2t8pcHoZQD4NDny35kjEbnpNKqqZjzjJU+MbiHtctQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WoqzzYMn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJyzZ2Qi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C943606A31C;
-	Wed, 18 Nov 2026 19:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10E0606A320;
+	Wed, 18 Nov 2026 19:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WoqzzYMn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E13A1F000C5;
-	Wed, 18 Nov 2026 19:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJyzZ2Qi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EDD1F000C5;
+	Wed, 18 Nov 2026 19:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031819;
-	bh=vxk/WmOQYO2A1S7ZHKpdg+yWdUzqjZy6Kfgu+cdVqTA=;
+	s=korg; t=1795031822;
+	bh=6hz+61Korzq/Lh9RRPV54uHNz40tnOkTiKcXVQksgFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WoqzzYMnPX4viQu1C2PhajfmbPl9wDrwNJyaoZnKZsoYrnJVWIcJLkoA3A2w2BhbZ
-	 VVZSL9MZORrK3d4REBh5Bqzdv9kXw24vJFc7fonJlx1+qIgmD2vwhBu/RzSAJ1gAEw
-	 7Ulcvwpik8YZD07Xb+Mv5XWFTm04eJWy0ctiQIkE=
+	b=AJyzZ2QiGjRVabf4czKV2yHS/JoQ90a28PMoBTIfR4jA5kdtv2sfr013VhQQw/Y9O
+	 4aABXdynpqwOFfiZrt0UFlXWoNtB0uO+MbAozmd6ShCILMmN/C4DlFXaWnWQpXZZLR
+	 Mc3WNNbXC5A18+6yAiNwPbwKJqnTsfBPHbo2ZkB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1151/1756] ASoC: amd: ps: Fix acp63_pdm_dma_close() being skipped on rollback
-Date: Wed, 18 Nov 2026 15:54:38 +0100
-Message-ID: <20261118150055.859554383@linuxfoundation.org>
+Subject: [PATCH 6.12 1152/1756] ASoC: amd: ps: Fix acp63_sdw_dma_close() being skipped on rollback
+Date: Wed, 18 Nov 2026 15:54:39 +0100
+Message-ID: <20261118150055.894990947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,36 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 172888114dda96492d40e4a6e0ed16146cb76e2b ]
+[ Upstream commit 45dd2b22ea8934ed69dd05e6ecbf3c66ac3baebf ]
 
 snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from acp63_pdm_dma_open(). ASoC only marks the component as opened
+from acp63_sdw_dma_open(). ASoC only marks the component as opened
 when .open() returns 0, so .close() can be skipped on rollback.
 
 Return 0 explicitly on success.
 
-Fixes: 5137305662ef ("ASoC: amd: add acp6.2 pdm driver dma ops")
+Fixes: f722917350ee ("ASoC: amd: ps: add SoundWire dma driver dma ops")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261008103831.542533-3-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261008103831.542533-4-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/ps/ps-pdm-dma.c | 2 +-
+ sound/soc/amd/ps/ps-sdw-dma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/ps/ps-pdm-dma.c b/sound/soc/amd/ps/ps-pdm-dma.c
-index 318fc260f293f..f3f1a9b059260 100644
---- a/sound/soc/amd/ps/ps-pdm-dma.c
-+++ b/sound/soc/amd/ps/ps-pdm-dma.c
-@@ -211,7 +211,7 @@ static int acp63_pdm_dma_open(struct snd_soc_component *component,
- 
- 	pdm_data->acp63_base = adata->acp63_base;
- 	runtime->private_data = pdm_data;
+diff --git a/sound/soc/amd/ps/ps-sdw-dma.c b/sound/soc/amd/ps/ps-sdw-dma.c
+index 3b4b9c6b3171e..fc470b18a2de6 100644
+--- a/sound/soc/amd/ps/ps-sdw-dma.c
++++ b/sound/soc/amd/ps/ps-sdw-dma.c
+@@ -243,7 +243,7 @@ static int acp63_sdw_dma_open(struct snd_soc_component *component,
+ 	stream->stream_id = cpu_dai->id;
+ 	stream->instance = amd_manager->instance;
+ 	runtime->private_data = stream;
 -	return ret;
 +	return 0;
  }
  
- static int acp63_pdm_dma_hw_params(struct snd_soc_component *component,
+ static int acp63_sdw_dma_hw_params(struct snd_soc_component *component,
 -- 
 2.53.0
 
