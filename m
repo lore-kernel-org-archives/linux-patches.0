@@ -1,48 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037195;
-	b=AUdbXdMbxOj8hzs7YeFn1AsKskgMjDQevV+mdBb+TfeazNtaje8EAyjYpIwuMsAmcKTc
-	 SmWT7Qvb/7OltVOlovC5wwGDKBSGPuAyNMBZG32WxGTOmxwpqg5YfCV+EIK+YuKvWQReG
-	 oGU384IlwvoT+YQR5sdDATx+Di51MG8fwcNt091t47JSlzg4Xyonm23L/7jmR6Wj+2+Ot
-	 lvR+j+wvbCv3OU63h/4nzOFZcscb/WGtwNV/rbNM+9mLoVpjRwjrvbdymXN6g8hkP/dKf
-	 dlbmboTM600wCMhNg0tfKMHl95l6/q1SupMINt6M3InN5sHvYjSvS6kk4z/4p4BJ55A==
+	t=1795037198;
+	b=4yDOwYMlMo1xipk39ZP0gk9eADyPdepPrxYOM3wApBTuLlbn23fcuuAgZMFYZlbAvOb6
+	 jD1Mm6WM9CXhNxkRlX9crXPTE7qdDALoKd4pCurzTIuTDmxH7my0GNYvT7WGnLNBfIi3Y
+	 ts6RpM1HIC5b+SjBnonjCrf1DThhFa/OwhmZL/grj1tHnncFHpGtIS+E1+G70CVTj3V0h
+	 8O58l7SZvq9Cwej/1OAYcExH72YzwjaZILFSVcr5SUfW/Ad6TTW6z3i9ew2vnlO8K3XCr
+	 Qq1h1NB1QBIfoMntbyl3kAcPROELTcOEGfmE79m/7Tk2PJfGCzjMGKiFmmZQ3waL3gQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037195;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MKz5THxQLHSEk5t0k0FYxz2Ec0lFwIcoZClExbfmn/I=;
-	b=TF1vwEycJawd3H0W0ogvroTxN8U3YJoWTJytCgdQBuu5CVoN82Q1m0u1W3DbbC+jI+oO
-	 CmKz3PsXhYqtstuzATMUITJJwrdcHy9TVClKrEDxwxh+Icah7mSkOXa47a/cSZ2t8yx2k
-	 I+wskguRq0Nlr+Hhrvv6hcLqFCpXQSluYAG8zCaM5BObZgR4Komz+lH5EO9MzvsQDWy68
-	 o34QsQ9vyNgVt6aYe0/ONAU/FN2MV2u2D+StveTuuXgp0yfop1MKlgMpNmBc38TNFY9Do
-	 4AZlb2u7Z9aK9Txje+jOcbEERfj65Fs1uDAt+1EvmoMwgS+JF0hdQtLwcNEajHAqDIQ==
+	bh=gPi0AfwPco6bxrWPeUhSzko2/M5r7eB3C/WJgNIzxk4=;
+	b=iahDlyni3STiGBDuDFEtax2ACmL9ienuBbSxSqMK03y8l21Vmc3hzzbztYYqr3b3BybN
+	 P4txtGFIfKLeO5EzBWEtkoDsUJkK0lK5Zrcha/fkJMpXmNjDg9FYXnYA+S1WKannLCvtf
+	 QQpnJzJ1HIaFyJ3eQkw7/ymyPdJpfkGDYnxmoBfN9/Af4FFqVq3F6Ny71Ynm9OoWyT6Ty
+	 XgQ8a90v+MfWWV9OPHTySxWt7AjmApcPFDbHPca9rr/Wv5Msq44Sso0ROn65GaYU05W0d
+	 SIeet3Stje0F0yeqvxlWtUL1/BVWtctxuOcgPIpQkibtONpptz8elNJsjVJXnsRiNvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euk3hHuv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0EixvwM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFDD606A320;
-	Wed, 18 Nov 2026 21:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76055606A325;
+	Wed, 18 Nov 2026 21:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=euk3hHuv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8251F000C4;
-	Wed, 18 Nov 2026 21:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0EixvwM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA54B1F000C5;
+	Wed, 18 Nov 2026 21:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037195;
-	bh=MKz5THxQLHSEk5t0k0FYxz2Ec0lFwIcoZClExbfmn/I=;
+	s=korg; t=1795037198;
+	bh=gPi0AfwPco6bxrWPeUhSzko2/M5r7eB3C/WJgNIzxk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=euk3hHuvhiWLdzlLk4Ybc2vIkqSNOKn/miXwCHjyFPBen09rXrPEN9pdVDoPSQniv
-	 9iJTUJdKiIuut+McJ8gjtWHzMRh7NpqzKiKHSpUJjNoLxxT9h/ZJPkCPOu5LEaVGwo
-	 BTV6SzxIsE8uNYg0N0+yf20kQj4ces8LKhoyQEPc=
+	b=T0EixvwMUFMe9f0JreCHfJGPbLoUmBBMHtuS5wo4q0rdxlWvwCAB6Mj+5tC7argt0
+	 MIEU1qinSsHynKi3gx/SWEDib/hLWFn08xMjMfGx95G7y0iKZJfM/C7V2K3dQ+KvPj
+	 nHSXx0CIbNJhxvG7VDPOFQES5Kp2NqeORbakhn1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Jakub Kicinski <kuba@kernel.org>,
@@ -50,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1325/3318] afs: Fix afs to abort the rxrpc call on send error
-Date: Wed, 18 Nov 2026 15:32:27 +0100
-Message-ID: <20261118150400.072047778@linuxfoundation.org>
+Subject: [PATCH 6.6 1326/3318] rxrpc: Fix return in rxrpc_recvmsg_data() for service calls
+Date: Wed, 18 Nov 2026 15:32:28 +0100
+Message-ID: <20261118150400.101896762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -76,20 +77,23 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 3e6af08a571fe2943a006acf3e890f36322602bc ]
+[ Upstream commit 18a71e111c7505e16c2de91480561fc491f41341 ]
 
-Fix afs_send_empty_reply() and afs_send_simple_reply() to always try to
-abort the rxrpc call rather than just aborting on -ENOMEM and otherwise
-abandoning it.  If the call is already complete due to network failure or a
-received abort, this will do nothing.
+When rxrpc_recvmsg_data() gets called on a service call that has received
+all of the request, RXRPC_CALL_RECVMSG_READ_ALL has been set, and this
+causes rxrpc_recvmsg_data() to jump straight out, indicating the end of the
+call (ie. rxrpc_kernel_recv_data() returns 1) without waiting for the call
+to be processed or the reply to be transmitted.
 
-Also make afs_make_call() always abort on send error; again, it does
-nothing if the rxrpc call is already dead.
+rxperf_deliver_to_call() also has to be altered to call
+rxrpc_kernel_recv_data() to collect the final ACK on a service call as does
+afs_deliver_to_call().
 
-Fixes: 08e0e7c82eea ("[AF_RXRPC]: Make the in-kernel AFS filesystem use AF_RXRPC.")
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260824091645.415423-1-dhowells%40redhat.com
+Fixes: d001648ec7cf ("rxrpc: Don't expose skbs to in-kernel users [ver #2]")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260914151340.3227501-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Eric Dumazet <edumazet@google.com>
 cc: "David S. Miller" <davem@davemloft.net>
 cc: Jakub Kicinski <kuba@kernel.org>
@@ -97,122 +101,137 @@ cc: Paolo Abeni <pabeni@redhat.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
 cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261006133011.531806-6-dhowells@redhat.com
+Link: https://patch.msgid.link/20261006133011.531806-10-dhowells@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: adapted rxrpc_kernel_send_data() calls to retain the explicit length argument ]
+[ sashal: Replaced the older rxrpc_kernel_recv_data() return-value paragraph with upstream's Return: section. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rxrpc.c               | 49 +++++++++++++-----------------------
- include/trace/events/rxrpc.h |  2 +-
- 2 files changed, 18 insertions(+), 33 deletions(-)
+ Documentation/networking/rxrpc.rst | 13 +++++++++----
+ fs/afs/rxrpc.c                     |  4 ++--
+ net/rxrpc/recvmsg.c                | 19 +++++++++++++------
+ net/rxrpc/rxperf.c                 | 16 ++++++++++++++--
+ 4 files changed, 38 insertions(+), 14 deletions(-)
 
+diff --git a/Documentation/networking/rxrpc.rst b/Documentation/networking/rxrpc.rst
+index e807e18ba32ac..257513e446184 100644
+--- a/Documentation/networking/rxrpc.rst
++++ b/Documentation/networking/rxrpc.rst
+@@ -910,10 +910,15 @@ The kernel interface functions are as follows:
+       want_more should be true if further data will be required after this is
+       satisfied and false if this is the last item of the receive phase.
+ 
+-      There are three normal returns: 0 if the buffer was filled and want_more
+-      was true; 1 if the buffer was filled, the last DATA packet has been
+-      emptied and want_more was false; and -EAGAIN if the function needs to be
+-      called again.
++      For client calls, there are three normal returns: 0 if the buffer was
++      filled and want_more was true; 1 if the buffer was filled, the last DATA
++      packet has been emptied and want_more was false; and -EAGAIN if the
++      function needs to be called again.
++
++      For service calls, there are four normal returns: 0 and -EAGAIN are the
++      same as for client calls; 2 indicates that the last DATA packet of the
++      request has been received, want_more was false and the call is still in
++      progress; and 1 indicates that the call is now successfully complete.
+ 
+       If the last DATA packet is processed but the buffer contains less than
+       the amount requested, EBADMSG is returned.  If want_more wasn't set, but
 diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index 523272b86ad46..02bb3ad472eec 100644
+index 02bb3ad472eec..9f312f29bb4bd 100644
 --- a/fs/afs/rxrpc.c
 +++ b/fs/afs/rxrpc.c
-@@ -442,10 +442,8 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
- 	return;
+@@ -543,7 +543,7 @@ static void afs_deliver_to_call(struct afs_call *call)
+ 						     &call->service_id);
+ 			trace_afs_receive_data(call, &call->def_iter, false, ret);
  
- error_do_abort:
--	if (ret != -ECONNABORTED)
--		rxrpc_kernel_abort_call(call->net->socket, rxcall,
--					RX_USER_ABORT, ret,
--					afs_abort_send_data_error);
-+	rxrpc_kernel_abort_call(call->net->socket, rxcall,
-+				RX_USER_ABORT, ret, afs_abort_send_data_error);
- 	if (call->async) {
- 		afs_see_call(call, afs_call_trace_async_abort);
- 		return;
-@@ -872,6 +870,7 @@ void afs_send_empty_reply(struct afs_call *call)
- {
- 	struct afs_net *net = call->net;
- 	struct msghdr msg;
-+	int ret;
+-			if (ret == -EINPROGRESS || ret == -EAGAIN)
++			if (ret == -EAGAIN || ret == 2)
+ 				return;
+ 			if (ret < 0 || ret == 1) {
+ 				if (ret == 1)
+@@ -949,7 +949,7 @@ int afs_extract_data(struct afs_call *call, bool want_more)
+ 		return ret;
  
- 	_enter("");
+ 	state = READ_ONCE(call->state);
+-	if (ret == 1) {
++	if (ret == 1 || ret == 2) {
+ 		switch (state) {
+ 		case AFS_CALL_CL_AWAIT_REPLY:
+ 			afs_set_call_state(call, state, AFS_CALL_CL_PROC_REPLY);
+diff --git a/net/rxrpc/recvmsg.c b/net/rxrpc/recvmsg.c
+index 97879faafb5e7..fcb0fd5a4caa0 100644
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -547,14 +547,16 @@ int rxrpc_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+  * @_service: Where to store the actual service ID (may be upgraded)
+  *
+  * Allow a kernel service to receive data and pick up information about the
+- * state of a call.  Returns 0 if got what was asked for and there's more
+- * available, 1 if we got what was asked for and we're at the end of the data
+- * and -EAGAIN if we need more data.
++ * state of a call.  Note that *@_abort should also be initialised to %0.
+  *
+- * Note that we may return -EAGAIN to drain empty packets at the end of the
+- * data, even if we've already copied over the requested data.
++ * Note that we may return %-EAGAIN to drain empty packets at the end
++ * of the data, even if we've already copied over the requested data.
+  *
+- * *_abort should also be initialised to 0.
++ * Return: %0 if got what was asked for and there's more available, %1 if we
++ * got what was asked for and we're at the end of the call, %2 if a service
++ * call received all of the request but is still in progress and %-EAGAIN if we
++ * need more data.  A variety of other errors can be returned if the call
++ * completed with failure.
+  */
+ int rxrpc_kernel_recv_data(struct socket *sock, struct rxrpc_call *call,
+ 			   struct iov_iter *iter, size_t *_len,
+@@ -593,6 +595,11 @@ int rxrpc_kernel_recv_data(struct socket *sock, struct rxrpc_call *call,
  
-@@ -884,21 +883,13 @@ void afs_send_empty_reply(struct afs_call *call)
- 	msg.msg_controllen	= 0;
- 	msg.msg_flags		= 0;
+ read_phase_complete:
+ 	ret = 1;
++	if (rxrpc_is_service_call(call)) {
++		if (rxrpc_call_is_complete(call))
++			goto call_failed;
++		ret = 2;
++	}
+ out:
+ 	if (_service)
+ 		*_service = call->dest_srx.srx_service;
+diff --git a/net/rxrpc/rxperf.c b/net/rxrpc/rxperf.c
+index 7b53e06da4587..66565dd24acf5 100644
+--- a/net/rxrpc/rxperf.c
++++ b/net/rxrpc/rxperf.c
+@@ -292,8 +292,20 @@ static void rxperf_deliver_to_call(struct work_struct *work)
+ 	       state == RXPERF_CALL_SV_AWAIT_ACK
+ 	       ) {
+ 		if (state == RXPERF_CALL_SV_AWAIT_ACK) {
+-			if (!rxrpc_kernel_check_life(rxperf_socket, call->rxcall))
++			size_t len = 0;
++			iov_iter_kvec(&call->iter, ITER_DEST, NULL, 0, 0);
++			ret = rxrpc_kernel_recv_data(rxperf_socket,
++						     call->rxcall, &call->iter,
++						     &len, false, &remote_abort,
++						     &call->service_id);
++
++			if (ret == -EAGAIN || ret == 2)
++				return;
++			if (ret < 0 || ret == 1) {
++				if (ret == 1)
++					ret = 0;
+ 				goto call_complete;
++			}
+ 			return;
+ 		}
  
--	switch (rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
--				       afs_notify_end_reply_tx)) {
--	case 0:
--		_leave(" [replied]");
--		return;
--
--	case -ENOMEM:
--		_debug("oom");
-+	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, 0,
-+				     afs_notify_end_reply_tx);
-+	if (ret < 0) {
- 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM,
--					afs_abort_oom);
--		fallthrough;
--	default:
--		_leave(" [error]");
--		return;
-+					RXGEN_SS_MARSHAL, ret,
-+					afs_abort_send_error);
-+		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
- 	}
- }
+@@ -368,7 +380,7 @@ static int rxperf_extract_data(struct rxperf_call *call, bool want_more)
+ 	if (ret == 0 || ret == -EAGAIN)
+ 		return ret;
  
-@@ -910,7 +901,7 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
- 	struct afs_net *net = call->net;
- 	struct msghdr msg;
- 	struct kvec iov[1];
--	int n;
-+	int ret;
- 
- 	_enter("");
- 
-@@ -925,21 +916,15 @@ void afs_send_simple_reply(struct afs_call *call, const void *buf, size_t len)
- 	msg.msg_controllen	= 0;
- 	msg.msg_flags		= 0;
- 
--	n = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
--				   afs_notify_end_reply_tx);
--	if (n >= 0) {
--		/* Success */
--		_leave(" [replied]");
--		return;
--	}
--
--	if (n == -ENOMEM) {
--		_debug("oom");
-+	ret = rxrpc_kernel_send_data(net->socket, call->rxcall, &msg, len,
-+				     afs_notify_end_reply_tx);
-+	if (ret < 0) {
- 		rxrpc_kernel_abort_call(net->socket, call->rxcall,
--					RXGEN_SS_MARSHAL, -ENOMEM,
--					afs_abort_oom);
-+					RXGEN_SS_MARSHAL, ret,
-+					afs_abort_send_error);
-+		afs_set_call_complete(call, ret, RXGEN_SS_MARSHAL);
-+		_leave(" [error]");
- 	}
--	_leave(" [error]");
- }
- 
- /*
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index 8cbec303cb505..1dbeabf143347 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -20,10 +20,10 @@
- 	/* AFS errors */						\
- 	EM(afs_abort_general_error,		"afs-error")		\
- 	EM(afs_abort_interrupted,		"afs-intr")		\
--	EM(afs_abort_oom,			"afs-oom")		\
- 	EM(afs_abort_op_not_supported,		"afs-op-notsupp")	\
- 	EM(afs_abort_probeuuid_negative,	"afs-probeuuid-neg")	\
- 	EM(afs_abort_send_data_error,		"afs-send-data")	\
-+	EM(afs_abort_send_error,		"afs-send-error")	\
- 	EM(afs_abort_unmarshal_error,		"afs-unmarshal")	\
- 	/* rxperf errors */						\
- 	EM(rxperf_abort_general_error,		"rxperf-error")		\
+-	if (ret == 1) {
++	if (ret == 1 || ret == 2) {
+ 		switch (call->state) {
+ 		case RXPERF_CALL_SV_AWAIT_REQUEST:
+ 			rxperf_set_call_state(call, RXPERF_CALL_SV_REPLYING);
 -- 
 2.53.0
 
