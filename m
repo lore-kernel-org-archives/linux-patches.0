@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027660;
-	b=QxzHzaxLlwOeqaBQQN7UE7JVKMEG+bcVKWXwEe1umYjGsgpOo+t5ij28gmNrNZ3uUP2t
-	 gbtrx+USCSQ3kZ0LgSmUxSPqLeJS8PJvml70qPfz1EtW0hTMRoQbnMQoSjWGc0djlzDtl
-	 dyOoQiUnFu0t1CC+zgwYZHn3dzKUx5cc8wDshKH508p+tvuMJie40RJ/f0wzEz0mGaIgY
-	 kGn+ZT3UwPN74r5zfTjyx25N8yedGJ8QhlmbsU9B9J/rKs6N6pngp1RmmJ9nPI/x6RVoG
-	 jkm+FRlLyzUK1fKYHmWpn8C9XlvuqsWXvGwe7OuQtV7psHxkeEFATnoeUXidkjXCMoA==
+	t=1795027663;
+	b=xECDFlnnujcOYHE+UpQuIB1uABRPvFpC8MSttGigHg0PJ0/8yrAhkjoeVDXqg5If/cmG
+	 8ZqQk0wlKzgHyAULmhjeUs6iszp0tI+glnGJm0j6nT7S/tGimQAMb53RrO9u1TKmYZmZX
+	 PTKCBDhwsBjrE8e/NIGmhiGaq7LvJxgKjufvJ9ZNQP95XkucocyiwqyPaOZDKqUqqCpGh
+	 R11xJvGpwpgB0IBSOPf6ylWtD6keXvgrvgifeqf1hFINqeTiJkrS6Fqrk4I1UmMuIb5SV
+	 p2jcRE8KQSJJXmhocvL2oi6N4T9vqZ+aP4OJltu0NYI+W0+iCC9EG+wJEROqVMpBo9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=oNMip6tHi5b34pG4jf5hE9PGzniuvOFXqt4oKQmRvjQ=;
-	b=AaSnxmVv9e6sfttFPntOjYcixFHGxiNw81VNqjkCCiEUOT+OMbnbW76gD6o+EV0nnvVS
-	 Qp7SkESWlCcYpzLNPfpgzxv+FeJe1K8T+Tb/YuKzfeiDXarM3VprNha/78wGWvVY8nxQA
-	 D7u6TDmlz23J0mg9an2IzF2cwMOFKKMQfBSD3wKNxcD9Zx2aNy1R391Ed6WGiNTFvCQIM
-	 QCiDb5DijoiNKWMt94L2zcurI7C2ECP+jEVUhrGlQUsh3xkoN53LTOEcG9ywYTw0FxnQQ
-	 RqhI6ZrNdMsU8CmqU3ScZ6WjF0rPvuLi/ClSikqI0howg1ABaZW9/jxqe6v+51oGJOA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BqfYU4+6ua8nDr0lXFfKD0Bk/yOUP6mTgkXJujvoGKU=;
+	b=GSTy1MXc0T1hLe0hzH/wJlOI7DgNxedZ3Lpo7E1o1eCygzPoem23R3zc12xV2hLSjeB3
+	 zqRGEO1ud63nhmG0cA3fJLdfU5AM4JxeGnDGBFSOqFG0sfbKhV15RmsF2FZgARSFwX1yH
+	 tJT+KmnWFOJxm8V6XJy1dSSSDkHOC3AhF7sF9Y732t1tFUrQ2fu59fhcsqh8a8nh2OOFR
+	 54dwTyOQzEqCNCZzhLGRHqFZyulOa9z1EK7xe8Kk3t0XdKP5oLW66MJs6HHjWROHc3fG1
+	 AK5jxI4f9e+QueuPPqYXwqQlzkc969YNem7oJ0MMhsXG11Eiq72XvloZ9FysJeXE6aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Lhu5/VDK";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gueJVMa5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2C0606A32A;
-	Wed, 18 Nov 2026 18:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A5660A2606;
+	Wed, 18 Nov 2026 18:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lhu5/VDK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135ED1F000C4;
-	Wed, 18 Nov 2026 18:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gueJVMa5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BD41F000C5;
+	Wed, 18 Nov 2026 18:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027660;
-	bh=oNMip6tHi5b34pG4jf5hE9PGzniuvOFXqt4oKQmRvjQ=;
+	s=korg; t=1795027663;
+	bh=BqfYU4+6ua8nDr0lXFfKD0Bk/yOUP6mTgkXJujvoGKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lhu5/VDKUbo+btuU/GGX3yUkbbQOwCBeX13/bnTaExe/dkScAoHAQdMX8huSFwLxA
-	 sienXmXxJMrD/47B/KOJBUth+xTav9N59ccBIaGn4RMzpLOs+b/JSRKAp6W+X2uyWA
-	 hBZgqKZiS8zo5C6aZCQ9cas9ileicLsyimiqwXpI=
+	b=gueJVMa5s5W7EWCYAtLuGO8++0RKKYMF2Xbs6rEa1JDTs3uRgFF//erkDbZJIYcJH
+	 YpWk4rIuWygplDbKQBEwwOLg/FBH2fr0qiIJj22Q7eJq7xGeDOePi0v8gHDAL1HT0g
+	 LE3vdnra2E7rCAQatN9oiWcXYrqCbBoPVlVDeSLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Dimitri Daskalakis <daskald@meta.com>,
-	Nimrod Oren <noren@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1827/2151] net/mlx5e: Update netdev features only after a successful ringparam set
-Date: Wed, 18 Nov 2026 15:59:22 +0100
-Message-ID: <20261118150228.360760289@linuxfoundation.org>
+Subject: [PATCH 6.18 1828/2151] ipv6: Hold RCU when emitting route hardware flags notification
+Date: Wed, 18 Nov 2026 15:59:23 +0100
+Message-ID: <20261118150228.397270391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -65,109 +65,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dimitri Daskalakis <daskald@meta.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 23dd5be7e19ceab8c1c79110ee3552bcabc463ef ]
+[ Upstream commit 7c9cb1edaf8fd8e1af25e39741e603500986ef66 ]
 
-mlx5 couples HW-GRO with tcp-data-split. If a user sets rx-gro-hw on ->
-tcp-data-split on -> rx-gro-hw off, the driver will leave HW-GRO on.
-mlx5e_ethtool_set_tcp_data_split() calls netdev_update_features() when
-tcp-data-split goes from enabled to disabled in case HW-GRO needs to be
-released. mlx5e_fix_features() reads the new HDS config from
-dev->cfg_pending, so HW-GRO is released before all ring parameters are
-validated.
+fib6_info_hw_flags_set() is called by drivers from process context
+without RTNL or RCU. When the route uses a nexthop object,
+rt6_nlmsg_size() and rt6_fill_node() access the nexthop's RCU protected
+nexthop info and group pointers via rcu_dereference_rtnl(), resulting in
+suspicious RCU usage splats [1].
 
-If the subsequent call to mlx5e_ethtool_set_ringparam() fails, the
-ethtool core discards the pending change and reports tcp-data-split
-enabled. The device is no longer splitting, and subsequent ring changes
-are blocked.
+Fix by holding RCU while sizing and filling the notification, like
+fib_alias_hw_flags_set() already does. Switch to GFP_ATOMIC for the skb
+allocation accordingly.
 
-Move the call to netdev_update_features() after
-mlx5e_ethtool_set_ringparam() exits successfully.
+Reproducer:
 
-The issue was discovered by manual code inspection during review of
-a change that stops mlx5 users from disabling tcp-data-split. It was
-reproduced on a ConnectX-7 with ethtool alone.
+ # echo "10 0" > /sys/bus/netdevsim/new_device
+ # sysctl -wq net.ipv6.fib_notify_on_flag_change=1
+ # sysctl -wq net.ipv4.nexthop_compat_mode=1
+ # ip -6 nexthop add id 1 blackhole
+ # ip -6 route add 2001:db8:1::1/128 nhid 1
 
-Steps to reproduce:
-ethtool -K eth0 rx-gro-hw on
-ethtool -G eth0 tcp-data-split on
-ethtool -K eth0 rx-gro-hw off # HW-GRO kept on for tcp-data-split
+[1]
+WARNING: suspicious RCU usage
+7.3.0-rc7-virtme-g191aa41548b2 #38 Not tainted
+net/ipv4/nexthop.c:1539 suspicious rcu_dereference_check() usage!
+[...]
+Workqueue: events nsim_fib_event_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+ lockdep_rcu_suspicious.cold (kernel/locking/lockdep.c:6972)
+ nexthop_for_each_fib6_nh (net/ipv4/nexthop.c:1539 (discriminator 16))
+ rt6_nlmsg_size (net/ipv6/route.c:5728)
+ fib6_info_hw_flags_set (net/ipv6/route.c:6503)
+ nsim_fib6_rt_add (drivers/net/netdevsim/fib.c:671 drivers/net/netdevsim/fib.c:694)
+ nsim_fib6_rt_insert (drivers/net/netdevsim/fib.c:759)
+ nsim_fib_event_work (drivers/net/netdevsim/fib.c:856 drivers/net/netdevsim/fib.c:889 drivers/net/netdevsim/fib.c:1493)
+ process_one_work (kernel/workqueue.c:3396)
+ worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (arch/x86/kernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+ </TASK>
 
-ethtool -G eth0 tcp-data-split off rx 1 # de-sync driver & kernel state
- netlink error: mlx5_core: rx (1) < min (16)
- netlink error: Invalid argument
-
-ethtool -G eth0 rx 1024 # valid ring changes are now blocked
- netlink error: mlx5_core: TCP-data-split is not supported when GRO HW is disabled
- netlink error: Invalid argument
-
-This is not a terminal state, users can recover by setting rx-gro-hw on.
-With the fix, the failing ringparam set leaves rx-gro-hw on and later
-ring changes succeed.
-
-Fixes: 46bcce5dfd33 ("net/mlx5e: Support ethtool tcp-data-split settings")
-Reported-by: Björn Töpel <bjorn@kernel.org>
-Closes: https://lore.kernel.org/87se2grw3d.fsf@all.your.base.are.belong.to.us/
-Signed-off-by: Dimitri Daskalakis <daskald@meta.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Reviewed-by: Nimrod Oren <noren@nvidia.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20261017005401.1582755-1-dimitri.daskalakis1@gmail.com
+Fixes: 907eea486888 ("net: ipv6: Emit notification when fib hardware flags are changed")
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://lore.kernel.org/netdev/179152182668.434549.18232968419539498055@kernel.org/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20261019140337.2886875-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en_ethtool.c    | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/ipv6/route.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 1aef0f550b58b..9f63746d5e458 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -391,11 +391,6 @@ static bool mlx5e_ethtool_set_tcp_data_split(struct mlx5e_priv *priv,
- 		return false;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 6b0eb2f2ed981..af376b9568e2f 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -6468,7 +6468,9 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
+ 	if (!fib_notify_on_flag_change)
+ 		return;
+ 
+-	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_KERNEL);
++	rcu_read_lock();
++
++	skb = nlmsg_new(rt6_nlmsg_size(f6i), GFP_ATOMIC);
+ 	if (!skb) {
+ 		err = -ENOBUFS;
+ 		goto errout;
+@@ -6481,10 +6483,13 @@ void fib6_info_hw_flags_set(struct net *net, struct fib6_info *f6i,
+ 		goto errout;
  	}
  
--	/* Might need to disable HW-GRO if it was kept on due to hds. */
--	if (tcp_data_split == ETHTOOL_TCP_DATA_SPLIT_DISABLED &&
--	    dev->cfg->hds_config == ETHTOOL_TCP_DATA_SPLIT_ENABLED)
--		netdev_update_features(priv->netdev);
--
- 	return true;
- }
- 
-@@ -456,13 +451,23 @@ static int mlx5e_set_ringparam(struct net_device *dev,
- 			       struct netlink_ext_ack *extack)
- {
- 	struct mlx5e_priv *priv = netdev_priv(dev);
-+	int err;
- 
- 	if (!mlx5e_ethtool_set_tcp_data_split(priv,
- 					      kernel_param->tcp_data_split,
- 					      extack))
- 		return -EINVAL;
- 
--	return mlx5e_ethtool_set_ringparam(priv, param, extack);
-+	err = mlx5e_ethtool_set_ringparam(priv, param, extack);
-+	if (err)
-+		return err;
++	rcu_read_unlock();
 +
-+	/* Might need to disable HW-GRO if it was kept on due to hds. */
-+	if (kernel_param->tcp_data_split == ETHTOOL_TCP_DATA_SPLIT_DISABLED &&
-+	    dev->cfg->hds_config == ETHTOOL_TCP_DATA_SPLIT_ENABLED)
-+		netdev_update_features(priv->netdev);
-+
-+	return 0;
- }
+ 	rtnl_notify(skb, net, 0, RTNLGRP_IPV6_ROUTE, NULL, GFP_KERNEL);
+ 	return;
  
- void mlx5e_ethtool_get_channels(struct mlx5e_priv *priv,
+ errout:
++	rcu_read_unlock();
+ 	rtnl_set_sk_err(net, RTNLGRP_IPV6_ROUTE, err);
+ }
+ EXPORT_SYMBOL(fib6_info_hw_flags_set);
 -- 
 2.53.0
 
