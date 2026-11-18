@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055770;
-	b=Qk3mxU7+MmJ20xLPHZzYGM2WQccVZgM5D48hKVnTti2W++HziyT/q1qK3xdUanIp5TG6
-	 HqombosHgO7BVvtZHoZFN3SDiZEvclq3lDHMig3k0w1KxNw5QayWwPZoiUjuV6n0JTP1U
-	 mrma1CLzwIFTnjVeaz4+DwmEZLStbpamK7FFsQv2PetmUTx2XbsFVf+qd68VUpFlCD4Am
-	 vAPn818i0OyNQvVtxXJ6kWjpfqXj8QbMa1+Qo81oC8WfiNbMwhDAJkEhsf2b4PnrDEaVn
-	 SFCFG5R3JRK/EyAKlJZxgufYfZuz3Up08YOnxTvSAUSqIlPpGbhrIy1/nIl17tfBOCA==
+	t=1795055773;
+	b=p3DcxK6rpwqyVuuEj1k9lcKyKg5bwmzwynfqEIMdgVqKpnri53CWEz+3N/JgiDGHPVNL
+	 ez25Wtp6tNwQO8hlJtCBQ38Wm5aig3MYdSVgXOuqJf5j/cf3ffMIqCyP1Qs9ATFZg4dVx
+	 tVSQm+N55G5T2XSINFOwjlNx/bERQPuCsRTrADQaf1Lu6+u/edYFnWMwEKeGwFqX2wWx/
+	 3mRUUlglUuNVPYKxCzplPTWz1Rb7JrwyP6tPToyWMsJHfK2K5kVT8ayOu03/jPpA8frXk
+	 /W+8CCNucUR2fD+6ZC++niMs1HOZWZoHhHm+4tF2I5ktDZG+kvLtJawR7N7Vaxs2gbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fsaxXJ4pwGXELrZT+cCago1V1K32l07uK0R8yNYTTpg=;
-	b=sCyRbD8TYB22UoLSrEFFqMdWH80ZVhb9/Iv6dNg72CdUweyA/PlUdoBIxrfo539F6RKz
-	 XGCjQsOkvWfkFGlm1AGI2oJKmsNGKgFZdGTVdMRSWpEMx8R1kV93szR93BTxp7Inby4Rj
-	 5W6w+Or/8qw9wgyCSYR5LB8b6DCy3HV8F+7WuOpiG/bPVv90q0NlSdlT7w2fa67cznT48
-	 Gzy+cATBejZu2cVFM/n2SkeMWdehwdyo6mgeblq41zdyRtrCVQ/s3egG8ZfWNaEVZC3kd
-	 TfoDftw+tNyr4yUvSFYlnsRXyZk0PYq7cS63MyhK+WM6ROPR9ixuA1DwGDA6kYqT0iA==
+	bh=Hb+OSXcv6/J+jPAkGDKcPUtrDSVCDrV59cuAqR1OiR4=;
+	b=XvrFlp1c2UcLlPCx8yLvEoTCyxa7CyzO3hX7synlR/rcR3a06oXH0uIbE4W3tuOxPxS8
+	 icVytEFFGvGvj2rcgMw9koI9M6aID2GRiymFUo2rEQHhk1XzwGpxcHQD7Uog6dLXJIUN7
+	 rXPWTJfgvIFRkWl7pXMGk6UHLciKWu3LScTMCLrUIsGumOvcEfsOYt1FeUUK1MyHnuWP8
+	 xLAUc3BbOE2xFDQkmtYbLj26e1g+rlRpGSlNXRpcocFEqwKxeciYBdEC1+JR2Ek4Uoo3Z
+	 vTNI2Azyx6P/24ZY8DT2JvLTs+5LREdYXBQXAD6DXNkS37vXy/SfhmQiuMiEd1mropQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmOn6Zk2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tSmgDCER;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59FA606A32F;
-	Thu, 19 Nov 2026 02:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1080606A332;
+	Thu, 19 Nov 2026 02:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmOn6Zk2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8FC1F000C4;
-	Thu, 19 Nov 2026 02:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tSmgDCER
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36D61F000C5;
+	Thu, 19 Nov 2026 02:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055770;
-	bh=fsaxXJ4pwGXELrZT+cCago1V1K32l07uK0R8yNYTTpg=;
+	s=korg; t=1795055773;
+	bh=Hb+OSXcv6/J+jPAkGDKcPUtrDSVCDrV59cuAqR1OiR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WmOn6Zk28Lt9588lgMo+pCHY/JX3wOANr3gftP5RAM10bvgXWo3VD7982j+e9y+2B
-	 lcbTUwDKS76BH0Lyn4tYrK8QTe6icPcnABe927JGcjZHaJ2Ky1Tnm3yyTSr30kFE3z
-	 Y2iUAVvw3xxIoP1+NPhhIWNzLGiO/XmD6BT+gDiw=
+	b=tSmgDCERvANapjCvEfbpRVD2EfKdRoFqk3MlztfOEJIgdmwP++7ivawdczbZoZx4g
+	 AH+8tAhxSoXLNQCtZDTUMXvCpLSxNSLAyvWrMbc6ty+ZKuBnUxrf4sgZGSnFdI200H
+	 mYqBAK7pxeSZt2iM7wIbfYuV6C9AL+Nbi1aIzbvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	syzbot+619e27617b2abe6b9b72@syzkaller.appspotmail.com,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
 	"Denis Efremov (Oracle)" <efremov@linux.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1750/2214] floppy: flush pending work before releasing resources on init failure
-Date: Wed, 18 Nov 2026 15:57:06 +0100
-Message-ID: <20261118150121.601608626@linuxfoundation.org>
+Subject: [PATCH 5.15 1751/2214] floppy: avoid NULL deref in reset_interrupt when cont is cleared
+Date: Wed, 18 Nov 2026 15:57:07 +0100
+Message-ID: <20261118150121.632757746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 74c2e2eeb7e51cdeb5e3eceaf324cfcf8dcd0d32 ]
+[ Upstream commit 7c82781039c03a3e47b70d3259f336adbb9d2692 ]
 
-do_floppy_init() probes each FDC with user_reset_fdc(), which queues a
-redo_fd_request() work item on floppy_wq that may still be pending when
-the probe finishes. When no controller is found, the error path calls
-floppy_release_irq_and_dma() to free the IRQ and DMA channel, and only
-later destroys the workqueue. destroy_workqueue() drains the queued work
-last, so it can run after the IRQ and DMA are already gone:
+reset_fdc() arms do_floppy = reset_interrupt; the IRQ handler then
+queues that function via schedule_bh(). If unlock_fdc() or do_wakeup()
+clears cont before the work runs, reset_interrupt() dereferences a NULL
+cont and oopses.
 
-  floppy0: no floppy controllers found
-  work still pending
+Example crash excerpt:
 
-The flush used to be here. Commit 070ad7e793dc ("floppy: convert to
-delayed work and single-thread wq") renamed the label out_flush_work to
-out_release_dma and dropped it. Restore it so the work drains before the
-IRQ and DMA are released, as floppy_module_exit() already does.
+[ 1070.468148] status=80
+[ 1070.468152] fdc_busy=1
+[ 1070.468158] cont=          (null)
+[ 1070.468161] current_req=          (null)
+[ 1070.468162] command_status=-1
+[ 1070.468163]
+[ 1070.557051] floppy0: floppy timeout called
+[ 1070.557053] no cont in shutdown!
+[ 1070.557056] floppy0: floppy_shutdown: timeout handler died.
+[ 1074.419509] floppy0: FDC access conflict!
+[ 1074.419782] BUG: unable to handle kernel NULL pointer dereference at
+0000000000000008
+[ 1074.421969] PGD 0 P4D 0
+[ 1074.422320] Oops: 0000 [#1] SMP NOPTI
+[ 1074.422648] CPU: 10 PID: 3269 Comm: kworker/u256:4 Kdump: loaded
+[ 1074.423830] Hardware name: inspur Standard PC (i440FX + PIIX, 1996),
+BIOS 0.0.0 02/06/2015
+[ 1074.424284] Workqueue: floppy floppy_work_workfn [floppy]
+[ 1074.424757] RIP: 0010:reset_interrupt+0x3a/0xa0 [floppy]
 
-Fixes: 070ad7e793dc ("floppy: convert to delayed work and single-thread wq")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260722034435.13432-1-kmehltretter@gmail.com
+The same NULL deref has also been reported by syzbot on upstream.
+
+Return early if cont is already NULL after result(). The hardware reset
+has completed; result() still drains the FDC. A later request can lock
+the FDC and reset again. This is a defensive fix for stale work, not a
+rewrite of the floppy continuation state machine.
+
+Reported-by: syzbot+619e27617b2abe6b9b72@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-block/00000000000093c4d105f9aa34d6@google.com/
+Link: https://lists.openwall.net/linux-kernel/2021/10/27/56
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Link: https://patch.msgid.link/20260723073512.11120-1-yangxiuwei@kylinos.cn
 Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/floppy.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index f4c55a9a9534c..d89469acf919d 100644
+index d89469acf919d..ed7449861e94f 100644
 --- a/drivers/block/floppy.c
 +++ b/drivers/block/floppy.c
-@@ -4735,6 +4735,8 @@ static int __init do_floppy_init(void)
- 		}
- 	}
- out_release_dma:
-+	/* Drain the queued redo_fd_request() before releasing IRQ and DMA. */
-+	flush_workqueue(floppy_wq);
- 	if (atomic_read(&usage_count))
- 		floppy_release_irq_and_dma();
- out_unreg_driver:
+@@ -1785,6 +1785,9 @@ static void reset_interrupt(void)
+ {
+ 	debugt(__func__, "");
+ 	result(current_fdc);		/* get the status ready for set_fdc */
++	/* Stale work: unlock_fdc()/do_wakeup() may have cleared cont. */
++	if (!cont)
++		return;
+ 	if (fdc_state[current_fdc].reset) {
+ 		pr_info("reset set in interrupt, calling %ps\n", cont->error);
+ 		cont->error();	/* a reset just after a reset. BAD! */
 -- 
 2.53.0
 
