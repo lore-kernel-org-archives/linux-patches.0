@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046362;
-	b=2aGLMuZyvQF+NRFPa0OEHI8jVLJIwaGzrlwZaRK8RDVkYbwUS0WMuAgtGxhC3HtsCPi5
-	 muc/UWu1E1ZOqA5R4CMyLICN0yCpfvGl44iCxHBBIf77L/weEy6rGABDlwCM8nDs6JMh6
-	 mvkkq1bYyKL6Ocnff/zmPZ05J2C//W4w9BFuHGru0SmvW7bkuKanIRp+SiHmnicStCJ7u
-	 T2bkkEzmc311ZyFo00dW9BAXLhX5qjjoQe1wGEgNu6JORanVO9vZ/Ly6wi6xwo4p/jW26
-	 AeCQ1F0e8x3PSykwdcI9MnkWoO/t6WTOEsz87BYGlcu6hbpr7HqYgFfdLKCZxeQfd4w==
+	t=1795046365;
+	b=c4RlE8rF53zxehBtLBujIPSRYO0wG764gOJwVaL8UD8SuL+yCrY7QpHdmQ9NYrom+jjI
+	 Kfy8UfJgDp4jtsqrjCNKZ5DfMwriQWw4h8U1k2g1IunQLW2+oPYEXvN5taOyzM0uQoZ1h
+	 YYl+X8gbT60uvzvuIEw/66+o8RR2YpQvXb38yefEXFqmrWeL/CuloSz01L9018ox1CO6l
+	 Ue/FlQPPnuU1rraUniuBTSGygqnzbJ66o7FrYDvlE7qBE+2BtI1fZR62z4FBXBhPr7nVv
+	 VWvjOfXfiuHhNVCQRckjoH62s8eYpJarW1OsdJgy9usT/0HMfpg4Mfv7FRgFRrgIQvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yx2/CJWBPFHVai1GxTvim+oiyIvz8sawrCHkYuusz5g=;
-	b=4EZUZ59qh0t/kSFlMvQj4q8vxG5VqGZl5mxcTLWfEPXLtkMtn0X5JkVyNavcncmHbdV9
-	 EPgJhzNI7NGjTeAOxdGB1tQDIbJ+kkliqQk0rDJwbTaMLqyBs51JLSJiUSuXrlIATGeqf
-	 bdT49xa1ETZEKRQ/PIb+bdaXNYrQr5mS1ZskYQhRse9DTFug+QPZCa++x+/Dh5+75NEgZ
-	 MM/Hbzp1E17i0Xqc4iJ78x6bnC2GKFyHWVPBPwcW0xDK9Prfst9lkfxqgo+0bPZ7oHrbp
-	 kP31O3ny1v0+SkEDWBum97EQxxhmlpU/g+erciVCfRxCrpdbpjCk5LSwsk1SKLkLWpQ==
+	bh=HTAlP9bHNmsuf82l/UwPpn1PvqqpBFxuNiqrgX2JKDg=;
+	b=w5D7Bzn7IRWVJz3coxsDf5ghb4mEvl2WyyWkAxCJoGW56Y7Os5bGKMXVrFLxkb4VX2dk
+	 L0IcCdNuQw/+2m0Qo0Uak+kEgOhSuLOuHn3X1IH83bI/A40+PFQq+w75VCt8+NuxKA6hW
+	 7m63WFvingaLKc2hToc4oEIVl13obcby73QEfQFqUByEwJbnxG1O9HOe8w98mzWakQURD
+	 jJoSdic37lHo0ZoEGBfXMvAlmLWPaL40lKrdHTxFNc14av9lAncHy+P5LPiSYBEIyndv+
+	 E9Jd3yQIkd0mNiNxj8fHoryXXeEOHn2hrpUPjK2/ZQwHhMkySAQ7Mw2qdxS5I1ES3Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbhclnS+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1aOXxVU5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F37C606A320;
-	Wed, 18 Nov 2026 23:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C9D606A31C;
+	Wed, 18 Nov 2026 23:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbhclnS+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D091F000C4;
-	Wed, 18 Nov 2026 23:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1aOXxVU5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677BC1F000C5;
+	Wed, 18 Nov 2026 23:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046362;
-	bh=Yx2/CJWBPFHVai1GxTvim+oiyIvz8sawrCHkYuusz5g=;
+	s=korg; t=1795046364;
+	bh=HTAlP9bHNmsuf82l/UwPpn1PvqqpBFxuNiqrgX2JKDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbhclnS+a+NsANKs5oNatCIutC3lYAKgNgO/Nl7o7XZZM7W8kDSCzY/m/fuU7ozUW
-	 UvNRAx5rMIPAdzM1PyTSnJoyQ7OA8XaiYpwpQFJnYQy8IYQbwPR408q98LkZCpC95L
-	 X+xd8mtowOmFAVSEwAaOHpe6n5T6/vgGzXXxDl80=
+	b=1aOXxVU5MFjJ0fQCoWBOm6mUJpeusA6FeJcu0c0fehPJjvWw516hxTw2NkLsbCp8t
+	 wF0yOEBic8+CTOijXfrqZt93gk4JohNQ7CEuXrLHywJ5KkT2cktPpzvTRchD82Zvgj
+	 zng35ojQgiYnq5UGIo/C7I55KMsntVbg0esDqpE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw2@infradead.org>,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1247/2857] KVM: nVMX: Process each host MSR entry at most once when unwinding failed VM-Entry
-Date: Wed, 18 Nov 2026 15:38:01 +0100
-Message-ID: <20261118150246.447959145@linuxfoundation.org>
+Subject: [PATCH 6.1 1256/2857] ocfs2: do not read the entry array of an empty xattr block
+Date: Wed, 18 Nov 2026 15:38:10 +0100
+Message-ID: <20261118150246.763444203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,51 +71,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit c33ef9d334059f7cb167569ed7b4779752fe4425 ]
+[ Upstream commit cd7c3563a98fe8c984463d83772e518cb7e68356 ]
 
-Add a missing "break" in the inner for-loop of the open coded mess that
-unwinds MSRs back to the pre-VM-Enter state when VMLAUNCH/VMRESUME VM-Fails
-due to a consistency check that is caught by hardware but missed by KVM.
-I.e. move on to the next MSR in the VM-Entry load list after performing a
-write using a value found in the VM-Exit load list.  Processing *every*
-matching entry in the VM-Exit load list makes the processing quadratic,
-which is problematic if the load lists are full of MSRs that are expensive
-to emulate.  E.g. writing APIC_BASE triggers kvm_recalculate_apic_map() and
-a whole pile of unnecessary work.
+ocfs2_cp_xattr_block_to_bucket() sizes the name and value area it has to
+carry over from the block's last entry, so an empty block makes it read
+xh_entries[-1].  That lands on the header, where xe_name_offset overlaps
+xh_name_value_len, and block storage never maintains that field, so it
+reads as 0 and the copy runs from the header to the end of the block.
 
-Functionally, arbitrarily restoring the value of the first matching entry
-is "fine", because none of this is architecturally correct: the load lists
-are never supposed to have been used in the first place.  In practice, it's
-likely a moot point as no well-behaved VMM will have multiple, diverging
-entries in the load lists.
+The bucket that comes out has xh_count 0 but a name_value_len of
+blocksize less the header, and a matching xh_free_start that claims
+those bytes are in use -- nearly the whole bucket with the common 4K
+block size -- while the last block of the bucket holds a copy of the old
+block's bytes.  Nothing but a trace event reads xh_name_value_len, the
+copied bytes came from the same inode and were wiped before the entry
+was removed, and ocfs2_defrag_xattr_bucket() recomputes xh_free_start,
+so this corrupts the header rather than leaking anything.
 
-Fixes: bd18bffca353 ("KVM: nVMX: restore host state in nested_vmx_vmexit for VMFail")
-Cc: stable@vger.kernel.org
-Cc: David Woodhouse <dwmw2@infradead.org>
-Reported-by: Stefan Teodorescu <fane@google.com>
-Suggested-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261027185917.1478906-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Leave the bucket empty instead, carrying over the hash the block was
+keyed by, since ocfs2_add_new_xattr_bucket() and
+ocfs2_xattr_bucket_find() both read xh_entries[0] of an empty bucket.
+That read is the exception ocfs2_xa_remove_entry() documents rather than
+a new out of bounds access.
+
+A block reaches the conversion empty when truncating an external value
+back fails partway through: the "reusing" and "overwriting" callers of
+ocfs2_xa_cleanup_value_truncate() remove the entry without setting
+ctxt->set_abort, so ocfs2_xattr_block_set() sees a plain -ENOSPC and
+converts.  The "growing" caller does set it, and the block form makes a
+single attempt with no defragment and retry in between, so that is the
+only route here.
+
+Link: https://lore.kernel.org/20261024151012.1059683-7-joseph.qi@linux.alibaba.com
+Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/xattr.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index fdca4b97ab9a6..96eedbc0ace67 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4766,6 +4766,7 @@ static void nested_vmx_restore_host_state(struct kvm_vcpu *vcpu)
- 					__func__, j, h.index, h.value);
- 				goto vmabort;
- 			}
-+			break;
- 		}
- 	}
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index cad7a46525192..8d15b0e824cdf 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -4238,6 +4238,21 @@ static void ocfs2_cp_xattr_block_to_bucket(struct inode *inode,
+ 	for (i = 0; i < blks; i++)
+ 		memset(bucket_block(bucket, i), 0, blocksize);
  
++	/*
++	 * An empty block has no names or values to carry over, and the
++	 * xh_entries[count - 1] below would be xh_entries[-1].  Leave the
++	 * bucket empty, but carry over the hash ocfs2_xa_remove_entry() left
++	 * in the block's xh_entries[0] so that the bucket still holds the key
++	 * it is looked up by.
++	 */
++	if (!count) {
++		xh->xh_num_buckets = cpu_to_le16(1);
++		xh->xh_free_start = cpu_to_le16(OCFS2_XATTR_BUCKET_SIZE);
++		xh->xh_entries[0].xe_name_hash =
++			xb_xh->xh_entries[0].xe_name_hash;
++		return;
++	}
++
+ 	/*
+ 	 * Since the xe_name_offset is based on ocfs2_xattr_header,
+ 	 * there is a offset change corresponding to the change of
 -- 
 2.53.0
 
