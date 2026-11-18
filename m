@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019071;
-	b=v8g47x7WK0YBWlx5t3PiGFApmezNhBw4spHdrs1liBIc4NVz+bPSIT81jIijq6fz9zPL
-	 FxdSFY3s5e0Sy4LNQUjhYy+mLWPX8MH3BEjNwbWRGcHY3r9crulM4SDFcrBZu9aAfeEAH
-	 VX5Ssi2UmCT+B65tfOOXztRqPKK5eprawQBceM4fW98FjHoEonXmrQGNo/tx8tb/8Nwvo
-	 g2B9tAEey1lmyl0OJsJzLHr7kpNMUi5nwmqTcux7cGSnek6zTZd3xIIuMhek9tzRFyPfI
-	 IIT3LwuhDUYEf8qEzyyJo3rYEqWtPH6q/ceLB+7dS5FphLyIy7Y95uOhBT9YLgymeNw==
+	t=1795019074;
+	b=zPd6FDYVgq9c5jk/BsWM28G1V2m/oQZn5V30hCu5plfCQfBhLdLz21U9jYmKD5+m4hpI
+	 k5Qa0fTqGgWxHR/6rpDNGa2AhTGcc1nr7Dx+e9He0N4Cs3j1L3yQj7gmvao50Rx39SQoH
+	 QY0ZqHM8BG7s1zmylBj2oMZfZRu4KGWCWYnGvOZ2cI4T8Vmy1tmanUCkREc/LEBuzNw6W
+	 qEWLlgX5uOSgkkN3Ey39j+37uq2bhKUI1YnwqztL7j5MNtrK/rhvV7dhUAAS2rCM0Yoze
+	 sdBY7Ydiwhhw6nrXsiDpL/6kEZG5qQWp0QhbfJqckL1rtb4GQlFZ0c0/6O7+/mM1w2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019071;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019074;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=10ZikdcjMmaicGHU7V78fSL0cy5eJ8H1gJZ4pv2c2Gk=;
-	b=kI3jSlrsmWfsBzC5Vrdpnl9RmAziFFqxOFaaZwrOK7w04h5TIe3REnf3xUN0xa+Hd0vC
-	 07b2Jcu0uEkRiKfB0W98CqsKridueQoBAW2UbJZCS4XWI5ySpgIfcHN6zeJRvjblOXsiI
-	 L445wxhAVWZRAA55SJGaN8u3i+TYcAvrBP6Ve5luVd3MiXMgxuQ3Yq7Ts+eKTGXAjdjUn
-	 gKxDmm4UJcnM7ZQ2eoYcvtsqO0ByaJQ9Nqz7U6vStt7dIZm2adza9+c6Doby+waaoWuEJ
-	 GBUTUNk8YeL/PrPpIWq4JAlFVvLkwHGqrZkAbhSgx4k51mYYZgcxnRjs0SXEDJmM6Qg==
+	bh=fR4SxUAIZK+BXu2kZv7LfPU/vCvdhCHEXwOaBec6xtw=;
+	b=chFtA68gARzAxD/5y6sox+bXhBJGKXEa3/nO49369Qb+D7lQ9o0n6R66SXQCrH4LB2y/
+	 klEAq8Q3gHVFmXkT225kKXMOAtb5FzjMdAVS+a4iPq4qGZlO1tii/1s8riARHHqIBCtjy
+	 orYeoeGhAqbHnos8UOg4ExOBcZvtvZnvrjL7kHWgjdUFi8m1hxIOuZMmKZQ7itfZ/XJDV
+	 03FHWotDwQ8ikMttHnyuGZKe20G5yfjVNZk2bRn7fOxxvsqaXIfnSdMdEuA4PH32lgoCf
+	 KrHb0yrMlQIAqh8VlxEjJWKXhjj4ir9MsbnP8pIs9vaX+2grUi2MD3dAYdIS9hEKzwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="S4TdzEr/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHHgkP3Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BF360A3809;
-	Wed, 18 Nov 2026 16:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384DF60A381B;
+	Wed, 18 Nov 2026 16:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4TdzEr/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51701F000CA;
-	Wed, 18 Nov 2026 16:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHHgkP3Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0541F000CB;
+	Wed, 18 Nov 2026 16:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019071;
-	bh=10ZikdcjMmaicGHU7V78fSL0cy5eJ8H1gJZ4pv2c2Gk=;
+	s=korg; t=1795019074;
+	bh=fR4SxUAIZK+BXu2kZv7LfPU/vCvdhCHEXwOaBec6xtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4TdzEr/w4WskoalMxWAYu5E+lKnCDSr+12pSg8P5RbjuV5Mec/ZUwLVo/qdgdaTU
-	 YvDSf779o19ov/V8QmPqspdO9ajhHfUTPu0zLwWv9uBqpO85c844PTL9P4EE/vDydO
-	 oEySUswMfDAfLm1hVlq9AvbHK+7fzioW3ggRZyjc=
+	b=ZHHgkP3YrX3uwyjOqZAURclq1OIaK15L8MkjL4hOPTfeCnLkcuEN3IieHTFpkZR9H
+	 pBqQnKJrlC030naTKxlBW6R0hmplVGRZQCcmb7lxILeII7tbSxapa/ynrf9ryku3O/
+	 dyr6ni5BfbiPehYuY+MuRJXuFtI9x0MykG9G2i5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Eason Lai <eason.lai@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1465/2651] wifi: mt76: mt7925: Fix MCU command timeouts during module unload
-Date: Wed, 18 Nov 2026 15:45:05 +0100
-Message-ID: <20261118150340.778274935@linuxfoundation.org>
+Subject: [PATCH 7.3 1439/2651] wifi: mt76: mt7925: fix the lock inversion in suspend and resume
+Date: Wed, 18 Nov 2026 15:44:39 +0100
+Message-ID: <20261118150339.852337281@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,71 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eason Lai <eason.lai@mediatek.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 79941e85f4b3b1385b545cf18998fda6e1176919 ]
+[ Upstream commit a105a9fe9a07a56d1e0b5a6978a49cde2ac7e7be ]
 
-Move MT76_REMOVED flag setting from mt7925_pci_remove() to after
-mt76_unregister_device() completes. Setting it too early causes
-mt792x_irq_handler() to drop MCU completion interrupts, timing out
-teardown commands (scan abort, BSS_INFO_UPDATE, etc).
+Same as the previous patch, other driver.
 
-The flag must still be set before napi_disable() to prevent reset_work
-from re-enabling NAPI and causing deadlock. Also guard mt792x_reset()
-to skip queuing work when device is removed.
-
-With nothing associated it still costs 9 to 10 seconds, so a bare rmmod
-does reach this, just small enough there to read as normal teardown.
-
-Fixes: eb628006a2c6 ("wifi: mt76: mt7925: Fix unregister deadlock")
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Signed-off-by: Eason Lai <eason.lai@mediatek.com>
-Link: https://patch.msgid.link/20260817052840.99478-1-eason.lai@mediatek.com
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260830064201.92285-3-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/pci.c | 4 ++--
- drivers/net/wireless/mediatek/mt76/mt792x_mac.c | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-index 76d8f8ea19ecd..12c1f7868d915 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/pci.c
-@@ -47,9 +47,10 @@ static void mt7925e_unregister_device(struct mt792x_dev *dev)
- 	if (dev->phy.chip_cap & MT792x_CHIP_CAP_WF_RF_PIN_CTRL_EVT_EN)
- 		wiphy_rfkill_stop_polling(hw->wiphy);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index 53845857bed33..4381e8c7559bd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1732,10 +1732,10 @@ static int mt7925_suspend(struct ieee80211_hw *hw,
+ 	mt792x_mutex_acquire(dev);
  
--	cancel_work_sync(&dev->reset_work);
- 	cancel_work_sync(&dev->init_work);
- 	mt76_unregister_device(&dev->mt76);
-+	set_bit(MT76_REMOVED, &dev->mphy.state);
-+	cancel_work_sync(&dev->reset_work);
- 	mt76_for_each_q_rx(&dev->mt76, i)
- 		napi_disable(&dev->mt76.napi[i]);
- 	cancel_delayed_work_sync(&pm->ps_work);
-@@ -725,7 +726,6 @@ static void mt7925_pci_remove(struct pci_dev *pdev)
- 	struct mt76_dev *mdev = pci_get_drvdata(pdev);
- 	struct mt792x_dev *dev = container_of(mdev, struct mt792x_dev, mt76);
+ 	clear_bit(MT76_STATE_RUNNING, &phy->mt76->state);
+-	ieee80211_iterate_active_interfaces(hw,
+-					    IEEE80211_IFACE_ITER_RESUME_ALL,
+-					    mt7925_mcu_set_suspend_iter,
+-					    &dev->mphy);
++	ieee80211_iterate_active_interfaces_mtx(hw,
++						IEEE80211_IFACE_ITER_RESUME_ALL,
++						mt7925_mcu_set_suspend_iter,
++						&dev->mphy);
  
--	set_bit(MT76_REMOVED, &mdev->phy.state);
- 	mt7925e_unregister_device(dev);
- 	devm_free_irq(&pdev->dev, pdev->irq, dev);
- 	mt76_free_device(&dev->mt76);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-index 888e5a5056731..1e20b333cc612 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x_mac.c
-@@ -278,6 +278,9 @@ void mt792x_reset(struct mt76_dev *mdev)
- 	if (pm->suspended)
- 		return;
+ 	mt792x_mutex_release(dev);
  
-+	if (test_bit(MT76_REMOVED, &mdev->phy.state))
-+		return;
-+
- 	queue_work(dev->mt76.wq, &dev->reset_work);
- }
- EXPORT_SYMBOL_GPL(mt792x_reset);
+@@ -1750,10 +1750,10 @@ static int mt7925_resume(struct ieee80211_hw *hw)
+ 	mt792x_mutex_acquire(dev);
+ 
+ 	set_bit(MT76_STATE_RUNNING, &phy->mt76->state);
+-	ieee80211_iterate_active_interfaces(hw,
+-					    IEEE80211_IFACE_ITER_RESUME_ALL,
+-					    mt7925_mcu_set_suspend_iter,
+-					    &dev->mphy);
++	ieee80211_iterate_active_interfaces_mtx(hw,
++						IEEE80211_IFACE_ITER_RESUME_ALL,
++						mt7925_mcu_set_suspend_iter,
++						&dev->mphy);
+ 
+ 	ieee80211_queue_delayed_work(hw, &phy->mt76->mac_work,
+ 				     MT792x_WATCHDOG_TIME);
 -- 
 2.53.0
 
