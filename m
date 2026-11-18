@@ -1,63 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054141;
-	b=snP/IdMMaooJJpnzm28wx+k5Y5ii8N3aSLuacjxWIL46V3M/v2rDyQl0iLbInVqZSj0a
-	 SKTxqn3hd1C7g7h6A9k2wIAObUHP5EGtgEXBRAtoFbx67bCrZ6OaZBk1KK/MNSLmeRhTt
-	 idrBt4FkpZfn7Mg6zDuQPlw/MX7erxEaU9mkKbKzhwlhN8Nar8XgPUetTwReAWNeMGl5c
-	 stIb49ofzzIGyWtMfu8H8S4X65smSbtBHWYRovc9Ur8SA5js39SYov8a3jvgyje7GXIR/
-	 hDtZ/YZiuYIl6CuEYPhn0zGjlC1hKnBsoAtSBPdKCoPk+tqF52ekAubIjmIIEreAJQA==
+	t=1795054144;
+	b=HP5X/+umpbsaTnqmk8SutsKgd8scSmZkQsXgIHc2Umx28Yf1w5gCYouf4bdMZxSoqjqP
+	 IXQCVrF/GX7FvWEYLFyN6sBGVAII5+AvOd8voNjfOqr78nwx0CHOLUgA0eFGpjw8+4344
+	 kAC0wroD+WIg1hghdcJrgm/LbcCNl/qatxMivp1I16z57o3mHOLU5MFl1B3lhL327tJNZ
+	 HIslzj1RxR7IEuU/AAcYsTlmgrk6v+c53QUK+AJB1c73KoOqRapunWM9QMv7qaijxdHiL
+	 XcxpXVkI8bFeHy2KRyu/sUe0eQ0ephM7Wxl3Ae4SCx9HO1/a/0zXT5v8Z+nPoKa2uBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mTx/MKyDN2E37SxDlnuoeHxbZMy4pYx+QpUZkGLln/k=;
-	b=0o1zfYmV42AIYAEqQ1hE1L18MAJax+shJDSP1m0htIVF0C2D5fJRwAxm+HiGfylTp1Yo
-	 I1D0kJKRl8l/1UFp7Amo3o7jdwqxY4upq7KnxpJZdQjinclzzVY6gXkVFSi/jzCZrTNjd
-	 GP2tlOXjZmXgEUrcSsUz/z0LGpEDC3LHDNZ2mmeomID9vQMDJnbr6OvTE/qWGlNUyhY38
-	 nLHIP4iyZ7szG56IqhqUIRFRYZq/QSdK6/E2s50BU7zEUQpnOqeJPXeE5NlT82agncG14
-	 EsHkW6nOCnlbz78WaNGrSJa10RoGRx5mjQxizeQzz/DMcmHCk0wMykszKWqUfbwUKOA==
+	bh=yPQOFg9JzI7KYYz5XH+mWKfOt02My6HsWhbhnPkrWxk=;
+	b=p3+w4vXws7UgCO+OpM+M7XkiRjNmdOjJwZMUFsDkLxlEtXLXCp6dtVib/f/j3PWW/VaA
+	 pEWpSAy5rUgJXHlrQocbj/7yxClr/SOvw7tXkwDtmGcj8vHwQn+A3kZEs+fC419CZsDdX
+	 I/Hb2ypnK9w4BhObix8Z9U1EPmnDYrfdJ+Sp67bfcMW/dVn+Yl7B5adfy49GsUjVXUk6d
+	 kr1wgul2KQ5/ayTeD7xGK3UMsuz8V5KNUWS/h/Ihhg1ZZi1jxzkP0x0Fe6OAq1oI9xI9D
+	 wIrvN7I2cWb/wuAAcjNYn8n0J6lBaGVHhiqPsBveh9V4Ass68qkEyJJeDJ/uOqYhnDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QTfVigIl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2WemSNp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C261E606A320;
-	Thu, 19 Nov 2026 02:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87628606A31C;
+	Thu, 19 Nov 2026 02:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QTfVigIl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AAC1F000C4;
-	Thu, 19 Nov 2026 02:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2WemSNp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB4C1F000C4;
+	Thu, 19 Nov 2026 02:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054141;
-	bh=mTx/MKyDN2E37SxDlnuoeHxbZMy4pYx+QpUZkGLln/k=;
+	s=korg; t=1795054144;
+	bh=yPQOFg9JzI7KYYz5XH+mWKfOt02My6HsWhbhnPkrWxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QTfVigIl4829kAYBqOVtdxy5gi1FK3B4Zfn2jnTxVdpcoY9ssv5cTY0M/rPT3RF22
-	 bfEfuxZAi7tu5frj43GlZpyAKmNgmiPzb3oaE/NQXdkulAevwupYBj2MIln9BG8vvF
-	 2O4/d493l7YWDHWd2etq0XDtX/RpI27hTE95Tmf0=
+	b=O2WemSNpbiKw8gMTIowF8IyZmBktTV1up20LHvh4iD/DTlYlo3nrbJwpNque0XdGJ
+	 vWU3JI3vDNeqJCVhv9cazDNIOZpXau0MwqEy4P4vXFizx84rjOEKOZeX1W6RfIG8DO
+	 B9/CL249XGOYpS3G1ZYvFQ1EFDJRkQHfFCvS59BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Yufan Chen <ericterminal@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Kees Cook <kees@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Pavel Hofman <pavel.hofman@ivitera.com>,
+	Henrik Enquist <henrik.enquist@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1170/2214] ocfs2/cluster: initialize heartbeat regions before publishing them
-Date: Wed, 18 Nov 2026 15:47:26 +0100
-Message-ID: <20261118150058.805410327@linuxfoundation.org>
+Subject: [PATCH 5.15 1171/2214] ALSA: aloop: Dont constrain playback params in notify mode
+Date: Wed, 18 Nov 2026 15:47:27 +0100
+Message-ID: <20261118150058.841048229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -79,185 +69,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Henrik Enquist <henrik.enquist@gmail.com>
 
-[ Upstream commit c5b7a30a5172317e1e3cba61d8c9f9c588c497bb ]
+[ Upstream commit ded106036984a9dd766e7e1451b02e2d15c81438 ]
 
-A region on o2hb_all_regions must have an initialized config item and
-name. o2hb_heartbeat_group_make_item() currently links the zeroed region
-under o2hb_live_lock, drops the lock, and only then initializes hr_item.
-The lock therefore protects the list without protecting initialization
-from readers of the published item.
+With notify enabled (the pcm_notify module parameter or the "PCM
+Notify" control), the playback side of a cable may change format, rate
+and channels while a capture is running. loopback_check_format() then
+stops the capture and notifies the "PCM Slave" controls, so that the
+capture application can reopen with the new parameters. For this
+reason loopback_open() still gives a notify mode playback the
+unconstrained loopback_pcm_hardware.
 
-With global heartbeat enabled, a DLM_QUERY_REGION from the current
-joining node can pass the existing-domain and protocol checks while a
-configfs mkdir creates another region. The DLM locks are not taken by
-the constructor, and the network worker does not take the configfs
-subsystem mutex. The following ordering is possible:
+Since commit 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints
+adjustment") the hw rules refine against the shared cable->hw instead
+of the substream's own runtime->hw. This pins the playback side to the
+parameters of an open capture whatever the notify setting is. A player
+probing the device sees only the capture's rate, format and channels,
+and the format change path in loopback_check_format() can't be reached
+by a new playback.
 
-  Configfs mkdir                     O2net receive worker
-  --------------                     --------------------
-  Allocate reg
-  Lock o2hb_live_lock
-  Link into o2hb_all_regions
-  Unlock o2hb_live_lock
-                                     dlm_query_region_handler()
-                                       dlm_match_regions()
-                                         o2hb_get_all_regions()
-                                           Lock o2hb_live_lock
-                                           Copy 32 bytes from NULL name
-                                           Unlock o2hb_live_lock
-  config_item_init_type_name()
+Skip the format, rate and channels rules for the playback substream
+when notify is enabled. Skip the period bytes rule as well: with a
+sound timer source, params_change() already takes the period size from
+a notify mode playback, and keeping the old capture's period bytes
+leaves a playback at another rate with a period that doesn't match the
+timer. The capture side stays constrained to the cable parameters.
 
-The query thus dereferences NULL. Initialize hr_item before linking the
-region so the existing list lock also orders name initialization before
-any reader. Reject a failed name allocation, since the initialization
-helper does not propagate that error.
+The capture stop this makes reachable again was hardened by commit
+826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") and
+commit e5c33cdc6f40 ("ALSA: aloop: Fix peer runtime UAF during
+format-change stop"), which need to be applied first when backporting.
 
-Use config_item_put() on initialized constructor failures to release the
-name and respect references retained by o2hb_region_pin(). Initialize
-the list heads, mutex and delayed works needed by o2hb_region_release()
-before any such put, and leave the list node self-linked after rollback.
-Keep the existing handler drain before removing a failed published item.
+Reproducer, with notify enabled on the cable:
+  arecord -D hw:Loopback,1,0 -r 44100 -f S32_LE -c 2 /dev/null &
+  aplay -D hw:Loopback,0,0 96k.wav
+Before: aplay is forced to 44100 Hz and the capture keeps running.
+After: aplay runs at 96000 Hz, the capture is stopped and "PCM Slave
+Rate" reports 96000.
 
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: null-ptr-deref in o2hb_get_all_regions+0xbb/0x1f0
-    Read of size 32 at addr 0000000000000000 by task kworker/u16:1/14
-
-    CPU: 2 UID: 0 PID: 14 Comm: kworker/u16:1 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: o2net o2net_rx_until_empty
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     kasan_report+0xe0/0x110
-     ? o2hb_get_all_regions+0xbb/0x1f0
-     kasan_check_range+0x105/0x1b0
-     __asan_memcpy+0x23/0x60
-     o2hb_get_all_regions+0xbb/0x1f0
-     dlm_query_region_handler+0x4c2/0xc20
-     ? __pfx_dlm_query_region_handler+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? kvm_clock_get_cycles+0x31/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_dlm_query_region_handler+0x10/0x10
-     o2net_rx_until_empty+0x1a50/0x3200
-     ? reacquire_held_locks+0xdd/0x200
-     ? __pfx_o2net_rx_until_empty+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? process_one_work+0x935/0x1b40
-     ? process_one_work+0x834/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x9a8/0x1b40
-     ? __pfx_process_one_work+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x177/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x351/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf70
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-    ==================================================================
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0079-v5-f931a29339cadc0a2a70@gmail.com
-Fixes: 536f0741f324 ("ocfs2/cluster: Track number of global heartbeat regions")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Yufan Chen <ericterminal@gmail.com>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: Omitted shutdown-related initialization moves because the shutdown fields are absent and delayed work is initialized during device setup. ]
+Fixes: 898dfe4687f4 ("ALSA: aloop: Fix racy hw constraints adjustment")
+Reported-by: Pavel Hofman <pavel.hofman@ivitera.com>
+Closes: https://lore.kernel.org/all/b4af9071-f8d7-5b47-4d7a-c5743bd67394@ivitera.com/
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261003-aloop-notify-fix-v1-1-ba5dfb831bf5@gmail.com
+[ sashal: adapted scoped_guard() mutex handling to explicit mutex_lock() and mutex_unlock() calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ sound/drivers/aloop.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 8afd04f545c52..33e2728c28a4e 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -2044,6 +2044,14 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 		goto free;
- 	}
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index fb507076e006f..7c76f702296e1 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -960,6 +960,11 @@ static int rule_format(struct snd_pcm_hw_params *params,
  
-+	INIT_LIST_HEAD(&reg->hr_all_item);
-+	INIT_LIST_HEAD(&reg->hr_handler_list);
-+	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
-+	if (!config_item_name(&reg->hr_item)) {
-+		ret = -ENOMEM;
-+		goto put_item;
+ 	snd_mask_none(&m);
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
 +	}
-+
- 	spin_lock(&o2hb_live_lock);
- 	reg->hr_region_num = 0;
- 	if (o2hb_global_heartbeat_active()) {
-@@ -2052,22 +2060,19 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 		if (reg->hr_region_num >= O2NM_MAX_REGIONS) {
- 			spin_unlock(&o2hb_live_lock);
- 			ret = -EFBIG;
--			goto free;
-+			goto put_item;
- 		}
- 		set_bit(reg->hr_region_num, o2hb_region_bitmap);
- 	}
- 	list_add_tail(&reg->hr_all_item, &o2hb_all_regions);
- 	spin_unlock(&o2hb_live_lock);
+ 	m.bits[0] = (u_int32_t)cable->hw.formats;
+ 	m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
+@@ -974,6 +979,11 @@ static int rule_rate(struct snd_pcm_hw_params *params,
+ 	struct snd_interval t;
  
--	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
--
- 	/* this is the same way to generate msg key as dlm, for local heartbeat,
- 	 * name is also the same, so make initial crc value different to avoid
- 	 * message key conflict.
- 	 */
- 	reg->hr_key = crc32_le(reg->hr_region_num + O2NM_MAX_REGIONS,
- 		name, strlen(name));
--	INIT_LIST_HEAD(&reg->hr_handler_list);
- 	ret = o2net_register_handler(O2HB_NEGO_TIMEOUT_MSG, reg->hr_key,
- 			sizeof(struct o2hb_nego_msg),
- 			o2hb_nego_timeout_handler,
-@@ -2090,10 +2095,13 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 	o2net_unregister_handler_list(&reg->hr_handler_list);
- remove_item:
- 	spin_lock(&o2hb_live_lock);
--	list_del(&reg->hr_all_item);
-+	list_del_init(&reg->hr_all_item);
- 	if (o2hb_global_heartbeat_active())
- 		clear_bit(reg->hr_region_num, o2hb_region_bitmap);
- 	spin_unlock(&o2hb_live_lock);
-+put_item:
-+	config_item_put(&reg->hr_item);
-+	return ERR_PTR(ret);
- free:
- 	kfree(reg);
- 	return ERR_PTR(ret);
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	t.min = cable->hw.rate_min;
+ 	t.max = cable->hw.rate_max;
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
+@@ -990,6 +1000,11 @@ static int rule_channels(struct snd_pcm_hw_params *params,
+ 	struct snd_interval t;
+ 
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	t.min = cable->hw.channels_min;
+ 	t.max = cable->hw.channels_max;
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
+@@ -1006,6 +1021,11 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
+ 	struct snd_interval t;
+ 
+ 	mutex_lock(&dpcm->loopback->cable_lock);
++	if (dpcm->substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
++	    get_notify(dpcm)) {
++		mutex_unlock(&dpcm->loopback->cable_lock);
++		return 0;
++	}
+ 	t.min = cable->hw.period_bytes_min;
+ 	t.max = cable->hw.period_bytes_max;
+ 	mutex_unlock(&dpcm->loopback->cable_lock);
 -- 
 2.53.0
 
