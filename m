@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021026;
-	b=beKoQWH4ur06BblovOLteQXEhMwjgkbraHS03KiOTYrebi/oVjMCmuvpTgUtGuhPu1gg
-	 pSTDqu3fWzjTpkURf/x6rcsVjK68KYWCRHfZ3qw7Dsx2ttXQkjRVU/7WxoBNyyB9HQT4A
-	 GCa6v5Qu3LUWsZZBpqsz0Tofhtm9DwWkuRJzxBDUOa7+DFlS92G11XxmRwYHLuswfq2Dj
-	 74N/i3+BOGPHeJfjm5PuEXB6gNw2k0Jo4PISRNo0xns8q015x/tB2hCrMUVUAGqn7X9Xs
-	 Beh/32GzNOQjAryALxbqyDjGCsgyFyV05Gt/Q8tykm1SyVwbfW6zFslV/42KLaKWQlQ==
+	t=1795021029;
+	b=KNtnBiy7xBjXG6YsU5tBYhwUe0BJ+ISDYCPMAizbU0XU4fuIOy0EKNXv2y+bNHGHhZ9E
+	 xblvsmHD2S76UFU4AIXIdkIH6uthNlUBwUKamfxcmVN13Oosik918ckulLHHxuv0PYAHF
+	 252o3lHogTLSCG1k1WAvQxWtXtejcOFYyFED2kTAN/iDEOPA5SQfjDcLpx1/1lehsgOBX
+	 KlE+NSvDWtGLmshIWjHmjPKT/LNU1YV9GHvPL+zFGE7gk3f7dMqFBzpeCAYyeTMnOeuZ2
+	 TCx9t8X26p7yVmfp+j1JCOGByn+qvX4+FnTpEk0qzbMePIBCjWTDT0u4cCPsg6PowTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021029;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=aeilLKuOVV6y/lXjApm97YJM+S/j/H1yCqbMpXssSCs=;
-	b=KP4zE0B60667xsPJgvskrQbbUpjNL3Sd4JUtA1LXxvFktntY8NnCzGZocbxEMIMz+Skv
-	 P5o52KQpiuLpncw5bfn8BVhhl9tk7Pp82zS1nHxWD7+I3UBrJiHtGUUU0iBd/ouowWR+K
-	 6Bmh5+xCeVlW+XENwkdZyU1CHg5U0InIC2J/l4tq8AG2b/ZfTKPRndC0X6reFbXepF6Rs
-	 5WmoNxy0DJCR8tsPUy83UHzfZDv28X2JdhvRUDF9Ezn81RI14SKaWOl0/cwxn/Z1G9W+f
-	 yM03fg/CVTviojvqNrVT2INhIdsb/xyYx9dTa6y1tIiDmnqgDZQIY75uG4M1zjaJTbw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=C088xyeXSLVrD4hmcveEg9PBI3Qqsoc5giKQyHSE7lU=;
+	b=k6HOJdb5tk65b9DuoW+BpW+iVi7HazrsohdkFw8TCDTQqdGRqJ7gjA7aMdgUQEHw0x3f
+	 k5k/lumt7Fo30DDWzmPiNDl/7hKtoLTWbN1Ja3Y/eL97/k8hVuGhyjhUSBlsz4RQml5WN
+	 WiafJ+hP6F8G3XCW+k2w5vdUkPgvv4//vHVPO8+jcOPOBnq3pgZmhUQdgDU3DspVQsm1P
+	 ZvjJ3BDJP7G6M6y//LobWWHrj9KqmwHdga8XUklHkrm6HiWTxeS1x8motBPDM48uPcbhd
+	 zOV2UicRv8s821c+4aPUVupzjiocRapQKt1+rxdrJCxxSQ/2zqvbAMVotU+M+L5sSIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i0q9MEKI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNmlkSg1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D39606A33F;
-	Wed, 18 Nov 2026 16:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EA1606A325;
+	Wed, 18 Nov 2026 16:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i0q9MEKI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4851F000CB;
-	Wed, 18 Nov 2026 16:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZNmlkSg1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEE81F000D2;
+	Wed, 18 Nov 2026 16:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021026;
-	bh=aeilLKuOVV6y/lXjApm97YJM+S/j/H1yCqbMpXssSCs=;
+	s=korg; t=1795021029;
+	bh=C088xyeXSLVrD4hmcveEg9PBI3Qqsoc5giKQyHSE7lU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i0q9MEKIIIhHHyOnhJu3Q78Idp1iw6CEwngF4MyJqzqr02+mZdSDaMsSCeFXKRp2J
-	 klo3t9dRG+stbzooNNfTd1I/BXZh5kOytOfkZSnThEgLqPF4M1fYrYzfR27vgfLYwu
-	 jghZ4SqB1Mm0LUKnMr6frg1vlLzhPw9pEXQvZqvw=
+	b=ZNmlkSg1fB2G95jQ/j0srf2V4Q2gPfF0p9H0J9F9Xh212MwH/Q2TmFXqZG7pzeIa3
+	 sl5r3NRgpVSkOjTyojPiPanwSFBWCk+S1JoLOKNCGq2qK7qOgXdqcjqOkun7Yh9iSe
+	 IbizH+5pPwdMxmMr7tn2e0D1dvKTQKw35xOBSL9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangfeng He <huangya90@gmail.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2161/2651] netfilter: flowtable: use the vlan id, not the full tci, in the tuple key
-Date: Wed, 18 Nov 2026 15:56:41 +0100
-Message-ID: <20261118150403.602390274@linuxfoundation.org>
+Subject: [PATCH 7.3 2162/2651] netfilter: nft_set_rbtree: narrow down range completion to anonymous sets
+Date: Wed, 18 Nov 2026 15:56:42 +0100
+Message-ID: <20261118150403.648606799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,69 +62,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuangfeng He <huangya90@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit c203ecf905745d979de5df28fa657121f2e9342d ]
+[ Upstream commit 86d47d4c84a1b8470ba3fc16df13ea2a220b74ff ]
 
-nf_flow_tuple_encap() stores the skb vlan tag in the encap tuple id
-using skb_vlan_tag_get(), which returns the unmasked TCI including
-the 3 PCP priority bits. The flowtable entry, however, is programmed
-by nf_dev_path_info() with vlan_dev_vlan_id(), a plain 12-bit VID.
+For anonymous sets, when adjacent ranges are found, the end element is
+not added to the set to pack the set representation. Use next start
+element to complete this interval.
 
-When a NIC delivers RX vlan offload skbs with a non-zero priority
-(an RTL9617C EPON ONU was observed handing over vid 818 skbs with
-tci 0x6332, PCP 3), the runtime lookup key never matches the
-programmed entry, so every packet misses the flow table and
-software flow offload is silently defeated.
+Jérémy Jean says:
 
-Mask both parse sites to the 12-bit VID so the lookup key matches
-for any priority. The in-header variant has the same problem for
-frames received with PCP != 0 on a non-offload path.
+Consider two ranges in a netfilter verdict map:
+* keys 10-19 accept packets, and
+* keys 30-39 jump to chain 'victim'.
+Now, delete the end marker at 20. The lookup array now uses element 30
+as the first range's end, so an INTERVAL_END query for key 15 returns
+element 30, including its jump verdict and chain pointer. This can make
+KASAN reports a UAF after the GC releases reference chain for 30 that
+has expired:
 
-The egress side is unaffected: nf_flow_encap_push() restores tags
-from the programmed tuple id, which never carried priority bits.
+  BUG: KASAN: slab-use-after-free in nft_verdict_dump+0xdd/0x110
+  Read of size 8 at addr ff110000009dfb58 by task repro/50
+  ...
+  Call Trace:
+  ...
+   nft_verdict_dump+0xdd/0x110
+   nft_data_dump+0x4d/0x80
+   nf_tables_fill_setelem+0x30b/0x8a0
+   ? __asan_memcpy+0x3c/0x60
+   nf_tables_fill_setelem_info+0x1b0/0x200
+   nft_get_set_elem+0x3fd/0x4b0
+  ...
+  Freed by task 24:
+  ...
+   kfree+0x1a5/0x280
+   nf_tables_trans_destroy_work+0x2cb/0x520
 
-Measured on an RTL9617C ONU (PPPoE over VLAN 818 WAN, NATed 6-flow
-download over a 1G EPON line), before -> after:
-
-  download throughput      377 Mbps -> 936 Mbps
-  CPU0 %soft at that rate    91.5%  ->  70.9%
-
-Fixes: 4cd91f7c290f ("netfilter: flowtable: add vlan support")
-Signed-off-by: Shuangfeng He <huangya90@gmail.com>
+Fixes: 2aa34191f06f ("netfilter: nft_set_rbtree: use binary search array in get command")
+Reported-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/netfilter-devel/20261005200404.3544062-2-Jeremy.Jean@oss.cyber.gouv.fr/
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_ip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
-index c8c29a9a16844..2dec15d402ca1 100644
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -170,14 +170,14 @@ static void nf_flow_tuple_encap(struct nf_flowtable_ctx *ctx,
- 	int i = 0;
- 
- 	if (skb_vlan_tag_present(skb)) {
--		tuple->encap[i].id = skb_vlan_tag_get(skb);
-+		tuple->encap[i].id = skb_vlan_tag_get_id(skb);
- 		tuple->encap[i].proto = skb->vlan_proto;
- 		i++;
- 	}
- 	switch (skb->protocol) {
- 	case htons(ETH_P_8021Q):
- 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
--		tuple->encap[i].id = ntohs(veth->h_vlan_TCI);
-+		tuple->encap[i].id = ntohs(veth->h_vlan_TCI) & VLAN_VID_MASK;
- 		tuple->encap[i].proto = skb->protocol;
- 		offset += VLAN_HLEN;
- 		break;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 12431b55752fb..fbe1750f1ca23 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -1091,7 +1091,8 @@ static void nft_rbtree_commit(struct nft_set *set)
+ 		 * representation. Use next start element to complete this
+ 		 * interval.
+ 		 */
+-		if (nft_rbtree_interval_start(rbe) &&
++		if (nft_set_is_anonymous(set) &&
++		    nft_rbtree_interval_start(rbe) &&
+ 		    nft_rbtree_interval_start(prev_rbe) &&
+ 		    priv->array_next->intervals[num_intervals].from)
+ 			priv->array_next->intervals[num_intervals++].to = &prev_rbe->ext;
 -- 
 2.53.0
 
