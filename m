@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027683;
-	b=h2Gs8HifrAQ5VzRhStmQ4yedJBzZ5r5FhHixEkq4GmXeN63lPE55YE8sr+dpH3zw47Uf
-	 AZttBUk1qrQUKn11azZKIeACy73oXv1SUKUBQq4Apv5zqgWvHZANCLQ6eVf55G0hNzpfi
-	 aKpM44I2J7kRcs7hJOHpt0Kl9BoZsMFwglA3eMD682G0KBVUw+7FjEfQT57yQV9Ks05d1
-	 MNOCYTTIs8uYaeIaFUUXlg0vkXs0ziM42tEfnyZCzrb79EA8QSmIwZBHqLtW4Yztbk5Va
-	 qjbt4ofw0QPGelkoRtgOaRtivTY9Zhgj6rej42T6ja4RxCSoJ+zHmCmKuGmMhvxw4iw==
+	t=1795027686;
+	b=nRl3/IYwJR+Q/djBe6VrzJz1f+qM0DWfMVaUz7OETYkZZ6xecC3WbP1e63FTIat4XP6N
+	 kTUcNLJYVtdQoo2fFp5qGgl0kGnxGPhM2DWC49040frr5GmK5WRFFwnCpPlaGcCVFXR68
+	 qY8Jomt0nWoImurslZrEZBH+IJRBeYpKh6VkqNLn+kKNxF2qYjtOwrvUNtC3aLZC/7zSZ
+	 yebMFhblI0i7Vif7HRPaTwbl5dZ0bz/MqywsZQ51p6WByG+RutrrHVCZzsDL/2saChAMn
+	 wa8mTX/SS2RNBi2wbbOcE44v2y8ztJ/FJa+FwiSkoPwg2VAcO7y/oqHgSrt3fuG4q7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027683;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027686;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UC89GmasOLT+zckVGhVsTFmCXlVWw7YxiAw+F3NKr7k=;
-	b=HKTKWi8G3TgEXoa8Ixce73ZTkT0/keDzI4nk/zUllw5Qti5iT4KB/KtEKIpconDrPndu
-	 ORvqKtXEWdS0NJN/b/Sb9lgTp3mjNd1Gz+x2TDOBLakihwtURl5+fv6y1XN4WxilXR2Ps
-	 y5O57lhl8BPH2gSOvT2+4c+fQ8lZUHp67jDR3YWwfLMHBNSHAUYfGcpQEUQF9qGvSTej4
-	 ZUqbOlwUjRtIOyBmm7H8cWFYkv8VQgeP4KWgb8z5ZfOe/jx2DL/hFf8fUzIe6lwNT7ry2
-	 R7LFNYsAb00mlRoob4V/0j/4gYC6Vgv5Pew6oyc3qBsDJMyeZRB9KOPNeMdaNxuGbtA==
+	bh=xgBQgfereYTIi8wRM7HXLcd0/mdtp+lTSZtcpdEhktw=;
+	b=olH3mfB/q0SubSo/GYhZW9ExlOb+u1bZDn535YedJ0tG3UbX1wn9gmYgmJJEslfuGrk8
+	 Lq0+yFlRhGWzhqHmiOthiAN2W77Jzuq7nAFhBS8IlWLLV58/XTsuk2CkJk5d8gaPhoY7q
+	 lOmfackS5t0Ule3iCzhtDr+J3Q3hiSllSl3lx7mk0poC6RENoChSnuOahV05Y8Dizdqg/
+	 accoBv4O/1WsQijPqXVMDNmhGuAuR2vLDD4+WMOGCfACqV2wWsg5IuicNI2aA3AZdXPtB
+	 zyzD2fcbnGchvOpfy2xVA5ESCGiQF7kbpVxL0X2AKaDTFXK1xR1l4RsOtGtdMd4tfaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3sY6yZs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o43vKUTx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC95606A320;
-	Wed, 18 Nov 2026 18:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0977E606A337;
+	Wed, 18 Nov 2026 18:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R3sY6yZs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980051F000C4;
-	Wed, 18 Nov 2026 18:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o43vKUTx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604761F000C4;
+	Wed, 18 Nov 2026 18:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027683;
-	bh=UC89GmasOLT+zckVGhVsTFmCXlVWw7YxiAw+F3NKr7k=;
+	s=korg; t=1795027685;
+	bh=xgBQgfereYTIi8wRM7HXLcd0/mdtp+lTSZtcpdEhktw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R3sY6yZs+EIaeGypYDq3qIgqyNAhO7jOgYpahYckcd2QiSdJmBMv8Xd7rKswRT90k
-	 xiB5ZYZ+73uGajjg9/1yKXPEOPqED77I94iWS39DMlkVuofJUOns3IeZ+tyIOOvqoG
-	 E+wMkenM/ISOatMITihBRRcI8ykyfzplzKUA79Jc=
+	b=o43vKUTxRUFVb6VZGa4JtToELSIsloeJ4U8B28pD6CHHYEltmn2ti3g/1fhMlDxqn
+	 lGqZNlMiN/r6E8aGtHkd5dcM+nWEVjGSwrqHugMbhL+m+O1w2rO32vHdLPn8NLa4Kq
+	 4n7uriTIS+1z7Nmjpo5oq+rvEtWe20fRyg7ytGTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	Waldemar Brodkorb <wbx@openadk.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1877/2151] ASoC: samsung: midas_wm1811: run FLL1 at the AIF1 configured rate when idle
-Date: Wed, 18 Nov 2026 16:00:12 +0100
-Message-ID: <20261118150230.169010279@linuxfoundation.org>
+Subject: [PATCH 6.18 1878/2151] sh: Select BINFMT_FLAT_NO_DATA_START_OFFSET for !MMU
+Date: Wed, 18 Nov 2026 16:00:13 +0100
+Message-ID: <20261118150230.211646862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,88 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Waldemar Brodkorb <wbx@openadk.org>
 
-[ Upstream commit d9c23ac1217ab094e6bd9ab95e159ec72c8baca5 ]
+[ Upstream commit f45711b39e03ff5e80b60dcc1fd34b3fc7d3d36c ]
 
-When the codec is brought up without an active stream, for example
-because the mixer state restored by alsactl powers up a digital path,
-midas_start_fll1() sets FLL1 to the default 11.2896MHz rate. The
-codec's AIF1 however keeps the configuration of the last stream, or its
-reset default of 48kHz at 256fs before the first stream, which needs
-a 12.288MHz AIF1 clock. The digital paths then run with AIF1 clocked
-at a rate not matching its configuration.
+binfmt_flat offsets the in-memory start of the data segment by
+MAX_SHARED_LIBS words and then aligns it to FLAT_DATA_ALIGN, so FLAT_FLAG_RAM
+binaries end up with a gap between text and data (commit 2217b9826246
+("binfmt_flat: revert "binfmt_flat: don't offset the data start"")).
 
-Remember the FLL1 rate requested by the last hw_params() call, which
-matches the AIF1 configuration kept in the codec, and use it when no
-specific rate is requested. Change the default rate used before the
-first stream to 12.288MHz, matching the codec's default AIF1
-configuration.
+SH position-independent code finds the GOT with a PC-relative mova of
+_GLOBAL_OFFSET_TABLE_, which assumes data follows text directly, as elf2flt
+lays out the image. With the gap, the GOT register points below the real GOT,
+so every GOT load reads the neighbouring slot and gets a wrong pointer. On a
+J2 (sh2eb, no MMU) this made userland crash or hang right after start-up.
+In my case the data was moved up by 0x20 bytes.
 
-Fixes: fd0ea9cd9698 ("ASoC: samsung: Add sound support for Midas boards")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-5-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Commit 04d82a6d0881 ("binfmt_flat: allow not offsetting data start") added
+CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET for architectures that cannot
+tolerate such a gap; currently only riscv !MMU selects it. Select it on SH
+as well when building without an MMU.
+
+Tested on a J2 board (Numato Mimas V2, sh2eb, no MMU) with Linux 7.3 and
+FLAT binaries built with elf2flt: with this change the data segment starts
+exactly at the end of text and init runs.
+
+Without the patch bootup fails with:
+[   12.080472] Fixing up unaligned userspace access in "init" pid=1 pc=0x(ptrval) ins=0x6583
+[   12.123609] Fixing up unaligned userspace access in "init" pid=1 pc=0x(ptrval) ins=0x6583
+[   12.175153] Kernel panic - not syncing: Attempted to kill init! exitcode=0x00007f00
+
+Fixes: 2217b9826246 ("binfmt_flat: revert "binfmt_flat: don't offset the data start"")
+Signed-off-by: Waldemar Brodkorb <wbx@openadk.org>
+Assisted-by: LLM
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/samsung/midas_wm1811.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/sh/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/samsung/midas_wm1811.c b/sound/soc/samsung/midas_wm1811.c
-index 239e958b88d3f..20be8b7f90ecf 100644
---- a/sound/soc/samsung/midas_wm1811.c
-+++ b/sound/soc/samsung/midas_wm1811.c
-@@ -25,7 +25,8 @@
-  */
- #define MCLK1_RATE 24000000U
- #define MCLK2_RATE 32768U
--#define DEFAULT_FLL1_RATE 11289600U
-+/* Matches the codec's default AIF1 configuration: 48kHz, 256fs */
-+#define DEFAULT_FLL1_RATE 12288000U
- 
- struct midas_priv {
- 	struct gpio_desc *gpio_fm_sel;
-@@ -34,6 +35,7 @@ struct midas_priv {
- 	struct gpio_desc *gpio_headset_key;
- 	struct iio_channel *adc_headset_detect;
- 	unsigned int fll1_rate;
-+	unsigned int aif1clk_rate;
- 
- 	struct snd_soc_jack headset_jack;
- };
-@@ -171,11 +173,12 @@ static int midas_start_fll1(struct snd_soc_pcm_runtime *rtd, unsigned int rate)
- 	if (!rate)
- 		rate = priv->fll1_rate;
- 	/*
--	 * If no new rate is requested, set FLL1 to a sane default for jack
--	 * detection.
-+	 * If no new rate is requested, set FLL1 to the rate the codec's AIF1
-+	 * is currently configured for, as its digital paths can be powered
-+	 * up without an active stream.
- 	 */
- 	if (!rate)
--		rate = DEFAULT_FLL1_RATE;
-+		rate = priv->aif1clk_rate ?: DEFAULT_FLL1_RATE;
- 
- 	if (rate != priv->fll1_rate && priv->fll1_rate) {
- 		/* while reconfiguring, switch to MCLK2 for SYSCLK */
-@@ -241,6 +244,7 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
- 				struct snd_pcm_hw_params *params)
- {
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
-+	struct midas_priv *priv = snd_soc_card_get_drvdata(rtd->card);
- 	unsigned int pll_out;
- 
- 	/* AIF1CLK should be at least 3MHz for "optimal performance" */
-@@ -249,6 +253,8 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
- 	else
- 		pll_out = params_rate(params) * 256;
- 
-+	priv->aif1clk_rate = pll_out;
-+
- 	return midas_start_fll1(rtd, pll_out);
- }
- 
+diff --git a/arch/sh/Kconfig b/arch/sh/Kconfig
+index d5795067befaa..1e80b4ab94f25 100644
+--- a/arch/sh/Kconfig
++++ b/arch/sh/Kconfig
+@@ -15,6 +15,7 @@ config SUPERH
+ 	select ARCH_MIGHT_HAVE_PC_PARPORT
+ 	select ARCH_WANT_IPC_PARSE_VERSION
+ 	select ARCH_NEED_CMPXCHG_1_EMU
++	select BINFMT_FLAT_NO_DATA_START_OFFSET if !MMU
+ 	select CPU_NO_EFFICIENT_FFS
+ 	select DMA_DECLARE_COHERENT
+ 	select GENERIC_ATOMIC64
 -- 
 2.53.0
 
