@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042093;
-	b=TEVxLnT+UWVFGls4KE/VzTp3Cp1uXoHc/GvZtbNxKo7gIWHZin8XHgok8ZjxpBZYIfYw
-	 E6wT1onpjPxHykbA51fc2UlRPcsr4UzyfTqzgU9I3GuGpmhXktW0tZhcreTBfZuZ7BxXb
-	 kvRCK4XiZYENPOOEFQ7xJYVD50gKniZg0kcwqK/RxH4hLuWTeEtqGMDNl7dGGnszgsgu6
-	 RGZnqGbuud5qWyRert/3TR9NE7o23AM2CQ7VDrkQACyQyTa70qjBSqY8WMO9yN8qdgtIl
-	 h1/uvg/ujxkVd4GgLo7u1GuDwQF7h3D9Ci/poHDZ9kH7mbrr28taOOAi1WBo+ido1tg==
+	t=1795042096;
+	b=OS62xXRphnw9TxhP9uN+eUtygcaqORi9NGOO/3Bgg6VdgO5fyGT8L8TdW7N67ZXFNeKk
+	 j9iqqW7q8ohO1jLO0+mYQyNQ9EstG9m+SxBX0i90MzvOtmJHoO9Z95s4BEk3sBWr3IW9B
+	 QeUYHpB9S7nlJUdQLvxW+R+lr+AGZWJbZg64n5i8NMpBaQitLNK+hf6KWfuapTuVTuMze
+	 XxQwPtdC8Jigf3Vl975vlFfiGqVGz/MUTuiVVXgQuGNZFns9VrNQWCaoHLBPFst8qNVFn
+	 EOwl/HdG9K0KS4NVKFIrTQ6Eas+AH4hKlh0t4tzMHBNWeqQLa/p6Og9ZNKmrs7m/Gsg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042093;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9W+DTT7utNSnVqC6bwr/w1JFNBOCCoPsQ5vTagR6BMY=;
-	b=SGlVWIr0Qd5DBLXJr37JBUr/rooQPkG7HNNKzf1Cm/AuqjqFeXgEycDLFu55NIiFsGmw
-	 +F1DqqeM26Bk7pmSh5MpXSTiFzxvfu8PhdF0AfmHCVYsu7WKwaJbbvrawvjmUAPfZTJcs
-	 7ZWV73ClYnpkSx5DwtpFoVY42hUmVA24JfiDMRANmeSqYOT/hOWuWMYtVqTEUL6FDaCIA
-	 9Mk0WAG8soyB5D+dN8BNrFYM9/s15H6hPhNKlN1BznApcJm/43zdblfvkjgXvchldYXTB
-	 z9yw/AEfoV5/lbZPhgKl8Cxp6cciOZ7Ez2Wnp8xI24BmfLGRxqOg48OOhvh75I/ok4A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pwgR+bPa49jvpjwD2HnKQzWymAi0BGllqvrc4vpBGDY=;
+	b=EwoIfehc5sDdy7f5XBLpwKe33SMu+pVcHRG1Kh0PHacQY1do2pA4CYkRtQOnvlAMTvOL
+	 IS3AKWsusRtE/ulgXQktRGbK70r5QyNbSzJBZqPgm+I6xu0YKr7Jzs83i+/cDI7ipDAwu
+	 WRkbsjCLRxQFL+WZbn4G9tlCjVgoObt2dzWoyMQYTR/x5N4OQt9w2d+qwP+5WZsqfpajl
+	 Rkgw95bT4nEhOBtUowrfhvvbWQtv7gi7oJIY4UKthxCZM2FxQLUjKPazerGgjKwQ/Wujc
+	 QQwHtqI0emeXP9fp0w3nBbCOhT3In80H+SYDkGMKHo0RoFV7/hxAtYdk6qwVmemdtyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7zCR4hX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b6J6VPDk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D12606A31C;
-	Wed, 18 Nov 2026 22:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590A8606A31C;
+	Wed, 18 Nov 2026 22:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7zCR4hX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A9F1F000C4;
-	Wed, 18 Nov 2026 22:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b6J6VPDk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95781F000C4;
+	Wed, 18 Nov 2026 22:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042093;
-	bh=9W+DTT7utNSnVqC6bwr/w1JFNBOCCoPsQ5vTagR6BMY=;
+	s=korg; t=1795042096;
+	bh=pwgR+bPa49jvpjwD2HnKQzWymAi0BGllqvrc4vpBGDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7zCR4hXwXwJrRVMQEGIX6+3ULTrGwBHagUub46Jg1/kU6ux4Frz2Gttb5Vw8xfV1
-	 Ya+k79IDjbu1lozAnaxIbOY3t8jy2ynXxSyodxKx76bQpGeP1M4AftWo7xmXKZW3op
-	 8onIA+ibzVp+k0TPtDXebFpqj9+JJbRTWr7djgK4=
+	b=b6J6VPDkt+fTKe6ytBxFm8fBeVPWnTzkrpqxZW7wM56QuHh/Nhx3aNe6g1ujzZG7F
+	 BN7wyIcr2Qk/vjXD3YdzNjxib+q5D9NRQnljwdNKgH05gTEcezdOkmZNNWJ/pzRqUx
+	 iqjdUB8C9XkuVcgdBpqjM8iY76x5Ce1tiPZrEdTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3047/3318] nios2: ksyms: Declare __mulsi3 export
-Date: Wed, 18 Nov 2026 16:01:09 +0100
-Message-ID: <20261118150451.566056949@linuxfoundation.org>
+Subject: [PATCH 6.6 3048/3318] ALSA: pcmtest: Pin the module while pattern files are open
+Date: Wed, 18 Nov 2026 16:01:10 +0100
+Message-ID: <20261118150451.594499732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,51 +62,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 2180d11e06fb56fd13643ae59964f144896870be ]
+[ Upstream commit 069003afab42b5a9394faa6985a3d76bd4700e72 ]
 
-GCC may emit libcalls to __mulsi3(). As modpost is not aware that this
-function is provided through the linked in libgcc, it fails:
+The fill_pattern_fops table must remain alive until the final release
+of each pattern debugfs file. It has no .owner, so the fops_get() call
+in full_proxy_open_regular() does not take a PCMTest module reference.
 
-ERROR: modpost: kernel/locking/test-ww_mutex.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: kernel/time/test_udelay.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: kernel/resource_kunit.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: fs/fuse/virtiofs.ko: symbol '__mulsi3' undefined!
-etc.
+With snd-pcmtest loaded as a module, a user with permission to open a
+fill_patternN file and unload the module can retain the descriptor
+across normal unload, provided no PCM file or other module reference
+prevents it. The following ordering is possible:
 
-Make sure modpost can see the symbol from libgcc.
+  Pattern file user                   Module unload
+  -----------------                   -------------
+  open(fill_patternN)
+    full_proxy_open_regular()
+      fops_get(fill_pattern_fops)
+        owner == NULL: no module pin
+  keep the descriptor open
+                                      mod_exit()
+                                        clear_debug_files()
+                                          debugfs_remove_recursive()
+                                          drain active operations
+                                      return from mod_exit()
+                                      free_module()
+                                        free the module image
+  close(fd)
+    full_proxy_release()
+      read real_fops->release -> UAF
+      fops_put(real_fops)
+        read real_fops->owner
+      access freed module memory
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610171933.J4bFOfL8-lkp@intel.com/
-Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Even though the table has no release callback, reading those fields
+is a use-after-free and can fault. The retained dentry keeps the
+proxy's bookkeeping alive, but does not retain the module storage.
+
+Set .owner to THIS_MODULE so the existing fops_get()/fops_put() pair
+pins PCMTest until final release has finished accessing the table.
+Normal module unload is then blocked while any pattern file is open.
+
+Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-1ce354e709dbab28e563-v2-6b2ea0aa16ec39442f6d@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/kernel/nios2_ksyms.c | 1 +
+ sound/drivers/pcmtest.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/nios2/kernel/nios2_ksyms.c b/arch/nios2/kernel/nios2_ksyms.c
-index 54f7b23df1bf5..33aa76f2eca10 100644
---- a/arch/nios2/kernel/nios2_ksyms.c
-+++ b/arch/nios2/kernel/nios2_ksyms.c
-@@ -39,6 +39,7 @@ DECLARE_EXPORT(__udivsi3);
- DECLARE_EXPORT(__umoddi3);
- DECLARE_EXPORT(__umodsi3);
- DECLARE_EXPORT(__muldi3);
-+DECLARE_EXPORT(__mulsi3);
- DECLARE_EXPORT(__ucmpdi2);
- DECLARE_EXPORT(__lshrdi3);
- DECLARE_EXPORT(__ashldi3);
+diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
+index 0de45d6e3a777..c9a32e45603b2 100644
+--- a/sound/drivers/pcmtest.c
++++ b/sound/drivers/pcmtest.c
+@@ -682,6 +682,7 @@ static ssize_t pattern_read(struct file *file, char __user *u_buff, size_t len,
+ }
+ 
+ static const struct file_operations fill_pattern_fops = {
++	.owner = THIS_MODULE,
+ 	.read = pattern_read,
+ 	.write = pattern_write,
+ };
 -- 
 2.53.0
 
