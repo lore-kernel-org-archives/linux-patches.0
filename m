@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054561;
-	b=nzgMnZRRRbum96yN+Um42Cf8UxhfRZY2/I+BHZlWae8RHFcnsl9hdMZMTgm52UqwBUMx
-	 5VhVkMx7pz/a+n0Y7+nhTOtrLFii/NMNxsbsMWjz7mZApWn/ROh0Y+O1PKMOnEbRmDLrn
-	 vccGNlplZ6cyb3/9y+vMROZZqsuJlo9//vby/PyPzDlgR2noeZ7535gpDtAnLADiNOmLy
-	 OUklKaMj9QSHoyj9UQGmrkFaEgfNo65lxax9OhWzCiffimnDOU7zC88yj+vWYWlu2PfNC
-	 gKlml/fFwzkaxRg3JxBBMX/KXd0cRF1doSQlbkhhL/Mn3U4wBiS/uAv5KM9RwbOYiaQ==
+	t=1795054563;
+	b=1o3DeVRrv0gBN+3oTQLCY+mZrSWQBPz+XjrEaTwQWCvANe8bg3zs+8oLlREsGtb3najf
+	 qelnBRgLepYICpeoos0yYikZ8zyehLIFMIK7ziQyoE6BTDOM6Qv+/quimqfMxjRp4mjPx
+	 VPrz98C+WTY0Qc0dt9MztMUITgudFdSIBoCVZVCF+zn4rJhfo1XRqdeVN69zL3skd5Unr
+	 9KgNP+ayaVO8hhKs74r+1JWkERJfAD+8TdQ2enEA3BEpBLaAqSHxTE6vTndeDneu2m3fx
+	 GVoeao94NekRGOiC+zzXM9YurC9/ba3IrY+xLu/0GULIyaj4ouetSRzQmZFRvJJoVAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054563;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fcHjdIVP3/GzgmDV8ww8zwJhcw3sQgOab+ZAJrVjxjs=;
-	b=c6aGVDPpo+re4/LWLZN6Ehn5oRciVAbuIth0zIl+Lrl9SwBGXpGOo1cX01S5MrMofUzF
-	 cmoZs8e97tnDJ4+IX+uLcSEBrQSy4BwUSaTyH9kDgcptEtuHqc9NUq39kUurgNCt1xI5M
-	 jQ+dUSrszMMMNXJ2HplSu8IYzAQi4YUkyYYQq15rVZgP/IzkQ/6jkbnrqjs/YONUtxmtQ
-	 5pfe0o7vFZLExkE7HRc1lDfPT/+2wAg86nkbW6QS0a54JWW00jKG+C0i6e4/4/LcfhbIV
-	 MBjGgwGQbG5tXVibA/ID8vG/PoZj2m/06JHdmayYfssWIzoOU79nfdVlM50ZaVnLNdA==
+	bh=D+7HAUDx57nTy/bRJdOM19yGRM0hCDnC4LQqhhICqFg=;
+	b=UwQtbJwhgrKFz0+w1zZYjV5AXuQNP6mJofQ0ITyx7pS1FFUqKQg5pfBSbXm01xRD0IJb
+	 i8G2q4ZY0zkD/ikxS0RPCLhsh9oEAwhwGcJNv2HxTw0x2TnUUYvEesL6645dWc9v743CU
+	 9BzsOgQYEbiDlTeJZFUP9U+BxKB/DR32WfEGS5kJVHy5jtJMf2OiZxZl0gr6Dy7IIJM5j
+	 Sgww8jz5ieTvEQbMyvJEH1qpFobbj+g89ca+Ah3J8+/qcr6h8Tx3wh1cvnZx4jOZpe/x+
+	 ZrSNn/Vm1nAhk29mY+pGopnpUpx0ZUDgacittD3iyT7Hxp3jzS9Xq2S0P+/QNbcaYPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwDkEmvr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3IfZs89;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91F4606A31C;
-	Thu, 19 Nov 2026 02:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B859A606A31C;
+	Thu, 19 Nov 2026 02:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwDkEmvr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E88D1F000C4;
-	Thu, 19 Nov 2026 02:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W3IfZs89
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E551F000C4;
+	Thu, 19 Nov 2026 02:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054560;
-	bh=fcHjdIVP3/GzgmDV8ww8zwJhcw3sQgOab+ZAJrVjxjs=;
+	s=korg; t=1795054563;
+	bh=D+7HAUDx57nTy/bRJdOM19yGRM0hCDnC4LQqhhICqFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fwDkEmvrCyAABCMzinn4rxyej2lJuxixYLPUFvVLFlbipTYPvPFuz9qka5rGWWYnc
-	 Se8MMMGRfECE9Aj0CmX/pu/kJ70Gp9ISxGTDX/BX7ZEvQ5JI7sfYiZVR0Fdo9ZycOk
-	 /3b+NSplLLlKy8B+XZScRGw4NJf5neIZ2uAZW5zA=
+	b=W3IfZs89Je52Ly0kGqRVulY66HuNXckxD9fBryJCkKbyxeAztbthqnpDk/0O9F6gd
+	 GYxfUMcAm+kxkawlHRQsD8s+fUnlmkisK2XFoZjhSfyYZ7mWaP/lj3tDLcdya45cq/
+	 bScrR6IWXgxjt/OJQoZ+Xx2oN0vj8m7WW+vYQyKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1317/2214] ocfs2: validate move extents against a stable EOF
-Date: Wed, 18 Nov 2026 15:49:53 +0100
-Message-ID: <20261118150104.159452918@linuxfoundation.org>
+Subject: [PATCH 5.15 1318/2214] xfs: add a flag to convert unwritten extents without allocating blocks
+Date: Wed, 18 Nov 2026 15:49:54 +0100
+Message-ID: <20261118150104.194916953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -74,172 +70,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 84db6619cb702c37cf848b450c21b9c9706b0775 ]
+[ Upstream commit f3ca3498dfe624f9b604c934263538a3acd55af5 ]
 
-The move-extents range must be bounded by the inode size used for extent
-movement.  ocfs2_ioctl_move_extents() checks and clamps the request before
-taking the local inode and cluster locks in ocfs2_move_extents().  It also
-uses separate i_size_read() calls for the range check and subtraction.
+xfs_bmapi_write() with XFS_BMAPI_CONVERT also allocates blocks for
+holes and delalloc extents in the range. Add XFS_BMAPI_CONVERT_ONLY for
+callers that may only convert already allocated blocks. It stops at a
+hole or delalloc extent, and returns -ENOSR if it stops before mapping
+anything.
 
-A concurrent truncate can invalidate the first check and make the later
-unsigned subtraction underflow:
+Marked for stable because "xfs: refuse a pNFS LAYOUTCOMMIT of a range
+without blocks" needs it.
 
-  Move-extents ioctl                  Truncate
-  ------------------                  --------
-  check me_start <= i_size
-                                      take inode and cluster locks
-                                      shrink EOF below me_start
-                                      release locks
-  compare me_start + me_len with EOF
-  set me_len = EOF - me_start
-    [unsigned underflow]
-  acquire inode and cluster locks
-  select extents using the bad range
-
-A truncate after clamping can also leave the range extending beyond EOF.
-Conversely, the cached size may be smaller than the size refreshed when
-the cluster inode lock is acquired.  Early validation can then reject a
-valid start or permanently shorten the requested length and threshold.
-The me_start + me_len comparison can also wrap for a large input length.
-
-Validate and adjust the original request once, after inode_lock(), the
-exclusive rw lock and ocfs2_inode_lock() have stabilized and refreshed the
-size.  Read EOF once, reject a start beyond it, and bound the length by
-EOF minus start.  Normalize the threshold using the same EOF snapshot.
-This keeps zero as the default-threshold sentinel until validation uses
-the size that will govern extent movement.
-
-Move goal validation after range adjustment as well.  Its allocation-group
-capacity check uses me_len and must see the EOF-clamped length.  Both
-validation failures use the existing inode-lock unwind path before any
-extent movement or transaction starts.
-
-Range errors now reach the ioctl's normal copyout path, as goal errors
-already did.  Unlike the old early rejection, a failed copyout can
-therefore override -EINVAL with -EFAULT.
-
-Link: https://lore.kernel.org/pm-ocfs2-move-extents-isize-rrw-v6-395bdee84ea81149068e@gmail.com
-Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: inlined range validation into ocfs2_move_extents() instead of adding a separate helper ]
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20261013120359.GB2944@lst.de
+Cc: stable@vger.kernel.org
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Restricted -ENOSR returns for empty mappings to CONVERT_ONLY requests to preserve existing callers' behavior. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/move_extents.c | 62 ++++++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ fs/xfs/libxfs/xfs_bmap.c | 12 ++++++++++++
+ fs/xfs/libxfs/xfs_bmap.h | 10 +++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/move_extents.c b/fs/ocfs2/move_extents.c
-index 32b4271f3deb6..e3a9404c71bda 100644
---- a/fs/ocfs2/move_extents.c
-+++ b/fs/ocfs2/move_extents.c
-@@ -906,8 +906,10 @@ static int __ocfs2_move_extents_range(struct buffer_head *di_bh,
- static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
- {
- 	int status;
-+	u64 i_size;
- 	handle_t *handle;
- 	struct inode *inode = context->inode;
-+	struct ocfs2_move_extents *range = context->range;
- 	struct ocfs2_dinode *di;
- 	struct buffer_head *di_bh = NULL;
- 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
-@@ -932,6 +934,35 @@ static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
- 		goto out_rw_unlock;
- 	}
- 
-+	i_size = i_size_read(inode);
-+	if (range->me_start > i_size) {
-+		status = -EINVAL;
-+		mlog_errno(status);
-+		goto out_inode_unlock;
-+	}
-+
-+	if (range->me_len > i_size - range->me_start)
-+		range->me_len = i_size - range->me_start;
-+
-+	/*
-+	 * The default threshold for defragmentation is 1 MiB, which
-+	 * matches the maximum OCFS2 cluster size.
-+	 */
-+	if (!range->me_threshold)
-+		range->me_threshold = 1024 * 1024;
-+
-+	if (range->me_threshold > i_size)
-+		range->me_threshold = i_size;
-+
-+	/* The goal check depends on the adjusted range length. */
-+	if (!context->auto_defrag) {
-+		status = ocfs2_validate_and_adjust_move_goal(inode, context->range);
-+		if (status) {
-+			mlog_errno(status);
-+			goto out_inode_unlock;
-+		}
-+	}
-+
- 	/*
- 	 * rememer ip_xattr_sem also needs to be held if necessary
+diff --git a/fs/xfs/libxfs/xfs_bmap.c b/fs/xfs/libxfs/xfs_bmap.c
+index b48230f1a3619..80208265dee57 100644
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -4355,6 +4355,8 @@ xfs_bmapi_finish(
+  * extent state if necessary.  Details behaviour is controlled by the flags
+  * parameter.  Only allocates blocks from a single allocation group, to avoid
+  * locking problems.
++ * With XFS_BMAPI_CONVERT_ONLY, it stops at a hole or a delalloc extent instead
++ * of allocating blocks, and returns -ENOSR if it stops before mapping anything.
+  */
+ int
+ xfs_bmapi_write(
+@@ -4414,6 +4416,8 @@ xfs_bmapi_write(
  	 */
-@@ -1024,49 +1055,18 @@ int ocfs2_ioctl_move_extents(struct file *filp, void __user *argp)
- 		goto out_free;
- 	}
+ 	ASSERT((flags & (XFS_BMAPI_PREALLOC | XFS_BMAPI_ZERO)) !=
+ 			(XFS_BMAPI_PREALLOC | XFS_BMAPI_ZERO));
++	ASSERT(!(flags & XFS_BMAPI_CONVERT_ONLY) ||
++	       (flags & XFS_BMAPI_CONVERT));
  
--	if (range.me_start > i_size_read(inode)) {
--		status = -EINVAL;
--		goto out_free;
--	}
--
--	if (range.me_start + range.me_len > i_size_read(inode))
--			range.me_len = i_size_read(inode) - range.me_start;
--
- 	context->range = &range;
+ 	if (XFS_IS_CORRUPT(mp, !xfs_ifork_has_extents(ifp)) ||
+ 	    XFS_TEST_ERROR(false, mp, XFS_ERRTAG_BMAPIFORMAT)) {
+@@ -4461,6 +4465,9 @@ xfs_bmapi_write(
+ 		 * that we found, if any.
+ 		 */
+ 		if (need_alloc || wasdelay) {
++			if (flags & XFS_BMAPI_CONVERT_ONLY)
++				break;
++
+ 			bma.eof = eof;
+ 			bma.conv = !!(flags & XFS_BMAPI_CONVERT);
+ 			bma.wasdel = wasdelay;
+@@ -4535,6 +4542,11 @@ xfs_bmapi_write(
+ 	xfs_bmapi_finish(&bma, whichfork, 0);
+ 	xfs_bmap_validate_ret(orig_bno, orig_len, orig_flags, orig_mval,
+ 		orig_nmap, *nmap);
++
++	if (!n && (flags & XFS_BMAPI_CONVERT_ONLY)) {
++		ASSERT(bma.nallocs == 0);
++		return -ENOSR;
++	}
+ 	return 0;
+ error0:
+ 	xfs_bmapi_finish(&bma, whichfork, error);
+diff --git a/fs/xfs/libxfs/xfs_bmap.h b/fs/xfs/libxfs/xfs_bmap.h
+index 67641f669918f..1c234d587c516 100644
+--- a/fs/xfs/libxfs/xfs_bmap.h
++++ b/fs/xfs/libxfs/xfs_bmap.h
+@@ -101,6 +101,13 @@ struct xfs_extent_free_item
+ /* Do not update the rmap btree.  Used for reconstructing bmbt from rmapbt. */
+ #define XFS_BMAPI_NORMAP	0x2000
  
--	/*
--	 * ok, the default theshold for the defragmentation
--	 * is 1M, since our maximum clustersize was 1M also.
--	 * any thought?
--	 */
--	if (!range.me_threshold)
--		range.me_threshold = 1024 * 1024;
--
--	if (range.me_threshold > i_size_read(inode))
--		range.me_threshold = i_size_read(inode);
--
- 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
- 		context->auto_defrag = 1;
++/*
++ * Use with XFS_BMAPI_CONVERT to convert unwritten extents without allocating
++ * blocks. Stop at a hole or a delalloc extent: return the mappings found so
++ * far, or -ENOSR if there are none.
++ */
++#define XFS_BMAPI_CONVERT_ONLY	0x4000
++
+ #define XFS_BMAPI_FLAGS \
+ 	{ XFS_BMAPI_ENTIRE,	"ENTIRE" }, \
+ 	{ XFS_BMAPI_METADATA,	"METADATA" }, \
+@@ -112,7 +119,8 @@ struct xfs_extent_free_item
+ 	{ XFS_BMAPI_REMAP,	"REMAP" }, \
+ 	{ XFS_BMAPI_COWFORK,	"COWFORK" }, \
+ 	{ XFS_BMAPI_NODISCARD,	"NODISCARD" }, \
+-	{ XFS_BMAPI_NORMAP,	"NORMAP" }
++	{ XFS_BMAPI_NORMAP,	"NORMAP" }, \
++	{ XFS_BMAPI_CONVERT_ONLY,	"CONVERT_ONLY" }
  
- 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
- 			context->partial = 1;
--	} else {
--		/*
--		 * first best-effort attempt to validate and adjust the goal
--		 * (physical address in block), while it can't guarantee later
--		 * operation can succeed all the time since global_bitmap may
--		 * change a bit over time.
--		 */
--
--		status = ocfs2_validate_and_adjust_move_goal(inode, &range);
--		if (status)
--			goto out_copy;
- 	}
  
- 	status = ocfs2_move_extents(context);
- 	if (status)
- 		mlog_errno(status);
--out_copy:
- 	/*
- 	 * movement/defragmentation may end up being partially completed,
- 	 * that's the reason why we need to return userspace the finished
+ static inline int xfs_bmapi_aflag(int w)
 -- 
 2.53.0
 
