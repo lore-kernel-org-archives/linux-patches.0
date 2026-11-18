@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027227;
-	b=YnJIq+3245kFPjwN7WpIcvS1vTU+uGSptOFpLaXTu3IqinvnveJkmg6onheE2W7EUCrQ
-	 n9qCncmLaJv5HEaPhNAwnA8OT3RRhVNnAgi+qYQeMATcvMo4JaF946p8kROd0Oh+BAN/v
-	 g29fYD4nAVAVpYHXifzFc1vxsM4jJgk95zMv5l5mkIBG5svpBMzu1X02adFBKoT6YMkZ7
-	 cL2mAws3IIUuyJYZd4p1peclL5RCW6iGv7Uj6IVrjl3OPjuR7NpaP3iixrrAdV+l192ux
-	 usjFtdZIjdOKngDZ8i/87X05J5uUcOe6i1RPWEvbvaN4fuYUxU3bzQScb+fQXpSOxzQ==
+	t=1795027229;
+	b=UDG2t3tNmUkx1kLsJtUHHS3pNQPOAgSZEuVgtg7SLhhuo8UTiogcu2MzfRKKtYJ3Lkok
+	 02hlZXpm1FzfGMTYw5TA6CZy0QBgh5uBr3fpq2EfoYeb8z7USYwUfL64Z33OmO2ayhuuO
+	 3iOdEFay1ekCs7Rv6vgNqP3BNCigVJmOYvdjz6a0x12mvp9AJBGUp4tAh0Sio8mjsbckm
+	 AtNeL/kdWx6tN7RuAOs2dweSYdVSUrl3YZHR5PO47V2eIcJ5LebdW2w7EXYM/33HKP8jt
+	 ju/EPzKyOwSBrelPKLvc0b9cn+OxwWPo31nfsu73tblTaHYvh3cq+JnIe2xvkEgmQ/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027227;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vqHp8IOzuoW9c4iMB7gqG3VFdCBCBhZxBN/ZUl5Gi20=;
-	b=mCUiy8f3SzjOgMiX75w0nJ1KA3vO8nU7BnxlVV7Y34vtgh1A96UHpRxWcOmI1SnYCZSZ
-	 2F8V1KnrHohyyYmTByBe5/LdRTqrS4ncUOCaVHQtoyD+kCx94dm5z00xZPRkSLGioWZhm
-	 qxaW3ituj1DbQT7kjZC8iw/S8i+eHKf1/w3C3vsn6el3qLuioqhXb2k2veWV9mEIgjki7
-	 HZA3bIXZaw/hTw8lo7EZAZUYWcCorYd3Wyhx0c01iqwCsajK8Ck8fL7Wr3k1pQ4YO82k7
-	 uu5cbyaN6MsQragQo0cvWcJsmyu+Qq5VSPvymshCpjd0GsYjO+t/09fAefVdjaky1aQ==
+	bh=0o8dQqgEZS6UKIkxMFLPgc35r618WGfrSm/DW+7AnRM=;
+	b=3ec265G9O6ea0FNgU1RBZpAZfh6AVXIQU/o2A/lvMBDk7X1QVSBn8GYugNFF0Ip7GHmi
+	 KKARwE8bDBQRAv5eN96QdvvhLHF3mFAiVsLyHjtd+mdQx6ETMztD0CCTGlENo2fhoyq/y
+	 A4QC6rbANokPfSXtOK80JNswjq22fK8m8tdriZ0M5WcR1FRXZemv+Zb/Pei0rWfbIpjn2
+	 9VkeHdvZcWTS9ZlWZfbeLTDMEtKCrbj/fFztetRS5RVOSkbFi+beUgaCVFojG0SxfC22O
+	 8RfM3aaisgEerz5XtP9rummtLI5tUoigPGrcZ8yJUascypLxTu7pHFJriumZOG43DiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hzETFfFy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weMDDmre;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10917606DAEF;
-	Wed, 18 Nov 2026 18:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0D1606A76F;
+	Wed, 18 Nov 2026 18:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hzETFfFy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BFD1F0092F;
-	Wed, 18 Nov 2026 18:40:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=weMDDmre
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027A21F000D0;
+	Wed, 18 Nov 2026 18:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027226;
-	bh=vqHp8IOzuoW9c4iMB7gqG3VFdCBCBhZxBN/ZUl5Gi20=;
+	s=korg; t=1795027229;
+	bh=0o8dQqgEZS6UKIkxMFLPgc35r618WGfrSm/DW+7AnRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hzETFfFyIXXRmUhbyVlG6tc0/qo1AL2SadhqSpvjQdhOe+FM3cNlPnv9ut3emhTDR
-	 BA1q4ON6mvEoRWtxWmsBZAReZ9Tdy06UNNuHZ3tdOGs2h/h6ti0lUPWd1iH7uzskNg
-	 72/hJD6JjlgRzk6VKHllcKClWz1ndJpX3ul+MR1M=
+	b=weMDDmre7RZrk9Nj/ARz5PQlYwA/Ngh/7zgt3bJOYyA3rXQ9c1Qsh3qnC+Q132RUn
+	 fXyr0KeB8MqXJHIELbE7l+d4dNMv/pA8dT6zpTJ2FZ7ev1z41gvFPmy6qzCSLES0vT
+	 Brg/hvZZZ+0I/eSmzxSdOExVYMzozNMxQiLGV0EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Joonhoe Kim <26rote@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1715/2151] power: supply: qcom_battmgr: report the USB type from USB_ADAP_TYPE
-Date: Wed, 18 Nov 2026 15:57:30 +0100
-Message-ID: <20261118150224.299265477@linuxfoundation.org>
+Subject: [PATCH 6.18 1716/2151] bpf: Use the frame mem type in devmap egress XDP
+Date: Wed, 18 Nov 2026 15:57:31 +0100
+Message-ID: <20261118150224.340138965@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,62 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a49f86cd1333c6e12fd37bc0b3234ace10072553 ]
+[ Upstream commit b3ca872947ef322c475ceaa7a76a9ebb3356152e ]
 
-On SM8350 and SM8550 class firmware the USB power supply reads its
-usb_type from the USB_TYPE property. On a Kaanapali (SM8850) tablet that
-property is 1 (SDP) whatever is plugged in, while USB_ADAP_TYPE reports
-the adapter, using the same numbering as POWER_SUPPLY_USB_TYPE_*:
+A devmap egress program that removes a whole fragment of a redirected
+xdp_frame with bpf_xdp_adjust_tail() or bpf_xdp_pull_data() frees it
+with page_frag_free() whatever the frame's memory type is. For a
+MEM_TYPE_PAGE_POOL frame from a page_pool based driver this drops the
+page reference owned by the pool while the pool still accounts the
+fragment ("page_pool leak" bad page, leaked pp reference).
 
-  PC port                  USB_TYPE 1   USB_ADAP_TYPE 1 (SDP)
-  USB-C dock, 5 V PD       USB_TYPE 1   USB_ADAP_TYPE 6 (PD)
-  65 W PPS charger         USB_TYPE 1   USB_ADAP_TYPE 8 (PD_PPS)
+kernel/bpf/devmap.c:dev_map_bpf_prog_run() points xdp.rxq at an
+on-stack
 
-Qualcomm's downstream qti_battery_charger driver also maps
-USB_ADAP_TYPE to POWER_SUPPLY_PROP_USB_TYPE.
+    struct xdp_rxq_info rxq = { .dev = rx_dev };
 
-Request USB_ADAP_TYPE for POWER_SUPPLY_PROP_USB_TYPE instead.
+whose mem.type is 0, i.e. MEM_TYPE_PAGE_SHARED, and
+net/core/filter.c:bpf_xdp_shrink_data() releases frags according to
+rxq->mem.type. cpumap, which runs programs on xdp_frames the same way,
+already copies xdpf->mem_type into its private rxq for each frame.
 
-Tested on a Lenovo Legion Tab Y700 gen 5 (qcom,kaanapali-pmic-glink,
-which uses the SM8550 path). Only tested on this device; the SM8350
-variant shares the property map and was not tested.
+With 9000 byte frames from virtio_net and an egress program that cuts the
+fragments off:
 
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
-Reviewed-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Assisted-by: LLM
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261012130053.442-1-26rote@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+  BUG: Bad page state in process swapper/3  pfn:10660b
+  page dumped because: page_pool leak
+   bad_page+0xbd/0x190
+   __free_frozen_pages+0x5c7/0x900
+   bpf_xdp_adjust_tail+0x3be/0x480
+   bpf_prog_dad43f894a3faff7_egress+0x15c/0x1cd
+   dev_map_bpf_prog_run+0x288/0x610
+
+The pool waits for these pages for ever when its device is gone. That is
+the harmless case. A page of the pool can hold more than one fragment
+while its refcount is 1: the first page_frag_free() frees it under the
+fragment which is still in use, and the second one runs into
+
+  page dumped because: VM_BUG_ON_PAGE(page_ref_count(page) == 0)
+  kernel BUG at include/linux/mm.h:1846!
+
+veth is not affected. It takes references of its own on the pages and
+redirects the frame as MEM_TYPE_PAGE_SHARED.
+
+Fix by setting rxq.mem.type from each frame before running the devmap
+program, as cpu_map_bpf_prog_run_xdp() does.
+
+Fixes: ca9984c5f0ab ("bpf: devmap: provide rxq after redirect")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-2-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/qcom_battmgr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/devmap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index d171ce7ff124f..8247eaca63d18 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -980,7 +980,7 @@ static const u8 sm8350_usb_prop_map[] = {
- 	[POWER_SUPPLY_PROP_CURRENT_NOW] = USB_CURR_NOW,
- 	[POWER_SUPPLY_PROP_CURRENT_MAX] = USB_CURR_MAX,
- 	[POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT] = USB_INPUT_CURR_LIMIT,
--	[POWER_SUPPLY_PROP_USB_TYPE] = USB_TYPE,
-+	[POWER_SUPPLY_PROP_USB_TYPE] = USB_ADAP_TYPE,
- };
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index dc7b859e8bbfd..1b8f0d7f84552 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -350,6 +350,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
  
- static int qcom_battmgr_usb_sm8350_update(struct qcom_battmgr *battmgr,
-@@ -1538,7 +1538,7 @@ static void qcom_battmgr_sm8350_callback(struct qcom_battmgr *battmgr,
- 		case USB_INPUT_CURR_LIMIT:
- 			battmgr->usb.current_limit = le32_to_cpu(resp->intval.value);
- 			break;
--		case USB_TYPE:
-+		case USB_ADAP_TYPE:
- 			battmgr->usb.usb_type = le32_to_cpu(resp->intval.value);
- 			break;
- 		default:
+ 		xdp_convert_frame_to_buff(xdpf, &xdp);
+ 		xdp.txq = &txq;
++		rxq.mem.type = xdpf->mem_type;
+ 		xdp.rxq = &rxq;
+ 
+ 		act = bpf_prog_run_xdp(xdp_prog, &xdp);
 -- 
 2.53.0
 
