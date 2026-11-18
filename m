@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026122;
-	b=zpXKOsEe7sZ4/517eFILqnDoC3Usaey0BS8hgWAGQZM5V1RCe8r3puTRlTLWfvkRhVT6
-	 8pvAZ9GkcLQ6jpniuBFfvjV4s0CmnyE/m1gK1LpNDckpAn3acmyv1c2CvnX0IThF40uOC
-	 FizgjRdRLw3rerPi169FRa7HsRJjDQMfyxAf4RrTJIFVRYZzelG18EkZSxt1G52G+vFPO
-	 SOaym74BlKTIpK+VOk3ULIRF/C940RWtLnisAZVNrMB+ulSqIzKLXGBBQBh+rEBbq/KJy
-	 Ktetni4boqnShwsdKbo5uj1a4YVcSP065BKIqbKfY9YOhhJw8dFSkDpcheMVt30QQ0A==
+	t=1795026124;
+	b=eE8OroOYcYBq1DbNWj4xRpqxJ9RDi4JNEfhMXxMxs1m+DHLR0fsiFTnLZWUxkgHbw1ic
+	 /n8t0tdM5i7xdPsmcvrmZOhPspKtBh6v1vPUJdBCOgF/SDKB8lDBHrCTue13x2WqD4KQ/
+	 7qoVw7ZObDz7Ltt/PcYU8uBYHhkwaf8A8bN3RI11WTXvf8+PgllvZzoN4rBiwSBiC5flX
+	 tm4CsuC9w4GeUfKKGSTQD7KbU8NBeQsedX2TsmToDQ1orEVdVxJnnqrBZn8Ss9brx6DHE
+	 +n5ACxfO+chvnhQclVQGYeDlRFcvIRbVd045gmDoJjFcVVe41HmdvP3JaeJU0cVMHWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026122;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026124;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FQ1EcLWCepM3MJrx/yAspy3DJPlYMyCe1TcV5ai0SCA=;
-	b=qIDtzsaDJETv75JA9GadKM//w/yqZZXRuHWY+yEf/ufDXXkZcCP7rcYpjzLAbNSdMSmX
-	 xac9V/ij+NPlroNzWdQaUkj+26ufbVINzDcUVqjG4xkImC9op8HngjprSIcdl783T6Vou
-	 dvQovklY8f2TsVJEWloI9RP7Nr9V1wGsnHWYrt/BfSWWmUVZomQMx58dZdRucUWnTW9CR
-	 2OXP++NjsiFBjsEyW47+/wnSAO7GBf7cWgT3HhHCDCHN0aBNWlUlxyO8qOXaJo359jcA6
-	 V8WS11wsUy3OBB4qgJqJZ+Ad1yVY9LWnB1ITAfZ8B4msoxfx+rOCL5Cso7yOurabH9g==
+	bh=lO2slhE47jxCmWQ/s1d1Yo+CY69sWmM9qBRs9uf3Tqw=;
+	b=XUNtdQhXyh3OdgJWo1wNtzaT7DIjvrkGHfDxinqYeqnYS9BZ4rzYtarxWZVzacfI0Atz
+	 fI0xQOCEG+gbT5lowf2wbvZbfg/+Vods8vxVTuDLXwLrkUEK+EjTr7MWUhsZD4POzkh9f
+	 ZzDQs+QhOWtbiRK9w1QB1yBssmj0mgHawJnk/6rQS/4GedZ9HZD8HXEBuYIQGNVP3Bw5a
+	 ztDsJg/IpmbJCTC52ZaaIqIjL6SNZkNLCiK4Rxm/JpMhdCOgwt7eFTpSv8kREXe+8N+F0
+	 Cz5Dsiadn2/ANhi84kL2eAKSBFbmUmn+4poEkc3RGqtRh7alI5W869g5CHuqqVyQweA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+Vg1puw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TIjYF1CO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108CB606A32C;
-	Wed, 18 Nov 2026 18:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40A1606A32C;
+	Wed, 18 Nov 2026 18:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d+Vg1puw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2C81F000C4;
-	Wed, 18 Nov 2026 18:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TIjYF1CO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CEE1F000CB;
+	Wed, 18 Nov 2026 18:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026121;
-	bh=FQ1EcLWCepM3MJrx/yAspy3DJPlYMyCe1TcV5ai0SCA=;
+	s=korg; t=1795026124;
+	bh=lO2slhE47jxCmWQ/s1d1Yo+CY69sWmM9qBRs9uf3Tqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+Vg1puwF8IKfAM1DsSOQV/DUPYl9Z2uPaNk4UfEva/M7wDlJQIWdQLJUutS/Qj9r
-	 7cEdezOgo1iKRofgp7PKTF+qiRiTckiMEv8Tz7ffLk2wMflwDmjbBV+JDe4gPwEfvj
-	 Dki0xbwbMQyzhV6rhfa55qT3RHehkIoUfxYqg8SQ=
+	b=TIjYF1COd1uxKmkd6xtjCPakMPV11oB9Sf2c60sPBGy45jo4Zo4mNfaKE0xqIb1Yc
+	 tPM9jMg9QX8Jik+MUJFIJg79hmiUvHRkWC2xZAle9fvYLbja9ZWXPzCC+AyPNIX4oZ
+	 wHx2rYjMiSpZMzwVFyq+x6HVIs5OWe7bzsoV32rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changyul Lee <lcy8047@gmail.com>,
-	Sang-Hoon Choi <csh0052@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1321/2151] xhci: dbc: lock the minor IDR on registration failure
-Date: Wed, 18 Nov 2026 15:50:56 +0100
-Message-ID: <20261118150210.210039298@linuxfoundation.org>
+Subject: [PATCH 6.18 1322/2151] mailbox: pcc: Free the channel before unmapping the shared memory
+Date: Wed, 18 Nov 2026 15:50:57 +0100
+Message-ID: <20261118150210.245642134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,43 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Hoon Choi <csh0052@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 47f4e983b5de7616fb11d5f537fc9a605387d136 ]
+[ Upstream commit 4ac21f3fac3e8584fd395c59044a8e99ac618572 ]
 
-dbc_tty_minors is protected by dbc_tty_minors_lock when entries are
-allocated and during normal device removal. The registration error path
-removes an entry without taking that lock. Different DbC instances have
-separate event work items, so this removal can race with an IDR update
-for another instance.
+I am seeing a crash on PCC that is related to a an shared memory being
+unmapped before the IRQ is disabled, and the IRQ kicks in and hits the
+unmapped (NULL) address. This is a summary of what I see on my box:
 
-Take the same mutex around the error-path removal.
+	scmi_protocol scmi_dev.1: Message for 1 type 0 is not expected!
+	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+	 __handle_irq_event_percpu+0x1c4/0x9e0
+	 handle_irq_event+0x98/0x218
+	 handle_fasteoi_irq+0x230/0x750
+	 generic_handle_domain_irq+0xac/0x138
+	 gic_handle_irq+0x344/0x740
+	 call_on_irq_stack+0x30/0x48
 
-Fixes: e1ec140f273e ("xhci: dbgtty: use IDR to support several dbc instances.")
-Reported-by: Changyul Lee <lcy8047@gmail.com>
-Assisted-by: LLM
-Signed-off-by: Sang-Hoon Choi <csh0052@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-6-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The trapping store is iowrite32(SCMI_SHMEM_FLAG_INTR_ENABLED,
+&shmem->header.flags), a write of 1 at offset 4 of a NULL base.
+
+But, back to the problem, pcc_mbox_free_channel() unmaps the shared
+memory and clears pchan->chan.shmem *before* freeing the IRQ (aka
+calling mbox_free_channel()).
+
+The interrupt is still live when the mapping goes away.
+
+Free the channel first, before the memory unmap. mbox_free_channel()
+calls pcc_shutdown(), which frees the platform interrupt, and then unmap
+shared memory.
+
+Fixes: 7f9e19f207be ("mailbox: pcc: Check before sending MCTP PCC response ACK")
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-dbgtty.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mailbox/pcc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-dbgtty.c b/drivers/usb/host/xhci-dbgtty.c
-index fda5ccaba27a9..979bfd904dc03 100644
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -535,7 +535,9 @@ static int xhci_dbc_tty_register_device(struct xhci_dbc *dbc)
- err_free_fifo:
- 	kfifo_free(&port->port.xmit_fifo);
- err_exit_port:
-+	mutex_lock(&dbc_tty_minors_lock);
- 	idr_remove(&dbc_tty_minors, port->minor);
-+	mutex_unlock(&dbc_tty_minors_lock);
- err_idr:
- 	xhci_dbc_tty_exit_port(port);
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 5189791c2790d..912819bb0b665 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -411,12 +411,13 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
+ 		return;
+ 	pchan_info = chan->con_priv;
+ 	pcc_mbox_chan = &pchan_info->chan;
++
++	mbox_free_channel(chan);
++
+ 	if (pcc_mbox_chan->shmem) {
+ 		iounmap(pcc_mbox_chan->shmem);
+ 		pcc_mbox_chan->shmem = NULL;
+ 	}
+-
+-	mbox_free_channel(chan);
+ }
+ EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
  
 -- 
 2.53.0
