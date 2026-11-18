@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057646;
-	b=e8lAc4/o80cKAgjJy0FQ4JObqDVF0/Bf4RR9qCwNepmOE2WYiCeybimAY+BJAGGTaSTa
-	 sU5kanW4EdUTqvSzLl0OLFfbnLS/LYX8NrURZYWzSpbBJC/RuarsQurWIUrmdPPktD6r9
-	 2wD0v1TvyuuKJC3LIerGySR6O/DBlPUSoW5T8+n4BYQvrmyyeqynXvtrEafIiKd5JpAEQ
-	 06B8B//0jps5mNL6H2UHufc3SLlHcjN7HNhKA/2s/x94Xctn+ufjyOz+KDI08be6lUhSN
-	 CBL4t2H/AkoVGuzoweiOe9V6tGmOe0G1uerLaAviDM+UQlmk7RfQt9h0t3fPD2KETDg==
+	t=1795057649;
+	b=u4fANOCCmwW2Dypv5r2PNFt1HprGRw18CEiueOcG4Es91yOZ6Cx3TP+HWQodwwubQtoS
+	 Jr9+1+O/2tXOvhcvAVupTuuxLrjhZFfP3ZzC+aV7lW1iBokD3W9OsD5ayL930zztMeEyz
+	 oLAFyryNQdWJbnLuLCMGdFMfBnwm6TFh2dXBwws9/kb5aBsDT1waGVZJgGWgOUEHU8QHF
+	 YoOiFYt6rbqynKbOfD5pB1gLdaMjBS5FjcYLkj6+wEjI1+x8Qud2bK9HQSsUF4zhRV5/W
+	 3a+c9zpVYk8oC1T4vTQ5IVAlyw4MWr7zrsfVkAHVBAVK9zMiNb5vWkqKjF5ZYvijq6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5ndognTWvf1Ifq6Je15KApgUftykbf3MC+WNvHOgjqw=;
-	b=2v1Ho6+Wy/0rTChf1gs/6alVL3LyLctry4Z230khrjDZE3MXPrO5v8gnD0I41mePeW3U
-	 f7Gk8RPY6yGiJQoaw32d2ZYmXwDaK94e96XDJ4Q+ot2fPnVKU0tT2ZXoaMlWv+FQV1gRX
-	 dtqn4dhSMTuR85x42bYn9+izl0CLBCFP5lBgf3eqz4k7eMxvcUjWl7P97dg5Tawvu6oiv
-	 +HzVzJpZW+cAmXjWdvFKOUm7DkUAqjX+cehc7HogupcWcPEoL3/MuWmAih9AyXLk/8j4z
-	 +GW/I5E3Be8aj4LGWYrZNbEDp4lVMaQt4+d3MKvF/CRk/wmAsJnmjVlcc3TZtPlcD8g==
+	bh=Ocmmj4qfhZjxX+mGGB91TlmyG3dUkznI/d2iZblexcg=;
+	b=HS4S9NxNci6cTmADtAmfOhfyX59aWQXdJUQdRHXGbgLZt6ofbTFAAt+asrFBzcEupq9g
+	 jzuGNRCBi1yO+6YrYvF/K3GsZskAmTYbXQjoDNdl1p5cjKW8ygFFBWljqoc58vi/4sB8P
+	 XXD8FD78cUxyZYgDTw/AaUXZQahXW2XhnYgoERVS4k5CgmZ+qeiJ5VQYlZ2hrnhU/vIii
+	 VLwTZ3O+F3+7YFTp2IH4JJrS0VsRsKkrU2/qJg7RYzxETxcLa3/wpnuIm8AGLDrWd1ROU
+	 aKvplHsNHsn2iw17kvWbI4BB1q3DnN7hb4fTBZDWfOLz2twpr/HwwcPTcedKmp1mugA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9ahHRHr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a72nGHlZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5160A2600;
-	Thu, 19 Nov 2026 03:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454A6606A33D;
+	Thu, 19 Nov 2026 03:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9ahHRHr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53941F000C4;
-	Thu, 19 Nov 2026 03:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a72nGHlZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A92A1F000C4;
+	Thu, 19 Nov 2026 03:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057646;
-	bh=5ndognTWvf1Ifq6Je15KApgUftykbf3MC+WNvHOgjqw=;
+	s=korg; t=1795057649;
+	bh=Ocmmj4qfhZjxX+mGGB91TlmyG3dUkznI/d2iZblexcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9ahHRHrzeNXzh1rDsWBPLHllFcFKWwsB+IMV5kwmXAdfvawGRdDjq4Y69GryHVtG
-	 XtBa2THLlYXDvsARQvQ2QIvJilJkjg1YH4WwaflkmL60dkPiDxl0tzj8nQ2MTmO4Lc
-	 y4Q182ynxTkDVUbFiajX1hXiESD3iOsHL77xAsb8=
+	b=a72nGHlZCON+Q+C8o7T6bOSo2tbYw6dJ0phUt/TwseXrlW3I+Oo3SqDR8Uyrt7NAo
+	 DJOdnMGFdZaqas3Rk1x9kZ2Ywmusx9a5GvzQ6LP98n4ChFNHCQ4kF1SdZGq9VYhgKJ
+	 YYpGJeCfiVAV35WKF7WrkrrMoNcNB1piQbO8RXHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eckhart Mohr <e.mohr@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0204/1848] ALSA: hda/realtek: Add quirk for ASRock NUC BOX-358H
-Date: Wed, 18 Nov 2026 15:37:22 +0100
-Message-ID: <20261118145920.416647718@linuxfoundation.org>
+Subject: [PATCH 5.10 0178/1848] ASoC: codec: max98926: fixup invert setup mask
+Date: Wed, 18 Nov 2026 15:36:56 +0100
+Message-ID: <20261118145918.972866062@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,33 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 9a44b828dd7c0be1d0d6d6cf178d9727ceb6da6e ]
+[ Upstream commit dd0ae9a2e19a24c532c9aa80a44f572b4907bcdf ]
 
-Fix headphone jack detection for some devices
+invert might have both WCI/BCI mask, but regmap_update_bits() masks
+BCI only. It needs both mask. Fixup it.
 
-Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20261001183403.103990-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+	static int max98926_dai_set_fmt(...)
+	{
+		...
+		switch (fmt & SND_SOC_DAIFMT_INV_MASK) {
+		case SND_SOC_DAIFMT_NB_NF:
+			break;
+		case SND_SOC_DAIFMT_NB_IF:
+=>			invert = MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_NF:
+=>			invert = MAX98926_DAI_BCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^
+		case SND_SOC_DAIFMT_IB_IF:
+=>			invert = MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK;
+			break;   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		default:
+			...
+		}
+		...
+		regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+				MAX98926_DAI_BCI_MASK, invert);
+		...		^^^^^^^^^^^^^^^^^^^^^
+	}
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87wltomc97.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/max98926.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 2cc9d961b96be..25573c62e86d1 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9601,6 +9601,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x9e56, "Lenovo ZhaoYang CF4620Z", ALC286_FIXUP_SONY_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1849, 0x0269, "Positivo Master C6400", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1849, 0x1233, "ASRock NUC Box 1100", ALC233_FIXUP_NO_AUDIO_JACK),
-+	SND_PCI_QUIRK(0x1849, 0x6256, "ASRock NUC Box 358H", ALC233_FIXUP_NO_AUDIO_JACK),
- 	SND_PCI_QUIRK(0x1849, 0xa233, "Positivo Master C6300", ALC269_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x19e5, 0x3204, "Huawei MACH-WX9", ALC256_FIXUP_HUAWEI_MACH_WX9_PINS),
- 	SND_PCI_QUIRK(0x19e5, 0x320f, "Huawei WRT-WX9 ", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+diff --git a/sound/soc/codecs/max98926.c b/sound/soc/codecs/max98926.c
+index c4dfa8ab1d494..bd9fb0c69794c 100644
+--- a/sound/soc/codecs/max98926.c
++++ b/sound/soc/codecs/max98926.c
+@@ -360,7 +360,7 @@ static int max98926_dai_set_fmt(struct snd_soc_dai *codec_dai,
+ 	regmap_write(max98926->regmap,
+ 			MAX98926_FORMAT, MAX98926_DAI_DLY_MASK);
+ 	regmap_update_bits(max98926->regmap, MAX98926_FORMAT,
+-			MAX98926_DAI_BCI_MASK, invert);
++			MAX98926_DAI_BCI_MASK | MAX98926_DAI_WCI_MASK, invert);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
