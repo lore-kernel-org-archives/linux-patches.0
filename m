@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054469;
-	b=AIRxQQHYHwq8Swmwkzhc313LisZt8ghXt6rEDlyfINMkZXPdn2xBZh01dZbZsRwEWEYL
-	 QP0cPhe63QHuNRTx1hc8be4UbdI7poi8JuK/71pZq62tkvfJkaBdgq4elT8XiMyZfYr4A
-	 77pIl6J74asZNYetR+26ODT0jfR3p3mRBQPj1OzM3Zp8bNjNLA/PcD7cKxe0VjdmHKbsC
-	 MNanFJOKRt/SrbNxFKMlzJfdhkg37IuNyPrEn/dUPFPwy3iUKhDnvs2y+EvV7bfVzZEE+
-	 B1rD7sBFOo16Z7vw83H0NYRfql0nhhLUKl/7GgPGsCF0fddCKqeX1qJELducznYPNrw==
+	t=1795054472;
+	b=bvkucHTEr7FRoN0qb1ozd0fJaQFebW75m17/auV/HyPLrK7BpxC4bqOyDBZH9rfo1EG5
+	 AmVLcKcIfXK1Lt6tvbg0DFmN51hofyyl/3+5qD1Iam4aO/+VXiki1rRgbhJ5LLoJ6xRxV
+	 azBBZoing2NplMjiI+KIGAj8j//rIT7nQkWm8QG2QTxwu7550KXMs1ZBreC/+6ylmyA7I
+	 8yXjzh3N7dVTu0/4cG01ZkTY96NkiwrAJ1UexSjsrXiLSskLiMTg6taivQXPTtBtp29at
+	 7D7kEfUqvvF+mntDA8xYp3UQki+ntYw4e2+eUJVvMqI1dNmP+wF92qX/o8nIWCfB3Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054469;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dtR52GgyUXVBiCgbWWmyTmlMm33ffrXGUkhDAuCS3mk=;
-	b=hDvpnLTz3ThstP4VdoZgTWjTGIWe1sFa54Dnc8MPkdEoh3HQ5m6WNxfgIzJf6vnuUeTN
-	 kwdxliRvPuwo0Vd5Vg7RHNaj3NunQuGeYKfTdWrdgcu/Oo6Yq2deFEjkN5Qm0+GGEdpX0
-	 ky2VKedE6A+7/1G2wy7ecA3EMb/uC+b2mtToTSP0JTp7HIWVTeo6oCin4Q/xlKjvBtVho
-	 zJ3F1hltTCAHEVXG37uPlA/gbvD3T2qGX8EDkc1rJX/bF++RCD7bhcENAKaQlfZCmiuXh
-	 UpbN+OsKKCBgbvcMNtj+ce8S1yHhKWwffjcfyKG2Akc/2wgQlvq5hgloHJWJD6ljNCw==
+	bh=/z+TXV6Ebj7+JBXbf5nk/Pnl36ctr7U45gxV71RYyQY=;
+	b=m2Wc+tu7uXeyZySe4Y/iI7Z+FmVslCqAl4r4rH71U9JwdcnIo8tdDHEvXGBnHbKKBbo4
+	 euWkfuoVsNVVqyuPx1Skof0sca3T+wBjsokmlTID2a+e82ArHRXxQEMFzCVWtIDcDsFCW
+	 0IGJvu0pkovZpqg1so5g7kkev//RdLgeZmI8kOi8dRV8Rfdr9JYMOthyeEKjDquYG9hi4
+	 MP1U1Q6HSWvsCYZOg+5VXtyyjb5MjB1R1ELZlhIgdXm8wPYlcQM5cHEn3tvUxqiW+KCWf
+	 iSM4VKx0asDs9naw+kehJey2bEkhC37ahNXha/jOKYNHyOMk3wTyjkbrLcb7ZWinnSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNaY6JD+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgGN26pw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E70606A31C;
-	Thu, 19 Nov 2026 02:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D82606A325;
+	Thu, 19 Nov 2026 02:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XNaY6JD+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239AC1F000C4;
-	Thu, 19 Nov 2026 02:14:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgGN26pw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44061F000C5;
+	Thu, 19 Nov 2026 02:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054469;
-	bh=dtR52GgyUXVBiCgbWWmyTmlMm33ffrXGUkhDAuCS3mk=;
+	s=korg; t=1795054472;
+	bh=/z+TXV6Ebj7+JBXbf5nk/Pnl36ctr7U45gxV71RYyQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNaY6JD+Fdui64DfTUI/31wPsKDYj5WzTmwDfA/9+PmW3Mp5po5Nt7xjl6WwIOet+
-	 GG9A4Youtw+9GNiRyOQGVMYz4MgbVpmqSCg/BbhR/s58UEcfEJGoaZM7uEjeLQCj+u
-	 HLemNG4z8kx/j25PvVFfkMZz9T6v1wqn7fJpYR+Y=
+	b=hgGN26pwfHifVsehFiXXMbtrg+5oNAUH2euAK+c0mBKzZ3/sNaiQOmkCX69H4aQw4
+	 zPqbsHLVHibbLPcFUM+rke0mcx+r2Lk/6fF3NqlC6+Rgte7fBPJUdbHqkNfxBDBdZB
+	 tk3lt/FkTC7qrU08cFgY8ELTwK98E0XKZ3O1dA3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Rik van Riel <riel@surriel.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1248/2214] hwmon: (sht15) Stop deferred work before releasing its resources
-Date: Wed, 18 Nov 2026 15:48:44 +0100
-Message-ID: <20261118150101.620363395@linuxfoundation.org>
+Subject: [PATCH 5.15 1284/2214] mm/filemap: read mapping->a_ops->free_folio under i_lock
+Date: Wed, 18 Nov 2026 15:49:20 +0100
+Message-ID: <20261118150102.950127328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,122 +71,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 5eab1e7f7ed12893f3864fe46ffcd5a41a752d6a ]
+[ Upstream commit dc24e273244e9d712257d5a6c20a32c7f5ca84e6 ]
 
-The IRQ handler and regulator notifier can leave work pending after a
-measurement or notification completes. Neither work item is drained before
-its resources are released on removal or probe failure.
+memory_failure() -> ... -> filemap_remove_folio() can read mapping->a_ops
+after the inode has been freed. Once the folio is deleted from the
+pagecache it no longer pins the mapping, so after i_lock is dropped
+e.g., a concurrent final iput() can evict and free the inode before
+filemap_free_folio() looks up mapping->a_ops->free_folio.
 
-Disable read_work before freeing the IRQ, since the worker can re-enable
-it. Use request_irq()/free_irq() for explicit teardown. Unregister the
-regulator notifier before cancelling update_supply_work and disabling the
-regulator. Apply the same ordering to probe failures.
+Most callers hold a reference on the inode, but not all.
 
-Fixes: 251eb40f5ccd ("hwmon: sht15 humidity sensor driver")
+Documentation/filesystems/vfs.rst explicitly states that ->free_folio()
+must not assume the original address_space mapping still exists.
+
+Fix it by loading ->free_folio while i_lock is still held, similar to
+what folio_unmap_invalidate() does.
+
+Inline filemap_free_folio() into its remaining caller such that
+delete_from_page_cache_batch() also just loads the callback before
+dropping the i_lock.
+
+The bug was found by code inspection and has not been reproduced.
+
+Fix generated by an LLM and sent by Josef Bacik in private.
+
+Fixes: 59c66c5f8c4f ("mm: factor out page cache page freeing into a separate function")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261024014044.27853-1-mhun512@gmail.com
-[groeck: Dropped obsolete 'Assisted-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: replaced disable_work_sync() with cancel_work_sync() plus IRQ disabling and a READ_ONCE()/WRITE_ONCE() state guard ]
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: get rid of filemap_free_folio() entirely; improve patch description ]
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-6-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: Adapted callback capture from free_folio under i_lock to freepage under i_pages. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht15.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ mm/filemap.c | 44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/hwmon/sht15.c b/drivers/hwmon/sht15.c
-index ae4d14257a11d..a0f2f1a2beb87 100644
---- a/drivers/hwmon/sht15.c
-+++ b/drivers/hwmon/sht15.c
-@@ -31,6 +31,7 @@
- #include <linux/bitrev.h>
- #include <linux/gpio/consumer.h>
- #include <linux/of.h>
-+#include <linux/workqueue.h>
- 
- /* Commands */
- #define SHT15_MEASURE_TEMP		0x03
-@@ -804,7 +805,7 @@ static irqreturn_t sht15_interrupt_fired(int irq, void *d)
- 	disable_irq_nosync(irq);
- 	atomic_inc(&data->interrupt_handled);
- 	/* Then schedule a reading work struct */
--	if (data->state != SHT15_READING_NOTHING)
-+	if (READ_ONCE(data->state) != SHT15_READING_NOTHING)
- 		schedule_work(&data->read_work);
- 	return IRQ_HANDLED;
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 9fec53a3f5505..eccc5318b6644 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -232,23 +232,6 @@ void __delete_from_page_cache(struct page *page, void *shadow)
+ 	page_cache_delete(mapping, page, shadow);
  }
-@@ -976,11 +977,8 @@ static int sht15_probe(struct platform_device *pdev)
- 		goto err_release_reg;
+ 
+-static void page_cache_free_page(struct address_space *mapping,
+-				struct page *page)
+-{
+-	void (*freepage)(struct page *);
+-
+-	freepage = mapping->a_ops->freepage;
+-	if (freepage)
+-		freepage(page);
+-
+-	if (PageTransHuge(page) && !PageHuge(page)) {
+-		page_ref_sub(page, thp_nr_pages(page));
+-		VM_BUG_ON_PAGE(page_count(page) <= 0, page);
+-	} else {
+-		put_page(page);
+-	}
+-}
+-
+ /**
+  * delete_from_page_cache - delete page from page cache
+  * @page: the page which the kernel is trying to remove from page cache
+@@ -260,13 +243,22 @@ static void page_cache_free_page(struct address_space *mapping,
+ void delete_from_page_cache(struct page *page)
+ {
+ 	struct address_space *mapping = page_mapping(page);
++	void (*freepage)(struct page *page);
+ 
+ 	BUG_ON(!PageLocked(page));
+ 	xa_lock_irq(&mapping->i_pages);
+ 	__delete_from_page_cache(page, NULL);
++	freepage = mapping->a_ops->freepage;
+ 	xa_unlock_irq(&mapping->i_pages);
+ 
+-	page_cache_free_page(mapping, page);
++	if (freepage)
++		freepage(page);
++	if (PageTransHuge(page) && !PageHuge(page)) {
++		page_ref_sub(page, thp_nr_pages(page));
++		VM_BUG_ON_PAGE(page_count(page) <= 0, page);
++	} else {
++		put_page(page);
++	}
+ }
+ EXPORT_SYMBOL(delete_from_page_cache);
+ 
+@@ -335,6 +327,7 @@ static void page_cache_delete_batch(struct address_space *mapping,
+ void delete_from_page_cache_batch(struct address_space *mapping,
+ 				  struct pagevec *pvec)
+ {
++	void (*freepage)(struct page *page);
+ 	int i;
+ 
+ 	if (!pagevec_count(pvec))
+@@ -347,10 +340,21 @@ void delete_from_page_cache_batch(struct address_space *mapping,
+ 		unaccount_page_cache_page(mapping, pvec->pages[i]);
  	}
+ 	page_cache_delete_batch(mapping, pvec);
++	freepage = mapping->a_ops->freepage;
+ 	xa_unlock_irq(&mapping->i_pages);
  
--	ret = devm_request_irq(&pdev->dev, gpiod_to_irq(data->data),
--			       sht15_interrupt_fired,
--			       IRQF_TRIGGER_FALLING,
--			       "sht15 data",
--			       data);
-+	ret = request_irq(gpiod_to_irq(data->data), sht15_interrupt_fired,
-+			  IRQF_TRIGGER_FALLING, "sht15 data", data);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to get irq for data line\n");
- 		goto err_release_reg;
-@@ -988,15 +986,15 @@ static int sht15_probe(struct platform_device *pdev)
- 	disable_irq_nosync(gpiod_to_irq(data->data));
- 	ret = sht15_connection_reset(data);
- 	if (ret)
--		goto err_release_reg;
-+		goto err_free_irq;
- 	ret = sht15_soft_reset(data);
- 	if (ret)
--		goto err_release_reg;
-+		goto err_free_irq;
- 
- 	ret = sysfs_create_group(&pdev->dev.kobj, &sht15_attr_group);
- 	if (ret) {
- 		dev_err(&pdev->dev, "sysfs create failed\n");
--		goto err_release_reg;
-+		goto err_free_irq;
- 	}
- 
- 	data->hwmon_dev = hwmon_device_register(data->dev);
-@@ -1009,9 +1007,15 @@ static int sht15_probe(struct platform_device *pdev)
- 
- err_release_sysfs_group:
- 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
-+err_free_irq:
-+	WRITE_ONCE(data->state, SHT15_READING_NOTHING);
-+	disable_irq(gpiod_to_irq(data->data));
-+	cancel_work_sync(&data->read_work);
-+	free_irq(gpiod_to_irq(data->data), data);
- err_release_reg:
- 	if (!IS_ERR(data->reg)) {
- 		regulator_unregister_notifier(data->reg, &data->nb);
-+		cancel_work_sync(&data->update_supply_work);
- 		regulator_disable(data->reg);
- 	}
- 	return ret;
-@@ -1025,12 +1029,18 @@ static int sht15_remove(struct platform_device *pdev)
- 	hwmon_device_unregister(data->hwmon_dev);
- 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
- 
-+	WRITE_ONCE(data->state, SHT15_READING_NOTHING);
-+	disable_irq(gpiod_to_irq(data->data));
-+	cancel_work_sync(&data->read_work);
-+	free_irq(gpiod_to_irq(data->data), data);
+-	for (i = 0; i < pagevec_count(pvec); i++)
+-		page_cache_free_page(mapping, pvec->pages[i]);
++	for (i = 0; i < pagevec_count(pvec); i++) {
++		struct page *page = pvec->pages[i];
 +
- 	ret = sht15_soft_reset(data);
- 	if (ret)
- 		dev_err(&pdev->dev, "Failed to reset device (%pe)\n", ERR_PTR(ret));
++		if (freepage)
++			freepage(page);
++		if (PageTransHuge(page) && !PageHuge(page)) {
++			page_ref_sub(page, thp_nr_pages(page));
++			VM_BUG_ON_PAGE(page_count(page) <= 0, page);
++		} else {
++			put_page(page);
++		}
++	}
+ }
  
- 	if (!IS_ERR(data->reg)) {
- 		regulator_unregister_notifier(data->reg, &data->nb);
-+		cancel_work_sync(&data->update_supply_work);
- 		regulator_disable(data->reg);
- 	}
- 
+ int filemap_check_errors(struct address_space *mapping)
 -- 
 2.53.0
 
