@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061995;
-	b=Nce0hIavtSSjAo3o9rXJgr4XrRvn9RsSixM2lfCyifX9LEgL+/j9LuaLddOszVnspEnw
-	 cUYGw+lvxHgCArfwdDavNHvGn7sZ7dhtvNUSgoPcBZ1QSshoAyLvoBRPfLwxuwo/iD/rR
-	 201uxmH8uyyL/KiW4FQo5mzs+GHoTaMHHqWW5v0xcLH3RnBwogsE9iWv29pHQEML9XqeQ
-	 zTjRr/VDHTuZFcVdycdq571XSzT6xsmF7zR9x272Ggq/UzvzW0kQlzU8ZeX96KB5kpyav
-	 cS5pNVWuV+Inoc0c8O58Ej4POI8zGwTspSh1cyb0E7ySUuIquzYwBq++gOXm/48jxmQ==
+	t=1795061997;
+	b=JHxlncU/GRkXGjebfUha7kuILJlskdG9ozG1zzl8vIAuJPJJ1xeTawwB5AS/e2Bfr14W
+	 nZAbYlvblPtunF9vzo80i/7nBRWrKBBKne5A0zLvjjI8jalItgVYmsY8iK5qN1f+fBTsf
+	 uatKbqNkx2Hxb9JGx6ZrYaBIp0Kwyp/lJGXWnEfgNyQCf8twAX65cZrWaVyWck0rbfY+3
+	 rjOU8E7WkYqbRyvpwecho5p62eq3/orq4yDcv7clYSMcgjX2M8snvTq2dFehnqmhdy3bZ
+	 Toui5rIoQCCC3VUGgGeOuBtm5Cns3yhPUYlZtwOQVNh/oe/yTtJEa/6kx0r6A5wWkfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TrIXWND52O0fWsYndlg0NGq5ZbHhzVC1QbBdPPySyAM=;
-	b=I45aci8o8BAcQwB1t9B+8LWQpOxatpoF/QE8PEQfhdF029F0JStd+gshHgHBtmgur7cO
-	 pDIdU2lezb7zUa4Q+8X1x22ilKiyVJlIOqTUXJv85KvwGfSNLyS0RrhpAQDJZ7TyQVuvd
-	 fifWYpcpusXb1NkmUpiQDxK+vNldRLqgtgh9HPFfxWalBRDyLegwlIbESTveIKGHu9BFM
-	 t3z2r9I03rFg6SSBT6P6vVXL+VaDcziOIf3zFRBMwmeFwSfTG5eQwi1y1b1v5GTckB0W9
-	 BZP0FkIsKtKm6CMSEv3jfpWypigJNJHTKUUj8eQiO49Gt91zfUnK/kXWeVFgxcYsu8Q==
+	bh=F+2rswXhzI+HexKmk3t4SySlnGg4WRI1UsIhXEKgCpU=;
+	b=kl9QvGyjoWK0pYZ3/aza1u5jrKJfe5OcOgb3+0Xbq+1nest0M2ovus0Jvu9KodJX875w
+	 nqjnLpWvxXe6PuKc/Xe1YILHGkp9XdHPigfexPwoAmF/gC6ypYcjtZUGsK+T7sP91uSfn
+	 KgrRNwPRaClhBW5AcXmQr+lR2oolVdm3bR5TabzTW0w1dqSAIw/b2g36rpwJV/ojWpuEO
+	 TnMd2v9bryRp/GhiKLcGtuLQIKU57CkMSli4LRwJ0+laC7CvQQeI4bVomXP5DmBL5DoJK
+	 UwBQTp9XH6RELUIqgrpiAGqQx6dE+E3bFR4cOybSzVNsLPo+XWYULoZZRAZTZMY7dtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vsrv7R3l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVhU5ICj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CA6606A325;
-	Thu, 19 Nov 2026 04:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56D360A2601;
+	Thu, 19 Nov 2026 04:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vsrv7R3l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545AB1F000C4;
-	Thu, 19 Nov 2026 04:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVhU5ICj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C621F000C4;
+	Thu, 19 Nov 2026 04:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061994;
-	bh=TrIXWND52O0fWsYndlg0NGq5ZbHhzVC1QbBdPPySyAM=;
+	s=korg; t=1795061997;
+	bh=F+2rswXhzI+HexKmk3t4SySlnGg4WRI1UsIhXEKgCpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vsrv7R3la8oh8+/BoJ6yYADCastzw18Ju/VYBtzo3adSfJ9MiAxAHCOTZd6uqEI0N
-	 1ODWybNXrJGlQo8VR7BpAuPiegP6VQ7FR52yhZEOEo2igaDKNdZ4s3H6VtcIMayyZv
-	 M3o0Er8SFDjP4sQfutSHPiMXlCvSvJ2qDF3u/WpA=
+	b=QVhU5ICj9bYzanBT+Un0DYuJHnUj5pnXQqj9LFaofk18GVl69iRYzNI2SuLoQlJEr
+	 8AmpoDmWHxYxs13fpmJNMmj1Q9irsTw052yMG4YhIntRyP20Yo+ex4ggYU9dpg2VVM
+	 ATxTmxf/SvmuIxkqi76/p2IMGVD439oHXoEKD/48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Eric Joyner <eric.joyner@amd.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Travis Howard <thoward@lafayetteinstrument.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1752/1848] ionic: fix port_info use-after-free on firmware recovery
-Date: Wed, 18 Nov 2026 16:03:10 +0100
-Message-ID: <20261118150032.812395473@linuxfoundation.org>
+Subject: [PATCH 5.10 1753/1848] tg3: Add Datto SIRIS 5 1U Server to restart AER quirk table
+Date: Wed, 18 Nov 2026 16:03:11 +0100
+Message-ID: <20261118150032.848547011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,71 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Travis Howard <thoward@lafayetteinstrument.com>
 
-[ Upstream commit d90d1a768b3b022c52beafb3a4701ee2ee3d2b5e ]
+[ Upstream commit a55eb6a622141352131aa6156bbd6ce5da79d9b5 ]
 
-ionic_port_init() allocates port_info when the pointer is NULL, but its
-error path frees it without checking whether this call allocated it.
-Before commit ddc5911b9bd2 ("ionic: call ionic_port_init after
-fw-upgrade") the function returned early when the buffer already
-existed, so the two were symmetric.
+The Datto SIRIS 5 1U Server is a Dell OEMR XL R640 (Dell's OEM-ready
+variant of the PowerEdge R640) sold under Datto's identity. Its DMI
+strings report sys_vendor "datto" and product_name "SIRIS 5 1U Server",
+so it does not match the existing "PowerEdge R640" entry in
+tg3_restart_aer_quirk_table.
 
-Since then a failed PORT_INIT on either recovery path - fw_up or
-reset_done - frees a buffer an earlier init owns, while the netdev is
-registered and the ethtool ops are reading it.
+As on the PowerEdge R640, a system restart triggers a fatal PCIe AER
+on the BCM5720 during ACPI _PTS for S5, which the iDRAC logs as
+PCI1318 and which hangs the reboot. Power off is unaffected.
 
-Free only what this call allocated.
+Clearing the same PCI_EXP_DEVCTL error-reporting bits on both BCM5720
+functions from userspace immediately before restart allows the system
+to reboot normally, confirming the quirk applies to this platform.
 
-Fixes: ddc5911b9bd2 ("ionic: call ionic_port_init after fw-upgrade")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-1-57232013fd79@amd.com
+Fixes: e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot")
+Signed-off-by: Travis Howard <thoward@lafayetteinstrument.com>
+Link: https://patch.msgid.link/20261019-tg3-datto-aer-quirk-v1-1-f0eccfb2ab5d@lafayetteinstrument.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 28617afecf287..b21ccc54c0b7c 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -504,6 +504,7 @@ int ionic_port_init(struct ionic *ionic)
- {
- 	struct ionic_identity *ident = &ionic->ident;
- 	struct ionic_dev *idev = &ionic->idev;
-+	bool allocated = false;
- 	size_t sz;
- 	int err;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 3f5cd16c79210..e0317ea710d63 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18203,6 +18203,12 @@ static const struct dmi_system_id tg3_restart_snp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
+ 		},
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "datto"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SIRIS 5 1U Server"),
++		},
++	},
+ 	{}
+ };
  
-@@ -515,6 +516,8 @@ int ionic_port_init(struct ionic *ionic)
- 						     GFP_KERNEL);
- 		if (!idev->port_info)
- 			return -ENOMEM;
-+
-+		allocated = true;
- 	}
- 
- 	sz = min(sizeof(ident->port.config), sizeof(idev->dev_cmd_regs->data));
-@@ -531,10 +534,12 @@ int ionic_port_init(struct ionic *ionic)
- 	mutex_unlock(&ionic->dev_cmd_lock);
- 	if (err) {
- 		dev_err(ionic->dev, "Failed to init port\n");
--		dma_free_coherent(ionic->dev, idev->port_info_sz,
--				  idev->port_info, idev->port_info_pa);
--		idev->port_info = NULL;
--		idev->port_info_pa = 0;
-+		if (allocated) {
-+			dma_free_coherent(ionic->dev, idev->port_info_sz,
-+					  idev->port_info, idev->port_info_pa);
-+			idev->port_info = NULL;
-+			idev->port_info_pa = 0;
-+		}
- 	}
- 
- 	return err;
 -- 
 2.53.0
 
