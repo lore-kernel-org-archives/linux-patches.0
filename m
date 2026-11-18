@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054605;
-	b=Pf7WHQDfel/Bwp0AoIB6/4lQQnqpQGwEyaETU8qaqVPXr6LaRp5QnjLqgN66CQi2YJXe
-	 JW0q/fc83cYxu7pCoB+qhNNmpclgOfAjZX/mdeeS9ks7GRKHzjoeHLLRbSpa5JG4YBqDY
-	 9uGLeGV13AQtpM1yEYduLi0VUH5ZaDLUAfksfgQMuiNH/REKFTfSCGpZ0SqzTg3XKXWCU
-	 ch681/ciKK0yOS4pSnHf7PaSW/wQ4gc2lKwae8OVRQWsvTHdhrPMimfX9KDc130itlXVp
-	 lnEZRwGpxUJ7lWDXznt16zQqdWsEO7r8kuKLkuFS8pbkQX5dIcGn6yJayoH4fwHrxSw==
+	t=1795054608;
+	b=vk86mk0IVQWP2nBF6pPZ6VgmJtqWuIVNjzgDvlx66BeZAoYioGmnBy1jvsZ+7UFqHXMc
+	 Rv01EvTaZLKcIz2GjBCVusaPu4wylpsaAgFqupOFf+qJe4mKSRW1G+o4ADSBiL+PyV0na
+	 LQO6eW0SEgn/+qkPZyALMDF/PC543ZzEL//T3e+cBG74Au2Ym5R0a9knR2voY4u7Ygplc
+	 VMml97VGKaLn/aqHMOEQ60aCyhB4HVzf0VODDJIb+rRlL51uz/T7RHuVyzigRoYyVV/3C
+	 lLWeN++BgAG0zyoK2YSnZDJpekIwNBX5UitCOt7b9Ui+SFvd9Gu7Lx5hUC1zCpj9tRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eqHYwnsS8ZbFesjpgURK6lKwBkNeGJJeyyKZA1TlpVE=;
-	b=WrudAzefBod+x2k4+ln0xCNRJkawBEkczJQMjKBrZZK+07HKK3Lz8xjY7WoEa/1kc631
-	 IjKyzwptyJkFKIWUIIqt8yfbSERI2pT+WlGNRVaFzAX53FmictalN5hmVEpIZnuaih/b/
-	 Cv8A3KsjnE0HOf1WF6xgkC9yHLr1qVotdSMadT/tJ/QfNvwyL8K2+nsOpQgxhhsqheW2+
-	 BdubqN1TM6SNUvVt30LtkCUlciMKmC4GWIknJ+w+rUEVs7XNxYUuQgfCmn/6X09wlH8rH
-	 8a5BMWCVJ+pl8OPWNh/GjnG6GiKnj2N9ZXZNsN3MgnS+RzKNtMe+vtp5Yx1R7tS982A==
+	bh=0whBlp3XpnvltcDSVncdTfq/R/iO8EE9J9F4Ze8VGoA=;
+	b=p3GVY+5G1BSXsw37KPyTbUf9IKEvcSyRNh6GM6sCYbOIR+AfMMxx0DPN2sXPL/vnIB/E
+	 RUuWjXsPsq97Ukw1pmQr/fgiVFHJc4Nw/JbmojwlrUDkpkqk47Q3legIX2JhZukpyDwk4
+	 3H3isJh9YFC97Qqqhyqc/PRbwKTXZkCJk0BCp8gpleQZ/fFf97li7innDT9fftYhAI7rG
+	 vXSEShyyT74EPantB3uV3bpC+cD9UbKbF8PIvGhKQDSHD3sfTP2jS72d4rKd1f2D/119Q
+	 XZ50yQMqgVhjE2jw1Ujfq5l32MJkgAAiSBLVbHOuR09vVlp1uJHRJgV+IQiftDLxssA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGkVZ43C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2afI3zKC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F51F606A31C;
-	Thu, 19 Nov 2026 02:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EA2606A320;
+	Thu, 19 Nov 2026 02:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AGkVZ43C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F30D1F000C4;
-	Thu, 19 Nov 2026 02:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2afI3zKC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5467E1F000C4;
+	Thu, 19 Nov 2026 02:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054605;
-	bh=eqHYwnsS8ZbFesjpgURK6lKwBkNeGJJeyyKZA1TlpVE=;
+	s=korg; t=1795054607;
+	bh=0whBlp3XpnvltcDSVncdTfq/R/iO8EE9J9F4Ze8VGoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AGkVZ43Cllk6zDwMYYgpzV+WXH/xZZK0HViYOtAI0XFq+HIbUl24d//RESEkeMTvT
-	 OdOQfmTjIBGBCjBLTJsyQ7Lp82Fvn6rbY4D1BaXojFieKpsE2Sh/nsdv+Dt99CO1Oh
-	 8TJ8S5ipUo/SEgv5v+Fjyldm1mksyPUTaJbBNVrQ=
+	b=2afI3zKCvhyuoc+cnvl46SSO5IxetpQ1SHs9996K2aCCdMc1sNjz/BxhrggRkOh/B
+	 oBL+YliODaZu6NbZ6eQOBMtLS/qUEkr/qz2z4TUZOMr5hLl6KAqUqMVmMpstgkKrqg
+	 ngmKudkekTWMnKdtaqEd2sQISM+9myCAX676sJtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Gerardo Lopez Hernandez <gamaerry@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1294/2214] ALSA: hda/realtek: Fix internal speakers on Acer Aspire AL16-31P
-Date: Wed, 18 Nov 2026 15:49:30 +0100
-Message-ID: <20261118150103.309566497@linuxfoundation.org>
+	Xie Yongji <xieyongji@bytedance.com>,
+	"chenglong.ma" <longpareto@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Claude Code <noreply@anthropic.com>
+Subject: [PATCH 5.15 1295/2214] vduse: fix VA/PA confusion in the coherent page fault path
+Date: Wed, 18 Nov 2026 15:49:31 +0100
+Message-ID: <20261118150103.341905936@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,47 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Gerardo Lopez Hernandez <gamaerry@gmail.com>
+From: chenglong.ma <longpareto@gmail.com>
 
-[ Upstream commit d933955c456e0573b40eae4f72a3af37ab1c15c3 ]
+[ Upstream commit bb2e6f166547838fd7c320b01c90918b736f76e2 ]
 
-The Acer Aspire AL16-31P (Intel Alder Lake-N, Realtek ALC269VC,
-PCI/codec SSID 2782:1718) has its internal speakers wired to pin 0x1b,
-but the BIOS marks that pin as not connected (0x411111f0) and only
-exposes pin 0x14 as the speaker. As a result the internal speakers are
-silent while headphones, HDMI and Bluetooth work.
+vduse_domain_get_coherent_page() assumes that iotlb entries above
+bounce_size were installed by vduse_domain_alloc_coherent(), so it
+treats map->addr as a physical address. But vduse registers with
+use_va = true, and when the device is bound to vhost_vdpa,
+vhost_vdpa_va_map() stores a userspace virtual address in map->addr,
+which vduse_domain_set_map() then copies into the same iotlb. A
+process holding the domain file descriptor across a rebind can
+therefore fault in an arbitrary physical page with read/write
+access, ignoring the entry permissions.
 
-This is the same layout as the Infinix Y4 Max and MEDION E15433, which
-share the 0x2782 subsystem vendor. Reuse their fixup, which configures
-pin 0x1b as an internal speaker and limits the internal mic boost.
+Additionally, since the domain file mmap lacks VM_IO, the domain
+file itself can be mapped and passed to vhost_vdpa_va_map(),
+producing self-referential entries that bypass the coherent path
+check.
 
-Tested by booting with snd-hda-intel model=2782:1705: the fixup is
-picked, pin 0x1b is used as a speaker output, the internal speakers
-work, and they are muted when headphones are plugged in.
+To fix, only translate entries whose backing file is the domain
+file itself in vduse_domain_get_coherent_page(), reject such
+entries in vduse_domain_set_map() since only external mappings
+should be imported, and set VM_IO on the domain file mmap so
+vhost_vdpa_va_map() refuses to map it in the first place.
 
+Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
+Cc: Xie Yongji <xieyongji@bytedance.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Luis Gerardo Lopez Hernandez <gamaerry@gmail.com>
-Link: https://patch.msgid.link/20261017005039.9139-1-gamaerry@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: adjusted insertion context to match the existing snd_pci_quirk table ]
+Reported-by: chenglong.ma <longpareto@gmail.com>
+Signed-off-by: chenglong.ma <longpareto@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Co-Authored-By: Claude Code <noreply@anthropic.com>
+[ sashal: Replaced vm_flags_set() with a direct vma->vm_flags |= update because the helper is unavailable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index dc2fb0a319c1a..66ca1f6988d71 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9722,6 +9722,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
-+	SND_PCI_QUIRK(0x2782, 0x1718, "Acer Aspire AL16-31P", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
+index 783319f160761..e7f1ed339b206 100644
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -70,6 +70,10 @@ int vduse_domain_set_map(struct vduse_iova_domain *domain,
+ 	for (map = vhost_iotlb_itree_first(iotlb, start, last); map;
+ 	     map = vhost_iotlb_itree_next(map, start, last)) {
+ 		map_file = (struct vdpa_map_file *)map->opaque;
++		if (!map_file || map_file->file == domain->file) {
++			ret = -EINVAL;
++			goto err;
++		}
+ 		ret = vduse_iotlb_add_range(domain, map->start, map->last,
+ 					    map->addr, map->perm,
+ 					    map_file->file,
+@@ -216,6 +220,7 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
+ {
+ 	u64 start = iova & PAGE_MASK;
+ 	u64 last = start + PAGE_SIZE - 1;
++	struct vdpa_map_file *map_file;
+ 	struct vhost_iotlb_map *map;
+ 	struct page *page = NULL;
+ 
+@@ -224,6 +229,10 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
+ 	if (!map)
+ 		goto out;
+ 
++	map_file = (struct vdpa_map_file *)map->opaque;
++	if (!map_file || map_file->file != domain->file)
++		goto out;
++
+ 	page = pfn_to_page((map->addr + iova - map->start) >> PAGE_SHIFT);
+ 	get_page(page);
+ out:
+@@ -461,7 +470,7 @@ static int vduse_domain_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+ 	struct vduse_iova_domain *domain = file->private_data;
+ 
+-	vma->vm_flags |= VM_DONTDUMP | VM_DONTEXPAND;
++	vma->vm_flags |= VM_IO | VM_DONTDUMP | VM_DONTEXPAND;
+ 	vma->vm_private_data = domain;
+ 	vma->vm_ops = &vduse_domain_mmap_ops;
+ 
 -- 
 2.53.0
 
