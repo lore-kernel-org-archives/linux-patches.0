@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048501;
-	b=49oiHgoG/LdrHRxHB+vbM+M9iN4w3S4Qc9VD/kLYmbRrUBd8LHlhnIdgH76hVLqF7Ijo
-	 MqUvY7Pwer8LpovDoBhQ5CDKplI1/suUDvjhAaAWGKz+iL3rzH2mDz4jZt6VuFJn8mmds
-	 j8ulrXCLqOQLeg5CCvpwYq8qPs06wSXR+6ZvNdJGE5PQXOEXC1T936mUaefV3R5Kr+nO9
-	 j8Om0nnIacsVYT6onuR6yhNtg8j3dORDaFh765SBpP5JxvNWTtymQpInS7RTae5GGnKrX
-	 Qkzpyoxaytj80PUuHgQts7VEGQtIJy3qUt8ZaDr3L9KgnAvOb15mzRiDUV7864yya0Q==
+	t=1795048504;
+	b=p9/umc32FhGLFQ98kdszC4w2PTd5J7Qkf44WTioGrvCtZO/IZQ6f23ZAADXPYCCEgxYt
+	 fU+gj6o1tVwUr6fTCv3aKlXOuq7liJZOHJLnZALLcdDqyH++V4w8iDj8FDJVp8zOo9V2E
+	 Q37L2Ugc1mUp6KjVXgJh0neXe1CP+WdkhRnU5e+PiHgcHnb/LnPSrq3ELCJ4mQ/iPvWzg
+	 8S1r3A4G5aBQWyz4oisbTGneCAHgbr6ONYabZC4PHdIXbvSKdKtMxzjZYRRkfiuUIBpHo
+	 Iku/eQfyIPRw0XONAuGxng6q/QBvmiuv2SZKdQjsfgmF2sHqYmCjtOqceRQA72bP4Ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048504;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ujYPvRi5a3fblbtWH+15owzbTUOla20wFbYnDZkFo1c=;
-	b=h+DwLyWIZHIkmE+wZ7Ivy9q6WZ6bRiX6P+Ja8XnePyeMcd5+76olKUzL3+TS3uW70YKE
-	 w3s92KTKYBpFyHWsg8YLa+2+ttujvlSqHyCX6Cl44te4E+kFT/OXJBrOi3RNEsrUTeGrn
-	 358zi+hFB5EQr39MGnbM6rGmZt6dMdSCbxClbgWfNzrnx2R0Hkp1v6pogaANFjfCJ43xz
-	 koedxkW0CVQpOEunMbRwIQ1Tb/RNUT5ZzLzOZCBeU9skkvSqjDHeqjAEygB6vF/ly0eI1
-	 7Blqt4ZKEWiCh+tNxNtKRviS22roIEl6Mm7DQc8abJLLx9OVrj9ZVyr2EZW4mIzkQaA==
+	bh=QXaS3gesVTCy/VT5zBf4otNJKwnTya2TDNYjrNETCDc=;
+	b=0MUSwLkuJ7iSWbxgvxDEs0mIls8/hmSk+pkTANcYDwcALa1bq8Obd++Mpxn+Teg9kMkp
+	 EUYCfEh9VP2VH/owQzcGcjGixqsD0hiVrigZ8yL8m+xkKaKZBhi2qfvXGjTfcDhtYMj/K
+	 rDbP05ngHeDwFcuK+EcjMllNAEpMpKgHiHd3rYcE7llWU4pvddb1E0fUrfz9WzzQQrRcQ
+	 eARH7keqg1+iH/Wf+1VdKVQGBrGDmhLsFxCKz8HWiWR+95Fnq8sg+IuwYvFsM47RrAY0J
+	 22/yNdGGljlRladaPUxezaS5BJ+1gZYpDagCHYHb4ajenMoVUoZS2mVPhWhh+2TMu0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUhXcySr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fG0xcjZA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60323606A31C;
-	Thu, 19 Nov 2026 00:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C59F606A31C;
+	Thu, 19 Nov 2026 00:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lUhXcySr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13FA1F000C4;
-	Thu, 19 Nov 2026 00:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fG0xcjZA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839011F000C6;
+	Thu, 19 Nov 2026 00:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048501;
-	bh=ujYPvRi5a3fblbtWH+15owzbTUOla20wFbYnDZkFo1c=;
+	s=korg; t=1795048504;
+	bh=QXaS3gesVTCy/VT5zBf4otNJKwnTya2TDNYjrNETCDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUhXcySr4mfyZJYWQvCdZVDm5kBFNM2KSMx3ovfXHIUwWAdzLt8AU/VtfC4wFa6z6
-	 kFLsXV+xVEorEeFV0p9ZmzTaGBMX0up75SNjWnrslD5xMYWJW9ZHmvXs0Uw7/cRyNo
-	 EGtKvIy1bzMQ20YnaDzeKTvAP5exEqoTLyuKm5jY=
+	b=fG0xcjZAf2nfpPkVI8P7o6g8Qx2+WfGCWsSgY/4NorvTX7zDbtGG2wuGUfZgkWi89
+	 L0ugJgpmsaNN8V21LgvrypJy4jJLEWblYbJp/bJoJFS7D4G2WIYMqGHHzK4FSpOpjt
+	 LGGEci4LUELLZ14vb0Jwdv2PhxQZH2wppoV0XLgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Krause <mileskrause5200@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1990/2857] leds: lp8860: Fix device_node leak in lp8860_probe()
-Date: Wed, 18 Nov 2026 15:50:24 +0100
-Message-ID: <20261118150313.024955397@linuxfoundation.org>
+Subject: [PATCH 6.1 2017/2857] swim: Recalibrate when drive is probed
+Date: Wed, 18 Nov 2026 15:50:51 +0100
+Message-ID: <20261118150314.025170384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,82 +69,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miles Krause <mileskrause5200@gmail.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit f9879086c4eb4b3b0f4baa80139a5720b99b229e ]
+[ Upstream commit ba087774a1493ade524f8a783461fa8be9c75039 ]
 
-lp8860_probe() looks up the driver's single LED child node with
-of_get_next_available_child() and hands it to the LED core as
-init_data.fwnode, but never drops the reference that lookup returned:
+Track zero recalibration can be slow and is normally done only once i.e.
+during system POST or boot-up. Recalibrate once after the drive is probed
+rather than every time the device is opened. Don't register the drive if
+recalibration fails. Park the heads before ejecting.
 
-	child_node = of_get_next_available_child(np, NULL);
-	if (!child_node)
-		return -EINVAL;
-	...
-	init_data.fwnode = of_fwnode_handle(child_node);
-
-of_get_next_available_child() returns the node with its refcount
-incremented, and the LED core does not take a reference of its own:
-led_classdev_register_ext() only reads properties out of
-init_data.fwnode and then stores the bare pointer with
-device_set_node().  The reference therefore stays owned by the driver
-for as long as it holds the node.
-
-Nothing in lp8860_probe() ever releases it, so it is leaked on every
-error return taken after the lookup - the enable GPIO, the vled
-regulator, devm_mutex_init(), the regmap allocation, the optional
-EEPROM programming and the LED class registration - and on a fully
-successful probe alike.  A device that binds and unbinds repeatedly
-leaks one device_node reference per bind.
-
-Sibling drivers already get this right: leds-lm3692x.c, from the same
-TI LED family, calls fwnode_handle_put(init_data.fwnode) once after
-devm_led_classdev_register_ext() to cover both outcomes, while
-leds-ktd2692.c and leds-aat1290.c take the node with __free(device_node).
-
-Use __free(device_node) here too.  Unlike a single of_node_put() at the
-end of probe it also covers the intermediate error returns, and it keeps
-the node alive for the whole function, which the LED core still needs
-when it reads the child's properties during registration.
-
-Fixes: 99ca0ea57309 ("leds: lp8860: Use generic support for composing LED names")
-Signed-off-by: Miles Krause <mileskrause5200@gmail.com>
-Link: https://patch.msgid.link/20260910-leds-lp8860-of-node-leak-v1-1-d333cff4345b@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/119e799afcc00d6bd4a479c31e0c960cb1a1d71b.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-lp8860.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/block/swim.c | 37 +++++++++++++++++--------------------
+ 1 file changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/leds/leds-lp8860.c b/drivers/leds/leds-lp8860.c
-index b7da47333cd8b..2733c3864b07d 100644
---- a/drivers/leds/leds-lp8860.c
-+++ b/drivers/leds/leds-lp8860.c
-@@ -7,6 +7,7 @@
-  * Author: Dan Murphy <dmurphy@ti.com>
-  */
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index f2ca35ed0ff0c..0d738368da44e 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -412,6 +412,7 @@ static inline int swim_track00(struct swim __iomem *base)
+ 	if (swim_readbit(base, TRACK_ZERO))
+ 		return 0;
  
-+#include <linux/cleanup.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
- #include <linux/leds.h>
-@@ -381,14 +382,14 @@ static int lp8860_probe(struct i2c_client *client,
- 	int ret;
- 	struct lp8860_led *led;
- 	struct device_node *np = dev_of_node(&client->dev);
--	struct device_node *child_node;
- 	struct led_init_data init_data = {};
++	pr_err("swim: track zero recalibration failed\n");
+ 	return -1;
+ }
  
- 	led = devm_kzalloc(&client->dev, sizeof(*led), GFP_KERNEL);
- 	if (!led)
- 		return -ENOMEM;
+@@ -456,6 +457,7 @@ static int floppy_eject(struct floppy_state *fs)
+ 	struct swim __iomem *base = fs->swd->base;
  
--	child_node = of_get_next_available_child(np, NULL);
-+	struct device_node *child_node __free(device_node) =
-+		of_get_next_available_child(np, NULL);
- 	if (!child_node)
- 		return -EINVAL;
+ 	swim_drive(base, fs->location);
++	swim_track(fs, 40);
+ 	swim_motor(base, OFF);
+ 	swim_eject(base);
+ 	swim_drive(base, NO_DRIVE);
+@@ -596,13 +598,6 @@ static void setup_medium(struct floppy_state *fs)
+ 		struct floppy_struct *g;
+ 		fs->disk_in = 1;
+ 		fs->write_protected = swim_readbit(base, WRITE_PROT);
+-
+-		if (swim_track00(base))
+-			printk(KERN_ERR
+-				"SWIM: cannot move floppy head to track 0\n");
+-
+-		swim_track00(base);
+-
+ 		fs->type = swim_readbit(base, TWOMEG_MEDIA) ?
+ 			HD_MEDIA : DD_MEDIA;
+ 		fs->head_number = swim_readbit(base, SINGLE_SIDED) ? 1 : 2;
+@@ -610,7 +605,6 @@ static void setup_medium(struct floppy_state *fs)
+ 		fs->total_secs = g->size;
+ 		fs->secpercyl = g->head * g->sect;
+ 		fs->secpertrack = g->sect;
+-		fs->track = 0;
+ 	} else {
+ 		fs->disk_in = 0;
+ 	}
+@@ -762,24 +756,33 @@ static const struct block_device_operations floppy_fops = {
+ 	.check_events	 = floppy_check_events,
+ };
  
+-static int swim_add_floppy(struct swim_priv *swd, enum drive_location location)
++static void swim_add_floppy(struct swim_priv *swd, enum drive_location location)
+ {
+ 	struct floppy_state *fs = &swd->unit[swd->floppy_count];
+ 	struct swim __iomem *base = swd->base;
+ 
+-	fs->location = location;
++	swim_drive(base, location);
++	if (!swim_readbit(base, DRIVE_PRESENT) ||
++	    swim_readbit(base, ONEMEG_DRIVE))
++		goto out;
++	if (swim_readbit(base, DISK_IN))
++		swim_motor(base, ON);
++	if (swim_track00(base))
++		goto out;
+ 
+-	swim_motor(base, OFF);
++	fs->location = location;
+ 
+ 	fs->type = HD_MEDIA;
+ 	fs->head_number = 2;
+ 
+ 	fs->ref_count = 0;
+ 	fs->ejected = 1;
++	fs->track = 0;
+ 
+ 	swd->floppy_count++;
+ 
+-	return 0;
++out:
++	swim_motor(base, OFF);
+ }
+ 
+ static const struct blk_mq_ops swim_mq_ops = {
+@@ -821,14 +824,8 @@ static int swim_floppy_init(struct swim_priv *swd)
+ 
+ 	/* scan floppy drives */
+ 
+-	swim_drive(base, INTERNAL_DRIVE);
+-	if (swim_readbit(base, DRIVE_PRESENT) &&
+-	    !swim_readbit(base, ONEMEG_DRIVE))
+-		swim_add_floppy(swd, INTERNAL_DRIVE);
+-	swim_drive(base, EXTERNAL_DRIVE);
+-	if (swim_readbit(base, DRIVE_PRESENT) &&
+-	    !swim_readbit(base, ONEMEG_DRIVE))
+-		swim_add_floppy(swd, EXTERNAL_DRIVE);
++	swim_add_floppy(swd, INTERNAL_DRIVE);
++	swim_add_floppy(swd, EXTERNAL_DRIVE);
+ 	swim_drive(base, NO_DRIVE);
+ 
+ 	/* register floppy drives */
 -- 
 2.53.0
 
