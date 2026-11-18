@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021699;
-	b=dgBhdaWk4Kez+9sK13Q+Ku+NAJfLYroduXkXErysr7V0gRCzoDzI9HetRZU8Kf0PKrr9
-	 Hte8naWZadaYAkWFtD4G42AC4b/RTVk5Gl4U9jH+QaAaMoBrrEulOPezBAuJU3hAwybG3
-	 aC40WbaurbM3GoUxdFB4dyMtmI+gR7fx9U+Nk8AqtPcDRZlzFTmSayTEDArnnSj3AtCgN
-	 P+Tj9JgtAAsuvDahTWisf2U/bjb+keJ2coys7bKop3eDxLRwrVf36wwIXri4yQvZ1lcOJ
-	 en1bEG0zJQ4x1pfGeYdonkKtoSDx1t8OLkmjP1FGvsyRWHIepXU7oi5xzxR3HkFJb/g==
+	t=1795021702;
+	b=BhZS/TEqueZ0251qS0beb5JIj7z6Rwh3dqsowl4wLT0n+LDXmLJ70ioj7kr5uKxETZCv
+	 +iBOUdPkfo3PFYiHl8td+btUJnh5kVOYWK4DKeQGyOa7z6mLNxVud3lShZfSwQKk8Yj5m
+	 s1004Cs4TCApTt8dxjHdRsqDUoDBrqBGmDqbNgzstvgr5WJpvQoCfaU/Pdf5j10UZYLqG
+	 IYRC1FFT7JAKT0gONe5C6YbIcshfH9AD3OJzcHvQQLXCHbt6POSML360NuqinEEIjXGHr
+	 cclEGbi+HQMXN7P+eSFLXVKIcu3OhIuCo5v25oR+fgOUNjkoe2iVAuLVKPvwG+dz6/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021699;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021702;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ilR33ORc5Ve0LzlbePRqeI+ndEBwQ42byWaUgZna5Zg=;
-	b=ByB5OvpuBVsavmPPvaS59G2qRvucLz1ZaPi+uqq9imsfGiwudPkb45fbZw0XuwQcxUJS
-	 yC4J2fsLmTUIsx+tnviIOwwRk+U7PcSqdHhtI/nzXASE0/tqFGFr6j0Bq/5SnfWvDynhS
-	 cFKRA7K83Ml2316vwo/P6y7Ylf4vQeFJyOriraYYuagBN9Z2BbJp7SfTmMiIXsvnHalLy
-	 L9ErppumAvBD9uErD0iYDkrLzUgwyMHZoYGipplcNfDL2l3IG+TYGhxPdM3YYr9VIjcVl
-	 ZVKB1AKf8gqTMAC69L9h5IGzZgq0Kgp3YhgygYa3sL/xu+ANFBtvhoHZ//vfVCPGxWQ==
+	bh=u6TqfuwI0w1EsRPXhOpKxz1nbPmwEGIdCmdFNmutubE=;
+	b=KvbxiSDqp//nIS1dlmCbndllV79a5feT5v7DPvwh0E+6FmSGYrq1TfA/KcksU1AcbUJi
+	 XKZMxETMKPXcpdJrKSqjIfCaLbbsnmUiGXqphZzvRQih1b1dzoTc3vrkg8ixh9o1j/pP2
+	 MUUlIw9RTKZ/Hdkx4M05Acn1I/onGd+OZN1Yv63ZQpRL8ef7pduRafBxKNqHmjRBcRGsS
+	 BkGf77JcADQyhgRK7LGXaXkQfqche7a9dz0l/UJcY7CN/TbZaHjCcsWNKUNueFSJmoUPr
+	 1p6AP24w2+XjSDJTBwGRnLE3OtKW4l+IRKCl0pkH7Zcmr/e2pjTPQtvwnQMfJ2JSwlQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJEOpsg6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAYzd2Ov;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243D9606A325;
-	Wed, 18 Nov 2026 17:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D8C606A333;
+	Wed, 18 Nov 2026 17:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJEOpsg6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D8E1F000C4;
-	Wed, 18 Nov 2026 17:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wAYzd2Ov
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B191F000C4;
+	Wed, 18 Nov 2026 17:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021699;
-	bh=ilR33ORc5Ve0LzlbePRqeI+ndEBwQ42byWaUgZna5Zg=;
+	s=korg; t=1795021701;
+	bh=u6TqfuwI0w1EsRPXhOpKxz1nbPmwEGIdCmdFNmutubE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJEOpsg6RgGRZDaqZp1EPgivh0n5TCZhXa5Ru6OmrwovM9XZXpf9Iah691m4aBACf
-	 oQIAEXjQ5k0w6+nti23GQmwmwGh/HjpRf8xvpIouNLtzbeidiveecEjl++9ndzC0zt
-	 TngGyPA0g8Kcax4HzhmT8vklSZV3bmMgweTgYHJ8=
+	b=wAYzd2OvXQMKAGmf3/64/Vg3Splo4Y/M9cWIEDrKHVizCVQG/LniPzH5SZdTMW6/Z
+	 gNXm9csLxBhX7s3Gl1AdRa0wbSppl9jXKP7w5qNbKbTSN4XToMroL+xEIzIpid+UaQ
+	 2YIx+mYAQ2dYHUptz6sdzoBBgROzcgfYwKlQVHd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jia Jie <mkofdwu@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Carlier <devnexen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2363/2651] perf: Fix UAF in attach_task_ctx_data()
-Date: Wed, 18 Nov 2026 16:00:03 +0100
-Message-ID: <20261118150410.615066622@linuxfoundation.org>
+Subject: [PATCH 7.3 2399/2651] ALSA: us122l: mark hwdep mappings VM_MIXEDMAP
+Date: Wed, 18 Nov 2026 16:00:39 +0100
+Message-ID: <20261118150411.729498101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,57 +72,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jia Jie <mkofdwu@gmail.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 64ea0e8226ed98d14e0231af1beae10c3d5c043a ]
+[ Upstream commit bbde9d5bdd2d7cf94707b2a8bb466f2e074f9db2 ]
 
-struct perf_ctx_data is RCU protected. In attach_task_ctx_data(),
-the cmpxchg retry loop runs without holding rcu_read_lock(). If
-task->perf_ctx_data already holds a pointer (call it `cd1`), then
-try_cmpxchg(&task->perf_ctx_data, &old, cd) fails and loads old = cd1.
-A concurrent thread running detach_task_ctx_data() could free cd1
-leading to UAF and further memory corruption when cd1 is reclaimed by
-another thread.
+mm has recently moved to a strict model which requires any driver which
+clears VMA_MAYWRITE_BIT to be mapping non-mm-managed memory
+(VMA_PFNMAP_BIT or VMA_MIXEDMAP_BIT), failing any such mmap() with an
+error and a kernel warning - see "mm/vma: only allow mmap to clear
+VMA_MAYWRITE_BIT if not mm-managed".
 
-  CPU 0: attach_task_ctx_data()     CPU 1: detach_task_ctx_data()
-  -----------------------------     -----------------------------
-  try_cmpxchg(&task->perf_ctx_data,
-              &old, cd2)
-    -> fails; loads old = cd1
+However, simultaneous to this, commit 71c610aeb177 ("ALSA: us122l: Prevent
+write upgrades for read mappings") updated us122l to clear
+VMA_MAYWRITE_BIT without marking the region with either VMA_PFNMAP_BIT or
+VMA_MIXEDMAP_BIT.
 
-                                    refcount_dec_and_test(&cd1->refcount)
-                                    try_cmpxchg(&task->perf_ctx_data,
-                                                &cd1, NULL)
-                                    perf_free_ctx_data_rcu(cd1)
-                                    [ RCU grace period -> kfree(cd1) ]
+vm_insert_pages() and friends set this automatically, however this driver
+maps its pre-allocated pages from a fault handler, so never calls these.
 
-  refcount_inc_not_zero(&old->refcount)
-    -> UAF on freed cd1
+Simply set the flag in usb_stream_hwdep_mmap() to resolve the issue.  This
+correctly marks the mapping as one whose pages core mm does not manage,
+which has no meaningful impact for this driver beyond preventing the
+mmap() from failing.
 
-Fix this by taking rcu_read_lock across the race window.
-
-Fixes: 506e64e710ff ("perf: attach/detach PMU specific data")
-Signed-off-by: Lee Jia Jie <mkofdwu@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/20261023-fix-us122l-mixedmap-v1-1-e7bdd053850f@kernel.org
+Fixes: 71c610aeb177 ("ALSA: us122l: Prevent write upgrades for read mappings")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: David Carlier <devnexen@gmail.com>
+Closes: https://lore.kernel.org/20261018025905.201296-1-devnexen@gmail.com
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Cc: Kazuki Hanai <hnkz.64@gmail.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/usb/usx2y/us122l.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 9b90b6831de7c..e8293a0e7945c 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -5434,6 +5434,9 @@ attach_task_ctx_data(struct task_struct *task, struct kmem_cache *ctx_cache,
- 		return -ENOMEM;
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index 9b4ec9bdc1383..6e491736ca5ba 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -204,7 +204,7 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
+ 	}
  
- 	for (;;) {
-+		/* Protect @old until inc_not_zero(&old->refcount) */
-+		guard(rcu)();
-+
- 		if (try_cmpxchg(&task->perf_ctx_data, &old, cd)) {
- 			if (old)
- 				perf_free_ctx_data_rcu(old);
+ 	area->vm_ops = &usb_stream_hwdep_vm_ops;
+-	vm_flags_set(area, VM_DONTDUMP);
++	vm_flags_set(area, VM_MIXEDMAP | VM_DONTDUMP);
+ 	if (!read)
+ 		vm_flags_set(area, VM_DONTEXPAND);
+ 	area->vm_private_data = us122l;
 -- 
 2.53.0
 
