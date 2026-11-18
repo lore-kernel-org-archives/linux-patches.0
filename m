@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034954;
-	b=cc7E/ZqQRQTGVeIlZvYPshn02sk9L0FsYVzlvPYZTdklT7eRnWqjNeuf+B8CXw0NzDPU
-	 T/ja1g1knnjBrdtyzE9ILp/FsAttSaQjlAXARwY5dVE8E2n7BtBhYwJJIhibFqIbwrfxo
-	 Iu+2IxTbmYEIbwgrInQSmwArlGVbUC5cO2rx/hRmjUvEVE+vFicuUgDv2mB920NBNVN5U
-	 9aVr29Ta94YKT6v6Xxhe9UXM4nl8IaAnlw9CUiRCRf9PaGv5zDldWV1g3IsqaEFdZLR5M
-	 pXlGPQ22cv7BytFYx2tZ7WmDWprVI2LyH7f7OiUnKjylYrgDL9Qdqf6uzlmC1NTpWcQ==
+	t=1795034957;
+	b=z2rYvD4XeJZLSmbeHP75KOVZq7WXl9TaN0GvJElaJIOGryT5pkTxmzWyhbsdMoSbfJMa
+	 K1BmzQDQ3mRQ37ZKqvjMCQLRIMG8W8cofTpj4olezUh2nrLmEgOoJlHQ7KAiJDJPh9REB
+	 cpVehlPf2wfQHbeIGFG0nH1hdethvYSYkeH4IBptQdDu8WdDwP37Aed6HGGSRtOeL5vCV
+	 AB1m1gNcw5aPTX+enF9xsZ7A5PryXFt8PtbBvOKI6BGA8xD3hafAo/H0fKvm3TUa6Nn27
+	 AR/tTRo+O1O5G9udBmVKgRp++qwL1L1LNlfTXQ0aMm2bDzcuURo0RnJTPMYkysOVn8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zxlC7kNBid9vpOAoOn75HnkAz57qAbF5Xlf2Fg9wArQ=;
-	b=dEQoYJoDc2mmpPTATPPdqrKFY1hz+Mqc0zEuapyrz+EirQABqIgfYdPwp7RqXIxXQWp8
-	 J+cNTLO66nm2/xKMEO/SbAYmby3hw+cmMzL7AoAGywR9+tD+6y7YCVuTEHb77rns6XCza
-	 TgWQ0pymMXTm0fIwa+Fl1R2xTeiiAeqLw4Ze2k890waURN5BgjEuF/Uq36cGiGiiwTtRW
-	 JeXUyG993FT5Yk07pyQYZldWWrVI0rjp3nKaAs74sXVpQwwWDA/f+XI8OWJF1nQMmVrJ5
-	 leYZrOgCm7mHN3zDXvpr3f558I3EvQV1/5M8n53kfJBpvjqyhaRMXG91fudOPdIx7+w==
+	bh=/slQqpOeieyl/w3xdzLSzovw100wGIkA5607j92AjpU=;
+	b=Dk5eNqnPgu2MrLDQZmgTclSoB+bzBMzbiYrjtEqezSYQgzJpWp5EbKsw8S6qv1vUg+v/
+	 7jzlrP84Pp+638O5QSjaM8waJxrVNWFT9UTXN28+Z2aGdmSBApiMFbyby7lMBWivmP455
+	 xC3ctvyoK2KhweXSl5Eut7BKKkchWB4p5opP/em7UOk5mVe93dXEO9oI3X8ZuE6+jcbfK
+	 4ywmDnZfNfk67JADUewVWEB05VbCR9KLvf38SSHiC6MSBx1aiLjloRWhdjYpUO57Udbw8
+	 rF94zGcWqlFDuR/3V73wJrkxAQaqrel1i5c/1idbM6fKvy6AQhPif/wt2kfZ19oS3pA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yUlG9bC/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qB6c9q7f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF57606A320;
-	Wed, 18 Nov 2026 20:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B860606A31C;
+	Wed, 18 Nov 2026 20:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yUlG9bC/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B9F1F000C4;
-	Wed, 18 Nov 2026 20:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qB6c9q7f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1681F000C4;
+	Wed, 18 Nov 2026 20:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034954;
-	bh=zxlC7kNBid9vpOAoOn75HnkAz57qAbF5Xlf2Fg9wArQ=;
+	s=korg; t=1795034957;
+	bh=/slQqpOeieyl/w3xdzLSzovw100wGIkA5607j92AjpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yUlG9bC/lEhyjRE3bv2qecyd9Y0j6SNDA/pTRhRSitFfAkasX8+yTw+YJElb+/r5J
-	 XIDdGqn35iifDbpXoRbALDjSHN544NJugD+Y+b8SItbvX/JEaDf46wBeDb9pjXIe/A
-	 86MOSPv4sCeClKhkC6yOoISrAjVqgWwcewb72ufE=
+	b=qB6c9q7fYmXZT7tTN4aFjUFwfomk7bu66OFD0reiyQLu3XogbrnT1Avh90uf59PXJ
+	 Cz3QZ3miLbxBN6rYa5yb3yAhwFZHk1gaUIuMWGGd8O4Y7yfM7WaO3J7dV0ep2iT0jY
+	 Yo/yIGh91u892Iy/PSQyBy2LkCNokvAciglfP0h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yucheng Lu <kanolyc@gmail.com>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0554/3318] net/sched: cls_flower: avoid stale mask references after delete
-Date: Wed, 18 Nov 2026 15:19:36 +0100
-Message-ID: <20261118150333.943207731@linuxfoundation.org>
+	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 0555/3318] net/sched: sch_teql: fix slaves_lock IRQ deadlock
+Date: Wed, 18 Nov 2026 15:19:37 +0100
+Message-ID: <20261118150333.975512824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,214 +69,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhang Zheng <z1652074432@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 58f7989da6e715ce834ac861b7ba6ae9f9bdb098 upstream.
+commit 8b2043279dae25483fe1f2d926e76d41ab95c398 upstream.
 
-Flower releases a mask reference when a filter is removed from the
-classifier. The filter object can remain alive while dump, walk, or
-hardware reoffload paths hold a reference to it. Those paths can then
-dereference f->mask after the mask has already been released.
+This is a followup of commit e5b811fe7931 ("net/sched: sch_teql:
+Introduce slaves_lock to avoid race condition and UAF") as reported by
+Sashiko.
 
-Keep the mask reference until the filter reference count reaches zero.
-Release the mask synchronously from the final __fl_put() while the caller
-still holds the tcf_proto reference, and leave the existing RCU work to
-free the mask. This keeps the mask available to every reader that still
-holds the filter.
+The issue: master->slaves_lock serializes the master's ring of slave
+qdiscs.  The control paths -- teql_dequeue(), teql_destroy() and
+teql_qdisc_init() -- take it with spin_lock_bh(), while
+teql_master_xmit() (the master's ndo_start_xmit) takes it with plain
+spin_lock().
 
-The filter is still removed from the classifier indexes immediately.
-Therefore, a deleted filter can temporarily retain an otherwise empty
-mask; fl_delete() uses the handle IDR, rather than the mask list, to
-determine whether the classifier has become empty.
+netpoll_send_skb() wraps the transmit in local_irq_save(), and
+__netpoll_send_skb() asserts lockdep_assert_irqs_disabled(), so
+teql_master_xmit() reached from netconsole always acquires slaves_lock
+with hard IRQs disabled.  On PREEMPT_RT spinlock_t is an rtmutex, and
+Documentation/locking/locktypes.rst names
 
-Failed mask assignment can leave fnew->mask as an error or borrowed
-pointer without an owned mask reference. Clear it before the common
-failure path so the final put cannot release an unowned reference.
+	local_irq_disable();
+	spin_lock(&lock);
 
-This fix does not add fields, snapshots, or per-filter memory.
+as a sequence that breaks there because the rtmutex requires a fully
+preemptible context.  This is reachable without any panic: the nbcon
+printer thread calls netconsole's write_thread() callback on every
+message.  The usual remedy -- folding the IRQ disable into the lock with
+spin_lock_irqsave() -- is unavailable because the local_irq_save() is
+netpoll's, not ours.
 
-Fixes: 92149190067d ("net: sched: flower: set unlocked flag for flower proto ops")
+On non-RT the same asymmetry leaves slaves_lock acquirable with hard IRQs
+disabled on one path and held with hard IRQs enabled on another.  That is
+only exploitable during the panic console flush (netconsole is
+CON_NBCON_ATOMIC_UNSAFE, so console_is_usable() admits its write_atomic()
+only from nbcon_atomic_flush_unsafe(), which panic() alone calls), and
+even then an IRQ-saving lock does not help if the holder oopsed inside the
+section or was stopped by panic_other_cpus_shutdown().  So the non-RT half
+is hardening; the PREEMPT_RT half is the bug.
+
+The Fix: take slaves_lock as a raw spinlock with IRQs saved at every
+site.  Since skb_queue_purge() takes the queue's spinlock_t and may not
+nest inside a raw lock on PREEMPT_RT, move its call in teql_destroy()
+outside the raw section; dat->q is the dying qdisc's own queue and was
+never serialized by slaves_lock, so the move is behaviour-neutral.
+
+The new critical sections contain only RCU pointer assignments and
+netdev_get_tx_queue(); skb_queue_purge(), netif_wake_queue() and
+dev_reset_queue() are all outside them.  teql_destroy()'s ring walk is
+O(slaves), two pointer loads and a compare per iteration, so even a large
+ring is microseconds with IRQs off.  Keeping the purge conditional rather
+than dropping it outright is the conservative call for a backport.
+
+Some context: commit 6301f6a34ed8 ("net/sched: sch_teql: move
+rcu_read_lock()/spin_lock() from _bh variants") hardened the parent
+fix; together they addressed the master->slaves resurrection
+use-after-free and the xmit-side BH warning but left the reverse
+direction -- a hard IRQ re-entering xmit while a control path holds the
+lock -- unaddressed.
+
+Conditions to recreate the bug:
+- CONFIG_PREEMPT_RT, CONFIG_NET_SCH_TEQL, CONFIG_DUMMY and
+  CONFIG_NETCONSOLE.
+- Run `ip link add dev teqlslave0 type dummy`, bring teqlslave0 up, attach
+  it with `tc qdisc add dev teqlslave0 root teql0`, and bring teql0 up.
+- Configure a netconsole target on teql0 with explicit local and remote
+  IP addresses and a remote MAC address, then emit a console message.
+  The nbcon printer thread reaches teql_master_xmit() with hard IRQs
+  disabled by netpoll; taking slaves_lock as a spinlock_t is invalid on
+  PREEMPT_RT. No panic or concurrent qdisc change is required.
+- Reachable by an admin with CAP_NET_ADMIN; teql devices exist only in the
+  initial netns (no per-netns ops), so a user namespace does not suffice.
+
+Fixes: e5b811fe7931 ("net/sched: sch_teql: Introduce slaves_lock to avoid race condition and UAF")
+Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260630150922.238714-1-jhs%40mojatatu.com
+Link: https://lore.kernel.org/netdev/20260630150922.238714-1-jhs@mojatatu.com/
 Cc: stable@vger.kernel.org
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yucheng Lu <kanolyc@gmail.com>
-Signed-off-by: Yuhang Zheng <z1652074432@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/20261012010720.2248662-2-n05ec@lzu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/QDISC-Y0BY.v2.r0.20261024060625-1@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_flower.c |   50 +++++++++++++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 22 deletions(-)
+ net/sched/sch_teql.c |   45 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 17 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -511,15 +511,22 @@ static void fl_hw_update_stats(struct tc
- 	tcf_exts_hw_stats_update(&f->exts, &cls_flower.stats, cls_flower.use_act_stats);
- }
- 
--static void __fl_put(struct cls_fl_filter *f)
-+static bool __fl_put(struct tcf_proto *tp, struct cls_fl_filter *f)
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -53,7 +53,7 @@ struct teql_master {
+ 	struct Qdisc_ops qops;
+ 	struct net_device *dev;
+ 	struct Qdisc __rcu	*slaves;
+-	spinlock_t		slaves_lock; /* serializes writes to ->slaves */
++	raw_spinlock_t		slaves_lock; /* serializes writes to ->slaves */
+ 	struct list_head master_list;
+ 	unsigned long	tx_bytes;
+ 	unsigned long	tx_packets;
+@@ -92,6 +92,7 @@ teql_dequeue(struct Qdisc *sch)
  {
-+	bool last = false;
-+
- 	if (!refcount_dec_and_test(&f->refcnt))
--		return;
-+		return false;
-+
-+	if (f->mask)
-+		last = fl_mask_put(fl_head_dereference(tp), f->mask);
+ 	struct teql_sched_data *dat = qdisc_priv(sch);
+ 	struct netdev_queue *dat_queue;
++	unsigned long flags;
+ 	struct sk_buff *skb;
+ 	struct Qdisc *q;
  
- 	if (tcf_exts_get_net(&f->exts))
- 		tcf_queue_work(&f->rwork, fl_destroy_filter_work);
- 	else
- 		__fl_destroy_filter(f);
-+
-+	return last;
- }
- 
- static struct cls_fl_filter *__fl_get(struct cls_fl_head *head, u32 handle)
-@@ -565,11 +572,10 @@ static int __fl_delete(struct tcf_proto
- 	list_del_rcu(&f->list);
- 	spin_unlock(&tp->lock);
- 
--	*last = fl_mask_put(head, f->mask);
- 	if (!tc_skip_hw(f->flags))
- 		fl_hw_destroy_filter(tp, f, rtnl_held, extack);
- 	tcf_unbind_filter(tp, &f->res);
--	__fl_put(f);
-+	*last = __fl_put(tp, f);
- 
- 	return 0;
- }
-@@ -610,7 +616,7 @@ static void fl_put(struct tcf_proto *tp,
- {
- 	struct cls_fl_filter *f = arg;
- 
--	__fl_put(f);
-+	__fl_put(tp, f);
- }
- 
- static void *fl_get(struct tcf_proto *tp, u32 handle)
-@@ -2363,12 +2369,14 @@ static int fl_change(struct net *net, st
- 	}
- 
- 	err = fl_check_assign_mask(head, fnew, fold, mask);
--	if (err)
-+	if (err) {
-+		fnew->mask = NULL;
- 		goto unbind_filter;
-+	}
- 
- 	err = fl_ht_insert_unique(fnew, fold, &in_ht);
- 	if (err)
--		goto errout_mask;
-+		goto unbind_filter;
- 
- 	if (!tc_skip_hw(fnew->flags)) {
- 		err = fl_hw_replace_filter(tp, fnew, rtnl_held, extack);
-@@ -2422,7 +2430,6 @@ static int fl_change(struct net *net, st
- 
- 		spin_unlock(&tp->lock);
- 
--		fl_mask_put(head, fold->mask);
- 		if (!tc_skip_hw(fold->flags))
- 			fl_hw_destroy_filter(tp, fold, rtnl_held, NULL);
- 		tcf_unbind_filter(tp, &fold->res);
-@@ -2430,7 +2437,7 @@ static int fl_change(struct net *net, st
- 		 * after this.
- 		 */
- 		refcount_dec(&fold->refcnt);
--		__fl_put(fold);
-+		__fl_put(tp, fold);
+@@ -102,9 +103,9 @@ teql_dequeue(struct Qdisc *sch)
+ 	if (skb == NULL) {
+ 		struct net_device *m = qdisc_dev(q);
+ 		if (m) {
+-			spin_lock_bh(&dat->m->slaves_lock);
++			raw_spin_lock_irqsave(&dat->m->slaves_lock, flags);
+ 			rcu_assign_pointer(dat->m->slaves, sch);
+-			spin_unlock_bh(&dat->m->slaves_lock);
++			raw_spin_unlock_irqrestore(&dat->m->slaves_lock, flags);
+ 			netif_wake_queue(m);
+ 		}
  	} else {
- 		idr_replace(&head->handle_idr, fnew, fnew->handle);
+@@ -137,11 +138,13 @@ teql_destroy(struct Qdisc *sch)
+ 	struct teql_master *master = dat->m;
+ 	struct netdev_queue *txq = NULL;
+ 	bool reset_master_queue = false;
++	unsigned long flags;
++	bool purge = false;
  
-@@ -2455,9 +2462,6 @@ errout_hw:
- 	if (in_ht)
- 		rhashtable_remove_fast(&fnew->mask->ht, &fnew->ht_node,
- 				       fnew->mask->filter_ht_params);
--errout_mask:
--	fl_mask_put(head, fnew->mask);
--
- unbind_filter:
- 	if (bound_to_filter) {
- 		if (flags & TCA_ACT_FLAGS_NO_RTNL)
-@@ -2473,14 +2477,14 @@ errout_idr:
- 		idr_remove(&head->handle_idr, fnew->handle);
- 		spin_unlock(&tp->lock);
- 	}
--	__fl_put(fnew);
-+	__fl_put(tp, fnew);
- errout_tb:
- 	kfree(tb);
- errout_mask_alloc:
- 	tcf_queue_work(&mask->rwork, fl_uninit_mask_free_work);
- errout_fold:
- 	if (fold)
--		__fl_put(fold);
-+		__fl_put(tp, fold);
- 	return err;
- }
+ 	if (!master)
+ 		return;
  
-@@ -2493,8 +2497,10 @@ static int fl_delete(struct tcf_proto *t
- 	int err = 0;
- 
- 	err = __fl_delete(tp, f, &last_on_mask, rtnl_held, extack);
--	*last = list_empty(&head->masks);
--	__fl_put(f);
-+	spin_lock(&tp->lock);
-+	*last = idr_is_empty(&head->handle_idr);
-+	spin_unlock(&tp->lock);
-+	__fl_put(tp, f);
- 
- 	return err;
- }
-@@ -2516,12 +2522,12 @@ static void fl_walk(struct tcf_proto *tp
- 		rcu_read_unlock();
- 
- 		if (arg->fn(tp, f, arg) < 0) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			arg->stop = 1;
- 			rcu_read_lock();
- 			break;
- 		}
--		__fl_put(f);
-+		__fl_put(tp, f);
- 		arg->count++;
- 		rcu_read_lock();
- 	}
-@@ -2572,7 +2578,7 @@ static int fl_reoffload(struct tcf_proto
- 		cls_flower.rule =
- 			flow_rule_alloc(tcf_exts_num_actions(&f->exts));
- 		if (!cls_flower.rule) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			return -ENOMEM;
- 		}
- 
-@@ -2590,7 +2596,7 @@ static int fl_reoffload(struct tcf_proto
- 		if (err) {
- 			kfree(cls_flower.rule);
- 			if (tc_skip_sw(f->flags)) {
--				__fl_put(f);
-+				__fl_put(tp, f);
- 				return err;
+-	spin_lock_bh(&master->slaves_lock);
++	raw_spin_lock_irqsave(&master->slaves_lock, flags);
+ 	prev = rcu_dereference_protected(master->slaves,
+ 					 lockdep_is_held(&master->slaves_lock));
+ 	if (prev) {
+@@ -169,12 +172,18 @@ teql_destroy(struct Qdisc *sch)
+ 					reset_master_queue = true;
+ 				}
  			}
- 			goto next_flow;
-@@ -2606,11 +2612,11 @@ static int fl_reoffload(struct tcf_proto
- 		kfree(cls_flower.rule);
- 
- 		if (err) {
--			__fl_put(f);
-+			__fl_put(tp, f);
- 			return err;
- 		}
- next_flow:
--		__fl_put(f);
-+		__fl_put(tp, f);
+-			skb_queue_purge(&dat->q);
++			purge = true;
+ 			break;
+ 		} while (prev != rcu_dereference_protected(master->slaves,
+ 							   lockdep_is_held(&master->slaves_lock)));
  	}
+-	spin_unlock_bh(&master->slaves_lock);
++	raw_spin_unlock_irqrestore(&master->slaves_lock, flags);
++
++	/* skb_queue_purge() takes the queue's spinlock_t, which cannot nest
++	 * inside a raw lock on PREEMPT_RT; purge after the raw section.
++	 */
++	if (purge)
++		skb_queue_purge(&dat->q);
  
+ 	if (reset_master_queue)
+ 		dev_reset_queue(master->dev, txq, NULL);
+@@ -187,6 +196,7 @@ static int teql_qdisc_init(struct Qdisc
+ 	struct teql_master *m = (struct teql_master *)sch->ops;
+ 	struct teql_sched_data *q = qdisc_priv(sch);
+ 	struct Qdisc *first;
++	unsigned long flags;
+ 
+ 	if (dev->hard_header_len > m->dev->hard_header_len)
+ 		return -EINVAL;
+@@ -203,7 +213,7 @@ static int teql_qdisc_init(struct Qdisc
+ 
+ 	skb_queue_head_init(&q->q);
+ 
+-	spin_lock_bh(&m->slaves_lock);
++	raw_spin_lock_irqsave(&m->slaves_lock, flags);
+ 	first = rcu_dereference_protected(m->slaves, lockdep_is_held(&m->slaves_lock));
+ 	if (first) {
+ 		if (m->dev->flags & IFF_UP) {
+@@ -214,7 +224,7 @@ static int teql_qdisc_init(struct Qdisc
+ 			    (m->dev->flags & IFF_MULTICAST &&
+ 			     !(dev->flags & IFF_MULTICAST)) ||
+ 			    dev->mtu < m->dev->mtu) {
+-				spin_unlock_bh(&m->slaves_lock);
++				raw_spin_unlock_irqrestore(&m->slaves_lock, flags);
+ 				return -EINVAL;
+ 			}
+ 		} else {
+@@ -237,7 +247,7 @@ static int teql_qdisc_init(struct Qdisc
+ 		m->dev->mtu = dev->mtu;
+ 		m->dev->flags = (m->dev->flags&~FMASK)|(dev->flags&FMASK);
+ 	}
+-	spin_unlock_bh(&m->slaves_lock);
++	raw_spin_unlock_irqrestore(&m->slaves_lock, flags);
  	return 0;
+ }
+ 
+@@ -302,11 +312,12 @@ static inline int teql_resolve(struct sk
+ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct teql_master *master = netdev_priv(dev);
+-	struct Qdisc *start, *q;
+-	int busy;
+-	int nores;
+ 	int subq = skb_get_queue_mapping(skb);
+ 	struct sk_buff *skb_res = NULL;
++	struct Qdisc *start, *q;
++	unsigned long flags;
++	int nores;
++	int busy;
+ 
+ restart:
+ 	nores = 0;
+@@ -342,13 +353,13 @@ restart:
+ 				    netdev_start_xmit(skb, slave, slave_txq, false) ==
+ 				    NETDEV_TX_OK) {
+ 					__netif_tx_unlock(slave_txq);
+-					spin_lock(&master->slaves_lock);
++					raw_spin_lock_irqsave(&master->slaves_lock, flags);
+ 					if (rcu_dereference_protected(master->slaves,
+ 								      lockdep_is_held(&master->slaves_lock)) == q)
+ 						rcu_assign_pointer(master->slaves,
+ 								   rcu_dereference_protected(NEXT_SLAVE(q),
+ 											     lockdep_is_held(&master->slaves_lock)));
+-					spin_unlock(&master->slaves_lock);
++					raw_spin_unlock_irqrestore(&master->slaves_lock, flags);
+ 					netif_wake_queue(dev);
+ 					master->tx_packets++;
+ 					master->tx_bytes += length;
+@@ -361,13 +372,13 @@ restart:
+ 				busy = 1;
+ 			break;
+ 		case 1:
+-			spin_lock(&master->slaves_lock);
++			raw_spin_lock_irqsave(&master->slaves_lock, flags);
+ 			if (rcu_dereference_protected(master->slaves,
+ 						      lockdep_is_held(&master->slaves_lock)) == q)
+ 				rcu_assign_pointer(master->slaves,
+ 						   rcu_dereference_protected(NEXT_SLAVE(q),
+ 									     lockdep_is_held(&master->slaves_lock)));
+-			spin_unlock(&master->slaves_lock);
++			raw_spin_unlock_irqrestore(&master->slaves_lock, flags);
+ 			rcu_read_unlock();
+ 			return NETDEV_TX_OK;
+ 		default:
+@@ -489,7 +500,7 @@ static __init void teql_master_setup(str
+ 	struct teql_master *master = netdev_priv(dev);
+ 	struct Qdisc_ops *ops = &master->qops;
+ 
+-	spin_lock_init(&master->slaves_lock);
++	raw_spin_lock_init(&master->slaves_lock);
+ 	master->dev	= dev;
+ 	ops->priv_size  = sizeof(struct teql_sched_data);
+ 
 
 
