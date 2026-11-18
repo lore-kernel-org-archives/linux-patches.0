@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049392;
-	b=jJfxCnaIULftjF33Si7LbKSL+wm6JTj8qZPfezpW4Lke8v3VjrIjZiseBtcVF4K5D4vU
-	 Bcmu2r9Fx9DbzJXx2+bqZyobkKF16HKvCGDbBeUSf7rfAOBnHmxoMe5q6sYgDafKdmaLC
-	 +D3PUSleQn1bOncseF9fDIVl7nkztMMbyGGVGNMWjubFPuS5vO1Ngpyamf6I8pU0hHpy6
-	 zS7NaTC71PIJ0QC4eciz/57gLN3gaSTNvbO+arnCywu2DXgqNUcgFI0tVBCHSWbZQufaj
-	 SBKIN2g33j20WXHnEOPZJXKcA/CKLl/BQ8nQ3KJHeGn+YbvF6WPSszMtiH7XVh9yjvA==
+	t=1795049394;
+	b=PsX13GWtgWh4MQZ2UrwJzfthY4rLI29eL+v66xn0/KzwhjKB7h4Eknw73YVlybaTfq5E
+	 TsgkYUun3Tq7kOKepqVoHJ5xWEnMn/PdlcF7LTz3xG2ATEBj1KWOGyaWh8kCqjTNnYfjD
+	 7aIyDT4HuVMqNjcdMyfPZTV/AhduUZlMtRjRWRaZ3iLdzgI1Mr7CYF/OQnTJk7v9EmBNv
+	 WKMXTxQ9U97YnjhREMCoWVtaCUsKXAnqxSJE7zEF3qiLuBSqtAdL9jeX0FgU+BAbGOjg9
+	 e1pNTJpY/1bv1m5qjpaH7uqG+oGc6M5zqG2ll1pytL55xnXFGJiB8xYrBj8O9aBdKow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=91rP5DxsSGzt+Qmy6dfgYyUvD2KnXqm8nJRZYZCS3qo=;
-	b=BClxxJQ55AqQpiq3l0whCrdL152dMF3nDQe3oRnqJXpQFzjl3jgGfSxHmO/Yt9740YzV
-	 qBbs5JotkjVg33oDCH858I10jJg5QqAySR9/5XFri/tVPDckcJ8JCLLpHVRs60Ir8+oXl
-	 92zbvnBqkvbszu3KXyaUN00SBABu+Bbip0FIZY1VU1OTq3wh0SEBgkC0IocdB9P291FVR
-	 tTVfgkyCUPciKl3Ek8LV/ESoG17FLx34Sx+PbMnFTBxhUfcVciF4prozSefYxN5BJeeho
-	 GgdxpVjOEO11exeSSW+TNVvfLNePuN1PPEsGfnG73AUSzlURdsEIWua8cJMytqxcQPw==
+	bh=N1Ceb8Y3q5BYNABrqTasiitheaNmSe6xNw8TuxIrTRg=;
+	b=BxGvy9cCwyyU+bEJcXqSEyu2NVDJXSN2iKZULSZdbbtxXMUBkcBj3HEdjfWLmyX7fBul
+	 uV2UXK3osF3LFwxGmPGl9oY6XxmcdyF61Unn6h2YWaHA8+TxtKp+o4fzTiaAUZ+Cw6Hyb
+	 7nanpg9cHC01QDjhcRhnzR9GypzOOTu9qbRjAWNn1FyVET5BDqdWkRqNU059rm7iKnyrM
+	 XWtvtFHJtNLbmsIH8crRWZG34pZwnGMvcIbIN1T2DwAX4FpCjN4qjXOP023MIC7TvHWqL
+	 mp47Tdu6yb5mJwfnnD8Xt7HIgOGOcgtSe6FVXDSoeX4x8zkCjVf5xnMX2IUCs0hrGsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU30fsfK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ3o7I3V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04809606A31C;
-	Thu, 19 Nov 2026 00:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7635606A31C;
+	Thu, 19 Nov 2026 00:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OU30fsfK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531BA1F000C4;
-	Thu, 19 Nov 2026 00:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LQ3o7I3V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DF81F000C4;
+	Thu, 19 Nov 2026 00:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049391;
-	bh=91rP5DxsSGzt+Qmy6dfgYyUvD2KnXqm8nJRZYZCS3qo=;
+	s=korg; t=1795049394;
+	bh=N1Ceb8Y3q5BYNABrqTasiitheaNmSe6xNw8TuxIrTRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OU30fsfKn/yM1/JFQyKM2b9JNH5KHuE7W0ihaM7QZ3MIRte36kyNRAjBXxs7+dHQl
-	 H7sNU/iTQrpSHHk0RhaNhlefcqqZOb9yLs9ZOf7xWMFBCSIhs0EKGXg8u18Qr/nl6T
-	 WuTDsMEG5xH2KSBRIVUtxvqiHRzMNfk3UYsZPvKc=
+	b=LQ3o7I3VljvDmWqiMxzCGSqnWCYKWoSTrI7cqGnRMrcxLEDBBsJl5RxveWXHIbOYb
+	 HnC+zwYav+l1rjQoeRKzQQrGhBZu8mtNgwJsMNHHmjtdnrtcFJ7RqkZq2ydpCoZrUS
+	 rBSohaBpEohUk8ttpe77jUJclLhT9vZ8hIwZ5dC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2335/2857] x86/PVH: dont truncate initrd address/size
-Date: Wed, 18 Nov 2026 15:56:09 +0100
-Message-ID: <20261118150325.608009252@linuxfoundation.org>
+Subject: [PATCH 6.1 2336/2857] ALSA: caiaq: Fix races at MIDI URB and trigger accesses
+Date: Wed, 18 Nov 2026 15:56:10 +0100
+Message-ID: <20261118150325.644922141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,40 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fcc43d1d6bf5fbd41e1e308b17187f9b759df56a ]
+[ Upstream commit 52b1213e2a086f2828500ab9c8bac45b213429bb ]
 
-Consuming merely the lower halves of the provided values isn't very
-useful. (While generally loaders try to place it below 4G, especially
-when it's huge it may not fit there.)
+URB completion and rawmidi trigger callbacks can race with each other,
+which may put the state inconsistent, causing double submissions, etc.
 
-Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Guard both with a new spinlock for avoiding the races.
 
-Message-ID: <9698d810-6664-4a9d-a847-18ad124261e0@suse.com>
+Fixes: f3f80a9205da ("ALSA: caiaq - Fix Oops with MIDI")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20261008192553.300025-7-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/pvh/enlighten.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/caiaq/device.c | 1 +
+ sound/usb/caiaq/device.h | 3 ++-
+ sound/usb/caiaq/midi.c   | 2 ++
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/platform/pvh/enlighten.c b/arch/x86/platform/pvh/enlighten.c
-index ed0442e354344..443ce7547cc78 100644
---- a/arch/x86/platform/pvh/enlighten.c
-+++ b/arch/x86/platform/pvh/enlighten.c
-@@ -82,7 +82,9 @@ static void __init init_pvh_bootparams(bool xen_guest)
- 		struct hvm_modlist_entry *modaddr =
- 			__va(pvh_start_info.modlist_paddr);
- 		pvh_bootparams.hdr.ramdisk_image = modaddr->paddr;
-+		pvh_bootparams.ext_ramdisk_image = modaddr->paddr >> 32;
- 		pvh_bootparams.hdr.ramdisk_size = modaddr->size;
-+		pvh_bootparams.ext_ramdisk_size = modaddr->size >> 32;
- 	}
+diff --git a/sound/usb/caiaq/device.c b/sound/usb/caiaq/device.c
+index 0f056d155a47b..dc0c26f281fa6 100644
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -448,6 +448,7 @@ static int create_card(struct usb_device *usb_dev,
+ 	cdev->chip.usb_id = USB_ID(le16_to_cpu(usb_dev->descriptor.idVendor),
+ 				  le16_to_cpu(usb_dev->descriptor.idProduct));
+ 	spin_lock_init(&cdev->spinlock);
++	spin_lock_init(&cdev->midi_lock);
+ 	mutex_init(&cdev->ep1_out_mutex);
  
- 	/*
+ 	*cardp = card;
+diff --git a/sound/usb/caiaq/device.h b/sound/usb/caiaq/device.h
+index bef5fd31dedd4..e1ec0bfdbb99a 100644
+--- a/sound/usb/caiaq/device.h
++++ b/sound/usb/caiaq/device.h
+@@ -74,7 +74,8 @@ struct snd_usb_caiaqdev {
+ 	unsigned char midi_out_buf[EP1_BUFSIZE];
+ 
+ 	struct caiaq_device_spec spec;
+-	spinlock_t spinlock;
++	spinlock_t spinlock;	/* for PCM audio */
++	spinlock_t midi_lock;	/* midi_x_stream, midi_out_active */
+ 	wait_queue_head_t ep1_wait_queue;
+ 	wait_queue_head_t prepare_wait_queue;
+ 	int spec_received, audio_parm_answer;
+diff --git a/sound/usb/caiaq/midi.c b/sound/usb/caiaq/midi.c
+index 18529484c8dcc..b7d7d24937a74 100644
+--- a/sound/usb/caiaq/midi.c
++++ b/sound/usb/caiaq/midi.c
+@@ -79,6 +79,7 @@ static void snd_usb_caiaq_midi_output_trigger(struct snd_rawmidi_substream *subs
+ {
+ 	struct snd_usb_caiaqdev *cdev = substream->rmidi->private_data;
+ 
++	guard(spinlock_irqsave)(&cdev->midi_lock);
+ 	if (up) {
+ 		cdev->midi_out_substream = substream;
+ 		if (!cdev->midi_out_active)
+@@ -151,6 +152,7 @@ void snd_usb_caiaq_midi_output_done(struct urb* urb)
+ {
+ 	struct snd_usb_caiaqdev *cdev = urb->context;
+ 
++	guard(spinlock_irqsave)(&cdev->midi_lock);
+ 	cdev->midi_out_active = 0;
+ 	if (urb->status != 0)
+ 		return;
 -- 
 2.53.0
 
