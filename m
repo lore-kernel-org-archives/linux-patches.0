@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057508;
-	b=hrUz8lwaHbC1c1SUy5WnQ8InqsvHUt0bqGRlsHkBQA1yAdda0lCPKhuQNgW7G3ul9CkG
-	 dKBs/MAeXpeh4N9kk23HS/SRZBm05K9DcIUkvoGBqImy5MKhvRxeTF87Ph+3Jk52DBWrf
-	 8mv3Zn0Ji/eKmpQjq0Ui9wkWvZaFLo2xvcGh7ZRrlkIQW7/5XizaFWnqK2a6+L7JcyZgb
-	 A/lydTXBNC2BARdyHRTOVg0BG9tLhjKcAyRQ4oO4E3Y9jMAhv1tPyPg3NWJ+WGQ4RxXUI
-	 z6N+Kv1ACzo7b5fgZOVeEIKyMGmMidTWtoYruyiGsv3Q4V2cN6kAcwRoiz5SMoX+vrA==
+	t=1795057511;
+	b=L4ZcH3jOV/Zb5NjcRgx6cP9UA8BvWUeHQrCQ4k6pZAyNscih0TKC1PTbeQGl+W9DECrO
+	 aIbazVRFsOAc0PT5J+FEBmNPQCLzXyftI9I+aG0W1wMegjjqnKC/OQI1GLobEZ3Fhpiz8
+	 P8xqZz8Hddb6ZmScPpw+2QR7vevSPDnTb4EsI3y+gE7sP76ksQzabENxVZd1Mgb3lgu44
+	 ROasaLDKwEpMpQAEuGsm7eA3s9pEqXk0Kmn7W9iiAXzlBwL9jxhjhXazYwHuZ5QHDz1hR
+	 tTJq4U0ErUKWooOMcMxGh+wE0bYcqcEPyhQO80I8CE2B6EpLaCnJVsBROe60Xq2YOVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057508;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057511;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uQR4PTYqS5BQZgwYFyFLqfhS7fEJYsIbK0jR+58vmFg=;
-	b=0FguxDC45Ta/ff8ulsfh8O4fyhezumeVDKcuNrbmB2qAYOhIJ375HDXwN02ky0iZeReF
-	 fPtLcPZtYjJ/gEk9c17EJsnli5GgKgvHfZgqbld3+0RgNffaNB1x9Up+04lbrTV4RjCqy
-	 ZH4YhpGJb5NsoKf/tkFSmGzP/hgkt0hohFp5U+V/Fk4Mc0kwug7U62YlZe/9dJsCH0xid
-	 aI3mg5j3qlZ5ImAa7gAZXTtYOdGEdwNlvLKOgtAuQWOAd5DgRfBePp4nU0Dx4vP/ctZ4Z
-	 o60ixaL7pzZJ/oH7WwKOXbMI7s8bogZvYo8QXlDeJLh3Rt+HXGUnWy0SMhw+kpHQiAg==
+	bh=38LXD9hTP27ACiwe+JiETkdJ8e8FwDec09XArSPh1gs=;
+	b=sugnhdwpbYT2WYTCsawwm39nk2QmMfvOobPMGykh+S3J4iXs+1ofF5u0CEIYP2G0Vvos
+	 5TRKcWiJ0aSKmapnrVV6iUjW/Ht7VwK1Bv9nGlyRPwbQozmyYBNs0c6DPQnFE/zpnh83P
+	 JcNDkuvM3XOXehEFO1OsbgxYWlp18dwlnQy7tAv306KNJ/xl4wKVR/GqJoh4hgD/gHXLy
+	 3RoBsZZnJJwp5mo6evN1As4McZPa8PyOXV7ElPGb85dnUsc7+jKo0u+kCAfk1doSPM1Dw
+	 9NUMWRRwHa2xVjnTbDeHo5bILMZOX1R7lIZglZ/zSOPJBtzRiILL+IaFs9fM8R9LawQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1mf6RNa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oatKbRqA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFDA60A260E;
-	Thu, 19 Nov 2026 03:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731E060A260B;
+	Thu, 19 Nov 2026 03:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c1mf6RNa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB571F000C4;
-	Thu, 19 Nov 2026 03:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oatKbRqA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48021F000C4;
+	Thu, 19 Nov 2026 03:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057508;
-	bh=uQR4PTYqS5BQZgwYFyFLqfhS7fEJYsIbK0jR+58vmFg=;
+	s=korg; t=1795057511;
+	bh=38LXD9hTP27ACiwe+JiETkdJ8e8FwDec09XArSPh1gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1mf6RNaPiaj3jWG/axIe4+ZBSABFSlwgeOXFhlctZ4RsmQoVa0p6SGYBbdpLxG3q
-	 lObP3THR+dKr+scZAGFlc/SGNjPRHomvTe6Md9SCYYbec9oiM/KHAUR4QpPGjwh/6z
-	 yjEHI7nZMqKcwZdyU7nACTAFy5hiJMwmH0LzbNl0=
+	b=oatKbRqAz8cI1/buqegCDUxIqndw5DeQl2uJMxEzulEzHaSVG7MnigLAZXsONpuQw
+	 GOQ+c7cpK2jOVFX9RaBxI8XbWSzgi4Mw8Ae4Auw9fD0OvWXzJZpOARWdkffaGyaG5v
+	 Q5yVE1k5ebu9clay2a4A6a6SuXWQzLDSAh9IyMc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Can Peng <pengcan@kylinos.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0156/1848] Bluetooth: hci_nokia: validate firmware packet bounds
-Date: Wed, 18 Nov 2026 15:36:34 +0100
-Message-ID: <20261118145917.927830805@linuxfoundation.org>
+Subject: [PATCH 5.10 0139/1848] wifi: brcmfmac: Set DMA direction for msgbuf packet IDs
+Date: Wed, 18 Nov 2026 15:36:17 +0100
+Message-ID: <20261118145917.126597563@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,58 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 45640627e3ddc5f4d3a0d08618a596a8c65d48a5 ]
+[ Upstream commit f0ba5fd51ff23077ce66cb9be79d41a4b7c19c5e ]
 
-nokia_setup_fw() walks a length-prefixed firmware stream and
-decodes HCI command packets from each record.
+brcmf_msgbuf_init_pktids() takes the DMA direction from its callers,
+but never stores it in the packet ID state.  Since the state is zeroed,
+pktids->direction remains DMA_BIDIRECTIONAL for both the TX and RX
+packet ID pools.
 
-Check that each record fits in the remaining firmware image, that command
-records contain the HCI command header, and that the payload length is
-covered before submitting the command.
+All msgbuf packet ID map and unmap paths use pktids->direction.  As a
+result, TX buffers requested with DMA_TO_DEVICE and RX buffers requested
+with DMA_FROM_DEVICE are mapped and unmapped as DMA_BIDIRECTIONAL
+instead.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Store the caller-provided direction when initializing the packet ID
+state.
+
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260724092530.674624-1-pengcan@kylinos.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_nokia.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/hci_nokia.c b/drivers/bluetooth/hci_nokia.c
-index 97da0b2bfd17e..159c93f6be6bc 100644
---- a/drivers/bluetooth/hci_nokia.c
-+++ b/drivers/bluetooth/hci_nokia.c
-@@ -359,9 +359,29 @@ static int nokia_setup_fw(struct hci_uart *hu)
- 		u16 opcode;
- 		struct sk_buff *skb;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+index bd3b234b78038..cca042d88887b 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
+@@ -309,6 +309,7 @@ brcmf_msgbuf_init_pktids(u32 nr_array_entries,
+ 	}
+ 	pktids->array = array;
+ 	pktids->array_size = nr_array_entries;
++	pktids->direction = direction;
  
-+		if (pkt_size > fw_size - 2) {
-+			err = -EINVAL;
-+			dev_err(dev, "%s: Malformed firmware packet\n",
-+				hu->hdev->name);
-+			goto done;
-+		}
-+
- 		switch (pkt_type) {
- 		case HCI_COMMAND_PKT:
-+			if (pkt_size < 1 + HCI_COMMAND_HDR_SIZE) {
-+				err = -EINVAL;
-+				dev_err(dev, "%s: Malformed firmware command\n",
-+					hu->hdev->name);
-+				goto done;
-+			}
-+
- 			cmd = (struct hci_command_hdr *)(fw_ptr + 3);
-+			if (cmd->plen > pkt_size - 1 - HCI_COMMAND_HDR_SIZE) {
-+				err = -EINVAL;
-+				dev_err(dev, "%s: Truncated firmware command\n",
-+					hu->hdev->name);
-+				goto done;
-+			}
- 			opcode = le16_to_cpu(cmd->opcode);
- 
- 			skb = __hci_cmd_sync(hu->hdev, opcode, cmd->plen,
+ 	return pktids;
+ }
 -- 
 2.53.0
 
