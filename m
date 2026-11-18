@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022511;
-	b=t86pENlW44MRKi0EAuGzs5FbCHbv310O3+7cxICD3/c7Vdtlcf/c9V8Vcc/l62brbkhE
-	 GmT8d74hrGF04SslT7PzQMjFu/M9BskktIR/OJW6+8UBP/1oyXR5UR1LTqACN8lFMGwyA
-	 WMcgn+9iPE/4HJOz0jJG+U6WuWJ0C35KBHbXYfa25Ll+ADTP1m2V4evacA+LHsE4huYPW
-	 kF9yYOp+a7dgmGH/QtDdwmCTAyOI063J1CMVH9cVGvEpZUh8EqS6cKw2HZ0rMf8gMMisg
-	 nFCyZRWvXlnMmUN2JIitrl2dbuJH2UjlbgByqN2mIHnwQrDDVMLMHWC1Lm3Em8txByw==
+	t=1795022514;
+	b=5UbOgLEI+O+AczNBhIpwKobPawqEu0m/QNwQuM0LrMp7m12eDSvl2gcdzE8sVo/uOjW8
+	 EXiwWQ054xQ/NOEc24Ywv54UT4Nvx9o7WhxbBXnyzFpBRpMloiNlwrEgqYxGLJ+9PNX71
+	 JHrYk6HsyFXv4gaFn83y9u6qygCzZx7ahOh/UrO10Sp72XRN0EKZNUO1LR99xQ2z9RK4r
+	 YxnCO/2B32rXSlwQzyp9lB55GlHR2N/7nbYfaGc9+71zl1u0A9bWV8JZhRDQrGPrl3/ZA
+	 So5Z9C1xaVaY54oWchsY84gxOwF1OiLyYEC0TtuPlt0XcYe/li3leCj3YMjElhLaQVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=32GrzAe/IR6H66UrMHYWQqzTDIy7qXyS+seQby2WpH0=;
-	b=ay6Xm8yzwaybwOBFLNg442T4ZSLvJRHlqPUOfQayMnJ13U2by9yL4L3waYi3yqgZsLEJ
-	 CEZgZpACXz3c1a7LFVharl+G1TlwCK/9Q1IA6lVqoPeL+CNZfDUrMzcBXs9c531QRLKnd
-	 40Los1hgNBPXB2zu1+oSf4shvKq5EZe2pUYr0/aTjWkEDsWxfFPA2+w13rxDSMmNzFjxY
-	 NfOFJj7mmCr9k9wuohXKMfY6Lq1/ymFyXWCmSB1L9rWM1F38QhSfhLGxk4rxCMDsbLMgZ
-	 GAsSoDBeE/UcyGGf0/VVrukXXb3OmWm/eR3ITS6D0Puvr+hSRTy/Z9UNtx6JysXOv6Q==
+	bh=YnxNLQPrIWiMTSKdgY0x1ZUA0dWbz9fahIZ6NlNHInQ=;
+	b=LqnmHnceiNOiqIRuAi47TGTEQGtJyajfLhVtSRP/L57DoYNA70Iurzh0qzrekpRyzBmH
+	 tZpz6qiGDndfvAYxLcdiygzsVRB3eP0T7X8ZHJ+41Sfapjzf/cf4v6EMc+aeafm6agjuC
+	 r1ZnlloFiqzyEfEG9MtheHgqnwjMxkaPYBJ9ospp8SKtqMtTrmUKRzZaKQc2Otix2HhrS
+	 DvJlQp7a9rXNzv1zZnNzjT1vi8NC350nuH+wRDpuLjB1yiXVHJrlnjcg5zXZ+ZYhdje89
+	 h/JnVv3iPh2KLkuvsQZeXV/967RlkHZqLDHK9Qzbj5Cn3FjtYd0EYfZDncEpjUu/nhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mmapQSFf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cN/bvruR";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C6C606A320;
-	Wed, 18 Nov 2026 17:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B937606A331;
+	Wed, 18 Nov 2026 17:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mmapQSFf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A471F000C4;
-	Wed, 18 Nov 2026 17:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cN/bvruR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E421F000C5;
+	Wed, 18 Nov 2026 17:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022511;
-	bh=32GrzAe/IR6H66UrMHYWQqzTDIy7qXyS+seQby2WpH0=;
+	s=korg; t=1795022514;
+	bh=YnxNLQPrIWiMTSKdgY0x1ZUA0dWbz9fahIZ6NlNHInQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmapQSFfTiHvq1nU3+oVXoEjh1crFTpAnpSk3cK4+nwtnaRBFgQf+eSGPVZ7z9VxO
-	 f625B7H56eVxxkE0aoKseC9TnjPBIWUwMZ359bHW5CR4dI8BHdwYC4RBtstsTty3ja
-	 plQde2VUGh7tVaf3EHjJg8saTHDz3+juVg0KXsI8=
+	b=cN/bvruRsvOtIvlvNDB0kbkbsUI576YZccdte+KPTMAagWbZ2M5+/+9ilpZ+rhXp6
+	 qwrC3v3t6ndon65c2NTWN+KHBaSfdYTfn73Wn14cBgf56zoaXtNDwvJ7HaJV9C8knB
+	 yO/LaaFcBltNJexzNLQCfDZYsGxGblsmoKZMOQrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0038/2151] apparmor: refactor xattr attachment, to take the file path
-Date: Wed, 18 Nov 2026 15:29:33 +0100
-Message-ID: <20261118150123.082406642@linuxfoundation.org>
+Subject: [PATCH 6.18 0039/2151] apparmor: constify aa_perms parameters that are read-only
+Date: Wed, 18 Nov 2026 15:29:34 +0100
+Message-ID: <20261118150123.120121320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,154 +69,140 @@ Content-Transfer-Encoding: 8bit
 
 From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 812aa0aa67d50c251d9788f1d225438e747507f0 ]
+[ Upstream commit e3bc982007fe5e704c6a7f5a189502ece056f68d ]
 
-The full bprm does not need to be passed into xattrs_match, so only
-pass in the path, and propagate the change backup the call stack until
-bprm is actually needed.
+Several functions take a struct aa_perms * argument that is only ever
+read from and never modified through the pointer. Mark those parameters
+const struct aa_perms * to document intent and let the compiler enforce
+that the permission set is not mutated.
 
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+The converted functions are:
+  - aa_check_perms()
+  - aa_do_perms()
+  - do_perms() (af_inet)
+  - match_label() (af_unix)
+  - verify_perm()
+  - aa_perms_accum() / aa_perms_accum_raw() (@addend only)
+
+No functional change.
+
 Signed-off-by: John Johansen <john.johansen@canonical.com>
+Assisted-by: Claude:claude-opus-4.8
 Stable-dep-of: ce94927fa417 ("apparmor: fix profile leak when a policy load fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/domain.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ security/apparmor/af_unix.c       |  2 +-
+ security/apparmor/include/net.h   |  2 +-
+ security/apparmor/include/perms.h | 11 ++++++-----
+ security/apparmor/lib.c           |  2 +-
+ security/apparmor/net.c           |  2 +-
+ security/apparmor/policy_unpack.c |  2 +-
+ 6 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
-index 8e478ac99ff6d..57e886b8ef461 100644
---- a/security/apparmor/domain.c
-+++ b/security/apparmor/domain.c
-@@ -303,28 +303,31 @@ static int change_profile_perms(struct aa_profile *profile,
- 
- /**
-  * aa_xattrs_match - check whether a file matches the xattrs defined in profile
-- * @bprm: binprm struct for the process to validate
-+ * @path: path for file being matched (NOT NULL)
-  * @profile: profile to match against (NOT NULL)
-  * @state: state to start match in
-  *
-  * Returns: number of extended attributes that matched, or < 0 on error
-  */
--static int aa_xattrs_match(const struct linux_binprm *bprm,
-+static int aa_xattrs_match(const struct path *path,
- 			   struct aa_profile *profile, aa_state_t state)
+diff --git a/security/apparmor/af_unix.c b/security/apparmor/af_unix.c
+index aa2b31d5598cd..7ba775017586b 100644
+--- a/security/apparmor/af_unix.c
++++ b/security/apparmor/af_unix.c
+@@ -172,7 +172,7 @@ static aa_state_t match_to_peer(struct aa_policydb *policy, aa_state_t state,
+ static aa_state_t match_label(struct aa_profile *profile,
+ 			      struct aa_ruleset *rule, aa_state_t state,
+ 			      u32 request, struct aa_profile *peer,
+-			      struct aa_perms *p,
++			      const struct aa_perms *p,
+ 			      struct apparmor_audit_data *ad)
  {
-+	AA_BUG(!path);
-+	AA_BUG(!profile);
+ 	AA_BUG(!profile);
+diff --git a/security/apparmor/include/net.h b/security/apparmor/include/net.h
+index 0d0b0ce427238..021a35b94bd7e 100644
+--- a/security/apparmor/include/net.h
++++ b/security/apparmor/include/net.h
+@@ -86,7 +86,7 @@ extern struct aa_sfs_entry aa_sfs_entry_network[];
+ extern struct aa_sfs_entry aa_sfs_entry_networkv9[];
+ 
+ int aa_do_perms(struct aa_profile *profile, struct aa_policydb *policy,
+-		aa_state_t state, u32 request, struct aa_perms *p,
++		aa_state_t state, u32 request, const struct aa_perms *p,
+ 		struct apparmor_audit_data *ad);
+ /* passing in state returned by XXX_mediates_AF() */
+ aa_state_t aa_match_to_prot(struct aa_policydb *policy, aa_state_t state,
+diff --git a/security/apparmor/include/perms.h b/security/apparmor/include/perms.h
+index 37a3781b99a08..695d9b0572d4f 100644
+--- a/security/apparmor/include/perms.h
++++ b/security/apparmor/include/perms.h
+@@ -105,7 +105,7 @@ extern struct aa_perms allperms;
+  * @addend: perms struct to add to @accum
+  */
+ static inline void aa_perms_accum_raw(struct aa_perms *accum,
+-				      struct aa_perms *addend)
++				      const struct aa_perms *addend)
+ {
+ 	accum->deny |= addend->deny;
+ 	accum->allow &= addend->allow & ~addend->deny;
+@@ -132,7 +132,7 @@ static inline void aa_perms_accum_raw(struct aa_perms *accum,
+  * @addend: perms struct to add to @accum
+  */
+ static inline void aa_perms_accum(struct aa_perms *accum,
+-				  struct aa_perms *addend)
++				  const struct aa_perms *addend)
+ {
+ 	accum->deny |= addend->deny;
+ 	accum->allow &= addend->allow & ~accum->deny;
+@@ -208,12 +208,13 @@ void aa_audit_perm_mask(struct audit_buffer *ab, u32 mask, const char *chrs,
+ 			u32 chrsmask, const char * const *names, u32 namesmask);
+ void aa_apply_modes_to_perms(struct aa_profile *profile,
+ 			     struct aa_perms *perms);
+-void aa_perms_accum(struct aa_perms *accum, struct aa_perms *addend);
+-void aa_perms_accum_raw(struct aa_perms *accum, struct aa_perms *addend);
++void aa_perms_accum(struct aa_perms *accum, const struct aa_perms *addend);
++void aa_perms_accum_raw(struct aa_perms *accum, const struct aa_perms *addend);
+ void aa_profile_match_label(struct aa_profile *profile,
+ 			    struct aa_ruleset *rules, struct aa_label *label,
+ 			    int type, u32 request, struct aa_perms *perms);
+-int aa_check_perms(struct aa_profile *profile, struct aa_perms *perms,
++int aa_check_perms(struct aa_profile *profile, const struct aa_perms *perms,
+ 		   u32 request, struct apparmor_audit_data *ad,
+ 		   void (*cb)(struct audit_buffer *, void *));
+ #endif /* __AA_PERM_H */
 +
- 	int i;
- 	struct dentry *d;
- 	char *value = NULL;
- 	struct aa_attachment *attach = &profile->attach;
- 	int size, value_size = 0, ret = attach->xattr_count;
- 
--	if (!bprm || !attach->xattr_count)
-+	if (!attach->xattr_count)
- 		return 0;
- 	might_sleep();
- 
- 	/* transition from exec match to xattr set */
- 	state = aa_dfa_outofband_transition(attach->xmatch->dfa, state);
--	d = bprm->file->f_path.dentry;
-+	d = path->dentry;
- 
- 	for (i = 0; i < attach->xattr_count; i++) {
- 		size = vfs_getxattr_alloc(&nop_mnt_idmap, d, attach->xattrs[i],
-@@ -372,7 +375,7 @@ static int aa_xattrs_match(const struct linux_binprm *bprm,
- 
- /**
-  * find_attach - do attachment search for unconfined processes
-- * @bprm: binprm structure of transitioning task
-+ * @path: path of file in question (NOT NULL)
-  * @ns: the current namespace  (NOT NULL)
-  * @head: profile list to walk  (NOT NULL)
-  * @name: to match against  (NOT NULL)
-@@ -387,7 +390,7 @@ static int aa_xattrs_match(const struct linux_binprm *bprm,
-  *
-  * Returns: label or NULL if no match found
+diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
+index 5d53c15e46a9e..3b982770c4ceb 100644
+--- a/security/apparmor/lib.c
++++ b/security/apparmor/lib.c
+@@ -415,7 +415,7 @@ void aa_profile_match_label(struct aa_profile *profile,
+  *       error code will indicate whether there was an explicit deny
+  *	 with a positive value.
   */
--static struct aa_label *find_attach(const struct linux_binprm *bprm,
-+static struct aa_label *find_attach(const struct path *path,
- 				    struct aa_ns *ns, struct list_head *head,
- 				    const char *name, const char **info)
+-int aa_check_perms(struct aa_profile *profile, struct aa_perms *perms,
++int aa_check_perms(struct aa_profile *profile, const struct aa_perms *perms,
+ 		   u32 request, struct apparmor_audit_data *ad,
+ 		   void (*cb)(struct audit_buffer *, void *))
  {
-@@ -395,6 +398,7 @@ static struct aa_label *find_attach(const struct linux_binprm *bprm,
- 	bool conflict = false;
- 	struct aa_profile *profile, *candidate = NULL;
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index cf590dd08540c..73a272576d5d6 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -166,7 +166,7 @@ void audit_net_cb(struct audit_buffer *ab, void *va)
+ /* standard permission lookup pattern - supports early bailout */
+ int aa_do_perms(struct aa_profile *profile, struct aa_policydb *policy,
+ 		aa_state_t state, u32 request,
+-		struct aa_perms *p, struct apparmor_audit_data *ad)
++		const struct aa_perms *p, struct apparmor_audit_data *ad)
+ {
+ 	struct aa_perms perms;
  
-+	AA_BUG(!path);
- 	AA_BUG(!name);
- 	AA_BUG(!head);
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 391665c27ede1..8dc2adedc7ae1 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -1257,7 +1257,7 @@ static bool verify_dfa_accept_index(struct aa_dfa *dfa, int table_size)
+ 	return true;
+ }
  
-@@ -434,13 +438,13 @@ static struct aa_label *find_attach(const struct linux_binprm *bprm,
- 				if (count < candidate_len)
- 					continue;
- 
--				if (bprm && attach->xattr_count) {
-+				if (attach->xattr_count) {
- 					long rev = READ_ONCE(ns->revision);
- 
- 					if (!aa_get_profile_not0(profile))
- 						goto restart;
- 					rcu_read_unlock();
--					ret = aa_xattrs_match(bprm, profile,
-+					ret = aa_xattrs_match(path, profile,
- 							      state);
- 					rcu_read_lock();
- 					aa_put_profile(profile);
-@@ -556,7 +560,7 @@ struct aa_label *x_table_lookup(struct aa_profile *profile, u32 xindex,
- /**
-  * x_to_label - get target label for a given xindex
-  * @profile: current profile  (NOT NULL)
-- * @bprm: binprm structure of transitioning task
-+ * @path: path of file in question
-  * @name: name to lookup (NOT NULL)
-  * @xindex: index into x transition table
-  * @lookupname: returns: name used in lookup if one was specified (NOT NULL)
-@@ -567,7 +571,7 @@ struct aa_label *x_table_lookup(struct aa_profile *profile, u32 xindex,
-  * Returns: refcounted label or NULL if not found available
-  */
- static struct aa_label *x_to_label(struct aa_profile *profile,
--				   const struct linux_binprm *bprm,
-+				   const struct path *path,
- 				   const char *name, u32 xindex,
- 				   const char **lookupname,
- 				   const char **info)
-@@ -598,11 +602,11 @@ static struct aa_label *x_to_label(struct aa_profile *profile,
- 	case AA_X_NAME:
- 		if (xindex & AA_X_CHILD)
- 			/* released by caller */
--			new = find_attach(bprm, ns, &profile->base.profiles,
-+			new = find_attach(path, ns, &profile->base.profiles,
- 					  name, info);
- 		else
- 			/* released by caller */
--			new = find_attach(bprm, ns, &ns->base.profiles,
-+			new = find_attach(path, ns, &ns->base.profiles,
- 					  name, info);
- 		*lookupname = name;
- 		break;
-@@ -690,7 +694,7 @@ static struct aa_label *profile_transition(const struct cred *subj_cred,
- 	}
- 
- 	if (profile_unconfined(profile)) {
--		new = find_attach(bprm, profile->ns,
-+		new = find_attach(&bprm->file->f_path, profile->ns,
- 				  &profile->ns->base.profiles, name, &info);
- 		/* info set -> something unusual that we should report
- 		 * Currently this is only conflicting attachments, but other
-@@ -720,8 +724,8 @@ static struct aa_label *profile_transition(const struct cred *subj_cred,
- 	state = aa_str_perms(rules->file, state, name, cond, &perms);
- 	if (perms.allow & MAY_EXEC) {
- 		/* exec permission determine how to transition */
--		new = x_to_label(profile, bprm, name, perms.xindex, &target,
--				 &info);
-+		new = x_to_label(profile, &bprm->file->f_path, name,
-+				 perms.xindex, &target, &info);
- 		if (new && new->proxy == profile->label.proxy && info) {
- 			/* Force audit on conflicting attachment fallback
- 			 * Because perms is never used again after this audit
+-static bool verify_perm(struct aa_perms *perm)
++static bool verify_perm(const struct aa_perms *perm)
+ {
+ 	/* TODO: allow option to just force the perms into a valid state */
+ 	if (perm->allow & perm->deny)
 -- 
 2.53.0
 
