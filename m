@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017267;
-	b=MtcauptjVTa9Z2QZ+1lXDcbvrrebhwrBJ+jm+nMHxAiqmr72sa8AkUiooaB6tMQoPBTE
-	 hNEk+yvwqVuz/aE5g9dXMU/DMefBYihgp66jLtj8PkKYWMp7CkgsWwEGkb0XecmGeqvfK
-	 jMLgXxnPf3iMJlTHyi30P+F5IYsSenCoVaZYNPyJr65UjrJ6Upk3GD5buhvV5GWlYaSXw
-	 xB/mZs8sHg8tR92NQX4BtKsaXGkqGVQkMi/CqUq/Jt2I5v9hcvfhTyvIfx9fHGciGZIiE
-	 5tJyYXgHgdccvrQmI+MCK8YJQoNL9+q4ITbA4uNmywZguxkC9+XSl+zqAvlNZDdVKqw==
+	t=1795017269;
+	b=BpzG1+0uW8QwFtDaE10DlXgjb93I0wZgc92p9WVUfB7c3OrqwKHgXPmUptzf4XqJZRsY
+	 B/MqYQwe1c4ianSLgLqrotBCvG6jOhdLIsbkciO7ZbhXWigOgTOGFOOp0SlC/NoCK1Yev
+	 91xzR6h6YzLg8ilAxdWMIPa1DJRe5mImz/guGIc2qzvu8tjSz1Tdosi+eTNW7iZcZdbj1
+	 nTaIkKT3ZKDnj2wAVoie3KJYZlNvhON8/2h/Lj97HeAUlBvr2JC+CVKHZzBZTHCYNj52b
+	 AAay3AhfbiaWL2KSuZmX+uZI3YKB81SAkPKuwSh/1uecYAp1Ts05CItHDOk35Qo7A9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017267;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017269;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/9upeZjUe6l9qfm81Q4pCAfZmhdsGlsiy+bYjMxZ1f8=;
-	b=slBgaNCpLbyNiFS+zdaNGpU4Q9fSXL3+52geV9duYvicV8Nr/SKqbOH/BKCWqJBAs8ef
-	 Iz9pCDgeOkpQg5vjGLHP72jzgYhBjCpa0AG33G3oSUyRq0LUb+1z0yFOQNKY45sWcGa9X
-	 iPDFj8RYiO4vLCVpdF0Fc0Zch8J9osOfUskoXithn8XuzVOATHHpbGr+bc7YS8u8dye9M
-	 /lutkVnN/xVCX9Kp7Q4OMmhGDRfzujeGt6yE6qWIiLyyXAqzRGm5QEwk10n4713oChvPB
-	 m9mDjxcipVW3O1p9IYfqaXJZsCLCuZkwdNmF8eMLHMK6egcSgz9GjOOLE5zLPaiLB4Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=VGwTmbf+GIMAGj0yjygfMEw6eKHZwO7GewJMllDL6i8=;
+	b=vUEx/grSUxKcufGP6i/r7ML71hI9Nc0FqQAMNaLWOKlpw8AfU9caj0APcUJ/sVtYU32t
+	 BhWMJr6xJaF3Ta0hj+JVUF30U7hemRa08AvLe/mE0BOPYlW9wPYDAyLh27rFy2pSMKVX3
+	 5/jIz3oez/XNS8um7Hp/+Ag8AR675a5IiFqeJInG15xwk1jPt9ZnGF34rZPX55CkYzgIx
+	 9hpHehAmlWA9hf8aE+kYG73E0mPs4vuZCwnf0tAZtfxzmmOHQBwJ8wygv3p6sAtuOMuY0
+	 z8N6ljD1MhZxMh4EsP/mz5JRM45XdPhMCgB4AURLkbO186RQNBIdq61C8I0JFRzRXvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=At0nzGM0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSH9nzoc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368B2606A31C;
-	Wed, 18 Nov 2026 15:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E0E606A320;
+	Wed, 18 Nov 2026 15:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=At0nzGM0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F201F000C4;
-	Wed, 18 Nov 2026 15:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xSH9nzoc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEA31F000C4;
+	Wed, 18 Nov 2026 15:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017266;
-	bh=/9upeZjUe6l9qfm81Q4pCAfZmhdsGlsiy+bYjMxZ1f8=;
+	s=korg; t=1795017269;
+	bh=VGwTmbf+GIMAGj0yjygfMEw6eKHZwO7GewJMllDL6i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=At0nzGM0WpklHXgMWF7MLYiYVbC9NK9kf2NNsQc4myDZHyuIEaBIMka7zFPuUer8n
-	 44VcW9R+YLe7xV2Ja+b4DHK9kyabvT/sz9QRvIpwnsxSOFBIubLSdLb7MzY1J2FIEh
-	 1GkzzxBLrSX71IGa5mYU2t8NeWHNrj3oaz5rHbzU=
+	b=xSH9nzocJJjhIRsSPKECiG0JBBFTzR4P/03wFaLItpWRVIWcAV413dmsDHbQwYt7A
+	 MpJkGEoGT4Ujpx1nWXfaiAksbOGCs7Uxm2Ifo3dKyCW2HvAifbAtxfVC4x4jRqTpDx
+	 CIT9k1wrZUSXilz+GNy78sNWvZpRu3BCv3M5tPlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Samir Mulani <samir@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0821/2651] bpf: Fix uninit read for non-fetch atomics on partially spilled slots
-Date: Wed, 18 Nov 2026 15:34:21 +0100
-Message-ID: <20261118150317.449289385@linuxfoundation.org>
+Subject: [PATCH 7.3 0822/2651] powerpc/ftrace: Dont restore r13 during ftrace_regs_caller
+Date: Wed, 18 Nov 2026 15:34:22 +0100
+Message-ID: <20261118150317.483794786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,90 +66,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-[ Upstream commit 5a84b4424db8ae07f0ac682ab031c37a91dce50b ]
+[ Upstream commit af5f0870883ae4aea7f668d06cbb7ad0e12824c8 ]
 
-check_stack_read_fixed_off() skips partial spill checks for non-fetch
-atomics; the following prog can be loaded:
+Michal reported a stack-protector failure and subsequent panic when
+running kernel builds. This was observed with full/lazy preemption.
+Initially it was suspected as KVM, but later turned out to be due
+to a bcc tool running in parallel.
 
-0: (b7) r1 = 1                        ; R1=1
-1: (63) *(u32 *)(r10 -8) = r1         ; R1=1 R10=fp0 fp-8=????1
-2: (db) lock *(u64 *)(r10 -8) += r1   ; R1=1 R10=fp0 fp-8=mmmmmmmm
-3: (79) r0 = *(u64 *)(r10 -8)         ; R0=scalar() R10=fp0 fp-8=mmmmmmmm
-4: (77) r0 >>= 32                     ; R0=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
-5: (95) exit
+Issue was recreated using a bcc tool.
+For example, running below in parallel leads to crash.
+./funccount sched* -d 100 and make -j 64
 
-When test run:
-	retval=4294967295
+The same crash was observed when running kprobe for schedule() function,
+while simpler function tracer for schedule() didn't cause the crash.
+This helped to narrow it down to ftrace backed kprobes area.
 
-Note fp-8 is ????1 at #1, yet it becomes fp-8=mmmmmmmm after the
-non-fetching atomic add at #2; hence the high 32 bits are leaked.
+The crash occurs as follows:
 
-Fix by applying the partial load check; after the patch, the
-prog is rejected:
+ftrace_regs_caller entry on CPU A
+    |
+    +-> save r13 = CPU A PACA into pt_regs
+    |
+    +-> call kprobe_ftrace_handler()
+            |
+            +-> ftrace_test_recursion_unlock()
+                    |
+                    +-> preempt_enable
+                    +-> task can schedule and migrate to CPU B
+                    +-> task resumes with live r13 = CPU B PACA
+    |
+    +-> REST_GPRS(2, 31)
+            |
+            +-> restore saved r13 = CPU A PACA
+    |
+    |-> The task then continues running on CPU B with r13 pointing
+    |   to CPU A's PACA.
 
-Verification failed: Memory Safety: Uninitialized stack read
+The stack-protector canary is accessed through the PACA. After the task
+migrates, CPU A may run a different task and update its PACA with that
+task's canary. Restoring the saved r13 then causes the migrated task's
+saved stack canary to be compared against the canary in CPU A's PACA,
+resulting in a stack-protector failure.
 
-Reason:
-  This rejected read uses 8 bytes at stack offset -8, but byte 4 in that range is uninitialized on
-  this path. Programs loaded with CAP_PERFMON can be allowed to read uninitialized stack bytes, but
-  this program is being rejected without that allowance.
+Similarly, current is resolved through the PACA. With a stale r13,
+preempt_count() can access the state of the task referenced by CPU A's
+PACA instead of the task running on CPU B. This results in corrupted
+preempt-count warnings and scheduling-while-atomic failures.
 
-At:
-  ...
-      0 | (b7) r1 = 1
-      1 | (63) *(u32 *)(r10 -8) = r1
-  >>> 2 | (db) lock *(u64 *)(r10 -8) += r1
-      3 | (79) r0 = *(u64 *)(r10 -8)
-      4 | (77) r0 >>= 32
+This path for example is called when using kprobes and parallel kernel
+builds can cause preemptions during ftrace_test_recursion_unlock.
 
-This affects CAP_BPF only.
+Do not restore r13 from the saved register frame. If the task did not
+migrate, the live r13 already has the saved value. If it migrated, the
+live r13 contains the correct PACA pointer for the CPU on which the task
+resumed.
 
-Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Link: https://lore.kernel.org/bpf/20260924131342.934290-1-sunhao.th@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+On PPC32, r13 is regular register. So do this fix only for PPC64
+
+Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/all/aqKfsVArHHaIK6M9@kunlun.suse.cz/
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Tested-by: Samir Mulani <samir@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260921072151.35531-1-sshegde@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/powerpc/kernel/trace/ftrace_entry.S | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 25cb335e008fd..04c763aa40094 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3910,11 +3910,11 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 				return -EACCES;
- 			}
+diff --git a/arch/powerpc/kernel/trace/ftrace_entry.S b/arch/powerpc/kernel/trace/ftrace_entry.S
+index 6599fe3c62347..5eb8eee32549d 100644
+--- a/arch/powerpc/kernel/trace/ftrace_entry.S
++++ b/arch/powerpc/kernel/trace/ftrace_entry.S
+@@ -220,7 +220,13 @@
  
--			if (dst_regno < 0)
--				return 0;
--
- 			if (size <= spill_size &&
- 			    bpf_stack_narrow_access_ok(off, size, spill_size)) {
-+				if (dst_regno < 0)
-+					return 0;
-+
- 				if (env->bpf_capable && size == 4 && spill_size == 4 &&
- 				    get_reg_width(reg) <= 32)
- 					/* Ensure stack slot has an ID to build a relation
-@@ -3956,6 +3956,9 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 					return -EACCES;
- 				}
- 
-+				if (dst_regno < 0)
-+					return 0;
-+
- 				if (spill_cnt == size &&
- 				    tnum_is_const(reg->var_off) && reg->var_off.value == 0) {
- 					__mark_reg_const_zero(env, &state->regs[dst_regno]);
+ 	/* Restore gprs */
+ 	.if \allregs == 1
++#ifdef CONFIG_PPC64
++	REST_GPRS(2, 12, r1)
++	/* Do not restore a stale PACA pointer if the task migrated */
++	REST_GPRS(14, 31, r1)
++#else
+ 	REST_GPRS(2, 31, r1)
++#endif
+ 	.else
+ 	REST_GPRS(3, 10, r1)
+ #if defined(CONFIG_LIVEPATCH_64) || defined(CONFIG_PPC_FTRACE_OUT_OF_LINE)
 -- 
 2.53.0
 
