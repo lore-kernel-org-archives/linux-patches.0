@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043991;
-	b=LWSR/qWHT5CUweTwMLOyx2XbIk1eiFujqnIvADD5LG9zShVmr2AdPbUApQjIMwusQr/D
-	 U3UmPlc4h27n+EWma/E+3agQgKHVz0GnCdrEq0/bNM4aD5VA9Gpq/ciM1v3zivUm30nyZ
-	 G5rkpfRcAGo2+l4l63IV0kOqTqNKfe7DuJm85ZP5XYNYpRSmgXvO94wO1OnHipgil34t8
-	 OKnKHoia6OVW4G0bEXVT3bEgmQ1l5/0XG15Tlr+xUqtja2uW1X9gEFD+SkxXInB9In/8E
-	 66oAToadJSPUKe9ctG68R3/UF3zYZRngKpqfpo36nfYmBDz8xh26t8ZslmXm60ijmfw==
+	t=1795043994;
+	b=rF6g5fW0miiRehYE5hXP8aTh9W1sK03bBT51Ly1x8X1ZqWGghiHxv4Zm8O6avZvJbuIG
+	 J2bv+XaloS5cbhhbwKYyCFZjDm1zXdT080sc7sND7zMt2Ng7VrdWb/qaPn3KBo39+31+1
+	 tyweWRpkyGbva7njzboJFWvABXnWEpuy5p8qA64a9idSA7C/HwvP7cSMESM8FnLOTFTtB
+	 qJuRJbJvTF2WZsG6YbYUZWh0nbg5hGSQ/NgKrCg0rOCu5hoEyA/+K0fIl4PxA312J/Ycr
+	 U0Uj8Hzp1fYbXvycL40DpOObW/z2BF/ZaoPxdBXBOF2eSJlEym2PmJe28I4sSRzRjjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043991;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JyCvWoRymBXUBTigvn91MtCiR9eINH15iBUHqdNsBsI=;
-	b=us9aH+FpF5BS2exSkS8dK/+CktN8tcu/CaWNrhojfAwgr7TgC8vW05LDqKUlSZMYswiC
-	 HR28SEcjwI/7DG00CjR6W0fiM+ZhlGg1j9+dcjLvQeQ/jT13TLvOyf6tzdHRluQeq+rgA
-	 3tzpBLkNk5d6iGmf6EyvT2ktqS9cmbSFVgoTWjmt1F9bj7gcoH3ghQV2BumsV1CYdnJma
-	 Ebnm2HCKoptn2scjGy4TosCGmEx/pWHF9uJRcTL7ZdukNGGKw3XMY9AFSF1dyOK40lZQ/
-	 TLoYkc2Rm8713j901ChZDUZQ68+VS3U4rMi+Crlzn6I8NWFh0qDrNTM7dELr61giLLA==
+	bh=HjQm8OBWBmCRPnVt9OUZ3RLbIzTeRiPeV4O7/WtX6KY=;
+	b=ssIo7Wo/bkf/0Q1m1BvrDqT/pdskFj2YgJ7eX/ayhBiv0il9p7jNlh3juKOFMn5YTvdK
+	 WTnrKi+gzgPb92/g42QZNmhZFl7J8NB073ee/PG6m1qtQbPPmHcEmzoDjhglyD5fC6z5f
+	 4VnilT1r095Q91G3zLvtKziZTTutIfYkbIzMWB3ukfTNxi45QYFxBPMxrTN8zz2TcjdNL
+	 KhE4QsPi8OHnzKPGue+KpAIz3PIhPBCxYGAh5HVXRfna2SHxvWvy5D8SyxaGFh9mRW+ng
+	 Ll7E0dYelc83gk3B1MSdvxTGr+f2D51tBnLxWfW/BRh+fRkmm8i3HHflT3l2lSxjTzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0+4OCLQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGKRyn8j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4192606A32A;
-	Wed, 18 Nov 2026 23:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB48606A32A;
+	Wed, 18 Nov 2026 23:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0+4OCLQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3323B1F000C5;
-	Wed, 18 Nov 2026 23:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dGKRyn8j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D331F000C5;
+	Wed, 18 Nov 2026 23:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043991;
-	bh=JyCvWoRymBXUBTigvn91MtCiR9eINH15iBUHqdNsBsI=;
+	s=korg; t=1795043994;
+	bh=HjQm8OBWBmCRPnVt9OUZ3RLbIzTeRiPeV4O7/WtX6KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0+4OCLQ9bUSMUMpcf8gQTzhiO89BwJvsS9l8FS9/fmfCRUwoM/Z+5tML8CeUuXKu
-	 y589oO9z8rsP84HAxKC1tLBeIE/mI/YlD7+gMNIhF0Hom3YT6AbFCm/IEdLaS+0Z3c
-	 ZH0V4CKokl70W1jTDDWQSHmMYxQ6DdETf5vPzmLM=
+	b=dGKRyn8j1xz0QY4/f57RM+2yHzwQy+LtPVENVYvAUNdhfKrlGNwHKR8uP/PH4qXXY
+	 +CElQxphZtqT9oA3anvoBAEevrjh4GsLHqnilQYhw0w5OenLNaUU51PAtxCsVYQUU2
+	 F2+CVtEyug5+mNBWggMAWIFXPdokJhTQTnjgKQpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com,
 	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
 	Breno Leitao <leitao@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0406/2857] configfs: pin the symlink targets dirent instead of chasing ->ci_dentry
-Date: Wed, 18 Nov 2026 15:24:00 +0100
-Message-ID: <20261118150216.007909555@linuxfoundation.org>
+Subject: [PATCH 6.1 0407/2857] configfs: unhash the dentry before dropping the item in rmdir
+Date: Wed, 18 Nov 2026 15:24:01 +0100
+Message-ID: <20261118150216.042940244@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,111 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 
-[ Upstream commit a7c1290eef60711c10289c056ad32ed1f2b47b12 ]
+[ Upstream commit f06c2d26d1999d37e93299db0ecead04ca7d0b9f ]
 
-create_link() reads the target's configfs_dirent from
-item->ci_dentry->d_fsdata, relying on the item reference taken by
-get_target().  That reference pins the item, not its dentry: the dentry is
-pinned by DCACHE_PERSISTENT, which configfs_remove_dir() releases via
-simple_rmdir() while the item is still alive.  A symlink racing with rmdir
-of its target can therefore find ->ci_dentry freed and its dirent
-released, triggering WARN_ON(!atomic_read(&sd->s_count)) in configfs_get().
+configfs_get_config_item() treats a hashed dentry as proof that
+sd->s_element is a live config_item.  configfs_rmdir() breaks that:
+simple_rmdir() leaves the dentry hashed, the last reference to the item is
+dropped right after, and the dentry is only unhashed by d_delete() once
+->rmdir() has returned.  configfs_symlink() resolves its target holding no
+lock on it, so get_target() can land in that window:
 
-Take the dirent in get_target() as well, under ->d_lock and atomically
-with the item reference, and pass it down to create_link().  A hashed
-dentry has not been killed yet, so its ->d_fsdata reference keeps the
-dirent alive there.
+  BUG: KASAN: slab-use-after-free in config_item_get+0x26/0x90
+   get_target fs/configfs/symlink.c:128 [inline]
+   configfs_symlink+0x4ab/0x1030 fs/configfs/symlink.c:185
 
-Cc: stable@vger.kernel.org
+Unhash in configfs_remove_dir(), while the item is still guaranteed to be
+there.  A reference obtained just before that stays harmless, as
+create_link() rechecks CONFIGFS_USET_DROPPING, already set by
+configfs_detach_prep().  Both configfs_unregister_subsystem() paths
+d_drop() after detaching, so this only makes rmdir match them.
+
+Reported-by: syzbot+6b16e3d085833cbf3e25@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6b16e3d085833cbf3e25
 Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
+Cc: stable@vger.kernel.org
 Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
 Tested-by: Breno Leitao <leitao@debian.org>
 Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260730093435.195441-2-vasilisalmpanis@gmail.com
+Link: https://patch.msgid.link/20260730093435.195441-3-vasilisalmpanis@gmail.com
 Signed-off-by: Breno Leitao <leitao@debian.org>
+[ sashal: Moved the d_drop() after simple_rmdir() into the older remove_dir() helper, since this tree splits it from configfs_remove_dir(), and omitted the pr_warn branch that doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/symlink.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ fs/configfs/dir.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/fs/configfs/symlink.c b/fs/configfs/symlink.c
-index 31b3a4ad5ea66..feaccac55d8cd 100644
---- a/fs/configfs/symlink.c
-+++ b/fs/configfs/symlink.c
-@@ -76,9 +76,9 @@ static int configfs_get_target_path(struct config_item *item,
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index 69762a33dff6b..5006437bed662 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -395,8 +395,17 @@ static void remove_dir(struct dentry * d)
  
- static int create_link(struct config_item *parent_item,
- 		       struct config_item *item,
-+		       struct configfs_dirent *target_sd,
- 		       struct dentry *dentry)
- {
--	struct configfs_dirent *target_sd = item->ci_dentry->d_fsdata;
- 	char *body;
- 	int ret;
+ 	configfs_remove_dirent(d);
  
-@@ -115,6 +115,7 @@ static int create_link(struct config_item *parent_item,
- 
- 
- static int get_target(const char *symname, struct config_item **target,
-+		      struct configfs_dirent **target_sd,
- 		      struct super_block *sb)
- {
- 	struct path path __free(path_put) = {};
-@@ -125,7 +126,20 @@ static int get_target(const char *symname, struct config_item **target,
- 		return ret;
- 	if (path.dentry->d_sb != sb)
- 		return -EPERM;
--	*target = configfs_get_config_item(path.dentry);
-+	/*
-+	 * A hashed dentry guarantees that neither the item nor the dirent
-+	 * have been released yet, as removals unhash before dropping.
-+	 * Grab both references here. An item reference alone would not keep
-+	 * ->ci_dentry alive.
-+	 */
-+	spin_lock(&path.dentry->d_lock);
-+	if (!d_unhashed(path.dentry)) {
-+		struct configfs_dirent *sd = path.dentry->d_fsdata;
-+
-+		*target = config_item_get(sd->s_element);
-+		*target_sd = configfs_get(sd);
+-	if (d_really_is_positive(d))
+-		simple_rmdir(d_inode(parent),d);
++	if (d_really_is_positive(d)) {
++		if (!simple_rmdir(d_inode(parent), d))
++			/*
++			 * configfs_get_config_item() takes a hashed dentry as
++			 * proof that ->s_element is still alive.  Our caller
++			 * is about to drop the last reference to the item and
++			 * the VFS will not unhash until after we return, so
++			 * unhash it here.
++			 */
++			d_drop(d);
 +	}
-+	spin_unlock(&path.dentry->d_lock);
- 	if (!*target)
- 		return -ENOENT;
- 	return 0;
-@@ -139,6 +153,7 @@ int configfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
- 	struct configfs_dirent *sd;
- 	struct config_item *parent_item;
- 	struct config_item *target_item = NULL;
-+	struct configfs_dirent *target_sd = NULL;
- 	const struct config_item_type *type;
  
- 	sd = dentry->d_parent->d_fsdata;
-@@ -182,7 +197,7 @@ int configfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
- 	 *  AV, a thoroughly annoyed bastard.
- 	 */
- 	inode_unlock(dir);
--	ret = get_target(symname, &target_item, dentry->d_sb);
-+	ret = get_target(symname, &target_item, &target_sd, dentry->d_sb);
- 	inode_lock(dir);
- 	if (ret)
- 		goto out_put;
-@@ -196,13 +211,14 @@ int configfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
- 		ret = type->ct_item_ops->allow_link(parent_item, target_item);
- 	if (!ret) {
- 		mutex_lock(&configfs_symlink_mutex);
--		ret = create_link(parent_item, target_item, dentry);
-+		ret = create_link(parent_item, target_item, target_sd, dentry);
- 		mutex_unlock(&configfs_symlink_mutex);
- 		if (ret && type->ct_item_ops->drop_link)
- 			type->ct_item_ops->drop_link(parent_item,
- 						     target_item);
- 	}
+ 	pr_debug(" o %pd removing done (%d)\n", d, d_count(d));
  
-+	configfs_put(target_sd);
- 	config_item_put(target_item);
- 
- out_put:
 -- 
 2.53.0
 
