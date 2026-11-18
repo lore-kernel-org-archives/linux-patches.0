@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031770;
-	b=QJUhFyuzzr/C1jiVHEhusg/OIZgrbXyxC4a0F7TMZCI69GgjwaiA1J6BI+zJ6wAIoJ/a
-	 Srzh82AsGyqP0PCF8vCiJZcb9DQHj6EzEU4KgLfuXuOgoriz/vrW5u8xrrO3lKfeD8Xcq
-	 ciayfcZIaspA1a7+CwwIblB4kXRk1ucA4MltMUOp1qscYwR/sRcObKggkDa5E8Jcquo92
-	 m01PNWT/UIK+Ywh2Kg39XnL16L7Rp31eYlLg6FD/2AlcbVTehZGhJGsrCRej9NuUclqE3
-	 ZPUPdozWJvRKPew2KbZNmiAxFqDmLPF9Gn0ehBb/AzIT+VebJQXlh906rVDxLr9DjHQ==
+	t=1795031772;
+	b=fIL6EvWdOgl4/DNOKrs0tUqIXKJvwWgifxShoZ4JukC/tTsC41JOmHEWf6HzIcB1HUJF
+	 ZhBOflBzVlrAgEP5iufYrJa6ZIhJAHjNc522fb4gZF4zcuhl/1lcQ/3nEV8s/W4WFbVhG
+	 9sBqvBjkRaBoSBdie058KcH6g7fs6LXmGIe9nxQkSVrifsj3diSm0Z87HrxEp+e6/+kk5
+	 dpqVMHm00UtMO5y3J2Nw1ZOjOzNHmtu1WsOTaILqEIEbOAMhLqKHd3Ac/TDg2l4G9xKHZ
+	 PQwmKZWu4/b5f3WxbY9uReOyc40lNABwoV4swGAC+XfNuD9UJmj20IqAiP3sZpBpumQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Y3OEMz73vaayWohgQ75owsvc+hl8lyJZ3V92GsmuoY=;
-	b=pgDl/oP/9QeewVfDKkzDQM/5GcDCdvU1hauYqumXwYrJQ65aEYpqs1ej5G4qWjVnTezc
-	 BzX9s3txIo2yEZbP09HV4pdpuSDpt4AwWsWEDbRsdoNwY0/AhKLdK6Gspxi/ezTGzu0Mf
-	 HO6LlwfeN/NNQ3SAg9pup57q4Yq4zzF6vYbnFLcCzAKxojoYWQN7Z5fME/ydqCz/A9bii
-	 87Kjp5c0Frdz16m9yQ8PadHGBxRd5BjJUZdym54mNBTzriPX+T4634FwRH0QLuvGUIfDp
-	 k6+YnG4OFAG26UgeOtcGHSwGpzWga4kGHIMAvleZbVeJgkZeJyWoi1UY3wHGWvtkwIA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=7U2M97KC1TZC3OQ/g66nrLbhoGMQWSgAczFsI6xipYo=;
+	b=caAyd+S/MrGNzVnx89SD5bitVNuFkSiqoXHgPdI1Xy5PPzy83TizPsusN1M3N85qB8Bl
+	 EiVjGZD1PtT9xqHnvQrRkTTa2FbEXxlQj024ZwOtA4kanVCFCsEXoQt8S/vlSuEvURHJV
+	 4MXZaRdVXgW2wrpGiONdroM1xPRrWVNRyY0QRTxHzGmi0/lUdxxL3tNJBCRgJ6bQJkdvj
+	 KCiQf2v01462KNwpXBOpMuAsataheHZYPiBZ8U9PBCM+OHMzfngsPgFNvT4+zv4MoZrOO
+	 CJkq/+v2v2ZBv2DpiTXvdGLaMnh/v5TANISDRG8e2KzIZoLOTyjiovOufnVrVBUHeYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4XFHFez;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwRVbPTb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5CD606A336;
-	Wed, 18 Nov 2026 19:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F96606A332;
+	Wed, 18 Nov 2026 19:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4XFHFez
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C601F000C9;
-	Wed, 18 Nov 2026 19:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jwRVbPTb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC761F000CB;
+	Wed, 18 Nov 2026 19:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031769;
-	bh=1Y3OEMz73vaayWohgQ75owsvc+hl8lyJZ3V92GsmuoY=;
+	s=korg; t=1795031772;
+	bh=7U2M97KC1TZC3OQ/g66nrLbhoGMQWSgAczFsI6xipYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4XFHFez5Jt2ceYM3imfsv34Ld/AVHIK/mYChtyvP0uPlExvHV+FcWhDL+e27UqT4
-	 X3lh+q5YqgAAUEp35aC9J/q45YSJwHmdiY48OA9gPz4FGKhLZ5N1xSBCvdIvTm0kst
-	 f9zGkPs08qqAk5L30uVhUh62Za9A57aLJDpyJfds=
+	b=jwRVbPTbFO/Gslm7a4mVt1a9fEzHtHHB2/ylV6zwUaZ0xJhMNi6XcIemEGMpDV5Ef
+	 mehJL0OgoYCiP+Y7fu0Tbg/ZkoRIcyrERWV+zm3QUB3KVCDDLkTdQa6ZbFz/5uLeDB
+	 y9R8vekZwllbjW5ODlsZ5h7oc0grFUPYs7ar7rjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yao Sang <sangyao@kylinos.cn>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1148/1756] nvme: pass partition flags to passthrough checks
-Date: Wed, 18 Nov 2026 15:54:35 +0100
-Message-ID: <20261118150055.744325177@linuxfoundation.org>
+Subject: [PATCH 6.12 1175/1756] ALSA: pcm: Fix driver_tstamp value reporting
+Date: Wed, 18 Nov 2026 15:55:02 +0100
+Message-ID: <20261118150056.725852029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,48 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yao Sang <sangyao@kylinos.cn>
+From: Amadeusz Sławiński <amade@asmblr.net>
 
-[ Upstream commit 6908a702955929b0876baac9fdc57070780a76f0 ]
+[ Upstream commit 8ff1161ac5aa02f3261e00f07d6212be2b12384b ]
 
-nvme_user_cmd() handles NVME_IOCTL_IO_CMD on namespace block devices,
-including partitions. It receives flags identifying a partition, but
-passes 0 to nvme_cmd_allowed(), bypassing the partition guard and
-allowing unprivileged passthrough commands to access sectors outside
-the partition.
+In some cases (system32 and compat64) due to incorrect assignment wrong
+value is being reported. Fix it.
 
-Pass flags to the permission check, rejecting unprivileged commands on
-partitions.
-
-Fixes: 313c08c72ee7 ("nvme: don't allow unprivileged passthrough on partitions")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yao Sang <sangyao@kylinos.cn>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3ddee7f88aaf ("ALSA: Avoid using timespec for struct snd_pcm_status")
+Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
+Link: https://patch.msgid.link/20261013164256.4949-1-amade@asmblr.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/pcm_compat.c | 4 ++--
+ sound/core/pcm_native.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index 22a98e75d8962..e0aa394c0482d 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -361,7 +361,7 @@ static int nvme_user_cmd(struct nvme_ctrl *ctrl, struct nvme_ns *ns,
- 	c.common.cdw14 = cpu_to_le32(cmd.cdw14);
- 	c.common.cdw15 = cpu_to_le32(cmd.cdw15);
+diff --git a/sound/core/pcm_compat.c b/sound/core/pcm_compat.c
+index c1c64da2eabd0..865939ce971ea 100644
+--- a/sound/core/pcm_compat.c
++++ b/sound/core/pcm_compat.c
+@@ -219,8 +219,8 @@ static int snd_pcm_status_user_compat64(struct snd_pcm_substream *substream,
+ 		.audio_tstamp_data = status.audio_tstamp_data,
+ 		.audio_tstamp_sec = status.audio_tstamp_sec,
+ 		.audio_tstamp_nsec = status.audio_tstamp_nsec,
+-		.driver_tstamp_sec = status.audio_tstamp_sec,
+-		.driver_tstamp_nsec = status.audio_tstamp_nsec,
++		.driver_tstamp_sec = status.driver_tstamp_sec,
++		.driver_tstamp_nsec = status.driver_tstamp_nsec,
+ 		.audio_tstamp_accuracy = status.audio_tstamp_accuracy,
+ 	};
  
--	if (!nvme_cmd_allowed(ctrl, ns, &c, 0, open_for_write))
-+	if (!nvme_cmd_allowed(ctrl, ns, &c, flags, open_for_write))
- 		return -EACCES;
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index ed9d8877f2635..4d0e3dd36c57f 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -1173,8 +1173,8 @@ static int snd_pcm_status_user32(struct snd_pcm_substream *substream,
+ 		.audio_tstamp_data = status64.audio_tstamp_data,
+ 		.audio_tstamp_sec = status64.audio_tstamp_sec,
+ 		.audio_tstamp_nsec = status64.audio_tstamp_nsec,
+-		.driver_tstamp_sec = status64.audio_tstamp_sec,
+-		.driver_tstamp_nsec = status64.audio_tstamp_nsec,
++		.driver_tstamp_sec = status64.driver_tstamp_sec,
++		.driver_tstamp_nsec = status64.driver_tstamp_nsec,
+ 		.audio_tstamp_accuracy = status64.audio_tstamp_accuracy,
+ 	};
  
- 	if (cmd.timeout_ms)
 -- 
 2.53.0
 
