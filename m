@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062241;
-	b=2Ui7w6JeBFru1vlsuFi8ualUZb0nRCnsTppER0ecHBqmpnQKPzMMJpSDRReMlDrPC8Li
-	 2oXQjcMN9HxhQKpOXGPc8p5wHI07eZ4eNsSDVIAEHum8FXbdZqEJ46B0eceoN9Z+pmeyB
-	 8PGHkFVZU4fGQ3pPHoktXEuFapUT1eSoZwmBZCnbj9SSIuEd/zf4cyW1RfNxhLuYKzlt8
-	 9VgXWfaoAtU5k6tk8CdAhVjd2X4u1OVsar6Yw9xYBLT1XuWT7abXofN3tPQ0H1LwsZ1IX
-	 gLuQipDBszBGxSntkYEGMipI3LPjDk477wXdUHGMLlZPd+bkMKZekulOg5VbP/8tkGg==
+	t=1795062244;
+	b=tZQ6NMeSn6802ro41ZlSE8D4je7TUAPzXDphEOJLBPdDAzU8NhM40m0CffvHZ2KlOpxN
+	 Kj3q4ujKNWKL+LL75ehE3VGlFsJxUUDh5j52tKjpp0YZXE9mFHQzIkN2Ugojbhjv6Z1ks
+	 0BywvGG77mbN2ybqGdZCBBcF9Q2k+FVU4fHkyWQmWIFSW46rLdYgM+UOcWo9rJUGQms+n
+	 Jww9MFIUptiNKedE96K2ZFwe2drku9N3zP4Su+fDZnh9MU0HqT6BReYW5lwCGGqWOzVyd
+	 EE0lI4JPuFWBZz0ewKwaWRFmtTg0hdJr8iwxR4kXgGzdthHjeWFSLfEcJIP+LRYVSVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062241;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VE7RaOv3IoUcZ8Mblq3wdVnuP4BDX1JEY3al/1ixhfc=;
-	b=aRD6YcAU+PjysTwM96BkACHx8hLlmyFzBGbrhkAJVDJagjFKB32vfpNm2wUJWotWfZoe
-	 A0AERVDxySy85oyo3zP1yTlAThXrHhZATavxa0s/MvfPJEgeJG6WLMfdic0f8tTkoyeKz
-	 SCEYTF1LwZjp7uRX62hyWOYhyZscZkiGDuJ0BwLgHmn7peg7dbbbP2aYk9F9tnMD1NmDj
-	 A+GeIMyjK49bvztUoUoq5/dqWtFio9ka2tF4PKLjZ0ZTs/s5MBEPcSmY8h7twRkXXK1kS
-	 Ub8N9er35FlPAuRSn4WSR+oP7HXG1b9bdUaQxZi9BQxXuOKlvlhYHWJRKnLz8QJIfWw==
+	bh=iBKwfuVJY2UKOkx6HAVItHtCBdy4DetI5ZHRGTR/DKU=;
+	b=dnX+xGt3nRmSX0Dzb45GcWC091Yeh1lgNH2r8sJHMfi8Q7NIYr3pGJ75JS53pRcsyFuQ
+	 G0KdYr97nh58QKA06Hgs6EYtxwAxDOMWfnEapBns4p2ITgEBCl8vndCWTh1kTZGjcLVAJ
+	 M7RJ8eQ7+TIz3MsR9wEhnCwvEVemBIJxKh7b2qxOGkHYZTScfo+FZurLigxROxiUSUzU0
+	 bVS6d/uvuqnIl0yvqdo9jwP5HNNsXGlp8aY+qI/KYne85tcuDnfHNAO0nVNHUkdE7WEUX
+	 jX4AuGpVv8esgsko1bb0wAkG7bU6sfHXuqH76v4ibMVhJM1axvz8Cx0ekohRf/3HzrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GmqlpABw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0glZIYM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5511606A320;
-	Thu, 19 Nov 2026 04:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64421606A325;
+	Thu, 19 Nov 2026 04:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GmqlpABw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075871F000C4;
-	Thu, 19 Nov 2026 04:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M0glZIYM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBFDE1F000C4;
+	Thu, 19 Nov 2026 04:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062241;
-	bh=VE7RaOv3IoUcZ8Mblq3wdVnuP4BDX1JEY3al/1ixhfc=;
+	s=korg; t=1795062244;
+	bh=iBKwfuVJY2UKOkx6HAVItHtCBdy4DetI5ZHRGTR/DKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GmqlpABwJSeClqz7rotzKB9ox+4AfjQQqpp64k6E6vSSyKEAJMbjQ567lo/fPJ+vS
-	 R+oa9/rE23HQMoPypS4z+aU/laWHEqdV3bxl8rY96Af9by82IhWBR8rgMneejmr1jB
-	 g4LFHH5KiOaHMuR2vmfb5nZv6PcnaB9fOZaUKM1U=
+	b=M0glZIYMU1vqDoDWV06b94EIZogI7IAtKMkAa89r2WlYgPEIsLnYEx3MGA8wDxNAg
+	 IRaI91PPttlW88gBQ6hygwwl3Y49jdHba0gDP2j9j2eGJlRqohQEDYx3JujvudJG33
+	 91v0u3H/uXbvUw1Sx5MGz3q8snSe7t2Iz3zWywZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Stephen Boyd <swboyd@chromium.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 5.10 1840/1848] drm/msm/dp: stop link training after link training 2 failed
-Date: Wed, 18 Nov 2026 16:04:38 +0100
-Message-ID: <20261118150036.603119570@linuxfoundation.org>
+Subject: [PATCH 5.10 1841/1848] drm/msm/dp: always add fail-safe mode into connector mode list
+Date: Wed, 18 Nov 2026 16:04:39 +0100
+Message-ID: <20261118150036.639229200@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,42 +70,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-commit 9051d629dbf7a998a40f7eac65a9512b01bc3bb8 upstream.
+commit d4aca422539c441a7f3fec749287b36de37d9b6b upstream.
 
-Each DP link training contains link training 1 followed by link
-training 2.  There is maximum of 5 retries of DP link training
-before declared link training failed. It is required to stop link
-training at end of link training 2 if it is failed so that next
-link training 1 can start freshly. This patch fixes link compliance
-test  case 4.3.1.13 (Source Device Link Training EQ Fallback Test).
+Some of DP link compliant test expects to return fail-safe mode
+if prefer detailed timing mode can not be supported by mainlink's
+lane and rate after link training. Therefore add fail-safe mode
+into connector mode list as backup mode. This patch fixes test
+case 4.2.2.1.
 
-Changes in v10:
---  group into one series
+Changes in v2:
+-- add Fixes text string
 
-Changes in v11:
--- drop drm/msm/dp: dp_link_parse_sink_count() return immediately if aux read
-
-Fixes: 2e0adc765d88 ("drm/msm/dp: do not end dp link training until video is ready")
+Fixes: 4b85d405cfe9 ( "drm/msm/dp: reduce link rate if failed at link training 1")
 Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/1642531648-8448-5-git-send-email-quic_khsieh@quicinc.com
+Link: https://lore.kernel.org/r/1643066274-25814-1-git-send-email-quic_khsieh@quicinc.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_panel.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1732,6 +1732,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_c
- 				/* end with failure */
- 				break; /* lane == 1 already */
- 			}
-+
-+			/* stop link training before start re training  */
-+			dp_ctrl_clear_training_pattern(ctrl);
- 		}
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -207,6 +207,11 @@ int dp_panel_read_sink_caps(struct dp_pa
+ 		if (drm_add_modes_noedid(connector, 640, 480))
+ 			drm_set_preferred_mode(connector, 640, 480);
+ 		mutex_unlock(&connector->dev->mode_config.mutex);
++	} else {
++		/* always add fail-safe mode as backup mode */
++		mutex_lock(&connector->dev->mode_config.mutex);
++		drm_add_modes_noedid(connector, 640, 480);
++		mutex_unlock(&connector->dev->mode_config.mutex);
+ 	}
  
- 		rc = dp_ctrl_reinitialize_mainlink(ctrl);
+ 	if (panel->aux_cfg_update_done) {
 
 
