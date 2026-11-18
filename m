@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060224;
-	b=AVfUxeUzS3pVSTY+6t8VIr3NXSqR9s2jTGLz4zKAgQ/ZQyMofIXklIz8MsD55dc/WUch
-	 XHGBHFCIUIHcAZOM18zyoYPalHRR8RPJ5huZVD/eGcalSlSBkZTM2Qi5BEUvSykAZuWfR
-	 TMJSyhEMyIs0ItN6+d8rFhZgqA9BDEJAZUxxMJdck8MsKt+gkRA4tDmrxl607w0c2nwRF
-	 FHxujoYvXxDXctJzH5q3eeUI885e6s6ncexH/MzN2HSXAtmjrq18849jKVS+TnSBjLX6O
-	 u7T88fyFja0iWFlLD23filfDWy9Wzi8weUl57od6RjKpd3ZNkqK0lFI2IN0imsKm07A==
+	t=1795060227;
+	b=3x0Jur88Qnrk0Mj+IeYj6tai4LKU2h2iKiM6aGjFr3RlhgTCzKbTKh1eV3qqDC9ulNvX
+	 8U+0j3H80s/p/lChBy0V137/7frb+zi7nVJCiOhLL08ljCv7RCwMgB4vx3eVKM3j00ZPs
+	 RWWLOl3FwpK0qe8wH0ElBJ3YwcOpRAZ01z6iQYv1u+mm+1L5Bgg3v3HZIX0BewbGX1mVb
+	 CPci5oap8I60geyrF3/EmD8UElpZqY2MEJ2/SjubNwcy5vjnXbRv6n4nfTKD844UrtYvu
+	 Lnk3cMFnkA4GuMI9MNffvgk7gS1f2FyE7BcYjq2l/aFooAJJfkvi1ggrtiDJczbJPYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LhiUqpM1fayq1JeTssUgw9BazBPBwsRfbfrZ2JfAUWs=;
-	b=UumNFXehxuJLzCnw0wj3prM3/zQELMjx/5+7OTJ4fTfUMMCcEHls3XvHx3c127ne0OSi
-	 qNC6yoV9aknmXz5xuY6g4wrt5DO3t23A+5Cten/UvtRqAU48phkeVzL8IGVNXAFRYU+Ey
-	 J05pFeUjqS+/T1mhato6NEjYMRw8Em5fCQTJ41gcFEI+B5FQmRtrYEyEaak2vPGp3qo71
-	 TJ8NYMNWWjlxQYM5vbOWsIslNCrdYNlsQBcD8SotaCybFZoXQnFygU3ENdYbW9JuHv3ip
-	 q6MT32g80Hypf8pCdAH2bFe4q9cC9JHBk7xZ8Q5lu0lH9TslU7sxepVS/2pr1FPJ8ow==
+	bh=ZA2K1CyO6NDSmcyyQRJP7yOdv83dSoQGDgSPshOd19c=;
+	b=Vo2lTLy6pRNAJ3qVqqmj+eCIC+uwiDrMIX0Wb0Sg1+BVOm92EdKqLwZX5aqEhrvPhXRh
+	 4+Gx0VKV84Fyq4XcgYAL2Kfjw+owxwswJ+atsT6Qvrb4ai7xjrADI02kq+6lRybRPYgLk
+	 3UJWzppKuyNQ6Bbsds6A9RwsS3Ok+BsTQvnOyrKNJB+JdMeykGCntgTvG+FPqhGDGD7aK
+	 TAmeFhkHtNNQQ3NG3VEivLDGjXAlQUKJU295VWOX3Mgg1JaTuuG0bFVe9Ht0fxew5nsxC
+	 hsBa6abIugST59b9+2yi90r2F2upk0x0/3NMFPcLZddBKyajf4/T5C34JvLF8cT4Y7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5AVNh51;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nCjCJ3HM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEBF606A320;
-	Thu, 19 Nov 2026 03:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73223606A320;
+	Thu, 19 Nov 2026 03:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n5AVNh51
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC4D1F000C4;
-	Thu, 19 Nov 2026 03:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nCjCJ3HM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CB51F000C4;
+	Thu, 19 Nov 2026 03:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060224;
-	bh=LhiUqpM1fayq1JeTssUgw9BazBPBwsRfbfrZ2JfAUWs=;
+	s=korg; t=1795060227;
+	bh=ZA2K1CyO6NDSmcyyQRJP7yOdv83dSoQGDgSPshOd19c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n5AVNh51ecj5PTtBwFt+P9mCTommxBQgkVGYfW8hqyLJs5ABnrXJ6QgeU+FuIGpsa
-	 v7T2gJIEWLbcdaUJpcnQPYOhu9nDCbqLRV8/UMIUPsbSVR8Urz1eo0xTYQ7bDxfgcG
-	 appC6V45ip2pOZd5EjvIfU5VjAIjGArpex+VaE6I=
+	b=nCjCJ3HM7x6jhimnk7AHZLSZX7ZFMbXEgV/PMjGOMgghWUqGxRxCCrC9ADzCWEAYi
+	 Tfkj0jlZfkQX9wpwkASRjj3X/Rv7mzhcB/2riaicyuYjR3DLpn7X1GYLpx1XTd5933
+	 sa0vB36FJ0Cy1OrfHRm28N1WC9SctIirD7cLd2qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1123/1848] spi: sh-msiof: SITMDR1/SIRMDR1 bitfield conversion
-Date: Wed, 18 Nov 2026 15:52:41 +0100
-Message-ID: <20261118150006.325356893@linuxfoundation.org>
+Subject: [PATCH 5.10 1124/1848] spi: sh-msiof: propagate setup runtime-PM errors
+Date: Wed, 18 Nov 2026 15:52:42 +0100
+Message-ID: <20261118150006.361395319@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,119 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 6bae252a9452ca8496670230a7821c34450763a2 ]
+[ Upstream commit 152867998da9f331d6235d76aae1c7e1650708a9 ]
 
-Convert MSIOF Transmit and Receive Mode Register 1 field accesses to use
-the FIELD_PREP() bitfield access macro.
+sh_msiof_spi_setup() ignores pm_runtime_get_sync() before programming
+native chip-select registers and marking the configuration initialized.
 
-This gets rid of explicit shifts.
+Use the checked runtime-PM helper and return failure before register
+access.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/9685c54e752b8ef4256c9b281e9d8292e71d222e.1747401908.git.geert+renesas@glider.be
+Fixes: 7ff0b53c4051 ("spi: sh-msiof: Avoid writing to registers from spi_master.setup()")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830140133.24156-1-pengpeng@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 152867998da9 ("spi: sh-msiof: propagate setup runtime-PM errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 45 ++++++++++++++++++++------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+ drivers/spi/spi-sh-msiof.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index 6c026b193548a..715e96c05b381 100644
+index 715e96c05b381..2c6333f18f970 100644
 --- a/drivers/spi/spi-sh-msiof.c
 +++ b/drivers/spi/spi-sh-msiof.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2014-2017 Glider bvba
-  */
+@@ -555,6 +555,7 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
+ 	struct sh_msiof_spi_priv *p =
+ 		spi_controller_get_devdata(spi->controller);
+ 	u32 clr, set, tmp;
++	int ret;
  
-+#include <linux/bitfield.h>
- #include <linux/bitmap.h>
- #include <linux/clk.h>
- #include <linux/completion.h>
-@@ -84,20 +85,19 @@ struct sh_msiof_spi_priv {
- 
- /* SITMDR1 and SIRMDR1 */
- #define SIMDR1_TRMD		BIT(31)		/* Transfer Mode (1 = Master mode) */
--#define SIMDR1_SYNCMD_MASK	GENMASK(29, 28)	/* SYNC Mode */
--#define SIMDR1_SYNCMD_SPI	(2 << 28)	/*   Level mode/SPI */
--#define SIMDR1_SYNCMD_LR	(3 << 28)	/*   L/R mode */
--#define SIMDR1_SYNCAC_SHIFT	25		/* Sync Polarity (1 = Active-low) */
--#define SIMDR1_BITLSB_SHIFT	24		/* MSB/LSB First (1 = LSB first) */
--#define SIMDR1_DTDL_SHIFT	20		/* Data Pin Bit Delay for MSIOF_SYNC */
--#define SIMDR1_SYNCDL_SHIFT	16		/* Frame Sync Signal Timing Delay */
--#define SIMDR1_FLD_MASK		GENMASK(3, 2)	/* Frame Sync Signal Interval (0-3) */
--#define SIMDR1_FLD_SHIFT	2
-+#define SIMDR1_SYNCMD		GENMASK(29, 28)	/* SYNC Mode */
-+#define SIMDR1_SYNCMD_SPI	2U		/*   Level mode/SPI */
-+#define SIMDR1_SYNCMD_LR	3U		/*   L/R mode */
-+#define SIMDR1_SYNCAC		BIT(25)		/* Sync Polarity (1 = Active-low) */
-+#define SIMDR1_BITLSB		BIT(24)		/* MSB/LSB First (1 = LSB first) */
-+#define SIMDR1_DTDL		GENMASK(22, 20)	/* Data Pin Bit Delay for MSIOF_SYNC */
-+#define SIMDR1_SYNCDL		GENMASK(18, 16)	/* Frame Sync Signal Timing Delay */
-+#define SIMDR1_FLD		GENMASK(3, 2)	/* Frame Sync Signal Interval (0-3) */
- #define SIMDR1_XXSTP		BIT(0)		/* Transmission/Reception Stop on FIFO */
- /* SITMDR1 */
- #define SITMDR1_PCON		BIT(30)		/* Transfer Signal Connection */
--#define SITMDR1_SYNCCH_MASK	GENMASK(27, 26)	/* Sync Signal Channel Select */
--#define SITMDR1_SYNCCH_SHIFT	26		/* 0=MSIOF_SYNC, 1=MSIOF_SS1, 2=MSIOF_SS2 */
-+#define SITMDR1_SYNCCH		GENMASK(27, 26)	/* Sync Signal Channel Select */
-+						/* 0=MSIOF_SYNC, 1=MSIOF_SS1, 2=MSIOF_SS2 */
- 
- /* SITMDR2 and SIRMDR2 */
- #define SIMDR2_BITLEN1(i)	(((i) - 1) << 24) /* Data Size (8-32 bits) */
-@@ -337,8 +337,9 @@ static u32 sh_msiof_spi_get_dtdl_and_syncdl(struct sh_msiof_spi_priv *p)
+ 	if (spi->cs_gpiod || spi_controller_is_slave(p->ctlr))
  		return 0;
- 	}
- 
--	val = sh_msiof_get_delay_bit(p->info->dtdl) << SIMDR1_DTDL_SHIFT;
--	val |= sh_msiof_get_delay_bit(p->info->syncdl) << SIMDR1_SYNCDL_SHIFT;
-+	val = FIELD_PREP(SIMDR1_DTDL, sh_msiof_get_delay_bit(p->info->dtdl)) |
-+	      FIELD_PREP(SIMDR1_SYNCDL,
-+			 sh_msiof_get_delay_bit(p->info->syncdl));
- 
- 	return val;
- }
-@@ -357,16 +358,18 @@ static void sh_msiof_spi_set_pin_regs(struct sh_msiof_spi_priv *p, u32 ss,
- 	 *    1    0         11     11    0    0
- 	 *    1    1         11     11    1    1
- 	 */
--	tmp = SIMDR1_SYNCMD_SPI | 1 << SIMDR1_FLD_SHIFT | SIMDR1_XXSTP;
--	tmp |= !cs_high << SIMDR1_SYNCAC_SHIFT;
--	tmp |= lsb_first << SIMDR1_BITLSB_SHIFT;
-+	tmp = FIELD_PREP(SIMDR1_SYNCMD, SIMDR1_SYNCMD_SPI) |
-+	      FIELD_PREP(SIMDR1_FLD, 1) | SIMDR1_XXSTP |
-+	      FIELD_PREP(SIMDR1_SYNCAC, !cs_high) |
-+	      FIELD_PREP(SIMDR1_BITLSB, lsb_first);
- 	tmp |= sh_msiof_spi_get_dtdl_and_syncdl(p);
- 	if (spi_controller_is_slave(p->ctlr)) {
- 		sh_msiof_write(p, SITMDR1, tmp | SITMDR1_PCON);
- 	} else {
- 		sh_msiof_write(p, SITMDR1,
- 			       tmp | SIMDR1_TRMD | SITMDR1_PCON |
--			       (ss < MAX_SS ? ss : 0) << SITMDR1_SYNCCH_SHIFT);
-+			       FIELD_PREP(SITMDR1_SYNCCH,
-+					  ss < MAX_SS ? ss : 0));
- 	}
- 	if (p->ctlr->flags & SPI_CONTROLLER_MUST_TX) {
- 		/* These bits are reserved if RX needs TX */
-@@ -561,12 +564,12 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
- 		return 0;
- 
- 	/* Configure native chip select mode/polarity early */
--	clr = SIMDR1_SYNCMD_MASK;
--	set = SIMDR1_SYNCMD_SPI;
-+	clr = SIMDR1_SYNCMD;
-+	set = FIELD_PREP(SIMDR1_SYNCMD, SIMDR1_SYNCMD_SPI);
- 	if (spi->mode & SPI_CS_HIGH)
--		clr |= BIT(SIMDR1_SYNCAC_SHIFT);
-+		clr |= SIMDR1_SYNCAC;
+@@ -570,7 +571,9 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
+ 		clr |= SIMDR1_SYNCAC;
  	else
--		set |= BIT(SIMDR1_SYNCAC_SHIFT);
-+		set |= SIMDR1_SYNCAC;
- 	pm_runtime_get_sync(&p->pdev->dev);
+ 		set |= SIMDR1_SYNCAC;
+-	pm_runtime_get_sync(&p->pdev->dev);
++	ret = pm_runtime_resume_and_get(&p->pdev->dev);
++	if (ret < 0)
++		return ret;
  	tmp = sh_msiof_read(p, SITMDR1) & ~clr;
  	sh_msiof_write(p, SITMDR1, tmp | set | SIMDR1_TRMD | SITMDR1_PCON);
+ 	tmp = sh_msiof_read(p, SIRMDR1) & ~clr;
 -- 
 2.53.0
 
