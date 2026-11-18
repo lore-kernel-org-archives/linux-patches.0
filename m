@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032559;
-	b=NAstT7osbL7vpRXx+dd4OltfimLqLLv7zsAk5Tqls5aNbImDuq11jhFlAXTcajqUrDi6
-	 O9lz9yQvBx4M9JWH3QJ6ErKBxMwmIbv9H3MQD8CaeCnEvGrInSx1ptfkUZPW9XCp4rpF8
-	 TVwRYufTQqwIVA1TryVS/nO5VpWdgcLpTUY4x8le8kNlSnNCUx2pAHkhnOLdVvv3OMEFg
-	 QvYh4nn4DnbOB14zvU6LemzuhmopUqseU+g3ygcVjvGYDDbB1OISyIUpcJD48CEIm4qwW
-	 9tWMr3354sctnLVgKequGKUKCZc+iUikP13rx5PqqAEND+ExM6A/bIT4F2tVmXzz1Zw==
+	t=1795032562;
+	b=UVeklF6/BGrHYfamWUD/+xpvWlL+mqkC9ekA+3OpA/+hTwXSy0j0VsWN8cAJUa5ydD+F
+	 1rRCbaFJwSDaETEeoRXhqhD+xRS1s7asakczYwvcR0Vvh3XvwvNHI4e3z1vYMqy612WlN
+	 P7YwenxZZQQcIgQw7LVDi7T14ItmdXeE12eH5LkPylV+anjszE48TAnQ1L+7lGNwieAcI
+	 87/4H2qf5u4kQCFwUGJuoqh/XPzcJPU9ooZoULmi+uyF3jwX5EhCab5rhO+h0BtFJ65aU
+	 irMAYQXSpQqgDechCEsvFnSMfiHkSdQK83A1RqlCw2wdT2EMZvKvtjsZlQXq+PZgD0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032559;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032562;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uyClaR7KsoZdt6lkopYRshkIQg2BbXUxw1HktJJ8pnA=;
-	b=RP/QFbecRbTayAp5Agds3X29in1iqJ3BPrGaOYmJtrNtFZHvVhLAxwXUOTI4GEt4Wx8q
-	 EQ3Y1ySiXZslNv6LO8tfGqt0X28Fgvs8Ob2caXPARNBOXx25Dnm+n9IIu9LfQkIdLt8M6
-	 6ll02m7hYrpw7DehKEe2/+bzcqqlQ8LHcnOLzzgSkfNT+avFKxqb8A5EqHx19Way8nXT/
-	 M/38vH52Tl36AWGREUaTxBTzG7+t2OVD23fXanGt5KE3VUYepwyAhCX9MuQynKibG5N8Q
-	 fCTLRDMozPHp12/D5zkAioh2n5iMTl4JVBzU19Jtw1xu6Kr/cEpGO7wWjqZiFwRf1ww==
+	bh=GdvSnAXdPRBd2wpMm8GavW1ozwjQEZWVRWh1qNCt0jM=;
+	b=EdmSnwi2NhIOZHhbFN76dmzsb93sYFyyOR4uUtbflGt315vKMR/Dk8/7/fx+hkbzUypV
+	 n6YMFaIAN71yZb4IUZDIDvx/ODMLOI/hsdk0BMcWyeNJCxh5ls1ZiBfet5CldtUjWfEt5
+	 DRSY2IyJdbYuIfnAva8B32rZ3sUS4Pl3sLSi31Jpeb0y5q9d0PiZr9et+TEh2LzGdrkJe
+	 N6pmxoI4/HtJcYaEjPfYb0auZO5Cd8ahOJvu2GukxIiVMANBpn/RZfxLKZsxL5V9XL6Vu
+	 T7nTnjaG0t1M9p6/nTz+LBhUFp1Sqb4qnVhb6TgEfrTk2eoV30e2FJ09dMHU86ih3Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuEf8cTr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=seyFW3ds;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD1460A2608;
-	Wed, 18 Nov 2026 20:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BCA606A32F;
+	Wed, 18 Nov 2026 20:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PuEf8cTr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF38E1F000C4;
-	Wed, 18 Nov 2026 20:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=seyFW3ds
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AC51F000C5;
+	Wed, 18 Nov 2026 20:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032559;
-	bh=uyClaR7KsoZdt6lkopYRshkIQg2BbXUxw1HktJJ8pnA=;
+	s=korg; t=1795032562;
+	bh=GdvSnAXdPRBd2wpMm8GavW1ozwjQEZWVRWh1qNCt0jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PuEf8cTrOXJyr/PzFGC5yOO2eJPTPZzIO/VpWcCClMqiJsME24vPcmu7HLqFy0iGZ
-	 jlnqHunWLuSDuhga2ku3jN+zBoAbkwHkcomcZHtSqpKD6jgirkseu4W0QMRoE9SaUK
-	 sRdlUiY3lFsayZkHViJqECDpxBp7NreCHs1EzZKM=
+	b=seyFW3dsbhYT/1EY3NyxMZEG5NYTdR37nGxw6q70hAfx3RU1ptpmqfvpFhylNbRtE
+	 z+AdsgEOZAcudHyzIfrk9ozQlvU3djKSmBz7nGSEyMkyQn21sKIORUeCzskjGTsg4c
+	 bO28p6kqWnIhXTfw03B7gsft19EIhGrz7Guw+JGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1453/1756] net: bcmasp: validate minimum RX packet size in bcmasp_rx_poll()
-Date: Wed, 18 Nov 2026 15:59:40 +0100
-Message-ID: <20261118150106.941952487@linuxfoundation.org>
+Subject: [PATCH 6.12 1418/1756] ALSA: aloop: Keep the timer source alive until card release
+Date: Wed, 18 Nov 2026 15:59:05 +0100
+Message-ID: <20261118150105.630369438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,51 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 07b624d2f5a4517d7d0022fbd4aef17e884b5686 ]
+[ Upstream commit 762ef425cf0ac9c4b9e9e61e0da0950e16e6fbea ]
 
-In bcmasp_rx_poll(), the driver removes a 2-byte alignment pad and
-optionally strips the ETH_FCS_LEN CRC from received packets before
-passing them to eth_type_trans().
+The timer_source string must remain valid while PCM opens can select
+and parse it. loopback_set_timer_source() allocates the string with
+parent-device devres, which can release it while the card is still
+registered.
 
-If the hardware reports a descriptor size smaller than the sum of the
-2-byte pad, the Ethernet header (ETH_HLEN), and optional CRC
-(ETH_FCS_LEN), subtracting the pad and CRC lengths underflows u32 len.
-This adds ~4 GiB to rx_bytes statistics, while the undersized frame
-reaches eth_type_trans(), which reads past skb->len into stale buffer
-data.
+A successful nonempty proc replacement after snd_card_register() adds
+the string allocation after trigger_card_free. Unbinding the platform
+device while snd_aloop remains loaded releases devres in reverse order.
+An open for an unused cable can run after the string is freed and before
+the card-free action disconnects the card:
 
-Check that desc->size is at least (2 + ETH_HLEN + (crc_fwd ? ETH_FCS_LEN
-: 0)) before proceeding to process the descriptor.
+  Device unbind                      PCM open
+  devres_release_all()
+    free replacement string
+                                     snd_pcm_open()
+                                       snd_card_file_add()
+                                       loopback_open()
+                                         loopback_snd_timer_open()
+                                           loopback_parse_timer_id()
+    trigger_card_free()
+      snd_card_free()
+        snd_card_disconnect()
 
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Reviewed-by: Justin Chen <justin.chen@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-4-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The parser can then read freed memory. KASAN has reported a one-byte
+use-after-free read in strchr() from loopback_snd_timer_open(). The
+cable_lock mutex serializes explicit replacements with opens, but
+implicit devres release does not take it. The card and module references
+held by PCM open do not retain this separate devres allocation.
+
+Use kstrdup() and release the current string from card->private_free.
+PCM admission already retains the card until each file is removed, and
+card disconnect drains proc callbacks before final card release. This
+keeps the string alive across admitted PCM opens and preserves the
+cable_lock serialization of replacements. Install the callback before
+the initial allocation so probe failures also release the string.
+
+Fixes: b072e65aadd6 ("ALSA: aloop: Allocate resources with device-managed APIs")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-71a33a26d68356e3ade7-v1-108d86919c5c92fe1ea8@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/drivers/aloop.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index a67205cf9647f..74df12df941f1 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -560,6 +560,12 @@ static int bcmasp_rx_poll(struct napi_struct *napi, int budget)
- 					DMA_FROM_DEVICE);
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 94ea73b3869c9..d7857659a7313 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -1784,13 +1784,10 @@ static int loopback_cable_proc_new(struct loopback *loopback, int cidx)
+ static void loopback_set_timer_source(struct loopback *loopback,
+ 				      const char *value)
+ {
+-	if (loopback->timer_source) {
+-		devm_kfree(loopback->card->dev, loopback->timer_source);
+-		loopback->timer_source = NULL;
+-	}
++	kfree(loopback->timer_source);
++	loopback->timer_source = NULL;
+ 	if (value && *value)
+-		loopback->timer_source = devm_kstrdup(loopback->card->dev,
+-						      value, GFP_KERNEL);
++		loopback->timer_source = kstrdup(value, GFP_KERNEL);
+ }
  
- 		len = desc->size;
-+		if (unlikely(len < 2 + ETH_HLEN + (intf->crc_fwd ? ETH_FCS_LEN : 0))) {
-+			u64_stats_update_begin(&stats->syncp);
-+			u64_stats_inc(&stats->rx_dropped);
-+			u64_stats_update_end(&stats->syncp);
-+			goto next;
-+		}
+ static void print_timer_source_info(struct snd_info_entry *entry,
+@@ -1821,6 +1818,13 @@ static int loopback_timer_source_proc_new(struct loopback *loopback)
+ 				    change_timer_source_info);
+ }
  
- 		skb = napi_alloc_skb(napi, len);
- 		if (!skb) {
++static void loopback_private_free(struct snd_card *card)
++{
++	struct loopback *loopback = card->private_data;
++
++	kfree(loopback->timer_source);
++}
++
+ static int loopback_probe(struct platform_device *devptr)
+ {
+ 	struct snd_card *card;
+@@ -1846,6 +1850,7 @@ static int loopback_probe(struct platform_device *devptr)
+ 		pcm_substreams[dev] = MAX_PCM_SUBSTREAMS;
+ 	
+ 	loopback->card = card;
++	card->private_free = loopback_private_free;
+ 	loopback_set_timer_source(loopback, timer_source[dev]);
+ 
+ 	mutex_init(&loopback->cable_lock);
 -- 
 2.53.0
 
