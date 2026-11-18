@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037208;
-	b=BQAFAtjptW2PQjbUNtHPT8x3cpKICBbtMWlVlZHBuJs/lktBG6um6pRJx9F9AaE/lYqt
-	 lF48bdE4+SwuIS6jvUAWH7YLU1Mgq+8fWjfNHxRUsyrgAECYMc9s7mhqpsMdGTvS8is4U
-	 IT+0BHOBL5cCvDd+pjxYYKVyMNH/X3EVsp0foDvkv2BQzESKj6UK1QvBzKUgCNV35G34h
-	 KE+Xiwfte0/aVwtaoa8IjCKtB/erVEKxBoQt7m2PHOKiPTSyOjewCb4r1KjGv5Spnwv5f
-	 m6O9LEkpt8fG+k1O2yltBY/E2YHRObAKOEJc9OAjLTvaAokYcI3yfDkiYn9jYGt8g7A==
+	t=1795037211;
+	b=U2ajlc1qkUL3s2p4nyb+0p/OE0MrkFfpxR4ZZ4xKB2Ht3lR2d+tumWOv92lTZhBsn0tk
+	 btJb8Fm4bfUzYjK9bdi9t09nwls79mtkLjLeAYxmC0IrLdL2qrf6kNpJsJF46trFTRzYW
+	 ihzoylWfnoLH9bCpttTI/I9uq0J/MeIF9w7Wd05lUe9Yn61LihVOHY4qCIarumaPg2Sa/
+	 yBsYkLHE3n4Z7sfX1d2IxteLn2AOxh7rnD0kUn6RhpKl353BDREyiSvbZgWEOz18ycKU3
+	 iHt6HbHicMCJvdBRJRNlIGMrs6YRVjxKLgaHjICChxLEwSmGbo5aCzFGuD14QfTccag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ev6NXtAlLkPpEZzOcGH9WOtiz7W7dfOuJBlR8tLkQwg=;
-	b=uDEEbPQu+NowlPhRyFDEY6nlpz7seFBKSBscPwtofBl2uNW5x20N1EFLp4Rd+m5CkQ9g
-	 44kX/vIck/raFrIreyENg3g7vM6gwBdgxyj/CqoDZn7fYv5JpRJrOkF8idESmroD064kO
-	 mstrSqgq8yKRaeM8+I6kmXfvTfPSa3KM2zDspciSfYsIZxOoQ/hQeyrXUNksmx8u6zu6N
-	 Tjq6wQMKSSJqDIgPkQ5oFGs4YWPwzmGCNFwSrX3Ph/aMRrLREFChECwvo5LVcxgSSMjej
-	 u00HmVPldP17PNQPOhTdcoLp5xbjxdVJcfoex88FZXI5IdWOKaavPAbUQbSA5FsPwnQ==
+	bh=1ewZLhzYbua1VNBy1ch9Gmv6ppY9VXTtzJtXsNc2g+U=;
+	b=mHlrERztMcGjYIChBfyCkYyonIPU4rvroa3SxSN0SJe73zCtLcRAhhGU6dzHVov2gwfY
+	 B0eF16nlWwyjYd+1JTLT3Hhja3uq6Y1DZn7wT9JobwI2wciFGoMdczcM+wP1t6yku2CqW
+	 KF1MNa7SwZSp4GuQPiq1jfKStEc0GAMgKsE2QGYIJnqWoiinjKht++e3p9fovz/aRLQMq
+	 PIQpCpN5DIjW7oJA1nAGxxUKo/gecpCJlWFSQqE3OyKJgiEGn5C49vbx929UviRF78NyH
+	 IRJyz59nM90cAqrwHmIsuCrHxyaEfi/ERFclAudxpma+Z9IsgGN1xp5B42s1lRLW8HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJpR9vDC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gjG/cJMk";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD6E606A325;
-	Wed, 18 Nov 2026 21:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A885F606A325;
+	Wed, 18 Nov 2026 21:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UJpR9vDC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9141F000C4;
-	Wed, 18 Nov 2026 21:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjG/cJMk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63D81F000C4;
+	Wed, 18 Nov 2026 21:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037208;
-	bh=Ev6NXtAlLkPpEZzOcGH9WOtiz7W7dfOuJBlR8tLkQwg=;
+	s=korg; t=1795037211;
+	bh=1ewZLhzYbua1VNBy1ch9Gmv6ppY9VXTtzJtXsNc2g+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJpR9vDCKIzq2aGsLUqWRj+7edoVyjptIUZiTYRkJwQ+ztkpC6vUnIYFl3RfIV0vz
-	 yyi0rYc/vkUAYo60xHgTaJlZ5c3/sHkvkueT2PBfaySzMkFgPzvR4VhEuZF7D+TkAj
-	 mMysZ1r5XXj5MAJOOHCiBaBM2kcgKtDKSjd86CdY=
+	b=gjG/cJMkOXevlc3zFHdVjs/bbfDQqnyTNS6zjyvo2qmurBpl9yDQ7r0XTAZSDLQdq
+	 HoPV+kBSQuFfz7OOWv5Jj2GPpNn1hAvMJs/KuqdD7OPEWENlgOtxCfYKpu07x2zrv7
+	 02LOVM4j9j1BwGrDXH6mQGTmXTiZ/jyFEXcL1XV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qinguang Chen <chenqinguang@kuaishou.com>,
-	Zhiping Du <duzhiping@kuaishou.com>,
-	Keqiang Duan <duankeqiangcym@gmail.com>,
-	Chao Gao <chao.gao@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1328/3318] KVM: x86: Clear hardware HLT state when userspace makes a vCPU not-halted
-Date: Wed, 18 Nov 2026 15:32:30 +0100
-Message-ID: <20261118150400.170072083@linuxfoundation.org>
+Subject: [PATCH 6.6 1329/3318] HID: hid-prodikeys: remove struct pk_device
+Date: Wed, 18 Nov 2026 15:32:31 +0100
+Message-ID: <20261118150400.203370584@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,138 +70,341 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keqiang Duan <duankeqiangcym@gmail.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 883719f57f5d3898637b130d6db4742471cad618 ]
+[ Upstream commit 16d0e1d469cc16aefa8ef745e926eda473a9b221 ]
 
-Force a vCPU out of its hardware-tracked halted state when userspace puts
-the vCPU into any state other than HALTED via KVM_SET_MP_STATE, i.e. clear
-VMCS.GUEST_ACTIVITY_STATE if it says the vCPU is halted.  Add an optional
-kvm_x86_ops hook to do the clearing, as SVM has no equivalent VMCB field.
+First, quirks was unused in struct pk_device.
 
-When HLT-exiting is disabled for a VM (KVM_CAP_X86_DISABLE_EXITS with
-KVM_X86_DISABLE_EXITS_HLT, e.g. QEMU's "-overcommit cpu-pm=on"), a guest
-HLT halts the physical CPU instead of exiting to KVM, and hardware saves
-GUEST_ACTIVITY_STATE=HLT into the VMCS on the next VM-Exit.  That field is
-sticky: it survives VM-Exit/VM-Enter and is only cleared by vmx_clear_hlt()
-on event injection, or by vmx_vcpu_reset() on INIT / vCPU creation.
+And I see no reason for this additional level of indirection. struct
+pcmidi_snd is far enough for the driver. Unless I am missing something?
 
-Nothing clears it on a userspace-driven state change.  KVM_SET_REGS only
-writes the software register cache and KVM_SET_MP_STATE only writes
-vcpu->arch.mp_state; kvm_vcpu_running() likewise consults software state
-only.  A VMM that emulates a machine reset therefore ends up with a vCPU
-that KVM happily VM-Enters while hardware refuses to fetch instructions.
+So drop struct pk_device and convert all the users to use struct
+pcmidi_snd directly. No need for doubled kmalloc+kfrees now.
 
-Reproduce with a Linux guest by triggering a panic/kdump on a non-boot
-vCPU: nmi_shootdown_cpus() parks the other vCPUs -- including vCPU0 -- in
-crash_nmi_callback(), which does local_irq_disable() followed by a bare
-HLT.  The capture kernel then resets the machine via port 0xCF9.  QEMU
-rewrites RIP to 0xfff0 and sets mp_state to RUNNABLE, but vCPU0's
-GUEST_ACTIVITY_STATE is still HLT, so the BSP never executes the reset
-vector, never sends SIPIs, and the entire VM hangs at "reboot: machine
-restart" forever.  Only destroying and recreating the VM recovers it.
+Found by https://github.com/jirislaby/clang-struct.
 
-Key off "not HALTED" rather than "is RUNNABLE" as HALTED is the only target
-state for which retaining the hardware halted state is meaningful; every
-other transition either can't be reached on VMX, e.g. AP_RESET_HOLD, or
-goes through vmx_vcpu_reset(), which stuffs GUEST_ACTIVITY_ACTIVE anyways.
-This also captures the intent more directly: KVM only ever drops the
-hardware halted state, it never installs it.
-
-Hook KVM_SET_MP_STATE rather than the VM-Enter path so that the clearing
-is driven by an explicit userspace declaration, and so that no work is
-added to vmx_vcpu_run().  Gate the call on kvm_hlt_in_guest() even though
-vmx_clear_hlt() checks it as well, as the check is cheap and makes it
-obvious in common code when the hardware state can exist at all.
-
-Do nothing for TDX vCPUs as TDX doesn't support disabling HLT-exiting and
-KVM cannot access a TD's VMCS, i.e. the VMCS used to run the vCPU can't
-in HALTED state, and even if it were, KVM can't change it.
-
-Fixes: caa057a2cad6 ("KVM: X86: Provide a capability to disable HLT intercepts")
-Cc: stable@vger.kernel.org
-Tested-by: Qinguang Chen <chenqinguang@kuaishou.com>
-Signed-off-by: Zhiping Du <duzhiping@kuaishou.com>
-Signed-off-by: Keqiang Duan <duankeqiangcym@gmail.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Link: https://patch.msgid.link/20260820123512.87236-1-duankeqiangcym@gmail.com
-[sean: drop claim that spurious wakeups are ok, massage changelog]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: replaced kvm_x86_call() with static_call_cond(kvm_x86_clear_hlt) to match the existing optional callback API. ]
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Stable-dep-of: 0ff37294c41b ("HID: prodikeys: validate fixed-format MIDI reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm-x86-ops.h |  1 +
- arch/x86/include/asm/kvm_host.h    |  7 +++++++
- arch/x86/kvm/vmx/vmx.c             |  1 +
- arch/x86/kvm/x86.c                 | 13 +++++++++++++
- 4 files changed, 22 insertions(+)
+ drivers/hid/hid-prodikeys.c | 113 +++++++++++++-----------------------
+ 1 file changed, 40 insertions(+), 73 deletions(-)
 
-diff --git a/arch/x86/include/asm/kvm-x86-ops.h b/arch/x86/include/asm/kvm-x86-ops.h
-index 3d00c2444a757..eff5dbf84ee4b 100644
---- a/arch/x86/include/asm/kvm-x86-ops.h
-+++ b/arch/x86/include/asm/kvm-x86-ops.h
-@@ -77,6 +77,7 @@ KVM_X86_OP(interrupt_allowed)
- KVM_X86_OP(nmi_allowed)
- KVM_X86_OP(get_nmi_mask)
- KVM_X86_OP(set_nmi_mask)
-+KVM_X86_OP_OPTIONAL(clear_hlt)
- KVM_X86_OP(enable_nmi_window)
- KVM_X86_OP(enable_irq_window)
- KVM_X86_OP_OPTIONAL(update_cr8_intercept)
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index 93e0903391ac5..5d0433d41208d 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1667,6 +1667,13 @@ struct kvm_x86_ops {
- 	int (*nmi_allowed)(struct kvm_vcpu *vcpu, bool for_injection);
- 	bool (*get_nmi_mask)(struct kvm_vcpu *vcpu);
- 	void (*set_nmi_mask)(struct kvm_vcpu *vcpu, bool masked);
-+	/*
-+	 * Force the vCPU out of any hardware-tracked halted/inactive state so
-+	 * that it will fetch and execute instructions on the next VM-Enter.
-+	 * Only needed by VMX, where VMCS.GUEST_ACTIVITY_STATE persists across
-+	 * VM-Exit/VM-Enter; SVM has no equivalent VMCB field.
-+	 */
-+	void (*clear_hlt)(struct kvm_vcpu *vcpu);
- 	/* Whether or not a virtual NMI is pending in hardware. */
- 	bool (*is_vnmi_pending)(struct kvm_vcpu *vcpu);
- 	/*
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 498549e823874..bf95123701461 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -8356,6 +8356,7 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
- 	.nmi_allowed = vmx_nmi_allowed,
- 	.get_nmi_mask = vmx_get_nmi_mask,
- 	.set_nmi_mask = vmx_set_nmi_mask,
-+	.clear_hlt = vmx_clear_hlt,
- 	.enable_nmi_window = vmx_enable_nmi_window,
- 	.enable_irq_window = vmx_enable_irq_window,
- 	.update_cr8_intercept = vmx_update_cr8_intercept,
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 386c0d127ff0e..1c785fc364b3f 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11615,6 +11615,19 @@ int kvm_arch_vcpu_ioctl_set_mpstate(struct kvm_vcpu *vcpu,
- 		set_bit(KVM_APIC_SIPI, &vcpu->arch.apic->pending_events);
- 	} else
- 		vcpu->arch.mp_state = mp_state->mp_state;
-+
-+	/*
-+	 * Force the vCPU out of any hardware-tracked halted state, e.g. VMX's
-+	 * GUEST_ACTIVITY_STATE=HLT, when userspace puts the vCPU into a state
-+	 * other than HALTED.  The hardware state is sticky across VM-Exit and
-+	 * VM-Enter and is not touched by any other ioctl, so a vCPU that halted
-+	 * with HLT-exiting disabled stays wedged even after userspace rewrites
-+	 * its registers, e.g. when a VMM emulates a machine reset.
-+	 */
-+	if (kvm_hlt_in_guest(vcpu->kvm) &&
-+	    mp_state->mp_state != KVM_MP_STATE_HALTED)
-+		static_call_cond(kvm_x86_clear_hlt)(vcpu);
-+
- 	kvm_make_request(KVM_REQ_EVENT, vcpu);
+diff --git a/drivers/hid/hid-prodikeys.c b/drivers/hid/hid-prodikeys.c
+index f20d29566b4da..b53b0c02675a4 100644
+--- a/drivers/hid/hid-prodikeys.c
++++ b/drivers/hid/hid-prodikeys.c
+@@ -32,13 +32,6 @@
  
- 	ret = 0;
+ struct pcmidi_snd;
+ 
+-struct pk_device {
+-	unsigned long		quirks;
+-
+-	struct hid_device	*hdev;
+-	struct pcmidi_snd	*pm; /* pcmidi device context */
+-};
+-
+ struct pcmidi_sustain {
+ 	unsigned long		in_use;
+ 	struct pcmidi_snd	*pm;
+@@ -50,7 +43,7 @@ struct pcmidi_sustain {
+ 
+ #define PCMIDI_SUSTAINED_MAX	32
+ struct pcmidi_snd {
+-	struct pk_device		*pk;
++	struct hid_device		*hdev;
+ 	unsigned short			ifnum;
+ 	struct hid_report		*pcmidi_report6;
+ 	struct input_dev		*input_ep82;
+@@ -100,11 +93,11 @@ static ssize_t show_channel(struct device *dev,
+ 	struct device_attribute *attr, char *buf)
+ {
+ 	struct hid_device *hdev = to_hid_device(dev);
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+-	dbg_hid("pcmidi sysfs read channel=%u\n", pk->pm->midi_channel);
++	dbg_hid("pcmidi sysfs read channel=%u\n", pm->midi_channel);
+ 
+-	return sprintf(buf, "%u (min:%u, max:%u)\n", pk->pm->midi_channel,
++	return sprintf(buf, "%u (min:%u, max:%u)\n", pm->midi_channel,
+ 		PCMIDI_CHANNEL_MIN, PCMIDI_CHANNEL_MAX);
+ }
+ 
+@@ -113,13 +106,13 @@ static ssize_t store_channel(struct device *dev,
+ 	struct device_attribute *attr, const char *buf, size_t count)
+ {
+ 	struct hid_device *hdev = to_hid_device(dev);
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+ 	unsigned channel = 0;
+ 
+ 	if (sscanf(buf, "%u", &channel) > 0 && channel <= PCMIDI_CHANNEL_MAX) {
+ 		dbg_hid("pcmidi sysfs write channel=%u\n", channel);
+-		pk->pm->midi_channel = channel;
++		pm->midi_channel = channel;
+ 		return strlen(buf);
+ 	}
+ 	return -EINVAL;
+@@ -137,11 +130,11 @@ static ssize_t show_sustain(struct device *dev,
+  struct device_attribute *attr, char *buf)
+ {
+ 	struct hid_device *hdev = to_hid_device(dev);
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+-	dbg_hid("pcmidi sysfs read sustain=%u\n", pk->pm->midi_sustain);
++	dbg_hid("pcmidi sysfs read sustain=%u\n", pm->midi_sustain);
+ 
+-	return sprintf(buf, "%u (off:%u, max:%u (ms))\n", pk->pm->midi_sustain,
++	return sprintf(buf, "%u (off:%u, max:%u (ms))\n", pm->midi_sustain,
+ 		PCMIDI_SUSTAIN_MIN, PCMIDI_SUSTAIN_MAX);
+ }
+ 
+@@ -150,15 +143,14 @@ static ssize_t store_sustain(struct device *dev,
+ 	struct device_attribute *attr, const char *buf, size_t count)
+ {
+ 	struct hid_device *hdev = to_hid_device(dev);
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+ 	unsigned sustain = 0;
+ 
+ 	if (sscanf(buf, "%u", &sustain) > 0 && sustain <= PCMIDI_SUSTAIN_MAX) {
+ 		dbg_hid("pcmidi sysfs write sustain=%u\n", sustain);
+-		pk->pm->midi_sustain = sustain;
+-		pk->pm->midi_sustain_mode =
+-			(0 == sustain || !pk->pm->midi_mode) ? 0 : 1;
++		pm->midi_sustain = sustain;
++		pm->midi_sustain_mode = (0 == sustain || !pm->midi_mode) ? 0 : 1;
+ 		return strlen(buf);
+ 	}
+ 	return -EINVAL;
+@@ -176,11 +168,11 @@ static ssize_t show_octave(struct device *dev,
+ 	struct device_attribute *attr, char *buf)
+ {
+ 	struct hid_device *hdev = to_hid_device(dev);
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+-	dbg_hid("pcmidi sysfs read octave=%d\n", pk->pm->midi_octave);
++	dbg_hid("pcmidi sysfs read octave=%d\n", pm->midi_octave);
+ 
+-	return sprintf(buf, "%d (min:%d, max:%d)\n", pk->pm->midi_octave,
++	return sprintf(buf, "%d (min:%d, max:%d)\n", pm->midi_octave,
+ 		PCMIDI_OCTAVE_MIN, PCMIDI_OCTAVE_MAX);
+ }
+ 
+@@ -189,14 +181,14 @@ static ssize_t store_octave(struct device *dev,
+ 	struct device_attribute *attr, const char *buf, size_t count)
+ {
+ 	struct hid_device *hdev = to_hid_device(dev);
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+ 	int octave = 0;
+ 
+ 	if (sscanf(buf, "%d", &octave) > 0 &&
+ 		octave >= PCMIDI_OCTAVE_MIN && octave <= PCMIDI_OCTAVE_MAX) {
+ 		dbg_hid("pcmidi sysfs write octave=%d\n", octave);
+-		pk->pm->midi_octave = octave;
++		pm->midi_octave = octave;
+ 		return strlen(buf);
+ 	}
+ 	return -EINVAL;
+@@ -270,7 +262,7 @@ static void stop_sustain_timers(struct pcmidi_snd *pm)
+ 
+ static int pcmidi_get_output_report(struct pcmidi_snd *pm)
+ {
+-	struct hid_device *hdev = pm->pk->hdev;
++	struct hid_device *hdev = pm->hdev;
+ 	struct hid_report *report;
+ 
+ 	list_for_each_entry(report,
+@@ -295,7 +287,7 @@ static int pcmidi_get_output_report(struct pcmidi_snd *pm)
+ 
+ static void pcmidi_submit_output_report(struct pcmidi_snd *pm, int state)
+ {
+-	struct hid_device *hdev = pm->pk->hdev;
++	struct hid_device *hdev = pm->hdev;
+ 	struct hid_report *report = pm->pcmidi_report6;
+ 	report->field[0]->value[0] = 0x01;
+ 	report->field[0]->value[1] = state;
+@@ -626,7 +618,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
+ 
+ 	/* Setup sound card */
+ 
+-	err = snd_card_new(&pm->pk->hdev->dev, index[dev], id[dev],
++	err = snd_card_new(&pm->hdev->dev, index[dev], id[dev],
+ 			   THIS_MODULE, 0, &card);
+ 	if (err < 0) {
+ 		pk_error("failed to create pc-midi sound card\n");
+@@ -664,7 +656,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
+ 		&pcmidi_in_ops);
+ 
+ 	/* create sysfs variables */
+-	err = device_create_file(&pm->pk->hdev->dev,
++	err = device_create_file(&pm->hdev->dev,
+ 				 sysfs_device_attr_channel);
+ 	if (err < 0) {
+ 		pk_error("failed to create sysfs attribute channel: error %d\n",
+@@ -672,7 +664,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
+ 		goto fail;
+ 	}
+ 
+-	err = device_create_file(&pm->pk->hdev->dev,
++	err = device_create_file(&pm->hdev->dev,
+ 				sysfs_device_attr_sustain);
+ 	if (err < 0) {
+ 		pk_error("failed to create sysfs attribute sustain: error %d\n",
+@@ -680,7 +672,7 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
+ 		goto fail_attr_sustain;
+ 	}
+ 
+-	err = device_create_file(&pm->pk->hdev->dev,
++	err = device_create_file(&pm->hdev->dev,
+ 			 sysfs_device_attr_octave);
+ 	if (err < 0) {
+ 		pk_error("failed to create sysfs attribute octave: error %d\n",
+@@ -710,11 +702,11 @@ static int pcmidi_snd_initialise(struct pcmidi_snd *pm)
+ 
+ fail_register:
+ 	stop_sustain_timers(pm);
+-	device_remove_file(&pm->pk->hdev->dev, sysfs_device_attr_octave);
++	device_remove_file(&pm->hdev->dev, sysfs_device_attr_octave);
+ fail_attr_octave:
+-	device_remove_file(&pm->pk->hdev->dev, sysfs_device_attr_sustain);
++	device_remove_file(&pm->hdev->dev, sysfs_device_attr_sustain);
+ fail_attr_sustain:
+-	device_remove_file(&pm->pk->hdev->dev, sysfs_device_attr_channel);
++	device_remove_file(&pm->hdev->dev, sysfs_device_attr_channel);
+ fail:
+ 	if (pm->card) {
+ 		snd_card_free(pm->card);
+@@ -728,12 +720,9 @@ static int pcmidi_snd_terminate(struct pcmidi_snd *pm)
+ 	if (pm->card) {
+ 		stop_sustain_timers(pm);
+ 
+-		device_remove_file(&pm->pk->hdev->dev,
+-			sysfs_device_attr_channel);
+-		device_remove_file(&pm->pk->hdev->dev,
+-			sysfs_device_attr_sustain);
+-		device_remove_file(&pm->pk->hdev->dev,
+-			sysfs_device_attr_octave);
++		device_remove_file(&pm->hdev->dev, sysfs_device_attr_channel);
++		device_remove_file(&pm->hdev->dev, sysfs_device_attr_sustain);
++		device_remove_file(&pm->hdev->dev, sysfs_device_attr_octave);
+ 
+ 		snd_card_disconnect(pm->card);
+ 		snd_card_free_when_closed(pm->card);
+@@ -763,10 +752,7 @@ static int pk_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+ 		struct hid_field *field, struct hid_usage *usage,
+ 		unsigned long **bit, int *max)
+ {
+-	struct pk_device *pk = hid_get_drvdata(hdev);
+-	struct pcmidi_snd *pm;
+-
+-	pm = pk->pm;
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
+ 	if (HID_UP_MSVENDOR == (usage->hid & HID_USAGE_PAGE) &&
+ 		1 == pm->ifnum) {
+@@ -781,16 +767,16 @@ static int pk_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+ static int pk_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 	u8 *data, int size)
+ {
+-	struct pk_device *pk = hid_get_drvdata(hdev);
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 	int ret = 0;
+ 
+-	if (1 == pk->pm->ifnum) {
++	if (1 == pm->ifnum) {
+ 		if (report->id == data[0])
+ 			switch (report->id) {
+ 			case 0x01: /* midi keys (qwerty)*/
+ 			case 0x03: /* midi keyboard (musical)*/
+ 			case 0x04: /* extra/midi keys (qwerty)*/
+-				ret = pcmidi_handle_report(pk->pm,
++				ret = pcmidi_handle_report(pm,
+ 						report->id, data, size);
+ 				break;
+ 			}
+@@ -805,8 +791,7 @@ static int pk_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	struct usb_interface *intf;
+ 	unsigned short ifnum;
+ 	unsigned long quirks = id->driver_data;
+-	struct pk_device *pk;
+-	struct pcmidi_snd *pm = NULL;
++	struct pcmidi_snd *pm;
+ 
+ 	if (!hid_is_usb(hdev))
+ 		return -EINVAL;
+@@ -814,26 +799,16 @@ static int pk_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	intf = to_usb_interface(hdev->dev.parent);
+ 	ifnum = intf->cur_altsetting->desc.bInterfaceNumber;
+ 
+-	pk = kzalloc(sizeof(*pk), GFP_KERNEL);
+-	if (pk == NULL) {
+-		hid_err(hdev, "can't alloc descriptor\n");
+-		return -ENOMEM;
+-	}
+-
+-	pk->hdev = hdev;
+-
+ 	pm = kzalloc(sizeof(*pm), GFP_KERNEL);
+ 	if (pm == NULL) {
+ 		hid_err(hdev, "can't alloc descriptor\n");
+-		ret = -ENOMEM;
+-		goto err_free_pk;
++		return -ENOMEM;
+ 	}
+ 
+-	pm->pk = pk;
+-	pk->pm = pm;
++	pm->hdev = hdev;
+ 	pm->ifnum = ifnum;
+ 
+-	hid_set_drvdata(hdev, pk);
++	hid_set_drvdata(hdev, pm);
+ 
+ 	ret = hid_parse(hdev);
+ 	if (ret) {
+@@ -860,26 +835,18 @@ static int pk_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	hid_hw_stop(hdev);
+ err_free:
+ 	kfree(pm);
+-err_free_pk:
+-	kfree(pk);
+ 
+ 	return ret;
+ }
+ 
+ static void pk_remove(struct hid_device *hdev)
+ {
+-	struct pk_device *pk = hid_get_drvdata(hdev);
+-	struct pcmidi_snd *pm;
+-
+-	pm = pk->pm;
+-	if (pm) {
+-		pcmidi_snd_terminate(pm);
+-		kfree(pm);
+-	}
++	struct pcmidi_snd *pm = hid_get_drvdata(hdev);
+ 
++	pcmidi_snd_terminate(pm);
+ 	hid_hw_stop(hdev);
+ 
+-	kfree(pk);
++	kfree(pm);
+ }
+ 
+ static const struct hid_device_id pk_devices[] = {
 -- 
 2.53.0
 
