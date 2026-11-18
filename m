@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049910;
-	b=f2B3EE3ZWsIk+J3GVLY7iFQzHlPYqLqDMV+t3C2VgV1YF/u9w9dlo0BnxUT/pt2VOCxz
-	 /C5R81jk9+UrlX5r2rRw+E53nfvLE34q/Z0gK55xzPEHXu+O3rsRB1uAJJqXyu7tWejwb
-	 kcXwAG6Gnuh3a/gFtAtBFO4xpkBIBZfV/EhHWZ0TaIuvVVbJkbr7BT4K7A9D9Jrr52mPq
-	 A7s5OYvT+uhXVk5GZ3PbnYCHsDyTalomMHV2WnOYzdIC18K4XhUEOsMU2XqOhtxPUMLaV
-	 a7p40UNQDNVG5BHT5cqgNZY0KmIv3Co9x/6UgVKlFnREvNqM1oDIFSc0j1uWAxiiv2Q==
+	t=1795049913;
+	b=rwShF0oRXTWE8y93rjeK37w1jnBUYKxwfyYVBpd5UyfoXyMFuI+6QOPzD/8Hv5nSX2Oe
+	 hqJ+dxsMDHAZRKWqGnqXnf0vxi/TPUrRk8xbPd+PQ1higCyOtG5/7lmIPWuMOT5zWuks1
+	 SggVIgygSTAF2zQ51AEbabM+KI0Fu8EOfaPuKbDBnaEGScLPfcP2OEcPsEKXiB1KG/gkB
+	 gFTE2SfE1k2F2ADJ3iOkH1PVCID65pucfnJC4gUS4n2xBjMHKecA8ErSIlA2OlOLZPQ2u
+	 Wu/RR+ycIpT+UQHB9EoT9apuk0y+TWZYxwFeTpxfK/Wsf6ULRjYkz/MWLKABVFJot2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049910;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049913;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iaoWa95O/U5EQFHaWbtRPvG1+QrIBuhH2xb8o2+zOtc=;
-	b=zgjpk0RmPGbPp3eoxjwPa3HdL8k9mLyFMqYLy+3MkJ6CCoBZ5StnnjbP02ObVCyvrw6x
-	 jVNW/y+ZceevCH4frugSu4nJl7hpCeZfVBSv0mW4ydMEYaJ0FwznArKOp51pppFQNoOjm
-	 OZsscGh3BVoDW4tbkhOZ5ZkGCnCqBu3yAOwQ73TDydEOOHq0uXsXzK5UWHcmaRsNLor/R
-	 kl5TCwnlSptlIySu0VlFvzuSo4w7AzoINwtOxs96thk2ExLHiPpa6VBFJHLjRRcd6dXDf
-	 xgzO9Xa4aa9DBuOF3M5L0o+k9QF6QUwhmk0e6G+xvy9oV5V49cCy1hwC3yf+6337hUA==
+	bh=m2/Y6ijMHMP2H06KkZO/W9nwewCcJnAXkXAUUhoaJl4=;
+	b=k2gQ0vwKO8u0NmeEfIDmdOvEPJKlZQZd6m9Cf99Aj7FfU+vqOfUZG39c6mXkw8TEHgjZ
+	 0O4weJrYSL+lwDIk4Ttu0NZ9j/lemhLyx/Fn9w8xzJW42aifykyrNgCSq6v6tlcUTMfb0
+	 FEFEcVZQ98F1BylAMcqT+dkYjX8QEaFSs9HNwr4sTL9UbAGTykoOPhecz0y65XBJDGb51
+	 qVGV0R4SPyy9Z6mw0z6xaD60KSkjYpEz4PRYjWauZJuFhvV91DqmBAYCbNT9C9hDBQ8Xr
+	 aV2hReBm0U7ySO52VTReOLmB/qi0+4v0imktTwWjFAXczvP3dtYwAfEAIyumj15lAHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fumzwb3G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlq9m4QG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC50606A325;
-	Thu, 19 Nov 2026 00:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10342606A320;
+	Thu, 19 Nov 2026 00:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fumzwb3G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A839A1F000C6;
-	Thu, 19 Nov 2026 00:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlq9m4QG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D941F000C4;
+	Thu, 19 Nov 2026 00:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049910;
-	bh=iaoWa95O/U5EQFHaWbtRPvG1+QrIBuhH2xb8o2+zOtc=;
+	s=korg; t=1795049912;
+	bh=m2/Y6ijMHMP2H06KkZO/W9nwewCcJnAXkXAUUhoaJl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fumzwb3GHKsD4FfBvvpB3dyFcp65XmRsbSjBTBv/A/JxA+FnglDsX9l8bQNjHNiAJ
-	 CSSOTODVY8dV5qwBL5JfnfWqNzZAvP8TsBFmc+jZ6feq3yi8eB6CU0LxSZtU47LuJU
-	 yQ18UqCfAMt26vGyGPrz9WeB3HwJWw3yTbQhKzIk=
+	b=Tlq9m4QGW8SZq9FLIiiqxfKhwC7VGO962OOK7AL9RTl/2WEuT8m9tQmrmmFOEe/jl
+	 gllh7c5QKwRBgjEcV2i0HIAaweTO5PmyqbNeCtLlPRJN7N0dNcrf2WRvOvQGLOLLbQ
+	 +Z+A1T2kSHzrAy/vPfWrfx2ECLkvDMHqce8gPfZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2520/2857] irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor
-Date: Wed, 18 Nov 2026 15:59:14 +0100
-Message-ID: <20261118150332.280979741@linuxfoundation.org>
+Subject: [PATCH 6.1 2494/2857] Bluetooth: 6LoWPAN: Use RCU-safe device list removal
+Date: Wed, 18 Nov 2026 15:58:48 +0100
+Message-ID: <20261118150331.359770698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,345 +68,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit b08e2f42e86b5848add254da45b56fc672e2bced ]
+[ Upstream commit 8c27d7d06e21ba9455ddae4e14f364c57f095cba ]
 
-Within a realm guest the ITS is emulated by the host. This means the
-allocations must have been made available to the host by a call to
-set_memory_decrypted(). Introduce an allocation function which performs
-this extra call.
+RCU readers of bt_6lowpan_devices must be able to follow an adapter's
+forward link until their read-side critical section ends. The entries
+are published with list_add_rcu(), but device_event() removes an entry
+on NETDEV_UNREGISTER with list_del(), poisoning that link.
 
-For the ITT use a custom genpool-based allocator that calls
-set_memory_decrypted() for each page allocated, but then suballocates the
-size needed for each ITT. Note that there is no mechanism implemented to
-return pages from the genpool, but it is unlikely that the peak number of
-devices will be much larger than the normal level - so this isn't expected
-to be an issue.
+When an adapter is being unregistered and 6LoWPAN is enabled, a
+6lowpan_control debugfs write with an existing LE L2CAP connection can
+enter lookup_peer() after unregister's first synchronize_net(). If the
+connection has no peer on that adapter, the reader must advance to the
+next list entry. Neither RTNL nor devices_lock excludes this RCU reader.
 
-Co-developed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Will Deacon <will@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/all/20241002141630.433502-2-steven.price@arm.com
-Stable-dep-of: 32e056cc1d15 ("irqchip/gic-v3-its: Don't free a vPE table shared with another ITS")
+The last peer's chan_close_cb() schedules delete_netdev(), which reaches
+unregister_netdevice_many_notify() through unregister_dev() and
+lowpan_unregister_netdev(). The following ordering is possible:
+
+  Unregister worker                 Control writer
+  -----------------                 --------------
+  synchronize_net() returns
+                                    lowpan_control_write()
+                                    lookup_peer(): rcu_read_lock()
+                                    reach adapter; no matching peer
+  device_event(): devices_lock
+  list_del(&entry->list)
+  spin_unlock(&devices_lock)
+                                    follow poisoned next link
+                                    read invalid adapter address
+  post-notifier synchronize_net()
+    waits for the reader
+
+This invalid pointer access can fault in lookup_peer(). The first grace
+period drains existing readers but permits new ones to start, and the
+later grace period cannot prevent the intervening poisoned-link access.
+
+Use list_del_rcu() under the existing devices_lock to preserve the
+forward link for readers that already reached the adapter. The existing
+post-notifier synchronize_net() waits for those readers before netdevice
+teardown frees the private storage containing lowpan_btle_dev.
+
+KASAN report as below:
+
+    [...]
+    [   45.867526] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000023: 0000 [#1] SMP KASAN NOPTI
+    [   45.869489] KASAN: maybe wild-memory-access in range [0xdead000000000118-0xdead00000000011f]
+    [   45.870981] CPU: 1 UID: 0 PID: 646 Comm: sh Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #4 PREEMPT(lazy)
+    [   45.872609] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    [   45.874380] RIP: 0010:lookup_peer+0x1ba/0x320
+    [   45.875067] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
+    [   45.878206] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
+    [   45.879106] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
+    [   45.880334] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
+    [   45.881455] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
+    [   45.882546] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
+    [   45.883839] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
+    [   45.885186] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    [   45.886539] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [   45.887527] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
+    [   45.888687] PKRU: 55555554
+    [   45.889183] Call Trace:
+    [   45.889666]  <TASK>
+    [   45.890061]  lowpan_control_write+0x445/0x9e0
+    [   45.890854]  ? __pfx_lowpan_control_write+0x10/0x10
+    [   45.891738]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.892603]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.893383]  ? __debugfs_file_get+0x1bd/0x7f0
+    [   45.894057]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.894902]  ? lock_acquire+0x17b/0x2f0
+    [   45.895593]  ? ksys_write+0x111/0x200
+    [   45.896290]  full_proxy_write+0x11f/0x180
+    [   45.896991]  vfs_write+0x25a/0x1010
+    [   45.897642]  ? __pfx_full_proxy_write+0x10/0x10
+    [   45.898440]  ? __pfx_vfs_write+0x10/0x10
+    [   45.899178]  ? lock_release+0x11f/0x280
+    [   45.899855]  ksys_write+0x111/0x200
+    [   45.900435]  ? __pfx_ksys_write+0x10/0x10
+    [   45.901074]  ? irqentry_exit+0xbe/0x820
+    [   45.901722]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.902489]  do_syscall_64+0x115/0x6a0
+    [   45.903064]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    [   45.903813] RIP: 0033:0x7fa889c3e687
+    [   45.904359] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    [   45.906981] RSP: 002b:00007ffd7651b960 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+    [   45.908070] RAX: ffffffffffffffda RBX: 00007fa889bac780 RCX: 00007fa889c3e687
+    [   45.909102] RDX: 000000000000001c RSI: 00005570f25e8d10 RDI: 0000000000000001
+    [   45.910133] RBP: 00005570f25e8d10 R08: 0000000000000000 R09: 0000000000000000
+    [   45.911162] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000001
+    [   45.912190] R13: 000000000000001c R14: 0000000000000000 R15: 00005570f25e8a78
+    [   45.913208]  </TASK>
+    [   45.913530] Modules linked in:
+    [   45.914022] ---[ end trace 0000000000000000 ]---
+    [   45.914709] RIP: 0010:lookup_peer+0x1ba/0x320
+    [   45.915436] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
+    [   45.919191] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
+    [   45.920046] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
+    [   45.921129] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
+    [   45.922553] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
+    [   45.923653] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
+    [   45.925119] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
+    [   45.926180] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    [   45.927817] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [   45.928726] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
+    [   45.930069] PKRU: 55555554
+    [   45.930456] Kernel panic - not syncing: Fatal exception
+    [   45.931542] Kernel Offset: disabled
+    [   45.932040] Rebooting in 1 seconds..
+
+Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 138 +++++++++++++++++++++++++------
- 1 file changed, 115 insertions(+), 23 deletions(-)
+ net/bluetooth/6lowpan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 2d09f9daba4ed..1c2f09778bfbf 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -12,12 +12,14 @@
- #include <linux/crash_dump.h>
- #include <linux/delay.h>
- #include <linux/efi.h>
-+#include <linux/genalloc.h>
- #include <linux/interrupt.h>
- #include <linux/iommu.h>
- #include <linux/iopoll.h>
- #include <linux/irqdomain.h>
- #include <linux/list.h>
- #include <linux/log2.h>
-+#include <linux/mem_encrypt.h>
- #include <linux/memblock.h>
- #include <linux/mm.h>
- #include <linux/msi.h>
-@@ -27,6 +29,7 @@
- #include <linux/of_pci.h>
- #include <linux/of_platform.h>
- #include <linux/percpu.h>
-+#include <linux/set_memory.h>
- #include <linux/slab.h>
- #include <linux/syscore_ops.h>
- 
-@@ -165,6 +168,7 @@ struct its_device {
- 	struct its_node		*its;
- 	struct event_lpi_map	event_map;
- 	void			*itt;
-+	u32			itt_sz;
- 	u32			nr_ites;
- 	u32			device_id;
- 	bool			shared;
-@@ -200,6 +204,87 @@ static DEFINE_IDA(its_vpeid_ida);
- #define gic_data_rdist_rd_base()	(gic_data_rdist()->rd_base)
- #define gic_data_rdist_vlpi_base()	(gic_data_rdist_rd_base() + SZ_128K)
- 
-+static struct page *its_alloc_pages_node(int node, gfp_t gfp,
-+					 unsigned int order)
-+{
-+	struct page *page;
-+	int ret = 0;
-+
-+	page = alloc_pages_node(node, gfp, order);
-+
-+	if (!page)
-+		return NULL;
-+
-+	ret = set_memory_decrypted((unsigned long)page_address(page),
-+				   1 << order);
-+	/*
-+	 * If set_memory_decrypted() fails then we don't know what state the
-+	 * page is in, so we can't free it. Instead we leak it.
-+	 * set_memory_decrypted() will already have WARNed.
-+	 */
-+	if (ret)
-+		return NULL;
-+
-+	return page;
-+}
-+
-+static struct page *its_alloc_pages(gfp_t gfp, unsigned int order)
-+{
-+	return its_alloc_pages_node(NUMA_NO_NODE, gfp, order);
-+}
-+
-+static void its_free_pages(void *addr, unsigned int order)
-+{
-+	/*
-+	 * If the memory cannot be encrypted again then we must leak the pages.
-+	 * set_memory_encrypted() will already have WARNed.
-+	 */
-+	if (set_memory_encrypted((unsigned long)addr, 1 << order))
-+		return;
-+	free_pages((unsigned long)addr, order);
-+}
-+
-+static struct gen_pool *itt_pool;
-+
-+static void *itt_alloc_pool(int node, int size)
-+{
-+	unsigned long addr;
-+	struct page *page;
-+
-+	if (size >= PAGE_SIZE) {
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, get_order(size));
-+
-+		return page ? page_address(page) : NULL;
-+	}
-+
-+	do {
-+		addr = gen_pool_alloc(itt_pool, size);
-+		if (addr)
-+			break;
-+
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
-+		if (!page)
-+			break;
-+
-+		gen_pool_add(itt_pool, (unsigned long)page_address(page), PAGE_SIZE, node);
-+	} while (!addr);
-+
-+	return (void *)addr;
-+}
-+
-+static void itt_free_pool(void *addr, int size)
-+{
-+	if (!addr)
-+		return;
-+
-+	if (size >= PAGE_SIZE) {
-+		its_free_pages(addr, get_order(size));
-+		return;
-+	}
-+
-+	gen_pool_free(itt_pool, (unsigned long)addr, size);
-+}
-+
- /*
-  * Skip ITSs that have no vLPIs mapped, unless we're on GICv4.1, as we
-  * always have vSGIs mapped.
-@@ -2190,7 +2275,8 @@ static struct page *its_allocate_prop_table(gfp_t gfp_flags)
- {
- 	struct page *prop_page;
- 
--	prop_page = alloc_pages(gfp_flags, get_order(LPI_PROPBASE_SZ));
-+	prop_page = its_alloc_pages(gfp_flags,
-+				    get_order(LPI_PROPBASE_SZ));
- 	if (!prop_page)
- 		return NULL;
- 
-@@ -2201,8 +2287,7 @@ static struct page *its_allocate_prop_table(gfp_t gfp_flags)
- 
- static void its_free_prop_table(struct page *prop_page)
- {
--	free_pages((unsigned long)page_address(prop_page),
--		   get_order(LPI_PROPBASE_SZ));
-+	its_free_pages(page_address(prop_page), get_order(LPI_PROPBASE_SZ));
- }
- 
- static bool gic_check_reserved_range(phys_addr_t addr, unsigned long size)
-@@ -2324,7 +2409,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
- 		order = get_order(GITS_BASER_PAGES_MAX * psz);
- 	}
- 
--	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO, order);
-+	page = its_alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO, order);
- 	if (!page)
- 		return -ENOMEM;
- 
-@@ -2337,7 +2422,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
- 		/* 52bit PA is supported only when PageSize=64K */
- 		if (psz != SZ_64K) {
- 			pr_err("ITS: no 52bit PA support when psz=%d\n", psz);
--			free_pages((unsigned long)base, order);
-+			its_free_pages(base, order);
- 			return -ENXIO;
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index ff93a81940bb0..8da455a8136ce 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1262,7 +1262,7 @@ static int device_event(struct notifier_block *unused,
+ 			if (entry->netdev == netdev) {
+ 				BT_DBG("Unregistered netdev %s %p",
+ 				       netdev->name, netdev);
+-				list_del(&entry->list);
++				list_del_rcu(&entry->list);
+ 				break;
+ 			}
  		}
- 
-@@ -2391,7 +2476,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
- 		pr_err("ITS@%pa: %s doesn't stick: %llx %llx\n",
- 		       &its->phys_base, its_base_type_string[type],
- 		       val, tmp);
--		free_pages((unsigned long)base, order);
-+		its_free_pages(base, order);
- 		return -ENXIO;
- 	}
- 
-@@ -2530,8 +2615,7 @@ static void its_free_tables(struct its_node *its)
- 
- 	for (i = 0; i < GITS_BASER_NR_REGS; i++) {
- 		if (its->tables[i].base) {
--			free_pages((unsigned long)its->tables[i].base,
--				   its->tables[i].order);
-+			its_free_pages(its->tables[i].base, its->tables[i].order);
- 			its->tables[i].base = NULL;
- 		}
- 	}
-@@ -2790,7 +2874,7 @@ static bool allocate_vpe_l2_table(int cpu, u32 id)
- 
- 	/* Allocate memory for 2nd level table */
- 	if (!table[idx]) {
--		page = alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(psz));
-+		page = its_alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(psz));
- 		if (!page)
- 			return false;
- 
-@@ -2909,7 +2993,7 @@ static int allocate_vpe_l1_table(void)
- 
- 	pr_debug("np = %d, npg = %lld, psz = %d, epp = %d, esz = %d\n",
- 		 np, npg, psz, epp, esz);
--	page = alloc_pages(GFP_ATOMIC | __GFP_ZERO, get_order(np * PAGE_SIZE));
-+	page = its_alloc_pages(GFP_ATOMIC | __GFP_ZERO, get_order(np * PAGE_SIZE));
- 	if (!page)
- 		return -ENOMEM;
- 
-@@ -2953,8 +3037,7 @@ static struct page *its_allocate_pending_table(gfp_t gfp_flags)
- {
- 	struct page *pend_page;
- 
--	pend_page = alloc_pages(gfp_flags | __GFP_ZERO,
--				get_order(LPI_PENDBASE_SZ));
-+	pend_page = its_alloc_pages(gfp_flags | __GFP_ZERO, get_order(LPI_PENDBASE_SZ));
- 	if (!pend_page)
- 		return NULL;
- 
-@@ -2966,7 +3049,7 @@ static struct page *its_allocate_pending_table(gfp_t gfp_flags)
- 
- static void its_free_pending_table(struct page *pt)
- {
--	free_pages((unsigned long)page_address(pt), get_order(LPI_PENDBASE_SZ));
-+	its_free_pages(page_address(pt), get_order(LPI_PENDBASE_SZ));
- }
- 
- /*
-@@ -3293,8 +3376,8 @@ static bool its_alloc_table_entry(struct its_node *its,
- 
- 	/* Allocate memory for 2nd level table */
- 	if (!table[idx]) {
--		page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
--					get_order(baser->psz));
-+		page = its_alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
-+					    get_order(baser->psz));
- 		if (!page)
- 			return false;
- 
-@@ -3390,7 +3473,6 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
- 	if (WARN_ON(!is_power_of_2(nvecs)))
- 		nvecs = roundup_pow_of_two(nvecs);
- 
--	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
- 	/*
- 	 * Even if the device wants a single LPI, the ITT must be
- 	 * sized as a power of two (and you need at least one bit...).
-@@ -3401,7 +3483,11 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
--	itt = kzalloc_node(sz, GFP_KERNEL, its->numa_node);
-+
-+	itt = itt_alloc_pool(its->numa_node, sz);
-+
-+	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
-+
- 	if (alloc_lpis) {
- 		lpi_map = its_lpi_alloc(nvecs, &lpi_base, &nr_lpis);
- 		if (lpi_map)
-@@ -3413,9 +3499,9 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
- 		lpi_base = 0;
- 	}
- 
--	if (!dev || !itt ||  !col_map || (!lpi_map && alloc_lpis)) {
-+	if (!dev || !itt || !col_map || (!lpi_map && alloc_lpis)) {
- 		kfree(dev);
--		kfree(itt);
-+		itt_free_pool(itt, sz);
- 		bitmap_free(lpi_map);
- 		kfree(col_map);
- 		return NULL;
-@@ -3425,6 +3511,7 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
- 
- 	dev->its = its;
- 	dev->itt = itt;
-+	dev->itt_sz = sz;
- 	dev->nr_ites = nr_ites;
- 	dev->event_map.lpi_map = lpi_map;
- 	dev->event_map.col_map = col_map;
-@@ -3452,7 +3539,7 @@ static void its_free_device(struct its_device *its_dev)
- 	list_del(&its_dev->entry);
- 	raw_spin_unlock_irqrestore(&its_dev->its->lock, flags);
- 	kfree(its_dev->event_map.col_map);
--	kfree(its_dev->itt);
-+	itt_free_pool(its_dev->itt, its_dev->itt_sz);
- 	kfree(its_dev);
- }
- 
-@@ -5058,8 +5145,9 @@ static int __init its_probe_one(struct its_node *its)
- 		}
- 	}
- 
--	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
--				get_order(ITS_CMD_QUEUE_SZ));
-+	page = its_alloc_pages_node(its->numa_node,
-+				    GFP_KERNEL | __GFP_ZERO,
-+				    get_order(ITS_CMD_QUEUE_SZ));
- 	if (!page) {
- 		err = -ENOMEM;
- 		goto out_unmap_sgir;
-@@ -5124,7 +5212,7 @@ static int __init its_probe_one(struct its_node *its)
- out_free_tables:
- 	its_free_tables(its);
- out_free_cmd:
--	free_pages((unsigned long)its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
-+	its_free_pages(its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
- out_unmap_sgir:
- 	if (its->sgir_base)
- 		iounmap(its->sgir_base);
-@@ -5605,6 +5693,10 @@ int __init its_init(struct fwnode_handle *handle, struct rdists *rdists,
- 	bool has_v4_1 = false;
- 	int err;
- 
-+	itt_pool = gen_pool_create(get_order(ITS_ITT_ALIGN), -1);
-+	if (!itt_pool)
-+		return -ENOMEM;
-+
- 	gic_rdists = rdists;
- 
- 	its_parent = parent_domain;
 -- 
 2.53.0
 
