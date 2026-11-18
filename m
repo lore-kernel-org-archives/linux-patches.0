@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039530;
-	b=S320CN5J0T8P66A9YyGqO+y9Csx2oMDK/lllWB5UxFOzw/BWO3wt4iMECvLaOXtoqPFS
-	 kFc83I4C/YPhp7XxmF7dxUxZ+lqAsp8l195yXB2+c5NEnE+xUMI9q+8S1i8uvqCFAzPZ8
-	 E4sG10VQzC/bV06seRTGJEsVbAq9IVILQszoZOkgRJhaX37JArtefFE8afcNN7waMHSEZ
-	 b79tqdC+PV7GJdw5N8S0lw85ozWZx/BiNnVW835tjD64+UrUI2CHjHHCeuxRFVgFkzfXS
-	 kIKmFAy392NfpKYPG2jmz3COakeeET7+UWlNuCj4FP1rVSNLkHo/yDVv1YMwmgZpUzA==
+	t=1795039532;
+	b=fLaexzYmy5PvpwDSCVutQQtAsgAbbHKOFgj2y+Ibq8KEPeAe+HiPiLvrAhxBREgd+FoV
+	 PO/sQ/GVZo7bCTvENp4l4IQxwP0pPd0mmH8jIXPj2I3YeCoAClyxlJ2LEChhTn5LBnRON
+	 d794Q5LcaANldKK1T7r9LGladwnaX8+NfHfp5xm7Mc8A68QkTvXjC4GtXTql8+YiCauk0
+	 S+SvaEuyfGVvLd6R6853hRn9MveKkbYWvAAPgRyKseX03eTdOazAL/+/p02jveaflpk6V
+	 Wwa3Jeo9r7q0PLS9oVsTNVIuCAMzILvqNLZpaibMSDqvC5DLFiqCCTsaP9vJfGXY11Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hrJ+aDbKFpBxNpX8pQ4HqGO1KJUKln9E5dfpMIZNHgI=;
-	b=BxPCIHkIG2Up8CtfBoadJRgUK6HFJE+1DqN2NN9K3t7LnHpCgyzp1zBuFZkvQVrloY/G
-	 AcevIdJtdtK7aKeAgh6f0msGHG2/mhOism7aqlguu8wpkboGxnUM3hvNF3BePLUIq2H7Q
-	 OoQRCh2C7MbwdCutmQqokp+OARtfwlYodfqoFbBFTgxbMj9QI0UBfXKaq+7JC5wB3U4m7
-	 DyW0YnwvcNtsCV+5YemWM2HufmZVr9vBrdqUDu088v/AP9orCadT27e7YxXPR845xG4OY
-	 SiNjcMkEu+rZ1aNLjR9x10fYZmIzMtuk/IGBJKkgG1sOAKtk1cpubKX9rV8z7w4FGOA==
+	bh=vbXf+MCbI5d0xvWz01gocnaDs8qymbermg9/KmOLXcA=;
+	b=Kpct5XmoUKkjxpFgD1DYnuehS0YNZ7da9QPpWOugOeJTlMdI82ckyZpcFRgx3McRkZQ8
+	 TmgIdaqSRUbHh3ZMpx636GL67IpmdoZ5Z6SywN5zrfnT768o1YqoGjrPCIq1dmv2ag80u
+	 EhTtkk7L2VgSw06Rm1uA1BEkqjJh450SuTNR3WGPoDFUsJPAYx9SzsY/t+yWwqrdZqNv6
+	 b8VSpEUQqfVrzgIsp+r/svEORNeCBUYAlYnb0imrADJL1BQayPE8llv8jz6xNc8B+1sCB
+	 m/BbnmI38vUQ/IJEUpy4mNkJR8whv+teobVCdCf/KV38A5R/0wgorZE50ZB+ytAfnLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uNJ4vA1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIeBOFtQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A938606A325;
-	Wed, 18 Nov 2026 22:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05C4606A32F;
+	Wed, 18 Nov 2026 22:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1uNJ4vA1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6105D1F000C4;
-	Wed, 18 Nov 2026 22:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIeBOFtQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246AF1F000C5;
+	Wed, 18 Nov 2026 22:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039529;
-	bh=hrJ+aDbKFpBxNpX8pQ4HqGO1KJUKln9E5dfpMIZNHgI=;
+	s=korg; t=1795039532;
+	bh=vbXf+MCbI5d0xvWz01gocnaDs8qymbermg9/KmOLXcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1uNJ4vA1ShaiZQypPeBP1OFMh/iAp2JyYPGn58xbwUJp2uXTU/TaolvBJxw7lFxjr
-	 2KthxJOVAOuQtQt+541Avd5rVlB1M2X1uA6mYasyVXBbvObd1052MpGphLVxjd1rUc
-	 PU/Xfg+XKsidnu/LnI8g9deCCacyEWD0ivwyAV4Y=
+	b=LIeBOFtQuRUe4l5LjbaOGlIHWKJhU28gWTDuvXeUoHFplU9A/jgcMsj4pE5vJFeCb
+	 Z+SN4u7u7JG/4BHTYLH/+V59VhcecdkZUznBuhPrFJtBoBgaw6cZOXwAoF6KOwlH9a
+	 hmZqoYZz/SMSS+txThUvqSIeqUlgtYP/2HhDmdFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2132/3318] scsi: mpi3mr: Fix out-of-bounds phy array access on link change
-Date: Wed, 18 Nov 2026 15:45:54 +0100
-Message-ID: <20261118150426.021606018@linuxfoundation.org>
+Subject: [PATCH 6.6 2097/3318] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
+Date: Wed, 18 Nov 2026 15:45:19 +0100
+Message-ID: <20261118150424.999489440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit f67caaa2521a3c8f931d1e679d831ba5ca654794 ]
+[ Upstream commit b70ab341088b2114dcbc7be868588f3e97893e6a ]
 
-The phy number that comes with a link change is used to index the node's
-phy array without being compared against the number of phys allocated for
-that node.
+The MCDMA BD format differs between memory-to-device (MM2S) and
+device-to-memory (S2MM) directions, but the driver was using generic
+'status' and 'sideband_status' fields for both. This led to incorrect
+residue calculations when the hardware updates direction-specific fields.
 
-Check it first.
+Refactor the descriptor structure to use unions with direction-specific
+field mappings, and update the residue calculation logic to select the
+correct status field based on DMA direction.
 
-Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-13-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+This matches the hardware descriptor layout and fixes incorrect
+residue reporting.
+
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260818174151.1608971-2-srinivas.neeli@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_transport.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/dma/xilinx/xilinx_dma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-index e717d90cc15b1..b299c501809c0 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
-@@ -1070,6 +1070,13 @@ void mpi3mr_update_links(struct mpi3mr_ioc *mrioc,
- 		return;
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index ee15da19515a0..02bb2d8b7cda2 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -220,6 +220,7 @@
+ #define XILINX_MCDMA_IRQ_ERR_MASK		BIT(7)
+ #define XILINX_MCDMA_BD_EOP			BIT(30)
+ #define XILINX_MCDMA_BD_SOP			BIT(31)
++#define XILINX_MCDMA_BD_HW_SIZE			64
+ 
+ /**
+  * struct xilinx_vdma_desc_hw - Hardware Descriptor
+@@ -274,8 +275,10 @@ struct xilinx_axidma_desc_hw {
+  * @buf_addr_msb: MSB of Buffer address @0x0C
+  * @rsvd: Reserved field @0x10
+  * @control: Control Information field @0x14
+- * @status: Status field @0x18
+- * @sideband_status: Status of sideband signals @0x1C
++ * @mm2s_ctrl_sideband: Sideband control info for mm2s @0x18
++ * @s2mm_status: Status field for s2mm @0x18
++ * @mm2s_status: Status field for mm2s @0x1C
++ * @s2mm_sideband_status: Sideband status for s2mm @0x1C
+  * @app: APP Fields @0x20 - 0x30
+  */
+ struct xilinx_aximcdma_desc_hw {
+@@ -285,10 +288,17 @@ struct xilinx_aximcdma_desc_hw {
+ 	u32 buf_addr_msb;
+ 	u32 rsvd;
+ 	u32 control;
+-	u32 status;
+-	u32 sideband_status;
++	union {
++		u32 mm2s_ctrl_sideband;
++		u32 s2mm_status;
++	};
++	union {
++		u32 mm2s_status;
++		u32 s2mm_sideband_status;
++	};
+ 	u32 app[XILINX_DMA_NUM_APP_WORDS];
+ } __aligned(64);
++static_assert(sizeof(struct xilinx_aximcdma_desc_hw) == XILINX_MCDMA_BD_HW_SIZE);
+ 
+ /**
+  * struct xilinx_cdma_desc_hw - Hardware Descriptor
+@@ -1022,9 +1032,11 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					   struct xilinx_aximcdma_tx_segment,
+ 					   node);
+ 			aximcdma_hw = &aximcdma_seg->hw;
+-			residue +=
+-				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
+-				(aximcdma_hw->status & chan->xdev->max_buffer_len);
++			residue += aximcdma_hw->control & chan->xdev->max_buffer_len;
++			if (chan->direction == DMA_DEV_TO_MEM)
++				residue -= aximcdma_hw->s2mm_status & chan->xdev->max_buffer_len;
++			else
++				residue -= aximcdma_hw->mm2s_status & chan->xdev->max_buffer_len;
+ 		}
  	}
  
-+	if (phy_number >= mr_sas_node->num_phys) {
-+		spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
-+		ioc_err(mrioc, "%s: phy_number(%d) >= num_phys(%d)\n",
-+			__func__, phy_number, mr_sas_node->num_phys);
-+		return;
-+	}
-+
- 	mr_sas_phy = &mr_sas_node->phy[phy_number];
- 	mr_sas_phy->attached_handle = handle;
- 	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
 -- 
 2.53.0
 
