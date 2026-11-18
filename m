@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023790;
-	b=JoOCmUMTT8a1fSHRkn8rNM+xzs0FoQnbMEr0Xy/Jr8OPioPy3CF9hYGMxe9Knu5LJO9P
-	 /3M7VLn+9oJN3qgs4P0/hEWou+NEXWWMlAp2MSYsZOIbFMURfUH/vcV75dpF3lxRFF1CN
-	 qSkCTy4VXdC3UIl028oss4Xm6NUdzOeSZ9hZ0nPoaI73bpQx1Kn21QtU6huzgPzYwNsEj
-	 jZpcm7k/KpLF+LbPnSsv1L+DiUyQjsANiDueN1wesCDgDc23BWb4otal9kG3ExWFh+ceD
-	 UYq9Pt4x2/c0/aOO7wE9bHK0ltxZSibaSuPqb+5XzQmZFgmanOTbneASGuhsm5y/lJA==
+	t=1795023793;
+	b=ntr1wuT+qlAKXPc1aB3rqigkebGcSIp4w511UoHwt2uAapxgdN7I9xJ9CTQYPun6AYTb
+	 mltea8KLBdl/Y66wqHnK/vziYUnU++AgBEhz/nDzteMdhi5ZjL2yASdNgLV5Py3dHG6rp
+	 xA8HZrjV8JnSYA1LSBZKOZ9+PB0A77KedZ4c5KhiqVHQgW0K7VBwK6K2mb3uh8kPWo9Th
+	 FIIctcQoctHN22xU9ojw3zaM1EgBFnJDB7fqDHhXafqp4gfkZXtUNDj4IOogRN/Azlika
+	 sJ2mLy3+BEasvfx8szRiTghjR6t8kkqJb3fualamti84X9tFJ1c5dSBIEexz7iCK6Mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vyB4v1bpbwqq4L7RZYGJEyM6B/6dWrFxU0q3X5UInfs=;
-	b=3jYoNrJ6wRAGkIFv4bj8cNADRl8LaxBToi9DOsKn5wdfWC9719rHolSKCnO18qU1+RjI
-	 yVfEMoU0PCvkz/lfQE9RaOszMYWYtGHdOiRRKXBCGUjL9alb2f6m5sbj4KVM5HeLeYC9t
-	 fLjbFY+Vz2KJaupkMbEuwer40C/sWMXQ4duAcIHZSHBtsDXYr22cWOk9NCwI6ymodoYil
-	 Fofg71uhy15i8fzHFG7XwQn4NQdYZJMOGtxUbQeeBR2fc5Gyb3zPr+FZuSb8bskinrmfT
-	 7Mt8XN880EFXyLns9P73+s436uvY0zz+OIwcTZnpzHXDak2OjybMys1u8CEm9/jPe3w==
+	bh=PvGqyz76cBiSD2aR/AdZUW4hpvfCj70R9J+CCKbbOgk=;
+	b=k0hNmwglZ1yufjUbBU/cZG52MiwKTGn39end7OlnRv5unXippW0sURx6m9tyew8rTsSE
+	 JUbpCAaxwUYC4s6XS/DR+8IY8mJn1GSmRDmYxxcHcUQcC5fBS6+z6sZ4oYC0gLk03D4EF
+	 zUjI5Lqpp5ypqcvBvjc6Zuxb9oNQ7G5dDR4B1WFL3xOhCVbysGFkj0mMoQRpp8GeSakMK
+	 sF/LUj4LNfyaT4IWOrEEetzn1gPR3IAuSZirEfwfeUVTziXSexaPBCNkotEoOlxNCE4o2
+	 xGUtIoaw5GKTa4RfwOH2RjIs6GEjWcXE8zL+FcS4i9njuC/BnwVmmgPfo6rKqXx9Tbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wVt030a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ip9APUqy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10A8606A31C;
-	Wed, 18 Nov 2026 17:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FDF606A31C;
+	Wed, 18 Nov 2026 17:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wVt030a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF311F000C4;
-	Wed, 18 Nov 2026 17:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ip9APUqy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CF91F000C4;
+	Wed, 18 Nov 2026 17:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023790;
-	bh=vyB4v1bpbwqq4L7RZYGJEyM6B/6dWrFxU0q3X5UInfs=;
+	s=korg; t=1795023793;
+	bh=PvGqyz76cBiSD2aR/AdZUW4hpvfCj70R9J+CCKbbOgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0wVt030aJ/Crq7QRahYXTt3EGr2I1JwXSSm0R4jG4YeiFwBgDUnFzH0rCNLUfp6pS
-	 HyWDLSTFktwkq6OuLe/WbFZPPSsbv/AmFIz3P0Bv36iFLk5KjXeSf8V0dHR9jmfGNH
-	 HCi/2XTRDoPhOWGlVwm1YYayGX+j3d6FQYHsNaLM=
+	b=Ip9APUqy396cftZOMw284Rviq2CGKGY/34qTRudqTX6EA4NwQPV67eU6tjL2FNmJH
+	 RNxvWVm2jliYPGu6oktkE4MswQDX7z31u29bGb1mDZmdqSnNXS6LE7WWNTi8xSXlXE
+	 mmv+nOF1ALpqARiXHGpRNCU6OGc13tCvIj/MyUtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0495/2151] drm/amd: Add correct prefix for VBIOS message
-Date: Wed, 18 Nov 2026 15:37:10 +0100
-Message-ID: <20261118150140.084735148@linuxfoundation.org>
+Subject: [PATCH 6.18 0496/2151] drm/amdgpu: Print full vbios info
+Date: Wed, 18 Nov 2026 15:37:11 +0100
+Message-ID: <20261118150140.122771781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,35 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit e6c7ebeaba4080562e71a59a788ac90b41e09240 ]
+[ Upstream commit 4fd7b724a87a4051401ee2ed64c26c9249582040 ]
 
-It's not obvious which GPU the ATOM BIOS message goes with. Use
-drm_info() to show the correct one.
+Add build number, version and date to the existing part number print.
 
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Example:
+
+[drm] ATOM BIOS: 113-PN000108-103, build: 00159017, ver: 022.040.003.043.000001, 2025/07/27
+
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: aee05c455ad3 ("drm/amdgpu/atom: bound the VBIOS date, part number, version and build getters")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/atom.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/atom.c b/drivers/gpu/drm/amd/amdgpu/atom.c
-index 639649ef6dd03..92ba327f476d6 100644
+index 92ba327f476d6..a40ce7555f287 100644
 --- a/drivers/gpu/drm/amd/amdgpu/atom.c
 +++ b/drivers/gpu/drm/amd/amdgpu/atom.c
-@@ -1474,7 +1474,7 @@ static void atom_get_vbios_pn(struct atom_context *ctx)
+@@ -1473,8 +1473,6 @@ static void atom_get_vbios_pn(struct atom_context *ctx)
+ 
  		ctx->vbios_pn[count] = 0;
  	}
- 
--	pr_info("ATOM BIOS: %s\n", ctx->vbios_pn);
-+	drm_info(ctx->card->dev, "ATOM BIOS: %s\n", ctx->vbios_pn);
+-
+-	drm_info(ctx->card->dev, "ATOM BIOS: %s\n", ctx->vbios_pn);
  }
  
  static void atom_get_vbios_version(struct atom_context *ctx)
+@@ -1531,6 +1529,30 @@ static void atom_get_vbios_build(struct atom_context *ctx)
+ 		strscpy(ctx->build_num, str, len);
+ }
+ 
++static inline void atom_print_vbios_info(struct atom_context *ctx)
++{
++	char vbios_info[256];
++	int off = 0;
++
++	if (ctx->vbios_pn[0])
++		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
++				 "%s", ctx->vbios_pn);
++	if (ctx->build_num[0])
++		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
++				 "%sbuild: %s", off ? ", " : "",
++				 ctx->build_num);
++	if (ctx->vbios_ver_str[0])
++		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
++				 "%sver: %s", off ? ", " : "",
++				 ctx->vbios_ver_str);
++	if (ctx->date[0])
++		off += scnprintf(vbios_info + off, sizeof(vbios_info) - off,
++				 "%s%.10s", off ? ", " : "",
++				 ctx->date);
++	if (off)
++		drm_info(ctx->card->dev, "ATOM BIOS: %s\n", vbios_info);
++}
++
+ struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios)
+ {
+ 	int base;
+@@ -1593,6 +1615,8 @@ struct atom_context *amdgpu_atom_parse(struct card_info *card, void *bios)
+ 	atom_get_vbios_version(ctx);
+ 	atom_get_vbios_build(ctx);
+ 
++	atom_print_vbios_info(ctx);
++
+ 	return ctx;
+ }
+ 
 -- 
 2.53.0
 
