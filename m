@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058939;
-	b=4scQ058WPsNIu8+hq3WOyw4HJRdSEh7FWw3BiwWmQd4tZzsMD3Ol/Jgtl6CvW2j40+M/
-	 BnBCcvXUV1BWq/6OJysGl+u+oMRn4NxuaNCEfXuxHG60xWkyr4G4gj1rnszKAOHSFHa17
-	 P+9PXYBRuGCq3L7erGoJV1jCLDHIwORLp/3r+qnRr8FGNW4FfP4rokJNHgEj3BRB6RKMM
-	 JBlC62y8HblYWqZ+5pS0SmNgsIhMgj4ML+CYQV0mfvfGuVniHYLvVV0WkUiEawcmRvavM
-	 XXVv5XjBk5Oinl1Fxpq2xfhSILV09EPpo347fTTf8zo5pWdgvkoUpbYw4TUoHGcy93Q==
+	t=1795058943;
+	b=Z84t8ybI5z0u4PmdEv/0KoxjWqYSjprN2Bmyi1bEY/mb/EgP2KY+2aSesiDeosV5iyQU
+	 laAf2RbjJyV/P7CGtFkS9j2E3kdW18GKgoLoDYgpzvGe2/oezD2W0qCt7QrOmnmj5bBHm
+	 pP753aFTSotFoMtGD+Ox8gTGUR+JByQwDtZN/grM5/kLN6T+bMSk4c/v5AeDFO/VwWMAy
+	 xi3BDiRv7my/gGG+MbC/nihxDqtHWjpOy33PjRlkQmNfOAf3RxOniiJiNX0+AUK6BW/ND
+	 naM93PyGsedRQ9AUQlZbUMlX4gjfCyRQJgLpz54xZTQL3RAGrY06OX0VQWi2radhWPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058939;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7GjEMdYahm3lyJWfjOU6zJETEcFMdzwkNviSmziHvlw=;
-	b=vSoWjunTulu/7SQ9ZP+i1FjWDZ32RZsQAobCt45pdoFkg84qrodGxqJrdiqHVMevKmEA
-	 ED062mW+EPgnSfFH+CIsuOwTCbtQfNqy9Nk1uxeGWw4j4683ybgg6KJrdSFzo1i6bixHv
-	 9N1ZfrHuRWn5VapBVsxdowBxeIYlNP/eFQeNLpTd88tq+bN0nx5gEYRncOwby9TBv0Cry
-	 mtogIAPqjhNPtHwckyykTJISiQ03QWKcMFS+yQSkzmscyiDOtDVsUT7farocpqi3T1CBl
-	 WQL2LkDG4M86DtNgEhyGuou8VQkn0ZIbgIFm2b5d0X4an2P9ue7YVdhCTjurYwRfAlg==
+	bh=haM/CGSDw+LJu/adlKo+CoJsb+ANa4t6MOLEks4jfwQ=;
+	b=mkT8nQeNzxg03SHeL8HuQEsUFhZBYiUaVqD7cf8JNM97IgyE7fD7Lcgh6xLqF3oOvA3f
+	 yayo5l7tQXbclyphhAu6AOcE2HWN8OaNtS+hXntCVdc8qIIVgUNZKV53fzRRr1TB8OK9E
+	 Xt2cBCZamq/opkFAperwRdSkSJVI1dgWhQ4wz0/U0vvaoOZsOPJmNGSlcH1sX11gzR97R
+	 nkQ6pE9zDjGyTr1mmwRYgYSkRZIaF3r1OiNWwSBq+PV6pJ4Yr/CuWdkdXJrr4WKqCAT3X
+	 C96yhjyuqKs4LjbyqJ95PMhxRUu00ZFSgSDZvXMXrrQrXtzIH9i4VPCasC0zRjij6Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xl+4oyKB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPdUOqy7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA76B60A2602;
-	Thu, 19 Nov 2026 03:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE518606A325;
+	Thu, 19 Nov 2026 03:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xl+4oyKB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8411F000C8;
-	Thu, 19 Nov 2026 03:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jPdUOqy7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F6C1F000C6;
+	Thu, 19 Nov 2026 03:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058939;
-	bh=7GjEMdYahm3lyJWfjOU6zJETEcFMdzwkNviSmziHvlw=;
+	s=korg; t=1795058942;
+	bh=haM/CGSDw+LJu/adlKo+CoJsb+ANa4t6MOLEks4jfwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xl+4oyKBLxaB63pEhYXPr40NBNC3FGf/aQuABMlohX1bX73EE1Uj+v15hPdqNqt4h
-	 5CBBFsGk8Wl/PkazHVDkg0HG2EFJ36uX7Zr9ierl6Iit1q4BRMFoV+IMHynkfeGguz
-	 2NzS86rdJW1GL464oM/532AfpBcCE7NcaGGcYlcQ=
+	b=jPdUOqy7+wnT7vMFSpkdG3i4ykpCd7XTz78yfZXbIToAtwhD5QIP7m7tZnb8jbgqw
+	 n5r+98+wXH/wdN4B49VJ5BRqylsGtUi+UulK1ONooyB2J61MMntZeCRXTbzwMX7Te8
+	 T6IPWOmkv6hji8Axpccn/3TffbLwJ+W2LcI0l7YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Liu <bird@lzu.edu.cn>,
+	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
 	Paulo Alcantara <pc@manguebit.org>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0623/1848] smb: client: fix buffer overflow in SMB2_tcon()
-Date: Wed, 18 Nov 2026 15:44:21 +0100
-Message-ID: <20261118145941.512983253@linuxfoundation.org>
+Subject: [PATCH 5.10 0624/1848] smb: client: validate SMB1 EA list bounds before parsing
+Date: Wed, 18 Nov 2026 15:44:22 +0100
+Message-ID: <20261118145941.550151524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,76 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 
-[ Upstream commit 73cc469b0ff7551f8537ea919709973e6dc4f514 ]
+[ Upstream commit ddc7a7e1eeb116ccaf010a6f1fb6ab927f3f888d ]
 
-In SMB2_tcon(), unc_path is allocated with a fixed buffer size of
-MAX_SHARENAME_LENGTH * 2 bytes (672 bytes). However, the user-controlled
-UNC path (tree) length is passed to cifs_strtoUTF16(), which assumes the
-destination buffer is large enough and writes strlen(tree) + 1 UTF-16 code
-units.
+CIFSSMBQAllEAs() checks the server-provided EA list length by adding it
+to the response pointer. On 32-bit systems, a positive length can wrap
+the pointer and pass the comparison. The parser then walks outside the
+received response while reading the next FEA header.
 
-Commit 62a1a439e0fd ("cifs: clean up handling of unc= option") removed the
-length check on UNC mount options, allowing mount paths to exceed
-MAX_SHARENAME_LENGTH while retaining the fixed-size buffer allocation in
-SMB2_tcon(). Consequently, an oversized UNC string causes cifs_strtoUTF16()
-to write past the end of the heap object, resulting in a slab-out-of-bounds
-write. Furthermore, if a tree exceeds MAX_TREE_SIZE characters, strscpy()
-truncates it in cifs_tcon::tree_name, causing subsequent reconnects or
-failovers to fail.
+A response with a list length of 0x40000000 reproduces this as a native
+i386 page fault and kernel panic from listxattr() against an SMB1
+server.
 
-Fix this by first verifying that the length of tree does not exceed
-MAX_TREE_SIZE, returning -EINVAL if it does. Then, dynamically allocate
-unc_path based on the length of tree so that it safely accommodates all
-UTF-16 code units for paths within MAX_TREE_SIZE.
+Check that the EA list starts within the SMB byte area before reading
+its header. Keep its length unsigned and compare it with the bytes left
+in the response without pointer addition.
 
-Fixes: 62a1a439e0fd ("cifs: clean up handling of unc= option")
+SMB1 is not negotiated by default and requires an explicit vers=1.0
+mount.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Closes: https://bugtracker.nebusec.ai/f/3292
-Assisted-by: LLM
-Suggested-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-[pc: remove unused MAX_SHARENAME_LENGTH]
+Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: adjusted context to match the existing MAX_SHARENAME_LENGTH location and direct -EIO return ]
+[ sashal: replaced smb_EIO2() calls with direct -EIO assignments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2pdu.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/cifs/cifssmb.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 9380cb3ea9743..0878a6423d5a2 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -1703,8 +1703,6 @@ static inline void cifs_stats_fail_inc(struct cifs_tcon *tcon, uint16_t code)
- 	cifs_stats_inc(&tcon->stats.smb2_stats.smb2_com_failed[code]);
- }
+diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
+index c867e31980785..d61effb5fef37 100644
+--- a/fs/cifs/cifssmb.c
++++ b/fs/cifs/cifssmb.c
+@@ -6197,9 +6197,11 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int rc = 0;
+ 	int bytes_returned;
+ 	int list_len;
++	u32 ea_list_len;
+ 	struct fealist *ea_response_data;
+ 	struct fea *temp_fea;
+ 	char *temp_ptr;
++	char *byte_area;
+ 	char *end_of_smb;
+ 	__u16 params, byte_count, data_offset;
+ 	unsigned int ea_name_len = ea_name ? strlen(ea_name) : 0;
+@@ -6276,9 +6278,18 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
+ 	ea_response_data = (struct fealist *)
+ 				(((char *) &pSMBr->hdr.Protocol) + data_offset);
  
--#define MAX_SHARENAME_LENGTH (255 /* server */ + 80 /* share */ + 1 /* NULL */)
--
- /* These are similar values to what Windows uses */
- static inline void init_copy_chunk_defaults(struct cifs_tcon *tcon)
- {
-@@ -1738,7 +1736,15 @@ SMB2_tcon(const unsigned int xid, struct cifs_ses *ses, const char *tree,
- 	if (!server || !tree)
- 		return -EIO;
- 
--	unc_path = kmalloc(MAX_SHARENAME_LENGTH * 2, GFP_KERNEL);
-+	total_len = strlen(tree);
-+	if (total_len > MAX_TREE_SIZE) {
-+		cifs_server_dbg(VFS | ONCE,
-+				"%s: tree name exceeded %u characters\n",
-+				__func__, MAX_TREE_SIZE);
-+		return -EINVAL;
+-	list_len = le32_to_cpu(ea_response_data->list_len);
+-	cifs_dbg(FYI, "ea length %d\n", list_len);
+-	if (list_len <= 8) {
++	byte_area = pByteArea(&pSMBr->hdr);
++	end_of_smb = byte_area + get_bcc(&pSMBr->hdr);
++	if ((char *)ea_response_data < byte_area ||
++	    (char *)ea_response_data >
++	    end_of_smb - sizeof(ea_response_data->list_len)) {
++		rc = -EIO;
++		goto QAllEAsOut;
 +	}
 +
-+	unc_path = kmalloc((total_len + 1) * sizeof(*unc_path), GFP_KERNEL);
- 	if (unc_path == NULL)
- 		return -ENOMEM;
++	ea_list_len = le32_to_cpu(ea_response_data->list_len);
++	cifs_dbg(FYI, "%s: ea length: %u\n", __func__, ea_list_len);
++	if (ea_list_len <= 8) {
+ 		cifs_dbg(FYI, "empty EA list returned from server\n");
+ 		/* didn't find the named attribute */
+ 		if (ea_name)
+@@ -6287,12 +6298,12 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
+ 	}
  
+ 	/* make sure list_len doesn't go past end of SMB */
+-	end_of_smb = (char *)pByteArea(&pSMBr->hdr) + get_bcc(&pSMBr->hdr);
+-	if ((char *)ea_response_data + list_len > end_of_smb) {
++	if (ea_list_len > end_of_smb - (char *)ea_response_data) {
+ 		cifs_dbg(FYI, "EA list appears to go beyond SMB\n");
+ 		rc = -EIO;
+ 		goto QAllEAsOut;
+ 	}
++	list_len = ea_list_len;
+ 
+ 	/* account for ea list len */
+ 	list_len -= 4;
 -- 
 2.53.0
 
