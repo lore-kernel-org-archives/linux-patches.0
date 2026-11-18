@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017502;
-	b=lHyN1AJRmtuxAnKSaFfZhEBDtabon7krdMrddIv/7jH6sEl3ZTVOz9b7rNkVEsPrBhjR
-	 khLmkXea5epNwDHMchyvxC05WN6fNO8VVUgencCha5PWrkxHBotcIr9Rq4nyuP4IRz7ea
-	 vM+/U1wH2T9NUfuvjq+02nNS2Yla3HV7gJ2kp7koeFpy3anKBOK0SNU+i+c3dBNRoSN2m
-	 kcwlZt0gyAuWjn5qY0jm3lxEW7X8AI3XtLFNsZeVFCkEpa7IMyuaPBgHf8/H3Urs68QvC
-	 1V2n+PBFfpItxOBYQn+iv/YSecyZFQZ1DgSv+nWrsS2fq7pUIbOi3UWWEZCEtpyqzwQ==
+	t=1795017505;
+	b=Id29VIViO/gqLtxAHvn754tYQW2/86CNiaXABJhtzP4qVDoP+r54Hzwi0+pRgSo6+kSk
+	 GGu7n1lj+BGktDDO9zVtKJWK/V8QNhl+rHFJ6xpSPsWUdMKojbk5Eif3BfhmzUWreOpqa
+	 rA3PBt/4yFQkqSDxgwSfIpakI8n8vYWwVUyxyyiaBBznTDRAMcdEPSnjvTJVi3DFicInA
+	 SbRQSf8S/PSClnAV26zQrZwMuCRWgzIwX3a2qU/thCmh12DfoQPM8ZgrOsXCzbuWf2YLZ
+	 GMcW/EY4qu6nUUm7RIqu8W2SGSSc6bCHThjOijG1VQvu/tzJC8+RDtAqTDGww3Iigjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017502;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MLz356rPPC2nvLvTHGtQHa2KeGB1fay1RRPswV8/fz4=;
-	b=cdrDUnW+5x1Qbbpb0rTit9gtwEhYN4Z7F7zoZLGF9mUgBk3UbkM2C35wGVa8NbrA0zjF
-	 lH+Ufb4Df/f9eAK4sGut7qiCIyrGOzH/5uyQapZ5T4JhVWpVPf/IOCkD8S2LcQDZ8zYFF
-	 VBOhF+zl1/tbkaoXfnTcMZA+M5M2xqWdHgFRtaCUeqzm4wvdh+osTK0N5DQfRx2iN+sxm
-	 x4ZELhuoE6EENNlwHEnJlYpfua3wHN4mWeTodFFPAfbl1ICun0w57uYIUihHZE7fhyN02
-	 /LibNgiCLOPUJafQz8cDx+0oYUXDUIdG6fbhZErIDgX7TmQ/H1P+n9iAfnq0AyoJ6yw==
+	bh=93nLpnt/PrfmUwss7MCQt+1IM+p+umFdeVKmu9WpWpE=;
+	b=0p8uJeouoaRf6SAGd0Ev8aWwdBv+Xn6bs80jc2zYb6udljth2NFnPbw2zvvck5C99yOk
+	 3ANvc1mUQoK8Pxx2RMXHllxjRIlAvpqdLQlQ5QstWaeNZMP9Vf/oKU5HRrc4v5W2FPsy5
+	 Jm+SE9XhT9hkxddIpkcFHSkVJ00JYCWSikAI9PwkkoUVjivzVfKPAA3H7HICx6tWhaJBl
+	 u/mvU/I0V+SyrOAFxJ7BrbszbUzsFBtzNuqOtUUdCT/oMV/nQX4FO40q9NN9tu1Q9vm4V
+	 I9mHSx33quD52f8VkjAnjzHx8/3yHE7uCwgNW8rJEJoj2LPBVvFVJmEKpium3ZJ+eJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mS/bRcSX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mLttHr/G";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F0E606A334;
-	Wed, 18 Nov 2026 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3F8606A32A;
+	Wed, 18 Nov 2026 15:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mS/bRcSX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B0B1F000C5;
-	Wed, 18 Nov 2026 15:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mLttHr/G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9021F000CA;
+	Wed, 18 Nov 2026 15:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017502;
-	bh=MLz356rPPC2nvLvTHGtQHa2KeGB1fay1RRPswV8/fz4=;
+	s=korg; t=1795017505;
+	bh=93nLpnt/PrfmUwss7MCQt+1IM+p+umFdeVKmu9WpWpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mS/bRcSXIysdrXNxk/nVAEA9MIxQz+BG4pXxHeqNy2QlLPCxRmL5lP/NkKGebq2O+
-	 /+3JTsLPHj4tjYGmcfxVLgy23NzhniCVXCTz3h2BHkNrR4SiZ77XYvLAbPdjAAPXgy
-	 ZD954ucJbSvJcQ+eFP7b8ViQDonayuU7bhPC+6jY=
+	b=mLttHr/GgtVrKcruGOcdklF3VoTzr50n+neqdT+44IJIy07pF+wZIKW8WO0uvSTak
+	 8rNnMWCXvodX1b3HF1P1n9YEixt6qnyHprovjjCpGYDKvl+Sqrac6mUhQiRxQl2m9L
+	 Ll5LOeV2hsE/ZDjC/0zoB9QFgQcc3rjbfD9QAQJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0870/2651] ASoC: mediatek: mt8183: Fix APLL enable error handling
-Date: Wed, 18 Nov 2026 15:35:10 +0100
-Message-ID: <20261118150319.178217337@linuxfoundation.org>
+Subject: [PATCH 7.3 0906/2651] m68k: apollo: Fix interrupt setup
+Date: Wed, 18 Nov 2026 15:35:46 +0100
+Message-ID: <20261118150320.495354430@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,74 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit 30cf48383006579d7cd35380cc6e766260b72bff ]
+[ Upstream commit 6cdbe63badcb524c88f2c8b3cee08f2ffc099a1b ]
 
-Currently, the mt8183_apll*_enable() functions call mux_setting(afe, true)
-but do not check its return value to handle failures.
+The user interrupt vector needs to be installed before the interrupts
+are unmasked otherwise the timer tick isn't handled and boot up gets
+stuck in calibrate_delay().
 
-In addition, the cleanup paths of mt8183_apll*_enable() do not call
-mux_setting(afe, false) when the enable operation fails, while the
-mt8183_apll*_disable() functions do.
-
-Add error handling for apll*_mux_setting() and call mux_setting(afe, false)
-in the cleanup paths when mt8183_apll*_enable() fails.
-
-Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260903045203.175337-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: Claude:claude-fable-5 # Wrote Apollo DN3000 emulator using QEMU
+Fixes: 0aa78106c661cf6c ("[PATCH] m68k: convert apollo irq code")
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://patch.msgid.link/20260828094940.3882602-1-daniel@0x0f.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/m68k/apollo/dn_ints.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-index dd1a5925af96d..06556689976db 100644
---- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-@@ -376,7 +376,9 @@ int mt8183_apll1_enable(struct mtk_base_afe *afe)
- 	int ret;
+diff --git a/arch/m68k/apollo/dn_ints.c b/arch/m68k/apollo/dn_ints.c
+index ba96a92f8f18f..89bfb5aaad9df 100644
+--- a/arch/m68k/apollo/dn_ints.c
++++ b/arch/m68k/apollo/dn_ints.c
+@@ -2,6 +2,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
  
- 	/* setting for APLL */
--	apll1_mux_setting(afe, true);
-+	ret = apll1_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
++#include <asm/irq.h>
+ #include <asm/traps.h>
+ #include <asm/apollohw.h>
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL22M]);
- 	if (ret) {
-@@ -405,6 +407,8 @@ int mt8183_apll1_enable(struct mtk_base_afe *afe)
- ERR_CLK_APLL1_TUNER:
- 	clk_disable_unprepare(afe_priv->clk[CLK_APLL22M]);
- ERR_CLK_APLL22M:
-+	apll1_mux_setting(afe, false);
+@@ -11,10 +12,13 @@ static unsigned int apollo_irq_startup(struct irq_data *data)
+ {
+ 	unsigned int irq = data->irq;
+ 
++	m68k_irq_startup(data);
 +
- 	return ret;
+ 	if (irq < 8)
+ 		*(volatile unsigned char *)(pica+1) &= ~(1 << irq);
+ 	else
+ 		*(volatile unsigned char *)(picb+1) &= ~(1 << (irq - 8));
++
+ 	return 0;
  }
  
-@@ -430,7 +434,9 @@ int mt8183_apll2_enable(struct mtk_base_afe *afe)
- 	int ret;
- 
- 	/* setting for APLL */
--	apll2_mux_setting(afe, true);
-+	ret = apll2_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL24M]);
- 	if (ret) {
-@@ -459,6 +465,8 @@ int mt8183_apll2_enable(struct mtk_base_afe *afe)
- ERR_CLK_APLL2_TUNER:
- 	clk_disable_unprepare(afe_priv->clk[CLK_APLL24M]);
- ERR_CLK_APLL24M:
-+	apll2_mux_setting(afe, false);
+@@ -26,6 +30,8 @@ static void apollo_irq_shutdown(struct irq_data *data)
+ 		*(volatile unsigned char *)(pica+1) |= (1 << irq);
+ 	else
+ 		*(volatile unsigned char *)(picb+1) |= (1 << (irq - 8));
 +
- 	return ret;
++	m68k_irq_shutdown(data);
  }
  
+ static void apollo_irq_eoi(struct irq_data *data)
 -- 
 2.53.0
 
