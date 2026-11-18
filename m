@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029717;
-	b=PAnpLPsV/2PDb9ST2nydDhj5KuepQs2rgZqNvUXgqLmL3Y5HFwBlI5c7TRSwwZC7FUz6
-	 kNoAJShN1ORuszAw4g3rv2HyrUfySzR/nKeeR75HNCKpe+vEYnKYnkw1ZmbGSzCDX9ve9
-	 QsubtvE46ul6/xtZrukjzpQXscWyEZZjnMMSraYGSZdQTUj6OXbUFzBtGLsS4YRo1EABq
-	 +qVLOsMXYAoo6Tl9XE1czCOWdHO1oY85SjElG18QvkM0FFTnqrRh4y8vNKgPqbzaTvsff
-	 /nbji55eH++cQrLmLlTXQmfdGHM8K6llNYhr+7OM0o46hMOt1sCzYZfqKciBd8gXkRw==
+	t=1795029720;
+	b=x6Ya8Ouc0ZrwN6cYkXFv5/Zy5gqItgEkphSn3/1fuyEpFIU200F4nhXQzTIoUrErltBg
+	 OIDxmLNYT/y+Mrnil95kGI+7XvFDqsWFZQLxWGQTuIsabX0EzEf4uwMotq5SCmSaulrWx
+	 rYFxHxoPeRF0sKvkPcHrNlbPgheHc2a/ZpFYKfjATqxLf7w+Y3Dd7lB0/IaA5vapcqvV+
+	 fsYCzw47uB/erpNvGxZKI9FnukKZiNuT/KKIz7HcEGfaLNGl4nxM31QG/uRi13qZkgF5T
+	 DnvhbAB79B2QlOTZT1q5A0BWc80BWFQQR2a12zQjPKaNbyqaYj1Gdi6ACdhjZPFItKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029717;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c2Q8Kz2rQYyi64tODVuf2/5+J8WsFNEg0QqlkB2xNh4=;
-	b=wpEtu0vdQNpYZnI563yOwilrQTPOrSFX9h5x31QCVPdgZUGzI4X8C0GN40tAL+CL98mN
-	 B7X2+xH9gk+oqUasHnYDwbZcnH7qFAq1EUiGaN30GnVAdCDCwQjcoCTCLOPJ00dOk1Uze
-	 zz2RRhOLmTFAQjUY7au6rKUh1+Lv13pi7UsSKBvqTdP4dJ9DHAN9c5gN6KcxFg5h2T+oo
-	 0ixzmSu7gyxvwWhUlbHeYEux29KR+4UjzZlURxVC82R34f4GPDnO/cWcJ5rpd0MhHvnQ5
-	 1g9Wl7CQMVMK3iASF5OGBuPthjPeO/2jwGRXo+BTimy13dAW1e+0XrZVnA8ocK/zfeQ==
+	bh=H2wbO4KKpmLAtsnpDU/MSamyrn1qbxPCpB5IoBejPvI=;
+	b=X+rAAtEq4zP+W8NTXOsBPp906YVwIosM3IbpdZcg5N+NoNvRIXGStIFRhAUhrC5MTgT5
+	 RCsC2x66rFgfbBCeP6TRHKhkU8hp2X4ZZ488pVyFYudELFYgpJkcaX+UmQsGH+ZIrw3zB
+	 j9f5fjL5BcysjUZUr4rE4eg5kY+m16Y3LBLMpyiVHxQHKOb1ioOPUKrSeMoxQPLydUQcu
+	 HBlmOoJ5jPCGV0CbQwTD7ObpN8toYlLNFLk9Yn03RZ49pLGgt03eFYxVXrsr5wFI/mZ12
+	 OauCaVpmif7/Zx3uiAuWy+jpLd3XAyt92Y4coi2E1TS/XaNS5bg2FJG2BFFC1G07hOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEF5UGVC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orTQzZXM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCE960A2609;
-	Wed, 18 Nov 2026 19:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9107B606A33A;
+	Wed, 18 Nov 2026 19:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JEF5UGVC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFB21F000CA;
-	Wed, 18 Nov 2026 19:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=orTQzZXM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B2C1F000CC;
+	Wed, 18 Nov 2026 19:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029717;
-	bh=c2Q8Kz2rQYyi64tODVuf2/5+J8WsFNEg0QqlkB2xNh4=;
+	s=korg; t=1795029720;
+	bh=H2wbO4KKpmLAtsnpDU/MSamyrn1qbxPCpB5IoBejPvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEF5UGVCIP8OvOdFaJOttMbRw/WgYLcWkRqNkLNevBYNDT2YlZx9QD4QF5cdFLYhk
-	 GtNIWS7fKqUac/hivlJ9iPYvlaPwJJUmBVcB25d9IKD4CpsD91g0whKajCuXGeYxbQ
-	 KA7AydeQsLdcrys7t2MjdhFj8x/uobp2LO7IelDA=
+	b=orTQzZXMih7MzxThVTkZhr7eGalilCzBQpXCJR27beCvAHQR7n6e4lCQ9Z80SbpeB
+	 2Ua+Yu0GDxI1bSWIrADswtt8hj+3t/TD+GZZ2j9BFlWGca+w6meycj+TkWo9GkpBn4
+	 CpgIj/CaQgcQjprXbTbVIi7AOVrJO1lGslC6cCXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingpei CAO <caomingpei@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0449/1756] libbpf: Reject local struct_ops bitfields before data access
-Date: Wed, 18 Nov 2026 15:42:56 +0100
-Message-ID: <20261118150026.679324393@linuxfoundation.org>
+Subject: [PATCH 6.12 0450/1756] Revert "rcu/nocb: Fix rcuog wake-up from offline softirq"
+Date: Wed, 18 Nov 2026 15:42:57 +0100
+Message-ID: <20261118150026.718525267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,59 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingpei CAO <caomingpei@gmail.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 961b8946acb482b6d7a39c266d623e5f9c4e873f ]
+[ Upstream commit b95d15980a0f2727a421392ebb50fc6338e43b02 ]
 
-A local struct_ops type can contain a bitfield absent from the
-corresponding kernel BTF type. bpf_map__init_kern_struct_ops() checks
-whether data for an absent local member is zero.
+This reverts commit f7345ccc62a4b880cf76458db5f320725f28e400.
 
-For a bitfield, member->offset contains the bit offset and field width.
-bpf_map__init_kern_struct_ops() used the encoded value to calculate the
-member data pointer before rejecting the bitfield. The zero-data check
-could therefore read outside st_ops->data and crash libbpf.
+swake_up_one_online() has been removed because hrtimers can now assign
+a proper online target to hrtimers queued from offline CPUs. Therefore
+remove the related hackery.
 
-Reject local bitfields before calculating the member data pointer. Keep
-the existing rejection for bitfields in the kernel type.
-
-Fixes: c911fc61a7ce ("libbpf: Skip zeroed or null fields if not found in the kernel type.")
-Signed-off-by: Mingpei CAO <caomingpei@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/bpf/20260915162252.473044-2-caomingpei@gmail.com
+Link: https://lore.kernel.org/all/20241231170712.149394-4-frederic@kernel.org/
+Reviewed-by: Usama Arif <usamaarif642@gmail.com>
+Reviewed-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Stable-dep-of: 4c714f015d9e ("rcu: fix shrink budget underflow in lazy_rcu_shrink_scan")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/rcu/tree_nocb.h | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index e43dad57c1125..262da96f2ca3b 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -1176,6 +1176,12 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
- 		const char *mname;
- 
- 		mname = btf__name_by_offset(btf, member->name_off);
-+		if (btf_member_bitfield_size(type, i)) {
-+			pr_warn("struct_ops init_kern %s: local bitfield %s is not supported\n",
-+				map->name, mname);
-+			return -ENOTSUP;
-+		}
-+
- 		moff = member->offset / 8;
- 		mdata = data + moff;
- 		msize = btf__resolve_size(btf, member->type);
-@@ -1212,8 +1218,7 @@ static int bpf_map__init_kern_struct_ops(struct bpf_map *map)
- 		}
- 
- 		kern_member_idx = kern_member - btf_members(kern_type);
--		if (btf_member_bitfield_size(type, i) ||
--		    btf_member_bitfield_size(kern_type, kern_member_idx)) {
-+		if (btf_member_bitfield_size(kern_type, kern_member_idx)) {
- 			pr_warn("struct_ops init_kern %s: bitfield %s is not supported\n",
- 				map->name, mname);
- 			return -ENOTSUP;
+diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
+index a1a5942d70170..9db8a88e9e6dc 100644
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -554,19 +554,13 @@ static void __call_rcu_nocb_wake(struct rcu_data *rdp, bool was_alldone,
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE_LAZY,
+ 					   TPS("WakeLazy"));
+-		} else if (!irqs_disabled_flags(flags) && cpu_online(rdp->cpu)) {
++		} else if (!irqs_disabled_flags(flags)) {
+ 			/* ... if queue was empty ... */
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp(rdp, false);
+ 			trace_rcu_nocb_wake(rcu_state.name, rdp->cpu,
+ 					    TPS("WakeEmpty"));
+ 		} else {
+-			/*
+-			 * Don't do the wake-up upfront on fragile paths.
+-			 * Also offline CPUs can't call swake_up_one_online() from
+-			 * (soft-)IRQs. Rely on the final deferred wake-up from
+-			 * rcutree_report_cpu_dead()
+-			 */
+ 			rcu_nocb_unlock(rdp);
+ 			wake_nocb_gp_defer(rdp, RCU_NOCB_WAKE,
+ 					   TPS("WakeEmptyIsDeferred"));
 -- 
 2.53.0
 
