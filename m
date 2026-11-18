@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050439;
-	b=RISHrvgwL7H27bfoO/S8Yd3DX+ShBFGCZASjYuafvrz5HZX0dTWqe1QwJw4U9k/FWQ+4
-	 H1XU1LAkCefLnW0uqZsO8Svlgzb3E4TXXm1kHb1O39qIteSSOedO572GqRgQ+uCgSGEj7
-	 nacjRSiJtKmq9IHr43tLvOKYLQMOrteQKQTUM5L7Cw2AHXVQP56pzPsdrPb2Jui6bbyp/
-	 FIidSN9An55TCGW9FWLpfWhmW+topkjHst82BkMJFEL2SVC+SqjOga6C5RHv4TslJkpC0
-	 munMW75D81W41Y4dZC15DY6SSlO4RNABgEBF67X937YfHsWFiekvjKVnM/SttjfpUWA==
+	t=1795050442;
+	b=dUE3Dscffk0A7zB+LYxESJQZ08CsK6oLw4IUIL4sMRhgJUYoscRH8GNqpK7AFfWES3p+
+	 0ZM6ut+w3XW5rIUJpccjkcyU9X/R/7Zb0suYEaXFokWNcgIGVj8p3+606qxObZiKXMLBd
+	 HZsWmy9lNTAtMKNta15K866ScnPvZ0Ah8+vD+O9m9EhVzk7UV9QZiIWvUP7TYdUF/5BMR
+	 N01WvzmxV0XkiA6fH8g0XLbpXSvZDHkKS0St3YEq/UEg7ZVmb96Gj+oM4zxxvgiwquXSv
+	 72cjsToBKzjUJF4jxZ7+hn9Q3AnyD8wI+qd4fbxJENVliXYJMw4sFi4izWvSsG8Pqdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050439;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050442;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BN/uw40KJqao8v/1jhDCKWJ2DhZi0+4SxSPHBplmGNU=;
-	b=qMmWy86cR8TslQVAnCXHNPKhRn9sBu/MfMFZ6aTzjtgBkIc1GfexG+z/Kd3BLhaaTZgT
-	 QEhGGLEtUNEd4GfrHlLEw+gFOFxboILHMH6cGSPBtTKEkdh5CRPkiZuF9mKhpe6JEkGhW
-	 yKqaPY6ltAi5voIDPAgwxzEIGajf96KuNCWP1gi2YWSbDg2JOe2tD/MnnwwPHdmcT9G41
-	 bFpGBZQDqgiOxCpq1PBcRUKNCsNtM96KlPt9na4w9liFjY7XY+xeRrsoozpjmB6c0ewPY
-	 2BtMUe3IzMVg5GtmMnUbMxlXBH4cp1fOu04iz1Zkcfq1E573aMhjR256LRZTzkHp1Ug==
+	bh=7lXYC0aaqmoTw+BqCa5xgQQThQl6+doPJL57zL0COYg=;
+	b=N5H35EEL8rqjBTdMMC2raRHnenpCj2kTVzY0kBgVSgoiiCwC0xq19vnqnE8EO4rjd6wu
+	 6W/DZ0jJRYkom2wE9HW/5JAm7dqOwgxUJoXf9F05rHZbsRd4g+/cJOrhutymvi/I4iwB3
+	 E27uEv6aLivZnJwxpZEAQIa9iUXfbsnRXyuK3WyetfjojViw5xtU+dN9Mp13jCKxyS5ZA
+	 A+kJkgFGmjHSKh9p93Qc9LCHJAZOpkgVfQuwe8Sa5I9wz0SimyS4FK44mFNtty3MatUNc
+	 lUa1cIEGSWAJ9Yu/ls3KV97T10DTh/BCrA8jPCPMDV4nJmYxTSxPDNoIa/MYAqcoYgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axyprkIA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qlsftsb0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E292606A31C;
-	Thu, 19 Nov 2026 01:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729A5606A32A;
+	Thu, 19 Nov 2026 01:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axyprkIA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09771F000C4;
-	Thu, 19 Nov 2026 01:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qlsftsb0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00971F000C4;
+	Thu, 19 Nov 2026 01:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050439;
-	bh=BN/uw40KJqao8v/1jhDCKWJ2DhZi0+4SxSPHBplmGNU=;
+	s=korg; t=1795050442;
+	bh=7lXYC0aaqmoTw+BqCa5xgQQThQl6+doPJL57zL0COYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=axyprkIAsVweqPLU8UYs7fdXJoj5ES6bHGR3lvSsA6Isnu36kBDmOOj82DqvwMSDZ
-	 /QYBJjHdxCCniyXtd0BBclGdAjYRMJN1AFKVt0dx6TmUgzV/6/hMFJ1mI0jEt6FvNd
-	 4lKadCkq9odxVRu/V5YJwQzlqdu7xjMn6rWfblM8=
+	b=Qlsftsb0DzFxuDnLpM0FTeDnTPiz4+dT1KjguR+DFiZjs368E3GFuz+DW5W8nS+KM
+	 pZx/2Q5fCLSq6YG0N/MaxIQu9cNzexgJZV/rcAWcF5sjA2vk8cb1qqB6PNeTXv/uQW
+	 UCwzazN3ritroVAPhNrtY+IlrsifAm6puwr/kmH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	Adrian McMenamin <adrianmcmenamin@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2706/2857] ALSA: sh: aica: Fix spu_memset() stride
-Date: Wed, 18 Nov 2026 16:02:20 +0100
-Message-ID: <20261118150339.015127540@linuxfoundation.org>
+Subject: [PATCH 6.1 2707/2857] net: sparx5/lan969x: do not read past skb->len when injecting a frame
+Date: Wed, 18 Nov 2026 16:02:21 +0100
+Message-ID: <20261118150339.054303734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,46 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit 0d01f90b07e877ef31f9959e9b0bc6bcca9b99df ]
+[ Upstream commit 9642ce6cb51ebd596d0a02074ba9b2a387e974b0 ]
 
-spu_memset() writes one 32-bit word per iteration, but advances the
-destination offset by only one byte. spu_reset() calls it with
-0x200000 / 4 words to clear the 2 MiB of sound RAM, so:
+sparx5_inject() writes the frame to the injection FIFO one 32-bit word
+at a time, and pads frames shorter than 60 bytes with zero words.
 
- - three out of four writel() calls target an unaligned address. The
-   SH4 can't do that. Each one traps and is emulated by the unaligned
-   access fixup. This call to spu_memset() causes 393216 unaligned
-   accesses, visible in /proc/cpu/alignment.
- - the clear covered only about 512 KiB of sound RAM, not 2 MiB.
+Before this patch, the last word is loaded whole even when skb->len is
+not a multiple of four, so 1 to 3 bytes past the end of the frame are
+read. For a frame shorter than 60 bytes those bytes are also
+transmitted, as VLD_BYTES marks the whole last word valid and the
+padding starts at the next word.
 
-Advance the offset by the size of the written word, to clear the full
-sound RAM using aligned writes.
+Write the trailing bytes from a zeroed word. The number of words written
+and VLD_BYTES are unchanged.
 
-Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Acked-by: Adrian McMenamin <adrianmcmenamin@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261022163241.2504922-1-fuchsfl@gmail.com
+Found by an AI code review agent, and reproduced on lan969x and sparx5
+with register injection: bytes 57 to 59 of a 57 byte frame were not
+zero. With the fix they are zero, and traffic still passes on both
+chips.
+
+Fixes: f3cad2611a77 ("net: sparx5: add hostmode with phylink support")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021-sparx5-inject-tail-bytes-v1-1-7dcc035c8ddf@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/sh/aica.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/microchip/sparx5/sparx5_packet.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/sound/sh/aica.c b/sound/sh/aica.c
-index 8b47bfcd90318..2ed2f5cc84447 100644
---- a/sound/sh/aica.c
-+++ b/sound/sh/aica.c
-@@ -95,7 +95,7 @@ static void spu_memset(u32 toi, u32 what, int length)
- 		local_irq_save(flags);
- 		writel(what, toi + SPU_MEMORY_BASE);
- 		local_irq_restore(flags);
--		toi++;
-+		toi += sizeof(what);
- 	}
- }
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+index dcf2e342fc14a..806983f002301 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_packet.c
+@@ -168,8 +168,8 @@ static int sparx5_inject(struct sparx5 *sparx5,
+ 			 struct sk_buff *skb,
+ 			 struct net_device *ndev)
+ {
++	u32 val, w, count, last;
+ 	int grp = INJ_QUEUE;
+-	u32 val, w, count;
+ 	u8 *buf;
  
+ 	val = spx5_rd(sparx5, QS_INJ_STATUS);
+@@ -188,14 +188,23 @@ static int sparx5_inject(struct sparx5 *sparx5,
+ 	for (w = 0; w < IFH_LEN; w++)
+ 		spx5_wr(ifh[w], sparx5, QS_INJ_WR(grp));
+ 
+-	/* Write words, round up */
+-	count = DIV_ROUND_UP(skb->len, 4);
++	/* Write the whole words of the frame */
++	count = skb->len / 4;
+ 	buf = skb->data;
+ 	for (w = 0; w < count; w++, buf += 4) {
+ 		val = get_unaligned((const u32 *)buf);
+ 		spx5_wr(val, sparx5, QS_INJ_WR(grp));
+ 	}
+ 
++	/* Write the last 1 to 3 bytes, zero padded to a whole word */
++	last = skb->len % 4;
++	if (last) {
++		val = 0;
++		memcpy(&val, buf, last);
++		spx5_wr(val, sparx5, QS_INJ_WR(grp));
++		w++;
++	}
++
+ 	/* Add padding */
+ 	while (w < (60 / 4)) {
+ 		spx5_wr(0, sparx5, QS_INJ_WR(grp));
 -- 
 2.53.0
 
