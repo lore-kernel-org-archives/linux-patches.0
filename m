@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034691;
-	b=bp0/hJ9MdKRlAQ8w8APhRUzO4pEL7JjZJ1Hz7QOLX2oa0PumOILNL3SFqucULGFZ+BdI
-	 D1HTM5teB6CrpXVax1Qt2PuBiZuGmRdFtgQ+B+PDuZ/R/zB94Iol6tSWlTX/+LGO3ZJkg
-	 QWmidOGWQeFgdjSXmiG7nvK4JKxAMNN4lqO6JSEmv7Z0d8qz85sondf4kHBR9EWhLpT8W
-	 jBJkHydcePKaTBlLGh1RSOA6x0c77w/fyrF2TfSnIvUiMy5uX9Q3B/+FFdj+13iSTrEan
-	 IRageYf3UF/eN3A2Xs5IImHcInjUJ8W2ZujJcp4OCTDaPKpSkBGCpJuH4A49GQoVSQA==
+	t=1795034694;
+	b=hR/Go5j4lsz8QtxxozjgL2zb75k/8jea1m16DN9aSk9xjooSfxsWhhXrck9K/oOTR3VC
+	 AeSQCa3WpAKMkx8TgIZ/8/cdKbKkZeQrTS7FGeDjYFJf4yYBzJyx2fJSi5AV0sZY1yICW
+	 sfU7PBiPqD5x3N01k7ENpgr6IZQaS1oh4IdJJce/yBbKYumQRG8Vh+pQe28NiAF7nREsu
+	 KWetYmT38Jv4g12xdDRYz+jvZbkNf1Rqr7HwkzIG9Geki4iRsdEbMTBDvnyPD6DN06c1D
+	 Q3FW6S1ZT/gSsLJyMiI6jMkKO1C8YmHmy+BSrI7QDdTjS3pcecQiTQOPFl0RaGBIFmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=C18V+nmI8aR3JOFuxgwb/OAH1SKOe/A/v0FYSPXvqCw=;
-	b=3pbQMbcuDN5QZfeFxu47y+3/WLh35LuHUbP3yUF6RgWwnFrsZZdS9oqQGftJw5QvxViM
-	 +vwyGXK1IvVvKOHz8ZZr655nbxklqCs01py2rqaVVTbeLcdDQ4hP6gOIFk1T7sQmflj3B
-	 ZKaV1MBdohcOGV7RMpEUbYhY+y+2o6RaMRVD16a/1FF6BzQkYYnTOqWBa4PgyjNd8gzkB
-	 wCc+Ge14D2eSMiIoGfp4gUP29ihuRJdAmsuoCy0VsnV5L+o3VONGr8cHkvkdv5tKZqdsf
-	 vyhH2Uh8St3pzMlXVGn+RMd4Y9CAvxebkCxfvvVSUEtVEwQ+XVHCZTuJkCHUCSqWfvw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=eGwUCnUowF9sDi4zLyg3/MLLRK31AP9+uUKqWG1rWLo=;
+	b=si0zyDTQ5z0QcU2Lt3nxmQA4RYklPoRBjWbDFmdWxnyvVOxZJyEGc0rlrBEgX/TLygJb
+	 jmkqi4aZVM6nSmIMP0edXq5ddTLQ0hsnFW35FINL1GtXrHZbcu7bwVCIyBq7TYRbqXnRa
+	 PZNKjBt4oZ+1GuKiYu8xE223vUm3hEv3S12tS1+j5Q8kMDN7Vv1LD65Vst7mGXZbGdJpA
+	 Xn8gEg2+hO6vuxll/4/JHSn3arRIHnedl/nyxVBoOcKoeFdUdl6uOq3fVyb7kvYh4wCtk
+	 2rr75HfxL5jq89L4FApEd8FSE8dBKh2jZmbV53NDl215V45TEBs61BGtXqSuLzd+wGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2a5Wnnj2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0XHqf5Cm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F7E606A31C;
-	Wed, 18 Nov 2026 20:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CE6606A31C;
+	Wed, 18 Nov 2026 20:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2a5Wnnj2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A923B1F000C4;
-	Wed, 18 Nov 2026 20:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0XHqf5Cm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7670A1F000C4;
+	Wed, 18 Nov 2026 20:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034691;
-	bh=C18V+nmI8aR3JOFuxgwb/OAH1SKOe/A/v0FYSPXvqCw=;
+	s=korg; t=1795034694;
+	bh=eGwUCnUowF9sDi4zLyg3/MLLRK31AP9+uUKqWG1rWLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2a5Wnnj2A6wDIvu+pWiwnfCW1n3A7BciUZADrezvajOziY1teRPCvxn6PSyh1t+Bo
-	 Q1p84ax3bHP57RDBQnfDkGj+d+1S0Fcq7MfoCmI+uCxTIOKAnEN8peqnUEYTKJ45cW
-	 Vm1btC1vndHCmKsTI/v/1IMblcQtvhULsult7Ljw=
+	b=0XHqf5CmFraCgtHA4xPYfFIHLpzxEAdvwa0R7ipyqzsaSsqXyZiL/zyw8ycsFCxRu
+	 vLB+m6GW9HikVzRoUXAce38g6InDaHoe7fU0FV0J12h4ZL5W6KzaM+O+t+VDkTrrC9
+	 v0FCNPxEVyNXXSktfwSkgY039zxxZUJul35xSyGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0459/3318] cifs: Remove duplicate struct reparse_symlink_data and SYMLINK_FLAG_RELATIVE
-Date: Wed, 18 Nov 2026 15:18:01 +0100
-Message-ID: <20261118150330.593509881@linuxfoundation.org>
+Subject: [PATCH 6.6 0433/3318] i2c: qcom-cci: Do not check return value of cci_init()
+Date: Wed, 18 Nov 2026 15:17:35 +0100
+Message-ID: <20261118150329.638259269@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,60 +64,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 2948f0d4db40d839db2c1d141121c2e4e12a6faa ]
+[ Upstream commit 17c5d247e3e4708cac05ff087c8013c0dda383a2 ]
 
-In file common/smb2pdu.h is defined struct reparse_symlink_data_buffer
-which is same as struct reparse_symlink_data and is used in the whole code.
-So remove duplicate struct reparse_symlink_data from client/cifspdu.h.
+The cci_init() function is not supposed to fail, and it never returns
+a non-zero, so it'd make sense to convert its signature to void.
 
-In file common/smb2pdu.h is defined also SYMLINK_FLAG_RELATIVE constant, so
-remove duplication from client/cifspdu.h.
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 65d5dbdc089b ("smb: client: fix file type corruption in posix_reparse_to_fattr()")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260515234121.1607425-3-vladimir.zapolskiy@linaro.org
+Stable-dep-of: f98d49864821 ("i2c: qcom-cci: fix autosuspend cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifspdu.h | 16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/cifspdu.h b/fs/smb/client/cifspdu.h
-index f4cfb082dfd14..1a2a01d74e26a 100644
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -1483,22 +1483,6 @@ struct file_notify_information {
- 	__u8  FileName[];
- } __attribute__((packed));
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index 7050b01f32287..e5dacc6677b01 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -247,7 +247,7 @@ static int cci_reset(struct cci *cci)
+ 	return 0;
+ }
  
--/* For IO_REPARSE_TAG_SYMLINK */
--struct reparse_symlink_data {
--	__le32	ReparseTag;
--	__le16	ReparseDataLength;
--	__u16	Reserved;
--	__le16	SubstituteNameOffset;
--	__le16	SubstituteNameLength;
--	__le16	PrintNameOffset;
--	__le16	PrintNameLength;
--	__le32	Flags;
--	char	PathBuffer[];
--} __attribute__((packed));
+-static int cci_init(struct cci *cci)
++static void cci_init(struct cci *cci)
+ {
+ 	u32 val = CCI_IRQ_MASK_0_I2C_M0_RD_DONE |
+ 			CCI_IRQ_MASK_0_I2C_M0_Q0_REPORT |
+@@ -288,8 +288,6 @@ static int cci_init(struct cci *cci)
+ 		val = hw->scl_stretch_en << 8 | hw->trdhld << 4 | hw->tsp;
+ 		writel(val, cci->base + CCI_I2C_Mm_MISC_CTL(i));
+ 	}
 -
--/* Flag above */
--#define SYMLINK_FLAG_RELATIVE 0x00000001
--
- /* For IO_REPARSE_TAG_NFS */
- #define NFS_SPECFILE_LNK	0x00000000014B4E4C
- #define NFS_SPECFILE_CHR	0x0000000000524843
+-	return 0;
+ }
+ 
+ static int cci_run_queue(struct cci *cci, u8 master, u8 queue)
+@@ -634,9 +632,7 @@ static int cci_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto error;
+ 
+-	ret = cci_init(cci);
+-	if (ret < 0)
+-		goto error;
++	cci_init(cci);
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+ 	pm_runtime_use_autosuspend(dev);
 -- 
 2.53.0
 
