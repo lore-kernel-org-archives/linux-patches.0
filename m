@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028317;
-	b=w7lP9grDib+Gk95x6ynuv8BRzd4aLGPy8ulNNUoF6HoqdBPGS5R7bjVXCJkDepByH189
-	 iAq6WmWGEWyYzqSpEIy2HwOHY6icpzpR8p54arZ60t3sOscR7HECj6VoUR4a1XvJxTFWg
-	 fzHgdW88Hck4/WnIotugppmmCPvBXDi+V1MCNXpPND2DYThCMfuaH79MqUcYX2LecoK9L
-	 1w9emXr2Mo222abpT+nITFa3vNy7BG7l0LNoJE36y8dh1x1tWbhbZz8E0jOXDdSCDQXTn
-	 1kIR+ST8Y/b+KUhRGKpSKs34eytwZr5r/3Js9F1gveZRCmT8EbQ8Td1fJVhA2kRcjpA==
+	t=1795028320;
+	b=gaNOBmr2k6Ip5dd6jQ+9ERRRCNnFvUTGRLggJhjhaI2trpazWi8J1n0aI/uXKRl1cKPL
+	 nN0seR6C6d//0ycAgEh7S+Vw2lrEDzr7sZH6oiQUvcPdbQ9TVSV4G4TxKjntNIxgwU0Mu
+	 phfuGAYDB69XdQchZcbPCQalTsVFb8go9kxaBEknejWQO4gjLs4pKNSO1ANYfYFJd6MwA
+	 /SisdZ4w6aNHDrReXeQG2MfFO1ThjcqSHeFHTkFz6CXbANaMf4jQO8bBQRfAiSqGQDrL+
+	 553fTInY7rnUx8LLYOkOvUNH470StvDnqyfjSap9nrEWKwgH+h6UNyWdbFdOvPF/fyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RLLukXZokpPLo3O1Bp1MSL3ujYw5hkhELeF4bZ6VJps=;
-	b=fb71OjNB5ekQHCm+InM7CiUfsbL4jcC9oREOyKA4xHByTXDeF6IprbC+XD/Z5xKMUE30
-	 0L6eMqOC011+OtOelMhyrQiAEX9ipbl4UbfHIfRHMP8frpWQijrHdaRE/Qt2XHZ/Bw73H
-	 k8RK4W0c4K0PFHu/9zHDaS9P/QUSlPoCjKcK3jzL8B20e+3eyWatXT2DZ0xwqL4gUyDif
-	 Jc6r0q8WYXwqB17KcXmYkUbfZFmB/jmCTvDN6ccytRw4jDmoLnfkq07MjGARCFioEgMdP
-	 osDVvARrLgci5/nkNLb/rxvJIRKgsad9BvyM9EBMK0pHVRbO0TiLXNKEhqSIIh82ndg==
+	bh=SQq54mLLPiuZuNgIn0MWaCskwf6Yidm8RN6GiNwplGA=;
+	b=UnuhLy6ukXh7+GdiOWNIZ4AhbW9UAgKtDsm7BVMBJFIzNn4Kmxv7FU+tx+kyJLeM68jw
+	 1KC215tJ7pqlPIqk4N9Q6H/zaOBVNgasvHiLFTkGpwyDXyz28dcPtHvgZgRW7OI+Y11Ef
+	 AUHsAb9yI+yyJtx6mnSmhDZ0v5/6bkCafh3pPY+n8kaKRleenrkgX1fnIbOAYFrj3DILS
+	 dDWZsGvYjhwnr0/FKwMsJJCE4ONzxS55ovbCodfNqSlG2OHWax9X7Vtgtjt9Kn/u9LHEe
+	 +MMXdu4noUq13EnJeMKdNl7HuU3+6FxOzaQQrSEzFiBA+rEmcxaQ46V0/3Dz8ljiReg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dlXQjY/q";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1yoFX9q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368AD60A260D;
-	Wed, 18 Nov 2026 18:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D9860A2600;
+	Wed, 18 Nov 2026 18:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dlXQjY/q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5407A1F000CA;
-	Wed, 18 Nov 2026 18:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1yoFX9q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227B41F000C8;
+	Wed, 18 Nov 2026 18:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028316;
-	bh=RLLukXZokpPLo3O1Bp1MSL3ujYw5hkhELeF4bZ6VJps=;
+	s=korg; t=1795028319;
+	bh=SQq54mLLPiuZuNgIn0MWaCskwf6Yidm8RN6GiNwplGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlXQjY/qUmeP7IOZvyUZlwo+8/7s7VwypKFHtDHDsmdrkZnjtfRfEvKSufXRhpUVa
-	 13I6Edw0XP4EWsuoGSB+6kshBen90xt0FEvJ0tM5zQYyyBAA59JU9VyQkTRK61vymH
-	 W87jLIAKQsheXOGrHXORJLUHPoM6DjUwNoC7m/R4=
+	b=h1yoFX9qUYw3HcTnZMWUVi7fQhzHNgsGy3Keb2lk8hCs4MSeaVqUoOSEXcbie+nYp
+	 rBCPmyl3Lpv3Q6+fDr98B4MSVcQmHgce3OSRIAviphDCO9alXTXWV4RoUwrieJfGM9
+	 6SVrWKHUg6jwBnUCcfPatWNl+wbs+L1pQzEopiZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2103/2151] eth: bnxt: resize Rx head buffers when rx-copybreak changes
-Date: Wed, 18 Nov 2026 16:03:58 +0100
-Message-ID: <20261118150238.305955139@linuxfoundation.org>
+Subject: [PATCH 6.18 2104/2151] eth: bnxt: dont leak buffers when XDP agg buffer allocation fails
+Date: Wed, 18 Nov 2026 16:03:59 +0100
+Message-ID: <20261118150238.343306213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,61 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 09f10efee6f93863ea71489ce84563f4d51787f6 ]
+[ Upstream commit 1b2f02fb4ba92d01603c8261c94be8d348de65b0 ]
 
-Since rx-copybreak became configurable, bnxt_set_ring_params() sizes
-the head buffers to fit at least rx_copybreak bytes, and the copybreak
-path in bnxt_copy_data() syncs rx_copybreak bytes of the head buffer.
-bnxt_set_tunable() however only updates bp->rx_copybreak, and nothing
-on the open path recalculates the ring parameters. After raising
-rx-copybreak the head buffers keep their old size until some other
-setting changes, and bnxt_copy_data() syncs past their end, into the
-next buffer in the page or past the end of the page:
+If a replacement agg buffer can't be allocated for a packet received
+with XDP attached, bnxt_rx_pkt() drops the packet without returning
+its head buffer to the ring. The head buffer leaks, and since rx_prod
+still advances, the device gets a BD with a stale DMA address which
+points at a buffer the driver no longer owns. When that BD completes
+the driver finds no buffer in the slot.
 
-  DMA-API: bnxt_en 0000:01:00.0: device driver tries to sync DMA memory it has not allocated [device address=0x00000002aa210c40] [size=1024 bytes]
-  WARNING: kernel/dma/debug.c:1162 at check_sync+0x577/0x1eb0, CPU#22: swapper/22/0
-  Call Trace:
-   <IRQ>
-   debug_dma_sync_single_for_cpu+0x66/0x90
-   bnxt_copy_data+0x12f/0x290
-   bnxt_rx_pkt+0x24ea/0x50f0
-   __bnxt_poll_work+0x42c/0xc00
-   bnxt_poll_p5+0x579/0x17a0
-   __napi_poll+0x8b/0x2c0
-   net_rx_action+0x58f/0xbb0
+The agg buffers consumed before the failing one have already been
+replaced on the agg ring, they are referenced only by the frags of
+the xdp_buff, which nobody frees. bnxt_xdp_buff_frags_free() would
+skip them since the frags flag is set only on success, so set it
+upfront.
 
-Here the head buffers were still sized for the 640B HDS threshold,
-four 1kB buffers per page, while rx-copybreak was raised to 1024.
-Without coherent DMA or with swiotlb the oversized sync can corrupt
-a neighboring buffer owned by the device or by an skb.
+Pointed out in LLM review of the first patch of the series.
+Tested on a BCM57504 at MTU 9000 with a frags-capable XDP_PASS
+program, receiving 8000B ICMPv6 echo requests (a head and two agg
+buffers each) while page_pool_alloc_netmems() called from
+bnxt_rx_agg_netmems_xdp() failed half of the time (bpftrace
+override()). 44.7k packets were dropped, the page pools' inflight
+count stayed flat and there were no KASAN or DEBUG_PAGEALLOC splats.
 
-The device must be down for rx-copybreak to change, so recalculate the
-ring parameters right away, like bnxt_set_ringparam() does.
-
-Hit while testing patch 1, tested on BCM57504 - boot; set rx-copybreak
-to 1024 with the link down (CONFIG_DMA_API_DEBUG); ifup.
-
-Fixes: 152f4da05aee ("bnxt_en: add support for rx-copybreak ethtool command")
+Fixes: 4c6c123c9af9 ("bnxt: adding bnxt_rx_agg_pages_xdp for aggregated xdp")
 Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20261027234940.1267225-3-kuba@kernel.org
+Link: https://patch.msgid.link/20261027234940.1267225-4-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 2dc9708fb63f6..8181d1bdca028 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -4445,6 +4445,7 @@ static int bnxt_set_tunable(struct net_device *dev,
- 			if (netif_running(dev))
- 				return -EBUSY;
- 			bp->rx_copybreak = rx_copybreak;
-+			bnxt_set_ring_params(bp);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 6e8e316165137..49016042d324e 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1372,16 +1372,19 @@ static u32 bnxt_rx_agg_netmems_xdp(struct bnxt *bp,
+ 	struct skb_shared_info *shinfo = xdp_get_shared_info_from_buff(xdp);
+ 	u32 total_frag_len = 0;
+ 
+-	if (!xdp_buff_has_frags(xdp))
++	if (!xdp_buff_has_frags(xdp)) {
++		xdp_buff_set_frags_flag(xdp);
+ 		shinfo->nr_frags = 0;
++	}
+ 
+ 	total_frag_len = __bnxt_rx_agg_netmems(bp, cpr, idx, agg_bufs, tpa,
+ 					       NULL, xdp);
+-	if (total_frag_len) {
+-		xdp_buff_set_frags_flag(xdp);
+-		shinfo->nr_frags = agg_bufs;
+-		shinfo->xdp_frags_size = total_frag_len;
++	if (!total_frag_len) {
++		bnxt_xdp_buff_frags_free(cpr->bnapi->rx_ring, xdp);
++		return 0;
+ 	}
++	shinfo->nr_frags = agg_bufs;
++	shinfo->xdp_frags_size = total_frag_len;
+ 	return total_frag_len;
+ }
+ 
+@@ -2253,8 +2256,10 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 							       cp_cons,
+ 							       agg_bufs,
+ 							       false);
+-			if (!frag_len)
++			if (!frag_len) {
++				bnxt_reuse_rx_data(rxr, cons, data);
+ 				goto oom_next_rx;
++			}
+ 
  		}
- 		return 0;
- 	case ETHTOOL_PFC_PREVENTION_TOUT:
+ 		xdp_active = true;
 -- 
 2.53.0
 
