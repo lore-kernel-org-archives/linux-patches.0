@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017375;
-	b=c3c//nlFCEoEh1QrE+q2p5l8h4RXAP1LopkI5WQ+PUh3vTaX/fS/juqbkdmDDg3J8in5
-	 OxGt+DwqUV0fwB+K4OzsUP8SRnzz5rXGU8u9ItZJCKP7N2PXl61kdV3xEXkCdzHBGYFal
-	 cHik9jFQy38zDsSwYx4o/zIjsXTwXBPQ2ukvZKS4qWNxpO2WgY6CiZ0Ppz6QadaPJqiEa
-	 3IDrmgNAJfpm/C0qFqAYT2K87LDqsWYGZyikyrANp65YRaRgAEuCz1/yNNDUgQWivS16n
-	 H8VdJdS7V7K2Qr+TStxhSEf1eF4RtqikXIZRohNdVmGGFW7DhaqLah8RIPSQ9AKMkuw==
+	t=1795017377;
+	b=0CkCwwLOC49FuavoihtYYw3v+eSFoVZkCFn03RgjIH8akhsiVpD/rQ2zO1it+u84bARB
+	 v9V9Vxmjvq7/nar2Ngy+5n0vtv1XkjnOsj3arl+zZkmcs9jPwqT4d7wtUA3A09rwXwk57
+	 AjVaim/yjpbom5abTAaMKfE477fM7qx8gKSZfFgi/4tIC2w1PdDm7IW36CCEM43uNoP7J
+	 5iK0nkrVjTAbYJSk1jvo10EMe4kxolbavUUqnSkdoq118tnYl+vZbINwnV3g2V3jGmjRy
+	 dgAX38Fa7gWBqPlsODgJb/u1wf/CKIftzfDcXeMS6fvsio7d6zmRUizdyyORaKe6S4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tiLPWq2ESqge6Uxdor7E4IpQMicrQHO/ocXi6xat7/A=;
-	b=2E/AQtPQRYrCqX2eR+4o/r/CyRl8OCLjXSeTPb3WMQpIq3uQeZvQTOEDY+mtdsgYD/An
-	 j/IgmRML8F6sDC/s69OeIwaYKKS5i/DLG29MpWxVxkIzJ/OQP75JKo9OENvBTQdqm5sQY
-	 o0JrlPhIQhAgr0q9bhA+X3gFbjuEW66p/jRpVZoniDNfzTPt1c4PH6T4Mlcm5dyMnpB2O
-	 JchBuJlSyYLyvr0+AamJkaohCdj3DwemgEvZZ4Y7+WTraSAeeLizhLju9HqN51eab+82g
-	 tAU06p/h6uwqmmPMyahqFuxLPRBJpPKAv83x5GA+gWgYwU4ADFkfEIDWbP0hVMMaA5w==
+	bh=sGinErszF67zhqay5Pxdczo6kGHT4udhBR6ok3Fj/9M=;
+	b=fAWuK4JSQ8KhPnnC9sdHYtgTEgQn16Hw9bR2Ez1YYZSxIEnfLTgDFXeecAQAhIaRALNw
+	 S6Dzudom+nwmbiNXE+BGpsPLWdJi4kjbhTLRtmKrXr8OzL9SUXXtEkpnfkEDc/ktZ+3Ie
+	 u/gOIZDINX4aNKscMxA8J8zg1gymxXcr7lWShIhBHGVG18weqhoTAIVPoxzPXgySOA44S
+	 +CwTot4bAvcTJPAEjGVHjT/QLmFypRdoCR/+vHMv1YQjrfJ2lWN4C4ka2lqhTd54/QIU4
+	 fE5MkTGxK42OhZBPtzPyYSwesBlG2rERIkgzPB7+nOl4CnO8dg35eTI/RMB8zhcJgTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hg3N3QCQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2UG3BW/B";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F6A606A325;
-	Wed, 18 Nov 2026 15:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92A8606A31C;
+	Wed, 18 Nov 2026 15:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hg3N3QCQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683061F000C4;
-	Wed, 18 Nov 2026 15:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2UG3BW/B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3971F000D0;
+	Wed, 18 Nov 2026 15:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017374;
-	bh=tiLPWq2ESqge6Uxdor7E4IpQMicrQHO/ocXi6xat7/A=;
+	s=korg; t=1795017377;
+	bh=sGinErszF67zhqay5Pxdczo6kGHT4udhBR6ok3Fj/9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hg3N3QCQAu3tft4/VuS/iTbU194uvaIWUHMHZY3NTErdGqxLyU9vV5y69wSiN04di
-	 2Vp7IZLcqLgYLw7k2ARzoYZzrn00ll661OIUUQheFqtwVWwyac1Vdq4Nz9nTbYERpS
-	 DlctDyf9gQPGSRj0mMyycoOMgeN9LYo0JzNUSkqE=
+	b=2UG3BW/B5Mkye9xSzpP9VqiRacwnnAaD2ZdMlejIma5PK70VBaVjReTlMwmU8mpNS
+	 5CsyOuO3Z6K5CpysJHTyAPj3RIWhY/DT3wPFuvKnvefDJ4qhxrhiwF2R5OInDQhYjn
+	 orfSWNV8pxxhpNlKaNZ29AJAVIc9EggcTrTOzYKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0861/2651] dt-bindings: clock: qcom: sm8750-gcc: Add CX power domain
-Date: Wed, 18 Nov 2026 15:35:01 +0100
-Message-ID: <20261118150318.859384106@linuxfoundation.org>
+Subject: [PATCH 7.3 0862/2651] perf test workload: Use unsigned int in code_with_type instead of uint
+Date: Wed, 18 Nov 2026 15:35:02 +0100
+Message-ID: <20261118150318.895739406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,63 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit f9c74b6ed57922b1fdb1ed6835665e06b5ba01a5 ]
+[ Upstream commit 66fcf1357a26d9cf8c7e34e2a70d12ebd7bd538f ]
 
-The GDSCs provided by the SM8750 and Kaanapali GCCs are supplied by the
-RPMh CX power domain. Model that parent domain in the GCC binding so the
-provider can describe the dependency in devicetree.
+The declaration of the Rust helper test_rs() uses "uint", a BSD-ism
+that lives in <sys/types.h>, so on glibc it is only visible by
+accident: glibc's <stdlib.h> includes <sys/types.h>, where uint is
+exposed under __USE_MISC, which is on by default.
 
-Add a single CX power-domain entry to the binding and make it required.
-Without this dependency, GCC GDSC consumers cannot vote for CX and RPMh may
-undervolt it.
+musl does none of that: its <stdlib.h> doesn't include <sys/types.h>
+and it typedefs uint there only when _GNU_SOURCE/_BSD_SOURCE is
+defined, while nothing else in this translation unit includes
+<sys/types.h>. Building it on Alpine therefore fails with:
 
-Fixes: 342d2a607450 ("dt-bindings: clock: qcom: Add Kaanapali Global clock controller")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260924-qcom-tie-cx-to-gcc-v5-9-38732033e5b5@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  tests/workloads/code_with_type.c:9:21: error: unknown type name 'uint'; did you mean 'int'?
+  tests/workloads/code_with_type.c:39:17: error: implicit declaration of function 'test_rs' [-Wimplicit-function-declaration]
+
+The second error is a consequence of the first one: with the
+declaration at line 9 rejected, the call at line 39 has no prototype,
+which is an error since gcc 14.
+
+The breakage is only visible when rustc is present, because
+tests/workloads/Build adds code_with_type.o when CONFIG_RUST_SUPPORT
+is detected, and tools/build/feature only checks for "rustc
+--version". That is why alpine:3.23 and alpine:3.24 fail while
+alpine:3.22 and alpine:edge, lacking rustc, build fine and hide it.
+
+Use unsigned int, which needs no header at all.
+
+Fixes: 2e05bb52a12d3 ("perf test workload: Add code_with_type test workload")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Dmitrii Dolgov <9erthalion6@gmail.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/clock/qcom,sm8750-gcc.yaml         | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/perf/tests/workloads/code_with_type.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml
-index 0114d347b26ff..59da3eb2b0738 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8750-gcc.yaml
-@@ -34,9 +34,14 @@ properties:
-       - description: UFS Phy Tx symbol 0 clock source
-       - description: USB3 Phy wrapper pipe clock source
+diff --git a/tools/perf/tests/workloads/code_with_type.c b/tools/perf/tests/workloads/code_with_type.c
+index 65d7be7dac24d..d2d437b86e0c6 100644
+--- a/tools/perf/tests/workloads/code_with_type.c
++++ b/tools/perf/tests/workloads/code_with_type.c
+@@ -6,7 +6,7 @@
+ #include <linux/compiler.h>
+ #include "../tests.h"
  
-+  power-domains:
-+    items:
-+      - description: CX power domain
-+
- required:
-   - compatible
-   - clocks
-+  - power-domains
-   - '#power-domain-cells'
+-extern void test_rs(uint count);
++extern void test_rs(unsigned int count);
  
- allOf:
-@@ -47,6 +52,7 @@ unevaluatedProperties: false
- examples:
-   - |
-     #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/power/qcom,rpmhpd.h>
-     clock-controller@100000 {
-       compatible = "qcom,sm8750-gcc";
-       reg = <0x00100000 0x001f4200>;
-@@ -58,6 +64,7 @@ examples:
-                <&ufs_mem_phy 1>,
-                <&ufs_mem_phy 2>,
-                <&usb_1_qmpphy>;
-+      power-domains = <&rpmhpd RPMHPD_CX>;
-       #clock-cells = <1>;
-       #reset-cells = <1>;
-       #power-domain-cells = <1>;
+ static volatile sig_atomic_t done;
+ 
 -- 
 2.53.0
 
