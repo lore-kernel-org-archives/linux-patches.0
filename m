@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041580;
-	b=yepttNFF1vYq14qiAFV01lOwIQCgqknHm0AMlBeSbS2D9oOaM+eonzNKWfn5rUpczoWq
-	 GVdgegzXGQHmsT4bF2u/VndK/4+/xQri2FhVLpht+t5kqR299eD0ptjkYb3wIlb4XPhNH
-	 gjxvuEc/HHF9FLRKqkMRfHwXPhBus25e2FxTI+IGstWxE0r1cr+spi43suuM6mFYRJtBv
-	 JRHbOah6qnVCSYr6YCpEG9DIMT2c53p83nuUBcXhbLM1h8UaWzSR5rvaNOeVDfglxY4Qt
-	 pDr3tc7R4F8Xmel9BAXrD0KyqG9seNIJQ5REm1igN7/hkGx2eZCG9A/kUcByxs1gdBw==
+	t=1795041583;
+	b=ZPyhL9jySy8cZZrzFuX8w0FDeVLDEG0xTOoKdUpTxP9Ix4Kul2DKBVGswgvahi98wItX
+	 6YIcb/VMbBAmgguGfrZoCgjTBXTh88oBkkLF/0oPoKgcOJg6J+nL2VWOnZCdKCin1vY5M
+	 HjPUWDbX9fudRtos2hP3bxIByexcU1HLb8sfDBtCVdAm8V2bC/FZJweR8Ez2UPjoFcine
+	 4S7tq8hqizhagRQgaSCOz6UWl4VsbbarsSEWzzeFnJaOca/+dWFJ+YdSxqGXZoYmSZiwm
+	 yaXDb9pdOSXAUENU5ti2ojaJjVd4RvxrvjBlBVfGSLCb03v/r1C6I1HH9IAJJg6CyFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3DOcUQOcNndQ7OeATOU229oT1LjTOg8Mb4Bubk4CXiQ=;
-	b=B1S2IadHdGoKv6X8Vq7zVEQcqzOKxRu4vxzxU9b2aCsixy6zcVVJogcO54yCa8SGivo2
-	 gD9GlNDSD71B/fUEIn3iEy5pDJN1lzMpkXYU/n647creCNJAt7HlPVwBNzsbAeslDh5Aw
-	 kbxyNE//NqhkQ0uO61MZjdVRHqJkQGe2KyEDdFHlg9UuGLAtNYa0VUEfk4OLZ323sy9XY
-	 Tdo67mKF8jXXLZL6pa/BiIri+nUG6U+xtNR3jc0J84LbnIbt0SoEFiQkZtOTW9m2CsQop
-	 Jf5cO8L11T80YjO2/VW46iqyvOU3eoRMiIxuzq3nZWvNVvUuF2IXvvnJmQfwED0+NpQ==
+	bh=cb5X+laEFXmleqcsmkAJFMzAglkZi5WnX41EXhvhVJU=;
+	b=hy/8R0vdSKq05MVeBgFM6i2kFywdxNkXWHgqBWBFGnz+h/1AlKLPSgJ7e+tekKR0yzR2
+	 GvTXK/PUromZdi3epx/OXNzTmtojoKCZML9jBYBFqt5aQ1Q3UIXxDAsIZhVxutCM7V+cS
+	 hm5mbO+oWp+pZi+rZBZiCI6szezx9hckxB23sf0LVX7gq1/PSPs5RE67SdA06fKAIGTSC
+	 t9WGdQxqWZiACZpBj9kOdltkQQ7FH+/JEpYbxtDHbu7K9ciB6mwYmF1RRPwcmraXiwcwx
+	 WR0BfXSb6HaGZdcfj4Z9V8gz7FtXcLufGKsZGqew0GIPHDBaBH3qq/jHne/FuJpB62Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDOmYUWh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqRfLPRi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FE0606A332;
-	Wed, 18 Nov 2026 22:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0C2606A332;
+	Wed, 18 Nov 2026 22:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDOmYUWh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A3E1F000C4;
-	Wed, 18 Nov 2026 22:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gqRfLPRi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 476741F000C4;
+	Wed, 18 Nov 2026 22:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041580;
-	bh=3DOcUQOcNndQ7OeATOU229oT1LjTOg8Mb4Bubk4CXiQ=;
+	s=korg; t=1795041582;
+	bh=cb5X+laEFXmleqcsmkAJFMzAglkZi5WnX41EXhvhVJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDOmYUWhKMXIafAfr9zln2IEH/2D3E4fGlBOaZnGgwU2BMcX9Q7cPsNwPhyL9f+ju
-	 xkl2tf1gt7vZAMWTdPeKEwRPT3GBzoXecYOX+GmR5WBLefIXDRD/6bGFPtEKR57pd8
-	 qM4RNvBtgXUKfjnKRfu4qOFDaYzjV94fy3dRMCDA=
+	b=gqRfLPRivG+ofwPDkACXyeZxDCIGzzq7Ltx/6rSH9BEhHxucdq5TAnareerxJf4xG
+	 QuqgdUDdLgA/rxmbXNQ5IQMHYds3wrnwOUsLWTOalVdYIZjH7MuXkDsMATfAi1gJQb
+	 I55RAIUaldEt9v9yQtiB0qU6toUlSaQ2BOQ6SdCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2847/3318] ipvs: fix buffer overflow when sending sync messages
-Date: Wed, 18 Nov 2026 15:57:49 +0100
-Message-ID: <20261118150446.017486282@linuxfoundation.org>
+Subject: [PATCH 6.6 2865/3318] ASoC: codecs: wm5100: Fix definition of EQ3 Band 1 Volume control
+Date: Wed, 18 Nov 2026 15:58:07 +0100
+Message-ID: <20261118150446.524421527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,120 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 3e3fe49e8678c1a3d535ed02f32a9a6e80674263 ]
+[ Upstream commit 96d30816a9a4fa6b3cc470f82d0f53e8a6425ab9 ]
 
-Sashiko reports for possible heap buffer overflow when
-generating sync message for the v0 and v1 message formats.
-We should read the cp->flags only once because another
-CPU can concurrently set the SEQ_MASK between the two
-reads.
+The EQ3 band 1 gain is in WM5100_EQ3_1, not in WM5100_EQ1_1, which
+holds the EQ1 band 1 gain.
 
-Note that IPVS does not set the SEQ_MASK anymore for the
-ip_vs_ftp.c helper starting from commit 7f1c40757951
-("IPVS: make FTP work with full NAT support") (2.6.36+),
-so the problem should not be reproducible.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260903004149.1037028-1-pablo%40netfilter.org
-Link: https://sashiko.dev/#/patchset/20260909111338.44357-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 6d4baf084f4d ("ASoC: Add WM5100 driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/d7f690e391feda7a6d8f38d0b238b165bc1f4fe2.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_sync.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ sound/soc/codecs/wm5100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index c6c712180c612..52562ad8359f5 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -544,13 +544,15 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	struct ip_vs_sync_conn_v0 *s;
- 	struct ip_vs_sync_buff *buff;
- 	struct ipvs_master_sync_state *ms;
--	int id;
-+	u32 flags, seq_mask;
- 	unsigned int len;
-+	int id;
+diff --git a/sound/soc/codecs/wm5100.c b/sound/soc/codecs/wm5100.c
+index ff63723928a16..b1e9484334a85 100644
+--- a/sound/soc/codecs/wm5100.c
++++ b/sound/soc/codecs/wm5100.c
+@@ -655,7 +655,7 @@ SOC_SINGLE_TLV("EQ2 Band 4 Volume", WM5100_EQ2_2, WM5100_EQ2_B4_GAIN_SHIFT,
+ SOC_SINGLE_TLV("EQ2 Band 5 Volume", WM5100_EQ2_2, WM5100_EQ2_B5_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
  
- 	if (unlikely(cp->af != AF_INET))
- 		return;
-+	flags = READ_ONCE(cp->flags);
- 	/* Do not sync ONE PACKET */
--	if (cp->flags & IP_VS_CONN_F_ONE_PACKET)
-+	if (flags & IP_VS_CONN_F_ONE_PACKET)
- 		return;
- 
- 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
-@@ -565,8 +567,8 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	id = select_master_thread_id(ipvs, cp);
- 	ms = &ipvs->ms[id];
- 	buff = ms->sync_buff;
--	len = (cp->flags & IP_VS_CONN_F_SEQ_MASK) ? FULL_CONN_SIZE :
--		SIMPLE_CONN_SIZE;
-+	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
-+	len = seq_mask ? FULL_CONN_SIZE : SIMPLE_CONN_SIZE;
- 	if (buff) {
- 		m = (struct ip_vs_sync_mesg_v0 *) buff->mesg;
- 		/* Send buffer if it is for v1 */
-@@ -598,9 +600,9 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	s->caddr = cp->caddr.ip;
- 	s->vaddr = cp->vaddr.ip;
- 	s->daddr = cp->daddr.ip;
--	s->flags = htons(cp->flags & ~IP_VS_CONN_F_HASHED);
-+	s->flags = htons(flags & ~IP_VS_CONN_F_HASHED);
- 	s->state = htons(cp->state);
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
-+	if (seq_mask) {
- 		struct ip_vs_sync_conn_options *opt =
- 			(struct ip_vs_sync_conn_options *)&s[1];
- 		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
-@@ -636,6 +638,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	int id;
- 	__u8 *p;
- 	unsigned int len, pe_name_len, pad;
-+	u32 flags, seq_mask;
- 
- 	/* Handle old version of the protocol */
- 	if (sysctl_sync_ver(ipvs) == 0) {
-@@ -648,6 +651,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- sloop:
- 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
- 		goto control;
-+	flags = READ_ONCE(cp->flags);
- 
- 	/* Sanity checks */
- 	pe_name_len = 0;
-@@ -675,7 +679,8 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- #endif
- 		len = sizeof(struct ip_vs_sync_v4);
- 
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK)
-+	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
-+	if (seq_mask)
- 		len += sizeof(struct ip_vs_sync_conn_options) + 2;
- 
- 	if (cp->pe_data_len)
-@@ -721,7 +726,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 	/* Set message type  & copy members */
- 	s->v4.type = (cp->af == AF_INET6 ? STYPE_F_INET6 : 0);
- 	s->v4.ver_size = htons(len & SVER_MASK);	/* Version 0 */
--	s->v4.flags = htonl(cp->flags & ~IP_VS_CONN_F_HASHED);
-+	s->v4.flags = htonl(flags & ~IP_VS_CONN_F_HASHED);
- 	s->v4.state = htons(cp->state);
- 	s->v4.protocol = cp->protocol;
- 	s->v4.cport = cp->cport;
-@@ -745,7 +750,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
- 		s->v4.vaddr = cp->vaddr.ip;
- 		s->v4.daddr = cp->daddr.ip;
- 	}
--	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
-+	if (seq_mask) {
- 		*(p++) = IPVS_OPT_SEQ_DATA;
- 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
- 		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
+-SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ1_1, WM5100_EQ3_B1_GAIN_SHIFT,
++SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ3_1, WM5100_EQ3_B1_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
+ SOC_SINGLE_TLV("EQ3 Band 2 Volume", WM5100_EQ3_1, WM5100_EQ3_B2_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
 -- 
 2.53.0
 
