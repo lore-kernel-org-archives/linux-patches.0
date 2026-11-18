@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046517;
-	b=MmchMAOUMPWioNfxrT+FRvawbu3RoXT/L9q7p04l+QL/zhMB+IYzds2lbbsMpVFliHHH
-	 IliRYUDy9lTzOGqdJ5moLmWiS9iaBe4H4m5FwK/O5ZXrHe5+D63ZRM9ma2m58Kak68rUj
-	 v7jSkGe+OXKhF0mKuA7B1+IQxzTVRYBfySAwBGpM9GDdR3Ywwv5o75o45eoFqTb+uA85A
-	 /Taq9CXf3NDqj//HmVo/h8Tetmu4NEueBBG8OY1w6qM7vevj8AJrJAtqOsA81aeBTa9op
-	 iu05SVO8+NAFLBmkUhGjNRFIeA0CUAQX3ugwyAEex/mDUZFUZENNM83pdJ2zVjGrvdw==
+	t=1795046520;
+	b=paQ3ixsDoprMDxm/X2T4qNcjJJuxWRyebWFxUbbCvurYAsMhiuX2w0KLLRyrBIHqHXKj
+	 WoGtqo3xAj3WvjMmvQVKeto3Y8ht8jUmf3+d53FAiKHpJ6owzxJg/2ILiLWcUWR+ghMzl
+	 oleJ2kaVH3iU63F5PROCpmeJi+91SsCYR5yV5ZCKpcZfKn+O1KDPGOCjs9UC2YzPm6gEV
+	 JypzmcuggMg+087GyfE0GlOSq84C6fFdyyyPeymirVLuy2XGg6r4cWD6bWoF5CdxH2GAk
+	 xGAPHXHeP8fDoo+uM3RLtv4dRp/L6TUNNySfVofBCANjTB/NGK8i42nk6fTTHAj3/dQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gXlHmXjR4NadsthxNY/vUFZ1BlQQQCgD7DeKbn5LAeU=;
-	b=BTf/j/r7kMvA76YhHhlk2qSnuVNsiqVdJI6RpyAgJaDujUwOp+HbznkU8izCa4gnEJVS
-	 bOY2iW7DpUb2e5rL0cLVeF5rigrMS3TLyauPZerhORi5t9z6yhMs35dheg7Kd5bfc1WcX
-	 lcUkqK0We8oyfYs2C3VBpQOwjgLTtlvgGIVAKhsAMstsxdyAP0XhX3CmyXclWTfodZOWu
-	 6d2UjHDebK9w7P0YnB9bWOGfHOquVLaR1n5wZGwQVPxeuSygV4QMBhCpjzLNVIQ+RBxUR
-	 gRLykeze/dG0aNyQM55jkVAQe6aD4qeTSLYM1N9xQxGt6AuErrluEgiOXGFmtC4G3/g==
+	bh=AHOlY6lLO2NdMohxjKHpTrKCnax1adhgpJ6RQwXhKZs=;
+	b=JzIIkQsY/9TAz0i0YKGRsJCdBNm1s+eE2MZusHT+B4FH46A+gO6/EgqwGw3QKNnRwqoi
+	 eBP7Ux2ZNuERs+Q/2OJ+34uXLeRgIC1eQVVblNK7FcbsDqdMesxiIev6n14jDKnbkuKNX
+	 zRzoaSg6KIztIgzuz/c66P2xVv++I70ocFz+YVrHgIGaCwNbLNmtRPZrFrPV4dNx4uNJe
+	 CSHpvH3Se6t2at/Vc6vBs+5ftICMrMxEy1wNM3peD4GBg6jOCd9pxrsJtoIiIHwNcQr9b
+	 rPVe13SzmGK04n47l0SpNcnveXtp1VFGOcmlb5tfBIY/ywciSWJ5BNE4jb8R4w1Jatw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12iecA2O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f211VCpg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE33606A31C;
-	Thu, 19 Nov 2026 00:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040E160A2621;
+	Thu, 19 Nov 2026 00:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12iecA2O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913DA1F000C4;
-	Thu, 19 Nov 2026 00:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f211VCpg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E7A1F000C8;
+	Thu, 19 Nov 2026 00:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046517;
-	bh=gXlHmXjR4NadsthxNY/vUFZ1BlQQQCgD7DeKbn5LAeU=;
+	s=korg; t=1795046519;
+	bh=AHOlY6lLO2NdMohxjKHpTrKCnax1adhgpJ6RQwXhKZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=12iecA2OWYU9nysn2N9Oe0EQNYW336G08BTWzoXM20b9/DGz7KHP0IyZcdSX4LuW6
-	 1QSYdzx7uGFOBTlvzXA2r7kLiBre1/OozqU6O4EWH03qq21+z8E4vhO/DFGrLpWaDQ
-	 oKwUG28uOU6PSWC9CRwNUw6mC+yHOussvtZoVzfI=
+	b=f211VCpgKrmpcfs+ZNnQOnPvsYDy6rTIPK55swn2PG5zmNKgp+zP0QanKsVi6k1P0
+	 qWwYcv5F/zYPaX79lJNFy/AmvhCdgT7ey57rbobXijUpOZqy8uEl0ZJrhf07Fh/o5F
+	 8DrKluS8byKvtLUKc3BSlHTapOSZ4gdBpOmLRtJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com,
-	syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com,
-	Matthias Goergens <matthias.goergens@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1309/2857] udf: dont let the extent type hide an exhausted free-space table extent
-Date: Wed, 18 Nov 2026 15:39:03 +0100
-Message-ID: <20261118150248.593752958@linuxfoundation.org>
+Subject: [PATCH 6.1 1310/2857] MIPS: mm: Fix the cache error vector jump for XKPHYS kernels
+Date: Wed, 18 Nov 2026 15:39:04 +0100
+Message-ID: <20261118150248.629375841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,96 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit da582d84fcf5f2f0c1d7760e1a899ca7cedb80fc ]
+[ Upstream commit 30b76362f80d39d80f1197c88b284d9fa7952356 ]
 
-udf_table_new_block() takes the first block of the free-space table
-extent closest to the goal.  It keeps that extent's type and length
-together in goal_elen, subtracts one block, and deletes the extent only
-if goal_elen then reaches zero.  UDF 2.60 section 2.3.7.1 requires the
-free-space extents of an Unallocated Space Entry to be of type 1
-(allocated but not recorded), and mkudffs writes them that way.  For
-such an extent the type bits keep goal_elen non-zero, so taking its last
-block leaves a type-1 extent of length zero behind, starting at the
-block after the extent, which is in use.
+except_vec2_generic jumps to cache_parity_error with a j, which cannot
+leave the vector's 256MB region. An XKPHYS kernel such as IP30's, linked
+at 512MB, is outside it, so the j targets an unbacked address and its
+speculative fetch raises bus errors on unrelated fetches. Jump to the
+handler's uncached XKPHYS address instead.
 
-The next allocation that picks this empty extent returns that in-use
-block.  Subtracting a block from 0x40000000 then borrows from the type
-bits, and the extent becomes type 0 with a length of 2^30 - blocksize:
-about a gigabyte of "free" space overlapping live metadata, the other
-table extents and whatever lies behind the partition.  From then on
-blocks are handed out twice, or past the end of the partition.
-
-Extents that udf_table_free_blocks() adds are type 0, where the check
-works, so only tables written by mkudffs or by another implementation
-are affected.  Nothing more than filling such a filesystem is needed:
-on a fresh 1 MiB "mkudffs --space=unalloctable" image, creating empty
-files until the partition is full writes file entries over the reserve
-volume descriptor sequence and the backup anchor, and df then reports a
-negative amount of used space.
-
-On syzbot's images the same double allocation is what the two reports
-below trip over.  In the first, ftruncate() extends a new file with
-enough hole extents to need a chain of allocation extent descriptors;
-one AED is placed on another inode's file entry, and a later one is
-placed on the block of the AED currently being filled, which
-udf_setup_indirect_aext() zeroes, so __udf_add_aext() finds
-lengthAllocDescs out of step with its cursor.  In the second, an AED
-is placed past the end of the device, sb_getblk() fails, and the error
-path of udf_do_extend_file() calls udf_truncate_extents() on an extent
-list that no longer covers i_size.
-
-Keep the type separately from the length, as udf_table_prealloc_blocks()
-already does.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 7505576d1c1a ("MIPS: add support for SGI Octane (IP30)")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=799a0e744ac47f928024
-Reported-by: syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=43fc5ba6dcb33e3261ca
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/6b51c38d2d069544053c542470950e2a448b0b8d.1793349907.git.matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/balloc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/mips/mm/cex-gen.S | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
-index e8e3e291ef819..0bbe86da3d133 100644
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -580,7 +580,7 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
- 	uint32_t elen, goal_elen = 0;
- 	struct kernel_lb_addr eloc, goal_eloc;
- 	struct extent_position epos, goal_epos;
--	int8_t etype;
-+	int8_t etype, goal_etype = 0;
- 	struct udf_inode_info *iinfo = UDF_I(table);
+diff --git a/arch/mips/mm/cex-gen.S b/arch/mips/mm/cex-gen.S
+index 45dff5cd4b8e7..b4c027b0421dc 100644
+--- a/arch/mips/mm/cex-gen.S
++++ b/arch/mips/mm/cex-gen.S
+@@ -8,6 +8,7 @@
+  *
+  * Cache error handler
+  */
++#include <asm/addrspace.h>
+ #include <asm/asm.h>
+ #include <asm/regdef.h>
+ #include <asm/mipsregs.h>
+@@ -37,6 +38,21 @@
+ 	nop
+ 	nop
  
- 	*err = -ENOSPC;
-@@ -628,7 +628,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
- 			goal_epos.block = epos.block;
- 			goal_epos.offset = epos.offset - adsize;
- 			goal_eloc = eloc;
--			goal_elen = (etype << 30) | elen;
-+			goal_elen = elen;
-+			goal_etype = etype;
- 		}
- 	}
- 
-@@ -650,7 +651,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
- 	goal_elen -= sb->s_blocksize;
- 
- 	if (goal_elen)
--		udf_write_aext(table, &goal_epos, &goal_eloc, goal_elen, 1);
-+		udf_write_aext(table, &goal_epos, &goal_eloc,
-+			       (goal_etype << 30) | goal_elen, 1);
- 	else
- 		udf_delete_aext(table, goal_epos);
- 	brelse(goal_epos.bh);
++#if defined(CONFIG_64BIT) && VMLINUX_LOAD_ADDRESS >= XKPHYS && \
++    VMLINUX_LOAD_ADDRESS < XKSEG
++	/*
++	 * An XKPHYS kernel may lie outside the 256MB region a j from the
++	 * vector reaches, so jump to the handler's uncached XKPHYS address.
++	 */
++	PTR_LA	k0, cache_parity_error
++	PTR_LI	k1, TO_PHYS_MASK
++	and	k0, k0, k1
++	PTR_LI	k1, UNCAC_BASE
++	or	k0, k0, k1
++	jr	k0
++	nop
++#else
+ 	j	cache_parity_error
+ 	nop
++#endif
+ 	END(except_vec2_generic)
 -- 
 2.53.0
 
