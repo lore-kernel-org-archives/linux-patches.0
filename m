@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055185;
-	b=m4diLODpTG073csT4bfV0L0YdLX4F1CZ/9F5ERaGVxNols/KPtevQ2WEW1E9b1oRxwPb
-	 NyiqW/SxKChUk3LrOlezZUkZ+1uu7LLioy8vyDCghrfgPehm2uw+ILM0ukZM0EYtXhLMe
-	 ZdVPwaNKmfyYWN71XrMEkYa950yNjMtt5PPzkDiPH/cxPPaRs81dyO+0gOHe46rTDIj/h
-	 zOvlliFQNtbyyW6/6F5ev1DWBibkioc0xbL8Zq/24ahpAGDlejtEwVKP6tQyZlX73p6/X
-	 Sao9GjSqWz/ipN0gG/dby/Wdd0zbhRaIQ1gZoVG9HYPsfkRavEOdkq6C+gMf+q2wQFQ==
+	t=1795055189;
+	b=0OW6DxUK2XcQYZSY0tzMF8Nfd1LIok1xPvfrocmhwUAapTz9rC9Hb+5AyLdNx3N6Rk08
+	 MEDybgIl5FLNaaUeUMUUqTowi/eF6DRKXJ70k0ejnzy6Dgx/osiU7EMZFFx2gtkB7CX3u
+	 bjfQH/vWFZoe8b49cvnB+K88Gz18uuMMiKRUi+HyvXzvuBVJ9162MD16r8lV87eB6IlL3
+	 gVpQUvyQM9apJ0FRN20JR+qid6ghfj6+Rg0H6z8lHHtS6oawaVig+VKu+LUkmSZlKmksk
+	 DwJFGh1/0hubpULpykLebIcZg+QzrP+MS0lZPE6aSxsClgkoYzpTDTPTAFqdqjE6oRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055189;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hzOFbjXuoBUf1lzgO4Pw0idlDC8BfyZgV5fnoNgeOEQ=;
-	b=RQ+EJSb9ACCJ2Zvo/kqqgnE5J3ajNUL40oJMgOF0sS44Eti0fyrh8uPokO9/RY3Itx8v
-	 2um2ntG0GSwsaNJJam5VwrYvNLZJ2zVy/76rM8H3n/FcBUgfibSnXqizEpZAtOLR7wAN4
-	 caFTW7/ss5MezRlvqHdL/E+aijKkLjA+yGq+OyEk/Ryi2DpC18AGIiKcL0VDOZw9nnApu
-	 WFGGA/OLS2BWpFMZkMhQlFtLuZQbPnkaKC/V4g6hMFoRCYdE39szUq+KgLyLB61wITNii
-	 QllwJTEtj2sAMFubOEt0gi5NTV6LRxCzx2iO4nlVDrYyhZpqip3NBU6G8wg5XKJotmw==
+	bh=bUxy7rOuJztU5a4PrhDyenO625Bx9XpXIYPTruKO+f4=;
+	b=QJQ3oVNE4h35HDdOCw6yPz4+RfNv2Bg09BIeUat+uo/+SRvkX3ZjdUSODhsfwzbq6eM5
+	 CiY0rz9tHwUQV7DtP1Sa5AlvYX9V2uu7TcgO8nrUWe2ya/vka5RKjp2knKATev8LVAFxe
+	 64qMaurtGEQYcpkIvaPVex/kKtbCQ1osG0lnZj4kUeEPvwCtImxUhjFO6G9BfzH5sonXf
+	 0HaHkD/eWC+gLHCN00NgcU+vhxRUilELQy3Q8iz8HwvwDLPmf9xMBmzGamrRLK5VfjWxf
+	 dFKix2RZ+i78lh9WeGPDipRcPWZwEXp5XIN2Yp18ksTCpUiHXEaMlT7SNoUL8BhFmAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Chs0nUGP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TyDwneSP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE407606A31C;
-	Thu, 19 Nov 2026 02:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06E2606A320;
+	Thu, 19 Nov 2026 02:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Chs0nUGP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8BC1F000C4;
-	Thu, 19 Nov 2026 02:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TyDwneSP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0389B1F000C4;
+	Thu, 19 Nov 2026 02:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055185;
-	bh=hzOFbjXuoBUf1lzgO4Pw0idlDC8BfyZgV5fnoNgeOEQ=;
+	s=korg; t=1795055188;
+	bh=bUxy7rOuJztU5a4PrhDyenO625Bx9XpXIYPTruKO+f4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Chs0nUGPeP0xLYQx8oaYkDdwiIpQrMTaNyLrChkhwS1PUyo9pPDEwVerfOi3zcyD6
-	 PdxHy2OGfiKTxLLoNg785lMcN76h6bIbjpw0XYF5+yEVtQ3P11Yig6ghmmD6nFvkrC
-	 eLcqwj2fHOZDFYrC+CXPzmaVSRJ85rRMvz9j7uiA=
+	b=TyDwneSPdUXQFvPTmDIdNQN++ijvS13Kd227OinVDMZebj/kWMQ5u4YyaRO24AQO+
+	 TFiapgkNXSOjaseJK2tw3t53bOvZImPWGIjBPX/wM0NCyj7g2NpjrB9BpTqVt7pMCH
+	 pggV5C7xc1++HIT1kXKseSN0ATmAyzF21aCghfJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiang Mei <xmei5@asu.edu>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1540/2214] fs/ntfs3: validate EA entry layout against ef->size in ntfs_read_ea
-Date: Wed, 18 Nov 2026 15:53:36 +0100
-Message-ID: <20261118150113.764998832@linuxfoundation.org>
+Subject: [PATCH 5.15 1541/2214] fs/ntfs3: validate $SDH entry size in ntfs_insert_security
+Date: Wed, 18 Nov 2026 15:53:37 +0100
+Message-ID: <20261118150113.799499125@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,61 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 01e56820ef52d14a5560fb7c0c6f2f75ef6f9393 ]
+[ Upstream commit 5b76487f94dacc2884135ce9a7bda61ce7ffa209 ]
 
-In ntfs_read_ea(), the ef->size branch only checks that the declared
-entry size fits the remaining buffer; unlike the zero-size branch it
-never verifies that the entry's own name and value fit inside ef->size.
-A crafted image can thus present an in-bounds ef->size with an arbitrary
-elength, which find_ea()/ntfs_get_ea() later use as the memcpy length,
-reading past the allocation and leaking adjacent heap memory:
+ntfs_insert_security() walks the $Secure::$SDH index and reads
+e->sec_hdr.size for every entry returned by indx_find()/indx_find_sort().
+Those only guarantee the NTFS_DE envelope (e->size), so a crafted $SDH
+entry shorter than a full NTFS_DE_SDH at the tail of an index buffer makes
+the read of e->sec_hdr.size run past the allocation. Triggerable by an
+unprivileged setxattr(2) on a crafted NTFS image.
 
-  BUG: KASAN: slab-out-of-bounds in ntfs_get_ea (fs/ntfs3/xattr.c:302)
-  Read of size 65535 at addr ffff888010770b0f by task exploit/142
-   ...
-   __asan_memcpy (mm/kasan/shadow.c:105)
-   ntfs_get_ea (fs/ntfs3/xattr.c:302)
-   ntfs_getxattr (fs/ntfs3/xattr.c:848)
-   __vfs_getxattr (fs/xattr.c:446)
-   vfs_getxattr (fs/xattr.c:479)
-   do_getxattr (fs/xattr.c:808)
-   filename_getxattr (fs/xattr.c:837)
-   path_getxattrat (fs/xattr.c:876)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-  ...
-  The buggy address is located 15 bytes inside of
-   allocated 20-byte region, cache kmalloc-32
+  BUG: KASAN: slab-out-of-bounds in ntfs_insert_security (fs/ntfs3/fsntfs.c:2148)
+  Read of size 4 at addr ffff88800fa1de00 by task exploit/142
+   ntfs_insert_security (fs/ntfs3/fsntfs.c:2148)
+   ntfs_setxattr (fs/ntfs3/xattr.c:947)
+   __vfs_setxattr (fs/xattr.c:223)
+   __vfs_setxattr_noperm (fs/xattr.c:257)
+   vfs_setxattr (fs/xattr.c:344)
+   filename_setxattr (fs/xattr.c:690)
+   path_setxattrat (fs/xattr.c:734)
+   __x64_sys_setxattr (fs/xattr.c:764)
+   [...]
+  The buggy address is located 0 bytes to the right of
+   allocated 512-byte region [ffff88800fa1dc00, ffff88800fa1de00)
 
-Validate the name/value layout in the ef->size branch too, bounding it
-against ef->size, as the zero-size branch validates it against the
-buffer.
+Stop the scan when an entry is too small to hold a SECURITY_HDR.
 
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
 Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Xiang Mei <xmei5@asu.edu>
-[almaz.alexandrovich@paragon-software.com: remove duplicate check of need > ea_size]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/fsntfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 078f4abb42ec2..f12eaaf1647e8 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -167,6 +167,8 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 			ea_size = le32_to_cpu(ef->size);
- 			if (ea_size > bytes || packed_size > ea_size)
- 				goto out1;
-+			if (bytes < offsetof(struct EA_FULL, name))
-+				goto out1;
- 			continue;
- 		}
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index cab0679c978c3..31a014dc5b066 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2153,6 +2153,9 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
+ 		goto out;
  
+ 	while (e) {
++		if (le16_to_cpu(e->de.size) < SIZEOF_SDH_DIRENTRY)
++			break;
++
+ 		if (le32_to_cpu(e->sec_hdr.size) == new_sec_size) {
+ 			err = ntfs_read_run_nb(sbi, &ni->file.run,
+ 					       le64_to_cpu(e->sec_hdr.off),
 -- 
 2.53.0
 
