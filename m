@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059958;
-	b=lS4Ee4xRyUb2UNO6YKuHvtdfs0vWO6JjGaKLe5hX5vF2RBg5HdFmS5MCFhCPWZciQXTB
-	 0EaIFKiKVvEJeGjrgb7UOCDZNwa2m05xucK+R+8JAAknI7U637JCJFZEiD8XO0zTyPOC/
-	 zxp3SPPvPR+L3yLVg1SHST5HjBlqCTuFMPKXAiGWJxgk08ehBTKymG+mFHdg3h4KQiqPa
-	 +7ULjZKWTVZN8V6EYE7tfCdCit3HbQYY8JLol8equhSeuKowkX5vkSQ8I3UYaetrOIL8A
-	 PecpuVoonqSJZT2J9hmY4jgJF/6++JVViDyjNyxBnOoJr++DrGheszIpxQBGTckzEug==
+	t=1795059960;
+	b=R5pxQlnt3zq+okbKb1FRv3E0HTfmCvhvl/7WPCkoxhM1IUl9dwF2rf7SIoIYIt82UTlO
+	 9VLzTAvCylyoUb65CYTRGYxQiiW7POZGXflJe5lL2rGTEb3QBT4hsJ24B/NWvLqu+BAeO
+	 o2YU/WeXDQAsedGHWzvPg9xU/fzP/1tuULoT6xD0HZr/zxMBxwPBv2EA5GlSC1vKNkjG1
+	 YM5S73mBNNwcQko2D1hy0XavOLzq/PksiL1uX6m+stJb4QSbuk03TNnfqEQtEj52nemtS
+	 llKEZ/dw9PtHexoKMrJO5FSl3scO1eVj4k+s8YTVyj29f0/Ygqv7oem3IFKxfdFfixQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059960;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3eU57pFtWNJMSiff/Qre6ZV/pl/fAYcM0Ac7+5rxgUM=;
-	b=WZjxCdNoG4EJQtl9XR0zDbVDWWSFrFyWrkwJPgIEhuOLAC9HIqbWvY2UIzf699kwnro3
-	 9myjolLDe6hqTpAygt8AplTFUc/gcC334LdiDSco5jZyBj24aR/1tj0P73uyuZzaFFU9D
-	 g/VdXZp9zgNGQN5qk9dONOaegJ0nKgPKXL3nhP6TXz74AjLITGdjXzRmOjQoNblZsXubT
-	 bCP/bzOF+D8nysMwYGtQGABbc8vbjL7o8m02Ab9eKmoTI6IcN7BKnljjDznsTP+q5fc4l
-	 w3Yl1tu9ox3NhDPxI+GztHUIXj5rkZETs517S35hvF5SiWi7sFKj5eqp8Y4Jz5kPZ4w==
+	bh=QHnOgD2EoWnrV3y/JOLJiOTRf0/GuwUEhohX7gdiEZQ=;
+	b=Qy6vJpNk8bj4HYdiDmvYVgP1xcmsr3CJWQH2MFhn/lCo7rwgvJl1SpsaBQ7x1hE9HKpZ
+	 StgRBduNkA3v3iVK/Ee0vw46VxcbZr7oExytwC/VuIIHSAlb3KJnlWgW1e3lLgtlqSFWc
+	 +u6ue1tt0aK3ErJd+w1pOzJc34O/q/KmbKZ7UBArLOPUPXqc57x294f3oZcKY10ZM8h/b
+	 46XfGV2QBwKZShk7Y7tYfR4DTZ/ZvyhosCZQgBGMvbW8yAl8nYVNvryKt9JSmubKPDyQN
+	 OAXZZzT/Xf75MKDjv1MC738kzWcivq+L7/tKcN+Qg+mQLZRaZYe1QPsLAvARkH66rAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBuKipyF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9cjjwtL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15957606A33F;
-	Thu, 19 Nov 2026 03:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAFA606A320;
+	Thu, 19 Nov 2026 03:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yBuKipyF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362701F000C4;
-	Thu, 19 Nov 2026 03:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o9cjjwtL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272D01F000C4;
+	Thu, 19 Nov 2026 03:45:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059957;
-	bh=3eU57pFtWNJMSiff/Qre6ZV/pl/fAYcM0Ac7+5rxgUM=;
+	s=korg; t=1795059960;
+	bh=QHnOgD2EoWnrV3y/JOLJiOTRf0/GuwUEhohX7gdiEZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yBuKipyFTVXI77s+2nCbomhPr8yM3EDQiIS9sTN+VAUlzrcHBGnFtTsKJlhfPpwv4
-	 NviaM9sVPque7259GWFOiF9GKY7YZidIfE2XapiT4ZiWGmI0QLT2DWdFgqfdW9iEBW
-	 A8KjXaUZ8jAcOKHj+GaerYJ4HmPAkMPGf+avS/W0=
+	b=o9cjjwtLwbn1HvmSXllKgow2mDLAmZmTE3Pq4DyzT8SJQvo4VvPTB5bHPG44+M0TD
+	 5tb2aldYN4vvpbl9rtoPcfC+IjaQWuoPHhxlw4hvTbJ/00iiYkmwHwgOGfvg/i6NjO
+	 e/JGYLRj43mfsEJLBRzC4GEwLmNRSyiB9IBAnnGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1028/1848] /proc/sys: use d_splice_alias() calling conventions to simplify failure exits
-Date: Wed, 18 Nov 2026 15:51:06 +0100
-Message-ID: <20261118150000.376559463@linuxfoundation.org>
+Subject: [PATCH 5.10 1029/1848] proc: add proc_splice_unmountable()
+Date: Wed, 18 Nov 2026 15:51:07 +0100
+Message-ID: <20261118150000.477761511@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,51 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 1eae9a47835ed4703055afbb3c52fef6d07a8a4c ]
+[ Upstream commit 32a0a965b8a5b7b505babae2ee10c513ede376d8 ]
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Add a tiny procfs helper to splice a dentry that cannot be mounted upon.
+
+Link: https://lore.kernel.org/r/20240806-work-procfs-v1-3-fb04e1d09f0c@kernel.org
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: eeecea75ece2 ("proc: don't let an entry below /proc/<pid>/net be a mountpoint")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/proc_sysctl.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ fs/proc/internal.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 78bd606314281..b7e3d36737cfe 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -524,13 +524,8 @@ static struct dentry *proc_sys_lookup(struct inode *dir, struct dentry *dentry,
- 			goto out;
- 	}
- 
--	inode = proc_sys_make_inode(dir->i_sb, h ? h : head, p);
--	if (IS_ERR(inode)) {
--		err = ERR_CAST(inode);
--		goto out;
--	}
--
- 	d_set_d_op(dentry, &proc_sys_dentry_operations);
-+	inode = proc_sys_make_inode(dir->i_sb, h ? h : head, p);
- 	err = d_splice_alias(inode, dentry);
- 
- out:
-@@ -688,13 +683,8 @@ static bool proc_sys_fill_cache(struct file *file,
- 			return false;
- 		if (d_in_lookup(child)) {
- 			struct dentry *res;
--			inode = proc_sys_make_inode(dir->d_sb, head, table);
--			if (IS_ERR(inode)) {
--				d_lookup_done(child);
--				dput(child);
--				return false;
--			}
- 			d_set_d_op(child, &proc_sys_dentry_operations);
-+			inode = proc_sys_make_inode(dir->d_sb, head, table);
- 			res = d_splice_alias(inode, child);
- 			d_lookup_done(child);
- 			if (unlikely(res)) {
+diff --git a/fs/proc/internal.h b/fs/proc/internal.h
+index e601bf77a5f80..e35e28415dd8e 100644
+--- a/fs/proc/internal.h
++++ b/fs/proc/internal.h
+@@ -331,3 +331,16 @@ static inline void pde_force_lookup(struct proc_dir_entry *pde)
+ 	/* /proc/net/ entries can be changed under us by setns(CLONE_NEWNET) */
+ 	pde->proc_dops = &proc_net_dentry_ops;
+ }
++
++/*
++ * Add a new procfs dentry that can't serve as a mountpoint. That should
++ * encompass anything that is ephemeral and can just disappear while the
++ * process is still around.
++ */
++static inline struct dentry *proc_splice_unmountable(struct inode *inode,
++		struct dentry *dentry, const struct dentry_operations *d_ops)
++{
++	d_set_d_op(dentry, d_ops);
++	dont_mount(dentry);
++	return d_splice_alias(inode, dentry);
++}
 -- 
 2.53.0
 
