@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061173;
-	b=OxdMSf+kS8+5UIm9pau0vjLln1tu3qQm38+Cz0Te88zO3GjcY9uoer1wfTW1XHD21mEc
-	 GXF+TzoUDDMDGiInHSB5+YA26XYG2qGqjrm1tdMfoLQR/SE1sE+6pwh2dTYCKyLQh6yb4
-	 fBhtb1QDkLXEDgYw73wpr3LWn3k8bk0+5EutXTafUMjDVA2LEqlks6HKsEoG4YAUHbZPs
-	 cVeH7TRGvmYSWsTf93n1Rr9jxwGAgbUl2SSkKBRXUzdJk96nAWKtmywdGDT4+hCGL64gk
-	 Koc4HRc5JHh1bxX9QPTmitBM32e8nsomDTZut+f50euBUyTSacZF6N8A5yRclmkI3CQ==
+	t=1795061176;
+	b=aD6ExUAmFnj0qxKcTfL4ocO6BX9A2x+Bw5fR21VnrbAH2IrQGQ5rVrKSgD0nLT2gHNvl
+	 zTAjK7R7JYls140KCNl6QI6/5SQhOxUQ4lhR6Ovsjn4TkgIhwiR88k1T5S0AecEvL5xlj
+	 v1rNy0Zm/bhaQdjBxwzFTLECTAbP8m7qz1Q6TXCBaRYayCZNcex9N2wXZYQiX6yqp82iV
+	 RwR4Dt42WUSBswmzxmcXXIVbXb4zhWR0NeoWqStml2coW6cszOBvFjtxmytfHMRxhrwZ4
+	 is2bPJYGtX6cA+vAiItd568oUukgpElVFDnh0cB7vd3VeQVSI3C5uuaFoOL4O39l21w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061176;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VTQj/eEwLiSV7L2mtTHT7+zwqva3welEiZjXlKHYXLU=;
-	b=RGlLd1LtIpkpSfZRSNW2iPwTekbKjpZi+Aj0NuNNxezBa5sQaDAFpnA4wqGaHuSMGYVA
-	 ErErpH+J1GE0Fuii0YmOSexxJgX5/M4KR3YvJjhcccJGflPVNsX3r6R2LBqsVlh8zfrhS
-	 IxjLhyRBsN60r1FyExLHavuzdDCGm1kNk1+V10ije2mPWOAOMFo3AOFxKmM6e6zC/HT8J
-	 xEaejgoFswcA+VQn3sesdQrtFHF3kF63Ioi6/ps6Qfuq7n4a6ipFj00pJAdf51UjJELDJ
-	 RTffMo22e5IHrbPtdPyZtdTnjWYupUP5OBtfuCCadC5tQJrI8fKizI6JyXUyEBfB2Zg==
+	bh=E9DLgDQXEK+K6WhVungqsAb3Q1pyzHTeLvIhJtVRku8=;
+	b=wbe5997rXauHxJZ3CwUs7RVUKeWMaOyjIfQO1Y8hkgC5ihz64qp6tzY4Fwyh7Pb2Ner+
+	 j3Aj/L60WMELbs5IEZxDS0CsAOhHZ5qqwnorqv2vvWp58Lae+BoLlW9bln5pRCq2Np69S
+	 ERsWHfVuyX20k/BdUc99LMZbcntDQo7wpg5SU/9pbh48k4l6rY4MG47BQo5G/H63DXT3w
+	 C28XpNKA12y2ghmxZVNgTlrb7b3gwdTEu2PQgES9vIbjFuZ9tD2pToBJyctqo07PtOVBu
+	 WwH7Ev5RCcc1XrEn5dDfF6fFSAP1XUgXmemUSNspXm0vNTEtGNXNxYj1BCq7s2ScDBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsefkEwa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF+ZNYhZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE719606A320;
-	Thu, 19 Nov 2026 04:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9C6606A325;
+	Thu, 19 Nov 2026 04:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsefkEwa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45CE1F000C4;
-	Thu, 19 Nov 2026 04:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF+ZNYhZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7791F000C4;
+	Thu, 19 Nov 2026 04:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061173;
-	bh=VTQj/eEwLiSV7L2mtTHT7+zwqva3welEiZjXlKHYXLU=;
+	s=korg; t=1795061176;
+	bh=E9DLgDQXEK+K6WhVungqsAb3Q1pyzHTeLvIhJtVRku8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IsefkEwanAlLFBhIatpRxbASiPaM+qujKDzpz+BlZoZ1/bcdbsK0T81QdYGlGt6ff
-	 y8KvGv7RJQgTOpra+v5yfGaftQ4y2a/vygWAhWhUYFyVH7+SkP1oTPeGeBPT3kuTHP
-	 q0i2VL+GmujWrFyVdbl3pi4eBPYJps2t4d2fAeDo=
+	b=UF+ZNYhZsqsa8Th76n1jkprq9KIIAthA0m8BKFgB3TxeCaEm+J1I4pGHtjuYiUmf/
+	 apfOi7GzrJxzjqFsK/+ONmWVgUX1isQXw+KijlLfZCRzyQQZ+IC7ss3qXATvcpeLlK
+	 KDeHt84paMxruoyAW4rPErYk8QucVur9nNZ8p+AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Marcus Cooper <codekipper@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1421/1848] drm/msm/mdp5: drop cursor pipe for msm8x76
-Date: Wed, 18 Nov 2026 15:57:39 +0100
-Message-ID: <20261118150018.960174034@linuxfoundation.org>
+Subject: [PATCH 5.10 1457/1848] power: supply: ab8500_charger: Oneshot threaded IRQs
+Date: Wed, 18 Nov 2026 15:58:15 +0100
+Message-ID: <20261118150020.371843914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,43 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit c33cee4c07f1533ad48ed8e3eef75df57edf44c1 ]
+[ Upstream commit 532b623f3c86d5166a8bb8acaa94fc3629d8ba97 ]
 
-The MSM8976/56 family of platforms doe't have a separate cursor plane.
-Instead the cursor is a part of the LM block. Drop the erroneously added
-pipe configuration, letting LM to provide a legacy cursor instead.
+Make sure the threaded IRQs requested by the charger are
+flagged as "oneshot". Usually this is what you want, and
+since the interrupts are shared with the USB phy on the
+AB8500 we will get a conflict like this if we don't,
+since the phy request them threaded oneshot:
 
-Fixes: 1860f2a8b8b1 ("drm/msm/mdp5: Add configuration for msm8x76")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/753150/
-Link: https://lore.kernel.org/r/20260914-mdp5-fix-cursor-v1-1-9fba3ace6cb9@oss.qualcomm.com
+genirq: Flags mismatch irq 83. 00004084 (USB_LINK_STATUS
+  vs. 00006084 (usb-link-status)
+ab8500-charger ab8500-charger.0: failed to request
+  USB_LINK_STATUS IRQ 83: -16
+
+Cc: Marcus Cooper <codekipper@gmail.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 1098c619ce75 ("power: supply: ab8500_charger: Handle detection errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/power/supply/ab8500_charger.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index df10c1ac7591a..46b4c3f54a68c 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -671,15 +671,6 @@ const struct mdp5_cfg_hw msm8x76_config = {
- 			MDP_PIPE_CAP_SW_PIX_EXT	|
- 			0,
- 	},
--	.pipe_cursor = {
--		.count = 1,
--		.base = { 0x440DC },
--		.caps = MDP_PIPE_CAP_HFLIP	|
--			MDP_PIPE_CAP_VFLIP	|
--			MDP_PIPE_CAP_SW_PIX_EXT	|
--			MDP_PIPE_CAP_CURSOR	|
--			0,
--	},
- 	.lm = {
- 		.count = 2,
- 		.base = { 0x44000, 0x45000 },
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index 8dadea5d158eb..2c8ea8d833e74 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3612,7 +3612,7 @@ static int ab8500_charger_probe(struct platform_device *pdev)
+ 		}
+ 
+ 		ret = request_threaded_irq(irq, NULL, ab8500_charger_irq[i].isr,
+-			IRQF_SHARED | IRQF_NO_SUSPEND,
++			IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
+ 			ab8500_charger_irq[i].name, di);
+ 
+ 		if (ret != 0) {
 -- 
 2.53.0
 
