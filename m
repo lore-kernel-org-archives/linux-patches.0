@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053595;
-	b=DwhQTIWjzzmnURW19O1NDZGpQuLyXi61o8DtA2HM4VfL22tACWhL2UVaif006qvzlAVe
-	 uNSiIxApWN04oIqUHPVjOJR3AR9WeRJeC1JCW6VnuolMl5bu5q9G7Uy1MTfvYffBnn4ci
-	 vak8TKwion/+Mw0jHr1D/SlQ6JZbNy/Iy5/8D0qBaZDJCenNY9O/wBiSgvDY4OrzVpVMg
-	 081JKEQiGspQbFy3XDYppEkRJHWNBZUbCW3OO0wOKu6x1hDoCS93/nHyw8PviIT3Qb+4N
-	 E2bKKAX7NcdnsNHOdCmTXNmukTGJ3dhhyxhUzpQNR5xGPr7jOkZUdWclVWGawDW31dw==
+	t=1795053597;
+	b=a/7/jyIO8SFFjKJmPh3cwNMaLUTcbi3UTodAPOrQXiNU3gaCxOFMzYkwRGCZ5rexAflX
+	 NmwbVNosMxl+1eJK1aCMYlBqbHwgfPLA/qxRmOw22L+6DePcL7bhWXUlzke3QXGouQFws
+	 Fk9couRTa7XQBKGrpeLICwYJf8xcP2GIwk0Ttdo4ef4Bh/p0mAdICwITEohA7EWwIoYCy
+	 6mwiEKjbKILH67EQ+Elh7Vdd3x+pCp2I+xq6y2UNENCsr9bTFaWteju3hLWb8j+lSVJLg
+	 NE0wfYjYilU7P6n4Yr9o2gfuRDQ3I8vJKxa8WPlnAi8MGUQE4iPZZ6idR9lVFzfURLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9FXA3EAMRFr9fJ3UFTCMk88tzTrgmeoG3qKVvSXV6VM=;
-	b=ur4Z1zon/gH6E5vvo3jJfgKyQAmoP3J4kxKLMWMqjFb2RUw9CYV5ClPNX6WfcIKmXOtW
-	 2b2i6/hFukk+e2etq9BNH3+tZmSB9dNOgvJqJ+5KCht6E/9wy7zrpfHgwuz0+NB4MQ8NC
-	 IyO3OiTeVESMtm+Oa5QVpQKHbcAEsrOjZ0Q/8E+N4ukKQO4Rg9WFQSOTCwKVubN+kMxQI
-	 SVt6jeVXKzzmNpS7iD8hsqEo7HQzWd8A23Ze6mez9RTAQQ83O3BlZs7OAYVD1TQanIIeU
-	 ka5Il/wXYTgY2CbPACtboSz7GTSFU4Zmfxi+MD+/oUDFsjo355SoJ5iejhTD00enQLQ==
+	bh=FWWlzCvS6ummAuO3uagecIO7unkMnIOYtGqoRZptGUk=;
+	b=aURjm926ySIlQVlhxhOo0fKAspH7wfrA5BogM1mEuLC7REgOJjVitYnJ6vaTC5lmAn1A
+	 qk1sQIfEWH08xC3s4hNQUlFl4w4BSmPXokUhcvBNabm9YcdbEUgM23SZUSFvUYSoTtiJN
+	 t525BOiCf5JdVqb0jMB1YsrcRTpzmR6xvR8uGbYiyCn5kN9RueuHJ9oeTv85N8nqFrUc5
+	 WCwf2DlAKwNtXjVtqoYPQkVDBdBb5Bm4vFVyQ8BIZIPSK/WZzFlUgnpVFAaz0IN9Q3p1R
+	 e1+4Z6S7/pm+zjS6/X9a+mysa+4fdkVfrkoRWdWvkq/OOH7poDLF5uqDeO1dc2KTOjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7aMtZpZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG3CQeVs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1C1606A31C;
-	Thu, 19 Nov 2026 01:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A71606A31C;
+	Thu, 19 Nov 2026 01:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7aMtZpZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA691F000C5;
-	Thu, 19 Nov 2026 01:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EG3CQeVs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B121F000C4;
+	Thu, 19 Nov 2026 01:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053595;
-	bh=9FXA3EAMRFr9fJ3UFTCMk88tzTrgmeoG3qKVvSXV6VM=;
+	s=korg; t=1795053597;
+	bh=FWWlzCvS6ummAuO3uagecIO7unkMnIOYtGqoRZptGUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7aMtZpZAvzTJBzpiGFtr2iVOtk/wq5C6Kk1gaDCFEFeqOOCaWwoPmhNVpKlXcTAG
-	 e+ML5kzrGlriPjFVBezcr0rBGp+eOjFmArdokRJtmVnwo6dQjQJQ3gPzqKJz6Dcxua
-	 +0mWkMfAqZkEwUNPsTBkgP4VpQdn+lAB9wO+cZUM=
+	b=EG3CQeVsC6wXUuLfl5VdU46UWI/9gnmR+ZB12VP1geIvRHhQu95sIh+jvt4uANri+
+	 aqiaOLu2S7sEGaTRARXNIk1GjQlzedZ+DpcNm8Zl5LRQ3+LKZj6N2VexE4uxVzabSH
+	 szQcEvJ06Mw3tI+sAcY+iEEBgtHrW5MKPJVmeocU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ross Burton <ross.burton@arm.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Georgiy Osokin <g.osokin@auroraos.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0973/2214] ALSA: bcd2000: Fix use-after-free of MIDI URBs on file close
-Date: Wed, 18 Nov 2026 15:44:09 +0100
-Message-ID: <20261118150051.190498832@linuxfoundation.org>
+Subject: [PATCH 5.15 0974/2214] of/fdt: Ignore disabled memory nodes
+Date: Wed, 18 Nov 2026 15:44:10 +0100
+Message-ID: <20261118150051.230653528@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,86 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Andre Przywara <andre.przywara@arm.com>
 
-commit f6c7bb1f0799591a62be75b9bcf84245b4f208b7 upstream.
+commit df5cd369876114f91f9ae60658fea80acfb15890 upstream.
 
-The 5.15.y tree is still built with -std=gnu89, so the guard() and
-scoped_guard() helpers used by the upstream patch cannot be used
-here.  Use explicit spin_lock_irqsave()/spin_unlock_irqrestore()
-pairs instead; the locking scope is unchanged.
+When we boot a machine using a devicetree, the generic DT code goes
+through all nodes with a 'device_type = "memory"' property, and collects
+all memory banks mentioned there. However it does not check for the
+status property, so any nodes which are explicitly "disabled" will still
+be added as a memblock.
+This ends up badly for QEMU, when booting with secure firmware on
+arm/arm64 machines, because QEMU adds a node describing secure-only
+memory:
+===================
+	secram@e000000 {
+		secure-status = "okay";
+		status = "disabled";
+		reg = <0x00 0xe000000 0x00 0x1000000>;
+		device_type = "memory";
+	};
+===================
 
-bcd2000_disconnect() calls snd_card_disconnect(), which only prevents
-new opens, and then frees the MIDI URBs.  A rawmidi file that was
-already open can still be closed afterwards, and its close callback,
-bcd2000_midi_output_close(), calls usb_kill_urb() on midi_out_urb.
+The kernel will eventually use that memory block (which is located below
+the main DRAM bank), but accesses to that will be answered with an
+SError:
+===================
+[    0.000000] Internal error: synchronous external abort: 96000050 [#1] PREEMPT SMP
+[    0.000000] Modules linked in:
+[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 5.18.0-rc6-00014-g10c8acb8b679 #524
+[    0.000000] Hardware name: linux,dummy-virt (DT)
+[    0.000000] pstate: 200000c5 (nzCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    0.000000] pc : new_slab+0x190/0x340
+[    0.000000] lr : new_slab+0x184/0x340
+[    0.000000] sp : ffff80000a4b3d10
+....
+==================
+The actual crash location and call stack will be somewhat random, and
+depend on the specific allocation of that physical memory range.
 
-The URB pointers are cleared on disconnect and their accesses are
-serialized with midi_lock, but bcd2000_midi_output_close() reads
-midi_out_urb without that lock.  The check can therefore pass just
-before the pointer is cleared, and usb_kill_urb() then runs on the URB
-that has already been freed:
+As the DT spec[1] explicitly mentions standard properties, add a simple
+check to skip over disabled memory nodes, so that we only use memory
+that is meant for non-secure code to use.
 
-  BUG: KASAN: slab-use-after-free in usb_kill_urb+0x74/0x80
-  Read of size 8 at addr ffff8880078e7d40
-   usb_kill_urb
-   bcd2000_midi_output_close
-   close_substream
-   rawmidi_release_priv
-   snd_rawmidi_release
+That fixes booting a QEMU arm64 VM with EL3 enabled ("secure=on"), when
+not using UEFI. In this case the QEMU generated DT will be handed on
+to the kernel, which will see the secram node.
+This issue is reproducible when using TF-A together with U-Boot as
+firmware, then booting with the "booti" command.
 
-  Allocated by: usb_alloc_urb <- bcd2000_init_midi <- bcd2000_probe
-  Freed by:     usb_free_urb <- bcd2000_midi_free
-                <- bcd2000_disconnect
+When using U-Boot as an UEFI provider, the code there [2] explicitly
+filters for disabled nodes when generating the UEFI memory map, so we
+are safe.
+EDK/2 only reads the first bank of the first DT memory node [3] to learn
+about memory, so we got lucky there.
 
-Take the lock in bcd2000_midi_output_close() and reference the URB with
-usb_get_urb() before releasing it.  The URB then stays valid until
-usb_put_urb() after usb_kill_urb() has returned, even if a disconnect
-frees it in the meantime.  usb_kill_urb() itself cannot run under
-midi_lock, as the completion handler takes the same lock.
+[1] https://github.com/devicetree-org/devicetree-specification/blob/main/source/chapter3-devicenodes.rst#memory-node (after the table)
+[2] https://source.denx.de/u-boot/u-boot/-/blob/master/lib/fdtdec.c#L1061-1063
+[3] https://github.com/tianocore/edk2/blob/master/ArmVirtPkg/PrePi/FdtParser.c
 
-Fixes: b47a22290d58 ("ALSA: MIDI driver for Behringer BCD2000 USB device")
-Cc: stable@vger.kernel.org
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261031190936.5696-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Ross Burton <ross.burton@arm.com>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20220517101410.3493781-1-andre.przywara@arm.com
+[ Georgiy: 5.15 lacks commit 1f012283e936 ("of/fdt: Rework
+  early_init_dt_scan_memory() to call directly"), so the function still
+  handles one node per of_scan_flat_dt() call: return 0 instead of
+  continue and use initial_boot_params instead of the local fdt. ]
+Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/bcd2000/bcd2000.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/of/fdt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/usb/bcd2000/bcd2000.c b/sound/usb/bcd2000/bcd2000.c
-index 95806e031e407..69c0f1b964b29 100644
---- a/sound/usb/bcd2000/bcd2000.c
-+++ b/sound/usb/bcd2000/bcd2000.c
-@@ -185,11 +185,26 @@ static int bcd2000_midi_output_open(struct snd_rawmidi_substream *substream)
- static int bcd2000_midi_output_close(struct snd_rawmidi_substream *substream)
- {
- 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
-+	struct urb *urb = NULL;
-+	unsigned long flags;
+diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
+index 338171c978cc1..342fdea263809 100644
+--- a/drivers/of/fdt.c
++++ b/drivers/of/fdt.c
+@@ -1102,6 +1102,9 @@ int __init early_init_dt_scan_memory(unsigned long node, const char *uname,
+ 	if (type == NULL || strcmp(type, "memory") != 0)
+ 		return 0;
  
-+	/*
-+	 * Reference the URB under the lock so that it stays valid until
-+	 * usb_kill_urb() returns, even if a disconnect frees it in the
-+	 * meantime.  usb_kill_urb() cannot run under the lock, as the
-+	 * completion handler takes the same lock.
-+	 */
-+	spin_lock_irqsave(&bcd2k->midi_lock, flags);
- 	if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
--		usb_kill_urb(bcd2k->midi_out_urb);
-+		urb = usb_get_urb(bcd2k->midi_out_urb);
- 		bcd2k->midi_out_active = 0;
- 	}
-+	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
++	if (!of_fdt_device_is_available(initial_boot_params, node))
++		return 0;
 +
-+	if (urb) {
-+		usb_kill_urb(urb);
-+		usb_put_urb(urb);
-+	}
- 
- 	return 0;
- }
+ 	reg = of_get_flat_dt_prop(node, "linux,usable-memory", &l);
+ 	if (reg == NULL)
+ 		reg = of_get_flat_dt_prop(node, "reg", &l);
 -- 
 2.53.0
 
