@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051578;
-	b=rgxIvi22HTJCVHbJA7bZt44XM2BxxFPPUvewPWt/uJxhyZ7ypfue5TKRUNXVbdwIxS8p
-	 VNQIChzP8eJ8TtDrmUhvShh1ImKrvenTJRiODA7RBBXdEuR+pQUuqdevE2E1Zchm16gAn
-	 xJJMn9ay8E6WazaBEW5crqsZVy5TgCSrH8+3VXvOdClKoiq2TVPYRYF/EWD4TFoh3aTFP
-	 XCPMIpVw3k6nUYdYmZNgjOOWajns8txZtL2Rqi1WsBA7+29NZ668/NvXd7776zTp67++Y
-	 H83tdyFbsq8yhoBdjh9Ngxmys3f+E7enflLxzvga79KbdaWLx9tnUUlAKZINb/QpycA==
+	t=1795051580;
+	b=Jid3Q7tD8scABBdPBMPnrFuCiySSf5B+PZjgMbHVp6U/G4UpoL3+0HhRWJrhpHOGcFaA
+	 v7Wx809TQM5HR0wDVqrwDM9H3ov3CFU/52GZzm2xGQJB6+um/tno9O6ZvJDdRVPHiDozv
+	 Wt6fGBx1LQcTHsVLmKUuyV0dC0AUO74z3BxlThTIUcY1PuO76co8tSBNHVHBcTvx1VKZ5
+	 z+XpW2+pU1Z7yMHlOAx0hgYft97ncP5InnwZck1fz019Mez0XG8mwxB0cnEPNbJOSQUr2
+	 JpRJ5re+/3JSP1C1tsQkwvM55eGS/7VjNtP8ORQgrV1qYo5kErNrwCdzx22kMaJ9v4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=GzEAygHSMri3tzmI3zYDUfNDUn9klAfHwcY56bgBpx4=;
-	b=mpikHxRWvBm+OrCeZgtpQme+mwFAfPYs715iCB5Xy33ojSm3x3G4NP9Q/8zRIwdzc1QK
-	 wCOkWvL95MpsvvuZlWsgopYu/1cqbPnFrRItnYmUKW3e3vmDbPT2F710C8gsIbvIDjjbN
-	 CDOx1bBYrdGefBlJTEdiZyNv3G20d3ZAZ4U7x4YdZ5w6coQPsvYJzlce0rEAKjiK3IdG9
-	 kHwgtf138iafcwa3Kk6Tofqwy7SVZWzc/ZMWoECeTdKgHe5bP7QSseG8ogOOCLOxIyWCx
-	 sa7WC9wlnGeZqqAowqdbxMlZf5LyosIfHe3UtbiZ4FfblnL0df/cpy2+aTnHZrO81dA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GIOAH8mirx1foI0+oRwGh0yopHrdmL0PnBw8GR8bbdc=;
+	b=0P9paHgOZk4NwtBvXx/5vZ3tfserjKv0Kka8+YqZV5WNdsNPhDD+lV/CYl+WljRlYsOr
+	 8/TI/yeSbNmAvwWEHEJ9UsNhHrSqDigmOMGMn1uW9CXJ7SCjpmchCVH6MB1eAZ41MO1p2
+	 SiSAwwyk74pV6kthV6HWMNnPWoe2dBB5W2yEsfqcY1Dvyhe/6/lCeYJ4/mjSKVtAfimZT
+	 8Xm9zca8/W/DMf93ZfnplyLTkzkd618R3t92rMyg9VGWbiwpdyHHp1qKKlQ8E+qgfxjfS
+	 1pJ5ahQPrCPteglgEW96yjJ2F6A/3XIH0zQVL7byghUN44tZn8Q9ffZXh5ktHq2MY4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KP0Qt1W7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SKAbsPYJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132BF606A31C;
-	Thu, 19 Nov 2026 01:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60EC606A31C;
+	Thu, 19 Nov 2026 01:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KP0Qt1W7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F871F000C4;
-	Thu, 19 Nov 2026 01:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SKAbsPYJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286A61F000C4;
+	Thu, 19 Nov 2026 01:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051577;
-	bh=GzEAygHSMri3tzmI3zYDUfNDUn9klAfHwcY56bgBpx4=;
+	s=korg; t=1795051580;
+	bh=GIOAH8mirx1foI0+oRwGh0yopHrdmL0PnBw8GR8bbdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KP0Qt1W7/++EL3u6xK6iIthUtwdDGuTB3IxBIHkHPMvB4Wn05O/1SM5nAfGzxKkxT
-	 dL/+AB2c5r2zKvpWbv9bKSTzxK914M9wbJAAxWNNqBgZkXyxgR4ohSmDwR94oZSm/7
-	 LgvkXRKGml0oxbURmltwsStjK/qVuNA+RF/jKCbc=
+	b=SKAbsPYJtBdznQ8I9jPTBQS/KCW6PvTV5v98uCgUs/TSS8TjbYJGcNU7DAI4sMNfe
+	 P2lAPJjfHtpjEjdmMT0aIzKbuDy9rTShoFglPFJCLLCOX9iz+mMHPToVF/WwT5OjfR
+	 qZVtDqMv91IXXPy6mWQaTBBwNi505AaHudXlp6Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 0256/2214] ceph: fail readdir when the MDS reply carries no dirfrag
-Date: Wed, 18 Nov 2026 15:32:12 +0100
-Message-ID: <20261118150020.371891093@linuxfoundation.org>
+	Gael Blivet <gael.blivet@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 0212/2214] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
+Date: Wed, 18 Nov 2026 15:31:28 +0100
+Message-ID: <20261118150018.660233515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,87 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-commit 728c856d7da04fb79f7aa00e974ffb6f55e55995 upstream.
+[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
 
-A ceph mount oopses in ceph_readdir() when the MDS answers a READDIR
-request with a reply whose extra blob is empty.  parse_reply_info()
-skips reply blobs whose length is zero, so parse_reply_info_readdir()
-never runs, r_reply_info.dir_dir stays NULL, and the reply still
-parses as successful.  ceph_mdsc_do_request() returns 0 and
-ceph_readdir() then reads rinfo->dir_dir->frag with no NULL check:
+smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
+client's CREATE request includes an AllocationSize create context.
+For a stream handle, fp->filp refers to the base file's data fork
+(streams are xattr-backed on the same underlying file, not separate
+files), so this pre-allocates storage on the base file's actual data
+instead of doing anything meaningful for the stream -- fallocate has
+no applicability to an xattr-backed stream at all.
 
-	/* extra */
-	ceph_decode_32_safe(&p, end, len, bad);
-	if (len > 0) {
-		...
-		err = parse_reply_info_extra(&p, p + len, req, features, s);
-		...
-	}
+Skip the fallocate call for stream handles.
 
-The oops on v7.3.0-rc4-00537-ga3ff15db6820, one getdents64(2) on the
-mount root after an ms_mode=legacy mount, trimmed:
-
-BUG: KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-CPU: 1 UID: 0 PID: 266 Comm: ls Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
-RIP: 0010:ceph_readdir+0xbff/0x3ea0
-Call Trace:
- <TASK>
- ? __pfx_ceph_readdir+0x10/0x10
- wrap_directory_iterator+0xa2/0xe0
- iterate_dir+0x1da/0x5d0
- __x64_sys_getdents64+0x13b/0x2a0
- do_syscall_64+0xdd/0x4a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-The unconditional frag read came in with 81c6aea5275ea ("ceph: handle
-frag mismatch between readdir request and reply"), so the bug is old.
-
-Treat a reply with no dirfrag as a protocol violation: warn once,
-drop the request and return -EIO, the same way ceph_readdir() already
-handles the two malformed-reply cases later in the function.
-
-Tested on v7.3.0-rc4-00537-ga3ff15db6820 (KASAN).  Unpatched, the
-getdents64(2) above takes the machine down (oops=panic) on the first
-READDIR reply.  With the patch it warns once and getdents64(2)
-returns -EIO, no oops, no hang.  A conformant reply for an empty
-directory — dirfrag present, zero entries, FRAG_END|FRAG_COMPLETE —
-still lists "." and ".." and returns EOF on both kernels, so normal
-readdir behavior is unchanged.  The oops is still present in
-v7.3-rc5 (72d3fcf802c45).
-
-Cc: stable@vger.kernel.org
-Fixes: 81c6aea5275ea ("ceph: handle frag mismatch between readdir request and reply")
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/dir.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ksmbd/smb2pdu.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -436,6 +436,10 @@ more:
- 		     (int)req->r_reply_info.hash_order);
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 53be62debf2d4..1f55c1bf69b9f 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -3347,13 +3347,22 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "request smb2 create allocate size : %llu\n",
+ 				    alloc_size);
+-			smb_break_all_levII_oplock(work, fp, 1);
+-			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
+-					    alloc_size);
+-			if (err < 0)
+-				ksmbd_debug(SMB,
+-					    "vfs_fallocate is failed : %d\n",
+-					    err);
++			/*
++			 * fp->filp is the base file's data fork for a stream
++			 * handle (streams are xattr-backed on the same
++			 * underlying file) -- fallocate has no meaning for a
++			 * stream and would otherwise pre-allocate storage on
++			 * the base file's data instead.
++			 */
++			if (!ksmbd_stream_fd(fp)) {
++				smb_break_all_levII_oplock(work, fp, 1);
++				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
++						    alloc_size);
++				if (err < 0)
++					ksmbd_debug(SMB,
++						    "vfs_fallocate is failed : %d\n",
++						    err);
++			}
+ 		}
  
- 		rinfo = &req->r_reply_info;
-+		if (WARN_ON_ONCE(!rinfo->dir_dir)) {
-+			ceph_mdsc_put_request(req);
-+			return -EIO;
-+		}
- 		if (le32_to_cpu(rinfo->dir_dir->frag) != frag) {
- 			frag = le32_to_cpu(rinfo->dir_dir->frag);
- 			if (!rinfo->hash_order) {
+ 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
+-- 
+2.53.0
+
 
 
