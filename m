@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048783;
-	b=uiCV3Qod1w2o0kRFR+6Mh/wUKesrp3JX2UrtrJN/+PrTIfy5nS/XLFyWV5VKd/saFuow
-	 9pjPNTEEW4I6fEY0x+7rZz+sydAfRk0pw3bSH2F3f/QDirjl4AodiHMfsEqA9Q9tBHMAK
-	 M9t6U+1IR0LNIFHRveztjv+2WP1o2yOfO92LZmdqW2qVcUXLhedDNkLLcNlVc9ozaN5WI
-	 gp3EGZEpzFnqR92W1+rMXO2BzXlCZbrcesgnBKP8GLFaTs79/fMe9bii3Xhqdaw3ESvol
-	 +BwpJb2fVd0CCEMGvkn2qkouqomT9Gquw9a/kwEcdcMNjrZ1+Gf9khRtWa2t3w5Pfhg==
+	t=1795048786;
+	b=ZTMW0gOLiTy1wmFj584FKbKTETHXAcJYaQlFuSksi0CgLrAbMTFLYKmux3dExbW0Qf2g
+	 1RiHnaxuB4Pa3hbmooELljygyj9H4jb73EsykfacjnldM45YNwPI8E9QbgusdIqDcDaYT
+	 MxeCdGV/q5/IEVUwQNfAgjaCLzVn3aV+QlOk7J06TZbWGxwOCijm8SzqzzuBXo3wfzVUk
+	 caRy/48OoxEToJq2z9+tetFJe3rYFZsgsoQKgpjkN73mAtqq/1oVZ9xMXbrfWaBMPDipL
+	 m2AW3CIVfzdO7L2azXvYpm4AwJfplByKYOu8jr/zsUpqZ15U4+C5TBDxB/Hp60CmQ0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048783;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048786;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PrVXb+gF0A7yaDUvBbvUSTgiHIARtGR/uUXaMyYSzV0=;
-	b=SnUxuPjfu3wqn727Llzxuc2Iqr9W7wPdY3j9vRAC3r358vgUtoT8/dnHyV6iVKDur70I
-	 TQICk4aKR+UrzLngrp9LDvIcFsRUPUF96yoCEejWi30xVhok1w2UeaqhXxkLPTfpiKYHR
-	 0et69pAqv7Or0CKosgOLJZYBp2B6MR19oUSX8/IyUvUigcS68itMxjCvjQSCnTg6d6Sd5
-	 ss6NOvnXatW/pNWmO6iuZICs031RvbibUgWN2yMEz/bQmaZ+6K9D+Mt2Sa4IqqfQ+J5jg
-	 mumX1fNiwX7flqrrSLkDPXNB83DCBjY9zhF5nuJx9hZaR9p9woWvLWqAkKuQCthDqmA==
+	bh=4da7gSkqzwCO3W/W5+2Qw7IPBxQ4GTGzzf0DkGkCsmg=;
+	b=DWez904q6b5KOKhLzFeJPh4ILbUeywyZn/1yHs4YqWZQqngtPOUqzhxvldNAziXLjV1u
+	 GqLYT/lsBLteij838QmRSZ+ik/VO5ciPD0zGYv2dywW+k33pLamQbHneQkU+oHnGQ2cfM
+	 nsn9xK8e9MPem4M11yHtspRHrh4NfWPVagNg7lbsHY9/kimbZmNa3AZS+A6Iq0qiG9RHn
+	 LVchdfWu4tgwMl7Zw29E6vqflfzDHiJA0Td+DpsSBGKlZc5pE+AGD8wdrEOfyo53zA6ze
+	 xkhSanFvZbmxs1q0P3+xqbvYQJD6RETQ501PuPJxACTu+EZUQPD7PEjJpFyMPofEtuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJjKwOTt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEf3XQLz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1535606A320;
-	Thu, 19 Nov 2026 00:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C22606A31C;
+	Thu, 19 Nov 2026 00:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJjKwOTt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 140041F000C4;
-	Thu, 19 Nov 2026 00:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEf3XQLz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB05E1F000C4;
+	Thu, 19 Nov 2026 00:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048783;
-	bh=PrVXb+gF0A7yaDUvBbvUSTgiHIARtGR/uUXaMyYSzV0=;
+	s=korg; t=1795048786;
+	bh=4da7gSkqzwCO3W/W5+2Qw7IPBxQ4GTGzzf0DkGkCsmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJjKwOTtJ2JGFU61zObms6oMDRSB4bJj1rkLVywXabX+OYLQiDVLBkX5s99/xXOR9
-	 xzZA5ql1/9FbzK2Y0zhkTHqGnyrtMlySPSRe4xp1KP9gVLLPIJsToSHerSTIv4NTMC
-	 Gp3M+lF3MFXz4Z0Mm0QudNK+TjNSq32LDN4gz0Dc=
+	b=GEf3XQLz401QhTM71fKjkoh/EyQW3puVFQ+9ZSFssHksT/+ZrPm5utR/kjvMJvN7z
+	 YUqsnRm/6MHfPNUsamlJ32NDwqMAchO1sHKn6moFsJN5pcsyVPsN4ixmZz7PrtW+bD
+	 ULUjZMaoG4cw29cyn9SECt+tNbeo4ZYToNv/zClM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2116/2857] ASoC: mediatek: mt8192-mt6359: Fix error handling in MTKAIF calibration
-Date: Wed, 18 Nov 2026 15:52:30 +0100
-Message-ID: <20261118150317.594858224@linuxfoundation.org>
+Subject: [PATCH 6.1 2117/2857] soc: ti: k3-ringacc: Correct ring API kernel-doc
+Date: Wed, 18 Nov 2026 15:52:31 +0100
+Message-ID: <20261118150317.629880136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,97 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit d6c8a0b5bf696d89350e43bf554362de8929f801 ]
+[ Upstream commit 45ea6911ad16859d4ce4f25780b0ebcf5660e43a ]
 
-mt8192_mt6359_mtkaif_calibration() ignored the return values of
-pm_runtime_get_sync() and mt8192_afe_gpio_request(), which could
-leave PM runtime references or GPIO state unbalanced on failure.
+The ring accelerator header labels k3_ring_cfg as an enum, uses
+propname instead of property, and gives the DMA reset helper the
+ordinary reset helper's name. The DMA reset comment also omits occ,
+including the convention that zero requests a hardware occupancy read.
 
-Switch to pm_runtime_resume_and_get(), check each GPIO request,
-and unwind on error.
+The proxy flag is parsed as a separate parameter, and the pop helpers
+describe pushing elements. Proxy access is supported in Message mode;
+the listed Credentials and Queue modes are not implemented. The phandle
+lookup returns encoded error pointers rather than integer error values.
 
-Fixes: 18b13ff23fab ("ASoC: mediatek: mt8192: add machine driver with mt6359, rt1015 and rt5682")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-16-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Match the declarations and document these argument and operation roles.
+
+Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260923061658.20140-1-kmehltretter@gmail.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mt8192/mt8192-mt6359-rt1015-rt5682.c      | 37 +++++++++++++------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ include/linux/soc/ti/k3-ringacc.h | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
-index 6dedcc7aa68cb..fed0869da1515 100644
---- a/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-mt6359-rt1015-rt5682.c
-@@ -160,12 +160,23 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
- 	int chosen_phase_1, chosen_phase_2, chosen_phase_3;
- 	int counter;
- 	int mtkaif_calib_ok;
-+	int ret = 0;
+diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
+index 39b022b925986..2de6031b94241 100644
+--- a/include/linux/soc/ti/k3-ringacc.h
++++ b/include/linux/soc/ti/k3-ringacc.h
+@@ -57,13 +57,13 @@ struct k3_ringacc;
+ struct k3_ring;
  
--	pm_runtime_get_sync(afe->dev);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
--	mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
-+	ret = pm_runtime_resume_and_get(afe->dev);
-+	if (ret < 0)
-+		return ret;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 1);
-+	if (ret)
-+		goto err_pm_put;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA, 0);
-+	if (ret)
-+		goto err_disable_adda_1;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 1);
-+	if (ret)
-+		goto err_disable_adda_0;
-+	ret = mt8192_afe_gpio_request(afe->dev, true, MT8192_DAI_ADDA_CH34, 0);
-+	if (ret)
-+		goto err_disable_adda_ch34_1;
- 
- 	mt6359_mtkaif_calibration_enable(cmpnt_codec);
- 
-@@ -286,10 +297,14 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
- 
- 	mt6359_mtkaif_calibration_disable(cmpnt_codec);
- 
--	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
--	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
--	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
- 	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 0);
-+err_disable_adda_ch34_1:
-+	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA_CH34, 1);
-+err_disable_adda_0:
-+	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 0);
-+err_disable_adda_1:
-+	mt8192_afe_gpio_request(afe->dev, false, MT8192_DAI_ADDA, 1);
-+err_pm_put:
- 	pm_runtime_put(afe->dev);
- 
- 	dev_info(afe->dev, "%s(), mtkaif_chosen_phase[0/1/2]:%d/%d/%d\n",
-@@ -298,7 +313,7 @@ static int mt8192_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
- 		 afe_priv->mtkaif_chosen_phase[1],
- 		 afe_priv->mtkaif_chosen_phase[2]);
- 
--	return 0;
-+	return ret;
- }
- 
- static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
-@@ -316,9 +331,7 @@ static int mt8192_mt6359_init(struct snd_soc_pcm_runtime *rtd)
- 	afe_priv->mtkaif_protocol = MTKAIF_PROTOCOL_2_CLK_P2;
- 
- 	/* mtkaif calibration */
--	mt8192_mt6359_mtkaif_calibration(rtd);
--
--	return 0;
-+	return mt8192_mt6359_mtkaif_calibration(rtd);
- }
- 
- static int mt8192_rt5682_init(struct snd_soc_pcm_runtime *rtd)
+ /**
+- * enum k3_ring_cfg - RA ring configuration structure
++ * struct k3_ring_cfg - RA ring configuration structure
+  *
+  * @size: Ring size, number of elements
+  * @elm_size: Ring element size
+  * @mode: Ring operational mode
+  * @flags: Ring configuration flags. Possible values:
+- *	 @K3_RINGACC_RING_SHARED: when set allows to request the same ring
++ *	 %K3_RINGACC_RING_SHARED: when set allows to request the same ring
+  *	 few times. It's usable when the same ring is used as Free Host PD ring
+  *	 for different flows, for example.
+  *	 Note: Locking should be done by consumer if required
+@@ -88,11 +88,10 @@ struct k3_ring_cfg {
+ /**
+  * of_k3_ringacc_get_by_phandle - find a RA by phandle property
+  * @np: device node
+- * @propname: property name containing phandle on RA node
++ * @property: property name containing phandle on RA node
+  *
+- * Returns pointer on the RA - struct k3_ringacc
+- * or -ENODEV if not found,
+- * or -EPROBE_DEFER if not yet registered
++ * Return: Pointer to the RA, or ERR_PTR(-ENODEV) if the phandle cannot
++ * be resolved, or ERR_PTR(-EPROBE_DEFER) if the RA is not yet registered.
+  */
+ struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
+ 						const char *property);
+@@ -103,10 +102,8 @@ struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
+  * k3_ringacc_request_ring - request ring from ringacc
+  * @ringacc: pointer on ringacc
+  * @id: ring id or K3_RINGACC_RING_ID_ANY for any general purpose ring
+- * @flags:
+- *	@K3_RINGACC_RING_USE_PROXY: if set - proxy will be allocated and
+- *		used to access ring memory. Sopported only for rings in
+- *		Message/Credentials/Queue mode.
++ * @flags: Set %K3_RINGACC_RING_USE_PROXY to allocate a proxy for
++ *	accessing ring memory in Message mode.
+  *
+  * Returns pointer on the Ring - struct k3_ring
+  * or NULL in case of failure.
+@@ -126,8 +123,9 @@ int k3_ringacc_request_rings_pair(struct k3_ringacc *ringacc,
+  */
+ void k3_ringacc_ring_reset(struct k3_ring *ring);
+ /**
+- * k3_ringacc_ring_reset - ring reset for DMA rings
++ * k3_ringacc_ring_reset_dma - ring reset for DMA rings
+  * @ring: pointer on Ring
++ * @occ: occupancy used by the DMA reset quirk, or zero to read it from hardware
+  *
+  * Resets ring internal state ((hw)occ, (hw)idx). Should be used for rings
+  * which are read by K3 UDMA, like TX or Free Host PD rings.
+@@ -217,8 +215,8 @@ int k3_ringacc_ring_push(struct k3_ring *ring, void *elem);
+  * @ring: pointer on ring
+  * @elem: pointer on ring element buffer
+  *
+- * Push one ring element from the ring head. Size of the ring element is
+- * determined by ring configuration &struct k3_ring_cfg elm_size..
++ * Pop one ring element from the ring head. Size of the ring element is
++ * determined by ring configuration &struct k3_ring_cfg elm_size.
+  *
+  * Returns 0 on success, errno otherwise.
+  */
+@@ -242,7 +240,7 @@ int k3_ringacc_ring_push_head(struct k3_ring *ring, void *elem);
+  * @ring: pointer on ring
+  * @elem: pointer on ring element buffer
+  *
+- * Push one ring element from the ring tail. Size of the ring element is
++ * Pop one ring element from the ring tail. Size of the ring element is
+  * determined by ring configuration &struct k3_ring_cfg elm_size.
+  *
+  * Returns 0 on success, errno otherwise.
 -- 
 2.53.0
 
