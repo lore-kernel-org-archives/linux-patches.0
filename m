@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019397;
-	b=SQxT/QvWIDXWAERL+4sBGh0NIn519XVJ6x/K+dk2ZT3TdoHEvoF+keK5nyjgJebgD9ID
-	 Q8EU/gLDe7TrVlByvfrBtpwpSo7oifLSDRo1E/4SdJfPZgNoNQySqHPCB2J9nXR43qFj3
-	 Lbzj17TemjSuCiklyPkA57FtHrHRMDNtpwhgvRDE8YF2JgEbu2TRnlWjxAJCC3xTd11NG
-	 9blZ71q7dODFKNmq/onPngMY1Obhf8R0f++lv/M6nbmejsTw19t72ZHd/EqKGtfwZPulw
-	 UW/GQ+AzRgPGTh/B8udPAETcZteSBZKgIpgBOpP567MXjLvbZvQGMlSaXLhHlgMV3eQ==
+	t=1795019399;
+	b=PwWxBybUmexYV6DRJ6z72qc8LP8OcxARcORPVIAwYk18NjYM1MGSVlfM2iBLF46K7Rh4
+	 bgC3C72j1blkSXIiRHZHAO2//2FpDnowJZsZnx5TG7j8Y3igfky40EEj7cEhQhQh9nPnS
+	 NqxDqiDAcUvb8zFKXLyAy6f+MJ50M3W/s9e4GET9+Sd1hcUTTrieIXvDWnTUc5xq2/7vj
+	 D0mlyPF/Wo/8d96JdIbBJYk9vofMQJZKzARmGo7LCrmdcgKZKXwq10cocWdgLfVbln919
+	 SxRNuV+r8JUyPA0me9toMyFQ0baQPmvPTVUqmWMjM99I13WIpf1TsJSkIKO4+RCp9DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019399;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KlPUIeY4+poPwsgUDjlmDq2fhDtZ/FgkttnUy2+1yik=;
-	b=2lpFZYLEePSj1FpLFk2fSSG6g3AaMq4ll+pdGyXLdxqrpw+CUo5eS6w5aZAMUmCq1Dvw
-	 mJc5fBOBYbgpJzWiEy+MCd7Qr9OKCy1R4xZaFBCvGI+PhzP3K93AbwwQ1yqt5LbfAK8GR
-	 hcJBmivFERR8xO6amCs0CnXfyikvHP63NXo10gF/BNuUtrj+yPdbgZ9CVOmSUuA5tw1Xu
-	 LUMPd+rf1EhQ7Cj+uKVv5g0AM2pyoNaCA9ykkMg5zyh5qn4mmgNupnsIItX9A/uvJMrMQ
-	 5qL71NCl0Q/Ao/ka8hrBtQQOoReGn2+gDTgErljDuAWcQgo8POhEpm6ixnWdz92bIZQ==
+	bh=KXt8EICWBCkXVfodC6sDESUHGHPc2+U1TARL0QabakI=;
+	b=m1w77+J9mi2xRibNxNLKTMF/CnUmOoEm03pB6WgjDOsnrqbYZrS6F0gq7VKNh/R+pUOt
+	 eZD538SWRiwMGj3mdAc/n0Fri9+Sj/fCfEIQvnaSI6gUMWZku8bobpVYixZhKy5c2c4iF
+	 Isa2amyo+evO2FwvEAyqx9ltQfQoFcQzy4k3Jusy+IGdqBiZJ/CZsMCGbTOp2RyTUu4xs
+	 MKu0+/sK1oE5grzGSTJmMGNOwX1u611sFAjqqwGmzukhLNGlfFm4b02KAEsBXnf/3nxnk
+	 ql421BZRYWXdye0dUXQrOHOqE9IAOth4To9CwUY0jJKJDLCwr2tmjlnFNdp6V2ptjSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1KpvR8fT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g5J7eLD/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB1A606A332;
-	Wed, 18 Nov 2026 16:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B340760A262D;
+	Wed, 18 Nov 2026 16:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1KpvR8fT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B391F000C6;
-	Wed, 18 Nov 2026 16:29:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g5J7eLD/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1967E1F000D1;
+	Wed, 18 Nov 2026 16:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019396;
-	bh=KlPUIeY4+poPwsgUDjlmDq2fhDtZ/FgkttnUy2+1yik=;
+	s=korg; t=1795019399;
+	bh=KXt8EICWBCkXVfodC6sDESUHGHPc2+U1TARL0QabakI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1KpvR8fTdDXsqjyPQXJrucENCYuCxAtYvfE64oGY66dPLarYQCqnOTnA1Iky4soZk
-	 adBlfuQzYDOS+ECeox5oOVDWsUi0edtn21RgOpxvOj/CpoTuQ4xnKauiwQD520Yuyo
-	 Kci9uIoJVnv+yDNtZHF3SGbRGYe47mVO9RGTTBck=
+	b=g5J7eLD//NKTyVHsbnc9QBKBeJbflKsc6QXyuQ+Gw7VYuhFMLAverHX6OJhRtDzCy
+	 G3rdXf03v9Hk5hd+ECdz3encxq8VoYbH3UH9MSKgMCSJG6m3bAY7ssm6/VQEdGnkfl
+	 wAKzk6vj01fSqmpddpNf9Htd8I5W6H2gMT+S/eVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
-	Simon Glass <sjg@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1582/2651] scripts/make_fit: Ignore schema checks when decomposing DTBs
-Date: Wed, 18 Nov 2026 15:47:02 +0100
-Message-ID: <20261118150344.869224959@linuxfoundation.org>
+Subject: [PATCH 7.3 1583/2651] cxl/core: Hold the dport host lock across dport lookup and use
+Date: Wed, 18 Nov 2026 15:47:03 +0100
+Message-ID: <20261118150344.905207779@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,46 +69,345 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 3bf2237f59af842e546fa4b2c146198db95d1519 ]
+[ Upstream commit b72a03ebd9586d59992ecaa6ceed11ea96835734 ]
 
-With CHECK_DTBS enabled, Kbuild appends a schema validation command to
-the fdtoverlay command saved in a composite DTB's .cmd file. When DTB
-decomposition is requested, process_dtb() treats every word after -i as
-an input file, including the semicolon and the validator arguments.
-FIT generation then fails with FileNotFoundError while opening or
-checking the size of those words as files.
+Callers of cxl_pci_find_port() and cxl_mem_find_port() can be handed a
+'struct cxl_dport' that is already freed, and all four dereference it
+without the lock that would prevent that.
 
-Limit the input list to the fdtoverlay command before extracting its
-arguments. This preserves the base DTB and overlay order and ignores
-the subsequent schema validation command.
+A dport is kzalloc()'d into a devres group on its host device, so it dies
+when that host unbinds. The host is &port->dev for a switch port and
+port->uport_dev for the root port.
 
-Fixes: 17c31aded9a1 ("scripts/make_fit: Support decomposing DTBs")
+Both helpers return the dport through an output parameter. The caller's
+port reference pins struct cxl_port, not the dport allocation, and the
+lookup itself is a bare xa_load() under no lock.
+
+Add cxl_port_dport_host() to name the device that pins a dport, and
+cxl_pci_find_dport() / cxl_mem_find_dport() to look one up with that
+device's lock held and asserted. Convert the four callers to use them and
+bail if the dport is gone. cxl_port_add_dport() already follows this rule.
+
+cxl_mem_probe() chose its endpoint devm host from dport->rch, which meant
+dereferencing the dport before taking any lock. Use cxl_port_dport_host():
+rch dports only ever land on the root port, so it selects the same device
+without needing the dport.
+
+With every caller converted, the dport output parameter of
+cxl_pci_find_port() and cxl_mem_find_port() is unused. Drop it.
+
+Fixes: 733b57f262b0 ("cxl/pci: Early setup RCH dport component registers from RCRB")
 Assisted-by: LLM
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
-Reviewed-by: Simon Glass <sjg@chromium.org>
-Link: https://patch.msgid.link/CA+NtrhQBK8uW32qO3dXxVxO1GSN-0EJfyJ16tnyx0o52T17WtQ@mail.gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20261001154744.1095902-3-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/make_fit.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cxl/core/core.h    |  6 +---
+ drivers/cxl/core/pci.c     |  8 ++++-
+ drivers/cxl/core/port.c    | 62 ++++++++++++++++++++++++++------------
+ drivers/cxl/core/ras_rch.c | 12 +++++++-
+ drivers/cxl/cxl.h          | 22 +++++++++++---
+ drivers/cxl/mem.c          | 14 ++++++---
+ drivers/cxl/pci.c          | 11 ++++---
+ 7 files changed, 95 insertions(+), 40 deletions(-)
 
-diff --git a/scripts/make_fit.py b/scripts/make_fit.py
-index 15ba26974fd72..9bd35aa721191 100755
---- a/scripts/make_fit.py
-+++ b/scripts/make_fit.py
-@@ -292,7 +292,8 @@ def process_dtb(fname, args):
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index bb380ec6daeb0..79918fde1575a 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -178,11 +178,7 @@ static inline struct device *port_to_host(struct cxl_port *port)
  
-         if 'scripts/dtc/fdtoverlay' in cmd:
-             # This depends on the structure of the composite DTB command
--            files = cmd.split()
-+            # Ignore any subsequent commands, such as schema validation
-+            files = cmd.split(';', 1)[0].split()
-             files = files[files.index('-i') + 1:]
-         else:
-             files = [fname]
+ static inline struct device *dport_to_host(struct cxl_dport *dport)
+ {
+-	struct cxl_port *port = dport->port;
+-
+-	if (is_cxl_root(port))
+-		return port->uport_dev;
+-	return &port->dev;
++	return cxl_port_dport_host(dport->port);
+ }
+ #ifdef CONFIG_CXL_RAS
+ void cxl_ras_init(void);
+diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
+index 2f90184d10689..27dccd4daa0ce 100644
+--- a/drivers/cxl/core/pci.c
++++ b/drivers/cxl/core/pci.c
+@@ -743,10 +743,16 @@ int cxl_pci_setup_regs(struct pci_dev *pdev, enum cxl_regloc_type type,
+ 	if (rc && type == CXL_REGLOC_RBI_COMPONENT && is_cxl_restricted(pdev)) {
+ 		struct cxl_dport *dport;
+ 		struct cxl_port *port __free(put_cxl_port) =
+-			cxl_pci_find_port(pdev, &dport);
++			cxl_pci_find_port(pdev);
+ 		if (!port)
+ 			return -EPROBE_DEFER;
+ 
++		guard(device)(cxl_port_dport_host(port));
++
++		dport = cxl_pci_find_dport(pdev, port);
++		if (!dport)
++			return -EPROBE_DEFER;
++
+ 		rc = cxl_rcrb_get_comp_regs(pdev, map, dport);
+ 		if (rc)
+ 			return rc;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 7fdf23b9d24de..230f1a3c7d6fe 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1404,13 +1404,11 @@ static int cxl_add_ep(struct cxl_dport *dport, struct device *ep_dev)
+ struct cxl_find_port_ctx {
+ 	const struct device *dport_dev;
+ 	const struct cxl_port *parent_port;
+-	struct cxl_dport **dport;
+ };
+ 
+ static int match_port_by_dport(struct device *dev, const void *data)
+ {
+ 	const struct cxl_find_port_ctx *ctx = data;
+-	struct cxl_dport *dport;
+ 	struct cxl_port *port;
+ 
+ 	if (!is_cxl_port(dev))
+@@ -1419,10 +1417,7 @@ static int match_port_by_dport(struct device *dev, const void *data)
+ 		return 0;
+ 
+ 	port = to_cxl_port(dev);
+-	dport = cxl_find_dport_by_dev(port, ctx->dport_dev);
+-	if (ctx->dport)
+-		*ctx->dport = dport;
+-	return dport != NULL;
++	return !!cxl_find_dport_by_dev(port, ctx->dport_dev);
+ }
+ 
+ static struct cxl_port *__find_cxl_port_by_dport(struct cxl_find_port_ctx *ctx)
+@@ -1441,22 +1436,21 @@ static struct cxl_port *__find_cxl_port_by_dport(struct cxl_find_port_ctx *ctx)
+ /**
+  * find_cxl_port_by_dport - find a cxl_port by one of its targets
+  * @dport_dev: device representing the dport target
+- * @dport: optional output of the 'struct cxl_dport' companion of the @dport_dev
+  *
+  * Return a 'struct cxl_port' with an elevated reference if found. Use
+  * __free(put_cxl_port) to release.
++ *
++ * The port reference does not pin the dport, which is a devm allocation of
++ * cxl_port_dport_host(). Use cxl_pci_find_dport() or cxl_mem_find_dport()
++ * under that device's lock to get it.
+  */
+-static struct cxl_port *find_cxl_port_by_dport(struct device *dport_dev,
+-					       struct cxl_dport **dport)
++static struct cxl_port *find_cxl_port_by_dport(struct device *dport_dev)
+ {
+ 	struct cxl_find_port_ctx ctx = {
+ 		.dport_dev = dport_dev,
+-		.dport = dport,
+ 	};
+-	struct cxl_port *port;
+ 
+-	port = __find_cxl_port_by_dport(&ctx);
+-	return port;
++	return __find_cxl_port_by_dport(&ctx);
+ }
+ 
+ /*
+@@ -1947,20 +1941,50 @@ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd)
+ }
+ EXPORT_SYMBOL_NS_GPL(devm_cxl_enumerate_ports, "CXL");
+ 
+-struct cxl_port *cxl_pci_find_port(struct pci_dev *pdev,
+-				   struct cxl_dport **dport)
++struct cxl_port *cxl_pci_find_port(struct pci_dev *pdev)
+ {
+-	return find_cxl_port_by_dport(pdev->dev.parent, dport);
++	return find_cxl_port_by_dport(pdev->dev.parent);
+ }
+ EXPORT_SYMBOL_NS_GPL(cxl_pci_find_port, "CXL");
+ 
+-struct cxl_port *cxl_mem_find_port(struct cxl_memdev *cxlmd,
+-				   struct cxl_dport **dport)
++struct cxl_port *cxl_mem_find_port(struct cxl_memdev *cxlmd)
+ {
+-	return find_cxl_port_by_dport(grandparent(&cxlmd->dev), dport);
++	return find_cxl_port_by_dport(grandparent(&cxlmd->dev));
+ }
+ EXPORT_SYMBOL_NS_GPL(cxl_mem_find_port, "CXL");
+ 
++/**
++ * cxl_pci_find_dport - find the dport of @port that @pdev is below
++ * @pdev: PCI device below the dport
++ * @port: port to search, typically from cxl_pci_find_port()
++ *
++ * Context: Caller must hold the cxl_port_dport_host() lock of @port, and
++ *	    must not use the result after dropping it.
++ */
++struct cxl_dport *cxl_pci_find_dport(struct pci_dev *pdev,
++				     struct cxl_port *port)
++{
++	device_lock_assert(cxl_port_dport_host(port));
++	return cxl_find_dport_by_dev(port, pdev->dev.parent);
++}
++EXPORT_SYMBOL_NS_GPL(cxl_pci_find_dport, "CXL");
++
++/**
++ * cxl_mem_find_dport - find the dport of @port that @cxlmd is below
++ * @cxlmd: memdev below the dport
++ * @port: port to search, typically from cxl_mem_find_port()
++ *
++ * Context: Caller must hold the cxl_port_dport_host() lock of @port, and
++ *	    must not use the result after dropping it.
++ */
++struct cxl_dport *cxl_mem_find_dport(struct cxl_memdev *cxlmd,
++				     struct cxl_port *port)
++{
++	device_lock_assert(cxl_port_dport_host(port));
++	return cxl_find_dport_by_dev(port, grandparent(&cxlmd->dev));
++}
++EXPORT_SYMBOL_NS_GPL(cxl_mem_find_dport, "CXL");
++
+ static int decoder_populate_targets(struct cxl_switch_decoder *cxlsd,
+ 				    struct cxl_port *port)
+ {
+diff --git a/drivers/cxl/core/ras_rch.c b/drivers/cxl/core/ras_rch.c
+index e0e01aa5eba6c..3c6aae26deedd 100644
+--- a/drivers/cxl/core/ras_rch.c
++++ b/drivers/cxl/core/ras_rch.c
+@@ -118,10 +118,20 @@ void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds)
+ 	int severity;
+ 
+ 	struct cxl_port *port __free(put_cxl_port) =
+-		cxl_pci_find_port(pdev, &dport);
++		cxl_pci_find_port(pdev);
+ 	if (!port)
+ 		return;
+ 
++	/*
++	 * The dport may have been freed since the lookup above, so take the
++	 * lock that pins it and find it again.
++	 */
++	guard(device)(cxl_port_dport_host(port));
++
++	dport = cxl_pci_find_dport(pdev, port);
++	if (!dport)
++		return;
++
+ 	if (!cxl_rch_get_aer_info(dport->regs.dport_aer, &aer_regs))
+ 		return;
+ 
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index b6853bc8fd818..ee408f5730c3f 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -703,6 +703,18 @@ static inline bool is_cxl_root(struct cxl_port *port)
+ 	return port->uport_dev == port->dev.parent;
+ }
+ 
++/*
++ * Return the owner device of the devm allocations of @port's dports. They
++ * are freed when that device unbinds, so hold device_lock() on the returned
++ * device across any lookup and use of a 'struct cxl_dport'.
++ */
++static inline struct device *cxl_port_dport_host(struct cxl_port *port)
++{
++	if (is_cxl_root(port))
++		return port->uport_dev;
++	return &port->dev;
++}
++
+ /* Address translation functions exported to cxl_translate test module only */
+ int cxl_validate_translation_params(u8 eiw, u16 eig, int pos);
+ u64 cxl_calculate_hpa_offset(u64 dpa_offset, int pos, u8 eiw, u16 eig);
+@@ -749,10 +761,12 @@ DEFINE_FREE(put_cxl_dax_region, struct cxl_dax_region *, if (!IS_ERR_OR_NULL(_T)
+ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd);
+ void cxl_bus_rescan(void);
+ void cxl_bus_drain(void);
+-struct cxl_port *cxl_pci_find_port(struct pci_dev *pdev,
+-				   struct cxl_dport **dport);
+-struct cxl_port *cxl_mem_find_port(struct cxl_memdev *cxlmd,
+-				   struct cxl_dport **dport);
++struct cxl_dport *cxl_pci_find_dport(struct pci_dev *pdev,
++				     struct cxl_port *port);
++struct cxl_dport *cxl_mem_find_dport(struct cxl_memdev *cxlmd,
++				     struct cxl_port *port);
++struct cxl_port *cxl_pci_find_port(struct pci_dev *pdev);
++struct cxl_port *cxl_mem_find_port(struct cxl_memdev *cxlmd);
+ bool schedule_cxl_memdev_detach(struct cxl_memdev *cxlmd);
+ 
+ struct cxl_dport *devm_cxl_add_dport(struct cxl_port *port,
+diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
+index 3959ec9630264..493c4071245d9 100644
+--- a/drivers/cxl/mem.c
++++ b/drivers/cxl/mem.c
+@@ -139,7 +139,7 @@ static int cxl_mem_probe(struct device *dev)
+ 		return rc;
+ 
+ 	struct cxl_port *parent_port __free(put_cxl_port) =
+-		cxl_mem_find_port(cxlmd, &dport);
++		cxl_mem_find_port(cxlmd);
+ 	if (!parent_port) {
+ 		dev_err(dev, "CXL port topology not found\n");
+ 		return -ENXIO;
+@@ -154,10 +154,7 @@ static int cxl_mem_probe(struct device *dev)
+ 		}
+ 	}
+ 
+-	if (dport->rch)
+-		endpoint_parent = parent_port->uport_dev;
+-	else
+-		endpoint_parent = &parent_port->dev;
++	endpoint_parent = cxl_port_dport_host(parent_port);
+ 
+ 	scoped_guard(device, endpoint_parent) {
+ 		if (!endpoint_parent->driver) {
+@@ -166,6 +163,13 @@ static int cxl_mem_probe(struct device *dev)
+ 			return -ENXIO;
+ 		}
+ 
++		/* @dport is only valid while @endpoint_parent stays bound */
++		dport = cxl_mem_find_dport(cxlmd, parent_port);
++		if (!dport) {
++			dev_err(dev, "CXL topology dport not found\n");
++			return -ENXIO;
++		}
++
+ 		rc = devm_cxl_add_endpoint(endpoint_parent, cxlmd, dport);
+ 		if (rc)
+ 			return rc;
+diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+index c7c91e8dc51dc..913c7517420f1 100644
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -706,22 +706,23 @@ static ssize_t rcd_pcie_cap_emit(struct device *dev, u16 offset, char *buf, size
+ 	struct device *root_dev;
+ 	struct cxl_dport *dport;
+ 	struct cxl_port *root __free(put_cxl_port) =
+-		cxl_mem_find_port(cxlmd, &dport);
++		cxl_mem_find_port(cxlmd);
+ 
+ 	if (!root)
+ 		return -ENXIO;
+ 
+-	root_dev = root->uport_dev;
++	root_dev = cxl_port_dport_host(root);
+ 	if (!root_dev)
+ 		return -ENXIO;
+ 
+-	if (!dport->regs.rcd_pcie_cap)
+-		return -ENXIO;
+-
+ 	guard(device)(root_dev);
+ 	if (!root_dev->driver)
+ 		return -ENXIO;
+ 
++	dport = cxl_mem_find_dport(cxlmd, root);
++	if (!dport || !dport->regs.rcd_pcie_cap)
++		return -ENXIO;
++
+ 	switch (width) {
+ 	case 2:
+ 		return sysfs_emit(buf, "%#x\n",
 -- 
 2.53.0
 
