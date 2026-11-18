@@ -1,59 +1,86 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031672;
-	b=BUPaqi8MGtP8TaYIwq8yiBivd8fsg6itsBaN3dJvGicV/c5Ntt4nlo8HSmhlv0FWwhW/
-	 tAwv9+BMhKQrLG2tgzLaORZ4XkSo19fJB2MS9NEG0ejwNxMEfbG56SAdu+OdhCqozmiI9
-	 G4jsXSxsydEQ375tm8K2Bgclr7CUX6EJyNT04lGT6Y7lHZx2OxAVKFqx9Tx/wax/mA4gb
-	 EsTdDvEKQcUVV+xVJTCMxkKs6yHxbIsBtgc08g67ECmOpPDaTo6pJpr57x9oka+l94kX4
-	 ws6vLojxGDxZngQqA+ecz2y6Tpl6J/FuLdd1H2PPsMwtcbwKcR/kWGv3CXuBsctt/7Q==
+	t=1795031673;
+	b=ZzQXyzN2dH346gDcqI0rJiVTe1Z8ms8VA0sJtVJGpvpY6WKG6F3u39q8owRa3p1HD+NM
+	 EQgi3T81YjTwqOIz4VqjGs2L4ICWjH6X8OdqiCLHkhVCw6Qo0ugeIaU5D7+votwxv/6vA
+	 EEJhoZh6L1BJ0HTjpou+XCS+m4Qmk8QuLBDaw+D6X+yG+PiVSVW0K7C2GbLJf6A6BR0H/
+	 krrz/BdTEthVLwSc1zq0G1KtEkmdjaO7KlRgM//O2c4KA9yS215Iuq75Cwl+uYijVFUPA
+	 yjWaDSr8cvhGrruOtrCV2hZkt3niO6I5RNlRqt0LCMM+/qwf7mYisel7o/wbY/I8EmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031672;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pj3OrL30H0Aw4i4ij9bEVhuyReWLQPSCsP3l1TqhoeI=;
-	b=vkt3wJk00p1TvMxRcFO8Bpro5SRagd31Rp56Y1ziODHAao8VqcexTIXOeBtZN6wPCMfo
-	 JPrIlKgAPrkAXm00fM8WqKM5i5kXXFTRJjJpSwMz6kHeHUWRR1Ts9OV7FH/cKAWyYP1dd
-	 BSZ9JNnTspND3i9vKSLPa1tWFMAAcq29VrIC/GVFQQoXhe1nOsed/8Gtrto+KMtGuuWYn
-	 2NHSzBz4rIH4mheqvYgZOGzfi04wgsRPUUmplMNa3kwobkEMTbf955xFgOd+9a2OmT9AZ
-	 l0lgJ2MV6sdWbw2J8N6Kpd+9nz+t8yOAO5VyyXxja3nBPtyxMIKwMlIjSnBBh4kOGPw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031673;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=i0RPIOg/N02GB/FO0QU0LL8vtzFon8FGCvQcjRptq9c=;
+	b=s65EHyTVOINlGhl8H6lnfLLsqGBr084hlUbEK0TFWXnB0st/BtddvYKo29B1SHcz7L7u
+	 ELE7ikYqMwRFKXAHLc/Pj3HHjy1LKnvR1hj/WFFHcFwhqVs54h2VVQx7ZFtWM9+DD0vKG
+	 CAWBpMbqCdRt2PPjmjqb839/NU89PM33pQbWHNJLSOr37W2AW+21fP6DB4YL3akJzRwq8
+	 kzLL2/f67m7e3D81e5AQChwWruH3JPy2ZCjUC4VbdOqpQpZW2X+GbqV+n96ex301zDy3/
+	 1y8a0HO+msj5gVwTglK51T+MTalm8LTgO//b/Ol8lYlU/NPOqY78hgyxtrduEQ340MQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIQXULNd;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FFgokOVJ;
+	arc=none smtp.remote-ip=209.85.222.170
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FC0606A31C;
-	Wed, 18 Nov 2026 19:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD894606A33F
+	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:54:32 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD894606A33F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIQXULNd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D831F000C5;
-	Wed, 18 Nov 2026 19:54:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031671;
-	bh=Pj3OrL30H0Aw4i4ij9bEVhuyReWLQPSCsP3l1TqhoeI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MIQXULNdvNB64uklBJMMgiTzDeG8KNSlTgULqdES9ObNpXd4vXeV4VAoeuP4lF+w7
-	 MpfFvkCY5xKCJqoIiT7be9/TOtRu6vRIkTYmYZpZTbBqt2/7sYoURQWNj3HkxXhKcy
-	 Fxdg/tsX2/hYV/eqTfzoUKSc5gGnx7LQcnvNZrqo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1139/1756] clk: qcom: rcg2: Initialize shared floor clock state
-Date: Wed, 18 Nov 2026 15:54:26 +0100
-Message-ID: <20261118150055.396279843@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-References: <20261118150007.957976754@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FFgokOVJ
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-94961b68685so121072585a.3
+        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 11:54:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795031672; x=1795636472; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=i0RPIOg/N02GB/FO0QU0LL8vtzFon8FGCvQcjRptq9c=;
+        b=FFgokOVJA8dxeNm7TfhKM8UtGpCYGjp7osifC9x/WACvezvT+O0HCUAv51ROu06s6m
+         Mr39Hik0xdlJS/C8+XD4yM5ihukt0fjn9yvrB3aemfrx0B6ODh/E++JEiLXJ54fEuWb9
+         PygQ8bwzpK6TcFvpp6R1WvZS5HRoXjamX44/NfUkCLQNIKEC5LGkOKQ3KzkDHiDlF3v5
+         rTSjnzKLdV51oFGAnU8sgTpdVI5CZQwiudaxff3W9Ae/gPNsKFw8wSIhaptCYjbearhz
+         6Z/uD/FGS05rmE/Vl88lvPQlFaPR7fkkHQADe3hwbYMaxpptS+3C6SjPtWxLA+VSn/jQ
+         nMQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795031672; x=1795636472;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=i0RPIOg/N02GB/FO0QU0LL8vtzFon8FGCvQcjRptq9c=;
+        b=wUbQ2gXb1WINB3W1OsI+RKQRda8N6AbamGdBKzOXLo/0xwa2mqlPv+f6r0Zy4Gxf6t
+         LAsVnYpn8mgvMEAXUWdAD+fEAjY73CrI+jMWZxNVN9bbRnn7Df2pah4v1JSWB1NUiqAu
+         GpHiBDLBvZEndlik2hOg1Qkt0GQSzATvcMVOKMDrRCViuURPYTti06C2ICwIQpPRXKKA
+         x47qaEXTKUpyaUP5D4wxLCJM/gsbFC14rRxH7l5Skk5GLPbr/Zjrmqv2J0JNKcI0OM0c
+         7eAmrkecetr31xunzwv4OO9A/PeIEdh6RsPw4Yzfk5I8t0QgToVZXGEZtwAIePCjX55X
+         P8XA==
+X-Gm-Message-State: APuU4Z8pdaZkDn25Wo9JsTYHl/u1q+SSH+0aQ0SJ0EueVQb3Lv2HQRbY
+	5iS4obqHPUB2QnBCEkiTXoDHSBB7bg1x+RvMTcTpFvMz3GTFlbn10gOI
+X-Gm-Gg: AYBFou0b8WUR0rysWJFrmhDgyKF206XfMmUZhkqRuOub2QKYxqVBHkhIKWYqoDkHItp
+	in0gOwWM7NnLt8nfqSTNWUA5wC6kmUHO0iXre2ffIkAPiDdMlS/MIWulV4wpdVi4s+D1vRfZP/n
+	+IvVc/u/UMtQo8QbZrkay7zP9ii07rGfjGcLT3XEXxHBFGz+fWAS1Wzir1XY9hRcpkc5adcB7/E
+	DJzrgLg+n08A2IUGhLTH+ujWoi+K2y/bmGFfGkWX0/1QQ6truHUp+7I1QmBNInHmnDDIg2jUuvJ
+	vaGLDbivBJNy5+XGzLFTOStYJfi1IIc2z5ME78snzGWofSLUsfs6Gns0WznjHnJ0G0cZgn8oEVS
+	xDnkqoz+FOmr7RMI9L6Rz87lIcA3wJjd1cdN0/TG4sWjXnGXrMY+NYtyuUZawtlJbae8GlHYx9z
+	cEAZz3bpT1U9vNKw/RC3WxbHHN71ELQe3bi2I9JkHjhpfEFNYgrQW2UDOWZdl9JWMuWqfJEJ9I/
+	NUNRJzMzJX69AEVqLp9QNdesUao50U1+VGKqe99sASDLFYYDyOlH2fAQtpxegghktC9XhTqPMrp
+	cw28cC98q3B6o3O5fGv+zrfPC8/40XafqKnm4cS50pISaOHst+3rgLGJ6Q==
+X-Received: by 2002:a05:620a:7084:b0:947:9060:7efb with SMTP id af79cd13be357-94999574d09mr635823285a.18.1795031671725;
+        Wed, 18 Nov 2026 11:54:31 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9499b7475b8sm257960785a.18.2026.11.18.11.54.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Nov 2026 11:54:31 -0800 (PST)
+Message-ID: <c7f0c78a-47c1-4dfb-bf21-808e25f05611@gmail.com>
+Date: Wed, 18 Nov 2026 11:54:28 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -63,84 +90,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 0000/2151] 6.18.65-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20261118150121.603863898@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On 11/18/26 06:28, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.65 release.
+> There are 2151 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 20 Nov 2026 14:55:45 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.65-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+perf fails to build with:
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+util/annotate-data.c: In function 'global_var__collect':
+util/annotate-data.c:765:30: warning: implicit declaration of function 
+'die_get_type_die'; did you mean 'die_get_typename'? 
+[-Wimplicit-function-declaration]
+   765 |                         if (!die_get_type_die(dwarf, 
+pos->die_off, pos->die_tag,
+       |                              ^~~~~~~~~~~~~~~~
+       |                              die_get_typename
+util/annotate-data.c:765:71: error: 'struct die_var_type' has no member 
+named 'die_tag'
+   765 |                         if (!die_get_type_die(dwarf, 
+pos->die_off, pos->die_tag,
+       | 
+       ^~
+util/annotate-data.c:766:50: error: 'struct die_var_type' has no member 
+named 'from_alt'
+   766 |                                               pos->from_alt, 
+&type_die))
+       |                                                  ^~
+util/annotate-data.c:777:44: error: 'struct die_var_type' has no member 
+named 'from_alt'
+   777 |                                         pos->from_alt);
+       |                                            ^~
+util/annotate-data.c: In function 'get_global_var_type':
+util/annotate-data.c:835:26: warning: implicit declaration of function 
+'die_same_file' [-Wimplicit-function-declaration]
+   835 |                         !die_same_file(cu_die, type_die));
+       |                          ^~~~~~~~~~~~~
+util/annotate-data.c: In function 'update_var_state':
+util/annotate-data.c:873:42: error: 'struct die_var_type' has no member 
+named 'die_tag'
+   873 |                                       var->die_tag, 
+var->from_alt, &mem_die))
+       |                                          ^~
+util/annotate-data.c:873:56: error: 'struct die_var_type' has no member 
+named 'from_alt'
+   873 |                                       var->die_tag, 
+var->from_alt, &mem_die))
+       |                                                        ^~
 
-[ Upstream commit 72f34d429f6e51b0ef8c43ab7667c4fb4099dd46 ]
-
-Shared floor RCGs use the cached parked_cfg whenever CCF considers the
-clock disabled. Unlike the other shared RCG variants, their ops do not
-initialize that cache, leaving it zeroed until the first disable or rate
-change. This can make registration report an undivided XO configuration
-instead of the boot-programmed parent and divider.
-
-Initialize parked_cfg from CFG_REG without parking or otherwise changing
-the hardware. Propagate read failures so a clock with unknown initial
-state is not registered.
-
-Fixes: aec8c0e28ce4 ("clk: qcom: rcg2: add clk_rcg2_shared_floor_ops")
-Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-1-5531cb00514b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/clk/qcom/clk-rcg2.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 6aa9dcdabffde..c811ed72c26ca 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1373,7 +1373,20 @@ const struct clk_ops clk_rcg2_shared_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
- 
-+static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+
-+	/*
-+	 * Read the config register so that the parent is properly mapped at
-+	 * registration time.
-+	 */
-+	return regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG,
-+			   &rcg->parked_cfg);
-+}
-+
- const struct clk_ops clk_rcg2_shared_floor_ops = {
-+	.init = clk_rcg2_shared_no_init_park,
- 	.enable = clk_rcg2_shared_enable,
- 	.disable = clk_rcg2_shared_disable,
- 	.get_parent = clk_rcg2_shared_get_parent,
-@@ -1385,19 +1398,6 @@ const struct clk_ops clk_rcg2_shared_floor_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_shared_floor_ops);
- 
--static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
--{
--	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
--
--	/*
--	 * Read the config register so that the parent is properly mapped at
--	 * registration time.
--	 */
--	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->parked_cfg);
--
--	return 0;
--}
--
- /*
-  * Like clk_rcg2_shared_ops but skip the init so that the clk frequency is left
-  * unchanged at registration time.
 -- 
-2.53.0
-
-
-
+Florian
