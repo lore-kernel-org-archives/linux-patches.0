@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018135;
-	b=nwYyGvE547hl9NueGIYtywRI3QBWad4U3CkP6aNCU8u4T81hF+ms1F3OmxGNkr/3mM+Y
-	 GjJYxg5HKJdmfhNmkNscvcmJ09DGkxNjHJrSKzmzDoRReITZMilKbwcPCgRFrdijCwRAH
-	 xnXeMOeGvAAjZIUWhsc3qyx1v2uJEvN61ocqxRbQeNrz9AA1uHrNwUAEwJzT/3gxnWeHV
-	 bBK53CYv5JczehITY82ZSlhVVCsq5Fi0HWUvyUuu9fFH6QQRmH3QypEBKF6uwyy7oubsF
-	 WppPtc0bwkhagmhuOFyRpC1GKbIxn6juZb/0H8yd+l22xH3rmnlhwJF3jWHzpOchVQA==
+	t=1795018138;
+	b=vRw4CNCKeusGi5oR7HNvXEI7iFebE7zq/sRIWIYHyiUEiLtP2ZCoRzPKtk/5O0N7yuo8
+	 HYPeMC6Ry+cvxsu7rChVqk9OYqKL2fVuaLXKObro2rbEVfzaRVCatyO+fL4evZW3SZfox
+	 lOI/ZAsXrL9KEBSn/TLgasTfEk2E6xMUWszu4haxcJX5m7cOQN1Z/H0qNLUd60GlwAq/N
+	 0lcgBR/+majtn1ZK6SEt2d5IKOgfaenWCXD3pUmyDBqD1ac+GEq8tOZG9LypBqoc4s5xj
+	 dR+7wkUgyZuGrBcPjktJ7I4nyKSSXMGJ6Y06Bu7wUDNwtDW6gn9K5GUobmQM+x4H2Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zvq4ZJ3sy+sprJFDDNZCzYlq/mHWTOv5IJzZvkWVOSI=;
-	b=cPJ7uefCrNBwE4DsV/qvX6KnBcDHQedJpviMA9Io6snsWkaNNVtXHIwAq6cnpWLHIhhQ
-	 LVCYGc5cae503PWOP9LSVXNPwGs0NlhQuk4WMfAfB4gYPWxvXuwIoTg69thGXaMJA47RL
-	 bxMnyM0Ga3GYFwzlQaw6+iZq9AdUj/Y15Weh66JAkuRKEPDhnHLs1QO+gEF1JrtOUSVMl
-	 fyxh2Si1UiooVXs7lov4BYJBFdvkwBQnGRtdV0Wf7akIPWEXgCr3KFTcZrl6URfutFRZV
-	 jWjHbCpCXraGzXadgkqc5kNrRnH7Ofq1KtRItdyDsBBUVE8MTj1yglC4pEjjePOCL3Q==
+	bh=BJFMNO679uWuiav4lXtLJroMgCejosyC0eZ0ec9u9ck=;
+	b=lOpv5+/DUlQBVJ72nv62YPxrfHvEmElqbW4cMW0BrIIxKPDgEZuDohQV1ObAWW+cCbgz
+	 yGeMvUg09BNhbQNAdvYxL0bp8DFLsojb0ErSEO3//7t3w//z4oQNBz4+chhQmIdIn/5Wk
+	 9D4BIm+eoyFFkLoJMyhBbCGkl83Oq8dwS8CPboc/byR+rURPNW1kLpRRXbEuJKKryPpSz
+	 BNyx+5iK6ZfDyAiTBKD9gWG+5tLIrcxJac+yNDdKBTkDLSWin8Zoib8XuR5uZnuHO9zPB
+	 Ber8J10bBThpMgsQOYnxPyBILBtREg4HtZuCUgf2y84F5zwtUrzW0ii2WekXgiAOgRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UySFmY6Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ssvi55NH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA0606A320;
-	Wed, 18 Nov 2026 16:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CF460A2609;
+	Wed, 18 Nov 2026 16:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UySFmY6Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D861F000C4;
-	Wed, 18 Nov 2026 16:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ssvi55NH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA7B1F000C5;
+	Wed, 18 Nov 2026 16:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018134;
-	bh=Zvq4ZJ3sy+sprJFDDNZCzYlq/mHWTOv5IJzZvkWVOSI=;
+	s=korg; t=1795018137;
+	bh=BJFMNO679uWuiav4lXtLJroMgCejosyC0eZ0ec9u9ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UySFmY6Qxl0SmFiqQqkq1wbRczAqrEBB7LCnqU10LqJ9pv7X5yYHECR3Ouveh7J01
-	 CeancV6z09DHtAWtmyWkSGyzBPNl7SDbd7drGUHUYm3YvBbOLXpObOunjhLOyr4mu4
-	 QyvBHw9A3W03ya9/J+HIlD/kjYKtc2XpO6sNeVJc=
+	b=Ssvi55NHvuK2DoiKg0DXr+zCWawmLQFwneJ7rQPe59olCcoh4LzCy8XY7sbDs2/WG
+	 MFQx3AEth4GISLsPqw1Ypi2maG49QLtPKtJomXlDudTCAPDlOX4yNyYs+VC/+/ErrX
+	 ur203Dlgy5tI7XudhARK+M0zEgVVmgO+X6C+AjF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1118/2651] misc: nsm: fix CBOR short-length decoding
-Date: Wed, 18 Nov 2026 15:39:18 +0100
-Message-ID: <20261118150328.257741965@linuxfoundation.org>
+Subject: [PATCH 7.3 1119/2651] mei: vsc-tp: initialize IRQ state before requesting interrupt
+Date: Wed, 18 Nov 2026 15:39:19 +0100
+Message-ID: <20261118150328.293977691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,60 +67,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 6edddc1d101bfd5cafc94ca2dffaf13e4394662d ]
+[ Upstream commit 7754a2924604ea442ef03ed8fc12ccc9221a2e98 ]
 
-CBOR encodes byte-string lengths from 0 through 23 directly in the
-additional-information field. cbor_object_get_array() only handles 23,
-so shorter byte strings leave array_len uninitialized. Reserved values
-28 through 30 and the unsupported indefinite-length encoding also fall
-through without assigning it.
+request_threaded_irq() enables the interrupt before returning, so the
+threaded handler may schedule work while the probe is still initializing
+its mutexes and work item. Initialize that state first and only free the
+IRQ on paths where the request succeeded.
 
-parse_resp_get_random() then uses the indeterminate value for bounds
-checking and as the byte count returned to the hwrng core. This can
-reject a valid short response or report an incorrect amount of entropy.
-
-Decode the complete inline-length range and reject unsupported values.
-Extended definite-length encodings retain their existing behavior, and
-the existing size and INT_MAX checks continue to bound the returned
-slice.
-
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
-Assisted-by: unnamed:claude-opus-4.8 typestate
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://patch.msgid.link/20260815151745.3758574-1-ruoyuw560@gmail.com
+Fixes: 566f5ca97680 ("mei: Add transport driver for IVSC device")
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260929132245.2152433-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/nsm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/mei/vsc-tp.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/misc/nsm.c b/drivers/misc/nsm.c
-index f1bdde2b77e13..b6d3fa79a5e89 100644
---- a/drivers/misc/nsm.c
-+++ b/drivers/misc/nsm.c
-@@ -117,7 +117,7 @@ static int cbor_object_get_array(u8 *cbor_object, size_t cbor_object_size, u8 **
- 	array_len_p = &cbor_object[1];
+diff --git a/drivers/misc/mei/vsc-tp.c b/drivers/misc/mei/vsc-tp.c
+index ce877cb957574..5410ec1c93286 100644
+--- a/drivers/misc/mei/vsc-tp.c
++++ b/drivers/misc/mei/vsc-tp.c
+@@ -496,30 +496,30 @@ static int vsc_tp_probe(struct spi_device *spi)
+ 	init_waitqueue_head(&tp->xfer_wait);
+ 	tp->spi = spi;
  
- 	switch (cbor_short_size) {
--	case CBOR_SHORT_SIZE_MAX_VALUE: /* short encoding */
-+	case 0 ... CBOR_SHORT_SIZE_MAX_VALUE: /* short encoding */
- 		array_len = cbor_short_size;
- 		break;
- 	case CBOR_LONG_SIZE_U8:
-@@ -132,6 +132,8 @@ static int cbor_object_get_array(u8 *cbor_object, size_t cbor_object_size, u8 **
- 	case CBOR_LONG_SIZE_U64:
- 		array_len = be64_to_cpup((__be64 *)array_len_p);
- 		break;
-+	default:
-+		return -EFAULT;
++	mutex_init(&tp->mutex);
++	mutex_init(&tp->event_notify_mutex);
++	INIT_WORK(&tp->event_work, vsc_tp_event_work);
++
+ 	irq_set_status_flags(spi->irq, IRQ_DISABLE_UNLAZY);
+ 	ret = request_threaded_irq(spi->irq, NULL, vsc_tp_isr,
+ 				   IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+ 				   dev_name(dev), tp);
+ 	if (ret)
+-		return ret;
+-
+-	mutex_init(&tp->mutex);
+-	mutex_init(&tp->event_notify_mutex);
+-	INIT_WORK(&tp->event_work, vsc_tp_event_work);
++		goto err_destroy_lock;
+ 
+ 	/* only one child acpi device */
+ 	ret = acpi_dev_for_each_child(ACPI_COMPANION(dev),
+ 				      vsc_tp_match_any, &adev);
+ 	if (!ret) {
+ 		ret = -ENODEV;
+-		goto err_destroy_lock;
++		goto err_free_irq;
  	}
  
- 	if (cbor_object_size < array_offset)
+ 	pinfo.fwnode = acpi_fwnode_handle(adev);
+ 	pdev = platform_device_register_full(&pinfo);
+ 	if (IS_ERR(pdev)) {
+ 		ret = PTR_ERR(pdev);
+-		goto err_destroy_lock;
++		goto err_free_irq;
+ 	}
+ 
+ 	tp->pdev = pdev;
+@@ -527,9 +527,10 @@ static int vsc_tp_probe(struct spi_device *spi)
+ 
+ 	return 0;
+ 
+-err_destroy_lock:
++err_free_irq:
+ 	free_irq(spi->irq, tp);
+ 
++err_destroy_lock:
+ 	cancel_work_sync(&tp->event_work);
+ 	mutex_destroy(&tp->event_notify_mutex);
+ 	mutex_destroy(&tp->mutex);
 -- 
 2.53.0
 
