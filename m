@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017892;
-	b=HjAS3lSLnF++WRv/dijkNb+6rPJKm688cZooUeaW7Jq1Uxsm5LtGdB8Be2AyOmeYFHtb
-	 aknvOZMjAgteh2PQcoKfd/Xvjn2rCtoQnK5k7SGDC/Ftqoy97efZDFKzqylrrp88VkdCX
-	 24ciYkUk2xgjxZlaBNHewBFzKVZ7ZjFNYuJ+yC2OB7uljIG4ATN+aFsyqEIKV4X0RTaPH
-	 rDdRNHGOtRhfabDU3LNCInJK+FBgYVx4VmNkntcQmOWBQI+t9IQ1gI0tlmCTpzx3xZZnB
-	 GKycrSYZMgs1fG7isxz9m7UQg8MtnaqO43Neb9910bViWgi7w5cOIuhE5hHxI7IbzKA==
+	t=1795017895;
+	b=4oJFYPJavCNp4Ofc4vRZeVgeI8MLLUmjM66tZYYqxih+Vc66s4nU/lfbakUMhs0MjQiO
+	 ebeOpnW7zTDpaQZ3Er3NIhaTdawRYsmLdNUlRmfKUmVRM8obxqU80pykuxE8+FNjv0tl7
+	 0QAldAenjAwu8f5/8TIZZOSFLV26+hubX3+Chz48jKYUt57/vl8nes+lmHj9jrJgExZ80
+	 PeqCk+5hUd8O3EFv64eYRoW4RqyGqHnJnEsv7MYJmmcBybINRlKUynoTDfpGsMFTqiMZ+
+	 xHhY5EHSRjywlsrYR59L0eX5y1uMJqdrrIEnVhXOr1mnWNVxXhVbyk8JNxVn26kduhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017892;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017895;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jVvQO3Sp4xUwfg72VnvYVD01bOzpw5xMIY6SbFn+hu8=;
-	b=hf+zYRblmzomM3nNtBRjOSHVX9nZ3htcS8tbhry8vEnQBamin9LaodLuEl/7WOVOAI72
-	 R13NBUBkvu0TWlHf3imKwlaVPSF/ggnI613eLCMLlMPCAoCWrxr4e6MqSqNs/pOAKSsm4
-	 XlA90VfnLOcHmWIyx2Ak5F9EXOBoZv1+4FZhz4DgAiRSzgTTdTv68pfJrH533e3jGmFpt
-	 xrJ7eOiNJZnVOPTGPcIrW6UJ2RwmEf/+zSckRKCD8S4Q6Ps8Crg450eHg8wkqZRmZk73O
-	 pW2qfA5LDO0/IBQ3ft/9y3CFD/+MdJ4z0svZy/D6/EFEpPCXsR1UrIsxcgI6ppmihgA==
+	bh=P7QGZOvKVbl8gBtd1583Mx+rJH2vooxNv9f9Ysyw+Oc=;
+	b=sw/FVgYUSRm435Prbcc0v/gJj8Fg7P3xmrXS5N3VT8xC8vHIzJNFLvc0zUPpkuOgieL4
+	 9etTS/IjKYDxBLhqYZDD4wd7cWKmb4wZjHysr5yqEvqvdmsCuWcVpvPMleAyo4I5VXv82
+	 JE4G8F+wTKCFyjq10yxL4+wfph0hrRi9qUkhTPAF1Aq68j3bSGmnl7ALzezPmYhme8WmG
+	 TCVNkPFf0r+dVsDmCqG5alx+vkURr7zVpHhODnq79sKuenASplcgBA2k9RaEvFqAs2nRa
+	 cDjnJnC4VHidJBCEAbXNiCFsyg2cmk67JWKiy/Q9nmVRi87vzgi5GYSlzPAGuYmXq/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nv6Q+nTB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTmTn4xX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D1D606A31C;
-	Wed, 18 Nov 2026 16:04:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F387606A31C;
+	Wed, 18 Nov 2026 16:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nv6Q+nTB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2E01F000C4;
-	Wed, 18 Nov 2026 16:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MTmTn4xX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C761F000C6;
+	Wed, 18 Nov 2026 16:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017892;
-	bh=jVvQO3Sp4xUwfg72VnvYVD01bOzpw5xMIY6SbFn+hu8=;
+	s=korg; t=1795017895;
+	bh=P7QGZOvKVbl8gBtd1583Mx+rJH2vooxNv9f9Ysyw+Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nv6Q+nTB0KW3AtlGlNHtuaGpCpmqcZGbSZiTJ6dECuvicNnsbXttm604PSPBIAqPd
-	 9ewb88G7OWMQ5ChoEsNT/Mo6f3qWmn5jX0chxJE18V3vnUzD79LD5g3c8rVCEs3725
-	 1Wq5odAwpuigx2+RDtr+mtc9RU3YIBQIOjs+Pef0=
+	b=MTmTn4xXqQd7OamnBTSCiXylw/YEZXqXxWGmdoTB7ROPzags5LhVfm+Myn36yHzFh
+	 NNwWzLE8f9YuEzTAH+aWL6x5AX+I3dOXTtBJVltSwNHquO2HOvwrpfIPXBxQiLgXz3
+	 ejBurflR6KaHFvJpapcp/swLK9cDEqI41/5X41cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1005/2651] swim: Return -EROFS when opened with BLK_OPEN_WRITE flag
-Date: Wed, 18 Nov 2026 15:37:25 +0100
-Message-ID: <20261118150324.098838301@linuxfoundation.org>
+Subject: [PATCH 7.3 1006/2651] swim: Fix FDEJECT ioctl for exclusive open
+Date: Wed, 18 Nov 2026 15:37:26 +0100
+Message-ID: <20261118150324.135974499@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,38 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit d8fe777978a12a96cb5d10d6d888720fcba2da2b ]
+[ Upstream commit c76b93df9ae61d8ddebf6aa3bc218252f85e80c6 ]
 
-Write requests are not supported by the driver and produce IO errors as
-shown below. Avoid this by returning -EROFS when opened for writing.
-
-[ 4111.690000] I/O error, dev fd0, sector 2 op 0x1:(WRITE) flags 0x800800 phys_seg 1 prio class 2
-[ 4111.700000] Buffer I/O error on dev fd0, logical block 2, lost async page write
+The eject command from the util-linux package does not work with the swim
+driver: the drive doesn't eject anything and the command fails.
+Apparently, ioctl(fd, FDEJECT) returns -EBUSY when fd is opened O_EXCL.
+Fix this by checking ref_count for either 1 or -1. Either value means that
+the caller is the sole user of the disk.
 
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Tested-by: Stan Johnson <userm57@yahoo.com>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://patch.msgid.link/327be6ca3c92c3411b5dfaeede014ed65a2d0f0f.1790641175.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/ae3ee8e86833a2739d7857460cbe2addf4146088.1790641175.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/swim.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index a67ccd4504b75..d45b789661a0e 100644
+index d45b789661a0e..fe46f9656f8ab 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -630,7 +630,8 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
- 	if (mode & (BLK_OPEN_READ | BLK_OPEN_WRITE)) {
- 		if (disk_check_media_change(disk) && fs->disk_in)
- 			fs->ejected = 0;
--		if ((mode & BLK_OPEN_WRITE) && fs->write_protected) {
-+		if (mode & BLK_OPEN_WRITE) {
-+			/* Write support isn't implemented. */
- 			err = -EROFS;
- 			goto out;
- 		}
+@@ -691,10 +691,11 @@ static int floppy_ioctl(struct block_device *bdev, blk_mode_t mode,
+ 
+ 	switch (cmd) {
+ 	case FDEJECT:
+-		if (fs->ref_count != 1)
+-			return -EBUSY;
+ 		mutex_lock(&swim_mutex);
+-		err = floppy_eject(fs);
++		if (fs->ref_count == -1 || fs->ref_count == 1)
++			err = floppy_eject(fs);
++		else
++			err = -EBUSY;
+ 		mutex_unlock(&swim_mutex);
+ 		return err;
+ 
 -- 
 2.53.0
 
