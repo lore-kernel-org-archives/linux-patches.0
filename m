@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037284;
-	b=dGEV5dtSyk1XMPiotZu7VQu/+nLeZokJvmcAkumUIejHZGj05HRZZV1ncHhzpJG3wc9z
-	 lLWN4eO15G6chlmGAoSsbzffqB2DN2G8NaLbCHMPLuuNRbGG3tSubPPI/HBCBMLCGpyCj
-	 PQD3SqQ2ilaDa6SsDbELPh/MLj80uH2onJE963lecsjtlbmVrKqrCOLIckamjkVf1xW1H
-	 Fgu6ecaWu6tuBbQNq43cLtthKtJU39TR6GhoikX/wvUFKuWq/s3i8Ecj66hGCjYUF7xd8
-	 +fwl3c7pThkV9Ks9uYdVGYSqYmPij3lCwGyZjC83CYGZqiyLf+wnkGfoV0HcyRtx0ag==
+	t=1795037287;
+	b=VrfP1zN8o+O0yXSolK/zOu/R6rYVXlSDoTLXfKBpeyJqCY1lrazsE6bMN4v1JYwnCTgT
+	 OIu7ajbWvAAEySLHe1PSyE8NipZRQ3wwg9LQ6wkQFbediOzNzuY5q9erRCeOeiAGHdso1
+	 eF19aZXd/zeGD4U7GCWN/92p+6cBCVXAsk4SW3tOf7LXglQlDnN69mEgj70yjyHEMPH2h
+	 tTlyavvXNxse8x3rq3o4EDoEYh08vDVWLi4zshIQluoUYyp8tH+5fOGO+tvRpV9ZMQT72
+	 sAYfvbdI7AzSGhBg85CyBwy+mFv2yMIZge+DuI2XaOEm+Trahf3HtAogvQzIlw1Tp/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L7O5A6A9E5FDJZNSRGZF7pXiukrvbtXubeHA9Fnx2zE=;
-	b=l+6u533foqtHMLDjmctVk97QEL8YZylRTy61bo7PIIElKw5xpxai0UXt1DECjsYCl/6s
-	 pMIByKSvP4tJNjx1OsTdE2aPpxg6rnw/1V7MTqmIjaIQOwzR1r8S8MhiCslHt55+HRX1W
-	 qyD927Ui9lAXkNW6J+TaGLmtyd04rrePC56jKoacenUaT1/B7Sx1YPQ+lUMyk6TIFssNs
-	 MIHrx6Xm2Ax2JBRTOq2XtPv/UkZ+p/qQlUl8y4WAFNkprSvLynNk/fWoRUZiOgVxqA7/h
-	 NU5ov1Vwe1hMlRSp8pW48DmNzDeat0R2gNrZtLLUvRQo0zjDVSG1Sc2JJVFseNOshug==
+	bh=BBoib4AKuJQGVLjyuFl/1lyUipjtZcI7AIDY8DNujo4=;
+	b=p9MksrrUjyOFbDyNRfmEpD9MkHrY0khtphtSuxI/DH1rTn2MzIdfBEjDnWFWjV6aWAWd
+	 2WSv5MQFxxRCrtNOvfeoeQIn9y6+nugZmRhUPRAlRU1qidQuqMWzrwfre9C9Q0FXTEFRj
+	 vM58N0t+IIYILhngTcF6uAZv1IHzno3gVAH8jXlPkWkrnLA2BGOs0nYW13sWasRL+YsCJ
+	 UPGfSyoMaQTg5OYgsqixIe922lBO0+AlnywOttwFcm59iECvElCCNeM5bm/U6OjEIuk1P
+	 jUUNxElJ/aHrGXL/wzo5AXtvndJgoOhzXcCrJNXW6mYdrowyHl4QRDj1rwDJd38o/bQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhB3UcaJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TRbkJGPm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48029606A31C;
-	Wed, 18 Nov 2026 21:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D9F606A325;
+	Wed, 18 Nov 2026 21:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhB3UcaJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B861F000C4;
-	Wed, 18 Nov 2026 21:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TRbkJGPm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8AF1F000C4;
+	Wed, 18 Nov 2026 21:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037284;
-	bh=L7O5A6A9E5FDJZNSRGZF7pXiukrvbtXubeHA9Fnx2zE=;
+	s=korg; t=1795037287;
+	bh=BBoib4AKuJQGVLjyuFl/1lyUipjtZcI7AIDY8DNujo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DhB3UcaJYPiKYFMUEDPqdKhHgn4kJARFOpDZcfelv/JkHariusyTg5EQ+OucKmwVC
-	 Gh369l0e1cUc7qtGASlfPGRhfClKHVMFljulGiP6+U6YaGoloE+2Z2uZRD+Z5uAN+O
-	 te0wjl7nX0Ekeuox8eLiD7EbS/tzNhhpmgGj/OlU=
+	b=TRbkJGPmIM9eKd7kl8LzCWZU92v+xVnS9DwWvgM5EQWQ80OwTRwj1IqmxFY8cKV6z
+	 k4XB0rZ4mAFXNAqCq0I6pCpOLfzzkb+wo0SS9YgOI6nW4Fg+p0Z624iigYJ5gordoB
+	 C/5QcznvKnrJS8q2FlMkcTZhuBfOKHr7Q7yaKEog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Simon Horman <horms@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Christian Schmidbauer <opensource@grische.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1336/3318] net: free_netdev: exit earlier if dummy
-Date: Wed, 18 Nov 2026 15:32:38 +0100
-Message-ID: <20261118150400.435784051@linuxfoundation.org>
+Subject: [PATCH 6.6 1354/3318] net: core: Implement dstats-type stats collections
+Date: Wed, 18 Nov 2026 15:32:56 +0100
+Message-ID: <20261118150401.045964657@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,43 +71,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit f8d05679fb3faae478d604177b0c188b340371cd ]
+[ Upstream commit 94b601bc4f8528262b2b83194b7fd3fc2a6da75a ]
 
-For dummy devices, exit earlier at free_netdev() instead of executing
-the whole function. This is necessary, because dummy devices are
-special, and shouldn't have the second part of the function executed.
+We currently have dev_get_tstats64() for collecting per-cpu stats of
+type pcpu_sw_netstats ("tstats"). However, tstats doesn't allow for
+accounting tx/rx drops. We do have a stats variant that does have stats
+for dropped packets: struct pcpu_dstats, but there are no core helpers
+for using those stats.
 
-Otherwise reg_state, which is NETREG_DUMMY, will be overwritten and
-there will be no way to identify that this is a dummy device. Also, this
-device do not need the final put_device(), since dummy devices are not
-registered (through register_netdevice()), where the device reference is
-increased (at netdev_register_kobject()/device_add()).
+The VRF driver uses dstats, by providing its own collation/fetch
+functions to do so.
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Dust Li <dust.li@linux.alibaba.com>
+This change adds a common implementation for dstats-type collection,
+used when pcpu_stat_type == NETDEV_PCPU_STAT_DSTAT. This is based on the
+VRF driver's existing stats collator (plus the unused tx_drops stat from
+there). We will switch the VRF driver to use this in the next change.
+
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240607-dstats-v3-2-cc781fe116f7@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Schmidbauer <opensource@grische.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/dev.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 19d3149d320db..5840a526af08e 100644
+index a5e9e63b67965..3c533479b45f7 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -11099,7 +11099,8 @@ void free_netdev(struct net_device *dev)
- 	dev->xdp_bulkq = NULL;
+@@ -10719,6 +10719,54 @@ void netdev_run_todo(void)
+ 	}
+ }
  
- 	/*  Compatibility with error handling in drivers */
--	if (dev->reg_state == NETREG_UNINITIALIZED) {
-+	if (dev->reg_state == NETREG_UNINITIALIZED ||
-+	    dev->reg_state == NETREG_DUMMY) {
- 		netdev_freemem(dev);
- 		return;
++/* Collate per-cpu network dstats statistics
++ *
++ * Read per-cpu network statistics from dev->dstats and populate the related
++ * fields in @s.
++ */
++static void dev_fetch_dstats(struct rtnl_link_stats64 *s,
++			     const struct pcpu_dstats __percpu *dstats)
++{
++	int cpu;
++
++	for_each_possible_cpu(cpu) {
++		u64 rx_packets, rx_bytes, rx_drops;
++		u64 tx_packets, tx_bytes, tx_drops;
++		const struct pcpu_dstats *stats;
++		unsigned int start;
++
++		stats = per_cpu_ptr(dstats, cpu);
++		do {
++			start = u64_stats_fetch_begin(&stats->syncp);
++			rx_packets = u64_stats_read(&stats->rx_packets);
++			rx_bytes   = u64_stats_read(&stats->rx_bytes);
++			rx_drops   = u64_stats_read(&stats->rx_drops);
++			tx_packets = u64_stats_read(&stats->tx_packets);
++			tx_bytes   = u64_stats_read(&stats->tx_bytes);
++			tx_drops   = u64_stats_read(&stats->tx_drops);
++		} while (u64_stats_fetch_retry(&stats->syncp, start));
++
++		s->rx_packets += rx_packets;
++		s->rx_bytes   += rx_bytes;
++		s->rx_dropped += rx_drops;
++		s->tx_packets += tx_packets;
++		s->tx_bytes   += tx_bytes;
++		s->tx_dropped += tx_drops;
++	}
++}
++
++/* ndo_get_stats64 implementation for dtstats-based accounting.
++ *
++ * Populate @s from dev->stats and dev->dstats. This is used internally by the
++ * core for NETDEV_PCPU_STAT_DSTAT-type stats collection.
++ */
++static void dev_get_dstats64(const struct net_device *dev,
++			     struct rtnl_link_stats64 *s)
++{
++	netdev_stats_to_stats64(s, &dev->stats);
++	dev_fetch_dstats(s, dev->dstats);
++}
++
+ /* Convert net_device_stats to rtnl_link_stats64. rtnl_link_stats64 has
+  * all the same fields in the same order as net_device_stats, with only
+  * the type differing, but rtnl_link_stats64 may have additional fields
+@@ -10792,6 +10840,8 @@ struct rtnl_link_stats64 *dev_get_stats(struct net_device *dev,
+ 		netdev_stats_to_stats64(storage, ops->ndo_get_stats(dev));
+ 	} else if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_TSTATS) {
+ 		dev_get_tstats64(dev, storage);
++	} else if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_DSTATS) {
++		dev_get_dstats64(dev, storage);
+ 	} else {
+ 		netdev_stats_to_stats64(storage, &dev->stats);
  	}
 -- 
 2.53.0
