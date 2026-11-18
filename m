@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037560;
-	b=1LGQcwUxU6AH0SXJgbaelS8t8LOzj88X+u7/+dkiBlICAj5HZrwbduAfx7ND2cllS35g
-	 LWF/NXTUMJNQ0Hy76LINYXs6ZtXetQDFd349ow8R3AFpdem7nnDNGSMNtmk/KFNiWppHp
-	 gkdKURLHRYwWuY7NDZ6eANrNJJKOUMkmtGmSJL57+/TgFgNwvHDFhECdIaFEAbcgnYN7q
-	 d8yYumQJjAh1/T+XFKvr5WfwujU70/1CBtBms+9OGLxTRqGD6eeUYpN70z8GA69FeC2Bg
-	 jk3zfYtZQWlebXt7dnGFw6rXn8m13sUeho/mUyomZYBIxPUJmCxUF+0oS5y8mH7hKFQ==
+	t=1795037563;
+	b=xMB3jq2qEOBTQCwdqedYQAN8A0T8jSnXJ/pOu5igs8cwPjI7i0XN9tRpuCdHaVCwsx+I
+	 k1bcw3MX4DG01uPCXsSDTbjGCUVUG1lqXFxflXAER7ar5c4WcnlaaNkMf0/Wbgi8jrvtB
+	 DftNyIbMbdPH4Kom9TKNnOI5XQEzKxNTdkfMFyfIx+uombAb/QBqNdC7hrPGGkSAMSBDR
+	 kz2PJQyzKo5cOo7zWjl0nV/ux7TJAB54A47u15qfHkoAE14aqr61daeTaxBZpl9qt/Wq0
+	 VIsvZwPK4xsradAdUxCIsZ8g5NjzK63oA1Co+6o/8cZ2hy8IJUe+J/qoTY8oWXmP2eQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037560;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037563;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=XgKJctQvpyHJ3DqGXPZ4V6iShuV+kb8JHZ9xNwJOJAk=;
-	b=cjDpSgBdyDeYaB/1QnkHEupnEH71t1grh6HCFICXIG/lyKLWllGPXBVXhVYFyJT43hBm
-	 tgf0uI7xJd9yH0OqNUcRcdSZWI2EvGuxECozodPU35vD0+k4SKAo+lWvxBhMASe4v66iS
-	 A9tM5E8yMfULwbLNZyOulJQbBMNSO9LDr4jPnRA5XRhNO/7uCZH1Qmb4vd7ZoUzb6WJbH
-	 m93CRTiy7bYKb0AYz/T4TBhZL5C5gBjgaYZ1O+y0fYmUWYAd2dQ1RIFaCAbDG1itkcjZg
-	 xO6r27/FCdzZwHV1VW38GfVZZ/kbgoVR3LP55W6JP1hLY/mAQKSWSant09iSfki6f3g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=D7Or21B/fpYenGv8+OCBOaGpzVf4gVjFWmBqGt1rPm8=;
+	b=Jt1AIpAcDR6jsDgnIqHehawQ0ZFqzJA1yDGFFzxZsAJBR2iYIjVC++udB31Zrjga217h
+	 ML8sLsdUwt9lu6R6iZ8/VGgpGJlG7NGMAKOLOZuNb8E52vhnO5gtRUE1Hu9bes0ZnajJi
+	 xWbfYSVRfbmH35A7upqDrOn94ZzQ1X+EU0AFSqVK+ViGM5elO/u1aBHpTP4LRaGyaQwEV
+	 JFLsqZBRs553NTBDiGwsr8rVQ913HGH2TpwgbJg/ytjVWyJwoaf8YS/i1AStohaUQJlqM
+	 P1oI7GeX2w/UVIHll1o+OYb2mZQKaw2gImoPdYkBdKpjxVELHfX8Q5om0cMCUj7IdAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kDlE/sA1";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ObgJ2h/a";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B82606A325;
-	Wed, 18 Nov 2026 21:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4AA606A31C;
+	Wed, 18 Nov 2026 21:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kDlE/sA1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFF51F000C4;
-	Wed, 18 Nov 2026 21:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ObgJ2h/a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40F21F000C4;
+	Wed, 18 Nov 2026 21:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037560;
-	bh=XgKJctQvpyHJ3DqGXPZ4V6iShuV+kb8JHZ9xNwJOJAk=;
+	s=korg; t=1795037563;
+	bh=D7Or21B/fpYenGv8+OCBOaGpzVf4gVjFWmBqGt1rPm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kDlE/sA1R57cmIfdcF1k3wTh1nV7o465iPeudztgQyIblEmrS4mh68aB2nZn9TPjD
-	 JLw0urshWjzdYI/KDROTef1OYkUCLJ5kedVBatAnANbNGfdPhbwr8E8wBB+FSY/bB9
-	 4iERtDz6WCKy3RXolQfwHh6f2chCoH+JYfsYSRLI=
+	b=ObgJ2h/abvMg5QwLQVgPJz6Jw1MNHsDKnYlmBwXOq4SJ0dBE6sit8SYE8mpkQN154
+	 R4WcKroYvBFoto4LuI9xDRH8B2REnekouAz37rOm8aza/jtGIWKG4vB1ddXPtIc6Pn
+	 FjKIbPw+Y30v7f4JWTvblqA6wa+QaSglpHHVRi2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jan Kara <jack@suse.cz>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Yingjie Wang <x-professor@outlook.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1441/3318] tmpfs: preserve explicitly disabled quota limits
-Date: Wed, 18 Nov 2026 15:34:23 +0100
-Message-ID: <20261118150404.049518333@linuxfoundation.org>
+Subject: [PATCH 6.6 1424/3318] scsi: bsg: Report synchronous data copyback failures
+Date: Wed, 18 Nov 2026 15:34:06 +0100
+Message-ID: <20261118150403.434778794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,117 +64,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Yingjie Wang <x-professor@outlook.com>
 
-[ Upstream commit d5d861ee303da01e59fdf8e8b2f7096c76e7efd5 ]
+[ Upstream commit a52f2ad45726d788755b525adcf51f65a6b836ff ]
 
-An administrator’s decision to disable a user’s or group’s quota
-limits can be silently lost when tmpfs restores the mount defaults
-after releasing and reacquiring the quota record. This can cause
-later file creation or writes to fail with EDQUOT, even though the
-administrator has explicitly disabled quota limits for the user or
-group.
+scsi_bsg_sg_io_fn() ignores the result of blk_rq_unmap_user(). For a
+data-in command that uses a bounce buffer, unmapping copies the completed
+data to userspace. If that copy fails, SG_IO can report success despite the
+copyback failure.
 
-do_set_dqblk() sets DQ_FAKE_B when all block and inode limits are zero.
-This means quota enforcement is disabled for that user or group.
-shmem_is_empty_dquot() treats the flag as a reason to discard the entry
-from the mount's quota tree. The next shmem_acquire_dquot() finds no
-saved entry and recreates it with the mount's default hard limits.
+Capture the unmap status. Preserve an earlier sense-buffer copy error and
+otherwise return the data copyback error. This matches the error precedence
+used by scsi_complete_sghdr_rq().
 
-If the cached dquot is reused, DQ_FAKE_B remains set: Q_GETQUOTA reports
-the restored defaults, but enforcement is still disabled. Once that
-dquot has been reclaimed, a new dquot enforces the restored defaults.
+On x86_64, a virtio-scsi INQUIRY with an unaligned PROT_NONE destination
+made ioctl() return 0 in 20/20 runs before this change and return -1 with
+errno EFAULT in 20/20 runs afterward. Writable controls succeeded in 20/20
+runs on both kernels.
 
-Remove the DQ_FAKE_B test. Only discard entries with zero usage, zero
-soft limits and hard limits equal to the mount defaults. Explicitly
-disabled limits are then preserved whenever the mount defaults are
-nonzero.
-
-Explicitly disabled limits now retain a quota-tree entry, just like other
-limits that differ from the mount defaults.
-
-Rename shmem_is_empty_dquot() to shmem_is_default_dquot() to describe
-the check for default values.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: de4c0e7ca8b5 ("shmem: Add default quota limit mount options")
+Fixes: 10e8855b9451 ("bsg: add SG_IO to SG v4")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: code cleanups; rewrite description ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-3-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Reviewed-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/2561d633cc8cef513d75eb1df260046a4971e783.1792772194.git.x-professor@outlook.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem_quota.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/scsi/scsi_bsg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/mm/shmem_quota.c b/mm/shmem_quota.c
-index 23589d18a532a..1568829297451 100644
---- a/mm/shmem_quota.c
-+++ b/mm/shmem_quota.c
-@@ -236,7 +236,7 @@ static int shmem_acquire_dquot(struct dquot *dquot)
- 	return ret;
- }
+diff --git a/drivers/scsi/scsi_bsg.c b/drivers/scsi/scsi_bsg.c
+index a9a9ec086a7e3..e2e4b8bb559f9 100644
+--- a/drivers/scsi/scsi_bsg.c
++++ b/drivers/scsi/scsi_bsg.c
+@@ -15,7 +15,7 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	struct scsi_cmnd *scmd;
+ 	struct request *rq;
+ 	struct bio *bio;
+-	int ret;
++	int ret, unmap_ret;
  
--static bool shmem_is_empty_dquot(struct dquot *dquot)
-+static bool shmem_is_default_dquot(struct dquot *dquot)
- {
- 	struct shmem_sb_info *sbinfo = dquot->dq_sb->s_fs_info;
- 	qsize_t bhardlimit;
-@@ -250,21 +250,21 @@ static bool shmem_is_empty_dquot(struct dquot *dquot)
- 		ihardlimit = sbinfo->qlimits.grpquota_ihardlimit;
- 	}
+ 	if (hdr->protocol != BSG_PROTOCOL_SCSI  ||
+ 	    hdr->subprotocol != BSG_SUB_PROTOCOL_SCSI_CMD)
+@@ -89,7 +89,9 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	else
+ 		hdr->dout_resid = scmd->resid_len;
  
--	if (test_bit(DQ_FAKE_B, &dquot->dq_flags) ||
--		(dquot->dq_dqb.dqb_curspace == 0 &&
--		 dquot->dq_dqb.dqb_curinodes == 0 &&
--		 dquot->dq_dqb.dqb_bsoftlimit == 0 &&
--		 dquot->dq_dqb.dqb_isoftlimit == 0 &&
--		 dquot->dq_dqb.dqb_bhardlimit == bhardlimit &&
--		 dquot->dq_dqb.dqb_ihardlimit == ihardlimit))
--		return true;
--
--	return false;
-+	/*
-+	 * Defaults are zero usage and soft limits, and the mount's hard limits.
-+	 * DQ_FAKE_B only means that *all* limits are zero, which need not match
-+	 * the mount defaults.
-+	 */
-+	return dquot->dq_dqb.dqb_curspace == 0 &&
-+	       dquot->dq_dqb.dqb_curinodes == 0 &&
-+	       dquot->dq_dqb.dqb_bsoftlimit == 0 &&
-+	       dquot->dq_dqb.dqb_isoftlimit == 0 &&
-+	       dquot->dq_dqb.dqb_bhardlimit == bhardlimit &&
-+	       dquot->dq_dqb.dqb_ihardlimit == ihardlimit;
- }
- /*
-- * Store limits from dquot in the tree unless it's fake. If it is fake
-- * remove the id from the tree since there is no useful information in
-- * there.
-+ * Remove the ID from the tree if it has no usage and its limits match
-+ * the mount defaults. Otherwise, save its limits for the next acquire.
-  */
- static int shmem_release_dquot(struct dquot *dquot)
- {
-@@ -299,7 +299,7 @@ static int shmem_release_dquot(struct dquot *dquot)
- 	return -ENOENT;
+-	blk_rq_unmap_user(bio);
++	unmap_ret = blk_rq_unmap_user(bio);
++	if (!ret)
++		ret = unmap_ret;
  
- found:
--	if (shmem_is_empty_dquot(dquot)) {
-+	if (shmem_is_default_dquot(dquot)) {
- 		/* Remove entry from the tree */
- 		rb_erase(&entry->node, info->dqi_priv);
- 		kfree(entry);
+ out_put_request:
+ 	blk_mq_free_request(rq);
 -- 
 2.53.0
 
