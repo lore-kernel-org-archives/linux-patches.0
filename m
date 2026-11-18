@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048555;
-	b=XA2WCfYASqvqNbagQlgcgZd6wOuBBdtRADd88B4b3LgMiBsoEy7OYQv4TDkQcEgPd9mK
-	 EqBVFtB2kc2rs3SdWmehKKAhytNXfTNIyJysfLyYCDCoOE+Ja604seNMnBNXwGIFWEAVG
-	 fUp73ynKiZ+B20ANqLy8Hlfmp+BegMKBSiTC+c7OUU9pcqFUSBZrZn7o/8slEREkKCsCd
-	 DVo0MIvvuXd2JSn9iQRPYondoJ9YyPeQ/w0Y2UfxGnC4xqE1koOouUH/sjDFwi+yZLzpW
-	 MWpwNWG4iZgACFMGdmaHxHgwVj2TVmwp/RhSAKYDYBiYn4zr2q18A1K/y+yam3yDPcg==
+	t=1795048558;
+	b=st7TawMhTUouw0s8aIt4wCMsh5TQz1jghLXJ5gVB5ijCSDMwf477qFL6AnY/hhnta9B2
+	 nLOJvg8x4iQrJg3uCp2xTCrBtsAGeq1xG0haEjNrvvDcxiIsKSEebNX/Wb9zl0rna8aVp
+	 bUCNXvUHosUXEqkJQMrSmpqhVWYm+syecuU06oEAdxEGB9WoYwVoUb/2zzHBvDeuxmBtR
+	 AXlmPRdBPD9CpaQxbD2+H3xfyZ3JwKLcrbq5doyFDMiIGXNMt18kmLkqUDrjDjLFu2rMF
+	 6VnlDg5Li0h7XtNybHSTGZCUM4Sr/idk96Pzd5V4vCSC9OFLE4Bowq16wY8diOHWVLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hzqtjie7EwP2Ee8cM7kSQ7NpML2dRUhlgoH1maFg1w8=;
-	b=IGXRDiRxEHb0VBSS0MIZsjF5l6c2XyKSyjLCijgKwooKqp7K3sNJldsCL3wlQLNW/Oew
-	 LgvM+gmE/g0SWrYbiPy9+VhCobrqpAtBbDEnjf27cAEtqG1W2v8E1ovaeuP0b+H47ywtb
-	 oG3ZR/0+2chG5HoKmeTXNm9VIO7l3taQpC+b49/lFEx9mQxv+BkhoUA9SJFE0p2isIeLl
-	 XBJW5lNm4r68A1qz+g3FoM8Xli7pIn4F3V2D+5Jp+8t+jkmwRL7k2Vi+AqteXeaS6QGbD
-	 WTmZlWbshxkYUdrP2ay/LGnRAk30fJFmpxAXtjUotZ1l/zqsL80uBx9mQJohfAWPkkA==
+	bh=BzPxXuymIHvJ8Qh+me5hHJxhBOmWya9l4hs0v5FKtHo=;
+	b=5amWZrwCTO1KYgmHoRmOL0d6r/nOeEKD1R6aphJsQCREZlg329Popzu+1CfNebAvHPzj
+	 7imMwV8a6z5qZK9yJCm729dx122seQ4Z2m1pAvsRJQEIb+L3CcMofb8uKpgMWzMig/fNP
+	 s/Xsoq35xbWjFRofZsctFpIBwe8SLoHtd7pFTuwJDu+Y5BsaF2YLhOh/33ebiCp1DjC6E
+	 uVzneS4W6lCM68l9bYMg2nljHeYVtxD9SyI2CxmEnU+ACSYhwJwQjrT3RdTsDnoYp59DY
+	 rIu4AL2zdoHfeBSjOHWlz1o3gyIvxVzDOlzQiZhf5Dv749kbZIqq3Eq/rDhbtFV8MLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2E2fLLP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0R45JqAL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B112606A320;
-	Thu, 19 Nov 2026 00:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84226606A31C;
+	Thu, 19 Nov 2026 00:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2E2fLLP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BEF1F000C4;
-	Thu, 19 Nov 2026 00:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0R45JqAL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E161F000C4;
+	Thu, 19 Nov 2026 00:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048555;
-	bh=Hzqtjie7EwP2Ee8cM7kSQ7NpML2dRUhlgoH1maFg1w8=;
+	s=korg; t=1795048558;
+	bh=BzPxXuymIHvJ8Qh+me5hHJxhBOmWya9l4hs0v5FKtHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h2E2fLLP9LsLW3pYYRRd/Frm7RfQiWZuGsl1Rj8FePVj3LzUh+nw27gdRXJ3/K31z
-	 2oj5ImoWyLRAh4savsRQL28C1+2Che6y2PTvhBklQoyrpSXGDHgYWlmuNGpofaCumg
-	 bzDNZeR0HoGCJLXFGjQq27WZMbbKPZk0jKhB7eHg=
+	b=0R45JqALk4mDd1icWOvGlrKu61doCtxHcQEn6PLLjP8STvl3uC5wBatNkbG8+LST2
+	 Iw2l9ZbrhqQkM5ZujfJCBsGchGlMOPWC0AdIwCpk6RlTHTFsCV3PjHKOJ7MMPQJ+9F
+	 F5aD/6LPlF9M033eWJaouuGnz9aZDg3ywirN40ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Lee Jones <lee@kernel.org>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1995/2857] leds: flash: Prevent using uninitialized variable in flash_fault_show()
-Date: Wed, 18 Nov 2026 15:50:29 +0100
-Message-ID: <20261118150313.203722158@linuxfoundation.org>
+Subject: [PATCH 6.1 1996/2857] regulator: mp886x: check get_voltage_sel() return value
+Date: Wed, 18 Nov 2026 15:50:30 +0100
+Message-ID: <20261118150313.239038735@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,39 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit d229695f2162a41bfa614f175798fa56a5f1c969 ]
+[ Upstream commit 87121c42fadc7683469aee96ad833bc560197a55 ]
 
-In flash_fault_show(), address of uninitialized 'fault' variable is
-passed to device-specific .fault_get callbacks. This is not a problem
-if such a callback directly assigns the value like rt4505_fault_get(),
-but results in an undefined behavior if callback just performs bitwise
-ORs like as3645a_get_fault(). So just initialize 'fault' with zero.
+The get_voltage_sel() can fail, resulting in negative error codes
+stored in unsigned integers and corrupted state logic.
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260904054437.461706-1-dmantipov@yandex.ru?part=1
-Fixes: 7aea8389a77ab ("leds: Add LED Flash class extension to the LED subsystem")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://patch.msgid.link/20260916161607.90106-1-dmantipov@yandex.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
+Link: https://patch.msgid.link/20260909143957.9284-2-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-class-flash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/mp886x.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/leds/led-class-flash.c b/drivers/leds/led-class-flash.c
-index 6fe9d700dfef6..e10a9c796c04c 100644
---- a/drivers/leds/led-class-flash.c
-+++ b/drivers/leds/led-class-flash.c
-@@ -188,7 +188,7 @@ static ssize_t flash_fault_show(struct device *dev,
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index 7910896df51a5..f42572d0f94e5 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -256,6 +256,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
  {
- 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
- 	struct led_classdev_flash *fled_cdev = lcdev_to_flcdev(led_cdev);
--	u32 fault, mask = 0x1;
-+	u32 fault = 0, mask = 0x1;
- 	char *pbuf = buf;
- 	int i, ret, buf_len;
+ 	struct regulator_desc *rdesc = &di->desc;
+ 	struct regulator_dev *rdev;
++	int sel;
+ 
+ 	rdesc->name = "mp886x-reg";
+ 	rdesc->supply_name = "vin";
+@@ -277,7 +278,12 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
+ 	rdev = devm_regulator_register(di->dev, &di->desc, config);
+ 	if (IS_ERR(rdev))
+ 		return PTR_ERR(rdev);
+-	di->sel = rdesc->ops->get_voltage_sel(rdev);
++
++	sel = rdesc->ops->get_voltage_sel(rdev);
++	if (sel < 0)
++		return sel;
++	di->sel = sel;
++
+ 	return 0;
+ }
  
 -- 
 2.53.0
