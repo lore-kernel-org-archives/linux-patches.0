@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048952;
-	b=A+eeyN6DsUCL6OakYmk0tx81YZy5e4aHaaOvXA9mULbCI7ebBIkXpSOJNyo3OUcddMOw
-	 tXqcn9syAMEWpdSDFyom2ASi4q/24QrfnDBS7onzT/5CmTJGNEdzT15gfGegBLmml+Ya2
-	 7aSjqm/uG3DxFFqkt0EMIBSV/iGqPd5o7OREqMSyO23r2Q9L8X7C38UfJT7ehzK+YfCO+
-	 T4dBfXu+VxdDo0F5T487iKagS9H7aUZjo1+2wm1isYE5GjLHBumKXBcKFJs3c6kW4TJhz
-	 0jzHwDcHGTUb+M0Ig8wvoh1cMSUU8eqa7VIt2lOYbCR5q7fSyj3CL9JmgAaKyGGyyTw==
+	t=1795048955;
+	b=reIlZy+cWafI38IPMyNwgVWjO5mAHk6n7mj6pflKnwTkqs45ujAlIWf8HhQTr+COhgDS
+	 Ff9s2Y5BX9TkJ5DfPCVnbAEPhs4SQOi37m+JMkXs0cY3XrJ1uHRVesvptnfbwkk3q7mnx
+	 AhiK0MpX5U3T3ezN/MkM5w69oDC5ckFWucq7sTX7WOoYr70iJO8SxqvQzjROY0aaU6QjH
+	 RaDw5OHKgb1/LyQ11NA3I4d6hPan68poM0Lno9qhYLVF17mWVeeyzKuhkpyW5aSXtgT+x
+	 +atx9aMqjPH9Co9ux4jJ8BXqD9toz0bYUgPCkme3Bmg9uKYtVDEsbMO+62orPhBfQ6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048952;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048955;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LxpPQ3L3HhCe3VmME4UnHWa4GuCvTAw7d4YQEws78aw=;
-	b=dY75S8yjjgcbYtNyMPeIDztTMXYyr1ZHxoFd8cOLHym9TccshVAt/DCH0rC85QoN2WR3
-	 Y01G8ib+wnO2kVBG3eCqSxW+H8jwyZE55z7Bh3RzZARncikl93BKg750dE5VgkMd8dN51
-	 WJ66Sbg0g450i5L4WZpwfqCs9XeSUmDZI40C3Piary9hePJ4V8W/qBn3zpPDOQXQOUI9m
-	 pvKnKt/DjKTmqM1RyvYL1NieWa9meBersDSyngKvQPKjvNeNsMbjsujJ4F/uJlpmVFIFW
-	 mQQ62+sTtDQSw7YrS/dE/L++7yrBcE46wF4OqNjvsfEJQwQIaNwjB1so31uf2xXokWw==
+	bh=hVaveDjrMr6Gd4oc1E1vpn/Hqb0Ry4AfHznGJZsCFCY=;
+	b=km5ADfV+Nvj4h5cs3OVyv7uLEJOwnx2ThJi4BiNlj8YD35y6LhwgTi4JnXxWHDT/8EsD
+	 OoRPW11PA4yS9Q+fV8KuUjDoY5sMnKtPp8ydWk/f8ke7zIGKnxgQSjK6/U1M/KslKZa9j
+	 UdekdQ7vOJly0tI/hXXCiBT0Bz3PhaYwV9wb6dIft2kmJG37YzVwVUYBgM3MBEsO4OrO4
+	 6cXHldH6MN/FEWgqqpn3aICkwBPrX9z5tk63c3+Qyn4Y2m9//frj56vaDXf5TtAqPo+Mw
+	 7U8kmtLRkiv/7RzXqnn8L4Nc5EStKsTkxZ8sId9csXb/R+yEdOhoop+BRAIcxNmkzBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QHv2EtNu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="O0H2A/zC";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A077F606A31C;
-	Thu, 19 Nov 2026 00:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AD7606A320;
+	Thu, 19 Nov 2026 00:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QHv2EtNu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F110B1F000C4;
-	Thu, 19 Nov 2026 00:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0H2A/zC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93671F000C4;
+	Thu, 19 Nov 2026 00:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048952;
-	bh=LxpPQ3L3HhCe3VmME4UnHWa4GuCvTAw7d4YQEws78aw=;
+	s=korg; t=1795048955;
+	bh=hVaveDjrMr6Gd4oc1E1vpn/Hqb0Ry4AfHznGJZsCFCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QHv2EtNupTHNrqHed2Ir5EyeOjKGu2YYp2r+B4lKviuq5XrH4GGoOFLxV1Co/olrX
-	 nMIp5py1Pvyy7FRYkdbgj5XD87otWEnSaj9M6nI2+J0LiJUlcFG9A/seobKDy21+oq
-	 q7J48tTemo7VoUHhUWS8G9t8H7h+urcsrpVwpT/I=
+	b=O0H2A/zCgKpZlI9+Ok/FsK6lj7zSxJY8Da9HlFQGAGrK9CFyZ1F0P9LW4R+P8t/g7
+	 P02FOt4aFlaLnQzPG7cwJdZLFw4tvtwn28ttcEI7iltB/qSEQI8BvSzRtAgYSKKcCC
+	 arzVWzCrWSByY1sV7RmbCfdHmBu7ZQtEpJ7w2wYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2179/2857] hwrng: intel - return -ENOMEM when ioremap() fails
-Date: Wed, 18 Nov 2026 15:53:33 +0100
-Message-ID: <20261118150319.860659075@linuxfoundation.org>
+Subject: [PATCH 6.1 2180/2857] clocksource/drivers/dbx500-prcmu: Check timer register mapping
+Date: Wed, 18 Nov 2026 15:53:34 +0100
+Message-ID: <20261118150319.897697219@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,36 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 4c3ca7c8c152278332590bfd3df1b0f086364759 ]
+[ Upstream commit 8f30b035a6676e292ee8e54334711d9905dd0495 ]
 
-intel_init_hw_struct() incorrectly returns -EBUSY when ioremap() fails.
-Return -ENOMEM instead.
+Return -ENOMEM if of_iomap() fails, before reading or configuring
+the timer register block.
 
-Fixes: c24c95a085c6 ("[PATCH] fix Intel RNG detection")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Detected by static analysis and reviewed with AI-assisted source auditing.
+
+Fixes: 9d2aa8c7961a ("ARM/clocksource: use automatic DT probing for ux500 PRCMU")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260911060917.94310-1-bolin.liu@seu.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/intel-rng.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clocksource/clksrc-dbx500-prcmu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/hw_random/intel-rng.c b/drivers/char/hw_random/intel-rng.c
-index 94f7116e96682..789a5c709ba87 100644
---- a/drivers/char/hw_random/intel-rng.c
-+++ b/drivers/char/hw_random/intel-rng.c
-@@ -318,8 +318,8 @@ PFX "RNG, try using the 'no_fwh_detect' option.\n";
- 	}
- 
- 	intel_rng_hw->mem = ioremap(INTEL_FWH_ADDR, INTEL_FWH_ADDR_LEN);
--	if (intel_rng_hw->mem == NULL)
--		return -EBUSY;
-+	if (!intel_rng_hw->mem)
+diff --git a/drivers/clocksource/clksrc-dbx500-prcmu.c b/drivers/clocksource/clksrc-dbx500-prcmu.c
+index 2fc93e46cea38..1af223b0e8963 100644
+--- a/drivers/clocksource/clksrc-dbx500-prcmu.c
++++ b/drivers/clocksource/clksrc-dbx500-prcmu.c
+@@ -52,6 +52,8 @@ static struct clocksource clocksource_dbx500_prcmu = {
+ static int __init clksrc_dbx500_prcmu_init(struct device_node *node)
+ {
+ 	clksrc_dbx500_timer_base = of_iomap(node, 0);
++	if (!clksrc_dbx500_timer_base)
 +		return -ENOMEM;
  
- 	return 0;
- }
+ 	/*
+ 	 * The A9 sub system expects the timer to be configured as
 -- 
 2.53.0
 
