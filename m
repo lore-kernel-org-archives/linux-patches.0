@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029942;
-	b=cWjqofs8bbAyF8I55IgNFLp04RLE2c97PjpsdDBqT+i5vCYYkSG1SvNUKLa6nXe3sYj1
-	 HuMMyAWKxeudS3VQ0KWk+DblozH6LFE1DJc3X7SlNLVAhZWLGLDNVX6vr1VewYl8/7cCH
-	 zr1kwAf90rl0tCRqfV8IS+7YS01LmwW79sGc/oDKa33La8poI8ACSte51J+oz0F/9eBrr
-	 RlV85VZxGGG3/jkQilpXgDk2pHB3dIW/VjANN4grdbof+v7knjTu12sQhrNDuQrMM1E4t
-	 TkCdXSJ86c7IUPHv4M8KxLGrA/lS8Yk28HgkGK/kEiQP5fHHZTT0dt7u+tIH3dxtJpw==
+	t=1795029945;
+	b=5BzrAMf2DwzJp1Vly0QWzl7HnlXzwJ59ZBD9hPrJr60zhoFIYwLgYy3YK6tBdFznSFit
+	 dTu/mGF1W4HRsrKowFNLVPuX/rhef0rfnsCj+bVRc8bYYC2mTuaYAD8IBMt3j+++GVK+z
+	 7kMh8q4MpSfbt9xNaJqugWrwjJDCx5MMgPCZ4Nu/48MD0FWtEulppxIIPq4FoveOMyNpT
+	 tHgEMfFxaNno6Dazils51nYm+sN+JjVN7Ey9UzlD0VjDN7mNDSsIG8Axd9xIJSO81spAU
+	 bI4PBMQHJN9GDFyhfZYpVuYBZEvW1U5NbARQc1ApWSek7PRiDZ8dt6RVZqMn79F0cgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029942;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029945;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TL0aWfQ07A5+P+seqMdndt05ZdqoaTnv7EFjswPVb1I=;
-	b=zBxYweL32MTblOu9ZjZaBRrcqoFCp/SPVRIW0/rFRrEtbwN1PHTyQay4u6AfoIc49+ZU
-	 YuOqpB34gyKrw2QEjGWLS5eorGRBS5e7FaEZIMkUqBjpSO45BNmoGt7Jsd85KR5q8gQjP
-	 B9QssHwufDnm7zbKXwrKvZ7Ym/uuCLhVdDC43oCUN0hTe4PwVcfeEmWo10P+3KbcEEE9C
-	 lU/TOx8xxBN1FX1VnbpD61ZyX/nxyoWTjk5OJe2esbwsnGkEu2cafaRqZ2NnNzRg3+FBj
-	 IeiIxCbwkI4GvGnehi3kTWM66Yq+OYwNchuK//lpMsh9dTK1A2is0At2IGHsJKJ56QQ==
+	bh=L9Kkh1CujFPbsppys5NwRhTs7ZF0sX79PxlfcWo70yw=;
+	b=OJBSAGyCW+RGbOMtfJRZ50RJXZK6/FNS0WRhv+jTvawIyWRz2KTjlKWToqFlQDsR/A1M
+	 R7u//C0FyQf/US556Otj5MLGp4VdRC0T2YjYYWEjkGHPVmm43Sqd65MZk+LN6m6p9o6Le
+	 RqeAgUsFX6wPqbgoDjH7XImtCnIhMNBNe61y2M3mYX8knaYML1I6q+SmhLWiKz/yZhIMI
+	 KOGqyvjLZVA3R1JLxQv2FWDxzHoEudHaBR/L2iX5Yr/sDApin7SPAqMbnB2xuorbND84k
+	 +DqXwlJsPd/SVFdO752Nkg4zueGuSnl8vmRvPbKQ62m0oanBspgynugANjyUwRnRmkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=00i8uezw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9ZumSrq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC3D606A320;
-	Wed, 18 Nov 2026 19:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AAF606A31C;
+	Wed, 18 Nov 2026 19:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=00i8uezw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FACB1F000C4;
-	Wed, 18 Nov 2026 19:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9ZumSrq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B2E1F000C4;
+	Wed, 18 Nov 2026 19:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029942;
-	bh=TL0aWfQ07A5+P+seqMdndt05ZdqoaTnv7EFjswPVb1I=;
+	s=korg; t=1795029945;
+	bh=L9Kkh1CujFPbsppys5NwRhTs7ZF0sX79PxlfcWo70yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=00i8uezwlWn6jxPPUUNdgkS9peAgCO8jSh5N3oScHRoKXHWLi9Ldf9Ol7bDjyO8FU
-	 wKO9zLFS9NYg6QnY1ZzRuoj/LqECSEMUvPHO1EofWx1Tgl9sYDwqguuTZd5LF+TsJW
-	 SzLsipUHKGipxWRY+fn+7HpR4Cj1x7miHyRdYEBM=
+	b=R9ZumSrqH2gqvoKuDs9HjuGo50VTq/uBua/T+xMdHMhpec2YxnevneymPzdq2fEKX
+	 OxueAfHUtNINyIEi+7Gc3SVF3f3dmfSKoaLtk4GEXVtlV1Fa+AIBGAYKoaO55NIIMK
+	 XPOoGYIdw1irJfIV7aXD7SAO1nS0zxaCBXnaDjmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0530/1756] swim: Simplify return value initialization
-Date: Wed, 18 Nov 2026 15:44:17 +0100
-Message-ID: <20261118150030.212713168@linuxfoundation.org>
+Subject: [PATCH 6.12 0513/1756] crypto: hisilicon/hpre - remove dma_free_coherent on NULL req->dst in ECDH
+Date: Wed, 18 Nov 2026 15:44:00 +0100
+Message-ID: <20261118150029.600861241@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,80 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 385a44e78702762e2fce796cf37b6f465d86a87f ]
+[ Upstream commit 5b87f619cc5c0a55dcd85ce97974e3f5b9333b7b ]
 
-Initialize the error result once only. Update the result only after a
-successful read.
+In hpre_ecdh_hw_data_clr_all(), req->dst is always NULL because
+hpre_ecdh_dst_data_init() sets hpre_req->dst = NULL before mapping
+the user buffer with dma_map_single(). The dma_free_coherent() call
+on req->dst is therefore dead code. Remove it.
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/28322f0cbefd865bdfb679bab4352c111996795b.1788513997.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d66bdef0a308 ("swim: Check error register during sector read")
+Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index 250e408060e8b..81c824923336c 100644
---- a/drivers/block/swim_asm.S
-+++ b/drivers/block/swim_asm.S
-@@ -49,6 +49,7 @@ swim_read_sector_header:
- 	link	%a6, #0
- 	moveml	%d1-%d5/%a0-%a4,%sp@-
- 	movel	%a6@(0x0c), %a4
-+	moveq	#-1, %d0
- 	bsr	mfm_read_addrmark
- 	moveml	%sp@+, %d1-%d5/%a0-%a4
- 	unlk	%a6
-@@ -63,7 +64,6 @@ mfm_read_addrmark:
- 	movel	%a6@(0x08), %a3
- 	lea	%a3@(read_handshake), %a2
- 	lea	%a3@(read_mark), %a3
--	moveq	#-1, %d0
- 	movew	#seek_time, %d2
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index e704b62d8beed..91232d2dd4ba4 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1467,8 +1467,6 @@ static void hpre_ecdh_hw_data_clr_all(struct hpre_ctx *ctx,
+ 	if (unlikely(dma_mapping_error(dev, dma)))
+ 		return;
  
- wait_header_init:
-@@ -143,10 +143,7 @@ crc1:	tstb	%a2@
- 	tstb	%a3@(read_error - read_mark)
- 
- 	moveq	#0, %d0
--	moveb	#0x18, %a3@(write_mode0 - read_mark)
--	rts
- signal_nonyb:
--	moveq	#-1, %d0
- 	moveb	#0x18, %a3@(write_mode0 - read_mark)
- 	rts
- 
-@@ -155,6 +152,7 @@ swim_read_sector_data:
- 	link	%a6, #0
- 	moveml	%d1-%d5/%a0-%a5,%sp@-
- 	movel	%a6@(0x0c), %a4
-+	moveq	#-1, %d0
- 	bsr	mfm_read_data
- 	moveml	%sp@+, %d1-%d5/%a0-%a5
- 	unlk	%a6
-@@ -238,15 +236,12 @@ data_crc1:
- 
- 	tstb	%a3@(read_error - read_mark)
- 
--	moveb	#0x18, %a3@(write_mode0 - read_mark)
--
- 	/* return number of bytes read */
- 
- 	movel	#sector_size, %d0
- 	addw	#1, %d4
- 	subl	%d4, %d0
--	rts
-+
- data_exit:
- 	moveb	#0x18, %a3@(write_mode0 - read_mark)
--	moveq	#-1, %d0
- 	rts
+-	if (req->dst)
+-		dma_free_coherent(dev, ctx->key_sz << 1, req->dst, dma);
+ 	if (dst)
+ 		dma_unmap_single(dev, dma, ctx->key_sz << 1, DMA_FROM_DEVICE);
+ }
 -- 
 2.53.0
 
