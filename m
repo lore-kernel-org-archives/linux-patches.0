@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053496;
-	b=DReT8a47r+7grqzgU0DrUOH6ZixYGrGJUJV4MBCtUIFEW83QPCDUkQ7lgdlv5yJfVGFr
-	 IGEH0UceGG9Ss58VXFI1I4tEV1oPBzOTb352SW/TwzzZ+Fg4HmHAagZupFlNnYq5C/ZGq
-	 XRWjvJTkV02AjVVHhp5ylCnNAStJp3zD+mw58eUmbDfaDn7PbPhkW7mqmg/iRANt9mUmF
-	 N9GxF4gp0l672TF7ofDYoguMVYgxTdyFjuDksndKX2RivfSjvJ2D+Cvdl0/8WxbudW6/X
-	 Wf+Z2QPVZrBqhLLN6WI4F0tzAZWb+Q6lCuNjxKMFmacR2GkD/TBceT6fjmU/3MiDXYQ==
+	t=1795053498;
+	b=t44uxzF1lpSsHPmyiYPE/E6Y9hhCUhAk7fHz+PuOymJVaIuN37O2UAacj+hTZntQwFVB
+	 JVG9E9PSdnAXtSUpwADKgAXJNADSMOP14n5TvUBbGFigcpe/u2IzLkGKD6rUn0VTknh3M
+	 92eVsHpqVMRE8dXsOJXy9Dsc2xYbwXj9JFrOZQYdCiL6SwE15mRdpChA0HIuR88RxqzSW
+	 vCN7Onyq0Mbcf+uF5EyJEqewbEEfr3YxDwI3f5vIXwNKlKhFOKoa1t7Hdy1mFZxSLyAof
+	 g4EW0y8OExTn8qnLQohgn5Adwt8NZd0LFcLkA+LPSJD6OGm8LKAnozxODoITGVG9aWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053498;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KdO81jxFwY2tTvb1XxTaHPDkwZlidL4sVlR6bek5jeU=;
-	b=zmVhgZieIfU9I8V8xSyakihmpVlWs2Xq3SXYUMQuaERHsL8qTP+mgSgu/kcEf8iMd41g
-	 K0+GybuB2aD+OHt7CSuReFq5IVT9U08NjR40rZjdTslT78J87rwYUY74qYb7Dj6WGytpg
-	 UKo3ZROVKXEXGBgEq8xxZw5UKbqiTsSLYaRnwuSyIb8hR+spSCW2MrKeugNXIA7aAgkW0
-	 vAdKdY0zBnvKPlrHQFoFvZEqQbUF8rylGnNkZHEuWh7qRQEq2wHN4tTgmQUaN2wWAPl5S
-	 gxeEODtwUVW7VuPOYCuvgeWfRLhOafVm4Bbh0okOUM7Ewo2RKPvtc93inB5MpuTbvrA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5TgPiV1OjLtjmfP/2pp/yohNZB91aSPWNDl+v9iTnNY=;
+	b=PgLRi8Bb3o+1INFX6c5kC5vsBKZyd3gQ3F6qlyYkY8YjirrBlPlEGhTLU7sXvR4Th1F3
+	 /YWMsRX4Jq36+HBtrZGB01YMVa6j0TIruIA7Zf/3pc8hVLLn1fBxr1zBcCUVXRKTRF/Id
+	 SzkYJvZAX4PIydsCOBuDBWPmRm1eB0BwgRtjMBpCcCMxU6GxSbxtWerQWlkt9w42y76tW
+	 w8EXQqCFmo9Y5DscidDReoAN7KS6HvdOBq0vkaD+xPRpzNsK42QA8lK7ZMXMynRErgtjd
+	 K6ObqiJjk70JkfYI0QLZ7N3BJfEPN1qlYvvFrffuEt9TqP+nDfazu0Svq5V2afFXKpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKFqJOkO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeR3Udow;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1634F606A31C;
-	Thu, 19 Nov 2026 01:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB914606A32C;
+	Thu, 19 Nov 2026 01:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RKFqJOkO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D711F000C4;
-	Thu, 19 Nov 2026 01:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeR3Udow
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221251F000C4;
+	Thu, 19 Nov 2026 01:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053495;
-	bh=KdO81jxFwY2tTvb1XxTaHPDkwZlidL4sVlR6bek5jeU=;
+	s=korg; t=1795053498;
+	bh=5TgPiV1OjLtjmfP/2pp/yohNZB91aSPWNDl+v9iTnNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RKFqJOkORtB4n7ngYFHLi6MtaNtqy8zYgSLkmCS4w18Kd/CGy4eqhlYAa0PNw9OSY
-	 nT30WKtMkLu/aljQ85Sn5lKomCJ7/ZiC6no2XI5QHH3wXrC1pQumxyItv5162kQiun
-	 ZFcPVcMXpz7WW0D7WdUaziHrP4fZ4hx5tvMCeiS0=
+	b=DeR3UdowRNmhtAP56Bu9qwLDl1/1cJDwXcl9GAAhVKj6OjlKX11pcS3DZ6orgYTD5
+	 PHNJhoW/DOZ6GSUKXjOBNAJ9eL/GJKWPO0mFaibHTEA6XK6Ilem2BkNiyO+4vvDHP/
+	 pzHZkkkRkChNSpYkfefL57SdOsfSasnX2oORG3k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Esben Haabendal <esben@geanix.com>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0890/2214] drm/bridge: nwl-dsi: Limit LCDIF specific sync override
-Date: Wed, 18 Nov 2026 15:42:46 +0100
-Message-ID: <20261118150047.903930687@linuxfoundation.org>
+Subject: [PATCH 5.15 0934/2214] ceph: clamp the inline data length in ceph_fill_inline_data()
+Date: Wed, 18 Nov 2026 15:43:30 +0100
+Message-ID: <20261118150049.730434723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,51 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Guanglei Zhu <zhugl3@xiaopeng.com>
 
-[ Upstream commit 54a88d9afcca66221d14f438d0960472984968ec ]
+[ Upstream commit 9c1d14d3b66b3e1dd96ee664c0dd2548f2b77a52 ]
 
-When using DCSS with NWL, overriding the mode flags to enforce active high
-sync is preventing the use of active low with downstream bridges, such as
-ti-sn65dsi83, which will not see such mode flags set by the panel.
+The MDS decides how much inline data to attach to a reply, and the
+client parses inline_len without any upper bound: ceph_decode_need()
+only verifies that the message actually carries that many bytes.
+ceph_fill_inline_data() then copies the data into a single page
+with no length check, so a malicious or buggy MDS returning more
+inline data than the page can hold writes past its end.
 
-Fixes: 44cfc6233447 ("drm/bridge: Add NWL MIPI DSI host controller support")
+Clamp the length to PAGE_SIZE so both callers, handle_cap_grant()
+and fill_inode(), are covered.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://patch.msgid.link/20261027-nwl-dsi-fixes-v5-2-b6d1d3d2d356@geanix.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 31c542a199d7 ("ceph: add inline data to pagecache")
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ Adapted for 5.15.y: folio_size()/memcpy_to_folio() → PAGE_SIZE and the page API; this tree has no pr_warn_ratelimited_client(), so the warning is dropped. ]
+Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/nwl-dsi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ceph/addr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/nwl-dsi.c b/drivers/gpu/drm/bridge/nwl-dsi.c
-index 3de8204230af3..194e00657ae92 100644
---- a/drivers/gpu/drm/bridge/nwl-dsi.c
-+++ b/drivers/gpu/drm/bridge/nwl-dsi.c
-@@ -823,10 +823,13 @@ static int nwl_dsi_bridge_atomic_check(struct drm_bridge *bridge,
- 				       struct drm_connector_state *conn_state)
- {
- 	struct drm_display_mode *adjusted_mode = &crtc_state->adjusted_mode;
-+	struct nwl_dsi *dsi = bridge_to_dsi(bridge);
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 618ef368b5649..0fb3fdfdc8685 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -1572,6 +1572,9 @@ void ceph_fill_inline_data(struct inode *inode, struct page *locked_page,
+ 	dout("fill_inline_data %p %llx.%llx len %zu locked_page %p\n",
+ 	     inode, ceph_vinop(inode), len, locked_page);
  
- 	/* At least LCDIF + NWL needs active high sync */
--	adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
--	adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-+	if (dsi->endpoint == NWL_DSI_ENDPOINT_LCDIF) {
-+		adjusted_mode->flags |= (DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_PVSYNC);
-+		adjusted_mode->flags &= ~(DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC);
-+	}
- 
- 	/*
- 	 * Do a full modeset if crtc_state->active is changed to be true.
++	if (len > PAGE_SIZE)
++		len = PAGE_SIZE;
++
+ 	if (len > 0) {
+ 		void *kaddr = kmap_atomic(page);
+ 		memcpy(kaddr, data, len);
 -- 
 2.53.0
 
