@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023242;
-	b=1dk0KYK4SiGSgyFIgLwSw+1lsd2PARufMavwcMRahoj5TnwOFaxSYAguBT4BtmvFt1hY
-	 sS5mI/X1KuTPQY3RzXl3Ztw1TGbnQt2pUQP8EdtOS9YRUBajGJ7mcALNTazpjE4vgC5H/
-	 +9x6Ul1drv0GsvIvuHYwsYb8U5gaD1O+Q3lNgPM96y8vbv/HMDnx01RdaIn1KgIzbBFRY
-	 0K34aCZbSWYSXo4bQSBn/0MK49sBQaX7F1EHNlIDU9SkzENqdAkLNf3japdVccMfJzsEJ
-	 V7qQ9Dp4vOpTSVyUykgzMWagP/ZSB4+bKNlsFxelnO8vUaQTGSzR8EYaUlgGalCAOJQ==
+	t=1795023245;
+	b=2mNX04tCMbETrTFbZL8e8ekh7PhRold8kplK8bSA3y0A9cgPYJjgmbkfaR63XF9rAFkA
+	 yDiN2p7A6D7dLwxQqsEtsN+wH63oGPGkn11Kn2Bo1BHg6Z3fp6m/lqehS532SqbVajBqu
+	 +VAVPqgkjxHRVZLaWm90u0VYRPonrH0ECEZsrby1xbXGF7l9c9R9H2EtcZ3J9bwhnHYbQ
+	 Dvyq0rePjay/23z2ZpRPwJqaQL6Y0jZxriYCnMEOxqt4IMnLkTo64J+4BAthGous8sQbu
+	 ySUDQxXwNOar40J89skHFF7zoRcpqPHy1Xj7crACvjFcviJEC94PzV/Y4PVadH0YMAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023242;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v3JO4etWAPJQXzhPPM1MgaPNCGUN8KEsoI9Oj1Oyop4=;
-	b=gEdlS+uLnjaAS2V88nOp4gF3YBerHGO8CmTzLmrF/5vZ88Gy6uFxce/Fe7wdxE77cZxT
-	 TrLIg+ozBpEZ0wmj6v29xRg1YFamTFRbdrrjMIGt+TVhQ/kspe6CVahMcUEYdSa3WnzHM
-	 8OxeoF5M0FRq11RecKuH1BUS8ZYUTYaTgFl5Gtl4bfrHmnpxo0NneEWvmo9WE22bNbXcb
-	 8nWtOzLSN9L8PWbrIOPstfmVPRzVdYTJvA2qNiOvYkU5CRPXjer2O08wrs856mIqWvQKj
-	 kwmioPjHK/rvilB3g2YNyfGMze1nXDD2EcQ9RKZTOhp3MhigUCZXBB10PIQgphlAMSA==
+	bh=5XHMptjgZpzTX8zhr37r6AtlNLpir6rfmRPhfRrUEyw=;
+	b=HSQp4VRT4GncYNvDAu3ZwnK5usmaP/JzuQDshkwZ0c+B7HzS9SyCshMujR3p+Pfd7Pkn
+	 YzTf3ezDG8r5ypNEgzsJdqmDG9ok4yvEkQ5dvqVgqhy3l/fiQJzGXwyD6fdr7G4vruBtV
+	 /crwM7B7dSED29KRbflEl7ae7DFMAY8OAmlguueOmW02/7+lFctSv4dtu43mEJKQzo5I5
+	 iNWVyAA1syz8AvnQwfgQlua2qJG3DCYW7guGb0K4aqtdy2RsynMwBurIFyBf77EAG8wzT
+	 GAATm3BBpomrcYQkCr4ZR8bXNyqXXBOJ7jl4+14IZcaLE704sj7LcGcJVDZrvPZzAcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BfzglLv/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uw83vB9G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4A7606A32F;
-	Wed, 18 Nov 2026 17:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EFD606A32A;
+	Wed, 18 Nov 2026 17:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BfzglLv/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EDE1F000C4;
-	Wed, 18 Nov 2026 17:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uw83vB9G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E171F000C4;
+	Wed, 18 Nov 2026 17:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023242;
-	bh=v3JO4etWAPJQXzhPPM1MgaPNCGUN8KEsoI9Oj1Oyop4=;
+	s=korg; t=1795023245;
+	bh=5XHMptjgZpzTX8zhr37r6AtlNLpir6rfmRPhfRrUEyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BfzglLv/srbIZwrBcWzHKuw0eBrwlb7Mbkmu+Ii2Wd1Yi/ut0omem4oYpv3qOpmUt
-	 WXJc9gOyVU7PSzwhCHLShSH/zEzrc0TppS0huncKXl2IQ2w5mQ+92721oSiXqwc1Xh
-	 edLX5N4fwm0aKuYMfxwHHmXQhJCWKuEiFv29njzQ=
+	b=Uw83vB9G26aITkMZRuFU8jEVqzsomX6eB5FiDJGUOZ/R3TQhKQx8Ggh+5pc7f4vDS
+	 cajbvhhg31iNYmIM/hOiBCLqVmilGYMP5ZKLw7dZQcJBNc0KyrG+RyiPlwxZFxKyOd
+	 eBRQ0p3TafmBWyrqwkQ0jVSMv1xNRAqhuPCEFkiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0293/2151] ASoC: codecs: sta32x: convert to snd_soc_dapm_xxx()
-Date: Wed, 18 Nov 2026 15:33:48 +0100
-Message-ID: <20261118150132.581457509@linuxfoundation.org>
+Subject: [PATCH 6.18 0302/2151] dmaengine: xilinx_dma: Fix MCDMA descriptor fields based on DMA direction
+Date: Wed, 18 Nov 2026 15:33:57 +0100
+Message-ID: <20261118150132.917077390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,84 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit 8454435315e5a6e2f8e531b5ec038c6db4d6ebfe ]
+[ Upstream commit b70ab341088b2114dcbc7be868588f3e97893e6a ]
 
-This patch converts below functions.
+The MCDMA BD format differs between memory-to-device (MM2S) and
+device-to-memory (S2MM) directions, but the driver was using generic
+'status' and 'sideband_status' fields for both. This led to incorrect
+residue calculations when the hardware updates direction-specific fields.
 
-dapm->dev					-> snd_soc_dapm_to_dev()
-dapm->card					-> snd_soc_dapm_to_card()
-dapm->component					-> snd_soc_dapm_to_component()
+Refactor the descriptor structure to use unions with direction-specific
+field mappings, and update the residue calculation logic to select the
+correct status field based on DMA direction.
 
-dapm_kcontrol_get_value()			-> snd_soc_dapm_kcontrol_get_value()
+This matches the hardware descriptor layout and fixes incorrect
+residue reporting.
 
-snd_soc_component_enable_pin()			-> snd_soc_dapm_enable_pin()
-snd_soc_component_enable_pin_unlocked()		-> snd_soc_dapm_enable_pin_unlocked()
-snd_soc_component_disable_pin()			-> snd_soc_dapm_disable_pin()
-snd_soc_component_disable_pin_unlocked()	-> snd_soc_dapm_disable_pin_unlocked()
-snd_soc_component_nc_pin()			-> snd_soc_dapm_nc_pin()
-snd_soc_component_nc_pin_unlocked()		-> snd_soc_dapm_nc_pin_unlocked()
-snd_soc_component_get_pin_status()		-> snd_soc_dapm_get_pin_status()
-snd_soc_component_force_enable_pin()		-> snd_soc_dapm_force_enable_pin()
-snd_soc_component_force_enable_pin_unlocked()	-> snd_soc_dapm_force_enable_pin_unlocked()
-snd_soc_component_force_bias_level()		-> snd_soc_dapm_force_bias_level()
-snd_soc_component_get_bias_level()		-> snd_soc_dapm_get_bias_level()
-snd_soc_component_init_bias_level()		-> snd_soc_dapm_init_bias_level()
-snd_soc_component_get_dapm()			-> snd_soc_component_to_dapm()
-
-snd_soc_dapm_kcontrol_component()		-> snd_soc_dapm_kcontrol_to_component()
-snd_soc_dapm_kcontrol_widget()			-> snd_soc_dapm_kcontrol_to_widget()
-snd_soc_dapm_kcontrol_dapm()			-> snd_soc_dapm_kcontrol_to_dapm()
-snd_soc_dapm_np_pin()				-> snd_soc_dapm_disable_pin()
-
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/87zf8t1kjp.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 3e71dc4508bc ("ASoC: sta32x: make power restoration transactional")
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260818174151.1608971-2-srinivas.neeli@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta32x.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
-index 24d4b643917da..bba45c813d4cb 100644
---- a/sound/soc/codecs/sta32x.c
-+++ b/sound/soc/codecs/sta32x.c
-@@ -799,6 +799,7 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
- {
- 	int ret;
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
-+	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 94d2e5398dd69..20dc3f4a15c9a 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -223,6 +223,7 @@
+ #define XILINX_MCDMA_IRQ_ERR_MASK		BIT(7)
+ #define XILINX_MCDMA_BD_EOP			BIT(30)
+ #define XILINX_MCDMA_BD_SOP			BIT(31)
++#define XILINX_MCDMA_BD_HW_SIZE			64
  
- 	dev_dbg(component->dev, "level = %d\n", level);
- 	switch (level) {
-@@ -813,7 +814,7 @@ static int sta32x_set_bias_level(struct snd_soc_component *component,
- 		break;
+ /**
+  * struct xilinx_vdma_desc_hw - Hardware Descriptor
+@@ -277,8 +278,10 @@ struct xilinx_axidma_desc_hw {
+  * @buf_addr_msb: MSB of Buffer address @0x0C
+  * @rsvd: Reserved field @0x10
+  * @control: Control Information field @0x14
+- * @status: Status field @0x18
+- * @sideband_status: Status of sideband signals @0x1C
++ * @mm2s_ctrl_sideband: Sideband control info for mm2s @0x18
++ * @s2mm_status: Status field for s2mm @0x18
++ * @mm2s_status: Status field for mm2s @0x1C
++ * @s2mm_sideband_status: Sideband status for s2mm @0x1C
+  * @app: APP Fields @0x20 - 0x30
+  */
+ struct xilinx_aximcdma_desc_hw {
+@@ -288,10 +291,17 @@ struct xilinx_aximcdma_desc_hw {
+ 	u32 buf_addr_msb;
+ 	u32 rsvd;
+ 	u32 control;
+-	u32 status;
+-	u32 sideband_status;
++	union {
++		u32 mm2s_ctrl_sideband;
++		u32 s2mm_status;
++	};
++	union {
++		u32 mm2s_status;
++		u32 s2mm_sideband_status;
++	};
+ 	u32 app[XILINX_DMA_NUM_APP_WORDS];
+ } __aligned(64);
++static_assert(sizeof(struct xilinx_aximcdma_desc_hw) == XILINX_MCDMA_BD_HW_SIZE);
  
- 	case SND_SOC_BIAS_STANDBY:
--		if (snd_soc_component_get_bias_level(component) == SND_SOC_BIAS_OFF) {
-+		if (snd_soc_dapm_get_bias_level(dapm) == SND_SOC_BIAS_OFF) {
- 			ret = regulator_bulk_enable(ARRAY_SIZE(sta32x->supplies),
- 						    sta32x->supplies);
- 			if (ret != 0) {
-@@ -870,6 +871,7 @@ static struct snd_soc_dai_driver sta32x_dai = {
- 
- static int sta32x_probe(struct snd_soc_component *component)
- {
-+	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
- 	struct sta32x_priv *sta32x = snd_soc_component_get_drvdata(component);
- 	struct sta32x_platform_data *pdata = sta32x->pdata;
- 	int i, ret = 0, thermal = 0;
-@@ -974,7 +976,7 @@ static int sta32x_probe(struct snd_soc_component *component)
- 	if (sta32x->pdata->needs_esd_watchdog)
- 		INIT_DELAYED_WORK(&sta32x->watchdog_work, sta32x_watchdog);
- 
--	snd_soc_component_force_bias_level(component, SND_SOC_BIAS_STANDBY);
-+	snd_soc_dapm_force_bias_level(dapm, SND_SOC_BIAS_STANDBY);
- 	/* Bias level configuration will have done an extra enable */
- 	regulator_bulk_disable(ARRAY_SIZE(sta32x->supplies), sta32x->supplies);
+ /**
+  * struct xilinx_cdma_desc_hw - Hardware Descriptor
+@@ -1025,9 +1035,11 @@ static u32 xilinx_dma_get_residue(struct xilinx_dma_chan *chan,
+ 					   struct xilinx_aximcdma_tx_segment,
+ 					   node);
+ 			aximcdma_hw = &aximcdma_seg->hw;
+-			residue +=
+-				(aximcdma_hw->control & chan->xdev->max_buffer_len) -
+-				(aximcdma_hw->status & chan->xdev->max_buffer_len);
++			residue += aximcdma_hw->control & chan->xdev->max_buffer_len;
++			if (chan->direction == DMA_DEV_TO_MEM)
++				residue -= aximcdma_hw->s2mm_status & chan->xdev->max_buffer_len;
++			else
++				residue -= aximcdma_hw->mm2s_status & chan->xdev->max_buffer_len;
+ 		}
+ 	}
  
 -- 
 2.53.0
