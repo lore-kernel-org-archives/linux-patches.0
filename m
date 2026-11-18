@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052736;
-	b=InL7KUL4fdLCLdDdzistSUnRk8EYL2fCr3QaCxcMdZojICfNy5bgPlei9khR14y91QFQ
-	 kS4GMykkuYnV1M4meFcwle3KIUeb1T0ESN0CsiF1Cm9D9kK7RC9t9JLQqsTSPbof66Cbn
-	 Sgfz2mrtiaeSsKCS0EO41MlGrLQKDq2vTxNiJFOrM5xlSkKrhwK2/Pj1YBzoEDAvfbSel
-	 iP/And8rraRXRCVpWJVrRYaUhCyg9klVvfnwStYE1QiI1gQYP6NHuNpZM7Jmhrc8R1kJe
-	 fcEvg7mrHia9Nl+ex8bSFzYO48CBH5jgjBDImv2oLgJuf0k9U5CSP3JNc5+4YvueDog==
+	t=1795052739;
+	b=jvIMcNzWnhrz3UAHEDDoeJEcxqvGbvF+wuWySu4zSnBDaJN4MdDYyr212aBoGU4Qy4wx
+	 fTyzCOFF70vSrezN8ZbkqYZLiP6iC43csm/3MMIH8MYcBIC5ISwU8wKp6cRXh1HCb7AsC
+	 g7x/SYQk438svEr2YBxSDsCy1KpyFq+kJYOt5waDDQEzYrKiqQklxzaKw/e+Av3vvdiIm
+	 lrUNJJLhOHrsbGkUcCxLtGw0OI7fvSLyLLmFn1C0BaFCjnd7ik4OH3PRy8XiqDKDn/qqO
+	 yCcWFoI8c6/q1LZXhHYanZh4A2rvBb+QlEQMHlCh0lUYA7fWPcpbv9zrzTYG0NKp4Ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pa7aPHrbyxlFkK79cWlksCh+GnwWw9l2ZVOCd5DC4aU=;
-	b=Pv1MIeuN7WnF/py7V9ZbQPAfVsNAwiNv+8mYpK0gGIQK821jWMXrPatprouHnLcjALDu
-	 tq9cLpBEV6PmblddV05akN7xhH6sAb13YpdjGyQmMSE3aqR6NVW7x05r+nLtKMBAzhLXw
-	 XLB5g4jhffgbUsZs2jeEVkq2kH6oWgSwoK4JSUAfoEnflV0oODl58hJPmXy9qCtK4r1nd
-	 6Fgytb2YWMfuVUchQjgR8x3RzcGFTI8HUAKSyAFCvZGbVrCbOITpRBVU8Hr3LlTtmwHDm
-	 g2CbAXLkT+sSuGUtuJafTAkxbU2R1Y4oSz7g9zn8RFvCFlgEGnfxoqLaUQ+Xn3vWuBw==
+	bh=qwRCR+8ZZVCVE5NGOF3qj+9ljx8CFx8Vzr8fgAjIhoE=;
+	b=NKFYOBpxn01Kv0WWYgXsu3R4sawALrSwmM73ZGgA2U5Io6Ptf5kS2zlox+ADhvnhH9Eo
+	 zOhffqHoGdTceEXeaa1r9ZtEFLsInt5GYfED1DAZI6wTYOzLu7FKm8DZCgW5jys9a/gEj
+	 upfmX4DsDQnTD+xbvfSIdWcSMnG8Gncwj0mrZPq8Dnj1+tolU83UxvDWa8ma/ccnLekEk
+	 Y74LG9JvLMdKtBdn+OxZ5j+grz0d7oRzGH92VzgTOQlD5LdumN3XNuSBRgCXrqBLpNc8/
+	 9HPjnlln60vqFHFFuYTZ7UJfuM666xYciv8fF14Y0qXGevji/qWQYIsRCLPdE813OGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dtbZmhun;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSyqo2UC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A93606A325;
-	Thu, 19 Nov 2026 01:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4969B606A320;
+	Thu, 19 Nov 2026 01:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dtbZmhun
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35CF1F000C4;
-	Thu, 19 Nov 2026 01:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSyqo2UC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB181F000C4;
+	Thu, 19 Nov 2026 01:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052736;
-	bh=pa7aPHrbyxlFkK79cWlksCh+GnwWw9l2ZVOCd5DC4aU=;
+	s=korg; t=1795052739;
+	bh=qwRCR+8ZZVCVE5NGOF3qj+9ljx8CFx8Vzr8fgAjIhoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dtbZmhunqnEEGhWK+ayY0rrGoKFila967sFnAuy07sXgQqATW2i8h0yFcfS2hMtrL
-	 HDfZldGfgnoi/JHhO9s0isERCHBdMVjG6UnPsEg8+TQgpqyX3UeQGyMxAWzh6CIBtd
-	 l7pAjUewwCnnuBt3atyhgYfLExB+UiP57gKRrjkE=
+	b=BSyqo2UC9ugm6NTQ4ICnjzrP+u2y4TwOzGzF9oFUMA+nAozM3eZzXbtZbH9ln4asi
+	 3dpbD9VYerIQvIkt5xSaT6R+SnRzCUBtCoS6TD0cIw6HnYv2G5Y8fRIm898zdH0aUX
+	 t8zy7uCFDM68kX53Wv5F5nksVH7c9cayS4S6j2bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0668/2214] rtc: cmos: Disable ACPI RTC event before handling it
-Date: Wed, 18 Nov 2026 15:39:04 +0100
-Message-ID: <20261118150038.556617005@linuxfoundation.org>
+Subject: [PATCH 5.15 0669/2214] hwmon: (sht3x) Return the consumed count for heater writes
+Date: Wed, 18 Nov 2026 15:39:05 +0100
+Message-ID: <20261118150038.595007575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,75 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 3f67038df8b5cba07254d1cff60d73e988b49ab7 ]
+[ Upstream commit 817ac527100c8e20684211eb919ffd6d875adc7a ]
 
-Users of RTC_UIE_ON can stop receiving update interrupts when rtc-cmos
-handles alarms through ACPI. In one 50-run test, 40 runs passed and 10
-timed out after receiving between one and four of five expected events.
+heater_enable_store() returns the result of i2c_master_send(), which is
+the two-byte command length on success rather than the sysfs input
+count. This can report more bytes than were supplied, or a partial write
+for a fully processed input. For example, writing "on\n" returns two
+instead of three, so a caller retrying the remaining newline gets
+-EINVAL even though the heater command succeeded. Retrying the remainder
+of "off\n" can also send the heater-off command twice.
 
-The ACPI ff_rt_clk counter stopped at 218, exactly matching the number
-of events delivered to userspace, and reported:
+Return count after a complete command transfer. Preserve negative I2C
+errors and return -EIO for nonnegative incomplete transfers, so a
+zero-message transfer is not reported as a successful zero-byte write.
+Keep the existing boolean parsing, command selection and locking.
 
-    218     STS disabled     unmasked
-
-rtc_handler() runs in the threaded ACPI SCI handler and calls
-cmos_interrupt(), which schedules rtc->irqwork. The work can run before
-rtc_handler() returns:
-
-    ACPI SCI thread          rtc->irqwork
-
-    cmos_interrupt()
-      schedule_work()
-                             __rtc_set_alarm()
-                               rtc_wake_on()
-    acpi_clear_event()
-    acpi_disable_event()
-
-The SCI thread then disables the event that the worker enabled for the
-next alarm. That alarm sets its status while delivery remains disabled,
-so no update interrupt reaches userspace.
-
-Clear and disable the current ACPI RTC event before cmos_interrupt()
-schedules the work. The worker can then enable the next event without
-the handler undoing it. With this ordering, 150 runs delivered all 750
-events without a stall.
-
-Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
+Fixes: 50c22cd154e5 ("hwmon: (sht3x) add humidity heater element control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261015173029.3091872-2-gourry@gourry.net
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261019154718.2328055-1-pocj8ur4in@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwmon/sht3x.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 33642da811817..6cb6ee19a17d2 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -758,7 +758,9 @@ static u32 rtc_handler(void *context)
- 	unsigned char rtc_intr;
- 	unsigned long flags;
+diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
+index 3f279aa1cee5e..7176d63a42151 100644
+--- a/drivers/hwmon/sht3x.c
++++ b/drivers/hwmon/sht3x.c
+@@ -541,7 +541,10 @@ static ssize_t heater_enable_store(struct device *dev,
  
--
-+	/* Quiesce this event before rtc->irqwork can arm the next one. */
-+	acpi_clear_event(ACPI_EVENT_RTC);
-+	acpi_disable_event(ACPI_EVENT_RTC, 0);
- 	/*
- 	 * Always update rtc irq when ACPI is used as RTC Alarm.
- 	 * Or else, ACPI SCI is enabled during suspend/resume only,
-@@ -781,8 +783,6 @@ static u32 rtc_handler(void *context)
- 	}
+ 	mutex_unlock(&data->i2c_lock);
  
- 	pm_wakeup_hard_event(dev);
--	acpi_clear_event(ACPI_EVENT_RTC);
--	acpi_disable_event(ACPI_EVENT_RTC, 0);
- 	return ACPI_INTERRUPT_HANDLED;
+-	return ret;
++	if (ret != SHT3X_CMD_LENGTH)
++		return ret < 0 ? ret : -EIO;
++
++	return count;
  }
  
+ static ssize_t update_interval_show(struct device *dev,
 -- 
 2.53.0
 
