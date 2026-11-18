@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057796;
-	b=HuxIWbCpMjofCgs7sIQFD6ThXXV2VAMOjakGBpb/YxMmqWAMqbe0CbiU2FWZsn0iJWUP
-	 ZI0QPjEkXnyofsvhk5lzoGkb1bBVBXmaJ2rdzlUtH4AE6B3zOEXQwDs+1q1yTcVv+b0kp
-	 D2zYxcyOp7e+xmbR4pnaQG/9/advHdowGw37CL3zZB39VDsfUGXMq86PGLplxCjQissgC
-	 Y3AolVVGzQNaEKXvykBUM8BeBjslOncgsT76PgaEcLQ8DhgaOLmMTo419rUOL3g3ZXSwf
-	 cJ+DyL6AW8se3ANkESIm8QGeJs0ernytDbMzTSAXVWqi2qR9h0uCSY8TyRlXNlk2URg==
+	t=1795057799;
+	b=a0v1yWydEPA9+5G4FB4UY4+oWeoSmLr4uSFhiI9v8mUNHVb1zXHoslA4Y7fZ79plyNEq
+	 q1dI1xyREqY7tTau3/lEpyhg7xR8kTV3u3zloebaOoshBYHDDTucMCJauwXnmHsy85f/s
+	 BlQVcvGPzRG5sOwq4MVRW6JCQ1OiZ0dHZeMnk6m3+bCTG2R2+2emQICv0zW3jdzJp6PED
+	 jQTHDx7jFi0nw0OXXEgHwdd+hufuArQ2B5+Xu2ZZZ40yjJhWg5kzAcrDXkRn40CWD17Ol
+	 Pcz4tDT9HuDTEO8bedjHRW2S+jZF1VyWDeb9ZOxghhuzNLgM07iXAi4i0nIbj4NLPyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w8QI87LXSfzh7dPM5pCKtD+n3jousfUSubGwaHZXF/w=;
-	b=l+SgyjZbbx8m/nxiYLrHux98SnmWo2ArFxx2/W4WRM7X3pK4aKg62oYNPcrX4AQrgyHD
-	 7CfQIfxa7RlSDAwAmJkVcc38awLZ9h0WkSjDB/JR4aTUUkWCH9F1IhU3gx/xOEAAAqFLE
-	 qdo9ya2TqmdrIE9UnnsGSQp55KkeBT6slZQeAqe+2EQ2CoDa+rcru7E7uHvdLuHHBzo7O
-	 aJ1Vy6znwPQvAjs1urM5N+4vxKjZrhflpjH551eGFV0nqtOz3h7bGte1E51xz9VJxDOPj
-	 axEHli+RT8KsnsyIHaDgZbxmNDtXD7XrlMDZgvhCaDn0/fH+Sd0R965SM2eV035V7og==
+	bh=MFyS3nA+5dNaSaTAjRt3VjJ6yQ+RVA35rc2EcGDwBDM=;
+	b=fDV0JMzIjSevd0Re8loAqRyr71kRPa/umruKNsXenmfjhTZtSrq+TSxotUZ2Zsox+mcA
+	 n1wgwuGKji7pX+SiVcFuPGkM5wpQts+Syx6Sdn7/O0BKiMmx8kVVqJpcjZW+iGqk00KZy
+	 MjnFHuGxYdfG39JG4UCc/XKP7eZC2+qmc/Zo1q6/BYbTkdhiOpP7/J4ydBpisLRM/zvIc
+	 Ofa4XdycCvZ+asAl7koTlwy5A7TvfCQ1SD9+AjYAaQoeP0qhAEvmnrgNS7/Cx/4cgYPcJ
+	 zgVmyN2crf4aqR+ZBsQBQCW9LrpWbwoxRCOiqQ6RLJ7Z6eDS9LoRg177sHUHu5XALDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMonhYR3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vkZGa7fa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD60A606A31C;
-	Thu, 19 Nov 2026 03:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB45606A325;
+	Thu, 19 Nov 2026 03:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMonhYR3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227021F000C4;
-	Thu, 19 Nov 2026 03:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vkZGa7fa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6271F000C4;
+	Thu, 19 Nov 2026 03:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057796;
-	bh=w8QI87LXSfzh7dPM5pCKtD+n3jousfUSubGwaHZXF/w=;
+	s=korg; t=1795057799;
+	bh=MFyS3nA+5dNaSaTAjRt3VjJ6yQ+RVA35rc2EcGDwBDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMonhYR3NXNs2By5FzEkcSwNSEkHp9Gp106b888Ls7pTGgdM5oWgR/7Ws1OSMasAT
-	 tP21Ge9bCPrL1AhhQSPiKtwn3mA6+LP+EvH9mJLhf5JpCB6JqQnssmMV+MMzGpQ8PO
-	 4h6FxAc8V+bJUsJR6A45QYmmaIgdgwRWLvouY0vg=
+	b=vkZGa7faAIkJDMXR9Ts4PNC8QFRAx6TG8Xn996v37Sdzj1nBQoA7dCYu1MvebG3eA
+	 Gs5qZL86Zf2urF7bYfth3VD2ogeCSMNqbhOFOvzYQ7+xBMCNt01ieeBDdTuze7Irpd
+	 NuyBSdeCT5O0Sff3GC66dnL/pinaxbdgqNO1Fgeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com,
-	Rik van Riel <riel@surriel.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 5.10 0256/1848] media: redrat3: fix UAF in probe error path leaving rc device registered
-Date: Wed, 18 Nov 2026 15:38:14 +0100
-Message-ID: <20261118145922.913199665@linuxfoundation.org>
+	syzbot+8496ab5e117502750445@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 0257/1848] usb: gadget: fix refcount underflow in gadgetfs_bind() error path
+Date: Wed, 18 Nov 2026 15:38:15 +0100
+Message-ID: <20261118145922.993201413@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,92 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
 
-commit af452b9e01331b5338a1e5141624f17607239207 upstream.
+commit cb3b441f2698455a48e9a023d5f7f4e3fcb94c73 upstream.
 
-redrat3 stores its device name and phys path inside the main rr3
-structure, and the rc device's device_name and input_phys point into
-rr3. When the RC device is registered, it keeps those pointers.
+gadgetfs_bind() calls get_dev() only on the success path, but
+gadgetfs_unbind() called from the enomem error label unconditionally
+calls put_dev().  When bind fails (e.g. ENOMEM), put_dev() fires
+without a matching get_dev(), leaving the refcount unbalanced.
 
-  KASAN: slab-use-after-free in string_nocheck lib/vsprintf.c:648
-  Read of size 1 at addr ffff888051fda758 by task udevd/7464
-  Call Trace:
-   string_nocheck lib/vsprintf.c:648 [inline]
-   string+0x216/0x2d0 lib/vsprintf.c:730
-   vsnprintf+0x74a/0xef0 lib/vsprintf.c:2945
-   vscnprintf+0x41/0x90 lib/vsprintf.c:3014
-   sysfs_emit+0x10e/0x180 fs/sysfs/file.c:761
-   input_dev_show_name+0x58/0x70 drivers/input/input.c:1282
+A subsequent close of the ep0 file descriptor calls dev_release() ->
+put_dev() which hits zero and frees the object; then gadgetfs_kill_sb()
+calls put_dev(the_device) again on the already-freed pointer, triggering
+a refcount underflow and use-after-free.
 
-  Allocated by task 10:
-   redrat3_dev_probe+0x477/0x2570 drivers/media/rc/redrat3.c:1023
-  Freed by task 10:
-   redrat3_delete drivers/media/rc/redrat3.c:466 [inline]
-   redrat3_dev_probe+0x1bf4/0x2570 drivers/media/rc/redrat3.c:1124
+Fix by calling get_dev() at the start of gadgetfs_bind(), before any
+error path that invokes gadgetfs_unbind(), so the reference is always
+balanced regardless of whether bind succeeds or fails.
 
-Syzkaller triggers this via usb probing. It probes the RedRat3 USB
-interface, which calls redrat3_dev_probe() in redrat3.c. That function
-allocates rr3, then builds an rc device whose name points into rr3 via
-redrat3_init_rc_dev() in redrat3.c, and registers it with
-rc_register_device().
-
-When the detector enable fails after the RC device is registered, the
-probe jumps to the led_free path. That path unregisters the LED but does
-not unregister the RC device before freeing rr3 via redrat3_delete() in
-redrat3.c. The RC device still holds device_name = rr3->name which is now
-freed.
-
-Later udevd reads /sys/.../input device name via sysfs_emit() in file.c,
-which calls input_dev_show_name() in input.c, which emits dev->name which
-is the freed rr3->name.
-
-When the detector enable fails after the RC device is registered, the
-error path must not leave the RC device registered. Make the probe error
-path clean up the same way redrat3_dev_disconnect() does.
-
-This change should be safe because the RC device is fully registered at
-this point and its teardown via rc_unregister_device() is protected by
-the input device mutex, and rr3 is still alive during unregister so
-device_name remains valid until after unregister. The URBs are killed
-before rc_free, so no completion can run after rc is freed. No new lock
-ordering is introduced.
-
-Reported-by: syzbot+302b9b575a06733ff60c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=302b9b575a06733ff60c
-Link: https://lore.kernel.org/all/6a74a76d.ec7c9571.3ac9bb.0056.GAE@google.com/
-Fixes: 2154be651b90 ("[media] redrat3: new rc-core IR transceiver device driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Hermes:muse-spark-1.2 syzkaller
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Reported-by: syzbot+8496ab5e117502750445@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=8496ab5e117502750445
+Signed-off-by: Nguyen Quang Le Kien <khiemtranzo532001@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260811060810.295666-1-khiemtranzo532001@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/redrat3.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/legacy/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/redrat3.c
-+++ b/drivers/media/rc/redrat3.c
-@@ -977,6 +977,7 @@ static int redrat3_dev_probe(struct usb_
- 	struct device *dev = &intf->dev;
- 	struct usb_host_interface *uhi;
- 	struct redrat3_dev *rr3;
-+	struct rc_dev *rc;
- 	struct usb_endpoint_descriptor *ep;
- 	struct usb_endpoint_descriptor *ep_narrow = NULL;
- 	struct usb_endpoint_descriptor *ep_wide = NULL;
-@@ -1121,9 +1122,12 @@ static int redrat3_dev_probe(struct usb_
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -1689,6 +1689,8 @@ static int gadgetfs_bind(struct usb_gadg
+ 	dev->gadget = gadget;
+ 	gadget->ep0->driver_data = dev;
+ 
++	get_dev (dev);
++
+ 	/* preallocate control response and buffer */
+ 	dev->req = usb_ep_alloc_request (gadget->ep0, GFP_KERNEL);
+ 	if (!dev->req)
+@@ -1703,7 +1705,6 @@ static int gadgetfs_bind(struct usb_gadg
+ 	spin_lock_irq(&dev->lock);
+ 	dev->state = STATE_DEV_UNCONNECTED;
+ 	spin_unlock_irq(&dev->lock);
+-	get_dev (dev);
  	return 0;
  
- led_free:
-+	rc_unregister_device(rr3->rc);
- 	led_classdev_unregister(&rr3->led);
- redrat_free:
-+	rc = rr3->rc;
- 	redrat3_delete(rr3, rr3->udev);
-+	rc_free_device(rc);
- 
- no_endpoints:
- 	return retval;
+ enomem:
 
 
