@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052483;
-	b=a+MjggdLrPvnX1Ys+FWfFRwl3bRAwrn2Xhs2EF4/krZ+3PMAN2o22AqCKynuUWrVwVSZ
-	 VTRTh9g4iR7F87jA+nF7dArPYAQNQnFoyaMQLyrOY721aNo7mHutNW84kFJAX/v4es2F2
-	 uUlI/MgYti8Thoboz2UOrFR2aBcozAAP/M7Zu3pwtaUQhszpVO9cKx0rYrsj+8OQyEcZB
-	 E5yA7KB4vhJp8huYM36zcZAL2qXnj657n6ZZ3FrPvyT4TGfazq2YO4qtlb6Ic+Llu0FA6
-	 C2oue6ymDnRgwXSxrX4nUZ001tABJdcO6wz+HtS5UB1FV15WUh4yUo8QjeoLK9klReQ==
+	t=1795052486;
+	b=w3Ym3c2/A5W+lAoUwsCRI9+7CClMbFxFwp+zdJqlYKpZCgiMHAeZHMQodNXGfsUiYYKZ
+	 kjqNFlJgjj5e2sFINE0PEQ2SOX21RFEjbkdxiFe2eH9N5IW7EYTjj3K4va8AioIIblAeF
+	 0vn8Q5Luoi/Ked5X+L328MJkWzPdudPtRKUaiaePrw+SP6ISD+MUUzMBVPGm4WYroJGgi
+	 o2Js8P0eHJvZMb5hWWplbkQaneXH20RY3NdmBuVeSwb7OPACiouLWqK2zpy7UjTewWFtr
+	 fYggXtEK3XhIa5KwCUK8vItjLhi2pQUD2dJ/+CoMoxpwxyFC4xqS4IbXvAsjMRYlQiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xxbt7hDk97ChFQM+F6iVvjLdELvLhAtXrwqowqAhxqU=;
-	b=doInZ2K+I2iUT6KZnCI63UCUjUXSd453tCtssbhCHtJuo52mFD1OXSjXyKCMbyMw61DI
-	 xlo2K8aQh2fgVxXMByNZLREcvOiRtPPZvnzaWCUP+t4UICfRMgA38DKGK9Urk3uM7ryXF
-	 OSVyHTKC7E51pomSObNsuL1uyZfGyzgYSz/Izkb1pXBDL4Tx2ol0UYLYoU8N22TgbHlq6
-	 NlVTGvXDJVnCByXT5WKNLzaQ58Y/KEBMMhFS581kpW0DimMLHyr52GYziEAxeuiYPW0sc
-	 BBCzNCOZddXLzuKrFbA+8arzyc9fDHXsc8Himqj0PzD6Y9k/O5jDmHwJ360k8OCYKrQ==
+	bh=BZHNg7eL01XIukBSmBohPosneeoi7MZXpg8yGt1VNpY=;
+	b=fMM/o2Z7AvGXI8dnlIOnC+pini/OGwABCxFwb9g+5f6xnIokhFsFCNMd+5dakAjGwZzZ
+	 Ox746f+6Or1oiTSY422l1MCay9vSPqhb30a6Ttq+lx2PIPdgR8dwirt0dtPuytpL/BWCt
+	 TVhO3DrWsb4lXcJfwQdZ6cg8/Gi7rvov61VAYwX9J+AaEJdj/SQ0SZRoEO7tftb9F5BL/
+	 BLDRJbejeVLmCiHfl9ZtQNI0RlxZE9N0Y+fNJEq46UxnOB4VesatKM5h2IQVQP1mgBhnQ
+	 bS3MbnF1zwD/ovJQwuxTvT+WHiM+F7TmFsuhbVLRPoCNt/H6KPb2BHUYP7UOF/S+K4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="K4Egk/TJ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fKbOBwUx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48CB606A31C;
-	Thu, 19 Nov 2026 01:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFD9606A31C;
+	Thu, 19 Nov 2026 01:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K4Egk/TJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E7E1F000C4;
-	Thu, 19 Nov 2026 01:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fKbOBwUx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00D31F000C4;
+	Thu, 19 Nov 2026 01:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052483;
-	bh=xxbt7hDk97ChFQM+F6iVvjLdELvLhAtXrwqowqAhxqU=;
+	s=korg; t=1795052486;
+	bh=BZHNg7eL01XIukBSmBohPosneeoi7MZXpg8yGt1VNpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K4Egk/TJpIOYPzIc7WMPVkVKolDdoGOkcaoCe9A446sPC6JCpM9gqDOAiaMnzx12+
-	 SybjqCUH6tiTRKM8Lp0PUT0jk144/024CeNevmHK9TZAbE6PJrQpa9zl2sD35pYzFR
-	 lAMBCari3MIflo6OS/4p37iln6O976UNYSa7Kaek=
+	b=fKbOBwUxuT0h9LR+lHharHLzYuxvk7d7WvnAhZKKHKFKsO2o2bh60rQbqrOjPjALI
+	 WmpfGKICIWfeo0T0MKiXfh6x9WEspfWoKrNANwn4IvmXSKW1ZIb6a/SH1fstXoqhnR
+	 Gx4V9zUBUEv3lKidAfQHscL4iugq4IsL7Z4YeucA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
-	Lee Jones <lee@kernel.org>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0530/2214] mfd: wcd934x: Fix NULL pointer dereference on IRQ probe deferral
-Date: Wed, 18 Nov 2026 15:36:46 +0100
-Message-ID: <20261118150032.264941367@linuxfoundation.org>
+Subject: [PATCH 5.15 0521/2214] crypto: hisilicon/hpre - fix GFP flags for dma_alloc_coherent
+Date: Wed, 18 Nov 2026 15:36:37 +0100
+Message-ID: <20261118150031.928260734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,45 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit dcf0e640b553d33512fbcaedb909c32ba9636a64 ]
+[ Upstream commit 40ec9605cb195e065470f8f23ef94b1b541411a3 ]
 
-ddata->dev is only assigned at the end of wcd934x_slim_probe(), but the
-of_irq_get() error path has passed it to the error print since the
-driver was added, while it is still NULL.
+The HPRE driver hard-codes GFP_ATOMIC for RSA/DH and GFP_KERNEL for
+ECDH. This may cause "scheduling while atomic" in atomic context or
+unnecessary allocation failures under memory pressure.
 
-This used to be harmless with dev_err(), which copes with a NULL device
-and was skipped on -EPROBE_DEFER. Since the switch to dev_err_probe(), a
-deferred IRQ reaches device_set_deferred_probe_reason() ->
-dev_driver_string(), which dereferences the NULL pointer and crashes
-during probe. Use dev, which is already valid at this point.
+Select GFP flags dynamically based on CRYPTO_TFM_REQ_MAY_SLEEP and
+store them in hpre_asym_request::flags. The areq field is a union of
+rsa/dh/ecdh request pointers; reading base.flags through any union
+member other than the one that was written would be type-punning, so
+a dedicated flags field avoids that.
 
+Fixes: 98dfa9343f37 ("crypto: hisilicon/hpre - don't use GFP_KERNEL to alloc mem during softirq")
 Cc: stable@vger.kernel.org
-Fixes: 0f1b1b899521 ("mfd: wcd934x: Simplify with dev_err_probe()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/mfd/20260903145651.AC1311F00ACA@smtp.kernel.org/
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260903-wcd-dma-v3-1-d3920c6563c4@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index aa19a6a4fdbfb..91584d408c7a1 100644
---- a/drivers/mfd/wcd934x.c
-+++ b/drivers/mfd/wcd934x.c
-@@ -218,7 +218,7 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 72b6a7452ccaa..d77056178d7ff 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -139,6 +139,7 @@ struct hpre_asym_request {
+ 	int req_id;
+ 	hpre_cb cb;
+ 	struct timespec64 req_time;
++	u32 flags;
+ };
  
- 	ddata->irq = of_irq_get(np, 0);
- 	if (ddata->irq < 0)
--		return dev_err_probe(ddata->dev, ddata->irq,
-+		return dev_err_probe(dev, ddata->irq,
- 				     "Failed to get IRQ\n");
+ static int hpre_alloc_req_id(struct hpre_ctx *ctx)
+@@ -243,6 +244,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
+ 				struct scatterlist *data, unsigned int len,
+ 				int is_src, dma_addr_t *tmp)
+ {
++	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
+ 	struct hpre_ctx *ctx = hpre_req->ctx;
+ 	struct device *dev = ctx->dev;
+ 	void *ptr;
+@@ -252,7 +254,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
+ 	if (unlikely(shift < 0))
+ 		return -EINVAL;
  
- 	reset_gpio = of_get_named_gpio(np, "reset-gpios", 0);
+-	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, GFP_ATOMIC);
++	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, gfp);
+ 	if (unlikely(!ptr))
+ 		return -ENOMEM;
+ 
+@@ -514,6 +516,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
+ 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
+ 		h_req->cb = hpre_rsa_cb;
+ 		h_req->areq.rsa = akreq;
++		h_req->flags = akreq->base.flags;
+ 		msg = &h_req->req;
+ 		memset(msg, 0, sizeof(*msg));
+ 	} else {
+@@ -528,6 +531,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
+ 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
+ 		h_req->cb = hpre_dh_cb;
+ 		h_req->areq.dh = kreq;
++		h_req->flags = kreq->base.flags;
+ 		msg = &h_req->req;
+ 		memset(msg, 0, sizeof(*msg));
+ 		msg->key = cpu_to_le64(ctx->dh.dma_xa_p);
+@@ -1487,6 +1491,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
+ 	h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
+ 	h_req->cb = hpre_ecdh_cb;
+ 	h_req->areq.ecdh = req;
++	h_req->flags = req->base.flags;
+ 	msg = &h_req->req;
+ 	memset(msg, 0, sizeof(*msg));
+ 	msg->in = cpu_to_le64(DMA_MAPPING_ERROR);
+@@ -1508,6 +1513,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
+ static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
+ 				   struct scatterlist *data, unsigned int len)
+ {
++	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
+ 	struct hpre_sqe *msg = &hpre_req->req;
+ 	struct hpre_ctx *ctx = hpre_req->ctx;
+ 	struct device *dev = ctx->dev;
+@@ -1521,7 +1527,7 @@ static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
+ 	if (unlikely(shift < 0))
+ 		return -EINVAL;
+ 
+-	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, GFP_KERNEL);
++	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, gfp);
+ 	if (unlikely(!ptr))
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
