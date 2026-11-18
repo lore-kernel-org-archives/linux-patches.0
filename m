@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047598;
-	b=lpuDEc+7JV06xVSB23yZg+o3uBs3CMWxPBAZjBdEs3BWRcqYxfHpOP6PpwQrfMdiMlYx
-	 bivfHhujlmO+3/bGSM0zWO+yPLTBpAkVjEvjHFGQXflT4BAXDRs5fduj0rOhzuUNXpZE7
-	 fcaFZPnpitLf+fN8m4UdY20/T2JEQ+nKN6er1wR0Dlk+DxJapObYAv5J68YGVv6gpGVjl
-	 NTzXk85dKlrlkq85aN9t5/iuSMimjWY0oj+a5taScVNSVd0C1BfCtGZgIYgVhrYe+jZ9X
-	 dRcqlobWy+tIHPXOfKjgv8O/0GUKEJcTiukQC6b3jo5j1DOiP5LOhiA5nP1XEhfsAeQ==
+	t=1795047601;
+	b=q5ZMS9gCjzSX8PqkkFcpNsOSLQ6glh61IpasSxeiB5Lb/ZuzJlxP+WURRmwW1T6jZrE0
+	 wpuoLUXlfDMUcr56tgodP33tj/KbILQfA6oCdEu7MiA/GquQjqmvxye+2ehB/+DIa/tay
+	 wl/RLvLA3Kgh5C1ZQz1l4YVK6G/HP1zVqkQFbw7dSNIMGIqCTuQirkTKBATLaToIcRW59
+	 C5csiP1uYjPG82gAWzmNdH6LrJ+jiQcwZylI/tJNurSeSOKlkRRTHvGdvEmqlkj4+OMvb
+	 FezZC3SqGAyS8kd7GS6sdDBK2CEOSWPoVy7H9bYwFIVE9c9dtUGKRSd3zU7uyvVLQ4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047598;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sW0DT7FZQ6cavrqsd88t7kTCNsJRJqPCckyVlg49hHQ=;
-	b=4bz7nZL/+XLPOCE6gd+gCYx3nWNHqml22DbfpYFsF8A3boaY/xZsjEM1nzP0+BX6PX7A
-	 DWs3JWR7xw31pgM48GHZUFZhz7ZY70nps2cB31O2RObXzrbRPB4P0r4adefGxnMZjd69V
-	 D+zckM7NWuJ79O7pzQsYozfmD1uMXLwn2n8CJS7YcvpGnZzO1MytEVPk9il19cJ+xjGdd
-	 7E4gpZzeOisCxCFaE1b/uXUQxfAVIjCb1UHg1TIHFxMXPupig8LAa2Pt4z6fwffjGihbL
-	 pubPh5mPrGThYSbEn/1Syv0elHf6dVKQywVHHVMMzwVT7h1nZ7ltIBfzNWvauTpgDHA==
+	bh=TcYIyDZ8waJgOcseSs1RWwEHy1v0j4BWS/HX87/pERI=;
+	b=4gI/SMd6yF3zYYWuD7ppHvf2WWQdin2m+7rWCZOwm833EjdgzNybkxGCBjnvszC24gcU
+	 M6gKmz0ch9URs/Nc3PHoy2Xr6lHe6JiiUCrXFNPNC4FfRhUMDKf971Q+tz1HvZTWsRzqc
+	 YKNnRb0LJvFWSdw970uR0gGmjcsS9XWCCgMlxwssWYGCeflTB4J/C5GjDtb8Jgm0ubqgB
+	 potcMQFIblA4HQWHPLqrRWDHuvWGLa8So2SGPkYBa7uNzWcDR2R0Tkqm5VPMZcqXRfk8R
+	 Q5hFiSNtYh3oq9MqNOKE/KlaJzkoJ1uaIf4gtZ8B6qDinewPbTzEWPuRD272HloGPjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F53qRzt9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iy2uo/6k";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B098606A31C;
-	Thu, 19 Nov 2026 00:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533A0606A31C;
+	Thu, 19 Nov 2026 00:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F53qRzt9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08781F000C4;
-	Thu, 19 Nov 2026 00:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iy2uo/6k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0171F000C4;
+	Thu, 19 Nov 2026 00:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047598;
-	bh=sW0DT7FZQ6cavrqsd88t7kTCNsJRJqPCckyVlg49hHQ=;
+	s=korg; t=1795047601;
+	bh=TcYIyDZ8waJgOcseSs1RWwEHy1v0j4BWS/HX87/pERI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F53qRzt93tv/6GP8eqjtHn0ktn6074DLohqLzJWwK1PdMXlp4AB6+XSKw5uNKFwQp
-	 do1ym+WIIDBG+YtsHidbLuT8Iexk5Ohw7Q3PHzyzttm/aXoJN/4dvHWzOyfvnUJeJH
-	 hS5PQmfxrv75A7IbITX3GPHykDyOT38K0X1C2vWI=
+	b=iy2uo/6kubp05yVSsiepwRkF3p+3WrPvdciymIIPyOYsvNCT8KoXH5BuMx6rm6NWG
+	 6nLd+OjNkhN/4yHxc5yNwPsVR+C3YiUJorziJWT7zP1mn8peIakwvy7dKPXlowiurD
+	 cy7ct6R2yPhWPSHxiKbp4yNUfLnQjrPmRsROvm04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Anderson Ferneda <anderson.ferneda@braza.com.br>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1697/2857] ASoC: qcom: q6apm: clear g_apm on driver removal
-Date: Wed, 18 Nov 2026 15:45:31 +0100
-Message-ID: <20261118150302.433805867@linuxfoundation.org>
+Subject: [PATCH 6.1 1698/2857] ocfs2: use the stored hash when checking xattr bucket collision
+Date: Wed, 18 Nov 2026 15:45:32 +0100
+Message-ID: <20261118150302.469176345@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,40 +72,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit be2172758f2b7c801ae80b9c8d1510b31eeffdaa ]
+[ Upstream commit e39baff18b85cf8956aee138d7944b6581e8ba36 ]
 
-The global g_apm pointer is set during apm_probe() but never cleared
-in apm_remove(). After the driver is removed the devm-managed struct
-q6apm is freed, leaving g_apm dangling. A subsequent call to
-q6apm_is_adsp_ready() dereferences the freed pointer.
+ocfs2_check_xattr_bucket_collision() decides whether splitting a full
+bucket can make room for the entry being set by recomputing the hash of
+the name:
 
-Clear g_apm in apm_remove() before the component is unregistered so
-that q6apm_is_adsp_ready() returns false instead of triggering a
-use-after-free.
+	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
 
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260923-vmid-v4-v6-1-3d61a0319b1c@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
+		return 0;
+
+For a new entry that is the hash it will be stored under, so comparing it
+is correct.  An existing entry keeps the hash it already has: an update
+never rewrites xe_name_hash, since ocfs2_xa_add_entry() is the only
+writer of that field for a real entry and ocfs2_xa_prepare_entry() calls
+it only when loc->xl_entry is NULL.
+
+An entry stored by a kernel that sign-extended the name bytes when
+hashing can still be updated, because ocfs2_xattr_find_entry() searches
+a non-indexed xattr block by memcmp on the name and never looks at
+xe_name_hash.  Growing it past the space left in the block converts the
+block into a tree, ocfs2_cp_xattr_block_to_bucket() fills the bucket in
+stored hash order, and the update runs out of room in the bucket too.
+The collision check then compares the unsigned hash against the legacy
+hashes in the bucket and reports no collision.
+
+ocfs2_xattr_set_entry_index_block() goes on to allocate a bucket that
+ocfs2_divide_xattr_bucket() cannot fill: a bucket whose entries all share
+one hash has no divide position, so all it does is append an empty bucket
+with a sentinel hash one above the last entry's.
+
+The re-search that follows depends on where the unsigned hash sorts.
+Below the legacy ones, it comes back to the full bucket and the set fails
+with -ENOSPC, having grown the tree for nothing.  Above them, it lands on
+the new empty bucket, which ocfs2_xattr_bucket_find() handles explicitly
+and ocfs2_find_xe_in_bucket() scans zero times, so the set stores a second
+copy of the entry under the unsigned hash and returns success.  The
+original stays in the full bucket, listxattr reports the name twice and
+getxattr returns the new copy.
+
+Pass the hash the entry is stored under instead: the stored one for an
+existing entry, the unsigned one for a new entry.  A tree whose entries
+are all stored under the unsigned hash sees no change, since there the
+two are the same value.
+
+Link: https://lore.kernel.org/20261009083002.2621201-3-joseph.qi@linux.alibaba.com
+Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org> # 6.2+
+Stable-dep-of: e8de099f2958 ("ocfs2: do not read the entry array of an empty xattr bucket")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/xattr.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 79bf618a90166..788de3e5624f3 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -790,6 +790,7 @@ static int apm_probe(gpr_device_t *gdev)
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 8d15b0e824cdf..fca9ed94ca17a 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -5601,16 +5601,14 @@ static int ocfs2_rm_xattr_cluster(struct inode *inode,
  
- static void apm_remove(gpr_device_t *gdev)
+ /*
+  * check whether the xattr bucket is filled up with the same hash value.
+- * If we want to insert the xattr with the same hash, return -ENOSPC.
+- * If we want to insert a xattr with different hash value, go ahead
+- * and ocfs2_divide_xattr_bucket will handle this.
++ * If the entry being set carries that same hash, return -ENOSPC, since
++ * ocfs2_divide_xattr_bucket() has no divide position to work with.
++ * Otherwise go ahead and ocfs2_divide_xattr_bucket() will handle this.
+  */
+-static int ocfs2_check_xattr_bucket_collision(struct inode *inode,
+-					      struct ocfs2_xattr_bucket *bucket,
+-					      const char *name)
++static int ocfs2_check_xattr_bucket_collision(struct ocfs2_xattr_bucket *bucket,
++					      u32 name_hash)
  {
-+	g_apm = NULL;
- 	of_platform_depopulate(&gdev->dev);
- 	snd_soc_unregister_component(&gdev->dev);
- }
+ 	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
+-	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
+ 
+ 	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
+ 		return 0;
+@@ -5707,6 +5705,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 					     struct ocfs2_xattr_search *xs,
+ 					     struct ocfs2_xattr_set_ctxt *ctxt)
+ {
++	u32 name_hash;
+ 	int ret;
+ 
+ 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
+@@ -5726,10 +5725,18 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
+ 	 * the maximum number of collisions we will allow for then is
+ 	 * one bucket's worth, so check it here whether we need to
+ 	 * add a new bucket for the insert.
++	 *
++	 * An existing entry keeps the hash it was stored under, and that is
++	 * the hash a split has to work with.  A new entry is stored under the
++	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
+ 	 */
+-	ret = ocfs2_check_xattr_bucket_collision(inode,
+-						 xs->bucket,
+-						 xi->xi_name);
++	if (xs->not_found)
++		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
++						  xi->xi_name_len);
++	else
++		name_hash = le32_to_cpu(xs->here->xe_name_hash);
++
++	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
+ 	if (ret) {
+ 		mlog_errno(ret);
+ 		goto out;
 -- 
 2.53.0
 
