@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018781;
-	b=PE7RZB+SrmfDSgCm9FSiJHmUjk3IMs0dSd5ZURg2ZcJF/n0K4g+mlYksb6Ptzt21kt1B
-	 EfUM35ydfYBtv1hvR2t9uxytOyrCI0VBusbD2gSacziFKT89QFqbrLOi0Uo69HT5ZuKH+
-	 5hNvWRLJXK3US9RAnnMmqWKC6pFADeVJbN5BIKXG86yEjY403x8Gb779fymR2P5coDW+0
-	 LNfYGTvLx66hM1AQCNLdk77JqMIWcjr5V5yTFGq6vN9WQhuCdetE1LtTLKuEo2GRJHsTA
-	 vqgEh65uvWGNR7DCPhlc/5l4JiTzzbAPQ8OS7XPAWPglRGjKcbIy42m8Sn/5a3g0MXg==
+	t=1795018785;
+	b=0N0YtOyA7Y9FOKr86uIhXBkK1NC/g8NjLoNSA/W2MlgtrE/vSkhgpnRuF5GEEOlcwcgP
+	 blwEDveJ1zVnpm130dTnX9KwOeVbyRPLwdEd0uczw5BHZtkcAkMQynxTErbknOehBl5cj
+	 OCkDAovnZ/NXhyJabTL3mTeNZ0G4lBdOsfGr/p/DcShs8P4zRfX4o4k7Uv+bxc/ANGpel
+	 ZyTjW5H34Nq5wo2NU6o2VmlQS6FrmcWXAYvniXv4SjZRKVYGrgCdMx+QpLlIcOROLP944
+	 2x36u9Svits6Y2GA5dqtajEYv3sDQVjIwgJjU0lhooOJINp7JBu0dQw8P1hNa/WwoKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018785;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gx3onN8hsrsqx0MHd3YN0LoemrUaN+1bvTLrB9phqD4=;
-	b=XPzktEb4fEnDj3q3K/K7nSfyK+rErrJ15pZaZH9AKpRAY6m2sRaNxtJXiA96fppdnru+
-	 85wWEOah6qCBrTsJNBJU3JJnwJM1FjVgvlKBasrAe3+9+UN7Jd/jvOe6d/T8irweS8muj
-	 AdEIYAAbKJNIrFUsRhNSPgT//aEOuz0x6CIWIrpJ5ePLscnvryjv9G5FMGPwNqmcUsTOq
-	 Nqw22YUTU62+MvxMa7Du6GNrPKGPCrtuG3vem0calOgLYLjf6drmp1f0zRecfOodIZiTk
-	 oCcaENdefaz6gwbGkQqIMu5F17LLC6oszFf8xN91ZPFnnSOLkrwTz2XiftRpdyER/DA==
+	bh=piPkga23M1YWSY20plXcHKafZtq35x6DUNn+hpTIWaM=;
+	b=VnK4gerSARj0qs5+8G3pYCT2k+gS5qdeKcwkPZF/1uTnNrsZG4UQh04C5l9IBZ+dXauW
+	 6KEh/7HcP6YbYiwUS/QpnfYc++by+ZZmCoV3f8fQmZHgkbAEh7/hvUgt1iEBaVAu8UToE
+	 0prKVe7FAuuT25BVUAp9/jpE9NonJgFHgusjL30OfjIOlHS8mY5TJAqxEaj0wG7XmQceM
+	 nkDaEp4E+LIfRDmzAiHSz7CXcMoZFEsffvRYEjzF7lzOLJyJzWmthg5+el/sLj9GdPFx4
+	 ppsSfCnQ+yR3ttmR4axYngMlG0ai2dRD+pc6cZ4CI0BEgNFBIjCKBXlbDJvuZ9Vh0wQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rm4YnwDB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jCfyIrwx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93F4606A335;
-	Wed, 18 Nov 2026 16:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F1C606A339;
+	Wed, 18 Nov 2026 16:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rm4YnwDB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A02A1F000C5;
-	Wed, 18 Nov 2026 16:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jCfyIrwx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF7B1F000C4;
+	Wed, 18 Nov 2026 16:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018781;
-	bh=Gx3onN8hsrsqx0MHd3YN0LoemrUaN+1bvTLrB9phqD4=;
+	s=korg; t=1795018784;
+	bh=piPkga23M1YWSY20plXcHKafZtq35x6DUNn+hpTIWaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rm4YnwDBJ4xC8Xo5lEzzALpD0tlHnaVLjvjuKa05q58m72FkfcNj4LjE4YZPde0JD
-	 FZiUjzcIHqWyczvlE73FLyaJG1H01dF3vmLp4neUrlEUCJGTJF33jVrJy6Zepf/JNE
-	 eu6felsWhWpUJkGrUOC8qozTcrv5RtbfSH3voAs4=
+	b=jCfyIrwxvtBFFcLkoOKXODgc/5y2gDg9JxB4xSnWdqwsWwS9FH+55GtlfnSJ1IfYM
+	 ri+czkbVexR8UxRIENB9jFvB6XwskQiVHxkZLmbyyvHl8qCu7XbkFwQv2vx954zyW6
+	 2p3I5Agfkks1jORQDQ93lL2/vjmKZUXdKQxdxSNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1363/2651] selftests: drv-net: psp: swap closed for connected sockets in assoc tests
-Date: Wed, 18 Nov 2026 15:43:23 +0100
-Message-ID: <20261118150337.095842349@linuxfoundation.org>
+Subject: [PATCH 7.3 1364/2651] net: psp: require an established connection for association setup
+Date: Wed, 18 Nov 2026 15:43:24 +0100
+Message-ID: <20261118150337.134358352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,143 +71,160 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Zahka <daniel.zahka@gmail.com>
 
-[ Upstream commit e404a2de7ed1a19ed356086e3b012e2227c1024d ]
+[ Upstream commit 86a19284425fb0c420e1702f8d0de891279df6b7 ]
 
-Future work will only allow rx-assoc and tx-assoc to be performed when
-the sock is in TCP_ESTABLISHED state.
+Check sk_state under the socket lock in both the rx-assoc and tx-assoc
+handlers, and only allow association setup on sockets in
+TCP_ESTABLISHED. Also, fail connect() when PSP assoc state is already
+present, and remove the dead PSP MSS adjustment from
+tcp_v[46]_connect().
 
-Several assoc_ tests, as well as dev_rotate_spi, test using the rx-assoc
-and tx-assoc uapi calls against sockets in TCP_CLOSE state.
-These tests don't involve sending or receiving data, nor involve looking
-up psp device by dst entry, so using a disposable disconnected socket
-was just a convenience. These can be replaced by a disposable loopback
-socket.
+The net effect of this commit is:
+1. PSP assoc state can never exist on a listen socket.
+2. The upgrade to PSP must be done while the socket is in
+   TCP_ESTABLISHED.
 
-The loopback sockets are IPv4, where the sockets they replace were
-AF_INET6. This doesn't reduce coverage, since the assoc handlers accept
-any TCP socket and don't look at the address family.
+This change defeatures behavior that was previously allowed under the
+PSP uapi. My justification is:
 
-Some users of rx-assoc and tx-assoc on closed sockets are left if they
-validate errors that are returned before the kernel will check the
-socket for TCP_ESTABLISHED.
+Nothing useful can be done after association setup on closed or listen
+sockets today. Listen sockets could accept a PSP-encrypted TCP SYN, but
+the child socket will not inherit any PSP state. On the other side,
+establishing PSP state prior to connect() will result in a PSP-encrypted
+TCP SYN sent to a listening peer, which in turn has the aforementioned
+limitations. That implies that there cannot be any users of this
+feature, so it should be safe to remove it from the PSP uapi.
+
+In theory, the check in the tx-assoc path is more restrictive than
+necessary. FIN_WAIT1/2, CLOSING, LAST_ACK and CLOSE_WAIT could be
+allowed, and the peer would accept PSP-encrypted ACKs in the
+post-FIN-sent states, or data in the half-close case, but it is simpler
+to disallow those states because they don't fit the upgrade model.
+
+The check in the tx-assoc path fixes a bug in commit 6b46ca260e22 ("net:
+psp: add socket security association code") where an unsynchronized
+write can be performed on an assoc shared with a timewait socket when
+the socket is in TCP_CLOSE after shutdown. This commit is not targeted
+at net because its premise of preventing listen sockets from holding
+assoc state depends on net-next commit 8cc3aef0cb19 ("tcp: Do not allow
+buggy transitions between ehash and lhash2.")
 
 Signed-off-by: Daniel Zahka <daniel.zahka@gmail.com>
 Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260930-psp-defeat-v2-1-f266e7447129@gmail.com
+Link: https://patch.msgid.link/20260930-psp-defeat-v2-2-f266e7447129@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/psp.py | 30 ++++++++++++++--------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ Documentation/networking/psp.rst |  8 ++++++++
+ net/ipv4/tcp_ipv4.c              |  7 +++++--
+ net/ipv6/tcp_ipv6.c              |  9 ++++++---
+ net/psp/psp_sock.c               | 12 ++++++++++++
+ 4 files changed, 31 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/psp.py b/tools/testing/selftests/drivers/net/psp.py
-index a5b1e14f120f0..22d2f43d109ac 100755
---- a/tools/testing/selftests/drivers/net/psp.py
-+++ b/tools/testing/selftests/drivers/net/psp.py
-@@ -11,6 +11,8 @@ import struct
- import termios
- import time
+diff --git a/Documentation/networking/psp.rst b/Documentation/networking/psp.rst
+index 4ac09e64e95a5..0f9b6b73f2447 100644
+--- a/Documentation/networking/psp.rst
++++ b/Documentation/networking/psp.rst
+@@ -132,6 +132,14 @@ numbers in a way that deletes a prefix of the PSP protected part of
+ the TCP stream. If userspace cares to mitigate this type of attack, a
+ special "start of PSP" message should be exchanged after ``tx-assoc``.
  
-+from contextlib import contextmanager
++Upgrade to PSP must be done on established TCP connections.
++``rx-assoc`` and ``tx-assoc`` will return ``-ENOTCONN`` if
++``sk_state`` is not ``TCP_ESTABLISHED``.
 +
- from lib.py import defer
- from lib.py import ksft_run, ksft_exit, ksft_pr
- from lib.py import ksft_true, ksft_eq, ksft_ne, ksft_gt, ksft_raises
-@@ -58,6 +60,17 @@ def _make_psp_conn(cfg, version=0, ipver=None):
-     return s
- 
- 
-+@contextmanager
-+def _make_lo_conn():
-+    # After tx-assoc, the client's egress is dropped, since lo has no
-+    # psp_dev, so its FIN never reaches the server. Closing the server
-+    # resets the unaccepted child, and the client accepts the cleartext
-+    # RST because it hasn't received any PSP traffic yet.
-+    with socket.create_server(("localhost", 0)) as srv, \
-+         socket.create_connection(srv.getsockname()[:2]) as s:
-+        yield s
++The PSP assoc state of a socket is not reset when the connection is
++torn down. ``connect()`` on a socket that has PSP assoc state will
++return ``-EINVAL``.
 +
+ Rotation notifications
+ ----------------------
+ 
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index bebc5a8d1ab69..a38cafcc553b6 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -238,6 +238,9 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr_unsized *uaddr, int addr_len
+ 	if (usin->sin_family != AF_INET)
+ 		return -EAFNOSUPPORT;
+ 
++	if (psp_sk_assoc(sk))
++		return -EINVAL;
 +
- def _close_conn(cfg, s):
-     _send_with_ack(cfg, b'data close\0')
-     s.close()
-@@ -200,20 +213,18 @@ def dev_rotate_spi(cfg):
-     _init_psp_dev(cfg)
+ 	nexthop = daddr = usin->sin_addr.s_addr;
+ 	inet_opt = rcu_dereference_protected(inet->inet_opt,
+ 					     lockdep_sock_is_held(sk));
+@@ -291,9 +294,9 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr_unsized *uaddr, int addr_len
+ 	inet->inet_dport = usin->sin_port;
+ 	sk_daddr_set(sk, daddr);
  
-     top_a = top_b = 0
--    with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
-+    with _make_lo_conn() as s:
-         assoc_a = cfg.pspnl.rx_assoc({"version": 0,
-                                      "dev-id": cfg.psp_dev_id,
-                                      "sock-fd": s.fileno()})
-         top_a = assoc_a['rx-key']['spi'] >> 31
--        s.close()
-     rot = cfg.pspnl.key_rotate({"id": cfg.psp_dev_id})
--    with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
-+    with _make_lo_conn() as s:
-         ksft_eq(rot['id'], cfg.psp_dev_id)
-         assoc_b = cfg.pspnl.rx_assoc({"version": 0,
-                                     "dev-id": cfg.psp_dev_id,
-                                     "sock-fd": s.fileno()})
-         top_b = assoc_b['rx-key']['spi'] >> 31
--        s.close()
-     ksft_ne(top_a, top_b)
+-	inet_csk(sk)->icsk_ext_hdr_len = psp_sk_overhead(sk);
++	inet_csk(sk)->icsk_ext_hdr_len = 0;
+ 	if (inet_opt)
+-		inet_csk(sk)->icsk_ext_hdr_len += inet_opt->opt.optlen;
++		inet_csk(sk)->icsk_ext_hdr_len = inet_opt->opt.optlen;
  
+ 	tp->rx_opt.mss_clamp = TCP_MSS_DEFAULT;
  
-@@ -221,7 +232,7 @@ def assoc_basic(cfg):
-     """ Test creating associations """
-     _init_psp_dev(cfg)
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 7fa4ed2fd4f16..be50b2fe12742 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -153,6 +153,9 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
+ 	if (usin->sin6_family != AF_INET6)
+ 		return -EAFNOSUPPORT;
  
--    with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
-+    with _make_lo_conn() as s:
-         assoc = cfg.pspnl.rx_assoc({"version": 0,
-                                   "dev-id": cfg.psp_dev_id,
-                                   "sock-fd": s.fileno()})
-@@ -234,7 +245,6 @@ def assoc_basic(cfg):
-                                   "tx-key": assoc['rx-key'],
-                                   "sock-fd": s.fileno()})
-         ksft_eq(len(assoc), 0)
--        s.close()
++	if (psp_sk_assoc(sk))
++		return -EINVAL;
++
+ 	fl6 = &inet_sk(sk)->cork.fl.u.ip6;
+ 	memset(fl6, 0, sizeof(*fl6));
  
+@@ -311,10 +314,10 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
+ 	sk->sk_gso_type = SKB_GSO_TCPV6;
+ 	ip6_dst_store(sk, dst, false, false);
  
- def assoc_bad_dev(cfg):
-@@ -320,7 +330,7 @@ def assoc_version_mismatch(cfg):
-     # Translate versions to integers
-     versions = [cfg.pspnl.consts["version"].entries[v].value for v in versions]
+-	icsk->icsk_ext_hdr_len = psp_sk_overhead(sk);
++	icsk->icsk_ext_hdr_len = 0;
+ 	if (opt)
+-		icsk->icsk_ext_hdr_len += opt->opt_flen +
+-					  opt->opt_nflen;
++		icsk->icsk_ext_hdr_len = opt->opt_flen +
++					 opt->opt_nflen;
  
--    with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
-+    with _make_lo_conn() as s:
-         rx = cfg.pspnl.rx_assoc({"version": versions[0],
-                                  "dev-id": cfg.psp_dev_id,
-                                  "sock-fd": s.fileno()})
-@@ -393,7 +403,7 @@ def assoc_twice(cfg):
+ 	tp->rx_opt.mss_clamp = IPV6_MIN_MTU - sizeof(struct tcphdr) - sizeof(struct ipv6hdr);
  
-         return assoc
+diff --git a/net/psp/psp_sock.c b/net/psp/psp_sock.c
+index e9b53eedf8dba..70fa137bd8116 100644
+--- a/net/psp/psp_sock.c
++++ b/net/psp/psp_sock.c
+@@ -139,6 +139,12 @@ int psp_sock_assoc_set_rx(struct sock *sk, struct psp_assoc *pas,
  
--    with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s:
-+    with _make_lo_conn() as s:
-         assoc = rx_assoc_check(s)
-         tx = cfg.pspnl.tx_assoc({"dev-id": cfg.psp_dev_id,
-                                "version": 0,
-@@ -402,7 +412,7 @@ def assoc_twice(cfg):
-         ksft_eq(len(tx), 0)
+ 	lock_sock(sk);
  
-         # Use the same Tx assoc second time
--        with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as s2:
-+        with _make_lo_conn() as s2:
-             rx_assoc_check(s2)
-             tx = cfg.pspnl.tx_assoc({"dev-id": cfg.psp_dev_id,
-                                    "version": 0,
-@@ -410,8 +420,6 @@ def assoc_twice(cfg):
-                                    "sock-fd": s2.fileno()})
-             ksft_eq(len(tx), 0)
++	if (sk->sk_state != TCP_ESTABLISHED) {
++		NL_SET_ERR_MSG(extack, "Socket must be in established state");
++		err = -ENOTCONN;
++		goto exit_unlock;
++	}
++
+ 	if (psp_sk_assoc(sk)) {
+ 		NL_SET_ERR_MSG(extack, "Socket already has PSP state");
+ 		err = -EBUSY;
+@@ -188,6 +194,12 @@ int psp_sock_assoc_set_tx(struct sock *sk, struct psp_dev *psd,
  
--        s.close()
--
+ 	lock_sock(sk);
  
- def _data_basic_send(cfg, version, ipver):
-     """ Test basic data send """
++	if (sk->sk_state != TCP_ESTABLISHED) {
++		NL_SET_ERR_MSG(extack, "Socket must be in established state");
++		err = -ENOTCONN;
++		goto exit_unlock;
++	}
++
+ 	pas = psp_sk_assoc(sk);
+ 	if (!pas) {
+ 		NL_SET_ERR_MSG(extack, "Socket has no Rx key");
 -- 
 2.53.0
 
