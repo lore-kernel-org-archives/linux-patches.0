@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052929;
-	b=nbHI09NY/mPorZ1wn95FA2OrRtRJMPfLRrJlQkXDQ7t9bMzUzWmr9B8mxpfv3TGk4xE0
-	 uV/Mmz6DvO462tJBJixPr0PYuEIwzT1HchwOE8emQCQxgGT5gYoaH6zr32z9nhORk3xS1
-	 KELfT9YifHNgk6dxy0MFmqnW7uhhVgDP5d28wKHM1IwEYjajXp+3y22U6OONpydCGE8Gb
-	 Di/MVr8tbwESxahmF+JJHizTKj3wObTY0CCGYW7qhgBG5cbB3c8V3T/z4JD1QW+F/poRR
-	 V8vBQ9IfW66Kny4df9NvEfDtfApu0nYtd4xZkDjKjTHjeSS7mg1l7A+vXB/BY5upyPA==
+	t=1795052932;
+	b=39v7oDH1vgZDZEnOuxZvJ42m1/iZS+pCJS1g29v/BbXs6UzId+QXMOMSBjHPAyPLOK/V
+	 bovP2vJxdMz6In+yCFCHzZvqf/sgE5DJm2mOq08O+0AP/TqUrOKZHxFL5grLREldlIs62
+	 /uOWK9hL4YUNh3nnUc3vqroSpX5CuQcCJQtgOnnmdWW5684n/lnWxPCViEhc2BlNthqkL
+	 MhSXiP5nntJymOpJbIysdCDugyde3v1FhdZb2USsBLH2y6t0gz0vu+Hz0wXXZfNYVdbaN
+	 y5lBG0uoPx/R2tjCV+9Cn6UuBM6UTO0HKlJyFiHkFKFyU7LwNHQub80Qx2ofQS9J6aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052929;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052932;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tx8i+PEJBez7U8PQoMa4QJ5OSU0XJyJdrNpUx5772cI=;
-	b=BxlXxp37YjwPtLIEfZ+eGlcg54Rmv0VowydTF5SmqAxUAQxO4M35ydWpmgkr9KAbQLGr
-	 +56B0Dc9T2qnaK/aMBhbYO34OmBGc+RpGDLYBI36L88mqVLa4sizMw8Psp6cKTRV8g2vt
-	 Lyit0be6cIqMO5dN8PEB2sd0hvzgYMnzHj27gNfh7u+V/pVXLE9NjJJQJiy4v9DBHSTYu
-	 WaTrRwjN42V6jkA2LfIELSau42eO9swuqNbKSxJbAqJEx6VFOTo9tL8IglRCDNsxq9IR8
-	 kmjUfb8GWe7tRscf8t0TjVLYwnke7112zmID80k106HICMmliNJ9WhkjwS1KTUd3B1g==
+	bh=aha8x344t9CYPyzi1pvgRfazQW6pAqgHTMKRLEyPaz0=;
+	b=ABIE9IuBTWKpeKmu1wkXgGpsE3SBvD1EcN46VoHPo0cgCCHq4WsVytFIy60anR++RvQJ
+	 zj+jJF6/Nwq+l0G4i9VzKMFz00jYd1oOtKuXnjcytJapsrFif6B/GN150vuCpuVxAs9ax
+	 sUvPc9J/RXADqMoqlr4QuW+dknubJnyDsW+Tk1178SJG2PLl9FcmfPt/gnEuIx1fy7vED
+	 dppZFeXY1/OxlqiDAOxff+XkL2drHZ363mzRudN1//nlxEPm1aa/lg9mFpt/V3wjYgoni
+	 eoznlb34aBQn7F2+0IFxs0mbfGmMhCt/kgFUppFn4jofwp71EeQRz/52ahYU+6j01iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hatM9Gur;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ICQXJmIK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6DB606A320;
-	Thu, 19 Nov 2026 01:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5A1606A325;
+	Thu, 19 Nov 2026 01:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hatM9Gur
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA52D1F000C4;
-	Thu, 19 Nov 2026 01:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ICQXJmIK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915071F000C4;
+	Thu, 19 Nov 2026 01:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052929;
-	bh=Tx8i+PEJBez7U8PQoMa4QJ5OSU0XJyJdrNpUx5772cI=;
+	s=korg; t=1795052932;
+	bh=aha8x344t9CYPyzi1pvgRfazQW6pAqgHTMKRLEyPaz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hatM9GurOkpVgRahJdpUt7Z/3w/ph2KyrkJynrsukGvvcgNCNpp47H/DSjkGX4JoD
-	 D1ud/yq9aamZsgLL+nB7IQrT2lN97UtYxHgAGWSh1qyEKbBLfoJNinjFjHFgkLN2aH
-	 ONtWsBxjin6SLM70oKOiQ/VCsJ1MDAE7kKHbAf7Q=
+	b=ICQXJmIKhreAwzWAo9ho8x9WodV1WxoRspofWLgV8pMdHzXagFK+0EgS5SfkNToSv
+	 fw/jyHq/QJ5K+oYl1T0rFFD2XbLI/F4BKjtOakj4OU+S8TJWWBYjD+bQt6+G/FkA/r
+	 aJxOKBZzIgaTiKlWU7PvT8Gt/7CDr+oXikoOe/88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sun <sunjunchao@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0688/2214] writeback: reset dirtied_when when switching wbs
-Date: Wed, 18 Nov 2026 15:39:24 +0100
-Message-ID: <20261118150039.256721754@linuxfoundation.org>
+Subject: [PATCH 5.15 0679/2214] ipv6: initialize temporary ifaddr before publication
+Date: Wed, 18 Nov 2026 15:39:15 +0100
+Message-ID: <20261118150038.945745834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,72 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao@bytedance.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 13b9a606dd0a6cf9bac12894c97b9546d22a7425 ]
+[ Upstream commit ed7f278812e540db507f683e5bf9b6d0a1f5bc1e ]
 
-When switching a dirty inode to another wb, inode_do_switch_wbs() puts
-it at the newest end of the target b_dirty list instead of searching
-for its sorted position. This requires updating dirtied_when, which
-move_expired_inodes() uses to decide where to stop scanning.
+ipv6_create_tempaddr() holds a reference to the public ifaddr, publishes
+the new temporary address through ipv6_add_addr(), and only then stores
+the reference and final timestamps.
 
-However, the switch updates dirtied_time_when instead. This leaves
-b_dirty out of order and can make the scan stop before reaching older
-inodes. It also resets the lazytime expiration timestamp, potentially
-delaying timestamp writeback.
+addrconf_ifdown() can remove the temporary address before ifpub is
+stored, leaking the public ifaddr reference. Publishing ifpub alone is
+insufficient: manage_tempaddrs() can then find the object before cstamp
+and tstamp are final, update its lifetimes, and have the constructor
+overwrite its timestamp with an older value.
 
-Update dirtied_when instead, preserving both the constant-time insertion
-and the lazytime expiration timestamp. Correct the field name in the
-comment and document the distinction between the two inode timestamps.
+This follow-on was found by source review and was not separately
+triggered at runtime.
 
-Fixes: 9a6ebbdbd412 ("writeback: Avoid excessively long inode switching times")
+Pass the public ifaddr and both timestamps in ifa6_config. Initialize all
+three fields before adding the temporary address to either the hash or
+per-device lists. On success the existing public-ifaddr reference
+transfers to the temporary object. On error it remains owned and released
+by ipv6_create_tempaddr().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Julian Sun <sunjunchao@bytedance.com>
-Link: https://patch.msgid.link/20261016115230.3640770-2-sunjunchao@bytedance.com
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://lore.kernel.org/r/179122559913.434549.12720841717630168470@kernel.org
+Link: https://lore.kernel.org/r/179161099665.434549.5858601179492551889@kernel.org
+Link: https://lore.kernel.org/r/20261007164548.GA1153540@shredder
+Link: https://lore.kernel.org/r/20261012145240.GA779501@shredder
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261015050651.1841557-4-4ncienth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c  | 6 +++---
- include/linux/fs.h | 4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ include/net/addrconf.h |  3 +++
+ net/ipv6/addrconf.c    | 20 +++++++++++++-------
+ 2 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index aff9f0613495a..c6c2dad201564 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -427,12 +427,12 @@ static bool inode_do_switch_wbs(struct inode *inode,
- 		if (inode->i_state & I_DIRTY_ALL) {
- 			/*
- 			 * We need to keep b_dirty list sorted by
--			 * dirtied_time_when. However properly sorting the
-+			 * dirtied_when. However properly sorting the
- 			 * inode in the list gets too expensive when switching
- 			 * many inodes. So just attach inode at the end of the
--			 * dirty list and clobber the dirtied_time_when.
-+			 * dirty list and clobber the dirtied_when.
- 			 */
--			inode->dirtied_time_when = jiffies;
-+			inode->dirtied_when = jiffies;
- 			inode_io_list_move_locked(inode, new_wb,
- 						  &new_wb->b_dirty);
- 		} else {
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 41b3ebe4e8e71..a6845fdc73cf9 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -679,7 +679,9 @@ struct inode {
- 	unsigned long		i_state;
- 	struct rw_semaphore	i_rwsem;
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index cda93578a41b4..637251ed33e49 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -73,6 +73,9 @@ struct ifa6_config {
+ 	unsigned int		plen;
  
--	unsigned long		dirtied_when;	/* jiffies of first dirtying */
-+	/* Timestamp for writeback list ordering and age checks (jiffies). */
-+	unsigned long		dirtied_when;
-+	/* Start time for deciding when lazytime updates need writeback (jiffies). */
- 	unsigned long		dirtied_time_when;
+ 	const struct in6_addr	*peer_pfx;
++	struct inet6_ifaddr	*ifpub;
++	unsigned long		cstamp;
++	unsigned long		tstamp;
  
- 	struct hlist_node	i_hash;
+ 	u32			rt_priority;
+ 	u32			ifa_flags;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index f8061b62da030..f7889ada42125 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1145,10 +1145,19 @@ ipv6_add_addr(struct inet6_dev *idev, struct ifa6_config *cfg,
+ 		ifa->flags |= IFA_F_TENTATIVE;
+ 	ifa->valid_lft = cfg->valid_lft;
+ 	ifa->prefered_lft = cfg->preferred_lft;
+-	ifa->cstamp = ifa->tstamp = jiffies;
+ 	ifa->tokenized = false;
+ 
+ 	ifa->rt = f6i;
++	ifa->ifpub = cfg->ifpub;
++	if (cfg->ifpub) {
++		ifa->cstamp = cfg->cstamp;
++		ifa->tstamp = cfg->tstamp;
++	} else {
++		unsigned long now = jiffies;
++
++		ifa->cstamp = now;
++		ifa->tstamp = now;
++	}
+ 
+ 	ifa->idev = idev;
+ 	in6_dev_hold(idev);
+@@ -1434,6 +1443,9 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 
+ 	cfg.pfx = &addr;
+ 	cfg.scope = ipv6_addr_scope(cfg.pfx);
++	cfg.ifpub = ifp;
++	cfg.cstamp = now;
++	cfg.tstamp = tmp_tstamp;
+ 
+ 	ift = ipv6_add_addr(idev, &cfg, block, NULL);
+ 	if (IS_ERR(ift)) {
+@@ -1444,12 +1456,6 @@ static int ipv6_create_tempaddr(struct inet6_ifaddr *ifp, bool block)
+ 		goto retry;
+ 	}
+ 
+-	spin_lock_bh(&ift->lock);
+-	ift->ifpub = ifp;
+-	ift->cstamp = now;
+-	ift->tstamp = tmp_tstamp;
+-	spin_unlock_bh(&ift->lock);
+-
+ 	addrconf_dad_start(ift);
+ 	in6_ifa_put(ift);
+ 	in6_dev_put(idev);
 -- 
 2.53.0
 
