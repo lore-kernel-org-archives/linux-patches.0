@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034143;
-	b=UFTA8/5dw73wjqHaL3xDTNopGlnHdBjLPZZIZowMi991IV139CZDbT07zxUs/fuy1KgX
-	 2YUTDgubGLn4gNOyzQgHVPkjBQ/aRm8qyErRO06arI3sHs2dxjiB8HzmARfnM81GKSYG1
-	 Uzqx/QdtuYYShrIS6AP/SGfw9PPo4ycLoKIPmVtGJHPqQ1qOG0zarD3tLZchtQZvAmwpc
-	 9uHhWa8u4iWEAmHoeksimf6ceMnjt3aK33/G1W+2+yMPGSssWz5aSamj1V59wddINss1V
-	 dBHI8DOEI9WYeu5HQ07bRu55muxEr0FX+1uCruEfgq4E/e86cywY8XpcpzzXgWNxSjA==
+	t=1795034146;
+	b=BYAUGbCDbsj5MxlbRThZkeGyw9/GhL1HFOxlSjjqLbxsbbs8asOJ27Vjk82n2+ZHKexU
+	 YcMSp3GRpQyGsln42HU4UNCf4QgsJhRvzOBiA3a57zto+pI6ciW5BRdncZbb+TVY27liN
+	 0WzIFXhEYAt2AyH7Akw7zOGjBvJbAuLLnWUYCZmYjKE4OaOCPbpIeTJQS0QROhz87vjNB
+	 UTLBHJiWiDBM0x+NayvRVDyLUQxxLdNKcZPWaNF8zskFCBfUD8cUeGydfFUud+ukOy1pZ
+	 Kh3oYRyeJeLMKNnN/0t+UeMVKHwVxILzO1yKfeb37g/b9gtARR/EmCk15wFNwzysw6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fNM19AVSKZcelN+MSH2ByAA1Ir8SOvc/eNZvTWW/2Vc=;
-	b=puyQkjmpCWmn4ZkIItF6N+9lR8bQUmodRpnqDpFIWuSlhrc8OMo8h/uMamHt8M2tA9O3
-	 jgSNsIj8ZDdnQ8k0KzKfDpUhTU0ABMJfYlP9Ly0cYSyAm40FD9YlqlemTi391CscYNm9s
-	 365hB03bB8+AotITj8KLlMsQYHqujQt8nyoiQ/BG4eV1tg2P6Ozi99v7dVtL9G2w12+PK
-	 9G5uUuT8Pp2M9+3oAYH2a8U2iNPDhR4+zg25cy+twFSLrp64yPmd0/aDHt+hNUTeTuh7p
-	 Z/ktqimwNJcJBow1XDeqF03ejntmUGSd4ZygS2pWjkofzpFfwNmo/eKCn7TjWsg+yyA==
+	bh=YR0HEeC58QvHkjStqIPxiVy+CroOyFQLyLPvuHQOftA=;
+	b=sxmrgZ/V0ivgf1iiPPPkIqMWdXQiE/Z5rEfQOPVSwWYKPj9n424qLLWG8LEPpvKoTFzz
+	 8mVcdvwHYxPcCEy/80/ZH3I0wr0GS0vG3CH3lxArxQUfrTljuG03FDEoCOTHC/Z7tiBjW
+	 8iUh15WkgLQsJlpZHFVer3WLq8M1oZx/Z9YfpaQPTj9z8j/S44OUDMiBkTp+ZQ7IJtGuJ
+	 OHokkFvtgjNE6jRryL7dLEZ8XJ+0jMpSPHl13lhq1X+ZcmZUvRstk+fptBStXqc6cJ9jG
+	 WSfkPBVxOZ5PhIwuu7UjgDTlYrRMyPc2HhgriiCthj2RJnWQY0njk4WTgotAlx5tK9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2igE9wuG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXzNAYir;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F3606A32A;
-	Wed, 18 Nov 2026 20:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DC7606A339;
+	Wed, 18 Nov 2026 20:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2igE9wuG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC921F000C4;
-	Wed, 18 Nov 2026 20:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXzNAYir
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99DC1F000C4;
+	Wed, 18 Nov 2026 20:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034143;
-	bh=fNM19AVSKZcelN+MSH2ByAA1Ir8SOvc/eNZvTWW/2Vc=;
+	s=korg; t=1795034146;
+	bh=YR0HEeC58QvHkjStqIPxiVy+CroOyFQLyLPvuHQOftA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2igE9wuGNRMhw0g/0C9So5PoNoqSrLz1vu5dyIfuPgp0gR3kLN2yBk4IowWcs8SjI
-	 wxM/u3cF6hgP5xnQChEAYD+FYVk6EZ3wi9Yn5uOKJWBmnuyjCbWOKKpVwB4yMxBFQb
-	 VYfPQnapvku6A0TwlqTbKz8vYwayUYUiHV3leqTM=
+	b=iXzNAYir/lu/yxxyx6mThGHnX6CQ0Jea/T7qcK4YVg1g1Uf6oGNAljNpsHHYcKz/5
+	 6ncA+fGMR6O7l5ALfTB3zwcWrZNGfbObdtnY9jmHhB3W1+xZMu/tmMFdu+Yhekfq1G
+	 DxpAcdqQK4wZEJY7vi+I5bMr/O95JCxMZ3qE1ax4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0265/3318] apparmor: fix auditing of mount binary data
-Date: Wed, 18 Nov 2026 15:14:47 +0100
-Message-ID: <20261118150323.356524979@linuxfoundation.org>
+Subject: [PATCH 6.6 0266/3318] selftests: net: reuseport_bpf_numa: consider cpuless numa node
+Date: Wed, 18 Nov 2026 15:14:48 +0100
+Message-ID: <20261118150323.389144313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,34 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Feng Tang <feng.tang@linux.alibaba.com>
 
-[ Upstream commit b9f2181b90ec047488dcb4fb1c631d417aff07e0 ]
+[ Upstream commit 88b8d85e889e2fe1cce3e66e50c3029dda94842a ]
 
-AppArmor only mediates non-binary mount data, and should only
-audit the mount data if it is non-binary.
+reuseport_bpf_numa case failed when testing on a platform with CXL
+memory:
 
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+    #./reuseport_bpf_numa
+    ---- IPv4 UDP ----
+    send node 0, receive socket 0
+    ./reuseport_bpf_numa: failed to pin to node: Invalid argument
+
+The root cause is that the platform has 2 numa nodes: node 0 has
+both cpu and memory, while node 1 is a CXL node which only has
+memory, and caused numa_run_on_node() to fail.
+
+Add sanity check to skip cpuless numa node for the numa binding test.
+
+Signed-off-by: Feng Tang <feng.tang@linux.alibaba.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260807002436.43991-1-feng.tang@linux.alibaba.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/mount.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../selftests/net/reuseport_bpf_numa.c        | 24 +++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
-index 49fe8da6fea45..5a92ed773f2ba 100644
---- a/security/apparmor/mount.c
-+++ b/security/apparmor/mount.c
-@@ -343,8 +343,8 @@ static int match_mnt_path_str(const struct cred *subj_cred,
- 
- audit:
- 	return audit_mount(subj_cred, profile, OP_MOUNT, mntpnt, devname,
--			   type, NULL,
--			   flags, data, AA_MAY_MOUNT, &perms, info, error);
-+			   type, NULL, flags, !binary ? data : NULL,
-+			   AA_MAY_MOUNT, &perms, info, error);
+diff --git a/tools/testing/selftests/net/reuseport_bpf_numa.c b/tools/testing/selftests/net/reuseport_bpf_numa.c
+index c9ba36aa688e2..b04b511809ad2 100644
+--- a/tools/testing/selftests/net/reuseport_bpf_numa.c
++++ b/tools/testing/selftests/net/reuseport_bpf_numa.c
+@@ -104,6 +104,26 @@ static void attach_bpf(int fd)
+ 	close(bpf_fd);
  }
  
- /**
++/*
++ * Return true if it is a cpuless node. Return false if it isn't or any
++ * error (very unlikely) happens during the libnuma calls.
++ */
++static bool is_cpuless_node(int node_id)
++{
++	struct bitmask *cpumask;
++	bool ret = false;
++
++	cpumask = numa_allocate_cpumask();
++	if (!cpumask)
++		return ret;
++
++	if (!numa_node_to_cpus(node_id, cpumask) && !numa_bitmask_weight(cpumask))
++		ret = true;
++
++	numa_bitmask_free(cpumask);
++	return ret;
++}
++
+ static void send_from_node(int node_id, int family, int proto)
+ {
+ 	struct sockaddr_storage saddr, daddr;
+@@ -213,6 +233,8 @@ static void test(int *rcv_fd, int len, int family, int proto)
+ 	for (node = 0; node < len; ++node) {
+ 		if (!numa_bitmask_isbitset(numa_nodes_ptr, node))
+ 			continue;
++		if (is_cpuless_node(node))
++			continue;
+ 		send_from_node(node, family, proto);
+ 		receive_on_node(rcv_fd, len, epfd, node, proto);
+ 	}
+@@ -221,6 +243,8 @@ static void test(int *rcv_fd, int len, int family, int proto)
+ 	for (node = len - 1; node >= 0; --node) {
+ 		if (!numa_bitmask_isbitset(numa_nodes_ptr, node))
+ 			continue;
++		if (is_cpuless_node(node))
++			continue;
+ 		send_from_node(node, family, proto);
+ 		receive_on_node(rcv_fd, len, epfd, node, proto);
+ 	}
 -- 
 2.53.0
 
