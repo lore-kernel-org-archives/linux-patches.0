@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021555;
-	b=orLGYGJTLdP6Pz72urAtH1B4Ejr/FuZQhElJWG1M3ImxPqgdVbjDnizwqlFjsunBnZPy
-	 Yc5h5nb0aaNzsQR5Nhq09VrZHk34k+k6aAi8wpMQAR2/VJSFPGZHnsXYXO+JSPB7kzQEj
-	 CkwOi/obhQHquKSDZMnBlhmJFhN4DdCvgunBlMm08kdwShK+ZQs6amjwvRO1Zuku1d7Cp
-	 cCziZ38jX+ONYypscEdK/MGkOJW2ACJI/0Hrh/bLDOM4fS5j0gZ/WtmJ61UATeOiVaFfJ
-	 7fbLUnYsTPxrq7OWdH694ICIOlzAkU2NJI1++kMNcVMqYN4KRJL+k/m/0IG+BCIuafA==
+	t=1795021558;
+	b=rdMyeP6c09O90XYvufZ00GijcTo9Z2VJsXGzd9JuJeK6Ut64p9vPQW8fiTa8Zq0wxa9i
+	 o8uBUMrq7+RrTM6Zmn/nxk9Qj8rPozKCCVn+qC11ZH14oraQVGIz3/ELpgvlid/XwO9YD
+	 EV4iaViagq/A5FcSRixYiEjRUfVDmFFNVMdCUhC/Sm5rlfc6YuvbCv+On8Y/t4Sr+8ZpD
+	 M3zzr5JRqEG48FagLwpQSSQRkHJigk8a+OBTOJ/3pLBfY6+heoWSTlaaQubmIv2MWtOPd
+	 bDAL4tJwTMfNNPMfJ+5IjdZ9kLYNTgiNm0SHW2//05i5x5CSwVFdV0xukSK47hl/qJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021558;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QvfrT7nSGdzRM1m09LQcvYSaZXOm+3dnUQH3bd1LT7o=;
-	b=x/1TlGzUtPJXzvyG4G41tPha/A0UzPFR0C/u+ozXvj2pqZjUNpimw5JKBgoC4iF3U9YR
-	 QdBkqySzRiqXgnzG+939HUWHamx4iZnbZq/MkUU05k3Of+uiouj1WEXqVVy4xvkRu1djR
-	 fw+0XfIyoAoaA/+ULdrI25K2H4nLObwoaqTTa7Ubal80yBF0q1ptEym3xr3b+Bgp2lv1n
-	 mCskL1o8iz9GdDmX8mFaatjCXe/gjweNodze82rFK/1wNlUGdaiHV8Xfd08kEnqB1LHl1
-	 Zd6VafhgH1FVN2YdYYcRgbebGrSai/arr5manC5LpL2AmWxwEQxxJhIdDe7ouMqQWKw==
+	bh=F2oQBDprIMwvtXzxEK2Jy//Oa6FxM+/UznOMOaO6JqE=;
+	b=XK+AC7rRn2pOmu/js677Pvi45vIZd8woUskjk0O+eExfCeXaaikUxiDQHMIrXdhTsfAM
+	 UnZ2sC4XYzsc8TJiqo9YL19PmeIQnjelFO+M+kvfvW1WL5DQZD7BB2V/YnW3a5IAHoiwW
+	 5uzOI1o9Rr+78oVPCDd/DP05KAkUt72IOTv+gvocZx5YZPOZhA3oOwKxTcZMEFLrDBNYY
+	 uC6UNzSlTt7xh/RgsguHiqhQpZB7+yRZsbkn+qncXAcmNMA0aOf6SWMFCq63mKvMSPX0C
+	 KBwzF6NbTl/P/KlrVyqmOoareljR4qQEzh0FO8APhhhvfcPNoKSgZh+Dy8RIRETI4KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVHbgki1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8zNE1Ul;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA260606A33A;
-	Wed, 18 Nov 2026 17:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0E6606A31C;
+	Wed, 18 Nov 2026 17:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TVHbgki1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EE11F000C9;
-	Wed, 18 Nov 2026 17:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J8zNE1Ul
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4531F000C5;
+	Wed, 18 Nov 2026 17:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021555;
-	bh=QvfrT7nSGdzRM1m09LQcvYSaZXOm+3dnUQH3bd1LT7o=;
+	s=korg; t=1795021558;
+	bh=F2oQBDprIMwvtXzxEK2Jy//Oa6FxM+/UznOMOaO6JqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVHbgki1uphSjfqoiUrUqDy7VnjRfWkSAJS3Ko4Gf/2bcwbRBtkU1LTL+eu1eKc3x
-	 Rv+iklCWBY/sayrGNIkNjjKrNbD6BtvhyJeb4QRNj3wqjzlTtQm42JjVOplHUCUwP7
-	 wd7vFAUtwcLzsn+OKPqdAoYjWdb25veMmxYGFxbE=
+	b=J8zNE1UlkzBCkdkLiJWKBiDEp2zRufr4ddF4gUkkmFau1qmLyCrH0zTzHfyymSnW9
+	 PHep6C2PeZBOyXYeX0PEX4ZVCWDdmbVp2S9pXL9+xPHPB2+bkiF1zSMGjnJ+CeRXqX
+	 UbQqakQllyq/FrHPOdZMPvqZaa2ROWHJ3zXG5uxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
-	Simon Horman <horms@kernel.org>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hang Nan <2122295973@qq.com>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2348/2651] tipc: fix use-after-free of broadcast reception link at node release
-Date: Wed, 18 Nov 2026 15:59:48 +0100
-Message-ID: <20261118150409.594806812@linuxfoundation.org>
+Subject: [PATCH 7.3 2349/2651] ntfs: reject index blocks with a too small entries offset
+Date: Wed, 18 Nov 2026 15:59:49 +0100
+Message-ID: <20261118150409.626048786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,95 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Hang Nan <2122295973@qq.com>
 
-[ Upstream commit 473167593f42551ce6b00c05cee8cd20309d45ac ]
+[ Upstream commit 20e14268ef410cbabff54a79405813a8b9ce8e89 ]
 
-When the last reference to a tipc_node is dropped, the node itself is
-deferred to the RCU callback tipc_node_free(), but the nested broadcast
-reception link, n->bc_entry.link, is kfree()d synchronously in
-tipc_node_kref_release(), before call_rcu(), and the pointer is never
-cleared.  Readers that obtained the node from node_list and then
-dereference bc_entry.link deep into the link (tipc_link_name() in
-tipc_nl_node_reset_link_stats(), bcl->name/stats in
-tipc_nl_add_bc_link() on the link dump path) therefore touch freed
-memory although the enclosing node stays alive for a full grace period.
-The sibling per-bearer links get "kfree + NULL" under the node write
-lock in tipc_node_clear_links(); the broadcast entry was missed.
+Index blocks read from the volume are checked for a plausible header, but
+nothing keeps a block from placing its entries closer to the header than
+ntfs_ib_alloc() does when it creates one.  The allocation adds the update
+sequence array, one entry per 512-byte sector plus the terminator, to the
+index header and aligns the result to 8 bytes, so the first entry of a
+4096-byte block starts at offset 40, while a corrupt block may declare 16.
 
-The race is reachable through the node cleanup timer: once a peer has
-been unreachable for NODE_CLEANUP_AFTER (300 s), tipc_node_timeout() ->
-tipc_node_cleanup() unlinks the node under the write lock, and the
-final tipc_node_put() at the caller runs outside node_list_lock, so the
-kfree executes in timer softirq context, concurrently with genl dump/
-reset walkers that hold only rcu_read_lock().  (A netlink "peer remove"
-cannot race those walkers itself: tipc_genl_family has no parallel_ops,
-so all doit/dumpit calls serialize on the global genl lock.)
+ntfs_ib_copy_tail() then copies the entries that follow the median entry
+from the source block into a freshly allocated destination.  The tail is
+sized as index_length minus entries_offset and the median entry, both from
+the source, while the destination only has allocated_size minus the
+canonical offset of room.  With the values above the tail is 4040 bytes
+and the destination holds 4032, so the last 8 bytes are written past the
+end of the new allocation, with contents taken from the mounted image.
 
-Reproduced in a QEMU/KVM guest running v7.3.0 with KASAN and
-PREEMPT(full): 10 TIPC peer namespaces on veth bearers, bearer removal
-staggered so the 300 s node cleanup timers expire while other tasks
-loop link dumps with the broadcast filter and reset-link-stats lookups.
-KASAN hit within two cleanup cycles:
+Reject such a block when it is read: entries_offset must not be smaller
+than the canonical offset for the block size.  Derive it from block_size
+rather than from the block's own usa_count, which post_read_mst_fixup()
+treats as "not protected" when it does not match the block size, and use
+the same helper in ntfs_ib_alloc() so both stay in sync.
 
-  BUG: KASAN: slab-use-after-free in strlen+0x85/0xa0
-  Read of size 1 at addr ffff88800b54a004 by task poc_eth/371
-   strlen+0x85/0xa0
-   tipc_nl_add_bc_link+0x2f9/0xd40
-   __tipc_nl_add_node_links+0x10c/0x140
-   tipc_nl_node_dump_link+0x8d5/0xd50
-  Freed by task 0:
-   kfree+0x121/0x380
-   tipc_node_timeout+0xa33/0xcf0
-   run_timer_softirq+0x144/0x250
-   sysvec_apic_timer_interrupt
-
-with the freed object being the kmalloc-1k tipc_link allocated by
-tipc_link_bc_create() during peer discovery.  The same defect fires in
-strcmp() called from tipc_nl_node_reset_link_stats().
-
-Move the kfree of n->bc_entry.link into the tipc_node_free() RCU
-callback so the broadcast link lives exactly as long as the enclosing
-node.  All readers are covered: the netlink walkers are inside
-rcu_read_lock(), and the packet reception path reaches the node via
-tipc_node_find(), whose kref defers kref_release itself.
-
-Found during a static-analysis-assisted audit: candidate sites were
-surfaced by a Coccinelle rule, and the reader/writer paths were
-confirmed by LLM-assisted (GLM-5.3) code inspection.
-
-Fixes: d25a01257e42 ("tipc: fix crash during node removal")
-Assisted-by: GLM-5.3 coccinelle
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20261019104352.488347-1-18983559317@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0a8ac0c1fa0b ("ntfs: update directory operations")
+Signed-off-by: Hang Nan <2122295973@qq.com>
+Reviewed-by: Baolin Liu <liubaolin@kylinos.cn>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs/index.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index d7cbfa786c132..53b0993c2c233 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -303,6 +303,7 @@ static void tipc_node_free(struct rcu_head *rp)
- #ifdef CONFIG_TIPC_CRYPTO
- 	tipc_crypto_stop(&n->crypto_rx);
- #endif
-+	kfree(n->bc_entry.link);
- 	kfree(n);
+diff --git a/fs/ntfs/index.c b/fs/ntfs/index.c
+index 03de4c97c1620..9a23d0786959b 100644
+--- a/fs/ntfs/index.c
++++ b/fs/ntfs/index.c
+@@ -489,6 +489,14 @@ static struct index_entry *ntfs_ie_dup_novcn(struct index_entry *ie)
+ 	return dup;
  }
  
-@@ -310,7 +311,6 @@ static void tipc_node_kref_release(struct kref *kref)
- {
- 	struct tipc_node *n = container_of(kref, struct tipc_node, kref);
- 
--	kfree(n->bc_entry.link);
- 	call_rcu(&n->rcu, tipc_node_free);
- }
- 
++/* Offset of the first entry in an index block created by ntfs_ib_alloc(). */
++static u32 ntfs_ib_canonical_entries_offset(u32 block_size)
++{
++	u32 usa_count = block_size / NTFS_BLOCK_SIZE + 1;
++
++	return (sizeof(struct index_header) + usa_count * 2 + 7) & ~7;
++}
++
+ /*
+  * Check the consistency of an index block
+  *
+@@ -548,6 +556,16 @@ int ntfs_index_block_inconsistent(struct ntfs_volume *vol,
+ 					   offsetof(struct index_block, index),
+ 					   inum))
+ 		return -EIO;
++
++	if (le32_to_cpu(ib->index.entries_offset) <
++	    ntfs_ib_canonical_entries_offset(block_size)) {
++		ntfs_error(sb,
++			   "Index block: entries offset %u is below the minimum for a %u-byte block: vcn %lld inode %llu\n",
++			   le32_to_cpu(ib->index.entries_offset), block_size,
++			   vcn, inum);
++		return -EIO;
++	}
++
+ 	if (ntfs_index_entries_inconsistent(vol, &ib->index, cr, inum))
+ 		return -EIO;
+ 	return 0;
+@@ -960,8 +978,8 @@ static struct index_block *ntfs_ib_alloc(s64 ib_vcn, u32 ib_size,
+ 	*(__le16 *)((char *)ib + le16_to_cpu(ib->usa_ofs)) = cpu_to_le16(1);
+ 	ib->lsn = 0;
+ 	ib->index_block_vcn = cpu_to_le64(ib_vcn);
+-	ib->index.entries_offset = cpu_to_le32((ih_size +
+-				le16_to_cpu(ib->usa_count) * 2 + 7) & ~7);
++	ib->index.entries_offset =
++		cpu_to_le32(ntfs_ib_canonical_entries_offset(ib_size));
+ 	ib->index.index_length = 0;
+ 	ib->index.allocated_size = cpu_to_le32(ib_size -
+ 			(sizeof(struct index_block) - ih_size));
 -- 
 2.53.0
 
