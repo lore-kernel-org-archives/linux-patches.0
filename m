@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040337;
-	b=JFJBcGVzQshmeOWQtIFouIWZtUjj8CRUZ9P/wy2SuYjTLZuEcCI8Ql+LKPe8E6dkWE/v
-	 Yrcjgcb0FuF0zh3EKo9C5Rt/elt+TxvCxGURbGGst9xVMWVqE1Y6rZlUYPwIdCuTpRman
-	 AXhAtApVp2Nb8VEDdfKeZieqi1rxPOfuxobe1yXfKgl72q0QZzmAP3t0JHnZ0vms5cCVb
-	 qbsIt0dedJc7zo43Wul27oQI5zumI8J5EfmxIw29wix1d9NmD2KYta8kcL7pgV4h9cEd2
-	 iknZcyIZNw8k6TqFE2qcQbcFkm1aDWRhk+PZWBsB+0EQaJ0p1J+B1+UlQJTCHMI9dYg==
+	t=1795040340;
+	b=Cw/02jp2GMmE6wVcN2GaK4xsZIUpX4ezhM1wn3ZCeQ7c9nhE/f4KN+rDk/ImX0gt76TM
+	 wSNd/q9AK6TMcAuInhpVJmhUKgT/Q8d/ZI7iWFOQ6QB87cVjC4uj+S1ib5mEeLCVa3cKs
+	 HJHhTdjbX3kt69tCjv+VBfYFQRL0ylUgyerK3B8oZyVB9DQDAEkCobdGzlonpyKFFANfy
+	 JwS/CrcrTqQ3Gv7QAw8Xscmo7nmsBwk3uY1iBEyP4IbX+zn/c1SRQ/nEDtT17k1qu/qPs
+	 Yi4h3x6bbZSaARfo/dQmkvuOBfNZzU3f/9Nc494cRZEmwEgKhka4lqBd4p8usvJWKAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040337;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040340;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RSRrvQwbI73SCIDOCYpJfWExWUa+B89a6VBgMIEovT0=;
-	b=LFe9ldwcDsJqI+gIYPVuI7KVx68NEkzv+93bwgPOS42CAbOisB4msNDKI/8wWxfQt9fx
-	 UDFIk/bnpenTZZSK71e7TqCD440Sie2g8aI62749QRGC91mkErFIDHrbWjxgz2o7JheC2
-	 HDxTXUDy+TxnmJBfTr1dVmbFT990v9ymXYH80agAMnb4r1eiOwr4rlSxbtxub1VTmcK4I
-	 75LZhE8YdES1kWjvjdKNPgqUYcQ6GddZSsK8UFmuf9mHwkgxjndABejT0TQsnSMRfAIAF
-	 N8OxHuL8LxSuOIQ+Kq6Qa8i0RdEHWj6G1cDzPvoOH0zshpMHJ1zWngCQRKuZ486GKaw==
+	bh=/6qJSyZ36V28WX3xcRQghUB0uY279/3XG4ps6bALo2g=;
+	b=3rbDGDuk6R+KZXVj+69PwPGvWYB6WActdR5BYB8MA+J9w5kVFDyTsTEqyvTI9f3hHOMN
+	 TdHdxk8dwKE44sSN5gf9AEBHEg/2VcUCUz9DjeGO4ruLd0R7alfjdDGWqT+/WvDcyd7YZ
+	 bW21jc2Bz9b5cllZR7JTqIv6SlErIdifUD3HW6CIPY8EX6zEw6accjUMSV3N10+Mh2ufJ
+	 b9NRkYfhfDiDVfVaz/zF31OhzvNxPhGo5tczQroJDf5JouxWDLbfdC+2puKPOs2Q3FngK
+	 38l3TtxXUZ94TGARRY33djAjPWyuinLzPQs4XQEel1P+KiC9rzFzWc6LYG/7IlIfvqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvJGrxCS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uzzbsg3A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB46606A339;
-	Wed, 18 Nov 2026 22:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEA4606A337;
+	Wed, 18 Nov 2026 22:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvJGrxCS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3089B1F000C5;
-	Wed, 18 Nov 2026 22:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uzzbsg3A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F375C1F000C5;
+	Wed, 18 Nov 2026 22:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040337;
-	bh=RSRrvQwbI73SCIDOCYpJfWExWUa+B89a6VBgMIEovT0=;
+	s=korg; t=1795040340;
+	bh=/6qJSyZ36V28WX3xcRQghUB0uY279/3XG4ps6bALo2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EvJGrxCSu7Tjl5NQkt4XLtuT7RZNiKElQShcRnDOMM2+q3ArK6/bUU087TfZEXYdI
-	 4qNkdT44G/0IOjJiW8Hqwcx8bBosEtrqEGISkjInWTT+WYbkKK+JBKMdLw1wVKKlaR
-	 dpdnd/LmON0ESz+rDy6jOI0F+a/NwR/ci2pH15dQ=
+	b=Uzzbsg3AxntL+S5MSUoamcl6qOTS8hHYQT8v78+L8a1xr2HWREN+xZdhNwdE9pro0
+	 ecRyiwSEA3mwabFibawNtkcRmdKaDs5eXOcU+pmHaf3QM8IMqTe3tKE9O03N/hDd7h
+	 gozTKaEufOEnJ6armRsuWdu5iPLj+6+M9TXjsmDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2404/3318] RDMA/mlx5: Initialize QP/RQ/SQ resource refcount before publishing it
-Date: Wed, 18 Nov 2026 15:50:26 +0100
-Message-ID: <20261118150433.620926389@linuxfoundation.org>
+Subject: [PATCH 6.6 2422/3318] ASoC: mediatek: mt8192: fix error handling in APLL enable functions
+Date: Wed, 18 Nov 2026 15:50:44 +0100
+Message-ID: <20261118150434.132374715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +68,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 829a0e65deff3f826a7870a52404aeaf1a3fec3f ]
+[ Upstream commit 88760524ca995acd229c30ec69ced7d883a90a72 ]
 
-create_resource_common() inserted the resource into the radix tree
-before its initialization was complete. A firmware EQE in that window
-finds a zero refcount_t and calls refcount_inc() on it; the refcount API
-treats this as a use-after-free, saturates the counter, and permanently
-breaks the resource's lifecycle tracking.
+If a clock operation fails in mt8192_apll1_enable() or apll2_enable(),
+the functions return without checking the return value of mux settings or
+unwinding previously enabled clocks and MUX configurations.
 
-Move the initialization before the radix_tree_insert().
+Fix this by checking the return value of apll1_mux_setting() and
+apll2_mux_setting(), and adding proper unwind handling on failure.
 
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-15-yishaih@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260918133912.133799-4-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qpc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 32 ++++++++++++++++------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qpc.c b/drivers/infiniband/hw/mlx5/qpc.c
-index 9de9bea1025e2..bba42790be37d 100644
---- a/drivers/infiniband/hw/mlx5/qpc.c
-+++ b/drivers/infiniband/hw/mlx5/qpc.c
-@@ -165,6 +165,10 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
- 	int err;
+diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
+index 7647bdd463d9c..118dd48196828 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
++++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
+@@ -308,20 +308,22 @@ int mt8192_apll1_enable(struct mtk_base_afe *afe)
+ 	int ret;
  
- 	qp->common.res = rsc_type;
-+	refcount_set(&qp->common.refcount, 1);
-+	init_completion(&qp->common.free);
-+	qp->pid = current->pid;
+ 	/* setting for APLL */
+-	apll1_mux_setting(afe, true);
++	ret = apll1_mux_setting(afe, true);
++	if (ret)
++		return ret;
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL22M]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_APLL22M], ret);
+-		goto EXIT;
++		goto err_disable_mux_setting;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL1_TUNER]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_APLL1_TUNER], ret);
+-		goto EXIT;
++		goto err_disable_apll22m;
+ 	}
+ 
+ 	regmap_update_bits(afe->regmap, AFE_APLL1_TUNER_CFG,
+@@ -332,7 +334,13 @@ int mt8192_apll1_enable(struct mtk_base_afe *afe)
+ 			   AFE_22M_ON_MASK_SFT,
+ 			   0x1 << AFE_22M_ON_SFT);
+ 
+-EXIT:
++	return 0;
 +
- 	spin_lock_irq(&table->lock);
- 	err = radix_tree_insert(&table->tree,
- 				qp->qpn | (rsc_type << MLX5_USER_INDEX_LEN),
-@@ -173,10 +177,6 @@ static int create_resource_common(struct mlx5_ib_dev *dev,
- 	if (err)
- 		return err;
++err_disable_apll22m:
++	clk_disable_unprepare(afe_priv->clk[CLK_APLL22M]);
++err_disable_mux_setting:
++	apll1_mux_setting(afe, false);
++
+ 	return ret;
+ }
  
--	refcount_set(&qp->common.refcount, 1);
--	init_completion(&qp->common.free);
--	qp->pid = current->pid;
--
- 	return 0;
+@@ -358,20 +366,22 @@ int mt8192_apll2_enable(struct mtk_base_afe *afe)
+ 	int ret;
+ 
+ 	/* setting for APLL */
+-	apll2_mux_setting(afe, true);
++	ret = apll2_mux_setting(afe, true);
++	if (ret)
++		return ret;
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL24M]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_APLL24M], ret);
+-		goto EXIT;
++		goto err_disable_mux_setting;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL2_TUNER]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_APLL2_TUNER], ret);
+-		goto EXIT;
++		goto err_disable_apll24m;
+ 	}
+ 
+ 	regmap_update_bits(afe->regmap, AFE_APLL2_TUNER_CFG,
+@@ -382,7 +392,13 @@ int mt8192_apll2_enable(struct mtk_base_afe *afe)
+ 			   AFE_24M_ON_MASK_SFT,
+ 			   0x1 << AFE_24M_ON_SFT);
+ 
+-EXIT:
++	return 0;
++
++err_disable_apll24m:
++	clk_disable_unprepare(afe_priv->clk[CLK_APLL24M]);
++err_disable_mux_setting:
++	apll2_mux_setting(afe, false);
++
+ 	return ret;
  }
  
 -- 
