@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034168;
-	b=K+RegxjSv3Dr9dSP69tSlLin5jyWWQsluRetc0Kac6QHXOw8Gcwa7TnmpIG1eQCiveQG
-	 WqQj4orhb+HwBWXXZIM1CEAD5uFypxqTfv/6kI8MNej9xa5trkqhIrB+fyhW4MrfcH/l5
-	 H9meCNRfuVKIeIiCaCrC9G+rPe0x7TYY4ntNzqRPozDL7MbuEZ9HxaJI8FNrfulKnur77
-	 lSU3hkRVXKVKV5DhU7S3KAiTIh7uooJabyQ1LstPRY1ZGMVZmOAEf3Ar5MW4ZR4kPMbpR
-	 2lKkAnKlO6+jdy4GqPw5cvtHhLcYAyiL9MjXPZ+doGpgbvgXPBjrREzGevEwR+hSL3g==
+	t=1795034172;
+	b=pjqHlzvfVNz0pks7i2Gs0Rt0U/3E30gRTZz6pIbACtcoxsIVQY1guwDtMbLBQTStRuA3
+	 hac++F04xLbc3cVg9wM0mgpAmJ1VEqJYw6q2viJMBCq20dOfXDQ2uInlVK2QLRMutZ9m3
+	 /HraGFg3M4kTkShp6fSKOnSp29LpNDsLVllRiKNdWvI8gAeplt/IoXUkMUOOpL6ShvwzF
+	 D14MwjteN+jnBvz9+7PIHeGNjAZSoSUc9TCxxVCwfxEnGCkRpcIgXOucV6mZTrVaYauYx
+	 KJLYB7lWDHq4+zvVy5CezMMLEx9A6GnRDJqabN8zQCq25ue+ZFLtV2Q33SWtQ1TjwaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034168;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034172;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oT5e66hY1iVdV6fDbA/mLqraR+ld3P4GaMzocIjl4GM=;
-	b=wyAQgfe9YrYOV+8LnLBDBmtrx9e8sjx5tLVgIPMHkAahrBasqROjycnjhHfXMoNlTOi7
-	 ewjROB2E8Io0dRtfkN2Ah8sAZbeLdIFEDzrAZ8Ya/1uymVq9493uXYnTG2gLTR+SRgm/3
-	 JezhyJRcA/Lt8JJQaB5J+U677HRknpkuV5ncjcKkCbnXxBj31ToIrQxiQ3Rb/Jzcu9akJ
-	 +6xLBrE6y1kTRXWLFtkoWgKkWT1Wv2nVlV4I2XT9ynbhXe0qKqXltn+05cr8p+huyi44U
-	 3aPVu/BR9WzyFgjL4QAf2rxY/H6nwIFmm4tgm/Vjmn74MWHprbWSzDXBiarbLbWuxMw==
+	bh=ZfqSGBWCB0DwDN2vhA8/zVtQEbM/CcCOW/JQnmNVs+c=;
+	b=hPJ3vCG+HiWs7ZRgCfOsoIyqU31bgKHQMgXJ70hcTL92Z01RBEZLUPSKbF+cn1xYV67l
+	 smndqU58zkeI/I+Ehpo7tFsqCLeIdLVZ1WAxYxcoPllUSc805UlvF0gPm15WAGj1hZPuZ
+	 le1xXPmRB9RzX0pQqIsKAC1Z0AxQyIRIwBxwFuNV+wMQn4CH0eEj/tbI1YBDPin6pLOgf
+	 m+yl7DHjV/+/J6pOglSxkRDbi962fbWjjy7gsF/JijUKm4wIUX/kAAA8G88zRJk/+V83W
+	 PaUwjn1jfPtp/ICJWbyoEvxJqJ3KVZl2TPmHEYXwT+i1L6tKvVshftfUpNmzJY2jSXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IGPEC4/K";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZxCMeQx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C132460A2628;
-	Wed, 18 Nov 2026 20:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAACE60A2609;
+	Wed, 18 Nov 2026 20:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGPEC4/K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D6C1F000C7;
-	Wed, 18 Nov 2026 20:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JZxCMeQx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D1A1F000C5;
+	Wed, 18 Nov 2026 20:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034168;
-	bh=oT5e66hY1iVdV6fDbA/mLqraR+ld3P4GaMzocIjl4GM=;
+	s=korg; t=1795034171;
+	bh=ZfqSGBWCB0DwDN2vhA8/zVtQEbM/CcCOW/JQnmNVs+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IGPEC4/KI0BPRb3Hc8B+Ad3rbfqwPhvtmse84vwX4uJFw+Csu4HWQqobEMLdDai0W
-	 PBqewY+QlD3kSSRDStIUk5Yrkc18e2WhXCJa7rBxtT5lxpDN0pQpTiAmohHyFaiS0G
-	 JWt0ZHgE8D9Ivty68wFYwgzxp//I/HsJbnZtRl1w=
+	b=JZxCMeQx6IZr5LGtf6RcPmnpujN9yAmSXN5Tm7RtseoEc5yNsGemp7h8HCT48FDkw
+	 W9wMMEEdZT/5KMVBJSUp1V4iqpwS+cufi/R7cIXflOzbewcaliS7jJYWZZQvwmV53g
+	 g3nubbhnAbP2xH7wrZkzBuupRL7hcriy4nfOiMvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chen Changcheng <chenchangcheng@kylinos.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0274/3318] soundwire: dmi-quirks: Disable ghost Realtek on Asus ROG Zephyrus Duo
-Date: Wed, 18 Nov 2026 15:14:56 +0100
-Message-ID: <20261118150323.690243182@linuxfoundation.org>
+Subject: [PATCH 6.6 0248/3318] Bluetooth: btrsi: Move set_bt_context after successful HCI registration
+Date: Wed, 18 Nov 2026 15:14:30 +0100
+Message-ID: <20261118150322.721343339@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,42 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Chen Changcheng <chenchangcheng@kylinos.cn>
 
-[ Upstream commit 5b08a3afd2995e5312c4c47ffea9d21b651e8e13 ]
+[ Upstream commit 290a3644609526f7ac12529cd1618042fa5a32db ]
 
-The Asus ROG Zephyrus Duo also has a Realtek device in the ACPI that
-doesn't exist in the physical hardware. This confuses the machine
-driver into attempting to create DAI links for the device. Add a
-quirk to remove this device.
+In rsi_hci_attach(), ops->set_bt_context() stores the newly allocated
+h_adapter into common->bt_adapter before hci_alloc_dev() and
+hci_register_dev() are called. If either of these fails, h_adapter
+is freed but common->bt_adapter remains a non-NULL dangling pointer.
 
-Suggested-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260807121425.1952003-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This causes a deterministically reachable use-after-free when the
+device operates in a BT+WiFi coexistence mode and CONFIG_RSI_COEX
+is enabled. The following software-only trigger paths exist:
+
+  1. SDIO driver .remove  (rsi_disconnect)
+  2. USB  driver .disconnect (rsi_disconnect)
+  3. SDIO driver .shutdown (rsi_shutdown)
+  4. Hibernation .freeze  (rsi_freeze)
+
+All four paths check:
+    if (IS_ENABLED(CONFIG_RSI_COEX) && coex_mode > 1 && bt_adapter)
+        rsi_bt_ops.detach(bt_adapter);  // use-after-free
+
+coex_mode is set during rsi_91x_init(), before rsi_hci_attach() is
+called, and is not cleared on attach failure. Since set_bt_context()
+already wrote bt_adapter before the failure, the deinit paths see a
+non-NULL dangling pointer and proceed to detach it.
+
+Fix this by moving set_bt_context() after hci_register_dev() succeeds.
+On failure paths bt_adapter stays NULL, and the deinit callers correctly
+skip the detach call.
+
+Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/bluetooth/btrsi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index f738e547a1f30..768255dd12db6 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -193,6 +193,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)ghost_realtek,
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
-+			DMI_MATCH(DMI_BOARD_NAME, "GX651AR"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
+diff --git a/drivers/bluetooth/btrsi.c b/drivers/bluetooth/btrsi.c
+index 0c91d7635ac39..eb136488db093 100644
+--- a/drivers/bluetooth/btrsi.c
++++ b/drivers/bluetooth/btrsi.c
+@@ -117,7 +117,6 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		return -ENOMEM;
+ 
+ 	h_adapter->priv = priv;
+-	ops->set_bt_context(priv, h_adapter);
+ 	h_adapter->proto_ops = ops;
+ 
+ 	hdev = hci_alloc_dev();
+@@ -146,6 +145,8 @@ static int rsi_hci_attach(void *priv, struct rsi_proto_ops *ops)
+ 		goto err;
+ 	}
+ 
++	ops->set_bt_context(priv, h_adapter);
++
+ 	return 0;
+ err:
+ 	h_adapter->hdev = NULL;
 -- 
 2.53.0
 
