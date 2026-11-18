@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056368;
-	b=Nn8x8GODBqRVIrNG3Ywz0DFZcpH0GOgQ7YHt/6oOph/3GAnLDiEHzPEzy5Au606cuo48
-	 ekaGonOT7iFkuFL60nKwwS99B51orR/YHropbI9112/C16oGJ8C3hYLxtns0GgBfvKiky
-	 x+ZkFIpux0fkvuOgm7716FZq95g4LshKozp2qr62sljZwm9OSk8f4iFAukbNN/56PimZf
-	 DaPv/5u2pM2f5LohTfD1W633h0PVD4MXLNp6ONauiLgfMGbbK1nJdf1CxfMJXsK5inoMF
-	 HRolpYeT5o1mjLsRJSF1e8lXOhp06uotol7RW4iWnP22wgbHA9MWCQN4Lm7as6BmzIw==
+	t=1795056371;
+	b=Y/7thrGQ45Ha0vZvhB8a91hId2Sy/nuQO514FgA4uPyDnAydf6ZagLSPUJqAljlVpw0t
+	 trm1Ho0ZVzv+3nKuaUNwXN8jUUAVblfg1XMZNsUHinjfSnZ2eCixACdO5M245OPR14lYR
+	 mya8iI5Xz5t3k69JQnN4CJLElPSMuvbK/m/lDnxUMdjNKPqEfRe4bDRA3XlCyNSlur1HN
+	 YUvhILx0T85ya1wdBdGfBuTtyh+BEVqxERTIbvmG0JOoi3Hm/kCVbrSmk0HqTqG6TTJZc
+	 vh+76QYrUYWB7y2ZUbyPW7XbyQLxW5iYOpLkRvPbfb+zQQWO0kvV+HQhqthv5CtBobA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=23IFwup6Fjjjn089QkATMGTqqcgMF39W1G6nSXx9ZkY=;
-	b=aMEcf/5Do6v2vuV8u77lCjTETj0hTpUXhV/I2WI6Gl0LTxWUJFq4eIoE/UKT5Om/Dwz9
-	 UX7xBCvdGbuYPcbdDcNQI6oTmF/oeWNDNMpPshyy4U7KobEh4shsvKWJZ27LIPGHwebv/
-	 x1v1H+NQN0bCXLv18mIbld45cAfT5sU/vSr/8JZSiysR/RQCoAJ5Clf8+2gsTX5Fy1lmz
-	 643x/ILaUmWWi1xdO4NLKnPGkBHGsAddv+PDwBhNQE2gEklQnSlhIEUjvteWQv70HYCUV
-	 H4w9Q5vK3Qe+tGZj1mJgzxIF7pAhwMBxvF0UWx4yDVups6mNzhk/VKwsjVKcbmWjJgA==
+	bh=Zj5Om+Iuz+KQe9ZDI0CIlac9h3A2WCa0P739fqGEoMg=;
+	b=gcn1TktagOZxA5792O4j7WV8JrVZVvfvH3ilH+UY5sOgI57+th4vFnxCIcn2zaL8VWan
+	 oEEyn53FoHC03dF6xjjYvPLdQPIv9NNmucno8IL0ipXNmn3cVDq3DOmM8xR7T3cFuyC3j
+	 FiaiBRfagxvD+0H/TioI2lnJ+4+blRuJlRRYIG1pvCapUBjFUWaq2tNuChInO6keMlZ60
+	 iSaqC2vU1ICR5jlR3mJj79xXrbbq76MCL4Mgyp4e4AnBC7dGOWm7eHtNIQ9GLRf0pUEQV
+	 da+c4B41nQbkWPG8bjLtPwPDfhIpXKs7q0vY4xQJzuvymaCN5raOxJugklVQFddOQAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ys3w/9Xi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VE0vT5IV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C73B606A31C;
-	Thu, 19 Nov 2026 02:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C17606A32A;
+	Thu, 19 Nov 2026 02:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ys3w/9Xi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16B91F000C6;
-	Thu, 19 Nov 2026 02:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VE0vT5IV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53831F000C4;
+	Thu, 19 Nov 2026 02:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056368;
-	bh=23IFwup6Fjjjn089QkATMGTqqcgMF39W1G6nSXx9ZkY=;
+	s=korg; t=1795056371;
+	bh=Zj5Om+Iuz+KQe9ZDI0CIlac9h3A2WCa0P739fqGEoMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ys3w/9XifXAWxvK/DxNYNiyOUbLsllzRmcCCWczc8t6L4H21hNrlO8dq1wBMVsxL3
-	 eJILwpykiv8XGx5EHswKvdNlH3wCPYKbw5zlwb78IqV0jZY1BF8hEIvgGpjBpEM3Ep
-	 3s7+4khC3bBg8QCpYktY7mn3+xpnjI+w0/z0cbXc=
+	b=VE0vT5IVM9CnSRxFZfVjEgl1AB4uAEQSWirHpWhSYORuZTXDuRlHdFq3ikoCo3v7D
+	 Zbx68iCO2qEG+o9G5Y1bVXodalgChCjL63GdtPBCksQPEdW1PGBMuXhHaFkQJZhR/Z
+	 2/On8a48ZIfa70l9Biy7eQZg9nF0vfEg34BkUrNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Kyrylo Biryuk <illofspeed@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1964/2214] RDMA/rxe: Create AH index and return to user space
-Date: Wed, 18 Nov 2026 16:00:40 +0100
-Message-ID: <20261118150129.505298374@linuxfoundation.org>
+Subject: [PATCH 5.15 1947/2214] ata: libahci: re-enable FBS after error handling on a port multiplier
+Date: Wed, 18 Nov 2026 16:00:23 +0100
+Message-ID: <20261118150128.884403352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,127 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Kyrylo Biryuk <illofspeed@gmail.com>
 
-[ Upstream commit 73a54932100375ba94b31710f1e3f1234f23be0b ]
+[ Upstream commit 23eab9e877497397a0e2394ee9174d576816209e ]
 
-Make changes to rdma_user_rxe.h to allow indexing AH objects, passing the
-index in UD send WRs to the driver and returning the index to the rxe
-provider.
+ahci_do_softreset() disables FBS before resetting a device behind a port
+multiplier, as required by AHCI 1.2 section 9.3.9, and re-enables it only
+when that softreset succeeds. If it fails, for example because a
+hot-plugged drive is still spinning up ("softreset failed (device not
+ready)"), EH escalates to a hardreset of the PMP link, and nothing turns
+FBS back on: only ahci_pmp_attach() does, which runs at the next boot.
+The port keeps working with command-based switching until then.
 
-Modify rxe_create_ah() to add an index to AH when created and if called
-from a new user provider return it to user space. If called from an old
-provider mark the AH as not having a useful index.  Modify rxe_destroy_ah
-to drop the index before deleting the object.
+Seen on a Marvell 88SE9235 (1b4b:9235) with Marvell 88SM9705 port
+multipliers (1b4b:9705, in a Synology DX1222 expansion unit): after
+hot-plugging a drive, the kernel logged "FBS is disabled" followed by
+"softreset failed (device not ready)" and a PMP hardreset, and never
+"FBS is enabled" again (twice, on two different ports).
 
-Link: https://lore.kernel.org/r/20211007204051.10086-4-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 47a9c0338f2e ("RDMA/rxe: validate inline sge_offset in finish_packet() before indexing inline_data[]")
+At the end of ahci_error_handler(), re-enable FBS if a PMP is still
+attached and FBS is supported but disabled.
+
+Fixes: 89dafa20f3da ("ahci: disabled FBS prior to issuing software reset")
+Assisted-by: LLM
+Signed-off-by: Kyrylo Biryuk <illofspeed@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261012103917.389-1-illofspeed@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_verbs.c | 31 ++++++++++++++++++++++++++-
- drivers/infiniband/sw/rxe/rxe_verbs.h |  2 ++
- include/uapi/rdma/rdma_user_rxe.h     |  8 ++++++-
- 3 files changed, 39 insertions(+), 2 deletions(-)
+ drivers/ata/libahci.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index d3aef42aaa38f..fe5c890ccb8fc 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -161,9 +161,19 @@ static int rxe_create_ah(struct ib_ah *ibah,
- 			 struct ib_udata *udata)
+diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
+index 1c010687a3f13..07a15b36d9990 100644
+--- a/drivers/ata/libahci.c
++++ b/drivers/ata/libahci.c
+@@ -2096,6 +2096,21 @@ void ahci_error_handler(struct ata_port *ap)
  
- {
--	int err;
- 	struct rxe_dev *rxe = to_rdev(ibah->device);
- 	struct rxe_ah *ah = to_rah(ibah);
-+	struct rxe_create_ah_resp __user *uresp = NULL;
-+	int err;
+ 	sata_pmp_error_handler(ap);
+ 
++	/*
++	 * ahci_do_softreset() turns FBS off before resetting a fan-out link
++	 * and turns it back on only if that reset succeeds. When it fails
++	 * (e.g. a hot-plugged drive is still spinning up), EH escalates to a
++	 * PMP hardreset, which never re-enables FBS, so the port would keep
++	 * command-based switching until the PMP is attached again (reboot).
++	 * Restore FBS once recovery is done and the PMP is still attached.
++	 */
++	if (sata_pmp_attached(ap) && ata_dev_enabled(ap->link.device)) {
++		struct ahci_port_priv *pp = ap->private_data;
 +
-+	if (udata) {
-+		/* test if new user provider */
-+		if (udata->outlen >= sizeof(*uresp))
-+			uresp = udata->outbuf;
-+		ah->is_user = true;
-+	} else {
-+		ah->is_user = false;
-+	}
- 
- 	err = rxe_av_chk_attr(rxe, init_attr->ah_attr);
- 	if (err)
-@@ -173,6 +183,24 @@ static int rxe_create_ah(struct ib_ah *ibah,
- 	if (err)
- 		return err;
- 
-+	/* create index > 0 */
-+	rxe_add_index(ah);
-+	ah->ah_num = ah->pelem.index;
-+
-+	if (uresp) {
-+		/* only if new user provider */
-+		err = copy_to_user(&uresp->ah_num, &ah->ah_num,
-+					 sizeof(uresp->ah_num));
-+		if (err) {
-+			rxe_drop_index(ah);
-+			rxe_drop_ref(ah);
-+			return -EFAULT;
-+		}
-+	} else if (ah->is_user) {
-+		/* only if old user provider */
-+		ah->ah_num = 0;
++		if (pp->fbs_supported && !pp->fbs_enabled)
++			ahci_enable_fbs(ap);
 +	}
 +
- 	rxe_init_av(init_attr->ah_attr, &ah->av);
- 	return 0;
+ 	if (!ata_dev_enabled(ap->link.device))
+ 		hpriv->stop_engine(ap);
  }
-@@ -205,6 +233,7 @@ static int rxe_destroy_ah(struct ib_ah *ibah, u32 flags)
- {
- 	struct rxe_ah *ah = to_rah(ibah);
- 
-+	rxe_drop_index(ah);
- 	rxe_drop_ref(ah);
- 	return 0;
- }
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
-index c852a9907bad4..446d14903cec5 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.h
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
-@@ -48,6 +48,8 @@ struct rxe_ah {
- 	struct rxe_pool_entry	pelem;
- 	struct rxe_pd		*pd;
- 	struct rxe_av		av;
-+	bool			is_user;
-+	int			ah_num;
- };
- 
- struct rxe_cqe {
-diff --git a/include/uapi/rdma/rdma_user_rxe.h b/include/uapi/rdma/rdma_user_rxe.h
-index 2f1ebbe964345..dc9f7a5e203ae 100644
---- a/include/uapi/rdma/rdma_user_rxe.h
-+++ b/include/uapi/rdma/rdma_user_rxe.h
-@@ -99,7 +99,8 @@ struct rxe_send_wr {
- 			__u32	remote_qkey;
- 			__u16	pkey_index;
- 			__u16	reserved;
--			__u32	pad[5];
-+			__u32	ah_num;
-+			__u32	pad[4];
- 			struct rxe_av av;
- 		} ud;
- 		struct {
-@@ -170,6 +171,11 @@ struct rxe_recv_wqe {
- 	struct rxe_dma_info	dma;
- };
- 
-+struct rxe_create_ah_resp {
-+	__u32 ah_num;
-+	__u32 reserved;
-+};
-+
- struct rxe_create_cq_resp {
- 	struct mminfo mi;
- };
 -- 
 2.53.0
 
