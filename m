@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015311;
-	b=2EBKrlwuWoJ+0cv5GFC9TQ0/gxxvZvtapqTmjwvPC4+ZE4ravuu1RwBTM1RVPvl6CkJt
-	 UP/rkN38i3PZ5JhuCeRHk32BozzpHV7o9PEqBNjC0lhJDZgvh4NxL64Je2sM6ml90pWzN
-	 oM3KDRQCnv6da/N2Juyf16P6kDMu4uT3GZVvhGMomLAAHSXe9vdgIHRl9iKO/+gbRva+9
-	 JcD/UbVl2kphMRlDKUhlrO8L8AjYGXX/FHxpeWXqIhlzxiaMcKBZptoc7upBeslIQT577
-	 vHL7ukf8BnneE7KKrM7ddABYOJu0r9kfHXXsybLWvjLJhYaSrbG6awDUjn5nNrhNppA==
+	t=1795015314;
+	b=k8x+RITOaG+sGv7zXZVYKctxgzElIDyM88EWMnXVMOfiCJcfK5Myb0b8p9jBUI8V7B9Y
+	 d5cb/6XHgCv2iec70nj9g+NVtTXvFSrlXv86JYdjoe33o5AMA+9t+k+sFv+bTqX846Xx1
+	 bUTGerdJrhDrAvAkxaZZYUmqgTVAXD5EsXxRHv1B7eS4wTX489MjCkxAxZs7JL6CdQJrq
+	 a5ulGxIw05K/CA66UA7ZfM9QOqFVAMJRkxBLXdsVf0ZKxc3w1pM2HqiiI+FfA+ZpA3bfE
+	 XNDRmdJkRWezAAXur5DtKksyvHyzadv/f2PcAR3t9Y+PkGSt+l24wLKf0s2LHUv35Aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wv7nSTjJ51Nd2Ec5RgU4hnrJnmGUwuMzIGy5rMKtSkw=;
-	b=iDRSFS/92RssNFcwWno0HnD83ZOfDMLk4V1vh2Df1jGGQTozOzCHmCs7/QBeE+uZks63
-	 6VHX/i3o6TuUjo8kcbwq/fKIwOrN2W0VSxn3SMgeD9h2jLtOZ2UDsRZKDY/TgBVs99/6a
-	 x812AB2jd+pbWlK23MjfpLMfHBZpPpgrJZd+IajbxTbouM5WweBiZe0Yhea+J6VJR6QFd
-	 /p8I8s8deGP0xJQYYNG797AiMt3xkK4ds1iu9gxlD7vhHMd2CObl0MJ4EfM7GtoP5Qvjn
-	 Itptuf8b9uwNtPhwy7BDp3dsjr7z8+xlj60Ny1w2MAip4rLdCofSVXIkzQrvo6OoqwA==
+	bh=7V5Dd1LcmQPsBZF2mK2uPOmGTMxvevrkZxDka4THDYI=;
+	b=deDOO38OP8zLoDZ2xa3+YmdQ3gh/RbuAXB2x5vcBYIpDOBlwRkAEZrfPSYGd1dBxIpNe
+	 i+cv1o8qN4zjSuwZFermZem4Hk6NcqhJWYefPldIeMegZIV6/H6A5Wf3p69Y9mumheHn8
+	 njRYdrpNfRhfxxp1Q7/hp//AXrpfBxvWytpi2yva1DjN2lzD2w4zrM3wqebxhs66CPw1F
+	 6kwNqEpxwyXWKD/BV4niJWuDHEhg4LscT2dijQK7YWTKIUy1CRkBBitRufxniBYM9Doea
+	 4VmwPIipLSaOFuRG1Eg0lAwD2uBE+y+f/4sTCbS1zbEBTQDYD+WwZozqHSfJwc4bP/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nk7vkrzk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2pJZqP6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD2D60A260A;
-	Wed, 18 Nov 2026 15:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E346606A31C;
+	Wed, 18 Nov 2026 15:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nk7vkrzk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9121F000C5;
-	Wed, 18 Nov 2026 15:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2pJZqP6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52771F000C7;
+	Wed, 18 Nov 2026 15:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015311;
-	bh=Wv7nSTjJ51Nd2Ec5RgU4hnrJnmGUwuMzIGy5rMKtSkw=;
+	s=korg; t=1795015314;
+	bh=7V5Dd1LcmQPsBZF2mK2uPOmGTMxvevrkZxDka4THDYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nk7vkrzk+dcLjv5hfT5Cl4yXKW3N1YSPbi6y4Cne8NUBKb6ETzSTtc/UdEBDhtxIa
-	 z7KPtHe29wdlcGfSpRi7yobXdxk6B0bL8ffV2meINWHeq57s+CZCLVs0nZfA8M59gk
-	 UzvQvukKvcol/i2Tr1H+fHYfYD7iWGM04afoapVI=
+	b=X2pJZqP6UINXEIq0rK/Jx7gdnDZFNOTrSQdcy63PdzieTqkfFcNji/4zHV0N5a3Fz
+	 ZQ55qjd1WxRcp09RJj4P952CBJEtVcz/j+lzybfLDLen6DKrd0Xn5PoQkcBFwCWazf
+	 c/RfWDx6acYgP7zDwjjZvT4iRnueIAlE2nTfTdsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shaikh Kamaluddin <shaikhkamal2012@gmail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0129/2651] cxl/mce: Avoid alias page retirement for corrected errors
-Date: Wed, 18 Nov 2026 15:22:49 +0100
-Message-ID: <20261118150252.502845822@linuxfoundation.org>
+Subject: [PATCH 7.3 0130/2651] remoteproc: xlnx: Initialize mailbox work before requesting channels
+Date: Wed, 18 Nov 2026 15:22:50 +0100
+Message-ID: <20261118150252.537264922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,56 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 04a7b330c8b60dfff200d9a32dd6615f97b59d07 ]
+[ Upstream commit 5ca7dea7cb2e47f42c15ac7206c5e0cba23d292d ]
 
-cxl_handle_mce() offlines the aliased page of an Extended Linear Cache
-(ELC) region for any MCE with a usable address in the region. This
-includes corrected errors, needlessly reducing usable memory.
+zynqmp_r5_setup_mbox() installs zynqmp_r5_mb_rx_cb() as the mailbox RX
+callback before requesting the mailbox channels, but initializes
+ipi->mbox_work only after both channels have been requested. Once the RX
+channel is active, a notification delivered before the late INIT_WORK()
+would make the callback queue an uninitialized work item.
 
-Skip ELC alias retirement when mce_is_correctable() identifies the
-reported error as corrected. Uncorrected errors with a usable address
-in the ELC region continue to retire the aliased page as before.
+Initialize the work item before requesting channels. Also drain the work
+before freeing the mailbox state, after the channels have been released so
+no new callbacks can queue it. Use the same drain before freeing ipi from
+the channel request error paths, since the callback is already published
+there as well.
 
-mce_usable_address() already implements the per-vendor checks that
-determine whether the reported address is usable, so no separate
-memory-error classification is needed.
+This issue was found by our static analysis tool and then confirmed by
+manual review of the mailbox setup sequence. The callback is published
+before the channel requests complete, so the work item should be ready
+before the mailbox provider can invoke it.
 
-On AMD, a corrected legacy bank 4 DRAM ECC error (XEC 8) reports a
-usable address and retired the aliased page before this change.
-Tested under QEMU with Intel Skylake-Server and AMD EPYC-Milan models.
+A QEMU PoC modeled a mailbox notification delivered after the RX callback
+became reachable but before the delayed INIT_WORK(). DEBUG_OBJECTS reported
+queueing an uninitialized work item from the zynqmp_r5_setup_mbox() path.
 
-Fixes: 516e5bd0b6bf ("cxl: Add mce notifier to emit aliased address for extended linear cache")
-Signed-off-by: Shaikh Kamaluddin <shaikhkamal2012@gmail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260824134957.11085-1-shaikhkamal2012@gmail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+This is sent as an RFC because the practical trigger depends on the ZynqMP
+IPI mailbox provider and firmware delivery timing. If the provider cannot
+invoke the RX callback until after setup returns, this is a defensive
+lifecycle cleanup rather than a reachable race on current systems.
+
+Fixes: 5dfb28c257b7 ("remoteproc: xilinx: Add mailbox channels for rpmsg")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260818101201.1603947-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/mce.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/remoteproc/xlnx_r5_remoteproc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/mce.c b/drivers/cxl/core/mce.c
-index 65fed913b2217..3ac6802e750d2 100644
---- a/drivers/cxl/core/mce.c
-+++ b/drivers/cxl/core/mce.c
-@@ -18,7 +18,13 @@ static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
- 	u64 spa, spa_alias;
- 	unsigned long pfn;
+diff --git a/drivers/remoteproc/xlnx_r5_remoteproc.c b/drivers/remoteproc/xlnx_r5_remoteproc.c
+index c685bb5fa62c3..d47fbf143acde 100644
+--- a/drivers/remoteproc/xlnx_r5_remoteproc.c
++++ b/drivers/remoteproc/xlnx_r5_remoteproc.c
+@@ -318,6 +318,8 @@ static struct mbox_info *zynqmp_r5_setup_mbox(struct device *cdev)
+ 	if (!ipi)
+ 		return NULL;
  
--	if (!mce || !mce_usable_address(mce))
-+	if (!mce)
-+		return NOTIFY_DONE;
++	INIT_WORK(&ipi->mbox_work, handle_event_notified);
 +
-+	if (mce_is_correctable(mce))
-+		return NOTIFY_DONE;
-+
-+	if (!mce_usable_address(mce))
- 		return NOTIFY_DONE;
+ 	mbox_cl = &ipi->mbox_cl;
+ 	mbox_cl->rx_callback = zynqmp_r5_mb_rx_cb;
+ 	mbox_cl->tx_block = false;
+@@ -329,6 +331,7 @@ static struct mbox_info *zynqmp_r5_setup_mbox(struct device *cdev)
+ 	ipi->tx_chan = mbox_request_channel_byname(mbox_cl, "tx");
+ 	if (IS_ERR(ipi->tx_chan)) {
+ 		ipi->tx_chan = NULL;
++		cancel_work_sync(&ipi->mbox_work);
+ 		kfree(ipi);
+ 		dev_warn(cdev, "mbox tx channel request failed\n");
+ 		return NULL;
+@@ -339,13 +342,12 @@ static struct mbox_info *zynqmp_r5_setup_mbox(struct device *cdev)
+ 		mbox_free_channel(ipi->tx_chan);
+ 		ipi->rx_chan = NULL;
+ 		ipi->tx_chan = NULL;
++		cancel_work_sync(&ipi->mbox_work);
+ 		kfree(ipi);
+ 		dev_warn(cdev, "mbox rx channel request failed\n");
+ 		return NULL;
+ 	}
  
- 	spa = mce->addr & MCI_ADDR_PHYSADDR;
+-	INIT_WORK(&ipi->mbox_work, handle_event_notified);
+-
+ 	return ipi;
+ }
+ 
+@@ -364,6 +366,8 @@ static void zynqmp_r5_free_mbox(struct mbox_info *ipi)
+ 		ipi->rx_chan = NULL;
+ 	}
+ 
++	cancel_work_sync(&ipi->mbox_work);
++
+ 	kfree(ipi);
+ }
+ 
 -- 
 2.53.0
 
