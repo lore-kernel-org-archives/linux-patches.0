@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043835;
-	b=C6ny2l9wsHqo5grCGjQO5xTh2wwTRWn57V95HHM7gx+gYSoeYNLrRv37lULqETGSr1h4
-	 iCOCamFVJ56mX6gsrnrdBliGLUlJ4xKFddWXJ8cYY0nf91Xeoar80vV6vU83AJC8Wr6f/
-	 X9na0VsXFYLx0f/eruvGyJO+ilrRoSg5ECot+gkLh5WYhwlVkka7b5uEFUqlblJpw8lpM
-	 J396APl9kkGFiWEa/d8Bapp4+KN+7whPBdCKIE+W+kuLYNK7wOs9cBSq1yCG8MrW8Fmx4
-	 J3qsYxmUbWuT2KuDOiY5zVjhiDyaIeUJ45O0BHf55Z3c309h3YuZoNZKyNTe1vQoQGQ==
+	t=1795043837;
+	b=x2hb/ewMRsT3rYhrnP/ujMnys4MWx2X7KMIbq11U0PJ6vjDWK/vN/H0FdymtvtgcA1Di
+	 IvGAf+UlHPrbJjpIaRIKylKBJim8VcibRvgvUX9ukkmDHRLwAE/KT8MpuVu3v3f+opGiT
+	 zZPmJlBuzrH9HelQtmPexAOfMkCZKh2QRwxZQqvolqKGkBnI9eRJfwvl3U7XO7h5Avi3R
+	 y9yN1uebQZXGw2WOduN58aZivfIB7HKB+A1lyoDiKrrlEQZyPj/bxSKLfUpMHnoAf+yd+
+	 1dJga+7vsk29vXBwJXw3S71Qe7sXNbLmoA5KW9RD5dYYu1YI3zyLuzmggCYuiU7Do/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rw2W0LJKfslKsAjs+3SNLiuztv0sOfb+6txhOEUFKyI=;
-	b=JLUrGJ3bU2rGN0Up3AbsZfLU7af9Bctr3+vhbsxRu4kjEn2NZOIJHkpGQiVmOAWZ6YOT
-	 9awsXmEj/CjSMz013uTSUe5uXLKTK/de7bPp0nvieJTP0I9NnznZBWM/YzPYq9PEZ115d
-	 M+24mZqmA95qN+p176EGwIF0w9MZ1uJtf6etwpsgI6Gfh99w9A4dSVEIMFDx1uZuYx2ca
-	 7b0O0cGdCvi6PBcewJAAJ6f7uLukPnhcvSyWVM74Xa5UwCTgcpt3KVMNfB9AyoNahjiqS
-	 K5TuxGzmc5GaFI+5JC7UI6gVP1qjGZowuiJZ/MXQ6ow+mHLILPMEVv4cC4nzuVLcxeQ==
+	bh=d+0Y5b/JW1/8hEDYnyEgF8SYhSCsXuI7GwvIZG7vFJ4=;
+	b=JYE15vIGrz6o2MquScfSXPlqwdrhooqrlYIGH9KFd9IN4a8Fo2OoWXGWfCXpRzVywlWm
+	 l2rdXctPsKHSE9ueLvoE2w1PS6G3aJSTQPe3LTkw9DTK+iXFlUmiCHCqxyHVV6ff0REAV
+	 +v2GTnTOvwgU9qR9wDLbvp8aryRrQVSl8RwH6LO59XItPeFHEKZEDbT/G5FB3ZjQNpBHK
+	 queaqZSdNJbtFFiKX0ur8+S/+gJ8FvSi/UVMi3HzZb6h8t4bIa/1tgJCB/LHFmDvWn7Op
+	 C4Hw9wmvTTEkxJrJmLUM8W2V46ic527kM/6utDcaCDZPFDJ9IKSYsEMbpJ7O0g/v8NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rudl+dcG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sezbVCe+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FAD606A320;
-	Wed, 18 Nov 2026 23:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B8160A2608;
+	Wed, 18 Nov 2026 23:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rudl+dcG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D011F000C6;
-	Wed, 18 Nov 2026 23:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sezbVCe+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BA11F000C5;
+	Wed, 18 Nov 2026 23:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043834;
-	bh=Rw2W0LJKfslKsAjs+3SNLiuztv0sOfb+6txhOEUFKyI=;
+	s=korg; t=1795043837;
+	bh=d+0Y5b/JW1/8hEDYnyEgF8SYhSCsXuI7GwvIZG7vFJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rudl+dcGXo1+epFrEVe7At/BljBCbkqAbZcmh8p0RTVA/eDguiS9+TRPoVVoGWh1Z
-	 M7pI+4V7/+mdUOvzoc4xX7lQ7FeN+5SKTli3uujlDCg+pHgg5faEjd6XS7TkN0F2hi
-	 RfeSv3dbP3I21ZC6mke08qPZuQiTb7IJXuQIA99M=
+	b=sezbVCe+KTQ8F7stI/z/wt9M8453fICBfU+i1kNt3uSSLOhN/0/57YckcEwm8uIw0
+	 F8SOgUeiF4RXNvv/oMoZba4/WKF/BqiGx/x7wPkhiHRmNZZPMJsxhYXSTqcm/k5vPD
+	 95HVZbnpLzVPV36Ej2d+Km8/sa2f2mkWPrJoai00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Chris Mason <clm@meta.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0351/2857] svcrdma: Clear sc_cm_id when ADDR_CHANGE replacement fails
-Date: Wed, 18 Nov 2026 15:23:05 +0100
-Message-ID: <20261118150214.073761119@linuxfoundation.org>
+Subject: [PATCH 6.1 0352/2857] nfsd: convert nfsd_net boolean flags to unsigned long flags word
+Date: Wed, 18 Nov 2026 15:23:06 +0100
+Message-ID: <20261118150214.108317046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,65 +68,398 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Chris Mason <clm@meta.com>
 
-[ Upstream commit 01500306e1d50de7ca7a2cdcdfa28ac0523eb747 ]
+[ Upstream commit 11a5fe42e1811f793e04ef885b639ea7668f439d ]
 
-When svc_rdma_listen_handler() handles RDMA_CM_EVENT_ADDR_CHANGE,
-it creates a replacement listener cm_id and returns 1, telling
-the CM core to destroy the old one. If the replacement allocation
-fails, sc_cm_id still points at the old cm_id that the CM core is
-about to destroy. Any subsequent dereference of sc_cm_id --
-such as svc_rdma_detach()'s rdma_disconnect() call -- is a
-use-after-free.
+nfsd_net contains several boolean fields that are accessed from
+concurrent contexts without serialization.  In particular,
+nfsd4_end_grace() guards its drain path with a plain bool:
 
-NULL sc_cm_id on the failure path and guard svc_rdma_detach()'s
-rdma_disconnect() call against NULL so that the listener can
-be torn down safely when the server shuts down.
+    if (nn->grace_ended)
+            return;
+    nn->grace_ended = true;
 
-Fixes: d1b586e75ec6 ("svcrdma: Handle ADDR_CHANGE CM event properly")
+The read and the write are independent, and nothing in struct
+nfsd_net serializes them.  At least two contexts can reach this
+code with no lock held:
+
+    laundromat path
+      laundry_wq kworker
+        nfs4_laundromat()
+          nfsd4_end_grace()
+
+    RECLAIM_COMPLETE path
+      nfsd compound kthread
+        nfsd4_reclaim_complete()
+          inc_reclaim_complete()
+            nfsd4_end_grace()
+
+Both callers can observe grace_ended == false on different CPUs,
+both store true, and both proceed into nfsd4_record_grace_done(),
+which invokes the active client_tracking_ops->grace_done callback.
+For tracking ops that drain reclaim_str_hashtbl (legacy_tracking_ops
+via nfsd4_recdir_purge_old, and the cld v1+ ops via
+nfsd4_cld_grace_done), grace_done calls nfs4_release_reclaim(),
+which walks every bucket of reclaim_str_hashtbl with no lock and
+calls nfs4_remove_reclaim_record() (list_del + kfree) on each
+entry.  Two concurrent walkers corrupt the list and double-free
+every nfs4_client_reclaim.  A concurrent nfsd4_find_reclaim_client()
+iterating the same bucket reads through freed memory.
+
+A third call site exists in nfs4_state_start_net() on the
+skip_grace startup path, but it runs under nfsd_mutex before any
+client has connected and before the laundromat's first delayed
+work fires, so it cannot race with the two callers above.
+
+Replace the scattered boolean fields in nfsd_net with a single
+unsigned long flags word and an enum nfsd_net_flag for the bit
+positions.  The grace_ended race is fixed by using
+test_and_set_bit(), which is atomic on all architectures.  The
+remaining flags (grace_end_forced, in_grace, somebody_reclaimed,
+track_reclaim_completes, nfsd_net_up, lockd_up) are converted to
+use test_bit/set_bit/clear_bit for consistency.  This avoids
+sub-word cmpxchg issues on architectures like Hexagon that only
+support word-sized atomic operations.
+
+Fixes: 362063a595be ("nfsd: keep a tally of RECLAIM_COMPLETE operations when using nfsdcld")
 Cc: stable@vger.kernel.org
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260527-rdma-follow-on-v1-5-1b09bd87b6cd@oracle.com
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Chris Mason <clm@meta.com>
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-3-f27e8eb4d974@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ sashal: Added a NULL check around rdma_destroy_id() in __svc_rdma_free(), since this tree's older teardown code lacks the NULL early-exit that upstream relies on. ]
+[ sashal: Kept this tree's client_lock and boot_time_bt logic and its flatter shutdown path, converting only the flag accesses to bit operations, plus one direct nfsd_net_up read in nfsd_last_thread converted to test_bit. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_transport.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfsd/netns.h       | 19 +++++++++++--------
+ fs/nfsd/nfs4proc.c    |  2 +-
+ fs/nfsd/nfs4recover.c | 12 ++++++------
+ fs/nfsd/nfs4state.c   | 41 +++++++++++++++++++++++++----------------
+ fs/nfsd/nfsctl.c      |  2 +-
+ fs/nfsd/nfssvc.c      | 20 ++++++++++----------
+ 6 files changed, 54 insertions(+), 42 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-index c84e80ae374ea..1da190fa25265 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -305,6 +305,7 @@ static int svc_rdma_listen_handler(struct rdma_cm_id *cma_id,
- 		if (IS_ERR(listen_id)) {
- 			pr_err("Listener dead, address change failed for device %s\n",
- 				cma_id->device->name);
-+			cma_xprt->sc_cm_id = NULL;
- 		} else
- 			cma_xprt->sc_cm_id = listen_id;
- 		return 1;
-@@ -584,7 +585,8 @@ static void svc_rdma_detach(struct svc_xprt *xprt)
- 	struct svcxprt_rdma *rdma =
- 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 6291cd57f38eb..94739a09b319d 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -25,6 +25,16 @@
+ struct cld_net;
+ struct nfsd4_client_tracking_ops;
  
--	rdma_disconnect(rdma->sc_cm_id);
-+	if (rdma->sc_cm_id)
-+		rdma_disconnect(rdma->sc_cm_id);
++enum nfsd_net_flag {
++	NFSD_NET_GRACE_ENDED,
++	NFSD_NET_GRACE_END_FORCED,
++	NFSD_NET_IN_GRACE,
++	NFSD_NET_SOMEBODY_RECLAIMED,
++	NFSD_NET_TRACK_RECLAIM_COMPLETES,
++	NFSD_NET_UP,
++	NFSD_NET_LOCKD_UP,
++};
++
+ enum {
+ 	/* cache misses due only to checksum comparison failures */
+ 	NFSD_STATS_PAYLOAD_MISSES,
+@@ -63,9 +73,8 @@ struct nfsd_net {
+ 	struct cache_detail *nametoid_cache;
+ 
+ 	struct lock_manager nfsd4_manager;
+-	bool grace_ended;
+-	bool grace_end_forced;
+ 	bool client_tracking_active;
++	unsigned long flags;
+ 	time64_t boot_time;
+ 	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
+ 
+@@ -113,19 +122,13 @@ struct nfsd_net {
+ 	spinlock_t blocked_locks_lock;
+ 
+ 	struct file *rec_file;
+-	bool in_grace;
+ 	const struct nfsd4_client_tracking_ops *client_tracking_ops;
+ 
+ 	time64_t nfsd4_lease;
+ 	time64_t nfsd4_grace;
+-	bool somebody_reclaimed;
+ 
+-	bool track_reclaim_completes;
+ 	atomic_t nr_reclaim_complete;
+ 
+-	bool nfsd_net_up;
+-	bool lockd_up;
+-
+ 	seqlock_t writeverf_lock;
+ 	unsigned char writeverf[8];
+ 
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 00681c82bebd0..afdf27306bd23 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -592,7 +592,7 @@ nfsd4_open(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		pr_warn("nfsd4_process_open2 failed to open newly-created file: status=%u\n",
+ 			be32_to_cpu(status));
+ 	if (reclaim && !status)
+-		nn->somebody_reclaimed = true;
++		set_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags);
+ out:
+ 	if (open->op_filp) {
+ 		fput(open->op_filp);
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 4f1f4d2c6bed1..d5ee9c2e05bb7 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -228,7 +228,7 @@ nfsd4_create_clid_dir(struct nfs4_client *clp)
+ out_unlock:
+ 	inode_unlock(d_inode(dir));
+ 	if (status == 0) {
+-		if (nn->in_grace)
++		if (test_bit(NFSD_NET_IN_GRACE, &nn->flags))
+ 			__nfsd4_create_reclaim_record_grace(clp, dname, nn);
+ 		vfs_fsync(nn->rec_file, 0);
+ 	} else {
+@@ -388,7 +388,7 @@ nfsd4_remove_clid_dir(struct nfs4_client *clp)
+ 	nfs4_reset_creds(original_cred);
+ 	if (status == 0) {
+ 		vfs_fsync(nn->rec_file, 0);
+-		if (nn->in_grace)
++		if (test_bit(NFSD_NET_IN_GRACE, &nn->flags))
+ 			__nfsd4_remove_reclaim_record_grace(dname,
+ 					HEXDIR_LEN, nn);
+ 	}
+@@ -446,7 +446,7 @@ nfsd4_recdir_purge_old(struct nfsd_net *nn)
+ {
+ 	int status;
+ 
+-	nn->in_grace = false;
++	clear_bit(NFSD_NET_IN_GRACE, &nn->flags);
+ 	if (!nn->rec_file)
+ 		return;
+ 	status = mnt_want_write_file(nn->rec_file);
+@@ -528,7 +528,7 @@ nfsd4_init_recdir(struct net *net)
+ 
+ 	nfs4_reset_creds(original_cred);
+ 	if (!status)
+-		nn->in_grace = true;
++		set_bit(NFSD_NET_IN_GRACE, &nn->flags);
+ 	return status;
  }
  
- static void __svc_rdma_free(struct work_struct *work)
-@@ -616,7 +618,8 @@ static void __svc_rdma_free(struct work_struct *work)
- 		ib_dealloc_pd(rdma->sc_pd);
+@@ -1476,7 +1476,7 @@ nfs4_cld_state_init(struct net *net)
+ 	for (i = 0; i < CLIENT_HASH_SIZE; i++)
+ 		INIT_LIST_HEAD(&nn->reclaim_str_hashtbl[i]);
+ 	nn->reclaim_str_hashtbl_size = 0;
+-	nn->track_reclaim_completes = true;
++	set_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags);
+ 	atomic_set(&nn->nr_reclaim_complete, 0);
  
- 	/* Destroy the CM ID */
--	rdma_destroy_id(rdma->sc_cm_id);
-+	if (rdma->sc_cm_id)
-+		rdma_destroy_id(rdma->sc_cm_id);
+ 	return 0;
+@@ -1487,7 +1487,7 @@ nfs4_cld_state_shutdown(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- 	kfree(rdma);
+-	nn->track_reclaim_completes = false;
++	clear_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags);
+ 	kfree(nn->reclaim_str_hashtbl);
  }
+ 
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index ec37aca0949af..3abe5e1d8baf4 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2379,7 +2379,7 @@ static void inc_reclaim_complete(struct nfs4_client *clp)
+ {
+ 	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
+ 
+-	if (!nn->track_reclaim_completes)
++	if (!test_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags))
+ 		return;
+ 	if (!nfsd4_find_reclaim_client(clp->cl_name, nn))
+ 		return;
+@@ -4536,8 +4536,6 @@ nfsd4_init_leases_net(struct nfsd_net *nn)
+ 
+ 	nn->nfsd4_lease = 90;	/* default lease time */
+ 	nn->nfsd4_grace = 90;
+-	nn->somebody_reclaimed = false;
+-	nn->track_reclaim_completes = false;
+ 	nn->clverifier_counter = get_random_u32();
+ 	nn->clientid_base = get_random_u32();
+ 	nn->clientid_counter = nn->clientid_base + 1;
+@@ -5966,12 +5964,21 @@ nfsd4_renew(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ static void
+ nfsd4_end_grace(struct nfsd_net *nn)
+ {
+-	/* do nothing if grace period already ended */
+-	if (nn->grace_ended)
++	/*
++	 * nfsd4_end_grace() can be entered concurrently from the
++	 * laundromat workqueue and from an nfsd compound thread
++	 * handling RECLAIM_COMPLETE.  Without serialization, both
++	 * callers can observe NFSD_NET_GRACE_ENDED clear and proceed
++	 * into nfsd4_record_grace_done().  For tracking ops whose
++	 * grace_done drains reclaim_str_hashtbl, that results in
++	 * list corruption and a double free of every
++	 * nfs4_client_reclaim entry.  Use an atomic test-and-set so
++	 * exactly one caller proceeds.
++	 */
++	if (test_and_set_bit(NFSD_NET_GRACE_ENDED, &nn->flags))
+ 		return;
+ 
+ 	trace_nfsd_grace_complete(nn);
+-	nn->grace_ended = true;
+ 	/*
+ 	 * If the server goes down again right now, an NFSv4
+ 	 * client will still be allowed to reclaim after it comes back up,
+@@ -6013,11 +6020,12 @@ bool nfsd4_force_end_grace(struct nfsd_net *nn)
+ 	if (!nn->client_tracking_ops)
+ 		return false;
+ 	spin_lock(&nn->client_lock);
+-	if (nn->grace_ended || !nn->client_tracking_active) {
++	if (test_bit(NFSD_NET_GRACE_ENDED, &nn->flags) ||
++	    !nn->client_tracking_active) {
+ 		spin_unlock(&nn->client_lock);
+ 		return false;
+ 	}
+-	WRITE_ONCE(nn->grace_end_forced, true);
++	set_bit(NFSD_NET_GRACE_END_FORCED, &nn->flags);
+ 	mod_delayed_work(laundry_wq, &nn->laundromat_work, 0);
+ 	spin_unlock(&nn->client_lock);
+ 	return true;
+@@ -6032,15 +6040,15 @@ static bool clients_still_reclaiming(struct nfsd_net *nn)
+ 	time64_t double_grace_period_end = nn->boot_time_bt +
+ 					   2 * nn->nfsd4_lease;
+ 
+-	if (READ_ONCE(nn->grace_end_forced))
++	if (test_bit(NFSD_NET_GRACE_END_FORCED, &nn->flags))
+ 		return false;
+-	if (nn->track_reclaim_completes &&
++	if (test_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags) &&
+ 			atomic_read(&nn->nr_reclaim_complete) ==
+ 			nn->reclaim_str_hashtbl_size)
+ 		return false;
+-	if (!nn->somebody_reclaimed)
++	if (!test_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags))
+ 		return false;
+-	nn->somebody_reclaimed = false;
++	clear_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags);
+ 	/*
+ 	 * If we've given them *two* lease times to reclaim, and they're
+ 	 * still not done, give up:
+@@ -7797,7 +7805,7 @@ nfsd4_lock(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		nfs4_inc_and_copy_stateid(&lock->lk_resp_stateid, &lock_stp->st_stid);
+ 		status = 0;
+ 		if (lock->lk_reclaim)
+-			nn->somebody_reclaimed = true;
++			set_bit(NFSD_NET_SOMEBODY_RECLAIMED, &nn->flags);
+ 		break;
+ 	case FILE_LOCK_DEFERRED:
+ 		kref_put(&nbl->nbl_kref, free_nbl);
+@@ -8308,8 +8316,8 @@ static int nfs4_state_create_net(struct net *net)
+ 	nn->unconf_name_tree = RB_ROOT;
+ 	nn->boot_time = ktime_get_real_seconds();
+ 	nn->boot_time_bt = ktime_get_boottime_seconds();
+-	nn->grace_ended = false;
+-	nn->grace_end_forced = false;
++	clear_bit(NFSD_NET_GRACE_ENDED, &nn->flags);
++	clear_bit(NFSD_NET_GRACE_END_FORCED, &nn->flags);
+ 	nn->client_tracking_active = false;
+ 	nn->nfsd4_manager.block_opens = true;
+ 	INIT_LIST_HEAD(&nn->nfsd4_manager.list);
+@@ -8391,7 +8399,8 @@ nfs4_state_start_net(struct net *net)
+ 	spin_lock(&nn->client_lock);
+ 	nn->client_tracking_active = true;
+ 	spin_unlock(&nn->client_lock);
+-	if (nn->track_reclaim_completes && nn->reclaim_str_hashtbl_size == 0)
++	if (test_bit(NFSD_NET_TRACK_RECLAIM_COMPLETES, &nn->flags) &&
++	    nn->reclaim_str_hashtbl_size == 0)
+ 		goto skip_grace;
+ 	printk(KERN_INFO "NFSD: starting %lld-second grace period (net %x)\n",
+ 	       nn->nfsd4_grace, net->ns.inum);
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 450957535d1d2..4b95830911c98 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1124,7 +1124,7 @@ static ssize_t write_v4_end_grace(struct file *file, char *buf, size_t size)
+ 	}
+ 
+ 	return scnprintf(buf, SIMPLE_TRANSACTION_LIMIT, "%c\n",
+-			 nn->grace_ended ? 'Y' : 'N');
++			 test_bit(NFSD_NET_GRACE_ENDED, &nn->flags) ? 'Y' : 'N');
+ }
+ 
+ #endif
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 3f7705be3ac75..6bd62ddd70a31 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -402,7 +402,7 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	int ret;
+ 
+-	if (nn->nfsd_net_up)
++	if (test_bit(NFSD_NET_UP, &nn->flags))
+ 		return 0;
+ 
+ 	ret = nfsd_startup_generic();
+@@ -412,11 +412,11 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
+ 	if (ret)
+ 		goto out_socks;
+ 
+-	if (nfsd_needs_lockd(nn) && !nn->lockd_up) {
++	if (nfsd_needs_lockd(nn) && !test_bit(NFSD_NET_LOCKD_UP, &nn->flags)) {
+ 		ret = lockd_up(net, cred);
+ 		if (ret)
+ 			goto out_socks;
+-		nn->lockd_up = true;
++		set_bit(NFSD_NET_LOCKD_UP, &nn->flags);
+ 	}
+ 
+ 	ret = nfsd_file_cache_start_net(net);
+@@ -434,7 +434,7 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
+ 	if (ret)
+ 		goto out_reply_cache;
+ 
+-	nn->nfsd_net_up = true;
++	set_bit(NFSD_NET_UP, &nn->flags);
+ 	return 0;
+ 
+ out_reply_cache:
+@@ -442,9 +442,9 @@ static int nfsd_startup_net(struct net *net, const struct cred *cred)
+ out_filecache:
+ 	nfsd_file_cache_shutdown_net(net);
+ out_lockd:
+-	if (nn->lockd_up) {
++	if (test_bit(NFSD_NET_LOCKD_UP, &nn->flags)) {
+ 		lockd_down(net);
+-		nn->lockd_up = false;
++		clear_bit(NFSD_NET_LOCKD_UP, &nn->flags);
+ 	}
+ out_socks:
+ 	nfsd_shutdown_generic();
+@@ -458,11 +458,11 @@ static void nfsd_shutdown_net(struct net *net)
+ 	nfs4_state_shutdown_net(net);
+ 	nfsd_reply_cache_shutdown(nn);
+ 	nfsd_file_cache_shutdown_net(net);
+-	if (nn->lockd_up) {
++	if (test_bit(NFSD_NET_LOCKD_UP, &nn->flags)) {
+ 		lockd_down(net);
+-		nn->lockd_up = false;
++		clear_bit(NFSD_NET_LOCKD_UP, &nn->flags);
+ 	}
+-	nn->nfsd_net_up = false;
++	clear_bit(NFSD_NET_UP, &nn->flags);
+ 	nfsd_shutdown_generic();
+ }
+ 
+@@ -558,7 +558,7 @@ void nfsd_last_thread(struct net *net)
+ 	 * other initialization has been done except the rpcb information.
+ 	 */
+ 	svc_rpcb_cleanup(serv, net);
+-	if (!nn->nfsd_net_up)
++	if (!test_bit(NFSD_NET_UP, &nn->flags))
+ 		return;
+ 
+ 	nfsd_shutdown_net(net);
 -- 
 2.53.0
 
