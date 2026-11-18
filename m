@@ -1,53 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028150;
-	b=zuhyDCCyqK2GX54SyEuBlq3M1KL2d7QMlCLdNpmmcdJkzB91kOzuzJpaGQ0CubMfI4ax
-	 bjm3ftLhB7QhTNboxqrx93XQRnG1dTVJQPhaURym8Y8+QR/QFL3wKs47cJd+7zsNt+0vu
-	 oq5IYCgSWJYaZtromTf5SKHmJLBQ8pBN3mPnVwKUbXXkXS9IGooSK6aq5tUgriqztf5IU
-	 l1UCFkzufeTaGMuQiuOLHl5o5vNUpK+SPQEHXCcCATNZLeKK5lflwCiGWmEhAgGJ18nNs
-	 51BIYg237AlsfvNo9qiMkY6S7Pm4NiO2LZzjL4Ql3nhr2A5EVh3WntCIdXUyZy5c0vA==
+	t=1795028153;
+	b=Um00iZ0NKRwH5WtrV4DfuY7YJRtlRzlHBQHT81rAxV9yV+2hM7/5ytb5592cziJ9FNOr
+	 1w7mg2NDfLEl1A5xco0W9D4rUnWkpS1uFfx3iwAiXSYCn/xXeKcuCdlllDArJR0hgExJq
+	 mu6KF/hx1u52cGXqbNjskM0qDJNJeiMKOo6UmHszHZse5hCP+sr6uFhJDk4NK93GGPQFT
+	 eftdzhgoWDO41z129C+G4EHmo/yUlHviJeh6xn/YKrVlnRuHWAQ01AbwA0x8roVx9QK9S
+	 90iDi/nHUTuWznmUpqR3sB+8DUV5yTRFZ8mohdRAwT/IxVyDDvL289Qg4CwLvMaHOAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028150;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6UFWD74jldaNt/5Ss8i+/STu8nY/gnwTDcgkYDmRchQ=;
-	b=RCiueEvqb3N04rnhx5a3JIO/rts2Ey51FU1VxXXzHvFeKL2oY6uBBGuEvRBMhzfyYVdo
-	 YTiGRndPNLPYmjEsOL9YRrFmMeTNMm13GepVFs1t8/L0mPjbGZX6q3rp/39HUyf83CgV6
-	 2EveJnol8Qgm+bgKQOT+e3q3mY3e2NNE1/OwD9WqoC4k7DeScXg7/jypRAT3fzZs7WZ/O
-	 QNiZ+PE4FSPNAFnaEMPMGzSDcXF6HFS3ejOirINsi5quASF34tM389Ci0Zku5R1vsLVZS
-	 waW9zKZU2VJAhJ7+vCe1PpLDO27uNi2tTxN7+M4WcJTM/g7UD5xZ3GIGFZSdJZPoTTg==
+	bh=4UV7ZtFrvgH7/ZMcDb5ADnLcgTkatLTeKpvQpiiOFxg=;
+	b=oRw68Ztj0L7wZX+d7bajElcbiWJ66sZ3NZHdXlkW6A7vbTHgupSf+FAXMphQK73YPzM3
+	 3+m/w5REuHNvdQSE6WNg9jB8QUmFr3EjQGrjn2HROUDHJwr7P3p5q65JsWBFFdHMEI4mu
+	 uVuI1LPJb3/7yufdQiAucXoJLalwiTlLo42cbg011fFrsrVFEThiJL076rujAANAM9vNx
+	 qapffCUqbOD0Lm2Fh1+91wQ7uJ1mpL0qPGqO6IiCgWNfaz8//sjl6HlKkDov18QntL/uw
+	 2NBFsuMkMT2chQObu0Sy7TbojP6IvxGlEKba21svoznrIvMbv2ZTwe5u3yseKIK1GNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISd7QDmg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfSicHVa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB47606A31C;
-	Wed, 18 Nov 2026 18:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A47606A31C;
+	Wed, 18 Nov 2026 18:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISd7QDmg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0011C1F000C4;
-	Wed, 18 Nov 2026 18:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EfSicHVa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA191F000C4;
+	Wed, 18 Nov 2026 18:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028150;
-	bh=6UFWD74jldaNt/5Ss8i+/STu8nY/gnwTDcgkYDmRchQ=;
+	s=korg; t=1795028153;
+	bh=4UV7ZtFrvgH7/ZMcDb5ADnLcgTkatLTeKpvQpiiOFxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ISd7QDmgLvuiI5zqfmkwmycjVda2Q8kbzVjoVrUKgytwuPYLEiybWOLtW4gbu0zFU
-	 YvsbxPR1tuHkYuy67WpYZM4+VSQkLPXPxzIxasBJ0MNRJENuvlkcv4XJBNTDOC6dBL
-	 weRwrSaUeoER+XFMhWZgswhmmbvtUCR79dwffJWo=
+	b=EfSicHVakP87MIDPsgipUdJvlqksvp2b+2oPjDZ3ferDCsT0KuchjhbDQtZSNAzNe
+	 5wgND53EKSFI50FBIF2y9Z2OoDLgfuA2OlZkk4CZtpC+lmQrB/ynJ1r4pi/eKk3/ts
+	 hOz5dcWqV82uj6I95J1VhXqWqKxBbv2uAt50RWnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	James Clark <james.clark@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2041/2151] blk-iolatency: flush enable_work after going offline
-Date: Wed, 18 Nov 2026 16:02:56 +0100
-Message-ID: <20261118150236.077247701@linuxfoundation.org>
+Subject: [PATCH 6.18 2003/2151] perf print_insn: Include sys/types.h for ssize_t
+Date: Wed, 18 Nov 2026 16:02:18 +0100
+Message-ID: <20261118150234.687953703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,41 +78,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 020f61242d6ebeba5f8f2ef6e429aeffdd63f1c1 ]
+[ Upstream commit e0e4470aa53c0022418290fb551c21da4bd50209 ]
 
-blkcg_iolatency_exit() flushes enable_work before it deactivates the
-policy, but iolatency_pd_offline() schedules it again for the last group
-with a target, so the blk_iolatency is freed with the work queued. Flush
-it after the deactivation.
+print_insn.h declares fprintf_insn_asm() with an ssize_t return type but
+does not include the header defining that type. This causes builds where
+stdio.h does not provide ssize_t to fail when compiling util/print_insn.c:
 
-Fixes: 8a177a36da6c ("blk-iolatency: Fix inflight count imbalances and IO hangs on offline")
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-24-axboe@kernel.dk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+  util/print_insn.h:21:1: error: unknown type name 'ssize_t'
+
+Include sys/types.h so the header provides its own dependency for ssize_t.
+
+Fixes: 218c200f677d8af4 ("perf script: Consolidate capstone print functions")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iolatency.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/print_insn.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 17e530b93c48c..741c804c217bf 100644
---- a/block/blk-iolatency.c
-+++ b/block/blk-iolatency.c
-@@ -637,8 +637,9 @@ static void blkcg_iolatency_exit(struct rq_qos *rqos)
- 	struct blk_iolatency *blkiolat = BLKIOLATENCY(rqos);
+diff --git a/tools/perf/util/print_insn.h b/tools/perf/util/print_insn.h
+index 07d11af3fc1cb..e4eb55e8b8a2f 100644
+--- a/tools/perf/util/print_insn.h
++++ b/tools/perf/util/print_insn.h
+@@ -4,6 +4,7 @@
  
- 	timer_shutdown_sync(&blkiolat->timer);
--	flush_work(&blkiolat->enable_work);
- 	blkcg_deactivate_policy(rqos->disk, &blkcg_policy_iolatency);
-+	/* iolatency_pd_offline() schedules it for the last group with a target */
-+	flush_work(&blkiolat->enable_work);
- 	kfree(blkiolat);
- }
+ #include <stddef.h>
+ #include <stdio.h>
++#include <sys/types.h>
  
+ struct perf_sample;
+ struct thread;
 -- 
 2.53.0
 
