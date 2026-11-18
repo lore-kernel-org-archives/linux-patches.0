@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050545;
-	b=0GcOqrBES+ULOpuKNhQRbDVJooM4hImtKVEoBq54RNhxlEcakKkck37X6/xxkozVPEru
-	 KCGol3exITjEixk4Np+gg/92f+ZfIljiDlSnKeUh3gGnxHynVJv4moC1U7AYnCP+k1Syv
-	 uNzRxFi0y+ZjT631cy/m/PmSaxyIoIGG6SkGYIdUWrEE44m2zs77l79yOnagffiFE1fL/
-	 JtyShFGfzR7tpRWzH/+m8E++PEoVw0g1rRuZUh3ChJ6Et9Rfy2vCIKzXY26+9mHWrTz99
-	 jFuveHdze2SvB15k0F0rf1YKP6HzGxC70PI80boNiFUa9sM1SyEw7RX+wTVwvWa38gw==
+	t=1795050548;
+	b=xpY62kZTtHm0M0xwePeDWWnGoblN7Fx++D7Lj/mTh3DPXhlt/zL8RcS0hXMC3GxXuEjk
+	 NJErcKM1/15BAh1jiWj1aIA4F51iWSMMyqb9JlJxFLRzh73GXNYAAlx3nFW3KQgveNKrg
+	 SKaYoQ/6M9WzWgg90fbkVvA93qc0plMCRdr7TrYQujEfh0FubDwYaUFrT0L3ZkKhlMuwT
+	 lYbNNkJLYxEML8994dpt/Va1vlHEknvRrmFVerSPNUi2F92UDqw3SanqtSMN6TYIn1ihB
+	 GxbwxETYrTOaSIqxWh+Tnm6flV/XJHLrpYLXzN1s/vsbmEmIEpxprITroGCFwZmyOYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050545;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050548;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eFARFF9JdSp+BhGS9W48WonnQfSfv1DV0VSI8NnANP0=;
-	b=pjDgu4A7t4sAs+heHAsOEKtpWHOzr5K79+I7nWdplyT2xh1Szi5wy/0phjig98ueraY1
-	 AFaEEbYmOiSYoZX9lPH/Qv4MgEGD20D12MmXs16LlvUNmkxsI0XYFzbxi1MZ/EnrRjveP
-	 jjLwzy7PhkV8J+zWw+hLb8oMqvcI/Q/Z6Lr0+bZSC9nMNmug8nG38kglF9HOdfpwPcx8Z
-	 RL6MeNbr0oOoe+egXuioO5grJDRCr+A9Md363Uy21Y4rFLAxUVkX2uSyqFs+WZbQYxDLr
-	 o9I/ZV17xkjFo7/nj/AstpjZ9oNciAIfHFGIy7aOVgIvL7Z/XHrn2hH+R0EPi6oatnQ==
+	bh=g8k8Vzrl+i0Dm79QI0gK70m9H+pHb2X3srQkufFy2UA=;
+	b=wZFpMJhpbWKhGw1mZdm6shU+t/HcoQlTb83bYxmCdx48Vz3FoeJZXkvS4HK24dN0XIf6
+	 DB85PrOX4+LcT5qGUAvZ1gou34EoZ/Jvz2LCtt52PBQWqeBQwI2ojN10OO7GGs7HlcWM/
+	 kP4otcSsAG4vgOgHa94EulqVRX55asTh8julykekUKf6gZ8GWkNwQkRmE/AuTYaG4tgkQ
+	 HxEJ9CjMvPtl0TJduOcqZmBK/A0zyLsbveYvfOOaV0NiaKQJpkQdSRCAUWPMHdm/bIBdb
+	 5/bEr/Syx3jOwkLiCQuQQRggI6Frsiz/0oOjr/fgvnPpFhakS9kjmTZCr6ZYdsA7A+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eaIY/ZQS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRWujery;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1B5606A31C;
-	Thu, 19 Nov 2026 01:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726D5606A31C;
+	Thu, 19 Nov 2026 01:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eaIY/ZQS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B1B1F000C4;
-	Thu, 19 Nov 2026 01:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KRWujery
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B151F000C4;
+	Thu, 19 Nov 2026 01:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050545;
-	bh=eFARFF9JdSp+BhGS9W48WonnQfSfv1DV0VSI8NnANP0=;
+	s=korg; t=1795050548;
+	bh=g8k8Vzrl+i0Dm79QI0gK70m9H+pHb2X3srQkufFy2UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaIY/ZQSeuqEAMPITZSqICQ+4pPlfp6ZITbH6yZA73+7V3ufxwa56DONeyZeY7JSI
-	 dwfzTHhS8oy+vgWq1p0yPMxtW8Nl9sUHA/NCJrlFrgorhqM9MQdmM0P6C9zz78BVOm
-	 Tp/RV/PEXpgKYDKarLy6yxfPHJGgskTC8pqFmVJk=
+	b=KRWujeryf1qiWx90np7G0Tg5gUZwqC8d08HO6VO7caybHSyGk/j5smeDWzG6xsjFT
+	 +l9e21q2U5dmiM384m7i1cJexnhiClfp3/HGqWtHHn7RczG/mSHDFgYnr+onN/6OL1
+	 Sk5alm6XJhOMcmngtO/YkE4670RnX8vgPvALae6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Deng <18983559317@163.com>,
+	Mikkel Eskildsen <mke@visotia.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2745/2857] net: atlantic: Unregister before clearing RXNFC rules
-Date: Wed, 18 Nov 2026 16:02:59 +0100
-Message-ID: <20261118150340.453160363@linuxfoundation.org>
+Subject: [PATCH 6.1 2746/2857] net: usb: cdc_ncm: dont enable BHs in tx_fixup under netpoll
+Date: Wed, 18 Nov 2026 16:03:00 +0100
+Message-ID: <20261118150340.488007376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,57 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Deng <18983559317@163.com>
+From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit 13b364c765e69db1f8446399d8db0b331c23b50c ]
+[ Upstream commit 108ca34cf4b453f6375a70079e32b11866b02601 ]
 
-aq_pci_remove() clears the driver's RXNFC rule list before unregistering
-the netdevice.  Until unregister_netdev() returns, ethtool operations can
-still call aq_get_rxnfc_rule(), aq_get_rxnfc_all_rules(),
-aq_add_rxnfc_rule(), or aq_del_rxnfc_rule().  Those paths traverse the
-same unlocked hlist that aq_clear_rxnfc_all_rules() is mutating and
-freeing.
+netpoll holds the txq lock and calls ndo_start_xmit() with IRQs off but
+BHs on. The spin_unlock_bh() in cdc_ncm_tx_fixup() then runs pending
+softirqs. If one of them transmits, it spins on the txq lock that
+netpoll holds. With netconsole on a cdc_ncm device this ends in a soft
+or hard lockup.
 
-The race is reachable by issuing RXNFC ethtool commands concurrently with
-PCI device removal or driver unbind.  A reader can dereference a node that
-has just been freed, and two writers can corrupt the list or free the same
-rule more than once, causing KASAN reports, list corruption, or a kernel
-panic.
+Every caller of cdc_ncm_tx_fixup() holds the txq lock with BHs or IRQs
+off, so the softirq user of ctx->mtx cannot interrupt it. Use plain
+spin_lock().
 
-Reverse the removal order: unregister the netdevice first, then clear the
-RXNFC rules.  After unregister_netdev() returns, ethtool can no longer
-enter the driver, while the PCI device is still available for the
-rule-clearing routine to issue hardware commands.
-
-Found during a static-analysis-assisted audit: candidate sites were
-surfaced by a Coccinelle rule, and the reader/writer paths were
-confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
-not observed at runtime; it is identified by code inspection only.
-
-Fixes: 8d0bcb012f57 ("net: aquantia: add infrastructure for ntuple rules")
-Signed-off-by: Binbin Deng <18983559317@163.com>
-Link: https://patch.msgid.link/20261020022630.515209-1-18983559317@163.com
+Fixes: c84ff1d6dff3 ("cdc_ncm: reduce driver latency in the data path")
+Reported-by: Mikkel Eskildsen <mke@visotia.com>
+Closes: https://lore.kernel.org/netdev/PRAP189MB185019A5A8D411482BB6E0CDA9982@PRAP189MB1850.EURP189.PROD.OUTLOOK.COM/
+Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20261024-cdc-ncm-netpoll-v3-1-6284ca03f967@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/cdc_ncm.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-index 4bb6a58d75a43..40cb0d336944e 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-@@ -346,9 +346,9 @@ static void aq_pci_remove(struct pci_dev *pdev)
- 	struct aq_nic_s *self = pci_get_drvdata(pdev);
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index a73ad0cd20fc3..76687d57adb97 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -1534,14 +1534,17 @@ cdc_ncm_tx_fixup(struct usbnet *dev, struct sk_buff *skb, gfp_t flags)
+ 	if (ctx == NULL)
+ 		goto error;
  
- 	if (self->ndev) {
--		aq_clear_rxnfc_all_rules(self);
- 		if (self->ndev->reg_state == NETREG_REGISTERED)
- 			unregister_netdev(self->ndev);
-+		aq_clear_rxnfc_all_rules(self);
+-	spin_lock_bh(&ctx->mtx);
++	/* BHs or IRQs are always off here. netpoll only disables IRQs, and
++	 * spin_unlock_bh() would then run softirqs with the txq lock held.
++	 */
++	spin_lock(&ctx->mtx);
  
- #if IS_ENABLED(CONFIG_MACSEC)
- 		aq_macsec_free(self);
+ 	if (ctx->is_ndp16)
+ 		skb_out = cdc_ncm_fill_tx_frame(dev, skb, cpu_to_le32(USB_CDC_NCM_NDP16_NOCRC_SIGN));
+ 	else
+ 		skb_out = cdc_ncm_fill_tx_frame(dev, skb, cpu_to_le32(USB_CDC_NCM_NDP32_NOCRC_SIGN));
+ 
+-	spin_unlock_bh(&ctx->mtx);
++	spin_unlock(&ctx->mtx);
+ 	return skb_out;
+ 
+ error:
 -- 
 2.53.0
 
