@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032325;
-	b=o3RYkHOxRNi33cnpBqyLxl6hvuvJUyAp6aJDwxQvoU0DFuyj6FJBtDhK4q/JHgZ0pXte
-	 MLAROtd7BcxE6ElOxzG9ajk/0cqUbw0wECoIX081cBjV9HWISJtd/4BFhEPgytja3kzoq
-	 iRiIOvHVTxWGPcHL9YKSx6rfqIyoxMd59U+U8Fs5Go/n01qKH7iAIbTys2zE1vT8bjFPa
-	 0LKqUKmpO7ZYQmveZh3TWJQty67iOBJ2ziAt8zxJmrFi/d8TRr+WD+JqsXnxz8TaPc+JM
-	 5VyvmvsA9aZ8NwUifDShrfc7J9ogmxFrnDTKRPmU2iVO4i26rykWY5fpgzRkkEmxVTw==
+	t=1795032328;
+	b=x59ly/p8I1TEGA56Ieve/oF5PDMYTKpy/lDcpzmkXfeviUILTWjqoVaFyLZ5ErZVQ5wy
+	 nUpBDLGidi8BGbpDjym3enNB5sbOJa1XDzPjjB3120RPOvHKlpmEDdHKHdyl2zEXChmyN
+	 Toi+JciRfJ5672bdtSYhG+npRPeSUY+x+MxvSxTMNAFG0UnIpCvJTnNqsu8EsHqG1uVLT
+	 7SJV5y3KrcMvBwrp4ccqY8/flGy/U0I1Eq0QuEaPzdnr7O3lIFoOCPb+kx5One9hO0L+a
+	 1EC78kPm65gR1Js20A8NJ4G4PX8rNcIEHS6ZakJxySokpMOq/AFSyNIHU9i0WX3D1GA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5M+vZJkGthcHTrbOY0VH24tRvVrdaDCMMGocrlA6BZQ=;
-	b=FYBLNIJYAb4foSk4M270dGx/GMctykJieFerCKGJw6MU470FE+kBf+QD+J6bxEYryzuN
-	 jqENJvwuwdcCpcc8bxkrO/QsPGRPFhHUJLtbgL3VkBGNTrNGsMTdOGMAD6eXR3+UjHdfL
-	 3LyA6vms+NB14CvaTHX7fV5Mf4KEt+o/A0q/b9BVrXOx9AdiY43/Ibk1EULE7EmdBOrJF
-	 u2v7uQc4EQ9qPx5Lru/kJbDe8X41I79wb/xog6rAgWQ9xqyBDbD70Q+R2sNXddB6cGxjU
-	 E8emBVnQCQGeF0SdMbyTiBgxt1hhi9l3/jErv1+Z75OGFpCcXE4i1TLnVpZz0CxWlhg==
+	bh=2n5saJnMTamfqe+Zx3sEQEO/ZuLlQFif01dJGNVL8TA=;
+	b=B1/e9ZTTFcz4JNw8gtiea29VochU7sfZ/j240k+9t93zMVdHsB1klRLmCWFE6WtzwbbJ
+	 pPTP8xhAOCSC9dfnvQzRsSutiWKA63h456lPqkzlFkxLu1oD7oHNl/1vWtLjdEmE2U6tQ
+	 VF/KABHvOQBhnOTtpWUmzt1g0QeG5Dc46kXa5G2pN/V4tbRdtyTEsKLfG4OwkuZOiL2Fk
+	 nMumZpoceoMOMdE2GMYjJi6nGeCw6mG8fU/WAp539mO4/dwVEMawQQ3DyNg8Gt+2lmeBz
+	 DyVua0fNPBwFfuirV4OVC71RicEM1S+fM7roZBO593uMiexTJt5x4YOHcfXdY+5eqbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6QJn8vl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k9WlF7Ow;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8505606A31C;
-	Wed, 18 Nov 2026 20:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C54C60A2617;
+	Wed, 18 Nov 2026 20:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O6QJn8vl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE171F000C8;
-	Wed, 18 Nov 2026 20:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k9WlF7Ow
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F601F000C4;
+	Wed, 18 Nov 2026 20:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032325;
-	bh=5M+vZJkGthcHTrbOY0VH24tRvVrdaDCMMGocrlA6BZQ=;
+	s=korg; t=1795032328;
+	bh=2n5saJnMTamfqe+Zx3sEQEO/ZuLlQFif01dJGNVL8TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6QJn8vlYimhqiYstZ7MyOMpyJbkWwFst+zxy5HlVfqFDi9Ozahc3YKjGg9dp7Ti+
-	 fJo3svDrRSMORWt4sTFjnDT4UrjFwLrlgZNHCEGWuQuV6eNyheR2Y3dA7LNLOKalqO
-	 kLF2YPGoCdZ+DehICPgSZtESV2SAsn/OA1mK0kxE=
+	b=k9WlF7OwA2nSOs7U5V/5c0vpa5nkfv2gysuo/WIzn+KtCd8PYBxVPZ+Tu1rr6QXOv
+	 Grv8xbhx1KKOQtghXQvZN5aNkRSnhenUanOoWfCpROBWSzoJWD8v4N/t6wO7wMlh6s
+	 qPQMYM7HNVWVnEkTt3fH0Dj2sP2hZCcWjbvmoeAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1330/1756] selftests/bpf: Unmount the bpffs that cgroup_hierarchical_stats mounted
-Date: Wed, 18 Nov 2026 15:57:37 +0100
-Message-ID: <20261118150102.340961229@linuxfoundation.org>
+Subject: [PATCH 6.12 1331/1756] ALSA: vmaster: Protect follower lookup and setup
+Date: Wed, 18 Nov 2026 15:57:38 +0100
+Message-ID: <20261118150102.373661226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,45 +68,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit e0645cfd0e1b2ae7b8ad989bef00a30016b16b5f ]
+[ Upstream commit db2db2dec96e24d067cc5692ac5eec35830ee8d9 ]
 
-setup_bpffs() mounts a bpffs on /sys/fs/bpf and records in mounted_bpffs
-whether it did, so that cleanup_bpffs() unmounts only a bpffs that the
-test mounted itself.
+A control selected by snd_ctl_add_followers() must remain alive until
+_snd_ctl_add_follower() has copied it and installed its wrapper. The
+lookup returns a raw pointer without retaining the control, and neither
+the short-lived list lookup lock nor the fast lookup protects later use.
 
-cleanup_bpffs() checks the flag the other way around. As mounting on
-/sys/fs/bpf succeeds even when a bpffs is already there, the test never
-unmounts the bpffs it mounted, and every run leaves another one stacked
-on /sys/fs/bpf of the mount namespace that the test_progs worker keeps
-running later tests in.
+If a kernel client adds followers to a live virtual master while another
+client removes or replaces a published follower, the following order is
+possible, with the card and master kept alive:
 
-Unmount the bpffs only when setup_bpffs() mounted it.
+  Follower setup                      Control removal
+  snd_ctl_add_followers()
+    snd_ctl_find_id_mixer()
+      return follower
+                                      snd_ctl_remove()
+                                        down_write(controls_rwsem)
+                                        __snd_ctl_remove()
+                                          unlink follower
+                                          snd_ctl_free_one(follower)
+                                        up_write(controls_rwsem)
+    _snd_ctl_add_follower()
+      read follower->count
 
-Fixes: 88886309d2e8 ("selftests/bpf: add a selftest for cgroup hierarchical stats collection")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20261009-selftests-bpf-cgroup-stats-bpffs-v2-2-f93a111da992@gmail.com
+Removal completes after lookup returns and before setup reads the
+control. Since setup holds neither controls_rwsem nor a reference, the
+count read and subsequent control copies can access freed memory.
+
+Hold controls_rwsem for writing across the lookup and follower setup.
+This prevents removal or replacement from freeing the selected control
+until wrapper installation is complete. Write ownership also excludes
+control callbacks while setup changes the callback and private fields.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in _snd_ctl_add_follower+0x452/0x520
+    Read of size 4 at addr ffff888107957d50 by task loadmodule/491
+
+    CPU: 3 UID: 0 PID: 491 Comm: loadmodule Tainted: G           O        7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
+    Tainted: [O]=OOT_MODULE
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? _snd_ctl_add_follower+0x452/0x520
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? _snd_ctl_add_follower+0x452/0x520
+     kasan_report+0xe0/0x110
+     ? _snd_ctl_add_follower+0x452/0x520
+     _snd_ctl_add_follower+0x452/0x520
+     snd_ctl_add_followers+0x153/0x2b0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_snd_ctl_add_followers+0x10/0x10
+     ? __might_fault+0x135/0x190
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __might_fault+0x14e/0x190
+     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
+     fixture_write+0x174/0x1f0 [pmbd_vmaster_fixture]
+     ? __pfx_fixture_write+0x10/0x10 [pmbd_vmaster_fixture]
+     ? __pfx___might_resched+0x10/0x10
+     proc_reg_write+0x1fb/0x2d0
+     vfs_write+0x25a/0x1010
+     ? __pfx_proc_reg_write+0x10/0x10
+     ? kmem_cache_free+0x242/0x580
+     ? __pfx_vfs_write+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? putname+0x93/0xe0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_sys_openat2+0x12a/0x1b0
+     ? __pfx_do_sys_openat2+0x10/0x10
+     ksys_write+0x111/0x200
+     ? __pfx_ksys_write+0x10/0x10
+     ? irqentry_exit+0xbe/0x820
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x7f0b835a9687
+    Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    RSP: 002b:00007ffc82ea0360 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+    RAX: ffffffffffffffda RBX: 00007f0b83517780 RCX: 00007f0b835a9687
+    RDX: 0000000000000005 RSI: 0000564f8a21d074 RDI: 0000000000000003
+    RBP: 0000000000000003 R08: 0000000000000000 R09: 0000000000000000
+    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+    R13: 00007ffc82ea04f0 R14: 00007f0b83755000 R15: 0000564f8a21ed78
+     </TASK>
+
+    Allocated by task 485:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_noprof+0x2d7/0x770
+     snd_ctl_new+0x51/0x190
+     snd_ctl_new1+0x13c/0x650
+     0xffffffffc04011b5
+     do_one_initcall+0xf3/0x4e0
+     do_init_module+0x281/0x8e0
+     load_module+0x658c/0x7cc0
+     init_module_from_file+0x15b/0x180
+     idempotent_init_module+0x22d/0x770
+     __x64_sys_finit_module+0xd2/0x160
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 492:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     __snd_ctl_remove+0x2ac/0x3d0
+     snd_ctl_remove+0x46/0x70
+     fixture_write+0x1ae/0x1f0 [pmbd_vmaster_fixture]
+     proc_reg_write+0x1fb/0x2d0
+     vfs_write+0x25a/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff888107957d00
+     which belongs to the cache kmalloc-192 of size 192
+    The buggy address is located 80 bytes inside of
+     freed 192-byte region [ffff888107957d00, ffff888107957dc0)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x107957
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881000423c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000100010 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff888107957c00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff888107957c80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+    >ffff888107957d00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                                     ^
+     ffff888107957d80: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+     ffff888107957e00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    ==================================================================
+
+Fixes: ae07eb9bf23e ("ALSA: vmaster: Add snd_ctl_add_followers() helper")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-6c0b7e841529ddd0b21a-v2-b53dbcd593a7a4bd9582@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/cgroup_hierarchical_stats.c        | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/vmaster.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-index ad19d6d41918a..cc6ab2c263da1 100644
---- a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-+++ b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-@@ -110,7 +110,7 @@ static void cleanup_bpffs(void)
- 	ASSERT_OK(rmdir(BPFFS_ATTACH_COUNTERS), "rmdir "BPFFS_ATTACH_COUNTERS);
+diff --git a/sound/core/vmaster.c b/sound/core/vmaster.c
+index f8d5b96d6e312..a06fdd3ac40f6 100644
+--- a/sound/core/vmaster.c
++++ b/sound/core/vmaster.c
+@@ -288,6 +288,8 @@ EXPORT_SYMBOL(_snd_ctl_add_follower);
+  *
+  * Adds the multiple follower kcontrols with the given names.
+  * Returns 0 for success or a negative error code.
++ *
++ * Note that this function takes card->controls_rwsem lock internally.
+  */
+ int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
+ 			  const char * const *list)
+@@ -295,6 +297,7 @@ int snd_ctl_add_followers(struct snd_card *card, struct snd_kcontrol *master,
+ 	struct snd_kcontrol *follower;
+ 	int err;
  
- 	/* Unmount bpffs, if it wasn't already mounted when we started */
--	if (mounted_bpffs)
-+	if (!mounted_bpffs)
- 		return;
- 
- 	ASSERT_OK(umount(BPFFS_ROOT), "unmount bpffs");
++	guard(rwsem_write)(&card->controls_rwsem);
+ 	for (; *list; list++) {
+ 		follower = snd_ctl_find_id_mixer(card, *list);
+ 		if (follower) {
 -- 
 2.53.0
 
