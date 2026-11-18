@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015135;
-	b=lcaYRCo/znEq8S65n8y9nRvEfnHTEplhlU08C73c6InB+kHPzdWFIRMLkl+J/ls8XQMZ
-	 igTk0vjV4Fr0Z91ZNCXKJfDtErnPH/tZyZWGES7Zld6WvVCiRfb58ue7ykuntzmFgCk+Q
-	 LM7eDWtKmYl0vLG2rd8oX3/inht0sDy+/2mqUNJGPR+xREYke/suVijoudONGWnjtOwYO
-	 I6Vo/9egerlh+kMveZiE1nrOrEml7Vo+zqKG7qn+xMfy5IbWuhKefFDUCYuOI/x46oasj
-	 8FTBbRkiTFujwB/CSXPOeAGa2jW2dhKvo/04T/XEO3DFbbHhWxif7aTKoHgFhnsf2pw==
+	t=1795015138;
+	b=N7rjoT8yF3IZmopOb1Mw5dvKOpAj7CktVF/GKB2NfqekvGeOfSrXnqV8hcUPV8QBKBPQ
+	 gUo4XsjAMgi/CygZmEBcnUrRdpLZrydJSLZv4VKrDijNofgynChJgn4b2P9x4tVQiU+kJ
+	 yE4gBbumwTMP77UPe/dfEpL18rSKWhlRsQDh9YMwBavJrtGkkxxjRfWW4lSqhqpD4TNc7
+	 K97YPN35xQ63aOFUukIj9ITDIPrBcFNuChHeq52VxOvBkWQyk6L3zI7K2YkNbvup3MYsp
+	 UzuMGV+Edn3g1yPOlhGUZeFebxB9tO4W1Y1PFooOTphrH86Sp/GKqKtVFPW/qy6WREg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=6JMED5yHTJFH4Fi0HYoWdq4YwPxJyZen0Rq6wc41aFM=;
-	b=DmSXVNuAYvzEbw0mlXAguc/mwWatQYdf+g9yAp15Bo7ChiWSjhUj2UFuy2k2sycyog3y
-	 Mm09NJ2TaTZoL3uGDc2TOH3LkmRVJS5t/8N2iNEfSIGnBHgFTnVRDyXpSLT35uL4vuMUh
-	 HNuKNeu+Cz5QBs9yIqpncJ4wJUAiCDHaOrguDxUyhzlutqrkghmKwoaujcWSjYkrZQjLX
-	 j/Adx+P3RMl6hw7CbgGW/+zuLxrq9L3ITEysmVB0kDhlvKyRHs/zQKVpxv5uxcNw15vbv
-	 uu2ojKYiLcG87UbktKU/3w9/MuO4UiHE+FeIdYqJzF2LQKGoy2V1az4dthIrrGURGeA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=HxDnBJbFibhXspisEnHu+ValLqjl6M9xJjqyBVrKWXM=;
+	b=muN2lC3mEyldEatyzzJaNVxaeE5PeVuYFwFDTQ9YgXELGsn2ILKLBfAadf7eHR4sw3Ld
+	 Ju7DtG1bUsNTOAYGiv9ft6UpMswGrITIQTtbzyOGcKOHMEAFq8ISclub2korEWjLfr2UL
+	 nwtudzr3REKsy0M9xxRxrvIEOrqFTuTe0C4hc4y4XPk8dWJyq3KJJ5augydGDgfGC/cHv
+	 Sknf/XtRhGwAo9ZUtI41YHxRhDQnL3vjhcuvNuZeL4gLz3PsUsGbqs03S+cylL+nfVS1e
+	 gyK7IIht3FK/YtvV+nV/gl2BHxnHuKQ1gEHBrufq61MkuuAMsCyK1yNM2/N1JqsjgDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eAdpTEVZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCo6NOmD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A579606A320;
-	Wed, 18 Nov 2026 15:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB0A606A32F;
+	Wed, 18 Nov 2026 15:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eAdpTEVZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22201F000C4;
-	Wed, 18 Nov 2026 15:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCo6NOmD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0C61F000C7;
+	Wed, 18 Nov 2026 15:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015135;
-	bh=6JMED5yHTJFH4Fi0HYoWdq4YwPxJyZen0Rq6wc41aFM=;
+	s=korg; t=1795015138;
+	bh=HxDnBJbFibhXspisEnHu+ValLqjl6M9xJjqyBVrKWXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eAdpTEVZkbNQ1YQ6NvfO5AQsDvJxKiOLsTbbTGOuTrCNdaKhU6h3+5B1kqJ/BmgbJ
-	 JlRVT9JoCefW9eevXkkhfTAQBjPrxKkYS2YbxnPcYVllrwujS+yUKZmqvrtxWsQoOy
-	 EOSR0caSNw++flWZPhOJHKIw95C6ZdL0fWC5KlFg=
+	b=aCo6NOmD7AqtNWFc9MRj8844ug+RewUzYD/97lKy/pMQiz71kaFkgMR4kS+Y40lf9
+	 DUtObeqx+s+jvz3RBc2nVLntDPTnRo/+qqfiSwMoXdnlW3zPH6jTmnYTK8LMtqYbKb
+	 p5x07THiRkyiaPTFYP1puDzWnCrnUp48SLIkOfw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claude <noreply@anthropic.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Sonny Jiang <sonny.jiang@amd.com>,
+	Leo Liu <leo.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0064/2651] drm/panfrost: Prevent division by 0
-Date: Wed, 18 Nov 2026 15:21:44 +0100
-Message-ID: <20261118150250.245365342@linuxfoundation.org>
+Subject: [PATCH 7.3 0029/2651] drm/amdgpu: VCN 5_0_2 disable VCN_RRMT
+Date: Wed, 18 Nov 2026 15:21:09 +0100
+Message-ID: <20261118150249.028532393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,46 +63,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrián Larumbe <adrian.larumbe@collabora.com>
+From: Sonny Jiang <sonny.jiang@amd.com>
 
-[ Upstream commit fd4227f03546c323b5b21568f727233e9792d298 ]
+[ Upstream commit 400af1fb41676c25966624b8ce0f5c09aee2a9b3 ]
 
-When updating and debug-printing devfreq stats, in the very unlikely
-off-chance that total device time is less than 100 ns, division by 0
-would happen. Fix the divisor when relevant and rearrange operands.
+When RRMT is enabled, VCN firmware's register access is remapped so
+that VCN instances on different dies (VCN0/1 on MID0, VCN2/3 on MID1)
+require different target addresses for the same logical register.
 
-Reported-by: Claude <noreply@anthropic.com>
-Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/88
-Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20260820-b4-panfrost-fixes-v1-2-1b2c2376f4bc@collabora.com
-Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Remove the RRMT capability detection so the driver always assumes RRMT
+is disabled, using local-die SMN addresses for all instances.
+
+Signed-off-by: Sonny Jiang <sonny.jiang@amd.com>
+Reviewed-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: a56c2536c399 ("drm/amdgpu: cancel idle work in hw_init failure paths for vcn/uvd/vce/jpeg")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_devfreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_devfreq.c b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-index b51c307788110..0fe81d259274e 100644
---- a/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_devfreq.c
-@@ -78,7 +78,7 @@ static int panfrost_devfreq_get_dev_status(struct device *dev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
+index 5291ebbc5c3e2..9f9b3a47f63ba 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_2.c
+@@ -203,8 +203,6 @@ static int vcn_v5_0_2_hw_init(struct amdgpu_ip_block *ip_block)
+ 	int i, r, vcn_inst;
+ 	uint32_t tmp;
  
- 	dev_dbg(pfdev->base.dev, "busy %lu total %lu %lu %% freq %lu MHz\n",
- 		status->busy_time, status->total_time,
--		status->busy_time / (status->total_time / 100),
-+		status->busy_time * 100 / MAX(status->total_time, 1),
- 		status->current_frequency / 1000 / 1000);
- 
- 	return 0;
+-	if (RREG32_SOC15(VCN, GET_INST(VCN, 0), regVCN_RRMT_CNTL) & 0x200)
+-		adev->vcn.caps |= AMDGPU_VCN_CAPS(RRMT_ENABLED);
+ 	for (i = 0; i < adev->vcn.num_vcn_inst; ++i) {
+ 		vcn_inst = GET_INST(VCN, i);
+ 		ring = &adev->vcn.inst[i].ring_enc[0];
 -- 
 2.53.0
 
