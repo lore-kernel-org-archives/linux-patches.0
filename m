@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038472;
-	b=qj8m8Fd3QLtiBuAlMMTj4oZNeb7SH0L+bqm9/gPGYj77VqgwPnxLaBhudF9GaBjJhMOQ
-	 qBlEqgzk6y18wH4/WOhmgLzBriPxF5qoP7rQCs8yDvarekfdIUeR/j5CQwPHGm50BNdlK
-	 1gPm9tpGOXpbkediaoEKIhY6ULALkTck/3fSwzrqhBSd7y+eircZX4DWXLPQJVLJjS5VL
-	 yUaCcMzbyDba+9mmTbOhhdvsWpz1jHZ5KBVnqhs3kZfwNGZEqq9hmGtjTkeP4Rhh5wUcJ
-	 0tIdTGWCspuABQ4F/0GHOpbsTsGuroQd8vjiJV5w4dKVZqLc9JUmCpG0CtXFaQ/21CQ==
+	t=1795038475;
+	b=m7IR5YA/igZR24cj/cNpkoEfihUmPg4YWBxV49yk1jOs7D08qQIumaDsFuz3dfqczwvr
+	 rHJ0Pw6R+k7VmCWq0fysOf65X31EgSE+yqbW0KrhHkbdxfRLrdsUu9AWWlZd7lxCleAzA
+	 0J5NECFRZ2T+f0KI/LAbo3pazURYNNVtCaKSdUSeVWs1JHOynlQVuO9ewIBe4Na6wUzyV
+	 Cij+jo6WGVwvl/shSsBSTNNeBIwGRKAo2oRmCc1TNyCjmDVsquLDD7d9QIPsijQmKlwcN
+	 fA1HWUqxRx1cP3owbLONEulqeuh96Iodco9sBL9Ujg4EQU2PdHTVp5DBgfxSk8VJjrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038472;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038475;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LwK0rcRD7ne1rC+0jzBV7BY02t+SV7QzsQYjqn7Qw2M=;
-	b=YhgWZH6y66YoDb06Q4g+JzQTk0p+m4pEPzRTjfUNKnvtykNDaBqD4YUaK/pd/4HjEgLC
-	 yj8vcRLvSTM35+egO1pYHOGq1WZgmsq0odqHZ7BIAnoxzPk1x+QGnoPSKszknkophyS0v
-	 2/51RQarHBZJTZsxczNanqJTRT4Ypa8yAU6HtMBOMmxIyaYZwY+Asa7kYSOcBRxabFm3p
-	 DDNRpgqyRJX25INA0FxTxKfShVFXTqAqt8vrjGDKebFZu0udA36u89akfT8gh0LZvgGAX
-	 z09vt4nhALIXaSfF8+OJKo2F+8YAy9gsNbp9LKepkbHWhH/1gfKppFUhhPxNc1DUTDA==
+	bh=IHxJz0v6qYwmH+y21xlQHBsR+2TRr/OYKAZ8tK6AtIE=;
+	b=TJR2jlwA03gQuQnB8dapU+YcqMqUpGbQCv/IbiuslUCHNiMmm/12fFtJG+4pshC2RMXX
+	 fJprM/hLTz9Y804oD36DlURTZsYeGT5/en/ZJEgKzsgo6kXmy60YGsMJLzyqS3bYQsfiI
+	 1DIY5lYPmTD9aAk0SxCHWvVHuworgNpnfogVVionVO6mlmLD/KO/K/5iMezOXOT4+cuDE
+	 rVtwK1zrbqHRKhqsIV7aOSmmlVCZ6zI/v9bC1keZ822pLXInvX1kfVdK4wCKeM/hOSUNt
+	 rfTdpAcSaTUQcgT1L4AmKqsfRPGbyuXcxUmzPuXMD/EBxzhLCCo1NJTjaw7Pt5HYjzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yCvh/Dlo";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PSkqVx2c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855D3606A32F;
-	Wed, 18 Nov 2026 21:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49456606A325;
+	Wed, 18 Nov 2026 21:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yCvh/Dlo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2531F000C7;
-	Wed, 18 Nov 2026 21:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PSkqVx2c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEA71F000C4;
+	Wed, 18 Nov 2026 21:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038472;
-	bh=LwK0rcRD7ne1rC+0jzBV7BY02t+SV7QzsQYjqn7Qw2M=;
+	s=korg; t=1795038475;
+	bh=IHxJz0v6qYwmH+y21xlQHBsR+2TRr/OYKAZ8tK6AtIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yCvh/DloOtkyMIVvM1YtZhNds0htIzPsPZd52zVH02a+BurrOZurQg8CvWNvcjsUi
-	 xG8Jnbrc2nvkJ6g0dvcwOr4+QKLltG90Rk3Mt1onwbXGPdnHb/F8kGUE86BPme61P2
-	 +zaqe0HIrdMuSSD7pQiQpME50p+knR+qAY+T+4Dw=
+	b=PSkqVx2cizRJlKkq/u6XWZRKZdMdDYFuSAVnSR+7Du2V8y9BX/i+Jfxs1sak7vdaD
+	 R3I2J/QtTBUSc2MNrHfc0zpgI/ySGHz/ayp8bS8mLaecpD8QIsXOta5O7pGmRl5OO6
+	 3OY8t80IaEC7EDEsg7iqYjIMr5kX5gaYO9oq79/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1738/3318] serial: 8250_exar: Clear interrupts before registering handler
-Date: Wed, 18 Nov 2026 15:39:20 +0100
-Message-ID: <20261118150414.005411760@linuxfoundation.org>
+Subject: [PATCH 6.6 1756/3318] KVM: arm64: vgic: Stop the target vcpu when disabling LPIs
+Date: Wed, 18 Nov 2026 15:39:38 +0100
+Message-ID: <20261118150414.536825055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,48 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 5bc430afeba5d5101765c1f1a4437a90218b00b9 ]
+[ Upstream commit a1b4bd2c2c262b8094c86afb99364d16ac08cb66 ]
 
-While now there is no issue if IRQ is fired before we clearing
-the interrupts as the handler does the same, but strictly speaking
-it might be problematic if IRQ handler wants to do something more.
+Disabling LPIs is pretty nasty, as it directly messes with the AP list
+of the affected CPU, which could be running... This has the potential to
+lead to really bad behaviours, and we should not be doing that.
 
-Move clearing interrupt code to be called before registering the
-IRQ handler.
+Take example on the way the Active state is handled and simply pause the
+the vcpu so that we are sure it is in a quiescent state, and the state be
+safely manipulated.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20240219150627.2101198-4-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 33d337816e00 ("serial: 8250_exar: store the GPIO platform device in struct exar8250")
+Nobody has any expectation of performance for this anyway.
+
+Fixes: 96085b949672d ("KVM: arm/arm64: vgic-v3: Retire pending interrupts on disabling LPIs")
+Co-developed-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261015100539.1011760-7-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: Replaced kvm_pause_vcpu()/kvm_resume_vcpu() with whole-guest kvm_arm_halt_guest()/kvm_arm_resume_guest() calls. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index e79ee33d432c9..95cde2c001118 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -722,14 +722,14 @@ exar_pci_probe(struct pci_dev *pcidev, const struct pci_device_id *ent)
- 	uart.port.irq = pci_irq_vector(pcidev, 0);
- 	uart.port.dev = &pcidev->dev;
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index 33ff9fcfcfb08..1dab5298ae9e7 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -276,9 +276,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
+ 		if (ctlr != GICR_CTLR_ENABLE_LPIS)
+ 			return;
  
-+	/* Clear interrupts */
-+	exar_misc_clear(priv);
-+
- 	rc = devm_request_irq(&pcidev->dev, uart.port.irq, exar_misc_handler,
- 			 IRQF_SHARED, "exar_uart", priv);
- 	if (rc)
- 		return rc;
- 
--	/* Clear interrupts */
--	exar_misc_clear(priv);
--
- 	for (i = 0; i < nr_ports && i < maxnr; i++) {
- 		rc = board->setup(priv, pcidev, &uart, i);
- 		if (rc) {
++		/*
++		 * Yes, disabling LPIs is painful, since it can be done from
++		 * a *remote* vcpu! So let's not take any chance, and make
++		 * sure that the target vCPU has written their LRs back to the
++		 * irq structures, and release any reference they would have.
++		 *
++		 * If it hurts, don't do it.
++		 */
++		kvm_arm_halt_guest(vcpu->kvm);
+ 		vgic_flush_pending_lpis(vcpu);
+ 		vgic_its_invalidate_cache(vcpu->kvm);
+ 		atomic_set_release(&vgic_cpu->ctlr, 0);
++		kvm_arm_resume_guest(vcpu->kvm);
+ 	} else {
+ 		ctlr = atomic_cmpxchg_acquire(&vgic_cpu->ctlr, 0,
+ 					      GICR_CTLR_ENABLE_LPIS);
 -- 
 2.53.0
 
