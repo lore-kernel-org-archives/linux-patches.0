@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016682;
-	b=b6BNo4uME5fJN8MsNCz0LZCf9GwLyIA+TyKqaGQm7tv66Z3/Vv5OC5IrKYKowAmfDSSZ
-	 9z9fGWH3xBfcntb0dlWoOKbewR3Mnjj67oek1izyhvcyXyigimnYQtfypjLm8d5j7VVyC
-	 wEEXRUx3YBFrGKHLy7AKrm4+vXkjerfDDLiEUJSaNqXhLHMb70ZVzv6csbBvtM4W2Y/Np
-	 iAuT8trktqQ1gF2+yQR59WmgJQYZpLKMwMEqIBClkDNKfMNoQtPzX/8KXh1sGXQk/xmjz
-	 xb7x1a3Rp55E4SnEY5dcV82m5q1/iJ2O933J3bMD1ZyskWL91LNN3YXAZc5+aMJwhLQ==
+	t=1795016685;
+	b=O1dlUiBL7Ic1BBYV+6u0nvvbshG5GmpKenIcUk+1lDZNiMWxO04JA4iwL968DyHx2App
+	 g5Z4924zeW1NGHKZrbywtTtr8cGyzV32YrhQBMs0DYl6RDZ7sB4yVrZ4p3Z+z8TEy42gw
+	 vUeCjOxLeTegzF/PeHX88r3lU0HDuskK9mjouPjLauatbZAkkVXv8pR1+mun0xRLqf+X8
+	 JoyHo80lOpUc/TEx9aHhE3bRB8woNjWfe/Z1gxS5KrAcakXtX3kCc/gI5GpFQXIMsZ5k0
+	 lNNGrtBnf21t9ojp04illdx441etzDlH0NK1zKkkqdW4SnmbdcG7hYQQI4VzdrsRY9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016682;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016685;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KY3R+0u0CkQQHA3ydSJ9vsK543WhcBSjKLum/HbakMg=;
-	b=tiNhhmShh5SNHet3QO30jcPwiUaOpc39cYlKMSmZaNa4gBm0Z/Ns/4s6P19lvdawagZ2
-	 kNuP2XWI4a+PV5tS1IFrPXu+YwDR+1x8FwiDnuRgXenjcljNYreofnS9Frwcy1AytrBIw
-	 F5rI6uiBod28dxTuj19cz+VQIkSjZvulrIDr4Wfc+WFA9nDN2BHEz3gwEzW4OHVq05woW
-	 3nRFJYQyBzyiWcaK2dGg4tquKuMQFo7g9GjlyndNA5vy2LDxZOmhrEQ/qYKZExYY1l7+4
-	 2tPyrt3kWGhMWLtMUGWfKjsU7JLxMgHca37A//g5W8fnFWFoaiXFKzOkIwVKhq6U/tg==
+	bh=76sYmCuio3yX3N8noTzZ9NTS0gobDn+7VyGzCcTfGV8=;
+	b=APMX0LpsIZZ+U+qJ1ojyGlL5tDS62IlvMo3z/B3Qgh2pZi/JXDxOQCREdD4NC93ZzOXU
+	 v4NIOpm5hiM6m7o/W5MK40pyIq1tvR/89gKlhFqjI3aRe60GpFQjisf7DL3Dwo1AiT9/s
+	 mI9l/N+PnqFhKOAx+/8e1kyctSYa+BX0Q18ThJ08jyubTKKHVPC66udIgz0Kwnh5+2m2B
+	 PXB4GIHnsBrdl+QwcY6dbDkB7jVYps2F3CHtzQMTMS4HJj63S5kCMg7SP549xf5dqE0lU
+	 6X6qcwh5Wd7NXy8zpG843farJfH8Q3ClerpO9v+OPjT1wClO6+FrFOtEoz6TupfHsaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvDswpwA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ISgG1/Jx";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60878606A320;
-	Wed, 18 Nov 2026 15:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF8A606A31C;
+	Wed, 18 Nov 2026 15:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvDswpwA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8392E1F000C4;
-	Wed, 18 Nov 2026 15:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISgG1/Jx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F26D1F000C4;
+	Wed, 18 Nov 2026 15:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016682;
-	bh=KY3R+0u0CkQQHA3ydSJ9vsK543WhcBSjKLum/HbakMg=;
+	s=korg; t=1795016684;
+	bh=76sYmCuio3yX3N8noTzZ9NTS0gobDn+7VyGzCcTfGV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XvDswpwAIkdzUqGJkuwYvdbUEed9d0/C7fUQ16KOeVfFxLdn7RzmuHIOqV8FHXPiw
-	 hdFdJqCu7v76tVzEWhwosloM71H3DZrE7SFOND0UUn6CABvdpVsMZ0G7cGtucLgO/O
-	 CKrTzRU/aBCjb9xs4SFIVhZVlPmc4ienvgn+srwE=
+	b=ISgG1/JxYLzoDjbDschJCtgBJD37f+dm8pjJapEq2FDOEnWi0bdnirhBWDtlIEAbK
+	 RSMRae1ySLw9P0s453jfO8Um0O8b/3IQmLZHnKj/oesv1E0Ax1ibWtJmkJlEGU43lo
+	 Dvk84JAS9J7iEpmnHXHSGqAmN/w2iFQrJZ3f1z34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0616/2651] thermal/drivers/renesas/rzg3e: Fix race between set_trips() and get_temp()
-Date: Wed, 18 Nov 2026 15:30:56 +0100
-Message-ID: <20261118150309.884918110@linuxfoundation.org>
+Subject: [PATCH 7.3 0617/2651] bpftool: Compute map size of light skeletons at runtime
+Date: Wed, 18 Nov 2026 15:30:57 +0100
+Message-ID: <20261118150309.919756768@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,74 +69,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit acd9bf8f9047b03f023514bceab6a00e037977ca ]
+[ Upstream commit a885470df10b1c0dbc011177c19d3fd3bb8af2e9 ]
 
-Datasheet section 7.11.9.2 "Conversion Start Trigger" states that a
-conversion must only be started while no other conversion is in
-progress:
+bpftool rounds memory-mapped data map sizes to the host page size when
+generating a light skeleton. The generated code therefore uses a 64K
+mapping size when bpftool runs on a 64K-page host, even if the skeleton
+runs on a 4K-page target. The target rejects the oversized map mmap(),
+causing failure of loading the light skeleton.
 
-  "Before making the setting to start conversion by software or an ELC
-   trigger, check that the CONV bit of the sensor status register is 0b."
+When try to run 64K-page selftests on 4K-page VM, the error message does
+not provide the reason about page size.
 
-set_trips() starts a conversion at the end of the function and returns
-without waiting for it to finish. A get_temp() call arriving right after
-that starts a conversion while the CONV bit may still be set, violating
-the requirement above.
+ test_atomics:PASS:atomics skeleton open 0 nsec
+ test_atomics:FAIL:atomics skeleton load unexpected error: -12 (errno 22)
+ #15      atomics:FAIL
 
-Fix this by:
- - polling for CONV == 0 in get_temp() before starting a conversion
- - not starting a conversion at the end of set_trips() anymore
+Pass the original map value size and max entries to the generated code and
+round mmap size to the runtime page size in the user-space light
+skeleton helpers. This keeps generated light skeletons independent of the
+build host page size.
 
-The conversion started at the end of set_trips() was supposed to check
-whether the thresholds have been passed, since the hw cannot raise
-interrupts on its own, but only when the temperature is read. However,
-the thermal core reads the temperature and computes the trip window from
-it just before calling into set_trips(), so reading the temperature again
-straight away is useless.
-
-Fixes: dc67521c20b7 ("thermal/drivers/renesas/rzg3e: Fix add thermal driver for the Renesas RZ/G3E SoC")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260916120003.87018-4-ovidiu.panait.rb@renesas.com
+Fixes: d510296d331a ("bpftool: Use syscall/loader program in "prog load" and "gen skeleton" command.")
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Link: https://lore.kernel.org/bpf/20260915161450.96249-1-leon.hwang@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/renesas/rzg3e_thermal.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ tools/bpf/bpftool/gen.c       | 26 ++++++-------------
+ tools/lib/bpf/skel_internal.h | 48 +++++++++++++++++++++++++----------
+ 2 files changed, 42 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
-index 45f67b2e11310..58fdcc66456a0 100644
---- a/drivers/thermal/renesas/rzg3e_thermal.c
-+++ b/drivers/thermal/renesas/rzg3e_thermal.c
-@@ -225,6 +225,16 @@ static int rzg3e_thermal_get_temp(struct thermal_zone_device *tz, int *temp)
+diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
+index a50540ef6521c..ee680f7c21160 100644
+--- a/tools/bpf/bpftool/gen.c
++++ b/tools/bpf/bpftool/gen.c
+@@ -500,16 +500,6 @@ static void print_hex(const char *data, int data_sz)
+ 	}
+ }
  
- 	guard(mutex)(&priv->lock);
+-static size_t bpf_map_mmap_sz(const struct bpf_map *map)
+-{
+-	long page_sz = sysconf(_SC_PAGE_SIZE);
+-	size_t map_sz;
+-
+-	map_sz = (size_t)roundup(bpf_map__value_size(map), 8) * bpf_map__max_entries(map);
+-	map_sz = roundup(map_sz, page_sz);
+-	return map_sz;
+-}
+-
+ /* Emit type size asserts for all top-level fields in memory-mapped internal maps. */
+ static void codegen_asserts(struct bpf_object *obj, const char *obj_name)
+ {
+@@ -686,8 +676,8 @@ static void codegen_destroy(struct bpf_object *obj, const char *obj_name)
+ 		if (!get_map_ident(map, ident, sizeof(ident)))
+ 			continue;
+ 		if (is_skel_data(map, ident, sizeof(ident)))
+-			printf("\tskel_free_map_data(skel->%1$s, skel->maps.%1$s.initial_value, %2$zu);\n",
+-			       ident, bpf_map_mmap_sz(map));
++			printf("\tskel_free_map_data(skel->%1$s, skel->maps.%1$s.initial_value, %2$u, %3$u);\n",
++			       ident, bpf_map__value_size(map), bpf_map__max_entries(map));
+ 		codegen("\
+ 			\n\
+ 				skel_closenz(skel->maps.%1$s.map_fd);	    \n\
+@@ -771,13 +761,13 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
+ 		\n\
+ 		\";							    \n\
+ 									    \n\
+-				skel->%1$s = (__typeof__(skel->%1$s))skel_prep_map_data((void *)data, %2$zd,\n\
++				skel->%1$s = (__typeof__(skel->%1$s))skel_prep_map_data((void *)data, %2$u, %3$u,\n\
+ 								sizeof(data) - 1);\n\
+ 				if (!skel->%1$s)			    \n\
+ 					goto cleanup;			    \n\
+ 				skel->maps.%1$s.initial_value = (__u64) (long) skel->%1$s;\n\
+ 			}						    \n\
+-			", ident, bpf_map_mmap_sz(map));
++			", ident, bpf_map__value_size(map), bpf_map__max_entries(map));
+ 	}
+ 	codegen("\
+ 		\n\
+@@ -871,14 +861,14 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
+ 		if (bpf_map__type(map) == BPF_MAP_TYPE_PERCPU_ARRAY) {
+ 			codegen("\
+ 		\n\
+-			err = skel_protect_map_data(skel->%1$s, &skel->maps.%1$s.initial_value, %2$zd);\n\
++			err = skel_protect_map_data(skel->%1$s, &skel->maps.%1$s.initial_value, %2$u, %3$u);\n\
+ 			if (err)					    \n\
+ 				return err;				    \n\
+ 		#ifdef __KERNEL__					    \n\
+ 			skel->%1$s = NULL;				    \n\
+ 		#endif							    \n\
+ 			",
+-			ident, bpf_map_mmap_sz(map));
++			ident, bpf_map__value_size(map), bpf_map__max_entries(map));
+ 			continue;
+ 		}
  
-+	/* Make sure a previous conversion is not in progress */
-+	ret = readl_poll_timeout(priv->base + TSU_SSR, status,
-+				 !(status & TSU_SSR_CONV),
-+				 TSU_POLL_DELAY_US,
-+				 USEC_PER_MSEC);
-+	if (ret) {
-+		dev_err(priv->dev, "Timeout waiting for conversion\n");
-+		goto out;
-+	}
+@@ -890,11 +880,11 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
+ 		codegen("\
+ 		\n\
+ 			skel->%1$s = (__typeof__(skel->%1$s))skel_finalize_map_data(&skel->maps.%1$s.initial_value,\n\
+-							%2$zd, %3$s, skel->maps.%1$s.map_fd);\n\
++							%2$u, %3$u, %4$s, skel->maps.%1$s.map_fd);\n\
+ 			if (!skel->%1$s)				    \n\
+ 				return -ENOMEM;				    \n\
+ 			",
+-		       ident, bpf_map_mmap_sz(map), mmap_flags);
++		       ident, bpf_map__value_size(map), bpf_map__max_entries(map), mmap_flags);
+ 	}
+ 	codegen("\
+ 		\n\
+diff --git a/tools/lib/bpf/skel_internal.h b/tools/lib/bpf/skel_internal.h
+index 1f3f332dffbe9..9e16b8e8cb7c9 100644
+--- a/tools/lib/bpf/skel_internal.h
++++ b/tools/lib/bpf/skel_internal.h
+@@ -11,6 +11,7 @@
+ #include <linux/bpf.h>
+ #else
+ #include <unistd.h>
++#include <sys/param.h>
+ #include <sys/syscall.h>
+ #include <sys/mman.h>
+ #include <linux/keyctl.h>
+@@ -127,7 +128,7 @@ static inline void skel_free(const void *p)
+  * either bpf_probe_read_kernel() or bpf_copy_from_user() from initial_value
+  * depending on bpf_loader_ctx->flags.
+  */
+-static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
++static inline void skel_free_map_data(void *p, __u64 addr, size_t val_sz, __u32 max_entries)
+ {
+ 	if (addr != ~0ULL)
+ 		kvfree(p);
+@@ -138,18 +139,20 @@ static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
+ 	 */
+ }
+ 
+-static inline void *skel_prep_map_data(const void *val, size_t mmap_sz, size_t val_sz)
++static inline void *skel_prep_map_data(const void *val, size_t val_sz, __u32 max_entries,
++				       size_t data_sz)
+ {
+ 	void *addr;
+ 
+-	addr = kvmalloc(val_sz, GFP_KERNEL);
++	addr = kvmalloc(data_sz, GFP_KERNEL);
+ 	if (!addr)
+ 		return NULL;
+-	memcpy(addr, val, val_sz);
++	memcpy(addr, val, data_sz);
+ 	return addr;
+ }
+ 
+-static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int flags, int fd)
++static inline void *skel_finalize_map_data(__u64 *init_val, size_t val_sz, __u32 max_entries,
++					   int flags, int fd)
+ {
+ 	struct bpf_map *map;
+ 	void *addr = NULL;
+@@ -172,9 +175,10 @@ static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int
+ 	return addr;
+ }
+ 
+-static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t sz)
++static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t val_sz, __u32 max_entries)
+ {
+-	(void)sz;
++	(void)val_sz;
++	(void)max_entries;
+ 
+ 	kvfree(p);
+ 	*init_val = ~0ULL;
+@@ -193,25 +197,39 @@ static inline void skel_free(void *p)
+ 	free(p);
+ }
+ 
+-static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
++static inline size_t skel_map_mmap_sz(size_t val_sz, __u32 max_entries)
+ {
+-	munmap(p, sz);
++	const long page_sz = sysconf(_SC_PAGE_SIZE);
++	size_t mmap_sz;
 +
- 	/* Clear any previous conversion status */
- 	writel(TSU_SICR_ADCLR, priv->base + TSU_SICR);
++	mmap_sz = roundup(val_sz, 8) * max_entries;
++	mmap_sz = roundup(mmap_sz, page_sz);
++	return mmap_sz;
+ }
  
-@@ -304,9 +314,8 @@ static int rzg3e_thermal_set_trips(struct thermal_zone_device *tz,
- 	/* Enable comparison with "out of range" mode (CMPCOND=0) */
- 	writel(TSU_CMSR_CMPEN, priv->base + TSU_CMSR);
+-static inline void *skel_prep_map_data(const void *val, size_t mmap_sz, size_t val_sz)
++static inline void skel_free_map_data(void *p, __u64 addr, size_t val_sz, __u32 max_entries)
+ {
++	munmap(p, skel_map_mmap_sz(val_sz, max_entries));
++}
++
++static inline void *skel_prep_map_data(const void *val, size_t val_sz, __u32 max_entries,
++				       size_t data_sz)
++{
++	size_t mmap_sz = skel_map_mmap_sz(val_sz, max_entries);
+ 	void *addr;
  
--	/* Unmask compare IRQ and start a conversion to evaluate window */
-+	/* Unmask compare IRQ */
- 	writel(TSU_SIER_CMPIE, priv->base + TSU_SIER);
--	writel(TSU_STRGR_ADST, priv->base + TSU_STRGR);
+ 	addr = mmap(NULL, mmap_sz, PROT_READ | PROT_WRITE,
+ 		    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+ 	if (addr == (void *) -1)
+ 		return NULL;
+-	memcpy(addr, val, val_sz);
++	memcpy(addr, val, data_sz);
+ 	return addr;
+ }
  
- 	pm_runtime_mark_last_busy(priv->dev);
- 	pm_runtime_put_autosuspend(priv->dev);
+-static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int flags, int fd)
++static inline void *skel_finalize_map_data(__u64 *init_val, size_t val_sz, __u32 max_entries,
++					   int flags, int fd)
+ {
++	size_t mmap_sz = skel_map_mmap_sz(val_sz, max_entries);
+ 	void *addr;
+ 
+ 	addr = mmap((void *) (long) *init_val, mmap_sz, flags, MAP_SHARED | MAP_FIXED, fd, 0);
+@@ -220,11 +238,13 @@ static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int
+ 	return addr;
+ }
+ 
+-static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t sz)
++static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t val_sz, __u32 max_entries)
+ {
++	size_t mmap_sz = skel_map_mmap_sz(val_sz, max_entries);
++
+ 	(void)init_val;
+ 
+-	if (mprotect(p, sz, PROT_READ))
++	if (mprotect(p, mmap_sz, PROT_READ))
+ 		return -errno;
+ 	return 0;
+ }
 -- 
 2.53.0
 
