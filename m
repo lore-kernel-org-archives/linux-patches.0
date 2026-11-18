@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051081;
-	b=ifr43vOOWz4bD0q3qc96fIMFK9OKYnk4n5KqtxQDHGxiTbwhpfXZVoUkJ9y4Z64GjW+3
-	 PU2J/W/rkXtcioJDipmkXnyqdo54bs1yEVZtg2WHVYMmqg5tZoYI4LvSAyTEZO8OyTRyL
-	 KeiEargyw/ywDWlh9ZT68AX/mTWVJTBz7UdD7p3JRM1a384NhQyzCNaI4bqQCK/IdH4aU
-	 PWORO34ufJfvR2JmaG63BpM8zUYvIqxn8ZhL+9hnGKyJEd8c/YLRuEH4hdvbDDvGpGh2K
-	 HUxLj0TTBm4ZM8Xbj2h/Y0aXzZl8syYIuRBvnXLmWHf+Vbxa4zc8lzd9yERO1SJMaRg==
+	t=1795051084;
+	b=vnL7BHhXmJfZ2jzyPo99zboQElJhQ/P9KC4jHt2brRYe7nGNcGZZoQfj0yYGCUlCK3QB
+	 voeBbeST385ftkmh4tel+d/ovDyzbacWF3x8Z8+ODd2ZeA6uRknKyANmLD+JEO43CkzAr
+	 4WY0/Q+J7NEBEgW0UMto757uXLx72IlMxXT9Sg/BuyU3du8xXIFiEtpTbFLJJl9Jwndnf
+	 yuKofm8JqowBjCYxCZ3hV+JfD1/SfFjqxPar3Dr+BPhK2XCdyhccMfZmoWuH1nwWP64qs
+	 zFqg5Xn2z9JMBOkTtaExT4rsLYXLKuTcdRhFWBOQtdbAJVl2uORqwu4vvDw/ZtZP5+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051081;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ka0dGFC4RCtiwLRiTy8Ymt8PVIPAwq8lF0qYBm82Nek=;
-	b=wqWicb68y9UnTNWkb9D0L+1eMJIFAK7Zh8nE+rj+YDN6d8hrxtWTfxlA8WQesG7FzCfO
-	 AJ3bwFHN7594KSQhNewl2Gc+L2t8JUY8MMFWxztUe/uk/A/XWTicg/p4u2fOAsAxVXwE0
-	 e9DJlKsttdCwsM4QMbQxro7hZjIxOHv0JDsJdBpBWGJIVlrIhBf1Joxc3kDii3PFdwQ8j
-	 0doU9vy3aLVm5VKoKcAEclLax0LYoTRyDbFTu2NtXl1AWnMrWzFgT/3jum7YKiKF/3Ifv
-	 xhqf2Ry1KXg8ZmNATgC1CtvzwRS9jd0HcLtwpuaq9/yk/KJ92Tc71s68XvyzsXw3HSQ==
+	bh=dto12QhTsx+Z066wxQF8lovj43Rha4WhGwhcIHYhUkg=;
+	b=5TK0eq/kZ+eE3ZfYLWCYi7pIwZXt4/Hn9yUwmLteRbUYJDyDbafWMhkqwKew0kXAChrP
+	 FAOuY5va1PpMtXhjR9E95a5qrSTz65BSZ06Ilr8k5l7jJMiDCD+kFnTzeJakqQO9gSQHW
+	 rAxClR2oIe/btKVZ0BR/XVnIRhj0qu8pJCNQgaA8SInn3RPLVVr5CSViSvOyGF9qDXEBM
+	 3jkYrVU4XCkelgfuC6lHZe0X7nppoqwajzh8TemhzQ8A50QXqeqtN6xUvyzYtlLSUGep8
+	 TX57pwgXi2RuAACmiHilCSh9r4+3AdcuTMd0hgUf/ya1XxTKmWjOZwZIZ6VOBvglRAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrzacMVK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ikuAczNk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F11A606A31C;
-	Thu, 19 Nov 2026 01:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38688606A320;
+	Thu, 19 Nov 2026 01:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vrzacMVK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B455B1F000C4;
-	Thu, 19 Nov 2026 01:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ikuAczNk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884EC1F000C5;
+	Thu, 19 Nov 2026 01:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051081;
-	bh=Ka0dGFC4RCtiwLRiTy8Ymt8PVIPAwq8lF0qYBm82Nek=;
+	s=korg; t=1795051084;
+	bh=dto12QhTsx+Z066wxQF8lovj43Rha4WhGwhcIHYhUkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrzacMVKGwi0TxZ0dUq+AeKfDz9+2HLnhYZv9rxog0xArt2ekFm3430HyUZhrE0q3
-	 llEcvaEABIh+6Y1bMCqSWegqIBSeTDph+LrHygdjFNsHE1jx/YmTTtxnqR3a0hTNzb
-	 3ShwiUDu8jHoZ6c2F2Lt8N3EvT13UofEsxyea8Ds=
+	b=ikuAczNkayDNZP8I8MWT4pjc0O+FMU7uYhwi8M1CzSiyAgTUAozbS0hZPTm5C81Rh
+	 A8pK1KZlDwdFItEVxT01Y3fpK0rb/2QFZgAp+VyNbjXcY3U4YxmzV3g7SC+XMMEeN6
+	 7dsWYCpLSUSCmsuH/Z27FAKftqPBZPAuNKuA4Qj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0080/2214] media: ivtv: stop VBI start-code scan before short tail
-Date: Wed, 18 Nov 2026 15:29:16 +0100
-Message-ID: <20261118150013.203596974@linuxfoundation.org>
+Subject: [PATCH 5.15 0081/2214] media: cx18: stop VBI start-code scan before short tail
+Date: Wed, 18 Nov 2026 15:29:17 +0100
+Message-ID: <20261118150013.244189856@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,7 +70,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f373cf17fb8e7a530bc6e1e36fc41cb5dab2cdaa ]
+[ Upstream commit bf533acaaa7dee21d49bcaabf8e813ea36bddcd8 ]
 
 compress_sliced_buf() scans one byte at a time while testing a four-byte
 VBI start code.  The final iterations can read beyond the remaining
@@ -82,22 +82,22 @@ Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ivtv/ivtv-vbi.c | 2 +-
+ drivers/media/pci/cx18/cx18-vbi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/ivtv/ivtv-vbi.c b/drivers/media/pci/ivtv/ivtv-vbi.c
-index 80478b026d752..279a4d6bece19 100644
---- a/drivers/media/pci/ivtv/ivtv-vbi.c
-+++ b/drivers/media/pci/ivtv/ivtv-vbi.c
-@@ -330,7 +330,7 @@ static u32 compress_sliced_buf(struct ivtv *itv, u32 line, u8 *buf, u32 size, u8
- 	unsigned lines = 0;
+diff --git a/drivers/media/pci/cx18/cx18-vbi.c b/drivers/media/pci/cx18/cx18-vbi.c
+index c7cce38dd7547..38b2cfd2372c0 100644
+--- a/drivers/media/pci/cx18/cx18-vbi.c
++++ b/drivers/media/pci/cx18/cx18-vbi.c
+@@ -135,7 +135,7 @@ static u32 compress_sliced_buf(struct cx18 *cx, u8 *buf, u32 size,
+ 				    : VBI_HBLANK_SAMPLES_50HZ;
  
  	/* find the first valid line */
--	for (i = 0; i < size; i++, buf++) {
-+	for (i = 0; i + 3 < size; i++, buf++) {
- 		if (buf[0] == 0xff && !buf[1] && !buf[2] && buf[3] == sav)
- 			break;
- 	}
+-	for (i = hdr_size, buf += hdr_size; i < size; i++, buf++) {
++	for (i = hdr_size, buf += hdr_size; i + 3 < size; i++, buf++) {
+ 		if (buf[0] == 0xff && !buf[1] && !buf[2] &&
+ 		    (buf[3] == sliced_vbi_eav_rp[0] ||
+ 		     buf[3] == sliced_vbi_eav_rp[1]))
 -- 
 2.53.0
 
