@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024941;
-	b=Z/vReK0Ev3mtzS5vqP5fyCF/Vvo8tcMD8YPa8afM/cHjYro//hJ6IewrpaZ5rfB7MYzO
-	 wQL1wTDZA62wEfmHmMIfVTeroN3a/qHxpkNPW4hdR/iDvOMhumwkQUjBLUuPkuk2vhMa8
-	 E0LzWKSrOiAn9G7vFmNLM1HXJL2UA6vAIDaTEe2BuwniV3WQSk3RmfeAnOzqF3lOe736T
-	 cIpAkx6xovmLZ1oLmOgrw9rVg07A+Svb59PYcd045paABj6dUE3leEqNq36tBON3vIRbX
-	 2Or7AEvifByL9ZmFLO6PaOzABuKsHegYG+kBgCtPjanCIBGRN4F6J0JhV06SwOVVj0g==
+	t=1795024944;
+	b=BYjMgOV9RLdIsIydijMzOvODheOa27mwb402iXKLZgQI1dF4fkRpJC/A86L2EjQVDl5Y
+	 7uhv4Gj5zhkFMIw9tfvlr3Jn+4fxMW5YzoAtzspiTFFrNpN8uHHX1zhphLvG0fmTA7bNX
+	 U2h38EU8ceznEFa2iIk347sGOLuaY+NjFB6owm2+xtXxwwtgv0UzDt60g6GkYm3Dup9PU
+	 bVlc7Hqk9fFqoEg2UpvWoFbZ5Nd0cAJgXtpRx/MuUCxN/t5vlqi5vzhuvarz7fS+qljOp
+	 sbEiIuRjSkWeLg3rsEThQVpwhi6hUpF3S2j4+X14GpQOtFn/ALd6Hk7DUa7nFWEuzPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FH1ka0fbdVdZHj89zSPcsUP+k73CC9KmKZ2zf4Cu3hw=;
-	b=4LRPXaNWytmsECph8SDQQ6qSfJd0A6Xd1yZob6+qlzrj/q0PRb0NdVCJNx2HJh0qLXn/
-	 FYGlWdxQhRNeDEOkl16uSkpnJgjA86uug8Q1gZIabeibOVN7JQjblxtUrZ3DTR21dSpgt
-	 M/WEcJm59Mu8gA5yV76j1vQF7cmHyTk6aDuZHq+adRkHm/TK8lEHId8qFtSxE2Cj2RT85
-	 A0Am+mZTe5GQPsRuyaDPkDfGrrkxrqvl94zO0iS+2AN9b+HUPgNRZ18xEll4AsqcWsbS6
-	 ZCxtBkh7IhJKNUl0muBlLZrsn2snN8LEivCSO2Sf6anBr+V8itz4OPARFwXnA1Niblg==
+	bh=iozf+8q0TmmqtzvpECEWXYxKhGsGAvvhVAk98A/aSEg=;
+	b=fpzKqs9KTQWFoVbnUA5vx1fWig0LWkJbB2Ez2FeHqxdEdmpdeg9Qn+UX336Akbd/Ndmq
+	 Qck8OPLs1uW5vhgjC3SiWI+ASuws/HRlNH1oU2ZDCZixd4MpfrLUdYmNXCi6dcrvp0bWB
+	 4vN9aJNlJLxGgwgewGbHI++IQduklcUz2GdtNiRJDvlnLIl1CiYKMm/MUHMd04KLZWIIm
+	 Xnu685CjqQ7G0/bE7Ola9he7C0+3qaInWUEI8+YvMfkIf1z2eFg8rsSO4BwCy4iLJDu7K
+	 KmdpJaShjbuailkOGdS07IPH/TSTsPBtarA+zMYyjzghdgoI6eQZqVbLhJuFl/W/RKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmGSPY49;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGIZxjLg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DC9606A31C;
-	Wed, 18 Nov 2026 18:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21191606A31C;
+	Wed, 18 Nov 2026 18:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xmGSPY49
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A427D1F000C4;
-	Wed, 18 Nov 2026 18:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGIZxjLg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7790E1F000C4;
+	Wed, 18 Nov 2026 18:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024941;
-	bh=FH1ka0fbdVdZHj89zSPcsUP+k73CC9KmKZ2zf4Cu3hw=;
+	s=korg; t=1795024944;
+	bh=iozf+8q0TmmqtzvpECEWXYxKhGsGAvvhVAk98A/aSEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmGSPY49AKoI98zZRhTe28uUzwDKQsuDwiNeeBqyOFlmSt6EbUxQs92le92c8Kq0p
-	 jVKq+8v5GyFU0KufpxVHtOfENcTdOfTDYzSJL7SehPt7LdWUBN5zz0S7T5d50CBorv
-	 xLYraP6HjL+JIMROKvO7YUrvaDAt6/OcmYabv+Lo=
+	b=IGIZxjLg4W8zVM+U1h1YV3BwOC30VGtIrj08I3x7LwPTCQ6K2qo/4XH3jVw22rv8+
+	 /Q0P8LG20aX+GOXFkQafbId11Wsf1/8O+WrjS70UF0JD5aPUKvm8BvaY8h54Hattp5
+	 gnvrwjf2pqVMDuBKzUzMfAK8O3Bu3hknYmL8tQRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Michal Pluta <michalpl2003@gmail.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0902/2151] f2fs: quota: fix unused-label warning
-Date: Wed, 18 Nov 2026 15:43:57 +0100
-Message-ID: <20261118150155.151052505@linuxfoundation.org>
+Subject: [PATCH 6.18 0903/2151] perf test demangle: Fail when demangling fails
+Date: Wed, 18 Nov 2026 15:43:58 +0100
+Message-ID: <20261118150155.221801197@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,42 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Michal Pluta <michalpl2003@gmail.com>
 
-[ Upstream commit 4faeea625cf730bb20f609f061ff81c9b6852931 ]
+[ Upstream commit 0568396eac41b56874d6ac0c552df91262e2ccf6 ]
 
-The newly added label causes a warning when QUOTA is turned off:
+The Rust and Java demangle tests only log a NULL result from
+dso__demangle_sym() and carry on, so a symbol that fails to demangle
+doesn't fail the test.  Set TEST_FAIL.
 
-fs/f2fs/super.c: In function '__f2fs_remount':
-fs/f2fs/super.c:3142:1: error: label 'restore_holder' defined but not used [-Werror=unused-label]
- 3142 | restore_holder:
-      | ^~~~~~~~~~~~~~
-
-Fixes: 3f140a60c92a ("f2fs: quota: fix stale lock holder on remount failure")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 07f2b1287c970e07 ("perf test demangle-java: Don't segv if demangling fails")
+Fixes: bdf05ccd18414274 ("perf test demangle-rust: Add Rust demangling test")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: LLM
+Signed-off-by: Michal Pluta <michalpl2003@gmail.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/tests/demangle-java-test.c    | 1 +
+ tools/perf/tests/demangle-rust-v0-test.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index e0257f6eff868..19da33bf838a0 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2992,7 +2992,9 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
- 	sbi->mount_opt = org_mount_opt;
- 	sb->s_flags = old_sb_flags;
- 
-+#ifdef CONFIG_QUOTA
- restore_holder:
-+#endif
- 	sbi->umount_lock_holder = NULL;
- 	return err;
- }
+diff --git a/tools/perf/tests/demangle-java-test.c b/tools/perf/tests/demangle-java-test.c
+index 0fb3e5a4a0ed2..a8eb0f4effad6 100644
+--- a/tools/perf/tests/demangle-java-test.c
++++ b/tools/perf/tests/demangle-java-test.c
+@@ -33,6 +33,7 @@ static int test__demangle_java(struct test_suite *test __maybe_unused, int subte
+ 		if (!buf) {
+ 			pr_debug("FAILED to demangle: \"%s\"\n \"%s\"\n", test_cases[i].mangled,
+ 				 test_cases[i].demangled);
++			ret = TEST_FAIL;
+ 			continue;
+ 		}
+ 		if (strcmp(buf, test_cases[i].demangled)) {
+diff --git a/tools/perf/tests/demangle-rust-v0-test.c b/tools/perf/tests/demangle-rust-v0-test.c
+index 904f966c65d78..ee4ddb61174b3 100644
+--- a/tools/perf/tests/demangle-rust-v0-test.c
++++ b/tools/perf/tests/demangle-rust-v0-test.c
+@@ -58,6 +58,7 @@ static int test__demangle_rust(struct test_suite *test __maybe_unused, int subte
+ 		if (!buf) {
+ 			pr_debug("FAILED to demangle: \"%s\"\n \"%s\"\n", test_cases[i].mangled,
+ 				 test_cases[i].demangled);
++			ret = TEST_FAIL;
+ 			continue;
+ 		}
+ 		if (strcmp(buf, test_cases[i].demangled)) {
 -- 
 2.53.0
 
