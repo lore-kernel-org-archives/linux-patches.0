@@ -1,48 +1,49 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062141;
-	b=z2R+lWoiLvO4qQmgiuf0cUauTroiC0LExExfIuMFfvXJw2kLziPg5bQ7S/bZg0d/0L3D
-	 iK0GZUw66VL00Saj4zU/qUzC8eFoDxUNx7dKCeBsRFfCge/eBofsnTGY4g9XqcCi32qpb
-	 lccpgBmIflJ8+O9vQd5neZ7AyhpNJZ2NHj4VIQ3Yfel/obeMyXj21DquOVcYWeQiduK7F
-	 SXybgDfld8Ao44iUvX17AZGC+ob+z2J5CprJPkyzzRoWIzGSOKqyrDBcMCYXnjsDHeEtP
-	 /SK7vazcvKUOsGoG9av7t5qkD5W7h+hOyiGApEa7jOJMiuOuQ3/6QXeRPCgaMqf+x7w==
+	t=1795062144;
+	b=jYcy9CmnewxCIjwru122jBAD3h//xlLX9QKEEm3Ze0zn7wa7MPRsgDvwQsKt4lqJxlRr
+	 mceKfLQvqm1P8uQDOxDhLc2fEqPP0EtRKGTbP0py+OOlL3M0zHUWn20kHEpzTLqYiKY5s
+	 rYMBRjf00AhYrx4TTNGfyvLcBTZ5bem/qkLwnaHqheFR+Uwg3Qvm1FJYrmk2/l0lB76Zy
+	 pipdWax7e1pf/YirC5vJ/VxOEzjAWL1AkCb1RWBzZf4YI99b2BoNynv+Gcg/bPXRYaNg5
+	 bdrTJ+2oUDmi2LnR7il43rd/1HmmHliVLI3MCbNiZZLkqhOEQ2Z/ykHQlVG9B9dJB7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062144;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ccDlipBp4qTD3KZsuNeOsmiLZc9SetFBGAax7coJjaw=;
-	b=W4K4onm1bOjp28BOSJkwjVBNyhMXA8aq7C9e6HHlvKMBsYVZfmayfoDBCKzL8AnZN8FF
-	 DfcrjDnXH55Fs3XnjcjMI0DY6VKFSZCsPSeGn5mUccg3+kBCG5KBUtCNOQYbX4H6d1Q6p
-	 bmsDOJCw5ftjf2QjIhq96wNNiFa/w6FjQtF4AfmRT5PEZjGJF6DBMBq2NVvAtsuCaY+is
-	 uZzOVeOt7XFcLAmrP1V80wakR9a7M4bv+DqDzS/7pgQM1cpwk/wXm4lQ7HfNTW7HM/WVV
-	 1N9bfLBbU9VwnIMgzpV7/8nU90+yOOKKFo5zaiTBN1DQxKn0kmP9fXMDKm2+bl+Sy+Q==
+	bh=RnCMIDVbgaABWQtxWmb3xMD+jCVmvqw6BEr/1HB9qk8=;
+	b=OBcWAusW+VqeOOmOZko3xSLqn0D6+/JIBF8LjaPquo8qE2YJN0fH0M7S7tO9v2V3deJl
+	 LnCGft5b3sbTHfW9NC6bwCpBW6rBFKgakWJ8n2hQ9wk0kMJyVR5wVedrQPETZG9hwG1Jg
+	 h19ldGltOCnK/lT+2xLEniwnOEN0B95tgNPbyAjjY6Xw1bfYNXV2ZOtXYP5cZ2lM+QNJ0
+	 Wsneb7PmTRk+epboPP/S0WNFyfzumKdBfCcPNr2b3hpiTYbWHpH4s9+enjFyiuqOp9f69
+	 5I/09Oyj7luC+YTrvypTGT2Nz2l3PsGqk3tezoTBKa/9Ml7Eqp95HqwpHelbXm2T9wA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViWcyLX5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXOH6G3R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2119C606A325;
-	Thu, 19 Nov 2026 04:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F0D606A320;
+	Thu, 19 Nov 2026 04:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViWcyLX5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1541F000C4;
-	Thu, 19 Nov 2026 04:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BXOH6G3R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493911F000C4;
+	Thu, 19 Nov 2026 04:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062141;
-	bh=ccDlipBp4qTD3KZsuNeOsmiLZc9SetFBGAax7coJjaw=;
+	s=korg; t=1795062143;
+	bh=RnCMIDVbgaABWQtxWmb3xMD+jCVmvqw6BEr/1HB9qk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ViWcyLX5FKQqn3wfsyOve9AG4KeyB5UzU+rb0HifrN8lvt7qKIL39130s71nvsLlw
-	 bHbEu5pDmHeGYt//XaftityUdMeHCXWg3zBmC8glnGky/u4ZphYpyrts+Jhw6a2maS
-	 1liBAmOGFQNgJdVNsupoHVaf9MD5x+z8xUlnltaI=
+	b=BXOH6G3RfKy6q+bhpeSRRybauVQeNl4w4p+oxekAd/uSEIJZWQOarD48DMXuv+N2z
+	 tC8rkCmrYZVTgq+CHlxyw6ltzIjV0OiQosf5KNO6qMT1drA5JB1Sz99a7Y2mRl6q6l
+	 cEXlW1ftYhHooT9OmWyzI05dkwkvKRGcnAxaVPTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kashyap Desai <kashyap.desai@broadcom.com>,
 	Qian Cai <cai@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sumit Saxena <sumit.saxena@broadcom.com>,
 	John Garry <john.garry@huawei.com>,
 	Bart Van Assche <bvanassche@acm.org>,
@@ -50,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1803/1848] blk-mq: add new API of blk_mq_hctx_set_fq_lock_class
-Date: Wed, 18 Nov 2026 16:04:01 +0100
-Message-ID: <20261118150034.787353009@linuxfoundation.org>
+Subject: [PATCH 5.10 1804/1848] nvme-loop: use blk_mq_hctx_set_fq_lock_class to set loops lock class
+Date: Wed, 18 Nov 2026 16:04:02 +0100
+Message-ID: <20261118150034.826127681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -76,22 +77,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit fb01a2932e81a1fb2273f87ff92dc8172b8880ee ]
+[ Upstream commit 88c9979334aa5ff8c814ddf578f3113ed6c5ce8e ]
 
-flush_end_io() may be called recursively from some driver, such as
-nvme-loop, so lockdep may complain 'possible recursive locking'.
-Commit b3c6a5997541("block: Fix a lockdep complaint triggered by
-request queue flushing") tried to address this issue by assigning
-dynamically allocated per-flush-queue lock class. This solution
-adds synchronize_rcu() for each hctx's release handler, and causes
-horrible SCSI MQ probe delay(more than half an hour on megaraid sas).
+Set nvme-loop's lock class via blk_mq_hctx_set_fq_lock_class for avoiding
+lockdep possible recursive locking, then we can remove the dynamically
+allocated lock class for each flush queue, finally we can avoid horrible
+SCSI probe delay.
 
-Add new API of blk_mq_hctx_set_fq_lock_class() for these drivers, so
-we just need to use driver specific lock class for avoiding the
-lockdep warning of 'possible recursive locking'.
+This way may not address situation in which one nvme-loop is backed on
+another nvme-loop. However, in reality, people seldom uses this way
+for test. Even though someone played in this way, it is just one
+recursive locking false positive, no real deadlock issue.
 
 Tested-by: Kashyap Desai <kashyap.desai@broadcom.com>
 Reported-by: Qian Cai <cai@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Cc: Sumit Saxena <sumit.saxena@broadcom.com>
 Cc: John Garry <john.garry@huawei.com>
 Cc: Kashyap Desai <kashyap.desai@broadcom.com>
@@ -103,63 +103,37 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 64e21d782020 ("nvme-loop: don't BUG() if a scan runs beside a reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-flush.c      | 25 +++++++++++++++++++++++++
- include/linux/blk-mq.h |  3 +++
- 2 files changed, 28 insertions(+)
+ drivers/nvme/target/loop.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/block/blk-flush.c b/block/blk-flush.c
-index 33b487b5cbf78..a82c82259112b 100644
---- a/block/blk-flush.c
-+++ b/block/blk-flush.c
-@@ -509,3 +509,28 @@ void blk_free_flush_queue(struct blk_flush_queue *fq)
- 	kfree(fq->flush_rq);
- 	kfree(fq);
+diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
+index ff3258c3eb8b6..e17710e405a31 100644
+--- a/drivers/nvme/target/loop.c
++++ b/drivers/nvme/target/loop.c
+@@ -211,6 +211,8 @@ static int nvme_loop_init_request(struct blk_mq_tag_set *set,
+ 			(set == &ctrl->tag_set) ? hctx_idx + 1 : 0);
  }
+ 
++static struct lock_class_key loop_hctx_fq_lock_key;
 +
-+/*
-+ * Allow driver to set its own lock class to fq->mq_flush_lock for
-+ * avoiding lockdep complaint.
-+ *
-+ * flush_end_io() may be called recursively from some driver, such as
-+ * nvme-loop, so lockdep may complain 'possible recursive locking' because
-+ * all 'struct blk_flush_queue' instance share same mq_flush_lock lock class
-+ * key. We need to assign different lock class for these driver's
-+ * fq->mq_flush_lock for avoiding the lockdep warning.
-+ *
-+ * Use dynamically allocated lock class key for each 'blk_flush_queue'
-+ * instance is over-kill, and more worse it introduces horrible boot delay
-+ * issue because synchronize_rcu() is implied in lockdep_unregister_key which
-+ * is called for each hctx release. SCSI probing may synchronously create and
-+ * destroy lots of MQ request_queues for non-existent devices, and some robot
-+ * test kernel always enable lockdep option. It is observed that more than half
-+ * an hour is taken during SCSI MQ probe with per-fq lock class.
-+ */
-+void blk_mq_hctx_set_fq_lock_class(struct blk_mq_hw_ctx *hctx,
-+		struct lock_class_key *key)
-+{
-+	lockdep_set_class(&hctx->fq->mq_flush_lock, key);
-+}
-+EXPORT_SYMBOL_GPL(blk_mq_hctx_set_fq_lock_class);
-diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-index f8ea27423d1d8..92bbc9a72355a 100644
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -5,6 +5,7 @@
- #include <linux/blkdev.h>
- #include <linux/sbitmap.h>
- #include <linux/srcu.h>
-+#include <linux/lockdep.h>
+ static int nvme_loop_init_hctx(struct blk_mq_hw_ctx *hctx, void *data,
+ 		unsigned int hctx_idx)
+ {
+@@ -219,6 +221,14 @@ static int nvme_loop_init_hctx(struct blk_mq_hw_ctx *hctx, void *data,
  
- struct blk_mq_tags;
- struct blk_flush_queue;
-@@ -594,5 +595,7 @@ static inline void blk_mq_cleanup_rq(struct request *rq)
+ 	BUG_ON(hctx_idx >= ctrl->ctrl.queue_count);
+ 
++	/*
++	 * flush_end_io() can be called recursively for us, so use our own
++	 * lock class key for avoiding lockdep possible recursive locking,
++	 * then we can remove the dynamically allocated lock class for each
++	 * flush queue, that way may cause horrible boot delay.
++	 */
++	blk_mq_hctx_set_fq_lock_class(hctx, &loop_hctx_fq_lock_key);
++
+ 	hctx->driver_data = queue;
+ 	return 0;
  }
- 
- blk_qc_t blk_mq_submit_bio(struct bio *bio);
-+void blk_mq_hctx_set_fq_lock_class(struct blk_mq_hw_ctx *hctx,
-+		struct lock_class_key *key);
- 
- #endif
 -- 
 2.53.0
 
