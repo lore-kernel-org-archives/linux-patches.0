@@ -1,54 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057087;
-	b=sEy+eymgYu0esOjm4Uy0UTpikjfTllHfUMHnoSu2U5BAySpBe0sTM6E/NnrsxWbkiu6W
-	 x4r7oYiakYAkrGEHVemODpWQrnykHgOMNJ9HDQ+b3FHTsY27I54LNrSIC/4bfQALPUwOj
-	 +Xg+OsjwWYXr3OHmwHVdtwz9mrY9R6+eri9zT3x7P0m6g62ayJ4+WD2x3Et/7p+/9omlW
-	 Zr9z3yIFBp0MUI/x0QSZtDPuyH2T9FNR3NkCsFGCcNzrCPGn7MNKzEjr7FTeDn45jMgfJ
-	 w+BY5oFfSeCFE0GC1RHFddf14m6z9ixlSvqxUkpclTtvVfU4Pm+i4zBTSJkhR/b9klw==
+	t=1795057089;
+	b=mXHMtCtd5QYwuI0dDuPEd/D6Ac+MCDawkMN18ENK68ufx/tSm3t4Dp3zuJB8caJC8CKD
+	 MD30qnAtpbTP601X4frWBECSLIbrFZDo74P5/xbVqyDWnMWwEXCgwWiOY9J5ThVIsdyvL
+	 QsbR0UQqfKrHyY5eF98jWePd9VbgXLzm8i+y3eZzfpRwMms2UMCNfCJgloCB2y0kICXUo
+	 Q9v8r6xGKe/c2eJ9HywRMR+7ikQGQ5fbyI3M9F09KfqzEgZUNofhFyN2ntD/6/0AMHoGD
+	 jHQ8CJ9hyRfYHztCCml+P5TAZorW6Ny1BMPqo49xQBDa3VCaiJIELgtItxa/YWLsmDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/W/Hkafc6Q+ETrmYtQfJs/qWIJGNjZW50QKH2GqedXg=;
-	b=KlZBW6TIkkXa6rHUu7+BwuowuBEPPA+SNDit4IDc+L6MwVXx9aVtkNSMrLYifxW0vuc/
-	 QDlUxrNz6ZsaeWc/Ht2HmmxZ+5Rhe4hQoGjX8z2Hpz3t+4Hs4uXqwvDNuu8Z8S6kjp4fm
-	 IRp4qB4+7usZabvYhGdYl3iLon3BssnaNbhsE6sWEES0qqoiL8r4DuwtkcusW6VXpNFEh
-	 ixC1AuYVQHLnjwrJEX5H2v7u5bb8AnfR+FtNt9eQTYsxibBR0qQSQNMzNdeEN2pHsXJ7P
-	 lNYkK2mpianIJPM0XdMSUmu47wn9++Td9nTQPYaZhYYn6Y+60ATtylu8qlKuFE4U8zA==
+	bh=ApjKfpUtg+D8XtQ8LUKb0NdPNM5QeYh9upX9owTX5l0=;
+	b=LRbBZHXWNNYIG7AD2El5X4wwU1eGO8xVfRwqJU+/P1A3vDCXAXAatTAUKqMQFPNhBVdZ
+	 ZVBm+PDbT/y8ZoXkqtjuv43kNAOLA/qcb+ZlqhRubkK+SPbcsU8N9DCZFredC+1mGAVuO
+	 Vqjaf6TfoPJ6dNecsJuGofugrQbZnCuoN9J+0DgqMj9sykkNeUgblXRW2I9skh+2Kuu1v
+	 ZFnVpqzTlLB4OBc3mhWP0/j3h7jROu2LlzR8+7e24eZwKKkB+ME15ukLBK/kIZoG3RYqp
+	 yGIKB6ufI9gr8XMcr4RFUsLARPL55KvSWihOL69ak4iU3a+ozRQa1Fu0s2+zYDGcWmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FegiPqMw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrMTmW2J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE06606A331;
-	Thu, 19 Nov 2026 02:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95E9606A32F;
+	Thu, 19 Nov 2026 02:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FegiPqMw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFA21F000C8;
-	Thu, 19 Nov 2026 02:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CrMTmW2J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6EE1F000C9;
+	Thu, 19 Nov 2026 02:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057086;
-	bh=/W/Hkafc6Q+ETrmYtQfJs/qWIJGNjZW50QKH2GqedXg=;
+	s=korg; t=1795057089;
+	bh=ApjKfpUtg+D8XtQ8LUKb0NdPNM5QeYh9upX9owTX5l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FegiPqMwKX4lxZkEN+IfnV6zm46DXEd/AxT6hfSNJJUtOJvKICzIVUkzF+jinU7/U
-	 xUInlZ1XNtFWKaofl4S/pPtOHelkmIlO3+nB5ZN8CB7xqcFKvtsoz3eBEUNq7WIMBI
-	 c72JaaGIbOcVj5PzPKX968on6Z94ekNGTJs6vnUY=
+	b=CrMTmW2JqyqerLNG8diShVewOtHqWY1nY5afHR2irLJ29T0Ow7qHzupjcC5LxzoeF
+	 vJ6ey/sKsd/jPecN1liBBMdUQgRNSmFqulnGhToJHWU8DDxnU5q8+B6IC3yabNJZQG
+	 H9ccyJ3ZrRiMUSQ/7bpNq0Ulil+Jk3JIBUYfX1T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Yoann Congal <yoann.congal@smile.fr>
-Subject: [PATCH 5.15 2212/2214] printk: Fix LOG_CPU_MAX_BUF_SHIFT when BASE_SMALL is enabled
-Date: Wed, 18 Nov 2026 16:04:48 +0100
-Message-ID: <20261118150138.728210303@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 5.15 2213/2214] seq_buf: Do not print an empty line from an overflowed seq_buf_do_printk()
+Date: Wed, 18 Nov 2026 16:04:49 +0100
+Message-ID: <20261118150138.765559805@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,68 +66,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoann Congal <yoann.congal@smile.fr>
+From: Kees Cook <kees@kernel.org>
 
-commit 320bf43190514be5c00e11f47ec2160dd3993844 upstream.
+commit a09fb764832dd7dbb9ccc38a9830f7294889c8ae upstream.
 
-LOG_CPU_MAX_BUF_SHIFT default value depends on BASE_SMALL:
-  config LOG_CPU_MAX_BUF_SHIFT
-  	default 12 if !BASE_SMALL
-  	default 0 if BASE_SMALL
-But, BASE_SMALL is a config of type int and "!BASE_SMALL" is always
-evaluated to true whatever is the value of BASE_SMALL.
+seq_buf_do_printk() prints a buffer line by line, then prints whatever
+follows the last newline. When a string has overflowed at exactly a
+newline, an empty line is printed since the pointer hasn't reached the
+overflow mark of the seq_buf. Switch to just check if the string is
+already empty and only print if not.
 
-This patch fixes this by using the correct conditional operator for int
-type : BASE_SMALL != 0.
+The only caller is the memory cgroup OOM report, so this could only ever
+add a blank line to a report whose statistics already did not fit.
 
-Note: This changes CONFIG_LOG_CPU_MAX_BUF_SHIFT=12 to
-CONFIG_LOG_CPU_MAX_BUF_SHIFT=0 for BASE_SMALL defconfigs, but that will
-not be a big impact due to this code in kernel/printk/printk.c:
-  /* by default this will only continue through for large > 64 CPUs */
-  if (cpu_extra <= __LOG_BUF_LEN / 2)
-          return;
-Systems using CONFIG_BASE_SMALL and having 64+ CPUs should be quite
-rare.
+Add a test that registers a console to count the records that
+seq_buf_do_printk() emits. It counts the records carrying the test's
+marker, and the records holding nothing but a line feed that arrive
+after one, so that unrelated kernel messages do not disturb it. Both
+states that reach the flaw are covered: exactly full, and overflowed.
 
-John Ogness <john.ogness@linutronix.de> (printk reviewer) wrote:
-> For printk this will mean that BASE_SMALL systems were probably
-> previously allocating/using the dynamic ringbuffer and now they will
-> just continue to use the static ringbuffer. Which is fine and saves
-> memory (as it should).
+Tests passed under qemu on ARCH=x86_64 with GCC 16.2.0 and CONFIG_KASAN=y,
+and on big-endian ARCH=s390 with GCC s390x-linux-gnu 16.2.0.
 
-Petr Mladek <pmladek@suse.com> (printk maintainer) wrote:
-> More precisely, it allocated the buffer dynamically when the sum
-> of per-CPU-extra space exceeded half of the default static ring
-> buffer. This happened for systems with more than 64 CPUs with
-> the default config values.
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/all/CAMuHMdWm6u1wX7efZQf=2XUAHascps76YQac6rdnQGhc8nop_Q@mail.gmail.com/
-Reported-by: Vegard Nossum <vegard.nossum@oracle.com>
-Closes: https://lore.kernel.org/all/f6856be8-54b7-0fa0-1d17-39632bf29ada@oracle.com/
-Fixes: 4e244c10eab3 ("kconfig: remove unneeded symbol_empty variable")
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Yoann Congal <yoann.congal@smile.fr>
-Link: https://lore.kernel.org/r/20240505080343.1471198-2-yoann.congal@smile.fr
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: 96928d9032a7c ("seq_buf: Add seq_buf_do_printk() helper")
+Assisted-by: LLM
+Link: https://patch.msgid.link/20261005155708.1471260-1-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/seq_buf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -742,8 +742,8 @@ config LOG_CPU_MAX_BUF_SHIFT
- 	int "CPU kernel log buffer size contribution (13 => 8 KB, 17 => 128KB)"
- 	depends on SMP
- 	range 0 21
--	default 12 if !BASE_SMALL
--	default 0 if BASE_SMALL
-+	default 0 if BASE_SMALL != 0
-+	default 12
- 	depends on PRINTK
- 	help
- 	  This option allows to increase the default ring buffer size
+--- a/lib/seq_buf.c
++++ b/lib/seq_buf.c
+@@ -118,7 +118,7 @@ void seq_buf_do_printk(struct seq_buf *s
+ 	}
+ 
+ 	/* No trailing LF */
+-	if (start < s->buffer + s->len)
++	if (*start)
+ 		printk("%s%s\n", lvl, start);
+ }
+ EXPORT_SYMBOL_GPL(seq_buf_do_printk);
 
 
