@@ -1,86 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031673;
-	b=ZzQXyzN2dH346gDcqI0rJiVTe1Z8ms8VA0sJtVJGpvpY6WKG6F3u39q8owRa3p1HD+NM
-	 EQgi3T81YjTwqOIz4VqjGs2L4ICWjH6X8OdqiCLHkhVCw6Qo0ugeIaU5D7+votwxv/6vA
-	 EEJhoZh6L1BJ0HTjpou+XCS+m4Qmk8QuLBDaw+D6X+yG+PiVSVW0K7C2GbLJf6A6BR0H/
-	 krrz/BdTEthVLwSc1zq0G1KtEkmdjaO7KlRgM//O2c4KA9yS215Iuq75Cwl+uYijVFUPA
-	 yjWaDSr8cvhGrruOtrCV2hZkt3niO6I5RNlRqt0LCMM+/qwf7mYisel7o/wbY/I8EmQ==
+	t=1795031674;
+	b=fqEpIYYc6Xeg+G7f/2xK7j+XiWbqvIEzPkceyEfoNa3m55TmFTzmBz3YOJhmGlC3awb3
+	 jNDMVCN7SaDJ/yA8vs+CFWff1Jjhy0/tfNMw2f3wFHikDZJSxuU2hsceCM+F7pa0osdwG
+	 2BU8CCQ888gFo9yp1Gq+Ue2WGP83Kst8AG4hGgcnEry4Zheg3xHhb0ToXfsWo9OzoDe92
+	 0cAdT8lqeXchvrV+msSzZAySg0lbo7CAA6ytCUKKrphM5ouoPDwifkedN/ZvtHY3yeB6S
+	 nsl2hs0h1m6yW2JJXsfeWY3brRCq7NUwlQote0nnfwKiZ4R1Su4NYX/0COxZiPa2nUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031673;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=i0RPIOg/N02GB/FO0QU0LL8vtzFon8FGCvQcjRptq9c=;
-	b=s65EHyTVOINlGhl8H6lnfLLsqGBr084hlUbEK0TFWXnB0st/BtddvYKo29B1SHcz7L7u
-	 ELE7ikYqMwRFKXAHLc/Pj3HHjy1LKnvR1hj/WFFHcFwhqVs54h2VVQx7ZFtWM9+DD0vKG
-	 CAWBpMbqCdRt2PPjmjqb839/NU89PM33pQbWHNJLSOr37W2AW+21fP6DB4YL3akJzRwq8
-	 kzLL2/f67m7e3D81e5AQChwWruH3JPy2ZCjUC4VbdOqpQpZW2X+GbqV+n96ex301zDy3/
-	 1y8a0HO+msj5gVwTglK51T+MTalm8LTgO//b/Ol8lYlU/NPOqY78hgyxtrduEQ340MQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031674;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Oj05cZczpZc1mvwgNDlMsHhQYNzwhVNN8HZpa+GahyQ=;
+	b=20h6NX0nN7Pt7n8TxBIlsSwNC5tRMmNBOgrzmK6b6szW62wD1Nyn5QADD7B1nFWMoVnh
+	 NlyvJ8Hoq2RIROeT8Yrte309Jt9eL1szCDEmqYwJEjTxKdWYdMzTpurX+wHZg3Xl2uqiy
+	 UsElquTPsdqe85tH39OfC0OoLPuUYSYfrICUDNqAz8O0sGluMKLkWyfW0Nejx8nZ/uH2p
+	 921Yv/WjOyU0VMOhdRR+1jo9G4cfFKm8cYYiUzZmkBuY5/6f3/dmtJRiC54rQFkzBgCOE
+	 Gz8aw7oRg2oMChAPZH5lX+fttbuML466PibNwrUy/eJH1HJO4Ym71vaZCqowuuCSb7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FFgokOVJ;
-	arc=none smtp.remote-ip=209.85.222.170
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFBumcAW;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD894606A33F
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:54:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD894606A33F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A75560A2614;
+	Wed, 18 Nov 2026 19:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=FFgokOVJ
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-94961b68685so121072585a.3
-        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 11:54:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795031672; x=1795636472; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=i0RPIOg/N02GB/FO0QU0LL8vtzFon8FGCvQcjRptq9c=;
-        b=FFgokOVJA8dxeNm7TfhKM8UtGpCYGjp7osifC9x/WACvezvT+O0HCUAv51ROu06s6m
-         Mr39Hik0xdlJS/C8+XD4yM5ihukt0fjn9yvrB3aemfrx0B6ODh/E++JEiLXJ54fEuWb9
-         PygQ8bwzpK6TcFvpp6R1WvZS5HRoXjamX44/NfUkCLQNIKEC5LGkOKQ3KzkDHiDlF3v5
-         rTSjnzKLdV51oFGAnU8sgTpdVI5CZQwiudaxff3W9Ae/gPNsKFw8wSIhaptCYjbearhz
-         6Z/uD/FGS05rmE/Vl88lvPQlFaPR7fkkHQADe3hwbYMaxpptS+3C6SjPtWxLA+VSn/jQ
-         nMQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795031672; x=1795636472;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=i0RPIOg/N02GB/FO0QU0LL8vtzFon8FGCvQcjRptq9c=;
-        b=wUbQ2gXb1WINB3W1OsI+RKQRda8N6AbamGdBKzOXLo/0xwa2mqlPv+f6r0Zy4Gxf6t
-         LAsVnYpn8mgvMEAXUWdAD+fEAjY73CrI+jMWZxNVN9bbRnn7Df2pah4v1JSWB1NUiqAu
-         GpHiBDLBvZEndlik2hOg1Qkt0GQSzATvcMVOKMDrRCViuURPYTti06C2ICwIQpPRXKKA
-         x47qaEXTKUpyaUP5D4wxLCJM/gsbFC14rRxH7l5Skk5GLPbr/Zjrmqv2J0JNKcI0OM0c
-         7eAmrkecetr31xunzwv4OO9A/PeIEdh6RsPw4Yzfk5I8t0QgToVZXGEZtwAIePCjX55X
-         P8XA==
-X-Gm-Message-State: APuU4Z8pdaZkDn25Wo9JsTYHl/u1q+SSH+0aQ0SJ0EueVQb3Lv2HQRbY
-	5iS4obqHPUB2QnBCEkiTXoDHSBB7bg1x+RvMTcTpFvMz3GTFlbn10gOI
-X-Gm-Gg: AYBFou0b8WUR0rysWJFrmhDgyKF206XfMmUZhkqRuOub2QKYxqVBHkhIKWYqoDkHItp
-	in0gOwWM7NnLt8nfqSTNWUA5wC6kmUHO0iXre2ffIkAPiDdMlS/MIWulV4wpdVi4s+D1vRfZP/n
-	+IvVc/u/UMtQo8QbZrkay7zP9ii07rGfjGcLT3XEXxHBFGz+fWAS1Wzir1XY9hRcpkc5adcB7/E
-	DJzrgLg+n08A2IUGhLTH+ujWoi+K2y/bmGFfGkWX0/1QQ6truHUp+7I1QmBNInHmnDDIg2jUuvJ
-	vaGLDbivBJNy5+XGzLFTOStYJfi1IIc2z5ME78snzGWofSLUsfs6Gns0WznjHnJ0G0cZgn8oEVS
-	xDnkqoz+FOmr7RMI9L6Rz87lIcA3wJjd1cdN0/TG4sWjXnGXrMY+NYtyuUZawtlJbae8GlHYx9z
-	cEAZz3bpT1U9vNKw/RC3WxbHHN71ELQe3bi2I9JkHjhpfEFNYgrQW2UDOWZdl9JWMuWqfJEJ9I/
-	NUNRJzMzJX69AEVqLp9QNdesUao50U1+VGKqe99sASDLFYYDyOlH2fAQtpxegghktC9XhTqPMrp
-	cw28cC98q3B6o3O5fGv+zrfPC8/40XafqKnm4cS50pISaOHst+3rgLGJ6Q==
-X-Received: by 2002:a05:620a:7084:b0:947:9060:7efb with SMTP id af79cd13be357-94999574d09mr635823285a.18.1795031671725;
-        Wed, 18 Nov 2026 11:54:31 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9499b7475b8sm257960785a.18.2026.11.18.11.54.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Nov 2026 11:54:31 -0800 (PST)
-Message-ID: <c7f0c78a-47c1-4dfb-bf21-808e25f05611@gmail.com>
-Date: Wed, 18 Nov 2026 11:54:28 -0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFBumcAW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41881F000C6;
+	Wed, 18 Nov 2026 19:54:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795031674;
+	bh=Oj05cZczpZc1mvwgNDlMsHhQYNzwhVNN8HZpa+GahyQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=FFBumcAWJdQOrsSrPhmldqtQ3CpTX2jVI1eLrfwQVqMmI2tEEO4IOu+3YrYisxiJ2
+	 sMN6IDGs6VVYgVG5OOP3/SxGD0ZlMEXMlPZHf4J/XTgOZL5eWRacbB4y66pjw9F0qk
+	 IUfbBUwfvCqhRLlFuK1QP+k/sqKzeAgZR5pkqK54=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1140/1756] clk: qcom: rcg2: Propagate force-enable status errors
+Date: Wed, 18 Nov 2026 15:54:27 +0100
+Message-ID: <20261118150055.431436702@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
+References: <20261118150007.957976754@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,83 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 0000/2151] 6.18.65-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20261118150121.603863898@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/18/26 06:28, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.65 release.
-> There are 2151 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 20 Nov 2026 14:55:45 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.65-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-perf fails to build with:
+------------------
 
-util/annotate-data.c: In function 'global_var__collect':
-util/annotate-data.c:765:30: warning: implicit declaration of function 
-'die_get_type_die'; did you mean 'die_get_typename'? 
-[-Wimplicit-function-declaration]
-   765 |                         if (!die_get_type_die(dwarf, 
-pos->die_off, pos->die_tag,
-       |                              ^~~~~~~~~~~~~~~~
-       |                              die_get_typename
-util/annotate-data.c:765:71: error: 'struct die_var_type' has no member 
-named 'die_tag'
-   765 |                         if (!die_get_type_die(dwarf, 
-pos->die_off, pos->die_tag,
-       | 
-       ^~
-util/annotate-data.c:766:50: error: 'struct die_var_type' has no member 
-named 'from_alt'
-   766 |                                               pos->from_alt, 
-&type_die))
-       |                                                  ^~
-util/annotate-data.c:777:44: error: 'struct die_var_type' has no member 
-named 'from_alt'
-   777 |                                         pos->from_alt);
-       |                                            ^~
-util/annotate-data.c: In function 'get_global_var_type':
-util/annotate-data.c:835:26: warning: implicit declaration of function 
-'die_same_file' [-Wimplicit-function-declaration]
-   835 |                         !die_same_file(cu_die, type_die));
-       |                          ^~~~~~~~~~~~~
-util/annotate-data.c: In function 'update_var_state':
-util/annotate-data.c:873:42: error: 'struct die_var_type' has no member 
-named 'die_tag'
-   873 |                                       var->die_tag, 
-var->from_alt, &mem_die))
-       |                                          ^~
-util/annotate-data.c:873:56: error: 'struct die_var_type' has no member 
-named 'from_alt'
-   873 |                                       var->die_tag, 
-var->from_alt, &mem_die))
-       |                                                        ^~
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
+[ Upstream commit 8c0f93e10fa9e34009817bd37bb75c1b5a691fa2 ]
+
+clk_rcg2_is_enabled() returns either a hardware status or a negative
+regmap error. The force-enable polling loop treats every nonzero return as
+an enabled clock, so a failed status read is incorrectly reported as
+success and clock reconfiguration can continue with unknown hardware
+state.
+
+Check for negative returns before testing the enabled status and propagate
+the read error to the caller.
+
+Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
+Assisted-by: LLM
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-2-5531cb00514b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/clk/qcom/clk-rcg2.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index c811ed72c26ca..8c6be8963c2b9 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1150,7 +1150,10 @@ static int clk_rcg2_set_force_enable(struct clk_hw *hw)
+ 
+ 	/* wait for RCG to turn ON */
+ 	for (count = 500; count > 0; count--) {
+-		if (clk_rcg2_is_enabled(hw))
++		ret = clk_rcg2_is_enabled(hw);
++		if (ret < 0)
++			return ret;
++		if (ret)
+ 			return 0;
+ 
+ 		udelay(1);
 -- 
-Florian
+2.53.0
+
+
+
