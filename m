@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021797;
-	b=dCyPrgnTTcuLneL39y0GSyv+44PudLXtWdmvAyml25Dh8jM/aBFzrj6JGklZbuWgBgXY
-	 c13NxVfMFEDtO+mBnrMzRw58KQJOLSo9qXqONVHwzrfSaHamPFtZa8g1OdL7F9jn8iNqa
-	 ENWVA93K8kVi7TJDysGhOVQGDd8CDnFHvxsnvNkG7Xx5OCPrp0tqFiIxxdCFeJEc3MOZ8
-	 V2Bl0K9iQGHTSfXYTdbzjI9Q6xIc9icBiCDJ/poiO04UnweLQmB/M1PTMzxr+I9F1xm5b
-	 59BlvZGNDIhtOm2LC7fbPqsM0tkl35g3M4uS59ejTSWXUhwVrfH+6bu5eN/Ta3rkGIA==
+	t=1795021799;
+	b=O3mrek/nommBzFCn0kQUR7gbScgc7CerV9ziTcZAvWhbXvHb4w/L2js3f2ou+2Oim1HK
+	 4L8BJkzlu3i8RFGS56WqYBJb9/GB80xr237TvN0GofBh1/t1eY2JPNTF4x1GLuMTvhjBH
+	 owGcJjklDgzTCJyt+w3dkl0LGPczRfkuv+6vKr4Z3daso0VpglN5AULbVB7AfXJaytq4T
+	 rROUt9hYiO0V/2Sr+bsyvnzxal2NGrJLWlHnVUF9pFMteerpBh3yCEO5dbrawOEUC7dnu
+	 n4UOvCOoRwbAz/zFW4Y2smLoUHTm1UF71BU86YgsmV28R756nqzV/cDSFzddc5Q8l1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021797;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xli92eQFlYrM8QqaWCwc8jQlJ2GKyyXQJCmhM3Lsgm4=;
-	b=fk+Sh1WXz6sZcqtLpgIwxU3ctPmVPkTLux+Ej84VXXyNnKAUarYFNLqdsQtaDAYAQrpN
-	 BFKDKmU4mVJp6Zvx0pv29xLD6arxpCQarCh5oJfWr0+VjXuprae6erUWfhI3dSHN8+FiA
-	 f5fw9jcMpPVk2p7c7jINlAw+xqU5aSL8lWGMLlrJ0tvkakXe6KUKIkCEdyhn2IygwaNKH
-	 WtyRFGxvfBt7v21zS5QNrIlatjblV+kWbA4CcnLj9Q5cEj3hqrfG7s1KvPu+qFiFQG0WX
-	 s7VwM2mthNKV4W+nbskPnEJCvOiMmF7kwqTOzeu9ECvRsz9k2v0lRcb6ko/+jMA9vpA==
+	bh=+U1XvkfynesrgZB/NWyy8Z7qU9naSXz1meItStHkaFk=;
+	b=K8zO5YymhNjZTC+6NlLE0phkxjb+tuzULOAGIvQ4MJzEFvgGez4EyjoJXkPGhrOsz+zB
+	 cfhQHcb7q67utSDhWp/b4VQ7pe1wfAiOBwmlViCM7QS7qqj0Yk2AhXzFIZlIL6ZDsr3TF
+	 kQKwCdcoMbDX5tUq3DZrpSoXPsIGWeKfwue7I9m14FTAJG7ywwVT7jddo9DZUbPhdpN4y
+	 wpyu2IrVruq4+hsEnsfuj1XSK0FfDQaWHkQKS2dW3O3OpD2ovCcbk+VnjvIi2NJApurUQ
+	 ed9tJyGYK6Ry+Ej9Cmote1loB0yssU+Uq+0kvdKKc9eFULSxV/zsuL2znuZaW+SpEzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeFwmyEO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lC1oZ7RX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E9E606A33B;
-	Wed, 18 Nov 2026 17:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74F60A2604;
+	Wed, 18 Nov 2026 17:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeFwmyEO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F621F000C4;
-	Wed, 18 Nov 2026 17:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lC1oZ7RX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB3E1F000C4;
+	Wed, 18 Nov 2026 17:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021796;
-	bh=Xli92eQFlYrM8QqaWCwc8jQlJ2GKyyXQJCmhM3Lsgm4=;
+	s=korg; t=1795021799;
+	bh=+U1XvkfynesrgZB/NWyy8Z7qU9naSXz1meItStHkaFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DeFwmyEO90zQlMm26PP6eURgJEbyyZ11K7URajc3gGYa5+QV8YPZOFNBH2uyRtRfo
-	 A1uAtgqZp2yS2JvbtTt6VfnB7yNlJGnEUNda9hCDXmeHSq8AxF4K7M3TIOZfDzOA4o
-	 U2JR+Ts+VCC1NhgNnd5w8Q92BoY8YFd805nLS5+M=
+	b=lC1oZ7RXX9jJVKc5bB1Sbm5pmnNGHXUQiUUEaZ/ZoHZOHuQJxVJ0lilYzdgY3ebRx
+	 mTic8KsxTTq9+iCUqBSJscRJIbHhV9CnCW/rDf2lMB1KKqApU2MRU5+fPQAJHmCyba
+	 xSqndCo8sA7kO/QBIq9e8yx6uQPWiF78CzAvFkc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.3 2433/2651] selftests/thermal: allow cross builds of the Intel tests
-Date: Wed, 18 Nov 2026 16:01:13 +0100
-Message-ID: <20261118150412.787193451@linuxfoundation.org>
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2434/2651] PM: suspend: Do not call suspend_ops->begin()/end() for s2idle
+Date: Wed, 18 Nov 2026 16:01:14 +0100
+Message-ID: <20261118150412.818431327@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,80 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit ff4194e54f840b4df4eb2489c63ee88283895efc ]
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-The power_floor and workload_hint Makefiles build nothing when
-CROSS_COMPILE is set, even for an x86 target, and they include lib.mk
-only on x86. Other architectures therefore have no install or
-emit_tests rules for these suites, and their installation fails with a
-missing target.
+[ Upstream commit 4785d5faa935a828a04743c5a7d279baf454c723 ]
 
-Select the x86 tests from the target ARCH when it is given and from the
-host's SUBARCH otherwise, and include lib.mk unconditionally so that the
-suites install and emit an empty runlist on other architectures. Use a
-private ARCH_PROCESSED instead of the ARCH override added by
-commit 5a1292137e89 ("selftests: fix ARCH normalization to handle
-command-line argument"): the override changed the value lib.mk uses to
-pick the clang target, whereas leaving ARCH unset lets lib.mk use the
-compiler's native triple. A command-line ARCH such as x86_64 is still
-normalized for the selection, while an ARCH spelling that lib.mk does
-not know, such as i686 with LLVM=1, is rejected as in other selftests.
+Commit 7602c0ec0bbf ("firmware: psci: Set
+pm_set_resume/suspend_via_firmware() for SYSTEM_SUSPEND") made
+psci_system_suspend_begin() call pm_set_suspend_via_firmware(), so that
+device drivers can prepare for the possible removal of the power before
+PSCI SYSTEM_SUSPEND.
 
-Fixes: 27801542b2b8 ("selftests/thermel/intel: Add test to read workload hint")
-Fixes: d4d27e5a1a88 ("selftests/thermel/intel: Add test to read power floor status")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261014200127.1363472-4-sashal@kernel.org
+Since then, on platforms where PSCI firmware supports SYSTEM_SUSPEND,
+pm_suspend_via_firmware() returns true during both s2ram and s2idle.
+This is inconsistent, since SYSTEM_SUSPEND is only invoked for s2ram.
+
+This was observed while investigating PCI-related suspend/resume issues
+on Renesas platforms (RZ/G3S, RZ/V2H), and was traced to
+platform_suspend_begin() falling back to suspend_ops->begin() (PSCI in
+this case) when there is no s2idle_ops->begin() callback:
+
+  platform_suspend_begin(PM_SUSPEND_TO_IDLE)
+    suspend_ops->begin()
+      psci_system_suspend_begin()
+        pm_set_suspend_via_firmware()
+
+platform_resume_end() falls back to suspend_ops->end() in the same way.
+
+Since s2idle has its own set of callbacks in s2idle_ops, make
+platform_suspend_begin() and platform_resume_end() only invoke those for
+s2idle, like the other platform_*() helpers do.
+
+Fixes: 7602c0ec0bbf ("firmware: psci: Set pm_set_resume/suspend_via_firmware() for SYSTEM_SUSPEND")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20261005111157.17256-1-ovidiu.panait.rb@renesas.com
+[ rjw: Added Fixes: tag ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/thermal/intel/power_floor/Makefile     | 12 +++++-------
- .../selftests/thermal/intel/workload_hint/Makefile   | 12 +++++-------
- 2 files changed, 10 insertions(+), 14 deletions(-)
+ kernel/power/suspend.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/thermal/intel/power_floor/Makefile b/tools/testing/selftests/thermal/intel/power_floor/Makefile
-index 07463c2160e09..16d26eab55652 100644
---- a/tools/testing/selftests/thermal/intel/power_floor/Makefile
-+++ b/tools/testing/selftests/thermal/intel/power_floor/Makefile
-@@ -1,12 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0
--ifndef CROSS_COMPILE
--ARCH ?= $(shell uname -m 2>/dev/null || echo not)
--override ARCH := $(shell echo $(ARCH) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
-+top_srcdir = ../../../../../..
-+include $(top_srcdir)/scripts/subarch.include
-+ARCH_PROCESSED := $(shell echo $(or $(ARCH),$(SUBARCH)) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
+diff --git a/kernel/power/suspend.c b/kernel/power/suspend.c
+index 57c44268698f7..32c055df02da7 100644
+--- a/kernel/power/suspend.c
++++ b/kernel/power/suspend.c
+@@ -306,20 +306,24 @@ static void platform_resume_finish(suspend_state_t state)
  
--ifeq ($(ARCH),x86)
-+ifeq ($(ARCH_PROCESSED),x86)
- TEST_GEN_PROGS := power_floor_test
-+endif
+ static int platform_suspend_begin(suspend_state_t state)
+ {
+-	if (state == PM_SUSPEND_TO_IDLE && s2idle_ops && s2idle_ops->begin)
+-		return s2idle_ops->begin();
+-	else if (suspend_ops && suspend_ops->begin)
++	if (state == PM_SUSPEND_TO_IDLE) {
++		if (s2idle_ops && s2idle_ops->begin)
++			return s2idle_ops->begin();
++	} else if (suspend_ops && suspend_ops->begin) {
+ 		return suspend_ops->begin(state);
+-	else
+-		return 0;
++	}
++
++	return 0;
+ }
  
- include ../../../lib.mk
--
--endif
--endif
-diff --git a/tools/testing/selftests/thermal/intel/workload_hint/Makefile b/tools/testing/selftests/thermal/intel/workload_hint/Makefile
-index 49e3bc2b20f9d..e53d6ecd9f8de 100644
---- a/tools/testing/selftests/thermal/intel/workload_hint/Makefile
-+++ b/tools/testing/selftests/thermal/intel/workload_hint/Makefile
-@@ -1,12 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0
--ifndef CROSS_COMPILE
--ARCH ?= $(shell uname -m 2>/dev/null || echo not)
--override ARCH := $(shell echo $(ARCH) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
-+top_srcdir = ../../../../../..
-+include $(top_srcdir)/scripts/subarch.include
-+ARCH_PROCESSED := $(shell echo $(or $(ARCH),$(SUBARCH)) | sed -e s/i.86/x86/ -e s/x86_64/x86/)
+ static void platform_resume_end(suspend_state_t state)
+ {
+-	if (state == PM_SUSPEND_TO_IDLE && s2idle_ops && s2idle_ops->end)
+-		s2idle_ops->end();
+-	else if (suspend_ops && suspend_ops->end)
++	if (state == PM_SUSPEND_TO_IDLE) {
++		if (s2idle_ops && s2idle_ops->end)
++			s2idle_ops->end();
++	} else if (suspend_ops && suspend_ops->end) {
+ 		suspend_ops->end();
++	}
+ }
  
--ifeq ($(ARCH),x86)
-+ifeq ($(ARCH_PROCESSED),x86)
- TEST_GEN_PROGS := workload_hint_test
-+endif
- 
- include ../../../lib.mk
--
--endif
--endif
+ static void platform_recover(suspend_state_t state)
 -- 
 2.53.0
 
