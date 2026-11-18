@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027369;
-	b=KUV5uNSK72xnzTQv2Kmdag+89LFO69nMpWsqyqeHE1gyu+za2vHzaN+ZPu4hUgmOEI+v
-	 qXVHGly9tMmIeqTCAoTXhuBQBqAZJHSAke5PTNK5kRf1kTdg25z1tnUpq3PvuQiMrWlsK
-	 b9daMtb1wiqEiLMj3AkVKFUINpe3Wpl45ndJBvqly/4SDpHLxq3TgZvLmIaHH+94TRFMi
-	 F0BRrEdJvuZQhvyhrVsEMhmKE6yCofsSbyUNrSBUlWLW7Pc7CWB0sy3CpTZT4obNc5wsw
-	 +/2gUQR5SoWhdaCoG1FlOc0rZzM7YvGq198Ox0pjo5K1pnkGJpQg1Yrmi05xH4YFNBA==
+	t=1795027372;
+	b=ijikQ3i6KnEr/TO4bk5HW1e/VFol2iehx0gPdlLZYmgEjMvKR0iXcBIWRpRwz6F2vH2m
+	 wSG3dj5iH7BIbC9fuRLN1Lk44Zoyu8NP4rTpLBIS6MO7uQz6puPQiWaDJn5LzxtjdWtjN
+	 Jb4e2/I5ZYf5y4Z3waKTMpKcuggNWz2SftLRn85ePmVGAHIdlEgxL0AO9tuAkaJBVdjjw
+	 3j/Wb7gwpy0mxbyNhP2t2cxbmpKVoKswKERBmgECVW4HPCga94YnMwH+Qv9k+YTvEOr8Z
+	 RrDgCLqeMo6elanOqeF8pNYLeraGfI53lWRrWLO8QvzvqS5rbvMVzur7ykuuZvYXfHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fad7ejHJxPyQfRiBIr63zSlX4RM/hqc1SQn5mS1TqAM=;
-	b=mTlGyfeWxCTqvWTrWTPaeMHii3k68wAopZ+CzXgN83R7+yIGhe3cJaZ5BCgPYYl1n9zz
-	 RNfyqYz0MtqHkdvQyAz4q6/FIaz7ctlQTAUM12VLd9Cw8gNMjqoyH5VTfnqbj2Hjg6XvD
-	 4iQbCgTwBBN7Jm1j+us8/ubqQH70CuFRHXD4N4DIwtEVtJPrHh4+KC1FBkXb5g5m81X0A
-	 Rg4OGNZk6m2+AHdPED0eOI0xg9IP1fZ59eLWa8kGF8+96c7Jr+Tpf8fFdEeVKiui0snFK
-	 kolBC8jz2tCSV0emD7dsp+jABE6VHjv7Q6t6YbwQcUjCmUHXAVmjDSCztwN5RBRJKlw==
+	bh=5go++4AUwOd/UyrrFANtAZAqCYIs0Ao7sEfmFXQ0fgI=;
+	b=W/QkqChdt2qhw4PuPnGP4zL7clz8tocAiwv/5CKL9RNq7LOfQjSTOll1DY4cIxhQxZfX
+	 kb7IU1N5J2ZGygJmiq/H2P0OM2vtt4G8HFr2iyTdDQzxgmpCtfGEhpemHCbFnXK7V5Uko
+	 jkJOOx/rs5xR4m9GVzG+O+IS3ApfkB2hospKcqskIHEbS2YU6Lo9OnKEOHHBktv9im0kC
+	 T1ZFiYD2iOP1naLlzeTUs8gttAOJyiyZCgtpe5nSS9+04S5679ATUdfgCMnTbctiOFn7k
+	 AG/nXI1oWIBOl3zuZA2+R5r9oTE7ZA8AXkKNkUfMwxiOWIPYoctN+9e/uuXDJEtzNZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypQ1kvdC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5TTmW+S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2E660A2603;
-	Wed, 18 Nov 2026 18:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65722606A331;
+	Wed, 18 Nov 2026 18:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypQ1kvdC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D7B1F000C5;
-	Wed, 18 Nov 2026 18:42:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5TTmW+S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEC61F000C4;
+	Wed, 18 Nov 2026 18:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027369;
-	bh=fad7ejHJxPyQfRiBIr63zSlX4RM/hqc1SQn5mS1TqAM=;
+	s=korg; t=1795027372;
+	bh=5go++4AUwOd/UyrrFANtAZAqCYIs0Ao7sEfmFXQ0fgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypQ1kvdCMrfsC5z1I+l9tvUDXKXyxDoecGYytyLhujGNO4yfpU0bEpLAFmmzqVntm
-	 Apxowx4mS0Bi34LQ4NIXN9HhkbrDB0aKm9fT+KHI20Ib+q8uuQi3zMSWv0li/ymNLn
-	 l9li0DvwvZaLuOzyDdn09xX1qhyv/dM1G7NITQ8o=
+	b=m5TTmW+ScfZToP0zjyMMKIN4yEgmVy4l1tjlblwGYgFUkaWaHkz8agNWkWcfRUXz0
+	 Xa96chEZq+hzNtGjrgzDCDrdZDqKqWZCizIAgV9zGlS7yjGQAiW86ZLIg1tQPspVMs
+	 0RZN3Vqf2NQrJhxZKNEgq8EqUFQCHnkCuXnmxmjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1764/2151] selftests/bpf: Run the cpumask map insert tests only for the test task
-Date: Wed, 18 Nov 2026 15:58:19 +0100
-Message-ID: <20261118150226.097526905@linuxfoundation.org>
+Subject: [PATCH 6.18 1765/2151] gpiolib: fix memory leak in gpiod_set_array_value_complex() EPERM error path
+Date: Wed, 18 Nov 2026 15:58:20 +0100
+Message-ID: <20261118150226.132841848@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,57 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Kent Gibson <warthog618@gmail.com>
 
-[ Upstream commit e2c978ad415ce223e71f6ddaa92778225eca0bef ]
+[ Upstream commit 138d7365c20efe47b4caa92c46f086ec39b81f78 ]
 
-verify_success() attaches each cpumask test program to task_newtask,
-forks a single child, and expects err to be 0 afterwards. Most programs
-return right away for other tasks than the test one.
+A drive-by review by Sashiko reports that, where the line has not been
+configured as an output, gpiod_set_array_value_complex() can return
+without freeing potentially alloced bitmaps, thus leaking memory.
 
-test_insert_leave and test_insert_remove_release don't, and insert a
-cpumask into the single entry of __cpumask_map for every task created
-in the system while they are attached. test_insert_leave leaves its
-cpumask in the map, so a second task created, for instance by a test
-running in parallel, fails to insert one and sets err to 3. Two tasks
-created at the same time can do the same to test_insert_remove_release.
+Cleanup the bitmaps before returning.
 
-Return early for other tasks than the test one in both programs, as the
-other programs do.
-
-Fixes: 7b6abcfa15cd ("selftests/bpf: Add selftest suite for cpumask kfuncs")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-cpumask-insert-filter-v1-1-3249218594d7@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 92ac7de3175e ("gpiolib: don't allow setting values on input lines")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-gpio/sashiko-outbox-168233@kernel.org/
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Link: https://patch.msgid.link/20261016105442.109836-1-warthog618@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/cpumask_success.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpio/gpiolib.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/cpumask_success.c b/tools/testing/selftests/bpf/progs/cpumask_success.c
-index 774706e7b058b..d623343adbaa2 100644
---- a/tools/testing/selftests/bpf/progs/cpumask_success.c
-+++ b/tools/testing/selftests/bpf/progs/cpumask_success.c
-@@ -460,6 +460,9 @@ int BPF_PROG(test_insert_leave, struct task_struct *task, u64 clone_flags)
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index c23ba5e94cd6f..a0a0d8ca6d82e 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -3694,7 +3694,7 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 				  unsigned long *value_bitmap)
  {
- 	struct bpf_cpumask *cpumask;
+ 	struct gpio_chip *gc;
+-	int i = 0, ret;
++	int i = 0, ret = 0;
  
-+	if (!is_test_task())
-+		return 0;
-+
- 	cpumask = create_cpumask();
- 	if (!cpumask)
- 		return 0;
-@@ -476,6 +479,9 @@ int BPF_PROG(test_insert_remove_release, struct task_struct *task, u64 clone_fla
- 	struct bpf_cpumask *cpumask;
- 	struct __cpumask_map_value *v;
+ 	/*
+ 	 * Validate array_info against desc_array and its size.
+@@ -3772,8 +3772,10 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 			int hwgpio = gpiod_hwgpio(desc);
+ 			int value = test_bit(i, value_bitmap);
  
-+	if (!is_test_task())
-+		return 0;
-+
- 	cpumask = create_cpumask();
- 	if (!cpumask)
- 		return 0;
+-			if (unlikely(!test_bit(GPIOD_FLAG_IS_OUT, &desc->flags)))
+-				return -EPERM;
++			if (unlikely(!test_bit(GPIOD_FLAG_IS_OUT, &desc->flags))) {
++				ret = -EPERM;
++				goto cleanup_bitmap;
++			}
+ 
+ 			/*
+ 			 * Pins applicable for fast input but not for
+@@ -3806,10 +3808,10 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
+ 		} while ((i < array_size) &&
+ 			 gpio_device_chip_cmp(desc_array[i]->gdev, guard.gc));
+ 		/* push collected bits to outputs */
+-		ret = 0;
+ 		if (count != 0)
+ 			ret = gpiochip_set_multiple(guard.gc, mask, bits);
+ 
++cleanup_bitmap:
+ 		if (mask != fastpath_mask)
+ 			bitmap_free(mask);
+ 		if (bits != fastpath_bits)
 -- 
 2.53.0
 
