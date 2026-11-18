@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051983;
-	b=djWRCfHhInQgd6TJ+cv60zxTghwwC1eDsxpayDOC4XdPRvW/0rt14Mgz4B4X7YMUYbrE
-	 5Z0sin8cwbq1Dh8AsXwfavw7q8PfilboYYKpKqv4uVIr+a7y5K2EX3uIKIOxihROMJp7X
-	 pbQkhuOr9+shYQ13uZn1vcSA0e7oo2lsT9fYpmnfs9F3lCMUyENi204eoxm1clh4oi1ER
-	 D5kMz6/vx53eS/UDE31Dzw4n80yBVrOkvDzSeVgcGAkm7DX9oqKGE14B2ibl8U5VW4YYv
-	 uxVo5DT65IyMc8z5JYLLHxVE8kHW13PU4qGJ/NHfabE2vM1skD6iXvTz8zXqbWsO1UQ==
+	t=1795051985;
+	b=VwSBafnIL2hlkxK8b7+vnFtHTHVebhq0XiLOn83+0Fo6N4ivxU3SRmPziqJghyTlqei3
+	 kZLH8dPso+T8Zw4+vTa+x8X9AE7+JVYCg4oB/nbvJhciSDghrCf30fRbuf87xC/N61g93
+	 Yb19RsWip6SNnm/iII5a1hlLP/G2TYYynOkyYFOBkggg1WMOi3eF6xXHrpAtx66Bij0Ci
+	 Ev9oEdKmi18zE3BsKAO7lRdxZLk57dgGkMJhyVzW47zYkTmHBlgpW2F2I+xD+tbcKkglV
+	 LgPheCx98cJ0VOwyf/ieT9MqAoRiWEK1ZhhWAV+4O37JosWlYgQST3jjQF2gLffU9oA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eZZmMvszjytl05jVBZTJOlG5i4+6VlB4dqd+7rwPCXU=;
-	b=CAIYJZIzRB1olqvQKiaz21czt9cbBwpePPVz5XiwdjgxzteuDPRBTwvoFa4CKpB4nP47
-	 9pFCGAZ+EbbU8nVeQ05kvi2MF2aHIkHVNogGV5byQjxTpf8nzSDvRSg69uZKy8jZ7Q9Kh
-	 zYpV+8fwUcP3DP86zMEQehLgbyew+D5+fj0tWGdcI5mruPoBgtiErBfyFgG3+9yz9irWX
-	 GNpxlaAZUoQ0lrMRiijK0LZVAhYJEKOrQvmsyqD0+CZZzYW+GvJaa6EtUa0DrkS+4pdyu
-	 xIxORBdwy2Cuh/LqcP4ipOFO7monOVQkO1wgPO3CAs2FozEFzsVfmmEZyFFlggwzeRA==
+	bh=qpPM4gZvm7h8mTb6MZMOHMGDeQE2a0Z5Kx78Px/q/fM=;
+	b=CuOBM7o6KfqCRNJEywBVuzECB2Ohlw+6/9zGAuwQuVY4QUvzI1RTXneVZX4DZaI22WtH
+	 03sjxVN7ClYDOnBDLFkfFqd4BkqGjW/R/m57NRwHisW6gMUpWqiHmNnpR14ldPDCRGG6W
+	 vCdEP4xrvD3AspxIBAB177smE+uWD/g9jJkAsd56R1lcr06Pahzp8UC8aDeOGQvKXn1qE
+	 0QD1s7JchF3stFbfF4EpGc0dzRp9gmy187QvJouOi4Y66Tib9P69lI+v1T2zmPpbKBwxV
+	 sCCAYwoppcCvzOV9FaSHgU3eAkkoINq8sfPfMviOF8cjbu0xu29ISuJTQTYvDh7ZRPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tl3I6Fll;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZ7onHqu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C216606A32A;
-	Thu, 19 Nov 2026 01:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9F9606A333;
+	Thu, 19 Nov 2026 01:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tl3I6Fll
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420CD1F000C4;
-	Thu, 19 Nov 2026 01:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wZ7onHqu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9FDB1F000C4;
+	Thu, 19 Nov 2026 01:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051982;
-	bh=eZZmMvszjytl05jVBZTJOlG5i4+6VlB4dqd+7rwPCXU=;
+	s=korg; t=1795051985;
+	bh=qpPM4gZvm7h8mTb6MZMOHMGDeQE2a0Z5Kx78Px/q/fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tl3I6Fll/BwAjMYEgxet9s+saIxXiG3g5vDaXaTdHTH8rwwoKljsZXvnnSw3eH3l9
-	 Gim1Ghh1TBiBZxox+HDj27JVirPprxWvYa8U5+g4bcPw/8u4l7E9QKJ1Wd0fysXPTf
-	 IXmb8hMVIZBO7jwuNkbC8RomW58VTas950lJ/eJM=
+	b=wZ7onHquA15CL5zo0+/xOTZScgKfh5rn6ysdHe+HhuVrGb2ymYMpz9wEtLaMeYHXv
+	 gKKtGXeAasIqZJf3OMTx1CfZ4Xy2Xyt8t8vtVjrt4N4jfiH0IpJ+nRLCk2XfFmIj6n
+	 nihV9xwRJKY+UKuVR6cY05CScoe70l2N7KO/haDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0401/2214] ksmbd: verify transform SessionId matches the decrypted header
-Date: Wed, 18 Nov 2026 15:34:37 +0100
-Message-ID: <20261118150026.802287796@linuxfoundation.org>
+	Stefan Teodorescu <fane@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.15 0366/2214] KVM: x86: Zero reserved synic flags when delivering message to avoid stack leak
+Date: Wed, 18 Nov 2026 15:34:02 +0100
+Message-ID: <20261118150025.303708371@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,159 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dairui Zhang <zhangdairui@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 798214e6fafcdcc29f5ba2661a473232b5e70cfb ]
+commit 2616f497506a772db53e7bb1024cde50b4c165e0 upstream.
 
-When an encrypted request comes in, the decryption key is picked by
-the SessionId in the transform header, but the request is then
-authorized under whatever session the decrypted inner header names.
-Nothing ever compares the two, so on a connection with more than
-one session a client can get a request decrypted with one session's
-key and run it as another session. Encrypted requests are exempt
-from signing too, so a valid AEAD tag is the only proof of session
-identity, and it is checked against the wrong session.
+Ensure all reserved flags are zeroed when setting the msg_pending flag as
+part of SynIC message delivery, as setting only msg_pending can leak seven
+bits of kernel stack data to the guest.  E.g. gcc typically uses a
+bitwise-OR to set the msg_pending flag, without initializing the on-stack
+variable.
 
-MS-SMB2 says the server must check that the transform SessionId
-matches the one in the decrypted SMB2 header and treat a mismatch
-as a protocol error. Add that check in __handle_ksmbd_work() after
-decryption, before dispatching: the message has to be at least one
-fixed SMB2 header, the first operation must not set
-SMB2_FLAGS_RELATED_OPERATIONS and its SessionId must match the
-transform SessionId, and every following non-related operation in
-a compound chain must carry the same SessionId. NextCommand
-offsets must be 8-byte aligned and stay inside the message; the
-bounds check is done by subtraction so it cannot wrap.
+Precisely zero the flags, e.g. as opposed to zeroing the entire structure,
+to make it somewhat more obvious that the flags *need* to be zeroed.  E.g.
+it would be quite easy to misread the initial read of guest memory and
+think that zeroing the entire structure is completely superfluous.
 
-When the decrypted payload is a compression transform, the
-existing decompression step runs first and the decompressed SMB2
-message is checked instead, since a compression transform header
-carries no SessionId.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: Dairui Zhang <zhangdairui@gmail.com>
-Assisted-by: LLM
+Fixes: 3a0e7731724f ("x86: kvm: hyperv: simplify SynIC message delivery")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: replaced unavailable ksmbd_conn_abort() calls with ksmbd_conn_set_exiting() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Stefan Teodorescu <fane@google.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://patch.msgid.link/20260826184449.814130-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/server.c  | 16 ++++++++++++++
- fs/ksmbd/smb2pdu.c | 54 ++++++++++++++++++++++++++++++++++++++++++++++
- fs/ksmbd/smb2pdu.h |  1 +
- 3 files changed, 71 insertions(+)
+ arch/x86/kvm/hyperv.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ksmbd/server.c b/fs/ksmbd/server.c
-index 275eeace4ba13..cc3d985b4b314 100644
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -169,10 +169,26 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -768,7 +768,9 @@ static int synic_deliver_msg(struct kvm_
+ 		if (no_retry)
+ 			return 0;
  
- 	if (conn->ops->is_transform_hdr &&
- 	    conn->ops->is_transform_hdr(work->request_buf)) {
-+		u64 tr_sess_id;
++		hv_hdr.message_flags.asu8 = 0;
+ 		hv_hdr.message_flags.msg_pending = 1;
 +
-+		if (get_rfc1002_len(work->request_buf) <
-+		    sizeof(struct smb2_transform_hdr)) {
-+			ksmbd_conn_set_exiting(conn);
-+			return;
-+		}
-+		tr_sess_id = le64_to_cpu(((struct smb2_transform_hdr *)
-+				smb_get_msg(work->request_buf))->SessionId);
-+
- 		rc = conn->ops->decrypt_req(work);
- 		if (rc < 0)
- 			return;
- 		work->encrypted = true;
-+
-+		rc = ksmbd_check_transform_session(work, tr_sess_id);
-+		if (rc < 0) {
-+			ksmbd_conn_set_exiting(conn);
-+			return;
-+		}
- 	}
- 
- 	if (conn->ops->allocate_rsp_buf(work))
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index eec98bbe4e788..55fb52cf2518f 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -8777,6 +8777,60 @@ bool smb3_is_transform_hdr(void *buf)
- 	return trhdr->ProtocolId == SMB2_TRANSFORM_PROTO_NUM;
- }
- 
-+/*
-+ * The decryption key is selected by the transform SessionId, but
-+ * the request is authorized under the session named in the
-+ * decrypted SMB2 header. Per MS-SMB2 the two must match, so check
-+ * the decrypted message and its compound chain before dispatch.
-+ */
-+int ksmbd_check_transform_session(struct ksmbd_work *work, u64 tr_sess_id)
-+{
-+	struct smb2_hdr *hdr = smb_get_msg(work->request_buf);
-+	size_t msg_len = get_rfc1002_len(work->request_buf);
-+	size_t off = 0;
-+	bool first = true;
-+
-+	if (msg_len < sizeof(*hdr)) {
-+		pr_err_ratelimited("Decrypted message is smaller than SMB2 header\n");
-+		return -ECONNABORTED;
-+	}
-+
-+	for (;;) {
-+		u64 sid = le64_to_cpu(hdr->SessionId);
-+		u32 next;
-+
-+		if (first) {
-+			if (hdr->Flags & SMB2_FLAGS_RELATED_OPERATIONS) {
-+				pr_err_ratelimited("RELATED_OPERATIONS set on first operation\n");
-+				return -ECONNABORTED;
-+			}
-+			if (sid != tr_sess_id) {
-+				pr_err_ratelimited("SessionId mismatch between transform and inner header\n");
-+				return -ECONNABORTED;
-+			}
-+			first = false;
-+		} else if (!(hdr->Flags & SMB2_FLAGS_RELATED_OPERATIONS) &&
-+			   sid != tr_sess_id) {
-+			pr_err_ratelimited("SessionId mismatch in compound chain\n");
-+			return -ECONNABORTED;
-+		}
-+
-+		next = le32_to_cpu(hdr->NextCommand);
-+		if (!next)
-+			return 0;
-+		if (next % 8) {
-+			pr_err_ratelimited("NextCommand %u is not 8-byte aligned\n", next);
-+			return -ECONNABORTED;
-+		}
-+		if (next > msg_len - off - sizeof(*hdr)) {
-+			pr_err_ratelimited("NextCommand %u is out of the message\n", next);
-+			return -ECONNABORTED;
-+		}
-+		off += next;
-+		hdr = (struct smb2_hdr *)((u8 *)smb_get_msg(work->request_buf) + off);
-+	}
-+}
-+
- int smb3_decrypt_req(struct ksmbd_work *work)
- {
- 	struct ksmbd_session *sess;
-diff --git a/fs/ksmbd/smb2pdu.h b/fs/ksmbd/smb2pdu.h
-index 3dafe8cc1bb13..9ea3e3437dbf6 100644
---- a/fs/ksmbd/smb2pdu.h
-+++ b/fs/ksmbd/smb2pdu.h
-@@ -1674,6 +1674,7 @@ struct channel *lookup_chann_list(struct ksmbd_session *sess,
- void smb3_preauth_hash_rsp(struct ksmbd_work *work);
- bool smb3_is_transform_hdr(void *buf);
- int smb3_decrypt_req(struct ksmbd_work *work);
-+int ksmbd_check_transform_session(struct ksmbd_work *work, u64 tr_sess_id);
- int smb3_encrypt_resp(struct ksmbd_work *work);
- bool smb3_11_final_sess_setup_resp(struct ksmbd_work *work);
- int smb2_set_rsp_credits(struct ksmbd_work *work);
--- 
-2.53.0
-
+ 		r = kvm_vcpu_write_guest_page(vcpu, msg_page_gfn,
+ 					      &hv_hdr.message_flags,
+ 					      msg_off +
 
 
