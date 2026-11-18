@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057543;
-	b=El/PtmbCKQ36N3UPOoTfexPk9kKFAETra/4bLIV4RKTUJRjiXNKD1vISUcVN2tewyVde
-	 4r4JxRayDzFJGqg0Kkah4BpvaKDq+ls85OPV9+NOxXpD7t1Mz1Wu6LjqBuPIJC2LShDve
-	 H53u5kiMzEpJ42YdR1KlYRXt1PIpOXFXqaGBXgjCtiAnmNnVj9+z6bGFoJdIirqECCn8L
-	 BTU1to9kYBFY/Aeoh4wTm9FBU84Mnt960UbXRiRexnU1ZkSEfh6gX1aZwqUU0Ysc/l/6f
-	 9gb9nCcxzvl5ZZ9fw7pyOfo6/vEelcwmaOT+Tsl3g0lJgHyVqegLiAj7Hj0RsKoXj8A==
+	t=1795057546;
+	b=PNBQMfoRKRF65sELl0rb73yRNdA76wc6jUEMSKYTGaxYhoPjtQB7Fkf60nDAXdV6M5/D
+	 wO1sbmIzMdA4uVLbb5PhUT8Shkj6e+WbpoBfL6d4l+JwOCxej+5SUZ3uAtKybLYB0NcII
+	 HoOOboYfFTihElT8pv93ck3QzTItcLK3emWXiNwfS1sZKBOxNJn0bIzgvDkCrIV6v0nhr
+	 8yTIPmH3OSPYauxt1eE2zpQBs2VYwQxJo8t9xZGnnhn3AFTW9pT/S+fp/6WBCuCdbgk0B
+	 fWZJPqC5E4hmIX1toMvaB+C57K5Ag5fGJA0AELnzG4iP000ea6d16/8KtOhKAeMC3bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/5wSjRuAJUTDIL/hBfZa7683mWffH38JH9PULC3TgVc=;
-	b=4nAGnbKtCchI8cC+hlRJ7cqaSrRNA2VTeCrwjlzb/A7aSkdiLAB4HEp4b399El26o8vt
-	 Lz1O3rk+/5zxUu95gk1b0Mln96A+//+a0CXHome4n8J+PejybUFQL/T+qJGZnxMveo0LP
-	 gHRT708GTguxU0GivbTGPjWwBIOPuXqhO1KXI9Mj1LeckXLC8b1V4jzJ9+FwiZLX1ovew
-	 tkOfwkCPubHWev/TEPZp81kfW2I2W5oJWP/0Gppetg1MHo2EcMbOKuEgdlO2cW+SSROVv
-	 QPGfqaSQ6StnLiBNeCRCwA5TBdFadEYUPFi5WfUk73t4ZrShWvPudkbdNdEjh3uW6Vg==
+	bh=UICvHQ8wR7iAF76I6PUAZfhBzoipMXvI12kk3p9j+CQ=;
+	b=PRBxLoewv18iGfKhHr88UEYlvSDp5k2ynLnvFWLIDsU50DTxumDhGnI5OXEF10Zeh0OJ
+	 hH7jymFAbz5KjIo3+fkeONvGEHLbgUaY98WMoXX05RYGYhhcJzGe/dFtW0uTOYmLuOkiA
+	 cCQ4AbRpRVGBl1vGw2JfAan7h65b6+OHEZqF/uWtetNNdtQ9DktjzvupISrCcWcuPD2LU
+	 3FjBIOakBpC96OV2JcpsLQN15YHLSmnH5zHPfZNbtUVfSfik8UXt9hnSbXgdXFR3M7bT6
+	 SPeA7Z9uRa4DvsubjW4BWsUC4dJa0VP96qU5eTEp6ajnxbJSvhGZefIT+LtywVXe+Kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wsGUC5w0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQbw1Idf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACF060A2607;
-	Thu, 19 Nov 2026 03:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49280606A33F;
+	Thu, 19 Nov 2026 03:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wsGUC5w0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E205E1F000C4;
-	Thu, 19 Nov 2026 03:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQbw1Idf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E10A1F000C4;
+	Thu, 19 Nov 2026 03:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057543;
-	bh=/5wSjRuAJUTDIL/hBfZa7683mWffH38JH9PULC3TgVc=;
+	s=korg; t=1795057546;
+	bh=UICvHQ8wR7iAF76I6PUAZfhBzoipMXvI12kk3p9j+CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wsGUC5w0Q1UjhuuG+HLtiFfv952/wk67FFK5HveDooEaapDjtySp2sfjw4oO3ewVm
-	 0/1FW8NniV+I+SldeI/6t79EUi3l5xIu2PpE7Abo1EYn6T0OPypU+Y9rFxO86ras+s
-	 V66Rmyw4d0pTL6WFyafGCtIGpdNA6CDOq2qV5EaI=
+	b=PQbw1Idf50vNPdFiWuoeQ/+T5SxhRAC4I3+rFs60vG3X4yYgsoLyp5vw72+w5pYuR
+	 aa2lYNg+SZEaP3hcIfvuKzu+8KLvdgoxzmUKfJnxjshlUpr/j9lm/npSguysnjx+0p
+	 Jrdn0ezkd+PELYDDKRp08buyLSbRypUA4p8UQG38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhe Liu <liuzhe1@kylinos.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0140/1848] wifi: brcmfmac: validate msgbuf flowring IDs before use
-Date: Wed, 18 Nov 2026 15:36:18 +0100
-Message-ID: <20261118145917.162819305@linuxfoundation.org>
+Subject: [PATCH 5.10 0167/1848] docs: cgroup-v2: fix stale "io" controller introduction
+Date: Wed, 18 Nov 2026 15:36:45 +0100
+Message-ID: <20261118145918.625259101@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,130 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Zhe Liu <liuzhe1@kylinos.cn>
 
-[ Upstream commit 32856f39fefdc75bd253cab999f996750628648e ]
+[ Upstream commit 3345c7248a9e2a91cb9e2477c29af16881706f4f ]
 
-Firmware messages carry flow_ring_id values which brcmfmac converts
-to an internal flowid by subtracting
-BRCMF_H2D_MSGRING_FLOWRING_IDSTART. The resulting value is used as
-a bit index in txstatus_done_map and as an array index into
-msgbuf->flowrings and the flowring state.
+The introductory paragraph for the IO controller still states that
+weight based distribution is "available only if cfq-iosched is in use"
+and that "neither scheme is available for blk-mq devices".  This text
+dates from when the cgroup v2 documentation was first written (2015)
+and was correct at the time, but is no longer accurate:
 
-Validate the firmware supplied flow_ring_id before using it. This
-prevents flow_ring_id values below BRCMF_H2D_MSGRING_FLOWRING_IDSTART
-from underflowing and rejects values outside msgbuf->max_flowrings.
+  * cfq-iosched was removed in v5.0;
+  * blk-mq is now the only block I/O path, and both the absolute limit
+    scheme (io.max via blk-throttle) and the weight based scheme
+    (io.weight via iocost, or io.bfq.weight under BFQ) work on it;
+  * latency based protection (iolatency) and I/O priority (ioprio)
+    controllers have since been added.
 
-In the tx status path, complete the packet with an error after
-removing a valid packet id so the skb is not leaked when the flow
-ring id is invalid.
+The rest of the section already documents io.weight, io.max,
+io.cost.{qos,model}, io.latency and io.prio.class correctly, so the
+introduction is the only part that contradicts them.  Rewrite it to
+reflect the current state.
 
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260723055618.550834-1-pengcan@kylinos.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Zhe Liu <liuzhe1@kylinos.cn>
+Reviewed-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmfmac/msgbuf.c      | 46 ++++++++++++++++---
- 1 file changed, 40 insertions(+), 6 deletions(-)
+ Documentation/admin-guide/cgroup-v2.rst | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-index cca042d88887b..f578ac00e5d1c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/msgbuf.c
-@@ -561,6 +561,28 @@ brcmf_msgbuf_remove_flowring(struct brcmf_msgbuf *msgbuf, u16 flowid)
- 	brcmf_flowring_delete(msgbuf->flow, flowid);
- }
+diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
+index 608d7c279396b..6506b15609324 100644
+--- a/Documentation/admin-guide/cgroup-v2.rst
++++ b/Documentation/admin-guide/cgroup-v2.rst
+@@ -1518,9 +1518,13 @@ IO
  
-+static bool brcmf_msgbuf_get_flowid(struct brcmf_msgbuf *msgbuf,
-+				    u16 flow_ring_id, u16 *flowid)
-+{
-+	u32 id = flow_ring_id;
-+
-+	if (id < BRCMF_H2D_MSGRING_FLOWRING_IDSTART) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	id -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	if (id >= msgbuf->max_flowrings) {
-+		bphy_err(msgbuf->drvr, "invalid flowring id %u\n",
-+			 flow_ring_id);
-+		return false;
-+	}
-+
-+	*flowid = id;
-+	return true;
-+}
-+
+ The "io" controller regulates the distribution of IO resources.  This
+ controller implements both weight based and absolute bandwidth or IOPS
+-limit distribution; however, weight based distribution is available
+-only if cfq-iosched is in use and neither scheme is available for
+-blk-mq devices.
++limit distribution.  Absolute BPS and IOPS limits are enforced by
++blk-throttle and apply to all devices, while weight based proportional
++distribution is provided by the iocost cost model controller
++(CONFIG_BLK_CGROUP_IOCOST) and, when the BFQ I/O scheduler is in use
++for a device, by BFQ's own cgroup support.  Latency-based protection
++(CONFIG_BLK_CGROUP_IOLATENCY) and I/O priority assignment
++(CONFIG_BLK_CGROUP_IOPRIO) are also available.
  
- static struct brcmf_msgbuf_work_item *
- brcmf_msgbuf_dequeue_work(struct brcmf_msgbuf *msgbuf)
-@@ -877,17 +899,23 @@ brcmf_msgbuf_process_txstatus(struct brcmf_msgbuf *msgbuf, void *buf)
- 	struct msgbuf_tx_status *tx_status;
- 	u32 idx;
- 	struct sk_buff *skb;
-+	u16 flow_ring_id;
- 	u16 flowid;
  
- 	tx_status = (struct msgbuf_tx_status *)buf;
- 	idx = le32_to_cpu(tx_status->msg.request_id) - 1;
--	flowid = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(tx_status->compl_hdr.flow_ring_id);
- 	skb = brcmf_msgbuf_get_pktid(msgbuf->drvr->bus_if->dev,
- 				     msgbuf->tx_pktids, idx);
- 	if (!skb)
- 		return;
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid)) {
-+		brcmf_txfinalize(brcmf_get_ifp(msgbuf->drvr, tx_status->msg.ifidx),
-+				 skb, false);
-+		return;
-+	}
-+
- 	set_bit(flowid, msgbuf->txstatus_done_map);
- 	commonring = msgbuf->flowrings[flowid];
- 	atomic_dec(&commonring->outstanding_tx);
-@@ -1234,13 +1262,16 @@ brcmf_msgbuf_process_flow_ring_create_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_create_resp *flowring_create_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_create_resp = (struct msgbuf_flowring_create_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_create_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_create_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring creation failed, code %d\n", status);
- 		brcmf_msgbuf_remove_flowring(msgbuf, flowid);
-@@ -1263,13 +1294,16 @@ brcmf_msgbuf_process_flow_ring_delete_response(struct brcmf_msgbuf *msgbuf,
- 	struct msgbuf_flowring_delete_resp *flowring_delete_resp;
- 	u16 status;
- 	u16 flowid;
-+	u16 flow_ring_id;
- 
- 	flowring_delete_resp = (struct msgbuf_flowring_delete_resp *)buf;
- 
--	flowid = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
--	flowid -= BRCMF_H2D_MSGRING_FLOWRING_IDSTART;
-+	flow_ring_id = le16_to_cpu(flowring_delete_resp->compl_hdr.flow_ring_id);
- 	status =  le16_to_cpu(flowring_delete_resp->compl_hdr.status);
- 
-+	if (!brcmf_msgbuf_get_flowid(msgbuf, flow_ring_id, &flowid))
-+		return;
-+
- 	if (status) {
- 		bphy_err(drvr, "Flowring deletion failed, code %d\n", status);
- 		brcmf_flowring_delete(msgbuf->flow, flowid);
+ IO Interface Files
 -- 
 2.53.0
 
