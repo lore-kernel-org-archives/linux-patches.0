@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019282;
-	b=Xpa+OXt1Frtj6R6MLZEmf8NSDmOg/uPgiAZhT6GKeQ5F/BhbgrbYbWSLXSfdMDMDIpt6
-	 0XQC0JTh6Docx+zaJuAMgfSmqQSTTfBmF1gd2GFq16p3Yawz7nEb8qC19c3vJfiu8fSgZ
-	 4cT4+tTicOB4O7v3xb7YIVMXEtZ7XsxLpbi8q6p60Jod5sFxdaTaezXdIiW/H27zptsSY
-	 i+9rwrbp7kkGSa6LHlyJYQ9+Bsnjfu8vbT8GpJQLUeAvcF8XbZHtxdT45otqqAV8sta1c
-	 6UWI7cwCBwRsmebULe9CuW8EjeId2jfCV6FLaL307mR2hpVXmVZ4g121Lth8uoCMHNQ==
+	t=1795019285;
+	b=KmQNwA2B2J4VRSiWXWy/FLUl4O6GoDy5kcLqrm5Ufu0a4UAO1F6/tL6CQfh6Wi1OPDgu
+	 BdwbRGh7Rm7F/Y8ykrvVWDP0iMGcxJOw91RbvWykxTrt9YIsf//4NcyMlcM/M1WzdCeqM
+	 iI5KQ9ilFcaDl9q5Fd/fZfVbqIwNJXqINlgZ6mV9h4p1SSNM7+RW7zczsCftgs2iQMqSE
+	 8rgGIGEulft8VLhf0d/0J3TSEUssmllUXDDSq7UhhqB6C330RDnl+yK3dxv6nbMKTjVVd
+	 YzUpHAQYgyAt9VefAZOC1xZQthEx+abgDzPlnxUjs1G/eIU8Y2rQ5CJZ0t1Nds3feWA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FAzBKWkESUsH8cNV1vVGIQW9DIg3FwjQOsU5xALSb30=;
-	b=J8M+XJsZRXnbVttH9WZXfzR02D5Il3YDgE3YkR+8afYxPhoaWZ7NFUroFE+hdb+PG5vm
-	 PImKE7Ov2CUpVa/GOMjznPUbYHTuEj4q/ppOBWjkwyinC4sIo3EdTTsEN+rZi2nT5sN1d
-	 Ks4SoJn1bOnoGBS1BarzJYpg4SvuBmuVibPENSX2zLTq5U/UBA7sPmaPgUrS8mYjgZHZ4
-	 9JcJfVm5+7Alu+hoz2e34LRQ4TDpZzWZGV4pS37dM0ibe6KGxdKAtu+8V6Tn3XqG3R3q6
-	 ukjh5qTpiYHDQ2oz1W7dsczFu7dFhfb757uLaTcUorE2j3zfiidvUv0XRZIDawXiDsA==
+	bh=2ldogF8TwaxEf0F4Q3eRBitGZS2YaRiOwv+mEnuxOwM=;
+	b=1Z6HaIus2Sy9elqMX/2BJTmqjfCz09ymK7X7BeKBLqaIOdJq2/hva5t12fzVC00W2Flz
+	 Lo/SBkRSMLKW/14eDQtjzwgm0wpju1jEBv1zX7khuXKarvpsgLNkCbLeB3koiXLJ9F8hE
+	 TgWyW8xA7gNoxl/lBjvTEMTCTb6x+wVgtKKDrI2uqmJiXgo2qqu7gnCFh/LVr4yyboKaW
+	 7eLvtdKD9r1BN7ONUOGI5EOVvFbILQCw38oj6L966Y6WdWQxdmnFlvY7sF4vYIY28rJaK
+	 xAqET594unsKE7tp3+YHb0xVL145sUzE4qUs0iRXyGB8qEVwcUiEG35YlqHDvkQ9pUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LGapvQ1b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTBDhDrL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1C1606A332;
-	Wed, 18 Nov 2026 16:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0A6606A335;
+	Wed, 18 Nov 2026 16:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LGapvQ1b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8C71F000C4;
-	Wed, 18 Nov 2026 16:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cTBDhDrL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73EAD1F000C4;
+	Wed, 18 Nov 2026 16:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019282;
-	bh=FAzBKWkESUsH8cNV1vVGIQW9DIg3FwjQOsU5xALSb30=;
+	s=korg; t=1795019285;
+	bh=2ldogF8TwaxEf0F4Q3eRBitGZS2YaRiOwv+mEnuxOwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LGapvQ1bWlGPXffNFTCwrNXY7ttgrx48iJS+9M+ZwlV/wCBz5ccA5jkehGn7T+CJH
-	 re2AgIwx7koifeLyfFOXtO+EekfIXDN3FSkYsiDQT08H+CcYYk4BWn697N8GEany9T
-	 1AQ4CK4qtgX6a4lWxRCAyjRAaNztUCWGNa2Yf0ic=
+	b=cTBDhDrLaQerunWH5Ph6jrXdNTcb60ry4nyiJfjLo9ye7hAEzT1F2tkPonbnl84fp
+	 0pu/n96ZFDoic1Sci7yNsETPw6LjvTC/9nsaVf55uoy/SKToZOZqaAcfM/ziBVN6zx
+	 xRK87R0t21+KKH67mj3mrNUZQxcWpVKuO2IuhLN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Norov <ynorov@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andrew Ballance <andrewjballance@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1541/2651] lib: fix lock initialization in region allocation benchmark
-Date: Wed, 18 Nov 2026 15:46:21 +0100
-Message-ID: <20261118150343.448402553@linuxfoundation.org>
+Subject: [PATCH 7.3 1542/2651] xen/pcifront: Fix PCI device reference leak in AER handling
+Date: Wed, 18 Nov 2026 15:46:22 +0100
+Message-ID: <20261118150343.484025556@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,71 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov <ynorov@nvidia.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 718de76e2d3dc38a30026f23909842ad26010b6e ]
+[ Upstream commit 5d12c51bd98cdb5a32cbfb606963b05740ec42f2 ]
 
-The Maple Tree benchmark uses MTREE_INIT() for a stack-allocated tree.
-Its static spinlock initializer leaves lockdep to use the lock address as
-the class key.  Since the address is on the stack, the first allocation
-triggers "INFO: trying to register non-static key" and disables lockdep.
+pci_get_domain_bus_and_slot() increments the reference count of the
+returned PCI device. pcifront_common_process() drops that reference only
+when the device or its driver is missing. All paths for a bound device
+either return directly after invoking an error recovery callback or fall
+through without calling pci_dev_put(). Consequently, each AER request for
+a bound device leaks a reference and can keep the device allocated after
+removal.
 
-The IDA benchmark has the same problem through IDA_INIT(), but runs after
-Maple Tree and therefore encounters an already disabled lockdep.
+Declare the looked-up device with __free(pci_dev_put), so every return
+path releases the reference after callback dispatch. This keeps the
+device alive while its callback runs and balances the lookup without
+restructuring the callback returns.
 
-Use mt_init_flags() and ida_init() to initialize the locks with persistent
-lock-class keys.  Keep initialization outside the timed allocation paths.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Link: https://lore.kernel.org/20260911155244.1406122-1-ynorov@nvidia.com
-Fixes: f4806cc63cc6 ("lib: test bitmap vs IDA vs Maple Tree performance for region allocations")
-Signed-off-by: Yury Norov <ynorov@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://lore.kernel.org/oe-lkp/202609101106.771b567e-lkp@intel.com
-Acked-by: Liam R. Howlett (Oracle) <liam@infradead.org>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Andrew Ballance <andrewjballance@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Fixes: 956a9202cd12 ("xen-pcifront: Xen PCI frontend driver.")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/r/20260813153138.3953222-1-ruoyuw560@gmail.com/
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260820135603.3901798-1-ruoyuw560@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/region_alloc_benchmark.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/xen-pcifront.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/lib/region_alloc_benchmark.c b/lib/region_alloc_benchmark.c
-index e88b4cf55c629..a644f3d5431a0 100644
---- a/lib/region_alloc_benchmark.c
-+++ b/lib/region_alloc_benchmark.c
-@@ -78,11 +78,13 @@ static size_t __init ida_size(unsigned long nr_ids)
+diff --git a/drivers/pci/xen-pcifront.c b/drivers/pci/xen-pcifront.c
+index 5c6f7796d204a..b8f2921cc253f 100644
+--- a/drivers/pci/xen-pcifront.c
++++ b/drivers/pci/xen-pcifront.c
+@@ -579,16 +579,15 @@ static pci_ers_result_t pcifront_common_process(int cmd,
+ 	int bus = pdev->sh_info->aer_op.bus;
+ 	int devfn = pdev->sh_info->aer_op.devfn;
+ 	int domain = pdev->sh_info->aer_op.domain;
+-	struct pci_dev *pcidev;
++	struct pci_dev *pcidev __free(pci_dev_put) =
++		pci_get_domain_bus_and_slot(domain, bus, devfn);
  
- static unsigned long __init benchmark_ida(unsigned long cap)
- {
--	struct ida ida = IDA_INIT(ida);
-+	struct ida ida;
- 	unsigned long cnt, idx, off, nr_ids = 0;
- 	ktime_t alloc_time, free_time;
- 	int id = -ENOSPC;
+ 	dev_dbg(&pdev->xdev->dev,
+ 		"pcifront AER process: cmd %x (bus:%x, devfn%x)",
+ 		cmd, bus, devfn);
  
-+	ida_init(&ida);
-+
- 	alloc_time = ktime_get();
- 	for (cnt = 0; cnt <= cap; cnt++) {
- 		for (off = 0; off < reg_sz[cnt]; off++) {
-@@ -125,12 +127,14 @@ static unsigned long __init benchmark_ida(unsigned long cap)
- 
- static unsigned long __init benchmark_maple_tree(unsigned long cap)
- {
--	struct maple_tree mt = MTREE_INIT(mt, MT_FLAGS_ALLOC_RANGE);
-+	struct maple_tree mt;
- 	unsigned long cnt, idx;
- 	ktime_t alloc_time, free_time;
- 	size_t sz;
- 	int ret;
- 
-+	mt_init_flags(&mt, MT_FLAGS_ALLOC_RANGE);
-+
- 	alloc_time = ktime_get();
- 	for (cnt = 0; cnt <= cap; cnt++) {
- 		ret = mtree_alloc_range(&mt, &idx, xa_mk_value(cnt + 1),
+-	pcidev = pci_get_domain_bus_and_slot(domain, bus, devfn);
+ 	if (!pcidev || !pcidev->dev.driver) {
+ 		dev_err(&pdev->xdev->dev, "device or AER driver is NULL\n");
+-		pci_dev_put(pcidev);
+ 		return PCI_ERS_RESULT_NONE;
+ 	}
+ 	pdrv = to_pci_driver(pcidev->dev.driver);
 -- 
 2.53.0
 
