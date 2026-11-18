@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042199;
-	b=M/cHZPPFQu+AmqTHoHU7Od9JiEerHQVThYJ0Ov1wsof64ETtlACKtFBs7j2OjcxYp4Ta
-	 Y/POkUENHW5SgjD0wDz6BGUKWanEjkLlF+4J60y+S5bt4ZfUPzomox9OncYVDg/bkPP83
-	 Vi2T1j30rmIyOkPaj06D5V6eNlvAZ/5PRzRWgc4E+/LQWqwAe02ONu1hUy5VXwesL2KDC
-	 49D8NL/Tj3RqrZbBzcDZ6N+mt52AZSdVL6gwm6Ky/c/mgROXMQJ30WtzxSc70azkCJeL0
-	 oEZMIU1mbR14MxM6zmoxhzANVbGv7jCkqw7TzWDebQo72suFlWiZigZ9b6cUNJOdvzg==
+	t=1795042202;
+	b=K3Hf6SyAw3gBtzPINTFk6AGKCVUPFVvzucerq+OPBYNspLj1u6h7FShrFz31rmJCyme7
+	 pB0OytVALx44aC32cllClt+x3zXlssN1Ircle5MlqcIIOF0MGboo/NGYFkusCtuYEXwnf
+	 oihyei8LLgzBix03uq08K7Y0rQARgvScM66Z0lE5Mwyl95RL4cfYdcm8t0sTWhIYAXbkf
+	 Ogdhp+lGxx1vLr6vTW5aV6p5kZhonPanwbjElwxCbQEQ1nHkV8w9oAFYVagGtLt4FsLJM
+	 A5+3FYmkY/PNqRJKiPaTxcyDRRqIdLqwaGjbif7NJzFVzFqvq9Ak1S3CQunTSg2hIiQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=72HilfA+aKLOyFq6t0rxWQ7c2c5idT098QJdjUp7RY4=;
-	b=XaBaYwJCdvg47hjH4ijsr204Je4lb6giaOujgYa1oxh/GHMEWlW3JMGJqAC7w8thJbUR
-	 fIsrVsejSGm4MylmwkncagUbcJxFsdbV3wGdrwknDXIiZ64MRWG+O+Z46LrZ5dGWkHMgE
-	 vuYaPuZo6zEjJA8wra/RuvrVHHpp3QDXO0w0t7WsYosDBswIphpgW2ECuouRN+D9bNtDs
-	 R4P2r9pSfUVq7KoFtPxX8b5QqmdF2NI5mTqrsOMjsJdTVVM7WXjRbJeyWy53NHLwwDwRk
-	 bB11BG4lxSe0VH/H1Nl2YSvTWDGCCPEN3KcObRjhS61h30STNt5KFuqw2hapPmJZGOQ==
+	bh=BIBdtgTDhTkwClHToxiim5VSJvO76mq5dxohOcIaj0c=;
+	b=TETcCyeHnvxcqVT6SeHWx04WXu9mlGsFUMVv8wZupDwy2Xk9jy30SvZh4It7VQl252VW
+	 9H2HmTkT9FnIYcyjyox5I6VFgLFGA8dkJNMnpDpp9Xgqzv6JC/i3aRjY/obb1uUOxMgkL
+	 A5VBo4FFKnQUBAzahGwjgUicrWJjgTwpt90Mp72gPOfPTA4j9Adumn/BdX5XzV80shQXv
+	 EhkWGiv9nIYvjdaBItcOFhJMHaFSngG5+ZrDzy92h+We00s7kE4k7zqIDBp0qB93G80pw
+	 n9Ym/thOHFMt+t8fMa6Kz9Wx+FSIvsxZ3BTVeHBX1yDJo3DpGD1GBVbNck/xX0O8Ukg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDq4lSW0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ptf1QTDn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A6B606A325;
-	Wed, 18 Nov 2026 22:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C74606A336;
+	Wed, 18 Nov 2026 22:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDq4lSW0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4AF1F000C4;
-	Wed, 18 Nov 2026 22:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ptf1QTDn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB941F000C4;
+	Wed, 18 Nov 2026 22:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042199;
-	bh=72HilfA+aKLOyFq6t0rxWQ7c2c5idT098QJdjUp7RY4=;
+	s=korg; t=1795042202;
+	bh=BIBdtgTDhTkwClHToxiim5VSJvO76mq5dxohOcIaj0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SDq4lSW0BLoDTufZq6y4031NG2I39Qak5uTwA/FU+RpLFR9Yin3fnQs32XA+g224p
-	 EXA6cG9f9/5k8ntAsz6ca/Q4xi8SkWijXGQu7hAezH3qEKM9C3FN7O4IYv2b3pRfMG
-	 /9NDeHakjsw5zbM/yhcsPI7m36RnbTWvxvfyFtLk=
+	b=Ptf1QTDnJAL7Jq6FWTv0A+OzKmuBemos8Q/kQX9ZJzwratTaNbLmJpN7Tro8ECmZ0
+	 w+ew6B3ilGC0C2oFfjHyh0k+nk/H8i/ymD/OXLNT3hRU/uQ9+7DvGC1F1JpXQie0lT
+	 SepXt/cfgUFv8jNwjujMdLk+YalgYktrArZuIqX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3086/3318] ibmveth: wait for in-flight transmits in ibmveth_close()
-Date: Wed, 18 Nov 2026 16:01:48 +0100
-Message-ID: <20261118150452.632156783@linuxfoundation.org>
+Subject: [PATCH 6.6 3069/3318] net: openvswitch: drop IP fragments on SCTP set action
+Date: Wed, 18 Nov 2026 16:01:31 +0100
+Message-ID: <20261118150452.181536483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,49 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit c807573ea58e615339a9c72675c45c157ffe245c ]
+[ Upstream commit 4d0d8f491307f22aea34b22f73351e1cd2ede735 ]
 
-ibmveth_close() frees the TX buffers after netif_tx_stop_all_queues(),
-which does not wait for an ibmveth_start_xmit() already running on
-another CPU. That transmit can copy into a freed buffer and hand PHYP
-a stale DMA address.
+The SCTP checksum is a CRC32c over the whole SCTP packet. set_sctp()
+updates it as old_csum ^ old_correct_csum ^ new_csum, with the two CRCs
+computed over the bytes of the current skb only. That is correct only
+when the skb holds the whole SCTP packet. For a first fragment, and for
+a later fragment, it holds just a part of it, and the CRC delta of a
+change at the start of the packet depends on how many bytes follow, so
+the checksum written is wrong. The receiver drops the reassembled
+packet.
 
-MTU, csum/TSO and buffer pool changes call ibmveth_close() directly
-while traffic flows. ifdown and the reset work go through dev_close(),
-which waits for running transmits only when the qdisc has an enqueue
-function, so with noqueue they race the same way.
+validate_set() accepts SCTP set action for any flow with ip.proto set to
+SCTP, regardless of the fragmentation bits, as it only receives the
+masked key. As the checksum cannot be fixed up without the whole
+datagram, fail the action for packets that are IP fragments of either
+family, so the packet is dropped with OVS_DROP_ACTION_ERROR instead of
+being forwarded with modified ports and an invalid checksum.
 
-Use netif_tx_disable(), which waits for running transmits.
-
-Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection; the race was not reproduced. Tested on a POWER10 LPAR
-with MTU changes during a ping flood, with no warnings. No kernel
-selftests cover ibmveth.
-
-Fixes: d6832ca48d8a ("ibmveth: Copy tx skbs into a premapped buffer")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-8-mmc@linux.ibm.com
+Link: https://lore.kernel.org/netdev/d4fc14f3-4308-4560-9012-43c09c1b3845@ovn.org/
+Fixes: a175a723301a ("openvswitch: Add SCTP support")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20261015124749.4694-2-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/actions.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 1475913c2541f..04dfeb5ea7f94 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -697,7 +697,7 @@ static int ibmveth_close(struct net_device *netdev)
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 8511e70890b45..e49964cdc5f5c 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -698,6 +698,9 @@ static int set_sctp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__le32 old_correct_csum, new_csum, old_csum;
+ 	int err;
  
- 	napi_disable(&adapter->napi);
- 
--	netif_tx_stop_all_queues(netdev);
-+	netif_tx_disable(netdev);
- 
- 	h_vio_signal(adapter->vdev->unit_address, VIO_IRQ_DISABLE);
- 
++	if (flow_key->ip.frag != OVS_FRAG_TYPE_NONE)
++		return -EINVAL;
++
+ 	err = skb_ensure_writable(skb, sctphoff + sizeof(struct sctphdr));
+ 	if (unlikely(err))
+ 		return err;
 -- 
 2.53.0
 
