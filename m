@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029260;
-	b=gtrfdKYk+bROYSrng3CdwCscgWVD5T+RMoCowXSbFgdvXqycDCePe6JObZfDponRqawX
-	 irSFPVyJOJiEkZCA2jKM+re1zjHmi6M3Kmyd2c/RrLU/niH4AKplWnP8RW65oA/HnCekG
-	 uClXzNbUbdpCWzSoOM6tRO1UreOHlq9OpoM8ASur3Tq0AVjFpQ80aN8ShwNErU2S5r2Ct
-	 Ni59FvPm65GX4fQF+OH4hSGuOUd0y54ZvsI63rmv7nf8c/YkmY1+IdPJKTQu/ApVVqB5b
-	 Y6oDa0sr05I7Wc6WPY3UX4QIZpLu36IpyvnxRMjrby8O7xS/XeBOMv3SyTpkWMpCc3w==
+	t=1795029263;
+	b=OijYb8FCT42i+kQDqtklTvFmOrK5Z6jIPn3HirXhbU4K4WJa/K2Sb/48MDoMIUr7llrU
+	 m3UZjMzGgOsW5YLH7Oxl3KeG+H8o5nyc0kIO17sC47PNLX4zaK8oMoCHbMG7qTDNvLRU1
+	 xCdl8RYR37x/l/Tff0HOudBhzsIMSGM3Lrmvcj9tyz2r3zgP/91i5TzKj7M+XsGwIqROn
+	 C5gTeiwKl83fGsO9JOoDQqmbyIK4bWj7Nzu8rO7qddSy0Ct/TaNDouwhI9DaMp8QmaptH
+	 7eKhYjV63QoJitwLNerQ7UejqPuKOqWNRMEGp/c6lgSwTpLqRMxsVQ0mtaSqaw64rqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029260;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029263;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fujv/Wss0AftbriWkg3O1iLPPoVJeuWGCPyYsEBsdEo=;
-	b=QyWCL5EALwgTjONE8R7rNQcNq7T6xWCjGEB7UoVHGmqwZ/QCNJ3u4bTh56Wth8LK+b21
-	 EuJ26qhUyB+wmAqme3gENc5R4Pn0Nu1+Mh4RGS8RGs8JuQ8Nolfv487hCjx+4VdwD409U
-	 yrKzcuOhHzOEhY5oiZiRoyGCFX0URSgd2LVhQROPmdAFX3Zp8pkOP4jxTZB1COh/XDVDJ
-	 7od5CFB1VnPLICJS5LUMXdCy8ZVh+uO5hdegPSnjNTYnM8/f8SNSuP+G6JjJmRKJIIHlB
-	 Uur/pzHARTQBHWYjSQUGwynlyXP/580HJZc8Fyb2hKsBsVsqK1V2p9lqMT++H5zhLfg==
+	bh=y17RfUGiinTCDVi+xm9sBSIcVWhGwJm+fRbGl6zwzVk=;
+	b=Yyb7rP0R6vPLDW0Q4xsxjnpfM2b3k/4Xfe8/gVxWjQLUWu0xn2viHvsqqi7XVKJn0HcR
+	 jz/n9fmbjmBN3uZNryHKh1MyZqlLDA7cAMNaUz6D0foSabA47nmC08w5Wr7zKIIti9i0b
+	 3PQYlHBvXppFE9ohxyld8howaGroXep7J+tOabBX6ea6Qq0NP8E6JAz9egxHaQ6fgGDlK
+	 3cIZuFGNNESbu7LUBM9Qd7prU9SSDpb63ugskZLfRUxLgqdPSyrfBzluBZfvkZL7qBdTB
+	 Qa9Kkt3oAoMSgVa+BzNCUCgJPkstcp2TYk/ENfbU4p12hVu5YMcEhRQzmNnvwLPIvCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qElA7EGX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qD6OcgL0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF32606A33A;
-	Wed, 18 Nov 2026 19:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36031606A325;
+	Wed, 18 Nov 2026 19:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qElA7EGX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C181F000C4;
-	Wed, 18 Nov 2026 19:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qD6OcgL0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846571F000C4;
+	Wed, 18 Nov 2026 19:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029260;
-	bh=fujv/Wss0AftbriWkg3O1iLPPoVJeuWGCPyYsEBsdEo=;
+	s=korg; t=1795029263;
+	bh=y17RfUGiinTCDVi+xm9sBSIcVWhGwJm+fRbGl6zwzVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qElA7EGXoNlDqnzPW4gjhy3TX6l+nDZpPTgdf5InB6oFSRkC1OZbot9P/UcPH/TB9
-	 k14PGkpbz7S5EdWPu7NdFYPzcv6uxW6+eYUB324zZMIZ0Wk4r8Hf6cLLi6U0EjqjDB
-	 7g+xmkdY4t5a0vaMt4JTCJLZX7eU2BjyVSPo3D1k=
+	b=qD6OcgL04M/KtmgDV8qvwN5YCQ/yghUS1+YeYZsOoCe9/ZdhxXeSgTDEPrSgF6bpe
+	 zlxfVzx2hP6lb7LLIfKh66MNGXpjvKKQBF/UwUbCAaoM17qUyQx68Bfwqs2XpEWZ3M
+	 ekbEJTgm7iDcdmMZ2VmoI+eDCeZUWvBSfYE6fuW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
+	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0287/1756] wifi: ath11k: fix locking problem in ath11k_dp_rx_tid_del_func()
-Date: Wed, 18 Nov 2026 15:40:14 +0100
-Message-ID: <20261118150019.822062749@linuxfoundation.org>
+Subject: [PATCH 6.12 0288/1756] wifi: ath12k: Free allocated CE IRQs on request_irq() failure
+Date: Wed, 18 Nov 2026 15:40:15 +0100
+Message-ID: <20261118150019.855621232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,98 +70,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit c7555d47b1d051e0406474349deccf74b491ae01 ]
+[ Upstream commit 12ca935af2e68447e9218a615ebbb5ff7faf1554 ]
 
-In this function, we iterate over dp->reo_cmd_cache_flush_list using
-list_for_each_entry_safe(), under dp->reo_cmd_lock for concurrent access,
-and for each expired entries we :
-  - drop the lock
-  - call ath11k_dp_reo_cache_flush()
-  - kfree() the entry
-  - retake the lock to keep on iterating
+When CE IRQ configuration fails, the driver does not release all IRQs
+that were successfully requested before the failure. This can leak IRQ
+resources during probe failure.
 
-list_for_each_entry_safe() protects us from deleting the entry during
-iteration but doesn't protect for concurrent access. So another thread can
-take the lock and modify the list in between and crash like below.
+Free the previously requested CE IRQs before returning from the error
+path to ensure that partially initialized IRQ resources are properly
+cleaned up during probe failure.
 
-To fix the issue, move all entries that needs to be freed to a local list
-while under the lock and then iterate over the list to free the entries
-without holding the lock.
+Factor out the CE IRQ cleanup into a helper to reuse the cleanup logic
+during both error handling and driver teardown.
 
-	BUG: Unable to handle kernel paging request at virtual address 00000010ddbeef8c
-	Call trace:
-	ath11k_dp_rx_tid_del_func+0x164/0x3c8
-	ath11k_dp_process_reo_status+0x1d4/0x2fc
-	ath11k_dp_service_srng+0x334/0x338
-	ath11k_pcic_ext_grp_napi_poll+0x30/0xc0
-	__napi_poll+0x34/0x184
-	napi_threaded_poll+0xb4/0x1d8
-	kthread+0xdc/0xe0
-	ret_from_fork+0x10/0x20
+Also free CE IRQs when external IRQ configuration fails, before
+returning from the error path.
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260813-ath11k-locking-v2-1-f4113a0bd0f4@gmail.com
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260819110215.2485514-2-aaradhana.sahu@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/pci.c | 29 ++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 9344d3f1f45da..077ded7f15da5 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -762,6 +762,9 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	struct ath11k_base *ab = dp->ab;
- 	struct dp_rx_tid *rx_tid = ctx;
- 	struct dp_reo_cache_flush_elem *elem, *tmp;
-+	struct list_head flush_list;
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index 4ba0c1bb32341..2017b54dc9f92 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -343,6 +343,19 @@ static void ath12k_pci_sw_reset(struct ath12k_base *ab, bool power_on)
+ 	ath12k_mhi_set_mhictrl_reset(ab);
+ }
+ 
++static void ath12k_pci_free_ce_irq(struct ath12k_base *ab, int num_ce)
++{
++	int i, irq_idx;
 +
-+	INIT_LIST_HEAD(&flush_list);
- 
- 	if (status == HAL_REO_CMD_DRAIN) {
- 		goto free_desc;
-@@ -783,23 +786,25 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	list_add_tail(&elem->list, &dp->reo_cmd_cache_flush_list);
- 	dp->reo_cmd_cache_flush_count++;
- 
--	/* Flush and invalidate aged REO desc from HW cache */
-+	/* identify aged REO desc that needs removal */
- 	list_for_each_entry_safe(elem, tmp, &dp->reo_cmd_cache_flush_list,
- 				 list) {
- 		if (dp->reo_cmd_cache_flush_count > DP_REO_DESC_FREE_THRESHOLD ||
- 		    time_after(jiffies, elem->ts +
- 			       msecs_to_jiffies(DP_REO_DESC_FREE_TIMEOUT_MS))) {
--			list_del(&elem->list);
-+			list_move_tail(&elem->list, &flush_list);
- 			dp->reo_cmd_cache_flush_count--;
--			spin_unlock_bh(&dp->reo_cmd_lock);
--
--			ath11k_dp_reo_cache_flush(ab, &elem->data);
--			kfree(elem);
--			spin_lock_bh(&dp->reo_cmd_lock);
- 		}
- 	}
- 	spin_unlock_bh(&dp->reo_cmd_lock);
- 
-+	/* remove aged REO desc from HW */
-+	list_for_each_entry_safe(elem, tmp, &flush_list, list) {
-+		ath11k_dp_reo_cache_flush(ab, &elem->data);
-+		list_del(&elem->list);
-+		kfree(elem);
++	for (i = 0; i < num_ce; i++) {
++		if (ath12k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
++			continue;
++
++		irq_idx = ATH12K_PCI_IRQ_CE0_OFFSET + i;
++		free_irq(ab->irq_num[irq_idx], &ab->ce.ce_pipe[i]);
 +	}
++}
 +
- 	return;
- free_desc:
- 	dma_free_noncoherent(ab->dev, rx_tid->unaligned_size,
+ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
+ {
+ 	int i, j;
+@@ -360,15 +373,7 @@ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
+ 
+ static void ath12k_pci_free_irq(struct ath12k_base *ab)
+ {
+-	int i, irq_idx;
+-
+-	for (i = 0; i < ab->hw_params->ce_count; i++) {
+-		if (ath12k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
+-			continue;
+-		irq_idx = ATH12K_PCI_IRQ_CE0_OFFSET + i;
+-		free_irq(ab->irq_num[irq_idx], &ab->ce.ce_pipe[i]);
+-	}
+-
++	ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
+ 	ath12k_pci_free_ext_irq(ab);
+ }
+ 
+@@ -690,6 +695,8 @@ static int ath12k_pci_config_irq(struct ath12k_base *ab)
+ 		if (ret) {
+ 			ath12k_err(ab, "failed to request irq %d: %d\n",
+ 				   irq_idx, ret);
++
++			ath12k_pci_free_ce_irq(ab, i);
+ 			return ret;
+ 		}
+ 
+@@ -700,8 +707,10 @@ static int ath12k_pci_config_irq(struct ath12k_base *ab)
+ 	}
+ 
+ 	ret = ath12k_pci_ext_irq_config(ab);
+-	if (ret)
++	if (ret) {
++		ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
+ 		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
