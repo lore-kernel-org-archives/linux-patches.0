@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053592;
-	b=CZNaDauG/GTRSjByAA6QmNjTnepTj7oMENnem7NADBp+h8PoylJfaEOSb2MDkUDKJwdK
-	 HopCeMvUpNLR2gA75a68F+PMq5VguOOxx8HS01jDUBHC5ImswNr5uSqb+x9CL2btN6PaN
-	 ySKKJ1YP0YkusLOLTpu3iYW6CXZT9DU9v/m1ySFYDmnGJnTtS1ul2KPPBZdC6CxWjFnKv
-	 uD1t203ZbOfW3+Swaa0tv96voACQCIWFpK8oFLZ9K3Bw6df9fzu6hZIgsEoc7onFCfLrW
-	 itNt4eDmNkX2ZLH1Dj8UJwQawcHCtItOTWzMah+Bt1C3g2MDlhJGgPrYVE+Q8h7Q/7A==
+	t=1795053595;
+	b=DwhQTIWjzzmnURW19O1NDZGpQuLyXi61o8DtA2HM4VfL22tACWhL2UVaif006qvzlAVe
+	 uNSiIxApWN04oIqUHPVjOJR3AR9WeRJeC1JCW6VnuolMl5bu5q9G7Uy1MTfvYffBnn4ci
+	 vak8TKwion/+Mw0jHr1D/SlQ6JZbNy/Iy5/8D0qBaZDJCenNY9O/wBiSgvDY4OrzVpVMg
+	 081JKEQiGspQbFy3XDYppEkRJHWNBZUbCW3OO0wOKu6x1hDoCS93/nHyw8PviIT3Qb+4N
+	 E2bKKAX7NcdnsNHOdCmTXNmukTGJ3dhhyxhUzpQNR5xGPr7jOkZUdWclVWGawDW31dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053595;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O11rLPcJkujQfdVailDL5ymCYSXlbh/m5HsGPBEtX/s=;
-	b=FXwo8Tmo/SKSjnRw+qIpKTWAEkCHFeQpia8x3jSCNOASmKEP/vjihFoDie8M+Qxv8g51
-	 YYzL4u/26Z1OLJpFDvPR2m8P7ewgOl12lwjiDgKdkJXsIdvmY6hwrYMWa2q5BDn4zn98m
-	 C9Nqdt82OY+ZiZeBYKF/M3AvVPOi3vPyTMvdshkk+J8OcBFTRPh9Lwn9DRZp+jfRaet2z
-	 m1uGzuAN+m4VbbGHZYsPM7d89A2TeXd7QZ8ALv2Ttz+nS7bnG0tMWBLcitz1eTGUnEICB
-	 kCoQjT/AVIufzSYiRx0bsRtVb3ccT3u3cDDOaQ0BxmXe7Gj044dPocqqRBRurMGC+0w==
+	bh=9FXA3EAMRFr9fJ3UFTCMk88tzTrgmeoG3qKVvSXV6VM=;
+	b=ur4Z1zon/gH6E5vvo3jJfgKyQAmoP3J4kxKLMWMqjFb2RUw9CYV5ClPNX6WfcIKmXOtW
+	 2b2i6/hFukk+e2etq9BNH3+tZmSB9dNOgvJqJ+5KCht6E/9wy7zrpfHgwuz0+NB4MQ8NC
+	 IyO3OiTeVESMtm+Oa5QVpQKHbcAEsrOjZ0Q/8E+N4ukKQO4Rg9WFQSOTCwKVubN+kMxQI
+	 SVt6jeVXKzzmNpS7iD8hsqEo7HQzWd8A23Ze6mez9RTAQQ83O3BlZs7OAYVD1TQanIIeU
+	 ka5Il/wXYTgY2CbPACtboSz7GTSFU4Zmfxi+MD+/oUDFsjo355SoJ5iejhTD00enQLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gxveVjGF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7aMtZpZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB77606A31C;
-	Thu, 19 Nov 2026 01:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E1C1606A31C;
+	Thu, 19 Nov 2026 01:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gxveVjGF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DCE1F000C4;
-	Thu, 19 Nov 2026 01:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F7aMtZpZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA691F000C5;
+	Thu, 19 Nov 2026 01:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053592;
-	bh=O11rLPcJkujQfdVailDL5ymCYSXlbh/m5HsGPBEtX/s=;
+	s=korg; t=1795053595;
+	bh=9FXA3EAMRFr9fJ3UFTCMk88tzTrgmeoG3qKVvSXV6VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gxveVjGFp9mrgkiJa+Q5voT7Eaol67kJrP2WTYWd8AS0G+hRLYUatmrLwS+9cbSxl
-	 G7tkBRrXobaOc1skrauqkjI7cwlWVr+eTNjeNCWspelFVQP8GXSfyDY2oGbRowHtye
-	 +MVMpppN76ZrTzC9kClxTMMX/GLiUjvpbZrZ2SgA=
+	b=F7aMtZpZAvzTJBzpiGFtr2iVOtk/wq5C6Kk1gaDCFEFeqOOCaWwoPmhNVpKlXcTAG
+	 e+ML5kzrGlriPjFVBezcr0rBGp+eOjFmArdokRJtmVnwo6dQjQJQ3gPzqKJz6Dcxua
+	 +0mWkMfAqZkEwUNPsTBkgP4VpQdn+lAB9wO+cZUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@xilinx.com>,
-	Mahesh Bodapati <mbodapat@xilinx.com>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0937/2214] microblaze: Use simple memset implementation from lib/string.c
-Date: Wed, 18 Nov 2026 15:43:33 +0100
-Message-ID: <20261118150049.845862975@linuxfoundation.org>
+Subject: [PATCH 5.15 0973/2214] ALSA: bcd2000: Fix use-after-free of MIDI URBs on file close
+Date: Wed, 18 Nov 2026 15:44:09 +0100
+Message-ID: <20261118150051.190498832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,85 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@xilinx.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 8f0f265e6cf5b6d99a5a5d01b36985bc1131183e ]
+commit f6c7bb1f0799591a62be75b9bcf84245b4f208b7 upstream.
 
-On microblaze systems which are not using OPT_LIB_FUNCTION only simple
-memset is used. This function is already implemented in lib/string.c that's
-why it should be used instead.
-This change is done in respect of issue fixed by commit 33d0f96ffd73
-("lib/string.c: Use freestanding environment") where gcc-10.x moved
--ftree-loop-distribute-patterns optimization is to O2 optimization level.
-This optimization causes GCC to convert the while loop in memset.c into a
-call to memset. So This optimization is transforming a loop in a
-memset/memcpy into a call to the function itself. This makes the memset
-implementation as recursive.
+The 5.15.y tree is still built with -std=gnu89, so the guard() and
+scoped_guard() helpers used by the upstream patch cannot be used
+here.  Use explicit spin_lock_irqsave()/spin_unlock_irqrestore()
+pairs instead; the locking scope is unchanged.
 
-Based on fix above -ffreestanding was used and it needs to be used on
-Microblaze too but the patch is not adding this flag it removes simple
-implementation to cause that generic implementation is used where this flag
-is already setup.
+bcd2000_disconnect() calls snd_card_disconnect(), which only prevents
+new opens, and then frees the MIDI URBs.  A rawmidi file that was
+already open can still be closed afterwards, and its close callback,
+bcd2000_midi_output_close(), calls usb_kill_urb() on midi_out_urb.
 
-Signed-off-by: Michal Simek <michal.simek@xilinx.com>
-Signed-off-by: Mahesh Bodapati <mbodapat@xilinx.com>
-Link: https://lore.kernel.org/r/4a143e7654f72ee893dcea9769946e17d3570b16.1645797329.git.michal.simek@xilinx.com
+The URB pointers are cleared on disconnect and their accesses are
+serialized with midi_lock, but bcd2000_midi_output_close() reads
+midi_out_urb without that lock.  The check can therefore pass just
+before the pointer is cleared, and usb_kill_urb() then runs on the URB
+that has already been freed:
+
+  BUG: KASAN: slab-use-after-free in usb_kill_urb+0x74/0x80
+  Read of size 8 at addr ffff8880078e7d40
+   usb_kill_urb
+   bcd2000_midi_output_close
+   close_substream
+   rawmidi_release_priv
+   snd_rawmidi_release
+
+  Allocated by: usb_alloc_urb <- bcd2000_init_midi <- bcd2000_probe
+  Freed by:     usb_free_urb <- bcd2000_midi_free
+                <- bcd2000_disconnect
+
+Take the lock in bcd2000_midi_output_close() and reference the URB with
+usb_get_urb() before releasing it.  The URB then stays valid until
+usb_put_urb() after usb_kill_urb() has returned, even if a disconnect
+frees it in the meantime.  usb_kill_urb() itself cannot run under
+midi_lock, as the completion handler takes the same lock.
+
+Fixes: b47a22290d58 ("ALSA: MIDI driver for Behringer BCD2000 USB device")
+Cc: stable@vger.kernel.org
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261031190936.5696-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/include/asm/string.h |  2 ++
- arch/microblaze/lib/memset.c         | 20 ++------------------
- 2 files changed, 4 insertions(+), 18 deletions(-)
+ sound/usb/bcd2000/bcd2000.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/include/asm/string.h b/arch/microblaze/include/asm/string.h
-index 34071a848b6a2..dbdb9eb4a733c 100644
---- a/arch/microblaze/include/asm/string.h
-+++ b/arch/microblaze/include/asm/string.h
-@@ -8,7 +8,9 @@
- 
- #ifdef __KERNEL__
- 
-+#ifdef CONFIG_OPT_LIB_FUNCTION
- #define __HAVE_ARCH_MEMSET
-+#endif
- #define __HAVE_ARCH_MEMCPY
- #define __HAVE_ARCH_MEMMOVE
- 
-diff --git a/arch/microblaze/lib/memset.c b/arch/microblaze/lib/memset.c
-index eb6c8988af027..615a2f8f53cbe 100644
---- a/arch/microblaze/lib/memset.c
-+++ b/arch/microblaze/lib/memset.c
-@@ -30,22 +30,7 @@
- #include <linux/compiler.h>
- #include <linux/string.h>
- 
--#ifdef __HAVE_ARCH_MEMSET
--#ifndef CONFIG_OPT_LIB_FUNCTION
--void *memset(void *v_src, int c, __kernel_size_t n)
--{
--	char *src = v_src;
--
--	/* Truncate c to 8 bits */
--	c = (c & 0xFF);
--
--	/* Simple, byte oriented memset or the rest of count. */
--	while (n--)
--		*src++ = c;
--
--	return v_src;
--}
--#else /* CONFIG_OPT_LIB_FUNCTION */
-+#ifdef CONFIG_OPT_LIB_FUNCTION
- void *memset(void *v_src, int c, __kernel_size_t n)
+diff --git a/sound/usb/bcd2000/bcd2000.c b/sound/usb/bcd2000/bcd2000.c
+index 95806e031e407..69c0f1b964b29 100644
+--- a/sound/usb/bcd2000/bcd2000.c
++++ b/sound/usb/bcd2000/bcd2000.c
+@@ -185,11 +185,26 @@ static int bcd2000_midi_output_open(struct snd_rawmidi_substream *substream)
+ static int bcd2000_midi_output_close(struct snd_rawmidi_substream *substream)
  {
- 	char *src = v_src;
-@@ -94,6 +79,5 @@ void *memset(void *v_src, int c, __kernel_size_t n)
+ 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
++	struct urb *urb = NULL;
++	unsigned long flags;
  
- 	return v_src;
++	/*
++	 * Reference the URB under the lock so that it stays valid until
++	 * usb_kill_urb() returns, even if a disconnect frees it in the
++	 * meantime.  usb_kill_urb() cannot run under the lock, as the
++	 * completion handler takes the same lock.
++	 */
++	spin_lock_irqsave(&bcd2k->midi_lock, flags);
+ 	if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
+-		usb_kill_urb(bcd2k->midi_out_urb);
++		urb = usb_get_urb(bcd2k->midi_out_urb);
+ 		bcd2k->midi_out_active = 0;
+ 	}
++	spin_unlock_irqrestore(&bcd2k->midi_lock, flags);
++
++	if (urb) {
++		usb_kill_urb(urb);
++		usb_put_urb(urb);
++	}
+ 
+ 	return 0;
  }
--#endif /* CONFIG_OPT_LIB_FUNCTION */
- EXPORT_SYMBOL(memset);
--#endif /* __HAVE_ARCH_MEMSET */
-+#endif /* CONFIG_OPT_LIB_FUNCTION */
 -- 
 2.53.0
 
