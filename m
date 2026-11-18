@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024361;
-	b=wUqCVB/UnzCk5E7Q6mUp89EZBczy8bf31K1lOxq9cv3zGGTt374+LVY068FWPLunyVGd
-	 GYFYzcDUTBzDt5mgNSSrnuHcW01YktlsN6rGLXoapuckRaIezHOdhcX3pAEADFVMNNwIl
-	 qpqHqmop+nRjpvSH9kCrsrWTnsku5AfYEpvlmGtJWgbxOK/ywVVd5yIcBWrH+XPpd+r3e
-	 k+6jyot/ROAdaC9JGQGvOMJO4FkQ5dNUUtu+FXiMbWQUFrLU/W/5gc8uhCurj/bD4gnDH
-	 jqwoAqgDyUvKSL4Rj2XaYFjm2YxIIjFDwJt1fas/yc8hXFZHpBJ3/niCRT392kiMmdA==
+	t=1795024364;
+	b=KeeHDUpGyHNEjSduiJpNa93Z0kxw/IqgDovOBXrQZkD/a124intP92ngoo9kdwzYCEHn
+	 bs4iVk4/rWG1nswLD6xo+Ho7oBgXNuDVJF9KEEsEdmR8yX67dZxxsc9eYxg6L5385WC2A
+	 yLzBzoWIYI42ZyLJqw0+fDcMU0/MtDLIf8MMSMbnBuFCZCa2aLwSbm55vjKlUEIJ97Og0
+	 jU+MPaNZs02RKIjA2EYJjlUVcx1Qg2j+r9HIRE7Mw3/gDw6lor4QlTr+tdqTTCy7Phcaz
+	 Wv3+IKABnDPiNBTv5LvM5ry4b74thKLT0DfiptGOGcVbYZIIfaFI14G3d6qBHaiJF5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vy4l9vWKZNmNfWY/hQYwOMIm1Clyw4dv6sbiRh7ewu4=;
-	b=MqvM8DGBZ8Kj92c36ZRl3BJ1MBAZv4itJt56ScvX6ZGB4mD0gqaX2IC1ekJK/PpugwG2
-	 gvCHSlN43iCbq7fGmHOpT2jrefHoIZyUvTlWIwEt420fPHcDmLiNjzAT+CUF/qI8rfnT9
-	 JsFqrqN1PfxPipLrXdpyofKRIFEsHj6KtHN8uB9frMpO3GYw55Tj4REVe02ArWPEZNLZn
-	 7nO3W/4VsTWWS3BJlSHzU3HyHiNDKH9y+s2zplDVuUm6lhqNkEnASR8EeBvK/x6wuSww7
-	 U/D/4h9JhqlWExIgkwMl/B331WL80Y3g2WS6Np275lRfPYdNSWR5JoGLsVgOqmxRWvA==
+	bh=Sjmlu9lbLZ0z0VHxlhjybiqyEPyL/kjyAIk7QZr51v4=;
+	b=BkGJaipaZApcrwOnirDE6QWJC135/lwR8hVw8YcU5mGaTSbdCONBMSMEy1Pg5go1FA7U
+	 sQwIrI67UHrhFinNaGm42Ip29CY82cm3UfUe/3C60FgYtwpo30L+HGnv3ha0Ax2ac9CJK
+	 7+cnRhQJOQ/e+s9gRBBwMhA81UWEV3w3L2TK8jzxOmx99gK7p8Df6/a94hVkuQmceun10
+	 8jaqa/mT8O1qlPEKYL3m2Yp44CoM7XlmnW6k6qYhnYhzNRe6fIFqVs6Cn5HP1Aox9gqaN
+	 BMVpjZryu+nV6sjaVugxndv9SipiTQFqWC+M367JeLCaYu6Xt9kjuzNVF/FFcc3LqIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTIoTSU+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxAVzZcJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B86960A260F;
-	Wed, 18 Nov 2026 17:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32911606A330;
+	Wed, 18 Nov 2026 17:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTIoTSU+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B341D1F000C4;
-	Wed, 18 Nov 2026 17:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DxAVzZcJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836021F000C5;
+	Wed, 18 Nov 2026 17:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024361;
-	bh=Vy4l9vWKZNmNfWY/hQYwOMIm1Clyw4dv6sbiRh7ewu4=;
+	s=korg; t=1795024364;
+	bh=Sjmlu9lbLZ0z0VHxlhjybiqyEPyL/kjyAIk7QZr51v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eTIoTSU+FF/PkGLB8AyvFxZCySMiyMOBwmogueDPt/kbdaSoNIb2MuNRJ5lkjLjNw
-	 l1iY6waNMZp7wb/k3bbzh5Pkr8EjfJmDt5AtOqJhg/UCpCwSFgN2sfxbXhA2t9AeMX
-	 2bDRhXejnKoTsnWsd3fR7s2DO+1UJfK3GF0M4bcw=
+	b=DxAVzZcJMGrIKSce2WfDqWJDhmscbpMJQryGwIsXemIVQNqXqe8dWdY/puO6jz/pE
+	 1aVsR/rkkJNUUIOMQyP09LvYVdcpifzm1MjTHfV9hptas9BRUkx9CCKlWx1TWUbARq
+	 DjHAu39RBZTktJlivGqgAay7F/svuQuks6JkvwjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
-	Prabhakar Pujeri <prabhakar.pujeri@dell.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0691/2151] NFS: use TCP for MOUNT when xprtsec= selects TLS
-Date: Wed, 18 Nov 2026 15:40:26 +0100
-Message-ID: <20261118150146.961240939@linuxfoundation.org>
+Subject: [PATCH 6.18 0700/2151] ASoC: rt1011: return cache sync errors from resume
+Date: Wed, 18 Nov 2026 15:40:35 +0100
+Message-ID: <20261118150147.276466434@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,58 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 72233aabc78cd0415c850641bc2a6e4fea23173f ]
+[ Upstream commit 432734a00bfae17baeff1a83b61bfc9c2ab20c12 ]
 
-An NFSv2 or NFSv3 text mount that specifies xprtsec= but no
-mountproto= crashes in nfs_init_timeout_values():
+rt1011_resume() restores cached registers during component resume but
+discards the regcache_sync() result and returns success. A failed replay
+can therefore leave the hardware register state stale without reaching
+the component error reporting path.
 
-  RIP: 0010:nfs_init_timeout_values+0x10a/0x110 [nfs]
-  Call Trace:
-   nfs_mount+0x1c3/0x330 [nfs]
-   nfs_try_get_tree+0x1e5/0x460 [nfs]
-   nfs_get_tree+0x64d/0x6d0 [nfs]
-   vfs_get_tree+0x2b/0xe0
-   vfs_cmd_create+0x5f/0xd0
-   vfs_fsconfig_locked+0x50/0x130
-   __se_sys_fsconfig+0x2f9/0x3a0
+Return the cache synchronization result. The ASoC component wrapper
+reports a negative callback result and retains the established
+best-effort resume state, so this adds observability without introducing
+rollback or retry semantics.
 
-nfs_validate_transport_protocol() sets nfs_server.protocol to
-XPRT_TRANSPORT_TCP_TLS when xprtsec= is present, but the switch in
-nfs_set_mount_transport_protocol() has no case for that value.
-mount_server.protocol stays zero, and nfs_init_timeout_values()
-calls BUG() on a transport it does not recognize.
+The successful resume path is unchanged.
 
-mount.nfs always appends mountproto= after probing the server's
-rpcbind, so only a caller that bypasses it, such as "mount -i" or a
-program that drives fsconfig() directly, reaches the crash.
+The issue was found by a tool we developed.
 
-Select TCP for MOUNT when the NFS transport is XPRT_TRANSPORT_TCP_TLS.
-nfs_mount() requests no transport security, so MOUNT already runs
-over plain TCP whenever mount.nfs supplies mountproto=tcp.
-
-Fixes: c8407f2e560c ("NFS: Add an "xprtsec=" NFS mount option")
-Signed-off-by: Chuck Lever <cel@kernel.org>
-Reviewed-by: Prabhakar Pujeri <prabhakar.pujeri@dell.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: d6e65bb7ff0d ("ASoC: rt1011: Add RT1011 amplifier driver")
+Assisted-by: gpt 5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260902013256.93072-7-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/fs_context.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/rt1011.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
-index 128ebd48b4f4b..912a45d033db8 100644
---- a/fs/nfs/fs_context.c
-+++ b/fs/nfs/fs_context.c
-@@ -402,6 +402,7 @@ static void nfs_set_mount_transport_protocol(struct nfs_fs_context *ctx)
- 		ctx->mount_server.protocol = XPRT_TRANSPORT_UDP;
- 		break;
- 	case XPRT_TRANSPORT_TCP:
-+	case XPRT_TRANSPORT_TCP_TLS:
- 	case XPRT_TRANSPORT_RDMA:
- 		ctx->mount_server.protocol = XPRT_TRANSPORT_TCP;
- 	}
+diff --git a/sound/soc/codecs/rt1011.c b/sound/soc/codecs/rt1011.c
+index b84dd18ddde95..122462b9f8bf3 100644
+--- a/sound/soc/codecs/rt1011.c
++++ b/sound/soc/codecs/rt1011.c
+@@ -2099,9 +2099,7 @@ static int rt1011_resume(struct snd_soc_component *component)
+ 	struct rt1011_priv *rt1011 = snd_soc_component_get_drvdata(component);
+ 
+ 	regcache_cache_only(rt1011->regmap, false);
+-	regcache_sync(rt1011->regmap);
+-
+-	return 0;
++	return regcache_sync(rt1011->regmap);
+ }
+ #else
+ #define rt1011_suspend NULL
 -- 
 2.53.0
 
