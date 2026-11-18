@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038213;
-	b=k+/TRcwxUDieo5Zd3yF2CoZEuOqZ9IULkne/rOju+aOOeSblk786exA883iRTtuxpfTA
-	 efpqy3q7I4TFSClBeeX3e4ZvKGzKl16wI1fNhuzOxCwZDLk2TeXMIkb+GbrB4BCZnffVj
-	 vqBDLRM42zKu/f87EwlqCD0xPtJTH6As4DUE7RfM3uoU6Oy4p6eIFK93RQn9f2gdvl1EG
-	 4knQbDSGEO2u9m4OkBncLuBem5nXPrUtdMVyJIkPpeKvwpwlMyFowPfjD8pj9IbzPf4Xq
-	 KnQf/KIK5irGL4Y4msUtHgC1gBXhXBGCVppC03C8JcECPyw5Au9bvAY/pFUPHnR7vRw==
+	t=1795038215;
+	b=jehUMo49+mrbnfRgO01TBxc8dIxNSdcInuDzHjlTe1UUPb/DEmHghFJ8DgQbtoyFDVt5
+	 fjjDF+XEq+roV5tZvlnbGQ7umH22492DlJ1nMXnQPJJezltdT2FS1FGrAwCfcJ13fXj8A
+	 hVBcFqNUSWnoqZab4sepF+xe4RyerOgVTmNYgl9a7sDtNFhmMAe2VQsBJSHNpj/5yJG+C
+	 U/pFp8dDM4EYHyqZ/kBRyHfD2pXmXpw+QkbMihsgM3+aqSP7KNIltaQHOgCA40fuyn18b
+	 Lr71RyTv6fMhbTo22LCXegCpTXotTypRoGbysstNy4v6Z42DpFLcyCR887ur72nT6Mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038215;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lqE9gx4nWtgcYBRQeql0nFt3G1wG++mTFA0iNzKPCv4=;
-	b=cRKqXgL1MQ+TWJ2D8VjKVz+Z6f+CGW/Q+FJQrqOUx4jWd0ZrNmbterH/ISQijr4xqaYh
-	 5jHB4sny1XIqgGh3hGuIPpfRBUDEiOpMEiFquRhhLgYRWdZqIBH6qwgwEbddPUWSykJhF
-	 1mE0jiK9P6rF3KFEH279Nq88tE975wG/tGIfEpFm9EDVn4gzdRGHEZHoFf3F7TNXQXjg+
-	 lpS6gryj5iFLypd6aiefSYHB0Ub9pqGLkOGPXk4SaH1N2PF+yeSRCZPpiRvuwIF42HW2i
-	 3spDmWYDmwSvURmpXzVSRCN+jv1vAs688KmbH/4Yivd72HAxdY6E7mBjDRvzpbbfHyA==
+	bh=uc+8w4gwcgjb6PF3Wi86pel2E6EKpuzN+M255fMGLEU=;
+	b=qGEcsZYh5qyxH0Cya75u7QcRcXwmb5xizTMNvnGOy1gY2WL6nqXMVbc6EVOvmbYK6ufD
+	 B/4yN7DYd7eddrpVjXJEMgaEwgSB7TheTwewoiecomPM+uKmHDRc8Y12rwhCsgKh9Edlj
+	 TFbiwxG+8NAgkiWCOGr5SUPV536idYfl9YPI0byb6yoGVR3g2Kf44ThUEKyH0kopCZl/I
+	 sg+c3DVWpPp4Cw4aZ/ZqDo6AbNFPsTmau0o+kqInlvSt7uT/5RMyd+tLd/u1vHPrX3ieC
+	 ag/xa6Q1cLa7D2lWewRnsralHlTlSIOzYniykDfobpy9NMVrtwC/ZHpvEGkh5e29T5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nQNO9/hz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qet9XRzX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68B606A320;
-	Wed, 18 Nov 2026 21:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2465606A31C;
+	Wed, 18 Nov 2026 21:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQNO9/hz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CACE1F000C4;
-	Wed, 18 Nov 2026 21:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qet9XRzX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D451F000C4;
+	Wed, 18 Nov 2026 21:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038212;
-	bh=lqE9gx4nWtgcYBRQeql0nFt3G1wG++mTFA0iNzKPCv4=;
+	s=korg; t=1795038215;
+	bh=uc+8w4gwcgjb6PF3Wi86pel2E6EKpuzN+M255fMGLEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nQNO9/hzSgfHWz70faNgABp47ZCzgFmMTaECKbqP1Gp1XVcC3LEqeligEcllerXeM
-	 zTbx346RviVz0KYgww+3R5mcMLl9aPMdVn8vugp8RWp6NPGlfh8AAT9KxCePFl03Bn
-	 TOqv7V8MBY0S40nDacLcHEYNcofqU8Y/qNOXsdeQ=
+	b=qet9XRzXEGZCXRAGcQWSANR53f1IEY25THAScXY9nyQO/Q6o90TzND95RsGiqB/Ra
+	 gOSjUU4d1Cpz/i4NroK6ds5M4JiJx9tUt0I5QqA9WmHT3OikLAMvxhiJMQ/YEfZnz8
+	 aTcmpUVybAy7D7sThFzd+nYtOw9153U+V97ogEnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	stable <stable@kernel.org>,
+	Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1666/3318] mm/shmem: honour F_SEAL_EXEC when an ACL is set
-Date: Wed, 18 Nov 2026 15:38:08 +0100
-Message-ID: <20261118150411.763776995@linuxfoundation.org>
+Subject: [PATCH 6.6 1649/3318] usb: typec: ucsi: ccg: Validate altmode index in GET_CURRENT_CAM response
+Date: Wed, 18 Nov 2026 15:37:51 +0100
+Message-ID: <20261118150411.230488774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,128 +70,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 0237c47ca17005ea41b510c6116f0257dbf84eab ]
+[ Upstream commit 02ee864e8d2142c5648998944c3306ea6a763c26 ]
 
-The owner of a memfd sealed with F_SEAL_EXEC can still change its
-execute bits by setting a POSIX access ACL. With CONFIG_TMPFS_POSIX_ACL,
-this lets an unprivileged owner make a non-executable memfd executable,
-bypassing vm.memfd_noexec=2.
+When the PPM reports more than one DisplayPort alternate mode for a
+connector, ucsi_ccg_update_altmodes() merges them into a single entry
+in uc->updated[] and sets uc->has_multiple_dp. In that case,
+ucsi_ccg_update_get_current_cam_cmd() rewrites the response of the
+GET_CURRENT_CAM command. The response is a single byte holding the
+index of the currently active alternate mode, and it is provided by
+the PPM firmware.
 
-simple_set_acl() updates i_mode directly, bypassing the seal check in
-shmem_setattr(). Add shmem_set_acl() to check the resulting mode. Share
-the F_SEAL_EXEC check with shmem_setattr() using memfd_check_seals_mode()
-in include/linux/memfd.h.
+The function uses this byte directly as an index into uc->orig[], and
+then uses the linked_idx read from that entry as the translated index
+into uc->updated[]. Both arrays have UCSI_MAX_ALTMODES entries, but
+neither index is checked against that size.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+If a malicious or buggy PPM reports a value of UCSI_MAX_ALTMODES or
+larger, e.g. 0xFF, uc->orig[cam].linked_idx reads over the end of
+uc->orig[]. The byte read from there is then used as the index for
+writing cam into uc->updated[new_cam].active_idx, so the out-of-bounds
+read is followed by an out-of-bounds write. This happens without any
+userspace action, since the UCSI core issues GET_CURRENT_CAM on its own
+when handling connector changes.
 
-Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: use common helper; simplify description ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-4-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: changed shmem_set_acl() to accept a non-const mnt_idmap pointer ]
+Fix this by rejecting responses whose index is out of range, printing an
+error and returning -EPROTO, so that the caller cannot accept this.
+Also check linked_idx before using it as an index, so that the write into
+uc->updated[] is always within bounds.
+
+The response is now only processed when the command completed without
+an error. ucsi_sync_control_common() only reads the response when the
+CCI reports command completion, so otherwise the buffer is not filled
+and must not be mistaken for an invalid index.
+
+This bug was found with a Python script that traces where firmware input
+is used.
+
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
+Cc: stable <stable@kernel.org>
+Reported-by: Nathan Rebello <nathan.c.rebello.27@dartmouth.edu>
+Assisted-by: LLM
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20261003215520.611083-2-eeodqql09@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: adapted ucsi_ccg_sync_control() changes to ucsi_ccg_read(), relying on existing core completion and error checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memfd.h |  9 +++++++++
- mm/shmem.c            | 35 ++++++++++++++++++++++++++++++-----
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/memfd.h b/include/linux/memfd.h
-index 40cc726a8a0ce..a0f022e2a58cb 100644
---- a/include/linux/memfd.h
-+++ b/include/linux/memfd.h
-@@ -2,8 +2,17 @@
- #ifndef __LINUX_MEMFD_H
- #define __LINUX_MEMFD_H
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index 623094cba276e..dde65e740bd8d 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -356,14 +356,28 @@ static int ucsi_ccg_init(struct ucsi_ccg *uc)
+ 	return -ETIMEDOUT;
+ }
  
-+#include <linux/fcntl.h>
- #include <linux/file.h>
+-static void ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
++static int ucsi_ccg_update_get_current_cam_cmd(struct ucsi_ccg *uc, u8 *data)
+ {
+ 	u8 cam, new_cam;
  
-+static inline int memfd_check_seals_mode(unsigned int seals, umode_t old_mode,
-+		umode_t new_mode)
-+{
-+	if ((seals & F_SEAL_EXEC) && ((old_mode ^ new_mode) & 0111))
-+		return -EPERM;
-+	return 0;
-+}
-+
- #ifdef CONFIG_MEMFD_CREATE
- extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
- unsigned int *memfd_file_seals_ptr(struct file *file);
-diff --git a/mm/shmem.c b/mm/shmem.c
-index e6b39b49caec7..0f7c7ec48837a 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -75,6 +75,7 @@ static struct vfsmount *shm_mnt;
- #include <linux/magic.h>
- #include <linux/syscalls.h>
- #include <linux/fcntl.h>
-+#include <linux/memfd.h>
- #include <uapi/linux/memfd.h>
- #include <linux/rmap.h>
- #include <linux/uuid.h>
-@@ -1202,10 +1203,11 @@ static int shmem_setattr(struct mnt_idmap *idmap,
- 	if (error)
- 		return error;
- 
--	if ((info->seals & F_SEAL_EXEC) && (attr->ia_valid & ATTR_MODE)) {
--		if ((inode->i_mode ^ attr->ia_mode) & 0111) {
--			return -EPERM;
--		}
-+	if (attr->ia_valid & ATTR_MODE) {
-+		error = memfd_check_seals_mode(info->seals, inode->i_mode,
-+					       attr->ia_mode);
-+		if (error)
-+			return error;
- 	}
- 
- 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
-@@ -4524,12 +4526,35 @@ static const struct file_operations shmem_file_operations = {
- #endif
- };
- 
-+#ifdef CONFIG_TMPFS_POSIX_ACL
-+static int shmem_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
-+		struct posix_acl *acl, int type)
-+{
-+	struct inode *inode = d_inode(dentry);
-+	umode_t mode = inode->i_mode;
-+	int error;
-+
-+	if (type == ACL_TYPE_ACCESS) {
-+		error = posix_acl_equiv_mode(acl, &mode);
-+		if (error < 0)
-+			return error;
-+		error = memfd_check_seals_mode(SHMEM_I(inode)->seals,
-+					       inode->i_mode, mode);
-+		if (error)
-+			return error;
+ 	cam = data[0];
++	if (cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "PPM returned invalid alternate mode index %u\n",
++			cam);
++		return -EPROTO;
 +	}
-+	return simple_set_acl(idmap, dentry, acl, type);
-+}
-+#else
-+#define shmem_set_acl simple_set_acl
-+#endif
 +
- static const struct inode_operations shmem_inode_operations = {
- 	.getattr	= shmem_getattr,
- 	.setattr	= shmem_setattr,
- #ifdef CONFIG_TMPFS_XATTR
- 	.listxattr	= shmem_listxattr,
--	.set_acl	= simple_set_acl,
-+	.set_acl	= shmem_set_acl,
- 	.fileattr_get	= shmem_fileattr_get,
- 	.fileattr_set	= shmem_fileattr_set,
- #endif
+ 	new_cam = uc->orig[cam].linked_idx;
++	if (new_cam >= UCSI_MAX_ALTMODES) {
++		dev_err(uc->dev, "invalid linked alternate mode index %u for %u\n",
++			new_cam, cam);
++		return -EPROTO;
++	}
++
+ 	uc->updated[new_cam].active_idx = cam;
+ 	data[0] = new_cam;
++
++	return 0;
+ }
+ 
+ static bool ucsi_ccg_update_altmodes(struct ucsi *ucsi,
+@@ -547,7 +561,7 @@ static int ucsi_ccg_read(struct ucsi *ucsi, unsigned int offset,
+ 	switch (UCSI_COMMAND(uc->last_cmd_sent)) {
+ 	case UCSI_GET_CURRENT_CAM:
+ 		if (uc->has_multiple_dp)
+-			ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
++			ret = ucsi_ccg_update_get_current_cam_cmd(uc, (u8 *)val);
+ 		break;
+ 	case UCSI_GET_ALTERNATE_MODES:
+ 		if (UCSI_ALTMODE_RECIPIENT(uc->last_cmd_sent) ==
 -- 
 2.53.0
 
