@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016954;
-	b=VViNimetHn9DdWodxaEoTxK5Yp/a5eT6u/35Rjj+OcUykfxvdcEOeIx6p+jEUHfe2YL/
-	 dJStIG1TATZLYHt1GFAyTQulQUrT7A5NbNYDkOTGw4p9N7Xix/nxRbzo53/1F+M98EwUU
-	 hAqEPYhAAUYW2A8AvjTc5nIqK7AGwOtQijHzGv4quD7RkeIjX+rbq0b+i4okOSO1MChY/
-	 GZGDN3Kfy90TSB29hy9UOmiek+66BlHMkzqysxe/pD7QjJGOTj9/FGcaHTjOj2B4qehXh
-	 bDhnugRBQjak143p7YuvjvSUQFa/FdMrivmKtgsFBxG54u3t/Mu5eiG9M1W8Ai6sJNA==
+	t=1795016957;
+	b=d66sJVKZKnOHmjZmzgp2YxGChGeLoo1FHavrj56zI2AXvvIqoIndTJxHqcgXWDwTmYTC
+	 Qu9Kh/mUQqM2pLz6Hoezkw1/1lEPiwxzlXxy7n5P9oueweQf4+uW6AFwrwRLyIdzP8kUF
+	 PBo5QxP02Zxd4u7QsONN+GYcfbgEthv2JjxS27xP1fhTqkU52ntP6Mp7ht3G4fYOeJbWr
+	 dM2tUWa1S5WQ37M2lzGba86Kb4+TPBmZ2bh7pVkFrkHP3j/sC/ydjRV9BkTNwc7bGiaEm
+	 UBvw3FlqSH/ePVXoCm9ymiS0SD7XhffVpevh2+ejSf7G/IN1I3eeR1msIJBIFNMyuTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016954;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016957;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bAt253pcepu1W1Axi49WVBjh4O6FC5LSUyPyOCFKn+s=;
-	b=ysW8324ad+iwZlAog58Sgq6KPiUHWvi25tR2N6DLHITLUekkf10TwmHt4lH09uPJMZtU
-	 uzyi9fftt3oaxPiZIZXvFG2WrWYKk8MuqYp48lUO5fj5np1blYNtyIlIgQCAnmIROjmmU
-	 BkMXfZB77URC12CL61Z3usqtziRVwqQ2UIgyot44/s0gq8CKIuNijv5D05lrX5D7VPJ1G
-	 yxY0a1SUsVmpHfM3QtxgqwDyJwi3lpVlz6l+J6wxUMBNfM+hUCPwm3prEOrPnvUhb+0so
-	 Aq5EioDLOOZpgZtv2yTLnzqGbYmS3y2KiLPjIPL51RyrAVJecettLJ2NmGYEB1hQ8gA==
+	bh=l8D0fedREe5vaFU7f5vcCliGnD/UqT2TbQ6tdPUaPMA=;
+	b=vd2ivgYrsCxiKCxMF7vwA94GLV7hPifQwdennG/zr687krcpYdMCB+ay62kBTRbpuYWZ
+	 puEtMwHvUbUjprGahYQwBYtJ45hL73vjBTuKjviZ2n0GaBkwYtiY0kxoEONM8PQCv4+p/
+	 LpiX6hjX/EzjkFQEcBay1B6FTcNF6FTWF9lD1z5tj6TQ18kQPHYAX1aEbJKAR632Whmur
+	 u9P41V1jI1BQHvnGZ+4RqqRYk0K9FNpwm9ThYTRYy5B0ZJdiLjfHZVMsdvyB+/JhhyIe0
+	 HEJyTuvLAZlZt/ZDh716QPvQMhbsJMR8Xj8mhTayFNF7pMarh7kfyE+vdD4WIQdNepA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=puo32PId;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mbgo/h3Z";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2057606A334;
-	Wed, 18 Nov 2026 15:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A4A606A32F;
+	Wed, 18 Nov 2026 15:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=puo32PId
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F411F00927;
-	Wed, 18 Nov 2026 15:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mbgo/h3Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69251F000C4;
+	Wed, 18 Nov 2026 15:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016954;
-	bh=bAt253pcepu1W1Axi49WVBjh4O6FC5LSUyPyOCFKn+s=;
+	s=korg; t=1795016957;
+	bh=l8D0fedREe5vaFU7f5vcCliGnD/UqT2TbQ6tdPUaPMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=puo32PIdHrvDO/zNX3yaltpkAvq9T+n5EFpBLVrhGl5kSqxaCT21SM21Vgn6s1Aht
-	 5HBOdIci447Y8ppvrMEE+O4yAO/lMU8280PErpsZEYWR3Huk09s/K8XEZw/GY6d4F0
-	 HM0VOlrdrzUA6GzBttSv/jz+0qG9bBq4P3cQLQAg=
+	b=mbgo/h3ZFnRUheksneaMBJAsYl8QDnVNz5e5IZsWAPtAjhEsv6aIevIK+0BITBHap
+	 heaZZYkFVocfXL6vFwgjSR8flydLqEMBeaRstNuODDxg2tPnK0cmm+g+vDGt6keVUc
+	 te/DeNtjGz7zU7jfCPYXciyJ0OxUV/z8CoKghN4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Laurent Vivier <laurent@vivier.eu>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0712/2651] swim: Check for CRC errors
-Date: Wed, 18 Nov 2026 15:32:32 +0100
-Message-ID: <20261118150313.455072611@linuxfoundation.org>
+Subject: [PATCH 7.3 0713/2651] swim: Simplify return value initialization
+Date: Wed, 18 Nov 2026 15:32:33 +0100
+Message-ID: <20261118150313.491689533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,59 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 01bff87152e6748fbac9ccd645d3d5f490d75ddc ]
+[ Upstream commit 385a44e78702762e2fce796cf37b6f465d86a87f ]
 
-After reading either the sector header or sector data, examine that flag
-in the handshake register which holds the result of the CRC calculation.
-CRC validation has to take place with the last byte still in the FIFO.
-This flag can't be checked by the caller because by then all bytes will
-have been retrieved from the FIFO. Return an error code when appropriate.
+Initialize the error result once only. Update the result only after a
+successful read.
 
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/9bfcd0414192d1b95803c16701d62732ff6e8f3f.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/28322f0cbefd865bdfb679bab4352c111996795b.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d66bdef0a308 ("swim: Check error register during sector read")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/block/swim_asm.S | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index 208622ac4aeb9..250e408060e8b 100644
+index 250e408060e8b..81c824923336c 100644
 --- a/drivers/block/swim_asm.S
 +++ b/drivers/block/swim_asm.S
-@@ -42,6 +42,8 @@
- 	.equ	max_retry, 40
- 	.equ	sector_size, 512
- 
-+	.equ	.Lhr_crc_error,		0x02
-+
- 	.global swim_read_sector_header
- swim_read_sector_header:
+@@ -49,6 +49,7 @@ swim_read_sector_header:
  	link	%a6, #0
-@@ -134,6 +136,10 @@ crc1:	tstb	%a2@
+ 	moveml	%d1-%d5/%a0-%a4,%sp@-
+ 	movel	%a6@(0x0c), %a4
++	moveq	#-1, %d0
+ 	bsr	mfm_read_addrmark
+ 	moveml	%sp@+, %d1-%d5/%a0-%a4
+ 	unlk	%a6
+@@ -63,7 +64,6 @@ mfm_read_addrmark:
+ 	movel	%a6@(0x08), %a3
+ 	lea	%a3@(read_handshake), %a2
+ 	lea	%a3@(read_mark), %a3
+-	moveq	#-1, %d0
+ 	movew	#seek_time, %d2
  
- 	moveb	%a3@, %a4@(o_crc1)
- 
-+	moveb	%a2@, %d5
-+	andb	#.Lhr_crc_error, %d5
-+	bne	signal_nonyb
-+
+ wait_header_init:
+@@ -143,10 +143,7 @@ crc1:	tstb	%a2@
  	tstb	%a3@(read_error - read_mark)
  
  	moveq	#0, %d0
-@@ -226,6 +232,10 @@ data_crc1:
+-	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-	rts
+ signal_nonyb:
+-	moveq	#-1, %d0
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	rts
  
- 	moveb	%a3@, %d5
+@@ -155,6 +152,7 @@ swim_read_sector_data:
+ 	link	%a6, #0
+ 	moveml	%d1-%d5/%a0-%a5,%sp@-
+ 	movel	%a6@(0x0c), %a4
++	moveq	#-1, %d0
+ 	bsr	mfm_read_data
+ 	moveml	%sp@+, %d1-%d5/%a0-%a5
+ 	unlk	%a6
+@@ -238,15 +236,12 @@ data_crc1:
  
-+	moveb	%a2@, %d5
-+	andb	#.Lhr_crc_error, %d5
-+	bne	data_exit
-+
  	tstb	%a3@(read_error - read_mark)
  
+-	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-
+ 	/* return number of bytes read */
+ 
+ 	movel	#sector_size, %d0
+ 	addw	#1, %d4
+ 	subl	%d4, %d0
+-	rts
++
+ data_exit:
  	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-	moveq	#-1, %d0
+ 	rts
 -- 
 2.53.0
 
