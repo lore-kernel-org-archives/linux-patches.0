@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048171;
-	b=BSopoTubDK+B4VxlK8xJ80Pl3lTapD3GazePt17HxGMkWPALDqZCOdEYHk7nR0v3asg2
-	 3RVTP0yJd+hxr1aAi7bgAe0owSiYELMBOsP9JiAFVC1wJufD1mTn35lTzX57cCKSrsiSi
-	 rjr+wJL7x3GfJs+pvff24V465Pao622D72tkYQAYhfTUCMSUv2E0Kd/8J4AO8z8nIiH9H
-	 9uwWH4TCdIgset43GTzf5reqL6m0DB+4spbyvtNOBfencaoz51KWpzTCFrOi9itAtJ2k0
-	 cY5bkxjPuE60zei8LmADvIJ7MN27x4I+dvdopfTKK/wGMHT7363P/TE4/BSEVm8o5+Q==
+	t=1795048174;
+	b=oez7X5OgGkdhoUzMgjWvr8OqdEcRZkmdpkp4kJygWJnQ8emba2k1YYIW5Cpabxv8TGUw
+	 vko7knnKxq3sXe5giCWpZD75eVmuA1kDV8zY62o+8Wtxz4iwEgsJDbDhTWfVHxFB5ZLr4
+	 uGWiJcirzRBs26M0myciKoTavc3BabKmTPxFNkBcKWRQN9JGjkPkF2+ZBKm4BBk+lZCsK
+	 FEYpmlUmt8WBF/wnLyyrQGdIKZHRl7yH7xMa8HwK7cou6FLMA6xqLqHx6N+uiuPB5F5cd
+	 kU0vjMSgOdhIbN+Vykkue1mxa37H5zDvF9EREzK3da5Y+sUD8/KYaAdDSs3h+kqly9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sPqAiietO/9pqywjLeQcqW737pVOJR6rQieioRSS8ew=;
-	b=mjxhofCsMAsdFroniiF6gGIupznJDyDyFmV+EMTm21tOQN6/ZD1rq3LCDlXSWvZekzA1
-	 /DjTZ4rdLceRI18hMzLD2S7cN2txKU4fURkwuQIhheGnWczAP26GILXR8ZFvSH19FQwQR
-	 4zepwz1ogfDmrsNyPKiaJ3728+rljTjeEflxoct5K4o/j4ncSJnEa5TYUu8m3TwIhCSRA
-	 5N6lKBXG9MikASimOJHBrsQwqRCwf++sSExg1yYQboSxF/W5kM7eD7VxnypqUkz5ox1e1
-	 fztX5Zwg7QzVwZDybLjvunBZjS+fmBuEm+pDmaZaEgeAXjpbvlLmiCxtiu6U4gqRFSg==
+	bh=aVcQvND/BkAWLP5bc9wfhewBHffZXoGCvqD5bv5pt8c=;
+	b=TUKSPaLjzqKwi3w0m3MSxWFrWNTDmQW17rCYnxen1fK7zGOCD8caR6LORSH/WwJIlWux
+	 v7+y52taRtE0SG/vHzb2BytRrTvOJEbPKrjuNdOfCzmv+A21NWghxsbh9FKWKmfWFwywL
+	 FOErn6Y3wxv1S6SoeioveJgknOuBNXfbKc7NYkFIrk9xBkhht2khSbf2DUeArtJg5z0wt
+	 gMVHG5xprLR+958O1oslSNAhacrH4fvvZe0znd6cGO06/un7kCRDfUWIffZtDqhmYxUhW
+	 rjHsLiI4KwjEmg0T7gw5XPWuU4QaAGketaSv4YT07WwGC+Zyn0lZQAjqCayAUVLUWMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="odQsc/v2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZWdugQd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52203606A320;
-	Thu, 19 Nov 2026 00:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E42606A31C;
+	Thu, 19 Nov 2026 00:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=odQsc/v2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35C01F000C4;
-	Thu, 19 Nov 2026 00:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PZWdugQd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F1E1F000C4;
+	Thu, 19 Nov 2026 00:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048171;
-	bh=sPqAiietO/9pqywjLeQcqW737pVOJR6rQieioRSS8ew=;
+	s=korg; t=1795048174;
+	bh=aVcQvND/BkAWLP5bc9wfhewBHffZXoGCvqD5bv5pt8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odQsc/v2eKWzRos+Rp1LJK28PV6vHdLBaqKsvfJLVjZijAhCouJlU9elg6bopRR1S
-	 OUa0KY/s/IcTS0EGbxEQ0XqpsXhxXYFjRwY/ge8/PDqH4sjrAY1LubjKpCoAGFPTVj
-	 prGHCmz23QfiK8fTebqNo6GiXCabDVOxWHHQw21I=
+	b=PZWdugQdQxE1XrdmDbEuxZXYTvueN6wAk8g0HgPubDeLOw8Jy/0c+c7xApneuigIR
+	 MSgipfVM5df5ueaEDWfQ04UDXkk+lud6pQyT4zUWF1PI4E6N/cpm4Cf0eitra6aNLT
+	 89eYutvV5khLwk/BqKspfteWrJwly2qY4e5Rfpn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1898/2857] ACPI: glue: Fix up and adjust acpi_unbind_one()
-Date: Wed, 18 Nov 2026 15:48:52 +0100
-Message-ID: <20261118150309.571502897@linuxfoundation.org>
+Subject: [PATCH 6.1 1861/2857] scsi: mpi3mr: Fix out-of-bounds phy array access on link change
+Date: Wed, 18 Nov 2026 15:48:15 +0100
+Message-ID: <20261118150308.245013762@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,80 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 693546852656075e0247ac637b05625ead134eff ]
+[ Upstream commit f67caaa2521a3c8f931d1e679d831ba5ca654794 ]
 
-Since none of the acpi_unbind_one() callers check its return value and
-it always returns 0 anyway, make it void.
+The phy number that comes with a link change is used to index the node's
+phy array without being compared against the number of phys allocated for
+that node.
 
-Also notice that unlocking physical_node_lock for the given ACPI device
-should be carried out before dropping the reference to it in case that
-reference is the last one (highly unlikely), so rearrange the code to
-make that happen.
+Check it first.
 
-Fixes: 3e3327837c18 ("ACPI: Use list_for_each_entry() in acpi_unbind_one()")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/10940500.nUPlyArG6x@rafael.j.wysocki
+Fixes: 42fc9fee116f ("scsi: mpi3mr: Add helper functions to manage device's port")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-13-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/glue.c     | 10 ++++++----
- include/acpi/acpi_bus.h |  2 +-
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
-index a194f30876c59..cc9ee8cb820fc 100644
---- a/drivers/acpi/glue.c
-+++ b/drivers/acpi/glue.c
-@@ -316,13 +316,13 @@ int acpi_bind_one(struct device *dev, struct acpi_device *acpi_dev)
- }
- EXPORT_SYMBOL_GPL(acpi_bind_one);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index d6ac71e1d9e4e..a95fec5f6f4e0 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1070,6 +1070,13 @@ void mpi3mr_update_links(struct mpi3mr_ioc *mrioc,
+ 		return;
+ 	}
  
--int acpi_unbind_one(struct device *dev)
-+void acpi_unbind_one(struct device *dev)
- {
- 	struct acpi_device *acpi_dev = ACPI_COMPANION(dev);
- 	struct acpi_device_physical_node *entry;
- 
- 	if (!acpi_dev)
--		return 0;
++	if (phy_number >= mr_sas_node->num_phys) {
++		spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
++		ioc_err(mrioc, "%s: phy_number(%d) >= num_phys(%d)\n",
++			__func__, phy_number, mr_sas_node->num_phys);
 +		return;
- 
- 	mutex_lock(&acpi_dev->physical_node_lock);
- 
-@@ -337,15 +337,17 @@ int acpi_unbind_one(struct device *dev)
- 			sysfs_remove_link(&acpi_dev->dev.kobj, physnode_name);
- 			sysfs_remove_link(&dev->kobj, "firmware_node");
- 			ACPI_COMPANION_SET(dev, NULL);
++	}
 +
-+			mutex_unlock(&acpi_dev->physical_node_lock);
-+
- 			/* Drop references taken by acpi_bind_one(). */
- 			put_device(dev);
- 			acpi_dev_put(acpi_dev);
- 			kfree(entry);
--			break;
-+			return;
- 		}
- 
- 	mutex_unlock(&acpi_dev->physical_node_lock);
--	return 0;
- }
- EXPORT_SYMBOL_GPL(acpi_unbind_one);
- 
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index 147b560947c66..9d2fb1cde25c5 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -594,7 +594,7 @@ struct acpi_bus_type {
- int register_acpi_bus_type(struct acpi_bus_type *);
- int unregister_acpi_bus_type(struct acpi_bus_type *);
- int acpi_bind_one(struct device *dev, struct acpi_device *adev);
--int acpi_unbind_one(struct device *dev);
-+void acpi_unbind_one(struct device *dev);
- 
- enum acpi_bridge_type {
- 	ACPI_BRIDGE_TYPE_PCIE = 1,
+ 	mr_sas_phy = &mr_sas_node->phy[phy_number];
+ 	mr_sas_phy->attached_handle = handle;
+ 	spin_unlock_irqrestore(&mrioc->sas_node_lock, flags);
 -- 
 2.53.0
 
