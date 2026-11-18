@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020280;
-	b=yNBIJW5+6ySiboaixDPZACS6OSgYgCu1SjL5U1iCCoXD00mDBbuXmN4ZE4+ZILWZ+vGf
-	 PtxmuhVIkVwN6YA7ishB31Fr7z33dAvHJna1DN4WVYYi0Q9uKIleM48q6iak3vlN+NJWF
-	 AJ275sv1JykoWcytezEJNJc53k7npfw8R+1mlezsBNkHYgzHK/O1o9sbxckJWZmBgBfDz
-	 RgRMSm/HuVCDICVloW90qRNtB8LIhZu0KUunn6UpgcoIAyHj8Dhn7+K3IgWVDy8op5pd/
-	 jffh4702VSm5bw2T/4UdzI+PoKCwmr07er6u/KsF+TkunBWT2I2JZGmT3Gm1hQW0M+A==
+	t=1795020283;
+	b=4dqrDewas7uUBPUYpXrTDQJsocfPilxzeu7ADnVfQNVLwQCE0L5R2ISZe8ck/dSIpFgk
+	 HuXObSIJWQ7dUjBUQqwTIG3O2ljBmZJL6VTJl+GNBxYUGa2+pNrzd4YLL7W8uRulaXpeJ
+	 mXnTMrf4PWVuXZ+h+VEqGV+LC98EJ8jc9Rh2u5Ww56dO9jsoAS8sLxlGPo7QR9TlN9t2m
+	 kPB48paBRtNQm/uvWXx7/rfZy1I7wu8oer2ORO0pXvcsrMmPVTY19LMqsP2aRYNXg/MQh
+	 qeMlepI5xqQhuTb2UpudqSdoBvs8DhyTDUW5bywcVfnW68w96Lbua2DUN73K6pEE4uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QA10rvLlf8VpCtd3bY7bOVaPXhE1etzJxirzbE1A/3A=;
-	b=XqgCAmiaV0CMbguQjKXtHClJMw+IHz8qZ/OCB9INZ6oVJ89S0xTEv0p3ds4JP0in1yum
-	 4jFAjMSx8r2dMmZ2iMao5d6KOSjcVxG+hQni7Jd3rowbgnE1QqbFTrHpU8eNp6xQ1HnC7
-	 KJgp2/XtE5kA6WgBDRnTuvotRIrJcDnbOSYmQGQg3BCX4T3np2cdBssQFQJAm50KvbaDw
-	 xya0XnYZ0Nk7cBd2Yjl9Ji+wdl0ukxQRDzCQ0qiykg9V5Udnrv6/KNmzDdJo1n9d2Wk5O
-	 Lp+KZT0xVmgbKKoMGyVqY4GLms6XEbVQny/yIwffbflX2idw7pTj6m02gHwKb8LZWeg==
+	bh=Ty4z7nhlf8ZXu6OfRN10Bb6yWAVdz2InTrqxrHbHBzI=;
+	b=EEMri3+WFhTuqUFFCvpVlZTy3vB9bzbE8xdFpBeynZantFLfa9tRCFwaqjmpXzulKjXm
+	 Xmc1BsKNbdTBrkSLW6XV31G3HvHeIhvFVhtZSndrEjocZdGPhPMHI+m24coZQVnrbwKVF
+	 UofKgmVPc5fdCUzJZh26U4dIS5NNlMvVQEqiGRlcK7mUZvR6YwfBiRnCklIwvLO3NU4MO
+	 R/cBw6/0td/Q3sGnEp1yoEmxXFbHXl5YCuFxeG4YemYOvNuy47xb8RZ1p7UQg3t1OjpOX
+	 RECYYQsISCOVXuJKjC/iFXW/Zy9IoQGf19lmxFsoOruoMWwGz2D9fTJwcqfMWl/hDxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OniFPthZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bWpGU4vw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A6C606A325;
-	Wed, 18 Nov 2026 16:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862BD606A320;
+	Wed, 18 Nov 2026 16:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OniFPthZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAA81F000C5;
-	Wed, 18 Nov 2026 16:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bWpGU4vw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7D51F000C5;
+	Wed, 18 Nov 2026 16:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020280;
-	bh=QA10rvLlf8VpCtd3bY7bOVaPXhE1etzJxirzbE1A/3A=;
+	s=korg; t=1795020283;
+	bh=Ty4z7nhlf8ZXu6OfRN10Bb6yWAVdz2InTrqxrHbHBzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OniFPthZR83g7elrhWaHd4R+YN1IvRtbg1eu4gmeVX3OQFnB0Y4uIIahout5Nq+wn
-	 CwALHqRkNBjuqyRkUQ59EXokkZHxp1wqkMuOZPqqAuW4riSogKD4bB8lWJqXBpd2fG
-	 p3BOwDsJmeNrAT59rLXxhveB1I8Q/Pc6eYLrDOMY=
+	b=bWpGU4vwpVS6xJRJkR1TwCZLeWzka/wakNvHP+cddSBVWI7Ic9FUKavHDXzGMsWTc
+	 bJuc96vWLzH2nEyqLYE9ozscQ6g0e6EFZzS/Fs9WbeyStb7hbiBV0fxc3aONzlChcN
+	 c8d/1YBlVMnkrjOujsPL1n7ItrMgOZX8u62xXZmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1896/2651] Bluetooth: hci_sync: Serialize devcoredump reset during device open
-Date: Wed, 18 Nov 2026 15:52:16 +0100
-Message-ID: <20261118150355.114439169@linuxfoundation.org>
+Subject: [PATCH 7.3 1879/2651] Bluetooth: btintel_pcie: remove duplicate BTINTEL_PCIE_MAGIC_NUM definition
+Date: Wed, 18 Nov 2026 15:51:59 +0100
+Message-ID: <20261118150354.576478549@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,109 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 
-[ Upstream commit 6d91353f6dbcc5c4fbb47bbd0c7f885453cfc939 ]
+[ Upstream commit 937363063afde2dce1f45d8f22514db99b9eba6b ]
 
-An ACTIVE devcoredump's buffer cursors must remain valid from the
-packet handler's state check through its copy. hci_devcd_rx() holds
-hdev->lock across that interval, and hci_devcd_reset() requires the
-same lock. However, hci_dev_open_sync() invokes reset without taking
-it.
+Two identical definitions of BTINTEL_PCIE_MAGIC_NUM were present in
+btintel_pcie.c, one indented with spaces and one with a tab. Remove the
+space-indented duplicate and the surrounding blank lines. Kernel coding
+style requires tabs for indentation, so keep the tab-indented copy.
 
-A registered VHCI controller can collect a dump through its debugfs
-interface while the controller is down. If a successful open overlaps
-with handling a nonempty dump packet, reset can run after the receiver's
-ACTIVE check and before its copy:
+No functional change.
 
-  hci_devcd_rx()                    hci_dev_open_sync()
-    dequeue nonempty skb
-    hci_dev_lock(hdev)
-    handler observes ACTIVE
-                                     hdev->open(hdev) succeeds
-                                     hci_devcd_reset(hdev)
-                                       dump.tail = NULL
-                                       dump.state = IDLE
-    hci_devcd_copy()
-      compare against old dump.end
-      memcpy(NULL, ..., skb->len)
-    hci_dev_unlock(hdev)
-
-Reset leaves dump.end pointing at the old buffer and purges only queued
-packets, so it cannot discard the skb already dequeued by the receiver.
-The bounds check can pass with a NULL tail, leading to a nonempty copy
-to address zero. KASAN reported a 24-byte NULL write in hci_devcd_rx().
-
-Take hdev->lock around the open-time reset. The receiver then finishes
-its state check and copy using valid cursors before reset, or observes
-IDLE after reset and skips the copy.
-
-KASAN report as below:
-
-    BUG: KASAN: null-ptr-deref in hci_devcd_rx+0x5d5/0x1a80
-    Write of size 24 at addr 0000000000000000 by task kworker/u17:0/496
-
-        CPU: 0 UID: 0 PID: 496 Comm: kworker/u17:0 Not tainted
-    7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-        Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps
-    fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: hci0 hci_devcd_rx
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     kasan_report+0xe0/0x110
-     ? hci_devcd_rx+0x5d5/0x1a80
-     kasan_check_range+0x105/0x1b0
-     __asan_memcpy+0x3c/0x60
-     hci_devcd_rx+0x5d5/0x1a80
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_hci_devcd_rx+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x280
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-
-Fixes: 9695ef876fd1 ("Bluetooth: Add support for hci devcoredump")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Assisted-by: Copilot:claude-opus-4.7 sparse
+Fixes: 6ed83047389c ("Bluetooth: btintel_pcie: Setup buffers for firmware traces")
+Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btintel_pcie.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 1e7ff1414e215..2a34528da0752 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5479,7 +5479,9 @@ int hci_dev_open_sync(struct hci_dev *hdev)
- 		goto done;
- 	}
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index b5540db17fec8..9f1ff12d85a07 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -73,11 +73,6 @@ struct btintel_pcie_dev_recovery {
+ #define BTINTEL_PCIE_HCI_EVT_PKT	0x00000004
+ #define BTINTEL_PCIE_HCI_ISO_PKT	0x00000005
  
-+	hci_dev_lock(hdev);
- 	hci_devcd_reset(hdev);
-+	hci_dev_unlock(hdev);
+-#define BTINTEL_PCIE_MAGIC_NUM    0xA5A5A5A5
+-
+-
+-
+-
+ #define BTINTEL_PCIE_MAGIC_NUM	0xA5A5A5A5
  
- 	set_bit(HCI_RUNNING, &hdev->flags);
- 	hci_sock_dev_event(hdev, HCI_DEV_OPEN);
+ #define BTINTEL_PCIE_TRIGGER_REASON_USER_TRIGGER	0x17A2
 -- 
 2.53.0
 
