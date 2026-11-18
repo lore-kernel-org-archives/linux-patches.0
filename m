@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057234;
-	b=iGg9JKhIugvs2+WVr9taaLHc9UzVgRBbH9HhKrA79pbhkOB+rmPCkAKKMOuG2Y/FPZRF
-	 8y5Tc8Dl14lg+rQ50HEtS7akSCyZBEHMsdIJDnMecdGuh5KYOOwJaJsJvjIA3neQDoDkO
-	 hBHliPESZSj6eAE9YVibMg5K1SNFMPWnb476+oRWdc8MZ3Jk5jqlhDs5DXoo11iCOcFYM
-	 mhoTP1anpbZdpPClEoAGNnYS/upWLbbLCVzh5ByClzJmwxfRw61zeCPrduI3HSHdyTSkr
-	 VggdGazNhdUjJQSXwXuhPsewdaOYqjKauZrwzHM5ytLj7oQ0BQAhkmRQaR5jfieOReA==
+	t=1795057237;
+	b=fTeJhI1H1jNtrbLzqWMEAMq1HmVnbsW5PurjXyGeSQGAggrq/6HRIlJww5fs5JOph0lf
+	 PgFf6Z0RLFyzuSPmyUB6kMjK1GsL8w3hxg01qxxZhZkWRLchuQo86e2/O34FQeAn1lSuu
+	 Q0RH2Oqfv5reJYJWAuhqYo5tgv5uMseIWjdKJ995MNLaFgCl8RLJx4HuACLtE7K1WI+V0
+	 JBKgDqGEVucXr5MdDAu6Op0CnuqGqAuQwrj1Lxjtc1Dn0V5iuPvxJ+VW/8vxx3PmD5YCw
+	 BSbhsb/0nOcyl64F46esKhVP4X1PCLOf8lLTTCJ9G6yUcI5GpwkNUfL21X8MKDdTdCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057234;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057237;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2hv0JlRpNl/IAwKcD+dh52TjkcbNkrCu4SuO7I5W6qs=;
-	b=q5xZWxWhbbGac/JxDyQqC5A0smf2N5Y0utUG6nkq+bVD/cGKAjvhPhMQHqF90bMr4ani
-	 qEzA/clh0EhmCwfZKHO/JwElIbEFnvsq30DJd9I+3Fom2I3oBkfb9NnvFx4xGXlavof+5
-	 NTz9QuQ9xq41SRk8BHhk2xzm3BTyZWWEGFzJAhDIHim/BQCYg1qReda6PjFn7UL+tliVV
-	 LEO75uk1MkhB+o56vliTV/JVbHTh9N3TANSlwctuhgGK/cQK0GHLGpVdd7/8atApk1fVp
-	 PtnUjD4kwEfsc+6/5poULE5MZs27oVsKjtN4o3aBw2B6lj8NLRleJ27QhI0eKt9bW4w==
+	bh=XDCF6oIvO6m1GFTQOXOj7k+Il46PXVqtfwxf/nhj5I0=;
+	b=IBfWmgIFQz0blK46mcIk9bQ6T/kp5SFw3FOJMPeoRPQbKVUZ1aBMc+cL54uRAly1qiJn
+	 +umk+opOvbqwso1SOP7l0C7I8HlVy+BRQ+4RiguyP6P7SeZLDsxJnPESvjUnK8tqBgj0v
+	 ElpP+nQRGHcTg8tbjY9x+3VI5Hoee3NRG9Y7kfGYAC9T8lsUHgRORWnDjo41vKISHgurH
+	 Y++n5/Nx4VwUZEMHxpBy5Lfa9oXR74Kd9yLEFnZ1p3la+dHPIVPVXl4XG4xOLMoXmbG8s
+	 mEnpYFVPDfhD6pZm8MxfTmd808w7SRM+yuFLFu33q88XHSF8ud9kiFCAm1/0w66Z96g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k5LZohsk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m2wmJzKu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4605E606A332;
-	Thu, 19 Nov 2026 03:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3545D606A31C;
+	Thu, 19 Nov 2026 03:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k5LZohsk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986291F000C5;
-	Thu, 19 Nov 2026 03:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m2wmJzKu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5551F000C5;
+	Thu, 19 Nov 2026 03:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057234;
-	bh=2hv0JlRpNl/IAwKcD+dh52TjkcbNkrCu4SuO7I5W6qs=;
+	s=korg; t=1795057236;
+	bh=XDCF6oIvO6m1GFTQOXOj7k+Il46PXVqtfwxf/nhj5I0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k5LZohskkvZgaPh2KLOQKBZdBG4NItSDui7R4rKqKLBn8FTJaxBGElcvtvBtxFPgo
-	 1MyTqwd7VGH/FOwMrh77w3fxchQFHm7hRW4bEicNzZXOQ3Frn8aTOAybbYU4A1i3Il
-	 tlF+kGojEv4J3tKWds0XyPwAJU8wTsSyQNA9iafU=
+	b=m2wmJzKub0FtUZBGaCrpo8E6LsdQxRwfL56Vsx4N+NcOzAz1xdqOWXthJF/RnMOQy
+	 P79AUAS8r5NLUHmRtz+Vll2QWgqygBZjQ+4wWYE3c4ktVUIYJ9TQVa5sBCqGaDiYw9
+	 9HLc6T8HMK3jZln9q1uY0HM2G7gf3cy3OU7nZLtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haoxiang Li <haoxiang_li2024@163.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0059/1848] tty: serial: pch_uart: add check for pci_get_slot()
-Date: Wed, 18 Nov 2026 15:34:57 +0100
-Message-ID: <20261118145913.607225339@linuxfoundation.org>
+Subject: [PATCH 5.10 0060/1848] usb: fsl_qe_udc: check qe_alloc_request() failure in ch9getstatus()
+Date: Wed, 18 Nov 2026 15:34:58 +0100
+Message-ID: <20261118145913.640358112@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,36 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 970ede67de0e3f6a1e707ec99ae49d80bf3f2966 ]
+[ Upstream commit 612551bf7cf7113b8bbd5e8c1eea86d9427c2f95 ]
 
-Add check for pci_get_slot() to prevent a potetial
-null pointer dereference in pch_request_dma().
+qe_alloc_request() may return NULL on allocation failure. ch9getstatus()
+passes the return value directly to container_of() and then immediately
+dereferences the resulting qe_req pointer. Check the allocation result
+before using it and stall the control request on failure.
 
 Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260623140539.2272473-1-haoxiang_li2024@163.com
+Link: https://patch.msgid.link/20260620120631.2894977-1-haoxiang_li2024@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/gadget/udc/fsl_qe_udc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index 57581af8a2e16..3db29616c0207 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -700,6 +700,11 @@ static void pch_request_dma(struct uart_port *port)
- 	/* Get DMA's dev information */
- 	dma_dev = pci_get_slot(priv->pdev->bus,
- 			PCI_DEVFN(PCI_SLOT(priv->pdev->devfn), 0));
-+	if (!dma_dev) {
-+		dev_err(priv->port.dev, "%s: failed to get DMA device\n",
-+			__func__);
-+		return;
-+	}
+diff --git a/drivers/usb/gadget/udc/fsl_qe_udc.c b/drivers/usb/gadget/udc/fsl_qe_udc.c
+index 618b0a38c8855..085071049aca8 100644
+--- a/drivers/usb/gadget/udc/fsl_qe_udc.c
++++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
+@@ -1935,6 +1935,7 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
+ 			u16 index, u16 length)
+ {
+ 	u16 usb_status = 0;
++	struct usb_request *usb_req;
+ 	struct qe_req *req;
+ 	struct qe_ep *ep;
+ 	int status = 0;
+@@ -1975,8 +1976,11 @@ static void ch9getstatus(struct qe_udc *udc, u8 request_type, u16 value,
+ 		}
+ 	}
  
- 	/* Set Tx DMA */
- 	param = &priv->param_tx;
+-	req = container_of(qe_alloc_request(&ep->ep, GFP_KERNEL),
+-					struct qe_req, req);
++	usb_req = qe_alloc_request(&ep->ep, GFP_KERNEL);
++	if (!usb_req)
++		goto stall;
++
++	req = container_of(usb_req, struct qe_req, req);
+ 	req->req.length = 2;
+ 	req->req.buf = udc->statusbuf;
+ 	*(u16 *)req->req.buf = cpu_to_le16(usb_status);
 -- 
 2.53.0
 
