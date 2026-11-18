@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017033;
-	b=psTYr6osIgxD43iBaNwDZiq8JAu5MZ4zC66Jv+N8Sty2xTk/XFste8tbEHa3G9V1Qx6Q
-	 hcPnFJUUSbOHh4flaO2BmD/FwkPUSfieFm/tMkOtlTyCFXRjLeSm7jTdP4hGeDU0Vxe89
-	 w2EULnrmyXqtDm9kFWH6eMyN5WMDClWKT6Dt7DT9qMiMaGzqaVOlQ68e3AuXAlLkDkSmT
-	 mLaboxDNMf09hs0OJohaGGdP8Wyoz26BVtJxvKWbvcvQfL/h8IvlhO6t21VbuXsKQXNYM
-	 htPTrwT9lL4XgiaZeOoJ0g7/dD97/bMSDQ5t0FxisRh7BiXtashO7v/zCgzp1ZraDRg==
+	t=1795017036;
+	b=hVQaN5yGH6dVGsA2cuQmNLaoI3ohe6IP/tHn8oILyukKPiknfWQ+C2XbqISmZVzV6JzE
+	 G36+Z6TQWyZnXvKPeW/0uMQ22fgNgCKHIWrucTYZCs2a8QjKIjdJKC5xGeS9RdZ/+b/DQ
+	 QP7Y8y0kKYD9BMTG0KviP7jLhRIUIE+GtbVOV6GHAx/ECFw5zizQpVT0FzZGZqtOd/dxp
+	 TxVRiNZSguDAu0zpcmN87VaJZcAofq8qikGX3I5c9DdKR8exPPsRRshBX0mNKQuI810rL
+	 93wLD0pVA2cfVytY/Hvu08m+uQf1doiFvlNP/ZYhJoMySRv70ziVSm/h3kIqUgXatUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017033;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017036;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GCXPyTmfJovGSXUCMNsFUC2QWp2eaBw1MUaNOVUFnIg=;
-	b=M7XG7na7JRQNk4jtOBth1dbvacAz+rEwbj1ojlelnxt169qz6cNqt0nxTgil+EEp3dQn
-	 MX7IuLm98UVsRzzLPmqEG0U+ViSMDEbg0LmtxmF+ifKyRUgL8k2k64IGj9CWrE8AyzI0A
-	 uM6zT7bE5Jj5lZaPKsvhwyyAfPf4ATfbYnnM+ROhVQ725LYXKcl5ByFPPaoyBxI6AAF/9
-	 3CkcyBTuXdzCvKKl+QG6OPRbnqFNkvfv2pVijId7C59ImqwCRQty7fK4H5lMvq1w5KBpS
-	 x7FSz6jeg8vcrA9Iz3ytQTKIkr/xSlvxPnALGgUoXCOFZuUSzbauyEd+dd5W8ErlfGA==
+	bh=mNUcYupyqJvw+uYGthxq949ddd5G5xMonHuq0QLLU7g=;
+	b=bpp9MEYQ3YH7U3c6C1FoJBwc6o3ScIz86E64d+7yOVRku8sRJHwqvhe1k5Dp8Dw+tyet
+	 1R7lJIwpTu3wX2UJ6Ho/QFVy1uyzNVJjzVyGXzUJ8nPtFpFWm68eR4LI3npnr3fLtq1ko
+	 ukgOoBObZFlQcuQMiFPl7MYEQd6hY5RUYdIiJE4+3ZuIysKULSlL5GJzL4hd+A9oB/RbN
+	 T20rYuZ0/GuaFAqEPi7wN9WSQLcaJtRVVsMzEdJSIu5mqW4AlYBjSX900cbi/1P5pQItm
+	 kuHzYhnBAzb+4iVd7Dc87PKEq00vdimvG+FN4tntYjpMBQvckgPUlv9y7b6T3CrLFEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPvku3sP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rCEyLaca;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6918C606A31C;
-	Wed, 18 Nov 2026 15:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E232606A31C;
+	Wed, 18 Nov 2026 15:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPvku3sP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29611F000C4;
-	Wed, 18 Nov 2026 15:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rCEyLaca
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774A61F000C4;
+	Wed, 18 Nov 2026 15:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017033;
-	bh=GCXPyTmfJovGSXUCMNsFUC2QWp2eaBw1MUaNOVUFnIg=;
+	s=korg; t=1795017036;
+	bh=mNUcYupyqJvw+uYGthxq949ddd5G5xMonHuq0QLLU7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gPvku3sPY/OaRaKG7gyER5uuMZJz1Vv2KMpUxV3+Gj3Z6ZDeqkyvajJmArt0/SNrG
-	 q6G5qxcHKXGIP9PR/Tz6/l/5azVlOuXGnjvVbsuQlGLBHQU/w+aVNoaK9VD+mygl65
-	 s1+L4zlUN1Q20icbabB1F5D7kgBT0wSVaZ+FPYtM=
+	b=rCEyLacaF2nQVMG6G3fbcvBWSFWhh1hRWOmyxY9OMEJBdkSXOfM8+/0oCFNNB+oS6
+	 lPIH3UZb9cMYYXSEsGx3OgkjuvvUDzBvQVEXfMxh165X5OiheuOpAuOZTgHoOBFiI2
+	 2uKWNo2Imrucelyo7P166zDi/2hA+ZojcXxspChE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jiawen Liu <1298662399@qq.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0700/2651] swim: Assert strobe with stable outputs
-Date: Wed, 18 Nov 2026 15:32:20 +0100
-Message-ID: <20261118150313.033522598@linuxfoundation.org>
+Subject: [PATCH 7.3 0691/2651] crypto: starfive - handle clock enable failures
+Date: Wed, 18 Nov 2026 15:32:11 +0100
+Message-ID: <20261118150312.727503885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,130 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit adcc410bfb41715fef198a0975db4ed594a49bb7 ]
+[ Upstream commit 5358248961ae23f7253d010ddfde1cfd2556ce22 ]
 
-Inside Macintosh says, "Be sure that you don't change CA0-CA2 or SEL
-while LSTRB is high". Unfortunately, those bits do change. The CA0-CA2
-outputs become inputs when (LSTRB << 4) | LSTRB gets written to the
-phase register. Then LSTRB is driven low (with CA0-CA2 bits set).
+Return error from failed clock enable.
 
-This is a problem because the drive interprets a STEP command as an
-EJECT command when these pins float high. This occurs intermittently,
-perhaps because interrupts are disabled and the race condition happens
-to end well. However, when I add code to step the heads with interrupts
-enabled, the disk always ejects.
+starfive_cryp_probe ignores clk_prepare_enable return for hclk/ahb, then
+remove/error paths unconditionally clk_disable_unprepare both clocks.
 
-Keep the four phase pin directions set to output and hold their levels
-constant during LSTRB signalling. Introduce the PHASE_PIN_DIRECTION
-macro to separate the pin configuration from the logic level changes.
+Check consecutive clk_prepare_enable(cryp->hclk)/cryp->ahb returns in
+starfive_cryp_probe.
 
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/6da86b9bfd1335fac3ebc8c435fb613d5de4a70c.1788513996.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: c8acdd77a623 ("crypto: starfive - propagate clock and reset errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 62 ++++++++++++++++++++++----------------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ drivers/crypto/starfive/jh7110-cryp.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 0ccc12a72388d..5d89e7813049c 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -87,37 +87,37 @@ struct iwm {
- #define iwm_write(base, reg, v) 	out_8(&(base)->reg, (v))
- #define iwm_read(base, reg)		in_8(&(base)->reg)
+diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
+index 842f76b0f1148..c3830a7c1810b 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.c
++++ b/drivers/crypto/starfive/jh7110-cryp.c
+@@ -120,8 +120,15 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(cryp->rst),
+ 				     "Error getting hardware reset line\n");
  
--/* bits in phase register */
-+/* Bits in phase register */
- 
--#define SEEK_POSITIVE	0x070
--#define SEEK_NEGATIVE	0x074
--#define STEP		0x071
--#define MOTOR_ON	0x072
--#define MOTOR_OFF	0x076
--#define INDEX		0x073
--#define EJECT		0x077
--#define SETMFM		0x171
--#define SETGCR		0x175
--
--#define RELAX		0x033
--#define LSTRB		0x008
--
--#define CA_MASK		0x077
-+#define RELAX		0x03
-+#define LSTRB		0x08
-+#define CA_MASK		0x07
-+#define PHASE_PIN_DIR	0xF0
- 
- /* Select values for swim_select and swim_readbit */
- 
--#define READ_DATA_0	0x074
--#define ONEMEG_DRIVE	0x075
--#define SINGLE_SIDED	0x076
--#define DRIVE_PRESENT	0x077
--#define DISK_IN		0x170
--#define WRITE_PROT	0x171
--#define TRACK_ZERO	0x172
--#define TACHO		0x173
--#define READ_DATA_1	0x174
--#define GCR_MODE	0x175
--#define SEEK_COMPLETE	0x176
--#define TWOMEG_MEDIA	0x177
-+#define SEEK_POSITIVE	0x000
-+#define SEEK_NEGATIVE	0x004
-+#define STEP		0x001
-+#define MOTOR_ON	0x002
-+#define MOTOR_OFF	0x006
-+#define INDEX		0x003
-+#define EJECT		0x007
-+#define SETMFM		0x101
-+#define SETGCR		0x105
+-	clk_prepare_enable(cryp->hclk);
+-	clk_prepare_enable(cryp->ahb);
++	ret = clk_prepare_enable(cryp->hclk);
++	if (ret)
++		return ret;
 +
-+#define READ_DATA_0	0x004
-+#define ONEMEG_DRIVE	0x005
-+#define SINGLE_SIDED	0x006
-+#define DRIVE_PRESENT	0x007
-+#define DISK_IN		0x100
-+#define WRITE_PROT	0x101
-+#define TRACK_ZERO	0x102
-+#define TACHO		0x103
-+#define READ_DATA_1	0x104
-+#define GCR_MODE	0x105
-+#define SEEK_COMPLETE	0x106
-+#define TWOMEG_MEDIA	0x107
++	ret = clk_prepare_enable(cryp->ahb);
++	if (ret) {
++		clk_disable_unprepare(cryp->hclk);
++		return ret;
++	}
+ 	reset_control_deassert(cryp->rst);
  
- /* Bits in handshake register */
- 
-@@ -269,11 +269,11 @@ static inline int get_swim_mode(struct swim __iomem *base)
- 
- static inline void swim_select(struct swim __iomem *base, int sel)
- {
--	swim_write(base, phase, RELAX);
-+	swim_write(base, phase, RELAX | PHASE_PIN_DIR);
- 
- 	via1_set_head(sel & 0x100);
- 
--	swim_write(base, phase, sel & CA_MASK);
-+	swim_write(base, phase, (sel & CA_MASK) | PHASE_PIN_DIR);
- }
- 
- static inline void swim_action(struct swim __iomem *base, int action)
-@@ -284,9 +284,9 @@ static inline void swim_action(struct swim __iomem *base, int action)
- 
- 	swim_select(base, action);
- 	udelay(1);
--	swim_write(base, phase, (LSTRB<<4) | LSTRB);
-+	swim_write(base, phase, LSTRB | action | PHASE_PIN_DIR);
- 	udelay(1);
--	swim_write(base, phase, (LSTRB<<4) | ((~LSTRB) & 0x0F));
-+	swim_write(base, phase, action | PHASE_PIN_DIR);
- 	udelay(1);
- 
- 	local_irq_restore(flags);
+ 	spin_lock(&dev_list.lock);
 -- 
 2.53.0
 
