@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061032;
-	b=sb3oCLAmd7obc/p13hJtY6nNREGQBzOYx76oKoYoZIqE1U1kJUAK5GpxQ1s7nfT67Xed
-	 tgIwAS02e10vbfMkeXcQhlM7IzHBH9EapRmTq0caZ/ql6t5YDfgG1DWwuVEFtEQiB+uBT
-	 WNUCxKDzaX4o2/1tuuucJy1zdpAHl392JC6nOdaMDzKG1NGCI9KOrqR8zxMr6UHd308gI
-	 G1Rmk1EJS63k6LF98qrrLlXs9S7GCfOHQlgwfMacTLii+dt9d0bXXW75KBt2AJkIlvlz+
-	 lffPrlO+x8KFnHD8m8VD2joXbNVP/y3my/6TEl5aiwboveewMP1rW8/pVnSZjUIZpLA==
+	t=1795061035;
+	b=LC4OyBOtwWcfGekdkFc6Esh+M55+QfhJuTS650PIAmSlZIM+/S2JvPC/RYSj8B5U1mQ3
+	 lvCINH+LzX8PFI04jTMlQwzzOBuP+Ik5YxdyQJX5yJhaPxMLSIvuFX79RofTtbPDGK7TH
+	 1e+WXiHs2/Cl+MSqy4MbQq6fQXmy8kTnIoKuivgiFdY/lK7zSFIDg8j1WCPGTBfUe041Y
+	 4MijpUrcYZ5trqS/7K0uaCjKP2R270IgmZ8kSe+M5OWyel0H5frj+NVCqqfdKSQvCoHv7
+	 Ne4KFpzJZWaf6MFaLBbcvrdw38kJvQcPqMsbwU/cXKDptB84n9y1WvWryUzIJIqVo1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061035;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YjZvMc/CajYko7MwRv9gWQNxmqSYvJZawUnECUUZuUw=;
-	b=DFDfzWkx9T7vdG4GP39tHta0dyeBw9BfbTuO55S+NQy56owUmjOYsygSfpF+Gh420Y8a
-	 jtg7W0lKt/Tbs98p64vOJCFKbP1ezAVqFBjcE3AXOTia8Swtfo7CmUTDXuSvzMRRWpZ7T
-	 /659POjsGmS5KUKuVdLpvWW1b9y1NRDls01dZXBKAfkwMjis4WnUlob2dC9YZve42PGub
-	 h07n26x6ypxnSW8ZcYhPcMkh2A3+L7tTePlcdF8yYihJoJKR8nP1JmzYJRLMkfxoHzB6j
-	 sW9FiN+GMCjf92Tf1cBzHIPtWZsONwK32aUeH6ZauhZjHWvWYp+NUmo0iS/kiuXxJ0A==
+	bh=n2qSggfhU+DQGgEC4Y1WIDLxM3XEV5eLMmDkB73dRMk=;
+	b=LmLFMaNSE1jMwcFAvsT3OEmdgI9/0VO3tNaz+ar6FADZt1aW9pRBwmjrOfYJbF2XaJe/
+	 xm0AriOULg7TQHA4NQi1sZHKmZzN+zSfs1hRnOm90F1B61VoNYHNPEAh3CgIPc7SLJYQ9
+	 2zF0sP9JUl0wxB1x/isXZYSncqC9YOqXFpIKOIaPhJNYxV3gCy9rGPylwO+zCALARpJR9
+	 1uDOzMYv1YxkSbhSmQR7RaOK702W83/dkjazyvi0EKkpFlRIdzBSTuKpk2d8KTHPahE6A
+	 D+uzppLP2wt+fD+TyuLVbZnxvnoPwvYNv3RsVV3SBceUqrta57RY9bgexzCegWMTzMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/6PJOJz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CMiydrup;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9F7606A325;
-	Thu, 19 Nov 2026 04:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71410606A32A;
+	Thu, 19 Nov 2026 04:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/6PJOJz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3741F000C4;
-	Thu, 19 Nov 2026 04:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CMiydrup
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7EE1F000C4;
+	Thu, 19 Nov 2026 04:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061032;
-	bh=YjZvMc/CajYko7MwRv9gWQNxmqSYvJZawUnECUUZuUw=;
+	s=korg; t=1795061035;
+	bh=n2qSggfhU+DQGgEC4Y1WIDLxM3XEV5eLMmDkB73dRMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k/6PJOJznorp8A3oPwwfJOJojayINhbCfoq5g5rpqBjBPsEhewLfxzfZKC81lFfkk
-	 lm+ML7wJ4Ur7aR3coZ8pPkISBtbBE8YnPFGEAg5WqexSB0nbN3KOn45hpscATHkEAJ
-	 2zrkFsu/njxtOlCqtJwtsftcH+WldIt1dsy500wM=
+	b=CMiydrupVx5G5zbcZiVkz82U0jiYcYTZE49PGDISJtezgOsjhDL7pdg2a6wJVvl6W
+	 OWuwlaHa7QnvbQYH++vt5QAn/5zwfxSqOWpjmij42tPLy27RrDpRmA8uVlE/BOkz8o
+	 JmmIw8FATMqQJU7bQwmxRrSQ1r59/b4zl/S2Gt1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@fb.com>,
+	Cassio Neri <cassio.neri@gmail.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Feng Tang <feng.tang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1408/1848] clocksource: Provide kernel module to test clocksource watchdog
-Date: Wed, 18 Nov 2026 15:57:26 +0100
-Message-ID: <20261118150018.461640448@linuxfoundation.org>
+Subject: [PATCH 5.10 1409/1848] time: Improve performance of time64_to_tm()
+Date: Wed, 18 Nov 2026 15:57:27 +0100
+Message-ID: <20261118150018.509721994@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,362 +68,331 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Cassio Neri <cassio.neri@gmail.com>
 
-[ Upstream commit 1253b9b87e42ab6a3d5c2cb27af2bdd67d7e50ff ]
+[ Upstream commit 276010551664f73b6f1616dde471d6f0d63a73ba ]
 
-When the clocksource watchdog marks a clock as unstable, this might
-be due to that clock being unstable or it might be due to delays that
-happen to occur between the reads of the two clocks.  It would be good
-to have a way of testing the clocksource watchdog's ability to
-distinguish between these two causes of clock skew and instability.
+The current implementation of time64_to_tm() contains unnecessary loops,
+branches and look-up tables. The new one uses an arithmetic-based algorithm
+appeared in [1] and is approximately 3x faster (YMMV).
 
-Therefore, provide a new clocksource-wdtest module selected by a new
-TEST_CLOCKSOURCE_WATCHDOG Kconfig option.  This module has a single module
-parameter named "holdoff" that provides the number of seconds of delay
-before testing should start, which defaults to zero when built as a module
-and to 10 seconds when built directly into the kernel.  Very large systems
-that boot slowly may need to increase the value of this module parameter.
+The drawback is that the new code isn't intuitive and contains many 'magic
+numbers' (not unusual for this type of algorithm). However, [1] justifies
+all those numbers and, given this function's history, the code is unlikely
+to need much maintenance, if any at all.
 
-This module uses hand-crafted clocksource structures to do its testing,
-thus avoiding messing up timing for the rest of the kernel and for user
-applications.  This module first verifies that the ->uncertainty_margin
-field of the clocksource structures are set sanely.  It then tests the
-delay-detection capability of the clocksource watchdog, increasing the
-number of consecutive delays injected, first provoking console messages
-complaining about the delays and finally forcing a clock-skew event.
-Unexpected test results cause at least one WARN_ON_ONCE() console splat.
-If there are no splats, the test has passed.  Finally, it fuzzes the
-value returned from a clocksource to test the clocksource watchdog's
-ability to detect time skew.
+Add a KUnit test for it which checks every day in a 160,000 years interval
+centered at 1970-01-01 against the expected result.
 
-This module checks the state of its clocksource after each test, and
-uses WARN_ON_ONCE() to emit a console splat if there are any failures.
-This should enable all types of test frameworks to detect any such
-failures.
+[1] Neri, Schneider, "Euclidean Affine Functions and Applications to
+Calendar Algorithms". https://arxiv.org/abs/2102.06959
 
-This facility is intended for diagnostic use only, and should be avoided
-on production systems.
-
-Reported-by: Chris Mason <clm@fb.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Cassio Neri <cassio.neri@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Feng Tang <feng.tang@intel.com>
-Link: https://lore.kernel.org/r/20210527190124.440372-5-paulmck@kernel.org
+Link: https://lore.kernel.org/r/20210622213616.313046-1-cassio.neri@gmail.com
 Stable-dep-of: 2927f7ca7844 ("time: Prevent time64_to_tm() day truncation on 32-bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         |   6 +
- include/linux/clocksource.h                   |   3 +
- kernel/time/Makefile                          |   1 +
- kernel/time/clocksource-wdtest.c              | 202 ++++++++++++++++++
- kernel/time/clocksource.c                     |   6 +-
- lib/Kconfig.debug                             |  12 ++
- 6 files changed, 228 insertions(+), 2 deletions(-)
- create mode 100644 kernel/time/clocksource-wdtest.c
+ kernel/time/Kconfig     |   9 +++
+ kernel/time/Makefile    |   1 +
+ kernel/time/time_test.c |  98 ++++++++++++++++++++++++++++++
+ kernel/time/timeconv.c  | 128 ++++++++++++++++++++++------------------
+ 4 files changed, 178 insertions(+), 58 deletions(-)
+ create mode 100644 kernel/time/time_test.c
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 0f1605d78e83d..3b3ff3592594a 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -593,6 +593,12 @@
- 			The actual CPUs are chosen randomly, with
- 			no replacement if the same CPU is chosen twice.
+diff --git a/kernel/time/Kconfig b/kernel/time/Kconfig
+index f2b0cfeade477..3e3ca3f018b91 100644
+--- a/kernel/time/Kconfig
++++ b/kernel/time/Kconfig
+@@ -68,6 +68,15 @@ config LEGACY_TIMER_TICK
+ 	  lack support for the generic clockevent framework.
+ 	  New platforms should use generic clockevents instead.
  
-+	clocksource-wdtest.holdoff= [KNL]
-+			Set the time in seconds that the clocksource
-+			watchdog test waits before commencing its tests.
-+			Defaults to zero when built as a module and to
-+			10 seconds when built into the kernel.
-+
- 	clearcpuid=BITNUM[,BITNUM...] [X86]
- 			Disable CPUID feature X for the kernel. See
- 			arch/x86/include/asm/cpufeatures.h for the valid bit
-diff --git a/include/linux/clocksource.h b/include/linux/clocksource.h
-index 8f87c1a6f3231..83b3c6639c39d 100644
---- a/include/linux/clocksource.h
-+++ b/include/linux/clocksource.h
-@@ -285,4 +285,7 @@ static inline void timer_probe(void) {}
- #define TIMER_ACPI_DECLARE(name, table_id, fn)		\
- 	ACPI_DECLARE_PROBE_ENTRY(timer, name, table_id, 0, NULL, 0, fn)
- 
-+extern ulong max_cswd_read_retries;
-+void clocksource_verify_percpu(struct clocksource *cs);
-+
- #endif /* _LINUX_CLOCKSOURCE_H */
-diff --git a/kernel/time/Makefile b/kernel/time/Makefile
-index 1fb1c1ef6a19b..1ed85b25b0968 100644
---- a/kernel/time/Makefile
-+++ b/kernel/time/Makefile
-@@ -21,3 +21,4 @@ obj-$(CONFIG_HAVE_GENERIC_VDSO)			+= vsyscall.o
- obj-$(CONFIG_DEBUG_FS)				+= timekeeping_debug.o
- obj-$(CONFIG_TEST_UDELAY)			+= test_udelay.o
- obj-$(CONFIG_TIME_NS)				+= namespace.o
-+obj-$(CONFIG_TEST_CLOCKSOURCE_WATCHDOG)		+= clocksource-wdtest.o
-diff --git a/kernel/time/clocksource-wdtest.c b/kernel/time/clocksource-wdtest.c
-new file mode 100644
-index 0000000000000..01df12395c0ee
---- /dev/null
-+++ b/kernel/time/clocksource-wdtest.c
-@@ -0,0 +1,202 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * Unit test for the clocksource watchdog.
-+ *
-+ * Copyright (C) 2021 Facebook, Inc.
-+ *
-+ * Author: Paul E. McKenney <paulmck@kernel.org>
-+ */
-+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-+
-+#include <linux/device.h>
-+#include <linux/clocksource.h>
-+#include <linux/init.h>
-+#include <linux/module.h>
-+#include <linux/sched.h> /* for spin_unlock_irq() using preempt_count() m68k */
-+#include <linux/tick.h>
-+#include <linux/kthread.h>
-+#include <linux/delay.h>
-+#include <linux/prandom.h>
-+#include <linux/cpu.h>
-+
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("Paul E. McKenney <paulmck@kernel.org>");
-+
-+static int holdoff = IS_BUILTIN(CONFIG_TEST_CLOCKSOURCE_WATCHDOG) ? 10 : 0;
-+module_param(holdoff, int, 0444);
-+MODULE_PARM_DESC(holdoff, "Time to wait to start test (s).");
-+
-+/* Watchdog kthread's task_struct pointer for debug purposes. */
-+static struct task_struct *wdtest_task;
-+
-+static u64 wdtest_jiffies_read(struct clocksource *cs)
-+{
-+	return (u64)jiffies;
-+}
-+
-+/* Assume HZ > 100. */
-+#define JIFFIES_SHIFT	8
-+
-+static struct clocksource clocksource_wdtest_jiffies = {
-+	.name			= "wdtest-jiffies",
-+	.rating			= 1, /* lowest valid rating*/
-+	.uncertainty_margin	= TICK_NSEC,
-+	.read			= wdtest_jiffies_read,
-+	.mask			= CLOCKSOURCE_MASK(32),
-+	.flags			= CLOCK_SOURCE_MUST_VERIFY,
-+	.mult			= TICK_NSEC << JIFFIES_SHIFT, /* details above */
-+	.shift			= JIFFIES_SHIFT,
-+	.max_cycles		= 10,
-+};
-+
-+static int wdtest_ktime_read_ndelays;
-+static bool wdtest_ktime_read_fuzz;
-+
-+static u64 wdtest_ktime_read(struct clocksource *cs)
-+{
-+	int wkrn = READ_ONCE(wdtest_ktime_read_ndelays);
-+	static int sign = 1;
-+	u64 ret;
-+
-+	if (wkrn) {
-+		udelay(cs->uncertainty_margin / 250);
-+		WRITE_ONCE(wdtest_ktime_read_ndelays, wkrn - 1);
-+	}
-+	ret = ktime_get_real_fast_ns();
-+	if (READ_ONCE(wdtest_ktime_read_fuzz)) {
-+		sign = -sign;
-+		ret = ret + sign * 100 * NSEC_PER_MSEC;
-+	}
-+	return ret;
-+}
-+
-+static void wdtest_ktime_cs_mark_unstable(struct clocksource *cs)
-+{
-+	pr_info("--- Marking %s unstable due to clocksource watchdog.\n", cs->name);
-+}
-+
-+#define KTIME_FLAGS (CLOCK_SOURCE_IS_CONTINUOUS | \
-+		     CLOCK_SOURCE_VALID_FOR_HRES | \
-+		     CLOCK_SOURCE_MUST_VERIFY | \
-+		     CLOCK_SOURCE_VERIFY_PERCPU)
-+
-+static struct clocksource clocksource_wdtest_ktime = {
-+	.name			= "wdtest-ktime",
-+	.rating			= 300,
-+	.read			= wdtest_ktime_read,
-+	.mask			= CLOCKSOURCE_MASK(64),
-+	.flags			= KTIME_FLAGS,
-+	.mark_unstable		= wdtest_ktime_cs_mark_unstable,
-+	.list			= LIST_HEAD_INIT(clocksource_wdtest_ktime.list),
-+};
-+
-+/* Reset the clocksource if needed. */
-+static void wdtest_ktime_clocksource_reset(void)
-+{
-+	if (clocksource_wdtest_ktime.flags & CLOCK_SOURCE_UNSTABLE) {
-+		clocksource_unregister(&clocksource_wdtest_ktime);
-+		clocksource_wdtest_ktime.flags = KTIME_FLAGS;
-+		schedule_timeout_uninterruptible(HZ / 10);
-+		clocksource_register_khz(&clocksource_wdtest_ktime, 1000 * 1000);
-+	}
-+}
-+
-+/* Run the specified series of watchdog tests. */
-+static int wdtest_func(void *arg)
-+{
-+	unsigned long j1, j2;
-+	char *s;
-+	int i;
-+
-+	schedule_timeout_uninterruptible(holdoff * HZ);
-+
-+	/*
-+	 * Verify that jiffies-like clocksources get the manually
-+	 * specified uncertainty margin.
-+	 */
-+	pr_info("--- Verify jiffies-like uncertainty margin.\n");
-+	__clocksource_register(&clocksource_wdtest_jiffies);
-+	WARN_ON_ONCE(clocksource_wdtest_jiffies.uncertainty_margin != TICK_NSEC);
-+
-+	j1 = clocksource_wdtest_jiffies.read(&clocksource_wdtest_jiffies);
-+	schedule_timeout_uninterruptible(HZ);
-+	j2 = clocksource_wdtest_jiffies.read(&clocksource_wdtest_jiffies);
-+	WARN_ON_ONCE(j1 == j2);
-+
-+	clocksource_unregister(&clocksource_wdtest_jiffies);
-+
-+	/*
-+	 * Verify that tsc-like clocksources are assigned a reasonable
-+	 * uncertainty margin.
-+	 */
-+	pr_info("--- Verify tsc-like uncertainty margin.\n");
-+	clocksource_register_khz(&clocksource_wdtest_ktime, 1000 * 1000);
-+	WARN_ON_ONCE(clocksource_wdtest_ktime.uncertainty_margin < NSEC_PER_USEC);
-+
-+	j1 = clocksource_wdtest_ktime.read(&clocksource_wdtest_ktime);
-+	udelay(1);
-+	j2 = clocksource_wdtest_ktime.read(&clocksource_wdtest_ktime);
-+	pr_info("--- tsc-like times: %lu - %lu = %lu.\n", j2, j1, j2 - j1);
-+	WARN_ON_ONCE(time_before(j2, j1 + NSEC_PER_USEC));
-+
-+	/* Verify tsc-like stability with various numbers of errors injected. */
-+	for (i = 0; i <= max_cswd_read_retries + 1; i++) {
-+		if (i <= 1 && i < max_cswd_read_retries)
-+			s = "";
-+		else if (i <= max_cswd_read_retries)
-+			s = ", expect message";
-+		else
-+			s = ", expect clock skew";
-+		pr_info("--- Watchdog with %dx error injection, %lu retries%s.\n", i, max_cswd_read_retries, s);
-+		WRITE_ONCE(wdtest_ktime_read_ndelays, i);
-+		schedule_timeout_uninterruptible(2 * HZ);
-+		WARN_ON_ONCE(READ_ONCE(wdtest_ktime_read_ndelays));
-+		WARN_ON_ONCE((i <= max_cswd_read_retries) !=
-+			     !(clocksource_wdtest_ktime.flags & CLOCK_SOURCE_UNSTABLE));
-+		wdtest_ktime_clocksource_reset();
-+	}
-+
-+	/* Verify tsc-like stability with clock-value-fuzz error injection. */
-+	pr_info("--- Watchdog clock-value-fuzz error injection, expect clock skew and per-CPU mismatches.\n");
-+	WRITE_ONCE(wdtest_ktime_read_fuzz, true);
-+	schedule_timeout_uninterruptible(2 * HZ);
-+	WARN_ON_ONCE(!(clocksource_wdtest_ktime.flags & CLOCK_SOURCE_UNSTABLE));
-+	clocksource_verify_percpu(&clocksource_wdtest_ktime);
-+	WRITE_ONCE(wdtest_ktime_read_fuzz, false);
-+
-+	clocksource_unregister(&clocksource_wdtest_ktime);
-+
-+	pr_info("--- Done with test.\n");
-+	return 0;
-+}
-+
-+static void wdtest_print_module_parms(void)
-+{
-+	pr_alert("--- holdoff=%d\n", holdoff);
-+}
-+
-+/* Cleanup function. */
-+static void clocksource_wdtest_cleanup(void)
-+{
-+}
-+
-+static int __init clocksource_wdtest_init(void)
-+{
-+	int ret = 0;
-+
-+	wdtest_print_module_parms();
-+
-+	/* Create watchdog-test task. */
-+	wdtest_task = kthread_run(wdtest_func, NULL, "wdtest");
-+	if (IS_ERR(wdtest_task)) {
-+		ret = PTR_ERR(wdtest_task);
-+		pr_warn("%s: Failed to create wdtest kthread.\n", __func__);
-+		wdtest_task = NULL;
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+module_init(clocksource_wdtest_init);
-+module_exit(clocksource_wdtest_cleanup);
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index d2bf84507efd0..c7ab41fc1a88c 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -201,8 +201,9 @@ void clocksource_mark_unstable(struct clocksource *cs)
- 	spin_unlock_irqrestore(&watchdog_lock, flags);
- }
- 
--static ulong max_cswd_read_retries = 3;
-+ulong max_cswd_read_retries = 3;
- module_param(max_cswd_read_retries, ulong, 0644);
-+EXPORT_SYMBOL_GPL(max_cswd_read_retries);
- static int verify_n_cpus = 8;
- module_param(verify_n_cpus, int, 0644);
- 
-@@ -324,7 +325,7 @@ static void clocksource_verify_one_cpu(void *csin)
- 	csnow_mid = cs->read(cs);
- }
- 
--static void clocksource_verify_percpu(struct clocksource *cs)
-+void clocksource_verify_percpu(struct clocksource *cs)
- {
- 	int64_t cs_nsec, cs_nsec_max = 0, cs_nsec_min = LLONG_MAX;
- 	u64 csnow_begin, csnow_end;
-@@ -380,6 +381,7 @@ static void clocksource_verify_percpu(struct clocksource *cs)
- 		pr_warn("        CPU %d check durations %lldns - %lldns for clocksource %s.\n",
- 			testcpu, cs_nsec_min, cs_nsec_max, cs->name);
- }
-+EXPORT_SYMBOL_GPL(clocksource_verify_percpu);
- 
- static inline void clocksource_reset_watchdog(void)
- {
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index ee630c7fcd641..7f975fef0d13b 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -2471,6 +2471,18 @@ config TEST_FPU
- 
- 	  If unsure, say N.
- 
-+config TEST_CLOCKSOURCE_WATCHDOG
-+	tristate "Test clocksource watchdog in kernel space"
-+	depends on CLOCKSOURCE_WATCHDOG
++config TIME_KUNIT_TEST
++	tristate "KUnit test for kernel/time functions" if !KUNIT_ALL_TESTS
++	depends on KUNIT
++	default KUNIT_ALL_TESTS
 +	help
-+	  Enable this option to create a kernel module that will trigger
-+	  a test of the clocksource watchdog.  This module may be loaded
-+	  via modprobe or insmod in which case it will run upon being
-+	  loaded, or it may be built in, in which case it will run
-+	  shortly after boot.
++	  Enable this option to test RTC library functions.
 +
 +	  If unsure, say N.
 +
- endif # RUNTIME_TESTING_MENU
+ if GENERIC_CLOCKEVENTS
+ menu "Timers subsystem"
  
- config MEMTEST
+diff --git a/kernel/time/Makefile b/kernel/time/Makefile
+index 1ed85b25b0968..7e875e63ff3b6 100644
+--- a/kernel/time/Makefile
++++ b/kernel/time/Makefile
+@@ -22,3 +22,4 @@ obj-$(CONFIG_DEBUG_FS)				+= timekeeping_debug.o
+ obj-$(CONFIG_TEST_UDELAY)			+= test_udelay.o
+ obj-$(CONFIG_TIME_NS)				+= namespace.o
+ obj-$(CONFIG_TEST_CLOCKSOURCE_WATCHDOG)		+= clocksource-wdtest.o
++obj-$(CONFIG_TIME_KUNIT_TEST)			+= time_test.o
+diff --git a/kernel/time/time_test.c b/kernel/time/time_test.c
+new file mode 100644
+index 0000000000000..341ebfad5e99d
+--- /dev/null
++++ b/kernel/time/time_test.c
+@@ -0,0 +1,98 @@
++// SPDX-License-Identifier: LGPL-2.1+
++
++#include <kunit/test.h>
++#include <linux/time.h>
++
++/*
++ * Traditional implementation of leap year evaluation.
++ */
++static bool is_leap(long year)
++{
++	return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
++}
++
++/*
++ * Gets the last day of a month.
++ */
++static int last_day_of_month(long year, int month)
++{
++	if (month == 2)
++		return 28 + is_leap(year);
++	if (month == 4 || month == 6 || month == 9 || month == 11)
++		return 30;
++	return 31;
++}
++
++/*
++ * Advances a date by one day.
++ */
++static void advance_date(long *year, int *month, int *mday, int *yday)
++{
++	if (*mday != last_day_of_month(*year, *month)) {
++		++*mday;
++		++*yday;
++		return;
++	}
++
++	*mday = 1;
++	if (*month != 12) {
++		++*month;
++		++*yday;
++		return;
++	}
++
++	*month = 1;
++	*yday  = 0;
++	++*year;
++}
++
++/*
++ * Checks every day in a 160000 years interval centered at 1970-01-01
++ * against the expected result.
++ */
++static void time64_to_tm_test_date_range(struct kunit *test)
++{
++	/*
++	 * 80000 years	= (80000 / 400) * 400 years
++	 *		= (80000 / 400) * 146097 days
++	 *		= (80000 / 400) * 146097 * 86400 seconds
++	 */
++	time64_t total_secs = ((time64_t) 80000) / 400 * 146097 * 86400;
++	long year = 1970 - 80000;
++	int month = 1;
++	int mdday = 1;
++	int yday = 0;
++
++	struct tm result;
++	time64_t secs;
++	s64 days;
++
++	for (secs = -total_secs; secs <= total_secs; secs += 86400) {
++
++		time64_to_tm(secs, 0, &result);
++
++		days = div_s64(secs, 86400);
++
++		#define FAIL_MSG "%05ld/%02d/%02d (%2d) : %ld", \
++			year, month, mdday, yday, days
++
++		KUNIT_ASSERT_EQ_MSG(test, year - 1900, result.tm_year, FAIL_MSG);
++		KUNIT_ASSERT_EQ_MSG(test, month - 1, result.tm_mon, FAIL_MSG);
++		KUNIT_ASSERT_EQ_MSG(test, mdday, result.tm_mday, FAIL_MSG);
++		KUNIT_ASSERT_EQ_MSG(test, yday, result.tm_yday, FAIL_MSG);
++
++		advance_date(&year, &month, &mdday, &yday);
++	}
++}
++
++static struct kunit_case time_test_cases[] = {
++	KUNIT_CASE(time64_to_tm_test_date_range),
++	{}
++};
++
++static struct kunit_suite time_test_suite = {
++	.name = "time_test_cases",
++	.test_cases = time_test_cases,
++};
++
++kunit_test_suite(time_test_suite);
+diff --git a/kernel/time/timeconv.c b/kernel/time/timeconv.c
+index 589e0a5521294..fad126a4bb8c9 100644
+--- a/kernel/time/timeconv.c
++++ b/kernel/time/timeconv.c
+@@ -22,47 +22,16 @@
+ 
+ /*
+  * Converts the calendar time to broken-down time representation
+- * Based on code from glibc-2.6
+  *
+  * 2009-7-14:
+  *   Moved from glibc-2.6 to kernel by Zhaolei<zhaolei@cn.fujitsu.com>
++ * 2021-06-02:
++ *   Reimplemented by Cassio Neri <cassio.neri@gmail.com>
+  */
+ 
+ #include <linux/time.h>
+ #include <linux/module.h>
+-
+-/*
+- * Nonzero if YEAR is a leap year (every 4 years,
+- * except every 100th isn't, and every 400th is).
+- */
+-static int __isleap(long year)
+-{
+-	return (year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0);
+-}
+-
+-/* do a mathdiv for long type */
+-static long math_div(long a, long b)
+-{
+-	return a / b - (a % b < 0);
+-}
+-
+-/* How many leap years between y1 and y2, y1 must less or equal to y2 */
+-static long leaps_between(long y1, long y2)
+-{
+-	long leaps1 = math_div(y1 - 1, 4) - math_div(y1 - 1, 100)
+-		+ math_div(y1 - 1, 400);
+-	long leaps2 = math_div(y2 - 1, 4) - math_div(y2 - 1, 100)
+-		+ math_div(y2 - 1, 400);
+-	return leaps2 - leaps1;
+-}
+-
+-/* How many days come before each month (0-12). */
+-static const unsigned short __mon_yday[2][13] = {
+-	/* Normal years. */
+-	{0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365},
+-	/* Leap years. */
+-	{0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366}
+-};
++#include <linux/kernel.h>
+ 
+ #define SECS_PER_HOUR	(60 * 60)
+ #define SECS_PER_DAY	(SECS_PER_HOUR * 24)
+@@ -77,9 +46,11 @@ static const unsigned short __mon_yday[2][13] = {
+  */
+ void time64_to_tm(time64_t totalsecs, int offset, struct tm *result)
+ {
+-	long days, rem, y;
++	u32 u32tmp, day_of_century, year_of_century, day_of_year, month, day;
++	u64 u64tmp, udays, century, year;
++	bool is_Jan_or_Feb, is_leap_year;
++	long days, rem;
+ 	int remainder;
+-	const unsigned short *ip;
+ 
+ 	days = div_s64_rem(totalsecs, SECS_PER_DAY, &remainder);
+ 	rem = remainder;
+@@ -103,27 +74,68 @@ void time64_to_tm(time64_t totalsecs, int offset, struct tm *result)
+ 	if (result->tm_wday < 0)
+ 		result->tm_wday += 7;
+ 
+-	y = 1970;
+-
+-	while (days < 0 || days >= (__isleap(y) ? 366 : 365)) {
+-		/* Guess a corrected year, assuming 365 days per year. */
+-		long yg = y + math_div(days, 365);
+-
+-		/* Adjust DAYS and Y to match the guessed year. */
+-		days -= (yg - y) * 365 + leaps_between(y, yg);
+-		y = yg;
+-	}
+-
+-	result->tm_year = y - 1900;
+-
+-	result->tm_yday = days;
+-
+-	ip = __mon_yday[__isleap(y)];
+-	for (y = 11; days < ip[y]; y--)
+-		continue;
+-	days -= ip[y];
+-
+-	result->tm_mon = y;
+-	result->tm_mday = days + 1;
++	/*
++	 * The following algorithm is, basically, Proposition 6.3 of Neri
++	 * and Schneider [1]. In a few words: it works on the computational
++	 * (fictitious) calendar where the year starts in March, month = 2
++	 * (*), and finishes in February, month = 13. This calendar is
++	 * mathematically convenient because the day of the year does not
++	 * depend on whether the year is leap or not. For instance:
++	 *
++	 * March 1st		0-th day of the year;
++	 * ...
++	 * April 1st		31-st day of the year;
++	 * ...
++	 * January 1st		306-th day of the year; (Important!)
++	 * ...
++	 * February 28th	364-th day of the year;
++	 * February 29th	365-th day of the year (if it exists).
++	 *
++	 * After having worked out the date in the computational calendar
++	 * (using just arithmetics) it's easy to convert it to the
++	 * corresponding date in the Gregorian calendar.
++	 *
++	 * [1] "Euclidean Affine Functions and Applications to Calendar
++	 * Algorithms". https://arxiv.org/abs/2102.06959
++	 *
++	 * (*) The numbering of months follows tm more closely and thus,
++	 * is slightly different from [1].
++	 */
++
++	udays	= ((u64) days) + 2305843009213814918ULL;
++
++	u64tmp		= 4 * udays + 3;
++	century		= div64_u64_rem(u64tmp, 146097, &u64tmp);
++	day_of_century	= (u32) (u64tmp / 4);
++
++	u32tmp		= 4 * day_of_century + 3;
++	u64tmp		= 2939745ULL * u32tmp;
++	year_of_century	= upper_32_bits(u64tmp);
++	day_of_year	= lower_32_bits(u64tmp) / 2939745 / 4;
++
++	year		= 100 * century + year_of_century;
++	is_leap_year	= year_of_century ? !(year_of_century % 4) : !(century % 4);
++
++	u32tmp		= 2141 * day_of_year + 132377;
++	month		= u32tmp >> 16;
++	day		= ((u16) u32tmp) / 2141;
++
++	/*
++	 * Recall that January 1st is the 306-th day of the year in the
++	 * computational (not Gregorian) calendar.
++	 */
++	is_Jan_or_Feb	= day_of_year >= 306;
++
++	/* Convert to the Gregorian calendar and adjust to Unix time. */
++	year		= year + is_Jan_or_Feb - 6313183731940000ULL;
++	month		= is_Jan_or_Feb ? month - 12 : month;
++	day		= day + 1;
++	day_of_year	+= is_Jan_or_Feb ? -306 : 31 + 28 + is_leap_year;
++
++	/* Convert to tm's format. */
++	result->tm_year = (long) (year - 1900);
++	result->tm_mon  = (int) month;
++	result->tm_mday = (int) day;
++	result->tm_yday = (int) day_of_year;
+ }
+ EXPORT_SYMBOL(time64_to_tm);
 -- 
 2.53.0
 
