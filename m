@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039250;
-	b=ZRWs6InYjsE7iJxKw8blrvuwpfiU3PQMS8Ii0YApYpmAoV6ZOVp2vt6OWK+ujpZJ+0Ul
-	 C14x04zVf+Vd5uV2Qo2S+lw5yZP4a8lzAjgSBEDbVXQxVRj8D+oGnoOg7yjgo37+Znnzb
-	 rLhDbUPRleg7Jn6lJ30ZDgEk6NDfOkIgv9xvnshmupgRZvSZud3dRV4JRU30VKKQF4PzD
-	 k06++LRJyeHAy2gNySMORvYyeODgwM8LGza6EBf8QFMhj3sCHYR6QbXtkEE9ue3ahD9Ey
-	 fakp6ntopPBa1xGEheujOWMhs3f2RQOb7SQ/HCHc1kJhNqp6TDGlM2Vhb3Ss9xbu59w==
+	t=1795039252;
+	b=JNKhCcU11iGFOaVu6/d8eKFnj1rlhiFZzlmuYaHvHtMBHXEOELHZHfVpJ/XbiUIORSqR
+	 iFxEnOdIw/CyxI4xDj2yIau/zpczKy+hJoDtRDQfIhj+LzHw3/2PR1zoMclzHlsx/jOx2
+	 WtcyObXdD5ZQB10rk9JmgZjCa002gr+jDsBKg4sG/0YTjJ57d9jbEV4sil0pv+C+4R7g+
+	 LInFRk8nqeQaKm4QApNo0qFcXsITmvVeiqrEGgm8ys9+zzXwcBfx3uTorM4AY0uXMudv+
+	 wUlOKrKag8ezo6wiri/TFcbe0R0fP1ANBGqcx6/QVBIiiEWDLeQm2ZiAAvFkY9Kiy+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LD0MmDqeB/UyvLQga0k/Ou5CSxgyQrGspaoGbFCQX7Y=;
-	b=ioIZULLVe0sDW/7ZEv2OCnk5xwI5RNn/06ENAgKkS6cyqTnAgAPV7yqpflCboh1hwpG1
-	 h4N118TGkSjXgo6DLzIJb/DRL+we3oEBeW1BTJGxxHimFWz3qZs0+BPlKFgrodklqHOw0
-	 4QAFhhYZKdQtJl3IQGQYtpsj8xy5oRALDVcAk3Ss8WbZy+FUWMyCN68UVna9xSoT7HCUp
-	 37+dXdQwCblmdxy3oLgj2WM8tWsBQFinDQPIeew6oqal7EiTHVxjCUH7CQHBOuD5KBRuc
-	 Tddt9RS9qdPVeCxoattzEkH+HyC3BXi9/rzRuQDOY7iCtYeDS3Qk3sWJhvMpgciCVVQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=mDz5NT313nRNLbxPuJla5VsRd5vNu2Q0CV97bJZuN+w=;
+	b=p6bkg+ZmlLED9R5axXZDgyrqd7IN9XxBjHuz6mMP9CpBsH8wXgAsCCyGoE/jDbKpmNFV
+	 I4r0uVewhfVVFfEprq+6BXNvqGjR9ITkTVRMrIah7BErWkQ/LL1OZ6MHc4LPaSABq/7ah
+	 0QJzXa3TgJTT+a3RpaPmeqOqMeB9m/V3nhV/uFOfnQZSlZAqxwRTNfRkT7twNQOJOTUwS
+	 fAnDQFPwikUP4x4udEt6BCIf/4Mq8gizhc1uDW7a3eUfnjYfAOYZ5ovpCbUspXMxYqm7Y
+	 xFdgxsbvPI7VS/Cuee8AD7rFUO++SyC2+djrsYIEGu9zjOfhwFKwIqDZvBABwUpmagQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h23nga2X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jL7kljns;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F21C606A325;
-	Wed, 18 Nov 2026 22:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5EA606A320;
+	Wed, 18 Nov 2026 22:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h23nga2X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB5D1F000C4;
-	Wed, 18 Nov 2026 22:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jL7kljns
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2646F1F000C4;
+	Wed, 18 Nov 2026 22:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039250;
-	bh=LD0MmDqeB/UyvLQga0k/Ou5CSxgyQrGspaoGbFCQX7Y=;
+	s=korg; t=1795039252;
+	bh=mDz5NT313nRNLbxPuJla5VsRd5vNu2Q0CV97bJZuN+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h23nga2XaTh2c5TJdu8FxeV6KWeYTFZYst1UoSQH8A7URU83Msa96Vgrja6pwsglD
-	 caHVrpzHtGMf8tUasipo/KaL04rZ4tbGCmL8M6S9NUezRmQVwBz7jbkSsOqXM5BZo8
-	 /4lYvuwQPAZkojOpXB6j6LeQGzunwKjwSXrsZUCA=
+	b=jL7kljnstFphCZ9jfp5wvrDZAFwCEa2WgxNSrxgyOPaVODQ2j2QG6VDSN7TTJ/c+R
+	 6Q/41XIdqtP2vzJRoi6ZP0PLVKQOlN9v7mxYJ/XOvByI2L7mSmLSJleJX+HVl6qFFe
+	 xJegjecJVvKsSjcwZ3h8quoAsyTDyzuCGHuh6hDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Michal Simek <michal.simek@amd.com>,
+	Boris Faure <boris@fau.re>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2033/3318] microblaze: prevent ptrace writes to MSR and pt_mode
-Date: Wed, 18 Nov 2026 15:44:15 +0100
-Message-ID: <20261118150423.032198370@linuxfoundation.org>
+Subject: [PATCH 6.6 2034/3318] soundwire: intel: initialise quirk_mask before reading it
+Date: Wed, 18 Nov 2026 15:44:16 +0100
+Message-ID: <20261118150423.064188200@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,53 +62,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Boris Faure <boris@fau.re>
 
-[ Upstream commit 8518fd17ccef4a7d77877ccb0403b722106ad1a4 ]
+[ Upstream commit ee8a8cfe4e8d3c67456e554c988017c252710a25 ]
 
-arch_ptrace() accepts PTRACE_POKEUSR for every aligned offset below
-PT_SIZE. This includes the saved machine status register and pt_mode,
-which are kernel-owned execution state rather than general registers.
+sdw_master_read_intel_prop() declares quirk_mask without an initialiser
+and ignores the return value of fwnode_property_read_u32(). When a BIOS
+does not describe "intel-quirk-mask" for a link, the property read leaves
+the variable untouched and stack garbage decides whether
+SDW_INTEL_QUIRK_MASK_BUS_DISABLE is honoured, so the link may be marked
+hw_disabled at random.
 
-On return from an exception, rtbd copies MSR_UMS to the live MSR_UM bit.
-An unprivileged same-UID tracer can therefore clear MSR_UMS in its
-tracee's saved register frame and make the tracee resume in supervisor
-mode. pt_mode also controls whether later entry paths classify the frame
-as kernel or user state.
+Initialise it to 0, matching is_link_enabled() in
+sound/hda/core/intel-sdw-acpi.c.
+Found by code inspection, not observed at run time.
 
-Reject PTRACE_POKEUSR writes to both fields while retaining read access.
-
-Fixes: 2b4384542691 ("microblaze_v8: ptrace support")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Link: https://patch.msgid.link/20260821103026.3627292-2-Jeremy.Jean@oss.cyber.gouv.fr
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: 395713d8ca43 ("soundwire: intel: handle disabled links")
+Signed-off-by: Boris Faure <boris@fau.re>
+Link: https://patch.msgid.link/20260820212220.226912-1-boris@fau.re
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/ptrace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soundwire/intel_auxdevice.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/ptrace.c b/arch/microblaze/kernel/ptrace.c
-index 5234d0c1dcaad..04700b08842e2 100644
---- a/arch/microblaze/kernel/ptrace.c
-+++ b/arch/microblaze/kernel/ptrace.c
-@@ -101,6 +101,9 @@ long arch_ptrace(struct task_struct *child, long request,
- 			} else {
- 				rval = -EIO;
- 			}
-+		} else if (request == PTRACE_POKEUSR &&
-+			   (addr == PT_MSR || addr == PT_MODE)) {
-+			rval = -EIO;
- 		} else if (addr < PT_SIZE && (addr & 0x3) == 0) {
- 			microblaze_reg_t *reg_addr = reg_save_addr(addr, child);
- 			if (request == PTRACE_PEEKUSR)
+diff --git a/drivers/soundwire/intel_auxdevice.c b/drivers/soundwire/intel_auxdevice.c
+index bdfff78ac2f81..d5d0a4c4ae145 100644
+--- a/drivers/soundwire/intel_auxdevice.c
++++ b/drivers/soundwire/intel_auxdevice.c
+@@ -124,7 +124,7 @@ static int sdw_master_read_intel_prop(struct sdw_bus *bus)
+ 	struct sdw_master_prop *prop = &bus->prop;
+ 	struct fwnode_handle *link;
+ 	char name[32];
+-	u32 quirk_mask;
++	u32 quirk_mask = 0;
+ 
+ 	/* Find master handle */
+ 	snprintf(name, sizeof(name),
 -- 
 2.53.0
 
