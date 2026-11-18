@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050982;
-	b=agz/MM2GjstvurcaJPfJjca0KfwDipMAqu02E7EQSEx1qjCAhuddH2EgdiqPtNnw28uT
-	 SP2EK6gHjYOKMlTyXsssnvXwuAkA+kLfQjH4WrmxoYmkjx51vDINZoTkgI48R0aRb4A/W
-	 cnTBlLiyFH+kaQIrn7OtSPRBDoMVB0i6t9sVMgXoBrgp/VtIzbfxyYD42hy97VArxYQ5l
-	 /3I+rp5dLaHQgPkdS4olL1Q1M6FK/bEvte6PSVJf5uH7eCdtSpARpaMsw5YZTYNTCMyqi
-	 EfGglkgjJI0ff6ZjRz/Tr4xLXPU5QRTvndGbo/viY4rm2Bmivt/3m6LOJvml87Heazg==
+	t=1795050986;
+	b=ef7hqhlhHayP07OVzjjn4KMCnYsVKDGR8ShDBoBjsiXTkLm2BAxdigmRh9gmrpzMak7y
+	 MdQVpOGg5uad/rzRyRVNzEdk6kCEDnecC+WszX1YdYbOh+AXRLoKJXJ99EQgcb7/ExpDd
+	 jLae2F4CDpC9b9GuWJKX45RYl9QBbql/HUYrv12HzihUh1nUIjXFTPEGeQoqBEBJYqIbc
+	 9Dy+dShPnXggVACGC2hicFFKCVd2Tv/FHWZTJagIx1x4um/V7FaVb0GcbiQ08fnSb2XqK
+	 y1hMJX30CBkG+E1+5v0OyciAvBwnqowKhc4Hf8KZRLdDxBMrSPsm0xi2INux62tPQ9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fd8b2QQrB0/45soVJL+frVQoJ412/tHmEsMNLn0Oxbk=;
-	b=y4UTfVCRKdDzJXnlKn3UVF+TenY8CXyBaQc9si0d1JUkKmFEqsxJKUYdGIaJLXZ0i6g2
-	 sNmbDgNtvcPmsgznnOuswYFWQalCxRTcBdYxtoXfDWEQ0KUKoECc+QOnBigLUG+QfCh1z
-	 hd5V7RVH0cWvpMV9nenb0lZx64LzccfmDSCNlYIcJ9PdXz7Jc4rQ3J8cfQmUqrpgumbEg
-	 bUMUshWcChJ92vpa7JCwJGX9Bl8MBgdoLQRi8QrQt7d9iEGUdg6m3TN54azutIMwE+dH9
-	 QZlnNoZv07Y39izI3yJCR7UMff8jECLBzYRzLc4bFQlkfJxcZn1fWFvsbGn9TxOcRXw==
+	bh=/qNPULcq7Fcw1FvGtyNOEIDEMSvorwnwy+1UhjXtdok=;
+	b=szpgBZ46B9BtRhEydWX0r6hkeD0iE+sY6CiUEHCqZY7zvf1aORN94+FhhQBXVNOQ3Uge
+	 5A9dIFFUOXha6D3IIfK5RfRgMKN+Aab9OqVbgRzSvL/NOORGjE5Z+UNy6fziID7ItOMEU
+	 Wnoxiwk4LBCkEdi/HBf/idLcDCyuRIVRfiNJ5owut39wZT9YBNXYc6w5vtJ5yrqPlTk0V
+	 yPnuJY6JwXY24xCjsc3UocglqLOg2P1CD/5YL5FscO8gTnPb1AuR98S79DwOJXXX1wn7F
+	 7OFF4C3Qlq6+RqUEDLmwcx6yrKuFBzcVYRM5fpW2AxgAYWY+KIrnf14YIxgm23NWtdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eyrr3JBO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vD8xR30Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D781606A330;
-	Thu, 19 Nov 2026 01:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4477E606A325;
+	Thu, 19 Nov 2026 01:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eyrr3JBO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612041F000C4;
-	Thu, 19 Nov 2026 01:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vD8xR30Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176321F000C4;
+	Thu, 19 Nov 2026 01:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050982;
-	bh=Fd8b2QQrB0/45soVJL+frVQoJ412/tHmEsMNLn0Oxbk=;
+	s=korg; t=1795050985;
+	bh=/qNPULcq7Fcw1FvGtyNOEIDEMSvorwnwy+1UhjXtdok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eyrr3JBOttmF/vHQPj9ndFDzo8YNbxT7tfv27OHU7ROYzzR81JAtgpivqzo1t7Zhl
-	 3ZvVAKy+DaMRyOrB4bMJOpo6iTFBttlIvzzUplEGY4+RfHi6MTNxBucU0clRDcywxm
-	 3CfcXbZr21bYKi0exwdrAKz1EQnEYjUZxvrE7rm0=
+	b=vD8xR30QsOAXCAP6QoB5uqSZNrA2OhNsxqzJX4EUcF/tSpxqlSdCVTu5Y1TQu+/iG
+	 BPshrlLr26/VXv6eUN7GicoEv08nxsmd17SwTR7eYqPCtTCNNnQKIMc0n1VaJzFrdA
+	 Gxqz2JGVbdDafXHqdLXrqz6s3s0RE4p8BTWkRIrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com,
-	Petko Manolov <petkan@nucleusys.com>,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0048/2214] net: usb: rtl8150: handle link status read failures
-Date: Wed, 18 Nov 2026 15:28:44 +0100
-Message-ID: <20261118150011.969199942@linuxfoundation.org>
+Subject: [PATCH 5.15 0049/2214] netfilter: ebtables: bound num_counters like nentries in do_replace()
+Date: Wed, 18 Nov 2026 15:28:45 +0100
+Message-ID: <20261118150012.007252887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,45 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 8c9c5b9a689612dcb92a04a4218c975cd19f19d8 ]
+[ Upstream commit 43ae85af154b27f9a0ff602f7a01e3a7583ffdab ]
 
-set_carrier() ignores the result of the USB control transfer and tests
-the stack variable supplied as its receive buffer. If the device rejects
-or aborts the request, that variable remains uninitialized and the driver
-chooses an arbitrary carrier state.
+do_replace_finish() allocates the counter buffer before it is validated:
 
-Leave the existing carrier state unchanged when the link status cannot be
-read. A transient USB error should not be treated as link loss.
+   counterstmp = vmalloc_array(repl->num_counters, sizeof(*counterstmp));
 
-Reported-by: syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9db6c624635564ad813c
-Suggested-by: Petko Manolov <petkan@nucleusys.com>
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260630101216.10365-1-alhouseenyousef@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+do_replace() only checks num_counters against INT_MAX / sizeof(struct
+ebt_counter), so vmalloc_array() can be asked for up to 134217726 * 16 =
+2147483616 bytes (~2 GiB).
+
+num_counters must in fact equal nentries: do_replace_finish() later
+rejects the request when repl->num_counters != t->private->nentries.
+get_counters() folds the per-CPU counters back into one entry per rule,
+so what userspace gets is bounded by nentries, never by nentries *
+nr_cpus. Apply the same upper bound used for nentries (MAX_EBT_ENTRIES)
+to the incoming num_counters so the over-sized allocation can no longer
+be requested.
+
+The allocation is still kept outside the ebt_mutex, since vmalloc() may
+sleep and trigger reclaim; only the bound is tightened.
+
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 4c7216b4c8ac2..7c2e6ae31d509 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -734,7 +734,9 @@ static void set_carrier(struct net_device *netdev)
- 	rtl8150_t *dev = netdev_priv(netdev);
- 	short tmp;
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index 6ac4ca32fdbfe..f585b516bca79 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -39,6 +39,8 @@
+ #define COUNTER_OFFSET(n) (SMP_ALIGN(n * sizeof(struct ebt_counter)))
+ #define COUNTER_BASE(c, n, cpu) ((struct ebt_counter *)(((char *)c) + \
+ 				 COUNTER_OFFSET(n) * cpu))
++#define MAX_EBT_ENTRIES (((INT_MAX - sizeof(struct ebt_table_info)) / \
++			 NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
  
--	get_registers(dev, CSCR, 2, &tmp);
-+	if (get_registers(dev, CSCR, 2, &tmp))
-+		return;
-+
- 	if (tmp & CSCR_LINK_STATUS)
- 		netif_carrier_on(netdev);
- 	else
+ struct ebt_pernet {
+ 	struct list_head tables;
+@@ -1125,10 +1127,9 @@ static int do_replace(struct net *net, sockptr_t arg, unsigned int len)
+ 		return -EINVAL;
+ 
+ 	/* overflow check */
+-	if (tmp.nentries >= ((INT_MAX - sizeof(struct ebt_table_info)) /
+-			NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
++	if (tmp.nentries >= MAX_EBT_ENTRIES)
+ 		return -ENOMEM;
+-	if (tmp.num_counters >= INT_MAX / sizeof(struct ebt_counter))
++	if (tmp.num_counters >= MAX_EBT_ENTRIES)
+ 		return -ENOMEM;
+ 
+ 	tmp.name[sizeof(tmp.name) - 1] = 0;
+@@ -2264,10 +2265,9 @@ static int compat_copy_ebt_replace_from_user(struct ebt_replace *repl,
+ 	if (tmp.entries_size == 0)
+ 		return -EINVAL;
+ 
+-	if (tmp.nentries >= ((INT_MAX - sizeof(struct ebt_table_info)) /
+-			NR_CPUS - SMP_CACHE_BYTES) / sizeof(struct ebt_counter))
++	if (tmp.nentries >= MAX_EBT_ENTRIES)
+ 		return -ENOMEM;
+-	if (tmp.num_counters >= INT_MAX / sizeof(struct ebt_counter))
++	if (tmp.num_counters >= MAX_EBT_ENTRIES)
+ 		return -ENOMEM;
+ 
+ 	memcpy(repl, &tmp, offsetof(struct ebt_replace, hook_entry));
 -- 
 2.53.0
 
