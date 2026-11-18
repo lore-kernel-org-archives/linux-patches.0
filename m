@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015859;
-	b=rgpm8GusFhqrd3fCedO8UpcpWeSQ1tOc2ywcyJK8WZ87nAxwililxKSuXhVFB5GNDc7A
-	 XbSiwGvWSNyo+CuTPJjUFAkw7PL7cSaUYg3H17NZ/m7ciM7MI7p5sUwIc8GzCWBcfvFSK
-	 Y3mDyNA+HQhKwg8QrklblwyKijrik5TTK4f1517k57fxOdeVcPIYkIRhAW20aMwFZonn1
-	 OCahoqEqXg41rK1QeLsJleEWU4QiDXYQeduzM/0J4fTpzrfgr1g4NonJAHCuaTD4lumzH
-	 +AuHolgO9RsCgI9m39/EbHZyLk2ttv/+cvCXsdfUbmzknlM4tH2xj2RRsZe18U3ISBw==
+	t=1795015861;
+	b=rk1Hi7ni2GIosCL8KY8QBW9TQDQsxGwWpym6qWfKUZAk7rYrFReZvmv/OURVjDUOBBb7
+	 iyea2KwPFOC4LdXQ7jjefnnB5P66/sAdsqAAjAejcgEy5/y/7ZeA3qRd9aaq9J+Gh56T6
+	 NbCk8YUo3zvTbSsGBVuG3YQIVHoL4bCX9Kb/3WwfuTky0dvpZJlTM0nv6BADnioHlwMBi
+	 kOaXKA+aCh5zIwfsU/teIkcA8eW+cvM/+FGu4bg9rRsofdhDh6+x6hONYRp1BkdSR0rEi
+	 qD1CjwWdchOhSKDF0m6E1Wzo2mitWMEnIRAwUH6x4S7sgw6DyZ/kzLy4KDvI7dVh4Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015859;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015861;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m6AM6N0PKdKD5qWD5l3JP4/fWqgBLedysQJRzaXpuN4=;
-	b=hTGjEfA7HYtHZpJlCKGtR0OEYFVcoVhjQYPmBZcL4LArvWPBxDGHiJ8bw5DX5+vDSe4v
-	 nBzudjq3caCHFL0U3coJcylTmTTSK98Ql0IMGJ6lIti5l5F4Hawfz2rn8Y+ABM1ZrEf3q
-	 CD/J8sGQgDINZrXNxf8A6zZBRYE4FKAT10zXI3U7tOPcIDu50/M8Ne/i5ImsrzDZIYGV4
-	 +Em4675bFRwXSyFpPsw6H9p2u1ZsFgbjMRkggB+imYq932Zn4+Xu1yrqtgqSq0wywLrg/
-	 TdKxQNxX32NcrmjsK1E5wWxhMKA8uoUc2NQm+wsiMsUX6L/4Kvg76JQiPu/Gf96AYJw==
+	bh=8qhZs/GBYeJCJ7/JtsBjuUjcmNN5JmPIsVB3tD397xE=;
+	b=RY0DfpCYnB6sGhY5yb2oI1YYH8QPpmEX3WROvJ4xeCtNmrDd13uFSJqHBUGrTxW1z6/g
+	 jU4XnZ16IG6pLi80Gz5MVLKcJRzdKKxOKtrJAGLWrJBE57WLQtEju+NhMD+I0dDt2xxPg
+	 CsDvACQzTzAV76hL0vcG/9vBvbCMflCtq70ovI8xav0g1oo5tkHhk+L1r9qCLzESe8ox5
+	 YRrYx1YUqQTWY20F8/jn+ZyLM7xCoP8mbfWHlWSOESp9KofH3EG9GMavMyC+h4aCycl9K
+	 er7BXsh4et8c1T5LxtgF668vo1PX8zrmlDScOp1VT3wg20MdS8Xn10YYZV7jluYm9AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yio+2ovz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vHAyZMly;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC1760A3816;
-	Wed, 18 Nov 2026 15:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C175660A2601;
+	Wed, 18 Nov 2026 15:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yio+2ovz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7209C1F000C7;
-	Wed, 18 Nov 2026 15:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vHAyZMly
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269B71F000CF;
+	Wed, 18 Nov 2026 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015859;
-	bh=m6AM6N0PKdKD5qWD5l3JP4/fWqgBLedysQJRzaXpuN4=;
+	s=korg; t=1795015861;
+	bh=8qhZs/GBYeJCJ7/JtsBjuUjcmNN5JmPIsVB3tD397xE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yio+2ovzaL6MOXFahKgl91zgsrM3jSnXZjrprxXr7u+ANze7g2MCb75z8+jqI9buH
-	 Z7X+5z3ujeMX7a0t63b8ZhW5YKKrL7Rpt+PIAFIalxQ3Zt0VAUk5loBlP4pyKidxZu
-	 FBcYdXau0OBcGJ1QAUrQqdVPtnvOFZIH3HOUAZYY=
+	b=vHAyZMlyU79O5YCcCaOWCLz4texJvlM0ji//JfURgdWkXcNwvNtqgnuBYqt0xMeAY
+	 gnxHFpAMb5tW6AClGbpQ63/bseG58QWYTcSGPg2dbLjNYDpiFEeqvglphK7K23n9Sw
+	 XDh98kNCq1IYwKo786eRMDzrLXY6Sz3O/ykx0Oco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <superm1@kernel.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0322/2651] selftests: net: csum: filter packets by source address and port
-Date: Wed, 18 Nov 2026 15:26:02 +0100
-Message-ID: <20261118150259.463077357@linuxfoundation.org>
+Subject: [PATCH 7.3 0323/2651] cpufreq/amd-pstate-ut: Fix amd_pstate_ut_check_freq failure with Requested CPU Min frequency BIOS option
+Date: Wed, 18 Nov 2026 15:26:03 +0100
+Message-ID: <20261118150259.496835643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,176 +68,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit 8342c68435dd34b1ecd65b02fff9745cadab2616 ]
+[ Upstream commit a23fca4ae137ec8e7620cc4f00b468b89cf5a7bd ]
 
-Add source address and port verification in recv_verify_packet_* and
-recv_udp: non-matching packets are skipped.
+Since commit 608a76b65288 ("cpufreq/amd-pstate: Add support for the
+"Requested CPU Min frequency" BIOS option"), amd-pstate driver sets
+policy->min to frequency corresponding to bios_min_perf if a valid BIOS
+programmed min frequency value is detected.
 
-The receiver reads from PF_PACKET and UDP sockets to verify incoming
-packets to test hardware checksum offload. It did not validate the
-packet source address or source port.
+amd_pstate_ut_check_freq expects policy->min to always match
+lowest_nonlinear_freq which does not hold true on platforms with user
+configured BIOS min freq.
 
-During tests expecting an invalid checksum (-E) or zero checksum (-Z),
-background packets can fail the test.
+Update the test case to compare policy->min to bios_min_freq on
+platforms that set it. Final comparison is adjusted to account for
+insane values by clamping the result within the supported frequency
+range.
 
-For -Z, build_packet_udp chooses a specific source port that causes
-the checksum to sum to zero. When running in receive-only mode (-R),
-call build_packet in do_rx to compute the expected source port so
-that source port filtering can be applied to -Z as well.
+While at it, move freq_to_perf() and perf_to_freq() helpers to internal
+header to allow their use from amd-pstate-ut.
 
-Also
-- add an inter-packet delay to avoid drops from bursts.
-- remove a comment that is no longer correct.
-
-Fixes: 91a7de85600d ("selftests/net: add csum offload test")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260908155537.813889-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Mario Limonciello <superm1@kernel.org>
+Fixes: 608a76b65288 ("cpufreq/amd-pstate: Add support for the "Requested CPU Min frequency" BIOS option")
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Link: https://lore.kernel.org/r/20260909102650.4582-1-kprateek.nayak@amd.com
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/lib/csum.c | 55 +++++++++++++++++++++++---
- 1 file changed, 50 insertions(+), 5 deletions(-)
+ drivers/cpufreq/amd-pstate-ut.c | 23 ++++++++++++++++++++++-
+ drivers/cpufreq/amd-pstate.c    | 13 -------------
+ drivers/cpufreq/amd-pstate.h    | 14 ++++++++++++++
+ 3 files changed, 36 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/net/lib/csum.c b/tools/testing/selftests/net/lib/csum.c
-index e28884ce3ab39..ad960e07e31bd 100644
---- a/tools/testing/selftests/net/lib/csum.c
-+++ b/tools/testing/selftests/net/lib/csum.c
-@@ -2,8 +2,7 @@
+diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
+index e23773680e050..c2c1a166b3a9e 100644
+--- a/drivers/cpufreq/amd-pstate-ut.c
++++ b/drivers/cpufreq/amd-pstate-ut.c
+@@ -226,11 +226,14 @@ static int amd_pstate_ut_check_freq(u32 index)
+ 	for_each_online_cpu(cpu) {
+ 		struct cpufreq_policy *policy __free(put_cpufreq_policy) = NULL;
+ 		struct amd_cpudata *cpudata;
++		union perf_cached perf;
  
- /* Test hardware checksum offload: Rx + Tx, IPv4 + IPv6, TCP + UDP.
-  *
-- * The test runs on two machines to exercise the NIC. For this reason it
-- * is not integrated in kselftests.
-+ * The test runs on two machines to exercise the NIC.
-  *
-  *     CMD=$((./csum -[46] -[tu] -S $SADDR -D $DADDR -[RT] -r 1 $EXTRA_ARGS))
-  *
-@@ -236,7 +235,8 @@ static void *build_packet_udp(void *_uh)
- 		uh->source = 0;
- 		uh->source = checksum(uh, IPPROTO_UDP, sizeof(*uh) + cfg_payload_len);
- 
--		fprintf(stderr, "tx: changing sport: %hu -> %hu\n",
-+		fprintf(stderr, "%s: changing sport: %hu -> %hu\n",
-+			cfg_do_tx ? "tx" : "rx",
- 			cfg_port_src, ntohs(uh->source));
- 		cfg_port_src = ntohs(uh->source);
- 	}
-@@ -249,7 +249,8 @@ static void *build_packet_udp(void *_uh)
- 	if (cfg_bad_csum)
- 		uh->check = ~uh->check;
- 
--	fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
-+	if (cfg_do_tx)
-+		fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
- 	return uh + 1;
- }
- 
-@@ -571,15 +572,36 @@ static int recv_prepare_packet(void)
- static int recv_udp(int fd)
- {
- 	static char buf[MAX_PAYLOAD_LEN];
-+	struct sockaddr_storage addr;
-+	socklen_t addrlen;
- 	int ret, count = 0;
- 
- 	while (1) {
--		ret = recv(fd, buf, sizeof(buf), MSG_DONTWAIT);
-+		addrlen = sizeof(addr);
-+		ret = recvfrom(fd, buf, sizeof(buf), MSG_DONTWAIT,
-+			       (struct sockaddr *)&addr, &addrlen);
- 		if (ret == -1 && errno == EAGAIN)
- 			break;
- 		if (ret == -1)
- 			error(1, errno, "recv r");
- 
-+		if (cfg_family == PF_INET) {
-+			struct sockaddr_in *sin = (void *)&addr;
+ 		policy = cpufreq_cpu_get(cpu);
+ 		if (!policy)
+ 			continue;
 +
-+			if (sin->sin_addr.s_addr != cfg_saddr4.sin_addr.s_addr)
-+				continue;
-+			if (sin->sin_port != htons(cfg_port_src))
-+				continue;
-+		} else {
-+			struct sockaddr_in6 *sin6 = (void *)&addr;
-+
-+			if (memcmp(&sin6->sin6_addr, &cfg_saddr6.sin6_addr,
-+				   sizeof(sin6->sin6_addr)))
-+				continue;
-+			if (sin6->sin6_port != htons(cfg_port_src))
-+				continue;
-+		}
-+
- 		fprintf(stderr, "rx: udp: len=%u\n", ret);
- 		count++;
- 	}
-@@ -620,6 +642,9 @@ static int recv_verify_packet_tcp(void *th, int len)
- 	if (len < sizeof(*tcph) || tcph->dest != htons(cfg_port_dst))
- 		return -1;
+ 		cpudata = policy->driver_data;
++		perf = READ_ONCE(cpudata->perf);
  
-+	if (tcph->source != htons(cfg_port_src))
-+		return -1;
-+
- 	return recv_verify_csum(th, len, ntohs(tcph->source), tcph->check);
- }
- 
-@@ -647,6 +672,9 @@ static int recv_verify_packet_udp(void *th, int len)
- 		return recv_verify_packet_udp_encap(udph + 1,
- 						    len - sizeof(*udph));
- 
-+	if (udph->source != htons(cfg_port_src))
-+		return -1;
-+
- 	return recv_verify_csum(th, len, ntohs(udph->source), udph->check);
- }
- 
-@@ -659,6 +687,9 @@ static int recv_verify_packet_ipv4(void *nh, int len)
- 	if (len < sizeof(*iph) || iph->protocol != proto)
- 		return -1;
- 
-+	if (iph->saddr != cfg_saddr4.sin_addr.s_addr)
-+		return -1;
-+
- 	ip_len = ntohs(iph->tot_len);
- 	if (ip_len > len || ip_len < sizeof(*iph))
- 		return -1;
-@@ -680,6 +711,9 @@ static int recv_verify_packet_ipv6(void *nh, int len)
- 	if (len < sizeof(*ip6h) || ip6h->nexthdr != proto)
- 		return -1;
- 
-+	if (memcmp(&ip6h->saddr, &cfg_saddr6.sin6_addr, sizeof(ip6h->saddr)))
-+		return -1;
-+
- 	payload_len = ntohs(ip6h->payload_len);
- 	if (payload_len > len - sizeof(*ip6h))
- 		return -1;
-@@ -940,6 +974,9 @@ static void do_tx(void)
- 			cfg_payload_len = rand() % MAX_PAYLOAD_LEN;
- 			buf = build_packet(_buf, sizeof(_buf), &len);
+ 		if (!((policy->cpuinfo.max_freq >= cpudata->nominal_freq) &&
+ 			(cpudata->nominal_freq > cpudata->lowest_nonlinear_freq) &&
+@@ -242,7 +245,25 @@ static int amd_pstate_ut_check_freq(u32 index)
+ 			return -EINVAL;
  		}
-+
-+		/* avoid bursting */
-+		usleep(20);
- 	}
  
- 	if (close(fd))
-@@ -952,6 +989,14 @@ static void do_rx(int fdp, int fdr)
- 	long tleft, tstop;
- 	struct pollfd pfd;
- 
-+	if (!cfg_do_tx && cfg_zero_sum) {
-+		static char _buf[MAX_HEADER_LEN + MAX_PAYLOAD_LEN];
-+		int len;
+-		if (cpudata->lowest_nonlinear_freq != policy->min) {
++		if (perf.bios_min_perf) {
++			u32 bios_min_freq = perf_to_freq(perf, cpudata->nominal_freq,
++							 perf.bios_min_perf);
 +
-+		/* calculate source port that causes csum to add up to zero */
-+		build_packet(_buf, sizeof(_buf), &len);
-+	}
++			/*
++			 * User set bios_min_freq cannot be trusted to
++			 * be within the driver limits. Clamp it similar
++			 * to cpufreq_verify_within_cpu_limits().
++			 */
++			bios_min_freq = clamp_t(u32, bios_min_freq,
++						     policy->cpuinfo.min_freq,
++						     policy->cpuinfo.max_freq);
 +
- 	tstop = gettimeofday_ms() + cfg_timeout_ms;
- 	tleft = cfg_timeout_ms;
++			if (bios_min_freq != policy->min) {
++				pr_err("%s cpu%d bios_min_freq=%d policy_min=%d, they should be equal!\n",
++					__func__, cpu, bios_min_freq, policy->min);
++				return -EINVAL;
++			}
++		} else if (cpudata->lowest_nonlinear_freq != policy->min) {
+ 			pr_err("%s cpu%d cpudata_lowest_nonlinear_freq=%d policy_min=%d, they should be equal!\n",
+ 				__func__, cpu, cpudata->lowest_nonlinear_freq, policy->min);
+ 			return -EINVAL;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 28b9d4d062b98..a6f96d812c5db 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -145,19 +145,6 @@ static struct quirk_entry quirk_amd_7k62 = {
+ 	.lowest_freq = 550,
+ };
  
+-static inline u8 freq_to_perf(union perf_cached perf, u32 nominal_freq, unsigned int freq_val)
+-{
+-	u32 perf_val = DIV_ROUND_UP_ULL((u64)freq_val * perf.nominal_perf, nominal_freq);
+-
+-	return (u8)clamp(perf_val, perf.lowest_perf, perf.highest_perf);
+-}
+-
+-static inline u32 perf_to_freq(union perf_cached perf, u32 nominal_freq, u8 perf_val)
+-{
+-	return DIV_ROUND_UP_ULL((u64)nominal_freq * perf_val,
+-				perf.nominal_perf);
+-}
+-
+ static int __init dmi_matched_7k62_bios_bug(const struct dmi_system_id *dmi)
+ {
+ 	/**
+diff --git a/drivers/cpufreq/amd-pstate.h b/drivers/cpufreq/amd-pstate.h
+index 9f5a81976eae0..578465187b7ae 100644
+--- a/drivers/cpufreq/amd-pstate.h
++++ b/drivers/cpufreq/amd-pstate.h
+@@ -159,6 +159,20 @@ enum amd_pstate_mode {
+ 	AMD_PSTATE_GUIDED,
+ 	AMD_PSTATE_MAX,
+ };
++
++static inline u8 freq_to_perf(union perf_cached perf, u32 nominal_freq, unsigned int freq_val)
++{
++	u32 perf_val = DIV_ROUND_UP_ULL((u64)freq_val * perf.nominal_perf, nominal_freq);
++
++	return (u8)clamp(perf_val, perf.lowest_perf, perf.highest_perf);
++}
++
++static inline u32 perf_to_freq(union perf_cached perf, u32 nominal_freq, u8 perf_val)
++{
++	return DIV_ROUND_UP_ULL((u64)nominal_freq * perf_val,
++				perf.nominal_perf);
++}
++
+ const char *amd_pstate_get_mode_string(enum amd_pstate_mode mode);
+ int amd_pstate_get_status(void);
+ int amd_pstate_update_status(const char *buf, size_t size);
 -- 
 2.53.0
 
