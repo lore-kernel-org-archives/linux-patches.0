@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030022;
-	b=wdUS15mzlatlQJUcryBDDhjm6abvhwVxynJEoGsuakFgF6Xm0zORvJ7RbS+DNE6w5Nd8
-	 DLeoQOhD2C0gUY6WvbTZxlYiCQYJJq/k/ZypPgXNOLLjZtescCgAI9xtq+DgQVl/dZSbX
-	 n8z0QkJQZdl0+tN7ogUUxtzMuR9t2rsnZW73xQVPWb6PX+oW4ODp0jt9LPOx1hhDyPAH6
-	 hSxQGKU2FUCe7gCyqHYXVWllt2u1eCbg7IiN+SAEiV5fXsGkAXYHyP6JHPmvulxTkwWSi
-	 EXd04+vLieCgkrUPiAzc8ZNyVNGSSQ+lbcUU/TGAX67AAmjU88LrS5iG98E47uFvJgQ==
+	t=1795030025;
+	b=2BnYTH/n8OBWpZfwYZK69sMybCcyAaQlJ7c34X1rdShfAL83eLP2wZ0jWFEd7SfWB3A6
+	 lL6FZ6v01/mUlvjta0jZxfotqHISo7mdUozAshNtr49wIUKX7k3KEq16ikwLuNz3u1047
+	 MEtMoM5l9C1+gox49t0+KyMoyZRqCiRBtIQ6uF7RdCMnG4ELWfzODuHKAkDUwzqS2VP7A
+	 B2z7ktJom5eJ77JCvh8ZNgCfQ6Ff/ID5cqTiEIJxG8HHRc3q3qTF4/LwGk+tUgIas8Kq4
+	 OneVJIyXE0yNqbFNCbGFjObGNYIS899cQ5FtcGpIOYhemwUdBzLZHpFbga+TYZlIp8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bH8p/N6P5v6d1fLwlWn3zFX4Yn9y0sDE52lEi+37f6o=;
-	b=DgbGQ4+zuf/bMFTZtQDo6i/0TCLZZIFT3CfdTMDwm1cMnpfksOuJzhFRNzTqJyZSmmTt
-	 C9b6GBwHw1C6SDyJwQpKSRCus4FcvIIHGYcjcOwUZXlDi3RfxfCKdzDjtVrqV4QndHbtK
-	 Ekb5zh9OYxqxtXabZ0sIYvwgfHiD4Ld0vWadhjY10mRmIVnmemnnMEEvZdQxx3M4FhEzm
-	 estbiKi2EbXJUofCQNFEuX/ITMg26lF+kurjL5HsHxzMoh2lAwfmTJz5FW5lyJ5WJdCpn
-	 +Qx6EPCcQmYZhrWWzqeRipEa9o7RPY1doTKIKkiKLABT3aXvwrU8kGeLzbMi1DxJMdQ==
+	bh=0bGs/CXXMG3S3ldTsMeiteTdVOxCCnxridCEQ8cxOsM=;
+	b=eOWCU72YZKKaKLlG6hpweBR3Je5UqSNrsJfvt4wN2vfy4y+2k3G1waE47inwCLgyINia
+	 cQQoavdNEoTdkup4gExXGkRftRHMcQCn3p/cxbF4y0MeiOAaDxgdOv9kIaephSMcdEcuK
+	 1GsyC0m97bptY/Y1nwGIp3a3ts37RWgiDFOkjIvvULOk8ZRTLAhRl1gXRRlwH0pGsIN+y
+	 wbGGQcXNIocF0rXv564vpDMNSNLa8EbtH6+3dbpHLkFhwekDanl+SXdntEndYWX1GiR08
+	 DsN/9w5u8gKvg4i7GknLCty5LDpXvDMXBSZ4yzjj8EmdjMk6xAKqDFaY1EPJrjFddDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtXfgZgF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dciHakPk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCA4606A325;
-	Wed, 18 Nov 2026 19:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8831B606A320;
+	Wed, 18 Nov 2026 19:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HtXfgZgF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D011F000C4;
-	Wed, 18 Nov 2026 19:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dciHakPk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF37A1F000C4;
+	Wed, 18 Nov 2026 19:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030022;
-	bh=bH8p/N6P5v6d1fLwlWn3zFX4Yn9y0sDE52lEi+37f6o=;
+	s=korg; t=1795030025;
+	bh=0bGs/CXXMG3S3ldTsMeiteTdVOxCCnxridCEQ8cxOsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HtXfgZgFVZypb+afigOq/MXu2lm07uxWGgCaqPW0zasy+GSWacP64g0XlSdF15Tev
-	 zYjU5zRS58EO4g89gI6w0j3+icM/JlskD9Qg5mPdndlBlBL2fKT+jGrEVJcw0mDZt3
-	 TzWus/Mb3Uwewz0aWDg9RM8wE+obCp8jbkbrM8yc=
+	b=dciHakPkb+QD/OjhrMFjFbvducdJ3mwREsZr1YL7pO2otZUDMG4Mcl6YmVdNJBlCS
+	 /8WdalKlNN6droM1aMekXB79DE7oSi2r+ZHK7YGYe/Hp5kYmSDkHmtI+MaL2mcaBiW
+	 Ni7ksKEXcrSmvdf/l4MYCsckhMuB+b0rXf3aJ4Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Anderson <ejona86@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0555/1756] mfd: rk8xx: Register poweroff handler in atomic phase
-Date: Wed, 18 Nov 2026 15:44:42 +0100
-Message-ID: <20261118150031.204276194@linuxfoundation.org>
+Subject: [PATCH 6.12 0516/1756] RDMA/mlx5: Guard steering anchor resource destruction on create error
+Date: Wed, 18 Nov 2026 15:44:03 +0100
+Message-ID: <20261118150029.713811372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,51 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Anderson <ejona86@gmail.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 128115b520c6b61afbffd01809cfc3e8cbb78516 ]
+[ Upstream commit 193aaf5b57f05d9f0403cfdaff3eda3b8d11ec13 ]
 
-This fixes a regression from v6.1 to v6.6 where Google Veyron devices
-(rk3288) would not power off after being shut down.
+The steering anchor resources are shared between anchors with the same
+priority and are protected by rule_goto_table_ref.
 
-Prior to commit 4fec8a5a85c4 ("mfd: rk808: Convert to device managed
-resources"), pm_power_off was called by legacy_pm_power_off() which
-itself was registered using SYS_OFF_MODE_POWER_OFF. But in that commit
-the registration of rk808_power_off() moved to
-SYS_OFF_MODE_POWER_OFF_PREPARE. At the very least, the code should be
-consistent between SYS_OFF_MODE_POWER_OFF and SYS_OFF_MODE_RESTART; both
-should be *_PREPARE or both not.
+When steering anchor creation succeeds but uverbs_copy_to() fails, the
+error path drops the reference acquired for the new anchor. However, it
+unconditionally calls mlx5_steering_anchor_destroy_res(), even when
+other anchors are still using the shared resources.
 
-It appears interrupt delivery is already shut down (but not disabled)
-when SYS_OFF_MODE_POWER_OFF_PREPARE is triggered, so
-regmap_update_bits() in rk808_power_off() does not complete
-successfully. Registering rk808_power_off() as SYS_OFF_MODE_POWER_OFF
-runs with interrupts disabled which causes polling I/O to be used
-instead, and the device to power down.
+This can destroy the shared flow table, flow groups, and rules while
+existing anchors still hold references to them, resulting in a
+use-after-free when those anchors are subsequently cleaned up.
 
-Fixes: 4fec8a5a85c4 ("mfd: rk808: Convert to device managed resources")
-Signed-off-by: Eric Anderson <ejona86@gmail.com>
-Assisted-by: Gemini:gemini-3.5-flash
-Link: https://patch.msgid.link/20260908-veyron-shutdown-v1-1-066ecb80f5f2@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Only destroy the shared resources when dropping the reference makes
+rule_goto_table_ref zero, consistent with the existing cleanup path.
+
+Fixes: e1f4a52ac171 ("RDMA/mlx5: Create an indirect flow table for steering anchor")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260917085419.1792-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rk8xx-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/fs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/rk8xx-core.c b/drivers/mfd/rk8xx-core.c
-index 39ab114ea669d..b27d14b8fd868 100644
---- a/drivers/mfd/rk8xx-core.c
-+++ b/drivers/mfd/rk8xx-core.c
-@@ -788,7 +788,7 @@ int rk8xx_probe(struct device *dev, int variant, unsigned int irq, struct regmap
- 	if (device_property_read_bool(dev, "rockchip,system-power-controller") ||
- 	    device_property_read_bool(dev, "system-power-controller")) {
- 		ret = devm_register_sys_off_handler(dev,
--				    SYS_OFF_MODE_POWER_OFF_PREPARE, SYS_OFF_PRIO_HIGH,
-+				    SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_HIGH,
- 				    &rk808_power_off, rk808);
- 		if (ret)
- 			return dev_err_probe(dev, ret,
+diff --git a/drivers/infiniband/hw/mlx5/fs.c b/drivers/infiniband/hw/mlx5/fs.c
+index 520034acf73aa..186085cfb4e9b 100644
+--- a/drivers/infiniband/hw/mlx5/fs.c
++++ b/drivers/infiniband/hw/mlx5/fs.c
+@@ -2466,8 +2466,8 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_STEERING_ANCHOR_CREATE)(
+ 	return 0;
+ 
+ destroy_res:
+-	--ft_prio->anchor.rule_goto_table_ref;
+-	mlx5_steering_anchor_destroy_res(ft_prio);
++	if (!--ft_prio->anchor.rule_goto_table_ref)
++		mlx5_steering_anchor_destroy_res(ft_prio);
+ put_flow_table:
+ 	put_flow_table(dev, ft_prio, true);
+ free_obj:
 -- 
 2.53.0
 
