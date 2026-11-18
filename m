@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027870;
-	b=UFgyxV6IcteS/Bb07zoVVq1CsBiyPHP0bN0G6tp3bEBR0YBspxeD5uvkTZ1cjOKwFf3v
-	 hRjYcLbuUB0SnYKbTqvV12+xW7kVa/FjmReDFzzH2I/t/sunv84ME8Lm+kC6seCjTCeBm
-	 LqoHkRfrwQdKxt+1yszj96LKUrnTBi8DdccMiazyQj3EkGFZCZhHfrLW3v2qV03QhFZmr
-	 pDi6V8v58lPirfW0CNKjWdvvgZFTj8mGdfPrxzuisyQr077uyHzD9T5nt8r9VvOKIXObV
-	 646KBlGZF0n4HMkaHjkjx8Y0Dz5dpDgODZJb+cAat6XCcCqB5BBGOJTNW3P7nu3fTPw==
+	t=1795027872;
+	b=GjPrVKFAHi/J76XtCYI6KC/THfER530SwZ49wB14CsVLEjNvW+Xb8zFKvjYP3H+kWIYD
+	 r9/hUJvOTEvo0eahDRR0zvSW+ZMPrAt70BGiJF8hWhcYRZbGVSclfFaYbWM7XE1RajCxf
+	 l0Er4jr9hzIlTkM23096c+nlHrOScdRB4Ye8+TTdBo1U1SFwq/5IBB4m6Hmzt06svp2HF
+	 y2WP1Rr+GhCJbHbmhwTOxmafrP6mhvmb/tZkFAtlIBkBxDtbU5vavCRgPs7ax9M7FQY/w
+	 feOVyTknO231x7e8jC8IsFb8qIWOh8coIcpH5T9d9qsWfdLdDx9Amgg3hMt3o5b3P0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027870;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X6/4ftLvAmVfWVSZx1yFQy50SmE2DQfr2w08Ga8R4Bw=;
-	b=A/4At4WA+LFeu/XbLGLs9jmkCkpy7/L7upe6lRl7uhoEZ7clICW/nhW60NHRdb0aFe0w
-	 8vL25DZBf29PvlxsT+CePDYrFG8naafJB3AIj+NJKd1+ZQouY+kKY1wWmvQO7H/+lXtBs
-	 DbLVd6Rg6+UggZEUkaaj7fBWsniR447iYDmskcaavfXxX4gnBWZNgjVwOYYhrTjFux4q/
-	 KaTlXGaK5MKcE1SKNOX4on24tA/RrF0hESKms1eEFKCJkblyHYmc9EUoWdyp/wsZvBqaD
-	 ePq29Y9E0eM2yPtMb/Y2sO9zKF7Qy6yru5bkgExKJI3n6xq6kSwwfg4DDKnkQGU5JFg==
+	bh=f4r/lcZRC4i48neldSAMJf0rkyafy9xbP0aU0YJIUaY=;
+	b=eImpJ5TYwB7T/cDtKD7cEnuya/gzJlr6mRe/KBz0qpUlIPEoqYSSZfmKjqFCtlEF8aUz
+	 AMY64c5UNYtD3YsanPcPH9mTn8XutDqQFdsTTz+KK47yzcfTSsg9Lx/ozIY+1plWqaa8t
+	 uerkAVQ1bGDLcCErzDDxuVGotNPrXFFd08PG1L0e9dtAnP+UKGfBQcCpX75uAq8M23MRb
+	 B77vh9ezc3+z6jmwayHpRzuCABGPLTG/+h3wGu6sFkrxw7UlxS0jeWIuhiRz8ia+ZNpgy
+	 zooXRZokbShu0MIHLpvN2i5vYl+0u3ObZ3sg0xoae1JFdRCliCJzOi1xetfoC3tYOOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWibCrCx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHxhtjjj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B96B606A31C;
-	Wed, 18 Nov 2026 18:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B6D606A330;
+	Wed, 18 Nov 2026 18:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWibCrCx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F901F000C4;
-	Wed, 18 Nov 2026 18:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHxhtjjj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BEA1F000C4;
+	Wed, 18 Nov 2026 18:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027869;
-	bh=X6/4ftLvAmVfWVSZx1yFQy50SmE2DQfr2w08Ga8R4Bw=;
+	s=korg; t=1795027872;
+	bh=f4r/lcZRC4i48neldSAMJf0rkyafy9xbP0aU0YJIUaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWibCrCxBvKZrKwnkRLKi5FzXM0NFSx0KmG4PsCBQc56C7QBHCd1puMTxV2pwGrFF
-	 l3kIf6VLS6Sxk8Nc41SfQgez5jNE6uBsOlQ7v7SHnI720Ma/bLSAWjWpwXA/AXVNgf
-	 JNS6OOvriL99zvlQmPXwY9Mg+JUEfhlE3wGxiDOY=
+	b=RHxhtjjjWzUNMLt8wFy3tEHVIFJ5t/sCJP4VoNFMWf+04/shHF64Ezzy6Z46KtZM3
+	 t1iD0SUJWPqMATMmkqXEdm1oJOPWKbIQMCQ53Zvj/7UJGNJ+EgKZ0M1j4BOCQZpp3e
+	 vgY9Rbvt8CMf4SrRRXAxgFZRIyWSELZzT27ZzE+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ting-Han Hou <ue081723@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
+	David Carlier <devnexen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Kazuki Hanai <hnkz.64@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1941/2151] scripts/gdb: fix stack depot out-of-bounds diagnostic
-Date: Wed, 18 Nov 2026 16:01:16 +0100
-Message-ID: <20261118150232.476601441@linuxfoundation.org>
+Subject: [PATCH 6.18 1942/2151] ALSA: us122l: mark hwdep mappings VM_MIXEDMAP
+Date: Wed, 18 Nov 2026 16:01:17 +0100
+Message-ID: <20261118150232.511565445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,44 +72,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ting-Han Hou <ue081723@gmail.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit b6232ca8d194c60ee603586e42b5ea584d4b7be9 ]
+[ Upstream commit bbde9d5bdd2d7cf94707b2a8bb466f2e074f9db2 ]
 
-The pool_index field was renamed to pool_index_plus_1, but the
-out-of-bounds diagnostic in stack_depot_fetch() still accesses the old
-field.  Looking up a handle whose pool index is outside stack_pools
-therefore raises "There is no member named pool_index" instead of printing
-the diagnostic and returning an empty result.
+mm has recently moved to a strict model which requires any driver which
+clears VMA_MAYWRITE_BIT to be mapping non-mm-managed memory
+(VMA_PFNMAP_BIT or VMA_MIXEDMAP_BIT), failing any such mmap() with an
+error and a kernel warning - see "mm/vma: only allow mmap to clear
+VMA_MAYWRITE_BIT if not mm-managed".
 
-Use the already decoded pool_index variable in the diagnostic.
+However, simultaneous to this, commit 71c610aeb177 ("ALSA: us122l: Prevent
+write upgrades for read mappings") updated us122l to clear
+VMA_MAYWRITE_BIT without marking the region with either VMA_PFNMAP_BIT or
+VMA_MIXEDMAP_BIT.
 
-Link: https://lore.kernel.org/20261011023044.1722-3-ue081723@gmail.com
-Fixes: 9d938f40b228 ("scripts/gdb: rename pool_index to pool_index_plus_1")
-Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+vm_insert_pages() and friends set this automatically, however this driver
+maps its pre-allocated pages from a fault handler, so never calls these.
+
+Simply set the flag in usb_stream_hwdep_mmap() to resolve the issue.  This
+correctly marks the mapping as one whose pages core mm does not manage,
+which has no meaningful impact for this driver beyond preventing the
+mmap() from failing.
+
+Link: https://lore.kernel.org/20261023-fix-us122l-mixedmap-v1-1-e7bdd053850f@kernel.org
+Fixes: 71c610aeb177 ("ALSA: us122l: Prevent write upgrades for read mappings")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
+Reported-by: David Carlier <devnexen@gmail.com>
+Closes: https://lore.kernel.org/20261018025905.201296-1-devnexen@gmail.com
+Acked-by: Takashi Iwai <tiwai@suse.de>
+Cc: Kazuki Hanai <hnkz.64@gmail.com>
+Cc: Jaroslav Kysela <perex@perex.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/stackdepot.py | 2 +-
+ sound/usb/usx2y/us122l.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/stackdepot.py b/scripts/gdb/linux/stackdepot.py
-index 37313a5a51a0d..aaa18af25cd12 100644
---- a/scripts/gdb/linux/stackdepot.py
-+++ b/scripts/gdb/linux/stackdepot.py
-@@ -39,7 +39,7 @@ def stack_depot_fetch(handle):
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index 46dbf9ea1fb70..92878a1a22960 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -204,7 +204,7 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
+ 	}
  
-     pool_index = parts['pool_index_plus_1'] - 1
-     if pool_index >= pools_num:
--        gdb.write("pool index %d out of bounds (%d) for stack id 0x%08x\n" % (parts['pool_index'], pools_num, handle))
-+        gdb.write("pool index %d out of bounds (%d) for stack id 0x%08x\n" % (pool_index, pools_num, handle))
-         return gdb.Value(0), 0
- 
-     stack_pools = gdb.parse_and_eval('stack_pools')
+ 	area->vm_ops = &usb_stream_hwdep_vm_ops;
+-	vm_flags_set(area, VM_DONTDUMP);
++	vm_flags_set(area, VM_MIXEDMAP | VM_DONTDUMP);
+ 	if (!read)
+ 		vm_flags_set(area, VM_DONTEXPAND);
+ 	area->vm_private_data = us122l;
 -- 
 2.53.0
 
