@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053990;
-	b=OtyIZ973FkWcxkIvE+yjPMv2XV4iP28bB+GFILnoj5gc7w9rjBeCTTHJ6qHsP0MPyOmt
-	 35+9vDfNEcArmv9FzVxgciHcy5yv5GmWIjZ6z0Cn4gzHwp0MxX4jq5DK5aUQiftLwcukb
-	 uY7TIFPv2whu89n7c/S0m49ksAeTRpkwTXKXQUAT+a+vISkYh8myEW/LbYdgqiHjNoQIV
-	 Uhuc1mvbnQN4tSgWn1kKs+JghwNQhlZSdl54LlMel3K3BedCr1ZaVAOmWRwrTpSHD9rY+
-	 uwnX/Q0peznTpX8kAQokZrTuML5/npfgGIcf7IkC5BhPhLG/P5OgPCYiczOv98R9ZcQ==
+	t=1795053993;
+	b=EdWU2mWNqNlyDfJ8he8sXlGnCrJuv1c0QmiyPt5TUBSn92Xe0r0NEChBnbToLkndoLJw
+	 C05Y/MC/dIiTmKuAn9xuuNteyWaSXC7xEl5iwahI7DW5R8AQvhhBe8nLI7NlZy5ayr2Cj
+	 byDtvxwb3VmQj3o5OuZIk1E3CWW2wy+eoUvrjVVhYIN7R0QCEAUutduB0Gu3NwsBzqVy7
+	 bb/jtSoJSHzNqq6sStn3ZmeX1KLgplXTGcyFsUwO5I5FGX+5D5bEoYTAz8cO2Sdgimfg5
+	 h0HEl6jELG8juzpXfGGd1CE4ViF80wih9YGU425+AK5WCBzj443FivGo2ERR8RJtAcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yk/SOkIyMkN/c3w0cD+T72qhw/rvTxczqU6pj8IwdaM=;
-	b=PYavAkT0p5Huv7HXO4voJEH5tIw4/nqtLLhsKP0iNXKHSWqJ0BMbtwYchF7pc2Eopeyh
-	 xG+PgmxsidGSOBigpM3BnExSP3ndEA7AZIyp9KXwT35kiaFV3kk8+SUScOnOTdeLyRm6m
-	 gfTYOqML/qJVLs9NkD+RUrImSP3RFyODlGgMONmmzn+MONDz+rgP2K5u/J+pAleBBKUzy
-	 +elNLLx/a4kKOYXWAoglc3EmW59SEv2MGVih02DRLF4fE7CCKaEItUc+cwpxeGEhTsfb3
-	 0Daz/gZjIC1ADOjk7CYVOcPL9Zt+v2ZohI5Zcvfi3yC9sB5ycO0B2Re4BYX+bAhy18g==
+	bh=zH3Fdb+D32OVTbk6ELbZF2ZApgGWZFR/mMfC6vad4YI=;
+	b=ZKKvVldi/AyN+oeDIgyqGsQP/2FQnkk2TphUZaCyQEKr7m0iNLomgpbFSJabRRKVjnDo
+	 OPFDB8UeWalNCJzh4UgxEA9gAx7tsD4yvnSYUm3Xc4GQ7lGtjtP8Pw2i9asvS6uznODfZ
+	 2vAqAul8u7rmVIuQyWURz0yE4sAljKyw4lfr5dlghsbX19bomWdjMxhoJMLb5ms74xNZj
+	 /yJIY6ZFhAy92VQrVXO05ddmfHncAi0Oq3dxLWnpiprQmZ4S7TUZKst/fLTQ+G8ad9Lpn
+	 XiIpCIYD8rnC1pIE996UPdt1lTe3bV4+hZPllVkrqz/ECjhMyrgDf5dxoNCND9cFRHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/zM/tut";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QiCTER8P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC818606A31C;
-	Thu, 19 Nov 2026 02:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F16A606A320;
+	Thu, 19 Nov 2026 02:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/zM/tut
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1001F000C4;
-	Thu, 19 Nov 2026 02:06:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QiCTER8P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFC51F000C4;
+	Thu, 19 Nov 2026 02:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053990;
-	bh=Yk/SOkIyMkN/c3w0cD+T72qhw/rvTxczqU6pj8IwdaM=;
+	s=korg; t=1795053993;
+	bh=zH3Fdb+D32OVTbk6ELbZF2ZApgGWZFR/mMfC6vad4YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u/zM/tutvE1u3XRoY7agZ2QptXk/61hwyC3c5rZQi9kT9VLZT0foj1TtWtewlRFbO
-	 5rIOk7M0NkDDEG3kNgq/R6bug57IShgzsac76aiXhquITi1fPpNiXCjLq2dVFj4VzK
-	 Pb+RdYkJCTWZWAzkZ5CZP+coBKZnmTl+gi4pyNvE=
+	b=QiCTER8PHdUx6GF+FvD54YFAbfjJG/V/hcMuHoAxkSjkJepcet3VkFJT/dmhSbkQF
+	 NcuxBHhAoWcHcc5RYZXuJZCtzSj3YdHpII69PIlakhtx6H2fwAV1HDHR8txhPDDWeQ
+	 B0Ej72b87Jr83H4swTu6AYqxtnCi1Fist/gdb0qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexey Charkov <alchark@flipper.net>,
+	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1065/2214] ALSA: mpu401: shut down timer before freeing MPU
-Date: Wed, 18 Nov 2026 15:45:41 +0100
-Message-ID: <20261118150054.888865422@linuxfoundation.org>
+Subject: [PATCH 5.15 1110/2214] nvmem: rockchip-otp: Serialize reads
+Date: Wed, 18 Nov 2026 15:46:26 +0100
+Message-ID: <20261118150056.550055616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,81 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Alexey Charkov <alchark@flipper.net>
 
-[ Upstream commit 9332af5220d42341bb1446a62c545c0518e990ef ]
+[ Upstream commit 9fc6a1592d844c0397f115ee8cbd935169b9a71e ]
 
-When an MPU401 interface has no usable IRQ, the driver polls raw-MIDI
-input and output with a timer. During raw-MIDI teardown, the timer callback
-can already be running when snd_mpu401_uart_remove_timer() clears the last
-mode bit and calls timer_delete(). That API neither waits for a running
-callback nor prevents it from rearming the timer, and free_irq() does not
-synchronize timer callbacks. snd_mpu401_uart_free() can therefore release
-mpu while the timer callback still uses it.
+The OTP controller is driven through a single set of registers holding a
+state machine which has to be stepped through for every word read, yet
+nothing keeps two readers out of each other's way. Concurrent reads
+interleave, and the outcome is either a reader bailing out:
 
-Initialize the timer once when the MPU object is created and only rearm it
-while a timer mode is active. Shut it down synchronously after freeing the
-IRQ so an in-flight callback completes before mpu and its resources are
-released.
+  rockchip-otp 2a580000.otp: timeout during read setup
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+or, worse, one of them silently taking delivery of the other's data.
+
+Reading two cells in parallel from userspace on RK3576 reproduces both
+within 150 iterations - 53 read errors and 9 corrupted results, the latter
+either losing their first word or, in one case, ending in the two bytes
+which belong to the other reader's cell - whereas the same reads issued
+sequentially never fail. Concurrency is not hypothetical here, as six
+thermal sensors source their trim values from the OTP and reach the driver
+straight from asynchronous driver probing.
+
+Guard the read path with a mutex. Reads are the only way into the hardware,
+as the driver registers no write callback, and they always run in process
+context, so a plain mutex spanning the whole clock-enable, read,
+clock-disable sequence is enough.
+
+Fixes: 755864feb729 ("nvmem: add Rockchip OTP driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260927093809.681726-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: adjusted context for explicit spin_lock_irqsave()/spin_unlock_irqrestore() calls instead of guard-based locking ]
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20261002101329.1084348-2-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/mpu401/mpu401_uart.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/nvmem/rockchip-otp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/mpu401/mpu401_uart.c b/sound/drivers/mpu401/mpu401_uart.c
-index f435b9b4ae241..e920a290ba1b6 100644
---- a/sound/drivers/mpu401/mpu401_uart.c
-+++ b/sound/drivers/mpu401/mpu401_uart.c
-@@ -161,14 +161,15 @@ static void snd_mpu401_uart_timer(struct timer_list *t)
+diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
+index aaa044bb231b8..0fb8d6d800bbe 100644
+--- a/drivers/nvmem/rockchip-otp.c
++++ b/drivers/nvmem/rockchip-otp.c
+@@ -12,6 +12,7 @@
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/nvmem-provider.h>
+ #include <linux/reset.h>
+ #include <linux/slab.h>
+@@ -66,6 +67,8 @@ struct rockchip_otp {
+ 	void __iomem *base;
+ 	struct reset_control *rst;
+ 	const struct rockchip_data *data;
++	/* Serializes access to the OTP controller state machine */
++	struct mutex mutex;
+ 	struct clk_bulk_data clks[];
+ };
  
- 	spin_lock_irqsave(&mpu->timer_lock, flags);
- 	/*mpu->mode |= MPU401_MODE_TIMER;*/
--	mod_timer(&mpu->timer,  1 + jiffies);
-+	if (mpu->timer_invoked)
-+		mod_timer(&mpu->timer,  1 + jiffies);
- 	spin_unlock_irqrestore(&mpu->timer_lock, flags);
- 	if (mpu->rmidi)
- 		_snd_mpu401_uart_interrupt(mpu);
+@@ -179,16 +182,21 @@ static int rockchip_otp_read(void *context, unsigned int offset,
+ 	if (!otp->data || !otp->data->reg_read)
+ 		return -EINVAL;
+ 
++	mutex_lock(&otp->mutex);
++
+ 	ret = clk_bulk_prepare_enable(otp->data->num_clks, otp->clks);
+ 	if (ret < 0) {
+ 		dev_err(otp->dev, "failed to prepare/enable clks\n");
+-		return ret;
++		goto unlock;
+ 	}
+ 
+ 	ret = otp->data->reg_read(context, offset, val, bytes);
+ 
+ 	clk_bulk_disable_unprepare(otp->data->num_clks, otp->clks);
+ 
++unlock:
++	mutex_unlock(&otp->mutex);
++
+ 	return ret;
  }
  
- /*
-- * initialize the timer callback if not programmed yet
-+ * arm the timer if it is not already active
-  */
- static void snd_mpu401_uart_add_timer (struct snd_mpu401 *mpu, int input)
- {
-@@ -176,7 +177,6 @@ static void snd_mpu401_uart_add_timer (struct snd_mpu401 *mpu, int input)
+@@ -246,6 +254,11 @@ static int rockchip_otp_probe(struct platform_device *pdev)
  
- 	spin_lock_irqsave (&mpu->timer_lock, flags);
- 	if (mpu->timer_invoked == 0) {
--		timer_setup(&mpu->timer, snd_mpu401_uart_timer, 0);
- 		mod_timer(&mpu->timer, 1 + jiffies);
- 	} 
- 	mpu->timer_invoked |= input ? MPU401_MODE_INPUT_TIMER :
-@@ -490,6 +490,7 @@ static void snd_mpu401_uart_free(struct snd_rawmidi *rmidi)
- 	struct snd_mpu401 *mpu = rmidi->private_data;
- 	if (mpu->irq >= 0)
- 		free_irq(mpu->irq, (void *) mpu);
-+	timer_shutdown_sync(&mpu->timer);
- 	release_and_free_resource(mpu->res);
- 	kfree(mpu);
- }
-@@ -544,6 +545,7 @@ int snd_mpu401_uart_new(struct snd_card *card, int device,
- 	spin_lock_init(&mpu->input_lock);
- 	spin_lock_init(&mpu->output_lock);
- 	spin_lock_init(&mpu->timer_lock);
-+	timer_setup(&mpu->timer, snd_mpu401_uart_timer, 0);
- 	mpu->hardware = hardware;
- 	mpu->irq = -1;
- 	if (! (info_flags & MPU401_INFO_INTEGRATED)) {
+ 	otp->data = data;
+ 	otp->dev = dev;
++
++	ret = devm_mutex_init(dev, &otp->mutex);
++	if (ret)
++		return ret;
++
+ 	otp->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(otp->base))
+ 		return PTR_ERR(otp->base);
 -- 
 2.53.0
 
