@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045876;
-	b=WxD2sgMYgpMwK9POPe1ANAT1GR0ivbH5AOE0PwYd4hppdYvrJengP3L+97+E0guN96KU
-	 GcN111vsX8AVO/zG4gbIbfOKXR2x9gbqVSjUHlfeIrQQd9HT87mlkPC40C1tpy1tlIrMC
-	 UIdQp37o9dgJDz+TYyRcwxa0RDBT+SIXtD7iEq0x6hvno2MV3BwlnMHQT5arrazL4om4d
-	 djKPF1LGKiChrSzxKJVQppXYYRf4Z7qK81tt2CTEU2h0tavIoU6fPOsU/ehyVIuW8GOuk
-	 SdtcOnXIq0LDwfc4Pb/IsIqTkB/yjBSGRYPR4CHkutQzYv7EIZBTVZ3j1EC0UGHniWQ==
+	t=1795045879;
+	b=FS0PRJfwsV+OWBfQbnqCVlsW5wfLWzGBBqdiw1TR/sm1kgLJu4bJD4jvEPR5ziFESp11
+	 VrBQGQrnSKYx10v5LxdL0qsKTra5irK4riTZC6BS91Z9FFpYMLDyHW6DHvH9JuVfMD9ab
+	 ufozVVQVAa/kd8vVS9DsYmu+zgIIoVsSebTmLlOMv04ihgTNpAh4mLu5jPFKUev4aCSKQ
+	 ga911PBTOV4xus6/T8zzdaRI99a53ePp8f8ro10N3cmJaeZ0iVtlksC6UhY7OoKtZUmeQ
+	 DB7eloZxMspWpPm6X0TRe/UcaVnk4gahVD6YHqR6nsH+FfY6JL+KPpROsS8p1vVQqHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045876;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Qx1fzNZyl9Euim4m6heINcPdUbQa9IzFN28Wfu78zko=;
-	b=k/VEHrXp9ESYMNCG3LfcguhDt30gysH3Bf7Ft5mr3Hwi7dNuwyALs3AQ2P5M8RfK1W1U
-	 qk73lBIGQLjWRnpwGoZtRoQRRJL5XHSY+AOCrGPQiISBCF67e+e5IMiV3f0QM/awkosb7
-	 wILjlp/vHnct1mxh4ib/wBpCCEX7XC5aPY+NTOzh5NcxAkhXZY0sA/v1idWEIDQ1yrFoc
-	 THcZABJhKwZeEqh4Evdeqfma1iEOEySe627LeByjAAqIhOWc/aXjVhzrO7nT7L4FkClBP
-	 Orgr+6+MjEDosYfbZqY0tABHxP74jNZ/Lk9yKIQCOuoPI8E2Wy+nr1/k9SROaFEuOnA==
+	bh=H403uhP+oyfWawpdFYgvmwBGE7XR8AGoqAYCsdub0LU=;
+	b=H742Dhdb2MvZbwXe/wpns2fppPqn4VJrN8NW3UGdNPIRo34Ghvgdqp7J9F28tFw3YHJp
+	 RXzZk2zynnYxOlpZVWdtSnjkdISCEc1BWbxlg966e/ozeT3Ue5ypIgin5sAp5zsTISqMt
+	 WQRVY3F8ZblOyCQ1ey3NOCpCWnG5Zujckjt4aY/K1oTBVMlbNNE30uqP8vCuN4+gQH9nY
+	 B/CbxeRCmH8Y58+rOaj5bd3J6icB3TNhA1Oil32KDfaFPcwUBzCxfeEUPKv0BTk6P4jY4
+	 t/E58UVmfcezuwlsiFuBjO0Bs976MXzrY1lGqgcp7eyoi1wFisk2QURBVifipHM+VaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPqYWROJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAsUgFtW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AF4606A337;
-	Wed, 18 Nov 2026 23:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0B9606A32F;
+	Wed, 18 Nov 2026 23:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XPqYWROJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3F91F000C4;
-	Wed, 18 Nov 2026 23:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAsUgFtW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FF71F000C9;
+	Wed, 18 Nov 2026 23:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045876;
-	bh=Qx1fzNZyl9Euim4m6heINcPdUbQa9IzFN28Wfu78zko=;
+	s=korg; t=1795045879;
+	bh=H403uhP+oyfWawpdFYgvmwBGE7XR8AGoqAYCsdub0LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPqYWROJwe8jmbg4ayjzdwr7D7fqXEf/iNe9R2iKI8kMAshepadEqfcJ2jkvewzm8
-	 KLtSLDUxiLwBeXpkSFLleCRFTXJLPbjNZjJDdI57v7B2YNbQkOi5wdo1PZf4gdHlOg
-	 5xPKJ9Q0Ri9v54u6VqGOT6S2MBNifJ6iybwZTygQ=
+	b=RAsUgFtWJKtOHXIUD51Z2KRwd9g8FKdGdmS1t+IQpDmWzaQUV0Ya759YTLhOA7pfc
+	 /k0bzdqLvVS8KC+MAgp5IGvPeteXK8pBJGSDXsxp8Q4gLxX6XzfUlCSftKS5/suuhL
+	 Hsr+aBseBCFEloxPvlyeFDLMNMBph6MCM1o06f0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+e015e82956da641b@bugs.sh,
 	Christoph Hellwig <hch@lst.de>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Andrea Parri <parri.andrea@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1081/2857] nvmet-rdma: reject short connection requests
-Date: Wed, 18 Nov 2026 15:35:15 +0100
-Message-ID: <20261118150240.542618818@linuxfoundation.org>
+Subject: [PATCH 6.1 1082/2857] nvmet-fc: only send read data for successful commands
+Date: Wed, 18 Nov 2026 15:35:16 +0100
+Message-ID: <20261118150240.578440545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,84 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 635e760169a87abf03874cd4636cd91b580cb427 ]
+[ Upstream commit 94f93c61b1a5dd08d011be58172ce4392b849008 ]
 
-nvmet_rdma_parse_cm_connect_req() treats RDMA-CM private data as a
-struct nvme_rdma_cm_req but accepts any nonzero private_data_len.  The
-iWARP path allocates exactly the peer-provided length, so a six-byte MPA
-request reaches the parser and the hsqsize load reads two bytes past the
-allocation.
+When a read command completes with an error,
+__nvmet_fc_fcp_nvme_cmd_done() still pushes the whole data buffer to
+the host before the response. nvmet_fc_alloc_tgt_pgs() allocates that
+buffer with sgl_alloc() and no __GFP_ZERO, and a command rejected by
+nvmet_check_transfer_len() leaves it untouched, so the host receives
+stale target memory.
 
-Require the complete request structure before reading any of its fields.
-The decoded KASAN report is:
+The buffer is as large as the data length in the command IU, so the
+amount of stale memory returned is up to the host.
 
-  BUG: KASAN: slab-out-of-bounds in nvmet_rdma_cm_handler
-    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
-     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
-  Read of size 2 at addr ff1100010459d366 by task kworker/u16:1/41
-  Workqueue: iw_cm_wq cm_work_handler
-  Call Trace:
-   <TASK>
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   nvmet_rdma_cm_handler
-    (drivers/nvme/target/rdma.c:1427 drivers/nvme/target/rdma.c:1475
-     drivers/nvme/target/rdma.c:1614 drivers/nvme/target/rdma.c:1814)
-   cma_cm_event_handler (drivers/infiniband/core/cma.c:2181)
-   iw_conn_req_handler (drivers/infiniband/core/cma.c:2640)
-   cm_work_handler
-    (drivers/infiniband/core/cm.c:2502
-     drivers/infiniband/core/cm.c:3858)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-   </TASK>
+The tcp and rdma targets send data only when cqe->status is zero (see
+nvmet_tcp_need_data_out() and nvmet_rdma_need_data_out()), so no nvmet
+command can rely on returning data with an error status. Do the same
+for fc. The ERSP then reports a transferred length of fod->offset,
+which is 0, matching what nvme_fc_fcpio_done() checks on the host.
 
-  Allocated by task 12:
-   __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-   __kmalloc_node_track_caller_noprof
-    (mm/slub.c:5414 mm/slub.c:5545)
-   kmemdup_noprof (mm/util.c:138)
-   cm_event_handler
-    (drivers/infiniband/core/iwcm.c:194
-     drivers/infiniband/core/iwcm.c:1076)
-   siw_cm_upcall (drivers/infiniband/sw/siw/siw_cm.c:408)
-   siw_proc_mpareq (drivers/infiniband/sw/siw/siw_cm.c:750)
-   siw_cm_work_handler (drivers/infiniband/sw/siw/siw_cm.c:1086)
+Tested over nvme-fcloop: a failed read command no longer transfers
+data and still completes with its error status, and successful reads
+are unaffected.
 
-  The buggy address is located 0 bytes to the right of
-  allocated 6-byte region [ff1100010459d360, ff1100010459d366)
-
+Fixes: c53432030d86 ("nvme-fabrics: Add target support for FC transport")
 Cc: stable@vger.kernel.org
-Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
-Reported-by: <co+e015e82956da641b@bugs.sh>
-Assisted-by: LLM
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/fc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 380c0aea840df..77439a3d5244b 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1412,7 +1412,7 @@ nvmet_rdma_parse_cm_connect_req(struct rdma_conn_param *conn,
- 	struct nvme_rdma_cm_req *req;
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 2ef185e0bc535..217637d2f8ae8 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -2464,11 +2464,11 @@ __nvmet_fc_fcp_nvme_cmd_done(struct nvmet_fc_tgtport *tgtport,
+ 	} else {
  
- 	req = (struct nvme_rdma_cm_req *)conn->private_data;
--	if (!req || conn->private_data_len == 0)
-+	if (!req || conn->private_data_len < sizeof(*req))
- 		return NVME_RDMA_CM_INVALID_LEN;
- 
- 	if (le16_to_cpu(req->recfmt) != NVME_RDMA_CM_FMT_1_0)
+ 		/*
+-		 * try to push the data even if the SQE status is non-zero.
+-		 * There may be a status where data still was intended to
+-		 * be moved
++		 * A failed command may not have filled its read buffer, so
++		 * only push data for success, as the tcp and rdma targets do.
+ 		 */
+-		if ((fod->io_dir == NVMET_FCP_READ) && (fod->data_sg_cnt)) {
++		if (fod->io_dir == NVMET_FCP_READ && fod->data_sg_cnt &&
++		    !cqe->status) {
+ 			/* push the data over before sending rsp */
+ 			nvmet_fc_transfer_fcp_data(tgtport, fod,
+ 						NVMET_FCOP_READDATA);
 -- 
 2.53.0
 
