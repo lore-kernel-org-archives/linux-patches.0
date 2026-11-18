@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042958;
-	b=tH04Ure+LhoNG1azWr0HOefk4faOcvxiF/lpwDMZlxLOVbFxRVEAw0dKijLyqE94Uiaw
-	 G0NPFXLjz2NgKaVje+5OGKhi3wMqSwo+bJcEu8ofKIo2bMitKhzFoPrq4kVoeKJuAhido
-	 +FdaekqRSs3lLC+4sPdh5Jvkvq4D8G3bUqmO/0ewzaWVmbiWxU2wt2PsbipyHUXul17T3
-	 r/2UZlz+SC1Lm5yqIA51urQa/SvNNmNrO6UFKbhmkOrWuba5/6mUtjYWdTrm+m78fEivB
-	 kjBk0QtqSTfSMVHU+sad+gBAwp9KMoONyI1PcWGgBz22NGDUuMUk1dauyGDx/ZFPK+Q==
+	t=1795042961;
+	b=qRj/2RiDH1rrQe4faXtupx0hQD1hmO1aRYDD19LWvlrdtOoeMNrnxx/v1CUU1qanF0r0
+	 C5oev3shSWcA39t9FOAPgOnEBHDpa66eOeKZI8e6n3WKvacF9djaElwdf79pKUn77pQKB
+	 0qnPtUVcFHA4obgX+rwu8p6edQliBKQcPJRNzObgZKnAafEfvnqfWhPp6xaGMnh59Du+N
+	 QVUK4qdv3uT/D/Lcf3bYw9KUhyDGnMqI3S0N9UKKXrwvr7AINbxv+gke8ZCbP19csQvgd
+	 QDkICMrFA8mOOyTo+mZwn+erVRm3HZD7VupCSETfDWcRU0Uo1/oExOZkm2DVJd/QBeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042958;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dBA/BITgcOfhNb85X7VsZcrQd5JsnNlC3LqbzzPv6G0=;
-	b=VulSRM/JNAK90eFbCdfujdW1F8SDnEsozu7KWR0I3tHBJ1yJCcM7Thpf2tB1b4v5eHf2
-	 /LoL0m81IR76yMpQozcIxm2vC0CPSQAyCkJDQCLnawAuRatxYY7op7PUb9iKCNGVQLi7u
-	 RMajovlvhkNYpYklA+IQiFQvWiyEK9eHh7mTa4Fhx3ObtRQrajBub3WnFgPdSXGiYQNMs
-	 2ukClJL5khYlrvkgvDuRpMGQL17GxPuvfgS3NTjz5JAClLTBCLGyDDgismtdheP3l63Ff
-	 xviYrzXktNtqvJ8PNwtmeYHMAtP3kcPoCqbB4FhPaFg0mj88AGuokxEVH6LeTKjW7ow==
+	bh=PZcdddmxKiYhXeEOU4FqGBWAd1VBYdfwpn7hMuGIysA=;
+	b=xL+jzgjDYceUDlG2VuNHmPPVNlV7alErrD+U8vIasS1ZATx6EdrJXbGb06hiNGuCXNL5
+	 0yOpCFcHCJuv8/EEmX0G1yLywdiAvAyAt8tyDsUchOCS0kzxnh35BjPIREZqQv2XG9lzc
+	 JzrLi5fX3VS+5gPZ/bubKnoX6LX09EWw8U5GRVKh0kwjdWEtYovcvXdPgXwbw73nRgTq0
+	 KbSaHhjuH3OZ6UmbHRHTbrbQNQgSv0nYf4sfIGAS/ASUhqIcn8MeCfa2SRCMiF09UNUmA
+	 pW2EIBzHqKl6TrCSOLM+BkMbZPC/cwmWQJ8IlOo76GaLprXHix4qJxnD1Hwq5AEiIOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I43m44Wy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MP9RpHrj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81D8606A325;
-	Wed, 18 Nov 2026 23:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9489F606A31C;
+	Wed, 18 Nov 2026 23:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I43m44Wy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7A81F000C4;
-	Wed, 18 Nov 2026 23:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MP9RpHrj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD561F000C4;
+	Wed, 18 Nov 2026 23:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042958;
-	bh=dBA/BITgcOfhNb85X7VsZcrQd5JsnNlC3LqbzzPv6G0=;
+	s=korg; t=1795042961;
+	bh=PZcdddmxKiYhXeEOU4FqGBWAd1VBYdfwpn7hMuGIysA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I43m44WyhYBxaY85xbTk7U9RtB/vWosl3jYDdith22RWuA1uiB3HSldG5F7kFK1s4
-	 9RZHrilNjA0Gj/6sj+X5cYcgNq1L4KACn1F+CfVncC9KHOZC+0RZ/H01/Hu0LYJdrl
-	 938SP+5sTZHySB1KVJpIxHvLq5Xq51y03EeRkDC8=
+	b=MP9RpHrjqg/qrXCkvO8rw/jDqBy4Um6Vs1SLA/pNUJBMRS7vx4TG4c/X+2bGXjvo7
+	 9bn9rFpg7f3enhC1AYSL9Vp7H6HhcrJLTGUF+GavXOOMQ6XjFXcF0SHRnA6NOBCWx7
+	 Uh7+X4HHKEoChV3ncTIdO9qBEGpnGPbnKAjBFKzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0040/2857] drm/amd/pm: Use uploaded size for legacy custom PPTable
-Date: Wed, 18 Nov 2026 15:17:54 +0100
-Message-ID: <20261118150202.780590663@linuxfoundation.org>
+Subject: [PATCH 6.1 0041/2857] drm/amd/pm: Validate Tonga PowerPlay state array bounds
+Date: Wed, 18 Nov 2026 15:17:55 +0100
+Message-ID: <20261118150202.814786684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,64 +71,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 055a40c32f3a2dcd4d1a6f85ff4c231cf35f1b53 ]
+[ Upstream commit 1ac24df78c566d767a5ef05a1fe0ecc55bac248d ]
 
-The legacy powerplay path used to allocate hardcode_pp_table from
-the original VBIOS PPTable size, copy only the uploaded bytes into it,
-and keep soft_pp_table_size unchanged. If a custom PPTable is shorter
-than the original table, later code can still treat the stale tail as
-valid table data.
+process_pptables_v1_0.c builds the Tonga state array pointer
+from usStateArrayOffset before checking that the table buffer covers
+the referenced data. A truncated PowerPlay table can therefore lead to
+out-of-bounds reads while validating the state array.
 
-Treat the uploaded buffer as the complete custom PPTable: duplicate the
-uploaded buffer directly, replace hardcode_pp_table atomically, and set
-soft_pp_table_size to the uploaded size.
+Validate the fixed table size first, then check the state array offset
+and entry range before dereferencing the state array.
 
 Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
 Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/powerplay/amd_powerplay.c  | 21 +++++++------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ .../powerplay/hwmgr/process_pptables_v1_0.c   | 62 ++++++++++++-------
+ 1 file changed, 40 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index e4494d963e356..7952371721d3e 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -676,25 +676,20 @@ static int amd_powerplay_reset(void *handle)
- static int pp_dpm_set_pp_table(void *handle, const char *buf, size_t size)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+index 17882f8dfdd34..14bc6beb91b33 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+@@ -1115,15 +1115,17 @@ static int init_thermal_controller(
+  * @powerplay_table: Pointer to the PowerPlay Table.
+  * Exception:  2 if the powerplay table is incorrect.
+  */
+-static int check_powerplay_tables(
+-		struct pp_hwmgr *hwmgr,
+-		const ATOM_Tonga_POWERPLAYTABLE *powerplay_table
+-		)
++static int get_tonga_state_array(struct pp_hwmgr *hwmgr,
++	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table,
++	const ATOM_Tonga_State_Array **state_array)
  {
- 	struct pp_hwmgr *hwmgr = handle;
-+	void *hardcode_pp_table;
- 	int ret = -ENOMEM;
+ 	const ATOM_Tonga_State_Array *state_arrays;
++	u16 state_array_offset;
++	size_t state_array_size;
++	size_t table_size = hwmgr->soft_pp_table_size;
  
--	if (!hwmgr || !hwmgr->pm_en)
--		return -EINVAL;
+-	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
+-		le16_to_cpu(powerplay_table->usStateArrayOffset));
++	PP_ASSERT_WITH_CODE((table_size >= sizeof(*powerplay_table)),
++			    "Invalid PowerPlay Table!", return -1);
+ 
+ 	PP_ASSERT_WITH_CODE((ATOM_Tonga_TABLE_REVISION_TONGA <=
+ 		powerplay_table->sHeader.ucTableFormatRevision),
+@@ -1132,12 +1134,34 @@ static int check_powerplay_tables(
+ 		"State table is not set!", return -1);
+ 	PP_ASSERT_WITH_CODE((0 < powerplay_table->sHeader.usStructureSize),
+ 		"Invalid PowerPlay Table!", return -1);
++
++	state_array_offset = le16_to_cpu(powerplay_table->usStateArrayOffset);
++	PP_ASSERT_WITH_CODE((state_array_offset <=
++			     table_size - sizeof(*state_arrays)),
++			    "Invalid PowerPlay Table!", return -1);
++
++	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)powerplay_table) +
++		state_array_offset);
+ 	PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
+ 		"Invalid PowerPlay Table!", return -1);
+ 
++	state_array_size = struct_size(state_arrays, entries, state_arrays->ucNumEntries);
++	PP_ASSERT_WITH_CODE((state_array_size <= table_size - state_array_offset),
++			    "Invalid PowerPlay Table!", return -1);
++
++	*state_array = state_arrays;
++
+ 	return 0;
+ }
+ 
++static int check_powerplay_tables(struct pp_hwmgr *hwmgr,
++	const ATOM_Tonga_POWERPLAYTABLE *powerplay_table)
++{
++	const ATOM_Tonga_State_Array *state_arrays;
++
++	return get_tonga_state_array(hwmgr, powerplay_table, &state_arrays);
++}
++
+ static int pp_tables_v1_0_initialize(struct pp_hwmgr *hwmgr)
+ {
+ 	int result = 0;
+@@ -1241,17 +1265,16 @@ const struct pp_table_func pptable_v1_0_funcs = {
+ 
+ int get_number_of_powerplay_table_entries_v1_0(struct pp_hwmgr *hwmgr)
+ {
+-	ATOM_Tonga_State_Array const *state_arrays;
++	const ATOM_Tonga_State_Array *state_arrays;
+ 	const ATOM_Tonga_POWERPLAYTABLE *pp_table = get_powerplay_table(hwmgr);
++	int result;
+ 
+ 	PP_ASSERT_WITH_CODE((NULL != pp_table),
+ 			"Missing PowerPlay Table!", return -1);
+-	PP_ASSERT_WITH_CODE((pp_table->sHeader.ucTableFormatRevision >=
+-			ATOM_Tonga_TABLE_REVISION_TONGA),
+-			"Incorrect PowerPlay table revision!", return -1);
+ 
+-	state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
+-			le16_to_cpu(pp_table->usStateArrayOffset));
++	result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
++	PP_ASSERT_WITH_CODE((result == 0),
++			    "Invalid PowerPlay Table State Array.", return result);
+ 
+ 	return (uint32_t)(state_arrays->ucNumEntries);
+ }
+@@ -1382,15 +1405,11 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
+ 
+ 	if (pp_table->sHeader.ucTableFormatRevision >=
+ 			ATOM_Tonga_TABLE_REVISION_TONGA) {
+-		state_arrays = (ATOM_Tonga_State_Array *)(((unsigned long)pp_table) +
+-				le16_to_cpu(pp_table->usStateArrayOffset));
 -
--	if (size > hwmgr->soft_pp_table_size)
-+	if (!hwmgr || !hwmgr->pm_en || !buf || !size || size > U32_MAX)
- 		return -EINVAL;
+-		PP_ASSERT_WITH_CODE((0 < pp_table->usStateArrayOffset),
+-				"Invalid PowerPlay Table State Array Offset.", return -1);
+-		PP_ASSERT_WITH_CODE((0 < state_arrays->ucNumEntries),
+-				"Invalid PowerPlay Table State Array.", return -1);
+-		PP_ASSERT_WITH_CODE((entry_index <= state_arrays->ucNumEntries),
+-				"Invalid PowerPlay Table State Array Entry.", return -1);
++		result = get_tonga_state_array(hwmgr, pp_table, &state_arrays);
++		PP_ASSERT_WITH_CODE((result == 0),
++				    "Invalid PowerPlay Table State Array.", return result);
++		PP_ASSERT_WITH_CODE((entry_index < state_arrays->ucNumEntries),
++				    "Invalid PowerPlay Table State Array Entry.", return -1);
  
--	if (!hwmgr->hardcode_pp_table) {
--		hwmgr->hardcode_pp_table = kmemdup(hwmgr->soft_pp_table,
--						   hwmgr->soft_pp_table_size,
--						   GFP_KERNEL);
--		if (!hwmgr->hardcode_pp_table)
--			return ret;
--	}
+ 		state_entry = GET_FLEXIBLE_ARRAY_MEMBER_ADDR(
+ 						ATOM_Tonga_State, entries,
+@@ -1416,4 +1435,3 @@ int get_powerplay_table_entry_v1_0(struct pp_hwmgr *hwmgr,
+ 
+ 	return result;
+ }
 -
--	memcpy(hwmgr->hardcode_pp_table, buf, size);
-+	hardcode_pp_table = kmemdup(buf, size, GFP_KERNEL);
-+	if (!hardcode_pp_table)
-+		return ret;
- 
-+	kfree(hwmgr->hardcode_pp_table);
-+	hwmgr->hardcode_pp_table = hardcode_pp_table;
- 	hwmgr->soft_pp_table = hwmgr->hardcode_pp_table;
-+	hwmgr->soft_pp_table_size = size;
- 
- 	ret = amd_powerplay_reset(handle);
- 	if (ret)
 -- 
 2.53.0
 
