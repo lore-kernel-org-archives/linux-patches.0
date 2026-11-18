@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042005;
-	b=lKjS2yBqVVYa2tlRameaN4aaCXmgZSkoLd1f9MNjvtFelso+jby2HWXYHr9mlmojHWZd
-	 8lMKbEng1a4drtGnVSVsHonIzvR6Fp/8ojCGEk1kGeJal0soMng2zO1zFa/bUlQYyV6PT
-	 L1be7Ncw2oW4lgRze6i+8iKSS+d9qzlZ+zkNivU+o4oTL2+4oxvOF/VkMasb8jmqyB0tR
-	 2UzwIRuUa8oi2mUIzcCGTPbO4HDPWxhQ3eeuOV8P8PTXkFftZWLTf2/okmB4okq3gh/Ih
-	 InLgF//sjAYIewkGmLDgauDGCjzaw1rCxPeRSpqNNZ+m78EStJizwcCy/cfIhkt3v4g==
+	t=1795042008;
+	b=eYg3e5HkD2nPzu5m+M/nYk73CgatoZMgnSeLQJwj3ytHiVPPOqxUDKtZCDASvFtfgt7v
+	 hTmdGOdqgXoqMY39NSQSM0F9bNQUj2JXOmdyJ8/K1lrjypOK46FWQABjxeB3tLZHcnFNO
+	 PhiSPVTcllOhFMcVS/jjjIjbVVnNpHZ6WYHDxYKKY38qAgRrFK6Z5h5bQRtm3fMJrtRU/
+	 lW2Xz8K+BDN77CVMdUXvRZec+PkJXeJhiPjjfK5yCLS1L0TrivmDlZdHoilYkLYvpMIdT
+	 O7kq58u6zWmLXWCdL0nifos0iZVkF5ALCl7+InPQQXrmiOzdzrQyIuV9IfzIyUOXDvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lB2fZX7GqZkkXvK2boSoQE1oJBRE1wWrVtqeI5rJ7Ck=;
-	b=cDPnl2G1z7RVFO4w7guKRrB1kVl1UDjTrmEXxJ03mmA7OkxLXJqKisGiDwPXI9yQDRwh
-	 fzNFGM0O00FK1W60+flm/XMRbqBNR0N0LKGdTmIrmYELRqv8ckoUbV/wOjpKFxa0jeUDB
-	 Sg203XksbEVBAGE9yezkVmmuiFSuLPUWIBsv2WvvXfQv/z4HOXFf8JQvUDhkyf4LE986M
-	 WmKnl7c0LKDWWB+6oV/H2J7LiuBMjTk593eVn3qFoU75oRFcj+txmwMkelwNyIU/LF/9l
-	 Ma03yHx+8YLMUKXQS/pluUbkEDQQa2TzDI1Gda3N/DtgAVe+6sV9lLzKZVJasEV3bzw==
+	bh=8QxxyM0DXH+qE5uSuSSso3od8PbrAwnEzx6OzAl8Fck=;
+	b=DTspsC9S7TBSQwniGptaHPK2bNj0ByCSLdv1amvai9Ud+Gaw61VqLvoezZS9lO/ZzNgn
+	 Qu3Z6q2E0IqWsdzGpGjCQUGdQwDiG/QZ744YgaH+8tt0Uhb1idBE169ECaTLcn4TY9lmi
+	 mhdByzNiLPiIBt9ir/GfvyJzJZuG+QwA41W0onmsYT8KxuQFCaRTNJeiYK5Kx8QIT6OHn
+	 nyjLvdyYc71n5YkIw3Wd4HD9XBHya6k5AE1FLKx5gNANBD3BmGXDw5GuQrnfoob4JiHsQ
+	 u3GwiEAJPwloGCd39o+yOPNOSQF3eEvlpTnU4c/F/YM43Vng384vab2ExUWhjFTa5JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpSBlmM2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEo+jUXI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E63606A31C;
-	Wed, 18 Nov 2026 22:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48014606A32A;
+	Wed, 18 Nov 2026 22:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpSBlmM2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44EB1F000C4;
-	Wed, 18 Nov 2026 22:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sEo+jUXI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CF91F000C4;
+	Wed, 18 Nov 2026 22:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042005;
-	bh=lB2fZX7GqZkkXvK2boSoQE1oJBRE1wWrVtqeI5rJ7Ck=;
+	s=korg; t=1795042008;
+	bh=8QxxyM0DXH+qE5uSuSSso3od8PbrAwnEzx6OzAl8Fck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SpSBlmM2r2UaKp6SaUnggsJc3J/IdG4kjRchrjKswwLFAMQklYR7x/YCaBIPFUbcZ
-	 l62cOqosgEieij3bbaxtMS9c4WePApngPIGLB0J4P6b1FmIyJt0NV13JUOOFL51yn6
-	 ToMb9Gidaxfz4PynlYun+a1kcAxXM8clkJfIcPwU=
+	b=sEo+jUXIXqiSAc0PpPPKsiEtaTmkFmhyiYtNfeskSUpDUzfwBLMKIigi6HEWFBepI
+	 f37AaPn0ephMqiqZqIbClrshoKtm8vVIA7d9G1OOFxVk/jcZvmzaeZbyZaLCrOZRjk
+	 n3b0V7rD1CftBSq45u7Iir/j+LxshG+Fe9GchKp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
-	syzbot@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3015/3318] bpf: Refactor cleanup of bpf_prog_test_run_skb
-Date: Wed, 18 Nov 2026 16:00:37 +0100
-Message-ID: <20261118150450.674008064@linuxfoundation.org>
+Subject: [PATCH 6.6 3016/3318] bpf: Reorder bpf_prog_test_run_skb initialization
+Date: Wed, 18 Nov 2026 16:00:38 +0100
+Message-ID: <20261118150450.701036168@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,89 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit d8accf661fcf3088ef4c349ab56ecd19a5071b19 ]
+[ Upstream commit 57bb2f6717930a5e670da179c316159719b724a2 ]
 
-This bit of refactoring aims to simplify how we free memory in
-bpf_prog_test_run_skb to avoid code duplication.
+This patch reorders the initialization of bpf_prog_test_run_skb to
+simplify the subsequent patch. Program types are checked first, followed
+by the ctx init, and finally the data init. With the subsequent patch,
+program types and the ctx init provide information that is used in the
+data init. Thus, we need the data init to happen last.
 
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/8971e01ae87b84f5af6b8b40defd3c310faf1c0f.1760037899.git.paul.chaignon@gmail.com
+Link: https://patch.msgid.link/063475176f15828a882c07846017394baf72f682.1760037899.git.paul.chaignon@gmail.com
 Stable-dep-of: 6aff0129f327 ("bpf: Use the socket of a sk_lookup test run under RCU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ net/bpf/test_run.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index d70543fb6849b..2522b0f79d15f 100644
+index 2522b0f79d15f..f677038cbb20f 100644
 --- a/net/bpf/test_run.c
 +++ b/net/bpf/test_run.c
-@@ -959,10 +959,10 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	u32 size = kattr->test.data_size_in;
- 	u32 repeat = kattr->test.repeat;
- 	struct __sk_buff *ctx = NULL;
-+	struct sk_buff *skb = NULL;
-+	struct sock *sk = NULL;
- 	u32 retval, duration;
- 	int hh_len = ETH_HLEN;
--	struct sk_buff *skb;
--	struct sock *sk;
- 	void *data;
- 	int ret;
+@@ -973,19 +973,6 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 	if (size < ETH_HLEN)
+ 		return -EINVAL;
  
-@@ -981,8 +981,9 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 
- 	ctx = bpf_ctx_init(kattr, sizeof(struct __sk_buff));
- 	if (IS_ERR(ctx)) {
--		kfree(data);
--		return PTR_ERR(ctx);
-+		ret = PTR_ERR(ctx);
-+		ctx = NULL;
-+		goto out;
+-	data = bpf_test_init(kattr, kattr->test.data_size_in,
+-			     size, NET_SKB_PAD + NET_IP_ALIGN,
+-			     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
+-	if (IS_ERR(data))
+-		return PTR_ERR(data);
+-
+-	ctx = bpf_ctx_init(kattr, sizeof(struct __sk_buff));
+-	if (IS_ERR(ctx)) {
+-		ret = PTR_ERR(ctx);
+-		ctx = NULL;
+-		goto out;
+-	}
+-
+ 	switch (prog->type) {
+ 	case BPF_PROG_TYPE_SCHED_CLS:
+ 	case BPF_PROG_TYPE_SCHED_ACT:
+@@ -1001,6 +988,19 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 		break;
  	}
  
- 	switch (prog->type) {
-@@ -1002,21 +1003,20 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 
++	ctx = bpf_ctx_init(kattr, sizeof(struct __sk_buff));
++	if (IS_ERR(ctx))
++		return PTR_ERR(ctx);
++
++	data = bpf_test_init(kattr, kattr->test.data_size_in,
++			     size, NET_SKB_PAD + NET_IP_ALIGN,
++			     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
++	if (IS_ERR(data)) {
++		ret = PTR_ERR(data);
++		data = NULL;
++		goto out;
++	}
++
  	sk = sk_alloc(net, AF_UNSPEC, GFP_USER, &bpf_dummy_proto, 1);
  	if (!sk) {
--		kfree(data);
--		kfree(ctx);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto out;
- 	}
- 	sock_init_data(NULL, sk);
- 
- 	skb = slab_build_skb(data);
- 	if (!skb) {
--		kfree(data);
--		kfree(ctx);
--		sk_free(sk);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto out;
- 	}
- 	skb->sk = sk;
- 
-+	data = NULL; /* data released via kfree_skb */
-+
- 	skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN);
- 	__skb_put(skb, size);
- 
-@@ -1136,7 +1136,9 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	if (dev && dev != net->loopback_dev)
- 		dev_put(dev);
- 	kfree_skb(skb);
--	sk_free(sk);
-+	kfree(data);
-+	if (sk)
-+		sk_free(sk);
- 	kfree(ctx);
- 	return ret;
- }
+ 		ret = -ENOMEM;
 -- 
 2.53.0
 
