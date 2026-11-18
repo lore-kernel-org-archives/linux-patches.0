@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054941;
-	b=a+4Y0iMe9Y/DtGKHWtdgCfof5NZxitidBoycZxz7QPFhh1v8LrYw0uuf2g/t9nKVFctS
-	 DzLHqRW2W/z3WughnK7X625GrF/cbxu+og0mJjm/MzZdsd/P/m8+zXJ29NNfJxQDK0JbM
-	 pojAaf5vWW6MC21HVXjkW2IJCE1u4V8jioi4pU6jq+KwL2nwNndJvkLJVsoJydSQ+5WL/
-	 kZxI6wAAPA085eOtJvVkRKyMvpZerwFGBcP4Ok03+FG+W9P4xZICuKfA+wCQrLJHeqydi
-	 SFtNJvDGTN4BRd/0QB77MRQMkRZQ6ZCoOhRWcndviYh1TIUEaP7M7YYyDlG4Mv+9g+Q==
+	t=1795054943;
+	b=1GHUVn2joLC07nF7y3wbsDlIDQicTDaFIpIUPDr3evIqolxDIWpFwbG61265pcR+hIum
+	 fkkoMoc4L+sIraurCCOyNowGwBZig89b/PvYotz8GQx9V105QO36Wx6B7zfF3fGNVE0x6
+	 bT4HuwDYOKhDieYBOhEGdiDvxOBGASTAuo0tJ78f8cspmvHFyAo+idtoImLBvueZacdKb
+	 yQ7cj3p/JL7ote4h7amHgE1NS/Ahrr8dETJLOzzVNFzbpdN0qyEjhHF4m4ZaqrQfxm/ic
+	 MEC/CZF4VcJFQ1ZtMQQpUo2cmDydEfDtjsbwOJ1SnccemjznLdlxtih6Mkcyw+ETMSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nx5RchxmSbKuPuRAyKEEjLqVcUHj8L7kIp1FHIYR2Kg=;
-	b=JckaZDhY6HmcZu+EVmK+nX24vI+Rggxm4SQ1wMWcPOTryDVjSMm0HmtfW9ftUO8V+1qM
-	 kFidxP/6FavYzyIkiGmZ2iLzg4oX/ErLdYJjUZ66LPDSGoGZhg85+uxCY+WUJS3TeBLBU
-	 1PGfuq1/U/0JTWOgncfcg7DqOiXTc2kqI0bw/0/uXGJXKHV4w0cdDjQY/YGPEIDqa1yIG
-	 Y0/Ro1+hETWaqe7DEOrLSxpqwD600c0eU/tFO9lpZlbj+piJt/44EB8KmUZQZFdP7fTcx
-	 e3lOf0hf+gaMXTfsr9t/T02Py2v94/+yUKDSG5wOcVbZhykaxsC5fSWftTAsKSE+pig==
+	bh=AQTcxNeBSVmRBFODb/BicL4lvSfQMRtdATx7jM4YSgQ=;
+	b=isdJLc7BgZr56PzjmPJXxBJge/NwKvgMBkrfCcU7uBaNGcfh6BogubdSyVvEz6xIxhBq
+	 NZHudTONecUupZiI7+SebpTLgerPJtJOq2oMuKdPSa1F1SeybnVCOyWNePOLU35MD8nap
+	 GyPvI3OuWCZF6MWHAVZ1pRfo3aW2y9eemC3bdu2FDFYbTv/T9BBDulrUdQcRaBdb+2jr2
+	 EgxFoW1vHejqN9tbf82vfPFxh12XzyLjrwhZoC6A8cDX6y69qk2bhsyM1qHOYpaDqx624
+	 9seQyjYPoxEdIVyZdC4Vfm6Wo9H3kzOEpPMcz3+7rErTTsUvsCsJzbv4GRDrho1c2UA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BLuFJmxb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDx9zxwc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E0B606A320;
-	Thu, 19 Nov 2026 02:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B632A606A325;
+	Thu, 19 Nov 2026 02:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BLuFJmxb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590D31F000C4;
-	Thu, 19 Nov 2026 02:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDx9zxwc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AC71F000C4;
+	Thu, 19 Nov 2026 02:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054940;
-	bh=Nx5RchxmSbKuPuRAyKEEjLqVcUHj8L7kIp1FHIYR2Kg=;
+	s=korg; t=1795054943;
+	bh=AQTcxNeBSVmRBFODb/BicL4lvSfQMRtdATx7jM4YSgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLuFJmxbj2ou26YEr+Bx2daUe3FdAxdhT3I2hFw/f9eUK18bVv3he8eRvaSdtfkLy
-	 07I+Tg+/UR2qyQwoOEgO9ZoCrKMblwj/fLlVkqzIoMuA1AHFRgsxijWA1enCzirD4u
-	 FHYHma5yAvsG/FxS1zRxwrSkY7y11Nxe/4KGoBRk=
+	b=BDx9zxwcFw+65ZguX2uKvrRC23PZ3zkzw5+o5njFSeP9ASrNHstvDxphol6UncAwR
+	 lC1pX0U1qTm+YmS44Wplfx2MtKU9LVpXAxR70+uS3ugDTSpwUR9ofGNK0TygdZoKpV
+	 4OlsUhJtMEXFdIR3lgFRt8s/84aqB84WaQBPy2eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1453/2214] usb: musb: da8xx: depopulate OF children on probe failure
-Date: Wed, 18 Nov 2026 15:52:09 +0100
-Message-ID: <20261118150109.204162321@linuxfoundation.org>
+Subject: [PATCH 5.15 1454/2214] dmaengine: sprd: use clk_bulk API to fix clock imbalance
+Date: Wed, 18 Nov 2026 15:52:10 +0100
+Message-ID: <20261118150109.245124447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,58 +69,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
 
-[ Upstream commit 8d70a378e702141424e27e0b8341e421f058635d ]
+[ Upstream commit d09cd5e8bbc98969b5333015b45c525078ac0f6f ]
 
-da8xx_probe() creates the CPPI child devices before registering the MUSB
-platform device. If population partially succeeds or the later MUSB
-registration fails, the probe path unregisters the generic PHY but leaves
-the OF children registered under a parent whose probe failed.
+sprd_dma_enable() enabled sdev->clk and then the optional ashb_clk. If
+enabling ashb_clk failed, sdev->clk was left enabled: both callers
+(probe and resume) treat a non-zero return as "nothing was enabled" and
+bail out, leaking sdev->clk.
 
-Depopulate the OF children before unregistering the PHY on both failure
-paths. Use one cleanup label so each resource is unwound in reverse
-publication order without introducing an unused label.
+Convert the driver to the clk_bulk API. clk_bulk_prepare_enable()
+enables all clocks and unwinds them on failure, and
+clk_bulk_disable_unprepare() disables them, which fixes the imbalance
+and simplifies the enable/disable paths. Both clocks are fetched with
+devm_clk_bulk_get_optional(); the optional ashb_eb clock simply becomes
+a NULL entry that the bulk helpers treat as a no-op, while the mandatory
+enable clock is still checked explicitly.
 
-Fixes: d6299b6efbf6 ("usb: musb: Add support of CPPI 4.1 DMA controller to DA8xx")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260813153230.40421-1-pengpeng@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
+Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260819053518.2825514-1-nagachaithanya9911@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/da8xx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/dma/sprd-dma.c | 45 ++++++++++++------------------------------
+ 1 file changed, 13 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/usb/musb/da8xx.c b/drivers/usb/musb/da8xx.c
-index 46920c3576503..a9e0717627abe 100644
---- a/drivers/usb/musb/da8xx.c
-+++ b/drivers/usb/musb/da8xx.c
-@@ -556,7 +556,7 @@ static int da8xx_probe(struct platform_device *pdev)
- 	ret = of_platform_populate(pdev->dev.of_node, NULL,
- 				   da8xx_auxdata_lookup, &pdev->dev);
- 	if (ret)
--		goto err_unregister_phy;
-+		goto err_depopulate;
+diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
+index e6ba7f7df8638..e27b77715a679 100644
+--- a/drivers/dma/sprd-dma.c
++++ b/drivers/dma/sprd-dma.c
+@@ -208,8 +208,7 @@ struct sprd_dma_chn {
+ struct sprd_dma_dev {
+ 	struct dma_device	dma_dev;
+ 	void __iomem		*glb_base;
+-	struct clk		*clk;
+-	struct clk		*ashb_clk;
++	struct clk_bulk_data	clks[2];
+ 	int			irq;
+ 	u32			total_chns;
+ 	struct sprd_dma_chn	channels[];
+@@ -260,31 +259,12 @@ static void sprd_dma_chn_update(struct sprd_dma_chn *schan, u32 reg,
  
- 	memset(musb_resources, 0x00, sizeof(*musb_resources) *
- 			ARRAY_SIZE(musb_resources));
-@@ -582,12 +582,13 @@ static int da8xx_probe(struct platform_device *pdev)
- 	ret = PTR_ERR_OR_ZERO(glue->musb);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to register musb device: %d\n", ret);
--		goto err_unregister_phy;
-+		goto err_depopulate;
- 	}
- 
- 	return 0;
- 
--err_unregister_phy:
-+err_depopulate:
-+	of_platform_depopulate(&pdev->dev);
- 	usb_phy_generic_unregister(glue->usb_phy);
- 	return ret;
+ static int sprd_dma_enable(struct sprd_dma_dev *sdev)
+ {
+-	int ret;
+-
+-	ret = clk_prepare_enable(sdev->clk);
+-	if (ret)
+-		return ret;
+-
+-	/*
+-	 * The ashb_clk is optional and only for AGCP DMA controller, so we
+-	 * need add one condition to check if the ashb_clk need enable.
+-	 */
+-	if (!IS_ERR(sdev->ashb_clk))
+-		ret = clk_prepare_enable(sdev->ashb_clk);
+-
+-	return ret;
++	return clk_bulk_prepare_enable(ARRAY_SIZE(sdev->clks), sdev->clks);
  }
+ 
+ static void sprd_dma_disable(struct sprd_dma_dev *sdev)
+ {
+-	clk_disable_unprepare(sdev->clk);
+-
+-	/*
+-	 * Need to check if we need disable the optional ashb_clk for AGCP DMA.
+-	 */
+-	if (!IS_ERR(sdev->ashb_clk))
+-		clk_disable_unprepare(sdev->ashb_clk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(sdev->clks), sdev->clks);
+ }
+ 
+ static void sprd_dma_set_uid(struct sprd_dma_chn *schan)
+@@ -1132,16 +1112,17 @@ static int sprd_dma_probe(struct platform_device *pdev)
+ 	if (!sdev)
+ 		return -ENOMEM;
+ 
+-	sdev->clk = devm_clk_get(&pdev->dev, "enable");
+-	if (IS_ERR(sdev->clk)) {
+-		dev_err(&pdev->dev, "get enable clock failed\n");
+-		return PTR_ERR(sdev->clk);
+-	}
++	/* The ashb_eb clock is optional and only present for AGCP DMA */
++	sdev->clks[0].id = "enable";
++	sdev->clks[1].id = "ashb_eb";
++	ret = devm_clk_bulk_get_optional(&pdev->dev, ARRAY_SIZE(sdev->clks),
++					 sdev->clks);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "get clocks failed\n");
+ 
+-	/* ashb clock is optional for AGCP DMA */
+-	sdev->ashb_clk = devm_clk_get(&pdev->dev, "ashb_eb");
+-	if (IS_ERR(sdev->ashb_clk))
+-		dev_warn(&pdev->dev, "no optional ashb eb clock\n");
++	if (!sdev->clks[0].clk)
++		return dev_err_probe(&pdev->dev, -ENOENT,
++				     "get enable clock failed\n");
+ 
+ 	/*
+ 	 * We have three DMA controllers: AP DMA, AON DMA and AGCP DMA. For AGCP
 -- 
 2.53.0
 
