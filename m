@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029852;
-	b=MjAeaJwIQCk29uWuFx16M9LFJLMt7ombJKsCMsHtiLNF1UiCX3WLoj56jVRww+aGIuHA
-	 nEbZnqp6eNkmjLO1n8XrvDoU8yywFRpBD0r1EJymD6+8MhYv8iG1nnFdpxheGFy4GU1r1
-	 dG/q472F9gJKOw/QqhhAnBvIthc0GfH8DS+sKNkujp8ZJD/A55eeXU3LSwVQ8xLplwtgB
-	 t+yUO/7UQ1JZ7nTx2qAdzVQScIG05Y/SyDgBjIXq6l1lJ2l/hZXvhBDuVZvQ420GDU9vr
-	 WeoV33kxViLHOC2R2P48mO0EvHUJrLyzJhQ4yEiXa+sAKGGpJXZ75VMd0fopJvO9HNA==
+	t=1795029855;
+	b=DJxTstFLofHNqKqZIeB9Ky8+uDi+GOpGvyhrKUNGjZh2GY1X81gTH6DhvPc3E76A9tqn
+	 KEEAK3cZXjYfWBaYV9lZUnzy/MowDuqrdwAe9uTL8eIjNHsdQcCmH3tL5uywScqXySe/A
+	 P2oCKMD+BWsejctcIvPlQXO0vxxt9bm8loOjK4nhYZtHpIeQ72qTOhiGtXKWUvFDOvMrB
+	 ubKoFjJhPzQjB5JsTXM4mghfZfVicYwcpSsSbrt3F4yVSgbllDnwNl1ibuHR+qTubc5wn
+	 8vZVH86lflar5CyJ67TEtK27JZpDWcK+lhsSxoyppk2LF571slf48fMdg+TkRk01eOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029852;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029855;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=65GdzSOYRyeYSTFMJUN3FHbtNaMOye1ddHRXWIaS5Eo=;
-	b=kpgr9+9SrLeZ2TQ+qyixRiqz39z6WEmyDlzZBVSg9hQDrfedF08k5h2z4AEjnP7xpd60
-	 +emxv5vtSgyiay/rme76Zf29qmMtBRychSOEIMZyI4m3qjMePYmCpftEmnjKO6sIFCsND
-	 YujAoqCBmdrB21BwXvbqHwmRz5wS0MVkzHsXzfat+ztSk+zlnEOuHe1WOijLOS6li0LY3
-	 YXjkbdQjC1VYbTJ3XHqba5jyj8EZBGWyT5xudFYUP+0JWEMj0kgIdElSXEN/sGd6LU9dW
-	 /tRfbz31Z/18HbAJrdgilrMrMOn6aitejZFLt4jYAqBhXnlfD4ynkwG1oHAs2QScUhA==
+	bh=8/a0JGAFeTBFE+vDeuzDpjC2BEXJvLLBmjLZ5aIUbmg=;
+	b=tXqdepL2diRt5C7bdlIYkz262ypwREfSIeyzQzCZeSFOLXt+NI/RMLC49NqGxmY5HaMF
+	 rgKj3HuJq5bdbLiL/rptqzLaF7zjw/V8dAKjPWKl0FTSsyfv9Z/RbXi6o58ieHqT3wYOF
+	 TuwtA2odjTqISGcL+Od/47t/fqVzQjCE7Ay9j1uuZLCfufJ7r+yQ7GipeccMHw10SeHou
+	 EYYk4IlLfHArk0+YNhEV3CTj6DkweJeNJfRWjIqmxtupKMaVnsIYiUhcxt0LLWYMwNj1K
+	 8BIigJLMFA0KqRkbRATgVsMreYOXDQa7JzMgNibOZAN6ZFxjclqnyX7eANs1RNs/6iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SQYiLWH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fv8Vx5CC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB40606A31C;
-	Wed, 18 Nov 2026 19:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A72D606A31C;
+	Wed, 18 Nov 2026 19:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SQYiLWH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6171F000C4;
-	Wed, 18 Nov 2026 19:24:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fv8Vx5CC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF6C1F000C4;
+	Wed, 18 Nov 2026 19:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029852;
-	bh=65GdzSOYRyeYSTFMJUN3FHbtNaMOye1ddHRXWIaS5Eo=;
+	s=korg; t=1795029855;
+	bh=8/a0JGAFeTBFE+vDeuzDpjC2BEXJvLLBmjLZ5aIUbmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SQYiLWH6xKzpypCFPDqD1n0NffHy15I/z+3mYLooaRriope/R33VcteyIqXAVYa2
-	 R3kyYGPiHfTSgFYRVjtwNeKPTP47P2U946abLXwZwDguvS2B9mbDL8nUPLGfVKrVeE
-	 e7HzLg88npT1nX4wUBtz66JtEWRQR23m5ZdzI1ZI=
+	b=fv8Vx5CCJ0mFgfYUqUP7xMd4uds68JLx8Lj/Nn9mg7EE069aLAC6C0b9GN4ja7Pj4
+	 4p3S8U/H/y/Tp0pxnfUR3FDm8CkrTFPIcNODQxHrIUs4jiimxTaqj6FvyOBWClyXj2
+	 ji60HHrCpqgPbvMy6woCcZ7oT3t6vI9K1dWVXBP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	sashiko-bot@kernel.org,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0496/1756] RDMA/irdma: Fix erroneous -ENOMEM for large MR registration
-Date: Wed, 18 Nov 2026 15:43:43 +0100
-Message-ID: <20261118150028.835713135@linuxfoundation.org>
+Subject: [PATCH 6.12 0497/1756] leds: flash: Prevent using uninitialized variable in flash_fault_show()
+Date: Wed, 18 Nov 2026 15:43:44 +0100
+Message-ID: <20261118150028.868585527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,45 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 5bb710151753fe53047b1d34b1b54d0f179cec68 ]
+[ Upstream commit d229695f2162a41bfa614f175798fa56a5f1c969 ]
 
-Commit cc8997c94bf3 ("RDMA/irdma: Refactor PBLE functions")
-replaced the explicit level1_only boolean with a bit mask
-but did not properly convert the "if (level1_only)" check
-in irdma_get_pble() to be "lvl == PBLE_LEVEL_1" and instead
-left it as "if (lvl)".
+In flash_fault_show(), address of uninitialized 'fault' variable is
+passed to device-specific .fault_get callbacks. This is not a problem
+if such a callback directly assigns the value like rt4505_fault_get(),
+but results in an undefined behavior if callback just performs bitwise
+ORs like as3645a_get_fault(). So just initialize 'fault' with zero.
 
-User MR registration passes "lvl = PBLE_LEVEL_1 | PBLE_LEVEL_2"
-so this check always evaluates to true and causes the
-loop to bail after grabbing a single SD even if the region
-actually requires more than one SD (as is the case for
-regions larger than 1 GiB with 4k pages). As a result, these
-registrations can fail with -ENOMEM even if there are
-sufficient PBLE resources.
-
-Fixes: cc8997c94bf3 ("RDMA/irdma: Refactor PBLE functions")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20260915170317.2901672-1-jmoroni@google.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260904054437.461706-1-dmantipov@yandex.ru?part=1
+Fixes: 7aea8389a77ab ("leds: Add LED Flash class extension to the LED subsystem")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20260916161607.90106-1-dmantipov@yandex.ru
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/pble.c | 2 +-
+ drivers/leds/led-class-flash.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
-index bd9e7b7f6ca34..9370fce3cc8e3 100644
---- a/drivers/infiniband/hw/irdma/pble.c
-+++ b/drivers/infiniband/hw/irdma/pble.c
-@@ -474,7 +474,7 @@ int irdma_get_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 
- 		status = get_lvl1_lvl2_pble(pble_rsrc, palloc, lvl);
- 		/* if level1_only, only go through it once */
--		if (!status || lvl)
-+		if (!status || lvl == PBLE_LEVEL_1)
- 			break;
- 	}
+diff --git a/drivers/leds/led-class-flash.c b/drivers/leds/led-class-flash.c
+index 6fe9d700dfef6..e10a9c796c04c 100644
+--- a/drivers/leds/led-class-flash.c
++++ b/drivers/leds/led-class-flash.c
+@@ -188,7 +188,7 @@ static ssize_t flash_fault_show(struct device *dev,
+ {
+ 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
+ 	struct led_classdev_flash *fled_cdev = lcdev_to_flcdev(led_cdev);
+-	u32 fault, mask = 0x1;
++	u32 fault = 0, mask = 0x1;
+ 	char *pbuf = buf;
+ 	int i, ret, buf_len;
  
 -- 
 2.53.0
