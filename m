@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021046;
-	b=GiYxzgQXfsgQjyWFe++qsry2SF5AFeRQz9WOPoJV3gKml6tZMshS8pXOv5CfbKsYeCKl
-	 kglTpNfVyp6E/VA1yICrStKiWUCbgs9OHPBxPfCyCyvS4kUcuoXjuGuqrexpAv9sSNFwc
-	 vVO5jNQcqRDkIe5ifEguPndARUqOdKltNp7hZ8qoCxJDKUvZVX5PC0j0KqREByQKvbzVq
-	 +h329LMPrL1scOuv+yvZGPQlducwnBdh/rnN5jTlZuwznPWH+ly+Zx1Ao87LlF6d13Tac
-	 /tTzhe0f9NPxEs7xkHXsXCgs8GO3M34ItDFA/HLIEcf0pz3XGjzh0fcMONg5SfbXMmQ==
+	t=1795021049;
+	b=FK1JQsNdp/mJZqcLWzZhnIvZbrGjuclVefoqIWAWd57M/4HPDVEmu2MZid9RGpTZujlF
+	 BLxAeTED+9pQmKmmhgao+IiCLVOS3ZSECVPTaUWaT9D5iSrYm8nLa4A3SLgppQA/o68TL
+	 aeGGsKDHHGy1i7NwGy9VvjW3ttbAVDXtKvOnpyTfLCmSw5f0D9BuFunuHriMNUUU+U996
+	 /4rhNGwc1Ql96Z+ZcXVqzaWKqqJBjxGjWOc6kBvtdv2dDtyKwVcQD44rLDbL8+TkKjyDi
+	 cnC3EI2Fkmud9S2XR3MlNDv5B4oGEAsSLLf0q1w8J3qWB/1G5mQU+/t+2KdaWn1dg9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EpiVe+TB2BBjGTiUM3sfqIelm+3YOXx0dZCEYv0Dpnk=;
-	b=R2lbeKvvIx7Fadjh00yuHKcWQTFjZfTkrvrEKnS2+Sti79ZY/cQvMANcY041Se7Hmkgi
-	 2tiFh2CQwkh+3GISa/xTzPkVcN8dA2J94RvC5LdK2Tn5S9UDhR7GSy+1Q/uMXWHeVvgvG
-	 +JARazsRlcU6aun0EjI/XHSFcOYlhX0VYb6XNWYT7egA10P8ttGNHixXXTtMKRefVyFl0
-	 eB+Cm13R1IppBVt6QGR46CdrvK8o+vpDEGsWBKujFClgxsMtCdwGn1VdHd17QZcWsZYex
-	 OvKiqkwj/5aQ0uJrvl2Fb5FiqMa3QTHI4KcFOva/elwKQgX7IMmf6Y3HeEQVhdhM1NQ==
+	bh=1gOcSouQZu0FMSgi24dJkrfWL50x8cvqm/CzTKs6Rgo=;
+	b=XVUOMqGSgxUDckSjdXQVqgp2UytTd1kzhkjwPmeR5iwLmyowXPI/U8i+VEL+hlsKIhk4
+	 4dp1Cs1izRy+iM900MSEn6Kve4tIYTizf8FppjjH+iXprZcGu1iZijJsHdo2e5tdbFsX7
+	 0Acis5kqtHyWUDhYxH4WYZQoI6AM7uLGf2TgtB7b08sLOOZq8BLegcZHp7ycv3SZN3/Ie
+	 0Ih/mBIk/PIec3jdIwyXRYZX2FRyQ+ug46W8UVHxTmOiG9D97Px+0dW/nnK3bZX6ZS4iY
+	 VmXiMpukRbs22lYZPjTRX6YGOnPn7GCw6cA04ndNNvf0I6c6WZhrVPR+tRkOwr4gUOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9JTKl+o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="cwe/RQbG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C18F606A33A;
-	Wed, 18 Nov 2026 16:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CD060A261F;
+	Wed, 18 Nov 2026 16:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w9JTKl+o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC221F000CA;
-	Wed, 18 Nov 2026 16:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwe/RQbG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883D91F000C9;
+	Wed, 18 Nov 2026 16:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021046;
-	bh=EpiVe+TB2BBjGTiUM3sfqIelm+3YOXx0dZCEYv0Dpnk=;
+	s=korg; t=1795021049;
+	bh=1gOcSouQZu0FMSgi24dJkrfWL50x8cvqm/CzTKs6Rgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9JTKl+okGs+Ow/ld81iYSLcCj4N72u0M3JaMmQsZrQXm6wbsCHdoXMlIdT+TSMtj
-	 cbVFKl+fXV2/Cwp2+dU8dI/Ba96GA76NToIPUjxEXxPyOGu2fi1lkxQX0rqjES/tSs
-	 hldNp737a5T4y7l8gsjXHkMoCEleWwzVRUZZ4M1w=
+	b=cwe/RQbG1xBSHg9xAF0NSMy173ItPszJN7kYAr3skUcAsRhEKTeWa5wgZ4ZUvH+F1
+	 ZqmnO+Wx1LQuEOmpAX8z7DtEnUJPcKoLdJ0ROt7Tl4HPg616IWrS6AzzgIUpM9aXQH
+	 TrFXUpcVgKhVOljLKIFOBNgo9KfNJ5gBpMttE0fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Zhiwei Zhang <202275009@qq.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2168/2651] ALSA: pcmtest: Pin the module while pattern files are open
-Date: Wed, 18 Nov 2026 15:56:48 +0100
-Message-ID: <20261118150403.866144070@linuxfoundation.org>
+Subject: [PATCH 7.3 2142/2651] RDMA/rxe: Clear pkt->qp before the early drop exits in rxe_rcv()
+Date: Wed, 18 Nov 2026 15:56:22 +0100
+Message-ID: <20261118150402.973545638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,70 +69,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Zhiwei Zhang <202275009@qq.com>
 
-[ Upstream commit 069003afab42b5a9394faa6985a3d76bd4700e72 ]
+[ Upstream commit 7d7214b39b14c9763c14445b139f63369063b65e ]
 
-The fill_pattern_fops table must remain alive until the final release
-of each pattern debugfs file. It has no .owner, so the fops_get() call
-in full_proxy_open_regular() does not take a PCMTest module reference.
+rxe_rcv() puts pkt->qp at its drop label, but leaves pkt->qp
+uninitialized on the two paths that take an early goto:
 
-With snd-pcmtest loaded as a module, a user with permission to open a
-fill_patternN file and unload the module can retain the descriptor
-across normal unload, provided no PCM file or other module reference
-prevents it. The following ordering is possible:
+	if (unlikely(skb->len < RXE_BTH_BYTES))
+		goto drop;
 
-  Pattern file user                   Module unload
-  -----------------                   -------------
-  open(fill_patternN)
-    full_proxy_open_regular()
-      fops_get(fill_pattern_fops)
-        owner == NULL: no module pin
-  keep the descriptor open
-                                      mod_exit()
-                                        clear_debug_files()
-                                          debugfs_remove_recursive()
-                                          drain active operations
-                                      return from mod_exit()
-                                      free_module()
-                                        free the module image
-  close(fd)
-    full_proxy_release()
-      read real_fops->release -> UAF
-      fops_put(real_fops)
-        read real_fops->owner
-      access freed module memory
+	if (rxe_chk_dgid(rxe, skb) < 0)
+		goto drop;
 
-Even though the table has no release callback, reading those fields
-is a use-after-free and can fault. The retained dentry keeps the
-proxy's bookkeeping alive, but does not retain the module storage.
+	pkt->opcode = bth_opcode(pkt);
+	pkt->psn = bth_psn(pkt);
+	pkt->qp = NULL;		<- too late for the gotos above
+	...
+drop:
+	if (pkt->qp)
+		rxe_put(pkt->qp);
 
-Set .owner to THIS_MODULE so the existing fops_get()/fops_put() pair
-pins PCMTest until final release has finished accessing the table.
-Normal module unload is then blocked while any pattern file is open.
+pkt points into skb->cb, which rxe does not own at this point: the
+network stack has used that space for its own state.  For IPv6,
+ip6_rcv_core() memsets inet6_skb_parm and then writes
 
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/pm-pmb-1ce354e709dbab28e563-v2-6b2ea0aa16ec39442f6d@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+	IP6CB(skb)->nhoff = offsetof(struct ipv6hdr, nexthdr);
+
+at offset 14, so the qword at cb + 8, which is where pkt->qp lives,
+reads back as 0x0006000000000000 for every IPv6 packet.
+
+Any IPv6 datagram to port 4791 whose payload is shorter than the BTH
+takes the first goto and reaches the drop label with that value, so
+rxe_put() runs refcount_dec_and_test() on 0x0006000000000150 and the
+kernel faults, in softirq, on a non-canonical address:
+
+	general protection fault, probably for non-canonical address
+	0x0006000000000150: 0000 [#1] PREEMPT SMP
+	RIP: 0010:__rxe_put+0x.../...
+	Call Trace:
+	 <IRQ>
+	 rxe_rcv+0x.../... [rdma_rxe]
+	 rxe_udp_encap_recv+0x.../... [rdma_rxe]
+	 udp_queue_rcv_one_skb
+	 ...
+	Kernel panic - not syncing: Fatal exception in interrupt
+
+The fault happens in softirq, so it panics even with panic_on_oops=0,
+and with panic=0 the machine hangs until it is power cycled.  A remote
+sender only needs to send an empty UDP datagram to port 4791; no RDMA
+connection, GID or other state is involved and the rxe socket is bound
+in init_net.
+
+IPv4 is not affected: ip_rcv_core() memsets the whole inet_skb_parm, so
+the pkt->qp slot is zero there.
+
+Fix by clearing pkt->qp before the first early exit.  pkt->qp is only
+ever assigned a reference-owning value by hdr_check() and
+rxe_rcv_mcast_pkt(), both of which run after this point, so the put at
+the drop label stays balanced.
+
+The ordering has been unsafe since the driver was merged: the two early
+gotos have preceded pkt->qp = NULL in every version since 8700e3e7c485.
+
+Testing done: the driver was built and run on a 6.2 vendor tree that
+carries this code, where a single 0-byte IPv6 datagram to port 4791
+reproduced the panic above (that tree does not pull the UDP header in
+rxe_udp_encap_recv(), so payloads of 0..3 bytes reach the first goto
+there, versus 0..11 on mainline).  With this change, the same packets
+are dropped as intended and tracing the drop label shows pkt->qp is 0
+on every path that reaches it.  Not done: the mainline tree was not
+built in the environment used to prepare this, and the reproducer is
+left out of this message on purpose - both are available on request.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Zhiwei Zhang <202275009@qq.com>
+Link: https://patch.msgid.link/tencent_FBB0EE9F592FD21FD4B0F3BFAD3336765209@qq.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/rxe/rxe_recv.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index b4e333b4c4381..c5b24c05b3562 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -638,6 +638,7 @@ static ssize_t pattern_read(struct file *file, char __user *u_buff, size_t len,
- }
+diff --git a/drivers/infiniband/sw/rxe/rxe_recv.c b/drivers/infiniband/sw/rxe/rxe_recv.c
+index 2c90387aa1266..e1d90633f0851 100644
+--- a/drivers/infiniband/sw/rxe/rxe_recv.c
++++ b/drivers/infiniband/sw/rxe/rxe_recv.c
+@@ -320,6 +320,14 @@ void rxe_rcv(struct sk_buff *skb)
+ 	struct rxe_dev *rxe = pkt->rxe;
+ 	unsigned int skblen = skb->len - skb_network_offset(skb);
  
- static const struct file_operations fill_pattern_fops = {
-+	.owner = THIS_MODULE,
- 	.read = pattern_read,
- 	.write = pattern_write,
- };
++	/*
++	 * pkt lives in skb->cb, which the network stack has already used
++	 * for its own state: for IPv6 the qword holding pkt->qp holds
++	 * inet6_skb_parm.nhoff.  The drop label puts pkt->qp, so clear
++	 * it before the first early exit.
++	 */
++	pkt->qp = NULL;
++
+ 	if (unlikely(skb->len < RXE_BTH_BYTES))
+ 		goto drop;
+ 
+@@ -328,7 +336,6 @@ void rxe_rcv(struct sk_buff *skb)
+ 
+ 	pkt->opcode = bth_opcode(pkt);
+ 	pkt->psn = bth_psn(pkt);
+-	pkt->qp = NULL;
+ 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
+ 
+ 	/*
 -- 
 2.53.0
 
