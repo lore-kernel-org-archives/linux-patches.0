@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034766;
-	b=A8Z4RvtGlUsWoZq7o7WoEvCxPH9JemW6HontZpk4xtefPckoeyuNsJplz4zB06SkvLfM
-	 2Tlk7K/2K5uL+Af9U4fY0E17V7TymdWF13m6dPWm39aTZ+s0N5A+tzackVaXnFe2ypK70
-	 14xK4psYsagudJ7R/wnuhNs41J9+WqNy+tdCDs0ncTZrXAl4I++R/2F2Qt1vQVQ2gNCYt
-	 M9+fQf0vBTCQUHlOEXdW0ANxcI+Eu0LplL850H91ppwG6aXr6jI9BXnzY6BuElutyNJOe
-	 P3d/dk8XwgIk7ero+YSQzBGDBZrmpTeyvC1ZuQqj4NaAEkBhoyblup1lu94yy0jquxQ==
+	t=1795034769;
+	b=mWihcXfGJiLeBTHRofl8LneOD7PcNUZVchL9X4dnDtcepza5Mkjkw/q3Lpz7iMy1pbTz
+	 0IG78yNuVQXZtwqI4MiCbEjXQZJM5aImLlfhghJ8fyFBtwYcxqdZssxOU1UYX1A+3yXWH
+	 hLyYdSzt+YMFFbn/iN2Sf3Xmh3Kj+G1A+VB8VlGRRU3CWnU9hx3Zxogcs7uXHHrsK6ORJ
+	 xgxGNr9O0+KhGHrNcyNw0Z1dao7fKSS6epA/FcR17JtSq65WzLkfDkE6UH9jj2P7QHE2V
+	 BE+eDU52boYFSwdfuV/HOMbAC/YRwMRK1Um4YGLnRd5VzWkQrVCMGCu6fVMxBA4Lwww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YuJZNPyyW6ltIkKqVY9YddvHxwDEZHDFN8NMauYAsBk=;
-	b=lXoyPYI1SNM0nqCLREz5b5nhVmqpfeay9DEBOclVdefJS5iRCqrLIPsIfihPJwkbnGKX
-	 Vz47z/acWLXMavt5Ji7Ct5mVpvuc7a55fR80yNnEUAkTnoQyV64tBLsf5Qg7s/vyo92qo
-	 LpLUvTcNAbUcbTi9OH58BfvxbvJD/n097L/zw1C9JucZz4dUwegHgPFY+vYP3ZA2hWMP1
-	 jqNGHCrM7Kjg3pH+CdLT40tv/hJIvW8r1/UD58cUwHMdZDfjWz6lrvk8yoMDdyx7QejqF
-	 BDgIGoiY82ZrIPW+Np00th6VUVCD5N6Xfd9uB9ONTT+/GB1JCTMLp5n1crjHmfBaWbg==
+	bh=CBxNFfWKylefEZQ1faXDXw0iY2224WU7x0oWad0KXNY=;
+	b=vXyJNjBEfLucxonmQam70KTCHP2ZDHXay3OT98jsYmp8IUEZ3tAfU8HIkvzKE4DMw6Qz
+	 opqRwUo4+OLGfEodF0Wq9BVe3pfH/TiDpyu2/OLpW/H6LEkkC/vhmCoQ2DNMXK3523/C6
+	 79LSdkUEreodgBGFK8WwK/nLsdtZHn24YsGmiHzYSEwm/enNnAZtV7ApThGSLnUa4q0KU
+	 tTj5YkPitTPTJ7aVyycOCfOIfXrH9eoxdlOgVqelcMYGaEvj+8KZ5F5QzEFamq4W9ApeO
+	 SRz8mNggPeSJLsiBx0UfDK9Rss3xKYKbYHnjWfUwbIXS3Mynpy8X1nDdk5yuU6peD3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUBh+Sc8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiqX2K7P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3B4606A325;
-	Wed, 18 Nov 2026 20:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B572606A330;
+	Wed, 18 Nov 2026 20:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YUBh+Sc8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10BB1F000C4;
-	Wed, 18 Nov 2026 20:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JiqX2K7P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D82A1F000C4;
+	Wed, 18 Nov 2026 20:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034766;
-	bh=YuJZNPyyW6ltIkKqVY9YddvHxwDEZHDFN8NMauYAsBk=;
+	s=korg; t=1795034769;
+	bh=CBxNFfWKylefEZQ1faXDXw0iY2224WU7x0oWad0KXNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YUBh+Sc8uov63ksl64iW6eKFE4rcr1mQ9B3qxUK77a3p/HKN27BfFwlv1h7SUahye
-	 KiMpkXL1CsixF6Jz00tgoGktZ6RzFAqfT8lVu1Wv2id7EJ+rzQ2oqJF2NHXOJSAKY3
-	 8o/qFiAxMIM9mpRTcAfE8gzoP7zmxTLpIxkcoXoM=
+	b=JiqX2K7POvV4I6YEtdq8qzHixlWDrK2S8mzvbMTBxWEVS9SvLcMqmlQ7WbfcOm0uR
+	 /gHGvGfl9GIubbBuTfDZsQ9Oyh5QJ3QnlYuyfvO/YwV0c+PAGnMq2qrtvSXZmw8kh0
+	 4xMb7/yw5+tm0dVarvMQTfe6NPzwwqACq1qXfcYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0436/3318] iio: admv1013: initialize callback mutex before registering notifier
-Date: Wed, 18 Nov 2026 15:17:38 +0100
-Message-ID: <20261118150329.748154589@linuxfoundation.org>
+Subject: [PATCH 6.6 0437/3318] smb: client: reject SetEA requests that do not fit the request buffer
+Date: Wed, 18 Nov 2026 15:17:39 +0100
+Message-ID: <20261118150329.788073902@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,48 +72,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-[ Upstream commit baf7e43b7fb5afb777353bf265ddf9d909f72b9f ]
+[ Upstream commit 4aa2c106aef4bf3dfd97c30842db0767b26e8428 ]
 
-admv1013_probe() registers a clock notifier whose callback takes st->lock
-on POST_RATE_CHANGE. Initialize the mutex before
-devm_clk_notifier_register() so the callback cannot observe an
-uninitialized lock during probe.
+CIFSSMBSetEA() copies the caller's extended attribute value into the
+SMB request buffer without checking that it fits.  The requirement is
+stated in the source but was never implemented:
 
-Use devm_mutex_init() so the lock lifetime is tied to the device and
-cleanup stays paired with the rest of the managed probe resources.
+	/*BB add length check to see if it would fit in
+	     negotiated SMB buffer size BB */
+	/* if (ea_value_len > buffer_size - 512 (enough for header)) */
+	if (ea_value_len)
+		memcpy(parm_data->list.name + name_len + 1,
+		       ea_value, ea_value_len);
 
-Fixes: da35a7b526d9 ("iio: frequency: admv1013: add support for ADMV1013")
+The only bound applied on the way in is in cifs_xattr_set():
+
+	#define MAX_EA_VALUE_SIZE CIFSMaxBufSize
+	...
+	if (size > MAX_EA_VALUE_SIZE)
+
+CIFSMaxBufSize is the full payload capacity of the buffer, so a value
+of exactly that size leaves no room for the SMB header, the TRANS2
+parameter block, the fealist header and the EA name that are written
+ahead of it in the same object.
+
+SendReceive() already enforces the correct limit on this very length:
+
+	if (in_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE)
+
+but it is called after the copy has taken place.  An unprivileged
+setxattr(2) on an SMB1 mount with a 250-byte name and a 16384-byte
+value writes 16384 bytes starting 345 bytes into a 16588-byte
+cifs_request object, ending 141 bytes past it:
+
+  BUG: KASAN: slab-out-of-bounds in CIFSSMBSetEA+0xabc/0xde0
+  Write of size 16384 at addr ffff888003aa0159 by task init/68
+   __asan_memcpy+0x3c/0x60
+   CIFSSMBSetEA+0xabc/0xde0
+   cifs_xattr_set+0xd3a/0xff0
+   __vfs_setxattr+0x13e/0x1a0
+  The buggy address is located 345 bytes inside of
+   allocated 16588-byte region
+
+Apply SendReceive()'s limit to the assembled request before the copy
+rather than after it, and widen the byte counters so the sum cannot
+wrap before it is tested.
+
+byte_count is also tested against U16_MAX, because it is stored in the
+16-bit pSMB->ByteCount.  That becomes reachable when CIFSMaxBufSize is
+raised at module load, where it may be set as high as 1024*127: with a
+5-byte EA name and a 65521-byte value, count is exactly U16_MAX while
+byte_count is 65556, and cpu_to_le16() would truncate it to 20 and
+transmit a frame whose ByteCount does not match its length.  Testing
+byte_count covers count as well, since byte_count is the larger of the
+two and count's only 16-bit consumer is written after this point.
+
+check_add_overflow() is evaluated first so that total_len is assigned
+before it is reported.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Declared in_len and set it from be32_to_cpu(pSMB->hdr.smb_buf_length) + 4, since smb_init() here doesn't return the header length that upstream's in_len = rc relies on. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/frequency/admv1013.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/smb/client/cifssmb.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/frequency/admv1013.c b/drivers/iio/frequency/admv1013.c
-index 8b521f371e87c..3193bc4e15882 100644
---- a/drivers/iio/frequency/admv1013.c
-+++ b/drivers/iio/frequency/admv1013.c
-@@ -604,11 +604,14 @@ static int admv1013_probe(struct spi_device *spi)
- 				     "failed to get the LO input clock\n");
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index bc5de4d3d3462..e3dffaeecbc2b 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -5896,8 +5896,10 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int name_len;
+ 	int rc = 0;
+ 	int bytes_returned = 0;
+-	__u16 params, param_offset, byte_count, offset, count;
++	__u16 params, param_offset;
++	unsigned int byte_count, offset, count;
+ 	int remap = cifs_remap(cifs_sb);
++	unsigned int in_len, total_len;
  
- 	st->nb.notifier_call = admv1013_freq_change;
--	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
-+
-+	ret = devm_mutex_init(dev, &st->lock);
- 	if (ret)
- 		return ret;
- 
--	mutex_init(&st->lock);
-+	ret = devm_clk_notifier_register(dev, st->clkin, &st->nb);
-+	if (ret)
-+		return ret;
- 
- 	ret = admv1013_init(st, vcm_uv);
- 	if (ret) {
+ 	cifs_dbg(FYI, "In SetEA\n");
+ SetEARetry:
+@@ -5948,6 +5950,14 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
+ 	pSMB->Reserved3 = 0;
+ 	pSMB->SubCommand = cpu_to_le16(TRANS2_SET_PATH_INFORMATION);
+ 	byte_count = 3 /* pad */  + params + count;
++	in_len = be32_to_cpu(pSMB->hdr.smb_buf_length) + 4;
++	if (check_add_overflow(in_len, byte_count, &total_len) ||
++	    byte_count > U16_MAX ||
++	    total_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE) {
++		cifs_dbg(VFS, "EA request too large: %u bytes\n", total_len);
++		cifs_buf_release(pSMB);
++		return -E2BIG;
++	}
+ 	pSMB->DataCount = cpu_to_le16(count);
+ 	parm_data->list_len = cpu_to_le32(count);
+ 	parm_data->list.EA_flags = 0;
 -- 
 2.53.0
 
