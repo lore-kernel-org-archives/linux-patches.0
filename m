@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015961;
-	b=WFUxuH85klmF4YS/kpGBl9TLeQMKviWz0XI99vq/CAOqK6BPAS1c4wgtr6GX8fIKy5b9
-	 Y2eUt8k+nWfYSm9fKGIwEDua3no9S02YXicQmeIxsPkbJPkrPagSU9SFIxOUGw/f0n9wD
-	 tHGtpsq5HpD6qzL6ycBVIEkUceHC03eH6v8Ghu3uK3kPUlgKzFZmN5nG7RxzdOALOzvd7
-	 6Mp1YjJ/AYboY/Abd5dlhF8+B3644bZBhkq7RE5LzTGmpyuLvJM1+an5PdPy6W4ykWK5O
-	 hEEAHD2DjP8OAq8KP6OwEiUFAAowlpEyWPMQEs4R2U2GJ92/lGRxVegHo9JnEEmlZ2g==
+	t=1795015964;
+	b=UBTjCt4uklDo0R6/pWsoGYDnghH9B2xWda9GZJO22XHlTI84G3vJvVZvLEoydYpE6+8s
+	 zaz8I5dIzT85Xt2kjIW6uzH6WGplr1aNq2Q4+MTKmjoW8sSt6zXmxy5E1ZD6CW/A9Djwa
+	 XINWG6TedfcPfjbROHuDAfxb4Ltk/YWuK5yScddsQmEUNlnqbNloa3RInmyiOewSnFTQ8
+	 mIxeqZUCqKZPreAjxiiHlu4hhcuH49gAFaO7t34nraIvcVSa84vBWvFVMNgNBvS04uRI5
+	 22OtZRbkQ1OkjYvoKQJc13xszhKCniGZ0uRnM2blz/koumZdftMiSpN3qvuPCOpV41Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015961;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015964;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nFSebZFDSLn1/tbM95U6LpL77zL6OyO8B0W7COlDTAw=;
-	b=yvTOYvRKXyjEiLZkZkzIuj5Be2veMzbGJV52iL0zPotnzSE6QsfcorADsQcjEMuYCRVf
-	 o8Y+9qxRZOmDMIsIw8+kGxig2Q3qCUQgehq9fVVRZa/uC/flqGaOdPKVAXVQdRBVbXz7u
-	 EXtY/yDkcK8HGOjdtD/ARi+f14viHfrlcFfKMJioMgxectesOjc8bMWCadDaP61MgRpaF
-	 AH5jK9rcYP/6EycRx4qeTknecuHVkSQF2yGS8Jz347ut3Ax391XAZhZ29WUKozOLfIAWU
-	 wx2A37aKK2PiiMLSdvecgszZdY9qh68WFWdyDz4y+StmCadPcJ3M7OkWz3DdIs8jORQ==
+	bh=M3WY+msrfF/zYwVorfF+h2MOV0BJStF9LgR7JAJPJUc=;
+	b=IJYPDU6r4olM5SMg34LZml486Sw79prXwKCKq1sDe2hlA39i/fn4W9nt0XZZ31SSLXVK
+	 qXEAO+OfP7ZrdJw+Pdry9W6JW2RHW8NWRacRbnLbiOM/dBPQ1dUZ36/iRI96Q/OCZawUd
+	 1VVfkrQrR1fBDtXaJLc2orVqBf/tzvnviLwR+3P6vydoNjEBp4gi7t7dMYLvAWWt0vHav
+	 P7L6VJBg/d1dY6jY0W1Cbc1BYmAp82P/k4tyeD2ta2WhfkJZK8d8WF+tDHgHu7WiVNqRo
+	 Xvwi+FRpGKsZuMf6x91cZVmzb+IhMMMStA5PkuS7enjNZUT5xqBcgJe0HDUqCIZbwWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UA2YPVDe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrm4P5yF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B78F606A32C;
-	Wed, 18 Nov 2026 15:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F456606A337;
+	Wed, 18 Nov 2026 15:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UA2YPVDe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650281F000C4;
-	Wed, 18 Nov 2026 15:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mrm4P5yF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D101F000C4;
+	Wed, 18 Nov 2026 15:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015960;
-	bh=nFSebZFDSLn1/tbM95U6LpL77zL6OyO8B0W7COlDTAw=;
+	s=korg; t=1795015963;
+	bh=M3WY+msrfF/zYwVorfF+h2MOV0BJStF9LgR7JAJPJUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UA2YPVDenorOFuJr4i5JUVAx1moQefO4bYixLJ1cR9VQdelRte7w05eqRNBdfPlVg
-	 o5JnExDf7KxWZUw/e/R9hhBgmImKYMcIPmnEb1G/up6PPSBg6Y4bdVTI13bQ54KqXs
-	 RnrvdIjElmZev6ctGKQQB3NhXHlCrp4rPF3An7hI=
+	b=mrm4P5yF0iO9R+yzArSLjOblzF5s0EP7mi8gBvlxK3linDEJnaXJ7BcqqY1qXA51x
+	 ta2gosUNYhn6JxocYKCovnaGngLhla/LlEbVGxUGenrwpPECamstHyACfU3KBDJE+4
+	 EuO1jhHT0ZnRyCVuDpx99rRIJ0OrSKxmz3OHE/co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arka Mondal <arka@arkamondal.net>,
 	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0359/2651] usb-storage: alauda: do not do DMA from the stack
-Date: Wed, 18 Nov 2026 15:26:39 +0100
-Message-ID: <20261118150300.758586072@linuxfoundation.org>
+Subject: [PATCH 7.3 0360/2651] usb-storage: alauda: check the return value of alauda_read_map()
+Date: Wed, 18 Nov 2026 15:26:40 +0100
+Message-ID: <20261118150300.794954426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,154 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Arka Mondal <arka@arkamondal.net>
 
-[ Upstream commit ec67dacb75ebd11fbe6d727e6f37c0ef5e3d3431 ]
+[ Upstream commit eb882419790c6710646904c6b25132189152cf33 ]
 
-alauda_check_status2(), alauda_get_redu_data(), alauda_erase_block(),
-alauda_read_block_raw() and alauda_write_block() build their commands in
-stack arrays and pass them to usb_stor_bulk_transfer_buf().
-alauda_check_status2() and alauda_erase_block() also read the reply back
-into a stack array.
+alauda_ensure_map_for_zone() ignores the value alauda_read_map()
+returns. On failure lba_to_pba[zone] and pba_to_lba[zone] are left NULL,
+and both callers dereference them immediately:
 
-usb_stor_msg_common() sets URB_NO_TRANSFER_DMA_MAP only when the buffer
-is us->iobuf. Every other buffer reaches usb_hcd_map_urb_for_dma(),
-which has warned and returned -EAGAIN for a buffer on the stack since
-commit 4568136620c6 ("usb: core: Check URB setup_packet and
-transfer_buffer sanity"). On a host controller that uses DMA, all of
-these commands fail.
+  pba = MEDIA_INFO(us).lba_to_pba[zone][lba_offset];
 
-Use us->iobuf, as alauda_reset_media() in this driver and the other
-usb-storage subdrivers already do. The command is sent before the reply
-is read, so both can use it; sddr09_read_status() does the same.
+alauda_read_map() returns USB_STOR_TRANSPORT_ERROR when either kcalloc()
+fails or an alauda_get_redu_data() transfer fails, so one failed bulk
+transfer is enough to reach the NULL dereference.
+
+Return that value from alauda_ensure_map_for_zone() and check it in
+alauda_read_data() and alauda_write_lba().
 
 Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
 Link: https://bugzilla.kernel.org/show_bug.cgi?id=217862
 Signed-off-by: Arka Mondal <arka@arkamondal.net>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260901065831.43567-2-arka@arkamondal.net
+Link: https://patch.msgid.link/20260901065831.43567-3-arka@arkamondal.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 70 ++++++++++++++++++++++++------------
- 1 file changed, 48 insertions(+), 22 deletions(-)
+ drivers/usb/storage/alauda.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index 691fe47009cf6..878c404106c54 100644
+index 878c404106c54..d47ce01d519a0 100644
 --- a/drivers/usb/storage/alauda.c
 +++ b/drivers/usb/storage/alauda.c
-@@ -500,11 +500,14 @@ static int alauda_check_media(struct us_data *us)
- static int alauda_check_status2(struct us_data *us)
+@@ -697,11 +697,13 @@ static int alauda_read_map(struct us_data *us, unsigned int zone)
+  * Checks to see whether we have already mapped a certain zone
+  * If we haven't, the map is generated
+  */
+-static void alauda_ensure_map_for_zone(struct us_data *us, unsigned int zone)
++static int alauda_ensure_map_for_zone(struct us_data *us, unsigned int zone)
  {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_GET_STATUS2,
--		0, 0, 0, 0, 3, 0, MEDIA_PORT(us)
--	};
--	unsigned char data[3];
-+	unsigned char *command = us->iobuf;
-+	unsigned char *data = us->iobuf;
+ 	if (MEDIA_INFO(us).lba_to_pba[zone] == NULL
+ 		|| MEDIA_INFO(us).pba_to_lba[zone] == NULL)
+-		alauda_read_map(us, zone);
++		return alauda_read_map(us, zone);
 +
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_GET_STATUS2;
-+	command[6] = 3;
-+	command[8] = MEDIA_PORT(us);
++	return 0;
+ }
  
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
-@@ -530,10 +533,15 @@ static int alauda_check_status2(struct us_data *us)
- static int alauda_get_redu_data(struct us_data *us, u16 pba, unsigned char *data)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_GET_REDU_DATA,
--		PBA_HI(pba), PBA_ZONE(pba), 0, PBA_LO(pba), 0, 0, MEDIA_PORT(us)
--	};
-+	unsigned char *command = us->iobuf;
+ /*
+@@ -849,7 +851,9 @@ static int alauda_write_lba(struct us_data *us, u16 lba,
+ 	unsigned int new_pba_offset;
+ 	unsigned int zone = lba / uzonesize;
+ 
+-	alauda_ensure_map_for_zone(us, zone);
++	result = alauda_ensure_map_for_zone(us, zone);
++	if (result != USB_STOR_TRANSPORT_GOOD)
++		return result;
+ 
+ 	pba = MEDIA_INFO(us).lba_to_pba[zone][lba_offset];
+ 	if (pba == 1) {
+@@ -980,7 +984,10 @@ static int alauda_read_data(struct us_data *us, unsigned long address,
+ 		unsigned int lba_offset = lba - (zone * uzonesize);
+ 		unsigned int pages;
+ 		u16 pba;
+-		alauda_ensure_map_for_zone(us, zone);
 +
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_GET_REDU_DATA;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba);
-+	command[8] = MEDIA_PORT(us);
++		result = alauda_ensure_map_for_zone(us, zone);
++		if (result != USB_STOR_TRANSPORT_GOOD)
++			break;
  
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
-@@ -702,14 +710,20 @@ static void alauda_ensure_map_for_zone(struct us_data *us, unsigned int zone)
- static int alauda_erase_block(struct us_data *us, u16 pba)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_ERASE_BLOCK, PBA_HI(pba),
--		PBA_ZONE(pba), 0, PBA_LO(pba), 0x02, 0, MEDIA_PORT(us)
--	};
--	unsigned char buf[2];
-+	unsigned char *command = us->iobuf;
-+	unsigned char *buf = us->iobuf;
- 
- 	usb_stor_dbg(us, "Erasing PBA %d\n", pba);
- 
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_ERASE_BLOCK;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba);
-+	command[6] = 0x02;
-+	command[8] = MEDIA_PORT(us);
-+
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
- 	if (rc != USB_STOR_XFER_GOOD)
-@@ -732,13 +746,19 @@ static int alauda_read_block_raw(struct us_data *us, u16 pba,
- 		unsigned int page, unsigned int pages, unsigned char *data)
- {
- 	int rc;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_READ_BLOCK, PBA_HI(pba),
--		PBA_ZONE(pba), 0, PBA_LO(pba) + page, pages, 0, MEDIA_PORT(us)
--	};
-+	unsigned char *command = us->iobuf;
- 
- 	usb_stor_dbg(us, "pba %d page %d count %d\n", pba, page, pages);
- 
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_READ_BLOCK;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba) + page;
-+	command[6] = pages;
-+	command[8] = MEDIA_PORT(us);
-+
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
- 	if (rc != USB_STOR_XFER_GOOD)
-@@ -783,13 +803,19 @@ static int alauda_write_block(struct us_data *us, u16 pba, unsigned char *data)
- {
- 	int rc;
- 	struct alauda_info *info = (struct alauda_info *) us->extra;
--	unsigned char command[] = {
--		ALAUDA_BULK_CMD, ALAUDA_BULK_WRITE_BLOCK, PBA_HI(pba),
--		PBA_ZONE(pba), 0, PBA_LO(pba), 32, 0, MEDIA_PORT(us)
--	};
-+	unsigned char *command = us->iobuf;
- 
- 	usb_stor_dbg(us, "pba %d\n", pba);
- 
-+	memset(command, 0, 9);
-+	command[0] = ALAUDA_BULK_CMD;
-+	command[1] = ALAUDA_BULK_WRITE_BLOCK;
-+	command[2] = PBA_HI(pba);
-+	command[3] = PBA_ZONE(pba);
-+	command[5] = PBA_LO(pba);
-+	command[6] = 32;
-+	command[8] = MEDIA_PORT(us);
-+
- 	rc = usb_stor_bulk_transfer_buf(us, us->send_bulk_pipe,
- 		command, 9, NULL);
- 	if (rc != USB_STOR_XFER_GOOD)
+ 		/* Not overflowing capacity? */
+ 		if (lba >= max_lba) {
 -- 
 2.53.0
 
