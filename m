@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061805;
-	b=j2RNcOZn/Vcy1I94e+q6AF8jQnzZ1HwHbymuVxv0XPgpoxh0VgMT0cPM8Xqm4LKUeqmQ
-	 0wA2WwEzQbfdMqTBmBmMelkPdVeu+LwzFzn0v5PuVMcbXN645ijOzpwh2zsJ+a0PKh9FX
-	 wBK1DrzbcQBqDxZds4nY3CRdBNpjvP08vqqCrNqdn/GROnSJRkSFJrkGw8EF4I1bHiMGx
-	 5cEkt/lCV3E39oZ4stheOWyx0L/IosLOFF38jcxFhsRHetxiFO0tucR75Sd/F1sdRBF4X
-	 H5Ak4pmjsCFpo8mixAFkTOvYRNll0RDfYgzRHlT64LgXOfysOY70LeEURd49wc8Uc8w==
+	t=1795061808;
+	b=GP2/Hj/JXmIs0nLllgWPcaeW5gjlkBJhoM8h+ysdy9i8y6Wb3x6MQABRLTrtDx8tWwG1
+	 oQneCvxTrCwN0vdiTvwsJpJ0mt8CJYy3qnrzVRvNRkKCPW/tqbMexcRmboFvES4pVeBXh
+	 WU/xNwZFT9zW9ohDQ9AgSSl9VBUyZBsw4hvVEiKxixJYvAV+W/tDZcyzlWrWabTm8BwUB
+	 gmiK6pktbvda1XUsZQnYvUEsftTDxGFKHbfCzcM/FlENKAwwOfgAEkZwwfltJLZQzAQcX
+	 onTMGyjWTYZ6bh/h/zQysX1RXIF7SoXCXlHyQCd2epFCCwdRhPeblTtFNr/b8utqvCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061808;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=77hg61ZIHWoV7SmGamBZNLp6UzOMqhNU+/Hwv9oZm7M=;
-	b=l1JzVLrm3AOfSqcRitAa9G47xJFw3kEjxPafW8p2tY025X95/Wpoi7FMK7C8Uz/6Rh0V
-	 /FaKTcUlcIy3+fmUdBQ957PIVqy6E0+FNw+IRErgIP3/MVRlqQzFDq2ISE3yxUh4eKvxZ
-	 BToB9trx2N3+sJJj+XAIFbJaMlLTEg4MQTm4AAyiQAtkUTyRM0Khp0qGcat59r7op4wl8
-	 1b1XVtVntnpj6vJUIrnLNFPXThAA4MDx8o/hhoJTSVOIGULMpCLdpro+ah80rBYuOeLb/
-	 Yx72rfUErET77FFUhmIEsmWg1nq9keFAQ0EFOfzHsfAa/N7aS47W1P1+PwJI9MivlxQ==
+	bh=Ke6JuAEPMdgKQYP/G6rkr/b0pSkt4F8wSxba7c5fk8k=;
+	b=pySjOY+E6K3xvXvsFp1hcLq2lhlLyrR4mfP38k1VRcEWB/wNc4Vmc4ie4zwN/x65cCr3
+	 zg3R863i3eq3cvy3yLXB7abWoz50QxXgSPCYgCyiwKDLs02/NsSytl/DnyyixwOxxaWyU
+	 KXrrNnDdy/WL/XtTkfeSi/b4Shnxi+fW6wvW7nU97UvSdobDETLNuDVkKIL0csFy2kQ1A
+	 L7BTQccQufTR5r7OsnHdU+6lqXZZq1Y/A2gI3yJghpbW4sYxEPR+BAhc2xnqu+eFV0yX9
+	 S9Ozg5vwPP1Batavo2hp+MqtEABqfc/1O+DhPra0CNZh3yDMU06HtGi1G7xbsflFElg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aulOFXnn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFQoZdGw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599FF606A320;
-	Thu, 19 Nov 2026 04:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4520B606A320;
+	Thu, 19 Nov 2026 04:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aulOFXnn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD221F000C4;
-	Thu, 19 Nov 2026 04:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MFQoZdGw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC501F000C4;
+	Thu, 19 Nov 2026 04:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061805;
-	bh=77hg61ZIHWoV7SmGamBZNLp6UzOMqhNU+/Hwv9oZm7M=;
+	s=korg; t=1795061808;
+	bh=Ke6JuAEPMdgKQYP/G6rkr/b0pSkt4F8wSxba7c5fk8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aulOFXnnKix22CJul1IDeE82pxneVJpqIqGcd5XGjLCBvd9y/tkDi4B3CwaW2uytZ
-	 UL2FIxfdnMspXVnjcZgcIZNjXyO7bmaEeAieQcOhBjej5yEeLiYU3sK9u0aCdTPSJG
-	 DZlqd/6y2WNaUkwrW14cIEMfpebtFvzXj/X+J3H0=
+	b=MFQoZdGwkYIFhxhFErGfmBTEYqm6SmZ/IFSUzlY5a8+7t9cII6XJPwrPCsnlvNqyo
+	 h1j9VoAnEljzFp5fufRmLODfWXjUanmDaA5QULCqkbrXtS3saC3ribC/a+JHff6XKx
+	 2zP1w3vEzJ0KL9tcwNFs3MBE7mJnAKwtVT3+7bnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1682/1848] blk-iocost: account zone append completions in latency stats
-Date: Wed, 18 Nov 2026 16:02:00 +0100
-Message-ID: <20261118150030.191861012@linuxfoundation.org>
+Subject: [PATCH 5.10 1683/1848] ima: reject a kexec buffer whose declared size exceeds the buffer
+Date: Wed, 18 Nov 2026 16:02:01 +0100
+Message-ID: <20261118150030.227278530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,55 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit c38975c427cc3d3f6eb66a36143893be5cdf4ebd ]
+[ Upstream commit ceb24c7052cc4649e3b52a51a7cca7dfe4896cec ]
 
-ioc_rqos_done() only accounts READ and WRITE completions, so zone
-append completions are excluded from the latency window: the vrate
-feedback loop cannot see ZA-induced latency, leaving it unable to
-respond to device saturation caused by zone appends.  Similarly,
-calc_size_vtime_cost_builtin() does not classify zone append as a
-write operation.
+ima_restore_measurement_list() parses the measurement list persisted across
+kexec.  It computes the parse end directly from the blob:
 
-Charging (the cost model) and feedback (the latency window) are
-separate mechanisms, so this is not covered by the previous patch
-that prices zone appends.
+	bufendp = buf + khdr->buffer_size;
 
-Treat zone append as WRITE for both latency accounting and cost
-classification.
+khdr->buffer_size is a u64 read straight from the persisted buffer.  The
+only length checks in the function are size >= sizeof(*khdr), version == 1
+and count -- none relates buffer_size to size, the actual buffer size the
+caller (ima_load_kexec_buffer()) obtained from the ima-kexec-buffer region.
+ima_parse_buf() bounds every field read to bufendp, so a blob whose
+internal buffer_size exceeds the real size makes the parse loop read past
+the end of the buffer (CWE-125).
 
-Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260922043856.2020116-4-cui.tao@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The buffer's memory range is validated against addressable RAM by
+commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
+against memory bounds") and commit c5489d04337b ("x86/kexec: add a
+sanity check on previous kernel's ima kexec buffer"), but the blob's
+own declared size is never clamped to it.  Reject a buffer_size larger
+than size before the loop.
+
+This is on the boot-time kexec-restore path (__init) and the buffer comes
+from the previous kernel, so triggering it requires control of the
+persisted buffer; it is an out-of-bounds read only.
+
+Fixes: 94c3aac567a9 ("ima: on soft reboot, restore the measurement list")
+Assisted-by: copilot-cli:claude-opus-4-6 frama-c
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/integrity/ima/ima_template.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 57cf12ed2e15d..ca4013e359b2c 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2559,6 +2559,7 @@ static void calc_size_vtime_cost_builtin(struct request *rq, struct ioc *ioc,
- 	case REQ_OP_READ:
- 		*costp = pages * ioc->params.lcoefs[LCOEF_RPAGE];
- 		break;
-+	case REQ_OP_ZONE_APPEND:
- 	case REQ_OP_WRITE:
- 		*costp = pages * ioc->params.lcoefs[LCOEF_WPAGE];
- 		break;
-@@ -2795,6 +2796,7 @@ static void ioc_rqos_done(struct rq_qos *rqos, struct request *rq)
- 		pidx = QOS_RLAT;
- 		rw = READ;
- 		break;
-+	case REQ_OP_ZONE_APPEND:
- 	case REQ_OP_WRITE:
- 		pidx = QOS_WLAT;
- 		rw = WRITE;
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index e5d941f485b19..fd7fd3929fd7a 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -399,6 +399,11 @@ int ima_restore_measurement_list(loff_t size, void *buf)
+ 		return -EINVAL;
+ 	}
+ 
++	if (khdr->buffer_size > size) {
++		pr_err("attempting to restore a corrupted measurement list");
++		return -EINVAL;
++	}
++
+ 	bitmap_zero(hdr_mask, HDR__LAST);
+ 	bitmap_set(hdr_mask, HDR_PCR, 1);
+ 	bitmap_set(hdr_mask, HDR_DIGEST, 1);
 -- 
 2.53.0
 
