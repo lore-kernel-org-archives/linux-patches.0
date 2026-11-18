@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034118;
-	b=qtR/1zPlLCY8RRjVzHUESHGRf1q20rPj1WEIDUnBzT/WjN3xv8hRmc/KC6ltNKD/xUB1
-	 22llZfbiIBhk+s+s44G1DBPBxbgPfgotSd4jyGr9dGe5EijTSD0Uqzp5y/WxHzK0/HaHm
-	 fTPCDfur8AtpxlSM+MJnYzCCSsXUhB6/XT5zNMZqTfdmbMeL2fQ09p+8YFZB1kd0tw/x5
-	 TSBCbfNA6YS6aS4D2PaG7p3EoIx2ZO1BYLgM6pKmx0B5f1pkNZTer18n++/p1OyZaoLWl
-	 FGmNjn8CUEoy6sptnrFbUnX8nOmTuPdnrunnNucQzfupqpxiZOOvvs0rWios9R+sYLw==
+	t=1795034121;
+	b=ysjquljBInwdYF2lXnTHRiwNunWvwns1PxZwEj2Yq1Y/da9XoiLLM+bBfnzkX/1aqH22
+	 u0TYKhccjteeKNDR2I08o61DHH+Tc2odv++GIQE8y9h42o1DniLsMSuVVbQcLWesDLd68
+	 gq2Ujd0mXIB40P3ii7EpE3VgCJOVy5e070tCnpZ/71RqQjt/79CVj9PqzDUFP/3K6RSYU
+	 DSFOQmCgNFTHVvSn9OjEgNdsDeaGhuW1ViYXFqyrvRzqQita8tWGThlaY582UNtwbjKnV
+	 pdD/r4gn1VnUJtY6T9CoD2DeIFtZlhIfoJHeAYdirRi+oDTrLi/DLe3T9qD+bvq+AzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LLYQX6Tbpj0s6XOgUeXMQim4Eu7sn3dK7AodTgqm0YU=;
-	b=P0cGaR5P2ujxISheYGdMJE7oPOjeOjnhpvyzH4J7eRD0Vy0QRp3HAzwJTn/tb/oPb2yv
-	 4UZoTbkCLzBeFaywqFnewlSDnpokaTN6plMgnlD8HI3ZKVQ7pabIHB+VmHwCUotl/uXNV
-	 pjp80m9h4azGYtej3osaUQhNVKcrkpBKKz/HphCkCs5kkPxolVSsCPnJBXDvqh8FgV9bp
-	 UpG8WmU1Xq4KoOZrrE782hXzsDeEAiW4S9jSvHZollX1s8pElUp2UJlhmEMIqxyHcIZMQ
-	 f6c2Uag8jl7AdgotITHkTQFAWUq8WBzqOYV8+mkxz13pnTwajm+4YPgwKV4a8SuYyVA==
+	bh=Jp5GiDoTcrTSNEjEwD4Jvz6tc/XHQP8PmE2iRBf15XM=;
+	b=uhk4pl1Sd2sApgjw1FNJB289oSNSfF1CCfezaeYuxT1IXUQc4zbhbjtbrIb33OVCczJb
+	 LbvFc86AjnpzoEqG+x0PbRBbVIQXg3wv6SN8WsqnAW1clj3HKz+1AR4DqsnsCDLQ5RvBm
+	 c8wvDi359YpgQokwlcmyCieeFBQAfJvdhGmnmvZZ5Ql+SwYG5ys6f8XKO9LHbQ4AJ3QSV
+	 Fv5kO4ulH/Y6FRokkG/iq3dS0hcYJ/G6bvVyKTpr0xZZz+3P4muSjLpaznM3mI7QYEJLK
+	 haIm/o38JAplB3btXPETTW4ZmLTi6MMXkBwz/2E90y1e7rQwKBjFoulPFy+7A8NHTCg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZARZawW7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oxyAtP/M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF17606A31C;
-	Wed, 18 Nov 2026 20:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D32D606A320;
+	Wed, 18 Nov 2026 20:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZARZawW7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D631F000C4;
-	Wed, 18 Nov 2026 20:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxyAtP/M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A8C1F000C4;
+	Wed, 18 Nov 2026 20:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034118;
-	bh=LLYQX6Tbpj0s6XOgUeXMQim4Eu7sn3dK7AodTgqm0YU=;
+	s=korg; t=1795034121;
+	bh=Jp5GiDoTcrTSNEjEwD4Jvz6tc/XHQP8PmE2iRBf15XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZARZawW7dMRvfcHKU1CVq3AMA3gSMMAHmxQ5zNqzzvQmpufGGri4pAa23q+atQa/T
-	 kFiKuaL421YzUuA9DkhGK7jbHq0zF+wUnskx8DHlXYz5aImW+py/isNzwarqMGmLmj
-	 3CcCPyzi+YxSYPWIBFJ3EYkeuNZZZUX7wkKj71p4=
+	b=oxyAtP/MPZAn8vAhW6U4rRJbVwyIQxqNixO2eOlBqlOmx1p2PbaYJEOEYeVHh8Dcu
+	 ib6RsVOk/aqycgNmqkWOTE+Yk1kfbgjJYXnxJ8aVsRjtEox/1l8Gd+qVe2d+cR7HDf
+	 jTYAnoS/+GvRhnaBpbFQ/VVKdVPbHLu3dOpDfeb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Zide Chen <zide.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0257/3318] ALSA: usx2y: Stop clearing urb->hcpriv before submission
-Date: Wed, 18 Nov 2026 15:14:39 +0100
-Message-ID: <20261118150323.056944093@linuxfoundation.org>
+Subject: [PATCH 6.6 0258/3318] perf/x86: Unregister PMI handler on PMU init failure
+Date: Wed, 18 Nov 2026 15:14:40 +0100
+Message-ID: <20261118150323.091407926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,36 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit fabae5548149ef5c8a056875d9ebdc38366db539 ]
+[ Upstream commit 91787047b1dc52b1fee68b07f79af70aae5fce47 ]
 
-This is managed by USB core and drivers aren't expected to touch it.
+Fix an NMI handler leak in init_hw_perf_events(). When PMU
+initialization fails after register_nmi_handler(), the error path
+exits without calling unregister_nmi_handler(), leaving a stale
+NMI_LOCAL "PMI" handler registered. Add the missing call before
+clearing x86_pmu state.
 
-It should only be not NULL on a submitted URB, in which case clearing
-defeats the "submitted while active" sanity check in usb_submit_urb()
-and may crash the HCD handling the URB and panic the kernel.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://patch.msgid.link/20260810075728.483c827e.michal.pecio@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Thomas Falcon <thomas.falcon@intel.com>
+Reviewed-by: Zide Chen <zide.chen@intel.com>
+Link: https://patch.msgid.link/20260717080342.1879573-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usbusx2yaudio.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/events/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
-index e8c7a9ba4e51d..3a7efa57edab3 100644
---- a/sound/usb/usx2y/usbusx2yaudio.c
-+++ b/sound/usb/usx2y/usbusx2yaudio.c
-@@ -167,7 +167,6 @@ static int usx2y_urb_submit(struct snd_usx2y_substream *subs, struct urb *urb, i
- 	if (!urb)
- 		return -ENODEV;
- 	urb->start_frame = frame + NRURBS * nr_of_packs();  // let hcd do rollover sanity checks
--	urb->hcpriv = NULL;
- 	urb->dev = subs->usx2y->dev; /* we need to set this at each time */
- 	err = usb_submit_urb(urb, GFP_ATOMIC);
- 	if (err < 0) {
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 497a1c20277f2..531b34b4b3633 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2142,7 +2142,7 @@ static int __init init_hw_perf_events(void)
+ 	err = cpuhp_setup_state(CPUHP_PERF_X86_PREPARE, "perf/x86:prepare",
+ 				x86_pmu_prepare_cpu, x86_pmu_dead_cpu);
+ 	if (err)
+-		return err;
++		goto pmi_unregister;
+ 
+ 	err = cpuhp_setup_state(CPUHP_AP_PERF_X86_STARTING,
+ 				"perf/x86:starting", x86_pmu_starting_cpu,
+@@ -2196,6 +2196,8 @@ static int __init init_hw_perf_events(void)
+ 	cpuhp_remove_state(CPUHP_AP_PERF_X86_STARTING);
+ out:
+ 	cpuhp_remove_state(CPUHP_PERF_X86_PREPARE);
++pmi_unregister:
++	unregister_nmi_handler(NMI_LOCAL, "PMI");
+ out_bad_pmu:
+ 	memset(&x86_pmu, 0, sizeof(x86_pmu));
+ 	return err;
 -- 
 2.53.0
 
