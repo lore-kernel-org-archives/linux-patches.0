@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015540;
-	b=c5gRPIF7R1lbEoxRJloKsqo0pmROWdJOYykIdUC0KLSV3r0aIQncwgc40Hy5x9vIG3KH
-	 z35H6ZJoY9GuGcRIb/4tg8a09wHherFxTelGev6oa58DkJCwGdm5zEVj+TCVtbqL0fV18
-	 OZCRm7E1lKe2oCdP2ftF3LB63+r90D3wYaFvRNN4GfSg0diO2vnL9ApJap/1tZ4Aq7IKw
-	 zwBwwJ++p0UaRPnbRZFEDGhrmKmsf+BdHLhZsaRiwTJmdfyr6z7b7aJswl9XzMQWhGxJF
-	 eqo/21gOm5xQ1l3RbyZTF9IpTMIev8atTKtK8l81HakCzegLUwVP8Ysip/B7Qd0rztg==
+	t=1795015543;
+	b=VZEdcCx/Z0hY801LcSyQ1gx+VclVGbh3Me+QHLAkFDenIOHzTorXHH6ACAPHX1WtZ19l
+	 6vQqSfW+b0Yhxi1vJdNTWjtxwpQe+Q7RouQABcNkrXLOIHue2uWQg7viJMJvotdaJeu0F
+	 ClxQOI3YjO8jueH0tpzvn5XTJX4zpPL8Xx9TcUHa7HDnWvZeYs10MCO6nISxpd58b8vPZ
+	 qyNu5lEC7QSJnGp+TdkylCyUOJy/jjrKGBh3ia+lvIT6HIhi0GDMP6rHNRoGdlpxWIPtM
+	 7BjnoLalCU+1PwP4UrueB3MDedNRI0z6Er1rlw+OeVuzU/GAmlVEDVJ7TIjk9+tEchg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015543;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SEPlPQsmlKWypx+o40SlbwgKsCuhSQgq5NUiuTLZuTc=;
-	b=VZnZxs2RmGTbLQebWYB4Rz8wNVyJGrggB2JOT87LiZgsSrc6QUzkcOr7G/xT0NKo9gRw
-	 qJWpwSb9RzpmE4t3+9jT1jxhWCHEV7SwcW5GadnH5pwIrlEKzxWeRkr9aoGjb/eXz/PSc
-	 CvWlG6y65QPSqGf5MGnNQ0bNK1HW6j4qhGNipGjst2/mjCeh3kVZHZGCYUOZu4eReynCJ
-	 DMpPwCLoO8qJpb4dvsjVQdJBzmFrKf/4cHUMM09ERCQO7ZXwKd2h+Ul4HxaXPRKHNQyRR
-	 CiPY31gWbZZCYoVmnpmaV/jMV4y5xlB/kG2p36FMnkvETIDdbowqBafthxGtOoe4aVg==
+	bh=ks14c164YDKIdmZCHDpEimoQBq3N/Lkn69MaKmXV6Xk=;
+	b=2oMrai/Z3gI3S6rx8/Ehu7dLXG2lgIrZcvLR7yIhYoRmeBpBW9Cy/xO1R6+19DwzzaP2
+	 R6iCld8G27StXLiFsvG9w5nyXfCzB7zfmdPn2v8blweT6DGEUwyfBBgWgjFIelj07ipyQ
+	 sVQXhWSHIa2LfJXC7PT8Fwj2GvyW1lZePRwEZlbgZxcX38577bUCXiHPi0rYIcN85ks6x
+	 tBsPKNJWke+KpqAP9e0BduuKpbnj4K5LcfT+xhpv8HbauAgS7YG2A0Qto1hB3TFJFpjFN
+	 qM+wxMAtNXpQFBCZtnueXjGri4MsIjW6rTGeoHFH6iFB+UOmEYRdLV84rsi7qFcgl2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nxx1pnC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JrIKS0A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE12F606A31C;
-	Wed, 18 Nov 2026 15:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7D8606A31C;
+	Wed, 18 Nov 2026 15:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nxx1pnC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CD1F000C4;
-	Wed, 18 Nov 2026 15:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2JrIKS0A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7191F000C4;
+	Wed, 18 Nov 2026 15:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015540;
-	bh=SEPlPQsmlKWypx+o40SlbwgKsCuhSQgq5NUiuTLZuTc=;
+	s=korg; t=1795015543;
+	bh=ks14c164YDKIdmZCHDpEimoQBq3N/Lkn69MaKmXV6Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Nxx1pnCF2o6qWc1hqowHu9zJnYipBoWapJJZkE2KueuWV+v43I9fvdx/XYBYhrCu
-	 pmzjGe16pPXjKIN7XLmFQsNCiqTbcKNizjN/V2Ep9efebAXZZ16eeoqU+54WVXguid
-	 CueOj/UYrsuEfGvz3yaqlXzDC1qwryypXDJq1zHk=
+	b=2JrIKS0AcjTqU4j5+8x0fOMkUlFGtj+why59D7PDaxdhSFCvGJfEFDDscv0ZW12zM
+	 EpjW7kTpwIbR3Ylu0aoWRHngyXHOG5uKXV62ayDGt4qjJOaUqKKuWdj121JSZVC5+Q
+	 VCUJekuAQZ2ZfyGtbJ515K78ktj7z4DobRCUjsyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horst Birthelmer <hbirthelmer@ddn.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0159/2651] fuse: dont bump attr_version for async direct read completion
-Date: Wed, 18 Nov 2026 15:23:19 +0100
-Message-ID: <20261118150253.575587320@linuxfoundation.org>
+Subject: [PATCH 7.3 0204/2651] regulator: pf1550: fix division by zero in the ramp rate selection
+Date: Wed, 18 Nov 2026 15:24:04 +0100
+Message-ID: <20261118150255.206789338@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,51 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-[ Upstream commit fc60668db85584da911e5d0a65c8698628f98bba ]
+[ Upstream commit f0c54cc56a9a21047b1afa209baea8ea931f2e92 ]
 
-The attr_version counter should only be incremented when cached
-attributes are actually modified (as documented in commit 1fb69e781729
-("fuse: fix race between getattr and write")).  Async direct reads do not
-modify any cached inode attributes (size, mtime, ctime), so bumping
-attr_version in fuse_aio_complete() for reads is incorrect.
+set_machine_constraints() calls the set_ramp_delay() op when either
+constraints->ramp_delay or constraints->ramp_disable is set. The
+regulator binding documents regulator-ramp-delay = <0> as the way to
+disable ramp control, and of_get_regulation_constraints() turns that
+into ramp_disable = true while leaving ramp_delay at 0, so the op is
+called with a ramp_delay of 0. The range check rejects negative values
+and values above 6250 but not zero, and the value is then used as a
+divisor.
 
-This unconditional bump causes a livelock when auto_inval_data is
-enabled together with writeback_cache: fuse_cache_read_iter() issues a
-FUSE_GETATTR before every read, but by the time the response arrives,
-an async DIO read completion has already incremented fi->attr_version
-past the snapshot taken before the request.  The GETATTR result is then
-discarded (attr_version race), fi->i_time is never refreshed, and every
-subsequent read triggers yet another GETATTR -- creating an infinite
-loop of useless round-trips.
+The mapping is also wrong for the values that do pass the check. The
+hardware offers two rates, 6250 uV/us and 3125 uV/us, selected by
+SWx_DVSSPEED in SWx_CTRL1. Dividing 6250 by the requested rate and
+taking bit 1 of the quotient does not map monotonically onto them: a
+request for 1500 uV/us selects 6250 uV/us, while a request for the
+faster 2000 uV/us selects 3125 uV/us.
 
-Fix this by only bumping attr_version for write completions, consistent
-with the synchronous DIO write path (fuse_write_update_attr) and the
-cached write path.
+Replace the division with a direct mapping onto the two supported
+rates. Requests at or below 3125 uV/us get the slower rate and anything
+above it gets the faster one. A ramp_delay of 0 asks for ramp control
+to be disabled, which this hardware cannot do, so it gets the fastest
+rate; pfuze100 handles the disabled case the same way.
 
-Fixes: 01e9d11a3e79 ("fuse: add support of async IO")
-Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 7320d41c29bb ("regulator: pf1550: Add support for regulator")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Link: https://patch.msgid.link/20260903082010.4024603-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/pf1550-regulator.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index bf79c6eb3062c..7e6eba6e7086f 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -689,7 +689,7 @@ static void fuse_aio_complete(struct fuse_io_priv *io, int err, ssize_t pos)
- 		struct address_space *mapping = io->iocb->ki_filp->f_mapping;
- 		ssize_t res = fuse_get_res_by_io(io);
+diff --git a/drivers/regulator/pf1550-regulator.c b/drivers/regulator/pf1550-regulator.c
+index ceee553a84b23..84f8b187a91bf 100644
+--- a/drivers/regulator/pf1550-regulator.c
++++ b/drivers/regulator/pf1550-regulator.c
+@@ -49,17 +49,26 @@ static const int pf1550_ldo13_volts[] = {
+ static int pf1550_set_ramp_delay(struct regulator_dev *rdev, int ramp_delay)
+ {
+ 	int id = rdev_get_id(rdev);
+-	unsigned int ramp_bits = 0;
++	unsigned int ramp_bits;
+ 	int ret;
  
--		if (res >= 0) {
-+		if (res >= 0 && io->write) {
- 			struct fuse_conn *fc = get_fuse_conn(inode);
- 			struct fuse_inode *fi = get_fuse_inode(inode);
+ 	if (id > PF1550_VREFDDR)
+ 		return -EACCES;
  
+-	if (ramp_delay < 0 || ramp_delay > 6250)
++	switch (ramp_delay) {
++	case 0:
++		/* Ramp control is disabled, so use the fastest rate. */
++		ramp_bits = 0;
++		break;
++	case 1 ... 3125:
++		ramp_bits = 1;
++		break;
++	case 3126 ... 6250:
++		ramp_bits = 0;
++		break;
++	default:
+ 		return -EINVAL;
+-
+-	ramp_delay = 6250 / ramp_delay;
+-	ramp_bits = ramp_delay >> 1;
++	}
+ 
+ 	ret = regmap_update_bits(rdev->regmap, rdev->desc->vsel_reg + 4, 0x10,
+ 				 ramp_bits << 4);
 -- 
 2.53.0
 
