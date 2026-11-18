@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037281;
-	b=FSjzLoYfUafvizjw10/RdYflkFmGfj/AjT+meizboyZl2vx1/hi/SCI6tsl21tJBrIUH
-	 2Hs1bdmQaKwBS5xCRtaTh1xf/ySNJi0CbIR4bqKM6ga4xA+O3MPTmdH0tITUaesGgSE69
-	 GrukEAOHtXyVVwT4mQEJ/a6ce5aUDeewvKbL3al7kp7tY4ds1UxRDo4XBTRrSsYVFMBSQ
-	 YRYJZDMCVeaEsC1B0I2Wsy0v/r3vbPNBJD/po+OxzzoeJUeArIr0gwLDI8Kz38Q1iSBW+
-	 KcMCQ+fWjb45IqmqOb77WNDJgPB4GvmvKBaLjokSV/Pp2nnYOmdXffHZWVZ5JRWpdyg==
+	t=1795037284;
+	b=dGEV5dtSyk1XMPiotZu7VQu/+nLeZokJvmcAkumUIejHZGj05HRZZV1ncHhzpJG3wc9z
+	 lLWN4eO15G6chlmGAoSsbzffqB2DN2G8NaLbCHMPLuuNRbGG3tSubPPI/HBCBMLCGpyCj
+	 PQD3SqQ2ilaDa6SsDbELPh/MLj80uH2onJE963lecsjtlbmVrKqrCOLIckamjkVf1xW1H
+	 Fgu6ecaWu6tuBbQNq43cLtthKtJU39TR6GhoikX/wvUFKuWq/s3i8Ecj66hGCjYUF7xd8
+	 +fwl3c7pThkV9Ks9uYdVGYSqYmPij3lCwGyZjC83CYGZqiyLf+wnkGfoV0HcyRtx0ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OkPMZFOrejSGYJvQvZ9LmAM40As/ppLmaqMXXJsXzY8=;
-	b=p57VvZqAvzmht9Ej6F7YdxBgYK+h+TzoG6vVRiuRKpPDObJTdBvvhyHUDafH1rdVh4UZ
-	 cYWtyBpBrsPt1H/LxAEzeiMhc6twNOxtOiHnNkJMuRkFv7cmQIQ59GHx5s/o7jqCO+wc6
-	 rWDtIL9RBLCo1Sk7G8CtFD7DBs3P+onFk/leQ4Gsotdpw0jDyEuhHAS9sn3A17UdSvv0P
-	 GpNiFyo2eNL/v6wc8TzcWbgMOeSBJk1cTkoXkEGP5bD8jrK3hmP6KNOHwjdIuNt1cWHeq
-	 Dekj5iAmjkUdk7tmgUrPpNXofvOfi6gbnJbdivUPBlPXtObalWXHopO1pW5zfjTZqgA==
+	bh=L7O5A6A9E5FDJZNSRGZF7pXiukrvbtXubeHA9Fnx2zE=;
+	b=l+6u533foqtHMLDjmctVk97QEL8YZylRTy61bo7PIIElKw5xpxai0UXt1DECjsYCl/6s
+	 pMIByKSvP4tJNjx1OsTdE2aPpxg6rnw/1V7MTqmIjaIQOwzR1r8S8MhiCslHt55+HRX1W
+	 qyD927Ui9lAXkNW6J+TaGLmtyd04rrePC56jKoacenUaT1/B7Sx1YPQ+lUMyk6TIFssNs
+	 MIHrx6Xm2Ax2JBRTOq2XtPv/UkZ+p/qQlUl8y4WAFNkprSvLynNk/fWoRUZiOgVxqA7/h
+	 NU5ov1Vwe1hMlRSp8pW48DmNzDeat0R2gNrZtLLUvRQo0zjDVSG1Sc2JJVFseNOshug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YFB5vijE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhB3UcaJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8D9606A331;
-	Wed, 18 Nov 2026 21:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48029606A31C;
+	Wed, 18 Nov 2026 21:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YFB5vijE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367521F000C4;
-	Wed, 18 Nov 2026 21:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DhB3UcaJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B861F000C4;
+	Wed, 18 Nov 2026 21:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037280;
-	bh=OkPMZFOrejSGYJvQvZ9LmAM40As/ppLmaqMXXJsXzY8=;
+	s=korg; t=1795037284;
+	bh=L7O5A6A9E5FDJZNSRGZF7pXiukrvbtXubeHA9Fnx2zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFB5vijEyF9S75Gt0Sm0D3vt3L6DMqyu8Kw3Kkc5wQhrMO2wLLaiYuQb5mpBKK5LX
-	 BB5VaPJme+gbkJB1z/B6TpwKSAgHjp/lqyn1OV397xLo1HQq9ZsXe1bhfcEDS7axR7
-	 2JRykoWV58qTdXS99l68tUYM2IOZc1JrKEU/S12M=
+	b=DhB3UcaJYPiKYFMUEDPqdKhHgn4kJARFOpDZcfelv/JkHariusyTg5EQ+OucKmwVC
+	 Gh369l0e1cUc7qtGASlfPGRhfClKHVMFljulGiP6+U6YaGoloE+2Z2uZRD+Z5uAN+O
+	 te0wjl7nX0Ekeuox8eLiD7EbS/tzNhhpmgGj/OlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>,
 	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Christian Schmidbauer <opensource@grische.xyz>,
+	Ido Schimmel <idosch@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1353/3318] net: get stats64 if device if driver is configured
-Date: Wed, 18 Nov 2026 15:32:55 +0100
-Message-ID: <20261118150401.006649762@linuxfoundation.org>
+Subject: [PATCH 6.6 1336/3318] net: free_netdev: exit earlier if dummy
+Date: Wed, 18 Nov 2026 15:32:38 +0100
+Message-ID: <20261118150400.435784051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,39 +73,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 3e2f544dd8a33b2f650b32920b9bef103da2a7cd ]
+[ Upstream commit f8d05679fb3faae478d604177b0c188b340371cd ]
 
-If the network driver is relying in the net core to do stats allocation,
-then we want to dev_get_tstats64() instead of netdev_stats_to_stats64(),
-since there are per-cpu stats that needs to be taken in consideration.
+For dummy devices, exit earlier at free_netdev() instead of executing
+the whole function. This is necessary, because dummy devices are
+special, and shouldn't have the second part of the function executed.
 
-This will also simplify the drivers in regard to statistics. Once the
-driver sets NETDEV_PCPU_STAT_TSTATS, it doesn't not need to allocate the
-stacks, neither it needs to set `.ndo_get_stats64 = dev_get_tstats64`
-for the generic stats collection function anymore.
+Otherwise reg_state, which is NETREG_DUMMY, will be overwritten and
+there will be no way to identify that this is a dummy device. Also, this
+device do not need the final put_device(), since dummy devices are not
+registered (through register_netdevice()), where the device reference is
+increased (at netdev_register_kobject()/device_add()).
 
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 94b601bc4f85 ("net: core: Implement dstats-type stats collections")
-Signed-off-by: Christian Schmidbauer <opensource@grische.xyz>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Dust Li <dust.li@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/dev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 5840a526af08e..a5e9e63b67965 100644
+index 19d3149d320db..5840a526af08e 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -10790,6 +10790,8 @@ struct rtnl_link_stats64 *dev_get_stats(struct net_device *dev,
- 		ops->ndo_get_stats64(dev, storage);
- 	} else if (ops->ndo_get_stats) {
- 		netdev_stats_to_stats64(storage, ops->ndo_get_stats(dev));
-+	} else if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_TSTATS) {
-+		dev_get_tstats64(dev, storage);
- 	} else {
- 		netdev_stats_to_stats64(storage, &dev->stats);
+@@ -11099,7 +11099,8 @@ void free_netdev(struct net_device *dev)
+ 	dev->xdp_bulkq = NULL;
+ 
+ 	/*  Compatibility with error handling in drivers */
+-	if (dev->reg_state == NETREG_UNINITIALIZED) {
++	if (dev->reg_state == NETREG_UNINITIALIZED ||
++	    dev->reg_state == NETREG_DUMMY) {
+ 		netdev_freemem(dev);
+ 		return;
  	}
 -- 
 2.53.0
