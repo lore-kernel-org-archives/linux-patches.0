@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034580;
-	b=Thju9PoQ3bAuBWKZHag8aAe0GbpQ974ac5N+pGqoVLyANveaz1vpmVVM1scd2bu0Xhs+
-	 EcaaakDtZ17aRPaxBt6se0zvgRFYGWqB0YS+V17Tl6xnEpOHe6OfMdMutUzYMPp2T21Bw
-	 w+toA82zc45jmIpuOaY2tDna9YDROSUwDA6rSMbBNXjag+hqa7NAGyU4AiJBtyvMOkhvA
-	 kPN9Eyoba8P9NgoZfPGODvPFsSfKcpuv0TtVQ73tDLYVyHtaa/FPSnLCcLPmGwLhCbpEl
-	 pcMVogIRggR+FpQ41dkyRX1yPX2qUhGctdOZTCmyjIb2QqOzUhnis5YU6uLGv/uVBKA==
+	t=1795034582;
+	b=zRxOLC47za8s2sWdoPoQPs8w1YtK0ZmIKMqWYIZdgXLNR6VL1RndgwhbHnFMuBzi5/cu
+	 UPARLTqNTQE6LZ28xr6rVqKef2B9u7UHjnwGGiYOJuikz6D7rJ7d6ZN3odVHx9pCXmTGI
+	 kE4RfsXh7+QHp9W8U/3/GCZuRLEemzGAygc/JuPnD5a6KXME7ph9F6EL/aANOTLXyDfHh
+	 SIGHcmfUY+RS5IjJXwVveTCCQjtvac8Ox93x4eFSeXFsdhSaIIDSnmtQFkJ75WaW81xps
+	 nNZSNSC2UHGiPw928cI6j/4Si8rkTHuZtqKC0uRekrNTGQrylTXnOxGRUDPodk7gv7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=kINscQXQa/q5JVUNrUF71rpJGfQVP8biHu74uWLy2fA=;
-	b=AjPwr+q4li10IQHU8upo7Fal2a8pjV4F8h/ElLWcv5OWWFkhmnsNT/GYPfSuWZri3tLZ
-	 cG9hJPPfCl0b+NNFGMoEoyuJn4+VqTbX/wXlq6GOKLKzpLD7AWd50Xha59NwP/9QUEoFh
-	 efiKiswp0UVtgk3uwwkqq414Pv6Cmxt00PWgXCjkhKlO7YkHCyB7mfKtxrbsjUwi7hyVx
-	 tN9iS4cF868RtCV5IhjoIzVS++BlgvR5SpczitD5ZBDmZ4q3JzQmu/Nqa7qylMj+7uhx/
-	 AzeIoCgm8IMTtaEmK/XrRXGLGWm4MED8OHsrRo2n8yBOdKJLFsFFGQ2jtbJf7R50wnw==
+	bh=Xl15ap3oyXSbG5B4q+iEsBW5T3DSiTpOFOwnFW2cFyE=;
+	b=SOZ1wnqGyuQcyuBIC+bwaB9/qMJflIyD367Y/poC+IDO7qR84EJ8Y+1oq1+n1dtbl/bV
+	 sQtN7rXNwivrxunjbWmsgv/kmnKi1NclhFHQekWZhI67NAxw1zn8wBvd0HuTT51MSCz17
+	 KpCYceT6/gv0W60bJd/V++WUzSxpJ9+kU04AzqGTXeVHHEcKDyx04RfpF9q9JbArFv0P5
+	 /lKEIceIZ4fYMuHFGW+q2NWzET3LuaYDHEDTY6v5gp/+9n9e61ZyzIJRp4NFYOi6yqjsj
+	 uDPoNdKe10++G9qVH6Ttc05ucxmIqbFwI8a32upKAVGV1S5JYI+pOJ2uf2g/8CQ+vxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SwjE6f9g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKGSBBig;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7AE606A31C;
-	Wed, 18 Nov 2026 20:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64475606A31C;
+	Wed, 18 Nov 2026 20:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SwjE6f9g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E082B1F000C4;
-	Wed, 18 Nov 2026 20:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKGSBBig
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E7E1F000C4;
+	Wed, 18 Nov 2026 20:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034579;
-	bh=kINscQXQa/q5JVUNrUF71rpJGfQVP8biHu74uWLy2fA=;
+	s=korg; t=1795034582;
+	bh=Xl15ap3oyXSbG5B4q+iEsBW5T3DSiTpOFOwnFW2cFyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SwjE6f9g2cU4ucFoRBbi7x58dLPfZ47mQ47URl0OenSFWocqt55/l3RF6U2LipTJn
-	 66EVgxHzF1+XPqgyhJmiScJPaxsSGDW5c3pnr0x5kxL63iVl0XWocN+jnYb+BRV54G
-	 j4QmwkJ/WeG/X20mY3zxmJ+Qx3EhS9ZpjpcI5eig=
+	b=FKGSBBig+CaCdii5NHlWSeEVWUB1FL9m/AHzE3+YwknVxQ1nbPRza1pSY3I3DDWLb
+	 fWnuRZrgpbKrk6NeMYUxD1iroedQM28Gr2xQc1sEauoOGpz+aUvDgIykOFUGA+/i/R
+	 v6NLntefLlR74YDJ1KNlgli7AAw2iEiTCektvjEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
 	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0418/3318] platform/x86: think-lmi: Fix certificate thumbprint sysfs output
-Date: Wed, 18 Nov 2026 15:17:20 +0100
-Message-ID: <20261118150329.087299308@linuxfoundation.org>
+Subject: [PATCH 6.6 0419/3318] platform/x86: think-lmi: Fix current password length check
+Date: Wed, 18 Nov 2026 15:17:21 +0100
+Message-ID: <20261118150329.121118619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,47 +72,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 4f3183f5ae9b8ddfe338d79a96146a05342bbe50 ]
+[ Upstream commit 54745d563114b74f6fecebce68cd020d06c1772b ]
 
-cert_thumbprint() already returns the accumulated output length, but
-certificate_thumbprint_show() adds that value to count again, making the
-next line use the wrong offset. Errors returned by cert_thumbprint() are
-also ignored and their negative values added to count.
+current_password_store() checks the password length before removing the
+trailing newline, which can reject valid passwords that are exactly
+->maxlen bytes long.
 
-Assign the total length to count instead and propagate errors correctly.
+It also passes ->maxlen to strscpy(), which truncates passwords without
+a newline.
 
-Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
+Use strchrnul() to measure the password length up to the newline, then
+copy that many bytes and add a trailing NUL terminator using strscpy().
+
+Fixes: a40cd7ef22fb ("platform/x86: think-lmi: Add WMI interface support on Lenovo platforms")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20260810120556.149416-2-thorsten.blum@linux.dev
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260818151635.37094-2-thorsten.blum@linux.dev
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[ sashal: Adapted to the older file location and replaced upstream's strreplace() context with the local strip_cr() helper, which is dropped from this function since the copy now stops before the newline. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/think-lmi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/platform/x86/think-lmi.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
-index d5319b4637e18..866c09f415e2a 100644
+index 866c09f415e2a..60fe2e762e35c 100644
 --- a/drivers/platform/x86/think-lmi.c
 +++ b/drivers/platform/x86/think-lmi.c
-@@ -680,9 +680,15 @@ static ssize_t certificate_thumbprint_show(struct kobject *kobj, struct kobj_att
- 	if (!tlmi_priv.certificate_support || !setting->cert_installed)
- 		return -EOPNOTSUPP;
+@@ -403,14 +403,13 @@ static ssize_t current_password_store(struct kobject *kobj,
+ 	struct tlmi_pwd_setting *setting = to_tlmi_pwd_setting(kobj);
+ 	size_t pwdlen;
  
--	count += cert_thumbprint(buf, "Md5", count);
--	count += cert_thumbprint(buf, "Sha1", count);
--	count += cert_thumbprint(buf, "Sha256", count);
-+	count = cert_thumbprint(buf, "Md5", count);
-+	if (count < 0)
-+		return count;
-+	count = cert_thumbprint(buf, "Sha1", count);
-+	if (count < 0)
-+		return count;
-+	count = cert_thumbprint(buf, "Sha256", count);
-+	if (count < 0)
-+		return count;
+-	pwdlen = strlen(buf);
++	/* Strip newline; setting password won't work if one is present. */
++	pwdlen = strchrnul(buf, '\n') - buf;
+ 	/* pwdlen == 0 is allowed to clear the password */
+ 	if (pwdlen && ((pwdlen < setting->minlen) || (pwdlen > setting->maxlen)))
+ 		return -EINVAL;
+ 
+-	strscpy(setting->password, buf, setting->maxlen);
+-	/* Strip out CR if one is present, setting password won't work if it is present */
+-	strip_cr(setting->password);
++	strscpy(setting->password, buf, pwdlen + 1);
  	return count;
  }
  
