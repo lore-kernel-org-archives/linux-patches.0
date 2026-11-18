@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054949;
-	b=F75RrMd+l2oYocVJXrFmA53IT3ZNQQidBCoOeFOCvUoDH5qhposuHkt3KGSVmD1R/kDr
-	 bv7dbwJEUJRZhrMIqYOvR5SkTPu32mxjFQ+tYt4M6Y/9NulFxFLcpMouXTpUj9/OrEwEu
-	 KXZItAFT7KNkyRypcQIeSS8ViVl7Hw/bGs8LI2gcGkTfjoOfDIX09rms9HwrMR653cCi6
-	 PgpXLXfh27YkItfsZyNIL2Fz8dkkaZXd97kTKTkDC5+jLI4RANoa12Eb/PWmXwQU/jsuO
-	 00Ov3O2xabmrhBmcSQFsyWyIg26Lgyow0DuEeYwJs5C8OKvvKWU6s1YsbJRgoluPrag==
+	t=1795054952;
+	b=AiJKOEbMeYg8CTSjiGx2LwFRwGynf3bUvXdSW+YQQOTMistJYG2jUt7HAzvjam1hH2a5
+	 AnDoygCV9C2SapzrJ8YyH1YKpEorYb2VHQzLD4dWGQjfHkBOr4BoxVQVCIv6K9St9q4xv
+	 u4FCtDF/ZGfASxYIgt8X9qOGp/eSbRWNxbulq09Fzu4aywWYlB267bROStdau8eShzv4D
+	 exs7xjyyFO9xjuL72DV10x7DxuC4ENEfkvV0vqwBA89mLoEiRAmRTx0SCkHG/4CjFWTzL
+	 Te8gN1r8Vupt5JB/AdijdxO0ypbk5CejlDdAmAbCcVYU6gbpSCsfH2H/TpN7AEwGnSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054949;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=li1RxLWTWiIlSqSfA1fZqJAJakQzppEQMCSzSfYhucQ=;
-	b=abt+CG/Vcn81TIPoE80mQo2ux4jJwzY/acXIJOK5xm5PY+OedZPKb6s5kZuGO4i9JGlE
-	 6QO6FNc+Pqj1eYdiRJU4vNdQyq4nBw+ZtGnXtqBnHQubstt8xpRfIALXReqHlTmJPtAfP
-	 100jKFgwH89sCOEeTffA4pVTSyiN81PpB1Eet/67fR4iXyyIOUVImGsFway7aJyagGhh5
-	 O/aevbRzr3TwLG7AZ8f2LGl1lAUa1Hol626SKJMv/ERBASaYwoiqYTrk2gNv+5EoWxHdX
-	 VP+j7WsOUEer937P4PIW/pTPYM1pwO3/iCdeOiSGnseTsesKWI9eBHKLEnW+1JjRw9g==
+	bh=/6Sn0c8y+ThCb7U5ZJuS+xpzbkQOd1NCCn2G8Jl6xv8=;
+	b=yPaVLJCiKR+6WQ3Yyqz26bajJNkhu2PMJsuD+k2oDcuYZvYThy2S5s9zvF5SUazzQcu6
+	 GK2c1YGkv2sudF8tWre/SLbcSekfKhscOZ65ojyyWnLOwYVSpk0i+mt+8lnKXCUWWWjl6
+	 rKNyqrvfFFIrzOtTNEgYrj4vS7DEpYtfE24RtbZwY2I08KnrfKsbWrdEcA/jnSPGsnJYB
+	 8OEVVJlA91v+xcFIYmnX9odbPn0wTwDwNAbN1OL0orD4CcW/rc3g2Id+fxpLIHoAsKweQ
+	 tUf/x93RKrlBVzWmiN98dKUdPjyZ3d8FZzNJ/PqhT8DxeCMjMe3sOt9kyjc2gqc3QSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lBUrvPrp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFfo3ktO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C62A606A31C;
-	Thu, 19 Nov 2026 02:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58492606A320;
+	Thu, 19 Nov 2026 02:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lBUrvPrp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16481F000C4;
-	Thu, 19 Nov 2026 02:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFfo3ktO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613551F000C5;
+	Thu, 19 Nov 2026 02:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054949;
-	bh=li1RxLWTWiIlSqSfA1fZqJAJakQzppEQMCSzSfYhucQ=;
+	s=korg; t=1795054951;
+	bh=/6Sn0c8y+ThCb7U5ZJuS+xpzbkQOd1NCCn2G8Jl6xv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lBUrvPrpxK/dFtFFXqAJ2ITewbpSaSR5sV18yH9lc8P0NpQpcuXNS5DzfmCqRW00a
-	 DVTIgGyjC7oRzi9/7rmHz/az1p1fV7YdcDzNwSMQorkGIImP+gPUw3g6xegtFA4Ds8
-	 psrF9F9b1HTEHV18n5zA6nCZI3AZYwWjArC52GIw=
+	b=wFfo3ktOS0QvBkMrhaHOHSoZwjEPUwp9nRQUhWobPcDn4EUwfeaGCYLul1KrpFv1X
+	 iJd0XPFUbI96immD7gpx+NUK432YkogdrXLGIfly+gm+EOcva6LvVNnRYDsPrFAg10
+	 oVbxyE/8XPvbRzLaAMjRfKiAOSa7yaawmBuXsaZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d31109047baed8f3b590@syzkaller.appspotmail.com,
-	Keisuke Tsukuda <tkdkei@outlook.jp>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Rosen Penev <rosenp@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1456/2214] usb: gadget: f_mass_storage: ignore class requests while inactive
-Date: Wed, 18 Nov 2026 15:52:12 +0100
-Message-ID: <20261118150109.316376577@linuxfoundation.org>
+Subject: [PATCH 5.15 1457/2214] dmaengine: fsl_raid: zero CF descriptor pool allocations
+Date: Wed, 18 Nov 2026 15:52:13 +0100
+Message-ID: <20261118150109.355871343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,50 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keisuke Tsukuda <catnyaaan@outlook.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit e84caed6e7f58d96ea2e4aaa0b947ab05faa451b ]
+[ Upstream commit 26d48e9fb6997f4026dd86daecf8d2c12258f698 ]
 
-SET_CONFIGURATION is handled asynchronously by the mass-storage thread.
-A class request can arrive after the composite core selects the function
-but before the thread installs common->fsg, or while the function is being
-disabled.
+The compound frame descriptors and embedded CDBs are allocated from the
+cf_desc_pool with dma_pool_alloc(), which does not zero the memory. Only
+cdb32, the gfm coefficients and the frame address/length fields are
+programmed; the dpi_dest_spec/dpi_src_spec fields in the CDBs and the
+rbro32 field of each frame are left uninitialized. The hardware reads
+the whole block (frame 0 length is sizeof(struct fsl_re_xor_cdb) or
+sizeof(struct fsl_re_pq_cdb)), so uninitialized heap contents are
+exposed to the device on each new descriptor.
 
-fsg_setup() already rejects this state with -EOPNOTSUPP, but checking it
-through fsg_is_set() also emits a warning. Check the active function
-directly so normal requests during a configuration transition are rejected
-without hiding fsg_is_set() warnings from other internal paths.
+Use dma_pool_zalloc() in both fsl_re_chan_alloc_desc() and
+fsl_re_alloc_chan_resources() so the descriptor and CDB memory is
+zeroed before it is handed to the RAID engine.
 
-Fixes: 8876f5e7d3b2 ("USB: gadget: f_mass_storage: added eject callback")
-Reported-by: syzbot+d31109047baed8f3b590@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d31109047baed8f3b590
-Signed-off-by: Keisuke Tsukuda <tkdkei@outlook.jp>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260908203348.95825-3-tkdkei@outlook.jp
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:deepseek-v4-flash-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260820031654.28450-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/dma/fsl_raid.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index b20aabf3fb2f3..5a4edb856e92f 100644
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -461,7 +461,12 @@ static int fsg_setup(struct usb_function *f,
- 	u16			w_value = le16_to_cpu(ctrl->wValue);
- 	u16			w_length = le16_to_cpu(ctrl->wLength);
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index facd8b0f48f47..d8914ddbedf7c 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -304,8 +304,8 @@ static struct fsl_re_desc *fsl_re_chan_alloc_desc(struct fsl_re_chan *re_chan,
+ 		if (!desc)
+ 			return NULL;
  
--	if (!fsg_is_set(fsg->common))
-+	/*
-+	 * fsg_is_set() warns when common->fsg is NULL, but that can happen
-+	 * normally while a configuration change installs or removes the active
-+	 * function.
-+	 */
-+	if (!fsg->common->fsg)
- 		return -EOPNOTSUPP;
+-		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
+-				    &paddr);
++		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_NOWAIT,
++				     &paddr);
+ 		if (!cf) {
+ 			kfree(desc);
+ 			return NULL;
+@@ -593,8 +593,8 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
+ 		if (!desc)
+ 			break;
  
- 	++fsg->common->ep0_req_tag;	/* Record arrival of a new request */
+-		cf = dma_pool_alloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
+-				    &paddr);
++		cf = dma_pool_zalloc(re_chan->re_dev->cf_desc_pool, GFP_KERNEL,
++				     &paddr);
+ 		if (!cf) {
+ 			kfree(desc);
+ 			break;
 -- 
 2.53.0
 
