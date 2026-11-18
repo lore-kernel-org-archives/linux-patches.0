@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042657;
-	b=LCxMjyibxd2JHzSV1NxHYZ+Kw+58Gwhv8RvT3pD2MzzeVklniA1+ZiMLi85Lbhr3JanX
-	 KaAHjkDXVCuaW/rWznsldXTe6d4OlwTokG8eoyaYeCEjjLHvdK2VYlfdtdj8OU2+RGul6
-	 Cv9mKepG1DpStW6m4c7JMeLA//OUZ30z3iClQ0gL58WSDYbfF1AHABO6B8eKUeQxgiHi7
-	 LhNUMmsNsCeqQLguLnDJLdKBtA7L/xRw7JspARKuv13u8WV+OhhPk/+I78I0laZI5sXbq
-	 p0Zuq+IH8/Ce1l+bO+dM/8z6MXcLdzbKmO7w8fuu6KAFB4qgCGQDWp7nwynD9EyyquA==
+	t=1795042661;
+	b=3pSHuSE4l4KuHlByKSnGnLhXJ5Ehs/Z0veDIfdqb/asOZFHvO1PhWdLMx0vtmfmIHK78
+	 oHn+cUuAjCjPq9bUq+mWISZ42leoc3vlYrwvEru8lPc88sTymZIHRULEE0+tgHJgy0Ad0
+	 tX/3lbeWhBpRkotF0IdqD0ixM+7Xd5cloBR2xnoEp9mWt67ASNcXh/aXT4+QFNxYw4YYo
+	 exW76Zq8OCip0kqkbvD+h6I6lf6yXuI0llMz67jtbPKeMQG6O9QrRMxiSKm5g/MK2kOVN
+	 yLIcv4SwpB8jQ1gxIhviqhOrRFu8SuVKf2B1QRI+KJjEoeiDcrwz5hh8uN8/I7g0+rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042661;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Cd2e6VJEyqLMU0RUn1Ws41IZXwnf5kvLqdPptqLlIVQ=;
-	b=J0Bi2Xv3FLHlCjVcDgVj0ptsBs1LAHTdU0Ravm/+eQcY5OPDSHyH3F3EZP8nFPIn2Mj6
-	 1Pqj77AHNLn1N4J5T337Ru1yC9VklqoGeqh5TtZny3nhxyZUrqsD5FiO8Xapcs96AguRb
-	 0HuBCBsjf65rn1WL8KGYITyWzerL0Y4tNk+hsMUJ4oajUSG+ZhrK5dnxxyU2Zln0JpxjC
-	 yed9KKWfbvqs+k8RprjJ8ck8X/5dsE0ntKH/x/fdCo6KQUNKm0kdMfbziznvoVbjtppZT
-	 2dzpI+5PO0yxeZJKrFkG3eLSnnNXU61ZjhRz8qvNsKaHxdmp8KHYrckKPkw5qDlDUJg==
+	bh=gOztOSxpBFII7qc39R2Puyy8Dk6kZZgVgwyWmmtzSZo=;
+	b=uoh/wBMEmJ47XiTChIqVhWx6xT7Kgp5CSv3yiPjRnUXsbWcg4/bjb6oF8TxvaYpFMWMm
+	 1Wlzv7rz8bOB6nNQY0E6EzbaFGjCrzH8C2j6byr8CB88N4yYOrfZOBDRffOqoimpg81SD
+	 kKsrkLvHs5qLeFC2MRO8nDwYxG6u0KnlLpQjcw2a3N/DwgYaCmSTuptTwAB+szWpldl/G
+	 DLl5xWV/sC2D9jS9e+yLW9nUi2ZVcy9A6cbRo6ZZEg0bWEKTK6Lp/8CcpQEBVCeBKeR99
+	 M3ztMWGvKb2UNEf0++o+uj+Qw/UnwcTAo8MDYsZk/yk8Oc/Rk2snNuipVDDiJUdJKjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RuoPWRg9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oRb/SV7+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CD6606A31C;
-	Wed, 18 Nov 2026 22:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CC1606A32A;
+	Wed, 18 Nov 2026 22:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RuoPWRg9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2694F1F000C4;
-	Wed, 18 Nov 2026 22:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRb/SV7+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF34C1F000C4;
+	Wed, 18 Nov 2026 22:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042657;
-	bh=Cd2e6VJEyqLMU0RUn1Ws41IZXwnf5kvLqdPptqLlIVQ=;
+	s=korg; t=1795042660;
+	bh=gOztOSxpBFII7qc39R2Puyy8Dk6kZZgVgwyWmmtzSZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RuoPWRg9Lu6E+oonB0VJyHg3jyog2XbsARTfwdWPqe3XgM+l7Rwkm1y7tdxvUu9Tf
-	 WDndD9uDiwtXo4c7LBqPTydNtwMTLpm4KUpiiBaixtidRqV/pdlgNEJ4l49FH4312W
-	 UJQsz1RDpz8GGebcRSYFkPhnR44lTvwhBLaDkmIg=
+	b=oRb/SV7+wBtIfjtrYy4T5AJZT/WRbdIiD5g9RW8spiOzn89auJac31beZJWU+G/gp
+	 Rcwhy1z8QQUNVY1/akNShzMMt3zDO6yZAN1vAx8iK+PzB1/k0Lre4wlqCmOJWvPn6F
+	 OFiuWzMa5QupGZY1IMCjmrypLQFuU397kWdS+Pn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Guikun Yang <yangguikun19@qq.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3198/3318] x86_energy_perf_policy: Cleanup: Check fseek() in VM path
-Date: Wed, 18 Nov 2026 16:03:40 +0100
-Message-ID: <20261118150455.708607200@linuxfoundation.org>
+Subject: [PATCH 6.6 3243/3318] net: mctp: free reassembly head skb when key_add fails on SOM
+Date: Wed, 18 Nov 2026 16:04:25 +0100
+Message-ID: <20261118150456.961599080@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,39 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 2778dc35d40e7e84c134ca4cab1376fa58208f80 ]
+[ Upstream commit d2bfe74a8fe219a86b86c1f126e1d722a5001790 ]
 
-Add return value validation for fseek() and ensure consistent
-resource cleanup on all error paths in err_on_hypervisor().
+When a start-of-message fragment creates a new reassembly key on the
+broadcast/bind path, mctp_frag_queue() stores the skb as
+key->reasm_head before the key is made observable with mctp_key_add().
 
-Fixes: 0936cdfbb527 ("tools/power x86_energy_perf_policy: Input/output error in a VM")
-Assisted-by: GitHub-Copilot:Claude-Sonnet-4.6
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+If mctp_key_add() fails (a race with another SOM packet for the same
+source/dest/tag, or the receiving socket going away), the error path
+only drops the key reference via mctp_key_unref().  The final key
+destructor frees the key itself but not key->reasm_head, and since the
+key was never added to any list, neither the expiry worker nor socket
+teardown can reach it to release the queued fragment.  The skb is
+leaked.
+
+Free key->reasm_head on the key_add failure path before releasing the
+key.  Other teardown paths (__mctp_key_done_in(), EOM delivery) already
+clear reasm_head before the final unref, so this only affects the
+failure path.
+
+Fixes: 4a992bbd3650 ("mctp: Implement message fragmentation & reassembly")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Reported-by: Guikun Yang <yangguikun19@qq.com>
+Closes: https://lore.kernel.org/all/tencent_43A65D51143E18518EA968DF9323694EFD08@qq.com/
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/179287946888.17431.11219154409333681184@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86/x86_energy_perf_policy/x86_energy_perf_policy.c     | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mctp/route.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 2545f64d5f43b..f26c6dd0d6c14 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -661,7 +661,11 @@ void err_on_hypervisor(void)
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index d3b20981e4ab8..aa3b523c15d49 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -496,8 +496,16 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 			 * can do is drop.
+ 			 */
+ 			rc = mctp_key_add(key, msk);
+-			if (!rc)
++			if (!rc) {
+ 				trace_mctp_key_acquire(key);
++			} else {
++				/* key_add failed: the key is not observable by
++				 * any cleanup path, so free the fragment we
++				 * just queued on it to avoid leaking the skb.
++				 */
++				kfree_skb(key->reasm_head);
++				key->reasm_head = NULL;
++			}
  
- 	flags = strstr(buffer, "flags");
- 	rewind(cpuinfo);
--	fseek(cpuinfo, flags - buffer, SEEK_SET);
-+	if (fseek(cpuinfo, flags - buffer, SEEK_SET) != 0) {
-+		fclose(cpuinfo);
-+		free(buffer);
-+		err(1, "Failed to seek in /proc/cpuinfo");
-+	}
- 	if (!fgets(buffer, 4096, cpuinfo)) {
- 		fclose(cpuinfo);
- 		free(buffer);
+ 			/* we don't need to release key->lock on exit, so
+ 			 * clean up here and suppress the unlock via
 -- 
 2.53.0
 
