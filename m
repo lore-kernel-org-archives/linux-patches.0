@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044804;
-	b=3HiACbRxBLhwxwTa+EavAlUrZH+yptOGzHvHtsFwaEvpq9xWaGlQt3A1+QuVE0Qo7+le
-	 zg5LcFx+UL39PlcvPaM6tKXYQTw5TxKRTfd9aMAAa2z2zBaaLhzTLuyPNoFTODwop3Rb2
-	 /BljITlW4VS5T7jlNgaG1bseNTiygxVMIZFbF3xtCbTaepcZgv5L0X2FlJ6cveVrYhIQ+
-	 Isgwri2+EIVKg+GlcZ8TiopkdJANf6SzObak10sRzWGFhUyT1j/r9f7IVmIda29YIt5fm
-	 Tx/0Bt68lPElJLObj5Y4/Gw7czXIOeDgR9NbLXpCkxMTD0pv02q8YmOVVvOH0pNHHtg==
+	t=1795044807;
+	b=r5EMUQU3EpIv18gru98B/Z8AcUlUlgt0cfvUTTTo13WHyA6IvsU4vrqMJX8mqjbVAsFc
+	 ApfpgdghSt6BJpOC4/08DFtgfjYOcZkLdblorTOK4ELPSlfFFnYis9LlgXpg1zTEjOrCB
+	 pwl5+ohc3iH+JxB+qDRtCSy4XE3MPBkED4dlXmbSCtTA7Hh8EMPTgNn5lAGFYYlWzrsQE
+	 8Fl5h6yeTdhsDtvlYrGU5iSyAi+HAAXuN+9fGf/G4JU2pnZyuYP7WtoWC6DJq6lyD3Q3O
+	 rmOtawuSGyXx2WHZ+WGU+9GBFMxPCweURvO3UvNEsG/85oMcYff0AP+z3QC2Y/g7Iiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=JMCubGHy6W11iFDcvorhDpy2dd1r7Zn2WZO4ggynZuw=;
-	b=x4NiHdvmcILifhhzX0aitRJHaASCZNk4eOz/oinzWr9ONCBkYov2ttYFMgVhbNSyIzM7
-	 aQQUlpTuDiYJOeemcCqqrY7IZuTZPzSs8MAoy2+GcGW2p2jq/TgjqGZkGXI5qEp1N8srf
-	 lVFqXYDDZ4OBWxrI1WeOM36RdP0pnHSETgAo0poiJI6NZFUzmFpRoZntD0Lc2r3ziMm3t
-	 XheL/J0iZs00EY4dTmXyhCcwyUKLmvhfvWraDl6wlCVDjpWCPBu4B0MzUMSHI6b992ldV
-	 zGxrNpy/0kz1EacTyCnCZ4RJBx5kbuxMoaJjSkKqagWgADsRpG6NcBXZXSAWVPXCeog==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nvSATxnxpmG/faFkobFa+sgIxXpjEA/XY4GIIN1dHA8=;
+	b=ygBUOT53R7y0vhCd2hxT+c+xsBHQVaXVduclOyuoq1p6MIP0irhWbtoMb+5UUuskaecd
+	 fPvxTmWAOCyLCiT8RwprOnJe0i+jKXQpcO8pIkklE+WNZzS4I+ZPjjfcwkzav0HEQ3lKt
+	 cjyQpCfV4EwVkYs2LDWnAFWN++vFTOt5QGHGO/n3CbkuthlJ4Ef2fE36lpoXor5yjs8Nw
+	 IBJ9bgc00o6BLtQFm/5RcmcJ/1ESeV/cm/MftCHuDs5CHSm5q3wGJQEARHGCqnXrTZOpX
+	 9uVy0NtAe8vJaztCH95ntl+iPrUwk6melZ1fOFDG+pDgBSpYZ6qCb4iAGBeWcWythzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFdbstL+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmM5xeWf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B8660A2606;
-	Wed, 18 Nov 2026 23:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD0860A2601;
+	Wed, 18 Nov 2026 23:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mFdbstL+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B271F000C4;
-	Wed, 18 Nov 2026 23:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UmM5xeWf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA3B1F000C9;
+	Wed, 18 Nov 2026 23:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044804;
-	bh=JMCubGHy6W11iFDcvorhDpy2dd1r7Zn2WZO4ggynZuw=;
+	s=korg; t=1795044807;
+	bh=nvSATxnxpmG/faFkobFa+sgIxXpjEA/XY4GIIN1dHA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFdbstL+LHptDR4vevVJ2qFOqn3Jy0VoZaLzWNTgoBRVNbNBZfE9YCv2o2KRxoaf7
-	 k8FxHpK/oXgezqgyVGrV6UaT07jznqScJtfBDE4zGE4p92fgLfKjLnHNyI10ckn/Ec
-	 GkGFfC49zM38nrW0lvek7DQOeN02BEwR8KjD2j6s=
+	b=UmM5xeWftpKvd+W4o7uq0jsqjT1ka7hVb44z1qMrSbGCVL0wIIhkXecmm+mY5a6sq
+	 3tHGM3h6V3tPBNm/gBCqsV+8L1DniBkfAl4yZTX37FsU9EzE+HtqPV78ZQh4mFj8fa
+	 Iit/3ZA/hYSSWwGSBwysacgCK49Z/i/PsFfwg+Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Keith Busch <kbusch@kernel.org>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0698/2857] nvmet-auth: serialize access to DH-HMAC-CHAP state to fix UAF
-Date: Wed, 18 Nov 2026 15:28:52 +0100
-Message-ID: <20261118150226.691687658@linuxfoundation.org>
+Subject: [PATCH 6.1 0699/2857] media: microchip-csi2dc: fix async notifier leak on probe error path
+Date: Wed, 18 Nov 2026 15:28:53 +0100
+Message-ID: <20261118150226.726617228@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,186 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 53f6efe00cea0c0cf7bd99debe3cdac8567170b5 ]
+[ Upstream commit c7528789244ce7329ca883170fb9315d739ae985 ]
 
-A REPLY AUTH_SEND command can derive a dhchap_skey key while a
-concurrent AUTH_RECEIVE command observing this REPLY state executes
-the failure path and frees that key. The REPLY command then continues
-and writes into freed memory, causing a use-after-free. KASAN reports
-it as:
+csi2dc_of_parse() ends up calling csi2dc_prepare_notifier(), which
+registers the V4L2 async notifier with v4l2_async_nf_register(). The
+probe error label csi2dc_probe_cleanup_notifier is reached after
+csi2dc_of_parse() has already succeeded (e.g. when media entity init,
+csi2dc_power() or v4l2_async_register_subdev() fail), but it calls only
+v4l2_async_nf_cleanup() and never v4l2_async_nf_unregister().
 
-  BUG: KASAN: slab-use-after-free in __sha256_final
-  Write of size 4 at addr ffff88800359c540
-  ...
-  nvmet_auth_sq_free (drivers/nvme/target/auth.c:237)
-  nvmet_execute_auth_receive (drivers/nvme/target/fabrics-cmd-auth.c:621)
+The notifier therefore stays chained in the global notifier_list while
+the enclosing struct csi2dc_device is freed, leading to list corruption
+and a use-after-free when the list is next walked.
 
-Add a mutex to each submission queue to serialize authentication
-commands and timeout handling. Unlock the mutex before completing
-requests and ignore outdated timeout callbacks. Limit timeout delays
-to prevent immediate expiry on 32-bit kernels.
+Unregister the notifier before cleaning it up on the error path,
+matching the teardown already done in csi2dc_remove().
 
-Fixes: 7a277c37d352 ("nvmet-auth: Diffie-Hellman key exchange support")
+Fixes: 2de0b3c0f678 ("media: atmel: introduce microchip csi2dc driver")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ sashal: adjusted context for the existing system_wq name and nvmet_sq field layout ]
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/auth.c             |  1 +
- drivers/nvme/target/fabrics-cmd-auth.c | 32 ++++++++++++++++++++++----
- drivers/nvme/target/nvmet.h            |  2 ++
- 3 files changed, 31 insertions(+), 4 deletions(-)
+ drivers/media/platform/atmel/microchip-csi2dc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
-index b3a0e19464539..59762bbb98da3 100644
---- a/drivers/nvme/target/auth.c
-+++ b/drivers/nvme/target/auth.c
-@@ -218,6 +218,7 @@ u8 nvmet_setup_auth(struct nvmet_ctrl *ctrl)
+diff --git a/drivers/media/platform/atmel/microchip-csi2dc.c b/drivers/media/platform/atmel/microchip-csi2dc.c
+index d5b359f607ae9..19d6cc5984445 100644
+--- a/drivers/media/platform/atmel/microchip-csi2dc.c
++++ b/drivers/media/platform/atmel/microchip-csi2dc.c
+@@ -734,6 +734,7 @@ static int csi2dc_probe(struct platform_device *pdev)
+ 	return 0;
  
- void nvmet_auth_sq_free(struct nvmet_sq *sq)
- {
-+	sq->auth_expiry_active = false;
- 	cancel_delayed_work(&sq->auth_expired_work);
- 	kfree(sq->dhchap_c1);
- 	sq->dhchap_c1 = NULL;
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 990bb7af4dc8b..454a01fe00f2c 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -6,6 +6,7 @@
-  */
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- #include <linux/blkdev.h>
-+#include <linux/jiffies.h>
- #include <linux/random.h>
- #include <linux/nvme-auth.h>
- #include <crypto/hash.h>
-@@ -17,16 +18,27 @@ static void nvmet_auth_expired_work(struct work_struct *work)
- 	struct nvmet_sq *sq = container_of(to_delayed_work(work),
- 			struct nvmet_sq, auth_expired_work);
- 
-+	mutex_lock(&sq->auth_lock);
-+	/* A command may have cancelled or rearmed this timeout. */
-+	if (!sq->auth_expiry_active ||
-+	    delayed_work_pending(&sq->auth_expired_work))
-+		goto out_unlock;
-+	sq->auth_expiry_active = false;
-+
- 	pr_debug("%s: ctrl %d qid %d transaction %u expired, resetting\n",
- 		 __func__, sq->ctrl->cntlid, sq->qid, sq->dhchap_tid);
- 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
- 	sq->dhchap_tid = -1;
-+out_unlock:
-+	mutex_unlock(&sq->auth_lock);
- }
- 
- void nvmet_auth_sq_init(struct nvmet_sq *sq)
- {
- 	/* Initialize in-band authentication */
-+	mutex_init(&sq->auth_lock);
- 	INIT_DELAYED_WORK(&sq->auth_expired_work, nvmet_auth_expired_work);
-+	sq->auth_expiry_active = false;
- 	sq->authenticated = false;
- 	sq->dhchap_step = NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
- }
-@@ -202,6 +214,8 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 	u16 status = 0;
- 	u8 dhchap_status;
- 
-+	mutex_lock(&req->sq->auth_lock);
-+
- 	if (req->cmd->auth_send.secp != NVME_AUTH_DHCHAP_PROTOCOL_IDENTIFIER) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
-@@ -227,8 +241,10 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 			offsetof(struct nvmf_auth_send_command, tl);
- 		goto done;
- 	}
--	if (!nvmet_check_transfer_len(req, tl)) {
-+	if (unlikely(tl != req->transfer_len)) {
- 		pr_debug("%s: transfer length mismatch (%u)\n", __func__, tl);
-+		mutex_unlock(&req->sq->auth_lock);
-+		nvmet_check_transfer_len(req, tl);
- 		return;
- 	}
- 
-@@ -353,10 +369,12 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 			 status, req->error_loc);
- 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
- 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
--		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
-+		unsigned long auth_expire = min_t(u64, MAX_JIFFY_OFFSET,
-+			(u64)(ctrl->kato ? ctrl->kato : 120) * HZ);
- 
-+		req->sq->auth_expiry_active = true;
- 		mod_delayed_work(system_wq, &req->sq->auth_expired_work,
--				 auth_expire_secs * HZ);
-+				 auth_expire);
- 		goto complete;
- 	}
- 	/* Final states, clear up variables */
-@@ -365,6 +383,7 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 		nvmet_ctrl_fatal_error(ctrl);
- 
- complete:
-+	mutex_unlock(&req->sq->auth_lock);
- 	nvmet_req_complete(req, status);
- }
- 
-@@ -483,6 +502,8 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
- 	u32 al;
- 	u16 status = 0;
- 
-+	mutex_lock(&req->sq->auth_lock);
-+
- 	if (req->cmd->auth_receive.secp != NVME_AUTH_DHCHAP_PROTOCOL_IDENTIFIER) {
- 		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
- 		req->error_loc =
-@@ -508,8 +529,10 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
- 			offsetof(struct nvmf_auth_receive_command, al);
- 		goto done;
- 	}
--	if (!nvmet_check_transfer_len(req, al)) {
-+	if (unlikely(al != req->transfer_len)) {
- 		pr_debug("%s: transfer length mismatch (%u)\n", __func__, al);
-+		mutex_unlock(&req->sq->auth_lock);
-+		nvmet_check_transfer_len(req, al);
- 		return;
- 	}
- 
-@@ -577,5 +600,6 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
- 		nvmet_auth_sq_free(req->sq);
- 		nvmet_ctrl_fatal_error(ctrl);
- 	}
-+	mutex_unlock(&req->sq->auth_lock);
- 	nvmet_req_complete(req, status);
- }
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index 09778c5d26791..cc74886cb3b0a 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -108,7 +108,9 @@ struct nvmet_sq {
- 	u32			sqhd;
- 	bool			sqhd_disabled;
- #ifdef CONFIG_NVME_TARGET_AUTH
-+	struct mutex		auth_lock;
- 	struct delayed_work	auth_expired_work;
-+	bool			auth_expiry_active;
- 	bool			authenticated;
- 	u16			dhchap_tid;
- 	u8			dhchap_status;
+ csi2dc_probe_cleanup_notifier:
++	v4l2_async_nf_unregister(&csi2dc->notifier);
+ 	v4l2_async_nf_cleanup(&csi2dc->notifier);
+ csi2dc_probe_cleanup_entity:
+ 	media_entity_cleanup(&csi2dc->csi2dc_sd.entity);
 -- 
 2.53.0
 
