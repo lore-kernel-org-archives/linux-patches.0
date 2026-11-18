@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058808;
-	b=dm2OR4og9zeEmO/+BFBL92oUq7Hvp5wlIXfE+OwnSyp0vYJFi+WNpE90FG8wgadyNQbd
-	 ecjtKukG9cWqETplSiPt1GPe7dHILAow/3pDYn0gcmKCwSuqi7bZ/+iEbNywfVdNGSPVf
-	 VhsfTKAT0T8td/ONgRgWta9EUbPd3iygjSswEDta6CzesPob+8jN4P3PhxN6J8SMO9WD0
-	 oP0bgL2DiOBh/NNfACSqG9FCu4rw9Zt47prAPKfJ/zcqHDMYgEsJMYfQpSCeVlaejHrLB
-	 z2tw3cQ8OKctTYt+YhNdGd/ZxugpYsfp3Z++EDLy+qiVXkW+sdJe1uEQWvHZibfqPuw==
+	t=1795058811;
+	b=QawXGoyJkIyyFIbV4h0FwVgVUkoqBOiZN6b2CVJBnBX/rbgfgvmcpcEhrtR0Qijp8aqi
+	 8QbtZ8QHqFhnst71ALLWu6/jBD1KrQP3P0HpXTtVCP5rfUe8ozoLaSiCnlH330xrN9DzT
+	 ZEyZN5uXSAqyOnTnqZdbJ1at1GhnJyKc89sR76PPyg2z+x/ILdFg0bBY9RQ2/SZYhY0Et
+	 uM6TmyHuuenSpe7MMLtgge1Cf/LUoUI5I0QLRcgiKemX1YrDW8h4vZ6a680rBvzBVUuj0
+	 CQULhrjHhC7haA7VBUMTFQ5cWgIe4YrFsWR8yW2ngrjvwy7cF6yDs7gBKgotYq6RVBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CkoW89cJlqRM1yVYLzdTWic6uTpnjmv/QH6HZVpMUcU=;
-	b=l9+suB7WTKETZrHaZMf+XC5t2kIA1xMDUdDG3uAqzzmfbjCJA4+39d+qc1H8NoKvfW7c
-	 EHfXr/TYUYElXpLjm5wSb81yLSUSwxLZuzGpDmCZvowAMUafy8XXZ8rMm8ayXGqsL+bdy
-	 TSb49zap9CxtIb0fiVJsUEdA7+KXKpFlte5kpDCA2L/CKxgsEjJBQO7P5UJnUNCxGBHqJ
-	 Jx7W3gcsFXgPIKxLmSMSninF3XZmMLjEjVitTKICNBNpsuZfeC8E4emmlMJzi0DRSP72A
-	 MKoVpPsgrdQx1j4v6W7cXlx91TeHYetsoBJAIKhHlS9A6hW+X2eVPGu/+TFRC3h6UOQ==
+	bh=o0NoBpYQ8kg+WYNaSkwbRJQ6VhXVF4rmIq8EtLHaUqE=;
+	b=P/QIc5G8NHrdpt/O6DtvqRlJgV7ratRhS8JxBenPNHGuYSOluL3oQ/2j/2iCzLQ3Dvy9
+	 onHHTA998+cHqRK0pGAmN0oQ5a3ExBd7Y/rq4U/wdBUGUNN7YeMk3oRFLYBI2glJKaR+k
+	 m3qj7SyZhjQ2nMNt+QbJWDah0MDbgOqNmptpPSfiLwTl+cAxaKWyX8rHET4JC6RHSRURg
+	 f4l0vRCDGG9vc2kknbsG2y/SFad9LsOqTGimkd6lFJmOpLopom0tVwszSI6yltYncEK+V
+	 RQKMQ4Qky8TJ7RWRk0hig+2hQDwWNzzt0WcdHJX4LEenv5FmoGJWpErLUjqP2qzEEUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isMkDaZx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1cNcG7t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B60606A320;
-	Thu, 19 Nov 2026 03:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535BB606A32C;
+	Thu, 19 Nov 2026 03:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isMkDaZx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795AC1F000C4;
-	Thu, 19 Nov 2026 03:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1cNcG7t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E85A1F000C4;
+	Thu, 19 Nov 2026 03:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058808;
-	bh=CkoW89cJlqRM1yVYLzdTWic6uTpnjmv/QH6HZVpMUcU=;
+	s=korg; t=1795058810;
+	bh=o0NoBpYQ8kg+WYNaSkwbRJQ6VhXVF4rmIq8EtLHaUqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isMkDaZx7L2UlJWFG9dnRonG9/3VlH+5VVT9O/yTrr5UKfqCiqt6yZgoSy8cmAfuY
-	 CxMSx+v3a/QAQEw/3kUg6PR3kYNhjdIsa5pDHx/DdB7NhOAEvKbgVv5N6QYLiT0Jeg
-	 G1D3lKM62Ih/V2lYIRBlsJcY5Stzjjm1rdBCEKp8=
+	b=q1cNcG7tzF+/1sTE/DkKCBrkkNKqfQAMp0M3Gx1u/mj6cu5qZykyo5ltmti9KEOtT
+	 sp4IHctxMxUVRpg/zENk6ZtewXVttUCAMza/DdE8dcqJnuNTgPyk+Kt+2y/CC+d9Nf
+	 kC62dT5Fxp77fnvJJuWY+Mn+x1damzh1D2FnTlJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com,
-	syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com,
-	Eduard Zateev <hackerowskiy@gmail.com>,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0616/1848] smb: client: hold server info until cifsd exits
-Date: Wed, 18 Nov 2026 15:44:14 +0100
-Message-ID: <20261118145941.065899140@linuxfoundation.org>
+Subject: [PATCH 5.10 0577/1848] libceph: Fix unsafe decode in ceph_redirect_decode()
+Date: Wed, 18 Nov 2026 15:43:35 +0100
+Message-ID: <20261118145939.312372335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,146 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zateev <hackerowskiy@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-[ Upstream commit 482c117c6dbeee382790168af10959810450ab09 ]
+[ Upstream commit 0405670e50f213594366ab7eddc07002bd7f84c0 ]
 
-The last session reference can be dropped while the cifsd demultiplex
-thread is still running clean_demultiplex_info(). That thread frees
-TCP_Server_Info there, racing with cifs_put_tcp_session() as it releases
-the server crypto state. syzbot reported a KASAN use-after-free in
-cifs_crypto_secmech_release().
+ceph_redirect_decode handles unchecked data received over the network
+from an OSD. Currently, there is only a bounds check covering the first
+three decode operations. After decoding the first len field from the
+message, the only remaining check ensures there is enough buffer space
+to hold len bytes. However, there is no guarantee that this value is
+large enough to hold the subsequently decoded fields. The decoding of
+the second len field is missing an explicit bounds check. Consequently,
+a corrupted message can trigger an out-of-bounds read.
 
-Keep an object reference for the cifsd thread. Defer final crypto,
-session-key, network namespace, string, and structure cleanup until both
-the last session reference and the thread reference are dropped. Drop the
-thread reference after clean_demultiplex_info() has finished using the
-server.
+This patch fixes the issue by switching the decoding from
+ceph_decode_32() to the bounds-checked version ceph_decode_32_safe().
 
-Build-tested with ARCH=arm64 and W=1 for
-fs/smb/client/connect.o. The KASAN reproducer was not run on the patched
-kernel.
-
-Fixes: a5c3e1c725af ("Revert "cifs: No need to send SIGKILL to demux_thread during umount"")
-Reported-by: syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5c3ed2a0de3270efc921
-Reported-by: syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=c2ec61adfbcb24e5ec20
-Assisted-by: LLM OpenAI Codex
-Signed-off-by: Eduard Zateev <hackerowskiy@gmail.com>
 Cc: stable@vger.kernel.org
-Tested-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: moved thread reference acquisition before kthread_run() because it starts the thread immediately. ]
+Fixes: 205ee1187a67 ("libceph: follow redirect replies from osds")
+Assisted-by: Cursor
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsglob.h |  2 ++
- fs/cifs/connect.c  | 29 +++++++++++++++++++----------
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ net/ceph/osd_client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
-index 8a5cdf4ba0ae6..05f68bf0a4a68 100644
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -25,6 +25,7 @@
- #include <linux/scatterlist.h>
- #include <linux/mm.h>
- #include <linux/mempool.h>
-+#include <linux/refcount.h>
- #include <linux/workqueue.h>
- #include <linux/fcntl.h>
- #include "cifs_fs_sb.h"
-@@ -674,6 +675,7 @@ struct TCP_Server_Info {
- 	struct list_head tcp_ses_list;
- 	struct list_head smb_ses_list;
- 	int srv_count; /* reference counter */
-+	refcount_t obj_refs; /* struct lifetime: srv_count users + cifsd */
- 	/* 15 character server name + 0x20 16th byte indicating type = srv */
- 	char server_RFC1001_name[RFC1001_NAME_LEN_WITH_NULL];
- 	struct smb_version_operations	*ops;
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index 6ff0eab0be81a..93e862f19c214 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -880,6 +880,18 @@ handle_mid(struct mid_q_entry *mid, struct TCP_Server_Info *server,
- 	dequeue_mid(mid, malformed);
- }
+diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
+index 819d29dba0a08..ae530f1248d89 100644
+--- a/net/ceph/osd_client.c
++++ b/net/ceph/osd_client.c
+@@ -3575,7 +3575,7 @@ static int ceph_redirect_decode(void **p, void *end,
+ 	if (ret)
+ 		goto out;
  
-+static void cifs_tcp_server_put(struct TCP_Server_Info *server)
-+{
-+	if (!refcount_dec_and_test(&server->obj_refs))
-+		return;
-+
-+	cifs_crypto_secmech_release(server);
-+	kfree_sensitive(server->session_key.response);
-+	put_net(cifs_net_ns(server));
-+	kfree(server->hostname);
-+	kfree_sensitive(server);
-+}
-+
- static void clean_demultiplex_info(struct TCP_Server_Info *server)
- {
- 	int length;
-@@ -964,12 +976,11 @@ static void clean_demultiplex_info(struct TCP_Server_Info *server)
- 		 */
- 	}
- 
--	kfree(server->hostname);
--	kfree(server);
--
- 	length = atomic_dec_return(&tcpSesAllocCount);
- 	if (length > 0)
- 		mempool_resize(cifs_req_poolp, length + cifs_min_rcv);
-+
-+	cifs_tcp_server_put(server);
- }
- 
- static int
-@@ -2498,8 +2509,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 		return;
- 	}
- 
--	put_net(cifs_net_ns(server));
--
- 	list_del_init(&server->tcp_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
-@@ -2520,16 +2529,13 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 	server->tcpStatus = CifsExiting;
- 	spin_unlock(&GlobalMid_Lock);
- 
--	cifs_crypto_secmech_release(server);
- 	cifs_fscache_release_client_cookie(server);
- 
--	kfree(server->session_key.response);
--	server->session_key.response = NULL;
--	server->session_key.len = 0;
--
- 	task = xchg(&server->tsk, NULL);
- 	if (task)
- 		send_sig(SIGKILL, task, 1);
-+
-+	cifs_tcp_server_put(server);
- }
- 
- struct TCP_Server_Info *
-@@ -2550,6 +2556,7 @@ cifs_get_tcp_session(struct smb_vol *volume_info)
- 		rc = -ENOMEM;
- 		goto out_err;
- 	}
-+	refcount_set(&tcp_ses->obj_refs, 1);
- 
- 	tcp_ses->ops = volume_info->ops;
- 	tcp_ses->vals = volume_info->vals;
-@@ -2637,6 +2644,8 @@ cifs_get_tcp_session(struct smb_vol *volume_info)
- 	 * this will succeed. No need for try_module_get().
- 	 */
- 	__module_get(THIS_MODULE);
-+	/* Keep the server alive until the demultiplex thread has exited */
-+	refcount_inc(&tcp_ses->obj_refs);
- 	tcp_ses->tsk = kthread_run(cifs_demultiplex_thread,
- 				  tcp_ses, "cifsd");
- 	if (IS_ERR(tcp_ses->tsk)) {
+-	len = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, len, e_inval);
+ 	if (len > 0) {
+ 		pr_warn("ceph_request_redirect::object_name is set\n");
+ 		goto e_inval;
 -- 
 2.53.0
 
