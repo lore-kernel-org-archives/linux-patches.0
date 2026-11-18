@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022350;
-	b=l3M56lFRDgjxrZUDF7aSJ5pwE0BbO9cwbMmomJbOFjCz5ykaVvKZvwkk8i1c2KOuq0dj
-	 +yC+kBKBl3pacecskjdzzWO5mqAr0MLYK/TNbDcZdjviQwFKsfmBwnskE0zBgZlQ87Jty
-	 Yimf05NtjIJFYzHmfGQzeKNOMckfP5RmcSz1SaFndnu0UEVuZFQZJvFqULqOctymto8eD
-	 wiEpX5uYWdUWSTaKR4vzR7eNLGdlDTLsSiNxd8y8Raq27cZs4pXfk7zFBem8C2FFgY8k1
-	 WmqB4/br9p8TGYpHv+R9HkrjBInhnIB4naqqB94y1zF+J6w2UgS+0XTJyg8A+qX6pIQ==
+	t=1795022353;
+	b=HJaKCZ5MLrn4S07456AIGqyFp5PwpRT9ohvzcp7sBsH6Yhu9PmRMQJHwb+OXWW5en0a6
+	 3KRD0OYPIeqyVnTCk2eeLRtqC4+7c7k/ywJRpn3FA6vcZPKOcsUdIDmkUNC4y2uLju1OG
+	 ZWbhrcFcUH5xeUO8RVMTktVFP7zcUSe+oMJsUOkq4kdACrj5rMO03Lv/C6a68/QK4wNWI
+	 5gBetJNo3OgOzbTyukvcA2Alcfe2ggZP4ZDN1GAfRJ1SXTtXTNpBd/nMLCK7hwlI5TAhK
+	 CDJzx4Xgo5a0CzIlHmG93OQbCjPQhE6hE10giKvbzEY9GbT/uVc2XZr02OUV4L4MiYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022353;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9LLGE3RWFSkOdEz3q3H4YsmmCpKeZjepRisg6+FPNuw=;
-	b=5I1cQSGHO0gFymuUpBtLDyul7cSwmp2rvhInp7ePEMKnHatDVNCL+mKdkY+RwHJX9T12
-	 CAJVJ98Ld4qZX0P0lGe75FZ30gNG/iwmCpJ4lX8o2IPTOwU6x+XqexHzLhYA0L/RvPRnX
-	 4WgkFoQ6MLMWoSTDapqbXbsNJLXt7OdhqKRnN2f4wG+Rw6nZeUv1xZ1QB1Uc5EeC5b4ru
-	 bZOw8kLvPhidS+9laI1r9XyuTcFvdraa22TjgY1OIId1lAUBQ33Imt6n6wu5K2iAnSa7E
-	 lZUJtdbYbDFKajNJ/es8U8JJu4TWnVyVr5g83fyFQSOvEtEKQ9m5ODWp6zjRLq88RNw==
+	bh=/VzE68E3ZSeCjlxGCW2rP34sJibushKaKz3M/ZDmU8I=;
+	b=LbuSCHLKj6vLrNcGI0DsglQwe/X6N/49e7u/vEDjdLfznnrbrT7Vk4/gBvXT8EM4gHIg
+	 tH/LGjNxefxZzgzWyviJAkrBDSGdWPs7lxjovqkRspUhu34kH+8vAzgMWVSLcJGwVkkOh
+	 9jxRlEa42fVUrqfBRcuv1pjHdOH5x4+d0WUkWR6aSBXboG3HDn+zN7yN1CQqLtfl9eDRK
+	 5Y/vUHhi1fe0IL3GvY+Y0yw5X229QrcT8Nh8fQyIFUoRGCr2diiFKhmcojY5mBn7LFAat
+	 //sPBftMiLVhq8eBfZzXzzBWdohAVYRUHl+740+LdNGo2PtEYXzCw8BQ4n4paFay2CA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uzf1ipys;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwCTCYTk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBC3606A320;
-	Wed, 18 Nov 2026 17:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13038606A331;
+	Wed, 18 Nov 2026 17:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uzf1ipys
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABFF1F000C5;
-	Wed, 18 Nov 2026 17:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwCTCYTk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF231F000C8;
+	Wed, 18 Nov 2026 17:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022349;
-	bh=9LLGE3RWFSkOdEz3q3H4YsmmCpKeZjepRisg6+FPNuw=;
+	s=korg; t=1795022352;
+	bh=/VzE68E3ZSeCjlxGCW2rP34sJibushKaKz3M/ZDmU8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uzf1ipysHO96ChkTEK98KLs7phUwZxD/fc2TmEoc8g0TlVGLxoHFLP09kvGmX/KGf
-	 fOklLUrj4RkV0me1o6VsE3NAWtPlqRQoOgL4qyf887xFuY5lzDtAAVmt93jsd/g03Q
-	 /Cpf0yQ9EH8YJOAJZyi/WVFtQAs6maEnZoVqq0Tw=
+	b=rwCTCYTkfrTLzB2tP0p/HxftCmkNGEWGn2McU/Vo9BrXYvPxguTCDFwMSXGQMAa9p
+	 olHNMQXixtGJtL/fluP5Srjl1YWukjHMv1PckuHYuxtFCsvvQSnY5T6e9xhE63DFIz
+	 xfrA8hofoy7Tsh99ObOhUNepOLTUfA7ugaFZK61o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pankaj Raghav(Samsung)" <pankaj.raghav@linux.dev>,
-	Qu Wenruo <wqu@suse.com>,
+	Tong Liu <lyutoon@gmail.com>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
+	Bradley Morgan <brads@mainlining.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2631/2651] iomap: only follow dio alignment requirement if specified
-Date: Wed, 18 Nov 2026 16:04:31 +0100
-Message-ID: <20261118150418.885309314@linuxfoundation.org>
+Subject: [PATCH 7.3 2632/2651] watch_queue: keep info_id separate from rcu_head
+Date: Wed, 18 Nov 2026 16:04:32 +0100
+Message-ID: <20261118150418.915010190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,87 +71,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Zhiyu Zhang <zhiyuzhang999@gmail.com>
 
-[ Upstream commit 87d02f3e98a86abf70441b0a0418e01cb1d64b44 ]
+[ Upstream commit 53d72818f9e2aeb03a6053544ee6efa4eb2a3988 ]
 
-After commit 4025185cf953 ("iomap: follow the alignment requirement for
-iomap_dio_hole_iter()"), generic/091 fails on both xfs and ext4.
+struct watch overlays info_id with rcu_head. A notification poster reads
+info_id under rcu_read_lock(), but a concurrent final put can enqueue the
+watch with call_rcu(). Enqueueing the callback writes rcu_head before the
+grace period has elapsed, so it can corrupt info_id while the object
+remains legally visible to the reader.
 
-The reason is that ext4 and xfs (except COW write) do not require full
-block alignment for direct IO. They are totally fine reading a sub-block
-range.
+__post_watch_notification() then merges that value into the notification
+info word without masking it. Pointer bits can corrupt WATCH_INFO_LENGTH
+and make post_one_notification() copy beyond the posting task's stack
+record.
 
-That commit fails any direct read of sub-block holes/prealloc, even those
-filesystems can handle it without any problem.
+Give info_id storage separate from rcu_head so RCU enqueueing cannot modify
+it. Place it after the kref, which uses existing tail padding on x86-64.
+Mask info_id with WATCH_INFO_ID at the point of use as an additional
+invariant check.
 
-Fix the regression by only follow the block alignment if the
-IOMAP_DIO_FSBLOCK_ALIGNED flag is set.
+An unprivileged shell and keyctl reproducer was run for 30 seconds in QEMU.
+The vulnerable baseline produced malformed notification lengths, while this
+change completed with 288631 key notifications and no malformed record.
 
-Fixes: 4025185cf953 ("iomap: follow the alignment requirement for iomap_dio_hole_iter()")
-Reviewed-by: Pankaj Raghav(Samsung) <pankaj.raghav@linux.dev>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Link: https://patch.msgid.link/0e89c49b6f7804081f4041007b81ac620a153830.1793307063.git.wqu@suse.com
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
+Reported-by: Tong Liu <lyutoon@gmail.com>
+Reported-by: Qi Tang <tpluszz77@gmail.com>
+Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Closes: https://lore.kernel.org/lkml/CALf2hKveij_sHgANY9Aktm1dPa4wfKjKNkHyp9yPbjORWFXagA@mail.gmail.com/
+Link: https://lore.kernel.org/netdev/CALf2hKvp0NPVLwr=a3+jUHtPohxbra8gox+aYAfWathJnn-J+Q@mail.gmail.com/
+Signed-off-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+Link: https://patch.msgid.link/20261029054136.1174216-1-zhiyuzhang999@gmail.com
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/direct-io.c  | 26 ++++++++++++++++----------
- include/linux/iomap.h |  3 ++-
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ include/linux/watch_queue.h | 6 ++----
+ kernel/watch_queue.c        | 2 +-
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
-index 9ad1a984d09e2..06566073a88c4 100644
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -590,18 +590,24 @@ static int iomap_dio_bio_iter(struct iomap_iter *iter, struct iomap_dio *dio)
- static int iomap_dio_hole_iter(struct iomap_iter *iter, struct iomap_dio *dio)
- {
- 	loff_t copied = iov_iter_zero(iomap_length(iter), dio->submit.iter);
--	unsigned int bs = i_blocksize(iter->inode);
--	loff_t aligned_copied = round_down(copied, bs);
- 
--	/*
--	 * If fs block size is larger than page size, page fault failure
--	 * can cause @copied to be page aligned but not fs block aligned.
--	 */
--	iov_iter_revert(dio->submit.iter, copied - aligned_copied);
--	dio->size += aligned_copied;
--	if (!aligned_copied)
-+	if (dio->flags & IOMAP_DIO_FSBLOCK_ALIGNED) {
-+		loff_t aligned_copied = round_down(copied,
-+						   i_blocksize(iter->inode));
-+
-+		/*
-+		 * For fs passing IOMAP_DIO_FSBLOCK_ALIGNED flag, if fs block
-+		 * size is larger than page size, page fault failure
-+		 * can cause @copied to be page aligned but not fs block
-+		 * aligned.
-+		 */
-+		iov_iter_revert(dio->submit.iter, copied - aligned_copied);
-+		copied = aligned_copied;
-+	}
-+	dio->size += copied;
-+	if (!copied)
- 		return -EFAULT;
--	return iomap_iter_advance(iter, aligned_copied);
-+	return iomap_iter_advance(iter, copied);
- }
- 
- static int iomap_dio_inline_iter(struct iomap_iter *iomi, struct iomap_dio *dio)
-diff --git a/include/linux/iomap.h b/include/linux/iomap.h
-index 9273378b37d0d..e9b76647784c6 100644
---- a/include/linux/iomap.h
-+++ b/include/linux/iomap.h
-@@ -665,7 +665,8 @@ struct iomap_dio_ops {
- #define IOMAP_DIO_PARTIAL		(1 << 2)
+diff --git a/include/linux/watch_queue.h b/include/linux/watch_queue.h
+index 429c7b6afeada..b87e1babb5f03 100644
+--- a/include/linux/watch_queue.h
++++ b/include/linux/watch_queue.h
+@@ -52,10 +52,7 @@ struct watch_queue {
+  * Representation of a watch on an object.
+  */
+ struct watch {
+-	union {
+-		struct rcu_head	rcu;
+-		u32		info_id;	/* ID to be OR'd in to info field */
+-	};
++	struct rcu_head		rcu;
+ 	struct watch_queue __rcu *queue;	/* Queue to post events to */
+ 	struct hlist_node	queue_node;	/* Link in queue->watches */
+ 	struct watch_list __rcu	*watch_list;
+@@ -64,6 +61,7 @@ struct watch {
+ 	void			*private;	/* Private data for the watched object */
+ 	u64			id;		/* Internal identifier */
+ 	struct kref		usage;		/* Object usage count */
++	u32			info_id;	/* ID to be OR'd in to info field */
+ };
  
  /*
-- * Ensure each bio is aligned to fs block size.
-+ * Ensure every operation, including bio and hole zeroing, is aligned to fs
-+ * block size.
-  *
-  * For filesystems which need to calculate/verify the checksum of each fs
-  * block. Otherwise they may not be able to handle unaligned bios.
+diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
+index 932a88ac1f395..453dcf613205a 100644
+--- a/kernel/watch_queue.c
++++ b/kernel/watch_queue.c
+@@ -212,7 +212,7 @@ void __post_watch_notification(struct watch_list *wlist,
+ 		if (watch->id != id)
+ 			continue;
+ 		n->info &= ~WATCH_INFO_ID;
+-		n->info |= watch->info_id;
++		n->info |= watch->info_id & WATCH_INFO_ID;
+ 
+ 		wqueue = rcu_dereference(watch->queue);
+ 		wf = rcu_dereference(wqueue->filter);
 -- 
 2.53.0
 
