@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020923;
-	b=T+t8cfiB4Y4VxA5+jQFQca8Se9+9KAkrp9x6+EXEpBs5Mu7Z1wUP6LsDsBopegP2Zl+X
-	 eoNZhIAZB3+5kku1El2cbr5TBK2o5ZTUdDTvx6S4Ga8n7uRLiioCy8D4yUSl42n6UwzhH
-	 j96eph3THc5+AvHYHDYWriWzPA3nWRrlLX4zBBR0Jwu2t6gdnmYXflFUBu26uSQebq/jU
-	 MuYRmOfxX0hpmTLmX5ucZLmAlvuNt8+jJjrf1U6xzZRYNYG34YaA91GBryl44z6mDOWCY
-	 x2+0FL+qFafhNR2+adnJFy9jSyGm3mGMqG+ysDPIgfNWJeJGsia7vAc8Fi4+4GTHGlg==
+	t=1795020926;
+	b=nIejpNtb824mrs2dTe+cqm+ApTa4rkaopfhZjwGMCAh0KEkU4w5SXjR6ZlVBTxXM9ZvU
+	 VfI61wMeDpL+A/GvYAQ7gK99FvNQ9Qr+JFIrEzg+nk4nRjw9aXdQWGXXnnQxt4AvQQ7Wy
+	 LXfsZ6+uCvm9BL5QHkiINsLmFuXEp2wm5zsPaLhhgIOs8YdASsPyUvJckYLZ212i5iuPQ
+	 apw3AU38up9m+6sUkS7LMWJ2vmFlmowLqeL68Gz7ba25FFC0yT4k6XYGrRzyyRswVrJzj
+	 ViUesIym/aiwGvqqU8DvGVqcZdy/NEs/LtJmpevZWQjMb8iUisLNis0HeakVYsJ4mJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020923;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020926;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M4JhunbFp55KQa2utH/Lt2YKt+wZFD5OB1GpMkPetCA=;
-	b=0EAKd3Vbku7/MH34aY2GRPGmQL9thyjrKuZGeZ12xRCAR1edn3917uFQtITfzTOh//20
-	 Z+Om5vnmzGanMbhAXnH3p6hlqpvM8zM/msSzM5PTxHZBqV/AOojWaKw2ZknCwpmj+qrP8
-	 Y0gNDM36WTmNXlj0MYh4Lu/+zPafWyngH8fMdv63uztifCLywx4JMjYB0ScoL+p5M7hiB
-	 i2jq5SvjZaFDz7J8DiESzHcFwgG7tWCsmlrR3p0bt+kadzs9frfYmcctBm01VKwbVyvZ5
-	 Mug3sOqvQmvwNICFtAd93cQrCAPcCwxIuxzCSAJ/VAPvxwA6jYn/vchU11dAT1BA32w==
+	bh=tsFzFyB5r8s0Uwg9qC3cMESbuQPEUBygrRXfebW1/u4=;
+	b=H9kCkGRAsrH2XekeC2uJ4HWOlJM67wbHbepcAl66DI6j5KXMrrxCkWg7DB5Ps31Ydubv
+	 1TY3tB2SsjbFmh4tW3Hp1DUQWz/NagujN6L8ZOKJ6+U/19mSPcL9aBbwcs3pszQ0ZQsvw
+	 reFrmnysBzE3/2Q6QjTuMZkpuL/ySzTXLYFCxKX206qqGkK218ldvZKG7v6iBYm8dADgU
+	 ZB9isM6WXSvQJQmN4A2NFd6bL5O+386fi5c0pk3Erp+81+RCXAbzi0bLP/trmbhkIvHpb
+	 Fx5F7nvv/R0c9B63F2q77bwgVVUcY98HjcLAYMMGiTYJ9sLzf9u+kUtXVytOQHdqGew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDRIw3dw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuujmGrb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A89606A320;
-	Wed, 18 Nov 2026 16:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE71606A32F;
+	Wed, 18 Nov 2026 16:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZDRIw3dw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691651F000C4;
-	Wed, 18 Nov 2026 16:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CuujmGrb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4656A1F000C4;
+	Wed, 18 Nov 2026 16:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020922;
-	bh=M4JhunbFp55KQa2utH/Lt2YKt+wZFD5OB1GpMkPetCA=;
+	s=korg; t=1795020925;
+	bh=tsFzFyB5r8s0Uwg9qC3cMESbuQPEUBygrRXfebW1/u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZDRIw3dwxFahziPzAEORnWQ+6T4WQM9f73SgSrh0yi00koYp5px7RxRCpBIRhdh3P
-	 t3jH+0/urOZqTzceCVXnU9PzIwMgbgUxs0F26ddAsB+VndA2L0IQW5Kev6S9Fal88Q
-	 yPeFW57U1VfclWwN+nKrY+X/FWZtuKtiPsGlumQk=
+	b=CuujmGrbMnjGnrbUDSMuJpu2x7HpCOjRJLnxAyXq5SN2YRa9xIc7k+yqNA4XFA1eT
+	 Rogn4tSw4SfWhxdsOwUG8x3RX/OBRIsqGRMImmNwm1z0hzxl7I8ptItpDY6p4p3U6o
+	 GOwlJP/BfyRF7XDVtCDqG+PUCEWy7BsP0eR4/90Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2124/2651] bpf: Keep the symbols of a program until it has ended
-Date: Wed, 18 Nov 2026 15:56:04 +0100
-Message-ID: <20261118150402.380246589@linuxfoundation.org>
+Subject: [PATCH 7.3 2125/2651] bpf: Use the socket of a sk_lookup test run under RCU
+Date: Wed, 18 Nov 2026 15:56:05 +0100
+Message-ID: <20261118150402.410001076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,155 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 4eaf4d71b91a983489227336adcab33d8eae58a5 ]
+[ Upstream commit 6aff0129f327b159c86a54e6bea64a027630ff6b ]
 
-When the last reference to a program goes, __bpf_prog_put_noref() takes
-its symbols out of the kallsyms tree and frees its line info at once, and
-waits for the grace periods only with the rest.  But the program may still
-be running: the link or the array it was called from is gone, the call is
-not over.
+bpf_sk_lookup_assign() accepts only sockets which are freed by RCU, and
+takes no reference. bpf_prog_test_run_sk_lookup() looks at sk_reuseport of
+the selected socket and generates its cookie, which is a write, behind
+bpf_test_timer_leave(), that is outside of the RCU read side critical
+section in which the program ran. If the socket is closed in the meantime
+it may be gone.
 
-search_bpf_extables() finds the exception table of a program by its
-symbol.  A load that faults, and that the table is there to fix up, is
-fatal from then on:
+Do both before the section ends.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdead0000000006f8: 0000 [#1] SMP NOPTI
-  RIP: 0010:0xffffffffc06008f6
-
-It takes a program that is detached and closed on one CPU while it runs on
-another.  Unwinders and bpf_prog_find_from_stack() do not know the program
-any more either, and the stack dump of a BPF stream reads the freed line
-info.
-
-Free the line info behind the grace periods the program needs, as it is
-done with the BTF that its text comes from.  Remove the symbols in
-bpf_prog_free_deferred(), which runs behind them as well.  The symbols are
-looked up under rcu_read_lock(), so the images and the program itself are
-freed one more grace period later.  All that the program refers to is
-released when it was before.
-
-Fixes: 3dec541b2e63 ("bpf: Add support for BTF pointers to x86 JIT")
-Fixes: d7c431cafcb4 ("bpf: Add dump_stack() analogue to print to BPF stderr")
+Fixes: 7c32e8f8bc33 ("bpf: Add PROG_TEST_RUN support for sk_lookup programs")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-6-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-7-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h  |  1 +
- kernel/bpf/core.c    | 50 +++++++++++++++++++++++++++++++-------------
- kernel/bpf/syscall.c |  5 ++---
- 3 files changed, 38 insertions(+), 18 deletions(-)
+ net/bpf/test_run.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 191b2fede27fc..b052efd4a0591 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1902,6 +1902,7 @@ struct bpf_prog_aux {
- 	union {
- 		struct work_struct work;
- 		struct rcu_head	rcu;
-+		struct rcu_work rwork;
- 	};
- 	struct bpf_stream stream[2];
- 	struct mutex st_ops_assoc_mutex;
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 593c0f2523114..f4682bcaea9d0 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -3073,12 +3073,40 @@ static void bpf_free_used_btfs(struct bpf_prog_aux *aux)
- 	kfree(aux->used_btfs);
- }
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index d73cd247f8cd0..3043a7393c29c 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1656,20 +1656,19 @@ int bpf_prog_test_run_sk_lookup(struct bpf_prog *prog, const union bpf_attr *kat
+ 		ctx.selected_sk = NULL;
+ 		retval = BPF_PROG_SK_LOOKUP_RUN_ARRAY(progs, ctx, bpf_prog_run);
+ 	} while (bpf_test_timer_continue(&t, 1, repeat, &ret, &duration));
+-	bpf_test_timer_leave(&t);
+-
+-	if (ret < 0)
+-		goto out;
  
--static void bpf_prog_free_deferred(struct work_struct *work)
-+static void bpf_prog_free_images(struct work_struct *work)
- {
- 	struct bpf_prog_aux *aux;
- 	int i;
- 
-+	aux = container_of(to_rcu_work(work), struct bpf_prog_aux, rwork);
-+	for (i = 0; i < aux->real_func_cnt; i++) {
-+		/* We can just unlink the subprog poke descriptor table as
-+		 * it was originally linked to the main program and is also
-+		 * released along with it.
-+		 */
-+		aux->func[i]->aux->poke_tab = NULL;
-+		bpf_jit_free(aux->func[i]);
-+	}
-+	if (aux->real_func_cnt) {
-+		kfree(aux->func);
-+		bpf_prog_unlock_free(aux->prog);
-+	} else {
-+		bpf_jit_free(aux->prog);
-+	}
-+}
++	/* Nothing but RCU keeps the selected socket */
+ 	user_ctx->cookie = 0;
+-	if (ctx.selected_sk) {
+-		if (ctx.selected_sk->sk_reuseport && !ctx.no_reuseport) {
++	if (!ret && ctx.selected_sk) {
++		if (ctx.selected_sk->sk_reuseport && !ctx.no_reuseport)
+ 			ret = -EOPNOTSUPP;
+-			goto out;
+-		}
+-
+-		user_ctx->cookie = sock_gen_cookie(ctx.selected_sk);
++		else
++			user_ctx->cookie = sock_gen_cookie(ctx.selected_sk);
+ 	}
++	bpf_test_timer_leave(&t);
 +
-+static void bpf_prog_free_deferred(struct work_struct *work)
-+{
-+	struct bpf_prog_aux *aux;
-+	bool ksyms;
-+
- 	aux = container_of(work, struct bpf_prog_aux, work);
-+	/*
-+	 * A prog that still runs when its last reference goes needs its symbols,
-+	 * by which its exception table is found.  It has ended by now.
-+	 */
-+	ksyms = aux->real_func_cnt || !list_empty(&aux->ksym.lnode);
-+	bpf_prog_kallsyms_del_all(aux->prog);
- #ifdef CONFIG_BPF_SYSCALL
- 	bpf_free_kfunc_btf_tab(aux->kfunc_btf_tab);
- 	bpf_prog_stream_free(aux->prog);
-@@ -3098,20 +3126,12 @@ static void bpf_prog_free_deferred(struct work_struct *work)
- #endif
- 	if (aux->dst_trampoline)
- 		bpf_trampoline_put(aux->dst_trampoline);
--	for (i = 0; i < aux->real_func_cnt; i++) {
--		/* We can just unlink the subprog poke descriptor table as
--		 * it was originally linked to the main program and is also
--		 * released along with it.
--		 */
--		aux->func[i]->aux->poke_tab = NULL;
--		bpf_jit_free(aux->func[i]);
--	}
--	if (aux->real_func_cnt) {
--		kfree(aux->func);
--		bpf_prog_unlock_free(aux->prog);
--	} else {
--		bpf_jit_free(aux->prog);
--	}
-+	/* The symbols are looked up under rcu_read_lock() */
-+	INIT_RCU_WORK(&aux->rwork, bpf_prog_free_images);
-+	if (ksyms)
-+		queue_rcu_work(system_percpu_wq, &aux->rwork);
-+	else
-+		bpf_prog_free_images(&aux->rwork.work);
- }
++	if (ret < 0)
++		goto out;
  
- void bpf_prog_free(struct bpf_prog *fp)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index de04cd266a422..1836cf9403fe2 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2449,6 +2449,8 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
- 	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
- 
- 	btf_put(aux->btf);
-+	kvfree(aux->jited_linfo);
-+	kvfree(aux->linfo);
- 	kvfree(aux->func_info);
- 	kfree(aux->func_info_aux);
- 	free_uid(aux->user);
-@@ -2473,10 +2475,7 @@ static void __bpf_prog_put_rcu_tasks(struct rcu_head *rcu)
- 
- static void __bpf_prog_put_noref(struct bpf_prog *prog, bool deferred)
- {
--	bpf_prog_kallsyms_del_all(prog);
- 	module_put(prog->aux->mod);
--	kvfree(prog->aux->jited_linfo);
--	kvfree(prog->aux->linfo);
- 	kfree(prog->aux->kfunc_tab);
- 	kfree(prog->aux->ctx_arg_info);
- 	if (prog->aux->attach_btf)
+ 	ret = bpf_test_finish(kattr, uattr, NULL, NULL, 0, 0, retval, duration);
+ 	if (!ret)
 -- 
 2.53.0
 
