@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043080;
-	b=0V8as6GOeb8MEj/DtWt9Gb1pTiEAKgdEx4DWkI6gDVTYpTaY8Q/cnIkVtDAFznsRkJZw
-	 hW9aa3zo/GAnD4mo83pSQz53WIkx1SyfBGtnEgkVEpLbpFbR4mOnvfvgpws/5kQlIKfXL
-	 R4Ag2UazdN5OOVoNPf2UGs5iMZXKOFNNzCsvaqf6fVqiwnCX6t1p/vE6NL6SOOVmJUjJ4
-	 pV3mbmI/6j6DDiRh92MgwVrrwx/89Jnmrz2ZX8G4hwLMTV0klkzPAJbcyTtDnVorY4A+5
-	 shV8e2W0M7LqmWfTqL0JH51r41lkeW2ntKMnz9zxFwC/CR/g0WvWPCPWSzrupkhmnIw==
+	t=1795043083;
+	b=SiuQxyGWYFNx9vjoN4n0fLnBazpl5KLG0J4qOMTbykP5IDHCVEqYM8ZikwTkG2izj42m
+	 /7cLLva0HusRZfDeSWp8C3RnRGkrO4JQKABwriB0rdhgjb1oIM61iJCCYYVxiN5J+eybK
+	 j0TvsQxUa9mN66Tmy8k7mp1dVgYEAd26jSkMePuk2ZH9CsSyZcfpNPOdIF0tiNMQTGqNG
+	 41l5flMEVnn5gp6tsF91LDOj45ZwTcE2pd3i4bQeTgD1VEy1wXq+ikAQRNoJscCt+58ZZ
+	 MQjomZm7UJts2+RuZdDWwbB8cUP+yQUCrlFcwd4UymJRdljGDdN2jNBSGj1uifTbRqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vr9X+jnJjSgrgoaTGtXRBn2tjDCBHq8BEv7+wfUT1Qs=;
-	b=MoMEgiDGmp4I8+lxCNdGd+ohjQCf7y3FYN/8zMwGw0MmTaNapobEVRZMSLNp2Iw8zwQ2
-	 dwBAr/GvtAXhS5cizQvj4Nqa8SpevAzRiIk3ODYd5ZSJ46/gPGy+G2EWHLu4P60GxZ2eJ
-	 inv2adOJS5kP9S+Z/mJk0hokf/WXI09sde4SFwOn7rtrv+j5FkiwJyF36BH+dWRUDtVec
-	 gK/iTmjWSMdp2OTDXF0aXV1XOSRjorDqGW3znWv5stECw3BzCY0KRLdD0lr9aV9xJIUzy
-	 d2BS9MekffyYREXnZUNGGDLci1WAjLR5GOsMl5vMJ2zOxw6jzTeVKDRYPOkMjGqlhMw==
+	bh=QdDC9eAfL3y50/XLnPwHMuln3LT3817qPv6x4cnFSBg=;
+	b=R109NPDqU2VSNnjBagP6cDS/cxhvp4AXc7d+i+4zWr+nz2zZYCZl827p0Yv/ANBhADh+
+	 Zae1iLDzF/pNkEHzUyGSfFu5UIjDwMLyIAu0hivWhBwJY6MLrHr9qRI5RxYOrU+u3dFq0
+	 LijIW++lqinsiSA7Clp4MKQN4+aApxYHGXp8WxyfOtgsMn6I1iNvswrwVJGbBcJKhtFFY
+	 lr92CtZWRAeUQofoGeBDo3AUv7TvQZW4/hoYmCgYrkL12CH3Kz3eXfn/fll6LVTds37GV
+	 ynHDeM0FB5Lecm2YCjojkBWVaZrzXoz7CrV/Xf1h56UK3uwbbIA6pdDs3AhjUbzOAiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7WZzfIp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xN8c110c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA2F606A325;
-	Wed, 18 Nov 2026 23:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0D4606A31C;
+	Wed, 18 Nov 2026 23:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7WZzfIp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D13F1F000C4;
-	Wed, 18 Nov 2026 23:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xN8c110c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B711F000C4;
+	Wed, 18 Nov 2026 23:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043080;
-	bh=Vr9X+jnJjSgrgoaTGtXRBn2tjDCBHq8BEv7+wfUT1Qs=;
+	s=korg; t=1795043083;
+	bh=QdDC9eAfL3y50/XLnPwHMuln3LT3817qPv6x4cnFSBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g7WZzfIpmWKD1foFvZz0DC0e3faw2+iZ0aO2B/exaNqHwfVwzhvG1dd1tJRfpsUa9
-	 WHnXH14FFqq3bfXa7Wl0ANVK/meVl1Vfjd53NCMiGEeBGk/wWIV5NT8HhAALLdAudV
-	 /Pz4orb7lWdcIJEDn1skzr5oSGsXUDS5KXOwxfQg=
+	b=xN8c110cdOUcDGygy+OFo41L330YBZ4ihlPya1z3riIKsWFzoP6ewugAGVv1sdWwn
+	 X/m/tuG8iUpiE4yOOE2DP9EkZ9E91i2nFt8npAxI282pKAkxa4BRjhlS4Xfm6I07RU
+	 Hb+PBCcMvbJU5iWclfnx/aXg0ZxL6apYX0QYRMuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0083/2857] soundwire: dmi-quirks: add a global ghost list
-Date: Wed, 18 Nov 2026 15:18:37 +0100
-Message-ID: <20261118150204.276492906@linuxfoundation.org>
+Subject: [PATCH 6.1 0084/2857] nvme: bound ns descriptor header and body to identify buffer
+Date: Wed, 18 Nov 2026 15:18:38 +0100
+Message-ID: <20261118150204.311076976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,72 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit b7a5d101d7d267922e828c40135bcaccf8cfb3bf ]
+[ Upstream commit 3c568b35a0d309acb40746552bec2af24cd550ef ]
 
-Not like other ghost devices, the 0x000000D010010500 ADR doesn't belong
-to any codec. We should disable it in all devices.
+nvme_identify_ns_descs() allocates a buffer and gives it to the
+controller, which populates it and then iterates the buffer with
+variable byte increments that vary by type and body size.  But, there is
+no bounds check inside the iteration itself except the loop bound
+itself.  Fix this by checking and stopping iteration if the next header
+or its declared body would go past the buffer itself.
 
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260703011656.2572959-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 2a98fc8c104d6..62cee6e2179da 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -15,6 +15,14 @@ struct adr_remap {
- 	u64 remapped_adr;
- };
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 1faef93ce4ba6..26233e6a50da9 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1457,8 +1457,12 @@ static int nvme_identify_ns_descs(struct nvme_ctrl *ctrl,
+ 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
+ 		struct nvme_ns_id_desc *cur = data + pos;
  
-+static const struct adr_remap global_ghost_adr[] = {
-+	{
-+		0x000000D010010500ull,
-+		0x0000000000000000ull
-+	},
-+	{}
-+};
-+
- /*
-  * Some TigerLake devices based on an initial Intel BIOS do not expose
-  * the correct _ADR in the DSDT.
-@@ -212,6 +220,7 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- u64 sdw_dmi_override_adr(struct sdw_bus *bus, u64 addr)
- {
- 	const struct dmi_system_id *dmi_id;
-+	int i;
- 
- 	/* check if any address remap quirk applies */
- 	dmi_id = dmi_first_match(adr_remap_quirk_table);
-@@ -223,10 +232,20 @@ u64 sdw_dmi_override_adr(struct sdw_bus *bus, u64 addr)
- 				dev_dbg(bus->dev, "remapped _ADR 0x%llx as 0x%llx\n",
- 					addr, map->remapped_adr);
- 				addr = map->remapped_adr;
--				break;
-+				goto out;
- 			}
- 		}
- 	}
- 
-+	/* remap the ghost ADRs */
-+	for (i = 0; i < ARRAY_SIZE(global_ghost_adr); i++) {
-+		if (global_ghost_adr[i].adr == addr) {
-+			dev_dbg(bus->dev, "remapped _ADR 0x%llx as 0x%llx\n",
-+				addr, global_ghost_adr[i].remapped_adr);
-+			addr = global_ghost_adr[i].remapped_adr;
++		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
 +			break;
-+		}
-+	}
-+out:
- 	return addr;
- }
+ 		if (cur->nidl == 0)
+ 			break;
++		if (pos + sizeof(*cur) + cur->nidl > NVME_IDENTIFY_DATA_SIZE)
++			break;
+ 
+ 		len = nvme_process_ns_desc(ctrl, &info->ids, cur, &csi_seen);
+ 		if (len < 0)
 -- 
 2.53.0
 
