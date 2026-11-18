@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055418;
-	b=5Yf5OS+vUU39gyf+183vfX/e3s7c+XS4TqFLpKLRCGJ7Z0yThiLBuhd3Aly/0DvjpZVV
-	 YMSlHp6XCpzvRkuXazn780Qbayqrc13Qr5hOnTGLckD9OVpis0mrym/9wY9o+2NYvkznB
-	 oQONDRJYTwd057Dlq8u+3FA/tUzYYqAFteH/IcaNNltUXFNo4gD+/zgAPdEuZIkAbZ1+L
-	 P5ghqsxjupFqT8mO7LVCZ3yZCnjdDVVgIj9OlWXmkEmaeJuquvMk1tEcH2WpDN54x+Fmr
-	 xAwU3bm8wj9GTL+1GnvNVx0UVCv9pyVFuwtb1SVXSUZY+jQCk1JHoVsXGXJf1G4ylBg==
+	t=1795055420;
+	b=f2nQYkyzl3dCBdcFZxOT+kmHVc2mUMfFltw20VmHcE0HA6WHsSU45TFw4JMBDUYIkXyJ
+	 L6RVhMocMVbtKR+JMKhIYBZAHCYqvkZTtprs14pS8HyF7oaoIJY40Ay9siaCx6w5Xgnps
+	 Udk1zk9ZsEAYTAS9nIoxWBS4dPK2FEa8X26g2OJm0LrVgS2zVDxFVCkRm2Falg5A0YLeL
+	 UTQVLOP2OOqWQIlnSKc0/pbgjctZZqJKuxhJAikNMSSK5yrGbFjwuSAymuVL0zvNf0y7R
+	 T2vs+jFJEEgMRa5GywjhKy1BSUY9sTJwHdEcYicV/8AJRlE48ELy2HcfH5ZepVpHjdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055420;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dZbSs6bE9aX+iubbimsLxxmkzSyP76UT6gOZgKBLkHk=;
-	b=eFT9arIo4nP+cb1BIZuGpPTF1FkB78/Z138yUtrQA8GhsaHUk56cwTq+7FJfv+mN5MpX
-	 6BPEVZ6XzLHq7w16ZiR2fO6TzCO4GGaMUGQwFdLpcOLh7SXKxftXv6QiKCSLxjALCFiQZ
-	 L744+WyBlVb88hgOGG2P8hfEAW77Jdy2vo/Nt5yRNMtyi/Inut1FyMthcXD4fiXBxMNJ4
-	 CsadLaNS5bf72q8jJudJZSZTadYAVbPhLI3IeshZB5KNkVQ6duQVYsR0j6oo5gpVseaOM
-	 +mXFdYwBNnjyswZj0LFvhp9EXhTdDU+kn/Jw8QtGXaLh5uPh1ou1P0sQhiGc5VwZGwg==
+	bh=jD72eDQ6fvc9SPHudNxTD3QC8vPEuyUkB4bkpbBsM3U=;
+	b=J5bCvXv0HI775mFTcn4Isyuq1UyEX5HdmkaRkqIrto8CEwqboOzMQ8DPd8HkUxR3JImd
+	 z+v2hRFMWcXAOtN8r6vob+KDwpBZrDzlPFC3gU4JeWmHBccTiQ3NY4JLVorQOONKzTZTc
+	 3HMYL+p1FvkkWkXgIEMETphPE2t9IPSJWLSNOVP8EBh1MeQyoL1YGkG/u1I/pP4F8m3QJ
+	 hQmvX1E5ELye2UgAq/A/ZT/awqgXb7PlyywWPEkAVfZRSwUr9hoduJVJINdZ2UDbkftvg
+	 IvKSCgxk3TgWVwnpI4iIdYSKzC9+inZc/x0A7XC7JgWOUBheu1YHBXa6BOCJxyVuXpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tl8J8yqt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia3k3nTN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195A3606A32A;
-	Thu, 19 Nov 2026 02:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1C2606A325;
+	Thu, 19 Nov 2026 02:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tl8J8yqt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788B31F000C7;
-	Thu, 19 Nov 2026 02:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ia3k3nTN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9461F000C4;
+	Thu, 19 Nov 2026 02:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055418;
-	bh=dZbSs6bE9aX+iubbimsLxxmkzSyP76UT6gOZgKBLkHk=;
+	s=korg; t=1795055420;
+	bh=jD72eDQ6fvc9SPHudNxTD3QC8vPEuyUkB4bkpbBsM3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tl8J8yqtmOa0wmSnp7r6X0quex/F6+ic17wHUWmxrTD4yAQ5YJSeuYH6Ucw98H/L4
-	 xsd4fSAXPF1kox4WcJxv/+wvGYkALYGzCB3R4UdREFCeAzf/wcLxh9Hqdsb4ER144j
-	 gmMl+55J0NAD2zh2xJo1CeSIkuNHAmzgL87t54As=
+	b=Ia3k3nTNEA0sXV7ZmB7ltTBnIL43X9qjy2GMxMeTBGH2Ive1C5niXp48MMSjtfKk1
+	 y3RyuvwxVZ+86TLhDyS7YyqluDe5iZKLRLbz9J7I8HBou2lK2xKBliSnNAzw0lS8ZQ
+	 2+7yjLuK7aopHhJH1WplmFUlMxqryH7QpGXcp6zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Chen Linxuan <chenlinxuan@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Chen Linxuan <me@black-desk.cn>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1623/2214] MIPS: Only check -msym32 when need-compiler
-Date: Wed, 18 Nov 2026 15:54:59 +0100
-Message-ID: <20261118150116.900735788@linuxfoundation.org>
+Subject: [PATCH 5.15 1624/2214] m68k: apollo: Fix interrupt setup
+Date: Wed, 18 Nov 2026 15:55:00 +0100
+Message-ID: <20261118150116.936727826@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,88 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit 7a8f286c235f5d308208cfdcb025b2a0e0c84742 ]
+[ Upstream commit 6cdbe63badcb524c88f2c8b3cee08f2ffc099a1b ]
 
-During 'make modules_install', the need-compiler variable is null, so
-Makefile.compiler isn't included.  This results in call cc-option-yn
-returning nothing and consequently an error is issued:
+The user interrupt vector needs to be installed before the interrupts
+are unmasked otherwise the timer tick isn't handled and boot up gets
+stuck in calibrate_delay().
 
-*** CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32.  Stop.
-
-and the invocation terminated for configurations that set the Kconfig
-option named.
-
-Previously commit a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS
-`modules_install' regression") addressed the same issue for GCC versions
-now supported for Linux compilation, but caused a build error with Clang
-because it doesn't support '-msym32'.  Then commit 18ca63a2e23c ("MIPS:
-Probe toolchain support of -msym32") fixed the issue with Clang, but
-reintroduced the 'make modules_install' error listed above.
-
-Wrap the handling of the '-msym32' option then with ifdef need-compiler,
-fixing said error for 'make modules_install'.
-
-For more technical details on why need-compiler is null during 'make
-modules_install' and why no compiler invocation is actually needed at
-this point, please refer to commit 4fe4a6374c4d ("MIPS: Only fiddle with
-CHECKFLAGS if need-compiler") and commit 805b2e1d427a ("kbuild: include
-Makefile.compiler only when compiler is needed").
-
-NB leading 8 spaces rather than tabs required due to `make' syntax.
-
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2502120612000.65342@angie.orcam.me.uk/
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2307180025120.62448@angie.orcam.me.uk/
-Fixes: a79a404e6c22 ("MIPS: Fix CONFIG_CPU_DADDI_WORKAROUNDS `modules_install' regression")
-Reported-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Closes: https://lore.kernel.org/all/alpine.DEB.2.21.2501030535080.49841@angie.orcam.me.uk/
-Co-developed-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: Chen Linxuan <chenlinxuan@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Reviewed-by: Chen Linxuan <me@black-desk.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Assisted-by: Claude:claude-fable-5 # Wrote Apollo DN3000 emulator using QEMU
+Fixes: 0aa78106c661cf6c ("[PATCH] m68k: convert apollo irq code")
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://patch.msgid.link/20260828094940.3882602-1-daniel@0x0f.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/Makefile | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ arch/m68k/apollo/dn_ints.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/mips/Makefile b/arch/mips/Makefile
-index 8d1b1d7b8e025..20cdff5f457b8 100644
---- a/arch/mips/Makefile
-+++ b/arch/mips/Makefile
-@@ -272,18 +272,20 @@ drivers-$(CONFIG_PCI)		+= arch/mips/pci/
- # We can always force a build with a 64-bits symbol format by
- # passing 'KBUILD_SYM32=no' option to the make's command line.
- #
--ifdef CONFIG_64BIT
--  ifndef KBUILD_SYM32
--    ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
--      KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+ifdef need-compiler
-+  ifdef CONFIG_64BIT
-+    ifndef KBUILD_SYM32
-+      ifeq ($(shell expr $(load-y) \< 0xffffffff80000000), 0)
-+        KBUILD_SYM32 = $(call cc-option-yn, -msym32)
-+      endif
-     endif
--  endif
+diff --git a/arch/m68k/apollo/dn_ints.c b/arch/m68k/apollo/dn_ints.c
+index 02cff7efc8342..e62c96c5b0dd6 100644
+--- a/arch/m68k/apollo/dn_ints.c
++++ b/arch/m68k/apollo/dn_ints.c
+@@ -2,6 +2,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
  
--  ifeq ($(KBUILD_SYM32), y)
--    cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
--  else
--    ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
--      $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+    ifeq ($(KBUILD_SYM32), y)
-+      cflags-$(KBUILD_SYM32) += -msym32 -DKBUILD_64BIT_SYM32
-+    else
-+      ifeq ($(CONFIG_CPU_DADDI_WORKAROUNDS), y)
-+        $(error CONFIG_CPU_DADDI_WORKAROUNDS unsupported without -msym32)
-+      endif
-     endif
-   endif
- endif
++#include <asm/irq.h>
+ #include <asm/traps.h>
+ #include <asm/apollohw.h>
+ 
+@@ -9,10 +10,13 @@ unsigned int apollo_irq_startup(struct irq_data *data)
+ {
+ 	unsigned int irq = data->irq;
+ 
++	m68k_irq_startup(data);
++
+ 	if (irq < 8)
+ 		*(volatile unsigned char *)(pica+1) &= ~(1 << irq);
+ 	else
+ 		*(volatile unsigned char *)(picb+1) &= ~(1 << (irq - 8));
++
+ 	return 0;
+ }
+ 
+@@ -24,6 +28,8 @@ void apollo_irq_shutdown(struct irq_data *data)
+ 		*(volatile unsigned char *)(pica+1) |= (1 << irq);
+ 	else
+ 		*(volatile unsigned char *)(picb+1) |= (1 << (irq - 8));
++
++	m68k_irq_shutdown(data);
+ }
+ 
+ void apollo_irq_eoi(struct irq_data *data)
 -- 
 2.53.0
 
