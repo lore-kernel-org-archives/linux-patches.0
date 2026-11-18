@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022024;
-	b=XMPXGQiFIVG3NmfAe9pomTNd/7p2vElr8X+HabnrrRdUqnFKsLfN8TVarH/UCigKHhJK
-	 gFkHFOhKKrpCQ6CK4T+FfaBIqm/1H/O5WRwhflR+juH1Iu3UPkbbdVAPU+hrxPqzJeKMt
-	 q8qWJ0iIfb+ZlpNrFTr6rAgF4N8k/fUmv1CKV8BZ+7adr7V5ynH9SRs0yYmAucUTVPlSJ
-	 KuyKRRWK78JhmNjVSWdnkZUX99bP3JHCvBBPKMdQ0bXNGf7M7s7WrACC6mnG4AsXrNYhq
-	 wR/9XKKcmKGn43qEmPLEQNUALLrFtXAKZAqWXHSiJciYzNxzTPLRsjSszhQSDMtg0Eg==
+	t=1795022028;
+	b=bJszoPirwmD1q850L4cc8AaS6IzzA4R5PCM5jh1+xP8g2reHJdv8Cu0A6bbkBuVJuhrq
+	 09PUR+wXkfPPuSitZEnvNTAjkak3M4n1oMOUH9ZSsj2nQSxACylc9zxfdhaltVrkGynMY
+	 g+gwUd5PZxLYGiEKi4w75NwcAM5wIMs1bzxOlaO8xF8nPdlAYOBKj9MwK7wTA/LxGFXRf
+	 rFlvrp/teT+hDfzkpnDDCAIlahVyoIwAGJJK6tcmmM8eCSGDlZPiXSByFSur9sv1x/god
+	 kgLIIs5dolNTIaWbGEDxFdoDqWVx3HWTVYGBeR4EYldOodTx85XYMsZf+vQlPGKKhBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/WQxG1AaFp/rGSz0RyiMJCU/KJhPNJPo4uIjYx9qfPY=;
-	b=CEPA1vRVJGsXpS5aEyg46S71fWIoALuGl5M6gMd27FOwPLw3kp1/oQv7dN3Z7YHIEObV
-	 R3pSo0PKj3kSGMALgIhUAyMBqo0s4I+wkQ0TqykDOYCqG25wLSH/W2vbQeyZbxFMB+Yhz
-	 kTp5EP946Sd2AoVHp0vk3dAjMI7oMSmCaSp5mH+8pO7zJbsK+IedyJu02k301BZ/Zpowu
-	 y70iN8uu9vC3MB6UYJXLLHTi/sZnPP89DVZZTPyTEK+L1poDE+jVwlVgGJY+1lNiYEEEn
-	 wOscgoHMZaataOGAmmZblsdvsOyNYvGG3LvvvqxFELVBMSFEyrz/K1tDGUQWf5Sp1sA==
+	bh=7gPQUffiEay5DLz4ajYie/YfJlwUHJWUScvfXZ0SsTI=;
+	b=IH+3YEZBvYp21HPl8s3a/5uGimARRskX/kyq+PkBs9yyQcFq3IG4m8THpsFrQoAxtii+
+	 x8xbM2xY2lEeIfzsBzOLaffln+ymqSnotZJ7swcYJzPebSIsDYq/XOJIPvD8qoHzApwDt
+	 wf+yeW8TCmSOZnKmxt4HdL9Pcf2OYZl0n4Sxt6piGACOUMXiwaGc+wBorlpyQ1H+oJghG
+	 z5RRtS6SRsTfyB3viS+UkLbbgBD3F6hZSXD2yLNRduegDyR637N1rE4nf/BXPcRHGZGlD
+	 nG6mciACmNs/UfueA8eB/9ENEoP2NDpRzTCpV1Pay8kLLpogS5tRfTSqXBa9JrX5WTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bneZn1Qu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvcBwWXT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2889A606A32F;
-	Wed, 18 Nov 2026 17:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190A8606A338;
+	Wed, 18 Nov 2026 17:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bneZn1Qu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491EA1F000C4;
-	Wed, 18 Nov 2026 17:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvcBwWXT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF8E1F000C5;
+	Wed, 18 Nov 2026 17:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022024;
-	bh=/WQxG1AaFp/rGSz0RyiMJCU/KJhPNJPo4uIjYx9qfPY=;
+	s=korg; t=1795022028;
+	bh=7gPQUffiEay5DLz4ajYie/YfJlwUHJWUScvfXZ0SsTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bneZn1QuSuESzlO642l5PPaA0sDI3WGNNigMzLrgPj/hAf8aNcAjpcEUWqetbClL+
-	 DBLfosyd9lGvYWL3tC0UgPNEBDbNCXzko6AfzSCXUSm7DeJ74jI1jePnrbwbh0xXnV
-	 aXMlRNPmspzP25+5W25UmkSRaQ1/DY0HgUtxVErM=
+	b=lvcBwWXTX7eS6FJT1LmuX80jBbtvkr2DzGsZoW4C0IDyci7ZqZXTWwUt9fL0VBsSG
+	 HmTSM4nF/Qeru7uNJDQCpoPlIHFJ4OB029CHpUgdDxjXwnJnYcpdNr0u+nOt31Qdcg
+	 RWms5w44YB8Uw4ytKhP08/rmM68zreXYK5QOPi4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Feng Yang <yangfeng@kylinos.cn>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Mahe Tardy <mahe.tardy@gmail.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2515/2651] bpf: Keep stack arguments in arch_bpf_timed_may_goto()
-Date: Wed, 18 Nov 2026 16:02:35 +0100
-Message-ID: <20261118150415.258290903@linuxfoundation.org>
+Subject: [PATCH 7.3 2516/2651] bpf: Fix out-of-bounds btf->types write for split BTF
+Date: Wed, 18 Nov 2026 16:02:36 +0100
+Message-ID: <20261118150415.289460800@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,167 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 4d0f560f4926417f010ce38f8628c41bcad29c9f ]
+[ Upstream commit 6c476d2b73056ed151c3f8b884c627c75999ed7c ]
 
-The JITs pass the first stack arguments of a call in registers:
+btf_add_type() stores the types of a BTF in btf->types[], which can hold at
+most BTF_MAX_TYPE entries.  The types of a split BTF get IDs start_id ..
+start_id + nr_types - 1, so only BTF_MAX_TYPE - start_id of them fit, but
+neither the limit check nor the size used to grow the array accounts for
+start_id: the check is an equality test against BTF_MAX_TYPE
+('start_id + btf->types_size == BTF_MAX_TYPE') and the new size is clamped
+to BTF_MAX_TYPE.
 
-  x86-64    r9       argument 6
-  arm64     x5-x7    arguments 6-8
-  riscv64   a5-a7    arguments 6-8
+The check therefore only fires if the array happens to grow to exactly
+BTF_MAX_TYPE - start_id entries.  Otherwise, if the module has more than
+BTF_MAX_TYPE types, the array is filled up to BTF_MAX_TYPE entries.  The
+next type that needs to be added reallocates the array to the same size,
+after which btf->types_size no longer equals btf->nr_types and the growth
+path is not taken anymore, so every following type is written past the end
+of the array:
 
-'*(u64 *)(r11 - 8) = rX' writes such a register in the caller.
-'rX = *(u64 *)(r11 + 8)' reads it in the callee. A call changes these
-registers. Thus the verifier accepts no call between the write and the call
-of the callee, and no call in the callee before the read.
+  BUG: unable to handle page fault for address: ffffc90006200000
+  RIP: 0010:btf_add_type+0x74/0x270
+  Call Trace:
+   btf_check_all_metas
+   btf_parse_module
 
-may_goto is not a call for the verifier. But one time in 65535 iterations
-it calls arch_bpf_timed_may_goto(), and this function calls C code. It
-saves R0-R5 only.
+Bound both the array size and the limit check by BTF_MAX_TYPE - start_id.
+Base BTF (start_id == 0) is unaffected.
 
-       *(u64 *)(r11 - 8) = 0      ; the verifier: argument 6 is 0
-       call sub
-  sub:
-    1: may_goto 2f                ; C code changes r9
-       goto 1b
-    2: r2 = *(u64 *)(r11 + 8)     ; r2 is a kernel address
-       r1 = map_value
-       r1 += r2
-       *(u64 *)(r1 + 0) = 0
-
-On x86-64 the C code changes r9 when the time of may_goto is up. With the
-hpet clocksource a look at the clock changes r9 too. The prog above crashes
-the kernel. LLVM does not emit such code: it reads stack arguments at the
-entry of a function, and it writes them immediately before the call.
-
-Save and restore these registers too. The cost is 2 insns on x86-64, 4 on
-arm64 and 6 on riscv64, one time in 65535 iterations.
-
-Fixes: 324c3ca6eed6 ("bpf,x86: Implement JIT support for stack arguments")
-Fixes: 235b2fe772f5 ("bpf, arm64: Add JIT support for stack arguments")
-Fixes: ba754185f902 ("riscv, bpf: Add BPF stack arguments support for RV64 JIT")
+Fixes: 951bb64621b8 ("bpf: Add in-kernel split BTF support")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261027190314.1440199-19-alexei.starovoitov@gmail.com
+Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://patch.msgid.link/20261028031933.277550-1-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_timed_may_goto.S | 10 ++++++++--
- arch/riscv/net/bpf_timed_may_goto.S | 27 ++++++++++++++++++---------
- arch/x86/net/bpf_timed_may_goto.S   |  3 +++
- 3 files changed, 29 insertions(+), 11 deletions(-)
+ kernel/bpf/btf.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_timed_may_goto.S b/arch/arm64/net/bpf_timed_may_goto.S
-index a9a802711a7f9..1b4a4f91ffc90 100644
---- a/arch/arm64/net/bpf_timed_may_goto.S
-+++ b/arch/arm64/net/bpf_timed_may_goto.S
-@@ -5,13 +5,16 @@
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index bf731bf9e0a57..b13302f33ff5c 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -1736,15 +1736,16 @@ static int btf_add_type(struct btf_verifier_env *env, struct btf_type *t)
+ 		/* Expand 'types' array */
  
- SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	/* Allocate stack space and emit frame record */
--	stp     x29, x30, [sp, #-64]!
-+	stp     x29, x30, [sp, #-96]!
- 	mov     x29, sp
+ 		struct btf_type **new_types;
+-		u32 expand_by, new_size;
++		u32 expand_by, new_size, max_size;
  
- 	/* Save BPF registers R0 - R5 (x8, x0-x4)*/
- 	stp	x8, x0, [sp, #16]
- 	stp	x1, x2, [sp, #32]
- 	stp	x3, x4, [sp, #48]
-+	/* Save stack arguments 6 - 8 (x5-x7) */
-+	stp	x5, x6, [sp, #64]
-+	str	x7, [sp, #80]
+-		if (btf->start_id + btf->types_size == BTF_MAX_TYPE) {
++		if (btf->start_id + btf->types_size >= BTF_MAX_TYPE) {
+ 			btf_verifier_log(env, "Exceeded max num of types");
+ 			return -E2BIG;
+ 		}
  
- 	/*
- 	 * Stack depth was passed in BPF_REG_AX (x9), add it to the BPF_FP
-@@ -32,9 +35,12 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	ldp	x8, x0, [sp, #16]
- 	ldp	x1, x2, [sp, #32]
- 	ldp	x3, x4, [sp, #48]
-+	/* Restore stack arguments 6 - 8 (x5-x7) */
-+	ldp	x5, x6, [sp, #64]
-+	ldr	x7, [sp, #80]
++		max_size = BTF_MAX_TYPE - btf->start_id;
+ 		expand_by = max_t(u32, btf->types_size >> 2, 16);
+-		new_size = min_t(u32, BTF_MAX_TYPE,
++		new_size = min_t(u32, max_size,
+ 				 btf->types_size + expand_by);
  
- 	/* Restore FP and LR */
--	ldp     x29, x30, [sp], #64
-+	ldp     x29, x30, [sp], #96
- 
- 	ret
- SYM_FUNC_END(arch_bpf_timed_may_goto)
-diff --git a/arch/riscv/net/bpf_timed_may_goto.S b/arch/riscv/net/bpf_timed_may_goto.S
-index fcf850f244c90..6ec37f634aff6 100644
---- a/arch/riscv/net/bpf_timed_may_goto.S
-+++ b/arch/riscv/net/bpf_timed_may_goto.S
-@@ -10,15 +10,16 @@
-  *	- output: updated count in BPF_REG_AX (t0)
-  *
-  * Calls bpf_check_timed_may_goto(ptr) with the standard RISC-V ABI, where
-- * ptr = BPF_REG_FP (s5) + BPF_REG_AX (t0). BPF R0-R5 (t6, a0-a4) are saved
-- * across the call; BPF_REG_FP (s5) is callee-saved and needs no saving.
-+ * ptr = BPF_REG_FP (s5) + BPF_REG_AX (t0). BPF R0-R5 (t6, a0-a4) and stack
-+ * arguments 6-8 (a5-a7) are saved across the call; BPF_REG_FP (s5) is
-+ * callee-saved and needs no saving.
-  */
- 
- SYM_FUNC_START(arch_bpf_timed_may_goto)
--	addi	sp, sp, -(8*SZREG)
--	REG_S	ra, 7*SZREG(sp)
--	REG_S	s0, 6*SZREG(sp)
--	addi	s0, sp, 8*SZREG
-+	addi	sp, sp, -(12*SZREG)
-+	REG_S	ra, 11*SZREG(sp)
-+	REG_S	s0, 10*SZREG(sp)
-+	addi	s0, sp, 12*SZREG
- 
- 	/* Save BPF registers R0-R5 (t6, a0-a4) */
- 	REG_S	t6, 5*SZREG(sp)
-@@ -27,6 +28,10 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	REG_S	a2, 2*SZREG(sp)
- 	REG_S	a3, 1*SZREG(sp)
- 	REG_S	a4, 0*SZREG(sp)
-+	/* Save stack arguments 6-8 (a5-a7) */
-+	REG_S	a5, 6*SZREG(sp)
-+	REG_S	a6, 7*SZREG(sp)
-+	REG_S	a7, 8*SZREG(sp)
- 
- 	add	a0, t0, s5
- 	call	bpf_check_timed_may_goto
-@@ -39,9 +44,13 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	REG_L	a1, 3*SZREG(sp)
- 	REG_L	a0, 4*SZREG(sp)
- 	REG_L	t6, 5*SZREG(sp)
-+	/* Restore stack arguments 6-8 */
-+	REG_L	a5, 6*SZREG(sp)
-+	REG_L	a6, 7*SZREG(sp)
-+	REG_L	a7, 8*SZREG(sp)
- 
--	REG_L	s0, 6*SZREG(sp)
--	REG_L	ra, 7*SZREG(sp)
--	addi	sp, sp, 8*SZREG
-+	REG_L	s0, 10*SZREG(sp)
-+	REG_L	ra, 11*SZREG(sp)
-+	addi	sp, sp, 12*SZREG
- 	ret
- SYM_FUNC_END(arch_bpf_timed_may_goto)
-diff --git a/arch/x86/net/bpf_timed_may_goto.S b/arch/x86/net/bpf_timed_may_goto.S
-index 6c6e03f725a30..dd2dde89836b8 100644
---- a/arch/x86/net/bpf_timed_may_goto.S
-+++ b/arch/x86/net/bpf_timed_may_goto.S
-@@ -22,6 +22,8 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	pushq %rdx
- 	pushq %rcx
- 	pushq %r8
-+	/* Save stack argument 6. */
-+	pushq %r9
- 
- 	/*
- 	 * r10 has the pointer to count and timestamp. JIT added the frame
-@@ -36,6 +38,7 @@ SYM_FUNC_START(arch_bpf_timed_may_goto)
- 	/* BPF_REG_AX=r10 will be stored into count, so move return value to it. */
- 	movq %rax, %r10
- 
-+	popq %r9
- 	/* Restore r5-r0. */
- 	popq %r8
- 	popq %rcx
+ 		new_types = kvzalloc_objs(*new_types, new_size,
 -- 
 2.53.0
 
