@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021637;
-	b=2vyVGPqCr4x3nLDXFA8An5T3PAQem5fFcvbQ6OSAxyDyWvQfUUj6jYR4QxJK0ZXdp8f5
-	 uLSpOJ7qdlvEnewDOe9vJWrmBPUSf9b1RBd6kvzwBHd+ckhbRoPojCEjmPfwVTDLYjPRj
-	 Ed8pH1K2PzWDlLg+WFT0O9GEY5VIaeb2slrpVjEPmGntgPXJnuwqOGO7yVnPBjdyc0b72
-	 ZRq8gF9xGf3esisXFUo4svrWRG4vFtQPUv/CB2ph8eY8kqXnGbK4HcstjPOUs+5KusGp9
-	 0j0KpwVSCkWUzpTRgioxwKMrRSbJM/8/VTgtCMLPXWbK5HfXriVCRiDP87pGBauQEnQ==
+	t=1795021640;
+	b=Vw0v21MDCdQ9tS8ez6qr8izZH0nzGZSuSg1/+ixZZNiGYfb/XGGrAgaWyEhKrtwCDqAF
+	 +jTvCQfwd7CRK/oMqLmEk8G7i4xK2vNQI8ws2wD+h2YweoC2y10wtVPmEhlwzPWQgdnqM
+	 WoJ6BpRI7bCY1WhjxFJLJNayQa8OAKtusI0e8l9EK5DBH8os75CKV0R+EaoopFC4yXF7h
+	 6flQXPQjFdxgS3nBT1rllX0GlxpBB62d9TwMcjPcF1Tb93/sAuBglkA2WbI1THPBGHjXi
+	 hgPViztIDEiABqhdjSU+5OPE96libkOQI05T1m6oJQjorkhIenCl1udzPq6IT5cUDyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aGUIXUS8v0dUQWo0TlKcE/5eVvUfiqtdXLoRZLF8ahk=;
-	b=oMK1WAfW5XJx3svdeDtpg6n6cYi7HWefSU+NKAC2H/+ievr20T19mOimeYdKmPdsY6nb
-	 E8BYRmFgDj7yrzQYp3gzaQnBjreDbBR7OUOp1T50WCMHB930QmQVSfhnq1rPprNPd6BFA
-	 DMRN6Me3tudHLIwHgFnul13NvzYV5knzVIzi7AQmhO6WKxVjSoN77i8uoFtFRA1emk+iF
-	 riIdbtYg/pCV1v+TR2RmLBQsOvSsJDy9cXyk0tTTeBEmmUAGDTSBt/dhj8290CBJlxdcx
-	 roHgzLvq9tTHKyERg/ziDlVHxbTKt0VgZ1HWNK4YxrPBN5FGm+VcP/dKGt0EwbtHhCA==
+	bh=mr4eeLtmARLRPB0cf5n0x/88FI10iMOjCllmKO2IxI4=;
+	b=TRjuGQyEwqlDjSWTbx64KRJff3oanPCRMojP+q+ebAgv5PPhV3hopu03O4j+oHFLB4ZT
+	 O9VmNoKw8rAKQ8khB/RXfDP5P6E0BHnaUqFSDRmxVGTFtdLjcgO5RpdvNUIK1EvOGzRMD
+	 g+FvMUZGrwm9AkBrd0x8oQ5rb3z3TYgJHmvA9s2PjSyChFoZazNYCWQVaLd58adeS4O4H
+	 O6lf0wYbcIKTEdy/r8NB5VO9dSV6p4BDrG2AlPFMHdJpot7iiYgaRZl+9WSO5/M1/pxk8
+	 P2Ig1lzlTDAMEgAb6LpFPyh8PpBfgp3mLxHVUjrUCHw3FHCKQdgFL9JqDQBdifw9C1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kamPnTRy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1Zx5y1x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887AF606A320;
-	Wed, 18 Nov 2026 17:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE33606A320;
+	Wed, 18 Nov 2026 17:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kamPnTRy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E691F000C4;
-	Wed, 18 Nov 2026 17:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1Zx5y1x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59AD81F000C4;
+	Wed, 18 Nov 2026 17:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021637;
-	bh=aGUIXUS8v0dUQWo0TlKcE/5eVvUfiqtdXLoRZLF8ahk=;
+	s=korg; t=1795021639;
+	bh=mr4eeLtmARLRPB0cf5n0x/88FI10iMOjCllmKO2IxI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kamPnTRyexEqqMiLKzhooLWO6eNmixmGtN48+Grz1Ua38dWkFsAwy1rrTiBPN8c7g
-	 eOYZYTSJU9N/ulfhS6RyCAdtFcMjklgnEOuzg8HJpHXnov37H6GwOUXU0vy9GjHUfx
-	 CTwx3YQmE8PkLJDzh0CoQdHJ5m4kNI+3qK1nT5Hg=
+	b=U1Zx5y1x6GAtFkLJgFasj9JZjAEJR2xtuyiBElTpkURIY4du9xeciqKqjREoOXk3v
+	 ABsc8hfXJuczDpFsgIaaRw4aquL5k9wfg2zNy8as9u/ukQfY/X8ZemSsDWAbd/ACvK
+	 wVcGUxJynsKdZQ0ECe1Idh1wRoNazkmGIZmQx/RU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Hu <ivan.hu@canonical.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Leonard Lausen <leonard@lausen.nl>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Simon Polack <spolack+git@mailbox.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Wang Zhan <wang.zhan@smartx.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2361/2651] ACPICA: Initialize parser_state.aml_end in acpi_install_method()
-Date: Wed, 18 Nov 2026 16:00:01 +0100
-Message-ID: <20261118150410.552658858@linuxfoundation.org>
+Subject: [PATCH 7.3 2379/2651] net: fix frag_list leak in skb_segment_list() error path
+Date: Wed, 18 Nov 2026 16:00:19 +0100
+Message-ID: <20261118150411.109194658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,59 +72,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Hu <ivan.hu@canonical.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit ec696f34774db985841bac9a2df179c0040ef073 ]
+[ Upstream commit 546daf344420b5dce27eded3ad15be12628dd185 ]
 
-In AcpiInstallMethod(), the local ParserState is stack-allocated and
-only ParserState.Aml was initialized. Parser helpers called by this path
-read ParserState.AmlEnd for bounds checking: AcpiPsPeekOpcode() reads it
-before validating the first AML opcode, and AcpiPsGetNextPackageEnd()
-reads it indirectly via AcpiPsGetNextPackageLength(). The subsequent
-package-limit check also compares against ParserState.AmlEnd. Because
-AmlEnd was never set, these checks operated on an uninitialized value,
-which Coverity flagged as an uninitialized read (CID 1684785) and which
-could lead to incorrect parser bounds decisions.
+skb_segment_list() detaches the frag_list from the head skb and moves
+its members one by one to the skb->next chain. On error, err_linearize
+frees that chain with kfree_skb_list(skb->next), relying on the members
+not yet processed to still be linked after the current one.
 
-Coverity report:
+This does not hold when the current member was shared: it is replaced
+by skb_clone(), and __skb_clone() clears ->next. If __skb_linearize()
+then fails on that clone, the remaining members are no longer reachable
+from skb->next nor from skb_shinfo(skb)->frag_list, and they leak.
 
-*** CID 1684785:         Memory - illegal accesses  (UNINIT)
-/src/acpica/source/components/namespace/nsxfname.c: 712             in AcpiInstallMethod()
-        ParserState.Aml += AcpiPsGetOpcodeSize (Opcode);
->>>     CID 1684785:         Memory - illegal accesses  (UNINIT)
->>>     Using uninitialized value "ParserState.AmlEnd" when calling
-        "AcpiPsGetNextPackageEnd".
-        ParserState.PkgEnd = AcpiPsGetNextPackageEnd (&ParserState);
+The skb_shared() error branch already relinks nskb->next to list_skb
+before jumping to err_linearize. Do it unconditionally right after nskb
+is added to the chain, so every error exit sees the remaining members.
+On the last member list_skb is NULL, which still terminates the chain.
 
-Initialize ParserState.AmlEnd to the end of the table
-(Buffer + Table->Length) so the parser bounds checks operate on a valid
-limit.
-
-Link: https://github.com/open-acpica/acpica/commit/19429ef91ebfb2144c918038dce13e297b4ef051
-Fixes: bdc357540129 ("ACPICA: add boundary checks in two places")
-Signed-off-by: Ivan Hu <ivan.hu@canonical.com>
-Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Signed-off-by: Leonard Lausen <leonard@lausen.nl>
-[ rjw: Subject tweaks ]
-Link: https://patch.msgid.link/20261019145421.47181-2-leonard@lausen.nl
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 53475c5dd856 ("net: fix use-after-free when UDP GRO with shared fraglist")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Cc: Simon Polack <spolack+git@mailbox.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Wang Zhan <wang.zhan@smartx.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261021161858.761205-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsxfname.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/skbuff.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/acpica/nsxfname.c b/drivers/acpi/acpica/nsxfname.c
-index b6534187cd43c..fcd94947fedb8 100644
---- a/drivers/acpi/acpica/nsxfname.c
-+++ b/drivers/acpi/acpica/nsxfname.c
-@@ -503,6 +503,7 @@ acpi_status acpi_install_method(u8 *buffer)
- 	/* First AML opcode in the table must be a control method */
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 0c1229c544d24..512eddc0fc3d6 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4747,10 +4747,13 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 		else
+ 			tail->next = nskb;
  
- 	parser_state.aml = buffer + sizeof(struct acpi_table_header);
-+	parser_state.aml_end = buffer + table->length;
- 	opcode = acpi_ps_peek_opcode(&parser_state);
- 	if (opcode != AML_METHOD_OP) {
- 		return (AE_BAD_PARAMETER);
+-		if (unlikely(err)) {
+-			nskb->next = list_skb;
++		/* nskb may be a clone with a NULL ->next: keep the remaining
++		 * members linked so that err_linearize frees them.
++		 */
++		nskb->next = list_skb;
++
++		if (unlikely(err))
+ 			goto err_linearize;
+-		}
+ 
+ 		tail = nskb;
+ 
 -- 
 2.53.0
 
