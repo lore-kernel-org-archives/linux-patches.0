@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052599;
-	b=kiJsOLMcAnDnoGoh57jFaCarl0zVKZV7spoBvEvrzJySa8R3j3xT7AXbX5yDdGX8wBoQ
-	 jcYBxx83lsZJX9YKLepHFSeMkG0WILujyqs9pKx49UtZo183R/SjUCg/PMg/auYyC9iBH
-	 7VOPrIPoyhdhKNIExAWG8GhnCpdTQfZwkg3xEfUd7Xy/wxXvThIppKn8HXsMb7msaaQnt
-	 6BwfBREwEccyH4eWgfos8sOHIiT0H33Fm95wX1h/VQ9V9hvIzIRSeKWCb29c0pXITLykB
-	 A8nHDT3fPZMTIsa4TzScI2mi73zysy925qUdhIQDULjSV5CDXQKuo0A2QwxD1puKkpQ==
+	t=1795052602;
+	b=MGTQbxQ8tuvOcq4T8KyU4GvDpXyYlSPoHTcOsM+0sgGtxwBijt6GgwzfnZfNvhZojZIP
+	 ZRhCJ4LxMJyTKfZORkLZD6VPW0xzci9lUu3D4yCsOHsugrYvLVecXP4cC6NzR6VwTzs/b
+	 tvW5gO7tvflPwR3aFkoWPNMKmLwNfbz2xE+gbtjIOzydA0nNeXRvW0ypWnCF9/9NopAY1
+	 0EfTAZA0O1kbW5l8kBZ2j4AQPyd3pkIBacc5vyq4uNGvx4DwDHzn8K3YxHCzoY4IkxoKL
+	 z4R1i09XxcCCWcRVHY4jpwDoWPizalPGe2iYoTGBkjkdL44VZTFlZUS9hYaJuIoaV4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vtisi6RU66I5IVSRGujvohagZfT0e91L8VWHb5ztXdk=;
-	b=B+58vteh1atA0KE2S316QJetAsI2bjhPzMqbjJA6LMNabJuVdZGiTWGPzJRGEegZAvcL
-	 YAo90QvL1to14p8PODhZw8A/dCXx5KuQNKV5Kk/aOmd1F9Lxh9ybTzItpWIkFQvyoll9f
-	 6gGgeBL8+asG3xRRcPX3bMZjPlUQUcYDIJwRjLFnidewM7sEJZSOU0oEMcC3L/5CaRj74
-	 Fg/q+iw7ui5lC3ogATa9AeLcOYGrS8R06/z5MCupPGylc/3oSearjSXNI9dXohwFm0SaZ
-	 Tz2+k/Y3Obt8M7SJctQrnJVvcPEvF+4EZZYhMQVD74S6npRS0ts8ZPC0Phc8sGUpM4Q==
+	bh=PUrOR3Naczaf2v+t99VhKYIYDtCBmrlj358phgt69NI=;
+	b=H9KSpyY8a3zCiysES/xa8C55hOVesUsGAnSCdql5SToecKggldswNKe2UwgabfIhYNtH
+	 4jTAsmTdlVyzp7fmKmTL0Dwbn+31anhd6ZAeaoaKXdZKitPGDevX+i4GKNw2RYw11/SC1
+	 cSk/tyoL6sZvFge2dwy7nnl8QNxAsUZxpjkTf8SdH7aiYJxgKmglhKEgFQXNiVn7F5O2o
+	 Z2JGVyQV8JoOw/gkW2RMerRtS/o5Ua7MpqxhKMPBtSq28yh47ViHx6AGHWG6EXBJtE8X8
+	 WjJfpFKYRNFUMjYHyQjKWaSC1qKlqpITZm+ItXrDA+Bq/m5jCruoS6fpo6tjs8Cef+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jnCAeuZ1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AFiBn6T9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D4D606A325;
-	Thu, 19 Nov 2026 01:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92ADC606A320;
+	Thu, 19 Nov 2026 01:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jnCAeuZ1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78D61F000C4;
-	Thu, 19 Nov 2026 01:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AFiBn6T9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE581F000C4;
+	Thu, 19 Nov 2026 01:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052599;
-	bh=vtisi6RU66I5IVSRGujvohagZfT0e91L8VWHb5ztXdk=;
+	s=korg; t=1795052602;
+	bh=PUrOR3Naczaf2v+t99VhKYIYDtCBmrlj358phgt69NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jnCAeuZ1SlEosQ6ofaFMQXCXJ/KsGmZ0rDWVCvIYWwow7550+B4274dcAlS/FHTUG
-	 ra0qR3QY2kAfCZpqd4oumGiXBvD63tLzc5Pq4RvdBJ1cL3fSde3vCQKBG78vo4hTKP
-	 GSWtgcDCD13G8ip4Kh2yOy0nmjPXjGUTntxQQiZk=
+	b=AFiBn6T9Mt134gC9nAftnXpXhZugX3JiEC0mWu+vjf6cEY+Ih6jONCXfNAL+nrg/J
+	 B1zjcKSIWpz8sN+VbzjmUgQBDYAfZuJWAqmJAocAPrZXD1wMlvb4awOnLa4aluZz0V
+	 Tsneea2CmSOEikQyM1dhLtnozDcncffieZb7WNxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@everpuredata.com>,
+	Yongjian Mu <ymu@everpuredata.com>,
 	Chuck Lever <cel@kernel.org>,
+	Tim Menninger <tmenninger@everpuredata.com>,
 	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0619/2214] xprtrdma: prevent disconnect feedback during endpoint teardown
-Date: Wed, 18 Nov 2026 15:38:15 +0100
-Message-ID: <20261118150036.142457020@linuxfoundation.org>
+Subject: [PATCH 5.15 0620/2214] xprtrdma: trim head iovec when the payload arrives via a Write chunk
+Date: Wed, 18 Nov 2026 15:38:16 +0100
+Message-ID: <20261118150036.182420618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,91 +70,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Menninger <tmenninger@everpuredata.com>
+From: Yongjian Mu <ymu@everpuredata.com>
 
-[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
+[ Upstream commit 9ee534a75912361308b1f956bc3e7895a082a422 ]
 
-xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
-->close() operation. For RPC/RDMA, ->close() calls
-rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
-drains its QP.
+The upper layer sets rq_rcv_buf.head[0].iov_len from its estimate of the
+reply header size. For RPCSEC_GSS that estimate includes
+auth->au_ralign, which gss_create_new() initializes to GSS_VERF_SLACK >>
+2 (25 XDR words, or 100 bytes) and which is corrected to the real
+verifier size only after the first reply on that rpc_auth has been
+unwrapped. In this case, the krb5 MIC verifier is 36 bytes, so every
+request encoded before the first reply completes has a head that is 64
+bytes too long.
 
-Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
-connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
-disconnect. Today that path, along with failed completion handling,
-reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
+On TCP this is harmless: xdr_realign_pages() moves the excess head
+bytes, which are genuine reply data, into the page list. With
+RPC-over-RDMA and a Write chunk (sec=krb5, i.e. RPC_GSS_SVC_NONE, where
+DDP is allowed), the payload has already been placed directly into the
+page list, and the receive buffer holds only the inline part of the
+reply. rpcrdma_inline_fixup() clamps its local copy of the head length
+to the inline length but leaves head.iov_len untouched, so
+xdr_realign_pages() still sees iov_len > cur and shifts whatever lies
+past the inline reply in the receive buffer into the front of the
+directly-placed payload:
 
-Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
-re_force_disconnect to ensure that multiple failure indications request
-only one SUNRPC disconnect. However, the gate remains open when SUNRPC
-itself begins endpoint teardown.
+  rpc_xdr_recvfrom:  head=[...,196] page=524288 tail=[...,64]
+  rpc_xdr_alignment: nfsv4 READ offset=132 copied=64
 
-If re_force_disconnect is still clear, either a CM disconnect event or a
-completion error can set XPRT_CLOSE_WAIT again while the current close
-is in progress. When the transport send lock is subsequently released,
-xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
-autoclose.
+The first 64 bytes returned by each such READ are incorrect (zeroed, or
+shifted right by 64 bytes depending on the kernel's xdr_shrink_bufhead()
+implementation). This is readily hit with pNFS flexfiles over RDMA and
+sec=krb5: the per-DS rpc_clnt gets a fresh rpc_auth whose first RPC is a
+large READ. Reads following the first completed reply return the
+expected data.
 
-Requesting a disconnect this way is necessary when a connection is lost
-unexpectedly, but not when the event was generated by
-rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
-committed to closing the transport.
+Commit cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in
+rpcrdma_inline_fixup()") removed the head-length correction while fixing
+the handling of pure-inline krb5p replies.
 
-Mark re_force_disconnect before initiating local endpoint teardown so
-that CM events and completion errors caused by that teardown cannot
-request another close. An unexpected error that wins the race before
-local endpoint teardown begins can still request a disconnect normally.
+When a Write chunk conveyed the payload, trim head.iov_len (in both
+rq_rcv_buf and rq_private_buf, which call_decode() expects to match) to
+the inline length actually received so that the XDR layer does not
+realign the page list. These READ replies have no trailing inline
+fields, and the payload is already in the page list, so the upper
+layer's head estimate can be safely reduced. Reduce buflen by the same
+amount to avoid treating unused head capacity as additional tail
+capacity. Pure inline replies and Reply chunk replies are unchanged.
 
-Use a fully ordered exchange so that the gate is globally closed before
-rdma_disconnect() can transition the QP to error and generate the
-callbacks that the gate suppresses.
+Tested on Linux 6.8.0 and 7.3-rc4 with NFSv4.1 pNFS flexfiles over
+RPC/RDMA and sec=krb5.
 
-In 30-second traces of a sustained recovery loop, without this change
-there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
-and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
-change, the same tracepoints recorded 3,512 xprt_force_disconnect()
-calls, 3,212 autocloses, and 131,287 receive-side flush completions.
-Thus QP teardown continues to produce flushed completions, but closing
-the disconnect gate before teardown substantially reduces their
-feedback into the SUNRPC close path.
-
-Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
+Fixes: cb0ae1fbb2f5 ("xprtrdma: Do not update {head, tail}.iov_len in rpcrdma_inline_fixup()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Signed-off-by: Yongjian Mu <ymu@everpuredata.com>
 Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
 Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtrdma/rpc_rdma.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 5d588d26b8bab..4cb0c1eac46b6 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -120,9 +120,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
- 	rpcrdma_ep_put(ep);
- }
- 
--/* Ensure xprt_force_disconnect() is invoked exactly once when a
-- * connection is closed or lost. (The important thing is it needs
-- * to be invoked "at least" once).
-+/* Ensure xprt_force_disconnect() is invoked at most once for an
-+ * unexpected endpoint failure. Local endpoint teardown closes this
-+ * gate before it can generate CM events and flushed completions.
+diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
+index 9c5e08ce9c2d3..1a6ce0d822020 100644
+--- a/net/sunrpc/xprtrdma/rpc_rdma.c
++++ b/net/sunrpc/xprtrdma/rpc_rdma.c
+@@ -1022,12 +1022,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
+  * @rqst: controlling RPC request
+  * @srcp: points to RPC message payload in receive buffer
+  * @copy_len: remaining length of receive buffer content
+- * @pad: Write chunk pad bytes needed (zero for pure inline)
++ * @writelist: bytes conveyed by the Write chunk (zero for pure inline)
+  *
+  * The upper layer has set the maximum number of bytes it can
+  * receive in each component of rq_rcv_buf. These values are set in
+  * the head.iov_len, page_len, tail.iov_len, and buflen fields.
+  *
++ * For READ replies with a Write chunk, the payload is already in
++ * the page list. An overestimated head length and buflen can be
++ * reduced without moving reply data.
++ *
+  * Unlike the TCP equivalent (xdr_partial_copy_from_skb), in
+  * many cases this function simply updates iov_base pointers in
+  * rq_rcv_buf to point directly to the received reply data, to
+@@ -1036,13 +1040,16 @@ void rpcrdma_reset_cwnd(struct rpcrdma_xprt *r_xprt)
+  * Returns the count of bytes which had to be memcopied.
   */
- void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
+ static unsigned long
+-rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
++rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len,
++		     u32 writelist)
  {
-@@ -583,6 +583,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
- 	if (!ep)
- 		return;
+ 	unsigned long fixup_copy_count;
+ 	int i, npages, curlen;
+ 	char *destp;
+ 	struct page **ppages;
+ 	int page_base;
++	int pad = writelist & 3;
++	unsigned int delta;
  
-+	/* Prevent teardown-generated events from requesting another close. */
-+	atomic_xchg(&ep->re_force_disconnect, 1);
+ 	/* The head iovec is redirected to the RPC reply message
+ 	 * in the receive buffer, to avoid a memcopy.
+@@ -1054,8 +1061,20 @@ rpcrdma_inline_fixup(struct rpc_rqst *rqst, char *srcp, int copy_len, int pad)
+ 	 * head.iov_len bytes are copied into the page list.
+ 	 */
+ 	curlen = rqst->rq_rcv_buf.head[0].iov_len;
+-	if (curlen > copy_len)
++	if (curlen > copy_len) {
++		/* These READ replies have no inline fields after the payload.
++		 * Trim the head without moving the directly-placed data.
++		 */
++		if (writelist) {
++			delta = curlen - copy_len;
 +
- 	id = ep->re_id;
- 	rc = rdma_disconnect(id);
- 	trace_xprtrdma_disconnect(r_xprt, rc);
++			rqst->rq_rcv_buf.head[0].iov_len = copy_len;
++			rqst->rq_private_buf.head[0].iov_len = copy_len;
++			rqst->rq_rcv_buf.buflen -= delta;
++			rqst->rq_private_buf.buflen -= delta;
++		}
+ 		curlen = copy_len;
++	}
+ 	srcp += curlen;
+ 	copy_len -= curlen;
+ 
+@@ -1283,7 +1302,7 @@ rpcrdma_decode_msg(struct rpcrdma_xprt *r_xprt, struct rpcrdma_rep *rep,
+ 	base = (char *)xdr_inline_decode(xdr, 0);
+ 	rpclen = xdr_stream_remaining(xdr);
+ 	r_xprt->rx_stats.fixup_copy_count +=
+-		rpcrdma_inline_fixup(rqst, base, rpclen, writelist & 3);
++		rpcrdma_inline_fixup(rqst, base, rpclen, writelist);
+ 
+ 	r_xprt->rx_stats.total_rdma_reply += writelist;
+ 	return rpclen + xdr_align_size(writelist);
 -- 
 2.53.0
 
