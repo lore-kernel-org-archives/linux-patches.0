@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055709;
-	b=3RYShel6pnZKC1C4pSLWM6xmhiHEGfyoWC3pi7M36cO9jcy0j8yqbSD+tnkHBv3HgGlb
-	 QePUfjxnq1XhsjnVw5l9SgDAvNp+SwA9ZoRpGdUJF/gu1fDMVHJLfppbcSCbLbCokmzJQ
-	 AYv6H8D4bYFKe9y6vVdsDQBqtcLEgpt0Yh6Dn5WeNIlb0R1dFBl8x57OlqJyKjTb1TN01
-	 PTgiNzK9PTQJEYsa3h8qLow/SSNWBBl0H7Z3s7s05eg+Dcw0D0tFHafxBO1maDmBtzIcu
-	 HQru8j8To6ckXFmtIzZ0o7xGOvQ/hmjOPvpHM+ECwe8VmOh7TgE9TifZCYchnZmH0Ow==
+	t=1795055712;
+	b=0+GHOag7b7B7Vm50VKHZ2FtY9YCp34dCRQ9OUtsl/6l9U3chHbD+oYTajaTO8+2RD6Jo
+	 /D5CeOdzZKvq9uC69z8z26pBUNoEr9vU/TSKfWp28HP4f+dmG3y6Pp3TcblB8AxwDNmSU
+	 TaZURfxXKRfg4QeNlWvzv00lSqwNd2dOH+mlBRGZL05am5oJPkkT6/OmkkjoWOwgTk8S7
+	 4qat4nY3Tki/acSTyjH85brHofXZ7IjF1qrXov3Sd08JKyHsQlYmhbhO4C1D5pCkaorDR
+	 D8KF7Vh2i1ST7reJfnvfMtpZiuL5EOYbjV4nmlM2umgrU/Oz5MT7+SXFwz7huxBryEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055709;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055712;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XTONmO+r7YBjS+CxrQBLPVroBhnPSUAkcPV+5m14Z8o=;
-	b=jew/dxucovwBQcrThkixAixMts24+jhcYjVJc4dq3LwuBe1q4hjCVnKg18SLUGNlz5Sh
-	 7+jfcyK3wscRoFfVjMi1K5SB77T40rrWHYqY4bHXJHe5lsoZXGXdcpaaQyUwoqhT/94xI
-	 IYP/98OSrXNMbfOx0oSZ07rHKw+Jghdqm0tQ/EqU6aSaIF2TKx7O40sp2K8km/TwA3jG7
-	 2rw7sBJO8yA844blguNCVOHhNPBWKgqUKLqPOh0IyREOL/GZfaYkWWG9EhVkw4BXUjCNS
-	 Dn1EyGlnmVTiQgMfkMb00aMIQxExNQmjPWtYF0+iF8Ke05sVuL9+MILBAgdOAjuSfjA==
+	bh=8ExkpaIBYDv+YWaqCxpEaD/aRbyVHzPHOMAR4i4DTSE=;
+	b=gM9TRCO+raOyofR8Nkf8h25JsMzqnjF1t6idh9i8AwOfK++hLYblFSVb2HJYClCV11TF
+	 ygw3kKd2nW4WIUL9JcZNKVTritm4/NGAqYM1XVHEpVutxg6nygKQhH9Pz6o6hp1S8hlOJ
+	 wBYhdkIIvNU4u0Har8DtYBBS4s+ahDYBjOIvQ9Cpyxm6Lkugt2pgUAFvuv3gdo8AkDxfR
+	 E8rw3nrykICse6+yJJATLhM/BQe9NO8pBBwnwSA7EwGLCYRxy9gdHvxh/aYwjS90hemZP
+	 VekJtkB8xHc2tNBTsLSktAu5f+Xi6oeZNNh/encoTKJrDgOK7A6BENkJCZQosDIJFaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U39KpLOI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vghCePhD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F536606A31C;
-	Thu, 19 Nov 2026 02:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00BF606A325;
+	Thu, 19 Nov 2026 02:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U39KpLOI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE811F000C4;
-	Thu, 19 Nov 2026 02:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vghCePhD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CEE1F000C4;
+	Thu, 19 Nov 2026 02:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055709;
-	bh=XTONmO+r7YBjS+CxrQBLPVroBhnPSUAkcPV+5m14Z8o=;
+	s=korg; t=1795055711;
+	bh=8ExkpaIBYDv+YWaqCxpEaD/aRbyVHzPHOMAR4i4DTSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U39KpLOIbLYz+tHKvxUbS5k/roDVI2eJMS4nH/jKbjdm4mu9RADq8KSyBFhg0ozZr
-	 bAPSVBmGs4BBUzkMT4gW2q5ufgyfWGuikL2TYuu8A+xJSZoiPk79P4q6UGhY8l7eb3
-	 z7i3myAGcvLg0JrdiMJxgwcV4QckBzVebTG2CIv8=
+	b=vghCePhDyi2Wo9j0xfygb+l3CwUm8TtuAX7og8Tm2CxI3BrV/sNATTnolNIiPZ+6f
+	 86sLI8asEGXZsAkNhcTv0RcWzc8iQNdArgsSKBsG9t6jw7FoLvb/3kXeSi8kCpjE+K
+	 FOqfOfOCD5LfqPQAOBCQ8VvZ84+S7v0qpyS/jQeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Chao Wei <chao.wei@sophgo.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1686/2214] dt-bindings: vendor-prefixes: add milkv/sophgo
-Date: Wed, 18 Nov 2026 15:56:02 +0100
-Message-ID: <20261118150119.274377519@linuxfoundation.org>
+Subject: [PATCH 5.15 1687/2214] dt-bindings: vendor-prefixes: Add Sophos
+Date: Wed, 18 Nov 2026 15:56:03 +0100
+Message-ID: <20261118150119.314148073@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,48 +69,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Wang <unicorn_wang@outlook.com>
+From: Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>
 
-[ Upstream commit 07f9b764062904f0c0fd6e54e58535f34ac3ac6f ]
+[ Upstream commit 538f8ec6b9c711833c5217a8bd8207a282265303 ]
 
-Add new vendor strings to dt bindings.
-These new vendor strings are used by
-- SOPHGO's SG2042 SoC [1]
-- Milk-V Pioneer board [2], which uses SG2042 chip.
+Add the "sophos" vendor prefix for Sophos Ltd., a vendor of network
+security appliances.
 
-Link: https://en.sophgo.com/product/introduce/sg2042.html [1]
-Link: https://milkv.io/pioneer [2]
-
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Chao Wei <chao.wei@sophgo.com>
-Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Stable-dep-of: 538f8ec6b9c7 ("dt-bindings: vendor-prefixes: Add Sophos")
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 42e6bb3df8d8e..22f0da9bb3bda 100644
+index 22f0da9bb3bda..e8503de28eb62 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -763,6 +763,8 @@ patternProperties:
-     description: MikroElektronika d.o.o.
-   "^mikrotik,.*":
-     description: MikroTik
-+  "^milkv,.*":
-+    description: MilkV Technology Co., Ltd
-   "^miniand,.*":
-     description: Miniand Tech
-   "^minix,.*":
-@@ -1134,6 +1136,8 @@ patternProperties:
-     description: Solomon Systech Limited
-   "^sony,.*":
+@@ -1138,6 +1138,8 @@ patternProperties:
      description: Sony Corporation
-+  "^sophgo,.*":
-+    description: Sophgo Technology Inc.
+   "^sophgo,.*":
+     description: Sophgo Technology Inc.
++  "^sophos,.*":
++    description: Sophos Ltd.
    "^sourceparts,.*":
      description: Source Parts Inc.
    "^spansion,.*":
