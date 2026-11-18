@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050414;
-	b=f3yley/07yWQAgP2WmQIQO6IGeRTK5K7lQx4CQZswN8Aw4eeFSVIJXAFMU0eJNKClYpl
-	 bc1Kag7NQF6v7WaygMz6lhkm9EdenxUN/28PwGUW2iF6aNJNhvP7afrgFxfBu0FBMIyej
-	 TYYm/WhviZZK0j3bgx4AvCbNa+7UApa1NUwp76njQtWX7nDER0LLu9Lp09Epy8jHRtS6t
-	 QxliLs2yNG9aWIOv4jsuhM3cqQQBK7l4WcY5nQ0yDhWm+Inz/zjpp+8HomYdw8uGIyHRU
-	 qvGpRJPMkD4n/ztnxoyPIXdTsg8SmxGF6hJ76WlWb/RdLhuP7pJxwQ0c4p3L6qehtJw==
+	t=1795050417;
+	b=LLRRiUfqm9/I2abTSW9MBROyhyRdaUjToEXRR2fIb4Mo32XufFqPJMRLYRJ+YV9Fad6B
+	 Aa0nKsCeqLVd6L2tdNVdSq3NDVhWZr2qhMttvQBdnmydOtThOyZNcXgQQNuPsHOJS/X31
+	 tQGKHnt+aIR0f9WbpPuns7Rd2KB3PGGO7qI7IjfmX+0jGdrA6NpNd3hg2COBY2mB0qWDC
+	 /YWZua6JheJgKNWjtWWrLRsgzWaTg3QNDSWdgEnmf/wOv3SRWlKmIffgGcKLW11EXqueo
+	 GG/EhdbNr++zBUFWZV3Xw55KUJKAxnK2Dvrf8c20GFoxd3HzDlcn/CTWrLCHK/zQ8tQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PucCNPLJt8D3qHbvvUw5FDOHRTmfxoIw1DVcOhHAXGU=;
-	b=TQcDhuBscyNGSWW5UXVAx/GVl4vc1rVfqAVoprprIV2B6fiI6gfRH1JjO2P42Dcua168
-	 lEmYNlGdoyHErppO0tn3XOZIOGl2/eJ/fnl2xkyiFVPo4pBpSI9DWSaMmXiTOcGI33r5o
-	 bB07mI1i9xGTSO3B5+LP4W3QWKzaZNiKZ3VvGalo+YekB7G7jOWrR46b0kqeK7S3Ygf4y
-	 LcTz/pCPXjg2/YvrCAFrOgBz6oY/tSY3q6SjYoJIQnZGG9v4S1tcQ2zauOpwHWiNaFxZX
-	 xB7Z34ovCAV6q/OOcvgpZ6CghrXLAVShGJeqxllRl3wOtxDynMVIFijPidg8jFNcepg==
+	bh=n1Xnk5kMI2O0Xv3hdTjkDQFX1M2LgTHPEbA5XimLZSI=;
+	b=P3NA+/tVBcfvtfoA+9+D4HmEZ5r/JgZU/LFWeE2Wbcfb2sEJv95V5noDG81EixoLwy4f
+	 Z8xXI8mXnhBQF1ZTe1tRK2DCdvbISxa9oZsJ5Cva80bt1UNMONP4LyqYNbyVZUGSqkvRI
+	 IhNglYe6C0qAVOg8LfeAl5n6S6fOR/Fst5tFADmv8K6B3RHk5D0V0RlQPXUvbF3ZaDe+N
+	 IsGhPGsYxGaodBvr34xSDsaM1QjEB5YPQjYP2E4Wj75GLgjS3foZ+yCINdRBsRhN4aJga
+	 oYixMmdFkCz2Tlo8esqLcaPKhgrdhUismOi7nblWT8Q3rW9Jnzpk+4Szjzo1KQ6v/GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMdbUm9Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phv+07Ri;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65617606A320;
-	Thu, 19 Nov 2026 01:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25621606A325;
+	Thu, 19 Nov 2026 01:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMdbUm9Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FF21F000C4;
-	Thu, 19 Nov 2026 01:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=phv+07Ri
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1FA1F000C4;
+	Thu, 19 Nov 2026 01:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050414;
-	bh=PucCNPLJt8D3qHbvvUw5FDOHRTmfxoIw1DVcOhHAXGU=;
+	s=korg; t=1795050417;
+	bh=n1Xnk5kMI2O0Xv3hdTjkDQFX1M2LgTHPEbA5XimLZSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lMdbUm9ZJP0K30/mGrL+WtygBp8OlsDvm+idZe+4y9pZJ2xSdnyOxIXXU7RbdUyel
-	 fs8SFG6eSMAxb8HKh8IgQjHPG5RXN9iGsVAvBEbH4WkYE8vEKydT1Vlh9ocXKPWrRx
-	 +16c4GoZ0D72FFw3JpfDtbN7ToPQrxg00g3da9nY=
+	b=phv+07RiI/fEJe6/dbvRMDzg4PYCJvGN+p48buZZKiVqmnEfiIjLOZC/R10batOjV
+	 wrcJmorjupUGo79glCOp3xy3p6pjUnySfi66bkZN1VBt8Ui0DeumJE4YCLE3ylJhGM
+	 a+ZqfHCT+iq/ctSYDmZDL2JLCEKE+sJIHdU8VQ3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Hu <ivan.hu@canonical.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Leonard Lausen <leonard@lausen.nl>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2698/2857] ACPICA: Initialize parser_state.aml_end in acpi_install_method()
-Date: Wed, 18 Nov 2026 16:02:12 +0100
-Message-ID: <20261118150338.709476320@linuxfoundation.org>
+Subject: [PATCH 6.1 2699/2857] ksmbd: select CRYPTO_AES
+Date: Wed, 18 Nov 2026 16:02:13 +0100
+Message-ID: <20261118150338.745481622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,59 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Hu <ivan.hu@canonical.com>
+From: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
 
-[ Upstream commit ec696f34774db985841bac9a2df179c0040ef073 ]
+[ Upstream commit 2c36c4a86104d763ee798d4a89e2d3384b4cd626 ]
 
-In AcpiInstallMethod(), the local ParserState is stack-allocated and
-only ParserState.Aml was initialized. Parser helpers called by this path
-read ParserState.AmlEnd for bounds checking: AcpiPsPeekOpcode() reads it
-before validating the first AML opcode, and AcpiPsGetNextPackageEnd()
-reads it indirectly via AcpiPsGetNextPackageLength(). The subsequent
-package-limit check also compares against ParserState.AmlEnd. Because
-AmlEnd was never set, these checks operated on an uninitialized value,
-which Coverity flagged as an uninitialized read (CID 1684785) and which
-could lead to incorrect parser bounds decisions.
+ksmbd allocates "gcm(aes)" and "ccm(aes)" AEAD transforms for SMB3
+encryption, but SMB_SERVER only selects CRYPTO_GCM and CRYPTO_CCM, not
+an AES cipher. With a configuration in which nothing else enables
+CRYPTO_AES, ksmbd builds but cannot allocate the transforms, and every
+session that uses encryption fails:
 
-Coverity report:
+  ksmbd: Failed to alloc encrypt aead : -2
+  ksmbd: crypto alloc failed
 
-*** CID 1684785:         Memory - illegal accesses  (UNINIT)
-/src/acpica/source/components/namespace/nsxfname.c: 712             in AcpiInstallMethod()
-        ParserState.Aml += AcpiPsGetOpcodeSize (Opcode);
->>>     CID 1684785:         Memory - illegal accesses  (UNINIT)
->>>     Using uninitialized value "ParserState.AmlEnd" when calling
-        "AcpiPsGetNextPackageEnd".
-        ParserState.PkgEnd = AcpiPsGetNextPackageEnd (&ParserState);
+Select CRYPTO_AES, as the SMB client already does.
 
-Initialize ParserState.AmlEnd to the end of the table
-(Buffer + Table->Length) so the parser bounds checks operate on a valid
-limit.
-
-Link: https://github.com/open-acpica/acpica/commit/19429ef91ebfb2144c918038dce13e297b4ef051
-Fixes: bdc357540129 ("ACPICA: add boundary checks in two places")
-Signed-off-by: Ivan Hu <ivan.hu@canonical.com>
-Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Signed-off-by: Leonard Lausen <leonard@lausen.nl>
-[ rjw: Subject tweaks ]
-Link: https://patch.msgid.link/20261019145421.47181-2-leonard@lausen.nl
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: a848c4f15ab6 ("cifsd: add Kconfig and Makefile")
+Assisted-by: LLM
+Signed-off-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/nsxfname.c | 1 +
+ fs/smb/server/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/acpica/nsxfname.c b/drivers/acpi/acpica/nsxfname.c
-index 8079364e2440e..d4ebb93ce03c3 100644
---- a/drivers/acpi/acpica/nsxfname.c
-+++ b/drivers/acpi/acpica/nsxfname.c
-@@ -503,6 +503,7 @@ acpi_status acpi_install_method(u8 *buffer)
- 	/* First AML opcode in the table must be a control method */
- 
- 	parser_state.aml = buffer + sizeof(struct acpi_table_header);
-+	parser_state.aml_end = buffer + table->length;
- 	opcode = acpi_ps_peek_opcode(&parser_state);
- 	if (opcode != AML_METHOD_OP) {
- 		return (AE_BAD_PARAMETER);
+diff --git a/fs/smb/server/Kconfig b/fs/smb/server/Kconfig
+index d036ab80fec35..f8973aeb3518a 100644
+--- a/fs/smb/server/Kconfig
++++ b/fs/smb/server/Kconfig
+@@ -16,6 +16,7 @@ config SMB_SERVER
+ 	select CRYPTO_AEAD2
+ 	select CRYPTO_CCM
+ 	select CRYPTO_GCM
++	select CRYPTO_AES
+ 	select ASN1
+ 	select OID_REGISTRY
+ 	select CRC32
 -- 
 2.53.0
 
