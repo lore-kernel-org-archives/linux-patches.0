@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051533;
-	b=ylga28nXZqgQKnH9/z5IF7MFQfV93QCxTM4r0J70cb5tzrkA9tbr/9QehJJd8vNZ6mgf
-	 BBQ7IC9sV5nLvDxthqUPS6zdsH/XbDC6hNkC8Hztp2ZqZcSXEeo7Evf0q9a79VsN+44gc
-	 +/Hi6RMoMrvZUC8YB0pGiPyQ4uwg+JWMb/iNKxul1OpJnaxwn3r6E51cRjQe4uNa291QR
-	 brS5C7zhSmWFAQJbGACVCdAnEgATkvfAshOkgAEveGM8Gv9nULQRCWXjRBli/O8RFnPSZ
-	 YT9FEx0am4l6Q+jOzZuzqVWlJ9Aq1E4uA0fYfxZpSBOVbu7oo5PaR/9xvZitTO1MPcA==
+	t=1795051536;
+	b=kT9MKOB1q/wE429IUbAXyqG+/XKxSaAUHJSARNJUo8OEqcKLgkFMHfkyELQygGOF8uyj
+	 qZUL4kkLkixS4g3w8BJTJdnPn5z7x/yyRm4sbIybMso1qnGSS/FfNYj3CIe/P59ipeyJg
+	 qQeYAuhmKG5fahVL8HzgaJEvLdlOqHuIqBDTMPL85kZTll6PC01EFdUu7S7hJRU0i/TKI
+	 iaG4jQOD/QqWcOmlC7/d9XLgBx28mTzjJV2DUIC2cqik2UDQRbI72WysdNd7YONKhEbrW
+	 H/3/sWSnR9Oy0f9Qmw8WmboxGbIHUP1nQVQdyNmRcjQw6x/Dm3hVqhhj1XCvb8KlOrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051533;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kOGjGL5DEwLhFeMQ5Joyl3it6o6ypicB0mJlQVmwD9A=;
-	b=qbEmR8drxUqQCnu1h8yTIoGcP7yDaPrhEq6rNBe5076jnuYfW79XjTDRw5drXCqUbPFm
-	 WwRhnhaqoA6b/zsuQqZe/g/78YMnO0Jw+sdRZao/vQvwgJ7aldXtj3jc8qtbxYPCxHyzW
-	 exBRAebSwJe81iIQ1di64sX5iYGvjSA8sjxX41v9DIGTPQXzTqzleC3F4epxaY1cbnOUv
-	 pcxCigOvpNV+cuUXfT816DnDkum1Dgn6YNGwoXCPMs6deydV5SgzL0K3kLprtswTYQfsV
-	 2sHP4zpHuc9NHBWDY9R7JtqPh5NyFQUAPd0/woqglWltl57ii+29zLticbnbla7/kDA==
+	bh=mnmSN0f3lcHA2OA+Oe8cXFCwkG5DtnfWDbm1DJOSTGA=;
+	b=fNTDe3H/XiS6ZftCNb2Z6CqydkoFKcWI1FLHIOmqNkV3LyftRMd9BMdlWl5k1C4M79W+
+	 8h45y0ceYbiCDt0FSnFZybSdz9YvsY/QZsYKkgz17iDczNCaYDGwp70OSMr0cI376/m5Q
+	 E9bkOZtcafZR5Kmvz9mi6aEAgwkPXKWGYy5PH6uXGNVT8mv05FYf3VldqgVYO11e8WVVn
+	 6x4LiVWITkk91P4E5Q36Ghor7YACs61eyzdCPj/Y1oEajxkuaeoaYlUBh+rPChZHQGYAZ
+	 f3Js9HPeAepRLuI6WxIP/WCyxHWnDhK6YP+gJC3NN9kGEuuCthfM1L+gKWh3zYqL8DQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z69pkNLj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bEomeD7c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E170606A31C;
-	Thu, 19 Nov 2026 01:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EE8606A320;
+	Thu, 19 Nov 2026 01:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z69pkNLj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D880C1F000C4;
-	Thu, 19 Nov 2026 01:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bEomeD7c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B319F1F000C5;
+	Thu, 19 Nov 2026 01:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051533;
-	bh=kOGjGL5DEwLhFeMQ5Joyl3it6o6ypicB0mJlQVmwD9A=;
+	s=korg; t=1795051536;
+	bh=mnmSN0f3lcHA2OA+Oe8cXFCwkG5DtnfWDbm1DJOSTGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z69pkNLjW7Xq5hPKLbTnX+DIdR0KKdCZP7Xuh7QTFg/VAhTCGAtTyK3Du1I4INfqt
-	 g046yJa+bnn5vw9OKTOJWivOji0EF8EMhN/AZ5w+Hs8OCzLtlPlS7U7nqJRNm5rg26
-	 NGO8WhuKdbZjzf0ZUidc7/CvEoMdQJBRhsdXMTL4=
+	b=bEomeD7cEZCb2s/qazr2XT56q38aNjhYq+9oBy0xPBh7XLS4nO+kWz73Qr202d1b4
+	 bImyKoRMFki1VIlYJYY+ec2GS5FYr5mFTbuGoiqrV4/71FJhpJ4UVTbGAJgKD0vTZm
+	 c9ww9kUfx/ti2kt15nvzDE2n4i5vcVn6ZBSbmD70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jiri Kosina <jkosina@suse.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0241/2214] HID: roccat: fix locking in roccat_connect() and roccat_disconnect()
-Date: Wed, 18 Nov 2026 15:31:57 +0100
-Message-ID: <20261118150019.820837194@linuxfoundation.org>
+Subject: [PATCH 5.15 0242/2214] gpio: mvebu: keep resume masks within the irqchip cache
+Date: Wed, 18 Nov 2026 15:31:58 +0100
+Message-ID: <20261118150019.860025575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,68 +68,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit d76994443eed0af297cb82bd038ae9d76327ef90 ]
+[ Upstream commit 02af7eac17bc62a72335c1fc8c4af4471654f6cc ]
 
-Extend critical section in roccat_connect() to ensure that partially
-initialized 'struct roccat_device' is never exposed in 'devices' list,
-and do the same in roccat_disconnect() to avoid racy 'devices' access
-against roccat_release().
+mvebu_gpio_resume() writes the edge/level mask registers saved at
+suspend time straight back to hardware, bypassing the irqchip's
+mask_cache_priv.  genirq skips mask_irq() for a line it already
+considers masked, so restoring a bit in hardware that genirq thinks
+is still masked leaves that line unmasked behind genirq's back.  An
+asserted level line then has nobody to ack it, and the moment
+interrupts are re-enabled the chained handler storms, hanging resume.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+AND the restored mask values with the matching irqchip mask cache so
+only lines genirq currently considers unmasked are unmasked again.
+Read the caches under gc->lock to keep them consistent with the
+mask/unmask handlers.
+
+Tested on Helios4 (armhf): 5 suspend cycles woken by magic packet,
+no hang; mvebu_gpio_resume() returns in 6 usecs.
+
+Assisted-by: LLM
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260915004406.115230-1-rosenp@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-roccat.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-mvebu.c | 33 +++++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-roccat.c b/drivers/hid/hid-roccat.c
-index a73cafa3869f7..b203ee39c9ea1 100644
---- a/drivers/hid/hid-roccat.c
-+++ b/drivers/hid/hid-roccat.c
-@@ -344,8 +344,6 @@ int roccat_connect(struct class *klass, struct hid_device *hid, int report_size)
- 		return temp;
- 	}
+diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
+index f56142defd15a..68b0fa9f4d97a 100644
+--- a/drivers/gpio/gpio-mvebu.c
++++ b/drivers/gpio/gpio-mvebu.c
+@@ -1011,6 +1011,8 @@ static int mvebu_gpio_suspend(struct platform_device *pdev, pm_message_t state)
+ static int mvebu_gpio_resume(struct platform_device *pdev)
+ {
+ 	struct mvebu_gpio_chip *mvchip = platform_get_drvdata(pdev);
++	u32 edge_cache = ~0U, level_cache = ~0U;
++	unsigned long flags;
+ 	int i;
  
--	mutex_unlock(&devices_lock);
--
- 	init_waitqueue_head(&device->wait);
- 	INIT_LIST_HEAD(&device->readers);
- 	mutex_init(&device->readers_lock);
-@@ -356,6 +354,7 @@ int roccat_connect(struct class *klass, struct hid_device *hid, int report_size)
- 	device->cbuf_end = 0;
- 	device->report_size = report_size;
+ 	regmap_write(mvchip->regs, GPIO_OUT_OFF + mvchip->offset,
+@@ -1022,32 +1024,51 @@ static int mvebu_gpio_resume(struct platform_device *pdev)
+ 	regmap_write(mvchip->regs, GPIO_IN_POL_OFF + mvchip->offset,
+ 		     mvchip->in_pol_reg);
  
-+	mutex_unlock(&devices_lock);
- 	return minor;
- }
- EXPORT_SYMBOL_GPL(roccat_connect);
-@@ -369,15 +368,12 @@ void roccat_disconnect(int minor)
- 
- 	mutex_lock(&devices_lock);
- 	device = devices[minor];
--	mutex_unlock(&devices_lock);
- 
- 	device->exist = 0; /* TODO exist maybe not needed */
- 
- 	device_destroy(device->dev->class, MKDEV(roccat_major, minor));
- 
--	mutex_lock(&devices_lock);
- 	devices[minor] = NULL;
--	mutex_unlock(&devices_lock);
- 
- 	if (device->open) {
- 		hid_hw_close(device->hid);
-@@ -385,6 +381,8 @@ void roccat_disconnect(int minor)
- 	} else {
- 		roccat_free_device(device);
- 	}
++	/*
++	 * genirq skips mask_irq() for a line it already considers masked, so
++	 * unmasking one behind its back leaves an asserted level line that
++	 * nobody masks. Restore only bits the irqchip cache still has set.
++	 *
++	 * Snapshot the caches under the raw spinlock, but release it before
++	 * the regmap writes below: regmap_write() takes a sleepable lock on
++	 * PREEMPT_RT.
++	 */
++	if (mvchip->domain) {
++		struct irq_chip_generic *gc;
 +
-+	mutex_unlock(&devices_lock);
- }
- EXPORT_SYMBOL_GPL(roccat_disconnect);
- 
++		gc = irq_get_domain_generic_chip(mvchip->domain, 0);
++		raw_spin_lock_irqsave(&gc->lock, flags);
++		level_cache = gc->chip_types[0].mask_cache_priv;
++		edge_cache = gc->chip_types[1].mask_cache_priv;
++		raw_spin_unlock_irqrestore(&gc->lock, flags);
++	}
++
+ 	switch (mvchip->soc_variant) {
+ 	case MVEBU_GPIO_SOC_VARIANT_ORION:
+ 	case MVEBU_GPIO_SOC_VARIANT_A8K:
+ 		regmap_write(mvchip->regs, GPIO_EDGE_MASK_OFF + mvchip->offset,
+-			     mvchip->edge_mask_regs[0]);
++			     mvchip->edge_mask_regs[0] & edge_cache);
+ 		regmap_write(mvchip->regs, GPIO_LEVEL_MASK_OFF + mvchip->offset,
+-			     mvchip->level_mask_regs[0]);
++			     mvchip->level_mask_regs[0] & level_cache);
+ 		break;
+ 	case MVEBU_GPIO_SOC_VARIANT_MV78200:
+ 		for (i = 0; i < 2; i++) {
+ 			regmap_write(mvchip->regs,
+ 				     GPIO_EDGE_MASK_MV78200_OFF(i),
+-				     mvchip->edge_mask_regs[i]);
++				     mvchip->edge_mask_regs[i] & edge_cache);
+ 			regmap_write(mvchip->regs,
+ 				     GPIO_LEVEL_MASK_MV78200_OFF(i),
+-				     mvchip->level_mask_regs[i]);
++				     mvchip->level_mask_regs[i] & level_cache);
+ 		}
+ 		break;
+ 	case MVEBU_GPIO_SOC_VARIANT_ARMADAXP:
+ 		for (i = 0; i < 4; i++) {
+ 			regmap_write(mvchip->regs,
+ 				     GPIO_EDGE_MASK_ARMADAXP_OFF(i),
+-				     mvchip->edge_mask_regs[i]);
++				     mvchip->edge_mask_regs[i] & edge_cache);
+ 			regmap_write(mvchip->regs,
+ 				     GPIO_LEVEL_MASK_ARMADAXP_OFF(i),
+-				     mvchip->level_mask_regs[i]);
++				     mvchip->level_mask_regs[i] & level_cache);
+ 		}
+ 		break;
+ 	default:
 -- 
 2.53.0
 
