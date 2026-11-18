@@ -1,59 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044526;
-	b=39g67fYs6ZwaOlKmVARCcWmF66CHGS4HDMtqRtJxeLz/SJahBdPR0+rNXQarG0juYb51
-	 5jKGMajB1IG+ocnf5BiCKor8CnX9def0tk/B7vHX8VYEV90Oq1setsxiq2/SBWOamollU
-	 2kr7G6jX0clQs91atk/ruynBzq2Ayq8TnNxQt4QWLZaq+2vxJbne05zRbQowdDe8LCFmJ
-	 jk75Uzsid09QO0HxP1DAAmSOkW+X15YY/e4S8BPBjn+gRsdSp8/1vJsEaxrWdiPQVQ1Ez
-	 pXratfWpDIyDTWkQogfuts9eP8jSD1VyCDcIwgV6bgzO9/4k/iPASto7J8uqGl42ngg==
+	t=1795044529;
+	b=wvJokWd3I8yJP9ltzx4xvnVr5bPrSvnuccKRvWkSODGkokhRozXIewZrE0wNeqqUJkug
+	 E80R+vzared/RNrtWhLajduU3XTNQI6+w/tZBoWeqLBc2YABVNWEHq62jM85C6+ZO/rmR
+	 gYzWnIz3U5HCx7QpnG3Crgrzp3T9Q0XBY4FpRT2ICxWiPaqeN8axQmfQWS+4p7iMmG+Yr
+	 FxlUhMLZsOtKpS2hRx4TWa4lsi8IxkxXeQO5EEjblpyVtx3Csv32bDqWx4EBKdfyjpG78
+	 /IpnXi7oalmYOjNXE1iYsVbBJOB9GDhOlqZSfmLfzxw3/8T+UP/2os81k+l+DjvuoZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rXYLX2F8muU04RoZLYzpmPxUcjoUOIRfgEy/FzugbUc=;
-	b=gkAvNAgW1bNKwHsgPV7iJJd7b642ZD9JVXNjvUFRr5EHwshlD1jlnYork4fXtn/21V+t
-	 dZ3diQsECne3vxuB6uEuf8AdPeqAYI1lw9YxH/nFTfX1I9vCQkA1C+lSLCFbVwPI1WltF
-	 K86Q4d+WJDmFWG1RSNUKYKvGrWnhRgU98H+7AYcmEqFcU7+gitKxQPQpf+DBdEvlP5379
-	 QufcdiFSy16PuoLOpgc42ZSD2phJidTMUz+yZqEgja4R4Xz57Qd3Enm089Jg62XnKX9o8
-	 8jlXZPkN2kITYL0LVxjyqjhGeN/ExAQc0dRJA2TlB7VEucyzNzL3zei1PSHGhsU7L2A==
+	bh=BAEPP00IjA0RrHu7UBkWK7ZGRBNW06Ua48/apB+OzTY=;
+	b=SOToTtaV4lm8Ig5bJMySLTxQmwr3QKf8096/Kk1lcmKmK+OoPh58GzzpiEhTLEantH3i
+	 H18bSq8/GfahBAotzT9M+LmgjvTeEjrXFBLl1Dywtv/PHaN0Mu6zt+JlGl8QkLpEFSnu1
+	 KZzW+Fu7qT+3v4thDbuqtuvmpV13E6wDggJbBcv6jUB2Um2mjD4j/CYumH+Vx9DU6n8S9
+	 5ivEr9VAee1fi9XYZy6PwkYPtzVcEbFOOootsv4IKH5lwZgfrlleDViPChncFLoe+6euW
+	 QOORILCulX0ynmGKQAYG703PvGBV8QDBsnIG9yzcBn+XWVlBQobRDdPDNSXETLtA6Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUjjDsmm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gjK3teC/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C85C606A331;
-	Wed, 18 Nov 2026 23:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F897606A32A;
+	Wed, 18 Nov 2026 23:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUjjDsmm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85BE1F000C4;
-	Wed, 18 Nov 2026 23:28:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjK3teC/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DC71F000C4;
+	Wed, 18 Nov 2026 23:28:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044526;
-	bh=rXYLX2F8muU04RoZLYzpmPxUcjoUOIRfgEy/FzugbUc=;
+	s=korg; t=1795044529;
+	bh=BAEPP00IjA0RrHu7UBkWK7ZGRBNW06Ua48/apB+OzTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUjjDsmmpwMJ4JBVYndMm5ZjFUrdeVb1HZR3kkfNAPXJ0oWgDggGKvkxapesntVYs
-	 +KYVzyNFB9GdOWJtvSVDVH1vImiRWWric4DzmypZagySUD4L1orCeJRA5ZtilwuhxK
-	 1m4SFmCok4IMryfnD32RMizqO6MxbLcaBoLyARSI=
+	b=gjK3teC/BujdR139oMgIK57FJDr1QOC3j637xHckiWPi7XDTRAYFFUG1DikPnOH4R
+	 MCWyif4EIHdEUHbwGCY5Y8CuIfMLLfYAGUTWUpBF2cBT+mRW4cu3sYsbujujtUNZl8
+	 nQgZSE7hGxR4Al6O/s0GAAHSFh8yyYdrvzyZ9qLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Kees Cook <kees@kernel.org>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 6.1 0572/2857] ocfs2/dlm: hold a lock reference across grant AST enqueue
-Date: Wed, 18 Nov 2026 15:26:46 +0100
-Message-ID: <20261118150222.077918082@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.1 0599/2857] pnfs/blocklayout: Complete a device upcall only on its own reply
+Date: Wed, 18 Nov 2026 15:27:13 +0100
+Message-ID: <20261118150223.058391496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -75,220 +66,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit 71743471204e21113295c786e5cfa570294234a4 upstream.
+commit acfbea6c5e27c68d6b6d12849eb2b7f8466ccf06 upstream.
 
-A newly granted remote lock must remain alive until its grant AST is
-queued.  dlmlock_master() publishes the lock on res->granted with its base
-and queue references, then drops res->spinlock before calling
-dlm_queue_ast().  The resource's reserved AST count does not retain the
-lock itself.
+bl_pipe_downcall() wakes bl_resolve_deviceid() on any write of the
+right size, without checking that blkmapd has read the upcall being
+replied to. A write that arrives first returns the waiter while its
+struct rpc_pipe_msg is still queued on the pipe, which then holds a
+list_head into a dead stack frame. Reaching the pipe takes root, so
+the trigger is a broken or hostile blkmapd.
 
-This can fail when a peer dies with an immediately grantable CREATE
-buffered on its socket.  O2NET's node-down callback flushes receive work
-before DLM cleanup, but the flush only waits for work queued on entry.  A
-data-ready callback that already selected the socket container can queue
-new receive work after the flush advances its work color.  Socket shutdown
-does not discard bytes already queued for TCP receive.
+The wait has two further defects. bl_resolve_deviceid() sets
+TASK_UNINTERRUPTIBLE only after rpc_queue_upcall() has made the
+message visible, so a reply that lands in between wakes a running
+task and the schedule() that follows sleeps forever holding
+bl_mutex. And nn->bl_mount_reply is never reset, so when the pipe
+purges an unread upcall the waiter takes the previous reply as its
+own.
 
-The late receive work and DLM node-down cleanup can interleave as
-follows (the lock reference operations shown are before this fix):
+Move the message into struct nfs_net, where bl_mutex already limits
+the pipe to one upcall per net namespace. Accept a reply only while
+blkmapd has read the whole message and no earlier reply has been
+taken, and reject any other write with -EINVAL. Wait for that reply
+on a completion so it cannot slip past the sleep, and check
+msg->errno before trusting it.
 
-  Socket data-ready        Node-down thread         Receive worker
-  -----------------        ----------------         --------------
-  o2net_data_ready()
-    select sc under
-    callback read lock
-                           o2net_disconnect_node()
-                             queue shutdown
-                             begin flush; new color
-    queue sc_rx_work
-    in the new color
-    release callback lock
-                             shutdown socket
-                             flush returns
-                                                    read buffered CREATE
-                                                    dlmlock_master()
-                                                      lock res->spinlock
-                                                      add lock to granted
-                                                      unlock res->spinlock
-                           DLM node-down cleanup
-                             lock res->spinlock
-                             dlm_free_dead_locks()
-                               unlink lock
-                               put queue/base refs
-                               free lock
-                             unlock res->spinlock
-                                                    dlm_queue_ast()
-                                                      __dlm_queue_ast()
-                                                      read lock->lockres
-                                                      (use-after-free)
-
-DLM cleanup holds res->spinlock while dlm_free_dead_locks() drops the
-queue and base references.  The CREATE handler no longer holds that
-spinlock when __dlm_queue_ast() reads the lock, before taking its AST list
-reference.
-
-Take a temporary lock reference under res->spinlock when a grant AST will
-be queued, and drop it after dlm_queue_ast().  This keeps the lock alive
-across cleanup until the AST path has taken its own reference, without
-reversing the existing AST/resource lock order.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in __dlm_queue_ast+0x8a4/0xc00
-    Read of size 8 at addr ffff88810ead5940 by task kworker/u16:3/52
-
-    CPU: 3 UID: 0 PID: 52 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: o2net o2net_rx_until_empty
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? __dlm_queue_ast+0x8a4/0xc00
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? __dlm_queue_ast+0x8a4/0xc00
-     kasan_report+0xe0/0x110
-     ? __dlm_queue_ast+0x8a4/0xc00
-     __dlm_queue_ast+0x8a4/0xc00
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_raw_spin_lock+0x130/0x270
-     ? __pfx___dlm_queue_ast+0x10/0x10
-     ? __pfx_do_raw_spin_lock+0x10/0x10
-     ? _raw_spin_unlock_irqrestore+0x45/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lockdep_hardirqs_on_prepare+0xeb/0x1a0
-     dlm_queue_ast+0x46/0x70
-     dlmlock_master+0x51f/0xf50
-     ? __pfx_dlmlock_master+0x10/0x10
-     ? dlm_create_lock_handler+0x2b2/0x870
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     dlm_create_lock_handler+0x35b/0x870
-     ? __pfx_dlm_create_lock_handler+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? kvm_clock_get_cycles+0x31/0x60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_dlm_create_lock_handler+0x10/0x10
-     o2net_rx_until_empty+0x1dae/0x32c0
-     ? reacquire_held_locks+0xdd/0x200
-     ? __pfx_o2net_rx_until_empty+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? process_one_work+0x935/0x1b40
-     ? process_one_work+0x834/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x9a8/0x1b40
-     ? __pfx_process_one_work+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x177/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x351/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf70
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 52:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_slab_alloc+0x89/0x90
-     kmem_cache_alloc_noprof+0x20b/0x5c0
-     dlm_new_lock+0x39/0x5f0
-     dlm_create_lock_handler+0x16e/0x870
-     o2net_rx_until_empty+0x1dae/0x32c0
-     process_one_work+0x9a8/0x1b40
-     worker_thread+0x65c/0xe40
-     kthread+0x351/0x460
-     ret_from_fork+0x659/0x940
-     ret_from_fork_asm+0x1a/0x30
-
-    Freed by task 603:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kmem_cache_free+0x242/0x580
-     dlm_lock_release+0x1df/0x2f0
-     dlm_lock_put+0x51/0x80
-     __dlm_hb_node_down+0x15be/0x2710
-     dlm_hb_node_down_cb+0x6c/0xa0
-     o2hb_run_event_list+0x34a/0x500
-     o2hb_do_disk_heartbeat+0x1a07/0x2950
-     o2hb_thread+0x1ed/0xdc0
-     kthread+0x351/0x460
-     ret_from_fork+0x659/0x940
-     ret_from_fork_asm+0x1a/0x30
-
-    The buggy address belongs to the object at ffff88810ead5900
-     which belongs to the cache o2dlm_lock of size 184
-    The buggy address is located 64 bytes inside of
-     freed 184-byte region [ffff88810ead5900, ffff88810ead59b8)
-
-    [Page and shadow memory dumps omitted.]
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0043-v5-1ad07df761ff49638789@gmail.com
-Fixes: 2c5c54aca9d0 ("ocfs2/dlm: Add missing dlm_lock_put()s")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: fe0a9b740881 ("pnfsblock: add device operations")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260901-alemi-v2-5-e163f94a3a6e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dlm/dlmlock.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/nfs/blocklayout/blocklayout.h |    5 ---
+ fs/nfs/blocklayout/rpc_pipefs.c  |   58 ++++++++++++++++++++++++---------------
+ fs/nfs/netns.h                   |    5 ++-
+ 3 files changed, 41 insertions(+), 27 deletions(-)
 
---- a/fs/ocfs2/dlm/dlmlock.c
-+++ b/fs/ocfs2/dlm/dlmlock.c
-@@ -138,6 +138,8 @@ static enum dlm_status dlmlock_master(st
- 					  res->lockname.len)) {
- 			kick_thread = 1;
- 			call_ast = 1;
-+			/* Keep the lock alive through AST enqueue. */
-+			dlm_lock_get(lock);
- 		} else {
- 			mlog(0, "%s: returning DLM_NORMAL to "
- 			     "node %u for reco lock\n", dlm->name,
-@@ -166,10 +168,12 @@ static enum dlm_status dlmlock_master(st
- 	wake_up(&res->wq);
+--- a/fs/nfs/blocklayout/blocklayout.h
++++ b/fs/nfs/blocklayout/blocklayout.h
+@@ -155,11 +155,6 @@ BLK_LSEG2EXT(struct pnfs_layout_segment
+ 	return BLK_LO2EXT(lseg->pls_layout);
+ }
  
- 	/* either queue the ast or release it */
--	if (call_ast)
-+	if (call_ast) {
- 		dlm_queue_ast(dlm, lock);
--	else
-+		dlm_lock_put(lock);
-+	} else {
- 		dlm_lockres_release_ast(dlm, res);
+-struct bl_pipe_msg {
+-	struct rpc_pipe_msg msg;
+-	wait_queue_head_t *bl_wq;
+-};
+-
+ struct bl_msg_hdr {
+ 	u8  type;
+ 	u16 totallen; /* length of entire message, including hdr itself */
+--- a/fs/nfs/blocklayout/rpc_pipefs.c
++++ b/fs/nfs/blocklayout/rpc_pipefs.c
+@@ -55,17 +55,15 @@ bl_resolve_deviceid(struct nfs_server *s
+ 	struct net *net = server->nfs_client->cl_net;
+ 	struct nfs_net *nn = net_generic(net, nfs_net_id);
+ 	struct bl_dev_msg *reply = &nn->bl_mount_reply;
+-	struct bl_pipe_msg bl_pipe_msg;
+-	struct rpc_pipe_msg *msg = &bl_pipe_msg.msg;
++	struct rpc_pipe_msg *msg = &nn->bl_pipe_msg;
++	struct rpc_pipe *pipe = nn->bl_device_pipe;
+ 	struct bl_msg_hdr *bl_msg;
+-	DECLARE_WAITQUEUE(wq, current);
+ 	dev_t dev = 0;
+ 	int rc;
+ 
+ 	dprintk("%s CREATING PIPEFS MESSAGE\n", __func__);
+ 
+ 	mutex_lock(&nn->bl_mutex);
+-	bl_pipe_msg.bl_wq = &nn->bl_wq;
+ 
+ 	b->simple.len += 4;	/* single volume */
+ 	if (b->simple.len > PAGE_SIZE)
+@@ -83,17 +81,15 @@ bl_resolve_deviceid(struct nfs_server *s
+ 	nfs4_encode_simple(msg->data + sizeof(*bl_msg), b);
+ 
+ 	dprintk("%s CALLING USERSPACE DAEMON\n", __func__);
+-	add_wait_queue(&nn->bl_wq, &wq);
+-	rc = rpc_queue_upcall(nn->bl_device_pipe, msg);
+-	if (rc < 0) {
+-		remove_wait_queue(&nn->bl_wq, &wq);
++	reinit_completion(&nn->bl_done);
++	rc = rpc_queue_upcall(pipe, msg);
++	if (rc < 0)
+ 		goto out_free_data;
+-	}
+ 
+-	set_current_state(TASK_UNINTERRUPTIBLE);
+-	schedule();
+-	remove_wait_queue(&nn->bl_wq, &wq);
++	wait_for_completion(&nn->bl_done);
+ 
++	if (msg->errno < 0)
++		goto out_free_data;
+ 	if (reply->status != BL_DEVICE_REQUEST_PROC) {
+ 		printk(KERN_WARNING "%s failed to decode device: %d\n",
+ 			__func__, reply->status);
+@@ -113,26 +109,46 @@ static ssize_t bl_pipe_downcall(struct f
+ {
+ 	struct nfs_net *nn = net_generic(file_inode(filp)->i_sb->s_fs_info,
+ 					 nfs_net_id);
++	struct rpc_pipe *pipe = nn->bl_device_pipe;
++	struct bl_dev_msg reply;
++	bool accepted;
+ 
+-	if (mlen != sizeof (struct bl_dev_msg))
++	if (mlen != sizeof(reply))
+ 		return -EINVAL;
+-
+-	if (copy_from_user(&nn->bl_mount_reply, src, mlen) != 0)
++	if (copy_from_user(&reply, src, mlen) != 0)
+ 		return -EFAULT;
+ 
+-	wake_up(&nn->bl_wq);
+-
++	/*
++	 * Accept a reply only after blkmapd has read the whole upcall.
++	 * Completion retires the message, here and in
++	 * bl_pipe_destroy_msg(), so a later reply finds nothing in
++	 * flight.
++	 */
++	spin_lock(&pipe->lock);
++	accepted = rpc_msg_is_inflight(&nn->bl_pipe_msg);
++	if (accepted) {
++		nn->bl_pipe_msg.copied = 0;
++		nn->bl_mount_reply = reply;
++		complete(&nn->bl_done);
 +	}
++	spin_unlock(&pipe->lock);
++	if (!accepted)
++		return -EINVAL;
+ 	return mlen;
+ }
  
- 	dlm_lockres_calc_usage(dlm, res);
- 	if (kick_thread)
+ static void bl_pipe_destroy_msg(struct rpc_pipe_msg *msg)
+ {
+-	struct bl_pipe_msg *bl_pipe_msg =
+-		container_of(msg, struct bl_pipe_msg, msg);
++	struct nfs_net *nn = container_of(msg, struct nfs_net, bl_pipe_msg);
++	struct rpc_pipe *pipe = nn->bl_device_pipe;
+ 
+ 	if (msg->errno >= 0)
+ 		return;
+-	wake_up(bl_pipe_msg->bl_wq);
++
++	spin_lock(&pipe->lock);
++	msg->copied = 0;
++	spin_unlock(&pipe->lock);
++	complete(&nn->bl_done);
+ }
+ 
+ static const struct rpc_pipe_ops bl_upcall_ops = {
+@@ -235,7 +251,7 @@ static int nfs4blocklayout_net_init(stru
+ 	struct dentry *dentry;
+ 
+ 	mutex_init(&nn->bl_mutex);
+-	init_waitqueue_head(&nn->bl_wq);
++	init_completion(&nn->bl_done);
+ 	nn->bl_device_pipe = rpc_mkpipe_data(&bl_upcall_ops, 0);
+ 	if (IS_ERR(nn->bl_device_pipe))
+ 		return PTR_ERR(nn->bl_device_pipe);
+--- a/fs/nfs/netns.h
++++ b/fs/nfs/netns.h
+@@ -10,6 +10,8 @@
+ #include <net/net_namespace.h>
+ #include <net/netns/generic.h>
+ #include <linux/sunrpc/stats.h>
++#include <linux/sunrpc/rpc_pipe_fs.h>
++#include <linux/completion.h>
+ 
+ struct bl_dev_msg {
+ 	int32_t status;
+@@ -21,8 +23,9 @@ struct nfs_netns_client;
+ struct nfs_net {
+ 	struct cache_detail *nfs_dns_resolve;
+ 	struct rpc_pipe *bl_device_pipe;
++	struct rpc_pipe_msg bl_pipe_msg;
+ 	struct bl_dev_msg bl_mount_reply;
+-	wait_queue_head_t bl_wq;
++	struct completion bl_done;
+ 	struct mutex bl_mutex;
+ 	struct list_head nfs_client_list;
+ 	struct list_head nfs_volume_list;
 
 
