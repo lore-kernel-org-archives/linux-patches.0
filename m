@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017937;
-	b=S0OWAS25d1JC607GRmXli+ioZ/eCtif/b8Y9bqqu9afnoEOokxkJp+fvrapiS/kPzpaO
-	 3wdISX75+VWaNyMD5nlNtFF8iT+MZ3NeHD1i7ljbqemTG9pP65AsTrpK6NJHjNU4r0XcR
-	 69gU302VNC5hCApKpKLILq1DbUqHDVBvdTdFJXulrMmSXxQtbq5Vi+NuHb+6w4pZF1IQR
-	 DoacqNUnlyl1VdWVIw3s2oPK5SmdOmVEwPvuGfWvpaYXL4jhkJMwddIEWmXcidvf3NNWe
-	 SrbHhHp03WA0D6FDLPmxg+vQwom6HZ6pvnIbfhjGRJRWkB5tv9iNaM7kht/DVatscrg==
+	t=1795017940;
+	b=UWOl8iXqOw2H9m4BkOE2Ye1n2tllZSyfuvtdgfB7L9C/sVTnRLuhd4Bq1+Tzm35MpGcO
+	 jORtM8qgISk/YDID4ps4IemuAwNSGcjDnbCsMAutkVykWJCIdaDqGhnnhN12RNKICUG1Y
+	 H1YeR2z7wal7seVL80mehVBYdTWL3Lxf447gKsznFesK4S55tJytoEMOGyXRlL46Jnrt+
+	 CGzlCycsAmuB8KNbxLGkDeTnu24RsKRj7YUep3wdrwdPgDvwW3RAdBmqfyGTtEfs5hcnt
+	 WcaFNRNfrPKN0cXg8ri2ErJ9nDqTTlmkhZ/yDEhY0KvYrip0Fel9NU6uj3UvnGXOrhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017937;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017940;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mg1MPy6t/7BApboLtzzGH+XNJnMW6LPZvL7Vr6cZAa0=;
-	b=M0AFsQbEJH97zkfx3Wv9rRimRwZbOGTO/lNBXl/oZCTepeyHTkvMrZ1dTnthp+DSg5w2
-	 BMAgDPJ7AfDEuk5/zOplKQ30BiY80ZK//D0QobOsN6fNAxUitGQWfL5mZwzqdBrRh2Q7y
-	 fB7E69mzltVsiPN83mziEki9/pDcizjvry2/yEBCMeb2lHl/iWMKPWyEqBeBxMPpM73qX
-	 KVYRLQnUFq9YLr9tNLAusv8F63Rh0CgKGhF+THFa25Vomey5XWv7JiJXPcLjlX65bl4t7
-	 XNGqv7VszeVMRUN6hOgva8FeXS0LfQjK7QifeorFD+nM1CqNYwHrxl4IjweS7LPojWg==
+	bh=EpJczYJ7hag1T3SEWL4o+iPSSG7gsvJBbAWP52Qt/Y4=;
+	b=W2uaH/Xa0UXPfiQyYGrciOzO2yhdeoZUNEKaL1x2tgwI3bmqxtMNiKHXQCWnf/9+oE+l
+	 vk2tJmKt2o2n3llJvBEJ2jqXOsKBGwygHvHTQscxqjgiO/9saBGHGZ8ox8trByMQuLg4i
+	 W8acdWRM/802UM8qy8n7iEtZ372i8xcJmXHlYlES1pyWC9wbkA2AYrgWnbAZSur5YNjrO
+	 I1e2y1Kml5Z9UL5CO17bVdL3X16rHQrofJzLai7qiF9yQGc18hdfQp1O4WkrKTmRTxFxw
+	 GIm9uO4VqrduCDKsP0F5KpB8ATVOQmOtAq4IVKKENcpnknX59T6f6CFaXGVQ9EdckKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs5pmhTR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEHdx+1j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B90606A31C;
-	Wed, 18 Nov 2026 16:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF46606A31C;
+	Wed, 18 Nov 2026 16:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs5pmhTR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8381F000C4;
-	Wed, 18 Nov 2026 16:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEHdx+1j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5DD1F000C4;
+	Wed, 18 Nov 2026 16:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017937;
-	bh=mg1MPy6t/7BApboLtzzGH+XNJnMW6LPZvL7Vr6cZAa0=;
+	s=korg; t=1795017940;
+	bh=EpJczYJ7hag1T3SEWL4o+iPSSG7gsvJBbAWP52Qt/Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rs5pmhTRVeGjRuhXv0z1UNCHm2kI8ZTX4YBCVmNzXBaRC2jgBfMK16iOm4tIQco6m
-	 rIjiCd3W36SsANvVI0Xb5v/uqjrVOxyCxezYmsHSg1/alcSQOJsFufcsoZ/Mf7pOyu
-	 J4IsS5nHnNzsMfTUKQfelOcBpdnEaAQB9FS4VSlA=
+	b=HEHdx+1jCP7ui3fXDADfwy8IdEY4mSk8HUW4ApID3HRT43N1Vh/LUrSV5ZIaNocoR
+	 XQsgwTlf+6up1mKr7gwo6eJqx3vc4pxxwjEW7ma8ZVOJOxabc7n2UFOYZI/81Yxc85
+	 UGNnPkFvV/1uMBPcqrLP8htOhOwqSI12t/sEtvdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Schier <n.schier@fritz.com>,
 	Julian Braha <julianbraha@gmail.com>,
+	Nicolas Schier <n.schier@fritz.com>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1062/2651] kconfig: tests: Reset all KCONFIG_* env variables by default
-Date: Wed, 18 Nov 2026 15:38:22 +0100
-Message-ID: <20261118150326.215125111@linuxfoundation.org>
+Subject: [PATCH 7.3 1063/2651] kconfig: tests: Provide defconfig outfile for savedefconfig
+Date: Wed, 18 Nov 2026 15:38:23 +0100
+Message-ID: <20261118150326.251854284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,53 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolas Schier <n.schier@fritz.com>
 
-[ Upstream commit 8688f0b29d021cad8188b11d5664b4a1f595691b ]
+[ Upstream commit 09bd92ba15bd00d937deea38a10a439458393043 ]
 
-Reset all environment variables with names starting with 'KCONFIG_' from
-the user-provided environment.
+Let kconfig test framework's 'savedefconfig' forward the requested
+output 'defconfig' filename to 'conf'.
 
-This fixes the 'warn_changed_input' test on systems with
-KCONFIG_WARN_CHANGED_INPUT=1 and ensures a cleaner test environment.
+The original implementation was calling 'conf' with '--savedefconfig'
+but missed the mandatory filename for the defconfig output file.
 
-Fixes: 645323a7f4e5 ("kconfig: add optional warnings for changed input values")
-Signed-off-by: Nicolas Schier <n.schier@fritz.com>
+While at it, honour the 'dot_config' argument which points to the input
+config file.
+
+Fixes: 022a4bf6b59d ("kconfig: tests: add framework for Kconfig unit testing")
 Reviewed-by: Julian Braha <julianbraha@gmail.com>
-Link: https://patch.msgid.link/20260929-kconfig-tests-minor-updates-v2-1-c5902bee1d0c@fritz.com
+Signed-off-by: Nicolas Schier <n.schier@fritz.com>
+Link: https://patch.msgid.link/20260929-kconfig-tests-minor-updates-v2-2-c5902bee1d0c@fritz.com
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/tests/conftest.py | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ scripts/kconfig/tests/conftest.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
-index 2263bd2a3b3ac..6fb391ac8fa9e 100644
+index 6fb391ac8fa9e..1f25de43128d3 100644
 --- a/scripts/kconfig/tests/conftest.py
 +++ b/scripts/kconfig/tests/conftest.py
-@@ -57,9 +57,12 @@ class Conf:
-         # Override 'srctree' environment to make the test as the top directory
-         extra_env['srctree'] = self._test_dir
+@@ -235,7 +235,8 @@ class Conf:
+         dot_config: .config file for input
+         returncode: exit status of the Kconfig executable
+         """
+-        return self._run_conf('--savedefconfig', out_file='defconfig')
++        return self._run_conf('--savedefconfig={}'.format(out_file),
++                              dot_config=dot_config, out_file='defconfig')
  
--        # Clear KCONFIG_DEFCONFIG_LIST to keep unit tests from being affected
--        # by the user's environment.
--        extra_env['KCONFIG_DEFCONFIG_LIST'] = ''
-+        # Clear all KCONFIG_* environment variables
-+        env = {
-+            varname: os.environ[varname]
-+            for varname in os.environ.keys()
-+            if not varname.startswith("KCONFIG_")
-+        }
- 
-         # Run Kconfig in a temporary directory.
-         # This directory is automatically removed when done.
-@@ -75,7 +78,7 @@ class Conf:
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE,
-                                   cwd=temp_dir,
--                                  env=dict(os.environ, **extra_env))
-+                                  env=dict(env, **extra_env))
- 
-             # If input key sequence is given, feed it to stdin.
-             if in_keys:
+     def listnewconfig(self, dot_config=None):
+         """Run listnewconfig.
 -- 
 2.53.0
 
