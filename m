@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021572;
-	b=05SUEMwGUrhO7Co6k0UrUsV2FqySdpw0+zkD6CFjJtzUQQ5nNYSbNWaGEDVmqVTES6w7
-	 9cCyZk6xIlF/2xXmCOdKqm6aACSR87YDdDkCYa2tlNH7KwmT1yL8IDCmvhxVu2vRAiCDG
-	 JSGaugApJvrkefdMOCu5gXtSN5BezF9MYrcCQVeLSRexuyyD1/H7QGdM67r5hTb/KCcaJ
-	 K3xG72NI2kxDEZBU29/fE4RPJz+O2Zmky9Q5SJ5HU+2tmw5E3V9m6bEIfBCai9rrChYjQ
-	 ejGvD/wIIPIIHSXdfStKClMLWHbPe8E9cqXbyNKfZ97lPvLeULxYfcDR7ZKSDNp737A==
+	t=1795021575;
+	b=kb7CqTfv31yNl7aL+zNaB4tmHbW6qogAWoV49AmK+0cDZq98Ybkww7aaxBcMV7Tidzw8
+	 bA3f9UIm9FIjNz5qklnLlLlMn4WvVFqdDN8byk6ajPMlqNS5nTlW31s/2KgHKwpVT1Hfh
+	 OnTPENobGFUw096yerNs+kp5WhXt7cqByQ71RThAsx/yfGz92xwkgVELy96F75sQVTu74
+	 3NGxbsEII2C1gMepbIhZaHBtOQU/DMBLLxRp6V1hmBiBs3wYAOtcuxwthzWTtodbkP032
+	 V+jEpy4so3J+ZzKc2yfe8XJPEU+kV6oUXtPJhvFiQy9JWFLhun/3z1LGZxYapQcFIDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021572;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RpMlvsgWShZgDQUuKF1BSCoqYRbnsmzIyix4iR4QNv8=;
-	b=CgWEVX4MmRzsDgqjCub50B2ySyWKBmu4pAP8aNc9pY5jxtD3+VumvBtaYjOk6LtFVn59
-	 ko22VpN1M4s4ASjeeWHyZDo1KNkd1X3hCzva9+DstQgWKyUPFA65SZuOfOW2NZ5BCZKpL
-	 prUZ5kfPbMKBdHf47xY/+Ehc+jVbq6Yz/JGUcF3RpiK6eL52gJIdSGoYCeXBI+zvuML0y
-	 2eiEr+dZ7ipgiACrt7suV5hB4NjzO7eLqoNrzBJHDwPZPSv4ITYYxjp03d7hPJbCg7lML
-	 oKdWgGNtuW2tIvc1IPldNdIgENQEzMXbjUWqtRAOVtvMwrck9fY8t0p+ucMUUeIVFbA==
+	bh=wYoIh2+ucsWXSd+lcrOEdSCsyedrHR7YbCYSk47cnUk=;
+	b=kndX4uqHdjgwfua+LBHa055nuWKPajXgeDJP5dfP0n/fd8M+I09Ylez2NQbTRrtT2k6m
+	 3qwRT/XD5JjPB/jv8xdjpNq72Vnw5CcgKw8yUoismJXT15uj9D9jCOXRBRccrppYMPxTf
+	 YWbXtxU13B+kiyH1Cgrk7LBFcweeufO2t0c/5qbl+Wmr0Ikyklm25qlmHDpvOT+rr3w1+
+	 8XMJWLWVCMqsIn8X4DlK7T8RkBRWL0ZpK9BCiesyd5G2r5WcIbSFoSycJPQIl5BbS0+cd
+	 jTpmWGvf+8LsGS0hsvfczwK9cECWrhCnArL18o9Q6V5UawCOmQRWMHzZw+dg9/E7vaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iu2g5ayt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1BZPryBF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9641606A334;
-	Wed, 18 Nov 2026 17:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A211606A331;
+	Wed, 18 Nov 2026 17:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iu2g5ayt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7451F000C5;
-	Wed, 18 Nov 2026 17:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1BZPryBF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23FE1F000C8;
+	Wed, 18 Nov 2026 17:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021572;
-	bh=RpMlvsgWShZgDQUuKF1BSCoqYRbnsmzIyix4iR4QNv8=;
+	s=korg; t=1795021575;
+	bh=wYoIh2+ucsWXSd+lcrOEdSCsyedrHR7YbCYSk47cnUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iu2g5ayt/YWVFCSNS6VKh9swz4jq0pfWdMbJt6Ky9LW93V+1MQicr+zR8fRnv5wFO
-	 Jt9sU+G8JuiXKhdQ4KNzTUTXfG9Yyep/CskRs7l88wQ9d3o/I8U7k60bv1DeJuc1H3
-	 zApU5pmxm9N8HndNDrnnU3PPEG5bglKwDYCbzD6Y=
+	b=1BZPryBFU6McDVrqPr8KV9cJ5i4vMuBq8TG3znwVho8s/Cv0Wzw7BdvdiX6S0zytp
+	 9EeDAzdm4dBCM3JBI8xQlQxhW771E+OHcb76mYHQQUwhxFw4886/zK/Wx7V9gUxbEv
+	 bhzKjzFzXz9x7Y8khN6ZyZp8Q8PfTQ0p4syHsFYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2354/2651] nsfs: check the trailing bytes of a file handle in bytes, not words
-Date: Wed, 18 Nov 2026 15:59:54 +0100
-Message-ID: <20261118150409.789928788@linuxfoundation.org>
+Subject: [PATCH 7.3 2319/2651] ASoC: wm8994: fix MCLK gating for AIF clocks sourced from MCLK2
+Date: Wed, 18 Nov 2026 15:59:19 +0100
+Message-ID: <20261118150408.668648429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,64 +70,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit ad0312e1decd40d18e0e75de96c9c52013ec05be ]
+[ Upstream commit 872215109fc880de7a03fa30437346f9212649e8 ]
 
-open_by_handle_at(2) gets the wrong answer for a namespace file handle
-longer than struct nsfs_file_handle: a 16-byte handle padded with
-zeros to 48 bytes or more, which is what the comment above the check
-promises to accept, is refused with -ESTALE, while a 20-byte handle
-whose extra word is garbage is accepted. Reproduced on v7.0 and on
-mainline with the handle of /proc/self/ns/net from
-name_to_handle_at(AT_SYMLINK_FOLLOW); no privilege is needed, as
-nsfs_fh_to_dentry() admits the caller's own namespaces. Since v6.18.
+aif_mclk_set() masks the AIFnCLK_SRC field of the AIFn clocking
+register, but compares the result with unshifted field values. The
+MCLK2 source (0x08) therefore never matches, so MCLK2 is never enabled
+for an AIF clocked from it, and the AIF relies on other users of that
+clock to keep it running.
 
-nsfs_fh_to_dentry() receives fh_len in 32-bit words, like every
-fh_to_dentry(), and NSFS_FID_SIZE_U32_LATEST is the struct size in
-words (4). The check that the bytes past the struct are zero adds that
-word count to a byte pointer and passes the word difference to
-memchr_inv() as a byte count: it inspects bytes 4 .. fh_len - 1 of the
-handle instead of bytes 16 .. 4 * fh_len - 1. Up to a 44-byte handle
-that range lies inside ns_id, ns_type and ns_inum, so the outcome
-depends on the values of those fields (a padded net namespace handle
-passes because the upper bytes of its ns_id and ns_type are zero) and
-the real trailing bytes are never looked at; from 48 bytes on the range
-always covers a non-zero field byte and every padded handle is refused.
+On the Exynos4412 Trats2 board, AIF1 and SYSCLK run from MCLK2, the
+32768Hz PMIC clock, while the codec is idle. That clock is shared with
+the WLAN and Bluetooth chips, which enable it only once their drivers
+are loaded. Until then the codec runs from a stopped clock: FLL1 fails
+to lock when configured from that state, and the codec floods the
+kernel log with FIFO error interrupts once a digital path is powered
+up:
 
-Start NSFS_FILE_HANDLE_SIZE_LATEST bytes into the handle and check
-(fh_len - NSFS_FID_SIZE_U32_LATEST) * sizeof(u32) bytes.
+ wm8994-codec wm8994-codec: Timed out waiting for FLL lock
+ wm8994-codec wm8994-codec: FIFO error
 
-Tested with a program that encodes /proc/self/ns/net and opens the
-handle with handle_bytes 16, 20, 36, 48 and 128 (zero padding), and 20
-and 48 with a non-zero last byte. Before: 48 and 128 refused, the
-20-byte garbage handle accepted; after: every padded handle opens, both
-garbage handles are refused.
+Booting with clk_ignore_unused, which keeps that clock running from
+the bootloader, makes both issues disappear.
 
-Fixes: 5222470b2fbb ("nsfs: support file handles")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261018030342.799383-1-nickolai@csail.mit.edu
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixing just the comparison is not enough. The AIF clock source can
+be changed while the AIF clock is running, for example the Midas
+machine driver switches AIF1 between MCLK2 and FLL1 while AIF1CLK is
+kept enabled for jack detection. Looking up the clock again on disable
+can then release a different MCLK than the one enabled, leaking the
+enable count of one clock and underflowing the other.
+
+Shift the field value before decoding it, and remember which MCLK has
+been enabled for each AIF, so that the same clock is released on
+disable. While at it, report the MCLK number 1-based in the error
+message.
+
+Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Link: https://patch.msgid.link/20261021101750.3297770-2-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nsfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wm8994.c | 28 ++++++++++++++++++----------
+ sound/soc/codecs/wm8994.h |  1 +
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nsfs.c b/fs/nsfs.c
-index c3b6ae76594a8..0ef4e1455b7a0 100644
---- a/fs/nsfs.c
-+++ b/fs/nsfs.c
-@@ -529,8 +529,8 @@ static struct dentry *nsfs_fh_to_dentry(struct super_block *sb, struct fid *fh,
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 3214cf2a4c916..e166a377e1ed4 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -1059,13 +1059,24 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 	unsigned int offset, val, clk_idx;
+ 	int ret;
  
- 	/* Check that any trailing bytes are zero. */
- 	if ((fh_len > NSFS_FID_SIZE_U32_LATEST) &&
--	    memchr_inv((void *)fid + NSFS_FID_SIZE_U32_LATEST, 0,
--		       fh_len - NSFS_FID_SIZE_U32_LATEST))
-+	    memchr_inv((void *)fid + NSFS_FILE_HANDLE_SIZE_LATEST, 0,
-+		       (fh_len - NSFS_FID_SIZE_U32_LATEST) * sizeof(u32)))
- 		return NULL;
++	/*
++	 * The AIF clock source may be changed while the AIF clock is
++	 * running, so release the MCLK which has been enabled for it
++	 * instead of the one currently selected.
++	 */
++	if (!enable) {
++		clk_disable_unprepare(wm8994->aif_mclk[aif]);
++		wm8994->aif_mclk[aif] = NULL;
++		return 0;
++	}
++
+ 	if (aif)
+ 		offset = 4;
+ 	else
+ 		offset = 0;
  
- 	switch (fh_type) {
+ 	val = snd_soc_component_read(component, WM8994_AIF1_CLOCKING_1 + offset);
+-	val &= WM8994_AIF1CLK_SRC_MASK;
++	val = (val & WM8994_AIF1CLK_SRC_MASK) >> WM8994_AIF1CLK_SRC_SHIFT;
+ 
+ 	switch (val) {
+ 	case 0:
+@@ -1078,16 +1089,13 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
+ 		return 0;
+ 	}
+ 
+-	if (enable) {
+-		ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
+-		if (ret < 0) {
+-			dev_err(component->dev,	"Failed to enable MCLK%d\n",
+-				clk_idx);
+-			return ret;
+-		}
+-	} else {
+-		clk_disable_unprepare(wm8994->mclk[clk_idx].clk);
++	ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
++	if (ret < 0) {
++		dev_err(component->dev,	"Failed to enable MCLK%d\n",
++			clk_idx + 1);
++		return ret;
+ 	}
++	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
+ 
+ 	return 0;
+ }
+diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
+index b28398aa9e48f..5b22cfab317e1 100644
+--- a/sound/soc/codecs/wm8994.h
++++ b/sound/soc/codecs/wm8994.h
+@@ -81,6 +81,7 @@ struct wm8994_priv {
+ 	struct wm_hubs_data hubs;
+ 	struct wm8994 *wm8994;
+ 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
++	struct clk *aif_mclk[2];
+ 	int sysclk[2];
+ 	int sysclk_rate[2];
+ 	int mclk_rate[2];
 -- 
 2.53.0
 
