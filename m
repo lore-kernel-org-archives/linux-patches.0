@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050599;
-	b=IRRlX3wTwrZISmklc8EgsEwAGkZI2yQ0xOgXHnKcGnQ2GN0TM0y80vHVTM1hUtcPcxF8
-	 aUiQWZSpk4Iz5v5LMx5OjQEw+W+vlOxHq1A39QdZJPeG4NXZcOMk0H4Iy4UPTQOQHH8M7
-	 /pzD6f1y51w79HaX6QE0V8xbLILGRkwuTSmYtdwVDeGx+h5l0qaWd68X8pZsPI0P7CUBq
-	 vtpqJL0qWQHr0RpfltInKRuZSD/+k3kP78kLObQRCjGjbAgeXmlLmMEh7ohuJgC1hHAvK
-	 LXKsAnCF47Zv5fGwJjRqgRkEDjSaLluewOc/hd/PQk9G0gSvRTP9ghXMKAkxw2CyioA==
+	t=1795050602;
+	b=s4ueWaoXhdelZZ4RgMAQg/GeLoZOiO2F7iIa1g2NNzYqa4syFWAyxLoBIYzxBwLaR6Sq
+	 4UQn0aCU9kC9olWCOB+rmvvrpj+PgG3/zJj4zxiZXkhnLj05u7+mxIHKiGRgdT0fNLLRz
+	 TCF0B4ZXwHWoZMgB81DMJhViFpl162XIe6i+jr0P65atdL4V1MkA+yaiKyIGqxLLFA8x3
+	 Hxd93KloQl7B+DJtwc3qJOP5OyLgHeBUf9ypJFjE7H0MMhJ4Zxqh5nIXO1PBKLD30ec6t
+	 zjH1KChGdgnq5OhkDksDKVg2e7F+5z5y4ud0WOjMjhGx7A9F7SwU+OFLwEhIvnUEseA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KwcVbtHlhooZvo05IoyIJxARPTGicb3ZgR9hXN/oc+o=;
-	b=Jn/tt/YqTy4vtxLdzluN4XLMZEZ8VbxU1WeAhuQ9ApXcMy7WJVkkDvQcl0YxcxBcOsOU
-	 uoYI3U6dJwyZarQR27D0kZgoMANCt8HwzFyaJMJjQ+a/1b2yE41/xrpgPKwpKGvgveize
-	 leC22op5kNhWJ2AE0EHFtJmetC1HgJOs5M63fYnyLHNIUfBV+REslrdoKAxet+mpquGkh
-	 gpKC0/mL8NVEP7BrtJ008Rr7CgPb1PAfGkPRgnnmKTi8k6FsvA/gkDZuayJUGmRj//0cw
-	 E8Gqn/QxUZq/QFU/3fZUrAq2lNqTk6QSF8y4Js8BSu/joL68Mcdc50QwZ3ImdoDvYyQ==
+	bh=7ZxERjMZB8GJHvLswdbPbJsxstmmwuh53P5fd5yun+I=;
+	b=ZtIneggbKqCj7qRdencOhxHFss7KUvBhwG/iGWUJLLTr66bqGXNyVhOTgUVfQRB3wVdu
+	 SOsk/rzcNZJ6cnc4wQ9MjSeFROg+LbH5LzWQCp3iMDh/18wzlnRreEDdhlsIQ5mMxHwUj
+	 dpB6d8BhD3euJIXxwt4WCDrbCw7seaNLNVcG082/qdke/II2yKY02VXqY3Fg9GOOZ5wrI
+	 6A79XL8hb8ElR1Tog6qFEl1mw2af5tcMEDBd00oR43mozBbhCQ18QdclpbQp2XvIgisOQ
+	 oJTuxAqCeqv1ipqMOm+K4/GTFh+MgPR1hSFOUyv/1KNAt/iCY/Sql70mamJRNUfKy5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qg7ZsPd2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=snp+fE2c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419F9606A32A;
-	Thu, 19 Nov 2026 01:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AF3606A31C;
+	Thu, 19 Nov 2026 01:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qg7ZsPd2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F09F1F000C4;
-	Thu, 19 Nov 2026 01:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=snp+fE2c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758771F000C4;
+	Thu, 19 Nov 2026 01:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050599;
-	bh=KwcVbtHlhooZvo05IoyIJxARPTGicb3ZgR9hXN/oc+o=;
+	s=korg; t=1795050602;
+	bh=7ZxERjMZB8GJHvLswdbPbJsxstmmwuh53P5fd5yun+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qg7ZsPd2SImIdhvLcr+dyoGRmcfxnA+p0ySuel5IvhH02tn7hgFXiROq6OVvtPtyH
-	 7nZg8nXJyDGMDY2dsxZcX2EfGGhpTVxA+JlZ3tEmytjO4LdUy2dIuXjmTjeGCSMfUS
-	 jzcaqZAbwCtqxIA60rHsUCZA3wK0JOSz1J3emhPg=
+	b=snp+fE2cIhxCRQSrJBXhBEmXd9JGoHt2gPWse3kUd0QYS5JN1cBGaxj7MwA8dACH3
+	 LzDNJvjl0m2OEAONT9UoBdarbcdPrlFfwjtFrGmyne8MQLo9D0SfnrfoYK+BAT5ZEM
+	 YsFTaqRy+mEYkbtkuyDWfutSnfLgfE0ruTt99Djk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Qing Zhang <diasyzhang@tencent.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2766/2857] nvmet: protect nvmet_ports_list with nvmet_config_sem
-Date: Wed, 18 Nov 2026 16:03:20 +0100
-Message-ID: <20261118150341.197257126@linuxfoundation.org>
+Subject: [PATCH 6.1 2767/2857] nvme: add TCP TSAS definitions
+Date: Wed, 18 Nov 2026 16:03:21 +0100
+Message-ID: <20261118150341.232331788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,67 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Zhang <diasyzhang@tencent.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit cead6beb89256ae7145b65fbe8e8a5fedba4a47c ]
+[ Upstream commit 646f45b23218c7a97a84259d8eeb22dad5711fc8 ]
 
-Readers of nvmet_ports_list (e.g. nvmet_subsys_disc_changed()) hold
-nvmet_config_sem and assert it via lockdep.  The writers --
-nvmet_ports_make() and nvmet_port_release() -- do not take the lock;
-they rely on the parent directory's VFS inode lock for serialization,
-which is an implementation detail of configfs and not a guaranteed
-contract.  Align the writers with the lock the readers already require.
-
-Also move list_add() in nvmet_ports_make() to after the port is fully
-initialized: the old position published the port on the global list
-before INIT_LIST_HEAD(&port->subsystems), so a concurrent reader
-could traverse uninitialized list heads.
-
-flush_workqueue() in nvmet_port_release() stays outside the semaphore
-to avoid a lock dependency on nvmet_wq.
-
-Fixes: b662a078576e ("nvmet: enable Discovery Controller AENs")
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Qing Zhang <diasyzhang@tencent.com>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 60385038754e ("nvmet: use the enabled transport when disabling a port")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/linux/nvme.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index cbc3693d5fc0a..25a16d2336f5f 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -1644,7 +1644,9 @@ static void nvmet_port_release(struct config_item *item)
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 7f8ef075b0d26..7a41f5f9cbd1b 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -111,6 +111,13 @@ enum {
+ 	NVMF_RDMA_CMS_RDMA_CM	= 1, /* Sockets based endpoint addressing */
+ };
  
- 	/* Let inflight controllers teardown complete */
- 	flush_workqueue(nvmet_wq);
-+	down_write(&nvmet_config_sem);
- 	list_del(&port->global_entry);
-+	up_write(&nvmet_config_sem);
- 
- 	kfree(port->ana_state);
- 	kfree(port);
-@@ -1701,8 +1703,6 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
- 			port->ana_state[i] = NVME_ANA_INACCESSIBLE;
- 	}
- 
--	list_add(&port->global_entry, &nvmet_ports_list);
--
- 	INIT_LIST_HEAD(&port->entry);
- 	INIT_LIST_HEAD(&port->subsystems);
- 	INIT_LIST_HEAD(&port->referrals);
-@@ -1733,6 +1733,10 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
- 	configfs_add_default_group(&port->ana_default_group.group,
- 			&port->ana_groups_group);
- 
-+	down_write(&nvmet_config_sem);
-+	list_add(&port->global_entry, &nvmet_ports_list);
-+	up_write(&nvmet_config_sem);
++/* TSAS SECTYPE for TCP transport */
++enum {
++	NVMF_TCP_SECTYPE_NONE = 0, /* No Security */
++	NVMF_TCP_SECTYPE_TLS12 = 1, /* TLSv1.2, NVMe-oF 1.1 and NVMe-TCP 3.6.1.1 */
++	NVMF_TCP_SECTYPE_TLS13 = 2, /* TLSv1.3, NVMe-oF 1.1 and NVMe-TCP 3.6.1.1 */
++};
 +
- 	return &port->group;
- }
+ #define NVME_AQ_DEPTH		32
+ #define NVME_NR_AEN_COMMANDS	1
+ #define NVME_AQ_BLK_MQ_DEPTH	(NVME_AQ_DEPTH - NVME_NR_AEN_COMMANDS)
+@@ -1453,6 +1460,9 @@ struct nvmf_disc_rsp_page_entry {
+ 			__u16	pkey;
+ 			__u8	resv10[246];
+ 		} rdma;
++		struct tcp {
++			__u8	sectype;
++		} tcp;
+ 	} tsas;
+ };
  
 -- 
 2.53.0
