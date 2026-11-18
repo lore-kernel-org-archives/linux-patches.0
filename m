@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041244;
-	b=QyDI9FQbyKfC18ZrOy0kps6QW+872jAD/oc7fJbW42f6ISmntv1hIcC3IrS+PEuG/PHE
-	 tGJcEJ30bASppCbyFHT5Nb/UuUCB7fhcddjLY/PySr0k0rZffCOPPmqN+Cll6Bt2NWOgT
-	 spjEObpGpfM67jvQL8XNWvxcNTd+xKB2Y1t6ZVFDlZOMU0vR8DBTQV5XJ3NS5Uki8VoY2
-	 AYJ3YwJSwO5c9bfawYRwQdB3bsloMlO8BB7jwCIA3rWm+SFYJ2KcdMkgb5Bun8PlgkMkX
-	 R9k1AhneG18ux/8g/lv7oT63r1Ggiixby9P4S2TdRBEbaOE9FfASHtFJBLldszHqMwA==
+	t=1795041247;
+	b=CNQH7Lk1uAHGQj4mIJDKYTT39SkV+vnNbYuDirzon0Wobe9AXDfNVaUkfjQUp8kmbhf2
+	 29F+gPV7RN9YOtkoBU2yr/u8Y6rRh3iGq2RFoId2zU+zc4IWInzqZ9ihskOILYneMdER/
+	 Bbk4IP84wWm8qPzkRMyOFGJBUZ7xuwmHqpgSKxKDU5he5XeooTOvW+mDt+PiZWipdpgVR
+	 0yZf7mjcsNw+4LgYjDeaq1rPfncsx8kFCvo9n1+N1b+OSy+47yNZIH+xEW+o6OqgCLdzk
+	 4464oA7sz70E43M7B/6e8gA85vLKNUVa4N7AoavqdeTRa/iM2eScdaQASPqte6ATOfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041247;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/TSWnaFpjK+AxnbPX2FmPnt/ly0tARDay2JkrJNJg3o=;
-	b=PLFUhInGRY0FzI6V0JlvThhaY6Xt+QwKPlXY1fUzMLcN5JFugQf/RNwUVZviW6fHamL8
-	 CMmT/q7NbRt85ZO4k6ftG78M4tPRHpDShDxVqQ5IRO0uJnS5TN6LZ3PjCVIQqEiXTNf7B
-	 Xdst2EkHG8Jfe2sOpxFHV2GE3M2ANBx/8+5jjqcURMc/RFUixlswlddjCsUvuk3V8myau
-	 wAU0QJVxIF13lmxnRQCcGlpGbF2GkR+g9qQdbp8yDaKrrtKZ+3FomLqp+71ejEU9lcpnZ
-	 0qquvECUk7KUfZs9iVbbgvwlFDUrGA0T4KToOook/kMbbfQS78DMyvr7XAmtPnNdCeg==
+	bh=sGlOlQlN/LVJxGgBgWxBZLJ4DeFSajUybQMjff4eFVo=;
+	b=g/V3zckfqdCOZMNYYa69FW1JBL/nU3efMgJ9MhNBT2bMyB1uKEkTFcFvwsQrSE0h4KXC
+	 /1cs9yLalEB4M7U62i09xTZvrmelwZMr/euiqn/4SbNUwO66xarh+iiF6BmAU3t5VwTHg
+	 PM2fp7E2SLDKk2rn0zsmxhOJMZ7wL6bvtXCRjRbC0RhOqZB+ZlvksAJXRUfVeF7dwuc36
+	 9ze2kAQP8sS7OJqwGUu4zrfnPeNU4ndzlvTLXBF8aAIXX9YGX6HfRa5cDHKEpalk88IYl
+	 Y/NXM47ks3px6t0bZUrvLb//DU6PrKygd7Dp/e4hHS5IBS6tdCy2BWTRkJfA3WkQyhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5ztubOz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Zp/fAmcU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8005606A31C;
-	Wed, 18 Nov 2026 22:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62766606A320;
+	Wed, 18 Nov 2026 22:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a5ztubOz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F97E1F000C4;
-	Wed, 18 Nov 2026 22:34:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zp/fAmcU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A5D1F000C4;
+	Wed, 18 Nov 2026 22:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041244;
-	bh=/TSWnaFpjK+AxnbPX2FmPnt/ly0tARDay2JkrJNJg3o=;
+	s=korg; t=1795041247;
+	bh=sGlOlQlN/LVJxGgBgWxBZLJ4DeFSajUybQMjff4eFVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a5ztubOzHX0GlQ7kTKH8Pzf/I6tGRrEX97q+IDhW6Tu4P3da9A4CvAxBw0d+LX67L
-	 v6uRtueclpu8icqWEqhzzn4lVoEPB98srmoUU4zSPHjiwBhiMKqrAnYEXR87dAH6gX
-	 KautUZjq/OPqKP8hbOt7u+B8cF4Hciqbwd3l250o=
+	b=Zp/fAmcUPSLhM/TNWM3I9ggpOp+TrorHAhsUr17YjvVLaA6CF/S8GlMMuYxHHmYbr
+	 h2w0P08tDw5ARXULeZsSmjM0dtTQRJCWc95Bvq2XBf768dB8O7q9EONOEr0tyW1NTO
+	 AhL/p48ogFi8HUd85r5dSTcACQ1N7AmFILWf/FQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Tal Zussman <tz2294@columbia.edu>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2743/3318] block: use iomap_dirty_folio for block devices
-Date: Wed, 18 Nov 2026 15:56:05 +0100
-Message-ID: <20261118150443.066541281@linuxfoundation.org>
+Subject: [PATCH 6.6 2744/3318] block: honor IOCB_NOWAIT in the block device buffered read path
+Date: Wed, 18 Nov 2026 15:56:06 +0100
+Message-ID: <20261118150443.092624600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,58 +73,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit be1e33eda3e6699e57ed3fe6e34078f115b4a1ec ]
+[ Upstream commit d16519a561f4ccc2cebbf52831435833cac1fec6 ]
 
-With CONFIG_BUFFER_HEAD=n, block devices are written back through iomap,
-but def_blk_aops uses filemap_dirty_folio, which only sets PG_dirty. It
-does not set the per-block dirty bits in the folio's iomap_folio_state,
-so iomap_writeback_folio() finds no dirty range, submits no I/O and
-clears PG_dirty, resulting in data loss.
+blkdev_read_iter() takes inode_lock_shared() unconditionally around
+filemap_read(). Unlike blkdev_write_iter(), it does not reject
+IOCB_NOWAIT for buffered I/O, so a non-blocking read, or the buffered
+tail of a short IOCB_NOWAIT direct read, blocks behind set_blocksize()
+holding i_rwsem across sync_blockdev().
 
-Other iomap users set .dirty_folio to iomap_dirty_folio, which marks the
-folio's blocks dirty before calling filemap_dirty_folio().
+A preadv2(RWF_NOWAIT) issued while another thread changes the block
+size with a dirty page cache blocks for as long as sync_blockdev()
+takes, 4 to 6 seconds on a scsi_debug device with delay=5.
 
-This is only observable with block size < folio size. With a single
-block there is no iomap_folio_state to get out of sync and
-iomap_writeback_folio() marks the whole folio dirty itself. For a
-page-aligned device, this may require using the BLKBSZSET ioctl to set
-the block size, which requires CAP_SYS_ADMIN. A device whose size is not
-page aligned already gets a sub-page block size from
-set_init_blocksize(), so no ioctl and no privilege is needed.
+Use inode_trylock_shared() for IOCB_NOWAIT and return the bytes the
+direct path already read, or -EAGAIN if none, when the lock is
+contended, preserving NOWAIT semantics.
 
-To reproduce, on a device with a sub-page block size, write a known
-pattern with O_DIRECT, mmap the same range, store to it, msync() and
-fsync(), then read it back with O_DIRECT. A reproducer is available at
-[1].
-
-[1] https://gist.github.com/tzussman/18ab05cba4b3fdc79cce0a69d1fd05b4
-
-Fixes: 925c86a19bac ("fs: add CONFIG_BUFFER_HEAD")
+Fixes: c0e473a0d226 ("block: fix race between set_blocksize and read paths")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260730-blk-dontcache-v7-0-3e8e6850068d%40columbia.edu?part=5
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://sashiko.dev/#/patchset/20260802-blkdev-fixes-v1-0-a82fc549fd74%40columbia.edu?part=2
+Assisted-by: Claude:claude-fable-5
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Tal Zussman <tz2294@columbia.edu>
-Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-1-307939c387df@columbia.edu
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-4-307939c387df@columbia.edu
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/fops.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/fops.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/block/fops.c b/block/fops.c
-index 088143fa9ac9e..0daa21b0369eb 100644
+index 0daa21b0369eb..8de3bdfdd9984 100644
 --- a/block/fops.c
 +++ b/block/fops.c
-@@ -493,7 +493,7 @@ static int blkdev_writepages(struct address_space *mapping,
- }
+@@ -740,7 +740,15 @@ static ssize_t blkdev_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 	 * Take i_rwsem and invalidate_lock to avoid racing with set_blocksize
+ 	 * changing i_blkbits/folio order and punching out the pagecache.
+ 	 */
+-	inode_lock_shared(bd_inode);
++	if (iocb->ki_flags & IOCB_NOWAIT) {
++		if (!inode_trylock_shared(bd_inode)) {
++			if (!ret)
++				ret = -EAGAIN;
++			goto reexpand;
++		}
++	} else {
++		inode_lock_shared(bd_inode);
++	}
+ 	ret = filemap_read(iocb, to, ret);
+ 	inode_unlock_shared(bd_inode);
  
- const struct address_space_operations def_blk_aops = {
--	.dirty_folio	= filemap_dirty_folio,
-+	.dirty_folio		= iomap_dirty_folio,
- 	.release_folio		= iomap_release_folio,
- 	.invalidate_folio	= iomap_invalidate_folio,
- 	.read_folio		= blkdev_read_folio,
 -- 
 2.53.0
 
