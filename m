@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034637;
-	b=F3fu9IiLSN3RzHIoI9xtvY+jj9pTRUA/joxLBod/tfbsBt7ryeOCdW6p05xrQo2JVTdp
-	 EAgeuGeAlum/YSXIfrEJ4RN0BNEAoIaTnhyKJTccLqPkhptII+h68JSlOPxlwXeBbzvYN
-	 ZCfCJFqSpSmVizy4TZj6hTo/nQ8AVgeuTM0ebAkRj6UvUMW0ttR44roXaicFyOFLD18QQ
-	 eZQrbDFSS/V6JrFbQOVlGmus7O3KXiUjHoW1xwA+yEwWqmXj8mx9RI6sF61wJLBoqQOVz
-	 Q4LMHkrpuXRAzHEheh6gy1pL+ZpqS+dEfAk8/Bb79pMDQY+4vAbQ/k+SX1oroeyYjUg==
+	t=1795034640;
+	b=Qdjbp66wiycVW0x6o6l5K1wpr5t+3MKuFNekNlZkWNWHbTMfPpQePGd/Sm5T4Lf7HQQ0
+	 dSKZpmBAuKJEAfiQqO8KJREuGwyoUwS4oug3jVoIDUfQB4uMQM8hM2AtUl/S3nlyluE02
+	 Fxsh4us0tDrsIeLyLmemmizBjJL68alZDed3ha6HD/8W1QjkpLC0hB1nzrraFqMJRxhgA
+	 vHmdP+Bc8fDmslg1DVme8Y4brSeFfsdaUjUAQcKDYcaFL50VqXMyopLDNnglpS7BqwAEQ
+	 sAiUnOsrdYtg3st3TfQLrpLzC47IA9j+tHdJTnrwWmddWz5czzZHzZBPrfyp/36pg+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lHf9n8XIiE5Rau9U38vwvOT2EK9cJZ6vVLvrfLlXA94=;
-	b=iwruSylKdyQMM38DHTu0faJNSG9ghZkTBCnCwKbZS6gPU5qRClLDu5qZf9PGov9N4jyL
-	 htt1YF5N7X5Xc9pi9KtL5z616cM0sEbJoTjssTyzQwoQU3Engp4NnEEts45COd7HCw07z
-	 wvcbQBasJwcJcOxtIgIG64la0RkW48VIWk/tweBrCm9i8LBgyj5M99yI8mAXn0yjKMbj5
-	 oTBAg4EOQSJqPxIMB+kbHqwbre2/D762Ta9or/LK1Z4h7zM7N1NHsqYUR1Gd1Ml/LVRVU
-	 yW6qyXZr3p6cf78t0GZXWL4xPh33iWYxIcPbnYPhdhL6kIe7YrhwIqTuPI4mmyxiC6Q==
+	bh=Z+WLo3anoxfxMqJsyCtabj5PU7x1guR9ocJ9/RX01es=;
+	b=K5071QvuUY+i6TioZbEj4Z/gigUovzr4iWitz3Twt5aTmjnaoK3znfRiAx6rNaImRAN7
+	 2lyjnFYW8nneQSKQdl40ATHVqem9Z4xNb71rtG1M/adWz+UwYB1QxNMiarPgG9NhI7EN2
+	 27ikHhZvXdrp6U6Brcd22MTAG6zTYYJZwk4R3jM97TRYNMOcg7L6/2sYtszVfxh1mI4Y3
+	 3TLjG229eRkBiiYx5/r5x5Hj1O4OZtc1m8ZEl2/o01/tsTcGmipulCLfOY6dKF3kLkmmx
+	 gG9dAWEuUvq1N2EKUhTo2XTTm2wfTJamcI9azLcl78/ekX3s//6c9bmiB+hjJsYTgAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JzU8EQRx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e60c5rG8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81403606A325;
-	Wed, 18 Nov 2026 20:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CE7606A338;
+	Wed, 18 Nov 2026 20:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JzU8EQRx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91571F000C4;
-	Wed, 18 Nov 2026 20:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e60c5rG8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76141F000C4;
+	Wed, 18 Nov 2026 20:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034637;
-	bh=lHf9n8XIiE5Rau9U38vwvOT2EK9cJZ6vVLvrfLlXA94=;
+	s=korg; t=1795034640;
+	bh=Z+WLo3anoxfxMqJsyCtabj5PU7x1guR9ocJ9/RX01es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JzU8EQRx8CxD4BR6FKOs461g1/5tRUcD1+UDcpF3LeLzEvrT9yQuN6D5aNeos4ISu
-	 Sojd7s+DTLuSdEpJuKgHlKkiiUoBXBjhWUzqaCEykSoAbsJuIt/FpzfCCQTVd3viza
-	 9oGtDE/cZQosfpP0hLm3ubpXg7SVrvUbh9KX1XuU=
+	b=e60c5rG8AVC849iwavb3sHJ2CT3SmWmXLGoq6lO9ifsqB4kuRHxOJKRjz0iFry7yZ
+	 ap+njwvN0kWuBD4yMFV03oIoZ2wSiQ9eEVohVZQmtwSQjFn6ILYoDBhvulK2rvyvbE
+	 w3YaUz/9VJYvJvjkhXXVOzTLmsBD2BjDEwOI0ctM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	stable <stable@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0441/3318] xfrm: save input state data before secpath resets
-Date: Wed, 18 Nov 2026 15:17:43 +0100
-Message-ID: <20261118150329.933642088@linuxfoundation.org>
+Subject: [PATCH 6.6 0442/3318] usb: cdnsp: fix wakeup from S3 after controller context loss
+Date: Wed, 18 Nov 2026 15:17:44 +0100
+Message-ID: <20261118150329.968227981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,104 +69,400 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 3cf5cdecd99c9c186a5ea518d93bbf3045b6e3aa ]
+[ Upstream commit eae6460f617382044c5afe5ef202f4d8b2c099b5 ]
 
-xfrm_input() stores the current xfrm_state in the skb secpath while it
-continues receive-side processing. Some input paths can reset that secpath
-before xfrm_input() has finished dereferencing the state.
+CDNSP controller may lose its runtime register programming across S3
+suspend/resume, depending on SoC power domain configuration. After
+resume the operational and interrupter registers may contain reset
+values, which prevents the gadget side from recovering correctly and
+breaks wakeup from S3.
 
-Receive callback users such as VTI and XFRM interfaces can reset the
-secpath. The VTI receive path does so before checking whether the packet
-crosses network namespaces, while the XFRM interface path does so only for
-cross-network-namespace packets. The XFRM_MAX_DEPTH error path can also
-reset the secpath before the final drop callback reports the current
-state's protocol.
+Fix this by detecting whether the controller lost its register context
+after resume and handling both cases:
+- If context was lost (CFG_3XPORT_U1_PIPE_CLK_GATE_EN set or power
+  lost): reset the controller and reprogram the state required for
+  normal operation, including the command ring, DCBAA pointer, doorbell
+  base, event ring, ERST base/size and event ring dequeue pointer.
+- If context was retained: restart the controller directly without
+  reprogramming registers. Issue a wakeup if the link was in U3 before
+  suspend.
 
-If secpath_reset() drops the last state reference while the state is
-concurrently deleted, xfrm_input() can still dereference the freed state
-when selecting transport_finish() or reporting the drop callback protocol.
+Move the basic controller register programming out of the one-time memory
+initialization path and make it reusable from the resume path. Also
+separate ring allocation from ring initialization so that rings can be
+reinitialized without reallocating DMA memory.
 
-Save the state protocol on the stack while the state is still valid,
-and use the already saved address family for transport_finish(). A larval
-XFRM_STATE_ACQ state has no type, so retain nexthdr as its protocol. This
-preserves the existing drop-path fallback while avoiding the post-reset
-state dereferences without adding an extra state reference to every
-received packet.
+Always perform the full suspend sequence regardless of the current link
+state. Previously, if the device was already in U3, the suspend callback
+returned early without stopping the controller, which could lead to
+commands being issued on a disabled slot during resume.
 
-Fixes: df3893c176e9 ("vti: Update the ipv4 side to use it's own receive hook.")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ sashal: Dropped the x->dir hunk and kept the tree's existing RCU and dev_put(skb->dev) structure, applying only the xfrm_proto and family substitutions in the callback, afinfo lookup, and drop paths. ]
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260820-suspend_resume_fix-v3-1-5a713098b977@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Renamed the hibernated parameter to lost_power in the resume callback to match this tree's signature, and skipped a blank-line removal in cdnsp_run() that doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_input.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/cdns3/cdnsp-gadget.c | 110 +++++++++++++++++++++++++++++--
+ drivers/usb/cdns3/cdnsp-gadget.h |   1 +
+ drivers/usb/cdns3/cdnsp-mem.c    |  98 ++++++++++-----------------
+ 3 files changed, 142 insertions(+), 67 deletions(-)
 
-diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
-index da015efb45414..3c55fc2a37c0f 100644
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -462,6 +462,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 	struct xfrm_state *x = NULL;
- 	xfrm_address_t *daddr;
- 	u32 mark = skb->mark;
-+	u8 xfrm_proto = nexthdr;
- 	unsigned int family = AF_UNSPEC;
- 	int decaps = 0;
- 	int async = 0;
-@@ -472,6 +473,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+diff --git a/drivers/usb/cdns3/cdnsp-gadget.c b/drivers/usb/cdns3/cdnsp-gadget.c
+index 89d3d8167e599..e28a26ce0ab60 100644
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -1819,6 +1819,82 @@ static void cdnsp_get_rev_cap(struct cdnsp_device *pdev)
+ 		 readl(&pdev->rev_cap->tx_buff_size));
+ }
  
- 	if (encap_type < 0 || (xo && (xo->flags & XFRM_GRO || encap_type == 0))) {
- 		x = xfrm_input_state(skb);
-+		xfrm_proto = x->type ? x->type->proto : nexthdr;
++static void cdnsp_set_event_deq(struct cdnsp_device *pdev)
++{
++	dma_addr_t deq;
++	u64 temp;
++
++	deq = cdnsp_trb_virt_to_dma(pdev->event_ring->deq_seg,
++				    pdev->event_ring->dequeue);
++
++	/* Update controller event ring dequeue pointer */
++	temp = cdnsp_read_64(&pdev->ir_set->erst_dequeue);
++	temp &= ERST_PTR_MASK;
++
++	/*
++	 * Don't clear the EHB bit (which is RW1C) because
++	 * there might be more events to service.
++	 */
++	temp &= ~ERST_EHB;
++
++	cdnsp_write_64(((u64)deq & (u64)~ERST_PTR_MASK) | temp,
++		       &pdev->ir_set->erst_dequeue);
++}
++
++static void cdnsp_add_interrupter(struct cdnsp_device *pdev)
++{
++	u64 erst_base;
++	u32 erst_size;
++
++	/* Set ERST count with the number of entries in the segment table. */
++	erst_size = readl(&pdev->ir_set->erst_size);
++	erst_size &= ERST_SIZE_MASK;
++	erst_size |= ERST_NUM_SEGS;
++	writel(erst_size, &pdev->ir_set->erst_size);
++
++	/* Set the segment table base address. */
++	erst_base = cdnsp_read_64(&pdev->ir_set->erst_base);
++	erst_base &= ERST_PTR_MASK;
++	erst_base |= (pdev->erst.erst_dma_addr & (u64)~ERST_PTR_MASK);
++	cdnsp_write_64(erst_base, &pdev->ir_set->erst_base);
++
++	/* Set the event ring dequeue address. */
++	cdnsp_set_event_deq(pdev);
++}
++
++/* Set up basic CDNSP registers */
++static void cdnsp_init(struct cdnsp_device *pdev)
++{
++	unsigned int val;
++	u64 val_64;
++
++	val = readl(&pdev->op_regs->config_reg);
++	val |= ((val & ~MAX_DEVS) | CDNSP_DEV_MAX_SLOTS) | CONFIG_U3E;
++	writel(val, &pdev->op_regs->config_reg);
++
++	/* Initialize the Command ring */
++	cdnsp_ring_init(pdev, pdev->cmd_ring);
++
++	/* Set the address in the Command Ring Control register */
++	val_64 = cdnsp_read_64(&pdev->op_regs->cmd_ring);
++	val_64 = (val_64 & (u64)CMD_RING_RSVD_BITS) |
++		 (pdev->cmd_ring->first_seg->dma & (u64)~CMD_RING_RSVD_BITS) |
++		 pdev->cmd_ring->cycle_state;
++	cdnsp_write_64(val_64, &pdev->op_regs->cmd_ring);
++
++	/* Set Device Context Base Address Array pointer */
++	cdnsp_write_64(pdev->dcbaa->dma, &pdev->op_regs->dcbaa_ptr);
++
++	/* Set Doorbell array pointer */
++	val = readl(&pdev->cap_regs->db_off);
++	val &= DBOFF_MASK;
++	pdev->dba = (void __iomem *)pdev->cap_regs + val;
++
++	/* Initialize the Primary interrupter */
++	cdnsp_ring_init(pdev, pdev->event_ring);
++	cdnsp_add_interrupter(pdev);
++}
++
+ static int cdnsp_gen_setup(struct cdnsp_device *pdev)
+ {
+ 	int ret;
+@@ -1884,6 +1960,8 @@ static int cdnsp_gen_setup(struct cdnsp_device *pdev)
+ 	if (ret)
+ 		return ret;
  
- 		if (unlikely(x->km.state != XFRM_STATE_VALID)) {
- 			if (x->km.state == XFRM_STATE_ACQ)
-@@ -572,11 +574,13 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++	cdnsp_init(pdev);
++
+ 	/*
+ 	 * Software workaround for U1: after transition
+ 	 * to U1 the controller starts gating clock, and in some cases,
+@@ -2014,9 +2092,6 @@ static int cdnsp_gadget_suspend(struct cdns *cdns, bool do_wakeup)
+ 	struct cdnsp_device *pdev = cdns->gadget_dev;
+ 	unsigned long flags;
  
- 		x = xfrm_state_lookup(net, mark, daddr, spi, nexthdr, family);
- 		if (x == NULL) {
-+			xfrm_proto = nexthdr;
- 			secpath_reset(skb);
- 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOSTATES);
- 			xfrm_audit_state_notfound(skb, family, spi, seq);
- 			goto drop;
- 		}
-+		xfrm_proto = x->type ? x->type->proto : nexthdr;
+-	if (pdev->link_state == XDEV_U3)
+-		return 0;
+-
+ 	spin_lock_irqsave(&pdev->lock, flags);
+ 	cdnsp_disconnect_gadget(pdev);
+ 	cdnsp_stop(pdev);
+@@ -2030,12 +2105,38 @@ static int cdnsp_gadget_resume(struct cdns *cdns, bool hibernated)
+ 	struct cdnsp_device *pdev = cdns->gadget_dev;
+ 	enum usb_device_speed max_speed;
+ 	unsigned long flags;
++	bool context_lost;
++	u32 val;
+ 	int ret;
  
- 		skb->mark = xfrm_smark_get(skb->mark, x);
+ 	if (!pdev->gadget_driver)
+ 		return 0;
  
-@@ -696,7 +700,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- 		crypto_done = false;
- 	} while (!err);
+ 	spin_lock_irqsave(&pdev->lock, flags);
++	val = readl(&pdev->port3x_regs->mode_2);
++	context_lost = !!(val & CFG_3XPORT_U1_PIPE_CLK_GATE_EN) || hibernated;
++
++	if (context_lost) {
++		cdnsp_halt(pdev);
++		cdnsp_set_apb_timeout_value(pdev);
++
++		/* Reset the internal controller memory state and registers. */
++		ret = cdnsp_reset(pdev);
++		if (ret)
++			goto unlock;
++
++		val = readl(&pdev->port3x_regs->mode_2);
++		val &= ~CFG_3XPORT_U1_PIPE_CLK_GATE_EN;
++		writel(val, &pdev->port3x_regs->mode_2);
++
++		cdnsp_clear_cmd_ring(pdev);
++
++		memset(pdev->event_ring->first_seg->trbs, 0,
++		       sizeof(union cdnsp_trb) * (TRBS_PER_SEGMENT));
++
++		cdnsp_init(pdev);
++	}
++
+ 	max_speed = pdev->gadget_driver->max_speed;
  
--	err = xfrm_rcv_cb(skb, family, x->type->proto, 0);
-+	err = xfrm_rcv_cb(skb, family, xfrm_proto, 0);
- 	if (err)
- 		goto drop;
+ 	/* Limit speed if necessary. */
+@@ -2043,9 +2144,10 @@ static int cdnsp_gadget_resume(struct cdns *cdns, bool hibernated)
  
-@@ -719,7 +723,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
+ 	ret = cdnsp_run(pdev, max_speed);
  
- 		err = -EAFNOSUPPORT;
- 		rcu_read_lock();
--		afinfo = xfrm_state_afinfo_get_rcu(x->props.family);
-+		afinfo = xfrm_state_afinfo_get_rcu(family);
- 		if (likely(afinfo))
- 			err = afinfo->transport_finish(skb, xfrm_gro || async);
- 		rcu_read_unlock();
-@@ -743,7 +747,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
- drop:
- 	if (async)
- 		dev_put(skb->dev);
--	xfrm_rcv_cb(skb, family, x && x->type ? x->type->proto : nexthdr, -1);
-+	xfrm_rcv_cb(skb, family, xfrm_proto, -1);
- 	kfree_skb(skb);
+-	if (pdev->link_state == XDEV_U3)
++	if (!context_lost && pdev->link_state == XDEV_U3)
+ 		__cdnsp_gadget_wakeup(pdev);
+ 
++unlock:
+ 	spin_unlock_irqrestore(&pdev->lock, flags);
+ 
+ 	return ret;
+diff --git a/drivers/usb/cdns3/cdnsp-gadget.h b/drivers/usb/cdns3/cdnsp-gadget.h
+index a91cca509db08..c157023c93761 100644
+--- a/drivers/usb/cdns3/cdnsp-gadget.h
++++ b/drivers/usb/cdns3/cdnsp-gadget.h
+@@ -1509,6 +1509,7 @@ int cdnsp_endpoint_init(struct cdnsp_device *pdev,
+ int cdnsp_ring_expansion(struct cdnsp_device *pdev,
+ 			 struct cdnsp_ring *ring,
+ 			 unsigned int num_trbs, gfp_t flags);
++void cdnsp_ring_init(struct cdnsp_device *pdev, struct cdnsp_ring *ring);
+ struct cdnsp_ring *cdnsp_dma_to_transfer_ring(struct cdnsp_ep *ep, u64 address);
+ int cdnsp_alloc_stream_info(struct cdnsp_device *pdev,
+ 			    struct cdnsp_ep *pep,
+diff --git a/drivers/usb/cdns3/cdnsp-mem.c b/drivers/usb/cdns3/cdnsp-mem.c
+index 3f35c8af271e0..4b66307baaeb5 100644
+--- a/drivers/usb/cdns3/cdnsp-mem.c
++++ b/drivers/usb/cdns3/cdnsp-mem.c
+@@ -394,13 +394,6 @@ static struct cdnsp_ring *cdnsp_ring_alloc(struct cdnsp_device *pdev,
+ 	if (ret)
+ 		goto fail;
+ 
+-	/* Only event ring does not use link TRB. */
+-	if (type != TYPE_EVENT)
+-		ring->last_seg->trbs[TRBS_PER_SEGMENT - 1].link.control |=
+-			cpu_to_le32(LINK_TOGGLE);
+-
+-	cdnsp_initialize_ring_info(ring);
+-	trace_cdnsp_ring_alloc(ring);
+ 	return ring;
+ fail:
+ 	kfree(ring);
+@@ -604,6 +597,7 @@ int cdnsp_alloc_stream_info(struct cdnsp_device *pdev,
+ 		if (!cur_ring)
+ 			goto cleanup_rings;
+ 
++		cdnsp_ring_init(pdev, cur_ring);
+ 		cur_ring->stream_id = cur_stream;
+ 		cur_ring->trb_address_map = &stream_info->trb_address_map;
+ 
+@@ -699,6 +693,8 @@ static int cdnsp_alloc_priv_device(struct cdnsp_device *pdev)
+ 	if (!pdev->eps[0].ring)
+ 		goto fail;
+ 
++	cdnsp_ring_init(pdev, pdev->eps[0].ring);
++
+ 	/* Point to output device context in dcbaa. */
+ 	pdev->dcbaa->dev_context_ptrs[1] = cpu_to_le64(pdev->out_ctx.dma);
+ 	pdev->cmd.in_ctx = &pdev->in_ctx;
+@@ -992,6 +988,8 @@ int cdnsp_endpoint_init(struct cdnsp_device *pdev,
+ 	if (!pep->ring)
+ 		return -ENOMEM;
+ 
++	cdnsp_ring_init(pdev, pep->ring);
++
+ 	pep->skip = false;
+ 
+ 	/* Fill the endpoint context */
+@@ -1099,28 +1097,6 @@ void cdnsp_mem_cleanup(struct cdnsp_device *pdev)
+ 	pdev->active_port = NULL;
+ }
+ 
+-static void cdnsp_set_event_deq(struct cdnsp_device *pdev)
+-{
+-	dma_addr_t deq;
+-	u64 temp;
+-
+-	deq = cdnsp_trb_virt_to_dma(pdev->event_ring->deq_seg,
+-				    pdev->event_ring->dequeue);
+-
+-	/* Update controller event ring dequeue pointer */
+-	temp = cdnsp_read_64(&pdev->ir_set->erst_dequeue);
+-	temp &= ERST_PTR_MASK;
+-
+-	/*
+-	 * Don't clear the EHB bit (which is RW1C) because
+-	 * there might be more events to service.
+-	 */
+-	temp &= ~ERST_EHB;
+-
+-	cdnsp_write_64(((u64)deq & (u64)~ERST_PTR_MASK) | temp,
+-		       &pdev->ir_set->erst_dequeue);
+-}
+-
+ static void cdnsp_add_in_port(struct cdnsp_device *pdev,
+ 			      struct cdnsp_port *port,
+ 			      __le32 __iomem *addr)
+@@ -1200,6 +1176,36 @@ static int cdnsp_setup_port_arrays(struct cdnsp_device *pdev)
  	return 0;
  }
+ 
++static void cdnsp_initialize_ring_segments(struct cdnsp_device *pdev, struct cdnsp_ring *ring)
++{
++	struct cdnsp_segment *seg;
++
++	/* Only event ring does not use link TRB. */
++	if (ring->type == TYPE_EVENT)
++		return;
++
++	seg = ring->first_seg;
++
++	while (seg) {
++		struct cdnsp_segment *next = seg->next;
++
++		cdnsp_link_segments(pdev, seg, next, ring->type);
++		if (next == ring->first_seg)
++			break;
++
++		seg = next;
++	}
++
++	ring->last_seg->trbs[TRBS_PER_SEGMENT - 1].link.control |= cpu_to_le32(LINK_TOGGLE);
++}
++
++void cdnsp_ring_init(struct cdnsp_device *pdev, struct cdnsp_ring *ring)
++{
++	cdnsp_initialize_ring_segments(pdev, ring);
++	cdnsp_initialize_ring_info(ring);
++	trace_cdnsp_ring_alloc(ring);
++}
++
+ /*
+  * Initialize memory for CDNSP (one-time init).
+  *
+@@ -1211,10 +1217,8 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ {
+ 	struct device *dev = pdev->dev;
+ 	int ret = -ENOMEM;
+-	unsigned int val;
+ 	dma_addr_t dma;
+ 	u32 page_size;
+-	u64 val_64;
+ 
+ 	/*
+ 	 * Use 4K pages, since that's common and the minimum the
+@@ -1222,10 +1226,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 	 */
+ 	page_size = 1 << 12;
+ 
+-	val = readl(&pdev->op_regs->config_reg);
+-	val |= ((val & ~MAX_DEVS) | CDNSP_DEV_MAX_SLOTS) | CONFIG_U3E;
+-	writel(val, &pdev->op_regs->config_reg);
+-
+ 	/*
+ 	 * Doorbell array must be physically contiguous
+ 	 * and 64-byte (cache line) aligned.
+@@ -1237,8 +1237,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 
+ 	pdev->dcbaa->dma = dma;
+ 
+-	cdnsp_write_64(dma, &pdev->op_regs->dcbaa_ptr);
+-
+ 	/*
+ 	 * Initialize the ring segment pool.  The ring must be a contiguous
+ 	 * structure comprised of TRBs. The TRBs must be 16 byte aligned,
+@@ -1264,17 +1262,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 	if (!pdev->cmd_ring)
+ 		goto destroy_device_pool;
+ 
+-	/* Set the address in the Command Ring Control register */
+-	val_64 = cdnsp_read_64(&pdev->op_regs->cmd_ring);
+-	val_64 = (val_64 & (u64)CMD_RING_RSVD_BITS) |
+-		 (pdev->cmd_ring->first_seg->dma & (u64)~CMD_RING_RSVD_BITS) |
+-		 pdev->cmd_ring->cycle_state;
+-	cdnsp_write_64(val_64, &pdev->op_regs->cmd_ring);
+-
+-	val = readl(&pdev->cap_regs->db_off);
+-	val &= DBOFF_MASK;
+-	pdev->dba = (void __iomem *)pdev->cap_regs + val;
+-
+ 	/* Set ir_set to interrupt register set 0 */
+ 	pdev->ir_set = &pdev->run_regs->ir_set[0];
+ 
+@@ -1291,21 +1278,6 @@ int cdnsp_mem_init(struct cdnsp_device *pdev)
+ 	if (ret)
+ 		goto free_event_ring;
+ 
+-	/* Set ERST count with the number of entries in the segment table. */
+-	val = readl(&pdev->ir_set->erst_size);
+-	val &= ERST_SIZE_MASK;
+-	val |= ERST_NUM_SEGS;
+-	writel(val, &pdev->ir_set->erst_size);
+-
+-	/* Set the segment table base address. */
+-	val_64 = cdnsp_read_64(&pdev->ir_set->erst_base);
+-	val_64 &= ERST_PTR_MASK;
+-	val_64 |= (pdev->erst.erst_dma_addr & (u64)~ERST_PTR_MASK);
+-	cdnsp_write_64(val_64, &pdev->ir_set->erst_base);
+-
+-	/* Set the event ring dequeue address. */
+-	cdnsp_set_event_deq(pdev);
+-
+ 	ret = cdnsp_setup_port_arrays(pdev);
+ 	if (ret)
+ 		goto free_erst;
 -- 
 2.53.0
 
