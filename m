@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017728;
-	b=EhC6/GZJGU5UJzCs7Q6omu/LJpuRey9za94aYG/iVneJOrMiO4+N5RgjfnFhVTTQlca4
-	 F3Hmm2Qv5KbLZ5bfnr3M/+eaBXFAbODANuY0+P0u8SkCF7jKs8O8tIa9RfZYZwG5cjrp4
-	 XWaotJ8abqP+F5rnhkwi19J6WwbuTzayteb3HvXXyvoox/perTr0Iq3IY5apHOAFM2ifV
-	 aMpYJMU2ejMDKspH29u5R0BheggBEGXWm8bilwK2O6hcjIesmx4baS4PfxlenuSu8wP5k
-	 TQQcczXtnVHfqzIHlo7JmVDFStfG7wmXClbss/LQdgkAFULL+mtW3zMwZBVKvV+5Hmg==
+	t=1795017732;
+	b=3VZxNM/gazp4fqLFwDmEuGcUtDEpMDWYmg82FRUSgTruFUVglZ7mrhEspXeQhjUe4kVs
+	 Z+nD96l+895t/OwZb3SStLK33SJ2jOUgabGvMbd5rzXFKlQsuj3DvflRt9BNdlbTQCMck
+	 f7pg5CkzHwk3Mves9d9A/SC0KDrjzlMHAqAJEgeMAtaQP+KLz8xxm0jwW1CHvPmlRtJOS
+	 wNyMApjEkrG+noKl4Qk104v1PEHEV86kH7646ZSc/kCGPxUP19nNb2CPwBgmItxGknRFn
+	 iUDEDP7H+mW6u5QQ0sQRkVdVbV/+ZBWkTEzzqcX0mChc3uUJDA8oQpVq5W5XqFGM/OA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017728;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017732;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gj4QWNm8meAhNOhOhfAE8R3q0G8NMpB2ExQdxyQxEys=;
-	b=Lzrh6KcOkF42Rr6ZPcj0jEAgHddmtL1eF/xzottzD5SXZ5wFEp/CfXMdVTW8Ny1uU8t/
-	 CwtTikodSiqYpNOkDtccuNso8rU1crSNngOB808ocfAAS7/J71PpljiIQj0AIIBj3qh8Z
-	 UHao2SQ7uJJYFr5Myejk1Ku5daDsyU20QE3K1hgGy+MIJSZeT30Zez7OV7U0ydNoTe0ed
-	 FB0Z+m1z8zLGCuAEEILDKUvrYyMxfGGgLALG68aItURz4EAlZjVclg+YCUaEpi73kANCY
-	 ZZTiB/VyUt7OtI3v0QBFwwaLmiLtzNk3jganS3YWfH56NswDcl9UmEYLkzt+lwePjxA==
+	bh=K0MNhl+MHLTqk99RyfkX7jhOCynkOjL3J4zomgONkk0=;
+	b=M2BouqmKhtHv/OlAbJs/hFyyDZazifSyDqFsdaCPp/jUfW26sN8yhxl5Xkf+s+1lryIq
+	 yxAMAZuN1hh5skeU+8UuXz+Nskr6ovccYRBULtJhMMFRXH+yl/cuLu5K7oD2oHXZWIEs+
+	 cMm66OO4+ZdZsA7X7ghMJ0EC9qklTXadRqO3+8TCzHupPg/0t/oZJjO8+PG8+VV5UGpQm
+	 xZphcmWBxFL20J0fJeQwb5/0DIJv8lWqO3mURcQjjuJJ2UXUjTAdFfmmDzvgdUvM0WKEy
+	 UUEF5n88JiWFvq0WbRVs5YZ4+2Cg1OfRyexz4pq2YzVFeGAEkbCpK0yAltcd3lXqnJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hM/CFTAR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8qAq0HG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BB5606A320;
-	Wed, 18 Nov 2026 16:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B12606A31C;
+	Wed, 18 Nov 2026 16:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hM/CFTAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1513A1F000C6;
-	Wed, 18 Nov 2026 16:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8qAq0HG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6421F000C4;
+	Wed, 18 Nov 2026 16:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017728;
-	bh=gj4QWNm8meAhNOhOhfAE8R3q0G8NMpB2ExQdxyQxEys=;
+	s=korg; t=1795017731;
+	bh=K0MNhl+MHLTqk99RyfkX7jhOCynkOjL3J4zomgONkk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hM/CFTARlfcYb/fZoSgoHhHTFIexLE/vA8ZPwll0YxBrNK3uNw5C1DKsSQHokB2UI
-	 eoMYa5wMMKRlA6H9kTcHrffOoa1LkjOFaYaJ7BZu2Uh57+fTHWS3+iFQ+YiRqf8H3S
-	 /2M2MV6gIfQYAp8UKg8/5QxVB3MRtWbH/+2I+hk0=
+	b=G8qAq0HGgEo9CUESgiokS8TptEOw/nAmO+8pGYeC+520C+1tfBDTLpI7PYzNDQ/UW
+	 XXTMjTc8N3k7VoACUZkdBWZ1+3eet9WabYDh+skA7odKRcmlRfdP8nm7WZWHzmcXY6
+	 pbzi72sZG916J0raXIPx6k55G+O3dd3CTUe229qY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0987/2651] cgroup/cpuset: Run SCHED_DEADLINE shrink test on valid partition root only
-Date: Wed, 18 Nov 2026 15:37:07 +0100
-Message-ID: <20261118150323.435472167@linuxfoundation.org>
+Subject: [PATCH 7.3 0988/2651] spi: spi-qpic-snand: fix read location register usage in qcom_spi_config_cw_read()
+Date: Wed, 18 Nov 2026 15:37:08 +0100
+Message-ID: <20261118150323.471158048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,66 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 8a1c0f5c82843104d9bef2bc3726c89da70a9b91 ]
+[ Upstream commit f3c0a2b557ea87cbd802b278783c32484a063ded ]
 
-Commit f82f80426f7a ("sched/deadline: Ensure that updates to exclusive
-cpusets don't break AC") adds a check in validate_change() to make
-sure that there is enough bandwidth for SCHED_DEADLINE tasks if we
-shrink a v1 exclusive cpuset that has CS_CPU_EXCLUSIVE flag set.
+While configuring a codeword read, the com_spi_config_cw_read()
+function unconditionally schedules writing of the regular read
+location registers. However these registers should be written
+only if the actual codeword is not the last one.
 
-With the introduction of cpuset partition in cgroup v2, we keep setting
-the CS_CPU_EXCLUSIVE flag for a partition root so that the SCHED_DEADLINE
-check will continue to work as intended. However it turns out that the
-current code isn't perfect and there are cases where a cpuset isn't
-a valid partition root, but the exclusive flag is still incorrectly
-set. This can leads to SCHED_DEADLINE check being incorrectly triggered
-when there are deadline tasks in the system. This can result in unexpected
--EBUSY failure when making changes to cpuset control files. Fix that
-by checking for a valid partition root for v2 and is_cpu_exclusive()
-for v1. It is far easier and less cumbersome than to make sure that
-the exclusive flag is only set for valid partition roots.
+Change the function to schedule writing of the registers corresponding
+to the acual codeword only.
 
-Even though commit a86ce68078b2 ("cgroup/cpuset: Extract out
-CS_CPU_EXCLUSIVE & CS_SCHED_LOAD_BALANCE handling") is marked as a
-commit to be fixed, the problem may exist before that.
+While at it, also drop the single-use 'reg' and 'num_cw' local variables
+and use the respective values directly in order to make the code easier
+to understand.
 
-Fixes: a86ce68078b2 ("cgroup/cpuset: Extract out CS_CPU_EXCLUSIVE & CS_SCHED_LOAD_BALANCE handling")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Reviewed-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 7304d1909080 ("spi: spi-qpic: add driver for QCOM SPI NAND flash Interface")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Link: https://patch.msgid.link/20260922-qpic-snand-fix-cw_read-readloc-v1-1-67f6819fb3d7@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/spi/spi-qpic-snand.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 86b5921998afa..4a8166101a69a 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -792,8 +792,8 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
- 	 * For v1, effective_cpus == cpus_allowed & user_xcpus() returns
- 	 * cpus_allowed.
- 	 *
--	 * For v2, is_cpu_exclusive() & is_sched_load_balance() are true only
--	 * for non-isolated partition root. At this point, the target
-+	 * For v2, is_partition_valid(cur) & is_sched_load_balance() are true
-+	 * only for non-isolated partition root. At this point, the target
- 	 * effective_cpus isn't computed yet. user_xcpus() is the best
- 	 * approximation.
- 	 *
-@@ -802,7 +802,8 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
- 	 * becomes an issue.
- 	 */
- 	ret = -EBUSY;
--	if (is_cpu_exclusive(cur) && is_sched_load_balance(cur) &&
-+	if ((is_partition_valid(cur) || (!cpuset_v2() && is_cpu_exclusive(cur))) &&
-+	    is_sched_load_balance(cur) &&
- 	    !cpuset_cpumask_can_shrink(cur->effective_cpus, user_xcpus(trial)))
- 		goto out;
+diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
+index ae4a3f2a35e1c..684c3b9486b77 100644
+--- a/drivers/spi/spi-qpic-snand.c
++++ b/drivers/spi/spi-qpic-snand.c
+@@ -506,15 +506,14 @@ static void qcom_spi_set_read_loc(struct qcom_nand_controller *snandc, int cw, i
+ static void
+ qcom_spi_config_cw_read(struct qcom_nand_controller *snandc, bool use_ecc, int cw)
+ {
+-	__le32 *reg = &snandc->regs->read_location0;
+-	int num_cw = snandc->qspi->num_cw;
+-
+-	qcom_write_reg_dma(snandc, reg, NAND_READ_LOCATION_0, 4, NAND_BAM_NEXT_SGL);
+-	if (cw == (num_cw - 1)) {
+-		reg = &snandc->regs->read_location_last0;
+-		qcom_write_reg_dma(snandc, reg, NAND_READ_LOCATION_LAST_CW_0, 4,
++	if (cw == (snandc->qspi->num_cw - 1))
++		qcom_write_reg_dma(snandc, &snandc->regs->read_location_last0,
++				   NAND_READ_LOCATION_LAST_CW_0, 4,
++				   NAND_BAM_NEXT_SGL);
++	else
++		qcom_write_reg_dma(snandc, &snandc->regs->read_location0,
++				   NAND_READ_LOCATION_0, 4,
+ 				   NAND_BAM_NEXT_SGL);
+-	}
  
+ 	qcom_write_reg_dma(snandc, &snandc->regs->cmd, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
+ 	qcom_write_reg_dma(snandc, &snandc->regs->exec, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
 -- 
 2.53.0
 
