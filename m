@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016715;
-	b=pDzQNvL5xiEw7Squ8/Vo70nR7PSyqTLE8t0JcrSbU186VcCTXsO15Clx1x4l87WMGgoV
-	 5MS6Wtwz8B2H2459o4HqEWOq8Gbj0ZlhC/AV51oVcMR0aLgFiKx/9G3hVaQMRYu9LTWJU
-	 94yDYEnbpdBflHz6fwcduAGC+MdIGFIiv3YfbPcTeybhizlm2B8z2+qtWFEYvUdhhcRNj
-	 cE9fzoajiMC2shsDeI5F+X5T6ak4070T/OJ5V9tDQzUhFkzf2ZHuahp23gYisXu9Qtmah
-	 0i710W/JVqnhLlrGnRhHyWYG6vXWSVMh5b2eIjjPegpLXgvyjBKFS2aSwYdyOfIoq5Q==
+	t=1795016718;
+	b=fpMcV3jZvh2CeK483WOATNZty3RlHO1f+gWjNaG2hFQts8WnfQ7B+Exkc1IBXaSCfcGf
+	 qoPy1F5iC78HPg10JWB6dFFKZNPvMSeo87JCVDoL9Nz4sq/ZR2gBJOEZdHkpltPH3XU1K
+	 dsad9utGxNbCUNn/uoA17WJHpPfF1LIo1PPLCsqOuyi5lDnJyVaLK5ZMMe2aTYmZM891s
+	 Q0WhammeGgyA2IjZsZ8ycccKIe3mCMj3asHkVTfTN3LRhgmyoUnODWeD6/aJxjRpR88Km
+	 BCukFGWwf1LP3lFEU4TJ66BOrRpajmeT/wgGnGh4SVJ2iLMGjqM1qjvxuuxEmpd2o4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016715;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wif+88wFoKB8qkCKBO0hZoK4vfhbNkc0o8VEPN/Hstw=;
-	b=rSUtbTk/PZhBTojfE2FDZfJLA8AIOXD4AkPvqbS0nIlUb1GoyPMMWeYW7OEXLMtnKlml
-	 rdsyJdMCaHehuNwxZDpQZGjwosxltLFm+a/zAtzZt435+KUuQEXoZRMZIzvcoNWM4lknm
-	 42P1i4MvVgR1OhCOuuy1HRGSFnxzXEMGSV8dwQGfwhllDdm2WRZriLwF3R8+ckYalioz8
-	 ah6kh3khl0UDxdGKS92aXHcXR8q4nWeLr8DDhzugYdU0AxZ7P8HD+hRZ1xXoOFXTywyGZ
-	 TD8RnhhN/+aABp6e/nAlEVS87OcftqNhOzgU887s1Q7ZHbfrJpaMyINIABoyAwd+C2g==
+	bh=VjhyYuKltHg7+qreAfmcBTyCw4sJRx1yLtF0N4D6LZg=;
+	b=QKArcxBIrREiZ4WP1/kHPX9pMNz0KoD6xc77JtKeMyro6cyqidV2m0UmdDLfmWLXNawz
+	 /N/Sg7N9F3TuvHWIzIn3SRnwzAc6DNyNDBZJW+GgMpWMbMBFii5AFPgK+mhobWTkTvqQE
+	 IBNbNewv21xL/yxnhS80g2cma/q24J0Z++kMwj/LQI9npx7xF5C2s6/9xq/iXX69ps+le
+	 l6sh3kqKM6bosrvJiq3BNZ2xGY0bkUmBdrm6sh4+kMfvX+oJSwF/cz7BQC1iMLXsYgwu+
+	 4zODgqxLdj6ZkljfYzFX4HXRncmCxY/UG1rqSV6ATOrP36PX+DrNAN+jBNqZypPxK5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgiaFYbH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2532oJu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD6F60A2606;
-	Wed, 18 Nov 2026 15:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9942C606A325;
+	Wed, 18 Nov 2026 15:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgiaFYbH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F209A1F000C4;
-	Wed, 18 Nov 2026 15:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2532oJu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2611F000C6;
+	Wed, 18 Nov 2026 15:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016715;
-	bh=wif+88wFoKB8qkCKBO0hZoK4vfhbNkc0o8VEPN/Hstw=;
+	s=korg; t=1795016718;
+	bh=VjhyYuKltHg7+qreAfmcBTyCw4sJRx1yLtF0N4D6LZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WgiaFYbHWIuPibSbU4jv2KomCzBRObbebh8+RH4TA/+3QVtp7H/X1PVZdDQwC4nlm
-	 RsviNQj4QaEeCcdtUTPZSi5qd9ihfDK8Gpq+GaSocftFRVwgiNS14eGUBe+W8ZVyfh
-	 4MUUEV32zw5780ikvDeh3YOOGCyrE+PpylL/4ZuE=
+	b=b2532oJuSrJ3ndwQREmQUK3dq/oZfktAdIKD/Yir6EGeRiF5T9jBFLSV/7dGHPv3E
+	 3GhlpVOEsxyV46klDV20nWqbMQRJLIBBy/gllwzkF5dDD8na75xbwGNSFXe4UD3qiK
+	 8K12bXmkZvAuFQ6qEHZ8UYvka0hfLY0loazJVCDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrea Parri <parri.andrea@gmail.com>,
 	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0627/2651] pstore: dont leave an ERR_PTR in the ramoops zone pointer
-Date: Wed, 18 Nov 2026 15:31:07 +0100
-Message-ID: <20261118150310.265080068@linuxfoundation.org>
+Subject: [PATCH 7.3 0628/2651] pstore: reject persistent RAM zones too small for the buffer header
+Date: Wed, 18 Nov 2026 15:31:08 +0100
+Message-ID: <20261118150310.298695225@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,38 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 70fec428c845216da98041b1ae9f16a8f54b3d68 ]
+[ Upstream commit 1b30df8662ac85a6759be4332f3bec7e3cb28efc ]
 
-ramoops_init_prz() stores the result of persistent_ram_new() in *prz and
-returns the error without clearing it when initialization fails.
-ramoops_probe() then cleans up through ramoops_free_przs(), which hands
-*prz to persistent_ram_free(); that treats the ERR_PTR as a valid zone
-and dereferences it, crashing the kernel.
+persistent_ram_buffer_map() computes
 
-Clear *prz before returning so that cleanup sees a NULL zone.
+	prz->buffer_size = size - sizeof(struct persistent_ram_buffer);
 
-Fixes: b5d38e9bf1b0c ("pstore/ram: Add console messages handling")
+without checking that size is large enough to hold the header.  A
+ramoops zone configured with a tiny size (e.g. ramoops.pmsg_size=1)
+underflows buffer_size to a huge value, which defeats every bounds
+check in persistent_ram_write() and persistent_ram_write_user(); a
+write to /dev/pmsg0 then copies user data far past the end of the zone
+and corrupts kernel memory.
+
+Reject zones that are not larger than the buffer header.
+
+Fixes: 404a6043385de ("staging: android: persistent_ram: handle reserving and mapping memory")
 Assisted-by: LLM
 Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/20260921202317.70595-2-parri.andrea@gmail.com
+Link: https://patch.msgid.link/20260921202317.70595-3-parri.andrea@gmail.com
 Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/pstore/ram_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index 2eb0d4fa21869..aa056d0395a4d 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -604,6 +604,7 @@ static int ramoops_init_prz(const char *name,
- 	if (IS_ERR(*prz)) {
- 		int err = PTR_ERR(*prz);
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index b4ec8009b8dc9..ae941777037b8 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -505,6 +505,12 @@ static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
+ 	prz->paddr = start;
+ 	prz->size = size;
  
-+		*prz = NULL;
- 		dev_err(dev, "failed to request %s mem region (0x%zx@0x%llx): %d\n",
- 			name, sz, (unsigned long long)*paddr, err);
- 		return err;
++	if (size <= sizeof(struct persistent_ram_buffer)) {
++		pr_err("%s: persistent ram zone too small (%#llx bytes)\n",
++		       prz->label, (unsigned long long)size);
++		return -EINVAL;
++	}
++
+ 	if (pfn_valid(start >> PAGE_SHIFT))
+ 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
+ 	else
 -- 
 2.53.0
 
