@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056680;
-	b=QIxlBp/j3pWJ9Vd9fA8JTxXFE3dHA6nhvj4fRv3k9x+JVRoOZuKpYLAmNbMFe+HxLXyQ
-	 GO0cxIS7P00G0Y6mCifk5S3vxr3qIjpTLu0xxJ3BcJSHJUUtEmZplphxVPweFVzFwYnvt
-	 jjpjrYuLBR+zRF5iORTMTfqP3g01jyA4ZcIcKf3iGEvI3eBBZSF8iCR2Vp96Vmt28VNWw
-	 fmOa+Zq6wdb2N+b/3WKfP5DNuZETkxDv7jwm2LDAJqpMdAmGb1Y3YFURViDbMlyf5skAF
-	 UTAYXrFnjfWdSZ+y6OskO9gC+Fms0RG2tL99aDCRddOwt/W3+oPswl3KFiJamrmbmDQ==
+	t=1795056683;
+	b=5QgYlNaPdaX/ZBMnwsZn7cEJdhwh949FZi7K8QEuRfsGHuAoNsXdJnVQBQJ+2lkVGzL/
+	 Oxj3/yc0hp2R/IM2vA/lT/Vcbt9c0zu793N8M0w4PI1ooi/IB0drXZ+SLpmCSwhMCqTbi
+	 eHPwq5r47k4laLiRevIRCA6hToyDwVDSRQBrAI1F9VwK8CCGg9Dskaz0kEi900NnpVb55
+	 Ba4f9EiDH3cnoWwut4JTNd+K2Wq9zso9fKsBxccDpJQTS3YgV8/EiAQLpdvRpOcevA+EM
+	 PdhJFELGoVLG5pxup3ATwEspZ/3iS7fOVhXTO/9XB78usSMUe497BOB7U38e4+Z5hzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=OxSP+UGXzZX78pNLM8seam0qe76NR7Qlu7C7+TWFbpE=;
-	b=qz1jElhlxZeaiVy+aH+AOhU90sfSAFiywGsjvyucSHH9S4W68nLTeEC4FodUcoVVbyD7
-	 Vm01wH7q7b0ZPE1wdl8h9zo+sUWDcZK1birwFCZUoAnofNtWcQKFs9fWU75d11f9F/eTI
-	 qfxwtkv6WiOh5r2HZ3MFR/uJ+3FyFqK5mZzca0xBDfIOCLhRXbirr44UyjQQWHWwop8vf
-	 zZDtVMhIA9eF2NMB73LJPxQ7aiK5eXz056sp08X9ZSnKf+klAYOf6QIp/W9vtzxYji2Ii
-	 Ek7Cc9kfm0jrljkbj7GkBuudYiPIfM0hv8+ldDcb6FeMg0p1Ftcwote9ohhnERCHGRw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+KRHicYVrbQ02Nm+1uqHxKL3rwA9W+WbbOkEuyjnJKg=;
+	b=AP536AALystd7M1etaXD44FwZkIEv6W6BUApQklwlWsGX67A3MItuazLdotcmtrsET8P
+	 iZBoxSDm3eh172baGpvBg6UvKV1/8lPYb6hYnaIEzOG9h2sgha2Lse57Ol3182hiqOwXL
+	 S71zpvY46EmsxzNiMP4VyBImgfre4ykBlSqwMqdMPqe0KjGutVDZwQ1nbHNWxLdcK0tAL
+	 ZDPz1L3zDQvvwM9ZWB4MXqJG4Yrs1vyQFzO71Wk+RSVVa2WGvC/eSFCQR0tb2NzUSOfUO
+	 RI7N4L/5Zz7KoG94laTWRZi89u2qVJ50dJFTHZqDqDtcFUw1H/ipowr5I87JUbNOdFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Q/XtZep+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIMMoFe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA9E606A32A;
-	Thu, 19 Nov 2026 02:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8553A606A320;
+	Thu, 19 Nov 2026 02:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q/XtZep+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0706B1F000C4;
-	Thu, 19 Nov 2026 02:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHIMMoFe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D51F000C4;
+	Thu, 19 Nov 2026 02:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056680;
-	bh=OxSP+UGXzZX78pNLM8seam0qe76NR7Qlu7C7+TWFbpE=;
+	s=korg; t=1795056683;
+	bh=+KRHicYVrbQ02Nm+1uqHxKL3rwA9W+WbbOkEuyjnJKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q/XtZep+DKYXd1yJgYCt2MdJetAiw57cd3vsBKzHzf0IHVo+H6BUi3TpnQcBbHoSk
-	 Cgf6lJFrYYw7qrtZ4p8JdBvH55tvJ/5Mb27f3umnrR/Mid1ySjLNPmIvNu24jHuJSq
-	 8TbKhKB/x5ut9gDA1dPk00AgJQViL6Blyr74+gZU=
+	b=JHIMMoFeU6DF0xhkchoRg/GqCBmt+y+J9b8qFIbqqlrGQCU1DCQPa+++SVnVXAQNs
+	 oPlaXG6PM3N6owcte3ARF7DFRtwQRf94+XQ4Griy3hLS1aNaY3T9Z98LdclITFLYAO
+	 AINCGk3CKs8HCvASoUSWw/+pvk3VWlxn6SLSFANk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2037/2214] RDMA/core: Reject LAG selection when source MAC lookup fails
-Date: Wed, 18 Nov 2026 16:01:53 +0100
-Message-ID: <20261118150132.227253117@linuxfoundation.org>
+Subject: [PATCH 5.15 2073/2214] platform/x86: gpd pocket fan: Cancel work before releasing GPIOs
+Date: Wed, 18 Nov 2026 16:02:29 +0100
+Message-ID: <20261118150133.558815389@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -61,75 +63,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit fdfd099222d9de9e2f1b8d69e94494c5489272cc ]
+[ Upstream commit 9962770049c715fc30a7b3274d8f245167c0a410 ]
 
-GID deletion can clear the source device association after LAG lookup
-retains the bonding master. Ignoring the resulting L2 lookup failure
-copies uninitialized source MAC bytes into the synthetic hash packet.
+The fan worker changes the direction of both GPIOs and schedules its
+next run. Its managed cancellation action is registered before the GPIOs
+are acquired, so devres releases the GPIOs before cancelling the work. A
+running worker can therefore change a GPIO after the driver has released
+it.
 
-Read the source MAC before allocating the packet and propagate lookup
-errors to the caller, so failed lookups cannot influence slave selection.
+Register the work cancellation action after both GPIO acquisitions. This
+makes devres cancel and drain the worker before releasing either GPIO.
+No work has been queued yet if GPIO acquisition or action registration
+fails.
 
-Fixes: bd3920eac133 ("RDMA/core: Add LAG functionality")
-Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-3-60f6da3ddec3@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+This issue was identified as part of our ongoing research while
+reviewing kernel code.
+
+Fixes: b82a7b018b93 ("platform/x86: gpd pocket fan: Clean-up by using managed work init")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/179229442299.3956787.17526066623947466315.gpd-pocket-fan@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/lag.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/platform/x86/gpd-pocket-fan.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
-index c18642accfce5..9f2e5431757f9 100644
---- a/drivers/infiniband/core/lag.c
-+++ b/drivers/infiniband/core/lag.c
-@@ -19,6 +19,11 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 	u8 smac[ETH_ALEN];
- 	bool is_ipv4;
- 	int hdr_len;
-+	int ret;
-+
-+	ret = rdma_read_gid_l2_fields(ah_attr->grh.sgid_attr, NULL, smac);
+diff --git a/drivers/platform/x86/gpd-pocket-fan.c b/drivers/platform/x86/gpd-pocket-fan.c
+index 7a20f68ae2061..01f9676fc0f43 100644
+--- a/drivers/platform/x86/gpd-pocket-fan.c
++++ b/drivers/platform/x86/gpd-pocket-fan.c
+@@ -153,10 +153,6 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	fan->dev = &pdev->dev;
+-	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
+-					   gpd_pocket_fan_worker);
+-	if (ret)
+-		return ret;
+ 
+ 	/* Note this returns a "weak" reference which we don't need to free */
+ 	fan->dts0 = thermal_zone_get_zone_by_name("soc_dts0");
+@@ -175,6 +171,11 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
+ 	if (IS_ERR(fan->gpio1))
+ 		return PTR_ERR(fan->gpio1);
+ 
++	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
++					   gpd_pocket_fan_worker);
 +	if (ret)
-+		return ERR_PTR(ret);
++		return ret;
++
+ 	gpd_pocket_fan_force_update(fan);
  
- 	is_ipv4 = ipv6_addr_v4mapped((struct in6_addr *)ah_attr->grh.dgid.raw);
- 	hdr_len = ETH_HLEN + sizeof(struct udphdr) + LL_RESERVED_SPACE(netdev);
-@@ -26,7 +31,7 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 
- 	skb = alloc_skb(hdr_len, flags);
- 	if (!skb)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	skb->dev = netdev;
- 	skb_reserve(skb, hdr_len);
-@@ -70,7 +75,6 @@ static struct sk_buff *rdma_build_skb(struct net_device *netdev,
- 	skb_reset_mac_header(skb);
- 	eth = eth_hdr(skb);
- 	skb->protocol = eth->h_proto = htons(is_ipv4 ? ETH_P_IP : ETH_P_IPV6);
--	rdma_read_gid_l2_fields(ah_attr->grh.sgid_attr, NULL, smac);
- 	memcpy(eth->h_source, smac, ETH_ALEN);
- 	memcpy(eth->h_dest, ah_attr->roce.dmac, ETH_ALEN);
- 
-@@ -86,8 +90,8 @@ static struct net_device *rdma_get_xmit_slave_udp(struct ib_device *device,
- 	struct sk_buff *skb;
- 
- 	skb = rdma_build_skb(master, ah_attr, flags);
--	if (!skb)
--		return ERR_PTR(-ENOMEM);
-+	if (IS_ERR(skb))
-+		return ERR_CAST(skb);
- 
- 	rcu_read_lock();
- 	slave = netdev_get_xmit_slave(master, skb,
+ 	platform_set_drvdata(pdev, fan);
 -- 
 2.53.0
 
