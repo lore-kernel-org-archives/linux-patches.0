@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018126;
-	b=4w/TszD19DX4zY1pheN/AepUS6C/Q2C/RDBFf0df2Ml3iaAP/h4bIvXdXyBAQwACRJMU
-	 3SGMw+z+mYPSZqrtbY2KKf9nBYVsI1/x18sirAmouTgpTE9JeqdkenilKRKDj45xvKu+F
-	 9omXettfYtXVXP3RvYTOiQUftS/cVWOie59CY5Wg0E5JWwWfCyIcpxow5j9Vz+Fhr+3ul
-	 qLZohy43HqTjxHdlxqy7ouJwPM/J+SQSHyGic6yGdO2iUUJ1bwZzv6fg1oCyrng7ntqW7
-	 t5QvTfAmhBjpZUdL/y5R63A5ZOvZplXM+ghYQeCqTK+pmrffcN/orB1YX6k0qERzHog==
+	t=1795018129;
+	b=TWXfc84ADGNYaAUUaidYFw6PIViuJP1a0Tgx1PenWwmRjk3uACurY9zLnRecIGy9tF/o
+	 Og4/Gr0RdL1Iin0QEL7G+mexNGeMMrw+DsdHtkaJ7xV9Rb2fPKx3H5vTjK1kdHCjSiyB+
+	 vDu3RPDxSTcA3D5UxsQli3igrngcAY/h+BLM0nbxNblQRY/0n1S5Y9QyBGxegc2VMyJLt
+	 Q88Fb12An2z0Tf9OCRXDOCPq5sPeYtYwzqaRf51PhX5ybOYnWKY5SjuVQq+fIMNgWGAXs
+	 x63AFHQAWrTIYujg3jwuzCgCFw5gt8FuwfpO9iYLVWzYqdRaYvVXldzLHCznB+v8s0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018126;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LOJmLpPY4utTi0ybKnRjXRiXryigQTdOrWOWbm6wOFQ=;
-	b=KIGgrJjfwrHpz+DsFHCYnsAY364jJmUBnbWWNDQlHqDu5UQwC78O4+iIuCf9hgGzKBnL
-	 8BIZssOJA0HuKrxsSG9xCHowNnaEd+AIP6+yU06cFhTppZBhiggTbkQV1d0gvJinS7eKX
-	 A7oyDVr3AOgH3LmVqY3kgZiQ87/OVIftGAntRwGw0PrgAF/QWInxiXbnmiw3KjPF9ht9L
-	 MBqp4XdrQ+j/Tgg5N8XCJ2OjD5Y9xNHl/I16ZgL/J70lQH55p5WT9kU9Bd+3fQh02T4Cz
-	 72ikn7hO9hefrFEjy8yT00QMIr9/n23AVuJzn9u4txBmR/9lT7myY8EPTE+fGQUzZow==
+	bh=4Al4hWfSG10afvkV+AKLkMxEoKX8TT/F7UluzmUXXKc=;
+	b=BKsGLGzfqnj9q76kqJoZslI23xhux0uDPI9pKozqWyWmIIUEglVjGfMv2ku9nH58mbIs
+	 kUeKBeqRFAYiQIDeq+vbxjL/9E6WnmXCo+tv/E0EPI2qjjZKam39tDijj2mbQ+vExQfRa
+	 yhdphMRWzcyloZRsY518Qez5kZvF8mrcF6C4U5LM9qQhaYWmbrxbEB6yS0Imlk0aUPiPo
+	 m431O4Edo+mYgfnSHmmEk4mxIuLqHvY5yU1EcW6mzettz2F59U/QwkLJxHDB4v2JtntM3
+	 vBk8YwUUzSGNOVTE4sDFusseqx1hqs7HyWrs/E5tP+rlHgf7QynVg+L/OMOklFrjUkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jJCmv/lI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOHIweTv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BAE606A32C;
-	Wed, 18 Nov 2026 16:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8F6606A320;
+	Wed, 18 Nov 2026 16:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJCmv/lI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53821F000C4;
-	Wed, 18 Nov 2026 16:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOHIweTv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16DC1F000C5;
+	Wed, 18 Nov 2026 16:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018126;
-	bh=LOJmLpPY4utTi0ybKnRjXRiXryigQTdOrWOWbm6wOFQ=;
+	s=korg; t=1795018129;
+	bh=4Al4hWfSG10afvkV+AKLkMxEoKX8TT/F7UluzmUXXKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jJCmv/lIbph3vpaThNdMeOvOqCPbuBr6J/KWIo8EFFcRB8OmaPEoXTAtY61hLNIZd
-	 lTdHpn6rVWGoO+IGGooxHHbowPYORUxLcxiSg5KSHmFrsweADtWuVJ1EKeJABRZx4V
-	 V7cK4qw2rwSuBWdVMzygGwXXL6mdna9PeVyEV9fs=
+	b=MOHIweTvYKdIYCDnOXv5WzVw67qcqQSHjlAX0sYoPGvGPJKhDk9OqKbLyi0pqYCt9
+	 Inj9S2Z9+xDp3TV/g2Lo0+bMoALSv3sqCJhR+QUoNuu9TPJx0WN75TdHICFASd4WfN
+	 FNgSKZOIYG4CDdnsEq9BYjxLsVBrGYJXeY07KM/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Andrea Righi <arighi@nvidia.com>,
-	Gabriele Monaco <gmonaco@redhat.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1115/2651] sched: Set TIF_NEED_RESCHED before calling __trace_set_need_resched()
-Date: Wed, 18 Nov 2026 15:39:15 +0100
-Message-ID: <20261118150328.146596494@linuxfoundation.org>
+Subject: [PATCH 7.3 1116/2651] misc: enclosure: fix UAF on device_register() failure
+Date: Wed, 18 Nov 2026 15:39:16 +0100
+Message-ID: <20261118150328.183526024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,109 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sechang Lim <rhkrqnwk98@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 53bc5c556b82a3ca32b62ba349c4511f91526b9f ]
+[ Upstream commit 0f3b12bab74e13a2b8686a49c5b83099da61e032 ]
 
-set_tsk_need_resched() tests TIF_NEED_RESCHED, calls
-__trace_set_need_resched() if the flag is clear, then sets it via
-set_tsk_thread_flag().  A BPF raw_tp program attached to
-sched_set_need_resched executes synchronously inside __bpf_trace_run().
-On return, __bpf_trace_run() drops the RCU lock with
-rcu_read_unlock_migrate(), which on the preempt-or-BH-disabled path
-calls set_need_resched_current() -> set_tsk_need_resched() again.
+After device_register() fails, the embedded struct device has already been
+initialized and must be released with put_device() so that
+enclosure_release() can drop the parent reference and free edev.
 
-set_tsk_thread_flag() follows the tracepoint call, so every re-entrant
-frame sees TIF_NEED_RESCHED clear and calls __trace_set_need_resched()
-again:
+The error path currently does put_device(parent) + kfree(edev), which
+skips the device lifetime rules and can free the object while the device
+core still owns a reference (use-after-free).
 
-  BUG: TASK stack guard page was hit at ffffc9001224ff98
-  Oops: stack guard page: 0000 [#1] SMP KASAN PTI
-  RIP: 0010:__bpf_trace_sched_set_need_resched_tp+0x1c/0x190
-  Call Trace:
-   trace_sched_set_need_resched_tp+0x110/0x130
-   set_tsk_need_resched include/linux/sched.h:2076
-   set_need_resched_current include/linux/sched.h:2094
-   rcu_read_unlock_special+0x43a/0x440
-   __rcu_read_unlock+0x9e/0x120
-   rcu_read_unlock_migrate+0xa9/0x240
-   __bpf_trace_run+0x131/0x180
-   bpf_trace_run3+0x333/0x430
-   __bpf_trace_sched_set_need_resched_tp+0x13a/0x190
-   trace_sched_set_need_resched_tp+0x110/0x130
-   set_tsk_need_resched include/linux/sched.h:2076
-   ...
-
-__resched_curr() has the same ordering, firing the tracepoint before
-setting the flag via set_ti_thread_flag() or set_nr_and_not_polling().
-Fix it for consistency.
-
-Replace the separate test_tsk_thread_flag() + set_tsk_thread_flag() pair
-in set_tsk_need_resched() with test_and_set_tsk_thread_flag().  In
-__resched_curr(), move the tracepoint call after the flag is set in
-each path.
-
-Fixes: adcc3bfa8806 ("sched: Adapt sched tracepoints for RV task model")
-Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Acked-by: Gabriele Monaco <gmonaco@redhat.com>
-Link: https://patch.msgid.link/20260630084750.2792851-1-rhkrqnwk98@gmail.com
+Fixes: d569d5bb3fd9 ("[SCSI] enclosure: add support for enclosure services")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260806070358.1599627-1-gonglinkai@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h | 5 ++---
- kernel/sched/core.c   | 7 +++++--
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/misc/enclosure.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 78bfc0e32e56f..09d90f5edd2bf 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -2105,10 +2105,9 @@ static inline int test_tsk_thread_flag(struct task_struct *tsk, int flag)
+diff --git a/drivers/misc/enclosure.c b/drivers/misc/enclosure.c
+index de457378c5014..bdbff5178ec70 100644
+--- a/drivers/misc/enclosure.c
++++ b/drivers/misc/enclosure.c
+@@ -148,8 +148,7 @@ enclosure_register(struct device *dev, const char *name, int components,
+ 	return edev;
  
- static inline void set_tsk_need_resched(struct task_struct *tsk)
- {
--	if (tracepoint_enabled(sched_set_need_resched_tp) &&
--	    !test_tsk_thread_flag(tsk, TIF_NEED_RESCHED))
-+	if (!test_and_set_tsk_thread_flag(tsk, TIF_NEED_RESCHED) &&
-+	    tracepoint_enabled(sched_set_need_resched_tp))
- 		__trace_set_need_resched(tsk, TIF_NEED_RESCHED);
--	set_tsk_thread_flag(tsk,TIF_NEED_RESCHED);
+  err:
+-	put_device(edev->edev.parent);
+-	kfree(edev);
++	put_device(&edev->edev);
+ 	return ERR_PTR(err);
  }
- 
- static inline void clear_tsk_need_resched(struct task_struct *tsk)
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 174b6b2331744..025ed33aa5600 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1196,6 +1196,7 @@ static void __resched_curr(struct rq *rq, int tif)
- {
- 	struct task_struct *curr = rq->curr;
- 	struct thread_info *cti = task_thread_info(curr);
-+	bool need_ipi;
- 	int cpu;
- 
- 	lockdep_assert_rq_held(rq);
-@@ -1212,15 +1213,17 @@ static void __resched_curr(struct rq *rq, int tif)
- 
- 	cpu = cpu_of(rq);
- 
--	trace_sched_set_need_resched_tp(curr, cpu, tif);
- 	if (cpu == smp_processor_id()) {
- 		set_ti_thread_flag(cti, tif);
- 		if (tif == TIF_NEED_RESCHED)
- 			set_preempt_need_resched();
-+		trace_sched_set_need_resched_tp(curr, cpu, tif);
- 		return;
- 	}
- 
--	if (set_nr_and_not_polling(cti, tif)) {
-+	need_ipi = set_nr_and_not_polling(cti, tif);
-+	trace_sched_set_need_resched_tp(curr, cpu, tif);
-+	if (need_ipi) {
- 		if (tif == TIF_NEED_RESCHED)
- 			smp_send_reschedule(cpu);
- 	} else {
+ EXPORT_SYMBOL_GPL(enclosure_register);
 -- 
 2.53.0
 
