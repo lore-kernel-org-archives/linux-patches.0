@@ -1,55 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033426;
-	b=l8+QMMqWcujRMxy19/FIXg0e0gzIpI/FHWxyZI9IDRvyUbxm0hY3nHdjbxzg4rOdXbC7
-	 +TmUfONvcu6rxzRe9L2CwEqI+9BlE5BnZAeH5TIhoRjX8oYfkvHAh3mSaeDSKpz7zV7ER
-	 HgvrXRjO9ORxhLLbdrksKfGbmZg8zLxvMlAKsDvYJEftTSUIYTHqFKGrXWXhmL5xNpwd2
-	 GxXcjxD/TafJY2vYvkK8SJJXdwNcv7fBdvk9k4DG7sBuBb5vtivcHtucu6zh3NfL2WjOj
-	 Ir+qb3n0dwQceekT3y6XhzIik5brAEuO4ZrU6ElTKsYn8iSRosmmaRyWHlnjRZhQr0Q==
+	t=1795033429;
+	b=X9JKbggwZ+M1/N2vS9/Gc3SPARwIBmSZgt08uec4XzfyRhtWl/iDZtk9rod7SvOjKVhL
+	 Z4jBfqI9lh85Ui3mj9mRZMHbrlDvZZ4DoRTHKw856Sjdk5lM8ekFJi4XC7kOhVau7kAOY
+	 KeCbwXoq7T5sjP9h2pig/Za0PlwMN6xyFt0N05/rXuFSE0Vi9d/nVvk4a3PAPW8kG/CAp
+	 Qp2jdQPZesIULDV3eSDs92vvE6W1yJGxge30F77R47jp6t6U0Hv3q23jKWeM/3m9q+elr
+	 RJH3SyEbyQvfFcaRZgDUSWeXzWq5iR0jx5kfcrkaRz6gdoihpVzc7tndPytM506MB0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033426;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033429;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QjX1qdOfjOfyyGuUYIdrDhygneheO6H/BKC2TlPI2xQ=;
-	b=2DVZmxJf+evs2uxtbD5WmvSbOOXI1lmeH6HDCG5EzpE/ozewtSesZUP4BbvI0WR6A6Bc
-	 zSLDuOm3apYtj0hE8FnT0DyZl3SPA6p08E9IXg6hXz/31M1gIe6Xy/Z8uN7loDN1H3e1x
-	 FiRctW+CmaB0frvrFohJj7QcFnsL76xeJBE+/ChRciasPWTFx8j7QfC7Jp4raUdfMRudz
-	 KVgddoN6BCsDPO8+wziia5Ttm7L0mQp9/TWfz3C7usalK8wNcqLcsNluaMFVoTT8RiAdV
-	 SEZ9l2zmNa4q57T/6H/6KN5HYAZAtG4UcvUzOCV/Vyfq9k2AdckV9dhAwZ32jeKZo9Q==
+	bh=6b0bmXpTb2POHcluIZq10kHjn4U6FxTE5tAyq8gr8YI=;
+	b=Yn2Df/MHDXBJD63rJinRlpOP0SBz3xwz5Y5ECjiS5JVyhnZ5x8s4QB5NrN7kziaeAvPm
+	 nxVS4DcLkacVTQsGACEtMxDHhANX9rHf/+qaFFi1hIiV7hMPmj7EB0WC+VRnDWzhiFzxX
+	 Y62A0TzjpE7Sb0wff1LMApX2ooU6lHFNm3KzsfeUWVOG06y27mPJ1CKEgbNIBpxKAA3EI
+	 uKRDNMu4KKQRNWZqtOi2fHtz+30g8Xyxu1+SIqczXkaCKRMroqcJajF4kP2bmKVbD+3KA
+	 7ya8QEXzNg6wTqlM9iTqHjQ5O+bYQWyHp4qjMxa0jbHuWGEqo3WSYk97HzlAOVxr1Sg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6mIsZ7H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcX22W2j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDEC606A31C;
-	Wed, 18 Nov 2026 20:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12A4606A31C;
+	Wed, 18 Nov 2026 20:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W6mIsZ7H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E8C1F000C4;
-	Wed, 18 Nov 2026 20:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcX22W2j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20C61F000C4;
+	Wed, 18 Nov 2026 20:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033425;
-	bh=QjX1qdOfjOfyyGuUYIdrDhygneheO6H/BKC2TlPI2xQ=;
+	s=korg; t=1795033428;
+	bh=6b0bmXpTb2POHcluIZq10kHjn4U6FxTE5tAyq8gr8YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W6mIsZ7HjuYfk3mbmk9RlU0O8sd+MdH6hiuiSAQ/zp2n/ULgwDVoLFGjpbYEW46DR
-	 4D9W6Dgjra2+5Ftlz4wLvIu9eidZSnZau0NhsIq3X4CVbvCXW/BJOag1iJsg/w3x7S
-	 t3BiBQUGqMcFrM1269SnQDuDJveCOv+oFIBVDTdw=
+	b=GcX22W2juWjOuoWO5Zaj7gBqVSxx/3x83XzfBWYryezK5Ozcz3lWYs9WxntNmmJhq
+	 0F2dYFq1/p2SfmepEvV2Ofo7SOzbqy0yVCJW0dk6eL3Rt6HK6McGILZYqWMvLLFFaG
+	 670/MvOBpr5k+HvlpDN5b4az1OWodmu3wa3ckMfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 1736/1756] libbpf: Fix accessing BTF.ext core_relo header
-Date: Wed, 18 Nov 2026 16:04:23 +0100
-Message-ID: <20261118150118.667494467@linuxfoundation.org>
+	stable@kernel.org,
+	Zizhen Liu <pointerliu@126.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0004/3318] net: skbuff: propagate shared-frag marker in skb_zerocopy()
+Date: Wed, 18 Nov 2026 15:10:26 +0100
+Message-ID: <20261118150313.745356913@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
-References: <20261118150007.957976754@linuxfoundation.org>
+In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
+References: <20261118150313.527275416@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -64,48 +66,54 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Zizhen Liu <pointerliu@126.com>
 
-commit 0a7c2a84359612e54328aa52030eb202093da6e2 upstream.
+commit 79dc34beb1fdb3da79753e51e15c68591a2561fe upstream.
 
-Update btf_ext_parse_info() to ensure the core_relo header is present
-before reading its fields. This avoids a potential buffer read overflow
-reported by the OSS Fuzz project.
+skb_zerocopy() moves frag descriptors from @from into @to and takes a
+reference on each frag, but it does not copy skb_shinfo(from)->flags into
+skb_shinfo(to)->flags.  A destination skb holding the same page-cache
+backed frags as the source therefore reports skb_has_shared_frag() as
+false.
 
-Fixes: cf579164e9ea ("libbpf: Support BTF.ext loading and output in either endianness")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://issues.oss-fuzz.com/issues/388905046
-Link: https://lore.kernel.org/bpf/20250125065236.2603346-1-itugrok@yahoo.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+That breaks the invariant relied on by later in-place writers.  ESP input
+checks skb_has_shared_frag() before deciding whether an uncloned
+nonlinear skb can skip skb_cow_data(); with the marker lost, an skb that
+skb_zerocopy() built for nfnetlink_queue or for an openvswitch upcall is
+decrypted in place, letting an unprivileged user write into the page
+cache of a root-owned read-only file.
+
+Propagate SKBFL_SHARED_FRAG when frag descriptors are copied, as done for
+the other frag-transfer helpers.
+
+Fixes: af2806f8f90a ("net: Export skb_zerocopy() to zerocopy from one skb to another")
+Fixes: f4c50a4034e6 ("xfrm: esp: avoid in-place decrypt on shared skb frags")
+Cc: stable@kernel.org
+Signed-off-by: Zizhen Liu <pointerliu@126.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261022104217.1852191-1-pointerliu@126.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adjusted context in skb_zerocopy() due to missing from->unreadable propagation. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/lib/bpf/btf.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/skbuff.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -3018,8 +3018,6 @@ static int btf_ext_parse_info(struct btf
- 		.desc = "line_info",
- 	};
- 	struct btf_ext_sec_info_param core_relo = {
--		.off = btf_ext->hdr->core_relo_off,
--		.len = btf_ext->hdr->core_relo_len,
- 		.min_rec_size = sizeof(struct bpf_core_relo),
- 		.ext_info = &btf_ext->core_relo_info,
- 		.desc = "core_relo",
-@@ -3037,6 +3035,8 @@ static int btf_ext_parse_info(struct btf
- 	if (btf_ext->hdr->hdr_len < offsetofend(struct btf_ext_header, core_relo_len))
- 		return 0; /* skip core relos parsing */
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3649,6 +3649,8 @@ skb_zerocopy(struct sk_buff *to, struct
+ 	}
+ 	skb_shinfo(to)->nr_frags = j;
  
-+	core_relo.off = btf_ext->hdr->core_relo_off;
-+	core_relo.len = btf_ext->hdr->core_relo_len;
- 	err = btf_ext_parse_sec_info(btf_ext, &core_relo, is_native);
- 	if (err)
- 		return err;
++	skb_shinfo(to)->flags |= skb_shinfo(from)->flags & SKBFL_SHARED_FRAG;
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(skb_zerocopy);
 
 
