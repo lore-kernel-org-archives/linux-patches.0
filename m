@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027005;
-	b=J05WO++XjwfuK8m0E0fr3dU3HXFo0Oc1c3RW+pnfnv+GwU7PtwDWwAV5e5RN7+9NR+Wu
-	 ct/SI65nsGzm4CaI3k/y2ZrACatC0jT8skZwKHVYiamcbZPk5cjdYmBVNsOcrvega2Gh3
-	 c0eSddl5awGAIDDgvl/4xHScH+xn/4g3lYQgeIvyRkbVIfxsueZ4H77G2ztoL9DnVfumb
-	 KyHM3Ww1tY5FEPcRLfM7oGBuB4i6f0ZH0jRvqmUJ7bEqBmT1UZTMxaYoKg9dsJSItVvNX
-	 IlXjK63KuS/2o1ZqF25hlKa5w2QIavvd0szwWCyL9sjE673hwybpC/nRWjus0wbZcOQ==
+	t=1795027007;
+	b=bOvr1ihuFDLvqyH6dH6X1LjuBp6Is2U34Ua5xReSU79cIV3sSE2J04YIWO8gFMCyWTV8
+	 vLrbu2wuQUdyrTnXJyYJv5U6wC7cx2g+Q7TMg+vvOJIFRWh8yBV3dtv7zHNQT6FQtg6UA
+	 iDm+kRFLXEA5xaDH4RmEZ6UpqRBIx2OCRN4F+SudHi1JG6OS06eSOibhl6B+m3AWdEJij
+	 rBn4TSGxSznTwDOrvB53bwxRg9LO6KpmHru8SCPgvqoAtEgC1o4jUZmcgmHwrRND/PzRg
+	 JtucMWOoA1PAXwjiK/GRJD1/De4/XAmbNVk7Al2OVMDiRA9MNO70GXoV2d80xT0oxuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=POtxOn4890NkpdgdhElXCnni1Jn/koQZi6zCG6QCrPg=;
-	b=iTdSVMdLDros48G3vKOtbmDxKZS1yeKhfxiF5yH0lwKyRsxw/KKWhEiP+SkXieGUHWNA
-	 Cyfx0HjM5nRf3Ha/YmegG57vW6dfM2rbdIf8Ls+ApU95P4LTPP8Q8sLMUX46kthPnXYy3
-	 tNxPGNs96VZcVYMwbrVLvLI4Ne6KjzKx023HNydDaCkvMSogaShPL/mHdJfukQunxAWNX
-	 L85JkG5LLtZewyiMMxT4DrBKjwb0noAaD172uw0fO323F0wzkklEIkNuGPatqZP3yXWbc
-	 NJZIpZk/tA+wrZ5cOF319cA3M0tZxakpEVaZfG7XZqf372T3s4Ukdo3moF1uN615KiQ==
+	bh=XTW7krDmyEjYW9nrpMbWVlld/UwhE+CmnhEgQUxSRRc=;
+	b=KV5Jh6ogGnsDlJOhq1IGl7D0VAbelLFG7Pz7NeESqO5iIuiBpa9cq9cDkvg3H8xl29Vc
+	 46oLgCmyZ4yb5Y3kXprxMZ3NwLpz/mqOGsv5ObV6LHgincSezSZAtwarykBQKl8HiVXt7
+	 nsh2W8XYeOpDb1Tc9rNXjpgeAvXmOa93pzdp9oqf7YRkT844WgdWiUU4MbZF0NM9zCj2e
+	 OCVb784b6fIQzb/jfy+vdmBP6ua6qh7K7fcMV1Posasm+broelcx4YPfa7YMO+MnqQ+2K
+	 A27Jzo18xzFW6GtVBNpXVLKgiH5oNrhYzTFakITtDXFqsyS+efkj0cFhnTIl8No2N6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=07NCHCMj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hKVNlMWL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFB8606A31C;
-	Wed, 18 Nov 2026 18:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24A4606A32F;
+	Wed, 18 Nov 2026 18:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=07NCHCMj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9F71F000C4;
-	Wed, 18 Nov 2026 18:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hKVNlMWL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266661F000C4;
+	Wed, 18 Nov 2026 18:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027005;
-	bh=POtxOn4890NkpdgdhElXCnni1Jn/koQZi6zCG6QCrPg=;
+	s=korg; t=1795027007;
+	bh=XTW7krDmyEjYW9nrpMbWVlld/UwhE+CmnhEgQUxSRRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=07NCHCMjiV8fl2Wc5b25Ip5XWoYUq27MZ7RZ4tXb1BpA0ZqKC+O49ING9SUqKOVGe
-	 WF4d23zKM8COa3KFdgoqf9rhYfyP4ZGiDMrGu9iD2zo7r6HSHS1DnOA/s159sW2izo
-	 8mNmTPwDi6lMvB+H1GUKnX8WM5AerWGjtcm1ddqA=
+	b=hKVNlMWLsRv40Rrs36V/VlMQC4qmHYPzwocTP8U+YkOwPPB01p4hiPksRU9TbrxCz
+	 yOeL6rrq45vf0QYAkjhgziAqYPCHa9IUxBuFdlVHPOfe2Fn6yOg+saItTadZBbpgb1
+	 uXZEoJLshRBXXR1SWlsEnYYv7OT2nyDNTniToegI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1635/2151] ASoC: mediatek: mt8195: Fix paired memif clock error handling
-Date: Wed, 18 Nov 2026 15:56:10 +0100
-Message-ID: <20261118150221.428116537@linuxfoundation.org>
+Subject: [PATCH 6.18 1636/2151] ASoC: mediatek: mt8195: Fix FE startup error handling
+Date: Wed, 18 Nov 2026 15:56:11 +0100
+Message-ID: <20261118150221.463341022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,82 +70,79 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit c0ec135cf3fd7c7c7cdefd234111e5d4f069a7e6 ]
+[ Upstream commit b1db7408c8e0761d17b49b74f8f2d60c0c1929e8 ]
 
-Check and propagate errors when preparing and enabling the paired
-DL8/DL10 memif clocks.
+Check and propagate errors from paired memif clock preparation and
+PCM hardware constraints during FE startup.
 
-If enabling the second clock fails, undo the clock that was already
-prepared or enabled to keep the clock state balanced.
+Unprepare the paired memif clocks and shut down the FE when a later
+startup step fails to avoid leaving resources enabled on error.
 
 Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-7-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261014112752.683032-8-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 24 ++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 40 +++++++++++++++-------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
 diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index c63b3444bc176..91dd4b1b0aaba 100644
+index 91dd4b1b0aaba..5c4e40713fce6 100644
 --- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
 +++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -286,15 +286,23 @@ mt8195_afe_paired_memif_clk_prepare(struct snd_pcm_substream *substream,
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+@@ -364,24 +364,38 @@ static int mt8195_afe_fe_startup(struct snd_pcm_substream *substream,
  	int id = snd_soc_rtd_to_cpu(rtd, 0)->id;
- 	int clk_id;
-+	int ret;
+ 	int ret = 0;
  
- 	if (id != MT8195_AFE_MEMIF_DL8 && id != MT8195_AFE_MEMIF_DL10)
- 		return 0;
+-	mt8195_afe_paired_memif_clk_prepare(substream, dai, 1);
++	ret = mt8195_afe_paired_memif_clk_prepare(substream, dai, 1);
++	if (ret)
++		return ret;
  
- 	if (enable) {
- 		clk_id = MT8195_CLK_AUD_MEMIF_DL10;
--		mt8195_afe_prepare_clk(afe, afe_priv->clk[clk_id]);
-+		ret = mt8195_afe_prepare_clk(afe, afe_priv->clk[clk_id]);
-+		if (ret)
-+			return ret;
- 		clk_id = MT8195_CLK_AUD_MEMIF_DL8;
--		mt8195_afe_prepare_clk(afe, afe_priv->clk[clk_id]);
-+		ret = mt8195_afe_prepare_clk(afe, afe_priv->clk[clk_id]);
-+		if (ret) {
-+			clk_id = MT8195_CLK_AUD_MEMIF_DL10;
-+			mt8195_afe_unprepare_clk(afe, afe_priv->clk[clk_id]);
-+			return ret;
+ 	ret = mtk_afe_fe_startup(substream, dai);
++	if (ret < 0)
++		goto err_clk_unprepare;
+ 
+-	snd_pcm_hw_constraint_step(runtime, 0,
+-				   SNDRV_PCM_HW_PARAM_BUFFER_BYTES,
+-				   MT8195_MEMIF_BUFFER_BYTES_ALIGN);
++	ret = snd_pcm_hw_constraint_step(runtime, 0,
++					 SNDRV_PCM_HW_PARAM_BUFFER_BYTES,
++					 MT8195_MEMIF_BUFFER_BYTES_ALIGN);
++	if (ret)
++		goto err_fe_shutdow;
++
++	if (id == MT8195_AFE_MEMIF_DL7) {
++		ret = snd_pcm_hw_constraint_minmax(runtime,
++						   SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
++						   1,
++						   MT8195_MEMIF_DL7_MAX_PERIOD_SIZE);
++		if (ret < 0) {
++			dev_dbg(afe->dev, "hw_constraint_minmax failed\n");
++			goto err_fe_shutdow;
 +		}
- 	} else {
- 		clk_id = MT8195_CLK_AUD_MEMIF_DL8;
- 		mt8195_afe_unprepare_clk(afe, afe_priv->clk[clk_id]);
-@@ -315,6 +323,7 @@ mt8195_afe_paired_memif_clk_enable(struct snd_pcm_substream *substream,
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
- 	int id = snd_soc_rtd_to_cpu(rtd, 0)->id;
- 	int clk_id;
-+	int ret;
++	}
  
- 	if (id != MT8195_AFE_MEMIF_DL8 && id != MT8195_AFE_MEMIF_DL10)
- 		return 0;
-@@ -322,11 +331,18 @@ mt8195_afe_paired_memif_clk_enable(struct snd_pcm_substream *substream,
- 	if (enable) {
- 		/* DL8_DL10_MEM */
- 		clk_id = MT8195_CLK_AUD_MEMIF_DL10;
--		mt8195_afe_enable_clk_atomic(afe, afe_priv->clk[clk_id]);
-+		ret = mt8195_afe_enable_clk_atomic(afe, afe_priv->clk[clk_id]);
-+		if (ret)
-+			return ret;
- 		udelay(1);
- 		/* DL8_DL10_AGENT */
- 		clk_id = MT8195_CLK_AUD_MEMIF_DL8;
--		mt8195_afe_enable_clk_atomic(afe, afe_priv->clk[clk_id]);
-+		ret = mt8195_afe_enable_clk_atomic(afe, afe_priv->clk[clk_id]);
-+		if (ret) {
-+			clk_id = MT8195_CLK_AUD_MEMIF_DL10;
-+			mt8195_afe_disable_clk_atomic(afe, afe_priv->clk[clk_id]);
-+			return ret;
-+		}
- 	} else {
- 		/* DL8_DL10_AGENT */
- 		clk_id = MT8195_CLK_AUD_MEMIF_DL8;
+-	if (id != MT8195_AFE_MEMIF_DL7)
+-		goto out;
++	return 0;
++
++err_fe_shutdow:
++	mtk_afe_fe_shutdown(substream, dai);
++err_clk_unprepare:
++	mt8195_afe_paired_memif_clk_prepare(substream, dai, 0);
+ 
+-	ret = snd_pcm_hw_constraint_minmax(runtime,
+-					   SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
+-					   1,
+-					   MT8195_MEMIF_DL7_MAX_PERIOD_SIZE);
+-	if (ret < 0)
+-		dev_dbg(afe->dev, "hw_constraint_minmax failed\n");
+-out:
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
