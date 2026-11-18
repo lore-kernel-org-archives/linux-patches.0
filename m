@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050509;
-	b=becFJoDIqodIYOigPz2aYIELYkzG5ldtvexI/A5TsCvHY+BPksigi//EcAVU3mlfvj1o
-	 nO2tGtuDkaWzg4C1tdCqIswJzQ4IHwHICSZJ4S9AzcR5ZZFPIEzRkvcgZ/EoZefDksaDQ
-	 PFoj5bRDvWgM4cQqVMqCw80JZcGUAN09yj2TpDP3HuwS2dNgjEnVwhVqUBiioDQpA6vi7
-	 RtgNLkE+2livghLilh2Mk5TIyX1jbnQszNTD6rsXMJLzzl5ITPp0sibP+vWal5SYLABlX
-	 KsMGR5QRIQ4nbluc2UksTzMEDZwu+WSzbEaJmd2QzgNV+9XPZXDVrCXxiYeYiHD1YnA==
+	t=1795050512;
+	b=Kk7TtAsD7Fi9WXkr4CVZnuLsl7N0Z9BSbyxpllVbIxqj4pISPkR9V/4NvJ6YS4aWTYDb
+	 IaWxwCgpai9F38aseFHg51BWXIFa6IQH/iIrgLTIypSPrJ8tA/T7cYMwQshyq7BFbK4NJ
+	 o9Xd3Oioay5QVwwwzqlVfIc6k9hnoi4mcmT9oMhQ6rihlQ1iV3rx1c27iBlWvub4SsUer
+	 DGf9ZQfL6YYiwhtbVFacRgr0E76JSAXQEMGNpJKQktT3s0pVuMz8h/qnFQ0iNbnfGRimB
+	 m6DEMNUjr7vN1654xceVFu27OkhAwI4bkf09XvlhN5AJgpnH5h0GazELyji6/O4YSrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050509;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050512;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qUHubZxXxloIvxg+YwUV9svnX9gGM22948ofUd121L4=;
-	b=BGXrFblU7BzDFkTb5wcYEU97HzQamdOVWQk1s2eE3Dxwr9SADcAcYp+9uFzKggegKRVE
-	 naImHCLRDJcL5mAbKX6PTyJB2QNkMM+ZWEnq9PQBSpRBAUlCOMe3rmeCMnk0mdZixYDaA
-	 jd7HT5TVlu416pF4ivmD8RCZguGtpfKjkLSFQz8hR0dsNvhh+F01n9Ee4a0wdw78/UpN/
-	 Ii2SnV+jSBMyZZrdGkcoCGHUXU0XCs5SvguaQ3TqdX2NDHd1rt5128GBqu6B/ZTTo8nPU
-	 +2bQuEmQsq4xkbIS8oH/bmQ2lFRiOr/kBbPCOnR/IA5g/ZJMUgW8tGtto6aX4I7ii+w==
+	bh=2TqZVc2to0x1bZDS9zPjuAVpoxKUeXAmtXMJ7rFfAtw=;
+	b=OfpCpVcB4OxriGJvV7orHRHacsHYmq4uKZWEwUyF1b/oDWPuzsb5K/e6FZdMBI1ZKimH
+	 esaote/8ZGagyLPmLddXkAA3+wKORdHqyVJF+M21L4X1SS6pKN8HnHA0folIO8afsFyV3
+	 0U3WHHUr0DSTkcCyYWTct6P38soCfsDCf2ZNIgnFf9uvpqEDUt8/zY9lSrBLOIDBRvcXX
+	 tW8J9sO20e1Nxx7OqQmdEuwDgvBf5izlP924LnTJsoYW1aNYLsb1EK5sHZ1+GcATVHIr2
+	 /O2HulwFlbDTobmkckn+rLUlgFfAxeLLxyzSpvLbs8+tnfRcCb6DRIUglar43BZby0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yptj7kPA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEntPLiG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CFE606A31C;
-	Thu, 19 Nov 2026 01:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F34606A325;
+	Thu, 19 Nov 2026 01:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yptj7kPA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30F51F000C4;
-	Thu, 19 Nov 2026 01:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DEntPLiG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DBB1F000C4;
+	Thu, 19 Nov 2026 01:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050509;
-	bh=qUHubZxXxloIvxg+YwUV9svnX9gGM22948ofUd121L4=;
+	s=korg; t=1795050512;
+	bh=2TqZVc2to0x1bZDS9zPjuAVpoxKUeXAmtXMJ7rFfAtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yptj7kPAXVOoyII0l+/1x0Tje58EihCEsxgj54jRVDa9HlLF+3uJM6otUlDmGpIAL
-	 hsx4/4u6XDvnAnJgKOkMe34mTCJB3guTUR2Ym6hsPDVwK9B5tuLgE+X42D72J1yXsg
-	 vTqmWLWGwL2PICruFai6j4BbAb+9Drm72vQDAopc=
+	b=DEntPLiGViT0Z2DLGBBXpo11vdQ9WuXYAuTcQ0AuV7lRMvahb8cYJ63209dOPzle7
+	 EuTSNqYtWwv4jtsipXRZE/pVuSVg8jvbUKnHyfUj244Ef3QCXwHwT6xF6iIVlhwBgR
+	 oILJ+sfar0j/Mp1zfkkOEH9N6wULI22DdHv4zqSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2733/2857] thermal: Fix CPU mask truncation in power limit trace event
-Date: Wed, 18 Nov 2026 16:02:47 +0100
-Message-ID: <20261118150340.032518151@linuxfoundation.org>
+Subject: [PATCH 6.1 2734/2857] ASoC: codecs: wsa883x: disable runtime PM on unbind
+Date: Wed, 18 Nov 2026 16:02:48 +0100
+Message-ID: <20261118150340.065813316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
+[ Upstream commit ea63182d71956dc33c6f08dc4171f1052f8409a9 ]
 
-num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
-Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
-higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
-bitmap on a 64-bit system, dropping CPU 64.
+Probe enables runtime PM but nothing disables it on unbind, or when
+registering the component fails. A pending autosuspend can then run
+wsa883x_runtime_suspend() after the devm-managed regmap is freed, and
+dereference NULL, as seen on wsa884x.
 
-Use nr_cpumask_bits for both sizing and copying the bitmap.
+Use devm_pm_runtime_enable() so runtime PM is disabled before the regmap
+is freed.
 
-Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261023171316.819857-6-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wsa883x.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/thermal.h b/include/trace/events/thermal.h
-index e58bf3072f324..cd9306e9752f1 100644
---- a/include/trace/events/thermal.h
-+++ b/include/trace/events/thermal.h
-@@ -117,7 +117,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
- 	TP_ARGS(cpus, freq, cdev_state, power),
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 94ac6729cb016..8b50a0b351884 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -1449,7 +1449,9 @@ static int wsa883x_probe(struct sdw_slave *pdev,
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		goto err;
  
- 	TP_STRUCT__entry(
--		__bitmask(cpumask, num_possible_cpus())
-+		__bitmask(cpumask, nr_cpumask_bits)
- 		__field(unsigned int,  freq      )
- 		__field(unsigned long, cdev_state)
- 		__field(u32,           power     )
-@@ -125,7 +125,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
- 
- 	TP_fast_assign(
- 		__assign_bitmask(cpumask, cpumask_bits(cpus),
--				num_possible_cpus());
-+				nr_cpumask_bits);
- 		__entry->freq = freq;
- 		__entry->cdev_state = cdev_state;
- 		__entry->power = power;
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+ 					      &wsa883x_component_drv,
 -- 
 2.53.0
 
