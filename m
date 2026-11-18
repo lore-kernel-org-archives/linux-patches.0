@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040530;
-	b=xnlhPrBm32FZkvbH0fYyvBtiH3bT4Ht4ARk4nCNyne9DKQGJpKFqcXh6eS9feGW2oFbi
-	 YtvThRi4C/ZvJ/eyPIFnbVIpgzP3hZlTZOyhO6rZfwwDKb0TAaEaXDxkgyty8do+8sN02
-	 tHlkfXalKmpN2lc4JTiObM1swrOMwy5hqcnvLg6vv2bcolX0Q3oEiSkvpMjQSgkaag1Mh
-	 aQcbmGGikgYUBiM0WQ+ez3LpF8JpkVDq3Jspcz3IWI7ph7inlR3+goWYENpofUx4ub/W2
-	 SE6zeAp5s1kn3ZhNU3ch3KVBssMChXmQhIM3ttL9atyCafNG+IFjsduXFUbj3TJFXjw==
+	t=1795040533;
+	b=hoDkxJNgGoMVj3xCEWIQxRA9327oV8+AshWwYDjfiqqv46wlCXSWU/P+NaxAub3YSLhn
+	 4h8h2YUJnaarJTNZNU9QzMXz3pHaO1fVyJxDN2HGBlHCPvkLY9KqwA9REUAJF9TaHLPaV
+	 rqaPemRVlhd40fQAc9DsAOmXqV7JpEr0q1HcTdBWvQn/0L5T1/A1diCyJ54Mp6WEJexBo
+	 CX2UyaVLu4TtrZjgPvH4g5Aw862e4JaTO2keTPiSywaOvbbUKnJKOh7I1DIlpgekevr1h
+	 Sw5AbHoDrwbC1pzQORemdBF562NqAww/ZUJLJsXhr/izXzd8zcOBEVakCjRFeuFdnqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=2XAiOn7bMgjWUVe9pYeT0Swfj3X8tV4+AfWHTzqR234=;
-	b=KG71TFnD0Ezj8LiuO0sW9YNYvFauGdjHhFwGbc/4VAvqPOxxmizzDn1z5wl9bCjqzMk5
-	 DZW7HqYjIdzf7aWZB4NFJ3v82fpf5SAcGt+eiFKdF08jLilNZBl2a8qOJdpLmM1eUGL7K
-	 5BA2Tm+PItQZQvw92dUYdouAbsGVyFh9dSvDzJh6SCEWLiB8+OQGuv5zbTNBsxC0QHHpW
-	 b2axuDTD6MkDdNvILH9kB8qBcOHqyzBxtlHIegydjhhwjw8sSSURXR7XqBljWDyO2AoAG
-	 iX4ldWL14mc1LHYSnB52QMz83Y4P6OVRA8/Q5XRcyHcq34DehEX34JNJxjTo5mp5jUg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=65G8595Y42VImopO4ZHtHImenS/Kz0c+859A2suJuGQ=;
+	b=Zw9DnTWfVWPGJENUtJ5rQaiSK2NwALvm0O0WeYpz7KpqfzvSNitg4XtNYsMQeQ1E9xoK
+	 jn8ZdMTjZEhnGwqW9ENkcO1d/o4DsF92mDdzDbxEa8VIyhAR7e0SdR2/2R5eMvN+Ov8I6
+	 KTYvoDfl5w7qIBJ174+ho9qnIwnvJSJGowgqLw413Vv7579PAujS/Cey3A+cJybT/uya6
+	 hBUStmyWPlzga+smwwqAsQck7CAojVmYk+I2mjuSgdpvKgXgVXwB7Sdp1zELWLLzr5fcj
+	 kiil8AtYHE9NC0Xig9RQZ9pSWR7a/X+pCw/DdecbfwOxKVZ1ZROM4T/+0NQcT347d6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iZIM/reV";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W2W11ZPS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFCE606A325;
-	Wed, 18 Nov 2026 22:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8403606A32A;
+	Wed, 18 Nov 2026 22:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZIM/reV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894351F000C4;
-	Wed, 18 Nov 2026 22:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W2W11ZPS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49BAF1F000C5;
+	Wed, 18 Nov 2026 22:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040530;
-	bh=2XAiOn7bMgjWUVe9pYeT0Swfj3X8tV4+AfWHTzqR234=;
+	s=korg; t=1795040532;
+	bh=65G8595Y42VImopO4ZHtHImenS/Kz0c+859A2suJuGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZIM/reVjj/v0dMjJBJdbBsM3l591ccncj6yHZGkfYROZWr8OpvDr4xuNLKpVczi6
-	 gYy/D1kpeanHAUcKR4uX2GfCeCLqdTa088MdPI8OfKA9Sg12xj50Y7zlWf8i1QlAbU
-	 ihQ5/TUmi++OBoMX/dvP5vBiE54Dh+HH9hpeprwU=
+	b=W2W11ZPSFMnh9mJnpNYapP1YHU5LtIYTtd0GJBMNqtYMBPIsRZHKl6pqn8R6Gm0dr
+	 pNGWksR3a4+cH1YClEKhKoEDPvrM+ZhxKYk76XYlmGroMCfdwFQSAYod1eiPPVuxJF
+	 uZPDlnTEV2cd3uEcAkkg9K3foKj35mQykKDfzYEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Ze Huang <ze.huang@oss.qualcomm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2488/3318] drm/imx/lcdc: avoid duplicate clk_per enable
-Date: Wed, 18 Nov 2026 15:51:50 +0100
-Message-ID: <20261118150436.035025037@linuxfoundation.org>
+Subject: [PATCH 6.6 2489/3318] rtc: ftrtc010: drop needless struct ftrtc010_rtc::rtc_dev member
+Date: Wed, 18 Nov 2026 15:51:51 +0100
+Message-ID: <20261118150436.063784202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,54 +63,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ze Huang <ze.huang@oss.qualcomm.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit b08f4d9b21a7846b91bb6c4064f58c3a7ab997c7 ]
+[ Upstream commit a55d44807b63f171f8079d770c9d82fa87046cdd ]
 
-The simple-KMS helper calls the pipe update after enabling the CRTC.
-On an enable commit, imx_lcdc_pipe_enable() already programs the
-mode and enables clk_per. The following pipe update sees the plane move
-from no CRTC to the active CRTC, treats it as a mode update, and calls
-imx_lcdc_update_hw_registers() again.
+The memory pointed to by the ::rtc_dev member is managed via devres,
+and no code in this driver uses it past _probe().
 
-That second call has no old CRTC state to disable clk_per first, but it
-enables clk_per again at the end. The disable path only drops one
-reference, leaving clk_per enabled after each on/off cycle.
+We can drop it from the structure and just use a local temporary
+variable, reducing runtime memory consumption by a few bytes.
 
-Skip the register update from the pipe update path when the CRTC already
-needs a modeset. The enable path has already programmed the hardware for
-that commit; keep the event handling in pipe update unchanged.
-
-Fixes: c87e859cdeb5 ("drm/imx/lcdc: Implement DRM driver for imx25")
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Ze Huang <ze.huang@oss.qualcomm.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260919-b4-imx-simple-kms-v4-v4-1-53b1fdf4589e@oss.qualcomm.com
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250304-rtc-cleanups-v2-6-d4689a71668c@linaro.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: c60478875a44 ("rtc: ftrtc010: fix clock resource leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/lcdc/imx-lcdc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-ftrtc010.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
-index 4beb3b4bd6942..809bf188012df 100644
---- a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
-+++ b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
-@@ -309,7 +309,8 @@ static void imx_lcdc_pipe_update(struct drm_simple_display_pipe *pipe,
- 	else if (old_crtc != crtc)
- 		mode_changed = true;
+diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
+index 8bfe7378f6533..84483e311b782 100644
+--- a/drivers/rtc/rtc-ftrtc010.c
++++ b/drivers/rtc/rtc-ftrtc010.c
+@@ -28,7 +28,6 @@ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:" DRV_NAME);
  
--	imx_lcdc_update_hw_registers(pipe, old_state, mode_changed);
-+	if (!drm_atomic_crtc_needs_modeset(crtc->state))
-+		imx_lcdc_update_hw_registers(pipe, old_state, mode_changed);
+ struct ftrtc010_rtc {
+-	struct rtc_device	*rtc_dev;
+ 	void __iomem		*rtc_base;
+ 	int			rtc_irq;
+ 	struct clk		*pclk;
+@@ -113,6 +112,7 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 	struct ftrtc010_rtc *rtc;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
++	struct rtc_device *rtc_dev;
+ 	int ret;
  
- 	if (event) {
- 		crtc->state->event = NULL;
+ 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
+@@ -160,29 +160,28 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 		goto err_disable_extclk;
+ 	}
+ 
+-	rtc->rtc_dev = devm_rtc_allocate_device(dev);
+-	if (IS_ERR(rtc->rtc_dev)) {
+-		ret = PTR_ERR(rtc->rtc_dev);
++	rtc_dev = devm_rtc_allocate_device(dev);
++	if (IS_ERR(rtc_dev)) {
++		ret = PTR_ERR(rtc_dev);
+ 		goto err_disable_extclk;
+ 	}
+ 
+-	rtc->rtc_dev->ops = &ftrtc010_rtc_ops;
++	rtc_dev->ops = &ftrtc010_rtc_ops;
+ 
+ 	sec  = readl(rtc->rtc_base + FTRTC010_RTC_SECOND);
+ 	min  = readl(rtc->rtc_base + FTRTC010_RTC_MINUTE);
+ 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
+ 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+ 
+-	rtc->rtc_dev->range_min = (u64)days * 86400 + hour * 3600 +
+-				  min * 60 + sec;
+-	rtc->rtc_dev->range_max = U32_MAX + rtc->rtc_dev->range_min;
++	rtc_dev->range_min = (u64)days * 86400 + hour * 3600 + min * 60 + sec;
++	rtc_dev->range_max = U32_MAX + rtc_dev->range_min;
+ 
+ 	ret = devm_request_irq(dev, rtc->rtc_irq, ftrtc010_rtc_interrupt,
+ 			       IRQF_SHARED, pdev->name, dev);
+ 	if (unlikely(ret))
+ 		goto err_disable_extclk;
+ 
+-	return devm_rtc_register_device(rtc->rtc_dev);
++	return devm_rtc_register_device(rtc_dev);
+ 
+ err_disable_extclk:
+ 	clk_disable_unprepare(rtc->extclk);
 -- 
 2.53.0
 
