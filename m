@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027165;
-	b=4pB0q7lrR/alhIZBn/JOaGnegskZhRH2ANbVXXTSXQj/EZQOPJ6S4gur2pSHp3TEuX8M
-	 TV/LQLcWeuW/bFrSxBMWp/wLk1lRH0sKfLikKkXFHHc48BHG1yASMNuQBUuQSohg2rfi6
-	 EV+HM6lgHHGp02F9dPfeQxrji+/HSUPbHlATim2hHphd8goGvI4WwDXNg+NejC/lAK3/W
-	 yAN0jnKaGDxksVAHDaMH9VtNZ86qNgm9O+R4179RdvHMgwncXzQorj1AY04pYlwZ82I8y
-	 FUUbM9+N9lNtqWnjHFpagwc2fZhM4UGNbmjkbjUMOAqsdC+/bE8z98loG7bRlIuF4ag==
+	t=1795027168;
+	b=AH6B41DyLe+BvCcHnubxyNW/HNgTxB2XaCKwqAUCnGpRuhiAGm9R+WFGUhcEtFOgaw7K
+	 aSp09kJcLrbznjDfLPE8H/b9Cy9A8FZV1SMd3IaggBIp+gXa4edTjL9o82VegAXWx9oiD
+	 ynDjbtCKcWfWPru0vfAmunnakBcKyLCj1f0N8CMiVYj6gE1GuNTdYQc66EQ7kFhdDFrkH
+	 OYLO2b3vfBhxyQYDTBBnBLOkXprDdRWydjyZ9PMZS/ZmXEGKxVBap0tvgi6tOlTz9JDwF
+	 bHrRnPAFxqbErQugt5g30IZyb1lABD9RlWsZFlbB9BqAsdFEDtx1cm9nqqCXPlB9mzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027165;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3Ktmaafo5U+oQXAJptNWHyjdHprOms3/dtRYpgun0J0=;
-	b=yOcSZrr1dFPuakaTnOM8lf0VsaAptrScPzIsuKejUObwmoBelSVAdQ67zBoYdbeLFFVf
-	 uKUZ84zyT4EPSOtxmzT7Q6ORrKow2bO8gVvLcRtA6tqWZ8e1NKSkIGWAN6es7w0qbPvvk
-	 dO1804TLwswGUbgSGjbPgj/QAUHsylu3z3coHRI3R6/xJurekI74yYhTVL3hU/9I5R87W
-	 lyr8vCGbsVxbeZm/L8xepTRum5B5H0A6pIfYOPuRVuHd/9qtfRDKXKch0sS8ka8aI0gK5
-	 fPMEX01J8OQijtdaWVt3iS9YlrraP9+L0HSopMqu7ADYYFYw4pVyFfpPz0UnYPfYRxw==
+	bh=VFT/GCF4faA67N6tnAOJf69iLBvf5REuISCInPmkjgA=;
+	b=KcHtJ8gBxdyvGVqHPo9IhH9nydPBLLkCbv5VDBGqLUGv7KcnuAYM9Rg/b9ESWffzoWyx
+	 8JQDg2RwKeOsrFNpJODllJXN3bXwtVJBsfM/AIDCHSvHc1QQFyXSxLK6NESxsp+qiGho+
+	 hMRpe+qVEDBwSF0Dp8SeBlNQfWgWWjl9jlnu+htAzH35hW+XOBGCmFJvH2cxXkmSAkRdX
+	 7UkutBFFiewQR4IRHiuaAnl3tsNj89rF3+GKvt0GFelmaDmIA3Jpof2WvqxSXaWtIndZX
+	 jB8KGGIQ+tw9+hf5xshu9btrELxi9R+8q/xPyMEbWNVqZP8FyQHIuduwOK2HkZNPIZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrWa7xAA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X9Fg/UaG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BBB606A320;
-	Wed, 18 Nov 2026 18:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3399606A32C;
+	Wed, 18 Nov 2026 18:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrWa7xAA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70A41F000C4;
-	Wed, 18 Nov 2026 18:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X9Fg/UaG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9DAE1F000C4;
+	Wed, 18 Nov 2026 18:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027165;
-	bh=3Ktmaafo5U+oQXAJptNWHyjdHprOms3/dtRYpgun0J0=;
+	s=korg; t=1795027168;
+	bh=VFT/GCF4faA67N6tnAOJf69iLBvf5REuISCInPmkjgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FrWa7xAA4PCHlP5526l2O0GcrqheaCLX0Z7EbTt/ESsMUctYGMglanArKeI/KrqL/
-	 cdpPbwSAu4545Qd+JIP76LnhiwoimZqHI81/umiVqduv/mFLP7Coe5bmQZl+Bda6IX
-	 DhRl/Kdx00NNhEnnqKbhTmM9yRNtVbmvmD2Wku0A=
+	b=X9Fg/UaGkphmF16MW5jqFIx+jaLqqb7XSqFLc/Pt64Fa8aapjhSFAL5UjO/H36O07
+	 j7ojuIpVkCA72KAdrfJc355hfveZ+DFOSV2H9j58yzHCvZIn1K3qIDMKxDMjDRkylq
+	 DOWu4CZMwIlo2CeNwK1UmsUozQd7qILUgIKF+2Q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Ming Lei <tom.leiming@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1651/2151] ublk: allow a NULL io->cmd in the cancel callback
-Date: Wed, 18 Nov 2026 15:56:26 +0100
-Message-ID: <20261118150221.990323960@linuxfoundation.org>
+Subject: [PATCH 6.18 1652/2151] block: cleanup blkdev_report_zones()
+Date: Wed, 18 Nov 2026 15:56:27 +0100
+Message-ID: <20261118150222.025439309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,59 +74,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <tom.leiming@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 4915dc0a1834457520ef0592bfd454b26901614f ]
+[ Upstream commit e8ecb21f081fe0cab33dc20cbe65ccbbfe615c15 ]
 
-A cancel from the control path, like STOP_DEV's ublk_cancel_dev() after
-dropping ub->mutex, takes the command and clears io->cmd under
-cancel_lock, then completes it with io_uring_cmd_done(), which takes
-uring_lock to remove it from the cancelable list. The server's io_uring
-cancel runs ublk_uring_cmd_cancel_fn() under uring_lock in between:
+The variable capacity is used only in one place and so can be removed
+and get_capacity(disk) used directly instead.
 
-  control path cancel                    io_uring cancel (uring_lock)
-  io->cmd = NULL, CANCELED
-  io_uring_cmd_done()
-    waits for uring_lock                 cmd still on the list
-                                         ublk_uring_cmd_cancel_fn(cmd)
-                                           io->cmd == NULL: WARN
-
-ublk_cancel_cmd() then sees CANCELED and leaves the command alone, so
-nothing is wrong; only warn if io->cmd holds another command.
-
-Fixes: ab03a61c6614 ("ublk: have a per-io daemon instead of a per-queue daemon")
-Tested-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20261011063555.1142277-7-tom.leiming@gmail.com
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 80897c7e5ae5 ("ublk: use global index for reported zones")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ block/blk-zoned.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 197825f44b1d0..3dc070de93c83 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2029,6 +2029,7 @@ static void ublk_uring_cmd_cancel_fn(struct io_uring_cmd *cmd,
+diff --git a/block/blk-zoned.c b/block/blk-zoned.c
+index a7d3d2e002da6..4253483c5c76b 100644
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -161,7 +161,6 @@ int blkdev_report_zones(struct block_device *bdev, sector_t sector,
+ 			unsigned int nr_zones, report_zones_cb cb, void *data)
  {
- 	struct ublk_uring_cmd_pdu *pdu = ublk_get_uring_cmd_pdu(cmd);
- 	struct ublk_queue *ubq = pdu->ubq;
-+	struct io_uring_cmd *cur;
- 	struct task_struct *task;
- 	struct ublk_io *io;
+ 	struct gendisk *disk = bdev->bd_disk;
+-	sector_t capacity = get_capacity(disk);
+ 	struct disk_report_zones_cb_args args = {
+ 		.disk = disk,
+ 		.user_cb = cb,
+@@ -171,7 +170,7 @@ int blkdev_report_zones(struct block_device *bdev, sector_t sector,
+ 	if (!bdev_is_zoned(bdev) || WARN_ON_ONCE(!disk->fops->report_zones))
+ 		return -EOPNOTSUPP;
  
-@@ -2045,7 +2046,9 @@ static void ublk_uring_cmd_cancel_fn(struct io_uring_cmd *cmd,
+-	if (!nr_zones || sector >= capacity)
++	if (!nr_zones || sector >= get_capacity(disk))
+ 		return 0;
  
- 	ublk_start_cancel(ubq->dev);
- 
--	WARN_ON_ONCE(io->cmd != cmd);
-+	/* NULL if a cancel from the control path took it meanwhile */
-+	cur = READ_ONCE(io->cmd);
-+	WARN_ON_ONCE(cur && cur != cmd);
- 	ublk_cancel_cmd(ubq, pdu->tag, issue_flags);
- }
- 
+ 	return disk->fops->report_zones(disk, sector, nr_zones,
 -- 
 2.53.0
 
