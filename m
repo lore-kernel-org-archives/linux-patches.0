@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028370;
-	b=JEgPp7WJAne7MJy4FFKAuLZgIi/OW6IUwafOAntjpczeaB5zx+4JMG/vo9sydnilSNQ0
-	 0QjVHFP3wzxEbGwmPMMRGnVwGB8rSEUt2VRlyY2DuNWRkVu+fxZA9BqvNMwX9Bb7TnBHj
-	 fZ+A46VRWDaIgzQCbuS+n++bwA/CrvQLMw9FdD2JalLYezkE+qwRrjMoivLvL9YqFmx4P
-	 C3Um2/gJYO6I7VG8jhq42TIWeA5F8yKIfvC5fgzVPOKOEXspiz60Uo9wKkpQhs6Hz/apx
-	 K1TfUlRSvHx8K97KYaFEy8uyaaMlaxU2dEgEZ4REL3WvjzfQyxOpoFeLTALCIcjZovg==
+	t=1795028373;
+	b=rgCvaFLCpIR5+pBQtwfRg8mYYSE8FbOjGhdQw7UNupi8KbUdRtc5H4HBdUjtCsEflDsb
+	 wlTRlvU7vUBIaDIuLF9djK5UPuYyZYbbr4tSPMVYOFUyCpgTbGEeOPebyFB830+nopw+3
+	 /fjgWRjNxGQYajTiBizoMUiIlKhQpHZCFFsWjkD+aUeyveePKoCJCUdcem7fLMLlhkq1S
+	 VKOK3SHfEgiHaNu03GY5sa+yi9PcZ6fVT2yHqBSJo2MvD93DV84mN12SfsyNjHpgZDCDm
+	 TR8YyW95bX9COR0ZEeYtk3EuUapzeN6mDxDIIKKy+APIgpR78k2/ZYyPWdVX2m5gqlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028370;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Llclz/6pf+EQqW2bmst+X1O+HmJuFs7tQPdwQ9+L+AU=;
-	b=S1DXYrIZ9biXiL0E3DVy3SzcQYKgZ35h5RRx3qFz/+cD3bgoJxcQ2TNuEw9FuG8CywpR
-	 WXfNl5FR6gTATnY032kGXouQhpMxpeYY0WSSnjcDslOECHK66x0Trel79nH/7tCvFNHui
-	 2efWPD9d0AOdnRWS66/R8teMSP4INFWhpDs6f/adu3iAnPe15z7ME3VmQiQngWNMzlU8n
-	 kLp/QF6TbBwHtCCSSrkrEj68FmmgjNDCkbV+tm3p+EM+3EY0G2186VlYfQHbyzYiQoz3u
-	 R7WVPTkcgF4woGVxfyzJioQD8qZO+QyzbzhzWrxE7nGxRSgmHyRgrmo24qn5IGWJ7oA==
+	bh=Xos/t0U+uUAA/YdlJpLfFOAUemPlNtcvhjk1/Y4k3VE=;
+	b=C/ygcjXuB6pY9NUUX1X1WoFfeFny/FaicpB7ihZGbSg/KZfwAq1Xir5RXxfVWs/nl0G6
+	 CS9gZSENVufxOchZQtg1Uk55vPj87vhqh1v33Ht72BqlbgfFiTahcMNpPOpvacCm5l1SA
+	 O8oDQGyWWcgfL/Nto5gJuAS7mLbXXkqgAidNvWPEWiANDOt2lgLP30zOU6MocIyGD0jZN
+	 drx1dChCkADXHWQQikT2HAwGkAM9ymVyOdU+d+SgI08KigTcDZlc1xh4UWJWe7LXLyzVx
+	 U1hOhvZrES0UoivnCpPUZm8qUh2unui6yDYP9xoIjWMqRYhBY8p4zwz/2m8Q/EyqF8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xDOem8/x";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h/Nl1KWJ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E9B606A32F;
-	Wed, 18 Nov 2026 18:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FAE606A32C;
+	Wed, 18 Nov 2026 18:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDOem8/x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C6D1F000C4;
-	Wed, 18 Nov 2026 18:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h/Nl1KWJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4971A1F000C4;
+	Wed, 18 Nov 2026 18:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028370;
-	bh=Llclz/6pf+EQqW2bmst+X1O+HmJuFs7tQPdwQ9+L+AU=;
+	s=korg; t=1795028372;
+	bh=Xos/t0U+uUAA/YdlJpLfFOAUemPlNtcvhjk1/Y4k3VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xDOem8/xjCiAxpMZpPMGB4l4JsfiTNV7mN3fn7WYz6xyP7eWENEVrJBi0YM8A5XPr
-	 jft5BSKXj2OWzE89vEfQOlQ/SCqIBtdSZ/JDftO+AvLNH6uug09fezjabHCViVP+cc
-	 v9eUiPU5GppNoWCOMuZ1R5RXWprIkzll3gtsNIYg=
+	b=h/Nl1KWJXAkzc8epWWUUXPfBwOIIngS2nHsEVpNB8mGvY04IV6yWTwUqGwH8q8mFN
+	 NDFF7yz6tuyQSra4tJOrBQBN7bzWPeMCgUAlYOW3FO1a3mJoHi4w1obORQ9WuQXSua
+	 8DzH6RgnW82lDdE0dP+CGhf/rMMomiFKXHXd41e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tong Liu <lyutoon@gmail.com>,
-	Qi Tang <tpluszz77@gmail.com>,
-	Zhiyu Zhang <zhiyuzhang999@gmail.com>,
-	Bradley Morgan <brads@mainlining.org>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2120/2151] watch_queue: keep info_id separate from rcu_head
-Date: Wed, 18 Nov 2026 16:04:15 +0100
-Message-ID: <20261118150238.918703868@linuxfoundation.org>
+Subject: [PATCH 6.18 2121/2151] splice: retry tee() instead of returning 0 when it races
+Date: Wed, 18 Nov 2026 16:04:16 +0100
+Message-ID: <20261118150238.953128498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,83 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiyu Zhang <zhiyuzhang999@gmail.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 53d72818f9e2aeb03a6053544ee6efa4eb2a3988 ]
+[ Upstream commit b2aa970a0a03c117306f48d75a4c3125a8cc9957 ]
 
-struct watch overlays info_id with rcu_head. A notification poster reads
-info_id under rcu_read_lock(), but a concurrent final put can enqueue the
-watch with call_rcu(). Enqueueing the callback writes rcu_head before the
-grace period has elapsed, so it can corrupt info_id while the object
-remains legally visible to the reader.
+tee() can return 0 while the input pipe still has writers, when
+another task reads the input pipe or fills the output pipe at the same
+time. tee(2) documents 0 as "no data was copied" because the input pipe
+has no writers, and loops built on it (the man page example breaks out
+on 0) stop early. In a test with one thread writing 1 byte at a time
+to the input pipe, one reading it and one draining the output pipe,
+about one tee() call in 150 returned 0.
 
-__post_watch_notification() then merges that value into the notification
-info word without masking it. Pointer bits can corrupt WATCH_INFO_LENGTH
-and make post_one_notification() copy beyond the posting task's stack
-record.
+do_tee() runs ipipe_prep() and opipe_prep() to wait for data and room,
+each under its own pipe lock, and only then takes both locks in
+link_pipe(). If the input pipe was emptied or the output pipe filled in
+between, link_pipe() finds nothing to do and returns 0.
+splice_pipe_to_pipe(), which was modelled on tee(), handles the same
+race by dropping both locks and going back to the prep steps ("A zero
+return value means EOF, so retry instead"), and returns -EAGAIN for
+SPLICE_F_NONBLOCK.
 
-Give info_id storage separate from rcu_head so RCU enqueueing cannot modify
-it. Place it after the kref, which uses existing tail padding on x86-64.
-Mask info_id with WATCH_INFO_ID at the point of use as an additional
-invariant check.
+Do the same in link_pipe(): move the prep steps into it and retry when
+nothing was linked although the input pipe still has writers.
 
-An unprivileged shell and keyctl reproducer was run for 30 seconds in QEMU.
-The vulnerable baseline produced malformed notification lengths, while this
-change completed with 288631 key notifications and no malformed record.
+Tested under QEMU (x86_64) with the program in the notes: 154 of 22698
+tee() calls returned 0 before the change, none of 34429 after it.
 
-Fixes: c73be61cede5 ("pipe: Add general notification queue support")
-Reported-by: Tong Liu <lyutoon@gmail.com>
-Reported-by: Qi Tang <tpluszz77@gmail.com>
-Reported-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Closes: https://lore.kernel.org/lkml/CALf2hKveij_sHgANY9Aktm1dPa4wfKjKNkHyp9yPbjORWFXagA@mail.gmail.com/
-Link: https://lore.kernel.org/netdev/CALf2hKvp0NPVLwr=a3+jUHtPohxbra8gox+aYAfWathJnn-J+Q@mail.gmail.com/
-Signed-off-by: Zhiyu Zhang <zhiyuzhang999@gmail.com>
-Link: https://patch.msgid.link/20261029054136.1174216-1-zhiyuzhang999@gmail.com
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Fixes: aadd06e5c56b ("[PATCH] splice: fix problems with sys_tee()")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Link: https://patch.msgid.link/20261018025541.799135-1-nickolai@csail.mit.edu
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/watch_queue.h | 6 ++----
- kernel/watch_queue.c        | 2 +-
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ fs/splice.c | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/watch_queue.h b/include/linux/watch_queue.h
-index 429c7b6afeada..b87e1babb5f03 100644
---- a/include/linux/watch_queue.h
-+++ b/include/linux/watch_queue.h
-@@ -52,10 +52,7 @@ struct watch_queue {
-  * Representation of a watch on an object.
-  */
- struct watch {
--	union {
--		struct rcu_head	rcu;
--		u32		info_id;	/* ID to be OR'd in to info field */
--	};
-+	struct rcu_head		rcu;
- 	struct watch_queue __rcu *queue;	/* Queue to post events to */
- 	struct hlist_node	queue_node;	/* Link in queue->watches */
- 	struct watch_list __rcu	*watch_list;
-@@ -64,6 +61,7 @@ struct watch {
- 	void			*private;	/* Private data for the watched object */
- 	u64			id;		/* Internal identifier */
- 	struct kref		usage;		/* Object usage count */
-+	u32			info_id;	/* ID to be OR'd in to info field */
- };
+diff --git a/fs/splice.c b/fs/splice.c
+index 8ac45441e2193..0c38b36df3992 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1858,6 +1858,15 @@ static ssize_t link_pipe(struct pipe_inode_info *ipipe,
+ 	unsigned int i_tail, o_tail;
+ 	ssize_t ret = 0;
  
- /*
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index bc8d6b641ed43..0c413613ffe2c 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -212,7 +212,7 @@ void __post_watch_notification(struct watch_list *wlist,
- 		if (watch->id != id)
- 			continue;
- 		n->info &= ~WATCH_INFO_ID;
--		n->info |= watch->info_id;
-+		n->info |= watch->info_id & WATCH_INFO_ID;
++retry:
++	ret = ipipe_prep(ipipe, flags);
++	if (ret)
++		return ret;
++
++	ret = opipe_prep(opipe, flags);
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Potential ABBA deadlock, work around it by ordering lock
+ 	 * grabbing by pipe info address. Otherwise two different processes
+@@ -1879,13 +1888,32 @@ static ssize_t link_pipe(struct pipe_inode_info *ipipe,
+ 		i_head = ipipe->head;
+ 		o_tail = opipe->tail;
  
- 		wqueue = rcu_dereference(watch->queue);
- 		wf = rcu_dereference(wqueue->filter);
++		if (pipe_empty(i_head, i_tail) && !ipipe->writers)
++			break;
++
+ 		/*
+ 		 * If we have iterated all input buffers or run out of
+ 		 * output room, break.
+ 		 */
+ 		if (pipe_empty(i_head, i_tail) ||
+-		    pipe_full(o_head, o_tail, opipe->max_usage))
+-			break;
++		    pipe_full(o_head, o_tail, opipe->max_usage)) {
++			if (ret)
++				break;
++
++			if (flags & SPLICE_F_NONBLOCK) {
++				ret = -EAGAIN;
++				break;
++			}
++
++			/*
++			 * We raced with another reader/writer and haven't
++			 * linked any buffers. A zero return value means EOF,
++			 * so retry instead.
++			 */
++			pipe_unlock(ipipe);
++			pipe_unlock(opipe);
++			goto retry;
++		}
+ 
+ 		ibuf = pipe_buf(ipipe, i_tail);
+ 		obuf = pipe_buf(opipe, o_head);
+@@ -1956,16 +1984,7 @@ ssize_t do_tee(struct file *in, struct file *out, size_t len,
+ 		if ((in->f_flags | out->f_flags) & O_NONBLOCK)
+ 			flags |= SPLICE_F_NONBLOCK;
+ 
+-		/*
+-		 * Keep going, unless we encounter an error. The ipipe/opipe
+-		 * ordering doesn't really matter.
+-		 */
+-		ret = ipipe_prep(ipipe, flags);
+-		if (!ret) {
+-			ret = opipe_prep(opipe, flags);
+-			if (!ret)
+-				ret = link_pipe(ipipe, opipe, len, flags);
+-		}
++		ret = link_pipe(ipipe, opipe, len, flags);
+ 	}
+ 
+ 	if (ret > 0) {
 -- 
 2.53.0
 
