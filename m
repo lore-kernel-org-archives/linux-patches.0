@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050050;
-	b=r3jjzdRgWFW5sp9LavbHQ0Q7HkvfqxucXd2dPGDw3Onohbzh4r+Bf0CE4WTQI7ULM7M5
-	 FaKw6XvWAN+6NfLEbBUnaA/KD7ubKdprPniQwCZDpLOfy/vlBHg4dtm8d4kVEeX6Rp/Va
-	 X+iHv3ngYPscnkVN3rlHMlQ8/P9B2eKQhhXko5nQfujb8D9hN0XmdRDjNocUpX34BSGuN
-	 HxGfbWgEufc85z335u7q6kP40ju8FTeDzG8Z4IwtalUBXeN+zhhtIgFwRyXd212ZGbw5q
-	 FEnKUlF+sAb08uuoBfKWra+XwZ/Ce7jKe2fveiTxwkfwqTjRVDwYfI+qoB5Stqo3mCQ==
+	t=1795050053;
+	b=PNhrzngLdK47JhIOhyrISRZC6WOmy8fbhwq9Dn1+a0Thm/I8Qc0DiWmFty53C9MrAX0P
+	 BHxPIH7xL9f9R4PWsz/7fElwA2EpMTdtoPO4wH5gxiCCZgagFyvK+FJfLvVURy42mq8BR
+	 TT3iXNiHtuFv7+j+JPj61IOQ0/nNewd97pUDRd9SxfJBhEA+CblrGSc5jpMIXHr5D7/ZU
+	 i+9+UBilChXBLvoOMGygknDxLBNyQlXBQSA+eM6sPrOyJMdHWsf03TH1P/1TENJFiWvvl
+	 YQzLYsZJCEsOSBEb/r0VIipkbkfZ+H+S8RrLTX/K3i7yhFXSLZImjTaqoInB9UtgTbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050053;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HA4X6OnH8g0+WEEIYPdziVgqf8gRae5HzQ9tqCXoEEM=;
-	b=rrDpLGN2U4MOdYgz7tGXSzwekGzZbzGKn48e6l+QaWQrTuyl6FL1mh/Fa4SS7v6JJ0Ol
-	 KVJ12KbiEVf2w6tfpr10FyX4HPGs+R398GKZKyiMojW36V08yIsOgC28sEVpdlrZl/R1O
-	 OFbUqK9uvP91AYaZxacF/4s7NUaZFj4fk6TfuLR2WN6EvS9UGXYdQBfBlLe89OSxOr/71
-	 5BfGZx49YShp80t/hjpnOR6H+mqCEfLgdH+ZQ9LP3yuZUybD0XComcrlxicBPVCwCXMWw
-	 ozFZpAwfv11Og2rsSpKnRwBukztvRz3KUswI/Rhg7+JaluduR/jUjA9wh+unsjWbzWQ==
+	bh=6bRrhhCvkvscg0NhFryDHOLe999nfTQrP11di1/aJP8=;
+	b=3Eu3wquGY1yHaI9IuH55QXNfVS1XvMKv9xYd1RFZl8eK3o0gkTwn+saBjAmpg/JOr5fU
+	 sVGCqP/LkODennFDv/2rxphbfEf9JEqXncJCSr7i8oPPDmsU5KeXwHgGyShLp1wByqCLj
+	 6uLldiLXZHUpZF1j6GxS9urY1mITllwzDfjH+4yltCV0LdP29oHADQJLRoT008y3znBWJ
+	 tXYLWzlbxy3Yp3oXYeV2h/lMF9DchhmtEBwClorM954WenA+pTxDrW+1VnCsH5kN+88yZ
+	 CM4hhIW6ucoHdLjye7kQ5loWstY70Z868//0KdYHIrqGADGT97LzeS5z1gp20WOPXtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rO9Ncwsn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oEBEessa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5129F606A325;
-	Thu, 19 Nov 2026 01:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3088606A325;
+	Thu, 19 Nov 2026 01:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rO9Ncwsn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46891F000C4;
-	Thu, 19 Nov 2026 01:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oEBEessa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E491F000C4;
+	Thu, 19 Nov 2026 01:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050050;
-	bh=HA4X6OnH8g0+WEEIYPdziVgqf8gRae5HzQ9tqCXoEEM=;
+	s=korg; t=1795050052;
+	bh=6bRrhhCvkvscg0NhFryDHOLe999nfTQrP11di1/aJP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rO9NcwsngCDjtaTmR/MjPQrJ1kPqmno22klCwbKDgRgvnc41WooZzuGswmmo3ximN
-	 tLM1pq/Biv01Rt8uCOgbSg2r2jzNZASJVrZLUNt7vX3KRoZ7HQze5IOqqh9pQ5HldC
-	 T9sEVGfl995V6mg35ExnPa86swPzCe598OecGuzg=
+	b=oEBEessa7LOsaZ+Dhb0dI1f/XLSnLSuiiWTJ71dFGkx1PAlfeu1VgBE+JfC9N5XPy
+	 mDaazj+I4KTkxkn0AiK4toQnd1fpkDT6Nx0CJpCYFXRyAmmQgb6EOnhrPMkb3XdsaT
+	 MeA6rIrA41TrgyWGojkad9GDBWql57NAE2C42Xdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
+	syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com,
+	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2569/2857] selftests/bpf: Unmount the bpffs that cgroup_hierarchical_stats mounted
-Date: Wed, 18 Nov 2026 16:00:03 +0100
-Message-ID: <20261118150333.986234728@linuxfoundation.org>
+Subject: [PATCH 6.1 2570/2857] HID: wacom: fix wacom_intuos_irq NULL pen_input deref
+Date: Wed, 18 Nov 2026 16:00:04 +0100
+Message-ID: <20261118150334.021013853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,45 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
 
-[ Upstream commit e0645cfd0e1b2ae7b8ad989bef00a30016b16b5f ]
+[ Upstream commit 2f985de0afbe9366af9d322ea20589712c1dc8fe ]
 
-setup_bpffs() mounts a bpffs on /sys/fs/bpf and records in mounted_bpffs
-whether it did, so that cleanup_bpffs() unmounts only a bpffs that the
-test mounted itself.
+Currently, wacom_intuos_irq() passes the parent of wacom_wac's
+pen_input to the dev_dbg() in the unknown report path. However,
+pen_input can be NULL on interfaces without a pen, causing a
+NULL pointer dereference.
 
-cleanup_bpffs() checks the flag the other way around. As mounting on
-/sys/fs/bpf succeeds even when a bpffs is already there, the test never
-unmounts the bpffs it mounted, and every run leaves another one stacked
-on /sys/fs/bpf of the mount namespace that the test_progs worker keeps
-running later tests in.
+Get the HID device from the enclosing struct wacom and use hid_dbg()
+instead.
 
-Unmount the bpffs only when setup_bpffs() mounted it.
-
-Fixes: 88886309d2e8 ("selftests/bpf: add a selftest for cgroup hierarchical stats collection")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20261009-selftests-bpf-cgroup-stats-bpffs-v2-2-f93a111da992@gmail.com
+Fixes: eb71d1bb270e ("Input: wacom - use dev_xxx() instead of naked printk()s and dbg()s")
+Reported-by: syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b5a7cd83622c747977de
+Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/cgroup_hierarchical_stats.c        | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/wacom_wac.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-index ad19d6d41918a..cc6ab2c263da1 100644
---- a/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-+++ b/tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-@@ -110,7 +110,7 @@ static void cleanup_bpffs(void)
- 	ASSERT_OK(rmdir(BPFFS_ATTACH_COUNTERS), "rmdir "BPFFS_ATTACH_COUNTERS);
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index db3c0197b799b..ba17d3575434d 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1068,10 +1068,10 @@ static int wacom_intuos_general(struct wacom_wac *wacom)
+ 	return 2;
+ }
  
- 	/* Unmount bpffs, if it wasn't already mounted when we started */
--	if (mounted_bpffs)
-+	if (!mounted_bpffs)
- 		return;
+-static int wacom_intuos_irq(struct wacom_wac *wacom)
++static int wacom_intuos_irq(struct wacom_wac *wacom_wac)
+ {
+-	unsigned char *data = wacom->data;
+-	struct input_dev *input = wacom->pen_input;
++	unsigned char *data = wacom_wac->data;
++	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
+ 	int result;
  
- 	ASSERT_OK(umount(BPFFS_ROOT), "unmount bpffs");
+ 	if (data[0] != WACOM_REPORT_PENABLED &&
+@@ -1082,23 +1082,23 @@ static int wacom_intuos_irq(struct wacom_wac *wacom)
+ 	    data[0] != WACOM_REPORT_CINTIQ &&
+ 	    data[0] != WACOM_REPORT_CINTIQPAD &&
+ 	    data[0] != WACOM_REPORT_INTUOS5PAD) {
+-		dev_dbg(input->dev.parent,
++		hid_dbg(wacom->hdev,
+ 			"%s: received unknown report #%d\n", __func__, data[0]);
+                 return 0;
+ 	}
+ 
+ 	/* process pad events */
+-	result = wacom_intuos_pad(wacom);
++	result = wacom_intuos_pad(wacom_wac);
+ 	if (result)
+ 		return result;
+ 
+ 	/* process in/out prox events */
+-	result = wacom_intuos_inout(wacom);
++	result = wacom_intuos_inout(wacom_wac);
+ 	if (result)
+ 		return result - 1;
+ 
+ 	/* process general packets */
+-	result = wacom_intuos_general(wacom);
++	result = wacom_intuos_general(wacom_wac);
+ 	if (result)
+ 		return result - 1;
+ 
 -- 
 2.53.0
 
