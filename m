@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029599;
-	b=ukHf32GgEDXWHw8A2Ik+YsGoaQnLj3feyaG4CCmrLUlx1rZIfmKdv2a47g8k0ttl32It
-	 x+ODgbJRytWDVH/Tg+Q4RhM5iY4z0IFz2iWUmZrO85loRP7v+oPRnaGlIYIt9k1Dzbe0O
-	 EEbUoPBdgFxljNKlynZbVCBSTR7S+cZ9NnnXDkx5DpSmWzMHw75uTvZDEax8nYjOw8COh
-	 VrUT849LF4pE61c95v1MQ22LR9s/Jr1446vSFD8AC7ZRdihdoo15z2k+eareEk5w9TvZ8
-	 nTqRmHsAxiiGb4SXDIuvwLqYLhSigPFJh3C4DWcq/r/FGjy0mDmhECDH8u/j4YXacBg==
+	t=1795029601;
+	b=ogBO8KHBYD7ZrY/WLT1fT05IwbXgHyFj6Hp+gFYA/BCtxTx0fdDnF2D2EfC5a7nFaUMA
+	 smv0zN9vPEkNhI56dfqv+c5OEwSpTm8DZJh38zH2EL641nX7TGvZMx7wcUEUNcP+8XCjh
+	 WhfjjalBq5r8WFmKdL7HDbU9Tqm8zlOExF6DqsvHTwAY40aLbOLvwVa/gHXnx4vlWlKVG
+	 o5/v1qGOBofyy9tSjBauy4Qo/dkWKSVs5iEZGwgGYxlp9K3nbWp3p7y5yF0Go4RtU50MJ
+	 Zoo6d+q7rmS658h0ib2Z7l0q6MB73dwX3fJTe/vKmyj2vYeVo0WDSoFgs+67v3Jxj+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tMvkiKjKby36wslfwVIzz1yOrbwFn8ZOqSTRCxPspCM=;
-	b=bqFHyRdDFvyrn2hl1Co0iOiVWm0yitPviZs8P9ZJRCRGYld3X9oVwCapJaDATqNIZ+AY
-	 ZC18BZlFipWBarsVY7GC/ia3I3LMggnUWkeQo7xxGkgE6UvLh4+ONMt8p6akh0DDOnviL
-	 CIEf66FSf0bnhxNVv+FZnje7NgB3dorCVvmT9r320xHx7dMPKniaWW1EM1a0Om+Y766y7
-	 amZGDk0a4AKlWExUHoZOF07L/dy4yanKNf15lcTI/AVHStx1EYwOaQ9/P30jWUq01EzWK
-	 YgZZNIohUc4WIMPdSZOfZywBbfQ8HzZn0q3Nf1TfOq4X0Gq0yOfejXg6uPLZqSgLSZA==
+	bh=qVvk3y6wKbOLASXJEWn9TeGcl5+BtKDe5WCu12q331I=;
+	b=ZEfXgefh84noHFm+r6tJytkY6reOp5nDV1EeTIdY3ZSyquF0TlHukkVmTtk12RcG98Fm
+	 vlh+Ub2zl+x+KT6VocDB6hafW0njaXBgNYjxcHwCTnV+VHqgmRwSHN7TWtjJpr4ZTzp5y
+	 cKKqMrTY8vXm2ED7jC9ls3aDXqa9V845JI3zpIBAbNYqFdneXT+7Tyt8piUfcLGk0hn0g
+	 7u7QSCGxn6cnXPf/cTMgZLR3qZnUpT+WGwOEmQr19U5/12O1yo4XaQqhP+r0M8/HbSzwX
+	 JEdWPsXSQoGJ5NxMLIftvAkV6cs0qro1uRIj4HpTiEyvq4b9qx5bVAN7jAIRJTtohsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1S1Y2GO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOEpTy63;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4711F606A332;
-	Wed, 18 Nov 2026 19:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF22606A330;
+	Wed, 18 Nov 2026 19:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a1S1Y2GO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123721F000C4;
-	Wed, 18 Nov 2026 19:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rOEpTy63
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34691F000C4;
+	Wed, 18 Nov 2026 19:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029598;
-	bh=tMvkiKjKby36wslfwVIzz1yOrbwFn8ZOqSTRCxPspCM=;
+	s=korg; t=1795029601;
+	bh=qVvk3y6wKbOLASXJEWn9TeGcl5+BtKDe5WCu12q331I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a1S1Y2GOJ5d6GFNQjZwb4TQH8vF7cQnWGuFEe99jy0y5B0AbjFMbsjgVucmu77kJv
-	 SbHmaJ+GlC1EHSedW2wEbTuIPC2hkrPMO7PiXAXwHI85MQ6rWmADLK7CjYTD4O/yKs
-	 bniClk8GdW+MTSddY+Dnf77n96fkkyzKK88tW6P4=
+	b=rOEpTy63TuMMK1o33S1Av244sG3691Fg/gJc9oT8+8jgrLKvDknDFolQKmoUAFzAM
+	 WHIuVYkpriJn1E0yycIBOauXjWNLhvExWHY6zv6v6pHvDXdNimqyTIx6LT47NH4dcW
+	 vgS5uLImQAdeMaVlck06yRTj58VmUSIDnf/Lv94E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianan Huang <jnhuang95@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0406/1756] f2fs: quota: fix stale lock holder on remount failure
-Date: Wed, 18 Nov 2026 15:42:13 +0100
-Message-ID: <20261118150024.928114856@linuxfoundation.org>
+Subject: [PATCH 6.12 0407/1756] firmware: imx: dsp: fix mailbox channel leak on kasprintf failure
+Date: Wed, 18 Nov 2026 15:42:14 +0100
+Message-ID: <20261118150024.965621713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,56 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianan Huang <jnhuang95@gmail.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 3f140a60c92a5e2e9885adac70cd3686ba4ee19a ]
+[ Upstream commit e3631d0242842940f9e902afaea98202e56277e8 ]
 
-F2FS remount can fail while duplicating a journalled quota file name.
+If kasprintf() fails while setting up mailbox channels, already
+requested channels from earlier iterations were never freed. Route
+the failure through the existing cleanup path.
 
-f2fs_remount()
-- sbi->umount_lock_holder = current
-- kstrdup(F2FS_OPTION(sbi).s_qf_names[i])
-  : fails
-- free previously duplicated names
-- return -ENOMEM
-
-The direct return leaves umount_lock_holder pointing at the failed
-remount context.  A later checkpoint may then wrongly treat another
-context as the s_umount lock holder.
-
-Add a restore_holder cleanup path and use it before returning -ENOMEM.
-
-Fixes: eb85c2410d6f ("f2fs: quota: fix to avoid warning in dquot_writeback_dquots()")
-Signed-off-by: Jianan Huang <jnhuang95@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: ffbf23d50353 ("firmware: imx: Add DSP IPC protocol interface")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/firmware/imx/imx-dsp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index facf7647b5095..7f81ac832a858 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2381,7 +2381,8 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
- 			if (!org_mount_opt.s_qf_names[i]) {
- 				for (j = 0; j < i; j++)
- 					kfree(org_mount_opt.s_qf_names[j]);
--				return -ENOMEM;
-+				err = -ENOMEM;
-+				goto restore_holder;
- 			}
- 		} else {
- 			org_mount_opt.s_qf_names[i] = NULL;
-@@ -2645,6 +2646,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
- 	sbi->mount_opt = org_mount_opt;
- 	sb->s_flags = old_sb_flags;
+diff --git a/drivers/firmware/imx/imx-dsp.c b/drivers/firmware/imx/imx-dsp.c
+index 01c8ef14eaec3..41d1d6153923b 100644
+--- a/drivers/firmware/imx/imx-dsp.c
++++ b/drivers/firmware/imx/imx-dsp.c
+@@ -99,8 +99,10 @@ static int imx_dsp_setup_channels(struct imx_dsp_ipc *dsp_ipc)
+ 		else
+ 			chan_name = kasprintf(GFP_KERNEL, "rxdb%d", i - 2);
  
-+restore_holder:
- 	sbi->umount_lock_holder = NULL;
- 	return err;
- }
+-		if (!chan_name)
+-			return -ENOMEM;
++		if (!chan_name) {
++			ret = -ENOMEM;
++			goto out;
++		}
+ 
+ 		dsp_chan = &dsp_ipc->chans[i];
+ 		dsp_chan->name = chan_name;
 -- 
 2.53.0
 
