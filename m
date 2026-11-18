@@ -1,47 +1,46 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028112;
-	b=U/ae+1Zbakqi9H168C6W4bXwgiJUdV0E7zEA8glrIRRDsX92piC6YbMME7XC02Ta1fdA
-	 wOxAuAab7wbKOADDXSIHak7SXcDqfE4JEs9dkPL6QxgrhUNq+timdZViwYmJPr0Yn3WOv
-	 tCC1z2MsPDXUTUzHMQNkMp6iiGRnrxiWNKA2FXTlol6MQFpuXNrxHSLC/t9fdzawEYN94
-	 OobloLDIFoYhCgWy2T6CHXtXDdJLuYZlQsRwPnxnfi4r/x/TkeVGbTPp3ic+y2LCs801L
-	 Cigv7itfN6kNDOlipKUGx4gH1zEBigP7hXoitugC6OsDYrc1GlAP/cjpVvm79aKk/6Q==
+	t=1795028115;
+	b=pG/2DfR+OhFD7uoFR4oF2TrNCh3GzoW+KYwiy5lIt+1oinM2s0u1nMyBoqH+WXcuqsoD
+	 +Xl0Vlq3ZUmlS/oieOeJSDr7f7F3KPw287WdtezxypFElT7iN4qoooGMeWyr9lDL8NJAM
+	 J4op/nsvuS1cMbPSC64aP4W6EgLEdHw7+5CEuafy0uzL30uJpSiPoKRUlm5/3ka9i6eA7
+	 vd6xVAHNRXTGz5Kw2iRdv/5M9er4UguiN73Jlarv4mE6gRzyrKjnFhpjYlgPzGkOJSznI
+	 2P1fKlv7o8ugEhHbBiOdUeVDpyAbFlTUe7cko6XAMYw8WUM0/YB6DfY7cMbKZNMuDJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DTTaXxPJexio/845M56KGHawPJIGhy+pD9uvZBOSU1Y=;
-	b=aMyPtP4nelokvNw2xeEbQy0nrZzpQUUX0WfdVL5qFTbQnD2rfhLgZoAQAfKRnBl84zr5
-	 EFiqJvplNd/+qrTNq+IqEyxES/ZHtrpPa3Whq65jkZLP8JmIx1Zv9bq3r+kZ6XbJjZBqG
-	 7qYkajUyrBhROc34UXu92Vp7SZJGJSrkYYuOV8rAnGjSxONwqjK0ttVLJaTyv4IYH4kl8
-	 C2iF69OmH4zSmXfE9gy8K5L6P3yf0EoN3qoG0pjsFXwLpkXLKG3OhDSJ7VTkMK4RCuCEf
-	 Y0B8Ln+dhjjocPhbNjpozan+lHF4uG5XRg7fx0CBvgHI4WJCYOLdQrmzvv5Q7bzc0WA==
+	bh=MwygOyvukvD31U6+W2yQ6BKXy1RYZ4ZoSMu33dUMlk4=;
+	b=I5LeQ2FpFK12IlKLdsRnDtih2gF3bLnKcjV4mNC7pT7Dkmu00IRqhQD24fcwiUp6mYC7
+	 QphOSh2eQ8mIi5x3dsT+vkDMl+8Bq+upXQnICMBVxtzoxmYvWWL5pr97ZPJEDf13d01uO
+	 EPTxyVoKoqLS07U77PacRUDUbTZnpSWvxE/LLxk9P8uMe30UAiy9h3TqDQvYKRwERw0s4
+	 9G1XgTpMSNtBvY2bsOxK6GfVLjZmfWJFYX7XKK9W/RAKB+dRbdeNX/u4wFYsU4TYQvANZ
+	 RNzMmx2k5x4UEyv7K9G7SpsvN9LF+UbiedEg8D3OZSZuf+2MMLG5KG/muWguf5+1n0g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVVVDrUM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exY8FHmA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED61606A320;
-	Wed, 18 Nov 2026 18:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A160606A335;
+	Wed, 18 Nov 2026 18:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UVVVDrUM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7861F000C4;
-	Wed, 18 Nov 2026 18:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=exY8FHmA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671AD1F000C4;
+	Wed, 18 Nov 2026 18:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028112;
-	bh=DTTaXxPJexio/845M56KGHawPJIGhy+pD9uvZBOSU1Y=;
+	s=korg; t=1795028114;
+	bh=MwygOyvukvD31U6+W2yQ6BKXy1RYZ4ZoSMu33dUMlk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UVVVDrUMpgMfAZcLgHVXOfENF+83M04bK2ytlXfEaGVkMpvCKYpL1RnLOidyGo0FX
-	 s8Bu95nYhVFe5VwDv+Joo+Dvxzolog/QGTpSDST6r+XARn/6vR+uQ/hErNsau6Axk9
-	 gqXfeWtfIczQVg77m+ARKxcGo0WrJCwtnbzAxXRI=
+	b=exY8FHmAlFTM0weNPqiuvHCApCsCD3Kp1lZu/Lp9bio+X4KCTs8GElUvjmPQ9Km//
+	 Z2gWYhM1rgpnoa8WT3OH517AyTB26RyjDoeIKEg24hvvyM1r4nYQs22Tih3pJqgTBv
+	 H54sbteIuddMJToUpfmOKVzX/qmZb4wNMlXm0SBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
@@ -49,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2028/2151] nvmet-auth: take only AUTH_Negotiate for a negotiation
-Date: Wed, 18 Nov 2026 16:02:43 +0100
-Message-ID: <20261118150235.614392134@linuxfoundation.org>
+Subject: [PATCH 6.18 2029/2151] nvmet: fix NULL dereference of PCI endpoint targets
+Date: Wed, 18 Nov 2026 16:02:44 +0100
+Message-ID: <20261118150235.649839638@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -75,20 +74,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 7dd1d31e2e3124f331056d68af9a48c501b37e02 ]
+[ Upstream commit 4a5ace11b5a367270bc86097d31c35cb61890a95 ]
 
-nvmet_execute_auth_send() hands a common-type message to
-nvmet_auth_negotiate() if its ID is AUTH_Negotiate or matches the step
-the queue is in. The second case is wrong: the only other common-type
-message a host sends is AUTH_Failure2, and no queue waits in that step.
-A host can name the step on purpose though, and its message is then
-treated as a new AUTH_Negotiate without the work that goes with a new
-transaction, like reloading the keys on the admin queue.
+nvmet_pci_epf_create_ctrl() calls nvmet_alloc_ctrl() without a queue,
+the admin queue comes later from the host. nvmet_alloc_ctrl() passes
+args->sq to nvmet_queue_tls_keyid(), which with
+CONFIG_NVME_TARGET_TCP_TLS dereferences it, so every PCI endpoint
+controller creation crashes on such a kernel. The debugfs tls_key file
+passes ctrl->sqs[0] to the same function, which is NULL until the admin
+queue exists and again once a fabrics host has closed it while keeping
+an I/O queue.
 
-Fail every other common-type message, as AUTH_Failure2 already is.
+A queue that isn't there has no TLS key.
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: Hannes Reinecke <hare@suse.de>
+Fixes: fa2e0f8bbc68 ("nvmet-tcp: support secure channel concatenation")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
@@ -97,24 +96,23 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c | 3 ++-
+ drivers/nvme/target/nvmet.h | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
-index 846ba4c8ec249..72b42fc872385 100644
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -347,8 +347,9 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
- 			}
- 			req->sq->dhchap_step =
- 				NVME_AUTH_DHCHAP_MESSAGE_NEGOTIATE;
--		} else if (data->auth_id != req->sq->dhchap_step)
-+		} else {
- 			goto done_failure1;
-+		}
- 		/* Validate negotiation parameters */
- 		dhchap_status = nvmet_auth_negotiate(req, d, tl);
- 		if (dhchap_status == 0)
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 6a0d9b37443e8..9abf67fae1882 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -892,7 +892,8 @@ static inline void nvmet_req_bio_put(struct nvmet_req *req, struct bio *bio)
+ #ifdef CONFIG_NVME_TARGET_TCP_TLS
+ static inline key_serial_t nvmet_queue_tls_keyid(struct nvmet_sq *sq)
+ {
+-	return sq->tls_key ? key_serial(sq->tls_key) : 0;
++	/* A PCI endpoint controller is created without a queue */
++	return sq && sq->tls_key ? key_serial(sq->tls_key) : 0;
+ }
+ static inline void nvmet_sq_put_tls_key(struct nvmet_sq *sq)
+ {
 -- 
 2.53.0
 
