@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016101;
-	b=14hoifHOwDOAkqrF0kArKN4zhpwg3ZDZX6+5IByVdYlEvfQfNVngImY8y10QLXV3PPpu
-	 oXvcQXKnfASBQL7RcgOE9oBXtx+f5Bg6oN6K/SCY7P9HQskJbcKd5CmgVdAPWtYZ1TtPU
-	 ccq/PqwC+RFlNpNVogITuwQC49GOwL/9uNFgWMC/ZEe+zueY30HtDFfZ8FJbfrJ/DjwLS
-	 /TXaUgf8lKyyzNuJWJVsxQkb+5qIae0S/TskH79CfkXXjQdfCCWAosJiC/I0sto1UqjM+
-	 dNkJE7eE3nBydqN+kF23/0t4RBjWZS+LK+aMePzMGSbh41dZ18UV/FXlCScKskAQEtw==
+	t=1795016104;
+	b=A6MBRZ497eioufcQPSZCya17hxl8qOJI8Lp7v6yhUpJs7R6JBYc9B5vpnYjvWCiMadcB
+	 sE5LguRd0pdKRPxAvf/rUbdmnpzdZMVuaItDEXFuXCtnFZC++HcA2LzKDhDo+nbZYCUQk
+	 tBDz3H65S11pQYuHBoq6niIxGQ0mLK47h9djpVEGXVpH6gxFJwrcIn7JcZ2A64L2MKugY
+	 hQemFoGiaef9BK9pUWDx9XxHWOHllrkHhH0BJ0mHcqBfAkZGAuDtYabwbGKMwotn0hOYf
+	 LyrQ5lI7APJuTge+FfSIDMuPzb+9xDd8HfODjEdrTav239Mc6x8svUVi5rnBmvHr6bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016101;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016104;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PfI2YMhGy/VQnlJ8DtqruiZ/jrm3WK8gWXp+TgARKQs=;
-	b=Udy/8cwZ73dDSzhUIYEgV92rj/M0y5AzBrg8l9ZOOMs9+4wXEZxrj3s1tFONh3CCKCg4
-	 +WJlmO7MgHWmtX8MzmjwShoc2glgVAX1KTdDLDKzJMb8Sv9Vxnvi8XVJDr/liQttNdUQF
-	 iMdkq8gY8yMzOfPoEQjt4sRGSg2TgdrVMoB52rlSsOzZcEQEL26nC8x8T1nu0ntYX49Pr
-	 Hlp37NWWgs6wLcqF05/DwDPhgLMy8p24JSezPoFH45aw7VNDfhbd0z9RrHnDC5cLjK+IC
-	 ztDG6Jaj93Vew0fIAUnPQ58dYwpksjujY5gvmcuu4tUT7VIFhMvYjF8u65aj1LprM0g==
+	bh=F/xgoTGEm5/8vkpw4l649JDyfNHD8yu2gjmQpFsQAbc=;
+	b=Dzmr87Ij/4rvu9iEixfOoZKECoS3mw61YRb9lWrXFw/NfPn30XBWB6Ns7526eglrtsgh
+	 shcTelJ5kLMvAkPyD4/07X6JXIvVZ+9EIUmTG4ncyfyqUMZnoc0x2junWtc0bmd0+BYJR
+	 dUxMErbAYmuBtoT76EL7hsdbyK4J5KPBvkVh1WbFa63RCC7K0kRWHDR3e9Fo0oDRaZiQZ
+	 k308F/K0yATm08tt7SkhqGwGBFJtV3L0ah7A7Jjp09knKGFB/VBLCGDqRQR6Qh9XxEIsM
+	 5/ozUXwEmlBeId6BF4ymRTsAXTsa09CJ9BBwaCOeu+E4VWNaReNWOa8QePaRQZerMvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+Bog6ik;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVGgefsk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A75606A31C;
-	Wed, 18 Nov 2026 15:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE254606A332;
+	Wed, 18 Nov 2026 15:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C+Bog6ik
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F501F000C5;
-	Wed, 18 Nov 2026 15:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KVGgefsk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486AF1F000C5;
+	Wed, 18 Nov 2026 15:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016100;
-	bh=PfI2YMhGy/VQnlJ8DtqruiZ/jrm3WK8gWXp+TgARKQs=;
+	s=korg; t=1795016103;
+	bh=F/xgoTGEm5/8vkpw4l649JDyfNHD8yu2gjmQpFsQAbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+Bog6ikLvXrxExg6kpJ3UcWq/cdrSnMueqtYpG2oEloMYlASJLbc1Bah5YmXyzau
-	 YzyUm2dYNoXc8ZNoWVmjnrftZj5CwNHF/xi0AxgL6E+pIYAT0nMpb4+lFXbJ9JIe6P
-	 yckdMIz+K5WrUWnTqnFySQNmzZLnCTVKINBQbP+E=
+	b=KVGgefsk5q8lkh2991IBp/nBlPoOx2+akF9ZHK9Yv0a+4jUUVO4qShRCWH4PbJCSI
+	 UQEbkyFX5fuxmroGjMiRMifn4PrJmZHww7R3vB9Ovplveyklxtdv4dUU+h98O51R7N
+	 vCPS8MhzbZihHBJxtd140chWEUnMGw/djgsNjAnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0409/2651] cpuidle: menu: Do not return a disabled idle state
-Date: Wed, 18 Nov 2026 15:27:29 +0100
-Message-ID: <20261118150302.558629332@linuxfoundation.org>
+Subject: [PATCH 7.3 0383/2651] cpufreq/amd-pstate: Remove obsolete amd_dynamic_epp documentation
+Date: Wed, 18 Nov 2026 15:27:03 +0100
+Message-ID: <20261118150301.622320725@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit d594187cafd5ad65afc5f00242f8fa20e1d8c0f1 ]
+[ Upstream commit c8663e0457e6e6c72006478f4b6da99060030ec1 ]
 
-When idle state 0 is disabled and the PM QoS latency constraint is
-zero (latency_req == 0), the first branch of the || in the early-return
-condition of menu_select() is taken immediately, so state 0 is returned
-regardless of its disable flag.
+The amd_dynamic_epp command-line parameter was removed. Dynamic EPP
+is now selected through the per-policy energy_performance_preference
+attribute, which is already documented.
 
-Address this by making the !disable check a prerequisite for the entire
-early-return condition, so that when state 0 is disabled the normal
-state selection loop is used instead, which already skips disabled
-states.
-
-Fixes: 53812cdc9100 ("cpuidle: menu: Move the latency_req == 0 special case check")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20260827094820.3900062-1-luoxueqin@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 32692fcf61ed ("cpufreq/amd-pstate: Remove "amd_dynamic_epp" cmdline and "dynamic_epp" sysfs")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20260905010706.57380-1-kmehltretter@gmail.com
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt | 7 -------
+ Documentation/admin-guide/pm/amd-pstate.rst     | 6 ------
+ 2 files changed, 13 deletions(-)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 544a5d5930077..eb529d73d4b75 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -284,10 +284,10 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		data->bucket = BUCKETS - 1;
- 	}
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 4e64219c8da4c..3c2523dd6a8d7 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -501,13 +501,6 @@ Kernel parameters
+ 			disable
+ 			  Disable amd-pstate preferred core.
  
--	if (latency_req == 0 ||
--	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
--	      latency_req < drv->states[1].exit_latency_ns) &&
--	     !dev->states_usage[0].disable)) {
-+	if (!dev->states_usage[0].disable &&
-+	    (latency_req == 0 ||
-+	     data->next_timer_ns < drv->states[1].target_residency_ns ||
-+	     latency_req < drv->states[1].exit_latency_ns)) {
- 		/*
- 		 * In this case state[0] will be used no matter what, so return
- 		 * it right away and keep the tick running if state[0] is a
+-	amd_dynamic_epp=
+-			[X86]
+-			disable
+-			  Disable amd-pstate dynamic EPP.
+-			enable
+-			  Enable amd-pstate dynamic EPP.
+-
+ 	amijoy.map=	[HW,JOY] Amiga joystick support
+ 			Map of devices attached to JOY0DAT and JOY1DAT
+ 			Format: <a>,<b>
+diff --git a/Documentation/admin-guide/pm/amd-pstate.rst b/Documentation/admin-guide/pm/amd-pstate.rst
+index 6fd72ba52df20..4c5d3d8acf645 100644
+--- a/Documentation/admin-guide/pm/amd-pstate.rst
++++ b/Documentation/admin-guide/pm/amd-pstate.rst
+@@ -481,12 +481,6 @@ For systems that support ``amd-pstate`` preferred core, the core rankings will
+ always be advertised by the platform. But OS can choose to ignore that via the
+ kernel parameter ``amd_prefcore=disable``.
+ 
+-``amd_dynamic_epp``
+-
+-When AMD pstate is in auto mode, dynamic EPP will control whether the kernel
+-autonomously changes the EPP mode. The default is disabled. It can be enabled
+-with the kernel parameter ``amd_dynamic_epp=enable``.
+-
+ User Space Interface in ``sysfs`` - General
+ ===========================================
+ 
 -- 
 2.53.0
 
