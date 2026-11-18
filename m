@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018845;
-	b=iy9hMJ90JuSBQ/DDtZoOXwm90iztrHde2cpiO5rQoM8MzU6O7addnFmnGtEeUVe+51Kp
-	 98hZktw+Wd+GKW7BSFkgfqcNow2XoIpd9Stx6OIKX1WwQviX+TsGc0yc/3ECDXOqQTz0M
-	 5XBbv4X6xM5cH4SuYZZzRjAXrNPctpWfoWauRzQS4IqEOgRSnMxAI5Xup1PvCP+IWTREn
-	 pqM+bMQ+/goCmBWQmmATjFdyH3x7wUMvfz/2Y6pmTTVq0msCXXB6uynpgXy4BxzWkjjvZ
-	 9zIQ1UFhrsNA76gKKy2SISzj6jEJae9VtcNajxJJgjBxtL1uuwSfanj5uH3KFPwwCOw==
+	t=1795018848;
+	b=Bm6fOMfJEXrje7mrNOCDZC8Trvgw60Klnsa0gbblECfBS4TZmAFXgkNg3wESP636yzjb
+	 Ji/8AORkYBJ7xj28n6W3CczAflWCF0T6tpneK0vlBx1LkoKyYzxGGfQSwvk4MqWmWr3+M
+	 kTZvT0OsnWIDKxiJBkgOxaMCGIFiW5gYBYZY510Boq321IrsvrFrb2PkHUvOdMKzvhSf4
+	 /YI2inHumMVNbBNtERYlSmkGPeQuDNNmX9QyZ/dA8a7+GGOaWI9RomgMF5xrC7qrrJ/03
+	 YjTs993tbMMzRLq3oznkprq7C/rybuOMCONtU2R/dsSFJw2YDkVfPRsNwlTRAEzi/9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3DDbqIy+n5lEPNolyV5msy0odsjaffA2rXsBZmiP+1A=;
-	b=Z7Cpp1r13hrN7TIDKqW+MKhz/ET+MrwliHc7YZPjsUDfKycMD9IbyrNF15Fmupluzjea
-	 JR4WlWBOVPYnVqDoXp360ErVX3sM1lytMQK5tHP+oy0PTqnatPgRBUgr97dJlfP5IUniQ
-	 +A/VRyOfvtKRwsRsGB0X32TcsjrBHA3IlCCsdFyWffOXQC7YzocBftCIr5rFLcHF/AuJ+
-	 lLHdoMF5kPxz4YVTb/9CW7UQpQfHZVOURFLN7QaJPpmw3yixFzmdRahz9JgJbAG078XL1
-	 QZsWGcR8Z/pSrVcnwBr+S9Os2uYeJeL34zsmjDLgYQxt1UXRb1tFXH5H7fThUZ+VO4w==
+	bh=1m6OoMavc4uKEmX3ZsrzSWZWWmprhSXrPxoh/tJDP6s=;
+	b=gWRzA7OkaHAdkEia7WT+t50M9eoelBT9l9lveCoyHKs1hcZFyucj8sy2jCOaeZjKppTH
+	 SlOTq3MJIREUbQqt2Oc33T6/v4uIpBmVAHAMTavzk+mZI3n+m58lKqx3eXIBe0rq6L19i
+	 /YdamMbX4OwblX915brVRvuVBN70OFll6j3FFzUytZyowfPZlxhPUu5Zlbjza1PkW0v3q
+	 IIwSwfd7zBFzI+OJTLamuXrJedWqODE59/zR0RDrJUiYkFtnjYV5ORjXxVnwj4Satjmco
+	 SoV9hnVdwiX5COsmKaEVDw9cBONn1codPLux0utoGnJ0TxjJWBhW0WcbqYTnVsz0bvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="GHbxO/K+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YHOZZjQ/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1017606A31C;
-	Wed, 18 Nov 2026 16:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92810606A31C;
+	Wed, 18 Nov 2026 16:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHbxO/K+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232AD1F000C9;
-	Wed, 18 Nov 2026 16:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YHOZZjQ/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75B41F000C8;
+	Wed, 18 Nov 2026 16:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018845;
-	bh=3DDbqIy+n5lEPNolyV5msy0odsjaffA2rXsBZmiP+1A=;
+	s=korg; t=1795018848;
+	bh=1m6OoMavc4uKEmX3ZsrzSWZWWmprhSXrPxoh/tJDP6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHbxO/K+eTsYQung9yicwt2sGL9GW0j0rgmm8mhhpEUqjDnfe6DHt71rTF1EsivKb
-	 z1HH3PD0+G4Ufa1Q/VvBeMhjSpkqr1RMsFk0o6i7AhOyHfmxApAY8dNQ4tfXRJ12vc
-	 IfoWwO781bBBNAF1+SJOEyDbeuH3buYVMLcgL3hY=
+	b=YHOZZjQ/1B/5++wA0MkFCYUPz5rckq97C854zVwHxyzzgHhOpKhsjIk0RNisppz1y
+	 xAYgJMNbKChaQs6i+PXw+ua93KqvGPryLCM60icscWCNRvNL5F2WdBa7H/+AYg+U2v
+	 kHZh5lcSVYjSGcbXbw7jONNzQA2h3PE1ioQY8NQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Georgios Androutsopoulos <georgeandrout13@gmail.com>,
 	Yury Norov <ynorov@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1384/2651] rust: id_pool: document panics in `find_unused_id` and `release_id`
-Date: Wed, 18 Nov 2026 15:43:44 +0100
-Message-ID: <20261118150337.845172474@linuxfoundation.org>
+Subject: [PATCH 7.3 1385/2651] rust: bitmap: document panics in `next_bit` and `next_zero_bit`
+Date: Wed, 18 Nov 2026 15:43:45 +0100
+Message-ID: <20261118150337.879129214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,58 +71,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Georgios Androutsopoulos <georgeandrout13@gmail.com>
 
-[ Upstream commit 842c5beca0b369bb143b86d6ae63dbcd7c5f0988 ]
+[ Upstream commit a73b4d1fa7d334a5f7de5bb0a14726530f66196e ]
 
-`find_unused_id()` calls `Bitmap::next_zero_bit()` and `release_id()`
-calls `Bitmap::clear_bit()`, both of which panic when
-`CONFIG_RUST_BITMAP_HARDENED` is enabled and the index is out of
-bounds. Neither `IdPool` method documents this.
+`next_bit()` and `next_zero_bit()` use `bitmap_assert!()` to check
+that `start` is less than `self.len()`, which panics when
+`CONFIG_RUST_BITMAP_HARDENED` is enabled. However, neither function
+has a `# Panics` section, and both document that `None` is returned
+for exactly the input that triggers the panic.
 
-Add the missing `# Panics` sections and state the bounds requirement
-on `offset` and `id`.
+Update the documentation of `next_bit()` and `next_zero_bit()` to add
+the missing `# Panics` sections, add the missing blank doc comment line
+before `Returns` in `next_zero_bit()`, and simplify the wording.
 
-Fixes: 2cdae413cd3e ("rust: add dynamic ID pool abstraction for bitmap")
+Fixes: 11eca92a2cae ("rust: add bitmap API.")
+Closes: https://github.com/Rust-for-Linux/linux/issues/1252
 Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
 Signed-off-by: Georgios Androutsopoulos <georgeandrout13@gmail.com>
 Signed-off-by: Yury Norov <ynorov@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/id_pool.rs | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ rust/kernel/bitmap.rs | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/rust/kernel/id_pool.rs b/rust/kernel/id_pool.rs
-index 384753fe0e44a..c8b3465548027 100644
---- a/rust/kernel/id_pool.rs
-+++ b/rust/kernel/id_pool.rs
-@@ -224,7 +224,13 @@ pub fn grow(&mut self, mut resizer: PoolResizer) {
-     /// Finds an unused ID in the bitmap.
+diff --git a/rust/kernel/bitmap.rs b/rust/kernel/bitmap.rs
+index 053821fff74b7..4b4c6fef41257 100644
+--- a/rust/kernel/bitmap.rs
++++ b/rust/kernel/bitmap.rs
+@@ -487,7 +487,13 @@ pub fn last_bit(&self) -> Option<usize> {
+ 
+     /// Finds next set bit, starting from `start`.
      ///
-     /// Upon success, returns its index. Otherwise, returns [`None`]
--    /// to indicate that a [`Self::grow_request`] is needed.
-+    /// to indicate that a [`Self::grow_request`] is needed. `offset` must be
-+    /// within bounds.
+-    /// Returns `None` if `start` is greater or equal to `self.nbits`.
++    /// Returns `None` if no bits are set on or after the given index. The
++    /// index `start` must be in bounds.
 +    ///
 +    /// # Panics
 +    ///
-+    /// Panics if `CONFIG_RUST_BITMAP_HARDENED` is enabled and `offset` is out
-+    /// of bounds.
++    /// Panics if `CONFIG_RUST_BITMAP_HARDENED` is enabled and `start` is
++    /// out of bounds.
      #[inline]
-     #[must_use]
-     pub fn find_unused_id(&mut self, offset: usize) -> Option<UnusedId<'_>> {
-@@ -236,6 +242,13 @@ pub fn find_unused_id(&mut self, offset: usize) -> Option<UnusedId<'_>> {
+     pub fn next_bit(&self, start: usize) -> Option<usize> {
+         bitmap_assert!(
+@@ -507,7 +513,14 @@ pub fn next_bit(&self, start: usize) -> Option<usize> {
      }
  
-     /// Releases an ID.
+     /// Finds next zero bit, starting from `start`.
+-    /// Returns `None` if `start` is greater than or equal to `self.len()`.
 +    ///
-+    /// The `id` must be within bounds.
++    /// Returns `None` if no bits are zero on or after the given index. The
++    /// index `start` must be in bounds.
 +    ///
 +    /// # Panics
 +    ///
-+    /// Panics if `CONFIG_RUST_BITMAP_HARDENED` is enabled and `id` is out of
-+    /// bounds.
++    /// Panics if `CONFIG_RUST_BITMAP_HARDENED` is enabled and `start` is
++    /// out of bounds.
      #[inline]
-     pub fn release_id(&mut self, id: usize) {
-         self.map.clear_bit(id);
+     pub fn next_zero_bit(&self, start: usize) -> Option<usize> {
+         bitmap_assert!(
 -- 
 2.53.0
 
