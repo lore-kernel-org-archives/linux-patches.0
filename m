@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037629;
-	b=h2FnjC/Tb5s3w1LFXdqc0aaQ5QP8xRDCPLRKGf0DA91lBCseztr5q8XYn5jR4B2DWYHF
-	 mPyMXxFE6F3kcDm+L5EJSoElUrdzA6GB5RnmdW3e6OTuWqY6h+g28f80Kt/PM/YrZHKWA
-	 P2lu43eBdFPNQAt9x52CHtlL1NbmT4s0P1F1+fALonMb06PTPRNJ9Djn2vEmKWbF0v4rh
-	 dXqE1DiCzaymQrY7a9VBFfyD8GllWqpPyfu4zJ/ZVO19Rl+kpUC+vg5aafUSX5DCFY4UW
-	 50RueN6NjpOe7gwAbsgUt/tnjUdYG62Q/5oOk/a1T6IEwgso5qz3wMvzm5uRl5BQgZg==
+	t=1795037631;
+	b=UyiAFpfwHaGK8zy5M/dhnM426zNsZqvBTzooewV1jKAvEfoEUbgAWgJph9n+Jt9/o2t2
+	 Kz/PSOpW7WrW5QloNNUboi7jmlra5gWAyKeQRsYPCc7QcuUzY9iCGj6/M7k7PonF+zyDW
+	 47OOmd+pxrDf65ILF+CxL5NolrROpRv3dTkWF3nFSRwe4VQajIq7+OBAaslt0L1aee0tj
+	 cuDWlZcFtnDSCsYz17QdUdMC97v4H2xrqcQq4wZRv+Pdzkz2RYFUTU0ODfljEWhhWvpYD
+	 PN3yJnJVp1kjXthxcB7/2/v9dJaf/WAAvkSYUxMghUB8z1nmNRQFjSvvPuIiW/61JZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XrvkOsOEWI7T/oBdAKkbb90N4VYmox7mBRKvwh/8jLc=;
-	b=3ytuUs01u6305nafEud3ORbg/7s+8SfUAcUrc/WDEBNuQl9J3lE/VQp6fXhpY/WO3Pq+
-	 5NnXZHTLK3X51yHXciQ2LEiJwP8XDNucbKo3ejKMmdp64Z3cRFCz9+t1GgHd2hRscRJs+
-	 QKLw3igMjLdlI2xtSkLBcPtd/kOJoObL8QVEKwvy3EaD+EAWo4GiZJXW066hpVDR1jAKp
-	 4gdYlBnf44a3teBwiYkrCy7KXNkpE99blm+rtPFYPep2j+Dv2s8GZTBf+tFRU1Nrq0/ZZ
-	 adOTYJUyl21zlvoBUj0GGB/V+Wg9ly0Po5M+dkNmzpqH/Q/x7N8OH44re/KWQblkSwA==
+	bh=3WjhR4zF3k7hJDBMxULJGxnsc4OkwM/x4HH+z72Q9PQ=;
+	b=BO3M2vD2TiCN3cWAUs2EVz037ctwicAW9F1K/iL+hx6bsd8bEOWv+LHAenLWEIRr53r6
+	 3Rv8CJYIpZT+Sf4PHSpw5tfI2NDilp8Lq7zifjcHbEEZYDCRIO8+rEwspygu3M5EglV1L
+	 z5aUjj11EF8zxO/QzSmrEh33Mdh0b7ksveO2u+18j3tkQHIFTCShK/tlZisyYSZ4Garg2
+	 4OYqulSrPaenW48fyS9LRNl3OcvVTWqeZVfEjjv2aOzq6uHhNHce6YX6f0V68RDx0vQAQ
+	 nAcaPL2tH9LODPnVXezL8xSe1qTTIK3R6th2nCqOKOAol5Y3a5Q8F0IBA2eJLl4+RDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD7qejtz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ojy/1AyS";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F5A606A31C;
-	Wed, 18 Nov 2026 21:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB88E606A31C;
+	Wed, 18 Nov 2026 21:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yD7qejtz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523E91F000C4;
-	Wed, 18 Nov 2026 21:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ojy/1AyS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0941F000C4;
+	Wed, 18 Nov 2026 21:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037628;
-	bh=XrvkOsOEWI7T/oBdAKkbb90N4VYmox7mBRKvwh/8jLc=;
+	s=korg; t=1795037631;
+	bh=3WjhR4zF3k7hJDBMxULJGxnsc4OkwM/x4HH+z72Q9PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yD7qejtzOIxZIFDG2OZZJmQASZH9UGkLxy1Af7dvBfPykNrKf0qfF0ra5qsbVs0lB
-	 bmAKNMih1oDhzvhQRkpZh6edCvfvSHsl50WMMmijbKZRnFKDS3mxSzTRZQESla8yJ0
-	 A0szmR7ZXFBEayqhMlIx+qR9j2zjWNg4BY16RINM=
+	b=ojy/1AySsUflQSBB+8nSXeJsZVy8XRhly2ytk67s2+VW4bsNdzfmlp6+P3xy6ZCNy
+	 4F8W0OYmdeqtO6+ofjj0kavJTCZG2UvdzOUlK5fFDqA7CWUdQruf/lUEtjHsFqNenx
+	 OiEgseFLk3fZm6eMld+XGf3/QFDCYVwGXHfp/aCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iwona Winiarska <iwona.winiarska@intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1462/3318] hwmon: (peci/dimmtemp) Fix devres leak and UAF on concurrent unbind
-Date: Wed, 18 Nov 2026 15:34:44 +0100
-Message-ID: <20261118150404.752008627@linuxfoundation.org>
+Subject: [PATCH 6.6 1463/3318] hwmon: (pmbus/q54sj108a2) Add missing NULL pointer check
+Date: Wed, 18 Nov 2026 15:34:45 +0100
+Message-ID: <20261118150404.781824007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,108 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 61bc4514b8e99e9733c04de028885f6fc906d628 ]
+[ Upstream commit a5802c587da97a4ff85c04aad6043fa26640fc9b ]
 
-When a peci_dimmtemp device is unbound concurrently with its delayed
-initialization work (detect_work), newly allocated devm resources and
-the hwmon device are leaked, leading to a use-after-free when reading
-the lingering hwmon sysfs attributes.
+When CONFIG_DEBUG_FS is enabled and per-client PMBus debugfs directory
+creation fails during pmbus_do_probe(), q54sj108a2_probe() passes the NULL
+pointer returned by pmbus_get_debugfs_dir() to debugfs_create_dir()
+without validation, creating its debugfs directory at the debugfs root
+instead of under the client directory.
 
-In peci_dimmtemp_probe(), detect_work is registered for cancellation via
-devm_delayed_work_autocancel(). During driver detach, devres_release_all()
-first moves all existing entries from dev->devres_head onto a local todo
-list before invoking their release callbacks in reverse order. If
-create_dimm_temp_info_delayed() is already running when
-devm_delayed_work_drop() calls cancel_delayed_work_sync(),
-create_dimm_temp_info() can allocate dimmtemp_label strings via
-devm_kzalloc()/devm_kasprintf() and register the hwmon device via
-devm_hwmon_device_register_with_info(), appending new devres entries to
-the now-empty dev->devres_head. Once the work finishes,
-devres_release_all() frees priv and priv->name from the local todo list
-without re-evaluating dev->devres_head, leaving the late devres
-allocations and registered hwmon device behind with a dangling priv
-pointer.
+If pmbus_init_debugfs() fails to create the client directory, data->debugfs
+is left as NULL or an ERR_PTR, which pmbus_get_debugfs_dir() converts to
+NULL. Passing a NULL parent to debugfs_create_dir() places q54sj108a2_dir
+in the root of the debugfs filesystem and populates it with attribute files
+whose private data pointers reference psu->debugfs_entries. Because this
+root-level directory is outside the client debugfs hierarchy, PMBus core
+cleanup does not remove it on device unbind, leaking the debugfs entries
+and causing a use-after-free of the devm-allocated struct q54sj108a2_data
+if the orphaned files are accessed via q54sj108a2_debugfs_read() or
+q54sj108a2_debugfs_write() after device removal.
 
-Cancel detect_work synchronously in a driver .remove() callback instead
-of relying on devm_delayed_work_autocancel() so that the work is fully
-drained before devres_release_all() detaches dev->devres_head, allowing
-any devm resources registered by the delayed work to be released in
-proper reverse order. Also only schedule detect_work when
-check_populated_dimms() returns -EAGAIN so that probe failure paths do
-not leave delayed work pending.
+Fix the problem by adding the missing NULL pointer check.
 
-Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
+Fixes: d014538aa385 ("hwmon: (pmbus) Driver for Delta power supplies Q54SJ108A2")
 Cc: stable@vger.kernel.org
-Cc: Iwona Winiarska <iwona.winiarska@intel.com>
-Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/peci/dimmtemp.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/hwmon/pmbus/q54sj108a2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwmon/peci/dimmtemp.c b/drivers/hwmon/peci/dimmtemp.c
-index 01329fce39093..fcb77a147e4ee 100644
---- a/drivers/hwmon/peci/dimmtemp.c
-+++ b/drivers/hwmon/peci/dimmtemp.c
-@@ -4,7 +4,6 @@
- #include <linux/auxiliary_bus.h>
- #include <linux/bitfield.h>
- #include <linux/bitops.h>
--#include <linux/devm-helpers.h>
- #include <linux/hwmon.h>
- #include <linux/jiffies.h>
- #include <linux/module.h>
-@@ -331,11 +330,13 @@ static int create_dimm_temp_info(struct peci_dimmtemp *priv)
- 	if (ret == -ENODEV) {
- 		dev_dbg(priv->dev, "No DIMMs found\n");
- 		return 0;
--	} else if (ret) {
-+	}
-+	if (ret == -EAGAIN) {
- 		schedule_delayed_work(&priv->detect_work, DIMM_MASK_CHECK_DELAY_JIFFIES);
- 		dev_dbg(priv->dev, "Deferred populating DIMM temp info\n");
--		return ret;
- 	}
-+	if (ret)
-+		return ret;
+diff --git a/drivers/hwmon/pmbus/q54sj108a2.c b/drivers/hwmon/pmbus/q54sj108a2.c
+index d9fd1095ae7ee..857bf6b6141c6 100644
+--- a/drivers/hwmon/pmbus/q54sj108a2.c
++++ b/drivers/hwmon/pmbus/q54sj108a2.c
+@@ -343,6 +343,8 @@ static int q54sj108a2_probe(struct i2c_client *client)
+ 	psu->client = client;
  
- 	channels = priv->gen_info->chan_rank_max * priv->gen_info->dimm_idx_max;
+ 	debugfs = pmbus_get_debugfs_dir(client);
++	if (!debugfs)
++		return 0;
  
-@@ -405,10 +406,8 @@ static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct auxil
- 			 "Unexpected PECI revision %#x, some features may be unavailable\n",
- 			 peci_dev->info.peci_revision);
- 
--	ret = devm_delayed_work_autocancel(priv->dev, &priv->detect_work,
--					   create_dimm_temp_info_delayed);
--	if (ret)
--		return ret;
-+	auxiliary_set_drvdata(adev, priv);
-+	INIT_DELAYED_WORK(&priv->detect_work, create_dimm_temp_info_delayed);
- 
- 	ret = create_dimm_temp_info(priv);
- 	if (ret && ret != -EAGAIN) {
-@@ -419,6 +418,13 @@ static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct auxil
- 	return 0;
- }
- 
-+static void peci_dimmtemp_remove(struct auxiliary_device *adev)
-+{
-+	struct peci_dimmtemp *priv = auxiliary_get_drvdata(adev);
-+
-+	cancel_delayed_work_sync(&priv->detect_work);
-+}
-+
- static int
- read_thresholds_hsx(struct peci_dimmtemp *priv, int dimm_order, int chan_rank, u32 *data)
- {
-@@ -655,6 +661,7 @@ MODULE_DEVICE_TABLE(auxiliary, peci_dimmtemp_ids);
- 
- static struct auxiliary_driver peci_dimmtemp_driver = {
- 	.probe		= peci_dimmtemp_probe,
-+	.remove		= peci_dimmtemp_remove,
- 	.id_table	= peci_dimmtemp_ids,
- };
+ 	q54sj108a2_dir = debugfs_create_dir(client->name, debugfs);
  
 -- 
 2.53.0
