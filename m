@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043064;
-	b=TyoJKvBOd2/7nN1VW9x1LYELLqhd6Gx+DsRAGTZTpQAoAjy1TytnuodszEvWCR/7ysNd
-	 RcVWQH4+E50bdKY0K8oRSeT79RqwkV4H3bGE2sDN1Gjx2XFmRrc/GQQ7h07aKTWA1tCPr
-	 OVMwamP1LPFblkkfS12cIqBHcy0AWX0zVXP/Qna4zkr1ailtobgev7qFXuUN8p7CNcbkf
-	 gRyi9ZqMsCqmB8BSfHE4G3zhJNn5Z/ANOcb4Yu8rCd+cj1507t+rmb8haLa03L1iQ7f3m
-	 Kw8BsN4dI4Uot5ojT6mHVfDi68uC/CRbM5SOpI+7Uv8Hs97LYdD22NcdhFeJkcv9bzg==
+	t=1795043067;
+	b=t/9VJ2jne5i2FpbfMx1+eT5xXy5WrZLQ+U8OExSYPxBzOuIzL747TfstjsUBIznIGmVW
+	 BAqUgpxJRbGZShmJo4ejNvTznsdKxx3YnP8eRgTK7AAVEXTGnWRP+4boW8h8YLCfcsbSh
+	 gWDfSAQtWzcDeAGGD0HVpZdiM1QGSpTe3nnGLIjoiVWU0zAYMoaUbhJNHt8CBFehpYYIx
+	 zFTN46LNgPBMyhVgNmfIL+SwmMwMNhuigXx9nnkt+aHQKLkl1/4HYlBNd0wodQYWljROX
+	 z4c9jBZC/PUB0y20R7bYShfv3DWcnCQwbCT6J0zbiIcxUj/0mXF72b+bFwv0BMLASHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043067;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MRBWPiGdDPIIcnd5IskQCUdVUNRbSlabbGw5lhy0PKA=;
-	b=3x1iWjwZraB59tJa1TrA6CYKfd28Z1NcUCNyLktvxQEN4PpjzQdNoAObmQsZuxy1gGGS
-	 D09zEKWHae5iWNV06z/x/uCjhMMQrcw/dstotXbdbBipQYhApysMP/3S/NKFVdpSpA1pY
-	 b97bQFJqvv47agVwnQeVEsl3khuFoXeMCPwOKj87H80vV0NHGywxqwMG66M8fYP4KjGoY
-	 3YkTmdI8Sud94dV8Tarq6CKbwF+UJpVHYNR7S73wGRDBk4HOoqFfNhQ7SqjD981zDhgh4
-	 6bYPHD6SsDRAIBdj7jtwf+U8OUszASgYSEfGsFEtSNwkPP+Y2tzIAbRIIONi0AeRsBg==
+	bh=6xpnXgd9T5SBkA3Wdx1eefbK/I+6khyBcv06lL/KC0E=;
+	b=WF/jPiEQXNw6snp/O3etBLcG2XcVkcxf2yu6+iHZZl5OJtaOTOWVtBVb91Y9/haTrOta
+	 3m8GjXHx+O8AOvve1uKhSN2pa10ewqX+Ip/ZozrS7fNPozcRsv1w9FTx2jq+P5breEyFu
+	 0KIYZQBnjfNEgSAnSTtYuViCXhMLUxX+Sf9LSGCuYUgvyQODSQ+bBBJW+FaD0sFJHDZJm
+	 u2G+xjtuIuGikhGmH/3vw9VRuGbFIiP8gXGLGk/Yxejza1GOp927cjVdbxYmIXPnxVDYz
+	 Xv6cZKtx2N5e4RdGywZpYubYy66PiqUECiMAD9VvNPX04Uxf+aME9xQsY95Bov2BudA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HgQ4VRLd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HHC/Bx56";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88234606A31C;
-	Wed, 18 Nov 2026 23:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A08606A330;
+	Wed, 18 Nov 2026 23:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HgQ4VRLd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9DC1F000C4;
-	Wed, 18 Nov 2026 23:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HHC/Bx56
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2381F000C4;
+	Wed, 18 Nov 2026 23:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043064;
-	bh=MRBWPiGdDPIIcnd5IskQCUdVUNRbSlabbGw5lhy0PKA=;
+	s=korg; t=1795043066;
+	bh=6xpnXgd9T5SBkA3Wdx1eefbK/I+6khyBcv06lL/KC0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HgQ4VRLdZ1UziO6X3cyLzLHfFRED8RFSf9rw1adXI0eg/it7dDvp6O843uWozTcFM
-	 d3TKMwUpraRtOswSya5denedDu30wWN6sSiaJljT9894iHVK3QgUdXtl8L6J1LAyI4
-	 38yu3r+n1XRInV3jtrbijcCyyl5ybMsmX4fFoZas=
+	b=HHC/Bx568Ga2DloKxen7ZrEHI2c9qK3VQat2MdlzSy5o4aGD+2FYzT80x9HDFS5nP
+	 QjsiezcphlPpQYj9BAJwT0zUmxlCcH5Kp6EzjrywJECDPWhOLr+GxvrjmE1nwWlmtJ
+	 2PJrnhV8nMN5xVsJqHa9BndSJphXvKQEylzOhmvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0060/2857] clk: sunxi-ng: fix ccu probe clock unregister on error
-Date: Wed, 18 Nov 2026 15:18:14 +0100
-Message-ID: <20261118150203.464861846@linuxfoundation.org>
+Subject: [PATCH 6.1 0078/2857] pinctrl: sx150x: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:18:32 +0100
+Message-ID: <20261118150204.111936986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,75 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 81f4ddc9f7e0c11d3e9d24d0f30023845a02f7ee ]
+[ Upstream commit 5fe4b12c087db3e565f53b87f1dafdf2f0d1ee0f ]
 
-When registering clocks with sunxi_ccu_probe(), the number of ccu_clocks
-and the number of hw clocks might be different, eventhough they usually are
-the same.
+The driver has a match table for the i2c bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-If they are different, it could lead to out-of-bound access or registered
-clock left behind on error.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-Use a different variable when iterating on hw clocks so every registered
-clock, and only those, gets unregistered on error.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/r/20260629131254.7E34C1F00A3A@smtp.kernel.org
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260706-a733-rtc-v4-3-f330728db3d3@baylibre.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_common.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/pinctrl/pinctrl-sx150x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_common.c b/drivers/clk/sunxi-ng/ccu_common.c
-index 8d28a7a079d09..03ebbc0c926a4 100644
---- a/drivers/clk/sunxi-ng/ccu_common.c
-+++ b/drivers/clk/sunxi-ng/ccu_common.c
-@@ -92,7 +92,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- 			   const struct sunxi_ccu_desc *desc)
- {
- 	struct ccu_reset *reset;
--	int i, ret;
-+	int i, j, ret;
+diff --git a/drivers/pinctrl/pinctrl-sx150x.c b/drivers/pinctrl/pinctrl-sx150x.c
+index a87ea3b95cf47..c012f422f57ae 100644
+--- a/drivers/pinctrl/pinctrl-sx150x.c
++++ b/drivers/pinctrl/pinctrl-sx150x.c
+@@ -829,6 +829,7 @@ static const struct i2c_device_id sx150x_id[] = {
+ 	{"sx1509q", (kernel_ulong_t) &sx1509q_device_data },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(i2c, sx150x_id);
  
- 	ccu->desc = desc;
- 
-@@ -108,8 +108,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- 		cclk->lock = &ccu->lock;
- 	}
- 
--	for (i = 0; i < desc->hw_clks->num ; i++) {
--		struct clk_hw *hw = desc->hw_clks->hws[i];
-+	for (j = 0; j < desc->hw_clks->num ; j++) {
-+		struct clk_hw *hw = desc->hw_clks->hws[j];
- 		const char *name;
- 
- 		if (!hw)
-@@ -121,7 +121,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- 		else
- 			ret = of_clk_hw_register(node, hw);
- 		if (ret) {
--			pr_err("Couldn't register clock %d - %s\n", i, name);
-+			pr_err("Couldn't register clock %d - %s\n", j, name);
- 			goto err_clk_unreg;
- 		}
- 	}
-@@ -149,8 +149,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
- err_del_provider:
- 	of_clk_del_provider(node);
- err_clk_unreg:
--	while (--i >= 0) {
--		struct clk_hw *hw = desc->hw_clks->hws[i];
-+	while (--j >= 0) {
-+		struct clk_hw *hw = desc->hw_clks->hws[j];
- 
- 		if (!hw)
- 			continue;
+ static const struct of_device_id sx150x_of_match[] = {
+ 	{ .compatible = "semtech,sx1501q", .data = &sx1501q_device_data },
 -- 
 2.53.0
 
