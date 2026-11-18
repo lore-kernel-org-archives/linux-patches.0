@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057571;
-	b=WymsSOiqp3wt2slfojgZHHJnVo3cQ9wx0g9ApDQq0NsIhcnHo6sT1U4TAt27T9NOE8BP
-	 gJHWTJtsiOs+Nq8pIELrvK6xPXFkU+pjBYjNsjE1PvzVmTRSSgCDGwRTpMRN0jCUSqvkF
-	 zugHMgExc5zowcNi4hTQROgvTtEyzKTf/W49Y3MVFdvMTe+DKB/r6KRuj0ab+yJWLyd56
-	 n/2bldbLUE4gb9FEf9yNqmEDehsAiygXmHcsx5q9i93t4fvpiD+GnIgNaZhLLK8Xm0mZ/
-	 aIqJbcJnKW7S4vZVuR8MO3ZJ3wgUBdaBrnl9qMpArrkIBL4ez4Du86y1F/QyW7nTNqQ==
+	t=1795057573;
+	b=bZ2A4MVf0L7Qu3Y/fVxJRlnMBJVYRpoBy9qD9Iwx16x2VpHU98Kx79FZp4C606a+Y7Sb
+	 OX2Pnsv1usApX8vr9ZrzzXiwmvqlyoh8lT9E1mBe+RiM0y+nfskr+QrbuiF3kRqKnKmqm
+	 7i5EjcVs6t+xszvAVQiFKdpFl/oDODyg3NjYcLxDRumjTdBZ/IWmA9ExbvGQxVAxWTcoY
+	 4zu4O/zcSPzqK0eyLuE3hTj81TgoM6LJOsco6/gA/5tbnC286b43JiybR+EV5g1SkZxoU
+	 zz5dwGYzP/Set81RRosJ/uIhBiOxr6CFR0oQXDjf7jnC9uVcR/2ljFsfUR21zBBPw8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057571;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057573;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0/BKQB8hvj7vlopmr6R6828N4G5KQuSjuA+E5EbkuZc=;
-	b=D6HYP8uaJz2eMoELjqN7IlpxZAA7ugtb/i93i+rbSUWQuycClwsPTcVqaLRF0RsA04Ld
-	 Rtq1iLBkkaVEHETkwkgSJtwTpN6Z+xmgIstuwNP1jjISFA5kRP7D2MAeYVPQxfuGAY+RG
-	 jvYUazL4Qh+Coow3KOzaPAdABQikpEwzVlwuhdANEPbqd57Q/2wPc+4Bn/UKNDUVyAdYT
-	 qGBByrEzKjuahdyaULny/wqni33/obCcGyUWi1AqnrcwakPN/WacJPmLZ1KjOe3IWrj1H
-	 tFNCwUmbLdUvtT64SaqPDTYadg+9gRNjKyvNrIP/82ns8sW9tgehhTZIstSsn53LdMQ==
+	bh=rCvPANXbIJC12wqXm4+itN0Wvq6ETkV6+/gGs03ccJ8=;
+	b=vqZtJgA3Om3nBVvLJma/q0OwN9TNdj67Ci3/jTZ94Qe+dmSo69C6I45f8MAlloPHDuta
+	 dEyQUmFznwApGji5OjiOYCXNr32solRytmavEaE8SiKVkHDg/vVL19UFuNFl2EcXb06gI
+	 7YjkLCls+vt8fLy9xl6c1hbEKBoq0ssZ+WgCp2+WITHm/PuvupSnLHGu+sNRiwlaqmFVt
+	 Oo8jpWliT/WJOHDeR+nEPhJXB7wwLNh4Vc4Nx4X45+Xia4OIp07ZGeGvKA/L9Dj28+XAt
+	 ENGJoQsBAmLwwWfNEkAE8vlgLC5d3TRdqI5cPt+18xajkb/L2JtbyBKUCTSxpvgk42A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0SaLoPU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F32e691i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE7606A337;
-	Thu, 19 Nov 2026 03:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87D860A2617;
+	Thu, 19 Nov 2026 03:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r0SaLoPU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4787F1F000C4;
-	Thu, 19 Nov 2026 03:06:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F32e691i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BAC1F000C4;
+	Thu, 19 Nov 2026 03:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057570;
-	bh=0/BKQB8hvj7vlopmr6R6828N4G5KQuSjuA+E5EbkuZc=;
+	s=korg; t=1795057573;
+	bh=rCvPANXbIJC12wqXm4+itN0Wvq6ETkV6+/gGs03ccJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r0SaLoPUz5Yf8w3ps5Rr4uwTAj20resNbxAAgUBYFzl0BkS3tvL2IBWZ+/pgRpjPg
-	 vVsWq83pfsz7HfqrwqXn7I2DS/gtqpyrF/UmVTK2B3GmvWl6JtvZH5Nuvo5K8IJ8Sn
-	 Qmrj5RBC6COQFdXyC27S2o6ArE80DU6TQbm+X1uE=
+	b=F32e691iz4am4NHKvl7vWF7wjH8iVGjUL9g6GvwdsyLSFUxNRTlNC0KzN4n/iRAEC
+	 Ap1HycrgnMa+UOBCspGNOvNNGu8VPvIBI0FpDlBTXpGz29794vJ6GlcnDim+8LvsYF
+	 gozJvuiSnSRPj5o3QvnEfNiMMh+7xHDh/ogpTKA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wahid Khan <wahidzk0091@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Zhang Lixu <lixu.zhang@intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0142/1848] HID: intel-ish-hid: ignore post-init ENUM_DEVICES from firmware
-Date: Wed, 18 Nov 2026 15:36:20 +0100
-Message-ID: <20261118145917.254785154@linuxfoundation.org>
+Subject: [PATCH 5.10 0143/1848] net/rds: dont use unpin_user_pages_dirty_lock() from atomic context
+Date: Wed, 18 Nov 2026 15:36:21 +0100
+Message-ID: <20261118145917.295190864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,59 +68,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wahid Khan <wahidzk0091@gmail.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit f3f3f6df05226dfa220c4e603310dae94595060a ]
+[ Upstream commit d100966325f782aa7775e5f0e8fb04f66f56308e ]
 
-Some ISH firmware versions (observed on Tiger Lake LP, 8086:a0fc,
-GUID {33AECD58-B679-4E54-9BD9-A04D34F0C226}) periodically re-send an
-unsolicited HOSTIF_DM_ENUM_DEVICES response roughly every 79 seconds.
+rds_rdma_free_op() and rds_atomic_free_op() are reached from the IB
+send completion path via
 
-The current guard collapses two distinct cases into one condition:
+  rds_ib_tasklet_fn_send()
+    rds_ib_send_cqe_handler()
+      rds_message_put()
+        rds_message_purge()
+          rds_rdma_free_op() / rds_atomic_free_op()
 
-  if (!(response_flag) || init_done)  ->  bad packet + ish_hw_reset
+which runs in tasklet (softirq) context.  Both functions unpin the
+user pages of the op with unpin_user_pages_dirty_lock(), which uses
+set_page_dirty_lock() and thus may take the folio lock and sleep.
+Sleeping in softirq context is not allowed and can deadlock or crash.
 
-This incorrectly treats a valid post-init firmware announcement as a
-corrupted packet, triggering an ISH soft-reset and a full ISHTP
-re-initialisation cycle on each occurrence (~1100 times per day on
-affected hardware).
+Dirtying the pages with the non-sleeping set_page_dirty() instead
+would just trade one bug for another, as pointed out during review:
+the pinned range can be file-backed.  rds_pin_pages() pins with
+FOLL_LONGTERM, which refuses fs-dax but takes the page-cache pages
+of a MAP_SHARED file mapping just fine, and RDS does not restrict
+what memory the caller registers as an RDMA destination.
 
-Split the check: reject messages with no response flag as before, but
-simply discard valid ENUM_DEVICES messages that arrive after init is
-complete.
+For a file-backed page, set_page_dirty() from a tasklet can take
+non-irq-safe filesystem locks (e.g. mapping->i_private_lock and
+inode->i_lock in block_dirty_folio()) and deadlock against the task
+it interrupted.  Without the folio lock, it races with truncation
+clearing folio->mapping, which is the race set_page_dirty_lock()
+exists to close.  The pre-pin_user_pages() version of this code
+dirtied pages that way from the tasklet, so that bug is older than
+the sleeping unpin.
 
-Signed-off-by: Wahid Khan <wahidzk0091@gmail.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Tested-by: Zhang Lixu <lixu.zhang@intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The page dirtying therefore has to move to process context, not
+merely avoid the folio lock.  When the final rds_message_put() runs
+in atomic context, rds_rdma_free_op() and rds_atomic_free_op() now
+leave the op's pages pinned and flag the op. Later, rds_message_put()
+hands the message to a work item that unpins the flagged ops' pages
+and frees the message from process context. Here,
+unpin_user_pages_dirty_lock() is safe outside the atomic context.
+Everything else keeps running in the caller's context exactly as
+before: the rest of the purge - the zerocopy completion, the socket
+put and the MR reference drops - as well as RDMA writes, whose pages
+the remote side only reads and which unpin without dirtying,
+everything on rds_tcp, and final puts that already happen in process
+context (socket close, connection teardown).
+
+Deferring only the unpin means the work item touches nothing but the
+pinned pages and the rds module's own memory: it cannot call back
+into a transport module, so it changes nothing about the transports'
+shutdown and unload ordering.  rds_exit() drains any pending unpin
+work via destroy_workqueue(rds_wq) before the module goes away.
+
+The Oracle UEK kernel avoids the sleeping unpin by calling
+set_page_dirty() directly from the tasklet, which is subject to the
+file-backed page problem above, so this deliberately does not follow
+UEK here.
+
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260730041629.3512480-2-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ishtp-hid-client.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/rds/message.c | 26 +++++++++++++++++++++++++
+ net/rds/rdma.c    | 49 ++++++++++++++++++++++++++++++++++++-----------
+ net/rds/rds.h     | 10 ++++++++++
+ 3 files changed, 74 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ishtp-hid-client.c b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
-index 751eec63cea42..10b7494b7cd30 100644
---- a/drivers/hid/intel-ish-hid/ishtp-hid-client.c
-+++ b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
-@@ -105,8 +105,7 @@ static void process_recv(struct ishtp_cl *hid_ishtp_cl, void *recv_buf,
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 7444594a02e11..a4ec08a551e05 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -180,6 +180,19 @@ static void rds_message_purge(struct rds_message *rm)
+ 		kref_put(&rm->atomic.op_rdma_mr->r_kref, __rds_put_mr_final);
+ }
  
- 		switch (recv_msg->hdr.command & CMD_MASK) {
- 		case HOSTIF_DM_ENUM_DEVICES:
--			if ((!(recv_msg->hdr.command & ~CMD_MASK) ||
--					client_data->init_done)) {
-+			if (!(recv_msg->hdr.command & ~CMD_MASK)) {
- 				++client_data->bad_recv_cnt;
- 				report_bad_packet(hid_ishtp_cl, recv_msg,
- 						  cur_pos,
-@@ -114,6 +113,8 @@ static void process_recv(struct ishtp_cl *hid_ishtp_cl, void *recv_buf,
- 				ish_hw_reset(ishtp_get_ishtp_device(hid_ishtp_cl));
- 				break;
- 			}
-+			if (client_data->init_done)
-+				break;
- 			client_data->hid_dev_count = (unsigned int)*payload;
- 			if (!client_data->hid_devices)
- 				client_data->hid_devices = devm_kcalloc(
++static void rds_message_unpin_worker(struct work_struct *work)
++{
++	struct rds_message *rm = container_of(work, struct rds_message,
++					      m_unpin_work);
++
++	if (rm->rdma.op_unpin_deferred)
++		rds_rdma_op_unpin_pages(&rm->rdma);
++	if (rm->atomic.op_unpin_deferred)
++		rds_atomic_op_unpin_page(&rm->atomic);
++
++	kfree(rm);
++}
++
+ void rds_message_put(struct rds_message *rm)
+ {
+ 	rdsdebug("put rm %p ref %d\n", rm, refcount_read(&rm->m_refcount));
+@@ -187,8 +200,21 @@ void rds_message_put(struct rds_message *rm)
+ 	if (refcount_dec_and_test(&rm->m_refcount)) {
+ 		BUG_ON(!list_empty(&rm->m_sock_item));
+ 		BUG_ON(!list_empty(&rm->m_conn_item));
++
+ 		rds_message_purge(rm);
+ 
++		/* A final put in atomic context cannot dirty the ops'
++		 * user pages on unpin, so rds_rdma_free_op() and
++		 * rds_atomic_free_op() deferred it.  Finish the unpin,
++		 * and the free, from process context.
++		 */
++		if (rm->rdma.op_unpin_deferred ||
++		    rm->atomic.op_unpin_deferred) {
++			INIT_WORK(&rm->m_unpin_work, rds_message_unpin_worker);
++			queue_work(rds_wq, &rm->m_unpin_work);
++			return;
++		}
++
+ 		kfree(rm);
+ 	}
+ }
+diff --git a/net/rds/rdma.c b/net/rds/rdma.c
+index a02b29ad7f349..ba23bc5628d02 100644
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -483,22 +483,36 @@ void rds_rdma_unuse(struct rds_sock *rs, u32 r_key, int force)
+ 		kref_put(&mr->r_kref, __rds_put_mr_final);
+ }
+ 
+-void rds_rdma_free_op(struct rm_rdma_op *ro)
++void rds_rdma_op_unpin_pages(struct rm_rdma_op *ro)
+ {
+ 	unsigned int i;
+ 
++	for (i = 0; i < ro->op_nents; i++) {
++		struct page *page = sg_page(&ro->op_sg[i]);
++
++		/* Mark page dirty if it was possibly modified, which
++		 * is the case for a RDMA_READ which copies from remote
++		 * to local memory
++		 */
++		unpin_user_pages_dirty_lock(&page, 1, !ro->op_write);
++	}
++}
++
++void rds_rdma_free_op(struct rm_rdma_op *ro)
++{
+ 	if (ro->op_odp_mr) {
+ 		kref_put(&ro->op_odp_mr->r_kref, __rds_put_mr_final);
++	} else if (in_task() || ro->op_write) {
++		/* An RDMA write's pages are only read by the remote
++		 * side; unpinning without dirtying does not sleep.
++		 */
++		rds_rdma_op_unpin_pages(ro);
+ 	} else {
+-		for (i = 0; i < ro->op_nents; i++) {
+-			struct page *page = sg_page(&ro->op_sg[i]);
+-
+-			/* Mark page dirty if it was possibly modified, which
+-			 * is the case for a RDMA_READ which copies from remote
+-			 * to local memory
+-			 */
+-			unpin_user_pages_dirty_lock(&page, 1, !ro->op_write);
+-		}
++		/* Dirtying the pages on unpin can sleep; leave them
++		 * pinned and have rds_message_put() finish the unpin
++		 * from process context.
++		 */
++		ro->op_unpin_deferred = 1;
+ 	}
+ 
+ 	kfree(ro->op_notifier);
+@@ -507,7 +521,7 @@ void rds_rdma_free_op(struct rm_rdma_op *ro)
+ 	ro->op_odp_mr = NULL;
+ }
+ 
+-void rds_atomic_free_op(struct rm_atomic_op *ao)
++void rds_atomic_op_unpin_page(struct rm_atomic_op *ao)
+ {
+ 	struct page *page = sg_page(ao->op_sg);
+ 
+@@ -515,6 +529,19 @@ void rds_atomic_free_op(struct rm_atomic_op *ao)
+ 	 * is the case for a RDMA_READ which copies from remote
+ 	 * to local memory */
+ 	unpin_user_pages_dirty_lock(&page, 1, true);
++}
++
++void rds_atomic_free_op(struct rm_atomic_op *ao)
++{
++	if (in_task()) {
++		rds_atomic_op_unpin_page(ao);
++	} else {
++		/* Dirtying the page on unpin can sleep; leave it
++		 * pinned and have rds_message_put() finish the unpin
++		 * from process context.
++		 */
++		ao->op_unpin_deferred = 1;
++	}
+ 
+ 	kfree(ao->op_notifier);
+ 	ao->op_notifier = NULL;
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index 1257867e85e4e..6090a6045379a 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -424,6 +424,12 @@ struct rds_message {
+ 
+ 	void			*m_final_op;
+ 
++	/* Unpins the ops' user pages and frees the message from
++	 * process context when the final put happens in atomic
++	 * context: dirtying the pages on unpin can sleep.
++	 */
++	struct work_struct	m_unpin_work;
++
+ 	struct {
+ 		struct rm_atomic_op {
+ 			int			op_type;
+@@ -447,6 +453,7 @@ struct rds_message {
+ 			unsigned int		op_mapped:1;
+ 			unsigned int		op_silent:1;
+ 			unsigned int		op_active:1;
++			unsigned int		op_unpin_deferred:1;
+ 			struct scatterlist	*op_sg;
+ 			struct rds_notifier	*op_notifier;
+ 
+@@ -462,6 +469,7 @@ struct rds_message {
+ 			unsigned int		op_mapped:1;
+ 			unsigned int		op_silent:1;
+ 			unsigned int		op_active:1;
++			unsigned int		op_unpin_deferred:1;
+ 			unsigned int		op_bytes;
+ 			unsigned int		op_nents;
+ 			unsigned int		op_count;
+@@ -939,6 +947,8 @@ int rds_cmsg_rdma_map(struct rds_sock *rs, struct rds_message *rm,
+ 			  struct cmsghdr *cmsg);
+ void rds_rdma_free_op(struct rm_rdma_op *ro);
+ void rds_atomic_free_op(struct rm_atomic_op *ao);
++void rds_rdma_op_unpin_pages(struct rm_rdma_op *ro);
++void rds_atomic_op_unpin_page(struct rm_atomic_op *ao);
+ void rds_rdma_send_complete(struct rds_message *rm, int wc_status);
+ void rds_atomic_send_complete(struct rds_message *rm, int wc_status);
+ int rds_cmsg_atomic(struct rds_sock *rs, struct rds_message *rm,
 -- 
 2.53.0
 
