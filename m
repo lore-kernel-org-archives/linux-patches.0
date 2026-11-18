@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061176;
-	b=aD6ExUAmFnj0qxKcTfL4ocO6BX9A2x+Bw5fR21VnrbAH2IrQGQ5rVrKSgD0nLT2gHNvl
-	 zTAjK7R7JYls140KCNl6QI6/5SQhOxUQ4lhR6Ovsjn4TkgIhwiR88k1T5S0AecEvL5xlj
-	 v1rNy0Zm/bhaQdjBxwzFTLECTAbP8m7qz1Q6TXCBaRYayCZNcex9N2wXZYQiX6yqp82iV
-	 RwR4Dt42WUSBswmzxmcXXIVbXb4zhWR0NeoWqStml2coW6cszOBvFjtxmytfHMRxhrwZ4
-	 is2bPJYGtX6cA+vAiItd568oUukgpElVFDnh0cB7vd3VeQVSI3C5uuaFoOL4O39l21w==
+	t=1795061179;
+	b=xahOa8jrxHILsyvuBQSNrl74XGO3xa146QOdwuWZYLeJnc+nMVcgP5ihyEYJ7o3suf2e
+	 Uk5e4ynkLQHZKbuHLtBcnadi2YJWbrIphxIdNT1VYixSDccuVNTlb4tvr5tez/epupgGW
+	 IcgmX+ec+yM5Wpl62OR2zfWe8jJX3MVarOumdMo5soGOP5LtPTwAWZQt81Xa9nbPizOQz
+	 pwtwIlctZ/smkKi0haXWGm9qSwjVC8mQdmIeoFTGbgs9jWTYpmIEhP8EGP3B2UELa0yN6
+	 0uDqVkoZVnh76Sm3uoi28VDiG//QT+j0dJco+itKUpxdqPCtQVD565fCOTTRAgWJ77A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E9DLgDQXEK+K6WhVungqsAb3Q1pyzHTeLvIhJtVRku8=;
-	b=wbe5997rXauHxJZ3CwUs7RVUKeWMaOyjIfQO1Y8hkgC5ihz64qp6tzY4Fwyh7Pb2Ner+
-	 j3Aj/L60WMELbs5IEZxDS0CsAOhHZ5qqwnorqv2vvWp58Lae+BoLlW9bln5pRCq2Np69S
-	 ERsWHfVuyX20k/BdUc99LMZbcntDQo7wpg5SU/9pbh48k4l6rY4MG47BQo5G/H63DXT3w
-	 C28XpNKA12y2ghmxZVNgTlrb7b3gwdTEu2PQgES9vIbjFuZ9tD2pToBJyctqo07PtOVBu
-	 WwH7Ev5RCcc1XrEn5dDfF6fFSAP1XUgXmemUSNspXm0vNTEtGNXNxYj1BCq7s2ScDBg==
+	bh=Y6Ht5OyVv5+mkU9yFRq6N7gcNma+hjDn2dxAhK92qiY=;
+	b=t53t7AibNeUF7XTRgstasQMdC1W+JA6N2tnx7UuAJVmi/oqqm8lOrEN6rNx/vza6K3J5
+	 7Ru+Gggs5uh6N4E/LQ7cr4cbTMtgi1xt2FcE09T47bQuQDVkf+k99dNtKVNg/v90I9oLs
+	 65qrpXEItDFuVumUyq/38GgqfkeFoFzNY4kFKl0H/nEqnvLghVy9ZWi/Ud0Ypp5AwgvQO
+	 nuA4p+fKt8lDcxECxMEVwiU2fvchcYYC+U4JexuxeCn9wHwwuxLDc9vtYGEqC9fzxBaA/
+	 Y0CX/8e1rW+ilLHo6I9/TJGqYXKeKZ6Pmh7cuJBjjqoEOkwmnJYcN2pKO3oWBEMkxpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF+ZNYhZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCqcOQok;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9C6606A325;
-	Thu, 19 Nov 2026 04:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258A4606A320;
+	Thu, 19 Nov 2026 04:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UF+ZNYhZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7791F000C4;
-	Thu, 19 Nov 2026 04:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LCqcOQok
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B791F000C4;
+	Thu, 19 Nov 2026 04:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061176;
-	bh=E9DLgDQXEK+K6WhVungqsAb3Q1pyzHTeLvIhJtVRku8=;
+	s=korg; t=1795061179;
+	bh=Y6Ht5OyVv5+mkU9yFRq6N7gcNma+hjDn2dxAhK92qiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UF+ZNYhZsqsa8Th76n1jkprq9KIIAthA0m8BKFgB3TxeCaEm+J1I4pGHtjuYiUmf/
-	 apfOi7GzrJxzjqFsK/+ONmWVgUX1isQXw+KijlLfZCRzyQQZ+IC7ss3qXATvcpeLlK
-	 KDeHt84paMxruoyAW4rPErYk8QucVur9nNZ8p+AM=
+	b=LCqcOQokWDWJn+ktAP/aMt0Im1AZZnQiVWsX/oAuOneA2/OpCY/1wUBbmFkXuw5g/
+	 B6D2kbOpYxyMc/puU2BrrpttRkAUZnwu/kLL8N7elt7JRwSBYV190p8ihXSmvMeKwt
+	 dTW30UMw3FkIpSPqY+GlmrsJZhnWXY5Vd2a9tn9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1457/1848] power: supply: ab8500_charger: Oneshot threaded IRQs
-Date: Wed, 18 Nov 2026 15:58:15 +0100
-Message-ID: <20261118150020.371843914@linuxfoundation.org>
+Subject: [PATCH 5.10 1458/1848] power: supply: ab8500_fg: Request all IRQs as threaded
+Date: Wed, 18 Nov 2026 15:58:16 +0100
+Message-ID: <20261118150020.407017384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,18 +71,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 532b623f3c86d5166a8bb8acaa94fc3629d8ba97 ]
+[ Upstream commit 807042539d8ed11299c9278e55d2cb6df8d04a39 ]
 
-Make sure the threaded IRQs requested by the charger are
-flagged as "oneshot". Usually this is what you want, and
-since the interrupts are shared with the USB phy on the
-AB8500 we will get a conflict like this if we don't,
-since the phy request them threaded oneshot:
+Since these IRQs are cascaded from a nested IRQ, the
+generic IRQ system detects this and refuse to deliver
+a fastpath IRQ in response to request_irq():
 
-genirq: Flags mismatch irq 83. 00004084 (USB_LINK_STATUS
-  vs. 00006084 (usb-link-status)
-ab8500-charger ab8500-charger.0: failed to request
-  USB_LINK_STATUS IRQ 83: -16
+  nested = irq_settings_is_nested_thread(desc);
+  if (nested) {
+          if (!new->thread_fn) {
+                  ret = -EINVAL;
+                  goto out_mput;
+          }
+   (...)
+
+Threaded IRQs work just as well so let's just request
+threaded IRQs. One of the IRQs are alread requested
+as threaded anyways.
 
 Cc: Marcus Cooper <codekipper@gmail.com>
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
@@ -90,22 +95,97 @@ Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Stable-dep-of: 1098c619ce75 ("power: supply: ab8500_charger: Handle detection errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/ab8500_fg.c | 47 ++++++++------------------------
+ 1 file changed, 11 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 8dadea5d158eb..2c8ea8d833e74 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3612,7 +3612,7 @@ static int ab8500_charger_probe(struct platform_device *pdev)
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index 161abfd4afeb0..e289e6cad777c 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -3008,14 +3008,11 @@ static int ab8500_fg_remove(struct platform_device *pdev)
+ }
+ 
+ /* ab8500 fg driver interrupts and their respective isr */
+-static struct ab8500_fg_interrupts ab8500_fg_irq_th[] = {
++static struct ab8500_fg_interrupts ab8500_fg_irq[] = {
+ 	{"NCONV_ACCU", ab8500_fg_cc_convend_handler},
+ 	{"BATT_OVV", ab8500_fg_batt_ovv_handler},
+ 	{"LOW_BAT_F", ab8500_fg_lowbatf_handler},
+ 	{"CC_INT_CALIB", ab8500_fg_cc_int_calib_handler},
+-};
+-
+-static struct ab8500_fg_interrupts ab8500_fg_irq_bh[] = {
+ 	{"CCEOC", ab8500_fg_cc_data_end_handler},
+ };
+ 
+@@ -3156,44 +3153,25 @@ static int ab8500_fg_probe(struct platform_device *pdev)
+ 	init_completion(&di->ab8500_fg_complete);
+ 
+ 	/* Register primary interrupt handlers */
+-	for (i = 0; i < ARRAY_SIZE(ab8500_fg_irq_th); i++) {
+-		irq = platform_get_irq_byname(pdev, ab8500_fg_irq_th[i].name);
++	for (i = 0; i < ARRAY_SIZE(ab8500_fg_irq); i++) {
++		irq = platform_get_irq_byname(pdev, ab8500_fg_irq[i].name);
+ 		if (irq < 0) {
+ 			ret = irq;
+-			goto free_irq_th;
++			goto free_irq;
  		}
  
- 		ret = request_threaded_irq(irq, NULL, ab8500_charger_irq[i].isr,
--			IRQF_SHARED | IRQF_NO_SUSPEND,
-+			IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
- 			ab8500_charger_irq[i].name, di);
+-		ret = request_irq(irq, ab8500_fg_irq_th[i].isr,
+-				  IRQF_SHARED | IRQF_NO_SUSPEND,
+-				  ab8500_fg_irq_th[i].name, di);
++		ret = request_threaded_irq(irq, NULL, ab8500_fg_irq[i].isr,
++				  IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
++				  ab8500_fg_irq[i].name, di);
  
  		if (ret != 0) {
+ 			dev_err(dev, "failed to request %s IRQ %d: %d\n",
+-				ab8500_fg_irq_th[i].name, irq, ret);
+-			goto free_irq_th;
++				ab8500_fg_irq[i].name, irq, ret);
++			goto free_irq;
+ 		}
+ 		dev_dbg(dev, "Requested %s IRQ %d: %d\n",
+-			ab8500_fg_irq_th[i].name, irq, ret);
+-	}
+-
+-	/* Register threaded interrupt handler */
+-	irq = platform_get_irq_byname(pdev, ab8500_fg_irq_bh[0].name);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto free_irq_th;
+-	}
+-
+-	ret = request_threaded_irq(irq, NULL, ab8500_fg_irq_bh[0].isr,
+-				IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
+-			ab8500_fg_irq_bh[0].name, di);
+-
+-	if (ret != 0) {
+-		dev_err(dev, "failed to request %s IRQ %d: %d\n",
+-			ab8500_fg_irq_bh[0].name, irq, ret);
+-		goto free_irq_th;
++			ab8500_fg_irq[i].name, irq, ret);
+ 	}
+-	dev_dbg(dev, "Requested %s IRQ %d: %d\n",
+-		ab8500_fg_irq_bh[0].name, irq, ret);
+ 
+ 	di->irq = platform_get_irq_byname(pdev, "CCEOC");
+ 	disable_irq(di->irq);
+@@ -3230,12 +3208,9 @@ static int ab8500_fg_probe(struct platform_device *pdev)
+ 
+ free_irq:
+ 	/* We also have to free all registered irqs */
+-	irq = platform_get_irq_byname(pdev, ab8500_fg_irq_bh[0].name);
+-	free_irq(irq, di);
+-free_irq_th:
+ 	while (--i >= 0) {
+ 		/* Last assignment of i from primary interrupt handlers */
+-		irq = platform_get_irq_byname(pdev, ab8500_fg_irq_th[i].name);
++		irq = platform_get_irq_byname(pdev, ab8500_fg_irq[i].name);
+ 		free_irq(irq, di);
+ 	}
+ 
 -- 
 2.53.0
 
