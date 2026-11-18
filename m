@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045542;
-	b=v4oE8bY+HcIslnpOBErz1zoKsrBaGAaEiY7tsGPOcQ9JVKOfMA90EI1G3Uk7S7SGALrl
-	 vAhDEWXCWSoaUEBfWyIDoQBrgeuAVK8JxSqNWlu0opUGhBJNQed+fkEyovmIly++bGvWX
-	 RXPezE7He0Vz7mtBmQ7xWkpjmkANF1PKzElvD3au6BV9I3OZIr7I6mdRPugRy9Jx7UL0p
-	 K1gP7RGNo7byVun9gZ4yfgaE6QDShN4L46ZPpU3BB9+um0sXXhUEMLJ9fEceXTBW8ztbv
-	 gIeLBWfbKFzWIvlOG3YnMtyNCh3U2N+WShPRGblPeVwDgGW3IBaNOWqVeB9iN8kYQpQ==
+	t=1795045544;
+	b=I/DMjcHATt4HsJ1nis5N747nYuQ8J0uKNS4oTGBwJwnksthuZbiTx7ItP4Ac3NkGIJMM
+	 cuc8fOAEz5DQGpCVuIgJvGsZZo+jRWGnwai5dJu0wJjl537YZKE6JzoHZQMT1VeFWiErb
+	 SLEO9sPQz7bYUAZzOAcC4zR3FrQ8z4hrPlyVawRsaLOwxTKBh0FZotCc77GgVre3TrruI
+	 Med27Q1FdnHbz10OWLggPnzNnaxnyQSKl8j0jTs9sXC8tyk8PWhmBo89f+TTaL8gBOf0a
+	 GKjt4dbiO6qvkKsFff+JqScG3+VhkltOVYfEBgPu4Yd9YRZLS8B33f0vIXmwhMlX1vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X6jRO6t2PogRPJdoqfUI3lGP3Xo7yV6GvzAuRsxHnOg=;
-	b=BQK+cBBn89hBVONE2nhXdaVkQYVK8Hjt27J/KXf/6/lJ8/2PL0DSdvzwXhyU2xZKN5tm
-	 1Wz2JYQKLHVQajyiGgX96j3D8jI//f8tGxoZ1sB3MweDV/XN9ojNZvJ/XCDa26JB8IEUw
-	 YTOwx0o1tJOqX6CPDZzZ7n5MycVJ4FUrTBixF+0WecjkuheNcxZ/gM5gvOIKJHYCpzbCh
-	 /mOhV+aCZaGBmKbyZ0gT8VaPRgnoxwUWfFgVNCfxdKMgjDz9uwcFA8g1TpbARnZoEDNTg
-	 kYm9z5c7p+lPfh5PmPUr82txvLoK6C9LWfi35HFNM8AG+IrLZcytqBLhEfyz8FX2azQ==
+	bh=J5MRxa80KgEYXaJLHz0N4VlITWasYBtJAFFoQDJVYro=;
+	b=lhL4QEsPk6LTkzVL1dztqjGiEDJfp7+UFoEwz6TayDFdmUZxHt3X3Pqe6GrIoQyqoES7
+	 zAAGqVSdB+VPg1Wg//X5UgU4s006lo1MB9N1PR+lVvPJFfsnQTCsC+/I7CLpo1RcsfkA/
+	 Mgp1jQH0tkrdif3f364NigrhSNAyjFIHka7TfZSPhZudBbk5DWYYx1qETUzzgJjtNc3+v
+	 W28Kz1v7yR/YJlrsieHOkzBL25IpqIl8B9P+iakPwtmIvhS4bSNg/C1g08+/bosbqTrKK
+	 sMpDbdnt4ADbpxYgM0bMep5sbuhRdG2V3/Y9E4yFGD6WLgSlS3y1otsNf6cIT+arEwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNQX+DZ8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5JhMG3U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14561606A320;
-	Wed, 18 Nov 2026 23:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95D8606A320;
+	Wed, 18 Nov 2026 23:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NNQX+DZ8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E511F000C4;
-	Wed, 18 Nov 2026 23:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5JhMG3U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361381F000C5;
+	Wed, 18 Nov 2026 23:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045541;
-	bh=X6jRO6t2PogRPJdoqfUI3lGP3Xo7yV6GvzAuRsxHnOg=;
+	s=korg; t=1795045544;
+	bh=J5MRxa80KgEYXaJLHz0N4VlITWasYBtJAFFoQDJVYro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNQX+DZ8cV1QL1srRK7foWzoUcpcCrzYBkKTLHH7Om3/3EI0SpVg1YfYEFQMgsP6B
-	 hQNLzf7iHUaczLT9PcHSWyS2Xfils/UWe/fdO59vl47pnX7ZVJ7IeR4YAVxHCa5Alb
-	 zS3Ww7O447q1Ge6VHpSqc8k8YfmDOgszllH3126c=
+	b=s5JhMG3UKgft8AEZUlceAh7XPovNKee2MUvj8w79TeD/mr+jqZsq1v+fVn3cJRaTn
+	 cC8NYYmNnvguUwGlJAHEZA/I6m2vAPJKgrh4Sao7LB/2Ja0V/0x3HnyU9bBlUT823f
+	 g94B8deI7uMFXPv+j8nyj7IaLy0f2VfnzigPdaEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0943/2857] f2fs: check every cur_*_segno[] entry on readonly images
-Date: Wed, 18 Nov 2026 15:32:57 +0100
-Message-ID: <20261118150235.561617966@linuxfoundation.org>
+Subject: [PATCH 6.1 0961/2857] efi/libstub: Dont replace an existing LINUX_EFI_MEMRESERVE table
+Date: Wed, 18 Nov 2026 15:33:15 +0100
+Message-ID: <20261118150236.203278608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,73 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
+[ Upstream commit aaf3ed0f46298e18ec8bc477cf0a37478e41f2ea ]
 
-sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
-against main_segs, but on an image with the RO feature the goto that skips
-the duplicate-segno cross-checks also leaves the enclosing loop, so only
-index 0 of each array is ever checked.
+The LINUX_EFI_MEMRESERVE table is the root of a linked list of memory
+reservations that need to persist across kexec, such as the GICv3 LPI
+pending and property tables, which cannot be moved once the
+redistributors have been enabled. Each kernel adds its own reservations
+to the list that it finds via the EFI configuration table, and honours
+the ones made by its predecessors.
 
-An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
-reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
-segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
-three out-of-bounds writes during mount and the mount then succeeds.
+The EFI stub installs a new, empty table unconditionally, replacing any
+existing one. This is fine on a cold boot, but not if the stub is being
+executed by a loader that passes on the configuration tables of an
+earlier kernel, e.g., a kexec loader that runs the incoming kernel's EFI
+stub, as the reservations made by earlier kernels would be lost.
 
-Use continue so every index is bounds-checked, and skip the node-vs-data
-cross-check explicitly, which is the other thing the old goto skipped.
+So leave an existing table in place, and only install a new one if none
+exists yet.
 
-Cc: stable@kernel.org
-Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/firmware/efi/libstub/efi-stub.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index a1c33931d175e..1b6d28116a04c 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3611,7 +3611,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			return 1;
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index cf474f0dd261a..b3f4d1e233dd0 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -86,6 +86,14 @@ static void install_memreserve_table(void)
+ 	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	efi_status_t status;
  
- 		if (f2fs_sb_has_readonly(sbi))
--			goto check_data;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
-@@ -3623,14 +3623,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
--check_data:
++	/*
++	 * If an earlier boot stage installed a memreserve table already, e.g.,
++	 * a kexec loader passing on the persistent reservations made by the
++	 * previous kernel, use it as is: installing a new one would replace it.
++	 */
++	if (get_efi_config_table(memreserve_table_guid))
++		return;
 +
- 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
- 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
- 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
- 			return 1;
- 
- 		if (f2fs_sb_has_readonly(sbi))
--			goto skip_cross;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
-@@ -3642,6 +3642,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
-+	if (f2fs_sb_has_readonly(sbi))
-+		goto skip_cross;
-+
- 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
- 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
+ 	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, sizeof(*rsv),
+ 			     (void **)&rsv);
+ 	if (status != EFI_SUCCESS) {
 -- 
 2.53.0
 
