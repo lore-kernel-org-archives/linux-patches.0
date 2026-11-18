@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031575;
-	b=lF49BNILctPNXg0kWzYFToNRQTJHTDsQFgITswfOP6gDi+sQYQaYVyIGFA+HI1goMtGL
-	 nHJ+26g+vOQfbs8SZOqc5cRZceG8OLOt1UGwZYgu/nTL66+RyZwHQazS6N6uELyL4iCqt
-	 lz6CsjtmzVn3BG/2+WSe8PC+zZkvhx5fc+rQBg3xX6g0nAIO5BkkQyxLgnDrvVGRG5ecK
-	 putskCmLMdwdvve3QqpIwzZBhJbzG3VwjGnDgo/YQcBCMOE6HFCLNcWQ2f2M0JR6VSyzo
-	 lxDV6Sj2x/BazKxy6tTYJEcZYOVJHlqtWXdQoI9CCMqN11ksuBbquwt44Qo7v8LG0lQ==
+	t=1795031578;
+	b=SonXF1/5mDgoREvBb+qXUHagN6xm1quCm/7AMtMWEeAf+4bHStaM21kuRStNhPrCfZli
+	 9zyBWMenY23HMWlewG3mlUUvDfQvpH+uF7YlPEK+CK3Sr1d8O95tzGTE1yQ2AgW0ZZ3cn
+	 VoUr6Bzcct8LWm/Pw9I3ipnKjc6hfCEy3jrWkv5wRklJNYqbiMGZeMWlX2oIDTjCdnjpx
+	 ZeWE1xWnDJSWNsFMfrpUKhDHhhBqpr89inmyUUbU31zzxN/toGgzfI/RIkMgTnvZaRvDk
+	 yb3ebGXoLILv3oEGEvGt4nUIzVq/zppXPacc0+XAhL3BlL+pRdu1XebvpOZPGsyjruA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031578;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o5cnB/c+GXgclET8K52/EuAcIbfTPRGZ9SmoFlRDa7s=;
-	b=y3jfH3gGOY7l2bMgbVfKMrqJA9SkA08lKa+VtqsrbJDXaRDnAkwxAQo7mY4kQvpTe+lJ
-	 EBsmelakjhoildiEJCHIlagbJajwsc6svfjPXiB/h5CksdRcAfyC8VCSY+gvFyecWqvlG
-	 zwbXCM5dxYDIEhH/+vcfqf0pnDoF6xpU1ArWl/MS+Qn8YJKbtK+iVgm8a7Op/yG2FiA4c
-	 oQtUKyAdD/ksdPIPKFF7gTR4jbz6t1iDPXHSz3ezrelXNFJwRjldb0bsjZhmUbbnRV3tD
-	 T2Zu20iP+wsMKzm/xb2D420UNRYO7v5+Fuphdc575EL6UFyK/ga1NpUDysQqkk0ovhQ==
+	bh=LDfcF4oSZzfvN6lHUQV4R7FL9J3UPEUuwKlcTSb1cLM=;
+	b=Y/ArexZAckt9Bc6U+VZYpXnNHWjGR9bLvxh1Wc4M2uQTY0VSyaP7/6Ww/VThbK/MG8PI
+	 0quX+b5JepjFLUhC3JLObC1I7Ayodv66pKj2VtEhVOTim7lIC9pf8AcxEoefdBIx3lmRq
+	 Engvh/fRSeiKk7Pi75Yxbgx8lOfNeqCOVw8qf0rP6ZTPFYW/x4nteJEnqasqizDKJBdhq
+	 T7dhoAj83z+X1/y8kes3Ai5jVy6XY6eYph38XO24IL+HjoGEAfwkAM64SmjW2F228PYHB
+	 f4VaA+bqyy3H7YAAzSfrOAXkK4AEANjwGILxn0iPCN0xhepESwCtamAsKDcpKV0sI7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIXzcXaW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="umZO/a0J";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C7A606A31C;
-	Wed, 18 Nov 2026 19:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D17606A31C;
+	Wed, 18 Nov 2026 19:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIXzcXaW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85F51F000C4;
-	Wed, 18 Nov 2026 19:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umZO/a0J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A34A1F000C4;
+	Wed, 18 Nov 2026 19:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031575;
-	bh=o5cnB/c+GXgclET8K52/EuAcIbfTPRGZ9SmoFlRDa7s=;
+	s=korg; t=1795031578;
+	bh=LDfcF4oSZzfvN6lHUQV4R7FL9J3UPEUuwKlcTSb1cLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bIXzcXaWc03LoqKO14FUIzbQkS5GmZHxcQwXU/+axRuk4EDWUvsDMMGvVLn7PT2kf
-	 1jVNgJCPWlGSJak+EYf9eXlohFbrVv4FWvsLjgzJTApkaENpLF33SBMZtWifWq7d7S
-	 +UprjD80BnzbLgFPSIHRrcUuAxmQSgXrBI/o50cA=
+	b=umZO/a0JIFRKXTXbGqqYbvobtWXUI9y8+SB77op3zVrMHgIInlTuG4+NMJb0iDwoK
+	 xdfWZDS6C4Cu2DTtqkfXfgu/dF+esR/X7uikLTXwET3UcEjN4pTfE2aLnXLyf92+eh
+	 2V1IuAGQ3kb9IataWbZjQmUg6kRBmSz84fC1gjls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1065/1756] btrfs: fix off by one super block end offset calculation when writing super blocks
-Date: Wed, 18 Nov 2026 15:53:12 +0100
-Message-ID: <20261118150052.649093635@linuxfoundation.org>
+Subject: [PATCH 6.12 1066/1756] btrfs: fix dangling nodes in tree-mod-log after error in btrfs_tree_mod_log_insert_root()
+Date: Wed, 18 Nov 2026 15:53:13 +0100
+Message-ID: <20261118150052.700952564@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,46 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 7884a8f3279c28ff990e2eacd5c2479bb1c930d0 ]
+[ Upstream commit 057e3c350a9185df598c88b4081168ed047c9247 ]
 
-We are skipping the write of a super block mirror if its end offset
-matches exactly the device's end offset. This happens because we are using
-a greater than or equals comparison instead of just a greater than
-comparison.
+If in btrfs_tree_mod_log_insert_root() there is an error in the call to
+tree_mod_log_insert() (the only possible error is -EEXIST, which means we
+have a bug or some memory corruption maybe) we free all the nodes in the
+'tm_list' array but we don't remove them from the tree-mod-log rbtree,
+which can result in use-after-free bugs later.
 
-Fixes: 935e5cc935bc ("Btrfs: fix wrong disk size when writing super blocks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
+So make sure we remove the nodes from the rbtree before freeing them after
+an error.
+
+Fixes: 5de865eebb83 ("Btrfs: fix tree mod logging")
+Assisted-by: LLM (found the bug)
+Reviewed-by: Boris Burkov <boris@bur.io>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/btrfs/tree-mod-log.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index d1f245ef1911f..e49072f7ea027 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3744,8 +3744,7 @@ static int write_dev_supers(struct btrfs_device *device,
- 			atomic_inc(&device->sb_write_errors);
- 			continue;
- 		}
--		if (bytenr + BTRFS_SUPER_INFO_SIZE >=
--		    device->commit_total_bytes)
-+		if (bytenr + BTRFS_SUPER_INFO_SIZE > device->commit_total_bytes)
- 			break;
+diff --git a/fs/btrfs/tree-mod-log.c b/fs/btrfs/tree-mod-log.c
+index b382a4c443d42..13f58ed448422 100644
+--- a/fs/btrfs/tree-mod-log.c
++++ b/fs/btrfs/tree-mod-log.c
+@@ -446,10 +446,17 @@ int btrfs_tree_mod_log_insert_root(struct extent_buffer *old_root,
+ 		goto out_unlock;
+ 	}
  
- 		btrfs_set_super_bytenr(sb, bytenr_orig);
-@@ -3828,8 +3827,7 @@ static int wait_dev_supers(struct btrfs_device *device, int max_mirrors)
- 				primary_failed = true;
- 			continue;
- 		}
--		if (bytenr + BTRFS_SUPER_INFO_SIZE >=
--		    device->commit_total_bytes)
-+		if (bytenr + BTRFS_SUPER_INFO_SIZE > device->commit_total_bytes)
- 			break;
+-	if (tm_list)
++	if (tm_list) {
+ 		ret = tree_mod_log_free_eb(fs_info, tm_list, nritems);
+-	if (!ret)
+-		ret = tree_mod_log_insert(fs_info, tm);
++		if (ret)
++			goto out_unlock;
++	}
++
++	ret = tree_mod_log_insert(fs_info, tm);
++	if (ret && tm_list) {
++		for (i = 0; i < nritems; i++)
++			rb_erase(&tm_list[i]->node, &fs_info->tree_mod_log);
++	}
  
- 		folio = filemap_get_folio(device->bdev->bd_mapping,
+ out_unlock:
+ 	write_unlock(&fs_info->tree_mod_log_lock);
 -- 
 2.53.0
 
