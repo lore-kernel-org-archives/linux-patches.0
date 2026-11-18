@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023740;
-	b=RhuuvVHq99K9tuPYGq+x3XT+V49DWH76NhDmm4lXXOsA0/dPQ07emczbkKwTlFVpn+vX
-	 29BnkUw3GuVSrSsDVW1F07cTKhTWd3JyTA45UtgAG+wff68W5Axg5D0cJP/dTMrR6pA/X
-	 N4g9XHkHbjHP1SZeoa6dSxjVBvknZAjXJh+hohUMUgAHy4tMiSQKIYQiEnWIIriv9BUyq
-	 bgUYNe8jqOCYyuY3Sc76FPnj5Rv+49azy51iEXiWGZHxw+OOTk3WhQZmBlKHpeSfc7OOf
-	 g1Ijm9oS6K0BsvdXy673SEAFFL9UsDty6eKqHIYYrML14G9kf4ViCGS0fiBAAuyvwLw==
+	t=1795023743;
+	b=jCTzVRpu8x5g8E02aiMT6FzLXgcM/U3YBGXnh3CZ2Oxf0+hJDTVkAfW6GZC7E1jxXlcq
+	 WEwf7MxEztJrV+U+2RSNq46JafTJ8JO8vgsEFS844Eg/+90W36XeWNlb99mPWN4r5vq0z
+	 S/W2cWe2QPgmN/cHR1xmDo14S/GdBJhErBIe7/6oESPMp17SlO49t5eWSk6pYY9nvNrCu
+	 IIcHdg1epBws18UHdkSVIL2MWY26F3+HdoKC7zo66J+iDFgoPVCURb3njNzbFg05woqkl
+	 k2ZcB1go7C4nWceok+sbwdhU/NEBUXpUm8UArdyy50xoj+lzfGndpvL3bqIrPKPex7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mcDMFBt9gA0F6k4HOXGBaS+IOZUxwmU5l9UKVgTCagA=;
-	b=ay0brhPP52w3CCUhGKIUWbZ7M+5JiE6nUiE6/gph22f3scaPSb6CZOrSL2VTzADEgBEa
-	 Qsr+3Zd/4/wqVC7syZlBizCPpbrx3bBaaO7CuFoZy5T6NBDyM+0JFmybqnge4PR49BpyS
-	 uQb5UKPJtnvmjhkg7VyZhHVcSFGTmixpwaRw6EilBhrgkCwxmwT0OS6KgpEXUUJr1fl5C
-	 EALxXTNKUQYpsTeOBIB8uAzpviRafyq1AOPcvC0ALS1ePiWzUDL0pJzjZ6k25swyv6ZLt
-	 EVp3YZ3GMxcxZbOGoR7wwrm6TZg953xQurqBMkuYC+1JE5czOkYxEASvALfMHxeBdUQ==
+	bh=awuUzvDuargdYxCP3sESj6FXa78SHlZA+V4dn0lNd18=;
+	b=uDHKiUWOkwJiDi4XSxhYKGMKkxzrQ5JKRgEnu/lP+ffQ6wzt7TOMVS9rKTyQkh8E+1UV
+	 iLhdi6mmLAgd6aqw5TArxoO1xlr6Axf17pldERgvLc4CtB97D2aJJyOj5qJ0HsVY6/DQL
+	 LnamZaVzR2GvnPHjqKehEd6v9eO7MB/vgwwE5rt6o9rDnrR50Bz8LybqEX0XDhjx2Avwv
+	 2nihPc6ptKImrTznBgZl2tRYkrGZEG9qQNImtUGynuJLA1lNCb2ZOGBokVcVxNiVbW2Tn
+	 Qj6Nk95crH+K/bg8czqMecW+hPklmrbCv9fSRwBs4gMhkbysn7KT9+HnxIf6Xxbmbmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rkZWFIO1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6wqW6kB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78450606A31C;
-	Wed, 18 Nov 2026 17:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46480606A32A;
+	Wed, 18 Nov 2026 17:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rkZWFIO1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC0E1F000C4;
-	Wed, 18 Nov 2026 17:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q6wqW6kB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0081F000C4;
+	Wed, 18 Nov 2026 17:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023740;
-	bh=mcDMFBt9gA0F6k4HOXGBaS+IOZUxwmU5l9UKVgTCagA=;
+	s=korg; t=1795023743;
+	bh=awuUzvDuargdYxCP3sESj6FXa78SHlZA+V4dn0lNd18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rkZWFIO1CZPBgnVz2TsvdXqIcwXn64T092yASnaP88YbwSmpX9d3MAPk1DqYSFHKZ
-	 WHnAdoH+FLpgT3g+tlTH3LFPFBFI3mgmWGhiHL2MxyXX0dQQRWeZKfNnG00S6vn/AJ
-	 GGKTRNdV3hOtyRSmAq+feeYxvYy1XHFaflDFScOI=
+	b=Q6wqW6kB/NuxrhwcL0ez6hNI+JVXvZ6GOTDmHjp6dxb8kw9S2otdNX3p0UiDhUF/t
+	 0//npafLph89eZx7AvlU3VfpGqTH31H+wyP/V97AeYdaiKBp6lI6wxZQkvqYNLXGSG
+	 LcPfqGR3k9Qv8sg2wX+yUO7murwRGuf45vxRkcZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0426/2151] clk: sunxi-ng: sun55i-a523-ccu: Use M-only clocks for MBUS, IOMMU and DRAM
-Date: Wed, 18 Nov 2026 15:36:01 +0100
-Message-ID: <20261118150137.574764056@linuxfoundation.org>
+Subject: [PATCH 6.18 0471/2151] pinctrl: stm32: Drop the nonexistent CONFIG_MACH_STM32MP25 from the STM32MP257 default
+Date: Wed, 18 Nov 2026 15:36:46 +0100
+Message-ID: <20261118150139.165508995@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,100 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhui Liu <junhui.liu@pigmoral.tech>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 59dced16a82d1ec685b88365c64dde27a0a0b46a ]
+[ Upstream commit 01f20711d044f35a7a89ceec33df30e097147e8a ]
 
-The MBUS, IOMMU, and DRAM clocks only have an M divider, but are
-currently modeled as MP clocks with a zero-width P divider.
+Commit 619f8ca4a73d ("pinctrl: stm32: add stm32mp257 pinctrl support")
+made CONFIG_PINCTRL_STM32MP257 default to MACH_STM32MP25, following the
+MACH_* pattern of the arm32 entries above it, but no Kconfig symbol of
+that name exists and git log -S finds no Kconfig file that ever defined
+one: the STM32MP25 family is arm64 only, where CONFIG_ARCH_STM32 covers
+it. Commit dba0aff2b89b ("pinctrl: stm32: Allow compile as module for
+stm32mp257") added "|| (ARCH_STM32 && ARM64)" next to it, so the first
+half now evaluates to n and changes no configuration.
 
-ccu_mp_set_rate() generates an invalid mask for the zero-width P
-divider, clearing unrelated register fields. It also ignores
-CCU_FEATURE_UPDATE_BIT, so the new divider value does not take effect.
+Drop the first half.
 
-Model these clocks as M-only clocks instead. This avoids accessing a
-nonexistent P divider and uses ccu_div_set_rate(), which handles the
-update bit.
-
-Fixes: 74b0443a0d0a ("clk: sunxi-ng: a523: add system mod clocks")
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-2-cbde21c9fe69@pigmoral.tech
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 619f8ca4a73d ("pinctrl: stm32: add stm32mp257 pinctrl support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 45 ++++++++++++--------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+ drivers/pinctrl/stm32/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-index 20dad06b37ca3..9bc3ff0ab12d7 100644
---- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
-@@ -380,14 +380,13 @@ static const struct clk_parent_data mbus_parents[] = {
- 	{ .hw = &pll_periph1_150M_clk.hw },
- 	{ .fw_name = "hosc" },
- };
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
--					    0x540,
--					    0, 5,		/* M */
--					    0, 0,		/* no P */
--					    24, 3,	/* mux */
--					    BIT(31),	/* gate */
--					    CLK_IS_CRITICAL,
--					    CCU_FEATURE_UPDATE_BIT);
-+static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
-+					   0x540,
-+					   0, 5,	/* M */
-+					   24, 3,	/* mux */
-+					   BIT(31),	/* gate */
-+					   CLK_IS_CRITICAL,
-+					   CCU_FEATURE_UPDATE_BIT);
+diff --git a/drivers/pinctrl/stm32/Kconfig b/drivers/pinctrl/stm32/Kconfig
+index d6a1715230121..cc425bbfc996e 100644
+--- a/drivers/pinctrl/stm32/Kconfig
++++ b/drivers/pinctrl/stm32/Kconfig
+@@ -55,7 +55,7 @@ config PINCTRL_STM32MP157
+ config PINCTRL_STM32MP257
+ 	tristate "STMicroelectronics STM32MP257 pin control"
+ 	depends on OF && HAS_IOMEM
+-	default MACH_STM32MP25 || (ARCH_STM32 && ARM64)
++	default ARCH_STM32 && ARM64
+ 	select PINCTRL_STM32
  
- static const struct clk_hw *mbus_hws[] = { &mbus_clk.common.hw };
- 
-@@ -584,14 +583,13 @@ static const struct clk_parent_data iommu_parents[] = {
- 	{ .fw_name = "hosc" },
- };
- 
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
--					    0x7b0,
--					    0, 5,	/* M */
--					    0, 0,	/* no P */
--					    24, 3,	/* mux */
--					    BIT(31),	/* gate */
--					    CLK_SET_RATE_PARENT,
--					    CCU_FEATURE_UPDATE_BIT);
-+static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
-+					   0x7b0,
-+					   0, 5,	/* M */
-+					   24, 3,	/* mux */
-+					   BIT(31),	/* gate */
-+					   CLK_SET_RATE_PARENT,
-+					   CCU_FEATURE_UPDATE_BIT);
- 
- static SUNXI_CCU_GATE_HWS(bus_iommu_clk, "bus-iommu", apb0_hws, 0x7bc,
- 			  BIT(0), 0);
-@@ -603,14 +601,13 @@ static const struct clk_parent_data dram_parents[] = {
- 	{ .hw = &pll_periph0_400M_clk.hw },
- 	{ .hw = &pll_periph0_150M_clk.hw },
- };
--static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
--					    0x800,
--					    0, 5,	/* M */
--					    0, 0,	/* no P */
--					    24, 3,	/* mux */
--					    BIT(31),	/* gate */
--					    CLK_IS_CRITICAL,
--					    CCU_FEATURE_UPDATE_BIT);
-+static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
-+					   0x800,
-+					   0, 5,	/* M */
-+					   24, 3,	/* mux */
-+					   BIT(31),	/* gate */
-+					   CLK_IS_CRITICAL,
-+					   CCU_FEATURE_UPDATE_BIT);
- 
- static SUNXI_CCU_GATE_HWS(mbus_dma_clk, "mbus-dma", mbus_hws,
- 			  0x804, BIT(0), 0);
+ config PINCTRL_STM32_HDP
 -- 
 2.53.0
 
