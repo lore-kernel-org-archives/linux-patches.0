@@ -1,58 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036889;
-	b=brShG30BwgI16OPhJJGibP6dkD3oQkS5Xw78rzXNyCMSF9HaHx/TckBsuxk8LN5TVCBw
-	 HXVx8RlyKhLLo3GOXZSs5caEImE+4sztIC24Gv6M4Q8+UWVZsPhGmsxV13C39IcPmV7CI
-	 ZsGOFuOFDf3vT94nqnT0ZZIlPZtc17Sn1aB7bkgn2QvBXxZUO9sQasoxV2rcFNjRV0YDG
-	 3cIq+1ig8D5FhLfKOVif8bEv/OEMMOjIPLTxvmVYaYRhbP0l2CTsWo77NLalJb5LFMIKQ
-	 Fs+TGYVjxwTcFcnXPd8ccWc01ivefPwowSSo+GxFtfHbIHsEw01HoJWNHfaRgSv7sAQ==
+	t=1795036892;
+	b=sfuROCtdPAFn11TJU+0e+HDipg6WYHjq9hFTpURlfnUekCBcgLt68WmoqPZM/Fx8DAkC
+	 /Ba4U92dLSpN+5BeWcEHUKT11X8MYsEfjb9EJVDN/g9YIjACbzcuLI/97+7E+qMOOLEF+
+	 4E76QRbM6HHUAvkzvE2h/7BgGvgUCTfJ6ntizHxssaVlOZS/HH3gD7C30Br1YVXYFc/He
+	 bQ+V/bXYWNS50fHlZjxk7gMtOm5fhqtVEYto23gtQFgeJSDiRu0uPi2uwp9sLMp03bbxD
+	 GTOW6csS0P1IWwfvllMOpggVh578L8JkxC3x5XFOYdzWlkkLNlyMFhLVo/jA/cllR1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036889;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036892;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=knbeOREV629kdii3j5QHxvuHytj78xJ6z4mHzkJYG5M=;
-	b=Bz7ZU50qS6YTmQ8BJFWzcyTpsl07+uSRdTyT2ZBx1M1hahBexGLBGanY30eRAheBpg8E
-	 O701GCMZzj3NTtYb0ERRF5ECWn2/+f1d/o4kkjkBz4/6vdPCqg7NJpXbcBE11QBNV5XZB
-	 7zGieAE7jpp4WOrs+pEX7sZAWXc09e2CMSusJtEI5pZ707lnwWuFrusRUUHyHLl+K4y74
-	 xqcnWL3PsOb37LDxklrTRiKsy4kU0j8GxiBphtNDV5KTh8iOnO8lAj8Tyjaa5VMbXl8it
-	 VJ29D15F67Vtly5fWLB/v4iHDPNakJfSXj6TZP0HYqQEIEkamWctTka0jZqGKyNninw==
+	bh=dloRhlWIl+QNe3Vc7AftKLFvTe1bapedUFikd+2P0g0=;
+	b=m3+lFgkBkXqaH7xYXcm0BZExh1xlnEmMcIzr21l27Z+uR9Q7Dnk5egtWnbSCDKNFpzKe
+	 9KaSPSDOGzY0uj2VQ+CmW+lfhHSzCHQq/8XSoMMyeyT7EodjksRehSrmfHoE5W1OrC7Dm
+	 eOM2xfVfC26EsZu26wz0olIWyv3C00JX947EOP18v2oH9Vi2qXAHo6K3WGAkWgaZbKJro
+	 HLc9/a6ufOQiamNJXS7qtJQSO0kjQDMo9HxDfiA8SFjsNvFtV4GosTv1MzSHCK9SMFT56
+	 29RixVb3SqoqC2xCooAe9LhSMQ6vIXuuxhhVg/opW28E/vaNAYbm8Fq4EZA3Bf8m1rQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d9WWy/jI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oA67hOB9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C08606A32A;
-	Wed, 18 Nov 2026 21:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FED8606A31C;
+	Wed, 18 Nov 2026 21:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d9WWy/jI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BA81F000C7;
-	Wed, 18 Nov 2026 21:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oA67hOB9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4B71F000C5;
+	Wed, 18 Nov 2026 21:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036889;
-	bh=knbeOREV629kdii3j5QHxvuHytj78xJ6z4mHzkJYG5M=;
+	s=korg; t=1795036892;
+	bh=dloRhlWIl+QNe3Vc7AftKLFvTe1bapedUFikd+2P0g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d9WWy/jIK8k5gJDTNGmtv3Q4O08pJE3ZUSjEayFuEyquECRP0V+YGMerMFZFoHn5A
-	 CaHLbtnx6pWpgMa5TZXNKe069SWjY5K3iC7C9My8O9GzmCemljNjMLq8drap9W15iu
-	 ogwARMbq68Ucgop9Y/97/PhPOztJPUibXbfn0n+Y=
+	b=oA67hOB935VjbFOp4/1N/pJGUuii8J/bN+mkIgIA8Smx4tSogmZAIjDh/UCrXTTHR
+	 KEZiGUWg6X9rx/EhcbUEG5Oi2D9BgCmxurVLVdBOc/3ZJvwFDqZHpyI2QrD9X3cbm7
+	 5aEKuqvenlbXq2uVGZpMVnZFfVNuqShIUUZ0LQc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Wei Yang <albinwyang@tencent.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1219/3318] ocfs2/cluster: remove zero-address nodes from IP tree on teardown
-Date: Wed, 18 Nov 2026 15:30:41 +0100
-Message-ID: <20261118150356.749791707@linuxfoundation.org>
+Subject: [PATCH 6.6 1220/3318] mm/madvise: add cond_resched() in THP branch of madvise_cold_or_pageout_pte_range()
+Date: Wed, 18 Nov 2026 15:30:42 +0100
+Message-ID: <20261118150356.779721864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,61 +74,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Wei Yang <albinwyang@tencent.com>
 
-[ Upstream commit 5dd57e77eff4ba3e85b3df126a55417c88245708 ]
+[ Upstream commit f5cfc8e3b20ad71949a1e5623ff45882c063a71b ]
 
-o2nm_node_ipv4_address_store() accepts 0.0.0.0. It sets
-O2NM_NODE_ATTR_ADDRESS and links nd_ip_node into cl_node_ip_tree under
-cl_nodes_lock, but o2nm_node_group_drop_item() uses nd_ipv4_address as a
-membership test. A zero address therefore leaves the rbtree node linked
-when config_item_put() releases and frees struct o2nm_node. A later
-address store or IP lookup can then walk the stale node and dereference
-freed memory.
+During stress testing with stress-ng on a 256-CPU system, a softlockup was
+observed when madvise(MADV_COLD) was called on a 31GB memory region backed
+by transparent hugepages.  The region contains 15935 THP PMD entries, and
+the softlockup was triggered after 14485 of them had been processed.
 
-During teardown, drop_item takes cl_nodes_lock, skips rb_erase()
-for the zero key, and then calls config_item_put(). A later
-o2nm_node_ipv4_address_store() duplicate check or o2nm_get_node_by_ip()
-lookup takes the same lock and walks the stale cl_node_ip_tree entry. Use
-O2NM_NODE_ATTR_ADDRESS for teardown so every published nd_ip_node is
-erased before configfs can release the node, without rejecting 0.0.0.0
-or changing lookup semantics.
+The THP branch of madvise_cold_or_pageout_pte_range() has no scheduling
+point.  walk_pmd_range() invokes it once per 2MB PMD entry with no
+cond_resched() anywhere in the loop.  Each iteration calls
+pmdp_invalidate() which issues a synchronous TLB shootdown (dsb ish)
+waiting for all CPUs to acknowledge.  This operation can be time-consuming
+under heavy system load, causing the accumulated time across all PMD
+entries to exceed the softlockup threshold (20s) and panic when
+softlockup_panic=1.  On a CONFIG_PREEMPT_NONE=y kernel, there is no other
+opportunity to reschedule during this entire traversal.
 
-Link: https://lore.kernel.org/pm-ocfs2-node-ip-rbtree-zero-address-uaf-v5-e7f64be16b7c3b0988d1@gmail.com
-Fixes: 0c83ed8eeb28 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+The regular PTE path already has an unconditional cond_resched() at the
+function tail (introduced by commit 9c276cc65a58 ("mm: introduce
+MADV_COLD") and commit 1a4e58cce84e ("mm: introduce MADV_PAGEOUT") when
+MADV_COLD and MADV_PAGEOUT were first introduced) and a conditional one
+inside the loop (commit b2f557a21bc8 ("mm/madvise: add cond_resched() in
+madvise_cold_or_pageout_pte_range()")).  The THP branch never received
+equivalent treatment.
+
+Fix by adding cond_resched() at the huge_unlock exit path after
+spin_unlock(ptl) and reclaim_pages(), which is the single exit point for
+all goto paths in the THP branch.
+
+Crash log:
+  watchdog: BUG: soft lockup - CPU#63 stuck for 23s! [stress-ng-vm:1665914]
+  ...
+  Call trace:
+  pmdp_invalidate+0x48/0x68
+  madvise_cold_or_pageout_pte_range+0x84c/0xb00
+  walk_pmd_range.isra.0+0x1ac/0x3b0
+  walk_pud_range+0x120/0x190
+  walk_pgd_range+0x170/0x1b8
+  __walk_page_range+0x184/0x198
+  walk_page_range_vma+0x94/0x128
+  madvise_cold+0xd8/0x198
+  madvise_vma_behavior+0x234/0x638
+  madvise_walk_vmas.constprop.0+0xdc/0x210
+  madvise_do_behavior+0xa8/0x328
+  do_madvise+0xd8/0x140
+  __arm64_sys_madvise+0x2c/0xe0
+
+Link: https://lore.kernel.org/20261010024042.4070048-1-albin_yang@163.com
+Signed-off-by: Wei Yang <albinwyang@tencent.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/nodemanager.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/madvise.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
-index 87aeb1a7a90ae..bfc7c0fb2be05 100644
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -626,8 +626,11 @@ static void o2nm_node_group_drop_item(struct config_group *group,
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 9b70ade86141d..209d0cc950139 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -428,6 +428,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 		spin_unlock(ptl);
+ 		if (pageout)
+ 			reclaim_pages(&folio_list);
++		cond_resched();
+ 		return 0;
+ 	}
  
- 	write_lock(&cluster->cl_nodes_lock);
- 
--	/* XXX sloppy */
--	if (node->nd_ipv4_address)
-+	/*
-+	 * 0.0.0.0 is a valid configured address, so nd_ipv4_address does
-+	 * not tell us whether nd_ip_node was published in the IP tree.
-+	 */
-+	if (test_bit(O2NM_NODE_ATTR_ADDRESS, &node->nd_set_attributes))
- 		rb_erase(&node->nd_ip_node, &cluster->cl_node_ip_tree);
- 
- 	/* nd_num might be 0 if the node number hasn't been set.. */
 -- 
 2.53.0
 
