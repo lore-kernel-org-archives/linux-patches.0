@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015592;
-	b=DlGCHKZk89vwfpeh8BAcxDPjYugyEbMmJhK7FMizG+0SbbiC7hY/ByxzJmBLx16vMRuU
-	 +r7qNn+zRhZjgbpEhwm2/HjiO1V5olQk4+yHLpWEFs5OBzd/PKMfb7jkAzsVZdPa9JvJY
-	 wQXnV+sndJoCb47H1EQconXgVaVkPnF/5WWS6J1n+SZDUZlxLPxT10rug2GKvOTnLvoVX
-	 PRlqZDYEHLR73zSv07KSd/BruxNh1qBwSJmxfnVdv3Rw6G8cGGUUzbtdR2mlnlHevBsh9
-	 u9OUoNuEePlGMamFeD2c/veJgfx8tTPJ5XE6aevmR7QAQ4Q246zYt3M2DJNIIq7TvuQ==
+	t=1795015596;
+	b=ykOJv30Gj5pwEWfabiZMTsYADjyYGIDfATsqg73I3UPwDYzDegs057nDzRGfC+wqXVy4
+	 bvwOYqJE3mpDEpF0Rc4kQK57yqzPO1ivtOMAzO0W2KTtnV0tS6xJpKhUWRcMYw3pZDY21
+	 pw9sjxm8F38SNTitYEDfALCiY7NgqutVZDccBSkWJyjLI9lVpriJsHhqBt8pXQ+ZccbKL
+	 IWVWPqh/EYumr6DhUeTx91QArEc+jw8I9EGV30JTsIxo434Qy6GhFgBkwijSRsSZC9ElH
+	 /XeGHlYGzHNzOrS8TZ5HI0i+ncLaU0pVw1gi4MbWOdjJ0puNUdqb1dic/6c8HYaaHXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xi7oomV8ngr20tsSVBLvhE8NlyWOcQLTBqix3BLsaJU=;
-	b=ijvo5EyrF87tt1MvGlnxRiwtqDALR3tiEGl6hSIVoLfAoAFv74tA6g431IY8vGCG6uzK
-	 YeN0/YQCRw0slZK7AT3rmmN/PU6F13mnTm9Slm2dfR7bm/TrMfV9iA9qwOfe8+7a7X565
-	 WZsOiDFTThwtf+0fYiqNJHBVG6BapaOOlMtkhgSwFg/oeNj3afqHMfFxOFgyCz2EFZkbc
-	 FXkllsaM1ee1rAd9JXT6f3ATVt0Z9FN0dURlygSdhyZ8ndjCsgSlT/p9gbfQwK/Nt/W2i
-	 1C36mshlMQXNL0PTV7f91i2Oc7pnw/kQFxABtF2BeWTwP4xko/PZ9RlfF8EtU+1nrIA==
+	bh=Uf3d5vSfb3SVedB9XAz43LhWY2QZqwMHV11CLEApD3g=;
+	b=tL7DuAK9d2Qqyirj6noawQYfX71xNBUW0JUDHAEjOdhKqJVivACvJnbaBf1H397eb+s0
+	 53hW4CusnmTgZu8imOUtepYnwiVj0Y8q4hPNHbitq1UsSIXvFrPyhV6+RuT3wywCi2pQb
+	 TgBEdbp231J584GDPGHdp3u+hKHllKBVXcrCH51eq5ZJZ6n0INnU3WH6y57+FkqiKO1Ux
+	 PK/SZDt/FSNpso/zdV0+UuTMRQVeaV5AOXpCwAeOh1pEPTwE6cgqoGsQ5bsKqGYXsZyDS
+	 2CLQDj3NTe7Pb10Yl7uenBpID8VhXVLQjVyi45HXDrHOkaZgLI7DLqtZ+HWWcMF2//g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvSTXu1Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc9VLPpT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC229606A31C;
-	Wed, 18 Nov 2026 15:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8439606A31C;
+	Wed, 18 Nov 2026 15:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uvSTXu1Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1C11F000C4;
-	Wed, 18 Nov 2026 15:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wc9VLPpT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CC21F000C4;
+	Wed, 18 Nov 2026 15:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015592;
-	bh=xi7oomV8ngr20tsSVBLvhE8NlyWOcQLTBqix3BLsaJU=;
+	s=korg; t=1795015595;
+	bh=Uf3d5vSfb3SVedB9XAz43LhWY2QZqwMHV11CLEApD3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uvSTXu1QotT/I5ogEkE58h2kcIMbnd6jZXNh46rM2djzhhwfMf3Utlr87V/YhhPoH
-	 7eMGIB7tBNqtJ0YRNDE4PouoBzbQe1CPMTP99pxSLk866XAkJ7TfRTKDml7iEbOkdt
-	 sZ07YoFnPxUQuA/vCPk8e4ujOd+ybDCClFrP7QZg=
+	b=wc9VLPpTC0BsCiSbDjpLF4D/4w3nIokSP/cURtBvpQEfnB3J3zXlA2NBSDM3r+KC2
+	 nwLOknQkfvN2h9i/6dS+aXNEkgrhufHoTxRYPKUvqizcRU6i7jdzMq2WYA+UNruSej
+	 H5mStX5vomtvxYTbcCvaNZ3LCsqUnzBCuPYwRozg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0228/2651] mtd: rawnand: sunxi: use a stack buffer for BBM randomization
-Date: Wed, 18 Nov 2026 15:24:28 +0100
-Message-ID: <20261118150256.074373502@linuxfoundation.org>
+Subject: [PATCH 7.3 0229/2651] regulator: mp886x: fix vsel_mask
+Date: Wed, 18 Nov 2026 15:24:29 +0100
+Message-ID: <20261118150256.108202251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,61 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit a8596bb7148136b9e83980900d508d0ef86507ef ]
+[ Upstream commit 24fa0eadc2e3c7e9397924197dca7777ec08b8d7 ]
 
-Variable protected user-data lengths replaced the original four-byte
-stack buffer with a heap allocation before compensating the bad block
-marker. The allocation is unchecked, and a zero length returns
-ZERO_SIZE_PTR which sunxi_nfc_randomize_bbm() dereferences.
+The MP886X vsel is 7bits, fix the vsel_mask.
 
-The controller supports at most 32 protected user-data bytes per ECC
-step, so use a zero-initialized buffer of that bounded size. This
-removes the allocation failure path and keeps zero-sized invalid layouts
-from dereferencing ZERO_SIZE_PTR.
-
-Fixes: 54dcd6aa69db ("mtd: rawnand: sunxi: introduce maximize variable user data length")
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://patch.msgid.link/20260901043123.5401-2-jszhang@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/regulator/mp886x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
-index 88503a45fe81a..f41feebe42571 100644
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -222,6 +222,7 @@
-  * USER_DATA_LEN registers.
-  */
- #define USER_DATA_SZ 4
-+#define SUNXI_NFC_MAX_USER_DATA_SZ 32
- 
- /**
-  * struct sunxi_nand_chip_sel - stores information related to NAND Chip Select
-@@ -1003,11 +1004,10 @@ static void sunxi_nfc_hw_ecc_set_prot_oob_bytes(struct nand_chip *nand,
- 	struct sunxi_nfc *nfc = to_sunxi_nfc(nand->controller);
- 	struct sunxi_nand_chip *sunxi_nand = to_sunxi_nand(nand);
- 	unsigned int user_data_sz = sunxi_nfc_user_data_sz(sunxi_nand, step);
--	u8 *user_data = NULL;
-+	u8 user_data[SUNXI_NFC_MAX_USER_DATA_SZ] = {};
- 
- 	/* Randomize the Bad Block Marker. */
- 	if (bbm && (nand->options & NAND_NEED_SCRAMBLING)) {
--		user_data = kmalloc(user_data_sz, GFP_KERNEL);
- 		memcpy(user_data, oob, user_data_sz);
- 		sunxi_nfc_randomize_bbm(nand, page, user_data);
- 		oob = user_data;
-@@ -1040,7 +1040,6 @@ static void sunxi_nfc_hw_ecc_set_prot_oob_bytes(struct nand_chip *nand,
- 		}
- 	}
- 
--	kfree(user_data);
- }
- 
- static void sunxi_nfc_hw_ecc_update_stats(struct nand_chip *nand,
+diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
+index e0b62bc02a1e1..a10f3a20d413f 100644
+--- a/drivers/regulator/mp886x.c
++++ b/drivers/regulator/mp886x.c
+@@ -267,7 +267,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
+ 	rdesc->min_uV = 600000;
+ 	rdesc->uV_step = 10000;
+ 	rdesc->vsel_reg = MP886X_VSEL;
+-	rdesc->vsel_mask = 0x3f;
++	rdesc->vsel_mask = 0x7f;
+ 	rdesc->ramp_reg = MP886X_SYSCNTLREG1;
+ 	rdesc->ramp_mask = MP886X_SLEW_MASK;
+ 	rdesc->ramp_delay_table = di->ci->slew_rates;
 -- 
 2.53.0
 
