@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055740;
-	b=Cl5nWNySYO881jCrVt29wn0eFwC2QVAqfA6BdpFj/ByRPzvJVJNYcDMeZHDiRX6oxkmo
-	 gdfjLep7rXj5SrMVJNiuYi9Xrh+IjR0hXTk2hHCWWf01zXwQGEfCq2FaeFrfSQhzAxuUE
-	 zrU/vQs/z2fUfOTPcoEOWY5YcljpMpctqdnJOIc1y6d1bAIzYKEHrF9NuOAilTBv4KuUo
-	 jEeveI1wFJn6IF39/8FY9k5oddXApvQknfU5H4dUSjMcvnntYOODgy9O+kfBE7LGb9aRf
-	 O8XNVph+6E8sx7vaUcMbKT9xxBDL7tX6tA6KCDP9qYFurUBlCJ6YtNJgjNca3JU05cg==
+	t=1795055742;
+	b=eFvLB0gBKteBcFjJAVhbl42cJVga7WptUh5/szgSWu5lLgNmiDOvhS+0oHMjutSueDTU
+	 NQGHsP4N39i3BcnNN2IKqoOinRsVOlXQt50YOJWZ6Xs5TCEEsFbDif45MyF2icUPGBe+E
+	 pk6KSs/mNmZiVJx5t2O6nBNRFQxqDiC515OF7cEWayk8Zg30QpToKP+M+TCPn6uqe4njR
+	 Kbj1NctrEPKjPw+RfA0FygsyZIAsXuk0uPY+VzO/TWEAAr9nVP5Y0U5ti51fDNrjoUahM
+	 4o6/z1M7NULLHlLAIZ4+trqbgQuHgnOVOsaFYUG3Yy8xoy0Fxh+eBfA6nIAp4BQMrJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z8kC30uc+HikOFgyf2NgHdH29vBXF0XCpxIv/Rs55sI=;
-	b=qA0FQGcefKzBXv8xzzmVjUVxOcWOkTTYBQy+l5/yX1nuG12DERqMWTiPwY2xmyi9eGfP
-	 36eftb0ZMRTkEX7WFlYzcyPo6XolpvkjzXD/3XC3U8ACHrxuplHieSB0emL+XHn5ig8Bj
-	 SoBLyzZaZqPv5iG1hzOfob8CW7O8WuiC31wXCkHexGTeFSDfMCadv6Wbpvns8kH1svg17
-	 yx2YM2FSgQl5qOL9NTSmDz1vxZX5lGnGDxy+yOznXwf0v1zeBfSZkJnaOd1sSXT66kW2O
-	 wnin5e27e0bv7B/24sy7GJoHT1+BWRYe+ul33q8Agr6p2XzhHfhcaevjt2bpXi1qluA==
+	bh=nlJQREMbESa4UVYszoEfWgPjtDiaohxxGYfte05EpdQ=;
+	b=dhlgo/1fRK78f4R83nXABY8Oy/dBNPIFvSG0fylUCF/JIGDaPHCqCyQC0rLzgTnTQfA1
+	 i6TTUUjcMUSVlMCH/ugUeiaDQCQx/Ev390SxEtjIw/08ChQAs4hjg0ymj72PXubsvdosO
+	 UjpqbmtzhkLcDmVrzvFYakxCg0qXRh0KL2ePwHdGwePCSeQ4smRZGqmH0ADS/obXDFNnv
+	 aIZ0H8z+GQHZZfpKosBTdJmZonFhkQuF3mOBb6sOVczokZqAj+n+VefrHcez0V/7ljfco
+	 pYutLnHj5r6A2lOz/WLhM0M59sc45S+Nh+c8NjDFB0xuKu4Rws5rwwqJGmpXmZ/w2mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BEepdHpU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqnc7eVc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7A7606A320;
-	Thu, 19 Nov 2026 02:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6F4606A325;
+	Thu, 19 Nov 2026 02:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BEepdHpU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7504C1F000C4;
-	Thu, 19 Nov 2026 02:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqnc7eVc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE6B1F000C4;
+	Thu, 19 Nov 2026 02:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055740;
-	bh=Z8kC30uc+HikOFgyf2NgHdH29vBXF0XCpxIv/Rs55sI=;
+	s=korg; t=1795055742;
+	bh=nlJQREMbESa4UVYszoEfWgPjtDiaohxxGYfte05EpdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BEepdHpUpAigaJRHRnxLlB+f5Zq5xf0LlBFWkaWdoiw5dap+3lyJIIcC5NZhtokDB
-	 C2m9SIrlr8Xeib85QeNALgU08Lr4EDHsNeucYycflZk8ACssmtO6dwpT7iIFRK6IIy
-	 YEwi/EpFxYjwYf/Y8dL73VHwwqWSgbTl3L6dWRA4=
+	b=eqnc7eVcxlbvJBzMkWY2x/+he5ySx8eeYERsOD/Gce5c3UeZC4fRdBgo99pwZ6UF2
+	 26dM4nfcM/p4x7Vbb42gdAxt55fP3bzklC0c4vSLsN/ksWGdSHPC0pbSVLkJ03v7oS
+	 HOabHWt9heTa0WOA6NI4O/lpPYN95/DfEPtm+sVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1740/2214] ASoC: mt6359-accdet: manage private workqueues with devres
-Date: Wed, 18 Nov 2026 15:56:56 +0100
-Message-ID: <20261118150121.255691980@linuxfoundation.org>
+Subject: [PATCH 5.15 1741/2214] cpufreq: sparc-us2e: fix frequency table index copy-paste error
+Date: Wed, 18 Nov 2026 15:56:57 +0100
+Message-ID: <20261118150121.286677453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,111 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 9a773d9d21fa909e8babbe11e93c811cf1a6d22d ]
+[ Upstream commit e5b33fa47792375ca7fc49ccadee87d8e4b72929 ]
 
-The threaded jack-detect interrupts queue work on two private
-workqueues. Neither queue is destroyed on device removal, so queued
-callbacks can retain pointers to devm-allocated state after it is
-released. Probe error paths also leak the queues.
+In us2e_freq_cpu_init(), the last two frequency writes both use
+index [2] instead of [3] and [4] respectively, and the terminator
+uses [3] instead of [5].  This is a copy-paste error where the index
+was not incremented, causing the divider-6 and divider-8 entries to
+overwrite the already-written divider-4 entry.
 
-Create and initialize both workqueues before requesting interrupts, then
-add a managed cleanup action. Since the managed IRQs are acquired
-afterwards, devres releases and synchronizes them before draining and
-destroying the workqueues on both removal and probe failure.
+As a result, only three frequency steps (div 1, 2, and 4) are actually
+available to the cpufreq core, while the intended dividers 6 and 8 are
+silently lost.  The struct us2e_freq_percpu_info::table[6] has room for
+5 entries plus a terminator, matching the 5 hardware dividers.
 
-Fixes: eef07b9e0925 ("ASoC: mediatek: mt6359: add MT6359 accdet jack driver")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260928134054.312-1-getshell@seu.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the indices so all five frequency steps are correctly populated:
+table[0]=div1, table[1]=div2, table[2]=div4, table[3]=div6,
+table[4]=div8, table[5]=TABLE_END.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/mt6359-accdet.c | 50 ++++++++++++++++++--------------
- 1 file changed, 28 insertions(+), 22 deletions(-)
+ drivers/cpufreq/sparc-us2e-cpufreq.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/mt6359-accdet.c b/sound/soc/codecs/mt6359-accdet.c
-index 7f624854948c7..e7dc20ac67024 100644
---- a/sound/soc/codecs/mt6359-accdet.c
-+++ b/sound/soc/codecs/mt6359-accdet.c
-@@ -923,6 +923,14 @@ int mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
- }
- EXPORT_SYMBOL_GPL(mt6359_accdet_enable_jack_detect);
+diff --git a/drivers/cpufreq/sparc-us2e-cpufreq.c b/drivers/cpufreq/sparc-us2e-cpufreq.c
+index 92acbb25abb3a..bbf5b3522fa67 100644
+--- a/drivers/cpufreq/sparc-us2e-cpufreq.c
++++ b/drivers/cpufreq/sparc-us2e-cpufreq.c
+@@ -284,12 +284,11 @@ static int __init us2e_freq_cpu_init(struct cpufreq_policy *policy)
+ 	table[1].frequency = clock_tick / 2;
+ 	table[2].driver_data = 2;
+ 	table[2].frequency = clock_tick / 4;
+-	table[2].driver_data = 3;
+-	table[2].frequency = clock_tick / 6;
+-	table[2].driver_data = 4;
+-	table[2].frequency = clock_tick / 8;
+-	table[2].driver_data = 5;
+-	table[3].frequency = CPUFREQ_TABLE_END;
++	table[3].driver_data = 3;
++	table[3].frequency = clock_tick / 6;
++	table[4].driver_data = 4;
++	table[4].frequency = clock_tick / 8;
++	table[5].frequency = CPUFREQ_TABLE_END;
  
-+static void mt6359_accdet_destroy_workqueues(void *data)
-+{
-+	struct mt6359_accdet *priv = data;
-+
-+	destroy_workqueue(priv->jd_workqueue);
-+	destroy_workqueue(priv->accdet_workqueue);
-+}
-+
- static int mt6359_accdet_probe(struct platform_device *pdev)
- {
- 	struct mt6359_accdet *priv;
-@@ -964,6 +972,26 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
- 	}
- 	mutex_init(&priv->res_lock);
- 
-+	priv->accdet_workqueue = create_singlethread_workqueue("accdet");
-+	INIT_WORK(&priv->accdet_work, mt6359_accdet_work);
-+	if (!priv->accdet_workqueue) {
-+		dev_err(&pdev->dev, "Failed to create accdet workqueue\n");
-+		return -ENOMEM;
-+	}
-+
-+	priv->jd_workqueue = create_singlethread_workqueue("mt6359_accdet_jd");
-+	INIT_WORK(&priv->jd_work, mt6359_accdet_jd_work);
-+	if (!priv->jd_workqueue) {
-+		dev_err(&pdev->dev, "Failed to create jack detect workqueue\n");
-+		destroy_workqueue(priv->accdet_workqueue);
-+		return -ENOMEM;
-+	}
-+
-+	ret = devm_add_action_or_reset(&pdev->dev,
-+				       mt6359_accdet_destroy_workqueues, priv);
-+	if (ret)
-+		return ret;
-+
- 	priv->accdet_irq = platform_get_irq(pdev, 0);
- 	if (priv->accdet_irq >= 0) {
- 		ret = devm_request_threaded_irq(&pdev->dev, priv->accdet_irq,
-@@ -1009,22 +1037,6 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
- 		}
- 	}
- 
--	priv->accdet_workqueue = create_singlethread_workqueue("accdet");
--	INIT_WORK(&priv->accdet_work, mt6359_accdet_work);
--	if (!priv->accdet_workqueue) {
--		dev_err(&pdev->dev, "Failed to create accdet workqueue\n");
--		ret = -1;
--		goto err_accdet_wq;
--	}
--
--	priv->jd_workqueue = create_singlethread_workqueue("mt6359_accdet_jd");
--	INIT_WORK(&priv->jd_work, mt6359_accdet_jd_work);
--	if (!priv->jd_workqueue) {
--		dev_err(&pdev->dev, "Failed to create jack detect workqueue\n");
--		ret = -1;
--		goto err_eint_wq;
--	}
--
- 	platform_set_drvdata(pdev, priv);
- 	ret = devm_snd_soc_register_component(&pdev->dev,
- 					      &mt6359_accdet_soc_driver,
-@@ -1043,12 +1055,6 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
- 	mt6359_accdet_jack_report(priv);
- 
- 	return 0;
--
--err_eint_wq:
--	destroy_workqueue(priv->accdet_workqueue);
--err_accdet_wq:
--	dev_err(&pdev->dev, "%s error. now exit.!\n", __func__);
--	return ret;
- }
- 
- static struct platform_driver mt6359_accdet_driver = {
+ 	policy->cpuinfo.transition_latency = 0;
+ 	policy->cur = clock_tick;
 -- 
 2.53.0
 
