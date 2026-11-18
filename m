@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040527;
-	b=M0HxFqSyZLqJ95f9c8zRA+SGdpbaP15yTZg8u8e8sKpGytQ6G/3KbX5wzaF36EFOf3Tc
-	 azDgnlRw8X1mji2a+YTomgRrmeasI1/6cVqrUXdqDYQCbBJ55gGvcXmW0Ub9Y+cjQlWua
-	 0NdixxHyld4mcNODrb3Xx2/M/gJGILQMjHhW5NZM7u5KoBlOCqer0xGjWs0yHBXFFuD+l
-	 lTHKoFAhf9TKevdDcDQPCGSzsTNDJKs8q85XU1gtoj4K1m0emYOgO6O7IFTYFobR0LVr6
-	 NmGOYe9PkQiaHFUYZaaAdW4VB3VCKOKTdDgCuVhzEIsQONQBX0yTTLuimPJAB5Wr+rA==
+	t=1795040530;
+	b=xnlhPrBm32FZkvbH0fYyvBtiH3bT4Ht4ARk4nCNyne9DKQGJpKFqcXh6eS9feGW2oFbi
+	 YtvThRi4C/ZvJ/eyPIFnbVIpgzP3hZlTZOyhO6rZfwwDKb0TAaEaXDxkgyty8do+8sN02
+	 tHlkfXalKmpN2lc4JTiObM1swrOMwy5hqcnvLg6vv2bcolX0Q3oEiSkvpMjQSgkaag1Mh
+	 aQcbmGGikgYUBiM0WQ+ez3LpF8JpkVDq3Jspcz3IWI7ph7inlR3+goWYENpofUx4ub/W2
+	 SE6zeAp5s1kn3ZhNU3ch3KVBssMChXmQhIM3ttL9atyCafNG+IFjsduXFUbj3TJFXjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihwvMHTj0S67slqnon1CXo4asjl+J81vmaT6/pfUmTg=;
-	b=Cp5gCWwWfqJXXLRYOe5YoEdmNlLaKfR/sgp8pF1naLTc13KjHiClnG+Ty6NmKBRvDQw3
-	 9YTbBrAp2+Q3oeqKuyhNpjRPuN9W7xam4hygT3PiLssg8uvkdu7qVCOE1StX3d5KDoZj8
-	 XcWkFXph4g4UdAPxRsOJePjklt+qLUHGbwvHfAI48DmLqKFnnO3SvYgTDlg4nJM7fxSAp
-	 ubsTkIzVgGFRFWnz3G9Qg9EIQ0MCDEyKC9gNdijvWhU3VXlgbd5lWpnoarMCJhWLVotyp
-	 AZQ32yKQq3aug6tTT9FNoSP67p3WA9LQ4LPbN+zZHPai7/d7EjQ21IE8IWjNtB1V3Tw==
+	bh=2XAiOn7bMgjWUVe9pYeT0Swfj3X8tV4+AfWHTzqR234=;
+	b=KG71TFnD0Ezj8LiuO0sW9YNYvFauGdjHhFwGbc/4VAvqPOxxmizzDn1z5wl9bCjqzMk5
+	 DZW7HqYjIdzf7aWZB4NFJ3v82fpf5SAcGt+eiFKdF08jLilNZBl2a8qOJdpLmM1eUGL7K
+	 5BA2Tm+PItQZQvw92dUYdouAbsGVyFh9dSvDzJh6SCEWLiB8+OQGuv5zbTNBsxC0QHHpW
+	 b2axuDTD6MkDdNvILH9kB8qBcOHqyzBxtlHIegydjhhwjw8sSSURXR7XqBljWDyO2AoAG
+	 iX4ldWL14mc1LHYSnB52QMz83Y4P6OVRA8/Q5XRcyHcq34DehEX34JNJxjTo5mp5jUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cO4pZzC6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iZIM/reV";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83003606A325;
-	Wed, 18 Nov 2026 22:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFCE606A325;
+	Wed, 18 Nov 2026 22:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cO4pZzC6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98191F000C4;
-	Wed, 18 Nov 2026 22:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZIM/reV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894351F000C4;
+	Wed, 18 Nov 2026 22:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040527;
-	bh=ihwvMHTj0S67slqnon1CXo4asjl+J81vmaT6/pfUmTg=;
+	s=korg; t=1795040530;
+	bh=2XAiOn7bMgjWUVe9pYeT0Swfj3X8tV4+AfWHTzqR234=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cO4pZzC6AvuVZP3X1LUdiTnUllFOjMZJ/Odf/7JPPph1fCRqYSFIPBB4AEvLAY3mc
-	 HKcewX426dBWCasslM7xGHKvDjDZsC71OU3l7FHZDfLjilQrsACh5jStTtcR3nI2WX
-	 IxyvGfEEDRkdrfMnAygGyFATP91e0+l0N7a6AKJE=
+	b=iZIM/reVjj/v0dMjJBJdbBsM3l591ccncj6yHZGkfYROZWr8OpvDr4xuNLKpVczi6
+	 gYy/D1kpeanHAUcKR4uX2GfCeCLqdTa088MdPI8OfKA9Sg12xj50Y7zlWf8i1QlAbU
+	 ihQ5/TUmi++OBoMX/dvP5vBiE54Dh+HH9hpeprwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ze Huang <ze.huang@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2487/3318] OPP: Fix the return value in dev_pm_opp_get_of_node() kernel-doc
-Date: Wed, 18 Nov 2026 15:51:49 +0100
-Message-ID: <20261118150436.005725056@linuxfoundation.org>
+Subject: [PATCH 6.6 2488/3318] drm/imx/lcdc: avoid duplicate clk_per enable
+Date: Wed, 18 Nov 2026 15:51:50 +0100
+Message-ID: <20261118150436.035025037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,35 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Ze Huang <ze.huang@oss.qualcomm.com>
 
-[ Upstream commit 706081c6b9327dd611dd72b20130a77f0f059b6e ]
+[ Upstream commit b08f4d9b21a7846b91bb6c4064f58c3a7ab997c7 ]
 
-dev_pm_opp_get_of_node() returns NULL when the OPP is invalid, but its
-kernel-doc says "else 0 on success", which was never true. Say NULL.
+The simple-KMS helper calls the pipe update after enabling the CRTC.
+On an enable commit, imx_lcdc_pipe_enable() already programs the
+mode and enables clk_per. The following pipe update sees the plane move
+from no CRTC to the active CRTC, treats it as a mode update, and calls
+imx_lcdc_update_hw_registers() again.
 
-Fixes: e2f4b5f8dc59 ("PM / OPP: Implement dev_pm_opp_get_of_node()")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+That second call has no old CRTC state to disable clk_per first, but it
+enables clk_per again at the end. The disable path only drops one
+reference, leaving clk_per enabled after each on/off cycle.
+
+Skip the register update from the pipe update path when the CRTC already
+needs a modeset. The enable path has already programmed the hardware for
+that commit; keep the event handling in pipe update unchanged.
+
+Fixes: c87e859cdeb5 ("drm/imx/lcdc: Implement DRM driver for imx25")
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Ze Huang <ze.huang@oss.qualcomm.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260919-b4-imx-simple-kms-v4-v4-1-53b1fdf4589e@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/of.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/imx/lcdc/imx-lcdc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/opp/of.c b/drivers/opp/of.c
-index 56aa753f7b0d9..9af17ff6206e4 100644
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -1413,7 +1413,7 @@ EXPORT_SYMBOL_GPL(of_get_required_opp_performance_state);
-  * dev_pm_opp_get_of_node() - Gets the DT node corresponding to an opp
-  * @opp:	opp for which DT node has to be returned for
-  *
-- * Return: DT node corresponding to the opp, else 0 on success.
-+ * Return: DT node corresponding to the opp, else NULL.
-  *
-  * The caller needs to put the node with of_node_put() after using it.
-  */
+diff --git a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
+index 4beb3b4bd6942..809bf188012df 100644
+--- a/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
++++ b/drivers/gpu/drm/imx/lcdc/imx-lcdc.c
+@@ -309,7 +309,8 @@ static void imx_lcdc_pipe_update(struct drm_simple_display_pipe *pipe,
+ 	else if (old_crtc != crtc)
+ 		mode_changed = true;
+ 
+-	imx_lcdc_update_hw_registers(pipe, old_state, mode_changed);
++	if (!drm_atomic_crtc_needs_modeset(crtc->state))
++		imx_lcdc_update_hw_registers(pipe, old_state, mode_changed);
+ 
+ 	if (event) {
+ 		crtc->state->event = NULL;
 -- 
 2.53.0
 
