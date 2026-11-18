@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029646;
-	b=pA/2GGCIB2h/dy9kApW0XXD8ShGYHgk6bnZD+o2kg/ehVkWwGpisIUY2CRULkJ9pXUbb
-	 snscsRGOY/WOrFEFNAXHrd5c1f+oAbuCViwvjPTU1ZXTN/q6As2Ty/ro4U7ojDDBCZSx0
-	 rLK//M3HTLkdRGF4fMr9IrNQENAW9H5at22eEDiw6+f3v9CiUTmpjqV+pqIX45XsbS9Vf
-	 0FniDq1537oonElXO0D72R3Ync5af+a0eTwDCLfFcThvzlxfeTT9YqCWwctqqvp6PLa2k
-	 CdSCEtrguvdlJQ9qP6UlXkkVUGaQvmR5KKjo4WCgOMgTYs6qxTOb9ssrmYgJRxCTo+w==
+	t=1795029649;
+	b=2MwYtQh00nq1DYXeSPLtvOP78Wl5b+J6RftrpZv2GE6kWM4PBFF+Soo476IELum9yDq2
+	 n+NJrwF5NAvwfgwUmqRk3XxlwVy4sP5bDr6+UIMAUps1gRTyaaGVb/rd2KLkawI/YG6rj
+	 Ja3xQcwZa9OHYuqznuDYvC/8K8utc/eOTHYhfc1giqOG0qo6HCHbrqkyiWUwAWN999vVU
+	 NYJMTrUAHwfHPpOGuldIAm06C+0ld7hSehuNWKibDt8Ur+SsRtkZ4Tg9aMZSOF7fv5fzI
+	 yaSCIlnsc9Df6C7/0GzS91QqoWIaYq+BFU2KXD+9JRlC6hUHjauDgF43oYqAUgT+Jhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z7tlLqAcvs668jOGQQXOc/6Ie45KlWDUO5t6qD+LfUo=;
-	b=dwAwpw+Nv4CJJlzZZr9VO/ZDovnMPW1X/QvQ2yAl2GEIvd/oAiIvlkytys8kh3D0RpOM
-	 oGuAhy6Wt2uLWGRhAjCnPZAb8RC5WEnE7h1/SwZALdikEx2lIkQWPpBnvd8LA0KMpz8f9
-	 sC9ThJ6RyCmCwyL4wsvKFgS6GFz5d7RFx/M2ilZ/0sxdtyXL9jfYBEqVNrd9gP71O6U74
-	 ExgtkIzP5Bs0nqKI8iYEXMNhFXQ9bBvTHMofMtSZVhXecSBc9dKT/7Ibv/G0WCn1aLHx/
-	 LQPQD2FbzDJzTjxttwGDRdqqdvSF54N9URl3HP66hV6gpcb56BLqQFKtTKReY270a3Q==
+	bh=BV18pGXHyKCiy43FSses472iXdLMmAnNN5JZprFlZ1g=;
+	b=GnvTOCKZAX8k4TKREsjg9+AQlR6eKKj5doOUqej002wzXnfGXAfJ+1BnBcScu4AnRan7
+	 ILwm0zUSZIphT2LF9y4GsF/tEuiwYH3EMlD4NE0rFTOs5wcmYpBLNnlOLaRuJR+fiijTI
+	 DxGSn7SJwvpmgpLdB3oK1PgdtR2Y0FIqVJHE+C712JHdj3/cO3qnRFDnaU9CgeXFEqnTP
+	 Cd4auIWEaPruuRDcDb+w9vJaqukH/01JYjc1wkQn5w+3rlPd+MLiNtlzaZSl9T3R/dWME
+	 4HmQAx/UOQzQVVN324sGJ2IUP8p9LKJqf+sb+Xs4X/eY5d/F+1OjMlB7OQry+xtuzOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uuHO5gnV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=APtq4T3M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29E0606A330;
-	Wed, 18 Nov 2026 19:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AE3606A336;
+	Wed, 18 Nov 2026 19:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uuHO5gnV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CE61F000C4;
-	Wed, 18 Nov 2026 19:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=APtq4T3M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4341F000C4;
+	Wed, 18 Nov 2026 19:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029646;
-	bh=Z7tlLqAcvs668jOGQQXOc/6Ie45KlWDUO5t6qD+LfUo=;
+	s=korg; t=1795029649;
+	bh=BV18pGXHyKCiy43FSses472iXdLMmAnNN5JZprFlZ1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uuHO5gnVqTFTid79TpA5ARYdgq5b1mLS610qL3g0sY4eTE7Ut73uUah+MNHqCho59
-	 b2lAxZpnRPqD8e0AOswnsW5bAZg2tUhV4p95Fpa4pVcWn2/zrHTuMazsMWaLLl8hab
-	 SE/cqN+Bzuhbeuvjw0PK5MgvDupoA7mI+FW4zxpo=
+	b=APtq4T3MK+f3iJigtgjmf13+X+LrM/K224fMSedGlawL1cOn9RLgVFEipdY+kZw5L
+	 WyJtFXUl1tZBWmmsgamciAAtsDJgNb9gjvYuTGM3sV8FKF0Qc/w9jSC9qTjUJQtH2j
+	 hcOWkrYsylm85nKplM2yWl5zEJdrwSBo5Pv6kGg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0379/1756] clk: s2mps11: Propagate OF provider registration failures
-Date: Wed, 18 Nov 2026 15:41:46 +0100
-Message-ID: <20261118150023.556813007@linuxfoundation.org>
+Subject: [PATCH 6.12 0380/1756] spi: Fix the return value in spi_new_ancillary_device() kernel-doc
+Date: Wed, 18 Nov 2026 15:41:47 +0100
+Message-ID: <20261118150023.683179098@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,58 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 276741aac3b56ba50bef59715ba18ba3f0b953a2 ]
+[ Upstream commit 3742867ce96539100ed5f4c754f04273d8aa00d7 ]
 
-s2mps11_clk_probe() ignores of_clk_add_hw_provider() failures, stores
-driver data and returns success even though DT consumers cannot acquire the
-registered clocks.
+spi_new_ancillary_device() returns the new struct spi_device, or an
+ERR_PTR() on failure, but its kernel-doc says "0 on success; negative
+errno on failure", which was never true. Describe the pointer.
 
-Return the provider error through the existing lookup cleanup path. Skip
-empty lookup slots while unwinding because S2MPS14 omits its CP clock.
-
-The issue was found by our static-analysis tool and manually reviewed.
-
-Fixes: b228fad50c00 ("clk: s2mps11: Migrate to clk_hw based OF and registration APIs")
+Fixes: 0c79378c0199 ("spi: add ancillary device support")
 Assisted-by: LLM
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260911230211.11755-1-kmehltretter@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-s2mps11.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/spi/spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-s2mps11.c b/drivers/clk/clk-s2mps11.c
-index 8ddf3a9a53dfd..ce52c3aeb6920 100644
---- a/drivers/clk/clk-s2mps11.c
-+++ b/drivers/clk/clk-s2mps11.c
-@@ -188,8 +188,10 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
- 		clk_data->hws[i] = &s2mps11_clks[i].hw;
- 	}
- 
--	of_clk_add_hw_provider(s2mps11_clks->clk_np, of_clk_hw_onecell_get,
--			       clk_data);
-+	ret = of_clk_add_hw_provider(s2mps11_clks->clk_np,
-+				     of_clk_hw_onecell_get, clk_data);
-+	if (ret)
-+		goto err_reg;
- 
- 	platform_set_drvdata(pdev, s2mps11_clks);
- 
-@@ -197,8 +199,10 @@ static int s2mps11_clk_probe(struct platform_device *pdev)
- 
- err_reg:
- 	of_node_put(s2mps11_clks[0].clk_np);
--	while (--i >= 0)
--		clkdev_drop(s2mps11_clks[i].lookup);
-+	while (--i >= 0) {
-+		if (s2mps11_clks[i].lookup)
-+			clkdev_drop(s2mps11_clks[i].lookup);
-+	}
- 
- 	return ret;
- }
+diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
+index 780a8c4bef392..c5cd38e295f56 100644
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2577,7 +2577,7 @@ static void of_register_spi_devices(struct spi_controller *ctlr) { }
+  *
+  * This may only be called from main SPI device's probe routine.
+  *
+- * Return: 0 on success; negative errno on failure
++ * Return: the new device on success; an ERR_PTR() on failure
+  */
+ struct spi_device *spi_new_ancillary_device(struct spi_device *spi,
+ 					     u8 chip_select)
 -- 
 2.53.0
 
