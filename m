@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045325;
-	b=pD8NETwh3PPSXw50vYCe09naoTpsx9RmqdWvzeEYVpuk1XTk3l6xhCk20KJAsG0jZqUF
-	 9HhgXanrGzo46dG7D5EHWLDcR0fMv+tO2Dd2jWRnYqy/NUnpK+z0fz8NiXK0cUEAxKxm/
-	 bJzuRL4qe1t6B6YmQuKiXU2BwXQ8bqQzw89XI8iZiO129nTTfw2lhbG/Ezk0aiSayetJe
-	 F/D1V+btYqXiO5o+zE21mta8bqtjcnwBaGhVldOEKu2QmF6SNUjfSqv2Fu/FAyYy9ulXl
-	 TdqKCFb51lt1eox0Hl8afZ8B4S7RpyC80RNlyZfQaH79HKi98HxyoYTclJ9E/aZiQhQ==
+	t=1795045328;
+	b=5G/smKZEu0WEpvfzJeocFW9/YNiNx1BykkbWPrPDxvgeVgyHO8TunFDkeSnIQRFz7ePu
+	 Qv5tbCHkInT7Hqh2iyHMLonbJniRYNnNvRl3Ko/ACgjQHTx48b7Pc98okRgdaPn+syycl
+	 qjoQWD44/782gnfc/wEExPcljCjWFY9fFWK5OGsoWGPo4sqAEEX4xDZbqxfV5604R0652
+	 tCsKVFR7Kdxha8oCshC1vrqEK4gAXdKhJkukOhRpXVQYcNmSrWXFIq3UWvYOdbon/R5Vp
+	 wWyPzNQrjfcIh1zSRGsInKi5r5NUnkXUm+YonQ6y+FPlTZNQC1+QF5gKvTdx6XVQBEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045325;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045328;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qTh4+DV5wJ2P+Qin4FvrKkn/oeAD4WeHT9KVOzRnyi4=;
-	b=fQffvE1zT8dw2jWAMbRGApQsf6jRcHk29G6tWCHvPmEw0tOjgJq3KcbavVDdkEI0zWTb
-	 okRvMhgGqo7aVWX4IiCnUZzSK1LHwZqaV8ZEaKHDTRRI9/t6iaMYFtH45efyoyVkAUf9T
-	 e0afWRjqI0K1lkE2XegEyE6EAQN4tIhC600CEGpfz+mAAAIdZOadBKzhK/1aGuHS7P9WO
-	 X/pG4FUbUiUVd7gb09ddZmf6rNx58BqJo9jwvfSeDrvsvk4ogB/2Y9j59zLE+XDCXr0hb
-	 peDGjg+bsANLJf9STs4ezITl2nRW3JNzLiLknQkAvX3k7xY4EcOY2L0cTau6cvyciAA==
+	bh=4ffUZtDhkj48EbnaxOXUnuyK1NxvoLxdQofIuVuVPAI=;
+	b=BpGBBM7/k9IgQdr5vPXPXt9kyK7SRuKbZGehvqdh8TDxEaSmA3ZemfxYoAQCjOAJmHzC
+	 EqzqKjzel6wCnLEEFPWZAvV49mq9xRhpbcdIQe4VNv1jF897bHgpekuqFHaEeF9eeZFXd
+	 ntiO79Nps8q4tFUr/zEqfVtl+nbY1ZvwoVNw8ryGyIi6PaJgA3au5Lv/MdIOYhQssp5B4
+	 oxnzzFyLz9Hgpr78ouuXl2W0ap8/YqOQnFnfByMLbqU5CjLhTE5DB+nurSxf3qXs1808l
+	 jp/Wv2x34gFpehmMAmQT3GI2XYmUbtIb5J0YfDYFv+90nFye1KawUk5eDI+3/dUu5Aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nc5eI9nl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueh0v3jm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25A1606A32F;
-	Wed, 18 Nov 2026 23:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2DC606A320;
+	Wed, 18 Nov 2026 23:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nc5eI9nl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113F31F000C4;
-	Wed, 18 Nov 2026 23:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ueh0v3jm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1421F000C4;
+	Wed, 18 Nov 2026 23:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045325;
-	bh=qTh4+DV5wJ2P+Qin4FvrKkn/oeAD4WeHT9KVOzRnyi4=;
+	s=korg; t=1795045328;
+	bh=4ffUZtDhkj48EbnaxOXUnuyK1NxvoLxdQofIuVuVPAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nc5eI9nlpEGZ6FGnAVCCEaIxYwUF9CdLxkMBVFIte5ve64gskdG+FuFFLt6WqGCnf
-	 4qyHAxTkHGPwGasUw05hom3wcAUYI/YmG8tk/h7jUoEirjt4xNAyNjY3OuQBL1oUkc
-	 mA1uhTjeC4frpUaiXZ8N986f36QnrtVS473p5kvg=
+	b=ueh0v3jmczO7CrjMPqCVMIUBwZIj/32+GzIoCL9MP0lqyBHpkzUY8PsbSfjbsd1E4
+	 mb5IiuleLXsasq5Pg28ajUrnT4mZlw6vSKdOgCQcEDesekX2OumuxLg6R+KqMWVYGC
+	 Cw+EcMAcMRtFjpyrC52HL2aIQf7pfTGNFNl6H9tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis Efremov (Oracle)" <efremov@linux.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0881/2857] floppy: return the drive state flags from the 32-bit FDGETDRVSTAT
-Date: Wed, 18 Nov 2026 15:31:55 +0100
-Message-ID: <20261118150233.281783676@linuxfoundation.org>
+Subject: [PATCH 6.1 0882/2857] wifi: brcmsmac: Adjust txpwrindex value in nphy_ipa_rxcal_gaintbl_2GHz
+Date: Wed, 18 Nov 2026 15:31:56 +0100
+Message-ID: <20261118150233.316647923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,54 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Efremov (Oracle) <efremov@linux.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit bb38473f1bcb287567f2fa7980e483a778092504 ]
+[ Upstream commit f7463a9c99a506b3308a852f9aaaf2a26b659e95 ]
 
-compat_getdrvstat() copies every field of the drive state to a 32-bit
-caller except ->flags, which stays zero. 32-bit FDGETDRVSTAT and
-FDPOLLDRVSTAT therefore never report FD_DISK_WRITABLE, FD_DISK_CHANGED
-or FD_VERIFY: i386 fdutils (floppycontrol -P, fdmount), and other
-32-bit users see every disk as write-protected and never see a disk
-change. The compat code in block/compat_ioctl.c copied the field;
-it was lost when that code moved into floppy.c
+After a recent change in clang to warn on signed char conversions within
+array initializers [1], there is a warning (or error with
+CONFIG_WERROR=y / W=e) from nphy_ipa_rxcal_gaintbl_2GHz:
 
-Also declare the field as compat_ulong_t: the 32-bit struct
-floppy_drive_struct starts with an unsigned long, and a signed char at
-offset 0 only lines up with its low byte on little-endian machines. The
-size and offsets of the compat structure, and so FDGETDRVSTAT32, do not
-change.
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c:224:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 128 to -128 [-Werror,-Wconstant-conversion]
+    224 |         {0, 0, 0, 0, 0, 128},
+        |         ~               ^~~
+  1 error generated.
+
+This value was introduced in the original staging merge of brcmsmac in
+commit a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom
+802.11n wireless LAN driver.") and it is the same in the proprietary
+driver [2]. Presumably it is correct since there have been no reported issues,
+so update the value to '-128' to be type correct and clear up the warning.
 
 Cc: stable@vger.kernel.org
-Fixes: 229b53c9bf4e ("take floppy compat ioctls to sodding floppy.c")
-Link: https://patch.msgid.link/20260924112825.3525931-1-efremov@linux.com
-Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Fixes: a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom 802.11n wireless LAN driver.")
+Link: https://github.com/llvm/llvm-project/commit/a5ef934a8d295dc03be3960f2b3744ec2e53238e [1]
+Link: https://lore.kernel.org/1a107e21b08.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com/ [2]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20261005-brcmsmac-clang-24-constant-conversion-v1-1-a30c5692d582@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index 61e936d4f601c..0ddefc094e837 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -3601,7 +3601,7 @@ struct compat_floppy_drive_params {
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+index 42e7bc67e9143..930f22418a4c4 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+@@ -221,7 +221,7 @@ static const struct nphy_ipa_txrxgain nphy_ipa_rxcal_gaintbl_5GHz[] = {
  };
  
- struct compat_floppy_drive_struct {
--	signed char	flags;
-+	compat_ulong_t	flags;
- 	compat_ulong_t	spinup_date;
- 	compat_ulong_t	select_date;
- 	compat_ulong_t	first_read_date;
-@@ -3785,6 +3785,7 @@ static int compat_getdrvstat(int drive, bool poll,
- 			goto Eintr;
- 		process_fd_request();
- 	}
-+	v.flags = drive_state[drive].flags;
- 	v.spinup_date = drive_state[drive].spinup_date;
- 	v.select_date = drive_state[drive].select_date;
- 	v.first_read_date = drive_state[drive].first_read_date;
+ static const struct nphy_ipa_txrxgain nphy_ipa_rxcal_gaintbl_2GHz[] = {
+-	{0, 0, 0, 0, 0, 128},
++	{0, 0, 0, 0, 0, -128},
+ 	{0, 0, 0, 0, 0, 70},
+ 	{0, 0, 0, 0, 0, 20},
+ 	{0, 0, 0, 3, 0, 20},
 -- 
 2.53.0
 
