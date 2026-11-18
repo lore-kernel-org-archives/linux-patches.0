@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041577;
-	b=gVplgdWKy2dDK5l6NcrQ/sPKu88xQrFad4cWbZdyTlg67N98bd5VxRdBK7YxMHZh8uB2
-	 j9OQRs+3RvYaxzQNTUpUcUAdkCswaMvqDgXmJF8HaA2B/J24+eaLnLt/sjPHie8oVTz7e
-	 o0mfONDSvf7pdfkIwDiTUm3fMaPGCtXNxP5uAFd3pgYZKyzZxf01RdfvKiLK+wKaBXHyg
-	 WTTeQA6+21WM6zjxQAWT0J2v7UbSKnCpMaQtOxcqTenuaGdDRqlnPXMBdCi3XV3aMcT7X
-	 QzUhA8F6aPG3WsG20+mevw+xGTvblmb5aoIebApz7ULzkXiI6k5EfHfUJOqr+cQlo/w==
+	t=1795041580;
+	b=yepttNFF1vYq14qiAFV01lOwIQCgqknHm0AMlBeSbS2D9oOaM+eonzNKWfn5rUpczoWq
+	 GVdgegzXGQHmsT4bF2u/VndK/4+/xQri2FhVLpht+t5kqR299eD0ptjkYb3wIlb4XPhNH
+	 gjxvuEc/HHF9FLRKqkMRfHwXPhBus25e2FxTI+IGstWxE0r1cr+spi43suuM6mFYRJtBv
+	 JRHbOah6qnVCSYr6YCpEG9DIMT2c53p83nuUBcXhbLM1h8UaWzSR5rvaNOeVDfglxY4Qt
+	 pDr3tc7R4F8Xmel9BAXrD0KyqG9seNIJQ5REm1igN7/hkGx2eZCG9A/kUcByxs1gdBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PuyRnxBn/XGs4QrqG7KIpGRWT2ZqNZKj8Q4aTzdKBDY=;
-	b=5Jlxb9nmjJnG8YKNB17OsSeh/nGrWNaJ2StyUT7Og/jrFtpIJB0Hw379hvoNgdf80tzf
-	 qKTShYvN8z2xv+gaTtukWb4N1EJkx9jMU3x5jo3/7CtCf2X0e2UBg1lSAp2CmXaoHonEX
-	 YM6pTbSgK8Pzr+1H9xp/eV1iYm3PAar8gE8tCRa+AMIXvt0OeKBgofl4wJzfWFFW/Zgtq
-	 Gp/n2kdHt1fmx4q2/xiJ+sK2l8w6A2eCBPLUq8gNFAhbj6fSY1L81J4jQ3MkNnVIMGoo4
-	 Td62/C/aYq3gulGAlVf41gyTrEntVRCCgXZY/IKtm78xdDfdlICAEV6/c0HvLR52u1Q==
+	bh=3DOcUQOcNndQ7OeATOU229oT1LjTOg8Mb4Bubk4CXiQ=;
+	b=B1S2IadHdGoKv6X8Vq7zVEQcqzOKxRu4vxzxU9b2aCsixy6zcVVJogcO54yCa8SGivo2
+	 gD9GlNDSD71B/fUEIn3iEy5pDJN1lzMpkXYU/n647creCNJAt7HlPVwBNzsbAeslDh5Aw
+	 kbxyNE//NqhkQ0uO61MZjdVRHqJkQGe2KyEDdFHlg9UuGLAtNYa0VUEfk4OLZ323sy9XY
+	 Tdo67mKF8jXXLZL6pa/BiIri+nUG6U+xtNR3jc0J84LbnIbt0SoEFiQkZtOTW9m2CsQop
+	 Jf5cO8L11T80YjO2/VW46iqyvOU3eoRMiIxuzq3nZWvNVvUuF2IXvvnJmQfwED0+NpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD55FeHU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDOmYUWh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F308606A332;
-	Wed, 18 Nov 2026 22:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FE0606A332;
+	Wed, 18 Nov 2026 22:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bD55FeHU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A231F000C4;
-	Wed, 18 Nov 2026 22:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDOmYUWh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A3E1F000C4;
+	Wed, 18 Nov 2026 22:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041577;
-	bh=PuyRnxBn/XGs4QrqG7KIpGRWT2ZqNZKj8Q4aTzdKBDY=;
+	s=korg; t=1795041580;
+	bh=3DOcUQOcNndQ7OeATOU229oT1LjTOg8Mb4Bubk4CXiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bD55FeHULkIx4Umpkaho/rELzenULULrCp2BYwXvbsF8j03NjhqyGdt+C4I7Tq/nX
-	 v6hU6kW1GwgW2LwSqcTMMTTnZUPuf2nDz/rI+rql4L9S42rRu89T8+/BwlSjC6V81X
-	 4NrLo/vIy/+TIHdDyqhT6i6hGiTcsgcN9AI1uajM=
+	b=wDOmYUWhKMXIafAfr9zln2IEH/2D3E4fGlBOaZnGgwU2BMcX9Q7cPsNwPhyL9f+ju
+	 xkl2tf1gt7vZAMWTdPeKEwRPT3GBzoXecYOX+GmR5WBLefIXDRD/6bGFPtEKR57pd8
+	 qM4RNvBtgXUKfjnKRfu4qOFDaYzjV94fy3dRMCDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2864/3318] ASoC: codecs: wm8737: Fix definition of zero cross switches
-Date: Wed, 18 Nov 2026 15:58:06 +0100
-Message-ID: <20261118150446.498550307@linuxfoundation.org>
+Subject: [PATCH 6.6 2847/3318] ipvs: fix buffer overflow when sending sync messages
+Date: Wed, 18 Nov 2026 15:57:49 +0100
+Message-ID: <20261118150446.017486282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,48 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 121963197200ca89050f05a704f53c281702ec16 ]
+[ Upstream commit 3e3fe49e8678c1a3d535ed02f32a9a6e80674263 ]
 
-The mic (xMZC) and PGA (xPZC) zero cross bits are bits 3 and 2 of each
-channel's Audio Path register. SOC_DOUBLE takes one register and two
-shifts, so both controls only write the left register. Use
-SOC_DOUBLE_R, as the Mic Boost Switch next to them does.
+Sashiko reports for possible heap buffer overflow when
+generating sync message for the v0 and v1 message formats.
+We should read the cp->flags only once because another
+CPU can concurrently set the SEQ_MASK between the two
+reads.
 
-Fixes: 2a9ae13a2641 ("ASoC: Add initial WM8737 driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/36cab58287bd24955e73bfe3a6fb24cae8fad7b8.1791959026.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Note that IPVS does not set the SEQ_MASK anymore for the
+ip_vs_ftp.c helper starting from commit 7f1c40757951
+("IPVS: make FTP work with full NAT support") (2.6.36+),
+so the problem should not be reproducible.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://sashiko.dev/#/patchset/20260903004149.1037028-1-pablo%40netfilter.org
+Link: https://sashiko.dev/#/patchset/20260909111338.44357-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8737.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/ipvs/ip_vs_sync.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8737.c b/sound/soc/codecs/wm8737.c
-index 0d231c289ef33..6bca58404bc20 100644
---- a/sound/soc/codecs/wm8737.c
-+++ b/sound/soc/codecs/wm8737.c
-@@ -149,13 +149,13 @@ SOC_DOUBLE_R_TLV("Mic Boost Volume", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
- 		 6, 3, 0, micboost_tlv),
- SOC_DOUBLE_R("Mic Boost Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
- 	     4, 1, 0),
--SOC_DOUBLE("Mic ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
--	   3, 1, 0),
-+SOC_DOUBLE_R("Mic ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
-+	     3, 1, 0),
+diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
+index c6c712180c612..52562ad8359f5 100644
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -544,13 +544,15 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
+ 	struct ip_vs_sync_conn_v0 *s;
+ 	struct ip_vs_sync_buff *buff;
+ 	struct ipvs_master_sync_state *ms;
+-	int id;
++	u32 flags, seq_mask;
+ 	unsigned int len;
++	int id;
  
- SOC_DOUBLE_R_TLV("Capture Volume", WM8737_LEFT_PGA_VOLUME,
- 		 WM8737_RIGHT_PGA_VOLUME, 0, 255, 0, pga_tlv),
--SOC_DOUBLE("Capture ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
--	   2, 1, 0),
-+SOC_DOUBLE_R("Capture ZC Switch", WM8737_AUDIO_PATH_L, WM8737_AUDIO_PATH_R,
-+	     2, 1, 0),
+ 	if (unlikely(cp->af != AF_INET))
+ 		return;
++	flags = READ_ONCE(cp->flags);
+ 	/* Do not sync ONE PACKET */
+-	if (cp->flags & IP_VS_CONN_F_ONE_PACKET)
++	if (flags & IP_VS_CONN_F_ONE_PACKET)
+ 		return;
  
- SOC_DOUBLE("INPUT1 DC Bias Switch", WM8737_MISC_BIAS_CONTROL, 0, 1, 1, 0),
+ 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
+@@ -565,8 +567,8 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
+ 	id = select_master_thread_id(ipvs, cp);
+ 	ms = &ipvs->ms[id];
+ 	buff = ms->sync_buff;
+-	len = (cp->flags & IP_VS_CONN_F_SEQ_MASK) ? FULL_CONN_SIZE :
+-		SIMPLE_CONN_SIZE;
++	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
++	len = seq_mask ? FULL_CONN_SIZE : SIMPLE_CONN_SIZE;
+ 	if (buff) {
+ 		m = (struct ip_vs_sync_mesg_v0 *) buff->mesg;
+ 		/* Send buffer if it is for v1 */
+@@ -598,9 +600,9 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
+ 	s->caddr = cp->caddr.ip;
+ 	s->vaddr = cp->vaddr.ip;
+ 	s->daddr = cp->daddr.ip;
+-	s->flags = htons(cp->flags & ~IP_VS_CONN_F_HASHED);
++	s->flags = htons(flags & ~IP_VS_CONN_F_HASHED);
+ 	s->state = htons(cp->state);
+-	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
++	if (seq_mask) {
+ 		struct ip_vs_sync_conn_options *opt =
+ 			(struct ip_vs_sync_conn_options *)&s[1];
+ 		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
+@@ -636,6 +638,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ 	int id;
+ 	__u8 *p;
+ 	unsigned int len, pe_name_len, pad;
++	u32 flags, seq_mask;
  
+ 	/* Handle old version of the protocol */
+ 	if (sysctl_sync_ver(ipvs) == 0) {
+@@ -648,6 +651,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ sloop:
+ 	if (!ip_vs_sync_conn_needed(ipvs, cp, pkts))
+ 		goto control;
++	flags = READ_ONCE(cp->flags);
+ 
+ 	/* Sanity checks */
+ 	pe_name_len = 0;
+@@ -675,7 +679,8 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ #endif
+ 		len = sizeof(struct ip_vs_sync_v4);
+ 
+-	if (cp->flags & IP_VS_CONN_F_SEQ_MASK)
++	seq_mask = flags & IP_VS_CONN_F_SEQ_MASK;
++	if (seq_mask)
+ 		len += sizeof(struct ip_vs_sync_conn_options) + 2;
+ 
+ 	if (cp->pe_data_len)
+@@ -721,7 +726,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ 	/* Set message type  & copy members */
+ 	s->v4.type = (cp->af == AF_INET6 ? STYPE_F_INET6 : 0);
+ 	s->v4.ver_size = htons(len & SVER_MASK);	/* Version 0 */
+-	s->v4.flags = htonl(cp->flags & ~IP_VS_CONN_F_HASHED);
++	s->v4.flags = htonl(flags & ~IP_VS_CONN_F_HASHED);
+ 	s->v4.state = htons(cp->state);
+ 	s->v4.protocol = cp->protocol;
+ 	s->v4.cport = cp->cport;
+@@ -745,7 +750,7 @@ void ip_vs_sync_conn(struct netns_ipvs *ipvs, struct ip_vs_conn *cp, int pkts)
+ 		s->v4.vaddr = cp->vaddr.ip;
+ 		s->v4.daddr = cp->daddr.ip;
+ 	}
+-	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
++	if (seq_mask) {
+ 		*(p++) = IPVS_OPT_SEQ_DATA;
+ 		*(p++) = sizeof(struct ip_vs_sync_conn_options);
+ 		hton_seq(&cp->in_seq, (struct ip_vs_seq *)p);
 -- 
 2.53.0
 
