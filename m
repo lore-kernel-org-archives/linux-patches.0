@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039812;
-	b=yjRF/M44IoJLV72VxBWK4fqD18USryDqgeVMMBgnSedfdLMcVLUmKl9th9aB4BEoO4yr
-	 6f+FsYaGiJjKrDqWOtPGy9cRmhQU51CeoRxvPkRFMtljMIurWK6HuZM4ee2AMbeU2dFdq
-	 fP4wSHIGIenLfXJEqPp5w1s/yqtRDKFQPdemqh1Ie/hk9GmDx93I5RfFqqU8n0dPosrEB
-	 rJ+lsk3rWcG7ZXF+I4r9mL6xFgq03s1g3xPdfkNkTo3Lpf/9FszOvHF+VFSluEe+gcj/R
-	 8ZSFlsMXlew9Q1DajLwD/ADNZ8kXW02EWI02YnbdkXcnoRXa3Qy+XvuyNgYJiC9F5bw==
+	t=1795039815;
+	b=jvBUJrMO+3m0c5AIcR8PgJY2OdSqX1x/gNByEJ9d9QQCUPCGz8zJG0RM23SY3aBM5RDZ
+	 g7wiW9cV3ajZWFRzSV9f1RR3hL5v772FzqBrSG4YaKERIboaVKuIiG0RTYPJF4PtUccfN
+	 o5nUCyriAQ2ASFWMn/FH53+2XyVD1vfym+YihClvcynKH4QlhvtOaUPWcmeZPm39DMyQg
+	 xSfMxYhzbXdAQYR6b878aLG+HXmGrAdhTv8w7b23mfIP94RJY4bBTgO87WjUcCHnoCmEC
+	 xtHog4JN9S89Yn2TnYbTWPSlyroW+K+efbs5vZiTfEAKEu2dYScHwSn7XatzisbhxJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rvDguSSdGAhqRfkV7dxzfX6U//+IW5dOog2ZysF86j0=;
-	b=iMXlx6SCdefVbmtvPQo8YJlS5CPE36Hap2DBA5UelVNLq/MMTxZh6/ouAffAZyUC/Hrf
-	 yBCtr+5Ee6NrezoF7cMP4DNSnf4nT9fPYz8NIuNhsMFSr6R1x7DN3p2u/kyLjHfRn2OMe
-	 mh7wLy5/YY0rjZcBeQC4MQWsk+EpraGK7vgo7yRAAJedgLw3emfKxq6AOsBBoVqLFBNl8
-	 llFKcCdGiw/DTnYHoqzfjwYKJzgdF9QEilTwu4GOvQX6uUeS+jyrx1mvzXPgS+aGxmZJ2
-	 a9z/NBOJkW8udcIhBDACjXEbOvpEFIsnYVZTv1csCXuz5SIeqFvEI6cymL1IAzpaUSQ==
+	bh=qiQr79TQQPrt+IgH73Cmp+ZALho881eris5NoetJeyM=;
+	b=K3T6CO+pyLF98J33mwYBGbE76JwK8YuBR+XWXLVTtM2c0Y5sv1U7vD9/CuSlqcjflF3H
+	 /YceDjqpsGIt8zntE0HqJetx/ap65Tj5Y/48LZGIfutxytj+1DIvNpiGlgmKhozUMVLsu
+	 1TozCQWArvzlnzdsZmPZ5FL9jAdUy9UfXGxxKZJZXzqk4C9YbEX9X8q8vfK7Z2OeopeJv
+	 PdeU6daQWN/fmTRIax+R+bigPcrK3eVbrWT3Hk8Lr76NtGCzehuALZgUvDBKYWdNI5bxh
+	 xsfj4vDAi0cWqLElEAqTr4VdK1n3LB3Fz1yJfhblbQmalfND4Irus2PKWjSJ+rL6HMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V25NzZm0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tzecYPn4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558C9606A320;
-	Wed, 18 Nov 2026 22:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3653E606A31C;
+	Wed, 18 Nov 2026 22:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V25NzZm0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1551F000C4;
-	Wed, 18 Nov 2026 22:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tzecYPn4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFAA1F000C4;
+	Wed, 18 Nov 2026 22:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039812;
-	bh=rvDguSSdGAhqRfkV7dxzfX6U//+IW5dOog2ZysF86j0=;
+	s=korg; t=1795039815;
+	bh=qiQr79TQQPrt+IgH73Cmp+ZALho881eris5NoetJeyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V25NzZm0WlSRwQGcLCLkWFyB8yvx/HsYhLaDpURtEofxwFRE6iYDHg9Um7iMz+jFv
-	 kHlyt2kt6/pDh3Z0pbuszPpTZC7oK8IKIgbq1r62bUaIiRHci0lWzIBOPDNu9HEk3D
-	 WYbNY+mHRiiDF071B1El7/LL9AK9TMcrb8riikYI=
+	b=tzecYPn4H5ROotNiPxS5Aw+4+EG3Iky2l/K4eBDcAuRzV9Lhj+r73q5lgbX4//VfJ
+	 vvVLIJ72rSKYDwdnlXH7LMopK9Ug0Hh31lOzX+EPgiZUXielQS3xsM/F2tdfaIPOO3
+	 4rQvh1I5Xt9AdP+y/uTRCP/SixFnHivIT3f8FwQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2227/3318] loadpin: Fix stale KEXEC_VERIFY_SIG reference in documentation
-Date: Wed, 18 Nov 2026 15:47:29 +0100
-Message-ID: <20261118150428.690106818@linuxfoundation.org>
+Subject: [PATCH 6.6 2236/3318] pinctrl: stm32: Declare stm32_pmx_get_mode() as static
+Date: Wed, 18 Nov 2026 15:47:38 +0100
+Message-ID: <20261118150428.943163114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,46 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Antonio Borneo <antonio.borneo@foss.st.com>
 
-[ Upstream commit eb0b0d222a832b6ec851e56d4922a775ac762955 ]
+[ Upstream commit 9b71efc450fdd2f70d59917025da34f8b0e81135 ]
 
-Commit 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG
-and KEXEC_SIG_FORCE") removed CONFIG_KEXEC_VERIFY_SIG but left the
-LoadPin documentation pointing at it. Refer to CONFIG_KEXEC_SIG instead.
+The commit acaa037970f6 ("pinctrl: stm32: Implement .get_direction
+gpio_chip callback") exported the function stm32_pmx_get_mode()
+and the struct stm32_gpio_bank, but these were never used outside
+the file that defines them.
 
-While at it, clean up the grammar of the sentence.
+Declare the function as static, drop it from the include file and
+drop also the struct, not anymore visible outside the file.
 
-Fixes: 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG and KEXEC_SIG_FORCE")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260905013655.58665-1-kmehltretter@gmail.com>
+Signed-off-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Link: https://lore.kernel.org/20250610143042.295376-2-antonio.borneo@foss.st.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 01f20711d044 ("pinctrl: stm32: Drop the nonexistent CONFIG_MACH_STM32MP25 from the STM32MP257 default")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/LSM/LoadPin.rst | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 5 +++--
+ drivers/pinctrl/stm32/pinctrl-stm32.h | 4 ----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/admin-guide/LSM/LoadPin.rst b/Documentation/admin-guide/LSM/LoadPin.rst
-index dd3ca68b5df18..a90fd9dac9606 100644
---- a/Documentation/admin-guide/LSM/LoadPin.rst
-+++ b/Documentation/admin-guide/LSM/LoadPin.rst
-@@ -23,9 +23,9 @@ sysctl allows for easy testing on systems with a mutable filesystem.)
- It's also possible to exclude specific file types from LoadPin using kernel
- command line option "``loadpin.exclude``". By default, all files are
- included, but they can be excluded using kernel command line option such
--as "``loadpin.exclude=kernel-module,kexec-image``". This allows to use
-+as "``loadpin.exclude=kernel-module,kexec-image``". This allows using
- different mechanisms such as ``CONFIG_MODULE_SIG`` and
--``CONFIG_KEXEC_VERIFY_SIG`` to verify kernel module and kernel image while
--still use LoadPin to protect the integrity of other files kernel loads. The
--full list of valid file types can be found in ``kernel_read_file_str``
--defined in ``include/linux/kernel_read_file.h``.
-+``CONFIG_KEXEC_SIG`` to verify kernel modules and kernel images while
-+still using LoadPin to protect the integrity of other files the kernel
-+loads. The full list of valid file types can be found in
-+``kernel_read_file_str`` defined in ``include/linux/kernel_read_file.h``.
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index eace8153c4ab0..df7003ff10123 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -121,6 +121,8 @@ struct stm32_pinctrl {
+ 	spinlock_t irqmux_lock;
+ };
+ 
++static void stm32_pmx_get_mode(struct stm32_gpio_bank *bank, int pin, u32 *mode, u32 *alt);
++
+ static inline int stm32_gpio_pin(int gpio)
+ {
+ 	return gpio % STM32_GPIO_PINS_PER_BANK;
+@@ -808,8 +810,7 @@ static int stm32_pmx_set_mode(struct stm32_gpio_bank *bank,
+ 	return err;
+ }
+ 
+-void stm32_pmx_get_mode(struct stm32_gpio_bank *bank, int pin, u32 *mode,
+-			u32 *alt)
++static void stm32_pmx_get_mode(struct stm32_gpio_bank *bank, int pin, u32 *mode, u32 *alt)
+ {
+ 	u32 val;
+ 	int alt_shift = (pin % 8) * 4;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.h b/drivers/pinctrl/stm32/pinctrl-stm32.h
+index 5e5de92ddd58c..8790fef2d58a2 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.h
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.h
+@@ -65,11 +65,7 @@ struct stm32_pinctrl_match_data {
+ 	bool secure_control;
+ };
+ 
+-struct stm32_gpio_bank;
+-
+ int stm32_pctl_probe(struct platform_device *pdev);
+-void stm32_pmx_get_mode(struct stm32_gpio_bank *bank,
+-			int pin, u32 *mode, u32 *alt);
+ int stm32_pinctrl_suspend(struct device *dev);
+ int stm32_pinctrl_resume(struct device *dev);
+ 
 -- 
 2.53.0
 
