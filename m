@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054494;
-	b=Fq9jZI2kody8DW1sS9jVgXaux+nHEaVYaUKlvJ0+QLICai9TF7RXkiGjnRhlIQtkItD1
-	 Hw9wjXe5d92XvoH3YYa37ozgQgZIwSZqajHqOj57vxpNDF6B8tn6yHEQOFrADO2wOC7JW
-	 7jdTTFt2L3OGtd5aEzNtfOLLQ/WbW915y17Y29wARAZ7lr7MtUW1gDcdfEt6fW5Nxv102
-	 pyCzxiOMyHASamG05xgGSeFNtNYbBGyycBnWBMAKOfoUkTSjyLZNkUZ1AzfXfXdCM0hK7
-	 nEU+5NtAve3TMItEovydLwGy7OTzWk/IMbNmlkQdIZXj7gnFZIJWL4GeGbh2hy745XA==
+	t=1795054497;
+	b=Qy/oXZpqgZQuzeqnc9tbK0QBgcfl9qOTWf3T/yov7z+9eygVUnMPvpL2sT+D/xtZJW2H
+	 pbdDVEfblrYjFqk/D0T9N7yPHY/ESNtz6lNuD1a4aCZC1U3ZZHf4J8mjlkFvjO4+kcGjG
+	 wfoRBpRHpq+AuBKTeVP/RJt8lZ7PV9CxVhZmaYwjRHAs0byfdzQebRstm/m1PwLD2GF1g
+	 V9Ylvve1xkp+xWjGu6YaIbNaD5PdYyeKZoSkiP4LIQj6j4nuQGpn381l7QrNBHyGvudt6
+	 rYGeLYDxfJ0hrqWJ/o7h+KwKs9fnOTIjvFZEq2upy/Iqt8GpuGKaiV6+7hsT8h4uwBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=d0mWlEU8i3Z1NOQURYuY52s2Ca0b95F+9eY18O0b2Q4=;
-	b=YdmwUEHt7Qholvx7Mtl+NCUOeF34315DZmOSR+BW+Sji2YT0aZAcVn8DHdQCjFQ08Vgl
-	 otaftdK/bT6vq4Qa8AVi2VBEFx0KfMMREd0yotrRNpggcCPjFQwKyEb9gTt5HJSrWRtbB
-	 +MsbPjlZ8VUybNhflP3N4p4HYgint4f0MUXVRoj3cwZ4LcD8YWvlvctDvcRs5K73m+aXZ
-	 mehIb96YwJd70ymmePayg7kiK9DLO7d22jTKyp6+fyrbAkHU1V+5uuhjixvI7rJlleEOC
-	 P7448tY3U9cE6JVIUaooPAi2yY+pHmXHWV7tkRQyl9vDGdaRpKnfhCcQVLlTV10fSow==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=+XwjWkS2FoA+Z120GXEOA8rbm2hcIs1kqKBPWZmSDLA=;
+	b=iHDJhFHuYjFPZbA3wE2Ca0n1jXwvpWBgwRjBVPkvFT74B2ghXPti/7PXvCf1gvAp3MWd
+	 76Qam2J3ApQHLMr7h1fRqYOa2353bVFf+E6xwtHlhpeJdAeGwzrzixORsxnyvxzogYhfu
+	 1KOFWjuNraz4ZMqK46fay/jUuCMa7HsmCTgEWtkwc5mqgQteLEPzq2+ET8kXOWJcyIgRW
+	 IwKzGxLGinypGrQwUVZSw7G/TdBk6TBMFfbDMvwlXf/UFrA8VRwIxdNwfMQlRP8Ri/dR6
+	 u5Yq5QDfUdvclqbWl0ScNNQCCVIuIlOBhj6jPxhfJZGqQ4fETUom/V7KOVV3rA6lOEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALiblO8a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuYXvXHy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD20606A31C;
-	Thu, 19 Nov 2026 02:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819F7606A31C;
+	Thu, 19 Nov 2026 02:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ALiblO8a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BFC51F000C4;
-	Thu, 19 Nov 2026 02:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zuYXvXHy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32C31F000C5;
+	Thu, 19 Nov 2026 02:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054494;
-	bh=d0mWlEU8i3Z1NOQURYuY52s2Ca0b95F+9eY18O0b2Q4=;
+	s=korg; t=1795054497;
+	bh=+XwjWkS2FoA+Z120GXEOA8rbm2hcIs1kqKBPWZmSDLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ALiblO8aEUDN+QGVysMe+EnJOKcnhjmAFzEEDN7AsWLEYDcELopdTNMN0H8ED5+gi
-	 FpNQl6lRk2/y9cFFmVRmX8nFaUpmtR3kReFENPj7lduAS/sgLDgadWt5yGEcArN11U
-	 ZGqyR/LV1OuC3XMYOsQw68EpnQ/jh2JhOS8jVbnY=
+	b=zuYXvXHygECTSr+HWgfC7p/ElKqC2yEyMibPk9uA9BVeR9FWx9Hoyu5LX3ueuo9gP
+	 8+W7rTm1n202p8P3RuTAA0r1qsSB0zqKJDGZGlBsOnNpSQ+zX3hIKtOWQaVPN+q+ME
+	 giq2h1VhGq2uWDhFHSFAtN/TA1RXjZaauk7DO5lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1244/2214] ocfs2: cache the mount context for dentry lock callbacks
-Date: Wed, 18 Nov 2026 15:48:40 +0100
-Message-ID: <20261118150101.478553890@linuxfoundation.org>
+Subject: [PATCH 5.15 1288/2214] hwmon: (coretemp) Check for NULL platform device in hotplug callbacks
+Date: Wed, 18 Nov 2026 15:49:24 +0100
+Message-ID: <20261118150103.092060344@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,144 +63,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 5b4696e0bfc358619adaeab25ad35b4979af8331 ]
+[ Upstream commit 0f9c7ed3b5009a037e5533eac03a0d4d45ecf1f0 ]
 
-ocfs2_drop_dentry_lock() drops the inode reference before releasing the
-DENTRY lock.  This lets inode eviction release the local inode and open
-locks before a remote unlink can proceed past the DENTRY lock.
+coretemp_get_pdev() returns NULL when topology_logical_die_id(cpu) is
+negative (such as -ENODEV or -ERANGE from topology_get_logical_id() on a
+firmware/hardware APIC ID mismatch) or exceeds max_zones (for example,
+under asymmetric or anomalous ACPI die topologies where
+topology_max_packages() * topology_max_dies_per_package() is smaller
+than the logical die count).
 
-A DLM callback can still arrive before the DENTRY lock has been dropped.
-ocfs2_get_dentry_osb() obtains the mount context through dl_inode->i_sb,
-which can access a freed inode when the downconvert thread drops the
-last inode reference in its post-unlock callback:
+Commit 6d03bbff456b ("hwmon: (coretemp) Simplify platform device
+handling") pre-allocated zone_devices[0 .. max_zones - 1] during module
+init and dropped the NULL checks on pdev in coretemp_cpu_online() and
+coretemp_cpu_offline(), passing pdev unconditionally to
+platform_get_drvdata(). When coretemp_get_pdev() returns NULL,
+platform_get_drvdata(pdev) dereferences &pdev->dev and triggers a kernel
+NULL pointer dereference.
 
-  Downconvert thread                     DLM callback thread
-  ------------------                     -------------------
-  ocfs2_process_blocked_lock()
-    ocfs2_dentry_post_unlock()
-      ocfs2_dentry_lock_put()
-        ocfs2_drop_dentry_lock()
-          iput(dl->dl_inode)
-          [inode reclaimed after RCU]
-                                         ocfs2_blocking_ast()
-                                           ocfs2_get_dentry_osb()
-                                             dl->dl_inode->i_sb
-          ocfs2_simple_drop_lockres()
+Check for a NULL pdev and return 0 in both coretemp_cpu_online() and
+coretemp_cpu_offline() before calling platform_get_drvdata(). Returning
+0 in coretemp_cpu_online() ignores the unmapped CPU without blocking CPU
+bringup or tearing down valid thermal zones on other dies.
 
-Store the mount context in the DENTRY lock resource's l_priv field and use
-the default mount-context lookup.  Recover the containing dentry lock with
-container_of(), as already done for refcount locks, and remove
-ocfs2_get_dentry_osb().  ocfs2_dismount_volume() shuts down the DLM before
-freeing the mount context, so callbacks can use it without accessing the
-inode.  Preserve the existing iput-before-unlock order to avoid delaying
-local inode and open lock release until after the DENTRY lock is released.
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0012-v9-eeb9084fb29577971229@gmail.com
-Fixes: 8ed6b23709b3 ("ocfs2: revert iput deferring code in ocfs2_drop_dentry_lock")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 6d03bbff456b ("hwmon: (coretemp) Simplify platform device handling")
+Cc: stable@vger.kernel.org
+Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: adjusted insertion context from the housekeeping check to the existing DTHERM feature check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dcache.h  |  5 ++---
- fs/ocfs2/dlmglue.c | 16 ++++------------
- 2 files changed, 6 insertions(+), 15 deletions(-)
+ drivers/hwmon/coretemp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ocfs2/dcache.h b/fs/ocfs2/dcache.h
-index 7f246c5692d82..046ab9a807692 100644
---- a/fs/ocfs2/dcache.h
-+++ b/fs/ocfs2/dcache.h
-@@ -17,9 +17,8 @@ struct ocfs2_dentry_lock {
- 	u64			dl_parent_blkno;
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index d8ab0175f16b1..abc6ab90e9298 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -619,6 +619,9 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 	if (!cpu_has(c, X86_FEATURE_DTHERM))
+ 		return -ENODEV;
  
- 	/*
--	 * The ocfs2_dentry_lock keeps an inode reference until
--	 * dl_lockres has been destroyed. This is usually done in
--	 * ->d_iput() anyway, so there should be minimal impact.
-+	 * The inode reference is dropped before dl_lockres is unlocked.
-+	 * Callbacks must not use it to find the mount context during teardown.
- 	 */
- 	struct inode		*dl_inode;
- 	struct ocfs2_lock_res	dl_lockres;
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index ce61085f3b94b..c8cda79945317 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -56,7 +56,6 @@ struct ocfs2_mask_waiter {
- #endif
- };
++	if (!pdev)
++		return 0;
++
+ 	pdata = platform_get_drvdata(pdev);
+ 	if (!pdata->hwmon_dev) {
+ 		struct device *hwmon;
+@@ -670,6 +673,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 		return 0;
  
--static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_inode_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_file_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_qinfo_osb(struct ocfs2_lock_res *lockres);
-@@ -256,7 +255,6 @@ static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
- };
- 
- static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
--	.get_osb	= ocfs2_get_dentry_osb,
- 	.post_unlock	= ocfs2_dentry_post_unlock,
- 	.downconvert_worker = ocfs2_dentry_convert_worker,
- 	.flags		= 0,
-@@ -307,7 +305,7 @@ static inline struct ocfs2_dentry_lock *ocfs2_lock_res_dl(struct ocfs2_lock_res
- {
- 	BUG_ON(lockres->l_type != OCFS2_LOCK_TYPE_DENTRY);
- 
--	return (struct ocfs2_dentry_lock *)lockres->l_priv;
-+	return container_of(lockres, struct ocfs2_dentry_lock, dl_lockres);
- }
- 
- static inline struct ocfs2_mem_dqinfo *ocfs2_lock_res_qinfo(struct ocfs2_lock_res *lockres)
-@@ -608,13 +606,6 @@ static __u64 ocfs2_get_dentry_lock_ino(struct ocfs2_lock_res *lockres)
- 	return be64_to_cpu(inode_blkno_be);
- }
- 
--static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres)
--{
--	struct ocfs2_dentry_lock *dl = lockres->l_priv;
--
--	return OCFS2_SB(dl->dl_inode->i_sb);
--}
--
- void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 				u64 parent, struct inode *inode)
- {
-@@ -622,6 +613,7 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 	u64 inode_blkno = OCFS2_I(inode)->ip_blkno;
- 	__be64 inode_blkno_be = cpu_to_be64(inode_blkno);
- 	struct ocfs2_lock_res *lockres = &dl->dl_lockres;
-+	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
- 
- 	ocfs2_lock_res_init_once(lockres);
- 
-@@ -650,9 +642,9 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 	memcpy(&lockres->l_name[OCFS2_DENTRY_LOCK_INO_START], &inode_blkno_be,
- 	       sizeof(__be64));
- 
--	ocfs2_lock_res_init_common(OCFS2_SB(inode->i_sb), lockres,
-+	ocfs2_lock_res_init_common(osb, lockres,
- 				   OCFS2_LOCK_TYPE_DENTRY, &ocfs2_dentry_lops,
--				   dl);
-+				   osb);
- }
- 
- static void ocfs2_super_lock_res_init(struct ocfs2_lock_res *res,
+ 	/* If the physical CPU device does not exist, just return */
++	if (!pdev)
++		return 0;
++
+ 	pd = platform_get_drvdata(pdev);
+ 	if (!pd->hwmon_dev)
+ 		return 0;
 -- 
 2.53.0
 
