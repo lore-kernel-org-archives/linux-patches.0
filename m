@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027246;
-	b=PBVnNR9EY3tyxG05F+sGoEPT2PkuD6Cli1d+8tJz2NE8quuwkCPILLzqa0W3I/dYvosZ
-	 lEBj9CWXEcWu20n/x6IBvFPVVLrIaGjhJRDilZxprU0XTXsHQF5o5S5FtdmKV9URHd77N
-	 OcXeZWEVkYis4DfvpgVRgKtM3eu/g7oKa2AMwlwGXF2wh5xxMQNQsLfXHv4D3iJ3KPZ61
-	 yjSvQQadkpFdASjBVRSJzdacKuwZmeqoBmAYAqis9akJR3qcYvOYt9EF/R2pA6IKBSPnt
-	 0QwQ3VFQtHwhqE1ojSybPdsZKN6KEfEiJeG0KtrpY7IQs2VLsN2WXQbBnbcsEogXeXw==
+	t=1795027248;
+	b=UXSyBGt5A8eZfq3/a4Ak8G4ZOSH9RIFduEWsvfnozg4BVCCXkogaQhI5tc3xFQFMTblJ
+	 gA1i5/Wb+Nr6n8mg3jkLNTL23gRuVgpabyP4Mdz+yzFRdQ4ETnMZAM9Ss0rNFpcy5O2Lx
+	 G741/RJ55+8b3UT9if5+wuL4LuyhhTnYwxSHv278+1n0dVF6zd0WwmhIBP/Uzy9aDFXej
+	 AhFWNFewzqAiC1DZ9MRLxWFnIoSDb4qcmHq5OqwYoj51PQ9iv70BPdKfOlOP9ncSTewLu
+	 KoltVtakH2Hdi8OnTj4aZ5O+1XsCuGP6SW/18+cI712tqg6NgVNyaZwsDPQcQ1qol3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027246;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xzt6xp8GELCtUNZaGrZE+/neQTp19ajCZr/4HN/Qau8=;
-	b=clRveKGXC/7Y6ELN0nbLqg2jI5Wbr32b0mwim62SJxf3weEl82u1gxEu+nNeEo/EuKVp
-	 KywEh0mk+iFYmLmvslRavvGuk7cjagNCbkrH+hsOTSlD5uDtbikcU6ssl4ef2KdIcueFB
-	 KejXawuIiO45jKtffJCoa+eHkKAx2nPrmfmIILVRXs55MKV5kIj4362PRsEEfL2teF3uf
-	 zolhHB0r0pTHZ0hgSykgGMBDopRLVO/1Eh1E4TVDVMUvfbTc5gZ6BeNWEtImwCX2i/QYF
-	 GuYXF4XctSpSvhwZRqaBT48ufCHNbbx6yiNacDfj2Ub/u13T9/nuLBxD8c/zZE+Z7Zg==
+	bh=oLZFiWDp/iFyfLDd9CNDSmRAPurDZoux4pEL4vBMX2o=;
+	b=yXZB47Aq7YgCiOuVhs9NjwbI85bmnb9vURqpvYhrwqlrXrXTE3sqI0IIWZZk1XEdTjd5
+	 As/1pUMXl3TgpmTegS7hVB7GZgc7pAJTbHhL3JSUNyU1F3kLu7pR++BTGM3PUgIDtWU1W
+	 NHtprAWWUb5g74PPKQkYOeU3/CM8jtcXcGNPFAZoU6yliFkNsZwOXUkIucOy0/29QqZGP
+	 J/M/6kJXC5uIUJInG2OZvjxOhf/o1rTFwkj3lSFJ9wFEgXacMqLwlT70+namF8vZR3cr1
+	 jPQKfi8q/NiXMW+I3N+amVOt7cu5GozRLserAUNTqESeAxyaRihRHg/HmbGEWCInWdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKkVASCy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S23jUHMu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1877606A32C;
-	Wed, 18 Nov 2026 18:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C1F606DACA;
+	Wed, 18 Nov 2026 18:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKkVASCy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F98C1F000C4;
-	Wed, 18 Nov 2026 18:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S23jUHMu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7641F000C4;
+	Wed, 18 Nov 2026 18:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027245;
-	bh=Xzt6xp8GELCtUNZaGrZE+/neQTp19ajCZr/4HN/Qau8=;
+	s=korg; t=1795027248;
+	bh=oLZFiWDp/iFyfLDd9CNDSmRAPurDZoux4pEL4vBMX2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QKkVASCy4LJOqOzeav2z3djiJ6Cc168KUlouLIZ0sZkMVhcPWBK1yI6qVvUr7jgXn
-	 H+dZDQkiI551DIau3LT5dkkWVjICNd8NPlYAodwrahNeyOfZZWzGk5tZfgDUklsxva
-	 OI2ad879mOIlc8kpWja6yrh1v7dgo4B3oyFj3qSs=
+	b=S23jUHMu1dqHh31oC3TDxAyL1fJhlaTPCSHG0HqW+QX6yvVKg7mT8ws5UJFd+p6pR
+	 go2vZm/vO67CfiP7oTawWlPC+AXwfAxa7ylekEHrugPWbfaj4GF7H5iWG+CFnOL5r9
+	 ld+wKSNN077QYitTT1DbNvo1ePmPZfR3pht7qetQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1720/2151] bpf: Make bpf_skb_adjust_room metadata-safe
-Date: Wed, 18 Nov 2026 15:57:35 +0100
-Message-ID: <20261118150224.491049812@linuxfoundation.org>
+Subject: [PATCH 6.18 1721/2151] bpf: Dont let bpf_skb_adjust_room() use up the MSS
+Date: Wed, 18 Nov 2026 15:57:36 +0100
+Message-ID: <20261118150224.530447494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,70 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit be83105d38ab99737ac0488600efd59ddd57b74c ]
+[ Upstream commit 12d07c38e1b0f79e48a37abd7103194212f2da8c ]
 
-bpf_skb_adjust_room() may push or pull bytes from skb->data. In both cases,
-skb metadata must be moved accordingly to stay accessible.
+When bpf_skb_adjust_room() grows a TCP GSO packet without
+BPF_F_ADJ_ROOM_FIXED_GSO, gso_size is lowered by the number of bytes
+added. Nothing looks at how large it is.
 
-Replace existing memmove() calls, which only move payload, with a helper
-that also handles metadata. Reserve enough space for metadata to fit after
-skb_push.
+gso_size is the size of the segments the peer has sent if the packet
+comes out of GRO, and what the sender has written into the virtio header
+if it comes from a tun device or a packet socket. If it equals len_diff
+the result is 0, and a packet of up to 64 KB is no GSO packet any more. If
+it is smaller, the 16 bit value wraps around.
 
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20251105-skb-meta-rx-path-v4-7-5ceb08a9b37b@cloudflare.com
-Stable-dep-of: 12d07c38e1b0 ("bpf: Don't let bpf_skb_adjust_room() use up the MSS")
+One less than len_diff gives GSO_BY_FRAGS. skb_segment() then takes the
+length of each segment from the frag_list. A packet with more than 64 KB
+of payload gets that far, and one from a tun device has no frag_list:
+
+  BUG: KASAN: null-ptr-deref in skb_segment+0xcf1/0x1a90
+  BUG: kernel NULL pointer dereference, address: 0000000000000070
+   tcp_gso_segment+0x1be/0x9f0
+   inet_gso_segment+0x288/0x740
+   inet_gso_segment+0x288/0x740
+   skb_mac_gso_segment+0x179/0x2e0
+
+What is left must not be less than TCP_MIN_GSO_SIZE either. The stack
+relies on that for the number of segments to fit into gso_segs, see
+commit c27c449d455a ("virtio-net: Ensure that TCP packets don't overflow
+gso_segs").
+
+Refuse to grow a packet that would end up with less, with the error that
+other packets which cannot be adjusted get.
+
+Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017163745.3341787-9-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/core/filter.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index ab49e7eb9d16b..ce126500a52cc 100644
+index ce126500a52cc..ebb502a8469e3 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -3311,11 +3311,11 @@ static void bpf_skb_change_protocol(struct sk_buff *skb, u16 proto)
- 
- static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
- {
--	/* Caller already did skb_cow() with len as headroom,
-+	/* Caller already did skb_cow() with meta_len+len as headroom,
- 	 * so no need to do it here.
- 	 */
- 	skb_push(skb, len);
--	memmove(skb->data, skb->data + len, off);
-+	skb_postpush_data_move(skb, len, off);
- 	memset(skb->data + off, 0, len);
- 
- 	/* No skb_postpush_rcsum(skb, skb->data + off, len)
-@@ -3339,7 +3339,7 @@ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
- 	old_data = skb->data;
- 	__skb_pull(skb, len);
- 	skb_postpull_rcsum(skb, old_data + off, len);
--	memmove(skb->data, old_data, off);
-+	skb_postpull_data_move(skb, len, off);
- 
- 	return 0;
- }
-@@ -3549,6 +3549,7 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
- 	u8 inner_mac_len = flags >> BPF_ADJ_ROOM_ENCAP_L2_SHIFT;
- 	bool encap = flags & BPF_F_ADJ_ROOM_ENCAP_L3_MASK;
- 	u16 mac_len = 0, inner_net = 0, inner_trans = 0;
-+	const u8 meta_len = skb_metadata_len(skb);
- 	unsigned int gso_type = SKB_GSO_DODGY;
- 	int ret;
- 
-@@ -3559,7 +3560,7 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
+@@ -3560,6 +3560,14 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
  			return -ENOTSUPP;
  	}
  
--	ret = skb_cow_head(skb, len_diff);
-+	ret = skb_cow_head(skb, meta_len + len_diff);
++	/*
++	 * The MSS is lowered by len_diff. Leave the least that the stack lets a
++	 * TCP GSO packet have, or gso_segs can overflow.
++	 */
++	if (skb_is_gso(skb) && !(flags & BPF_F_ADJ_ROOM_FIXED_GSO) &&
++	    skb_shinfo(skb)->gso_size < len_diff + TCP_MIN_GSO_SIZE)
++		return -ENOTSUPP;
++
+ 	ret = skb_cow_head(skb, meta_len + len_diff);
  	if (unlikely(ret < 0))
  		return ret;
- 
 -- 
 2.53.0
 
