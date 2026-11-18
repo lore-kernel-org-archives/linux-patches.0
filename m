@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060002;
-	b=XCTTqexYUg6E9rdHelwRPFzKoVJkwOmN9OdIAgtO67DUoQDS76gId15bD9nIZbiBSzKp
-	 ZulU4fzQbiVuQUGK8rcHYfV+VOar5b32wRW6FeW6Pz1b85Iud01gqcR4b3ahMiBaPctcr
-	 2W1w8bNKK8dSzZH0KGSdh+IJNAzaRmY8MSNRqbGnIQnc+iKPJEuheHNdzoDq5yHS0+Ggy
-	 VmBINAIPEGPwXfCO6UjWliuDiIs5WPqMCG3scWoG36SpGVfJLvDi0/+wwipRComE5+zrm
-	 Mr/D4wEk+X/zNQneqOimzyxo8/2XtAHP9sfRStuGWzyXWjDe0TLb3EKoUVD7ulKIpSw==
+	t=1795060005;
+	b=Lht5O/ifIuut7tBvKB1kTg5A1oj2ytGlqGzyDz3mx4KjzHQfmCzakaSrhFd0cubsObsa
+	 o/H3gHWPkhz6cVMdwv829dTfzpR9eE99sPSiZGB/eycKe31T5UXPpv+6AWwLrwO1yXP1A
+	 731VvKPFpB71oEy/0l23vnR9GLJzkfRbR5s8JztsIfkjMneqfPhjH9tRROKqbPGI/jd6t
+	 kQ1wvS89U00EuTjkl1d78kRcDFzdOXCqH6XwmTndtP8irNeB8i2gKzDODPC+oJ81J+xnV
+	 TQRdfDqUXTLSEcsvioAavEXoMBuTEbGwZ2+IQOg7gzSPL6a271zbweixwWw0IUlqPmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060005;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y7MKUmrqjvrhCyp0fDqRbN1uhZ2AJxlSQJGZTXfidhg=;
-	b=Gw/CnpMfe02ptlL6gDEpcQbRPsPj8v/lXQQZGTN5JT6+D+MSpZlq73ApzkBA5IjwuZ71
-	 v4i+2KHzJaep2+ENQpJbfHv8tPwE+tQxh4syXJ23msNLQDjQauig30Sxit6oFQHJqT/7r
-	 r+IVM2weca4q5YFam8U6ZnMi2AhVHla6Ifcs8lZRWKSMF6Jsypa3tdkeIuIYv/a6Fv3RV
-	 5+Bi1lPa7mEt6ZKmJp0Pq2XHWFhHEezsPo34zHl/ZsqRV/sc4mnw6Pudk691uDlDc0PmO
-	 65KU3SSgcpKCA0MvlkYtiOLkcNTHLT4m2WjE18MiGNKTEc1ytQ1+JCS66gm8Xaz1/Cg==
+	bh=S2+8rKi4zls4ddH+HtVbypx0kyU/3uGcz96cD/ZUxbk=;
+	b=RO2JB34hWhlWzLzeSFagq+qXLOHRFQhBxlueZVevGhbQlb0U5c1kuDjdc00Pe4M1w8le
+	 KPMZ4JcE8560y5qq4levIwDsQ49uMZxEFJroZjBQxHMsumP9Kp4BfyFwOIFKf7+SxI5/b
+	 2CcJTfMEsvUH6VeIBhYJbU/vQ/VdodUDIEtPyr07LgMbWzyGTNGxcCse0UdJyEmBAhFAn
+	 F7m1UL7AlS9ajdEREslmOfYJ2TpTGPaXMq5pCeBXwFnW+omM8zJA9/t+7xCK5tA3vMeGe
+	 1zZNLfti0nOenmj3r7Qrs4QTZSUJUkjI0/rVvAIYhwKgD68M8tKLfF8t3fbZX/YuC+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Hl4abRU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeRLkQ6U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685AC606A320;
-	Thu, 19 Nov 2026 03:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43050606A320;
+	Thu, 19 Nov 2026 03:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Hl4abRU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5AE1F000C4;
-	Thu, 19 Nov 2026 03:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeRLkQ6U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F771F000C4;
+	Thu, 19 Nov 2026 03:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060002;
-	bh=Y7MKUmrqjvrhCyp0fDqRbN1uhZ2AJxlSQJGZTXfidhg=;
+	s=korg; t=1795060005;
+	bh=S2+8rKi4zls4ddH+HtVbypx0kyU/3uGcz96cD/ZUxbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Hl4abRUVmzAXN+s9zHDkNunUKIfncqnDNSjezn0wkCzAB12s261Ck5faoEbLq3lr
-	 Hqjh6vVOFVv7lVK24UjlOoNAkh76Myx+ZcJBvHdPqdJthQg/4kRmP86PZrLGyT2rTm
-	 jElhWWisjBE8AO7jdfgtr4tfyuICtTpaMQ6dsJgk=
+	b=YeRLkQ6UM55cflUZ9K2WLRlCZe84hTgnaoxgGAEpO7Z8aqdgMG8uwYrd61NFQbGMN
+	 348ZmduevXZtnVHtqEVMqn5COU8MGtJn7uPwo/tkZnHPWwCshXllkoImjmmRL2zc42
+	 0cwDyg9Y/ZN/AMKlIa3wwBkjXHZTF/+ntNDyq6sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Xu Xin <xu.xin16@zte.com.cn>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1043/1848] drm/amdgpu: finish GPU recovery callbacks before restarting schedulers
-Date: Wed, 18 Nov 2026 15:51:21 +0100
-Message-ID: <20261118150000.996567505@linuxfoundation.org>
+Subject: [PATCH 5.10 1044/1848] mm/ksm: mark migration stores with WRITE_ONCE()
+Date: Wed, 18 Nov 2026 15:51:22 +0100
+Message-ID: <20261118150001.034729696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,80 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 733389cb31e2c55e355410759fdc68afe74a4582 ]
+[ Upstream commit d3863210464f69c18615cbe400d48a6e53e770d4 ]
 
-Run GPU post-reset callbacks, including KFD and display-audio resume,
-before restarting DRM scheduler workqueues. IP hardware initialization
-already happens inside ASIC recovery; this change orders the remaining
-callbacks before new scheduler submissions. Preserve the emergency-stop
-and guity job completition path's callbacks without starting schedulers,
+ksm_get_folio() deliberately samples stable_node->kpfn and folio->mapping
+without taking the folio lock because the KSM folio may be migrated
+concurrently.  folio_migrate_ksm() updates the same state using plain
+assignments.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1f6433e2b264e75c56ae95f187788806201bdbc3)
-Cc: stable@vger.kernel.org
-[ sashal: adapted recovery helper reordering to inline callback code in amdgpu_device_gpu_recover() ]
+The reader can load the old kpfn, then the migrator can store the new
+kpfn, execute smp_wmb(), and clear the old folio's mapping before the
+reader checks that mapping.  Thus the initial kpfn load can overlap its
+update and the subsequent mapping load can overlap the clear, with no
+common lock.  This leaves marked READ_ONCE() accesses racing with plain
+stores.
+
+The kernel reported:
+
+  BUG: KCSAN: data-race in folio_migrate_ksm / ksm_get_folio
+
+  read (marked) to 0xffff8ce401421330 of 8 bytes by task 48 on cpu 3:
+   ksm_get_folio+0x7f/0x2a0
+   ksm_scan_thread+0x1635/0x3330
+   kthread+0x1af/0x1f0
+
+  write to 0xffff8ce401421330 of 8 bytes by task 102 on cpu 1:
+   folio_migrate_ksm+0x6a/0xd0
+   folio_migrate_flags+0x193/0x420
+   __migrate_folio.isra.0+0x162/0x1a0
+   migrate_folio+0x4c/0x70
+   move_to_new_folio+0xd6/0x170
+
+Use WRITE_ONCE() for both stores to pair them with the existing lockless
+reads.  This preserves the existing smp_wmb()/smp_rmb() migration protocol
+and control flow while preventing compiler transformations of the shared
+accesses.
+
+Link: https://lore.kernel.org/20260824112433.191301-1-nicoyip.dev@gmail.com
+Fixes: c8d6553b9580 ("ksm: make KSM page migration possible")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Xu Xin <xu.xin16@zte.com.cn>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted folio-based KSM operations to page-based equivalents ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ mm/ksm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 873346c377787..ea0fd088c97f5 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4646,7 +4646,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	}
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 649fd1326d3d1..b50ace8974b72 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -869,7 +869,8 @@ static inline struct stable_node *page_stable_node(struct page *page)
+ static inline void set_page_stable_node(struct page *page,
+ 					struct stable_node *stable_node)
+ {
+-	page->mapping = (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM);
++	WRITE_ONCE(page->mapping,
++		   (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM));
+ }
  
- 	if (need_emergency_restart)
--		goto skip_sched_resume;
-+		goto post_resume;
- 
- 	/*
- 	 * Must check guilty signal here since after this point all old
-@@ -4658,7 +4658,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	    dma_fence_is_signaled(job->base.s_fence->parent)) {
- 		job_signaled = true;
- 		dev_info(adev->dev, "Guilty job already signaled, skipping HW reset");
--		goto skip_hw_reset;
-+		goto post_resume;
- 	}
- 
- retry:	/* Rest of adevs pre asic reset from XGMI hive. */
-@@ -4686,7 +4686,17 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 			goto retry;
- 	}
- 
--skip_hw_reset:
-+post_resume:
-+	list_for_each_entry(tmp_adev, device_list_handle, gmc.xgmi.head) {
-+		/* unlock kfd: SRIOV would do it separately */
-+		if (!need_emergency_restart && !amdgpu_sriov_vf(tmp_adev))
-+			amdgpu_amdkfd_post_reset(tmp_adev);
-+		if (audio_suspended)
-+			amdgpu_device_resume_display_audio(tmp_adev);
-+	}
-+
-+	if (need_emergency_restart)
-+		goto skip_sched_resume;
- 
- 	/* Post ASIC reset for all devs .*/
- 	list_for_each_entry(tmp_adev, device_list_handle, gmc.xgmi.head) {
-@@ -4721,11 +4731,6 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 
- skip_sched_resume:
- 	list_for_each_entry(tmp_adev, device_list_handle, gmc.xgmi.head) {
--		/*unlock kfd: SRIOV would do it separately */
--		if (!need_emergency_restart && !amdgpu_sriov_vf(tmp_adev))
--	                amdgpu_amdkfd_post_reset(tmp_adev);
--		if (audio_suspended)
--			amdgpu_device_resume_display_audio(tmp_adev);
- 		amdgpu_device_unlock_adev(tmp_adev);
- 	}
- 
+ #ifdef CONFIG_SYSFS
+@@ -2788,7 +2789,7 @@ void ksm_migrate_page(struct page *newpage, struct page *oldpage)
+ 	stable_node = page_stable_node(newpage);
+ 	if (stable_node) {
+ 		VM_BUG_ON_PAGE(stable_node->kpfn != page_to_pfn(oldpage), oldpage);
+-		stable_node->kpfn = page_to_pfn(newpage);
++		WRITE_ONCE(stable_node->kpfn, page_to_pfn(newpage));
+ 		/*
+ 		 * newpage->mapping was set in advance; now we need smp_wmb()
+ 		 * to make sure that the new stable_node->kpfn is visible
 -- 
 2.53.0
 
