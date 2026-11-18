@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023986;
-	b=QAubIy3mefqeH47VGko9x1Q0FfORtyN25Z5FtIN4BL4VrEKX0xaUS/fRbYKBCloWS1qG
-	 BWP4aEPstxeCV3SlRx/H6M5IT7HbnOu+gJkL5uEO703omUc+1mN4m5+Bqs34iMMJd2cc+
-	 GrK7lsnz8Mvb7iqnG23HQy3R8yqmQVAfg0AxP5d6L/eFZYzbCCC1uBGqVm+1QKu2C8ag1
-	 3gh6m+VIFNhy3D5GmgSpqwulXsjbHrrdoqmM0wDLjHzRk4ZKMcVxeM/tV+q1+Dd7p501p
-	 tkQaMwyWoP4u7y6/EZTbkiZ/XDnZV1jyKXc+IKT/gpmNQeV3jA0KqevtnKkPpRxOEDA==
+	t=1795023988;
+	b=lOIDDvJT5GLkg5yS2xb0ThltILxB+PgxcpO0Xras0N/8t4c2SK9JWWA5g+zyg/2mqdyC
+	 IZfVSPpVgAJqaYh7Wo/U0FwCWyF8vTU6938MgsRoRi1+Xt2Kjl9tc23zDjdWLZs1ypT5N
+	 sFSJprDBG8Wu8YnW05BaCr7kqBs/zJxZ3jx78POqmngzSvh+NuBZcstOLpDFoihudHTAk
+	 TCc9FEeZV5G4gzdUon8++6YewsUxEomLeDEZB5ZPVJGZa5BOCMusw7Ysn6GkMxP1V2zfI
+	 YpGRHomyyzyIu5JIbJJGB+E2j9T2yjYByiDUSc80/uGnSsSGGfFolH0ubG+FDGoG+LA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023988;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y/Qi0oIMeewMVfmtZXjxjB3xgDFabMwxPwBo+EFAM3s=;
-	b=q1G31H5B6X0nOQFd07SnLi2S/S3Q/t8bjNiqcivre+RWv3189jng1EIOQX4p/aNNoQyk
-	 7VAZJaG5KFxyd6DKZFtmZrQsJDjdx+FFsvN+6n3pDDSK8Xtl6eXMlNKKbCjcI6lEmB2mZ
-	 cCsfWD7r3Byf1LfRgLO7m76QsizJQtyBS6CI0bociOX+TJ3X3lix5SCtpcVwOtGk8S9P/
-	 3U6Mb4I4NYUkwNr3OyrMRNONmJOZvL6yKUTIfdSpX3mVFsr2D1nrNZzZSWCQBaMBROaAB
-	 Fi/jC3bP1sUgqQiWprCGfOtje+pXwFaGD1Q9saE54fTkhawI/+j/od3qBcaMy31vKag==
+	bh=yw4ho9jWGbxdVqkHGc1E3MmtcXNC9n4ujMNfEd3lNco=;
+	b=v1ryfaPcNNStqW8SGvKVkXEmVgZE9h0C8ujUv/aqI8oZnlxD5UkBrD/O3zmdFpNVGK5t
+	 HF6c0W17WE0tMOeiiU/7YPtj3I7SBy97SNNFoUtEpPQEuWDvb+BWTlB/8EfjtmesrcpAF
+	 hLFfcbiZYsk9KExc5H8r/FPDj1KvP1EZuTrUJZve/+rgX6kqxVtabD03F3u/sjhjj7Gm8
+	 +EPzZeXZ1VlqNhAzg1Di7ocXS/uzDJJgaqBrB8nSyQwBAfIACKB53BU+foFIE8Wb0lH3T
+	 ZIkehipd9xZnD7n52U9lEDB8t7ttk0/I74p+jQmSPN09E7qiFcoTQhK6pfBgIIMJ/dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brMCV5oG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhcJ2YhH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011F0606A320;
-	Wed, 18 Nov 2026 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6561606A32A;
+	Wed, 18 Nov 2026 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=brMCV5oG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2101F000C5;
-	Wed, 18 Nov 2026 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yhcJ2YhH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B951F000C4;
+	Wed, 18 Nov 2026 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023985;
-	bh=Y/Qi0oIMeewMVfmtZXjxjB3xgDFabMwxPwBo+EFAM3s=;
+	s=korg; t=1795023988;
+	bh=yw4ho9jWGbxdVqkHGc1E3MmtcXNC9n4ujMNfEd3lNco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=brMCV5oGQ3eADJAUnT+bW9k3NUuwLZ2S3z3P9R/7vJjLMxPUIMGLeyq0e04D8Ndq9
-	 NQQSYVE3jBUpHSkWKcsvZui/emFzuQwKVQrMO58hLTjhHv64E8KVNqTj1GfS9PoYZ+
-	 hxMpqV8IiZwqSK62D8TNS+yi2NpLOkn+3SGTcv48=
+	b=yhcJ2YhHvzBwLiB99V1aRXUtsxZNXmoqaPlwyYpPTrpgDLFH6hAyuRVAq67ZCe+Z+
+	 956OtJ0ZTFa3rKZVzyGnakzQJCYF9TUaKq0gq6ogE8u3PXV5BlfPu5Y6OVE3VqYosl
+	 q03yw5WKmVVXCM8ROoHzE6G1qdxfPR60RhRHBAS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0523/2151] interconnect: qcom: use 64-bit SMD RPM bus votes
-Date: Wed, 18 Nov 2026 15:37:38 +0100
-Message-ID: <20261118150141.090977257@linuxfoundation.org>
+Subject: [PATCH 6.18 0514/2151] cxl/port: Cleanup dport removal with a devres group
+Date: Wed, 18 Nov 2026 15:37:29 +0100
+Message-ID: <20261118150140.779601501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,82 +70,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 24e7422ce31189502d07279c083646aaca513311 ]
+[ Upstream commit afa2bdba1ee28e21f30fe5391b0273b58b32e0d3 ]
 
-SMD RPM bus bandwidth requests carry a 64-bit bandwidth value.
-The interconnect proxy declared the KVP payload as u32, truncating
-votes above 4 GiB/s and advertising the wrong payload size to RPM.
+In preparation for adding more setup actions like RAS register mapping,
+introduce a devres group to collect all the dport creation / registration
+actions. This replaces the maintenance tedium of open coding several
+devm_release_action() calls in del_dport().
 
-Use a little-endian 64-bit payload and accept a u64 value in the proxy
-API. This has always been the right behavior, even on msm-3.10 and
-32-bit SoCs.
-
-Fixes: be06f8e7425d ("interconnect: qcom: Add interconnect RPM over SMD driver")
-Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260904-topic-icc_rpm_64b_req-v1-1-37e24f1991a3@oss.qualcomm.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Tested-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20260131000403.2135324-4-dan.j.williams@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/icc-rpm.h | 4 ++--
- drivers/interconnect/qcom/smd-rpm.c | 8 ++++----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/cxl/core/port.c | 71 +++++++++++++++++++++++++++++++++++------
+ 1 file changed, 61 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-index f4883d43eae4d..9b1602b2d5c59 100644
---- a/drivers/interconnect/qcom/icc-rpm.h
-+++ b/drivers/interconnect/qcom/icc-rpm.h
-@@ -30,7 +30,7 @@ enum qcom_icc_type {
-  * @resource_type: RPM resource type of the clock resource
-  * @clock_id: index of the clock resource of a specific resource type
-  * @branch: whether the resource represents a branch clock
--*/
-+ */
- struct rpm_clk_resource {
- 	u32 resource_type;
- 	u32 clock_id;
-@@ -164,7 +164,7 @@ int qnoc_probe(struct platform_device *pdev);
- void qnoc_remove(struct platform_device *pdev);
- 
- bool qcom_icc_rpm_smd_available(void);
--int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val);
-+int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u64 val);
- int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, int ctx, u32 rate);
- 
- #endif
-diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
-index 8316c87a2c60f..39831fcf191b3 100644
---- a/drivers/interconnect/qcom/smd-rpm.c
-+++ b/drivers/interconnect/qcom/smd-rpm.c
-@@ -21,7 +21,7 @@ static struct qcom_smd_rpm *icc_smd_rpm;
- struct icc_rpm_smd_req {
- 	__le32 key;
- 	__le32 nbytes;
--	__le32 value;
-+	__le64 value;
- };
- 
- bool qcom_icc_rpm_smd_available(void)
-@@ -30,12 +30,12 @@ bool qcom_icc_rpm_smd_available(void)
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 9990a038d2360..c7b46eeedb093 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1163,6 +1163,57 @@ static void cxl_dport_unlink(void *data)
+ 	sysfs_remove_link(&port->dev.kobj, link_name);
  }
- EXPORT_SYMBOL_GPL(qcom_icc_rpm_smd_available);
  
--int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val)
-+int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u64 val)
++static struct device *dport_to_host(struct cxl_dport *dport)
++{
++	struct cxl_port *port = dport->port;
++
++	if (is_cxl_root(port))
++		return port->uport_dev;
++	return &port->dev;
++}
++
++static void free_dport(void *dport)
++{
++	kfree(dport);
++}
++
++/*
++ * Upon return either a group is established with one action (free_dport()), or
++ * no group established and @dport is freed.
++ */
++static void *cxl_dport_open_dr_group_or_free(struct cxl_dport *dport)
++{
++	int rc;
++	struct device *host = dport_to_host(dport);
++	void *group = devres_open_group(host, dport, GFP_KERNEL);
++
++	if (!group) {
++		kfree(dport);
++		return NULL;
++	}
++
++	rc = devm_add_action_or_reset(host, free_dport, dport);
++	if (rc) {
++		devres_release_group(host, group);
++		return NULL;
++	}
++
++	return group;
++}
++
++static void cxl_dport_close_dr_group(struct cxl_dport *dport, void *group)
++{
++	devres_close_group(dport_to_host(dport), group);
++}
++
++static void del_dport(struct cxl_dport *dport)
++{
++	devres_release_group(dport_to_host(dport), dport);
++}
++
++/* The dport group id is the dport */
++DEFINE_FREE(cxl_dport_release_dr_group, void *, if (_T) del_dport(_T))
++
+ static struct cxl_dport *
+ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 		     int port_id, resource_size_t component_reg_phys,
+@@ -1188,14 +1239,20 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 	    CXL_TARGET_STRLEN)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	dport = devm_kzalloc(host, sizeof(*dport), GFP_KERNEL);
++	dport = kzalloc(sizeof(*dport), GFP_KERNEL);
+ 	if (!dport)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	/* Just enough init to manage the devres group */
+ 	dport->dport_dev = dport_dev;
+ 	dport->port_id = port_id;
+ 	dport->port = port;
+ 
++	void *dport_dr_group __free(cxl_dport_release_dr_group) =
++		cxl_dport_open_dr_group_or_free(dport);
++	if (!dport_dr_group)
++		return ERR_PTR(-ENOMEM);
++
+ 	if (rcrb == CXL_RESOURCE_NONE) {
+ 		rc = cxl_dport_setup_regs(&port->dev, dport,
+ 					  component_reg_phys);
+@@ -1248,6 +1305,9 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 
+ 	cxl_debugfs_create_dport_dir(dport);
+ 
++	/* keep the group, and mark the end of devm actions */
++	cxl_dport_close_dr_group(dport, no_free_ptr(dport_dr_group));
++
+ 	return dport;
+ }
+ 
+@@ -1474,15 +1534,6 @@ static void delete_switch_port(struct cxl_port *port)
+ 	devm_release_action(port->dev.parent, unregister_port, port);
+ }
+ 
+-static void del_dport(struct cxl_dport *dport)
+-{
+-	struct cxl_port *port = dport->port;
+-
+-	devm_release_action(&port->dev, cxl_dport_unlink, dport);
+-	devm_release_action(&port->dev, cxl_dport_remove, dport);
+-	devm_kfree(&port->dev, dport);
+-}
+-
+ static void del_dports(struct cxl_port *port)
  {
- 	struct icc_rpm_smd_req req = {
- 		.key = cpu_to_le32(RPM_KEY_BW),
--		.nbytes = cpu_to_le32(sizeof(u32)),
--		.value = cpu_to_le32(val),
-+		.nbytes = cpu_to_le32(sizeof(u64)),
-+		.value = cpu_to_le64(val),
- 	};
- 
- 	return qcom_rpm_smd_write(icc_smd_rpm, ctx, rsc_type, id, &req,
+ 	struct cxl_dport *dport;
 -- 
 2.53.0
 
