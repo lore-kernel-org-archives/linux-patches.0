@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038091;
-	b=zAgOPxK87nQOlq3Iin5dY2Rd1/JaPxZZN6xpUXm/ufy0GHmCUBXHjBqRmErTttvXv8eX
-	 nc8bCra2HEFEnfNPsYf8aOEszGjmm9YOHganB9yux6sRCsGzW9hECvWlEkD0sdzmj1DYu
-	 hjsZutzjhXegT67HBPClDnAfezLPKTsl1P8hcZSx6ZX359bQLfjHvlFLTr/6bk067QceQ
-	 TWv3b6Kd9iGlvpGI/sghimvMvNTxbdnzxoee3qD21IBlnc6NFQDC0gz1G4Hd7HExqhOr0
-	 ojFEk257yD8dOnyD1xMia4I5NFsJ2SRBIP15wySCGD8jA7Y6UkOpNGCXIlfyoVdGuMA==
+	t=1795038094;
+	b=ppb44wOHHUwywS1lsHsnMtjwCudwKLWDxckcyqU9OeCE/6rDw3S0A6fw0SFcuhBV+Mib
+	 wWhJyw4/bpPQkkPV+DedzRjbkMJeakmkp+EUCaSFB1ODg7YstlWQqywBa7Al7ztjbiE/V
+	 GgIgsFAZgjDP7a39yjoQQDycYWT6nthhFwDzgNVH95J1UY0hI0EYCW3exkQfBb+aurasJ
+	 lj2DJetz42EtQSGwr6/Ikt8DT9nKwd6/81tFfaBqIc6xkkA9gF8Ul7LmBm+dboLbSYJ5S
+	 Gb8eu5h4e2574P9G0fe4R4zu2SJ+89JnQH/bo57Q4m+UF/OVHCYOcWT1mmo2kAT/8ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mVoH1cXI5bpWPtr7EIpKDOJ0ZiaQPUTL3mDSg2i0BSc=;
-	b=SPqGP7wMvlNmYZyPxT1yy+MFJZWU4CJ9rAUfIjEXyzT2IQaSItlCL9X1BLdYKJTzkzFG
-	 XHBKVWdDi7wAYtFOdAO9SQTZ2N/4FpV6HKPl8aGHUhRRlg3tI7n2NAQZLwySyUWyyYn12
-	 m45sWxN63yJ1PrdX0h3to8nexz5G1L50j7OhhqPo5d5z521iYCD/YD+c7dGtMMPbJvvDz
-	 T8LP2FbcHiZjmDTOldxOwNuf7qyY8O3njMLOiYYeek8pDGm502LBriB0zhU1E9+TNFNm2
-	 cPwjy/SxNskN14R2lqKeeTz/EYKWIHzvJCVKIWrRt5k7HlA5sqtCBoHd5Kv3qqaBZwQ==
+	bh=Us/YUzNi4CeHaDeGxk8nErn1cCcvWjgrsdFhSAXbYD4=;
+	b=oFD0nUNgLUkv5z29i5RbfncNLIp483SOkvo3ZfEMg6vp+JTPq5yrhv9/JZCOoV8dh3dE
+	 eWiStAmhngSedvapLnoOnX+85OWJB2onlFtTeDkJEfcypqh57yOsFLyLxj0me2XCSGSl/
+	 7LWl3mBXWCxIpj9+8AtTQQwlZZvTAsJmfkcdq3hnhh9JOkIWqd/BCdnZ8BaKlW4KmyiwV
+	 tX/JlletGFQVY8835HKyKkgf2sa7TqPVg9PNXHO9yJ6c3f/6Qv+aMsyn0pSEnr+OtAjY0
+	 pQzlZC4DR4/zwgJsiNUebB0Th3pnFDvPb1DrNYhvMkWQe5839bzx8h17R1CEqvWTOGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lEq2gpMD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=drmBtrU6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E089606A31C;
-	Wed, 18 Nov 2026 21:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35374606A320;
+	Wed, 18 Nov 2026 21:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lEq2gpMD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4691F000C4;
-	Wed, 18 Nov 2026 21:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=drmBtrU6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2AF1F000C4;
+	Wed, 18 Nov 2026 21:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038091;
-	bh=mVoH1cXI5bpWPtr7EIpKDOJ0ZiaQPUTL3mDSg2i0BSc=;
+	s=korg; t=1795038093;
+	bh=Us/YUzNi4CeHaDeGxk8nErn1cCcvWjgrsdFhSAXbYD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lEq2gpMDLfMRU6CzweAq13XPDQKHN/zpNJkzibyqKTr7qaaROZXDdZu9E3vv6Sdya
-	 67TRVSWHdbWcZh5+Qxs0yO5VMX4BSKHHMURydRT1grKSmq1LGUlxP/4wjtNVIKpQ6m
-	 1r5fxJlwqK+EAUfJCGJ4RUXLSfXzX+zGhg0YzobQ=
+	b=drmBtrU60xaM2nBGEugjWTvDPHjUk/JoaJzNmu18lbWJnSs2vCrzsfzSX1NIPrUL5
+	 VoZRutn1x/X85eEG8CFl8EbiM5MwWGRBiPB+xiYoKkQC9faBTgDKtQCrOjJ8uZSm6Q
+	 TfIIkz12Ru0Zds2tIQGyl9Pa3OF7gHQuctBVlRz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1623/3318] ALSA: usb-audio: Protect Roland control activation
-Date: Wed, 18 Nov 2026 15:37:25 +0100
-Message-ID: <20261118150410.422883082@linuxfoundation.org>
+Subject: [PATCH 6.6 1624/3318] ocfs2: restrict OCFS2_INVALID_SLOT suballoc slot to system inodes
+Date: Wed, 18 Nov 2026 15:37:26 +0100
+Message-ID: <20261118150410.451818237@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,86 +74,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 19b42c1fff7f220a6346c614d79ce1bda6d95b40 ]
+[ Upstream commit 25bf9e549360b656a6763232e0e9e58a00c3aff7 ]
 
-The USB MIDI driver changes the Roland MIDI Input Mode control's access
-flags directly from the rawmidi open and close paths.  These changes are
-not protected by the ALSA control core and the corresponding notifications
-can race with control access.
+Patch series "ocfs2: validate suballoc slot and bit of metadata blocks", v3.
 
-Use snd_ctl_activate_id() so that the control core updates the access flags
-and sends the notification under its lock.  Release the USB MIDI mutex
-before calling it because the control write path holds controls_rwsem while
-roland_load_put() takes the USB MIDI mutex.
+The ocfs2 metadata validators trust the on-disk suballoc slot and bit
+without checking them against the slot range of the mounted filesystem and
+the capacity of the block group bitmap.  A corrupted image can carry
+OCFS2_INVALID_SLOT or another out-of-range slot, or a suballoc bit beyond
+the bitmap, and once the corresponding inode, extent block, xattr block,
+dir index root or refcount block gets freed, the bad value goes straight
+into ocfs2_get_system_file_inode() or _ocfs2_free_suballoc_bits() and hits
+a BUG_ON() or runs off the end of local_system_inodes[].
 
-Keep the state transition and alternate-setting change under the USB MIDI
-mutex; rawmidi's open mutex serializes the enclosing open and close paths.
+This series rejects such values at read time, in the existing validators,
+so corrupted objects fail with -EROFS (and a read-only remount) instead of
+crashing:
 
-Fixes: 96f61d9ade82 ("sound: usb-audio: allow switching altsetting on Roland USB MIDI devices")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260929141726.2166899-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: adapted scoped mutex locking to the existing mutex_lock()/mutex_unlock() sequence ]
+  patch 1 restricts OCFS2_INVALID_SLOT dinodes to system inodes,
+        completing fe7a283b3916 ("ocfs2: add suballoc slot check in
+        ocfs2_validate_inode_block()"), and turns the "system file
+        state is ambiguous" BUG_ON() in ocfs2_read_locked_inode() into
+        an ocfs2_error();
+  patch 2 rejects oversized dinode suballoc bits;
+  patch 3 validates the suballoc slot and bit of xattr and dir index
+        blocks;
+  patch 4 validates the suballoc slot and bit of extent and refcount
+        blocks.
+
+The checks only enforce what the kernel and mkfs.ocfs2 already write: a
+valid slot from meta_ac->ac_alloc_slot and a bit within the block group
+bitmap, with system inodes carrying OCFS2_INVALID_SLOT plus
+OCFS2_SYSTEM_FL and extent blocks using slot 0.  Nothing changes for
+healthy filesystems.
+
+Each new check was exercised under QEMU by corrupting the field in
+question with an out-of-range value; with the series applied the access
+fails with -EROFS and the filesystem remounts read-only instead of hitting
+the BUG_ON().
+
+This patch (of 4):
+
+ocfs2_validate_inode_block() currently permits i_suballoc_slot to be
+OCFS2_INVALID_SLOT for any dinode.  Only system inodes created by
+mkfs.ocfs2 are allocated from the global allocator and thus legitimately
+carry this value; regular inodes are always allocated from a per-slot
+suballocator and hence must have a valid slot.
+
+If a corrupted regular inode with OCFS2_INVALID_SLOT is accepted,
+ocfs2_remove_inode() will pass the slot to ocfs2_get_system_file_inode()
+and get_local_system_inode() will hit BUG_ON(slot == OCFS2_INVALID_SLOT)
+when the inode is deleted.  This can be triggered by an unprivileged user
+unlinking such a corrupted file.
+
+Reject OCFS2_INVALID_SLOT for non-system dinodes during validation, while
+still accepting it for system inodes.  Note that a crafted dinode carrying
+OCFS2_SYSTEM_FL passes the check above, yet a plain lookup of it still
+used to BUG() in ocfs2_read_locked_inode() ("system file state is
+ambiguous").  Since i_flags comes from disk, handle that mismatch with
+ocfs2_error() instead of BUG_ON() as well.
+
+Link: https://lore.kernel.org/20260901125221.1634686-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20260901125221.1634686-2-joseph.qi@linux.alibaba.com
+Fixes: fe7a283b3916 ("ocfs2: add suballoc slot check in ocfs2_validate_inode_block()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adjusted context around the suballoc slot check in ocfs2_validate_inode_block() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ fs/ocfs2/inode.c | 37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index 156b16e48373f..0758422e949bd 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1152,7 +1152,9 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
- 			  int open)
- {
- 	struct snd_usb_midi *umidi = substream->rmidi->private_data;
--	struct snd_kcontrol *ctl;
-+	struct snd_ctl_elem_id ctl_id;
-+	bool activate_ctl = false;
-+	bool active;
+diff --git a/fs/ocfs2/inode.c b/fs/ocfs2/inode.c
+index 01e33782f4f6e..213cc1ebc14b8 100644
+--- a/fs/ocfs2/inode.c
++++ b/fs/ocfs2/inode.c
+@@ -573,14 +573,18 @@ static int ocfs2_read_locked_inode(struct inode *inode,
+ 	fe = (struct ocfs2_dinode *) bh->b_data;
  
- 	down_read(&umidi->disc_rwsem);
- 	if (umidi->disconnected) {
-@@ -1164,11 +1166,9 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
- 	if (open) {
- 		if (!umidi->opened[0] && !umidi->opened[1]) {
- 			if (umidi->roland_load_ctl) {
--				ctl = umidi->roland_load_ctl;
--				ctl->vd[0].access |=
--					SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--				snd_ctl_notify(umidi->card,
--				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
-+				ctl_id = umidi->roland_load_ctl->id;
-+				activate_ctl = true;
-+				active = false;
- 				update_roland_altsetting(umidi);
- 			}
- 		}
-@@ -1181,15 +1181,15 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
- 			snd_usbmidi_input_stop(&umidi->list);
- 		if (!umidi->opened[0] && !umidi->opened[1]) {
- 			if (umidi->roland_load_ctl) {
--				ctl = umidi->roland_load_ctl;
--				ctl->vd[0].access &=
--					~SNDRV_CTL_ELEM_ACCESS_INACTIVE;
--				snd_ctl_notify(umidi->card,
--				       SNDRV_CTL_EVENT_MASK_INFO, &ctl->id);
-+				ctl_id = umidi->roland_load_ctl->id;
-+				activate_ctl = true;
-+				active = true;
- 			}
+ 	/*
+-	 * This is a code bug. Right now the caller needs to
+-	 * understand whether it is asking for a system file inode or
+-	 * not so the proper lock names can be built.
++	 * The caller must know whether it is asking for a system file inode
++	 * or not so the proper lock names can be built.  Since i_flags comes
++	 * from disk, a mismatch is filesystem corruption instead of a code
++	 * bug, so handle it with ocfs2_error() rather than BUG_ON().
+ 	 */
+-	mlog_bug_on_msg(!!(fe->i_flags & cpu_to_le32(OCFS2_SYSTEM_FL)) !=
+-			!!(args->fi_flags & OCFS2_FI_FLAG_SYSFILE),
+-			"Inode %llu: system file state is ambiguous\n",
+-			(unsigned long long)args->fi_blkno);
++	if (!!(fe->i_flags & cpu_to_le32(OCFS2_SYSTEM_FL)) !=
++	    !!(args->fi_flags & OCFS2_FI_FLAG_SYSFILE)) {
++		status = ocfs2_error(osb->sb,
++				     "Inode %llu: system file state is ambiguous\n",
++				     (unsigned long long)args->fi_blkno);
++		goto bail;
++	}
+ 
+ 	if (S_ISCHR(le16_to_cpu(fe->i_mode)) ||
+ 	    S_ISBLK(le16_to_cpu(fe->i_mode)))
+@@ -1597,8 +1601,23 @@ int ocfs2_validate_inode_block(struct super_block *sb,
  		}
  	}
- 	mutex_unlock(&umidi->mutex);
-+	if (activate_ctl)
-+		snd_ctl_activate_id(umidi->card, &ctl_id, active);
- 	up_read(&umidi->disc_rwsem);
- 	return 0;
- }
+ 
+-	if (le16_to_cpu(di->i_suballoc_slot) != (u16)OCFS2_INVALID_SLOT &&
+-	    (u32)le16_to_cpu(di->i_suballoc_slot) > OCFS2_SB(sb)->max_slots - 1) {
++	/*
++	 * Only system inodes created by mkfs.ocfs2 are allocated from the
++	 * global allocator and thus legitimately carry OCFS2_INVALID_SLOT.
++	 * Regular inodes are always allocated from a per-slot suballocator.
++	 * If a regular inode with OCFS2_INVALID_SLOT was accepted here,
++	 * deleting it would pass the slot to get_local_system_inode() via
++	 * ocfs2_remove_inode() and trigger BUG_ON(slot == OCFS2_INVALID_SLOT).
++	 */
++	if (le16_to_cpu(di->i_suballoc_slot) == (u16)OCFS2_INVALID_SLOT) {
++		if (!(le32_to_cpu(di->i_flags) & OCFS2_SYSTEM_FL)) {
++			rc = ocfs2_error(sb,
++					 "Invalid dinode %llu: suballoc slot %u for non-system inode\n",
++					 (unsigned long long)bh->b_blocknr,
++					 le16_to_cpu(di->i_suballoc_slot));
++			goto bail;
++		}
++	} else if ((u32)le16_to_cpu(di->i_suballoc_slot) > OCFS2_SB(sb)->max_slots - 1) {
+ 		rc = ocfs2_error(sb, "Invalid dinode %llu: suballoc slot %u\n",
+ 				 (unsigned long long)bh->b_blocknr,
+ 				 le16_to_cpu(di->i_suballoc_slot));
 -- 
 2.53.0
 
