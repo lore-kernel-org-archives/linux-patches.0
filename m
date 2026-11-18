@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040700;
-	b=2xzWCEi9me+0R5yZMFCAkvdnQzIXosy6vnDhz4ADnH119tyAAI0sFtJlGg3LVYan27Vv
-	 vlAsN9O7RyS8onyB49XwBkNp6AY6aGOUu1Kd0X1O5GK+YlnMuO64FcEixHLMQ6ZXD8nSe
-	 xOLvkJlysfRZQIUdUgtegKW4aIadvHUw1hpv2+4uZCd4FCm+Lr+f+S8sdICO0wNmyJIUw
-	 ytK5Pwwn5XbDDmEY9cdX+EoZT/WP+nFPwZhJHGsHpZCcYisd/TCHtQU/OvsL5pEkv8ul8
-	 aYHmmw0LB/NBp5GrFTIWe9cv3JY9MpulNbaxI08Rap74QJmzojopcP827WaS9OMA7XA==
+	t=1795040703;
+	b=qNfot4SRXJ9Tee7XNV+lDC5Db5X5kHjJVAvP43a2Opq6PwELRdQC7ymAtNQofyIv+zfy
+	 QctP3cdhkxWCbj6h68LhUSiSVYFaCwfeXCkLh+oVCYR4J0WtfjuNKOZ4DoFB/jd0oj5OD
+	 pkN6mjuT+9YaLvU1Z+TXBuX7n6kAOzVA4ewZXdRXQxYSSLmbwlDWaxwAECmf11cLsxEks
+	 9XdUdhnSgEJSSFa1rK/Dc/+8L/DY++ALDhTIy5oJ0Gb/VHc+lEJlfHCmkzkkzqVMv8sRG
+	 uHql50ZpQXjGrDiMJN/OTzPiHcVJPKwv3q2//85kRiZMS17lMzLzuo7kqy4+CV0pGuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040700;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040703;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VOrQzDN41+ROHITB8IwYcFJmGSyJhLIWDKPSlT36hDc=;
-	b=i9Gx71DsHdzRSHYMAESHBAiKnjYCf8olCgGuCCOOr9nhcjVXu49GbNRplixwn5Kttpx3
-	 wZBjVOr3KA6rJ0ofdu8fo+VZPnSimkAPA9ON57Tal/TTm7Tw98EZoFi4hKRrmM0qD/aJk
-	 8XwQJoM23BD7ivRrRPoqp9KZOL46a+lsl2yxeZQQcOltB+hBEjn/h5EVbSBCPAFtYeT4X
-	 /EGRch6cd2kv+PxHdqTxtyzi93w1/BwBfY1msHJQa2bOQH8ys768NeNqVZj2H6cq0XPO5
-	 imdv+i75X4fvAESOmWPpHSVy9il59YsUQQ7+UAT3pScD0DviGxSbUpqCrHWygEFXaPg==
+	bh=7S0n4BAQTSjad30nkNAbYOMqNlhHDZNNAEwSc6uwNNk=;
+	b=2XgBj2wuVDq92sV9BZCzrjWyu7KLxOQUXYyN3EIB5vfdO6MVoeoybyT5J7bZi/h7qE5J
+	 qm9PSKy5PhOV+dV/EarEJz2pJm3UATeUAfb93t5TbmrNXo4uPo3eoVrQbTF32sVxUq4ZW
+	 uEmm6bd/lJ0m1oX+hDuJGKGWuDf196xHN1QtzFB3aya3uXCGJVr4fHtDtjRZcQPTNH0oE
+	 4det1ovcS/hm4FddMkv2XXeCbizvdsaYGu/GrEyIgt+G88z8OJQX/9iLjVD4jKWMmnYpg
+	 cwT/tutgq1/2rsDi/647JhmV9eMQ6ruVhK5dtkRjsKj2d+FSg/lasSf5xSj3Jvb6B7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qc+luikn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vn5cU6BU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F75A606A32C;
-	Wed, 18 Nov 2026 22:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFEF606A31C;
+	Wed, 18 Nov 2026 22:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qc+luikn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801821F000C4;
-	Wed, 18 Nov 2026 22:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vn5cU6BU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5131F000C4;
+	Wed, 18 Nov 2026 22:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040700;
-	bh=VOrQzDN41+ROHITB8IwYcFJmGSyJhLIWDKPSlT36hDc=;
+	s=korg; t=1795040702;
+	bh=7S0n4BAQTSjad30nkNAbYOMqNlhHDZNNAEwSc6uwNNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qc+luiknanbUvZN67ljbcSwk01IiicTgf+EE2PGLI2msgmLC4XV0s2rGbm4Mvahb7
-	 Wey30VeU2sli6WR7lQvmeIxIMZ8InNW5c60dZkfZG6POl6nY/J+XPGJ6GIgljJUvY9
-	 5b0Nshz61OYDsPSN9jpHCL5FacMMe+eeT6pReDnI=
+	b=vn5cU6BU9Fof+TC6xNv6Ycl110+dcHChPGJMqdXgxBhGOc/Jf/Cghgp7tdI5otXEw
+	 cI/YAjJq3R7X3IaZQhe2OH5T9YiDrK0FP63tAkFQdCquinXwD9jOzB409dCI3Ub2ya
+	 FCUeUdfZfAtOfga+CjAc0+qmop5Vk0QliEBu5oQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2551/3318] spi: fsl: switch to managed controller allocation
-Date: Wed, 18 Nov 2026 15:52:53 +0100
-Message-ID: <20261118150437.816389679@linuxfoundation.org>
+Subject: [PATCH 6.6 2552/3318] spi: fsl: unmap immr_spi_cs on remove
+Date: Wed, 18 Nov 2026 15:52:54 +0100
+Message-ID: <20261118150437.844318292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,82 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 6afe041c2ce9068b2b6c64eddb5537911752050c ]
+[ Upstream commit af1d882d421de504a1e5fac92eb06947b6cbdd8f ]
 
-Switch to device managed controller allocation to simplify error
-handling and to avoid having to take another reference during
-deregistration.
+of_fsl_spi_remove() does not unmap pinfo->immr_spi_cs after a
+successful probe when CONFIG_FSL_SOC is enabled and fsl,spisel_boot
+causes of_fsl_spi_probe() to map it with ioremap(). The probe error
+path already performs the matching iounmap().
 
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260429091333.165363-12-johan@kernel.org
+Retrieve pinfo from the platform data and call iounmap() when
+pinfo->immr_spi_cs is present, pairing normal removal with the mapping
+established by of_fsl_spi_probe().
+
+Fixes: 0f0581b24bd0 ("spi: fsl: Convert to use CS GPIO descriptors")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260924112329.1566051-2-lgs201920130244@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: af1d882d421d ("spi: fsl: unmap immr_spi_cs on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-spi.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/spi/spi-fsl-spi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
-index 8c4db35377903..0c0d1b89c9d6a 100644
+index 0c0d1b89c9d6a..d4c8e124dc17b 100644
 --- a/drivers/spi/spi-fsl-spi.c
 +++ b/drivers/spi/spi-fsl-spi.c
-@@ -536,7 +536,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
- 	u32 regval;
- 	int ret = 0;
- 
--	host = spi_alloc_host(dev, sizeof(struct mpc8xxx_spi));
-+	host = devm_spi_alloc_host(dev, sizeof(struct mpc8xxx_spi));
- 	if (host == NULL) {
- 		ret = -ENOMEM;
- 		goto err;
-@@ -560,7 +560,7 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
- 
- 	ret = fsl_spi_cpm_init(mpc8xxx_spi);
- 	if (ret)
--		goto err_cpm_init;
-+		goto err;
- 
- 	mpc8xxx_spi->reg_base = devm_ioremap_resource(dev, mem);
- 	if (IS_ERR(mpc8xxx_spi->reg_base)) {
-@@ -626,8 +626,6 @@ static struct spi_controller *fsl_spi_probe(struct device *dev,
- 
- err_probe:
- 	fsl_spi_cpm_free(mpc8xxx_spi);
--err_cpm_init:
--	spi_controller_put(host);
- err:
- 	return ERR_PTR(ret);
- }
-@@ -706,13 +704,9 @@ static void of_fsl_spi_remove(struct platform_device *ofdev)
+@@ -703,10 +703,18 @@ static void of_fsl_spi_remove(struct platform_device *ofdev)
+ {
  	struct spi_controller *host = platform_get_drvdata(ofdev);
  	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
++#if IS_ENABLED(CONFIG_FSL_SOC)
++	struct fsl_spi_platform_data *pdata = dev_get_platdata(&ofdev->dev);
++	struct mpc8xxx_spi_probe_info *pinfo = to_of_pinfo(pdata);
++#endif
  
--	spi_controller_get(host);
--
  	spi_unregister_controller(host);
  
  	fsl_spi_cpm_free(mpc8xxx_spi);
--
--	spi_controller_put(host);
++#if IS_ENABLED(CONFIG_FSL_SOC)
++	if (pinfo->immr_spi_cs)
++		iounmap(pinfo->immr_spi_cs);
++#endif
  }
  
  static struct platform_driver of_fsl_spi_driver = {
-@@ -758,13 +752,9 @@ static void plat_mpc8xxx_spi_remove(struct platform_device *pdev)
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
- 
--	spi_controller_get(host);
--
- 	spi_unregister_controller(host);
- 
- 	fsl_spi_cpm_free(mpc8xxx_spi);
--
--	spi_controller_put(host);
- }
- 
- MODULE_ALIAS("platform:mpc8xxx_spi");
 -- 
 2.53.0
 
