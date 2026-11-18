@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041219;
-	b=QsQcppWqwxLJDas1DnwjDy+I01ZpWihY7VHEiL+b2unPs+YwC81mcX7b/fus7erRJe2v
-	 yQs0SVnRsXO0/DS822o5QJZa4Ncm88ok5UodNec3DeNfgqp7pXfl1X4AxPgj22Wuj+LmQ
-	 x1mb35vjJauoGzxEtI9O1wbUHB1aY9czVeOjZiLAk0ErJwIJiQU8fqn7agjETDT2AATHj
-	 kYqKaXI2tdwrpFrlhxaymu8BJn0nK377x55LWhz8YVkHvc6UAiCZL5WplC9YHUn/aq1u5
-	 RnG5EHvdGuiuyXQ9rXR1wH4sgSTcHztibHKxk8JzybCMxPuIAemysqCO75DupWBeyjQ==
+	t=1795041222;
+	b=pna2X6Q78uVqyxBgp4AUFQ8xlFI8fHTSmcd8xMYbLLAoob3uHn8JJ76EMp6+FXIhff0g
+	 xtWAirqgOIKqxTOQsNKbKUd27sBaWwDNXHnThcIE3Zdv73AanhaRFk1Efffeh/TXceZyn
+	 WdA93vRIoFpm07k7fIzyTY9r+ne28b90n/9vyIMyGryjXAObQy9EmkMEYcdxFAIaTQEk7
+	 RfUan+T4QSiuI7o31D4GnD0xVg/6L3QvjZDvW9dFuJ1ichSLrCUFAJ/j1FFSmVvA6Nb2E
+	 s2dPigGH9szENXsbbCQyvYR1gxMOrI9H0QmTOaTaUnvqyUe5hmfz1bpVnWMNe2QcxqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041222;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zzdvg9rO5QMOi0/Wj8bLDxRlDgAtF/RRFfUgA0j3jpM=;
-	b=CkzzvZnoPfcpwncV8AFTSYbOuBaSR7YKa5K/av43xH/obZZAZGK+4bsccszpKRxkSvCY
-	 5aPzYIkQrcjaABrO8Gkd6LZjb30Ax90MoNqOcIA5x3DA30VTfvMVR+by+QLAIQGBIU9Qn
-	 0Bw4NL7gIu/OFZ3Nytp5iz5Mm6+ngD/dZT6TELa4GzrtMrlcnGe6vtEbz/W1m4afCKDeB
-	 uNMt/1Wrp6lG6CQ8KJVr+L+Bq2aInQIYyrWPXzJf1wZfoNu/OktI2KWvlhI6JZF9JuLmR
-	 RgYSelYAtj4feGw4QlAW2qioRGOMAQcbrqU+N5QAp8jv8Fm1lhdjBQlYact0E4PBuJA==
+	bh=Od1Di+MHSaKImb5FrRmfG2/qF8yyNhK+jbQLSxAHIRw=;
+	b=q7iCzz9rdnoJVhinKkxmWx5FHxYq6TBt2dZ0j1RTHVCGlD3JscagOntk9wq6GPLBzsiV
+	 cC4RiUjugd453HDNii+zzUqN9zGs8tsaVAMFZ5Ylvrq6nALr1IO9iptW35UOpbTYfvRs/
+	 C3FzBuKokFopWFj15C5vYu/IaOCPo4ITrWdqZgd8wt8NIfaJmSBtXvu5vF6+uVUbdyGXL
+	 itx/KEL2WmOzyKVwsNIzKDOl/GtIUFBt9EVej+6vYCer933zj9jMWEVvZ6a8hvjFftlg4
+	 g2t7ZAqyOREjjQ7320/NZz5I0OX5IzNjVvmg5zEpGmFdZoFoA1wZMiv9dkJ/Up/HmyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nVpSY/Io";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E47BsJIe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EB5606A32A;
-	Wed, 18 Nov 2026 22:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DC9606A320;
+	Wed, 18 Nov 2026 22:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nVpSY/Io
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D721F000C4;
-	Wed, 18 Nov 2026 22:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E47BsJIe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B3D1F000C4;
+	Wed, 18 Nov 2026 22:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041219;
-	bh=Zzdvg9rO5QMOi0/Wj8bLDxRlDgAtF/RRFfUgA0j3jpM=;
+	s=korg; t=1795041222;
+	bh=Od1Di+MHSaKImb5FrRmfG2/qF8yyNhK+jbQLSxAHIRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVpSY/IoFpIOJC4VSmMuApkTA4EqRXHVCbAxLMqeiG73P9Z+K5PMT0wdDJu+GusKG
-	 Gm37nw2aW0idpWBCXvRKEmyBuaa6xhyX2NlKzglfXONEbwXCthAIBUZbJcT/XHkggZ
-	 mvmW/CvblXhlR3u/h3UMC9BJ+dy/ndEfX3E+s56Y=
+	b=E47BsJIe3sTSBrG18DmT8oCTAHEDYtt5tF6LO/IwqJUCoLAnQpMFhyqZwZJu0ZXIA
+	 QTYldjPBqMmvihVad3R6CDbHL05PBIPuXFPpd/5OXdx7e61VXJSlW/NZxFGo/gwkEK
+	 qEeMmjZK3CA4bBjyoqDhsGlwaxW8zik8ZxZutHE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2735/3318] mailbox: qcom-ipcc: remove stray disable_irq_wake() call
-Date: Wed, 18 Nov 2026 15:55:57 +0100
-Message-ID: <20261118150442.856250177@linuxfoundation.org>
+Subject: [PATCH 6.6 2736/3318] RDMA/mlx5: Cancel deferred page-fault EQ work before teardown
+Date: Wed, 18 Nov 2026 15:55:58 +0100
+Message-ID: <20261118150442.882642206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,46 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit 134ef0278d4e48bcc325a7699250dfe861c11953 ]
+[ Upstream commit aea64024ac37d29e99b82b315a56a9145dc0bc23 ]
 
-Commit afaf2ba5b430 ("mailbox: qcom-ipcc: Support interrupt wake up
-from suspend") replaced enable_irq_wake() with IRQF_NO_SUSPEND on the
-IRQ request, but left the paired disable_irq_wake() in remove()
-behind.
+Page-fault EQ work can remain queued after the notifier is disabled.
+Destroying the EQ before cancelling that work can let the worker access
+freed EQ memory.
 
-disable_irq_wake() decrements the IRQ's wake_depth. With no matching
-enable_irq_wake() left to increment it, wake_depth stays at 0 and
-irq_set_irq_wake() reports:
+Cancel the deferred work before destroying the EQ.
 
-  WARN(1, "Unbalanced IRQ %d wake disable\n", irq)
-
-on every unbind. Since there is no enable_irq_wake() to pair it with,
-remove the stray disable_irq_wake() call; IRQF_NO_SUSPEND already
-provides the intended wake behaviour.
-
-Fixes: afaf2ba5b430 ("mailbox: qcom-ipcc: Support interrupt wake up from suspend")
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: d5d284b829a6 ("{net,IB}/mlx5: Move Page fault EQ and ODP logic to RDMA")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Link: https://patch.msgid.link/20261007234216.2765-1-prathameshdeshpande7@gmail.com
+Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/qcom-ipcc.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/infiniband/hw/mlx5/odp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index c1e0d7ef0053c..7426fc5e02e4b 100644
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -341,7 +341,6 @@ static int qcom_ipcc_remove(struct platform_device *pdev)
- {
- 	struct qcom_ipcc *ipcc = platform_get_drvdata(pdev);
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 98e7a55ec8a4d..f5db9f832fa73 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1598,8 +1598,8 @@ mlx5_ib_odp_destroy_eq(struct mlx5_ib_dev *dev, struct mlx5_ib_pf_eq *eq)
+ 	if (!eq->core)
+ 		return 0;
+ 	mlx5_eq_disable(dev->mdev, eq->core, &eq->irq_nb);
+-	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
+ 	cancel_work_sync(&eq->work);
++	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
+ 	destroy_workqueue(eq->wq);
+ 	mempool_destroy(eq->pool);
  
--	disable_irq_wake(ipcc->irq);
- 	irq_domain_remove(ipcc->irq_domain);
- 
- 	return 0;
 -- 
 2.53.0
 
