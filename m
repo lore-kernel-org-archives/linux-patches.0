@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032820;
-	b=k2pyRqPYV9lS/nLKv8ZsSzz6JUBTB33I4EsoSp8RgRrBmNL44PeuHCHH1frnyjMjupNc
-	 MUve0Z1JhPUnIjRdVJrqSB61Hc8hO8QonNS/oc2ZS21PG/cptSZXLbFynEFD63pDF1LSz
-	 U6LKyBVsbt/7IiHpeiSuwq0S6O800xBtnyGLDxmJ77BgA4pzPYwBNq54BXEbt7vxAjWCO
-	 u+/US00BfclgL9M5DPgZ/rxmIkL7coopEaZu8SW0Mho5Tcl2ulvAJHRvgUS8EXI6N3mOr
-	 uepYnZk+2vSoUpq2zjaiuAbe7mGQ6d/Zvvy4I442bZG5UbSGaTsppnSsvdR5OcwZlgw==
+	t=1795032823;
+	b=oqRJt7UI1/CLt6g6NyeGpmsRPRceREkEItk8C0tTDttRN+8bk3+UNKASX3vycycueNLG
+	 OwDLZpoJYgsIPSDgU9UZcB3hAhSzL0ShBhkmAUj0czH0HLAZdNquMXwVk1kFIz7ZQGYXH
+	 X6SSHzRiwn9nRkosBfN7YjBGTIEhskwU26+Awi1n7ZIeHEUsmoGpaP41nDb1Ykgoxl1nE
+	 B21t7RgQD080pG8IQk8e3W0vZ4XfTWJuQEi2nPLKzGfQpfWB/UxBUFeRD3gLAwWEQp24t
+	 sC6GIrPHJ1fhy5IuThJmFlCHyFMZV+JJl1kf7xKO5HKtr9/F1QK0edwoZ92Ysa1fwhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032820;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032823;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mQSByaM+Lr2lgzuQOm+UGLTBZkzRHEAmFWL6lP8306w=;
-	b=lPfYKB8K7cDLOFaOJic1lbo5+LMJAUr8UcwY2D04kMXFsxjI7is89zETWmWazYJ3xVq2
-	 6R10FTQd8vchAhv+fINarzN1UkjPrCCLYJ4ywkkWPyNk6NvYfpRzhhJJSMYXMXDqghxSh
-	 FeyZAuB6X44U9zu/wtTNklYrIOGtujZm4k0DKvUz8KO8zDLHzHzp1WL4G+vkfYwa4/hUz
-	 pF3zJ4UPpe7xdSxH8/L2cN/9EtSAcAZlG0CBndSL9isUo+eJEAiUfFMpZ8K3pPy0FWoTZ
-	 1h+xVXNQDHNNOTg11NttPrl5hSrQ0YpvBHozAhdx+F1p+MrjjGAV8lpo0dRfComXinA==
+	bh=Cr3m0mztcNyc4D40qA2WIKspKpPu8vqkPfwod39LPNA=;
+	b=tJoOlPwH0/qcYs54KYQOdUZ7GZa3Dsp1ARYHofrVFBfTDJOwi2RBZxKv3ZjeSBvb0GzE
+	 TuJ/7+8zjdXIHSUIru0e2vlxOX0xb1UtUh3C2F3ptnIx5Z5UxBpJ96Q7sH2HUWF/i2Dev
+	 oT1oQVQ9qpy8bvkjVK0HiUIK79Fu7e1saA9EXj1kO+EgmRpUWTcng+TJkW/VsjG1/mPox
+	 epwGluG6bOz5um+4Rg6dIXRK8U2/0iJLdDZUIs8BpY5014a+U/bNPs+EYPmovT0HchIx0
+	 1uT+NOtfEK8Eqx6snspa6uIY56/5atCPC4prJFGodQxtVp7htuQPo8Cz3IKHN5Fm83w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPKV6GeB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDajwzPa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8BF606A320;
-	Wed, 18 Nov 2026 20:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F273606A31C;
+	Wed, 18 Nov 2026 20:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPKV6GeB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8621F000C4;
-	Wed, 18 Nov 2026 20:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDajwzPa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6388B1F000C4;
+	Wed, 18 Nov 2026 20:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032820;
-	bh=mQSByaM+Lr2lgzuQOm+UGLTBZkzRHEAmFWL6lP8306w=;
+	s=korg; t=1795032822;
+	bh=Cr3m0mztcNyc4D40qA2WIKspKpPu8vqkPfwod39LPNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KPKV6GeBSTzt47BKkvV4f19x5e2aWl9FsV7LR69RKlij6VPgAYMxXCpSO6FtW4Csk
-	 3sMcXXGnbhUvy/h2TR7qlTSSIpUNr84n37IM2nwmq/VeButDa0yWMp/nmoHHbgT6qH
-	 loFbRdOaM0934BjjQwgefmrzUUOBAKgA/t8Lviuc=
+	b=HDajwzPaczFp/3sakJJpCo+pY8LHa4+G5oNn5XaTUwljMceNmJ+DYTPLpTXYwFpnK
+	 tWMFvXh/eOtTNYUyizmjYX5BpMShkbMdgjG6Jbl0hS0kQEpCxix5SntwZkSDYuqSWr
+	 aOHP+LwKHs5V+MI+1IUSVqf/aL5m7LZ/G/hET5u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ayushman Rout <ayushmanrout27@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Aditya Sharma <adi.sharma@zohomail.in>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1546/1756] bpf: Use memmove() to load bytes from an skb and an xdp_buff
-Date: Wed, 18 Nov 2026 16:01:13 +0100
-Message-ID: <20261118150110.472886526@linuxfoundation.org>
+Subject: [PATCH 6.12 1547/1756] bpf: Remove nmi_uaccess_okay() check in bpf_send_signal_common()
+Date: Wed, 18 Nov 2026 16:01:14 +0100
+Message-ID: <20261118150110.511114250@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,74 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ayushman Rout <ayushmanrout27@gmail.com>
+From: Aditya Sharma <adi.sharma@zohomail.in>
 
-[ Upstream commit b93cf2c8a0552b544e90e25802e4bf989987d29d ]
+[ Upstream commit 93bd472336ac2424f5f3cf05cbb24e02242343b7 ]
 
-bpf_dynptr_read() on an skb or xdp dynptr ends in bpf_skb_load_bytes()
-or bpf_xdp_load_bytes(). The destination can be a slice of the same
-packet, so it can overlap the source, which memcpy() does not allow.
-On x86 with FSRM memcpy() copies forward, so a destination above the
-source gets the first bytes repeated:
+nmi_uaccess_okay() takes no task argument and is a statement about
+current. When commit 6280cf718db0 ("bpf: Implement bpf_send_signal_task()
+kfunc") made the PF_KTHREAD/PF_EXITING and is_global_init() test the
+supplied task, nmi_uaccess_okay() was left testing current.
 
-  p = bpf_dynptr_slice_rdwr(&ptr, 8, NULL, 64);
-  bpf_dynptr_read(p, 64, &ptr, 0, 0);
+As a result bpf_send_signal_task() returns -EPERM whenever the
+calling context happens to be a kernel thread, regardless of which task
+the signal is aimed at. The same call with the same target succeeds or
+fails depending only on what the CPU was running:
 
-leaves bytes 8-71 of the packet as bytes 0-7 repeated, not bytes 0-63.
-Reproduced with BPF_PROG_TEST_RUN on both an xdp and a tc program.
+  bpf_send_signal_task() from tp_btf/workqueue_execute_start : -EPERM
+  bpf_send_signal_task() from tp_btf/sys_enter               : 0
 
-Use memmove(), as the store side does since commit 1db084f42884
-("bpf: Use memmove() to store bytes in an skb") and commit ab08863c58b1
-("bpf: Use memmove() to store bytes in an xdp_buff"). A read that spans
-xdp frags still goes through bpf_xdp_copy_buf() and is not changed
-here.
+The check was carried over from bpf_probe_write_user() when
+bpf_send_signal() was added in commit 8b401f9ed244 ("bpf: implement
+bpf_send_signal() helper"). There it guards a user memory write, but
+bpf_send_signal_common() does no user memory access, so the check has
+nothing to guard here. It is also already a no-op outside x86.
 
-bpf_skb_load_bytes_relative() has the same pattern and is reachable
-from tc and sk_filter programs, so use memmove() there as well.
-Reproduced with BPF_PROG_TEST_RUN on a tc program: loading into a
-slice at offset 8 gave wrong bytes before the change and correct
-bytes after.
+Remove it, and drop the part of the comment above it that described
+the memory access checks, as none remain.
 
-Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
-Signed-off-by: Ayushman Rout <ayushmanrout27@gmail.com>
+Fixes: 6280cf718db0 ("bpf: Implement bpf_send_signal_task() kfunc")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Aditya Sharma <adi.sharma@zohomail.in>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261022112312.31563-1-ayushmanrout27@gmail.com
+Link: https://lore.kernel.org/bpf/20260819124324.43162-1-adi.sharma@zohomail.in/T/#u
+Link: https://patch.msgid.link/20261001072449.1377267-2-adi.sharma@zohomail.in
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/trace/bpf_trace.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 16ac1c7a842d4..355c95863af38 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1776,7 +1776,7 @@ BPF_CALL_4(bpf_skb_load_bytes, const struct sk_buff *, skb, u32, offset,
- 	if (unlikely(!ptr))
- 		goto err_clear;
- 	if (ptr != to)
--		memcpy(to, ptr, len);
-+		memmove(to, ptr, len);
- 
- 	return 0;
- err_clear:
-@@ -1858,7 +1858,7 @@ BPF_CALL_5(bpf_skb_load_bytes_relative, const struct sk_buff *, skb,
- 	ptr = start + offset;
- 
- 	if (likely(ptr + len <= end)) {
--		memcpy(to, ptr, len);
-+		memmove(to, ptr, len);
- 		return 0;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 5abd26d3a8ab8..d6d9ca8c79746 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -845,15 +845,12 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type, struct task_struc
+ 		siginfo = &info;
  	}
  
-@@ -4157,7 +4157,7 @@ BPF_CALL_4(bpf_xdp_load_bytes, struct xdp_buff *, xdp, u32, offset,
- 	if (!ptr)
- 		bpf_xdp_copy_buf(xdp, offset, buf, len, false);
- 	else
--		memcpy(buf, ptr, len);
-+		memmove(buf, ptr, len);
- 
- 	return 0;
- }
+-	/* Similar to bpf_probe_write_user, task needs to be
+-	 * in a sound condition and kernel memory access be
+-	 * permitted in order to send signal to the current
+-	 * task.
++	/*
++	 * Similar to bpf_probe_write_user, task needs to be
++	 * in a sound condition.
+ 	 */
+ 	if (unlikely(task->flags & (PF_KTHREAD | PF_EXITING)))
+ 		return -EPERM;
+-	if (unlikely(!nmi_uaccess_okay()))
+-		return -EPERM;
+ 	/* Task should not be pid=1 to avoid kernel panic. */
+ 	if (unlikely(is_global_init(task)))
+ 		return -EPERM;
 -- 
 2.53.0
 
