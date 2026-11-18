@@ -1,57 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042249;
-	b=w5xPcv1FRIqE9QZjSL7r05eK/rcgRqjeV5+Z64+WphJPiBvrYgrMz6T5Rxr0/akG5GQB
-	 jk47/IYlXdWTOadRSTftEUbKaalFpbLfaKiYfzJ15craqzm1jNz50LhH8GJfJlFhsXit5
-	 sSz/24G7CrL6iay+rgd5nY2mcG0sM4wLi7BB5aS339jf457gtNirkGPkCpUp9TzNUxUrU
-	 qogADQTYx3IMFAouBsuyIbXowN6BG/O6PFHiawKtOsWE/Ip0gqAQN4BWUTctGPOQZvypx
-	 DqHALDRUv1jL6ppDWrWYWsb9ZxpFwW4odiFmxvBfMYXAzeoUX2k3QT0j4/A4fdkcpJg==
+	t=1795042252;
+	b=R2+LoTRWwCujfV+hP4yfDRDpetX3XFRO6BJn6ZTFxgpV1l6gp4Y30d2xQ8GqXud4o9f8
+	 F6vKeosJPGsp6GbQuheMKcS0S8hL3oPTAJRbrNTPzGb//23a7mqV9X/OLW7nUSaMGZbkb
+	 cV7EMExQXMUfEgUAyglM7vaaWjQWOcTyHX4S738iLMtq+U/MXpsfLqavbzkpaUIl42LJh
+	 pjlgbUQyThV0+vSXDaXFOdfWUfl5Hek4T2EosugXwZ28Uk6CRU6KxcEhJS/bgvbsfScY6
+	 dR1IdKvBDmCLnzidir0zZiuZa5DtIwMu6ZEBgqBHJz03SdMIZkwWOU/Snirdethqa/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=RMr2r0ZX4ZXx5XjIGQYWDObmS3A2T/oq6ypBtow5FIU=;
-	b=VhKjn74jaOMKmebtM5158Wm7ffuop9yRTawYEaGXMMSFSuQxjdY5BdZ2y/1iAtxOhi5V
-	 mTiempZTRvkIVjHC+ApMMsI+QBJV6g+4mDUXt2Vice7ywGSVGNCHcVjnAd04GP8sdRtlo
-	 o95b2fF8MSl4xJRt1FQvD8XyhjbEgjbgUFyenNrajI/MCOpRJ7j6ZOxxnOYrHKbW8sciH
-	 AaFEwu50sfbUvslH/Syy/qHJHy28vsa/NLibOzSRMxZ8kdr2Q8w4WVqZCiV8UHuGRVXT4
-	 CT3Nc9Uoe8IG4q9vPj+HHVJ0HDk90hiSogAvvWblmgf01kOKPZddnb+oarO9vPb57/g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=9qmeN/n/bAbI7PhmvDk51p9dPo2qSHGg4O4frPxxbBo=;
+	b=NEdL7hipPFY5pLdQNuduQTTACh8hPfKS0t2Q/XUt8HZ0t0jYRqtPtosUI+YEEiVySW1b
+	 ncDgcDqwdDGy79m5iMKgClt4/WVOSDCb8HhikVQD2Tbw5sOpCEQ7fhCbc44xpLRlmHNNS
+	 4f0yl2tbyP3qNYUPPU5FOwZxT6a8qRHi98T3jEIcVaFiLge+WBz/FYfVfcx6TnKv0oa9B
+	 2AbG6TcRZ9TE1eL4IfJ4DPVZN0a+zyK4eC1iz0lDTWoSGpr4EddjQJ8tOuDidUNO+P04+
+	 se1ilx1KMNhFOSk/xq4XtuyL2OywWLCNccpHiByhQeSO5lxeZe0R9e2xVij/ixjlQ1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVyc35GK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0xdzvqH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D31606A320;
-	Wed, 18 Nov 2026 22:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457BC606A325;
+	Wed, 18 Nov 2026 22:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVyc35GK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0601F000C4;
-	Wed, 18 Nov 2026 22:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0xdzvqH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37C01F000C4;
+	Wed, 18 Nov 2026 22:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042249;
-	bh=RMr2r0ZX4ZXx5XjIGQYWDObmS3A2T/oq6ypBtow5FIU=;
+	s=korg; t=1795042252;
+	bh=9qmeN/n/bAbI7PhmvDk51p9dPo2qSHGg4O4frPxxbBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dVyc35GK9/z+Opr44dmacMSdy3z+S1Cxl7IIvbS9GD9bgcZSOFhgixIUcd1y2iWAW
-	 bqYhCATwjzmodz5pkBB4N/uRItiLF8jiP5ECRnGKqYXvsLTSNgsl+V0JrFe853K9uX
-	 qlQ8Zhzz27fcQDgLMrz1KctdF1t8eiG5uzvtDU80=
+	b=B0xdzvqH9s9pnxhZawhcUZONlcgC1GtMkMziLiAl39a8yV0CSwAhpWdMqxUV97a5R
+	 WjLgY3K8+46JFqE8dJ4N/6HYgiLQ8ym3gF7pC1x8VF0bc3yfAb4jvuX0b2taqE3aKj
+	 LwNMsyeJwtqbTPES7jEZlsKYjkTOOzUWpSNoqPQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3102/3318] net: skbuff: dont copy alloc_cpu in skb header copies
-Date: Wed, 18 Nov 2026 16:02:04 +0100
-Message-ID: <20261118150453.061173320@linuxfoundation.org>
+Subject: [PATCH 6.6 3103/3318] ocfs2: reserve xattr value tree metadata only once
+Date: Wed, 18 Nov 2026 16:02:05 +0100
+Message-ID: <20261118150453.087569347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,118 +65,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 78d4bd22ec9df490135303c00e190ac43d5c334a ]
+[ Upstream commit 5365f1f417b36627f825aacf9844ae24b671b525 ]
 
-Commit 68822bdf76f1 ("net: generalize skb freeing deferral to
-per-cpu lists") added alloc_cpu to struct sk_buff and placed it in the
-headers group copied by __copy_skb_header().
+ocfs2_calc_xattr_set_need() asks for the new value's extent tree twice
+when it replaces an inline value smaller than a value root with one large
+enough to be stored outside.  The "stored outside" branch reserves the
+tree and then falls through to meta_guess instead of going out:
 
-This is wrong for newly allocated skbs. For example, skb_segment()
-allocates a new skb and records the current CPU in alloc_cpu, but
-__copy_skb_header() overwrites it with the value from the original skb.
+        if (!ocfs2_xattr_is_local(xe)) {
+                ...
+                xv = (struct ocfs2_xattr_value_root *)
+                     (base + name_offset + name_len);
+                value_size = OCFS2_XATTR_ROOT_SIZE;
+        } else
+                xv = &def_xv.xv;
 
-If the original skb was allocated on another CPU, the segment may later
-be treated as remotely allocated and unnecessarily deferred there when
-it is freed.
+        if (old_clusters >= new_clusters) {
+                ...
+                goto out;
+        } else {
+                meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+                ...
+                if (value_size >= OCFS2_XATTR_ROOT_SIZE)
+                        goto out;
+        }
 
-Move alloc_cpu out of the headers group so it is preserved across
-header copies. Copy it explicitly in skb_clone(), which allocates
-the skb object directly instead of going through __alloc_skb().
+On the fall-through xv is def_xv, so what gets added here is the two
+blocks ocfs2_extend_meta_needed() wants for an empty value root -- and
+both sides of meta_guess reserve that same tree again.  The create side
+has done so since commit 3ed2be719eb9 ("ocfs2: allow for more than one
+data extent when creating xattr"), which ported this reservation to the
+create case without noticing it was already on the way in, and the
+existing-block side since commit 0cdc7dde00ec ("ocfs2: fix missing
+metadata reservation for large xattrs").  Both were chasing the same
+RESTART_META failure in ocfs2_xattr_extend_allocation(), for xattr create
+and then for xattr update.
 
-This was discovered while investigating a throughput regression with
-software IPsec. The load used 512 IPsec tunnels carrying traffic over
-VXLAN, with 512 parallel iperf3 flows and an MTU of 4500.
+ocfs2_init_xattr_set_ctxt() hands the total straight to
+ocfs2_reserve_new_metadata_blocks(), so the surplus is two blocks held for
+the whole transaction.  A setxattr that would otherwise fit can come back
+-ENOSPC on a filesystem whose metadata allocator is nearly exhausted.
 
-Before the fix:
+Move the reservation into the branch that stops there, leaving meta_guess
+as the only place that reserves for a value tree the fall through is about
+to create.  The paths that do go out keep reserving against the value root
+they already have, which for an external old value is the on-disk one and
+so can legitimately ask for more than two blocks.
 
-  16.09%  queued_spin_lock_slowpath
-             |
-             --15.90%--_raw_spin_lock_irqsave
-                       |
-                       --9.37%--__slab_free
-                                 kfree
-                                 skb_release_data
-                                 napi_consume_skb
-                                 mlx5e_poll_tx_cq
+Both sides of meta_guess have to come out even on their own now that the
+copy covering for them is gone.  The existing-block side only started
+reserving the value tree in the commit this one is tagged against.  The
+create side has reserved the tree since 3ed2be719eb9, but only the tree:
+the block ocfs2_create_xattr_block() claims came out of the same two, and
+on the fall-through it was the duplicate removed here that made up the
+difference.  So "ocfs2: reserve metadata for a new xattr block and its
+value tree" has to land first -- without it the create side reserves 2
+where 3 are needed and the value tree is back to RESTART_META.  That one
+fixes a shortfall of its own on the path that reaches meta_guess directly,
+where there was never a duplicate to cover it, so it is worth taking
+alone; this patch is not.
 
-After the fix:
-
-   6.84%  queued_spin_lock_slowpath
-             |
-             --6.57%--_raw_spin_lock_irqsave
-                      |
-                      --5.00%--__slab_free
-                                kfree
-                                skb_release_data
-                                napi_consume_skb
-                                mlx5e_poll_tx_cq
-
-Fixes: 68822bdf76f1 ("net: generalize skb freeing deferral to per-cpu lists")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261019174152.2932829-1-cjubran@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/20261010113454.1420939-4-joseph.qi@linux.alibaba.com
+Fixes: 0cdc7dde00ec ("ocfs2: fix missing metadata reservation for large xattrs")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 4 ++--
- net/core/skbuff.c      | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/ocfs2/xattr.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index d6167cc0280c4..9340ee3b60045 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -992,8 +992,6 @@ struct sk_buff {
- 	__u16			tc_index;	/* traffic control index */
- #endif
- 
--	u16			alloc_cpu;
--
- 	union {
- 		__wsum		csum;
- 		struct {
-@@ -1046,6 +1044,8 @@ struct sk_buff {
- 
- 	); /* end headers group */
- 
-+	u16			alloc_cpu;
-+
- 	/* These elements must be at the end, see alloc_skb() for details.  */
- 	sk_buff_data_t		tail;
- 	sk_buff_data_t		end;
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index e0f31155c8007..28e84b894936b 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1409,7 +1409,6 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
- #ifdef CONFIG_NET_RX_BUSY_POLL
- 	CHECK_SKB_FIELD(napi_id);
- #endif
--	CHECK_SKB_FIELD(alloc_cpu);
- #ifdef CONFIG_XPS
- 	CHECK_SKB_FIELD(sender_cpu);
- #endif
-@@ -1441,6 +1440,7 @@ static struct sk_buff *__skb_clone(struct sk_buff *n, struct sk_buff *skb)
- 	C(pfmemalloc);
- 	C(pp_recycle);
- 	n->destructor = NULL;
-+	C(alloc_cpu);
- 	C(tail);
- 	C(end);
- 	C(head);
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 91481f229d78d..0b408e1161772 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -3451,12 +3451,21 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 			credits += ocfs2_remove_extent_credits(inode->i_sb);
+ 			goto out;
+ 		} else {
+-			meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 			clusters_add += new_clusters - old_clusters;
+ 			credits += ocfs2_calc_extend_credits(inode->i_sb,
+ 							     &xv->xr_list);
+-			if (value_size >= OCFS2_XATTR_ROOT_SIZE)
++			/*
++			 * The old value occupies at least as much room as a
++			 * value root, whether it sat outside or inline, so the
++			 * new root fits where it was and no new xattr block or
++			 * bucket is needed -- only the metadata to extend the
++			 * tree hanging off it.  A smaller one is replaced
++			 * outright, which meta_guess below reserves for.
++			 */
++			if (value_size >= OCFS2_XATTR_ROOT_SIZE) {
++				meta_add += ocfs2_extend_meta_needed(&xv->xr_list);
+ 				goto out;
++			}
+ 		}
+ 	} else {
+ 		/*
+@@ -3508,6 +3517,10 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
+ 		 * Reserve metadata for the new xattr's value extent tree.
+ 		 * The not_found path above adds credits for this tree but
+ 		 * omits meta_add, leaving meta_ac NULL for large values.
++		 *
++		 * This is all of meta_ac on this side beyond the xattr tree
++		 * above: no xattr block is allocated here, and a new bucket or
++		 * index block is paid for out of data_ac.
+ 		 */
+ 		if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
+ 			meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
 -- 
 2.53.0
 
