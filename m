@@ -1,59 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020054;
-	b=VghB21+uNhzu2xJp1XlnDqRKS4jTlpMNp9JFQBGChx+hRND3nwH3cNR/sorWqHWRmQGq
-	 ImXOtAnVsM9dHtVpIEwJpsV3fB5SXAa8tyXMj1CPVUdM9pkJOb7lIBdR6FIJnoAmnppja
-	 FHDgP1HJ58GaWXBFXJbaoE+h1b8jBAoqdWgXXawsX3FwbIe5N0MVs35uQf+4319wuK2tv
-	 r9j3ZcVjzqXbqjkZv6GgDbLc5zHfIp94UQfS7bR8EINwI0zxquqt01QVVt5Fw8NysKQ/V
-	 pPBclSKALQwJtNnUShekhZFQ+WdPaxYI80mcj3IFN+r6tgYFaRrGbaCoT8u/FkTP8Pw==
+	t=1795020057;
+	b=JJBL5UXqKMM3sQBJhVX07SUE300unQJaaHLs0wbsYM12NAd+2vgWnlA7p3aQGwssvJ4n
+	 gmzAGxuuJtMn1SaayLSikVG+X2rVmPk5VcMVaFTv0iqx0Oyf7qGyYIP2Wr4e48BeAvYal
+	 kBP8lwAgCcJNEOjXRLBjpBj9veBZd5mEjfIgDkZgLDK1u6hTUzmu/yI0PxmbBdzO5k4zD
+	 KR1IGO4ESgCT2s+x5Aij0/B0teaglt4mHtWw0ilUWaf0C41KmixBaEw9qGXTfsgHAk1h3
+	 lzctSRWFr1owUtgA/0HLFf/3rAz8Q7dnK/VhPs0tqE53w8VxBLuDvBrhiVrkcadR29A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020057;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Eo+gba0QEXzmn9iEXAaSmkBdyH9tkrah55PfoMo9g88=;
-	b=UojqChphJH0FmJAUFIHJpMznvM4ncJNJNcKlatjv8MmJVtkzUGLIScnk0EfP/le2v6ol
-	 VpfVX6Wz/gbCzrD+p3i5Q/ayLsMBKlNuqBccg03yejdzc3loHqJQVqnzfL9e6ediqOV0H
-	 ZRIl2L+gYN8sv7MaF4jQxSUkyGyUKBF0QStIrTn0NHB1IG6mjDu++oq/HIt6yH22YsDOL
-	 gNx5edffYVRZknljEbu9fJfjRkdEMzkMA0lKQu1I6EGoQllwrN89SjI2Y2EinX4C7sPWA
-	 nQEqtf1wZQUar3fQgywFHu/C7sVtBzZ0UrPhY+cn6HPuuZUrHYCxiw/hwOI+Z6lTcWQ==
+	bh=GZhew7Qv1dYPeJylyVLgY0uQFNw9RdxY34q+6AjMgkA=;
+	b=rYWoPuZ/8/hZYFbdSwD7ITT2Z2ueTJ/61PGo4JWjQSJ10WIA1mkS8a1c0oMRQCaG21cf
+	 0hI2zGqCO/SyCid+yiwPXGQpKKa9f7VvrzyDYPx8eQ3iYSkvqtjIWzlKgSxGjdhzeXAi8
+	 6qi1pnrire2RJfjHhLViWEshP8Sn7ZA2DALS5Sd2hnn2VSa9b/QQIgmD5Ia3wJUs1jKKG
+	 +ftIdsAWPxJ3I9FFw5T9hRQldFPVJgvHqqIF3IBC+tIULqa8p75HXrrbFh2X8Bez/HRNT
+	 zMzeMp59ToLm2CKmSe95vw9rSwycA1sX8+2uUjMaxl+/fTcurQtsjkpgOXf+wJyACmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=voi6p2vg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KkZlMHDt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6FD606A334;
-	Wed, 18 Nov 2026 16:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E81606A33D;
+	Wed, 18 Nov 2026 16:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=voi6p2vg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1E51F000C6;
-	Wed, 18 Nov 2026 16:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KkZlMHDt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715BF1F000C4;
+	Wed, 18 Nov 2026 16:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020054;
-	bh=Eo+gba0QEXzmn9iEXAaSmkBdyH9tkrah55PfoMo9g88=;
+	s=korg; t=1795020056;
+	bh=GZhew7Qv1dYPeJylyVLgY0uQFNw9RdxY34q+6AjMgkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=voi6p2vgOl8wBkmXVnk08PdMNGXwhZvBcf1G2au0pfRb1X0uzM/n5l1MkPqKNQGCB
-	 UCLqsIMtFAPpDZfJ2rVv+3ov0yf4Mi2Rc6VUAb8nwOch60eZ0IP4XNFd0sldupQ7GU
-	 DWFjmqUn7g/CYo8tXCHxHnExlncLOpfACFC42EAo=
+	b=KkZlMHDtPpqiV331eytNAmzb9oInLH5D6lMe7SK6Zn0aBVtLn0/uLy8lTx4utJfw5
+	 faVQ+pkL2diVJQHJJhPTg/2vgk7RfClTshnBN9KA5eVd4JZQxQqMX1ybwA3b+y9dk7
+	 7W2NHirlplK50MQmvoP7r1GC07KCjlpRAwm3I5JI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Potapenko <glider@google.com>,
 	Bradley Morgan <brads@mainlining.org>,
-	Ying Huang <huang.ying.caritas@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <david@davidgow.net>,
-	Rae Moar <raemoar63@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Bradley Morgan <include@grrlz.net>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1815/2651] resource, kunit: stop selecting GET_FREE_REGION
-Date: Wed, 18 Nov 2026 15:50:55 +0100
-Message-ID: <20261118150352.554323578@linuxfoundation.org>
+Subject: [PATCH 7.3 1816/2651] kcov: report spurious PCs in the interrupt selftest
+Date: Wed, 18 Nov 2026 15:50:56 +0100
+Message-ID: <20261118150352.585910781@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -77,67 +77,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 7c3f4d699f34535285d0ceb184927d71543d0064 ]
+[ Upstream commit 5d9f31ed855fa89e533b222d0365da81ad3b10cc ]
 
-RESOURCE_KUNIT_TEST selects GET_FREE_REGION even when no other option
-needs it. Remove the selection to follow the dependency rule in
-Documentation/dev-tools/kunit/style.rst.
+The KCOV interrupt selftest enables KCOV_MODE_TRACE_PC without a coverage
+area so that spurious coverage causes a fault.  If the fault path is
+instrumented, the coverage callback faults recursively.  Observed failure
+modes include a stack overflow on x86_64 and arm32 getting stuck in abort
+handling, neither of which identifies the original coverage event.
 
-Skip resource_test_region_intersects() when GET_FREE_REGION is disabled.
-GET_FREE_REGION has no prompt, so configurations without a production
-consumer cannot enable it. Most configurations will therefore skip this
-case; this is intentional. The union and intersection tests remain
-available.
+The recursive failure is not new, but commit 9a79524d1420 ("kcov: use
+WRITE_ONCE() for selftest mode stores") made the selftest effective on
+configurations where the compiler had previously removed the mode store,
+exposing it more broadly.
 
-Since kunit_skip() does not return, the compiler drops the reference to
-the unavailable alloc_free_mem_region(), as in the CONFIG_OF_ADDRESS
-check in drivers/of/of_test.c.
+Replace the open-coded kcov_mode stores with kcov_start() and kcov_stop(),
+passing a 16-word buffer that records up to 15 spurious PCs, with the
+first word holding the count.  Keep KCOV enabled for the original 300 ms
+window, then disable it, print all recorded PCs and panic if any were
+recorded.  Once the buffer fills, further PCs are discarded by the
+existing coverage callback.  This preserves the selftest's hard failure
+while avoiding the recursive fault path.
 
-Link: https://lore.kernel.org/20260926002651.87267-1-kmehltretter@gmail.com
-Fixes: 99185c10d5d9 ("resource, kunit: add test case for region_intersects()")
+Add decanonicalize_ip() as the inverse of canonicalize_ip(), which
+subtracts kaslr_offset() from recorded PCs.  Restore that offset before
+printing the PCs with %pB, since KCOV records return addresses.
+
+Link: https://lore.kernel.org/20261002181357.14293-1-kmehltretter@gmail.com
+Fixes: 6cd0dd934b03 ("kcov: Add interrupt handling self test")
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Tested-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
 Tested-by: Bradley Morgan <brads@mainlining.org> # Power10
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
 Assisted-by: LLM
-Cc: Ying Huang <huang.ying.caritas@gmail.com>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <david@davidgow.net>
-Cc: Rae Moar <raemoar63@gmail.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Bradley Morgan <include@grrlz.net>
+Cc: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource_kunit.c | 3 +++
- lib/Kconfig.debug       | 1 -
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ kernel/kcov.c | 35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/resource_kunit.c b/kernel/resource_kunit.c
-index 42785796f1dbc..9eeb2b1a85c01 100644
---- a/kernel/resource_kunit.c
-+++ b/kernel/resource_kunit.c
-@@ -225,6 +225,9 @@ static void resource_test_region_intersects(struct kunit *test)
- 	struct resource *parent;
- 	resource_size_t start;
+diff --git a/kernel/kcov.c b/kernel/kcov.c
+index 54eaae97bfd67..9402227bd7ba8 100644
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -198,6 +198,16 @@ static notrace unsigned long canonicalize_ip(unsigned long ip)
+ 	return ip;
+ }
  
-+	if (!IS_ENABLED(CONFIG_GET_FREE_REGION))
-+		kunit_skip(test, "CONFIG_GET_FREE_REGION is disabled");
++#ifdef CONFIG_KCOV_SELFTEST
++static unsigned long __init decanonicalize_ip(unsigned long ip)
++{
++#ifdef CONFIG_RANDOMIZE_BASE
++	ip += kaslr_offset();
++#endif
++	return ip;
++}
++#endif
 +
- 	/* Find an iomem_resource hole to hold test resources */
- 	parent = alloc_free_mem_region(&iomem_resource, RES_TEST_TOTAL_SIZE, SZ_1M,
- 				       "test resources");
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 6b24a2c89b84d..1dc11129f3c2c 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -2776,7 +2776,6 @@ config RESOURCE_KUNIT_TEST
- 	tristate "KUnit test for resource API" if !KUNIT_ALL_TESTS
- 	depends on KUNIT
- 	default KUNIT_ALL_TESTS
--	select GET_FREE_REGION
- 	help
- 	  This builds the resource API unit test.
- 	  Tests the logic of API provided by resource.c and ioport.h.
+ /*
+  * Entry point from instrumented code.
+  * This is called once per basic-block/edge.
+@@ -1107,9 +1117,11 @@ struct kcov_common_handle_id kcov_common_handle(void)
+ EXPORT_SYMBOL(kcov_common_handle);
+ 
+ #ifdef CONFIG_KCOV_SELFTEST
++static unsigned long selftest_area[16] __initdata;
++
+ static void __init selftest(void)
+ {
+-	unsigned long start;
++	unsigned long start, i, ip, count;
+ 
+ 	pr_err("running self test\n");
+ 	/*
+@@ -1119,15 +1131,26 @@ static void __init selftest(void)
+ 	 * leaks out of that section and leads to spurious coverage.
+ 	 * It's hard to call the actual interrupt handler directly,
+ 	 * so we just loop here for a bit waiting for a timer interrupt.
+-	 * We set kcov_mode to enable tracing, but don't setup the area,
+-	 * so any attempt to trace will crash. Note: we must not call any
++	 * A small coverage area records the PCs of any leaks. The first word
++	 * holds the count, leaving room for 15 PCs. Note: we must not call any
+ 	 * potentially traced functions in this region.
+ 	 */
++	kcov_start(current, NULL, ARRAY_SIZE(selftest_area),
++		   selftest_area, KCOV_MODE_TRACE_PC, 0);
+ 	start = jiffies;
+-	WRITE_ONCE(current->kcov_mode, KCOV_MODE_TRACE_PC);
+ 	while ((jiffies - start) * MSEC_PER_SEC / HZ < 300)
+-		;
+-	WRITE_ONCE(current->kcov_mode, 0);
++		cpu_relax();
++	kcov_stop(current);
++
++	count = READ_ONCE(selftest_area[0]);
++	if (count) {
++		pr_err("spurious coverage detected during interrupt selftest:\n");
++		for (i = 1; i <= count; i++) {
++			ip = decanonicalize_ip(selftest_area[i]);
++			pr_err("  %pB\n", (void *)ip);
++		}
++		panic("kcov: interrupt selftest detected spurious coverage");
++	}
+ 	pr_err("done running self test\n");
+ }
+ #endif
 -- 
 2.53.0
 
