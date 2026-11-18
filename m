@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045915;
-	b=oXGFL2ohldhWD1TNgPqwuGe2LOmJgj0SADE0yJzmiTPKS3+FlsEAi4uEoqrmTAq15dt3
-	 NPKRvawdgGdFXa86wrnXqmrZrEkepX7A8Qo/AJZKGq/Bdk2a2K7x27+wsebZTQBVUPHZA
-	 EV2F4f0zuqbPW6gASSIjOtD3ZHYlbBCUmTVM7OOlyCcLPlMv4DgUXTeJiSWL425sygYcG
-	 gaVR0DhpyLLAjsjoNFTV3rc/2RhoM8ZfQioA8I8X+A5R1/1zm0Kqb79SzoUNxNVBSNP2G
-	 BDinhjFCZXgkKJWv5lKGZIDFkfL87DwXaiGzEKUwZZRjDrXyAJOQ90SEqbIFKmrh+Qw==
+	t=1795045917;
+	b=GuHG2026xuO9rfoF/U9a7Fyt5U/tVT+U0Rzu753R7HEnhzBI/3sZSQZ5J6Tb0c278Nnl
+	 VMScpaq2aEHkfsy0Xbi1D9nK/1CrRgrnNHpaOoolVraMHrSBAyfMMrBDbD+LVuuQQnq38
+	 PowKd7JIxfYNrF0M3VCXM4kUy8SA8BEpVV4InScNGmhg+n5vLLjXNBLx9dVNx3/k8VAFE
+	 YRQZLyK/rozWb5vui4ZtiqrLKdt//LGyOKjCt/sly0dCYHnYGz0FR+I3R38ca7zOZ8k9m
+	 UyGLt6Ps3hB7JiwqCkgdRA2Z7nK3VP+IdQlb0xz7Zigl7KqM137k0MEp8/9ixxuOUow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045915;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5hwmTu5/ofe1KfTQdbTW1r4X85GMbwFvqsKRZ86bbGo=;
-	b=2UqkXzByEQw7MR4OeqIvReHPCEAXVNYtqiAYOzgdOcjNyfA5II2pnnvbRzNgVnqI6nRl
-	 ZrhNdT4zco0CNZ1kOZH06lFbd1K+LL9uySb2Mjqw2RnnCVM/uppT1V2dGddcqCAyObUsm
-	 iHuEVxgh8+Rwg6g2cTwWOkf0Nvf9r5xTClFcHffH7uhdw2z1NaXPX2lwh1Pny4KvlJtNP
-	 HJIlF/f/v/DXLefA1/1mcmHNRFY/Zjs+1t4L9tCQUwEhE8DgDfJwdPy8tteUjt4udKPdL
-	 cfM+Pv9y+oFB36VRikEhYVJPsUzEHD4Z6LpWy8uG2ygdKtlKQD7FUtMzLpJQ+ChY29w==
+	bh=LT3Kh1PTtMwsetUVXklzyC7LT28quVvBprg2kguFK4o=;
+	b=zprhsRxHP8pLQdvuHgbZxPltRFUCQqaujSg6FkZ5vSgG56MUKxE191/Wq5KDIZl4mQLA
+	 UN8dLQrk+H5Nb2b/u0xpev/6bs3alNRqGqH2y5I0KxbhQKB3r00E+1RG64yWlsV0LhpCg
+	 ItgV9nF5yNOvee/CdPrNdoZycVooInVOFeh0nvS+FW+tXQQrA86ePzSXWofIIZ7ApDcOu
+	 cksoBMcuihkL3PoLh4LF5r+tc0iaN4YHXvzT3ACi81F6kJlEjKKvXYJWJ0bGu2vMXsekV
+	 Bnx5ifAMJukS55RcvbCe/KbP2I/DgSVCAMcFeoxd/VqANbiofSHZtWyeBQ4oqIM1Pww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxLnkv5u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnoVTMR5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A6606A31C;
-	Wed, 18 Nov 2026 23:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBAE8606A31C;
+	Wed, 18 Nov 2026 23:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxLnkv5u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7654C1F000C4;
-	Wed, 18 Nov 2026 23:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnoVTMR5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346701F000C4;
+	Wed, 18 Nov 2026 23:51:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045915;
-	bh=5hwmTu5/ofe1KfTQdbTW1r4X85GMbwFvqsKRZ86bbGo=;
+	s=korg; t=1795045917;
+	bh=LT3Kh1PTtMwsetUVXklzyC7LT28quVvBprg2kguFK4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YxLnkv5uuHIhx7bHK68krNyzPRmvi0NqisVKUO3Ho49Xbh2afilOKVOynCaL/C8Cc
-	 0xthbIAkYx6O1nLPyKOjSlOT+RIMlyuhap9xcoLYpsLJAn02ALvhWZ51AzrbHbF4oi
-	 dyVUG6WTM1hEzbxUBU5efJGVlsW2Y7ZxfkxW0qmE=
+	b=tnoVTMR5Q0gESKP+rQdNRikTxo0xBwuv7NGl2qScTUiAlNBmJxeKDA1S0WShC93C7
+	 XZaNrOyuQiitq0V5S7gIfiYNwSlCgMXjRm4PDl7TaLQA4wdfXmOOeUOKx7fP6/YhZe
+	 zB5MkywnsFc7lbI7o/RRABXu6yZbwbWFNmYDux7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1094/2857] apparmor: fix refcount leak in aa_get_newest_profile()
-Date: Wed, 18 Nov 2026 15:35:28 +0100
-Message-ID: <20261118150241.013388828@linuxfoundation.org>
+Subject: [PATCH 6.1 1095/2857] tcp: fix reordering addition overflow in MTU probing
+Date: Wed, 18 Nov 2026 15:35:29 +0100
+Message-ID: <20261118150241.049658869@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,62 +74,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 33ed50716251d5b2875706c40d0c8082d46be0b1 ]
+[ Upstream commit c1df9c0c0536393de43310f84ca4f8b217271a00 ]
 
-The labels_profile() macro is evaluating its argument twice
+Commit efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and
+MTU probe sizes") widened size_needed and the MSS multiplication, but
+tp->reordering + 1 is still evaluated as u32. RTAX_REORDERING accepts
+an unrestricted u32, and tcp_init_metrics() can install U32_MAX.
 
-  #define labels_profile(X) ((X)->vec[(X)->size - 1])
+In that case the extra-data requirement becomes zero. A write queue
+with probe_size - 1 data bytes and a FIN satisfies the sequence-space
+check. The coalescing walk can pass the queue head to
+tcp_skb_can_collapse(), and tcp_clone_payload() can produce an skb
+whose advertised payload exceeds the data in its fragments. Local
+delivery followed by TCP_ZEROCOPY_RECEIVE can then walk beyond the
+fragment array. KASAN reports a slab-out-of-bounds read in
+can_map_frag().
 
-unfortunately aa_get_newest_profile() passes
-   aa_get_newest_label(&p->label)
-so every call to aa_get_newest_profile results in 2 refcounts
-being taken with one being leaked.
+Cast reordering before incrementing it so the arithmetic handles the
+entire u32 metric range. For U32_MAX, the required size exceeds the
+32-bit queue and window limits, so the existing checks skip the probe.
+The calculation is unchanged for all other reordering values.
 
-There is no need for labels_profile() to be a macro. Convert it to
-an inline fn, which ensures all uses are passing the correct struct
-and removes the double evaluation.
-
-Fixes: 637f688dc3dc ("apparmor: switch from profiles to using labels on contexts")
+Fixes: efb8763d7bbb ("net: ipv4: bound TCP reordering sysctl writes and MTU probe sizes")
 Cc: stable@vger.kernel.org
-Reported-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Cc: Wyatt Feng <bronzed_45_vested@icloud.com>
+Cc: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261028160226.2170244-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/include/label.h | 6 +++++-
- security/apparmor/label.c         | 1 -
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/apparmor/include/label.h b/security/apparmor/include/label.h
-index 43565faae2ba5..6429a4e3db2c3 100644
---- a/security/apparmor/include/label.h
-+++ b/security/apparmor/include/label.h
-@@ -147,7 +147,11 @@ do {							\
- #define labels_ns(X) (vec_ns(&((X)->vec[0]), (X)->size))
- #define labels_set(X) (&labels_ns(X)->labels)
- #define labels_view(X) labels_ns(X)
--#define labels_profile(X) ((X)->vec[(X)->size - 1])
-+
-+static inline struct aa_profile *labels_profile(const struct aa_label *label)
-+{
-+	return label->vec[label->size - 1];
-+}
- 
- 
- int aa_label_next_confined(struct aa_label *l, int i);
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index dc12488b5b3da..74b4fd651c423 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -380,7 +380,6 @@ void aa_label_kref(struct kref *kref)
- 		label_free_switch(label);
- 		return;
- 	}
--	/* TODO: update labels_profile macro so it works here */
- 	AA_BUG(label_isprofile(label) &&
- 	       on_list_rcu(&label->vec[0]->base.profiles));
- 	AA_BUG(label_isprofile(label) &&
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 5117de7afc24f..f0a4ce8f3dd1c 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2376,7 +2376,7 @@ static int tcp_mtu_probe(struct sock *sk)
+ 	mss_now = tcp_current_mss(sk);
+ 	probe_size = tcp_mtu_to_mss(sk, (icsk->icsk_mtup.search_high +
+ 				    icsk->icsk_mtup.search_low) >> 1);
+-	size_needed = probe_size + (tp->reordering + 1) * (u64)tp->mss_cache;
++	size_needed = probe_size + ((u64)tp->reordering + 1) * tp->mss_cache;
+ 	interval = icsk->icsk_mtup.search_high - icsk->icsk_mtup.search_low;
+ 	/* When misfortune happens, we are reprobing actively,
+ 	 * and then reprobe timer has expired. We stick with current
 -- 
 2.53.0
 
