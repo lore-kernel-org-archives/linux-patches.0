@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018435;
-	b=WidqVH/6RRRDBCSgIRilNc0pHEFmXRUomHO26f/JpPHcdA96hSzcCtRu8vgI+u7COLlo
-	 FQXTXGEZUa5HHXdTYcMZF2/MhaArS9dUJjpsmhyrRUTwIYk45+f8Y+WDPz2vZHeSvlBQn
-	 FbiswwxdnfjodGBCsJdPN3QfoHa2mn1gtgy//EdaxpmyUp0HPbnWhdYfEp5m+QZgnpo2+
-	 yKypmcw83RdXmLih9wdKBL/567disauI+eUJVoL2R74XT1MH6MC7XS0/DS2DEIhxgRL6n
-	 UEqXpGodkCDBI5snt3S7kosdWSaMm8xgex8RrvoA55gZjzx0TuxYlP4vSMVAbllaqPA==
+	t=1795018438;
+	b=ztwJnolGqY6qWAx/4mv3SxvHecpR3Gn7T+BRzpkA7H4Qd2fa6lda491Jbz3EEGB8Y5IK
+	 MBmbSNpcyGv9y5VxCbkXzmbroPTDJStFcARGBknrBbFW1Y5xp73vTKQiTrkgdcKU5fA6K
+	 83TRURpT0WmJ6+vSH48U82BLtHKGwZkHKK4NSRHBZ1QVdHkNALWugEkHLxGK5XpZKERuq
+	 m1dr6c33kGEryPWsAs5dG2M1SZc+fOQFUbvQtKEWqat2z0YK3p4gKTtORjMn9WdWCcixt
+	 pMqEWtUW3K1KoZqzt/lLnoqzZyZ5Im00s1SZLq0mTJqrK/7jF2Bj/At5iYwjyV7DRSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018438;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tP9vgn7WEPOTnSvrscWT5Z99IhPaMsBeEQHepK6lO8w=;
-	b=J8KpQOA5BeTZjU5n9pBg1RoePLiWqzc2vLnWrmvDrdUb6lvGNkSHYtbtFpVXMXw0oIXS
-	 Mc9shJYYS4bHiEao8QOVRxn1tDpGWFteQ9MKwYvd4SPr5VscLUoO0+3N+HfPzz+WHxTcD
-	 BpVAUZPLbkQlkB0U8TRCI0elI+4JOueSTB8ZBDMDbhK3d7YlB0E377BnY0S0S71V9UVvl
-	 3buwKah64cqx2jkcMzNPSdu0SQcEIyq/mZ2O35ODHhpAtyuip80hCaSisKELtUFrmMT4D
-	 FlxiZRZrt6KeDsPeLoFh9I/zbkeFZWzopjj54N+K5TwB/eT7pt1GKPLzSLVwWhFT3ZQ==
+	bh=gACgexpeEO85SVHhrNt9tQwk+xNCCS2Mhv65uj0866o=;
+	b=0jCxulMkFN5RQoCER2BAu+HYYouqszBM4OgH02xfcJVk+5OloRuX8etdQDPKyIZhJ+B3
+	 W8LKBymm2i3qfCvVZAE2N0RPaEfmYrGVE3sfmdnIzYidfJPuB5xzkosQpeXYWAbfIo0XI
+	 5oKEkdT6ISJvOqDTtWDAKcR5qWis7SGa6rRdpY76k4zqvtEEaVYj8qkHI0aK2t4u7MbNk
+	 t1p2NWoUghVJIS1HUBOoUJ268R/H86na1ctKOD85D5DU2N+zWlzqik2bYeUifm43kgpp4
+	 DX+yYP/bUOv3Mp5niAB62vx7OruhBpsiO8x07IvVoIZ548Q+PidCVBTBZj2r32aHakQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnG38W1G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osW4UtK2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF2E606A339;
-	Wed, 18 Nov 2026 16:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47100606A325;
+	Wed, 18 Nov 2026 16:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xnG38W1G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962F41F000C5;
-	Wed, 18 Nov 2026 16:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=osW4UtK2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F7D1F000C5;
+	Wed, 18 Nov 2026 16:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018435;
-	bh=tP9vgn7WEPOTnSvrscWT5Z99IhPaMsBeEQHepK6lO8w=;
+	s=korg; t=1795018437;
+	bh=gACgexpeEO85SVHhrNt9tQwk+xNCCS2Mhv65uj0866o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xnG38W1GEkYTipBd5TXCMr3C2m5/TCvA5wM1DdRo4j6tbfGStl8udAUcN9XgF0kje
-	 NlurIP9C7i2ctWx/7u/hON3qrz9pppni+xSWQHTLKqrEj4Xnto5ldx6tAOEG2+QIOk
-	 37/LDdxG7+0xB1yVgs9LoaHoTmqV1llBl4vITUfk=
+	b=osW4UtK2YuUghi7wqAvLXHalduk779DpwInGiRviaQ6/bE/+eLCCDCx6PZl9mho7G
+	 yY/1tWNQ3TQpy8hD9XJAtJWQEsdwwhc7AYL0Incty+VnIMrcpnEWhQJa1AyIHm/8HL
+	 6jcO6hlZnjF9dgakZeoehwBbLPsWMYx/dcOJovGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+75d7e96ad03ac2dbbd9f@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	syzbot+6a132745caefcf42cb0d@syzkaller.appspotmail.com,
+	Li Youhong <liyouhong@kylinos.cn>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1239/2651] md: take reconfig_mutex when enabling PPL on an inactive array
-Date: Wed, 18 Nov 2026 15:41:19 +0100
-Message-ID: <20261118150332.605257190@linuxfoundation.org>
+Subject: [PATCH 7.3 1240/2651] md/raid5: drain released_stripes before destroying the cache
+Date: Wed, 18 Nov 2026 15:41:20 +0100
+Message-ID: <20261118150332.640790194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,66 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+From: Li Youhong <liyouhong@kylinos.cn>
 
-[ Upstream commit 900bf42e0ff8009f66ffd4a679c56264957019dd ]
+[ Upstream commit af560e357a81964544be40c549e241b032ef7565 ]
 
-consistency_policy_store() sets MD_HAS_PPL for an external-metadata array
-that is not running yet, without holding reconfig_mutex.  But ->pers is
-only assigned after pers->run() returns, so "not running" also covers an
-md_run() that is in progress under the lock.
+grow_one_stripe() calls raid5_release_stripe() for each new stripe.
+When mddev->thread is already set, that queues the stripe on
+conf->released_stripes and wakes the thread. Only raid5d moves that
+list onto inactive_list.
 
-If the write lands inside raid5_run() after log_init() has decided not to
-set up PPL, or after a failed ppl_init_log() has cleared the flag, the
-flag ends up set with conf->log_private still NULL.  The next idle pass
-of raid5d() then does:
+Takeover calls setup_conf() while mddev->thread still belongs to the
+previous personality, so those stripes stay on released_stripes. If
+setup_conf() then fails, shrink_stripes() only frees inactive_list and
+kmem_cache_destroy() warns that objects remain.
 
-  raid5d() -> handle_active_stripes() -> log_flush_stripe_to_raid()
-    -> ppl_write_stripe_run()
+Move stripes still queued on released_stripes onto inactive_list
+before shrink_stripes() frees them.
 
-and dereferences the NULL ppl_conf:
-
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000002
-  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-  RIP: 0010:ppl_write_stripe_run+0x60/0x1320 drivers/md/raid5-ppl.c:538
-
-Take reconfig_mutex around the update and refuse it with -EBUSY once the
-array is running, in which case ->change_consistency_policy() is the
-right interface.
-
-Fixes: 664aed04446c ("md: add sysfs entries for PPL")
-Reported-by: syzbot+75d7e96ad03ac2dbbd9f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=75d7e96ad03ac2dbbd9f
-Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Link: https://patch.msgid.link/20260924171345.75894-1-ngocthang2710.1999@gmail.com
+Fixes: 773ca82fa1ee ("raid5: make release_stripe lockless")
+Reported-by: syzbot+6a132745caefcf42cb0d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-raid/6ab6b743.7eec07f4.c25c.0006.GAE@google.com/T/#t
+Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
+Link: https://patch.msgid.link/20260929083916.50620-1-dayou5941@163.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/md/raid5.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 8c56c521a8f8a..b103784a3cb3e 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -5887,7 +5887,15 @@ consistency_policy_store(struct mddev *mddev, const char *buf, size_t len)
- 		else
- 			err = -EBUSY;
- 	} else if (mddev->external && strncmp(buf, "ppl", 3) == 0) {
--		set_bit(MD_HAS_PPL, &mddev->flags);
-+		/* md_run() holds the lock until ->pers is set */
-+		err = mddev_lock(mddev);
-+		if (err)
-+			return err;
-+		if (mddev->pers)
-+			err = -EBUSY;
-+		else
-+			set_bit(MD_HAS_PPL, &mddev->flags);
-+		mddev_unlock(mddev);
- 	} else {
- 		err = -EINVAL;
- 	}
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index fbc356e442458..05f1b17491ad9 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -2713,6 +2713,37 @@ static int drop_one_stripe(struct r5conf *conf)
+ 
+ static void shrink_stripes(struct r5conf *conf)
+ {
++	struct list_head temp[NR_STRIPE_HASH_LOCKS];
++	int i;
++
++	/*
++	 * grow_one_stripe() parks new stripes on released_stripes when
++	 * mddev->thread is already set. Takeover leaves the previous
++	 * personality's thread there, so raid5d never moves them to
++	 * inactive_list. Drain them before the cache is destroyed.
++	 * slab_cache is assigned only after device_lock and the hash
++	 * lists exist; earlier abort paths have nothing to drain.
++	 */
++	if (conf->slab_cache) {
++		for (i = 0; i < NR_STRIPE_HASH_LOCKS; i++)
++			INIT_LIST_HEAD(&temp[i]);
++
++		spin_lock_irq(&conf->device_lock);
++		release_stripe_list(conf, temp);
++		spin_unlock_irq(&conf->device_lock);
++
++		for (i = 0; i < NR_STRIPE_HASH_LOCKS; i++) {
++			if (list_empty(&temp[i]))
++				continue;
++			spin_lock_irq(conf->hash_locks + i);
++			if (list_empty(conf->inactive_list + i))
++				atomic_dec(&conf->empty_inactive_list_nr);
++			list_splice_tail_init(&temp[i],
++					      conf->inactive_list + i);
++			spin_unlock_irq(conf->hash_locks + i);
++		}
++	}
++
+ 	while (conf->max_nr_stripes &&
+ 	       drop_one_stripe(conf))
+ 		;
 -- 
 2.53.0
 
