@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042311;
-	b=AvCVo2M9sGuSyEf+GQFsgKhzDvtATi8eY4XjCwvsGo7TALh72mQSVNbWDSJ+OO3qMBjw
-	 6xZy+r8PJ9PgSIRoMFEUxTW54EqRkvoyznC+JlBjJ6DLWdc5TjQtuoSlp/duhy+Tz7IeF
-	 PybdTuCBK3JnoS5oL+JX4eSQeWEsXAUcUTqNpB5f9h0PXBBygcPJNX3pN22jYmxZpeR3M
-	 JXgWNz/wGRln5fAWRFmC5T/ACYn+gWUJBIqGcSmUIJKlwY3xcCdyr47WM0arwwQroYwSY
-	 5U2WpkreP1HTqQdGE3PxcRVGZlQp/FX30u0cJxLVxiOv9eFg50e2U36uF4zfkhAHYUQ==
+	t=1795042313;
+	b=OAVRttKwtdgQVWYZ9qP49H4FiDRgAEcHVC7hGrwEiPaGpj00fKQGHl9OdCD2uSO7HAkO
+	 k1R9y4qBcXla3im+UyX/f9v6qgSPmfXTZqv/CGI8xJq2+7LOaVEMFXqaBDGD5Rrm/UvW2
+	 VNkbj1gJ+eWyr7H3ylf6XZTEZFfcIVXGOiwlaa2jfiKh2j1pq8d9humL1EeXC1c+5KNEu
+	 u0L6aYi/vyM+Gmbs6Bkt2C06snq3eSawZpXQIUAgebJLf3Pde9ZRIA2xl1VSpiPhtRSZH
+	 pIV29xOQsIBlvb8asLaylfB8HxaVcJZ5QMHFTFA4TheqgQQZZmgEs+BznVl5inhgjLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VFCJEw2wn0tfhV9CAogcMZF+xlRLHno74H1v0cwTKhc=;
-	b=pbKJp6xvc63ClWDiRJzYKNGiT69NSXqZ6xPOTJUxM/Heyc3inaP8+XPsEUIWULgNdvjR
-	 sceiyYjqrd+nKPGwZ2qNWjfNrILvGgQL7K6XaSnn+JWxm83ihVjx9h6f2sZehxblEwoa2
-	 zScrZX3TzwvYfuVMMUJPsFJND6zz2IQwwUPVvQiJUlyNA/Sso8woQfjkGv2aZ6sSTbsIg
-	 J8Rj38LDF6KL1frJ0nmH3HLnzhrD1M2E6I7mBeCjiuMf4hT/LAI1+0qYJzxyoUARMP2py
-	 0Yl0QU4CrcVbGwDh0iwcZAWhfi0cEZa+F+DhHzT0vh2tLo3mQbnjHfUf+ufNQiiQeOA==
+	bh=/w8oq0uGQbwup8YnLXZO2S4FiO6hdXigFY8/XVF0x3s=;
+	b=XaivjK90Qcn3jaCE+UCxgFHS+MnAFcCVzJjgrjgMxirtI1Ybqo61Vlz1VVzKee+UoW2P
+	 Z23Okksn/cuJGtXbaOssQ+9RYBBHLDCN9pcRDHri3jlCMOYHrA8q1WyeL/0JvdQXwf342
+	 N0Ask56bQGaviz+5O59TtfQePAoVlcNS5szLcUMxgjOzWb9OtzU5iilKaBdgJvKY5OWB4
+	 41NFHC9NXyZ1tc24OpOU7Yxppy9aDvOMKNZaSlyFR5BKiJrd7bLiMRM7OV8qLuyDzS/kr
+	 vCazR+1ywnW3X01eUPwF1gGBKAeJX9w0NNoNi5/bJg7AqxUWRwUIjlMSA42XucpcLSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4vBEX70;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IN+Kw+Le;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33373606A31C;
-	Wed, 18 Nov 2026 22:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1302606A320;
+	Wed, 18 Nov 2026 22:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G4vBEX70
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D691F000C4;
-	Wed, 18 Nov 2026 22:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IN+Kw+Le
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061491F000C4;
+	Wed, 18 Nov 2026 22:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042310;
-	bh=VFCJEw2wn0tfhV9CAogcMZF+xlRLHno74H1v0cwTKhc=;
+	s=korg; t=1795042313;
+	bh=/w8oq0uGQbwup8YnLXZO2S4FiO6hdXigFY8/XVF0x3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G4vBEX702aZlV15DPFBB86KqJN+64Szd5zgObb/GOTIFNmm56EZmWuL4bE7YRZjqI
-	 GAHLqm/uGnXwTnlPv7VQ4Yb/6hr1sMYVBQ9yN5jG8sdxpGJgvimA9B0cjrOp6ixc4B
-	 PpWkt6rojGG4y+WiXqhuvgDeK08JjwZskX6gNBcg=
+	b=IN+Kw+LeVQM815PgnUhzI+VxXnhvabgrL6QL4+S7i2ihq9IyPkRetsnOwl4QX9BCu
+	 GydlleRrVqNzVEU8fQJ8NemRJPSSSfO5Xb7gRN+svOfTRgbgNpDaMakFr7mgW91sVT
+	 sDlZJNb7EREWyld7/hJj+NsFHMRT4iic8lGLKY3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Tianyi Gao <tianyi@cloudflare.com>,
+	Mohsin Bashir <hmohsin@meta.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3126/3318] net: sparx5/lan969x: do not clobber the PSFP cycle timer update period
-Date: Wed, 18 Nov 2026 16:02:28 +0100
-Message-ID: <20261118150453.699907301@linuxfoundation.org>
+Subject: [PATCH 6.6 3127/3318] veth: schedule the peers NAPI after XDP_TX when only GRO is enabled
+Date: Wed, 18 Nov 2026 16:02:29 +0100
+Message-ID: <20261118150453.728230008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,64 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Tianyi Gao <tianyi@cloudflare.com>
 
-[ Upstream commit 5a3dcad8e101ddcd3a886907c8992df54472f749 ]
+[ Upstream commit f16b8c6a656e62bfa7bb6a3b876f9ccdaf53bd43 ]
 
-sparx5_psfp_init() enables the periodic stream gate cycle timer update,
-which keeps the cycle start time of each stream gate within one cycle
-time of the current time. SG_CT_CLKS sets the update period, in system
-clock cycles.
+veth_xdp_xmit() queues XDP_TX frames on the peer's ring if the peer has
+NAPI. A peer with GRO enabled and no XDP program also has NAPI.
 
-Before this patch, the update is enabled with a full register write of
-SG_CT_UPDATE_ENA only, which also sets SG_CT_CLKS to zero. That is below
-the documented minimum, the number of stream gates (1024 on sparx5 and
-256 on lan969x).
+veth_xdp_flush() then schedules the peer's NAPI, but only if the peer's
+xdp_prog is set, so for such a peer the frames are never processed.
+Nothing else schedules that NAPI by default.
 
-Write both fields, and set the period to the recommended 10 us,
-computed from the core clock since it differs per target (6250 cycles
-at 625 MHz, 3280 at 328 MHz).
+Once the ring is full, every XDP_TX frame is dropped, and so are the
+skbs that veth_xmit() queues on the same ring.
 
-Found by an AI code review agent, and confirmed on lan969x and sparx5
-by reading the register back as 0x80000000.
+Commit 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before
+xmit of XDP frame") changed the check in veth_xdp_xmit() but not the one
+in veth_xdp_flush(). Make veth_xdp_flush() check the napi pointer
+instead of xdp_prog, as veth_xdp_xmit() does.
 
-Fixes: e116b19db202 ("net: microchip: sparx5: initialize PSFP")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261020-sparx5-psfp-cycle-timer-v1-1-00f2908f096a@microchip.com
+Fixes: 0e672f306a28 ("veth: check for NAPI instead of xdp_prog before xmit of XDP frame")
+Signed-off-by: Tianyi Gao <tianyi@cloudflare.com>
+Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20261016214217.16942-2-tianyi@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/veth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
-index 2f06d7ab7d4b7..850b4af8564f3 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_psfp.c
-@@ -317,6 +317,7 @@ int sparx5_psfp_fm_del(struct sparx5 *sparx5, u32 id)
- void sparx5_psfp_init(struct sparx5 *sparx5)
- {
- 	const struct sparx5_sdlb_group *group;
-+	u32 sg_ct_clks;
- 	int i;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 6766e1381650d..486eea7d060ec 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -585,7 +585,7 @@ static void veth_xdp_flush(struct veth_rq *rq, struct veth_xdp_tx_bq *bq)
+ 	rcv_priv = netdev_priv(rcv);
+ 	rcv_rq = &rcv_priv->rq[veth_select_rxq(rcv)];
+ 	/* xdp_ring is initialized on receive side? */
+-	if (unlikely(!rcu_access_pointer(rcv_rq->xdp_prog)))
++	if (unlikely(!rcu_access_pointer(rcv_rq->napi)))
+ 		goto out;
  
- 	for (i = 0; i < SPX5_SDLB_GROUP_CNT; i++) {
-@@ -325,7 +326,14 @@ void sparx5_psfp_init(struct sparx5 *sparx5)
- 				       group->min_burst, group->frame_size, i);
- 	}
- 
--	spx5_wr(ANA_AC_SG_CYCLETIME_UPDATE_PERIOD_SG_CT_UPDATE_ENA_SET(1),
-+	/* Poll the stream gate cycle start times every 10 us. The core clock
-+	 * period is in picoseconds.
-+	 */
-+	sg_ct_clks = 10 * NSEC_PER_USEC * PSEC_PER_NSEC /
-+		     sparx5_clk_period(sparx5->coreclock);
-+
-+	spx5_wr(ANA_AC_SG_CYCLETIME_UPDATE_PERIOD_SG_CT_CLKS_SET(sg_ct_clks) |
-+		ANA_AC_SG_CYCLETIME_UPDATE_PERIOD_SG_CT_UPDATE_ENA_SET(1),
- 		sparx5, ANA_AC_SG_CYCLETIME_UPDATE_PERIOD);
- 
- 	spx5_rmw(ANA_L2_FWD_CFG_ISDX_LOOKUP_ENA_SET(1),
+ 	__veth_xdp_flush(rcv_rq);
 -- 
 2.53.0
 
