@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061162;
-	b=aVx8Jj2xpKhAD6m9PWh8X3kJkSzv33MYFIvN4yG+QzqwcqE8sgaY4T1jPx3dHcR33ul7
-	 8ndU0162UeWCit3XPm3cMiRrEtc8lZXVeOcMWv+eKk4w2d7togH2uHMX3IPyIQwLDktjd
-	 yCzzipzxOBtHT4qb+WxAzsSFNLK2e8/M4/TUfRzoJ0XG7ffYRLTsuUbVssh1Hx8gK5y5O
-	 fwyHucJkpO6LiSsMIPPxazHCIQu1SAubDun+U+GL7LzxUXP2GdP43JL/WnmcwrXYa2vP3
-	 Qn24OT27bNWeNOkEMwv3SZGFLKKrwL2R6+IvUXGc+5naH/Mc6C20qo9hsOEG57EA+mw==
+	t=1795061164;
+	b=ONT6gqsM9UzYGC+MGswBw/DAp/oU4uer5yKIC9esF0+4qYEzsOGQLcOLSzTzr2CJRHwi
+	 +amr6NLiqeIVCMyEw5zupP3z+3DeJsFJu/GPhflU9I/7cbNJlphQz7J6qqHxtC6qu7MXV
+	 9HM4eXqs+zn38/u4c0MDXxfyuItW/lL+N7EWS8Z/9JRsVqv+XxvsdBdhng9S8qoB0ZCfx
+	 AToFB0XwzjdS3GG5i6eGQRySZhtzDWMNn28bdEEcWrcKddzrgyG88cN3XcBZfxf282emr
+	 hw4K1DK3yAAPEn6akZm33pYF2NCDxMdyg10vaz9xJcQc6cs/Dd4wL4UTkrsQg6aqZMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061162;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=u3PQFwfmH+wUY45TFB9KTdPMtbL04cqPyjmOz57Ooko=;
-	b=F/3zK8A8dBXxfhQlExtnddgLuw7It+OWP1cHduNA7BhOcGrZed0bv+8dD+0IIqlLISnf
-	 3ChhjKoXa4KauBywhQE0fhtLDi+Xv28oX/5ZkzirnjJPMTkmb+mtfmJdMhaPzyI2RV76E
-	 dFmLa7dZonNpF6D6sStp+Ck6Y/xNvRWFfq9nIWlJiU1ORZiyloftHxyBg1wLJvIXI14ng
-	 A5/OMXAjuMcsqYcoqZPmfaoXe3xLZzx6BM8d4v2p9rEMCFFrOo885UOKiR/TSGftRp9mY
-	 uJUsv2sdBgD3QvBb6Q2A5jmromgGFDLmjZmAjyvcKFecKkDodd5pNZJ8eJifeI9TYQg==
+	bh=u4792zslu3Oy79EV1P6aPQU0yyaZ9Mba7cTsSGeRf7g=;
+	b=xRDGVicjiqMriuCB2BsKMXmVIw7HX5DXp42bhTGFmaT6+BlQ34Cg0LNIhIt/H6V4gZG/
+	 jptaeUHnnAEoyAh8ahiOjGCGMlj8cRNNbnFjE6a+O6cHQWA7Ue/2jJgnbE0kBP/Akl5Pg
+	 ZrC4tKBNbGzjGv2mqfkFGUGs94TDZEP5mX2Q97/6Sq1jVetTNboraEC0hPBSHPlPvlWre
+	 3jcmk0MbTcqijgNFxPOOmmQ+ACiYPGQNyh66teSup3sdqZTfVAS5ARhNcLKiZZWfxKfep
+	 kHZuKr1P442S/YdBbfkKbvp/LXi3KQ+bYaRaIRFqPxXsmdGPXRuLM1OakDuO12g1c5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9j1Kj1A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAg2upgE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BBD606A325;
-	Thu, 19 Nov 2026 04:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9260606A325;
+	Thu, 19 Nov 2026 04:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K9j1Kj1A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5914B1F000C4;
-	Thu, 19 Nov 2026 04:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAg2upgE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DC11F000C4;
+	Thu, 19 Nov 2026 04:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061161;
-	bh=u3PQFwfmH+wUY45TFB9KTdPMtbL04cqPyjmOz57Ooko=;
+	s=korg; t=1795061164;
+	bh=u4792zslu3Oy79EV1P6aPQU0yyaZ9Mba7cTsSGeRf7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9j1Kj1ANzBVBMaHtn/CS5hUZ93W0nkSOR15FPaXB80IUIKLwnzjaTgv4QHWb5O5F
-	 nsjVzR2zikZhX+wzwwlO0ieR9XK85+SY35PxDQ1riSgAT1vbPF90uiHCC8DHfnjiVD
-	 +kwCg/uCZW6hIRaMofaR0Q14f7tDakwp2hOpCjT0=
+	b=FAg2upgEBWEW+jrd2+L/7BPV9qU0Vme9QNjXkeH/UsYbzy8Y0DOxdVN8XQMKxLKJM
+	 hcb5RXVQT6jv2iiAgREus0a3ANS2RdJKLYxwCyO1m00mfXm++pmYUT5AcySTeTBcem
+	 m/z9bB2LHJn9WxzRxGB8Y/rkOw6gAYl8tlGsqZRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	Tian Tao <tiantao6@hisilicon.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1453/1848] power: supply: ab8500_btemp: Fix event temperature reporting
-Date: Wed, 18 Nov 2026 15:58:11 +0100
-Message-ID: <20261118150020.232129818@linuxfoundation.org>
+Subject: [PATCH 5.10 1454/1848] power: supply: Fix missing IRQF_ONESHOT as only threaded handler
+Date: Wed, 18 Nov 2026 15:58:12 +0100
+Message-ID: <20261118150020.265092290@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,82 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Tian Tao <tiantao6@hisilicon.com>
 
-[ Upstream commit 95990cda8e42dda4bd3f1475d578323981bd8579 ]
+[ Upstream commit df12470ce775cd126f26c96d240959b0c1929e23 ]
 
-The event-aware path initializes its local temperature to zero and
-compares that zero against the thermal thresholds. Consequently some
-events report the measured temperature after it crosses the event
-threshold, while others always report the threshold.
+Coccinelle noticed:
+drivers/power/supply/ab8500_btemp.c:1107:8-28: ERROR: Threaded IRQ with
+no primary handler requested without IRQF_ONESHOT.
 
-Start with the measured temperature, clamp it according to the active
-event, and convert to tenths of a degree only once. This path is used
-by AB8505 and later variants.
-
-Fixes: 1f855824757e ("ab8500-btemp: AB8500 battery temperature driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-5-e986ed321cc6@kernel.org
+Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 1098c619ce75 ("power: supply: ab8500_charger: Handle detection errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_btemp.c | 28 +++++++++-------------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+ drivers/power/supply/ab8500_btemp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
-index 5a1adceb6974d..a191effd5d63b 100644
+index a191effd5d63b..2fce437f04547 100644
 --- a/drivers/power/supply/ab8500_btemp.c
 +++ b/drivers/power/supply/ab8500_btemp.c
-@@ -756,39 +756,29 @@ static void ab8500_btemp_periodic(struct ab8500_btemp *di,
-  */
- int ab8500_btemp_get_temp(struct ab8500_btemp *di)
- {
--	int temp = 0;
-+	int temp = di->bat_temp;
+@@ -1093,7 +1093,7 @@ static int ab8500_btemp_probe(struct platform_device *pdev)
+ 		}
  
- 	/*
- 	 * The BTEMP events are not reliabe on AB8500 cut3.3
- 	 * and prior versions
- 	 */
--	if (is_ab8500_3p3_or_earlier(di->parent)) {
--		temp = di->bat_temp * 10;
--	} else {
-+	if (!is_ab8500_3p3_or_earlier(di->parent)) {
- 		if (di->events.btemp_low) {
- 			if (temp > di->btemp_ranges.btemp_low_limit)
--				temp = di->btemp_ranges.btemp_low_limit * 10;
--			else
--				temp = di->bat_temp * 10;
-+				temp = di->btemp_ranges.btemp_low_limit;
- 		} else if (di->events.btemp_high) {
- 			if (temp < di->btemp_ranges.btemp_high_limit)
--				temp = di->btemp_ranges.btemp_high_limit * 10;
--			else
--				temp = di->bat_temp * 10;
-+				temp = di->btemp_ranges.btemp_high_limit;
- 		} else if (di->events.btemp_lowmed) {
- 			if (temp > di->btemp_ranges.btemp_med_limit)
--				temp = di->btemp_ranges.btemp_med_limit * 10;
--			else
--				temp = di->bat_temp * 10;
-+				temp = di->btemp_ranges.btemp_med_limit;
- 		} else if (di->events.btemp_medhigh) {
- 			if (temp < di->btemp_ranges.btemp_med_limit)
--				temp = di->btemp_ranges.btemp_med_limit * 10;
--			else
--				temp = di->bat_temp * 10;
--		} else
--			temp = di->bat_temp * 10;
-+				temp = di->btemp_ranges.btemp_med_limit;
-+		}
- 	}
--	return temp;
-+
-+	return temp * 10;
- }
- EXPORT_SYMBOL(ab8500_btemp_get_temp);
+ 		ret = request_threaded_irq(irq, NULL, ab8500_btemp_irq[i].isr,
+-			IRQF_SHARED | IRQF_NO_SUSPEND,
++			IRQF_SHARED | IRQF_NO_SUSPEND | IRQF_ONESHOT,
+ 			ab8500_btemp_irq[i].name, di);
  
+ 		if (ret) {
 -- 
 2.53.0
 
