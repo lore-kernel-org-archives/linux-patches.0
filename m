@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045044;
-	b=y5Sw8HCOmaMOHf6tvPAj1zQ6ZbRUwLAZnRDtLs+qO/i+viWu/9nEiYqKkac1fubofIjr
-	 Hl7uo3imAy9/MToYniPs0W0amQdNzmBbaqQG9zc+W22UuKQAKINFl3zoUm7zxK1SYIP9L
-	 VLJXtGrXKgfJx1VyWc6T1FAEQ/9gqXcH0hm33Syp3XFiHw8WKxE2YfKppBqLJWeVZqaJW
-	 5YqzXV83msjRM1K4jgmWmVtyzbJx1tvs2i1GFtz4NE4IdOEUetWK9CT0hNgqZ+M08+Xsi
-	 Ognr7oRDzsb4PrdgXFjSOU8yxqT2eCxsSZC4eh6OPmg7xNXk2SJx8ItSHAl84PEmS+w==
+	t=1795045046;
+	b=0zwL7jTCJwSLL1MOOfiYx73NgIxgZV4fHLmjt7bQ00KRj/n51ecIQ88Xi7IymRPVfM8T
+	 m8MRAABIzRTVg8zxodpe6LWW0JghCTmo3cXegocHbRRsK7XwEQTBzBiSOZ4W/PEn4LlbT
+	 w3U2uh1SsaC1rDUzD4ZfFjZgW2yE+pdRRVbVmtLXO9v6QRE76QpJyi9wH+VFfvgyevOOy
+	 k8UUejdLXQQ1aUtQ2Vzm5kCjDbjJSvrGa/oulyhGj/FNnBNpIugG6YR0lsu8K24cTQCnd
+	 4fx8g1KMAjDKGf9eXPCx6aUvGFfrh6oVHInByMc3kUONz/G6r/X7lA8c+K3XeqWgSOg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/2clveJBxGY6vSUWvo4XP+5xsLYaggCWiMYnHcK2pEg=;
-	b=LZLlIQeO3crrfbZxUG0bc4c5u6+m7R24faG4L9r2Swj9zETA+qI2Sm+Jfg5UdD2tf8YX
-	 tJ3j4+fZUUkazHAiidJ8IafKupCBPo4SRi3RQ06TQ8jLEPJsJINo39A8YEYXFZJEFJVS+
-	 m07bxpNRjwnyXfSLuc+6aeobweHef3vno+4zV4tlJwlGtVa+EexajyTA3jqGWR1rtEGXw
-	 AbnFIKFLWm8rMztSnmiKMYc44KGRGqZY71kYLnwEICobknGl0+f1cIRRZIEi/8iyDFxHD
-	 GAR5FG9MZEJ6k8ZEP5TSUMq0CTLscCmG7iS2/cFRGU7EF0gxsM2AhwJA/nla4SfThNQ==
+	bh=Dg1zxhfeaq+eCRYcv8787ZabvfP2mZnYaxmyPJYJGac=;
+	b=UuS5KEBuOuA+7ETvuHCmU3AMSn0J9e7Cc/0DLvRYYZTUmEPL1ibyGg/g9MZ1JmcJvfwO
+	 Zb1fso6sTn/p4smm4D77BYYWGXsrRiW+CnRphRptqN9UukVXTG++xy+SlFA6jFs75LiLc
+	 HXTsevMU7qSmZ+FhRX68vZvDi11Ac6D1B51xZTuLBmkgf3G2pUDU19oJ/FtD/sT+E/CrF
+	 cXOpIJ6stDZmZMD3xGqAPkL5pu/zSUx8ZjXPylK9BhssESIaZ0ZhoHr21Kt/XW55H5htA
+	 i6m4utSA2brp66UDOHLMvOxHStyeUBOfixCcOysb/ckOmjhQSWH0V9/xkEuWITegBqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1a+OmrTo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXC+BVcG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C743606A320;
-	Wed, 18 Nov 2026 23:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95796606A325;
+	Wed, 18 Nov 2026 23:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1a+OmrTo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352891F000C4;
-	Wed, 18 Nov 2026 23:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eXC+BVcG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB771F000C9;
+	Wed, 18 Nov 2026 23:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045043;
-	bh=/2clveJBxGY6vSUWvo4XP+5xsLYaggCWiMYnHcK2pEg=;
+	s=korg; t=1795045046;
+	bh=Dg1zxhfeaq+eCRYcv8787ZabvfP2mZnYaxmyPJYJGac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1a+OmrTojtr+3l/wS6dty+1Hdk1KY0+LQreMlPeBkYrZpCLSLUvoLzOhta7P7I8Cn
-	 jdX1Ugx9m5beLDGfD+A8zWN1cv7D3ryOgaW76Iw2S7h6lYE673o7dG7sUvhBwFyUt4
-	 GTvVm9SuTFMKkuESWSC0KfZ6h3EPB5RiLvEXZ9C8=
+	b=eXC+BVcGcBoncxiIM6CtDxSbmpnaRpTugpC7cuQ6qf8707x405Vq98S9K1wYJK3yz
+	 0Bgh+r/vdYS/egwVV2q/LaHfPHHzHgsdvx5eFGmRZ3UrZJzXxaQNuTdNTtpeiOQw17
+	 yCnYMXUr2Q7TlmFNgJy/zFAyQ9gpDwfBQ5O5ZmCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cao Guanghui <caoguanghui@kylinos.cn>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0780/2857] md/raid5: track disks array size to fix extra_page leak on error paths
-Date: Wed, 18 Nov 2026 15:30:14 +0100
-Message-ID: <20261118150229.654019094@linuxfoundation.org>
+Subject: [PATCH 6.1 0781/2857] md/raid5: fix NULL pointer dereference in raid5_free_percpu
+Date: Wed, 18 Nov 2026 15:30:15 +0100
+Message-ID: <20261118150229.689976747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,85 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Cao Guanghui <caoguanghui@kylinos.cn>
 
-[ Upstream commit 5028ceee173bfcf844469cfb0d1c151d3f6d0296 ]
+[ Upstream commit 41742e35268d6a45161b187f51f42bc2ade14d0d ]
 
-free_conf() iterates conf->pool_size entries to free extra_page
-allocations, but pool_size may not reflect the actual size of the
-conf->disks array.  Two scenarios cause a mismatch:
+If cpuhp_state_add_instance() fails in raid5_alloc_percpu() (e.g., the
+startup callback raid456_cpu_up_prepare fails due to an allocation
+failure), conf->node is never added to the cpuhp instance list and
+its pprev remains NULL (from kzalloc initialization).
 
-1. setup_conf() early abort: pool_size is 0 (not yet set by
-   grow_stripes) but conf->disks has max_disks entries with
-   extra_page allocated.  The loop iterates 0 times, leaking all
-   pages.
+When setup_conf() then jumps to abort, free_conf() calls
+raid5_free_percpu(), which checks conf->percpu (non-NULL, since it was
+allocated before the cpuhp failure) and proceeds to call
+cpuhp_state_remove_instance().  This calls hlist_del() on the unhashed
+node, which dereferences node->pprev (NULL), causing a kernel panic.
 
-2. resize_stripes() Step 4 failure: conf->disks was replaced with
-   a newsize-entry array in Step 3, but pool_size is only updated
-   on success.  The loop iterates pool_size (old, smaller value)
-   times, leaking (newsize - pool_size) pages.
+Guard the removal with hlist_unhashed_lockless() so that the cpuhp
+instance is only removed if it was actually added.  The lockless variant
+uses READ_ONCE() for the pprev read, which is safe here because the
+actual removal is synchronized by cpuhp_state_mutex inside
+cpuhp_state_remove_instance().
 
-Add a dedicated disks_cnt field to track the actual number of
-entries in conf->disks.  Set it immediately after each allocation
-or replacement (in setup_conf and resize_stripes Step 3, where the
-array is safely stalled with no concurrent access), and use it in
-free_conf() instead of pool_size.
-
-This leaves pool_size untouched, preserving the check_reshape()
-retry behavior that depends on pool_size only being updated on
-full success.
-
-Fixes: d7bd398e97f2 ("md/r5cache: handle alloc_page failure")
+Fixes: 29c6d1bbd7a2 ("md/raid5: Convert to hotplug state machine")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
-Link: https://patch.msgid.link/20260827080341.112296-1-ghuicao@163.com
+Link: https://patch.msgid.link/20260827080341.112296-2-ghuicao@163.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 5 +++--
- drivers/md/raid5.h | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/md/raid5.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 663b95b82360e..94b38c4fe5a88 100644
+index 94b38c4fe5a88..a9cb7cedd6053 100644
 --- a/drivers/md/raid5.c
 +++ b/drivers/md/raid5.c
-@@ -2652,6 +2652,7 @@ static int resize_stripes(struct r5conf *conf, int newsize)
- 		} else {
- 			kfree(conf->disks);
- 			conf->disks = ndisks;
-+			conf->disks_cnt = newsize;
- 		}
- 	} else
- 		err = -ENOMEM;
-@@ -7422,7 +7423,7 @@ static void free_conf(struct r5conf *conf)
- 	free_thread_groups(conf);
- 	shrink_stripes(conf);
- 	raid5_free_percpu(conf);
--	for (i = 0; i < conf->pool_size; i++)
-+	for (i = 0; i < conf->disks_cnt; i++)
- 		if (conf->disks[i].extra_page)
- 			put_page(conf->disks[i].extra_page);
- 	kfree(conf->disks);
-@@ -7605,7 +7606,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+@@ -7409,7 +7409,8 @@ static void raid5_free_percpu(struct r5conf *conf)
+ 	if (!conf->percpu)
+ 		return;
  
- 	if (!conf->disks)
- 		goto abort;
--
-+	conf->disks_cnt = max_disks;
- 	for (i = 0; i < max_disks; i++) {
- 		conf->disks[i].extra_page = alloc_page(GFP_KERNEL);
- 		if (!conf->disks[i].extra_page)
-diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
-index e873938a6125d..fd0161c5496fc 100644
---- a/drivers/md/raid5.h
-+++ b/drivers/md/raid5.h
-@@ -672,6 +672,7 @@ struct r5conf {
- 	unsigned long		cache_state;
- 	struct shrinker		shrinker;
- 	int			pool_size; /* number of disks in stripeheads in pool */
-+	int			disks_cnt; /* number of entries in disks[] array */
- 	spinlock_t		device_lock;
- 	struct disk_info	*disks;
- 	struct bio_set		bio_split;
+-	cpuhp_state_remove_instance(CPUHP_MD_RAID5_PREPARE, &conf->node);
++	if (!hlist_unhashed_lockless(&conf->node))
++		cpuhp_state_remove_instance(CPUHP_MD_RAID5_PREPARE, &conf->node);
+ 	free_percpu(conf->percpu);
+ }
+ 
 -- 
 2.53.0
 
