@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052158;
-	b=lOlrQKTFmNYycj8FX8VtQpi5zlZAjbkKaZdIvBfzUop1PWz2zkIOgC8BAYVSWRlmw0mG
-	 TytYzL9fWX7SlS4f9DuKgU8w+H13wkvESt2co/l2gGoKRwZ6dilZJc4RVLZ5RuvWm4P4R
-	 +/CCD44HxF262S9DfZspfpXxp8BGDk7+Bejz4xLkThGPM1qUo8HadCmW9J8FEnexX+3mN
-	 Y1aZWIqS0J60uCyiKoe/0Tte623ZIyYD/w0y2H6y9ASQ4qTWNpXk27Po12O282DiTeLPJ
-	 04/Rz6OljBwz+4ZUxwx7IoNUOkhTmeCmwim3zmvMmutwaDrpYV3b7BIWraSUXagFuDQ==
+	t=1795052161;
+	b=qofMdxaU7QKptApt2Sajs8Ls4/xe/vOAW6wB1m9KIVf/zMVlu+gqhTDu/h1HJEPDuf3/
+	 0L2NG3cZfBOkJ89DEO+DsQeC/1qqW2U3OIraA8nFRxRiGiDQRsEb6QvoNa9ehnSKi1k82
+	 ZstagFD2QGGT6ta7KVYDxmM2taoHNDNC67BHX8O48oUB1vWzWvWQ9k5vIvzfv5c4AY7gD
+	 n9g4vNY5tYDCu/66dnnzj+bJhow1ZP0HR2W/NziVDar+g7LiXmSmXxPVXMsMU5xNQZuU7
+	 6eqJ5MpcfQMFnH5jS1pATmGV/oZAxX08fhNm6fj5znuRTsgbnlSIsLAzdI8TCR+UirA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052158;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052161;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6zaM6NsXovL2FWsj6pMGE+0CUDx5d9mALWK5uzlEcS8=;
-	b=t8DEaK1cZoi5s2IKGn38/VlW3x39euK4eDKivaDdlCu2edzWT0GI8Sos0lwwUE+xGm1z
-	 rZhRbptoP12gnhP7zQSz4glsXco864uZPOZ+oiUTAxruVChEE1WyQQwLSpsWhiqF7D5Rw
-	 RDcDz0E2KtObhmDUcQnu/51Vr2DDYrqta+2KPjLR/qF9sGxAGhYXXVPDBoFFw66/3YFHM
-	 5mcFggqgLVsLEwGedWTJ+X1Oce22dvydxiMGUYlFT70474w1CdBAaABFmdhcTit7QXzBZ
-	 5Q2x12INYI7bRBZbTtPQ4qK5T10nLIYVx1/MXAESHvBJKv7G0ufC1q6pfoMrCpcXFJA==
+	bh=q5vWp3UuN8uXtVwLWvub/IT87a4BZfz54ivEgjb4HO0=;
+	b=T/UaEBuBmfb1RX5bpY1ltCSCP4646NBUy3BJIJg623ycVxzFQkrU6seXD4K51YFWqdnp
+	 lVrngL+PDW6B3pyvod+1ybzu8GoAJamfy27P5tD/fU5bL+OqfU1XUGJ8pqu/Y1wrAuYUv
+	 O/fm1C6f/MHZo6gG9fERh/zr8FIXuFMk2/SkzQB59gdJrw5wSG9nfMPcBe+4ZUQChMRMV
+	 q8KrO0Ptlhr9ahc1jXTCbCUfsuiSR4EkMkoJv6b1+kXnmkxnpQtw0asCDf0xwTQ4oVHwk
+	 n/5MJE+GjJyjZkFRafc9NuAffU93kHSDlMNyaAqudG6Emc0Ax9iHDM/zxjWyWAiKZsw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzxm1V6I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PSTs4YHg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F01606A31C;
-	Thu, 19 Nov 2026 01:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B2C606A335;
+	Thu, 19 Nov 2026 01:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qzxm1V6I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8ED1F000C4;
-	Thu, 19 Nov 2026 01:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PSTs4YHg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D881F000CA;
+	Thu, 19 Nov 2026 01:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052158;
-	bh=6zaM6NsXovL2FWsj6pMGE+0CUDx5d9mALWK5uzlEcS8=;
+	s=korg; t=1795052160;
+	bh=q5vWp3UuN8uXtVwLWvub/IT87a4BZfz54ivEgjb4HO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qzxm1V6I4986rAdQZubjHrqreZflyxpAoJw9q+2V4cSFhNczWGqHAQgF9VVXawD/j
-	 ZplEJwVdqXmciKG+tt+M3XPualqUWHuYFziQKm+fKoU32PBI89LaaXA4UkZ0LWkfnC
-	 1pvqMJBbCXCMfMzxsOWQ4TlB2D52lFTMcMhmfU4g=
+	b=PSTs4YHgHntiUYj7gfDeAcIb5VShbrXgvZdeXgJ3Uv+eWMgorfyVZq+3sc9FZnzwO
+	 Uju18WqYa20wkd/AKzhkyOgoDz3VIViEMWcuD+ZBTcebZGnF6kBPSyNnExgCd/FhkG
+	 ZeFEQHzspCmWZb/mTezrm4xRX+QJYrBJVPQHFwTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengzhuo Wei <me@cherr.cc>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0462/2214] media: go7007: bound EZ-USB I2C transfers to the usb_buf size
-Date: Wed, 18 Nov 2026 15:35:38 +0100
-Message-ID: <20261118150029.698786345@linuxfoundation.org>
+Subject: [PATCH 5.15 0463/2214] media: saa7146: Initialize interrupt lock before requesting IRQ
+Date: Wed, 18 Nov 2026 15:35:39 +0100
+Message-ID: <20261118150029.735019447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,50 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengzhuo Wei <me@cherr.cc>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 816c4628b23e8c3d925978433f4dd1a13620c01b ]
+[ Upstream commit e07c75a6bc4adf1ed09ede31756261e2c6bdede5 ]
 
-go7007_usb_i2c_master_xfer() copies msgs[i].len bytes into go->usb_buf,
-a 16-byte buffer embedded in struct go7007, without any length check.
-The adapter declares no transfer limits, so an SMBus block transfer
-issued through /dev/i2c-N can write up to 34 bytes into it and corrupt
-the struct fields that follow the buffer.
+The saa7146 interrupt handler can call SAA7146_IER_DISABLE(), which
+serializes register access with dev->int_slock. request_irq() allows the
+shared handler to run before saa7146_init_one() reaches the current lock
+initialization block.
 
-Bound the transfer size with i2c_adapter_quirks so the I2C core
-rejects oversized messages before they reach the driver.
+Initialize dev->int_slock before requesting the interrupt so every handler
+path sees an initialized lock.
 
-Fixes: 7955f03d18d1 ("[media] go7007: move out of staging into drivers/media/usb.")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shengzhuo Wei <me@cherr.cc>
-Assisted-by: GLM:5.3
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/go7007-usb.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/common/saa7146/saa7146_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/go7007/go7007-usb.c b/drivers/media/usb/go7007/go7007-usb.c
-index 762c13e49bfa5..6a0733c5925fc 100644
---- a/drivers/media/usb/go7007/go7007-usb.c
-+++ b/drivers/media/usb/go7007/go7007-usb.c
-@@ -1029,10 +1029,16 @@ static const struct i2c_algorithm go7007_usb_algo = {
- 	.functionality	= go7007_usb_functionality,
- };
+diff --git a/drivers/media/common/saa7146/saa7146_core.c b/drivers/media/common/saa7146/saa7146_core.c
+index e50fa0ff7c5d5..81a94141b360b 100644
+--- a/drivers/media/common/saa7146/saa7146_core.c
++++ b/drivers/media/common/saa7146/saa7146_core.c
+@@ -352,6 +352,8 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
+ 		goto out;
+ 	}
  
-+static const struct i2c_adapter_quirks go7007_usb_quirks = {
-+	.max_write_len	= 12,
-+	.max_read_len	= 15,
-+};
++	spin_lock_init(&dev->int_slock);
 +
- static struct i2c_adapter go7007_usb_adap_templ = {
- 	.owner			= THIS_MODULE,
- 	.name			= "WIS GO7007SB EZ-USB",
- 	.algo			= &go7007_usb_algo,
-+	.quirks			= &go7007_usb_quirks,
- };
+ 	/* create a nice device name */
+ 	sprintf(dev->name, "saa7146 (%d)", saa7146_num);
  
- /********************* USB add/remove functions *********************/
+@@ -437,7 +439,6 @@ static int saa7146_init_one(struct pci_dev *pci, const struct pci_device_id *ent
+ 	dev->ext = ext;
+ 
+ 	mutex_init(&dev->v4l2_lock);
+-	spin_lock_init(&dev->int_slock);
+ 	spin_lock_init(&dev->slock);
+ 
+ 	mutex_init(&dev->i2c_lock);
 -- 
 2.53.0
 
