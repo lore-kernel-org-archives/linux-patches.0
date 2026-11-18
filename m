@@ -1,50 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035376;
-	b=sBUCg01vLIUKCAlKHsd50uQD8MJYJvSwXMX8DKV+6lEXCFEVsgtLwBE2q7D0q3m8OUbD
-	 UcRwpFrv7x43JbQLvc0PgC9PEzsECUBAYNrppWmxD/Egu51yP3ddy9Ali4ibrF5sf1eD5
-	 gbKq/tCFf1m1YupsaXFRWgVYo4rYOeanrc0Ciz2xyitqGU8SAbGUYVWI1J3dgffubvGSw
-	 LWHzI1LGL5dxgkq7iTq2yoJEfk+TE3K1BCkNqghKTs2iXajZs8hZYxTb8KfWcEg1rPlhP
-	 dgNEioWVfoCYzaw7DW3AE2atlwPaoecr0+cnybFW9XkSMow6ri8sAO3ce37ah2l16HQ==
+	t=1795035379;
+	b=FRbJylPpFB47sZnXX6qCSwXugXmfsndA4YkymixhyGSv9dXqMDisgJz+6LlTVVg/N55d
+	 YKrTzkDta+tUH/0QCnk9GCDz8qC8YRZ8NESe95yYMoyP2GxubrufRPNTvv+jZF8Jjg+ia
+	 SdxM19iPnqOyAFZ9ODrObp22jfzxmkK344yaydWRedoIRwp7R8b9NKfeWtKjsrvrl7W9X
+	 KVOYVWeY6XVDZdpASZ/RRBQOt5i+eg4qS4RppI89bwKT41nrArItzbf2lBLpt8ALQuW6y
+	 DwQZ/cUi8mrUI9n9kRlvkGVHbR4uiiXo9mqoaKWc3ps4mIla16MAl5jyIwo3BCiziqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035376;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035379;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q+mPR+vt4CBHex1Lu9Pin9KHkmvuMvJB9jn825CcT6A=;
-	b=UijGWRfMX1l0904WyMYBhMOMLvc4i29szd0GZhGQkseR+Wiqtr7C2UHRFqW9T8po8VYS
-	 xKCqGJ5W9t/L+CdY8npOyl6NkmOaQ9HTdkfX3+Qm9qfqN7sJ+fKd8wlcE4B3rI+pd4rGN
-	 5WE432b8cQm+fp0yCMW6icKztyQJ+onc6MJHLBauQ4/N6cc2bZAIETynoZShtZEfc1KVm
-	 A9M2BzcgoLRotSRzHWtmX3nPkXWjcg9FX+yzxn5P9r4OEK/zhDTpOmNTsWljqA5B/g1Uz
-	 l7dsXHx2TeuPN0T6QSHp2RsfP3eQmf3/m/jjpPQiwrTKFqjfwtB6W4UTqykZKBYNMHg==
+	bh=I6JGhLJfUvkOULbWYHHZLvkJENiSJoHXn5NmfyQQ/Gs=;
+	b=oR/0hFeuTudoape6+byt7Bn4L2NhxNdOlScjod8BOLEi2RnGGh9xcb/oCt71Y6sd5Ub2
+	 dy5MUJtKmdWKDPICiT/Yj7VddbHSM6mboS6uXP5YfOwgucQPAvtIQy8r+BEdHxYmjfUxc
+	 hdthJf3XS0f6aS90BMYXry1k5+LTGNXJnOzkK+CWdLhK83+BE9BXeEGcFQqb/8IpPXTtZ
+	 hx0xGb2Re0LXMsfehwbH3bm1Go53bR7PKtON1T4gFxHP1PheFKpRe4NYvH3PofIrqvNrO
+	 ZhqslQ9IHr8quLzwJGUMyHW/7ZJBmdEnrCwCxDCq6FHzGxesE/j+mqLjvTWE2ALvCVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eHq+p8Hm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aHBXJVsa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EAC606A31C;
-	Wed, 18 Nov 2026 20:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B014606A31C;
+	Wed, 18 Nov 2026 20:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eHq+p8Hm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054AF1F000C4;
-	Wed, 18 Nov 2026 20:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aHBXJVsa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE7531F000C4;
+	Wed, 18 Nov 2026 20:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035376;
-	bh=Q+mPR+vt4CBHex1Lu9Pin9KHkmvuMvJB9jn825CcT6A=;
+	s=korg; t=1795035379;
+	bh=I6JGhLJfUvkOULbWYHHZLvkJENiSJoHXn5NmfyQQ/Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eHq+p8HmvZL7sf7LEuVwZ1IIog334xkjwpB1C0he6ptC9zr9O6BrpZwr89zkoTUnX
-	 JZ4PlqhlEGW+TWyrylumZQtM08PLHs0uM5KFez8N7hlfHOui5QlDbFsBVUASfnUjoP
-	 1XrVmtpzgl8Yj07E0dT2WacLrtu6ivRE8OW9EpHU=
+	b=aHBXJVsaz0MB/zyeVhy4z0cm8S2yfSNXs5oZ/yE7Dj3ygGzEQWcAPY8Pb3m2WYGam
+	 tpejlRWqhB3uRYqk+uMlQveJYnr8106pKhP7pO1nHheaWP/asr38Rf8tT1pdVvlbHo
+	 FZI4s4dMW1dXzB6l0xALBEbpjZxBNPWGc/JbEJBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0681/3318] pnfs/blocklayout: Complete a device upcall only on its own reply
-Date: Wed, 18 Nov 2026 15:21:43 +0100
-Message-ID: <20261118150338.626153292@linuxfoundation.org>
+	Diego Oliva <diego@bynar.io>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>
+Subject: [PATCH 6.6 0646/3318] smb: client: fix OOB last_entry pointer from unbounded LastNameOffset
+Date: Wed, 18 Nov 2026 15:21:08 +0100
+Message-ID: <20261118150337.368132259@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -66,188 +68,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Diego Oliva <diego@bynar.io>
 
-commit acfbea6c5e27c68d6b6d12849eb2b7f8466ccf06 upstream.
+commit 570c783a96f054dd3ac409a92772e9afb705d21c upstream.
 
-bl_pipe_downcall() wakes bl_resolve_deviceid() on any write of the
-right size, without checking that blkmapd has read the upcall being
-replied to. A write that arrives first returns the waiter while its
-struct rpc_pipe_msg is still queued on the pipe, which then holds a
-list_head into a dead stack frame. Reaching the pipe takes root, so
-the trigger is a broken or hostile blkmapd.
+CIFSFindFirst() and CIFSFindNext() locate the last entry of a
+TRANS2_FIND_FIRST2 or TRANS2_FIND_NEXT2 response by adding the
+LastNameOffset of the response parameters to the start of the data
+area, and store the result in psrch_inf->last_entry. MS-CIFS 2.2.6.2.2
+defines that offset as the offset of the entry's file name; the client
+follows the reading of NT and Samba servers, which point it at the
+entry. LastNameOffset is only checked against CIFSMaxBufSize, which
+says nothing about the response actually received: validate_t2() lets
+the data area start up to 1024 bytes into the buffer, and SendReceive()
+copies at most CIFSMaxBufSize + MAX_CIFS_HDR_SIZE bytes of a response,
+16468 by default, into a cifs_request allocation of CIFSMaxBufSize +
+MAX_SMB2_HDR_SIZE bytes, 16588 by default. The pointer itself can
+therefore be placed anywhere from the end of the received data to 820
+bytes past the end of the allocation.
 
-The wait has two further defects. bl_resolve_deviceid() sets
-TASK_UNINTERRUPTIBLE only after rpc_queue_upcall() has made the
-message visible, so a reply that lands in between wakes a running
-task and the schedule() that follows sleeps forever holding
-bl_mutex. And nn->bl_mount_reply is never reset, so when the pipe
-purges an unread upcall the waiter takes the previous reply as its
-own.
+The read through that pointer is far larger than its displacement.
+find_cifs_entry() hands last_entry to cifs_save_resume_key() after every
+FindNext and after the FindFirst of a search rewind, and
+cifs_fill_dirent() takes the length of the name from the entry itself: a
+__le32 FileNameLength for most levels, a __u8 for
+SMB_FIND_FILE_INFO_STANDARD, and for SMB_FIND_FILE_UNIX the result of a
+scan for the terminating NUL over up to PATH_MAX + 1 UTF-16 units. The
+name is recorded as the resume name of the search, and the next
+CIFSFindNext() rejects only a recorded length of PATH_MAX or more before
+copying the name into the ResumeFileName of its request and sending it
+with the resume key taken from the same entry: up to 4 KiB of memory
+from past the end of the allocation leaks to the server, and for
+SMB_FIND_FILE_UNIX the NUL scan runs about twice as far before the
+length is even known. The entry does not have to lie outside the
+response for that either: a maximal response ends about 120 bytes before
+the end of the allocation, so an entry in its last bytes with a name
+just under PATH_MAX has nearly all of that name copied from past the
+allocation.
 
-Move the message into struct nfs_net, where bl_mutex already limits
-the pipe to one upcall per net namespace. Accept a reply only while
-blkmapd has read the whole message and no earlier reply has been
-taken, and reject any other write with -EINVAL. Wait for that reply
-on a completion so it cannot slip past the sleep, and check
-msg->errno before trusting it.
+It needs nothing unusual from the client: a FindNext response that
+reports no entries and does not end the search makes find_cifs_entry()
+send the next FindNext at once, carrying whatever was parsed at
+LastNameOffset, and a search rewind can do the same after its
+FindFirst. SMB1 is not negotiated by default: this takes a malicious
+or compromised server, a mount of it with an explicit vers=1.0, which
+CONFIG_CIFS_ALLOW_INSECURE_LEGACY (default y) permits, and a directory
+listing on that mount.
 
-Fixes: fe0a9b740881 ("pnfsblock: add device operations")
+With KASAN enabled, a response that places the last entry past the
+buffer, with a large DataOffset and a LastNameOffset near the end of
+its range, gives:
+
+ ==================================================================
+ BUG: KASAN: slab-out-of-bounds in cifs_save_resume_key.isra.0+0x7aa/0x7f0
+ Read of size 4 at addr ffff88807b55c33b by task ls/83
+
+ CPU: 1 UID: 0 PID: 83 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
+ Call Trace:
+  <TASK>
+  kasan_report+0xdf/0x1a0
+  cifs_save_resume_key.isra.0+0x7aa/0x7f0
+  cifs_readdir+0x1ed6/0x29c0
+  iterate_dir+0x1c0/0x570
+  __x64_sys_getdents64+0x133/0x270
+  do_syscall_64+0x109/0x5d0
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  </TASK>
+
+ Allocated by task 83 on cpu 0 at 19.317556s:
+  cifs_buf_get+0x36/0x90
+  smb_init+0x4f/0x110
+  CIFSFindNext+0xf7/0x14c0
+  cifs_readdir+0xf51/0x29c0
+
+ The buggy address belongs to the object at ffff88807b558000
+  which belongs to the cache cifs_request of size 16588
+ The buggy address is located 623 bytes to the right of
+  allocated 16588-byte region [ffff88807b558000, ffff88807b55c0cc)
+ ==================================================================
+
+The four bytes read there are the FileNameLength of the entry, which
+cifs_fill_dirent() takes before anything checks where the entry lies.
+
+Ignore the last entry when it does not start inside the received
+response or the response holds no entries; for a response without
+entries, last_entry pointed into or past its empty data area and
+cifs_save_resume_key() parsed whatever the buffer held there. The
+entry is bounded by the response that was received, which is what the
+buffer holds, rather than by the data area the response declares,
+which a later patch checks against the received length. Record the
+search handle before the last entry is examined, since a response
+without a usable last entry still carries the handle that the search
+is continued and closed with; leaving the assignment in the else
+branch would drop the handle of every response without entries.
+
+This bounds where the last entry starts, not how far it is parsed: an
+entry that starts within the final bytes of the response still has
+its fixed part read past the end of the received data and its name,
+up to 4095 bytes, copied from past the end of the allocation, until
+the following patch bounds the parse itself. A response without a
+usable last entry continues the search with an empty resume name,
+since the preceding patch, "smb: client: fix use-after-free infoleak
+via the readdir resume name", drops the recorded name whenever a new
+response is installed. This patch applies on top of that one and
+relies on it: without it, every response rejected here would leave
+the previous name in place, pointing into a buffer that has been
+released.
+
+A conforming server is not affected: the last entry lies inside the
+data area of the response.
+
+Fixes: 0752f1522a91 ("[CIFS] make sure we have the right resume info before calling CIFSFindNext")
+Fixes: b77d753c413e ("[CIFS] Check that last search entry resume key is valid")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-5-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/blocklayout/blocklayout.h |    5 ---
- fs/nfs/blocklayout/rpc_pipefs.c  |   58 ++++++++++++++++++++++++---------------
- fs/nfs/netns.h                   |    5 ++-
- 3 files changed, 41 insertions(+), 27 deletions(-)
+ fs/smb/client/cifssmb.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/nfs/blocklayout/blocklayout.h
-+++ b/fs/nfs/blocklayout/blocklayout.h
-@@ -155,11 +155,6 @@ BLK_LSEG2EXT(struct pnfs_layout_segment
- 	return BLK_LO2EXT(lseg->pls_layout);
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -4098,14 +4098,17 @@ findFirstRetry:
+ 	psrch_inf->presume_name = NULL;
+ 	psrch_inf->resume_name_len = 0;
+ 	psrch_inf->resume_key = 0;
++	if (pnetfid)
++		*pnetfid = parms->SearchHandle;
+ 	lnoff = le16_to_cpu(parms->LastNameOffset);
+-	if (CIFSMaxBufSize < lnoff) {
++	if (!psrch_inf->entries_in_buffer) {
++		psrch_inf->last_entry = NULL;
++	} else if (psrch_inf->srch_entries_start + lnoff >=
++		   psrch_inf->ntwrk_buf_start + bytes_returned) {
+ 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
+ 		psrch_inf->last_entry = NULL;
+ 	} else {
+ 		psrch_inf->last_entry = psrch_inf->srch_entries_start + lnoff;
+-		if (pnetfid)
+-			*pnetfid = parms->SearchHandle;
+ 	}
+ 	return 0;
  }
- 
--struct bl_pipe_msg {
--	struct rpc_pipe_msg msg;
--	wait_queue_head_t *bl_wq;
--};
--
- struct bl_msg_hdr {
- 	u8  type;
- 	u16 totallen; /* length of entire message, including hdr itself */
---- a/fs/nfs/blocklayout/rpc_pipefs.c
-+++ b/fs/nfs/blocklayout/rpc_pipefs.c
-@@ -55,17 +55,15 @@ bl_resolve_deviceid(struct nfs_server *s
- 	struct net *net = server->nfs_client->cl_net;
- 	struct nfs_net *nn = net_generic(net, nfs_net_id);
- 	struct bl_dev_msg *reply = &nn->bl_mount_reply;
--	struct bl_pipe_msg bl_pipe_msg;
--	struct rpc_pipe_msg *msg = &bl_pipe_msg.msg;
-+	struct rpc_pipe_msg *msg = &nn->bl_pipe_msg;
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
- 	struct bl_msg_hdr *bl_msg;
--	DECLARE_WAITQUEUE(wq, current);
- 	dev_t dev = 0;
- 	int rc;
- 
- 	dprintk("%s CREATING PIPEFS MESSAGE\n", __func__);
- 
- 	mutex_lock(&nn->bl_mutex);
--	bl_pipe_msg.bl_wq = &nn->bl_wq;
- 
- 	b->simple.len += 4;	/* single volume */
- 	if (b->simple.len > PAGE_SIZE)
-@@ -83,17 +81,15 @@ bl_resolve_deviceid(struct nfs_server *s
- 	nfs4_encode_simple(msg->data + sizeof(*bl_msg), b);
- 
- 	dprintk("%s CALLING USERSPACE DAEMON\n", __func__);
--	add_wait_queue(&nn->bl_wq, &wq);
--	rc = rpc_queue_upcall(nn->bl_device_pipe, msg);
--	if (rc < 0) {
--		remove_wait_queue(&nn->bl_wq, &wq);
-+	reinit_completion(&nn->bl_done);
-+	rc = rpc_queue_upcall(pipe, msg);
-+	if (rc < 0)
- 		goto out_free_data;
--	}
- 
--	set_current_state(TASK_UNINTERRUPTIBLE);
--	schedule();
--	remove_wait_queue(&nn->bl_wq, &wq);
-+	wait_for_completion(&nn->bl_done);
- 
-+	if (msg->errno < 0)
-+		goto out_free_data;
- 	if (reply->status != BL_DEVICE_REQUEST_PROC) {
- 		printk(KERN_WARNING "%s failed to decode device: %d\n",
- 			__func__, reply->status);
-@@ -113,26 +109,46 @@ static ssize_t bl_pipe_downcall(struct f
- {
- 	struct nfs_net *nn = net_generic(file_inode(filp)->i_sb->s_fs_info,
- 					 nfs_net_id);
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
-+	struct bl_dev_msg reply;
-+	bool accepted;
- 
--	if (mlen != sizeof (struct bl_dev_msg))
-+	if (mlen != sizeof(reply))
- 		return -EINVAL;
--
--	if (copy_from_user(&nn->bl_mount_reply, src, mlen) != 0)
-+	if (copy_from_user(&reply, src, mlen) != 0)
- 		return -EFAULT;
- 
--	wake_up(&nn->bl_wq);
--
-+	/*
-+	 * Accept a reply only after blkmapd has read the whole upcall.
-+	 * Completion retires the message, here and in
-+	 * bl_pipe_destroy_msg(), so a later reply finds nothing in
-+	 * flight.
-+	 */
-+	spin_lock(&pipe->lock);
-+	accepted = rpc_msg_is_inflight(&nn->bl_pipe_msg);
-+	if (accepted) {
-+		nn->bl_pipe_msg.copied = 0;
-+		nn->bl_mount_reply = reply;
-+		complete(&nn->bl_done);
-+	}
-+	spin_unlock(&pipe->lock);
-+	if (!accepted)
-+		return -EINVAL;
- 	return mlen;
- }
- 
- static void bl_pipe_destroy_msg(struct rpc_pipe_msg *msg)
- {
--	struct bl_pipe_msg *bl_pipe_msg =
--		container_of(msg, struct bl_pipe_msg, msg);
-+	struct nfs_net *nn = container_of(msg, struct nfs_net, bl_pipe_msg);
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
- 
- 	if (msg->errno >= 0)
- 		return;
--	wake_up(bl_pipe_msg->bl_wq);
-+
-+	spin_lock(&pipe->lock);
-+	msg->copied = 0;
-+	spin_unlock(&pipe->lock);
-+	complete(&nn->bl_done);
- }
- 
- static const struct rpc_pipe_ops bl_upcall_ops = {
-@@ -235,7 +251,7 @@ static int nfs4blocklayout_net_init(stru
- 	struct dentry *dentry;
- 
- 	mutex_init(&nn->bl_mutex);
--	init_waitqueue_head(&nn->bl_wq);
-+	init_completion(&nn->bl_done);
- 	nn->bl_device_pipe = rpc_mkpipe_data(&bl_upcall_ops, 0);
- 	if (IS_ERR(nn->bl_device_pipe))
- 		return PTR_ERR(nn->bl_device_pipe);
---- a/fs/nfs/netns.h
-+++ b/fs/nfs/netns.h
-@@ -10,6 +10,8 @@
- #include <net/net_namespace.h>
- #include <net/netns/generic.h>
- #include <linux/sunrpc/stats.h>
-+#include <linux/sunrpc/rpc_pipe_fs.h>
-+#include <linux/completion.h>
- 
- struct bl_dev_msg {
- 	int32_t status;
-@@ -21,8 +23,9 @@ struct nfs_netns_client;
- struct nfs_net {
- 	struct cache_detail *nfs_dns_resolve;
- 	struct rpc_pipe *bl_device_pipe;
-+	struct rpc_pipe_msg bl_pipe_msg;
- 	struct bl_dev_msg bl_mount_reply;
--	wait_queue_head_t bl_wq;
-+	struct completion bl_done;
- 	struct mutex bl_mutex;
- 	struct list_head nfs_client_list;
- 	struct list_head nfs_volume_list;
+@@ -4223,7 +4226,10 @@ int CIFSFindNext(const unsigned int xid,
+ 	psrch_inf->resume_name_len = 0;
+ 	psrch_inf->resume_key = 0;
+ 	lnoff = le16_to_cpu(parms->LastNameOffset);
+-	if (CIFSMaxBufSize < lnoff) {
++	if (!psrch_inf->entries_in_buffer) {
++		psrch_inf->last_entry = NULL;
++	} else if (psrch_inf->srch_entries_start + lnoff >=
++		   psrch_inf->ntwrk_buf_start + bytes_returned) {
+ 		cifs_dbg(VFS, "ignoring corrupt resume name\n");
+ 		psrch_inf->last_entry = NULL;
+ 	} else {
 
 
