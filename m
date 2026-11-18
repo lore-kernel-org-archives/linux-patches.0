@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029498;
-	b=UPugfH5p2ePP1tqm4dipAG5aouNjfNlD9gpvUHnLn/6SWxTUDg2GG+GgFgz4v5b6fYyW
-	 G/f1waB0boMI3b7Znr49/Ma0pxYhP6qJMVZ9JDCk6kOMffXuDXj8Tn1M5PFTlfx8c4Bjo
-	 U+VnqK+jVJjuCBc3iTI97Tajp+diCFrGUFYoXAR/BUF0wF225LL6J8ftL4TlpMcbLoB2F
-	 8y/BkunXR3MJS3L/kihUEoc1MGTP/fAaPGjpgzS1UQe+Llz5yP9ST8vSw/g/oxa7Vi0JU
-	 lrGQDBJP9kHG5wQHurEp+2mikxdPXwKV8iqzz94OECaZ/STdWuWvy54+UHPf4kPPb7A==
+	t=1795029500;
+	b=xDyh8B1gjqFEEcmVb69awh7Zmv9U7pOb3t9QmwtamRZJVfpMNIe1YAzYCcD2oLDLvvTF
+	 GY2hwJDi5YQ6252Y3kj51Csta/uyJzveizcS3mMUajGJJnRO2kyJynfQ3/dfii/8yh01b
+	 F5Mt8yO+p+QR9kqtzjFnmbnlhG9FitBfMLfyk5J8QRTYgGyVbW2TXJSUzDlpzfSb4HR7x
+	 cR3Vo+HbEyw6WZDCTMGrq6KUcbk7J/T0eE38L/YGBN89KKmzIRVItBHnmG3DHlrwWgSlK
+	 hjqoPwkZt7sDxTbdBMfcLR1y7+PfnA6Z1nSQjXMPnUwKzfFTLlcR3zRgLOI/LmwczgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029500;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wwXp8x+Pt35g0RzPiMgVQ6PPr6UakdfgPYiNDmBJZaU=;
-	b=HbwFUQEUvqc4b6bVcAlDQOg+FTG4zTuTn1VU2EbWeo9ZksJMMyGlZSGQxCJbu0tMYq3S
-	 kG7HTguOfegIhbr8vTkZZaa/D2tZZYswCQDfIR5DhGJgeOp+blpBmBnZgDcow86FiJhbh
-	 +YA+6ITAEAhAsTRlCkJiEEAFzG6YhISW7jLXiYzlfz32ZKD6wr2zTlzaypX1ay61fgrJV
-	 fRDCh3Z8Kt/gmSvfX3ygQPfmk26OC7K83gErvOOZ15BdNEVOhuo10ZWPsUsJKud8x95Hq
-	 +Tf+4dDW7b1mf8pti3QvJ73DYxXYK0On2Cl3x+CryOIJXCTIcmY4iKnXcclzrYhEjBw==
+	bh=ApbdGtUX+s3xaV2JxuDDOt32wASv79qwDz+L1cKHyhA=;
+	b=clSgfeA68zbZOqbRUVRbsTP5hraknpjFV5ZWn8Jh0MOyxierctkj/sY7AtHG9D0z6GQd
+	 Rh1dnB3hzz2IDEkcPu4X2OlqXwwa7G0WEd0R0gnHTLSAk4PdYzlI3HXAA2WWHjwKpj6k9
+	 5DmwdQBMvHnM7YZueYZF6fY3S1degp3TNpto8hiLVtdvQHptZpsyQiqpJSK2aPTIXK/fv
+	 nSrp009n1ocKKJTspONXlIMk7GFkA/q545DcZvdcKNNFDM69F5E9gmXOnzLtwVi57w6F4
+	 NIOYPoo5bgKFltbFJI4TWQ9OUSzFByzijqX6vOSeaHiUBJRr0b9T3RsCM1Yc2YzMNqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hbfJIv/x";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nxTX75u/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2218B606A32F;
-	Wed, 18 Nov 2026 19:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A035D606A32A;
+	Wed, 18 Nov 2026 19:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbfJIv/x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B40A1F000C5;
-	Wed, 18 Nov 2026 19:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxTX75u/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30121F000C5;
+	Wed, 18 Nov 2026 19:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029497;
-	bh=wwXp8x+Pt35g0RzPiMgVQ6PPr6UakdfgPYiNDmBJZaU=;
+	s=korg; t=1795029500;
+	bh=ApbdGtUX+s3xaV2JxuDDOt32wASv79qwDz+L1cKHyhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hbfJIv/xU+4ce0Ksz63NP46zxiXGBr5AUAhQmJe2YB1eo2Z2TKh16Dx+VXQ03Q/WL
-	 gUBP57Vjr+L/Zqw8WEyNRBSqPBZfW8pREmwyvWKgR3Y0j35iLlJxKmqU6sbIYBg9b1
-	 Lgoc/mpNZ/p8IyTI0sNvpfHmBBP8/JeH6d1qpu2k=
+	b=nxTX75u/xbpK1aIWuTs9Ar8WkNql1jCzAbYR+A3MMCizGouX9iDDIQyioI0OqWnjM
+	 hsyEJNvciVDBnu718qGuTM6vkHlL3cIXCh9S6SqX3vG4WDz+idiiuB7SZeLtsc3sJH
+	 woXvJ/t++wGQEN6rqXP5o9hxP1UtDTIebm1LZl/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0324/1756] RDMA/hns: Fix GID capacity loss in 64K system
-Date: Wed, 18 Nov 2026 15:40:51 +0100
-Message-ID: <20261118150021.182734369@linuxfoundation.org>
+Subject: [PATCH 6.12 0369/1756] ARM: dts: stm32: add LTDC / DCMIPP access controller for STM32MP135
+Date: Wed, 18 Nov 2026 15:41:36 +0100
+Message-ID: <20261118150023.120451577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,79 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Alain Volmat <alain.volmat@foss.st.com>
 
-[ Upstream commit 95761b8736c938759032e8d4eb42074d39d13007 ]
+[ Upstream commit 0c354b85cc95b5d563a581c8dbca57b4942bfae7 ]
 
-Our HW always handles GMV BT pages with a fixed 4K size, but the driver
-calculates the needed GMV BT pages number with PAGE_SIZE, which is 64K
-in 64K system. Only the first 4K (GMV index 0-127) can be reached by HW,
-causing GID capacity loss and memory waste.
+Add ETZPC as an access controller for the LTDC and DCMIPP found
+on the stm32mp135.
 
-Split a single 64K BT page into multiple 4K pages and register them to
-HW per 4K block so that HW can correctly reach all GMV entries.
+Fixes: a06b9560eb6c ("ARM: dts: stm32: add ETZPC as a system bus for STM32MP13x boards")
 
-Fixes: 32053e584e4a ("RDMA/hns: Add support for filling GMV table")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260907084901.2420703-4-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Link: https://lore.kernel.org/r/20260721-etzpc-mp13-ltdc-dcmipp-fix-v1-1-a969f2ab8da1@foss.st.com
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 37 +++++++++++++++++-----
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ arch/arm/boot/dts/st/stm32mp135.dtsi | 42 ++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 8774715174b3e..065b76e9f29a3 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -4136,18 +4136,39 @@ static int get_op_for_set_hem(struct hns_roce_dev *hr_dev, u32 type,
- static int config_gmv_ba_to_hw(struct hns_roce_dev *hr_dev, unsigned long obj,
- 			       dma_addr_t base_addr)
- {
-+	u32 obj_num_per_bt = HNS_HW_PAGE_SIZE / hr_dev->caps.gmv_entry_sz;
-+	u32 chunk_size = 1 << (hr_dev->caps.gmv_buf_pg_sz + PAGE_SHIFT);
-+	u32 bt_num_per_chunk = chunk_size / HNS_HW_PAGE_SIZE;
-+	u32 first = obj / obj_num_per_bt;
-+	u32 last = min(first + bt_num_per_chunk, hr_dev->caps.gmv_bt_num);
- 	struct hns_roce_cmq_desc desc;
--	struct hns_roce_cmq_req *req = (struct hns_roce_cmq_req *)desc.data;
--	u32 idx = obj / (HNS_HW_PAGE_SIZE / hr_dev->caps.gmv_entry_sz);
--	u64 addr = to_hr_hw_page_addr(base_addr);
-+	struct hns_roce_cmq_req *req;
-+	u64 addr;
-+	int ret;
-+	u32 i;
+diff --git a/arch/arm/boot/dts/st/stm32mp135.dtsi b/arch/arm/boot/dts/st/stm32mp135.dtsi
+index 834a4d545fe44..f573335edf6b4 100644
+--- a/arch/arm/boot/dts/st/stm32mp135.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp135.dtsi
+@@ -6,29 +6,29 @@
  
--	hns_roce_cmq_setup_basic_desc(&desc, HNS_ROCE_OPC_CFG_GMV_BT, false);
-+	/* The GMV BT entry of hardware covers a fixed 4K region, so a buffer
-+	 * chunk larger than 4K must be registered to hardware with one BT
-+	 * entry per 4K block, otherwise the GMV entries beyond the first
-+	 * 4K of the chunk are unreachable.
-+	 */
-+	for (i = first; i < last; i++) {
-+		hns_roce_cmq_setup_basic_desc(&desc, HNS_ROCE_OPC_CFG_GMV_BT,
-+					      false);
-+		req = (struct hns_roce_cmq_req *)desc.data;
+ #include "stm32mp133.dtsi"
  
--	hr_reg_write(req, CFG_GMV_BT_BA_L, lower_32_bits(addr));
--	hr_reg_write(req, CFG_GMV_BT_BA_H, upper_32_bits(addr));
--	hr_reg_write(req, CFG_GMV_BT_IDX, idx);
-+		addr = to_hr_hw_page_addr(base_addr +
-+					  (u64)(i - first) * HNS_HW_PAGE_SIZE);
-+		hr_reg_write(req, CFG_GMV_BT_BA_L, lower_32_bits(addr));
-+		hr_reg_write(req, CFG_GMV_BT_BA_H, upper_32_bits(addr));
-+		hr_reg_write(req, CFG_GMV_BT_IDX, i);
+-/ {
+-	soc {
+-		dcmipp: dcmipp@5a000000 {
+-			compatible = "st,stm32mp13-dcmipp";
+-			reg = <0x5a000000 0x400>;
+-			interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
+-			resets = <&rcc DCMIPP_R>;
+-			clocks = <&rcc DCMIPP_K>;
+-			status = "disabled";
++&etzpc {
++	dcmipp: dcmipp@5a000000 {
++		compatible = "st,stm32mp13-dcmipp";
++		reg = <0x5a000000 0x400>;
++		interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
++		resets = <&rcc DCMIPP_R>;
++		clocks = <&rcc DCMIPP_K>;
++		access-controllers = <&etzpc 4>;
++		status = "disabled";
  
--	return hns_roce_cmq_send(hr_dev, &desc, 1);
-+		ret = hns_roce_cmq_send(hr_dev, &desc, 1);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
- }
+-			port {
+-			};
++		port {
+ 		};
++	};
  
- static int set_hem_to_hw(struct hns_roce_dev *hr_dev, int obj,
+-		ltdc: display-controller@5a001000 {
+-			compatible = "st,stm32-ltdc";
+-			reg = <0x5a001000 0x400>;
+-			interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&rcc LTDC_PX>;
+-			clock-names = "lcd";
+-			resets = <&scmi_reset RST_SCMI_LTDC>;
+-			status = "disabled";
+-		};
++	ltdc: display-controller@5a001000 {
++		compatible = "st,stm32-ltdc";
++		reg = <0x5a001000 0x400>;
++		interrupts = <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
++		clocks = <&rcc LTDC_PX>;
++		clock-names = "lcd";
++		resets = <&scmi_reset RST_SCMI_LTDC>;
++		access-controllers = <&etzpc 3>;
++		status = "disabled";
+ 	};
+ };
 -- 
 2.53.0
 
