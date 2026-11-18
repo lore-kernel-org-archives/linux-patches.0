@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022981;
-	b=NnXsdJJnYsECl4bg/EgFraI5AeXtmXZQDOGi9nIm4Kd5/gifEshF1Qxyo/YSt5h3I7xE
-	 9w6wmlfHBtUINxEyI/9jQr24o4nLf3SCSS8W4zEiLSBC1iCQw64N/kJGjEwzanGdvq7e8
-	 Q8yNkdl55MLL+q7CtoA4TQ+n3jh51qiz1B8bLinucsD1Rv00hywmSvP/M4JyK2NDeqp3o
-	 OOPRMmAHFCNDokjGYP1zJCZCsVSNeOBfA02sdsjtPlMstMA72NczJ7lomcVhq3FB07lLX
-	 q1m+mT8ur82ZmyapxDERTgyoUFCdW+KDkKYZI8+zouHskMQkQDBTOxTLIuk3+ck3bIA==
+	t=1795022984;
+	b=47+XjvFdkSH4YcD7w3Ons+Qvj9J4nzm489h5KJlLEK3Hjnqx0FdT2RV95m1WX/bSz9t2
+	 C2XjbrkXpgUsjfsjrT9phrygIrdJv7or6T1O7p7v5oHQwBdaskGb1mEwDllsdW0keGBbJ
+	 4NOaz7sNKJF/+GfhraXXgp9J7166/rgkeOkVFxo97yIud4c3bROEnXdiT9VNzXO7Zj+0O
+	 eedyzoVyvTz1CIcytMiRBy6NFDtENo0VC/WQYoLiDThpcrtyraMcWH9bsPMygedNq5ANC
+	 ImBBtE0P5WWdJ0yBSBu/yLdg9ECgXuTiIGJZmhgYTh81W2szydywDXNhfZG381k/S+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6hTTsW0ZBsVzGhR8XCR1/XpJbKHWOcsRN2e3n7mQ31I=;
-	b=JOzba+SLeBJyX1UjrjmKZmGjaRbdDXfRGCaRnZtit+ACQbcYQbEdUxg5qn88d65dWoUD
-	 uUCmTZ3DzBMC5Kr9QuJJzjV8p3nK3R2von7NWM4tjFeWvxLhSlyY4i5uyfmqc2Njiwlmn
-	 EG8xaDNgsEKKBXFDnQqbmO+hRwcCxhiRsp+dKZN0tKMFH4jb9XXLns0AZdf6UF5xVx2Dd
-	 m8QbRzyEV4lL6b+4I7ML346cIU3hIVS4TnLk4PlFgVwluSTTw8BxSo/bzdaazH4z2W1XX
-	 aVSkpvZEZix0AIxor8PGZ44C0VYtHMMCMXK9hzKvb1WZk8BVn8QtAQVOFsmzlgSLEBg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=vboQe7ZR13xIl3IDog+n6gEkbIoN0rnb3C1VM9kn6ws=;
+	b=IaeY6GP2/b0U7TNLmbRU6yZP+GR97hE8VNW6BR9u8Olib57FQSBG4+YHolQF8vNdpJNt
+	 7URcDs+73VHYpFjEmmsVdVW++uHWdRgMbn2ABcxvcF4ptJ1UXvezj/9Yw+kKLEaLTAYdf
+	 ExMWuorBTAWBMrTPn3pHoPzVTvy1fppOpVu8bxrzkqQbJ8392MZUulpWl7SB9/WdVX4nF
+	 v/4MuxeDtlQMz0SxQdDXsgeVAlJ/0n5uXSdJUckJrH3p0VCrs9JtPNmCeLdbqrIAkEqaE
+	 ugXKI6g06ArLHmnWnUSKG73M0sBbv3l89oYZUWi1W01HsyfQEKbArbq7fjKNzBCtyQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NkTt/YBn";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkZeCJf1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B118606A31C;
-	Wed, 18 Nov 2026 17:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17BF606A31C;
+	Wed, 18 Nov 2026 17:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkTt/YBn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54261F000C4;
-	Wed, 18 Nov 2026 17:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkZeCJf1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62111F000C4;
+	Wed, 18 Nov 2026 17:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022981;
-	bh=6hTTsW0ZBsVzGhR8XCR1/XpJbKHWOcsRN2e3n7mQ31I=;
+	s=korg; t=1795022984;
+	bh=vboQe7ZR13xIl3IDog+n6gEkbIoN0rnb3C1VM9kn6ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NkTt/YBn8nVFh3LyFR0VGf3BncKV3PKNE/D5ITz+MhefFgk/w1ryQv/q/JncKxKD8
-	 Ssb2iDVitxVYC4c0NOqN4hui5E/EJAEw1EU+w3YHW2sRdD4Shro4Y5UWMwx83TcYhZ
-	 x9VBKiMFe9gtuSyrPbghEr26WbSehCqWuuY3OcwY=
+	b=GkZeCJf1ixMrj7mGnN2ESRJ+uDry4gVnyUEZmje2IC+tTy+kiiIWEZW91wAp1U3Gd
+	 O4YPRGBnJa0qY1h1UpnQPvDzlG1xQuz3FDR2WA07+6U3H1LeoO1CezVAAm7anNjwIh
+	 qw695K6YfO0bpJofhGEDSr5rP068m+6N/Msn7Gwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ionut Nechita <ionut.nechita@windriver.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Baoquan He <baoquan.he@linux.dev>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0206/2151] x86/crash: Reserve elfcorehdr for CONFIG_NR_CPUS, not CONFIG_NR_CPUS_DEFAULT
-Date: Wed, 18 Nov 2026 15:32:21 +0100
-Message-ID: <20261118150129.287401337@linuxfoundation.org>
+Subject: [PATCH 6.18 0207/2151] bpftool: Set BPF_F_XDP_DEV_BOUND_ONLY flag non-destructively
+Date: Wed, 18 Nov 2026 15:32:22 +0100
+Message-ID: <20261118150129.322267077@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -66,67 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ionut Nechita <ionut.nechita@windriver.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit 6664ad1026b558563702f9a1ce637df33e7c001e ]
+[ Upstream commit 06d6f845c4bda857a6ae864690f35321b878e827 ]
 
-NR_CPUS_DEFAULT is purely a Kconfig thing.  Its entire purpose in life is
-to start NR_CPUS at a sane value.  There is precisely one (buggy)
-reference to it outside of Kconfig in the whole kernel: the x86 crash
-code.
+When setting the XDP hints ifname, bpftool would set the
+BPF_F_XDP_DEV_BOUND_ONLY without looking at the existing program flags,
+overriding any other flag values. This was always a destructive action,
+but after we change libbpf to carry the frags section flag in
+prog_flags, this can impact bpftool loading of XDP frags programs.
 
-That code undersizes the elfcorehdr reservation whenever NR_CPUS exceeds
-NR_CPUS_DEFAULT, because the header carries one phdr per possible CPU and
-num_possible_cpus() is bounded by NR_CPUS.  kexec_file_load(2) then fails
-with -EINVAL from sanity_check_segment_list(), and kexec_load(2) silently
-truncates the elfcorehdr, which surfaces later as a bad or unusable dump.
+Change the flag setting to be non-destructive by OR'ing it with the
+existing flags.
 
-Size the elfcorehdr reservation with NR_CPUS instead.
-
-Fixes: ea53ad9cf73b ("x86/crash: add x86 crash hotplug support")
-Signed-off-by: Ionut Nechita <ionut.nechita@windriver.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Acked-by: Baoquan He <baoquan.he@linux.dev>
-Link: https://patch.msgid.link/20260901071041.16311-2-ionut.nechita@windriver.com
+Fixes: f46392ee3dec ("bpftool: Specify XDP Hints ifname when loading program")
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://lore.kernel.org/bpf/20260901-libbpf-frags-flags-v3-1-4eb6f14968b0@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/crash.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/bpf/bpftool/prog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
-index 335fd2ee9766d..521ff276f5c5a 100644
---- a/arch/x86/kernel/crash.c
-+++ b/arch/x86/kernel/crash.c
-@@ -432,9 +432,9 @@ int crash_load_segments(struct kimage *image)
- 	 * maximum CPUs and maximum memory ranges.
- 	 */
- 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
--		pnum = 2 + CONFIG_NR_CPUS_DEFAULT + CONFIG_CRASH_MAX_MEMORY_RANGES;
-+		pnum = 2 + CONFIG_NR_CPUS + CONFIG_CRASH_MAX_MEMORY_RANGES;
- 	else
--		pnum += 2 + CONFIG_NR_CPUS_DEFAULT;
-+		pnum += 2 + CONFIG_NR_CPUS;
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index 6daf19809ca4a..86ea90cd45408 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -1769,7 +1769,7 @@ static int load_with_options(int argc, char **argv, bool first_prog_only)
+ 		}
  
- 	if (pnum < (unsigned long)PN_XNUM) {
- 		kbuf.memsz = pnum * sizeof(Elf64_Phdr);
-@@ -493,7 +493,7 @@ unsigned int arch_crash_get_elfcorehdr_size(void)
- 	unsigned int sz;
- 
- 	/* kernel_map, VMCOREINFO and maximum CPUs */
--	sz = 2 + CONFIG_NR_CPUS_DEFAULT;
-+	sz = 2 + CONFIG_NR_CPUS;
- 	if (IS_ENABLED(CONFIG_MEMORY_HOTPLUG))
- 		sz += CONFIG_CRASH_MAX_MEMORY_RANGES;
- 	sz *= sizeof(Elf64_Phdr);
+ 		if (prog_type == BPF_PROG_TYPE_XDP && xdpmeta_ifindex) {
+-			bpf_program__set_flags(pos, BPF_F_XDP_DEV_BOUND_ONLY);
++			bpf_program__set_flags(pos, bpf_program__flags(pos) | BPF_F_XDP_DEV_BOUND_ONLY);
+ 			bpf_program__set_ifindex(pos, xdpmeta_ifindex);
+ 		} else {
+ 			bpf_program__set_ifindex(pos, offload_ifindex);
 -- 
 2.53.0
 
