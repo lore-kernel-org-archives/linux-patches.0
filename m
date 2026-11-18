@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020600;
-	b=hmEWRb7ZuVq0SODijQ2vG3ECJosKNhTt0d+80aycnX/vRLQ6fajx6xXFH661LSn0211H
-	 HvfNojF+ANTVqIhaHBmbq5tznYDZyUCt5QyTAxj2V2aXCeX8foAbP+YMHsNBKv3RgJF47
-	 7855j1LQUGKRJZZp/AvoxYCoEPjfmWZARrwHp8/zdvIt9LQya3Khs8Z9c3TFcppwBKg/6
-	 3erlySziuCHJ+emVmG54/ik9W96jmXZAKqkWf15PRlq4qlafFM1CTcxBJLyPJf+4Cb+Ex
-	 OJqso72IJB3UBCXZPUtRv8DgYzST1AVF4jAuE6BpIBYOQ2nShMbzhUOYi4vwcKnLk3g==
+	t=1795020602;
+	b=3Z3Ety3Kk3S8rSpQaHOq7AffVYUiPadzrAljTDF7vEH+AGn9EINCO8OfR5+0BoQetTlY
+	 QYImPeHyHsVGIH80HAu4gszuNBmEHhvDK700yZ+EQxRt8wI5tZSY6tc+kipFALBIe5tXg
+	 quGnCjRepE/p+ylR0lxxXwndCkTf0pRq+954RyuazzVtoQkJu9D6yIaWVylCE02ZEzZbI
+	 0NhMATfRmeuQJVvyuSP1eUJSHWHC5ZGRVTvMHMezpEDHs6ZJcd7FvEAnoIM0JFZQqy60X
+	 kxvqVl4NYcB0AqrwmvvDvBjkw6xWEU4Fdk7OJz4PaWoqxLUPjL1pXd1KbC81t/wVLEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=+mW5QGtxdWem48z8Zw/Siz4tVWQOm6d4zoPoEFFqeV4=;
-	b=R0NajyjJicKUCW56oFESse1v4tV4h5mx930bC13LyzrJ8i8q9B2+s/vJa5MwJeMseGLX
-	 HGF85SKf+isFBjLWCGbubGQZGPEE+SQ+oFq3mE6McfslFDclS1Z6YA5Ukjrx6Nb1z7dTB
-	 ZJ5R27+dPhH9TxEmg4chDVvKAbOUS3ODjDIWb+ScGdWIke+D9JgsNKkdNEKe6jtAl5P5W
-	 nzZ2tGWas6PVGF6bZ5SzqJCgqnjYrsJQDMC5ukOAp1u02tlz6T6WY+4vCzo1UDxhHfDB9
-	 EqOq+fK17DL02VP4WCLOQpEjCCYP3GfIh10hWxAJ0Iak7pQQDJ4FouaigePGpmtXYJg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Q+DR6VG3y9hCufsP8L+mQTsZMq6FHAQxHCnI73KCka0=;
+	b=Zelki/vg4fCvtYM47woR69ax5JquWKcucIacRhrAus6DjcvLGC92XPNDmJQqhZtuPg9y
+	 RQhVN1BZ2j/i3JU2G6hEJQ5lJoXweqKJ7JGeHqCq4xihyKJkoX7ShyFhKIKC2cYmsEoH1
+	 6hwIvZEEnwj63Iq/NADuh+502lcg9zu4jLh7BT2Xca+NPHK8m2ZCpMwGcXoYoxeRevJ64
+	 1C74cQgrNUn3bf9FXUfngq4x5HuoePCPzC67dXz+Y9/MtmzP/y9lx46JePNHLFmx/hS1T
+	 szc3nsut8P4z4yr0UAwFRkU4y4m4XWs3rPC3BtjPJdjrgX01gRe/cu/fZpphoMqqeRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwjjCQzI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DlE8KqLG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A22560A2601;
-	Wed, 18 Nov 2026 16:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEE4606A334;
+	Wed, 18 Nov 2026 16:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LwjjCQzI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645FF1F000C6;
-	Wed, 18 Nov 2026 16:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DlE8KqLG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7771F000C6;
+	Wed, 18 Nov 2026 16:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020599;
-	bh=+mW5QGtxdWem48z8Zw/Siz4tVWQOm6d4zoPoEFFqeV4=;
+	s=korg; t=1795020602;
+	bh=Q+DR6VG3y9hCufsP8L+mQTsZMq6FHAQxHCnI73KCka0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LwjjCQzI7tnf7WVyb9m5rhD9lhPU/dWDwu6+dXlOZBjqaIvfM0z8MFRS1xoFEulva
-	 h2/hFMjtuIK1ebqqqjV0969T5z8UNHWt3u0rqcXrz6YfVs9+0w1mbZkguvM/sjfgCD
-	 Bz4Zr5lAc1ohgp2FyXuPpVASnG2sjEr7cDEgKk5o=
+	b=DlE8KqLG4MKslMfK32zDrXAt17E57QTYgjQ6wICgk1ZyK79cyD4l2nomtPkJwNu8s
+	 pOKE7f2GLQbcpA2w/iAFyHHxdwzJSvIJ/7+lJ34RUcQk7RgEgUHFwBwn7T2KlOtq94
+	 ZM0/dSemjLTyR3MAYWdDHdEyVT4nmPjeJXt4McwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2007/2651] tracing: Only report the stacktrace modifier on a real field
-Date: Wed, 18 Nov 2026 15:54:07 +0100
-Message-ID: <20261118150358.531642910@linuxfoundation.org>
+Subject: [PATCH 7.3 1970/2651] vdso/math64: Add and use __iter_div64_u64_rem()
+Date: Wed, 18 Nov 2026 15:53:30 +0100
+Message-ID: <20261118150357.389641189@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,57 +64,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 18bb005845b78e0c0eb44b7f231c29d138552438 ]
+[ Upstream commit dcd65074e2c593a06bed36178bba6d49d6b6883c ]
 
-get_hist_field_flags() returns "stacktrace" for any field carrying
-HIST_FIELD_FL_STACKTRACE, including the common_stacktrace pseudo-field,
-which has no ftrace_event_field behind it. parse_field() no longer takes
-the modifier there:
+The vDSO basetimes for CLOCK_MONOTONIC and CLOCK_BOOTTIME are stored in
+the scaled nanoseconds of tkr_mono, so normalising them requires a
+division by NSEC_PER_SEC << shift.  That divisor does not fit the u32
+parameter of __iter_div_u64_rem(), so update_vdso_time_data() open-codes
+the same iterative division twice.
 
-	if (stack_modifier &&
-	    (!field || field->filter_type != FILTER_STACKTRACE)) {
-		hist_err(tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
+Repeated subtraction is the appropriate form at these two sites because
+the quotient never exceeds one.  accumulate_nsecs_to_secs() keeps
+xtime_nsec below one scaled second, and the offset added to it is a
+normalised timespec64 fraction, so the dividend stays below twice the
+divisor.  That bound holds on every architecture, which matters more here
+than the cost of a division on any particular one.
 
-so expr_field_str() renders "common_stacktrace.stacktrace", a spelling
-that cannot be parsed back.
+Add __iter_div64_u64_rem(), the u64-divisor counterpart of
+__iter_div_u64_rem(), and use it at both sites.  Return the quotient as a
+u32 for consistency with the u32-divisor variant; the bound above leaves
+no use for a wider type.
 
-Report the modifier only when there is a field to report it for.
+Store the remainder directly into the basetime, as the coarse clocks
+already do.  The CLOCK_BOOTTIME copy of the CLOCK_MONOTONIC values then
+takes both fields from the same place.
 
-hist_field_print(), the other caller of get_hist_field_flags(), excludes
-HIST_FIELD_FL_STACKTRACE before it calls, so this is confined to
-expr_field_str(), whose only key renderer arrives in the next patch.
+Folding the two open-coded loops into one inlined helper removes 16 bytes
+of vsyscall.o text on x86-64 with gcc 13.
 
-Link: https://patch.msgid.link/20260914053443.981201-4-donggeunyoo.kernel@gmail.com
-Fixes: a5e70ba87ca8 ("tracing: Fix memory corruption from the histogram stacktrace modifier")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+No functional change.
+
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20261002153104.1347978-3-zhanxusheng@xiaomi.com
+Stable-dep-of: 8d17190fae2c ("vdso/vsyscall: Keep the CLOCK_AUX base scaled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/vdso/math64.h  | 20 ++++++++++++++++++++
+ kernel/time/vsyscall.c | 16 +++++-----------
+ 2 files changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 1cd3d0552db83..64d89f5fb9d93 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1725,7 +1725,7 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
- 		flags_str = "percent";
- 	else if (hist_field->flags & HIST_FIELD_FL_GRAPH)
- 		flags_str = "graph";
--	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE)
-+	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE && hist_field->field)
- 		flags_str = "stacktrace";
+diff --git a/include/vdso/math64.h b/include/vdso/math64.h
+index 22ae212f8b28f..2ef4905585c59 100644
+--- a/include/vdso/math64.h
++++ b/include/vdso/math64.h
+@@ -21,6 +21,26 @@ __iter_div_u64_rem(u64 dividend, u32 divisor, u64 *remainder)
+ 	return ret;
+ }
  
- 	return flags_str;
++static __always_inline u32 __iter_div64_u64_rem(u64 dividend, u64 divisor, u64 *remainder)
++{
++	u32 ret = 0;
++
++	while (dividend >= divisor) {
++		/*
++		 * Prevent the compiler from optimising this loop into a
++		 * modulo operation.
++		 */
++		OPTIMIZER_HIDE_VAR(dividend);
++
++		dividend -= divisor;
++		ret++;
++	}
++
++	*remainder = dividend;
++
++	return ret;
++}
++
+ #if defined(CONFIG_ARCH_SUPPORTS_INT128) && defined(__SIZEOF_INT128__)
+ 
+ #ifndef mul_u64_u32_add_u64_shr
+diff --git a/kernel/time/vsyscall.c b/kernel/time/vsyscall.c
+index aa59919b8f2c2..f43dd3f4744b5 100644
+--- a/kernel/time/vsyscall.c
++++ b/kernel/time/vsyscall.c
+@@ -41,14 +41,12 @@ static inline void update_vdso_time_data(struct vdso_time_data *vdata, struct ti
+ 
+ 	nsec = tk->tkr_mono.xtime_nsec;
+ 	nsec += ((u64)tk->wall_to_monotonic.tv_nsec << tk->tkr_mono.shift);
+-	while (nsec >= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift)) {
+-		nsec -= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift);
+-		vdso_ts->sec++;
+-	}
+-	vdso_ts->nsec	= nsec;
++	vdso_ts->sec	+= __iter_div64_u64_rem(nsec, (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
++						&vdso_ts->nsec);
+ 
+ 	/* Copy MONOTONIC time for BOOTTIME */
+ 	sec	= vdso_ts->sec;
++	nsec	= vdso_ts->nsec;
+ 	/* Add the boot offset */
+ 	sec	+= tk->monotonic_to_boot.tv_sec;
+ 	nsec	+= (u64)tk->monotonic_to_boot.tv_nsec << tk->tkr_mono.shift;
+@@ -56,12 +54,8 @@ static inline void update_vdso_time_data(struct vdso_time_data *vdata, struct ti
+ 	/* CLOCK_BOOTTIME */
+ 	vdso_ts		= &vc[CS_HRES_COARSE].basetime[CLOCK_BOOTTIME];
+ 	vdso_ts->sec	= sec;
+-
+-	while (nsec >= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift)) {
+-		nsec -= (((u64)NSEC_PER_SEC) << tk->tkr_mono.shift);
+-		vdso_ts->sec++;
+-	}
+-	vdso_ts->nsec	= nsec;
++	vdso_ts->sec	+= __iter_div64_u64_rem(nsec, (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
++						&vdso_ts->nsec);
+ 
+ 	/* CLOCK_MONOTONIC_RAW */
+ 	vdso_ts		= &vc[CS_RAW].basetime[CLOCK_MONOTONIC_RAW];
 -- 
 2.53.0
 
