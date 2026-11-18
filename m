@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025729;
-	b=q6CD+zkD9r4AlZXupAW9NMf5XsBy7NHPNHO4f4Pnd+TV4LmQhsimp8jij2qQBhQDsIcd
-	 WMZG7XmSbvQ8LsFo0MU73V4VPaqU72xTWszXvSxJI2H6GbqN+ldri/3hXT692zaOBbaMD
-	 uQL+Pr3J0BXuwsNvd9StIOZJ435xny50Q561z5f/azkT9H3nMZr7iQ8DNajDslNXS/CBI
-	 1EznTyIIBFow2T9bbFosRIgfyW1qMS7+cXRmmeJykpYo6FrApRsDsODrqJkrnO0GCk16X
-	 sfDi449Xnko+BezWkXkN8S6bDS2q5RDqy+tXwsQdm6WPlld0ngD+qxoCHJXqnfZ+KQA==
+	t=1795025731;
+	b=rjj6ZEjji3pnREg7RcEQZjkoSvAge6+cDtdZZy227/RzZO386MfbH3cbm7++1N/tm1KL
+	 dPgYWu2WxCfsZnTXUI7CRBbWqUbMh9XFjqxypK5COUOYGxivUKRmCMsiBR699xEKYs0te
+	 //pbjpvBO4jcaBFzUTQ4jhdXSr0NF43Hx6Jq8s++HD3L/q+TeGyD3f2Wb0vBhVjJdlc7y
+	 Wn4a7ANaNE1nDyI6ysml5AxZkQt72Rn/6xih1DYwKJJpXSCRGwvFafNJ1LcUsmHRqDqtt
+	 +YeyY0N/iu7oRqkjGD+ol05RF2qWcM6D3mMqm6n6Efz8FdueIU2/WoiPvCzMato4fUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025729;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025731;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9gJoFO2FYlStIGGQAmCRdhiIcV87HWDuzRTqOVl2qSc=;
-	b=QwOp2kYB39ormDzJzZlWCmlDCFymz88LmaEmY6sjTV+TOJ3WvRt4zPD4uhkUHN6Xs2wG
-	 j5EPwVc52xw7hYwE8rm+vA3zt/7hwCYG0QBRDYsIU/EmJ+WNB9NIn5fqKJ4AT9CacEXwO
-	 Zy8yaHz63EkKmkB2JqtL8nHQV9nZbJjcNnY3qfp88D+1JvYU8RcFOlE5Ghi6vnlFNd2r1
-	 B8RGFfv7p2bX4YMPgbfbaKg8tUxdkhD1iTIiZwOaDu8e7/RnxS1uxkYj2gWHROg/TlYOi
-	 cyKNozvhetFFHhxcHezTJDzIVnzr2E1MkWKWBv6FzM15IUyn+/q/tplZHMYqgZ8SVCA==
+	bh=LnJlhbllDCl/dUdbVj7Z9RL1PG+NpAac3MgSlC10+DU=;
+	b=LE4JIJv2PXG5lH77JIQ2A79sYL/7tku1tE3pymPKQfLH2WYYRMxW0PMahO3BZoMUFcav
+	 5GY4XB3wBy3I/lComesL3gOgYTl8LF1vZTJzcrG26fm4ww23uRDDVLPvjIBWNXVVKGLZO
+	 Bh+DclnQvkL+MAjoQ1fHw80lmTiEi45gtAa3+BFLFwlAhOYvZGzuUqfCXfv/Kq9CgjZUs
+	 Yui5JAN+FmEmwUrPUYkIpDdyy2My3SwIXoZUL0LqRUpMQ37LhGHofsiVweX/xXm5BYsol
+	 tUF4ict2zLNXEulmaRwObMaFhUCj43InAvhDUcMJJo2KAcwycoymjT5pQUCKi+35S7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVhnWuFZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwMjsz4R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B4B606A325;
-	Wed, 18 Nov 2026 18:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6C6606A325;
+	Wed, 18 Nov 2026 18:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVhnWuFZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AFA71F000C4;
-	Wed, 18 Nov 2026 18:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cwMjsz4R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4688F1F000C4;
+	Wed, 18 Nov 2026 18:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025729;
-	bh=9gJoFO2FYlStIGGQAmCRdhiIcV87HWDuzRTqOVl2qSc=;
+	s=korg; t=1795025731;
+	bh=LnJlhbllDCl/dUdbVj7Z9RL1PG+NpAac3MgSlC10+DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVhnWuFZWptB16wdvKtmEkWR7lvLtvnrHQSqqAQppW3SNk+GgjCjZGCGw3QGP7+ua
-	 suvnbXIalFhul+ucdt7T9r3mO1F/xAaGiKfLXlE7fjkJ+WBBMmQv9thy0r0Pi/qWCy
-	 Q+9oXQHrHh41eODp/d9XxtXU0VcQij0uoUYq5Kac=
+	b=cwMjsz4RhS54fty8Q0c+bJ/pHNAS+NMZIzDKehu7CwBZFZfYZaHLevfyPrRgRk3GF
+	 AZpkNuBj7QXPoZ50CJqtYbuShsCAhIowZ6bAGu42upZcq/dLjYQefN9knICNMWROg6
+	 495oigirTwm/58sI6G65JTtutsmB2JcqJSUZdT/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@google.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Changwei Ge <gechangwei@live.cn>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1181/2151] proc: report SIGEV_NONE in /proc/pid/timers if target task has died
-Date: Wed, 18 Nov 2026 15:48:36 +0100
-Message-ID: <20261118150205.147774506@linuxfoundation.org>
+Subject: [PATCH 6.18 1182/2151] ocfs2: reject inconsistent xattr bucket during defrag
+Date: Wed, 18 Nov 2026 15:48:37 +0100
+Message-ID: <20261118150205.185700420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,75 +74,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Vagin <avagin@google.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 0a27f795030ce6a2c71525b0544e3b13bba8828e ]
+[ Upstream commit bd40b997f04542869afeabe94f2cf1a016fc9bfa ]
 
-When a posix timer is created targeting a specific thread (using
-SIGEV_SIGNAL | SIGEV_THREAD_ID), it takes a reference to the target struct
-pid in timer->it_pid.  If the target thread subsequently terminates, its
-numeric tid is freed and can be recycled for an unrelated task.  However,
-the timer holds its reference to the original struct pid.
+ocfs2_defrag_xattr_bucket() has two mlog_bug_on_msg() checks that assume
+the name/value pairs in a bucket are disjoint and that xh_free_start is
+not below the compacted region.
 
-show_timer() in /proc/[pid]/timers previously called pid_nr_ns() directly
-on timer->it_pid without checking whether any task remained attached to
-that struct pid.  As a result:
+ocfs2_validate_xattr_bucket() only checks each entry in isolation, so a
+corrupt bucket holding overlapping entries, or one with an inflated
+xh_free_start, passes validation and then hits BUG() in defrag when a
+setxattr triggers it.
 
-1. It reported the stale tid, which could mistakenly refer to a recycled
-   pid.
+Defrag works on a linear copy of the bucket and does not touch the real
+blocks before the copy back, so the checks can return an error instead of
+calling BUG().
 
-2. In the kernel, expired signals for dead target threads are dropped by
-   posixtimer_send_sigqueue() because posixtimer_get_target() returns
-   NULL, so the timer functionally acts as SIGEV_NONE.
-
-3. Checkpoint/restore tools (CRIU) parsing /proc/[pid]/timers would try
-   to restore a timer with SIGEV_SIGNAL | SIGEV_THREAD_ID targeting a
-   non-existent or unrelated thread.
-
-Check pid_has_task(timer->it_pid, timer->it_pid_type) in show_timer().  If
-the target task has died, override notify to SIGEV_NONE and report PID 0
-(e.g., 'notify: none/pid.0').
-
-Link: https://lore.kernel.org/20260816161216.984580-1-avagin@google.com
-Fixes: 57b8015e07a7 ("posix-timers: Show sigevent info in proc file")
-Signed-off-by: Andrei Vagin <avagin@google.com>
+Link: https://lore.kernel.org/20260903131313.2396208-3-joseph.qi@linux.alibaba.com
+Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/base.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/ocfs2/xattr.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index c8d783f3b2ac6..8480745351605 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -2527,17 +2527,23 @@ static int show_timer(struct seq_file *m, void *v)
- 	struct k_itimer *timer = hlist_entry((struct hlist_node *)v, struct k_itimer, list);
- 	struct timers_private *tp = m->private;
- 	int notify = timer->it_sigev_notify;
-+	pid_t nr = 0;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index da31b530b96e0..d86bc4001b131 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -4622,16 +4622,22 @@ static int ocfs2_defrag_xattr_bucket(struct inode *inode,
+ 			memmove(bucket_buf + end - len,
+ 				bucket_buf + offset, len);
+ 			xe->xe_name_offset = cpu_to_le16(end - len);
++		} else if (end < offset + len) {
++			ret = ocfs2_error(inode->i_sb,
++					  "Defrag check failed for bucket %llu\n",
++					  (unsigned long long)blkno);
++			goto out;
+ 		}
  
- 	guard(spinlock_irq)(&timer->it_lock);
- 	if (!posixtimer_valid(timer))
- 		return 0;
+-		mlog_bug_on_msg(end < offset + len, "Defrag check failed for "
+-				"bucket %llu\n", (unsigned long long)blkno);
+-
+ 		end -= len;
+ 	}
  
-+	if (timer->it_pid && pid_has_task(timer->it_pid, timer->it_pid_type))
-+		nr = pid_nr_ns(timer->it_pid, tp->ns);
-+	else
-+		notify = SIGEV_NONE;
-+
- 	seq_printf(m, "ID: %d\n", timer->it_id);
- 	seq_printf(m, "signal: %d/%px\n", timer->sigq.info.si_signo,
- 		   timer->sigq.info.si_value.sival_ptr);
- 	seq_printf(m, "notify: %s/%s.%d\n", nstr[notify & ~SIGEV_THREAD_ID],
- 		   (notify & SIGEV_THREAD_ID) ? "tid" : "pid",
--		   pid_nr_ns(timer->it_pid, tp->ns));
-+		   nr);
- 	seq_printf(m, "ClockID: %d\n", timer->it_clock);
+-	mlog_bug_on_msg(xh_free_start > end, "Defrag check failed for "
+-			"bucket %llu\n", (unsigned long long)blkno);
++	if (xh_free_start > end) {
++		ret = ocfs2_error(inode->i_sb,
++				  "Defrag check failed for bucket %llu\n",
++				  (unsigned long long)blkno);
++		goto out;
++	}
  
- 	return 0;
+ 	if (xh_free_start == end)
+ 		goto out;
 -- 
 2.53.0
 
