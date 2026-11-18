@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025080;
-	b=LGmspy6mYZgiAl7jccfWPUntZQ3DpEWL3eJ8ZveDoe2XWDQZm1rxXVhQY4/noJJ3n1e5
-	 QQuF5OFSGp2m+Gy+RUw3g0ayUTF8to0AjQ+kEeTFBRz8jXmk9WNn66WCw+Gamgiy8pq0Q
-	 fawNMqt1ZcmvF38dgSFe3u1pialJtydRhgGUj+Y6YdYvFaEugnrnMChcpXyTX8q0pXU2A
-	 NfY/aRWIEJruv9RYb5ZE7q+ZkYsK0Rt6cPcd4eBUjSjcL8WO+FxoAywToe5UzuF8as8WW
-	 EVc/fNtzW5bcbPCZP2pOPzDKxFzCycOSLHjM3VxPg1M2AAiXm+YZiI9JnUTuRhXV+WQ==
+	t=1795025083;
+	b=3sIHp5p4TFct9J8S4aqi6wIeSjgC75qDq5oeI2fY2TswnTYCDpLJmk93D+4XudqPb6+o
+	 Sl1IZgAYqgsgAPbi58+njwngcrZeuic7pUUKFwj9+uKeUicr4RDito6p6e7nzhxomfokE
+	 b6ajoTYoMQ+zYe8LMKKA1lzVxV16xuWIzvkPDc9x090ehTRr/c2CZJjmQ07lXZz4Genh4
+	 qARwhEoI71UPaUI1LTQ1WquRxzkonliM4t96yV9YzZEsElLhQPzj1KMzLoUGTa0+VEU3L
+	 zkYQr3wI+3Kgf9I0KIdZGFI9W0UEEBkZvoilpbR/dLt5lFHN6eeLogge5i1+aj3/FvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025083;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+LrKag0YL3l6pxdXycgYFA2pracAHQJ6zoWSqWSKFPo=;
-	b=GEdjrfQbiQ3eWNWcHSILrhqKlB9PS3mt85EL3rCILwkby5v9N5pY0T3WSgejPW6B+T01
-	 SZOLC6sAbvZXpHJut3KyUZRsLja86DZw/PyXAL7N6i63paaIFMgfcyhPtwnR9wZsSIEOc
-	 O4TbsGcks+vDYhLpmuWaob5VRvlj6Z9PTuel3KDvjN3z10VoU9Ehsfj/f196C8b5yZgFn
-	 24kGPHT5JQhbH93eZAYDxLubuFxnAgXF+WNqno5D142Quagwx/EP47QXBI8RqELeVgEkN
-	 smFvGfFjuwkEdRHSqtm3nuHD/HczvQBx2AAm94P+UXKlY+CCtvfHy7CR3vfHfIK5GPg==
+	bh=WyB4jVnHkOMarW//08NuPu1qCq39JpBsP9IEJ1UDbhg=;
+	b=Jduw6NsdD7Ci3PiwSfrahB6Ke/h0I9L6dT5BlIdjqMQH7gtY+q45oCg6rS16A4cL+y2t
+	 lKOx2hOIzWHB4sIv+7mVREPpC5mbkGtAhcBJQF2lcX8lgKpqH4hWPo5VlejmjXM1BWRIU
+	 VBDXQJqgGoAY84IdDtke+s3eTzYwmv+A8KI5Iv1rXynKI7aXyaNfhreC65MnOtUUO7K4R
+	 FhNGJci//BPY+BnS6UDfUJebTr49gFomJ79pA8RkxciLljGDORncmev9VF+0fXBL/1Rh2
+	 nJ0lxeHh9vsWLJSSWw+XbSboGC5ir+kbAMGC4+JUJI5HcH7LuiUyoVQqsE5/ryo7+Cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EIE0dDOE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ndY2NE2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BA7606A325;
-	Wed, 18 Nov 2026 18:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EF6606A32C;
+	Wed, 18 Nov 2026 18:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EIE0dDOE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E699A1F000C5;
-	Wed, 18 Nov 2026 18:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ndY2NE2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9445A1F000C6;
+	Wed, 18 Nov 2026 18:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025080;
-	bh=+LrKag0YL3l6pxdXycgYFA2pracAHQJ6zoWSqWSKFPo=;
+	s=korg; t=1795025083;
+	bh=WyB4jVnHkOMarW//08NuPu1qCq39JpBsP9IEJ1UDbhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EIE0dDOE5UrCVwaiGtAWGxSwmXjrZKBPu2nu57H/XMF9h3Ivb3OVmdYhii7FSCNs0
-	 hQlglHYikeTOmPOtpOSVGytwyHOF3KbqWa5ryXn52Yu0KyatjYjJ+xxscnwjqJYgot
-	 NyCPBVanKmSvp9jomx4ZpRlcBjLlPRFQb8gPt4Rs=
+	b=1ndY2NE2mPRVhZM7NAgN1so0L2AizolJSjkgQ0TRybrnaNy0mClkRpJgpR3mkXl6j
+	 sJ9/sLlnwJ1RGRRX8vIWKdWgi8QmIVCtMubAzpBKl1d4+s/nq2N1rTDun/d5V6Iu1c
+	 y7HIOyNLQIGj/1LxEU+Tm5YQ/1tJaeswhKz5bwls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Radaelli <stefano.r@variscite.com>,
-	Bryan Brattlof <bb@ti.com>,
-	Kendall Willis <k-willis@ti.com>,
-	"Markus Schneider-Pargmann (TI)" <msp@baylibre.com>,
-	Nishanth Menon <nm@ti.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Adrian Tomasov <atomasov@redhat.com>,
+	Kris Pan <kris.pan@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0953/2151] arm64: dts: ti: var-som-am62p: Fix wkup R5F memory region size
-Date: Wed, 18 Nov 2026 15:44:48 +0100
-Message-ID: <20261118150157.170162875@linuxfoundation.org>
+Subject: [PATCH 6.18 0954/2151] net: iterate online nodes in skb_defer_free_flush()
+Date: Wed, 18 Nov 2026 15:44:49 +0100
+Message-ID: <20261118150157.208604399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,48 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
+From: Kris Pan <kris.pan@intel.com>
 
-[ Upstream commit c9b15cd49b3fbd54f3382655b4e898921a7adb4e ]
+[ Upstream commit 56fbbb662795b29f4d12a55cb1b456553a6ec3b0 ]
 
-The wkup_r5fss0_core0_memory_region was reserved with
-0x01e00000 but the MCU SDK linker for the wkup R5F firmware on
-AM62P defines the DM code/data DDR footprint differently:
+skb_attempt_defer_free() only queues skbs on the current CPU's node
+(numa_node_id() of a running CPU), which is always online, so the
+flush loop never needs to visit nodes that are merely possible.
 
-    /* DDR for DM R5F code/data [ size 27 MiB + 396 KB ] */
-    DDR                         : ORIGIN = 0x9CAA5000 LENGTH = 0x1B63000
+for_each_node() walks node_possible_map.  On machines where the
+possible map is much larger than the online map -- e.g. a POWER10
+LPAR with 32 possible but 1 online node -- the flush loop touches 31
+cold, always-empty per-node lists on every softirq pass.
 
-which results in an end at 0x9e608000. For this memory region which
-starts at 0x9c900000 this means a length of:
+Use for_each_online_node() to iterate only node_online_map.  Nodes
+that go offline are drained by dev_cpu_dead() ("net: flush
+skb_defer_nodes in dev_cpu_dead()"), so the flush no longer needs to
+visit offline nodes.
 
-    0x9e608000 - 0x9c900000 = 0x1d08000
+Loopback UDP throughput in a QEMU guest with 32 possible / 1 online
+nodes (bench_udp, 8 senders, interleaved runs) improves by ~5%.
 
-Link: https://github.com/TexasInstruments/mcupsdk-core-k3/blob/k3_main/examples/drivers/ipc/ipc_rpmsg_echo_linux/am62px-sk/wkup-r5fss0-0_freertos/ti-arm-clang/linker.cmd
-Fixes: 571562e76458 ("arm64: dts: ti: Add support for Variscite VAR-SOM-AM62P")
-Reviewed-by: Stefano Radaelli <stefano.r@variscite.com>
-Reviewed-by: Bryan Brattlof <bb@ti.com>
-Reviewed-by: Kendall Willis <k-willis@ti.com>
-Signed-off-by: Markus Schneider-Pargmann (TI) <msp@baylibre.com>
-Link: https://patch.msgid.link/20260918-topic-am62a-ioddr-dt-v6-19-v9-6-40972ef1f663@baylibre.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: 5628f3fe3b16 ("net: add NUMA awareness to skb_attempt_defer_free()")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Suggested-by: Adrian Tomasov <atomasov@redhat.com>
+Closes: https://lore.kernel.org/oe-lkp/202512112119.5b9829a-lkp@intel.com
+Signed-off-by: Kris Pan <kris.pan@intel.com>
+Link: https://patch.msgid.link/20260928014708.3903028-1-kris.pan@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi | 2 +-
+ net/core/dev.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi b/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi
-index edaa4f99295dc..4b01aafa389a6 100644
---- a/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62p5-var-som.dtsi
-@@ -83,7 +83,7 @@ wkup_r5fss0_core0_dma_memory_region: r5f-dma-memory@9c800000 {
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 95126e2360792..244ec60b2dd1a 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6825,7 +6825,7 @@ static void skb_defer_free_flush(void)
+ 	struct skb_defer_node *sdn;
+ 	int node;
  
- 		wkup_r5fss0_core0_memory_region: r5f-memory@9c900000 {
- 			compatible = "shared-dma-pool";
--			reg = <0x00 0x9c900000 0x00 0x01e00000>;
-+			reg = <0x00 0x9c900000 0x00 0x01d08000>;
- 			no-map;
- 		};
+-	for_each_node(node) {
++	for_each_online_node(node) {
+ 		sdn = this_cpu_ptr(net_hotdata.skb_defer_nodes) + node;
  
+ 		if (llist_empty(&sdn->defer_list))
 -- 
 2.53.0
 
