@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050467;
-	b=DSBOg9D7SL7IAr0qmNJrXKCKbiqPVozGcrih69NCmrxWRdDVOYeZpjNvCCvIZZWfNDbv
-	 ilrYo7VRyta4pV57WcdZIJq7Z9JXp2Gv/BWMxyAmaqEMVuuaC7bItklBgRwVO8JEecylg
-	 W88+u9Nz0eS1YMWkJait+5XlX7QZc1MsjFs0pQM0hQMgoIdv0eQJ7kBjWudNHIF0D2L6A
-	 gHRlrPMa2u2GhvOiyHZE7KwjgldxTvb6Oo/Au7bYNq1ub1/XgbpGvZOJPiV9kGTpiZf3n
-	 wEqx/DWgH2Xm2Nvmnpj33G3MHpdyn2KEivOXPYUW6A0tPJ7G1Eu7SgULn8kL5ZFWwiQ==
+	t=1795050470;
+	b=B3/T/t7rmMsnUDBc7Mit169ghlOFacY8/BeU1/ih2rk2nFEWQ0LeZW+W9kCbZd8WtZF2
+	 yabGvGkH+bwV2f4my1E/qQDqamZ53wfGUz9+u9Vlc4Urwy7bTK0qdVvTmQkWpBqpsMyJr
+	 hzFJjZpK2AKWj9gVFddcrzEC/jZQyFNYBbdw3HHeNV5Bn24/Sfmuu9ZuuoJvC85O7NrRD
+	 kAM10xd8P33Zl1IcZBkIh59L/EkggoHdyoSwDiz4s/T1ZtwVS6oHzp8cvKJ1NOM2liE32
+	 kMTZj9UzzIyg8OhX65Xa39vWa7UfIwrXL/MNuL2Oif2EkXVAEve+DFFzhAoNTa42vQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050467;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050470;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zDpty1OjYnm9Z9aJT83EwH8OVhEgocXUFBYXFY/2k9A=;
-	b=3uWucRco78O+KYlxk8/cN7ASS0BrVSPmRI5Q7CKbbNNwwur/y/z8/h9aHaDnIuQYaWkh
-	 saRuMH3xudbFpug/8uPZLDB2PRcguOsXfG0ukCKZCU0st+59wHONQVNNM7HEieIrqxDS7
-	 noFXO8mNrGXTou4tseAgG25T5pyqtiJfs4CladzztaqgMF3LzlUKIW3ZOnoLGQhS+Wdc3
-	 ikhA1XEj45dOST97EWhA3Xpi/h1U8UPpF433V8Lo2kNYQrL5JWEU1CRnuPNbczVBdUduI
-	 VjdiBzMsgWYPuv+iDhWbF+jI4CthAzkZv71/olAjVV5emG+AkQID2DmPsqKiLC+Wslg==
+	bh=GyOUhKtvIplUhyyrOjsPHAsoVOneytSGXNmJlxKWZWI=;
+	b=1v40lsnre6Y6g/bO+dciIkpWT9UG46tcH4A78FpYEviraFJK2313wHg8+dew0xOvJNST
+	 YMl7vPRqtdLMT7MhOWEOnw8ZXgESoX9mrcMODQ+IpcTul1m97QFqiF8v7B836NtHC1Vl/
+	 mvgkh75aCYzN9dD2KHS5EzVFP46iIlpN5dLgzc9b338i2mJpr2s3wk4dcOgtt/Bh0sH/W
+	 5TPHzvsguAiF0MMlLdseK8zgAYRKM0H4KQLhUpQKVRbm/v8+QIKjDtxlHLgQKwdOCHc4o
+	 6vqNasYCIinCUBwJsWKmNDUpsFGGM83ckXKRxqrPiV8s3kiyuDBeVgpyT2KIZlyyw+w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nS8KZhap;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CK66xitC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93406606A31C;
-	Thu, 19 Nov 2026 01:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667D9606A31C;
+	Thu, 19 Nov 2026 01:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nS8KZhap
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82C81F000C5;
-	Thu, 19 Nov 2026 01:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CK66xitC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91781F000C6;
+	Thu, 19 Nov 2026 01:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050467;
-	bh=zDpty1OjYnm9Z9aJT83EwH8OVhEgocXUFBYXFY/2k9A=;
+	s=korg; t=1795050470;
+	bh=GyOUhKtvIplUhyyrOjsPHAsoVOneytSGXNmJlxKWZWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nS8KZhap1iUCbMbRQTUZoFIKDUe30NxT5l3HirSKhV3zfcVW3D+WeK4HR8Pj6u2Og
-	 MepWsMsDBFJNJDFGg2ZdCpxU7DVnl1qA5xwCkwdUG4eKzz26YZU7FFSCuVuZzL5N5t
-	 Rsnfu4Awm9zr4qmujHtNbX1OdRrwVrKPkmK4mWPs=
+	b=CK66xitCEiXP0bobWdKWl8T/beBI1OKK67UoYvpIyErEHEbKhpcgKVqGvxSaNRSIr
+	 SaKr4KlibDtwxtTZ5iX/DsqIdnVZQ8FxmJyrqqfsdR773gDR78syZU8BBYrt2jseYq
+	 5Lxf+W0n6mPp5vc6mpJXr7gCMR0g2OM+d4h7+Xvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Nandor Kracser <nandor@riptides.io>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2719/2857] net: tls: Pass union tls_crypto_context pointer to memzero_explicit
-Date: Wed, 18 Nov 2026 16:02:33 +0100
-Message-ID: <20261118150339.514767566@linuxfoundation.org>
+Subject: [PATCH 6.1 2720/2857] tls: avoid field-spanning write when copying crypto info
+Date: Wed, 18 Nov 2026 16:02:34 +0100
+Message-ID: <20261118150339.549012086@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,73 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Nandor Kracser <nandor@riptides.io>
 
-[ Upstream commit 0d9e699d3421b5db83eb0cb7a708882440ee78ef ]
+[ Upstream commit c43c1c24f3cdc0d2d3f59e5686573ac3129637aa ]
 
-Pass union tls_crypto_context pointer, rather than struct
-tls_crypto_info pointer, to memzero_explicit().
+do_tls_setsockopt_conf() copies the cipher-specific part of the crypto
+info to crypto_info + 1, where crypto_info points at the 4-byte info
+member of union tls_crypto_context. When optval is a kernel sockptr,
+copy_from_sockptr_offset() is a memcpy(), and FORTIFY_SOURCE bounds the
+destination by that member:
 
-The address of the pointer is the same before and after.
-But the new construct means that the size of the dereferenced pointer type
-matches the size being zeroed. Which aids static analysis.
+  [    6.948348] memcpy: detected field-spanning write (size 52) of single field "dst" at include/linux/sockptr.h:49 (size 0)
+  [    6.948480] WARNING: include/linux/sockptr.h:49 at tls_setsockopt+0x9b2/0xa30, CPU#1: init/1
+  [    7.001355] Call Trace:
+  [    7.003146]  do_sock_setsockopt+0xb0/0x190
+  [    7.003975]  __sys_setsockopt+0x76/0xc0
+  [    7.005368]  do_syscall_64+0xda/0x4b0
 
-As reported by Smatch:
+tls_setsockopt() gets a kernel sockptr whenever a cgroup setsockopt BPF
+program is attached, even one that leaves the option alone, because
+__cgroup_bpf_run_filter_setsockopt() passes optval on in a kernel
+buffer. With a no-op program on the root cgroup, a plain TLS_TX
+setsockopt() with AES-GCM-256 triggers the warning above on an x86_64
+build with CONFIG_FORTIFY_SOURCE.
 
-  .../tls_main.c:842 do_tls_setsockopt_conf() error: memzero_explicit() 'crypto_info' too small (4 vs 56)
+Copy into the union at offset sizeof(struct tls_crypto_info) instead.
+crypto_ctx already points at the right union for both the first set
+and the TLS 1.3 rekey (tmp) case, and the address is unchanged.
 
-No functional change intended.
-Compile tested only.
-
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240708-tls-memzero-v2-1-9694eaf31b79@kernel.org
+Fixes: a7b75c5a8c41 ("net: pass a sockptr_t into ->setsockopt")
+Signed-off-by: Nandor Kracser <nandor@riptides.io>
+Link: https://patch.msgid.link/20261021073233.16720-1-nandor@riptides.io
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c43c1c24f3cd ("tls: avoid field-spanning write when copying crypto info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/tls/tls_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index 42d4266aec70c..1555b67e45a61 100644
+index 1555b67e45a61..3293f84bd0456 100644
 --- a/net/tls/tls_main.c
 +++ b/net/tls/tls_main.c
-@@ -687,6 +687,7 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 	struct tls_crypto_info *alt_crypto_info;
- 	struct tls_context *ctx = tls_get_ctx(sk);
- 	const struct tls_cipher_desc *cipher_desc;
-+	union tls_crypto_context *crypto_ctx;
- 	int rc = 0;
- 	int conf;
- 
-@@ -705,13 +706,15 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 		return -EINVAL;
- 
- 	if (tx) {
--		crypto_info = &ctx->crypto_send.info;
-+		crypto_ctx = &ctx->crypto_send;
- 		alt_crypto_info = &ctx->crypto_recv.info;
- 	} else {
--		crypto_info = &ctx->crypto_recv.info;
-+		crypto_ctx = &ctx->crypto_recv;
- 		alt_crypto_info = &ctx->crypto_send.info;
+@@ -762,8 +762,8 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
+ 		goto err_crypto_info;
  	}
  
-+	crypto_info = &crypto_ctx->info;
-+
- 	/* Currently we don't support set crypto info more than one time */
- 	if (TLS_CRYPTO_INFO_READY(crypto_info))
- 		return -EBUSY;
-@@ -814,7 +817,7 @@ static int do_tls_setsockopt_conf(struct sock *sk, sockptr_t optval,
- 	return 0;
- 
- err_crypto_info:
--	memzero_explicit(crypto_info, sizeof(union tls_crypto_context));
-+	memzero_explicit(crypto_ctx, sizeof(*crypto_ctx));
- 	return rc;
- }
- 
+-	rc = copy_from_sockptr_offset(crypto_info + 1, optval,
+-				      sizeof(*crypto_info),
++	rc = copy_from_sockptr_offset((u8 *)crypto_ctx + sizeof(*crypto_info),
++				      optval, sizeof(*crypto_info),
+ 				      optlen - sizeof(*crypto_info));
+ 	if (rc) {
+ 		rc = -EFAULT;
 -- 
 2.53.0
 
