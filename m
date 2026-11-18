@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016371;
-	b=VnW8JQKhyqDDmCM2eE4UzH2pZj6dpruTRELMKbvizG9dDRIxp+u7DsMc2K+EPa5KBI0q
-	 lrZNR/lge5uGubTb5j0spdv+x2s4SmLMQGIWuQ6YndOgUgyrzK69AYaWOc1CAwWINlnWa
-	 mnQYQHLrg/Kj/4bOC5IvHw8oNO+jzQ4MHALpYPc+mckYbOaNJjohvfd54ETyI/UWxXRp6
-	 MdlwX9XCSGdBQePzEXnr/5gGIXNKZSr/z+VoJFGNf1UoNl1BYr8nqr3kBOMRStDY5NCq3
-	 PDynVsf5USSatAPS6op79KOu6xmS2C9v5iI9VeTtPfpXNJBJN7AdPlmJL5kMHL/3r2A==
+	t=1795016373;
+	b=qohz+VweNBafe3neuogF1uiJCqIrIrbr8KoeLS86olhNqE0eRrcEaoqDpFfPpbaqfUBo
+	 5umfZVt2gZ+UAogUHOTXhrTrfX5LExkMZHCpoGyk0yMUrTMdzgH6pnwYY+1eOqo6d1mLu
+	 CQXU8GBNQ3dKy7c0HY1x0GnhyCkDb+2EvFv4odqCtD+VbxZLmKupNp+axHLy56WXtZkLE
+	 BPEn4lk8aPXDZMKz6uIB7ok9XSDRR2ff3L4RHXt9pZv8po9fYSMaHUkIv0sKGlWHxfEV4
+	 2eecdVhC+b1Qp/uEUXKLSOz1P8KXcEIHH0sUHepXWLOGAFaCe4oBmPHHJbCFhJSazqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016373;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=8psRQVM+TVXToOFxwqGKm9Qyv5VFHDBqOSm4SH+qZFk=;
-	b=n2sBkRHX58R8+nlWZCtsvPva/jGw6xjDZSzQyYxjho9bjddUQxKuCdtJeYvhYHS65JWi
-	 N34EXcPDKf1ycwZwtOPdTk6z+lvJ7tsOX0zlt0/HD/p1CjaXYg7u8JFA+pMjF+IrMEz59
-	 UImmkDGGyc1LqVRtAY2RnPPgtDHBuDU70R0yb9D+0HI6XWXBTNE4qb4Sz9NxU95aE9deh
-	 bRb/5G0ICz1k0jYFFALhoPlmjenJAZcolVscT/pX4MbQMtqDfpsWpvribXxa46kgg3o+W
-	 b4i0xmtcd2ncGCBs7owD8kAG2CTfa6qY0DFDE0QSXi4fOVupm7UOnLj8AP1PD6ddbYQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=/+FqOT3Rbw+TxI8ENLcMzWdxXRTMWZiyoPncPzfK2x0=;
+	b=ybdVMdaK/6u84GQ4JRlBXsKftkxCgeILr5rBORrlgXn09bqpGp6o+nut863qdSWY/oUE
+	 MpzlY/KOEauVAdyPXvXjXckYgSxtiSW5D5IJBg/7KbJOpqLVTs7/dLKMJZlvSa3nJxjWV
+	 q18qaZiogFIxg5fcbEVEAtkKTBGiUr8dR1XOeQ6oVXKTfFj7QtQF+HiO0UeE+2W9RIF1F
+	 5JGqHyL/dc9GBEK9Sxf08aNcpOxPBwNVTDStfojHvMdB07zQ80JsfSRPjmdRpXEZ4iwav
+	 +kKPC3c2WtzHqwQ7KxCrTtK13kjpz6RKdHA3j8CnApLL1gRaBWoi5/C6+K2IcCByh4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5ZtAyYo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DeDlpbv/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8CE60A2611;
-	Wed, 18 Nov 2026 15:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B108560A2606;
+	Wed, 18 Nov 2026 15:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5ZtAyYo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B3D1F000C4;
-	Wed, 18 Nov 2026 15:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeDlpbv/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EA41F000C4;
+	Wed, 18 Nov 2026 15:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016370;
-	bh=8psRQVM+TVXToOFxwqGKm9Qyv5VFHDBqOSm4SH+qZFk=;
+	s=korg; t=1795016373;
+	bh=/+FqOT3Rbw+TxI8ENLcMzWdxXRTMWZiyoPncPzfK2x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s5ZtAyYo8wa7HMP1bWC7xiyWTSeT3AIY0sBw1Bwn+4OeNCHWcQnNnewHH6Xv0dflp
-	 TRVeSpwC8T1+Kt1G5ZquAiFjPkzHLF3uqrckYdTVl+wYcdVFY6yID/I/po+Tb3Hna0
-	 IpNVVc/07Nt1qLotRJ0copnUvcI/eSBAazsMeOQA=
+	b=DeDlpbv/Yvh1Do7vT129e91WdS2NYlXOlfg6YiM44Uk8BfNkQL7ZSZap1z0RBizE3
+	 FG/ePXffqb9P13EkL079m9FsKqjvxOq43D8nErUqPjGO/T1BbPb7T01KbnkYmTjErv
+	 ofkjsC4T/1BIk4+zVmd0G6i3ynczD/Cp46ONOfmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	=?UTF-8?q?=C8=98tefan=20Ghe=C8=9Bu?= <stefanghetu9@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0504/2651] ASoC: rt1015: make control calibration failures observable
-Date: Wed, 18 Nov 2026 15:29:04 +0100
-Message-ID: <20261118150305.908199055@linuxfoundation.org>
+Subject: [PATCH 7.3 0505/2651] ASoC: SOF: imx: Prevent stack OOB read in DSP panic dump
+Date: Wed, 18 Nov 2026 15:29:05 +0100
+Message-ID: <20261118150305.943033254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,162 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ștefan Ghețu <stefanghetu9@gmail.com>
 
-[ Upstream commit 98fe8aab04cec6fcadeb10a757235225d550be36 ]
+[ Upstream commit 48ed992bfbe53537ad1cbc8ad68f7031e7ac0af3 ]
 
-The bypass-boost control runs a hardware calibration while bypassing the
-register cache. It ignores every register access and cache restore
-failure, then publishes both the requested mode and calibration
-completion.
+Commit 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore
+call stack") added a shared Xtensa helper that iterates over a flexible
+array of AR registers (`ar[]`) controlled by `plat_hdr.numaregs`.
 
-Return failures from the complete calibration sequence, always restore
-normal cache operation and unlock DAPM, and only publish the control
-state after the calibration and final mode write both succeed. The mixer
-control callback is an effective error consumer, independent of deferred
-component resume.
+While Intel IPC4 allocates dynamic storage for the AR block, the i.MX
+IPC3 path reads the oops message into a stack-allocated struct without
+backing storage for `ar[]`, while leaving `numaregs` unvalidated. This
+causes a stack out-of-bounds read when printing a DSP panic.
 
-Fixes: da145172b236 ("ASoC: rt1015: Fix DC calibration on bypass boost mode")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830142118.36668-1-pengpeng@iscas.ac.cn
+Clear `numaregs` to 0 on i.MX since the AR block is not fetched or
+supported on this platform, preventing unsafe out-of-bounds memory
+accesses in the shared Xtensa helper.
+
+Fixes: 58bb5081cba1 ("ASoC: SOF: Xtensa: dump ar registers to restore call stack")
+Signed-off-by: Ștefan Ghețu <stefanghetu9@gmail.com>
+Link: https://patch.msgid.link/20260908170740.276800-1-stefanghetu9@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1015.c | 81 +++++++++++++++++++++++++++++++--------
- 1 file changed, 65 insertions(+), 16 deletions(-)
+ sound/soc/sof/imx/imx-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/rt1015.c b/sound/soc/codecs/rt1015.c
-index ff0c08ff610e1..c6cb8d3ec0454 100644
---- a/sound/soc/codecs/rt1015.c
-+++ b/sound/soc/codecs/rt1015.c
-@@ -488,35 +488,72 @@ static int rt1015_bypass_boost_get(struct snd_kcontrol *kcontrol,
- 	return 0;
- }
+diff --git a/sound/soc/sof/imx/imx-common.c b/sound/soc/sof/imx/imx-common.c
+index 7a03c8cc5dd47..436fe49246ba8 100644
+--- a/sound/soc/sof/imx/imx-common.c
++++ b/sound/soc/sof/imx/imx-common.c
+@@ -34,6 +34,7 @@ void imx8_get_registers(struct snd_sof_dev *sdev,
  
--static void rt1015_calibrate(struct rt1015_priv *rt1015)
-+static int rt1015_calibrate(struct rt1015_priv *rt1015)
- {
- 	struct snd_soc_component *component = rt1015->component;
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(component);
- 	struct regmap *regmap = rt1015->regmap;
-+	int ret, sync_ret;
+ 	/* first read registers */
+ 	sof_mailbox_read(sdev, offset, xoops, sizeof(*xoops));
++	xoops->plat_hdr.numaregs = 0;
  
- 	snd_soc_dapm_mutex_lock(dapm);
- 	regcache_cache_bypass(regmap, true);
- 
--	regmap_write(regmap, RT1015_CLK_DET, 0x0000);
--	regmap_write(regmap, RT1015_PWR4, 0x00B2);
--	regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x0009);
-+	ret = regmap_write(regmap, RT1015_CLK_DET, 0x0000);
-+	if (ret)
-+		goto restore_cache;
-+
-+	ret = regmap_write(regmap, RT1015_PWR4, 0x00B2);
-+	if (ret)
-+		goto restore_cache;
-+
-+	ret = regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x0009);
-+	if (ret)
-+		goto restore_cache;
-+
- 	msleep(100);
--	regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x000A);
-+	ret = regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x000A);
-+	if (ret)
-+		goto restore_cache;
-+
- 	msleep(100);
--	regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x000C);
-+	ret = regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x000C);
-+	if (ret)
-+		goto restore_cache;
-+
- 	msleep(100);
--	regmap_write(regmap, RT1015_CLSD_INTERNAL8, 0x2028);
--	regmap_write(regmap, RT1015_CLSD_INTERNAL9, 0x0140);
--	regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x000D);
-+	ret = regmap_write(regmap, RT1015_CLSD_INTERNAL8, 0x2028);
-+	if (ret)
-+		goto restore_cache;
-+
-+	ret = regmap_write(regmap, RT1015_CLSD_INTERNAL9, 0x0140);
-+	if (ret)
-+		goto restore_cache;
-+
-+	ret = regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x000D);
-+	if (ret)
-+		goto restore_cache;
-+
- 	msleep(300);
--	regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x0008);
--	regmap_write(regmap, RT1015_SYS_RST1, 0x05F5);
--	regmap_write(regmap, RT1015_CLK_DET, 0x8000);
-+	ret = regmap_write(regmap, RT1015_PWR_STATE_CTRL, 0x0008);
-+	if (ret)
-+		goto restore_cache;
-+
-+	ret = regmap_write(regmap, RT1015_SYS_RST1, 0x05F5);
-+	if (ret)
-+		goto restore_cache;
-+
-+	ret = regmap_write(regmap, RT1015_CLK_DET, 0x8000);
-+
-+restore_cache:
- 
- 	regcache_cache_bypass(regmap, false);
- 	regcache_mark_dirty(regmap);
--	regcache_sync(regmap);
-+	sync_ret = regcache_sync(regmap);
-+	if (!ret)
-+		ret = sync_ret;
- 	snd_soc_dapm_mutex_unlock(dapm);
-+
-+	return ret;
- }
- 
- static int rt1015_bypass_boost_put(struct snd_kcontrol *kcontrol,
-@@ -525,6 +562,8 @@ static int rt1015_bypass_boost_put(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct rt1015_priv *rt1015 =
- 		snd_soc_component_get_drvdata(component);
-+	int bypass_boost = rt1015->bypass_boost;
-+	int ret;
- 
- 	if (rt1015->dac_is_used) {
- 		dev_err(component->dev, "DAC is being used!\n");
-@@ -534,13 +573,23 @@ static int rt1015_bypass_boost_put(struct snd_kcontrol *kcontrol,
- 	rt1015->bypass_boost = ucontrol->value.integer.value[0];
- 	if (rt1015->bypass_boost == RT1015_Bypass_Boost &&
- 			!rt1015->cali_done) {
--		rt1015_calibrate(rt1015);
--		rt1015->cali_done = 1;
-+		ret = rt1015_calibrate(rt1015);
-+		if (ret)
-+			goto restore_boost;
-+
-+		ret = regmap_write(rt1015->regmap, RT1015_MONO_DYNA_CTRL,
-+				   0x0010);
-+		if (ret)
-+			goto restore_boost;
- 
--		regmap_write(rt1015->regmap, RT1015_MONO_DYNA_CTRL, 0x0010);
-+		rt1015->cali_done = 1;
- 	}
- 
- 	return 0;
-+
-+restore_boost:
-+	rt1015->bypass_boost = bypass_boost;
-+	return ret;
- }
- 
- static const char * const rt1015_dac_output_vol_select[] = {
+ 	/* then get panic info */
+ 	if (xoops->arch_hdr.totalsize > EXCEPT_MAX_HDR_SIZE) {
 -- 
 2.53.0
 
