@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045010;
-	b=r104y9m/73gYAdEsEugXAYpm/Hkd+eh/3YJOqsqObvPKy9ZG4DPZcMc7szNsmJ0W9Q4a
-	 dYUF30CdggmrN5yHBsDtt4P8+FK7RzgB8dU4cedMuxR6EGVkerTPR4nwnzO/4tdskrrHK
-	 OS+9A5rl8v4roVbpAfxgejqS6i+f+L3PAEN12Zwsyvw3a1V3W1I1UzmwUkZkVVxpgp7jz
-	 MLiL8hYLxSj3Fr4pocKNB73rpDWmrw5Sa3LGzrhIcfsbHUtNjGvll6HZIDJuiH4F0nJoo
-	 E+w0blwhAceUZWZlSaNWXLvQWuqACl/9cuwRzRWrGOptTDiFt9d+gbcpK1nUz7cP7ng==
+	t=1795045013;
+	b=eBLonyTsLh17aaSUdBUd0WQRjTN41yyrOKLnPRdfwhG4yw8HuOCnRmXTxoARQU2CySuY
+	 3TfOPCiVjYPkJablswrhEsJcIo/rR4ztr6037uVoWrdF5e2wv0F/o4UGn4I8EW7ib+l6A
+	 yH0SNjK9GcY07gFfxg1Y7uHWWYJ+1JE5BKKvSo5zwaBY/siYUlgwKAGkjRXUOqIXEF5Tj
+	 8UANm3sbEoAsTvT7toDWeG0F9L2sI+VzSsBQLpzsGu2C6xbZRBn9kLniv0RRAUqNkDJpf
+	 BoDCUQ9qzFr92kmTBJn3dp0/ewsc/iRKdhe7IrCqnpJTfa/tXOELpBxwxI5nnbpPF9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045010;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045013;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L7hHq+VuNTNnegZXPIWF27gL2l+x7WKKrTb/zPNvLGM=;
-	b=xby+gCEIZfmvcscOftm33k8Pf/q9Yst5L9XyERQo8xOpAZfcN3NPoo3xMynvnfkVoa+p
-	 qYv4+D6IsG3R6gboAzUNF12ywwanYaOwIGFGq+RZ+8+XWos2JAgvBlcwESMXWVWewM9Kh
-	 m0XPZdrmcXhOMFZxbrTwf1l20ujmKAFR4o0bHxmOetvKMJlq/GSx2t7GekkeW1A3Ithlr
-	 4jqndufhzXbHI8uRrhRVHj7jHPwIs3YqCM1hWxcBctzXSMgSqcWJQ10uNvyHkE822odbe
-	 1X0EfaXIJOx++Xmb70EdN74KicjRa4B9usVyEP7iJST7wZWf2aejtZmThk6kRYAUQyw==
+	bh=y6SgZtvGStUu6uMbWrq90wr901zNk4xnRrwQMmyYf6g=;
+	b=rZ4E5Iw1b0123tMyn1QomhpfP0scDRonteGjQXBThk421BAKP0TSVkQLTClhD9gXrw79
+	 5/L3JCetcZflk8t4nXMnoTd26DljijQNMzUjwjv+lc87h/dcz8UsHkoURbO3g3m9NYIBl
+	 sOmhUAK8XiChUXzhyCV/S6AwwlkNahFDbyVdJYMMxrdegKfaCL21lSD7ZSE2hzUlOFRbn
+	 kDTLMeXilBpldfVj/cl+MTCiAG2w+3p84sDadPKWMAa90U8SA/7Bftil+EZ/I7w+iwCmE
+	 dImyvu1UIQV3RF62ee+IrIsV/cyRxAf1hb0AzTjrkVJQhXSg5gsapIsz17RFrRmiqVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KL1Hs+tY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNPEcL5r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77972606A32A;
-	Wed, 18 Nov 2026 23:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C8606A320;
+	Wed, 18 Nov 2026 23:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KL1Hs+tY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C1E1F000C5;
-	Wed, 18 Nov 2026 23:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YNPEcL5r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CE21F000C4;
+	Wed, 18 Nov 2026 23:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045010;
-	bh=L7hHq+VuNTNnegZXPIWF27gL2l+x7WKKrTb/zPNvLGM=;
+	s=korg; t=1795045013;
+	bh=y6SgZtvGStUu6uMbWrq90wr901zNk4xnRrwQMmyYf6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KL1Hs+tYDngTYVKGM5kR7wF4kPLT+FvSR9r2FyID1V7yRMag8IwwdVoqAtQfxav/k
-	 HgX0AuYRdXk9z9xRMefhU6Y5DI6nT4V4BJ8s0yYeT7Xtmu+X1NJLII9GtjaAaPfb7o
-	 9wt7DaBvOWRayhy5nHCc4RHOrSj3Z6Ucm8ft4JO0=
+	b=YNPEcL5rzHaZJMIt4VTnr34hSugJgUAmhriNBpc+kYKvh0guku8PnvXFPRiE5liYg
+	 d6nnvwBS9G13jw3GAadUGSx6CvfWpDOjxL/ThCG9jxDKFl7PuYcojK6ofsXS7RmECP
+	 ah8INaFEIbtuuTf0IY3ZiO6S46p48+TQsmhWFKcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0769/2857] ata: ahci_st: Do not ignore errors when getting the reset controls
-Date: Wed, 18 Nov 2026 15:30:03 +0100
-Message-ID: <20261118150229.252960423@linuxfoundation.org>
+Subject: [PATCH 6.1 0770/2857] ata: ahci_st: Assert the power down reset in the probe() error path
+Date: Wed, 18 Nov 2026 15:30:04 +0100
+Message-ID: <20261118150229.291281220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,85 +70,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit c74ee9230a8d1d2f6fcbceff55f56f7dd9b9cccd ]
+[ Upstream commit 91e0a7452d7a81e924a499b23f30f3bf85fddbd2 ]
 
-st_ahci_probe_resets() treats any error from devm_reset_control_get() as
-"reset control not defined" and continues with a NULL reset control:
+st_ahci_probe_resets() deasserts the "pwr-dwn" reset, but the probe()
+error path of st_ahci_probe() only releases the host resources, so the
+SATA IP is left powered up when probe() fails after
+st_ahci_probe_resets() has succeeded, e.g. when
+ahci_platform_enable_resources() fails.
 
-	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
-	if (IS_ERR(drv_data->pwr)) {
-		dev_info(dev, "power reset control not defined\n");
-		drv_data->pwr = NULL;
-	}
+The reset is asserted by st_ahci_host_stop(), however ->host_stop() is
+only called through the ata_host_stop() devres action registered by
+ata_host_start(), so it does not cover any failure happening before the
+host has been started.
 
-This also swallows -EPROBE_DEFER, which is returned when the reset
-controller providing the reset has not been probed yet. probe() then
-continues as if the device tree did not specify any reset, so the resets
-of the SATA IP are never deasserted, and st_ahci_configure_oob() and
-ahci_platform_init_host() access the MMIO of an IP which is still held in
-reset and powered down, which can result in an external abort.
+Factor the assert out into st_ahci_assert_pwrdwn() and call it when
+either ahci_platform_enable_resources() or ahci_platform_init_host()
+fails. The "pwr-dwn" reset control is an exclusive one, so asserting it
+once more from st_ahci_host_stop() is harmless.
 
-The resets are optional in the binding, as they are not part of its
-required properties, so use devm_reset_control_get_optional(), which
-returns NULL if the reset is not specified in the device tree, and
-propagate all other errors.
-
-Note that an absent reset is now indicated by a NULL reset control
-instead of an error, so the "reset control not defined" messages are
-dropped.
+No functional change intended for ->host_stop() and st_ahci_suspend().
 
 Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
 Cc: stable@vger.kernel.org
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-9-cassel@kernel.org
+Link: https://lore.kernel.org/r/20260915084127.692494-10-cassel@kernel.org
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_st.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/ata/ahci_st.c | 51 +++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
-index 8607b68eee532..8da0b769fc0d3 100644
+index 8da0b769fc0d3..96a92db2b83fc 100644
 --- a/drivers/ata/ahci_st.c
 +++ b/drivers/ata/ahci_st.c
-@@ -105,23 +105,20 @@ static int st_ahci_probe_resets(struct ahci_host_priv *hpriv,
- {
- 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
- 
--	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
--	if (IS_ERR(drv_data->pwr)) {
--		dev_info(dev, "power reset control not defined\n");
--		drv_data->pwr = NULL;
--	}
--
--	drv_data->sw_rst = devm_reset_control_get(dev, "sw-rst");
--	if (IS_ERR(drv_data->sw_rst)) {
--		dev_info(dev, "soft reset control not defined\n");
--		drv_data->sw_rst = NULL;
--	}
--
--	drv_data->pwr_rst = devm_reset_control_get(dev, "pwr-rst");
--	if (IS_ERR(drv_data->pwr_rst)) {
--		dev_dbg(dev, "power soft reset control not defined\n");
--		drv_data->pwr_rst = NULL;
--	}
-+	drv_data->pwr = devm_reset_control_get_optional(dev, "pwr-dwn");
-+	if (IS_ERR(drv_data->pwr))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->pwr),
-+				     "failed to get pwr-dwn reset\n");
-+
-+	drv_data->sw_rst = devm_reset_control_get_optional(dev, "sw-rst");
-+	if (IS_ERR(drv_data->sw_rst))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->sw_rst),
-+				     "failed to get sw-rst reset\n");
-+
-+	drv_data->pwr_rst = devm_reset_control_get_optional(dev, "pwr-rst");
-+	if (IS_ERR(drv_data->pwr_rst))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->pwr_rst),
-+				     "failed to get pwr-rst reset\n");
- 
- 	return st_ahci_deassert_resets(hpriv, dev);
+@@ -84,18 +84,27 @@ static int st_ahci_deassert_resets(struct ahci_host_priv *hpriv,
+ 	return 0;
  }
+ 
+-static void st_ahci_host_stop(struct ata_host *host)
++static int st_ahci_assert_pwrdwn(struct ahci_host_priv *hpriv,
++				 struct device *dev)
+ {
+-	struct ahci_host_priv *hpriv = host->private_data;
+ 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
+-	struct device *dev = host->dev;
+ 	int err;
+ 
+-	if (drv_data->pwr) {
+-		err = reset_control_assert(drv_data->pwr);
+-		if (err)
+-			dev_err(dev, "unable to pwrdwn\n");
+-	}
++	if (!drv_data->pwr)
++		return 0;
++
++	err = reset_control_assert(drv_data->pwr);
++	if (err)
++		dev_err(dev, "unable to pwrdwn\n");
++
++	return err;
++}
++
++static void st_ahci_host_stop(struct ata_host *host)
++{
++	struct ahci_host_priv *hpriv = host->private_data;
++
++	st_ahci_assert_pwrdwn(hpriv, host->dev);
+ 
+ 	ahci_platform_disable_resources(hpriv);
+ }
+@@ -160,18 +169,23 @@ static int st_ahci_probe(struct platform_device *pdev)
+ 
+ 	err = ahci_platform_enable_resources(hpriv);
+ 	if (err)
+-		return err;
++		goto assert_pwrdwn;
+ 
+ 	st_ahci_configure_oob(hpriv->mmio);
+ 
+ 	err = ahci_platform_init_host(pdev, hpriv, &st_ahci_port_info,
+ 				      &ahci_platform_sht);
+-	if (err) {
+-		ahci_platform_disable_resources(hpriv);
+-		return err;
+-	}
++	if (err)
++		goto disable_resources;
+ 
+ 	return 0;
++
++disable_resources:
++	ahci_platform_disable_resources(hpriv);
++assert_pwrdwn:
++	st_ahci_assert_pwrdwn(hpriv, &pdev->dev);
++
++	return err;
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+@@ -179,20 +193,15 @@ static int st_ahci_suspend(struct device *dev)
+ {
+ 	struct ata_host *host = dev_get_drvdata(dev);
+ 	struct ahci_host_priv *hpriv = host->private_data;
+-	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
+ 	int err;
+ 
+ 	err = ahci_platform_suspend_host(dev);
+ 	if (err)
+ 		return err;
+ 
+-	if (drv_data->pwr) {
+-		err = reset_control_assert(drv_data->pwr);
+-		if (err) {
+-			dev_err(dev, "unable to pwrdwn");
+-			return err;
+-		}
+-	}
++	err = st_ahci_assert_pwrdwn(hpriv, dev);
++	if (err)
++		return err;
+ 
+ 	ahci_platform_disable_resources(hpriv);
+ 
 -- 
 2.53.0
 
