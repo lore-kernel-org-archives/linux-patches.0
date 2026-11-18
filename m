@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021674;
-	b=CMQ118kS6fD3RWW8YFUCqdqjY5f2DJCPpPOmQt4fbR65iwGOsP6SGNoHVOruDjgaoWGP
-	 +Oo7MzTg8YdIWnv7loaNACulOTHx5ViV3i6kIjOwWYLBZjTpg5AErotJXmDT63USNUZBv
-	 wGAoVpiOnmhDLrGStyDkUDEKe2iswP/5lAwUQs/JECJchEl+8OUoNM973c/mwoHCW++vs
-	 zcQLSiN2IkUcY6QCnEpSmzpdv5/P14D7qGBl2g3HFDXhdEBTqe2WDi9CiFkWaEh2UiOOT
-	 2n9h74b51pOeOJWEKExu6fzFA6hcxW37UnXa9zO9qNis3936Wu3iW3xrV4FMA9EubAQ==
+	t=1795021677;
+	b=K/5/EocQ+S515RTPLoj5UwZOFjSuscY1wEp0BJJryQ3ndfwULSIQUiyu4eJb09DT9ekY
+	 gLabfIw984ivsgxNMhbNYoEpDphXYDGBIQMFQ8jyT5NNR9IfnZV4Sk13+hHW87wc9JzzY
+	 P+0J3cCj/M2Gapp2hzsPonFCrpkVX64dNGzh02msRgY5s9Oe4IfIoNyHo4oZKXp6pEHI0
+	 g25/6Wek22vcOrcyxFR9QnNrQZgRCk5o9VRa37+5rzGiN5Ey2I7hMCgDKgJdbD4YQhfbJ
+	 Io/mRx2Vhk6f5KutE6av0/GpE12I+4C5Y4qkPuoBL6vFeydOf/IWe0fZcLzxC86DdXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021674;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h0gx1ChTGjMBd/zm7ZQWsMHyuq1YGJ1yF1sDHPi++Js=;
-	b=EYXPdje8ZxctUKc89iqgN7Et4VBZTrZXTxkgPec4TtJNSPH0ChP4gumfbqIc67U22U1I
-	 fi7SmlUuzrciunEnV2NZiMetQ/0F5hwyKGa0XHYM+3MD6gF1BydFQjkgtYsPFG5ouOXge
-	 wbE2AAzQ6YfqjNzpmmWDVlpteRnowSs8F6LGQc7VDxbghSus8kiBclpE0oFPDHcxVw0Hv
-	 d7lfv5JcYpHZ9zF1VxrJtbzDJlsIzqlbDeyl+X5iL+KV4vD2EBmezaG8ZJEnGlEythaEM
-	 01XR2MzCFWlmNVa8bbJed9WCMl4Bt9DAldL1884ckGUTieJtzPf4r4ShbvHEddvZlNQ==
+	bh=ss0tZ2VmTGLHKWGWic6GsnEweNvTN7RzkhZqG6d/QBU=;
+	b=eOyA/VpIzNrVgjSqTwnnA1Fbd1JqOFUUZeDab3tzYuJC75IvDKG5puJZlr3cb+fNwwH/
+	 Gfx6exs1QWWWWi7tT6jfMYfw5r8RoNmx/RqNOyy7OFJXMnu9gBAlsy+g91CMzltqwzyMu
+	 6xsKGjnVbyvaCtb4r8R+JjSY13L05CJYzJfxoLZCVLdqIMv19bJy+VAfpnC9NpEBnSBOo
+	 R+30kB0vKyWti02IxjzrI2F10ZJVdvMK5v1q5tergRV3Y0gik76+Qjl35F6fIZeYTQ2/V
+	 QXcPmYl4U3SZoJeRmZjdBFnBnG3kpYYpknkh/8YQA+WwURY7/HJRi+f6iFrkrogvyew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGVeemqi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehhlPU4s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D78606A320;
-	Wed, 18 Nov 2026 17:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D57606A330;
+	Wed, 18 Nov 2026 17:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGVeemqi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EA61F000C4;
-	Wed, 18 Nov 2026 17:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ehhlPU4s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9EB1F000C9;
+	Wed, 18 Nov 2026 17:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021673;
-	bh=h0gx1ChTGjMBd/zm7ZQWsMHyuq1YGJ1yF1sDHPi++Js=;
+	s=korg; t=1795021676;
+	bh=ss0tZ2VmTGLHKWGWic6GsnEweNvTN7RzkhZqG6d/QBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGVeemqi9lwVhO2nZ1CyN89KIZocE14Z21Fr2q8seH+nKGfp3F4om6qhC+JAxJ4gz
-	 3iqlGZa1hKo6R6PuVv99vGdHFF7hiM0PZXYy4j1BJSd7en/5qWGVzsDD2+x1mm9fA1
-	 g6jabJ4WvBUHvHRjALbYSbrAwTpTcrpoRsgwNAYc=
+	b=ehhlPU4seWr1/plSHJzU5nFdgRXZ33DMCu+Fl2C52ijPQm2uPZbWwRnGMbkF9S1iX
+	 EytDnRp9+hDJ7l8YjndXwlnjeZk2PxiEizcbTQAOPf1qEHXv2+Na7clywzy50xCXgR
+	 RNuYufPwRqAxMmMyODSVc8HHb5WV9qoE0OK/qXA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
+	Feng Yang <yangfeng@kylinos.cn>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Mahe Tardy <mahe.tardy@gmail.com>,
+	Alan Maguire <almagui@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2390/2651] selftests/bpf: Wait for the struct_ops map to be freed in assoc_in_timer
-Date: Wed, 18 Nov 2026 16:00:30 +0100
-Message-ID: <20261118150411.448320829@linuxfoundation.org>
+Subject: [PATCH 7.3 2391/2651] bpf: Propagate btf_add_type() errors in btf_check_all_metas()
+Date: Wed, 18 Nov 2026 16:00:31 +0100
+Message-ID: <20261118150411.477828671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,56 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit ac3df711a428a9ff4277100ee26c6765e8f80a3b ]
+[ Upstream commit fb2b27d214c3b88d926a303267dd83cfdb428b13 ]
 
-st_ops_assoc_in_timer_no_uref runs .test_1, which starts a timer to
-call it again 500ms later, drops every reference to the struct_ops map,
-and expects the timer callback to find no struct_ops associated with
-its program anymore.
+btf_check_all_metas() ignores the return value of btf_add_type(), so a
+type that could not be registered is silently dropped while the loop
+keeps walking over the type section.
 
-The association goes away only when the last reference to the map is
-dropped. syscall_prog holds one through its own association and drops
-it only when it is freed, in a work item after an RCU tasks trace grace
-period. With other tests running in parallel, that can take longer than
-500ms, and the callback still reaches the struct_ops and gets MAP_MAGIC
-instead of -1.
+Both failure modes are reachable:
 
-Have the timer callback restart the timer until the map is gone, as it
-does for st_ops_assoc_in_timer_free. Calling the struct_ops through the
-association until then is safe, as the map is freed only after a grace
-period that follows clearing the association.
+  - -E2BIG.  Once the types array reaches its capacity (BTF_MAX_TYPE),
+    every following btf_add_type() fails the same way, so
+    btf_check_all_metas() still returns 0 and the BTF object is created
+    with btf->nr_types capped while hdr->type_len claims more records.
 
-st_ops_assoc_in_timer_no_uref run 100 times with test_progs -j32 running
-in the background, on a KASAN kernel with the fix, x86_64 VM with 32
-vCPUs, before and after this patch:
+  - -ENOMEM.  btf->nr_types is not incremented and the array is not
+    grown, so the next type is recorded at the slot of the dropped one
+    and btf->types[] stays off by one with respect to the type ids for
+    all remaining types.  btf_type_by_id() then returns the wrong type
+    for those ids for the whole lifetime of the object, and the last
+    type is silently left unresolved.
 
-              before                       after
-  outcome     2 of 100 failed (MAP_MAGIC)  0 of 100 failed (MAP_MAGIC)
+Propagate the error so that the object is rejected instead.
 
-Fixes: 0e841d19263a ("selftests/bpf: Test getting associated struct_ops in timer callback")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Fixes: 69b693f0aefa ("bpf: btf: Introduce BPF Type Format (BTF)")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261022-selftests-bpf-struct-ops-assoc-timer-v6-4-2c0f18e82582@gmail.com
+Reviewed-by: Mahe Tardy <mahe.tardy@gmail.com>
+Acked-by: Alan Maguire <almagui@kernel.org>
+Link: https://patch.msgid.link/20261022064727.747304-1-yangfeng59949@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/test_struct_ops_assoc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/btf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/test_struct_ops_assoc.c b/tools/testing/selftests/bpf/prog_tests/test_struct_ops_assoc.c
-index 6c85d368bf167..9b646d134a45e 100644
---- a/tools/testing/selftests/bpf/prog_tests/test_struct_ops_assoc.c
-+++ b/tools/testing/selftests/bpf/prog_tests/test_struct_ops_assoc.c
-@@ -188,7 +188,7 @@ static void run_st_ops_assoc_in_timer_no_uref(int timer_ns, int wait_map_free,
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index b1adb52e2f310..85b8a667dd547 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -5471,6 +5471,7 @@ static int btf_check_all_metas(struct btf_verifier_env *env)
+ 	struct btf *btf = env->btf;
+ 	struct btf_header *hdr;
+ 	void *cur, *end;
++	int err;
  
- static void test_st_ops_assoc_in_timer_no_uref(void)
- {
--	run_st_ops_assoc_in_timer_no_uref(500000000, 0, 0);
-+	run_st_ops_assoc_in_timer_no_uref(500000000, 1, 0);
- }
+ 	hdr = &btf->hdr;
+ 	cur = btf->nohdr_data + hdr->type_off;
+@@ -5485,7 +5486,10 @@ static int btf_check_all_metas(struct btf_verifier_env *env)
+ 		if (meta_size < 0)
+ 			return meta_size;
  
- /*
+-		btf_add_type(env, t);
++		err = btf_add_type(env, t);
++		if (err)
++			return err;
++
+ 		cur += meta_size;
+ 		env->log_type_id++;
+ 	}
 -- 
 2.53.0
 
