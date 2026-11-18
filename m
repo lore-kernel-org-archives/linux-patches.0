@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017471;
-	b=zRO/BztfrJ7Be22Iefg847RwGls/29ZaGvtZtP9uTdlSPTRJaUiygAUlriUCDdhC/nT/
-	 PJWNOcr7xtMYGWNd5dkQFHf5HlW5L/aJCZfAlLDKyRtbFJCoSmRgkVx1NvrNFoqtGar1L
-	 n2zgp+H9wWsZNgIuPNv5iz8G/Sb4NpSoamj/GZl6764T/8XPm8ieyOdgH6djkwuap1uxL
-	 lmzdes164XAOJirJBcD2KgVrmuxkR9bonKbu1bcD3YmSn3+fJL4wW6jO1eM1+tCLlIeKP
-	 d7NkNgBkr5QXCV2xTtmmEfKsaFbR2TUczpOHNTjAItOePUFsxuc6uWhJlNyLxRxbr7Q==
+	t=1795017474;
+	b=4fNqbUKPXhlIXyomED7pwi8cM4HyieFiTtdz1fleLE2dOX9I2r/PYPcXKU6dCtXtiWfm
+	 WNRoN5j2LTyZwua0WgebDx+7g2AqE9Ee0FgL+KSkmOGQ1I9abUJkyRo9SVDij7OHgqO/k
+	 OkiJ+xEghnSFcYCa3m2cIEiMTzDlucbdK02yIbBaCadtgqOuV15tsM6bOqX1vPLwJodq0
+	 CaUkOkKsPjonAupPI62he1umG07SDGg3FXafpp9Bsd7UIeDNWmmhtH+NLZzyIk0B+CTmC
+	 8ENVATBy4pEsPwOdA8w3ICC1RMAdudA38SIqW6QJe9rihzPDtQdnnd4OWw5Suef8u4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=mRSTyUuO/X6g8yKPmpiwFhtvJs+yevEZ+Gk8QrRzvDk=;
-	b=REV0hnnL0/yGht5lQIZGiDRxNLUBtazvre+DDzQjbF+OX6Vzsi5ghTJWraV/c2HnC4VB
-	 JCxnFIV4iBqqJycfUPXbXJJRYs/jLXvhh+sVHOSvjx1ANlppdkzMpxvppIBjk1TLSlxH2
-	 WnqR4Yh8iqs24Xm0sa2Kl9NozioP1p7A5sJB6iPzUVoW9k4El5H2KVzL/3xQm3Xm6FQrL
-	 6Hzs+XG22l3EO+WZ2uBKFn5Mn6FQlgNjzSOAr7IuMeh6GabnFYeowt+5eMBc4r//YBRVb
-	 uv912/R0ORRUYGKsI1kj8p9lssQkkewlRsIUbLnH8764bbBEPZklZhE9oqHUO40yGFg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=3RNaTTysqExztZmjbE1Vst3y9sa8tjVzpGrnKPQnImA=;
+	b=LWNXowiWpqKSDV8E7mH3yOlq9FtcT8GTiK59ngUEC4gnn515OWk7AIccz+EUpVwJdAt4
+	 bq9UIpkokSlc/8iGcnOwq1ZkB5pqFpFH133+qYHnfPwgfHPLLYBzmuTkc8RkmZiwkeoe3
+	 NCDtWjWtL9NmAzod4U0GHWzWFdZGBL82OWUQbNW+wLyxi10vxCstFLcsRHJfVAi8mefRR
+	 y0JA4ew1Ltp5HZ8cFEMslGwQsUYU7yfkgkRYb1rKyby40k9afoB1UZ41yWdfX+NfkS4UQ
+	 cekw5QsHf21QoIuW8o1DuTaeXTQfFZboiurgU6qmE9aFKHS99D6lLs9awODGHTgNOcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVEjvfUc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWJ8GyiW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD986606A320;
-	Wed, 18 Nov 2026 15:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F84E606A320;
+	Wed, 18 Nov 2026 15:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVEjvfUc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B6B1F000C5;
-	Wed, 18 Nov 2026 15:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWJ8GyiW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E116D1F000C4;
+	Wed, 18 Nov 2026 15:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017471;
-	bh=mRSTyUuO/X6g8yKPmpiwFhtvJs+yevEZ+Gk8QrRzvDk=;
+	s=korg; t=1795017474;
+	bh=3RNaTTysqExztZmjbE1Vst3y9sa8tjVzpGrnKPQnImA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YVEjvfUcHtw1TtEyFjvtL1/HCyAUTJfDdm8KJwu+1pzGEReur3A6Eh1AKEIekv4ch
-	 eV0xc5XwBjUDd+7+It095ElbtHeuvnKuTJEaPopMpjdsGiiKuNqW618WofrmJd8LIQ
-	 Ps1K/FiLPiMW2tjNVc76/FoW7YRHbTTN+TNhUCZ8=
+	b=GWJ8GyiW0vjdRqeAR1VsvjgwaSh2dWhkc3NaXaRrV4Qn2jTlmqAVqITYi/FHkoC/f
+	 c980malAh8PJwVXTDDQd1pZ52/k/CYJqRJ3z8umAtzARNAfNcHEvQyX3AbIj1yN8x3
+	 3sdQH2iOo2UmzzWnhlF82DpJL1zGIqqIgrm+lNuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Danish Khateeb <danishkhateeb03@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0869/2651] ASoC: mediatek: mt8183: Fix clock handling in mux disable path
-Date: Wed, 18 Nov 2026 15:35:09 +0100
-Message-ID: <20261118150319.142186747@linuxfoundation.org>
+Subject: [PATCH 7.3 0896/2651] tools/nolibc: fix FD_SET(), FD_CLR() and FD_ISSET() on 64-bit
+Date: Wed, 18 Nov 2026 15:35:36 +0100
+Message-ID: <20261118150320.122570238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,86 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Danish Khateeb <danishkhateeb03@gmail.com>
 
-[ Upstream commit 4a0f9566ae0c3ad32620254342b266f37f4757de ]
+[ Upstream commit 929ea5b3481fdbbb419f3986703280fb2b819504 ]
 
-In the disable path of the appl*_mux_setting() functions,
-clk_disable_unprepare() is called after clk_set_parent().
-If clk_set_parent() fails, clk_disable_unprepare() is skipped,
-potentially leaving one of the clocks enabled.
+Since commit feaf75658783 ("nolibc: fix fd_set type"), an fd_set is an
+array of unsigned long, but the FD_* macros still build their masks as
+an int or an unsigned int: 1 << n in FD_SET(), 1U << n in FD_CLR() and
+FD_ISSET(), where n is the fd modulo 64 on 64-bit architectures. So:
 
-Remove the goto exit paths so that all teardown steps are attempted
-and any errors are only reported.
+- FD_SET() of an fd with n == 31 sets the bits for n = 31-63, as
+  1 << 31 is negative and gets sign-extended.
+- For n >= 32 the shifts are undefined. x86-64, for instance, masks
+  the shift count, so FD_SET(40) and FD_ISSET(40) use the bit of fd 8.
+- FD_CLR() zero-extends ~(1U << n), so it also clears the bits for
+  n = 32-63, whichever fd it is given.
 
-Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
-Suggested-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260903045203.175337-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+select() on fd 40, for instance, fails with EBADF, or watches fd 8
+instead if that one is open.
+
+Build the masks from 1UL.
+
+Fixes: feaf75658783 ("nolibc: fix fd_set type")
+Assisted-by: LLM
+Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+Link: https://patch.msgid.link/20260925211600.119116-3-danishkhateeb03@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 6 ------
- 1 file changed, 6 deletions(-)
+ tools/include/nolibc/sys/select.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-index 6ab0734ad1365..dd1a5925af96d 100644
---- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-@@ -271,7 +271,6 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG1],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
- 		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG1]);
+diff --git a/tools/include/nolibc/sys/select.h b/tools/include/nolibc/sys/select.h
+index 6d65d9ef3d6af..f299c79939f59 100644
+--- a/tools/include/nolibc/sys/select.h
++++ b/tools/include/nolibc/sys/select.h
+@@ -26,7 +26,7 @@ typedef struct {
+ 		int __fd = (fd);					\
+ 		if (__fd >= 0)						\
+ 			__set->fds[__fd / FD_SETIDXMASK] &=		\
+-				~(1U << (__fd & FD_SETBITMASK));	\
++				~(1UL << (__fd & FD_SETBITMASK));	\
+ 	} while (0)
  
-@@ -281,7 +280,6 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_1],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
- 		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_1]);
- 	}
-@@ -298,7 +296,6 @@ static int apll1_mux_setting(struct mtk_base_afe *afe, bool enable)
- 		       afe_priv->clk[CLK_CLK26M]);
- 	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_1]);
- ERR_ENABLE_CLK_TOP_MUX_AUD_1:
--EXIT:
- 	return ret;
- }
+ #define FD_SET(fd, set) do {						\
+@@ -34,7 +34,7 @@ typedef struct {
+ 		int __fd = (fd);					\
+ 		if (__fd >= 0)						\
+ 			__set->fds[__fd / FD_SETIDXMASK] |=		\
+-				1 << (__fd & FD_SETBITMASK);		\
++				1UL << (__fd & FD_SETBITMASK);		\
+ 	} while (0)
  
-@@ -345,7 +342,6 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_ENG2],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
- 		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_ENG2]);
- 
-@@ -355,7 +351,6 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 			dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 				__func__, aud_clks[CLK_TOP_MUX_AUD_2],
- 				aud_clks[CLK_CLK26M], ret);
--			goto EXIT;
- 		}
- 		clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_2]);
- 	}
-@@ -372,7 +367,6 @@ static int apll2_mux_setting(struct mtk_base_afe *afe, bool enable)
- 		       afe_priv->clk[CLK_CLK26M]);
- 	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_2]);
- ERR_ENABLE_CLK_TOP_MUX_AUD_2:
--EXIT:
- 	return ret;
- }
+ #define FD_ISSET(fd, set) ({						\
+@@ -43,7 +43,7 @@ typedef struct {
+ 		int __r = 0;						\
+ 		if (__fd >= 0)						\
+ 			__r = !!(__set->fds[__fd / FD_SETIDXMASK] &	\
+-1U << (__fd & FD_SETBITMASK));						\
++1UL << (__fd & FD_SETBITMASK));						\
+ 		__r;							\
+ 	})
  
 -- 
 2.53.0
