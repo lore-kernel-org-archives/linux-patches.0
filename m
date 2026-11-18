@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043569;
-	b=DfNQydk6Xyo94J7h9UqTAk2D3sslxDQvStFq95oWuG+EoGQ49JpqoI5y1cj68IBxNeIb
-	 cPgfKfnti4NDQbOkBCnks8kyb+/2YwXnLfjBapIk9BDultg4cOd4f8TLdu3qOoUh8urqZ
-	 +vIqO19keiABAdUIVXNMrsBhYJGAEIU6jylH3k7ZuBwi7oXXbk7n7YrhbB/36gN29HQ5E
-	 oBezY0aHq9UBHcMgAJs7+d/efzHOL9zArYLXdcvZuElCAEjdbOHphT24TM4F4qXudFzaP
-	 DcD3VeSQ1Ga1Klumas9p2neoogzJyPLrei406JZYh7R+lMAOfguDEGCCN7dYbdcoNsg==
+	t=1795043572;
+	b=2nQqrxBzBl7u4odZ0mjximnrSNM5rpHixyLUPCZiNslZlGgDDo00lM3lup0/FOXdbfB0
+	 1yDVDi2Qxc3PYubFlAqxdKq9DMbm5Jkyuv/sY3hHNJyOnPfgiC/IUu8aHdOhHf9qi9jyA
+	 P0YTuvoGBwJG143NZpm5FBKvGkXGXEJjopd0N+D5rF2oiqlFtgd+Z+mb1Rc7dpOglq4BK
+	 8dJOEmEqsEQBP46TE2Qiw2UM+XpeypbGa+Mn9xZsMXjaeQi6rjszwX2vEU+eVfLobjuwE
+	 kYKvtJu/64GWCS14xpXbLKUqUFd0HvBHq2LZj4BtFbloS+t0/QRrSgRYRzRtmeRrPtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043569;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043572;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YXbtf1COYJzsJ+shwHEduXhPJ4Apzf135kAKUj4Nt+o=;
-	b=iDCSfowojKmMD+FnEnnt8BkZlXdu360CJdOI8ZQS2FXWh8maeTexC9sJvPKbk+K4NqgA
-	 YrfuJZ94l/MwqilI79p8hGH9LrwJBTHoIlqjlBMU6eBL/3g7AuA8dFV/2+7utUSlVninA
-	 ifL3Osc4mHOBQse/fJ32wDKijL+CUs7qLiGcFIS2AVUqhF9hjG7+sqHce8a5RV+OpJVCF
-	 z+yVUAxNaLSCq2tOKa2EScc9sAgVQjF4xAmnw7/AL4OrlPdBiQjmQKUCabcs/y+yhXD+5
-	 eIF6LdQHOiljEql6C0QXqAraG4v+wmLbYgVmdH6gEOo8LeRgfc/kObHRjDZqs39eX/w==
+	bh=MLa0W27kiE37NJMMhnXUTTrsXVUPUIV9cdMq9FpxM0s=;
+	b=SbdnjsORIzDCin0yYdjbUEcSV9dIlsZZtX9+Ky5lubielTeGYh+hg3WnSpo8nouTlLNU
+	 sj0g2SH52NPcl9duZBoBjGt/HZU7vFWkcZsNrVBtTmqvsNZgnV69dCksU/U0Rcy1OiWyL
+	 MC11C7r7aVV8NokOhdmHEjwMnUSSbzJgTQdYKiSrOOmPkdUHuNJbJ85BN1kry2Qm2E3UT
+	 zVhvI0A5f/+vPZid6DBwOKmzUa4iT1GW9HGEn8US6JN6BSDO3wW43uSTK3OUs8p7T2Zqj
+	 Bmfa7n20t63ia7hI1RPgDRBvTVWvjGpMUrVpc5JQ8xcvB1udCO/O8EHI4GBtZKSqcWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="N7j07I/2";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRviCiH1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22881606A325;
-	Wed, 18 Nov 2026 23:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8541606A320;
+	Wed, 18 Nov 2026 23:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N7j07I/2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F511F000C4;
-	Wed, 18 Nov 2026 23:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRviCiH1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CFF1F000C4;
+	Wed, 18 Nov 2026 23:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043569;
-	bh=YXbtf1COYJzsJ+shwHEduXhPJ4Apzf135kAKUj4Nt+o=;
+	s=korg; t=1795043571;
+	bh=MLa0W27kiE37NJMMhnXUTTrsXVUPUIV9cdMq9FpxM0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N7j07I/2h5D7p4qAqwk/gI3w0/sJpQEcafZxUTdmKcdnqkc10j9zr72lIpD3Y4QNz
-	 97/tQ5aUrH0PbumTRPYPOTwD4wpKfwMwhArH4enaX4v7AeseGeMw1kn4zvBMRE8tbz
-	 A+8fbHvSYingFcCGFboU3O/SovS+Zo2e46nvSdjQ=
+	b=yRviCiH1OPH/zBJwzL5F0XVoL88UnlQvy8ripb0KNh32KnfTtVoT8Lo7H6ez2y/zQ
+	 eakGFzTruXc99nYLFTa+9H/CsmfvHCGoMFmxhhCfoUxBWBTuKgHcVaU+qt1HaHZhwC
+	 C9Y+zNKIGNSg5wmI1QniMCgkCWKbv5zSJ7MIE5ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Alex Elder <elder@riscstar.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0257/2857] smb: server: Free session data in user_session.c with kfree_sensitive()
-Date: Wed, 18 Nov 2026 15:21:31 +0100
-Message-ID: <20261118150210.684984535@linuxfoundation.org>
+Subject: [PATCH 6.1 0258/2857] net: stmmac: use dma_addr_t for DMA addresses
+Date: Wed, 18 Nov 2026 15:21:32 +0100
+Message-ID: <20261118150210.721663114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,39 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Alex Elder <elder@riscstar.com>
 
-[ Upstream commit 9a4bd6507c21f66e84dc021705a4b9d84773111e ]
+[ Upstream commit 0c1f9020d2ada55aed8a2e055903ad9cd5d49dab ]
 
-struct ksmbd_session contains some arrays with sensitive information, like
-sess_key, smb3encryptionkey, smb3decryptionkey and smb3signingkey. Thus
-let's make sure that this information cannot leak via the heap and use
-kfree_sensitive() to free it.
+In jumbo_frm() (implemented in both "chain_mode.c" and "ring_mode.c"),
+an unsigned integer local variable is used to hold the value returned
+by dma_map_single().  On systems where a dma_addr_t is 64 bits, the
+subsequent dma_mapping_error() check of the returned value operates
+only on the low 32 bits (whose high bit won't be sign-extended).  In
+this case, dma_mapping_error() would return 0 (no error) even if there
+were one.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fix this in both spots by using a dma_addr_t for the local variable.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-devicetree/20260606010122.21A211F00899@smtp.kernel.org/
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20260812163832.271742-2-elder@riscstar.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/mgmt/user_session.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/chain_mode.c | 3 ++-
+ drivers/net/ethernet/stmicro/stmmac/ring_mode.c  | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 09c19d1f71e38..39d24dc253a04 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -168,10 +168,10 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
- 	ksmbd_destroy_file_table(&sess->file_table);
- 	ksmbd_session_rpc_clear_list(sess);
- 	free_channel_list(sess);
--	kfree(sess->Preauth_HashValue);
-+	kfree_sensitive(sess->Preauth_HashValue);
- 	ksmbd_release_id(&session_ida, sess->id);
- 	ida_destroy(&sess->tree_conn_ida);
--	kfree(sess);
-+	kfree_sensitive(sess);
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+index 2515608878235..5b0bab33ce4b6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+@@ -20,9 +20,10 @@ static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
+ 	unsigned int nopaged_len = skb_headlen(skb);
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->cur_tx;
+-	unsigned int bmax, buf_len, des2;
++	unsigned int bmax, buf_len;
+ 	unsigned int i = 1, len;
+ 	struct dma_desc *desc;
++	dma_addr_t des2;
  
- static struct ksmbd_session *__session_lookup(unsigned long long id)
+ 	desc = tx_q->dma_tx + entry;
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+index 88a8d22812f5d..1e6541937cb27 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+@@ -20,8 +20,9 @@ static int jumbo_frm(struct stmmac_tx_queue *tx_q, struct sk_buff *skb,
+ 	unsigned int nopaged_len = skb_headlen(skb);
+ 	struct stmmac_priv *priv = tx_q->priv_data;
+ 	unsigned int entry = tx_q->cur_tx;
+-	unsigned int bmax, len, des2;
++	unsigned int bmax, len;
+ 	struct dma_desc *desc;
++	dma_addr_t des2;
+ 
+ 	if (priv->extend_desc)
+ 		desc = (struct dma_desc *)(tx_q->dma_etx + entry);
 -- 
 2.53.0
 
