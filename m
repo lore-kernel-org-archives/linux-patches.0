@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027072;
-	b=OPCo6z2IhNAai5hEapcA6625GEykq6EJb/eYp8iwNM3f/yEQ/LcGKXO/YdShRSxgn+Su
-	 iESfqF3A2512+T2y5PN5HBAVo9bjN/YkYSVnOQF5EQu3yG0mt/axNQed+/D0+HGjRgGaZ
-	 96dr5i9Ep9yrsawFHh/8jZkewwq4pcZowEH/DV110K4wgNfH5XNdRLmqAmj4lYDoR7Jmx
-	 hA/ptnmKbrWN0UUmQm2vuZfcogPvNVUbZfo7Zm4jHyYSbOl4tjUQBYLceenpznshaLj1/
-	 tcLiDVk68RgKjqUm3zmvxzmCH2J2d8HyTNI4SVWpQT4C1W2IxPX9U5tDyruD3XRx3UA==
+	t=1795027075;
+	b=wlh4pmoFtdfwiON4CW1Yv4PtMoNurr1y+Xtu5DSVivN03QFbQTGAMkVVM4MjeHzIAGdz
+	 In1uccHR6HjYDQ8g5sUR+efu1AD6If5thTw1yzM7g7w/NmKdebcob/1h1NWEruoYvlD7V
+	 E+khY3CFSqO3H4aBOZg/OPshdWUw8s43gwOG7PCes14dixFWNnl7BCRMxM0Xi44ENhe6w
+	 JwVupPaZNTMENE0traN1AinQO/UpMervXnrm6i43qc9F8VqlOsnVGOmierwXEwBuMbZQp
+	 40YEj3ykewmSDdNQlshI0AS+4I0PfXc0PbKKiyDiZmtcCspHsBJ7Bpxkzml5uVJG/aw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NvzlI2hDWInl1AYM2d8VTEa5G2P82A9iyyrRnoBTMHA=;
-	b=UzpFZdfezhjjubUWwAoobGRu9Z3pBZGCrZgGBt9bt/wHVg6lpL17CNrbqzyfdC2Txcz5
-	 kgzmIKiY/s6v2hc2HbkF6wQ7eKavBzPrs5qXARKlj5ToOilwOHlYOXjHKkr0i7NqyfhXJ
-	 BPmYBXS6fUF8AYE6vtsj6bcOOjZzy+eVQ8LYUXfjAX1kB+O5EnTk9u/09Vs5fiX16SNT7
-	 V+SL7+Sk06JDMg9RAx8R/6D+5Txwxi0iORxLVYyXyh6xyUDBRq98c6gYcJWTQVHU8Eom+
-	 nKa8bo+KMhC6t+6joWW9aZPZVBYwR0ApBXjy69jwZ0XWoC+pOznupLEsuaSG/WifJqA==
+	bh=r0na+AXrWN5T/tdHd0J9VU0pbdHz/+B+bXyWJMfvCKo=;
+	b=49cWCAjEYQD/3dCfrlSI2Ltf+9pzUw6oTjzmj7bPTH/Gxhk0jcusLCLtWjTyA/rfXez9
+	 LhD4QDK05oCdSipljpsEocnBSmnbcZbE38xyHZ3LVUvl0pwdY59mtaMtUSuNNFfbK0630
+	 Yq5GBBKbUawFM4lKyte8EoVsNrWn0z4syafEk5nvOm9FsGXtH6m4tkVywp6IBs8vVjVkt
+	 84n4w+vbBXfnOKtvyS1Zrv0QjHuzsUvbFqH9nzvyEg9uwnN1d7pSqHyyD0x0TlhKliPCk
+	 wRD+P0ddgrzhmqYCLdtt3DZ4azFaS4Toxdqs5wrX9P6L1EaOcuzpzmEPWDsQ/nNJ5ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/w5x4W7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAbFoMIL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E46606A31C;
-	Wed, 18 Nov 2026 18:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B05606A31C;
+	Wed, 18 Nov 2026 18:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/w5x4W7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3751F000C4;
-	Wed, 18 Nov 2026 18:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EAbFoMIL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55FA1F000C4;
+	Wed, 18 Nov 2026 18:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027072;
-	bh=NvzlI2hDWInl1AYM2d8VTEa5G2P82A9iyyrRnoBTMHA=;
+	s=korg; t=1795027075;
+	bh=r0na+AXrWN5T/tdHd0J9VU0pbdHz/+B+bXyWJMfvCKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/w5x4W78kprgMUrXQ2QypT2boUy+5NWp7KHYhVsSIwW7Gz3/k91t92vx8l08XTLt
-	 Bkvg8oekJCPQ+lkZb6B9d73dlKZOV04RyxEfOEEbkDU6TIjdwXSfyRLxeevRbxKhO9
-	 GqNDFr/HIod+Pxu1fDCk8DuK6CPgI0tlwSVJ8tRw=
+	b=EAbFoMILHa8S163O1nlfCx7pBYq0oBH5U7EdjFAzyMKHeiT0C6Yc3tVDVTMItj4Jg
+	 dn9bYwAVAJQmuXubBMlGjazyJqMjpNLlFPB59fsD9ofkBZ8ZkEOTOh8alt8TmDnu47
+	 LbY5UsWUEILXd0kabMSRkjB9Y75zsknyPAEPfQ0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Munari <stefanomunari.sm@gmail.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1661/2151] net: usb: lan78xx: reject invalid EEPROM write requests
-Date: Wed, 18 Nov 2026 15:56:36 +0100
-Message-ID: <20261118150222.347969578@linuxfoundation.org>
+Subject: [PATCH 6.18 1662/2151] dax/bus: Return errors for invalid mapping targets
+Date: Wed, 18 Nov 2026 15:56:37 +0100
+Message-ID: <20261118150222.384517581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,53 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Munari <stefanomunari.sm@gmail.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit 9272297df14124fe603c81e40b52ff0c5dd88652 ]
+[ Upstream commit df6cc0a24717c38ac81b5ba1e839c35e74e667dc ]
 
-The runtime PM handling removed the -EINVAL return for invalid
-EEPROM/OTP write requests. These requests now return zero from a
-successful usb_autopm_get_interface() call, even though no data is
-written.
+After the DAX configuration locking was converted to rwsems, successful
+lock acquisition leaves rc set to zero in mapping_store(). Two error
+paths can return this stale value: an unbound region driver and a
+misaligned range size. The sysfs write therefore reports success without
+allocating the requested range.
 
-Set ret to -EINVAL for invalid requests while preserving the runtime
-PM reference release.
+Return -ENXIO when the region driver is not bound and -EINVAL when the
+range size is misaligned.
 
-Fixes: 8a7ffeb795f8 ("lan78xx: Fix for eeprom read/write when device auto suspend")
-Signed-off-by: Stefano Munari <stefanomunari.sm@gmail.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # Raspberry Pi 3B+ (LAN7515)
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261010213248.15938-1-stefanomunari.sm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c05ae9d85b47 ("dax/bus.c: replace driver-core lock usage by a local rwsem")
+Assisted-by: LLM
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260924025035.1265035-2-songmuchun@bytedance.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/dax/bus.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index b73490cae3ba7..3597ae6a542ef 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1712,13 +1712,16 @@ static int lan78xx_ethtool_set_eeprom(struct net_device *netdev,
- 	/* Invalid EEPROM_INDICATOR at offset zero will result in a failure
- 	 * to load data from EEPROM
- 	 */
--	if (ee->magic == LAN78XX_EEPROM_MAGIC)
-+	if (ee->magic == LAN78XX_EEPROM_MAGIC) {
- 		ret = lan78xx_write_raw_eeprom(dev, ee->offset, ee->len, data);
--	else if ((ee->magic == LAN78XX_OTP_MAGIC) &&
-+	} else if ((ee->magic == LAN78XX_OTP_MAGIC) &&
- 		 (ee->offset == 0) &&
- 		 (ee->len == 512) &&
--		 (data[0] == OTP_INDICATOR_1))
-+		 (data[0] == OTP_INDICATOR_1)) {
- 		ret = lan78xx_write_raw_otp(dev, ee->offset, ee->len, data);
-+	} else {
-+		ret = -EINVAL;
-+	}
+diff --git a/drivers/dax/bus.c b/drivers/dax/bus.c
+index fde29e0ad68b1..53d4f5ac29cc2 100644
+--- a/drivers/dax/bus.c
++++ b/drivers/dax/bus.c
+@@ -1180,7 +1180,7 @@ static ssize_t mapping_store(struct device *dev, struct device_attribute *attr,
+ 		return rc;
+ 	if (!dax_region->dev->driver) {
+ 		up_write(&dax_region_rwsem);
+-		return rc;
++		return -ENXIO;
+ 	}
+ 	rc = down_write_killable(&dax_dev_rwsem);
+ 	if (rc) {
+@@ -1189,8 +1189,12 @@ static ssize_t mapping_store(struct device *dev, struct device_attribute *attr,
+ 	}
  
- 	usb_autopm_put_interface(dev->intf);
+ 	to_alloc = range_len(&r);
+-	if (alloc_is_aligned(dev_dax, to_alloc))
++	if (!alloc_is_aligned(dev_dax, to_alloc)) {
++		dev_dbg(dev, "%s: size: %zu misaligned\n", __func__, to_alloc);
++		rc = -EINVAL;
++	} else {
+ 		rc = alloc_dev_dax_range(dev_dax, r.start, to_alloc);
++	}
+ 	up_write(&dax_dev_rwsem);
+ 	up_write(&dax_region_rwsem);
  
 -- 
 2.53.0
