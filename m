@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050916;
-	b=ThrAm8yLEaj00G2G8xFvU0DruXrw6YZpeWDuKwcfSSkK0jcw20/Ayyx7tRGWVLu3dLx6
-	 F2t/KZzmLp/qsdeQgNjhB8ZkWOqRO5WpFHb8D/pzZQu6NAXm8XUKMttCOwOqW3Tcvk1Vo
-	 XOMbIOMtGWTCe3JRkNHQlcrYiFRf4OuM8NX4gqk3HJmVzem2xlbXE8X5/kqRmFhKNAOeW
-	 0o7D0FgAzFbPqwgI9wMWnz0vuk8KEaZRgVK0+6q2UFaYky7qQjqUkov/87MUGKser+h7R
-	 XveNEg7NFvDsip2TYcklQpcUxOEIysoZnkfwsK9WQ/aFSYHA6IUweSE0jtpj+mE8HjA==
+	t=1795050918;
+	b=VsSMOFxHxGHGI6vmh1IgLvVLfCXuEeOe7/Mig+3i3wbKsVLLeURDk7sn1/nU3XaR9qjw
+	 8y02k4um42yI190Ppv6OQrh2Ub2ISN67Jbgn8YJ8C51639rf5xKT6qTuTwR2QEmL2Gllt
+	 06a5TkuAvmvqr+UA/gnlZc5IYIfFAc/OjdwAuopOIpFWFtZEzLBvAmulShy/cTWJ72+9f
+	 oUgfzwhB0H7YMio8CgtwngwFG612Ra3iwDH1KdcAX91jq5begPoVcqYNYejvo0o7qrkqH
+	 OStwQw8VPM4Xl7kkX1MQ2osQaoajpu8RtxPAuTvFcd4KqkqlazUwCHOMQu+bbI2z3pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050916;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050918;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PJaPilJiuxDDWvMMy3az1LwjZVOZx3T+6Qtg2kkrMeA=;
-	b=1xwtDQpgRsJQuajfM7jXqroNgEaobYECNNXwiLPQbUZcpSA0+cdHyulkbNCA9mko5yXA
-	 fGIOH8lgBjkxatRGvT+SJczaoW7oykxzuXdB1yqF7pIMIeWFT8ZD0N+r7uW0qe+wVztqB
-	 /iWQ7uFvVdkWLI4G2sff/b7M8Pmm1czCeDzsdpjlFYHsrNV6CeRKbbbSbQbGhwfQ7BcmO
-	 MEvurm6SWK4YZ+TKQ95dyHDHzTq3Fy+146AEHz8m9ZqRuywpHdL11DwFd2kXCPfR6fkqT
-	 ty9rZMwd5s7AK3MARacu56vJ9SRS8gkLpXOwFuduuUzXXKNhIBDilV+jRBHPGHfc/xA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nxR4gUnfR3CKdKATtXMvbdUdCQFqXMl9o5uTKlC5qjA=;
+	b=1ITTXwJtA1a9fCK0h28Eg00La32WcQGcezRnbz/vpKpzyYGDD7R85l3a4ZJ/HM8/BsWs
+	 +Y/hnjKwSZOrolumcvomukk3h8O/mwwbu8OJlaQBOI5koW/o4YduaNiUMh45Y/srjlUVp
+	 VFBD0qiTYsSeSc2cCQyTA7EoyXgduKAbHeOxFOwPaxA7qzZ1qBRyiuX4yRPiGWxT8hTqM
+	 AyclKsJY0du9PqOV6ni1R82JrChM2uZOM3hdkvXePVmhPMU0EjY62FxqLC3RCab5TDGlW
+	 Eyc6/dudHoYffjb7ZjRe+FNBMwauXEJO0FRwzlge8fCtgJOfk9+e+8Y9cWLbhCbyqvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnARgtdM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Saa5MOcQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE53C606A32C;
-	Thu, 19 Nov 2026 01:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9155B606A31C;
+	Thu, 19 Nov 2026 01:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnARgtdM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9EE1F000C4;
-	Thu, 19 Nov 2026 01:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Saa5MOcQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8961F000C4;
+	Thu, 19 Nov 2026 01:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050915;
-	bh=PJaPilJiuxDDWvMMy3az1LwjZVOZx3T+6Qtg2kkrMeA=;
+	s=korg; t=1795050918;
+	bh=nxR4gUnfR3CKdKATtXMvbdUdCQFqXMl9o5uTKlC5qjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnARgtdMefNDg+rnZLbNrgx0qL3OyACrcJUkrHSyhloXCuKpJsI7DqAAI2IUwHia+
-	 UKjVAvkiQJfPDuxrOTm9BL7PkoGiJi4MruG+IobXywu4sc981H0vvrKFotaNUg0H2N
-	 a2R0/UDDiDxnbxxt9L031gGzA1TkzJq76w4exMKM=
+	b=Saa5MOcQQzfChOESiNmBQmWzP0QI5CuYI8LFAf68urLWWBMe9yerjH17jFChccHix
+	 N7ul7m3THxzacSlpespGSSwhd527d+JoYdURP2JUisQMFsmH9Lg9cMSeEm6EsUyU0N
+	 SEqgm9D0W7Fn1BDuChXKvU3OXgXEYU1fFVi+vtms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 0023/2214] drm/amdgpu: Limit BO list entry count to prevent resource exhaustion
-Date: Wed, 18 Nov 2026 15:28:19 +0100
-Message-ID: <20261118150011.051880327@linuxfoundation.org>
+Subject: [PATCH 5.15 0024/2214] dmaengine: dw-edma-pcie: Reject devices without driver data
+Date: Wed, 18 Nov 2026 15:28:20 +0100
+Message-ID: <20261118150011.085905006@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,62 +63,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse.Zhang <Jesse.Zhang@amd.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 6270b1a5dab94665d7adce3dc78bc9066ed28bdd upstream.
+commit 11d7cfe0c119691b2dafbb699bbca90258c678aa upstream.
 
-Userspace can pass an arbitrary number of BO list entries via the
-bo_number field. Although the previous multiplication overflow check
-prevents out-of-bounds allocation, a large number of entries could still
-cause excessive memory allocation (up to potentially gigabytes) and
-unnecessarily long list processing times.
+dw_edma_pcie_probe() treats the PCI device ID driver_data as the
+template for the controller layout and copies it unconditionally. A
+device bound dynamically via sysfs can match the driver without that
+data, which leads to a NULL pointer dereference.
 
-Introduce a hard limit of 128k entries per BO list, which is more than
-sufficient for any realistic use case (e.g., a single list containing all
-buffers in a large scene). This prevents memory exhaustion attacks and
-ensures predictable performance.
+Reject such matches before enabling the device.
 
-Return -EINVAL if the requested entry count exceeds the limit
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 688b87d39e0aa8135105b40dc167d74b5ada5332)
+Fixes: 41aaff2a2ac0 ("dmaengine: Add Synopsys eDMA IP PCIe glue-logic")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260521142153.2957432-3-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/dw-edma/dw-edma-pcie.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-@@ -35,6 +35,7 @@
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -151,6 +151,9 @@ static int dw_edma_pcie_probe(struct pci
+ 	int err, nr_irqs;
+ 	int i, mask;
  
- #define AMDGPU_BO_LIST_MAX_PRIORITY	32u
- #define AMDGPU_BO_LIST_NUM_BUCKETS	(AMDGPU_BO_LIST_MAX_PRIORITY + 1)
-+#define AMDGPU_BO_LIST_MAX_ENTRIES	(128 * 1024)
- 
- static void amdgpu_bo_list_free_rcu(struct rcu_head *rcu)
- {
-@@ -230,6 +231,9 @@ int amdgpu_bo_create_list_entry_array(st
- 	const uint32_t bo_number = in->bo_number;
- 	struct drm_amdgpu_bo_list_entry *info;
- 
-+	if (bo_number > AMDGPU_BO_LIST_MAX_ENTRIES)
-+		return -EINVAL;
++	if (!pdata)
++		return -ENODEV;
 +
- 	/* copy the handle array from userspace to a kernel buffer */
- 	if (likely(info_size == bo_info_size)) {
- 		info = vmemdup_array_user(uptr, bo_number, info_size);
+ 	/* Enable PCI device */
+ 	err = pcim_enable_device(pdev);
+ 	if (err) {
 
 
