@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053057;
-	b=wHjBJ1eatroOvXm+0AxsQGRpRHeguvBFCHoJu7alUiuWc2ldQ9n2kc+goX+4mlntXICn
-	 Bx+ulBlGKQ9mR7yQvuwlr+FtbSJWZ1BORlNzkxT3/IY6IKq88XGi5D77+muprzn5GtrSW
-	 sqHpDZYh/sT0zV9+0qSkCzt3XpCBWTIs77RfPRHe5YHmZBRkd/0U8L61TQxGKcXwrCg5j
-	 r5tXjG7PBd0zp45evtREQG8dajLebDJPCa+LlwFVHDEwTFQM9SD8bPQC+LDGzY4fCRQuI
-	 Ni/OWnfbqFA265rPtwYYGTKmSzI6PNu/ZKD/vomt4E9s0aESir8g2h3lITpR++Uvu2g==
+	t=1795053060;
+	b=49ib3IUEckovPsZ8I3FIz2Ez14zYDDHtWYA73PmRlVCh5daDUGK1PK9ii7ZJdZJxWbWi
+	 qt/mYgyUeAV839nABXY20f+RMwBDtESaIJgpiDBhyzlL9vHISAVlHhnhwgWGQTsSCy0in
+	 RQXGL9MhQg4B/EnfAPOw8qoN88n+8k5eDxzvVj6Muoku8lBvyNEVdIZXkhoWFuGENm5OW
+	 5I6PXiAmm/r99yCiQjMYob0bO94+s3z3xNZokG4Vh/716FYGHS8Xa6QX771YTXRA15df6
+	 BYdZjuIQ63Akv7ChPwzp/N3qwv06YqocZ4HXUtj+w4ulZwrKFuYFG12x1H7CAaXrHvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n0J1FbDHV2jZawdFCKwlVjXr/dXvS8DRbya7yoP/QNo=;
-	b=iNuZ/w1OZReJj4VYl2kI4tShQLR1i5GYRn1SKa5U7Sy46KDhQjKiRubiaRRL+xD85m33
-	 +yti5TAsw0Co3a5lHM69kSodHQGXPzexLGm5psLdLUzCkW9g7Pvm8UXBMmyg2PY/fMqVk
-	 aCL34RoLrjCOyN50CUXMQGMBa/LWggi/shAYmo19on41k2gqNYIgwfjrl1nCC96t3myJB
-	 jChageYVzCLBEvrkBgNXZ9BLMn+wbJ4ikpCjuIZvn/Rlb6qN8s+hTP6b/sKCcQ2IsCjJ+
-	 vGVKF0m54zZbp6bhYISbiiuwTZrKTK9VMAt8qjs3ylH0Ynb3yLy7iWQvEFSwrapovdQ==
+	bh=7Wkr4FlYomwl4GoF7UQdghkODbXOtXmjj2uHASiOZDI=;
+	b=nfmtLanSMeATG1+PntF/gcxKeZTmLoe8eL93CICMNp/sQo02dnSbqVnD9GocuzzSUqWn
+	 9/NPcaQCvi19Tcr/1uyWgsZAy4JEJP1BvQ/pCIM6y905Y2WYG7Tzzn5btHnCVXaIzpxrg
+	 Uk3/HqpxVCJB2vqRAmCUl/59N5NvmZS8SPC54GBWzrj8rzjm0X3/funQ+zjFwBI71MPQa
+	 uCUxCHjYDMRIoaN/4Sy8ZT993GN1lnSp59gH3+WdVXXbsCCXl9CzwBrkrutZ9dKw4Drbe
+	 i0YQ219uO6kwKmwERvJe8tQw8BU6lfo+TLHw6Mc3ZrZcP5ejBWKOlQi1Hq07H65AxZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PWoLhPH1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WkEBqyDe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B712606A32A;
-	Thu, 19 Nov 2026 01:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAF0606A325;
+	Thu, 19 Nov 2026 01:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PWoLhPH1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21091F000C4;
-	Thu, 19 Nov 2026 01:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WkEBqyDe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F931F000C4;
+	Thu, 19 Nov 2026 01:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053057;
-	bh=n0J1FbDHV2jZawdFCKwlVjXr/dXvS8DRbya7yoP/QNo=;
+	s=korg; t=1795053060;
+	bh=7Wkr4FlYomwl4GoF7UQdghkODbXOtXmjj2uHASiOZDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PWoLhPH1O/UPGbJYSJZoJSWZ6lDMpl4rqJfdQnyuxk5iygOk5pz/DnaBWt9c/gHs6
-	 bNYMlDYXGxmd9KRnVRvo2WYO+gyuWUw75amPHIRyqvA6sqGBkj6e1dvRXpFf/IzyTj
-	 keMw6lemgsBDtz70w+hlbAh33+cq4veBN8NT/3dg=
+	b=WkEBqyDeDVYPLEUzaeBAZh5ZW7ZgUV4ad4NyM3KKTs9adVGsSEnvBvjr92ShKPIdI
+	 UNfEEtAwo+UqF4hUHhCl1WJGVUiomcIqm6AAGfKVgKovBXZJ1KBw6RWP0vgNe26mHZ
+	 87gUgi7OFmlfmDvV1OdooJEBNVR1nRBp4eAHtT2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Benji Wiebe <itsme@benjiwiebe.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0737/2214] ASoC: hdac_hda: Keep runtime PM state in sync across codec remove/probe
-Date: Wed, 18 Nov 2026 15:40:13 +0100
-Message-ID: <20261118150041.308162665@linuxfoundation.org>
+Subject: [PATCH 5.15 0782/2214] nfsd: dont offer flexfiles layouts when NFSv3 isnt being served
+Date: Wed, 18 Nov 2026 15:40:58 +0100
+Message-ID: <20261118150042.900685948@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,85 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 99203e8d8968def973e82bb712ea959c6a46c16e ]
+[ Upstream commit 5d28b2c920d9d9d3c45b41769342ad785eb372a7 ]
 
-After the codec has been removed, its runtime PM status is
-RPM_SUSPENDED while hdac_hda_codec_probe() powers the codec up via
-snd_hda_codec_device_new(). The pm_runtime_put()/snd_hda_power_down()
-calls on probe and registration then see an already suspended device,
-the codec suspend callback is not called and the codec, its HDA link and
-the codec_powered bit stay set, preventing the controller from runtime
-suspending.
+The flexfiles layout driver hands out a deviceinfo that names this server
+as an NFSv3 DS (flexfilelayout.c hardcodes da->version = 3). With v3
+disabled, the client can't talk to the DS: it loops on v3 NULL calls that
+the server answers with PROG_MISMATCH, and I/O hangs in D state.
 
-The remove has a similar problem with the codec link accounting:
-hdac_hda_codec_remove() drops the link reference taken in probe without
-looking at the runtime PM state of the codec. If the codec was already
-runtime suspended, the link reference has been dropped by the codec
-suspend callback and the remove drops it a second time.
+Skip LAYOUT_FLEX_FILES in nfsd4_setup_layout_type() unless v3 is enabled.
 
-Resume the codec in hdac_hda_codec_remove() before disabling runtime PM
-so that the link reference and the codec_powered bit are always in the
-same state as after the probe, and mark the device active on probe once
-the codec has been powered up.
-
-Finally mark the codec device suspended at the end of the remove. Its
-runtime PM is disabled at this point and if only the ASoC card is
-unbound (e.g. by unbinding the machine driver), a following system
-suspend would otherwise call the runtime suspend callback on the already
-cleaned up codec via pm_runtime_force_suspend().
-
-This is a followup patch to address Sashiko reports.
-
-Link: https://lore.kernel.org/linux-sound/20261027083840.28813-4-peter.ujfalusi@linux.intel.com/
-Fixes: c3ec8ac82105 ("ASoC: hdac_hda: fix memleak on module unload")
+Reported-by: Benji Wiebe <itsme@benjiwiebe.com>
+Closes: https://lore.kernel.org/linux-nfs/c734eeb8-8486-4491-bb4d-b9656cbaffbe@app.fastmail.com/
+Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027144655.31988-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260904-pnfs-ff-v1-1-5f502cf25401@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ sashal: replaced the CONFIG_NFSD_FLEXFILELAYOUT preprocessor guard instead of extending an existing IS_ENABLED() check ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/nfsd/nfs4layouts.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index 02936e5f8f64a..b113b33133e88 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -481,6 +481,9 @@ static int hdac_hda_codec_probe(struct snd_soc_component *component)
- 		snd_hdac_display_power(hdev->bus,
- 				       HDA_CODEC_IDX_CONTROLLER, false);
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index bcf16dd07d488..f55092c66f42b 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -125,6 +125,7 @@ nfsd4_set_deviceid(struct nfsd4_deviceid *id, const struct svc_fh *fhp,
  
-+	/* The codec is in D0, the status is RPM_SUSPENDED after a previous unbind */
-+	pm_runtime_set_active(&hdev->dev);
-+
- 	/* match for forbid call in snd_hda_codec_device_new() */
- 	pm_runtime_allow(&hdev->dev);
- 
-@@ -520,6 +523,12 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
+ void nfsd4_setup_layout_type(struct svc_export *exp)
+ {
++	struct nfsd_net *nn = net_generic(exp->cd->net, nfsd_net_id);
+ #if defined(CONFIG_NFSD_BLOCKLAYOUT) || defined(CONFIG_NFSD_SCSILAYOUT)
+ 	struct super_block *sb = exp->ex_path.mnt->mnt_sb;
+ #endif
+@@ -132,9 +133,9 @@ void nfsd4_setup_layout_type(struct svc_export *exp)
+ 	if (!(exp->ex_flags & NFSEXP_PNFS))
  		return;
- 	}
  
-+	/*
-+	 * Resume the codec to have its link reference (dropped below) and
-+	 * codec_powered bit in the same state as after the probe.
-+	 */
-+	pm_runtime_get_sync(&hdev->dev);
-+
- 	/* prevent runtime PM callbacks while the link and the codec are torn down */
- 	pm_runtime_disable(&hdev->dev);
- 	snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-@@ -531,6 +540,9 @@ static void hdac_hda_codec_remove(struct snd_soc_component *component)
- 
- 	/* Balances the disable above, cleanup_for_unbind keeps runtime PM disabled */
- 	pm_runtime_enable(&hdev->dev);
-+	pm_runtime_put_noidle(&hdev->dev);
-+	/* The codec is cleaned up, system suspend must skip it from now on */
-+	pm_runtime_set_suspended(&hdev->dev);
- }
- 
- static const struct snd_soc_dapm_route hdac_hda_dapm_routes[] = {
+-#ifdef CONFIG_NFSD_FLEXFILELAYOUT
+-	exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
+-#endif
++	if (IS_ENABLED(CONFIG_NFSD_FLEXFILELAYOUT) &&
++	    nfsd_vers(nn, 3, NFSD_TEST))
++		exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
+ #ifdef CONFIG_NFSD_BLOCKLAYOUT
+ 	if (sb->s_export_op->get_uuid &&
+ 	    sb->s_export_op->map_blocks &&
 -- 
 2.53.0
 
