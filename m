@@ -1,58 +1,49 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021731;
-	b=v+Spdmc1awJnxvIPWYzYElshemUmL/mJLE/2Rz5FKKwmLwst+V8wWMHzKeYPnOpUU1nJ
-	 scRnnpHluRTIO+euZIl1HI+Uvov7TAL3NwctKtqnHez96+QhtnqmZw9YmHmaloNcVKYeo
-	 o+7tLR03FXvxTkpQwQ6CR0dDt+hAez/m0yVNjjE+iXvy3sbJ8aftt0Pg2C4Qe1dbpg9Pf
-	 n2Vqh3f+lz9izahr+9q65hN8cekRLA0VyTcb/lMbIMaHmS2rP3daQX5jbLMQME1PcCIzi
-	 3JnNXrDQhMkyX3W6auuBMP7ssAfjFSxDRCH9HUuAOwULONiwd6rzwlUf+tpT6WcMgIw==
+	t=1795021732;
+	b=yxQj9LWUiHQYCWVC2zQ2WKXCUtA6Kh8H3NRpPETk8JSNzSOqjMI1bMPu+MP9mKXPOJMd
+	 4jYyf7DmwN8mvZpA8Xfnnn6RUZqnfU6WzzLhnWEED8IdT4vatFAFCvntKsf1q53F55TFl
+	 kJO1FEQOZdqF/AbSWIEWT2lHChA6AVagN8BjH2yFm3Si1Iu6k4RHHX0Gk83X1f0rl6P+N
+	 0vSRLxOLW6WBWeXy2Ri5Ckz59n6N12p9NxyOjLYX57j0JJ8gQoH/tlb/fUmwxkgN/0M6n
+	 EoyfxgfnpYvDXw0VWFpsZA2v93vx2ZvXBRxZSzRCi6Q/07F1ogrZyjFdxhCjo2fmKUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021731;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fj3m6av2pkgyYuwZIVT8e5GBoBeHzjoTtVRgWLzUPmg=;
-	b=xTZD06ICBSMGwkUPl/26u6hJCWZd/xusW9j/9e7G8kgoDzIHzJTojD4s9NAVRXQRe0fW
-	 nuuKb9WyTP+H8drdtmjBnbS83/e7Fh97KEGTDDbRPcxJUxzRX1K9jqohJbUKhAYgcnexS
-	 DC6ZLmV7xvpOrcsO/fUxq2c3csd+0V83qzfZgBR0qHk1ZJotKuWP8NN1788tPfr35HasD
-	 dXvfIT5lBZf4eYcMSgV2nC0t8U1Nd5avzT5fc94H6h9eQ2JKBQyXOUL3uVZinyUTjIHTO
-	 cGN7LgdAhnLD8RU918JCbj0lCZk2CG/XiJ5iIdvV0a47rNLEmQDF3KurYpk2InTBZCg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021732;
+	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
+	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
+	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
+	bh=bx+7bUQnz6I2D7Oz7SpSebRvvPf2hSBNvXrgjF2Tezo=;
+	b=1QFgJ9aVFKJNOl3ezz++GYR3ygnclJMysWM/pMvWVV+J89VZ8of6cKQRx5kSvelwP12z
+	 2PWGe6QPwPLTzKRhSwUxHQJj8HoyLLUgrNDMyOwke5yChYcKfrqlnrlLABcPq+6M7Tef3
+	 Dms7eH0rEG0ILCUh+eVjW0zl8xnwVB1pQwy5Yzzd++1CyduOXEZlAE6bMsavZv87BUi5c
+	 LzLBPo7NnC0bxzdrnnBYwgFNyEJDzPUF0xWopJxh1SdtEB5YBpc3348YbAgssxWu7UFD/
+	 cSKMLwVEndKHVe/kiqiP1hmfMEWcPvLDBzoJ1gaM1UKp5+Zu08c+QNA2s0iITo/ShdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z7seLJhR;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D715C60A2603;
-	Wed, 18 Nov 2026 17:08:51 +0000 (UTC)
+	dmarc=pass header.from=arm.com;
+	spf=pass smtp.mailfrom=arm.com;
+	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=iEQsK1xR;
+	arc=none smtp.remote-ip=217.140.110.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7126660A2603
+	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 17:08:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 7126660A2603
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z7seLJhR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1D71F000CE;
-	Wed, 18 Nov 2026 17:08:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021731;
-	bh=Fj3m6av2pkgyYuwZIVT8e5GBoBeHzjoTtVRgWLzUPmg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z7seLJhRE+Z6wkXY98bRL3+m6hmO/V11nRX20i14r3SWGJFpVX5sYr8OuAPrUiduC
-	 rkCqGdI4ukNqRMiiwZZo6OK+p2K7EHYkhRXKD9qK9X1HMyK642j1laDMzu8osTY4Er
-	 fKuO/iNFMP0abiIxv0PBK2i8sHSjftxzMykMKKoE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2404/2651] ALSA: ump: Drain sequencer callbacks before freeing their client
-Date: Wed, 18 Nov 2026 16:00:44 +0100
-Message-ID: <20261118150411.885355676@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
-References: <20261118150247.972732815@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=iEQsK1xR
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BF4E91477;
+	Wed, 18 Nov 2026 09:08:48 -0800 (PST)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E55293F632;
+	Wed, 18 Nov 2026 09:08:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1795021731; bh=yLwLKFyJIs3jWgTDF+dUIQs6dCjE/lLvFSox/OcEPFw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iEQsK1xRMyJvG0cJx5aLiW6PSSUsAAvaqlVOYeoXMaKt2v0sRi6/Dey2cmSiBrfeb
+	 ib4zWPVS1HS+VEvRQkfXFXoWJHm66qW0c2gcRIA/hVTJ++4yiQVTe6i9HZg1shtYQS
+	 RUd+S808Y5+XqbgXFx1vrSLw5i5MV75L2b3NjoJY=
+Message-ID: <4245d7c1-1607-41d4-98f8-2dceaf33593f@arm.com>
+Date: Wed, 18 Nov 2026 17:08:48 +0000
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,216 +53,210 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/8] arm_mpam: resctrl: Split control and monitoring
+ domain setup into helpers
+To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
+ Dave.Martin@arm.com, fenghuay@nvidia.com, ruanjinjie@huawei.com
+Cc: tony.luck@intel.com, yu.c.chen@intel.com, babu.moger@amd.com,
+ fustini@kernel.org, tan.shaopeng@fujitsu.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <cover.1794283825.git.reinette.chatre@intel.com>
+ <3d67a3dddd76cdb9981d4d7e78d657c930eb2cb6.1794283825.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <3d67a3dddd76cdb9981d4d7e78d657c930eb2cb6.1794283825.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+Hi Reinette,
 
-------------------
+On 10/11/2026 04:19, Reinette Chatre wrote:
+> mpam_resctrl_alloc_domain() allocates one structure that holds both the
+> control domain and the monitoring domain of a resource. It sets up
+> whichever of the two domains the resource supports, with the setup of
+> both open coded in the function, and undoes the control domain if
+> setting up the monitoring domain fails.
+> 
+> Apart from the code that manages domains, every user of the structure
+> accesses only one of its two domains, so the monitoring domain can be
+> given a structure of its own. Doing so starts with separating its setup
+> from that of the control domain.
+> 
+> Move the setup of each domain into its own helper in preparation for
+> giving the monitoring domain its own structure as part of supporting
+> multiple controls per resource. Keep the allocation and the error
+> handling in mpam_resctrl_alloc_domain() so that a failure to set up the
+> monitoring domain still undoes the control domain.
+> 
+> No functional change intended.
+> 
+> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+> Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-From: Cen Zhang <zzzccc427@gmail.com>
+Looks good to me.
 
-[ Upstream commit 9b30046de03acb3b3f2135d45af6be7ee0b565b6 ]
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 
-seq_ump_client_free() cancels group_notify_work while the endpoint still
-publishes seq_ops and seq_client. A received Function Block update can
-enter the sequencer callback after cancellation and queue the work again.
-Even disabling the work cannot protect a callback that already loaded
-seq_client and then resumes after the client has been freed.
-
-A USB UMP endpoint can continue receiving while its sequencer binding
-is removed. The following order uses the same endpoint and client:
-
-  Sequencer binding removal             UMP input completion
-  -------------------------             --------------------
-  cancel_work_sync()
-                                        load seq_ops and seq_client
-  delete sequencer client
-  clear endpoint binding
-  kfree(client)
-                                        schedule group_notify_work
-                                        read client->seq_client
-
-Cover all calls through seq_ops with SRCU in the UMP core. Withdraw the
-operations pointer and wait for those callbacks before canceling work
-and deleting the client. No producer can then queue work after the final
-cancellation, and both the client and callback code remain available
-until the last in-flight callback returns.
-
-Publish seq_ops with release/acquire ordering so the separately stored
-seq_client is initialized before any callback uses it. Use SRCU because
-sequencer notification delivery can sleep; no callback needs to change
-its existing execution context or allocation behavior.
-
-Fixes: 4a16a3af0571 ("ALSA: seq: ump: Handle FB info update")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-00625126b81966d1bf1d-v2-915f6bbabe1fd458c3ab@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/sound/ump.h             |  5 +++
- sound/core/seq/seq_ump_client.c |  5 +--
- sound/core/ump.c                | 59 ++++++++++++++++++++++++++++-----
- 3 files changed, 59 insertions(+), 10 deletions(-)
-
-diff --git a/include/sound/ump.h b/include/sound/ump.h
-index 73f97f88e2ed7..387143783a9b5 100644
---- a/include/sound/ump.h
-+++ b/include/sound/ump.h
-@@ -66,6 +66,7 @@ struct snd_ump_endpoint {
- 
- #if IS_ENABLED(CONFIG_SND_SEQUENCER)
- 	struct snd_seq_device *seq_dev;
-+	/* Published after seq_client; calls are covered by UMP core SRCU. */
- 	const struct snd_seq_ump_ops *seq_ops;
- 	void *seq_client;
- #endif
-@@ -126,6 +127,10 @@ int snd_ump_receive_ump_val(struct snd_ump_endpoint *ump, u32 val);
- int snd_ump_switch_protocol(struct snd_ump_endpoint *ump, unsigned int protocol);
- void snd_ump_update_group_attrs(struct snd_ump_endpoint *ump);
- 
-+#if IS_ENABLED(CONFIG_SND_SEQUENCER)
-+void snd_ump_detach_seq(struct snd_ump_endpoint *ump);
-+#endif
-+
- /*
-  * Some definitions for UMP
-  */
-diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
-index 4c1e81db376f8..ca9dcec198832 100644
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -353,12 +353,12 @@ static int create_ump_endpoint_port(struct seq_ump_client *client)
- /* release the client resources */
- static void seq_ump_client_free(struct seq_ump_client *client)
- {
-+	snd_ump_detach_seq(client->ump);
- 	cancel_work_sync(&client->group_notify_work);
- 
- 	if (client->seq_client >= 0)
- 		snd_seq_delete_kernel_client(client->seq_client);
- 
--	client->ump->seq_ops = NULL;
- 	client->ump->seq_client = NULL;
- 
- 	kfree(client);
-@@ -523,7 +523,8 @@ static int snd_seq_ump_probe(struct snd_seq_device *dev)
- 	snd_seq_kernel_client_put(cptr);
- 
- 	ump->seq_client = client;
--	ump->seq_ops = &seq_ump_ops;
-+	/* Publish the initialized client before callbacks can observe seq_ops. */
-+	smp_store_release(&ump->seq_ops, &seq_ump_ops);
- 	return 0;
- 
-  error:
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index f6482a9bfe614..20cae15e76fcf 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -8,6 +8,7 @@
- #include <linux/module.h>
- #include <linux/export.h>
- #include <linux/mm.h>
-+#include <linux/srcu.h>
- #include <sound/core.h>
- #include <sound/rawmidi.h>
- #include <sound/ump.h>
-@@ -18,6 +19,31 @@
- #define ump_info(ump, fmt, args...)	dev_info((ump)->core.dev, fmt, ##args)
- #define ump_dbg(ump, fmt, args...)	dev_dbg((ump)->core.dev, fmt, ##args)
- 
-+#if IS_ENABLED(CONFIG_SND_SEQUENCER)
-+DEFINE_STATIC_SRCU(ump_seq_srcu);
-+
-+static const struct snd_seq_ump_ops *seq_ops_load(struct snd_ump_endpoint *ump)
-+{
-+	/* Pair with publication after seq_client has been initialized. */
-+	return smp_load_acquire(&ump->seq_ops);
-+}
-+
-+/**
-+ * snd_ump_detach_seq - stop callbacks to a sequencer binding
-+ * @ump: UMP endpoint
-+ *
-+ * Withdraw the binding and wait for all callbacks already in progress.
-+ * The caller can then drain binding work and free the sequencer client.
-+ * Must not be called from one of the binding callbacks.
-+ */
-+void snd_ump_detach_seq(struct snd_ump_endpoint *ump)
-+{
-+	WRITE_ONCE(ump->seq_ops, NULL);
-+	synchronize_srcu(&ump_seq_srcu);
-+}
-+EXPORT_SYMBOL_GPL(snd_ump_detach_seq);
-+#endif
-+
- static int snd_ump_dev_register(struct snd_rawmidi *rmidi);
- static int snd_ump_dev_unregister(struct snd_rawmidi *rmidi);
- static long snd_ump_ioctl(struct snd_rawmidi *rmidi, unsigned int cmd,
-@@ -348,8 +374,13 @@ int snd_ump_receive(struct snd_ump_endpoint *ump, const u32 *buffer, int count)
- 			continue;
- 		ump_handle_stream_msg(ump, ump->input_buf, n);
- #if IS_ENABLED(CONFIG_SND_SEQUENCER)
--		if (ump->seq_ops)
--			ump->seq_ops->input_receive(ump, ump->input_buf, n);
-+		scoped_guard(srcu, &ump_seq_srcu) {
-+			const struct snd_seq_ump_ops *ops;
-+
-+			ops = seq_ops_load(ump);
-+			if (ops)
-+				ops->input_receive(ump, ump->input_buf, n);
-+		}
- #endif
- 		process_legacy_input(ump, ump->input_buf, n);
- 	}
-@@ -699,8 +730,12 @@ static void choose_default_protocol(struct snd_ump_endpoint *ump)
- static void seq_notify_ep_change(struct snd_ump_endpoint *ump)
- {
- #if IS_ENABLED(CONFIG_SND_SEQUENCER)
--	if (ump->parsed && ump->seq_ops && ump->seq_ops->notify_ep_change)
--		ump->seq_ops->notify_ep_change(ump);
-+	const struct snd_seq_ump_ops *ops;
-+
-+	guard(srcu)(&ump_seq_srcu);
-+	ops = seq_ops_load(ump);
-+	if (ump->parsed && ops && ops->notify_ep_change)
-+		ops->notify_ep_change(ump);
- #endif
- }
- 
-@@ -797,8 +832,12 @@ static int ump_handle_product_id_msg(struct snd_ump_endpoint *ump,
- static void seq_notify_protocol(struct snd_ump_endpoint *ump)
- {
- #if IS_ENABLED(CONFIG_SND_SEQUENCER)
--	if (ump->seq_ops && ump->seq_ops->switch_protocol)
--		ump->seq_ops->switch_protocol(ump);
-+	const struct snd_seq_ump_ops *ops;
-+
-+	guard(srcu)(&ump_seq_srcu);
-+	ops = seq_ops_load(ump);
-+	if (ops && ops->switch_protocol)
-+		ops->switch_protocol(ump);
- #endif /* CONFIG_SND_SEQUENCER */
- }
- 
-@@ -893,8 +932,12 @@ static void seq_notify_fb_change(struct snd_ump_endpoint *ump,
- 				 struct snd_ump_block *fb)
- {
- #if IS_ENABLED(CONFIG_SND_SEQUENCER)
--	if (ump->seq_ops && ump->seq_ops->notify_fb_change)
--		ump->seq_ops->notify_fb_change(ump, fb);
-+	const struct snd_seq_ump_ops *ops;
-+
-+	guard(srcu)(&ump_seq_srcu);
-+	ops = seq_ops_load(ump);
-+	if (ops && ops->notify_fb_change)
-+		ops->notify_fb_change(ump, fb);
- #endif
- }
- 
--- 
-2.53.0
-
-
+> ---
+> Changes since RFC v2:
+> - Add Jinjie's Reviewed-by tag.
+> - Add Jinjie's Tested-by tag.
+> ---
+>  drivers/resctrl/mpam_resctrl.c | 112 ++++++++++++++++++++-------------
+>  1 file changed, 68 insertions(+), 44 deletions(-)
+> 
+> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
+> index ec39f3909388..db1df6e8d8c0 100644
+> --- a/drivers/resctrl/mpam_resctrl.c
+> +++ b/drivers/resctrl/mpam_resctrl.c
+> @@ -1640,13 +1640,75 @@ static struct mpam_component *find_component(struct mpam_class *class, int cpu)
+>  	return NULL;
+>  }
+>  
+> +static int mpam_resctrl_setup_ctrl_domain(unsigned int cpu,
+> +					  struct rdt_resource *r,
+> +					  struct mpam_component *comp,
+> +					  struct mpam_resctrl_dom *dom)
+> +{
+> +	struct rdt_ctrl_domain *ctrl_d = &dom->resctrl_ctrl_dom;
+> +	int err;
+> +
+> +	dom->ctrl_comp = comp;
+> +
+> +	mpam_resctrl_domain_hdr_init(cpu, comp, r->rid, &ctrl_d->hdr);
+> +	ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
+> +	err = resctrl_online_ctrl_domain(r, ctrl_d);
+> +	if (err)
+> +		return err;
+> +
+> +	mpam_resctrl_domain_insert(&r->ctrl_domains, &ctrl_d->hdr);
+> +
+> +	return 0;
+> +}
+> +
+> +static int mpam_resctrl_setup_mon_domain(unsigned int cpu,
+> +					 struct rdt_resource *r,
+> +					 struct mpam_resctrl_dom *dom)
+> +{
+> +	struct rdt_l3_mon_domain *mon_d = &dom->resctrl_mon_dom;
+> +	struct mpam_component *any_mon_comp = NULL;
+> +	enum resctrl_event_id eventid;
+> +	struct mpam_resctrl_mon *mon;
+> +	int err;
+> +
+> +	/*
+> +	 * Even if the monitor domain is backed by a different
+> +	 * component, the L3 component IDs need to be used... only
+> +	 * there may be no ctrl_comp for the L3.
+> +	 * Search each event's class list for a component with
+> +	 * overlapping CPUs and set up the dom->mon_comp array.
+> +	 */
+> +
+> +	for_each_mpam_resctrl_mon(mon, eventid) {
+> +		struct mpam_component *mon_comp;
+> +
+> +		if (!mon->class)
+> +			continue;       // dummy resource
+> +
+> +		mon_comp = find_component(mon->class, cpu);
+> +		dom->mon_comp[eventid] = mon_comp;
+> +		if (mon_comp)
+> +			any_mon_comp = mon_comp;
+> +	}
+> +	if (WARN_ON_ONCE(!any_mon_comp))
+> +		return -EFAULT;
+> +
+> +	mpam_resctrl_domain_hdr_init(cpu, any_mon_comp, r->rid, &mon_d->hdr);
+> +	mon_d->hdr.type = RESCTRL_MON_DOMAIN;
+> +	err = resctrl_online_mon_domain(r, &mon_d->hdr);
+> +	if (err)
+> +		return err;
+> +
+> +	mpam_resctrl_domain_insert(&r->mon_domains, &mon_d->hdr);
+> +
+> +	return 0;
+> +}
+> +
+>  static void mpam_resctrl_alloc_domain(unsigned int cpu,
+>  				      struct mpam_resctrl_res *res)
+>  {
+>  	int err;
+>  	struct mpam_resctrl_dom *dom;
+> -	struct rdt_l3_mon_domain *mon_d;
+> -	struct rdt_ctrl_domain *ctrl_d;
+>  	struct mpam_class *class = res->class;
+>  	struct mpam_component *comp;
+>  	struct rdt_resource *r = &res->resctrl_res;
+> @@ -1663,55 +1725,17 @@ static void mpam_resctrl_alloc_domain(unsigned int cpu,
+>  		return;
+>  
+>  	if (r->alloc_capable) {
+> -		dom->ctrl_comp = comp;
+> -
+> -		ctrl_d = &dom->resctrl_ctrl_dom;
+> -		mpam_resctrl_domain_hdr_init(cpu, comp, r->rid, &ctrl_d->hdr);
+> -		ctrl_d->hdr.type = RESCTRL_CTRL_DOMAIN;
+> -		err = resctrl_online_ctrl_domain(r, ctrl_d);
+> +		err = mpam_resctrl_setup_ctrl_domain(cpu, r, comp, dom);
+>  		if (err)
+>  			goto free_domain;
+> -
+> -		mpam_resctrl_domain_insert(&r->ctrl_domains, &ctrl_d->hdr);
+>  	} else {
+>  		pr_debug("Skipped control domain online - no controls\n");
+>  	}
+>  
+>  	if (r->mon_capable) {
+> -		struct mpam_component *any_mon_comp = NULL;
+> -		struct mpam_resctrl_mon *mon;
+> -		enum resctrl_event_id eventid;
+> -
+> -		/*
+> -		 * Even if the monitor domain is backed by a different
+> -		 * component, the L3 component IDs need to be used... only
+> -		 * there may be no ctrl_comp for the L3.
+> -		 * Search each event's class list for a component with
+> -		 * overlapping CPUs and set up the dom->mon_comp array.
+> -		 */
+> -
+> -		for_each_mpam_resctrl_mon(mon, eventid) {
+> -			struct mpam_component *mon_comp;
+> -
+> -			if (!mon->class)
+> -				continue;       // dummy resource
+> -
+> -			mon_comp = find_component(mon->class, cpu);
+> -			dom->mon_comp[eventid] = mon_comp;
+> -			if (mon_comp)
+> -				any_mon_comp = mon_comp;
+> -		}
+> -		if (WARN_ON_ONCE(!any_mon_comp))
+> -			goto offline_ctrl_domain;
+> -
+> -		mon_d = &dom->resctrl_mon_dom;
+> -		mpam_resctrl_domain_hdr_init(cpu, any_mon_comp, r->rid, &mon_d->hdr);
+> -		mon_d->hdr.type = RESCTRL_MON_DOMAIN;
+> -		err = resctrl_online_mon_domain(r, &mon_d->hdr);
+> +		err = mpam_resctrl_setup_mon_domain(cpu, r, dom);
+>  		if (err)
+>  			goto offline_ctrl_domain;
+> -
+> -		mpam_resctrl_domain_insert(&r->mon_domains, &mon_d->hdr);
+>  	} else {
+>  		pr_debug("Skipped monitor domain online - no monitors\n");
+>  	}
+> @@ -1720,8 +1744,8 @@ static void mpam_resctrl_alloc_domain(unsigned int cpu,
+>  
+>  offline_ctrl_domain:
+>  	if (r->alloc_capable) {
+> -		mpam_resctrl_offline_domain_hdr(cpu, &ctrl_d->hdr);
+> -		resctrl_offline_ctrl_domain(r, ctrl_d);
+> +		mpam_resctrl_offline_domain_hdr(cpu, &dom->resctrl_ctrl_dom.hdr);
+> +		resctrl_offline_ctrl_domain(r, &dom->resctrl_ctrl_dom);
+>  	}
+>  free_domain:
+>  	kfree(dom);
 
