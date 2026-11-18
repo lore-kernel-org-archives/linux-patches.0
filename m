@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037165;
-	b=pr41KLUU8uD/F5JkZm3kdmwebvlA0jHZQ2WfZ/Ieh97BPHksSNFy3PEov+BMVGn35MvO
-	 4fu2/EaFlkb4jPkVLzva56kdKTsBDwvlXX3Tg8X+9QMB9CsHiwfq9k/lPLTp9+A3FumOa
-	 mXDZgOpF5pRs8n7/MJSnrB++SwAjG8IvASMYWO8vaf9qOvm057/KHheZ4ZrY44NlpixAZ
-	 JGkWdAmxMTPIUXFdWNBV2Mfcc6e12Uy7SfpZR1j/XodNF5CKGCLQ1I0JnUtdO2V6X/zKF
-	 JNwA5XIs6ae+cLFCVkM0zyypZpLO/SKI3E/YWq8Tq19MuQy+Hz1gR73HWpYjiXhI27w==
+	t=1795037168;
+	b=WcsAaPh4C7vsYFKQ1s6YU3eTigoNyUEWdGGAY9Hoy1ORHnQXs7sj2r8VXyOt7ovRyU+i
+	 2Cyama4wsZGK1zSXTgOYSdLvk2QVdYmy72Dv4/hINnA8MDpCmNK6fZOiauxin1toqVCnV
+	 FvJy6zZnAvkXvqi6UdG1YbGGPC5LktPSeBh91jd3jJteEkUWtK1OMaEawnSVvjhiQ8DS8
+	 YW+DpO6mLCPn231YcCD8SY0vA0eHay5MzWPO9OjUzn9KLi0d+x9ujKS0HOZCZkTg37Mg7
+	 o0DQ9na8RQHASLiwGomwz9SjYrleQEb+i2nqY0TSPBfVWiu55Ep/jQ8MIIe0WfOD6Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037165;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037168;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G0iKvjepNPbvt+rFxUBa5Vr2g445F7HaBnwhrLs1sgo=;
-	b=TrwSD2gslDOuaIwehex9bL0ZyEBskpIhqz62QD5t+OHc97bN2wqaJ3EPsPUmKeuis0RY
-	 1ObL21aYk5fItI55GhxTdNPf4fTtizI22SAD2OPyPcotVxmg7F8i4gDkLhYPzpwGNGPdo
-	 Ots9S76uI+rHndJqwBNt842W6QdpXCHv/SwMdbGmPlUH1G0noSfByIaqqd8J6WXzXJ6TY
-	 zVymyh8nscpaZ15u29iYiLQR4EnaFFhfuAyh0k+Ie+gZLd2B7KqoctZxPAmFWNNmMekbe
-	 M3fMHiXIDru9h0g6pYZuJcqaPerYPAGdQKYZrPV1V0eEnmfogc3OnK7j22Hgz3Op1GQ==
+	bh=lLLJIQzCb5dY4vvwUxO7XnoqV1AW/T8D+1W3xjKMZIs=;
+	b=U8AOESUBdv7s9T/RRvyLf5nke+B+lGX9pqY9iK+iGW1u5fRo4TVUf9FjgBuRol0trC9q
+	 KanHB0FVoXzMzkER5qaxqoh4627IZYyF009uZ6MO9CMpmjlNyWZS1+p67gkypsqSN24pt
+	 yawvcMrM07SEz/o+TDbieibAcHikAiUubaNSdKb4G5tKlqLp562x78rbtZ4M585kbdebt
+	 ta29BOz8Nqq/UQWZRj9wh7O5ZakwG3PeWl04Vy5ihjPUSunUUFNe8h/7VEqzDauyGVqce
+	 jQjlToJiy0IGrM0UJQlHRO37X7VD2UIrgzPVa4qcTmA+7ViTq/BZn0DMnGM6NF0uG1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="D9Moh0i/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ijFF/4XF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7065606A334;
-	Wed, 18 Nov 2026 21:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A429D606A331;
+	Wed, 18 Nov 2026 21:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D9Moh0i/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF761F000C4;
-	Wed, 18 Nov 2026 21:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ijFF/4XF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA231F000C4;
+	Wed, 18 Nov 2026 21:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037165;
-	bh=G0iKvjepNPbvt+rFxUBa5Vr2g445F7HaBnwhrLs1sgo=;
+	s=korg; t=1795037168;
+	bh=lLLJIQzCb5dY4vvwUxO7XnoqV1AW/T8D+1W3xjKMZIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D9Moh0i/2hKF8vu03CjHSKMuXn64uW80eMHTLeYqxg9P+BLtNoO05ZwF69wo3KJJ+
-	 dFgRdB5vk5AhJzXSruqMBfiawy3cM0rQY4Rhy+JDfiGMeJ4zUhu4+BqhzbgbXTuGga
-	 rKTi7kaC4VD1XLcmAh1h4EhdpJlneZ965AfSqwmY=
+	b=ijFF/4XFwFljPHV/Ct8q8JRja48/95/4IOjboosKgdiyBpE1Oaido7K/Cj0mQdFVl
+	 xKtOA9zTGnryFITX6mpjh/nLxDeL07B6MoTrRkAqWm6b9VZePcD+jfaaFsQhXrJTtb
+	 707peLJN6O0l2/9Fj+Jg7Fv1P3yvjdZ4E4qIRr44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1317/3318] smb: client: bound POSIX lock data area by response length
-Date: Wed, 18 Nov 2026 15:32:19 +0100
-Message-ID: <20261118150359.822322905@linuxfoundation.org>
+Subject: [PATCH 6.6 1291/3318] splice: avoid stale f_pos writeback on error
+Date: Wed, 18 Nov 2026 15:31:53 +0100
+Message-ID: <20261118150358.997285428@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,61 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 8fc9af68c57156ff64769f30e831553cd03b3000 ]
+[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
 
-CIFSSMBPosixLock() receives a TRANS2 response whose server-provided
-DataOffset and DataCount are not required by validate_t2() to describe an
-interval inside the response. A server can therefore make the client read a
-cifs_posix_lock beyond the response buffer and return those kernel bytes
-through F_GETLK.
+do_splice() snapshots an implicit file position before calling the splice
+helper. Since splice does not take f_pos_lock, another operation on the
+same open file description can update f_pos while the helper is blocked.
+If the helper then fails, the unconditional writeback restores the stale
+snapshot.
 
-Use smbCalcSize() to obtain the full response length after any multipart
-TRANS2 reassembly, then reject data areas that extend past it before
-dereferencing them.
+For a directory without ->splice_read, a file-to-pipe splice fails with
+-EINVAL. A concurrent directory mutation and getdents() call can advance
+f_pos and refresh the filesystem's revalidation cookie before that failure
+restores only the old position. The next ext2 readdir can then trust an
+offset inside a directory entry and copy data from the adjacent page to
+userspace.
 
-Fixes: fc94cdb94462 ("[CIFS] Fix new POSIX Locking for setting lock_type correctly on unlock")
-Reported-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+Only update an implicit file position when splice returns a non-negative
+result, matching read and write. Keep explicit offset updates unchanged.
+
+Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Subtracted 4 from smbCalcSize() and replaced smb_EIO2() tracing with plain -EIO. ]
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/splice.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index e38d1489bb135..8406291dfcbf5 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2056,6 +2056,7 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
- 		cifs_dbg(FYI, "Send error in Posix Lock = %d\n", rc);
- 	} else if (pLockData) {
- 		/* lock structure can be returned on get */
-+		unsigned int rsp_len;
- 		__u16 data_offset;
- 		__u16 data_count;
- 		rc = validate_t2((struct smb_t2_rsp *)pSMBr);
-@@ -2066,10 +2067,16 @@ CIFSSMBPosixLock(const unsigned int xid, struct cifs_tcon *tcon,
- 		}
- 		data_offset = le16_to_cpu(pSMBr->t2.DataOffset);
- 		data_count  = le16_to_cpu(pSMBr->t2.DataCount);
-+		rsp_len = smbCalcSize(&pSMBr->hdr) - 4;
- 		if (data_count < sizeof(struct cifs_posix_lock)) {
- 			rc = -EIO;
- 			goto plk_err_exit;
- 		}
-+		if (data_offset > rsp_len ||
-+		    data_count > rsp_len - data_offset) {
-+			rc = -EIO;
-+			goto plk_err_exit;
-+		}
- 		parm_data = (struct cifs_posix_lock *)
- 			((char *)&pSMBr->hdr.Protocol + data_offset);
- 		if (parm_data->lock_type == cpu_to_le16(CIFS_UNLCK))
+diff --git a/fs/splice.c b/fs/splice.c
+index 6f9b06bbb860a..53c5a44b08bb1 100644
+--- a/fs/splice.c
++++ b/fs/splice.c
+@@ -1292,10 +1292,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 		ret = do_splice_from(ipipe, out, &offset, len, flags);
+ 		file_end_write(out);
+ 
+-		if (!off_out)
+-			out->f_pos = offset;
+-		else
++		if (off_out)
+ 			*off_out = offset;
++		else if (ret >= 0)
++			out->f_pos = offset;
+ 	} else if (opipe) {
+ 		if (off_out)
+ 			return -ESPIPE;
+@@ -1312,10 +1312,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
+ 
+ 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
+ 
+-		if (!off_in)
+-			in->f_pos = offset;
+-		else
++		if (off_in)
+ 			*off_in = offset;
++		else if (ret >= 0)
++			in->f_pos = offset;
+ 	} else {
+ 		ret = -EINVAL;
+ 	}
 -- 
 2.53.0
 
