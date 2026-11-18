@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024207;
-	b=s0THhkYFUA8LMBEl/oc0jWMVeWSb3vJzBda8eEqAoR8Apl8qbIUBA2aTkR4v6n5n4lCw
-	 iEEcmCYoZLvftORpsCwl8b2wT9gfy+hBuDBFDm+XiP/7AMV7bd5FFpfH8rle5rt6J6p0a
-	 FgsTbwDcc/DLKqN7iNNI6SABeZMS0X7vIvl2dLKfGGn7Qp8mhVk8R135hTMRUsu5VeIjc
-	 9yGpeOUWvsJB+Z69WhQKXl32fIEYH/f93VtQ9crZK7i1sFSCSlYW32bni++7WwQ0W8aMR
-	 TP/Jx8i03Y5ZDY4wa8oT/CeyVVdCjG3pdU83IPshcFMAvxdWAlUJdVBi+R2G3k/935A==
+	t=1795024210;
+	b=oSmTEBWa8jygYiv4vn2995l3S8Pq4iC7RavBjwkNZhJ3ArJ/KLB2LKiX3/RiggGtOVTU
+	 psIhNSnZQPkeXCho5QComJVMR24vaSXpRNkgRNVZA1ZaalFfeFtFOeM0+wN+OlFgoLJ0S
+	 o+tLAcFgGERL31BzgZiOLqQFK6/fw1iCEw6Lj8e6ZeFZst7gbm6gVMAQSx1wG71Znydqg
+	 Oa7n3WRkmFf5O+G9pJJ5GGk34VmANSNPbO44iwW+H265pLBjTLE/yYRkN1Mvq+///WzNy
+	 UYMv/Lxl3QNZQsCpaZ9JqPCfpwW9AHYFFtMXZ6INOsChX5N2osaM0FAvFD1oq2KF6VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MJwSuLUouzAmH0nqMhTGUf1/klBuy8PmA2KPzNCsyQE=;
-	b=tcXQOqXk3PaWLrXcGEjC1qv0R7ZMlJ6XMJfJZpwHaagayZDk+CV+B/Y96ct2/BuUh3r3
-	 1QYkdg9lJsJIfw2WRNnyC6o32H2CvrtrdfZrlYgpBI20kLVgLqvP7C+sZBdOXpM+Khmc+
-	 Rcg+AgHtZwDe2jXV2Thc+9ZySwKdR3Mt2xDDIQebF1oiDce+pK/hze2n95KlxWhOFPZQy
-	 Z63LzqES2PUh+N2yGIZHtWjNweRgAsWelRDw0RBF4I8fNvExf2cTobaoB8yDDKrPe51oN
-	 seJDBJUlotUgAoFWCGHNhuJozFX0wIIBcvpfMd7FZXINL7FfBe8/GFmlZ8BiiEzxwAQ==
+	bh=PlO2ftxL+LTWUkacD2QdJ97drJ026WBmH+nsKL0nZ1k=;
+	b=TdXcMZNt3Jeb8e3Cx5EeQMoIZGMZqjFdQDKEuVb/KeJWrE5ATOh4EIoHIBzXMrCKu/W/
+	 ew18DrRwggK4bIHnY9QTMHIOS4zTZzAT4cdSfLNDJROHPF4h12uwpqiKjrNWPlawMKaNi
+	 4/OK3DiI5ZV8qqejrCddh/SklL2+AxAwF1+R5QTdIGSnn7C6d2kxv+3+AREqadiOduM6t
+	 y1UJfTd68IDjrvCCPUOrzr2Z3LMUM6M4ZPRRGhHpbM4JbKa72zH9ruG5AAhIBZb0fa16l
+	 Q78g752BIqikth8ZSkAwYCxCQj7/G+hAFpm8NbxNA/bOV5zdOtcrvk6Ja7k+o0ObkOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdAntU0g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1koZNFn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD49B606A320;
-	Wed, 18 Nov 2026 17:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921F5606A325;
+	Wed, 18 Nov 2026 17:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cdAntU0g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A26E1F000C4;
-	Wed, 18 Nov 2026 17:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1koZNFn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A681F000C4;
+	Wed, 18 Nov 2026 17:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024207;
-	bh=MJwSuLUouzAmH0nqMhTGUf1/klBuy8PmA2KPzNCsyQE=;
+	s=korg; t=1795024210;
+	bh=PlO2ftxL+LTWUkacD2QdJ97drJ026WBmH+nsKL0nZ1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cdAntU0gaJyZefylsnYXoSSbcS3D8r+MhmVM3KKl5CcmAszT4/Ki/VjrQqZiLi3Sh
-	 pKAFLhCvvORBn+giXIBeVEpXTPD2CdvSNC787eEAS45mgI5ViXWAY1aHNNToVKV8ay
-	 gFhoyxcTTsmSgwaawDXLsaSNKwB+IkEjvHfa71/g=
+	b=H1koZNFn7HmdpP6J/XAw4Bv0HUekNS6mWZD2LwRhCpyrC3rm2AWqjxAm72WChZP1u
+	 XNN78+XnhRQT7E5TsLuD0v5/PtdOWxWYn82vFmnelJd2qOFdA0OJzfMI/I5k7Q+uCc
+	 oPKi/NESrwC3B+RnPhSR3B0nky0zGPcDpSGEVqCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Niklas Cassel <cassel@kernel.org>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0606/2151] ata: pata_parport: fix parport attach idr_alloc for
-Date: Wed, 18 Nov 2026 15:39:01 +0100
-Message-ID: <20261118150144.014249215@linuxfoundation.org>
+Subject: [PATCH 6.18 0642/2151] swim: Simplify return value initialization
+Date: Wed, 18 Nov 2026 15:39:37 +0100
+Message-ID: <20261118150145.244040748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,43 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 193f5b84a95c02456f51fe5067750ecf73d213d5 ]
+[ Upstream commit 385a44e78702762e2fce796cf37b6f465d86a87f ]
 
-idr_alloc() expects an inclusive start and an exclusive end, so passing
-port->number as both arguments produces an empty range. Because
-idr_alloc() only falls back to INT_MAX when end <= 0, the allocation
-succeeds solely for parport0 and returns -ENOSPC for every other port,
-which pata_parport_attach() silently ignores. As a result only
-parport0 gets probed and any higher-numbered parports are never
-attached.
+Initialize the error result once only. Update the result only after a
+successful read.
 
-Use port->number + 1 as the end so the range [port->number,
-port->number + 1) contains exactly the desired ID.
-
-Fixes: 246a1c4c6b7f ("ata: pata_parport: add driver (PARIDE replacement)")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/cee1a15d98cd0d55f41fd65ca9d222b68a74e7d3.1790047457.git.xiaopei01@kylinos.cn
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/28322f0cbefd865bdfb679bab4352c111996795b.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d66bdef0a308 ("swim: Check error register during sector read")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_parport/pata_parport.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/swim_asm.S | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
-index 5c6651621dfbe..2096a38cb6c87 100644
---- a/drivers/ata/pata_parport/pata_parport.c
-+++ b/drivers/ata/pata_parport/pata_parport.c
-@@ -731,7 +731,7 @@ static void pata_parport_attach(struct parport *port)
- 	int pr_num, id;
+diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
+index 250e408060e8b..81c824923336c 100644
+--- a/drivers/block/swim_asm.S
++++ b/drivers/block/swim_asm.S
+@@ -49,6 +49,7 @@ swim_read_sector_header:
+ 	link	%a6, #0
+ 	moveml	%d1-%d5/%a0-%a4,%sp@-
+ 	movel	%a6@(0x0c), %a4
++	moveq	#-1, %d0
+ 	bsr	mfm_read_addrmark
+ 	moveml	%sp@+, %d1-%d5/%a0-%a4
+ 	unlk	%a6
+@@ -63,7 +64,6 @@ mfm_read_addrmark:
+ 	movel	%a6@(0x08), %a3
+ 	lea	%a3@(read_handshake), %a2
+ 	lea	%a3@(read_mark), %a3
+-	moveq	#-1, %d0
+ 	movew	#seek_time, %d2
  
- 	mutex_lock(&pi_mutex);
--	id = idr_alloc(&parport_list, port, port->number, port->number,
-+	id = idr_alloc(&parport_list, port, port->number, port->number + 1,
- 		       GFP_KERNEL);
- 	if (id < 0) {
- 		mutex_unlock(&pi_mutex);
+ wait_header_init:
+@@ -143,10 +143,7 @@ crc1:	tstb	%a2@
+ 	tstb	%a3@(read_error - read_mark)
+ 
+ 	moveq	#0, %d0
+-	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-	rts
+ signal_nonyb:
+-	moveq	#-1, %d0
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	rts
+ 
+@@ -155,6 +152,7 @@ swim_read_sector_data:
+ 	link	%a6, #0
+ 	moveml	%d1-%d5/%a0-%a5,%sp@-
+ 	movel	%a6@(0x0c), %a4
++	moveq	#-1, %d0
+ 	bsr	mfm_read_data
+ 	moveml	%sp@+, %d1-%d5/%a0-%a5
+ 	unlk	%a6
+@@ -238,15 +236,12 @@ data_crc1:
+ 
+ 	tstb	%a3@(read_error - read_mark)
+ 
+-	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-
+ 	/* return number of bytes read */
+ 
+ 	movel	#sector_size, %d0
+ 	addw	#1, %d4
+ 	subl	%d4, %d0
+-	rts
++
+ data_exit:
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+-	moveq	#-1, %d0
+ 	rts
 -- 
 2.53.0
 
