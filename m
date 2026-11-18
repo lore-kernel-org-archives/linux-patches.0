@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061649;
-	b=BnXSboQXzgvrRalozTxPtcxpdQV+Om+kem3zrqON8iQacJ4Pq35ZWCcmIaFoBFSIv3h2
-	 ckxUwffo1yjOGsAjBbSpF+yrCS0bSL2mRdrAufr9bYgiesZR16ki+HxC1Q6XukmrHdd19
-	 dBPh3Rm0w1iso/Eu3na8HwGRUUtBKvyGa8axa+/92VJsFj92c350bgIscDKlfbgRuaB2G
-	 lmWLiIP8kZVTPzjOp+B705ACTHURiTNVrklrArrnG1eexbyMhwuHSIjd3ezHxdd4T07sl
-	 jVaw4r0fq6/qKXGUlvPgz++2ijjMW8CyqQ8PibfOgYAkaCEh8wvR/Y44YiqgVENsTtg==
+	t=1795061651;
+	b=es55RiGDmfrg1CdIBc+0l6jdTQwO/bMSWnpkvmmrkTCcSSD6n3dJ4+LJToHI6Bbc1UoH
+	 7BiXw6UV8Q8UdHqm2RA0McXYdQhcoNABgDr5Y2WDK+sUKmjFdinDwsuUXuBRy2aXwVT0p
+	 dPOoDOBWk2VUHY71jcxYsN7v3hXz6BcaiQkVJ1NDqu0esCWC48XYQTXrDCA4xc0wYvQYu
+	 W84L+sdoN+DZJt9UiPh7HYrSRi/PPuUz+tn6DgGUzZTH2Qjs5Fq0LmEJHPWAqKhMBY+xd
+	 M11AvfWfgsy6KVanXugkjKCQjLrFR9pFwomqlxgfd9I3cNk7BH6UDTObQFVKJnNrIrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061651;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fQuZGhQ0NX7/QHRvb4128lTXIYP6Y6DdFqu15qzDhHU=;
-	b=ixaEHjn7pmINI0cKM7RpBfi2HF3C74Y9rpfwqJGqz5uBew7qLBBSlXYaSQJG/a5aUZDP
-	 I3dMCiQdVaykQSwKwplRU6Crp56MWzn0do08Lb1yIr2v1gz1RNZ5bt2f13BJTDEfxqoHC
-	 X+swU4+JzTiwO6hal7ZVJMlDNjfA0zStaPYn37QhIQaFUWSE4Nig8iJ4ZitJM9FiVOCxT
-	 0TOixfpv8F9Vl+3InwJ8LSaM/+KQORg25hW5LEj9zsUzRvvxmDmiZ0d7Lt0Qoyhp4U9sz
-	 oSb6jTFpkt3XMPisiU9etXQsH621/LCwo6Oygg7HbY0OKYhYQA2FxQx9I/LwCxWsiOA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=XDpjRYBd4VX7Dm74uen8DtgLotbveLuCpbARYHR7DUM=;
+	b=1IzStuuUUK8uHh0XCHTmxMa4FJcPqlARmUBt6L6SiYBfuHB0WYGJccRVSwqY8297vsLx
+	 09Za5EZ80VOO7keZW/cokOK9QVbhEExeVnXYK0J/2O6mb5xbW/N/DwauH5sENdLm7MGaQ
+	 iuUiOGyzdCTjo/e0PNkqssZkVR334u9eIYSTP1gXchSeeo/jawN42Vs8qtqdiOCdy5kqV
+	 2Zjdtd6AhnTU6jQJppNw9ZYgMToP8hDffj4OlL9GCyTZfj1XtXL7gr1v/6gyv4uOEd9ex
+	 xB4g4Fo0laeCM+gVMyfdAHWlEqq6rcPGQtj1pjapB/rcrS0FZ1gxaqs6G7YuNV2RvAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpRbuu8z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arbu1bG4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED993606A325;
-	Thu, 19 Nov 2026 04:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D16606A325;
+	Thu, 19 Nov 2026 04:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpRbuu8z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B341F000C4;
-	Thu, 19 Nov 2026 04:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=arbu1bG4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BD41F000C5;
+	Thu, 19 Nov 2026 04:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061648;
-	bh=fQuZGhQ0NX7/QHRvb4128lTXIYP6Y6DdFqu15qzDhHU=;
+	s=korg; t=1795061651;
+	bh=XDpjRYBd4VX7Dm74uen8DtgLotbveLuCpbARYHR7DUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpRbuu8zYKBphOjGA5dIszQ8SC3437lSO1yKOg2Tx7d11iM9kPrwrjL32hiHdNIDf
-	 wW2i8mi0gWtJqmfXidJaaK9eZu4B6IIl5ZmNy4M13dDh/oxUsNFajNzic7/uL+VRAH
-	 DupXoCCQ6ZNv8YL/JTYUIW+fuYTxZJ5yGHb0DjZU=
+	b=arbu1bG4b8OMfrU4orLXhJYsd/jxMiuwlObGUJL5yPeEvt4jZHARipwJGej/o9z4H
+	 /Rm7dX90EgZuB49ZKDkfJ5uxdxZwCkORY/s0N0lMN7jzWxaSpWeTxGJJHXtIy26SeI
+	 ckLeNRA7aBJYbyVvJCvPlWzDeFd6FB+zp7j8zr5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1627/1848] tools/thermal/tmon: Fix string truncation warning in optarg copy
-Date: Wed, 18 Nov 2026 16:01:05 +0100
-Message-ID: <20261118150027.671179890@linuxfoundation.org>
+Subject: [PATCH 5.10 1628/1848] thermal: ti-soc-thermal: Fix the return value in ti_bandgap_get_sensor_data() kernel-doc
+Date: Wed, 18 Nov 2026 16:01:06 +0100
+Message-ID: <20261118150027.713520448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,52 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 602da762f7a7c494a95cb204ac005965b214e556 ]
+[ Upstream commit 82bb005cd9cf5a9df4cfe4a52db90346ac5fd17a ]
 
-GCC warns about possible string truncation with -Wstringop-truncation:
+ti_bandgap_get_sensor_data() returns an ERR_PTR() if the bandgap
+instance or sensor ID is invalid. Otherwise it returns the stored sensor
+data, which can be NULL if no data has been set or the stored value has
+been cleared.
 
-  tmon.c: In function ‘main’:
-  tmon.c:233:25: warning: ‘__builtin_strncpy’ specified bound 20 equals
-destination size [-Wstringop-truncation]
-    233 |                         strncpy(ctrl_cdev, optarg,
-	CDEV_NAME_SIZE);
-        |
-^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This mismatch was already present in omap_bandgap_get_sensor_data() when
+the driver was introduced in staging.
 
-Replace strncpy() with snprintf() to guarantee NUL-termination and
-silence the compiler warning.
+Document the validation errors while retaining NULL as a possible stored
+value.
 
-Fixes: 94f69966faf8 ("tools/thermal: Introduce tmon, a tool for thermal subsystem")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: 8feaf0ce1a04 ("staging: OMAP4+: thermal: introduce bandgap temperature sensor")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260929201951.408456-1-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20260912062252.42762-1-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/thermal/tmon/tmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/ti-soc-thermal/ti-bandgap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/thermal/tmon/tmon.c b/tools/thermal/tmon/tmon.c
-index 7eb3216a27f45..0c8deee4652e2 100644
---- a/tools/thermal/tmon/tmon.c
-+++ b/tools/thermal/tmon/tmon.c
-@@ -230,7 +230,7 @@ int main(int argc, char **argv)
- 		switch (c) {
- 		case 'c':
- 			no_control = 0;
--			strncpy(ctrl_cdev, optarg, CDEV_NAME_SIZE);
-+			snprintf(ctrl_cdev, sizeof(ctrl_cdev), "%s", optarg);
- 			break;
- 		case 'd':
- 			start_daemon_mode();
+diff --git a/drivers/thermal/ti-soc-thermal/ti-bandgap.c b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
+index 24aa2160d2a6c..0df9abec524b1 100644
+--- a/drivers/thermal/ti-soc-thermal/ti-bandgap.c
++++ b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
+@@ -576,7 +576,8 @@ int ti_bandgap_set_sensor_data(struct ti_bandgap *bgp, int id, void *data)
+  * @bgp: pointer to bandgap instance
+  * @id: sensor id
+  *
+- * Return: data stored by set function with sensor id on success or NULL
++ * Return: the stored sensor data, which may be %NULL, or an ERR_PTR()
++ * if @bgp or @id is invalid.
+  */
+ void *ti_bandgap_get_sensor_data(struct ti_bandgap *bgp, int id)
+ {
 -- 
 2.53.0
 
