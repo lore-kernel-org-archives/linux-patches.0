@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017258;
-	b=dUXUPmjbQpbxNDjyev9MyxDwA92RFVGGoV03ffD5osYOwZRsLYAqiUF4N2Ow/ddFx6qR
-	 008Sf95e9T09OhS5fUK9qaruz7saiyPzT1/gbkoA2PKZX0T9pJK7Ke2q2IKTvh5Q8kvf1
-	 6XUD/2XbtJgvwzc9/rmkpYjd+wpwHi52xC5yqXMXYt3OkkNla5pqJTaYUo7cuDOwhnCVW
-	 404oSRjPhgboVun2NxoGesWmMm7iNRsXEtPDCfBWqfDeldmOPj0wkNjj+fqA2LurliCVG
-	 UrSw80AkZ2bb3Kh6gTR8kyYgSwRohYxIwW3hGqugyF0llRgI8jnBSC8eTggLaDjwmOw==
+	t=1795017261;
+	b=M30xpMVBrgSm3Qd9H3n48pG8kToXYiSYjCXaqUzTrgVa/qyt4hkODWPvoTk3+nkabXck
+	 QTREP1NQoNf+WFSg1RNKjh4PONZhXLyX2CLxtBjdwPecibdP3//AfLFpX/a+DlGA/RCvu
+	 Cxhj/fuzPAYg+14fJfMXxocpOyl1SACysRKtdJIIR0iwpYYKnjoE357qpSMBszIEEqGE8
+	 XHg2yGrU4JJs0BvjFPCJY6nYBaFBipRcHK9Mmg3H0Ff9gjdIKnfcr5CJ6GIi6lvcfGWlJ
+	 Bo6XMXGosqB28Xd0htHsf7EgNlk9LB9CUcI9qoGnOBDKa/kTgeil9wc94FLupXTeUyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017258;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JXpAl5a0Y2feO0op1f4V4opMY9eMVirnj3iNpB0jU7Y=;
-	b=446D8xWWINXE+LY6CbQrpRbXFDnuH9i6Ll0drgUvIJM9dOWuNqqLZESVVjM6LZXFMKsI
-	 w49GZHWqDOXqu9poV1d++jqNl5VERaz7exVHE/kPUdgynL1Koa0WynKP8mV5F59iNJKOz
-	 Z0r/npUto96KDOfRNNUyyxLYq+JFt6xa4A5rnWDd2+VDHp8Ssj0lg8iJuwG7Sra0ZnKi/
-	 75Pjbl/ybieED/pUmtJmGNzi/ofNnrlm/9Ow9RingI3BNibzC3KDsa0/G/pxyp49EymU0
-	 MLhDt1xUcldwvELwPw0DHzo8tVfCwR9oXOU7TCEDwoyFqiBxaYSlSaMeNAcpdD5V6Jg==
+	bh=68fqJL1AYNsU2B+r1ZSrADkBw2+p9tbe+JJ3PLiR9ys=;
+	b=FPEO8GpD8RBzjdhEEOPo2B0PZ55y8ZuxlESDtbsxDyIm6YHjZTRG9xe/6B5MQJrhZP9/
+	 4zmfPekOuE1EypbU/zbK81w2ET9hCOmYBX8FFi6DwJRTWtJdsCa84wWEz6JctmDRLaTaO
+	 0Ah1bQ43dF6oil0V9SncCblnQRwkhjKLjtO0nJnVW/58eKxPS9FsJxtMJQ54M3EU/2ohI
+	 oUXPzhxhdqykZsJrv4OH7N9t+x7YXU4GBfas1AgdYOvE8fXOwajOpM6mG/npdeMg96NLS
+	 p+SHdD4xrQoj7f3ckIRa7tYDUusCbttXkRzP33x1Iq5tSwUMLqo/Yopvk/D7h6bFQKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2M5HBN4I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ytP79Adu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B0C606A320;
-	Wed, 18 Nov 2026 15:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99120606A32A;
+	Wed, 18 Nov 2026 15:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2M5HBN4I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48331F000C4;
-	Wed, 18 Nov 2026 15:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ytP79Adu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE661F000C4;
+	Wed, 18 Nov 2026 15:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017258;
-	bh=JXpAl5a0Y2feO0op1f4V4opMY9eMVirnj3iNpB0jU7Y=;
+	s=korg; t=1795017261;
+	bh=68fqJL1AYNsU2B+r1ZSrADkBw2+p9tbe+JJ3PLiR9ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2M5HBN4IZpLtzUtK38NAcgqW3zOfDgd/YEDvquGptW8iuB5g1x//pKrfDR1NeHywh
-	 Ryx3uKSHlTlNssBmp29m7x7/c319DAIwxBpvATu45TzHlA6w8n/3wbd4gCAwGqOGCU
-	 qPEgMCgOsWbMoea+FcVbsWYl77tpFknGadSetL58=
+	b=ytP79AduBaWJ+UX5DX/D+tm9mIZhPczjMpayFM3UpuYJCsg121eVWJFDHZuWBE8/S
+	 y0zGU2VIoqrBnPGdSnKIUW2p0CPmo1zQGtg0K2wUXVRwZnDB2pjgzZbjMpXYsQ9KTB
+	 omDquigZKBMhHTbFEH09FMeJezXVB3dwvniSqWmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0783/2651] ASoC: amd: acp: fix TAS2783 SoundWire codec unmet dependencies
-Date: Wed, 18 Nov 2026 15:33:43 +0100
-Message-ID: <20261118150316.077650083@linuxfoundation.org>
+Subject: [PATCH 7.3 0819/2651] iio: accel: bma220: publish the SPI driver ACPI alias
+Date: Wed, 18 Nov 2026 15:34:19 +0100
+Message-ID: <20261118150317.379292017@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,65 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Syed Saba Kareem <Syed.SabaKareem@amd.com>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit d06607bafb36abc14ed34c8adfb1239bebcd83d1 ]
+[ Upstream commit cdc7d3dd101251a6373332726b8d6fad35e83b8a ]
 
-SND_SOC_AMD_LEGACY_SDW_MACH unconditionally selects SND_SOC_TAS2783_SDW,
-but that codec depends on SND_SOC_SDCA and EFI in addition to SOUNDWIRE.
-An unconditional select force-enables the codec even when those
-dependencies are not met, which the kernel test robot reported as unmet
-direct dependencies when EFI=n:
+The SPI driver advertises an ACPI match for BMA0220 but does not export
+that table. A modular build therefore lacks the ACPI alias used to load
+the driver when the device is enumerated through ACPI.
 
-  WARNING: unmet direct dependencies detected for SND_SOC_TAS2783_SDW
-    Depends on [n]: SOUND [=y] && SND [=y] && SND_SOC [=y] &&
-      SOUNDWIRE [=y] && SND_SOC_SDCA [=y] && EFI [=n]
-    Selected by [y]:
-    - SND_SOC_AMD_LEGACY_SDW_MACH [=y] && ...
+Export the ACPI table. Move the existing SPI export next to its SPI ID
+table so each export is adjacent to the table it describes.
 
-The other SoundWire codecs selected by this machine driver only depend
-on SOUNDWIRE, which the driver already depends on, so they select
-cleanly.  SND_SOC_TAS2783_SDW is the only one that additionally needs
-the SDCA core and EFI (it reads speaker calibration data from EFI
-variables).
+The issue was found by our static-analysis tool.
 
-SND_SOC_SDCA cannot simply be selected here, as that introduces a
-recursive Kconfig dependency (SOUNDWIRE depends on SND_SOC_SDCA_OPTIONAL,
-whose default pulls in SND_SOC_SDCA), and EFI is a platform feature that
-must not be selected by a driver.  Instead, guard the select with the
-missing dependencies so the codec is only (and always) built when they
-are satisfied:
-
-  select SND_SOC_TAS2783_SDW if SND_SOC_SDCA && EFI
-
-This keeps the TAS2783 SoundWire codec built together with the machine
-driver on platforms that can use it, while avoiding the unmet dependency
-when SND_SOC_SDCA or EFI is disabled.
-
-Fixes: 28114992dd2f ("ASoC: amd: acp: enable TAS2783 and add RT712-VB SoundWire machine")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202609182147.gfofWIXW-lkp@intel.com/
-Signed-off-by: Syed Saba Kareem <Syed.SabaKareem@amd.com>
-Link: https://patch.msgid.link/20260924124205.3376083-1-syed.sabakareem@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bf2a5600a3eb ("iio: accel: Add support for Bosch BMA220")
+Assisted-by: LLM
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/bma220_spi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/acp/Kconfig b/sound/soc/amd/acp/Kconfig
-index e880e44b9763f..6433876430f04 100644
---- a/sound/soc/amd/acp/Kconfig
-+++ b/sound/soc/amd/acp/Kconfig
-@@ -181,7 +181,7 @@ config SND_SOC_AMD_LEGACY_SDW_MACH
- 	select SND_SOC_RT715_SDW
- 	select SND_SOC_RT715_SDCA_SDW
- 	select SND_SOC_RT722_SDCA_SDW
--	select SND_SOC_TAS2783_SDW
-+	select SND_SOC_TAS2783_SDW if SND_SOC_SDCA && EFI
- 	help
- 	  This option enables Legacy(No DSP) sound card support for SoundWire
- 	  enabled AMD platforms along with ACP PDM controller.
+diff --git a/drivers/iio/accel/bma220_spi.c b/drivers/iio/accel/bma220_spi.c
+index d6c1087cc3c0f..d7a95289df481 100644
+--- a/drivers/iio/accel/bma220_spi.c
++++ b/drivers/iio/accel/bma220_spi.c
+@@ -28,12 +28,13 @@ static const struct spi_device_id bma220_spi_id[] = {
+ 	{ .name = "bma220" },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(spi, bma220_spi_id);
+ 
+ static const struct acpi_device_id bma220_acpi_id[] = {
+ 	{ "BMA0220", 0 },
+ 	{ }
+ };
+-MODULE_DEVICE_TABLE(spi, bma220_spi_id);
++MODULE_DEVICE_TABLE(acpi, bma220_acpi_id);
+ 
+ static const struct of_device_id bma220_of_spi_match[] = {
+ 	{ .compatible = "bosch,bma220" },
 -- 
 2.53.0
 
