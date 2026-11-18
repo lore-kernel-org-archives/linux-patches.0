@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052395;
-	b=DXMOME9XGRidE9/qdJR58ycHjJFpF3Xe+e8dRakV8NkdXYtqQVLQvLYaGWVQkY+odr18
-	 1/hp8cZSOQ3JTz4ZXN/GpjNflQzMinsbnfc2hmfrNoCMhjDlPzaxc2QW5ekJvBw+iX1IK
-	 8e+KCD+ihbUL7xSL7/ESRbFfCWKdNmGhDmqPZyrwZvS8e+hlmQSos6KkIGZsEMO0Q6EU8
-	 XasLdZhdr5VQvTQT0IuJPUM2XmLRKtLXuajWQXcF+wy+qxiAKHOA1eqOuGlOKmZapCAeD
-	 xO+p4etHKQ3Ak8e9pGdGGG7ac498OXVPk8WjZ2u8cV9sN+FG1GYdypYtu7TCT0kHrFA==
+	t=1795052397;
+	b=B07lC/hxu/dLV+w1cYLo5ORK76RixmhzC7HkwPGZc9AFEHJaEna/pnOLuNuvTTnhrA3J
+	 UzjOD/bxsemPd57wUNADTSvVIULWJ/uS8JrLiGhM1PIIGPCAd6wvzMkFFJA3isBZNgL+t
+	 1h/YtVTQTrixPWjrN6873YA2TIxNNjNIU31xQ5ke6E7qOgmfCoCON4JTw+Lur0KbwfUn2
+	 BKxcc7NIia0JZgvRyBNo8MW3tdpCIYV08ZjQepiLU5DjbJ9cuAIzRh1ZPio3JLwbfVCTR
+	 wCEI8sj0UO0z5fhNVOycOFqlc7elw4XicZfvu+02OkOkQ6CbgwjGR+/lbkSLRe6fLKw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XKv4yBuJAMuTUy33uUKo8GAUz8WtLD9lvBuWlKBKhho=;
-	b=ic+MRAgqywkRD3yKtIVe9JQbtU+EumlOO8x7zWZpXkhR0ulI+2Zg1cq9EVgMwJ3XIfkh
-	 RUqyNhBp9FvD1h3aWUGZ3jMyUMK3j3bT53UoakMoIPOvWetzlyTp1nKY7w0YnvZyfdVQK
-	 95WNKVAx3sHyuiBJL5xq7+67cFt8IetnQGo93q1oZaIbZPBiMNa/LpjUcc9kF7eB5vTcj
-	 4tX+TZkReAmUVVsw0+Dix7DZh/2OkB7JfhRo5X1JTx/Z6iBGEkMV+5ymetxNa+Q2UB6xI
-	 oHL9WsiUIYUgmj1IILh53AY5HXMUL7tjXXZ1wDm7+5hwTJ8DWVgvka6mrssFXjXkfjg==
+	bh=C+2lScmsuz89i6S8Vcu7LiOk6jNfvQrmdPWgQPNiehA=;
+	b=WdlTozxp+QVF18/7vv/siLRtxUluYf40q7NE0XOAjEnk8e7oKEQzVavkUcjAwkZ6um98
+	 Qf7HSz7HAm0bMTBmZHmttL1Jl3/qIZK3Uo2KjhWNAt7BFmQA26ROsyQbPUUJo3doGSjOt
+	 GPTitaZ9jEhrPP7bmdfVKx5vUOmfIgGDDoF4r1ttVoJLLOAQjq3ey4in4AzdTCpKraQzT
+	 Z2GVoDLHeNFQ9Z8VkATstNE/7DGwcLr+U0iW57iAEyepQ0x986xipxjC7y7xWCwVafrkd
+	 njFkyXmFrtoPU4bDsokxWkl9WtZMJnrGQ/ETHC687Ctl/v8PbGmuJnpTMi6UxEc+YRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knh2YsFV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SyQOf2bZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0504D606A335;
-	Thu, 19 Nov 2026 01:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A930606A325;
+	Thu, 19 Nov 2026 01:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knh2YsFV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F681F000C4;
-	Thu, 19 Nov 2026 01:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SyQOf2bZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE851F000C4;
+	Thu, 19 Nov 2026 01:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052394;
-	bh=XKv4yBuJAMuTUy33uUKo8GAUz8WtLD9lvBuWlKBKhho=;
+	s=korg; t=1795052397;
+	bh=C+2lScmsuz89i6S8Vcu7LiOk6jNfvQrmdPWgQPNiehA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knh2YsFV3l8QwP1lfHAQQdEAP65iy7WJ0ERNJQpmXiOTtugm/cz4ppPTfnAIoD8FL
-	 8jjldgzf23UDDURQckeCIOOtjl7ByNcIMkOnYPEcmlY4NQ371eDCzBZft4YSlk8HKM
-	 +yNilITA8+XXcd9zwHRx+uA06us+26Y7XK9MFQ4Y=
+	b=SyQOf2bZdXAayW2yY5LNETuV/EMDP9QrtM2XZauD1dCCkhIvyIBOJbwXc7O0fWLrv
+	 qIlYgXrVWOHi57q7TZRmYbJirVXTNLm+L8UpTBv9HKGMraVf/H0zmWuYLx2O6VpETd
+	 dZCHgYgWZ3oT6kw69BcsgtBQ4tEKJn4poyrxARus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Hitesh Patel <hitesh@ebytelogic.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0548/2214] media: qcom: camss: vfe-17x: Fix write master buffer done being dropped
-Date: Wed, 18 Nov 2026 15:37:04 +0100
-Message-ID: <20261118150032.925674913@linuxfoundation.org>
+Subject: [PATCH 5.15 0549/2214] ALSA: sgio2audio: Only free successfully requested IRQs
+Date: Wed, 18 Nov 2026 15:37:05 +0100
+Message-ID: <20261118150032.962516309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,56 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hitesh Patel <hitesh@ebytelogic.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit eed550a8191c2f6984047a1b794b313d1bacf77d ]
+[ Upstream commit af3d225b639c6f9fb8fd5e1e27f11672d56724b6 ]
 
-The VFE 17x interrupt handler reads and clears the bus status
-registers on every interrupt, but only acts on the per write master
-BUF_DONE bits when bit 9 of IRQ_STATUS_0 is set as well. Bit 9 is the
-ping-pong flag of image master 1. It has nothing to do with the other
-write masters, and it is not guaranteed to be set in the same
-interrupt in which a write master reports a completed buffer.
+snd_sgio2audio_create() calls snd_sgio2audio_free() when an IRQ
+request fails. The cleanup helper currently walks the complete IRQ table,
+including entries whose request_irq() calls have not been attempted yet.
+free_irq() then receives an IRQ and dev_id pair that was never registered.
 
-The bus status is read-to-clear. When a buffer done arrives while bit
-9 is not set, the handler clears the status and never calls
-wm_done() for it. The buffer stays queued in the driver and the video
-node never receives that frame.
+Pass the number of successfully requested IRQs to the cleanup helper on
+the request failure path, while retaining the full-table cleanup for
+teardown after all requests have succeeded.
 
-With one RDI streaming this is rare. With two RDIs streaming on the
-same VFE, for instance two virtual channels demultiplexed by the CSID,
-the interrupt rate doubles and one of the two lines loses buffer done
-events continuously.
-
-Act on the bus status alone, as the other gen2 VFE handlers do.
-
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
+Fixes: 862c2c0a61c5 ("ALSA: ALSA driver for SGI O2 audio board")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260929084540.2065213-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe-170.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/mips/sgio2audio.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index af264c1f7b0eb..44223c08b87af 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -383,9 +383,8 @@ static irqreturn_t vfe_isr(int irq, void *dev)
- 			vfe->isr_ops.comp_done(vfe, i);
+diff --git a/sound/mips/sgio2audio.c b/sound/mips/sgio2audio.c
+index 989f656e2de7d..5bcfe8516f22b 100644
+--- a/sound/mips/sgio2audio.c
++++ b/sound/mips/sgio2audio.c
+@@ -751,7 +751,8 @@ static struct {
  
- 	for (wm = 0; wm < MSM_VFE_IMAGE_MASTERS_NUM; wm++)
--		if (status0 & BIT(9))
--			if (vfe_bus_status[1] & STATUS1_WM_CLIENT_BUF_DONE(wm))
--				vfe->isr_ops.wm_done(vfe, wm);
-+		if (vfe_bus_status[1] & STATUS1_WM_CLIENT_BUF_DONE(wm))
-+			vfe->isr_ops.wm_done(vfe, wm);
+ /* ALSA driver */
  
- 	return IRQ_HANDLED;
+-static int snd_sgio2audio_free(struct snd_sgio2audio *chip)
++static int snd_sgio2audio_free(struct snd_sgio2audio *chip,
++			       unsigned int irq_count)
+ {
+ 	int i;
+ 
+@@ -761,7 +762,7 @@ static int snd_sgio2audio_free(struct snd_sgio2audio *chip)
+ 	writeq(0, &mace->perif.audio.control);
+ 
+ 	/* release IRQ's */
+-	for (i = 0; i < ARRAY_SIZE(snd_sgio2_isr_table); i++)
++	for (i = 0; i < irq_count; i++)
+ 		free_irq(snd_sgio2_isr_table[i].irq,
+ 			 &chip->channel[snd_sgio2_isr_table[i].idx]);
+ 
+@@ -777,7 +778,7 @@ static int snd_sgio2audio_dev_free(struct snd_device *device)
+ {
+ 	struct snd_sgio2audio *chip = device->device_data;
+ 
+-	return snd_sgio2audio_free(chip);
++	return snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
  }
+ 
+ static const struct snd_device_ops ops = {
+@@ -828,7 +829,7 @@ static int snd_sgio2audio_create(struct snd_card *card,
+ 				0,
+ 				snd_sgio2_isr_table[i].desc,
+ 				&chip->channel[snd_sgio2_isr_table[i].idx])) {
+-			snd_sgio2audio_free(chip);
++			snd_sgio2audio_free(chip, i);
+ 			printk(KERN_ERR "sgio2audio: cannot allocate irq %d\n",
+ 			       snd_sgio2_isr_table[i].irq);
+ 			return -EBUSY;
+@@ -852,13 +853,13 @@ static int snd_sgio2audio_create(struct snd_card *card,
+ 	/* initialize the AD1843 codec */
+ 	err = ad1843_init(&chip->ad1843);
+ 	if (err < 0) {
+-		snd_sgio2audio_free(chip);
++		snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
+ 		return err;
+ 	}
+ 
+ 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+ 	if (err < 0) {
+-		snd_sgio2audio_free(chip);
++		snd_sgio2audio_free(chip, ARRAY_SIZE(snd_sgio2_isr_table));
+ 		return err;
+ 	}
+ 	*rchip = chip;
 -- 
 2.53.0
 
