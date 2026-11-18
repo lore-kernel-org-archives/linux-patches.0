@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031068;
-	b=QabgDwjhuQPnV6H4Xj7M9s2bjTY6ho3NPXPEk3wyajW3/EPcNtgjCL6LEt9xspMqHJiU
-	 gqw+fQGBYpOBJYG9ZtNbOkeAL5Dyy1qH1HPKOgnP7kz3B1xMIyvMTOsmkHQvgV/qDqHAa
-	 IHIE9Hx1xw8NYzs7Kb6GWqa5OyuVH9kn6Klics2HP13mck6646g8gurOwPs05NPJdUdVN
-	 pNnPH1XUBjRPROzSM+etG4bChgOEIWksOWtdUSlkTDC+6hiQmlqu+lHiNt/eG+tS64M6Q
-	 r7bblQETNrBBVn+KPzhDgb65JYEbxh1qhvVn1J8X/pBlE0caOUeLv40pSrmKGZwCQ8Q==
+	t=1795031071;
+	b=tJgZ9+MA8GQvwjEx4/zsDgqMg0DhJCMeGlPDaNtJi7500jqwQpQOe8naysNx/XID72xs
+	 p0xuqUe+Qk7Qxy4Zt6YMHfQio3UpGvm/dRdaoQ7fbpnn3nqOOYGYSEDz1cUyOrkK2XJWz
+	 3ZOQYbHJydfH9Wkid4Lho99SCwAFC30TyMkPYOGuUPr7DjAVhUnhmigxC/NbfENm3TpUO
+	 tHDKT4hSmmx5S/udyls7VCUIH+XMSfoh818V0aaJRkSduAZUaxQs46VnMNK+ukZH6ZQh3
+	 FJKBPvX8heRG5hohzcSXdVW+NnebFifx57/LdV1uKzSNeTFixp1Vy1f7L1xWlSBfKoQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031071;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2uAHtO+B7CS5xW94kfc4FI453XN1JExPHHmpfpn9D+s=;
-	b=Z97/vlIKtR1gldJ1bUp55PBSYmfyrtdaWFQe2YH3DG9HCSey2FOnt0qfSaGgo702dHUA
-	 4xvknfpO+53rs54RTP5VqqjVrMjsJ7fDCDWsup6Um5ul5TZHJD/nuC/h23m3KIYvgMeJC
-	 iNSgTtQUa+ACKdlg6OW0ppzvL48o/ZBNpf281Zv7yha5XCM1RCO0ZC1sSMvy356yprwez
-	 KPZwBWc5cLJcQ0fazvJsSgEsLxi6ahPIsXqwDj7yDbsf6C+hwBOtBpZSrVjBJOg9/Iba6
-	 RO5TQA9jqR1Sqz/2LXdhH7koOxN5hprRNOmFQbPZPjL0obFrJmZp032ebu3TJUntRig==
+	bh=Aby4c3l62de/gOArX0oWhMXJUXTfnBlh4c7tr8g04vk=;
+	b=NV8oHjXCLK3j96Gf7420fBu/KfdHfrutQVUk7iU8E80Zgu+nolJ0Wg7Qqqxv4oMTHFfe
+	 lZ/nkuQ/HZlspzvlQL3+kBzRlKxzMpEpU4CGCh95iQmIr1dvJN+Dz20/XtEuOos725z8i
+	 ZTcfpgS7i+fsj62gRjAMQlcBc5JWQsi9WQaNu+iTFjVy/JHeMOmMajqYUPzjtsfe7hUqQ
+	 nWRFb+Ayd3blsTMTj3m/RyOs9I+u9kXWNdPMaKF3Ju0zuAgr79HNJ9vSyJ482oIOAbi55
+	 L9+pJqvDgw1njRv6qeZ6CiHzj9PeJLAvYMHwf8qx6eNcWJ7hFrv8eTW/M11KXxfFCLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbTiOf72;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="L/QUPeKw";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39588606A31C;
-	Wed, 18 Nov 2026 19:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015B8606A31C;
+	Wed, 18 Nov 2026 19:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbTiOf72
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0E81F000C4;
-	Wed, 18 Nov 2026 19:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L/QUPeKw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB951F000C4;
+	Wed, 18 Nov 2026 19:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031068;
-	bh=2uAHtO+B7CS5xW94kfc4FI453XN1JExPHHmpfpn9D+s=;
+	s=korg; t=1795031070;
+	bh=Aby4c3l62de/gOArX0oWhMXJUXTfnBlh4c7tr8g04vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbTiOf72wmNG2NEhLRmRTGakK5pLJbWodB+embsUL2k1gHZDoGcyTdSuacvNBvOKj
-	 M3MAy8jKU7LLbme27PCw0AX4JEZ2N1VVlvRdc+Vx3RzhElggaAY+ZT77oIEzPUo83n
-	 yQydpfNsL2MjQlqOgOfo0d/gkRT5vDrX/2wmAwSg=
+	b=L/QUPeKwWM0gZn9RyQ9ezWRTuB7WPNJVgjLwGwDdxhUJXkzzayKSS1y+YhnRisajJ
+	 I/3aOKnUQaS7RZvDrlfJhwFJ3ttqNDXs8Kx/vBjML76xRhuPkWvm3pQDImPhex3Fbq
+	 gYKngFJq5c1EjXZfNVBmuQz8D8GjLnj+cbqqOrrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0885/1756] dmaengine: ste_dma40: Init hardware before registration
-Date: Wed, 18 Nov 2026 15:50:12 +0100
-Message-ID: <20261118150044.825351185@linuxfoundation.org>
+Subject: [PATCH 6.12 0876/1756] wifi: ath12k: Reserve space for a string terminator
+Date: Wed, 18 Nov 2026 15:50:03 +0100
+Message-ID: <20261118150044.263645709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,67 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit ffd583a734dc4bdafb9e18d9aa48b6efafd1a628 ]
+[ Upstream commit 13b15eabe2c541b80406166964cdc8ccb5e9c32a ]
 
-d40_probe() enables the interrupt handler and registers DMAengine devices
-before calling d40_hw_init(). An interrupt pending from the bootloader can
-therefore reach the handler while the hardware interrupt state is not
-initialized and channel lookup entries are empty. The handler deliberately
-does not acknowledge an interrupt for an unknown channel, so a level IRQ
-can retrigger continuously.
+ath12k_write_htt_stats_type() accepts count == size, which fills the
+zero-initialized buffer without a terminating NUL. sscanf() then reads
+beyond the buffer.
 
-Initialize the hardware and set the DMA segment limit before requesting
-the IRQ or registering DMAengine devices. d40_hw_init() clears pending
-logical and physical interrupt status, so request_irq() can enable the
-line normally after the hardware state is initialized.
+Reject input that leaves no room for the trailing NUL.
 
-This ensures that the handler and clients only observe initialized
-hardware.
-
-Fixes: 8d318a50b3d7 ("DMAENGINE: Support for ST-Ericssons DMA40 block v3")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-9-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 8c7a5031a6b0 ("wifi: ath12k: Fix buffer overflow in debugfs")
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20261003095913.575108-1-yaojiale02@163.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 4e5907f6840fd..c88de0dc7c6eb 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3670,20 +3670,19 @@ static int __init d40_probe(struct platform_device *pdev)
- 	}
- 	pm_runtime_use_autosuspend(base->dev);
+diff --git a/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c b/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
+index 6f2e7ecc66af7..df95a4ebace84 100644
+--- a/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
++++ b/drivers/net/wireless/ath/ath12k/debugfs_htt_stats.c
+@@ -1646,7 +1646,7 @@ static ssize_t ath12k_write_htt_stats_type(struct file *file,
+ 	const int size = 32;
+ 	int num_args;
  
-+	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
-+
-+	d40_hw_init(base);
-+
- 	ret = request_irq(base->irq, d40_handle_interrupt, 0, D40_NAME, base);
- 	if (ret) {
- 		d40_err(dev, "No IRQ defined\n");
- 		goto destroy_cache;
- 	}
--
- 	ret = d40_dmaengine_init(base, num_reserved_chans);
- 	if (ret)
- 		goto destroy_cache;
+-	if (count > size)
++	if (count >= size)
+ 		return -EINVAL;
  
--	dma_set_max_seg_size(base->dev, STEDMA40_MAX_SEG_SIZE);
--
--	d40_hw_init(base);
--
- 	ret = of_dma_controller_register(np, d40_xlate, NULL);
- 	if (ret) {
- 		dev_err(dev,
+ 	char *buf __free(kfree) = kzalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
