@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042016;
-	b=tJHcqSUBbwFq6UgcSR3cK9EoW3iAfm8CWMlVTD4gQWXZPjTU6+AgEPPYv8dt0bUiPRcn
-	 +9rjMm7XE+pjxuihlmqpHpqZ+0GDkLmyRYyjSqCpTlzFnHn+RIUaPFvi5LTuxqvQGPJqf
-	 ET2RWrEKQogf+/zvUBYm09B7MjYvyG3UgMH83KIFThmSVGFwcnNFJVjxnkbiGoLtX/Hi6
-	 n1ghKgIN2DVIJo5p0JurRglLmsl8KXhcp6TJDW6LAF2sgolwwZyoERoEZ+BoyTCobDlUp
-	 NjlZ1h5kCJuu0b4hetIunqcW4uo6wN0qxouwgvRlFJkRGWB4GSnowy/SLpayLXX7U3A==
+	t=1795042019;
+	b=UI1su4KIpLQ+xF/HvQjWsiQQvRZzpD4Ue6OFsCtZPME7NneWEVdN0S4LvBbJIqdMYVpP
+	 vniMK0kax5bmHAc/KQ5U9ZxQlA1+8zz/TEOCZMnA4QjUOP2W8E6mxHFC4jTKlel+1YxAW
+	 0X1IIoUTZ9rQ1s+lRn2oZc0kA1cXuhRWXS6p9PTzZUc+eqgQLjUMKdPMkkuydBeUNS3lL
+	 LgowAVdC8ecQaMqp1WhAUb7lBecweTWIPyj7FgD7tepPLTQ2tfTpZC+euR9jQNQS/dys7
+	 rfExksMtktzoBClQn+3qgxaQrhTJC03k/4cqEUhAmJ75dwn9QsL1Vp4CtwVI94zVOiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042019;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LlOwAZ0de9mTYGZxq/QUv/HfPO0ItrZ6PRM4PhmFePU=;
-	b=JyVAtBN+T3YOYGHuLjvfBETtAo6WFYEg5cT5DU0DZjUMR4v/4XJGyoIF0b1VwHYPseLp
-	 R/FsbGbPVwuOJgLjLGoQumGLiWKvlbqADiVyB63H34mR+kb5/SlL2eFxe5YVKpZ2vaY0G
-	 AqAFJy8GqeC/YCIJJ7QmttCNydOHYju54ZqzGhhzkDimRyPuLSCnfI+6g0Th+9qZpF2EW
-	 bUhxnRrsy4o5cENj0iEO2yG75jsyw+TmPlEQScowbW/4lbt+76JYotSK6/AMakWWYfPWw
-	 qOSHL4XXa+r8+Lb2l3xVAAU3p6sLJX1euY8RS20AkFKtZMtwO2fk2v2hrds1hGsMIkw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=JlJncRiFfJ1rfLoig3i1iIyRTDZqIL4shZwUukNqQ0w=;
+	b=JevvOgrBD8XsNToYrVTUTUsOON4IwCWxaAFq53N60qaJk2PaXZXIbXLMaMrPSjstqnTR
+	 Rxsjm29Bqk+zGnut7AalvNDQc/xylZ1wmHwy3VJkTWpJx2TIYDxc1Hzl9JMv4tpkHNeEM
+	 kNaP3aLvl1QZcqMdXnIZ2SK9A+Z2mImDDSyW6PCckYUdAYeoSkgUqSgi2bhc1Rqe69SpO
+	 eiFtdYzFHGf/9kglv3qUss4V7CtsBqsRC2v/NQja8i4Ztew2h7j9Cn8Qm2dfa7MrhLrF3
+	 lnp1lGFTYnRrC90v9f/PvMOzXpSMRRbqwreCLvgDlTbMleeQebagBlCt1+ct6k8c5Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjlscZ9q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dQsk77pO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6334606A325;
-	Wed, 18 Nov 2026 22:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E35606A31C;
+	Wed, 18 Nov 2026 22:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZjlscZ9q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B901F000C4;
-	Wed, 18 Nov 2026 22:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dQsk77pO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85FF1F000C4;
+	Wed, 18 Nov 2026 22:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042016;
-	bh=LlOwAZ0de9mTYGZxq/QUv/HfPO0ItrZ6PRM4PhmFePU=;
+	s=korg; t=1795042019;
+	bh=JlJncRiFfJ1rfLoig3i1iIyRTDZqIL4shZwUukNqQ0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjlscZ9q6Vu1UjOs8ik/x6mcqhO3Law/BkO4l2g9nkntISMBr4LSY4Mg73ltqcZNl
-	 aSi+WlmPWexrDPQodzB1tJCrq+3vgNENZTJ4UhlokRlN59iJK2+tbIOX6culO1Jc5E
-	 8WhP+b/4FdbgvPFpGF2+f4uZ6LBIny3bPxGJ+80I=
+	b=dQsk77pOGayX6L+qG6D2HcBgUVyQUxGUcX6PmrUkaruxyau5PpEDqzlZsdFxzBf4K
+	 Hfuh0t/XzZ0aa8+cgv79miHfYqDniEIBSpXyCTIqdyIwg4aK55i03KBpK4Q50qkIVX
+	 D10XUO9IEE61nkH9Wk45NfqjGrOyoRS/G25QNBj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Piotr=20Gli=C5=BAniewicz?= <p.glizniewicz@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2983/3318] ALSA: 6fire: take stream_mutex in the Digital Thru control
-Date: Wed, 18 Nov 2026 16:00:05 +0100
-Message-ID: <20261118150449.764393375@linuxfoundation.org>
+Subject: [PATCH 6.6 3019/3318] bpf: Use memmove() to store bytes in an skb
+Date: Wed, 18 Nov 2026 16:00:41 +0100
+Message-ID: <20261118150450.781624460@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,79 +62,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit d030561d53cb272bb55ba2dd11aaa609e8240b7e ]
+[ Upstream commit 1db084f42884c5af881fedf3df4777fe2095b20b ]
 
-usb6fire_control_digital_thru_put() calls
-usb6fire_control_streaming_update(), which on an idle card with Digital
-Thru on selects altsetting 2 and writes the clock register for 96 kHz
-through usb6fire_control_set_rate(). usb6fire_pcm_prepare() calls both
-functions through usb6fire_pcm_set_rate() under rt->stream_mutex. The
-put does not take stream_mutex, so the two can run at the same time.
+Through bpf_dynptr_write() and bpf_dynptr_copy() the source of
+bpf_skb_store_bytes() can be a slice of the same skb which overlaps the
+destination. memcpy() then reads bytes which it has overwritten already. On
+x86 with FSRM it repeats the first bytes of the source instead of copying
+it. Local, ringbuf and skb metadata dynptrs are written with memmove() for
+that reason.
 
-500 runs of a 0.2 s aplay at 48 kHz while a second loop toggled
-"Digital Thru Playback Route" with amixer (12693 on/off cycles, kernel
-7.2.9): in 216 cases the two usb_set_interface() calls ran at the same
-time and the kernel logged "sysfs: cannot create duplicate filename
-'.../3-2:1.1/ep_82'" with a stack dump. 27 of the aplay runs failed,
-and for each of them the kernel logged "could not start pcm stream".
-
-Take stream_mutex in the put. The pcm runtime is created before the
-controls and freed with the card, so chip->pcm is valid whenever the
-put runs. The put waits for a running prepare, which makes synchronous
-USB transfers under stream_mutex; on a card that responds late the wait
-can reach about 12 s, or 24 s with Digital Thru on, and during the wait
-the other controls of the card can be neither read nor written, because
-snd_ctl_elem_write() holds controls_rwsem around the put. Before this
-patch the put already made transfers of the same kind under
-controls_rwsem. No code that holds stream_mutex takes controls_rwsem.
-
-The same test on kernel 7.2.10 with this patch (12863 cycles) gave no
-failed aplay run and no "duplicate filename" message.
-
-Fixes: 2475b0d40761 ("ALSA: 6fire - Add support of digital-thru mixer")
-Assisted-by: LLM
-Signed-off-by: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261016073132.109288-2-p.glizniewicz@gmail.com
+Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017230950.802052-15-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/control.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/core/filter.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/6fire/control.c b/sound/usb/6fire/control.c
-index 7c2274120c765..4474bdc78e535 100644
---- a/sound/usb/6fire/control.c
-+++ b/sound/usb/6fire/control.c
-@@ -20,6 +20,7 @@
- #include "control.h"
- #include "comm.h"
- #include "chip.h"
-+#include "pcm.h"
+diff --git a/net/core/filter.c b/net/core/filter.c
+index cf123f6410ac3..c86e31c46582b 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -1724,7 +1724,8 @@ BPF_CALL_5(bpf_skb_store_bytes, struct sk_buff *, skb, u32, offset,
+ 	if (flags & BPF_F_RECOMPUTE_CSUM)
+ 		__skb_postpull_rcsum(skb, ptr, len, offset);
  
- static const char * const opt_coax_texts[2] = { "Optical", "Coax" };
- static const char * const line_phono_texts[2] = { "Line", "Phono" };
-@@ -383,6 +384,12 @@ static int usb6fire_control_digital_thru_put(struct snd_kcontrol *kcontrol,
- 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
- 	int changed = 0;
+-	memcpy(ptr, from, len);
++	/* through a dynptr the source may be an overlapping slice of the skb */
++	memmove(ptr, from, len);
  
-+	/*
-+	 * with Digital Thru on, streaming_update() selects the altsetting and
-+	 * writes the clock register of an idle card; prepare does the same
-+	 * under stream_mutex
-+	 */
-+	guard(mutex)(&rt->chip->pcm->stream_mutex);
- 	if (rt->digital_thru_switch != ucontrol->value.integer.value[0]) {
- 		rt->digital_thru_switch = ucontrol->value.integer.value[0];
- 		usb6fire_control_streaming_update(rt);
+ 	if (flags & BPF_F_RECOMPUTE_CSUM)
+ 		__skb_postpush_rcsum(skb, ptr, len, offset);
 -- 
 2.53.0
 
