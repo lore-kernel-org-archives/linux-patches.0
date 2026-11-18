@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017703;
-	b=NXHXoXrNVKTLe+gxIcLsyLj7nH8OKLgNQwbYrZpjxYCVN5tHeIw9ZpU3KEkl26cl0aSI
-	 XNuN2cmswp45H+vAMxZmOlehfUCF17b+VMvBfZ8V9Xx6Q3puME7kK4khbtZaSvK7k0hSl
-	 H8BEfVDlNkO4gLBiiu5HbdLm06VW/yFb1lJ+3gV9D/tyuDe8D8ZtT+uqmMJq/oWBQj14f
-	 52KB9TeJ5X3GdJFwoAL0JFVNMlSlOgEeGhwPMmNfjhUDg6bv5IPZgSeje5QF+PLPm4c9L
-	 swxRF2UoDLgi1h88XoC9Eehmd5+w4NM1oB7pCqQVGm14+4X3Ka87qHM30YXHh8SBWzw==
+	t=1795017706;
+	b=IvyN/xULHuQJ4NbQmYsl+xqMP2IRfI560+i0FYOEm8VOVkTja7VGfb0cCsqVbM++/nRK
+	 2RFf0Jldy/KiEQgjiYc/XTmCnKa7c7UmLbdnQD7YxfPHGH2GD8IKoAQKLTuHAA9pNPv9r
+	 EqGc7ChXmqCKWRXZpeBmPG/fVOu9wXSBcUzjp/IIT3IzHax5YbKqYEol0yLKbQeKl57+/
+	 gLtYOoAfWxb5oi1eQ1fl7oWFSWOMUQ7FRYzWYUxa8F/3x0zdG8EuKrVo5SPKDVk+GxrQp
+	 UjoM4H1Sg4Hj+5C23ofJ6zAVAVaBe+Qvz15RnaJsGVmYGu1/roRiWR3uOx8n3SkKQ2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6KKhW+jFqxbyVwhLfHTKJh96KVMBfdx0ZXAGwblUkO8=;
-	b=NH4I9rqbPPoRGxRX2qAon7cSSB1Q/3zjxOXbmiZ4XKBzBGuTmy5Fym+y0yPTWX8Nqvqz
-	 lLkoG5omUDUqD5lAc6BvW6hPivUt1f5sHWPPRyRDte5BMslcEzpdUPezpEH/zqVdVl9rj
-	 7dkg9iiELZML//CBZ76eiAe7HEqCVzj+v+v/aDLMByzYdCc2chtwBrlkmZ5K+iNACbxhz
-	 BAFb39VZ1CVuLBNeQ1se/Tub8vCSrJa64r/FXfsFw+9TvD4wmqsJFlW2VoEqJA/zmQGXO
-	 5+n9/iagHVZYXWQ003NrQEkte12G9TnYHNfEFR3mpqq1SHOAmjU1RoVqjye1NrjojGQ==
+	bh=ErrxqWxTdfoiHce9SIkjTUAhC6Lft6UhKMbV0bZmoqY=;
+	b=TLCWyLoWvsj1v0eoIMA5o13Y2f7kOBIDssdnzdlDs70DFbhAI/QbEkfoamXSGwtZUXje
+	 0crLCr3aEeD4crYhQFH8gfLbBbzLYUlZ5klKT7WByrJsiXzJCXpQS41XNUpWhRCUb5PSW
+	 R8ybOiql9vPECOQUmnmn4fH/g4kwYC5dCzvmXvBqPF+qFN/mwE+mF6ZcMa2dUoFE5HGA/
+	 pVGwGhmEg/YqPQSpwG4EEEbNpX8OAc4mj9xB4Ki+2+pRlWfwnX61x30mVApe0FF3BOZ8T
+	 tXdl7LRoyqm9AEnSSB3dwa52+4+Ky9jP3vvw789J1SEkFVFDwSxjAwUHaGPRMkHroZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nUGCE51h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUOOtmMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593EE60A260B;
-	Wed, 18 Nov 2026 16:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334A9606A320;
+	Wed, 18 Nov 2026 16:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nUGCE51h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03431F000C8;
-	Wed, 18 Nov 2026 16:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BUOOtmMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D5B1F000C4;
+	Wed, 18 Nov 2026 16:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017703;
-	bh=6KKhW+jFqxbyVwhLfHTKJh96KVMBfdx0ZXAGwblUkO8=;
+	s=korg; t=1795017706;
+	bh=ErrxqWxTdfoiHce9SIkjTUAhC6Lft6UhKMbV0bZmoqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nUGCE51htK7K5DruKcwx32Vxce0cJvkKiMMJoqDzLUMSC/fL9Dsv2Jj3AwMRGXJ+x
-	 rQnvlyyKm5395cyxbmf1Oug4bgh4owGzZ91vzp93oBAadqqY1w4uE3cPnJyT+Pshwk
-	 5WOBKlV5A9otmVi+3JQQSpJFxPj0DVbSoZveD3Yg=
+	b=BUOOtmMjvjXpgsEPxq5daRec6pJcv6/1v1hxH4I7yiyNBZa+pvQkUGQrYZwm5QPde
+	 QXaBEa/kGedgG0/CI0cc26OMHEpw7cnYRKgme3OZxEacnDaBk787sDrwzEAXQGwkp6
+	 1CY5NjX46HrFHJO+u0cm7DcEDqMQkHukclCycU+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0979/2651] perf vendor events intel: Fix clearwaterforest umask encoding.
-Date: Wed, 18 Nov 2026 15:36:59 +0100
-Message-ID: <20261118150323.145847556@linuxfoundation.org>
+Subject: [PATCH 7.3 0980/2651] perf vendor events intel: Fix lunarlake umask encoding.
+Date: Wed, 18 Nov 2026 15:37:00 +0100
+Message-ID: <20261118150323.182711904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,95 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b26183fade24530141a2c7a22ca47e1ab0f7989e ]
+[ Upstream commit f2844acc9dfc330b6e4b4731c18ddafe10b2f99c ]
 
 Fix UMaskExt that was wrongly encoded when the UMask was 0.
 
-Fixes: 1a5c515eae7c ("perf vendor events intel: Update clearwaterforest events and metrics from 1.00 to 1.02")
+Fixes: 23878069de30 ("perf vendor events: Update/add Lunarlake events/metrics")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../perf/pmu-events/arch/x86/clearwaterforest/pipeline.json  | 3 ++-
- .../pmu-events/arch/x86/clearwaterforest/uncore-cache.json   | 5 +++++
- .../arch/x86/clearwaterforest/uncore-interconnect.json       | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ tools/perf/pmu-events/arch/x86/lunarlake/cache.json    | 3 +++
+ tools/perf/pmu-events/arch/x86/lunarlake/pipeline.json | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/tools/perf/pmu-events/arch/x86/clearwaterforest/pipeline.json b/tools/perf/pmu-events/arch/x86/clearwaterforest/pipeline.json
-index f73686174af90..6cea91277d5ce 100644
---- a/tools/perf/pmu-events/arch/x86/clearwaterforest/pipeline.json
-+++ b/tools/perf/pmu-events/arch/x86/clearwaterforest/pipeline.json
-@@ -934,6 +934,7 @@
-         "Counter": "0,1,2,3,4,5,6,7",
-         "EventCode": "0xc2",
-         "EventName": "UOPS_RETIRED.X87",
--        "SampleAfterValue": "1000003"
-+        "SampleAfterValue": "1000003",
-+        "UMask": "0x100"
-     }
- ]
-diff --git a/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-cache.json b/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-cache.json
-index 278837f2068a5..e065236e95255 100644
---- a/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-cache.json
-+++ b/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-cache.json
-@@ -700,6 +700,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.DIRBACKED_ONLY",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x4000",
-         "Unit": "CHA"
-     },
-     {
-@@ -729,6 +730,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.INCLUSIVE_ONLY",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x2000",
-         "Unit": "CHA"
-     },
-     {
-@@ -747,6 +749,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.UPDATE_EXCLUSIVE",
-         "Experimental": "1",
-         "PerPkg": "1",
+diff --git a/tools/perf/pmu-events/arch/x86/lunarlake/cache.json b/tools/perf/pmu-events/arch/x86/lunarlake/cache.json
+index 5b350233a5e18..c77040e87639f 100644
+--- a/tools/perf/pmu-events/arch/x86/lunarlake/cache.json
++++ b/tools/perf/pmu-events/arch/x86/lunarlake/cache.json
+@@ -848,6 +848,7 @@
+         "EventName": "MEM_LOAD_L3_MISS_RETIRED.MEMSIDE_CACHE",
+         "PublicDescription": "Retired load instructions which data source is memory side cache. Available PDIST counters: 0,1",
+         "SampleAfterValue": "100007",
 +        "UMask": "0x100",
-         "Unit": "CHA"
+         "Unit": "cpu_core"
      },
      {
-@@ -766,6 +769,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.VICTIM_EXCLUSIVE",
-         "Experimental": "1",
-         "PerPkg": "1",
+@@ -901,6 +902,7 @@
+         "EventName": "MEM_LOAD_RETIRED.L1_HIT_L1",
+         "PublicDescription": "Counts retired load instructions with at least one uop that hit in the Level 1 of the L1 data cache. Available PDIST counters: 0,1",
+         "SampleAfterValue": "1000003",
++        "UMask": "0x100",
+         "Unit": "cpu_core"
+     },
+     {
+@@ -1093,6 +1095,7 @@
+         "EventCode": "0x44",
+         "EventName": "MEM_STORE_RETIRED.MEMSIDE_CACHE",
+         "SampleAfterValue": "100021",
 +        "UMask": "0x400",
-         "Unit": "CHA"
+         "Unit": "cpu_core"
      },
      {
-@@ -775,6 +779,7 @@
-         "EventName": "UNC_CHA_REMOTE_SF.VICTIM_SHARED",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x200",
-         "Unit": "CHA"
+diff --git a/tools/perf/pmu-events/arch/x86/lunarlake/pipeline.json b/tools/perf/pmu-events/arch/x86/lunarlake/pipeline.json
+index 8be3ea336bb8a..5d8bd972d4633 100644
+--- a/tools/perf/pmu-events/arch/x86/lunarlake/pipeline.json
++++ b/tools/perf/pmu-events/arch/x86/lunarlake/pipeline.json
+@@ -190,6 +190,7 @@
+         "EventName": "BR_INST_RETIRED.COND_TAKEN_FWD",
+         "PublicDescription": "Counts taken forward conditional branch instructions retired. Available PDIST counters: 0,1",
+         "SampleAfterValue": "400009",
++        "UMask": "0x100",
+         "Unit": "cpu_core"
      },
      {
-diff --git a/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-interconnect.json b/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-interconnect.json
-index 1f6e0970141a1..7fa6def25379a 100644
---- a/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-interconnect.json
-+++ b/tools/perf/pmu-events/arch/x86/clearwaterforest/uncore-interconnect.json
-@@ -515,6 +515,7 @@
-         "EventName": "UNC_B2CMI_IMC_WRITES.NI",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x300",
-         "Unit": "B2CMI"
-     },
-     {
-@@ -524,6 +525,7 @@
-         "EventName": "UNC_B2CMI_IMC_WRITES.NI_MISS",
-         "Experimental": "1",
-         "PerPkg": "1",
-+        "UMask": "0x500",
-         "Unit": "B2CMI"
+@@ -474,6 +475,7 @@
+         "EventName": "BR_MISP_RETIRED.COND_TAKEN_FWD",
+         "PublicDescription": "Counts taken forward conditional mispredicted branch instructions retired. Available PDIST counters: 0,1",
+         "SampleAfterValue": "400009",
++        "UMask": "0x100",
+         "Unit": "cpu_core"
      },
      {
 -- 
