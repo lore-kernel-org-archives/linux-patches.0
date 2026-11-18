@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015772;
-	b=et9s1cSGZTT+JHR20AO1SuZ1S30ITJvHjck7NiOm5WjlxJW/dbwp+LNcK1fc7azad8l+
-	 Ra+CMXtUqeTqEGZhYDqGL5zF1SRt7FrSQ2DhBIo4zX+4MScpkckx0I5J26r9RiaAQVEyn
-	 RMFLEC3T6vK9qR13Zu5i2nMpO7Tn3Q2gNqfA84g79NLNzviAy+Oj62NirZsUBjiPkQVUC
-	 BFwZLDhSZzhteBvLmBIn4ekPkll/Bq9tzDiURvDl00I2u6K/DF9rkKpp7YsBAGxtwrSe4
-	 nC8xd17xFEGOHYfUoTRZlHoAknbM7BgERJac5b2SfiihqMHSDxkeAvwXelQEUet062g==
+	t=1795015775;
+	b=yHT6KARt/gUrdAoNEvQYGadF4BogEGdemvmyfhOqhAZ3zmOqikL9NBOjlg0Ml1AJPNEF
+	 rV9FdS/bNoMBlH4w2mjTPYLJ49+22kq0Hq+iGVh2yEFbwl10dKAy3cZpUH/du2h92oovl
+	 HEeVwi7CUgNQXWQT2P2x8VeY3GlFtdh7xtCYYi6vCeEDOkFNdauYA7Gk5aBaR2LcUrR3C
+	 nx1guivdD2z4PmdLE6Rrpg9oqyTrkKqyZ7jxFKUYMnDyBZGEQl3wsaPSStCgfdnht9ny2
+	 KzyUA1mqi7d5KK0l6x1NUg1DdvD+f7/u3ximfsem9HmE2igGHFCvmd+EnEuR6f63whg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3J8ELjKd3jXaHUWmP82vKK0jr40clYmFIbTEpyOReBE=;
-	b=RyJDoU+aAXQNdIH9UQjEznx3k6MrzAAZPWECZn1jlwp5M70r5+kBmd479dEvliWig2KD
-	 WoXsOnLVXhPSU+jHLsjYN0lZnbI8JKnPU9BigJbdqt+d9/ymxfQbvhXkKEr+Uc+BaQC32
-	 pdkwnsRmsuR7cj8edpcWfPcqo3uaihveM4vIe6i5VomConDy7A8MB7eJyoYYQhsz/MBZt
-	 6HJja3W1QiIYKwrmYRN7T1uFYL/xBU6efoP1KtCX8X7EHSmMoFJHOvSzquupN5tImMADB
-	 b2gXbVX+hV5KS2+uHrimPXZH0IrFJpxn2uglbkecVtSyYCxud61rz89ui5Pv4nK779A==
+	bh=byGTAGSApRM3QmOsu+563QZzIa22alxFx0mvAoHfcLc=;
+	b=ZrDdandDUj/bXVhnGh3cqTVCU2giH0l0snEkE46jkm+rZZv3WLAnN2jpcQEBqtzgL0p7
+	 1/YjohSwdg+MM6pi4L6zSQH4pJvczLDn7hvKqcxAboHd99ycm3lq14St3FtFnF9q+Y7gG
+	 wh6uSQCOMBUwOnp4i2ziS46tae5BAt0v1Y8qKRy6iRMiZHxILTuFbkezBSYKaypfc+3Qj
+	 qiDNGJC8c35kiayhcwzFUAUFubpHDBBdYZSVB8lc/2XU4kNyxdP/HKPqGtfWSb2ZHo0fa
+	 KM8wEcV8o+LWlTbNu3DvKmhXSxjQHKxMDAuyZLK6g3OHPMq1bATwZpYTIX6zvPQtmOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AS4h+DrF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GyLTMGzv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DF1606A31C;
-	Wed, 18 Nov 2026 15:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B6D606A31C;
+	Wed, 18 Nov 2026 15:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AS4h+DrF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51D61F000C4;
-	Wed, 18 Nov 2026 15:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GyLTMGzv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A791F000C4;
+	Wed, 18 Nov 2026 15:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015772;
-	bh=3J8ELjKd3jXaHUWmP82vKK0jr40clYmFIbTEpyOReBE=;
+	s=korg; t=1795015775;
+	bh=byGTAGSApRM3QmOsu+563QZzIa22alxFx0mvAoHfcLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AS4h+DrFQtRWr3D761YBSRXlhXlNQq+T3vQTENfMOdKWYurBwzQWAEjo7KYVhNHsk
-	 GAn2NRB1GW4Kit8YNp8cInAoAjwcEyDzXzhOIT2OYiZmHAI2fk6CwjNmyHe5833yYF
-	 1d9vMssP9Bh/17sUbkjkFdtXrSbFZHNGc+Z7iOEo=
+	b=GyLTMGzvtFJVRZXA3O4GVCJiEEKOdr8ssi9FNeKEEqF+IwKk7nL6AEk1hq3bOx5t4
+	 7gBtWVNtIdL8GzC3KRsw2D2kvzyAQ9OqmOILFK+1wtS3KG56TWmh5Aubls9WRCzEE9
+	 sar0K6Kq0hHXBDhRYZvMAqFYtjp13np1b8qPO448=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0290/2651] perf stat: Avoid uninitialized memory read on error
-Date: Wed, 18 Nov 2026 15:25:30 +0100
-Message-ID: <20261118150258.346548013@linuxfoundation.org>
+Subject: [PATCH 7.3 0291/2651] ASoC: codecs: sma1307: validate setting firmware layout
+Date: Wed, 18 Nov 2026 15:25:31 +0100
+Message-ID: <20261118150258.383784761@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 93fd7adf1a47c61ef81b33c8fdd9cb4e4ea0bdcb ]
+[ Upstream commit af0f4f7a042e39bf70fa7406351b26efead18dff ]
 
-If has_supported_counters fails then msg was passed to ui__error
-regardless of whether an error was written into msg leading to reading
-uninitialized memory. Avoid this by always terminating msg at
-initialization.
+sma1307_setting_loaded() checks a byte count against an element count, then
+reads an eight-int header and a fixed default table from the firmware. It
+also trusts the mode count while indexing a five-entry mode_set array.
 
-Opportunistically reduce the scope of msg to make its use clearer.
+Validate the byte-to-int conversion, fixed header/default extent, mode
+count, and exact mode table layout before parsing the setting file.
 
-Fixes: c9a8c343ef2f ("perf stat: When no events, don't report an error if there is none")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20260908220720.564614-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 576c57e6b4c1 ("ASoC: sma1307: Add driver for Iron Device SMA1307")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830134428.9550-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/sma1307.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index c50cf230f16ed..37752d6bfef45 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -777,7 +777,6 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 	int interval = stat_config.interval;
- 	int times = stat_config.times;
- 	int timeout = stat_config.timeout;
--	char msg[BUFSIZ];
- 	unsigned long long t0, t1;
- 	struct evsel *counter;
- 	size_t l;
-@@ -908,6 +907,9 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 		}
- 	}
- 	if (!has_supported_counters && !stat_config.null_run) {
-+		char msg[BUFSIZ];
-+
-+		msg[0] = '\0';
- 		if (open_err) {
- 			evsel__open_strerror(evlist__first(evsel_list), &target, open_err,
- 					     msg, sizeof(msg));
+diff --git a/sound/soc/codecs/sma1307.c b/sound/soc/codecs/sma1307.c
+index adb369a29b9d3..653cbafee23ec 100644
+--- a/sound/soc/codecs/sma1307.c
++++ b/sound/soc/codecs/sma1307.c
+@@ -1701,7 +1701,9 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
+ 			__func__, setting_file, ERR_PTR(ret));
+ 		sma1307->set.status = false;
+ 		return;
+-	} else if ((fw->size) < SMA1307_SETTING_HEADER_SIZE) {
++	} else if (fw->size % sizeof(int) ||
++		   fw->size < (SMA1307_SETTING_HEADER_SIZE +
++				       SMA1307_SETTING_DEFAULT_SIZE) * sizeof(int)) {
+ 		dev_err(sma1307->dev, "%s: Invalid file\n", __func__);
+ 		sma1307->set.status = false;
+ 		return;
+@@ -1720,6 +1722,10 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
+ 	sma1307->set.checksum = data[sma1307->set.header_size - 2];
+ 	sma1307->set.num_mode = data[sma1307->set.header_size - 1];
+ 	num_mode = sma1307->set.num_mode;
++	if (num_mode < 0 || num_mode > ARRAY_SIZE(sma1307->set.mode_set)) {
++		sma1307->set.status = false;
++		return;
++	}
+ 	sma1307->set.header = devm_kmalloc_array(sma1307->dev,
+ 						 sma1307->set.header_size,
+ 						 sizeof(int),
+@@ -1755,7 +1761,11 @@ static void sma1307_setting_loaded(struct sma1307_priv *sma1307, const char *fil
+ 
+ 	/* MODE */
+ 	offset = sma1307->set.header_size + sma1307->set.def_size;
+-	sma1307->set.mode_size = DIV_ROUND_CLOSEST(size - offset, num_mode + 1);
++	if ((size - offset) % (num_mode + 1)) {
++		sma1307->set.status = false;
++		return;
++	}
++	sma1307->set.mode_size = (size - offset) / (num_mode + 1);
+ 	for (int i = 0; i < num_mode; i++) {
+ 		sma1307->set.mode_set[i]
+ 		    = devm_kzalloc(sma1307->dev,
 -- 
 2.53.0
 
