@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017622;
-	b=0ZqirEAH7c6ihHlVQtne1rVJsmgMuEVZbSYMjFUdRqEiLK3pOj6PLdySTlXmBXZL47m6
-	 zRr27G5N3v+cetu6jt3HFjNz7uNEB4fpNHBtMYvZ3oUvQjEcK63fHDxD0lTwWBvllsZCQ
-	 8QOCcqCRRwzvfOXW/JAG6HfhhT/NJ+BT+GOBnL5MNKLiBFHIPMdqi0SninS7n4mcQWqdD
-	 cfjtcXu6feHQGtMO8CfKM6F3wDCGKTohmtczFYZCGz4G0FxTw5tFQ/B8K8zgKLOE24pMG
-	 n0XuaBU38cP0zByHXtQu8IkTwhuz2E+yYdwAEmZYbMkc+6U2kr1XZZKNXPUp+SevY7A==
+	t=1795017625;
+	b=y7K7ctFE0DevB/drroheQPbZK8nuIeiFLSmTLsQE7KWeLwIy5Ey1ek0CvZ/10GUahNsc
+	 bzu3bnBk7H2luiB3zf0Hnei4u8fbdumIKCZKVbMhJD48MaZl9H67GTDRZz4sGbSjiaGmX
+	 oPj31gGR8Mh6WCNVm0lhewjIY5yWJFak5Q4HGPFRQayWrrjHqZMeaUx2BhKnpEYIAct1+
+	 sIkr3pNZmLFXlSaFNOKA+K3oWWGr0nvDIIh2GR8JETSaUVnhO6mo1a0OnLMqNosia6Ebn
+	 bhPETumJ0LdHLTkVVmdqdaS2YbdxynHBHJUOOWs/XmyCOzAKXXCGQneHZLtW0TwXdRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017622;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017625;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NkMYJxPzh66kRa/c++lezkWSqE6kd3yfcNnELNvEgVs=;
-	b=AleFou30yR4legK5F/YnG4NOlDcNbcaJUMW2p6R1B2wnVJAKOY6xmsdkjWVer6UfbhCl
-	 bd32G20OTgkjUzCfdUMhtNRtDMnNodU64iwkXyiF1KSdQk4GFOvPmUC2RdVjXM5TCM7pP
-	 cuzI9sBI/b8vAIsKKNsJJtZB6kmVBqeQfic6HRQt8ozD5T6qPktQEtH5XpqOxIDnhQ9j7
-	 eUabdyLpYM+J+9ywDsG2QL92XxzN613grJQA3YqFzF8P+t84JooePXWGdbX8UvPwaBhuI
-	 tHfy8YkD2Kve+IAP5Bcm912skzLJEEZ0F++X/jKNV1ve7rNzspiRoR1QPKL8fVS+tiA==
+	bh=3WSUuZY1M8MjK4dF8l8pU1TdZfcFPY3XN86/uJ86dDw=;
+	b=YjNEysHxdO+50q9jAh2KraJpp6lqeR6G6sCfc2/NF+te9UePilr/N1HSfBWqSWBfoD8h
+	 6aqig6zVg4MHyg/Rnzf7UxNiWueF88S5Id67JXZgZrafHQimBupbAQbpBhMItSdrdxxBr
+	 VFO8FYygtqa9A4M2MVm/RtJkpAgJ1Kh5nq+eSUM9BisSz1yP1bscFYbrnLPedk8LzqPdn
+	 dYpJd6wLBLrHz5Q6zxR7gH5jf54s5mjKiyeRy2An1nE/3rw0EQxlsGdGfGHMIDRXgDg34
+	 YkEmmm6p17d5eTdHyHi+S+c9FZxtL4/vSNELF74uMIdcjwquBF3KWBxTXBP7qbwUfhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pkt8Elmp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAcklcyJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66864606A320;
-	Wed, 18 Nov 2026 16:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B08606A333;
+	Wed, 18 Nov 2026 16:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pkt8Elmp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B111F000C4;
-	Wed, 18 Nov 2026 16:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HAcklcyJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36911F000C4;
+	Wed, 18 Nov 2026 16:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017622;
-	bh=NkMYJxPzh66kRa/c++lezkWSqE6kd3yfcNnELNvEgVs=;
+	s=korg; t=1795017625;
+	bh=3WSUuZY1M8MjK4dF8l8pU1TdZfcFPY3XN86/uJ86dDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pkt8Elmpld2kLXvbVff/u8Up3AWRU6PnAewSn+DUc+uwnaDS2X3WlqjTwAg/Ytzvj
-	 RRGutZvy1iPw94umXzZHM6dV86OMlAsU3bCdfgjw5SQ7QY3IsV4H3DDc6Vpf28mCoT
-	 TLyrZPT7yE8Y2urMS/wMU0x8E66xoZ0dZJmWjD4I=
+	b=HAcklcyJWCRZieWTJARWAfNA4GukvwR09yd/QwUjbsI3ETDjKxXYL+nWahuL/tpsR
+	 bCcyMseplgnRnWcMTCvRcpMynRqK2Ss7h5OfrnCYv9uTVKFLIghIFxZCJhePwgf76U
+	 LXF2tQYqxCON2bN2ZjuznTVMOLnkUmuB0VosQkWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yilin Chen <1479826151@qq.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0949/2651] rust: configfs: require thread-safe callback data
-Date: Wed, 18 Nov 2026 15:36:29 +0100
-Message-ID: <20261118150322.070825488@linuxfoundation.org>
+Subject: [PATCH 7.3 0914/2651] netfilter: synproxy: fix reset of ct seqadj when reopening a connection
+Date: Wed, 18 Nov 2026 15:35:54 +0100
+Message-ID: <20261118150320.800470424@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,211 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Chen <1479826151@qq.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit ec27f3b700010d2ebae1cde2df0246197689d159 ]
+[ Upstream commit a8708aa9fe1095ca7859cb3f102b6a3fa0fb98bd ]
 
-The Rust configfs abstractions do not fully constrain callback data for
-cross-thread use. Add the missing `Send` and `Sync` requirements.
+SYNPROXY is resetting conntrack seqadj when a closed connection is
+re-opened, but it was using nf_ct_seqadj_init() which is a no-op for a
+zero offset.
 
-Specifically, make the following changes:
+This patch introduces nf_ct_seqadj_reset() which sets the offset values
+directly to zero and avoid setting IPS_SEQ_ADJUST_BIT flag, it changes
+SYNPROXY code to use it when needed.
 
-1. Require `Data: Send` when implementing `Send` for `Subsystem<Data>`,
-   since the subsystem stores its data by value.
-2. Make `GroupOperations` a `Sync` supertrait because `make_group` and
-   `drop_item` receive `&self` from foreign threads. Require `Child: Send`
-   because configfs may release child groups on an arbitrary thread.
-3. Require `AttributeOperations::Data: Sync` because its callbacks receive
-   `&Data` from foreign threads.
-4. Update the safety comments in FFI callbacks that call `get_group_data`
-   to cite these bounds as justification for sharing the returned
-   references with the callback thread.
-5. Remove redundant `Child: 'static` bounds from `GroupOperationsVTable`
-   and `new_with_child_ctor`.
-
-Fixes: 446cafc295bf ("rust: configfs: introduce rust support for configfs")
-Link: https://rust-for-linux.zulipchat.com/#narrow/channel/288089-General/topic/Should.20add.20Data.3A.20Send.2FSync.20bounds.20in.20configfs.3A.3ASubsystem.3F/with/623719979
-Assisted-by: Gpt-5.6 Sol
-Signed-off-by: Yilin Chen <1479826151@qq.com>
-Link: https://msgid.link/tencent_5449081195EDDF5726C709CF648DD4044A08@qq.com
-[ Andreas: Add Send/Sync bounds for `Group<Data>`, add `Send` bounds to
-`GroupOperationsVTable`, `ItemOperationsVTable` and `ItemType` macro
-implementation. ]
-Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/configfs.rs | 63 ++++++++++++++++++++++++++++-------------
- 1 file changed, 44 insertions(+), 19 deletions(-)
+ include/net/netfilter/nf_conntrack_seqadj.h |  1 +
+ net/netfilter/nf_conntrack_seqadj.c         | 17 +++++++++++++++++
+ net/netfilter/nf_synproxy_core.c            |  4 ++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/rust/kernel/configfs.rs b/rust/kernel/configfs.rs
-index 2b3325cd9e1f0..ff53b3fb31c2d 100644
---- a/rust/kernel/configfs.rs
-+++ b/rust/kernel/configfs.rs
-@@ -135,8 +135,9 @@ pub struct Subsystem<Data> {
- // SAFETY: We do not provide any operations on `Subsystem`.
- unsafe impl<Data> Sync for Subsystem<Data> {}
+diff --git a/include/net/netfilter/nf_conntrack_seqadj.h b/include/net/netfilter/nf_conntrack_seqadj.h
+index 883c414b768ee..0f5bbb14a25aa 100644
+--- a/include/net/netfilter/nf_conntrack_seqadj.h
++++ b/include/net/netfilter/nf_conntrack_seqadj.h
+@@ -33,6 +33,7 @@ static inline struct nf_conn_seqadj *nfct_seqadj_ext_add(struct nf_conn *ct)
  
--// SAFETY: Ownership of `Subsystem` can safely be transferred to other threads.
--unsafe impl<Data> Send for Subsystem<Data> {}
-+// SAFETY: Ownership of `Subsystem` can safely be transferred to other threads
-+// if its data can be transferred as well.
-+unsafe impl<Data: Send> Send for Subsystem<Data> {}
- 
- impl<Data> Subsystem<Data> {
-     /// Create an initializer for a [`Subsystem`].
-@@ -249,6 +250,13 @@ pub struct Group<Data> {
-     data: Data,
+ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		      s32 off);
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo);
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off);
+ void nf_ct_tcp_seqadj_set(struct sk_buff *skb, struct nf_conn *ct,
+diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
+index 220216a4edc51..cc6a9037df6b0 100644
+--- a/net/netfilter/nf_conntrack_seqadj.c
++++ b/net/netfilter/nf_conntrack_seqadj.c
+@@ -32,6 +32,23 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
  }
+ EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
  
-+// SAFETY: We do not provide any operations on `Group`.
-+unsafe impl<Data> Sync for Group<Data> {}
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo)
++{
++	struct nf_conn_seqadj *seqadj = nfct_seqadj(ct);
++	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
++	struct nf_ct_seqadj *this_way;
 +
-+// SAFETY: Ownership of `Group` can safely be transferred to other threads if
-+// its data can be transferred as well.
-+unsafe impl<Data: Send> Send for Group<Data> {}
++	if (unlikely(!seqadj))
++		return;
 +
- impl<Data> Group<Data> {
-     /// Create an initializer for a new group.
-     ///
-@@ -338,7 +346,9 @@ unsafe fn get_group_data<'a, Parent>(this: *mut bindings::config_group) -> &'a P
- impl<Parent, Child> GroupOperationsVTable<Parent, Child>
- where
-     Parent: GroupOperations<Child = Child>,
--    Child: 'static,
-+    // We transfer `Arc<Group<Data>>` across a thread boundary in `make_group`
-+    // and `drop_item`.
-+    Arc<Group<Child>>: Send,
++	spin_lock_bh(&ct->lock);
++	this_way = &seqadj->seq[dir];
++	this_way->offset_before	 = 0;
++	this_way->offset_after	 = 0;
++	spin_unlock_bh(&ct->lock);
++}
++EXPORT_SYMBOL_GPL(nf_ct_seqadj_reset);
++
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off)
  {
-     /// # Safety
-     ///
-@@ -357,8 +367,9 @@ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
-         this: *mut bindings::config_group,
-         name: *const kernel::ffi::c_char,
-     ) -> *mut bindings::config_group {
--        // SAFETY: By function safety requirements of this function, this call
--        // is safe.
-+        // SAFETY: By function safety requirements, `this` points to a configfs
-+        // group containing `Parent`. The `GroupOperations` bound guarantees
-+        // that `Parent: Sync`, so it is safe to share it with this thread.
-         let parent_data = unsafe { get_group_data(this) };
- 
-         let group_init = match Parent::make_group(
-@@ -403,8 +414,9 @@ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
-         this: *mut bindings::config_group,
-         item: *mut bindings::config_item,
-     ) {
--        // SAFETY: By function safety requirements of this function, this call
--        // is safe.
-+        // SAFETY: By function safety requirements, `this` points to a configfs
-+        // group containing `Parent`. The `GroupOperations` bound guarantees
-+        // that `Parent: Sync`, so it is safe to share it with this thread.
-         let parent_data = unsafe { get_group_data(this) };
- 
-         // SAFETY: By function safety requirements, `item` is embedded in a
-@@ -416,7 +428,9 @@ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
- 
-         if Parent::HAS_DROP_ITEM {
-             // SAFETY: We called `into_raw` to produce `r_child_group_ptr` in
--            // `make_group`.
-+            // `make_group`. This function may be executing on a different
-+            // thread than `into_raw`. As `Arc<Group<Child>>: Send` this
-+            // ownership transfer is safe.
-             let arc: Arc<Group<Child>> = unsafe { Arc::from_raw(r_child_group_ptr.cast_mut()) };
- 
-             Parent::drop_item(parent_data, arc.as_arc_borrow());
-@@ -447,6 +461,8 @@ const fn vtable_ptr() -> *const bindings::configfs_group_operations {
- impl<Data> ItemOperationsVTable<Group<Data>, Data>
- where
-     Data: 'static,
-+    // We transfer `Arc<Group<Data>>` across a thread boundary in `release`.
-+    Arc<Group<Data>>: Send,
- {
-     /// # Safety
-     ///
-@@ -463,8 +479,9 @@ impl<Data> ItemOperationsVTable<Group<Data>, Data>
-         // embedded within a `Group<Data>`.
-         let r_group_ptr = unsafe { Group::<Data>::container_of(c_group_ptr) };
- 
--        // SAFETY: We called `into_raw` on `r_group_ptr` in
--        // `make_group`.
-+        // SAFETY: We called `into_raw` on `r_group_ptr` in `make_group`. This
-+        // function may be running on a different thread than the thread that
-+        // called `into_raw`. As `Arc<Group<Data>>: Send`, this is safe.
-         let pin_self: Arc<Group<Data>> = unsafe { Arc::from_raw(r_group_ptr.cast_mut()) };
-         drop(pin_self);
-     }
-@@ -496,12 +513,12 @@ const fn vtable_ptr() -> *const bindings::configfs_item_operations {
- ///
- /// Implement this trait on structs that embed a [`Subsystem`] or a [`Group`].
- #[vtable]
--pub trait GroupOperations {
-+pub trait GroupOperations: Sync {
-     /// The child data object type.
-     ///
-     /// This group will create subgroups (subdirectories) backed by this kind of
-     /// object.
--    type Child: 'static;
-+    type Child: 'static + Send;
- 
-     /// Creates a new subgroup.
-     ///
-@@ -568,8 +585,10 @@ impl<const ID: u64, O, Data> Attribute<ID, O, Data>
-             // `config_group`.
-             unsafe { container_of!(item, bindings::config_group, cg_item) };
- 
--        // SAFETY: The function safety requirements for this function satisfy
--        // the conditions for this call.
-+        // SAFETY: By function safety requirements, `c_group` points to a
-+        // configfs group containing `Data`. The `AttributeOperations` bound
-+        // guarantees that `Data: Sync`, so it is safe to share it with this
-+        // thread.
-         let data: &Data = unsafe { get_group_data(c_group) };
- 
-         // SAFETY: By function safety requirements, `page` is writable for `PAGE_SIZE`.
-@@ -602,8 +621,10 @@ impl<const ID: u64, O, Data> Attribute<ID, O, Data>
-         // `config_group`.
-             unsafe { container_of!(item, bindings::config_group, cg_item) };
- 
--        // SAFETY: The function safety requirements for this function satisfy
--        // the conditions for this call.
-+        // SAFETY: By function safety requirements, `c_group` points to a
-+        // configfs group containing `Data`. The `AttributeOperations` bound
-+        // guarantees that `Data: Sync`, so it is safe to share it with this
-+        // thread.
-         let data: &Data = unsafe { get_group_data(c_group) };
- 
-         let ret = O::store(
-@@ -656,7 +677,7 @@ pub const fn new(name: &'static CStr) -> Self {
- pub trait AttributeOperations<const ID: u64 = 0> {
-     /// The type of the object that contains the field that is backing the
-     /// attribute for this operation.
--    type Data;
-+    type Data: Sync;
- 
-     /// Renders the value of an attribute.
-     ///
-@@ -762,7 +783,8 @@ pub const fn new_with_child_ctor<const N: usize, Child>(
-             ) -> Self
-             where
-                 Data: GroupOperations<Child = Child>,
--                Child: 'static,
-+                Arc<Group<Child>>: Send,
-+                Arc<Group<Data>>: Send,
-             {
-                 Self {
-                     item_type: Opaque::new(bindings::config_item_type {
-@@ -780,7 +802,10 @@ pub const fn new_with_child_ctor<const N: usize, Child>(
-             pub const fn new<const N: usize>(
-                 owner: &'static ThisModule,
-                 attributes: &'static AttributeList<N, Data>,
--            ) -> Self {
-+            ) -> Self
-+            where
-+                Arc<Group<Data>>: Send,
-+            {
-                 Self {
-                     item_type: Opaque::new(bindings::config_item_type {
-                         ct_owner: owner.as_ptr(),
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index acd360515972f..37f88702980a6 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -686,7 +686,7 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
+@@ -1116,7 +1116,7 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
 -- 
 2.53.0
 
