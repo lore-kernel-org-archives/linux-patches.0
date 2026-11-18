@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022047;
-	b=lnInGi7QrwkaX548oENzvpzUmFpSW7o2Ecg7mCw/Lgxd+cmAWP8qzERr7enYA3V1cQY0
-	 KdmDK2JY7lLR7FjuEYh6ZwQuNlpCqvb+pDAQ/diEeNCGfFj+k5C4muAlQC3wLHIOUqt/h
-	 C+I/v44Bl8+ywXGUyJwQ0dpTh4D2X4N//J2Q470MQoF+elIveeGof4VZLs6OfRhy5ZzDz
-	 RS1YUjJOsxSASC7U6/xq3IhVCk62Gu3Mrzgfx2XrqSdzNb+/Kxa6E/qYRTtAVYMq/tpqi
-	 vSZneGqgnwtnv+UAoDeAwgcMFOKQvWUg44v6dFH+wSijn21FvkbYYH15Qukw/I4nJbA==
+	t=1795022050;
+	b=u2SRrPi4STYKxXVr+ERF1HD/BlIq79Lqq7/TxA+QkZjd0eb60Vd9nRNnGuFb+IbMDUYZ
+	 2fx3pL5C/Fs2dhs65Ii0WtZC2104vmrHgCxdGhoN7yEEv9VkMTWi0RKE067NproqfffL/
+	 OQIrPRXwGBWoWTxU5KGAjcc9jyCpELI4vyIu3XXAXQP6AKUTONH2Ec1BH16vj7byW12D5
+	 fIfwnCFYdMM+mbIv4aeEN2w1mnyTuJfVz1i5R6iIIqXQhrfzQx/ZWuNk7l0+49/oHA1o2
+	 n94VhM5LtRzp33gJFvBh4y5ayZCUGE5Hm6vVBT1b9erBtUHFhnGnq1r8vjwvkIGmNHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RJBvGTKk7+i2fpG3eKTGr1FBzmsUVHVzJEyegYQzp7E=;
-	b=ZqASwcF04GyGFRrl/RFzj2k0Y2/ovxxx9r4BUZrAyqffVu3z760diSFN1pWVq/RuEQQL
-	 G8xx3OxiM1ZQySy44tlPoiGcPmXoDIz0ukDQtciC0NuttQWX6QwdnszpZE+NQbpX3Obki
-	 87Jn+GEDN1VgyIL7cfuQaMiKi77GwTwKR4uCh0EUF5ZeQ7tpeIlM7jsRlYMwVl7lVu8sy
-	 ATeQsRHAREzxtiq5tu53tkQ7Tr6a6YIfAKn5xto76VDb7CBtZ7PS8fDGD4Gq4SspkFbER
-	 g68xsTsy0IEFwPDOsfmt9jnelssnv9BZ3kN+67U1hq1XvjwIUCywphuCbm1V7oYlZ1w==
+	bh=7FeGL4p4Y34qNV8J56j2yP8cU5UHJdwmUSOIol8dxb0=;
+	b=ZdfbnRQOrGzYpwiU723915tamjUtuzdvjvXuas+2ElPyuYPJBgjmjI2saj6ZLiwdpMVO
+	 ZbqCOR6wmjcG9VTGW77lF4UOc7PIzel3XevU29RskIo8ZBD8hW3zSzDL6WZ39tYMcinLs
+	 12t2+Svq2c0cinjIgUVkw31NVeIj37QlDJ7gXkX0wGmxcg52lbpawcLa5mI32snciwcd9
+	 l7vKGDQfmLqmx0rvW86t7YnhoaZbqtx8unoSawGhWLaqIR5ocpCONtsCcsJoq49yOtTPM
+	 plxd6SXiQac/+Ki6TKYKQOO0ET0C8jNynAWuHs/PXXiF8kB4iJvIgUw7ZTHMwxbXpQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e10uMScS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=br63AM1P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05CB606A31C;
-	Wed, 18 Nov 2026 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932E1606A31C;
+	Wed, 18 Nov 2026 17:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e10uMScS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103791F000C4;
-	Wed, 18 Nov 2026 17:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=br63AM1P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED1B1F000C4;
+	Wed, 18 Nov 2026 17:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022047;
-	bh=RJBvGTKk7+i2fpG3eKTGr1FBzmsUVHVzJEyegYQzp7E=;
+	s=korg; t=1795022050;
+	bh=7FeGL4p4Y34qNV8J56j2yP8cU5UHJdwmUSOIol8dxb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e10uMScSa2CSeIO0EYs/rT5y3HRpQjNwPB7u+DJWHZRCGXxJ3nS3L+JD3oyZfYYJy
-	 atYu0OgLgr7pBRlp3WjeiLuKdDLffJcjwMuzSOfnFtBeP/k4ZW5MWk9g9MuV7qftrf
-	 8HaX/w8Md9FjQWpiStE7hQBIE8l2OAW+eWDDWxkE=
+	b=br63AM1P2EUrDyI0H3ly4XRq1YhpcMeRSYIARIz+zkfeDDnlQ3eZRyiXOcFJu22Gx
+	 V3g5UWqbeY7I1KbNyF+TojzUwzccasTGtkesMXaT3tHe5Gop/uS/P0gTq2uNOSgcdl
+	 VbbaZquAlfBB8FbYvNLWCjOZJvvvSey+DnKTTvv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Sicong Huang <congei42@163.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2522/2651] ksmbd: return complete and aligned stream information
-Date: Wed, 18 Nov 2026 16:02:42 +0100
-Message-ID: <20261118150415.468953113@linuxfoundation.org>
+Subject: [PATCH 7.3 2523/2651] nfp: flower: fix use-after-free in neighbour update work
+Date: Wed, 18 Nov 2026 16:02:43 +0100
+Message-ID: <20261118150415.498264977@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,280 +69,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Sicong Huang <congei42@163.com>
 
-[ Upstream commit 206fc30f71b005156085fd8523ccc84a2c67791b ]
+[ Upstream commit 083aaafd453c3fb14411519d6ada9a8917573fdb ]
 
-FILE_STREAM_INFORMATION responses are assembled without aligning entries
-and truncated to the client buffer length after the fact. A short query
-can therefore return STATUS_BUFFER_OVERFLOW with an incomplete entry and
-a nonzero NextEntryOffset, which clients may reject as an invalid
-network response. Standalone queries can also exhaust the server
-response buffer and silently omit streams while reporting success.
+The netevent notifier handles neighbour updates and redirects by
+queuing nfp_tun_neigh_update() on system_highpri_wq. Each work item
+holds a reference to the neighbour, but only stores a pointer to the
+flower app.
 
-Allocate the same large response buffer used by other variable-length
-QUERY_INFO classes for stream queries. Pack only complete entries within
-the requested output length and available response space, aligning each
-entry to eight bytes and sizing names after UTF-16 conversion. Return
-STATUS_BUFFER_OVERFLOW when more entries remain, using an SMB2 error
-response if no entry fits.
+During device removal, nfp_tunnel_config_stop() unregisters the
+notifier. This waits for notifier callbacks to return, but does not
+wait for the work they queued. The teardown then frees app->priv and
+app without waiting for these work items. Flushing cmsg_work in
+nfp_flower_clean() does not cover the neighbour update work.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Fixes: 6b8b79226bc3 ("ksmbd: fix partial file information responses")
-Link: https://github.com/namjaejeon/ksmbd/issues/522#issuecomment-6391152923
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+A pending work item can therefore run after the app has been freed.
+Its call to nfp_flower_get_port_id_from_netdev() can then access freed
+memory while checking whether the neighbour's device can be offloaded.
+Even notifications for unrelated devices can reach this check. The
+same problem affects shutdown and probe error paths that tear down the
+app after the netevent notifier has been registered.
+
+One possible interleaving is shown below. The neighbour belongs to
+another network device that remains registered.
+
+  CPU0 (remove)                   CPU1 (notifier / kworker)
+                                  nfp_tun_neigh_event_handler()
+                                    queue_work(system_highpri_wq, ...)
+                                    return
+                                  /* Work has not run yet. */
+  nfp_tunnel_config_stop()
+    unregister_netevent_notifier()
+    /* Notifier callbacks have finished, but work may be pending. */
+  nfp_flower_clean()
+    vfree(app->priv)
+    app->priv = NULL
+  nfp_app_free()
+    kfree(app)
+                                  nfp_tun_neigh_update()
+                                    app = update_work->app
+                                    nfp_flower_get_port_id_from_netdev()
+                                      app->priv  /* use-after-free */
+
+The work items are allocated per event and free themselves, so they
+cannot be cancelled individually, and flushing system_highpri_wq is
+not allowed. Use a dedicated workqueue for neighbour updates instead.
+In nfp_tunnel_config_stop(), unregister the notifier and destroy the
+workqueue before cleaning up the tunnel state. This prevents new work
+from being queued and waits for pending and running work to finish
+while the app and its resources are still valid.
+
+Found by code inspection.
+
+Fixes: 0ad722bd9ee3 ("nfp: flower: fix for take a mutex lock in soft irq context and rcu lock")
+Signed-off-by: Sicong Huang <congei42@163.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 183 +++++++++++++++++++++++++---------------
- 1 file changed, 115 insertions(+), 68 deletions(-)
+ .../net/ethernet/netronome/nfp/flower/main.h  |  2 ++
+ .../netronome/nfp/flower/tunnel_conf.c        | 24 ++++++++++++++-----
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index f2a4854d2c224..828e2cf1dda54 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -992,7 +992,8 @@ int smb2_allocate_rsp_buf(struct ksmbd_work *work)
- 		if ((req->InfoType == SMB2_O_INFO_FILE &&
- 		     (req->FileInfoClass == FILE_FULL_EA_INFORMATION ||
- 		      req->FileInfoClass == FILE_ALL_INFORMATION ||
--		      req->FileInfoClass == FILE_NORMALIZED_NAME_INFORMATION)) ||
-+		      req->FileInfoClass == FILE_NORMALIZED_NAME_INFORMATION ||
-+		      req->FileInfoClass == FILE_STREAM_INFORMATION)) ||
- 		    req->InfoType == SMB2_O_INFO_SECURITY)
- 			sz = large_sz;
- 	}
-@@ -7139,41 +7140,107 @@ static int get_file_normalized_name_info(struct ksmbd_work *work,
- 	return 0;
+diff --git a/drivers/net/ethernet/netronome/nfp/flower/main.h b/drivers/net/ethernet/netronome/nfp/flower/main.h
+index 2b7c947ff4f2a..bd4399758ed4d 100644
+--- a/drivers/net/ethernet/netronome/nfp/flower/main.h
++++ b/drivers/net/ethernet/netronome/nfp/flower/main.h
+@@ -94,6 +94,7 @@ struct nfp_fl_stats_id {
+  * @ipv6_off_lock:	Lock for the IPv6 address list
+  * @mac_off_ids:	IDA to manage id assignment for offloaded MACs
+  * @neigh_nb:		Notifier to monitor neighbour state
++ * @neigh_wq:		Workqueue for neighbour updates
+  */
+ struct nfp_fl_tunnel_offloads {
+ 	struct rhashtable offloaded_macs;
+@@ -103,6 +104,7 @@ struct nfp_fl_tunnel_offloads {
+ 	struct mutex ipv6_off_lock;
+ 	struct ida mac_off_ids;
+ 	struct notifier_block neigh_nb;
++	struct workqueue_struct *neigh_wq;
+ };
+ 
+ /**
+diff --git a/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c b/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
+index ca30702f88780..8f5b0d3eb3778 100644
+--- a/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
++++ b/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
+@@ -742,7 +742,7 @@ nfp_tun_neigh_event_handler(struct notifier_block *nb, unsigned long event,
+ 	if (!update_work)
+ 		return NOTIFY_DONE;
+ 
+-	queue_work(system_highpri_wq, &update_work->work);
++	queue_work(app_priv->tun.neigh_wq, &update_work->work);
+ 
+ 	return NOTIFY_DONE;
  }
+@@ -1515,6 +1515,13 @@ int nfp_tunnel_config_start(struct nfp_app *app)
+ 	if (err)
+ 		return err;
  
-+struct smb2_stream_info_buffer {
-+	struct smb2_query_info_rsp *rsp;
-+	struct smb2_file_stream_info *last;
-+	const struct nls_table *local_nls;
-+	unsigned int length;
-+	unsigned int capacity;
-+};
-+
-+static int smb2_add_stream_info(struct smb2_stream_info_buffer *buf,
-+				const char *name, loff_t size, u64 allocation_size)
-+{
-+	struct smb2_file_stream_info *file_info;
-+	__le16 *utf16_name;
-+	size_t name_len = strlen(name);
-+	unsigned int offset = ALIGN(buf->length, 8), name_bytes;
-+	int conv_len, ret = 0;
-+
-+	if (offset > buf->capacity ||
-+	    buf->capacity - offset < sizeof(*file_info))
-+		return -ENOSPC;
-+
-+	utf16_name = kmalloc_array(name_len + 1, sizeof(*utf16_name),
-+				   KSMBD_DEFAULT_GFP);
-+	if (!utf16_name)
-+		return -ENOMEM;
-+
-+	conv_len = smbConvertToUTF16(utf16_name, name, name_len,
-+				     buf->local_nls, 0);
-+	if (conv_len < 0) {
-+		ret = conv_len;
-+		goto out;
++	priv->tun.neigh_wq = alloc_workqueue("nfp-flower-neigh",
++					     WQ_HIGHPRI | WQ_PERCPU, 0);
++	if (!priv->tun.neigh_wq) {
++		err = -ENOMEM;
++		goto err_free_macs;
 +	}
 +
-+	name_bytes = conv_len * sizeof(*utf16_name);
-+	if (name_bytes > buf->capacity - offset - sizeof(*file_info)) {
-+		ret = -ENOSPC;
-+		goto out;
-+	}
-+
-+	file_info = (struct smb2_file_stream_info *)&buf->rsp->Buffer[offset];
-+	if (buf->last) {
-+		memset(&buf->rsp->Buffer[buf->length], 0, offset - buf->length);
-+		buf->last->NextEntryOffset =
-+			cpu_to_le32((char *)file_info - (char *)buf->last);
-+	}
-+	file_info->NextEntryOffset = 0;
-+	file_info->StreamNameLength = cpu_to_le32(name_bytes);
-+	file_info->StreamSize = cpu_to_le64(size);
-+	file_info->StreamAllocationSize = cpu_to_le64(allocation_size);
-+	memcpy(file_info->StreamName, utf16_name, name_bytes);
-+
-+	buf->last = file_info;
-+	buf->length = offset + sizeof(*file_info) + name_bytes;
-+out:
-+	kfree(utf16_name);
-+	return ret;
-+}
-+
- static int get_file_stream_info(struct ksmbd_work *work,
-+				struct smb2_query_info_req *req,
- 				struct smb2_query_info_rsp *rsp,
--				struct ksmbd_file *fp,
--				void *rsp_org)
-+				struct ksmbd_file *fp)
- {
--	struct ksmbd_conn *conn = work->conn;
--	struct smb2_file_stream_info *file_info;
-+	struct smb2_stream_info_buffer buf = {
-+		.rsp = rsp,
-+		.local_nls = work->conn->local_nls,
-+	};
- 	char *stream_name, *xattr_list = NULL, *stream_buf;
- 	struct kstat stat;
- 	const struct path *path = &fp->filp->f_path;
- 	ssize_t xattr_list_len;
- 	ssize_t slen;
- 	loff_t ssize;
--	int nbytes = 0, streamlen, stream_name_len, next, idx = 0;
-+	unsigned int req_output_len = le32_to_cpu(req->OutputBufferLength);
-+	int streamlen, idx = 0;
- 	int buf_free_len;
- 	int ret;
+ 	ida_init(&priv->tun.mac_off_ids);
  
-+	if (req_output_len < FILE_STREAM_INFORMATION_SIZE) {
-+		rsp->hdr.Status = STATUS_INFO_LENGTH_MISMATCH;
-+		return -EINVAL;
-+	}
-+
-+	buf_free_len = smb2_calc_max_out_buf_len(work,
-+						 offsetof(struct smb2_query_info_rsp, Buffer),
-+						 req_output_len);
-+	if (buf_free_len < 0)
-+		return buf_free_len;
-+	buf.capacity = buf_free_len;
-+
- 	ret = vfs_getattr(&fp->filp->f_path, &stat, STATX_BASIC_STATS,
- 			  AT_STATX_SYNC_AS_STAT);
- 	if (ret)
- 		return ret;
+ 	/* Initialise priv data for IPv4/v6 offloading. */
+@@ -1527,13 +1534,17 @@ int nfp_tunnel_config_start(struct nfp_app *app)
+ 	priv->tun.neigh_nb.notifier_call = nfp_tun_neigh_event_handler;
  
--	file_info = (struct smb2_file_stream_info *)rsp->Buffer;
--
--	buf_free_len = smb2_resp_buf_len(work,
--			offsetof(struct smb2_query_info_rsp, Buffer));
--	if (buf_free_len < 0)
--		goto out;
--
- 	xattr_list_len = ksmbd_vfs_listxattr(path->dentry, &xattr_list);
- 	if (xattr_list_len < 0) {
--		goto out;
-+		goto default_stream;
- 	} else if (!xattr_list_len) {
- 		ksmbd_debug(SMB, "empty xattr in the file\n");
--		goto out;
-+		goto default_stream;
- 	}
- 
- 	while (idx < xattr_list_len) {
-@@ -7183,69 +7250,49 @@ static int get_file_stream_info(struct ksmbd_work *work,
- 
- 		ksmbd_debug(SMB, "%s, len %d\n", stream_name, streamlen);
- 
--		if (strncmp(&stream_name[XATTR_USER_PREFIX_LEN],
--			    STREAM_PREFIX, STREAM_PREFIX_LEN))
-+		if (strncmp(stream_name, XATTR_NAME_STREAM,
-+			    XATTR_NAME_STREAM_LEN))
- 			continue;
- 
--		stream_name_len = streamlen - (XATTR_USER_PREFIX_LEN +
--				STREAM_PREFIX_LEN);
--		streamlen = stream_name_len;
--
--		/* plus : size */
--		streamlen += 1;
--		stream_buf = kmalloc(streamlen + 1, KSMBD_DEFAULT_GFP);
--		if (!stream_buf)
--			break;
--
--		streamlen = snprintf(stream_buf, streamlen + 1,
--				     ":%s", &stream_name[XATTR_NAME_STREAM_LEN]);
--
--		next = sizeof(struct smb2_file_stream_info) + streamlen * 2;
--		/* smbConvertToUTF16() also writes a terminating UTF-16 unit. */
--		if (next + sizeof(__le16) > buf_free_len) {
--			kfree(stream_buf);
--			break;
-+		stream_buf = kasprintf(KSMBD_DEFAULT_GFP, ":%s",
-+				       &stream_name[XATTR_NAME_STREAM_LEN]);
-+		if (!stream_buf) {
-+			ret = -ENOMEM;
-+			goto out;
- 		}
--
--		file_info = (struct smb2_file_stream_info *)&rsp->Buffer[nbytes];
--		streamlen  = smbConvertToUTF16((__le16 *)file_info->StreamName,
--					       stream_buf, streamlen,
--					       conn->local_nls, 0);
--		streamlen *= 2;
--		kfree(stream_buf);
--		file_info->StreamNameLength = cpu_to_le32(streamlen);
- 		slen = ksmbd_vfs_xattr_len(file_mnt_idmap(fp->filp),
- 					   path->dentry, stream_name);
- 		ssize = slen < 0 ? 0 : (loff_t)slen;
--		file_info->StreamSize = cpu_to_le64(ssize);
--		file_info->StreamAllocationSize = cpu_to_le64(ssize);
-+		ret = smb2_add_stream_info(&buf, stream_buf, ssize, ssize);
-+		kfree(stream_buf);
-+		if (ret == -ENOSPC)
-+			goto overflow;
-+		if (ret)
-+			goto out;
-+	}
- 
--		nbytes += next;
--		buf_free_len -= next;
--		file_info->NextEntryOffset = cpu_to_le32(next);
-+default_stream:
-+	if (!S_ISDIR(stat.mode)) {
-+		ret = smb2_add_stream_info(&buf, "::$DATA", stat.size,
-+					   stat.blocks << 9);
-+		if (ret == -ENOSPC)
-+			goto overflow;
-+		if (ret)
-+			goto out;
- 	}
- 
-+	ret = 0;
-+	goto out;
-+
-+overflow:
-+	rsp->hdr.Status = STATUS_BUFFER_OVERFLOW;
-+	/* An empty overflow needs an SMB2 error response. */
-+	ret = buf.length ? 0 : -EOVERFLOW;
- out:
--	if (!S_ISDIR(stat.mode) &&
--	    buf_free_len >= sizeof(struct smb2_file_stream_info) + (7 + 1) * 2) {
--		file_info = (struct smb2_file_stream_info *)
--			&rsp->Buffer[nbytes];
--		streamlen = smbConvertToUTF16((__le16 *)file_info->StreamName,
--					      "::$DATA", 7, conn->local_nls, 0);
--		streamlen *= 2;
--		file_info->StreamNameLength = cpu_to_le32(streamlen);
--		file_info->StreamSize = cpu_to_le64(stat.size);
--		file_info->StreamAllocationSize = cpu_to_le64(stat.blocks << 9);
--		nbytes += sizeof(struct smb2_file_stream_info) + streamlen;
+ 	err = register_netevent_notifier(&priv->tun.neigh_nb);
+-	if (err) {
+-		rhashtable_free_and_destroy(&priv->tun.offloaded_macs,
+-					    nfp_check_rhashtable_empty, NULL);
+-		return err;
 -	}
--
--	/* last entry offset should be 0 */
--	file_info->NextEntryOffset = 0;
-+	if (!ret)
-+		rsp->OutputBufferLength = cpu_to_le32(buf.length);
- 	kvfree(xattr_list);
--
--	rsp->OutputBufferLength = cpu_to_le32(nbytes);
--
--	return 0;
-+	return ret;
++	if (err)
++		goto err_destroy_neigh_wq;
+ 
+ 	return 0;
++
++err_destroy_neigh_wq:
++	destroy_workqueue(priv->tun.neigh_wq);
++err_free_macs:
++	rhashtable_free_and_destroy(&priv->tun.offloaded_macs,
++				    nfp_check_rhashtable_empty, NULL);
++	return err;
  }
  
- static int get_file_internal_info(struct smb2_query_info_rsp *rsp,
-@@ -7542,7 +7589,7 @@ static int smb2_get_info_file(struct ksmbd_work *work,
- 		break;
+ void nfp_tunnel_config_stop(struct nfp_app *app)
+@@ -1543,6 +1554,7 @@ void nfp_tunnel_config_stop(struct nfp_app *app)
+ 	struct list_head *ptr, *storage;
  
- 	case FILE_STREAM_INFORMATION:
--		rc = get_file_stream_info(work, rsp, fp, work->response_buf);
-+		rc = get_file_stream_info(work, req, rsp, fp);
- 		break;
+ 	unregister_netevent_notifier(&priv->tun.neigh_nb);
++	destroy_workqueue(priv->tun.neigh_wq);
  
- 	case FILE_INTERNAL_INFORMATION:
+ 	ida_destroy(&priv->tun.mac_off_ids);
+ 
 -- 
 2.53.0
 
