@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015662;
-	b=3mBuzNQ2LvtZe4TPGkT5/hJri0o2XLdAXta2SzIk06VV51yHDClKdrsNfWWgWAnMSbRr
-	 ZT3nJaqPyApKyZnk449j2tZQ7F2K6CKT4FD7jJneMisSR7t4KpbQlEfjVM/aGDTo7Jn+d
-	 GHoIQwJOQ2/tpzDvRRUCK/AvU5gx+fhgM1oRtt9NpG4sEjH2hk2qGjTtaLkTcBowwnyhJ
-	 gTt61/N0RpJbIZdLp989O5LhZjid2qC9pn/miLjDeTUvX1ZmADC9ZaoklbTN0Hm0E0vCd
-	 fppXtW5CveAGW0VdrRfkZiNQrUdzl1PzFdDrOfvjM6Itz8H7WPYnwO+CcqldMRi+ATA==
+	t=1795015664;
+	b=fQD6YplOpcp5Kj5wwFxlbLrCFuFT2QczSw1Sil4bcVoza+GM2Zgx56iuez2E43ZUlAuH
+	 ZvQ+vvX6kEfH89rp+C/WQlkJGZKhv7R8SkB+/nWrniROvZcTWcwC4ptE4TXwNJdTDetZZ
+	 ujNrelHeVrpG4sImG7G5aYU29eggYcsDvdYLe5P0OAza8t/V7awowqalIUxXD8UL/fWlM
+	 OegCbfqiaAQgkdRBZW0vqkwLMYt2HSp8R48adlnObceIeTp3k/TFyeLjDzomTOmms8g3z
+	 EuFMBGyCtR0Quxvs/QziROvfz6T16XHhKUtGhu9Lkoud9YLBKDc9frhiooxux/axAuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015664;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RpWFVbAM7nkgTbgYUlyY7Lkgv5WnGwSO3bLCM/IGt1c=;
-	b=5kydUDyp/BpibjBD2NugvonTvU8yNCvYwobnuxmZdQupAqjdSoqwyDU3jPn32f8+Ali+
-	 tCKo+AG+3n0sXo3kynnzgifP0TNkMqsjTZ1p8rSctG/lFc8tQbtqUNIpu+vjTlDn5mYdB
-	 3xsuatoU2eKfPwKkNIjyysLopYCq7rdRrQv7bdqbde24Ya8RYVQPltR/r99l67cXrKOj7
-	 zTn4fS0K5LMz997hKdt1MyF/bqQBviWn5//rDMaFWXJx6oO3XELYSto0nJy9QcsVXEbBs
-	 /VxanT+6uZWOJzbqnjVQZB5+ueFCEyvamijzJAu3RnwYDlCxkYvu9hSUhQcD7zd/ABg==
+	bh=sQ5hBq4QUkxaQAXKPCKnSknNv4YnY0QU7SBfkqFzZ7o=;
+	b=AuRRvR7ADXYMgnBMCG07CZrFmaXwFg+OWUq3K+wRgUdgJsX639UicQTcl+OH+/Xx8eAl
+	 i9uqjMNzo6whzfURZlpw3IWHGgOia9E7c8I+saXFw+IhC5l9qlr3hSl5P4V/GqQrD9S9w
+	 ZkOZrDtJiz17KS/7tC6X3hZoUDVlLk4TJicLoW9DpYqVWNMytqyy86m5dYSa6s54z2fCx
+	 NYtiJ7+l76HfzhdJKgYuOBwPH24O3ayPQH2lEZyhMNLFDQqqyeq83J4d5OjtJLM5pR/a1
+	 WzLHsInkIbD5o4ef26nF8aEhWQnmMT+blbPQGvzPGoWi8kzMnnh+cd/fSCyVwZsV64Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWx5yhg4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1QwJcLZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286E060A2612;
-	Wed, 18 Nov 2026 15:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A9960A2619;
+	Wed, 18 Nov 2026 15:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWx5yhg4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3EF1F000C6;
-	Wed, 18 Nov 2026 15:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1QwJcLZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C41E1F000C5;
+	Wed, 18 Nov 2026 15:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015661;
-	bh=RpWFVbAM7nkgTbgYUlyY7Lkgv5WnGwSO3bLCM/IGt1c=;
+	s=korg; t=1795015664;
+	bh=sQ5hBq4QUkxaQAXKPCKnSknNv4YnY0QU7SBfkqFzZ7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uWx5yhg4fvbdubxCS35sXDPdl1VgiPY2Mq4ZGAXWESqWofQej457/GXwMP6JWTdsE
-	 DNggiQI4y02Se7AAoGSdav8cPbakWrGnzXQ8zJar/UjHB5jCsgJhNuFSEmim5xL4o6
-	 bBR1oVHh467OMFIUODdvyXx9UH9n7ia1M31AMyiY=
+	b=p1QwJcLZDhtIQGj6Aze+JxGnvmBQRVyj5f3zk2E0ZLLVLOL0pZpEKuBAlNcYHpOcy
+	 RwwDk45oqBWUZGTz5/NeW8gO7eZSu5Mr1G33UB90F1O5k4u6byb4k8JwbXBANbLbru
+	 d5QzXWHvuTdjvpLyL9HS/90Z01sHrwfqDdNgj+h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Gregor Herburger <gregor.herburger@linutronix.de>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0212/2651] wifi: mac80211: fix IEEE80211_TX_CTL_REQ_TX_STATUS mixup
-Date: Wed, 18 Nov 2026 15:24:12 +0100
-Message-ID: <20261118150255.507790236@linuxfoundation.org>
+Subject: [PATCH 7.3 0203/2651] arm64: dts: broadcom: bcm2712-d-rpi-5-b: add compatible
+Date: Wed, 18 Nov 2026 15:24:03 +0100
+Message-ID: <20261118150255.169778404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,59 +70,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Gregor Herburger <gregor.herburger@linutronix.de>
 
-[ Upstream commit e035900ffe9e8978f7c0d7b61811b6b578751697 ]
+[ Upstream commit ef76568f51914937d22e5efd05874bd42f478903 ]
 
-In ieee80211_build_hdr(), IEEE80211_TX_CTL_REQ_TX_STATUS is checked
-in ctrl_flags, which is wrong - IEEE80211_TX_CTL_REQ_TX_STATUS is in
-info->flags, so the check is for IEEE80211_TX_CTRL_PORT_CTRL_PROTO
-instead. This works out OK because the only place setting _that_ at
-a point before this gets called is in fact ieee80211_tx_control_port()
-which was intended here. This is actually needed for correctness, if
-jt were checking info->flags instead, TDLS would fill/leak the status
-frames created here.
+The bcm2712 found on the Raspberry Pi 5 is available in the d Stepping
+and in a c Stepping. There are two separate dts files. The
+bcm2712-rpi-5-b.dts for the c Stepping and the bcm2712-d-rpi-5-b.dts for
+the d Stepping. The d stepping does not set its own compatible/model
+string but uses "raspberrypi,5-model-b" through its include.
 
-However, we can just fix it by using the cookie instead, that'll be
-set for PREAUTH frames via ieee80211_tx_control_port() as well, and
-no other frames.
+These two steppings are not compatible. Booting with the wrong dtb file
+causes a crash at boot.
 
-Additionally, the code also erroneously set it, but that just caused
-preauth frames to get it set, since storing the ACK SKB will also set
-the correct flag. Drop this assignment entirely.
+Add a compatibles string "raspberrypi,5-model-b-d0" together with a
+"bcm2712-d0" string to allow us to distinguish between those two
+steppings.
 
-Fixes: a7528198add8 ("mac80211: support control port TX status reporting")
-Link: https://patch.msgid.link/20260803141309.292711-10-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 44839e2ac8ec ("arm64: dts: broadcom: Add DT for D-step version of BCM2712")
+Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260810-bcm2712-d-stepping-compatible-v4-2-73f74479539c@linutronix.de
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 45167a2592615..951e2c678fc5f 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3023,8 +3023,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 	}
+diff --git a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
+index 127be0fc27c22..ae4b7c587dbc5 100644
+--- a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
++++ b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
+@@ -3,6 +3,11 @@
  
- 	if (unlikely(!multicast &&
--		     (sk_requests_wifi_status(skb->sk) ||
--		      ctrl_flags & IEEE80211_TX_CTL_REQ_TX_STATUS)))
-+		     (sk_requests_wifi_status(skb->sk) || cookie)))
- 		info_id = ieee80211_store_ack_skb(local, skb, &info_flags,
- 						  cookie);
+ #include "bcm2712-rpi-5-b.dts"
  
-@@ -6662,9 +6661,6 @@ int ieee80211_tx_control_port(struct wiphy *wiphy, struct net_device *dev,
- 	if (unencrypted)
- 		flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
++/ {
++	compatible = "raspberrypi,5-model-b-d0", "brcm,bcm2712-d0";
++	model = "Raspberry Pi 5 d0 Stepping";
++};
++
+ &gio_aon {
+ 	brcm,gpio-bank-widths = <15 6>;
  
--	if (cookie)
--		ctrl_flags |= IEEE80211_TX_CTL_REQ_TX_STATUS;
--
- 	flags |= IEEE80211_TX_INTFL_NL80211_FRAME_TX;
- 
- 	skb = dev_alloc_skb(local->hw.extra_tx_headroom +
 -- 
 2.53.0
 
