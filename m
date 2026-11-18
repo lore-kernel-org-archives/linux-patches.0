@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030527;
-	b=kZ8AbmN7dbBxzD5oH+9S37rYA4RLVhPlzeiXmYaRaPgaLRG46y7YO5ZNSqBG9gX3GwY7
-	 Gw6WLKh/WmFk8pm7/WYW1T0Dfx8nBPZVKMSALx48VQ9EYjc6SLBmV1EZwDIDBEwLoqZed
-	 KyPVhwUTXnUzoV3+wh58PTMYoaD3JYrogqbKnme2ELhbC6HGO7pkBGHbNhRJicTO1tkMQ
-	 6K24rw+ubK1T/Fq+HN2UAGbcddCg3JXixaRLEfAhA2QRVTrdT+WPeExjsqw4BFpCy9E/I
-	 0WNUnBjvL8G7fHlZaStdkrtJtHfV+3zhEu8UA6EHTFlCNO6UyyNnVHMxJrcQoT25dyA==
+	t=1795030529;
+	b=pqpVDrS/jrrz34oTb7mC5yjiH94k/DD7HZsn06MJHp2PRrTKzMIhwiw5ABMZKn92G2Vg
+	 O+8wrr26lowA+4tQ1haWyrZ06alulmRTvZv+Z710s2PuerUpoIoT6KHmu8Y19HiZlOtKd
+	 421GZExDALOWfXPqEux4b+AE3Y37SoYgzkJi6idKjXxG/NsvjUX3KIJvwa3wB4292QUOW
+	 f3aToxWXuOiR2nS5FHPzbu6FB2c14bBlBHYys0huuG1qAME8l+Hsp3LM2aHanTFCXnz+P
+	 BjLU5gWJSHIFO66Ja2X1cz7w//7qk2rdXNkZEb/HjoIZ/i2k26XbL6QzefFI5QtHR8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X1Fj8rdfwue1TMsCHs1L08ppec2T7dVf1bTmdfXy9Eg=;
-	b=fIghcmdoItfqwbI4c/7UbDm6wjg5WnjIp96JivSYLRa8YNZPnA2VF5LNzPv9gr7fmS/5
-	 QOXS41cdOjPm+WiH74ZjMwCxrHHQfvq04RXD8ki+tEOMETubRhL+K4XjMQnnloWiKWsPr
-	 I1K/9kAmvlknkPl1YZ5RdexVCTb3R1s3+lFUKCrPIrHVHNl6Nyk1qLFVjLGre2oUiGPCS
-	 aa0rwVZPSJRBIuYeN/uxYJZS+Oab6T4rIRKr7N2nuPuEQGqi17D9iR4RtOLLivoRJS+kw
-	 R2v2RcjNfvrZp6oFIi5p8vdm9uJQu0eM1mWVg4Gv/iQbgCHOCeApTOV235+3R0ShycQ==
+	bh=P5lEGZRBOcTQKy7NIdFNQjsoxKFByiAX+uRx/LOYcIE=;
+	b=Z/5ZpaymCubN46fH7z4aFmzeJt2kmt1oWaFgt6TYluOA5cPq2lqfIsLHbVE947cZ/R7x
+	 s4FuDri8u4r5pJz3shiojKzcI9c//snQxfPy+F3ohjBqbXjdCFWpc/dqnnQ1/P+3RRaZW
+	 edlmwMVrbrEv0F1d3Up6nbxkpgrXcz77T8hEA8o0hNbLYfowM0NYNbT9gnx7/NTALFA8z
+	 IBJq8tLr/DKYwMjLexcjwPh0jKawj/T0h14OamAsl2E6rrw80ZYkjOgvQQWlhbk1pMHym
+	 WnIzamTcStC1CfIJekabbga1UajHw2zXuqAzZ5IVoVilsNJoFHWn149yIs5puOiNJvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im5OrroU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P04stPvI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9F5606C42B;
-	Wed, 18 Nov 2026 19:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE3C606C419;
+	Wed, 18 Nov 2026 19:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im5OrroU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F361F000C6;
-	Wed, 18 Nov 2026 19:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P04stPvI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C481F000C6;
+	Wed, 18 Nov 2026 19:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030526;
-	bh=X1Fj8rdfwue1TMsCHs1L08ppec2T7dVf1bTmdfXy9Eg=;
+	s=korg; t=1795030529;
+	bh=P5lEGZRBOcTQKy7NIdFNQjsoxKFByiAX+uRx/LOYcIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Im5OrroUSerqXJZILSKsx024uIzgaKH7c8EAR5N0SNgjpaWnK7kC5X4ub53vo8iY/
-	 1MXdTi/vbV+Gs9tseK0kpzcCnIac9ykYU9Y9Jt/+Rsi5S3WMC+Ub1pzqfB9weASBzY
-	 mJ+TWdynnfA0e59vumuLXKkkrkYk7h0ZVK59c9Q8=
+	b=P04stPvI9nCqSujVDau4cEE+IdOPfFlyoDq5RRu+lfDAiM0gZRL2+ay0FfAnkP/7p
+	 Kvr8T2y6o4jSMaAj4StVpWopAMAcDm6A8Yx+vFrgGkR6t9p+SL6mP0CANY5z5WNvYs
+	 eqklU0CZXX0MikQjzaAD7wNyEd52RcLtTlTSnrm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0695/1756] perf python: Initialize debug output on module load
-Date: Wed, 18 Nov 2026 15:47:02 +0100
-Message-ID: <20261118150036.866211196@linuxfoundation.org>
+Subject: [PATCH 6.12 0696/1756] RDMA/mad: Reject receive completions shorter than GRH
+Date: Wed, 18 Nov 2026 15:47:03 +0100
+Message-ID: <20261118150036.904861454@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,54 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 3d13b3f1f3a7cd33d1847a4b87c3198089b6c4a7 ]
+[ Upstream commit 2dc2126e690203d6adbddc7675927a242d810e43 ]
 
-Unlike the perf binary's main(), PyInit_perf() does not call
-perf_debug_setup(). As a result, the first warning or error printed from
-the perf Python C extension hits debug_file() with _debug_file == NULL
-and emits 'debug_file not set' without a trailing newline before the
-actual diagnostic message.
+ib_mad_recv_done() derives the OPA MAD length by subtracting the GRH
+size from wc->byte_len without ensuring the receive completion covers
+the GRH. If it is shorter, the subtraction wraps before the result is
+stored in mad_len and an invalid length can be passed downstream.
 
-Call perf_debug_setup() in PyInit_perf() and add the missing trailing
-newline to the fallback warning in debug_file().
+Reject receive completions shorter than the GRH before inspecting the
+MAD header or deriving the MAD length.
 
-Fixes: ec49230cf6dda704 ("perf debug: Expose debug file")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 8e4349d13f33 ("IB/mad: Add final OPA MAD processing")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260926105927.3183294-1-yaojiale02@163.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/debug.c  | 2 +-
- tools/perf/util/python.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/mad.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-index bd968b4883cbd..5b53c9f8ec66f 100644
---- a/tools/perf/util/debug.c
-+++ b/tools/perf/util/debug.c
-@@ -55,7 +55,7 @@ FILE *debug_file(void)
- {
- 	if (!_debug_file) {
- 		debug_set_file(stderr);
--		pr_warning_once("debug_file not set");
-+		pr_warning_once("%s not set\n", __func__);
- 	}
- 	return _debug_file;
- }
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 66d3b0c633b25..7b9b6d464a3e0 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -1371,6 +1371,7 @@ PyMODINIT_FUNC PyInit_perf(void)
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 21f482e0243f2..d68803faa336d 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -2084,6 +2084,8 @@ static void ib_mad_recv_done(struct ib_cq *cq, struct ib_wc *wc)
+ 			    recv->header.mapping,
+ 			    mad_priv_dma_size(recv),
+ 			    DMA_FROM_DEVICE);
++	if (unlikely(wc->byte_len < sizeof(struct ib_grh)))
++		goto out;
  
- 	/* The page_size is placed in util object. */
- 	page_size = sysconf(_SC_PAGE_SIZE);
-+	perf_debug_setup();
- 
- 	Py_INCREF(&pyrf_evlist__type);
- 	PyModule_AddObject(module, "evlist", (PyObject*)&pyrf_evlist__type);
+ 	/* Setup MAD receive work completion from "normal" work completion */
+ 	recv->header.wc = *wc;
 -- 
 2.53.0
 
