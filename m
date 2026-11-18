@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045434;
-	b=mFfwHIe6sURMpE42X5rxaO4SxB1xqdMVvSLY2quM/aCjMuz7R/Q8QS22vAtr0T4j1g3+
-	 U2Fuo4NVo3IxGTaV4I36c9ALblXrcN5xxeTcZx/d6AIkURPh28MaeodyL6VIdXvnnR/67
-	 IaKAcSbXXzgjjlkYxAJ5PlmkB1IG3mvvAH9Q6afMgnGYzyYeQYu9yU0qwiyIVXHeLjlYf
-	 xMeCTkfMaxIJo+aJj842FrveOC8LcgNl3jE62OmfU/lIvCr51Dm/1TJgrlK20z08YFSIO
-	 xu3SEHoufETJNV/GV5jpaU5krgg08EZ9qAF7Q2O45wlpyCFHwKSNRknDci0WqxPSLBg==
+	t=1795045437;
+	b=vymLO9ZOyKMVMykaZhHnQNEjpMVpToogHgi0L0G/qHOiJTxpDFnUKYu8ZxiGtK08x9Nr
+	 oDlLg5V4JIKnGFphrN2vS/NR0a3QgxH0EE4jOQpjbd4BjNsP+qiUVe3ehySTK3WoFrgd8
+	 LSycnpV8koRIES34xn4UHQ+U2X5l9v0eUC8yixRD4ACIcr6YX6dMe2Gl7B+sRgY/m45hf
+	 P+XgdbAdMcaeV6ixRF22j5li0PeH3k0C26EGWBIDBQk7dtkhAb5HcB6yrE+Fblb9ngl/N
+	 Sg6cX/pAOoiZZ/nNIfnw05zJAHwUOqDArUfUboLXCSthme7CHhweCS7a4y5OFo+0rNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045437;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5f0GLQr7B5uHYjDjk38H1OO12OeJUD1LaMD+UxyAX4o=;
-	b=viZrOfwMaQVRyZQBULjQ5pGepxMmbKmN0AIIzOAeQpAzFQbT/LcKpjMWAZCoxdasrv/E
-	 AWMWAYM/UR/j7QBk+MMr1JSQs9AghVkVShn3OdJeAmqDj9KKlJA5FVEfPZHb0uUHsmwMi
-	 gIt0x9xE+OJmozekbZ/NngrIq3sEYJfMCM0kXKlI1I8vl+RLHAUszMmmtmO9L7sEY+Gte
-	 U/fKnSbAY1LkCiNtTmRyMJAsXjjsryIwGwRGJ9U8qQbcG23XhXNdpz5shprqOYRQey/RE
-	 IRxuYpGWJShfLumRnyHWXvmMTA2jLzpZDVjy8s/SVMF7yDkfQKyG0yLrtxcqq4hOWww==
+	bh=UE/VZbt9GW9vI+WU/ru+mgz8C/99M7yD+KN00k/9yCs=;
+	b=Frh/I86r0CmdoNkSwspxKL/ciaIuDYlN//IZmO4MQumt396SXA9/MDecxlV+aMwfYbHA
+	 m+VmBWUpH5wH+OpY2Gp0INMkWVSceKI1Q4WclXyAOxXJrJRWwswJlAqG/6HtT4y+/r01x
+	 qKSS3xIMeB1HjppmyhSVFBRN8fNrOg0G3fsbbrVPMyoOGShqLrYN3QVy5NC/gYGzaH5tT
+	 bhW1HKEaBc+96VZOMaNOP5dlC0hdt7FFkJvB5dYHfIMh/86fKm91Mmv9eity+XtteSlQP
+	 rVxb1IoqiynoLPdNt/obx+FfNC3I6/z8LqxJ9Wh7rgrmDKaEqNmveVNn6j1fNocQVXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GlDZ99Gk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO1BsZNK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AEF606A31C;
-	Wed, 18 Nov 2026 23:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A39606A332;
+	Wed, 18 Nov 2026 23:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GlDZ99Gk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6731F000C5;
-	Wed, 18 Nov 2026 23:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GO1BsZNK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF231F000C5;
+	Wed, 18 Nov 2026 23:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045434;
-	bh=5f0GLQr7B5uHYjDjk38H1OO12OeJUD1LaMD+UxyAX4o=;
+	s=korg; t=1795045437;
+	bh=UE/VZbt9GW9vI+WU/ru+mgz8C/99M7yD+KN00k/9yCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GlDZ99GkxmGoLDndLWnAPMQvBZOK4OJwLaLgSsWPPh9bfRGqak0M0k7U/vVj3U5v9
-	 427ad8qAmJTBoDJ0Sk+KgdOTk4lBRGPGVXQVPY4udjTI7Oivdm3fp415iWrODwch66
-	 QPu2q3yyE0jl8mW3pyfdEC8Z6xe0pH86i3hw7gZ8=
+	b=GO1BsZNK43qj8T5YC05j1Xv6LyoeB5IaiQ67bHrGa7SPglIN8gEntfOid76YsrbVS
+	 EImFKSzwsS9bb+l4sRNgRAyyT9FB9hrDA/h6PIHBc1s5DX+26i1pl61MJPPrFjBWQZ
+	 8lWXUobatBjGtlrrmVjcQXPGscHMd/KdZkzNv8/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Oliver Neukum <oliver@neukum.org>,
-	Johan Hovold <johan@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0921/2857] USB: serial: sierra: fix urb leak on write completion
-Date: Wed, 18 Nov 2026 15:32:35 +0100
-Message-ID: <20261118150234.744151901@linuxfoundation.org>
+Subject: [PATCH 6.1 0922/2857] dm-snapshot: fix crash if dm_io_client_create fails
+Date: Wed, 18 Nov 2026 15:32:36 +0100
+Message-ID: <20261118150234.784171222@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,45 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit e7daa54802c566ed3f22e81513f84c8c9197c5d1 ]
+[ Upstream commit 829c4d21148a205eca864429e06530319e1f92d5 ]
 
-Make sure to drop the reference taken by usb_anchor_urb() also on
-successful submission of delayed write URBs during runtime resume to
-prevent them from leaking on completion.
+If dm_io_client_create() fails, it stores error into the ps->io_client
+variable. The code would try to free it later with
+dm_io_client_destroy(ps->io_client), causing an invalid pointer
+dereference. Fix this by setting ps->io_client = NULL.
 
-Fixes: e6929a9020ac ("USB: support for autosuspend in sierra while online")
-Reported-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/20260916165352.2085480-1-vulab@iscas.ac.cn
-Cc: stable@vger.kernel.org	# 2.6.32
-Cc: Oliver Neukum <oliver@neukum.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-5
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/sierra.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-snap-persistent.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/serial/sierra.c b/drivers/usb/serial/sierra.c
-index 353b2549eaa8a..8cc4e04e214bd 100644
---- a/drivers/usb/serial/sierra.c
-+++ b/drivers/usb/serial/sierra.c
-@@ -972,12 +972,13 @@ static int sierra_submit_delayed_urbs(struct usb_serial_port *port)
- 			intfdata->in_flight--;
- 			usb_unanchor_urb(urb);
- 			kfree(urb->transfer_buffer);
--			usb_free_urb(urb);
- 
- 			spin_lock(&portdata->lock);
- 			portdata->outstanding_urbs--;
- 			spin_unlock(&portdata->lock);
- 		}
-+
-+		usb_put_urb(urb);
+diff --git a/drivers/md/dm-snap-persistent.c b/drivers/md/dm-snap-persistent.c
+index 1b61a7a54c117..c28e08c15ead3 100644
+--- a/drivers/md/dm-snap-persistent.c
++++ b/drivers/md/dm-snap-persistent.c
+@@ -324,8 +324,11 @@ static int read_header(struct pstore *ps, int *new_snapshot)
  	}
  
- 	if (ec)
+ 	ps->io_client = dm_io_client_create();
+-	if (IS_ERR(ps->io_client))
+-		return PTR_ERR(ps->io_client);
++	if (IS_ERR(ps->io_client)) {
++		r = PTR_ERR(ps->io_client);
++		ps->io_client = NULL;
++		return r;
++	}
+ 
+ 	r = alloc_area(ps);
+ 	if (r)
 -- 
 2.53.0
 
