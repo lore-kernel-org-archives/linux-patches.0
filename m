@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036752;
-	b=qeJS4+cwHaOQGMuV5gkyuFecaWI97L3pvYs+zVWj3vN8WZ+u+Iv4QHQ+z9sYbrbLRah9
-	 hfxa6pTXKQcV8qwxk5QiAXDsdYTKusmOIlGQhgNKkspJ58/miFHe65Dn0Rf44Bo3hGvil
-	 rYcCQ19DwPDLMfChpBNeu4s/0SoYtc+QmqA5Xu4Zn6ZDwfsb7cSkyw6pvpWtaBJRH+MZw
-	 4xFbbogXknGVZg+fNRKE6bZlmSN32kvUQjTz4InOyLCmhzdKF+pDtaizZ29CmuwODqCM7
-	 fy9BqRKzYLCmVP8pE5w1619VGhDgum6ebP6b35Yms517hgcJI/Fkn+APyXTNp4aDgfw==
+	t=1795036755;
+	b=jXyrONS6Ag3p6RoyI7HKxn7dsWHHIJYRMrtT0Te0GU6AviAGhnVYZ6pbjJpWMMWYQtHe
+	 H7w6zO/5w5OJWfye2lTVg8IAN5B56fLQr3HiGongrPFe6LMxY/0u/GkI2K2feiJg7dqYx
+	 r3FYAil8T87X2lQ151FfwK7hRbctbF4bD81gXWAeVdoXM47bv4yS+f4BsFRArzGGDT7/P
+	 84MBr/igwqOw7J0NAViUE0aSqCVWTZWpks3Rl3P+YNcWLlYPVeX2Vt+dX0UqCTuVIlqg1
+	 LzmJGSmmsfsvfeuWnoYIzhsmg/gWLmE8WRuCwekLO1ZlsDf2tIQFhQ/Hdj8Bkx7aEIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7d76koS2e91Gwrdb6BGER+1EIsNJj1LS3j88yTVBbrA=;
-	b=j6wJPe0VXzZdB6RBeJVH+ZC53k7gcCDj8E5ASB3PhSX2kNj637IyHy8zaqD2IWtroDLS
-	 eKtANo/SlTp87ahCWaoWA0I7knribkIdAhsONlqqCxDc/6vHG3UujBiCrA2B4XYU+n+U+
-	 Qxj23M4I0QJo65heVhWvmxMOg4bxM4E2QjectHf9Vi9rK2l0ccpAaOeq1oGlx3YdUeVlS
-	 uE/4Qmc4c0g/2eNTcaMcW83Ofe6xs72bT9C1ziAZ+WKR+DgLQAO/5pVTZT1EdR7HsLiRt
-	 vW2PaWTrGQjBbosDwvpNAY3MCGarG1kbR3IqQeOL++levQNMJojDYHP8PYY6l8/+6mg==
+	bh=Jz7Vy7eSwfd6p9vh2RSMFKKCERwsp4tEhfVqPtoTIZI=;
+	b=tIITw2JUHnQXEzVsUjkTtzE5cM/NX4ZH9IgjA4hUEmSP8flRKwOnMSwMj5nXE3km5WMy
+	 wZnSHjJR8QcXsEPMKPRWKj2/k7+9kw8MV7vkV/EEWBKI0zGNwWYnz+7IzBHN0DfSkODGI
+	 JG3lvT3FYyIP9yqlKuBmiRI3Ozub1CpgcRzZtoqHUZpAI7pmZ2s/2oT8GZQ2A3C/txV3O
+	 y8tr5dg2rSvU6mi3lLo9qcovaJKPt91hZVUquIVCmKrNBLud9TGABEe/lrXCxxHPANwf+
+	 YlOsoJjmwudcmbpLwsZNcJDZi/OgD93c+msAXidVMNpfdqStRMdQKFcsoDa2zaTJDdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dAi3/RXb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5atwJgC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F29606A31C;
-	Wed, 18 Nov 2026 21:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CED6606A31C;
+	Wed, 18 Nov 2026 21:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dAi3/RXb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C5E1F000C4;
-	Wed, 18 Nov 2026 21:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s5atwJgC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F23A1F000C4;
+	Wed, 18 Nov 2026 21:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036751;
-	bh=7d76koS2e91Gwrdb6BGER+1EIsNJj1LS3j88yTVBbrA=;
+	s=korg; t=1795036754;
+	bh=Jz7Vy7eSwfd6p9vh2RSMFKKCERwsp4tEhfVqPtoTIZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dAi3/RXbNPisSFIy9ixcpDVV/4qVrRVlKmR1ReXsM4CIY2HBUuyGrLni99DYJKfvd
-	 j4swg2/uDT8SXH+R3dUZ3rKlC8cb2sVEUvDxxvWcvxDDL/uRWDnTvBA0nrCFAUetVq
-	 Iq4McuJDjyY6ZHYV4xbQsqI2u1ml2umkyUME1zbc=
+	b=s5atwJgCIgID80eHjKNs6pg4gma1ccXR9Rs+f4WVjfMZkq9z2Ml7+yMAWlIYG4zat
+	 ml7w5H4B22TWyLdyXhJQ1T6jvOCWdbOucGZ8EC8w9Pwkl4I689zAiu2dzmGZsoT335
+	 wmK/HHZ8xqMX1A1FtV2Z2Rycrft544BcLJpqtd3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <wayne.lin@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Nikita Maksimov <nickstogramm@yandex.ru>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1172/3318] drm/amd/display: dont WARN when removing an unallocated MST payload
-Date: Wed, 18 Nov 2026 15:29:54 +0100
-Message-ID: <20261118150355.289163126@linuxfoundation.org>
+Subject: [PATCH 6.6 1155/3318] ALSA: hda/via: Apply runtime PM workaround for ASUS X55A
+Date: Wed, 18 Nov 2026 15:29:37 +0100
+Message-ID: <20261118150354.750951393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,59 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit b18a7c6d75bcc883b39497863cc88c9ef4c6c85f ]
+[ Upstream commit f6e8d5ebde5ceb7d3c0eef6e9e4d82862b503ade ]
 
-[Why]
-On an MST teardown that runs through the reset path
-(dcn31_reset_hw_ctx_wrap -> link_set_dpms_off -> deallocate_mst_payload),
-fill_dc_mst_payload_table_from_drm() is asked to remove a payload whose
-vcpi is not present in link->mst_stream_alloc_table and trips:
+ASUS X55A requires the same workaround like other machines with
+VT1802, otherwise it loses the codec power on a few nodes and the
+sound stays silent.
 
-  WARNING: .../amdgpu_dm_helpers.c:275 fill_dc_mst_payload_table_from_drm
-
-This is a legitimate case, not an error: deallocate_mst_payload() can be
-called for a stream whose MST payload was never programmed into DC's
-HW-maintained table (a new stream created for a modeset whose enable
-never completed, as already documented in deallocate_mst_payload()).
-There is simply nothing to remove.
-
-[How]
-Drop the ASSERT and fall through to the fill loop, which rebuilds the
-allocation table from the remaining entries. The table ends up unchanged,
-which is correct: the payload being removed was never in it.
-
-Note the loop must not early-return here - the caller passes a zeroed
-proposed_table, so returning early would zero the whole link's table and
-drop the other MST streams sharing the link.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5875
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 88a27f624dc0ebc14a7ab274a84d977ce8513cb6)
-Cc: stable@vger.kernel.org
+Link: https://bugzilla.altlinux.org/45606
+Cc: <stable@vger.kernel.org>
+Tested-by: Nikita Maksimov <nickstogramm@yandex.ru>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://patch.msgid.link/20261017101257.215166-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_via.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-index 3a16de55f43c9..a8ba727d1b689 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -191,7 +191,7 @@ fill_dc_mst_payload_table_from_drm(struct dc_link *link,
- 				break;
- 			}
- 		}
--		ASSERT(i != copy_of_link_table.stream_count);
-+		/* Payload absent from HW table when never allocated: nothing to remove. */
- 	}
- 
- 	/* Fill payload info*/
+diff --git a/sound/pci/hda/patch_via.c b/sound/pci/hda/patch_via.c
+index bbd521859a3af..e761abaacc261 100644
+--- a/sound/pci/hda/patch_via.c
++++ b/sound/pci/hda/patch_via.c
+@@ -1044,6 +1044,7 @@ static const struct hda_fixup via_fixups[] = {
+ static const struct hda_quirk vt2002p_fixups[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x13f7, "Asus B23E", VIA_FIXUP_POWER_SAVE),
+ 	SND_PCI_QUIRK(0x1043, 0x1487, "Asus G75", VIA_FIXUP_ASUS_G75),
++	SND_PCI_QUIRK(0x1043, 0x1c33, "Asus X55A", VIA_FIXUP_POWER_SAVE),
+ 	SND_PCI_QUIRK(0x1043, 0x8532, "Asus X202E", VIA_FIXUP_INTMIC_BOOST),
+ 	SND_PCI_QUIRK_VENDOR(0x1558, "Clevo", VIA_FIXUP_POWER_SAVE),
+ 	{}
 -- 
 2.53.0
 
