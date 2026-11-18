@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024077;
-	b=CyiGaavsA9krzKwtNLw1/Zkii1TwMPZU4I3pt9c54iXkgXbvTF+r0QeXEBbOfzEe1RyF
-	 iwYuAuXwHVhlIAkIsHQ1wlfXKj30Ga3P44KoDx1ONPJlg2MCKjeIwMs0E6oMFdxzUyH/5
-	 lc/WNyl/OIk2QtYKFmDMFt3oEpQng8qkVfi4Frl7X2gqkSUojLPFzWwFM3jFbNhsQX0+V
-	 YkDjVBXwBplqKJlBS7B4ohUjbY6FUYw4WCEb8f3LSVhAMz4xOgDAXSDH3kaWSAaiYt9n8
-	 WyzWE5LylGqhWMGy8Kr0bbCoEHrri3H31bQC4DTe9s3DTtmxqtspBfXbTVuZBwJM5Tw==
+	t=1795024079;
+	b=RRSUt0N/Vl5HU/ayH0bnqO6fiukDROaWfPY6ErZqINnq2zHM1z9bt4iLOGRIjBW/iyuT
+	 HHMn6Xra4S3teJzcWqS5NHBXJE8xZtS4Ph/ABHhoDq5eM1z+RJi8mvNYo4NRECqKLEIp7
+	 yfSf39/w4kUkVc6erIFeNOMsICwGDv66mK51ZWMRm//rBuqFhcjy8+XbY5sSCMvgbY5FO
+	 QwcEN5/SdF37dC/UxR0lZHs8OhsIbbI7hP3o13/hD2pVXWCuSfFWTAuvLaQ3hlBoDrizw
+	 5VevSMabvB5nze6R9odiKPWVGdLnoajU46T5HKLwAvQkFuYB1fiepOSIriDurgw/kYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024077;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SUo9DK+j0CDSFSbOpaauHfSop0FNp/fecoaFGJGv+rY=;
-	b=EoAnfao3RyBjlO1MA6kqjzKNFVwMYtNXJk6lyIL56NPXdGxXudB3INDZMIcK8UPNbkjS
-	 lvUeH6HE/juN2mTA4cAdej/KLY1xYplF0J+NgABkXpUWpoBU9VnxNqccyUjQ5JqKdESjh
-	 U4f20wtgiPKjnGI1zICaFhkxvJzzGDrnhqbAOqkRvuc4BjVq0OC0e5/reLS3DPsJ6pbuE
-	 kiFrUUFjfITA7FQrUYjA9myjlUZisvXlDRMeVve5peQ55vz8h9NP5aBhC0K5sh4uAP+2q
-	 ImTG5HtUjl1VRBl8syoFLCGq0mzjS/y5RL1A+7qCxjD0RlfFF8zzfJGvPnW6nuySOTg==
+	bh=8BqN6iZ8z+vJ/QHrRUUkRmmuVAHO7jWNRVcvG6kyuN8=;
+	b=hJVMeEcIMQVoJ0eA91IAoewLOVjuAxxf77wpkhcMhq6RUN9C4Gl0yAmWPRwoFsImycYF
+	 YlOQTPiiv0MUcj7REEHutg+jlg6ZQ3YriR5DHm4oRiuwy/09OXY89A2OHmXBGbHyWCWmY
+	 JKtZRRKoJqk1OqngUdOcwnRiLSTL4xkBV4qtipzvMtO9YOG7bKXZ8pcUB9GGrCRkwsjSB
+	 r2Ni2yCWZzMryafS/MaR2XvJIMbfpr7DPLlY2GOiESJX3ZgcL1t6MBK54o0tZjgsONOKO
+	 JLcJ92xuuXvuUEyGd0cYNvV3o0tgKZYnWOaYeBYp611W5J8D7X78MKztKcAtKw77NWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNhB7d9F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZtIJ4Loc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6E8606A31C;
-	Wed, 18 Nov 2026 17:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7584606A320;
+	Wed, 18 Nov 2026 17:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNhB7d9F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F3D1F000C4;
-	Wed, 18 Nov 2026 17:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZtIJ4Loc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346C41F000C4;
+	Wed, 18 Nov 2026 17:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024076;
-	bh=SUo9DK+j0CDSFSbOpaauHfSop0FNp/fecoaFGJGv+rY=;
+	s=korg; t=1795024079;
+	bh=8BqN6iZ8z+vJ/QHrRUUkRmmuVAHO7jWNRVcvG6kyuN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNhB7d9FXG8lqWnvHD6ZuUvFb+/Dv0al44p/qXbOEm63TndAbBhcqJh/0RNJpLYNn
-	 VckgCiC0/GRi5yIyNz4VyFwMAPuoh3hs0iFychi3ZhVr8YiyySRPGoL8ghafZbJCEv
-	 fAu3cAyVqUhB1W6rbkkH2vt6bHBzvdGoQDWzZeaI=
+	b=ZtIJ4LociFfeWfKHxNKvP2x9EzlB66pGEQxLwj2qFX0mqvuWbi4WpAXr2HWEK7vmB
+	 YQp3exBKYzgVrXFtAD5RyH523In5hJFKKLCP0B8CfaoBDCbmqM50277ctObGg+613G
+	 NrEr75HQ148kq62lhWvKUKiGMvrEr+Y8cxowb7ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manuel Fombuena <fombuena@outlook.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0596/2151] leds: st1202: Take a reference on the LED firmware node
-Date: Wed, 18 Nov 2026 15:38:51 +0100
-Message-ID: <20261118150143.660981807@linuxfoundation.org>
+Subject: [PATCH 6.18 0597/2151] leds: st1202: Do not set brightness from atomic context
+Date: Wed, 18 Nov 2026 15:38:52 +0100
+Message-ID: <20261118150143.693948295@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,75 +70,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit 5882de94edf7a53812a76a882a95e1e86d7105d9 ]
+[ Upstream commit 1ec35fa181981b4b9581b3dae967bac7ed82c89c ]
 
-st1202_dt_init() stores each LED's firmware node while walking the
-device tree with for_each_available_child_of_node_scoped(), which drops
-its reference to the node at the end of every iteration. The LED class
-stores the pointer with device_set_node() and does not take a reference
-of its own, so nothing keeps the node alive for as long as the LED
-device uses it. That has been the case since the driver was added, when
-the LED class devices were registered inside that same loop.
+st1202_brightness_set() takes the chip mutex and performs I2C transfers,
+both of which can sleep, but it is installed as the brightness_set
+callback. led_set_brightness_nopm() calls that op directly on the
+assumption that it never sleeps, including from softirq context, so the
+driver can sleep in atomic context.
 
-Commit c72e455b89f2 ("leds: leds-st1202: Fix NULL pointer access on race
-condition") moved the registration into a separate loop in
-st1202_probe(), which also leaves the stored pointer unreferenced
-between the two loops.
+The driver also installs brightness_set_blocking, but the core only
+falls back to it when brightness_set is absent, so st1202_led_set() was
+never reached. It merely turned the channel on or off and ignored the
+requested brightness, so dropping brightness_set on its own would have
+lost brightness control entirely.
 
-With CONFIG_OF_DYNAMIC the node can be freed while it is still in use,
-leaving led->fwnode and the LED device's firmware node dangling.
+Move the register programming into st1202_led_set() so the blocking
+callback honours the brightness value, and drop brightness_set. The core
+now defers the update to a work queue, where sleeping is allowed. Errors
+from the register writes are propagated rather than discarded.
+st1202_led_set() was the last user of the locking st1202_channel_set()
+wrapper, which is removed.
 
-Take a reference when the node is stored and release it through a devm
-action. The action is registered before the LED class devices are, so it
-runs after they have been unregistered.
+Programming every PWM slot to full scale is kept: it is what makes the
+brightness visible while the global sequencer is running, without having
+to stop the sequencer and disturb the other channels.
 
 Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
 Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
 Assisted-by: LLM
-Link: https://patch.msgid.link/GV1PR08MB849710C564F23C21BDA3EA41C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
+Link: https://patch.msgid.link/GV1PR08MB8497CF8FB57A272EB671F0C6C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/leds/leds-st1202.c | 45 +++++++++++++++++++-------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 25e548b023364..46228ecb52cac 100644
+index 46228ecb52cac..23fffee873b9e 100644
 --- a/drivers/leds/leds-st1202.c
 +++ b/drivers/leds/leds-st1202.c
-@@ -13,6 +13,7 @@
- #include <linux/i2c.h>
- #include <linux/leds.h>
- #include <linux/module.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- 
-@@ -400,6 +401,11 @@ static int st1202_blink_set(struct led_classdev *led_cdev,
+@@ -174,27 +174,6 @@ static int __st1202_channel_set(struct st1202_chip *chip, int led_num, bool acti
  	return 0;
  }
  
-+static void st1202_fwnode_put(void *data)
-+{
-+	fwnode_handle_put(data);
-+}
-+
- static int st1202_dt_init(struct st1202_chip *chip)
+-static int st1202_channel_set(struct st1202_chip *chip, int led_num, bool active)
+-{
+-	guard(mutex)(&chip->lock);
+-
+-	return __st1202_channel_set(chip, led_num, active);
+-}
+-
+-static void st1202_brightness_set(struct led_classdev *led_cdev,
+-				enum led_brightness value)
+-{
+-	struct st1202_led *led = cdev_to_st1202_led(led_cdev);
+-	struct st1202_chip *chip = led->chip;
+-
+-	guard(mutex)(&chip->lock);
+-
+-	for (int pattern = 0; pattern < ST1202_MAX_PATTERNS; pattern++)
+-		st1202_pwm_pattern_write(chip, led->led_num, pattern, ST1202_PATTERN_PWM_FULL);
+-	st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, value);
+-	__st1202_channel_set(chip, led->led_num, !!value);
+-}
+-
+ static enum led_brightness st1202_brightness_get(struct led_classdev *led_cdev)
  {
- 	struct device *dev = &chip->client->dev;
-@@ -419,7 +425,11 @@ static int st1202_dt_init(struct st1202_chip *chip)
- 
- 		led = &chip->leds[reg];
- 		led->is_active = true;
--		led->fwnode = of_fwnode_handle(child);
-+		led->fwnode = fwnode_handle_get(of_fwnode_handle(child));
+ 	struct st1202_led *led = cdev_to_st1202_led(led_cdev);
+@@ -211,8 +190,29 @@ static enum led_brightness st1202_brightness_get(struct led_classdev *led_cdev)
+ static int st1202_led_set(struct led_classdev *ldev, enum led_brightness value)
+ {
+ 	struct st1202_led *led = cdev_to_st1202_led(ldev);
++	struct st1202_chip *chip = led->chip;
++	int ret;
 +
-+		err = devm_add_action_or_reset(dev, st1202_fwnode_put, led->fwnode);
-+		if (err)
-+			return err;
++	guard(mutex)(&chip->lock);
++
++	/*
++	 * The output of a channel is ILED x Pattern_PWM / 4095. Setting every
++	 * PWM slot to full scale makes it equal ILED whatever the state of the
++	 * sequencer, so the brightness takes effect without stopping the
++	 * sequencer, which is global and would disturb the other channels.
++	 */
++	for (int pattern = 0; pattern < ST1202_MAX_PATTERNS; pattern++) {
++		ret = st1202_pwm_pattern_write(chip, led->led_num, pattern,
++						ST1202_PATTERN_PWM_FULL);
++		if (ret)
++			return ret;
++	}
++
++	ret = st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, value);
++	if (ret)
++		return ret;
  
- 		led->led_cdev.max_brightness = U8_MAX;
- 		led->led_cdev.brightness_set_blocking = st1202_led_set;
+-	return st1202_channel_set(led->chip, led->led_num, !!value);
++	return __st1202_channel_set(chip, led->led_num, !!value);
+ }
+ 
+ static int st1202_led_pattern_clear(struct led_classdev *ldev)
+@@ -437,7 +437,6 @@ static int st1202_dt_init(struct st1202_chip *chip)
+ 		led->led_cdev.pattern_clear = st1202_led_pattern_clear;
+ 		led->led_cdev.default_trigger = "pattern";
+ 		led->led_cdev.blink_set = st1202_blink_set;
+-		led->led_cdev.brightness_set = st1202_brightness_set;
+ 		led->led_cdev.brightness_get = st1202_brightness_get;
+ 	}
+ 
 -- 
 2.53.0
 
