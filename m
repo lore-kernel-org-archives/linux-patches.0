@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053021;
-	b=2djrV5iUsUS1bMzRt/HXNcz0UsFolGGgXsridlnjkk7uRkf+sUKfnbda74YttlMFWnHK
-	 Ucv0kIes1YuG4Hkxyo5x3EwQdUdXe8FFmgN5Mu/od3/z65EahCgEOGqocekmBBdgj4BLd
-	 sLkDO/AS0C0whnNKMdrtixqhki9j41VWXQKkOjS7QT9oQw6qozQ09jT7sjmKHoM8FBhSf
-	 iNe6xNsvYbtF3miftpD2TxgiuazgqAzM+33q+56vnZzcEfnj2H5AIS5lGuNwUfIUayYy/
-	 bgMEesBSX0gG19WKPob1Hi/x+AgnJfoIxcgOJVhWUhe4zIgKOLpf/Z+smR8xUz+UzeQ==
+	t=1795053024;
+	b=Vdxly9ubHEhxd/zOlfAKV7lxuEmRL80PJgvtqDoCsDjsvbEohvomyUQ2gXYClzaUyNyg
+	 LtVwjx9+bWVXLMaK8UKc631w45tFPp+o2eTXYEcLCzbCvlGpyKiPYzQelF8yFY2TVs9sS
+	 XcgNSQ1uix3whiIa9PdIy1CPWCrf/zwldWikbueaLwAhhTpejj7zrbALdmTiY1D5MggiR
+	 W8b/HQDgOLJJeRe8wHSgLwY/6BHYmIqf7fAlrP9VivWU1gA9tPLdu8CaQeK5fHRq6tv46
+	 gWv7W2nVl/8Zme5WwWVK5f1xKaf73UPTwz3vNn3tC/XTwvrh+W5p2e7OUvCnV4MEtgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053021;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053024;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wa2KYrwbBj4yAtWxt3fPMqH91+2p79+Nz6kY7Jt6lQs=;
-	b=yCcR8mYWBL74Mty1PdQ64darfFh8khKva/Qv8+LLQHzXIgECY32ohgKJ371QaOTSSJBq
-	 ed4Z9mBpM7Zxk3R6LLtxKjw5iV+zBa/sAZZeE7jVamR5WExycqmu+Cdb8dpFIE9lAeK27
-	 vtF9OewaQRDjTddabnwjfLFamWOjVZK5dj9NzGJmFXT9KTwbgAthsei1RhHcPpj/RPKxl
-	 x/eJcpTHHUv1mMCFTCE4fjIO2kL8FoPXMVhXH+VvpSKWDT1+iSh0yomTFcbNSPooQh5X8
-	 9ZGwZsSvwsh1NgbYYP7gvINvZmRMi4d67cIBOJ5i64NsPeN4NsvSpwr9Vb6dAgwpxxg==
+	bh=i9JJRsGX5WUS+kw5TReV3cdYpTsj0ZDBsaV/rjj6Ok8=;
+	b=OPLPX9cAVwpnrbq60OGJBWORCCntuIV5XgYt7LWI5BxVglD9GjQuRdO/eaWDnfFsaFdR
+	 B/h7rT+9tMZdKoiisVErO5hXHoeYTO9B0ef7PJWbC1ucKmUCf9t5aeSilCFsVAs1jp+kH
+	 GhDGnd6ogsLcjd5rC0/67Kpc5unB2CvNvSaLCeZOXNWUEYF/xv5XSwDu8cpBOLVNZPaTi
+	 AIuJwP05YN78J0smyP3wpcR5nrpZQCJUUpn84vuoNBvCzQLEj9IKgZoebCOvltW984mFB
+	 Vy0+4UdTVgy2z8xN1oYE6ipXQ44OkPbupUe2pUqHPP0tfr5FbAdciFBr6GnkIezFWkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lZP57U37;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CPd/xhWZ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65358606A31C;
-	Thu, 19 Nov 2026 01:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C955606A320;
+	Thu, 19 Nov 2026 01:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lZP57U37
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B265C1F000C4;
-	Thu, 19 Nov 2026 01:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CPd/xhWZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA221F000C4;
+	Thu, 19 Nov 2026 01:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053021;
-	bh=Wa2KYrwbBj4yAtWxt3fPMqH91+2p79+Nz6kY7Jt6lQs=;
+	s=korg; t=1795053024;
+	bh=i9JJRsGX5WUS+kw5TReV3cdYpTsj0ZDBsaV/rjj6Ok8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lZP57U371hh+Ts4nFZb/nrJ7XFIFNIRHXtTDzMe8M5vOd5r8FI1lpznQDFi95TWs1
-	 uYxQPf+kaYt0TNSZbjvE8HWmksO/W1OB12boOo9FYcOg6aIvJ0Hf6wwvjaSQSGQ8oO
-	 CfwPXa7dtxsDt+R+nBpW8Vs7TPT7z3EHX4HtARp8=
+	b=CPd/xhWZztlh8O3OTUqCosHUpxnT3ieOhshp3md8vK3pDCzJu8b7U9UOuOxh2Mx0V
+	 SCm7XZpQuvp3Tu1rpk2IrSOwDbfTMyQy3b1Q7syZsW/sGuZ3QPT7ezrng9j+sdgaXN
+	 YCLI0DrqbFx811K59r3KqQugsiIdWWLUK7ZALeFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0770/2214] ovl: check that the parents of volatile/dirty are dirs
-Date: Wed, 18 Nov 2026 15:40:46 +0100
-Message-ID: <20261118150042.478143600@linuxfoundation.org>
+Subject: [PATCH 5.15 0771/2214] xfs: bound inode fork length against the fork size during log recovery
+Date: Wed, 18 Nov 2026 15:40:47 +0100
+Message-ID: <20261118150042.518215451@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,78 +69,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit e34d2ef818e4c7676d8d8e1bf43e6a1ed39efb2a ]
+[ Upstream commit 9232301894a06e664d8de2da97175cf98419bd16 ]
 
-An unprivileged user crashes the kernel by mounting overlayfs with the
-volatile option.
+xlog_recover_inode_commit_pass2() copies an inode log item's data/attr
+fork region into the inode buffer using the on-log region length without
+bounding it against the fork capacity, e.g.:
 
-A dentry that serves as the parent of a lookup must be a directory.
-ovl_create_volatile_dirty() walks work/incompat/volatile/dirty by name,
-and ovl_lookup_or_create() returns an existing entry whatever its type.
-A file or a symlink that another task creates during the mount becomes
-the parent of the next lookup, which calls a NULL ->lookup.
+	len = item->ri_buf[2].iov_len;
+	memcpy(XFS_DFORK_DPTR(dip), src, len);
 
-An unprivileged user mounted overlayfs with "volatile" in a user
-namespace while a second process created a symlink named work/incompat,
-and the mount task oopsed on a NULL ->lookup call.
+The only guard is an ASSERT, which is a no-op on production kernels
+(CONFIG_XFS_DEBUG off), and xfs_dinode_verify() runs only after the copy.
+A crafted image with a dirty log can therefore drive a heap out-of-bounds
+write at mount time. The XFS_ILOG_DBROOT sibling already passes
+XFS_DFORK_DSIZE as a bound; the DDATA/DEXT and ADATA/AEXT memcpy paths
+did not.
 
-Fix this by returning -ENOTDIR from ovl_lookup_or_create() when the
-caller asked for a directory and the existing entry is a non-dir.
+Bound each logged fork region against the destination fork size before
+copying it, and reject the log item with -EFSCORRUPTED when it does not
+fit. Because the recovered inode is only verified after the fork data has
+been copied in, the checks are done up front, before any memcpy into the
+on-disk inode.
 
-Fixes: c86243b090bc ("ovl: provide a mount option "volatile"")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: Adapted newer creation helpers to lookup_one_len() with explicit inode locking and dput() cleanup. ]
+Fixes: 658fa68b6f34 ("xfs: refactor log recovery inode item dispatch for pass2 commit functions")
+Cc: stable@vger.kernel.org # v5.8
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Changed two iov_len accesses to i_len to match struct xfs_log_iovec recovery buffers. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ fs/xfs/xfs_inode_item_recover.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 2ad1f8652ce61..6e97ef29ebd8c 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1321,16 +1321,23 @@ static int ovl_check_rename_whiteout(struct ovl_fs *ofs)
+diff --git a/fs/xfs/xfs_inode_item_recover.c b/fs/xfs/xfs_inode_item_recover.c
+index 239dd2e3384ec..2e82ee4b404b5 100644
+--- a/fs/xfs/xfs_inode_item_recover.c
++++ b/fs/xfs/xfs_inode_item_recover.c
+@@ -403,6 +403,25 @@ xlog_recover_inode_commit_pass2(
+ 	ASSERT(!(fields & XFS_ILOG_DFORK) ||
+ 	       (len == in_f->ilf_dsize));
  
- static struct dentry *ovl_lookup_or_create(struct ovl_fs *ofs,
- 					   struct dentry *parent,
--					   const char *name, umode_t mode)
-+					   const char *name, bool is_dir)
- {
- 	size_t len = strlen(name);
- 	struct dentry *child;
- 
- 	inode_lock_nested(parent->d_inode, I_MUTEX_PARENT);
- 	child = lookup_one_len(name, parent, len);
--	if (!IS_ERR(child) && !child->d_inode)
--		child = ovl_create_real(ofs, parent->d_inode, child,
--					OVL_CATTR(mode));
-+	if (!IS_ERR(child)) {
-+		if (!child->d_inode) {
-+			child = ovl_create_real(ofs, parent->d_inode, child,
-+						OVL_CATTR(is_dir ? S_IFDIR :
-+								   S_IFREG));
-+		} else if (is_dir && !d_can_lookup(child)) {
-+			dput(child);
-+			child = ERR_PTR(-ENOTDIR);
-+		}
++	/*
++	 * The recovered inode is verified only after the fork data has been
++	 * copied into it, so bound each logged fork region against the size of
++	 * its fork now, before the memcpy below can overrun the on-disk inode.
++	 * The DBROOT/ABROOT cases already bound their copies against the fork
++	 * size.
++	 */
++	if ((fields & (XFS_ILOG_DDATA | XFS_ILOG_DEXT)) &&
++	    item->ri_buf[2].i_len > XFS_DFORK_DSIZE(dip, mp)) {
++		error = -EFSCORRUPTED;
++		goto out_release;
 +	}
- 	inode_unlock(parent->d_inode);
- 	dput(parent);
++	if ((fields & (XFS_ILOG_ADATA | XFS_ILOG_AEXT)) &&
++	    item->ri_buf[(fields & XFS_ILOG_DFORK) ? 3 : 2].i_len >
++	    XFS_DFORK_ASIZE(dip, mp)) {
++		error = -EFSCORRUPTED;
++		goto out_release;
++	}
++
+ 	switch (fields & XFS_ILOG_DFORK) {
+ 	case XFS_ILOG_DDATA:
+ 	case XFS_ILOG_DEXT:
+@@ -442,7 +461,6 @@ xlog_recover_inode_commit_pass2(
+ 		case XFS_ILOG_ADATA:
+ 		case XFS_ILOG_AEXT:
+ 			dest = XFS_DFORK_APTR(dip);
+-			ASSERT(len <= XFS_DFORK_ASIZE(dip, mp));
+ 			memcpy(dest, src, len);
+ 			break;
  
-@@ -1351,7 +1358,7 @@ static int ovl_create_volatile_dirty(struct ovl_fs *ofs)
- 	const char *const *name = volatile_path;
- 
- 	for (ctr = ARRAY_SIZE(volatile_path); ctr; ctr--, name++) {
--		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1 ? S_IFDIR : S_IFREG);
-+		d = ovl_lookup_or_create(ofs, d, *name, ctr > 1);
- 		if (IS_ERR(d))
- 			return PTR_ERR(d);
- 	}
 -- 
 2.53.0
 
