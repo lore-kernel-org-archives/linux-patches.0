@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054558;
-	b=haVrMd7Br/IWiXqIwVoEe/qmMoYchk0i/kw56GJzKP5lz5DixzP6M0ks0QahY4xYujZm
-	 N7tBKwDbm61nrk3ZAkhJL9BhzvUgPMqmYcQCT3X8kBH3NlYvKGLrdXhceGuogJvem7DEW
-	 KhZ3ZI+bF/Q5L1rYEMxBHwcsRdFOLN3aG9ZN9S9r4SaXUnfnT4FRj/N0GrUd88Q0fZBuO
-	 gqyJgjOqovZVkRsf7qZDD7T78v/rDftkldE++fXe/fiNRpZMdrRtntqEfN9V3TDnj7P00
-	 vO7lqbnNsIsE8f1VoNWF5av6vDVxgUhI9xz334HD7dOVFvgJC8+sWtrSAKtaB3BGYvA==
+	t=1795054561;
+	b=nzgMnZRRRbum96yN+Um42Cf8UxhfRZY2/I+BHZlWae8RHFcnsl9hdMZMTgm52UqwBUMx
+	 5VhVkMx7pz/a+n0Y7+nhTOtrLFii/NMNxsbsMWjz7mZApWn/ROh0Y+O1PKMOnEbRmDLrn
+	 vccGNlplZ6cyb3/9y+vMROZZqsuJlo9//vby/PyPzDlgR2noeZ7535gpDtAnLADiNOmLy
+	 OUklKaMj9QSHoyj9UQGmrkFaEgfNo65lxax9OhWzCiffimnDOU7zC88yj+vWYWlu2PfNC
+	 gKlml/fFwzkaxRg3JxBBMX/KXd0cRF1doSQlbkhhL/Mn3U4wBiS/uAv5KM9RwbOYiaQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cwCzEgjOdz5ic2bi9ovVCoMm31uP9F8x5m8AsMoN0DM=;
-	b=xUpzWEBNsAN4vVTvHPjVYs09zkfZXuHie4ENAmqeQExnESsvzZ0w70MOv/inIJxCs9R7
-	 cZQ0H6YRcIRI1RhR0tLe2SXhdDOlbowhv1cMTypT8ZvSq2OxMOhn9MQpqnSk0la/lGsI2
-	 szU62jIj4k785mM9G2ade5aIfgyQu9WoVNb1ldFrxI3ntEfmv5KS1PsX7NNNlhm2qjUkY
-	 H1088AVK2+Vjj2klI5bJwgmmxgMRpiIAsm7wb4duHLjAB/PXxQFyMMGXwHwN4EKZXKDSH
-	 97rEV0scodta/5lvLp01fEG+7qoKAyflHWTH9GkkC4Fvcibj0+KK/v22+sHrelZtRxQ==
+	bh=fcHjdIVP3/GzgmDV8ww8zwJhcw3sQgOab+ZAJrVjxjs=;
+	b=c6aGVDPpo+re4/LWLZN6Ehn5oRciVAbuIth0zIl+Lrl9SwBGXpGOo1cX01S5MrMofUzF
+	 cmoZs8e97tnDJ4+IX+uLcSEBrQSy4BwUSaTyH9kDgcptEtuHqc9NUq39kUurgNCt1xI5M
+	 jQ+dUSrszMMMNXJ2HplSu8IYzAQi4YUkyYYQq15rVZgP/IzkQ/6jkbnrqjs/YONUtxmtQ
+	 5pfe0o7vFZLExkE7HRc1lDfPT/+2wAg86nkbW6QS0a54JWW00jKG+C0i6e4/4/LcfhbIV
+	 MBjGgwGQbG5tXVibA/ID8vG/PoZj2m/06JHdmayYfssWIzoOU79nfdVlM50ZaVnLNdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwwebrWV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwDkEmvr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E3C606A31C;
-	Thu, 19 Nov 2026 02:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91F4606A31C;
+	Thu, 19 Nov 2026 02:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WwwebrWV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B131F000C4;
-	Thu, 19 Nov 2026 02:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fwDkEmvr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E88D1F000C4;
+	Thu, 19 Nov 2026 02:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054558;
-	bh=cwCzEgjOdz5ic2bi9ovVCoMm31uP9F8x5m8AsMoN0DM=;
+	s=korg; t=1795054560;
+	bh=fcHjdIVP3/GzgmDV8ww8zwJhcw3sQgOab+ZAJrVjxjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WwwebrWVUAhv9s1JGGAxEm0r6zbU0hPITw4elB4LByxan59KidXX542gQzY9t9sxK
-	 bTQjXYkm5LFtwPdyr9LEnYlFmNBFxx7ftpJDN/X1vGPjfIJG4zQxVgvIW3HJt3aXqb
-	 mWs8LrLnk3ELexUt7u4QXW0p4/D5WqMqqA2ldPaw=
+	b=fwDkEmvrCyAABCMzinn4rxyej2lJuxixYLPUFvVLFlbipTYPvPFuz9qka5rGWWYnc
+	 Se8MMMGRfECE9Aj0CmX/pu/kJ70Gp9ISxGTDX/BX7ZEvQ5JI7sfYiZVR0Fdo9ZycOk
+	 /3b+NSplLLlKy8B+XZScRGw4NJf5neIZ2uAZW5zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Anderson Ferneda <anderson.ferneda@braza.com.br>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1290/2214] ocfs2: use the stored hash when checking xattr bucket collision
-Date: Wed, 18 Nov 2026 15:49:26 +0100
-Message-ID: <20261118150103.166244038@linuxfoundation.org>
+Subject: [PATCH 5.15 1317/2214] ocfs2: validate move extents against a stable EOF
+Date: Wed, 18 Nov 2026 15:49:53 +0100
+Message-ID: <20261118150104.159452918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,124 +74,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit e39baff18b85cf8956aee138d7944b6581e8ba36 ]
+[ Upstream commit 84db6619cb702c37cf848b450c21b9c9706b0775 ]
 
-ocfs2_check_xattr_bucket_collision() decides whether splitting a full
-bucket can make room for the entry being set by recomputing the hash of
-the name:
+The move-extents range must be bounded by the inode size used for extent
+movement.  ocfs2_ioctl_move_extents() checks and clamps the request before
+taking the local inode and cluster locks in ocfs2_move_extents().  It also
+uses separate i_size_read() calls for the range check and subtraction.
 
-	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
+A concurrent truncate can invalidate the first check and make the later
+unsigned subtraction underflow:
 
-	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
-		return 0;
+  Move-extents ioctl                  Truncate
+  ------------------                  --------
+  check me_start <= i_size
+                                      take inode and cluster locks
+                                      shrink EOF below me_start
+                                      release locks
+  compare me_start + me_len with EOF
+  set me_len = EOF - me_start
+    [unsigned underflow]
+  acquire inode and cluster locks
+  select extents using the bad range
 
-For a new entry that is the hash it will be stored under, so comparing it
-is correct.  An existing entry keeps the hash it already has: an update
-never rewrites xe_name_hash, since ocfs2_xa_add_entry() is the only
-writer of that field for a real entry and ocfs2_xa_prepare_entry() calls
-it only when loc->xl_entry is NULL.
+A truncate after clamping can also leave the range extending beyond EOF.
+Conversely, the cached size may be smaller than the size refreshed when
+the cluster inode lock is acquired.  Early validation can then reject a
+valid start or permanently shorten the requested length and threshold.
+The me_start + me_len comparison can also wrap for a large input length.
 
-An entry stored by a kernel that sign-extended the name bytes when
-hashing can still be updated, because ocfs2_xattr_find_entry() searches
-a non-indexed xattr block by memcmp on the name and never looks at
-xe_name_hash.  Growing it past the space left in the block converts the
-block into a tree, ocfs2_cp_xattr_block_to_bucket() fills the bucket in
-stored hash order, and the update runs out of room in the bucket too.
-The collision check then compares the unsigned hash against the legacy
-hashes in the bucket and reports no collision.
+Validate and adjust the original request once, after inode_lock(), the
+exclusive rw lock and ocfs2_inode_lock() have stabilized and refreshed the
+size.  Read EOF once, reject a start beyond it, and bound the length by
+EOF minus start.  Normalize the threshold using the same EOF snapshot.
+This keeps zero as the default-threshold sentinel until validation uses
+the size that will govern extent movement.
 
-ocfs2_xattr_set_entry_index_block() goes on to allocate a bucket that
-ocfs2_divide_xattr_bucket() cannot fill: a bucket whose entries all share
-one hash has no divide position, so all it does is append an empty bucket
-with a sentinel hash one above the last entry's.
+Move goal validation after range adjustment as well.  Its allocation-group
+capacity check uses me_len and must see the EOF-clamped length.  Both
+validation failures use the existing inode-lock unwind path before any
+extent movement or transaction starts.
 
-The re-search that follows depends on where the unsigned hash sorts.
-Below the legacy ones, it comes back to the full bucket and the set fails
-with -ENOSPC, having grown the tree for nothing.  Above them, it lands on
-the new empty bucket, which ocfs2_xattr_bucket_find() handles explicitly
-and ocfs2_find_xe_in_bucket() scans zero times, so the set stores a second
-copy of the entry under the unsigned hash and returns success.  The
-original stays in the full bucket, listxattr reports the name twice and
-getxattr returns the new copy.
+Range errors now reach the ioctl's normal copyout path, as goal errors
+already did.  Unlike the old early rejection, a failed copyout can
+therefore override -EINVAL with -EFAULT.
 
-Pass the hash the entry is stored under instead: the stored one for an
-existing entry, the unsigned one for a new entry.  A tree whose entries
-are all stored under the unsigned hash sees no change, since there the
-two are the same value.
-
-Link: https://lore.kernel.org/20261009083002.2621201-3-joseph.qi@linux.alibaba.com
-Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Link: https://lore.kernel.org/pm-ocfs2-move-extents-isize-rrw-v6-395bdee84ea81149068e@gmail.com
+Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Anderson Ferneda <anderson.ferneda@braza.com.br>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org> # 6.2+
-Stable-dep-of: e8de099f2958 ("ocfs2: do not read the entry array of an empty xattr bucket")
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: inlined range validation into ocfs2_move_extents() instead of adding a separate helper ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ fs/ocfs2/move_extents.c | 62 ++++++++++++++++++++---------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 8d15b0e824cdf..fca9ed94ca17a 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -5601,16 +5601,14 @@ static int ocfs2_rm_xattr_cluster(struct inode *inode,
- 
- /*
-  * check whether the xattr bucket is filled up with the same hash value.
-- * If we want to insert the xattr with the same hash, return -ENOSPC.
-- * If we want to insert a xattr with different hash value, go ahead
-- * and ocfs2_divide_xattr_bucket will handle this.
-+ * If the entry being set carries that same hash, return -ENOSPC, since
-+ * ocfs2_divide_xattr_bucket() has no divide position to work with.
-+ * Otherwise go ahead and ocfs2_divide_xattr_bucket() will handle this.
-  */
--static int ocfs2_check_xattr_bucket_collision(struct inode *inode,
--					      struct ocfs2_xattr_bucket *bucket,
--					      const char *name)
-+static int ocfs2_check_xattr_bucket_collision(struct ocfs2_xattr_bucket *bucket,
-+					      u32 name_hash)
+diff --git a/fs/ocfs2/move_extents.c b/fs/ocfs2/move_extents.c
+index 32b4271f3deb6..e3a9404c71bda 100644
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -906,8 +906,10 @@ static int __ocfs2_move_extents_range(struct buffer_head *di_bh,
+ static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
  {
- 	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
--	u32 name_hash = ocfs2_xattr_name_hash(inode, name, strlen(name));
+ 	int status;
++	u64 i_size;
+ 	handle_t *handle;
+ 	struct inode *inode = context->inode;
++	struct ocfs2_move_extents *range = context->range;
+ 	struct ocfs2_dinode *di;
+ 	struct buffer_head *di_bh = NULL;
+ 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
+@@ -932,6 +934,35 @@ static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
+ 		goto out_rw_unlock;
+ 	}
  
- 	if (name_hash != le32_to_cpu(xh->xh_entries[0].xe_name_hash))
- 		return 0;
-@@ -5707,6 +5705,7 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 					     struct ocfs2_xattr_search *xs,
- 					     struct ocfs2_xattr_set_ctxt *ctxt)
- {
-+	u32 name_hash;
- 	int ret;
- 
- 	trace_ocfs2_xattr_set_entry_index_block(xi->xi_name);
-@@ -5726,10 +5725,18 @@ static int ocfs2_xattr_set_entry_index_block(struct inode *inode,
- 	 * the maximum number of collisions we will allow for then is
- 	 * one bucket's worth, so check it here whether we need to
- 	 * add a new bucket for the insert.
-+	 *
-+	 * An existing entry keeps the hash it was stored under, and that is
-+	 * the hash a split has to work with.  A new entry is stored under the
-+	 * unsigned one, which is what ocfs2_xa_add_entry() will write.
- 	 */
--	ret = ocfs2_check_xattr_bucket_collision(inode,
--						 xs->bucket,
--						 xi->xi_name);
-+	if (xs->not_found)
-+		name_hash = ocfs2_xattr_name_hash(inode, xi->xi_name,
-+						  xi->xi_name_len);
-+	else
-+		name_hash = le32_to_cpu(xs->here->xe_name_hash);
++	i_size = i_size_read(inode);
++	if (range->me_start > i_size) {
++		status = -EINVAL;
++		mlog_errno(status);
++		goto out_inode_unlock;
++	}
 +
-+	ret = ocfs2_check_xattr_bucket_collision(xs->bucket, name_hash);
- 	if (ret) {
- 		mlog_errno(ret);
- 		goto out;
++	if (range->me_len > i_size - range->me_start)
++		range->me_len = i_size - range->me_start;
++
++	/*
++	 * The default threshold for defragmentation is 1 MiB, which
++	 * matches the maximum OCFS2 cluster size.
++	 */
++	if (!range->me_threshold)
++		range->me_threshold = 1024 * 1024;
++
++	if (range->me_threshold > i_size)
++		range->me_threshold = i_size;
++
++	/* The goal check depends on the adjusted range length. */
++	if (!context->auto_defrag) {
++		status = ocfs2_validate_and_adjust_move_goal(inode, context->range);
++		if (status) {
++			mlog_errno(status);
++			goto out_inode_unlock;
++		}
++	}
++
+ 	/*
+ 	 * rememer ip_xattr_sem also needs to be held if necessary
+ 	 */
+@@ -1024,49 +1055,18 @@ int ocfs2_ioctl_move_extents(struct file *filp, void __user *argp)
+ 		goto out_free;
+ 	}
+ 
+-	if (range.me_start > i_size_read(inode)) {
+-		status = -EINVAL;
+-		goto out_free;
+-	}
+-
+-	if (range.me_start + range.me_len > i_size_read(inode))
+-			range.me_len = i_size_read(inode) - range.me_start;
+-
+ 	context->range = &range;
+ 
+-	/*
+-	 * ok, the default theshold for the defragmentation
+-	 * is 1M, since our maximum clustersize was 1M also.
+-	 * any thought?
+-	 */
+-	if (!range.me_threshold)
+-		range.me_threshold = 1024 * 1024;
+-
+-	if (range.me_threshold > i_size_read(inode))
+-		range.me_threshold = i_size_read(inode);
+-
+ 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
+ 		context->auto_defrag = 1;
+ 
+ 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
+ 			context->partial = 1;
+-	} else {
+-		/*
+-		 * first best-effort attempt to validate and adjust the goal
+-		 * (physical address in block), while it can't guarantee later
+-		 * operation can succeed all the time since global_bitmap may
+-		 * change a bit over time.
+-		 */
+-
+-		status = ocfs2_validate_and_adjust_move_goal(inode, &range);
+-		if (status)
+-			goto out_copy;
+ 	}
+ 
+ 	status = ocfs2_move_extents(context);
+ 	if (status)
+ 		mlog_errno(status);
+-out_copy:
+ 	/*
+ 	 * movement/defragmentation may end up being partially completed,
+ 	 * that's the reason why we need to return userspace the finished
 -- 
 2.53.0
 
