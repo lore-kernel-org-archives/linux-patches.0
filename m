@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057599;
-	b=nAQu6Z1tBcuQPvToCrDqfMgnOWW2vz6H8TzAGpGc819VMWYVz6hIs488W7mMBQtYmevA
-	 Pov+ZJrMpbdmSDmiI7ey5d8B7qRDscGhRY2FLPedYNu2OWxahIJyGvziQ/qnt6EQV601I
-	 o26ZeXxYppQSMqxPV+a2JLHPlr2XtHNu8fb6d4tdRJpJ+hAafJ7CLmzy5+usbVLM2asXb
-	 fvmXzE+vRLOWrPFDLJLeOUceh20YJuwNqd9firuTm0sLr00Glbsl+O02W3hCxxh5gRfNe
-	 zIlEvMMS/7aq/IWB5a9tWqYz2vTqSluyaARDLRhfjq1/Q8q0NY1E1//MKr/0B5MlMAg==
+	t=1795057601;
+	b=xR+2OvfpnNwk+gkFoVF7aVNpXYSUiZewGd/lISfarWalpONiZkypg7uMqyjBFHUZ/JKI
+	 TgBiCfmFOMuqUB3PyaAXLMy9+lrcjovtsNY8oxj5RnJCgrg9mOb1ns8txz8rg+ZJStxZG
+	 Up41PncqIUKQNSfi4O7i39JzIQ/IsV9mhlYZfYeIEqrVra1LToSXJpxFxGgN6t8asnDWW
+	 6TJ9dbelQrIhumrLF3cYruryITrYf48DEOZzVrwZq9MrIsaPVLhW8R/GZk89uKQ+OriL5
+	 x20P5scRtH/HXUj3k5v2GlikiQ9Y7OlADShOoaxCLwcbaayMbqGofzM9SCH/skRv3pQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HwYBXl2vmhgHuG4R67Joi3rLtVD48XopTrgDzRlj4ts=;
-	b=nT1cwoH9Vr5EEX5Syd3LSHB6GFmyNoiKGSYsD/OQZAHbbLNEcYTLiehlrlRgGog3ASNs
-	 ZuJ3j0YqyydF6VVMRAvB9eTpDkK1k78dnkqDdCGfptN6qj6N0MDIWsm7Po4MZYoYblGyA
-	 kpznBo4mABXHvyzBfUd7P06nHmnXJ7iZ/+IXnpdqQ1lB32r7+8pJo6zJN/gDPqYYz+3LE
-	 nXBxZJ5FrVd/tkfC3HPz68taf/o5OEqPrEc1LtzfwJZidvu115Ml1l/EC/SMQiLcUR989
-	 Joik9ShqyaRJ5QTjOBbiRgQtnHR9XqDn7XlwdMdDEnvN7KwPXVmcuqPajbanoWhJtoQ==
+	bh=AO62nRvGUW0XSBxQPu/o1/VseMcplppW4VcQ5+DygdQ=;
+	b=2wS8s+IiogXZcL30QPmb7dWX0R/XkkxD4HWJmrQXtA+5pPqpAiatFr8XdWUcVNX62aYv
+	 zPZR3hOLt5YA7INUs1uZqpIQNF0Wv+ihIHqmpzqvqmmpo5yp5BlT5shbofF2A5J6d5L+7
+	 ehLIoUWyIjBYuN8fxyMCp1gE1AXn0GpcgzBvSHMPfH4wQeUAq0+uxaT408rEADAPufWME
+	 ym563WPMpkquCFoyp/11kML4NIFaUopio/EsIXXe+8PzUMlGjkNc2HgiAucA5m/ewc1XY
+	 3QYvXLgP4nbMlRXKQzyg+83cma1NZ3jn4Uj4GxJ0gMrMYWh02SuwrJNCW2ggRikK83Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NG+tkqc8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rk8I7Q0q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ED1606A33B;
-	Thu, 19 Nov 2026 03:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC50A606A33E;
+	Thu, 19 Nov 2026 03:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NG+tkqc8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F701F000C5;
-	Thu, 19 Nov 2026 03:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rk8I7Q0q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDA61F000C9;
+	Thu, 19 Nov 2026 03:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057598;
-	bh=HwYBXl2vmhgHuG4R67Joi3rLtVD48XopTrgDzRlj4ts=;
+	s=korg; t=1795057601;
+	bh=AO62nRvGUW0XSBxQPu/o1/VseMcplppW4VcQ5+DygdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NG+tkqc8w/nmAWOJac6hQykz6Uq0rnL6lg8x4XGMKtF71WBxRk+CIaFqlmH1oayBf
-	 5uQpkfNHnpKEupZsVCDTnQwKLfaEo57aCPdh3TP0S/Gb6jAPxaSFWsB0y5eL32UULV
-	 aDuCVtfNDz8e7BXF1luVUDLoznMyEodev6RXkU+M=
+	b=Rk8I7Q0qI7f/TAWKmsni91SfH7Oi1qUrEUqJGiTbqDgrZWN/lUIkB3xjf9iAUoQnF
+	 EDozRT06Sh8qp7JRY6T6PMwMumLplcTNeIPybTo68LvFRiMFEgqGljXp86LiC6ux8o
+	 Zq25ZyrfYPOwYdnaeeURIFeThGygMLmZIuAi0Ito=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jenson Johnathon Reggentin <mail@jregg.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	syzbot+0c815b25cdb3678e7083@syzkaller.appspotmail.com,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0188/1848] docs: block: fix dead http link in blk-mq.rst
-Date: Wed, 18 Nov 2026 15:37:06 +0100
-Message-ID: <20261118145919.541253412@linuxfoundation.org>
+Subject: [PATCH 5.10 0189/1848] fbcon: Fix KASAN slab-out-of-bounds Read in fbcon_prepare_logo
+Date: Wed, 18 Nov 2026 15:37:07 +0100
+Message-ID: <20261118145919.611395237@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,37 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jenson Johnathon Reggentin <mail@jregg.de>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit b40a680ea4efe4ef2addada63e304a94d19500d1 ]
+[ Upstream commit 94e6a058b16820e02f25e1221a4c4e713ba23550 ]
 
-The current link http://kernel.dk/blk-mq.pdf leads to a 404 error page.
-https://www.kernel.dk/blk-mq.pdf leads to the correct document.
+Ensure the logo will not exceed the screen size, which then should
+fix a reported KASAN: slab-out-of-bounds Read in fbcon_prepare_logo.
 
-v2 to add the missing www. prefix in the actual file change.
-
-Signed-off-by: Jenson Johnathon Reggentin <mail@jregg.de>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260819192422.42189-1-mail@jregg.de>
+Reported-by: syzbot+0c815b25cdb3678e7083@syzkaller.appspotmail.com
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/block/blk-mq.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbcon.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/block/blk-mq.rst b/Documentation/block/blk-mq.rst
-index a980d23af48c2..c880197034589 100644
---- a/Documentation/block/blk-mq.rst
-+++ b/Documentation/block/blk-mq.rst
-@@ -139,7 +139,7 @@ completed.
- Further reading
- ---------------
- 
--- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <http://kernel.dk/blk-mq.pdf>`_
-+- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <https://www.kernel.dk/blk-mq.pdf>`_
- 
- - `NOOP scheduler <https://en.wikipedia.org/wiki/Noop_scheduler>`_
- 
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index b72d7bf448793..41720de26eee4 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -602,6 +602,13 @@ static void fbcon_prepare_logo(struct vc_data *vc, struct fb_info *info,
+ 		erase &= ~0x400;
+ 	logo_height = fb_prepare_logo(info, ops->rotate);
+ 	logo_lines = DIV_ROUND_UP(logo_height, vc->vc_font.height);
++	logo_lines = min(logo_lines, rows);
++	logo_lines = min(logo_lines, new_rows - 1);
++	if (logo_lines <= 0) {
++		logo_lines = 0;
++		logo_shown = FBCON_LOGO_DONTSHOW;
++		return;
++	}
+ 	q = (unsigned short *) (vc->vc_origin +
+ 				vc->vc_size_row * rows);
+ 	step = logo_lines * cols;
 -- 
 2.53.0
 
