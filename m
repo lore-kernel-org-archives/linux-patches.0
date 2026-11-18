@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047239;
-	b=phs4SyoRF3i2ac9CmR3ZHxUM16CUddrO4IzOaqTy5iccK7W/hntcvobEINmlDW0FstHd
-	 XQNxan+lq4Wp8aRvm8K9RSPua2OPC9QthK8tjIh3OuDn07iWYsvw8GBcOVmH1vv8+xl2R
-	 N77fHGk+JkrlzbhY6oE5RMxX41ErOXJLEie/C3NTHG33XtzMZx6P26lMcmHENpqbokdIm
-	 CJwau4kGVow3yosfg4PQNNQzY+/dP0MMJQNpZfW32RvDiv6g+gSPohEEZfYLNx6bjBsgp
-	 fjPKTviDWsDbGjqwSaCnTV/ytNNmSRHbjqphK0/ufLm4dV/Wu7ig4nJWaQ+asKC3IdA==
+	t=1795047242;
+	b=F9RLzhrct05RZBTqd+6isc0cS36xB8yBMqZqiLiq8B7Uwvjqse95Kia6Adb21SR3GwB5
+	 yngbQofGRoSKJcZPMpxrd9s5IdXpQInM8n1jSI/thJbgY6sR9DL97zyXXJc323Zjb5/ui
+	 vzBpVjB1Dc0nfVSEvzupEtbYSh8Gb3+iRtT10xPBF0eKahIUMzkg0ylg57hNyHy0u8Uuh
+	 akoD2mVlFvmRqtvSEm2slmOK1sLa7HXzZyPGbjcPS41Guwgh+QxrozpYP6bq8D+RAD0LG
+	 dbjMdFbXK034HdvfuLUXKgVQgWtikAjUYyE4v92aevMQDh/UKboibagD8Bi5V5kMK5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047239;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047242;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=haP51m3h6AwoY4QIkWD1k4xkY0kQnVga+SLeV5ameeU=;
-	b=lzIr32UNbQYqx464HlvWhpp9xRk9Hbc+vLvcJWlYUV3OCAuQ3nE8rWQBTbuP3cwWcm+2
-	 9O6RfMyWpKjPSWPJhVityKN/plZnj3ZqsuCOYkOdprdFqJ/x8wnlBa7PwQlyLuhAJsVjd
-	 Xy7U+n1sbWZDfIdaj8qzOb7EjKygai8lzVnpARpJYdjsoN5wbswob4vW9AyY4sp/53Npw
-	 loJf+qjHfE3grNq6WkZ7wb8hFCQIAFw39Xi2tc2dp3x6+hRxv4vRmUB/hGKjLVnlPwDbj
-	 OcnmfrDU2dUtD+IOzITzLX3u7YRhfXfEU6neZhkV1RSOUgmATI/cG1B8dw0sqdyk9/Q==
+	bh=epshHbx7ufSY595+g8HcBhW6HyMHSwCRSp8OqlELDZ0=;
+	b=ojbHXB770tCYSUGrwjO4qpqjeIL4ftOAklGV9cWcFRhKL7smx3nOzykcOv9ksoEnMOID
+	 F4qeRWW0BTU0ZiKooQseKPxog4PTlEELnt2TwLplJTid/FkDXKdxAXYoSZaAJk8/OCYI5
+	 +MxNUD0fOMtdaFBXfMFaV1OsGytZIzLkRRuwwc4M4mODQ1FL2YxBfwq30N/wqStbzjl5m
+	 4p6pHNIbV1ez7/QAT5Jq25wGZ9QfsNz3HgB1oqVTD2+ubYmbCRIYtbori9mH4TqYXntb5
+	 95hf/UjqjtIHfLalSSQOS6+jsGkwrMnj29H5oRJY+AzupWJMOcSzRYxFIZrUokV/PDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPgWftop;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H3hkmmBN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DDB606A31C;
-	Thu, 19 Nov 2026 00:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3662606A31C;
+	Thu, 19 Nov 2026 00:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kPgWftop
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E338A1F000C4;
-	Thu, 19 Nov 2026 00:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H3hkmmBN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C306F1F000C4;
+	Thu, 19 Nov 2026 00:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047239;
-	bh=haP51m3h6AwoY4QIkWD1k4xkY0kQnVga+SLeV5ameeU=;
+	s=korg; t=1795047242;
+	bh=epshHbx7ufSY595+g8HcBhW6HyMHSwCRSp8OqlELDZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kPgWftopt4gRDUT40QT8HTjFneB6O0v38dRioDnJmwXBIL2QzcUq/9CymS8Pzb95H
-	 RicKXZbqF9aiVxe4fGqH+ehMw2RyOhiwL/R9MgRRBxkfMwFuSix9kUY3Uj44MEKZc4
-	 5vAZC+ZvmT8F0f3zsrd7v9PHjB4YwBAzY/x3Vl2Y=
+	b=H3hkmmBN6z9t5C9dNgYP36+B1VRHwqfm0HfZoFQErJ9TZ3iUW45UkzJyN/QBRyr75
+	 lkDc4svX1T6RLvVBFVHRDugNJDJ8bcfFF4WTEtLhoRFhXkqPbvAvp/nodv6AuWdcbW
+	 Ee4SjJgG7I1A3Xmwxk3+u+7mbjkxvhgfhX9CVZXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Hitesh Patel <hitesh@ebytelogic.com>,
-	Bryan ODonoghue <bod@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1551/2857] media: qcom: camss: vfe-17x: Fix write master selection for RDI lines
-Date: Wed, 18 Nov 2026 15:43:05 +0100
-Message-ID: <20261118150257.180504561@linuxfoundation.org>
+Subject: [PATCH 6.1 1569/2857] ALSA: aloop: Use guard() for mutex locks
+Date: Wed, 18 Nov 2026 15:43:23 +0100
+Message-ID: <20261118150257.881310249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,81 +67,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hitesh Patel <hitesh@ebytelogic.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit fc02156a3efb747b724a490cc50e1ad8c28a3b23 ]
+[ Upstream commit ebd9b6c91d4e345b7ded4b56567c46267a45d961 ]
 
-On the gen2 VFE bus there is no crossbar between the RDI paths and
-the bus write masters: RDI n is served by write master n. The common
-vfe_get_output_v2() reflects this by mapping line->id to write master
-line->id, and every gen2 VFE except 17x uses it.
+Replace the manual mutex lock/unlock pairs with guard() for code
+simplification.
 
-The 17x code kept its own vfe_get_output(), which reserves whichever
-write master is free first. That happens to be the right one as long
-as a single line streams and it is RDI0. As soon as two lines of the
-same VFE stream, for instance two virtual channels demultiplexed by
-the CSID to RDI0 and RDI1, the second line to start is given the
-write master of the other RDI. Both write masters are then programmed
-with the buffer address and frame size of the wrong line. The frames
-are truncated to the smaller of the two buffers and the SMMU faults
-on the larger one.
+Only code refactoring, and no behavior change.
 
-Use vfe_get_output_v2() on 17x like the other gen2 VFEs and drop the
-duplicate. This also removes an error path that released
-output->wm_idx[0] before it had been assigned.
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250829150026.6379-2-tiwai@suse.de
 
-The gen1 VFEs are not affected: they have a bus crossbar and any write
-master can serve any line, so vfe_reserve_wm() is correct there.
+Limit the conversion to the four hardware rules needed by the
+notify-mode playback fix. The access-control callbacks are absent,
+and the remaining mutex conversions are unnecessary for that fix.
+The scoped guards preserve the existing lock boundaries and release
+the mutex if a hardware rule returns early.
 
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Hitesh Patel <hitesh@ebytelogic.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-[ sashal: Adapted the change to the existing vfe_get_output() because the shared vfe_get_output_v2() helper is absent. ]
+Stable-dep-of: ded106036984 ("ALSA: aloop: Don't constrain playback params in notify mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe-170.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ sound/drivers/aloop.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index 47049a1fe5787..c916c70f6ca9e 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -402,7 +402,6 @@ static int vfe_get_output(struct vfe_line *line)
- 	struct vfe_device *vfe = to_vfe(line);
- 	struct vfe_output *output;
- 	unsigned long flags;
--	int wm_idx;
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 9c7671f034d54..cc0c59232d61f 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -952,10 +952,10 @@ static int rule_format(struct snd_pcm_hw_params *params,
+ 	struct snd_mask m;
  
- 	spin_lock_irqsave(&vfe->output_lock, flags);
+ 	snd_mask_none(&m);
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	m.bits[0] = (u_int32_t)cable->hw.formats;
+-	m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		m.bits[0] = (u_int32_t)cable->hw.formats;
++		m.bits[1] = (u_int32_t)(cable->hw.formats >> 32);
++	}
+ 	return snd_mask_refine(hw_param_mask(params, rule->var), &m);
+ }
  
-@@ -414,12 +413,8 @@ static int vfe_get_output(struct vfe_line *line)
+@@ -966,10 +966,10 @@ static int rule_rate(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
  
- 	output->wm_num = 1;
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.rate_min;
+-	t.max = cable->hw.rate_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.rate_min;
++		t.max = cable->hw.rate_max;
++	}
+         t.openmin = t.openmax = 0;
+         t.integer = 0;
+ 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
+@@ -982,10 +982,10 @@ static int rule_channels(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
  
--	wm_idx = vfe_reserve_wm(vfe, line->id);
--	if (wm_idx < 0) {
--		dev_err(vfe->camss->dev, "Can not reserve wm\n");
--		goto error_get_wm;
--	}
--	output->wm_idx[0] = wm_idx;
-+	output->wm_idx[0] = line->id;
-+	vfe->wm_output_map[line->id] = line->id;
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.channels_min;
+-	t.max = cable->hw.channels_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.channels_min;
++		t.max = cable->hw.channels_max;
++	}
+         t.openmin = t.openmax = 0;
+         t.integer = 0;
+ 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
+@@ -998,10 +998,10 @@ static int rule_period_bytes(struct snd_pcm_hw_params *params,
+ 	struct loopback_cable *cable = dpcm->cable;
+ 	struct snd_interval t;
  
- 	output->drop_update_idx = 0;
- 
-@@ -427,9 +422,6 @@ static int vfe_get_output(struct vfe_line *line)
- 
- 	return 0;
- 
--error_get_wm:
--	vfe_release_wm(vfe, output->wm_idx[0]);
--	output->state = VFE_OUTPUT_OFF;
- error:
- 	spin_unlock_irqrestore(&vfe->output_lock, flags);
- 
+-	mutex_lock(&dpcm->loopback->cable_lock);
+-	t.min = cable->hw.period_bytes_min;
+-	t.max = cable->hw.period_bytes_max;
+-	mutex_unlock(&dpcm->loopback->cable_lock);
++	scoped_guard(mutex, &dpcm->loopback->cable_lock) {
++		t.min = cable->hw.period_bytes_min;
++		t.max = cable->hw.period_bytes_max;
++	}
+ 	t.openmin = 0;
+ 	t.openmax = 0;
+ 	t.integer = 0;
 -- 
 2.53.0
 
