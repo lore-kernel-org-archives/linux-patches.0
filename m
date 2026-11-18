@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059480;
-	b=PihqNrzcDmj+zD0YfQjhsuZHJ5/QUY2IRlxirBDL+RFy2Lgj2YIcKM/nJWoowh+X5NVX
-	 tak5AExUnpsAxYNEWCfLJr+bfx7Kxny343uggBj9q4TIfMIb6Pruca+bilspe/hMzWJAU
-	 yN2FzvbafDMIVvs7AWiMyR8XL/X69k3SVx1YwAc1dcQnQzf9slbzs0Gntl/n/LrOLlUYR
-	 cZTKCvGw+s55mKvMJTOasMSTMRj5vDNgt0IDbhri56nFyMOpTX70xvoiXEF2eOERKAxgp
-	 F4qBHo6cJhRD/SovdBg6DyUdzwCXYPyVZeS+HD+7XNSrX1f+S/gZzfouB9aOk4ASfvw==
+	t=1795059483;
+	b=znXKKNY0fnZA+cDxoLqAF1w9uSWzRfL1PHVqaNn/64S6dI0AGCtq51peHqrEI0ZIub6N
+	 4YONoowPO9jVq2IBB1ZAtGz/it3wbt8H/3oWKlBv/xyA/YCAY5QlMoGOXiOfYVmwzFRgy
+	 0IPI6tuPqSysH4lm0Mn0nNxhXiXMvvT3SfxEEnngNpUPrB4UF/yll28MSjtMqHrMS+Uq4
+	 cJlJa+opEb0ruOyiiE0kaCvb6emJemWrYddGNj1wVAlDC87SPOb8tD7n7KHRTIjW3UIf2
+	 ZPXn+vRiYnz4p03iocmhIBdEYhjN/CxYpoipWVUio3IyRjJAVFBI4kqfEvMtEv+RPcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059480;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059483;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rhez0v4a2kVofIXYDXh6snA3qlRJuBaEMIN2q6Yk/Rs=;
-	b=iYKopbKy0RB7C1kxytfP1EK7o1100AlVEutVkAld/YpEJd9LzJSbV66if1n+uSxc3t0z
-	 rgqOTicXARITqoFAXIIyj9rJkfiBguAt0xBhwtyZmcuSyNvdHZtq1fGWDGbtF4w7WIi28
-	 +nrbjh3DK7X6GVi7z1fDjx54nZKJwFCxMUwSFIrlVLOX2aR2UnZNHV27AAcNiAA/Ym9Ry
-	 5nl4+dD5RYMXX72xZD3E+ibYF6oL4s7o8pwTJ+WIXuvbaBZYoEDAwyTeTzN8yI1pVHXf6
-	 AV5BZusq/4iLqDo3DW2k38tQcI1ecV+qUklUK5sJvMEiza+REAtxmgzyXWK6hT69uKg==
+	bh=BVsK1q10pibHlM09YH1arDG6ZbgV9V+XQTaqtuGfbTc=;
+	b=E9PN0pRaOozDWUKKr3L1pVU9j2Cr1ZSO9xpvCok8ok2XCiWhtiSERNfb6ArrOmBiqntY
+	 fFRMV8CVJFYCsxpmd1zK8rsCe7ras4ocK2aaF8/YZUJZ5kfz3YFfT+kVcRXDp5eHygn1z
+	 EPKh/f29FzEsB739IWzKMHSp56ODFsBoBsHQrerPlC/ezbLMLpZOmXRFdihK2wIPec8MG
+	 ZPQ6kF4ABcPcu+1uPLwK22GyS7/Q3Ih8lNUBsmqCJqJzR6mgj+GVuC37bvlFL+qRGSfUa
+	 1S/L9X3P2OAbXUQ14D3J8GhyK8u933DPc3K8wLSYI2KIzn/HnQ0U+kRtxH9slA0QDfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qX5JTeAR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obJIXotS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8590606A32A;
-	Thu, 19 Nov 2026 03:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1F0606A326;
+	Thu, 19 Nov 2026 03:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qX5JTeAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3D81F000C4;
-	Thu, 19 Nov 2026 03:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obJIXotS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5F11F000C4;
+	Thu, 19 Nov 2026 03:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059480;
-	bh=rhez0v4a2kVofIXYDXh6snA3qlRJuBaEMIN2q6Yk/Rs=;
+	s=korg; t=1795059483;
+	bh=BVsK1q10pibHlM09YH1arDG6ZbgV9V+XQTaqtuGfbTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qX5JTeARQXNS6Uos8QZsPKz4X4eIPeDJt6byAGDixqauX4Af1bAmjMLovnAvkcj2U
-	 tH2mlxdDKWzKBK+ryJoaFrf6Mjor8/bYWofgU0/EWa8g+AswpDKATQCwRsZ/qD7m4F
-	 dCqHmY8TezN63z/RnUR32csePAyG3lYEHLI/E2L0=
+	b=obJIXotSamw7REoWe2qHBVkQMkniVVRW6JIODu8qzV+vM2N/Dns4fNTXQi/aGopiH
+	 gIpx0D+oVkjYardL+MVtUBAe8/R6o4XEug7ipr8uJmsZzTVVO6Qqv2Ib7EGMbIATbk
+	 JqJ4Fsk2LowoLu9QRVKeVFJ0rWT+DfGoFGSYjd6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Xu Xin <xu.xin@linux.dev>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0858/1848] mm/madvise: fix data loss from MADV_FREE on a KSM page
-Date: Wed, 18 Nov 2026 15:48:16 +0100
-Message-ID: <20261118145952.441001034@linuxfoundation.org>
+Subject: [PATCH 5.10 0859/1848] ALSA: hwdep: Serialize DSP load requests
+Date: Wed, 18 Nov 2026 15:48:17 +0100
+Message-ID: <20261118145952.475154776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,58 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 22d043c1da48d6c7274f9dd900714b6d58b7b9c6 ]
+[ Upstream commit aee83c204f80d56b4d55f53acdb8594308ddcd4a ]
 
-MADV_FREE can clear the dirty flag of a singly mapped KSM folio. The
-folio remains in the stable tree and can gain new mappings without being
-dirtied again. Once marked lazyfree, reclaim can discard data that those
-mappings still need.
+The check of the loaded DSP indices and the call of the driver's
+dsp_load callback in snd_hwdep_dsp_load() are not serialized.  A hwdep
+file descriptor can be shared among threads, or inherited across fork,
+so two SNDRV_HWDEP_IOCTL_DSP_LOAD requests for the same index can both
+observe the index as unloaded and enter the driver's callback
+concurrently, even though the device itself is opened exclusively.
 
-KSM always marks a folio dirty when converting it to a KSM folio in
-try_to_merge_one_page(). Marking a folio lazyfree clears PG_swapbacked
-but leaves PG_dirty unchanged. Preserving PG_dirty makes reclaim restore
-PG_swapbacked instead of discarding the folio. This also protects folios
-that were already lazyfree when KSM converted them.
+This breaks the assumption behind hw->dsp_loaded that a firmware index
+is loaded only once.  For example, snd-usb-usx2y hits
+WARN_ON(usx2y->as04.buffer) in usx2y_async_seq04_init() and may
+allocate the US-428 sequence URBs twice.
 
-Skip KSM folios before clearing their dirty flag, checking under the
-folio lock to serialize with KSM conversion.
+Serialize the check, the callback invocation and the bookkeeping with a
+per-hwdep mutex, so that the second request returns -EBUSY.
 
-Fixes: 854e9ed09ded ("mm: support madvise(MADV_FREE)")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Xu Xin <xu.xin@linux.dev>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-34-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adapted folio-based KSM handling to page-based APIs ]
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261029084810.21910-2-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+
+5.10 and 5.15 still build with -std=gnu89, so guard() cannot be used
+after the early returns of this function.  Take the mutex explicitly
+and release it on every exit path instead.
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/sound/hwdep.h |  1 +
+ sound/core/hwdep.c    | 14 ++++++++++----
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index ad33cdbf27a88..5aea93718eec2 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -649,6 +649,15 @@ static int madvise_free_pte_range(pmd_t *pmd, unsigned long addr,
- 		if (PageSwapCache(page) || PageDirty(page)) {
- 			if (!trylock_page(page))
- 				continue;
-+			/*
-+			 * KSM pages can gain new mappings at any time, so we must
-+			 * not clear their dirty flag.
-+			 */
-+			if (PageKsm(page)) {
-+				unlock_page(page);
-+				continue;
-+			}
-+
- 			/*
- 			 * If page is shared with others, we couldn't clear
- 			 * PG_dirty of the page.
+diff --git a/include/sound/hwdep.h b/include/sound/hwdep.h
+index 8d6cdb254039d..137be4b4074b2 100644
+--- a/include/sound/hwdep.h
++++ b/include/sound/hwdep.h
+@@ -57,6 +57,7 @@ struct snd_hwdep {
+ 
+ 	struct mutex open_mutex;
+ 	int used;			/* reference counter */
++	struct mutex dsp_mutex;		/* serializes DSP load requests */
+ 	unsigned int dsp_loaded;	/* bit fields of loaded dsp indices */
+ 	unsigned int exclusive:1;	/* exclusive access mode */
+ };
+diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
+index 0c029892880a8..2862cbe757051 100644
+--- a/sound/core/hwdep.c
++++ b/sound/core/hwdep.c
+@@ -211,14 +211,19 @@ static int snd_hwdep_dsp_load(struct snd_hwdep *hw,
+ 		return -ENXIO;
+ 	if (info->index >= 32)
+ 		return -EINVAL;
++	mutex_lock(&hw->dsp_mutex);
+ 	/* check whether the dsp was already loaded */
+-	if (hw->dsp_loaded & (1u << info->index))
+-		return -EBUSY;
++	if (hw->dsp_loaded & (1u << info->index)) {
++		err = -EBUSY;
++		goto unlock;
++	}
+ 	err = hw->ops.dsp_load(hw, info);
+ 	if (err < 0)
+-		return err;
++		goto unlock;
+ 	hw->dsp_loaded |= (1u << info->index);
+-	return 0;
++unlock:
++	mutex_unlock(&hw->dsp_mutex);
++	return err;
+ }
+ 
+ static int snd_hwdep_dsp_load_user(struct snd_hwdep *hw,
+@@ -376,6 +381,7 @@ int snd_hwdep_new(struct snd_card *card, char *id, int device,
+ 
+ 	init_waitqueue_head(&hwdep->open_wait);
+ 	mutex_init(&hwdep->open_mutex);
++	mutex_init(&hwdep->dsp_mutex);
+ 	hwdep->card = card;
+ 	hwdep->device = device;
+ 	if (id)
 -- 
 2.53.0
 
