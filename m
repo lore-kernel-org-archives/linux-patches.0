@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056689;
-	b=DKVemvkIjcgyMFNjYyXtFDnY9vpkhMLm4vadzpU8R7DuRNvEkFTpnvVZAzZ8lVDJgmKf
-	 otP9YtSULvvGPbzmnXFxroySQZugDx7TBOB5++rvwYdgkMAzRexAjwb0sJtMy4d9joaJr
-	 2jAcy8xnsZMZCUhGmD4fdo7AEb+0ujGPM1E3E+tRmb5iqBsDhVSEhEvp5RlSKxTo8j48N
-	 OkejM9n04tPa01UQUTzlmkEZ1T6IABH1p3kc1sn2GXdUH+ipdFVDKfhjBcCW2DvUQMugf
-	 oNoLKe3ejxRamGO0qK02/1obqvH0i+fQiCcUFzyAJxxVqZS8KFWUlmpmr/yr8OkMEaw==
+	t=1795056691;
+	b=CahmWYyBBt3Vwmzg1qjxPyAorpLPitV7ArmaC4MUANWC91i8D3jTDoXfUROGvuzDzHJM
+	 a1SlcFVWUHPuTDLf8sxV9I3VOOjuU2FVvlP+Fs+frRFFpmMvpA2F+yj46BIdSSocbVS3H
+	 Ta6KqX2O07+bVf9TkY9pdQrBtaEeUrS6mzQYaT+oF/g6NbhXw0uDOKjSDeDM4GOKN64oX
+	 3X7+161uV0k4JHAuinAxh851W9rRxikza7PlsR2q+Q502QErkFc0DrIJ/yXp6TaWvWKR1
+	 8XSv0IycRbxbKJ55gQg4jsVHze/LGrzWHfc9Fx+Iq03gdY2ZxAxqqSzoCXWvlrsmeLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GJsCBZc5Jqc+OO5eCC9ghyto9c2siSeDKpJNRid6xO8=;
-	b=1K/B4s1DlI9jt4ocFuRKYyu3Z5uC7AwPOmaIPz/dsiy4at82X8bqxOcSypxYhNdH4FCC
-	 shhe30JpqLm72eHO7ScjgvsiL85cwwbyrqiL45nNY8dAGX1vGH/L2pQFPGD9nKhgu1WJb
-	 NxHUOdb+RMHDGhV5SNSpJUaERMDTH8LIOrDe3PlpwPePsNESnpLoqpasRu94ArM2PuM+r
-	 /ZKZYdj6IAiQJkEkeihoW9/KmlNh7YDKwP/eVzV5Jb7M3PkOXwsLDR0fdIBp2BDs8fuai
-	 0YQqAoZmLcTTpAp+c9G9YwIXlbZI151zIiRz4FgexVdo0uyL0j5J+E4Ls/Rkj4hI5JQ==
+	bh=Wabo9XHZsbENZpFQUx6QwbrR/rmZd37ySoXw80X4jmI=;
+	b=eXqZ+0QUj2lUR6oHsXr9dc7kszTw4NFEWkrwLrMDXbSdO8vpIigqkmvBDaRcS49/5QBt
+	 bF0jVMwHBE5v4BGcWVsyUnj0ZKuxygzWKnb0eH1jfvM3umcMqGRHVjyI1djymfbFM636U
+	 e+NxK9xaE1lDezd5V7XktVtYH8FcIFuCzehqCM8LW4PaITOiA9rF6VhmNIlTKa8nCRWi6
+	 ucgdrBq8ya8JRQctYQOcBV6mKZl2TtMem7QeCdJl1N3bLGJhbnavaaAqMwo+sKsY+AXr/
+	 N6lyR+nX9qE2j3aRdvdRoPfDiqFdpOoPdtEb5MoeJzkG3iTlj84bu0sTIisjHQUCk3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JIUSp8QO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rRTdh7fR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1196606A320;
-	Thu, 19 Nov 2026 02:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DA0606A325;
+	Thu, 19 Nov 2026 02:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JIUSp8QO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EFF1F000C4;
-	Thu, 19 Nov 2026 02:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rRTdh7fR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D98C1F000C4;
+	Thu, 19 Nov 2026 02:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056688;
-	bh=GJsCBZc5Jqc+OO5eCC9ghyto9c2siSeDKpJNRid6xO8=;
+	s=korg; t=1795056691;
+	bh=Wabo9XHZsbENZpFQUx6QwbrR/rmZd37ySoXw80X4jmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JIUSp8QOwo2aekkSa46wXyH1LNZwEIVERwTME+XiD3HUqE99qvFQ+4/ucgbx73mMu
-	 ItcyGTXJu1KYXHrFMnvgGka4QpWid8z0n652jZf5+6lDYVYtPWD/uXW8ZHT6TSJbHU
-	 UsATrdriV3L2Cyq0Nw4xM5Z6BqDwkxmC2HmedGNI=
+	b=rRTdh7fRHRRTk21lf2G6d8Zmza3D4v/HRSU6XcE42/PDlls2DovTCtURn4fygBPKY
+	 b8XDScHBWNwuWpp2N7dH7jZX7Pec4pn4zUQR9Id3likoUn1r3HpJVxt59CX1FwIOZb
+	 3YdoRYO2wHx8LT+1MjG1a9cZDsb+aHymhKkXs2XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Mingming Cao <mmc@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2075/2214] team: reject CAN, IEEE 802.15.4 and 6LoWPAN devices in team_port_add
-Date: Wed, 18 Nov 2026 16:02:31 +0100
-Message-ID: <20261118150133.630674831@linuxfoundation.org>
+Subject: [PATCH 5.15 2076/2214] ibmveth: fix netpoll races with RX replenish
+Date: Wed, 18 Nov 2026 16:02:32 +0100
+Message-ID: <20261118150133.670707257@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,68 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 9043be310c6a4c5e57f7bba4b9870554eac7aa96 ]
+[ Upstream commit 8d9ecac6b96e61d0e6d126c60644829fd9f66952 ]
 
-When the first port has a non-Ethernet type, team_setup_by_port()
-copies port_dev->type to the team device while netdev_priv() of the
-team device still holds a struct team. Several L2 stacks identify their
-devices by dev->type alone and then access type specific data that the
-team driver never sets up:
+ibmveth_poll_controller() runs RX replenish outside NAPI and without
+a lock, racing NAPI's replenish on another CPU. Both can fill the
+same slot, so an skb and its DMA mapping leak and PHYP can write
+into an unmapped buffer. netpoll calls it from netconsole and from
+netpoll-enabled bonds.
 
-- CAN protocols rely on the CAN mid-layer private data (ml_priv)
-- IEEE 802.15.4 code dereferences ieee802154_ptr and the mlme ops in
-  ml_priv
-- the 6LoWPAN netdev notifier writes through lowpan_dev(dev) on
-  NETDEV_DOWN and reads it on NETDEV_UP/NETDEV_CHANGE
+ibmveth_open() also enables NAPI before the RX resources exist.
+ibmveth_change_mtu(), veth_pool_store(), ibmveth_set_csum_offload()
+and ibmveth_set_tso() call close() and open() directly, so while
+open() is still setting up, netpoll and the direct ibmveth_interrupt()
+calls can replenish NULL pools and read freed memory.
 
-Enslaving such a device (e.g. vxcan, wpan0, lowpan0) therefore leads to
-NULL pointer dereferences or to writes into struct team.
+Remove the callback, as Eric Dumazet did for many drivers after
+commit ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional"),
+including ibmvnic in commit 0c3b9d1b37df ("ibmvnic: remove
+ndo_poll_controller"). netpoll then polls NAPI itself with budget 0.
+napi->poll_owner serializes that with NAPI, but not with a NAPI poll
+that was already running when netpoll was set up, so skip RX
+replenish at budget 0, which netpoll uses for TX only. TX completes
+synchronously, so ibmveth_poll() has nothing else to do for netpoll.
 
-This is the same problem that syzbot reported for the bonding driver
-with a vxcan device enslaved to a bond master, which crashed in
-can_rx_unregister() and was fixed by commit 8ba68464e478 ("bonding:
-refuse to enslave CAN devices"). The team driver has the same gap.
+Enable NAPI just before request_irq(), once everything
+ibmveth_poll() touches exists.
 
-Reject ARPHRD_CAN, ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR and
-ARPHRD_6LOWPAN devices in team_port_add().
+Found in review of the ibmveth multi-queue RX series and confirmed by
+code inspection of poll_one_napi() and the direct close()/open()
+callers; neither race was reproduced. Tested on a POWER10 LPAR with
+netconsole over ibmveth: a ping flood (678,470 packets, no loss) during
+a printk flood, and MTU changes and buffer pool toggles under traffic,
+with no warnings. No kernel selftests cover ibmveth.
 
-Link: https://lore.kernel.org/all/b58d98e0-8fe3-4e4e-b8a5-c1c7e647ccca@hartkopp.net/
-Link: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95 # bonding splat
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261019155407.61487-1-socketcan@hartkopp.net
+Fixes: 6b4223748895 ("[PATCH] ibmveth: Add netpoll function")
+Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Link: https://patch.msgid.link/20261013182926.30417-2-mmc@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/ethernet/ibm/ibmveth.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 8c9b56c40f702..64f8215fc2f16 100644
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -1164,6 +1164,17 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index 4e2b9e0eeaa28..f09d19f6f8400 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -507,8 +507,6 @@ static int ibmveth_open(struct net_device *netdev)
+ 
+ 	netdev_dbg(netdev, "open starting\n");
+ 
+-	napi_enable(&adapter->napi);
+-
+ 	for(i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
+ 		rxq_entries += adapter->rx_buff_pool[i].size;
+ 
+@@ -591,10 +589,18 @@ static int ibmveth_open(struct net_device *netdev)
+ 		}
  	}
  
-+	if (port_dev->type == ARPHRD_CAN ||
-+	    port_dev->type == ARPHRD_IEEE802154 ||
-+	    port_dev->type == ARPHRD_IEEE802154_MONITOR ||
-+	    port_dev->type == ARPHRD_6LOWPAN) {
-+		NL_SET_ERR_MSG(extack,
-+			       "CAN, IEEE 802.15.4 and 6LoWPAN devices can't be added as a team port");
-+		netdev_err(dev, "Device %s is CAN, IEEE 802.15.4 or 6LoWPAN. These device types can't be added as a team port\n",
-+			   portname);
-+		return -EINVAL;
-+	}
++	/* NAPI can run as soon as it is enabled, from netpoll during the
++	 * direct close()/open() pairs or from a direct ibmveth_interrupt()
++	 * call, so enable it only once everything ibmveth_poll() touches
++	 * exists.
++	 */
++	napi_enable(&adapter->napi);
 +
- 	if (netif_is_team_port(port_dev)) {
- 		NL_SET_ERR_MSG(extack, "Device is already a port of a team device");
- 		netdev_err(dev, "Device %s is already a port "
+ 	netdev_dbg(netdev, "registering irq 0x%x\n", netdev->irq);
+ 	rc = request_irq(netdev->irq, ibmveth_interrupt, 0, netdev->name,
+ 			 netdev);
+ 	if (rc != 0) {
++		napi_disable(&adapter->napi);
+ 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
+ 			   netdev->irq, rc);
+ 		goto out_free_buffer_pools;
+@@ -651,7 +657,6 @@ static int ibmveth_open(struct net_device *netdev)
+ out_free_buffer_list:
+ 	free_page((unsigned long)adapter->buffer_list_addr);
+ out:
+-	napi_disable(&adapter->napi);
+ 	return rc;
+ }
+ 
+@@ -1411,7 +1416,11 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
+ 		}
+ 	}
+ 
+-	ibmveth_replenish_task(adapter);
++	/* netpoll polls with budget 0 for TX only, and is not serialized
++	 * with a NAPI poll that was already running when it was set up
++	 */
++	if (budget)
++		ibmveth_replenish_task(adapter);
+ 
+ 	if (frames_processed < budget) {
+ 		napi_complete_done(napi, frames_processed);
+@@ -1549,14 +1558,6 @@ static int ibmveth_change_mtu(struct net_device *dev, int new_mtu)
+ 	return -EINVAL;
+ }
+ 
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-static void ibmveth_poll_controller(struct net_device *dev)
+-{
+-	ibmveth_replenish_task(netdev_priv(dev));
+-	ibmveth_interrupt(dev->irq, dev);
+-}
+-#endif
+-
+ /**
+  * ibmveth_get_desired_dma - Calculate IO memory desired by the driver
+  *
+@@ -1656,9 +1657,6 @@ static const struct net_device_ops ibmveth_netdev_ops = {
+ 	.ndo_validate_addr	= eth_validate_addr,
+ 	.ndo_set_mac_address    = ibmveth_set_mac_addr,
+ 	.ndo_features_check	= ibmveth_features_check,
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-	.ndo_poll_controller	= ibmveth_poll_controller,
+-#endif
+ };
+ 
+ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
 -- 
 2.53.0
 
