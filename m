@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018109;
-	b=PpE2KnGmiFgTgnuyOE72ZME/9FO8E9QFlOhmYbjnjiG3j4MSY9SUT18/NnenvYZlAXUR
-	 wxtzUyDYDxJQwB1JlMIHuqChzcuteZbekhAq+onKvHqFRpLGXvUUiwuxPdYqa5FtuAgOg
-	 lTEph73x811yZliaQNG72Z8Xme+6REsZVOfDwLK2K8EMEhKB9T+bF7vB4oSOgXaawY81J
-	 nZh20fChIPfqamm1mbwJBr7L/HanBL601lUS5NC+93WPTdjEK7wm054Y6JZfF73iAmWht
-	 MBYj+Ngdb/TH3PAIOYAC+DVzw0vVDc/D/9dklVdSQeLJzASsCWcuiPV8SZAHMWW6YTA==
+	t=1795018112;
+	b=TqeSxvy0Ra9eBwO+HA2RIybW+561zHaMzs0LfEZ+58oAXrQREbDb+BlJS6FJAF+bOovD
+	 f9zf3mRXGFSXobK5XJxFhWSc2TER5/08UpLoqwIjEBACa4jPLOs/rAqTQLlOC0nT5oOJO
+	 GOVFzOu4P3IS+jpl+m3NfZtM1hAnaIwzyKvZe8FkSzfdYxR5JWmqE0Wr2ZmIGH5wDBM7j
+	 ixOchjbFolX8DRAsL0XuwGwHcgFHF7uExyjH9DB0rSAcrKtexS0ILzzwJxAwfSp0SHzv6
+	 9GVuvbks3Wx/CBY9KBXewaMsfsKBE3Eopg3U5NPLVLW9mlQ0O6GK8s0Nq2hpgYmwEVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018109;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=vc6UyAY1k+MTlC4NFr9kUP6gGIhqK0aVFkIFNF//cMU=;
-	b=O2QZ0yiLO+vvgTF7e/Wv392LfxNiIVKcRu+5byQt4Ns7eCiyEw3IaPaHvWNxoPNs93Vp
-	 DZKKqrQPE1qDeEXeW6A/WanNUOKwH/E/u7qcW1mx95nA5lH1oY5ZL2rNXfPMgU+3qo8N5
-	 T8wktDMFqIBHwSlDx3B3fKrQ5Y+BC2vFYZ2Fur/5x8CMC9c5gZx6dHtJQDIjWmJOV8DMW
-	 HEsM5GOOhISWdQMjnoTwnkH9MW8c2S1R2L9P7bZxOtyasiVW/lS6+fgJfKrgFvwFtIQQv
-	 tjnpeVo/KucjIGC4ogaRRHTurHv9T226BsKK8J9EK+FCGJIfK3XytBav6q0Nrj0Krlg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=uPJrXbP5tAakm1dKbzZ/tXuVfgpWyrnhas8X8BrXAsc=;
+	b=qZYLhlw4yaV3ErweW5rEJEDRKpooheTwGkhmtTxM+v9cC/hrCayEOm6lEHLaqqd2b5lH
+	 eL1I5Nz1wKJmh+y8k3w5BREBP+i1ExJGXBgYau3rr+52/1BNYoVO3iDa/UqXsLeSaLCXA
+	 /rIMntUpHM95wg1f3bZdrUCNMst0oZHoN7ffrFDkBV0afMOcBlyeWGNZHUtCWNnTlmHgc
+	 SirciqjCvjR8Vi5Fcq6H3F/0dyGfQ+pVmJfpXF+p7DCgUUKOcz1hwMtP6c+wr+Rq0l8Rs
+	 So9PVdBlqCFyDtp8sLF868wxFDf0a0xV8k/EOSj+iZmusuKZtBxtA+3v8TQJFQm7geQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zQYx/COI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rkd8CCa8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC40B60A261D;
-	Wed, 18 Nov 2026 16:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7F6606A335;
+	Wed, 18 Nov 2026 16:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQYx/COI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F2A1F000C5;
-	Wed, 18 Nov 2026 16:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rkd8CCa8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAE81F000C4;
+	Wed, 18 Nov 2026 16:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018109;
-	bh=vc6UyAY1k+MTlC4NFr9kUP6gGIhqK0aVFkIFNF//cMU=;
+	s=korg; t=1795018112;
+	bh=uPJrXbP5tAakm1dKbzZ/tXuVfgpWyrnhas8X8BrXAsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zQYx/COIxcp8d9zcjyWMZ0mblD1z0M+op2gDGY05LCGY37Z+NaauMk2YPRVKJbvqY
-	 Mon1cOJM4zplNiLKKV4kOIPreY5KdRj3NMSvSdjkPGXM8Bswe2rMXQ4DhyraHZL2yM
-	 eDG/VxtiDlhdA986PLjA8GNxiYBxhuhehSHqdy4c=
+	b=Rkd8CCa8OX2iefK+HQVRcECwuMlak6VZ9dA7NWIpikfuuvZ95lJxO3e7egpt7X5Zi
+	 48EEV5yeUZTQBsI+F/J01ah6xdrYB4tRQyZ9ybg5UuE+Qd1qBz8OekVVKhnrsfhy0D
+	 CvO93qv3kS7y2wJOU3XCKPauRMYvqRDvW4+ke7NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Namhyung Kim <namhyung@kernel.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1124/2651] perf trace: Copy sockaddr arguments by their length
-Date: Wed, 18 Nov 2026 15:39:24 +0100
-Message-ID: <20261118150328.475146949@linuxfoundation.org>
+Subject: [PATCH 7.3 1125/2651] perf thread_map: Add thread_map__tgid()
+Date: Wed, 18 Nov 2026 15:39:25 +0100
+Message-ID: <20261118150328.512834695@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,7 +63,6 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
@@ -71,88 +71,134 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1c443dfc3202048b2cb1d3c2534b39b28701e929 ]
+[ Upstream commit 1fdf657871b9240edcaaf1d15caaac5b78a84317 ]
 
-The BTF augmenter copies sizeof(struct sockaddr), 16 bytes, for the
-sockaddr arguments of connect, bind and sendto, and runs before the
-sys_enter_connect and sys_enter_sendto programs that copy their length.
-An IPv6 address needs 24 or 28 bytes, so the rest was read from past the
-payload, and now that the printers are bounded only its family is shown.
+bpf-filter reads the tgid of each thread in a thread map from /proc, to
+key its BPF map by process, and perf trace is about to do the same. Move
+convert_to_tgid() to thread_map.c as thread_map__tgid(), taking the
+thread map and index both users have.
 
-Copy them as buffers sized by the length argument after them, up to the
-32 bytes augmented buffers are limited to. That holds an IPv6 address
-and doubles the AF_LOCAL path shown.
+While moving it, fix two bugs. Match Tgid: at the start of a line, as a
+task can set its comm, shown on the Name: line before it, to contain
+"Tgid: <n>". And check the character after the number before freeing the
+buffer it points into, rather than after.
 
-Committer testing:
-
-Is using BPF:
-
-  root@x2:~# strace -e bpf perf trace -e connect,bind |& head -5
-  bpf(BPF_TOKEN_CREATE, {token_create={flags=0, bpffs_fd=12}}, 8) = -1 EOPNOTSUPP (Operation not supported)
-  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3054260, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0}, 148) = 12
-  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3054390, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0, fd_array_cnt=0, signature=NULL, signature_size=0, keyring_id=0}, 168) = 12
-  bpf(BPF_PROG_LOAD, {prog_type=BPF_PROG_TYPE_SOCKET_FILTER, insn_cnt=2, insns=0x7ffea3053f80, license="GPL", log_level=0, log_size=0, log_buf=NULL, kern_version=KERNEL_VERSION(0, 0, 0), prog_flags=0, prog_name="libbpf_nametest", prog_ifindex=0, expected_attach_type=BPF_CGROUP_INET_INGRESS, prog_btf_fd=0, func_info_rec_size=0, func_info=NULL, func_info_cnt=0, line_info_rec_size=0, line_info=NULL, line_info_cnt=0, attach_btf_id=0, attach_prog_fd=0, core_relo_cnt=0, fd_array=NULL, core_relos=NULL, core_relo_rec_size=0, log_true_size=0, prog_token_fd=0}, 148) = 12
-  bpf(BPF_MAP_CREATE, {map_type=BPF_MAP_TYPE_ARRAY, key_size=4, value_size=4, max_entries=1, map_flags=BPF_F_MMAPABLE, inner_map_fd=0, map_name="libbpf_mmap", map_ifindex=0, btf_fd=0, btf_key_type_id=0, btf_value_type_id=0, btf_vmlinux_value_type_id=0, map_extra=0, value_type_btf_obj_fd=0, map_token_fd=0, excl_prog_hash=NULL, excl_prog_hash_size=0}, 92) = 12
-  root@x2:~#
-
-And btf:
-
-  root@x2:~# strace -e openat perf trace -e connect,bind |& grep "/sys/kernel/btf/vmlinux"
-  openat(AT_FDCWD, "/sys/kernel/btf/vmlinux", O_RDONLY) = 12
-  ^C
-  root@x2:~#
-
-And copying the sockaddr parameters according to its addrlen or the cap
-in the augmented bpf, that probably needs to be a bit bigger for local
-sockets:
-
-  ⬢ [acme@toolbx perf-tools-next]$ echo -n /var/run/.heim_org.h5l.kcm-soc | wc -c
-  30
-  ⬢ [acme@toolbx perf-tools-next]$ ls -la /var/run/.heim_org.h5l.kcm-socket
-  srw-rw-rw-. 1 nobody nobody 0 Sep 14 23:13 /var/run/.heim_org.h5l.kcm-socket
-  ⬢ [acme@toolbx perf-tools-next]$
-
-  root@x2:~# perf trace -e connect,bind --max-events 10
-       0.000 ( 0.717 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-       3.733 ( 0.059 ms): pool-0/29901 connect(fd: 10, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-       8.859 ( 0.054 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-      10.880 ( 0.053 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-    1225.303 ( 0.081 ms): systemd-resolv/103685 connect(fd: 30, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
-    1226.000 ( 0.046 ms): systemd-resolv/103685 connect(fd: 31, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
-    1371.972 ( 0.055 ms): systemd-resolv/103685 connect(fd: 27, uservaddr: { .family: INET6, port: 53, addr: fd55:6f31:c26b::1, scope_id: 4 }, addrlen: 28) = 0
-    1382.266 ( 0.260 ms): Socket Thread/2663038 connect(fd: 178, uservaddr: { .family: INET, port: 443, addr: 186.192.83.34 }, addrlen: 16) = -1 (unknown) (Operation now in progress)
-    5003.508 ( 0.063 ms): pool-0/29901 connect(fd: 9, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-    5007.007 ( 0.054 ms): pool-0/29901 connect(fd: 10, uservaddr: { .family: LOCAL, path: /var/run/.heim_org.h5l.kcm-soc }, addrlen: 110) = 0
-  root@x2:~#
-
-Fixes: a68fd6a6cdd309bb ("perf trace: Collect augmented data using BPF")
+Fixes: eb1693b1150d4b99 ("perf bpf-filter: Split per-task filter use case")
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
 Assisted-by: Antigravity:gemini-3.1-pro
 Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/perf/util/bpf-filter.c | 29 ++---------------------------
+ tools/perf/util/thread_map.c | 26 ++++++++++++++++++++++++++
+ tools/perf/util/thread_map.h |  1 +
+ 3 files changed, 29 insertions(+), 27 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 45b1e58c4b8e7..521f620dbd9dd 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -4081,7 +4081,12 @@ static int trace__bpf_sys_enter_beauty_map(struct trace *trace, int e_machine, i
- 				continue;
+diff --git a/tools/perf/util/bpf-filter.c b/tools/perf/util/bpf-filter.c
+index bcd81084e3420..72e83ac1d6a4b 100644
+--- a/tools/perf/util/bpf-filter.c
++++ b/tools/perf/util/bpf-filter.c
+@@ -56,6 +56,7 @@
+ #include "util/debug.h"
+ #include "util/evsel.h"
+ #include "util/target.h"
++#include "util/thread_map.h"
+ #include "util/bpf-utils.h"
  
- 			bt = sc->arg_fmt[i].type;
--			beauty_array[i] = bt->size;
-+			/* Copy a sockaddr as a buffer sized by the next argument, e.g. addrlen. */
-+			if (strcmp(name, "sockaddr") == 0 && field->next &&
-+			    strstr(field->next->name, "len"))
-+				beauty_array[i] = -((i + 1) + 1);
-+			else
-+				beauty_array[i] = bt->size;
- 			can_augment = true;
- 		} else if (field->flags & TEP_FIELD_IS_POINTER && /* string */
- 			   strcmp(field->type, "const char *") == 0 &&
+ #include "util/bpf-filter.h"
+@@ -202,31 +203,6 @@ static int get_filter_entries(struct evsel *evsel, struct perf_bpf_filter_entry
+ 	return 0;
+ }
+ 
+-static int convert_to_tgid(int tid)
+-{
+-	char path[128];
+-	char *buf, *p, *q;
+-	int tgid;
+-	size_t len;
+-
+-	scnprintf(path, sizeof(path), "%d/status", tid);
+-	if (procfs__read_str(path, &buf, &len) < 0)
+-		return -1;
+-
+-	p = strstr(buf, "Tgid:");
+-	if (p == NULL) {
+-		free(buf);
+-		return -1;
+-	}
+-
+-	tgid = strtol(p + 6, &q, 0);
+-	free(buf);
+-	if (*q != '\n')
+-		return -1;
+-
+-	return tgid;
+-}
+-
+ /*
+  * The event might be closed already so we cannot get the list of ids using FD
+  * like in create_event_hash() below, let's iterate the event_hash map and
+@@ -407,14 +383,13 @@ static int create_idx_hash(struct evsel *evsel, struct perf_bpf_filter_entry *en
+ 	last = -1;
+ 	nr = perf_thread_map__nr(threads);
+ 	for (int i = 0; i < nr; i++) {
+-		int pid = perf_thread_map__pid(threads, i);
+ 		int tgid;
+ 		struct idx_hash_key key = {
+ 			.evt_id = event_id,
+ 		};
+ 
+ 		/* it actually needs tgid, let's get tgid from /proc. */
+-		tgid = convert_to_tgid(pid);
++		tgid = thread_map__tgid(threads, i);
+ 		if (tgid < 0) {
+ 			/* the thread may be dead, ignore. */
+ 			continue;
+diff --git a/tools/perf/util/thread_map.c b/tools/perf/util/thread_map.c
+index 48c70f149e920..918ab31802320 100644
+--- a/tools/perf/util/thread_map.c
++++ b/tools/perf/util/thread_map.c
+@@ -395,3 +395,29 @@ int thread_map__remove(struct perf_thread_map *threads, int idx)
+ 	threads->nr--;
+ 	return 0;
+ }
++
++/* The tgid of the thread at idx, read from /proc, or -1 if it has exited. */
++pid_t thread_map__tgid(struct perf_thread_map *threads, int idx)
++{
++	char path[128];
++	char *buf, *p, *q;
++	pid_t tgid;
++	size_t len;
++
++	snprintf(path, sizeof(path), "%d/status", perf_thread_map__pid(threads, idx));
++	if (procfs__read_str(path, &buf, &len) < 0)
++		return -1;
++
++	/* From a line start, as the Name: line before it can contain "Tgid:". */
++	p = strstr(buf, "\nTgid:");
++	if (p == NULL) {
++		free(buf);
++		return -1;
++	}
++
++	tgid = strtol(p + 6, &q, 0);
++	if (*q != '\n')
++		tgid = -1;
++	free(buf);
++	return tgid;
++}
+diff --git a/tools/perf/util/thread_map.h b/tools/perf/util/thread_map.h
+index fc16d87f32fb8..d700a22b7ae46 100644
+--- a/tools/perf/util/thread_map.h
++++ b/tools/perf/util/thread_map.h
+@@ -24,4 +24,5 @@ size_t thread_map__fprintf(struct perf_thread_map *threads, FILE *fp);
+ void thread_map__read_comms(struct perf_thread_map *threads);
+ bool thread_map__has(struct perf_thread_map *threads, pid_t pid);
+ int thread_map__remove(struct perf_thread_map *threads, int idx);
++pid_t thread_map__tgid(struct perf_thread_map *threads, int idx);
+ #endif	/* __PERF_THREAD_MAP_H */
 -- 
 2.53.0
 
