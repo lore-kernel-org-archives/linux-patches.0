@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026465;
-	b=TfcOvjnhOeecOsrACzu2UsC2dD1SeP9KompGhtih4cXsra7wUgsV6NjOH5tDm9O0j6Tx
-	 yXFKRwXbBqos03517DZ87aBfZpO4IaTadFusem70th1nqYrFFcn2+REFTdtYJXoHXJNXl
-	 WFKdLv/03oVSj8mL7kT6xRdt2p31cyxrnwm4ParyugjAvLdHSVg1GTRWEKQ75gdJKTqc+
-	 UgYWk++/5EofJh4KVZkekLebVCCQ4Y5vGkbGw4NG5OYcdwqcBc+UycXXZyOmSh2jALH7w
-	 zGBEHvF7Z/elEuHTuSS2sknFNcdT7CSnq/VB9XtKa1RtMCiYPqNCgoslXHYxnf6fEsw==
+	t=1795026468;
+	b=3jkSmfP9mgOmi+9EqP5yNqaTK1+BtbTIZmbFhdxbDtxUge9EVvxj/hpOI6zxFNZmGaHg
+	 xXJ7sWVRjLE2pZBx4+6249eVx/ySvpBaDLmJyzrXLUZ/YyLQIth1vUKeSPt4L6VNTpJz5
+	 3tgL6tHyudz25EwQiwLCj7jSZA7dm3ejkFO27rmAhy0k0tXS1i+kQpeb2ehqYSLqZ1VPH
+	 vDiJB9zFY5sGN39pziLNWyB70lmZmDTPol4acwNCCyaWrhPx6M5P1wa2bRKPwN8maIhB8
+	 3Xnv3u53nlOHQ9iyVfABBrwlDRb12f8GSHCnF6d4Q7Svic57cCh7sqOQS+WwYL28glQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FnxG4R7DZNeGIy+5feNN5SUlUi1OnGnssg39BKFp7gE=;
-	b=G0Y5KFWH1GwzAc27G4RL+ZqoOwE5o9YbbJHDHeUNX+BuErDHF1w/BC4H6ITqzshFSaLe
-	 DtWXW2kutesW7fiLEVXSrBS0S5lDU+yxzISbA+6QN77U1+nwyLhsnQdfZpfDUW94EQ+Dq
-	 tfIM3UqXDV1gVjWszSI6TMnTpwsj/o3PfFeZ8rup3mCHhe5pO6dNnu/TUf1fNp/goEJHy
-	 gOv8+PcD/I8/VRhPrUp5US9w17p/M8RuINaF746ZfKgbss3OdBhNwQ/tSW6POzog5G1ap
-	 YPfr797+ID8/dG36XXWPqy1TnUC+OK7/2KEmVlF0Rnn1L9omlFuao9iiClfF6ilWOcg==
+	bh=nVYMbaFHSQBtwiRzreS+L44udAU924apXxOmOLEPyA0=;
+	b=Wq/k1012f1PmpAaHCbxCL8YCSSjTuJ9+SZ2iVHw5zZUDUvw/9g0kwOu2cPrOyQoykcmj
+	 05Ze/kSCYS+Dp6Q5BRleISCtmXf380WUBdvy+PF+K8lNZUaI40b7Z40hPHJz33XhPEZ84
+	 bIJ3Q4lkIYSwGi51OPiKvfD0JNvGDDp1Yg/6zxVpAFMQiYS7/mJjZjm8yw4Xjolq+e+MQ
+	 3Inf9lut+xYCkEiH/gjTt0nbOKLzd1/97eKoDwP6wAZGOSdgXVl4gReZm9SiB0v8Np2r0
+	 K2TuSGiLBtyPMov7Ro94YlcU6YKv9+MzZJj9m/njjOQwganQWxhelXV2Aqtl/CAYMpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qX0RKu2e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPzOh7wL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D6E606A325;
-	Wed, 18 Nov 2026 18:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C02A606A325;
+	Wed, 18 Nov 2026 18:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qX0RKu2e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89981F000C5;
-	Wed, 18 Nov 2026 18:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPzOh7wL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07A71F000C4;
+	Wed, 18 Nov 2026 18:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026465;
-	bh=FnxG4R7DZNeGIy+5feNN5SUlUi1OnGnssg39BKFp7gE=;
+	s=korg; t=1795026468;
+	bh=nVYMbaFHSQBtwiRzreS+L44udAU924apXxOmOLEPyA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qX0RKu2eEJaoCJWPj1s68Rr7RgTMmdmWNd6F8GqJZOzCLrKxxbPLCj0rcgAq4Dd2w
-	 dwcBHuDH31gJAin3ahha2DlnbrxOYr9HNdhIPHxNAl6B5DQ0Amv2jiz6z1xFAJzrXe
-	 OvKZEEoC7eyd1+uje1BPxdJ12dk9KFd6C/wB10T4=
+	b=SPzOh7wLW70Gsftm+VsBS4L12+ik5k/sDMAuIC7LQLE/RxcREV0VowkAtHSuLsOaN
+	 kv2yNcSYZraFQhWXukACMRXUb/+v3qJZ8kDBOheTK84K0uXobogchRZry+OgW/OgC6
+	 pNbxKwMmFk6vB76JUjMZeg+jMn/iqAaAkcFjPuCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingxuan Guo <gmx472@qq.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1445/2151] firmware: cs_dsp: clear dsp->running on the cs_dsp_run() error path
-Date: Wed, 18 Nov 2026 15:53:00 +0100
-Message-ID: <20261118150214.567647646@linuxfoundation.org>
+Subject: [PATCH 6.18 1446/2151] ASoC: amd: acp: Fix .close() being skipped on rollback
+Date: Wed, 18 Nov 2026 15:53:01 +0100
+Message-ID: <20261118150214.601520839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,52 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingxuan Guo <gmx472@qq.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit ad6be54d13496a0b5c6d1edeea99504e438cdb7a ]
+[ Upstream commit 2c3400aa9f397da48a6760f5e84438973e01a00c ]
 
-cs_dsp_run() sets dsp->running = true once the core has been started, but
-the error path below it only stops and disables the core, leaving the flag
-set.  The first thing that can fail after that point is the post_run client
-hook, and it is reachable in mainline: wm_adsp registers
-wm_adsp_event_post_run(), which can fail in wm_adsp_buffer_init().
+snd_pcm_hw_constraint_integer() may return 1, which is then returned
+from acp_dma_open(). ASoC only marks the component as opened when
+.open() returns 0, so .close() can be skipped on rollback.
 
-The core is then stopped and disabled, but dsp->running still reads true,
-and that stale state is acted on elsewhere: cs_dsp_coeff_write_ctrl() and
-cs_dsp_coeff_read_ctrl() talk to the DSP when ctl->dsp->running is set, and
-client drivers use the flag to decide whether the firmware is up (cs35l41
-checks cs_dsp.running before its early events and on hibernate/resume).
+Return 0 explicitly on success.
 
-The flag cannot simply be moved below the hook: post_run hooks such as
-wm_adsp_event_post_run() read controls while they run, and
-cs_dsp_coeff_read_ctrl() only goes to the DSP when the flag is set.
-
-Clear the flag on the error path, before the core is stopped - the order
-cs_dsp_stop() already uses.
-
-Fixes: f6bc909e7673 ("firmware: cs_dsp: add driver to support firmware loading on Cirrus Logic DSPs")
-Signed-off-by: Mingxuan Guo <gmx472@qq.com>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/tencent_B839C5A92D762B5717B9637A5CFA0841C608@qq.com
+Fixes: 623621a9f9e1 ("ASoC: amd: Add common framework to support I2S on ACP SOC")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261008103831.542533-2-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/amd/acp/acp-platform.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index 7ca56777a1da5..15710c97f9fb0 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -2911,6 +2911,8 @@ int cs_dsp_run(struct cs_dsp *dsp)
- 	return 0;
+diff --git a/sound/soc/amd/acp/acp-platform.c b/sound/soc/amd/acp/acp-platform.c
+index b25ac5612808c..861411c4a75c5 100644
+--- a/sound/soc/amd/acp/acp-platform.c
++++ b/sound/soc/amd/acp/acp-platform.c
+@@ -248,7 +248,7 @@ static int acp_dma_open(struct snd_soc_component *component, struct snd_pcm_subs
+ 	list_add_tail(&stream->list, &chip->stream_list);
+ 	spin_unlock_irq(&chip->acp_lock);
  
- err:
-+	dsp->running = false;
-+
- 	if (dsp->ops->stop_core)
- 		dsp->ops->stop_core(dsp);
- 	if (dsp->ops->disable_core)
+-	return ret;
++	return 0;
+ }
+ 
+ static int acp_dma_hw_params(struct snd_soc_component *component,
 -- 
 2.53.0
 
