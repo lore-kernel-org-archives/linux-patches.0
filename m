@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048311;
-	b=XVQHzo+YcvW9ocRL5xdm0ID4f6ln97WwD2kugIdToIfwMFu8ad0pZQ4dEnvch3z9S1Gw
-	 b7AjZXHv6neG6QJHS522imJKiePD6zCeN/1WXRmA6Fke7tWueceH7xb7Se4wZYtmP0ttn
-	 TAIUU+LEFe6bIza+YX4Yc/Y71Ik1R3Vtt6QWQs6hStXjE56KOTRIsOdRSbejlZf9WIVjv
-	 UMQnQVnmNzw+9QdTNRuoZhcCWeGrvS8tm++hvcelBB37gdSajhwRVRvpLtgJPaWhXG2Wk
-	 biYamhPInHciGLUQ3GnqHWWr28u6Thg2hHWo7j0Dpfo04V8daH9ytM/jUddbzrwDZ2A==
+	t=1795048314;
+	b=eVHU9SOl2hVFCYeNboPyIVldp+axHj0eOkLyExMFFXphyPT6T4bwX4hEYoyWhjF+iiT9
+	 ai1lgpwUC/7/aJ+3wtpKK/U6RMPixBtsHliBoX4SIU9SGqhh2hKLnIojUS34F1kSbmvJn
+	 0Ax/WKYDT0r5dnsn/XiAeiFvweqRsTB1AfTZxhN5+sQxdq/iYLTK4yN1K46Nknj11BPGN
+	 ddMaUwd4xhhH6trVqRQX3k3CNB5/B8/FBfHgFuz9hSYI+H45rMN1zoisUPiG2bI49JUc6
+	 cvalZFKlKIt56oWrx+DulhUqa13T9kJkKWAlBAvxcrL434LRVM5UALEHok7acLaHnsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RMLXCSc/kbXYGcF2NO/tZaJ/fqof+SGOkKruTlu9YH8=;
-	b=22k2zg0wqP1zoa6dKar2uHczWNcdF0/O6nbyCwdypErdHCk2SakNs1cI7nUIqXuV2UUB
-	 kn/SKmSETSKQ4QPzqFp5nVSeuCylZmxS3+jDx+KxkfCbxudS1rMcXV9vKWPzo9Kv1yaIq
-	 4kb6GZxcb/Z8EEMYG0ldNLe2jgLi0BSdklX14gJMu+5eW8JKIjhvxlT9kVYSvyUo0ZJsH
-	 ia6EK64Z2Uws8zGvBIWOGGAAHY/vCSxQJ0h29WcoZtK7/SQ1f2GWS7/8QlRyj9n++n92u
-	 FzdyEffU3I2D1O0O0Vu671CZ0KNq7LkUhH9txRoy6CtML7+FkRgO4nAm408UiYXcGgg==
+	bh=xHQ1FDfjOgqQZiaznE6yFI+0r1kPpm5GlV01z4ey/3Q=;
+	b=UQxlg4bXj2wpAgsW9Bah0cPKiANI+Qb2jnK5S/Ic8085vk9Md/vDmk5vAl4gG6Ano0kW
+	 /ll1rNyq8aVUypEOtqlIbtqcRUMSiDR8zGVVbdwhUYf1TeDSCb3dn47oNSFxq+HaN9PO7
+	 aY+dqhZOA1KGrKo926O36C9FTEtLe9EECVrDTzz+PR1eF1sd/7lyJ8bcgyBJisovBfOAF
+	 MNGoF28Pw8JPMRuGVzNlS8n7nJfV1SAAs7j3dIQZrbBs1SpNiAqa5lJkEL41PZgs2NHH2
+	 7keWTfq1LUYWMX3a73CpPslzayQarzOiT6xq0gBNA6SLbRa4+QIuGSza5DZnq5TabSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KPimhP0/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syTTJmod;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758CE606A32A;
-	Thu, 19 Nov 2026 00:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013CF606A32F;
+	Thu, 19 Nov 2026 00:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPimhP0/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D10D1F000C4;
-	Thu, 19 Nov 2026 00:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=syTTJmod
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B191F000C4;
+	Thu, 19 Nov 2026 00:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048311;
-	bh=RMLXCSc/kbXYGcF2NO/tZaJ/fqof+SGOkKruTlu9YH8=;
+	s=korg; t=1795048313;
+	bh=xHQ1FDfjOgqQZiaznE6yFI+0r1kPpm5GlV01z4ey/3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KPimhP0/bsEWbcGSpCa7hGGYIu71ApK0AbQYtFKFnApFLzETmvwh7UVlbGSvC/9wT
-	 jv7FK1fjQknTwauXJARJE+t1pQDc6mQVhpPoQBMbiyXSTaJB/UrQA8DFE1OuVbamJT
-	 CV1gVNeDbqem4pgvaHG+JZKhlejDU0lX+RrKT8fE=
+	b=syTTJmodm0xDLeUUnu3K0OxLjL2SQBta3KBey1CzNZQmQtgw6ex681q1cWvSDz8BO
+	 DUxNrhHRuYaNWOOTZOBDVh8VMvzA+3Ra2GnicW6P0JCTP5e3hFr8oWmD2gi50v/aKn
+	 /gjXgCTMOiT6B3lPH4PT23MMt+J56a8AhZ9T/4Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1908/2857] x86/svm: Avoid sign extension of SVM_EVTINJ_VALID in 64-bit expressions
-Date: Wed, 18 Nov 2026 15:49:02 +0100
-Message-ID: <20261118150309.918583592@linuxfoundation.org>
+Subject: [PATCH 6.1 1899/2857] firewire: cdev: Fix FW_CDEV_IOC_CREATE_ISO_CONTEXT references in kernel-doc
+Date: Wed, 18 Nov 2026 15:48:53 +0100
+Message-ID: <20261118150309.615119503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,70 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit c5991239b148d40d4981901968b3a6a838ff517b ]
+[ Upstream commit 0a6cf2b7adcbd362039e9d282f73aff3f24022ca ]
 
-SVM_EVTINJ_VALID is defined as (1 << 31), i.e. as an int with the sign
-bit set. Whenever it is used in a 64-bit expression the int is sign
-extended, so bits 63:32 end up set as well. Two 64-bit users are
-affected.
+The fw_cdev_event_iso_interrupt and fw_cdev_event_iso_interrupt_mc
+comments refer to FW_CDEV_CREATE_ISO_CONTEXT, but the ioctl is named
+FW_CDEV_IOC_CREATE_ISO_CONTEXT.
 
-verify_exception_info() uses the macro as a mask against a 64-bit value
-when it sanity checks hypervisor supplied exception information:
+Correct both references. The misspellings were introduced separately
+with the userspace interface documentation and multichannel reception
+support.
 
-	u64 info = ghcb->save.sw_exit_info_2;
-	...
-	if ((info & SVM_EVTINJ_VALID) &&
-
-The mask is 0xffffffff80000000, so the check also passes when any bit of
-the error code in 63:32 is set while the valid bit itself is clear.
-
-svm_vmgexit_inject_exception() builds the value that KVM hands to an
-SEV-ES guest in GHCB SW_EXITINFO2:
-
-	u64 data = SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_EXEPT | vector;
-
-For vector == X86_TRAP_GP this yields 0xffffffff8000030d instead of
-0x000000008000030d. The field uses the EVENTINJ format, which holds the
-error code in bits 63:32, so KVM asks the guest to inject #GP with an
-error code of 0xffffffff. Linux guests only consume the error code when
-SVM_EVTINJ_VALID_ERR is set, which it is not here, so they are not
-affected in practice, but the value KVM writes is not the one it intends.
-
-Use BIT() instead, as is already done for most single bit definitions in
-this header. Every other user applies the macro to a u32, where the
-resulting bits are unchanged.
-
-Opportunistically give SVM_EVTINJ_VALID_ERR the same treatment, there's
-zero reason to open code BIT().
-
-Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
-Fixes: c3392d0ab714 ("KVM: SVM: Provide helpers to set the error code")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Link: https://patch.msgid.link/20260908053722.3917934-1-nagachaithanya9911@gmail.com
-[sean: use BIT() for SVM_EVTINJ_VALID_ERR as well]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 7ada60e36764 ("firewire: Document userspace ioctl interface.")
+Fixes: 872e330e3880 ("firewire: add isochronous multichannel reception")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260911222807.7673-1-kmehltretter@gmail.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/svm.h | 4 ++--
+ include/uapi/linux/firewire-cdev.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
-index 184fd776cd39f..40fc747d04ba3 100644
---- a/arch/x86/include/asm/svm.h
-+++ b/arch/x86/include/asm/svm.h
-@@ -559,8 +559,8 @@ struct vmcb {
- #define SVM_EVTINJ_TYPE_EXEPT (3 << SVM_EVTINJ_TYPE_SHIFT)
- #define SVM_EVTINJ_TYPE_SOFT (4 << SVM_EVTINJ_TYPE_SHIFT)
- 
--#define SVM_EVTINJ_VALID (1 << 31)
--#define SVM_EVTINJ_VALID_ERR (1 << 11)
-+#define SVM_EVTINJ_VALID	BIT(31)
-+#define SVM_EVTINJ_VALID_ERR	BIT(11)
- 
- #define SVM_EXITINTINFO_VEC_MASK SVM_EVTINJ_VEC_MASK
- #define SVM_EXITINTINFO_TYPE_MASK SVM_EVTINJ_TYPE_MASK
+diff --git a/include/uapi/linux/firewire-cdev.h b/include/uapi/linux/firewire-cdev.h
+index 92be3ea3c6e0b..0d7870249ab55 100644
+--- a/include/uapi/linux/firewire-cdev.h
++++ b/include/uapi/linux/firewire-cdev.h
+@@ -211,7 +211,7 @@ struct fw_cdev_event_request2 {
+ /**
+  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
+  * @cycle:	Cycle counter of the last completed packet
+  * @header_length: Total length of following headers, in bytes
+@@ -271,7 +271,7 @@ struct fw_cdev_event_iso_interrupt {
+ /**
+  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
+  * @completed:	Offset into the receive buffer; data before this offset is valid
+  *
 -- 
 2.53.0
 
