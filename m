@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039454;
-	b=wFboTuutmuiSMKJW/KEwMaMFVuK/iUWHcDtS1eav2pbbBWOgPAjzwmAIxqZn8rKa5pGL
-	 hpkBnu2z0RGxvI3AMMjIYLHsfGmKpAulL87j/udvDwnx5+bJyK1gYBNciIgcJhQYryz9G
-	 CCpLJtThIn7qQXS8qnAp68gTn0kXu6lJQBQ/d42CjiAOJj1iLMy8UPLWq1KVoezyfCYmw
-	 JGfM2BzJzi5UY70JGC8MFhXTZ3K53a11uk8JDsUyqBgt1FJvraLS3m6a2NkTyesStDXo9
-	 3E0ZHDZxzX2/K5oHbgX+VAmUitgpMbPn3j3uco97wUcfLx1tU2yNf5164JQeY5YOTDg==
+	t=1795039456;
+	b=0DwWRDqBh1/StrSTPlttZIots+JJ1++G1l/oOGsLXCr8ksX4FSULhDyG0/+cyJ2fa4P1
+	 yaGw8sJLEjLytmD7P1cVEpJGjBhZL2xcm7B1hpCOuwsV4xhdxcf0fUqjVvKy7IiU73aqO
+	 CSZyP4Kiz1vYHx8ZUL5r+Wko2znCQDimnvD5DRL25rYMlFPNNIKQj3QxY14FS+i5zyqd0
+	 aFK5yZoIFCqG2cr6KqVQz9U06SceHPcEJ7ENvovtYitlrsXMjjsaDRRT3ilSr28vG6AFg
+	 xWZV9Zaw236JOu8OU/COdBJQYFMZEb6Wds5CffeIGetqTUo9p23sAjsvYbGR0PZC8mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039454;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039456;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nugi18hl76pxZFJQhzaanJdLZNfjLyMWdV2ybxxsESY=;
-	b=PWnDTDvNUELJUsGC6lw6iZ1HCby0BF4VQBBBs/HlKkR6yXyoR/RR/y8OxbElUkbR61Jq
-	 i4+FVofJ1oUZ9pNe54yPmlobUl/ssfAywAO4wOnCBvZWNo3GBsOZaVunTmjoum3Q3F2og
-	 8iinLxV4TvRu+opFwzQG61+phwAg6QiSIC5bg1f9MEh0dbPY+mlA+1EiAATkM1oZNjj2c
-	 x/vQObONm1M4PHAx85GTMW7KLwc9l46ESQSAgj8J43KBAduui4lNXer+JEbfo4T7aoJYa
-	 u/s4fx2rd+xMRqJm7ukqnHNkS8z/zlxKYNfchSTbA4oI26fliPzr8Rj700Qhq4yMLiA==
+	bh=doOqPfWekBeARX7hTXjZL3iz6JDSJPkgXOS0DaeVKMw=;
+	b=XClsRbSzNuYAsUnzZvy0eKrZYDNOeyXeuPbju3vXJ+fjZgHMgHIF3S0oIwRurH+zmINo
+	 nEBs1Nbb4OZ3GYEFCEaS/WwSWoZrldGvbF4T5v7Je0+iLCsy9R7Inphm3Vtnm874aQ/qC
+	 wBY88/qGv4phibvi1jx5+oSOLvG/6qezTyU7cZc/1l3x8qt8IWPapTQ5H9zuZXF2Ojl2+
+	 /5086M4i+Cse2rgmDB2l4QXqzg+ADPEWgMZbuy08V9ObDnUITmU+J0M9L6EbCcybIfAtH
+	 KUbuwtLoMTNMrmIDWQCg4onIKtVFtS3AmHv/z1JUFhAMsCi95kXKLnHljMA3v4H3JQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhVO1OZ5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DgUMz392;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44064606A331;
-	Wed, 18 Nov 2026 22:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9806606A31C;
+	Wed, 18 Nov 2026 22:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xhVO1OZ5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6129A1F000C5;
-	Wed, 18 Nov 2026 22:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DgUMz392
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A071F000C5;
+	Wed, 18 Nov 2026 22:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039453;
-	bh=Nugi18hl76pxZFJQhzaanJdLZNfjLyMWdV2ybxxsESY=;
+	s=korg; t=1795039456;
+	bh=doOqPfWekBeARX7hTXjZL3iz6JDSJPkgXOS0DaeVKMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xhVO1OZ59HAnxXKE2okxDOZgSYJqss1ZR15VmwtqKEZ+kR5D497KXt1bxPtPVMgIk
-	 WYDpaBHfW9uf6eb/HONYwxN3fBG0oZlTgmxLkPFtM/u5I9enLQsQr0duK8GgJtCcee
-	 S6YVLCCKspTtn4i3znVxRtxszFXfyCbY6l2XW4RE=
+	b=DgUMz392b8LbSpcrnJjpWAP+MJKKjYLzg55WkHpi5A36F9+MLdR2EGL/Qx0V0caG+
+	 uSxO2XkyfkYnMI0PGLzTEdxbLBG9iRMwcY2BzElULgKNLebWMPc4TIfr1TCHjG1W53
+	 RqKJxVw/77blmbWig+6sYPBJBWFOQZzu5hDe8ETU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2107/3318] wifi: ath12k: Free allocated CE IRQs on request_irq() failure
-Date: Wed, 18 Nov 2026 15:45:29 +0100
-Message-ID: <20261118150425.286700988@linuxfoundation.org>
+Subject: [PATCH 6.6 2108/3318] wifi: ath12k: refactor multiple MSI vector implementation
+Date: Wed, 18 Nov 2026 15:45:30 +0100
+Message-ID: <20261118150425.315479600@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,99 +69,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+From: Kang Yang <quic_kangyang@quicinc.com>
 
-[ Upstream commit 12ca935af2e68447e9218a615ebbb5ff7faf1554 ]
+[ Upstream commit 6711b2a80b9a9bf7d10042a526b1f92a5ba69362 ]
 
-When CE IRQ configuration fails, the driver does not release all IRQs
-that were successfully requested before the failure. This can leak IRQ
-resources during probe failure.
+This is to prepare for one MSI vector support. IRQ enable and disable
+of CE and DP are done only in case of multiple MSI vectors.
 
-Free the previously requested CE IRQs before returning from the error
-path to ensure that partially initialized IRQ resources are properly
-cleaned up during probe failure.
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
 
-Factor out the CE IRQ cleanup into a helper to reuse the cleanup logic
-during both error handling and driver teardown.
-
-Also free CE IRQs when external IRQ configuration fails, before
-returning from the error path.
-
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260819110215.2485514-2-aaradhana.sahu@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231121021304.12966-5-quic_kangyang@quicinc.com
+Stable-dep-of: 9a78703ec4a8 ("wifi: ath12k: Free allocated external IRQs on request_irq() failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 29 ++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/net/wireless/ath/ath12k/pci.c | 48 ++++++++++++++++++++++-----
+ drivers/net/wireless/ath/ath12k/pci.h |  2 ++
+ 2 files changed, 42 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 8db438988ae22..c515bc1421384 100644
+index c515bc1421384..df5469ce498f3 100644
 --- a/drivers/net/wireless/ath/ath12k/pci.c
 +++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -329,6 +329,19 @@ static void ath12k_pci_sw_reset(struct ath12k_base *ab, bool power_on)
- 	ath12k_mhi_set_mhictrl_reset(ab);
+@@ -364,16 +364,30 @@ static void ath12k_pci_free_irq(struct ath12k_base *ab)
+ 
+ static void ath12k_pci_ce_irq_enable(struct ath12k_base *ab, u16 ce_id)
+ {
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+ 	u32 irq_idx;
+ 
++	/* In case of one MSI vector, we handle irq enable/disable in a
++	 * uniform way since we only have one irq
++	 */
++	if (!test_bit(ATH12K_PCI_FLAG_MULTI_MSI_VECTORS, &ab_pci->flags))
++		return;
++
+ 	irq_idx = ATH12K_PCI_IRQ_CE0_OFFSET + ce_id;
+ 	enable_irq(ab->irq_num[irq_idx]);
  }
  
-+static void ath12k_pci_free_ce_irq(struct ath12k_base *ab, int num_ce)
-+{
-+	int i, irq_idx;
-+
-+	for (i = 0; i < num_ce; i++) {
-+		if (ath12k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
-+			continue;
-+
-+		irq_idx = ATH12K_PCI_IRQ_CE0_OFFSET + i;
-+		free_irq(ab->irq_num[irq_idx], &ab->ce.ce_pipe[i]);
-+	}
-+}
-+
- static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
+ static void ath12k_pci_ce_irq_disable(struct ath12k_base *ab, u16 ce_id)
  {
- 	int i, j;
-@@ -345,15 +358,7 @@ static void ath12k_pci_free_ext_irq(struct ath12k_base *ab)
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+ 	u32 irq_idx;
  
- static void ath12k_pci_free_irq(struct ath12k_base *ab)
- {
--	int i, irq_idx;
--
--	for (i = 0; i < ab->hw_params->ce_count; i++) {
--		if (ath12k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
--			continue;
--		irq_idx = ATH12K_PCI_IRQ_CE0_OFFSET + i;
--		free_irq(ab->irq_num[irq_idx], &ab->ce.ce_pipe[i]);
--	}
--
-+	ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
- 	ath12k_pci_free_ext_irq(ab);
++	/* In case of one MSI vector, we handle irq enable/disable in a
++	 * uniform way since we only have one irq
++	 */
++	if (!test_bit(ATH12K_PCI_FLAG_MULTI_MSI_VECTORS, &ab_pci->flags))
++		return;
++
+ 	irq_idx = ATH12K_PCI_IRQ_CE0_OFFSET + ce_id;
+ 	disable_irq_nosync(ab->irq_num[irq_idx]);
  }
+@@ -433,8 +447,15 @@ static irqreturn_t ath12k_pci_ce_interrupt_handler(int irq, void *arg)
  
-@@ -614,6 +619,8 @@ static int ath12k_pci_config_irq(struct ath12k_base *ab)
- 		if (ret) {
- 			ath12k_err(ab, "failed to request irq %d: %d\n",
- 				   irq_idx, ret);
+ static void ath12k_pci_ext_grp_disable(struct ath12k_ext_irq_grp *irq_grp)
+ {
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(irq_grp->ab);
+ 	int i;
+ 
++	/* In case of one MSI vector, we handle irq enable/disable
++	 * in a uniform way since we only have one irq
++	 */
++	if (!test_bit(ATH12K_PCI_FLAG_MULTI_MSI_VECTORS, &ab_pci->flags))
++		return;
 +
-+			ath12k_pci_free_ce_irq(ab, i);
- 			return ret;
+ 	for (i = 0; i < irq_grp->num_irq; i++)
+ 		disable_irq_nosync(irq_grp->ab->irq_num[irq_grp->irqs[i]]);
+ }
+@@ -461,8 +482,15 @@ static void __ath12k_pci_ext_irq_disable(struct ath12k_base *ab)
+ 
+ static void ath12k_pci_ext_grp_enable(struct ath12k_ext_irq_grp *irq_grp)
+ {
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(irq_grp->ab);
+ 	int i;
+ 
++	/* In case of one MSI vector, we handle irq enable/disable in a
++	 * uniform way since we only have one irq
++	 */
++	if (!test_bit(ATH12K_PCI_FLAG_MULTI_MSI_VECTORS, &ab_pci->flags))
++		return;
++
+ 	for (i = 0; i < irq_grp->num_irq; i++)
+ 		enable_irq(irq_grp->ab->irq_num[irq_grp->irqs[i]]);
+ }
+@@ -523,6 +551,7 @@ static irqreturn_t ath12k_pci_ext_interrupt_handler(int irq, void *arg)
+ 
+ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
+ {
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+ 	int i, j, ret, num_vectors = 0;
+ 	u32 user_base_data = 0, base_vector = 0, base_idx;
+ 
+@@ -569,16 +598,15 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
+ 
+ 			irq_set_status_flags(irq, IRQ_DISABLE_UNLAZY);
+ 			ret = request_irq(irq, ath12k_pci_ext_interrupt_handler,
+-					  IRQF_SHARED,
++					  ab_pci->irq_flags,
+ 					  "DP_EXT_IRQ", irq_grp);
+ 			if (ret) {
+ 				ath12k_err(ab, "failed request irq %d: %d\n",
+ 					   vector, ret);
+ 				return ret;
+ 			}
+-
+-			disable_irq_nosync(ab->irq_num[irq_idx]);
  		}
- 
-@@ -624,8 +631,10 @@ static int ath12k_pci_config_irq(struct ath12k_base *ab)
++		ath12k_pci_ext_grp_disable(irq_grp);
  	}
  
- 	ret = ath12k_pci_ext_irq_config(ab);
--	if (ret)
-+	if (ret) {
-+		ath12k_pci_free_ce_irq(ab, ab->hw_params->ce_count);
- 		return ret;
-+	}
- 
  	return 0;
- }
+@@ -586,6 +614,7 @@ static int ath12k_pci_ext_irq_config(struct ath12k_base *ab)
+ 
+ static int ath12k_pci_config_irq(struct ath12k_base *ab)
+ {
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+ 	struct ath12k_ce_pipe *ce_pipe;
+ 	u32 msi_data_start;
+ 	u32 msi_data_count, msi_data_idx;
+@@ -614,7 +643,7 @@ static int ath12k_pci_config_irq(struct ath12k_base *ab)
+ 		tasklet_setup(&ce_pipe->intr_tq, ath12k_pci_ce_tasklet);
+ 
+ 		ret = request_irq(irq, ath12k_pci_ce_interrupt_handler,
+-				  IRQF_SHARED, irq_name[irq_idx],
++				  ab_pci->irq_flags, irq_name[irq_idx],
+ 				  ce_pipe);
+ 		if (ret) {
+ 			ath12k_err(ab, "failed to request irq %d: %d\n",
+@@ -709,6 +738,9 @@ static int ath12k_pci_msi_alloc(struct ath12k_pci *ab_pci)
+ 			return -EINVAL;
+ 		else
+ 			return num_vectors;
++	} else {
++		set_bit(ATH12K_PCI_FLAG_MULTI_MSI_VECTORS, &ab_pci->flags);
++		ab_pci->irq_flags = IRQF_SHARED;
+ 	}
+ 
+ 	ath12k_pci_msi_disable(ab_pci);
+@@ -922,11 +954,11 @@ int ath12k_pci_get_user_msi_assignment(struct ath12k_base *ab, char *user_name,
+ 	for (idx = 0; idx < msi_config->total_users; idx++) {
+ 		if (strcmp(user_name, msi_config->users[idx].name) == 0) {
+ 			*num_vectors = msi_config->users[idx].num_vectors;
+-			*user_base_data = msi_config->users[idx].base_vector
+-				+ ab_pci->msi_ep_base_data;
+-			*base_vector = msi_config->users[idx].base_vector;
++			*base_vector =  msi_config->users[idx].base_vector;
++			*user_base_data = *base_vector + ab_pci->msi_ep_base_data;
+ 
+-			ath12k_dbg(ab, ATH12K_DBG_PCI, "Assign MSI to user: %s, num_vectors: %d, user_base_data: %u, base_vector: %u\n",
++			ath12k_dbg(ab, ATH12K_DBG_PCI,
++				   "Assign MSI to user: %s, num_vectors: %d, user_base_data: %u, base_vector: %u\n",
+ 				   user_name, *num_vectors, *user_base_data,
+ 				   *base_vector);
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/pci.h b/drivers/net/wireless/ath/ath12k/pci.h
+index 74dffd7b75494..0fc776252e8b5 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.h
++++ b/drivers/net/wireless/ath/ath12k/pci.h
+@@ -86,6 +86,7 @@ enum ath12k_pci_flags {
+ 	ATH12K_PCI_FLAG_INIT_DONE,
+ 	ATH12K_PCI_FLAG_IS_MSI_64,
+ 	ATH12K_PCI_ASPM_RESTORE,
++	ATH12K_PCI_FLAG_MULTI_MSI_VECTORS,
+ };
+ 
+ struct ath12k_pci_ops {
+@@ -110,6 +111,7 @@ struct ath12k_pci {
+ 	/* enum ath12k_pci_flags */
+ 	unsigned long flags;
+ 	u16 link_ctl;
++	unsigned long irq_flags;
+ 	const struct ath12k_pci_ops *pci_ops;
+ };
+ 
 -- 
 2.53.0
 
