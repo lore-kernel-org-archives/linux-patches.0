@@ -1,64 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046755;
-	b=LzLkvscakNihAC+wQzAzpiaecWbqlnRU7AfURIaNQLgd6Qe8B8FkD4iJvewhaf0j/K0/
-	 htZI/dSW+gac0HXPd2mDIcniNezCXDvYF+RiFVbLK/tQ1OTulPPIl5sQSOasOVYvxPUMD
-	 MHhMo9CSs/qwXmzBR3NWU6FkLHnoPyYyzb3qHUSV8SZ7To6YNV7wA1uHadAbT2u2UPyiu
-	 eTI9Yj5MDSgnYxo4Wp1pj9fqjNyNMf9WOE5UFomyXpsbK+G7+hrMONBzfjHfxomXI0/DB
-	 5QRMweIHxiqe+8qkgBwkhUl6xFSfGAyTvWUi3AL3mf+YjPC24oN61r/WB3uFc6TWL5g==
+	t=1795046758;
+	b=JkLZLf9rAwbpNxz7kEyPfUxVmfz4pHobQ5eaR8w6IdlZ8Yo9chtLthJ47bFpePHOMGPk
+	 mzSeApqvGgNzI0fZKJPK6OsZhVIZu+C3sgfhp+HJlMvNdOzlewSUM7MU2CM92Otk9n/lO
+	 2fQA8OyJI0UbFsHD+2HRaP0UzvYM9+CaVt/myZI19YVNGRBGWZg7mAGPQDd23laaBYDEZ
+	 21gTCXhsYKFwmUd81LVQPV5XdMZRZ6SjoOpAX8ksKxA4jJ7eYjIikI6fsywmvvJbygwXP
+	 VhiGyrZjSlR4T3JdkBqTDXUUpJXRgR28S1OWxIhd0dAd3+dIAUuVKOPHOCqL5csFvHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046755;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046758;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=irvXSoaRDRx0xgRXmaKP6liB9ZCPPD5WSzQtPOVGkD0=;
-	b=E1c8L9v/WRJvrcvTfcD30/rsURXE7XDu1AP/rNT4NjDeZ47Dzv6fkyTn4I8O58vBGzc5
-	 x3LvhJuoXUsciOONmXIZUVJQnYlLon53uEpScevlJNpL3fLZ/JjFP/gYEEkp9o624vK5M
-	 GjAz/Ux76IuTN8NVPnTzo8HDcJm5G/Y5x2Eb666heywyrI6DJ0HNma4hhQuFZjLc0V+7D
-	 9xt/HFs3AxxZMkZe2xN0IQsk3tcqLTAd6mbQMg6e09xZJdb8/+qGUB23uqA7B3LovqahG
-	 UzvsJ2F6L0UqvCMdMZkIllrzOehgd4I836SjSLqk+VEcnWmelEKT6Kc1ZzTgdXccfyw==
+	bh=oP+r8pAz7g8ebCNElzSkQgkqB0BPfrsPPZJNvlZHscg=;
+	b=KH2gcizW77oxXBuaHMOVTvem3qNi0GsYxJTOcA99coCbuz7qXrB7uG03SqpK72hMiH6Y
+	 UIXmXuVFX/Y583uY9I8rbLyFchSPUjmnA4Pz+0QR+VB5hY5xKKxbNJARFLRDlWPDrRCdr
+	 b60c8pfFNF1hzp2jHwj0+cNnJSuvK//I6aETiF7MwvaI+iq5sz/RWdLIvAeo9rI0nrrkz
+	 PHO/MnfNRmQZP+nBgr101aWVS9nPyN0U8ThF7T/lYNW9IrQ+rvQ5PoCBG+0fojOspOpsw
+	 Txuqu95PT8ZSY1CcWDhzZmTZS3DHuY+FGc2IllG69weCFSoP2AEPImyhlWh24LokTtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1CYZ//1O";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaCAeplA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBFC606A325;
-	Thu, 19 Nov 2026 00:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38726606A31C;
+	Thu, 19 Nov 2026 00:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1CYZ//1O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA241F000C4;
-	Thu, 19 Nov 2026 00:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaCAeplA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866941F000C4;
+	Thu, 19 Nov 2026 00:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046755;
-	bh=irvXSoaRDRx0xgRXmaKP6liB9ZCPPD5WSzQtPOVGkD0=;
+	s=korg; t=1795046758;
+	bh=oP+r8pAz7g8ebCNElzSkQgkqB0BPfrsPPZJNvlZHscg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1CYZ//1O2ITwNZMTRqs6fklzZSi6HkoJ2Vc8DvuDVxMFWB8c3jh7+QVYvob0Jzz68
-	 LXOXO/dFUzp2pmcdM4Lc1FiiBLHZUWqW2e3oPmEba4ZTNnuBZXMGWDbG9h/Y193nGF
-	 zjAXjgyBhJ1RsUi/6PmYaZUZNqgVF3MH/+jPmm3A=
+	b=aaCAeplAFPna1SdyLqZL8nLlBhGDF168B304uJxFCMshvnxS0B4wJ5l1cSAk7jzqd
+	 SOdNaQoHPAkxZfb+jwfMHtP8sv9m7iG7BHMBhIZH5Au4mCTwDenb9bDQknc+MDcia2
+	 G50GptQlOcHGbsGFwZz5BGJNlk/7dwFTpKV1lZ0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1395/2857] mm/madvise: atomically clear the young bit on THP MADV_COLD
-Date: Wed, 18 Nov 2026 15:40:29 +0100
-Message-ID: <20261118150251.583420995@linuxfoundation.org>
+Subject: [PATCH 6.1 1378/2857] gfs2: reject invalid inode sizes
+Date: Wed, 18 Nov 2026 15:40:12 +0100
+Message-ID: <20261118150250.992696728@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -80,82 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Jiaming Zhang <r772577952@gmail.com>
 
-[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
+[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
 
-As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
-by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
-pmd again.  However, it does so in a racy manner, looking at a
-possibly-stale snapshot.  It's entirely possible that a write elsewhere
-set the hardware D bit, which this logic now loses.
+A corrupted GFS2 image can store a dinode size that is larger than what VFS
+i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
+writes it directly into inode->i_size. If the value is larger than S64_MAX, the
+incore i_size becomes negative. That negative value can bypass the existing
+stuffed inode size check:
 
-Fix it by using pmdp_test_and_clear_young().  This is an atomic
-modification of the PMD entry, and thus safe against any possible racing
-writes.  As a (nice) side-effect, this elides one non-required TLB flush
-in pmdp_invalidate().
+inode->i_size > gfs2_max_stuffed_size(ip)
 
-This bug can interact with the swapping system in complicated ways,
-leading to data loss.  For instance, if a folio is marked lazyfree, but
-was later read from, and then MADV_COLD'd while racing a write to that
-same THP, dropping the dirty bit may lead to data loss as
-reclaim/MADV_PAGEOUT drops the "clean" anon folio:
+Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
+gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
+passes it to memcpy(), turning it into a huge copy size and triggering a
+out-of-bound issue.
 
-T0                                T1
-================================================================
-MADV_FREE(thp)			|
-  folio marked lazyfree		|
-read(thp)			|
-  PMD marked young by hardware	|
-				| MADV_COLD(thp)
-write(thp)			|   if (pmd_young(pmd)) {
-  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
-MADV_PAGEOUT/reclaim		|
-  dirty bit may or may not be   |
-  set				|
-    reclaim/pageout may drop    |
-    the folio			|
+Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
+inode->i_size. Also make the stuffed inode check use the raw on-disk size while
+it is still unsigned.
 
-Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Retained pmd_young(orig_pmd) without the !pageout guard because the corresponding reclaim optimization is absent. ]
+Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
+Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
+Assisted-by: Codex:gpt-5.5-xhigh
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+[ sashal: adjusted context for direct inode->i_state access and existing inode depth and entry assignments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/gfs2/glops.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index b271cc1b48edb..5640bacba5384 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -379,10 +379,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index e7904c1c985f6..0fa7b6f1f4218 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -404,6 +404,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	umode_t mode = be32_to_cpu(str->di_mode);
+ 	struct inode *inode = &ip->i_inode;
+ 	bool is_new = inode->i_state & I_NEW;
++	u64 size;
  
- 		if (pmd_young(orig_pmd)) {
--			pmdp_invalidate(vma, addr, pmd);
--			orig_pmd = pmd_mkold(orig_pmd);
--
--			set_pmd_at(mm, addr, pmd, orig_pmd);
-+			pmdp_test_and_clear_young(vma, addr, pmd);
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
+ 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
+ 		gfs2_consist_inode(ip);
+@@ -429,7 +430,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	i_uid_write(inode, be32_to_cpu(str->di_uid));
+ 	i_gid_write(inode, be32_to_cpu(str->di_gid));
+ 	set_nlink(inode, be32_to_cpu(str->di_nlink));
+-	i_size_write(inode, be64_to_cpu(str->di_size));
++	size = be64_to_cpu(str->di_size);
++	if (unlikely(size > inode->i_sb->s_maxbytes)) {
++		gfs2_consist_inode(ip);
++		return -EIO;
++	}
++	i_size_write(inode, size);
+ 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
+ 	atime.tv_sec = be64_to_cpu(str->di_atime);
+ 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
+@@ -467,7 +473,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	ip->i_depth = (u8)depth;
+ 	ip->i_entries = be32_to_cpu(str->di_entries);
  
+-	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
++	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
+ 		gfs2_consist_inode(ip);
+ 		return -EIO;
+ 	}
 -- 
 2.53.0
 
