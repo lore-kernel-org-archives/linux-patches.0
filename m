@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035007;
-	b=sU5WTGy4k9LTrrUMbfywKpTRfjCFv+oo5/NUwfuZHOfCdXuo+pFHasxxQft02sSOORIk
-	 fgJLCAB9Zm/L3Lte5V8fs3TaCLR4wRcRz3ehRn4rWPuD1GEvv7r+vseIlFpwVt9pJ58lG
-	 e5ZqVowZ4PkrCbCPNdGhXULXy6XHIZhHL49lwv0yGijEohggAMx1dyr/pToVwvzDM4RgG
-	 LsTihhjAqtJdgv4qhCBCuV1p8cotU1aRZ0Hnj+ecSjuyqvBiWyBsY5inWg//cfs9J19G/
-	 sa/r7hDztbd5C5tVFecjTGB0nz8GTFIOtI6uG4zg9FxiZJrLqFgIBSMwZOlizSbRWpg==
+	t=1795035010;
+	b=q4oh4vfIVyS8Vis2Lvg0KHFcAiP1KHn3uPH0I3+oIK5n5BgEC1tTK9iqL1n7F7Lx/Ioh
+	 eIlnb7eiZ80dRQlJJTbFQUWpWLHSTGkR+8jYqCHgpgYStijG8s0dYPjr2sXiMX7Z/tpQy
+	 jmoQjO8N+RKkV3kZX9rqx0icHto7jDn4kDcBcDhy7AVkbDQh0+NLY0aVHrOXTU/D9LZnb
+	 Tt1AFfGpvetrMrHxjA2jo/lWo1LoVagBVAjhk59+7/H2sC5kY4g/ZvRhRScnwvYuuSSh/
+	 iUVoK7cJZo5WZxnuD09rc2mdRMzmwBzD4sGJWjULySOZr2Hh0Zn/aJ4xgLKGcSdy3Sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I/jTlvnH+94zZgJHs+IAvsqfjGGPop2caBvrvSHaPbs=;
-	b=OCASZofnIWYlAVLEHl3S5x2cyZHv6jn8ghwz3GakSmwbolibtXSkSF0DSlCstYpDBffX
-	 hXeN7Cl1JSeLOpk2HXmq3sh0qVTfPb1qw/KYf+exP/yG1bpisil4tdhffWC8htzI3nwsm
-	 iaJQhIoPV+6zT9KvQI6bzUxcWkZYsCHcqUKz0yNwgzvS+reSyBoq+ZNpsUug3y0ic979A
-	 +7XfhENsfbUXI+kftzT+A/BjGaeqfv3RnfXHkZjwdaecIWCWlzZ7AEj0Khcnh5X/fOr/9
-	 LUE13PBLJEWqta9z7QnuAotSKQkZhzSoT31wX96Uzzruvp5hm9xH+LekKF7VBnBK76Q==
+	bh=Nit1wdCkh3AplmE2Ezk6OFl1Rg8oo+olTsVMURtgmaQ=;
+	b=oTLQD3Dz3JZSJ+/5graW25OmHWzwa/fNqQnTmfLy8AHXBoaMccxTIHFxqG2XE6K2kvl+
+	 WfaKq5e9uOHLvfcLJjGAol+vIZraL/mbpziWYYk2VTGsMYhOL3XffdX567b4T1Y/n78R+
+	 72TUzboJ1+mXgO2/glG6TqciyggPTRK45dZfd2we4U9xVwyWYkjQuOywZ4bZveJtowZ1n
+	 cdGxoFI++1tUqtkWjkpoFWmVPKnH2Xap+C18Az+WjKePp31mRkujPKBrQyY4PiGjXVyDV
+	 BZ0DHWcc0ZNEbhimaJKRFnMVX9/nJoMQ8DigLERBi4bGtAUpiwzWKK1sEYsH/LNWz4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIMj8wkD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/MxC4jf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E30C606A325;
-	Wed, 18 Nov 2026 20:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B61606A325;
+	Wed, 18 Nov 2026 20:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LIMj8wkD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E3E1F000C4;
-	Wed, 18 Nov 2026 20:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/MxC4jf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29EC1F000C4;
+	Wed, 18 Nov 2026 20:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035007;
-	bh=I/jTlvnH+94zZgJHs+IAvsqfjGGPop2caBvrvSHaPbs=;
+	s=korg; t=1795035010;
+	bh=Nit1wdCkh3AplmE2Ezk6OFl1Rg8oo+olTsVMURtgmaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LIMj8wkDq9ybyZjgYL2vUPuv2FdzUCkFONYC0ogfJUSRHuXTQlUgpdkwhKn64RWSs
-	 gz4nTzr3RCt4n8J7DLZPw9Ph8fI5gNckM+xI/ojXzOlmDzMPaD53m6F25OO4U7yQNa
-	 jv8M/TH/gWL34pkROwa/0CUImyZ/p4dbOCERd2xs=
+	b=d/MxC4jfS9445MSFYaxxvqTzmbAm5GAeowJmOg/TBWSFqfaeDFmPcai+6R3cXoGCQ
+	 7KpmEy3IGU70ZynMrfbhW5ulbZux2X8raTGfz46PR50Oy5lMIJuAYqGrwHwgtml+gY
+	 0zT3L2Lvd+BN674CBdRhTgZYeMsIgjzFL2VBRyHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Giorgi Kobakhia <gkobakhi@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
 	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.6 0571/3318] ksmbd: fix overflow in dacloffset bounds check in build_sec_desc()
-Date: Wed, 18 Nov 2026 15:19:53 +0100
-Message-ID: <20261118150334.570345010@linuxfoundation.org>
+Subject: [PATCH 6.6 0572/3318] ksmbd: fix parent dentry lifetime in directory enumeration
+Date: Wed, 18 Nov 2026 15:19:54 +0100
+Message-ID: <20261118150334.612331360@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,71 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giorgi Kobakhia <gkobakhi@asu.edu>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-commit eb96e2a0e817807c48dc8387ca6a5249fdeae3a0 upstream.
+commit 171df27077fb49b4af2c53ad2cedcd0e39664fe8 upstream.
 
-When the large dacl_offset is provided, dacl_offset + sizeof(struct
-smb_acl) overflows on 32-bit builds and the check is passed,
-Which makes le16_to_cpu(ppdacl_ptr->size) read out-of-bounds. This
-only happens for dacl_offset in range [0xFFFFFFF8, 0xFFFFFFFF]. So
-the oob read is max 8 bytes preceding the allocated ppntsd.
+ksmbd_populate_dot_dotdot_entries() builds the ".." entry from
+the open directory's d_parent and passes that pointer to
+ksmbd_vfs_fill_dentry_attrs() without taking a reference. That pointer
+is only valid while the directory stays under this parent. If a
+concurrent rename moves the directory elsewhere, the old parent loses
+its last reference; a following rmdir then turns it into a negative
+dentry with d_inode cleared, and after the RCU grace period the dentry
+itself is freed. The worker still holds the raw pointer and
+dereferences d_inode through vfs_getattr() and vfs_getxattr().
 
-    unsigned int dacl_offset = le32_to_cpu(ppntsd->dacloffset);
-    int ppdacl_size, ntacl_size = ppntsd_size - dacl_offset;
+A remote SMB client, authenticated or guest, triggers this by listing
+a directory while that directory is moved under a new parent and the
+old parent is deleted. It can be done by the client itself with write
+access or by other concurrent writers, triggering null-ptr-deref and
+slab-use-after-free on a KASAN build.
 
-    if (!dacl_offset ||
-	(dacl_offset + sizeof(struct smb_acl) > ppntsd_size))
-	    goto out;
+  KASAN: null-ptr-deref in range
+      [0x0000000000000000-0x0000000000000007]
+  Workqueue: ksmbd-io handle_ksmbd_work
+  RIP: 0010:xattr_permission+0x9d/0x160
+  Call Trace:
+   vfs_getxattr+0x9c/0x1b0
+   ksmbd_vfs_getxattr+0x82/0x100
+   ksmbd_vfs_get_dos_attrib_xattr+0x7f/0x130
+   ksmbd_vfs_fill_dentry_attrs+0x435/0x650
+   ksmbd_populate_dot_dotdot_entries+0x25e/0x630
+   smb2_query_dir+0xcf9/0x1a20
+   handle_ksmbd_work+0x5f1/0x1c80
+   process_one_work+0x90b/0x19d0
 
-Commit beff0bc9d69b ("ksmbd: fix overflow in dacloffset bounds check")
-fixes similar checks in other functions. But leaves this one out,
-because it is only valid for 32-bit builds.
+Fix by using the dentry reference counting APIs: take the parent with
+dget_parent(), take a matching dget() on ".", and dput() the dentry
+once ksmbd_vfs_fill_dentry_attrs() has returned or the pattern does
+not match.
 
-Reproduced on 32-bit ARM with KASAN, by a client sending SMB2
-SET_INFO(SEC) with dacloffset=0xfffffff8, then QUERY_INFO(SEC) on the
-same file:
-
- BUG: KASAN: slab-out-of-bounds in build_sec_desc (fs/smb/server/smbacl.c:1105)
- Read of size 2 at addr c2a273fa by task kworker/1:1/35
- CPU: 1 UID: 0 PID: 35 Comm: kworker/1:1 Not tainted 7.3.0-rc2+ #5
- Workqueue: ksmbd-io handle_ksmbd_work
- Call trace:
-  kasan_check_range from build_sec_desc (fs/smb/server/smbacl.c:1105)
-  build_sec_desc from smb2_query_info (fs/smb/server/smb2pdu.c:7676)
-  smb2_query_info from handle_ksmbd_work (fs/smb/server/server.c:160)
-  handle_ksmbd_work from process_one_work (kernel/workqueue.c:3401)
-  process_one_work from worker_thread (kernel/workqueue.c:3473)
-  worker_thread from kthread (kernel/kthread.c:436)
-
-Add overflow check.
-
-Fixes: 8f0541186e9a ("ksmbd: fix heap-based overflow in set_ntacl_dacl()")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM claude
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Giorgi Kobakhia <gkobakhi@asu.edu>
+Cc: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/smb_common.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1093,9 +1093,12 @@ int build_sec_desc(struct mnt_idmap *idm
- 			struct smb_acl *ppdacl_ptr;
- 			unsigned int dacl_offset = le32_to_cpu(ppntsd->dacloffset);
- 			int ppdacl_size, ntacl_size = ppntsd_size - dacl_offset;
-+			size_t dacl_struct_end;
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -447,16 +447,17 @@ int ksmbd_populate_dot_dotdot_entries(st
+ 			if (i == 0) {
+ 				d_info->name = ".";
+ 				d_info->name_len = 1;
+-				dentry = dir->filp->f_path.dentry;
++				dentry = dget(dir->filp->f_path.dentry);
+ 			} else {
+ 				d_info->name = "..";
+ 				d_info->name_len = 2;
+-				dentry = dir->filp->f_path.dentry->d_parent;
++				dentry = dget_parent(dir->filp->f_path.dentry);
+ 			}
  
- 			if (!dacl_offset ||
--			    (dacl_offset + sizeof(struct smb_acl) > ppntsd_size))
-+			    check_add_overflow(dacl_offset, sizeof(struct smb_acl),
-+					       &dacl_struct_end) ||
-+			    dacl_struct_end > (size_t)ppntsd_size)
- 				goto out;
+ 			if (!match_pattern(d_info->name, d_info->name_len,
+ 					   search_pattern)) {
+ 				dir->dot_dotdot[i] = 1;
++				dput(dentry);
+ 				continue;
+ 			}
  
- 			ppdacl_ptr = (struct smb_acl *)((char *)ppntsd + dacl_offset);
+@@ -465,6 +466,7 @@ int ksmbd_populate_dot_dotdot_entries(st
+ 							 idmap,
+ 							 dentry,
+ 							 &ksmbd_kstat);
++			dput(dentry);
+ 			if (rc)
+ 				break;
+ 
 
 
