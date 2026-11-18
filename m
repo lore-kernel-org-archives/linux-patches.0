@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056833;
-	b=lJgb32ACbSWJQvE6nSiK0EezUznOgWXkex4jch2GB25WUVYZXTEDpeuiHmF30zep1gLf
-	 AjM004irhjl1uat1I796iTWRaHrWiqSuEuo3Qwh91VivGPM2hWTyIyukSr2M0qFzemNtF
-	 543jA09CQ5Z1lnVs4dmKSiVAxdxP+R6+nuYaTzhDMU7ha98Pq8lsGWzvNcCzgSQmWmQPF
-	 yWQHqoE0K589GxTP5UKNxakKn8ymak4lJB6L1lwUxMby5xeADOXQ6YwU+zGjI/tuZMN6U
-	 T+x6MDoe4kIoxggjiFzZpNNg9av8E/iUtzrmWMd6T1O7eLBvtLiQkZUnGsMIkC20NAQ==
+	t=1795056836;
+	b=BsSlwSJr6NCM6q2ReOnLiQGfjVibDm2Wz1L4HQj4hhOhDhIOE/qfzMD2m8IPAINkdcwA
+	 RfRIq5Lti91v2HauUJvQkHRKBgy0uOqgx4DggbvldQUpZPDBN9EP8WLfEqSxTTYXmGW4e
+	 5cAktkzaDKRO8lcE+aGg5qe9iT+KpIh0n2GEND1E4uyKg4odK9eE4g1ZvKLiEGjbtuZ1E
+	 87zA9/let5sMjWCNn+s43Xn6TwG49Sn/vSXVjPSWMYMtwetdUubwdzgY9IZ41sjYTTk+s
+	 XYSzD0kFusSbuUAjliSo6/Ri/sxfSyG4bCDUixGfySjm2irX6HjESEnNXS1wUivcEVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Tt26JC9EdfzGHvv/Kk5Sr5Z7s1DIbz9T4TXnnmnDOM=;
-	b=XCkA8e3H90gxX7lvDUn4+jUDV33hu7BzIP4QE707ZHhDDAbIFQBwDPvpXRTo2WyoPrKY
-	 fSaK9ohSznQlK9hXro6adsuvPMTrLAvC7I7aACKPiSC2g7ilhAmZzLJ/xTEJP4Vuvkgqz
-	 qa8KaA9df17xRpwtqKch71vyRsL7/KxRLdWzxFTNa0zNzxfEfpz25k3ziOAJozGqcp7Pa
-	 EMKGugTCsMt51BTMZH59MZR/RoFU3mGAYcbdnwewy0pigtUVb607H/MakxoQ+Gd9aEIMu
-	 tiKbji5PNCkH5EkbuWHPkt4qbpNEVyY3/tV8bjHKFU4+hbOJ6PRZ+qlFdmlrR5j1iLg==
+	bh=xXP0iFRlizqtuBjc8n+7aJuOzB3J/MKVU1iUm+CdJec=;
+	b=NEK8dTZmZYfgkDmRiewGw1aN+iVenouqBsWb6Va5wrQ1qaWqnhYLGmme+Fzv3MQwWuqk
+	 OL8HlWesVmC7ElmBcqkiPK9BSvq7ai/bybKfXcNo9dr3BSk/5vbEPstiyWiAcKibT6gTU
+	 xQNbmiz4w7dNhMCPo1IFwXe2fyEd/xxX9Xk82fEc63gjE7kIQUjibZwVq6TOp0MAIW7Py
+	 sXQgdMr1ne8JEIggz6AkNqO3WbBegKQ1derZWfquM8AbrJ341O2J2cp8usS2qSI25tthX
+	 UQU/VlldHIAhD0MIfhXCkfJ4SxMz2VoydcBUKa/u2GXLb/FUE6RDKiS7FYQUGr4nwVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vthNVyGE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="z4ynT/V6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2455606A33E;
-	Thu, 19 Nov 2026 02:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ED460A2607;
+	Thu, 19 Nov 2026 02:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vthNVyGE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D73F1F000C4;
-	Thu, 19 Nov 2026 02:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z4ynT/V6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272211F000C4;
+	Thu, 19 Nov 2026 02:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056832;
-	bh=8Tt26JC9EdfzGHvv/Kk5Sr5Z7s1DIbz9T4TXnnmnDOM=;
+	s=korg; t=1795056835;
+	bh=xXP0iFRlizqtuBjc8n+7aJuOzB3J/MKVU1iUm+CdJec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vthNVyGEKXbjfLMaaCWX/Xp34TWEx73jjBaKyL8qcCH/63PDeekRIImJXOftke9Io
-	 l+MElGi/736oCkCh6mMD7EticxdsgS93rd9B2jzPDMZYXyaHZB1eqAu/KtUQGyVUDv
-	 4qX8xj/i/3kKGoV8vyEnBc3dtT9uIvINcen6bsX8=
+	b=z4ynT/V6+YMdpyWlmnThZtL4i6h3sdmuO+mIcabbLTw413jxN1HehJjVw0stajr7L
+	 AuMo4XMmRyyr9/HLjqCLCxbouyr2s5S8kqBhEwXFdNXLCNOsx9WW8qwckk/vh3HGS6
+	 2ue8oBVV58Fhhj88cSogKzGjj0pe+ZYXU9TLHE1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2077/2214] ibmveth: wait for the RX poll to return before freeing the RX queue
-Date: Wed, 18 Nov 2026 16:02:33 +0100
-Message-ID: <20261118150133.713823253@linuxfoundation.org>
+Subject: [PATCH 5.15 2122/2214] netlink: fix out-of-bounds bitmap access clearing stale mc groups
+Date: Wed, 18 Nov 2026 16:03:18 +0100
+Message-ID: <20261118150135.458798806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,62 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 3f872b34368c7c1d2a8900950e0fee4cb4dd9a34 ]
+[ Upstream commit 6430fb7f1cc4e329e386521b7b208df443de92f2 ]
 
-napi_disable() returns once ibmveth_poll() has called
-napi_complete_done(), but the poll is not finished: it then re-enables
-the interrupt and calls ibmveth_rxq_pending_buffer(), which reads the
-RX queue. ibmveth_close() can free that queue in the meantime, and the
-late enable can leave the interrupt unmasked after close() masked it.
-The request_irq() failure path in ibmveth_open() frees the same memory
-after napi_disable() too.
+netlink_realloc_groups() sizes nlk->groups to the number of groups
+that exist at bind/ADD_MEMBERSHIP time.  When more multicast groups
+are registered later (e.g. a new genl family), existing sockets keep
+their smaller bitmap.
 
-Call synchronize_net() after napi_disable() on both paths. Every
-caller of ibmveth_poll() runs it with bottom halves or interrupts
-disabled, so this waits for the poll to return.
+When clearing a multicast group of a departing family,
+__netlink_clear_multicast_users() runs netlink_update_socket_mc() on
+each socket on mc_list, which does test_bit()/__assign_bit() on
+group - 1 with no regard to nlk->ngroups.  Skip sockets whose bitmap
+predates the group: such a socket can never have joined it.
 
-Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection; also raised by the Sashiko review of the first version
-of this series. The race was not reproduced. Tested on a POWER10 LPAR
-under an incoming ping flood with 30 rapid link down/up cycles and 30
-rapid MTU cycles (1500 <-> 9000); ran cleanly with no warnings or
-faults. No kernel selftests cover ibmveth.
+The overflow windows differ per architecture, both needing privileged
+module (un)loading.  On 32-bit kernels the ~54 dynamically allocated
+genl groups already exceed the initial 32-bit bitmap, so the table
+can grow there directly.  On 64-bit kernels the same in-tree set fits
+the initial 64-bit bitmap only while allocation stays contiguous:
+genl_allocate_reserve_groups() takes the first free contiguous range
+and unregister does not compact, so an unload/reload sequence can
+fragment the ~59 free IDs until no fitting range remains, forcing
+the table past 64 bits and reaching the same stale-bitmap overflow on
+the next family teardown.
 
-Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-9-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This issue was discovered by Tencent CodeBuddy Security.
+
+Fixes: 84659eb529b3 ("[NETLIKN]: Allow removing multicast groups.")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/netlink/af_netlink.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index f09d19f6f8400..43cfcf68443d5 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -601,6 +601,7 @@ static int ibmveth_open(struct net_device *netdev)
- 			 netdev);
- 	if (rc != 0) {
- 		napi_disable(&adapter->napi);
-+		synchronize_net();
- 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
- 			   netdev->irq, rc);
- 		goto out_free_buffer_pools;
-@@ -670,6 +671,11 @@ static int ibmveth_close(struct net_device *netdev)
- 	netdev_dbg(netdev, "close starting\n");
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 3671071482a02..d3536f9d50cb3 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2168,8 +2168,12 @@ void __netlink_clear_multicast_users(struct sock *ksk, unsigned int group)
+ 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
+ 	struct hlist_node *tmp;
  
- 	napi_disable(&adapter->napi);
-+	/* napi_disable() returns once ibmveth_poll() has called
-+	 * napi_complete_done(), but the poll still re-enables the
-+	 * interrupt and reads the RX queue after that.
-+	 */
-+	synchronize_net();
+-	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
++	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list) {
++		/* bitmap predates the group, can't be a member */
++		if (group - 1 >= nlk_sk(sk)->ngroups)
++			continue;
+ 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
++	}
+ }
  
- 	if (!adapter->pool_config)
- 		netif_stop_queue(netdev);
+ struct nlmsghdr *
 -- 
 2.53.0
 
