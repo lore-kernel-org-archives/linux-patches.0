@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040549;
-	b=jsCQGoUUjyekJkLLyn6RDXGyd41127w73f1ef0xFYd1iSC2oVgf+nZL+bpduUsi3MwIt
-	 OKFsfXc4BARbU6n3BKqY/rTq8bwLhRlYwvVJ+2cVYvqigexKKhKnNca6ssB3nm01EImjC
-	 ggQB+pIppoAPtIKYKPM8L+B9Qg7WdsRSBFP1m02trRImhW5taqn0vFcKFQUMatejYkXk6
-	 E/8LrycJpjpQbKQpWr5Z8uxLG5fa9zf0jLoZsVYEBzypA/XjK+JbMGDgoO27Ruhd+j7EZ
-	 1KWIAaVQpxx87bq+kM2gYJ/4SrGg2k2Co1M3JpdSJOupZTZoWCspr1oLpIvSl5pHfEg==
+	t=1795040552;
+	b=0ZaotZw2/9jn26OQ0rAqB7luJHwY2jp0OoyI8n481+JH5Sglmpe0+AI/qWBVVfwZuIUd
+	 mCaYndrctQgxMK6AUZWz5Kb/fB37InvNbPMUkhMX4OnBXwJ/aDUnvwGpqQVBJFyC/abco
+	 L8nDmssWKTywyIkLp8U381GINDzr2stKBSEDMqFkFRvQjGMIDNY1Fb1qTNa6kfv6v8TLi
+	 HHZ2zJBru5oWMvSMGaHNtQpFOgKL0zNE9+J0tDQ/CkYVQC7npajzfXg7smWGiHS1OjmKs
+	 rAIwdUDHzjA6GlnEA/fedk/+bBfWBpGkreWGAHauivUPz3cqggRIZuMEesBWasR9evA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040549;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040552;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O6oEZeWq7KXM55SdccgYwtW6h0MIrJifC6TKWyYcqlI=;
-	b=wBJhiuwIq/CqMF4Wp38W8342/nBHJ6SA3FS85zN21FobvlkrUQS6NaDEUMaAYFcuXjua
-	 f3xRVETfBdDXaTxMlX7/fd9C5c9SiJoEHjEGYA5p/px1Zt5B6AQfn2TVDj5NYtG6X4Aom
-	 oBom9hwGeBO+fltfsIbmpK5TKvUxZl6f7wZgQMwj61kkYuZdZGMJDLGg5NE51NPS+1wwW
-	 RKvm7wb7uCEGVEuC81H90TOaCLLKMzQQWYyt/XJCq049IWgtbwG8MFiesiwcxSxrGsAHq
-	 5WxTZE45U1PaQBFe6stak84nEinNxex9EHbrzBuGognbjslMGy4UeImoflMOKtyojsQ==
+	bh=NSyQnXjUXRuv4+TO3aaFczQNXd2uGmUavWH1cij0lo4=;
+	b=K3ZyRVmUon3buEyHyZ7QKy9s9Us3yS97avBGW1DJwQUnkQq1m9J4aYSNSZROO4OdxkDE
+	 RbvbQ4CPgtAn6OyNwrtbhGISOp4Vq4x1fTq61xjwsdJctRKNe0esqgXN4+spB3CPdQoKh
+	 Ua4ApzvlBfajHte3LDculIzQeZxcA1k+XBbZtwuE+N/n5Fl2DdBNIQZweNKh/2TXPAAag
+	 bwMDcattbg8jX2rPrAqRlMAPPHjv49zWcMuIlHUCEz5be9RxN3S8l9SN8YHBFFZmWOwOh
+	 9cB/TpA+WU0DlUhCkvtrtv0Lrph7TxAMtalo2LDkwdrMMkNaSg2+ZUoahEmbeE/uA2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJEK+ulf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FELV3+MZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922B4606A31C;
-	Wed, 18 Nov 2026 22:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC65606A33A;
+	Wed, 18 Nov 2026 22:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AJEK+ulf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA33D1F000C4;
-	Wed, 18 Nov 2026 22:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FELV3+MZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B03C1F000C9;
+	Wed, 18 Nov 2026 22:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040549;
-	bh=O6oEZeWq7KXM55SdccgYwtW6h0MIrJifC6TKWyYcqlI=;
+	s=korg; t=1795040552;
+	bh=NSyQnXjUXRuv4+TO3aaFczQNXd2uGmUavWH1cij0lo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJEK+ulfAroKgYMv8TfXJncwC0cospqIGMadlCwhIucqHhKpb9dWe2nDx/TEWF1IC
-	 oXg6XnYnXutI5kuJQ4i5hRcKMo7pLa5uKzyUWnoHWMHPJLrGKVxDlXepmdk/r3DyDB
-	 5pgB7Gm6kgX+tmHHNaObadRVwoK+kOrjkGqGH9pE=
+	b=FELV3+MZKt2nzlVGKWn4UStLRCBnDpAYcsYtXKmu1zZCUG3e+FZV7J4enLu+T1xdx
+	 T1OgSUp8FgaxZq8DHf7SQ/UGflLWTEDSO+JB154pHA3cs2AFLDpFfivRsuGMP5vYjD
+	 F8wC6YeOXDWaJLq2MyaP7kWzZ3kgkUXJYoeaasyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2446/3318] RDMA/bnxt_re: Fix integer overflow in send payload size computation
-Date: Wed, 18 Nov 2026 15:51:08 +0100
-Message-ID: <20261118150434.826308493@linuxfoundation.org>
+Subject: [PATCH 6.6 2491/3318] ARM: vexpress: fix device_node refcount leak in vexpress_flags_set()
+Date: Wed, 18 Nov 2026 15:51:53 +0100
+Message-ID: <20261118150436.119678336@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,120 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 3483cbbd7487163345b4b4d5eb8cad8540d1c3ba ]
+[ Upstream commit 62b9ae8ae4a7f0b93efa1efa230782b37057b1e7 ]
 
-bnxt_re_build_sgl() summed SGE lengths into a signed int, which could
-overflow. Make it return u32, and have bnxt_re_copy_wr_payload() report
-the size via a u32 out-parameter with the return value carrying only
-the error status, instead of overloading a signed int with both.
+vexpress_flags_set() obtains a reference to the "arm,vexpress-sysreg"
+device node via of_find_compatible_node() and passes it to of_iomap(),
+but never calls of_node_put() on it. of_iomap() only reads the node's
+reg property to create the mapping and does not take ownership, so the
+node reference is leaked. The function runs from the __init SMP prepare
+path and caches the mapping in a static, so this is a one-shot leak of a
+single refcount during boot, with no functional impact.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The lookup was added to drivers/mfd/vexpress-sysreg.c by the commit
+below and later moved here by commit 9b06fc39084e ("ARM: vexpress: Move
+vexpress_flags_set() into arch code").
+
+Annotate node with the __free(device_node) cleanup attribute so the
+reference is released when it goes out of scope.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260925173252.933705-2-geoffreyhe2@gmail.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 44 +++++++++++++-----------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ arch/arm/mach-versatile/v2m.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index a6a074ec2908d..db5571af5c759 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -114,10 +114,11 @@ static enum ib_access_flags __to_ib_access_flags(int qflags)
- 	return iflags;
- };
+diff --git a/arch/arm/mach-versatile/v2m.c b/arch/arm/mach-versatile/v2m.c
+index 79afdf2a90b6f..c86b38386cf7c 100644
+--- a/arch/arm/mach-versatile/v2m.c
++++ b/arch/arm/mach-versatile/v2m.c
+@@ -13,8 +13,8 @@ void vexpress_flags_set(u32 data)
+ 	static void __iomem *base;
  
--static int bnxt_re_build_sgl(struct ib_sge *ib_sg_list,
-+static u32 bnxt_re_build_sgl(struct ib_sge *ib_sg_list,
- 			     struct bnxt_qplib_sge *sg_list, int num)
- {
--	int i, total = 0;
-+	u32 total = 0;
-+	int i;
+ 	if (!base) {
+-		struct device_node *node = of_find_compatible_node(NULL, NULL,
+-				"arm,vexpress-sysreg");
++		struct device_node *node __free(device_node) =
++			of_find_compatible_node(NULL, NULL, "arm,vexpress-sysreg");
  
- 	for (i = 0; i < num; i++) {
- 		sg_list[i].addr = ib_sg_list[i].addr;
-@@ -2644,17 +2645,22 @@ static int bnxt_re_copy_inline_data(struct bnxt_re_dev *rdev,
- 
- static int bnxt_re_copy_wr_payload(struct bnxt_re_dev *rdev,
- 				   const struct ib_send_wr *wr,
--				   struct bnxt_qplib_swqe *wqe)
-+				   struct bnxt_qplib_swqe *wqe,
-+				   u32 *payload_sz)
- {
--	int payload_sz = 0;
-+	int rc;
- 
--	if (wr->send_flags & IB_SEND_INLINE)
--		payload_sz = bnxt_re_copy_inline_data(rdev, wr, wqe);
--	else
--		payload_sz = bnxt_re_build_sgl(wr->sg_list, wqe->sg_list,
--					       wqe->num_sge);
-+	if (wr->send_flags & IB_SEND_INLINE) {
-+		rc = bnxt_re_copy_inline_data(rdev, wr, wqe);
-+		if (rc < 0)
-+			return rc;
-+		*payload_sz = rc;
-+	} else {
-+		*payload_sz = bnxt_re_build_sgl(wr->sg_list, wqe->sg_list,
-+						wqe->num_sge);
-+	}
- 
--	return payload_sz;
-+	return 0;
- }
- 
- static void bnxt_ud_qp_hw_stall_workaround(struct bnxt_re_qp *qp)
-@@ -2677,7 +2683,8 @@ static int bnxt_re_post_send_shadow_qp(struct bnxt_re_dev *rdev,
- 				       struct bnxt_re_qp *qp,
- 				       const struct ib_send_wr *wr)
- {
--	int rc = 0, payload_sz = 0;
-+	int rc = 0;
-+	u32 payload_sz = 0;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&qp->sq_lock, flags);
-@@ -2693,11 +2700,9 @@ static int bnxt_re_post_send_shadow_qp(struct bnxt_re_dev *rdev,
- 			goto bad;
- 		}
- 
--		payload_sz = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe);
--		if (payload_sz < 0) {
--			rc = -EINVAL;
-+		rc = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe, &payload_sz);
-+		if (rc)
- 			goto bad;
--		}
- 		wqe.wr_id = wr->wr_id;
- 
- 		wqe.type = BNXT_QPLIB_SWQE_TYPE_SEND;
-@@ -2738,7 +2743,8 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
- {
- 	struct bnxt_re_qp *qp = container_of(ib_qp, struct bnxt_re_qp, ib_qp);
- 	struct bnxt_qplib_swqe wqe;
--	int rc = 0, payload_sz = 0;
-+	int rc = 0;
-+	u32 payload_sz = 0;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&qp->sq_lock, flags);
-@@ -2755,11 +2761,9 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
- 			goto bad;
- 		}
- 
--		payload_sz = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe);
--		if (payload_sz < 0) {
--			rc = -EINVAL;
-+		rc = bnxt_re_copy_wr_payload(qp->rdev, wr, &wqe, &payload_sz);
-+		if (rc)
- 			goto bad;
--		}
- 		wqe.wr_id = wr->wr_id;
- 
- 		switch (wr->opcode) {
+ 		base = of_iomap(node, 0);
+ 	}
 -- 
 2.53.0
 
