@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047672;
-	b=SEbsTQlxgtVE6LJaUvsJABpxd5swyJ2mFuFJhRQwRRh5ISNhJgOE5sK6R7S90Bqh1oer
-	 Y3Fo1SWTk+zp/cxaappYuC/UsNH6sRFWhe6wx/W4g7kh2U7Siuf1fPs8llZHdeOTs/IB8
-	 RN04pTbtkJQk4qcwvuo7cHTp8IL0C9LcOh24RG8uGi9pVy5ihoWPvVhVOc+erKAbWMxv+
-	 0pABzLfEW+2vtKyFT0GG1/AMI334Z0x0LvglooI5iRWE4nTbMbQFpSnopY5Fgbs6LKS9Q
-	 sujb1kzAle1duKkIX66cXILyKA0znAzJBL/zkOkJ3WeDTEiC9IcgmSlFoCkc4nxmeMg==
+	t=1795047674;
+	b=maHZhWwQAwXQdZyzxtnzPlBBc6iK0AJ10uC6mCKU9dzUqzT9zZeBelub37v59oRaeWtz
+	 P+PldGzlkdzFjhqCFfbPSBtRX0k1lFmmFw3xeja6PecGz99Q99tEZFIUEsHWSKH2OgyUN
+	 R1LGHOVLwgZP8pumDoWMk9kvwTVwqQ6qiFz0a3FpegSoGv/POxGB9qNY48ngmLVsyKvvl
+	 ciW67n6Cf+RJkatSMl2xtKRV6oEqLIxWSQAuBGix+Etl1wTjkZUYgyCFZIeRBf5+/8gl4
+	 6xAWknpLTh14b0cw1+pn+uLNmh7aq7lJcc3OO5TJRnIKdeq3hCay9CoZWLFbb+pUnDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OHszE8PVIdmVnhPElsgGFoHUjf8r6nJso0Wskewqy9s=;
-	b=Mk4Rr9G+GKrWhoJuum2AGcae4LVVTaYdfphogjdGOvFG6ci8eqgdzqmpk9lOYHwqP2rj
-	 1XvArKeAKarEnI6erVSdQhoh1FRf+JsAD/hD20Xl6du2T608uwZVtOYACS3YDt64tg2GZ
-	 HTGFOWlJzYR8YicqCjzYceAPOyqRrfjtwHcEJDSgE0l8mVRSwyZVjLUvFzlPz1obCSMXv
-	 9Bfuz4i1FKO7Obeo6WpfHTCrQFpJ6fxZbGsaZ7wXUdLRsCm8Xo3ZSZjXXUNR9jNnP9Pl1
-	 RzQMDtFvFVg1fmN/NYhCmXdPAq35ebjTI3UKtk7LqHTXaHaMTfbag7SrtkEAZohYmxQ==
+	bh=bl2C5c9kETpoBvb+Z8RDuSH6qzJ832d54bwjbzrjVGM=;
+	b=fAI97Y9Cbd57rScDvEg7JaKV+B1Uyh3TYiKdeeB3HVrtynUBFTbcJ+2ngMmEQLhiJAKw
+	 DyjZ4hbcP16wiC4ijAC9Ye6w5HEYPTDwD+0srMcHXB3wupMTONz0QHZcLOlxz8vuzCAYp
+	 aHGlXRaGIWZ5La/hNJ1b+R/vJ2ZzIR3uRLyckCAeuziTGmda1PW2HtDU9woNjo43LUuYk
+	 xjHNvR+Tyo9mRHhHUid/h3+oZeLbrJ59SYdgF2mFeC1gQsk3Yfprj1cqFtVMDLs5aJXtb
+	 wNBljsuZjxryVcOtLnyb6E4TarNnVqyW9ROjdWQoARjCrEkWSDuBUfe4AdKhsaHomKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTno09Yd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yz35iOeF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10C0606A32A;
-	Thu, 19 Nov 2026 00:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D33606A320;
+	Thu, 19 Nov 2026 00:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bTno09Yd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514311F000CC;
-	Thu, 19 Nov 2026 00:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yz35iOeF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0D91F000CD;
+	Thu, 19 Nov 2026 00:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047671;
-	bh=OHszE8PVIdmVnhPElsgGFoHUjf8r6nJso0Wskewqy9s=;
+	s=korg; t=1795047674;
+	bh=bl2C5c9kETpoBvb+Z8RDuSH6qzJ832d54bwjbzrjVGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTno09Yd73LR0BXo25N+/9qPzq9P59wIMptKRGQ5HpmmLfhq/mWsXUm3AaUMUZTgw
-	 Jamd8dVsJOy5ZmRx0mq17fON2fIYUNlJHDiYXPVUZigV+l0Ii84ozSjwMnqoXjnESt
-	 J+0BnGuSwuE5PlMyQ8KBFaOAMwGJS5sHZJOT2WkM=
+	b=yz35iOeFz5jtuPSxvsJm4PcHJ3Nks4elx9cCLajnuQt13OuqlIidAtfpJWPhbFTon
+	 XB6h/rXuAL02CqTgfVMWJSqMw+BvjzkObuad/RvTFADyt2N7cO0/Ukp8nttVABnQXi
+	 wlBmJrmIhoysoPOLuJXSPXhO5F3kVZqIoXbc9aMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Rik van Riel <riel@surriel.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Kimi Security Team <bug-report@moonshot.ai>,
+	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Chuck Lever <cel@kernel.org>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1685/2857] mm/filemap: read mapping->a_ops->free_folio under i_lock
-Date: Wed, 18 Nov 2026 15:45:19 +0100
-Message-ID: <20261118150302.003416640@linuxfoundation.org>
+Subject: [PATCH 6.1 1721/2857] SUNRPC: Copy the deferred RPC Call from the head buffer
+Date: Wed, 18 Nov 2026 15:45:55 +0100
+Message-ID: <20261118150303.288729159@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,171 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit dc24e273244e9d712257d5a6c20a32c7f5ca84e6 ]
+commit 2192a56b0686599358909c3e12e9a366f5b5d452 upstream.
 
-memory_failure() -> ... -> filemap_remove_folio() can read mapping->a_ops
-after the inode has been freed. Once the folio is deleted from the
-pagecache it no longer pins the mapping, so after i_lock is dropped
-e.g., a concurrent final iput() can evict and free the inode before
-filemap_free_folio() looks up mapping->a_ops->free_folio.
+svc_defer() snapshots the RPC Call for replay once a pending cache
+upcall resolves. It copies the Call starting (rq_arg.len -
+head[0].iov_len) bytes before head[0].iov_base, a back-up that once
+covered a transport header. No transport has had one since commit
+983084b2672c ("SUNRPC: Remove svc_rqst::rq_xprt_hlen"), so the two
+lengths are meant to be equal.
 
-Most callers hold a reference on the inode, but not all.
+An RPCSEC_GSS Call breaks that assumption. Unwrapping the integrity
+service truncates rq_arg.len by the length of the trailing checksum,
+and unwrapping the privacy service leaves rq_arg.len short by an
+amount the client sets with trailing bytes after the wrap token.
+Neither adjusts head[0].iov_len. Both lengths are size_t, so the
+subtraction underflows and the copy starts past head[0].iov_base.
+Every deferred integrity Call replays a shifted snapshot.
 
-Documentation/filesystems/vfs.rst explicitly states that ->free_folio()
-must not assume the original address_space mapping still exists.
+A deferred replay skips GSS verification, so a shifted snapshot runs
+as an authenticated Call. With the privacy service the offset is
+client-chosen. A forged Call placed in that window, naming another
+user's GSS context handle, runs under that identity.
 
-Fix it by loading ->free_folio while i_lock is still held, similar to
-what folio_unmap_invalidate() does.
+Copy the Call from head[0].iov_base. Refuse to defer a Call whose
+length runs past the head buffer, so the copy cannot read out of
+bounds.
 
-Inline filemap_free_folio() into its remaining caller such that
-delete_from_page_cache_batch() also just loads the callback before
-dropping the i_lock.
-
-The bug was found by code inspection and has not been reproduced.
-
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 59c66c5f8c4f ("mm: factor out page cache page freeing into a separate function")
+Fixes: 260c1d1298f6 ("svc: Add transport hdr size for defer/revisit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[ david: get rid of filemap_free_folio() entirely; improve patch description ]
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-6-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: preserved hugetlb-aware reference counting in the inlined cleanup, including the additional invalidate_complete_folio2() caller ]
+Reported-by: Kimi Security Team <bug-report@moonshot.ai>
+Reported-by: Yilin Zhang <yilinzhang@moonshot.ai>
+Link: https://patch.msgid.link/20260902133101.48914-1-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[doebel: 6.1 backport. In this tree the RPC Call header is parsed
+ with svc_getnl(), which advances rq_arg.head[0].iov_base while
+ rq_arg.len keeps measuring from the start of the receive buffer, so
+ len > head[0].iov_len for every Call at svc_defer() time and the
+ upstream guard and copy-from-iov_base cannot apply; keep the
+ skip-based snapshot that svc_deferred_recv() expects. A GSS privacy
+ unwrap breaks the len - iov_len invariant by resetting rq_arg.len
+ (gss_unwrap_kerberos_v2()); refuse to defer after a GSS
+ integrity/privacy unwrap (rq_auth_slack != 0) or when
+ len < head[0].iov_len.]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c  | 37 ++++++++++++++++++++-----------------
- mm/internal.h |  1 -
- mm/truncate.c | 10 +++++++++-
- 3 files changed, 29 insertions(+), 19 deletions(-)
+ net/sunrpc/svc_xprt.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 7c996dc4dad28..61581b59d0ff3 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -223,20 +223,6 @@ void __filemap_remove_folio(struct folio *folio, void *shadow)
- 	page_cache_delete(mapping, folio, shadow);
- }
- 
--void filemap_free_folio(struct address_space *mapping, struct folio *folio)
--{
--	void (*free_folio)(struct folio *);
--	int refs = 1;
--
--	free_folio = mapping->a_ops->free_folio;
--	if (free_folio)
--		free_folio(folio);
--
--	if (folio_test_large(folio) && !folio_test_hugetlb(folio))
--		refs = folio_nr_pages(folio);
--	folio_put_refs(folio, refs);
--}
--
- /**
-  * filemap_remove_folio - Remove folio from page cache.
-  * @folio: The folio.
-@@ -248,6 +234,8 @@ void filemap_free_folio(struct address_space *mapping, struct folio *folio)
- void filemap_remove_folio(struct folio *folio)
- {
- 	struct address_space *mapping = folio->mapping;
-+	void (*free_folio)(struct folio *folio);
-+	int refs = 1;
- 
- 	BUG_ON(!folio_test_locked(folio));
- 	spin_lock(&mapping->host->i_lock);
-@@ -256,9 +244,14 @@ void filemap_remove_folio(struct folio *folio)
- 	xa_unlock_irq(&mapping->i_pages);
- 	if (mapping_shrinkable(mapping))
- 		inode_add_lru(mapping->host);
-+	free_folio = mapping->a_ops->free_folio;
- 	spin_unlock(&mapping->host->i_lock);
- 
--	filemap_free_folio(mapping, folio);
-+	if (free_folio)
-+		free_folio(folio);
-+	if (folio_test_large(folio) && !folio_test_hugetlb(folio))
-+		refs = folio_nr_pages(folio);
-+	folio_put_refs(folio, refs);
- }
- 
- /*
-@@ -318,6 +311,7 @@ static void page_cache_delete_batch(struct address_space *mapping,
- void delete_from_page_cache_batch(struct address_space *mapping,
- 				  struct folio_batch *fbatch)
- {
-+	void (*free_folio)(struct folio *folio);
- 	int i;
- 
- 	if (!folio_batch_count(fbatch))
-@@ -335,10 +329,19 @@ void delete_from_page_cache_batch(struct address_space *mapping,
- 	xa_unlock_irq(&mapping->i_pages);
- 	if (mapping_shrinkable(mapping))
- 		inode_add_lru(mapping->host);
-+	free_folio = mapping->a_ops->free_folio;
- 	spin_unlock(&mapping->host->i_lock);
- 
--	for (i = 0; i < folio_batch_count(fbatch); i++)
--		filemap_free_folio(mapping, fbatch->folios[i]);
-+	for (i = 0; i < folio_batch_count(fbatch); i++) {
-+		struct folio *folio = fbatch->folios[i];
-+		int refs = 1;
+diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
+index dfefb4a9161ad..5e84969cb239b 100644
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -1221,6 +1221,20 @@ static struct cache_deferred_req *svc_defer(struct cache_req *req)
+ 	} else {
+ 		size_t skip;
+ 		size_t size;
 +
-+		if (free_folio)
-+			free_folio(folio);
-+		if (folio_test_large(folio) && !folio_test_hugetlb(folio))
-+			refs = folio_nr_pages(folio);
-+		folio_put_refs(folio, refs);
-+	}
- }
- 
- int filemap_check_errors(struct address_space *mapping)
-diff --git a/mm/internal.h b/mm/internal.h
-index 1c1b37bd4226d..92051c970ac1c 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -129,7 +129,6 @@ unsigned find_lock_entries(struct address_space *mapping, pgoff_t *start,
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
- unsigned find_get_entries(struct address_space *mapping, pgoff_t start,
- 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
--void filemap_free_folio(struct address_space *mapping, struct folio *folio);
- int truncate_inode_folio(struct address_space *mapping, struct folio *folio);
- bool truncate_inode_partial_folio(struct folio *folio, loff_t start,
- 		loff_t end);
-diff --git a/mm/truncate.c b/mm/truncate.c
-index cd6768ca5b975..785bfc4147e8b 100644
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -597,6 +597,9 @@ EXPORT_SYMBOL(invalidate_mapping_pages);
- static int invalidate_complete_folio2(struct address_space *mapping,
- 					struct folio *folio)
- {
-+	void (*free_folio)(struct folio *folio);
-+	int refs = 1;
++		/*
++		 * A GSS integrity/privacy unwrap can reset rq_arg.len so
++		 * it no longer measures from the start of the receive
++		 * buffer (see gss_unwrap_kerberos_v2()). In that state
++		 * len - iov_len does not locate the buffer start, and a
++		 * snapshot taken here would be replayed without GSS
++		 * verification. Refuse to defer; the caller fails the
++		 * request and the client retries.
++		 */
++		if (rqstp->rq_auth_slack ||
++		    rqstp->rq_arg.len < rqstp->rq_arg.head[0].iov_len)
++			return NULL;
 +
- 	if (folio->mapping != mapping)
- 		return 0;
- 
-@@ -613,9 +616,14 @@ static int invalidate_complete_folio2(struct address_space *mapping,
- 	xa_unlock_irq(&mapping->i_pages);
- 	if (mapping_shrinkable(mapping))
- 		inode_add_lru(mapping->host);
-+	free_folio = mapping->a_ops->free_folio;
- 	spin_unlock(&mapping->host->i_lock);
- 
--	filemap_free_folio(mapping, folio);
-+	if (free_folio)
-+		free_folio(folio);
-+	if (folio_test_large(folio) && !folio_test_hugetlb(folio))
-+		refs = folio_nr_pages(folio);
-+	folio_put_refs(folio, refs);
- 	return 1;
- failed:
- 	xa_unlock_irq(&mapping->i_pages);
+ 		/* FIXME maybe discard if size too large */
+ 		size = sizeof(struct svc_deferred_req) + rqstp->rq_arg.len;
+ 		dr = kmalloc(size, GFP_KERNEL);
 -- 
 2.53.0
 
