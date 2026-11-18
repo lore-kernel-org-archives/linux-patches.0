@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030599;
-	b=Zzu1hNbq7f7kH9zLLic2jdxyOYUmPFpB5OagzAcpG0uEEZHoBci7xkgjgzIgr6WLG8T4
-	 pd3tTVw63mxqSlGYdpET8L/rScFqZPwW6K9p2Id1KioCh/44O7kFLyQsnSj+SEtX/odUn
-	 TfPddZT7S3iYJEdwCn+fz44EhMSLDHZLACDqk0O5YuSYWxJOi+lOp4wX0IWTLv/k8Tbfq
-	 cfONWHX4buLDgm9nAIQ3OhyGqrylAmbmJ/H27xsXbUKgkglpHlbGsT/kHSHQsS/jCZNdi
-	 RZNZzo1TNuvRYHyTVsX9Mf1x5QPREnY9JiAnG21UjE7sVUMmiLASeY6v4q+Fn1Cc1hA==
+	t=1795030602;
+	b=XrUPKHj6Ho+fqQLYQuV6tR9xBQ1wPxvAc7JDrU5drc7VWQEDrF9GirFbXwLSEC2KIXcO
+	 6KxOogc4EuEGzEwam/7ucNGTgBj8iXz9mYlTQpZA60kJfOJ0qISOou3865dpydIimFOjq
+	 +Lptw/6FZ/AYNZ/nuz5e+kD/2YWvYMEXTEBaisAtFRx3jb6Wz8Rgww/fp7XqA0hHffe2l
+	 KM0Utbluxw1c9lKpjn0OYBKYl66o53CEGM2ylqcij4UXmpaCFgDuWm44jrFvmtJyoWgDU
+	 5VVJzTKZcSIuIYizhQ4v/Tf0/jlzvkpGn4z6X7TLMEeDUZaVi7RQWG6XAQ5rv09dHUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030599;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030602;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pnqpc1EgkxgThsCVFWQKxUovBqX/NUyZkJNzVSI7STo=;
-	b=v4foFQw8jMvVyi0+QFRwFeIy8+SEP1C4ICSAM8ZXqbzZVydKuOuc4bd5ozTUxNnwEwd/
-	 qsut8iA4MGo0gdsOh6inWpE7XsBF1x7ZFDVCzMGVPcBu7ak7JB2fYODNhHaGvkk4uFzJU
-	 HWqp8NRAOG1olQrAJ52JEO6Etm/Dbezyr86J3Os7mHQA6cpwhvAatuEt7Jk00Oh6CX0Yw
-	 U1PZgecI6IgXa7vJSKBWhj7F1JpL3akd0Ex92nnV8a5GkPj38iqpmxjzQkWsZ0NRmfT8X
-	 xsLJZHhNUfijMKABHcVZq0mF6m9VsRF1fnjMqGtKWZykaYE4K7qmZQ4Yoa4/H408wUw==
+	bh=kLLsmhN/qWivSSZh1QWUxxXr/Tc467xpPsKBiH/6OPg=;
+	b=ZGKqprMkwvggW4I2itMoeZ5Nt7fe5fw+0FNP8KLbBv5exM/UY7POQ2/dIkfOalSYDFN+
+	 yBJtrqmknSLVG8P3lmgNkctHDnB7XfwYeay4x2Ot/NQ5XWXeTIsfFRVBNs6MiyEoCjU1G
+	 TA4DGK4DVKAXtFLhMesEx6UhKLnKyJEg6VHxTb1LTBH8PlEP252OQHgTRwidm3GFm3oOy
+	 rL2UO6kBuE2IXe/VPe//CSymcNJVW57HunfmiFRonF7+zaOTfG+Y8IhvXDidbmDGgSnkI
+	 kYYmeVYwqveBHFCd/EBTF26O6i68TBYE7qFg8iuEIQs2pryiE3aoR1Bc61wLhhWn54Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1S7kXPt5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ITzCm7+6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CF9606F256;
-	Wed, 18 Nov 2026 19:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D006073D42;
+	Wed, 18 Nov 2026 19:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1S7kXPt5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DAC1F000CC;
-	Wed, 18 Nov 2026 19:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ITzCm7+6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3FE1F000C5;
+	Wed, 18 Nov 2026 19:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030599;
-	bh=pnqpc1EgkxgThsCVFWQKxUovBqX/NUyZkJNzVSI7STo=;
+	s=korg; t=1795030602;
+	bh=kLLsmhN/qWivSSZh1QWUxxXr/Tc467xpPsKBiH/6OPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1S7kXPt5zAdmgTXNV2uvIuXmx5Z4aj3kEag/J5kMcucJh7ih6UIHfUNpuOEPZAMt7
-	 Cqajs2vCcEgJwO2JP7OfAwt4qDhfKX+AwIjNocPYNjEqzKzGR1MW1FvHaQLtdL1jiS
-	 pEYB8vS7zqvK1AWAfT0oraKU9Chyn7nOlWtz8DV8=
+	b=ITzCm7+6M+OqTEQx95zSYDzLntsmyiZt7C4CGSx9sAFpiwUr8yr8Xe9+73/3Fkj/5
+	 oJeAI8OJ9YrTDyRpWRxB9EO0B5jSo569ckMna6NbHA97IO7sW9aqOTvVi/jngPo5GA
+	 U7newWJEmYBzkKFDLeB6tEDEM/Bwt+E929Mm36po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuri Zaporozhets <yuriz@vodafonemail.de>,
-	Mark Brown <broonie@kernel.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0762/1756] ASoC: dwc: Use OF match data again for StarFive JH7110
-Date: Wed, 18 Nov 2026 15:48:09 +0100
-Message-ID: <20261118150039.970863071@linuxfoundation.org>
+Subject: [PATCH 6.12 0763/1756] iommu/arm-smmu-v3: Ensure L2 tables are visible before L1 ptrs
+Date: Wed, 18 Nov 2026 15:48:10 +0100
+Message-ID: <20261118150040.004331333@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,73 +71,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuri Zaporozhets <yuriz@vodafonemail.de>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit d532e2f5c288556075dc429941861391118787a0 ]
+[ Upstream commit 84366fb547ed987c4857311da0e5127d95bf97e6 ]
 
-Commit d6d6c513f5d2 ("ASoC: dwc: Use ops to get platform data") made
-dw_i2s_probe() fetch its platform data with of_device_get_match_data(),
-and commit 52ea7c0543f8 ("ASoC: dwc: i2s: Add StarFive JH7110 SoC
-support") put the JH7110 configuration into the OF match table. Commit
-9c97790a07dc ("ASoC: dwc: Fix non-DT instantiation") then went back to
-pdev->dev.platform_data so that non-DT users such as AMD work again.
+Commit 6fabce53f6b9 ("iommu/arm-smmu-v3: Add a missing dma_wmb() for hitless STE update")
+adds a dma_wmb() to arm_smmu_write_entry() to make sure stream tables
+and context descriptors are observed first.
 
-Since then the JH7110 match data is never read. The probe runs neither
-the JH7110 clock and reset setup (i2s_pd_init) nor uses its capability
-flags; it configures the DAI from COMP_PARAM_1 instead. On the
-VisionFive 2, i2stx0 drives the bit and frame clocks for HDMI audio, but
-COMP_PARAM_1 reports it as slave-only, so the sound card fails to probe:
+However, STE L1 table descriptors are configured directly
+via WRITE_ONCE(), where before that they were zeroed with memset()
+inside dma_direct_alloc() then written to abort in via memset() also
+in arm_smmu_init_initial_stes() without a barrier in both cases which
+means that the SMMUv3 can observe the allocated table before the
+written descriptors causing it to fetch random data.
 
-  designware-i2s 120b0000.i2s: ASoC error (-22): at snd_soc_dai_set_fmt() on 120b0000.i2s
-  asoc-simple-card sound-hdmi: probe with driver asoc-simple-card failed with error -22
+Similarly in arm_smmu_write_cd_l1_desc() where the L1 CD is written
+after dma_alloc_coherent() with no barriers.
 
-Take the OF match data first and fall back to the platform data when
-there is none, so that both DT and non-DT users get their configuration.
+Add dma_wmb() in both cases.
 
-Tested on a VisionFive 2 v1.3B (v7.0.3 with local HDMI audio patches):
-the HDMI sound card now probes and plays through i2stx0. The non-DT
-path is build-tested only.
-
-Fixes: 9c97790a07dc ("ASoC: dwc: Fix non-DT instantiation")
-Assisted-by: LLM
-Signed-off-by: Yuri Zaporozhets <yuriz@vodafonemail.de>
-Link: https://patch.msgid.link/20261001192552.2904-1-yuriz@vodafonemail.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 48ec83bcbcf5 ("iommu/arm-smmu: Add initial driver support for ARM SMMUv3 devices")
+Reported-by: Sashiko <>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/dwc/dwc-i2s.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/dwc/dwc-i2s.c b/sound/soc/dwc/dwc-i2s.c
-index 5b4f20dbf7bba..2ca74a02b30ac 100644
---- a/sound/soc/dwc/dwc-i2s.c
-+++ b/sound/soc/dwc/dwc-i2s.c
-@@ -21,6 +21,7 @@
- #include <linux/reset.h>
- #include <linux/slab.h>
- #include <linux/pm_runtime.h>
-+#include <linux/property.h>
- #include <sound/designware_i2s.h>
- #include <sound/pcm.h>
- #include <sound/pcm_params.h>
-@@ -916,13 +917,16 @@ static int jh7110_i2stx0_clk_cfg(struct i2s_clk_config_data *config)
- 
- static int dw_i2s_probe(struct platform_device *pdev)
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 28331d9118b63..af3070db47460 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1240,6 +1240,9 @@ static void arm_smmu_write_cd_l1_desc(struct arm_smmu_cdtab_l1 *dst,
  {
--	const struct i2s_platform_data *pdata = pdev->dev.platform_data;
-+	const struct i2s_platform_data *pdata = device_get_match_data(&pdev->dev);
- 	struct dw_i2s_dev *dev;
- 	struct resource *res;
- 	int ret, irq;
- 	struct snd_soc_dai_driver *dw_i2s_dai;
- 	const char *clk_id;
+ 	u64 val = (l2ptr_dma & CTXDESC_L1_DESC_L2PTR_MASK) | CTXDESC_L1_DESC_V;
  
-+	if (!pdata)
-+		pdata = dev_get_platdata(&pdev->dev);
++	/* Ensure the zero-cleared L2 table is fully visible. */
++	dma_wmb();
 +
- 	dev = devm_kzalloc(&pdev->dev, sizeof(*dev), GFP_KERNEL);
- 	if (!dev)
- 		return -ENOMEM;
+ 	/* The HW has 64 bit atomicity with stores to the L2 CD table */
+ 	WRITE_ONCE(dst->l2ptr, cpu_to_le64(val));
+ }
+@@ -1511,6 +1514,9 @@ static void arm_smmu_write_strtab_l1_desc(struct arm_smmu_strtab_l1 *dst,
+ 	val |= FIELD_PREP(STRTAB_L1_DESC_SPAN, STRTAB_SPLIT + 1);
+ 	val |= l2ptr_dma & STRTAB_L1_DESC_L2PTR_MASK;
+ 
++	/* Ensure the new L2 table is fully visible. */
++	dma_wmb();
++
+ 	/* The HW has 64 bit atomicity with stores to the L2 STE table */
+ 	WRITE_ONCE(dst->l2ptr, cpu_to_le64(val));
+ }
 -- 
 2.53.0
 
