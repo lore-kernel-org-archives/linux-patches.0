@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049877;
-	b=YIQEe1TcoKunnlPdJQkNHrSagHZ0bslTbl4eCKKLg/n+aYqz3GlJJ+Zg7i8cV3v8OMYg
-	 kYmTlu0BtwSI255duURyYe+6q2Yt7jCr/5l0/BFQbAFnmjz3b1UzSW31c5OvmndhR5Etk
-	 bKUw7AfJx6yK7VXH1GjZlwjQQnzoFrCfcKqMX4OB17QxEUnRacU+S1RAHoeO7vfSureZR
-	 TZC16KKSHTp2uS9/5gShwhT+wtNvM42j+YcRjR3v5KlnOOb5e+dNJEsvPUVO5rRIuULZn
-	 62VWoUASXzcaYCGoCsYKlB+zx8O3uRrqLQzsjGHt5Ogtx1lFY0y235BxP63KlaCRj9A==
+	t=1795049879;
+	b=grLCmhHtkHh8GhpIYvvuOc3VYS4mvODsQCQNZzovI496pt1TsXJ2ZLqRSaWBTFrjenq0
+	 zXpwP7zwIkDi5DyD5A11tdn90nk9K6f3/prHKYqsIv7VA+aiDkEF2JtfWIVDSrMCof0kS
+	 gqttuEQ2WIfi9O8QIfc4OeKLm5NEckq0Tg6khwjSGvLEyPdVXtXpP04FYq0UCIIhkTJIv
+	 rik9iERu5YLYngTrPLe/e1i43oju0hkPMIfVgvMg00OjJcRgr5CWb6iZPhtg9p/lCTTIA
+	 0YefUC3b5YaqVz4GEhkqdtj12MHKFCZQX1Am2JkpQZt61oIbQ60W+XX3D8vPQxCzZNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=szufM+9jOq4RwHrZ89LVlC8EJhEVfk+8zhomRZbacBU=;
-	b=ZfU+JPJ8RWs/r/gMVyQ23sxpVTCLqUfUvEO3YuzPu3flNmWjV/sSKtYFlKB/LFLqimQK
-	 kBea20hsR9Yc8Ie4yqi4hPnqyID7pvJusnDvZ952P17LLjIUve98fVVWyEFDkS8AB4iv1
-	 0VM9GaGLsqoE67B9lxb1V1sU5UhycrLgrnsG4RpsGgY8hpcGSbOcyyp7RhzULw3+0xg4k
-	 VmI58jJEAW4sIDRhU9Ih1yXJbryweQ5P3h86wisHIA4TC8FPXlPRp6qS4eRIFzn0Ejz3U
-	 CCvX5ZqfoCKh57iyEVXTgcImjSLE3+MBPo9rp93fvXfT4JGPNosASlGork8s48Wclhw==
+	bh=QtwqBXx2Q0TDia4zZoiPcxgAVNIt6o64rqjLitqUDQA=;
+	b=3HDNYwcIBBj00YyGAAt+WOB1va6mxlIaQiu8kL3lrVbE3Ej203v01SomxImjU7rmhgpt
+	 fKBOvWYpQS4HdyQJ6XiB+BUPFLYQwpN9hDzEb46Vd2hYamtQvC62UuOtwboI9Qi2yP5El
+	 LvSh00TxLFP+UYMferYzoHkdBAJ9nwOiZw4pQ20sAPHNKaNZrr+WL1DYJMlP3TEUbTsi8
+	 auex77XdQIG4guQrv8KvY5iSRWKO4kBk9YlyD3JRj3pct97k0lceQs5Mh246mqCGnjP8A
+	 lJDlc5KB3E71+vfhBJx0QWLTpW5riNKOq9xyKBg3jfeRt55TOPSyOpj7ETltNqRMpLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8VWx0Be;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPpzx2lB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035AD606A320;
-	Thu, 19 Nov 2026 00:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC16A606A32C;
+	Thu, 19 Nov 2026 00:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P8VWx0Be
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579101F000C4;
-	Thu, 19 Nov 2026 00:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPpzx2lB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B5E1F000C4;
+	Thu, 19 Nov 2026 00:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049876;
-	bh=szufM+9jOq4RwHrZ89LVlC8EJhEVfk+8zhomRZbacBU=;
+	s=korg; t=1795049879;
+	bh=QtwqBXx2Q0TDia4zZoiPcxgAVNIt6o64rqjLitqUDQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P8VWx0BesS8Ap+ehuoNdW5A9B1ei0PkUL34yYnFlbNx7Ilfn3E6GS0jVJg9CeTRh8
-	 IivPa0AOPu1LFeg8TrWzt2rtU65XqiM4bOkj02iVZmzcWSevO3eN0N6kWyjw7fIHRk
-	 Rg+eV/V3AwhqBXjkxz/BbRVEV1oQ0cCA9oiOLzKc=
+	b=RPpzx2lBU7/woUKtxs3J/O4diX1Pde8YAewriWqHTTRlPEr5W52fKumu85mcYF4OI
+	 rveyLLYuYI6MRioqG7SK5Bgvs/csnpOkT/CuY+NIkOV3KLiMbqVZ4Pzqf+frIpaVKS
+	 Vn8aKFKJT8i31G92knMs+zNLYSXQCUe8fjqZ/LVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2509/2857] net: selftests: use skb_share_check() in the loopback receive hook
-Date: Wed, 18 Nov 2026 15:59:03 +0100
-Message-ID: <20261118150331.885812587@linuxfoundation.org>
+Subject: [PATCH 6.1 2510/2857] net: stmmac: selftests: use skb_share_check() in the loopback receive hook
+Date: Wed, 18 Nov 2026 15:59:04 +0100
+Message-ID: <20261118150331.918772251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,7 +71,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolai Buchwitz <nb@tipi-net.de>
 
-[ Upstream commit fbd3a301b1378423a5cfc23a42e3c0b04e26192c ]
+[ Upstream commit a7a89019bac0e8810bde7f1419f4adf9adc23d41 ]
 
 The loopback hook gets a shared skb when another ETH_P_IP handler is
 bound to the device. skb_unshare() does not unshare it, so
@@ -79,21 +79,21 @@ skb_linearize() on a non-linear frame hits BUG_ON(skb_shared()).
 
 Use skb_share_check() instead.
 
-Fixes: 3e1e58d64c3d ("net: add generic selftest support")
+Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
 Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-1-458369bfa1ba@tipi-net.de
+Link: https://patch.msgid.link/20261007-nb-net-selftest-shared-net-v1-2-458369bfa1ba@tipi-net.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/selftests.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/selftests.c b/net/core/selftests.c
-index 946e92cca2111..78c2c6acad427 100644
---- a/net/core/selftests.c
-+++ b/net/core/selftests.c
-@@ -190,7 +190,7 @@ static int net_test_loopback_validate(struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index fa338b083129c..11172f05ef6fb 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -262,7 +262,7 @@ static int stmmac_test_loopback_validate(struct sk_buff *skb,
  	struct tcphdr *thdr;
  	struct iphdr *ihdr;
  
