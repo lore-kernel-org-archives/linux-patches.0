@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040689;
-	b=chqGTgjL+aHF1FtZ4GqsM2SJrfh/IcOIEVulvP86o2mCHqTmn9pFImDFyt2y7M+o+Ru/
-	 yAYabyyY/bZZbXVf8c/3sxxBQi6WqjTDr6sQpntXivI2K8FEiKsfBgN7UqcpLf7cnB4Fo
-	 IwN/dtxtN0lHD2kaHn3vCYnCkuEMIsiHvlhUxtyen9gQR+9TjAI8gCE7ATsnK3VX225JA
-	 XVDNh/OH8z3QsCOZzqxUQKbk4DdW3GS2ehufBmndkVE071tP+Z2DTJDm7RPIMobesM/ZN
-	 D0dCLi1wzXb8poOvHnHMkmBqN5mllkAbAzaHfy8SogFMgYubs7JuQpDJATaRjFObZmg==
+	t=1795040691;
+	b=2ayTTuJOT7SS4wPXpI9u/zkh6hAmTExx+10KrcGXyuVz7N7FqUoPgFmXLbya5vm+x1y4
+	 eyIz9fbzHWQfTM7jxmI9LpRt0QGG0YFmZMlNAm6tHQeUjfiIvooRzNgmen0p/9rrK4QcN
+	 M7dR4aVGrYfhKxbPMNXTdN/luBitqJe4Tc3vGfbkr3OrGnRJcwUSasNCPpN97ez5xhEiK
+	 pSs6rPqHoeuh8LF5jJ/t5fUTj4mVajwK5hYZiHkRjBegTORKH/3QX2lI0pspRB1iU7HeQ
+	 xrKabodP/yyLlbKBOrGgjn5RU2eNigAUcLzM0nQom812OdP0296i2cvK9iSNejbM30A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040689;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cP7d0ioxSnm4t6i+hLheQw0YKWHPihImJVjTBV2J9+0=;
-	b=u9quQC9FlT7zQpfDUkL0s/7L/3dtVVDzLL6G4Hu9BeestO9TnhRjWlA8vRxuMoISfZou
-	 fZT7aQdHVy3leHnSpHJqzqy3/EMRzgCQ7mL6ALsM+trpi/YUNF4tF7OybeLEEWzwOk4cf
-	 CUgwwokElr9NwxObaTmBVQLfkG+Fvk1zDuWAkKdFNW1zkXEw1qYEqNtI+jNc42MesxQ56
-	 lLnlnBlZgCR2oKQbzbtztorRxrUUO3ya0mMD54BGDhB/KlqgV9qygjrHvOSRbvTG5YV7r
-	 yA3yVyMP8SPMrkGUHS9mqJRIrCpTy/5a0u7KMY3xi3BOaLJr2crRZJZVgHIMqjEYcXw==
+	bh=92sOR57sXqn8V+bBzRGNfS+D/0q0axDcvrokKcR/XmI=;
+	b=4O3jEYilYoFha1Q5D/qpFMMmPeYvbmB2OfgraQENq+g2uPZ2ZWy0ZH/gE0em2JEw++6D
+	 17onTZB7Vc89G6cQSbeFs2krmNvY36Nl5d5LoHS/rq2pgfOAv1iqXMCEWfv/gyKtMvm6i
+	 s0WmmFy1+guCdIERv4S+4DCAz+IJi7KJ5GzmjJoGn4dMnT7kArz3KihMyE1upJGSjk9Cw
+	 r8yQCj0HIoTvfGsXp/DesiJ55MQF952oaktVWDjzjOcBF+staYHMIO1MOf+bGjx5Wfot7
+	 8zK4aC92yEWm/F+K/IOkVpWrvxzFZKpqsgXtUj1WauO32/STY87X+KvasqvEft3xuRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dFI/15bA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrNjfK58;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E08606A325;
-	Wed, 18 Nov 2026 22:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CFB606A32A;
+	Wed, 18 Nov 2026 22:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dFI/15bA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630961F000C4;
-	Wed, 18 Nov 2026 22:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NrNjfK58
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274B11F000C4;
+	Wed, 18 Nov 2026 22:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040688;
-	bh=cP7d0ioxSnm4t6i+hLheQw0YKWHPihImJVjTBV2J9+0=;
+	s=korg; t=1795040691;
+	bh=92sOR57sXqn8V+bBzRGNfS+D/0q0axDcvrokKcR/XmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFI/15bAd9G8Et/hDaQxfl0UIFn2U+XbtTIZSzwBUIUU+kzCxAQNpJSD2QPxexEj4
-	 E7YQHb1y/ZixuPdrYcBErKGSxhYY5G7munhu3FjUqFXmbXoYix8K5sEfhqHra8eqx1
-	 5jVaDNDVLLRvnvMqAopTph0H8hz64swM4RSm/SqM=
+	b=NrNjfK587i83V1qwfd48/qwVHQ97Ug2Fa5Wptv23RT/1IFzUHNLiMrepznYswKPox
+	 DzMNdVQobVDItW5R9aoT85iR4GKBpFfmGijXq6imbYxj7gXWGIVVABoUfKFKWxuaNZ
+	 R6NWccfU0eXVjie6+sLJRorAmOmLRhtCFb0L4ymY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2547/3318] perf/cxl: Unfreeze counters after handling an overflow interrupt
-Date: Wed, 18 Nov 2026 15:52:49 +0100
-Message-ID: <20261118150437.706756865@linuxfoundation.org>
+Subject: [PATCH 6.6 2548/3318] perf/cxl: Validate the hardware-reported counter width
+Date: Wed, 18 Nov 2026 15:52:50 +0100
+Message-ID: <20261118150437.735739589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,18 +72,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 2e4fe234c72d65a09bbfd421240a0cfd7c8046a2 ]
+[ Upstream commit 1c5499e67303a9393388197fb14b39ed06a3dc55 ]
 
-The counters run with Freeze on Overflow set, so one overflow freezes every
-counter in the block (CXL r4.0 8.2.7.2.1), and a frozen counter "remains
-frozen until explicitly unfrozen by software" (8.2.7.1.3, Table 8-183).
-cxl_pmu_irq() reads the overflowed counters and clears the overflow status
-but never unfreezes, so everything stays frozen until the next pmu_enable()
-and events in that window are lost.
+cxl_pmu_parse_caps() takes the Counter Width straight from the CPMU
+Capability register without a bounds check. The Counter Data register is 64
+bits wide, so a device reporting 0 or more than 64 is reporting nonsense,
+and GENMASK_ULL(width - 1, 0) in the read path then shifts out of range.
+That is undefined behaviour, and a UBSAN splat where it is enabled.
 
-Unfreeze after clearing the status, unless the PMU has been disabled in the
-meantime - cxl_pmu_disable() freezes the block deliberately. Track the
-enabled state and leave it frozen in that case.
+Reject a counter width outside 1..64 at probe.
 
 Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
 Reported-by: sashiko-bot@kernel.org
@@ -94,60 +91,29 @@ Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/perf/cxl_pmu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index 79b1d824d0b12..4ee39a80e73ac 100644
+index 4ee39a80e73ac..261311dd47f57 100644
 --- a/drivers/perf/cxl_pmu.c
 +++ b/drivers/perf/cxl_pmu.c
-@@ -107,6 +107,8 @@ struct cxl_pmu_info {
- 	struct hlist_node node;
- 	bool filter_hdm;
- 	int irq;
-+	/* Set between pmu_enable() and pmu_disable(), read by the IRQ handler */
-+	bool enabled;
- };
+@@ -141,6 +141,15 @@ static int cxl_pmu_parse_caps(struct device *dev, struct cxl_pmu_info *info)
  
- #define pmu_to_cxl_pmu_info(_pmu) container_of(_pmu, struct cxl_pmu_info, pmu)
-@@ -603,6 +605,7 @@ static void cxl_pmu_enable(struct pmu *pmu)
- 	void __iomem *base = info->base;
- 
- 	/* Can assume frozen at this stage */
-+	WRITE_ONCE(info->enabled, true);
- 	writeq(0, base + CXL_PMU_FREEZE_REG);
- }
- 
-@@ -611,6 +614,7 @@ static void cxl_pmu_disable(struct pmu *pmu)
- 	struct cxl_pmu_info *info = pmu_to_cxl_pmu_info(pmu);
- 	void __iomem *base = info->base;
- 
-+	WRITE_ONCE(info->enabled, false);
- 	/*
- 	 * Whilst bits above number of counters are RsvdZ
- 	 * they are unlikely to be repurposed given
-@@ -809,6 +813,21 @@ static irqreturn_t cxl_pmu_irq(int irq, void *data)
- 
- 	writeq(overflowed, base + CXL_PMU_OVERFLOW_REG);
- 
+ 	info->num_counters = FIELD_GET(CXL_PMU_CAP_NUM_COUNTERS_MSK, val) + 1;
+ 	info->counter_width = FIELD_GET(CXL_PMU_CAP_COUNTER_WIDTH_MSK, val);
 +	/*
-+	 * An overflow freezes every counter in the CPMU, so unfreeze once the
-+	 * overflowed ones have been read and their status cleared. Otherwise
-+	 * they stay frozen until the next pmu_enable() and events are lost.
-+	 *
-+	 * Not while the PMU is disabled, so as not to undo an intentional freeze.
-+	 * The check is advisory, not exclusive: pmu_disable() normally runs on
-+	 * info->on_cpu with interrupts off, where the pinned handler cannot
-+	 * preempt it. In the one window where it does not - the migration in
-+	 * cxl_pmu_offline_cpu() - the counters are legitimately running again,
-+	 * so unfreezing is correct there anyway.
++	 * The Counter Data register is 64 bits wide, so a Counter Width of 0 or
++	 * >64 is invalid. Reject it rather than let GENMASK_ULL(width - 1, 0) in
++	 * the read path shift out of range.
 +	 */
-+	if (READ_ONCE(info->enabled))
-+		writeq(0, base + CXL_PMU_FREEZE_REG);
-+
- 	return IRQ_HANDLED;
- }
++	if (info->counter_width == 0 || info->counter_width > 64) {
++		dev_err(dev, "Invalid counter width %d\n", info->counter_width);
++		return -ENODEV;
++	}
+ 	info->num_event_capabilities = FIELD_GET(CXL_PMU_CAP_NUM_EVN_CAP_REG_SUP_MSK, val) + 1;
  
+ 	info->filter_hdm = FIELD_GET(CXL_PMU_CAP_FILTERS_SUP_MSK, val) & CXL_PMU_FILTER_HDM;
 -- 
 2.53.0
 
