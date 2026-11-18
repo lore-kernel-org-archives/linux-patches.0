@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044612;
-	b=2bLcybAxpUbi5/VtDGZYYkV8EiAAIlcJKvPS+Pbx1eBJI8q0ucDu4GcsLXCDye1b6eTu
-	 8TlRiBxlBEBUKQlp6IxW81ht2qEDRxpQTvLXWB7vcCbCpzo39WrJBaCnVc+eTsRflgDBX
-	 VKlV63mmOi8R6bP5WgKkZOA6OR4cr2U0EIb5fftR9Qgti2rrrExSkj77WZhSqmauHxbK1
-	 nmWTyUwlHIFfinnQcnf7OTPNxac0clgtDXzLp0YOJL8LQV+7kaVmlEdTrHuhlPeo39MYH
-	 0YcaIRPNKhe3GoULOz9h+tFBnkpqRTUzyWABN2zUB5lwKRLtDoaQFliAiuAx8iYk9bg==
+	t=1795044615;
+	b=JHYUqnS49pvqDbXU1CqwPmrCIqDZ+XaeCOmxgyjNfX/sF0i7REDvCS+WW5ta5bjDnjnA
+	 tBJeagzp5tXUneFJQM3+8qR5815vZ14tEm0fdF8GoBOPLSCPS0OiMYD+H2raCMiwCC0Ph
+	 F2Ht9/cMDrMYYRuEwIDTOO0VpYFJPCLgFuplSUAgZNLVfMxpJYEoaFnVYIZmbU2WCtVXZ
+	 9yK5jMc6zDsCMWG0B8y3YFaDX4hRNELlkeirWnb/igh1tWAPhDoFJ7X2OYZojnfcGwUi8
+	 SX31GdHEytu7lJwN33dmbD8cD44di48ixrehdsgdCLMkQQ9BcicUXL8dMlSgp6thO7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044612;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UFxg+0cQhd85QDQQ/1P0mL9nYYOn2kjaOjGJbbc4rKw=;
-	b=x8z8FXwm079SUF+/VthWDTwozVnot/YL8Ji+awC9y9K9rsoU3fUHvtrT9cg994EIKOE3
-	 3xXAXk1OjOCMjWghX/5Cz1letBjVacO/lYLNS0CmbRb4x3a0M9q0irBzZkO3D0kVm0VXc
-	 QDBl2gpMhODkifzUIN7pEf97BUkaIRHln4V72vmLKCydQ7eGbcVnAj5cOOsjZnA9ttd8m
-	 Gom6GB0x8GHzzQZRJZwSQj3tiIkQYxU4SVOT6Py1mNpUztjRTcRI7J/TSPrhQNjMEaiHo
-	 +XezisJhbuL11VvKzauiwwhdUPyS+nOEn0H0rOV/NxlTq56gspQaUBsasD5gOLezNMg==
+	bh=vfI/ItPpXWWlk7EGgNFxirnP5IMmiv6zy51lboEXpN0=;
+	b=5UEGqCHG4z5VOHU1KjskRCwhBuV+s1h4g9415PP9pPftar6/P++7k9XTqm8ORH346GK7
+	 QkmF98mxWGWHnyF/LAfQok3pA4K90iqOM0TlheyyQag1TPCqXefI1IWUpYoTCzTCVLsEo
+	 4oK6KNmusX1gcyK854D99BZ0YJxXlk4s+bCkYKSINrQycWGTZW3nFCFvvYWsctUHw2Ea0
+	 YktatvNEU7Vetncg2CVeHKhia4XzJAmgQf2o9IKWcgVoWo0rS6SZMwacF7XmHWZRmodaz
+	 YYJcC5orJyeeBRM9XOxFX9uZ4yin0oTS6tXcHEOP8T0DRGHoYLUsz+du8vRB9s9Mn5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ul/+dxwc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpKtxUoF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38BF606A32A;
-	Wed, 18 Nov 2026 23:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02447606A325;
+	Wed, 18 Nov 2026 23:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ul/+dxwc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EDF1F000C4;
-	Wed, 18 Nov 2026 23:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpKtxUoF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003291F000C4;
+	Wed, 18 Nov 2026 23:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044611;
-	bh=UFxg+0cQhd85QDQQ/1P0mL9nYYOn2kjaOjGJbbc4rKw=;
+	s=korg; t=1795044614;
+	bh=vfI/ItPpXWWlk7EGgNFxirnP5IMmiv6zy51lboEXpN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ul/+dxwcX55j9nAtZU/sd8aB8rI2PKm5HAAjQ1N2ytbAUUrMn5OB8JETY7iue+aVZ
-	 XlgESvkjLlDyC/D2TBmeWZ/k1vqgAPAOIRuGzDJmYDZeSZXpFrZ3VJmqhE7vLDRMp9
-	 fq+38RvMKxyYLIGjcJjBaVtSJA6DnG3qpWZNoEfk=
+	b=mpKtxUoF2qyJg8DjdomovdL8fDOCNJYINR3Dh3H3h80uS2TBwRoc1OhSi7vIVa0f1
+	 zrW3UaU6h+qBviR6LeDPJxlI0foQp1edgsrRb394QQ0fQrcY8cD9rGyomdHgjpTbcN
+	 jv0eojoQ3sLDyEConcRbADDf0nQIRpK2EO4SOyVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Sean Young <sean@mess.org>
-Subject: [PATCH 6.1 0569/2857] media: rc: fintek-cir: process a full RX buffer instead of overflowing it
-Date: Wed, 18 Nov 2026 15:26:43 +0100
-Message-ID: <20261118150221.974071305@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 0623/2857] KVM: Use goto to handle errors during memslot preparation
+Date: Wed, 18 Nov 2026 15:27:37 +0100
+Message-ID: <20261118150223.921565375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,59 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d1febef1bcfa7bbc401729f994c375b91a833911 upstream.
+commit 23a205797cec86f391d0be886b9bc741e1262063 upstream.
 
-fintek_get_rx_ir_data() drains the CIR RX FIFO into fintek->buf[], which
-holds RX_BUF_LEN (32) bytes, for as long as CIR_STATUS reports pending
-RX data:
+Use a goto to unwind early memslot changes if preparing for a memslot
+operation fails.  This will allow moving the creation of guest_memfd
+bindings into kvm_set_memslot() without needing to copy+paste the unwind
+logic.
 
-	do {
-		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
-		...
-		fintek->buf[fintek->pkts] = sample;
-		fintek->pkts++;
-		...
-	} while (status & rx_irqs);
+No functional change intended.
 
-Nothing bounds fintek->pkts. If the hardware reports data for more than
-RX_BUF_LEN reads in one interrupt, the loop writes past the end of
-buf[], starting with the pkts counter that follows it in struct
-fintek_dev.
-
-Hand a full buffer to fintek_process_rx_ir_data(), which parses the
-samples and resets fintek->pkts, before storing the next sample. This
-keeps the parser state consistent and drops no samples. The loop still
-relies on the status register to terminate.
-
-The driver does not document the hardware FIFO depth, so it is not
-known whether a working device can trigger this.
-
-Found by static analysis tool CodeQL.
-
-Fixes: 9bdc79ea07d9 ("[media] fintek-cir: new driver for Fintek LPC SuperIO CIR function")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
+Link: https://patch.msgid.link/20260922001332.1121266-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/fintek-cir.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ virt/kvm/kvm_main.c |   31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---- a/drivers/media/rc/fintek-cir.c
-+++ b/drivers/media/rc/fintek-cir.c
-@@ -340,6 +340,10 @@ static void fintek_get_rx_ir_data(struct
- 		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
- 		fit_dbg("%s: sample: 0x%02x", __func__, sample);
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -1866,21 +1866,8 @@ static int kvm_set_memslot(struct kvm *k
+ 	}
  
-+		/* Process a full buffer before storing the next sample. */
-+		if (fintek->pkts >= RX_BUF_LEN)
-+			fintek_process_rx_ir_data(fintek);
+ 	r = kvm_prepare_memory_region(kvm, old, new, change);
+-	if (r) {
+-		/*
+-		 * For DELETE/MOVE, revert the above INVALID change.  No
+-		 * modifications required since the original slot was preserved
+-		 * in the inactive slots.  Changing the active memslots also
+-		 * release slots_arch_lock.
+-		 */
+-		if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
+-			kvm_activate_memslot(kvm, invalid_slot, old);
+-			kfree(invalid_slot);
+-		} else {
+-			mutex_unlock(&kvm->slots_arch_lock);
+-		}
+-		return r;
+-	}
++	if (r)
++		goto err;
+ 
+ 	/*
+ 	 * For DELETE and MOVE, the working slot is now active as the INVALID
+@@ -1912,6 +1899,20 @@ static int kvm_set_memslot(struct kvm *k
+ 	kvm_commit_memory_region(kvm, old, new, change);
+ 
+ 	return 0;
 +
- 		fintek->buf[fintek->pkts] = sample;
- 		fintek->pkts++;
++err:
++	/*
++	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
++	 * required since the original slot was preserved in the inactive slots.
++	 * Changing the active memslots also release slots_arch_lock.
++	 */
++	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
++		kvm_activate_memslot(kvm, invalid_slot, old);
++		kfree(invalid_slot);
++	} else {
++		mutex_unlock(&kvm->slots_arch_lock);
++	}
++	return r;
+ }
  
+ static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
 
 
