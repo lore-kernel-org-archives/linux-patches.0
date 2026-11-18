@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045080;
-	b=PY1vBvHF2ZATS4USOlWbUJTr7+PD7tHZcXX2R6nypiLJlgosN5ho2VXDFonxKwQ3Y90a
-	 NjlLeTJGVZQiKT5YOOyWrKtWgzEKdKBY7olZ81UIaCkBgHAjIcvPuh4JmizsYwDuU9ORH
-	 7y4kKJ0kL+Ro4SxClIvslevy+FFg9vUqYYV2oyLBVKc6Gp+z7y076P2R9axGQW978V0S0
-	 Cxkpzvq2DbeL4kNDjZ85SZArksFmwRAWPZAzN6SuJOucQ6Y0Bbe3DBUwXfd/+UUVxLGe3
-	 xPiXbltEALroFzQDXNIJpKygpabAUMRrGrLJrGkNTSJFTSWqFk9qb0w3opeyvWmxe+Q==
+	t=1795045082;
+	b=2Bw94jqCdvO974XBdT15jwZPbbwz1zU/O/1S2RIzfoDqhQyfSHzs0dIDZoDzjLVXrcJ+
+	 GFg9v7wG+oTdg3xd23GH5E0sCWD6YqrSCaxJp5IqeiGx1StAWGPxYG/e7/YJf+t1G06WB
+	 oTwHPEemuke7BHCTbWIDrgNsvTBtfBS1YF/Fm1ujGG/KPYTAEXeWmKBN1Kqa+GZcp4KWA
+	 VjHObpMZY4gSAsI6vOjketrVMi463wgJOjji3CyIkR81MuNDpTKpWOoDJTm6w4t5uLGw0
+	 oJ6281k49kKqHX1KOfvACRAMgw3IXxHTsn04GaeYzywrg0Zrn9pQAlYky2Hyws3E2Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045082;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kI8e9a4FDh2i4lAo++yRLYC2mAjKo4nUIW0UbamMzCs=;
-	b=YPZNfSNulAXeO1VkFjJTCETNgE0OzACJFsIrWeTQhTLKuu69zD3+CTRP/Y7SiDSOuTeS
-	 WxaV72zoS7FuqgfdXiGJOUf4fXeuqBDZjQ9YBA7PFxnUUV/PHD6Qd10S06uKqPI4x3SEA
-	 jUihUXYsQixsxYHQO3TAH7sj/HybV6HMdrqyOe7pA8VJW+usZ8Eu1zBAalUxIE19NTbsS
-	 bBNSVhY7bvqWqvfeWwIBNzh2lOPN4fp2gPiw6EFHBPw1CCV/SD7d3Kny9a50vP8WPteOH
-	 J3pbNJ+C08WpadjFVmcJiMKqNUGHsy0gAi98SQhKj+oX1ZGd/AgDi4lzMK9xYPG8yDQ==
+	bh=4OXEYcltw71HlhZ95//6NVFuME3VDMZeMq/AQXS3OTk=;
+	b=0YhV0DnQNazHtaX0qzFKFvcWDR2n1+48CDH0YF+w5OS0NGqmOU4tqGgbNvf+mkxoWejj
+	 VanGSVvJzsnxQdehh2Kd2i60S/mhfVy9+vuqz1vdsLDsooM1177yoRapU9IcRTVuVgDKa
+	 DbyyMKW/0AhU+522OmkWgs+pFapSQXKBB6Wwskc8fvOxpahgLkGxhPanXCxjFqLrGZCJW
+	 iIYv0uLZRhHDGtnugo6fRn0meaYtvE3Vd4l3/V3uPHSRvkADSorOP/ymiOY9pw0Fde/eG
+	 xyYEd50JjHwP8K76/lcbSrazISniekkdvQWGT3mfynuSM+S/VR+hSuHI8vqrHPRYCwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWuWlgkx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bhNf53tc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756F2606A335;
-	Wed, 18 Nov 2026 23:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BF2606A330;
+	Wed, 18 Nov 2026 23:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWuWlgkx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E6A1F000C6;
-	Wed, 18 Nov 2026 23:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bhNf53tc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BBB1F000C5;
+	Wed, 18 Nov 2026 23:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045080;
-	bh=kI8e9a4FDh2i4lAo++yRLYC2mAjKo4nUIW0UbamMzCs=;
+	s=korg; t=1795045082;
+	bh=4OXEYcltw71HlhZ95//6NVFuME3VDMZeMq/AQXS3OTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fWuWlgkxPgH6vKLL6Ne77qUiO5WU8x2L4GU0+h7mZl8Gms2ylOyCDIyi6rA3KRJZQ
-	 pdKfhmapEmWk0Lmf3BYeftJDu32B+hw2wm39+2fSMOEJ70MzvMUO2Z8rW2GdEEeDE1
-	 fBZ6plPRvUrqTg2WNGgpv6bkbuQPUPXwEGIQMjh8=
+	b=bhNf53tc4t/ngowSIEzhP6tN5ruRXbxJzSd+ynClR7kRI3qLdMuh4F80LtKHii1ax
+	 9Dsoflh9wyHccYntm5XTeIfYUro+sNGLuwJfpMdutlx1BTneud1ytf75WIPc+K4cOu
+	 9K3UkL/c1b0XRw/qS1/RKmz0JaFUSjazCFwJAn4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Yuchao Zhang <ndaugoing@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0797/2857] nilfs2: fix checkpoint root lifetime on sysfs errors
-Date: Wed, 18 Nov 2026 15:30:31 +0100
-Message-ID: <20261118150230.272860062@linuxfoundation.org>
+Subject: [PATCH 6.1 0798/2857] md: validate bblog_size when loading v1.x badblocks metadata
+Date: Wed, 18 Nov 2026 15:30:32 +0100
+Message-ID: <20261118150230.308671008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,132 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Yuchao Zhang <ndaugoing@gmail.com>
 
-[ Upstream commit 2cb947450e0e5a88bb6bb5fca6dbfda1910e74b0 ]
+[ Upstream commit ae5f89b23cb88667cfa1273b42d6a551db9c651e ]
 
-nilfs_find_or_create_root() links a new checkpoint root into the
-checkpoint tree and drops ns_cptree_lock before creating the root's
-sysfs group.  If nilfs_sysfs_create_snapshot_group() then fails, the
-root is freed while it is still reachable from ns_cptree, so a
-concurrent nilfs_lookup_root() can dereference freed memory.
+In super_1_load(), when the on-disk feature_map does not have
+MD_FEATURE_BAD_BLOCKS set but sb->bblog_offset is non-zero,
+rdev->badblocks.shift is initialized to 0 without validating
+sb->bblog_size.  The same field is validated in the
+MD_FEATURE_BAD_BLOCKS branch ("sectors > (PAGE_SIZE / 512)"), but this
+branch bypasses that check.
 
-nilfs_sysfs_create_snapshot_group() allocates memory and creates sysfs
-nodes and may sleep, so it cannot run under the ns_cptree_lock spinlock.
-Reorder the creation path so that the sysfs group is set up before the
-root is published: initialize the root, create its sysfs group outside
-the lock, and only then take ns_cptree_lock to link it into the tree.
-On sysfs failure the root was never visible and is freed directly; in
-the unlikely case a root with the same checkpoint number is already
-present, the sysfs group of the new root is removed before it is freed.
-Concurrent insertions are already serialized by ns_snapshot_mount_mutex,
-so only the race against nilfs_lookup_root() needs to be closed.
+A forged on-disk superblock (malicious storage device or crafted
+image) can therefore carry an oversized sb->bblog_size.  When bad
+blocks are later recorded, super_1_sync() sets bb->size from
+sb->bblog_size and md_write_metadata() issues a bio larger than the
+single rdev->bb_page, reading beyond the page and leaking kernel
+memory contents to disk.
 
-Because kobject_put() does not guarantee that the embedded kobject's
-release callback has run by the time it returns
-(CONFIG_DEBUG_KOBJECT_RELEASE defers it), the container must not be
-freed until the release completes.  Keep that wait_for_completion() of
-snapshot_kobj_unregister inside the sysfs helpers, so both the creation
-error path and nilfs_sysfs_delete_snapshot_group() wait for the release
-before their callers free the root.
+sb->bblog_size is never modified by the kernel between load and sync,
+and the MD_FEATURE_BAD_BLOCKS branch already validates it, so checking
+it in this branch is sufficient to cover both paths.
 
-Fixes: dd70edbde262 ("nilfs2: integrate sysfs support into driver")
+Fix this by rejecting an oversized sb->bblog_size with -EINVAL,
+matching the existing check in the MD_FEATURE_BAD_BLOCKS branch.
+
+Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
+Link: https://patch.msgid.link/20260922044606.30774-1-ndaugoing@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/sysfs.c     |  5 ++++-
- fs/nilfs2/the_nilfs.c | 34 +++++++++++++++++++++-------------
- 2 files changed, 25 insertions(+), 14 deletions(-)
+ drivers/md/md.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/sysfs.c b/fs/nilfs2/sysfs.c
-index 59fda8ce0790b..e0f860aef81ff 100644
---- a/fs/nilfs2/sysfs.c
-+++ b/fs/nilfs2/sysfs.c
-@@ -195,8 +195,10 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
- 					    "%llu", root->cno);
- 	}
- 
--	if (err)
-+	if (err) {
- 		kobject_put(&root->snapshot_kobj);
-+		wait_for_completion(&root->snapshot_kobj_unregister);
-+	}
- 
- 	return err;
- }
-@@ -204,6 +206,7 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
- void nilfs_sysfs_delete_snapshot_group(struct nilfs_root *root)
- {
- 	kobject_put(&root->snapshot_kobj);
-+	wait_for_completion(&root->snapshot_kobj_unregister);
- }
- 
- /************************************************************************
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index d1891dd4a5109..f9b10b4e22c01 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -865,6 +865,26 @@ nilfs_find_or_create_root(struct the_nilfs *nilfs, __u64 cno)
- 	if (!new)
- 		return NULL;
- 
-+	new->cno = cno;
-+	new->ifile = NULL;
-+	new->nilfs = nilfs;
-+	refcount_set(&new->count, 1);
-+	atomic64_set(&new->inodes_count, 0);
-+	atomic64_set(&new->blocks_count, 0);
-+
-+	/*
-+	 * Register the sysfs group before publishing the root in the
-+	 * checkpoint tree.  nilfs_sysfs_create_snapshot_group() can sleep,
-+	 * so it must run outside ns_cptree_lock; creating it first also
-+	 * ensures a concurrent nilfs_lookup_root() can never observe a root
-+	 * whose sysfs registration later fails and gets freed.
-+	 */
-+	err = nilfs_sysfs_create_snapshot_group(new);
-+	if (err) {
-+		kfree(new);
-+		return NULL;
-+	}
-+
- 	spin_lock(&nilfs->ns_cptree_lock);
- 
- 	p = &nilfs->ns_cptree.rb_node;
-@@ -881,29 +901,17 @@ nilfs_find_or_create_root(struct the_nilfs *nilfs, __u64 cno)
- 		} else {
- 			refcount_inc(&root->count);
- 			spin_unlock(&nilfs->ns_cptree_lock);
-+			nilfs_sysfs_delete_snapshot_group(new);
- 			kfree(new);
- 			return root;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 712789d386dd4..b60321f1e808f 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1749,8 +1749,11 @@ static int super_1_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor_
+ 			if (badblocks_set(&rdev->badblocks, sector, count, 1))
+ 				return -EINVAL;
  		}
- 	}
+-	} else if (sb->bblog_offset != 0)
++	} else if (sb->bblog_offset != 0) {
++		if (le16_to_cpu(sb->bblog_size) > (PAGE_SIZE / 512))
++			return -EINVAL;
+ 		rdev->badblocks.shift = 0;
++	}
  
--	new->cno = cno;
--	new->ifile = NULL;
--	new->nilfs = nilfs;
--	refcount_set(&new->count, 1);
--	atomic64_set(&new->inodes_count, 0);
--	atomic64_set(&new->blocks_count, 0);
--
- 	rb_link_node(&new->rb_node, parent, p);
- 	rb_insert_color(&new->rb_node, &nilfs->ns_cptree);
- 
- 	spin_unlock(&nilfs->ns_cptree_lock);
- 
--	err = nilfs_sysfs_create_snapshot_group(new);
--	if (err) {
--		kfree(new);
--		new = NULL;
--	}
--
- 	return new;
- }
- 
+ 	if ((le32_to_cpu(sb->feature_map) &
+ 	    (MD_FEATURE_PPL | MD_FEATURE_MULTIPLE_PPLS))) {
 -- 
 2.53.0
 
