@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020580;
-	b=SPU4eQI+p06zHZF3tatjob+EE5Y59c536q8hsz5b4hMTmpySKiOIQiGMHyY1EdT6BzbN
-	 jrDPKbJOMYhWcTMRrCV1MbmoxdFEhBj5x74AmJmr/DmxIfC37E8Pb+1ksCLqhQ0xeVU2K
-	 A887I73LmKSw0SPU0DeYlALCHh8GSeU8DLE8w+rMyoCIOChKj6DW/WtLKUrqzosMBllcA
-	 CHxPrY3TmBndZRprKyyjTZ+6r+qQOpMRcughSFDX7sLoRbzyZrOSQETPWXY0oI28RAbf7
-	 Mh1xOpbqPypRt0hsHirda2Ub4dfiEi2GNXb6m6JSjlcu8oRGBsLDn0TXr9istUS8Znw==
+	t=1795020583;
+	b=USQ6JQTV8vP2YDwY7n7PPIdy2Bh110zg8YG8hO3ISUIJOuHokS6Q8e/VD5ptvg8q7yRt
+	 eKsZ7BpqYDitVz4nwIbqMWdcow6818vcVlUdJtHAsAY+qG65gEE+ODc9pmcr4HKBZc579
+	 q+wygXAMmrECuHUzrJH0s8dgNOj3b2bNTpavh77qKc4LBnvAoz2qdw3U/ZIrVd3ZME40s
+	 btvD6wUOZkixq9OQRXRmV5GB8ojUuFKBC49dKlJoHxNS7nCDTsFyCIPDIBgHwuzuGPgnw
+	 wjPcF4QyRLzvdsqUBR14O0CIn+A+EuVSsME6VzrneI8ymSh62f1d3Fa2GV6lL+j45Qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SeO9jMvH2Y/AkGOzFNfunJvOHGvfpxe3JUmVD+A1g/Y=;
-	b=p1Vntk4+6P1xZZ49jMQ/7ulq4wZABo5B9T6hHHF2P2PztI1AeAuo+nOtt1Kk1JuoIKZ3
-	 uD9yhwtF4utbaBZefBhNwb/IwhnAc/WRKbqkuwBo+BP3T+GP0ZM+DMqXc8YCubDHoOjC7
-	 RZs+LwKOzmS4ubCTppFlTIfrEG82lUAstloN99ysFw3/d8ox8+Yi4Qzr4WZHdtFLZFjeF
-	 emduyluVygN4r/kUHnKu0F3025LYICiNyhmwm8vXmRqQBzo/IVYNOa+1VUySH11JqveY+
-	 jMycTmK7L5cEmjfcfn4+xH23vhAs/A55zcTEiFDb0A6IDcITJoafI9OSSHpanJy3NYg==
+	bh=ukhh14JcVZ4Qz2zcAlFvJ9sq8VlcEDtFRtry4DkRBkA=;
+	b=IhRD5Gvpg7e0YWRmdsMlBTTQgbOJvmjHp2Ro+ETZBRK2UG6yQm4G13LD173ZdjE5wXfC
+	 /C+oBB8ObKyT+O12TcUdcLW9minuM8oqaHiq3lOFQVuJim8YoR2CYfE/oLxVkAUtxbqU3
+	 /SXh06WhaiKbe0YlBMePKpSeZW9Fb4HQ2ay6FspwyA+dBvWhXhghJpo/Wp71Bfn421IzZ
+	 3EAhpR9+oxxkXXOQl+kVHPniTuhR8pfomCgIYTVbnjlgDwu9tL2QdYZYQjpT2/EiQymnc
+	 dFEGXEPl2qutBysJfVXeih6+0haHRxJuQtrMTZWo2XGDwcw4BqWdra1OLhwVbMXpopg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQWNgnwl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l90V+oKg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B436606A31C;
-	Wed, 18 Nov 2026 16:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533F4606A31C;
+	Wed, 18 Nov 2026 16:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQWNgnwl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23BF1F000C5;
-	Wed, 18 Nov 2026 16:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l90V+oKg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A601F000C4;
+	Wed, 18 Nov 2026 16:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020580;
-	bh=SeO9jMvH2Y/AkGOzFNfunJvOHGvfpxe3JUmVD+A1g/Y=;
+	s=korg; t=1795020583;
+	bh=ukhh14JcVZ4Qz2zcAlFvJ9sq8VlcEDtFRtry4DkRBkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQWNgnwl8Q7RiqO4Hnpv5SHaG3HjstT0aD71iHxCpE2iDkU8z2UsknreQQpzxOqcL
-	 Ywnx0Apg+27JMciKeXB6St63xyDYKWN5ODkmQLCjbCotspobu4cOe9POY+AANnTNmc
-	 HAVrfbguXalgNBNt6bc0GqeA1/5BpF0dfUn92xPY=
+	b=l90V+oKgl9bHJZzV2ajRkFqBofJT6DYscahZS0gimu0AVcln+YUkPYuvxkMVRyRFd
+	 jRlngrdoPdLyhL3AfZI2qJEotezkvwdMkpeAQVSMhZDqZeVJt7QE8Dts+ZwpVd9/DJ
+	 r4kf2kT8VqaMztFmfxmZ3+eM2z1UCGhe7PN//G4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2001/2651] ASoC: mediatek: mt8195: Propagate IRQ lookup errors
-Date: Wed, 18 Nov 2026 15:54:01 +0100
-Message-ID: <20261118150358.346678666@linuxfoundation.org>
+Subject: [PATCH 7.3 2002/2651] ASoC: mediatek: mt8195: Fix ETDM MCLK error handling
+Date: Wed, 18 Nov 2026 15:54:02 +0100
+Message-ID: <20261118150358.375676890@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,37 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 9d5dedb285fb61a40e04f337d9e06fc59c065857 ]
+[ Upstream commit 91dce9c7eec25e95b5ca32e17e60e2c27333d411 ]
 
-Propagate the error returned by platform_get_irq() instead of
-replacing it with -ENXIO.
+Propagate errors from mt8195_afe_enable_clk() when enabling the
+ETDM MCLK instead of always returning success.
 
-This preserves errors such as -EPROBE_DEFER for proper handling
-by the caller.
+This allows callers to properly handle failures when enabling the
+MCLK.
 
-Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
 Reviewed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-12-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261014112752.683032-13-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index 74999ea531bd2..8e38c50a8bd44 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -3132,7 +3132,7 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
- 	/* request irq */
- 	irq_id = platform_get_irq(pdev, 0);
- 	if (irq_id < 0)
--		return -ENXIO;
-+		return irq_id;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
+index 1a20adb2cbf53..fba51c552eecd 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
+@@ -1549,9 +1549,7 @@ static int mtk_dai_etdm_enable_mclk(struct mtk_base_afe *afe, int dai_id)
+ 	if (clkdiv_id < 0)
+ 		return -EINVAL;
  
- 	ret = devm_request_irq(dev, irq_id, mt8195_afe_irq_handler,
- 			       IRQF_TRIGGER_NONE, "asys-isr", (void *)afe);
+-	mt8195_afe_enable_clk(afe, afe_priv->clk[clkdiv_id]);
+-
+-	return 0;
++	return mt8195_afe_enable_clk(afe, afe_priv->clk[clkdiv_id]);
+ }
+ 
+ static int mtk_dai_etdm_disable_mclk(struct mtk_base_afe *afe, int dai_id)
 -- 
 2.53.0
 
