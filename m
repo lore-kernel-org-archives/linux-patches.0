@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056566;
-	b=23jkWlW06pH6e4FuL03XNtWth4/T4a2jhvgUiLHpwof6bhGBIHRIN01GpQVUU6fF7KvQ
-	 u34l7GmGsek1bQUad7c/L8eeISKOqhLCOaSZQAS2tkb2ZtZzyE1s/ZAq+qNuOESy3Vkg9
-	 9ao162wAjfR6wY5lwP87rRKmJxoadJT9tUsCGrPfLoloqR7jy5Z/W2UGrUPWR/QSOoHUP
-	 sPicQZIpbHlaOYDaNA+k9Ez4RVndFfWWy/1zbRL1qO3aEiKf9oa1i82IoRImJaMFMna6x
-	 TVRn0bUcwX4J8lBpVnA4xaKtCZfAUrk1+WCf3JF4vwat2uWkzXrOoHTuS7b9zi8VlPQ==
+	t=1795056569;
+	b=IvlSy+3srnk0BVQF0wMKkvvgjKnNH3lx/sLce2REMHdMBvSkScB6wbrn6bOWQ6Z4+g/y
+	 4fiBLOI0LnSIiSp6ooN4k/RmlkNET5ApbJnUQo18qhLYBpAl6SDu04TeRpkhiqPX5KFtZ
+	 wPEIb17p3u9AXw+r2lErPo1aCABl8UYAKpor37hnj/CFLehbDzqHz2fL4YdEFOTlBUFMI
+	 +gF7JTZGSt2ykUKD0TUMoZPD7SThk2FyBkGGmet5BZzt0CSYRHYkAoN69/+YBw2m56a85
+	 G+bGHVoWQ+6qz007EbNhCoZoxFXQr0JAWVRwptiDVNfVzjd3s5wCvwBmvJx0J/qnhWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d+bLFQgLbOvbxiVOpZBQ8i2WCOCQWnTRHp8VFVpHPDw=;
-	b=ej78aZk+JMZ4WoA3JwT/+pvxM6/yc5KLavKWXOGNb5LnbLWWgJJme2BbeUjRwQdURWez
-	 +hPtdxIORJwmo2sCVPCXBWl9i7ghv63bX6NmSuafR5JBV8IsizmJcPPsWASRgZu/bsnB+
-	 yAhX3hjFqJMTlQN5Tg6PWa0EzKo1g7IczDxjnRadh+gfid8wlpaGhN3PpFylM6Lh6/ytn
-	 wL3zeH+DUrn8Yuu8J4U3qEp7NgRFZqjcs2CVtUwqzWKpI+FPXxr5C1f96jfMSMoi2v4Rh
-	 0mw67Cj89ukT7w8zRvIL6pv2DbFvz6s0cQ7OHCaVuCrZeMiRqcws5l/rOT7G87ey//Q==
+	bh=Beod3u3NLU3kjMQcqsL/jmjoKM1xvleL4E00RIEAQTc=;
+	b=O+xx/YeX8j553wodQBT4cZud2ky9siE4rLl60LkRlwHAf0mQyHq6rt563Dh9G9pgTKEd
+	 iPoKhqyvlg/lst2I39/vYRTKeetzRwNYYYhBEK5gOjy9Azvfv5o3/xIU0npFKj2R7BZ+f
+	 LabKTS3WMYnvobYB4rW+6EYVONzLBuHHpqY3+8VwlCCpb85SvmUsus5XrtV/LmSb6p3fU
+	 hDUobK52Q5Kc7LSggKKouiA36oYKk5qGaNmrdKJbUbnGIAf2VH6foYOV1I3BBUgOAOn0N
+	 YJ1KSL/zYGL19kgJKQuAjbM4SKTGIlG78yWNyfTwTTYbvlYdew8F74pM2r0jzftzVRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t3Nn/LPO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGifOeMD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618AB606A325;
-	Thu, 19 Nov 2026 02:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23608606A32C;
+	Thu, 19 Nov 2026 02:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t3Nn/LPO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1FC1F000C4;
-	Thu, 19 Nov 2026 02:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FGifOeMD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795E41F000C4;
+	Thu, 19 Nov 2026 02:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056566;
-	bh=d+bLFQgLbOvbxiVOpZBQ8i2WCOCQWnTRHp8VFVpHPDw=;
+	s=korg; t=1795056569;
+	bh=Beod3u3NLU3kjMQcqsL/jmjoKM1xvleL4E00RIEAQTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t3Nn/LPOK0kJ80O/ni6it0/NGnv5z3mUECJNokqVvqSjxjphV+GWiyvZlHewFGiIH
-	 dDxKb6FEUkR2besSIiTNtxcOAwljKTapV+MLdCM2nkKzm3/kbTDIdftL7supn+3/av
-	 00PjJBSTHl/TlGyRwbl7V6eZBwa7JqR+EBznMwMk=
+	b=FGifOeMDNpbE4PezxiTUGMxfDr5fAuAc/kV/pbAiB1YG0xwUAw1/pEEqGv0H6JiPg
+	 jf/DeM4pbDuC6ySyhRHBpF1Drbuejs1J5Q8diuzYGKnuwrZpZMoUdjkj+R6F5DIIn/
+	 J6Rg6xwL5TRNr/ZTmB2wzup9qhb3YTvEzIdHBSBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Igor Skalkin <igor.skalkin@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2031/2214] bpf: Dont take a program with a target program for an iterator
-Date: Wed, 18 Nov 2026 16:01:47 +0100
-Message-ID: <20261118150132.005287389@linuxfoundation.org>
+Subject: [PATCH 5.15 2032/2214] usb: gadget: dummy_hcd: fix SuperSpeed ep0 maxpacket
+Date: Wed, 18 Nov 2026 16:01:48 +0100
+Message-ID: <20261118150132.041639875@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,55 +68,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Igor Skalkin <igor.skalkin@oss.qualcomm.com>
 
-[ Upstream commit b83bacf2161d0f8583e3f1e9c90402638992ad82 ]
+[ Upstream commit e68f245bcb1f863aeb8eab617bd06878c078029a ]
 
-bpf_iter_prog_supported() goes by the name of the attach function.  Commit
-7cc639dc45c5 ("bpf: Don't take an extension for an iterator program")
-keeps out extensions, for which that is the name of a function of another
-program.  A tracing program with BPF_TRACE_ITER that is loaded with
-attach_prog_fd gets there as well: unlike for BPF_TRACE_RAW_TP,
-bpf_check_attach_target() does not mind the target program.
+For USB_SPEED_SUPER, dummy_hcd sets ep0 maxpacket to 9.
+That is incorrect for SuperSpeed ep0 and breaks short packet handling
+in control transfer tests.
 
-If the function is called like that of an iterator target, bpf_iter_bpf_map
-for example, its id in the BTF of the program is cached as the id of the
-target, even if the load fails later.  Programs of that target which are
-loaded already cannot be attached any more.  And the program itself can be
-attached as an iterator of that target, with a context that the verifier
-has taken from the prototype of that function:
+Set ep0 maxpacket to 512 for SuperSpeed.
 
-  BUG: KASAN: stack-out-of-bounds in bpf_prog_66d4234e2e50f5b6_ts26_forged+0x12a/0x20b
-  Read of size 8 at addr ffffc90000d9fc48 by task ts26/104
-
-Refuse every program that has a target program.  That covers extensions.
-
-Fixes: 15d83c4d7cef ("bpf: Allow loading of a bpf_iter program")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-2-alexei.starovoitov@gmail.com
+Fixes: 1cd8fd2887e1 ("usb: gadget: dummy_hcd: add SuperSpeed support")
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Igor Skalkin <igor.skalkin@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812081910.6821-2-igor.skalkin@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_iter.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
-index d7345a3eda04a..15f25156071b5 100644
---- a/kernel/bpf/bpf_iter.c
-+++ b/kernel/bpf/bpf_iter.c
-@@ -336,10 +336,10 @@ bool bpf_iter_prog_supported(struct bpf_prog *prog)
- 	bool supported = false;
- 
- 	/*
--	 * The attach function of an extension is a subprogram of the iterator
--	 * program that it extends, whatever its name is.
-+	 * The attach function of a program that has a target program is a
-+	 * function of that program, whatever its name is.
- 	 */
--	if (prog->type == BPF_PROG_TYPE_EXT)
-+	if (prog->aux->dst_prog)
- 		return -EINVAL;
- 
- 	if (strncmp(attach_fname, prefix, prefix_len))
+diff --git a/drivers/usb/gadget/udc/dummy_hcd.c b/drivers/usb/gadget/udc/dummy_hcd.c
+index 37e50ec6ad737..134ce1bb25372 100644
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -914,7 +914,7 @@ static int dummy_set_selfpowered(struct usb_gadget *_gadget, int value)
+ static void dummy_udc_update_ep0(struct dummy *dum)
+ {
+ 	if (dum->gadget.speed == USB_SPEED_SUPER)
+-		dum->ep[0].ep.maxpacket = 9;
++		dum->ep[0].ep.maxpacket = 512;
+ 	else
+ 		dum->ep[0].ep.maxpacket = 64;
+ }
 -- 
 2.53.0
 
