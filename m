@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056531;
-	b=Wz6suBrMsJq2ROqKh8BXkS5IoNpdsTCemnddKMmHvC2i1BaJQoR2pmHKGJQHf2jTBhyu
-	 NOgrhJ8U7Z1+YrXxvSH2oCWQxpzbynRPXjyz/ZR3ke/SS8D0lY3UDuPwki7bDhN4PwZ5n
-	 WLrHoIa/0eHsGQntdz5+jZ3P9QzJn+x7Juefzcrqm6lDwLLwReSlgbn1um4WNu5eWH/J4
-	 KjAHDjwrwfgCV+3fCZaf3aUVAmVUcZhMj6zdbVKLrAjYuCU1oks8/22+k+Q6h94XCVsBZ
-	 KJcBoDYZ3p80WJBs3oNTaMW4pW5j8FKikQvrrrJsaXaHmBbcH56NMpFm/xOfXXSmMxQ==
+	t=1795056535;
+	b=IwquW56IFy2AAm/dntyATo1CANGKLxZujB5rIbAjDiaOf+umsI9vV5NeUTGobiQ+3Ewz
+	 tz8RQkOtiYJnJOaIdm96M0XK/zI9j1vRPlUK8j+MY5ehQpWPOe9aK0NNWw4MYOTp9+ns1
+	 4meIY+dMcvMXxcOkkGpVYdwNR1xZLDO24AZBdO72dKOLveHRLUVO12Hb1x5KBk5rb/jCD
+	 W/gqwxGkBzUylSwIdx/60izRoRjUNM5a4ok+c/bv8Ksc0tX2qrXwuoPmZ85IaT80DIB7d
+	 WqWQSehLKFbdFx8iTntPGxPwCG85YD2HGxSUOXqtRd3GRF7ARF1CW//jWskWCQCqq6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3tCV1iMeePzxQfr+V/9UpOIs8gv89deAtrFIoP2qvOQ=;
-	b=fe0+AnnMoUuzTvv+XDAydGyN6VoHPI0pIeiGpMXMz37FP2ffpmnf6KSoIH5evpDCBkRc
-	 /oPUo+buIxiH44KK5nszOtnTHK7G7eUq12k83xsjWSr0S7LdcbxONnHjBYhc6q7R20VlE
-	 qId1zNw9GYBGFNdXESm9KZbmSvIJaktHRoj5XbqUb7pUvG4hCNu9zzf4fCSEJdI2+40R4
-	 WIbNHo8fbe9Jw/RhBvDrmX823ZS36u9xDyO02hM6NTNucboFHTSjZwEr6w/4D9zgxYePe
-	 K6EhEHExn0W7YZjC/vyXcxKSPxlepCs9OoYZP0SqIEzuQn3QyLqgIL/bjx5ez6j0yRA==
+	bh=AKWJrro79u6pCe7W9s9+9ieTfChNHyvyibfSI1m4XDU=;
+	b=GUs6ZB+VWcvfMHccGbqopUuKNTXtnodXWG0h/8cl75lmBypUfAGlw/lbINBX8ha/8iES
+	 uBtl9EmcxZoxlM1PtQety2/5cWXAKNcUiU3Kyu5wa2UyiGYyl+G4H8tiRV2NdRxwwqpf5
+	 NCEn5jI2M/QfJkq7npi7Ycf5kIYzAujbgW43ZzIgBtCy/63XMH6aoQbydRfd2HmIaySH7
+	 EfAJoX/GrCryXSWNFPxa/1mNpwa8IUVnKfdPm1htpDl7EyUmu02Chyot48xpSEzJ/VuzI
+	 K7zkndM6pBEMIMxu70fDgmnNBMY/L1VLjo8JuELEGgMFmTzwraGG9METTKyO5VdoXgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmArQ5fT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHeeb0NB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAE2606A32C;
-	Thu, 19 Nov 2026 02:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B442606A320;
+	Thu, 19 Nov 2026 02:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vmArQ5fT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56721F000C4;
-	Thu, 19 Nov 2026 02:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jHeeb0NB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89751F000C5;
+	Thu, 19 Nov 2026 02:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056531;
-	bh=3tCV1iMeePzxQfr+V/9UpOIs8gv89deAtrFIoP2qvOQ=;
+	s=korg; t=1795056535;
+	bh=AKWJrro79u6pCe7W9s9+9ieTfChNHyvyibfSI1m4XDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vmArQ5fTx7HnB3qmIWmzFPaK4Ksv5KkejBLwQbjKvFgDYtmm0zG5MolYtouh/XkBR
-	 9ok6ZAlPreP1oxpa+3yyZpME8t/5HLOPl2Fiyr2ZldxHaTKM3gjMJs8jsZ6ZpAad+J
-	 Lraeq2hFamBApkVT1h2q+1iCO62oGqu5LpSIHguU=
+	b=jHeeb0NBF/tAMxXKJtRD3qVjy0kNHje7n+Rr07qhdnnJGxcyi0fUODkc6UfGNIsur
+	 nXS8mt7na+CxQ4hnxr2SGdVitC2RSouE6QX9/XHqzSETfBeqoiLQ3wFJDRel6ycViz
+	 9A2nkTl+K9stuuZdFeGJ9akznnty1BZhKT9s7e5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2020/2214] bpf: Validate the SRH which End.DT6 uncovers in End.BPF
-Date: Wed, 18 Nov 2026 16:01:36 +0100
-Message-ID: <20261118150131.548197908@linuxfoundation.org>
+Subject: [PATCH 5.15 2021/2214] bpf: Pull the inner header for End.DT6 in End.BPF
+Date: Wed, 18 Nov 2026 16:01:37 +0100
+Message-ID: <20261118150131.586983209@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,69 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit e8b084646b946cc6f7976365588035947a296184 ]
+[ Upstream commit 434324c611a98bc76dc850d45d67756dae5622cf ]
 
-input_action_end_bpf() validates the SRH of a packet and pulls it into the
-head before the program runs. If the program decapsulates the packet with
-bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6), bpf_update_srh_state()
-looks for a routing header in the inner packet and takes it for the new
-SRH as it is.
+bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6) pulls the outer headers off
+the packet and hands it to seg6_lookup_nexthop(), which reads the inner
+IPv6 header at skb->data. Nothing says that this header is in the head of
+the skb, or that there is one. If the head ends with the outer headers,
+the route is looked up for whatever lies behind the head, and the packet
+is dropped or leaves by the wrong route. If the program then pushes an SRH
+with SEG6_LOCAL_ACTION_END_B6, seg6_do_srh_inline() pulls an IPv6 header
+off a head which has none, and __skb_pull() hits its BUG(): the kernel
+panics on a packet from the network.
 
-Nobody has looked at that header, and whoever has sent the packet has
-written it. ipv6_find_hdr() finds it in a fragment of the skb as well, but
-hdrlen is then read at that offset from skb->data, past the end of the
-head. The header need not be an SRH, and its hdrlen need not fit into the
-packet, but it is marked as valid, and bpf_lwt_seg6_adjust_srh() and
-bpf_lwt_seg6_store_bytes() check their offsets against it.
+GRO pulls the inner header of a plain IPv6 in IPv6 packet into the head. It
+takes a packet which GRO does not look into that far, one with a fragment
+header in front of the inner header for example, or a device without GRO,
+and a driver which leaves the inner header in a fragment.
 
-A program which then adds a TLV at the end of the SRH, where hdrlen has it,
-makes bpf_lwt_seg6_adjust_srh() move and write memory behind the head of
-the skb, as far as the sender likes within the 2 KB that hdrlen can say:
-
-  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x185/0x240
-  Read of size 2088 at addr ffff888107d6f09e by task srh/102
-  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x1b5/0x240
-  Write of size 8 at addr ffff888107d6f8be by task srh/102
-
-Use seg6_get_srh(), which pulls and validates the header. Without a valid
-SRH the state says that there is none, and the packet goes its way as
-before. The pull can move the head, so compute the data pointers behind
-it.
+Make sure of the inner header together with the outer ones. The program
+goes on behind an error of the helper, so do it before the packet is
+changed. A pull which fails can still have moved the head, so look for the
+SRH again.
 
 Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-12-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-13-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/core/filter.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index af963bbb5885d..cb87f1eb5ab0f 100644
+index cb87f1eb5ab0f..a3712d4068e8f 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -6212,15 +6212,15 @@ static void bpf_update_srh_state(struct sk_buff *skb)
- {
- 	struct seg6_bpf_srh_state *srh_state =
- 		this_cpu_ptr(&seg6_bpf_srh_states);
--	int srhoff = 0;
+@@ -6252,9 +6252,14 @@ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
  
--	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0) {
--		srh_state->srh = NULL;
--	} else {
--		srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
-+	/* Behind a decapsulation this is a header that nobody has looked at */
-+	srh_state->srh = seg6_get_srh(skb, 0);
-+	if (srh_state->srh) {
- 		srh_state->hdrlen = srh_state->srh->hdrlen << 3;
- 		srh_state->valid = true;
- 	}
-+	/* it may have been pulled into the head */
-+	bpf_compute_data_pointers(skb);
- }
+ 		if (ipv6_find_hdr(skb, &hdroff, IPPROTO_IPV6, NULL, NULL) < 0)
+ 			return -EBADMSG;
+-		if (!pskb_pull(skb, hdroff))
++		/* As long as nothing has been changed, the program goes on */
++		if (!pskb_may_pull(skb, hdroff + sizeof(struct ipv6hdr))) {
++			/* but the head may have moved */
++			bpf_update_srh_state(skb);
+ 			return -EBADMSG;
++		}
  
- BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
++		__skb_pull(skb, hdroff);
+ 		skb_postpull_rcsum(skb, skb_network_header(skb), hdroff);
+ 		skb_reset_network_header(skb);
+ 		skb_reset_transport_header(skb);
 -- 
 2.53.0
 
