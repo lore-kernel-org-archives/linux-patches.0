@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040626;
-	b=Y/JLuwD1i/lWu98g8nZOHWlO0S4UKaGkVOSajHUoik9rvz6PGErSk2LxDkytRu6mG1VG
-	 k3kJTfJYwmBTIaTyX/iwADInayCQ0oo5f7EtfA0sVTcdaUPIlJ6OX81aZs2JpcNk9HBev
-	 SIvoiQHUlD3/attT5MfFDhEac1iKr1TNO1wc+51bqeq2dQ/9Pfu3aX5rOl9v+oF5WZzET
-	 +3HHWRMv3uSR/UJqXJTax17fKOGcvyzMi/DsKHk8zvPUHo9zVS7vyrK0e/JXxFzZWNhK6
-	 w8i5DtgCyun6FlOmui2Vrx6OS1JeRW5m6LZ5GxHw6r4OwCXc6a1kLQd271wQUDSoS1g==
+	t=1795040629;
+	b=uHQGAMM+WCrQHr1Pa5pe9GtL2cWKJ9AYGPj7SldVFc8WzsqABlMwBeEQ8wtym6z83zkF
+	 s9j5MIyMnS4fTjN8lK5KGnlORhU88va93brJYaFjCjTIc01kx2io/e2Pf21MQDIH31K83
+	 kja3upY4b8iguBA+tC0Dd/ZXQwK2G4Hh9kgnhpOMAvV0RYN9kHbq2A65v3eVpFFmZkBVh
+	 WyhfR2CSbBVOFeo4L0T7gMzTIElOcjZDDOPmqs4gtG8G9/rhfVqTZfBm7PiWNvprtpIxl
+	 LKkP8PAZllilE6TaDRH6wGiLFnu6/Hz5mj9BEuDeVUPHnG0IGPaTIfGeWrmy/spxEHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pHbhxolCzeiuNilo6z8uEBoiOX1GdlKu84qrtfWOkGY=;
-	b=u/H2ZMcUFf2mnef4wnmcN5EqI2s9J/E9X0lm1n1E60zfrau9GqNGccK7GlTM4twf7AB8
-	 mBUALWJQ/z8vu3QgH3n8ms1VezE4eiN0meKaBklglBhinf4F2RbJEv44F5HomCtEod1ju
-	 ru/r1M9EZIUcESy2SxXpqL1+A/3rLbHVHHChNUUV2Bj+i9MvI4lRuI1DHSJ7O6sPFDCvz
-	 7VHXj7a9IkJmmPFrlnqmpBQOoyx0nQ2PbDIxHaPaR5PgvTpcYBi6fSxDIlLZKJdFmM2NW
-	 lQwa/0jwBdLmuIe1IvTzJG156V8i8a5/7vaTEcwhAFv1uOXU8hEJPJRE2EAfSRPDryg==
+	bh=iCsczZVwQVP1xUkme/NsXFPh8fxxBNIUVen1jyKB3iw=;
+	b=wC12feOz1lEGHcpgshsxotouAck4/PaItFgI8u8aYgtGzVUq41pQsaZDzx0otzb1i9mE
+	 qkc4rQS07GvImchabdFIFhBmrPddvdSOWvZXkvr6xPmvQvUQ8xqtLc4d9jAu4zU0IwENW
+	 SNyNDWJsv9OrGdGe9ku+9BMTbSn+DJecFnuEjAT4BYlacnihGcMyPx/eVh2qOk8BW+aBi
+	 PnAjRxFLauxeua1HF9BJNySGdgg3cWRG5c0tK9RY8jT3PwPOlivPM0oO5BM6e1o56FnYi
+	 axIEqIjWoeQI8uXrkaJTPpMKtUhFmQzq2lf//W9jNqiINO8GuoKbtbkaVgxsXHS/d7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f7fFc+B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWxoL9ZF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC20A606A32C;
-	Wed, 18 Nov 2026 22:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB82606A325;
+	Wed, 18 Nov 2026 22:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0f7fFc+B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45BD1F000C4;
-	Wed, 18 Nov 2026 22:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zWxoL9ZF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBBC1F000C4;
+	Wed, 18 Nov 2026 22:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040626;
-	bh=pHbhxolCzeiuNilo6z8uEBoiOX1GdlKu84qrtfWOkGY=;
+	s=korg; t=1795040629;
+	bh=iCsczZVwQVP1xUkme/NsXFPh8fxxBNIUVen1jyKB3iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0f7fFc+BKDJCddIkRO/KQ2LKxVDi4FRtN3CsvS/FvtkwXWcEbnyGq6Z5+6oBCNlfj
-	 15+qZxzhw37k3rQ0os2VZ9WTxBZc3EuQtNccdglLpQn9m3w6ocwl80XNKW+cKKjWtJ
-	 tPkLU7epSot37zMZ2By0KHC59ciIrbvxPQqcvgt4=
+	b=zWxoL9ZFLDUIIM9A64B7Xld5CoNaTfRdOtU9zZtNIEGppT7wZisPuzY04GiTBIyTX
+	 bJwOfdgyO12cccKZ9mCLb1UenuLtrvbL+VZyrSMmg7aGEXbVGNpQJKw4z6rJn6w01S
+	 z6YtxC6uxB4hB8e7wm2QqCHsbLcGKeP2ozE/gvbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Joonhoe Kim <26rote@gmail.com>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Meng Li <li.meng@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2524/3318] drm/msm/dpu: disable the slave encoder before the master
-Date: Wed, 18 Nov 2026 15:52:26 +0100
-Message-ID: <20261118150437.077416060@linuxfoundation.org>
+Subject: [PATCH 6.6 2498/3318] cpufreq: amd-pstate: Update amd-pstate preferred core ranking dynamically
+Date: Wed, 18 Nov 2026 15:52:00 +0100
+Message-ID: <20261118150436.327519180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,77 +73,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Meng Li <li.meng@amd.com>
 
-[ Upstream commit 32d04280ddebb6eb964990931b0f1001f63b35e7 ]
+[ Upstream commit e571a5e2068ef57945fcd5d0fb950f8f96da6dc8 ]
 
-dpu_encoder_virt_atomic_disable() disables the physical encoders in
-phys_encs[] order, i.e. the master first. With a split display (two
-interfaces on one CTL, e.g. bonded DSI) the master's
-dpu_encoder_helper_phys_cleanup() then resets the shared CTL while the
-slave's timing engine is still running, and the source pipe is left
-stalled half-way through the slave's next frame.
+Preferred core rankings can be changed dynamically by the
+platform based on the workload and platform conditions and
+accounting for thermals and aging.
+When this occurs, cpu priority need to be set.
 
-A power collapse of the MDSS core GDSC clears the stall, so it normally
-goes unnoticed. When MDSS stays powered across the disable (a full
-modeset, or an active DP controller), the next enable scans out
-nothing: black screen with the backlight on.
-
-Disable the slave before the master, as atomic_enable() enables them in
-that order. The slave's cleanup still resets the CTL while the master is
-running, but the last reset, from the master's cleanup, now happens with
-both timing engines stopped.
-
-Tested on a Lenovo Legion Tab Y700 gen 5 (SM8850, bonded DSI video-mode
-panel) with MDSS kept active:
-
-  echo on > /sys/bus/platform/devices/9800000.display-subsystem/power/control
-
-DPMS off/on: black 10/10 before, picture 10/10 after. Full modesets were
-not retested with this version. Only tested on this device.
-
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Fixes: 22cb02bc96ff ("drm/msm/disp/dpu: reset the datapath after timing engine disable")
-Assisted-by: LLM
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757684/
-Link: https://lore.kernel.org/r/20261002130712.50612-1-26rote@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Wyes Karny <wyes.karny@amd.com>
+Reviewed-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Perry Yuan <perry.yuan@amd.com>
+Signed-off-by: Meng Li <li.meng@amd.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: f6d3cbc63935 ("cpufreq: amd-pstate: Restore previous mode when changing driver mode fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 52 ++++++++++++++++++++++++++++++++++++
+ include/linux/amd-pstate.h   |  6 +++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index dcf8127b9b6ef..fb3dea7c34811 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1247,7 +1247,6 @@ static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
- 	struct dpu_encoder_virt *dpu_enc = NULL;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *old_state = NULL;
--	int i = 0;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index d16e626155a2d..1e4ce11910d73 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -354,6 +354,7 @@ static int pstate_init_perf(struct amd_cpudata *cpudata)
+ 	WRITE_ONCE(cpudata->nominal_perf, AMD_CPPC_NOMINAL_PERF(cap1));
+ 	WRITE_ONCE(cpudata->lowest_nonlinear_perf, AMD_CPPC_LOWNONLIN_PERF(cap1));
+ 	WRITE_ONCE(cpudata->lowest_perf, AMD_CPPC_LOWEST_PERF(cap1));
++	WRITE_ONCE(cpudata->prefcore_ranking, AMD_CPPC_HIGHEST_PERF(cap1));
+ 	WRITE_ONCE(cpudata->min_limit_perf, AMD_CPPC_LOWEST_PERF(cap1));
+ 	return 0;
+ }
+@@ -378,6 +379,7 @@ static int cppc_init_perf(struct amd_cpudata *cpudata)
+ 	WRITE_ONCE(cpudata->lowest_nonlinear_perf,
+ 		   cppc_perf.lowest_nonlinear_perf);
+ 	WRITE_ONCE(cpudata->lowest_perf, cppc_perf.lowest_perf);
++	WRITE_ONCE(cpudata->prefcore_ranking, cppc_perf.highest_perf);
+ 	WRITE_ONCE(cpudata->min_limit_perf, cppc_perf.lowest_perf);
  
- 	dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	DPU_DEBUG_ENC(dpu_enc, "\n");
-@@ -1273,12 +1272,11 @@ static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
+ 	if (cppc_state == AMD_PSTATE_ACTIVE)
+@@ -809,6 +811,40 @@ static void amd_pstate_init_prefcore(struct amd_cpudata *cpudata)
+ 	schedule_work(&sched_prefcore_work);
+ }
  
- 	dpu_encoder_resource_control(drm_enc, DPU_ENC_RC_EVENT_PRE_STOP);
++static void amd_pstate_update_limits(unsigned int cpu)
++{
++	struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
++	struct amd_cpudata *cpudata = policy->driver_data;
++	u32 prev_high = 0, cur_high = 0;
++	int ret;
++	bool highest_perf_changed = false;
++
++	mutex_lock(&amd_pstate_driver_lock);
++	if ((!amd_pstate_prefcore) || (!cpudata->hw_prefcore))
++		goto free_cpufreq_put;
++
++	ret = amd_pstate_get_highest_perf(cpu, &cur_high);
++	if (ret)
++		goto free_cpufreq_put;
++
++	prev_high = READ_ONCE(cpudata->prefcore_ranking);
++	if (prev_high != cur_high) {
++		highest_perf_changed = true;
++		WRITE_ONCE(cpudata->prefcore_ranking, cur_high);
++
++		if (cur_high < CPPC_MAX_PERF)
++			sched_set_itmt_core_prio((int)cur_high, cpu);
++	}
++
++free_cpufreq_put:
++	cpufreq_cpu_put(policy);
++
++	if (!highest_perf_changed)
++		cpufreq_update_policy(cpu);
++
++	mutex_unlock(&amd_pstate_driver_lock);
++}
++
+ static int amd_pstate_cpu_init(struct cpufreq_policy *policy)
+ {
+ 	int min_freq, max_freq, nominal_freq, lowest_nonlinear_freq, ret;
+@@ -980,6 +1016,17 @@ static ssize_t show_amd_pstate_highest_perf(struct cpufreq_policy *policy,
+ 	return sysfs_emit(buf, "%u\n", perf);
+ }
  
--	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
--		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
-+	if (dpu_enc->cur_slave && dpu_enc->cur_slave->ops.disable)
-+		dpu_enc->cur_slave->ops.disable(dpu_enc->cur_slave);
++static ssize_t show_amd_pstate_prefcore_ranking(struct cpufreq_policy *policy,
++						char *buf)
++{
++	u32 perf;
++	struct amd_cpudata *cpudata = policy->driver_data;
++
++	perf = READ_ONCE(cpudata->prefcore_ranking);
++
++	return sysfs_emit(buf, "%u\n", perf);
++}
++
+ static ssize_t show_amd_pstate_hw_prefcore(struct cpufreq_policy *policy,
+ 					   char *buf)
+ {
+@@ -1223,6 +1270,7 @@ cpufreq_freq_attr_ro(amd_pstate_max_freq);
+ cpufreq_freq_attr_ro(amd_pstate_lowest_nonlinear_freq);
  
--		if (phys->ops.disable)
--			phys->ops.disable(phys);
--	}
-+	if (dpu_enc->cur_master && dpu_enc->cur_master->ops.disable)
-+		dpu_enc->cur_master->ops.disable(dpu_enc->cur_master);
- 
- 
- 	/* after phys waits for frame-done, should be no more frames pending */
+ cpufreq_freq_attr_ro(amd_pstate_highest_perf);
++cpufreq_freq_attr_ro(amd_pstate_prefcore_ranking);
+ cpufreq_freq_attr_ro(amd_pstate_hw_prefcore);
+ cpufreq_freq_attr_rw(energy_performance_preference);
+ cpufreq_freq_attr_ro(energy_performance_available_preferences);
+@@ -1233,6 +1281,7 @@ static struct freq_attr *amd_pstate_attr[] = {
+ 	&amd_pstate_max_freq,
+ 	&amd_pstate_lowest_nonlinear_freq,
+ 	&amd_pstate_highest_perf,
++	&amd_pstate_prefcore_ranking,
+ 	&amd_pstate_hw_prefcore,
+ 	NULL,
+ };
+@@ -1241,6 +1290,7 @@ static struct freq_attr *amd_pstate_epp_attr[] = {
+ 	&amd_pstate_max_freq,
+ 	&amd_pstate_lowest_nonlinear_freq,
+ 	&amd_pstate_highest_perf,
++	&amd_pstate_prefcore_ranking,
+ 	&amd_pstate_hw_prefcore,
+ 	&energy_performance_preference,
+ 	&energy_performance_available_preferences,
+@@ -1590,6 +1640,7 @@ static struct cpufreq_driver amd_pstate_driver = {
+ 	.suspend	= amd_pstate_cpu_suspend,
+ 	.resume		= amd_pstate_cpu_resume,
+ 	.set_boost	= amd_pstate_set_boost,
++	.update_limits	= amd_pstate_update_limits,
+ 	.name		= "amd-pstate",
+ 	.attr		= amd_pstate_attr,
+ };
+@@ -1604,6 +1655,7 @@ static struct cpufreq_driver amd_pstate_epp_driver = {
+ 	.online		= amd_pstate_epp_cpu_online,
+ 	.suspend	= amd_pstate_epp_suspend,
+ 	.resume		= amd_pstate_epp_resume,
++	.update_limits	= amd_pstate_update_limits,
+ 	.name		= "amd-pstate-epp",
+ 	.attr		= amd_pstate_epp_attr,
+ };
+diff --git a/include/linux/amd-pstate.h b/include/linux/amd-pstate.h
+index 68fc1bd8d851e..d21838835abda 100644
+--- a/include/linux/amd-pstate.h
++++ b/include/linux/amd-pstate.h
+@@ -39,11 +39,16 @@ struct amd_aperf_mperf {
+  * @cppc_req_cached: cached performance request hints
+  * @highest_perf: the maximum performance an individual processor may reach,
+  *		  assuming ideal conditions
++ *		  For platforms that do not support the preferred core feature, the
++ *		  highest_pef may be configured with 166 or 255, to avoid max frequency
++ *		  calculated wrongly. we take the fixed value as the highest_perf.
+  * @nominal_perf: the maximum sustained performance level of the processor,
+  *		  assuming ideal operating conditions
+  * @lowest_nonlinear_perf: the lowest performance level at which nonlinear power
+  *			   savings are achieved
+  * @lowest_perf: the absolute lowest performance level of the processor
++ * @prefcore_ranking: the preferred core ranking, the higher value indicates a higher
++ * 		  priority.
+  * @max_freq: the frequency that mapped to highest_perf
+  * @min_freq: the frequency that mapped to lowest_perf
+  * @nominal_freq: the frequency that mapped to nominal_perf
+@@ -73,6 +78,7 @@ struct amd_cpudata {
+ 	u32	nominal_perf;
+ 	u32	lowest_nonlinear_perf;
+ 	u32	lowest_perf;
++	u32     prefcore_ranking;
+ 	u32     min_limit_perf;
+ 	u32     max_limit_perf;
+ 	u32     min_limit_freq;
 -- 
 2.53.0
 
