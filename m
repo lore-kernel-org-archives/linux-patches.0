@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046758;
-	b=JkLZLf9rAwbpNxz7kEyPfUxVmfz4pHobQ5eaR8w6IdlZ8Yo9chtLthJ47bFpePHOMGPk
-	 mzSeApqvGgNzI0fZKJPK6OsZhVIZu+C3sgfhp+HJlMvNdOzlewSUM7MU2CM92Otk9n/lO
-	 2fQA8OyJI0UbFsHD+2HRaP0UzvYM9+CaVt/myZI19YVNGRBGWZg7mAGPQDd23laaBYDEZ
-	 21gTCXhsYKFwmUd81LVQPV5XdMZRZ6SjoOpAX8ksKxA4jJ7eYjIikI6fsywmvvJbygwXP
-	 VhiGyrZjSlR4T3JdkBqTDXUUpJXRgR28S1OWxIhd0dAd3+dIAUuVKOPHOCqL5csFvHA==
+	t=1795046761;
+	b=3SMafUjQTXwBccdxHiDDiGH5hL7bIv5H/A6oDfzf/LzcImU2wL19OQPIQyH5KA0CzzC/
+	 JJqtHkytMU3Z1sNoQU9QIvxxDOgXITiHth6tVi12PnFlSdhNtD9iBXSkWdsEw6rsFjbrP
+	 mU6YfCMhtIMpKglOqEAkLO4ThsJd+BU78Hi8Uyi0Lr5RY1BbOUp+P0XLGYnCfsyGAVJnf
+	 yw7lvHBI3r1zTkKdm6g9ZpJAQjTd/TnHrRqdiciY5jDEul/0fIfTOIKT+4JmdfvvMu33H
+	 /6f1nYq7ndoRp84bGnmNemx2u3WCQbME/+hxdSmzH7vUsT3upk/2qY+2MlsD88FbnxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oP+r8pAz7g8ebCNElzSkQgkqB0BPfrsPPZJNvlZHscg=;
-	b=KH2gcizW77oxXBuaHMOVTvem3qNi0GsYxJTOcA99coCbuz7qXrB7uG03SqpK72hMiH6Y
-	 UIXmXuVFX/Y583uY9I8rbLyFchSPUjmnA4Pz+0QR+VB5hY5xKKxbNJARFLRDlWPDrRCdr
-	 b60c8pfFNF1hzp2jHwj0+cNnJSuvK//I6aETiF7MwvaI+iq5sz/RWdLIvAeo9rI0nrrkz
-	 PHO/MnfNRmQZP+nBgr101aWVS9nPyN0U8ThF7T/lYNW9IrQ+rvQ5PoCBG+0fojOspOpsw
-	 Txuqu95PT8ZSY1CcWDhzZmTZS3DHuY+FGc2IllG69weCFSoP2AEPImyhlWh24LokTtQ==
+	bh=GPovS61eDHzYQyexdkTXRF+TPipBXWuoHbsHIcZrOOc=;
+	b=2B2+Ddl9vm4DMImxIEMkoTLhREzTgkem2jPIRwdgchydIlhK68wmiQY5DWnWB0X7s5hN
+	 hcC2lzsIO1wueaCbskQj5+a3wwxDdEWmPOV+07Q7TPozLDyT2N+vNK73HGtfJ68SSN5Iy
+	 A19TihQJK2zBxpVi/o9TLiPkw/2LF3utDVWAJskrKt97neacdIeEXzEyAXjiCa+qBdj40
+	 jrlx2imNBWO0vDzf+5sZkGiUf1cwueLyGOqrEIVjE5g1IQNtZa/DRe2kP92Q/f19MxKlj
+	 2gUHhd1Uw4H9NgUO5vnI6rRoM2g2zM8XKrCdni7xCKChhBHgpURGlk8NmnakwQJjV6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaCAeplA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXmQfV5+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38726606A31C;
-	Thu, 19 Nov 2026 00:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A057606A320;
+	Thu, 19 Nov 2026 00:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aaCAeplA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866941F000C4;
-	Thu, 19 Nov 2026 00:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bXmQfV5+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F471F000C4;
+	Thu, 19 Nov 2026 00:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046758;
-	bh=oP+r8pAz7g8ebCNElzSkQgkqB0BPfrsPPZJNvlZHscg=;
+	s=korg; t=1795046761;
+	bh=GPovS61eDHzYQyexdkTXRF+TPipBXWuoHbsHIcZrOOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaCAeplAFPna1SdyLqZL8nLlBhGDF168B304uJxFCMshvnxS0B4wJ5l1cSAk7jzqd
-	 SOdNaQoHPAkxZfb+jwfMHtP8sv9m7iG7BHMBhIZH5Au4mCTwDenb9bDQknc+MDcia2
-	 G50GptQlOcHGbsGFwZz5BGJNlk/7dwFTpKV1lZ0U=
+	b=bXmQfV5+4z1N7uzLlT9tqs1J9ShjWzJxdm70+Z6OOsE7iSQwUMXbHJWQMN/h2FvpD
+	 CBpiyjOdFwbmFNttM4J+OFklsk0ycgtDjz1a4Aqbf0fEjXWeaD5sWnSKVlLDo2d+ni
+	 JYX9EEqcljc+jHFblindy20fXctauHWP5T98vt4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Yuejie Shi <syjcnss@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1378/2857] gfs2: reject invalid inode sizes
-Date: Wed, 18 Nov 2026 15:40:12 +0100
-Message-ID: <20261118150250.992696728@linuxfoundation.org>
+Subject: [PATCH 6.1 1396/2857] fs/ntfs3: validate the EA value length in ntfs_read_ea()
+Date: Wed, 18 Nov 2026 15:40:30 +0100
+Message-ID: <20261118150251.617568233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,73 +68,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Yuejie Shi <syjcnss@gmail.com>
 
-[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
+[ Upstream commit 351817226fbf0031c4c63d1f5d7f15c3172312eb ]
 
-A corrupted GFS2 image can store a dinode size that is larger than what VFS
-i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
-writes it directly into inode->i_size. If the value is larger than S64_MAX, the
-incore i_size becomes negative. That negative value can bypass the existing
-stuffed inode size check:
+ntfs_read_ea() checks the $EA list for consistency, but it only
+recomputes the packed size of an entry when the entry's own size field is
+zero:
 
-inode->i_size > gfs2_max_stuffed_size(ip)
+	for (off = 0; off < size; off += ea_size) {
+		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
+		u32 bytes = size - off;
+		...
+		if (ef->size) {
+			ea_size = le32_to_cpu(ef->size);
+			if (ea_size > bytes)
+				goto out1;
+			continue;              /* <- elength never checked */
+		}
+		...
+		ea_size = ALIGN(struct_size(ef, name,
+					    1 + ef->name_len +
+						    le16_to_cpu(ef->elength)),
+				4);
+		if (ea_size > bytes)
+			goto out1;
+	}
 
-Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
-gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
-passes it to memcpy(), turning it into a huge copy size and triggering a
-out-of-bound issue.
+ef->size is non-zero for every entry except the last one, and it is what
+ntfs3 itself writes (ntfs_set_ea() stores exactly that aligned packed
+size), so in practice elength is not validated at all.  find_ea() then
+uses unpacked_ea_size(), which also prefers ea->size when it is set, so
+it agrees and hands the entry back.
 
-Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
-inode->i_size. Also make the stuffed inode check use the raw on-disk size while
-it is still unsigned.
+ntfs_get_ea() copies elength bytes with no further bound of its own:
 
-Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
-Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5-xhigh
+	len = le16_to_cpu(ea->elength);
+	...
+	if (len > size) {              /* size is the *caller's* buffer */
+		err = -ERANGE;
+		...
+	}
+	memcpy(buffer, ea->name + ea->name_len + 1, len);
+
+so a caller that supplies a large enough buffer receives up to 64 KiB of
+whatever follows the small $EA allocation -- straight to userspace via
+getxattr(2).
+
+Compute the packed size unconditionally and require it to fit in the
+entry.  Hoist the "bytes < offsetof(struct EA_FULL, name)" test above the
+ef->size branch as well: name_len and elength were being read there
+without it, which is itself a small over-read of the kmalloc'd buffer
+when fewer than 8 bytes are left.  The old "bytes < sizeof(ef->size)"
+test is subsumed by it.
+
+  # mkntfs image; create /mnt/ntfs/poc with user.ntfs6 set, then rewrite
+  # that EA_FULL's elength from 0xf to 0xff00 on the raw device
+  mount -t ntfs3 -o ro /dev/vda /mnt/ntfs
+  getxattr("/mnt/ntfs/poc", "user.ntfs6", buf, 128 * 1024);
+
+  BUG: KASAN: slab-out-of-bounds in ntfs_get_ea+0x294/0x3e0
+  Read of size 65280 at addr ffff0000cca53acf by task xattr_probe/142
+   __asan_memcpy+0x3c/0xa0
+   ntfs_get_ea+0x294/0x3e0
+   ntfs_getxattr+0x284/0x318
+   __vfs_getxattr+0x104/0x160
+   vfs_getxattr+0x1b4/0x1e0
+   do_getxattr+0xcc/0x230
+   path_getxattrat+0x184/0x270
+   __arm64_sys_getxattr+0x64/0x80
+  Allocated by task 142:
+   __kmalloc_noprof+0x294/0x668
+   ntfs_read_ea+0x1e4/0x420
+   ntfs_get_ea+0x2c8/0x3e0
+  The buggy address belongs to the object at ffff0000cca53a80
+   which belongs to the cache kmalloc-96 of size 96
+
+The object being over-read is the one ntfs_read_ea() just allocated, and
+it is 96 bytes.
+
+Entries written by ntfs3 and by Windows set size to the aligned packed
+size, so the new test does not reject anything a working filesystem
+produces.
+
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[ sashal: adjusted context for direct inode->i_state access and existing inode depth and entry assignments ]
+Signed-off-by: Yuejie Shi <syjcnss@gmail.com>
+[almaz.alexandrovich@paragon-software.com: applied as-is, logic is the same but the code is cleaner]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+[ sashal: adjusted context on top of c22f91d82cb9, which already validates ef->size ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/ntfs3/xattr.c | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index e7904c1c985f6..0fa7b6f1f4218 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -404,6 +404,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	umode_t mode = be32_to_cpu(str->di_mode);
- 	struct inode *inode = &ip->i_inode;
- 	bool is_new = inode->i_state & I_NEW;
-+	u64 size;
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index a235050e92098..754839cb85e8e 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -145,29 +145,32 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
+ 	for (off = 0; off < size; off += ea_size) {
+ 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
+ 		u32 bytes = size - off;
+-		size_t need;
+-
+-		/* Check if we can use field ea->size. */
+-		if (bytes < sizeof(ef->size))
+-			goto out1;
++		u32 packed_size;
  
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
- 		gfs2_consist_inode(ip);
-@@ -429,7 +430,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	i_uid_write(inode, be32_to_cpu(str->di_uid));
- 	i_gid_write(inode, be32_to_cpu(str->di_gid));
- 	set_nlink(inode, be32_to_cpu(str->di_nlink));
--	i_size_write(inode, be64_to_cpu(str->di_size));
-+	size = be64_to_cpu(str->di_size);
-+	if (unlikely(size > inode->i_sb->s_maxbytes)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
-+	i_size_write(inode, size);
- 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
-@@ -467,7 +473,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
+ 		/* Check if we can use fields ef->name_len and ef->elength. */
+ 		if (bytes < offsetof(struct EA_FULL, name))
+ 			goto out1;
  
--	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
-+	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
- 		gfs2_consist_inode(ip);
- 		return -EIO;
+-		/* Size needed to hold this record's name and value. */
+-		need = struct_size(ef, name,
+-				   1 + ef->name_len + le16_to_cpu(ef->elength));
++		/*
++		 * The name and the value have to fit in the entry whether or
++		 * not ef->size is set, because ntfs_get_ea() copies elength
++		 * bytes out of this buffer and checks them only against the
++		 * caller supplied buffer size.
++		 */
++		packed_size =
++			ALIGN(struct_size(ef, name,
++					  1 + ef->name_len +
++						  le16_to_cpu(ef->elength)),
++			      4);
+ 
+ 		if (ef->size) {
+ 			ea_size = le32_to_cpu(ef->size);
+-			/* ef->size must fit the list and cover the record. */
+-			if (ea_size > bytes || ea_size < need)
++			if (ea_size > bytes || packed_size > ea_size)
+ 				goto out1;
+ 			continue;
+ 		}
+ 
+-		ea_size = ALIGN(need, 4);
++		ea_size = packed_size;
+ 		if (ea_size > bytes)
+ 			goto out1;
  	}
 -- 
 2.53.0
