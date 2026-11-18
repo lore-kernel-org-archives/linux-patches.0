@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016828;
-	b=hOatUNGPYInwdK7mrrH/Mt9ztlVva1WyghOI3+XRhcGQXUGnM1fdLlSUJBnPBThJDYVk
-	 ckYAy87I4zGYu2oaDwbiUrzhs1/sQRGdzcgiGnXmj2MzzwmE9F7HzWQ6Js6dZ5YtVTBKC
-	 TGfl+127UOf9t10pjahlFLAXPMKRXTXcAbcBvki7HVIh537Ybh1Kyt4TB7493cr8Bzt3G
-	 j2N3EKZMDS9LU77C+MUhV+KP4cGGbF0viR8CuhFJwSEKpPZxnHy29cMwY/i2V1HZRgoQc
-	 f9dLyuAuCFmFHkpAUUaAP9hHdHzHgKNf3weMYsaspy5ha5xSSMLtUsy0KmdtWJJ1I9g==
+	t=1795016831;
+	b=j6OWxbq69/adesREugJfYKf/D5Fqyp1lKx63daMY/4jTMe2+gkhAKAdJtf1+dp4e0+hn
+	 Ni/gYFTFg5DYDZrV3jJ8K8fY5a6eZWrvGDqtLXTPvC43UC3qHUfeqBgtMhMAF9IKsa6Wo
+	 U8fX2lZxuo3o47UOy+MXfahsuoEjY3iIiI4qdbuJV0KloKldUCggyUzw814Pvxrf3LmVG
+	 BG2IDQow9xF9xXv5in6StlEcgcwh2JyhHQumDq20OTJon+eV445lJSidmIwfvo1lSOAge
+	 +VzrY/1V+fz+GtdI7oRwM+9/c6u0h7ZoAJ/A+pAQSVArgd8p0PSNeq2U8F176Iz77SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016828;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016831;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ybAu67Zw7tLzveTzuHqIqpwGkQaK0c9ZFymSIWeIVw8=;
-	b=CBKWK4Gd1wpifRopkoJIOip+OYdDrKbbGtFjv7F7u3qOezsjgCiPPrjvjvS10E0VgpbR
-	 qjnImyJiXZYG5Zy8DKJj0LgkzZ3lBbo4lSbmfQAmwwerlxkfXuMZ75vhTtp3Y+TodGaHZ
-	 Z3bpY+N4S+xm4fs8z4bVZaLc1HQxfCoEuDh6o8lhQZIJma8rQEmLsr6rKhQyGoeoj8bcX
-	 LFgyEQbbnka8HHUP+WBCI3Nx5C8SXbVD9fwpX/9mKQyVwW7u3El5QVKKd0BuUJB7aF5SA
-	 /FZ4CN+rc9JJRASJLzATVOhojGdC1+56hdPvQmuMmmSAgwtCuX/nO5vsqeg65ghvEGg==
+	bh=ITC3wimASs5pTwH0x9+7ZC0TfqwkSE2H2oMQIbFOeGo=;
+	b=PftwFfSn29qnpBFhQeXo8IN9mQnUu1rOOhg0C8NZ7feqr5HQpeNdYJs66glY/q1OC8PF
+	 cycf4/ecBbLs2EA3aBgH7ozuYqJOQ/bnB5l9RFWiDsAZBzCr3wLadEHvr/lpSLsD8MMjJ
+	 AO954TDwvNOkdQjaR+mSh2oMf+zBb4Bn+ahaT4NJLmHQTKSdUq1S9LpKNTmQnVMX8uo2n
+	 8GiL+ndH9kSZ+ax/2R7zqSc6LzqKPa9k+k7zAwLNKUNtAtRraRpXzwf9PgvBaPAy9t3OQ
+	 D+JUSHaZVLP42S2YMfYc1GaEguut4l8B85qGa54ElFtM80QBic99K00qcyStULkS6GA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HaXOdKcX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7u+hNlA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AC8606A31C;
-	Wed, 18 Nov 2026 15:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BCE606A320;
+	Wed, 18 Nov 2026 15:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HaXOdKcX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CB21F000C4;
-	Wed, 18 Nov 2026 15:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7u+hNlA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C733F1F000C4;
+	Wed, 18 Nov 2026 15:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016828;
-	bh=ybAu67Zw7tLzveTzuHqIqpwGkQaK0c9ZFymSIWeIVw8=;
+	s=korg; t=1795016831;
+	bh=ITC3wimASs5pTwH0x9+7ZC0TfqwkSE2H2oMQIbFOeGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HaXOdKcXtEafe0Cv4t8dWvJBe9vj3tQ9AssXyjFd5jSpVn6RAIuhmXQMeDrE6dqET
-	 B2wxzFnBAUwecYknoUqL90NSgozlfPFhNckQ4wxDPLF6oX+MMGtuBFJtCYWdzvSsgM
-	 cgLF51hcXfBV2zm+Hsw0C5SGOV6y9lxex4nMs/Yw=
+	b=a7u+hNlAZiiqQDrJwrG6ksrbqgfnJ0TItE7mlYUgSgFZaUsCAFXpvPcOCDsrzi0S7
+	 0sTpRp8lNw1nG3JT43SttDQj2Prk6KJraxCRXT+rByQy3BenAYjq1r5m/rhqITT8Da
+	 Ofo4T2UNj7vHU8fFIknJnJ9FDdz8U9SmVVpgoSeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Bongio <jbongio@google.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0667/2651] RDMA/irdma: Use kvzalloc for lvl2 leafmem allocation
-Date: Wed, 18 Nov 2026 15:31:47 +0100
-Message-ID: <20261118150311.887268107@linuxfoundation.org>
+Subject: [PATCH 7.3 0668/2651] ata: pata_parport: fix parport attach idr_alloc for
+Date: Wed, 18 Nov 2026 15:31:48 +0100
+Message-ID: <20261118150311.921965419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,81 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Bongio <jbongio@google.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 9c40f13a63a4b87177de3e8c318af25068fc6ab4 ]
+[ Upstream commit 193f5b84a95c02456f51fe5067750ecf73d213d5 ]
 
-During VM live migration or when registering large memory regions
-(e.g., guest memory >= 256 GB backed by 4 KiB pages), get_lvl2_pble()
-calculates total leaves exceeding ~131,072. The memory required for
-lvl2->leafmem.va exceeds 4 MiB (sizeof(*leaf) * total > 5.24 MiB).
+idr_alloc() expects an inclusive start and an exclusive end, so passing
+port->number as both arguments produces an empty range. Because
+idr_alloc() only falls back to INT_MAX when end <= 0, the allocation
+succeeds solely for parport0 and returns -ENOSPC for every other port,
+which pata_parport_attach() silently ignores. As a result only
+parport0 gets probed and any higher-numbered parports are never
+attached.
 
-Because kzalloc() requires physically contiguous pages, requests larger
-than MAX_PAGE_ORDER (4 MiB on x86_64) fail and trigger a warning:
+Use port->number + 1 as the end so the range [port->number,
+port->number + 1) contains exactly the desired ID.
 
-  WARNING: CPU: 123 PID: 119906 at mm/page_alloc.c:5997 __alloc_frozen_pages_noprof+0x50c/0x1050
-  Call Trace:
-   <TASK>
-   alloc_frozen_pages_noprof+0xc0/0x240
-   ___kmalloc_large_node+0x3d/0xd0
-   __kmalloc_large_node_noprof+0x1b/0x90
-   __kmalloc_noprof+0x254/0x660
-   get_lvl1_lvl2_pble+0xbc/0x270 [irdma]
-   irdma_get_pble+0x44/0xc0 [irdma]
-   irdma_setup_pbles+0x46/0x1d0 [irdma]
-   irdma_reg_user_mr_type_mem+0x41/0x230 [irdma]
-   irdma_reg_user_mr+0x194/0x1c0 [irdma]
-   ib_uverbs_reg_mr+0x1b0/0x2c0 [ib_uverbs]
-
-The leafmem array is purely host software tracking structures (struct
-irdma_pble_info) and does not require physically contiguous memory.
-
-Switch the allocation from kzalloc() to kvzalloc() and free it with
-kvfree() so that requests exceeding MAX_PAGE_ORDER fall back to
-virtually contiguous memory via vmalloc.
-
-Fixes: e8c4dbc2fcac ("RDMA/irdma: Add PBLE resource manager")
-Assisted-by: LLM
-Signed-off-by: Jeremy Bongio <jbongio@google.com>
-Link: https://patch.msgid.link/20260916173203.2555458-1-jbongio@google.com
-Tested-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 246a1c4c6b7f ("ata: pata_parport: add driver (PARIDE replacement)")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/cee1a15d98cd0d55f41fd65ca9d222b68a74e7d3.1790047457.git.xiaopei01@kylinos.cn
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/pble.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/ata/pata_parport/pata_parport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
-index 14318af97d581..0c2c5e96a05a4 100644
---- a/drivers/infiniband/hw/irdma/pble.c
-+++ b/drivers/infiniband/hw/irdma/pble.c
-@@ -330,7 +330,7 @@ static void free_lvl2(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 	if (root->addr)
- 		irdma_prm_return_pbles(&pble_rsrc->pinfo, &root->chunkinfo);
+diff --git a/drivers/ata/pata_parport/pata_parport.c b/drivers/ata/pata_parport/pata_parport.c
+index cf81a6128f552..f0fe921a10b4e 100644
+--- a/drivers/ata/pata_parport/pata_parport.c
++++ b/drivers/ata/pata_parport/pata_parport.c
+@@ -723,7 +723,7 @@ static void pata_parport_attach(struct parport *port)
+ 	int pr_num, id;
  
--	kfree(lvl2->leafmem.va);
-+	kvfree(lvl2->leafmem.va);
- 	lvl2->leaf = NULL;
- }
- 
-@@ -358,7 +358,7 @@ static int get_lvl2_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 	lvl2->leaf_cnt = total;
- 
- 	lvl2->leafmem.size = (sizeof(*leaf) * total);
--	lvl2->leafmem.va = kzalloc(lvl2->leafmem.size, GFP_KERNEL);
-+	lvl2->leafmem.va = kvzalloc(lvl2->leafmem.size, GFP_KERNEL);
- 	if (!lvl2->leafmem.va)
- 		return -ENOMEM;
- 
-@@ -367,7 +367,7 @@ static int get_lvl2_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
- 	ret_code = irdma_prm_get_pbles(&pble_rsrc->pinfo, &root->chunkinfo,
- 				       total << 3, &root->addr, &fpm_addr);
- 	if (ret_code) {
--		kfree(lvl2->leafmem.va);
-+		kvfree(lvl2->leafmem.va);
- 		lvl2->leaf = NULL;
- 		return -ENOMEM;
- 	}
+ 	mutex_lock(&pi_mutex);
+-	id = idr_alloc(&parport_list, port, port->number, port->number,
++	id = idr_alloc(&parport_list, port, port->number, port->number + 1,
+ 		       GFP_KERNEL);
+ 	if (id < 0) {
+ 		mutex_unlock(&pi_mutex);
 -- 
 2.53.0
 
