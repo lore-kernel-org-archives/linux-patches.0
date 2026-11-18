@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037637;
-	b=xDh6SzJpycnhkMa89KXgNMdWe6SH2bF09G0bMZj+aM+G7g3JdI2NhJXv+FPTBizxFtGL
-	 5Fi+rziuy5R3c5Q6VG/JIfbppOD2vyZl07wsUOylMk+961jPcHu2dkMJR7y7Lm+npfUkn
-	 3CfITCakgdCRB+0Ia00Gv8rdJlJTibBYPZcOjMaSH0oNckVysY11BIMNLxYK5JX9yrAw2
-	 b10Pgwx/BKskerJmVCJWMBw1nrgVsiTpIR08IZ6cdR/rWC0TQ+zxaGnIBH62uM0qvDWQD
-	 X9qR6nuWSPlBtTRIsrjNLKo+1v1/UkX9v737Cp0huH/brp8kdZ9X95z+XRgQYU7bwEg==
+	t=1795037640;
+	b=n5lydb/MYLxVspjzgeAkjyrNKOrO9FxpfxdFHHDv13xZ8hsI/VTs0SOTpb63qb16E2Y5
+	 1Ud1Uj2T6ldYenmm6FAg2s2FGA/szyuTpOGA4rXNPUuUJOhFSbjQMZA17EjHHIO5mxhOA
+	 fAuVV4YvVNBee3cyWzmjcikXyPOJ3yXGbQzCIsAycWuMTyarLCNUz4i5YMWb1koEa0Spp
+	 z0bRq6w0Vf110DG4b0RKFx3sX2riGSqdft/dZOwsYga4K9LGz9auKBeVX7AktrD+aj86T
+	 GnmiCSmgheuCc92AUS2gdBzBcx1ZDxTkZp9sx08SIbXgvtf16HAGNVj/W2j5RYX65bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037640;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/JVcSnLZaIeKEyKeCtxgbbjCrlNqUxKCDMGPL+MXy30=;
-	b=3JI/c7WwnOmusDiZdKMDXa3FYY/+YT58n+EgtHC/OiYiWkQnwdRtNRJy3lTwm4LEKTwT
-	 +xBxc7sOt307dbSJ79YbaRndWi66ziATjQZixBaKHbRj4OGreLn7D0ZwAvGV8jPFUe5L6
-	 JZWAh8lecX2dPtadT7yY/8VOPRk/qlSmSQrKrh0Mod1cNURQLiwaFnPkpnEBmMhWBg9SJ
-	 cx6pM8f+16lPFRX4+t9+4CBrPenPFn2VBWdKwsIMVLMwd9wxaYWnOkk/dKYj9n8PIyrdS
-	 nZB/G9CNtzq+QlSKQ+rWuzF+tyGm9nii9896ASa4RBIOHnLzM1hB5Z9Y751Oabv/D8Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=yaBq6SWRHIh56V/E4mgLwcMg7xxXACPlDz5iG9msd7I=;
+	b=FFYtxkS4raWrzi1GZqleP7Z+yo8FAkMU4G2IQShJ5BfeEb6wRbgTCb1C+rEtoZmkmGif
+	 E4N2pppfw+1ox0ix11KxM4ylULD1qWOV9iCysSPxZ3tTwrRzfm16JTBkcgE+NXeo0aG/i
+	 3ADtKSL2cfqUiYryLyfNrwCvlagZ3jzprD7RzMqrYVzA7ho8WiMHwCEvK1kmq/buxcsW+
+	 MvjmWldMcEBe08ejEuLPoyaVLwXk5nv1vUbfvBrlsKXOkXpUTttnpML0N/Qk1swboIkTd
+	 YJHfcf34un2AXvFol6RaFt4z/GX27sjrSOY6O77KL5LzcuD3yyKBN0tmCpk5urU/4Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="t7e/rhJo";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVKZ4tt5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA24606A31C;
-	Wed, 18 Nov 2026 21:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70DB606A320;
+	Wed, 18 Nov 2026 21:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t7e/rhJo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4612B1F000C4;
-	Wed, 18 Nov 2026 21:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YVKZ4tt5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03A41F000C4;
+	Wed, 18 Nov 2026 21:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037637;
-	bh=/JVcSnLZaIeKEyKeCtxgbbjCrlNqUxKCDMGPL+MXy30=;
+	s=korg; t=1795037640;
+	bh=yaBq6SWRHIh56V/E4mgLwcMg7xxXACPlDz5iG9msd7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t7e/rhJoxfEHS4rCQMwZGhgS0CSp2I9p2pvvvzaa4HD+bIdoitr/vsWEdblbHknUJ
-	 CYqtpGPUgY7gK5Msn6BI25PdU4khaJndQwPiO/uyYzoGSWqXR/zMWQqIfu4OknRj77
-	 Pb1Jt/ejseIvZO/7DzM10bpVHJDFeOxn+ByGDujo=
+	b=YVKZ4tt5z3v+MIMrzJsW9nNQ6ltezzGRPjXC9M/r76wfQH+sos7MclEVwnCnzbsGi
+	 vr54vyNUx2j74b7VIFZdbIcdjs8sPQjmGUQC9iY1WDlkLdHBq1j+KskVAUJVp4XyQl
+	 JJJw3s9UXh5TY99Mkz/HMXa08eDD3LDUlEJTvvFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Asaf=20Nuri=20Bertizlio=C4=9Flu?= <ycistak@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1465/3318] hwmon: (pmbus) Fix return value check from thermal zone registration
-Date: Wed, 18 Nov 2026 15:34:47 +0100
-Message-ID: <20261118150404.841707524@linuxfoundation.org>
+Subject: [PATCH 6.6 1466/3318] hwmon: (coretemp) Check for NULL platform device in hotplug callbacks
+Date: Wed, 18 Nov 2026 15:34:48 +0100
+Message-ID: <20261118150404.872163230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -61,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -69,49 +72,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 4fc79634af8cdf734e0a633923ba4817e30d29ad ]
+[ Upstream commit 0f9c7ed3b5009a037e5533eac03a0d4d45ecf1f0 ]
 
-The PMBus core used to call devm_thermal_zone_of_sensor_register()
-to register thermal zones. Commit 613ed3f676092 ("hwmon: pm_bus: core:
-Switch to new of thermal API") changed this to call
-devm_thermal_of_zone_register() instead. The code subsequently checks if
-the call failed because the thermal subsystem is not configured.
-devm_thermal_zone_of_sensor_register() used to return -ENODEV in this
-case. devm_thermal_of_zone_register() returns -ENOTSUPP. The code currently
-still checks for -ENOVEV. This results in driver instantiation failures if
-the thermal subsystem is disabled.
+coretemp_get_pdev() returns NULL when topology_logical_die_id(cpu) is
+negative (such as -ENODEV or -ERANGE from topology_get_logical_id() on a
+firmware/hardware APIC ID mismatch) or exceeds max_zones (for example,
+under asymmetric or anomalous ACPI die topologies where
+topology_max_packages() * topology_max_dies_per_package() is smaller
+than the logical die count).
 
-Check for -ENOTSUPP to fix the problem. Keep checking for -ENODEV because
-this indicates that no thermal zone is configured for the sensor, which is
-acceptable for the driver and must not cause a registration failure.
+Commit 6d03bbff456b ("hwmon: (coretemp) Simplify platform device
+handling") pre-allocated zone_devices[0 .. max_zones - 1] during module
+init and dropped the NULL checks on pdev in coretemp_cpu_online() and
+coretemp_cpu_offline(), passing pdev unconditionally to
+platform_get_drvdata(). When coretemp_get_pdev() returns NULL,
+platform_get_drvdata(pdev) dereferences &pdev->dev and triggers a kernel
+NULL pointer dereference.
 
-Fixes: 613ed3f676092 ("hwmon: pm_bus: core: Switch to new of thermal API")
+Check for a NULL pdev and return 0 in both coretemp_cpu_online() and
+coretemp_cpu_offline() before calling platform_get_drvdata(). Returning
+0 in coretemp_cpu_online() ignores the unmapped CPU without blocking CPU
+bringup or tearing down valid thermal zones on other dies.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 6d03bbff456b ("hwmon: (coretemp) Simplify platform device handling")
 Cc: stable@vger.kernel.org
+Tested-by: Asaf Nuri Bertizlioğlu <ycistak@gmail.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hwmon/coretemp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 4212fbd63e7bd..5500f1827ae68 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -1352,10 +1352,11 @@ static int pmbus_thermal_add_sensor(struct pmbus_data *pmbus_data,
- 	tzd = devm_thermal_of_zone_register(dev, index, tdata,
- 					    &pmbus_thermal_ops);
- 	/*
--	 * If CONFIG_THERMAL_OF is disabled, this returns -ENODEV,
--	 * so ignore that error but forward any other error.
-+	 * If CONFIG_THERMAL_OF is disabled, devm_thermal_of_zone_register()
-+	 * returns -ENOTSUPP. If no thermal zone is configured for the sensor,
-+	 * it returns -ENODEV. Ignore those errors but forward any other error.
- 	 */
--	if (IS_ERR(tzd) && (PTR_ERR(tzd) != -ENODEV)) {
-+	if (IS_ERR(tzd) && PTR_ERR(tzd) !=  -ENODEV && PTR_ERR(tzd) != -ENOTSUPP) {
- 		devm_kfree(dev, tdata);
- 		return PTR_ERR(tzd);
- 	}
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index f562057efcce2..6c10349ea68a3 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -664,6 +664,9 @@ static int coretemp_cpu_online(unsigned int cpu)
+ 	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
+ 		return 0;
+ 
++	if (!pdev)
++		return 0;
++
+ 	pdata = platform_get_drvdata(pdev);
+ 	if (!pdata->hwmon_dev) {
+ 		struct device *hwmon;
+@@ -715,6 +718,9 @@ static int coretemp_cpu_offline(unsigned int cpu)
+ 		return 0;
+ 
+ 	/* If the physical CPU device does not exist, just return */
++	if (!pdev)
++		return 0;
++
+ 	pd = platform_get_drvdata(pdev);
+ 	if (!pd->hwmon_dev)
+ 		return 0;
 -- 
 2.53.0
 
