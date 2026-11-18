@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051352;
-	b=Jo4gOshXjDiDdndjXiHsisuLs7qUfgGBWjNZp5cHKz4pUb2Q8CTVn/PaQ7LI8sJf3FBM
-	 otjVsumKCXEGKgnplHa60aW9cYVBvOUqIqsQioRKQct3SnGQNtWqBSkhUjwnXxGqtpKMx
-	 Gw3mqNa5+gcJyXwjNjd91GLnP0Msp2o6NEKsjAcMh3Y/QtNRUcUPU+GAN48s4nb0K6Dvk
-	 mJLuPHKGllciEQx+ENJenypfwHVSrvpWNLmZfzBTvukgvdUibCE6RVdDndJzUjJWXWwKt
-	 kt/8KSzAVAIqeJX2zRpP94RmWg9+LYGAKAG/n/UQ6CJOAIrIX2hh28bYMZ8ANuZFexw==
+	t=1795051355;
+	b=Tt8ZLnfstCu8r2U02lqKMUCHBqCzh+v6p+L9A7Y6P/3FHh8CHmkRQMGqKcQJNqMllLxL
+	 Ga75KCnhVAljqZNHpt3QqdKAWO46zZsfRqjK6AM5vvwEEJWN+gvjb1Lr1VIk13VvkZeRk
+	 NDEl8MmaVkgArLJBkYZhcRBSg6rr5MUsBLoo8fz4AyO8X38HWl7QGfTwO0F8koihzBNQo
+	 Ewa6UuOcaW0ExOAJ0pzv5FlSuzR77hVGym/LogeY5qk/cDlhHT+HgX0v+1YRa0NvUyS/e
+	 NYDZ0h6CBoVEEtKgjU0kKin96EUn7Sqza2klYJQxs7a9mirfUFNrc/mW8cEwD/Yqzgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=nVZx99+Y0IjjHoJTAnBdY71O4q3aWL+Pb3asT4Bb0ns=;
-	b=JFNq0i6QcFHVo2JXmxFeAixw3LBol/gCEPuA+kO1rssQ4wC0hw9ecujvDzBRae1mfMyy
-	 Usf6kJ96HS6TEO37l1VgcgvUeZuRLl3w/j4M3yR+dMYmuPk9IYroCCnCi5KrO6Z4F3iZC
-	 Nz9YauLwJX41dZtZBIQmCje0rZYlPjPIqQY6puwXymOCNOL09qKCikBKCJY7Iaz/Ov7HN
-	 81y3Zghr4RxB3qZylZfLfNotjZClQFCmG7+AbBoYgaDjtda3/7HfgtOAUv49Wqhboybjc
-	 UU3ozte0LkHuwXL4ME6TVHKlrA3j7El/fNegPiNnRD64SoAgUR+SJS+94Scz/k6vrCg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=X+hdWFj5NYCGz5lzDtSbR/JRrfv+ux6AJREoF7Hr9bg=;
+	b=UOnUOvgNJCl8j9p2POuhfen8kVclpWhJaReV/QL9swO/pRiiv786a0eP6BVPldWfV9Tm
+	 2nrYhglRkdwiZJAbCibfAGC00HhAsYFJhSHTSYGLdXjSbj+H5aZhBCgGhEd/h64R2uYcG
+	 suhEVev6l3QbauwG+rJEgnLwAFXpOUYahATVGCTLZWgHQ+3x9l3Tp7KJCXPKoWNSNje0W
+	 41cbJ4zndQI7/T04L9dFbSr2y4m4WAx56NT3l+PWoyI1mw6GNfIOwzIpq7bh1N8z/RvfK
+	 IveHvNClzMR4OfoxbKBESCcRyppTDEFvzYINWy2OEG3fzHwbdlifXTMTBoA74nrcSew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fMiaRMyy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0WBTtde;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E48606A31C;
-	Thu, 19 Nov 2026 01:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3EA606A32C;
+	Thu, 19 Nov 2026 01:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fMiaRMyy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C72A1F000C4;
-	Thu, 19 Nov 2026 01:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L0WBTtde
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14E01F000C4;
+	Thu, 19 Nov 2026 01:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051352;
-	bh=nVZx99+Y0IjjHoJTAnBdY71O4q3aWL+Pb3asT4Bb0ns=;
+	s=korg; t=1795051355;
+	bh=X+hdWFj5NYCGz5lzDtSbR/JRrfv+ux6AJREoF7Hr9bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fMiaRMyym8edd0q2VAMr4WNmKobCedkfpAx4Dy1rIGnK/0v2GdBHf7hm4+dL6sTtY
-	 V0J9XQ3p6ps5G3Z5zzcQU+hefS0NfwbDuD7QVxzfJoC8umHPjL9SYqVqtA9CN558BN
-	 ThK1bEC8XV3BWd6n4QpREIzEcAAhi1UdS7piTLpI=
+	b=L0WBTtdej96NP7XrlUHY6sa6Mu5+ES4qIsKLxhRU1bkZzXQzSgy+465DeSI1rhwzv
+	 xyUM0RfVXs4grhVEqVc3cr3kI2guc9Wtgh2dTj+3FM+fSB7DxvVjA722hpFsNaFczF
+	 3ffsY1DFdf9Xj38aDVczXp86uAvI5Awbl9o57lj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Rausch <gerd.rausch@oracle.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Junzhe <junzheyu1@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0171/2214] net/rds: fix rds_message leak in the rds_send_xmit() drop path
-Date: Wed, 18 Nov 2026 15:30:47 +0100
-Message-ID: <20261118150016.921739988@linuxfoundation.org>
+Subject: [PATCH 5.15 0180/2214] ext4: guard against NULL s_group_info in ext4_get_group_info
+Date: Wed, 18 Nov 2026 15:30:56 +0100
+Message-ID: <20261118150017.243641317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,82 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: Junzhe Yu <junzheyu1@gmail.com>
 
-[ Upstream commit eb8a59a17f4a8b6f2afb4a8063e99dd96cc3fab0 ]
+[ Upstream commit 8f3901fbb40745046e513226ad84e8b84492632d ]
 
-When rds_send_xmit() picks the next message off cp_send_queue it takes
-its own reference with rds_message_addref().  If the message then hits
-the never-retransmit check (RDS_MSG_FLUSH, or an RDMA op that was
-already retransmitted), it is moved to the local to_be_dropped list and
-that reference is dropped after the batch.
+Resend: previous attempt was rejected by vger for containing HTML.
 
-However, if RDS_MSG_ON_CONN has already been cleared, the message is
-not added to to_be_dropped and the reference taken above is never
-dropped: cp_xmit_rm has not been set at this point, so the loop simply
-abandons rm and the rds_message (and everything it pins: pages, MRs,
-notifiers) leaks after an RDMA error.
+==================================================================
 
-The only other places that clear RDS_MSG_ON_CONN are
-rds_send_path_drop_acked() and rds_send_drop_to(), and both can run
-while rds_send_xmit() has dropped cp_lock between moving the message
-to cp_retrans and re-taking the lock in the never-retransmit check:
-rds_send_path_drop_acked() can ack away a message that already sat on
-cp_retrans - the RDS_MSG_RETRANSMITTED case above - and
-rds_send_drop_to() runs on socket close.  Both unlink the message
-under cp_lock and put their own reference, leaving the xmit-path
-reference stranded.
+ext4_mark_group_bitmap_corrupted() already treats a NULL return from
+ext4_get_group_info() as "nothing to do", but ext4_get_group_info()
+indexes s_group_info without checking whether the array exists.
 
-Drop the reference directly in that case.
+During mount, fast-commit replay runs inside jbd2_journal_load() from
+ext4_load_and_init_journal(), which is before ext4_mb_init() allocates
+s_group_info. Replaying an FC UNLINK for an inode whose bitmap bit is
+already clear takes:
 
-This mirrors Oracle UEK commit "net/rds: fix rds_message memleak in
-rds_send_xmit".
+   ext4_fc_replay_unlink -> iput -> ext4_evict_inode -> ext4_free_inode
+     -> ext4_mark_group_bitmap_corrupted -> ext4_get_group_info
 
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-[achender: port to net-next; update commit message, checkpatch nits]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+and faults on the NULL s_group_info base. Userspace only mounts a dirty
+ext4 image; this is a supported recovery path.
+
+Return NULL when s_group_info (or the per-block grp_info row) is unset
+so the existing caller check is effective during early mount.
+
+Tested on Linux v6.6.145 KASAN: crafted FC-unlink image previously
+triggered KASAN null-ptr-deref / panic in ext4_get_group_info; with this
+patch, mount succeeds (EXT4 "bit already cleared" may still log). Also
+observed on v6.6.144; still present on torvalds/linux as of
+f5098b6bae76 (2026-07-26).
+
+A self-contained Docker/QEMU reproducer (craft + mount + patch verify) is
+available on request.
+
+Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
+Link: https://patch.msgid.link/65c955b0-716b-4599-b925-59c2782e38b4@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/ext4/balloc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 9ff3091575d0d..64cdfd58e511b 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -288,9 +288,21 @@ int rds_send_xmit(struct rds_conn_path *cp)
- 			    (rm->rdma.op_active &&
- 			    test_bit(RDS_MSG_RETRANSMITTED, &rm->m_flags))) {
- 				spin_lock_irqsave(&cp->cp_lock, flags);
--				if (test_and_clear_bit(RDS_MSG_ON_CONN, &rm->m_flags))
--					list_move(&rm->m_conn_item, &to_be_dropped);
--				spin_unlock_irqrestore(&cp->cp_lock, flags);
-+				if (test_and_clear_bit(RDS_MSG_ON_CONN,
-+						       &rm->m_flags)) {
-+					/* our ref is put after the batch */
-+					list_move(&rm->m_conn_item,
-+						  &to_be_dropped);
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+				} else {
-+					/* already off the conn list; drop
-+					 * the ref taken above ourselves
-+					 */
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+					rds_message_put(rm);
-+				}
- 				continue;
- 			}
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index d6872b71657b6..660d8aa23db0f 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -327,9 +327,13 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
+ 
+ 	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
+ 		return NULL;
++	if (unlikely(!EXT4_SB(sb)->s_group_info))
++		return NULL;
+ 	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
+ 	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
+ 	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
++	if (unlikely(!grp_info))
++		return NULL;
+ 	return grp_info[indexh];
+ }
  
 -- 
 2.53.0
