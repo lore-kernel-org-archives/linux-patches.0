@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027154;
-	b=goQRL1PrtRH+C1MNSz2lIgRFEjJFeuIK5sCe7gbBvKHkEsNwKlftu58JRF/1oFYEPORa
-	 aF4wF6SJWM7z3anmmDvxaUs1DX/dHvIPlHZSs1jhedZAsvSWU1z+74tKl5MHkHQ08a/H+
-	 zannIepEfhoJkQZ9KSkOYDI0Kgkro8Hh5HQISsDrBrT/H+WqfZBXUu00hK9HaXsddlAV9
-	 D7tAna9+04DhkXy/7D5s+t1/kWP1LPbTh2sr724sMJx6QkyULj59KrQ2iriRIHSanv8ZL
-	 kig+DVHloald2f18REYpZ9UWbC7PwUYwlHwXc4GKUcVfpsj0MeFoCgDiKstFAi6On8w==
+	t=1795027157;
+	b=QDyh54kuz8cv4mI8mXvuH5ZbEIrEFOKmvwlprm9mZUEeb+ro0Jb4FqYYR/BOWylNaMYV
+	 6lPGglX7uqljnILTUB4OJeiMuuotfIshJpD92iY/SPEDFlPUwSdLi0Dm6eCn9RvwwfuQ8
+	 uGB7r7N9Ztnb4Z0lEybrykgk2OZ+iQDlyH0M/7PJ/CDtKP+MoJm0IZmJVYupUR34Ys10N
+	 MTSQhfegyB0yuOxJUo1lRUQk+xOug/MWc20iWVk+tDqT17CztjTk6XgG/to6rSl6ja9CY
+	 RQ57+CFYBPjzJxDPRy8Uu8vQ0bGSj3wDLayjAJeU8DbZ1W5LLdxZoeZ2Kd214ByGFdA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=03Ge+phTPoJk91Nadkf7V/GLGmkz/hZ1DzppQuv9zwA=;
-	b=Q7sB2e30C/Hv4dKdjHcg4HDp8yqFI3X8wkN/8GlLkrWp30n3ENunXuQXQrp5Wyp619Ac
-	 SGtl1NS1snOvWMLoYKAJK9dwb58W7W1OXk5GNNBWtma7pO71TU7RS45UyT20ORZwxk6xZ
-	 qIcbPjrWGRPzKiLP/wveErreIRURifLBY7naG+2LWpw4X3le0+ZmZU9laqdic1x6tVaVE
-	 ITr3OZrG00BQJFnHS3wqAsVcMsOuSHz/Xy3xC2NODGjYfvWAbJNR+KZdbjQB8edt4o3Qi
-	 A/47ZRrlf4IxXqLhRgGa1+HwpgLFXG6S/n3v9uUDqj+gvP+dSdU8OiinRA/UJ0wJ4yw==
+	bh=vP+Pta45/F1nokoE8cwmZ9b05AkMqLgZ87g7z8+UECM=;
+	b=aiTU3cNoV4y/VOEyclS+hxL6OQpemiEn8UX+/lwTTskP85rvxQt9fco58uLjGGY6z7aw
+	 vpE2FNC+qa4bPrFcsyGMwpiFEzHgZh+gvxu8fF5rh0255CQucKNOnCG2xB1h0LaAnKMTy
+	 BTHozasOBsujZmogOBE7891oT1bzRaXIqgweUdnVX00aUto+9jeUHXM6y9qzFg4eIJriU
+	 P1hxb/l6e8gKueByHWTcBoARPezTbOK+104YwjWA/fhsc7kawH0hPyGLzxD/sYunMSbq2
+	 6ZLN36ZUt3W2Q5YleyR6fLD4L+DexFjqEEF84f/t5a2sEGQl5GmbN9kDm6Mom/NYoTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUGkZLFM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2iDOhkxP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C4B606A320;
-	Wed, 18 Nov 2026 18:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FBB606A32C;
+	Wed, 18 Nov 2026 18:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kUGkZLFM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CC01F000C4;
-	Wed, 18 Nov 2026 18:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2iDOhkxP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DC01F000CD;
+	Wed, 18 Nov 2026 18:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027154;
-	bh=03Ge+phTPoJk91Nadkf7V/GLGmkz/hZ1DzppQuv9zwA=;
+	s=korg; t=1795027157;
+	bh=vP+Pta45/F1nokoE8cwmZ9b05AkMqLgZ87g7z8+UECM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kUGkZLFMN5cfoIj3l+xxWVcqewUgs8vblymR1O0tZ2d5TXVZ24CuFD6dPmuzkHXnQ
-	 z9OWljXXRCozq1DOLD8ueUZpzx0qLuW5c9wqAO7eTkVsyeYspWgqgQLnfx6NiRYe9k
-	 gpnn7D6cEEkLfHY4uNoyCdrZSDBA20TnzexUoR9s=
+	b=2iDOhkxPmrjAUnzfyx5kx5cm7Wh1ymKCItcBUTyLcHdQLPVbAklnkwGopgGQEzFkk
+	 fOhnuigJzpAv6Rqmm5tHnoIORboAjhRdK8Yenml4vm9eNQ0kGbnahHJ2j/QCf5Y0BD
+	 WmpN7dgjgtK0kXAjtW/BSJx7s6CB22CICPJx6VaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Derepas <fabrice.derepas@canonical.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Jianan Huang <jnhuang95@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1687/2151] ima: reject a kexec buffer whose declared size exceeds the buffer
-Date: Wed, 18 Nov 2026 15:57:02 +0100
-Message-ID: <20261118150223.281999410@linuxfoundation.org>
+Subject: [PATCH 6.18 1648/2151] f2fs: quota: fix quota flush failure during filesystem freeze
+Date: Wed, 18 Nov 2026 15:56:23 +0100
+Message-ID: <20261118150221.882517646@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,59 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrice Derepas <fabrice.derepas@canonical.com>
+From: Jianan Huang <jnhuang95@gmail.com>
 
-[ Upstream commit ceb24c7052cc4649e3b52a51a7cca7dfe4896cec ]
+[ Upstream commit f6f8f34480c78eade6542faea6386c47c9b4c6b3 ]
 
-ima_restore_measurement_list() parses the measurement list persisted across
-kexec.  It computes the parse end directly from the blob:
+Quota flush retries can be exhausted during filesystem freeze.
 
-	bufendp = buf + khdr->buffer_size;
+freeze_super() and the quota checkpoint may race as below.
 
-khdr->buffer_size is a u64 read straight from the persisted buffer.  The
-only length checks in the function are size >= sizeof(*khdr), version == 1
-and count -- none relates buffer_size to size, the actual buffer size the
-caller (ima_load_kexec_buffer()) obtained from the ima-kexec-buffer region.
-ima_parse_buf() bounds every field read to bufendp, so a blob whose
-internal buffer_size exceeds the real size makes the parse loop read past
-the end of the buffer (CWE-125).
+freeze_super()                       f2fs_ckpt
+- down_write(&sb->s_umount)
+- sb->s_writers.frozen = SB_FREEZE_PAGEFAULT
+- sync_filesystem()
+ - f2fs_sync_fs()
+  - f2fs_issue_checkpoint()
+   - queue CP_SYNC -----------------> - block_operations()
+                                      - down_read_trylock(s_umount)
+                                        : fails; freeze holds write lock
+                                      - quota flush retries exhausted
+                                      - set CP_QUOTA_NEED_FSCK_FLAG
 
-The buffer's memory range is validated against addressable RAM by
-commit cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
-against memory bounds") and commit c5489d04337b ("x86/kexec: add a
-sanity check on previous kernel's ima kexec buffer"), but the blob's
-own declared size is never clamped to it.  Reject a buffer_size larger
-than size before the loop.
+During the PAGEFAULT sync pass, freeze_super() holds s_umount for
+write, but umount_lock_holder is not set until f2fs_freeze().  Thus
+quota writeback tries to acquire s_umount again and can exhaust retries.
 
-This is on the boot-time kexec-restore path (__init) and the buffer comes
-from the previous kernel, so triggering it requires control of the
-persisted buffer; it is an out-of-bounds read only.
+With checkpoint merge enabled, f2fs_issue_checkpoint() may dispatch
+CP_SYNC to f2fs_ckpt. That thread also cannot acquire the freeze lock.
 
-Fixes: 94c3aac567a9 ("ima: on soft reboot, restore the measurement list")
-Assisted-by: copilot-cli:claude-opus-4-6 frama-c
-Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Record current as umount_lock_holder around the VFS PAGEFAULT sync so
+checkpoint runs in the freeze caller and quota flush uses its existing
+s_umount write lock.
+
+Fixes: eb85c2410d6f ("f2fs: quota: fix to avoid warning in dquot_writeback_dquots()")
+Signed-off-by: Jianan Huang <jnhuang95@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_template.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/super.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
-index 04c49f05cb74f..0a802072490a3 100644
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -449,6 +449,11 @@ int ima_restore_measurement_list(loff_t size, void *buf)
- 		return -EINVAL;
- 	}
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 19da33bf838a0..65ae5989a38cd 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2070,6 +2070,25 @@ int f2fs_sync_fs(struct super_block *sb, int sync)
+ 	return err;
+ }
  
-+	if (khdr->buffer_size > size) {
-+		pr_err("attempting to restore a corrupted measurement list");
-+		return -EINVAL;
-+	}
++static int f2fs_sync_fs_super(struct super_block *sb, int sync)
++{
++	struct f2fs_sb_info *sbi = F2FS_SB(sb);
++	bool freeze_sync = sync &&
++			sb->s_writers.frozen == SB_FREEZE_PAGEFAULT;
++	int err;
 +
- 	bitmap_zero(hdr_mask, HDR__LAST);
- 	bitmap_set(hdr_mask, HDR_PCR, 1);
- 	bitmap_set(hdr_mask, HDR_DIGEST, 1);
++	/* freeze_super() holds s_umount for write during this sync pass. */
++	if (freeze_sync)
++		sbi->umount_lock_holder = current;
++
++	err = f2fs_sync_fs(sb, sync);
++
++	if (freeze_sync)
++		sbi->umount_lock_holder = NULL;
++
++	return err;
++}
++
+ static int f2fs_freeze(struct super_block *sb)
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+@@ -3649,7 +3668,7 @@ static const struct super_operations f2fs_sops = {
+ #endif
+ 	.evict_inode	= f2fs_evict_inode,
+ 	.put_super	= f2fs_put_super,
+-	.sync_fs	= f2fs_sync_fs,
++	.sync_fs	= f2fs_sync_fs_super,
+ 	.freeze_fs	= f2fs_freeze,
+ 	.unfreeze_fs	= f2fs_unfreeze,
+ 	.statfs		= f2fs_statfs,
 -- 
 2.53.0
 
