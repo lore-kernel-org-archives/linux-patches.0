@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023037;
-	b=E6hOovG9CATFO7yGL507UUQl4DVj4Y/nypnhAlFC+/nSjuZoDYDoUqhdmmQWT8CfJqmx
-	 dOxTMLzN+V2pgw/MrbXUb0FzDH0RW2Sj3h3hO29LelsyZefgBU950t27KBetnIIbLzdki
-	 Qp/69i/7b+PMbxnQPcMax6UIUB0/gRpmsXqwS1X97eNqkjbEGpj6oPRff62hzh05Yu+kW
-	 Nrh45K5TsV7bj5X5uU1/hhQlZu0+cIgjeShKQ7W0r9PDjvkQigF1fP+sCuou1EWloFPno
-	 0M0QR+Rlc51oLN4S9PeGyrU3FQSXxz3v/OdvcQM9TXrZ1BROZuj/qp2x4nH2kvovH7g==
+	t=1795023040;
+	b=1f4QDqKI7DHa5KyRwBYqQweU6Vm8fAlTsdIqZ6uYp+g2khNnI+oAe3l31TQDNmRNNf09
+	 spfiNUw7E4Lis7kxc42aN655OCTj1sVBs3mJU/0BWUgQVpGImkiEeyJYRkXjGpNtXFl3s
+	 Kp2Um5I81OrJZjPtCrnzWjSaG/LSfB1YOu4v9L7gURcpLItiHMDUE5D2FKRKNlun5AQzt
+	 G+vLc4oI1ZG3rOiCE5REPVwt+z2jUxPR8RrY6MytbQl37iTkfKL6/psvHCdvEWicfyXZh
+	 gGML9SxUra3iCrA4TIXHZUC2C34R0yUghXfSP/H6YFjq5f62LfOYnjqlWrYbLgdLs6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023037;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023040;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2GixX8cgLoNZHxG+jKC+OiJPSB/aSQ2mzMftEnMymmw=;
-	b=NZyeiiqWq1fpNw2z1oUH/+mXUoQwmb9rFW/M0BwpeZSTSjr/6MK8a5zmbOycJaMTZiNL
-	 vv4fXvGBltQdKWPPCRlDCtmMoy3qSEAudCcbrhYnUhMWe9hss0Mv7nuPNPdlvmGTjUkLc
-	 Phu3cVC/gotV7I6YKKMvItz88ryJ7RVkmaHbHIV48qyo9QTlUY48973y4webP2vubk4Jv
-	 +uFG25iHjeWo2zRmL3/rzvq4BgiOyCbN71TtgH9tEnnNE79oA9fqIprzHga9eisKBpmog
-	 HtyOxwNJp1uvuAcPQOOtsBVDqZKu5sM/j+NppI70eao4jtrToSgjc0twA+9bLbQiBWg==
+	bh=CkVm8VietKpAr0/Kf+XtMgKavDH6tt24C/kAxG4AKJs=;
+	b=OuCEzLlwBQBlR1kzkdoULCud8vUvVldm+aufoqLRCJy9/XLLEjIBxiCfZZnEECHZ1o8A
+	 t0gOJ/bO4/WP1Vh1QEOddTJuM+0NgjpsyfYo3XbUu5sio0bh24Reimudo630GdRzc/c6Y
+	 SU0bD7+Fqr/eVQq3K+7F5SPap0bpg9Ynkn+PhIOLq/bQD20lL28QUKdl4LrJKhU8467K7
+	 FMOpWLymNvfDi0bzcVFnSQ7obOo6giagnk4WTsJm8kcMassyRzoe3CAvxFJP1YP1oWpsx
+	 IyeNcEHMa86IU1Z4IVEb7uRGVv+0rIoeCCvN6Iv08GnSfZNNRQjD84JLm4kM8+7gOJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jXP2QNX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WvuD1tW1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845A6606A336;
-	Wed, 18 Nov 2026 17:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BF7606A330;
+	Wed, 18 Nov 2026 17:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1jXP2QNX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1A81F000C4;
-	Wed, 18 Nov 2026 17:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WvuD1tW1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8C01F000C5;
+	Wed, 18 Nov 2026 17:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023037;
-	bh=2GixX8cgLoNZHxG+jKC+OiJPSB/aSQ2mzMftEnMymmw=;
+	s=korg; t=1795023040;
+	bh=CkVm8VietKpAr0/Kf+XtMgKavDH6tt24C/kAxG4AKJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1jXP2QNXqP3XZbde9dcGGQqsVHCo13a908+Ywfjj5ZUq3f8w+zaTTtj+APbCrPR3N
-	 ORGOAb9CDXdLGwRonqRhjfXnjzc2lNz8DABJ9LXjbNr/QnN6nPrlyHa1y06yx+nZMX
-	 hqDFLjjlYWn835QMmAbrNLpBfKFgneXIuvAoaT4o=
+	b=WvuD1tW1qs7aDGGlNyQhRj2MXuTx1s5jaDLzOMVgkGyTkHxR93JJGtrDZJiSARdCI
+	 guayPTIBfxLfmgIb/Lo2RpvfTUT70qLUudGczzbl+9wn0DfS2P/ZALt11GLKqlMXUt
+	 WmPzmhqCy0qjZPMpt4B3TucrApfx87omJxCvyqck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0189/2151] clk: fix self-consuming provider module pinning
-Date: Wed, 18 Nov 2026 15:32:04 +0100
-Message-ID: <20261118150128.672351167@linuxfoundation.org>
+Subject: [PATCH 6.18 0225/2151] wifi: mac80211: fix unauthorised port check for encap offload
+Date: Wed, 18 Nov 2026 15:32:40 +0100
+Message-ID: <20261118150129.976653645@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,254 +67,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a1c8d531c694e193dc48ef2428877d5ea2e35134 ]
+[ Upstream commit d59b9bf7df49367e01b06e82dd0f6e7ad3be493c ]
 
-clk_hw_get_clk() lets a provider get a struct clk for one of its own
-struct clk_hw.
+The check in ieee80211_tx_dequeue() reads frame_control, addr1 and
+addr2 out of the skb, but for encapsulation offload that's just a
+random part of the ethernet addresses, so dropping depends on bits
+in the destination address. This is obviously wrong.
 
-When a struct clk is created, the module usage count of the provider
-is unconditionally increased. For a self-consuming provider, this means
-it pins itself and the module can never be unloaded.
+Refactor the check and short-circuit for ethernet format frames,
+it only needs the port-control flag check since those are locally
+generated and not forwarded frames.
 
-Increasing the module usage count should only be done when the consumer
-lives in a different module from the provider. Use THIS_MODULE to
-capture caller's module and increase the module usage count accordingly.
-
-It is OK for consumer-only APIs such as clk_get() or of_clk_get() to
-pass a NULL owner. As a result, any provider module will get pinned,
-same as before.
-
-Fixes: 30d6f8c15d2c ("clk: add api to get clk consumer from clk_hw")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
+Link: https://patch.msgid.link/20260802105818.dd5da579813d.I51ed0121154bb652bebc97bb0597b1fae9ac978f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c            | 46 ++++++++++++++++++++----------------
- drivers/clk/clk.h            |  5 ++--
- drivers/clk/clkdev.c         |  4 ++--
- include/linux/clk-provider.h | 22 ++++++++++++++---
- 4 files changed, 50 insertions(+), 27 deletions(-)
+ net/mac80211/tx.c | 48 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 85d2f2481acf3..e00b36f5a6cfd 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -115,6 +115,7 @@ struct clk {
- 	unsigned long max_rate;
- 	unsigned int exclusive_count;
- 	struct hlist_node clks_node;
-+	bool pinning;
- };
- 
- /***           runtime pm          ***/
-@@ -4153,13 +4154,15 @@ static void free_clk(struct clk *clk)
-  * @hw: clk_hw associated with the clk being consumed
-  * @dev_id: string describing device name
-  * @con_id: connection ID string on device
-+ * @owner: reference to the module creating the clock
-  *
-  * This is the main function used to create a clk pointer for use by clk
-  * consumers. It connects a consumer to the clk_core and clk_hw structures
-  * used by the framework and clk provider respectively.
-  */
- struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
--			      const char *dev_id, const char *con_id)
-+			      const char *dev_id, const char *con_id,
-+			      struct module *owner)
- {
- 	struct clk *clk;
- 	struct clk_core *core;
-@@ -4174,7 +4177,13 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
- 		return clk;
- 	clk->dev = dev;
- 
--	if (!try_module_get(core->owner)) {
-+	/*
-+	 * Pin the provider module only when the consumer lives in a different
-+	 * module. A provider getting a clk from its own clk_hw would otherwise
-+	 * pin itself and could never be unloaded.
-+	 */
-+	clk->pinning = owner != core->owner;
-+	if (clk->pinning && !try_module_get(core->owner)) {
- 		free_clk(clk);
- 		return ERR_PTR(-ENOENT);
- 	}
-@@ -4185,24 +4194,19 @@ struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
- 	return clk;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 85c90f7c24d8e..4f2cf65514a6a 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3865,6 +3865,38 @@ static bool ieee80211_xmit_fast(struct ieee80211_sub_if_data *sdata,
+ 	return true;
  }
  
--/**
-- * clk_hw_get_clk - get clk consumer given an clk_hw
-- * @hw: clk_hw associated with the clk being consumed
-- * @con_id: connection ID string on device
-- *
-- * Returns: new clk consumer
-- * This is the function to be used by providers which need
-- * to get a consumer clk and act on the clock element
-- * Calls to this function must be balanced with calls clk_put()
-+/*
-+ * Internal helper backing the clk_hw_get_clk() macro, which passes the caller's
-+ * module via THIS_MODULE.
-  */
--struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id)
-+struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
-+			     struct module *owner)
- {
- 	struct device *dev = hw->core->dev;
- 	const char *name = dev ? dev_name(dev) : NULL;
- 
--	return clk_hw_create_clk(dev, hw, name, con_id);
-+	return clk_hw_create_clk(dev, hw, name, con_id, owner);
- }
--EXPORT_SYMBOL(clk_hw_get_clk);
-+EXPORT_SYMBOL(__clk_hw_get_clk);
- 
- static int clk_cpy_name(const char **dst_p, const char *src, bool must_exist)
- {
-@@ -4366,8 +4370,9 @@ __clk_register(struct device *dev, struct device_node *np, struct clk_hw *hw)
- 	INIT_HLIST_HEAD(&core->clks);
- 
- 	/*
--	 * Don't call clk_hw_create_clk() here because that would pin the
--	 * provider module to itself and prevent it from ever being removed.
-+	 * Don't call clk_hw_create_clk() here because it would systematically
-+	 * add a consumer to the hw clock and all clocks would appear to have
-+	 * consumer in the clock summary.
- 	 */
- 	hw->clk = alloc_clk(core, NULL, NULL);
- 	if (IS_ERR(hw->clk)) {
-@@ -4724,7 +4729,7 @@ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
- 	if (!clkp)
- 		return ERR_PTR(-ENOMEM);
- 
--	clk = clk_hw_get_clk(hw, con_id);
-+	clk = __clk_hw_get_clk(hw, con_id, dev->driver->owner);
- 	if (!IS_ERR(clk)) {
- 		*clkp = clk;
- 		devres_add(dev, clkp);
-@@ -4771,7 +4776,8 @@ void __clk_put(struct clk *clk)
- 
- 	owner = clk->core->owner;
- 	kref_put(&clk->core->ref, __clk_release);
--	module_put(owner);
-+	if (clk->pinning)
-+		module_put(owner);
- 	free_clk(clk);
- }
- 
-@@ -5292,7 +5298,7 @@ struct clk *of_clk_get_from_provider(struct of_phandle_args *clkspec)
- {
- 	struct clk_hw *hw = of_clk_get_hw_from_clkspec(clkspec);
- 
--	return clk_hw_create_clk(NULL, hw, NULL, __func__);
-+	return clk_hw_create_clk(NULL, hw, NULL, __func__, NULL);
- }
- EXPORT_SYMBOL_GPL(of_clk_get_from_provider);
- 
-@@ -5319,7 +5325,7 @@ static struct clk *__of_clk_get(struct device_node *np,
- {
- 	struct clk_hw *hw = of_clk_get_hw(np, index, con_id);
- 
--	return clk_hw_create_clk(NULL, hw, dev_id, con_id);
-+	return clk_hw_create_clk(NULL, hw, dev_id, con_id, NULL);
- }
- 
- struct clk *of_clk_get(struct device_node *np, int index)
-diff --git a/drivers/clk/clk.h b/drivers/clk/clk.h
-index 2d801900cad59..5009380863a9d 100644
---- a/drivers/clk/clk.h
-+++ b/drivers/clk/clk.h
-@@ -23,13 +23,14 @@ struct clk_hw *clk_find_hw(const char *dev_id, const char *con_id);
- 
- #ifdef CONFIG_COMMON_CLK
- struct clk *clk_hw_create_clk(struct device *dev, struct clk_hw *hw,
--			      const char *dev_id, const char *con_id);
-+			      const char *dev_id, const char *con_id,
-+			      struct module *owner);
- void __clk_put(struct clk *clk);
- #else
- /* All these casts to avoid ifdefs in clkdev... */
- static inline struct clk *
- clk_hw_create_clk(struct device *dev, struct clk_hw *hw, const char *dev_id,
--		  const char *con_id)
-+		  const char *con_id, struct module *owner)
- {
- 	return (struct clk *)hw;
- }
-diff --git a/drivers/clk/clkdev.c b/drivers/clk/clkdev.c
-index e0bede6350e11..717e079899d90 100644
---- a/drivers/clk/clkdev.c
-+++ b/drivers/clk/clkdev.c
-@@ -88,7 +88,7 @@ static struct clk *__clk_get_sys(struct device *dev, const char *dev_id,
- {
- 	struct clk_hw *hw = clk_find_hw(dev_id, con_id);
- 
--	return clk_hw_create_clk(dev, hw, dev_id, con_id);
-+	return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
- }
- 
- struct clk *clk_get_sys(const char *dev_id, const char *con_id)
-@@ -105,7 +105,7 @@ struct clk *clk_get(struct device *dev, const char *con_id)
- 	if (dev && dev->of_node) {
- 		hw = of_clk_get_hw(dev->of_node, 0, con_id);
- 		if (!IS_ERR(hw) || PTR_ERR(hw) == -EPROBE_DEFER)
--			return clk_hw_create_clk(dev, hw, dev_id, con_id);
-+			return clk_hw_create_clk(dev, hw, dev_id, con_id, NULL);
- 	}
- 
- 	return __clk_get_sys(dev, dev_id, con_id);
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 630705a471294..d95cb8624fb4b 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -37,6 +37,7 @@ struct clk;
- struct clk_hw;
- struct clk_core;
- struct dentry;
-+struct module;
- 
- /**
-  * struct clk_rate_request - Structure encoding the clk constraints that
-@@ -316,8 +317,9 @@ struct clk_init_data {
-  * @core: pointer to the struct clk_core instance that points back to this
-  * struct clk_hw instance
-  *
-- * @clk: pointer to the per-user struct clk instance that can be used to call
-- * into the clk API
-+ * @clk: pointer to the per-user struct clk instance. This will be removed at
-+ * some point in the future, Please consider the field obsolete and do not use
-+ * it. Use clk_hw_get_clk() to get a per-user struct clk from a struct clk_hw.
-  *
-  * @init: pointer to struct clk_init_data that contains the init data shared
-  * with the common clock framework. This pointer will be set to NULL once
-@@ -1395,10 +1397,24 @@ static inline struct clk_hw *__clk_get_hw(struct clk *clk)
- }
- #endif
- 
--struct clk *clk_hw_get_clk(struct clk_hw *hw, const char *con_id);
-+struct clk *__clk_hw_get_clk(struct clk_hw *hw, const char *con_id,
-+			     struct module *owner);
- struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
- 				const char *con_id);
- 
-+/**
-+ * clk_hw_get_clk - get clk consumer given a clk_hw
-+ * @hw: clk_hw associated with the clk being consumed
-+ * @con_id: connection ID string on device
-+ *
-+ * Return: new clk consumer
-+ * This is the function to be used by providers which need
-+ * to get a consumer clk and act on the clock element
-+ * Calls to this function must be balanced with calls to clk_put()
-+ */
-+#define clk_hw_get_clk(hw, con_id) \
-+	__clk_hw_get_clk((hw), (con_id), THIS_MODULE)
++static bool ieee80211_drop_unauth_port(struct ieee80211_tx_data *tx)
++{
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
++	struct ieee80211_hdr *hdr;
 +
- unsigned int clk_hw_get_num_parents(const struct clk_hw *hw);
- struct clk_hw *clk_hw_get_parent(const struct clk_hw *hw);
- struct clk_hw *clk_hw_get_parent_by_index(const struct clk_hw *hw,
++	if (likely(test_sta_flag(tx->sta, WLAN_STA_AUTHORIZED)))
++		return false;
++
++	if (info->flags & IEEE80211_TX_CTL_INJECTED)
++		return false;
++
++	if (ieee80211_vif_is_mesh(&tx->sdata->vif) ||
++	    tx->sdata->vif.type == NL80211_IFTYPE_OCB)
++		return false;
++
++	/* no need to check forwarding here */
++	if (info->flags & IEEE80211_TX_CTL_HW_80211_ENCAP)
++		return !(info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO);
++
++	hdr = (struct ieee80211_hdr *)tx->skb->data;
++
++	if (!ieee80211_is_data_present(hdr->frame_control) ||
++	    is_multicast_ether_addr(hdr->addr1))
++		return false;
++
++	if ((info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO) &&
++	    ieee80211_is_our_addr(tx->sdata, hdr->addr2, NULL))
++		return false;
++
++	return true;
++}
++
+ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 				     struct ieee80211_txq *txq)
+ {
+@@ -3931,20 +3963,8 @@ struct sk_buff *ieee80211_tx_dequeue(struct ieee80211_hw *hw,
+ 
+ 	if (txq->sta) {
+ 		tx.sta = container_of(txq->sta, struct sta_info, sta);
+-		/*
+-		 * Drop unicast frames to unauthorised stations unless they are
+-		 * injected frames or EAPOL frames from the local station.
+-		 */
+-		if (unlikely(!(info->flags & IEEE80211_TX_CTL_INJECTED) &&
+-			     ieee80211_is_data_present(hdr->frame_control) &&
+-			     !ieee80211_vif_is_mesh(&tx.sdata->vif) &&
+-			     tx.sdata->vif.type != NL80211_IFTYPE_OCB &&
+-			     !is_multicast_ether_addr(hdr->addr1) &&
+-			     !test_sta_flag(tx.sta, WLAN_STA_AUTHORIZED) &&
+-			     (!(info->control.flags &
+-				IEEE80211_TX_CTRL_PORT_CTRL_PROTO) ||
+-			      !ieee80211_is_our_addr(tx.sdata, hdr->addr2,
+-						     NULL)))) {
++
++		if (unlikely(ieee80211_drop_unauth_port(&tx))) {
+ 			I802_DEBUG_INC(local->tx_handlers_drop_unauth_port);
+ 			ieee80211_free_txskb(&local->hw, skb);
+ 			goto begin;
 -- 
 2.53.0
 
