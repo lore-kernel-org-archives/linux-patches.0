@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031045;
-	b=awbw049+3UoVxsKpHmVsx8kfiuavqFQutw4ZZaIJQRsVrdstR4uJ8V2aaEuK5zVET4nU
-	 rJIr/nKCh25kyvuZQhRLzxhHT9BccoO1Jdscc7RQtPmqFLtMg0p4fWzfVYJq2yhN7esxx
-	 q0pzEEKB99RhKHYtLHSsk2Op8KwQ/8uZe2ER/JLplWN/N3mNTxBcgCpeLfY7Jq5s4gjbo
-	 mGwRdmCYx2vP+hCiTJQwco5a9mCCvWnLGTrRycGRK/VQyB7PHHj/p8gjBoBCkI6/d13bL
-	 pfbzd2+uBkfsApyrmd6reYVvWw31aruEqQ+Z8zLlOA6oTFvgF5Qmy1wCQBmr5xEOoaQ==
+	t=1795031048;
+	b=QpuSjsurS/3v/jzpLd+2F11hEvT8S4cnP18YAaCHjsGjpE0JXwZLjeiSjuYosUn4PI5s
+	 Rqi3gWqJT7qCpGnwjmoOQkVEZ4+X6vnCv7HbNHjhwz11iAbZMw8G5EeArHeintkdkhJok
+	 b4RQ3C3albPRuM98H+Sx+4SP1FmdO+Vx4k1+irYWuP1bDUKWDsxneSGFWhEafgdfBlWV0
+	 rY+B89GF3dk0L1+a+98VMZrwr+r2+MD86AwYctHFpaPkPAlKL4V90384GsKIhXpC3qix1
+	 6DhYWAzrYH0jnrEA/2QJlxD3yvCI3IG8sGNxJJG95Djhtkp+PUONvrVIySuueMaWpyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031045;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rj8CtQXsgZa8hmhv9mAjBgum4xZixHWUV+8HsyWLaEc=;
-	b=Bii4MaS8pplToglBQCT4jf+49E77frd37ycWW/EIQWwcqX5OhomFwWHVpF8jFdNQTPdB
-	 NusDtAlg0clvJ12iyS/SXKtvgrzZRyJdc76sO0LkTmvBRsx/NsagHs+ml8esCH5allJr5
-	 DUCCQ8CMbcsqHpNG4wGpF7o2yjE/dtFyAF8j6TXU9jAlQ+w6moz3D9mNhWjy4FlG0CjNA
-	 jOJtuCVKheADzuiZbjFA8Y1kJO5eugjjXDVVQS4CjJoSSV4SIM2b+1zB59zygWs8/W0oP
-	 MWG0PBp44ksu57ICYjVhQlduj9Et0d2U6Fpst/20UP8T7/4EqulrwaI43KJ4zhamddg==
+	bh=skcdvMbC2EKXk1jqOHL1y0s0M9Ww/MHWI7uMaQtCpPQ=;
+	b=A78pNWeAXnJtOAZfsB4Mi9dIHXeYrG6jVQsCsO6FHQv2iqEVqH7aEgltlt1y4byF+Lhn
+	 VOKtunD5VjdjzcamRc3hSNKckK38ApUq6tRqozyfgVro/x5WTKypYnrzs2AWD3MLkvNaP
+	 pACJ/IfuaUIBomF7X8KDnRirrFHxNHZSq6l9uB0mgISvEUoXCIho18o3U8imTWcWqiEKG
+	 ZZ4NSQbYI1wzQKsCuuDiymEu1jLWm0Ou1jdUI5i3VJIdUqoL1zqOQEkASpckCRcy+n1KI
+	 zBSlje3A5YGmXZJPgtjVl6IC4saprutJMYk77RNAf0lFL740G0QjC+rRbH0ybpJ4L8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gJW1VepL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTVBo2XX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96789606A31C;
-	Wed, 18 Nov 2026 19:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70658606A31C;
+	Wed, 18 Nov 2026 19:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gJW1VepL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCEB1F000C4;
-	Wed, 18 Nov 2026 19:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BTVBo2XX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CFE1F000C4;
+	Wed, 18 Nov 2026 19:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031045;
-	bh=rj8CtQXsgZa8hmhv9mAjBgum4xZixHWUV+8HsyWLaEc=;
+	s=korg; t=1795031048;
+	bh=skcdvMbC2EKXk1jqOHL1y0s0M9Ww/MHWI7uMaQtCpPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJW1VepLCwPvxifBHMBK58UEsHjBxuYlO6+8Do+TacM0iTZBgK+uJ1fIps0Tq4jsd
-	 IqsveZEDI0pvrwlLVKyv8tEiJSlMZn5NtMdDPPxQBjWYuhwsGiH1mvP8KvMJlk7Hpg
-	 D+mHBSet4mYVHicy3iC+9WcJCZwZ3rlz8exYgNGY=
+	b=BTVBo2XXF1GKtEJsWR9R16B8rrpgj6GMfyr/3aUMHNtx939QBa3E6ssumjKbFswHN
+	 /y7qpAsqoCNW8vo0h7VEOMYqlcmwjHKtH2zAe4L1+tT6Ezpi3NO3pXrPw3fAuzv1Vv
+	 7qmXfxmhD7yieCsB66hMfwuzxqaQbmsTk7+a/crA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0917/1756] efi/libstub: Simplify PCI I/O handle buffer traversal
-Date: Wed, 18 Nov 2026 15:50:44 +0100
-Message-ID: <20261118150046.498347718@linuxfoundation.org>
+Subject: [PATCH 6.12 0918/1756] efi/libstub: Use cleanup helpers for freeing copies of the memory map
+Date: Wed, 18 Nov 2026 15:50:45 +0100
+Message-ID: <20261118150046.532268622@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,141 +69,186 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 90534e689d2e52202c276ade5cf1dfc13d9e116f ]
+[ Upstream commit ad69b0b6f9954796875ee4faf6c16c9caca21999 ]
 
-Use LocateHandleBuffer() and a __free() cleanup helper to simplify the
-PCI I/O handle buffer traversal code.
+The EFI stub may obtain the memory map from the firmware numerous times,
+and this involves doing a EFI pool allocation first, which needs to be
+freed after use.
+
+Streamline this using a cleanup helper, which makes the code easier to
+follow.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/pci.c      | 33 ++++++-------------------
- drivers/firmware/efi/libstub/x86-stub.c | 29 +++++-----------------
- 2 files changed, 13 insertions(+), 49 deletions(-)
+ drivers/firmware/efi/libstub/kaslr.c       |  4 +---
+ drivers/firmware/efi/libstub/mem.c         | 20 ++++++++------------
+ drivers/firmware/efi/libstub/randomalloc.c |  4 +---
+ drivers/firmware/efi/libstub/relocate.c    | 10 ++++------
+ drivers/firmware/efi/libstub/x86-stub.c    | 11 ++++++-----
+ 5 files changed, 20 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/pci.c b/drivers/firmware/efi/libstub/pci.c
-index b0ba372c26c55..1dccf77958d3a 100644
---- a/drivers/firmware/efi/libstub/pci.c
-+++ b/drivers/firmware/efi/libstub/pci.c
-@@ -16,36 +16,20 @@
- void efi_pci_disable_bridge_busmaster(void)
+diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
+index 6318c40bda38a..4bc963e999eb9 100644
+--- a/drivers/firmware/efi/libstub/kaslr.c
++++ b/drivers/firmware/efi/libstub/kaslr.c
+@@ -57,7 +57,7 @@ u32 efi_kaslr_get_phys_seed(efi_handle_t image_handle)
+  */
+ static bool check_image_region(u64 base, u64 size)
  {
- 	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
--	unsigned long pci_handle_size = 0;
--	efi_handle_t *pci_handle = NULL;
-+	efi_handle_t *pci_handle __free(efi_pool) = NULL;
-+	unsigned long pci_handle_num;
- 	efi_handle_t handle;
+-	struct efi_boot_memmap *map;
++	struct efi_boot_memmap *map __free(efi_pool) = NULL;
  	efi_status_t status;
- 	u16 class, command;
- 
--	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, &pci_proto,
--			     NULL, &pci_handle_size, NULL);
--
--	if (status != EFI_BUFFER_TOO_SMALL) {
--		if (status != EFI_SUCCESS && status != EFI_NOT_FOUND)
--			efi_err("Failed to locate PCI I/O handles'\n");
--		return;
--	}
--
--	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, pci_handle_size,
--			     (void **)&pci_handle);
-+	status = efi_bs_call(locate_handle_buffer, EFI_LOCATE_BY_PROTOCOL,
-+			     &pci_proto, NULL, &pci_handle_num, &pci_handle);
- 	if (status != EFI_SUCCESS) {
--		efi_err("Failed to allocate memory for 'pci_handle'\n");
-+		efi_err("Failed to locate PCI I/O handles\n");
- 		return;
+ 	bool ret = false;
+ 	int map_offset;
+@@ -80,8 +80,6 @@ static bool check_image_region(u64 base, u64 size)
+ 		}
  	}
  
--	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL, &pci_proto,
--			     NULL, &pci_handle_size, pci_handle);
--	if (status != EFI_SUCCESS) {
--		efi_err("Failed to locate PCI I/O handles'\n");
--		goto free_handle;
--	}
+-	efi_bs_call(free_pool, map);
 -
--	for_each_efi_handle(handle, pci_handle, efi_get_handle_num(pci_handle_size)) {
-+	for_each_efi_handle(handle, pci_handle, pci_handle_num) {
- 		efi_pci_io_protocol_t *pci;
- 		unsigned long segment_nr, bus_nr, device_nr, func_nr;
- 
-@@ -81,7 +65,7 @@ void efi_pci_disable_bridge_busmaster(void)
- 		efi_bs_call(disconnect_controller, handle, NULL, NULL);
- 	}
- 
--	for_each_efi_handle(handle, pci_handle, efi_get_handle_num(pci_handle_size)) {
-+	for_each_efi_handle(handle, pci_handle, pci_handle_num) {
- 		efi_pci_io_protocol_t *pci;
- 
- 		status = efi_bs_call(handle_protocol, handle, &pci_proto,
-@@ -107,7 +91,4 @@ void efi_pci_disable_bridge_busmaster(void)
- 		if (status != EFI_SUCCESS)
- 			efi_err("Failed to disable PCI busmastering\n");
- 	}
--
--free_handle:
--	efi_bs_call(free_pool, pci_handle);
+ 	return ret;
  }
+ 
+diff --git a/drivers/firmware/efi/libstub/mem.c b/drivers/firmware/efi/libstub/mem.c
+index 4f1fa302234d8..9c82259eea816 100644
+--- a/drivers/firmware/efi/libstub/mem.c
++++ b/drivers/firmware/efi/libstub/mem.c
+@@ -20,10 +20,10 @@
+ efi_status_t efi_get_memory_map(struct efi_boot_memmap **map,
+ 				bool install_cfg_tbl)
+ {
++	struct efi_boot_memmap tmp, *m __free(efi_pool) = NULL;
+ 	int memtype = install_cfg_tbl ? EFI_ACPI_RECLAIM_MEMORY
+ 				      : EFI_LOADER_DATA;
+ 	efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
+-	struct efi_boot_memmap *m, tmp;
+ 	efi_status_t status;
+ 	unsigned long size;
+ 
+@@ -48,24 +48,20 @@ efi_status_t efi_get_memory_map(struct efi_boot_memmap **map,
+ 		 */
+ 		status = efi_bs_call(install_configuration_table, &tbl_guid, m);
+ 		if (status != EFI_SUCCESS)
+-			goto free_map;
++			return status;
+ 	}
+ 
+ 	m->buff_size = m->map_size = size;
+ 	status = efi_bs_call(get_memory_map, &m->map_size, m->map, &m->map_key,
+ 			     &m->desc_size, &m->desc_ver);
+-	if (status != EFI_SUCCESS)
+-		goto uninstall_table;
++	if (status != EFI_SUCCESS) {
++		if (install_cfg_tbl)
++			efi_bs_call(install_configuration_table, &tbl_guid, NULL);
++		return status;
++	}
+ 
+-	*map = m;
++	*map = no_free_ptr(m);
+ 	return EFI_SUCCESS;
+-
+-uninstall_table:
+-	if (install_cfg_tbl)
+-		efi_bs_call(install_configuration_table, &tbl_guid, NULL);
+-free_map:
+-	efi_bs_call(free_pool, m);
+-	return status;
+ }
+ 
+ /**
+diff --git a/drivers/firmware/efi/libstub/randomalloc.c b/drivers/firmware/efi/libstub/randomalloc.c
+index 593e98e3b993e..fd80b2f3233aa 100644
+--- a/drivers/firmware/efi/libstub/randomalloc.c
++++ b/drivers/firmware/efi/libstub/randomalloc.c
+@@ -62,9 +62,9 @@ efi_status_t efi_random_alloc(unsigned long size,
+ 			      unsigned long alloc_min,
+ 			      unsigned long alloc_max)
+ {
++	struct efi_boot_memmap *map __free(efi_pool) = NULL;
+ 	unsigned long total_slots = 0, target_slot;
+ 	unsigned long total_mirrored_slots = 0;
+-	struct efi_boot_memmap *map;
+ 	efi_status_t status;
+ 	int map_offset;
+ 
+@@ -137,7 +137,5 @@ efi_status_t efi_random_alloc(unsigned long size,
+ 		break;
+ 	}
+ 
+-	efi_bs_call(free_pool, map);
+-
+ 	return status;
+ }
+diff --git a/drivers/firmware/efi/libstub/relocate.c b/drivers/firmware/efi/libstub/relocate.c
+index bf676dd127a14..d4264bfb6dc17 100644
+--- a/drivers/firmware/efi/libstub/relocate.c
++++ b/drivers/firmware/efi/libstub/relocate.c
+@@ -23,14 +23,14 @@
+ efi_status_t efi_low_alloc_above(unsigned long size, unsigned long align,
+ 				 unsigned long *addr, unsigned long min)
+ {
+-	struct efi_boot_memmap *map;
++	struct efi_boot_memmap *map __free(efi_pool) = NULL;
+ 	efi_status_t status;
+ 	unsigned long nr_pages;
+ 	int i;
+ 
+ 	status = efi_get_memory_map(&map, false);
+ 	if (status != EFI_SUCCESS)
+-		goto fail;
++		return status;
+ 
+ 	/*
+ 	 * Enforce minimum alignment that EFI or Linux requires when
+@@ -82,11 +82,9 @@ efi_status_t efi_low_alloc_above(unsigned long size, unsigned long align,
+ 	}
+ 
+ 	if (i == map->map_size / map->desc_size)
+-		status = EFI_NOT_FOUND;
++		return EFI_NOT_FOUND;
+ 
+-	efi_bs_call(free_pool, map);
+-fail:
+-	return status;
++	return EFI_SUCCESS;
+ }
+ 
+ /**
 diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
-index 76e611ffadccb..b11c46215a81f 100644
+index b11c46215a81f..d54454cbab1c3 100644
 --- a/drivers/firmware/efi/libstub/x86-stub.c
 +++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -119,37 +119,23 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
- static void setup_efi_pci(struct boot_params *params)
+@@ -617,7 +617,7 @@ static efi_status_t allocate_e820(struct boot_params *params,
+ 				  struct setup_data **e820ext,
+ 				  u32 *e820ext_size)
  {
+-	struct efi_boot_memmap *map;
++	struct efi_boot_memmap *map __free(efi_pool) = NULL;
  	efi_status_t status;
--	void **pci_handle = NULL;
-+	efi_handle_t *pci_handle __free(efi_pool) = NULL;
- 	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
--	unsigned long size = 0;
- 	struct setup_data *data;
-+	unsigned long num;
- 	efi_handle_t h;
+ 	__u32 nr_desc;
  
--	status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
--			     &pci_proto, NULL, &size, pci_handle);
--
--	if (status == EFI_BUFFER_TOO_SMALL) {
--		status = efi_bs_call(allocate_pool, EFI_LOADER_DATA, size,
--				     (void **)&pci_handle);
--
--		if (status != EFI_SUCCESS) {
--			efi_err("Failed to allocate memory for 'pci_handle'\n");
--			return;
--		}
--
--		status = efi_bs_call(locate_handle, EFI_LOCATE_BY_PROTOCOL,
--				     &pci_proto, NULL, &size, pci_handle);
--	}
--
-+	status = efi_bs_call(locate_handle_buffer, EFI_LOCATE_BY_PROTOCOL,
-+			     &pci_proto, NULL, &num, &pci_handle);
- 	if (status != EFI_SUCCESS)
--		goto free_handle;
-+		return;
+@@ -631,13 +631,14 @@ static efi_status_t allocate_e820(struct boot_params *params,
+ 				 EFI_MMAP_NR_SLACK_SLOTS;
  
- 	data = (struct setup_data *)(unsigned long)params->hdr.setup_data;
- 
- 	while (data && data->next)
- 		data = (struct setup_data *)(unsigned long)data->next;
- 
--	for_each_efi_handle(h, pci_handle, efi_get_handle_num(size)) {
-+	for_each_efi_handle(h, pci_handle, num) {
- 		efi_pci_io_protocol_t *pci = NULL;
- 		struct pci_setup_rom *rom;
- 
-@@ -169,9 +155,6 @@ static void setup_efi_pci(struct boot_params *params)
- 
- 		data = (struct setup_data *)rom;
+ 		status = alloc_e820ext(nr_e820ext, e820ext, e820ext_size);
++		if (status != EFI_SUCCESS)
++			return status;
  	}
--
--free_handle:
--	efi_bs_call(free_pool, pci_handle);
+ 
+-	if (IS_ENABLED(CONFIG_UNACCEPTED_MEMORY) && status == EFI_SUCCESS)
+-		status = allocate_unaccepted_bitmap(nr_desc, map);
++	if (IS_ENABLED(CONFIG_UNACCEPTED_MEMORY))
++		return allocate_unaccepted_bitmap(nr_desc, map);
+ 
+-	efi_bs_call(free_pool, map);
+-	return status;
++	return EFI_SUCCESS;
  }
  
- static void retrieve_apple_device_properties(struct boot_params *boot_params)
+ struct exit_boot_struct {
 -- 
 2.53.0
 
