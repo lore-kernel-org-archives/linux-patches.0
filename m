@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061029;
-	b=YZGbqIZOXruVf/tCj/VAkwxwX8dvHwjuCCT12iUyu4FgnAEErX9n4pM/Jfa2k6CthpMM
-	 oZqcXG7fVvqyR3KEo+GzESdo02UAY4jSwZHZb4o1h24E9DpflOFzb5r/Z7B+/FoG9Iblv
-	 RTUEcCRhxkUApfA66/WbXTUDxmf8Ulre/ziqs4S7Lmc8Prm5FKTleVzoI/xwySFSAyUKP
-	 lLP4VZsA8QH+J/hhXMjhNXQekaOV0hjzH/1MPhojNzYNYkowzk58xddvta+F+Ge/qSmLi
-	 SvAA4RsU9ttbWZ3POR4vrAwc9MVuFp9JEzK305iw8byIHjJV+XxNkzv720QEed0dIjA==
+	t=1795061032;
+	b=sb3oCLAmd7obc/p13hJtY6nNREGQBzOYx76oKoYoZIqE1U1kJUAK5GpxQ1s7nfT67Xed
+	 tgIwAS02e10vbfMkeXcQhlM7IzHBH9EapRmTq0caZ/ql6t5YDfgG1DWwuVEFtEQiB+uBT
+	 WNUCxKDzaX4o2/1tuuucJy1zdpAHl392JC6nOdaMDzKG1NGCI9KOrqR8zxMr6UHd308gI
+	 G1Rmk1EJS63k6LF98qrrLlXs9S7GCfOHQlgwfMacTLii+dt9d0bXXW75KBt2AJkIlvlz+
+	 lffPrlO+x8KFnHD8m8VD2joXbNVP/y3my/6TEl5aiwboveewMP1rW8/pVnSZjUIZpLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061029;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061032;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yqfbPBGQlOZBGRO4EsFV/lfyqn3EfmQxn3ZjsXFZSRg=;
-	b=zlJEnE26zyGDXVWPTwhwToIuD0MCM4ikgJnbnHTJGYIj8rHiKvqHEBBcHeGBC87Mt0JP
-	 FubDFFaQfLj4zf6i7NHUq02JGN6kxUFOVVPGeTXsmtLA5cKL3TZYtdFySNiXNLPHLNnzl
-	 PSF/Dz/QMDHfxHN9GOk2ubW5M93Y7ZM+EBLgBQ8NntvFWmSQtTRRvIECBenV3Z2qLRp12
-	 VXTsPvuvPFz9R76qQtZCpAk+Lyz828Z8isKWBSkzE3f1S8Eim82YUSaq1S48VK4QwS3BH
-	 K+YR+MvtmpkXge1kFm3QOW2w0IE2wPOna6fcquqd75ltK9iPYfrdEuIyROu2zBYQIDg==
+	bh=YjZvMc/CajYko7MwRv9gWQNxmqSYvJZawUnECUUZuUw=;
+	b=DFDfzWkx9T7vdG4GP39tHta0dyeBw9BfbTuO55S+NQy56owUmjOYsygSfpF+Gh420Y8a
+	 jtg7W0lKt/Tbs98p64vOJCFKbP1ezAVqFBjcE3AXOTia8Swtfo7CmUTDXuSvzMRRWpZ7T
+	 /659POjsGmS5KUKuVdLpvWW1b9y1NRDls01dZXBKAfkwMjis4WnUlob2dC9YZve42PGub
+	 h07n26x6ypxnSW8ZcYhPcMkh2A3+L7tTePlcdF8yYihJoJKR8nP1JmzYJRLMkfxoHzB6j
+	 sW9FiN+GMCjf92Tf1cBzHIPtWZsONwK32aUeH6ZauhZjHWvWYp+NUmo0iS/kiuXxJ0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suTonObY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k/6PJOJz";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A2B606A320;
-	Thu, 19 Nov 2026 04:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9F7606A325;
+	Thu, 19 Nov 2026 04:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=suTonObY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F741F000C4;
-	Thu, 19 Nov 2026 04:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k/6PJOJz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3741F000C4;
+	Thu, 19 Nov 2026 04:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061029;
-	bh=yqfbPBGQlOZBGRO4EsFV/lfyqn3EfmQxn3ZjsXFZSRg=;
+	s=korg; t=1795061032;
+	bh=YjZvMc/CajYko7MwRv9gWQNxmqSYvJZawUnECUUZuUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=suTonObYplfMMIazF/YqMi43ajdqQNyY8HOHJdk8SdENGuatATBBQCKogyIFnJ8UR
-	 43vTaZ8WhB/aJqj5EOZL0sBS5uCi5kwtFY/jg17pvcRNpvi+4SBBF5JiGUt+qqr2mo
-	 fXWqoSRJXV6uGe3V9b+pG4rCQ3/dGULbISy16R8c=
+	b=k/6PJOJznorp8A3oPwwfJOJojayINhbCfoq5g5rpqBjBPsEhewLfxzfZKC81lFfkk
+	 lm+ML7wJ4Ur7aR3coZ8pPkISBtbBE8YnPFGEAg5WqexSB0nbN3KOn45hpscATHkEAJ
+	 2zrkFsu/njxtOlCqtJwtsftcH+WldIt1dsy500wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Chris Mason <clm@fb.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Feng Tang <feng.tang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1407/1848] timekeeping: add CONFIG_LEGACY_TIMER_TICK
-Date: Wed, 18 Nov 2026 15:57:25 +0100
-Message-ID: <20261118150018.411255872@linuxfoundation.org>
+Subject: [PATCH 5.10 1408/1848] clocksource: Provide kernel module to test clocksource watchdog
+Date: Wed, 18 Nov 2026 15:57:26 +0100
+Message-ID: <20261118150018.461640448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,98 +70,362 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit b3550164a19d62e515af6cacb5a31f0b2b3f9501 ]
+[ Upstream commit 1253b9b87e42ab6a3d5c2cb27af2bdd67d7e50ff ]
 
-All platforms that currently do not use generic clockevents roughly call
-the same set of functions in their timer interrupts: xtime_update(),
-update_process_times() and profile_tick(), sometimes in a different
-sequence.
+When the clocksource watchdog marks a clock as unstable, this might
+be due to that clock being unstable or it might be due to delays that
+happen to occur between the reads of the two clocks.  It would be good
+to have a way of testing the clocksource watchdog's ability to
+distinguish between these two causes of clock skew and instability.
 
-Add a helper function that performs all three of them, to make the
-callers more uniform and simplify the interface.
+Therefore, provide a new clocksource-wdtest module selected by a new
+TEST_CLOCKSOURCE_WATCHDOG Kconfig option.  This module has a single module
+parameter named "holdoff" that provides the number of seconds of delay
+before testing should start, which defaults to zero when built as a module
+and to 10 seconds when built directly into the kernel.  Very large systems
+that boot slowly may need to increase the value of this module parameter.
 
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+This module uses hand-crafted clocksource structures to do its testing,
+thus avoiding messing up timing for the rest of the kernel and for user
+applications.  This module first verifies that the ->uncertainty_margin
+field of the clocksource structures are set sanely.  It then tests the
+delay-detection capability of the clocksource watchdog, increasing the
+number of consecutive delays injected, first provoking console messages
+complaining about the delays and finally forcing a clock-skew event.
+Unexpected test results cause at least one WARN_ON_ONCE() console splat.
+If there are no splats, the test has passed.  Finally, it fuzzes the
+value returned from a clocksource to test the clocksource watchdog's
+ability to detect time skew.
+
+This module checks the state of its clocksource after each test, and
+uses WARN_ON_ONCE() to emit a console splat if there are any failures.
+This should enable all types of test frameworks to detect any such
+failures.
+
+This facility is intended for diagnostic use only, and should be avoided
+on production systems.
+
+Reported-by: Chris Mason <clm@fb.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Feng Tang <feng.tang@intel.com>
+Link: https://lore.kernel.org/r/20210527190124.440372-5-paulmck@kernel.org
 Stable-dep-of: 2927f7ca7844 ("time: Prevent time64_to_tm() day truncation on 32-bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/timekeeping.h |  1 +
- kernel/time/Kconfig         |  7 +++++++
- kernel/time/Makefile        |  1 +
- kernel/time/tick-legacy.c   | 19 +++++++++++++++++++
- 4 files changed, 28 insertions(+)
- create mode 100644 kernel/time/tick-legacy.c
+ .../admin-guide/kernel-parameters.txt         |   6 +
+ include/linux/clocksource.h                   |   3 +
+ kernel/time/Makefile                          |   1 +
+ kernel/time/clocksource-wdtest.c              | 202 ++++++++++++++++++
+ kernel/time/clocksource.c                     |   6 +-
+ lib/Kconfig.debug                             |  12 ++
+ 6 files changed, 228 insertions(+), 2 deletions(-)
+ create mode 100644 kernel/time/clocksource-wdtest.c
 
-diff --git a/include/linux/timekeeping.h b/include/linux/timekeeping.h
-index 7f7e4a3f4394a..3670cb1670ffe 100644
---- a/include/linux/timekeeping.h
-+++ b/include/linux/timekeeping.h
-@@ -12,6 +12,7 @@ extern int timekeeping_suspended;
- /* Architecture timer tick functions: */
- extern void update_process_times(int user);
- extern void xtime_update(unsigned long ticks);
-+extern void legacy_timer_tick(unsigned long ticks);
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 0f1605d78e83d..3b3ff3592594a 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -593,6 +593,12 @@
+ 			The actual CPUs are chosen randomly, with
+ 			no replacement if the same CPU is chosen twice.
  
- /*
-  * Get and set timeofday
-diff --git a/kernel/time/Kconfig b/kernel/time/Kconfig
-index a09b1d61df6a5..f2b0cfeade477 100644
---- a/kernel/time/Kconfig
-+++ b/kernel/time/Kconfig
-@@ -61,6 +61,13 @@ config POSIX_CPU_TIMERS_TASK_WORK
- 	bool
- 	default y if POSIX_TIMERS && HAVE_POSIX_CPU_TIMERS_TASK_WORK
- 
-+config LEGACY_TIMER_TICK
-+	bool
-+	help
-+	  The legacy timer tick helper is used by platforms that
-+	  lack support for the generic clockevent framework.
-+	  New platforms should use generic clockevents instead.
++	clocksource-wdtest.holdoff= [KNL]
++			Set the time in seconds that the clocksource
++			watchdog test waits before commencing its tests.
++			Defaults to zero when built as a module and to
++			10 seconds when built into the kernel.
 +
- if GENERIC_CLOCKEVENTS
- menu "Timers subsystem"
+ 	clearcpuid=BITNUM[,BITNUM...] [X86]
+ 			Disable CPUID feature X for the kernel. See
+ 			arch/x86/include/asm/cpufeatures.h for the valid bit
+diff --git a/include/linux/clocksource.h b/include/linux/clocksource.h
+index 8f87c1a6f3231..83b3c6639c39d 100644
+--- a/include/linux/clocksource.h
++++ b/include/linux/clocksource.h
+@@ -285,4 +285,7 @@ static inline void timer_probe(void) {}
+ #define TIMER_ACPI_DECLARE(name, table_id, fn)		\
+ 	ACPI_DECLARE_PROBE_ENTRY(timer, name, table_id, 0, NULL, 0, fn)
  
++extern ulong max_cswd_read_retries;
++void clocksource_verify_percpu(struct clocksource *cs);
++
+ #endif /* _LINUX_CLOCKSOURCE_H */
 diff --git a/kernel/time/Makefile b/kernel/time/Makefile
-index c8f00168afe84..1fb1c1ef6a19b 100644
+index 1fb1c1ef6a19b..1ed85b25b0968 100644
 --- a/kernel/time/Makefile
 +++ b/kernel/time/Makefile
-@@ -16,6 +16,7 @@ ifeq ($(CONFIG_GENERIC_CLOCKEVENTS_BROADCAST),y)
- endif
- obj-$(CONFIG_GENERIC_SCHED_CLOCK)		+= sched_clock.o
- obj-$(CONFIG_TICK_ONESHOT)			+= tick-oneshot.o tick-sched.o
-+obj-$(CONFIG_LEGACY_TIMER_TICK)			+= tick-legacy.o
- obj-$(CONFIG_HAVE_GENERIC_VDSO)			+= vsyscall.o
+@@ -21,3 +21,4 @@ obj-$(CONFIG_HAVE_GENERIC_VDSO)			+= vsyscall.o
  obj-$(CONFIG_DEBUG_FS)				+= timekeeping_debug.o
  obj-$(CONFIG_TEST_UDELAY)			+= test_udelay.o
-diff --git a/kernel/time/tick-legacy.c b/kernel/time/tick-legacy.c
+ obj-$(CONFIG_TIME_NS)				+= namespace.o
++obj-$(CONFIG_TEST_CLOCKSOURCE_WATCHDOG)		+= clocksource-wdtest.o
+diff --git a/kernel/time/clocksource-wdtest.c b/kernel/time/clocksource-wdtest.c
 new file mode 100644
-index 0000000000000..73c5a0af47433
+index 0000000000000..01df12395c0ee
 --- /dev/null
-+++ b/kernel/time/tick-legacy.c
-@@ -0,0 +1,19 @@
-+// SPDX-License-Identifier: GPL-2.0
++++ b/kernel/time/clocksource-wdtest.c
+@@ -0,0 +1,202 @@
++// SPDX-License-Identifier: GPL-2.0+
 +/*
-+ * Timer tick function for architectures that lack generic clockevents,
-+ * consolidated here from m68k/ia64/parisc/arm.
++ * Unit test for the clocksource watchdog.
++ *
++ * Copyright (C) 2021 Facebook, Inc.
++ *
++ * Author: Paul E. McKenney <paulmck@kernel.org>
 + */
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 +
-+#include <linux/irq.h>
-+#include <linux/profile.h>
-+#include <linux/timekeeper_internal.h>
++#include <linux/device.h>
++#include <linux/clocksource.h>
++#include <linux/init.h>
++#include <linux/module.h>
++#include <linux/sched.h> /* for spin_unlock_irq() using preempt_count() m68k */
++#include <linux/tick.h>
++#include <linux/kthread.h>
++#include <linux/delay.h>
++#include <linux/prandom.h>
++#include <linux/cpu.h>
 +
-+#include "tick-internal.h"
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Paul E. McKenney <paulmck@kernel.org>");
 +
-+void legacy_timer_tick(unsigned long ticks)
++static int holdoff = IS_BUILTIN(CONFIG_TEST_CLOCKSOURCE_WATCHDOG) ? 10 : 0;
++module_param(holdoff, int, 0444);
++MODULE_PARM_DESC(holdoff, "Time to wait to start test (s).");
++
++/* Watchdog kthread's task_struct pointer for debug purposes. */
++static struct task_struct *wdtest_task;
++
++static u64 wdtest_jiffies_read(struct clocksource *cs)
 +{
-+	if (ticks)
-+		xtime_update(ticks);
-+	update_process_times(user_mode(get_irq_regs()));
-+	profile_tick(CPU_PROFILING);
++	return (u64)jiffies;
 +}
++
++/* Assume HZ > 100. */
++#define JIFFIES_SHIFT	8
++
++static struct clocksource clocksource_wdtest_jiffies = {
++	.name			= "wdtest-jiffies",
++	.rating			= 1, /* lowest valid rating*/
++	.uncertainty_margin	= TICK_NSEC,
++	.read			= wdtest_jiffies_read,
++	.mask			= CLOCKSOURCE_MASK(32),
++	.flags			= CLOCK_SOURCE_MUST_VERIFY,
++	.mult			= TICK_NSEC << JIFFIES_SHIFT, /* details above */
++	.shift			= JIFFIES_SHIFT,
++	.max_cycles		= 10,
++};
++
++static int wdtest_ktime_read_ndelays;
++static bool wdtest_ktime_read_fuzz;
++
++static u64 wdtest_ktime_read(struct clocksource *cs)
++{
++	int wkrn = READ_ONCE(wdtest_ktime_read_ndelays);
++	static int sign = 1;
++	u64 ret;
++
++	if (wkrn) {
++		udelay(cs->uncertainty_margin / 250);
++		WRITE_ONCE(wdtest_ktime_read_ndelays, wkrn - 1);
++	}
++	ret = ktime_get_real_fast_ns();
++	if (READ_ONCE(wdtest_ktime_read_fuzz)) {
++		sign = -sign;
++		ret = ret + sign * 100 * NSEC_PER_MSEC;
++	}
++	return ret;
++}
++
++static void wdtest_ktime_cs_mark_unstable(struct clocksource *cs)
++{
++	pr_info("--- Marking %s unstable due to clocksource watchdog.\n", cs->name);
++}
++
++#define KTIME_FLAGS (CLOCK_SOURCE_IS_CONTINUOUS | \
++		     CLOCK_SOURCE_VALID_FOR_HRES | \
++		     CLOCK_SOURCE_MUST_VERIFY | \
++		     CLOCK_SOURCE_VERIFY_PERCPU)
++
++static struct clocksource clocksource_wdtest_ktime = {
++	.name			= "wdtest-ktime",
++	.rating			= 300,
++	.read			= wdtest_ktime_read,
++	.mask			= CLOCKSOURCE_MASK(64),
++	.flags			= KTIME_FLAGS,
++	.mark_unstable		= wdtest_ktime_cs_mark_unstable,
++	.list			= LIST_HEAD_INIT(clocksource_wdtest_ktime.list),
++};
++
++/* Reset the clocksource if needed. */
++static void wdtest_ktime_clocksource_reset(void)
++{
++	if (clocksource_wdtest_ktime.flags & CLOCK_SOURCE_UNSTABLE) {
++		clocksource_unregister(&clocksource_wdtest_ktime);
++		clocksource_wdtest_ktime.flags = KTIME_FLAGS;
++		schedule_timeout_uninterruptible(HZ / 10);
++		clocksource_register_khz(&clocksource_wdtest_ktime, 1000 * 1000);
++	}
++}
++
++/* Run the specified series of watchdog tests. */
++static int wdtest_func(void *arg)
++{
++	unsigned long j1, j2;
++	char *s;
++	int i;
++
++	schedule_timeout_uninterruptible(holdoff * HZ);
++
++	/*
++	 * Verify that jiffies-like clocksources get the manually
++	 * specified uncertainty margin.
++	 */
++	pr_info("--- Verify jiffies-like uncertainty margin.\n");
++	__clocksource_register(&clocksource_wdtest_jiffies);
++	WARN_ON_ONCE(clocksource_wdtest_jiffies.uncertainty_margin != TICK_NSEC);
++
++	j1 = clocksource_wdtest_jiffies.read(&clocksource_wdtest_jiffies);
++	schedule_timeout_uninterruptible(HZ);
++	j2 = clocksource_wdtest_jiffies.read(&clocksource_wdtest_jiffies);
++	WARN_ON_ONCE(j1 == j2);
++
++	clocksource_unregister(&clocksource_wdtest_jiffies);
++
++	/*
++	 * Verify that tsc-like clocksources are assigned a reasonable
++	 * uncertainty margin.
++	 */
++	pr_info("--- Verify tsc-like uncertainty margin.\n");
++	clocksource_register_khz(&clocksource_wdtest_ktime, 1000 * 1000);
++	WARN_ON_ONCE(clocksource_wdtest_ktime.uncertainty_margin < NSEC_PER_USEC);
++
++	j1 = clocksource_wdtest_ktime.read(&clocksource_wdtest_ktime);
++	udelay(1);
++	j2 = clocksource_wdtest_ktime.read(&clocksource_wdtest_ktime);
++	pr_info("--- tsc-like times: %lu - %lu = %lu.\n", j2, j1, j2 - j1);
++	WARN_ON_ONCE(time_before(j2, j1 + NSEC_PER_USEC));
++
++	/* Verify tsc-like stability with various numbers of errors injected. */
++	for (i = 0; i <= max_cswd_read_retries + 1; i++) {
++		if (i <= 1 && i < max_cswd_read_retries)
++			s = "";
++		else if (i <= max_cswd_read_retries)
++			s = ", expect message";
++		else
++			s = ", expect clock skew";
++		pr_info("--- Watchdog with %dx error injection, %lu retries%s.\n", i, max_cswd_read_retries, s);
++		WRITE_ONCE(wdtest_ktime_read_ndelays, i);
++		schedule_timeout_uninterruptible(2 * HZ);
++		WARN_ON_ONCE(READ_ONCE(wdtest_ktime_read_ndelays));
++		WARN_ON_ONCE((i <= max_cswd_read_retries) !=
++			     !(clocksource_wdtest_ktime.flags & CLOCK_SOURCE_UNSTABLE));
++		wdtest_ktime_clocksource_reset();
++	}
++
++	/* Verify tsc-like stability with clock-value-fuzz error injection. */
++	pr_info("--- Watchdog clock-value-fuzz error injection, expect clock skew and per-CPU mismatches.\n");
++	WRITE_ONCE(wdtest_ktime_read_fuzz, true);
++	schedule_timeout_uninterruptible(2 * HZ);
++	WARN_ON_ONCE(!(clocksource_wdtest_ktime.flags & CLOCK_SOURCE_UNSTABLE));
++	clocksource_verify_percpu(&clocksource_wdtest_ktime);
++	WRITE_ONCE(wdtest_ktime_read_fuzz, false);
++
++	clocksource_unregister(&clocksource_wdtest_ktime);
++
++	pr_info("--- Done with test.\n");
++	return 0;
++}
++
++static void wdtest_print_module_parms(void)
++{
++	pr_alert("--- holdoff=%d\n", holdoff);
++}
++
++/* Cleanup function. */
++static void clocksource_wdtest_cleanup(void)
++{
++}
++
++static int __init clocksource_wdtest_init(void)
++{
++	int ret = 0;
++
++	wdtest_print_module_parms();
++
++	/* Create watchdog-test task. */
++	wdtest_task = kthread_run(wdtest_func, NULL, "wdtest");
++	if (IS_ERR(wdtest_task)) {
++		ret = PTR_ERR(wdtest_task);
++		pr_warn("%s: Failed to create wdtest kthread.\n", __func__);
++		wdtest_task = NULL;
++		return ret;
++	}
++
++	return 0;
++}
++
++module_init(clocksource_wdtest_init);
++module_exit(clocksource_wdtest_cleanup);
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index d2bf84507efd0..c7ab41fc1a88c 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -201,8 +201,9 @@ void clocksource_mark_unstable(struct clocksource *cs)
+ 	spin_unlock_irqrestore(&watchdog_lock, flags);
+ }
+ 
+-static ulong max_cswd_read_retries = 3;
++ulong max_cswd_read_retries = 3;
+ module_param(max_cswd_read_retries, ulong, 0644);
++EXPORT_SYMBOL_GPL(max_cswd_read_retries);
+ static int verify_n_cpus = 8;
+ module_param(verify_n_cpus, int, 0644);
+ 
+@@ -324,7 +325,7 @@ static void clocksource_verify_one_cpu(void *csin)
+ 	csnow_mid = cs->read(cs);
+ }
+ 
+-static void clocksource_verify_percpu(struct clocksource *cs)
++void clocksource_verify_percpu(struct clocksource *cs)
+ {
+ 	int64_t cs_nsec, cs_nsec_max = 0, cs_nsec_min = LLONG_MAX;
+ 	u64 csnow_begin, csnow_end;
+@@ -380,6 +381,7 @@ static void clocksource_verify_percpu(struct clocksource *cs)
+ 		pr_warn("        CPU %d check durations %lldns - %lldns for clocksource %s.\n",
+ 			testcpu, cs_nsec_min, cs_nsec_max, cs->name);
+ }
++EXPORT_SYMBOL_GPL(clocksource_verify_percpu);
+ 
+ static inline void clocksource_reset_watchdog(void)
+ {
+diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+index ee630c7fcd641..7f975fef0d13b 100644
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2471,6 +2471,18 @@ config TEST_FPU
+ 
+ 	  If unsure, say N.
+ 
++config TEST_CLOCKSOURCE_WATCHDOG
++	tristate "Test clocksource watchdog in kernel space"
++	depends on CLOCKSOURCE_WATCHDOG
++	help
++	  Enable this option to create a kernel module that will trigger
++	  a test of the clocksource watchdog.  This module may be loaded
++	  via modprobe or insmod in which case it will run upon being
++	  loaded, or it may be built in, in which case it will run
++	  shortly after boot.
++
++	  If unsure, say N.
++
+ endif # RUNTIME_TESTING_MENU
+ 
+ config MEMTEST
 -- 
 2.53.0
 
