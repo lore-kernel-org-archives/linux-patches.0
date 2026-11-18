@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053313;
-	b=NCgq7y0eScnOWWjVQuVAIWsTwdPi+1o8wxlSyrBQZqTWMN5VvG2IFgT32WYrjDBfZiYK
-	 J9d/vxL9196oo/1LUlU/gVeonHAKAAd5/rMopGYAIrwmUzYJsOu6ugWThbxlwncE3BjJO
-	 I6eRCIOM2Zvg4slkDw4+4Pfpp6jsx1FGDQtujkY1mLProDd7ZZGKjtW5ySK7pfgIsHtr2
-	 gQc7MFDcspLU2ttc+mLzisfGpRYmYdUk9MC9ZGroSQ2siLJowrMv0M4NsxW9+tkIGa+G7
-	 IzdIPIeZfvaRproNmW09sjIaygLZFRWC3DeuPS+q7W5nfrtXZib3YKbyRymdMShFVCg==
+	t=1795053315;
+	b=QCjpIL4fEfGtEPYEHb3r78IAdYpoDNB8Jf+3/zoFcuzgxHeEttRLnLuhgr019MTUWUQU
+	 k6IEGAPG7QGB6Xupf8ez7rywhHJ7O34sBXmach36/LpDC77VbqD8uwM/5xF8rN0/c6Hg0
+	 UAIJi4n0f27MfNXDxwo88bNLvEEl8RwACJ1A1LWXPrWiZNRFaFGOahrGuQn5IpBcHEmdZ
+	 3+NgtuhkKKjAySpbjQck/exZbeqwZ0cpInPERP9H2XOkTuGgShxDvX+1VrtU8EEI2XPNz
+	 7qNuZclLbF5dN/DB3SYJqNoa2+E+jjAZvQ3yY6kALnUJqqPn2lWo/PPJJiatizdMlzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053313;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053315;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bew8pu1WujLHlprQIsxH+JhqHPZa/WDSZsinDlHyib0=;
-	b=CgOQsh3W6pEckMEBHxLWrcqEymliKlfa5nhywxTKKCVPwP+SNyTbtuohsG2ef8Qy+kdu
-	 8HrsXGG+1MmdpzKRQ7XqAztCTkwCgzLvzUpEi2hS0JL1qljRhUXqdqCvTs10iV755jCuK
-	 knCMZWvvI5mxZtDGx2ShGmZ0aLnklQvnAbjIsTqy/7+zTBkwQLiOm/D6GaIeYbG5w87nO
-	 EzVGsv4su3i1fExf4hToCrLwngrYzRDElWmWE3tFOyVv7SozCwJIj3zzK+gtiWpYhZTnZ
-	 4nKznPmW51bo1bbUJgazwidKCZ21bsszabYigffJ6x+VCH16aFEUXPCwaHBgNa25XvQ==
+	bh=qmtn9vaB38GSWggzHDeHsQk7o41EI02hBPSoFI9KkY0=;
+	b=Nhg6SouXIcF96Bi64j5VajTQWiMPJLEryomtHYVlvqAZEd5REWo+Hjip/HYrWz1OzhN6
+	 eN57dnNRoQ9Rte4PEqr+PXzog3GHvk8jRV9/mvBuDwDXu8HZNvcEdKPWAaGrbch2UwG6x
+	 RGAS1jGxq9WFOnSmLsfeSi+MIOz2fDBLKlNBa5hNfeFYWgEeVyifqE83+UGpq85nh7Z9b
+	 s5b+ZbK35JD5jKAJUIqWcfO6/NtJ7qUbNw4EKaU4Vy7MjRVVKnmr2TOupfLqrW8C7gF/Z
+	 cgkJVIRmFdOK3KJhfCYRhSNT6LHwm/HUGU0d6z4w1VHwHDW8YvQ9tINEm18wnE4QhmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p+ExlNZ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KOo0fV5z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00843606A32A;
-	Thu, 19 Nov 2026 01:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6209606A32A;
+	Thu, 19 Nov 2026 01:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p+ExlNZ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FC01F000C5;
-	Thu, 19 Nov 2026 01:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KOo0fV5z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064111F000C5;
+	Thu, 19 Nov 2026 01:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053312;
-	bh=bew8pu1WujLHlprQIsxH+JhqHPZa/WDSZsinDlHyib0=;
+	s=korg; t=1795053315;
+	bh=qmtn9vaB38GSWggzHDeHsQk7o41EI02hBPSoFI9KkY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p+ExlNZ3Ltzy69/FB0S3oENU5hn1nHmZiy/4NN5bbPufFBwwuKGj2R+JsHc6VDo1Y
-	 4gYXiYK5WBA9Hv+NrnWqeWcg6km4AP8xryDGhFHxezvJPhp/Qxak0oubPJ8LDcjmDA
-	 fgUN4Isq9k5A428uDjgeQGfmiyjqtOnDaGIIEDL8=
+	b=KOo0fV5zP0q2xeZJQ/R1qVoCzrYMcEEq7I708dxPOANz8I8ErwniRhxS0j54jH0TG
+	 ERDYXLmR5MhAR4xcrDHMLYQ86qBOEpXtlUHTB/sLXeEQB9sTOhKzwlMAmdu2gCIdG1
+	 JDrEk4hr8CUDGD3wv8Owx7BlTJCMByGCJpwOCYuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0874/2214] KVM: x86: Conditionally resched when restarting REP string emulation
-Date: Wed, 18 Nov 2026 15:42:30 +0100
-Message-ID: <20261118150047.097904619@linuxfoundation.org>
+Subject: [PATCH 5.15 0875/2214] KVM: nVMX: Process each host MSR entry at most once when unwinding failed VM-Entry
+Date: Wed, 18 Nov 2026 15:42:31 +0100
+Message-ID: <20261118150047.137837509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,54 +72,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit ae85ac25eb671d174811cc3101549448671fd505 ]
+[ Upstream commit c33ef9d334059f7cb167569ed7b4779752fe4425 ]
 
-When restarting emulation, e.g. of a REP-prefixed string instruction,
-conditionally reschedule as emulating guest writes can be deceptively slow
-and expensive, e.g. when shadow paging is in use and each write can trigger
-write tracking.
+Add a missing "break" in the inner for-loop of the open coded mess that
+unwinds MSRs back to the pre-VM-Enter state when VMLAUNCH/VMRESUME VM-Fails
+due to a consistency check that is caught by hardware but missed by KVM.
+I.e. move on to the next MSR in the VM-Entry load list after performing a
+write using a value found in the VM-Exit load list.  Processing *every*
+matching entry in the VM-Exit load list makes the processing quadratic,
+which is problematic if the load lists are full of MSRs that are expensive
+to emulate.  E.g. writing APIC_BASE triggers kvm_recalculate_apic_map() and
+a whole pile of unnecessary work.
 
-In a perfect world, restarting emulation (or not) would be less arbitrary,
-e.g. would honor not only host events (NEED_RESCHED, signals, etc.) but
-also guest events (e.g. by checking kvm_vcpu_has_events()).  Unfortunately,
-as pointed out by Sashiko, pio_in_emulated()'s read-ahead logic is baked
-into the restart logic, as KVM relies on restarting emulation to drain the
-cache and avoid duplicate reads from the I/O port.  I.e. re-entering the
-guest on kvm_vcpu_has_events() or __xfer_to_guest_mode_work_pending() would
-introduce architecturally-incorrect, guest-visible changes.
+Functionally, arbitrarily restoring the value of the first matching entry
+is "fine", because none of this is architecturally correct: the load lists
+are never supposed to have been used in the first place.  In practice, it's
+likely a moot point as no well-behaved VMM will have multiple, diverging
+entries in the load lists.
 
-Fixes: 5cd21917da24 ("KVM: x86 emulator: restart string instruction without going back to a guest.")
+Fixes: bd18bffca353 ("KVM: nVMX: restore host state in nested_vmx_vmexit for VMFail")
 Cc: stable@vger.kernel.org
 Cc: David Woodhouse <dwmw2@infradead.org>
 Reported-by: Stefan Teodorescu <fane@google.com>
 Suggested-by: Stefan Teodorescu <fane@google.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261028173638.1765329-1-seanjc@google.com>
+Message-ID: <20261027185917.1478906-1-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/vmx/nested.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index ccbd27f496488..34ca96e302c38 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -8271,10 +8271,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 	} else if (vcpu->arch.complete_userspace_io) {
- 		writeback = false;
- 		r = 0;
--	} else if (r == EMULATION_RESTART)
-+	} else if (r == EMULATION_RESTART) {
-+		cond_resched();
- 		goto restart;
--	else
-+	} else {
- 		r = 1;
-+	}
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index 82aa349e33aff..2ea93059ad713 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4568,6 +4568,7 @@ static void nested_vmx_restore_host_state(struct kvm_vcpu *vcpu)
+ 					__func__, j, h.index, h.value);
+ 				goto vmabort;
+ 			}
++			break;
+ 		}
+ 	}
  
- 	if (writeback) {
- 		unsigned long rflags = static_call(kvm_x86_get_rflags)(vcpu);
 -- 
 2.53.0
 
