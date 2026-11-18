@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059400;
-	b=TgYCQU3+BnFyQ9Df59iOYoWWLXDMxslvj60RNTVznaH9fOoZbJzKmsI6rB8hDHLh4uyu
-	 G072xSt6TNvPpoNqr5tVAO+/b2HGqZLPASt8xDsMCklgMci/wUTU3LutbtEvaX0WZUd5J
-	 AD5f+nW+CzSh87hmmOXRczHAOdLthaZlsJELCvC1rFwVFaOktDw5F1R0ExzDHS1ra0hMX
-	 CHURri0BNWT/rLPJ0FkeAQ9MIGVGSegTfARNCIOG1hFxbhibKgCEWFd8kiad2rUWGppyu
-	 swiLD41qlb96jcgVy4oSN3U2YOjIVL/mETdqSHnDM6T3kpK4FdkHOWLw1HXq8yTIdMQ==
+	t=1795059403;
+	b=TW8qRoPG6t6Oq3qfkjLO/sSni5ekgmxjOy6RgdmyTjgnIo4NrNxjx3jsUelZJuYEym67
+	 1fgiY6IzDNeaBz+G/0KGuqJPlyXmr7axYLvjRs+WgC+aVB0nJNeyXfGdi45aAr7YE5VSF
+	 NaPPoXnXDN8KBzznGixdjmgkp2FPQim2mqO2t8H1yBhY1NhhCLJ6SMuZaW/VEe4cIefzJ
+	 sAvSunSaxjBboJx4RwmgnNt+uNo0WJeZj5Z95g3TNh1N1SzYJeKrV5rtAYh9rudNFdjQI
+	 VMfLq2c2sU6ENGXAFP4E3aMyKsHk98HbyGNxBMzQYyzie4zWogDAjQ2By7fnMKsCE+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059400;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059403;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=raFQc7s8ddNzVVwUXCA9iusdKmH+WkY4M/9c7/Ul+co=;
-	b=FLFX38nSbKnTH4zynYMRQL/ivRHo0IYIzE+eDaCD/GZ6gUy/Biih51z/qfgLEE4klKgl
-	 QBQDEJFttc182HLUNijlqjpmXpJgXJTAPSkmFQerz8uzA2SqP4wW/ep3MZpy43ldOavUH
-	 cUIaKRMwbtS0X7I05LZ7Br/Zkht4jOx+EfOjIyeRD4Y5f8IqdsS5rxGwFACq9rImeIbgP
-	 GjoQ+SYpE1Jes/RgfX3p9O2FkIWSolfk2aXU0HW80Dv3KXyT9oi7+Kk0zxLdikDRIyqkh
-	 9ZgcUFTedj9AQ0F54XbpFyDp6VAMIW5SyOw8hDQVmfyShHoV8Wkenjgl1bD7uEzZx/w==
+	bh=alm5brNJa122WibiK0Vovnh7WxW01KBRG92QKg5eByE=;
+	b=QO7Kfy32da8vWQiWFeG3/I8iz/irQRLJHEiYyFqdKJR2jPz8OCdIxon6cge0ofVL9ct+
+	 lX+zKeqauBIn9cbFZehYTh9tcEFY+4bPtNFrXuzVdJbBvNEkNln//UOeKlWyxvb+dTMr6
+	 7a6f00CAGXi5zel4W+eTqn2VgA4UmsVdSc0Ls+1bCPqA1R6ntV17Hzx8uomibiYmJ+Z2B
+	 SyGL4jH1tjsj6+2ALsnUh7u0KFLTnFm744ji/cnBBZQqjy0eMIeDbt8cc/D2FyD3fLawd
+	 Y544Ok7fCckark3OlEyhEkA9sI2sHMqrmPmDUrRGwzLcGlrmJeZbbR0FIJwvVPEWdJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9rHfKXo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i15wzkll;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DA1606A31C;
-	Thu, 19 Nov 2026 03:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1876A606A31C;
+	Thu, 19 Nov 2026 03:36:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L9rHfKXo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF19D1F000C4;
-	Thu, 19 Nov 2026 03:36:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i15wzkll
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0941F000C4;
+	Thu, 19 Nov 2026 03:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059400;
-	bh=raFQc7s8ddNzVVwUXCA9iusdKmH+WkY4M/9c7/Ul+co=;
+	s=korg; t=1795059403;
+	bh=alm5brNJa122WibiK0Vovnh7WxW01KBRG92QKg5eByE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9rHfKXoVAJfHsCEVZ6LTh96vdikKSrZtAGCRs41Pc1rXKnPTl36/Qf0VRwUVqVtK
-	 g/JzPfiXqAKI6wwF2K4OX+MKu4PoPRy23UtJ4GZzT4r7F3kuFH3OL6sGN9j3RrPfAK
-	 GnlGb/ENC/3IsuAaST9dzBrY7tvXO3nRSw6QgTAU=
+	b=i15wzkllrt/uZ9IAxzXRpE+f+gJaK/J23uoCXAceQ2k41ss9Ft47I6ZfvKnjUa5VA
+	 0jW4gpuMLlgY5Z0hddqr5tLYBhdJ3ya0buRb85evM23vrSDDyfTEvW3tb1P445up0C
+	 ohtHufRziu4u583oVHzolqbT7lLlc1tGzTEMz/oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Punnay Sharma <punnaysharma805@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0827/1848] mtd: rawnand: ndfc: use devm_platform_ioremap_resource()
-Date: Wed, 18 Nov 2026 15:47:45 +0100
-Message-ID: <20261118145951.345729042@linuxfoundation.org>
+Subject: [PATCH 5.10 0828/1848] staging: media: av7110: fix sp8870 initialization failure state
+Date: Wed, 18 Nov 2026 15:47:46 +0100
+Message-ID: <20261118145951.378410775@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,81 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Punnay Sharma <punnaysharma805@gmail.com>
 
-[ Upstream commit 0d66f9895f286d2fab396a71e6efeb95c4a7e5a6 ]
+[ Upstream commit 30684fa98394bc0eb4362282908612aab7d4dad9 ]
 
-Replace the open-coded of_iomap()/iounmap() with the managed
-devm_platform_ioremap_resource() helper. This fixes a mapping leak on
-driver remove (the old code never called iounmap()) and simplifies the
-error path by dropping the manual cleanup in ndfc_probe().
+The SP8870 DVB frontend driver prematurely flags the device as
+initialized at the very beginning of the sp8870_init() routine, prior
+to requesting the firmware (dvb-fe-sp8870.fw) and executing the I2C
+upload sequence.
 
-There is no overlapping memory-region concern introduced by this
-change: each supported board DT describes a single ndfc node with a
-unique 0x2000 register region, and the EBC parent uses dcr-reg rather
-than a MEM reg resource, so the newly added request_mem_region() cannot
-conflict with an existing reservation. Distinct chip selects map to
-distinct 64-bit physical addresses, so CS instances do not overlap.
+If request_firmware() times out or sp8870_firmware_upload() encounters
+an I2C bus error, the function aborts and returns -EIO. However,
+because `state->initialised` is already set to 1, all subsequent
+invocations of `fe->ops.init()` by the DVB core will immediately return
+0 (success) without attempting to load the firmware again. This leaves
+the demodulator microcontroller halted and the frontend permanently dead
+until the module is forcibly reloaded.
 
-Fixes: a808ad3b0d28 ("[MTD] [NAND] ndfc driver")
+Relocate the `state->initialised = 1` assignment to the end of
+sp8870_init(), ensuring the flag is only set after the firmware is
+successfully uploaded and the system controller is actually restarted.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: opencode:hy3-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Punnay Sharma <punnaysharma805@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: Adjusted the patch for the driver's older location and surrounding source context. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/ndfc.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ drivers/media/dvb-frontends/sp8870.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
-index b9223cdaa8e34..97a2e36d812ac 100644
---- a/drivers/mtd/nand/raw/ndfc.c
-+++ b/drivers/mtd/nand/raw/ndfc.c
-@@ -185,10 +185,15 @@ static int ndfc_chip_init(struct ndfc_controller *ndfc,
- static int ndfc_probe(struct platform_device *ofdev)
- {
- 	struct ndfc_controller *ndfc;
-+	void __iomem *ndfcbase;
- 	const __be32 *reg;
- 	u32 ccr;
- 	u32 cs;
--	int err, len = 0;
-+	int len = 0;
+diff --git a/drivers/media/dvb-frontends/sp8870.c b/drivers/media/dvb-frontends/sp8870.c
+index f68479e75e462..3e05ef983fafb 100644
+--- a/drivers/media/dvb-frontends/sp8870.c
++++ b/drivers/media/dvb-frontends/sp8870.c
+@@ -297,7 +297,6 @@ static int sp8870_init (struct dvb_frontend* fe)
+ 
+ 	sp8870_wake_up(state);
+ 	if (state->initialised) return 0;
+-	state->initialised = 1;
+ 
+ 	dprintk ("%s\n", __func__);
+ 
+@@ -336,6 +335,8 @@ static int sp8870_init (struct dvb_frontend* fe)
+ 	sp8870_writereg(state, 0x0D00, 0x010);
+ 	sp8870_writereg(state, 0x0D01, 0x000);
+ 
++	state->initialised = 1;
 +
-+	ndfcbase = devm_platform_ioremap_resource(ofdev, 0);
-+	if (IS_ERR(ndfcbase))
-+		return PTR_ERR(ndfcbase);
- 
- 	/* Read the reg property to get the chip select */
- 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
-@@ -210,11 +215,7 @@ static int ndfc_probe(struct platform_device *ofdev)
- 	ndfc->ofdev = ofdev;
- 	dev_set_drvdata(&ofdev->dev, ndfc);
- 
--	ndfc->ndfcbase = of_iomap(ofdev->dev.of_node, 0);
--	if (!ndfc->ndfcbase) {
--		dev_err(&ofdev->dev, "failed to get memory\n");
--		return -EIO;
--	}
-+	ndfc->ndfcbase = ndfcbase;
- 
- 	ccr = NDFC_CCR_BS(ndfc->chip_select);
- 
-@@ -232,13 +233,7 @@ static int ndfc_probe(struct platform_device *ofdev)
- 		out_be32(ndfc->ndfcbase + offset, be32_to_cpup(reg));
- 	}
- 
--	err = ndfc_chip_init(ndfc, ofdev->dev.of_node);
--	if (err) {
--		iounmap(ndfc->ndfcbase);
--		return err;
--	}
--
--	return 0;
-+	return ndfc_chip_init(ndfc, ofdev->dev.of_node);
+ 	return 0;
  }
  
- static int ndfc_remove(struct platform_device *ofdev)
 -- 
 2.53.0
 
