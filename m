@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017530;
-	b=VHgojypu5Na18hv+Brb/6Mpyje0xvsHpO8TzQkE08D9WanpB1UIt+95VMpr4PIfVXIgd
-	 xs7E/38moQg6VaexOQh+XnmnppYO4Qc3ublhHGGSRR1cMvdJt8gVughMkCooav2evVnQo
-	 YfQ9uaUZN8IUoa+s5emGpeJXmjjZAEWwktcLTjW1wLEmrOX7HuUvbiwrSa2sWpWaXlRTD
-	 872j+2eaMilXEFIPSOx29olQ0m/mS2LBzLZ5nwJt5I+0Pej6RQ2Uevo7kzZpzLM/BoLvd
-	 FuKr0JWhpf6DaD2OSenMLJyZ8quGsF5RCJkqB8FypUmJ7eBer1HCmL+5O7vy76mlASQ==
+	t=1795017532;
+	b=EH0AJVQhxOkUgsJe8Rl7cDE3GGIRAhD9XE9o4fhmpvjst6czx2pQ+/5UlNEMeWZPyTff
+	 efMb84ldZ1C40dJ0mhbQDcBipRozR1THitJCtljVULqZ4DfBn3iz92dk0RhoPVd+bkT9g
+	 AbvfV71e6s2gTowJHsO3P/z3ssAFU88lVJXmSVexIGExQ37NRof0CLwlQFRqrwTOcYCNJ
+	 dRLCSUChwYLGrsB4XCEoTEFG/9w0tdAaVPSewSKRAiJbZRJijQ6i8V0U1HI+S11sucIjI
+	 hpnpfNOFTADv3EUr9+UQ15FjtiyF+igm3FPHbinzew7Z8sBvCHFrVyOdIro5b2ZsQcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VvL49JjKqtJv+1myDHyEsPtZKX0bKIy1laO7X31qyp0=;
-	b=Qpb9dCCFaJxMPX8yxX22GOfs17HI8qj/+ayXeImewMx9eyyfz+d7i4+VXS2Yw3q7+jY4
-	 DR7khVnr0VmywUw7hjFQXPz/cWvwnZ/l0Ptf9lNxBdbqIpBvFdxgw7P7/hCmmiq+MWK3S
-	 shQhP00XEIatZVf/CKZ1NhFWCma3ISVorVGikkWqt3wOGbpK1r/ph7w32ea/9KpUS4HB7
-	 lskAQBJ49LlEmk4TY2PnHr3pWJkr/jSYC4yrTDg222f9SSZyeHK5lBlcUJfutRZF1O1/o
-	 zwFcbzAmS5xfzj6jOCKFY/tfqqYgvXJS3gJuaoBXISjcsn1bSOcPfJxeB3zlhHjNFKg==
+	bh=q6r77grM5C0uKWWR0jvn/V04qCOJk4hc9BAsol98PMQ=;
+	b=yd4m2datDpNgijRUL/3tIuVGL4bT4NH1SMvQcQiMzkbUrFYtZwQonL/fZZsrqCh2tICT
+	 kMNnym3i5uFDz+a8a9ep+98zP8jET8443ZD4E9vC3hDy4nLKm+Wb/dnB96bF2T6jqZL4B
+	 EFh00LDgjaq64s0eY5H6PmBksWSqAiAdGJcEA3SEhUqqomzIgH+11Je8xf6u+lFsRmJgW
+	 VRy+T1Jbff8mO1EHKI71fnH/mIjZIwAuXb8BgmJ/5n2R4bkTDVQZ9F/zxE4Hx9QhCrwd2
+	 DFbdWwiGfyGifUfTuktChK4krEUpy9cP6MBEq+XGmvg8yGLsGXUDbaLP8IvkLcRXiAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8cIv6kE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nYGzllbx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22584606A320;
-	Wed, 18 Nov 2026 15:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80F0606A31C;
+	Wed, 18 Nov 2026 15:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n8cIv6kE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704E01F000C4;
-	Wed, 18 Nov 2026 15:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nYGzllbx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CE31F000C7;
+	Wed, 18 Nov 2026 15:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017530;
-	bh=VvL49JjKqtJv+1myDHyEsPtZKX0bKIy1laO7X31qyp0=;
+	s=korg; t=1795017532;
+	bh=q6r77grM5C0uKWWR0jvn/V04qCOJk4hc9BAsol98PMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8cIv6kEktKo47onSJfEgVp8HYIXtteluoah+U+xYPXiaooO0MyxsBWZms6jpotCU
-	 8+MnEju1oCYOcSBA5/RRDoDiFdpDtnZA/RO4R3uwsZWxuLa0dlQA6s39VOCsGu1o6D
-	 GlLaIvpdVDhrpPyPLkPPIN98T5wBM/PRdhFvnJBU=
+	b=nYGzllbx+5kRfXESZenRsNBa5ZRDSqnJjqugQ+/GO2DTvTNcdAu0IB2f5/Wzn8t9Z
+	 OVbHlu+1CzJcc4Hioiq9gZWHHgozopyIbbJzmJ4M+xPkFu5deI/j9wLB0rwJcwjPdt
+	 2LI+v5p6YX1hqBfYZaogN+QusJb2Oo2DROq62+Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0866/2651] ACPI: PCC: Preserve shared memory signature in OpRegion handler
-Date: Wed, 18 Nov 2026 15:35:06 +0100
-Message-ID: <20261118150319.034855599@linuxfoundation.org>
+Subject: [PATCH 7.3 0911/2651] kbuild: Remove alignment on .modinfo section
+Date: Wed, 18 Nov 2026 15:35:51 +0100
+Message-ID: <20261118150320.683770658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,110 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 46c263c213876bdc2297ef61aa90f0b210ebac73 ]
+[ Upstream commit 36d4a11b56aa98da4b4652a2e34d229ffcf36070 ]
 
-ACPI 6.3 introduced PCC OperationRegions. Section 5.5.2.4.7.3,
-"Declaring message fields within a PCC OperationRegion", states that,
-for all PCC subspace types, the PCC Operation Region pertains to the
-region of PCC subspace that succeeds the PCC signature. Its length
-therefore excludes the 4-byte signature.
+Commit d50f21091358 ("kbuild: align modinfo section for Secureboot
+Authenticode EDK2 compat") aligned .modinfo because it appeared in the
+x86_64 compressed kernel image after commit 3e86e4d74c04 ("kbuild: keep
+.modinfo section in vmlinux.unstripped"), breaking boot.
 
-The PCC address space handler currently copies the OperationRegion
-buffer to and from the start of the shared memory. This overwrites or
-exposes the platform-populated signature and omits the final four bytes
-of the OperationRegion.
+Commit 8678591b4746 ("kbuild: Split .modinfo out from ELF_DETAILS")
+properly addresses .modinfo appearing in unexpected contexts like
+compressed images by moving it out of ELF_DETAILS and explicitly
+specifying its location in every architecture's vmlinux linker script or
+discarding it where it may appear elsewhere.
 
-Offset the copies by the size of the signature and reject an
-OperationRegion that does not fit in the remaining shared memory.
+Effectively revert commit d50f21091358 ("kbuild: align modinfo section
+for Secureboot Authenticode EDK2 compat") and its follow up fix,
+commit a26a6c93edfe ("kbuild: Strip trailing padding bytes from
+modules.builtin.modinfo"), as they are no longer necessary in the
+current tree. This simplifies future cleanups.
 
-The example added by commit 77e2a04745ff ("ACPI: PCC: Implement
-OperationRegion handler for the PCC Type 3 subtype") incorrectly
-included the signature as an OperationRegion field. A Type 3
-OperationRegion containing a 100-byte communication area is declared
-as follows:
-
-OperationRegion (PFRM, PCC, 2, 0x70)
-Field (PFRM, ByteAcc, NoLock, Preserve)
-{
-    FLGS,   32,
-    LEN,    32,
-    CMD,    32,
-    DATA,   800
-}
-
-This contains three 32-bit fields followed by a 100-byte DATA field.
-The fields correspond to the Type 3 shared memory layout in ACPI 6.3,
-Table 14-372, after excluding its 4-byte signature.
-
-Fixes: 77e2a04745ff ("ACPI: PCC: Implement OperationRegion handler for the PCC Type 3 subtype")
-Reviewed-by: Huisong Li <lihuisong@huawei.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20260922144302.3847593-3-sudeep.holla@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Nicolas Schier <n.schier@fritz.com>
+Link: https://patch.msgid.link/20260918005142.GA1585590@ax162/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Stable-dep-of: a98db7418797 ("kbuild: keep .modinfo when vmlinux is linked with --gc-sections")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pcc.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ include/asm-generic/vmlinux.lds.h |  2 +-
+ scripts/Makefile.vmlinux          | 10 ----------
+ 2 files changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/acpi_pcc.c b/drivers/acpi/acpi_pcc.c
-index 438c671895112..9881c9ee293d1 100644
---- a/drivers/acpi/acpi_pcc.c
-+++ b/drivers/acpi/acpi_pcc.c
-@@ -28,6 +28,7 @@
-  * to PCC commands
-  */
- #define PCC_CMD_WAIT_RETRIES_NUM	500ULL
-+#define PCC_SIGNATURE_SIZE		sizeof(u32)
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index b2988aa12f664..26201821ea7ff 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -855,7 +855,7 @@
+ 		KLP_SYMID
  
- struct pcc_data {
- 	struct pcc_mbox_chan *pcc_chan;
-@@ -74,6 +75,14 @@ acpi_pcc_address_space_setup(acpi_handle region_handle, u32 function,
- 	}
+ #define MODINFO								\
+-		.modinfo : { *(.modinfo) . = ALIGN(8); }
++		.modinfo : { *(.modinfo) }
  
- 	pcc_chan = data->pcc_chan;
-+	if (pcc_chan->shmem_size < PCC_SIGNATURE_SIZE ||
-+	    ctx->length > pcc_chan->shmem_size - PCC_SIGNATURE_SIZE) {
-+		pr_err("PCC channel-%d shared memory is too small.\n",
-+		       ctx->subspace_id);
-+		ret = AE_AML_REGION_LIMIT;
-+		goto err_free_channel;
-+	}
-+
- 	if (!pcc_chan->mchan->mbox->txdone_irq) {
- 		pr_err("This channel-%d does not support interrupt.\n",
- 		       ctx->subspace_id);
-@@ -97,14 +106,17 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
- 			       u32 bits, acpi_integer *value,
- 			       void *handler_context, void *region_context)
- {
--	int ret;
- 	struct pcc_data *data = region_context;
-+	void __iomem *pcc_opregion;
- 	u64 usecs_lat;
-+	int ret;
-+
-+	pcc_opregion = data->pcc_chan->shmem + PCC_SIGNATURE_SIZE;
+ #ifdef CONFIG_GENERIC_BUG
+ #define BUG_TABLE							\
+diff --git a/scripts/Makefile.vmlinux b/scripts/Makefile.vmlinux
+index fcae1e432d9ad..6833b517cacb6 100644
+--- a/scripts/Makefile.vmlinux
++++ b/scripts/Makefile.vmlinux
+@@ -102,18 +102,8 @@ vmlinux: vmlinux.unstripped FORCE
+ # modules.builtin.modinfo
+ # ---------------------------------------------------------------------------
  
- 	reinit_completion(&data->done);
+-# .modinfo in vmlinux.unstripped is aligned to 8 bytes for compatibility with
+-# tools that expect vmlinux to have sufficiently aligned sections but the
+-# additional bytes used for padding .modinfo to satisfy this requirement break
+-# certain versions of kmod with
+-#
+-#   depmod: ERROR: kmod_builtin_iter_next: unexpected string without modname prefix
+-#
+-# Strip the trailing padding bytes after extracting .modinfo to comply with
+-# what kmod expects to parse.
+ quiet_cmd_modules_builtin_modinfo = GEN     $@
+       cmd_modules_builtin_modinfo = $(cmd_objcopy); \
+-                                    sed -i 's/\x00\+$$/\x00/g' $@; \
+                                     chmod -x $@
  
--	/* Write to Shared Memory */
--	memcpy_toio(data->pcc_chan->shmem, (void *)value, data->ctx.length);
-+	/* Write to the PCC OperationRegion after the shared memory signature. */
-+	memcpy_toio(pcc_opregion, (void *)value, data->ctx.length);
- 
- 	ret = mbox_send_message(data->pcc_chan->mchan, NULL);
- 	if (ret < 0)
-@@ -125,7 +137,7 @@ acpi_pcc_address_space_handler(u32 function, acpi_physical_address addr,
- 
- 	mbox_chan_txdone(data->pcc_chan->mchan, ret);
- 
--	memcpy_fromio(value, data->pcc_chan->shmem, data->ctx.length);
-+	memcpy_fromio(value, pcc_opregion, data->ctx.length);
- 
- 	return AE_OK;
- }
+ OBJCOPYFLAGS_modules.builtin.modinfo := -j .modinfo -O binary
 -- 
 2.53.0
 
