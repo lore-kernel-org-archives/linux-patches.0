@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041588;
-	b=Gl6RNqodwNRY91jm2iPXJVq62YqITvCJS/pRU2y1oMnVsYzEWzub1neCvJ0k9WGKQrhN
-	 JDpEh2/lGNlnkwx4kEH3WGFm1BkFxgBmrfojSl2ST8ZnGdfotrgDxUUBB6oofI9DcDkQN
-	 FUd8DAUa3fOeoWhcHiVoBrYRVbozBDa4HHNAb2ORwxSRS1fVZlARLuAWawC91R9r+Skko
-	 q8Ryn9cDfJiBcZvVVnU2bZU+Jmvx22nEGU03AtocON8tPgh25c8QH6GrPMfVEi2sOnzD+
-	 vGYthyhikLtTK1Mufh8OLhzyJVwpCPC0jj5VvE03vVLcQXhkZLA9PBEZyLvLuP0t0tg==
+	t=1795041591;
+	b=JTH7j/tH5ghjg6cWLiQL6z98TIPzYi83T53W9XgHHHot1zoQOiDpOI+ZATVDODGafSqq
+	 U1ZZL8Dc4sTR7crM11kp/zfXAI4CREoP8FJt4bOjf/uAK21OqweLZt5UtPZy3CiP5zTRz
+	 oNKJ1O+9C+PsIM/tFnG7MhIFm0FBRzUyclWq3CDRIBzkbbmVoxbIZyROB2y0UexYgQX/4
+	 IpkbTp2dBgZNbniMDbv5/cjQr9XTF3S9HSNCgZ/JXaV+xXHCPENwpU3kmtiBZFwYtI079
+	 Wrt9Y/6KJqpIdAOd6HG/+STxKMUPJ3M9tsRH3BA7BWwiY9icBMNhGfxKb+gGW1vIooA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9DUmdDnUy5BQkcqegwNFjQEQT8LYpk+O/LtRdb4Z0Qw=;
-	b=D196za/VeVc0HrH051QvkvDgWy3KO0/OxNpl1Hg0dUelSJQ6ebGeL1BV8yBTXVMUuuOq
-	 gNohdwlIok+ebEGqvllRKLl9FRcjJTKTlgN+/UWKCsqZjwy9nsK94OHm/a5xHN3oQ07Ej
-	 gVL7PSD5dNf1FdhFt0baVX92UKU05A1NlCE7mleXfn2c78Tr5ooj+uRG+Pr8v+DRbX7mj
-	 By78sXMDyIHNPl1z6EMRC8ehvoo5gW0yhm9EMIHSRIrb69yCZehJO8DRiwAtjKHeByiRD
-	 JZ0Sk/9ECQCgec4Sa2pW9BFxyxUPTpyXYs96KpPI8/N440/cGtA5bcordCdpd4D4Ssw==
+	bh=OZvmpVlVYAEQDCvjPo+vnZ5k8HgchmFKGcBFx91rX2E=;
+	b=ExlurDdOFoDhcos8SRD2g+FJJQ9qurowxOql/g+S7v4Xv/CLB1aEwdvu+wOOsE+wdRvr
+	 EYBgVfbhttF0TzG0mMEIFvYFW3je1p7Ok85BCUxnjld3KkiWkj6L+LTCsj1UNDB1qs6Pg
+	 l1QfT6F9O/ykgsLUQc5zWxK58iEeqzwVz3OeAtLmpV6a+Qlqu7hGG2mn7fzb6CTpCFUAS
+	 TlbL/k8QyNmGJMjGNY3yam6TP3QwgJ8qMqbUnE4W6g1a09V69SJvxh1BJ1gxztW9ZdUXm
+	 6J/l510ZNQmdC38piHJJCYguD6AUFa9fpCHmQeHD2WKwxULQg4XvYgD/23LbSfRoOOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uGzAnymS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxwWp33V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886B8606A332;
-	Wed, 18 Nov 2026 22:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0B2606A6CC;
+	Wed, 18 Nov 2026 22:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uGzAnymS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAD41F000C4;
-	Wed, 18 Nov 2026 22:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WxwWp33V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D471F000C4;
+	Wed, 18 Nov 2026 22:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041588;
-	bh=9DUmdDnUy5BQkcqegwNFjQEQT8LYpk+O/LtRdb4Z0Qw=;
+	s=korg; t=1795041591;
+	bh=OZvmpVlVYAEQDCvjPo+vnZ5k8HgchmFKGcBFx91rX2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uGzAnymSMAS6m7OACd99j0sJ3yeFQ+IBrAuc5eXnSywNSd4nwK4/TmHTZnR6xJkur
-	 F9eSE6N8tbgFi6+/xXc8ADX0LTQBaUqMNyUAAP7Q/2qSNDtViV4PrVfddepJHu8OiY
-	 v4zoOowURgtcXmIz8HlYVAFM29vY1zdTSAQIyHBk=
+	b=WxwWp33VbMET311iH2x4dAbRfZDw3i8uHqqO8wUncqGzKOmaiXHTO3kFx6n7qZ9uN
+	 pamGeu8/Aai9XcZzAfau8fxBFOUbH96cTorO/bFB50FFf/6wrAdxBB/gzGYaVduJ2G
+	 qEKJOdOoliBE2rPEUilZyqLmHcKCg2jETgtK/ZNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2867/3318] ASoC: codecs: wm8510: Fix definition of ADC Inversion Switch control
-Date: Wed, 18 Nov 2026 15:58:09 +0100
-Message-ID: <20261118150446.578023553@linuxfoundation.org>
+Subject: [PATCH 6.6 2868/3318] rpmsg: mtk: release channel OF node on device teardown
+Date: Wed, 18 Nov 2026 15:58:10 +0100
+Message-ID: <20261118150446.605845770@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,37 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit 22d50113078dfbeff0d005d64fd9cc680249831c ]
+[ Upstream commit 00e100cfbf7bc159e462df16832cddeaf2cab770 ]
 
-ADC polarity is bit 0 of WM8510_ADC, not bit 0 of WM8510_COMP, which
-is the loopback enable. wm8974, which has the same register layout,
-already uses WM8974_ADC for this control.
+mtk_rpmsg_match_device_subnode() returns a referenced OF child
+node, which is stored in rpdev->dev.of_node.
 
-Fixes: 5d421516670e ("[ALSA] ASoC: Add WM8510 driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/6ada61df8c8fc97ffb1623e74f6742ca498032fa.1791959026.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+mtk_rpmsg_release_device() later frees the containing allocation
+without dropping that ref.
+
+Release the OF node when the RPMsg device is destroyed.
+
+Fixes: 7017996951fd ("rpmsg: add rpmsg support for mt8183 SCP.")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Link: https://lore.kernel.org/r/20261013074744.942560-1-thnkslprpt@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8510.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rpmsg/mtk_rpmsg.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/wm8510.c b/sound/soc/codecs/wm8510.c
-index 6636a70f3895c..9db4b8caa9a2d 100644
---- a/sound/soc/codecs/wm8510.c
-+++ b/sound/soc/codecs/wm8510.c
-@@ -135,7 +135,7 @@ SOC_SINGLE("Master Playback Volume", WM8510_DACVOL, 0, 127, 0),
+diff --git a/drivers/rpmsg/mtk_rpmsg.c b/drivers/rpmsg/mtk_rpmsg.c
+index d1213c33da204..d4eb1968cefd7 100644
+--- a/drivers/rpmsg/mtk_rpmsg.c
++++ b/drivers/rpmsg/mtk_rpmsg.c
+@@ -168,6 +168,7 @@ static void mtk_rpmsg_release_device(struct device *dev)
+ 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+ 	struct mtk_rpmsg_device *mdev = to_mtk_rpmsg_device(rpdev);
  
- SOC_SINGLE("High Pass Filter Switch", WM8510_ADC, 8, 1, 0),
- SOC_SINGLE("High Pass Cut Off", WM8510_ADC, 4, 7, 0),
--SOC_SINGLE("ADC Inversion Switch", WM8510_COMP, 0, 1, 0),
-+SOC_SINGLE("ADC Inversion Switch", WM8510_ADC, 0, 1, 0),
- 
- SOC_SINGLE("Capture Volume", WM8510_ADCVOL,  0, 127, 0),
++	of_node_put(dev->of_node);
+ 	kfree(mdev);
+ }
  
 -- 
 2.53.0
