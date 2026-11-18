@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020305;
-	b=1aLeyTxExRQyTTj80nam3Brt6JhcLMCp07cnG7md8VHYGQYf3d/SlXbjmbrspF4H6MDM
-	 l5ICliHrhqgNju1Nn8L2hQl88IbKcOKTDJcve+kjeEXcQQIU58jOKg/mrRwEMBaxIHHTE
-	 hDsbisk5bBFghPixCz898aiz8jy/7aJw7om9x8d87pSBtRmRyGCARrG+Z3+DXba+F84Pp
-	 4lLvDZg7QVEnTRH7DsRLI1nAoJ2grjKLWEdiEA4Cu+3kCYi1CnpuYZFrhpVlqVmGzoM+J
-	 pYWwzQLFFA3aQnrr7rEXBAqgaI4DKtoSPmByxyOe4SUfgerQsrHxofFQmE1xpy8AE7A==
+	t=1795020308;
+	b=r8Wlx8osvf0xLtRpw1btzBOcEA/T77EmPia9IOvqRBNnPs0J16JKtd1MQF4zNR8HnE4O
+	 i7qm0kfU8zwCEzd9K9vMnYU9b0sA4ppxmjbcPXmwECKjt37Y2s8637T/XQai9fgH1aY98
+	 nRwbCvJO4B6eKtp052SOuWoiayVWmtyzW3245nrXxaXF6Lp6krzsn3XdxrwTX66vtvsSB
+	 5fxKHPChtJuCppFTObFIqIZds0Wj2fiSzQ55rGkbudaBFhjHCYsCCYqBEuY0ldATMaP4z
+	 CguA6xlQ9EwatVURGpNl4DLKi1zID4aWg/SIqI5LiMhAUsmx8KrDFVtY9wgtOvybP6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020308;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bPP788t3HxN7KFGpw5pLMw7nkBUJzvalWnVery5aUkU=;
-	b=uw4CS2/4tgv/plhhsYXQvtpqrKpvg9sd0gWcS1hqpFeBfLoun7iS+0MJami3rAtHA3i1
-	 nZQ2mioPYDxFDaWTNY+YaEmn5joaJvaiNJFefWyJwqvrBIhhugdpxKix2CMY+9LNG4DgP
-	 UwCgN38Ae0L1aEoTRObALrZ8K8+0lZ6bsHu292T+BLbw8qGOJ4Yta53l08AOZpgW/c2Dd
-	 iMlGSrbYwKf3RG/aPN5YWemG7fIhvVv3o7NWNFwmoAoYmcm5EVAZXSX2kOMw2pnO8egks
-	 if0/qau1h2zNDM25wGj54/bCJKzhZhLhSFxtUsSNZ5ZJ/vZujt+xnf8krAty74Jm7dw==
+	bh=v0VCRLsdo+0ccSHrotv6l6o9ckd41muoN3g+eWdXjZs=;
+	b=uI8Rb0uENygc9NxmpE3dVGiR87i5K0T2xf5DWSj4Q+kzogokLx3YNBBwSBAfHLqw7bz/
+	 5Pp01NOyNZ2ZemiiZNMZKeWsShMvjpQKIQoMyCBqYibiiP185iKwPO2T/XtQjiYyzQxME
+	 zBoVetDHSscTjZCf2/0EsNRP1mr9RhYREL8Oa1p3ttUe3vRodW9ttjMxMQfLK6Kqu4l4y
+	 9odWTz0kEWC7QtVD6hzn/619+cRzx0sNoAlPmF3/9q0BUUyRQ12oja0I7ZCuJh9mcma7Y
+	 ac81Z3D5zn2/93ZSylvxN8J66nbIOJocWUO1ug2ebzFyyGz8IzGh3ehgBqMq96vD1hQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgw23y42;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ro5j2kx7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3C0606A325;
-	Wed, 18 Nov 2026 16:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791CA606A32A;
+	Wed, 18 Nov 2026 16:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bgw23y42
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6711F000C4;
-	Wed, 18 Nov 2026 16:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ro5j2kx7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE63B1F000C4;
+	Wed, 18 Nov 2026 16:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020305;
-	bh=bPP788t3HxN7KFGpw5pLMw7nkBUJzvalWnVery5aUkU=;
+	s=korg; t=1795020308;
+	bh=v0VCRLsdo+0ccSHrotv6l6o9ckd41muoN3g+eWdXjZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bgw23y42CnSxFpK1bNLfroDRfrvZMY6s0xx7T9JU+O5tQMlwgkIK4y0td2DBS38nh
-	 0+uLIJOu68mMhVUyDsKs0smrz9iJxhrzpmqiLj483FtfFQd/BZeK+PMQ4QWcV7xGyN
-	 QKyTfKmrloa9LNrxm/H7lHBYsaq/COn0UJOyM35g=
+	b=Ro5j2kx7NtBXWTF0wJPTIzHeksRiZYMUfj6u55xgGVyeyRsPK/8mV2vhkxCpcGmGg
+	 ZdcG+K43VanUKgxLIiXk/R1mwIGUoVAWOCziXQBmf5E3awDcvcnQC3ObpGIaUJlmbU
+	 9hzFrahNPyYmZu3n1AFQb3wqFy8Wv2Byark21jeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1904/2651] Bluetooth: MGMT: Allow connection rate request as peripheral
-Date: Wed, 18 Nov 2026 15:52:24 +0100
-Message-ID: <20261118150355.363501667@linuxfoundation.org>
+Subject: [PATCH 7.3 1905/2651] Bluetooth: MSFT: Serialize handle map cleanup with event processing
+Date: Wed, 18 Nov 2026 15:52:25 +0100
+Message-ID: <20261118150355.394406817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,50 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 47493e62e8a8522a250537ed2ce026dd7d9163b1 ]
+[ Upstream commit 56e20c3d8ad340bbfc90221c4aae1c870485fb57 ]
 
-Load Connection Subrate only issues the LE Connection Rate Request when
-connected as central, but either role can initiate the Connection Rate
-Update procedure, e.g. a HID device, which is the peripheral, does it
-once the HID host requests a HID SCI mode with the HID Control Point.
+MSFT monitor handle mappings must remain valid while vendor events look
+up and use them under hdev->lock. msft_do_close() removes and frees the
+mappings without that lock.
 
-Issue it regardless of the role.
+hci_dev_close_sync() clears HCI_UP and drains the RX workqueue before
+MSFT cleanup. However, a transport callback that already passed
+hci_recv_frame()'s state check can queue a vendor event after the drain
+returns, if no earlier shutdown callback has quiesced reception. The
+driver close callback runs after MSFT cleanup, so event processing can
+overlap the unlocked removal. msft_monitor_device_evt() can then
+traverse freed list entries or read handle_data->mgmt_handle after it is
+freed.
 
-Fixes: 19129d7037be ("Bluetooth: Add MGMT Load Connection Subrate command")
-Assisted-by: OpenCode:claude-opus-5.5
+Take hdev->lock while resetting monitor states and removing handle
+mappings in msft_do_close(), as normal monitor cancellation already
+does. An active event reader then finishes before its mapping is freed,
+and later lookups see an empty handle map.
+
+An instrumented kernel produced this KASAN report (timestamps removed
+and unrelated frames omitted):
+
+    BUG: KASAN: slab-use-after-free in msft_vendor_evt+0x1906/0x1990
+    Read of size 2 at addr ffff888104df3602 by task kworker/u17:2/502
+
+    Workqueue: hci0 hci_rx_work
+    Call Trace:
+      [...]
+      msft_vendor_evt+0x1906/0x1990
+      hci_vendor_evt+0x6f/0x90
+      hci_event_packet+0x894/0xc70
+      [...]
+      hci_rx_work+0x3f8/0xfa0
+      [...]
+
+    Allocated by task 499:
+      [...]
+      msft_add_monitor_sync+0x6a8/0x10a0
+      msft_add_monitor_pattern+0x7f/0xb0
+      hci_add_adv_monitor+0x1fa/0x2e0
+      [...]
+
+    Freed by task 499:
+      [...]
+      kfree+0x307/0x580
+      msft_do_close+0x238/0x750
+      hci_dev_close_sync+0x546/0x1380
+      [...]
+
+    The buggy address belongs to the object at ffff888104df3600
+      which belongs to the cache kmalloc-32 of size 32
+    The buggy address is located 2 bytes inside of
+      freed 32-byte region [ffff888104df3600, ffff888104df3620)
+    [...]
+
+Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/bluetooth/msft.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 23b65ceea8955..11f01b8d53f80 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -8334,8 +8334,10 @@ static int load_conn_subrate(struct sock *sk, struct hci_dev *hdev, void *data,
- 		hci_param->cont_num = cont_num;
- 		hci_param->rate_supv_timeout = supv_timeout;
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 6f4b7c38a2474..2559c5b1bef02 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -683,6 +683,8 @@ void msft_do_close(struct hci_dev *hdev)
  
--		/* If the device is connected as central check if the
--		 * connection rate parameters need to be updated.
-+		/* If the device is connected check if the connection rate
-+		 * parameters need to be updated, either role can initiate the
-+		 * Connection Rate Update procedure, e.g. a HID device acting
-+		 * as peripheral once the HID host requests a HID SCI mode.
- 		 */
- 		if (!i && param_count == 1) {
- 			struct hci_conn *conn;
-@@ -8344,7 +8346,6 @@ static int load_conn_subrate(struct sock *sk, struct hci_dev *hdev, void *data,
- 						       &hci_param->addr,
- 						       addr_type);
- 			if (conn && conn->state == BT_CONNECTED &&
--			    conn->role == HCI_ROLE_MASTER &&
- 			    (conn->le_rate_interval < min ||
- 			     conn->le_rate_interval > max ||
- 			     conn->le_subrate < subrate_min ||
+ 	bt_dev_dbg(hdev, "Cleanup of MSFT extension");
+ 
++	hci_dev_lock(hdev);
++
+ 	/* The controller will silently remove all monitors on power off.
+ 	 * Therefore, remove handle_data mapping and reset monitor state.
+ 	 */
+@@ -697,6 +699,8 @@ void msft_do_close(struct hci_dev *hdev)
+ 		kfree(handle_data);
+ 	}
+ 
++	hci_dev_unlock(hdev);
++
+ 	mutex_lock(&msft->filter_lock);
+ 	list_for_each_entry_safe(address_filter, n, &msft->address_filters,
+ 				 list) {
 -- 
 2.53.0
 
