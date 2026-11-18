@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036547;
-	b=FrNeE0mZo8QMo4Rz2q5ReNEXMP00hPKUU7gPvY2uNvAK8jndYbz+qw53/OpUONuWkSV8
-	 Ewl7erLgZYCYaYci4i0crYMK13m6mAr+ORWuQi3/ed+mTqNEkdXKWEDK6OpdqOnuMyTsO
-	 JQEVzHhwT3usRZrSZEu1FzmoYDpbmQBc2EuhrJwmMmEjFT9SuF19No8mhK+fQOAJGGGjA
-	 Zf0ClVS+XIzFSJM8OakWhAy1pzN0oCxArGpmN+ypk3d1O14nEc+MhlOhtyNOZN9FMEjTJ
-	 DDwycvOgCtMujYABt7EdLAxDudLiXRANOgCqVQXnTWsHg1pQxinOE6yWSkoXH2Ah0EA==
+	t=1795036550;
+	b=kHu/0zoW5XyMTMxomTwrPkBbFGVNi1pbWvSNAUDRWX1C+URNtY78QwSygXypArndKH4K
+	 zASn6UpVUA0WyZojFYnyQn2BJmmz8s/cnOtBhrt8OmD4LoXJoIkpise5rFbqrabxC5x/X
+	 Z3yHgoP2KM2c2+i6v9GG2cus3qeFGqj4gqPkHL5kZ/SPCLz9YpOlcYpBlKr5pc6+tpwSI
+	 +tQiRBXKs+pDSPc/1bcbrndjbPdGJXZGow4EgJ5mRLvisXiduR74JnII4Oq1ncXKAVELO
+	 vqyUT2eFIA0AtpILccSlSekgN0Tl7LRT18G5NEjcBUORi6u3pZFUgg9dqUSTH7npDxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VxMdUDp9wQnUIyzBTuwDNCm4/nL8LMdNJn87S2O/0mE=;
-	b=Drl5zRnf0UjRBtp4ZapGx20w5f45FTY0a5gV8Nmz+1CpV17ycKkoUHIhiiIGScoD3W+d
-	 mKRgiGSYR8JFdJthFr5gW0V3GL5Cr7CYhpiZ8q1cI3DL+cwraYTz26VVBVSLzhnBAxzCi
-	 yURs7T9kDl2ooIjnKCJbs/yCHfmCnw9w3jPSZgdPcJfl/9I5e3fcgylmsZm7pMpJBcI0/
-	 Iy3x0GZyOnaxHjM3GsL3c6tR7JC2KbRqd8HQYZnHnbvSedIlzSJmJu0iHsC1nw54rzRiv
-	 TGpdRjuHzPv8I5rILlRYpnvdOuuqJ/DFoFELbkqL+T5EW7C/CGGCsH/HjhcnSRyXkzg==
+	bh=4V/l3ncRbwOh4WGnxxP/mEz67l288gVAQFOrm5SK0hk=;
+	b=0E5X46276FhQEmYf+/vRblUPwuF8pPI6UeQ8Z03RCmHTcec75FurWXF+W8bxdZUePMBw
+	 AwE8LIhmHwO3FC6rv1s9v2hE6NnlewW4ThYgZ7BK/bhvLbq+QUvLvZWP9mj40DZCe9gZw
+	 G37F9DpEZrAPfWn8AReCiuxKk6EFUiP+4Ma8rBmnXtlPjrWhVEE18toPJzTShGzPq8qkd
+	 VgMsjSqjak62x8013xcxBkjMBzLeQ3QU+63a8zywkFnOYcjaz+6gAMn48tBHAsyjSQCQM
+	 n6nrudGkyChKbBuF5x9v4VsBCtJObYM4QDcTp9VTAm65ZpVufVbJHSmFedQtjFIjSWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=el93i8ay;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="N/NUqQPq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89C160A2607;
-	Wed, 18 Nov 2026 21:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC46B60A2601;
+	Wed, 18 Nov 2026 21:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=el93i8ay
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F671F000C4;
-	Wed, 18 Nov 2026 21:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N/NUqQPq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0221F000C4;
+	Wed, 18 Nov 2026 21:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036547;
-	bh=VxMdUDp9wQnUIyzBTuwDNCm4/nL8LMdNJn87S2O/0mE=;
+	s=korg; t=1795036550;
+	bh=4V/l3ncRbwOh4WGnxxP/mEz67l288gVAQFOrm5SK0hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=el93i8ayvp9psBaHkKzLjp0r0wqtR0cM4r82kc8/6mQBEDBKCMMl+dlNt3Ez2MYaE
-	 iXoY1Zr3HG2ly0n3QGWwRYikeWBr1xzFhPpZfSL22sZI0C9hPNXXJOhWPKPZOYeqP8
-	 86+WFEIsiqTGjr50WXUvYVFre8Dq9MnLbCcnvGmI=
+	b=N/NUqQPqfDJhLRWYW0qzMGtrkm+PXnTclsFfXp8a2AC9vpSNpC4AthXb8Pcobo1Me
+	 /atX0WQZE3PgsSYm4qELj/8hjaHntLw5OyEoN8vdRzfOcI1EMdfLbVx/ZXmaAXZp8B
+	 COSHSA+nJM5yxP4MN2921LFmu743ZgNv2pqVfdS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Ma Ke <make_ruc2021@163.com>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1098/3318] f2fs: check every cur_*_segno[] entry on readonly images
-Date: Wed, 18 Nov 2026 15:28:40 +0100
-Message-ID: <20261118150352.919457149@linuxfoundation.org>
+Subject: [PATCH 6.6 1099/3318] pinctrl: stm32: Fix fwnode reference leak in stm32_gpiolib_register_bank()
+Date: Wed, 18 Nov 2026 15:28:41 +0100
+Message-ID: <20261118150352.950137677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,73 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 9c4ee79190c8c23a9fb5c07d3bc87eaac514b2bb ]
+[ Upstream commit 54c66b5e47a9b10cbf4a1efe9b01301b7ffee205 ]
 
-sanity_check_ckpt() bounds-checks cur_node_segno[] and cur_data_segno[]
-against main_segs, but on an image with the RO feature the goto that skips
-the duplicate-segno cross-checks also leaves the enclosing loop, so only
-index 0 of each array is ever checked.
+stm32_gpiolib_register_bank() walks the "gpio-ranges" property with
+fwnode_property_get_reference_args().  As documented in
+drivers/base/property.c:
 
-An unchecked index reaches __set_sit_entry_type() through build_curseg() ->
-reset_curseg(), which writes se->type through &sit_i->sentries[segno]. With
-segment_count_main 120 and cur_data_segno[1] set to 200, KASAN reports
-three out-of-bounds writes during mount and the mount then succeeds.
+ * The caller is responsible for calling fwnode_handle_put() on the
+ * returned @args->fwnode pointer.
 
-Use continue so every index is bounds-checked, and skip the node-vs-data
-cross-check explicitly, which is the other thing the old goto skipped.
+The returned reference is never put.  The function calls the helper
+twice, once directly and then repeatedly in a while loop, and each
+call overwrites args, so only the last reference is even reachable
+and all the earlier ones are leaked for good.
 
-Cc: stable@kernel.org
-Fixes: a7d9fe3c3388 ("f2fs: support RO feature")
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Put the reference as soon as args.args[] has been consumed, both for
+the initial call and for every iteration of the loop.
+
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: bb949ed9b16b ("pinctrl: stm32: Switch to use for_each_gpiochip_node() helper")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index b94dab34e591b..433506ea5738c 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3707,7 +3707,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			return 1;
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index bfc10cf9ab975..eace8153c4ab0 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1332,8 +1332,12 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
  
- 		if (f2fs_sb_has_readonly(sbi))
--			goto check_data;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_NODE_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
-@@ -3719,14 +3719,14 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
--check_data:
+ 		/* get the last defined gpio line (offset + nb of pins) */
+ 		npins = args.args[0] + args.args[2];
+-		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args))
++		fwnode_handle_put(args.fwnode);
 +
- 	for (i = 0; i < NR_CURSEG_DATA_TYPE; i++) {
- 		if (le32_to_cpu(ckpt->cur_data_segno[i]) >= main_segs ||
- 			le16_to_cpu(ckpt->cur_data_blkoff[i]) >= blocks_per_seg)
- 			return 1;
- 
- 		if (f2fs_sb_has_readonly(sbi))
--			goto skip_cross;
-+			continue;
- 
- 		for (j = i + 1; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_data_segno[i]) ==
-@@ -3738,6 +3738,9 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 			}
- 		}
- 	}
-+	if (f2fs_sb_has_readonly(sbi))
-+		goto skip_cross;
-+
- 	for (i = 0; i < NR_CURSEG_NODE_TYPE; i++) {
- 		for (j = 0; j < NR_CURSEG_DATA_TYPE; j++) {
- 			if (le32_to_cpu(ckpt->cur_node_segno[i]) ==
++		while (!fwnode_property_get_reference_args(fwnode, "gpio-ranges", NULL, 3, ++i, &args)) {
+ 			npins = max(npins, (int)(args.args[0] + args.args[2]));
++			fwnode_handle_put(args.fwnode);
++		}
+ 	} else {
+ 		bank_nr = pctl->nbanks;
+ 		bank->gpio_chip.base = bank_nr * STM32_GPIO_PINS_PER_BANK;
 -- 
 2.53.0
 
