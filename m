@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022420;
-	b=xJk5cT8tQTye4lWbuuptbp3LHw17Zt3hfF2fNPQjurgTZs+ZC5Q+cX3IRHqMMX6uLxng
-	 cbRFYgS8KA8Rf/K2nkolXzlFWpTbKIoHywz0tcAyV4JvSsygHCfEz6S0k/DJRzELIs+mG
-	 bk9V6SVirdHZ9Qe9WCKCsgpl9p8ORUEdi01zJUBklw2HjAHQzJPalq5moWPU0GIP6Y/so
-	 Qn5Q4h9H9XcqlzMwabt5BwWPZoOCbg8k4RibGxoS1FPNAz2hir/nVATB4dR9cmJ0RiUFo
-	 GYJVu9Y0PpAv2ouwqgqkovTHzdhM2BRRUZ9Axwwdw7YoWkfHmprSNSUoue8zPbi0NBw==
+	t=1795022422;
+	b=F2EXkLMcZWTEAg90wH8uxl1QINvN6y33K2m9YsPvVqhilc4Ce6WHNCVpPC2ybzYvZZx8
+	 LGTd5i8snACYL19Ez02BbdpfhwBMOo3WdQBwK4N0CXMw1FAMvNvDizSOXsQBQ98sNjFqS
+	 2tXYw7DoruNYavJ7RbOGqK1Ht0+46bSC3Bk/b+pCsoOw1zOvq6NPbTmEz62oQ8v6p/lHk
+	 sXVbT9zsNZ3twd87Og02f0mN3i5JiIfZjmaiHnWWp22IutEpho7TJrvTHgy92WOj+4xgW
+	 DT8lUWVE5RPMI+v3kRS3ESEPvh6hOUisMzJ3Xv3gd/Hjyx439ciMpWbkPU8yI4g1duw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022420;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022422;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IgIiITxVjm7kIyQ/zfRLE5+VcqSexCvsHqxgRddnORo=;
-	b=wbyeYogPDhbdrfSDHcciwqskF6/mbUNg1Kyv4J/YrQRI9+zmGqsn2+pn1DhxjuLl2j3j
-	 IaZFVmWoWxmhnuMYe7I5hWSO0SHU1yWIQ7YtYtT93lDUqM2sLGqakQ42zO6ul7ic5YmNL
-	 DBdqgxLA4Fsn+3FMSQ8jDavvSz0fyxTh8Pth88RDOoRtk5KCyag41NCcQtRvKpoIIkVuv
-	 3F80CmboxpMac24qrx1I9ZsbGWcZB1RHkHRb+/1TwPY0h3mU6QKARWeumSy6oGrDoSiWU
-	 CGJmkdCxEkxCPOsU8a2f11jBnlxPig3A3V0BCpQstmoZNvRnLCxFIYZ7WG224aaiykw==
+	bh=4701j4U7h6x7pQKoX2mOHVdiZDrWSZgMwDj6/5ooEc8=;
+	b=yb+CA39x3PHZwUfB8WfSuX2zHSlsdsSZypxRhPR60RzPgM5mGwo0fndqDfwMfjtsw33W
+	 vlZgitQ4vXv/+PEFFf/GyXdbhIEcbDzUDwWMbTpeebPSfArfbFusrgfjIa9TKPzFXw5KW
+	 /+OguElUdOk44IuSMgwr6vllYRRiMWYcUnVt0m8UQISeGPF+8gACWYtlr5B59PhXmMB1U
+	 6pEDgQl989dYTdvrI47aADm7aVM221PG0qrT3frOa8H4qEz5G8LOKxj0L2CGLwXIdpon/
+	 9SYAsM6wHcJPix8nKrfiIuoK+TrM0DJaUqYVgRQiBrYECTtWtbLkTF8ZcPJPnnYfdbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SehBtupa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=STaqNcTC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EADA606A320;
-	Wed, 18 Nov 2026 17:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C34606A325;
+	Wed, 18 Nov 2026 17:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SehBtupa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1BC1F000C5;
-	Wed, 18 Nov 2026 17:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=STaqNcTC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9331F000C5;
+	Wed, 18 Nov 2026 17:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022419;
-	bh=IgIiITxVjm7kIyQ/zfRLE5+VcqSexCvsHqxgRddnORo=;
+	s=korg; t=1795022422;
+	bh=4701j4U7h6x7pQKoX2mOHVdiZDrWSZgMwDj6/5ooEc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SehBtupa7pQtBA/tk4KsK/2JqfEEakG9ENe4/MPRrmIfgk/Ftjkni0qE5+4JlXy2o
-	 Q/9vLIyHGDMGi1+w8kb+qQhfogxTDoylF46SDUCP/6tyo0Ppk5hYLzUkN7Wp0LOiEn
-	 RzmUhuLv4tmTUQwamjxDJ5m5K5KYSjtbvOPksTNI=
+	b=STaqNcTCzmGMGHECWKP6KJTyBSUG2UKMVeGk3F2V1focVkW/wVYEUPvXCZWxf2+sK
+	 MFAKFZ30Qb8TMVlVs3GuO0fS5VoOr7baRSQZxgqbcplMeQ3tF0zT2JZ9t0+gxSkUlb
+	 WsixhhXwdfBGaQPzXHDj74Kd8zsBdk9Ik3v3jTgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jhonata Poma-Hansen <jhonata.poma@gmail.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2627/2651] openvswitch: use eth_type_trans_careful() in internal_dev_recv()
-Date: Wed, 18 Nov 2026 16:04:27 +0100
-Message-ID: <20261118150418.758398155@linuxfoundation.org>
+Subject: [PATCH 7.3 2628/2651] netlink: check sk_rcvbuf before charging the dump skb
+Date: Wed, 18 Nov 2026 16:04:28 +0100
+Message-ID: <20261118150418.790248303@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,76 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
 
-[ Upstream commit b55e5a0159c8f53edefcb7848d95eb93db37bce1 ]
+[ Upstream commit b45d37740cfb4bdfccef3fbd9fd970fd3224438f ]
 
-OVS actions like pop_eth followed by pop_mpls(ETH_P_TEB) or pop_nsh
-can expose an inner Ethernet header which is not in the linear part
-of the skb. Output to an internal port then crashes in eth_type_trans():
+Since commit ae8f160e7eb2 ("netlink: Fix wraparounds of
+sk->sk_rmem_alloc."), netlink_dump() charges the dump skb first and
+queues it only if sk_rmem_alloc is still below sk_rcvbuf. Commit
+a215b5723922 ("netlink: make sure we allow at least one dump skb")
+added an exception for an empty socket.
 
-  flow: in_port(0),eth(),eth_type(0x8847),mpls(lse=0x00010140)
-  actions: pop_eth,pop_mpls(0x6558),0
-  # AF_PACKET SOCK_RAW on dp0: eth / mpls / eth / 4096 bytes of payload
+A dump that starts while something else is still charged to a socket
+with a small receive buffer fails with ENOBUFS and stays running.
+Every recvmsg() retries it, fails again and sets sk_err, so a reader
+that peeks before reading, as libnl does, gets ENOBUFS on the read
+after each peek, never consumes the message at the head of the queue
+and spins forever.
 
-  kernel BUG at include/linux/skbuff.h:2839!
-  RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
-  Call Trace:
-   internal_dev_recv (net/openvswitch/vport-internal_dev.c:202) openvswitch
-   do_execute_actions (net/openvswitch/actions.c:1296) openvswitch
-   ovs_execute_actions (net/openvswitch/actions.c:1606) openvswitch
-   ovs_dp_process_packet (net/openvswitch/datapath.c:310) openvswitch
-   ovs_vport_receive (net/openvswitch/vport.c:448) openvswitch
-   internal_dev_xmit (net/openvswitch/vport-internal_dev.c:42) openvswitch
-   dev_hard_start_xmit (include/linux/netdevice.h:5455 include/linux/netdevice.h:5464 net/core/dev.c:4057 net/core/dev.c:4073)
-   __dev_queue_xmit (net/core/dev.c:5066)
-   packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+I hit this with "iw dev wlan0 scan" hanging at 100% CPU on an arm64
+board with a 6.6 based kernel (iw 5.19 sets SO_RCVBUF to 8KiB). A
+kprobe trace showed the scan dump starting while the NEW_SCAN_RESULTS
+notification iw had just read was still charged to its socket,
+because iw had preempted the sender before netlink_broadcast()
+returned.
 
-Use eth_type_trans_careful(), and drop the packet if the Ethernet
-header can not be pulled. This covers all OVS actions at the consumer,
-instead of fixing each producer.
+Check the limit before charging, as before ae8f160e7eb2, which also
+covers the empty socket. netlink_recvmsg() continues a dump only at
+or below half of sk_rcvbuf, so the skb is then always queued, and a
+dump goes over the limit by at most one skb. Refuse a skb that would
+take sk_rmem_alloc past INT_MAX, so the wraparound stays fixed.
 
-Fixes: b2d0f5d5dc53 ("openvswitch: enable NSH support")
-Fixes: f66b53fdbb22 ("openvswitch: New MPLS actions for layer 2 tunnelling")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028122703.2093730-5-edumazet@kernel.org
+Reproduced on net in a KVM guest with a userspace reproducer and the
+selftest in the next patch; both pass with this fix.
+
+Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Signed-off-by: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261027-netlink-dump-livelock-v2-1-c4bb05352a33@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/vport-internal_dev.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/netlink/af_netlink.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/vport-internal_dev.c b/net/openvswitch/vport-internal_dev.c
-index 125d310871e93..06a363df81556 100644
---- a/net/openvswitch/vport-internal_dev.c
-+++ b/net/openvswitch/vport-internal_dev.c
-@@ -186,6 +186,7 @@ static void internal_dev_destroy(struct vport *vport)
- static int internal_dev_recv(struct sk_buff *skb)
- {
- 	struct net_device *netdev = skb->dev;
-+	enum skb_drop_reason reason;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index aecd0332b90fd..510fb5ebf9ff8 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2325,9 +2325,13 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
+ 	if (!skb)
+ 		goto errout_skb;
  
- 	if (unlikely(!(netdev->flags & IFF_UP))) {
- 		kfree_skb(skb);
-@@ -197,7 +198,12 @@ static int internal_dev_recv(struct sk_buff *skb)
- 	nf_reset_ct(skb);
- 
- 	skb->pkt_type = PACKET_HOST;
--	skb->protocol = eth_type_trans(skb, netdev);
-+	reason = eth_type_trans_careful(skb, netdev);
-+	if (unlikely(reason)) {
-+		dev_core_stats_rx_dropped_inc(netdev);
-+		kfree_skb_reason(skb, reason);
-+		return NETDEV_TX_OK;
-+	}
- 	skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
- 	dev_sw_netstats_rx_add(netdev, skb->len);
- 
++	/* Check the limit before charging the skb: netlink_recvmsg() continues
++	 * the dump at or below half of sk_rcvbuf, and the skb must be queued
++	 * then. Keep sk_rmem_alloc at or below INT_MAX.
++	 */
+ 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+-	if (rmem != skb->truesize && rmem >= rcvbuf) {
++	if (rmem - skb->truesize >= rcvbuf || rmem > INT_MAX) {
+ 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 		goto errout_skb;
+ 	}
 -- 
 2.53.0
 
