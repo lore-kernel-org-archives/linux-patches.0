@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026415;
-	b=kLz6DeCKaR1ST2g7PfaYEU4W4EnKC8qXk4G1DugKA5Hc5CiIFqoIsfE/YHseUEMi/FDf
-	 XHQ2GMBznZCqhmueKu6Yrw7mYLz/LCfncKvhqMBhmUnN4EOkkYkCuGlg2SVBkaT/+SNgd
-	 ZHGjfSq1Hq4HFGfRBtM83F66XLrIny/0SV6oWW8F7RJ7E1g5XmbQXK/ZxXveFXBCm/0Zl
-	 Bneek70CeMmnIQEs020BOFDNZPYrltPSBl8tMxnHlxmmTljzSkAh6HlJUQ3BtMYyZdUXt
-	 efY/pXD+lFclSPjF1aBGCbKjSkQXCttdw0wfv6n4utJG456mvbtLrQm2ny2xVTpQrFA==
+	t=1795026418;
+	b=GG5GaNF+r25UHxBp78sfWRCI7uOGOfLLWd4raUPjXyEsFQRnWcNlFeLRZDICQhbhCd+g
+	 YF6fGq2UzMdaXvys9rGP8sKiTmM9FUljDstHiMjwdqwPYuyv6WT/9SwoLV4PGHCvFj8dI
+	 aBJ4W1lb+7m9XmAOnzyjPHOgwSLKT2ieyEMcsN+XvditjzENOXiEY6LvYUEl2spNliZEE
+	 dIM7i4grXc4+zQC8/X+8+WeOP5TaPHw5AXt63va831isvuxOoGfHsX7uqTmChjP8L46TH
+	 YO/L+dkGlAOMfeRVwBeHOZDnv6uS1x76j91td+4OiMmYRV51w5fxr4m2Xp+3HE6yQSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=q0W8FppdrUHXK/10/3novnDl4uELzAD2eROr6bUkA3w=;
-	b=GhJZJuNwSE44u6Jjldi2TP8tbOMWPcq/aK2KrusVpPGL/uXmwJcmje6PrHFprfMn2D3G
-	 GblpOAZkpFk3ub/ph90dEXE0MKqx4SfMI8N3P9FHOHh+s72pV8aT+HqzWz5bR8hNzaKCp
-	 igiyK8zEhHXhGAsLDDAuKj3/cMg/ksA8gqiA2//kMI0qCQpXP6n1/z5gsAf+t6J5664aL
-	 brNT0IpBBfoJ/112jvbxfLxFBCW/jgcm2H32c/Axj3Yb1naGoIMANNCUoFo6KibdNKN8V
-	 GCz3WXSLUHG/GD0X9IErvQC7V9EgAiIa+xjypJP8GfKr30cNOaXp0JLGqrOBImBuAYg==
+	bh=oVis7aY7re3FG1yB1BPq6h/ARqFClaZnB5OdVByXPxg=;
+	b=s90VkZQaaSBNWpXUT1TwK3XW5BNmNQxvvwFog33MvxRNZdCR1nkZWQbsm9Vdwi4Ysuss
+	 e/H0lhixjc88SWWQIw2W3MBqYTFT5qLWxCrTJNu+h0eqZ5YSQDOjUrAxqY5G+eSHHdDLL
+	 r7BQ/nPz/j1SkB2Zs3jmmIpSuJ8Qd6BhsF0bV+DfhAk+GDvPdFMxFkdaLXlCKGi7VlR/p
+	 rXnnlur30YW7U1xB3SD8VL1Qx1KGpVQfIakppFTYcOPEXMcmUleAMoYRCsZMAVF7KL9AA
+	 45CDfJBYC7lX1MEVkDxwlYlCJT6jMHrVljwMxAmrZPANl9US7sclLHQtOb3/xU+2Rmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2i444RU3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISHMRfs+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E774606A31C;
-	Wed, 18 Nov 2026 18:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF183606A31C;
+	Wed, 18 Nov 2026 18:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2i444RU3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C681F000C4;
-	Wed, 18 Nov 2026 18:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISHMRfs+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573951F000C4;
+	Wed, 18 Nov 2026 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026415;
-	bh=q0W8FppdrUHXK/10/3novnDl4uELzAD2eROr6bUkA3w=;
+	s=korg; t=1795026417;
+	bh=oVis7aY7re3FG1yB1BPq6h/ARqFClaZnB5OdVByXPxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2i444RU3sSWDJf8TCoMVRFD4EHh0uQqDh+oHApBz1n3msYByUbLNgGKpRERfMn6wr
-	 SpQfyguC+YGgrY1jQIv8TETZmBf3Esp+MPn9QDQsEru0MusIpCkR24nnflUWKNgkwz
-	 UNnRGlXmqb9wfoHfY8N7bFbc37unMESlJjv4fNhI=
+	b=ISHMRfs+yaZ0YHoBNXCSjbPRxW/zWsgPkMaWXgSTUj60N9BhzrLJV909HRjWnctWF
+	 EybK+ocbneAutfXHNSURshSVwtcSYj26WpvSrzRtAeIq+jkFVeUdpl9ErgTDVXKZLY
+	 KCU5Ko8HROCfGOKEv1b70m/QTUCcUYeexBKn3g/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1420/2151] perf test attr: Source setup_python.sh instead of calling python
-Date: Wed, 18 Nov 2026 15:52:35 +0100
-Message-ID: <20261118150213.688673101@linuxfoundation.org>
+Subject: [PATCH 6.18 1429/2151] clk: qcom: gcc-glymur: Use clk_regmap_phy_mux_ops for GCC UFS muxes
+Date: Wed, 18 Nov 2026 15:52:44 +0100
+Message-ID: <20261118150213.997471747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,61 +71,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[ Upstream commit 3b05843302202598a6d25f3e2543c8182e6a930c ]
+[ Upstream commit 20b77a88fc6e410b69bc98d3d61c035a8618fb90 ]
 
-The "Perf attribute expectations test" (perf test 82) fails on machines
-that don't ship a bare 'python' binary, i.e. distributions that provide
-only python3 unless python-is-python3 or an equivalent is installed.
-Namhyung Kim hit this and posted the fix applied here in
-<asWLmvF-3YtoKJ7j@google.com>:
+Use clk_regmap_phy_mux_ops for GCC UFS muxes so these muxes are
+automatically switched to UFS external symbol clocks during enable and
+safely parked at XO clk during disable.
 
-  /home/namhyung/project/linux/tools/perf/tests/shell/attr.sh: line 20: python: command not found
-  ---- end(-1) ----
-   82: Perf attribute expectations test : FAILED!
-
-attr.sh is the only shell test that still invokes python directly; do
-what the others do: source lib/setup_python.sh, which prefers python3,
-falls back to python and skips the test when no interpreter is found,
-then run $PYTHON.
-
-Fixes: 8519e4f44c2af722 ("perf test: Add a shell wrapper for "Setup struct perf_event_attr"")
-Reported-by: Namhyung Kim <namhyung@kernel.org>
-Suggested-by: Namhyung Kim <namhyung@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/linux-perf-users/asWLmvF-3YtoKJ7j@google.com/
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-glymur-ufs-clk-changes-v2-2-d0aa1c60c269@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/attr.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-glymur.c | 69 +++++++++--------------------------
+ 1 file changed, 18 insertions(+), 51 deletions(-)
 
-diff --git a/tools/perf/tests/shell/attr.sh b/tools/perf/tests/shell/attr.sh
-index 307e1535795a3..ca3ca4a193971 100755
---- a/tools/perf/tests/shell/attr.sh
-+++ b/tools/perf/tests/shell/attr.sh
-@@ -4,6 +4,10 @@
+diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+index 7adbe59915f0f..4c94a42d3bca7 100644
+--- a/drivers/clk/qcom/gcc-glymur.c
++++ b/drivers/clk/qcom/gcc-glymur.c
+@@ -483,36 +483,6 @@ static const struct clk_parent_data gcc_parent_data_17[] = {
+ 	{ .hw = &gcc_gpll0_out_even.clkr.hw },
+ };
  
- err=0
+-static const struct parent_map gcc_parent_map_18[] = {
+-	{ P_UFS_PHY_RX_SYMBOL_0_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_18[] = {
+-	{ .index = DT_UFS_PHY_RX_SYMBOL_0_CLK },
+-	{ .index = DT_BI_TCXO },
+-};
+-
+-static const struct parent_map gcc_parent_map_19[] = {
+-	{ P_UFS_PHY_RX_SYMBOL_1_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_19[] = {
+-	{ .index = DT_UFS_PHY_RX_SYMBOL_1_CLK },
+-	{ .index = DT_BI_TCXO },
+-};
+-
+-static const struct parent_map gcc_parent_map_20[] = {
+-	{ P_UFS_PHY_TX_SYMBOL_0_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_20[] = {
+-	{ .index = DT_UFS_PHY_TX_SYMBOL_0_CLK },
+-	{ .index = DT_BI_TCXO },
+-};
+-
+ static const struct parent_map gcc_parent_map_21[] = {
+ 	{ P_GCC_USB3_PRIM_PHY_PIPE_CLK_SRC, 0 },
+ 	{ P_USB4_0_PHY_GCC_USB4RTR_MAX_PIPE_CLK, 1 },
+@@ -909,47 +879,44 @@ static struct clk_regmap_phy_mux gcc_pcie_6_pipe_clk_src = {
+ 	},
+ };
  
-+shelldir=$(dirname "$0")
-+# shellcheck source=lib/setup_python.sh
-+. "${shelldir}"/lib/setup_python.sh
-+
- cleanup() {
-   trap - EXIT TERM INT
- }
-@@ -17,7 +21,7 @@ trap trap_cleanup EXIT TERM INT
+-static struct clk_regmap_mux gcc_ufs_phy_rx_symbol_0_clk_src = {
++static struct clk_regmap_phy_mux gcc_ufs_phy_rx_symbol_0_clk_src = {
+ 	.reg = 0x7706c,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_18,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_phy_rx_symbol_0_clk_src",
+-			.parent_data = gcc_parent_data_18,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_18),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_UFS_PHY_RX_SYMBOL_0_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
  
- shelldir=$(dirname "$0")
- perf_path=$(which perf)
--python "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
-+$PYTHON "${shelldir}"/lib/attr.py -d "${shelldir}"/attr -v -p "$perf_path"
- err=$?
- cleanup
- exit $err
+-static struct clk_regmap_mux gcc_ufs_phy_rx_symbol_1_clk_src = {
++static struct clk_regmap_phy_mux gcc_ufs_phy_rx_symbol_1_clk_src = {
+ 	.reg = 0x770f0,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_19,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_phy_rx_symbol_1_clk_src",
+-			.parent_data = gcc_parent_data_19,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_19),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_UFS_PHY_RX_SYMBOL_1_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
+ 
+-static struct clk_regmap_mux gcc_ufs_phy_tx_symbol_0_clk_src = {
++static struct clk_regmap_phy_mux gcc_ufs_phy_tx_symbol_0_clk_src = {
+ 	.reg = 0x7705c,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_20,
+ 	.clkr = {
+ 		.hw.init = &(const struct clk_init_data) {
+ 			.name = "gcc_ufs_phy_tx_symbol_0_clk_src",
+-			.parent_data = gcc_parent_data_20,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_20),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_UFS_PHY_TX_SYMBOL_0_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
 -- 
 2.53.0
 
