@@ -1,53 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022561;
-	b=3jT1gF4wozCSgS707qOppCOI/Oyw8qGmibg2dWzBflzbWzfzPRmG7zDjGU/icpow9/qj
-	 cTuXbURLribof6kZPqHroaDeS2Azc4ayQDFtoOqUq497sUJ1mw7FoVY2ITTsMsFOXl64H
-	 sWSFOqVMgrMYBUR0Fl6wNXVVB7hJTS8+q945ut6iUFktZfG1uEfSLkwPBZLAJIK6HwCO8
-	 f6saflHixRGQfZhS7DWzpoAEzNkb9kfckp24YKEIIdZl/E8g55+/tFy67MBNpz2LuuaOj
-	 LwvXQD5CUEyu5vD3Ul+XcPGAAJyL555lDRxQRnVTbLMFEXUuIU5HxJ/NXbGeJlowo+Q==
+	t=1795022564;
+	b=q3vIFaQaFN8wXf6lesVBWSPV4iIFr7awuWesfeTNoj2tLKITpnXlbabyaRph4x1q9GCp
+	 CtFmZ10k2m6h12gQ2gRlMZ6NpZ07sdlNx5ijYBImGe3l2vyDWVaVa6syCJnffw5ve/jk7
+	 fslwlwG6AHZ/G4ZKGwrWZj4cghx+rigZejRLH8EvgT9e2qhmgKB6x7ReGXl6WTZ+1jQoP
+	 vzjqbG4TJixpRqDNdn9Z4ugz/LHgBQkN53XsWNe7eipFGOGlUZIbPixIdIK6VFVkqfOWp
+	 zLnMgdgyfcg/V4Z5vWdyvS7hDuXaifqy/ZbHUaUZSXtMwRt0mHXtaKo0ueQHoE9JmLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022561;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022564;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fUMN+z9+7ZmceG+OzwyrlCF/E06sW+PRW9wTXWlFiZE=;
-	b=gETalEwGBQDo4VvRTJH+j2xwDvnoeilADVop8YLaxYs+bapZe1X1KWGMLHUxOrFO7s6t
-	 xlBkr6rcfe4z17kLUfUIPhp6QSnRcw1KOD7DK0KuEBqTK4kuHVGqaBfQmMo6uHIb5t3/y
-	 EGV63V28rqZUF7aeRNlen/vJ51FhCya0PLCvE0X0ZWFUJA8jBvcUWRxBW5ohL3Pttbq0u
-	 dnA8JOP2Czfw8TBYMJewCEkF9KlVvF0bwOngdhDICor008gZ4sN/+F8W2BdR5H+SLgECo
-	 mUfOBiRBkA4c+5OYyskMkWzLtFHm/p6N5r3n7g6Ljna2GpgZcE3KJqvbLmeKfjVu9Rg==
+	bh=bXFt9e+kVhoF9ccEpcV3/maHx6N7U0t3XPYxp0xnQYA=;
+	b=cDfjpIOdAZ5+jnCDoDMO4dNQ3SvUFXHp9m7GM22CRFxvdt9ywrmZKUtIcmFsHbOxuBvn
+	 v/WLJZiHbBE+htNoEsxIwm70Ahm0SHLtvpzKtWJohqpG6na8DlhXpg2xl5OOFu7VVYQT2
+	 MyibQQHkrN5Fyny7C9HLXjdSx05zgtXCRHjz2DLipvHjm2owi/QXTc3q95EYuuoPpQOl0
+	 Msc9iyf6QxjCmjW4dOQqcqMV2EUPdSkXAQ22cZ5/jVdEPPh6LfGpEughSSWtg6UDG6Yoi
+	 TJOAZA6yJbHkTlE1BUOn5QGFYnj0c5lE17q5n/wiO2bADikbAvQeT/KR2PFs6dZizNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="slpenHH/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e83FMV5C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D832760A2610;
-	Wed, 18 Nov 2026 17:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08E3606A32F;
+	Wed, 18 Nov 2026 17:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=slpenHH/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377871F000C4;
-	Wed, 18 Nov 2026 17:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e83FMV5C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4CF1F000C4;
+	Wed, 18 Nov 2026 17:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022561;
-	bh=fUMN+z9+7ZmceG+OzwyrlCF/E06sW+PRW9wTXWlFiZE=;
+	s=korg; t=1795022564;
+	bh=bXFt9e+kVhoF9ccEpcV3/maHx6N7U0t3XPYxp0xnQYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=slpenHH/t5+Ktg2kZNBgyhLHWdUqadQnxnZiSVt0V1ErWyyGAN/XioB7mVKjC9VKg
-	 UbVw6K0A37dVSLy3b5l/KYYj9/oYekW1C2t0chdNG3OuCuk1o2v0UUcqZjDOqlRSVU
-	 3sH6jJUAmKVDxBUxwBwnGJRCBukKFgZn37t0uMmU=
+	b=e83FMV5C06wFcoylSfJc8t/byLfIYvHl/k2dMaSaj6u7PBsZp2yCVn9ogikzDGAHJ
+	 JXwz8Bz8OteY9fryt15gdas/A580hgMHqmmVDC0GpbVZ/avTKPGNCHHemcMq/zE9rb
+	 jYtvfy8CtO5JOuomUbLbI+FkBgh6Y08T+MGsHdjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Salvatore Dipietro <dipiets@amazon.it>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dgc@kernel.org>,
+	Matt Fleming <matt@readmodwrite.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0058/2151] hwmon: (sht15) Stop deferred work before releasing its resources
-Date: Wed, 18 Nov 2026 15:29:53 +0100
-Message-ID: <20261118150123.860108663@linuxfoundation.org>
+Subject: [PATCH 6.18 0059/2151] mm: page_alloc: do not give all non-blocking requests reserve access
+Date: Wed, 18 Nov 2026 15:29:54 +0100
+Message-ID: <20261118150123.898290059@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,106 +81,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-[ Upstream commit 5eab1e7f7ed12893f3864fe46ffcd5a41a752d6a ]
+[ Upstream commit 6ee3d87b940848aaed5d4e8d005c5f674bf2637a ]
 
-The IRQ handler and regulator notifier can leave work pending after a
-measurement or notification completes. Neither work item is drained before
-its resources are released on removal or probe failure.
+Patch series "mm: page_alloc: fix reserve access for non-blocking
+requests", v2.
 
-Disable read_work before freeing the IRQ, since the worker can re-enable
-it. Use request_irq()/free_irq() for explicit teardown. Unregister the
-regulator notifier before cancelling update_supply_work and disabling the
-regulator. Apply the same ordering to probe failures.
+Two fixes for how non-blocking allocations interact with the highatomic
+reserve.  There are prerequisites for Salvatore's "mm/page_alloc: avoid
+direct reclaim and compaction for costly __GFP_NORETRY allocations" [0].
 
-Fixes: 251eb40f5ccd ("hwmon: sht15 humidity sensor driver")
-Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261024014044.27853-1-mhun512@gmail.com
-[groeck: Dropped obsolete 'Assisted-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Patch 1 narrows which requests may physically take highatomic pages,
+patch 2 narrows which requests may count them in their watermark check.
+
+Both are prerequisites for Salvatore's patch: it clears
+__GFP_DIRECT_RECLAIM for costly __GFP_NORETRY requests, which turns every
+large page cache folio allocation that reaches the slowpath into a
+non-blocking one.  Without patch 1, those requests may fall back to the
+highatomic freelists reserved for atomic requests.  Without patch 2, they
+count the free highatomic pages in their watermark check while being
+served from regular memory, so they can consume regular high-order blocks
+below the min watermark by the size of the reserve.  GFP_NOWAIT requests
+hit both paths today, so these are existing problems worthy of their own
+stable backports; but Salvatore's patch would widen them significantly.
+
+Patch 2 reproduction: a GFP_NOWAIT burst under memory pressure can drain
+regular free memory to zero while the highatomic reserve sits idle.
+Measured on a 32G box with an anonymous working set, swap, and a full 290M
+reserve, three synthetic bursts drove the 28G Normal zone's regular free
+memory to 28M, 0.8M and 0.6M against a 60M min watermark.  Swapout failed
+its swap table allocation inside reclaim, reclaim scanned 13M pages to
+free 200k, and page faults stalled for tens to hundreds of milliseconds.
+With the fix the burst stops at the min watermark and nothing else
+happens.  This was found in review and reproduced synthetically; it has
+not been observed in production.
+
+GFP_ATOMIC order-0 requests have a milder version of the same problem:
+They are entitled to the reserve but are served regular memory first, so
+the fix there has to change the watermark check and the freelist order
+together.  Salvatore's change doesn't interact with this, though; fixing
+that is left for a separate patch.
+
+This patch (of 2):
+
+281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access
+highatomic reserves") accidentally gave all non-blocking allocation
+requests access to highatomic reserves, which includes GFP_NOWAIT and
+other sites clearing __GFP_DIRECT_RECLAIM.
+
+While this improved atomic request success rate, it's unintentionally
+broad and can actually worsen highatomic requests by squandering the
+reserves on requests that don't need it.
+
+There are concurrent efforts to clear __GFP_DIRECT_RECLAIM altogether
+for costly order __GFP_NORETRY requests, which would then also fall
+into this exemption and deplete reserves even faster.
+
+What GFP_ATOMIC has over the others is __GFP_HIGH, which
+alloc_flags_slowpath() translates to ALLOC_MIN_RESERVE.
+
+Narrow the exemption to contexts that have both ALLOC_NON_BLOCK |
+ALLOC_MIN_RESERVE.
+
+Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it [0]
+Link: https://lore.kernel.org/linux-mm/arFBWvzXPYrKuIYi@cmpxchg.org/ [1]
+Link: https://lore.kernel.org/linux-mm/20261001082152.2879289-1-dipiets@amazon.it/ [2]
+Link: https://lore.kernel.org/20261028171719.2043421-1-hannes@cmpxchg.org
+Link: https://lore.kernel.org/20261028171719.2043421-2-hannes@cmpxchg.org
+Fixes: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260904115629.3993331-1-dipiets@amazon.it
+Acked-by: Balbir Singh <balbirs@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Salvatore Dipietro <dipiets@amazon.it>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <dgc@kernel.org>
+Cc: Matt Fleming <matt@readmodwrite.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: placed ALLOC_MASK_ATOMIC in the existing internal header because the dedicated allocator header is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht15.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ mm/internal.h   | 3 +++
+ mm/page_alloc.c | 4 +++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/sht15.c b/drivers/hwmon/sht15.c
-index 48bcd362c4808..8af2336052b0e 100644
---- a/drivers/hwmon/sht15.c
-+++ b/drivers/hwmon/sht15.c
-@@ -31,6 +31,7 @@
- #include <linux/bitrev.h>
- #include <linux/gpio/consumer.h>
- #include <linux/of.h>
-+#include <linux/workqueue.h>
+diff --git a/mm/internal.h b/mm/internal.h
+index e0adafc45c8c3..e36c46e865956 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -1315,6 +1315,9 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
+ /* Flags that allow allocations below the min watermark. */
+ #define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
  
- /* Commands */
- #define SHT15_MEASURE_TEMP		0x03
-@@ -976,25 +977,22 @@ static int sht15_probe(struct platform_device *pdev)
- 		goto err_release_reg;
- 	}
- 
--	ret = devm_request_irq(&pdev->dev, gpiod_to_irq(data->data),
--			       sht15_interrupt_fired,
--			       IRQF_TRIGGER_FALLING,
--			       "sht15 data",
--			       data);
-+	ret = request_irq(gpiod_to_irq(data->data), sht15_interrupt_fired,
-+			  IRQF_TRIGGER_FALLING, "sht15 data", data);
- 	if (ret)
- 		goto err_release_reg;
- 	disable_irq_nosync(gpiod_to_irq(data->data));
- 	ret = sht15_connection_reset(data);
- 	if (ret)
--		goto err_release_reg;
-+		goto err_free_irq;
- 	ret = sht15_soft_reset(data);
- 	if (ret)
--		goto err_release_reg;
-+		goto err_free_irq;
- 
- 	ret = sysfs_create_group(&pdev->dev.kobj, &sht15_attr_group);
- 	if (ret) {
- 		dev_err(&pdev->dev, "sysfs create failed\n");
--		goto err_release_reg;
-+		goto err_free_irq;
- 	}
- 
- 	data->hwmon_dev = hwmon_device_register(data->dev);
-@@ -1007,9 +1005,13 @@ static int sht15_probe(struct platform_device *pdev)
- 
- err_release_sysfs_group:
- 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
-+err_free_irq:
-+	disable_work_sync(&data->read_work);
-+	free_irq(gpiod_to_irq(data->data), data);
- err_release_reg:
- 	if (!IS_ERR(data->reg)) {
- 		regulator_unregister_notifier(data->reg, &data->nb);
-+		cancel_work_sync(&data->update_supply_work);
- 		regulator_disable(data->reg);
- 	}
- 	return ret;
-@@ -1023,12 +1025,16 @@ static void sht15_remove(struct platform_device *pdev)
- 	hwmon_device_unregister(data->hwmon_dev);
- 	sysfs_remove_group(&pdev->dev.kobj, &sht15_attr_group);
- 
-+	disable_work_sync(&data->read_work);
-+	free_irq(gpiod_to_irq(data->data), data);
++/* Flags that mean GFP_ATOMIC */
++#define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
 +
- 	ret = sht15_soft_reset(data);
- 	if (ret)
- 		dev_err(&pdev->dev, "Failed to reset device (%pe)\n", ERR_PTR(ret));
+ enum ttu_flags;
+ struct tlbflush_unmap_batch;
  
- 	if (!IS_ERR(data->reg)) {
- 		regulator_unregister_notifier(data->reg, &data->nb);
-+		cancel_work_sync(&data->update_supply_work);
- 		regulator_disable(data->reg);
- 	}
- }
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 2685e570bf7de..bce50449902cb 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -3241,7 +3241,9 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
+ 			 * reserves as failing now is worse than failing a
+ 			 * high-order atomic allocation in the future.
+ 			 */
+-			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
++			if (!page &&
++			    ((alloc_flags & ALLOC_OOM) ||
++			     (alloc_flags & ALLOC_MASK_ATOMIC) == ALLOC_MASK_ATOMIC))
+ 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
+ 
+ 			if (!page) {
 -- 
 2.53.0
 
