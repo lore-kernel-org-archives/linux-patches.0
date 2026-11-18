@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048149;
-	b=wT/ihB3qTZzG4j/vxFMpnhJrc91KVAAPo62I7msJ403Xai0ssUx7YDSMEbxozwQyCB3P
-	 h/xa36e1CMq76CgmtmkfC9XzqXr9dEWChesktoik3AqwK1DpHnwYnMNs4RYK10JwZLwVA
-	 AMZo4rlnQHZsg5yX45IGBRO75irXVi1tg5tVwVnN8pCvMTaJQ4O4WBwhCybDg4puHGGw8
-	 sf5zGxBAYn/OpfTrbDQyyVIZk+y3pSkkgCUjdSAvKVHGHUrYVlfq7zYNC66c20F4+4YRL
-	 4gFo7dPmoo8+F8eHbeweEo1pHkMU6cF0iqu+yW9lxH+/b+DXvSgo8mTNrQrIZD9jgTg==
+	t=1795048151;
+	b=Nhj9E3rR8dM/F0FOEy5SeNbunAAIZ14IZQWi+99wBGgv8fXtyWl/HKz47D/NpI+cjYeh
+	 2klEKYiyr8L01JWJecJkD79NLgjltQgerIOW7wdGneXOeoc02apDNmG1nzV652SLmt02+
+	 GOfkQAXHkhbNlQQ1n7lIRuZcOKGPOa3YYB+NXq03ZMUXMlqBiBRHVEeRUpLqPTDEKckNj
+	 4OhY106pnWXGl1qlei1xFsnJz176eJrGNcpLJYi+96ZUE8NyPCrdYk25aE1lczNJcOarF
+	 1VW7zdiv/m/m9Vi7TvYNe+ztEyF/50MbgXr+iNUFn0ugR+7f0bRa3Y8sa8QewqMXTdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/ut9SAZwLzPARh29lnnqkGCPlwwc7fAYNWL8M7rSYWI=;
-	b=jSKjZyvo/SAYcbbu3FmHcEYFllm57Br+7lEChcy8ZNDrkR80Gtw0u4KZsS0raUJuJTvF
-	 TUrU6MGtpmRRiCyYBGvbOBrJx93gVPs6VA2+6Fppd51aJWw9Nhvj2MXS1AbrzcfEK6Iam
-	 bXukLB4L0wViokueYwVMJnNhcx8kw+Jl9gfku4TLr6p7OseRJ8RcHajU/+XR4pTNYXBtH
-	 xPT3042wUdYWlUTDUjovzZPKiK9cJDfDaW83+4UFlblUCd/A15psuXsOFGr6vTW7fiu+t
-	 5O3vnrUDqqQwbhzNqHeiqAviZKZF6KlQ6stdVFXSxuJGXZaTYyCdczNAPioNYkmrl2w==
+	bh=r4t2VgWNyeiQgpedFFuoEDKXAhDEMFXOo0J0tHYoVA4=;
+	b=H5UoTHSB3yBb6OfxbQbbGRMut0DclUYRPQSWqFgwKF2fhd06fMRUQZT3aX0z3ISq9q1l
+	 iH90szWrjw/Eu7ViVD5GNxbInZ77btaL9pui7IIBPeiybRjlIuB8bWw8RGhmYjCF/CzWP
+	 44ZoFj4XmLG4ZqgrFeBa2u1fqc8x6uJjU5mD4YXiLR3FA3cBq+BL87UKioOrl857UrzL7
+	 YPD1XoDJ/FVnZEOHyMiDSMNZ0YNFol66YD5nKuFOPxF7ivwF5S126ZqCDoioRuQfGeJ/k
+	 V8cif9n2Q8XTWyvq2y/B5SiE9CHFISVF0fIMDR2845r5YdjK5ep+wzrQPg+cRbj7B+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wi8d2Xvk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXKgyRp2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CE2606A325;
-	Thu, 19 Nov 2026 00:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B53606A332;
+	Thu, 19 Nov 2026 00:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wi8d2Xvk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B911F000CA;
-	Thu, 19 Nov 2026 00:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SXKgyRp2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8EE1F000C7;
+	Thu, 19 Nov 2026 00:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048149;
-	bh=/ut9SAZwLzPARh29lnnqkGCPlwwc7fAYNWL8M7rSYWI=;
+	s=korg; t=1795048151;
+	bh=r4t2VgWNyeiQgpedFFuoEDKXAhDEMFXOo0J0tHYoVA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wi8d2Xvk/uMc6Z/XmxVJ8+KRc9e0MChknK9lDD+Y0qpS2tGVDy1kF6xaDNdvXfPWs
-	 q9EtN1+dXn8G+QoG09EO3kPpmrWjkeeut9Om1hFFNIyOmHoHAa+q3RNGL79KHvf5sd
-	 FlIs4AxHFO/YYVoK7iae5lBmSSjaZwiWJK0iH48I=
+	b=SXKgyRp2a/Jhz4K9UH/wVLa9qabz6xwzx1PM7IQPSosAT3LTs29MwpaiDsbi2gNzo
+	 bgCRcdAo4Nqd7cIRN0vLFrs1A7/DTdYqNsP+C6gQAjdHADxqiKjboDGD6odajSghWr
+	 p+cQ1B6CmlYta7pRYR5sfu9YS4azGvRkfI4TmuE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1891/2857] regulator: ab8500: Propagate mode enable read errors
-Date: Wed, 18 Nov 2026 15:48:45 +0100
-Message-ID: <20261118150309.323819520@linuxfoundation.org>
+Subject: [PATCH 6.1 1892/2857] sit: fix UAF in ipip6_tunnel_del_prl()
+Date: Wed, 18 Nov 2026 15:48:46 +0100
+Message-ID: <20261118150309.357527532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,63 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 71ac8878573058e2b85210760ccaeaac90796c35 ]
+[ Upstream commit 5145bb6a2c2683d541828f86d5321e0565f2e30c ]
 
-For regulators whose enable and mode share a state field, set_mode()
-first reads that field so changing the requested mode does not enable a
-disabled rail. A register read error is currently treated as true and
-the driver proceeds to write the new mode, potentially enabling a rail
-whose state is unknown.
+When flushing all potential router list (PRL) entries,
+ipip6_tunnel_del_prl() called call_rcu(&x->rcu_head, prl_list_destroy_rcu)
+before clearing t->prl.
 
-Return the read error without changing the register or cached mode.
+A concurrent reader in isatap_chksrc() could enter an RCU read-side
+critical section after call_rcu() but before t->prl is set to NULL,
+allowing prl_list_destroy_rcu() to free nodes while the reader traverses
+them.
 
-References: AB8500 User Manual, UM0836 Rev 3, p. 227;
-AB8505 User Manual, DM00046744 Rev 3, p. 237
+Clear t->prl using RCU_INIT_POINTER() before invoking call_rcu().
+Also use rcu_assign_pointer() when unlinking individual entries.
 
-Fixes: 438e695b87e0 ("regulator: ab8500: Get rid of is_enabled from struct ab8500_regulator_info")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-6-fe88b01829bf@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ef9a9d1183b3 ("ipv6 sit: RCU conversion phase I")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260907075846.2913645-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/ipv6/sit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index c00bd8bf1e058..3a7576e3f0706 100644
---- a/drivers/regulator/ab8500.c
-+++ b/drivers/regulator/ab8500.c
-@@ -433,7 +433,7 @@ static unsigned int ab8500_regulator_get_optimum_mode(
- static int ab8500_regulator_set_mode(struct regulator_dev *rdev,
- 				     unsigned int mode)
- {
--	int ret = 0;
-+	int enabled, ret = 0;
- 	u8 bank, reg, mask, val;
- 	bool lp_mode_req = false;
- 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
-@@ -490,7 +490,17 @@ static int ab8500_regulator_set_mode(struct regulator_dev *rdev,
- 		goto out_unlock;
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index bc1f0d3de34e1..2c0d62ec8ec4f 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -432,7 +432,7 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 		     (x = rtnl_dereference(*p)) != NULL;
+ 		     p = &x->next) {
+ 			if (x->addr == a->addr) {
+-				*p = x->next;
++				rcu_assign_pointer(*p, rtnl_dereference(x->next));
+ 				kfree_rcu(x, rcu_head);
+ 				t->prl_count--;
+ 				goto out;
+@@ -443,8 +443,8 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 		x = rtnl_dereference(t->prl);
+ 		if (x) {
+ 			t->prl_count = 0;
++			RCU_INIT_POINTER(t->prl, NULL);
+ 			call_rcu(&x->rcu_head, prl_list_destroy_rcu);
+-			t->prl = NULL;
+ 		}
  	}
- 
--	if (info->mode_mask || ab8500_regulator_is_enabled(rdev)) {
-+	if (info->mode_mask) {
-+		enabled = 1;
-+	} else {
-+		enabled = ab8500_regulator_is_enabled(rdev);
-+		if (enabled < 0) {
-+			ret = enabled;
-+			goto out_unlock;
-+		}
-+	}
-+
-+	if (enabled) {
- 		ret = abx500_mask_and_set_register_interruptible(info->dev,
- 			bank, reg, mask, val);
- 		if (ret < 0) {
+ out:
 -- 
 2.53.0
 
