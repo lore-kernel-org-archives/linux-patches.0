@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030479;
-	b=EbN3woNXHzkaz5cdtOi1u0dNSYwC/C87f4/+42Gw/Iuh4JhVQVmzVD3ANWw/mU1Pd+sc
-	 o82/AZwsLjSDRP6FjNtOGZ9ycl8aRFQrHrifSnNy+qavLG1++xkqAm5DYx0kchPUvXqT5
-	 0y9wvDXMflfuPTwgTD5pB2+aAjc4YlA3T/IXTw/pSKho74RYo1PAdPhxxD81J0cPb5aJx
-	 JaoEBs5qCqtfHgruwMfb+Ik9TN6Kn5uwyJKh+3Gp5jMbfL4neVNndvgYYhQbdMOvegEzM
-	 WUgZZUSVAo0aP1rS423y3eQ3ml1NA3EoCENSbIPuJN15lKS3Lumwk9F03ARDkE015cQ==
+	t=1795030482;
+	b=L7lunuZFQjmtWRxVAmviK86QJt7Jp/1DoLEkVgxgCUoz3ktwOiBDY3ZSeCrByGNKQMdK
+	 QeuUN2CRjMgtyiKuXa6WB2uO4ZKtdcSus64R2EHhYrsZRyQQKvBPp6xVtAzuCLXUTqN/F
+	 Ul7DOhbzdHU9ztAjmlFHcgLXp3vvKwbeNGJbD/UFGFjF7dqcSpF2ic4IbfZYbsTFVFFlc
+	 4ui2ZMZ0E9PigJQfx9/3nQ5rwhs09aDt1Jnc9TOYKrflRDDy/TwrwMw0H/jSgSyVSg27+
+	 iHqPXXjzgrpjG2b0ji2TXroohQFbH+wyWsFrlK5iPNfmqQfARz5Y+zVK4vH5ScI/tBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S4mvK94t7m+UXyFDXnQrOP+xCduGbJv4mcCM72PZOug=;
-	b=Zq9261MkqoDD3dpGFfU77/EBD3xs20e4761IOxhLWcEMAoyzbxWTTZ9n3TnzEZ9leoen
-	 o85fdMjs/9iLRqfTRXSfvpYFQ+DBMUjwIe4WLynCOVOOLlvNG5+OBZu+BYkVx25/UCwXA
-	 b53804T6LvjTahsDq4ULX4P7fPB4SHRMp5LM2eiHRmCsVO1ts33oJhfHgiYSsLR4vFR7H
-	 QHD2IlQGZZqGQJS6sAer/uM10LYPVpGwvab39/W2iiv5bNl8nWfpvPVjJzHMRYgvdtdAg
-	 dfRzLJk5VK86qQm+z3UDTaWRekEWW69DCzR7DwZQx+X2yMY44mmXl0cQGUmTye1JNSg==
+	bh=ik80Rc9VE0vhtsRyt5+BpuN9g7JgyUgsrHHblf9KqcI=;
+	b=5qQvIFdkaZnzFyemYCiqlmPNUd4c8gFUZkp9qz3C9TLZT1BKj2U2muRB9aMABBrE2C/K
+	 CDpGk37FQ2N9b8m5d0AutjKKT0jOl2CGRx5+D2ZCOQJTlNeWWlzjl32WGG9xK6oHeVMeG
+	 Xhp8/Ngo9RFG8zDuC+UMgflx6zf96xHsl/0yb6XQVCDNuk2wjDfQVbCpP8KvKYZC1CmxT
+	 UhRSCQfDR2FqcvpeTpkgQ3w0ofrDPadJBxNBuqyVR5GWM2VEtSyUQfyokfleU8JiZ743m
+	 yeFo7mup3Zwc7Oi8joWl24Jcj4u696z2z8IGuHRPvvd+r+3wfFfyDzGQ6CZW1qqehCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNlFFyYX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jr4FSFcD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20881606BB4A;
-	Wed, 18 Nov 2026 19:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0FA606BB4A;
+	Wed, 18 Nov 2026 19:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mNlFFyYX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8871F000C7;
-	Wed, 18 Nov 2026 19:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jr4FSFcD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B34A1F000C4;
+	Wed, 18 Nov 2026 19:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030478;
-	bh=S4mvK94t7m+UXyFDXnQrOP+xCduGbJv4mcCM72PZOug=;
+	s=korg; t=1795030481;
+	bh=ik80Rc9VE0vhtsRyt5+BpuN9g7JgyUgsrHHblf9KqcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNlFFyYXLfiqVtuhIOp6njKtJ8G2jqGvXagRV7JrGNi3mnEfb5wWOeM55kLMW7668
-	 5qjf8Sz41NnUkgniHhCyUtkmW6R0d1P3EYnvcBsv2ooAvNwvy4htYSR8LMRNYwXFqD
-	 WJTRd3Tc4jo/lWPei4g1igC+XZvK/UQwH6mPBmp0=
+	b=jr4FSFcDBZgKW5ybPUA+sA35z4YCRjgdm3oOE5vBcBehe1g69L5HZmtaH6AdOwy/C
+	 Ubx5yFgjvSHtCuSbXn0u1awz+DObbIei4vdW5j5KwHn0wgS4ngq9QUWOrTb+d0y1Ua
+	 oJD24S5R7xW1oawU243HGvmxwBF1v/3WnUuYH4EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Pengpeng Hou <hppiscas@163.com>,
+	Roberto Ricci <io@r-ricci.it>,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0692/1756] clk: si5351: fail prepare when PLL reset times out
-Date: Wed, 18 Nov 2026 15:46:59 +0100
-Message-ID: <20261118150036.758424316@linuxfoundation.org>
+Subject: [PATCH 6.12 0719/1756] x86/hibernate: Ignore page-zero RAM in E820 checksum
+Date: Wed, 18 Nov 2026 15:47:26 +0100
+Message-ID: <20261118150038.285825729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,83 +69,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit b6685c30d15cd7f28c40b2daaeacc00f21b2f12a ]
+[ Upstream commit 29671cabfc09afb1ee2426b21173cdde276a95ac ]
 
-The clock prepare path requests a PLL reset when the platform data
-requires a deterministic output phase. The reset helper logs polling
-errors but returns no status, so prepare still enables the output and
-reports success when the reset did not complete.
+The legacy kexec_load path reconstructs the E820 map exported through
+sysfs.  kexec-tools leaves the first 1 KiB unavailable for the real-mode
+transition, so a kernel entered through kexec_load can see conventional
+RAM starting at 0x400.  A subsequent firmware boot reports the same RAM
+range starting at zero.
 
-Return the poll result to prepare, restore the output power-down bit on
-failure, and leave the output disabled. XTAL and CLKIN inputs continue
-to bypass PLL reset successfully.
+The hibernation E820 checksum compares those byte representations and
+rejects the image, even though the maps agree from page one onwards.
+A QEMU guest showed this transition:
 
-The issue was found by our static-analysis tool.
+  firmware:     RAM [0-0x9fbff]
+  kexec_load:   gap [0-0x3ff], RAM [0x400-0x9fbff]
+  firmware:     RAM [0-0x9fbff]
 
-Fixes: 5142cbcea324 ("clk: si5351: Wait for bit clear after PLL reset")
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+The checksum covers e820_table_firmware, which trim_bios_range() leaves
+alone.  The nosave regions come from e820_table instead, where
+trim_bios_range() has already turned conventional RAM in page zero into
+reserved memory, so page zero never occurs in the image, whatever the
+firmware map says about it.
+
+Canonicalise only the conventional-RAM portion below PAGE_SIZE before
+calculating the checksum.  Preserve RESERVED, ACPI, NVS, UNUSABLE, PMEM
+and all other E820 types so that changes to exceptional mappings remain
+detectable.
+
+This is deliberately narrower than Marco Scardovi's June proposal to
+checksum only RAM and its opt-in relaxed_memmap successor.  Rafael
+noted that ignoring non-RAM changes could hide moved ACPI or UEFI
+regions still used by the resumed kernel.  This patch preserves every
+non-RAM entry and ignores only RAM within page zero, which common setup
+already reserves and excludes from the image.
+
+Bump RESTORE_MAGIC, since the checksum semantics change, so that an
+image written by a kernel without this change is refused by the magic
+check instead of being compared under different rules.
+
+In the same guest, with the page-zero difference kept, hibernation and
+resume now work after both a direct boot and a kexec_load boot.  An
+image written by an unpatched kernel is refused at resume with
+"Unrecognized hibernate image header format!", and the firmware-booted
+kernel carries on.
+
+Fixes: 62a03defeabd ("PM / hibernate: Verify the consistent of e820 memory map by md5 digest")
+Reported-by: Roberto Ricci <io@r-ricci.it>
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://lore.kernel.org/all/Z-hYWc9LtBU1Yhtg@desktop0a/
+Link: https://lists.openwall.net/linux-kernel/2025/04/04/1372
+Link: https://lore.kernel.org/all/CAJZ5v0jmOj0WBtMTvbnaD+2b0bTFowA=JWrqRzaaCYpHpai1Nw@mail.gmail.com/
+Link: https://lore.kernel.org/all/20260623165724.10753-1-scardracs@disroot.org/
+Link: https://patch.msgid.link/20260926052117.3613637-1-matthias.goergens@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-si5351.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ arch/x86/power/hibernate.c | 51 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 45 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/clk-si5351.c b/drivers/clk/clk-si5351.c
-index a4c92c5ef3ff7..e4d165e2b5c2f 100644
---- a/drivers/clk/clk-si5351.c
-+++ b/drivers/clk/clk-si5351.c
-@@ -907,7 +907,7 @@ static int _si5351_clkout_set_disable_state(
- 	return 0;
- }
+diff --git a/arch/x86/power/hibernate.c b/arch/x86/power/hibernate.c
+index 5b81d19cd114c..4430f158c7476 100644
+--- a/arch/x86/power/hibernate.c
++++ b/arch/x86/power/hibernate.c
+@@ -62,6 +62,25 @@ struct restore_data_record {
+ 	unsigned long e820_checksum;
+ };
  
--static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num)
-+static int _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num)
++static bool trim_e820_page_zero_ram(struct e820_entry *entry)
++{
++	u64 lowmem_size;
++
++	/*
++	 * Page zero is BIOS-owned and registered as nosave.  Boot loaders may
++	 * therefore omit part of its conventional RAM entry without changing
++	 * any memory available to the image.  Preserve all other E820 types.
++	 */
++	if (entry->type != E820_TYPE_RAM || entry->addr >= PAGE_SIZE)
++		return true;
++
++	lowmem_size = min_t(u64, entry->size, PAGE_SIZE - entry->addr);
++	entry->addr += lowmem_size;
++	entry->size -= lowmem_size;
++
++	return entry->size;
++}
++
+ /**
+  * compute_e820_crc32 - calculate crc32 of a given e820 table
+  *
+@@ -69,18 +88,38 @@ struct restore_data_record {
+  *
+  * Return: the resulting checksum
+  */
+-static inline u32 compute_e820_crc32(struct e820_table *table)
++static u32 compute_e820_crc32(struct e820_table *table)
  {
- 	u8 val = si5351_reg_read(drvdata, SI5351_CLK0_CTRL + num);
- 	u8 mask = val & SI5351_CLK_PLL_SELECT ? SI5351_PLL_RESET_B :
-@@ -918,7 +918,7 @@ static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num
- 	switch (val & SI5351_CLK_INPUT_MASK) {
- 	case SI5351_CLK_INPUT_XTAL:
- 	case SI5351_CLK_INPUT_CLKIN:
--		return;  /* pll not used, no need to reset */
-+		return 0;  /* pll not used, no need to reset */
- 	}
- 
- 	si5351_reg_write(drvdata, SI5351_PLL_RESET, mask);
-@@ -931,6 +931,8 @@ static void _si5351_clkout_reset_pll(struct si5351_driver_data *drvdata, int num
- 	dev_dbg(&drvdata->client->dev, "%s - %s: pll = %d\n",
- 		__func__, clk_hw_get_name(&drvdata->clkout[num].hw),
- 		(val & SI5351_CLK_PLL_SELECT) ? 1 : 0);
+-	int size = offsetof(struct e820_table, entries) +
+-		sizeof(struct e820_entry) * table->nr_entries;
++	struct e820_entry entry;
++	u32 crc = ~0;
++	u32 nr_entries = 0;
++	u32 i;
 +
-+	return err;
- }
- 
- static int si5351_clkout_prepare(struct clk_hw *hw)
-@@ -947,8 +949,18 @@ static int si5351_clkout_prepare(struct clk_hw *hw)
- 	 * Do a pll soft reset on the parent pll -- needed to get a
- 	 * deterministic phase relationship between the output clocks.
- 	 */
--	if (pdata->clkout[hwdata->num].pll_reset)
--		_si5351_clkout_reset_pll(hwdata->drvdata, hwdata->num);
-+	if (pdata->clkout[hwdata->num].pll_reset) {
-+		int ret;
++	for (i = 0; i < table->nr_entries; i++) {
++		entry = table->entries[i];
++		if (trim_e820_page_zero_ram(&entry))
++			nr_entries++;
++	}
 +
-+		ret = _si5351_clkout_reset_pll(hwdata->drvdata, hwdata->num);
-+		if (ret) {
-+			si5351_set_bits(hwdata->drvdata,
-+					SI5351_CLK0_CTRL + hwdata->num,
-+					SI5351_CLK_POWERDOWN,
-+					SI5351_CLK_POWERDOWN);
-+			return ret;
-+		}
++	crc = crc32_le(crc, (unsigned char const *)&nr_entries,
++		       sizeof(nr_entries));
++
++	for (i = 0; i < table->nr_entries; i++) {
++		entry = table->entries[i];
++		if (!trim_e820_page_zero_ram(&entry))
++			continue;
++
++		crc = crc32_le(crc, (unsigned char const *)&entry,
++			       sizeof(entry));
 +	}
  
- 	si5351_set_bits(hwdata->drvdata, SI5351_OUTPUT_ENABLE_CTRL,
- 			(1 << hwdata->num), 0);
+-	return ~crc32_le(~0, (unsigned char const *)table, size);
++	return ~crc;
+ }
+ 
+ #ifdef CONFIG_X86_64
+-#define RESTORE_MAGIC	0x23456789ABCDEF02UL
++#define RESTORE_MAGIC	0x23456789ABCDEF03UL
+ #else
+-#define RESTORE_MAGIC	0x12345679UL
++#define RESTORE_MAGIC	0x1234567AUL
+ #endif
+ 
+ /**
 -- 
 2.53.0
 
