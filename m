@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020845;
-	b=J47qWSxgouV+rQsZ0XTmoaXNVMq0TZxaWJ9uWsek+FGUvgYgNkGRWtP89dnAKZWCskIN
-	 e0PYOvlN8hQFcJ4w29qAHx2MN4Pbytyvx/UMnjB9/FLG4FG1kguY/AAv3LhKG5eL6jQmU
-	 /Dbvash0hHVpsF36Pvx3Th+3wG5kQZF2D3oWr24sRezcxaJYvevTgPoKnjEqNPsJQwTgP
-	 CQeTsa+BNnVdliSPt1MrmHzYe0wV0HTwUuNg0tzNHOE037mngevKCTkojIP2VX6gNG6zQ
-	 jQgPMo0a11kXn7iQs7hksW7S0J0E3NtDYAqKW8IKRN4GXiw0mpDQEMsQ0m7Z0R8zLvw==
+	t=1795020848;
+	b=yY0UcQtJ61Jgl/y42o+E39ZGc5IUOWsZG1ECVv22wJUaYRsfBW2biT2m7dFBfSV8oTCg
+	 3RcxyvHNQPlLsMjIOoPt1fw2r1v+U1Zh3bI5T9KSmiMoy49OhOLwc63LOvwnsM3YUrX2Q
+	 JRC88FXypK+XUqtRoddsoxYd0mf/slN9D8FieJYfX0S83bifLTMuZKZMEo9TCJVBnLZwb
+	 0NYKJSrM1MmtQkWswIjCdFYMvU6IbtsWqCYlaLv9+62ODI782JMThK5q7YN0zOVlG35wl
+	 LbsACAD4uiM9pgnjeNLQ1E/Yp/UEavisyH2hS51KX+IiwcHNpiGvbG+flTogeUsiSmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020845;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JavGiplzlYbuyqYVJAVgbJlwQmrSBqpDhO8R2Wj3xTE=;
-	b=WnxjDg+uf/qLzygF33EIsjMVYTwxBS5mKGN2WtJD9Re1zk+rbW57zHxsTG3FrxnV2+hR
-	 2HiUNp44htyvFP4dnJ8+g/5laLGa4bhFJbg16TXISRDHa2HLNsoJeHvmVv/CiFKxH2TAq
-	 X0vNOTxl+9wqHe73sV8UcBS5I9qphS1okMTvBT6/WA2/+5uHpOctHEeYtkDYH023TKDnN
-	 C19PejvO6hLgwfUxibyc01OIGKObxLSe6C1IwK+RFPCGptFNepWBRbYerPcu24ytIkcsa
-	 O1QWR8zEYc9ShuzAoQph5DDVSjksU2J3sBTJD4vGPUrgTACZipLBle3DQfSdoElQzvQ==
+	bh=xS7NPjtRPV6sT3PU5PJCQHuirJCEXF3RN8SYNNaCYE4=;
+	b=dFF26p9CsZaQtrWGL0FXU/0+z4LY7+k76aB5yeNgA+9v6e0Ar9ew6EJMzA+REtO1Soxv
+	 uWrgSydKW3ajL31O6ECZEOuaZRMoN0YmNp69QWuTWc5wnZgz8rKD7vyotcdYSGbfO44rC
+	 w6rqBMB9MktYtR+AIMB7dLCRnrcJ+/DODqfvtd4HgFIfp9O3UBEe+C1Ufx9DAfsNPgsZc
+	 kJ7l4L93ejAvl3m26L5HOaUAYhigSxI8hMqwSt6WpILOEuBJiVahLyndg4oms2cW1VbWm
+	 e+DXlz7snO1s+xtqUQsbjrMLnfCS8+OH1JMnXd2z8jwnGybm5JWXjaBeh6IH0IqZ2yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G0VHyCkp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vE8oFOxA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5416A606A335;
-	Wed, 18 Nov 2026 16:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3E260A2630;
+	Wed, 18 Nov 2026 16:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G0VHyCkp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADA91F000C4;
-	Wed, 18 Nov 2026 16:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vE8oFOxA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEA31F000C4;
+	Wed, 18 Nov 2026 16:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020844;
-	bh=JavGiplzlYbuyqYVJAVgbJlwQmrSBqpDhO8R2Wj3xTE=;
+	s=korg; t=1795020847;
+	bh=xS7NPjtRPV6sT3PU5PJCQHuirJCEXF3RN8SYNNaCYE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G0VHyCkpYZfGROrP2JVQFW8i6gfpP7TgEo/HJvbae9a8umpjLph8uAJ4Z3QbQUMIj
-	 rzylhjSg/a16PnRh1uFAOMP2FBBIPsOxnyVF+3Y2ewpJUyuyKJpwsAOaQayNffrroa
-	 WRm4R0m2qQRMkRmM+7GTRCa8LEchz7XSHeSDStwQ=
+	b=vE8oFOxAPpU1lUcWL9cunMhEydGa0c3H1DAR+4v3QE3rgJsycJYlePINKFOvRhOy2
+	 O9VnVHDRPb63s4YbSEHn1DKsEo96p4QnC9hxti7xIiqJbq/b2IQfinc7E7vAxWu8Md
+	 aVd45sT2FqFJjCHFWYSCyzxNcU6dxi1WnUlCrpx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2094/2651] bpf: Forbid sleeping in bpf_find_vma() callbacks
-Date: Wed, 18 Nov 2026 15:55:34 +0100
-Message-ID: <20261118150401.398028339@linuxfoundation.org>
+Subject: [PATCH 7.3 2095/2651] bpf: Look at all 64 bits of a BPF_JSET mask on 32-bit
+Date: Wed, 18 Nov 2026 15:55:35 +0100
+Message-ID: <20261118150401.429121092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,83 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit c6dc0a288d4e787c578d7ab0464b9c943ad88ecc ]
+[ Upstream commit ee4f44e0e3c8125eebe9ac967b6984bc9253d489 ]
 
-A sleepable program can call bpf_find_vma() and use a sleepable helper
-such as bpf_copy_from_user() or bpf_copy_from_user_task() in the
-callback. The verifier accepts this, but bpf_find_vma() runs the callback
-with the mmap_lock of the mm held for read. If the user copy faults on
-that mm, the fault handler has to take mmap_lock again. Lockdep reports
-recursive locking, and if a writer queued up in between, the fault blocks
-behind the writer, which waits for the read lock the helper already
-holds:
+In the branch of a BPF_JSET which is taken, the verifier can learn
+something about the register only if the mask has a single bit: then this
+bit is set. regs_refine_cond_op() tests this with is_power_of_2(val) and
+then ORs val into var_off.
 
-    sleepable prog                  other thread of the same mm
-    bpf_find_vma(current, ...)
-      mmap_read_trylock(mm)
-                                    mmap_write_lock(mm)  <- waits
-      callback: copy_from_user()
-        page fault
-          mmap_read_lock(mm)        <- queued behind the writer
+val is a u64, but is_power_of_2() takes an unsigned long. On a 32-bit
+kernel it only sees the lower half of the mask. For
 
-This is the same problem as with sleepable task_vma iterator programs.
-The verifier checks synchronous callbacks in the caller's context, so
-in_sleepable_context() is true in the callback of a sleepable program.
+	if r1 & 0xffffffff80000000 goto l
 
-Verify the callback like a hash map for_each callback, as running in an
-RCU read-side critical section where sleeping is not allowed, and actually
-hold rcu_read_lock() around it, so that global functions the callback
-calls, which are then verified for a non-sleepable context, see the RCU
-protection they are verified with.
+which is a BPF_JSET | BPF_K with an immediate of 0x80000000, the lower
+half is a power of two. So the verifier takes all 33 bits for set at l,
+while the branch is taken if any of them is. A mask of 0x100000001 from a
+register does the same for bit 0.
 
-Non-sleepable programs already run the callback under RCU, nothing changes
-for them. A sleepable program whose bpf_find_vma() callback calls any
-helper, kfunc or global function that may sleep is now rejected by the
-verifier, including ones that would be harmless under mmap_lock as they
-don't touch user memory.
+The log of an i386 kernel, for r6 = bpf_get_prandom_u32() << 31:
 
-Fixes: 7c7e3d31e785 ("bpf: Introduce helper bpf_find_vma")
+	3: (45) if r6 & 0x80000000 goto pc+2
+	from 3 to 6: R6=0xffffffff80000000 R10=fp0
+	6: (77) r6 >>= 63                     ; R6=1
+
+When the program runs, r6 >> 63 is 0.
+
+>From then on the verifier works with known bits which the register does
+not have at run time. It accepts, for example, an offset into a map value
+which it derives from these bits and believes to be constant, and the
+program can access memory outside of the map value.
+
+Count the bits of the whole value.
+
+Only 32-bit kernels are affected. On a 64-bit kernel unsigned long holds
+the whole mask, and this patch changes nothing.
+
+Fixes: 960ea056561a ("bpf: verifier: teach the verifier to reason about the BPF_JSET instruction")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-7-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-8-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/task_iter.c | 6 ++++++
- kernel/bpf/verifier.c  | 2 ++
- 2 files changed, 8 insertions(+)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
-index cf2bf388e1817..2fa6b8dae8c4f 100644
---- a/kernel/bpf/task_iter.c
-+++ b/kernel/bpf/task_iter.c
-@@ -810,8 +810,14 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
- 	vma = find_vma(mm, start);
- 
- 	if (vma && vma->vm_start <= start && vma->vm_end > start) {
-+		/*
-+		 * The callback must not sleep while mmap_lock is held, and the
-+		 * verifier checks it as an RCU read-side critical section.
-+		 */
-+		rcu_read_lock();
- 		callback_fn((u64)(long)task, (u64)(long)vma,
- 			    (u64)(long)callback_ctx, 0, 0);
-+		rcu_read_unlock();
- 		ret = 0;
- 	}
- 	bpf_mmap_unlock_mm(work, mm);
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2cb34276313cf..1dea0faaffcc3 100644
+index 1dea0faaffcc3..9b2f20392d075 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -10271,6 +10271,8 @@ static int set_find_vma_callback_state(struct bpf_verifier_env *env,
- 	bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_4]);
- 	bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_5]);
- 	callee->in_callback_fn = true;
-+	/* bpf_find_vma() runs the callback under mmap_lock and RCU. */
-+	callee->in_rcu_callback_fn = true;
- 	callee->callback_ret_range = retval_range(0, 1);
- 	return 0;
- }
+@@ -16716,7 +16716,7 @@ static void regs_refine_cond_op(struct bpf_reg_state *reg1, struct bpf_reg_state
+ 		 * this restriction. I.e., !(r1 & 0x3) means neither bit 0 nor
+ 		 * bit 1 is set, which we can readily use in adjustments.
+ 		 */
+-		if (!is_power_of_2(val))
++		if (hweight64(val) != 1)
+ 			break;
+ 		if (is_jmp32) {
+ 			t = tnum_or(tnum_subreg(reg1->var_off), tnum_const(val));
 -- 
 2.53.0
 
