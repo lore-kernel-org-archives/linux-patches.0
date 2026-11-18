@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016842;
-	b=aNsTF/37HI1uuoadBrPLfibZybDdCutgi690objgFvxGZ3xPteYB2xzwJPfHjTo6etSL
-	 cmJMVU2dLez74Ei4FxjqVtOmDzc/zeHjzrlFOHkP7/3znJZSPwT2pN0X/yFBO+DFmuZEs
-	 j9dbk/+vVcd75A6AsX7Mt1giCdAMN24sOsyjQ7HLYysw2mP/57YAq8ebrEmKKJbBPrPnh
-	 W4bAnA1U/DIab6qBPjdYH6sUk5SNvG2uT5Yr1cGJP0gwA8eEkgUGej4pSE2f0tIMJX93d
-	 FTVzLyUMag1U7Zs7WI9xKa45tV+AegVAkjgNZu3IEOBBX77cVARb6P1MGu9oQKBF1qA==
+	t=1795016845;
+	b=lLfQMseGRYm6ogMLyyQUhRyNGTGVfRjeFuJxVdXJvy5h4XrrbjwkoIX5qVSjOA5tgzpG
+	 cnFv8R0PXQpQyAv4ZGmOwSjFiCc+mEabeWEp5RjQaHnAAdimzVPQo52+y+rHyeYARHJ+B
+	 QV7I04ipwEps6jY8yWgIMe6XoSNTf4bdmZL2EAx86buC5CPMao1xUl90z9NnG0j1xQB1s
+	 wN/qUS7tpN9dpO2F8ePL0gaE5sYftoO7TORCM/EAt2FF6Ksd/QhMvrRFSbmvDeJ9+MXNO
+	 C0RjSGRaRZmj8HLMTWPVrkNU7wS9ja0Eb5b8GZ7CrCHWY8H76rLvBS45KgPP47jmi7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016842;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G+OHcL5mnRTiUySkpI3IBA48oq1pfGegOcZg2EX6J/Q=;
-	b=A8PqE2KYZGgkiub433QZ+IhlGZrzes7iFB5FLDs5xDmZQwoSgAW80Wg2MxA1+lRkj8FH
-	 NHlGOtxWQ62QxfPa//Wb0pVq2gdlbyz7nYoMmWOkOkmvEoE4mifsOCgVGpmjA19alc9Xg
-	 zTpcXvavqxaymMxfLQPVUHdknfzZQ66XZ7eaIF7pH6bI5b/lFcKNnMXoqkO00NvuujUUb
-	 jtCvAdL/gXMCxt3evaWXJ5ByG0oYOssmxoYLbqJHUTj+sunxa0RuncBd7rjSekNJvugvX
-	 4v4F9MQC76W2i/1DBiAb8DF88uMnMkW33tqoGuRFm9cw+sNkgpMewPW5Gy2nLKPd8lw==
+	bh=slpCf1bRFNEfVot06mr629M1D6+OPyLufVEbZDcAM5U=;
+	b=iv/56LEyG/N7Js6buViIfRwR3nuyA/4erZtoPkthp4KU0+VZF85tdfjMJ1bVnyzTrUx8
+	 JQKE2YcGuxLREpxClqVFzvc7B0V3Qne0szLxDG4g6+rgaL3SPGQmCwmOw5X86Izod4LrT
+	 u+EWJPuD+PzLBq3/YT405ZBJ6MEx/mSbMftw9+G326J87JExPDWElfrKgGbfPlkhxJmuK
+	 NlwiDfP9i2feWnXgDb27kj9/iWCa+OdU6oj5jZ7FA5H7/SrbB1FBkOISDfHeJx46g2+MN
+	 zJrS1673NgICjDSTRXCWBX/wwgeicRgEGNpUfOj8dVXcaeSUa1FQIEREqff49ipzdjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMjgnLSd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIstU3lE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01AB606A31C;
-	Wed, 18 Nov 2026 15:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D7F606A31C;
+	Wed, 18 Nov 2026 15:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMjgnLSd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4601F000C4;
-	Wed, 18 Nov 2026 15:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nIstU3lE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDDC1F000C4;
+	Wed, 18 Nov 2026 15:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016842;
-	bh=G+OHcL5mnRTiUySkpI3IBA48oq1pfGegOcZg2EX6J/Q=;
+	s=korg; t=1795016845;
+	bh=slpCf1bRFNEfVot06mr629M1D6+OPyLufVEbZDcAM5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMjgnLSd8Aq6EmjaBR286aAfUlMujQXvmzrD4yyNRCG+CG1Kxizbpil4nffpxspyR
-	 /Hc3mx8uRrujU7Fu0JZnJ9MK6apq2jg+BnJMZootK2mVOMCtVffPQklOfwgxgGICY9
-	 T/MA90Xl7x31sf65D1tjtKMWrpXgU0spghjfIZmg=
+	b=nIstU3lEOF2H2lYYL3/szWZ4pzlQBk3NNTPx9SImWn/0sXQqrp6Z0kHupoAwvPbjI
+	 73v4G5MQLPgeQbryql9wcWhMVlYwuffZSMVPmoRnFyL79QS/jaUY3eSly+F2dK++I3
+	 mTnt6f/A8GV5DiaMmOap5f20p1L3PXiADc2BLfkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	Mario Limonciello <superm1@kernel.org>,
+	Cheng-Yang Chou <yphbchou0911@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0672/2651] cpufreq/amd-pstate: Restore previous EPP if profile_name allocation fails
-Date: Wed, 18 Nov 2026 15:31:52 +0100
-Message-ID: <20261118150312.065542893@linuxfoundation.org>
+Subject: [PATCH 7.3 0673/2651] selftests/sched_ext: Fix rt_stall runner abort
+Date: Wed, 18 Nov 2026 15:31:53 +0100
+Message-ID: <20261118150312.100757839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,52 +68,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Cheng-Yang Chou <yphbchou0911@gmail.com>
 
-[ Upstream commit 50fb9e04c9b1fe822baccba57801e2bc7795552e ]
+[ Upstream commit 6b8d2bc44fbb6d232382141ae70d4ecc28a9dc36 ]
 
-amd_pstate_set_dynamic_epp() first applies the EPP value derived from
-the current platform profile via amd_pstate_set_epp() and only then
-allocates the profile name and registers the platform profile handler
-and the power supply notifier.  All failures after the EPP has been
-programmed jump to the cleanup label, which restores the previously
-programmed EPP value.
+rt_stall uses ksft_exit_fail() and friends, which call exit(), so a
+single rt_stall failure or a fork() error kills the runner and skips
+the remaining tests.
 
-However, if the kasprintf() of the profile name fails, the function
-returns -ENOMEM directly, bypassing the cleanup label, so the EPP value
-programmed above is never rolled back even though enabling dynamic EPP
-has failed.
+Drop the ksft_* usage, report the handshake failure back from
+wait_ready(), and let run() return SCX_TEST_FAIL so the runner records
+the failure and moves on. Since the test now returns rather than
+exiting, route every path after the forks through one cleanup label, so
+a failure cannot leave the SCHED_FIFO task spinning on CORE_ID for the
+tests that follow.
 
-Make the allocation failure path jump to the cleanup label as well, so
-that the previous EPP value is restored consistently on all error
-paths.
+Also destroy the struct_ops link before checking the exit kind, so the
+link is released when that check fails.
 
-Fixes: b7294b627598 ("cpufreq/amd-pstate: Add dynamic EPP as an "energy_performance_preference" mode")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://lore.kernel.org/r/20260825131400.1509428-1-luoxueqin@kylinos.cn
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Fixes: be621a76341c ("selftests/sched_ext: Add test for sched_ext dl_server")
+Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/selftests/sched_ext/rt_stall.c | 80 ++++++++++----------
+ 1 file changed, 42 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index a6f96d812c5db..dffa75b0e8709 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1281,8 +1281,10 @@ static int amd_pstate_set_dynamic_epp(struct cpufreq_policy *policy)
- 		return ret;
+diff --git a/tools/testing/selftests/sched_ext/rt_stall.c b/tools/testing/selftests/sched_ext/rt_stall.c
+index a5041fc2e44fd..a1552b38a6e8c 100644
+--- a/tools/testing/selftests/sched_ext/rt_stall.c
++++ b/tools/testing/selftests/sched_ext/rt_stall.c
+@@ -17,7 +17,6 @@
+ #include <scx/common.h>
+ #include "rt_stall.bpf.skel.h"
+ #include "scx_test.h"
+-#include "../kselftest.h"
  
- 	cpudata->profile_name = kasprintf(GFP_KERNEL, "amd-pstate-epp-cpu%d", cpudata->cpu);
--	if (!cpudata->profile_name)
--		return -ENOMEM;
-+	if (!cpudata->profile_name) {
-+		ret = -ENOMEM;
-+		goto cleanup;
+ #define CORE_ID		0	/* CPU to pin tasks to */
+ #define RUN_TIME        5	/* How long to run the test in seconds */
+@@ -35,15 +34,17 @@ static void signal_ready(int fd)
+ }
+ 
+ /* Wait for a child to signal readiness via a pipe */
+-static void wait_ready(int fd)
++static bool wait_ready(int fd)
+ {
++	bool ready;
+ 	char c;
+ 
+-	if (read(fd, &c, 1) != 1) {
++	ready = read(fd, &c, 1) == 1;
++	if (!ready)
+ 		perror("read from ready pipe");
+-		exit(EXIT_FAILURE);
+-	}
+ 	close(fd);
++
++	return ready;
+ }
+ 
+ /* Simple busy-wait function for test tasks */
+@@ -151,13 +152,11 @@ static bool sched_stress_test(bool is_ext)
+ 	float ext_runtime, rt_runtime, actual_ratio;
+ 	int ext_pid, rt_pid;
+ 	int ext_ready[2], rt_ready[2];
+-
+-	ksft_print_header();
+-	ksft_set_plan(1);
++	bool ret = false;
+ 
+ 	if (pipe(ext_ready) || pipe(rt_ready)) {
+ 		perror("pipe");
+-		ksft_exit_fail();
++		return false;
+ 	}
+ 
+ 	/* Create and set up a EXT task */
+@@ -172,7 +171,7 @@ static bool sched_stress_test(bool is_ext)
+ 		exit(0);
+ 	} else if (ext_pid < 0) {
+ 		perror("fork task");
+-		ksft_exit_fail();
++		return false;
+ 	}
+ 
+ 	/* Create an RT task */
+@@ -188,7 +187,7 @@ static bool sched_stress_test(bool is_ext)
+ 		exit(0);
+ 	} else if (rt_pid < 0) {
+ 		perror("fork for RT task");
+-		ksft_exit_fail();
++		goto out_kill_ext;
+ 	}
+ 
+ 	/*
+@@ -199,45 +198,47 @@ static bool sched_stress_test(bool is_ext)
+ 	 */
+ 	close(ext_ready[1]);
+ 	close(rt_ready[1]);
+-	wait_ready(ext_ready[0]);
+-	wait_ready(rt_ready[0]);
++	if (!wait_ready(ext_ready[0]) || !wait_ready(rt_ready[0]))
++		goto out_kill;
+ 
+ 	/* Let the processes run for the specified time */
+ 	sleep(RUN_TIME);
+ 
+ 	/* Get runtime for the EXT task */
+ 	ext_runtime = get_process_runtime(ext_pid);
+-	if (ext_runtime == -1)
+-		ksft_exit_fail_msg("Error getting runtime for %s task (PID %d)\n",
+-				   class_str, ext_pid);
+-	ksft_print_msg("Runtime of %s task (PID %d) is %f seconds\n",
+-		       class_str, ext_pid, ext_runtime);
++	if (ext_runtime == -1) {
++		fprintf(stderr, "Failed to read %s task runtime\n", class_str);
++		goto out_kill;
 +	}
  
- 	cpudata->ppdev = platform_profile_register(get_cpu_device(policy->cpu),
- 						   cpudata->profile_name,
+ 	/* Get runtime for the RT task */
+ 	rt_runtime = get_process_runtime(rt_pid);
+-	if (rt_runtime == -1)
+-		ksft_exit_fail_msg("Error getting runtime for RT task (PID %d)\n", rt_pid);
+-	ksft_print_msg("Runtime of RT task (PID %d) is %f seconds\n", rt_pid, rt_runtime);
+-
+-	/* Kill the processes */
+-	kill(ext_pid, SIGKILL);
+-	kill(rt_pid, SIGKILL);
+-	waitpid(ext_pid, NULL, 0);
+-	waitpid(rt_pid, NULL, 0);
++	if (rt_runtime == -1) {
++		fprintf(stderr, "Failed to read RT task runtime\n");
++		goto out_kill;
++	}
+ 
+ 	/* Verify that the scx task got enough runtime */
+ 	actual_ratio = ext_runtime / (ext_runtime + rt_runtime);
+-	ksft_print_msg("%s task got %.2f%% of total runtime\n",
+-		       class_str, actual_ratio * 100);
++	fprintf(stderr, "%s task ran %.3fs, RT task ran %.3fs (%.2f%% of runtime)\n",
++		class_str, ext_runtime, rt_runtime, actual_ratio * 100);
+ 
+-	if (actual_ratio >= expected_min_ratio) {
+-		ksft_test_result_pass("PASS: %s task got more than %.2f%% of runtime\n",
+-				      class_str, expected_min_ratio * 100);
+-		return true;
++	if (actual_ratio < expected_min_ratio) {
++		fprintf(stderr, "%s task got less than %.2f%% of runtime\n",
++			class_str, expected_min_ratio * 100);
++		goto out_kill;
+ 	}
+-	ksft_test_result_fail("FAIL: %s task got less than %.2f%% of runtime\n",
+-			      class_str, expected_min_ratio * 100);
+-	return false;
++
++	ret = true;
++
++out_kill:
++	kill(rt_pid, SIGKILL);
++	waitpid(rt_pid, NULL, 0);
++out_kill_ext:
++	kill(ext_pid, SIGKILL);
++	waitpid(ext_pid, NULL, 0);
++
++	return ret;
+ }
+ 
+ static enum scx_test_status run(void *ctx)
+@@ -263,14 +264,17 @@ static enum scx_test_status run(void *ctx)
+ 			link = bpf_map__attach_struct_ops(skel->maps.rt_stall_ops);
+ 			SCX_FAIL_IF(!link, "Failed to attach scheduler");
+ 		}
++
+ 		res = sched_stress_test(is_ext);
++
+ 		if (is_ext) {
+-			SCX_EQ(skel->data->uei.kind, EXIT_KIND(SCX_EXIT_NONE));
++			int exit_kind = skel->data->uei.kind;
+ 			bpf_link__destroy(link);
++			SCX_EQ(exit_kind, EXIT_KIND(SCX_EXIT_NONE));
+ 		}
+ 
+ 		if (!res)
+-			ksft_exit_fail();
++			return SCX_TEST_FAIL;
+ 	}
+ 
+ 	return SCX_TEST_PASS;
 -- 
 2.53.0
 
