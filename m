@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057785;
-	b=yJP2XlUQJO9F2zTS9gvLuejhwtoklN0VsDqPLiOI89yt8yEADoI5fTDnZpeXIFfTDBEt
-	 OWCjDA86lVosRQ6J+xYX8d6w/8W4/lH7dOdmlCJmKTGK1hvzDxllICeao9AfKs8s2Mh/p
-	 Aw3nqrZIowJuXZ1E8/xbCSMynzUE/r2BRpZn1MRcVREfARw/q1JvJaOCx6TS2OTpsYESs
-	 alDEiN2UVA9tIkhxOoMu9K38nZhR980rPuo677nHdteT8hI1OCp0PrJbRIh+EhYj1Zs7b
-	 e4F4M1PmbLBPMJsHfe6iA112tptuw7oMjL7pswDp6q3h6kPpCcyb85xhFYpqpUqtbZg==
+	t=1795057788;
+	b=DrDffxrYtMYa5vIDY1nbOCOYiDznae4tRwkrQ7HAg/wSrSuVuywgNyr8bFlWuoLEUq4q
+	 lcOnITaxsRcdIPlsUP2Lkulmdbs+dCgi37kf06TRSNfoplV1iZ8hyxBIIRPTSqyx0LHAY
+	 KGFwOB1gXIQzoOqkmbQhj7+XDiRsSA+NzH0sXE5BRoJejs5sgJTNao7ncc4hLpmtC99Hb
+	 CwpZpsPjr0GWeS80GBhorBytYCEpplcj9nMfJCve6s6/dKqlmxL9M+S1rcKBAFxbwzftB
+	 cSWq4+mNKYrscIYj+qXDnRbDg0Je4w3lOcqI0Q1zgJGWWW/MtE3ez/Oy8CPXs8fgUPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057785;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057788;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TAW3wxQa52Gsgz5IhGbhCBo9Gnnf1DQlirPBNb4+Ig4=;
-	b=bMVYGM4Lf6DwhzzmXo+jPZIrPJKpVMsyws6k0NL4lvOdbeVXtCsF3Fdorn07p16vyuPA
-	 0rAVsFkiTPc1BvCCRIT0BKiyf3lD/sixn1HZ6W2AtYCI+P2juY/QLjBl7Aq0eIWXkwXD+
-	 d4pVt4Ot9UhYJkWdVsSmt2AC4+JH+YJE8+LBbOCe8XQNWYYg8rumFofEHrEjzM1Zi6yo4
-	 SZNH0lBQwEhGErk2vVkzc7KgwcUpHizxA0zyxT/dm+cVLMUa4pjoQ3NMsJJpkwLgk2Ez+
-	 f0IaMWqy3H7LcPR7nNPC0PKD+f09REi7vYpHXZTHsn8x9JI6fB6nP4QbN881V+ZvyVQ==
+	bh=SgBluaz4dKMxoZWeAAFg5SeRtaLxlzRACTyzh51U/gg=;
+	b=5qTPVrDTGge7tIqCbMjNeCD+i4Q9WG/sE6e/GLmsXEAYtRG9ce5hZJliJI3XeSu5BdaO
+	 ++4NNGR1zIPP3VqjXX5/NyDXDymdADQS8Ir/EfX8xtoNbBEZR4I0LlTKC78BOZT+xSMQv
+	 mU4Jec9nNcuHYANVsiz0vLqleupCEFybMpLPL4QpRaWim82eBxCFclEGLy9ZWzsq17+o7
+	 MKEtqnMFjJfD9UhCuhVAfMcaJxDiO6BaMfe2ReCsInVCp+WpMyweTOBIIEXm3Fv5jjvaZ
+	 P1b16Iu17X92UEKgjAITewOasK9oyNeZ8c0Og04dcuMdlzfA8FUdg1vGWlTitz5pGPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXW4FhAI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi2mNVwX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31AB606A31C;
-	Thu, 19 Nov 2026 03:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74CE1606A32F;
+	Thu, 19 Nov 2026 03:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXW4FhAI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F381F000C4;
-	Thu, 19 Nov 2026 03:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fi2mNVwX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1621F000C4;
+	Thu, 19 Nov 2026 03:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057785;
-	bh=TAW3wxQa52Gsgz5IhGbhCBo9Gnnf1DQlirPBNb4+Ig4=;
+	s=korg; t=1795057788;
+	bh=SgBluaz4dKMxoZWeAAFg5SeRtaLxlzRACTyzh51U/gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kXW4FhAIj58Rzju9qV53CdBzX2mTyRZ4wYQHi4v9lp/A+jQU87Dio0tPDwJBNTGsI
-	 7mf+BXxS0Da0Gp/+SHRHN52EKCJ00nHAyTFUf3I7zsl/oEqGRLdNpyd4Tn20FirrXg
-	 kShB23BOFzL/EL/NOitQHCZCazKo/BfL+3QmYVsI=
+	b=Fi2mNVwXVIAxBiPv6tip6QZYSHz1Q+yHZ2efehzoKA4pYjadb+v45+oFjoKi2GjB+
+	 kgPLUsSo6r8L0abKMjEwp4BcXwSG5jNGRHTVju4e48TfpkYblDHAnHzt5emApfAULt
+	 jCjrT0ZQDessgtfhtjYPNYVQCRasCtiS5+9IWnyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 0252/1848] HID: hiddev: keep state alive through disconnect unlock
-Date: Wed, 18 Nov 2026 15:38:10 +0100
-Message-ID: <20261118145922.608131276@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 0253/1848] io_uring/io-wq: save worker type before dropping its reference
+Date: Wed, 18 Nov 2026 15:38:11 +0100
+Message-ID: <20261118145922.667869786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,130 +67,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 03f449b5de36a25fc5eba7dabf2b4494389bdb91 upstream.
+commit 37e425460b7c41687e51e3254b1eb1d799da9614 upstream.
 
-mutex_unlock() clears the mutex owner before taking its wait lock. A
-thread spinning in the final hiddev file release can acquire
-existancelock after hiddev_disconnect() clears the owner, then free
-hiddev before the disconnecting thread reaches the mutex wait lock. This
-causes a use-after-free in the mutex slow unlock path.
+io_wq_cancel_tw_create() inspects cb->func after calling
+io_worker_cancel_cb(). For an existing worker, that call can drop the
+last worker reference and wake io_worker_exit(). If the canceling task
+is preempted, the worker can be unlinked and freed by kfree_rcu() before
+the callback function is inspected. KASAN reports a slab-use-after-free
+read in this path.
 
-Give the connection and each open file an explicit reference. Drop each
-reference only after its existancelock critical section has completed,
-so neither unlock path can free the mutex while the other is still using
-it.
+Save whether the callback belongs to an unpublished continuation worker
+while its reference is still held, then use the saved result for the
+conditional free. This preserves the existing accounting and frees only
+the worker allocated for the canceled continuation.
 
-Fixes: 079034073faf ("HID: hiddev cleanup -- handle all error conditions properly")
-Reported-by: syzbot+563191a4939ddbfe73d4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
+Fixes: e6db6f9398da ("io_uring/io-wq: only free worker if it was allocated for creation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=563191a4939ddbfe73d4
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hiddev.c |   37 +++++++++++++++++++------------------
- include/linux/hiddev.h      |    2 ++
- 2 files changed, 21 insertions(+), 18 deletions(-)
+ io_uring/io-wq.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/usbhid/hiddev.c
-+++ b/drivers/hid/usbhid/hiddev.c
-@@ -46,6 +46,12 @@ struct hiddev_list {
- 	struct mutex thread_lock;
- };
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1232,14 +1232,16 @@ static void io_wq_cancel_tw_create(struc
  
-+static void hiddev_put(struct hiddev *hiddev)
-+{
-+	if (refcount_dec_and_test(&hiddev->refcount))
-+		kfree(hiddev);
-+}
-+
- /*
-  * Find a report, given the report's type and ID.  The ID can be specified
-  * indirectly by REPORT_ID_FIRST (which returns the first report of the given
-@@ -216,26 +222,21 @@ static int hiddev_fasync(int fd, struct
- static int hiddev_release(struct inode * inode, struct file * file)
- {
- 	struct hiddev_list *list = file->private_data;
-+	struct hiddev *hiddev = list->hiddev;
- 	unsigned long flags;
+ 	while ((cb = task_work_cancel_match(wq->task, io_task_work_match, wq)) != NULL) {
+ 		struct io_worker *worker;
++		bool free_worker;
  
--	spin_lock_irqsave(&list->hiddev->list_lock, flags);
-+	spin_lock_irqsave(&hiddev->list_lock, flags);
- 	list_del(&list->node);
--	spin_unlock_irqrestore(&list->hiddev->list_lock, flags);
-+	spin_unlock_irqrestore(&hiddev->list_lock, flags);
- 
--	mutex_lock(&list->hiddev->existancelock);
--	if (!--list->hiddev->open) {
--		if (list->hiddev->exist) {
--			hid_hw_close(list->hiddev->hid);
--			hid_hw_power(list->hiddev->hid, PM_HINT_NORMAL);
--		} else {
--			mutex_unlock(&list->hiddev->existancelock);
--			kfree(list->hiddev);
--			vfree(list);
--			return 0;
--		}
-+	mutex_lock(&hiddev->existancelock);
-+	if (!--hiddev->open && hiddev->exist) {
-+		hid_hw_close(hiddev->hid);
-+		hid_hw_power(hiddev->hid, PM_HINT_NORMAL);
+ 		worker = container_of(cb, struct io_worker, create_work);
+-		io_worker_cancel_cb(worker);
+ 		/*
+ 		 * Only the worker continuation helper has worker allocated and
+-		 * hence needs freeing.
++		 * hence needs freeing. Save this before dropping its reference.
+ 		 */
+-		if (cb->func == create_worker_cont)
++		free_worker = cb->func == create_worker_cont;
++		io_worker_cancel_cb(worker);
++		if (free_worker)
+ 			kfree(worker);
  	}
- 
--	mutex_unlock(&list->hiddev->existancelock);
-+	mutex_unlock(&hiddev->existancelock);
-+	hiddev_put(hiddev);
- 	vfree(list);
- 
- 	return 0;
-@@ -270,6 +271,7 @@ static int __hiddev_open(struct hiddev *
- 	spin_unlock_irq(&hiddev->list_lock);
- 
- 	file->private_data = list;
-+	refcount_inc(&hiddev->refcount);
- 
- 	return 0;
- 
-@@ -897,6 +899,7 @@ int hiddev_connect(struct hid_device *hi
- 	INIT_LIST_HEAD(&hiddev->list);
- 	spin_lock_init(&hiddev->list_lock);
- 	mutex_init(&hiddev->existancelock);
-+	refcount_set(&hiddev->refcount, 1);
- 	hid->hiddev = hiddev;
- 	hiddev->hid = hid;
- 	hiddev->exist = 1;
-@@ -937,9 +940,7 @@ void hiddev_disconnect(struct hid_device
- 	if (hiddev->open) {
- 		hid_hw_close(hiddev->hid);
- 		wake_up_interruptible(&hiddev->wait);
--		mutex_unlock(&hiddev->existancelock);
--	} else {
--		mutex_unlock(&hiddev->existancelock);
--		kfree(hiddev);
- 	}
-+	mutex_unlock(&hiddev->existancelock);
-+	hiddev_put(hiddev);
  }
---- a/include/linux/hiddev.h
-+++ b/include/linux/hiddev.h
-@@ -13,6 +13,7 @@
- #ifndef _HIDDEV_H
- #define _HIDDEV_H
- 
-+#include <linux/refcount.h>
- #include <uapi/linux/hiddev.h>
- 
- 
-@@ -24,6 +25,7 @@ struct hiddev {
- 	int minor;
- 	int exist;
- 	int open;
-+	refcount_t refcount;
- 	struct mutex existancelock;
- 	wait_queue_head_t wait;
- 	struct hid_device *hid;
 
 
