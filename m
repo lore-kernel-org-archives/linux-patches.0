@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051075;
-	b=E5vuhWksINGq9NeKw7BFVv0n1XQZpO4vat4KkoJHWy4fVjc2X7yIemGKnZoiT2Y6k2bk
-	 JjsULAft6PUnhqs1P9725OWIPlx4T1283S2v9yccTsPzpNO+ESY1uQxO374C7IsLIKz/4
-	 CBm7/B5UUwNJaQdj7X4hljb7rvG0mAhRlpu7d54/73DqwzVBww5E0VshkCv4sBU/b6gCN
-	 gETgTWHkaQxFvzJygJy8/+3x1nL9jPDktdDB+CN6CkY4fSpYLuyutqrjl/rh8ZYPzO+7v
-	 fNjzj7MuH7dHNGBNTpH8qcY24fXzVPcGaxDR1zzDBb1Pm4Eu2zoUaUMTk74zoGtaX0g==
+	t=1795051078;
+	b=hSoLf5ct2nfKQjjLfpQzQOGFjS7Fnt6cbJqvgauzIZ+xHfjxqmGhJn+TrSDndR+Gfpx8
+	 OIVaVngNbcANUvv4I1uP9ehYo7gLXsZVnevX9D//VS0qWB1RO26sbSKQvf3qkv+5gutWU
+	 SwPCYAman8h/uIGERZkNnzf+mA7MU83TDlto+SNDg/aBh7kiXLSgr19heqB+brSIAkQW5
+	 ynFSp7GE+sqYw0zdxOitryf5dY+9cJuH46X9bHUOi0Tjd7SIYwm1Mv6ZA81Y0Hk/9Xz/1
+	 LWau52oGu9SNXsTzKAijibDAZZw/tYtd2boPEHZqy/f1tA9vEG1TIxsmBAPrsXg3cNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051075;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051078;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HU6WVE0x5i5YOS74X/LNgWVc7LGoXpPnHuYRKl7jJi0=;
-	b=2cnxbTqyjkJIs7byRUMVgQadbVoJWKV9v6NL8LNgK9hok8rNFIq2Ro6n3UuYL/GIFSYI
-	 pHOkXTvUHh40kLVYK9Ug18xt5Aft9n7FHFXKXSyqUPb7fNwifvZwhbxsQpXd/LLKB/IuF
-	 ovFOccZBfNScosOfZuSZQht7ZPBEo1zcdAsbJk9K+8l9USmcmwT6YW2DSU8pe1xnOsP4k
-	 hUkoh4WdyfOGMXl3Pb0TF7gRN+2QKpcjoHLzMnzgWLy0BSp7BrIkzBl+KjPxEnRHrily+
-	 RK6MY3n7p0hV0tXlf3nDHfHLMyWtoNNlxXtsYPC3eSSeNxEeIJ801wprfNEVy9r3r/A==
+	bh=Auh9CLYQ5upFEhiwHvsKpjSF6h1te/GrRar/5CONHJk=;
+	b=sC738xr1gVixpfB8oukSOetY8wdD0LmS5gZjKnP/oyNw+HOYGeC8On4m6qR+pWNSukEJ
+	 iRdnRENO+53mh2OSLsDENw4zsC9JkuHxRg0flKuI/ez6JbxAjP12fTQmqU+2Z40x7bg//
+	 vRN0ph9sNVODrDhWUxZxfYP0ZMJ8J6y8V5PXhNOzbiAaDJfKDfj7v4PJA67+jPHIHuG1F
+	 Gqz53v9Q1VakPNApK7UK6aQZc2JI6nvEr8hgjvnBr1TTRtrK0LfqbnCuEQ5q2h4A42VEp
+	 0wgu7HOFNrpmyM8LhtW3GBQpMvhXnF6rNZAb5sBtBpLEHshq/byBcx5NOPbs6v55cIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTHNPnJb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywH4cBav;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA43D606A320;
-	Thu, 19 Nov 2026 01:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0873606A31C;
+	Thu, 19 Nov 2026 01:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YTHNPnJb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD851F000C4;
-	Thu, 19 Nov 2026 01:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ywH4cBav
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0781F000C4;
+	Thu, 19 Nov 2026 01:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051075;
-	bh=HU6WVE0x5i5YOS74X/LNgWVc7LGoXpPnHuYRKl7jJi0=;
+	s=korg; t=1795051078;
+	bh=Auh9CLYQ5upFEhiwHvsKpjSF6h1te/GrRar/5CONHJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YTHNPnJbBwIJHCIILzO7HoYAtjiVPvAGF8zxZubN8FACcbIUc1Gyzjw+Fzusqbpgj
-	 Uy4hMWtkY/cKhky0p4BQafAqD5TFp7ooa1d1p6MEID5jHlYf2A/rc+qh8/CgbTKAFT
-	 V46AsnBwNLiCRFAiXl4FnELNx+Cy7yIKftkkeV/Q=
+	b=ywH4cBavZ6boyUBZS5u1sYy7efnti+0cXtktQvsASM/ozBXbZoRvYkFTJZUO9xTZC
+	 /vgcmqEcwQJjUhFqgkqZ/1AVoOYJpzpcbJLKsZJPnWwts7EVahz/hcv3AaAztO3TVJ
+	 Kb5E2kozNzapFHLqAAwnTwYmVwYj4wUeQo2ai++w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Jurison Murati <eng.juri@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0078/2214] drm/etnaviv: check all modules for idle after reset
-Date: Wed, 18 Nov 2026 15:29:14 +0100
-Message-ID: <20261118150013.096030858@linuxfoundation.org>
+Subject: [PATCH 5.15 0079/2214] media: i2c: ov8865: Program the sensor on stream start
+Date: Wed, 18 Nov 2026 15:29:15 +0100
+Message-ID: <20261118150013.134620833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,40 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Jurison Murati <eng.juri@gmail.com>
 
-[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
+[ Upstream commit 4e1446ac169a1a621ba90502ab8db3be821fe726 ]
 
-While the FE is an important part of the GPU, which needs to be idle
-after reset, all other modules should be idle after a proper reset.
-Check all present modules for being idle to determine whether the
-reset was successful.
+The sensor registers are only written in the runtime PM resume
+handler; ov8865_set_fmt() merely stores the requested mode, relying on
+the sensor being runtime suspended between uses so that the next
+resume applies it.
 
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+That assumption breaks when something keeps the sensor powered. On
+IPU3 platforms, ipu_bridge instantiates the VCM device with a
+DL_FLAG_PM_RUNTIME device link to the sensor, so a userspace process
+holding the VCM subdev open (e.g. wireplumber's camera monitor) pins
+the sensor runtime-active. A subsequent set_fmt() then never reaches
+the hardware: the sensor keeps streaming the mode programmed on the
+last resume while the CSI-2 receiver expects the newly negotiated
+format.
+
+On a Surface Book 2 (IPU3, ov8865 + dw9719 VCM), requesting the
+3264x2448 mode while the hardware was left programmed for the
+1632x1224 binned mode makes ipu3-cio2 report "frame sync error" and
+"payload length is 10340352, received 2585088" (exactly one binned
+frame) for every frame, and the inverse case stalls the stream after
+a single frame. Camera applications end up displaying one bogus frame
+forever.
+
+Program the sensor configuration and apply the control values on
+stream start instead, where the negotiated mode is always current,
+and only write the configuration in the runtime PM resume handler
+when resuming with the stream already started.
+
+Signed-off-by: Jurison Murati <eng.juri@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/i2c/ov8865.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index 0fff51dc97755..ed8f5f8439f78 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -537,9 +537,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
- 		/* read idle register. */
- 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
+diff --git a/drivers/media/i2c/ov8865.c b/drivers/media/i2c/ov8865.c
+index c587b14c91e93..cb076cdd24a09 100644
+--- a/drivers/media/i2c/ov8865.c
++++ b/drivers/media/i2c/ov8865.c
+@@ -2496,7 +2496,7 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
+ {
+ 	struct ov8865_sensor *sensor = ov8865_subdev_sensor(subdev);
+ 	struct ov8865_state *state = &sensor->state;
+-	int ret;
++	int ret = 0;
  
--		/* try resetting again if FE is not idle */
--		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
--			dev_dbg(gpu->dev, "FE is not idle\n");
-+		/* try resetting again if any module is not idle */
-+		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
-+			dev_dbg(gpu->dev, "GPU modules not idle\n");
- 			continue;
- 		}
+ 	if (enable) {
+ 		ret = pm_runtime_resume_and_get(sensor->dev);
+@@ -2505,7 +2505,23 @@ static int ov8865_s_stream(struct v4l2_subdev *subdev, int enable)
+ 	}
  
+ 	mutex_lock(&sensor->mutex);
+-	ret = ov8865_sw_standby(sensor, !enable);
++
++	/*
++	 * The sensor may have been kept powered by something else (e.g. the
++	 * VCM's runtime PM device link on IPU3 platforms), in which case
++	 * runtime resume did not run and the hardware may still be
++	 * configured for a previous mode. Always program the negotiated
++	 * configuration on stream start.
++	 */
++	if (enable) {
++		ret = ov8865_sensor_init(sensor);
++		if (!ret)
++			ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
++	}
++
++	if (!ret)
++		ret = ov8865_sw_standby(sensor, !enable);
++
+ 	mutex_unlock(&sensor->mutex);
+ 
+ 	if (ret || !enable)
+@@ -2750,15 +2766,15 @@ static int ov8865_resume(struct device *dev)
+ 	if (ret)
+ 		goto complete;
+ 
+-	ret = ov8865_sensor_init(sensor);
+-	if (ret)
+-		goto error_power;
++	if (state->streaming) {
++		ret = ov8865_sensor_init(sensor);
++		if (ret)
++			goto error_power;
+ 
+-	ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
+-	if (ret)
+-		goto error_power;
++		ret = __v4l2_ctrl_handler_setup(&sensor->ctrls.handler);
++		if (ret)
++			goto error_power;
+ 
+-	if (state->streaming) {
+ 		ret = ov8865_sw_standby(sensor, false);
+ 		if (ret)
+ 			goto error_power;
 -- 
 2.53.0
 
