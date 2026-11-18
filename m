@@ -1,67 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051739;
-	b=OURyRZu6AQL2QhZEUO0jT/sHm/4QeZa7sAl9fIehcP3lIxryYQnBPV9lG+3TEHe1Npdf
-	 stGoZjuDurTVXYKD52gp8SnuZbW/wRZwzgneaKITDWlRqcDBBbMdX7B1hycRjWogAz7Aq
-	 N2TTvdjAgN1bnfG7OXddg1xsSR5WMiI5wuL0ssdNaskikJF0Qgb0oQwUSHs+rfbFiOoks
-	 e0Sl4f1eEe2xSu1w5EjF2gH/392ikXOHwZePL6IkUDgAupv+EJmr3vVdRwrEgnHPmFJrk
-	 to2+9bCEqhZ0NzO+jp2S4NaxcXFCJEnmobZhV7UVqXvN68oVk5Vx2jg7T2ItQhyXQDQ==
+	t=1795051742;
+	b=Kgq6kFy1Yxl60pmwK/y5NeFFKB/a3WvlnvNZOJ2QZ6cHGUoYP0TczWRNSwVx+4hUctH2
+	 X03BCOPcpS/jiXkJ5UDXA6asDGtjHuqKblGWYw2gtDE4aIuQO+ygfHs10k4ijB9t5uQcb
+	 F7CfDQD90n0LTZ73I90Yc1opkLOFFBrQaUPC8fp1/corA6wWtYYJLU16Y/RYLLLB2ywAp
+	 2S+hw9sQYvUQ17v0/RTyXGjs0gRuYO0cx2/MGR+GV5D7yKXb4gvng/VIJI85bfgW52N2I
+	 0vhGStbIqhaLMZge3sFKbb8nqRqJl2JgEX3v42acOb9WX16ljdhjZiOfWNHvAtON4FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vRt+s2Q3px9a7pryUgCZXyE3Qe2divi7wFc2AYZiCus=;
-	b=Fm9+mAVFSM9WV+DAwtGUzSwgVVFGMxmpqD7fyo4Ows0EHIyjO3++5LbZupJeJ8LN045I
-	 HWxuwAYdETHfKtTRjWegDuchdlsYDHi9RFHsPds0xUOP0hs5uUeHtlJjzRxS9/48xjklG
-	 6lJYwCY3garNMqbl/V+NUMkwwXSoGwmqW2eKLeImiQF8C1yu8bQmHOdehnVdImhgimnek
-	 xLIYurp+3iRVGgnpooqImNbnI48k6EDEmjnmSIUcla4fupCkp1eY8b5wFXroa9I5f9vKM
-	 YsJF/TnF/HErHKYVJAJFwLJ0OuExzrxqe2LQHPT+x+VWltTuc1zps1Wq4dy6veq4nyA==
+	bh=HZ894K/X/CY0a0ev55A1zTM7lgv05sDXotyZ7lXlwmI=;
+	b=WFBw8uyzMviF/t3QIWclAEeuvlvKdjmev+CoOYrrUPQ/vAwrqxaIde+rulN5ZcDj4rCc
+	 8Aik0gpuOauzNkgrjmREj9V9AI5Y1iPuG9eCwv4BQ06/ZNcnaZCGbG44AP3l+m3aSXOFE
+	 KC1rB3Obi4mrru2+qiECoiV6yj2ZCm2602q3nIYB30qn0QmVTN+Ku068qQnaD6Ukegw3m
+	 cb1btY4yC6syq/ROnO6mHrrgX2swpAsoRBOsR3kMtzCOfjMLXHBcjUF0w7XMnAyTac9Y4
+	 QdMWVIFwpY4GLw3OEywYoPrYf6SZCUnb5zGr1HCnJwSQbsehkPOZJ4G04U1X+mAAHmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7NNHRDN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCTJI7Wm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55756606A320;
-	Thu, 19 Nov 2026 01:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10433606A31C;
+	Thu, 19 Nov 2026 01:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s7NNHRDN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D68D1F000C4;
-	Thu, 19 Nov 2026 01:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCTJI7Wm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F24D1F000C4;
+	Thu, 19 Nov 2026 01:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051739;
-	bh=vRt+s2Q3px9a7pryUgCZXyE3Qe2divi7wFc2AYZiCus=;
+	s=korg; t=1795051741;
+	bh=HZ894K/X/CY0a0ev55A1zTM7lgv05sDXotyZ7lXlwmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s7NNHRDNLAmXzcTRZuHE+rwPTm026Exvfl2/F4jLeIn5Yv8tnqD3GS1iymesTfZCb
-	 1h39vddum7oV48cRlhtgHbIMoLammH/L10lctfijOu3kK2lnydOgABBaQpa8Jsoxyi
-	 tLQpTfIwfuoamMtRgPks2egpwXD/Tul2ADPkZMRM=
+	b=bCTJI7Wmp+sCc0yVxrx6rTAZ37ZpBpysztbsC2G+hPKYYagTqstnsc0QhzuGhNfi5
+	 daL64BaafTH8g6zbRaKUCxBn6UuyELphtryqE8cO2UD6NQgWlERqEAJfijOJ5CKev1
+	 2OUigXmUCfZaiXff365nq+wINsdwvQUbTDt1HuVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Kees Cook <kees@kernel.org>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Yufan Chen <ericterminal@gmail.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sunil Mushran <sunil.mushran@oracle.com>,
-	Kurt Hackel <kurt.hackel@oracle.com>,
-	Jan Kara <jack@suse.cz>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com
-Subject: [PATCH 5.15 0266/2214] ocfs2: pin owning modules for open debugfs files
-Date: Wed, 18 Nov 2026 15:32:22 +0100
-Message-ID: <20261118150020.735962350@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Victor Chibotaru <tchibo@google.com>
+Subject: [PATCH 5.15 0257/2214] kcov: ignore an out-of-range comparison count in write_comp_data()
+Date: Wed, 18 Nov 2026 15:32:13 +0100
+Message-ID: <20261118150020.410569634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -83,199 +72,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-commit 26d7e34b4226709084461a07bf28d9066fa96d8c upstream.
+commit f5263bee9eb84d2388fd7555a18d518e17226894 upstream.
 
-The OCFS2 debugfs file operation tables do not set owner. The
-full debugfs proxy obtains real_fops with fops_get() at open and
-keeps it until final release. Without an owner, this does not acquire
-a reference to the module containing the table and its callbacks.
-Removing the debugfs entries does not drain retained open files.
+write_comp_data() reads the comparison record count from area[0] and uses
+it to index the coverage buffer:
 
-An open connected_nodes file can therefore outlive ocfs2_nodemanager
-and make full_proxy_release() read real_fops->release from freed
-module memory. Heming also reproduced the issue with fs_state and
-asked for the other OCFS2 debugfs operation tables to be checked.
+	area = (u64 *)t->kcov_area;
+	max_pos = t->kcov_size * sizeof(unsigned long);
 
-Set owner to THIS_MODULE in all eleven explicit debugfs operation
-tables: five in ocfs2_nodemanager, four in ocfs2_dlm, and two in
-ocfs2. The existing debugfs get/put pair then holds the appropriate
-module until final release. Leave the open, read and release callbacks
-unchanged. The blockcheck table already sets owner through
-DEFINE_DEBUGFS_ATTRIBUTE(), so it needs no change.
+	count = READ_ONCE(area[0]);
 
-The original controlled test used an unloadable OCFS2 module and
-case-local probe filters without changing the candidate open, unload
-or release logic. Closing a retained connected_nodes file after
-normal unload produced:
+	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
+	start_index = 1 + count * KCOV_WORDS_PER_CMP;
+	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
+	if (likely(end_pos <= max_pos)) {
 
-  BUG: unable to handle page fault for address: fffffbfff804cfef
-  Oops: Oops: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:full_proxy_release+0xbf/0x190
-  Call Trace:
-   <TASK>
-   __fput+0x39a/0xa60
-   fput_close_sync+0xff/0x200
-   __x64_sys_close+0x8c/0xf0
-   do_syscall_64+0x114/0x620
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  Modules linked in: [last unloaded: ocfs2_nodemanager]
+The buffer is mmap'd writable into the collecting process, so count is
+under its control and end_pos <= max_pos is its only bound.  A count that
+wraps the u64 multiply leaves end_pos below max_pos, so the check passes
+while the record store lands 24 bytes before the buffer, in the unmapped
+vmalloc guard page, and faults:
 
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0089-v6-f7fda843f80887488145@gmail.com
-Fixes: 2309e9e040fe ("ocfs2/net: Add debug interface to o2net")
-Fixes: 87d3d3f3931f ("ocfs2/hb: Expose the list of heartbeating nodes via debugfs")
-Fixes: 3ba169ccec1c ("ocfs2/cluster: Add new function o2net_fill_node_map()")
-Fixes: 50397507e856 ("ocfs2: Expose the file system state via debugfs")
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Fixes: 7209300a9b98 ("ocfs2/dlm: Dumps the purgelist into a debugfs file")
-Fixes: d0129aceaecc ("ocfs2/dlm: Dumps the mles into a debugfs file")
-Fixes: 4e3d24ed1a12 ("ocfs2/dlm: Dumps the lockres' into a debugfs file")
-Fixes: 007dce53a29c ("ocfs2/dlm: Dump the dlm state in a debugfs file")
-Fixes: db02754c8a12 ("ocfs2/cluster: Show o2net timing statistics")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+  BUG: unable to handle page fault for address: ffa0000000b60fe8
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  Oops: 0002 [#1] SMP KASAN NOPTI
+  RIP: 0010:write_comp_data+0x7e/0xa0
+  ...
+  Kernel panic - not syncing: Fatal exception
+
+Bound count first: only max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP)
+records fit, so a larger count is not a valid index and is dropped.
+kcov_move_area() bounds the same untrusted count this way, and no count
+the end_pos <= max_pos check accepts reaches that limit, so no valid
+record is lost.
+
+kcov is a root-only debugfs file (debugfs_create_file_unsafe("kcov", 0600,
+...)) and write_comp_data() exists only under
+CONFIG_KCOV_ENABLE_COMPARISONS, so this is a local, debug-kernel
+robustness fix: the process corrupts its own buffer and the kernel oopses.
+It crosses no privilege boundary.  Additional details at [1]
+
+Link: https://lore.kernel.org/20260917104306.22145-1-fangxy@xiaopeng.com [1]
+Fixes: ded97d2c2b2c ("kcov: support comparison operands collection")
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Yufan Chen <ericterminal@gmail.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Zhang Cen <rollkingzzc@gmail.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Sunil Mushran <sunil.mushran@oracle.com>
-Cc: Kurt Hackel <kurt.hackel@oracle.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Assisted-by: Hawkeye:GLM-5.3-flash
+Assisted-by: Qoder:Qwen3.8-Max
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Victor Chibotaru <tchibo@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/cluster/heartbeat.c |    1 +
- fs/ocfs2/cluster/netdebug.c  |    4 ++++
- fs/ocfs2/dlm/dlmdebug.c      |    5 +++++
- fs/ocfs2/dlmglue.c           |    2 ++
- fs/ocfs2/super.c             |    1 +
- 5 files changed, 13 insertions(+)
+ kernel/kcov.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -1379,6 +1379,7 @@ static ssize_t o2hb_debug_read(struct fi
- #endif  /* CONFIG_DEBUG_FS */
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -237,6 +237,14 @@ static void notrace write_comp_data(u64
  
- static const struct file_operations o2hb_debug_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		o2hb_debug_open,
- 	.release =	o2hb_debug_release,
- 	.read =		o2hb_debug_read,
---- a/fs/ocfs2/cluster/netdebug.c
-+++ b/fs/ocfs2/cluster/netdebug.c
-@@ -183,6 +183,7 @@ static int nst_fop_release(struct inode
- }
+ 	count = READ_ONCE(area[0]);
  
- static const struct file_operations nst_seq_fops = {
-+	.owner = THIS_MODULE,
- 	.open = nst_fop_open,
- 	.read = seq_read,
- 	.llseek = seq_lseek,
-@@ -415,6 +416,7 @@ static int stats_fop_open(struct inode *
- }
- 
- static const struct file_operations stats_seq_fops = {
-+	.owner = THIS_MODULE,
- 	.open = stats_fop_open,
- 	.read = seq_read,
- 	.llseek = seq_lseek,
-@@ -427,6 +429,7 @@ static int sc_fop_open(struct inode *ino
- }
- 
- static const struct file_operations sc_seq_fops = {
-+	.owner = THIS_MODULE,
- 	.open = sc_fop_open,
- 	.read = seq_read,
- 	.llseek = seq_lseek,
-@@ -476,6 +479,7 @@ static ssize_t o2net_debug_read(struct f
- }
- 
- static const struct file_operations nodes_fops = {
-+	.owner		= THIS_MODULE,
- 	.open		= nodes_fop_open,
- 	.release	= o2net_debug_release,
- 	.read		= o2net_debug_read,
---- a/fs/ocfs2/dlm/dlmdebug.c
-+++ b/fs/ocfs2/dlm/dlmdebug.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2004, 2008 Oracle.  All rights reserved.
-  */
- 
-+#include <linux/module.h>
- #include <linux/types.h>
- #include <linux/slab.h>
- #include <linux/highmem.h>
-@@ -393,6 +394,7 @@ bail:
- }
- 
- static const struct file_operations debug_purgelist_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_purgelist_open,
- 	.release =	debug_release,
- 	.read =		debug_read,
-@@ -450,6 +452,7 @@ bail:
- }
- 
- static const struct file_operations debug_mle_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_mle_open,
- 	.release =	debug_release,
- 	.read =		debug_read,
-@@ -657,6 +660,7 @@ static int debug_lockres_release(struct
- }
- 
- static const struct file_operations debug_lockres_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_lockres_open,
- 	.release =	debug_lockres_release,
- 	.read =		seq_read,
-@@ -852,6 +856,7 @@ bail:
- }
- 
- static const struct file_operations debug_state_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		debug_state_open,
- 	.release =	debug_release,
- 	.read =		debug_read,
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -7,6 +7,7 @@
-  * Copyright (C) 2003, 2004 Oracle.  All rights reserved.
-  */
- 
-+#include <linux/module.h>
- #include <linux/types.h>
- #include <linux/slab.h>
- #include <linux/highmem.h>
-@@ -3313,6 +3314,7 @@ static int ocfs2_dlm_debug_open(struct i
- }
- 
- static const struct file_operations ocfs2_dlm_debug_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		ocfs2_dlm_debug_open,
- 	.release =	ocfs2_dlm_debug_release,
- 	.read =		seq_read,
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -384,6 +384,7 @@ static ssize_t ocfs2_debug_read(struct f
- #endif	/* CONFIG_DEBUG_FS */
- 
- static const struct file_operations ocfs2_osb_debug_fops = {
-+	.owner =	THIS_MODULE,
- 	.open =		ocfs2_osb_debug_open,
- 	.release =	ocfs2_debug_release,
- 	.read =		ocfs2_debug_read,
++	/*
++	 * area[0] is writable by the collecting process, so count cannot be
++	 * trusted. Bound it to the records that fit, as kcov_move_area()
++	 * does, so the end_pos multiply below cannot wrap past its check.
++	 */
++	if (count >= max_pos / (sizeof(u64) * KCOV_WORDS_PER_CMP))
++		return;
++
+ 	/* Every record is KCOV_WORDS_PER_CMP 64-bit words. */
+ 	start_index = 1 + count * KCOV_WORDS_PER_CMP;
+ 	end_pos = (start_index + KCOV_WORDS_PER_CMP) * sizeof(u64);
 
 
