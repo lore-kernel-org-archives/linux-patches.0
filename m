@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022104;
-	b=lF8N93y8mCKIZJ4qgUm/GlKhu44XEPBjfEhllbVS1z6LDBOdEziz1LDmG26l5uDobBzU
-	 38h9qf6168ALIomGHxlIhxO9bqo0CHax2ljyLpc4Lf1Kx/p41rxCeOfiT+6L3SpPIQs2h
-	 rG6O985wgzarCi4vAkE4wMyhHP8+dv6++XrSbEfXH9VK+FHN7WXJEtYxMmso1JIaTBzeK
-	 RbU49Z/PrHXJbJPwmOvnK1m1/08ti1Om5MaWXe6rE3i7OqICSn0NzWdaUr2rBC4ikvpcB
-	 hdVLExoaXqIsgHmoNR/wf8gtFXvbbKg+sqqAM0U/ICYjq/cPjOepkYHcBvMa4llKGfw==
+	t=1795022107;
+	b=cUMC0+s1TGk/zy1/o3vXZ2wjA0YoGMdixmJtZBYoHFXHHlDUz1t98uubcuDqYCmdwz4l
+	 hPsvmbRDVxXdKRTNQdgIvbyVO0vCCYQtvGpqHj7WtwQiw7Ytcx+ute4SNTNHxk8o/Befd
+	 GNb358ozRqbaUgIPCzO6nuMfxmAnk9PFkPnkTuApGo6BVrWvhoaEacbsvd3a1g8kgM+21
+	 6HtCt+EaIsUdWfd8rAvfCJg6HFbPmKFyUv49oJtQ1rF8Wmwk1LVsAqy78h93jj+k9sXsS
+	 kHcCUANUYOm8KaSfwpDUAgDaPdBSBED2iEjv1I+XTJtdxXf2DU6hY6u45NcBJuyGb3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5nKFpulICa7BcvDjSg/ylaSH8PgQlECFdRmEFAn7aGc=;
-	b=zwPpjFHg0Xxd1DkfUc+4Hj7wCam5mU+fZU7D+dFhA6DlwinOMoWQ8y9nVjXo3YzH4MCn
-	 kLxeFOjAfxgWPpQ98TSPVaodw40pr/sURbVLoPi8xI2kn4MEqU+sAERFIVPoUQ5uc1e5p
-	 uAI7iRtOMuUy6R2yUoa+jZE3B8/VCS5uSPjdWulYYm4vyftXXQJQfWI8zzDgvFFEyeAEF
-	 wy77sLnnJbVffj00q71h72zWGeOARML9Cmi6L1/agUkgKPujHmM+h/z8lLeLlKo8ekEW2
-	 wdHTJdwN8AI0Oo+HNTNFoLfBqhhKiJW9WFORLeu9El9sf9AHk2RvnMpuJuVvSLoF9MA==
+	bh=Ope5CiyhPhTS7f2oZ5cM6oa59VdzMoLmbiZxrMXOzzU=;
+	b=pYFQcBPPLZkTEV9qeB2RrHnkI65MLRV+/D87FAyVsly9yhLoEw6vfA21cnUA9pf8x1zH
+	 ShQQsjJ4e6r4jXt0pntxe2Ybt6U1AoxA5Su/AaqTCw/OOvjp9V98Hpzkg7kv7i8ni8I/p
+	 ppShAGrE1oVthFnv1cLqcyguKhf2g0rhnGN4of0+zim3xzhw1RjJviY/sHc2DLzd9Ioua
+	 jnBO3lo8Xy3vKFzt8s+oRQMzQRjZh22JnHUXMzuVwiAhMFCWpJNmmP7tjjWIXvNgUy/EW
+	 DpG1rNd6cflI8v74trwTd+PywL2gR7aY3pldOR+BFRwfphTWxaoVJkK681o0NFn7ZOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTKpWcT+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftWbXN03;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8666C606A32A;
-	Wed, 18 Nov 2026 17:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F3260A2601;
+	Wed, 18 Nov 2026 17:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OTKpWcT+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0F71F000C7;
-	Wed, 18 Nov 2026 17:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftWbXN03
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E1C1F000C7;
+	Wed, 18 Nov 2026 17:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022104;
-	bh=5nKFpulICa7BcvDjSg/ylaSH8PgQlECFdRmEFAn7aGc=;
+	s=korg; t=1795022106;
+	bh=Ope5CiyhPhTS7f2oZ5cM6oa59VdzMoLmbiZxrMXOzzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTKpWcT+5TMo2HWn87dyhXISTEpwEV8rquoq4t/GvI7nqYCxfe14gosu4w/1RIIGs
-	 q5f0Wwr8X7NMVMjVm40P3M6Vi+5q8HCch5Vc0we+PvBWHHvZVS9ddDVDfoHITMLbbx
-	 yvuqRTfiw9BBhdmA/135HsA9V0RMD05Kvf4Rc+i4=
+	b=ftWbXN03aqmUchnjYFlA39OUg/0zg0zrWOH82GAiOjAubhByhM0g6VeQVwVUDvrRv
+	 4BKepX60Q0msVNtD++vdOoEiRPVLJGodwWIl82mYjO1l55tYg06pmrkgNyYZmQbNrf
+	 5xuu4o71KpxFq5XMIBJ7gozfnz6+dSwY1E+kgnso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2544/2651] nvmet: dont clear sq->ctrl for a Connect with sqsize 0
-Date: Wed, 18 Nov 2026 16:03:04 +0100
-Message-ID: <20261118150416.124514030@linuxfoundation.org>
+Subject: [PATCH 7.3 2545/2651] blk-cgroup: keep the old blkg while reassociating a bio
+Date: Wed, 18 Nov 2026 16:03:05 +0100
+Message-ID: <20261118150416.152746684@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,51 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 89480d137bf0d943a82c64f86ae2407a15276b5e ]
+[ Upstream commit 0e1daaf9b20df2125452846f768a68d8ea280adf ]
 
-nvmet_install_queue() checks sqsize first and jumps to err on zero,
-where sq->ctrl is set to NULL. Since commit b71df12605ca the cmpxchg()
-that sets sq->ctrl comes after the checks, so err now undoes a bind
-that this call never made. Over RDMA a host can send two Connects
-together and the second is parsed before the first executes, so a
-second Connect with sqsize 0 clears the sq->ctrl the first one set.
-The reference it held is never dropped and the controller leaks, with
-its cntlid, until reboot. The discovery subsystem lets any host do
-that, 20 connections leak around 10 controllers. A pending AER on such
-a queue hangs nvmet_sq_destroy() forever, and a queue can keep its
-"authenticated" mark across a rebind.
+bio_associate_blkg_from_css() drops the bio's old blkg before it looks up
+the new one through the css. The css is pinned by the blkg, not by the
+bio, so if the cgroup is gone the bio may hold the last reference and the
+blkcg can be freed under blkg_tryget_closest(). The rcu_read_lock()
+around the whole thing used to cover that, until commit 457d3c4f0fdd
+dropped it.
 
-Return the status directly, as the two checks after it do, so err is
-only reached after this call's cmpxchg() succeeded.
+Put the old blkg after the new one has been looked up.
 
-Fixes: b71df12605ca ("nvmet: avoid duplicate qid in connect cmd")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
+Fixes: 457d3c4f0fdd ("blk-cgroup: don't nest queue_lock under rcu in bio_associate_blkg()")
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-2-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/blk-cgroup.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
-index b451029ab8f49..fc626c2fd2c92 100644
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -186,8 +186,7 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
- 		pr_warn("queue size zero!\n");
- 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
- 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
--		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
--		goto err;
-+		return NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
- 	}
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index b56db1cc6778f..a39167228501d 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -2132,8 +2132,7 @@ static inline struct blkcg_gq *blkg_tryget_closest(struct bio *bio,
+ void bio_associate_blkg_from_css(struct bio *bio,
+ 				 struct cgroup_subsys_state *css)
+ {
+-	if (bio->bi_blkg)
+-		blkg_put(bio->bi_blkg);
++	struct blkcg_gq *old_blkg = bio->bi_blkg;
  
- 	if (ctrl->sqs[qid] != NULL) {
+ 	if (css && css->parent) {
+ 		bio->bi_blkg = blkg_tryget_closest(bio, css);
+@@ -2141,6 +2140,10 @@ void bio_associate_blkg_from_css(struct bio *bio,
+ 		blkg_get(bdev_get_queue(bio->bi_bdev)->root_blkg);
+ 		bio->bi_blkg = bdev_get_queue(bio->bi_bdev)->root_blkg;
+ 	}
++
++	/* @old_blkg may be the only thing which pins @css */
++	if (old_blkg)
++		blkg_put(old_blkg);
+ }
+ EXPORT_SYMBOL_GPL(bio_associate_blkg_from_css);
+ 
 -- 
 2.53.0
 
