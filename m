@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038352;
-	b=fWV8YAFEdzysZhCFWrEi13H00uOAppOn7a2/znS8GQoqQwnf+c6sD8mkLR13QcsJdx1W
-	 LQsd3Nok+CTjP6HRhqt1ArxeYpe4T9YusGi9WPf3qfLuoRf5x+Z6JmG9W/4qGVVpsLuC/
-	 tZJN/iHmFbdWbkz20766UxXx0tdds1PKYgZZiDd4TFg58lPwouUcceDWHrrxqOswAHy8x
-	 LzwiJ/5sgppVIuabOzqOnV8jYlqLhix7AiNKdjEolFd+OR+rw2lIXYfuBOdwt3o46E2DL
-	 FnsuALomnfmUnWkHVw5hl0t6fTzo5tA9mgcUAX3JcU30agMaFNtNlHZbzlpiQgrRNZQ==
+	t=1795038355;
+	b=hVVreOX6u0hgXabGv+JCHAv399rYJni5a1Tel+JBFNnajS+23LNPoAPHgcXDbzu4YOPZ
+	 5EI6U33Aw/UFX0w8X/A7aGuGAkRsd3y9Dd8I/UjZYpEOxzCWQNNEv+gahTo0MjaLOcoDw
+	 0ucjZd35U5yRC7yJI4WOu3iDyO/27nEhRLH6YSj3l6aGRdbrZtb74Zjt5ebiYBtFVZt03
+	 ABk5nAVfvrdIcZHWon4oFQgnZsdya+QHRGNS7P6vatoU5D1+JEOw127NgvEHqWvMG+oSK
+	 o5SBFj3pzw2jBc2jFf4uClCgxhVfcF1EZnUupis5ZRoPtt8ew61zrk11STxoklTiCKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038355;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yWBi8F0xnjGbRjtDhV+JO/2jlhuTbnrDAcSftw1zPtg=;
-	b=sM1GnP5iAXwdnMqYk9WUEPwKVpyISg+qv74p8ZK95k6pPVPnTfdBBJr8ucbUjoGUDQAR
-	 cziCqtM1LT+CexkZKej1rx5iNzO8r3ctfN121yeFAO/MX22GDMb4Out75spp4iEUPiVyc
-	 zOIFgC4vHTyc/jTs1etOY1pR916+jX+EdkiYTYtIQmly+zrzQ9OphhgWg3dKm4iBOkVrA
-	 CQD5jr7mHzqMXhEM1YJerBSSxEJDwnmAZ2U5wHcyjatULJpEKPek1YK2d66iHOu52i5v7
-	 idthFVOldo/x6aQf/7aQKxvDtis7F+IboN66zM9CF/8omnNLptNDX6vyxinoNHhZCaA==
+	bh=nY7XziTq/GYTTuxAVmFMKsCRT1liDwW5ISBvynHUsLQ=;
+	b=1zRy187UuEfsZlddWQeuSl2z8sxHRNp9ZL/lQiNxo/GhQb3KUa4gOwX/ccKZCTJFehVp
+	 T3B7w/TAZkFnsBKJoTl71OL9wkcy8uaZdxEfbvXbLV/cUIxwUm9HdzDpa3E+3kn9OCCmO
+	 hiIjqPbVcF3Xca8YCXgymepIL+EESqXiZlhQcx4zR38SolMG22kN0w0RZ0plkh+F3YwBI
+	 NFy3sIJbP3gGg0S49ZLbk67wP/m/iVehRDE6GOSXVu4euQGIs3FKFoAn7Fps2ito6wKmd
+	 xGvge8FGoijfmTTOSmx5ayh8R8ICYKIk75/2vCL9cdPvC1hRU72BtwPSjR0wqYbSodg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6YrN2KM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yrQ9C81y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66D0606A32A;
-	Wed, 18 Nov 2026 21:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F44606A320;
+	Wed, 18 Nov 2026 21:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6YrN2KM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310941F000C5;
-	Wed, 18 Nov 2026 21:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yrQ9C81y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137B31F000C4;
+	Wed, 18 Nov 2026 21:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038352;
-	bh=yWBi8F0xnjGbRjtDhV+JO/2jlhuTbnrDAcSftw1zPtg=;
+	s=korg; t=1795038355;
+	bh=nY7XziTq/GYTTuxAVmFMKsCRT1liDwW5ISBvynHUsLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H6YrN2KMqfvjA0dWHD4yBXgcq4jcMUDEBUf2emKm2xU543H3vPWsBk34Vlwk0PEgS
-	 PhnyP4HvUT2GSxT+YQ6INhWmemrNWWYi+mFrXQnMN1/voIeawuXiCzVRcmfyUDoehV
-	 oFpBEC6SiqE4bUw9LaQABcPJJUWNfcvwc083/Y3E=
+	b=yrQ9C81y5kcTUaLoUUOFplP7TNqRL/bwyhAtdEj4OITq0EGo3/YOvBhc7AF0TroG4
+	 pOPLqehKbuRdcAJ6UOGIw5caDWheeLMGtpYW7R4p5Hoo8EHKy+d3eSdBpPYwW2PLfG
+	 fWCp0PA/IqG9RcQQtQPQ7nPE/vslYqM8wLUKp8vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Nanzhe Zhao <zhaonanzhe@xiaomi.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1714/3318] f2fs: remove mappedtodisk flag usage in mmap write path
-Date: Wed, 18 Nov 2026 15:38:56 +0100
-Message-ID: <20261118150413.288011098@linuxfoundation.org>
+Subject: [PATCH 6.6 1715/3318] mm: memcontrol: raise MEMCG_MAX for charges that fail without reclaiming
+Date: Wed, 18 Nov 2026 15:38:57 +0100
+Message-ID: <20261118150413.318225198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,83 +73,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
+From: Joe Damato <joe@dama.to>
 
-[ Upstream commit b3c9843589257631bac18f30655e82d88970688a ]
+[ Upstream commit 374f65b1481992eb6b9c6bffd53f3afa5c2e94cf ]
 
-PG_mappedtodisk was inherited from the nobh/buffer-head era.  However,
-f2fs has no buffer heads and the flag is no longer meaningful.  The only
-user of the flag is the "no holes" shortcut in f2fs_vm_page_mkwrite(),
-which makes mmap write faults skip marking the folio dirty.  Moreover,
-it causes the following race condition with filesystem freezing:
+Charges that exceed memory.max and return through the nomem label can
+raise no event and simply return -ENOMEM.
 
- CPU0 (write fault)     CPU1 (freeze_super)
- ----                   ----
- f2fs_vm_page_mkwrite()
- sb_start_pagefault()
- /* shortcut: no dirty */
- sb_end_pagefault()
+A non-blocking charge can hit the limit, get rejected, but is not visible
+in memory.events.
 
-                        sb_wait_write(SB_FREEZE_PAGEFAULT)
-                        /* no waiter, passes */
-                        sync_filesystem()
-                        /* folio not dirty, skipped */
+This was noticed in a production setting where bpf_mem_alloc() attempted
+to refill its per-cpu freelists, which triggered a non-blocking charge
+while at the limit.
 
- finish_fault()
- /* PTE writable */
- fault_dirty_shared_page()
- folio_mark_dirty()
- /* dirty folio on a frozen fs */
+Commit d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for
+enforced allocations") added raised_max_event to cover charges that are
+force charged without ever reaching reclaim, but charges that are rejected
+outright were left out.  Getting an allocation failure without the
+corresponding MEMCG_MAX event is unexpected and makes debugging and
+monitoring harder.
 
-It will also skip APP_MAPPED_IO iostat/REQ_TIME updates and post-EOF
-folio zeroing.
+Raise the event on the way out for rejected charges as well, by routing
+the -ENOMEM return through the same exit path that already covers forced
+charges.  The existing behavior of raising a MEMCG_MAX event on every
+charge/reclaim/retry iteration is left unchanged.
 
-Remove this shortcut in f2fs_vm_page_mkwrite() and stop setting it in
-f2fs_read_single_page().
+Tested with a module that performs accounted GFP_NOWAIT page allocations
+from a task in a cgroup at its memory.max, and measures the resulting
+memory.events:max delta.  Without this patch the rejected charges raise no
+event at all; with it the delta matches the number of rejected charges
+exactly.  A GFP_KERNEL|__GFP_NORETRY control, which reaches reclaim,
+raises the same two events per failed charge before and after, confirming
+the existing charge/reclaim/retry accounting is unchanged.
 
-Reported-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/linux-f2fs-devel/496b913c-eb81-4fa8-be72-c6a06a10aba2@kernel.org/
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Fixes: fbfa2cc58d53 ("f2fs: add file operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nanzhe Zhao <zhaonanzhe@xiaomi.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/20260831174836.3102406-1-joe@dama.to
+Fixes: d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for enforced allocations")
+Signed-off-by: Joe Damato <joe@dama.to>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+[ sashal: Changed __memcg_memory_event(..., allow_spinning) to memcg_memory_event(...) to match the existing API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 1 -
- fs/f2fs/file.c | 6 ------
- 2 files changed, 7 deletions(-)
+ mm/memcontrol.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 6412cacf2d53c..28592d5267295 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2136,7 +2136,6 @@ static int f2fs_read_single_page(struct inode *inode, struct folio *folio,
- got_it:
- 	if ((map->m_flags & F2FS_MAP_MAPPED)) {
- 		block_nr = map->m_pblk + block_in_file - map->m_lblk;
--		folio_set_mappedtodisk(folio);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index e6fffb91742a8..ff9927140c836 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2682,10 +2682,11 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	bool drained = false;
+ 	bool raised_max_event = false;
+ 	unsigned long pflags;
++	int ret = 0;
  
- 		if (!f2fs_is_valid_blkaddr(F2FS_I_SB(inode), block_nr,
- 						DATA_GENERIC_ENHANCE_READ)) {
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 7ec8d054bf1ee..f4863d7331802 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -215,12 +215,6 @@ static vm_fault_t f2fs_vm_page_mkwrite(struct vm_fault *vmf)
- 	/* wait for GCed page writeback via META_MAPPING */
- 	f2fs_wait_on_block_writeback(inode, dn.data_blkaddr);
+ retry:
+ 	if (consume_stock(memcg, nr_pages))
+-		return 0;
++		return ret;
  
+ 	if (!do_memsw_account() ||
+ 	    page_counter_try_charge(&memcg->memsw, batch, &counter)) {
+@@ -2797,16 +2798,11 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	 * put the burden of reclaim on regular allocation requests
+ 	 * and let these go through as privileged allocations.
+ 	 */
+-	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH)))
+-		return -ENOMEM;
++	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH))) {
++		ret = -ENOMEM;
++		goto out;
++	}
+ force:
 -	/*
--	 * check to see if the page is mapped already (no holes)
+-	 * If the allocation has to be enforced, don't forget to raise
+-	 * a MEMCG_MAX event.
 -	 */
--	if (folio_test_mappedtodisk(folio))
--		goto out_sem;
+-	if (!raised_max_event)
+-		memcg_memory_event(mem_over_limit, MEMCG_MAX);
 -
- 	/* page is wholly or partially inside EOF */
- 	if (((loff_t)(folio->index + 1) << PAGE_SHIFT) > isize) {
- 		loff_t offset;
+ 	/*
+ 	 * The allocation either can't fail or will lead to more memory
+ 	 * being freed very soon.  Allow memory usage go over the limit
+@@ -2816,7 +2812,15 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	if (do_memsw_account())
+ 		page_counter_charge(&memcg->memsw, nr_pages);
+ 
+-	return 0;
++out:
++	/*
++	 * Don't forget to raise a MEMCG_MAX event for forced or rejected
++	 * requests.
++	 */
++	if (!raised_max_event)
++		memcg_memory_event(mem_over_limit, MEMCG_MAX);
++
++	return ret;
+ 
+ done_restock:
+ 	if (batch > nr_pages)
+@@ -2869,7 +2873,7 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	    gfpflags_allow_blocking(gfp_mask)) {
+ 		mem_cgroup_handle_over_high(gfp_mask);
+ 	}
+-	return 0;
++	return ret;
+ }
+ 
+ static inline int try_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
 -- 
 2.53.0
 
