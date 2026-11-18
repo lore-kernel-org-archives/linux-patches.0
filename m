@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039995;
-	b=0TwXe+FAKZ9kGfRW69SRzg7TIfU7dOqwOF/hrz6T9SGwKFKys7+0QdDDuNRme/0/Y/YV
-	 zVqT3ukX6aOxun2B3ItUSmo4uBtU0M8vUtck6qmRuSmyipgh2zpjvOJMgnyIp2JSDOTXp
-	 g3dg4c+wmTLjXHfHco5YzbVKJScfC5Pl9Jv6Hmvu5ZTOnx/CLGzaheNfe+zR3Ol3TDoOv
-	 FNV0FXvo0uj6yfAMPWspu1XYfSCOGaT6+SAJPCW2wmtscEiCGEBnes++Csst1Cj+IVOGi
-	 my0o4iQ1T6apC0AwhRa/C+tQINbkeuqQ/1cvSObJ1UrtzeVLkVHhL+V9vUc8AK/aGkQ==
+	t=1795039998;
+	b=RKqH+PmNx88a89AsxL5SBoDUGkTkCjdV+cLFuKYnIbgE8pgJrMWnJeSfjnBCnk0l62Bt
+	 oPXjecZOIm7rccOd2nqhjc5+ZhjfW2wep14evfaSn7jayHoaRIRdHprw6iiMCHZvhLask
+	 V8Aiqqy8UtqNRmAPWtxv2nw5i1BR0xh0nZitCWizGSTuxJs9PW8CPxlnF1bwUSq2IIfYI
+	 TRQRG8qyCZrZBQeQk1e6lAmYJCjFx4DzLwZONoeawILQSBBp/NTa4SR6Q36iaQYMbbQ5b
+	 S+YNdgvKHStC0l2qSwZnmlIhATgAtZtMd0r+8gyrmIuN+kEGCl7GuMh/uMNfDpITqHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039998;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W3tuHktF8+5dz0rwH6fpqB8ccyL+//IKzDnuo16/Y9o=;
-	b=Cj6lJUOv3Yjh8PugcJU594tN6mDm6QClS7KA6DvsdLfWAkEuIJ+nRPUSrWjz8koiQmiw
-	 Ejnmsy5x0GHhxczpJFIGIu5Nq3mq3zIm3ArKfQfFIuGoW63ryvi63gHYWI2VcIZ+6qi/W
-	 0xrg6ZolHbNkEKkqP1Ca5NishM//77Z0EmTLlZ9ASoSflGv5Vld5q8QHYvXFdyNKY507T
-	 d2HXsriJEykrp9bB1EectBVCGY/3YvF+uVNzBHplgkzwAuA1a53GKf6cHrqLlSzV1i/FG
-	 Ep1g7YAbxrHqjNDIrc0LFCe6B2wfx81pIW/HHtIqGk4ly4nrVHrcuDYOgRo9ARiRcZA==
+	bh=6SrC1+zomdRy8QGoCIDyGR0JPr7hoWs1sU3wpSSGstA=;
+	b=RHqvkUEGmR1eUX56YOsYhSQx6QswA5ap8Z9bCns4mrNS7Eg1UGY/HQONwLY0Vaba9fm2
+	 yaBzNeubYRmphEEy/AUy9aJVlWvf8pLhWNbQa49RPOTOaTmW6FwaEI8z3+YsWxFHngOPn
+	 RukoRtSXpYi3wXqCeTI+GENcPKV06jaas0+FJwjy446Y52S/Jn8IWHml/T2DlpMaKFucj
+	 F4XCpRbJ2NlMW919TGy/g7HSQ8FqR2s9g/4lQ0uzsZwq+iERu+jSQTI2BWmolj2kuwiFt
+	 BpIWxkojND/UmOBP1p2v9uFKst9BAGpI+ztqabqIRCE2rtvIttpiTuGug9R3/sXlp7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kdi0cUdp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUqlXpTT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA54606A325;
-	Wed, 18 Nov 2026 22:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9CA606A325;
+	Wed, 18 Nov 2026 22:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kdi0cUdp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EC41F000C4;
-	Wed, 18 Nov 2026 22:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUqlXpTT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8278A1F000C4;
+	Wed, 18 Nov 2026 22:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039995;
-	bh=W3tuHktF8+5dz0rwH6fpqB8ccyL+//IKzDnuo16/Y9o=;
+	s=korg; t=1795039998;
+	bh=6SrC1+zomdRy8QGoCIDyGR0JPr7hoWs1sU3wpSSGstA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kdi0cUdp7aAm3xqqPBRIijkyI/ZY3ts6sPBndmp2o+bsLknFHmAGe4G501nqmVPGU
-	 9M6zl0Pyoi/+5vGcIEh4GeLkPIagi056pn22vCDz2+51fUemByblwOOh4S2HZ0JOKN
-	 WcM0+H6IuBDUFIR2uPhxMrHOOTMLDmwAHmmNjGqs=
+	b=bUqlXpTTOsCQKNIaqRsrv+TXR7Uu7SYLnAVAX6xUskr4aptQe50OFSW3fcep+MDNX
+	 pGxTBtT4dKKkVMzyrKNlSCAUR3uQLtjQslZaMhUzGIkgM1f/z1XfBErGxvZ+EFl4Mn
+	 3cMDSAHIQNJKinE+vYYklvtBEQqEWVPnvHNQ7X4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2299/3318] RDMA/cxgb4: Fix skb reference leak in rx_pkt()
-Date: Wed, 18 Nov 2026 15:48:41 +0100
-Message-ID: <20261118150430.688432719@linuxfoundation.org>
+Subject: [PATCH 6.6 2300/3318] RDMA/mlx5: Fix RQ resource reference leak in mlx5_ib_wq_event()
+Date: Wed, 18 Nov 2026 15:48:42 +0100
+Message-ID: <20261118150430.716878904@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,42 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5eb6ecb612841927b5ede554a0e9d88240934282 ]
+[ Upstream commit 65f3eab431944415bbe5e3af1bbb2736d4bb1523 ]
 
-rx_pkt() takes an extra reference on the received skb so it can be
-handed to the firmware completion path via req->cookie.  When the
-work request skb allocation in send_fw_pass_open_req() fails the
-function returns without releasing that extra reference, leaking
-one skb reference.
+Since commit 312b8f79eb05 ("RDMA/mlx: Calling qp event handler in
+workqueue context") rsc_event_notifier() expects the event handler to
+drop the resource reference taken by mlx5_get_rsc().  mlx5_ib_wq_event()
+was missed by that conversion, so every RQ event leaks one reference,
+which keeps destroy_resource_common() waiting on the completion.
 
-Free the packet skb before returning when the allocation fails,
-matching the cxgb4_ofld_send() failure path.
+Put the resource reference on all exits of the handler.
 
-Fixes: 1cab775c3e75 ("RDMA/cxgb4: Fix LE hash collision bug for passive open connection")
+Fixes: 312b8f79eb05 ("RDMA/mlx: Calling qp event handler in workqueue context")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260916183715.2092663-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260916183921.2092821-1-vulab@iscas.ac.cn
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/qp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index 07cf0026cf1e3..51b0eb021dfc1 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -4006,8 +4006,10 @@ static void send_fw_pass_open_req(struct c4iw_dev *dev, struct sk_buff *skb,
- 	int ret;
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 83661a393136c..6bfd1e6f26b44 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -5182,11 +5182,14 @@ static void mlx5_ib_wq_event(struct mlx5_core_qp *core_qp, int type)
+ 			break;
+ 		default:
+ 			mlx5_ib_warn(dev, "Unexpected event type %d on WQ %06x\n", type, core_qp->qpn);
+-			return;
++			goto out;
+ 		}
  
- 	req_skb = alloc_skb(sizeof(struct fw_ofld_connection_wr), GFP_KERNEL);
--	if (!req_skb)
-+	if (!req_skb) {
-+		kfree_skb(skb);
- 		return;
-+	}
- 	req = __skb_put_zero(req_skb, sizeof(*req));
- 	req->op_compl = htonl(WR_OP_V(FW_OFLD_CONNECTION_WR) | FW_WR_COMPL_F);
- 	req->len16_pkd = htonl(FW_WR_LEN16_V(DIV_ROUND_UP(sizeof(*req), 16)));
+ 		rwq->ibwq.event_handler(&event, rwq->ibwq.wq_context);
+ 	}
++
++out:
++	mlx5_core_res_put(&core_qp->common);
+ }
+ 
+ static int set_delay_drop(struct mlx5_ib_dev *dev)
 -- 
 2.53.0
 
