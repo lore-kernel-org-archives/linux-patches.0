@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056592;
-	b=CPVca7YZGrZZahF/OD2APXAmCTGgJavGWjsU7xDw9Xnj8dLZtTz89SFh0G3y1oJYQnfv
-	 raX/OaXYPlPERlDNbpf8Cz2S41wtbSier2SMIc9jCtXjvh+2ku40661YfsCBVZXV2BQsV
-	 NmzH9heEcJCQ9rqVpLq6260S2jIFO7SDEyhGeuDp7oxPQWp0TKiV6U87njuk5djt4/eZA
-	 C1UWO9D9j1Pf1rnaWDUCfmM1K0nvQV+P9Cep60GGVXeCotdscCu4+DjcYE1lebHC8z6id
-	 7EiWrz924GMSyWdbkjt2d94VQ6U4H4YYCCuWDFu0PL6y6LtxcVvhZqKfRbxHPdpheww==
+	t=1795056594;
+	b=faoObuJRE5bpdfdv6Z7vqDaSHO8Ge5IjEXAE1i6w0UZsp8DvZIh/sjWF8J7513zwhYWB
+	 2VYTFngP3BKyTt2xlyCO0sF4AJakGZQ2RsKxSeGBVf7FMSnYc/c0Tfyq2Nt74h0i10DkP
+	 SoqdyF7dBsEZ/4TUCAMM+3avoe7vnk6GOwSnFtoBfONIBKecqXnlwIWfsCzGbNfRn4Y/r
+	 quOoOLCXrAoz1QxNP+3RB3T+cBY/p7bLfQLqWPQ0KI04OJyaFa8nZEAkZ6gowDsXogKms
+	 dvrBpzSkc2Qe27FE1goJHeS3MFnuGyVhUlxpVfzKZcgMsy5T3FN/NeV7IQvsVCYwFrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056592;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pvtJRYpbyJgU0OIbD+BpsIaKtfWydgexqPIpD+GVj08=;
-	b=mjxUImIEONUYMt1lzaNZmKrEt2sJMinqnpSB2EX87bACzFhgQrAig6BOvQrZNSvYQ70s
-	 lpMpUepIN0LZ3U5HrUWBI4L7tP3zX8eNJ1bDDuky6+AxHfjq+dA1Xyvr2l6DnheZKfDUu
-	 XX6mG4dOJWHSiGKzE2CQOGK+eHByj40VQZxA7bCUMJJCV8xCvmRaD9YCRWMEcLo0JbxjH
-	 NZmitLGdKi7PhFMZI3cLFj4OibFHqpEts7ac71lBXUDnop9KSCMkejrhJsQy3QC5FHv9k
-	 0TuyJCKuE4cwrnhFlI8NGCIKiwiWXLfuTQRESDgndfHRrq2jfObiHlxbNx+W+CkcQ9g==
+	bh=AamQqNSZAlmE4rEGw8sfRTFdG6kFsE9141ii2S3TSog=;
+	b=1F9N9hzlzRpzmmadYg6lwRiKxzgu+HMs+oSq+lcQi5qaM4V3v/2hQJQWqGqd0ZZDW/SB
+	 dgmb3m4BfKUuobI/qn8DSoyeFcokOUsuWvZ8AuEBNUg+7rAEARNSr3tZK4ndHoSnBZBkT
+	 Db8aAzk4JxHSzq8jFQ03JwB/aAex5kvIHneK4Z3hXH36hDfues6cE4C2p1U756TMCBWPI
+	 gHe+VBHx9qvJtWH2IPGbmlW5Fkuw1RTpGn+FXTkEhK4WQS8HGzQWZJFYsP/DJKoYrP3I5
+	 1Edpp9OL+tekfggICAaJVT8wP38W9BUqvNM52+2ALS4ZoW2WFvJhjH9UHxzhNVFSL2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anue2JQR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKs6jD09;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E01606A31C;
-	Thu, 19 Nov 2026 02:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A506E606A32F;
+	Thu, 19 Nov 2026 02:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anue2JQR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C761F000C4;
-	Thu, 19 Nov 2026 02:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKs6jD09
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E031F000C5;
+	Thu, 19 Nov 2026 02:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056591;
-	bh=pvtJRYpbyJgU0OIbD+BpsIaKtfWydgexqPIpD+GVj08=;
+	s=korg; t=1795056594;
+	bh=AamQqNSZAlmE4rEGw8sfRTFdG6kFsE9141ii2S3TSog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=anue2JQRs7uaYNXgD8esWr+fIExUTqddPGUULsvqGdRX0c08XPT0bvw9eFXuEuhps
-	 DnscR1SgSNKpsu9aGgaj3FfSbAMKTgMRGoIN8NZ4tMFGTcR2aOPVmnM7zTwkvAuMa8
-	 gqCqKHdOZtm6ZuOUrd9NmIBPKsYtj11Vze6ZehnI=
+	b=TKs6jD095FonJuVDZ7boERyV51Yxv7baPFecagSmcF+9HYahskYBlSV3jZVFe6stt
+	 7pp5mz5V0D/umeGzB8ynQP/q3lJBmNLmPDF7985mAcjmdqGl0ApeTQRO4dcYfcV/CE
+	 +Plt3LlWATg/uEgorOIgYpkQIlzuojP5EMEe9ZiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Zhilkin <csharper2005@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2043/2214] dt-bindings: Add Sercomm (Suzhou) Corporation vendor prefix
-Date: Wed, 18 Nov 2026 16:01:59 +0100
-Message-ID: <20261118150132.441929156@linuxfoundation.org>
+Subject: [PATCH 5.15 2044/2214] dt-bindings: vendor-prefixes: Add Sensylink
+Date: Wed, 18 Nov 2026 16:02:00 +0100
+Message-ID: <20261118150132.484932089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,38 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Zhilkin <csharper2005@gmail.com>
+From: Troy Mitchell <troy.mitchell@linux.dev>
 
-[ Upstream commit d217c4d968bb590e5aa1ff7d02f680c9ba5c1cec ]
+[ Upstream commit f4ba4f8cc8e8df45e57c1754955b3a6b9b089a97 ]
 
-Add "sercomm" vendor prefix for "Sercomm (Suzhou) Corporation".
+Add the vendor prefix for Sensylink Microelectronics.
 
-Company website:
-Link: https://www.sercomm.com/
-
-Signed-off-by: Mikhail Zhilkin <csharper2005@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20220516151637.885324-1-csharper2005@gmail.com
-Stable-dep-of: f4ba4f8cc8e8 ("dt-bindings: vendor-prefixes: Add Sensylink")
+Link: https://en.sensylink.com/
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Troy Mitchell <troy.mitchell@linux.dev>
+Link: https://patch.msgid.link/20260914-ctl2301-v5-1-b44b81cd2c3c@linux.dev
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 5f4114bcb2e64..c538bd92b7af3 100644
+index c538bd92b7af3..3adb39d121ff7 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
 @@ -1064,6 +1064,8 @@ patternProperties:
      description: Sensirion AG
    "^sensortek,.*":
      description: Sensortek Technology Corporation
-+  "^sercomm,.*":
-+    description: Sercomm (Suzhou) Corporation
++  "^sensylink,.*":
++    description: Sensylink Microelectronics Technology Co., Ltd.
+   "^sercomm,.*":
+     description: Sercomm (Suzhou) Corporation
    "^sff,.*":
-     description: Small Form Factor Committee
-   "^sgd,.*":
 -- 
 2.53.0
 
