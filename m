@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055877;
-	b=4T4jjv8V2cPn3c5dIotDXNoOBJ9Ke+yWv7hzlGNlX6XFFaTN2boM/ij9F+tBpnXV03Pl
-	 ae1x6bppr440AxixPWsT259zu5WfMSqyaaUOgIvpydlGMTTnURQFVZ2QDaTxxuZfCLQzO
-	 uBV6sqKnuQOJgAhVgshPkIT1xqjOY/sattIgX+17T0FBj7uxGntot0q65Vl8D4Ci9A0lL
-	 8oPIkshR9PzWL+j9/jyXc9XKvXvzfpwFA4Q1NXGnc4lg4oKHzXeldZcuB/ArVBAhKLeGE
-	 KQb3jgOby/CAsvofbRc7NbuU0WPIF+HxJLjvtw9Khl1x+QJoKznQE8RMpCbLWm3sgEg==
+	t=1795055879;
+	b=ivwQt64UBUf/16HXbzXd1MYUzu+9bSjm/y8VhpnZ3HevfTK7dN/h9OTvsE812WAxlE0A
+	 MEyRLeasunrmpjwOJXpxp+iWWf+07MD4tTaGClkGGV5Fbdr+tvyDM6o3e8x6hDAW/OMWI
+	 frPCc5501h4rIed1kKFmJQkf7SCWv69yMW7KfHJt9tYyYobk3ffw9vMCP9+Uc85SQCF4Y
+	 gvg9tnyRaa1SPCcS2dxmBmzpk0vqK3NVO6V9BgW7wiky9fU8AnSOSQv0R2g7MjMUZ8e8x
+	 TIcu+2+w5hBNC0ni67tHlp+AAXwxO4ILQyxcRTwVfCCXgHnGEh8ljNzOUXcyFUoCbTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ovyi0jiMCaidJ3rYsdmnbjtjmS9PRW46XRo3pS4vLRw=;
-	b=KlHNcTzOAyngcP3uy6N1JrzI9P9rf8utD6kNTRDLAroiMW5V+ho+0YhVzMhd79m4r6cj
-	 N4AukQSVMXHSmp1rFI23iQnDu4Mqd2A3v7sV7QmAN0uDFQqSnnWPO489tSKYMoD95+3KA
-	 MHbepElt4mkdsJk+vMCzCyJtcYoCb3TjyRNFo2Mq5mm27cuB0vZkMD+4bLiVbIWoOSA/i
-	 WoL2ZuiL5fz4WZDkshX7yaMgxi8ippNfL0BVueVXJ1NMmsQ7suYVDRM2S/WE6CnRaQqJ3
-	 K1qIoFLNxa2sAx0Ls9Ivv+1dCiW3SSvpLWxyqh5k6mxNwpLydn2S1DrMoWTC8iy0UpA==
+	bh=mm3qHs4l5mGjI3KBqSHd4mu56acPUBbxpy0R/lTutis=;
+	b=qKCYf8bEaPiZyhUXqJW1e0/+HB87p/zc3BXDvM1Z06O5YjITZT/uH9RrSbeEPbpa7N93
+	 MOb1jamVPb3uohUcAB9TtUhPJhnEfulKbWrbhgS8mGWTNEFKs1PJtfzZnTJrZwozRi1Vq
+	 GC/tTYyDTXY4hqa9t80VRA2ydklJ5wF6ltsHsYW7wQ+iUZ1Xx5zhW6LrZ6pQYpuDlm9pe
+	 +LjTt3dFR0q6Gp2qARhB+8/fTH9EtyzOVltKtLezbeMfqm+wnEWY7FVcoJhNaxHjIzR7Z
+	 +EC3J7FFRNjFlkKST04QliFBkfT7O7fLtKtinGn3daHBBxG3MymK+DRtic76NE7uvNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlK0jINm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UZrGww/n";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAA3606A31C;
-	Thu, 19 Nov 2026 02:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C509606A325;
+	Thu, 19 Nov 2026 02:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hlK0jINm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C28C1F000C4;
-	Thu, 19 Nov 2026 02:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UZrGww/n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C549B1F000C5;
+	Thu, 19 Nov 2026 02:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055876;
-	bh=Ovyi0jiMCaidJ3rYsdmnbjtjmS9PRW46XRo3pS4vLRw=;
+	s=korg; t=1795055879;
+	bh=mm3qHs4l5mGjI3KBqSHd4mu56acPUBbxpy0R/lTutis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hlK0jINmW1WEThVsItFU/9EIvi4pJiclomf8Hl0vKexmVkTKuzv8mMX0odN5CDsLG
-	 nY5M0V7E5SkdOlAiBwvGqxyDfsgDNrC2G3yiuf/ZnNzBFfA7yyKa5vtpGCB9N6I1Dh
-	 6+Ylx2mJ9J1cXsk/0tC6QWoJTGClSH+G9TftV718=
+	b=UZrGww/n3zEfOI7klLGT9+YIDngKKQrDzJqFlizf3zLxOXnNAaU/YY1823FPpMsdz
+	 Bw84Da07tqrevVcbc1+2aauc90i4IOJtTaRwquVccL6X+Z3JlH5bdOWgtkn/KetKZK
+	 LC/icDry/9VzFzLP6CE3Y8p08rPdimIOR7XxrOmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Robert Richter <rrichter@amd.com>,
+	Oliver OHalloran <oohall@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-pci@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1771/2214] dmaengine: ste_dma40: Fix V4B event group mapping
-Date: Wed, 18 Nov 2026 15:57:27 +0100
-Message-ID: <20261118150122.361920082@linuxfoundation.org>
+Subject: [PATCH 5.15 1789/2214] PCI/AER: Forward RCH downstream port-detected errors to the CXL.mem dev handler
+Date: Wed, 18 Nov 2026 15:57:45 +0100
+Message-ID: <20261118150123.049904747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,170 +75,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Robert Richter <rrichter@amd.com>
 
-[ Upstream commit b36f8fce7314fed53563c60e683ff86deb8a51ae ]
+[ Upstream commit 0a867568bb0d203ca3d28634a611a1367d7c892d ]
 
-DMA40 physical resources are connected in pairs to event groups. The
-mapping repeats after each complete set of groups.
+In Restricted CXL Device (RCD) mode a CXL device is exposed as an
+RCiEP, but CXL downstream and upstream ports are not enumerated and
+not visible in the PCIe hierarchy. [1] Protocol and link errors from
+these non-enumerated ports are signaled as internal AER errors, either
+Uncorrectable Internal Error (UIE) or Corrected Internal Errors (CIE)
+via an RCEC.
 
-D40_GROUP_SIZE and D40_PHYS_TO_GROUP() encode the four-group V4A layout.
-On V4B, which has five groups, resources 8 and 9 are consequently offered
-both to event groups 0 and 4. The GCC clock bookkeeping also treats these
-resources as group 0 instead of group 4.
+Restricted CXL host (RCH) downstream port-detected errors have the
+Requester ID of the RCEC set in the RCEC's AER Error Source ID
+register. A CXL handler must then inspect the error status in various
+CXL registers residing in the dport's component register space (CXL
+RAS capability) or the dport's RCRB (PCIe AER extended
+capability). [2]
 
-Derive the physical-resource stride and reverse mapping from the
-variant-specific number of event groups. This preserves the V4A mapping
-and gives V4B a ten-resource stride: resources 8 and 9 belong only to
-group 4, while resources 10 and 11 repeat group 0.
+Errors showing up in the RCEC's error handler must be handled and
+connected to the CXL subsystem. Implement this by forwarding the error
+to all CXL devices below the RCEC. Since the entire CXL device is
+controlled only using PCIe Configuration Space of device 0, function
+0, only pass it there [3]. The error handling is limited to currently
+supported devices with the Memory Device class code set (CXL Type 3
+Device, PCI_CLASS_MEMORY_CXL, 502h), handle downstream port errors in
+the device's cxl_pci driver. Support for other CXL Device Types
+(e.g. a CXL.cache Device) can be added later.
 
-Fixes: 3cb645dc85a0 ("dmaengine: ste_dma40: support more than 128 event lines")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-21-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To handle downstream port errors in addition to errors directed to the
+CXL endpoint device, a handler must also inspect the CXL RAS and PCIe
+AER capabilities of the CXL downstream port the device is connected
+to.
+
+Since CXL downstream port errors are signaled using internal errors,
+the handler requires those errors to be unmasked. This is subject of a
+follow-on patch.
+
+The reason for choosing this implementation is that the AER service
+driver claims the RCEC device, but does not allow it to register a
+custom specific handler to support CXL. Connecting the RCEC hard-wired
+with a CXL handler does not work, as the CXL subsystem might not be
+present all the time. The alternative to add an implementation to the
+portdrv to allow the registration of a custom RCEC error handler isn't
+worth doing it as CXL would be its only user. Instead, just check for
+an CXL RCEC and pass it down to the connected CXL device's error
+handler. With this approach the code can entirely be implemented in
+the PCIe AER driver and is independent of the CXL subsystem. The CXL
+driver only provides the handler.
+
+[1] CXL 3.0 spec: 9.11.8 CXL Devices Attached to an RCH
+[2] CXL 3.0 spec, 12.2.1.1 RCH Downstream Port-detected Errors
+[3] CXL 3.0 spec, 8.1.3 PCIe DVSEC for CXL Devices
+
+Co-developed-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Cc: Oliver O'Halloran <oohall@gmail.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Cc: linux-pci@vger.kernel.org
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20231018171713.1883517-18-rrichter@amd.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: e86ac10110d0 ("PCI/AER: Fix struct pci_dev reference leak in aer_process_err_devices()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c    | 47 ++++++++++++++++++++++++++------------
- drivers/dma/ste_dma40_ll.h |  2 --
- 2 files changed, 33 insertions(+), 16 deletions(-)
+ drivers/pci/pcie/Kconfig |  9 ++++
+ drivers/pci/pcie/aer.c   | 93 +++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 100 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 92cff7b672c2b..86265890f10be 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -52,6 +52,7 @@
- /* Number of event groups per hardware register layout */
- #define D40_EVENT_GROUPS_V4A 4
- #define D40_EVENT_GROUPS_V4B 5
-+#define D40_PHYS_PER_EVENT_GROUP 2
+diff --git a/drivers/pci/pcie/Kconfig b/drivers/pci/pcie/Kconfig
+index 45a2ef702b45b..c38789da37ac6 100644
+--- a/drivers/pci/pcie/Kconfig
++++ b/drivers/pci/pcie/Kconfig
+@@ -45,6 +45,15 @@ config PCIEAER_INJECT
+ 	  gotten from:
+ 	     https://www.kernel.org/pub/linux/utils/pci/aer-inject/
  
- /* Max number of logical channels per physical channel */
- #define D40_MAX_LOG_CHAN_PER_PHY 32
-@@ -1885,6 +1886,12 @@ static bool d40_alloc_mask_free(struct d40_phy_res *phy, bool is_src,
- 	return is_free;
++config PCIEAER_CXL
++	bool "PCI Express CXL RAS support"
++	default y
++	depends on PCIEAER && CXL_PCI
++	help
++	  Enables CXL error handling.
++
++	  If unsure, say Y.
++
+ #
+ # PCI Express ECRC
+ #
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index 3770727c8a327..da4d7f3060ec9 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -937,14 +937,97 @@ static bool find_source_device(struct pci_dev *parent,
+ 	return true;
  }
  
-+static int d40_phy_to_group(struct d40_base *base, int phy)
++#ifdef CONFIG_PCIEAER_CXL
++
++static bool is_cxl_mem_dev(struct pci_dev *dev)
 +{
-+	return (phy / D40_PHYS_PER_EVENT_GROUP) %
-+	       base->gen_dmac.num_event_groups;
++	/*
++	 * The capability, status, and control fields in Device 0,
++	 * Function 0 DVSEC control the CXL functionality of the
++	 * entire device (CXL 3.0, 8.1.3).
++	 */
++	if (dev->devfn != PCI_DEVFN(0, 0))
++		return false;
++
++	/*
++	 * CXL Memory Devices must have the 502h class code set (CXL
++	 * 3.0, 8.1.12.1).
++	 */
++	if ((dev->class >> 8) != PCI_CLASS_MEMORY_CXL)
++		return false;
++
++	return true;
 +}
 +
- static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
++static bool cxl_error_is_native(struct pci_dev *dev)
++{
++	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
++
++	return (pcie_ports_native || host->native_aer);
++}
++
++static bool is_internal_error(struct aer_err_info *info)
++{
++	if (info->severity == AER_CORRECTABLE)
++		return info->status & PCI_ERR_COR_INTERNAL;
++
++	return info->status & PCI_ERR_UNC_INTN;
++}
++
++static int cxl_rch_handle_error_iter(struct pci_dev *dev, void *data)
++{
++	struct aer_err_info *info = (struct aer_err_info *)data;
++	const struct pci_error_handlers *err_handler;
++
++	if (!is_cxl_mem_dev(dev) || !cxl_error_is_native(dev))
++		return 0;
++
++	/* protect dev->driver */
++	device_lock(&dev->dev);
++
++	err_handler = dev->driver ? dev->driver->err_handler : NULL;
++	if (!err_handler)
++		goto out;
++
++	if (info->severity == AER_CORRECTABLE) {
++		if (err_handler->cor_error_detected)
++			err_handler->cor_error_detected(dev);
++	} else if (err_handler->error_detected) {
++		if (info->severity == AER_NONFATAL)
++			err_handler->error_detected(dev, pci_channel_io_normal);
++		else if (info->severity == AER_FATAL)
++			err_handler->error_detected(dev, pci_channel_io_frozen);
++	}
++out:
++	device_unlock(&dev->dev);
++	return 0;
++}
++
++static void cxl_rch_handle_error(struct pci_dev *dev, struct aer_err_info *info)
++{
++	/*
++	 * Internal errors of an RCEC indicate an AER error in an
++	 * RCH's downstream port. Check and handle them in the CXL.mem
++	 * device driver.
++	 */
++	if (pci_pcie_type(dev) == PCI_EXP_TYPE_RC_EC &&
++	    is_internal_error(info))
++		pcie_walk_rcec(dev, cxl_rch_handle_error_iter, info);
++}
++
++#else
++static inline void cxl_rch_handle_error(struct pci_dev *dev,
++					struct aer_err_info *info) { }
++#endif
++
+ /**
+- * handle_error_source - handle logging error into an event log
++ * pci_aer_handle_error - handle logging error into an event log
+  * @dev: pointer to pci_dev data structure of error source device
+  * @info: comprehensive error information
+  *
+  * Invoked when an error being detected by Root Port.
+  */
+-static void handle_error_source(struct pci_dev *dev, struct aer_err_info *info)
++static void pci_aer_handle_error(struct pci_dev *dev, struct aer_err_info *info)
  {
- 	int dev_type = d40c->dma_cfg.dev_type;
-@@ -1895,11 +1902,14 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 	int j;
- 	int log_num;
- 	int num_phy_chans;
-+	int phy_group_stride;
- 	bool is_src;
- 	bool is_log = d40c->dma_cfg.mode == STEDMA40_MODE_LOGICAL;
+ 	int aer = dev->aer_cap;
  
- 	phys = d40c->base->phy_res;
- 	num_phy_chans = d40c->base->num_phy_chans;
-+	phy_group_stride = D40_PHYS_PER_EVENT_GROUP *
-+			   d40c->base->gen_dmac.num_event_groups;
- 
- 	if (d40c->dma_cfg.dir == DMA_DEV_TO_MEM) {
- 		log_num = 2 * dev_type;
-@@ -1933,13 +1943,18 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 				}
- 			}
- 		} else
--			for (j = 0; j < d40c->base->num_phy_chans;
--			     j += D40_GROUP_SIZE) {
--				int phy_num = j  + event_group * 2;
--				if (phy_num + 1 >= num_phy_chans)
-+			for (j = 0; j < num_phy_chans;
-+			     j += phy_group_stride) {
-+				int phy_num = j + event_group *
-+					      D40_PHYS_PER_EVENT_GROUP;
+@@ -968,6 +1051,12 @@ static void handle_error_source(struct pci_dev *dev, struct aer_err_info *info)
+ 		pcie_do_recovery(dev, pci_channel_io_normal, aer_root_reset);
+ 	else if (info->severity == AER_FATAL)
+ 		pcie_do_recovery(dev, pci_channel_io_frozen, aer_root_reset);
++}
 +
-+				if (phy_num + D40_PHYS_PER_EVENT_GROUP >
-+				    num_phy_chans)
- 					break;
++static void handle_error_source(struct pci_dev *dev, struct aer_err_info *info)
++{
++	cxl_rch_handle_error(dev, info);
++	pci_aer_handle_error(dev, info);
+ 	pci_dev_put(dev);
+ }
  
--				for (i = phy_num; i < phy_num + 2; i++) {
-+				for (i = phy_num;
-+				     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
-+				     i++) {
- 					if (d40_alloc_mask_set(&phys[i],
- 							       is_src,
- 							       0,
-@@ -1958,9 +1973,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 		return -EINVAL;
- 
- 	/* Find logical channel */
--	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
--		int phy_num = j + event_group * 2;
--		if (phy_num + 1 >= num_phy_chans)
-+	for (j = 0; j < num_phy_chans; j += phy_group_stride) {
-+		int phy_num = j + event_group * D40_PHYS_PER_EVENT_GROUP;
-+
-+		if (phy_num + D40_PHYS_PER_EVENT_GROUP > num_phy_chans)
- 			break;
- 
- 		if (d40c->dma_cfg.use_fixed_channel) {
-@@ -1987,14 +2003,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 		 * channels.
- 		 */
- 		if (is_src) {
--			for (i = phy_num; i < phy_num + 2; i++) {
-+			for (i = phy_num;
-+			     i < phy_num + D40_PHYS_PER_EVENT_GROUP;
-+			     i++) {
- 				if (d40_alloc_mask_set(&phys[i], is_src,
- 						       event_line, is_log,
- 						       first_phy_user))
- 					goto found_log;
- 			}
- 		} else {
--			for (i = phy_num + 1; i >= phy_num; i--) {
-+			for (i = phy_num + D40_PHYS_PER_EVENT_GROUP - 1;
-+			     i >= phy_num; i--) {
- 				if (d40_alloc_mask_set(&phys[i], is_src,
- 						       event_line, is_log,
- 						       first_phy_user))
-@@ -3105,9 +3124,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
- 			base->phy_res[i].allocated_src = D40_ALLOC_PHY;
- 			base->phy_res[i].allocated_dst = D40_ALLOC_PHY;
- 			base->phy_res[i].reserved = true;
--			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
-+			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
- 						       D40_DREG_GCC_SRC);
--			gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(i),
-+			gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, i),
- 						       D40_DREG_GCC_DST);
- 
- 
-@@ -3127,9 +3146,9 @@ static int __init d40_phy_res_init(struct d40_base *base)
- 		base->phy_res[chan].allocated_src = D40_ALLOC_PHY;
- 		base->phy_res[chan].allocated_dst = D40_ALLOC_PHY;
- 		base->phy_res[chan].reserved = true;
--		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
-+		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
- 					       D40_DREG_GCC_SRC);
--		gcc |= D40_DREG_GCC_EVTGRP_ENA(D40_PHYS_TO_GROUP(chan),
-+		gcc |= D40_DREG_GCC_EVTGRP_ENA(d40_phy_to_group(base, chan),
- 					       D40_DREG_GCC_DST);
- 		num_phy_chans_avail--;
- 	}
-diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
-index c504e855eb02b..b04c4e92b4ed0 100644
---- a/drivers/dma/ste_dma40_ll.h
-+++ b/drivers/dma/ste_dma40_ll.h
-@@ -16,8 +16,6 @@
- 
- #define D40_TYPE_TO_GROUP(type) (type / 16)
- #define D40_TYPE_TO_EVENT(type) (type % 16)
--#define D40_GROUP_SIZE 8
--#define D40_PHYS_TO_GROUP(phys) ((phys & (D40_GROUP_SIZE - 1)) / 2)
- 
- /* Most bits of the CFG register are the same in log as in phy mode */
- #define D40_SREG_CFG_MST_POS		15
 -- 
 2.53.0
 
