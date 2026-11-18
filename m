@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032024;
-	b=taI2TqJzBG78WsjHd4ABQrI/8dieaOP8p0Y7tdSygAnn5I/qKyYlsVQpdZOZOapuvf07
-	 t9THuF8yFx1PZfLMJD0l30vXaWurCOTiQM6GA4RpqrqhdXODemwqlUpuv0FRHJqL+eTP9
-	 Z5tZaPkS2wUPZcZM3YTTBIwpaYuLXVFmZIY3YbuvHz3lTNSQL8R7ULeMwjxW2nNKwva1+
-	 psjIcK77r8KebRWd1E+xNXiEJcBqa1tHqyDRIpY56/SDaSKZhRRGWeD+sejaopxuy7zql
-	 0afKwXxDp4RAwHAUrit4BVUjgfMelC7LuixjrQSVhKiFVfQ2UwM6UpvA868fI/0bqZw==
+	t=1795032027;
+	b=3I/2u2Ua4cz1DKzbBmwWMwZrWgWriASbB+9Dfyp7KVF33B0VHyHuNudgBO9WWDnZnsMd
+	 T+L2zTwNx3qDGtlq9zMIshqhodo0uOn/NTyysLpaAdYY25CU5i/vmVTH880JBlOEN2mvp
+	 NKmoOfmGK0B6HXZJllShgqrV5l57FnhInl1PuHG8GAq47rwGQOB45xlGtR+yPRWzScR1I
+	 8G3MJDP1anbLh7XcWDaCNDJWCEULYlo2UA2vjeymNyqgAWhSctkqYMKBUn9+D7uhUxsMK
+	 rifY4LsR6I5kNaE41pXPam79Cuiy/tra7aY9FLQ/E72A+ncNxXPvxRg25c1V5Xu+mXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Z6yh7EXkaxszmRA7RLzcd597XkBYLZK1VkPP9URIXfA=;
-	b=0q7o/5QQgTzRtKTQ+5aMKgr6C6r6nd7ffYoSwTiAuoWvt5dCnq/lmE1wULspusVZw0gg
-	 7l46jM1hf98mvS0o9GdrnKSqc8xERC/S0M9UnliGODVl4LNGwL2Wb0NCaMyBvpbO0WgB8
-	 Kk6ek3V9uy/Q20+aevrH/rtjmSrXSWCTGTiHIOgCDjAl+kK5NTdyDBc3DePYffnd9e89y
-	 LaW7Nq3AdQ0qIlHiXQfq+fGRcNgq+34x9qkrOd8wLcSJH5pkfRyBCHlXAuz/gNXsUlzUz
-	 fn3T6t6QbV3uEfTgSsh1O6bWrnlDpD+9ubuIbduf+DU/C3D+Sq3LqgcOG0u2wf2p/6A==
+	bh=WnGqLTloIidSeRAV1O64wRD8ptfDHTQ8pkh0RxgwG20=;
+	b=xidvB2TvzodnnGroXKhuXYixag0N6GBcyIxCB+iUo6coNpRcDmOivUxczniYCRgFgDTX
+	 LpuIeTlPkeN/9um7i2uXazW5xj/Lfn5aBcU9dzjW30D3/urudu76rhMGr+bWU6xVOTymx
+	 0hbZiccZrbcPMXS6I5tWD9dhPnzuU42JbVUHMMfNS8dnV20ilbv9NUvA1fACFcDwCDD/k
+	 W16o3K1q+5Xpt2cf41dn9DocKKoBxIAo6qxFfu3WBUz2BIunan9sqGRrCkJjnv8hiWBXJ
+	 VIvdkMKKzEFFRKvcU7c4DDESkajg2y7pjgFEOOH/aDH2fGANR0HM2szZNlSe91g0g4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2I60VJi3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vXm/ecLp";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6340160A2600;
-	Wed, 18 Nov 2026 20:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF2B60A260F;
+	Wed, 18 Nov 2026 20:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2I60VJi3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72601F000C4;
-	Wed, 18 Nov 2026 20:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vXm/ecLp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0D11F000C5;
+	Wed, 18 Nov 2026 20:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032024;
-	bh=Z6yh7EXkaxszmRA7RLzcd597XkBYLZK1VkPP9URIXfA=;
+	s=korg; t=1795032026;
+	bh=WnGqLTloIidSeRAV1O64wRD8ptfDHTQ8pkh0RxgwG20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2I60VJi3KnZwfqH6rmzmfB+6Vq9Pap+LO9Hg27mBP2urr9ZZy9KKW8ovTkF6rpMXn
-	 QajwMA9XihFwezOGeSM7OoBvofhRbHpaZZxCB44LSGr5DQs5FQ+5v3e5Ool66hH/7d
-	 NYIYOTca6S3F6gY65rwEOCkYzMCI/VAHQ1m71rUc=
+	b=vXm/ecLpArrRssGXc2LfcJPOz3UdO5XNyPbJAO0vlMQ1eiq1eN+C8+QcW5EBFHhii
+	 PUUnDVCW72pwA0q0Pvh9tua3S2K/9L0x+fOIF3mMe+8b5ZKPPH61PcmHurELtJ47R4
+	 8T4OKoUmIyYIE86uF+uJojX4l9J/oQXb3FgUnduA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1238/1756] Bluetooth: hci_sync: Protect IRK identity reads with RCU
-Date: Wed, 18 Nov 2026 15:56:05 +0100
-Message-ID: <20261118150059.048823041@linuxfoundation.org>
+Subject: [PATCH 6.12 1265/1756] irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor
+Date: Wed, 18 Nov 2026 15:56:32 +0100
+Message-ID: <20261118150100.021359866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,187 +71,345 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit 4b76fa362110cf1b74a0263c14406b71de99894c ]
+[ Upstream commit b08e2f42e86b5848add254da45b56fc672e2bced ]
 
-hci_le_set_privacy_mode_sync() needs the IRK returned by
-hci_find_irk_by_addr() to remain allocated until its identity address
-and type have been copied into the command. The finder drops its RCU
-read lock before returning this borrowed pointer, leaving the later
-field reads unprotected.
+Within a realm guest the ITS is emulated by the host. This means the
+allocations must have been made available to the host by a call to
+set_memory_decrypted(). Introduce an allocation function which performs
+this extra call.
 
-When a privacy-capable controller has a pending peer with address
-resolution and device privacy enabled, accept-list programming can
-reach this helper while management reloads the IRKs. The request
-worker holds hdev->req_lock, whereas load_irks() takes hdev->lock,
-allowing the following ordering:
+For the ITT use a custom genpool-based allocator that calls
+set_memory_decrypted() for each page allocated, but then suballocates the
+size needed for each ITT. Note that there is no mechanism implemented to
+return pages from the genpool, but it is unlikely that the peak number of
+devices will be much larger than the normal level - so this isn't expected
+to be an issue.
 
-  Request worker                     Management / RCU reclaim
-  hci_le_set_privacy_mode_sync()
-    hci_find_irk_by_addr()
-      rcu_read_lock()
-      find matching IRK
-      rcu_read_unlock()
-      return borrowed IRK
-                                     load_irks()
-                                       hci_dev_lock(hdev)
-                                       hci_smp_irks_clear()
-                                         list_del_rcu()
-                                         kfree_rcu()
-                                       hci_dev_unlock(hdev)
-                                     RCU grace period and IRK free
-    read irk->addr_type
-    copy irk->bdaddr
-
-The request then accesses a freed IRK. KASAN reports a one-byte
-use-after-free read of addr_type on this path.
-
-Keep an outer RCU read-side critical section across the lookup and
-both identity-field copies. The finder's nested unlock then leaves
-the IRK protected until the caller finishes copying it. Release RCU
-on a lookup miss and after copying the fields, before the synchronous
-HCI command can sleep.
-
-KASAN report as below:
-
-    ==================================================================
-        BUG: KASAN: slab-use-after-free in
-    hci_le_add_accept_list_sync+0x90f/0x940
-    Read of size 1 at addr ffff88810aa6072c by task kworker/u17:0/493
-
-    Workqueue: hci0 hci_cmd_sync_work
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     kasan_report+0xe0/0x110
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     hci_le_add_accept_list_sync+0x90f/0x940
-     ? __pfx_hci_le_add_accept_list_sync+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? conn_params_copy+0x3a0/0x650
-     hci_passive_scan_sync+0x8c9/0x1e80
-     ? __pfx_hci_passive_scan_sync+0x10/0x10
-     ? find_held_lock+0x2b/0x80
-     ? hci_lookup_le_connect+0x181/0x3c0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? find_held_lock+0x2b/0x80
-     ? hci_update_passive_scan_sync+0x437/0x950
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x280
-     hci_update_passive_scan_sync+0x461/0x950
-     hci_cmd_sync_work+0x1b3/0x450
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 507:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     hci_add_irk+0xb6/0x220
-     load_irks+0x5ef/0x7e0
-     hci_sock_sendmsg+0x128b/0x22e0
-     __sys_sendto+0x425/0x470
-     __x64_sys_sendto+0xe5/0x1c0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 0:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     __rcu_free_sheaf_prepare+0x65/0x2a0
-     rcu_free_sheaf+0x1f/0xe0
-     rcu_core+0x661/0x1d10
-     handle_softirqs+0x201/0x930
-     __irq_exit_rcu+0x110/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-    The buggy address belongs to the object at ffff88810aa60700
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 44 bytes inside of
-     freed 64-byte region [ffff88810aa60700, ffff88810aa60740)
-
-    The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
-    pfn:0x10aa60
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-        raw: 0200000000000000 ffff8881000428c0 dead000000000100
-    dead000000000122
-        raw: 0000000000000000 0000000000200020 00000000f5000000
-    0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88810aa60600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810aa60680: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff88810aa60700: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                      ^
-     ffff88810aa60780: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810aa60800: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-
-Fixes: adae20cb2d20 ("Bluetooth: Convert IRK list to RCU")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Co-developed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Will Deacon <will@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/all/20241002141630.433502-2-steven.price@arm.com
+Stable-dep-of: 32e056cc1d15 ("irqchip/gic-v3-its: Don't free a vPE table shared with another ITS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 138 +++++++++++++++++++++++++------
+ 1 file changed, 115 insertions(+), 23 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 96da05eb380a5..fdf073a8f8b9b 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2629,13 +2629,19 @@ static int hci_le_set_privacy_mode_sync(struct hci_dev *hdev,
- 	if (!(params->flags & HCI_CONN_FLAG_DEVICE_PRIVACY))
- 		return 0;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index c138796d792eb..6e4afde808979 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -12,12 +12,14 @@
+ #include <linux/crash_dump.h>
+ #include <linux/delay.h>
+ #include <linux/efi.h>
++#include <linux/genalloc.h>
+ #include <linux/interrupt.h>
+ #include <linux/iommu.h>
+ #include <linux/iopoll.h>
+ #include <linux/irqdomain.h>
+ #include <linux/list.h>
+ #include <linux/log2.h>
++#include <linux/mem_encrypt.h>
+ #include <linux/memblock.h>
+ #include <linux/mm.h>
+ #include <linux/msi.h>
+@@ -27,6 +29,7 @@
+ #include <linux/of_pci.h>
+ #include <linux/of_platform.h>
+ #include <linux/percpu.h>
++#include <linux/set_memory.h>
+ #include <linux/slab.h>
+ #include <linux/syscore_ops.h>
  
-+	rcu_read_lock();
+@@ -166,6 +169,7 @@ struct its_device {
+ 	struct its_node		*its;
+ 	struct event_lpi_map	event_map;
+ 	void			*itt;
++	u32			itt_sz;
+ 	u32			nr_ites;
+ 	u32			device_id;
+ 	bool			shared;
+@@ -201,6 +205,87 @@ static DEFINE_IDA(its_vpeid_ida);
+ #define gic_data_rdist_rd_base()	(gic_data_rdist()->rd_base)
+ #define gic_data_rdist_vlpi_base()	(gic_data_rdist_rd_base() + SZ_128K)
+ 
++static struct page *its_alloc_pages_node(int node, gfp_t gfp,
++					 unsigned int order)
++{
++	struct page *page;
++	int ret = 0;
 +
- 	irk = hci_find_irk_by_addr(hdev, &params->addr, params->addr_type);
--	if (!irk)
-+	if (!irk) {
-+		rcu_read_unlock();
- 		return 0;
++	page = alloc_pages_node(node, gfp, order);
++
++	if (!page)
++		return NULL;
++
++	ret = set_memory_decrypted((unsigned long)page_address(page),
++				   1 << order);
++	/*
++	 * If set_memory_decrypted() fails then we don't know what state the
++	 * page is in, so we can't free it. Instead we leak it.
++	 * set_memory_decrypted() will already have WARNed.
++	 */
++	if (ret)
++		return NULL;
++
++	return page;
++}
++
++static struct page *its_alloc_pages(gfp_t gfp, unsigned int order)
++{
++	return its_alloc_pages_node(NUMA_NO_NODE, gfp, order);
++}
++
++static void its_free_pages(void *addr, unsigned int order)
++{
++	/*
++	 * If the memory cannot be encrypted again then we must leak the pages.
++	 * set_memory_encrypted() will already have WARNed.
++	 */
++	if (set_memory_encrypted((unsigned long)addr, 1 << order))
++		return;
++	free_pages((unsigned long)addr, order);
++}
++
++static struct gen_pool *itt_pool;
++
++static void *itt_alloc_pool(int node, int size)
++{
++	unsigned long addr;
++	struct page *page;
++
++	if (size >= PAGE_SIZE) {
++		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, get_order(size));
++
++		return page ? page_address(page) : NULL;
 +	}
- 
- 	memset(&cp, 0, sizeof(cp));
- 	cp.bdaddr_type = irk->addr_type;
- 	bacpy(&cp.bdaddr, &irk->bdaddr);
-+	rcu_read_unlock();
 +
- 	cp.mode = HCI_DEVICE_PRIVACY;
++	do {
++		addr = gen_pool_alloc(itt_pool, size);
++		if (addr)
++			break;
++
++		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
++		if (!page)
++			break;
++
++		gen_pool_add(itt_pool, (unsigned long)page_address(page), PAGE_SIZE, node);
++	} while (!addr);
++
++	return (void *)addr;
++}
++
++static void itt_free_pool(void *addr, int size)
++{
++	if (!addr)
++		return;
++
++	if (size >= PAGE_SIZE) {
++		its_free_pages(addr, get_order(size));
++		return;
++	}
++
++	gen_pool_free(itt_pool, (unsigned long)addr, size);
++}
++
+ /*
+  * Skip ITSs that have no vLPIs mapped, unless we're on GICv4.1, as we
+  * always have vSGIs mapped.
+@@ -2184,7 +2269,8 @@ static struct page *its_allocate_prop_table(gfp_t gfp_flags)
+ {
+ 	struct page *prop_page;
  
- 	/* Note: params->privacy_mode is not updated since it is a copy */
+-	prop_page = alloc_pages(gfp_flags, get_order(LPI_PROPBASE_SZ));
++	prop_page = its_alloc_pages(gfp_flags,
++				    get_order(LPI_PROPBASE_SZ));
+ 	if (!prop_page)
+ 		return NULL;
+ 
+@@ -2195,8 +2281,7 @@ static struct page *its_allocate_prop_table(gfp_t gfp_flags)
+ 
+ static void its_free_prop_table(struct page *prop_page)
+ {
+-	free_pages((unsigned long)page_address(prop_page),
+-		   get_order(LPI_PROPBASE_SZ));
++	its_free_pages(page_address(prop_page), get_order(LPI_PROPBASE_SZ));
+ }
+ 
+ static bool gic_check_reserved_range(phys_addr_t addr, unsigned long size)
+@@ -2318,7 +2403,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
+ 		order = get_order(GITS_BASER_PAGES_MAX * psz);
+ 	}
+ 
+-	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO, order);
++	page = its_alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO, order);
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+@@ -2331,7 +2416,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
+ 		/* 52bit PA is supported only when PageSize=64K */
+ 		if (psz != SZ_64K) {
+ 			pr_err("ITS: no 52bit PA support when psz=%d\n", psz);
+-			free_pages((unsigned long)base, order);
++			its_free_pages(base, order);
+ 			return -ENXIO;
+ 		}
+ 
+@@ -2387,7 +2472,7 @@ static int its_setup_baser(struct its_node *its, struct its_baser *baser,
+ 		pr_err("ITS@%pa: %s doesn't stick: %llx %llx\n",
+ 		       &its->phys_base, its_base_type_string[type],
+ 		       val, tmp);
+-		free_pages((unsigned long)base, order);
++		its_free_pages(base, order);
+ 		return -ENXIO;
+ 	}
+ 
+@@ -2526,8 +2611,7 @@ static void its_free_tables(struct its_node *its)
+ 
+ 	for (i = 0; i < GITS_BASER_NR_REGS; i++) {
+ 		if (its->tables[i].base) {
+-			free_pages((unsigned long)its->tables[i].base,
+-				   its->tables[i].order);
++			its_free_pages(its->tables[i].base, its->tables[i].order);
+ 			its->tables[i].base = NULL;
+ 		}
+ 	}
+@@ -2793,7 +2877,7 @@ static bool allocate_vpe_l2_table(int cpu, u32 id)
+ 
+ 	/* Allocate memory for 2nd level table */
+ 	if (!table[idx]) {
+-		page = alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(psz));
++		page = its_alloc_pages(GFP_KERNEL | __GFP_ZERO, get_order(psz));
+ 		if (!page)
+ 			return false;
+ 
+@@ -2912,7 +2996,7 @@ static int allocate_vpe_l1_table(void)
+ 
+ 	pr_debug("np = %d, npg = %lld, psz = %d, epp = %d, esz = %d\n",
+ 		 np, npg, psz, epp, esz);
+-	page = alloc_pages(GFP_ATOMIC | __GFP_ZERO, get_order(np * PAGE_SIZE));
++	page = its_alloc_pages(GFP_ATOMIC | __GFP_ZERO, get_order(np * PAGE_SIZE));
+ 	if (!page)
+ 		return -ENOMEM;
+ 
+@@ -2958,8 +3042,7 @@ static struct page *its_allocate_pending_table(gfp_t gfp_flags)
+ {
+ 	struct page *pend_page;
+ 
+-	pend_page = alloc_pages(gfp_flags | __GFP_ZERO,
+-				get_order(LPI_PENDBASE_SZ));
++	pend_page = its_alloc_pages(gfp_flags | __GFP_ZERO, get_order(LPI_PENDBASE_SZ));
+ 	if (!pend_page)
+ 		return NULL;
+ 
+@@ -2971,7 +3054,7 @@ static struct page *its_allocate_pending_table(gfp_t gfp_flags)
+ 
+ static void its_free_pending_table(struct page *pt)
+ {
+-	free_pages((unsigned long)page_address(pt), get_order(LPI_PENDBASE_SZ));
++	its_free_pages(page_address(pt), get_order(LPI_PENDBASE_SZ));
+ }
+ 
+ /*
+@@ -3304,8 +3387,8 @@ static bool its_alloc_table_entry(struct its_node *its,
+ 
+ 	/* Allocate memory for 2nd level table */
+ 	if (!table[idx]) {
+-		page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
+-					get_order(baser->psz));
++		page = its_alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
++					    get_order(baser->psz));
+ 		if (!page)
+ 			return false;
+ 
+@@ -3401,7 +3484,6 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 	if (WARN_ON(!is_power_of_2(nvecs)))
+ 		nvecs = roundup_pow_of_two(nvecs);
+ 
+-	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+ 	/*
+ 	 * Even if the device wants a single LPI, the ITT must be
+ 	 * sized as a power of two (and you need at least one bit...).
+@@ -3412,7 +3494,11 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 	nr_ites = max(2, nvecs);
+ 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
+ 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
+-	itt = kzalloc_node(sz, GFP_KERNEL, its->numa_node);
++
++	itt = itt_alloc_pool(its->numa_node, sz);
++
++	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
++
+ 	if (alloc_lpis) {
+ 		lpi_map = its_lpi_alloc(nvecs, &lpi_base, &nr_lpis);
+ 		if (lpi_map)
+@@ -3424,9 +3510,9 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 		lpi_base = 0;
+ 	}
+ 
+-	if (!dev || !itt ||  !col_map || (!lpi_map && alloc_lpis)) {
++	if (!dev || !itt || !col_map || (!lpi_map && alloc_lpis)) {
+ 		kfree(dev);
+-		kfree(itt);
++		itt_free_pool(itt, sz);
+ 		bitmap_free(lpi_map);
+ 		kfree(col_map);
+ 		return NULL;
+@@ -3436,6 +3522,7 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
+ 
+ 	dev->its = its;
+ 	dev->itt = itt;
++	dev->itt_sz = sz;
+ 	dev->nr_ites = nr_ites;
+ 	dev->event_map.lpi_map = lpi_map;
+ 	dev->event_map.col_map = col_map;
+@@ -3463,7 +3550,7 @@ static void its_free_device(struct its_device *its_dev)
+ 	list_del(&its_dev->entry);
+ 	raw_spin_unlock_irqrestore(&its_dev->its->lock, flags);
+ 	kfree(its_dev->event_map.col_map);
+-	kfree(its_dev->itt);
++	itt_free_pool(its_dev->itt, its_dev->itt_sz);
+ 	kfree(its_dev);
+ }
+ 
+@@ -5177,8 +5264,9 @@ static int __init its_probe_one(struct its_node *its)
+ 		}
+ 	}
+ 
+-	page = alloc_pages_node(its->numa_node, GFP_KERNEL | __GFP_ZERO,
+-				get_order(ITS_CMD_QUEUE_SZ));
++	page = its_alloc_pages_node(its->numa_node,
++				    GFP_KERNEL | __GFP_ZERO,
++				    get_order(ITS_CMD_QUEUE_SZ));
+ 	if (!page) {
+ 		err = -ENOMEM;
+ 		goto out_unmap_sgir;
+@@ -5244,7 +5332,7 @@ static int __init its_probe_one(struct its_node *its)
+ out_free_tables:
+ 	its_free_tables(its);
+ out_free_cmd:
+-	free_pages((unsigned long)its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
++	its_free_pages(its->cmd_base, get_order(ITS_CMD_QUEUE_SZ));
+ out_unmap_sgir:
+ 	if (its->sgir_base)
+ 		iounmap(its->sgir_base);
+@@ -5734,6 +5822,10 @@ int __init its_init(struct fwnode_handle *handle, struct rdists *rdists,
+ 	bool has_v4_1 = false;
+ 	int err;
+ 
++	itt_pool = gen_pool_create(get_order(ITS_ITT_ALIGN), -1);
++	if (!itt_pool)
++		return -ENOMEM;
++
+ 	gic_rdists = rdists;
+ 
+ 	lpi_prop_prio = irq_prio;
 -- 
 2.53.0
 
