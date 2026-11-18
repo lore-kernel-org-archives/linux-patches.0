@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020486;
-	b=sIol5awyKxE3o7KHNpOwnjyv3Oi4Pwm32Nk7XPajSRMSkpmEZUm0NHLt5sl57zTjh5Sp
-	 7yuQgZVvjyMK8I8Z4A74MOugHpjK59KL81IwycrvMI4ffXbr48O1HyOaR6j6mQlg1aj9V
-	 MMpiHEuKBr4h22dnsEXHDmcsJB/6yqbhtGA2QxppLsTstreMoDdnF8cnS5QjTomz3uEuA
-	 xoCmIAYsvA4sKoKDdXeV5Sha4LVLq9KFDFMqXnRSorYJS91OfIVkTv7UR0TrvJ3BtjXUT
-	 53n7vNDUHK5vOcQS9sXqXXsc5ACNeLUBad62bN0ax6AmV3ks/GXLfiIK/Pj69K7XE5Q==
+	t=1795020489;
+	b=EmOp/lm3Luq/eoG3q686jF/PUX9dYiEaIzxWiaurYE5x15DXP3xFRmM54XnV5F+DKNzi
+	 lJclqfBShOhmHtnTOUPXVayyjl33QiilJkY0sAQC5ETqDcfIfXM9SPiSmvppwl1CbuOVN
+	 nhRvRL6crGOKgfT1oe4vzViJ8sMIj+SNEwCNBrPSPslGaDsID4zrQx2F+YuyDGiAPPvrb
+	 QbFwHteZnxqr0lXisGIZ+4N+aVtJq5VSlSqEkvSUgmdMOAXTZHuEao3a3gy+07snOdBZn
+	 gpeEfOgFoF/9vFaVqUsiRnCiFyKKIAmSXD2LQCE1Cbo/8sajm3vgvXcs/p69Xhtk5Rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=JVPL2iAppyQZpXFINxl1IrjnghrI8S3p3mrsjgV5X28=;
-	b=u+oROyhw6lcRqVJXkPTL/G1qwB8jFLzJPJc5RZhCianb2poNUtQnRboLaOMQo6RJwSpo
-	 pbNqDThmz2TdvCzdOPf38P21KtcVN9gIrC6cYb49Fjul3ysLwHXAtCPwE24ikXgJzvstW
-	 Vhh0969zI3+bgfrSE8HZYCe2R7N306b9kyprnR7Mx6kOLNXzQPypYWAkVbb56ZvN3/2sm
-	 mHUpDCAKz3qBwub1ivVCZaf9Q75JmWq5mV1AjA38AK3whCsApIqDQPMWEp/bmrMMFZKtQ
-	 8at0qZEe3vzOwsCD7SGYcvfF1PHKjA6uoHw1WUkgNK3EQq8baFOW6s5B1aIg/DeomsA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Pq3dnIL2BM4yqxIu32IiR6S+Z4hPHdXaTALO637SOI0=;
+	b=UNEPeQmNs7BI1CIdE1SMdtpNxHKlKnc2QCMrrQaRz98pc/nz9xPBszrE/N5l+iHEB/XP
+	 unjdAQ/gl9oH73aOI37iufDbtX4nE8WvqRvs+6MyYwtNDiufsP9uyGBNHb3Ep6imG0OLP
+	 yPV3D6ZVX2xpvyvmGhEX1vPRa8blG2axCZGFm1lraL7taqr7JhlCROI6PsoXo/UFmwqfp
+	 XQmGTUV1IEivTVIfYaybUxg6UquGQHit3vjKXKtccsgnuQgLZzMLelnhfbcG1wuvzbPI+
+	 BtmubxJf4Ppz0x8Hq8+BV9eZeMYKR5FOePzeCgsn7A+gnYnVUqnaTC9ey5wNXhHfVcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LG/I2gnB";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ubzSUfF0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9D3606A31C;
-	Wed, 18 Nov 2026 16:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94827606A31C;
+	Wed, 18 Nov 2026 16:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LG/I2gnB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BF31F000C4;
-	Wed, 18 Nov 2026 16:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ubzSUfF0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74351F000C5;
+	Wed, 18 Nov 2026 16:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020486;
-	bh=JVPL2iAppyQZpXFINxl1IrjnghrI8S3p3mrsjgV5X28=;
+	s=korg; t=1795020489;
+	bh=Pq3dnIL2BM4yqxIu32IiR6S+Z4hPHdXaTALO637SOI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LG/I2gnBl0/cczso29tLqbKRHczA9owXYADwjyuuDlFw4HudQ7S8No/sfTNgFCXvD
-	 8m40kumqil/UVvmuXvuOqwcFHDOmHLcxnLPqRBP0pAiXvlKupnMrn0pDGVy5+WaiYY
-	 VuO1DZtEqQG+Yd4LtkGywMQSDwLClLzo4TNhS9Cw=
+	b=ubzSUfF08DhMaBqRW6HfXZKJ0HRor1IRGpR8O6a8imGQpg4oE2f8iiHzEtFcIE3oh
+	 X+9FbIclTZH+kWbBHovjEwqjYDETuM297pD/9BhpIhZJuIKjVlpe21KM+KSzCp2j6f
+	 R4StVdeGBOH84wa2OYcSExg9rdRe4MoY+9R1MVBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1928/2651] ata: libata-core: Fix NO_FUA quirks shadowed by earlier quirk entries
-Date: Wed, 18 Nov 2026 15:52:48 +0100
-Message-ID: <20261118150356.111490807@linuxfoundation.org>
+Subject: [PATCH 7.3 1929/2651] selftests/bpf: Use its own netns in flow_dissector_skb_less_direct_attach
+Date: Wed, 18 Nov 2026 15:52:49 +0100
+Message-ID: <20261118150356.140378654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,92 +63,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 4153718a215eeb5bab3df50417bbd9602e84658c ]
+[ Upstream commit 76c1913f311f32971dc2c3e106e285bd63c1804d ]
 
-ata_dev_quirks() uses the first entry in __ata_dev_quirks[] that
-matches the device and ignores all later entries. Commit 38d431229bfb
-("ata: libata: exclude FUA support for known buggy drives") appended
-three ATA_QUIRK_NO_FUA entries to the end of the table, with model
-patterns meant to cover whole product lines. Earlier entries already
-match some or all of these drives, so NO_FUA is not always applied:
+test_flow_dissector_skb_less_direct_attach() and
+test_flow_dissector_skb_less_indirect_attach() each create a netns to
+run in, and test_progs may run the two at the same time.
 
-- "INTEL*SSDSC2CT*" never takes effect. Every model it matches also
-  matches the earlier "INTEL*SSD*" entry, so these drives only get
-  ATA_QUIRK_ZERO_AFTER_TRIM.
+Both name their netns flow_dissector_skb_less_indirect_attach_ns. When
+the two tests overlap, one of them fails to create or open the netns,
+or loses it to the cleanup of the other one.
 
-- "WDC*WD2500J*" does not take effect for "WDC WD2500JD-*" drives,
-  which match the earlier ATA_QUIRK_WD_BROKEN_LPM entry.
+Name the netns of the direct attach test after that test.
 
-- "OCZ-VERTEX*" does not take effect for "OCZ-VERTEX" drives with
-  firmware "1.30", which match the earlier ATA_QUIRK_BROKEN_HPA entry.
-
-Move the Intel entry in front of "INTEL*SSD*" and keep
-ATA_QUIRK_ZERO_AFTER_TRIM in it, so these drives stay on the
-ZERO_AFTER_TRIM whitelist. Add ATA_QUIRK_NO_FUA to the WD2500JD and
-OCZ Vertex 1.30 entries. The quirks of all other drives are unchanged.
-
-libata only uses FUA when it is enabled with libata.fua=1, so systems
-using the default setting are not affected.
-
-Fixes: 38d431229bfb ("ata: libata: exclude FUA support for known buggy drives")
-Assisted-by: LLM
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261013193915.174460-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 2b044dd186f0 ("selftests/bpf: re-split main function into dedicated tests")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+Link: https://lore.kernel.org/bpf/20261008-selftests-bpf-flow-dissector-netns-v1-1-5d9889aaad84@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/flow_dissector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index f218773f187fc..1fe222008abd2 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4323,7 +4323,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "MAXTOR 6L080L4",	"A93.0500",	ATA_QUIRK_BROKEN_HPA },
+diff --git a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+index fb48926814647..f6fefb14cda3c 100644
+--- a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
++++ b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+@@ -706,7 +706,7 @@ void test_flow_dissector_skb_less_direct_attach(void)
+ 	struct bpf_flow *skel;
+ 	struct netns_obj *ns;
  
- 	/* this one allows HPA unlocking but fails IOs on the area */
--	{ "OCZ-VERTEX",		    "1.30",	ATA_QUIRK_BROKEN_HPA },
-+	{ "OCZ-VERTEX",		    "1.30",	ATA_QUIRK_BROKEN_HPA |
-+						ATA_QUIRK_NO_FUA },
+-	ns = netns_new("flow_dissector_skb_less_indirect_attach_ns", true);
++	ns = netns_new("flow_dissector_skb_less_direct_attach_ns", true);
+ 	if (!ASSERT_OK_PTR(ns, "create and open netns"))
+ 		return;
  
- 	/* Devices which report 1 sector over size HPA */
- 	{ "ST340823A",		NULL,		ATA_QUIRK_HPA_SIZE },
-@@ -4459,6 +4460,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "Crucial*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "INTEL SSDSC2KG480G8", "XCV10120",	ATA_QUIRK_ZERO_AFTER_TRIM |
- 						ATA_QUIRK_MAX_SEC },
-+	{ "INTEL*SSDSC2CT*",		NULL,	ATA_QUIRK_ZERO_AFTER_TRIM |
-+						ATA_QUIRK_NO_FUA },
- 	{ "INTEL*SSD*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "SSD*INTEL*",			NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
- 	{ "Samsung*SSD*",		NULL,	ATA_QUIRK_ZERO_AFTER_TRIM },
-@@ -4479,7 +4482,8 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "WDC WD1200JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 	{ "WDC WD1600JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 	{ "WDC WD2000JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
--	{ "WDC WD2500JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
-+	{ "WDC WD2500JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM |
-+						ATA_QUIRK_NO_FUA },
- 	{ "WDC WD3000JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 	{ "WDC WD3200JD-*",		NULL,	ATA_QUIRK_WD_BROKEN_LPM },
- 
-@@ -4504,7 +4508,6 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
- 	{ "Maxtor",		"BANC1G10",	ATA_QUIRK_NO_FUA },
- 	{ "WDC*WD2500J*",	NULL,		ATA_QUIRK_NO_FUA },
- 	{ "OCZ-VERTEX*",	NULL,		ATA_QUIRK_NO_FUA },
--	{ "INTEL*SSDSC2CT*",	NULL,		ATA_QUIRK_NO_FUA },
- 
- 	/* End Marker */
- 	{ }
 -- 
 2.53.0
 
