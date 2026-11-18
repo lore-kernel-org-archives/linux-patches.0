@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036850;
-	b=t/uRbLEAR+UqDEvjhB6rvUPdy59zGmTAFEKEaijD22A7gyTZ3AWgQpaLzVOYGukjmlkA
-	 ZIEQ7lsKjrbMgE91DIhgnwBUXLOQUlbuzBcilEqcWgpuXC7cDOuY8ipFPDuwr9mf/2byg
-	 eXpCYcXwieSvgj4coZM5Nfvv+vshr5pTdP4ImP6cRy2anl37hTP3iiHAJXQbCHAgXjfik
-	 g2Ss1L97s+s2XvM+BxU4AU+X/YaPewMUTyRFonjlIx4si5YjzjEFmQ0UGqSXbADNuSNlx
-	 tBcexP3PLMbgkiyMQt1G4jY7Wc72C4MvuVLarmJi3Pqey4mtKGJCvlIwStDwZj3qlqA==
+	t=1795036854;
+	b=XLchPOCBxmEwGoCz3XdR10VnEoD3uLHqM/uoCr7NLVwHSWdCHgJtQyY5AL2dIGdDueYd
+	 FgTqwVJhDdKbuB9GecpXtlN0B6w7jLMDfaA3Q+dJtKPgzXa9hjiHi+xXobU7dkFczBksb
+	 AepdXM/eILD3dNa12/fDdLG79drp5TWxkH4FymaTHDJdxjOUiZ3R7twAupfxhF5Txfbcf
+	 h7pr9XC3X4RR278O5tZYDlgI+mq7y7cThnI4Gr91u2C6XHoSt7SpzTPDH9Szxfz4dZC6q
+	 OuB+sZ7yoFYzhWVxjw1Pbgiqirjf6x7HTYBybFERlOdZQpsK0MePGpTJ7ouM0AHcUVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036850;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=beq3FVfF6dkpS9gwC4+Zj0Wi1fYfmHWki92buGXgK/0=;
-	b=hNtRJSJNPy5eudpLYeYwmyJCEd9HAm+CMrg0cItZ6TZuXiFuyPv8h80NXfK1cYCPAdm1
-	 NEKZGoUwrjHcUcJsFsP0HHfbMKGFELWKNNDoc7surWGf1Y2cPpNSjsAWdvOj9eq5V8KtI
-	 yJwt3EcyBOH9KGwmAYnrRxHukZ1lYY32+kIPouMPxjLIwRaCQa1JvknHDn1xaVnC1PJ5r
-	 9ASNl/YgzcgpxxthBfZPb6qw8remgNbfG5lpdw/yibtHsK3METeGddI1qVQjuI42ALphs
-	 F9y/IlphZShs44JmTDYzToc5JQBn/S9E3KCVihSrJP5fZ/YJ7F3wIhXwGTgUGrzLdMw==
+	bh=UxHy2OetH6vhmu4ZucqZcZ9dR+xW+XN3IZJajRdfLAs=;
+	b=fp/BvrR4hObEoNcGGTjMM7GYppOQKtT8aFb21gGn7zcHXb5hVoMPqtz+wOFKx50enpa1
+	 lJqTVm5K8rLOgxjlrrsFKjCp776SU7dhDfADF5Da+5fuxjsXZw4nosqIp/A3VZJza47x1
+	 PZnkTywzgWND15atWMQbsgwX50teB8iiiQ/eakkcP1unRggLIuTrAY4WO+iAUcLmUJMLv
+	 ZD52EbocNVYJr5MigzSQwqtEERrv+KvUiokj8eyJO9ed7LRa/sMXWdoGtK/PbO6XYUQqz
+	 rX8Q3AjdxjUCN3MY1keKxnhBFtoxq7G7VsZIES5bvXJEkMSE+83Sjon8Ewh64ni/5Xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPkgg36s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9Aj63IF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310BC606A32C;
-	Wed, 18 Nov 2026 21:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDC5606A320;
+	Wed, 18 Nov 2026 21:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZPkgg36s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5F91F000C5;
-	Wed, 18 Nov 2026 21:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9Aj63IF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC10D1F000C5;
+	Wed, 18 Nov 2026 21:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036850;
-	bh=beq3FVfF6dkpS9gwC4+Zj0Wi1fYfmHWki92buGXgK/0=;
+	s=korg; t=1795036854;
+	bh=UxHy2OetH6vhmu4ZucqZcZ9dR+xW+XN3IZJajRdfLAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZPkgg36sx7orGeL3bQFwtoqqfFce66cLYnH0SExNYjISrezW9yPVoC7TWX7qe9/LJ
-	 eHujdOdkle25ZVHLtZ5N4r0yn1z5bifbIukv+KSP7CLPNIZU0RwLNEuM4Mnokd82j4
-	 ckPqd/tk3QV8m4d14ZIFLhWDJ9mFkltbssyehv3A=
+	b=Q9Aj63IFjXEIl5AAy8iIKW8coE/beHAygCR9c4c2rp8oGbVjGVHq7tuMSfZ8nBS5G
+	 PXs1PWcgdhpZA5SX37RJTlpNuefdZ1fpW9t18ksg4r/FgV69BY7HR9WDsJLsOLjZR9
+	 DxES6b0K/4dmlB2baUzJccgXZCUAOb6x57Zp60Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pufan Jin <cyan2254650260@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1207/3318] spi: zynq-qspi: fix address buffer corruption and support 4-byte address
-Date: Wed, 18 Nov 2026 15:30:29 +0100
-Message-ID: <20261118150356.380164786@linuxfoundation.org>
+Subject: [PATCH 6.6 1208/3318] posix-cpu-timers: Fix pid refcount leak in do_cpu_nanosleep() signal path
+Date: Wed, 18 Nov 2026 15:30:30 +0100
+Message-ID: <20261118150356.411048967@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,86 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pufan Jin <cyan2254650260@gmail.com>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit dc5ca34f5e8dc10c566ef39aa3b1a201a17ca734 ]
+[ Upstream commit 8ccd731b63a0183ca2b0e18f3ca15864b3f37eda ]
 
-In zynq_qspi_exec_mem_op(), when transmitting address bytes, the driver
-iterates over op->addr.nbytes and populates xqspi->txbuf[i]. However,
-xqspi->txbuf is never re-assigned before populating the address, meaning
-it still points to (u8 *)&op->cmd.opcode from the command phase.
+do_cpu_nanosleep() sleeps on a temporary k_itimer whose reference on the
+target's struct pid is taken by posix_cpu_timer_create() and dropped by
+posix_cpu_timer_del(). When a signal ends the sleep, the timer is
+disarmed with posix_cpu_timer_set(), but posix_cpu_timer_del() is only
+called for a result of 0 or TIMER_RETRY. If the target thread or process
+has exited in the meantime, timer_lock_sighand() finds no task,
+posix_cpu_timer_set() returns -ESRCH and the pid reference is leaked.
 
-This causes two severe issues:
-1. Memory corruption: Writing into xqspi->txbuf writes past the opcode
-   buffer on the stack (which was passed as const struct spi_mem_op *).
-   If opcode is zero, xqspi->txbuf is uninitialized.
-2. In zynq_qspi_supports_op(), operations with op->addr.nbytes > 3 are
-   rejected. When paired with SPI NOR flashes larger than 16MB (such as
-   Winbond W25Q256), spi_nor_spimem_check_read_pp_op() tests 4-byte address
-   support, which fails and causes spi_nor_select_read() to drop all read
-   capabilities, failing probe with -EINVAL (-22).
+An unprivileged user can trigger this: sleep on the CPU clock of a
+thread, let that thread exit, then signal the sleeper. Each round leaks
+one struct pid. Repeating it exhausts unreclaimable slab memory
+within minutes:
 
-The Zynq-7000 QSPI controller hardware in manual I/O mode natively supports
-transmitting 1 to 4 address bytes via its TXD FIFO registers
-(ZYNQ_QSPI_TXD_00_00_OFFSET).
+  Out of memory: Killed process 150 (poc) total-vm:789292kB, anon-rss:484kB
+  Kernel panic - not syncing: System is deadlocked on memory
 
-Fix this by introducing a local opaddr[4] buffer in zynq_qspi_exec_mem_op()
-and explicitly setting xqspi->txbuf = opaddr before populating address
-bytes. Also allow up to 4 address bytes in zynq_qspi_supports_op().
+Fix this by also calling posix_cpu_timer_del() on -ESRCH. With the
+target gone, the deletion is safe. It finds no task either and only
+drops the pid reference.
 
-Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
+Fixes: e26d70d271ee ("posix-timers: Cleanup reaped target handling")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
-Link: https://patch.msgid.link/20261016130812.282624-1-cyan2254650260@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20261012235149.66531-1-cenzhang@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-zynq-qspi.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ kernel/time/posix-cpu-timers.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-zynq-qspi.c b/drivers/spi/spi-zynq-qspi.c
-index 3c537b1c0e22d..e565630b9b47d 100644
---- a/drivers/spi/spi-zynq-qspi.c
-+++ b/drivers/spi/spi-zynq-qspi.c
-@@ -229,11 +229,10 @@ static bool zynq_qspi_supports_op(struct spi_mem *mem,
- 		return false;
- 
- 	/*
--	 * The number of address bytes should be equal to or less than 3 bytes.
-+	 * The number of address bytes should be equal to or less than 4 bytes.
- 	 */
--	if (op->addr.nbytes > 3)
-+	if (op->addr.nbytes > 4)
- 		return false;
--
- 	return true;
- }
- 
-@@ -524,6 +523,7 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
- 				 const struct spi_mem_op *op)
- {
- 	struct zynq_qspi *xqspi = spi_controller_get_devdata(mem->spi->controller);
-+	u8 opaddr[4] __aligned(4);
- 	int err = 0, i;
- 	u8 *tmpbuf;
- 
-@@ -549,12 +549,13 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
- 	}
- 
- 	if (op->addr.nbytes) {
--		for (i = 0; i < op->addr.nbytes; i++) {
--			xqspi->txbuf[i] = op->addr.val >>
-+		for (i = 0; i < op->addr.nbytes; i++)
-+			opaddr[i] = op->addr.val >>
- 					(8 * (op->addr.nbytes - i - 1));
--		}
- 
- 		reinit_completion(&xqspi->data_completion);
-+		xqspi->txbuf = opaddr;
-+
- 		xqspi->rxbuf = NULL;
- 		xqspi->tx_bytes = op->addr.nbytes;
- 		xqspi->rx_bytes = op->addr.nbytes;
+diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
+index fa730130fe154..e1312fbb69caf 100644
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -1607,8 +1607,8 @@ static int do_cpu_nanosleep(const clockid_t which_clock, int flags,
+ 		 */
+ 		expires = cpu_timer_getexpires(&timer.it.cpu);
+ 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
+-		if (!error) {
+-			/* Timer is now unarmed, deletion can not fail. */
++		if (error != TIMER_RETRY) {
++			/* Unarmed or target gone (-ESRCH), deletion can not fail. */
+ 			posix_cpu_timer_del(&timer);
+ 		} else {
+ 			while (error == TIMER_RETRY) {
 -- 
 2.53.0
 
