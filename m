@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058169;
-	b=a2GkKyJmAveFpo7hxygl4bgODD/qMmRU1pLODaFki1jQsL+ie1SKSgIf/c8sMZOWbWz9
-	 C1j4Wzcfr6t6T5l2MKUyj1KMt3a/aOX4s03zDQIcQXPQqtyPl1iheiaMEfpxqmrVIWA/X
-	 RnPTfVR0tZotM/dgLmqzfyYxR2xKTXd3km1rSlg2YbQCHsIws2l8E8QJrGVfLYn6wq7I2
-	 O43mWr4uCbSMeng7RUdF3O9VZZrHU0IWGAgRNN7h6MCGYmxzJ8PtPdzNhTMaojwwoTWHH
-	 EtEYs9wWTDUl3UnX2zNWqrahCWD37yp59l0ke2ocDkTcn4tTe4CuJJybKpUdTV0J6nQ==
+	t=1795058172;
+	b=ndjO2Xwr3YO6ArWdQQUz1CjNhNlzEP92L0Dr5WOBN2VGiVRGcEl1dS9EPaxQbdsngqFU
+	 VY2+J/FIcYoRgVls09cLRR87hfhuTMIbw6DmhlYTOooY9SYetcrW7odzbgErR2uYfhaFK
+	 x6z3nYbds1D1HMngsYfqEar54msNEkt4Wyx7HsqZpKSvy0FNJc4dHTsoJhvDx4E+FO/dd
+	 ZASX/eqYKBuIH1mC2Bdjj1EUmF8agu6GT3Ived5J0Uv8sv0uvoFQGcJi7IUQNQ2dTdcUq
+	 N7ESU1C6x1bAwLoXNJdwuMw+meEZc+D8Csnxor8dOnyYKuArYQlrQ4ni5YpLQlBfBGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058169;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058172;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pi3Fos6NwTUM08J9xmkPYzJj5GKgFNUI5PH0FVAhZg4=;
-	b=jUkjwPlzF0KUSRi9wnYK0ZiffDY0S21XLkStW5oHQ4MY+Nkxn3Ourh0xmXm5TOD29Ad/
-	 J7dz92d1NkZOqTQ91akIhnF5MkiBrEk9LGXw5rdasv8QTlA9Pt6/Q2oJfjn/eVHVAzIO2
-	 BclNxmvtSPL7PpdoUG1KC3uwVvdUHMUk66Z+nZWLCyZUVZY2FiW44xaiwdywW3+t/kZps
-	 XpoaVe9RpX8lZH/e3en1qnJKRWkAgC91cWbaPndYjKpYqfenFhB9PVSeCu8yq61hswFV3
-	 8rVKLN0JNZZW5d1T1AU85MLgTgWOmVGcd+J0ummxkay6ksxc5OXmlmdJYzpdPUEb8kw==
+	bh=1k+YlLXj4JyTACJmdgk5vapkxj09+yFG6hSibk3Yo2U=;
+	b=EPib2x8762slCUvnOEFs0NjuI0AmjTyxDryZp+mbBJPFoxZt5qWrSzc2ZbFXu540BdXe
+	 41H1zp1VkOd145gZ9tnaWpFwQrzSBmXHznH2GE7ZoJkk1EVXKMEVzCX2nsNxxtWe7Q1Fn
+	 6MLbJsugAl8n9m3HikNk/Rx/+znJSjXlq/GCEBiwrO6CuR4/gwIaA3FGak2eB152YwNPY
+	 x1ChmplS/98EcJSsHT0coprU3Bom02pwr7BKKoBD3nYFXVBBzMo6Pl7y/gXORF/ZXWsdE
+	 sHcmalPC9zVB0jR4z7zhBF2j+k7ywneGRpSG1nbE32LGrWuZ2zSRd5o3I527huh8M5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QwCsVdlX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hDUgQr5U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EFF606A31C;
-	Thu, 19 Nov 2026 03:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABF6606A31C;
+	Thu, 19 Nov 2026 03:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QwCsVdlX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7BC1F000C4;
-	Thu, 19 Nov 2026 03:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hDUgQr5U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF55B1F000C4;
+	Thu, 19 Nov 2026 03:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058169;
-	bh=pi3Fos6NwTUM08J9xmkPYzJj5GKgFNUI5PH0FVAhZg4=;
+	s=korg; t=1795058172;
+	bh=1k+YlLXj4JyTACJmdgk5vapkxj09+yFG6hSibk3Yo2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwCsVdlXJlyiR1Jk9Lk1BLmexnkHesg7jfqCUHWo0gylC6YvhDDDgnOG/GennmjFu
-	 iFENmXqJdqh1YDMDpmgVI0Qtdla21kkYKOdXCjkAAEs9eInlcXHgB9ivDuv24EfLDy
-	 horbu8rAvYGQR+LbmB7x0wBqomZ4E6wbxsqoF8kg=
+	b=hDUgQr5U7s6WPjBlwIiKE/Mx2twKkNLUgOPnkuj7qQe4sKx+3KUswxaMdQmI6jZYA
+	 x6QR4zRdLWP/AhbZl6lZTpaPf80pIyICGgF3O+/vKn+JUzvCTcPnm13FHx3NZWC4GM
+	 rI9yhooct9G3plcDqQuDmUf9o14L8D3KiGDLjUa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ramin Moussavi <ramin.moussavi@yacoub.de>,
+	Waldemar Brodkorb <wbx@openadk.org>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0389/1848] crypto: atmel-aes - fix AADLENR for standalone GHASH
-Date: Wed, 18 Nov 2026 15:40:27 +0100
-Message-ID: <20261118145929.995576649@linuxfoundation.org>
+Subject: [PATCH 5.10 0354/1848] microblaze: reserve the ABI argument-home area in the signal frame
+Date: Wed, 18 Nov 2026 15:39:52 +0100
+Message-ID: <20261118145927.576823955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,53 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Ramin Moussavi <ramin.moussavi@yacoub.de>
 
-[ Upstream commit 0dd8cded0e6f8c9635fe1d79d60dc7b2599b099b ]
+[ Upstream commit c5947d28c20955de897eeb98430f96db0494f7d7 ]
 
-atmel_aes_gcm_ghash_init() writes dd->total, the request's text length,
-to AES_AADLENR.  But the GHASH it runs hashes the dd->datalen bytes passed
-in: the 16-byte length block, or the padded IV when the IV is not 96 bits.
-The data sheet requires AES_AADLENR to hold the length of that input.
+The MicroBlaze procedure call standard reserves [r1+0] for the return
+address and lets a callee store its incoming register arguments r5..r10
+into the caller-provided home slots at [r1+4]..[r1+24].  When the kernel
+enters a signal handler it sets r1 to point at struct rt_sigframe, whose
+leading member is the siginfo prepared for the handler.  A handler that
+homes its arguments - which an unoptimised (-O0) build always does -
+therefore overwrites the first 24 bytes of that siginfo, so an
+SA_SIGINFO handler reads corrupted values.  The stores stay within
+siginfo (128 bytes) and do not reach the ucontext behind it.
 
-With empty plaintext and empty AAD, dd->total is 0 and the tag comes out
-wrong.  Later requests only pass because dd->total still holds the
-previous request's length.
+Reserve the home area by making a seven-word gap -- the return-address
+slot plus the six argument slots, 28 bytes -- the first member of struct
+rt_sigframe, so the handler's argument stores land in scratch space
+instead of clobbering siginfo.
 
-This is testmgr's first gcm(aes) vector, so CONFIG_CRYPTO_SELFTESTS=y
-fails at boot:
+Tested on qemu-system-microblazeel (petalogix-s3adsp1800) with the
+uClibc-ng NPTL test suite: tst-timer4, tst-timer5, tst-mqueue5 and
+tst-signal6 pass; before this change they failed because the handler
+clobbered the signal frame.
 
-  alg: aead: atmel-gcm-aes encryption test failed (wrong result) on test
-  vector 0, cfg="in-place (one sglist)"
-
-Without selftests the broken atmel-gcm-aes is preferred at priority 300.
-Seen on a SAM9X75 Curiosity with 6.18 and current mainline.
-
-Write dd->datalen instead.
-
-Fixes: d4419548dba9 ("crypto: atmel-aes - add support to GCM mode")
+Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
+Tested-by: Waldemar Brodkorb <wbx@openadk.org>
+Link: https://patch.msgid.link/20260821151809.1233057-3-ramin.moussavi@yacoub.de
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-aes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/microblaze/kernel/signal.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index 059c7db591fac..8f69245660a6d 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -1434,7 +1434,7 @@ static int atmel_aes_gcm_ghash_init(struct atmel_aes_dev *dd)
- 	struct atmel_aes_gcm_ctx *ctx = atmel_aes_gcm_ctx_cast(dd->ctx);
+diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
+index 5a8d173d7b75c..1a41f7266a000 100644
+--- a/arch/microblaze/kernel/signal.c
++++ b/arch/microblaze/kernel/signal.c
+@@ -49,6 +49,14 @@ struct sigframe {
+ };
  
- 	/* Set the data length. */
--	atmel_aes_write(dd, AES_AADLENR, dd->total);
-+	atmel_aes_write(dd, AES_AADLENR, dd->datalen);
- 	atmel_aes_write(dd, AES_CLENR, 0);
- 
- 	/* If needed, overwrite the GCM Intermediate Hash Word Registers */
+ struct rt_sigframe {
++	/*
++	 * Home area for the handler's register arguments: the MicroBlaze
++	 * ABI reserves [r1+0] for the return address and lets the callee
++	 * store r5..r10 at [r1+4]..[r1+24], and r1 points at this frame
++	 * when the handler is entered.  Without the gap those stores
++	 * corrupt frame->info.
++	 */
++	unsigned long abi_gap[7];
+ 	struct siginfo info;
+ 	struct ucontext uc;
+ 	unsigned long tramp[2];	/* signal trampoline */
 -- 
 2.53.0
 
