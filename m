@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027138;
-	b=JZrbMR6E30ZQbEYXFPdudv0mZKqmYN2W8BR5g81jLDY+Z1j9QPfS/0jGmGukx3/gF+DC
-	 NXrdjM8MVU8emC9JDlPD4NNnX10jwBtmZlY2ZDxKbULhWsTuuA4RJjIMC1eIV4ijH1CTd
-	 3wK6Zo543SY05gGJ+yfwfGc14cIeSV/ESlKd1mWT6glHS12bjhKIghVcwsq7Sp8qA/+k9
-	 9CFeo6OIoEcYpmJtkidgyRN67kcLcG26yO0K/NxKHB+Jq8l9+i4f9rlV/oRIsO2UpNt4t
-	 VRcLNhhajoeGEFfRiomQVRi16wONdKzJIHZt7osMS+CUI121kily8haJ9UyYppuQWZA==
+	t=1795027140;
+	b=kRawExA5SUuUhdRpm9vXUhxu063+jpfoKNoN6aM9BkdI+r0itffKI8vMxbN5HSsLxNYU
+	 dn1iN0JKizmtkYo+B7ObhQ1pBZVvzDkbw9Ooxv2jCFDBdjTOy5S/3NfQKXSM7MqXzhLu7
+	 CmTM9R4cPImWPIf5cEQttyoxi9I+Myt1rmg5FQNWYF86SyquRp3psCCiP0eweex5Esdeb
+	 GTdeUgr2Ow37eeo0Sq4Riw/Ial9OpVphW6DB95sAAVyy/M07PCC4sS8thbtmZG2WkA25M
+	 7w+cUQ+1CISk5HzHZiRXyvFICK4KvXCTu1rYZil9fb2EEymX5GPlZmk9B67VZ6buFPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sIqWoSnE3riybh7mkPkdbXBHoPpKBYQkH3LEFPOFEys=;
-	b=mUsRUn3VPO3oi286SsbTLG3UPlUpQ8wc1YVYEfxjTsyC7/jxrsMNTCNGHpd9xdcK6n/J
-	 qhbyP+G6sUJtmAOcGteoWxaz/qVrYD1JSloWUZYcZYsrHhpFM9iEHABOFGrVycs1lH5f1
-	 D3PPPC3783pK9lChZVRs57Cf52T88uzoHMSbH/+xpXrV4TinJHbnTlOMcOaWrJfge7Rww
-	 GyVcp+32v9CM5aSwoTi9rBHAt0q3g/50kYBuXS6bLKcSfX5vh6gkqOHcLFC6SD2iec6hT
-	 NhZ/h28mwJppZ7d9bbtP94q557tvmWYDP1vQ9TsY0Nucxs0zr0bq+pxfUobIq7oW1AA==
+	bh=dmyfzD229e2OVdx3biIbjP1Ox8GqQOPriOOodL7lUpQ=;
+	b=l2OJXD/6d3x021A0JDz/gwz1Pqf5H5de59TXHJHjJt8R+lc7KySVmPhC1Fp0p26aVK3f
+	 8qi5XIqeoQKSF+4Oi5B3nKryCb97VGqLE/Ot41NQye2Ns49ZhOmhXvmJPmHFPhvnf5VNY
+	 YP330xA9/KeC9IgDzJBbdZ5ezcKqYljWXE3YN299xNtlqQTTRGepwA+jJQYrpWuIwDGeC
+	 WI6jmULa/7XuaVkJqR3cVzOd5i++cJoo8jIrjRcET81xrpWunsVH3WGJpJCtq1j2E0iSn
+	 UW+4dwAAbDdI3eHzKYDLbEoyk39XRxQ1XGClF6d5HPCqD4bltJ46JM/Q0lfqxAX6Q0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZtlAQAOD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZ5iAA5w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC10606A325;
-	Wed, 18 Nov 2026 18:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A21606A31C;
+	Wed, 18 Nov 2026 18:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZtlAQAOD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054051F000C4;
-	Wed, 18 Nov 2026 18:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rZ5iAA5w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36A01F000C4;
+	Wed, 18 Nov 2026 18:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027137;
-	bh=sIqWoSnE3riybh7mkPkdbXBHoPpKBYQkH3LEFPOFEys=;
+	s=korg; t=1795027140;
+	bh=dmyfzD229e2OVdx3biIbjP1Ox8GqQOPriOOodL7lUpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZtlAQAODD/jXiVv7HXUZ8LfdeHMnWpFwREgjZuS6uAePatr0PS2eKyNfareX+laoL
-	 z28e+COVS6TdZS42ul8wy8By/hGXoD6N08+zSEqXAb6+qxUON0z5uG/TlDY0SPPWsE
-	 4+ezA5qWykd2LdW9b/E3gQTcgn19qlJAYPJIUvUY=
+	b=rZ5iAA5wWvLfIyRURTemodS0ouwuTJyoRi92G1nwHX5a+uivhgao1t5ZyXvnV5O93
+	 drRXUaxMRiPEnsxtxVEPYnxc7PvrW23t2YVUUmyt/P+Aw/BNBzDE6BM+UwhqlwUn2N
+	 ggbK5ETYgym0ZPXvueSmhZ56WH+ODkwFMhPZwPvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackie Dong <xy-jackie@139.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	pengdonglin <pengdonglin@xiaomi.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1682/2151] ALSA: hda/realtek: ALC269 fixup for Yoga/Legion Mic noise
-Date: Wed, 18 Nov 2026 15:56:57 +0100
-Message-ID: <20261118150223.101349645@linuxfoundation.org>
+Subject: [PATCH 6.18 1647/2151] tracing: Avoid BTF lookup in atomic context
+Date: Wed, 18 Nov 2026 15:56:22 +0100
+Message-ID: <20261118150221.846490994@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,58 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackie Dong <xy-jackie@139.com>
+From: pengdonglin <pengdonglin@xiaomi.com>
 
-[ Upstream commit 6cd3d2c82651a9e77aa5b1b9c12aa918c0d6c0a9 ]
+[ Upstream commit 42643ba35deb8ad1821acfc0577b445ee7ad7548 ]
 
-Lenovo Yoga Pro 7 15ASH11 and Legion 7 15ASH11 use the same audio
-subsystem implementation and support only analog microphone.
+The function graph trace formatter can be called from ftrace_dump_one()
+with interrupts disabled. When ftrace_dump_on_oops is enabled, the trace
+panic notifier can reach ftrace_dump() from the panic path, including the
+nmi_panic() path used by the hard lockup detector.
 
-Limit Amp-In Vals to 0x00 and 0x01 for the internal microphone to reduce
-recording noise. Values 0x02 and 0x03 introduce significant noise on
-them.
+btf_find_func_proto() calls bpf_find_btf_id(), which may initialize vmlinux
+BTF under a mutex. Skip the BTF lookup when running in an atomic context
+or with interrupts disabled, and fall back to the existing return value
+formatting.
 
-Fixes: 17065203e1bc ("ALSA: hda/realtek:ALC269 fixup for Yoga Pro 7 15ASH11 mic mute LED")
-Signed-off-by: Jackie Dong <xy-jackie@139.com>
-Link: https://patch.msgid.link/20260804123637.21001-1-xy-jackie@139.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 2fc28b1186d6 ("ALSA: hda/realtek: Fix hiss/crackle on Lenovo Xiaoxin 14 GT (17aa:3912)")
+Link: https://patch.msgid.link/20260916133218.1282590-2-dolinux.peng@gmail.com
+Fixes: ebeed8d4a555 ("tracing/probes: Move finding func-proto API and getting func-param API to trace_btf")
+Signed-off-by: pengdonglin <pengdonglin@xiaomi.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ kernel/trace/trace_btf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 1f65e80b23163..987f770a66d77 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3451,6 +3451,16 @@ static void alc287_fixup_yoga9_14iap7_bass_spk_pin(struct hda_codec *codec,
- 	}
- }
+diff --git a/kernel/trace/trace_btf.c b/kernel/trace/trace_btf.c
+index 43e3798011776..2fcb1efe49abf 100644
+--- a/kernel/trace/trace_btf.c
++++ b/kernel/trace/trace_btf.c
+@@ -15,6 +15,9 @@ const struct btf_type *btf_find_func_proto(const char *func_name, struct btf **b
+ 	const struct btf_type *t;
+ 	s32 id;
  
-+static void alc_fixup_yoga_pro7_audio(struct hda_codec *codec,
-+				      const struct hda_fixup *fix, int action)
-+{
-+	/* Reuse the DAC routing selected for ThinkPad X1 Gen7 */
-+	alc285_fixup_thinkpad_x1_gen7(codec, fix, action);
++	if (unlikely(in_atomic() || irqs_disabled()))
++		return NULL;
 +
-+	/* Limit the internal mic boost to 0 or 1 to avoid noise */
-+	alc269_fixup_limit_int_mic_boost(codec, fix, action);
-+}
-+
- static void alc295_fixup_dell_inspiron_top_speakers(struct hda_codec *codec,
- 					  const struct hda_fixup *fix, int action)
- {
-@@ -6071,8 +6081,7 @@ static const struct hda_fixup alc269_fixups[] = {
- 	},
- 	[ALC287_FIXUP_LENOVO_YOGA_PRO7] = {
- 		.type = HDA_FIXUP_FUNC,
--		/* Reuse the DAC routing selected for ThinkPad X1 Gen7 */
--		.v.func = alc285_fixup_thinkpad_x1_gen7,
-+		.v.func = alc_fixup_yoga_pro7_audio,
- 		.chained = true,
- 		.chain_id = ALC269_FIXUP_LENOVO_XPAD_ACPI,
- 	},
+ 	id = bpf_find_btf_id(func_name, BTF_KIND_FUNC, btf_p);
+ 	if (id < 0)
+ 		return NULL;
 -- 
 2.53.0
 
