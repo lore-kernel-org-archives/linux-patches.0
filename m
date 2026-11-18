@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024085;
-	b=1VxZ5zyUlQY9u1yu0oJA5pUqN5ndaleX3aBXZIpoE6YuQk1keC/sfikyUQFtEgCCzFMw
-	 1v4gP9qCP4NJxgWBU8cwj3+7PleD9bLS/W9e+DNKu7zhL7Exf7g9vXJWVaZp09WyReS0R
-	 BJdQ7W29pono8hrvt4+7sJqy3OVNn3fO6vfD5ibulM8hjsCsI+6C8gEFQOH4vKRC+RpeG
-	 CDKa/cdFOu187iwS9h1U7XH+/00rpaRd2YhLB1xJqgMfTlngYK5y5iecl8rVvqkbCCVo3
-	 6OM4D2J45e34tbWQFbdmYmu3p3JP4Jy+b+5yhAn3OK2X3LxFpXjBvAcLGKx38pzS0Gg==
+	t=1795024088;
+	b=hhJ/UVEfAzMotsmrIT20Yx0BtmleeYC4NJiYstTPfZs17yMovDrhkd+4DUVqVgUU2b6S
+	 q4CKBjUzSechJZ+gkx4oEse08sSSRqAvp2VuTG0QMR1as0hHj8A5EPIBXvaXwXrVyD7ki
+	 c0QumrxdSGCnXx6rHCoUI7AYRK1AiTWCWBZ5x1eWcN+90+tDMwq1aYjGvvp2OBfamtEua
+	 IpyrsYHOIKmTbsnGQkVVXCg5eSiu9VsBg7xqnXeO6mfVujEbCe206VuCx++vAvuyAwVL/
+	 TJQfA48TBHHM8LqyrUsfiRTK1yC+eFYz7gKO2qJwSjmIKJQBgAWG2TAKggESX+Oenxw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024085;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ADxtiKIfvCUbdiI9vf6PPGzScyH+RZ6LaYGR5+sGHEY=;
-	b=dXNfNSpuz3PjsD6TzqIPsy+QVy6tj3IQAYjMdRPSYsOino8tVEgPgp5YFV6BqktsFPQe
-	 O7w+HAO5mnkyWb7oKcvMTEpALBcBs7+ji//i0jglbRsJkHR85mqN4A3K/YoYcFP4T2y/C
-	 6JfwS6nTjUke0h7N+LyQyhQt5Dbd7lFdLg07KCP+qfZpyCvvH/CUzHM/7srBMklntHB1Y
-	 qlbO0b098nQw9LNRBEFHy6l6txLzhMjc31FV12TpspFvQhDhWUyU9mT10EyZQkk4q+9SJ
-	 PXVBDxTVlPk/drQFez+1cl6H/1QNzxdcw7ywTAF9nXORWT9gbz8AbHvr1pYsZDgqshg==
+	bh=pZ3bJbF8yjvbDYAkLkBAuEUnEtavEm0+NkGf4ntDh/w=;
+	b=KX5wjN5w9whUrLvzbBtTQQoiD0PYcVm/AnsWj2XlmXknHM4ylqbcX5TlIpO3TucRu847
+	 oSRIhoFnq15/Z+63LaMl3PCV86YCj+WiHz4ry6aulEF94M8EkK0MhssHnIg733XZhqh/c
+	 T4jA4FPi3MHVKHNpbNtW44JArhfzTlGkU3g385WBP4YgHXY82JYs8nvZAlrP4vo4njuf9
+	 r10Bf0DbJlzEkOfOFSm969NNGbr6trUy4ZX/ubU39P1wR+LfRkRg2aG5ciNMUttSkLXQy
+	 xHVyl5H1xMyb00RPWQF1fV+0qzDDpjyXHW69BhMhli7wSomMIcTGpr5xOD+RKJuBe9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIYFitd2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0n7n+rs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EC3606A31C;
-	Wed, 18 Nov 2026 17:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61295606A32F;
+	Wed, 18 Nov 2026 17:48:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RIYFitd2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D010A1F000C4;
-	Wed, 18 Nov 2026 17:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W0n7n+rs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC0D1F000D3;
+	Wed, 18 Nov 2026 17:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024085;
-	bh=ADxtiKIfvCUbdiI9vf6PPGzScyH+RZ6LaYGR5+sGHEY=;
+	s=korg; t=1795024088;
+	bh=pZ3bJbF8yjvbDYAkLkBAuEUnEtavEm0+NkGf4ntDh/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIYFitd2TxTzCn7lNfsJP85Gbxn56EkapoB+9ixY/7+a53L7t/NgUPjygASw19OWI
-	 pA9wNNEH7BB4OXUe8Y9HHs9hlRlQT4LQyt3yHhtflSAOZbHiStNrsfmgZecOi8TGnH
-	 thmfaMrEmFGvaX6Qc904zuJPD9j1ki+YNwDQvYsI=
+	b=W0n7n+rsny3/gQ+Y55lFIlPuMsfmetfolh2QTro2Ac32e19j7VoFfWFuDkQQrPfb8
+	 i81DgxrM3Xvq+Lf9RPaoaCtdZKHMZCpK5eOzWDpe0eBDZ0rREUZfQEoPtYKzSgm5Fi
+	 mxzMfoJDRIWegV+m8mu/TIWiKR+ehWvUxqVPp8+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manuel Fombuena <fombuena@outlook.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0598/2151] leds: st1202: Clear unused pattern slots in blink_set()
-Date: Wed, 18 Nov 2026 15:38:53 +0100
-Message-ID: <20261118150143.732943802@linuxfoundation.org>
+Subject: [PATCH 6.18 0599/2151] leds: st1202: Honour max_brightness when blinking
+Date: Wed, 18 Nov 2026 15:38:54 +0100
+Message-ID: <20261118150143.768385014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,58 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit 3268b9e91db16f240ffe07ff6caf963ba8191ce8 ]
+[ Upstream commit 865d81a98602c828515fa6ac3c530efc4205f9f6 ]
 
-st1202_blink_set() programs slots 0 and 1 of its own channel and leaves
-slots 2 to 7 at ST1202_PATTERN_PWM_FULL, the value both st1202_led_set()
-and st1202_led_pattern_clear() leave behind. Nothing keeps those slots
-out of the output except the duration registers being zero, and those
-are shared by all twelve channels.
+st1202_blink_set() drives the channel current register to U8_MAX, the
+full scale of the part, regardless of the ceiling the board declared.
+led_classdev_register_ext() takes max_brightness from the device tree
+max-brightness property. The driver does not implement led-max-microamp,
+so that is the only way a board can ask for less than 20 mA.
 
-Another channel programming a hardware pattern longer than two steps
-writes those durations again and re-arms the sequencer, so the blinking
-channel drives full scale for the extra steps. With two LEDs on one
-device, blinking one and giving the other a four step pattern, the
-blinking channel lights during the two steps it never programmed.
+The brightness and pattern paths both respect it. Blinking is the one
+that does not, so a board that declares a lower ceiling holds it until
+something enables the timer trigger.
 
-Zero the channel's own unused slots, the same invariant
-st1202_led_pattern_set() applies to the slots beyond its pattern length.
-blink_set() already zeroes durations 2 to 7 when it runs; the slots are
-exposed only when another channel sets those shared durations again.
-
-A channel whose blink is shorter than the active timeline still loses
-its own timing, because the sequencer has one set of duration registers.
-This only stops it emitting output it never asked for.
+Program the same value the other paths use, capped at the width of the
+current register so an out of range property cannot wrap it to zero.
 
 Fixes: 35cbd34a6a05 ("leds: st1202: Add hardware-accelerated blink support")
 Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
 Assisted-by: LLM
-Link: https://patch.msgid.link/GV1PR08MB849770CF6D41F3DFF56B1AC3C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
+Link: https://patch.msgid.link/GV1PR08MB84979A5D536C71D319A06808C5BA2@GV1PR08MB8497.eurprd08.prod.outlook.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/leds/leds-st1202.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 23fffee873b9e..98e8a43b5ed7b 100644
+index 98e8a43b5ed7b..aa334a7b2013b 100644
 --- a/drivers/leds/leds-st1202.c
 +++ b/drivers/leds/leds-st1202.c
-@@ -359,9 +359,11 @@ static int st1202_blink_set(struct led_classdev *led_cdev,
+@@ -383,7 +383,8 @@ static int st1202_blink_set(struct led_classdev *led_cdev,
  	if (ret)
  		return ret;
  
--	ret = st1202_pwm_pattern_write(chip, led->led_num, 1, LED_OFF);
--	if (ret)
--		return ret;
-+	for (int pattern = 1; pattern < ST1202_MAX_PATTERNS; pattern++) {
-+		ret = st1202_pwm_pattern_write(chip, led->led_num, pattern, LED_OFF);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = st1202_duration_pattern_write(chip, 0, on);
+-	ret = st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, U8_MAX);
++	ret = st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num,
++				min_t(unsigned int, led_cdev->max_brightness, U8_MAX));
  	if (ret)
+ 		return ret;
+ 
 -- 
 2.53.0
 
