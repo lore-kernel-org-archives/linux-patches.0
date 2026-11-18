@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019375;
-	b=iPyDdUdEvjUR6CHDsWhG4N54xxEOiA++YxrJWp8KiocCJu+Pt2Dc+PxB3T35FShwv20m
-	 lMcBM1Sw4Gi8pty+pnrbce73JlXeLShkSdqm6eUrGm3C2pbfpZBpNP5yeeBnCVTe+TnU9
-	 2CAugWtOQcBQ2z4w0XWTepF4n+NsmBS/8S2DFVKA/KDbjkSrPEeKv44wesx1U1PGza8Tm
-	 YaYuoaeb/LgdXR5eobWujZ3RLpijqtwPzxWSmG1mIEPNu9kkBkNL0dvo52I8I4wgP+qxf
-	 ieIoCJ0x8OLqZZ6waQziksw7rCF/7QE+gZj2MdQcIql/H0wCEI0CVyoKaq3juAJP16Q==
+	t=1795019377;
+	b=VC3wCKoW6+v+e3D/sx2mUa89ebbxUY3nNjrGbtTpQVut0eCu1CxpaLoohKeSECqu30uc
+	 Y0EGw2SutKyc8bVb/giykDA9qkVzcasvpfOiIj+13yP3xVtrtcYVCE+XbDKNVf9pzoTd9
+	 KorEP60+r3CYxHFDqqtBMbUgQq+yAfbf7EPXR1tiAIW3yjv/1t80UQM/lkBdpx75lZlBv
+	 qdknGi1BBCJM3byA30YdzjcqcsmEcY700hoQsLNObn4TBUrgrT9YU3DeC4iUDYVp8SiP0
+	 a0WfSD33UEgvxeBca6NDvziDze3wyzj2nxxxE6qCxAzduwIi9mZHbrt4gY/CWYhAjWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019375;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019377;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CnEhPkm/QsNed3UetyzhxKeki8kSEDS2KO4Qzzt0Xmo=;
-	b=hrneqKS2c6iPYKde2xK+HIJB0gnbJQy68Q136eoGjJNitHWb4DWf4zJMh35lNwgRQ6QD
-	 kzBhzH+GITcfoyzxek1mdIzY8LQ5kCCykheFwOBi6xc0SIX5r6uDjRWWYWs+ONxeCv9Xa
-	 O2Sp2PbUBt6rorE0QsKzKvDs6olgWk8jBUqM3QvmTilJq2R0Opp1xdPDEqGRD+6fZNat6
-	 x48CYuWT+QgoeaYoaPkDYZZW/iJNtzJkIv4JNzV8dcaO6El91kHch4XKpgSlwhJFPFAcL
-	 zN4Hvc8o4Z+B0JANePBRjNdD3U8fXQCraX4LoLQZs4TylFLw7M4JKOhXoZ3JEKbRjwg==
+	bh=BQHxNZDOGhlc0XRwO6uJyI5mCzUj9y19Pqd3lwuEwdg=;
+	b=kSfOZQhDZOyrXyUgQpOmyDu2C11+ToVmvkhS5+3ufn9o64ZZR0/rYr8XMypxbmMiAXVL
+	 VcDEO3D+7+Udg5ME5Y9RI7pt53nvyA78D+IqBMWTICS8GJJUT5cXwFvMHBcXWmrLa0y9Y
+	 tibdwe7UOlybKgrDYX6oC5JbHQR6aHD5DcnXCEq0/2fY4ZALyrfS8osihJDqi3U6PkBD8
+	 oWH4iV23KjeOM/x2HCL6GNmDmIpyGBlJizaZhpIU1Y4ILwnMyxqCipw7wpQq7+ZZm/OwC
+	 XdTAadyFofthnuWz/uTfKrcxHTcE7rckdSjHOOvWJRmV32Gc/8zlsETyRQF/nmBeCMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="eqg1/az+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjNK6upN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2245060A260C;
-	Wed, 18 Nov 2026 16:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB697606A33E;
+	Wed, 18 Nov 2026 16:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eqg1/az+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4DC1F000C5;
-	Wed, 18 Nov 2026 16:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjNK6upN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F7D1F000C4;
+	Wed, 18 Nov 2026 16:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019374;
-	bh=CnEhPkm/QsNed3UetyzhxKeki8kSEDS2KO4Qzzt0Xmo=;
+	s=korg; t=1795019377;
+	bh=BQHxNZDOGhlc0XRwO6uJyI5mCzUj9y19Pqd3lwuEwdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eqg1/az+fjy2y/K1HQcOj8CoC3HEjAtKPN6N3AN+7ZnKo3pmGoeY9WMrcH8kPbU+P
-	 0nShmW8eEpfuh/3/zL62tKBfL6Xd8SXmlM2mjuG/NdS9dE6/0JKjR8NRJCpsqQlsVZ
-	 zQgt97nqVkn746BU1185ncODrnsZbpmnYnFJvGnw=
+	b=bjNK6upN0Jc4P2TWfzOrANIibWYd6hyD996MSyKwoifdFTg2RfIDPB6Xt66u4ml5m
+	 /M6HTVMVDRrwopWfeNo9cXnvrfp82vX2bMVDICJzLowNYq14rfmA7GMnQrmJjMFtVX
+	 a5uJJzhUFAEjEeK0rjAvrvXGgEaMh9PD00AdAhjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Abraham P <george.abraham.p@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1532/2651] crypto: qat - force an edge when re-enabling all VF2PF interrupts
-Date: Wed, 18 Nov 2026 15:46:12 +0100
-Message-ID: <20261118150343.130348108@linuxfoundation.org>
+Subject: [PATCH 7.3 1533/2651] crypto: talitos - init tasklets before requesting IRQs
+Date: Wed, 18 Nov 2026 15:46:13 +0100
+Message-ID: <20261118150343.169539592@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,70 +68,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Abraham P <george.abraham.p@intel.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 2b91570f72670054ddae5b11b8c70a79c340014a ]
+[ Upstream commit 666d66df25253070cb297cb920b0bcfcfe5eb871 ]
 
-VF2PF interrupts are edge-triggered: a source only fires on a
-masked -> unmasked transition of VM2PF_MSK, not by being unmasked.
-adf_enable_all_vf2pf_interrupts() does a plain read-modify-write
-unmask, assuming VM2PF_MSK still holds the all-masked value left by
-adf_disable_all_vf2pf_interrupts().
+The talitos interrupt handlers schedule priv->done_task[] via
+tasklet_schedule(). Since the second IRQ support, probe has requested
+the IRQs before calling tasklet_init(), so an interrupt already pending
+when a line is requested, e.g. engine state left by the bootloader or
+a kexec'd kernel, would schedule a tasklet with a NULL callback.
 
-That breaks across a device reset: adf_dev_autoreset() (and AER
-recovery) FLR the PF while VFs stay alive, so a VF can latch a source
-in VM2PF_SOU with no vectors set up to deliver it. The FLR then resets
-VM2PF_MSK to its power-on default of 0 (unmasked) without a software
-write, so the following RMW unmask writes 0 over an already-0
-register: no edge occurs and the latched VF2PF message is never
-delivered.
+Look up the IRQ numbers and map the registers up front, so that
+-EPROBE_DEFER returns before anything is allocated and the done_task[]
+selection and reset_device() can see the secondary IRQ. Only request
+the IRQs once the channel fifos are allocated and init_device() has
+reset the engine. This matches remove(), which frees the IRQs before
+killing the tasklets.
 
-Fix by having adf_enable_all_vf2pf_interrupts() mask all sources
-immediately before unmasking them, mirroring the idiom already used in
-adf_gen4_disable_pending_vf2pf_interrupts(), forcing the required edge
-regardless of the prior state of VM2PF_MSK.
+remove() frees every IRQ number that is > 0, so make sure that only
+requested lines are set when it runs from the probe error path: clear
+both numbers when probe fails before the request, and clear any line
+talitos_probe_irq() did not request. Previously a failed primary
+request in the two-IRQ case freed the never-requested secondary line.
 
-Fixes: 575185000539 ("crypto: qat - keep VFs enabled during reset")
-Signed-off-by: George Abraham P <george.abraham.p@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: c3e337f88a5b ("crypto: talitos - support for channel remap and 2nd IRQ")
+Assisted-by: LLM
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_isr.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/crypto/talitos.c | 54 ++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_isr.c b/drivers/crypto/intel/qat/qat_common/adf_isr.c
-index 159e91a50106b..0df4b398508eb 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_isr.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_isr.c
-@@ -70,6 +70,7 @@ void adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask)
- void adf_enable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 num_vfs)
- {
- 	void __iomem *pmisc_addr = adf_get_pmisc_base(accel_dev);
-+	struct adf_pfvf_ops *pfvf_ops = GET_PFVF_OPS(accel_dev);
- 	unsigned long flags;
- 	u32 vf_mask;
+diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
+index fa96b6bf17e32..f9eb06aa487e6 100644
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -3355,21 +3355,13 @@ static int talitos_probe_irq(struct platform_device *ofdev)
+ 	int err;
+ 	bool is_sec1 = has_ftr_sec1(priv);
  
-@@ -79,7 +80,19 @@ void adf_enable_all_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 num_vf
+-	priv->irq[0] = platform_get_irq(ofdev, 0);
+-	if (priv->irq[0] < 0)
+-		return priv->irq[0];
+-
+ 	if (is_sec1) {
+ 		err = request_irq(priv->irq[0], talitos1_interrupt_4ch, 0,
+ 				  dev_driver_string(dev), dev);
+ 		goto primary_out;
+ 	}
  
- 	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
- 	WRITE_ONCE(accel_dev->pf.vf2pf_disabled, false);
--	GET_PFVF_OPS(accel_dev)->enable_vf2pf_interrupts(pmisc_addr, vf_mask);
-+	/*
-+	 * A VF2PF interrupt is only generated when a source transitions from
-+	 * masked to unmasked. A VF may write to its VF2PF CSR while the source
-+	 * is masked or while the MSI-X vectors are torn down, for example
-+	 * during a device reset, leaving the source latched with no interrupt
-+	 * pending. The FLR performed as part of a device reset returns the mask
-+	 * register to its default value, which leaves all the sources unmasked,
-+	 * so simply unmasking is not guaranteed to be a transition. Mask all the
-+	 * sources first, so that unmasking always generates an interrupt for
-+	 * the sources latched in the meantime.
-+	 */
-+	pfvf_ops->disable_all_vf2pf_interrupts(pmisc_addr);
-+	pfvf_ops->enable_vf2pf_interrupts(pmisc_addr, vf_mask);
- 	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
- }
+-	priv->irq[1] = platform_get_irq_optional(ofdev, 1);
+-	if (priv->irq[1] == -EPROBE_DEFER)
+-		return priv->irq[1];
+-
+-	/* get the primary irq line */
++	/* single (or primary) irq line */
+ 	if (priv->irq[1] < 0) {
+ 		err = request_irq(priv->irq[0], talitos2_interrupt_4ch, 0,
+ 				  dev_driver_string(dev), dev);
+@@ -3381,7 +3373,7 @@ static int talitos_probe_irq(struct platform_device *ofdev)
+ 	if (err)
+ 		goto primary_out;
+ 
+-	/* get the secondary irq line */
++	/* secondary irq line */
+ 	err = request_irq(priv->irq[1], talitos2_interrupt_ch1_3, 0,
+ 			  dev_driver_string(dev), dev);
+ 	if (err) {
+@@ -3394,7 +3386,9 @@ static int talitos_probe_irq(struct platform_device *ofdev)
+ primary_out:
+ 	if (err) {
+ 		dev_err(dev, "failed to request primary irq\n");
++		/* neither line is requested, keep remove() from freeing them */
+ 		priv->irq[0] = 0;
++		priv->irq[1] = 0;
+ 	}
+ 
+ 	return err;
+@@ -3406,12 +3400,27 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	struct device_node *np = ofdev->dev.of_node;
+ 	struct talitos_private *priv;
+ 	unsigned int num_channels;
++	void __iomem *reg;
+ 	int i, err;
+ 	int stride;
++	int irq0;
++	int irq1;
+ 
+ 	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
+ 		return -EINVAL;
+ 
++	irq0 = platform_get_irq(ofdev, 0);
++	if (irq0 < 0)
++		return irq0;
++
++	irq1 = platform_get_irq_optional(ofdev, 1);
++	if (irq1 == -EPROBE_DEFER)
++		return irq1;
++
++	reg = devm_platform_ioremap_resource(ofdev, 0);
++	if (IS_ERR(reg))
++		return PTR_ERR(reg);
++
+ 	priv = devm_kzalloc(dev, struct_size(priv, chan, num_channels), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -3426,12 +3435,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 
+ 	spin_lock_init(&priv->reg_lock);
+ 
+-	priv->reg = devm_platform_ioremap_resource(ofdev, 0);
+-	if (IS_ERR(priv->reg)) {
+-		dev_err(dev, "failed to of_iomap\n");
+-		err = PTR_ERR(priv->reg);
+-		goto err_out;
+-	}
++	priv->reg = reg;
+ 
+ 	/* get SEC version capabilities from device tree */
+ 	of_property_read_u32(np, "fsl,channel-fifo-len", &priv->chfifo_len);
+@@ -3482,9 +3486,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 		stride = TALITOS2_CH_STRIDE;
+ 	}
+ 
+-	err = talitos_probe_irq(ofdev);
+-	if (err)
+-		goto err_out;
++	priv->irq[0] = irq0;
+ 
+ 	if (has_ftr_sec1(priv)) {
+ 		if (priv->num_channels == 1)
+@@ -3494,6 +3496,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 			tasklet_init(&priv->done_task[0], talitos1_done_4ch,
+ 				     (unsigned long)dev);
+ 	} else {
++		priv->irq[1] = irq1;
+ 		if (priv->irq[1] > 0) {
+ 			tasklet_init(&priv->done_task[0], talitos2_done_ch0_2,
+ 				     (unsigned long)dev);
+@@ -3525,7 +3528,7 @@ static int talitos_probe(struct platform_device *ofdev)
+ 		if (!priv->chan[i].fifo) {
+ 			dev_err(dev, "failed to allocate request fifo %d\n", i);
+ 			err = -ENOMEM;
+-			goto err_out;
++			goto err_noirq;
+ 		}
+ 
+ 		atomic_set(&priv->chan[i].submit_count,
+@@ -3538,9 +3541,14 @@ static int talitos_probe(struct platform_device *ofdev)
+ 	err = init_device(dev);
+ 	if (err) {
+ 		dev_err(dev, "failed to initialize device\n");
+-		goto err_out;
++		goto err_noirq;
+ 	}
+ 
++	/* enable interrupts once the channel fifos and tasklets are set up */
++	err = talitos_probe_irq(ofdev);
++	if (err)
++		goto err_out;
++
+ 	/* register the RNG, if available */
+ 	if (hw_supports(dev, DESC_HDR_SEL0_RNG)) {
+ 		err = talitos_register_rng(dev);
+@@ -3598,6 +3606,10 @@ static int talitos_probe(struct platform_device *ofdev)
+ 
+ 	return 0;
+ 
++err_noirq:
++	/* the irq numbers are known, but the lines are not requested yet */
++	priv->irq[0] = 0;
++	priv->irq[1] = 0;
+ err_out:
+ 	talitos_remove(ofdev);
  
 -- 
 2.53.0
