@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021358;
-	b=toDs2Yxrctd3mae49RAZ90ezpOE0Ax+Dj88oG6RzTdkhYF9uWhsPni0Im8GoHROGMJyE
-	 YR2KAJIXMIKPkQiMnU8WtlVrnXxJZY15cmSyifPifDnGZpp5w5uADVtL4Vu6j/Gcf9mZu
-	 z0wxis3lvRHLNPBcINfOS5zLLgjAC2mEoN6vPoudmjDSRcVzq0LCFQ21SYY24kWZbdjFj
-	 WfZFN/h8sZoW94PjH+vkGtqkGrLdgpmDUCu7XfcMkkV4QlDYfeP38N3yVBKbBCNha0uRI
-	 O0eHptneMczmFVc6j1Ntkhcx4CKS+qMiB7DoUyOSZidWK/qj7HJt92Ac2XpitZTi3Pw==
+	t=1795021361;
+	b=0CNmERXs8BIFzIMA3vKhEVcJyyKhV9TsiXmb/ARWXQGk0tu4e0hfhR2Zg7STzA29OdbO
+	 sMgqLjZp3tdr1ctXdGJFwTKOwhk1/4/yysooqvl3gr8rtYHQlnZZQp6SzE2strL8oF/Am
+	 1KpyHjuXpVB+PhbXha0fQNs5Lcz4WBs5r2MUSbWxskE/FJcBztzVH4euYCjZx3vX2ccZG
+	 PhZNju6+O/NPsGOQTuxH8Rjgtn+96s0wnhS+uHlcEZQL5wTMrXNyYnP6RMdAjL/8qbLo2
+	 qfuF4CdF8RpVpzuKCHlBYoe0gD7aqtjiTdSc7NsTW0DJhjrCZHeVWhIwryngKNFu/eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=UWBZ1f1b/PrEht9INRxxzPCnzxuEksZEjFRpdzPlBb8=;
-	b=JpnZBwrBW84ilup6s4fNTM6+SIwW0YKHBMnpMa8solG3BCF6hJip3VUXsSr79tbyhyCX
-	 lE172KNaTAOSvY8fbbgfCvGqeLPh7Z76Sl0+r0dkVIZ3uLSHv0dCRYCG+DBFHhyURLW4T
-	 C/ymyqbaq6sHjD2AA5Al6o32i+Ny8pdUQBe1VjUHyeofTyjeKpH41xUwG+/rqzDCJKJfT
-	 EG724i882mt9qMhkTKbSkrdFB0sDDQYSbe/O+C6YHiOQ7+FNAW6LXxwld35yshOCmm1EB
-	 Vooois9d2/MqgXoOottBE13TAeQDyg+E5RPKCY4AvmVZ8uuE0LWJGEl9LxoNujdXv/Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=GKw2xKZFagOA21bbudXOrR3piqcrcijT1xD+DkYuhHc=;
+	b=EmiPrDX2vKyMOtEZVZPD/ieGelGpsiF6Enc4UL0XRO2ONVCQ5j/LPLrzRtNNUUKrFWNO
+	 z5qGx2GDoyxZfRPe/R5DFK152qkWZfwXgOKQoS5lloCh+kVZOALML30yzXl01X8njO/kA
+	 DGr7F8v3JlbRZibl0DdUwYA8mXyudNw7etlhTVjGs7HrMk+9b8h2UbHGhX1QDOdAPFRYz
+	 rBI+uBnNjCQvjdHuU/MAKYjoQjDS+jBjC6Q3jCBC1m2iVgFOikypa8e3VOxkbVsixztR5
+	 1sq4IHZMLlrW5jUyH5yaoMwx2DktF0EVCnc19EToBx5tLZJv2IARvZHYGBBBzL2SnNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4XLdaSz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o0F3v5Cb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C748B606A32C;
-	Wed, 18 Nov 2026 17:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2347606A339;
+	Wed, 18 Nov 2026 17:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S4XLdaSz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBDC1F000C4;
-	Wed, 18 Nov 2026 17:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o0F3v5Cb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033191F000C4;
+	Wed, 18 Nov 2026 17:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021358;
-	bh=UWBZ1f1b/PrEht9INRxxzPCnzxuEksZEjFRpdzPlBb8=;
+	s=korg; t=1795021361;
+	bh=GKw2xKZFagOA21bbudXOrR3piqcrcijT1xD+DkYuhHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S4XLdaSzA4ieUjxLcB9zVKa1UBgIw6Bi2rIoTgrToHcT4eA5dKeAAcquFwhhnFmjl
-	 oY2HB55dCL8IVkop8EH+HveQr4VvKzQrtLvgXzKlyGy2s2MI1Lx2vOi4FohyUtguvm
-	 kVHMqnt7NKTpmUtxd5WMM0V7VJLpY3u3vTotXPy4=
+	b=o0F3v5CbbDgDRAbq7oDnw/7ZpMaUgNs1b1qIU4+Ab6Rtg/DDz+/APh1mizLacfmpj
+	 1g5kQCJkNuia/UAQICd3E2lwNB5SF7fzn36FHqxdut66aHwxCbiuo6LDFefSVku3GA
+	 ZNBK83VIYKJQhtbmXlItNaAZC/S5JAhsoZ12uaJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Boqun Feng <boqun@kernel.org>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Gary Guo <gary@garyguo.net>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Tejun Heo <tj@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2272/2651] ibmveth: step past bad RX correlators instead of spinning or oopsing
-Date: Wed, 18 Nov 2026 15:58:32 +0100
-Message-ID: <20261118150407.142072351@linuxfoundation.org>
+Subject: [PATCH 7.3 2281/2651] rust: workqueue: replace deprecated system_wq with system_{percpu,dfl}_wq
+Date: Wed, 18 Nov 2026 15:58:41 +0100
+Message-ID: <20261118150407.426652412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,512 +69,253 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit c9b95adc755f2396307be676ce838161fb011986 ]
+[ Upstream commit 10ff62c6bb0baf9c2f77f92d2bcdaf6566c31191 ]
 
-ibmveth_poll() mishandles a bad RX correlator from PHYP in two ways.
+system_wq is deprecated and triggers a runtime warning:
 
-If harvest fails or ibmveth_rxq_get_buffer() returns NULL, poll
-breaks out without advancing the ring and restarts on the same slot
-forever. For an out-of-range correlator it also fires a WARN_ON() and
-schedules a reset each pass, but the reset is queued on that CPU and
-never runs, and the CPU stalls RCU, so RTNL holders hang too. This
-dates from the first commit in Fixes:, which turned the BUG_ON()s
-here into WARN_ON() plus a reset.
+	[    0.857414] workqueue: work func ...WorkItemPointerKy0_E3runB7_ enqueued on deprecated workqueue. Use system_{percpu|dfl}_wq instead.
 
-The range check also accepts a correlator naming an inactive buffer
-pool (pools 2 and 3 by default), whose skbuff array is NULL, so the
-lookup dereferences NULL in softirq. Pools became inactive with the
-second commit in Fixes:.
+Replace system() with system_percpu() and system_dfl(), to match the
+previous behavior of the deprecated system() and convert doc examples
+and tests to system_dfl().
 
-Validate the correlator in one helper that also rejects a pool with
-no skbuff array. On a bad slot, advance the ring, count the drop in
-rx_dropped and still schedule the reset, which rebuilds the pools.
-The slot has moved, so stay in the budget loop and count it in
-frames_processed. Breaking out would complete NAPI, re-arm, and
-napi_schedule() with budget left. When the final check finds more
-work, queue the NAPI and return instead of going back to
-restart_poll: after napi_complete_done() the NAPI is no longer this
-call's, and with threaded NAPI and busy polling the kthread can
-already be polling it on another CPU. frames_processed is below
-budget there, so busy_poll_stop() does not queue it a second time.
-Mask the interrupt before queueing, as ibmveth_interrupt() does;
-masking after napi_schedule() could land after that kthread has
-finished and unmasked, leaving RX masked with nothing scheduled.
+system_unbound_wq is deprecated in the same way, in favor of
+system_dfl_wq. Since system_unbound() has no users, just remove it as
+well.
 
-Drop a frame whose offset + length does not fit the pool buffer:
-copybreak would read past the RX buffer and skb_put() would BUG().
-Also drop one shorter than an Ethernet header, which eth_type_trans()
-would read past. Read the correlator once per slot and use that value
-for the lookup, the bound and the harvest.
-
-The base driver never checked frame bounds, and they have not been
-seen in the field, so they have no Fixes: tag of their own. The tags
-below are for the correlator hang.
-
-The correlator comes from PHYP, and with the ring advancing a burst
-of bad slots would WARN once per slot (and panic with
-panic_on_warn), so use a ratelimited netdev_err() instead. Also free
-the rx_copybreak skb if harvest fails there.
-
-Add a KUnit case for harvest advancing on errors and extend the
-existing cases to an inactive pool. Run against the unfixed driver,
-with the calls changed back to its signatures, the first fails and
-the others oops.
-
-Found in review of the ibmveth multi-queue RX series (the frame bound by
-the Sashiko review of v2 of this series) and confirmed by code
-inspection and the KUnit cases above. Hitting either correlator bug
-needs PHYP to return a bad correlator, so neither was reproduced on
-hardware. Tested with KUnit on qemu pseries (ppc64le), and on a POWER10
-LPAR with a ping flood and MTU changes under traffic. No kernel
-selftests cover ibmveth.
-
-Fixes: 2c91e2319ed9 ("net: ibmveth: Reset the adapter when unexpected states are detected")
-Fixes: 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-5-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 64d8eae3f895 ("workqueue: Add warnings and fallback if system_{unbound}_wq is used")
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Reviewed-by: Boqun Feng <boqun@kernel.org>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Acked-by: Marco Crivellari <marco.crivellari@suse.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261014-rust-workqueue-system-fix-v2-1-c018b8f870f9@google.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 265 +++++++++++++++++++++++------
- 1 file changed, 216 insertions(+), 49 deletions(-)
+ Documentation/rust/testing.rst                |  2 +-
+ .../translations/zh_CN/rust/testing.rst       |  2 +-
+ drivers/android/binder/process.rs             |  4 +-
+ rust/kernel/sync/completion.rs                |  2 +-
+ rust/kernel/sync/lock/spinlock.rs             |  2 +-
+ rust/kernel/workqueue.rs                      | 52 ++++++++++---------
+ 6 files changed, 33 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index cee0e9783b2ab..919b5831d875c 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -135,6 +135,13 @@ static inline int ibmveth_rxq_frame_length(struct ibmveth_adapter *adapter)
- 	return be32_to_cpu(adapter->rx_queue.queue_addr[adapter->rx_queue.index].length);
- }
+diff --git a/Documentation/rust/testing.rst b/Documentation/rust/testing.rst
+index e3943aceceb94..73046523a9a27 100644
+--- a/Documentation/rust/testing.rst
++++ b/Documentation/rust/testing.rst
+@@ -97,7 +97,7 @@ operator are also supported as usual, e.g.:
  
-+static u64 ibmveth_rxq_correlator(struct ibmveth_adapter *adapter)
-+{
-+	unsigned int idx = adapter->rx_queue.index;
-+
-+	return READ_ONCE(adapter->rx_queue.queue_addr[idx].correlator);
-+}
-+
- static inline int ibmveth_rxq_csum_good(struct ibmveth_adapter *adapter)
+ 	/// ```
+ 	/// # use kernel::{spawn_work_item, workqueue};
+-	/// spawn_work_item!(workqueue::system(), || pr_info!("x\n"))?;
++	/// spawn_work_item!(workqueue::system_dfl(), || pr_info!("x\n"))?;
+ 	/// # Ok::<(), Error>(())
+ 	/// ```
+ 
+diff --git a/Documentation/translations/zh_CN/rust/testing.rst b/Documentation/translations/zh_CN/rust/testing.rst
+index 6747d00129915..fdd88fa2fe40a 100644
+--- a/Documentation/translations/zh_CN/rust/testing.rst
++++ b/Documentation/translations/zh_CN/rust/testing.rst
+@@ -93,7 +93,7 @@ KUnit 测试即文档测试
+ 
+ 	/// ```
+ 	/// # use kernel::{spawn_work_item, workqueue};
+-	/// spawn_work_item!(workqueue::system(), || pr_info!("x\n"))?;
++	/// spawn_work_item!(workqueue::system_dfl(), || pr_info!("x\n"))?;
+ 	/// # Ok::<(), Error>(())
+ 	/// ```
+ 
+diff --git a/drivers/android/binder/process.rs b/drivers/android/binder/process.rs
+index 5372bfbd93b35..de5bca7f9fc74 100644
+--- a/drivers/android/binder/process.rs
++++ b/drivers/android/binder/process.rs
+@@ -1728,7 +1728,7 @@ pub(crate) fn release(this: Arc<Process>, _file: &File) {
+         if should_schedule {
+             // Ignore failures to schedule to the workqueue. Those just mean that we're already
+             // scheduled for execution.
+-            let _ = workqueue::system().enqueue(this);
++            let _ = workqueue::system_percpu().enqueue(this);
+         }
+ 
+         drop(binderfs_file);
+@@ -1745,7 +1745,7 @@ pub(crate) fn flush(this: ArcBorrow<'_, Process>) -> Result {
+         if should_schedule {
+             // Ignore failures to schedule to the workqueue. Those just mean that we're already
+             // scheduled for execution.
+-            let _ = workqueue::system().enqueue(Arc::from(this));
++            let _ = workqueue::system_percpu().enqueue(Arc::from(this));
+         }
+         Ok(())
+     }
+diff --git a/rust/kernel/sync/completion.rs b/rust/kernel/sync/completion.rs
+index 35ff049ff0783..1771bfc0ade28 100644
+--- a/rust/kernel/sync/completion.rs
++++ b/rust/kernel/sync/completion.rs
+@@ -38,7 +38,7 @@
+ ///             done <- Completion::new(),
+ ///         }), GFP_KERNEL)?;
+ ///
+-///         let _ = workqueue::system().enqueue(this.clone());
++///         let _ = workqueue::system_dfl().enqueue(this.clone());
+ ///
+ ///         Ok(this)
+ ///     }
+diff --git a/rust/kernel/sync/lock/spinlock.rs b/rust/kernel/sync/lock/spinlock.rs
+index aafc80125f591..92ad133262b62 100644
+--- a/rust/kernel/sync/lock/spinlock.rs
++++ b/rust/kernel/sync/lock/spinlock.rs
+@@ -450,7 +450,7 @@ fn run(this: Arc<Self>) {
+     fn spinlock_irq_condvar() -> Result {
+         let testdata = Test::new()?;
+ 
+-        let _ = workqueue::system().enqueue(testdata.clone());
++        let _ = workqueue::system_dfl().enqueue(testdata.clone());
+ 
+         // Let the updater know when we're ready to wait
+         let mut state = testdata.state.lock();
+diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+index 7e253b6f299ce..a872f9fffb902 100644
+--- a/rust/kernel/workqueue.rs
++++ b/rust/kernel/workqueue.rs
+@@ -67,7 +67,7 @@
+ //! /// This method will enqueue the struct for execution on the system workqueue, where its value
+ //! /// will be printed.
+ //! fn print_later(val: Arc<MyStruct>) {
+-//!     let _ = workqueue::system().enqueue(val);
++//!     let _ = workqueue::system_dfl().enqueue(val);
+ //! }
+ //! # print_later(MyStruct::new(42).unwrap());
+ //! ```
+@@ -121,11 +121,11 @@
+ //! }
+ //!
+ //! fn print_1_later(val: Arc<MyStruct>) {
+-//!     let _ = workqueue::system().enqueue::<Arc<MyStruct>, 1>(val);
++//!     let _ = workqueue::system_dfl().enqueue::<Arc<MyStruct>, 1>(val);
+ //! }
+ //!
+ //! fn print_2_later(val: Arc<MyStruct>) {
+-//!     let _ = workqueue::system().enqueue::<Arc<MyStruct>, 2>(val);
++//!     let _ = workqueue::system_dfl().enqueue::<Arc<MyStruct>, 2>(val);
+ //! }
+ //! # print_1_later(MyStruct::new(24, 25).unwrap());
+ //! # print_2_later(MyStruct::new(41, 42).unwrap());
+@@ -171,13 +171,13 @@
+ //! /// This method will enqueue the struct for execution on the system workqueue, where its value
+ //! /// will be printed 12 jiffies later.
+ //! fn print_later(val: Arc<MyStruct>) {
+-//!     let _ = workqueue::system().enqueue_delayed(val, 12);
++//!     let _ = workqueue::system_dfl().enqueue_delayed(val, 12);
+ //! }
+ //!
+ //! /// It is also possible to use the ordinary `enqueue` method together with `DelayedWork`. This
+ //! /// is equivalent to calling `enqueue_delayed` with a delay of zero.
+ //! fn print_now(val: Arc<MyStruct>) {
+-//!     let _ = workqueue::system().enqueue(val);
++//!     let _ = workqueue::system_dfl().enqueue(val);
+ //! }
+ //! # print_later(MyStruct::new(42).unwrap());
+ //! # print_now(MyStruct::new(42).unwrap());
+@@ -1024,20 +1024,32 @@ unsafe impl<T, const ID: u64> RawDelayedWorkItem<ID> for ARef<T>
  {
- 	return ibmveth_rxq_flags(adapter) & IBMVETH_RXQ_CSUM_GOOD;
-@@ -443,6 +450,37 @@ static void ibmveth_free_buffer_pool(struct ibmveth_adapter *adapter,
- 	}
  }
  
-+/* The correlator comes back from PHYP; a bad one schedules a reset. */
-+static bool ibmveth_rxq_correlator_valid(struct ibmveth_adapter *adapter,
-+					 u64 correlator)
-+{
-+	unsigned int index = correlator & 0xffffffffUL;
-+	unsigned int pool = correlator >> 32;
-+
-+	/* An inactive pool keeps its size but has no skbuff array. */
-+	if (pool < IBMVETH_NUM_BUFF_POOLS &&
-+	    index < adapter->rx_buff_pool[pool].size &&
-+	    adapter->rx_buff_pool[pool].skbuff)
-+		return true;
-+
-+	if (net_ratelimit())
-+		netdev_err(adapter->netdev,
-+			   "invalid RX correlator %llx, resetting\n",
-+			   correlator);
-+	schedule_work(&adapter->work);
-+	return false;
+-/// Returns the system work queue (`system_wq`).
++/// Returns the system per-cpu work queue (`system_percpu_wq`).
+ ///
+ /// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
+ /// users which expect relatively short queue flush time.
+ ///
+ /// Callers shouldn't queue work items which can run for too long.
+-pub fn system() -> &'static Queue {
+-    // SAFETY: `system_wq` is a C global, always available.
+-    unsafe { Queue::from_raw(bindings::system_wq) }
++#[inline]
++pub fn system_percpu() -> &'static Queue {
++    // SAFETY: `system_percpu_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_percpu_wq) }
 +}
 +
-+static void ibmveth_rxq_no_skb(struct ibmveth_adapter *adapter,
-+			       u64 correlator)
-+{
-+	if (net_ratelimit())
-+		netdev_err(adapter->netdev,
-+			   "no buffer for RX correlator %llx, resetting\n",
-+			   correlator);
-+	schedule_work(&adapter->work);
-+}
-+
- /**
-  * ibmveth_remove_buffer_from_pool - remove a buffer from a pool
-  * @adapter: adapter instance
-@@ -451,7 +489,8 @@ static void ibmveth_free_buffer_pool(struct ibmveth_adapter *adapter,
-  *
-  * Return:
-  * * %0       - success
-- * * %-EINVAL - correlator maps to pool or index out of range
-+ * * %-EINVAL - correlator maps to pool or index out of range, or to an
-+ *              inactive pool
-  * * %-EFAULT - pool and index map to null skb
-  */
- static int ibmveth_remove_buffer_from_pool(struct ibmveth_adapter *adapter,
-@@ -462,15 +501,12 @@ static int ibmveth_remove_buffer_from_pool(struct ibmveth_adapter *adapter,
- 	unsigned int free_index;
- 	struct sk_buff *skb;
- 
--	if (WARN_ON(pool >= IBMVETH_NUM_BUFF_POOLS) ||
--	    WARN_ON(index >= adapter->rx_buff_pool[pool].size)) {
--		schedule_work(&adapter->work);
-+	if (!ibmveth_rxq_correlator_valid(adapter, correlator))
- 		return -EINVAL;
--	}
- 
- 	skb = adapter->rx_buff_pool[pool].skbuff[index];
--	if (WARN_ON(!skb)) {
--		schedule_work(&adapter->work);
-+	if (!skb) {
-+		ibmveth_rxq_no_skb(adapter, correlator);
- 		return -EFAULT;
- 	}
- 
-@@ -504,51 +540,56 @@ static int ibmveth_remove_buffer_from_pool(struct ibmveth_adapter *adapter,
- 	return 0;
++/// Returns the system default (unbound) work queue (`system_dfl_wq`).
++///
++/// Workers are not bound to any specific CPU, not concurrency managed, and all queued work items
++/// are executed immediately as long as `max_active` limit is not reached and resources are
++/// available.
++#[inline]
++pub fn system_dfl() -> &'static Queue {
++    // SAFETY: `system_dfl_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_dfl_wq) }
  }
  
--/* get the current buffer on the rx queue */
--static inline struct sk_buff *ibmveth_rxq_get_buffer(struct ibmveth_adapter *adapter)
-+/* get the buffer for @correlator, read once from the current rx queue entry */
-+static struct sk_buff *ibmveth_rxq_get_buffer(struct ibmveth_adapter *adapter,
-+					      u64 correlator)
- {
--	u64 correlator = adapter->rx_queue.queue_addr[adapter->rx_queue.index].correlator;
- 	unsigned int pool = correlator >> 32;
- 	unsigned int index = correlator & 0xffffffffUL;
-+	struct sk_buff *skb;
+ /// Returns the system high-priority work queue (`system_highpri_wq`).
+ ///
+-/// It is similar to the one returned by [`system`] but for work items which require higher
++/// It is similar to the one returned by [`system_percpu`] but for work items which require higher
+ /// scheduling priority.
+ pub fn system_highpri() -> &'static Queue {
+     // SAFETY: `system_highpri_wq` is a C global, always available.
+@@ -1046,26 +1058,16 @@ pub fn system_highpri() -> &'static Queue {
  
--	if (WARN_ON(pool >= IBMVETH_NUM_BUFF_POOLS) ||
--	    WARN_ON(index >= adapter->rx_buff_pool[pool].size)) {
--		schedule_work(&adapter->work);
-+	if (!ibmveth_rxq_correlator_valid(adapter, correlator))
- 		return NULL;
--	}
- 
--	return adapter->rx_buff_pool[pool].skbuff[index];
-+	skb = adapter->rx_buff_pool[pool].skbuff[index];
-+	if (!skb)
-+		ibmveth_rxq_no_skb(adapter, correlator);
-+	return skb;
-+}
-+
-+static void ibmveth_rxq_advance(struct ibmveth_adapter *adapter)
-+{
-+	if (++adapter->rx_queue.index == adapter->rx_queue.num_slots) {
-+		adapter->rx_queue.index = 0;
-+		adapter->rx_queue.toggle = !adapter->rx_queue.toggle;
-+	}
+ /// Returns the system work queue for potentially long-running work items (`system_long_wq`).
+ ///
+-/// It is similar to the one returned by [`system`] but may host long running work items. Queue
+-/// flushing might take relatively long.
++/// It is similar to the one returned by [`system_percpu`] but may host long running work items.
++/// Queue flushing might take relatively long.
+ pub fn system_long() -> &'static Queue {
+     // SAFETY: `system_long_wq` is a C global, always available.
+     unsafe { Queue::from_raw(bindings::system_long_wq) }
  }
  
- /**
-  * ibmveth_rxq_harvest_buffer - Harvest buffer from pool
-  *
-- * @adapter: pointer to adapter
-- * @reuse:   whether to reuse buffer
-+ * @adapter:    pointer to adapter
-+ * @correlator: correlator of the current rx queue entry, as read by poll
-+ * @reuse:      whether to reuse buffer
-  *
-  * Context: called from ibmveth_poll
-  *
-+ * The ring advances even on error, so poll does not return to a bad
-+ * slot before the scheduled reset can run.
-+ *
-  * Return:
-  * * %0    - success
-  * * other - non-zero return from ibmveth_remove_buffer_from_pool
-  */
- static int ibmveth_rxq_harvest_buffer(struct ibmveth_adapter *adapter,
--				      bool reuse)
-+				      u64 correlator, bool reuse)
- {
--	u64 cor;
- 	int rc;
- 
--	cor = adapter->rx_queue.queue_addr[adapter->rx_queue.index].correlator;
--	rc = ibmveth_remove_buffer_from_pool(adapter, cor, reuse);
--	if (unlikely(rc))
--		return rc;
-+	rc = ibmveth_remove_buffer_from_pool(adapter, correlator, reuse);
-+	ibmveth_rxq_advance(adapter);
- 
--	if (++adapter->rx_queue.index == adapter->rx_queue.num_slots) {
--		adapter->rx_queue.index = 0;
--		adapter->rx_queue.toggle = !adapter->rx_queue.toggle;
--	}
+-/// Returns the system unbound work queue (`system_unbound_wq`).
+-///
+-/// Workers are not bound to any specific CPU, not concurrency managed, and all queued work items
+-/// are executed immediately as long as `max_active` limit is not reached and resources are
+-/// available.
+-pub fn system_unbound() -> &'static Queue {
+-    // SAFETY: `system_unbound_wq` is a C global, always available.
+-    unsafe { Queue::from_raw(bindings::system_unbound_wq) }
+-}
 -
--	return 0;
-+	return rc;
- }
+ /// Returns the system freezable work queue (`system_freezable_wq`).
+ ///
+-/// It is equivalent to the one returned by [`system`] except that it's freezable.
++/// It is equivalent to the one returned by [`system_percpu`] except that it's freezable.
+ ///
+ /// A freezable workqueue participates in the freeze phase of the system suspend operations. Work
+ /// items on the workqueue are drained and no new work item starts execution until thawed.
+@@ -1078,7 +1080,7 @@ pub fn system_freezable() -> &'static Queue {
+ ///
+ /// It is inclined towards saving power and is converted to "unbound" variants if the
+ /// `workqueue.power_efficient` kernel parameter is specified; otherwise, it is similar to the one
+-/// returned by [`system`].
++/// returned by [`system_percpu`].
+ pub fn system_power_efficient() -> &'static Queue {
+     // SAFETY: `system_power_efficient_wq` is a C global, always available.
+     unsafe { Queue::from_raw(bindings::system_power_efficient_wq) }
+@@ -1097,7 +1099,7 @@ pub fn system_freezable_power_efficient() -> &'static Queue {
  
- static void ibmveth_free_tx_ltb(struct ibmveth_adapter *adapter, int idx)
-@@ -1469,31 +1510,60 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
- 	struct net_device *netdev = adapter->netdev;
- 	int frames_processed = 0;
- 	unsigned long lpar_rc;
-+	u64 correlator;
- 	u16 mss = 0;
-+	int rc;
- 
--restart_poll:
- 	while (frames_processed < budget) {
- 		if (!ibmveth_rxq_pending_buffer(adapter))
- 			break;
- 
- 		smp_rmb();
-+		correlator = ibmveth_rxq_correlator(adapter);
- 		if (!ibmveth_rxq_buffer_valid(adapter)) {
- 			wmb(); /* suggested by larson1 */
- 			adapter->rx_invalid_buffer++;
- 			netdev_dbg(netdev, "recycling invalid buffer\n");
--			if (unlikely(ibmveth_rxq_harvest_buffer(adapter, true)))
--				break;
-+			rc = ibmveth_rxq_harvest_buffer(adapter, correlator, true);
-+			if (unlikely(rc)) {
-+				netdev->stats.rx_dropped++;
-+				frames_processed++;
-+				continue;
-+			}
- 		} else {
- 			struct sk_buff *skb, *new_skb;
- 			int length = ibmveth_rxq_frame_length(adapter);
- 			int offset = ibmveth_rxq_frame_offset(adapter);
- 			int csum_good = ibmveth_rxq_csum_good(adapter);
- 			int lrg_pkt = ibmveth_rxq_large_packet(adapter);
-+			unsigned int pool, room, off, len;
- 			__sum16 iph_check = 0;
- 
--			skb = ibmveth_rxq_get_buffer(adapter);
--			if (unlikely(!skb))
--				break;
-+			skb = ibmveth_rxq_get_buffer(adapter, correlator);
-+			if (unlikely(!skb)) {
-+				ibmveth_rxq_advance(adapter);
-+				netdev->stats.rx_dropped++;
-+				frames_processed++;
-+				continue;
-+			}
-+
-+			pool = correlator >> 32;
-+			room = min_t(unsigned int, skb_tailroom(skb),
-+				     adapter->rx_buff_pool[pool].buff_size);
-+			off = offset;
-+			len = length;
-+			if (unlikely(len < ETH_HLEN || off >= room ||
-+				     len > room - off)) {
-+				if (net_ratelimit())
-+					netdev_err(netdev,
-+						   "bad RX frame offset %u length %u (buffer %u), dropping\n",
-+						   off, len, room);
-+				ibmveth_rxq_harvest_buffer(adapter, correlator,
-+							   true);
-+				netdev->stats.rx_dropped++;
-+				frames_processed++;
-+				continue;
-+			}
- 
- 			/* if the large packet bit is set in the rx queue
- 			 * descriptor, the mss will be written by PHYP eight
-@@ -1517,12 +1587,25 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
- 				if (rx_flush)
- 					ibmveth_flush_buffer(skb->data,
- 						length + offset);
--				if (unlikely(ibmveth_rxq_harvest_buffer(adapter, true)))
--					break;
-+				rc = ibmveth_rxq_harvest_buffer(adapter,
-+								correlator,
-+								true);
-+				if (unlikely(rc)) {
-+					dev_kfree_skb_any(new_skb);
-+					netdev->stats.rx_dropped++;
-+					frames_processed++;
-+					continue;
-+				}
- 				skb = new_skb;
- 			} else {
--				if (unlikely(ibmveth_rxq_harvest_buffer(adapter, false)))
--					break;
-+				rc = ibmveth_rxq_harvest_buffer(adapter,
-+								correlator,
-+								false);
-+				if (unlikely(rc)) {
-+					netdev->stats.rx_dropped++;
-+					frames_processed++;
-+					continue;
-+				}
- 				skb_reserve(skb, offset);
- 			}
- 
-@@ -1578,10 +1661,13 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
- 		goto out;
- 	}
- 
--	if (ibmveth_rxq_pending_buffer(adapter) && napi_schedule(napi)) {
-+	/* Mask before queueing, as ibmveth_interrupt() does: a threaded
-+	 * NAPI can start polling, and unmask, as soon as it is queued.
-+	 */
-+	if (ibmveth_rxq_pending_buffer(adapter) && napi_schedule_prep(napi)) {
- 		lpar_rc = h_vio_signal(adapter->vdev->unit_address,
- 				       VIO_IRQ_DISABLE);
--		goto restart_poll;
-+		__napi_schedule(napi);
- 	}
- 
- out:
-@@ -2206,8 +2292,7 @@ static void ibmveth_reset_kunit(struct work_struct *w)
-  * @test: pointer to kunit structure
-  *
-  * Tests the error returns from ibmveth_remove_buffer_from_pool.
-- * ibmveth_remove_buffer_from_pool also calls WARN_ON, so dmesg should be
-- * checked to see that these warnings happened.
-+ * Each error also logs a ratelimited netdev_err.
-  *
-  * Return: void
-  */
-@@ -2216,6 +2301,7 @@ static void ibmveth_remove_buffer_from_pool_test(struct kunit *test)
- 	struct ibmveth_adapter *adapter = kunit_kzalloc(test, sizeof(*adapter), GFP_KERNEL);
- 	struct ibmveth_buff_pool *pool;
- 	u64 correlator;
-+	int ret;
- 
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, adapter);
- 
-@@ -2239,6 +2325,13 @@ static void ibmveth_remove_buffer_from_pool_test(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, -EINVAL, ibmveth_remove_buffer_from_pool(adapter, correlator, false));
- 	KUNIT_EXPECT_EQ(test, -EINVAL, ibmveth_remove_buffer_from_pool(adapter, correlator, true));
- 
-+	/* Pool 2 is in range but has no skbuff array, like an inactive pool. */
-+	correlator = ((u64)2 << 32) | 0;
-+	ret = ibmveth_remove_buffer_from_pool(adapter, correlator, false);
-+	KUNIT_EXPECT_EQ(test, -EINVAL, ret);
-+	ret = ibmveth_remove_buffer_from_pool(adapter, correlator, true);
-+	KUNIT_EXPECT_EQ(test, -EINVAL, ret);
-+
- 	correlator = (u64)0 | 0;
- 	pool->skbuff[0] = NULL;
- 	KUNIT_EXPECT_EQ(test, -EFAULT, ibmveth_remove_buffer_from_pool(adapter, correlator, false));
-@@ -2251,9 +2344,8 @@ static void ibmveth_remove_buffer_from_pool_test(struct kunit *test)
-  * ibmveth_rxq_get_buffer_test - unit test for ibmveth_rxq_get_buffer
-  * @test: pointer to kunit structure
-  *
-- * Tests ibmveth_rxq_get_buffer. ibmveth_rxq_get_buffer also calls WARN_ON for
-- * the NULL returns, so dmesg should be checked to see that these warnings
-- * happened.
-+ * Tests ibmveth_rxq_get_buffer. Each NULL return also logs a ratelimited
-+ * netdev_err.
-  *
-  * Return: void
-  */
-@@ -2262,6 +2354,7 @@ static void ibmveth_rxq_get_buffer_test(struct kunit *test)
- 	struct ibmveth_adapter *adapter = kunit_kzalloc(test, sizeof(*adapter), GFP_KERNEL);
- 	struct sk_buff *skb = kunit_kzalloc(test, sizeof(*skb), GFP_KERNEL);
- 	struct ibmveth_buff_pool *pool;
-+	u64 cor;
- 
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, adapter);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, skb);
-@@ -2285,14 +2378,87 @@ static void ibmveth_rxq_get_buffer_test(struct kunit *test)
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pool->skbuff);
- 
- 	adapter->rx_queue.queue_addr[0].correlator = (u64)IBMVETH_NUM_BUFF_POOLS << 32 | 0;
--	KUNIT_EXPECT_PTR_EQ(test, NULL, ibmveth_rxq_get_buffer(adapter));
-+	cor = ibmveth_rxq_correlator(adapter);
-+	KUNIT_EXPECT_PTR_EQ(test, NULL,
-+			    ibmveth_rxq_get_buffer(adapter, cor));
- 
- 	adapter->rx_queue.queue_addr[0].correlator = (u64)0 << 32 | adapter->rx_buff_pool[0].size;
--	KUNIT_EXPECT_PTR_EQ(test, NULL, ibmveth_rxq_get_buffer(adapter));
-+	cor = ibmveth_rxq_correlator(adapter);
-+	KUNIT_EXPECT_PTR_EQ(test, NULL,
-+			    ibmveth_rxq_get_buffer(adapter, cor));
-+
-+	/* Pool 2 is in range but has no skbuff array, like an inactive pool. */
-+	adapter->rx_queue.queue_addr[0].correlator = (u64)2 << 32 | 0;
-+	cor = ibmveth_rxq_correlator(adapter);
-+	KUNIT_EXPECT_PTR_EQ(test, NULL,
-+			    ibmveth_rxq_get_buffer(adapter, cor));
- 
- 	pool->skbuff[0] = skb;
- 	adapter->rx_queue.queue_addr[0].correlator = (u64)0 << 32 | 0;
--	KUNIT_EXPECT_PTR_EQ(test, skb, ibmveth_rxq_get_buffer(adapter));
-+	cor = ibmveth_rxq_correlator(adapter);
-+	KUNIT_EXPECT_PTR_EQ(test, skb,
-+			    ibmveth_rxq_get_buffer(adapter, cor));
-+
-+	flush_work(&adapter->work);
-+}
-+
-+/**
-+ * ibmveth_rxq_harvest_buffer_test - unit test for ibmveth_rxq_harvest_buffer
-+ * @test: pointer to kunit structure
-+ *
-+ * A bad correlator must still advance the RX ring, wrapping and flipping
-+ * the toggle at the end. This covers the harvest path; the advance after
-+ * ibmveth_rxq_get_buffer() fails in ibmveth_poll() is not tested here.
-+ *
-+ * Return: void
-+ */
-+static void ibmveth_rxq_harvest_buffer_test(struct kunit *test)
-+{
-+	struct ibmveth_adapter *adapter;
-+	struct ibmveth_buff_pool *pool;
-+	u64 cor;
-+	int ret;
-+
-+	adapter = kunit_kzalloc(test, sizeof(*adapter), GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, adapter);
-+
-+	INIT_WORK(&adapter->work, ibmveth_reset_kunit);
-+
-+	adapter->rx_queue.num_slots = 2;
-+	adapter->rx_queue.index = 0;
-+	adapter->rx_queue.toggle = 1;
-+	adapter->rx_queue.queue_addr =
-+		kunit_kcalloc(test, 2, sizeof(struct ibmveth_rx_q_entry),
-+			      GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, adapter->rx_queue.queue_addr);
-+
-+	/* Set sane values for buffer pools */
-+	for (int i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
-+		ibmveth_init_buffer_pool(&adapter->rx_buff_pool[i], i,
-+					 pool_count[i], pool_size[i],
-+					 pool_active[i]);
-+
-+	pool = &adapter->rx_buff_pool[0];
-+	pool->skbuff = kunit_kcalloc(test, pool->size, sizeof(void *),
-+				     GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pool->skbuff);
-+
-+	/* Slot 0: pool out of range. Slot 1: valid, but no skb. */
-+	adapter->rx_queue.queue_addr[0].correlator =
-+		(u64)IBMVETH_NUM_BUFF_POOLS << 32 | 0;
-+	adapter->rx_queue.queue_addr[1].correlator = (u64)0 << 32 | 0;
-+
-+	cor = ibmveth_rxq_correlator(adapter);
-+	ret = ibmveth_rxq_harvest_buffer(adapter, cor, true);
-+	KUNIT_EXPECT_EQ(test, -EINVAL, ret);
-+	KUNIT_EXPECT_EQ(test, 1ULL, adapter->rx_queue.index);
-+	KUNIT_EXPECT_EQ(test, 1ULL, adapter->rx_queue.toggle);
-+
-+	cor = ibmveth_rxq_correlator(adapter);
-+	ret = ibmveth_rxq_harvest_buffer(adapter, cor, true);
-+	KUNIT_EXPECT_EQ(test, -EFAULT, ret);
-+	KUNIT_EXPECT_EQ(test, 0ULL, adapter->rx_queue.index);
-+	KUNIT_EXPECT_EQ(test, 0ULL, adapter->rx_queue.toggle);
- 
- 	flush_work(&adapter->work);
- }
-@@ -2300,6 +2466,7 @@ static void ibmveth_rxq_get_buffer_test(struct kunit *test)
- static struct kunit_case ibmveth_test_cases[] = {
- 	KUNIT_CASE(ibmveth_remove_buffer_from_pool_test),
- 	KUNIT_CASE(ibmveth_rxq_get_buffer_test),
-+	KUNIT_CASE(ibmveth_rxq_harvest_buffer_test),
- 	{}
- };
- 
+ /// Returns the system bottom halves work queue (`system_bh_wq`).
+ ///
+-/// It is similar to the one returned by [`system`] but for work items which
++/// It is similar to the one returned by [`system_percpu`] but for work items which
+ /// need to run from a softirq context.
+ pub fn system_bh() -> &'static Queue {
+     // SAFETY: `system_bh_wq` is a C global, always available.
 -- 
 2.53.0
 
