@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034777;
-	b=BxndKBhc+O9nM4O79mE0+ASvounz/N9pWUtsviazmLtLVzoibivjRuoIwht2PBvOVWzm
-	 CmtjRF98W56RQu04BwLOR9RGFhk6CyHGbu8EC4Up9hScSp8EQb57Gn866Cg1p34dBbPFU
-	 9ITTBfbBj4aThwqgtU356TcoxIEnA55I4yQpJTSoQa37j0QNTRgYr8qH2raQQLVsuNQ3w
-	 gdHv5/L4zxuh9pKnLFkCnp0pGal7wWzcQ8aDTcqRy6GekUzmB8txZUkG5RVA2HBcFRycl
-	 Ea+B1XNe61pHS124K18j0uMM9NbmWUKxmLy2+C+DLmnYqOg5m059VegWjK1VPSrkQ7A==
+	t=1795034780;
+	b=zNDY3ML6EEG1Y2+VwLFG4xcnVt8PAYC5PftQXC7ZVi0KStRpTqfYZzNgYDsP1hvCsUia
+	 zlzGlwGZmCNdAHiq2myYjN10vHxQS3bjDneSrcYEHVUG7hYIyj4LtTusyKpWxbnWpQUqT
+	 G4daVjcclRnaJ/mn9Pgo8BcnoBV7jhrj6ne9HNbNVK0RHj5pIGwHRSgkm3xfY2lKm+1z+
+	 mC351xNig0xDXizScmbD6OIBq28eL8YVOck3EoyKQox5OH9siFkb4cNZafTYiy0EAzxbV
+	 MrHjeyOH/JrNHUDe1ZXSDfnAJW5SM3jUkFy+50kodYg0xmqextYw0T7GB4ayt1MgK1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034777;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034780;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NdsBkpfnbpnXU/3UQgskFQCtOciaUqpnckcCf7acfKw=;
-	b=kH3lQIi196INzDxQcWouQ/FwWCvTjaEwIMk+yEoiE2McSzmh7IRtn90ekkf5imaglf8o
-	 dn1AOQs9eFvbztZ5lb09EdrA8EHrbRwmh/Ej1/GbQ0fz6gkmnqSMuxoBUHSYbYME7nHWn
-	 oXRIB6n9Ji0XduBN+0/dgRdLDYxDW2bZYG/v1ZOlgXxR5zV8OjnTksP8fPaUh9AmDsXlq
-	 oleKtSlZJM2pASWjpEtSxpN6QqSH0U8bYLDQD34n4wNgAquKVHhsM4eH4bvzxlgIqLgc+
-	 mw2t/89UAftTw6LuR6D8R4aQIEEuU6FiNS38Bi0aBKyw1SyLh1/ZyGdzChnYtkpCR+A==
+	bh=pZB//sOOa4iTXtcUGxGSYUz7HL6ZaGsssa8fNj9qlCc=;
+	b=l5B5KjD3m/r/wqa2/O4XLTwTeG6s+uPVn321irBs8EnFoOegN5oICaMiDj+r5qJUqzMG
+	 sL67Cwkk3eKFY8jDzWWoPI3LRrJfQysku6ml1pBFE3oj1nfYUj+aU0oq608EyN7+ynZFj
+	 gC66JZSveqXaZ0FMderf+7VU7WR1WO0CUCF2TbXRJrO5Nr1p6trtAUfh1Cq1OFQQBt4lU
+	 Xu1Xj4GtT4D+LrjOHtAsdegkEYko3YOGJyR/WRpslc5Yo12PldfY0bsXUbdwK9jnMd0ml
+	 JAPJceVWABaKSvYYujThe1hA0bGSmnxRD65E83YHuUyFhMPBjRnsTWsP77ME8YW54Kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dx+lFkmm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWUX4fEN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C62606A31C;
-	Wed, 18 Nov 2026 20:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCCE606A32C;
+	Wed, 18 Nov 2026 20:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dx+lFkmm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FE71F000C4;
-	Wed, 18 Nov 2026 20:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tWUX4fEN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CB21F000C4;
+	Wed, 18 Nov 2026 20:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034777;
-	bh=NdsBkpfnbpnXU/3UQgskFQCtOciaUqpnckcCf7acfKw=;
+	s=korg; t=1795034780;
+	bh=pZB//sOOa4iTXtcUGxGSYUz7HL6ZaGsssa8fNj9qlCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dx+lFkmmnEf6XGcK/3sTfSa6v2p3N5R3FUDW8KXKReo9dE+kkPj2hasvacLvOYyv1
-	 gA1Uk0KeunebVHCVI6TRwzF5FgjSRy8VFLk+JaLmXmaCbqKdp+ZnpW1zJsz6lstICg
-	 keWsmsLw6twm+L//Jj8hnSfSfPcSydjJLTRKaAG0=
+	b=tWUX4fENLHWgaz+nph5Yb5obcHw1gbpL38zYkooSzVgfupHPoNoCRZrn5KnT4OLfz
+	 xo+ztKyUguYO5QxzqBcN8Lc9VhuZnWfUlAnnmHvviqrgglZyLGzUdfsLP0g+3KFiM8
+	 0K7WI43SYBCxEvgmE4Xcid6r9PtckkfnojNPX/lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0430/3318] mm/gup: fix always draining LRU caches in collect_longterm_unpinnable_folios()
-Date: Wed, 18 Nov 2026 15:17:32 +0100
-Message-ID: <20261118150329.524568290@linuxfoundation.org>
+Subject: [PATCH 6.6 0484/3318] ata: libahci_platform: Fix device reference leak in ahci_platform_get_resources()
+Date: Wed, 18 Nov 2026 15:18:26 +0100
+Message-ID: <20261118150331.488778191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,86 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 078e1a0fc41a42baaf113383b52dab8874c0b967 ]
+[ Upstream commit 0d1cb83337f13af082afb68b28d3fdfe29cde7fb ]
 
-folio_may_be_lru_cached() is currently only true for small folios, and
-for small folios FOLL_PIN adds GUP_PIN_COUNTING_BIAS references instead
-of 1 in try_grab_folio()/try_grab_folio_fast().
+of_find_device_by_node() takes a reference on the port platform device,
+which is only used to look up its port regulator and is never released,
+neither on success nor on the error paths. Drop the reference with
+put_device() once the regulator has been obtained, which covers both the
+success and error paths.
 
-Consequently, our
-
-	folio_ref_count(folio) != folio_expected_ref_count(folio) + 1
-
-check in collect_longterm_unpinnable_folios() will currently always
-identify "reference mismatch" and first drain the local LRU cache to then
-drain the LRU cache on all CPUs, as collect_longterm_unpinnable_folios()
-is really called after pinning the folios with FOLL_PIN.
-
-Add a comment because the current code is not quite intuitive: we used to
-drain only to make sure the folio_isolate_lru() would succeed. But then we
-also started draining to make later migration more reliable.
-
-We'll refactor that code soon a bit, to also make it usable in other
-context where we really want to remove any references from LRU caches.
-
-Let's add CC stable, because having an easy way for excessive LRU cache
-draining on all CPUs does not sound right. In common scenarios we
-don't expect to ever have to drain.
-
-Link: https://lore.kernel.org/20260731-check_and_migrate_movable_folios-v1-1-e0002d7b791e@kernel.org
-Fixes: 98c6d259319e ("mm/gup: check ref_count instead of lru before migration")
-Fixes: a09a8a1fbb37 ("mm/gup: local lru_add_drain() to avoid lru_add_drain_all()")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Hugh Dickins <hughd@google.com>
-Cc: Ackerley Tng <ackerleytng@google.com>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c7d7ddee7e24 ("ata: libahci: Allow using multiple regulators")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260915065933.1733061-1-vulab@iscas.ac.cn
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/ata/libahci_platform.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index 60006de1219ee..098a837043b61 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1957,6 +1957,7 @@ static unsigned long collect_longterm_unpinnable_pages(
+diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
+index 91d44302eac92..7308d48cf748b 100644
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -623,10 +623,10 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 			of_platform_device_create(child, NULL, NULL);
  
- 	for (i = 0; i < nr_pages; i++) {
- 		struct folio *folio = page_folio(pages[i]);
-+		const int pin_refs = folio_test_large(folio) ? 1 : GUP_PIN_COUNTING_BIAS;
- 
- 		if (folio == prev_folio)
- 			continue;
-@@ -1975,15 +1976,20 @@ static unsigned long collect_longterm_unpinnable_pages(
- 			continue;
- 		}
- 
-+		/*
-+		 * We drain not only to make the folio_isolate_lru() succeed,
-+		 * but also to remove any other folio references from LRU
-+		 * caches.
-+		 */
- 		if (drained == 0 && folio_may_be_lru_cached(folio) &&
- 				folio_ref_count(folio) !=
--				folio_expected_ref_count(folio) + 1) {
-+				folio_expected_ref_count(folio) + pin_refs) {
- 			lru_add_drain();
- 			drained = 1;
- 		}
- 		if (drained == 1 && folio_may_be_lru_cached(folio) &&
- 				folio_ref_count(folio) !=
--				folio_expected_ref_count(folio) + 1) {
-+				folio_expected_ref_count(folio) + pin_refs) {
- 			lru_add_drain_all();
- 			drained = 2;
- 		}
+ 			port_dev = of_find_device_by_node(child);
+-
+ 			if (port_dev) {
+ 				rc = ahci_platform_get_regulator(hpriv, port,
+ 								&port_dev->dev);
++				put_device(&port_dev->dev);
+ 				if (rc == -EPROBE_DEFER)
+ 					goto err_out;
+ 			}
 -- 
 2.53.0
 
