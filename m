@@ -1,55 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045345;
-	b=Kdv8SrNIscbsP5kSv3nknT5s9B3y8evQqfMt1skL/mtaoycJjAqO9r66KpfSCnkpsnmv
-	 GIxxIiuogM4ge0wRc52kIgitAPtsgI8Tw2dv1te9PK6FQsIBhtzCw3n+jjHx9iyTrPmxY
-	 Mjkoss5ax7G/UE9vwiOR4pV7VErDN3UGMgZCDQ93GWgRbCln2ThRINXkuiM1/pA1UVTAs
-	 KEHMwSLhi/sUPATQXMpAsaduPKYpKnbbGkz7OMmy5kx2wRsPp6GaqTansBJxOuDrwS+ss
-	 wgXzsye54gg/yJlxiBx9dL//xZfgXLCDxeJzLkEQD8gAwfxEgRkqYpbH3b9QZf2arHg==
+	t=1795045348;
+	b=T/zJSfJoED69HhIJJdRi6RNPXpQ6BPeVtDjuLM3xWiqF+0LOMVoICtzP91aQUtC9uy8r
+	 GSx0GFcOhIKPvIL0jLSYgzjP608fchx6T9uXX8yTeUS/9n41awZ7gbtQJxrPk4N05qtb1
+	 bh00krc+R+KlqiNwTs86++mWnaZj9Zn2+wIuf9ke/UOP1piGNxjkAlk6f+476Mxz0/zFf
+	 BoljThxap5fzAl2uSvuAaPNWe1wLzXNvhvSALLzO7T8hHu5K07zOLpbrIiFLFdxA8nSMn
+	 ckryOCGcR49t2F/ML+DZbHnfnUMo4+ATHtBdrHf2Oahxu9+xFnDH/4wfBx3X/Y2s6Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045348;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jbbgO0YQg30jJYUDdfg05nBLC15QE/OyaR8TOVMPtDM=;
-	b=XIk13GGmq77DiZRtSGzWXgTC9/lwZBty0Mc1H63mLHAPosot9KWFw5Undjlp3Zsz/9v5
-	 hx/NNrT58zVcUZ16wy8vXecytFIb1y+eWS4rrlLVmn80XBFdCUWrQr/IXR6xnwybFoRXE
-	 ow3OirGMED/TPe1kdLYBaYTXBsAiPe72OQ6cMS3i+h62rEQgAI23zx1Dry3kOdHkFxcVZ
-	 C1f6X+zJ8RjBuNr6R3TA419hfBQilvcB27f2erb9cIQzcVwz9K/2iNSsXRZOOnh0RVSJt
-	 8PQLEHTxrU4W1JwIPdUJSgYxpe9a1ia6fsCNy7xS9fs9ljeeKP94GW2oq9l2xIC9BSA==
+	bh=pjuBo7+HCgrRBco4zqLCaskHZeOYCvUduZIwork3Q0c=;
+	b=PsIlPaEtxkBEA+LB1Jzk8eYc9wV1G5OGWdRHZ+VBvm7xhRi41QkNDnFHI7yHOc2dodK3
+	 AqbLsnzKzwSpE5QVMqW3YaufNysOlkkCWsTix50gF/Mc98L2X2aW654Sy4ysHz9E5gO8i
+	 h05cPKtaIFsrH2aWtiMMyIYRtss7vs53IsN8g7Hczqy+DEmWxpd0kAmzjaCJqiGklpECf
+	 bHFDxg+V0KllwihLygFWr1VS5qFEh18wqoPtx1OBTKNTW5sqOtF8cALThEoeN7jZdjoTk
+	 bDOSQds/6+UJM+XukaUj+dBhiOZRFo/Fu673xSH1wVIvFdw2QrTu3nKOJ9tBFGfbXTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1dZDA1FY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QL1oY32B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AB6606A31C;
-	Wed, 18 Nov 2026 23:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E96606A320;
+	Wed, 18 Nov 2026 23:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1dZDA1FY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D201F000C6;
-	Wed, 18 Nov 2026 23:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QL1oY32B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E701F000C4;
+	Wed, 18 Nov 2026 23:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045344;
-	bh=jbbgO0YQg30jJYUDdfg05nBLC15QE/OyaR8TOVMPtDM=;
+	s=korg; t=1795045347;
+	bh=pjuBo7+HCgrRBco4zqLCaskHZeOYCvUduZIwork3Q0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1dZDA1FYnthkW5R4VeNBRBSmyYbPiGIKOQUXrkqxZDIUd+gN9uZWgsvrWXntEjH6D
-	 mEpVs+iB0Qwft7fYJY+uUGYAEsTN/XFo4WUkOKXy/z4lUCRk+umsfQZrz8Dtqj7uwW
-	 MznYXJGwM3JAlWcIlsMlrsfyoz9xuWhZ9HMezKTw=
+	b=QL1oY32BUYh5VjBmcfXAyfdSq9ptG4KCLUG8M7CJMvM7BFfqday/yQHhx5lBARhSA
+	 8oTK5AOMq7RONjSj6tlzWYAUJn7Wo8BLWwh2mG69woTCcuJntWLnZJLOTnd815dN9w
+	 2uoT3C53wn7pDEDpk36pr+P60MPk6y2a/zagCksA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+805630f1453e490427fa@syzkaller.appspotmail.com,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0887/2857] USB: gadgetfs: do not WARN about excessively large memory allocations
-Date: Wed, 18 Nov 2026 15:32:01 +0100
-Message-ID: <20261118150233.493843922@linuxfoundation.org>
+Subject: [PATCH 6.1 0888/2857] ocfs2: exit recovery thread on mount error path
+Date: Wed, 18 Nov 2026 15:32:02 +0100
+Message-ID: <20261118150233.528813456@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,60 +74,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit a156148976eac47bee7210097afbb609cafe88b6 ]
+[ Upstream commit 6163a859649e9432e9c79c541f36dbf3bba9172f ]
 
-GadgetFS passes an excessively large user input len to kmalloc and kmalloc
-gives a WARN (see below for details).  Suppress it by passing __GFP_NOWARN
-to kmalloc used by both ep_write_iter() and ep_read_iter().  Follow the
-same method as commit 4f2629ea67e72 ("USB: usbfs: Don't WARN about
-excessively large memory allocations").
+When a mount fails after the cluster connection has been established, e.g.
+in ocfs2_mount_volume(), ocfs2_fill_super() unwinds via
+out_debugfs/out_super and frees the osb without disabling recovery.
 
-kmalloc is used to allocate physically contiguous memory for kernel
-allocations.  For requests larger than KMALLOC_MAX_CACHE_SIZE, kmalloc
-uses the page allocator and can only support up to KMALLOC_MAX_SIZE.  For
-request sizes bigger than KMALLOC_MAX_SIZE, the page allocator can emit a
-WARN because kmalloc allocates an order greater than MAX_PAGE_ORDER.
+A node failure event can concurrently launch the recovery thread, which
+blocks in __ocfs2_wait_on_mount() waiting for the volume state to become
+VOLUME_MOUNTED or VOLUME_DISABLED.  As the mount error path neither sets
+VOLUME_DISABLED nor wakes osb_mount_event, the thread can never make
+progress: the kthread leaks and stays blocked on the wait queue embedded
+in the freed osb, which may then be accessed as freed memory.
 
-Link: https://lore.kernel.org/DKTTMAS94IMH.2C6ERY0ZIVWVZ@nvidia.com
-Fixes: b3c466ce5129 ("page allocator: do not sanity check order in the fast path")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
+Fix it by setting VOLUME_DISABLED and waking osb_mount_event on this path
+so the thread bails out, and replace the plain kfree(osb->recovery_map)
+with ocfs2_recovery_exit(), which waits for a running recovery thread to
+exit before the recovery map is freed.
+
+Link: https://lore.kernel.org/20260828112825.666097-1-joseph.qi@linux.alibaba.com
+Fixes: f1e75d128b46 ("ocfs2: rewrite error handling of ocfs2_fill_super")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a820ebc.9ebadd4d.20b15e.001b.GAE@google.com/
-Tested-by: syzbot+805630f1453e490427fa@syzkaller.appspotmail.com
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/legacy/inode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ocfs2/super.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/legacy/inode.c b/drivers/usb/gadget/legacy/inode.c
-index e3101131dddaa..b20a0ce91dd0e 100644
---- a/drivers/usb/gadget/legacy/inode.c
-+++ b/drivers/usb/gadget/legacy/inode.c
-@@ -608,7 +608,7 @@ ep_read_iter(struct kiocb *iocb, struct iov_iter *to)
- 		return -EBADMSG;
- 	}
- 
--	buf = kmalloc(len, GFP_KERNEL);
-+	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
- 	if (unlikely(!buf)) {
- 		mutex_unlock(&epdata->lock);
- 		return -ENOMEM;
-@@ -670,7 +670,7 @@ ep_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 		return -EBADMSG;
- 	}
- 
--	buf = kmalloc(len, GFP_KERNEL);
-+	buf = kmalloc(len, GFP_KERNEL | __GFP_NOWARN);
- 	if (unlikely(!buf)) {
- 		mutex_unlock(&epdata->lock);
- 		return -ENOMEM;
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index 59b6ec7eec4f2..8dd141609f69c 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1169,8 +1169,17 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
+ out_debugfs:
+ 	debugfs_remove_recursive(osb->osb_debug_root);
+ out_super:
++	/*
++	 * A recovery thread launched by a node failure event may still be
++	 * waiting for the volume to be mounted.  Set VOLUME_DISABLED and
++	 * wake it up, then wait for it to exit before osb is freed,
++	 * otherwise the kthread would leak and stay blocked on the wait
++	 * queue embedded in the freed osb.
++	 */
++	atomic_set(&osb->vol_state, VOLUME_DISABLED);
++	wake_up(&osb->osb_mount_event);
+ 	ocfs2_release_system_inodes(osb);
+-	kfree(osb->recovery_map);
++	ocfs2_recovery_exit(osb);
+ 	ocfs2_delete_osb(osb);
+ 	kfree(osb);
+ out:
 -- 
 2.53.0
 
