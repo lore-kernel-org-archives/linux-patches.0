@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053137;
-	b=pp0KP1ccfAl2ZIp29XUmqUTnoPqbJQIQOh6NadSNr9QxmNODjhY2NSlBe5tWJHC1uAnm
-	 VWMBmuZa2a/bwDC+t7NdXQ6Npx2ZcdgAq65PBAf0KomOaEQLytbav6oDyCQeXaiad18yc
-	 rXKnVWaB+ppG/ZYnQIVZisg1AI5gshLejsosTmNXDtT9T8tVG3UiU6ZC3ArgEHWFOesyu
-	 aeD5qOrLVK4D66OGMMUDq/2R8lKkcWKpTUuuMZeSt6sFNPhTLfwIf3Ope4iDXmBw3+Id8
-	 GcbnutjzMCFzymyhQnkm1etmrDuXmW/TEz2yoWzDru+qhhujhQ+JNmXIIFt6RMwIimg==
+	t=1795053140;
+	b=e7TavKjPg2Xk0jqHI6DWI6xlVSua8CQ1L0lo4uUcK5Ex6hZWHtgQYHjM67XRy+3hfaVt
+	 +ikIzXtkh4UP/c6E4BBil2OhCfZBJYbO3XBnvy1sOvEeVAvooR6uDq2zTh3qOUE3r0yYd
+	 enoY4QTX0p/nqN/zIm07V66L6WB758tchZzRuWtpI5fJyFr1fi1rodcWyNXynaNJ0veZp
+	 KMAYH9l8Xd2THU9cek+88cIU482URIk7GUbpk0BHSsMdmjzn+crO6C4+GpDTxwiJKho13
+	 S2HBxVcVSsalYrMr7LvxX6ms2xv7eoxPmNt5YwkF8fzJajGJAmccZqG85i8cLdBhIFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053137;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mMaoT/fDQ8OsKLt8luuBgZxkFv/lxYoPdVLz2MVJPJY=;
-	b=wKjvqzmrQEr2Sv5t6rjkoVM8pyTUWDJrX39B2I+Qy674jw1CG0Ci9EgV34c0XmStQMLw
-	 5DfIZhPuVE09tJ07kJViqEiK/4BWI49FefkUxCFM6Ca96x8pGRSUEzF498cxFLtC8+d4L
-	 p/Fn5t6wP/0b8rBzwx4UO0ALAiTAFHvuvi+YS2rdBkhtpJV38gFnJSOmRIJb+G32ghJbW
-	 9KCxJNbTy74IJNueoV2I3Go8EMI/oSEDY4qDcq7rk2hSb7ZgqVpWQd96tO3sxKQ/Z5RHi
-	 eShrl5NCOKD1bskV6jYRTVkA+9Msz316s9qIIKw7RNqCE8FRWvfepl/lB5rEXWid13Q==
+	bh=tlQ5LeHWTJMy4I0WRlXzaW6dOt/9K0RTuDAW5D2Yy9Q=;
+	b=q8XMwmXOfo9MhknBrowoeZlfC43Uvi3IPfcqyny+GcAtQ3EjO3M3UxFEHJVn86u5Y67k
+	 4XqbuwlTiJwHxTW4WYgULsEQs9NunvKXmjEtC/wUtxNcu8c74ktAi4kT1ttUsizWft8B5
+	 fxhVnedsTrqlgv4CaAitlQCjXXW3MrB2cFJnAYKFGEbSJlwnyfo3G5P/jIia1mbR+coXA
+	 VQOWxgkOXnAtu1vRChfJjq9GRUGQ328gJUWQuZr85SYgF0PemETb/FwS8hGEFUBNZTnxs
+	 68lmTvjMLip2LcPx4vwKr1/bhy0w+dON0GCLa514X8t7tKryr9xIytB3LiPJJDlj5hA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/g+eP7O";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GCG3aO5O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391A9606A32A;
-	Thu, 19 Nov 2026 01:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC8606A32C;
+	Thu, 19 Nov 2026 01:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/g+eP7O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A76D1F000C5;
-	Thu, 19 Nov 2026 01:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GCG3aO5O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EDB71F000C5;
+	Thu, 19 Nov 2026 01:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053137;
-	bh=mMaoT/fDQ8OsKLt8luuBgZxkFv/lxYoPdVLz2MVJPJY=;
+	s=korg; t=1795053139;
+	bh=tlQ5LeHWTJMy4I0WRlXzaW6dOt/9K0RTuDAW5D2Yy9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/g+eP7Opuw8czOKkYYXNDSVIT//qGmN9eMD9Z3ik90ZvFfFRacelyPLMo3HToItK
-	 SA6naFKARkUhpMKXBUKSozXDqw+eL2GIdkF5djbuELXrCL0/ij+LgZUej+WaJma2pe
-	 uZ5QGrzRgRON1pBMGHea9qWl77ZF8b7hbWfbDbtI=
+	b=GCG3aO5OXA/5ekEp6QQaFB7kr7HZczcZ68LnG96mpLhvtp/GX7rx1BNMeV65BoGOt
+	 vhJb0zDMFkWtWh85Z7/UYicfgkvjzyPpCaRX0B8cr2Njxd/QSKHH4WiA304G5yJdLN
+	 H+bfTunFCLTT3drHXzpoplR/MX9o34GMlATS5Me0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pufan Jin <cyan2254650260@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0812/2214] net: bgmac: enable interrupts only after NAPI is ready
-Date: Wed, 18 Nov 2026 15:41:28 +0100
-Message-ID: <20261118150043.950408006@linuxfoundation.org>
+Subject: [PATCH 5.15 0813/2214] spi: zynq-qspi: fix address buffer corruption and support 4-byte address
+Date: Wed, 18 Nov 2026 15:41:29 +0100
+Message-ID: <20261118150044.026031248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,77 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Pufan Jin <cyan2254650260@gmail.com>
 
-[ Upstream commit ac1f6e58cb77bb66b8811f7d98703e0f076a8f65 ]
+[ Upstream commit dc5ca34f5e8dc10c566ef39aa3b1a201a17ca734 ]
 
-bgmac_open() calls bgmac_chip_init(), which unmasks the interrupts and
-enables the MAC receiver, before request_irq() and napi_enable().
-bgmac_enet_resume() also enables NAPI only after bgmac_chip_init().
+In zynq_qspi_exec_mem_op(), when transmitting address bytes, the driver
+iterates over op->addr.nbytes and populates xqspi->txbuf[i]. However,
+xqspi->txbuf is never re-assigned before populating the address, meaning
+it still points to (u8 *)&op->cmd.opcode from the command phase.
 
-When frames arrive in that window, the first RX interrupt masks all
-interrupts in bgmac_interrupt() and calls napi_schedule() on a NAPI
-instance that is still disabled, so nothing is scheduled. Nothing
-unmasks the interrupts again, the RX ring fills up and the interface
-stays deaf until it is brought down and up without traffic.
+This causes two severe issues:
+1. Memory corruption: Writing into xqspi->txbuf writes past the opcode
+   buffer on the stack (which was passed as const struct spi_mem_op *).
+   If opcode is zero, xqspi->txbuf is uninitialized.
+2. In zynq_qspi_supports_op(), operations with op->addr.nbytes > 3 are
+   rejected. When paired with SPI NOR flashes larger than 16MB (such as
+   Winbond W25Q256), spi_nor_spimem_check_read_pp_op() tests 4-byte address
+   support, which fails and causes spi_nor_select_read() to drop all read
+   capabilities, failing probe with -EINVAL (-22).
 
-On an Asus RT-N16 (BCM4716) a single "ip link set eth0 down/up" while
-a host sends UDP to the router left INT_MASK at 0, INT_STATUS with RX
-pending and the RX DMA idle on a full ring, with the RX packet and
-interrupt counters no longer moving. With this change, 10 of 10 such
-cycles recovered on their own.
+The Zynq-7000 QSPI controller hardware in manual I/O mode natively supports
+transmitting 1 to 4 address bytes via its TXD FIFO registers
+(ZYNQ_QSPI_TXD_00_00_OFFSET).
 
-Request the IRQ and enable NAPI before the chip is initialized.
+Fix this by introducing a local opaddr[4] buffer in zynq_qspi_exec_mem_op()
+and explicitly setting xqspi->txbuf = opaddr before populating address
+bytes. Also allow up to 4 address bytes in zynq_qspi_supports_op().
 
-Fixes: dd4544f05469 ("bgmac: driver for GBit MAC core on BCMA bus")
-Fixes: f3537b3494c0 ("net: ethernet: bgmac: driver power manangement")
+Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261010070011.60403-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
+Link: https://patch.msgid.link/20261016130812.282624-1-cyan2254650260@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ resolved context conflict due to mem->spi->master in 5.15 ]
+Signed-off-by: Pufan Jin <cyan2254650260@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/spi/spi-zynq-qspi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index 3b42674b9df6d..4239fbb866fd3 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -1183,9 +1183,6 @@ static int bgmac_open(struct net_device *net_dev)
- 	if (err)
- 		return err;
+diff --git a/drivers/spi/spi-zynq-qspi.c b/drivers/spi/spi-zynq-qspi.c
+index f1c1047c949ad..43c4180fb88e0 100644
+--- a/drivers/spi/spi-zynq-qspi.c
++++ b/drivers/spi/spi-zynq-qspi.c
+@@ -231,7 +231,7 @@ static bool zynq_qspi_supports_op(struct spi_mem *mem,
+ 	/*
+ 	 * The number of address bytes should be equal to or less than 3 bytes.
+ 	 */
+-	if (op->addr.nbytes > 3)
++	if (op->addr.nbytes > 4)
+ 		return false;
  
--	/* Specs say about reclaiming rings here, but we do that in DMA init */
--	bgmac_chip_init(bgmac);
--
- 	err = request_irq(bgmac->irq, bgmac_interrupt, IRQF_SHARED,
- 			  net_dev->name, net_dev);
- 	if (err < 0) {
-@@ -1195,6 +1192,9 @@ static int bgmac_open(struct net_device *net_dev)
- 	}
- 	napi_enable(&bgmac->napi);
+ 	return true;
+@@ -535,6 +535,7 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
+ 				 const struct spi_mem_op *op)
+ {
+ 	struct zynq_qspi *xqspi = spi_controller_get_devdata(mem->spi->master);
++	u8 opaddr[4] __aligned(4);
+ 	int err = 0, i;
+ 	u8 *tmpbuf;
  
-+	/* Specs say about reclaiming rings here, but we do that in DMA init */
-+	bgmac_chip_init(bgmac);
-+
- 	phy_start(net_dev->phydev);
+@@ -561,11 +562,12 @@ static int zynq_qspi_exec_mem_op(struct spi_mem *mem,
  
- 	netif_start_queue(net_dev);
-@@ -1609,10 +1609,10 @@ int bgmac_enet_resume(struct bgmac *bgmac)
- 	if (rc)
- 		return rc;
+ 	if (op->addr.nbytes) {
+ 		for (i = 0; i < op->addr.nbytes; i++) {
+-			xqspi->txbuf[i] = op->addr.val >>
++			opaddr[i] = op->addr.val >>
+ 					(8 * (op->addr.nbytes - i - 1));
+ 		}
  
--	bgmac_chip_init(bgmac);
--
- 	napi_enable(&bgmac->napi);
- 
-+	bgmac_chip_init(bgmac);
-+
- 	netif_tx_lock(bgmac->net_dev);
- 	netif_device_attach(bgmac->net_dev);
- 	netif_tx_unlock(bgmac->net_dev);
+ 		reinit_completion(&xqspi->data_completion);
++		xqspi->txbuf = opaddr;
+ 		xqspi->rxbuf = NULL;
+ 		xqspi->tx_bytes = op->addr.nbytes;
+ 		xqspi->rx_bytes = op->addr.nbytes;
 -- 
 2.53.0
 
