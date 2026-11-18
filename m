@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051191;
-	b=ogbMQzo0xjt9fkrbfiTkRiGAn85Zxr43Tap54QiHZdCQZyCCti7z3R4aG7Gn+VnaQYBw
-	 jAnGAdq9QzO46UXJuXnMEraHd1ImzKANRe47nzZKDIBshFmAblVhzL/bCuYKRDwM5izV8
-	 n1841iss89B0iZZmjRogOAzSRpKBd5AF/JN8zHRYD9OfHnxbG/3yW0btjmV96J9hk789n
-	 9Nwcjs1QF9uPF5wyqfmcsedhzVRwREqzf4kYET7LUSYm4CshqTfLMRCvRn5s3ZG6gEUwc
-	 v/fBJ/sRvc+AFq6bVwMWhv5Kos0/pBAysd0q47Gh8Po4r9rAcJkzFa1sVEh6sGsRy6A==
+	t=1795051194;
+	b=fyNikOaagk7V1PD5T+WscR4OS29zMt+6SHSaV2V0vpglF4q3WdUg35cAyPdAPSarRWfT
+	 lpmyLgbY4ZPZJ9jsIJbto77lGz0L+0MGJ/OaFCWxKjX+pZWRrkI5SNJF6K6wB1+1OdHg1
+	 vHtz3y1VKAmsqC+HOHZps1Y7ZdONscUKQeG735L3PbrqhCm44+V0rQcel3hKkDCaHoRcT
+	 +E22W35vd5KoDno1AwXY8ceGqyRnPDzhGo/04Us5izryjymLbrr6mueyT7ckWM35w3o+B
+	 26g5XkSZq8e5P7AvCQNSqbSvHv1aPylGDYw31AZmtw0b8eDyYualpDsU+MFyroMprSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TZ0WKRks5QWkDMInYkdWZYGnW8J8oKfztdndjemM/eI=;
-	b=DJ5nurEY70s3T63WWcIEAtkkIOQ5FS3ewtrB8l5GVdmLl5ZgStDmG3LenRPlsm13Tzj6
-	 NXnFBNykA6bJpaOEXQQzn0h5uv5kV8u9+8mQcQnrMH5Xj62e3i1hbRSaAQp2ddPjAkILs
-	 mEV//zFCA1CDdy8JUgGDq+d0b9LAlk1jcasj4eLCB0vuVHu7icxZYilTctnpBF3fZ82Ap
-	 OmZvI/evjcKYFlFIKdhQ1ZMDu9wSkC/h/pBz8bI73i3UcfhP1d/4M1i5cnKAf/eZybKYt
-	 l8+GONF0LsHAZhXkXkNtxQFWTVSSQ+Hf+I/ZC5jdXll0rbdVfHGZ7ohJ0Ht/vwQtYKA==
+	bh=4/dZf1QsK7DuL1Kk2XowbpKUGRm9p0l6MYeFxq6pTCE=;
+	b=4Y/jd1uEwc/VlrIq51SfjmFRowcKbFWtqrIY9rZw0+2Vja17g5JThO78LzlsaO3aqmiq
+	 zQ2qJoNNg41lMxCdwxxqNuj41iAT1OE7/vQg7WfNkfxC7uyByrHF89sonZSugFR9o+HZp
+	 nw2Z1Aq9WcCpUHtCFWyS5zyyRnaRdubhp772R+UdCZClazjAgUuZ9K2YeMDcxYszGl7on
+	 OLI5hjQgTqiu9KSASPbcV6NY/VkWfdwKhFPnSpEZwdOylToboZKo1ZhurCmw4czpuENni
+	 9X3rWh5k1INIGSJeAeT/EbP0x5AfZ3WGdn2JYE2xrxteThvZ4SR45MxmywGb3S/oiSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AY08h98R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="i0GtWlo/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BAD606A320;
-	Thu, 19 Nov 2026 01:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3531606A325;
+	Thu, 19 Nov 2026 01:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AY08h98R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697C71F000C5;
-	Thu, 19 Nov 2026 01:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i0GtWlo/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB851F000C5;
+	Thu, 19 Nov 2026 01:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051191;
-	bh=TZ0WKRks5QWkDMInYkdWZYGnW8J8oKfztdndjemM/eI=;
+	s=korg; t=1795051193;
+	bh=4/dZf1QsK7DuL1Kk2XowbpKUGRm9p0l6MYeFxq6pTCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AY08h98RZKBnSabqThIV4q2IDZnbgHs30XrzqqM5hKzG8iPxaibdPoDGbmHgpzOy2
-	 qec176cyd/UzG9sHFwSFtE9qsmyAoF2jBsxhUrZNJ8vejU9ovPFuz19SYXzCXlmHsR
-	 4f5wI0EKzW6ZlU1AnwO2ZCXigwajoxZLY1p+035o=
+	b=i0GtWlo/FpLlrP/ZAt0SdjRyBzC6JHSuN5W4L+HcY8R7cBbxoHr/OktKH7GNEtt2I
+	 SMeqOWqXzjCv2PR8Z/Az8r5Fv8dc4ztfR4+dXiZ1AkvYdYAvv8YhOcxqfIh1TiW39J
+	 90nNYsYPAjmBy0kaXhislKZ744Mi+XAnMZyb4M4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0120/2214] power: supply: cros_pchg: unregister EC notifier
-Date: Wed, 18 Nov 2026 15:29:56 +0100
-Message-ID: <20261118150014.872550463@linuxfoundation.org>
+Subject: [PATCH 5.15 0121/2214] power: reset: piix4-poweroff: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:29:57 +0100
+Message-ID: <20261118150014.943182729@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,60 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 631adfa03595c63b2a621cdc62db60bb1ce5f91c ]
+[ Upstream commit ffefc5d9a052f67bc87b57d1107fd7cc1fa1a3d4 ]
 
-cros_pchg_probe() registers an EC event notifier whose callback uses the
-devm-allocated charger_data via container_of().  The driver has no
-remove callback and does not unregister the notifier, so the notifier
-chain can retain a pointer to freed driver state after unbind or probe
-cleanup.
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Register a devm cleanup action immediately after the notifier is
-installed so the notifier is unregistered before the driver state is
-released.  Also fail probe if the notifier cannot be registered, instead
-of leaving a charger device that cannot receive EC events.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20260615063105.39152-1-pengpeng@iscas.ac.cn
+Link: https://patch.msgid.link/20260704152336.51384-1-pengpeng@iscas.ac.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/cros_peripheral_charger.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/power/reset/piix4-poweroff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/cros_peripheral_charger.c b/drivers/power/supply/cros_peripheral_charger.c
-index 305f10dfc06d1..b3f6a956ca398 100644
---- a/drivers/power/supply/cros_peripheral_charger.c
-+++ b/drivers/power/supply/cros_peripheral_charger.c
-@@ -282,6 +282,14 @@ static int cros_ec_notify(struct notifier_block *nb,
- 	return cros_pchg_event(charger, host_event);
- }
+diff --git a/drivers/power/reset/piix4-poweroff.c b/drivers/power/reset/piix4-poweroff.c
+index 7f308292d7e38..19ab3822338ed 100644
+--- a/drivers/power/reset/piix4-poweroff.c
++++ b/drivers/power/reset/piix4-poweroff.c
+@@ -96,6 +96,7 @@ static const struct pci_device_id piix4_poweroff_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, PCI_DEVICE_ID_INTEL_82371AB_3) },
+ 	{ 0 },
+ };
++MODULE_DEVICE_TABLE(pci, piix4_poweroff_ids);
  
-+static void cros_pchg_unregister_notifier(void *data)
-+{
-+	struct charger_data *charger = data;
-+
-+	blocking_notifier_chain_unregister(&charger->ec_device->event_notifier,
-+					   &charger->notifier);
-+}
-+
- static int cros_pchg_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -367,9 +375,10 @@ static int cros_pchg_probe(struct platform_device *pdev)
- 	ret = blocking_notifier_chain_register(&ec_dev->ec_dev->event_notifier,
- 					       nb);
- 	if (ret < 0)
--		dev_err(dev, "Failed to register notifier (err:%d)\n", ret);
-+		return dev_err_probe(dev, ret, "Failed to register notifier\n");
- 
--	return 0;
-+	return devm_add_action_or_reset(dev, cros_pchg_unregister_notifier,
-+					charger);
- }
- 
- static struct platform_driver cros_pchg_driver = {
+ static struct pci_driver piix4_poweroff_driver = {
+ 	.name		= "piix4-poweroff",
 -- 
 2.53.0
 
