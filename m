@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045650;
-	b=rUIkpxaCXoe6u/+H2AAqe+yv7BStv457F+ximG2nrvHIhouklzrcq80rerZtBz58QdUi
-	 PKdRi+/ZcUIEbRfqKAtAsXOkZVTyIU6zITDceBx7CA6EUPTdKGt/Wdl9B2Lef1Xgd5GFE
-	 uKOj8htlNdZot9AKpxnFDjfW0+ieq0U6vbaIOt2w+TC3OJAK1g3tYvMP8b3ulgcVW610K
-	 In1GbpSFa00/08FsGK2jy4Tme/UHNpDf2ZZYfF1FuK58iUT1Ex73taFH5j7WZ9//BM6gv
-	 fxCy8wR6QoXfY+QEM6nCTxG3Dq6hbN9kxWeFrqUF5WvUDfxF6HOffZaQYGQZKrhf4JA==
+	t=1795045653;
+	b=nz1odYonOT0v1Wkg87WkBPIpm0u7vZHi3mKXoYbAfghyJtIzQZc9CzNTQ28vPYJNtUnd
+	 A96DbEOKu6bNvTT0Sd4KPzWVyoU66vsVFNKglReqryO0+MkZxZX5lXbJky8JmN099NLo3
+	 n2/8IINGn9u5qiof3U+dC7osQrexNL9z4VerZLswgKL3ADIbGK4vzMmfIhfmBaI5gUfhi
+	 A+05QvI4EmFvnt7sbDDERtcJSe8orr/LS8P1Dw3Tvj8V1TH7B09RGMC7kOzE0OCfaYxhh
+	 1/WrOX1tUKE5Xp4YkhB15KdDQRc0SQorqVzw0NBcaJX8haTjXF0msAKVPGq3KHJDrng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045650;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045653;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3EI8BQ4HmhqQKV6BcbHFu7Uda3zBPDuv3rxUAaRNAGI=;
-	b=1Lv1pwpV4sUWkdtb4aHsV/dlqyRU8LiyS/yFChfQtDelqAlmOQfaUOqxWhWhHfnJXsMf
-	 xOJ9Ocav424JbzcQQToefJm3AKecHZoFGWvOyWer3txQ5mx7o618mfioCYZX88tNHeIwW
-	 nZ1MOppeagBjMYrr3aXr+uRTeE40ZTGIvIQ2FzzFgUI2wKjz+gufGVl9cnvI2gZDM1hys
-	 3T70kNVpRUgzSRQY1cnvCbH6DL5r3Vz3YH97EXnZsnUwAo9LvSJFKu95+Vz49rviaHmdc
-	 +P/Eg8viMF5QudPKWY6y/5AX2zsMNhtfgrdjWroKoqGUmf1PT646XYmqbk8El4iTv1Q==
+	bh=ZfW0OerJvnfmdd31hvzycOc7TC6KNS8sdPZgC1GkGYc=;
+	b=ml8T/Bn0ioRlyB/Hznpi0Qomf7OxJe2/jGfqJ6669YmNszYl7LucQuLWFaiqedAQ8g5w
+	 aqnH0c9CUh/Xkgxpw23vtQ+GvVRBGzoJFtuJBvgXsXexoSdr1ORAN/B6y8+2uFBsoJmHX
+	 I2WJ4eSvPb1d35tkSg9cRCO0qjJbdXHWcpf+2NO9Ce4qUj0TPQO+0kEybzshcTx5/z0ba
+	 3Nb05rPqUWrjXh9XThX3yT27zWVNZAD+OVzB9NU8NKZkAwJQgiYk0zEY081qOZt4QbREx
+	 Df09O+7aehbAU3QxfOrcRfwBYrWtwsXYZWTJk5242BpBLqlf5o0CHtwe//I+C8HEH8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PsTZ/y8d";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1U9rObb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FECA606A33B;
-	Wed, 18 Nov 2026 23:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AD4606A32C;
+	Wed, 18 Nov 2026 23:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PsTZ/y8d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67421F000C4;
-	Wed, 18 Nov 2026 23:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U1U9rObb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E1C1F000C4;
+	Wed, 18 Nov 2026 23:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045650;
-	bh=3EI8BQ4HmhqQKV6BcbHFu7Uda3zBPDuv3rxUAaRNAGI=;
+	s=korg; t=1795045653;
+	bh=ZfW0OerJvnfmdd31hvzycOc7TC6KNS8sdPZgC1GkGYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PsTZ/y8d1MzkxN8Ekf2gy7mx/fqkMo1rkEH513m1BPkpB7ZNvvLbfmLy0U76Bf4p3
-	 x2Wbv5Re0cYrKexS8uCNH/YPmxyWgfqD61IAEpAKogGzUO2FwTojYWeoDct91RSme9
-	 IDVF/0s5rTMKu2jKK58LXGAQRRiccFDnIr+OQlFk=
+	b=U1U9rObbL21l69eTw4XESZ8SQUit53867RG7kYBRRLVx3fho8qRR5wZZ/1uDYLXys
+	 bzSN2HsQWdRUL5AStVhIn7MtJBv3qZ//BXXwLGaqZxigbL3Mm2fZgz81Q/e7jEk0a6
+	 Qk5SyzOuA9dOlOZXqdfJaLqssdCba7qpdyhaEBts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wayne Lin <wayne.lin@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1000/2857] drm/amdgpu: reset VI ASIC on Apple boards with VRAM at 0
-Date: Wed, 18 Nov 2026 15:33:54 +0100
-Message-ID: <20261118150237.606166942@linuxfoundation.org>
+Subject: [PATCH 6.1 1001/2857] drm/amd/display: dont WARN when removing an unallocated MST payload
+Date: Wed, 18 Nov 2026 15:33:55 +0100
+Message-ID: <20261118150237.641931832@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,70 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Kucharek <qchcio@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 92a5184787b81e67f7b831ad860ca9b053505cf8 ]
+[ Upstream commit b18a7c6d75bcc883b39497863cc88c9ef4c6c85f ]
 
-On MacBookPros with switchable graphics, the firmware puts VRAM at MC
-address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
-reset) moves VRAM back to the VBIOS default.  gmc_v8_0 reads
-MC_VM_FB_LOCATION once at init and reprograms it only on SR-IOV.  On
-bare metal, the driver then keeps using the old layout.
+[Why]
+On an MST teardown that runs through the reset path
+(dcn31_reset_hw_ctx_wrap -> link_set_dpms_off -> deallocate_mst_payload),
+fill_dc_mst_payload_table_from_drm() is asked to remove a payload whose
+vcpi is not present in link->mst_stream_alloc_table and trips:
 
-vi_reset_quirks[] handles this for the MacBookPro14,3 by PCI ID:
+  WARNING: .../amdgpu_dm_helpers.c:275 fill_dc_mst_payload_table_from_drm
 
-  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+This is a legitimate case, not an error: deallocate_mst_payload() can be
+called for a stream whose MST payload was never programmed into DC's
+HW-maintained table (a new stream created for a modeset whose enable
+never completed, as already documented in deallocate_mst_payload()).
+There is simply nothing to remove.
 
-Add the test that SI and CIK use: an Apple subsystem vendor and VRAM at
-0.  Other Polaris MacBookPros then get the same reset at load, for
-example the MacBookPro13,3 if its firmware leaves VRAM at 0.  These
-boards are not tested.
+[How]
+Drop the ASSERT and fall through to the fill loop, which rebuilds the
+allocation table from the remaining entries. The table ends up unchanged,
+which is correct: the payload being removed was never in it.
 
-Keep vi_reset_quirks[].  Its MacBookPro15,1 entries fix a different
-failure, a module reload after S3:
+Note the loop must not early-return here - the caller passes a zeroed
+proposed_table, so returning early would zero the whole link's table and
+drop the other MST streams sharing the link.
 
-  commit a5be7ad8f5f0 ("drm/amdgpu: reset VI ASIC on MacBookPro15,1")
-
-VRAM is not at 0 at that point, so the new test may not cover it.
-
-After the reset, FB_BASE is not 0, so the new test does not fire again
-on a module reload.
-
-Only compile-tested.
-
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5875
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c2335b685b1e1e387f2fea1c67f56b5b8a8b6dc6)
+(cherry picked from commit 88a27f624dc0ebc14a7ab274a84d977ce8513cb6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
-index 4ad7db4e414db..a926b30c72eb4 100644
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1450,6 +1450,16 @@ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
- 	unsigned int i;
- 	u32 clock_cntl, pc;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index 9dc41f569a761..0a57571b84f25 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -180,7 +180,7 @@ fill_dc_mst_payload_table_from_drm(struct dc_link *link,
+ 				break;
+ 			}
+ 		}
+-		ASSERT(i != copy_of_link_table.stream_count);
++		/* Payload absent from HW table when never allocated: nothing to remove. */
+ 	}
  
-+	/*
-+	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
-+	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
-+	 * the vbios default, so reset and post on load to start with the
-+	 * vbios layout.
-+	 */
-+	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
-+	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
-+		return true;
-+
- 	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
- 		if (adev->pdev->device == vi_reset_quirks[i].device &&
- 		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
+ 	/* Fill payload info*/
 -- 
 2.53.0
 
