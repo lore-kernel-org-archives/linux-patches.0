@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049983;
-	b=4ppMBQ0+KyQ12Ahyu4JkGJL/655WVWPldCqME6lJyW57zO9b15ptM6ojEeVLUiy8fQ4Y
-	 YQMWxmiekcRi50SZHtwJ4HlnQF3m9mppEfORvlu6ERVfv+uLD8bvD4MfkkR8WN5WoizcA
-	 h6fQK70F9FD5M4ReZmtYv1x16sVViEb1BZThuvdeODm9jEcc6kCB0fo6oztmePpyIsWnE
-	 d3T4fI1/oI4hJVy0QAiONS4b5f+3VIgLGvbCFA2eTD9A2RDyrvLDnyji+P+6Ktuj+V9yr
-	 Yg26D/xsN/56tNNCweFK3R1UpPnC5uqTwtXcw0mI4gt1pNLWlGo4e89BiCOxwHmVc6w==
+	t=1795049985;
+	b=0Whal14rqhB7X5k3ls3Ag9KG4TQtoPeusFqklB1B/Op5P6Eftx4+t9/1z8t9IxesuG7F
+	 xlLzAKoeR/lMrfUrifcXgzzuI5Q77XIQHjdy5b+JL8lTtwFTRBwPy3OCJLHVZQ2wI5k7+
+	 s+g4+0tSGbIT8jYUkXdmqF30ybkOGaxyMm+CwfaG0M6thHlB56LUWm+Cc58ur3E3DBEPS
+	 EHeCsS3v8eoG7O7ZTorTZreQbqdyi3MXvs2xixCAmMm5lMTmzfvsq7b5x4UteF5FYKfdM
+	 bK1DHJQA05VFL6KjXyRG77zItYMjlU0Fri6gXTmmE9gjb3IPOFrnuHmDqoEM5rPYUkQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DXWHv9dm3AS2KHKncP1I4zCKgRHtgmqCSl3GPM0PNUQ=;
-	b=XZOQ2EbBa3HDHjN1vLttqNl2o0IEeVJ1bVq3HMi3d9VgbjLY3hIMNBP1Xb3RdhSwI4XA
-	 XvUeJsFPNlu/b+6FYwOh4NqjapAlyHSbC2aT+Y8uc6a2kdPU5AN6mmDBnzW8AP6/hp1G5
-	 CWDzfa0630n+yCEFgOMGu15Ew02FKk34lFhlxfu4ZYTV0JZ/IdznAxdV3GBApXHKTk51L
-	 9LDtXTpcxXhlX4uwMGAINZ9uYc4FQTLL4D7+rlqL7+0MeuOQv6X6HvUBsBPwXL9toV+pX
-	 UNFFcO8sYeR+eIcWiS35kwDc4XGz3PfR3iyzdWWy1iJx5M3HnCNv4c5fjlrplwBX+7A==
+	bh=MTfO08XlKfrFg+wJoBizEtCT4Hia3U0HchTDG96vsDs=;
+	b=MH0Aujh1FyEkBCYk/gJ/LmTZBdyDmJ/oxJF2OO79orYgcMJRV+4mlcIkO0WUM22FOqkj
+	 Zu88FEBPUhEwRDOJViv+ZrAFpAknmDvgkOU5HsNsUT3B+zAYGk1TF9OTdtS31UJsiLhoH
+	 vrka/G8FvsOzITxR6heNYGX/uRN+EyqY8Kt5t6IPpaeXxJ21n9G1gq34na9JyEIJOJ+5x
+	 YQDYoV6Z4eXM2kwb3buU20N9Actq9WHIV0Y9b/c5mnQK8Ye4O+NS4PJ4E/dcezQyZGmuj
+	 udyjmzYwYEa58RSeBDclTCAp3idyddaH6jrTdNKFyPEbHJ9jxOP3/SFtvR7Oriq3xtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwmG5jir;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rw1VPtun;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2243F606A320;
-	Thu, 19 Nov 2026 00:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8217606A320;
+	Thu, 19 Nov 2026 00:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PwmG5jir
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7B01F000C4;
-	Thu, 19 Nov 2026 00:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rw1VPtun
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F7E1F000C4;
+	Thu, 19 Nov 2026 00:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049983;
-	bh=DXWHv9dm3AS2KHKncP1I4zCKgRHtgmqCSl3GPM0PNUQ=;
+	s=korg; t=1795049985;
+	bh=MTfO08XlKfrFg+wJoBizEtCT4Hia3U0HchTDG96vsDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwmG5jiruo9FWsoHEM/46P8kkRX1VTshqzOxjDMAqphuGxYD5tJLdGuhuqFG2BCdQ
-	 Hnlltfnt6AcQWUfBPkTaWa6mqp0OYFwoo4SX3PZWMbVpbA3QJlPmRkowUCQ4Du+wID
-	 2ilYEhaT35jZRCN3zBUnmMtvz3JOvFpndIYrMNT4=
+	b=rw1VPtunPaocpPc0L+xZXxUayVZ7XZaesPnZ1q+Ve29rAy51R+npUCnyTkvlFGUIl
+	 PmbBTtMAqm5UsfNoUTyUxR+yf5vAq3W5Vb2KKOWAuWeh+wn0APOzSAYqMmFC+dc2Wl
+	 8CWeHoRLJS5LUzYdnEMktnNuDWvufmuxK9ka5IvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2547/2857] ASoC: mediatek: mt8195: Fix timing system clock error handling
-Date: Wed, 18 Nov 2026 15:59:41 +0100
-Message-ID: <20261118150333.224494162@linuxfoundation.org>
+Subject: [PATCH 6.1 2548/2857] ASoC: mediatek: mt8195: Fix main clock error handling
+Date: Wed, 18 Nov 2026 15:59:42 +0100
+Message-ID: <20261118150333.262312604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,63 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit f18c0a8e528eb8844ee362324220ab8df3664afe ]
+[ Upstream commit 9f1b48c658ac38be81c04fbc29ed1522f89fb0c9 ]
 
-Check the return value of mt8195_afe_enable_clk() when enabling the
-timing system clocks.
+Check the return values of clock enable functions and propagate
+errors to the caller.
 
-If enabling a clock fails, disable the clocks that were already
-enabled and propagate the error to the caller. In
-mt8195_afe_enable_main_clock(), return the error instead of continuing
-with AFE clock enable.
+Disable previously enabled clocks on failure to match the
+main clock disable sequence.
 
 Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-5-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261014112752.683032-6-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 23 +++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-index 9940e95b1dcd3..57c72f8407720 100644
+index 57c72f8407720..2b944ff08621d 100644
 --- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
 +++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
-@@ -671,7 +671,7 @@ static int mt8195_afe_disable_afe_on(struct mtk_base_afe *afe)
- static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
+@@ -725,14 +725,31 @@ static int mt8195_afe_disable_timing_sys(struct mtk_base_afe *afe)
+ 
+ int mt8195_afe_enable_main_clock(struct mtk_base_afe *afe)
  {
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
--	int i;
-+	int i, ret;
- 	static const unsigned int clk_array[] = {
- 		MT8195_CLK_AUD_A1SYS,
- 		MT8195_CLK_AUD_A2SYS,
-@@ -682,13 +682,22 @@ static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
- 		MT8195_TOP_CG_26M_TIMING,
- 	};
+-	mt8195_afe_enable_timing_sys(afe);
++	int ret;
++
++	ret = mt8195_afe_enable_timing_sys(afe);
++	if (ret)
++		return ret;
  
--	for (i = 0; i < ARRAY_SIZE(clk_array); i++)
--		mt8195_afe_enable_clk(afe, afe_priv->clk[clk_array[i]]);
-+	for (i = 0; i < ARRAY_SIZE(clk_array); i++) {
-+		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[clk_array[i]]);
-+		if (ret)
-+			goto err_disable_clk;
-+	}
+ 	mt8195_afe_enable_afe_on(afe);
  
- 	for (i = 0; i < ARRAY_SIZE(cg_array); i++)
- 		mt8195_afe_enable_top_cg(afe, cg_array[i]);
+-	mt8195_afe_enable_apll_tuner(afe, MT8195_AUD_PLL1);
+-	mt8195_afe_enable_apll_tuner(afe, MT8195_AUD_PLL2);
++	ret = mt8195_afe_enable_apll_tuner(afe, MT8195_AUD_PLL1);
++	if (ret)
++		goto err_disable_afe_on;
++
++	ret = mt8195_afe_enable_apll_tuner(afe, MT8195_AUD_PLL2);
++	if (ret)
++		goto err_disable_apll1_tuner;
  
  	return 0;
 +
-+err_disable_clk:
-+	while (--i >= 0)
-+		mt8195_afe_disable_clk(afe, afe_priv->clk[clk_array[i]]);
++err_disable_apll1_tuner:
++	mt8195_afe_disable_apll_tuner(afe, MT8195_AUD_PLL1);
++err_disable_afe_on:
++	mt8195_afe_disable_afe_on(afe);
++	mt8195_afe_disable_timing_sys(afe);
 +
 +	return ret;
  }
  
- static int mt8195_afe_disable_timing_sys(struct mtk_base_afe *afe)
+ int mt8195_afe_disable_main_clock(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
