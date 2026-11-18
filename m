@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016600;
-	b=mxhLHnjaAmT01ct1PjwKqgTh0xPwm1SVJ4FieURJcVOlLs2fqnlDBzgZU0rn3zJaHSY1
-	 +WKXPuIjQKbQfxxe8ITtn+Mi973NYVRr8ZkFCeLeB426M4QX0GAU+F0vohq/w4ud0Hwx0
-	 B/Y4fGIL3homaaE9wWgmdVfjVXKwccBkYfn0atUTMNmHVMzst0SXugsUYucaLE43yIe9I
-	 ptn1H3OxzJ5YnCgMAcVQBvSM0lFxmhmg/7RkIqueAKtX9AMybL3SaAyQfrHGf4a5WP+MS
-	 CTbxl8iClCrvbOuVtRfizYKOtz8wUXITPX1VMwBBHbvhwXw8x+2LraBx/WBtrTzciCg==
+	t=1795016603;
+	b=M9Jg4Uiw/pZC0ZJ51PELy6t1H2GW9rf7qBFn65USmAEk5uI8c87k9cJzYyHQ8ndsVcAv
+	 0vuFYdBAohcW9q7WrSHAVat8Iyu54/ojhk3Qbld7LxctIlc8fBMz1PmuUkbsgGPoqiqkS
+	 bI5BMU457jVEuqdNFyzswKFcD6aaa4kxIdNncTsMz3fEdsIBweJdrTbMl7CNee7s5/fDU
+	 ajAmFFTJq/4cKR9RdLH8HwstRKcrqdg+0VBLF0A3vyBrXLQ5VAvYHqh6VreZtWEQ+Y0gp
+	 ybxE6y2WayIXpGzK5N5a43L1jCn0TfgWeNV3hB24RF3vv1kjCR05mWvKulCRoxDvd1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016600;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016603;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tsojaBcznlsmEDTqNzybss0co30liQ7OAmfxZPmVNtw=;
-	b=Kd1fwexVUXzn0vTHqDneH067/ke5vHjfwqL0was8UEkDYhoHbAa+718zby+U4lqACybh
-	 fQYeUo7A//ptpIO1/+gdQHx5bAKoDI0f2lYVkNltHIJuDN9S4fV86/iNGqQfRUQW7wkwx
-	 MNMNiccssRPLZGYZDmGmykW1oOYAkSOwowyvMguU9nGyD7B/y6wQQq8QVYZ5Lls+RjAW2
-	 c0X1zVu8pZaBurKFVuansBTtGs/JG/cikniA7ftnazyWmDMMbnjwmaz88i/lRKdgg8gm0
-	 lWF3DeSuCKxlQ3U/FQlGqHQq3xOAHwxX4JgT9PiTifU34yhibXm57Hmp7fDv15nyB0Q==
+	bh=yX24sAKCYSpMvcekcFisGApBwm7i8/1z0r6S7Ef0fvo=;
+	b=2511Q/EomChs73XuEqGC8Ma011fe/HHJp+l4tnRgEHkMxWd+kq0nO03RoHRrEasf2Hmk
+	 5bZF9O1/vi3gs7ahlrzkicCnqTC4qbItesILcwjKcWYLVUmUbi7CIY+3eVDBjGtyxwiYy
+	 +Hv4ZW/KKAuYNmK73MA3521P+EZypZ3jVOLyQLVRtoQ2trIqdfk0SHtAolK+yrzeBAyFH
+	 h8K/8uaTKb6ItaYKu7WitrY2nBP4y2+Qto64H0wqiQyH5EWA3u4r+MM6fJCHPPwoTV/B8
+	 Df29ynI4SvAy0LrY5XFlGoLK/GQZynG3sT+xbEFiZovLnGbLL3nPqgoQiMX3mtsBnqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IEaGYGbv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZXUyf4rx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6414606A31C;
-	Wed, 18 Nov 2026 15:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71C0606A320;
+	Wed, 18 Nov 2026 15:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IEaGYGbv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395451F000C9;
-	Wed, 18 Nov 2026 15:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZXUyf4rx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C0E1F000C6;
+	Wed, 18 Nov 2026 15:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016600;
-	bh=tsojaBcznlsmEDTqNzybss0co30liQ7OAmfxZPmVNtw=;
+	s=korg; t=1795016603;
+	bh=yX24sAKCYSpMvcekcFisGApBwm7i8/1z0r6S7Ef0fvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IEaGYGbvag+brVSCigMAe+cEP5O+QuDfv/eeIZO80k9EUBOieBHArKniOeuka6K6o
-	 TCqJKthCq99mFx7bcUtT2jwCAxFyiKZ3Im9wRnghEDdfAm/1pmjEWv7nFwhDasP9uO
-	 8IDJ+VHlw5XlcqFY2BFmbouITFQ6QAhSE3LzYvzI=
+	b=ZXUyf4rxONYqn8DK8AXGLdeRK21U+UFQ3vfg39rE0hh0J8g0Ptm/L1beDB3qp10Ai
+	 T0+wce+2ydagt80pYCRSmb6XL2FomfyykjOa12b8o6+HjJ2vAkgOHypEtTPJqgsBXN
+	 Urxl8jKThxqyo4jDXWZx/vGl3nhf06dXqSYQMACw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0586/2651] cxl/core: Skip einj_inject creation when devm_add_action_or_reset() fails
-Date: Wed, 18 Nov 2026 15:30:26 +0100
-Message-ID: <20261118150308.819664058@linuxfoundation.org>
+Subject: [PATCH 7.3 0587/2651] ACPI: CPPC: Validate the _CPC package header
+Date: Wed, 18 Nov 2026 15:30:27 +0100
+Message-ID: <20261118150308.854926453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,47 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit b25af6afd2f26b455108bab03dfeba52378e8dd2 ]
+[ Upstream commit fb345025f161d17fe7c8a6048c7e80e467fa8ddf ]
 
-cxl_debugfs_create_dport_dir() ignores the devm_add_action_or_reset()
-result and creates the einj_inject file below @dir unconditionally.
+The _CPC NumEntries field includes every package element, including
+NumEntries and Revision. acpi_cppc_processor_probe() nevertheless reads
+those first two elements before checking that they exist and trusts
+NumEntries when walking the remaining elements.
 
-When the devres allocation fails, remove_debugfs() has already run
-before devm_add_action_or_reset() returns, i.e. debugfs_remove() has
-released @dir. The subsequent debugfs_create_file() would then use
-that dentry as its parent although its final reference was dropped in
-the removal and its memory is subject to call_rcu() delayed freeing.
+Reject packages with fewer than two elements and NumEntries values which
+exceed the package count before accessing Revision or iterating over
+register descriptors. Although the specification defines NumEntries as the
+number of package elements, tolerate additional trailing elements because
+ignoring them is safe and avoids rejecting padded firmware.
 
-Skip the file creation in that case, consistent with how the rest of
-the helper tolerates debugfs failures.
+Revision is specified as a BYTE, but the parser assigns its 64-bit AML
+Integer to an unsigned int before validating it. Reject values above U8_MAX
+before conversion so, for example, 0x100000004 cannot truncate to revision
+4.
 
-Fixes: 9185b1a3043c ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915060138.2007974-1-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 337aadff8e45 ("ACPI: Introduce CPU performance controls using CPPC")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260724134251.1632824-1-christian.loehle%40arm.com
+Link: https://sashiko.dev/#/patchset/20260808082644.1251332-1-christian.loehle%40arm.com
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Sumit Gupta <sumitg@nvidia.com>
+Link: https://patch.msgid.link/20260916162805.1039247-2-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/cppc_acpi.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 2ebf24655cda0..7fdf23b9d24de 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -846,7 +846,8 @@ static void cxl_debugfs_create_dport_dir(struct cxl_dport *dport)
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 8aa0ce556863a..67dae96a3cd8c 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -804,6 +804,11 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	}
  
- 	dir = cxl_debugfs_create_dir(dev_name(dport->dport_dev));
+ 	out_obj = (union acpi_object *) output.pointer;
++	if (out_obj->package.count < 2) {
++		pr_debug("Unexpected _CPC package count (%u) for CPU:%d\n",
++			 out_obj->package.count, pr->id);
++		goto out_buf_free;
++	}
  
--	devm_add_action_or_reset(dport_to_host(dport), remove_debugfs, dir);
-+	if (devm_add_action_or_reset(dport_to_host(dport), remove_debugfs, dir))
-+		return;
- 
- 	debugfs_create_file("einj_inject", 0200, dir, dport,
- 			    &cxl_einj_inject_fops);
+ 	cpc_ptr = kzalloc_obj(struct cpc_desc);
+ 	if (!cpc_ptr) {
+@@ -814,12 +819,15 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	/* First entry is NumEntries. */
+ 	cpc_obj = &out_obj->package.elements[0];
+ 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
+-		num_ent = cpc_obj->integer.value;
+-		if (num_ent <= 1) {
+-			pr_debug("Unexpected _CPC NumEntries value (%d) for CPU:%d\n",
+-				 num_ent, pr->id);
++		if (cpc_obj->integer.value < 2 ||
++		    cpc_obj->integer.value > out_obj->package.count) {
++			pr_debug("Invalid _CPC NumEntries (%llu) for package count (%u) on CPU:%d\n",
++				 cpc_obj->integer.value, out_obj->package.count,
++				 pr->id);
+ 			goto out_free;
+ 		}
++
++		num_ent = cpc_obj->integer.value;
+ 	} else {
+ 		pr_debug("Unexpected _CPC NumEntries entry type (%d) for CPU:%d\n",
+ 			 cpc_obj->type, pr->id);
+@@ -829,6 +837,12 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+ 	/* Second entry should be revision. */
+ 	cpc_obj = &out_obj->package.elements[1];
+ 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
++		if (cpc_obj->integer.value > U8_MAX) {
++			pr_debug("Invalid _CPC Revision (%llu) for CPU:%d\n",
++				 cpc_obj->integer.value, pr->id);
++			ret = -EINVAL;
++			goto out_free;
++		}
+ 		cpc_rev = cpc_obj->integer.value;
+ 	} else {
+ 		pr_debug("Unexpected _CPC Revision entry type (%d) for CPU:%d\n",
 -- 
 2.53.0
 
