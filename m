@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026409;
-	b=kM3MsHg+9aGM5bF4mol1+RqDgrRDmbj8cr/HFYwC5+qKrwKJYSNVWwDhniF1FQKPaVbK
-	 iQtxA+z0//Y6aCcGQN+5iEqPutkD41WbwaJ9XxYLaCEHaKQpap2xgWFRKhFQtF/GwjLXc
-	 Y25IsfvSl4b4/lxDPEgHvsh7ufJRlbiWhbX8mex06auOZvvMMWjgidoDvaoC2DQp8XNq9
-	 55m/T9CwIg9Afs4QA9QkUyY+RlO8Qk+cpNhW/Vveh2gkcjN9IKrXrQC69CSobrcqMfnIy
-	 0VpEz/fU5tKLHlsnHbKXal7VFxcLLAPacRfrBs9OvGplKsKi+vCCq4q3Mr9x/PI4V9w==
+	t=1795026412;
+	b=BffsV8DTslTETuGFl71TQoztvbI+I9S9Zovw8nG9Z1eCm6TFiV+h3TyD38Vzy0h5Ib3e
+	 1dUupFhNNUZ5JM8gSYEJ2J+B2zlzrtjXzw4+e87D52Ev0e+UVuLPiI6/WxbdB4iNFouij
+	 iO9zVvgdOl0tMwAX/T+jFbWrMY/hsQ8hyeFyP9ppFxkMg8jUxqHyVqFyDYU9E76z7tahX
+	 qIDQj1gpVJfaIrECX82OjzPsVAq0bv7KzAhxLJrwXLWhUdAJH6oOJx0KIDRnQPPezuXV1
+	 OYcyRXjU/dhG6YbpwpQboCjOEkzZye+M0Ej/RmB7WLtvb1H5f5sD56bdWYO9f97Yd7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PEcuI8zw3TjBp7GqeyaNNIguXYUgOTLEMD01j0/PDQI=;
-	b=udFE8s30K1iNBgrOmRCzflbFJ8irl2k3h0rvYtluYVq+Rz/I1hFZlYgq7+9mLcZ7tIs8
-	 9p3Ps7z3FbicCuWZdfqEl3VAdUDL7mUbvM5XYWoBZkYMq/YJ+fSQ4rVxlF7phQ2OE/DrY
-	 Hka0VxAc9uTBHLEPZIMphIChwvjU5JAiL2MBam01kYfGc90vq6vLr0CmM6UA9Xik7WaOE
-	 G57vON1uJ6umqpujh4NQaAYmJ297EtvNiWD/C+LKWbotcMVxh8aZA56ie5CUb4OMzBuYR
-	 1sCQYJHuvrI+MTNJafroo7ql2D45sMCYpDqJhAJMHeX2WFZN5OFM0D9Nn/LsWNazNGg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hIpvTEjT9sDRbKiDntHNZvE75jI0/4XLUd/0XDEJdsE=;
+	b=gM59iE+3ho3ZlpOeQc3hquSUrT3QHV01frX5jCixo5267DHLhxRSwS/YzeTBHiVlEHTi
+	 dJGuMi9aGDwzXRmgyQDzaR+521WnR49tNAGsnGlgsHaP1/6LIP+PCcFIvFMXGOQkqjZSw
+	 m49k484U+iOpW/AfN8dURj7Uv+UzD9dXObnq9cHRuqk7bbyme5CaMKyI1+96Perm56VvU
+	 ye5BK3P7sXsuHZm6yObZ7CktE/qvblrPVr9JvnhOqlsOFKb7MNllSGo7huOVKLEHV1c54
+	 CzBMYtNgth2iKXA21UWB3iVPQza4smBm2ZTR8XT9va6eOV26W+yVLHHEvzG2JdjIzLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/xo+w9L";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLtIzJB2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1DE606A330;
-	Wed, 18 Nov 2026 18:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFE2606A325;
+	Wed, 18 Nov 2026 18:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/xo+w9L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BE41F000C4;
-	Wed, 18 Nov 2026 18:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLtIzJB2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F621F000C4;
+	Wed, 18 Nov 2026 18:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026409;
-	bh=PEcuI8zw3TjBp7GqeyaNNIguXYUgOTLEMD01j0/PDQI=;
+	s=korg; t=1795026412;
+	bh=hIpvTEjT9sDRbKiDntHNZvE75jI0/4XLUd/0XDEJdsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/xo+w9LcjxO2AfFS/ZcrgO2OK6xQcxM4XkXTUC1REr7QfR9a2QnYVo9NL5wl974G
-	 w1nTApv7FplSpDH8SmpsUY6zVm7bZrUWq33DKThOq9BhsIe358khh/VFXZYjllAOBN
-	 GMaZbl7Cdz6pxunsVjahh3CXmA9NNHPPchf/+VEo=
+	b=fLtIzJB2bk8HsWqmClyF2SSraElakSojefy0648BvuRR87pOdecITw8ooENxEBa1A
+	 3L7EA81DUojPWLCON2v3MtDAL90h/KLzUI9Ce04Mopucfhuq8Dz+DC1si5j4bgnHQO
+	 N0wGwnUtwl0NYW2yqKj00f02dFpy2YAXYdlCFFPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrova Alyona <aga@itb.spb.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1384/2151] platform/x86: intel_telemetry: initialize default trace verbosity
-Date: Wed, 18 Nov 2026 15:51:59 +0100
-Message-ID: <20261118150212.416938971@linuxfoundation.org>
+Subject: [PATCH 6.18 1375/2151] wifi: ath12k: avoid IDR mutation during vif mgmt TX cleanup
+Date: Wed, 18 Nov 2026 15:51:50 +0100
+Message-ID: <20261118150212.102898717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,60 +64,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandrova Alyona <aga@itb.spb.ru>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 1b55ec81926eb7f6e4fad692fa4040a569e9daf7 ]
+[ Upstream commit 4aa45334eb23d40bf31c43405daea9b73469f2a6 ]
 
-telemetry_def_get_trace_verbosity() returns success without initializing
-the output verbosity value.
+ath12k_mac_vdev_delete() walks txmgmt_idr with idr_for_each(), and its
+callback removes each entry belonging to the interface. Removing the
+current entry can invalidate the radix-tree iterator retained by
+idr_for_each().
 
-The default telemetry operations are installed when the core driver is
-initialized and again by telemetry_clear_pltdata() when the platform
-driver is removed. The telemetry debugfs files can remain available after
-the platform driver removal.
+Move the walk into a helper that uses idr_for_each_entry(). It performs a
+fresh lookup for every iteration, so each matching entry can be removed
+through the locked removal helper without retaining iterator state across
+the removal.
 
-A subsequent read of pss_trace_verbosity or ioss_trace_verbosity calls
-telemetry_get_trace_verbosity(), which may use the default callback and
-return success without setting verbosity. The uninitialized value is then
-passed to seq_printf().
-
-Validate the output pointer and initialize the default verbosity to zero
-so callers never use an uninitialized value after a successful call.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 378f956e3f93 ("platform/x86: Add Intel Telemetry Core Driver")
-Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
-Link: https://patch.msgid.link/20260917110812.2831-1-aga@itb.spb.ru
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261003092104.520135-6-yaojiale02@163.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/telemetry/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath12k/mac.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/telemetry/core.c b/drivers/platform/x86/intel/telemetry/core.c
-index f312864b8d07a..62299524a07b2 100644
---- a/drivers/platform/x86/intel/telemetry/core.c
-+++ b/drivers/platform/x86/intel/telemetry/core.c
-@@ -24,6 +24,10 @@ static struct telemetry_core_config telm_core_conf;
- static int telemetry_def_get_trace_verbosity(enum telemetry_unit telem_unit,
- 					     u32 *verbosity)
- {
-+	if (!verbosity)
-+		return -EINVAL;
-+
-+	*verbosity = 0;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 7f7eddfa97719..e10a3366cd845 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -8316,16 +8316,18 @@ int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
  	return 0;
  }
  
+-static int ath12k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
++static void ath12k_mac_vif_txmgmt_cleanup(struct ath12k *ar,
++					  struct ieee80211_vif *vif)
+ {
+-	struct ieee80211_vif *vif = ctx;
+-	struct ath12k_skb_cb *skb_cb = ATH12K_SKB_CB(skb);
+-	struct ath12k *ar = skb_cb->ar;
+-
+-	if (skb_cb->vif == vif)
+-		ath12k_mac_tx_mgmt_free(ar, buf_id);
++	struct ath12k_skb_cb *skb_cb;
++	struct sk_buff *skb;
++	int buf_id;
+ 
+-	return 0;
++	idr_for_each_entry(&ar->txmgmt_idr, skb, buf_id) {
++		skb_cb = ATH12K_SKB_CB(skb);
++		if (skb_cb->vif == vif)
++			ath12k_mac_tx_mgmt_free(ar, buf_id);
++	}
+ }
+ 
+ static int ath12k_mac_mgmt_tx_wmi(struct ath12k *ar, struct ath12k_link_vif *arvif,
+@@ -10198,8 +10200,7 @@ static int ath12k_mac_vdev_delete(struct ath12k *ar, struct ath12k_link_vif *arv
+ 	ath12k_peer_cleanup(ar, arvif->vdev_id);
+ 	ath12k_ahvif_put_link_cache(ahvif, arvif->link_id);
+ 
+-	idr_for_each(&ar->txmgmt_idr,
+-		     ath12k_mac_vif_txmgmt_idr_remove, vif);
++	ath12k_mac_vif_txmgmt_cleanup(ar, vif);
+ 
+ 	ath12k_mac_vif_unref(&ab->dp, vif);
+ 	ath12k_dp_tx_put_bank_profile(&ab->dp, arvif->bank_id);
 -- 
 2.53.0
 
