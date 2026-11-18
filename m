@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015582;
-	b=C+/44s0ZauDA14ClI+b+/97yC5L0YiYxuArM5YGpQPtCpyfRYahPwPlUWmSGS0kGBOzW
-	 cxYb11e7RcbcCsx5RZkqW5YBMQohf8IFL7t750vTGZQw/RhyokfgSP9d/2DqK1nuL3q3/
-	 OBk+rpArdfWyhYL7WhMtcJqI4Xi2U7HkjMGuRYF8QZwsUyjdFyR8Ytmo/dzbfWgE7czIW
-	 dN1RIiHVCBFUKfzT1qIgsPf56Eb4CUBXUnEhRVyUm+ALiKlr2nsqdOauyOhB8zGsHQbNQ
-	 TYf4ryOJVRC//UhTNjwWAvT/EujhZxz8kHMpYhoiIJL5MDsfW4f41MkaOvAPm8OfoCQ==
+	t=1795015586;
+	b=kBsmeHd9BMcQYXb3xLU0hsN/20pQ0SuGezkcSK+eCw0oapZdVp0UUqCBpNcwbiyB0L8K
+	 X95oA3hJxpp1ZCjKzcHT/ZHXL06SEwPTsKXnloQIhyisjc4631/z3yrvoluN51UuO4T94
+	 NKQ1TOREZ1w2xL/nPcGi1DwOEPmsCl2hwbsgVB+FUI0VpHzeYirkBe4N5i0B/gUYsVfHs
+	 jyCdQly+nPYl9nDx1zITlUvZHpsvs93axj5P7mODExi0jwlM4zyO4Ea4GNaPQd8/hpYrQ
+	 7RZa/lSsHghqHyp7veBlwl5PlgbLTIoi84kbpEylIpDAnQbXqo5UcEDVVfzODtX2Ywg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015582;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y2dxdMhVS4X5gYcJQiIf+OuB9ar7VI7IzIOGe/fq3Os=;
-	b=ep12xm6PQ77pJo4HCYSLmZPKIU7t7IPzsadPS8OmWwdDZSbi/BnGtK6WmrgWIC5Ll2LH
-	 67/O8dNuwzP74cTVOiFEDkXgh5w3OW/8n9AYu4YvUrvAqoEof27yzoO5kEqYcsi+LNSoa
-	 d3cnK/dDmEXNsfizGBcugDC4mIzx1uspFQSDEXhQyyKbMciHdZfjnt9/kW5/AEN8jCe+y
-	 IUk/os7DX8dgmSS+TS6A2SEurTMnYtQqT8JpcZVkykShoFkUhTnrp5dIAhq8GOwvcOBUN
-	 9EkwpISPB+jr+UNuHnVPAI2lXc1Z7pjWoXWu+JyalJuJQC0d3WlhIndJoKCl6CP5pJw==
+	bh=ID5CjipBeL3gENdUjoq0nkSdZjrOrR09ou92C+dYKFY=;
+	b=5F6ShEnF/FCrFd02emSmRJ1denO9vKz5MxgwdT2A5jhPkmrmBg8Fh/U8Wx03JMvliof/
+	 7A92pzppDrv/pKmeW3RZAeZVmZm/TeaEL5IKP0+EZ8v0iOMUQ5w81xS1Qr4gMOwFqSuBb
+	 dJC5nEBIDoqOIfHN0ZjalPxAiX1MN59mDLPbrMgGlXQydoD8WXLffvwiAtmGbN2FXgoB7
+	 1anRNn01qmhqmyHbDjIbezBCr2YvUObR90A5H846ZeWt+oLijX/D/Xag4/+Ke/03qaTXU
+	 H0bJ58Ys3+e7yoW9IvIS+MhbEWtUbAmYxzIdKnQfnBQQlzaKEniZfxS219klvRQKCeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWuX7pIM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0+Z9/PZO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F596606A31C;
-	Wed, 18 Nov 2026 15:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72488606A31C;
+	Wed, 18 Nov 2026 15:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWuX7pIM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50681F000C4;
-	Wed, 18 Nov 2026 15:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+Z9/PZO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375DF1F000C4;
+	Wed, 18 Nov 2026 15:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015582;
-	bh=Y2dxdMhVS4X5gYcJQiIf+OuB9ar7VI7IzIOGe/fq3Os=;
+	s=korg; t=1795015586;
+	bh=ID5CjipBeL3gENdUjoq0nkSdZjrOrR09ou92C+dYKFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uWuX7pIMdgGTLiBTL7BNkfYz1COyD/Qkvu9COsKR1mhiqnuxBKyeKU629utvge9Gt
-	 BijoH4xFXvovQ0RdmyIUkoebsc3wluhFU3HbwKCVAcxC/6trwlU8A65BaLAq9SJ+PD
-	 1IXoA4I3IIAIun0j+4U3HG6aitNKzp0yF+P164hI=
+	b=0+Z9/PZO9i3fefWnKjQ99hIgXkb7GnIpaBtHlkRLBqBlgx50ZBBH8oP1A9rL7djzm
+	 fyle0lyZM75c4RsSo48KthHoG/aruBWdjGkIDZqwU3GelPN1Lp0Ig/0bXRNsG+V1Cy
+	 1KAVHoGzKbpiWcc7yOGHEpLrqrLVqSdmJwQ8D9Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunny Luo <sunny.luo@amlogic.com>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Mark Brown <broonie@kernel.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0225/2651] spi: amlogic: spisg: Fix the incorrect keep_ss of the last descriptor
-Date: Wed, 18 Nov 2026 15:24:25 +0100
-Message-ID: <20261118150255.967840274@linuxfoundation.org>
+Subject: [PATCH 7.3 0226/2651] mtd: rawnand: sunxi: propagate user-data allocation errors
+Date: Wed, 18 Nov 2026 15:24:26 +0100
+Message-ID: <20261118150256.004051784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,78 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunny Luo <sunny.luo@amlogic.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 253dfb1839c6bc357aebe8aac4f1b4dcc20ee322 ]
+[ Upstream commit 8696502b0aa96bcbb1f1e78ae117726378823ae8 ]
 
-The driver currently unconditionally clears CFG_KEEP_SS on the last
-descriptor, causing the last transfer's cs_change setting to be ignored.
+sunxi_nfc_maximize_user_data() returns -ENOMEM when its per-step
+length array cannot be allocated, but the caller ignores that error.
+The NULL array then makes sunxi_nfc_user_data_sz() report the fixed
+four-byte fallback, which is not the layout that the variable-length
+setup calculated.
 
-Record the cs_change value of the last SPI transfer and use it to
-program CFG_KEEP_SS on the final descriptor. When a null descriptor is
-inserted to implement the cs-hold delay, keep CFG_KEEP_SS set on the
-preceding transfer descriptor and apply the recorded value to the final
-descriptor instead.
+Return the setup error so an allocation failure cannot silently select
+and validate a different OOB layout.
 
-This ensures the controller handles chip select correctly for the last
-transfer regardless of whether a cs-hold delay is required.
-
-Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
-Signed-off-by: Sunny Luo <sunny.luo@amlogic.com>
-Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Link: https://patch.msgid.link/20260731-a9-spisg-v3-3-a15da3f70029@amlogic.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 54dcd6aa69db ("mtd: rawnand: sunxi: introduce maximize variable user data length")
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spisg.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/mtd/nand/raw/sunxi_nand.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
-index 58dc6fedd8bc3..6bca2379e4ee3 100644
---- a/drivers/spi/spi-amlogic-spisg.c
-+++ b/drivers/spi/spi-amlogic-spisg.c
-@@ -489,6 +489,7 @@ static int aml_spisg_transfer_one_message(struct spi_controller *ctlr,
- 	struct spisg_descriptor_extra *exdescs, *exdesc;
- 	dma_addr_t descs_paddr;
- 	int desc_num = 1, descs_len;
-+	bool last_xfer_keep_ss = false;
- 	u32 cs_hold_in_sclk = 0;
- 	int ret = -EIO;
+diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
+index 89fe3c0379f74..5c4c027071a07 100644
+--- a/drivers/mtd/nand/raw/sunxi_nand.c
++++ b/drivers/mtd/nand/raw/sunxi_nand.c
+@@ -2072,6 +2072,7 @@ static int sunxi_nand_hw_ecc_ctrl_init(struct nand_chip *nand,
+ 	int total_user_data_sz = 0;
+ 	int nsectors;
+ 	int ecc_mode;
++	int ret;
+ 	int i;
  
-@@ -529,9 +530,11 @@ static int aml_spisg_transfer_one_message(struct spi_controller *ctlr,
- 				spi_delay_to_sclk(xfer->effective_speed_hz, &msg->spi->cs_setup));
- 
- 		/* calculate cs-hold delay with the last xfer speed */
--		if (list_is_last(&xfer->transfer_list, &msg->transfers))
-+		if (list_is_last(&xfer->transfer_list, &msg->transfers)) {
- 			cs_hold_in_sclk =
- 				spi_delay_to_sclk(xfer->effective_speed_hz, &msg->spi->cs_hold);
-+			last_xfer_keep_ss = xfer->cs_change;
-+		}
- 
- 		desc++;
- 		exdesc++;
-@@ -539,13 +542,17 @@ static int aml_spisg_transfer_one_message(struct spi_controller *ctlr,
- 				       xfer->effective_speed_hz);
- 	}
- 
--	if (cs_hold_in_sclk)
-+	if (cs_hold_in_sclk) {
- 		/* additional null-descriptor to achieve the cs-hold delay */
- 		aml_spisg_setup_null_desc(spisg, desc, cs_hold_in_sclk);
--	else
- 		desc--;
-+		desc->cfg_bus |= FIELD_PREP(CFG_KEEP_SS, 1);
-+		desc++;
-+	} else {
-+		desc--;
+ 	if (nanddev->ecc.user_conf.flags & NAND_ECC_MAXIMIZE_STRENGTH) {
+@@ -2172,9 +2173,12 @@ static int sunxi_nand_hw_ecc_ctrl_init(struct nand_chip *nand,
+ 	 * The rationale for variable data length is to prioritize maximum ECC
+ 	 * strength, and then use the remaining space for user data.
+ 	 */
+-	if (nfc->caps->reg_user_data_len)
+-		sunxi_nfc_maximize_user_data(nand, mtd->oobsize, ecc->bytes,
+-					     nsectors);
++	if (nfc->caps->reg_user_data_len) {
++		ret = sunxi_nfc_maximize_user_data(nand, mtd->oobsize,
++						   ecc->bytes, nsectors);
++		if (ret)
++			return ret;
 +	}
  
--	desc->cfg_bus |= FIELD_PREP(CFG_KEEP_SS, 0);
-+	FIELD_MODIFY(CFG_KEEP_SS, &desc->cfg_bus, last_xfer_keep_ss);
- 	desc->cfg_start |= FIELD_PREP(CFG_EOC, 1);
- 
- 	/* some tolerances */
+ 	if (total_user_data_sz == 0)
+ 		for (i = 0; i < nsectors; i++)
 -- 
 2.53.0
 
