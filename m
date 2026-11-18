@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054418;
-	b=3CSAww1YE8rg2st3ogboLK/xvk94qh9OVih1Hjvo4kYCrQeSv01KxH2tB6BUppyB1tTX
-	 +k3+FVoaKvmJRLzfuXricTDSb4ahEdnawOZ4sWkCRuw5h0bb18XyxUwUl2ma/zwuRkmgu
-	 HfiZmAz/aRThkoqObqzKRen5vHGOMJhO1PR/Os9wg5PJcbKyDIUGHp0zgfiStKI/RlfoA
-	 vZT9LHT1K2UjBjtLTCkdjYRXvlKJCkfG8aTNQwmJNbqY6NUT4zkNFOYnfGfxH3zEpQ3t0
-	 Yfm2y4LvYWP9StUPbLn/xRfWKAk/hmsOpyp/xys0t6RUb7vjv0nS2GDn0Vrowraxmlg==
+	t=1795054421;
+	b=B1yHion2QC58GNZ/32rc59d55y3gjG2jFWnDbGNM626RlPIhfNJhIQLBnHlwp5njOGbM
+	 dsXg+k/TuQRnVZ8+Lua8lnNmc4BBf25n7ZL50wXhzzy6rlFOTmEKNxvIw0oZ0cLIYf+ao
+	 aGO8gYyj+iXeTfXde8eIW4viGGHBbTt8Q6tcPVV4UtPIs0XUn1ShFbQM68w3RQXreimrq
+	 SWKansnl1JIPhbN0JqlJeV/ww9j6RPKTu6jbBPMbOfvd31nAOGwgbYeuZUXLbnm+Z90WY
+	 j5sFhaPJLhacalwTVTbdWW9Mci0VYVnjcY+wsZLEihaLhkNdemVRNXmZv3rOySpvqew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4WvIpjJlLpOle5tVY82RYkri1uBggxadlhL2YuYB7mo=;
-	b=m+DdKigSz0yelEGs2Q2Hn1egDc0FaAGr2HhogU+zTbARCRBqn5wXoZFYGRiAzppwXYtD
-	 vyF9i3s8sIDNdPXCR1UzJdGIFpnw2X1OZnwzieTHKr2Wznx+89OSp8qVmCJioVTRDZIoC
-	 WiJ1ZVqZevOh6OWK2pSy/kN5RuxVe5WQQJf++hS0clwLuUM4hf2+Bc47WfMRitcRJoifa
-	 6MSIBhG89FlEgiCTNGe4c6QsZgl0UlDy9QD0dH0VrCYXSYyqb7W9OaEGzjcmEwEDideDo
-	 7ZNdPxXHsjuArlRbAF4xGIg3JCkmTLjEWN6f6SBRR55TezdkSe1xnz3PryHunMA/+2w==
+	bh=bxHVJFalepBvBU2xVx9uqY8Kims0hsJM9aSBczNCqh4=;
+	b=UyIGZE9m1EWVOqBLtiBK1JqgdaOQd14tOYZ7X3J7j0ssLK9QG4md72nAON+G2Z351kbL
+	 C/E8xK36BwhCrUMMjXCVzJfISdaeChRSsu3HIzyNghF22HzcmFxcj2ioEvyTRRVPb7gFB
+	 jzSd74goR31VDp9FtN8BDSE69sIVH870yKT6AY3v2+dGeCE+38TVmImk5cEYtJ1ZYsaK/
+	 2TI4sp44sbjffbpKkPwH9u2zuLWBk8+HwA1b/pO7mb6SMjvzofV/IOSfJMJIbr3V/delz
+	 KFsNgpHn+uG/kkvkbwydenlwsgObbvSsa/TZieaqhWAcx5CJStDSGV2BAG3bWD94hlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nC50R0ju;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6K8GUW1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E926606A320;
-	Thu, 19 Nov 2026 02:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20031606A32A;
+	Thu, 19 Nov 2026 02:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nC50R0ju
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8851F000C4;
-	Thu, 19 Nov 2026 02:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G6K8GUW1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E48D1F000C4;
+	Thu, 19 Nov 2026 02:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054418;
-	bh=4WvIpjJlLpOle5tVY82RYkri1uBggxadlhL2YuYB7mo=;
+	s=korg; t=1795054421;
+	bh=bxHVJFalepBvBU2xVx9uqY8Kims0hsJM9aSBczNCqh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nC50R0juq8kLjT/3UArYrMT48Puaj35lPO7V6ymttKAB3DsDZsrBkTZu6IwTTV0An
-	 Kdt6MO7SPNHoS2JhhYyiXSpzB2ern1EpkqtItE+olpJF6ihe2WeUKiRGt91DnBsgWk
-	 AlRdTX2eoWhnugGIsuJh/tTbCAl74PScnY4JzFK4=
+	b=G6K8GUW12MKc/jkyBlYornZttBnI7ILGkAb648YGH350xfRUrUj2vHfPqSgntk+wa
+	 ASoLVq8XYDJrnZsDjyCxBpnj78zasM6KDvC8vQ4IfHszzk7ShvX3IdiRZ2nhJFqkXf
+	 rgVCISGQlAQp/RJFXcvndaOIZu8LgMTdcBwB61g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1267/2214] fbdev: kyro: Use devm_ioremap() for mmio registers
-Date: Wed, 18 Nov 2026 15:49:03 +0100
-Message-ID: <20261118150102.303853772@linuxfoundation.org>
+Subject: [PATCH 5.15 1268/2214] fbdev: kyro: Use devm_ioremap_wc() for screen mem
+Date: Wed, 18 Nov 2026 15:49:04 +0100
+Message-ID: <20261118150102.340673998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,10 +70,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
 
-[ Upstream commit e0bf12a43243e6afc5a03fc55c58ec48aba48088 ]
+[ Upstream commit 32dfb6112ea3ca143636832cd34234f2be4830bb ]
 
-Replace the manual ioremap() call for the MMIO registers with the
-device-managed devm_ioremap() variant.
+Replace the manual pci_ioremap_wc() call for mapping screen memory with the
+device-managed devm_ioremap_wc() variant.
 
 This simplifies the driver's resource management by ensuring the memory is
 automatically unmapped when the driver detaches from the device.
@@ -83,47 +83,50 @@ Signed-off-by: Helge Deller <deller@gmx.de>
 Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/kyro/fbdev.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/video/fbdev/kyro/fbdev.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
-index 4979339dbc008..7441d48faea77 100644
+index 7441d48faea77..b298e9a1b4510 100644
 --- a/drivers/video/fbdev/kyro/fbdev.c
 +++ b/drivers/video/fbdev/kyro/fbdev.c
-@@ -713,13 +713,14 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	kyro_fix.mmio_len   = pci_resource_len(pdev, 1);
- 
- 	currentpar->regbase = deviceInfo.pSTGReg =
--		ioremap(kyro_fix.mmio_start, kyro_fix.mmio_len);
-+		devm_ioremap(&pdev->dev, kyro_fix.mmio_start,
-+			     kyro_fix.mmio_len);
+@@ -718,7 +718,8 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  	if (!currentpar->regbase)
  		goto out_free_fb;
  
- 	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
+-	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
++	info->screen_base = devm_ioremap_wc(&pdev->dev, kyro_fix.smem_start,
++					    kyro_fix.smem_len);
  	if (!info->screen_base)
--		goto out_unmap_regs;
+ 		goto out_free_fb;
+ 
+@@ -756,7 +757,7 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	fb_memset(info->screen_base, 0, size);
+ 
+ 	if (register_framebuffer(info) < 0)
+-		goto out_unmap;
 +		goto out_free_fb;
  
- 	if (!nomtrr)
- 		currentpar->wc_cookie = arch_phys_wc_add(kyro_fix.smem_start,
-@@ -768,8 +769,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	fb_info(info, "%s frame buffer device, at %dx%d@%d using %ldk/%ldk of VRAM\n",
+ 		info->fix.id,
+@@ -767,8 +768,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
- out_unmap:
- 	iounmap(info->screen_base);
--out_unmap_regs:
--	iounmap(currentpar->regbase);
+ 	return 0;
+ 
+-out_unmap:
+-	iounmap(info->screen_base);
  out_free_fb:
  	framebuffer_release(info);
  
-@@ -792,7 +791,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
+@@ -790,8 +789,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
+ 	deviceInfo.ulNextFreeVidMem = 0;
  	deviceInfo.ulOverlayOffset = 0;
  
- 	iounmap(info->screen_base);
--	iounmap(par->regbase);
- 
+-	iounmap(info->screen_base);
+-
  	arch_phys_wc_del(par->wc_cookie);
  
+ 	unregister_framebuffer(info);
 -- 
 2.53.0
 
