@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025477;
-	b=KCSr+s2bq/LtYV8hog7d9hateB0OW78TbZ3muNifAkdhFaO9yt4+6K3K4k3zXsSXFh7s
-	 WoglCyMepmquIXGa/13WOjE0GFtBEz5vrbjcCWhFaUgVc+4rNeGcylGjLwim6vKuKSOhZ
-	 j9DUn8qVyYfblXXpNbowStlWzuYGkrXaovYDP+rJPEZIUO6CFSYEmSiiXGy+rL+aQx0Yo
-	 0XNSKTIEck3dqacJieNUQOWoNEKfEJJihMsw77Rm9rGg+bT/qPf0Wpps2kKI/dacF94Pj
-	 yA29elQQc7aLDTJRUNMVi8x2/a2GQsbVRMawlCW8ApefJdFdpmrVbKjj1jA48/9pG7g==
+	t=1795025480;
+	b=uI/yiT6RpnF03fhfZa33hgL7hudGzf/i86N+jaBjyV0ZO+Lb+QN75wnTMGmdAmDVdNWt
+	 a3fl8ooGbn/933t+z8I46zoAMc0GSYbSjD2HBlSCROM7TkP5VoxxKkPjJx2BUZ0Jw3Rmb
+	 oBJ+6fEMX03ObsvUafQhwYLaTJ1b0K5nbw1CyrEm6vPMHIryOU3LwHBbasR1VdT7i2FEe
+	 pwNbfSnsTZlVo69FuiKZig0Db87Yn5JhPyb+kp+TgVjfrDiHBE6n88rjS3Njm87Tx2DwW
+	 RwYsEW8ZPtSk/yqhON4IOcKX2meHWUcabZ/yYABTQpDk0ufYF9MXJ/++ycGWJFZtx/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025480;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GPX6p5kG04r7VnZ2sBb3ZG4b56pM++Bac7wRK3Uun6Y=;
-	b=xJtZbwhPNklVOPHGoS1AvoG+Wb5bj+eWNXUrsHb5OwLmRe+2WVpBKDUKYAybgksDwA6P
-	 sivu9TbUVts7hvwZ8IJxvAjPhGL1DI3z/z7v20Cp2UVz0DnLHDZ0jDBgiMd1jmBCR7S1L
-	 4HYEFQBlS2grtQJo7GhDgYTiiASDiJZDjUpxMxxIqhZ72k5EVDYDurnYK20rNWhnoJtQd
-	 M8slvSa7joaNSbn3CqmUxtBgYC9zxSXS+tOMtFc3v0qtE23PNT9UX60rPQOlAYuRWWD+v
-	 W/4SaY4OewTt7OM27TV/FR7fgqSTesEP4dnDO6g44dN26YYLfGu39L/S0uS/bd05JHw==
+	bh=Z3dplA3Rzj3e2z2Yl/GIzQjKvEpry0i11kI18OupZ3o=;
+	b=Q5HdnhXeCMMhkKnBMxxWSBSNVJbDQvGvR2WUHMc3KYqqEM8SzbbEvMyp+wKBgjCSAoX0
+	 AgDbAhINiTwFLzCgMvLc4RMqc74GfzwO1kPp6zuUYjvfSYAsXK81rCsaDAfGRPXQSA/LJ
+	 PFmwA1B4xfClVgCGOPSKMGEW4MSzaDMMkrm0A/HxlVn718MQIIjARln+RB5bfjmQUhPuB
+	 HiBjdBNqoFtuTQG0dt1IWkjpHQeqSr88ojGYYZZIXrLyHfWHlz+EvaIeaqAqbM2fUzLXs
+	 xBinO3D+mzufQE+mrQRnc+Hq9WKit9B9i+0FZM1xZ24Jy7gfeNtHZg4+M0xpQVWVSXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru3LCHVr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6FqtHA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D77606A320;
-	Wed, 18 Nov 2026 18:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A757F606A32C;
+	Wed, 18 Nov 2026 18:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ru3LCHVr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB3F1F000C4;
-	Wed, 18 Nov 2026 18:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6FqtHA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77DE1F000C4;
+	Wed, 18 Nov 2026 18:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025477;
-	bh=GPX6p5kG04r7VnZ2sBb3ZG4b56pM++Bac7wRK3Uun6Y=;
+	s=korg; t=1795025480;
+	bh=Z3dplA3Rzj3e2z2Yl/GIzQjKvEpry0i11kI18OupZ3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ru3LCHVrAS4GoV/ub8waP+Z81sWcD82PNDYBZXwnVrE2bzp+FmNWkPMcSTxG7kP3a
-	 YIWTfnfdQFj/8OugxCTVeRlbvTz3ENwpHVjPdeO2CNxsE6pBa2VfrHOd4rM0uiVabc
-	 jKNl6qjUI7E2gcOaNmK7GSjfI/dHqXif0gAn8Hsg=
+	b=QI6FqtHA/8V0j6hbcwyXi+NDDSFrs+KI2EaQxRPpA67iPmdbn4WZXeUSDRrXBFEoL
+	 PHay0pQfV7P9gNBZ58nXyLFzHcNdo1AuVLv9eFRnoC5Yx5YYU21PplNmYL4Pnea7gx
+	 5RWxqBKUcATXl2gIG3FYy69pVw8O0BMlyJEWRwsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yibo Tan <lhfff@tju.edu.cn>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1092/2151] soc: qcom: geni-se: provide PROG_RAM_DEPTH for I2C HUB Serial Engines
-Date: Wed, 18 Nov 2026 15:47:07 +0100
-Message-ID: <20261118150202.056367586@linuxfoundation.org>
+Subject: [PATCH 6.18 1093/2151] soc: qcom: pmic_pdcharger_ulog: prevent work requeue during remove
+Date: Wed, 18 Nov 2026 15:47:08 +0100
+Message-ID: <20261118150202.091190274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,96 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-[ Upstream commit 803f9950a6c6e0b37ed7f24925feed823703467e ]
+[ Upstream commit 66894a1c51366cc2d5c498178105dfe3bcccc1e4 ]
 
-The I2C Hub serial elements lacks DMA, so the SE_HW_PARAM_2 register which
-is in the DMA register space doesn't exist for those instances.
+pmic_pdcharger_ulog_rpmsg_remove() cancels the delayed worker while the
+RPMsg endpoint can still deliver callbacks. The RPMsg core invokes the
+driver remove callback before destroying the endpoint, so a response
+callback can run after cancel_delayed_work_sync() returns and queue the
+worker again.
 
-Provide the ram depth in the compatible data to be used instead
-of the reading the missing SE_HW_PARAM_2 register.
+Device cleanup then frees the devm-allocated pmic_pdcharger_ulog while the
+requeued delayed work still embeds and dereferences that object. KASAN
+reports a slab-use-after-free in pmic_pdcharger_ulog_work().
 
-Fixes: 522bfb4f33c0 ("soc: qcom: geni-se: Use HW PROG_RAM_DEPTH to validate firmware size")
+Use disable_delayed_work_sync() to drain the worker and reject queue
+attempts that race with removal.
+
+The issue was reproduced in four of four runs with the real target driver,
+RPMsg bus removal, endpoint teardown, workqueue code and devres cleanup.
+The test provider delivered a valid response in the window between the
+driver remove callback and endpoint destruction. With this change, the
+same late callback occurred in four of four runs without a KASAN report,
+warning, Oops or panic.
+
+The reproducer uses a test RPMsg provider to control the teardown timing.
+No unprivileged trigger or physical Qualcomm-device result is claimed.
+
+Fixes: 086fdb48bc65 ("soc: qcom: add ADSP PDCharger ULOG driver")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260923-topic-sm8x50-i2c-hub-fw-ram-v3-1-44287b4e814b@linaro.org
+Link: https://patch.msgid.link/20260912161210.1683266-1-lhfff@tju.edu.cn
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom-geni-se.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/soc/qcom/pmic_pdcharger_ulog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-index f85cac34c7260..ca251d84d540e 100644
---- a/drivers/soc/qcom/qcom-geni-se.c
-+++ b/drivers/soc/qcom/qcom-geni-se.c
-@@ -94,22 +94,26 @@
-  * @base:		Base address of this instance of QUP wrapper core
-  * @clks:		Handle to the primary & optional secondary AHB clocks
-  * @num_clks:		Count of clocks
-+ * @prog_ram_depth:	Available CFG RAM depth for instance without SE_HW_PARAM_2
-  */
- struct geni_wrapper {
- 	struct device *dev;
- 	void __iomem *base;
- 	struct clk_bulk_data clks[MAX_CLKS];
- 	unsigned int num_clks;
-+	unsigned int prog_ram_depth;
- };
- 
- /**
-  * struct geni_se_desc - Data structure to represent the QUP Wrapper resources
-  * @clks:		Name of the primary & optional secondary AHB clocks
-  * @num_clks:		Count of clock names
-+ * @prog_ram_depth:	Available CFG RAM depth for instance without SE_HW_PARAM_2
-  */
- struct geni_se_desc {
- 	unsigned int num_clks;
- 	const char * const *clks;
-+	unsigned int prog_ram_depth;
- };
- 
- static const char * const icc_path_names[] = {"qup-core", "qup-config",
-@@ -1005,6 +1009,7 @@ static const struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const s
- 						     enum geni_se_protocol_type protocol,
- 						     u32 *fw_size_out)
+diff --git a/drivers/soc/qcom/pmic_pdcharger_ulog.c b/drivers/soc/qcom/pmic_pdcharger_ulog.c
+index 39f412bbf2c1e..06cd9c4411c2f 100644
+--- a/drivers/soc/qcom/pmic_pdcharger_ulog.c
++++ b/drivers/soc/qcom/pmic_pdcharger_ulog.c
+@@ -143,7 +143,7 @@ static void pmic_pdcharger_ulog_rpmsg_remove(struct rpmsg_device *rpdev)
  {
-+	struct geni_wrapper *wrapper = se->wrapper;
- 	struct device *dev = se->dev;
- 	const struct elf32_hdr *ehdr;
- 	const struct elf32_phdr *phdrs;
-@@ -1069,8 +1074,11 @@ static const struct se_fw_hdr *geni_find_protocol_fw(struct geni_se *se, const s
- 		cfg_val_end = le16_to_cpu(sefw->cfg_val_offset) +
- 			      le16_to_cpu(sefw->cfg_size_in_items) * sizeof(u32);
+ 	struct pmic_pdcharger_ulog *pg = dev_get_drvdata(&rpdev->dev);
  
--		prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
--					   readl_relaxed(se->base + SE_HW_PARAM_2));
-+		if (wrapper->prog_ram_depth)
-+			prog_ram_depth = wrapper->prog_ram_depth;
-+		else
-+			prog_ram_depth = FIELD_GET(PROG_RAM_DEPTH_MSK,
-+					readl_relaxed(se->base + SE_HW_PARAM_2));
- 		if (fw_size >= prog_ram_depth) {
- 			dev_err(dev, "Firmware size (%u) exceeds RAM size (%u)\n",
- 				fw_size, prog_ram_depth);
-@@ -1381,6 +1389,7 @@ static int geni_se_probe(struct platform_device *pdev)
- 		return PTR_ERR(wrapper->base);
+-	cancel_delayed_work_sync(&pg->ulog_work);
++	disable_delayed_work_sync(&pg->ulog_work);
+ }
  
- 	desc = device_get_match_data(&pdev->dev);
-+	wrapper->prog_ram_depth = desc->prog_ram_depth;
- 
- 	if (!has_acpi_companion(&pdev->dev) && desc->num_clks) {
- 		int i;
-@@ -1433,6 +1442,7 @@ static const char * const i2c_master_hub_clks[] = {
- static const struct geni_se_desc i2c_master_hub_desc = {
- 	.clks = i2c_master_hub_clks,
- 	.num_clks = ARRAY_SIZE(i2c_master_hub_clks),
-+	.prog_ram_depth = 1020,
- };
- 
- static const struct of_device_id geni_se_dt_match[] = {
+ static const struct rpmsg_device_id pmic_pdcharger_ulog_rpmsg_id_match[] = {
 -- 
 2.53.0
 
