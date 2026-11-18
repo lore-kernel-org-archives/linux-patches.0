@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054787;
-	b=u3liLsJAqmWyyNFyYzhvp7wy3QA9rCosfHkUbeM9uSLZ4BtO/4Ay2QJkXlu2aacEjjRN
-	 3myuE3HdsNlhGjxtgzfBQQnTH8NvPzTLptGB9awqtLIn358brn2GenwodE7bT8kv5ahDw
-	 CmyaL+BubE3380VKaMh6KxiMBN1kOS1K+P8lMXzVUgc2tSHEeB7hp+me9Ax7Z8+V28XMh
-	 XjVzxMC2gGmbQMDeNc+aMcd3hcbN0HuCtvkqq7GPdjH5WZIav3cP5S/KkKhVSpHV22o0q
-	 +FNS4FnIFEmHwZB3UHkVWDj99uKK78h6ytJGrQSP4K1ghqcdzKVm0X+4d/1Szp6kfWQ==
+	t=1795054790;
+	b=1NWSKMZa+xhdXdIDkAreJWe+WgvJbNNaYujw6mQ66yd2FzWc88wKlO4aeMkYMONB+Tgr
+	 U7P007JJ5dXKooqF38LqbIn8PjkKYONZkFSNM+nc2RfYfUf1aQM9IoKps6CPvZ84ie1rs
+	 LXPKhTA1D34FUaAitxKd4oewda2Lffsa2x6IPu81UwRsNQw16KB+VIrx0cPAuzfPmyVB3
+	 Ya7oLh9j8qm0WKMP6ggWRpAdY3EXXRR9v9SSbBPxMRHIRHXIODa+7bma5aiPId31EbWZV
+	 9mTuTwWBYbmDaUSVxVIzUGS8wH7V4MSF2IPW58H+qTQLV1Sx76S/KLzp9buLEepUUvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054787;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=WP2Fprj6fSZKRogIyjykRFKYMh7OKdX4FcS9ZEqvScI=;
-	b=jiqmu59HocI5mwaSKZ1P8Cn+r5bbd74+DAvdXK7RP+sWI5Za/1v2rzGu3XIFYYNNUEKL
-	 XhyaP3ej4X5KTYsd+8gFhEC274dDnRhTBaEuHdhOPJPzMiai72hv/6wLSzq9jvl+w3Na5
-	 VpgrQMGvh711tUarcvFpF3Lpy7mPLUY9b5h04ajup7SJXQl5WQFbxcLiZel6t5Ll2XhxG
-	 RWJtXN10z2B3pmWwUoxHgrSr3OhRSMVwjpY/SzlQmCDavSPOrMLTkn5g6P1u3SCAx1OPk
-	 yZET7xDe5rCTNTaYpsq2q/CAo67tv+92wKvwVzeIZPsrHX+634Y+oXHFkQGkQ0k1WYA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=2Tvv2kWpBMYrFcHAAf7FjkUxztg6qhM26EmmXTnx+jI=;
+	b=uHuVQtJJogRMXRtEXc1u1X9dTCeSKXEfJgfRtSj6kb62ddk5yMC4nzThi2BUBsixdXC4
+	 GQZD+HjlcW64eblqDeQhfCwK/cFUvZwOJpGBKHxnok+XV2jwrEzisXhtw1CsZE+cvgbeu
+	 8BwS4epAXZE4bRM8i0xq32ZCNTpwulQIUEE0V4xbL7Emf8ZlSMBnDUWi4b73evShtv7oz
+	 VGwqq2dPy8zEJtsmRvY5PdilrUnVWXJdrReSv0MoTzSqT3LDCn0sD/81r0xOEXVkuliN5
+	 uv7fQxMXG1nQbff/CtyRKO8fh7kM85VIDKQ2a7ZYQr8Ah2ke8d1o1wiD5EX/YkMxL9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjfJ7+Cz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HPbsP/7+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619DD606A320;
-	Thu, 19 Nov 2026 02:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BAC606A31C;
+	Thu, 19 Nov 2026 02:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OjfJ7+Cz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7421F000C6;
-	Thu, 19 Nov 2026 02:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPbsP/7+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928481F000C4;
+	Thu, 19 Nov 2026 02:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054787;
-	bh=WP2Fprj6fSZKRogIyjykRFKYMh7OKdX4FcS9ZEqvScI=;
+	s=korg; t=1795054790;
+	bh=2Tvv2kWpBMYrFcHAAf7FjkUxztg6qhM26EmmXTnx+jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OjfJ7+CzBpMj71hDPcnyZJb8AS2ZaXzkHbsQsUEM7/7qahjKyzf/rTgN4rQPN9KOX
-	 hHKGFJ/QiLVvNvGKAG92npCHlOWTr5z/s3wrDxo4FDLmLbmwQsbNss3mBzeRYjPVTn
-	 ag94YbFtg1Cng1cVsv4nNDR9cNcNO4ZSyHgvdq9M=
+	b=HPbsP/7+/w9q8R2DM44VzNXO7rKpLr1CZa46AOeq8WZKENer50grxHX4cyEDS9tD2
+	 Ml0FCgaaxiisim/1dfUwO8Wby2zh7reR0fr/HGldm/5IBxrh+faCEXNDzEfQOpmgYW
+	 FYIEwsUZ5u8w0w/tZ/w4YAXi6bbLei1ezlxaPhfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jitao Shi <jitao.shi@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Fei Shao <fshao@chromium.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1399/2214] pwm: mtk-disp: Fix period readback
-Date: Wed, 18 Nov 2026 15:51:15 +0100
-Message-ID: <20261118150107.258193796@linuxfoundation.org>
+Subject: [PATCH 5.15 1400/2214] ASoC: mediatek: mt6797: fix wrong unwind order and error code in enable_clock
+Date: Wed, 18 Nov 2026 15:51:16 +0100
+Message-ID: <20261118150107.298143047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -65,58 +63,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit c5b29baad42b2b02389cc6a716697a8a63209930 ]
+[ Upstream commit e967d479b65c778cd2394ab185e289beefcf996d ]
 
-The period value stored in the register is the number of clock cycles - 1.
+The error paths in mt6797_afe_enable_clock() use incorrect goto labels,
+causing clocks that failed to enable to be disabled during cleanup.
 
-Account for the offset when calculating the period in nanoseconds. This
-fixes the discrepancy reported by the pwm core when CONFIG_PWM_DEBUG=1:
+Fix the goto labels to only unwind clocks that were successfully
+enabled, and return the actual error code.
 
-    mediatek-disp-pwm 1100e000.pwm: .apply is not idempotent
-    	(ena=1 pol=0 281500/499875) -> (ena=1 pol=0 281500/499750)
-
-Calculation discrepancy in the driver was found by AI run by a colleague
-while debugging another PWM related issue. Check against SoC datasheet
-and fix done by the author.
-
-Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
-Cc: Jitao Shi <jitao.shi@mediatek.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Link: https://patch.msgid.link/20260827105738.8570-1-wenst@chromium.org
-[ukleinek: Adapt comment accordingly]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: c5e7fca928d3 ("ASoC: mt6797: add structure define and clock control function for 6797")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260821122840.41266-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt6797/mt6797-afe-clk.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index a581d8adab59c..771838dc84d4a 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -212,9 +212,9 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
- 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
- 	/*
- 	 * period has 12 bits, clk_div 11 and NSEC_PER_SEC has 30,
--	 * so period * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
-+	 * so (period + 1) * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
- 	 */
--	state->period = DIV64_U64_ROUND_UP(period * (clk_div + 1) * NSEC_PER_SEC, rate);
-+	state->period = DIV64_U64_ROUND_UP((period + 1) * (clk_div + 1) * NSEC_PER_SEC, rate);
- 	high_width = FIELD_GET(PWM_HIGH_WIDTH_MASK, con1);
- 	state->duty_cycle = DIV64_U64_ROUND_UP(high_width * (clk_div + 1) * NSEC_PER_SEC,
- 					       rate);
+diff --git a/sound/soc/mediatek/mt6797/mt6797-afe-clk.c b/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
+index 6f3e6acfcfab2..0ac04d73b7772 100644
+--- a/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
++++ b/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
+@@ -63,21 +63,21 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_INFRA_SYS_AUD], ret);
+-		goto CLK_INFRA_SYS_AUDIO_ERR;
++		return ret;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_INFRA_SYS_AUD_26M]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_INFRA_SYS_AUD_26M], ret);
+-		goto CLK_INFRA_SYS_AUD_26M_ERR;
++		goto CLK_INFRA_SYS_AUDIO_ERR;
+ 	}
+ 
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_TOP_MUX_AUD]);
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_TOP_MUX_AUD], ret);
+-		goto CLK_MUX_AUDIO_ERR;
++		goto CLK_INFRA_SYS_AUD_26M_ERR;
+ 	}
+ 
+ 	ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD],
+@@ -93,13 +93,11 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
+ 	if (ret) {
+ 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
+ 			__func__, aud_clks[CLK_TOP_MUX_AUD_BUS], ret);
+-		goto CLK_MUX_AUDIO_INTBUS_ERR;
++		goto CLK_MUX_AUDIO_ERR;
+ 	}
+ 
+-	return ret;
++	return 0;
+ 
+-CLK_MUX_AUDIO_INTBUS_ERR:
+-	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_BUS]);
+ CLK_MUX_AUDIO_ERR:
+ 	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD]);
+ CLK_INFRA_SYS_AUD_26M_ERR:
+@@ -107,7 +105,7 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
+ CLK_INFRA_SYS_AUDIO_ERR:
+ 	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_SYS_AUD]);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int mt6797_afe_disable_clock(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
