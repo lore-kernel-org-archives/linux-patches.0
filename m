@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017507;
-	b=0K8ujtbeM9VLVFR4JQMAGcMEGqdCVA963yaW+gQlOgaijBsi52kY9wXFfSi94hEvjfoI
-	 C4Z3zAX/mupS4+r2Murrdt2y8FyUe9n/SfT/06Ch2JyBIwapWOD0JBQHT5+PNbnINnczs
-	 qoJe6kBHjZLrwsrAqSK+Oj27Vj59oPgapCSAlhIIUQL75pSaliaC6msB4IzJPnB1Gy7TW
-	 JltGLX7HFUWa4NiGMertLeHKjVT/SOhcDtwD6L9l40Qa4pRX4Jcd34MWHlwU/8IUQgipI
-	 KB8YxcFu7q4KHrLDToHJ7SBj2gZeFENmPrIAHaQAH2jWf6J7Z6ZqGS2++3roO8ppAyw==
+	t=1795017510;
+	b=caqzaEL6iK8QdVKLBJ1T/0snVTNyYha+HbONasoCkFykQLmu4+qeE1/nh/4/beQpq+wr
+	 Ug2HTNocKYmWcJawK4plICvphysh0ftYENiCX74odRr+OomZu+iSZEFq7BOELM3UNN246
+	 E7jsBMUuhmRKxX4Fbor6UnF6QRnAstbZUyi4Dms9ZF6xn9dKi84dErevjiKvd5idnNmUJ
+	 T4ux+psEjofddheYaFwsgkHqv6qr2mQ0quM5kdA6YgGbbfc+ciNvQUFWOmbquVOQMrhER
+	 oRMRfy1sZTOvFncdxU5+Lfbw7Me3muaQjvnqUMYcYgCiicvcx6b3pcP/xgq4nMNVPyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017510;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pw9UZGi5w3SRYsERx2vPy+6y0ZNJzmh5S+7IUz3Op3A=;
-	b=APC5xO2DI/yjR3Npr/lnyLdX/aMxsOQcCKDSxDB6zoNH4qlUhz9Oj3asixDYBATeYQl7
-	 PWRTwMHwg8tgS22D4O6OAFA0B0AOC3W5BjeH3ORWHIG9BwvyF1MhnDGQ39G99WdLQAJ0T
-	 UkcN0L7aAsMjb2qUjH4cnucMbPt102n2d54MkHqXMef1R9AdPHp38wTu2TuiBuNMO7Dtz
-	 3hqVhbMZ4OznUxsdRYVC0vznMBkPANlLUmiGjG41xON+CeYcVHgbql84vj/RLJ5BXsmYT
-	 MZ1nZt0G4oy6az+Kld2sBSbTAXDHkjBNr5ZsKdzkqbwGvgUMs6qiI0VoSH5fmFVP2pg==
+	bh=uLed6f+ljv+ax6d5KHUGcdPZRGmcvhWagNeo2p8jcJ4=;
+	b=hCYtUyMUT1MBt9k3tyhGqg1autZn1mZxZ1nhPkFV3ICDGpQ7qZ43+vpOsdBFzlVL/1Et
+	 kBS8syQp7LDY5ERZR28NtrYjhH/4P1QbDmt80B3oocwrsAViyqcGEY5CCqsCk7/3jq+H3
+	 aSi38K0GjnERhH+enlpE0WGGhAQMGXI4tAYEXGCI3RtnPje1P0Cuhoo+QYc+Ol9ldFqG5
+	 c4gYaTyEtPSz9kutbUSpQ/EWMXUbgda9IyqDjtAuVlqCi5ooqTVHvDgAyWlpqGoV5aug6
+	 c0EDYsTmntZBsJ4l3rAjyzEvoGHFbrdes4n47f8Si4e5xOLsZnUdbbd2vcfT6UOSSYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=naRQzV80;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X/KL4lW/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C559B60A2604;
-	Wed, 18 Nov 2026 15:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A954F606A31C;
+	Wed, 18 Nov 2026 15:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=naRQzV80
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D52B1F000C7;
-	Wed, 18 Nov 2026 15:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X/KL4lW/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FA21F000C5;
+	Wed, 18 Nov 2026 15:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017507;
-	bh=pw9UZGi5w3SRYsERx2vPy+6y0ZNJzmh5S+7IUz3Op3A=;
+	s=korg; t=1795017510;
+	bh=uLed6f+ljv+ax6d5KHUGcdPZRGmcvhWagNeo2p8jcJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=naRQzV809dTCw1xsQKdei8Yhr5Al42EHAXeBSdnevYwdZxORcd61VdxJuoGJVB7LM
-	 +dc0YAA8FUMSd7+4rekTjNVXfmADxf6uaU0llqk3asbCCVeRXh13TXhWd14q8wOdj8
-	 fPsAWC+r3wjmmYFsLxTyA2pQZ7gC65B9Mmbfs/PE=
+	b=X/KL4lW/cdy6w7gnCAJe6Cqa6B0SrWcVNy/M70jOPWoXCmh3vK82/48P4TXOh0bsu
+	 2qYQ/BWh0RzlQ624RIzBomhyEcoy5S7UZc8qXdd2wBkO4b4Z4hHRdrj/5uO7sULAar
+	 Uq2/R0lSh8d+oX19P1SjcpVtBC6Eqdc7B+uaXeG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0907/2651] drm/msm/a6xx: Honor perfmode_bw threshold on A8x
-Date: Wed, 18 Nov 2026 15:35:47 +0100
-Message-ID: <20261118150320.530627155@linuxfoundation.org>
+Subject: [PATCH 7.3 0908/2651] drm/msm/a6xx: Fix secondary rail vote in ARC votes
+Date: Wed, 18 Nov 2026 15:35:48 +0100
+Message-ID: <20261118150320.569433634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,59 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit db6a2e4a7ebd4378d03a97f4bef22f8c157240ad ]
+[ Upstream commit 128a0edde50780ed9eb93ab5d2e18ca24c1f1c43 ]
 
-Instead of voting ACV for all bw corners for A8x GPU, restrict it to BW
-votes above the perfmode_bw threshold, similar to the A7x GPUs.
+Using the requested level can pick a secondary corner lower than the one
+required to support the chosen primary corner, under-voting the
+dependent rail. To fix this, match against the selected primary voltage
+instead.
 
-Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/755589/
-Message-ID: <20260923-hawi-gpu-v1-1-0c3c79a1a470@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/755592/
+Message-ID: <20260923-hawi-gpu-v1-2-0c3c79a1a470@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c   | 8 ++++++--
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 5 +++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 6d49c51df1a27..baf77a6205724 100644
+index baf77a6205724..d072646093a13 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1656,8 +1656,12 @@ static int a6xx_gmu_rpmh_bw_votes_init(struct adreno_gpu *adreno_gpu,
- 			if (bcm->fixed) {
- 				u32 perfmode = 0;
+@@ -1765,10 +1765,14 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
+ 		/*
+ 		 * Look for a level in in the secondary list that matches. If
+ 		 * nothing fits, use the maximum non zero vote
++		 *
++		 * The secondary rail depends on the primary rail, so match it
++		 * against the quantized primary voltage (which is >= the
++		 * requested level), not the requested level itself.
+ 		 */
  
--				/* GMU on A6xx votes perfmode on all valid bandwidth */
--				if (!adreno_is_a7xx(adreno_gpu) ||
-+				/*
-+				 * GMU on A6xx votes perfmode on all valid
-+				 * bandwidth. A7xx and A8xx only vote perfmode
-+				 * above the perfmode_bw threshold.
-+				 */
-+				if (adreno_is_a6xx(adreno_gpu) ||
- 				    (bcm->perfmode_bw && bw >= bcm->perfmode_bw))
- 					perfmode = bcm->perfmode;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 114a40f79ef3a..bd5c440f1753f 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -580,6 +580,11 @@ static inline int adreno_is_a750_family(struct adreno_gpu *gpu)
- 	return gpu->info->family == ADRENO_7XX_GEN3;
- }
- 
-+static inline int adreno_is_a6xx(struct adreno_gpu *gpu)
-+{
-+	return (gpu->info->family >= ADRENO_6XX_GEN1) && (gpu->info->family < ADRENO_7XX_GEN1);
-+}
-+
- static inline int adreno_is_a7xx(struct adreno_gpu *gpu)
- {
- 	/* Update with non-fake (i.e. non-A702) Gen 7 GPUs */
+ 		for (j = 0; j < sec_count; j++) {
+-			if (sec[j] >= level) {
++			if (sec[j] >= pri[pindex]) {
+ 				sindex = j;
+ 				break;
+ 			} else if (sec[j]) {
 -- 
 2.53.0
 
