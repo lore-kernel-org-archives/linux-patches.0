@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055999;
-	b=YlGZZkv0Ki1BpDYqX0HMNPDqqwfS/HWJvqotUhNfZc9NP1dB5uamQM+okxYTVRTbF0hE
-	 Yg4halRj+VcjcAmCfmqUIq0lhZVc9vIOdITXfHEgwB/U8+CYYKxIpFZEU9TEmYCfo8/Qa
-	 1aSCxJ2aymtDKFswVd9S/Je3BPU+IavtbyQ2880Xc3SwrsFyDFMaWszAO83pcvADT1oNN
-	 ZnRrNi1dWfmV3PuP4PlofwxpK1v+Wto4vpbFFvXyeLK8w71YWYYBRnLz4iZE0uqEt7n5V
-	 aHoPsvZAjXwK91bMQMrMHVEsp/polKXUGDO30uOOwe7yCQVfH5k9dc2JKsGZzBTwXWA==
+	t=1795056002;
+	b=xQiaVePR71E1ZE2fAJtBV6LW/JaAETmJqu+uKeCm2QIFpfClC4NJd0tRFs3U9AqvehY0
+	 uoK+59yyPIT/Z1wf2mnR7GKo95Tn7x+L8vP7JPQsBhZjRcP/7qm2cVEQlQvCKij8E0wn/
+	 Uo2U+N3E/MXvq/csXRywoWBRH1rAkyPCJSomtJu9u9lD9p2kK1israWbwV+5DhmMvMXLb
+	 BTrBhBBnFWihH8vyUVhk6ToNjqx2D3jg8SyBPT1K+kT3yEsU9i/hVPgDOdsViWzYlKD19
+	 vVZuvUvvjhupMGZn1Du+m29pCWhdcCgCujJVtPjq8+w76gs27rEpYtb3MSvwSTnKZvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056002;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e1SAlandCfOJ9m8wLwI3JrVrRAcu1bPilJwLtli9SEA=;
-	b=GHkLfnf6DLVT10FUZPZYnButOv6Addka3WVNDfMPtCrYdzwHh7Zvb+7rqksokMOnagZW
-	 HRQ3dtgD+jjcFXIg6EMu8mt/agxccviz0FXeP1irsnhdsenC8NIl0696wpH0Sn1v98gjf
-	 F5tGcUScd3VGvRwcs5srUjOsb+yt9m65MrhIVhly16S+X5nqUvLENZvHAtQ+N0LGXLeDL
-	 7Y0kWZ1gmZVp+5TitXjG+8p/BDyTYnpHJpqo02yV68g30O/Js6XtECNIfmFfl0xYtyJXP
-	 SqdxkjPI6VqfgwbtrjB7LxAKCHOt4aUxPTOwrXWtCkC7LLzNEhy4POiqipvrjT4SvEA==
+	bh=wYvO14P+P8A4w1QCKR6rlHyz+JXOSOrM3myykj4WYVU=;
+	b=KBOQmYd6d7GcsxKsCIA2ovbhXdqMjjo46lU0sEKI5aW1/EuYMSM/8eyeaC8tS5oKBvju
+	 8fvt70i4fL/drPvNU2CwwDohukIbV2pvk5zWkFqZ8vW1JwopU4mg3xlvPhe8IRWekTP6b
+	 jzS8w19jq0tY113wxMLOX1WjgIe4q6pJ4awfh7LlANy79W5T8bXHeHWAbKV3HzoeENy4W
+	 FDLmdX/FpzuMbiAPldKfc4vOXEd87iRAsZ8ldDOqFtSvK/NHjAmVoAzoyoAUYVROPYMtc
+	 8eJSLYBlfMb8PssMlnx6eNN9jDr8wAGpgGrZFM/ClwFB9d6RKMPOPsoQbX/LNlMxUGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="w52c/BGN";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGOS1Hi2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEBC606A31C;
-	Thu, 19 Nov 2026 02:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11933606A320;
+	Thu, 19 Nov 2026 02:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w52c/BGN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319E21F000C4;
-	Thu, 19 Nov 2026 02:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tGOS1Hi2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123EA1F000C4;
+	Thu, 19 Nov 2026 02:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055998;
-	bh=e1SAlandCfOJ9m8wLwI3JrVrRAcu1bPilJwLtli9SEA=;
+	s=korg; t=1795056001;
+	bh=wYvO14P+P8A4w1QCKR6rlHyz+JXOSOrM3myykj4WYVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w52c/BGNVfUyu+uabSB5Wz8cDDSjrmCsR/Wkf0yuwL3t8UGaxjpj1BuRIB2eFJrYL
-	 zomWVwfK5nfIB417T3rMslWS6DUcz3hs6jAJVX3B1azidRNPg4Q4l6nMiCMWq4jL+v
-	 XXfAtoaNX3rYvWZ/bB5p3TC/aIoLPrhyEq6Ai3N4=
+	b=tGOS1Hi2bhYn+n5O8KFA+AKw6G6iU94/aSc8bRzUuCIkTE6AyIpq+efltHdOL8wCG
+	 ObdqE9ATDE+bbaoPGN9xYDeXyLm+UemDwAL+Be6STElq4q2h3dNmG14eX4n1qUiYJ2
+	 4HCMvTtvL+ZSIGy5LF38Nuu9ffDnQCNz5b2u1B9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Antoni Pokusinski <apokusinski01@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1814/2214] ALSA: hda: Avoid non-operational GPU warning at regular device removal
-Date: Wed, 18 Nov 2026 15:58:10 +0100
-Message-ID: <20261118150124.043063025@linuxfoundation.org>
+Subject: [PATCH 5.15 1832/2214] rtc: abx80x: properly handle shared IRQs
+Date: Wed, 18 Nov 2026 15:58:28 +0100
+Message-ID: <20261118150124.719256585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,50 +68,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Antoni Pokusinski <apokusinski01@gmail.com>
 
-[ Upstream commit 3af4ed9f927c469f23d03a76e3b438ed09715bd3 ]
+[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
 
-When a hda-intel driver is removed manually and it has a GPU with
-switcheroo, it always gives a warning like "GPU sound probed, but not
-operational:..." no matter whether GPU has been actually operational
-or not.  This warning was originally put for machines that really
-suffer from the non-operational GPU HDMI audio, but it's seen at the
-common path a normal device removal also goes over.
+The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
+but the handler always returned IRQ_HANDLED and cleared the status
+register even when no interrupt source from the RTC was active.
 
-For avoiding a confusing warning, move the check and the warning at
-the error path of azx_probe_continue() that is the point where the
-non-functional GPU gets detected and given up.
+This could cause the driver to claim interrupts belonging to other
+devices sharing the same IRQ line and could also clear unrelated status
+bits in the RTC status register.
 
-Fixes: 2b360ba9a493 ("ALSA: hda: intel: Fix Optimus when GPU has no sound")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007171231.8147-1-tiwai@suse.de
+Only handle the interrupt when the alarm or watchdog flags are set, and
+clear only those interrupt status bits that were handled. Return
+IRQ_NONE when the interrupt was not generated by the RTC.
+
+Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
+Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
+Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 691fc4be1f022..1a675dcce235d 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -1375,7 +1375,6 @@ static void azx_free(struct azx *chip)
- 			 * actually stop the chip) to allow GPU to suspend via
- 			 * vga_switcheroo, and print a warning.
- 			 */
--			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
- 			pm_runtime_disable(&pci->dev);
- 			pm_runtime_set_suspended(&pci->dev);
- 			pm_runtime_enable(&pci->dev);
-@@ -2377,6 +2376,8 @@ static int azx_probe_continue(struct azx *chip)
- out_free:
- 	if (err < 0) {
- 		pci_set_drvdata(pci, NULL);
-+		if (hda->vga_switcheroo_registered)
-+			dev_warn(&pci->dev, "GPU sound probed, but not operational: please add a quirk to driver_denylist\n");
- 		snd_card_free(chip->card);
- 		return err;
- 	}
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 6b3a47c6d0108..08c5adcc8a5e2 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -48,12 +48,18 @@
+ #define ABX8XX_CTRL2_RSVD	BIT(5)
+ 
+ #define ABX8XX_REG_IRQ		0x12
++#define ABX8XX_IRQ_EX1E		BIT(0)
++#define ABX8XX_IRQ_EX2E		BIT(1)
+ #define ABX8XX_IRQ_AIE		BIT(2)
++#define ABX8XX_IRQ_TIE		BIT(3)
++#define ABX8XX_IRQ_BLIE		BIT(4)
+ #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
+ 
+ #define ABX8XX_REG_CD_TIMER_CTL	0x18
+ 
+ #define ABX8XX_REG_OSC		0x1c
++#define ABX8XX_OSC_ACIE		BIT(0)
++#define ABX8XX_OSC_OFIE		BIT(1)
+ #define ABX8XX_OSC_FOS		BIT(3)
+ #define ABX8XX_OSC_BOS		BIT(4)
+ #define ABX8XX_OSC_ACAL_512	BIT(5)
+@@ -249,6 +255,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+ 	struct i2c_client *client = dev_id;
+ 	struct abx80x_priv *priv = i2c_get_clientdata(client);
+ 	struct rtc_device *rtc = priv->rtc;
++	unsigned int status_flags_clear;
+ 	int status;
+ 
+ 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
+@@ -265,9 +272,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+ 	if (status & ABX8XX_STATUS_WDT)
+ 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
+ 
+-	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
++	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
+ 
+-	return IRQ_HANDLED;
++	if (status_flags_clear) {
++		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
++					  status & ~status_flags_clear);
++		return IRQ_HANDLED;
++	}
++
++	return IRQ_NONE;
+ }
+ 
+ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
+@@ -821,6 +834,41 @@ static int abx80x_probe(struct i2c_client *client,
+ 
+ 	i2c_set_clientdata(client, priv);
+ 
++	/* Disable unused interrupts */
++	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
++	if (data < 0) {
++		dev_err(&client->dev, "Unable to read irq register\n");
++		return -EIO;
++	}
++
++	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
++					data & ~(ABX8XX_IRQ_EX1E |
++						 ABX8XX_IRQ_EX2E |
++						 ABX8XX_IRQ_TIE |
++						 ABX8XX_IRQ_BLIE));
++	if (err < 0) {
++		dev_err(&client->dev, "Unable to write irq register\n");
++		return -EIO;
++	}
++
++	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
++	if (data < 0) {
++		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
++		return -EIO;
++	}
++
++	/* Unlock write access to Oscillator Control Register */
++	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
++		return -EIO;
++
++	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
++					data & ~(ABX8XX_OSC_ACIE |
++						 ABX8XX_OSC_OFIE));
++	if (err < 0) {
++		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
++		return -EIO;
++	}
++
+ 	if (abx80x_caps[part].has_wdog) {
+ 		err = abx80x_setup_watchdog(priv);
+ 		if (err)
 -- 
 2.53.0
 
