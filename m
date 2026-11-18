@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032884;
-	b=E0QXb9HFxQwgjwpI1jZWd1bycMFsYWgpgg1BT8Sz72ILGuxTIZm9e6OxI505xg7Fc34z
-	 L+xmyxVKhpO/YRKxJuovy20kfS8vtPA4siG0RuBicY93uKkPwOmym7KqmQjP2FASutUrz
-	 tJguCp9Kqqc5uyF3U3Q/x/pcNgwToxevqgYOy7Y4s/lY8QuElyDdSwj8Ox+X4VOyNjLnn
-	 dJMBUBMK3ubtlCIx7LUqONohh/Ld0rzgDj1G3AY7DzG0erUqaUFpIes42U+iNB/8dtoCE
-	 9nOlJeAm3w2EFH6+G3JSUsCfEpCQUx0Gd3zufyHFCNQ5Nt4B7IyB0A8kIzYQOZnR1lg==
+	t=1795032887;
+	b=W6oE0lnWmrX2XY8XuWvpbaRx5yOg9uZ0kWWy2dbpDnfk/KKzvWNLUpKITGc1ev1VCIzi
+	 pdjUew56MS/VAMdzfsdME21Yg8wCLEzeAyH6ZPDoaKebFzqRcLM72sWY3BrMjnI8ZNKVD
+	 CFeSApJ1i1QeWssOStmskI1gbShi/8W+xznzHYa4GhKTwHld44TsedNe+JnbQtNNZAgiq
+	 8fFSPa8Q6/MrPx0Xj6KZusB8JMyXplBacCaOW4ujPQRBaaqZHYLK6f63TqhFphTBgK53F
+	 +sfwafbWp+aV7DrgrjVsLrXn/cur7d1MALA9YpIK1Ls2oNAXqbEIRi3DCMKZcoLSpLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032887;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=05NCsv0ILN+R8ThnJmc3nr7a1PZ80CW6o763EqedaTw=;
-	b=KtvuHKEuYHpnEOFcURnzH+982qwqPwHXsj/ovDpz+l7JqC57ZRZ3j3j+fE8i/7yOkb8r
-	 RMxnJO6fFq8sxHDVIMjHm92jPdGm+auc/VgDq6nPHgvjScsbZH1OUdElPQ/L/FA0bbdrS
-	 XVP4Ep0xgyMj1OqCnDxolNdi3bje8aoK5RThP+o2MPnIUH4nWcdpIxMrkRNKA9V2AxTCI
-	 vRvwvlxh855ycmKs4hACkqruzl7yX0UjjJV+NfETC6tMoouFg7FvKanOmmf+eWqbhEtxv
-	 xdzhxTZ+plm4goDZ+ChoF9JMWvMcHjfgaCKVUVsGuPIT6UqkQJj+3HIihVPKS4lEP+g==
+	bh=OrpC6X5f3WHkSwZXN0UDslCEfBI2sCAJx2NknEEx4bY=;
+	b=RnTNmA9ILjeHsIjRlQtMKWM3GNv4SCrpMfY1zia8+y0iaabV5mJjDjNN8eL/dwXK4CGq
+	 tfQicA/1Jjt5lKlKhlVjpVUXfQSHgtIkzRwXlrSc6xtfLzc6qZghVBvDytmqnK0vbLhoS
+	 LJ32Jlp7YMZTUbXSTlscCneRubC16gnBWg1hlOMKM6KZPLiAlntMX9fz0XCyrIhvsmdJW
+	 WPUHUs0OdSGHyiilO3jcD1NRmRy9yWrdbILn2CyeSCHbzpOIAteAU3cwkxr/g/mIedR4C
+	 XciDSBZZ+8MDBm4p5wXIUu7js9FSZfMhgmi13IBQvUN2VCDsA2d/DIHBPGoworFirXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QV4lMOqK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kgV/4E9P";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DB460A261D;
-	Wed, 18 Nov 2026 20:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21AE606A33B;
+	Wed, 18 Nov 2026 20:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QV4lMOqK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ECC81F000C4;
-	Wed, 18 Nov 2026 20:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kgV/4E9P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E501F000C4;
+	Wed, 18 Nov 2026 20:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032884;
-	bh=05NCsv0ILN+R8ThnJmc3nr7a1PZ80CW6o763EqedaTw=;
+	s=korg; t=1795032886;
+	bh=OrpC6X5f3WHkSwZXN0UDslCEfBI2sCAJx2NknEEx4bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QV4lMOqKJf87K33NLOia2WuPH1fhPELHZwfcYNgl1QAZsyme1KDOKnofqXgMBBQGM
-	 HE6XmZjClYaoGQVCHD/dVWvpaQa0WbhHDf/7UyYyi9JvEgVsn8awnSZNHhM4fd+N9R
-	 z5UheDi5urqAsw1TbLmEG5D7KMJ+lOSb2Cv8YeSk=
+	b=kgV/4E9PONBRzutrDCnnosuGSETcbKzLfa7ncvCoaJvXkujMxArWoZRt4cWdOjXsA
+	 EjwJE8ECglRtF1OlojqwzRFvDnmmKmacpL/jVyQ+cyt+Lcm4D4BVJm7DwT3qEwd7qa
+	 GfzG3gPWss7XyN391fAcMAhs1nT2/Mv2p8obe+B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+b0f93e29183ce737@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
+	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1571/1756] ceph: fix off-by-one NUL termination in decode_encrypted_symlink()
-Date: Wed, 18 Nov 2026 16:01:38 +0100
-Message-ID: <20261118150112.282675203@linuxfoundation.org>
+Subject: [PATCH 6.12 1572/1756] ceph: dont keep a mon_addr string that failed to parse
+Date: Wed, 18 Nov 2026 16:01:39 +0100
+Message-ID: <20261118150112.316566190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,58 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 4da259ea8bf4bd6a91a63f33630a26592d2353f8 ]
+[ Upstream commit 6c82bff8561f4c20dc0113f81cb2f6e6e2b4cf70 ]
 
-decode_encrypted_symlink() allocates enclen + 1 bytes but writes the NUL
-terminator at sym[declen + 1] instead of sym[declen].  A malicious MDS can
-report symlink_len == 0 for an encrypted inode, and base64_decode() returns
-0 for a zero-length input, so the store lands one byte past a kmalloc(1)
-allocation.
+ceph_parse_mon_addr() stores the string in fsopt->mon_addr before handing
+it to ceph_parse_mon_ips(), and then returns that function's error. So
+after a mon_addr= that does not parse, fsconfig() reports the failure but
+the mount context keeps the rejected string.
 
-Terminate at sym[declen], which is always within the allocation.
+That matters because ceph_get_tree() uses fsopt->mon_addr as the "monitor
+addresses were supplied" test:
 
-  BUG: KASAN: slab-out-of-bounds in ceph_fill_inode (fs/ceph/inode.c:996)
-  Write of size 1 at addr ffff888020aad361 by task kworker/0:0/9
-  Workqueue: ceph-msgr ceph_con_workfn
-  Call Trace:
-   kasan_report (mm/kasan/report.c:595)
-   ceph_fill_inode (fs/ceph/inode.c:996 fs/ceph/inode.c:1277)
-   ceph_fill_trace (fs/ceph/inode.c:1716)
-   ceph_con_process_message (net/ceph/messenger.c:1424)
-   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
-   ceph_con_workfn (net/ceph/messenger.c:1576)
-   ...
-  The buggy address belongs to the object at ffff888020aad360
-   which belongs to the cache kmalloc-8 of size 8
-  The buggy address is located 0 bytes to the right of
-   allocated 1-byte region [ffff888020aad360, ffff888020aad361)
+	if (fsopt->new_dev_syntax && !fsopt->mon_addr)
+		return invalfc(fc, "No monitor address");
 
-Fixes: 79f2f6ad878c ("ceph: create symlinks with encrypted and base64-encoded targets")
-Reported-by: co+b0f93e29183ce737@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Userspace is free to ignore the error from fsconfig(FSCONFIG_SET_STRING)
+and go straight to FSCONFIG_CMD_CREATE. The check then passes on a value
+that was rejected, and the mount continues with ceph_options::num_mon
+still 0 - which is how syzbot reached the BUG_ON() in pick_new_mon()
+fixed by the previous patch.
+
+Parse first and commit only on success. A failed mon_addr= now leaves any
+previously accepted value in place instead of replacing it with one that
+does not parse.
+
+Fixes: 7b19b4db5add ("ceph: new device mount syntax")
+Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
+Assisted-by: Cursor
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/super.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
-index 32f612934f839..933ef43371eb9 100644
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -965,7 +965,7 @@ static int decode_encrypted_symlink(struct ceph_mds_client *mdsc,
- 		kfree(sym);
- 		return -EIO;
- 	}
--	sym[declen + 1] = '\0';
-+	sym[declen] = '\0';
- 	*decsym = sym;
- 	return declen;
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index 45425700a7bd7..2ce9386c5d6b7 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -388,13 +388,18 @@ static int ceph_parse_mon_addr(struct fs_parameter *param,
+ {
+ 	struct ceph_parse_opts_ctx *pctx = fc->fs_private;
+ 	struct ceph_mount_options *fsopt = pctx->opts;
++	int ret;
++
++	ret = ceph_parse_mon_ips(param->string, strlen(param->string),
++				 pctx->copts, fc->log.log, '/');
++	if (ret)
++		return ret;
+ 
+ 	kfree(fsopt->mon_addr);
+ 	fsopt->mon_addr = param->string;
+ 	param->string = NULL;
+ 
+-	return ceph_parse_mon_ips(fsopt->mon_addr, strlen(fsopt->mon_addr),
+-				  pctx->copts, fc->log.log, '/');
++	return 0;
  }
+ 
+ static int ceph_parse_mount_param(struct fs_context *fc,
 -- 
 2.53.0
 
