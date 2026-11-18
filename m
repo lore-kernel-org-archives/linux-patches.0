@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049477;
-	b=sLE/rbVISxdGRC1Aavm0Dbx5CMPVBnZ237ULh27MKQJd7dB6q4KHT5T9DyAO7AnoDJUq
-	 t48uhN6whbC84V8TG6Js/FkyCCPh8qPRtPlbVAMKvdQoSS01nZyfIg7H6r/ztsQ2FOTGd
-	 Iu6E/LY94xUQW8uX6VpdurspvKLgxcqzaenWkxT+EB4RYx2/eS8ziR3mMM3RZMzRuOCak
-	 gh3oG1DuA6XSzgCxg+424dbduBy9M2qbWajyFQucfuf0o+6TIsuH1Mllg/KO/PI7OGUNz
-	 W/PuYGievCYLBQnQV8qZ90c7vG1H7ZlMOCgoeRv6QpEOYR6ECSo0jTKA23KxdZ11YYA==
+	t=1795049480;
+	b=wqTOQUzB89Jh84xJ+c2fiuRJlY6LPoCqkEJTzj9sP7g5rqMEKe5HMwhLpybt1KJEd8Uf
+	 /Tw4YVbDaY76NnRMRqOnw9OjklEHURe/DWY9XzkcxPCD00miu1WvTsypo3EYNrPn9MO0d
+	 jQqOn7G9gaZA9tPTNCekN4jMSeyMCLOQtn8adLyv3gK9j73Lo0f5SxMrYXXJcr9YBfkWD
+	 lyGzsVgyxsl0inVEo8uAebiMcBPuWmPR7ldVHirfJswdSHsf6c2VDFYqIpedZzqQWc0eF
+	 fn8Oq6BfBgPstjnX5VIrVUakQqmjmgEXViWUeLnZrvUWEqIFb2w0mtde4HmupOMen6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049480;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8MwOoh32OoRS/Racofb7OK/aoB9FSbcwcojV77cJpt4=;
-	b=Ovnyc9wi0m+DUPal8skCRAs3ZjyKuqSndq7yLXVSYbPi1emRL2Cx6G0yYAn9I03YTFw/
-	 L+0qajFGr0Hyv2CbB/mckAV88pG7VMpZNdG20Kf7un9W0r1ryt78lVfbrKO9TmsqbztOW
-	 pxZ8RiXVmfdvuO8H8u44FKOVl4bYC7zLuveinsR1CDxbeB4BysgyrnD5DogtJlgoFotga
-	 NHI7kTXmCVZrsnawDXBreyZbJOLa5ZFaoD5HSuoLKXSlREl9EO3XR62Ma6bXeiILUSB7/
-	 Evgljmt15ZDarp5FZhzHF9Nh05LY+9cCFW1btlMZRBWVRxLnpTK+VjbVg3Q9/iZmazQ==
+	bh=YdY4rjWeP9IzEQtpfWteieh5H9Qr1hIbkGHhF4xvO2Q=;
+	b=Qx0De4epQwscrn4YcVrPA7Kc1J24mIbf4Yb3zfgafNVywfUdcAvrbRksK7Tc9F1GQjZ+
+	 EhEPHDcVYH47NmbkB9Jq3ZfT/PgMZGTeL5kB4+tqTdL4s5tt9qimNEpwNSXvSEnPKBbgY
+	 j2DbuQCIJEmru5b9V3SjC4WNQ/cys3vIUhxjmCsU1jlOenOxbUB/uHVUt4+UaBh5PnZ8r
+	 cBDZFIpyX5mH3qIYlQaOL0838uB8roytG/zF/auOYnQXu0MHznJIOglUVUipPskuQKlBg
+	 35nxorBSwBE9h85k7rEQEj/vTh6c1BZXviANZ6sl4iE+VDSHu3aD4OUv20u00SD/xyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbiFYcpB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=moA75z8q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21BB606A31C;
-	Thu, 19 Nov 2026 00:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4E3606A320;
+	Thu, 19 Nov 2026 00:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbiFYcpB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC0A1F000C4;
-	Thu, 19 Nov 2026 00:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=moA75z8q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4591F000C4;
+	Thu, 19 Nov 2026 00:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049477;
-	bh=8MwOoh32OoRS/Racofb7OK/aoB9FSbcwcojV77cJpt4=;
+	s=korg; t=1795049480;
+	bh=YdY4rjWeP9IzEQtpfWteieh5H9Qr1hIbkGHhF4xvO2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hbiFYcpBhQoBqaU25xau43P3TeGSFB91H+n5vbJV3HciMj406Kc8NwUfH3g+4q1/p
-	 3s7/UN0JueUlrUfB2o0J4bXGVugtRCERn4tQ9E/euuy0CFBDHVIOjARh39dWyAQHFF
-	 5NZMat5WC5yS4xSDscLedN1vfdKltevrnqM47dHE=
+	b=moA75z8qB9eJjZ+DSqCNSDc3FVF9NupsWtLHSxg8WM8B0Sk5KWFAR1zbFNJ2bCY2n
+	 fcARwrMULnxM+Bb1owisN9yzoQvZ8wb3ysWTaBLMoyw2xXgG20bqO16VF+4ZSPfRkJ
+	 6VHVjUg5ys0LnFhT9t3azfQQTP7SC9QE3PALN/1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Melissa Wen <mwen@igalia.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2324/2857] ALSA: core: Add missing barriers for power_ref vs card->shutdown
-Date: Wed, 18 Nov 2026 15:55:58 +0100
-Message-ID: <20261118150325.212613027@linuxfoundation.org>
+Subject: [PATCH 6.1 2315/2857] drm/amd/display: remove duplicated prev_p_state_change_support assignment
+Date: Wed, 18 Nov 2026 15:55:49 +0100
+Message-ID: <20261118150324.879624034@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,54 +71,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit a6913835735469751f56473f5212eb291a4805e7 ]
+[ Upstream commit 11e8f72b09a6a3c0950b9558abd37559dd098698 ]
 
-snd_power_ref_and_wait() increments card->power_ref and then reads
-card->shutdown (and the power state) locklessly, while
-snd_card_disconnect() sets card->shutdown and then waits for
-power_ref to drop to zero via snd_power_sync_ref().  Due to the
-missing barrier on both sides, the caller proceeds with shutdown still
-seen as false, while the disconnect side sees a zero refcount and
-continues tearing down incorrectly.
+The prev_p_state_change_support trace entry is assigned and printed
+twice, remove the unnecessary duplicates.
 
-For addressing the potential race, add smp_mb__after_atomic() after
-the refcount increment and smp_mb() before snd_power_sync_ref() in
-snd_card_disconnect().
-
-Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-9-tiwai@suse.de
+Fixes: 13b5ca42ca9c ("drm/amd/display: Add tracepoint for capturing clocks state")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index d164646ab9602..7cd5e08d4e7ee 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -550,6 +550,8 @@ void snd_card_disconnect(struct snd_card *card)
- 		clear_bit(card->number, snd_cards_lock);
- 	}
- 
-+	/* order card->shutdown store against power_ref read */
-+	smp_mb();
- 	snd_power_sync_ref(card);
- }
- EXPORT_SYMBOL(snd_card_disconnect);
-@@ -1144,6 +1146,8 @@ EXPORT_SYMBOL(snd_card_file_remove);
- int snd_power_ref_and_wait(struct snd_card *card)
- {
- 	snd_power_ref(card);
-+	/* order power_ref increment against card->shutdown read */
-+	smp_mb__after_atomic();
- 	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
- 		wait_event_cmd(card->power_sleep,
- 			       card->shutdown ||
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+index 048b7f9c6321e..d7813017f7c24 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+@@ -521,7 +521,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 			   __entry->p_state_change_support = clk->p_state_change_support;
+ 			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
+ 			   __entry->pwr_state = clk->pwr_state;
+-			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
+ 			   __entry->dtm_level = clk->dtm_level;
+ 			   __entry->max_supported_dppclk_khz = clk->max_supported_dppclk_khz;
+ 			   __entry->max_supported_dispclk_khz = clk->max_supported_dispclk_khz;
+@@ -531,8 +530,8 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 	    TP_printk("dispclk_khz=%d dppclk_khz=%d disp_dpp_voltage_level_khz=%d dcfclk_khz=%d socclk_khz=%d "
+ 		      "dcfclk_deep_sleep_khz=%d fclk_khz=%d phyclk_khz=%d "
+ 		      "dramclk_khz=%d p_state_change_support=%d "
+-		      "prev_p_state_change_support=%d pwr_state=%d prev_p_state_change_support=%d "
+-		      "dtm_level=%d max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
++		      "prev_p_state_change_support=%d pwr_state=%d dtm_level=%d "
++		      "max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
+ 		      "bw_dppclk_khz=%d bw_dispclk_khz=%d ",
+ 		      __entry->dispclk_khz,
+ 		      __entry->dppclk_khz,
+@@ -546,7 +545,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 		      __entry->p_state_change_support,
+ 		      __entry->prev_p_state_change_support,
+ 		      __entry->pwr_state,
+-		      __entry->prev_p_state_change_support,
+ 		      __entry->dtm_level,
+ 		      __entry->max_supported_dppclk_khz,
+ 		      __entry->max_supported_dispclk_khz,
 -- 
 2.53.0
 
