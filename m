@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027221;
-	b=nKmAznuu/oMTbFppyxo7NU66YAndcx+Q8ZTM7CdVxKiI3XUnmwIPLUrAipv7w2pi+ZFa
-	 SHKrLtnlJF4ovGwA8RrTGpUErzeJ3xG6zSlh78kGZbwMhQAs+IINxUJQ5AHM9n61yT5Gf
-	 o3cJr1SsePm4dbiXwl4UYsLi4R0XNd1uN7y3N6VZBa1rS1nLmsuZU/5+2+zKw8HlVJU64
-	 x5ib/6sGdljhGGa57V1ndXWjDxZT3F5a5zrp7m2F7y3PNjapENmkylVDckb3KjSZ+k9oO
-	 QRy4QEBMXKnGlXpQ7TytRKmaOOSc+hYMtEA9qd7NEfPOUnMfnp+AdkAhMP8PE0BldRA==
+	t=1795027224;
+	b=WJ0Peer0AkE3vpW3jgMJ+1pH8jEJLO+sp8nrq32OQb36a9EFF9O93wFucB5Bbe2uGP03
+	 vG78DrxhoigkN6n1Pkfu6oXf9biLA/TViBMjgayJ2kwyQAK4ulr3il6oXSo4lykB+jB6T
+	 //qJVfjjhpYrldynOL1ToTxikPXNR+t+pFZNIBSAs61APXTpp+HdllAXM3RpMluDy64Rq
+	 +SlzO1GvrQAnYjKNpWlVEdcrInY3j/xNt8Ov7YQnE3ik+tMTtN5085FlEhfRAid6H9VpE
+	 TKB0s63OTKwDuRV6lViQcBRRXCndAs7vLRmWjLGtx0XQfbAiCTM6asF9v+yA7QYIc+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027221;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dYOC0qmnjR3ZHpIgCqCP7zPGLmDC/Bio8gu60ulxQDE=;
-	b=FKtQi55fH77yCt6EKfhsR8ZSNCiVkoI+lMzNVNMXr8uuN7c9MqH5AfiUopdUbRFk8CXj
-	 Pw0uEkDG4jEzO3aqGR8R+0kgWWUqba8sSXQ+sMoS6hUYrw/CBcVpq8CQY1gTpXuKMwaHe
-	 9wYiPa+ronjPnm4ctFX+4ReWFCCsEtgyBTz+X7QVIxyADWg001tYyqsWgbxb0YlTcV6x4
-	 7DW8jyyaYn3KZ24EN/9Rs5D46yCTmkXTdiJK5d5fwySQGRnEErtBVVxY0VQpZ5gLnf+YV
-	 b9oC8Tp4lhD1eHHvqGZp9YdhqloQv07Rcf0gp3eVoaITRtN7tiCI74KxvYWoMEfbihg==
+	bh=E5gwv/naOx2l+n9kwiTBtaRYuxQeX20MfkJ/LU7aRBY=;
+	b=avl/4FGUckyYYcbU6oJwgdrvDCFSQpcXJNZk2JwszR8b92/qhsvotTBOA/eTS8Wi12Pw
+	 DREVG6N7pZbnDtH6VPhsXLqv46jIptTYAX+yxQKTqXF92dy5+PEsfsrBRFgSroT1RGM1k
+	 47sje7ertlXuV8mWisWS5eDgAteNVdpQknAo6zLrnFO+YqdG0RaIpz+wGtB1G3xWPheLQ
+	 81WCDqFN5D2g/gVRA4X/3aVIEx2F3IVXCHdpXxf+81DSEwAEbm4i4dw9zggaPbcAu392z
+	 77aVfPJaonqwAZyJRuVTKzgTQCJ0fFtifFOFAfobXEBXw5Q+CbJD3qJgT1EKTDLzJFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bnAHO21o;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EX9uJbA+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40D6606A335;
-	Wed, 18 Nov 2026 18:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5876360A2603;
+	Wed, 18 Nov 2026 18:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bnAHO21o
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1841F000C5;
-	Wed, 18 Nov 2026 18:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EX9uJbA+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7922C1F000CE;
+	Wed, 18 Nov 2026 18:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027221;
-	bh=dYOC0qmnjR3ZHpIgCqCP7zPGLmDC/Bio8gu60ulxQDE=;
+	s=korg; t=1795027224;
+	bh=E5gwv/naOx2l+n9kwiTBtaRYuxQeX20MfkJ/LU7aRBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bnAHO21o8++FEEAjRoCAUwoXXe1MpPkaVrIO0m+O8mu1w7MnSCOYhP84FckaTcduY
-	 WPJXhBQ4MYCg1tRntZfDh/c5WzFfrLQJ8412rYVEOahOm3Rp38mZjcaa33kYRBUZs+
-	 eGCgahCQKCnJfn7XGN+3CdeFo+Uvh/u+7yaWloE4=
+	b=EX9uJbA+kf2xxEmt1Kwf4E38VRFYUxleLh0tvTW82dHrJvPUbC8U5MQFx1zSlTGBz
+	 cwLqBQjfLPzKoxdC4DeBt/PhC+HlIadKeA/qW2FuUel7IBX2PnK0VDU9Q1jkyma1Fj
+	 7fJ1El6rKyFnC9PH2oNme83yJPB0u52znbcJ6PrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1713/2151] perf evsel: Mark the event as supported when retrying an open
-Date: Wed, 18 Nov 2026 15:57:28 +0100
-Message-ID: <20261118150224.222536117@linuxfoundation.org>
+Subject: [PATCH 6.18 1714/2151] bpf: Fix verifier WARN on narrow read of bpf_tcp_sock u64 fields
+Date: Wed, 18 Nov 2026 15:57:29 +0100
+Message-ID: <20261118150224.257844540@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,59 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit cc956e0cd6a405fbc6ad3055cbbdb178562ef27d ]
+[ Upstream commit af873495cbcb066ab029f7f63b94410d4db47628 ]
 
-Opening a group with perf record on a machine with perf_event_paranoid >
-1 and no CAP_PERFMON fails the first perf_event_open() with EACCES, after
-which evsel__open_cpu() clears evsel->supported; evsel__fallback() then
-adds exclude_kernel and record__open() retries, and the retry succeeds
-with supported left false.  get_group_fd() treats unsupported events as
-ungroupable, so the retry opens the group members without their leader:
+A BPF program can read the middle of a u64 field in struct bpf_tcp_sock:
 
-  sys_perf_event_open: pid 12345 cpu 0 group_fd -1
-  FAILED '.../test-record-group-sampling1' - group failure
+	tp = bpf_tcp_sock(listener);
+	/* +0x54 is in the middle of the u64 bytes_received */
+	unsigned hi = *(unsigned *)((char *)tp + 0x54);
 
-which fails the group subtests of "perf test 82", the Perf attribute
-expectations test, when it is run as a regular user, while it passes as
-root or with CAP_PERFMON, where the first open doesn't fail.
+bpf_tcp_sock_is_valid_access() allows this 4-byte read (the default case
+only checks size == 4), but bpf_tcp_sock_convert_ctx_access() only knows
+the field starts and has no idea how to handle such an offset. It emits
+no instruction, cnt stays 0 and the fixup pass trips verifier_bug():
 
-commit 2cc7aa995ce9 ("perf stat: Refactor retry/skip/fatal error handling")
-dropped the pos->supported = true that record__open() did after a
-successful open and moved the resets into the stat code only, while
-saying "When an event is tried the supported is set to true again".  Do
-that in evsel__open_cpu(), which every open entry point funnels through,
-so that a retry describes its own try instead of the previous failure.
+	verifier bug: error during ctx access conversion (0)
 
-Fixes: 2cc7aa995ce9ecd8 ("perf stat: Refactor retry/skip/fatal error handling")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Just disallow the narrower access by matching the whole u64 range of the
+two fields, so it is turned down at check time:
+
+	invalid tcp_sock access off=84 size=4
+
+Fixes: 655a51e536c0 ("bpf: Add struct bpf_tcp_sock and BPF_FUNC_tcp_sock")
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017143819.209510-1-jiayuan.chen@linux.dev
+Closes: https://lore.kernel.org/bpf/7a8ff335.1024c.1a14395f3e5.Coremail.kaiyanm@hust.edu.cn/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index 0da2c56745c10..11b74d56d0601 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2665,6 +2665,12 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 	enum rlimit_action set_rlimit = NO_CHANGE;
- 	struct perf_cpu cpu;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 5c3c0939e2d20..ab49e7eb9d16b 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7302,8 +7302,8 @@ bool bpf_tcp_sock_is_valid_access(int off, int size, enum bpf_access_type type,
+ 		return false;
  
-+	/*
-+	 * A failed attempt being retried after evsel__fallback() would
-+	 * otherwise keep group members out of their group in get_group_fd().
-+	 */
-+	evsel->supported = true;
-+
- 	if (evsel__is_retire_lat(evsel)) {
- 		err = evsel__tpebs_open(evsel);
- 		goto out;
+ 	switch (off) {
+-	case offsetof(struct bpf_tcp_sock, bytes_received):
+-	case offsetof(struct bpf_tcp_sock, bytes_acked):
++	case bpf_ctx_range(struct bpf_tcp_sock, bytes_received):
++	case bpf_ctx_range(struct bpf_tcp_sock, bytes_acked):
+ 		return size == sizeof(__u64);
+ 	default:
+ 		return size == sizeof(__u32);
 -- 
 2.53.0
 
