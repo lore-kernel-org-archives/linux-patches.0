@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039546;
-	b=O+JGoh++ZAhUjgsolYhFZCQjdwkc0531xW1tfC49wUZ0dvhh9nrYf7dFAczn5WlH9N6W
-	 pCFFJNkJrGU7w9UceU5JLSM1KUGnC2MxUPet4sP6G9qJRupaBZaEcdBkZQXv5fRuS8x5e
-	 4qLuxyH3tAyxVhBYBSivhH/ESIdjFR9ppaC7ja46ZmzfOjg0I6z0Lqmn1y5/YRZfMuXX6
-	 I4EYJnWHKXWLTumUyqHrA6fVt9aacOe13NhebfB1bYQdxjHDRCQ2sHSfUgYRD+ROuVp/4
-	 Sl0pEZ7H6TBj8X3ZQsL5+HNvUbYXCX15F6+/hSSPrF1b+xM6o15LBHd3CKtRyyDMkAg==
+	t=1795039549;
+	b=JQ80fg7KCt5dQsU/TT9K+ZIyVVDwbzZRwZZOYjSU8zvlUvodUFHC7npjXTMHvc+UH+sl
+	 sQLLAAMUMnnVR1Misfd+hGGQyOoKU471lgYymnjRnCeJAfZCiLGL3RILv4KJu2g7BqLWh
+	 AQ/ajieSSWW7t71cEM5IgpGXsPPK5XPFdRVV3S5ZbNiT/3OYWJmzmHKsCNsHlWEQ6hi3b
+	 zpc8MLWXotVYSUVC4X0iYqeN2B1uEc8r/BCu/jngzpfjyEeft/uumqUfaC6fJVhNLZJsi
+	 UgYeKHbRx5dC7m8HCdudHD2bw6ytaCCgrptVk94zAr8tmfo4qHzvoaJJSDcMjijOquw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039546;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039549;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eUhS2TuZ0OFxvFHCxMbhXtAF0hDxhbX59uKSLO4O8Rc=;
-	b=47794Qw83v7TfTWjU0lpLubZ5Z3DvDSX55CmmOj0wf66ZHGS+am/wXqO2TIu/O8XDqW0
-	 6KVjcLywoqXH1ZDDvH7OHYFtvTVZWYoA7HdGpSNF/ia5/UPRt/Wo5JuywDsk8pVux7WHG
-	 U57nJ+D5cl6Y+kH4uXNuLkiEYV/DfHWwawNMhgij5yAQHpEOK/6UldghXVoJ7OrqAoZER
-	 12to8w7k6E36qzEcwYCCaSe0UIhinwtD0bYhflc9mPQqV0P23GdeyF3Is7QQVfKlv0TdD
-	 mVjYN+p3byXFIr9wu2+psqEzSbjzAVz0j0RKZqnRFmSJhVXTd9Lk7YE7ISR6Mn/Jnuw==
+	bh=4td4HqBwauMqIhC0ao17kLXD97HYH8sKOOMC6lJZndc=;
+	b=Znh/2uBCmvMODE25RLSNdLGulQjtLfH+Wpo8yqyzQdDEgOLPm0WVN+oyvuWfW4iSwV2U
+	 TBGf0zkqIJABP7xKkq49k7Wm24eaaUdwLyORqA1W1UuROasWh9TLk1sDWkbpSI42/jLtc
+	 UC0WT/Rtpj228xosKCh6p8MKqdrdFs8d8OcISrRPcIZ4eRw/oJ+GWFvQ/1H0eHb/gMq8d
+	 DnWZ8kDIfNnXfVp47pobGMC91JXRvxaSZl2DNmNl8mQQBknKijYWSFuwtw4T0QftEd2Ih
+	 f6hmxMyyz6ozEqiwqVV9+b71ClqTcgINqsN9W2/LvDSe4tjF15p/LOpSklDEu5wlRvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uioMfk1M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IhoEUk/M";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FF7606A320;
-	Wed, 18 Nov 2026 22:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5AB606A31C;
+	Wed, 18 Nov 2026 22:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uioMfk1M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BB41F000C4;
-	Wed, 18 Nov 2026 22:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IhoEUk/M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBB21F000C4;
+	Wed, 18 Nov 2026 22:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039546;
-	bh=eUhS2TuZ0OFxvFHCxMbhXtAF0hDxhbX59uKSLO4O8Rc=;
+	s=korg; t=1795039549;
+	bh=4td4HqBwauMqIhC0ao17kLXD97HYH8sKOOMC6lJZndc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uioMfk1MVxNVnfgo6S5Z6vhQF5xjiCxL02YLf+KZCTUMIHuXDCLEV3lNd7tlQDbqh
-	 eHLgHiDqCLqK0g63r8hCjaSxLvLxNmGC5GopHzl0q36EPW0dwZGKkHeR82Q4SziI+E
-	 J4RhbJBLJYqVjVsAM9rHDcpmXvTJHSTIejLp7bLM=
+	b=IhoEUk/MO4W5Yoimf/8EEPgM3etme/i6481yYvWcz5KgbMCGt5fM4jenXK6oyRTbH
+	 7RJsPj85qc5VrZoqVb37iV8Ufz3oPoHaUA/dS5jPAOa6W8lAgzmIKoPQnZ+8toJKND
+	 e6qmpq4Mei7EVkqbuBfJh0oos8lfZXnFjzy39KoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2137/3318] iio: imu: adis16400: Check return value of spi_setup()
-Date: Wed, 18 Nov 2026 15:45:59 +0100
-Message-ID: <20261118150426.173095047@linuxfoundation.org>
+Subject: [PATCH 6.6 2098/3318] dmaengine: xilinx_dma: Move descriptors to done list based on completion bit
+Date: Wed, 18 Nov 2026 15:45:20 +0100
+Message-ID: <20261118150425.026063925@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,43 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Srinivas Neeli <srinivas.neeli@amd.com>
 
-[ Upstream commit a7c07602e00596a45de8a4a700af96392953ed38 ]
+[ Upstream commit 5b585cc8778185ae7a7c9903f8cd70d562b91282 ]
 
-In adis16400_initial_setup(), the return value of spi_setup() was ignored.
-If SPI configuration fails, the driver would proceed with the
-initialization anyway, leading to undefined behavior or silent failures
-during device setup.
+In AXI MCDMA, xilinx_dma_complete_descriptor() walks the channel's
+active_list and unconditionally moves every entry to the done_list. The
+MCDMA IOC interrupt handler invokes this function on every
+interrupt-on-completion, but with interrupt coalescing (IRQThreshold > 1)
+an IOC interrupt may fire after only a subset of the queued descriptors
+have actually been processed by the hardware. As a result, descriptors
+whose completion bit is not yet set in the BD status were being reported
+as completed to client drivers.
 
-Check the return value of spi_setup() and return the error code immediately
-if it fails.
+Add a check for the descriptor completion bit before moving entries from
+the active list to the done list, using the appropriate direction-
+specific status field (s2mm_status for DMA_DEV_TO_MEM, mm2s_status for
+DMA_MEM_TO_DEV).
 
-Fixes: cd888a17f95f ("staging:iio:adis16400: Use adis library")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+This mirrors the AXIDMA fix in commit 7bcdaa658102 ("dmaengine:
+xilinx_dma: Freeup active list based on descriptor completion bit").
+
+Fixes: 6ccd692bfb7f ("dmaengine: xilinx_dma: Add Xilinx AXI MCDMA Engine driver support")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260818174151.1608971-3-srinivas.neeli@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16400.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
-index eac7cfead5a78..962cb1b505123 100644
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -443,7 +443,10 @@ static int adis16400_initial_setup(struct iio_dev *indio_dev)
- 	else
- 		st->adis.spi->max_speed_hz = ADIS16400_SPI_FAST;
- 	st->adis.spi->mode = SPI_MODE_3;
--	spi_setup(st->adis.spi);
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index 02bb2d8b7cda2..47d93ac0053c2 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -1765,6 +1765,17 @@ static void xilinx_dma_complete_descriptor(struct xilinx_dma_chan *chan)
+ 					      struct xilinx_axidma_tx_segment, node);
+ 			if (!(seg->hw.status & XILINX_DMA_BD_COMP_MASK) && chan->has_sg)
+ 				break;
++		} else if (chan->xdev->dma_config->dmatype == XDMA_TYPE_AXIMCDMA) {
++			struct xilinx_aximcdma_tx_segment *seg;
++			u32 status;
 +
-+	ret = spi_setup(st->adis.spi);
-+	if (ret)
-+		return ret;
- 
- 	ret = __adis_initial_startup(&st->adis);
- 	if (ret)
++			seg = list_last_entry(&desc->segments,
++					      struct xilinx_aximcdma_tx_segment,
++					      node);
++			status = (chan->direction == DMA_DEV_TO_MEM) ?
++				seg->hw.s2mm_status : seg->hw.mm2s_status;
++			if (!(status & XILINX_DMA_BD_COMP_MASK))
++				break;
+ 		}
+ 		if (chan->has_sg && chan->xdev->dma_config->dmatype !=
+ 		    XDMA_TYPE_VDMA)
 -- 
 2.53.0
 
