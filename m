@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034668;
-	b=EXUy5qI6IO2TvZx2ERiLOYAEnWk6LsJQidRkOQXeju5jR9NQ/TymobGWBf/sSwFYhzgY
-	 b0jhbb2XhUdN/RFhD5g8EMRUgWKHL3GBmXTpZrKJS2ggzqJrDtABzG6LEofLrHS6FrAxv
-	 T5EpdwiqoA8nEVqGZ8YOgfBWaxGxcl052wj4PYpbnfFFRiN0xcE7l133iQU4h2vsnULUR
-	 VtdV5K/BKR/G8iUhAIU4H+qcNi3aRcapLkZLmbhyDG0vrpFwk26ceJRMz/Oy0Ftu48SWq
-	 9P/1v2AaRo+R4fVbe1JVfmxVmVe6PhnMQmE84huZdyXGNYxxm6RY+TNQ/Pz98rw/0Hg==
+	t=1795034671;
+	b=NHEH7OsjjjiwLZN6NIxjDrMa6XSDhHlQcNbsFrF59dC+ffgXKaDp8+Aq4iU78oir2apu
+	 O6ew93ohiyDB0evNu1ymgAyRERmgBO8M7uZmhbaeDsPffcIjDtExD9isH2xQNJ5kIdP1+
+	 wUA+v4dlFj4QLm0orH+vUt5JCiR2ZkJ08yrWrcGCRPQYbTxdLsyZJtWbEm6l2QxYl15F7
+	 vX34wwgRnoW757jXmFrhPDHz4a1uRaAoKFRZkiN5O7Y9KR1qE3nSoU3kBv6guod4+QDrw
+	 ZBbJy6jw+Lh3RVIf6lZrBSs7Ia32KkzQWdPDPo3z0agrkKkvqSmrpXjW6dqQhuVFTMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MQuo6vZtd2qFWpPE6OAua1Z4Iz7N0UiqAyY4UI2urcg=;
-	b=hhwVT1yHwuO5rJCgB+6y06VUnD7j98k++DKujxrMh61dM/JuqEo3rbQxprtV4Qss9JuB
-	 YO5lNuc2l5AmwobvfZkv36KDXYFwJ0JHJL9sqV9JeqUygzOec8QRUuwFZZ8kq02YBMg+4
-	 5/PQip/LHfBoI7y5D6rm/bE5fx3wM0f/F9Yz3SksBbksnrDBxMBRV9TAP7OmTkijJbo3x
-	 Aa+WiJNBGx+cEmVQJc2Thzrh74QRKXmpqR2KDksiz+ZtWLNVlJJbbyn3jkJe00VTQ9DNq
-	 0G9mQk4UTcQVHBEzgmgHmhREACBeXi6MS329dwFAsN5XurUbiQQaZeQEjFZOxFhD+mQ==
+	bh=gxaEcuwtksf/tryAKKKJdTYaisFKx6Up26ClQwaEhMA=;
+	b=rloZ43feti0AqSAUJP/QFpaWAvw5gB424bYW624B9KW/o2Xcc7ZmAckauiy2/ZfSJ82G
+	 5PtdKYZNcnmjauKrlexjaQQUFBmfGQ+S3LRZLRGKRY8FWq+ix6nec74H8ZGMUQILeC+xa
+	 cn6i8w9LYv/8ztUv/pwnbR/MpseFtOcbq0/YCqqA7+E4MHgVLDeTaNLNJTaMH15l87A0R
+	 PJ9s4OBDINqOWY2B5xAAokGDWx/Hga2Gi6xUcyJIjGFh9eoiY55YpNOM0GGfQn1CPaINY
+	 F1hoatiZChRe77wOtUN4b/QW1dst9K1dUKqam1LAusFTW00w0PIONPhNglog6Rs/5KA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C8wWGbla;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RziNyNkZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E90F606A31C;
-	Wed, 18 Nov 2026 20:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A022B606A325;
+	Wed, 18 Nov 2026 20:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C8wWGbla
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F581F000C4;
-	Wed, 18 Nov 2026 20:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RziNyNkZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E202D1F000C5;
+	Wed, 18 Nov 2026 20:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034668;
-	bh=MQuo6vZtd2qFWpPE6OAua1Z4Iz7N0UiqAyY4UI2urcg=;
+	s=korg; t=1795034671;
+	bh=gxaEcuwtksf/tryAKKKJdTYaisFKx6Up26ClQwaEhMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8wWGblaV/fZPiXITjPRTkzZdiNDewLonOC4Gwxd1biT/bSqBPbEDqG8UBmPajvEf
-	 q//EEf7jCaOuwJRsal2Nv+/vKj1V/+I5nm0OgiFieXTt+eV+8ro5DltlZbZAk+EsAC
-	 inv31ovAtfmLnMvwDVy8Gviu3sKbvo9SiWCj2fn4=
+	b=RziNyNkZN8k6CkaXn9GwvaFXgomTwhRfPZTJUaEyasYBCDpQtF1+LLVUlLCCDWl0B
+	 bjRbPBplEStD+z8jFPqqfGrOUtnBzKcxRBq8N3Tc5NazPzwCYXFGIie2kPZunYYiK+
+	 OjBtxX/GwK9Mr3LKqtN67wFxoAPASX8RCu7bfkds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0451/3318] xfs: fix backwards mergeability logic in refcount scrubber
-Date: Wed, 18 Nov 2026 15:17:53 +0100
-Message-ID: <20261118150330.299579102@linuxfoundation.org>
+Subject: [PATCH 6.6 0452/3318] xfs: strengthen the "is cow staging" helpers in scrub
+Date: Wed, 18 Nov 2026 15:17:54 +0100
+Message-ID: <20261118150330.336418393@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,40 +71,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit e8b01aaafffe6b852325debdf1ef4b13ccea1cd7 ]
+[ Upstream commit 0d43368844a75ad13561a1198a3b027940730756 ]
 
-When we start the refcount or rtrefcount btree scanners, prev_rec is
-initialized to all zeroes.  This is done so that the record mergeability
-checks skip the first record because you must have two records to
-compare.  Unfortunately, I got the logic backwards, so scrub has never
-complained about mergeable refcountbt records.  Fix this bug that LOLLM
-noticed.
+LOLLM pointed out a bug in both of the refcount scrub predicates that
+determine if a range of blocks is marked as CoW staging in the btree.
+While it compares blockcount < len, this isn't enough to determine that
+the CoW staging record is at least as large as the range passed into the
+helper.  Fix both of them.
 
-Cc: stable@vger.kernel.org # v6.4
-Fixes: db0502b39c21d1 ("xfs: flag refcount btree records that could be merged")
+Cc: stable@vger.kernel.org # v4.16
+Fixes: f6d5fc21fdc713 ("xfs: cross-reference refcount btree during scrub")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Dropped the rtrefcount.c hunk because that file doesn't exist here; the refcount.c one-line fix applied unchanged apart from line offsets. ]
+[ sashal: Dropped the rtrefcount.c hunk because that file doesn't exist in this tree, so only the refcount.c change was applied, with no other adaptation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/refcount.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/xfs/scrub/refcount.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/fs/xfs/scrub/refcount.c b/fs/xfs/scrub/refcount.c
-index 304ea1e1bfb08..dd2c52807e40b 100644
+index dd2c52807e40b..4407fc3988c39 100644
 --- a/fs/xfs/scrub/refcount.c
 +++ b/fs/xfs/scrub/refcount.c
-@@ -399,7 +399,7 @@ xchk_refcount_mergeable(
- 	const struct xfs_refcount_irec	*r1 = &rrc->prev_rec;
+@@ -569,8 +569,12 @@ xchk_xref_is_cow_staging(
+ 	if (rc.rc_domain != XFS_REFC_DOMAIN_COW)
+ 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
  
- 	/* Ignore if prev_rec is not yet initialized. */
--	if (r1->rc_blockcount > 0)
-+	if (r1->rc_blockcount == 0)
- 		return false;
++	/* Can't start after bno */
++	if (rc.rc_startblock > agbno)
++		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
++
+ 	/* Must be at least as long as what was passed in */
+-	if (rc.rc_blockcount < len)
++	if (rc.rc_startblock + rc.rc_blockcount < agbno + len)
+ 		xchk_btree_xref_set_corrupt(sc, sc->sa.refc_cur, 0);
+ }
  
- 	if (r1->rc_domain != r2->rc_domain)
 -- 
 2.53.0
 
