@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026005;
-	b=sZETa+xg5qCpKwf4VcfAkT7l2gAZEPjObShmvbDe8FWdacBTDn+LU3geWUpb4pC0v3Vy
-	 f/KFyV1H2N8Ds+IrHBjtSZfdfnxubcRfFSE0FGWuQJvHEoBKfQJ5NqGyukLPCcnMEjman
-	 MxBAsUQeYzSOPTPE0F/E/+fkTd45R6mu0e3lDHQs50wLPz5hYbTHGIfju1wn34hpokTLK
-	 dOPjrVrMVKCRJ1LcLGFw4Fct+dBmDhwVvv3p+6aTLyiv2aZBt4mpnIDVKHE526sgOYyqH
-	 EoDxznupfOygJFGgsi2pE5SnhjmMsAXFDzmMABnBT28eXmauOmRhVRJLbKz8NPhw3uA==
+	t=1795026008;
+	b=CO8YzoguF6wZa+wTC77sTbDJJVHDKKzU1Jj/QRi9swcNVeVxs9fi2LVMhw3Jp611a3JA
+	 BRr4Gqwc9W3EGLF072nD6aPk60IlckJ6KjZn4nM5Z1S4b+smIPO1VbUWKrvU9CX07ugV3
+	 YoRNqFvevPva0ctyQc4wNFoaqCCeTvuV+tgWc1/Ww7QVIorTbWiN8+xn9H4cNabwXsibD
+	 Hq73y9BQPQqjiv6r/oTk4gl4bhcKK2ybrWRS0UUnQ00yJ9K1OXOb+1kejV++MjK+GTTg7
+	 Zipm14M/Pj4plgruKJ+u1Et60lfufXWfZ6Y43mL/LSWxxHKFBkCDAjcRT23V0so5nyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026005;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026008;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mzpqijy0DvIX8um6gd3EzBO3Gm2y6SLYAPpAq3y4Y54=;
-	b=W8J1lobpDTE04k2Ns3uND2EL6pbvyOi1rv74G5irpdVF9Any3sKOiejutAnVucuifHzZ
-	 8PbgEfQ5jqTWBkY+aKctgNaLU4IqJWnP6ESA86rV54J4tnf2U29OSgV4xjbMmHnsAxQk/
-	 yTM36zPxeNII9isbBhOw43dXn9nwIBE0aw6OCbxwhWH95paAq9xnpYDkeg36kilg38+cX
-	 GUKFXPtaUrPQFxv0Etn7B09qmANWMJx02LYaphOOpHopqUZslo+EGbziw7mQUN3/uUa2q
-	 t/268tqeQkUBzwuz6wsB20ncihD0dWoeqMNCczsDrSx4j3ACvysEnjzIQ5r6d+lU64w==
+	bh=dGCmicnZBcEJzKM7zDHb3VofrRliO3Qkziuat+oqBek=;
+	b=Mht72N022Z53h1wmhm+6wNJ4z/E6sXc9RHQQuD3L2cAGaAKeIOkqfSSvbY731FHBezkF
+	 o/TQGoedPboWaA4YICpYiUdBHYh6RRIFQsfoEQnqQBRJOru4/fRKGyygEpIGzJZuK1N0B
+	 CcYWFguRCAuydP6CVoFdLLsqjz9fy3R+Uu1kKJWBGf0Omv5x9nAW28pR6ljUQB8Rv9ALK
+	 xMQUdvf/Wl6kaOi/DfwiVgSBSxIjrqyxvLzgEybHxpe+YFPyJsRDvcXTgr4NPwZ7YRY2z
+	 s+ZtSP8PsDrD4Evs9UMfmi43oEi/+rRjin7CU0GS+g0UYepit+4BYQNkNcsxY2uYcZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6vUkFV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pesM2D7w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E9D606A320;
-	Wed, 18 Nov 2026 18:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82681606A31C;
+	Wed, 18 Nov 2026 18:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI6vUkFV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF5D1F000C4;
-	Wed, 18 Nov 2026 18:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pesM2D7w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72C91F000C4;
+	Wed, 18 Nov 2026 18:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026005;
-	bh=Mzpqijy0DvIX8um6gd3EzBO3Gm2y6SLYAPpAq3y4Y54=;
+	s=korg; t=1795026008;
+	bh=dGCmicnZBcEJzKM7zDHb3VofrRliO3Qkziuat+oqBek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QI6vUkFVXv1O9e3UA0uGwM4QtOI8sWg+x1cDuTMAwBV20YUMxeiP1lzfPtU4K6c+d
-	 OETU094OVJej8aauwZuXEv2doRBMwuRVOfXMmZaiKavKPc534utW8wmx1GimPakEB9
-	 O30dPkdJilUWmGHFO2fK4Z/KaVA1fXnwpUPfRTkQ=
+	b=pesM2D7wUhv7vMQx4YGi4D4xE0cKeH48qYSxS474ycFQfDt38nUyUzSUt755uhwmX
+	 ILqkIdpAZ0OGZugzV7uQ0D98DF+G2dvLNEMBycMVoMrFoktfT0bpxGGEU11++rmqo/
+	 1ZMj6Hsow0TKip573jnk1v9yJFBIHGEvqDbElh+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1280/2151] gpu: buddy: Drop the stale @p line from the gpu_buddy_print() kernel-doc
-Date: Wed, 18 Nov 2026 15:50:15 +0100
-Message-ID: <20261118150208.752032286@linuxfoundation.org>
+Subject: [PATCH 6.18 1245/2151] drm/amd/display: remove duplicated prev_p_state_change_support assignment
+Date: Wed, 18 Nov 2026 15:49:40 +0100
+Message-ID: <20261118150207.521516530@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,40 +71,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit b7027ff72c2fd4f7697a00b854c882445e9150b5 ]
+[ Upstream commit 11e8f72b09a6a3c0950b9558abd37559dd098698 ]
 
-gpu_buddy_print() takes only the allocator since commit ba110db8e1bc
-("gpu: Move DRM buddy allocator one level up (part two)"), but the
-kernel-doc still describes a printer argument and kernel-doc warns about
-the excess parameter on every docs build.
+The prev_p_state_change_support trace entry is assigned and printed
+twice, remove the unnecessary duplicates.
 
-Drop the line.
-
-Fixes: ba110db8e1bc ("gpu: Move DRM buddy allocator one level up (part two)")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Link: https://patch.msgid.link/20260907012125.21209-1-kmehltretter@gmail.com
+Fixes: 13b5ca42ca9c ("drm/amd/display: Add tracepoint for capturing clocks state")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/buddy.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/buddy.c b/drivers/gpu/buddy.c
-index bf5920bd22580..158f54e82547b 100644
---- a/drivers/gpu/buddy.c
-+++ b/drivers/gpu/buddy.c
-@@ -1291,7 +1291,6 @@ EXPORT_SYMBOL(gpu_buddy_block_print);
-  * gpu_buddy_print - print allocator state
-  *
-  * @mm: GPU buddy manager
-- * @p: GPU printer to use
-  */
- void gpu_buddy_print(struct gpu_buddy *mm)
- {
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+index 0995522bf58b5..a4b1b86237891 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+@@ -523,7 +523,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 			   __entry->p_state_change_support = clk->p_state_change_support;
+ 			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
+ 			   __entry->pwr_state = clk->pwr_state;
+-			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
+ 			   __entry->dtm_level = clk->dtm_level;
+ 			   __entry->max_supported_dppclk_khz = clk->max_supported_dppclk_khz;
+ 			   __entry->max_supported_dispclk_khz = clk->max_supported_dispclk_khz;
+@@ -533,8 +532,8 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 	    TP_printk("dispclk_khz=%d dppclk_khz=%d disp_dpp_voltage_level_khz=%d dcfclk_khz=%d socclk_khz=%d "
+ 		      "dcfclk_deep_sleep_khz=%d fclk_khz=%d phyclk_khz=%d "
+ 		      "dramclk_khz=%d p_state_change_support=%d "
+-		      "prev_p_state_change_support=%d pwr_state=%d prev_p_state_change_support=%d "
+-		      "dtm_level=%d max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
++		      "prev_p_state_change_support=%d pwr_state=%d dtm_level=%d "
++		      "max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
+ 		      "bw_dppclk_khz=%d bw_dispclk_khz=%d ",
+ 		      __entry->dispclk_khz,
+ 		      __entry->dppclk_khz,
+@@ -548,7 +547,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 		      __entry->p_state_change_support,
+ 		      __entry->prev_p_state_change_support,
+ 		      __entry->pwr_state,
+-		      __entry->prev_p_state_change_support,
+ 		      __entry->dtm_level,
+ 		      __entry->max_supported_dppclk_khz,
+ 		      __entry->max_supported_dispclk_khz,
 -- 
 2.53.0
 
