@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030459;
-	b=DcLQzFSXJclenjvkk5yfSoBBQwNv2X7DUnVIoHJ9DsxjYUPfXeemay1IdfoacEBt+lZG
-	 7GSSFkD160TWbj0nQtw8XtmJm5en5rkFviUmtoe8tG5AdiPoF6XWVZU3IaoldL4N2Un8D
-	 T01mTffJsbIPUOD38bfdVNRlFaSmJ9lyMG27Mi9CeLeA9QBlRmXhuXhfJjwioUEP8OdlK
-	 Yh9ineV2ZqSYJ/Y36se+tdlgdzvO1uz2hwfejKvdUpQ9WcIZcGAP2J1iTMgmHRbcNhYtS
-	 5POSClBl6Dmt49R8nFDMk/J57V5sbieIezSEk++Y4I2IWzp91QAbvxyC9tpxJzQ2NMw==
+	t=1795030462;
+	b=DoWoqW6dzxH5LjZd002LNxVLMueRpum5wTUJD9v6BDuQfp54/oQjkPlf410dQgD7auqr
+	 7WDQCv8y+xVTvg3EvM2D4bMSi3wafRmyFXnFL2pCyMKa3KsqT25UmEF760Qxrz5cxFbV5
+	 ozTGlTXk0SDDHXH+ITaqm9JiEE47/9+8yoGKKNmudE77xk8rhqr3VxL73crpCfBtusfUw
+	 MFkogyNH2yYchGWLhE4mi+y/uuTev5OVhugyTYwgx1hBoPaGQbCLfF7zVkgZQn27FXOe1
+	 cOb3Eu2VcqVWc4p74GNlqxR+tn1jCzqMyry/Uwrb0Qir3UBLX7L7MJpfu3aQ/hsnaHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030462;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=HVxXbNdPq0vBcyWyXILwq+u3g1Q8KlQ8MJhZcnIx7WE=;
-	b=cRbnFb597P6tdv3xqyZTvaR9NjIYDfxBwyOEi84LXLT/7o8wXeXCmW/tUkB6JFtX8ugq
-	 zVH+aktBslJ8mF87HV6mGepmDPcJQBgWn0Rh8rt9tvYzxvevyEnoiugv+ksSF6iQsl3OJ
-	 94PCJnn/1LgdgsrduRm7/mMUjvbjm4q2pXF/hLsK8MvxiOuVu2LC6Ep7bQvsZ21sKHseT
-	 8tvprlhK3aGkrHRpO7/+5MNHGL79R5awalE/1kx7wK4UGuOvdudtGcUn50wE+++ncnMUv
-	 xmen7EsFFBmSYsaRx2RM755Gf/AM7N0NrDn3linSHXLctaLay/wbtVHTs9TjdHo7nGQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=s/e3+Vt1y2t3zdczH7DTSDr6XxbDADMD/3y8iTk+9VQ=;
+	b=W7GXGShDI62S/Mv6neQbatHtzSiqHIP36h9jOzL6V6kirYZHjFhXVRfnezejcZDGEc19
+	 C/qlkOgi2WyKX2krjjVixr+OHY8dlJnAhaP07o1Y3nczASJGa3vSDyju+cIvL2KhD8vsV
+	 HnL4+4sVHkqhetCbo/diqqiWC9H00bpLEV2yyYqsBcz8zxwGZD6aMmsoSIxEQiNUv7jnK
+	 fJBCna42405w6VtWpPCp4IilnGFgsD/jxrV0eRt+KKM10EnIN7kqSdWxcvFWioBPeA9Ed
+	 HnVjgQ1eSYqt8EsCB4MU95SzeMjUsOS4g+Xk61vJREzNSSieLVFasV9I6HM4Q4wm1OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XqEH9BZW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VVakcBO/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05C8606A33D;
-	Wed, 18 Nov 2026 19:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634B2606A33D;
+	Wed, 18 Nov 2026 19:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XqEH9BZW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E761F000C4;
-	Wed, 18 Nov 2026 19:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVakcBO/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F041F000C4;
+	Wed, 18 Nov 2026 19:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030459;
-	bh=HVxXbNdPq0vBcyWyXILwq+u3g1Q8KlQ8MJhZcnIx7WE=;
+	s=korg; t=1795030462;
+	bh=s/e3+Vt1y2t3zdczH7DTSDr6XxbDADMD/3y8iTk+9VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XqEH9BZWcEFhFzUSaMwS1Ye5Xz92TC9g96BPUEH/FJAXt96iHXTdi8orRLCHRwNQY
-	 qi9ei7IdoLVH+OoG9TQj6lxKbCqDe/LycNBHH94B+IOb3/meKW4NhXckfy2kB7Vg+M
-	 dPdL6eyQh44054wBhH/R1746YQ/UogGkRqbhRJXM=
+	b=VVakcBO/nYlVXOXRO/qUQnCanFFaDhuymoRb2vuHeqY0dnUGbl7WR0nNb5WRZYvyX
+	 J6IZPaIz7PRbiVwjQOHnSr/Hh5tMAtAYtcBtkIGiDVaCmg/ySTrGexAITxDdO4AGuk
+	 Q/lBEjyOUNivoGZfPGFMfUNCvlLJywlJbDgI/tak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Braha <julianbraha@gmail.com>,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20V=C4=83n=20Cao=20Nguy=C3=AAn?= <nguyennvc@greennode.ai>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0712/1756] kconfig: tests: Provide defconfig outfile for savedefconfig
-Date: Wed, 18 Nov 2026 15:47:19 +0100
-Message-ID: <20261118150037.719292272@linuxfoundation.org>
+Subject: [PATCH 6.12 0713/1756] RDMA/irdma: Do not move a fresh RoCE QP to ERROR on RESET
+Date: Wed, 18 Nov 2026 15:47:20 +0100
+Message-ID: <20261118150037.773008714@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,49 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Schier <n.schier@fritz.com>
+From: Nguyễn Văn Cao Nguyên <nguyennvc@greennode.ai>
 
-[ Upstream commit 09bd92ba15bd00d937deea38a10a439458393043 ]
+[ Upstream commit 6de34bfb56ad8c24bf63b243b5f32b345d9cdd4d ]
 
-Let kconfig test framework's 'savedefconfig' forward the requested
-output 'defconfig' filename to 'conf'.
+irdma_modify_qp_roce() handles IB_QPS_RESET like IB_QPS_ERR and moves
+the QP to ERROR. On a QP that was never moved to INIT, this makes the
+following RESET->INIT fail with -EINVAL, while ibv_query_qp() still
+reports RESET.
 
-The original implementation was calling 'conf' with '--savedefconfig'
-but missed the mandatory filename for the defconfig output file.
+RESET->RESET is a valid transition. The Mooncake transfer engine
+resets every new QP before INIT, so it cannot connect over an E810,
+while mlx5 accepts the same sequence:
 
-While at it, honour the 'dot_config' argument which points to the input
-config file.
+  ibv_create_qp(RC)        -> RESET
+  ibv_modify_qp(RESET)     -> 0
+  ibv_modify_qp(INIT, ...) -> -EINVAL
 
-Fixes: 022a4bf6b59d ("kconfig: tests: add framework for Kconfig unit testing")
-Reviewed-by: Julian Braha <julianbraha@gmail.com>
-Signed-off-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260929-kconfig-tests-minor-updates-v2-2-c5902bee1d0c@fritz.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Skip the hardware modify when the QP has not been moved to INIT yet
+(iwarp_state is IRDMA_QP_STATE_INVALID), as there is nothing to flush.
+RESET after INIT still goes to ERROR.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Assisted-by: LLM
+Signed-off-by: Nguyễn Văn Cao Nguyên <nguyennvc@greennode.ai>
+Link: https://patch.msgid.link/20260930-irdma-reset-fresh-qp-v1-1-065327274e2b@greennode.ai
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/tests/conftest.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/kconfig/tests/conftest.py b/scripts/kconfig/tests/conftest.py
-index 26f194ed2d400..a6d52684036c2 100644
---- a/scripts/kconfig/tests/conftest.py
-+++ b/scripts/kconfig/tests/conftest.py
-@@ -213,7 +213,8 @@ class Conf:
-         dot_config: .config file for input
-         returncode: exit status of the Kconfig executable
-         """
--        return self._run_conf('--savedefconfig', out_file='defconfig')
-+        return self._run_conf('--savedefconfig={}'.format(out_file),
-+                              dot_config=dot_config, out_file='defconfig')
- 
-     def listnewconfig(self, dot_config=None):
-         """Run listnewconfig.
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 8a3c08679953d..d1caa78b8184b 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -1437,9 +1437,17 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 			issue_modify_qp = 1;
+ 			iwqp->suspend_pending = true;
+ 			break;
++		case IB_QPS_RESET:
++			/*
++			 * A QP that was never moved to INIT has nothing to
++			 * flush, so skip the hardware modify. Moving it to
++			 * ERROR would make the following INIT fail.
++			 */
++			if (iwqp->iwarp_state == IRDMA_QP_STATE_INVALID)
++				break;
++			fallthrough;
+ 		case IB_QPS_SQE:
+ 		case IB_QPS_ERR:
+-		case IB_QPS_RESET:
+ 			if (iwqp->iwarp_state == IRDMA_QP_STATE_ERROR) {
+ 				iwqp->ibqp_state = attr->qp_state;
+ 				spin_unlock_irqrestore(&iwqp->lock, flags);
 -- 
 2.53.0
 
