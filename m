@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017628;
-	b=cB/s20WRUwH17n6NEMraD0UlMKivGZ0I6rpCFCt7kFKQJ27ykNJqeTmJTIGoeKrYonhm
-	 t3laenTL/BcyuvOw2tNNxEvJ9zJ66JPcEWsKLYqT7x1ICX+AKz40Gnj+aaEeyJnWAfr1G
-	 /nP1V1iNqUyh/VX20ERghTsIeiWkOHczPCNhhaGTZWRXEtUkHGmycXSMveJ0scU+ljoGQ
-	 AGXD2N7ZHeNAdDoTf4dOoPtZqCWI2ZL2Wn4oO3n0M6QktfdG3zKNJsGTraKfIPYpKj96d
-	 Z5o3XoCoGzIbYqCN3Ml2jQGjtHx5nlT1fftUlShLjqbHUBP2/hocNwu4JIeMdRmEigQ==
+	t=1795017630;
+	b=WAOFPDA8pzFFLKXECyAZCjGTBBXo8mRJt4xEkSxKJB+/P6YdUEwUYnxvdNCCxkTwXYB+
+	 WutkR/K/0Zv6cvom0nGEv+aMpZEIGCnVEt6RLRo0Fq7Q5A06/FwEl0sSd4csHyiiYwG6/
+	 HMSpoCatq58SDiIjAbBatg+CMxP6O/e7i7qGgtKlnwyqx0rgxva2NK6XQVVOi0pIBmF5s
+	 zw06HAZ+LLJI+trcCCB27B4ToB4/kEiEuNS5i53dFyT6V6gLnKWQBoMkiE8lgI0pLwLUr
+	 awaRribR3Tvey++kYOjPdgK3QTdc0HN3YwvbuUUH8yBz8iLGB1Syu6d+EvafHwl7daA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017628;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017630;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rr2vJjyyivSsgplTcAsGi9JE9oMYMR7eMD9nz4cxs08=;
-	b=B9Ua4E79E/hZLDe2GeJ4Li4V5IfZ4BJ7vY2sURG8HcW9WwNTsjOSmis3SzIyCPaPb7/z
-	 mOl3FLeouErxNg4O92CLxcMp/9Ov8FQi6hzHTdTx88UwKKlGsbD4QkF5xx25tA/kMVOhv
-	 70ZFThbPfPj14G0G6Lh9+oJxymSC4C/8lcaxMNdAGdit4SchkOxsWQvbkzhXHQ/abiUmk
-	 IaG7JnxZZMxiqhR/Y92SULmfugjsnlHO3lGYhILQMA2LoJZM6AcshwR+18fmwCrWQGDDp
-	 uKqH7bM7zaBXTmnX2et1QUpjRHsPZmfzw/d0THghLjGP6A7027YlSHcS77uPGJLjd+w==
+	bh=dA3FqcttcnuSGS6hme/9EYZviDZ0TB+equfnWmSqGJ0=;
+	b=ccIqnjGjz0ApBX9XRAFTSwMDOg4v7c8Ex6NDgjFQnfGSYYCl0rgN1S/ZhRmN/M9rXGtp
+	 bYz0b12tAzBkZFyM/ZD1tJZi2ukSGcrJaT9G7/KjUBL8ltgb8PAklVltFb690s5b28Nz0
+	 H6WKuBEDA43/c2hOFrYe1ZM5QK2P3wjXe/1z/D+lyIJVus7MINEJyaE8DC7P6tJ9PM4/e
+	 1GCXsicJ4oDsvg+0F0k1UgaXhwnWkAt3/JW3zyL01Cn2efAG57XmnhNnByG8mBE1S0M8l
+	 vl4qj0VQKeVzWW+tnh4DUWL/7RviVW2thK881n9goUBMuTKqjN4iskQEpBuA7yX1WmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dm8r9vd5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xX4zoojt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB74606A337;
-	Wed, 18 Nov 2026 16:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B6A606A337;
+	Wed, 18 Nov 2026 16:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dm8r9vd5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743CB1F000C5;
-	Wed, 18 Nov 2026 16:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xX4zoojt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262571F000D3;
+	Wed, 18 Nov 2026 16:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017628;
-	bh=rr2vJjyyivSsgplTcAsGi9JE9oMYMR7eMD9nz4cxs08=;
+	s=korg; t=1795017630;
+	bh=dA3FqcttcnuSGS6hme/9EYZviDZ0TB+equfnWmSqGJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dm8r9vd518aw1Zw9oX9lCD1uXFRL1z9pTssJ59Kf12tBJwzpo2RKQjRDGB2KvuEVo
-	 ClI9ERtSR1HKxa72PZr19Bxh6MCn7IsV1GhfIL/h+rrZEzNwIbHuEcAkY4VMD8j3Kx
-	 tvQzO1slQSS+ObHgn2rrQtL8yRrnP1+PFVmnFkJ0=
+	b=xX4zoojtLpYv7viamjc0bAKpAsXzmiJxHmvwCONoIx7sCVOgstxzJGLyqqtD7g0gv
+	 XQnmwa4+/C6oiS5kCbHLO2nkPqSv7Y5AVfDvo3Lf3Qxlb5dqcj3IFqyUGIKoY3/uUH
+	 5drryj3XAoCfOl4EQEy0Z21I6fT29xBC7tDk5eDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ariana Lazar <ariana.lazar@microchip.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0950/2651] dt-bindings: iio: adc: renesas,r9a09g077-adc: Drop unwired interrupts
-Date: Wed, 18 Nov 2026 15:36:30 +0100
-Message-ID: <20261118150322.106344646@linuxfoundation.org>
+Subject: [PATCH 7.3 0951/2651] iio: dac: mcp47feb02: protect EEPROM store sequence with mutex
+Date: Wed, 18 Nov 2026 15:36:31 +0100
+Message-ID: <20261118150322.142019557@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,63 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Ariana Lazar <ariana.lazar@microchip.com>
 
-[ Upstream commit 1182148719cffb5ea7a4610dac34deac9a70cf89 ]
+[ Upstream commit 55b0514c2863d01e9b168d8a6ad0040d628fb534 ]
 
-Remove the compare match and compare mismatch interrupts from the binding,
-as these interrupts are not wired to the GIC on RZ/T2H and RZ/N2H SoCs
-according to the hardware manual Rev. 1.30.
+Move the mutex lock into store_eeprom_store() to prevent race conditions
+when reading volatile registers and writing them to the EEPROM.
 
-While this change introduces an ABI break, the expected impact on existing
-users is minimal, if any, since the interrupts are not wired to the GIC
-and are not used by the driver.
-
-Fixes: 4d8d58987cb5 ("dt-bindings: iio: adc: document RZ/T2H and RZ/N2H ADC")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: bf394cc80369 ("iio: dac: adding support for Microchip MCP47FEB02")
+Closes: https://lore.kernel.org/all/20260819125128.970911F000E9@smtp.kernel.org/
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Ariana Lazar <ariana.lazar@microchip.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/iio/adc/renesas,r9a09g077-adc.yaml        | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/iio/dac/mcp47feb02.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/iio/adc/renesas,r9a09g077-adc.yaml b/Documentation/devicetree/bindings/iio/adc/renesas,r9a09g077-adc.yaml
-index dc0206b282315..ae14fdbe44b1e 100644
---- a/Documentation/devicetree/bindings/iio/adc/renesas,r9a09g077-adc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/renesas,r9a09g077-adc.yaml
-@@ -34,8 +34,6 @@ properties:
-       - description: A/D scan end interrupt for Group C
-       - description: Window A compare match
-       - description: Window B compare match
--      - description: Compare match
--      - description: Compare mismatch
+diff --git a/drivers/iio/dac/mcp47feb02.c b/drivers/iio/dac/mcp47feb02.c
+index baeb1be455c6f..5353013ff98c5 100644
+--- a/drivers/iio/dac/mcp47feb02.c
++++ b/drivers/iio/dac/mcp47feb02.c
+@@ -442,8 +442,6 @@ static int mcp47feb02_write_to_eeprom(struct mcp47feb02_data *data, unsigned int
+ 	 * Wait until the currently occurring EEPROM Write Cycle is completed.
+ 	 * Only serial commands to the volatile memory are allowed.
+ 	 */
+-	guard(mutex)(&data->lock);
+-
+ 	ret = regmap_read_poll_timeout(data->regmap, MCP47FEB02_GAIN_CTRL_STATUS_REG_ADDR,
+ 				       eewa_val,
+ 				       !(eewa_val & MCP47FEB02_GAIN_BIT_STATUS_EEWA_MASK),
+@@ -469,6 +467,8 @@ static ssize_t store_eeprom_store(struct device *dev, struct device_attribute *a
+ 	if (!state)
+ 		return len;
  
-   interrupt-names:
-     items:
-@@ -44,8 +42,6 @@ properties:
-       - const: gcadi
-       - const: cmpai
-       - const: cmpbi
--      - const: wcmpm
--      - const: wcmpum
- 
-   clocks:
-     items:
-@@ -107,11 +103,9 @@ examples:
-                    <GIC_SPI 709 IRQ_TYPE_EDGE_RISING>,
-                    <GIC_SPI 710 IRQ_TYPE_EDGE_RISING>,
-                    <GIC_SPI 711 IRQ_TYPE_LEVEL_HIGH>,
--                   <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>,
--                   <GIC_SPI 855 IRQ_TYPE_EDGE_RISING>,
--                   <GIC_SPI 856 IRQ_TYPE_EDGE_RISING>;
-+                   <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>;
-       interrupt-names = "adi", "gbadi", "gcadi",
--                        "cmpai", "cmpbi", "wcmpm", "wcmpum";
-+                        "cmpai", "cmpbi";
-       clocks = <&cpg CPG_CORE R9A09G077_CLK_PCLKL>,
-                <&cpg CPG_MOD 225>;
-       clock-names = "adclk", "pclk";
++	guard(mutex)(&data->lock);
++
+ 	/*
+ 	 * Verify DAC Wiper and DAC Configuration are unlocked. If both are disabled,
+ 	 * writing to EEPROM is available.
 -- 
 2.53.0
 
