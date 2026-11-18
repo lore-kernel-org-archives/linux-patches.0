@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025360;
-	b=kRCIADAYZTkAB4c4KKWsb6QIWP2l3uafYQD3CnNljR8ORTW0mLgk15DKlhjSyRUNDq7g
-	 72DA0hKYxr/QKbjEr+qvA/C/vwbIsq29d1gjBwPPe18SwtzLGUg5aagAvZWgb75XA/OXp
-	 1FOaIaZAevWGy8JfI3P6COj5bshGZG62czthzzuaeRbM7XDSGK3OGCtHonUD3DFHzAioY
-	 Ef8GtSoLNAVp7TELuH5uNIwY3/EMSQ7/gaH1y2GnvAhcqIp2QnO3Yiyke4kAhc3Dkoqi0
-	 nRLQ9y9blUbW59ejALKYqjv6IrSMbEwURuDmHZh8J2YqOpZDbwJcpR6HtgDYeKBchLA==
+	t=1795025363;
+	b=JzZjplL2AObhMJGMcCWeUtsFmeXuxAT8nIdTrPNWxAQJL4Xq163CJxKwr9mrstOPr1LH
+	 4S0LVttJG5KsUk96jVRb8nLtVwbUJr/pgCLOeCe8nZitZW2SFM+iSh3DaakGrizW+p691
+	 hFqQ9Bt91SZVWHMSHRGGBZJCla2Y5WzLRRmqY5PFoCet96+c0x7u6iQhwBuI2PTqrTMII
+	 wrihvuk+21ashlQLRF5WCWyT8VKanXvn6EEyEp0frw4xrnyf4FgWmdQYBrqOCRz9LZFB0
+	 nyXH5PKJmxXhgTgqqc6pVK5Z4H6tDlYU7h7gDOkEvKtMGJBLAPsiSB2wMIvEilRXYmg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hQl427uEEJvMWnxhKmLBPGKundd/5mdtEEmpsBK1cXI=;
-	b=hjz49yhxRN0Qef7NlMWNSKbytp/Rug138t2GE1+k+s2TvAGLfaEbrZ+L3EwYU6/mMDzU
-	 LAMhOGGN4mYH+rgAQm510ArzsTM18YZGG6XC3tJxGvNZG9gR3tZi4IGZQ7ZiDiEhi5K/v
-	 GyFFXCbr7O4KjIoYmYIk40L4n8CJKNqUjPxV1ye9GXsjAloNQCn8qyJqRCdoRXBGLeq+4
-	 SVXI36/WRsETDzs/m/effMzce4Lldi1CWNBYEoltMn5IA9LNWu/5nCsT+VdWN7zMmVa8y
-	 G0jBtC/CTrjBsPLWyiXg3z/jHv+XYX65f/ljIvOPADIO9lvacAFCc62I8R5TxET0RLQ==
+	bh=gL93j183ntPn7/3M9BBKv3FMMot20yi9hFvqo5n8yw4=;
+	b=L2jvxmGlwNbrvGIINctcV1fVhzCjTInH9/72AjjtmRFhjccky8n/ay0gqk1N2DXRKKTF
+	 3i5o1fP3bxZucrBUhEZG3rL1CMqCOc3NaRaN8CWnfiRsflEGDXQGrGWIY1Vp4D6bPc9Iz
+	 Sw378rw1boCyw/wIoeVd8iDZLnV2wyz37jBctfiKWJWZkiAbnexSkRcNZHd3CZ8AftHfr
+	 MgypR8XbFad+006HAekeqqncUdwvmqg5ZGrkX22fmgyAV24zQUQFGq/XgowN23+5jFwIi
+	 l3o20qs7BeLy8jX4zVkOrCh5XDLih4KRJ/TtpAzq2AWHHHMMXWd19iAtmboRxyuQJ+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=koFmyq1G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuAhMoab;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C19560A262D;
-	Wed, 18 Nov 2026 18:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17ED606A331;
+	Wed, 18 Nov 2026 18:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=koFmyq1G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981B11F000C9;
-	Wed, 18 Nov 2026 18:09:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JuAhMoab
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A251F000C4;
+	Wed, 18 Nov 2026 18:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025360;
-	bh=hQl427uEEJvMWnxhKmLBPGKundd/5mdtEEmpsBK1cXI=;
+	s=korg; t=1795025362;
+	bh=gL93j183ntPn7/3M9BBKv3FMMot20yi9hFvqo5n8yw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=koFmyq1GkJME3GZorDlMLGH+OIAEustoi6trkA7Qwyx1cqCrlzwzAGCwGhZytxSk2
-	 n64mYKsVGWRDw1I9u1XGr39yp/L6eEFb5dxbNmwLvA6m3XIa4+SUMU0Sn9tYg3EE2A
-	 Gp9kqWejmTznjsL4ZEXPXEl14kPPGA6NInrpWu/I=
+	b=JuAhMoab/eA3jieamy10DSQ5i+aSc8795SRNpxHCYWkJVVd5ax6yQONH4fqvT2eR0
+	 9psjpy8+5qdfzE1ITowCyIuxZmXVTipopR8qoQslJDd/xD9YZj9aCw85uiIdsrYPdW
+	 QqSV6QZ/g5GZ2A/FmfDkwgJpnPrGi8EWrca6SvJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1051/2151] selftests/alsa: Do not take another controls event as our own
-Date: Wed, 18 Nov 2026 15:46:26 +0100
-Message-ID: <20261118150200.599939679@linuxfoundation.org>
+Subject: [PATCH 6.18 1052/2151] power: supply: ab8500_btemp: Fix event temperature reporting
+Date: Wed, 18 Nov 2026 15:46:27 +0100
+Message-ID: <20261118150200.633617785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,46 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit c9b0768669976a1beb0a1537b4257bd6b76dfbac ]
+[ Upstream commit 95990cda8e42dda4bd3f1475d578323981bd8579 ]
 
-The wait_for_event() skips an event for a different control with a
-continue inside its do-while loop. But continue goes straight to the
-loop condition, and that tests the mask of the event just skipped. So
-a value event for another control ends the wait as if it were ours.
+The event-aware path initializes its local temperature to zero and
+compares that zero against the thermal thresholds. Consequently some
+events report the measured temperature after it crosses the event
+threshold, while others always report the threshold.
 
-A driver that notifies a second control from its put() queues that
-event first. The core only sends ours once put() returns. So the wait
-returns early and leaves ours in the queue. The next test then
-reports it as spurious. And event_missing passes for a control whose
-put() said nothing changed, as long as it notified a neighbour.
+Start with the measured temperature, clamp it according to the active
+event, and convert to tenths of a degree only once. This path is used
+by AB8505 and later variants.
 
-To fix this, clear the mask before skipping the event.
-
-Fixes: b1446bda5645 ("kselftest: alsa: Check for event generation when we write to controls")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260930111534.3782264-2-sammiee5311@gmail.com
+Fixes: 1f855824757e ("ab8500-btemp: AB8500 battery temperature driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-5-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/mixer-test.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/power/supply/ab8500_btemp.c | 28 +++++++++-------------------
+ 1 file changed, 9 insertions(+), 19 deletions(-)
 
-diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
-index 2b9278475e6de..213300d0cad4e 100644
---- a/tools/testing/selftests/alsa/mixer-test.c
-+++ b/tools/testing/selftests/alsa/mixer-test.c
-@@ -261,6 +261,8 @@ static int wait_for_event(struct ctl_data *ctl, int timeout)
- 		if (ev_id != snd_ctl_elem_info_get_numid(ctl->info)) {
- 			ksft_print_msg("Event for unexpected ctl %s\n",
- 				       snd_ctl_event_elem_get_name(event));
-+			/* The loop condition must not see the other control's mask */
-+			mask = 0;
- 			continue;
- 		}
+diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
+index e5202a7b6209b..0079eca548573 100644
+--- a/drivers/power/supply/ab8500_btemp.c
++++ b/drivers/power/supply/ab8500_btemp.c
+@@ -468,39 +468,29 @@ static void ab8500_btemp_periodic(struct ab8500_btemp *di,
+  */
+ static int ab8500_btemp_get_temp(struct ab8500_btemp *di)
+ {
+-	int temp = 0;
++	int temp = di->bat_temp;
  
+ 	/*
+ 	 * The BTEMP events are not reliabe on AB8500 cut3.3
+ 	 * and prior versions
+ 	 */
+-	if (is_ab8500_3p3_or_earlier(di->parent)) {
+-		temp = di->bat_temp * 10;
+-	} else {
++	if (!is_ab8500_3p3_or_earlier(di->parent)) {
+ 		if (di->events.btemp_low) {
+ 			if (temp > di->btemp_ranges.btemp_low_limit)
+-				temp = di->btemp_ranges.btemp_low_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_low_limit;
+ 		} else if (di->events.btemp_high) {
+ 			if (temp < di->btemp_ranges.btemp_high_limit)
+-				temp = di->btemp_ranges.btemp_high_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_high_limit;
+ 		} else if (di->events.btemp_lowmed) {
+ 			if (temp > di->btemp_ranges.btemp_med_limit)
+-				temp = di->btemp_ranges.btemp_med_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_med_limit;
+ 		} else if (di->events.btemp_medhigh) {
+ 			if (temp < di->btemp_ranges.btemp_med_limit)
+-				temp = di->btemp_ranges.btemp_med_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
+-		} else
+-			temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_med_limit;
++		}
+ 	}
+-	return temp;
++
++	return temp * 10;
+ }
+ 
+ /**
 -- 
 2.53.0
 
