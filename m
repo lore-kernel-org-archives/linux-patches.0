@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015902;
-	b=hpeoH4HI9lF+eyvz8IDt/Jin7qrNzojHsisgwRSFJ0inNy6A35H2gi2lXehxvKB52tPp
-	 w7/tKM5AYMvniOk0FAvAM6edqlGkgpD5/l0zr5deAEc1ISaS8z2/NBGxutsdWBj7vig6c
-	 +8jgBBMhVU43onnRFmDFRdxU2jlAe3oo1Z42Gkd6+/3MQ3zYCo1RBjczbLDY3/Yg/zj/k
-	 /MP6RcJb0hj9Jyt0EJ9+6jfpN8JYIholiX4ttzZ4o5y2EHILlCqV2egf+yc/giBlkhIyh
-	 mTZdRSGIOJ1XJI612iebB1h0wZcToBFB7L5IjB32TWOielLBQbFyZbAGy5F7QFmRBFA==
+	t=1795015905;
+	b=FL2bCF1w0x5Zdg7sxsg0TP6cpvwPvWRzZ8hB10+T09Ro+ZC3GdaIEBFN3iYnBN1nX8Fg
+	 QDO1j7xVVPTC/Xsi8faDknGFp6saVr7/gvwHVm1C2y0be5jB4BzOxs9dbzZtxKqO5b1fi
+	 zLiYinMJ2MSIeg0ZTfLCw/Yi1szl1FwXM7SnSdTWS3kC3kcSECXQGh4CbBTLsj98+e/hn
+	 mCRmrR0ac5dOdVeKDIYf6ypY3mkAmXoV7rTIPPPoEpTZurx8/9J72+f3nur09RM01YSU5
+	 7ZSsHbDjxnYiMpSKfGvZniXL//l0mEjqKFuZWdS9JK7xqCJf05q6oM958h6LQZGL0TQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015902;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015905;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iNo/XgRHTKj/cyfIjbiNDhwxQE3AYH9b8OlX8YCs0xw=;
-	b=2c0Ukhket6LbObKTu6TunbqUOzUIfJfBGtfHKbpvr+sGgUQdvgKmp4K+At+s06x6va37
-	 fIPetvfAuIfOiQUYxe14JLaD7kBxQDot+L5Dba0i0R/u3jU5+1UhtQLjyrdgjH4HMBCXx
-	 8DDkC6G5GrmtPbrDu5joqG6s9Lakxjlf1rAX4eQF9bn3gEeZIM/N8Jugzclg1zD6KxU7S
-	 fngJmG9F2ymZvzQDtyXACgR9KMUTz1Ail+kvSvC/MoNOawmfLhbHhyn8Iu7QMUw6PBqQL
-	 Li7AoKMQocaowPiNJttx9n+6M9yRJp/5SmOblzRJOYmPNM3rymkUcL/VmUx9gjBB4GQ==
+	bh=UOnviMM9IN1eei7FU+LdV4b2ASQIEH8M9wnU0FKPdUw=;
+	b=HkVwjs+sLZNBT3PMhcOLndUMS7aF6/LM7cU9I4FtDBfNke95Ve9FTvSKPlNN3pafFY7q
+	 E4TweKjGa/Ppycm34YvknYJsl5ADw2cm0PzMuO5yp0dNQtHLz3hXFaOjltCrJ2eB3KiRP
+	 gOkC0lujBuQ7sAqZIuXRdazouwR+uVLM8DHjYvMcCB1J/cGf9OtvgVXl8xZd7N4S5JNR4
+	 2nnPS7u8apG5nowZdqxe9jSOz25pfEaytn+TKdDRGHyn6sU09/RRo6MtcC3kuJ2eSiQv5
+	 Y0vqBAAkEP4V27SZNqObSMzdBiYRaKot3gNW2pHY5XNtY3Pxnq5T9Zu3V6m2xJ984Tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDZX+SuR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFeciZW8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B666606A333;
-	Wed, 18 Nov 2026 15:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCC360A2606;
+	Wed, 18 Nov 2026 15:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDZX+SuR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF58C1F000C7;
-	Wed, 18 Nov 2026 15:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFeciZW8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77511F000C8;
+	Wed, 18 Nov 2026 15:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015902;
-	bh=iNo/XgRHTKj/cyfIjbiNDhwxQE3AYH9b8OlX8YCs0xw=;
+	s=korg; t=1795015905;
+	bh=UOnviMM9IN1eei7FU+LdV4b2ASQIEH8M9wnU0FKPdUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UDZX+SuRFGd02nYO7eNhhbedJtEPfG/0TF2jkpab8Aq6Tng9Ce8kwPVd1x8ETRhQf
-	 zXVsmZnJNhqxlr0lPRUZHuPKbzcR61qAlfEwyfAofRJZ87iBtWgSr2B3IWCA6oTWpk
-	 6Ci/jxPgL4CCBiD1Y2ByH/+sDe+l9UiWnm8N3OQw=
+	b=jFeciZW8AsnX8l7IqkhUfseXEY27KBdlNNLMRITOvMHGvsiei4xNHagZ4ngBjeJ82
+	 vxfIUP3stq9jko7Cuf/bdygeUqAfeV5FGY/uJW27lAqAqsVTNX7/DS1xJwvoxdnL1b
+	 0RMfPb+7O/Va0IDIaIoVSwqMdQWU7ZKLxR7IPB70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Golla Nagendra <nagendra.golla@amd.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0297/2651] dmaengine: img-mdc: Fix runtime PM usage counter leak
-Date: Wed, 18 Nov 2026 15:25:37 +0100
-Message-ID: <20261118150258.598516469@linuxfoundation.org>
+Subject: [PATCH 7.3 0298/2651] dmaengine: zynqmp_dma: Fix PM rollback on sw_desc_pool alloc failure
+Date: Wed, 18 Nov 2026 15:25:38 +0100
+Message-ID: <20261118150258.631131265@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,49 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Golla Nagendra <nagendra.golla@amd.com>
 
-[ Upstream commit 4a1a2d8b8529cc569b769b92fcd71c53805cbeb2 ]
+[ Upstream commit f2f44b952ea6e0c600e92ea21fcaa83cafeedf6e ]
 
-pm_runtime_get_sync() leaves the IMG MDC device's usage counter
-incremented when runtime resume fails. mdc_alloc_chan_resources() returns
-that error to the DMA core, so the channel's client count is not
-incremented and mdc_free_chan_resources() is not called to drop the
-reference. Repeated allocation attempts can therefore accumulate usage
-references and prevent runtime suspend.
+If sw_desc_pool allocation fails after pm_runtime_resume_and_get()
+succeeds in zynqmp_dma_alloc_chan_resources(), the error path returns
+without dropping the runtime PM reference.
 
-Use pm_runtime_resume_and_get() so a failed resume does not retain a
-usage reference while successful allocations remain paired with
-mdc_free_chan_resources(). DMA core only treats negative return values as
-allocation failures, so the helper's zero success return preserves
-behavior.
+Route that failure path through err_pm so the runtime PM reference is
+balanced before returning the error.
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 56d355e6f586 ("dmaengine: img-mdc: Add runtime PM")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Fixes: 8982d48af36d ("dmaengine: zynqmp_dma: Fix PM reference leak in zynqmp_dma_alloc_chan_resourc()")
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260813153143.3953303-1-ruoyuw560@gmail.com
+Link: https://patch.msgid.link/20260814045616.1661199-2-nagendra.golla@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/img-mdc-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/xilinx/zynqmp_dma.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
-index b3765ba158030..a3192d49b6c86 100644
---- a/drivers/dma/img-mdc-dma.c
-+++ b/drivers/dma/img-mdc-dma.c
-@@ -738,7 +738,7 @@ static int mdc_alloc_chan_resources(struct dma_chan *chan)
- 	struct mdc_chan *mchan = to_mdc_chan(chan);
- 	struct device *dev = mdma2dev(mchan->mdma);
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index 2b03584102acf..3a4deab0593c8 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -483,8 +483,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 		return ret;
  
--	return pm_runtime_get_sync(dev);
-+	return pm_runtime_resume_and_get(dev);
+ 	chan->sw_desc_pool = kzalloc_objs(*desc, ZYNQMP_DMA_NUM_DESCS);
+-	if (!chan->sw_desc_pool)
+-		return -ENOMEM;
++	if (!chan->sw_desc_pool) {
++		ret = -ENOMEM;
++		goto err_pm;
++	}
+ 
+ 	chan->idle = true;
+ 	chan->desc_free_cnt = ZYNQMP_DMA_NUM_DESCS;
+@@ -516,6 +518,10 @@ static int zynqmp_dma_alloc_chan_resources(struct dma_chan *dchan)
+ 	}
+ 
+ 	return ZYNQMP_DMA_NUM_DESCS;
++
++err_pm:
++	pm_runtime_put_autosuspend(chan->dev);
++	return ret;
  }
  
- static void mdc_free_chan_resources(struct dma_chan *chan)
+ /**
 -- 
 2.53.0
 
