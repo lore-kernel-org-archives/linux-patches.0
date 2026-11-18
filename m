@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030319;
-	b=jYGJIkyQSP432ClZjPYQSASnOOpveSb7uP57adoFnLlx3pONxlMTIcW3QHcqPb/wNRoh
-	 HKivce5Rur0VoPzyRaUFd5HN5RMIb7A3xqN/Ciazx0SiPIrpXt40PuBd4jUXMz3zYKuAI
-	 X4b0C18+6KpxZ3g2AJPDp1pkolTd4LWq+iOrasD1JGFBXzNQLfdVROEIZY6yNwWnhmN/t
-	 INu66oJVflrn+ojoXtOcdz9JSCOX4gACsQmJV9jyMtGqa8+FlJOtJ4lxIWmrR8dUQDfoN
-	 kosGowkhQIWiOTjWgw3f3uxCdQNRQv39xhnCdgCCV8fnoGjopNv2+t6DQeSoY7d52Tg==
+	t=1795030322;
+	b=lFDvS1FWobr8UsIW9ABob4I5jl+fpmPexmT9dM4L/bRkS3LNagiOsJqBr+1saaABPO+m
+	 +mD3QQVDYiGADn0Z1hEL5z6Bc9ehQn7eRZ0SR+5cf0aN4wAhgQZwyx3ilna/ZdaWXU9V3
+	 RFEH19Ic4BemUlh+j7nk8RV1zM8Dx+cq9Wu2VkgnLKuVckRlwkJK2brtMzgASxHhb+/UJ
+	 VGaWKYhmuO7fvZbbVvmMvKt2V1L5IZgBJUyZylzpg0DNwTObWw4M5dkh9TcOlAP2YXR/K
+	 g0TY8mDtzGmYnjTYUs81nJKJ1ucE8J0xxehW0jqHfBqXtk1fIWHuprRRTdXgpjYUBvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030322;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QbGrR0rx5YFVc40h0/q07KyFbvUZbR+bwOxo2fvF48Y=;
-	b=2mnt2TMEM2hEq6qbrpOhG1S36bIvOn88yLQwl4dbY1LKXp/zP3foYaFIBvRlRXlNG7jD
-	 wHqpHVHDFM2w7FO4V1BeWuXPORoJdJiPZWCUTtivHqbFlu6F0rpc2hpNqn1YctM1EcsJd
-	 SRoOert+fSQh39wHy83OBMML5/K33OjkRyBR9AMKbo3v0JcNcS0BTV9WZXWXDKpC6s4v8
-	 8W7Fcd1zO0Yg6dsg7C7S76qGbS3a1zjTmu+eKFytM/iiq6oDVqJAIuOj6ibvHBrYdwp4V
-	 l/o1ROZ5GesXHERL3/35J6xTyC6gbsaKtSfbxI6708ibTdb2x0SfJNK+JtN12Ex2EJQ==
+	bh=zyTM0DqMlwZ++1BGFLSj5VrQ3oqvQuTkg67wrP2BVD4=;
+	b=GSJr711sNq+HdzGn2OntOZfi4Z3XtJsPRsZ2dCtllgpem8rAZKrLD8lIt8FZVpZvVicx
+	 ygK1FCcHDLWgnxfVVMeBdSy5eAB5dtOk4VCxOKoOidb5YGLLmSeWPYXSNbnQoW6w2sNdt
+	 /LKY+1jpgkZcfy8XLWlIGTVa/1v02GuSALCno9vxWClujip5cr40ZM9NJTi8MVQWUwjAT
+	 ZT6+mjpuMsx3OxL5R3XWKH3nHZ3r3ga8YbMv+GKNbTUdi2mOoLsQg6Maawaz2sBS7v0LK
+	 WrQbx5HLCHI1iawycH+0r40TzFZWizT6m0dgf++Qv9aYHQBPAsWqB7hgeX9mbQE2l6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uD6Tu+dS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pExhrXuE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4487B606A334;
-	Wed, 18 Nov 2026 19:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A51606A334;
+	Wed, 18 Nov 2026 19:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uD6Tu+dS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5D61F000C4;
-	Wed, 18 Nov 2026 19:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pExhrXuE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB6A1F000C4;
+	Wed, 18 Nov 2026 19:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030319;
-	bh=QbGrR0rx5YFVc40h0/q07KyFbvUZbR+bwOxo2fvF48Y=;
+	s=korg; t=1795030322;
+	bh=zyTM0DqMlwZ++1BGFLSj5VrQ3oqvQuTkg67wrP2BVD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uD6Tu+dSDnlUNwOdB8ISbsVf3lseIwDtgF7HCx2IxWofcZvWod6RsFJryg4M1yY+9
-	 vdvPHOHdUkeFgniPntv8DHlq+rkGGG8AvtT2CU8rMgSF34r1HwBR7cA6oS5ZzhKD01
-	 GXJmMXujxQqH9BLjQ4WYKPT3ZZm9w8SPf+43ayMY=
+	b=pExhrXuEsiIg1zrlN9+9KMr6IT+oqO7WCdx0pvFflJk4dwGPHecgccTVlzUu/jp6G
+	 2BpYDWPfsHf2pyGRvI4U91KaFVbg7O86HBrUx8VL6Y3t9iuLv4RozDptjdG1tHMH/e
+	 FesS5DuUbZxu7dYWEqsDIw3+dXLfgWmVpR4wECPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0663/1756] perf build: Clean libperf-gtk.so in make clean
-Date: Wed, 18 Nov 2026 15:46:30 +0100
-Message-ID: <20261118150035.467131643@linuxfoundation.org>
+Subject: [PATCH 6.12 0664/1756] perf vendor events intel: Fix sierraforest umask encoding.
+Date: Wed, 18 Nov 2026 15:46:31 +0100
+Message-ID: <20261118150035.528124880@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,40 +70,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit fb0da4af899ab1d6a66d29b21189bda3c68c2ce0 ]
+[ Upstream commit a86bd28b6e71101a1b11b7768f9bbc648b7b14d3 ]
 
-When GTK support was made opt-in (first via GTK2=1 and recently ported
-to GTK4=1), $(OUTPUT)libperf-gtk.so is only added to ALL_PROGRAMS when
-GTK4 is defined. As a result, running 'make clean' without GTK4=1 does
-not remove $(OUTPUT)libperf-gtk.so.
+Fix UMaskExt that was wrongly encoded when the UMask was 0.
 
-Add $(OUTPUT)libperf-gtk.so explicitly to the core-progs clean list so
-it is always removed by 'make clean'.
-
-Fixes: 4751bddd3f983af2 ("perf tools: Make GTK2 support opt-in")
-Closes: https://lore.kernel.org/linux-perf-users/CAP-5=fV6+mzN3Lf_mCAJ4aP42JFZsF55ekvt8XrX505xOWwrmA@mail.gmail.com/
-Reported-by: Ian Rogers <irogers@google.com>
-Assisted-by: Antigravity:gemini-3.1-pro
+Fixes: 9626368d429a ("perf vendor events intel: Update sierraforst events to v1.01")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../perf/pmu-events/arch/x86/sierraforest/uncore-cache.json  | 5 +++++
+ .../arch/x86/sierraforest/uncore-interconnect.json           | 2 ++
+ 2 files changed, 7 insertions(+)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index b61c355fbdeed..839880b1a42cd 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -1275,7 +1275,7 @@ clean:: $(LIBAPI)-clean $(LIBBPF)-clean $(LIBSUBCMD)-clean $(LIBSYMBOL)-clean $(
- 		-name '\.*.cmd' -delete -o -name '\.*.d' -delete -o -name '*.shellcheck_log' -delete
- 	$(Q)$(RM) $(OUTPUT).config-detected
- 	$(call QUIET_CLEAN, core-progs) $(RM) $(ALL_PROGRAMS) perf perf-read-vdso32 \
--		perf-read-vdsox32 $(OUTPUT)$(LIBJVMTI).so
-+		perf-read-vdsox32 $(OUTPUT)$(LIBJVMTI).so $(OUTPUT)libperf-gtk.so
- 	$(call QUIET_CLEAN, core-gen)   $(RM)  *.spec *.pyc *.pyo */*.pyc */*.pyo \
- 		$(OUTPUT)common-cmds.h TAGS tags cscope* $(OUTPUT)PERF-VERSION-FILE \
- 		$(OUTPUT)FEATURE-DUMP $(OUTPUT)util/*-bison* $(OUTPUT)util/*-flex* \
+diff --git a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json
+index f37107373e3bf..981ae71e5c0f6 100644
+--- a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json
++++ b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-cache.json
+@@ -682,6 +682,7 @@
+         "EventName": "UNC_CHA_REMOTE_SF.DIRBACKED_ONLY",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x4000",
+         "Unit": "CHA"
+     },
+     {
+@@ -711,6 +712,7 @@
+         "EventName": "UNC_CHA_REMOTE_SF.INCLUSIVE_ONLY",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x2000",
+         "Unit": "CHA"
+     },
+     {
+@@ -729,6 +731,7 @@
+         "EventName": "UNC_CHA_REMOTE_SF.UPDATE_EXCLUSIVE",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x100",
+         "Unit": "CHA"
+     },
+     {
+@@ -748,6 +751,7 @@
+         "EventName": "UNC_CHA_REMOTE_SF.VICTIM_EXCLUSIVE",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x400",
+         "Unit": "CHA"
+     },
+     {
+@@ -757,6 +761,7 @@
+         "EventName": "UNC_CHA_REMOTE_SF.VICTIM_SHARED",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x200",
+         "Unit": "CHA"
+     },
+     {
+diff --git a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json
+index 80440edac4319..67a1a7f79ffb6 100644
+--- a/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json
++++ b/tools/perf/pmu-events/arch/x86/sierraforest/uncore-interconnect.json
+@@ -515,6 +515,7 @@
+         "EventName": "UNC_B2CMI_IMC_WRITES.NI",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x300",
+         "Unit": "B2CMI"
+     },
+     {
+@@ -524,6 +525,7 @@
+         "EventName": "UNC_B2CMI_IMC_WRITES.NI_MISS",
+         "Experimental": "1",
+         "PerPkg": "1",
++        "UMask": "0x500",
+         "Unit": "B2CMI"
+     },
+     {
 -- 
 2.53.0
 
