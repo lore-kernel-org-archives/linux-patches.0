@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030532;
-	b=pkOEpauXmdxWe6mJPPFhw9T+N8ak2odIxJXjQPcbw4XHgdzXL93XWFrAJ8oeNeSJ+qAi
-	 dUMTFQ5IihAS/ybNBuXq/z+jJ/zcKdcXDEJR8qCrehs/5JjgsiIQEFIidHPSMYjohYh58
-	 7xBbaBK34l8288sjXRx7uCwLN4z4OrKjWKNGRF0/u6dM7B5ziyuXTDDdL1MZVT70Z+B6z
-	 +9eZWmFoIkMUeI/EOv/3HB3obmXQVHmCq3+x3J6y4notbwnwUlYQYBO00aoBUsBSKBumf
-	 LrYIZwOzbukegwq1DLp8Pmz7kTl/DbFYdcTMaH4Uw3d1mF0qLK528G571p0zYbsDTow==
+	t=1795030535;
+	b=TP7kFpTWImUaTmJPwdAk5kSTjOP5VB9VvoTti8kzqg2O2EWgKFmLN19d6cSzTcdPSgn7
+	 A2Kn18KMljKRdHXdaYi58xQSKXRt5wmyzlQukuy9sSBlgGvYzptj0d4vpQsSf3q9mCQng
+	 io94k/F8JhIrfhPk48HG0Cn2YODjzjck6fpZWNyUBrwnTSixgyOIDVK5mTgxEj9p5LnKX
+	 vBN94mWeEXyyyrIVLR/6n9DKXIkkc2+yFmy8/ZO/6hGxSBLBg5QuKS3fkX5s6QBfoP5+m
+	 2LfDWusO35UeZz41d20nw3aTTlRwQbexIfNXu3YrwxFpVmyQ0LzePd4ELyvnqHfhLDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030532;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1eOLTe6IA9gqraEDvzY43n8v5KEoFbTEFAVPX1jaQ24=;
-	b=Nb2XruCu37p+fiSbROd6DqS5o+oS4K0QypkNS1Zg771688YEK0TaoP1wt4M1YGY23JSk
-	 Hebz/fvsiwuddI0eUHz16RY6sEFt/wZ6/Kqu2RZD2/++mHn2MEHx3cr9lmR9iJrFizeUd
-	 4x8ViriEs3w60WBx4oomiH+kQViov6x9e/rMz1Jp6/r6V0vh5NTANs3rYQwuTW7HhKih3
-	 86NsgHDU2b4jYiEZ8Wa7VMzxNNpQbZf7ZnCkdrZ8AFhJbzagIiCQXVHZ5JU/RJivMTMeN
-	 KxM19K1FZPYocHqMGlcY9zkZBuu1c8nunDPngkyQaKHKcuBCwrwTyIwmYMZewg5PL3w==
+	bh=EZ92DzGIHGDT+Ys09aaCy9L7Xvid/y4+Mpt9+7thc1o=;
+	b=5sGP4BiL3Isc5n7xZDOFuBYlGbfqqNYxWvpb/HFCrWgXgsmgL2AxINJmioqUhU2NEz6g
+	 h7Aw5RS4K7lCwFL6gGPm0xr1kpsnav3USZy2jt8d3LE+JZ6OWxd4ADnW5EA+6oxr6hwxl
+	 HGHYFW9iXr9wxVLS0s03Glj3+osez7rCTB2F4js7JaXlz++yHXt9RoTw3LqUU91iQFlJu
+	 Z3HJ/k+J3BnHQ27CEZoBh3hpcZjjxe4wB75SqIGzVfd4lEMKsE1eJXPZ87g8eEMwrvK6S
+	 G/V2hUvO3bLt0w7GB/EFQ1bpuGPDYsYPQons4VbtavmvhId3VH+bxXCijYvEKk8EfQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SP7TZwtP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usOKNQcn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623C2606C43D;
-	Wed, 18 Nov 2026 19:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB8B606BB70;
+	Wed, 18 Nov 2026 19:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SP7TZwtP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EC21F000C8;
-	Wed, 18 Nov 2026 19:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usOKNQcn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D23D1F000CD;
+	Wed, 18 Nov 2026 19:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030532;
-	bh=1eOLTe6IA9gqraEDvzY43n8v5KEoFbTEFAVPX1jaQ24=;
+	s=korg; t=1795030535;
+	bh=EZ92DzGIHGDT+Ys09aaCy9L7Xvid/y4+Mpt9+7thc1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SP7TZwtPJAfPCwUxVr/NL0ZHv6TESPxAJ9p46v4cA6QClriGB2AzHERKvgBnoaKM0
-	 wIUj3ned4+8P7VYSoG/543DWdNTpNn0mDzukqGwHPZ5TE+kLTMmdzsCAMjtGVxgNGU
-	 hblweK5Dw6L6RWEQZolOmDpsaza9QNaTEhYdNhIM=
+	b=usOKNQcngzJdYfZqqGFdgVlUwkQRZw+UQVxu/a6sZvHfHsXvUMVvmsRoj1PzpmF0n
+	 TU9lmJOZOjTDLkzKj/KD8jQ7qVJhV57dro6IyYvJ4ChPfd0TuPMIrXglRt5NHu/6C9
+	 Rvsf1QtW3KfNDLS/h2Jvefs6prjwTt3uN84kBSPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0697/1756] RDMA/mlx4: Do not allow the user to write to the clock page
-Date: Wed, 18 Nov 2026 15:47:04 +0100
-Message-ID: <20261118150036.942635735@linuxfoundation.org>
+Subject: [PATCH 6.12 0698/1756] RDMA/cxgb4: Do not allow userspace to write the status page
+Date: Wed, 18 Nov 2026 15:47:05 +0100
+Message-ID: <20261118150036.981263691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,42 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 33db1d9683b8fb00bc233d0bea093e694ed9afc5 ]
+[ Upstream commit 1c5335a6902639596a795705349da7f76027e103 ]
 
-mlx4_ib_mmap() maps the internal clock page to userspace through
-rdma_user_mmap_io(), which does not restrict write access. Userspace can
-request PROT_WRITE directly, or upgrade a read-only mapping later with
-mprotect() because VM_MAYWRITE remains set.
+The device status page is shared by all userspace contexts and contains
+db_off, which the driver updates to control doorbell flow. The rdma-core
+provider maps it with PROT_READ, but c4iw_mmap() passes the requested page
+protection through when handling CXGB4_MMAP_CONTIG.
 
-Reject VM_WRITE, VM_EXEC and clear VM_MAYWRITE, applying the same read-only
-policy as commit c660133c339f ("RDMA/mlx5: Do not allow the user to write to the
-clock page"). The rdma-core mlx4 provider requests this mapping with
-PROT_READ, so its existing behavior is unchanged.
+A process can therefore request PROT_WRITE directly or later upgrade a
+read-only mapping with mprotect() because VM_MAYWRITE remains set. This
+lets userspace alter device-wide flow-control state seen by the kernel and
+other contexts.
 
-Fixes: 52033cfb5aab ("IB/mlx4: Add mmap call to map the hardware clock")
+Reject initially writable mappings and clear VM_MAYWRITE before mapping the
+page. This preserves the existing read-only userspace ABI.
+
+Fixes: 05eb23893c2c ("cxgb4/iw_cxgb4: Doorbell Drop Avoidance Bug Fixes")
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260926111150.3197004-1-yaojiale02@163.com
+Link: https://patch.msgid.link/20260926112611.3214382-1-yaojiale02@163.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/infiniband/hw/cxgb4/provider.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
-index b1bbdcff631d5..27bd03078d3c2 100644
---- a/drivers/infiniband/hw/mlx4/main.c
-+++ b/drivers/infiniband/hw/mlx4/main.c
-@@ -1176,6 +1176,10 @@ static int mlx4_ib_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
- 		struct mlx4_clock_params params;
- 		int ret;
- 
-+		if (vma->vm_flags & (VM_WRITE | VM_EXEC))
-+			return -EPERM;
+diff --git a/drivers/infiniband/hw/cxgb4/provider.c b/drivers/infiniband/hw/cxgb4/provider.c
+index e059f92d90fd4..4b2c7ec348176 100644
+--- a/drivers/infiniband/hw/cxgb4/provider.c
++++ b/drivers/infiniband/hw/cxgb4/provider.c
+@@ -171,6 +171,11 @@ static int c4iw_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 					 len, t4_pgprot_wc(vma->vm_page_prot));
+ 		break;
+ 	case CXGB4_MMAP_CONTIG:
++		if (vma->vm_flags & (VM_WRITE | VM_EXEC)) {
++			ret = -EPERM;
++			break;
++		}
 +		vm_flags_clear(vma, VM_MAYWRITE);
-+
- 		ret = mlx4_get_internal_clock_params(dev->dev, &params);
- 		if (ret)
- 			return ret;
+ 		ret = io_remap_pfn_range(vma, vma->vm_start,
+ 					 addr >> PAGE_SHIFT,
+ 					 len, vma->vm_page_prot);
 -- 
 2.53.0
 
