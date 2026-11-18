@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016178;
-	b=KUVPSwELKRq15Fq5lneysXlJ2adC9nGEJdBV4uWG0DFg1L5OwzsU+ZoR33MGRA2OIYp5
-	 4KDf+ZfJbnLhEF4RO4BT/si7Bcb7+i+XB8+VsSCzb3N/JcnNJYMspxfTQWF2OPcmfcF56
-	 Q355PUDS54kx/X+sCpqmcDgaoOUpXgI3bRT+0RJSF/SP8gFJS33w3UPXG6ADPprOLSt7M
-	 XMHj7s77ujFhUZB68/zhFD3yi5h6RK0dtGPCQrZP6vvi87yPqjAggh3bcGfbNigYHrTvo
-	 qDdSXUKOD/Gz2ku5IToL+OL91oCENccZXgYnc0+29k7Q7+vBOdyuyg9ywNoffpBVQqA==
+	t=1795016181;
+	b=vtiTK8+PtDrLqPX0va6CkZBFCYu3orEf+XbEzjdamc/vJ0nVQbkq2YwBuylETYaEHQ5A
+	 hyYmWm6A5ijMwXFJNn/V7/U/8NTwWC+RjzE6tUTCIiPJi6AzAhm/BMr+pzrP0XunHh6c6
+	 xKNCX8hd63c88bDwCOxngST8Vnouu6J6myODVrsKCmNrKZ8OH9MBAferrsSoj7MVcqCJt
+	 7m7EvRtIEgTsXrcSXkzYMkN1eJ25PyU82LNROH6fs9TdKeEwitdzKZNVMNTq8qwSQiTMx
+	 zZTwNw66wboplgc3NGyaV1ehycU9jSHPenOSW9auzdSKqP/o5IKz44lcGdEkFLTbBsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016181;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ff5mIRbZrWMmQmD1qTpyJuCKDJnWWYO84B9gigQHWqw=;
-	b=QDDGJ4KVEZ0Pj7dAxnExXLYRtRkQQNVN9RgrWLUxWmEvkBwvrKh4UtvAYfrzDmEZ59pE
-	 Y1XlAGD9xngA1bpFCdBOMjEDY1tEzjWv76fwhRA++I9sWjW9pf7rAbXOXsNEABzpwlx5m
-	 c43RSdAY0sR4Z8PlGNsFW2AWD2xRXoDCxWqp1uoka/ftLtUqVWuSbNdynIwMEeTq6fnuL
-	 2+g90t0wdzE3wMNCYaqb5Jk6/tCntc2LSSZmTj0+aMh14pXzcnTemD0FCSFt4PnyUm+N7
-	 oS7ujK2tcBHlZ9W0ElFqJ20qhmMAc5PL4ZrlOU8cXCSSA93KpzOjMkNLhRl7Zz5nl9A==
+	bh=yHAFGtGGlt7jsczLJl6J6iTVU8uNfkagt2M4GZFF9Hw=;
+	b=ojNJxBJX0WxSElH96WvP71Jr36gZKZ+WkOboqgTQHuwNv+8mjyAFU5PlQv5Jmz/g7pC3
+	 O1W8bYx3SdkgfXB+DM2OROSSlhfdKd+h00O2N1NpdwGxIM+FR4AeZX9EpbrcvWgtHlIH/
+	 43xmo+zR26tDpBnp4a8tdq/SgU1Zl4OJLyn0o7nG8lOKYfa4dCsr3GdP3gzgg4I6mpwkE
+	 B9uXz/vP65V3q0D2pLMstLCkEE6imLbL9IgLcxi7VyO17a66Bh81WXgziqhfwBBwlXHKA
+	 480Vs8HpzCVoKBaD9qorA2y3a8I1WAdQaVCM35PSRl3yHaf/Df1O9jZlnOB3BKPh+2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzU4qPyO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=II2Mr1e5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F36606A31C;
-	Wed, 18 Nov 2026 15:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576F6606A325;
+	Wed, 18 Nov 2026 15:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VzU4qPyO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8241F000C4;
-	Wed, 18 Nov 2026 15:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=II2Mr1e5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB471F000C4;
+	Wed, 18 Nov 2026 15:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016178;
-	bh=ff5mIRbZrWMmQmD1qTpyJuCKDJnWWYO84B9gigQHWqw=;
+	s=korg; t=1795016181;
+	bh=yHAFGtGGlt7jsczLJl6J6iTVU8uNfkagt2M4GZFF9Hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VzU4qPyOBXJKCCw1TSOXuVzu3Cz8qem6Q6i5Zymn/rkNLDHzKzjMjaTtIioUa9D+B
-	 EwKuhXGH0pSC7KQj57DWH5rSAXeBN8MopfrSLZOaI46olJAONA2d2+qp9X3YXtdW1d
-	 NpG659kctqVpyIbgSFTH24UcvSoldCv6cAVy85ik=
+	b=II2Mr1e5SfqP213ZYCZnba/yAKL5DimQ4LLVIUbAyWch0RR7J2vYgy5aFh4uaHbVJ
+	 FLDoi1Mx05rWZJQVmOH9qFgxWYfsnvhgCjSKyau1NsBEEq/f6oGhjudDAA/5wLNxK8
+	 lvWUh8ggJkpu1DTAjp6zFb1yFAOnHOEyitVAqpUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0438/2651] ALSA: control: Fix virtual master creation reference in kernel-doc
-Date: Wed, 18 Nov 2026 15:27:58 +0100
-Message-ID: <20261118150303.594760877@linuxfoundation.org>
+Subject: [PATCH 7.3 0439/2651] ACPI: fan: Fix memory leak due to leftover devm_kcalloc() argument
+Date: Wed, 18 Nov 2026 15:27:59 +0100
+Message-ID: <20261118150303.628033220@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,37 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a347cc458d97ecd8adb5462b91559682a70aced6 ]
+[ Upstream commit 2cf65d00347005eccf9a24801783377d7f920021 ]
 
-The snd_ctl_add_follower() comment refers to
-snd_ctl_create_virtual_master(), but virtual master controls are created
-with snd_ctl_make_virtual_master(). Correct the helper name.
+An ACPI device object's dev field in passed as the first argument to
+devm_kcalloc() in acpi_fan_get_fps() which is incorrect and leads to
+a memory leak on driver probe errors and removal because the driver
+is not bound to that ACPI device.
 
-Fixes: 79c7cdd5441f ("ALSA: Add kernel-doc comments to vmaster stuff")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260912100548.86134-1-kmehltretter@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Address this by replacing that pointer with a pointer to the device the
+driver is actually bound to.
+
+While at it, drop a redundant error message after a memory allocation
+failure (that also gets printed relative to the ACPI device).
+
+Fixes: d91a1d129b63 ("ACPI: fan: Use platform device for devres-related actions")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/14089663.uLZWGnKmhe@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/control.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/fan_core.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/include/sound/control.h b/include/sound/control.h
-index 909db0d0485df..37e9c545503e5 100644
---- a/include/sound/control.h
-+++ b/include/sound/control.h
-@@ -244,7 +244,7 @@ int _snd_ctl_add_follower(struct snd_kcontrol *master,
-  * @follower: follower element to add
-  *
-  * Add a virtual follower control to the given master element created via
-- * snd_ctl_create_virtual_master() beforehand.
-+ * snd_ctl_make_virtual_master() beforehand.
-  *
-  * All followers must be the same type (returning the same information
-  * via info callback).  The function doesn't check it, so it's your
+diff --git a/drivers/acpi/fan_core.c b/drivers/acpi/fan_core.c
+index 624d0736b581c..a31d7beca5d0a 100644
+--- a/drivers/acpi/fan_core.c
++++ b/drivers/acpi/fan_core.c
+@@ -284,7 +284,7 @@ static int acpi_fan_speed_cmp(const void *a, const void *b)
+ 	return fps1->speed - fps2->speed;
+ }
+ 
+-static int acpi_fan_get_fps(struct acpi_device *device)
++static int acpi_fan_get_fps(struct device *dev, struct acpi_device *device)
+ {
+ 	struct acpi_fan *fan = acpi_driver_data(device);
+ 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+@@ -304,11 +304,8 @@ static int acpi_fan_get_fps(struct acpi_device *device)
+ 	}
+ 
+ 	fan->fps_count = obj->package.count - 1; /* minus revision field */
+-	fan->fps = devm_kcalloc(&device->dev,
+-				fan->fps_count, sizeof(struct acpi_fan_fps),
+-				GFP_KERNEL);
++	fan->fps = devm_kcalloc(dev, fan->fps_count, sizeof(*fan->fps), GFP_KERNEL);
+ 	if (!fan->fps) {
+-		dev_err(&device->dev, "Not enough memory\n");
+ 		status = -ENOMEM;
+ 		goto err;
+ 	}
+@@ -522,7 +519,7 @@ static int acpi_fan_probe(struct platform_device *pdev)
+ 		if (result)
+ 			return result;
+ 
+-		result = acpi_fan_get_fps(device);
++		result = acpi_fan_get_fps(&pdev->dev, device);
+ 		if (result)
+ 			return result;
+ 	}
 -- 
 2.53.0
 
