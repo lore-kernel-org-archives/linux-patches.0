@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039214;
-	b=hqmHPg+oEYSQu71kXlrWXGVtD4/6fEmvM+9WTRYzODkLLANyYJK9tuvkmrl6KEILT1tz
-	 fUmIYuQ2jGN2oRMnmmjiucAEe1893L5E/ZjsjvhFvBX4TQkE+onQ6WcZyBDtNR0yx6liv
-	 0mm3PkcsqFsmk3Vu6tmIsOgj6Wgg+uwGPjVm9uduzHHUk2iq/AfsTs7OGSAKabN27h2A5
-	 chkxQe3K3AZ4HHAUJ/6Xal2ieQkAL29Qa7ow6e2yYU82Zf3TaYfLQr6n06qFxa0RqV5Y9
-	 eNnXmdEIhyB5G61jnymn1Nm5AYoLE0+grX03JbcSIRtYtB/1w+xB2K+jM5tTbqTrR+w==
+	t=1795039217;
+	b=UnYl0TuJvGgbsAyCQbSGyZScNKOitkhpicKsZiOSUcpvbGiKrF8KBMhozSnwdck5ihzw
+	 HowGcSwHCahOEjHFFNxqULehCbxFKnEZ1plo1ieRoFXhD5+7o0VrF7HP7DYSQf5GlYAi2
+	 s59DXAKbVxY5IUP7NZU0Mrrn7k03H0a2ZK5YYX2gVbyovmZ8HJ2jl5bA5NH9U2FwPM6fS
+	 NfUsgb9YkshORokaTlGcGF3hM7buRUQ9K0cx+JcV3NOyIHBgkyzBQtZadSsU2fRiw7gUF
+	 EVyZ1L01ortdWepCl9EOj12tMwchQGdpDRXgmyMvqutnXn63/EtCNgJr2a3OLqvyOpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039214;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039217;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y/NocT7SUJd6AkeXMaH1BSsvTmFM43Faki5oqwyj88c=;
-	b=EAju3qxPPQN7A25VJjxXkuxI+yMjAE942/Aa7Rd+7ZCVQxu32or95zEgxut/K6ZOZKo4
-	 USsl6OO8CydAWngJ2SNFrz46n6+ameSKiliQdpHH+x5ZdINcavHTkO1dbBL/3kXtBcLL2
-	 32GaTak7rvTr415a/AoZtNq4vbByLGyVVhFRiZAAZMdJs6iyuVz2EqzMJx6gkz5XeVhU6
-	 ayAdVinUahKQLbVEvEfug93SB+0E1ye7IsSESurAKJpcbp/YDP2qMBnIdZc1ZmmjmmXRQ
-	 7BY5tHqzj/96THkiXky89a4RL46dUmy6HyFe5D74R/t4E6rOec2XXig6ueS5gvh43AA==
+	bh=Kma0ngkRvGJrWCGd9YRYyy9LNC8daW6xyU0nSgspr2Q=;
+	b=aYs3c3TPNmzCkr8b+ySmRYCuIknjaHwpPGtQHa2VnGEwiVB4ShMKn96yMBm8W/7UgQfr
+	 XOgvm6VBEHxwcEAq6vdnGZP0c31N+uH3uLlqoOhmuta/6oMw6hq7hpUizaabehNFdu9Ys
+	 A4ZtcN4DsNrYQ6rnCqfKcvzUmy06yOS94Zk2VWzjW6q9xLvNE0GxRxVU3qK9rTlediQj2
+	 GyIQop6v0ygU/vP4peeI3lqbBnYXBTpgOCevK7gHMglAeFhmwOj2FLesb3E7RIvX/O7zf
+	 MFuPl1eki93aMQG/e6HHCsGVBWbhTb/PnVHJhdtXThzj/dYhANGUp6Xk4gkmUnv9RWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="abh4/t00";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORB+3CSd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70101606A32A;
-	Wed, 18 Nov 2026 22:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DF4606A32F;
+	Wed, 18 Nov 2026 22:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=abh4/t00
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6E11F000C4;
-	Wed, 18 Nov 2026 22:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ORB+3CSd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AE01F000C4;
+	Wed, 18 Nov 2026 22:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039214;
-	bh=y/NocT7SUJd6AkeXMaH1BSsvTmFM43Faki5oqwyj88c=;
+	s=korg; t=1795039217;
+	bh=Kma0ngkRvGJrWCGd9YRYyy9LNC8daW6xyU0nSgspr2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=abh4/t00JZM9rKhZPoBkEn5ohTB2xm7Dz5Zo8FDgzt7kCgIGwkialBGjT8b900ujQ
-	 9YyMaDoOthi+lrUC2n6k8qCwwQv5xwUtUPZuq4jccsB+EK8DARPupoEMWv/U8h4+pe
-	 I8Dm1U0VntDlWdB5+UcBxMgzC0HqhNvJe9wER+7g=
+	b=ORB+3CSdB+ixVwFR/L6egv9/aVdVaM4S9xRHJEI64qCvTBYOSwTIlOVmhsNjEAxWG
+	 P3tF74nswnb2/lTg7tLcGKuY+P5JSyFAtFT+EtP27MHlW3TnnHyR6jYaFT9gUqFzan
+	 eUd7qrgSEonh4ChUDmyuiTfwH4AMiPOProBwwJfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2021/3318] spi: omap2-mcspi: Remove unbalanced pm_runtime_put_sync() calls
-Date: Wed, 18 Nov 2026 15:44:03 +0100
-Message-ID: <20261118150422.672822519@linuxfoundation.org>
+Subject: [PATCH 6.6 2022/3318] soc: qcom: apr: clean up failed service registrations
+Date: Wed, 18 Nov 2026 15:44:04 +0100
+Message-ID: <20261118150422.702496113@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,43 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 5f01cb141169fe422c42279f7d502479b1ff9fd2 ]
+[ Upstream commit 7dc14f37ca4ee35040c67c4b0180dd7b32079caf ]
 
-pm_runtime_put_sync() is called in the probe error path and in remove
-when nothing holds a runtime PM reference anymore, so it underflows
-the usage count.
+apr_add_device() publishes a service in svcs_idr before parsing the
+optional protection domain and registering the device. If device
+registration fails, put_device() frees the apr_device while its service
+remains in the IDR. A received packet can then dereference that stale
+entry. The property error path also leaves the service and allocation
+behind.
 
-Fixes: 0e6f357a5deb ("spi: omap2-mcspi: Fix PM regression with deferred probe for pm_runtime_reinit")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260826-mcspi-v1-1-0a8dd7f6dd56@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Split device_register() into device_initialize() and device_add() so every
+pre-registration error can safely drop the device reference. Remove the
+service from the IDR on all failures after publication, then drain the RX
+workqueue before dropping the device reference. This prevents an in-flight
+lookup from outliving the device.
+
+Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://lore.kernel.org/r/20260806060541.820-1-getshell@seu.edu.cn
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-omap2-mcspi.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/soc/qcom/apr.c | 44 +++++++++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
-index c955741f0c739..0d8aaf8c5ed0e 100644
---- a/drivers/spi/spi-omap2-mcspi.c
-+++ b/drivers/spi/spi-omap2-mcspi.c
-@@ -1549,7 +1549,6 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index 30f81d6d9d9da..a7b758428d778 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -434,31 +434,35 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 	if (np)
+ 		snprintf(adev->name, APR_NAME_SIZE, "%pOFn", np);
  
- disable_pm:
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
--	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- free_ctlr:
- 	omap2_mcspi_release_dma(ctlr);
-@@ -1569,7 +1568,6 @@ static void omap2_mcspi_remove(struct platform_device *pdev)
- 	omap2_mcspi_release_dma(ctlr);
++	adev->dev.bus = &aprbus;
++	adev->dev.parent = dev;
++	adev->dev.of_node = np;
++	adev->dev.release = apr_dev_release;
++	adev->dev.driver = NULL;
++	device_initialize(&adev->dev);
++
+ 	switch (apr->type) {
+ 	case PR_TYPE_APR:
+-		dev_set_name(&adev->dev, "aprsvc:%s:%x:%x", adev->name,
+-			     domain_id, svc_id);
++		ret = dev_set_name(&adev->dev, "aprsvc:%s:%x:%x", adev->name,
++				   domain_id, svc_id);
+ 		break;
+ 	case PR_TYPE_GPR:
+-		dev_set_name(&adev->dev, "gprsvc:%s:%x:%x", adev->name,
+-			     domain_id, svc_id);
++		ret = dev_set_name(&adev->dev, "gprsvc:%s:%x:%x", adev->name,
++				   domain_id, svc_id);
+ 		break;
+ 	default:
++		ret = -EINVAL;
+ 		break;
+ 	}
+-
+-	adev->dev.bus = &aprbus;
+-	adev->dev.parent = dev;
+-	adev->dev.of_node = np;
+-	adev->dev.release = apr_dev_release;
+-	adev->dev.driver = NULL;
++	if (ret)
++		goto out_put_device;
  
- 	pm_runtime_dont_use_autosuspend(mcspi->dev);
--	pm_runtime_put_sync(mcspi->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	spin_lock(&apr->svcs_lock);
+ 	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
+ 	spin_unlock(&apr->svcs_lock);
+ 	if (ret < 0) {
+ 		dev_err(dev, "idr_alloc failed: %d\n", ret);
+-		goto out;
++		goto out_put_device;
+ 	}
  
- 	spi_controller_put(ctlr);
+ 	/* Protection domain is optional, it does not exist on older platforms */
+@@ -466,18 +470,26 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 					    1, &adev->service_path);
+ 	if (ret < 0 && ret != -EINVAL) {
+ 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
+-		goto out;
++		goto out_remove_idr;
+ 	}
+ 
+ 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
+ 
+-	ret = device_register(&adev->dev);
++	ret = device_add(&adev->dev);
+ 	if (ret) {
+-		dev_err(dev, "device_register failed: %d\n", ret);
+-		put_device(&adev->dev);
++		dev_err(dev, "device_add failed: %d\n", ret);
++		goto out_remove_idr;
+ 	}
+ 
+-out:
++	return 0;
++
++out_remove_idr:
++	spin_lock(&apr->svcs_lock);
++	idr_remove(&apr->svcs_idr, svc_id);
++	spin_unlock(&apr->svcs_lock);
++	flush_workqueue(apr->rxwq);
++out_put_device:
++	put_device(&adev->dev);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
