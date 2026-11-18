@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029945;
-	b=5BzrAMf2DwzJp1Vly0QWzl7HnlXzwJ59ZBD9hPrJr60zhoFIYwLgYy3YK6tBdFznSFit
-	 dTu/mGF1W4HRsrKowFNLVPuX/rhef0rfnsCj+bVRc8bYYC2mTuaYAD8IBMt3j+++GVK+z
-	 7kMh8q4MpSfbt9xNaJqugWrwjJDCx5MMgPCZ4Nu/48MD0FWtEulppxIIPq4FoveOMyNpT
-	 tHgEMfFxaNno6Dazils51nYm+sN+JjVN7Ey9UzlD0VjDN7mNDSsIG8Axd9xIJSO81spAU
-	 bI4PBMQHJN9GDFyhfZYpVuYBZEvW1U5NbARQc1ApWSek7PRiDZ8dt6RVZqMn79F0cgA==
+	t=1795029948;
+	b=TujGpqNYfcfoCjkH+9hYlX+QzhZoxLbUdJxxGaQQZWMZeQlYd4eephYBCJErkvPNHGb4
+	 k7eNMEb3O3+4CYUtwHalFBG0ioQZsBf28pX3FAaS6HUDvKW5cKAigGFVu+fa99C0JGM3D
+	 J+jRwrERLaRA5AkVRyxWU3BvMvPCNyvz1GVyD/8V/JPoNEmKygzlLz6b9vWZ1oJRi/Gqd
+	 eTaYDWLCZW/QrCdlS3pBe5Ugr/TsKoL3yjQ/kK3W6lOgsCykGnUfNedEouNWdFeayeIgb
+	 18Uj4fHkRt4oK++L4iTFttj2Zo40GVRtVkc3KK8ZdJZxIezPgZQV0IDCMy0EOcktcaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L9Kkh1CujFPbsppys5NwRhTs7ZF0sX79PxlfcWo70yw=;
-	b=OJBSAGyCW+RGbOMtfJRZ50RJXZK6/FNS0WRhv+jTvawIyWRz2KTjlKWToqFlQDsR/A1M
-	 R7u//C0FyQf/US556Otj5MLGp4VdRC0T2YjYYWEjkGHPVmm43Sqd65MZk+LN6m6p9o6Le
-	 RqeAgUsFX6wPqbgoDjH7XImtCnIhMNBNe61y2M3mYX8knaYML1I6q+SmhLWiKz/yZhIMI
-	 KOGqyvjLZVA3R1JLxQv2FWDxzHoEudHaBR/L2iX5Yr/sDApin7SPAqMbnB2xuorbND84k
-	 +DqXwlJsPd/SVFdO752Nkg4zueGuSnl8vmRvPbKQ62m0oanBspgynugANjyUwRnRmkA==
+	bh=0X5iEWRBeSM30Q/WJXndpCD0npme4wl/KkzZo/yjTCY=;
+	b=wexxCMktSdjMvWvYHFkvjEreo1axAVRdYC0GzzwNn1gAj7tE+wd/rmALmcHK4qFUjC0v
+	 TabpCiafAKRCT00xLOZ0Pe/+wMhy8N78dMddntLEn9NxSGqIU0qRvSTxJFM8b2FJQgfRL
+	 CKXg6iqdtK2KylOKEi3gVn36budD9kXvp3+HZbbndNLJAdShWWoNr3xsm51nNDhkT5bCz
+	 dgNv8Z3QknhbjxOxnhIIeaRq7S99WwGg6UTucuoldXHKv7xS6G/PiADXFiSc72H6OkykU
+	 mYggN4+6m04UIvE7kiwUAMhzGHso2xbFUNjrirY3A2SMV5TecrFbM4e3KKFLYqvmvFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9ZumSrq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HsOj1Xyl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AAF606A31C;
-	Wed, 18 Nov 2026 19:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C7C60A263A;
+	Wed, 18 Nov 2026 19:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9ZumSrq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B2E1F000C4;
-	Wed, 18 Nov 2026 19:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HsOj1Xyl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF781F000C4;
+	Wed, 18 Nov 2026 19:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029945;
-	bh=L9Kkh1CujFPbsppys5NwRhTs7ZF0sX79PxlfcWo70yw=;
+	s=korg; t=1795029948;
+	bh=0X5iEWRBeSM30Q/WJXndpCD0npme4wl/KkzZo/yjTCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9ZumSrqH2gqvoKuDs9HjuGo50VTq/uBua/T+xMdHMhpec2YxnevneymPzdq2fEKX
-	 OxueAfHUtNINyIEi+7Gc3SVF3f3dmfSKoaLtk4GEXVtlV1Fa+AIBGAYKoaO55NIIMK
-	 XPOoGYIdw1irJfIV7aXD7SAO1nS0zxaCBXnaDjmE=
+	b=HsOj1XylU/hPpu+v4J6pIJ6zRc9RLcENMWisB9UcTa80bGUH3y7Od41mxiFV2nAgJ
+	 XqD8THvL4qUbAEdMIK6cGDeIm13NS2D9L1b7sqKQiJuFSRGosPi2ZHvwzbwWt3nbLL
+	 gmA/IFDOOibdFNcT3qXFX5GK3DGw1t5x+PjWSQM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0513/1756] crypto: hisilicon/hpre - remove dma_free_coherent on NULL req->dst in ECDH
-Date: Wed, 18 Nov 2026 15:44:00 +0100
-Message-ID: <20261118150029.600861241@linuxfoundation.org>
+Subject: [PATCH 6.12 0531/1756] swim: Check error register during sector read
+Date: Wed, 18 Nov 2026 15:44:18 +0100
+Message-ID: <20261118150030.246581713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,36 +70,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 5b87f619cc5c0a55dcd85ce97974e3f5b9333b7b ]
+[ Upstream commit d66bdef0a3083fed1a0fc4f0ee1c85b26476b21c ]
 
-In hpre_ecdh_hw_data_clr_all(), req->dst is always NULL because
-hpre_ecdh_dst_data_init() sets hpre_req->dst = NULL before mapping
-the user buffer with dma_map_single(). The dma_free_coherent() call
-on req->dst is therefore dead code. Remove it.
+Clear the error register only once before a sector read operation. Don't
+clear it afterwards -- the caller needs it. Check the error register in
+swim_read_sector() and return the appropriate error when necessary. Fully
+validate the sector header. Don't terminate the search loop early just
+because an erroneous sector header showed up.
 
-Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/efabd807f4ecf5cbc05b60e91ed69aa4c10691a8.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/block/swim.c     | 13 +++++++------
+ drivers/block/swim_asm.S |  8 --------
+ 2 files changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index e704b62d8beed..91232d2dd4ba4 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -1467,8 +1467,6 @@ static void hpre_ecdh_hw_data_clr_all(struct hpre_ctx *ctx,
- 	if (unlikely(dma_mapping_error(dev, dma)))
- 		return;
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 57f37bb3ece8c..9a8362a90f036 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -483,20 +483,21 @@ static inline int swim_read_sector(struct floppy_state *fs,
  
--	if (req->dst)
--		dma_free_coherent(dev, ctx->key_sz << 1, req->dst, dma);
- 	if (dst)
- 		dma_unmap_single(dev, dma, ctx->key_sz << 1, DMA_FROM_DEVICE);
+ 	local_irq_save(flags);
+ 	for (i = 0; i < 36; i++) {
+-		ret = swim_read_sector_header(base, &header);
+-		if (!ret && (header.sector == sector)) {
++		if (swim_read_sector_header(base, &header) ||
++		    swim_read(base, error) || header.track != track ||
++		    header.side != side || header.size != 2)
++			continue;
++		if (header.sector == sector) {
+ 			/* found */
+ 
+ 			ret = swim_read_sector_data(base, buffer);
++			if (swim_read(base, error))
++				ret = -EIO;
+ 			break;
+ 		}
+ 	}
+ 	local_irq_restore(flags);
+ 
+-	if ((header.side != side)  || (header.track != track) ||
+-	     (header.sector != sector))
+-		return 0;
+-
+ 	return ret;
  }
+ 
+diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
+index 81c824923336c..fcf574ced85ec 100644
+--- a/drivers/block/swim_asm.S
++++ b/drivers/block/swim_asm.S
+@@ -67,7 +67,6 @@ mfm_read_addrmark:
+ 	movew	#seek_time, %d2
+ 
+ wait_header_init:
+-	tstb	%a3@(read_error - read_mark)
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode1 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode0 - read_mark)
+@@ -140,8 +139,6 @@ crc1:	tstb	%a2@
+ 	andb	#.Lhr_crc_error, %d5
+ 	bne	signal_nonyb
+ 
+-	tstb	%a3@(read_error - read_mark)
+-
+ 	moveq	#0, %d0
+ signal_nonyb:
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+@@ -166,7 +163,6 @@ mfm_read_data:
+ 	movew	#seek_time, %d2
+ 
+ wait_data_init:
+-	tstb	%a3@(read_error - read_mark)
+ 	moveb	#0x18, %a3@(write_mode0 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode1 - read_mark)
+ 	moveb	#0x01, %a3@(write_mode0 - read_mark)
+@@ -191,8 +187,6 @@ wait_data_mark_byte:
+ 
+ 	/* read data */
+ 
+-	tstb	%a3@(read_error - read_mark)
+-
+ 	movel	#sector_size-1, %d4		/* sector size */
+ read_new_data:
+ 	movew	#max_retry, %d2
+@@ -234,8 +228,6 @@ data_crc1:
+ 	andb	#.Lhr_crc_error, %d5
+ 	bne	data_exit
+ 
+-	tstb	%a3@(read_error - read_mark)
+-
+ 	/* return number of bytes read */
+ 
+ 	movel	#sector_size, %d0
 -- 
 2.53.0
 
