@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058476;
-	b=Egj6Ofy8jWo4i5E23HoDwHYGf81GPipkuPniyTpOvhLYNFu9yuMeUEf25hvYoWBfaXEv
-	 1WpFmob3teTjwFpzciUvkwJQmcjd9KBStSRfm/D/EN1S7WpqcbdGfihHIX0lXou4f7iF7
-	 goK4xbhhotT6M+qYp8CVaGP/1BzL0tpINPb4m6c0Olic7wPyLK+x0f3gtNIM5FLHQc0eZ
-	 8ElPHJY9FsNFSV6us27aMkHbUYu7mIHgd5WK6pVkgth02Q94CL1lpiCaDZ3bnOHSU3Ykn
-	 XvJ9f24a62hDQcQ03IFjq2WdH7p3R+L2g5dmaj2zw8tChxv/KUACOXQFOacQkqtq3SA==
+	t=1795058479;
+	b=api+gqKF9EvmorLbgy+ZOw8MwN0mM1ei6XD90sE48StgGS/lHgs9f8rBUeAW2GBQSGjw
+	 q/pH8Og9HEz15KU0irzZaCIHy8SUXJPhkGhxQLW3i3ylwIDK/5kUEZWpZThylEReXvPin
+	 6G6mATDU1IfSjo0i+0cGuNZ720ZvF6B6KAO7BHU8K5pDNpbhbcY3pt61MtbQwd9eLJceH
+	 zQJ8OZvZjHLw4DG7hcSQ/tyVZR5MT5NvcEBijjEs7Fhr2GcsRSPusWwNmotsSxc7PkWE/
+	 /M+DD6RWKaHICnfNYc38Rb/PnOJ+ikgJcKviaGSDBkx07ysRMQ0wjTLFvRpmIlnY+kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DY/tiF1LML8C4PsmFT0Voq5zLK3J1HjKXUOHJF4MoOc=;
-	b=Ss7y0O0eG4wn1aA/T/VCGwjMH5DGnOrxm2qjOrJEmEQcqUlvDdjPzSJhswIO5/i7/cUA
-	 mFPjg3njussASRCTQkfJ+z9v3XgmF039uvTgizUy8dtAEMlyo3N6AbBdSyhH0p5J2N/D6
-	 zBJG0Cw1mGr8zPvpHAvqXNUzk9m9qlqon+ab8cQKRKSL/eTpTN+TFF53+ZzbGSgUBWhPu
-	 UVGSCpEOGFNN9VdL3q9puwiLzDTMNa2nJYjVQLwb/mNBAQf1xXwswFR54ChRuNToP5XSq
-	 RmD8IezA4A2QmSewyxubt75DBJnEaaZw92xHPjaWr/vnbs9RZlo7/82L16lksLurz2Q==
+	bh=VqS5tasv1Ml7Yjk5jF5oYikmwOwGiAHCIuGpAQCHqMQ=;
+	b=ikvJ+sqypkNZu1gda8Hc+icVwns3Qt+Apy3ZCLOU9I5LvrYe5BOX2IDzaBj5LVCkA5zV
+	 uGc3/rcFlRBmx74lkZ9ZgimgblhQTxVtDWnBxD4Cl2ZLby11K+kk8SG5SqzT21veFZBtx
+	 INfEWn4Ilzh9HGSEQcZaSr4APzbX9jIlF4oa2mN5DS9zBHsq+Lpd8GdlVyhgsQXXmiawU
+	 +rkLhUbE295aoftejsxrSSasBRJ01NXKZIcA+7sr//OJsWdPZR4/wdszVJVbz8DbResQ7
+	 28AH+fOQTyRn9PkiTcJkErpv+tJG2c6mrDZm7I5XXZQthQi7ze+tzBUGJ4JDhzgVM2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MY6KNQxL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKmMjyBJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2CD606A333;
-	Thu, 19 Nov 2026 03:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B57606A320;
+	Thu, 19 Nov 2026 03:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MY6KNQxL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E1B1F000C4;
-	Thu, 19 Nov 2026 03:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mKmMjyBJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99591F000C4;
+	Thu, 19 Nov 2026 03:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058476;
-	bh=DY/tiF1LML8C4PsmFT0Voq5zLK3J1HjKXUOHJF4MoOc=;
+	s=korg; t=1795058479;
+	bh=VqS5tasv1Ml7Yjk5jF5oYikmwOwGiAHCIuGpAQCHqMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MY6KNQxLOGzysAS++cw4pwFd04iPO0tlj8q5sF8DE0/FGV5ceFf7wOKr3blMer9wo
-	 eN74ANMd/79Fe623OprJJX/5dE2Ec0AVCYWOxX4Tdmaw1AuGpQBe218CyyI+Rxvkdi
-	 0gK1xaiXiynqwHASr0fUA63i5coQ3aPWICt/o77I=
+	b=mKmMjyBJhdKeDiGgNiSA8UyHJ4DiY9sd7vpRh6PMGkFz6ftf2WoHlb7HYermlsBB8
+	 Py7gDdga3eKdV5JYxlOQGKNJIyv5qCw2xPwzIDG79oIs/8rdvREH9hwGiYNaEGZZou
+	 qI1BE78OvzWcVoyUxwJXbplxlc0c8Svt+QMe2O1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Drobyshev Vladimir <enigma_137@icloud.com>,
 	stable <stable@kernel.org>,
+	Wayne Chang <waynec@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0500/1848] USB: cdc-acm: add VeriFone VX820 device ID
-Date: Wed, 18 Nov 2026 15:42:18 +0100
-Message-ID: <20261118145935.635956113@linuxfoundation.org>
+Subject: [PATCH 5.10 0501/1848] usb: typec: ucsi_ccg: Add retry mechanism in ccg_read
+Date: Wed, 18 Nov 2026 15:42:19 +0100
+Message-ID: <20261118145935.694556421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,36 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Drobyshev Vladimir <enigma_137@icloud.com>
+From: Wayne Chang <waynec@nvidia.com>
 
-[ Upstream commit ddbddee6592ecf6cf6c24d888780f9ad45a3e30b ]
+[ Upstream commit bbf6b99a57b2479bf51c3c8ad0946f4b8c33ed69 ]
 
-Add USB ID 11ca:0219 for the VeriFone VX820 to the cdc-acm device
-table and apply the SINGLE_RX_URB quirk.
+CCG4 firmware occasionally fails to respond to I2C read requests,
+especially when reading cci and intr_reg from the ISR path. In these
+cases, i2c_transfer() returns -EREMOTEIO.
 
-Signed-off-by: Drobyshev Vladimir <enigma_137@icloud.com>
-Link: https://patch.msgid.link/20260929173833.105208-1-enigma_137@icloud.com
+The CCG4 is EOL, and Infineon no longer supports firmware updates, so
+a software workaround is necessary.
+
+Attempt the read up to CCG_READ_MAX_RETRIES (4) times in total when
+-EREMOTEIO is returned, sleeping ~1 ms via fsleep() between attempts.
+This allows recovery from transient I2C failures without affecting
+other error paths.
+
+The sleep is safe because ccg_read() is called both from process
+context and from ccg_irq_handler(), which runs in threaded IRQ
+context (registered via request_threaded_irq() with a NULL hard-IRQ
+handler), so sleeping is allowed in both cases.
+
+Fixes: 247c554a14aa ("usb: typec: ucsi: add support for Cypress CCGx")
 Cc: stable <stable@kernel.org>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260916061858.1471606-1-waynec@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/cdc-acm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_ccg.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
-index 056b55d121ffb..83116f1da87a2 100644
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1783,6 +1783,9 @@ static const struct usb_device_id acm_ids[] = {
- 	{ USB_DEVICE(0x11ca, 0x0201), /* VeriFone Mx870 Gadget Serial */
- 	.driver_info = SINGLE_RX_URB,
- 	},
-+	{ USB_DEVICE(0x11ca, 0x0219), /* VeriFone Vx820 Gadget Serial */
-+	.driver_info = SINGLE_RX_URB,
-+	},
- 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
- 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
- 	},
+diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
+index 8d69bc5bff20a..b50933cd4babf 100644
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -129,6 +129,8 @@ struct version_format {
+ #define NVIDIA_FTB_DP_OFFSET	(2)
+ #define NVIDIA_FTB_DBG_OFFSET	(3)
+ 
++#define CCG_READ_MAX_RETRIES	4
++
+ struct version_info {
+ 	struct version_format base;
+ 	struct version_format app;
+@@ -239,6 +241,7 @@ static int ccg_read(struct ucsi_ccg *uc, u16 rab, u8 *data, u32 len)
+ 	};
+ 	u32 rlen, rem_len = len, max_read_len = len;
+ 	int status;
++	int retry_count;
+ 
+ 	/* check any max_read_len limitation on i2c adapter */
+ 	if (quirks && quirks->max_read_len)
+@@ -250,7 +253,17 @@ static int ccg_read(struct ucsi_ccg *uc, u16 rab, u8 *data, u32 len)
+ 		rlen = min_t(u16, rem_len, max_read_len);
+ 		msgs[1].len = rlen;
+ 		put_unaligned_le16(rab, buf);
+-		status = i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
++
++		for (retry_count = 0; retry_count < CCG_READ_MAX_RETRIES; retry_count++) {
++			status = i2c_transfer(client->adapter, msgs, ARRAY_SIZE(msgs));
++
++			/* Only retry on -EREMOTEIO, and not after the last attempt */
++			if (status != -EREMOTEIO || retry_count == CCG_READ_MAX_RETRIES - 1)
++				break;
++
++			fsleep(1000);
++		}
++
+ 		if (status < 0) {
+ 			dev_err(uc->dev, "i2c_transfer failed %d\n", status);
+ 			pm_runtime_put_sync(uc->dev);
 -- 
 2.53.0
 
