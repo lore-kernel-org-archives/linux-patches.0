@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061833;
-	b=11gWYKDf4/9BNrZymSzq4bZo8f6Q5exp5V1XVOe6zH3zishmi+kVN8CbF6ot70t6RwW5
-	 Vjqxnd+A8YNyDKASeTkZ+7rGhztDvBmEHdkFpMNzzJZ7Rkifdly8UguwGxsL7LcJwgSpQ
-	 L1gg3u49QOj0xAZJ2H0jCB4ZbDqVA0IXDOjahLs39IGKJ+q9S/GOFQMlCEdBwmKfCBW40
-	 3gYssrpnU04zPC6C8qI3GJNy0x3hqQAmlr1AQ8NzTEI7nffK1CUVT9dTgqf5K96rItE1e
-	 wXa1XZxBkqooQJNWV1+5LzSSg/yC1/06HSIFDDLSluVwpEN/t7wJ5+oCoS2wYlbtfkg==
+	t=1795061835;
+	b=grS5OVMLFXNLmRhWxZUlM2YNzdrPsBP7R2kWghwUx4IxWFwpk8EpsxosuBSC4OWD1Q+t
+	 Wg4mXrSHX5/kylolc3/2xV6f6BOakjoiGAHXjtP+x+gV9kJfs+YI2qyVyqzQWrQafy2T3
+	 sBgOplJD5wA0h6k1JyolavVDi+g9QN6RwtRDm8s4Q03aoxBumhRygP/rr0RJbAPDKT5Wb
+	 adJp9Gdu4Pf8dR0ARZ8Hs97YetopKM8bFwGHmkKSmCcrWF5VrS45ule7+uBqJCMVnmLWw
+	 OD14Z+OL+c/Vpz8hiw8JFUirH0vW0etRgKTHE6aCSBrVP8f7HcF+Z2BpPXYxHgxcPVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wdv7PARcfeWox6UqWvZYqucjmeK4MOvNEY5i6bAyCr4=;
-	b=ri3Bm/1AGF0iptZoAXeTkV4mZnUu5LZoeug4VJ8qT96i/M8b2+aWYzBVimOMimAxFLiA
-	 dtvBrLJIpr2M0jN0wFdtLBO6858BmS94bkTnkTA1hAqUXdMdchMiode8uCPv2zf6FhfmY
-	 xOP043WdD1peoC+8dmpom/EEi95KImYlrEfh6pxw/2j9f+H4FYEZVszynhbyutAth6pz0
-	 C0q3quCt6zF3SZ3hJY9mGs5A4Hg/93DlAznMC8Q5a3IqCTAQqdpUPbG37EQc4OOjk+rqc
-	 /+Hr3YoRAXHpaqMZutoPPCfgYcYvHzVySBxleSI6tk2EeHdyhnLxX7p0DILZGPVoX3Q==
+	bh=KZ0uSHxPLQkA8AFn3V0pfX3Xfn8XNPCPoa5H0+HYbGo=;
+	b=wihR2orZSaLHpghtKcdxUci63tKIwO0tX6B+G3VqbCLlXY7CcI+oamcXB/ZGENGMKCkY
+	 qS76SdmLwAH4wQbv1pEChU3pE89urgjkQMSRzZxpdeunjnqY+WyHQqhoQeQOfYqABUxy5
+	 QbkCEyJo0xMuNm0RDF3GVJhwPjilqHKBS6ikFVkYBz6mqhR/UIJpOGwWU1gdLTmlaf2PI
+	 jlqUtFlgbVYfsroY4g3kAPjg4surmUbPTkM4r8NOglwfn0rAvC0XLc7/RqDNFqU5KJQXh
+	 btwlugzMZHadPuKbIoNVH5tlL9I4/k4aUYrcECVaVDdhA+WVauLckhYJ7pXjEuzWpLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GjUf6JKk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vV3eZRkL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B96D606A32A;
-	Thu, 19 Nov 2026 04:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0751606A339;
+	Thu, 19 Nov 2026 04:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GjUf6JKk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C511F000C4;
-	Thu, 19 Nov 2026 04:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vV3eZRkL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DE01F000C5;
+	Thu, 19 Nov 2026 04:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061833;
-	bh=wdv7PARcfeWox6UqWvZYqucjmeK4MOvNEY5i6bAyCr4=;
+	s=korg; t=1795061835;
+	bh=KZ0uSHxPLQkA8AFn3V0pfX3Xfn8XNPCPoa5H0+HYbGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GjUf6JKkQyeuYA6VKZbH3nJixBuuwevkk44mMUvQqM9A0pOqt/NEjrHRjrYDh0Zgb
-	 D79c+mDD0hZrKqVYUbvUgwJg33y+RphBVNy63oIEu2TIaqgSbdOWczRPJQQbutc5hI
-	 24El8UQ8eVgVFkCARD6qLPsWuGOVrqYatcNkmJlQ=
+	b=vV3eZRkLCYdRr6Nlc3YRwSxMHCkaVo9c2Tx1nTOdlSue4eVyNW+rnL4jY6ww1BCV+
+	 lWnTVH5qg5qml1u05JoRDcmw8ufi4+HRO3EV7MHbTG8H2c36hee7yxfOiLnWFklMpr
+	 GxR9SZPZDze9I4CoR9x/tQHDtS+IvyElNNMhbmGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1695/1848] bpf: Fix verifier WARN on narrow read of bpf_tcp_sock u64 fields
-Date: Wed, 18 Nov 2026 16:02:13 +0100
-Message-ID: <20261118150030.728593255@linuxfoundation.org>
+Subject: [PATCH 5.10 1696/1848] bpf: Validate the SRH which End.DT6 uncovers in End.BPF
+Date: Wed, 18 Nov 2026 16:02:14 +0100
+Message-ID: <20261118150030.763080503@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,56 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit af873495cbcb066ab029f7f63b94410d4db47628 ]
+[ Upstream commit e8b084646b946cc6f7976365588035947a296184 ]
 
-A BPF program can read the middle of a u64 field in struct bpf_tcp_sock:
+input_action_end_bpf() validates the SRH of a packet and pulls it into the
+head before the program runs. If the program decapsulates the packet with
+bpf_lwt_seg6_action(SEG6_LOCAL_ACTION_END_DT6), bpf_update_srh_state()
+looks for a routing header in the inner packet and takes it for the new
+SRH as it is.
 
-	tp = bpf_tcp_sock(listener);
-	/* +0x54 is in the middle of the u64 bytes_received */
-	unsigned hi = *(unsigned *)((char *)tp + 0x54);
+Nobody has looked at that header, and whoever has sent the packet has
+written it. ipv6_find_hdr() finds it in a fragment of the skb as well, but
+hdrlen is then read at that offset from skb->data, past the end of the
+head. The header need not be an SRH, and its hdrlen need not fit into the
+packet, but it is marked as valid, and bpf_lwt_seg6_adjust_srh() and
+bpf_lwt_seg6_store_bytes() check their offsets against it.
 
-bpf_tcp_sock_is_valid_access() allows this 4-byte read (the default case
-only checks size == 4), but bpf_tcp_sock_convert_ctx_access() only knows
-the field starts and has no idea how to handle such an offset. It emits
-no instruction, cnt stays 0 and the fixup pass trips verifier_bug():
+A program which then adds a TLV at the end of the SRH, where hdrlen has it,
+makes bpf_lwt_seg6_adjust_srh() move and write memory behind the head of
+the skb, as far as the sender likes within the 2 KB that hdrlen can say:
 
-	verifier bug: error during ctx access conversion (0)
+  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x185/0x240
+  Read of size 2088 at addr ffff888107d6f09e by task srh/102
+  BUG: KASAN: slab-out-of-bounds in bpf_skb_net_hdr_push+0x1b5/0x240
+  Write of size 8 at addr ffff888107d6f8be by task srh/102
 
-Just disallow the narrower access by matching the whole u64 range of the
-two fields, so it is turned down at check time:
+Use seg6_get_srh(), which pulls and validates the header. Without a valid
+SRH the state says that there is none, and the packet goes its way as
+before. The pull can move the head, so compute the data pointers behind
+it.
 
-	invalid tcp_sock access off=84 size=4
-
-Fixes: 655a51e536c0 ("bpf: Add struct bpf_tcp_sock and BPF_FUNC_tcp_sock")
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: 486cdf21583e ("bpf: add End.DT6 action to bpf_lwt_seg6_action helper")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017143819.209510-1-jiayuan.chen@linux.dev
-Closes: https://lore.kernel.org/bpf/7a8ff335.1024c.1a14395f3e5.Coremail.kaiyanm@hust.edu.cn/
+Link: https://patch.msgid.link/20261017163745.3341787-12-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/filter.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/net/core/filter.c b/net/core/filter.c
-index 1630692179566..aa3fa288e9026 100644
+index aa3fa288e9026..dcce1f963dbdb 100644
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -6384,8 +6384,8 @@ bool bpf_tcp_sock_is_valid_access(int off, int size, enum bpf_access_type type,
- 		return false;
+@@ -5862,15 +5862,15 @@ static void bpf_update_srh_state(struct sk_buff *skb)
+ {
+ 	struct seg6_bpf_srh_state *srh_state =
+ 		this_cpu_ptr(&seg6_bpf_srh_states);
+-	int srhoff = 0;
  
- 	switch (off) {
--	case offsetof(struct bpf_tcp_sock, bytes_received):
--	case offsetof(struct bpf_tcp_sock, bytes_acked):
-+	case bpf_ctx_range(struct bpf_tcp_sock, bytes_received):
-+	case bpf_ctx_range(struct bpf_tcp_sock, bytes_acked):
- 		return size == sizeof(__u64);
- 	default:
- 		return size == sizeof(__u32);
+-	if (ipv6_find_hdr(skb, &srhoff, IPPROTO_ROUTING, NULL, NULL) < 0) {
+-		srh_state->srh = NULL;
+-	} else {
+-		srh_state->srh = (struct ipv6_sr_hdr *)(skb->data + srhoff);
++	/* Behind a decapsulation this is a header that nobody has looked at */
++	srh_state->srh = seg6_get_srh(skb, 0);
++	if (srh_state->srh) {
+ 		srh_state->hdrlen = srh_state->srh->hdrlen << 3;
+ 		srh_state->valid = true;
+ 	}
++	/* it may have been pulled into the head */
++	bpf_compute_data_pointers(skb);
+ }
+ 
+ BPF_CALL_4(bpf_lwt_seg6_action, struct sk_buff *, skb,
 -- 
 2.53.0
 
