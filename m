@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022196;
-	b=qAOmIhdse+k0Wem5X1C6XdlMcylqiyujFtBiTRK/exKXpdvysgCQcteWBNqTYp0NbQO3
-	 ppAPxGPjnRN3VY4a5D3mnEV6pRYl0TuDO9kjDD02ebB/esYuakGQo1UUTLxsWdkEz0zox
-	 iJcDWe5db8Rnd5GR8gtrEDp8JZkChQOP/2jhAzcqMl3QInmiyXOOO97z2JlWbYibg6tl8
-	 UQgtrhMPgnXhXAZsAzKLsM/0tioLnX2+Mj8v/k+RXEw+vEyg7JPNlr4qytg/FWES/na3H
-	 GD/3dSzTjF+Y9gElXZ/h6n4G9vF5g+76LMI09s9zzckDud/3SdPCUnbTzGRSKP+wVDQ==
+	t=1795022199;
+	b=YbBJG2MLZbaJl5swgz+4qa3kNv1xNj73sbbwVLWczkaHMxuQvNQ8B7VtHGaWrS5KnGxQ
+	 uaKscPdCnN4JGSfBOvPF9eyS1QRoFnq4nTJtlK+rPe4xdFNmoTFvdC3nI84r7eAvd5wop
+	 cJLFwLvddjfIqEKjry39zHh9wCb/jZwea/UCMJNcBqRapUtm8j1AQ2jCEOex3vfYsz2Xb
+	 EF6CmzLxmU74NGN6dS5dpKiRXyLI/zsVi1uAXFSdRsAuoUOYVl+WDEoAdqkHbWh6Xng/C
+	 JwAVo/RDu9lnTLLgcY9vhgEUYU8E/l5T4wDzEv7m5cXHSB0Qo4Y7yjCYw5WujuKN57A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022199;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XAPndJCNiFr1so/2PC02lQgiDXp8nwm4chhEJojPtuY=;
-	b=vxM2W/5iYYr8PC3EeFLcKPM32NcH6E6UTjdMHaTyJjBixu0pkq75vRanU9CjWHFlbHO3
-	 OfMkMYlR2u1t+H0G3uF4oR3S9O2JcKJbrqGtIf9osBtv3QxGWSGOCtlKSqLoyXwrX9yHS
-	 JKaEG0XtTTUrBS9LyeB9B1nz/8Wfa+8f7zc3aVV7eShQBTGlMuGpIjFS5kgyXsrmwcGcR
-	 Dc8a9bp/ENaqmc8XEN5DNd09KtSqceHtBo6rbX5wWmiy+mEOIGSlXFBVp4ixFTslpXT9R
-	 vJe1PdiXrEsxwsIUt9C4yFELrYeu9ksceatD9NdYLr+qmgWeQbByB/QAI3TCHrz06og==
+	bh=K4q9rqrGHSb+KFv7pNX6A0qlS5Jw73q1bmhlnUl8ulg=;
+	b=pMetUfOLMD/9AtOYsYk35Yc4RtYwuEHJYimdamiYwqZAVKqlA70Tt/n0UWVCsaJUcnFY
+	 CbXamKSTk1+n9eeRm7GtiWhf1Xt6TjRahE3PyLK5d/wTf8VjR/QngnVPy0ilkdAqIvire
+	 4QCOQ5fIN1u43guUYn1jlbXEtnOpmQecsRyE2STmKF4aYXVX3Uqr4Z7PlMens3M+LZNKH
+	 8InagrRskon+v+NbpqqWHfxHVm8RUDPYSRTLutFpQ8vcvPQOMvsxJC55VW/mFyP4NbnOQ
+	 YkE2q1pcAXU0oQFlTWjBeWWX7In/eOX9su/gcOJDPFtKsksMj4sOaWETBNoqpIR63Zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI5+Rb+r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bO1/cX3+";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB2C606A31C;
-	Wed, 18 Nov 2026 17:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC7A606A325;
+	Wed, 18 Nov 2026 17:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DI5+Rb+r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752F31F000C4;
-	Wed, 18 Nov 2026 17:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bO1/cX3+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B93C1F000C4;
+	Wed, 18 Nov 2026 17:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022196;
-	bh=XAPndJCNiFr1so/2PC02lQgiDXp8nwm4chhEJojPtuY=;
+	s=korg; t=1795022198;
+	bh=K4q9rqrGHSb+KFv7pNX6A0qlS5Jw73q1bmhlnUl8ulg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DI5+Rb+rv7XlET2YNm12FvjlvlE7OKgAjnhjJf6MlOSH+WpE52M8/OZC8G6BZn3yX
-	 Qr80htzEBH03vCLOphhs4u+kOGY36XX7COC8mQywWpvmxnmfaKoNDbhvM4aocFGolf
-	 ODvO/fUYN4dgKoxfT7XTdYo8e0+4EBrxFhvq09ig=
+	b=bO1/cX3+McfPDW/vS+9qCvNRW1DCwBmuJwRafO/UQuQ+yXRD4zutqT3rljqASdTCM
+	 tMRXwM/icqPhpSNN7OHuRtlMJN0qtowBgCtDDEdUJp8hDYgIq+YMAPw90VjAUCvNF1
+	 rCmWWOs7VWgw3fUGQNhpiC/5/0hiqHBZsOTedbjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2574/2651] fork: Let nobody keep a task that may not come to life
-Date: Wed, 18 Nov 2026 16:03:34 +0100
-Message-ID: <20261118150417.027854199@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Li Yifan <yifan2.li@intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.3 2575/2651] ASoC: SOF: Intel: hda: Stop the controller before freeing its DMA buffers
+Date: Wed, 18 Nov 2026 16:03:35 +0100
+Message-ID: <20261118150417.056753176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,70 +69,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+[ Upstream commit 11ae63bd9030349a0136fb2edd1622a4a029edc8 ]
 
-[ Upstream commit 5cf0881344cfa0a3b558107741884d8f43269d7b ]
+hda_dsp_probe() starts the CORB/RIRB DMA engines through
+hda_dsp_ctrl_init_chip(), but neither hda_dsp_remove() nor the error
+path of hda_dsp_probe() stops them before hda_dsp_stream_free() frees
+the CORB/RIRB ring buffer and the position buffer.  Unsolicited
+responses also stay enabled, so the controller can keep writing RIRB
+entries into the freed page.
 
-dup_task_struct() sets rcu_users to 2.  From then on bpf_task_acquire()
-hands out references to the new task, which BPF programs see as a trusted
-pointer long before it is sure to live: in the task_alloc LSM hook and in
-ops.init_task() of sched_ext.
+Until commit 9e6966f70404 ("ASoC: SOF: Intel: hda: Keep non-alt mlinks
+powered at probe on ACE2+"), hda_init_caps() dropped the initial
+references to the non-alternate links, and dropping the last one
+stopped the command DMA, so a probe that failed later, e.g. because
+the firmware is missing, did not leave it running.  Now it does, and
+as the probe runs from a work item, the device stays bound after the
+failure, with bus mastering enabled and the DMA engines pointed at
+freed memory.
 
-If copy_process() fails later on, it undoes what it has done and frees
-the task without a look at the count.  A program that has stored its
-reference in a map is left with a pointer to freed memory:
+Normal removal resumes the device first, which restarts the command
+DMA, so there the ring buffer is freed while the DMA is running until
+pci_disable_device() clears bus mastering.
 
-  BUG: KASAN: slab-use-after-free in put_task_struct_rcu_user+0x22/0x90
+Stop the controller with hda_dsp_ctrl_stop_chip() before freeing the
+buffers, as is done on suspend, and export it for use from hda.c.
 
-The program is loaded by the administrator, but any user can make a fork
-fail, for example at the pids.max of a cgroup.
+This was reproduced by binding SOF in DSPless mode to a QEMU
+ich9-intel-hda: after the probe fails with "SOF firmware and/or
+topology file not found", CORB and RIRB DMA are still running with
+unsolicited responses and bus mastering enabled, and the page they use
+is soon reused as a page table.
 
-Honouring the count would not do: the task would stay behind with its mm,
-files and credentials freed.  Leave rcu_users at zero until copy_process()
-cannot fail any more.  bpf_task_acquire() returns NULL until then, which
-its callers have to be prepared for, and which they get for init_task,
-whose count has always been zero.  The other users of rcu_users deal with
-tasks that have run.
-
-Fixes: 90660309b0c7 ("bpf: Add kfuncs for storing struct task_struct * as a kptr")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 9e6966f70404 ("ASoC: SOF: Intel: hda: Keep non-alt mlinks powered at probe on ACE2+")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Tested-by: Li Yifan <yifan2.li@intel.com>
+Reported-by: Li Yifan <yifan2.li@intel.com>
+Closes: https://github.com/thesofproject/linux/pull/5976
+Link: https://patch.msgid.link/20261028144446.992948-1-sashal@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/sof/intel/hda-ctrl.c | 1 +
+ sound/soc/sof/intel/hda.c      | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 48d7ca0644042..ddd3dbc0850b7 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -971,10 +971,10 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
- 	dup_user_cpus_ptr(tsk, orig, node);
+diff --git a/sound/soc/sof/intel/hda-ctrl.c b/sound/soc/sof/intel/hda-ctrl.c
+index aeb34310eebd6..333f6bbea7539 100644
+--- a/sound/soc/sof/intel/hda-ctrl.c
++++ b/sound/soc/sof/intel/hda-ctrl.c
+@@ -349,6 +349,7 @@ void hda_dsp_ctrl_stop_chip(struct snd_sof_dev *sdev)
  
- 	/*
--	 * One for the user space visible state that goes away when reaped.
--	 * One for the scheduler.
-+	 * Nobody can keep the task while copy_process() may still fail, which
-+	 * frees it no matter what.
- 	 */
--	refcount_set(&tsk->rcu_users, 2);
-+	refcount_set(&tsk->rcu_users, 0);
- 	/* One for the rcu users */
- 	refcount_set(&tsk->usage, 1);
- #ifdef CONFIG_BLK_DEV_IO_TRACE
-@@ -2522,6 +2522,12 @@ __latent_entropy struct task_struct *copy_process(
+ 	bus->chip_init = false;
+ }
++EXPORT_SYMBOL_NS(hda_dsp_ctrl_stop_chip, "SND_SOC_SOF_INTEL_HDA_COMMON");
  
- 	/* No more failure paths after this point. */
+ MODULE_LICENSE("Dual BSD/GPL");
+ MODULE_DESCRIPTION("SOF helpers for HDaudio platforms");
+diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
+index 4dbba9186b29d..2a40cb9bf24d9 100644
+--- a/sound/soc/sof/intel/hda.c
++++ b/sound/soc/sof/intel/hda.c
+@@ -939,6 +939,7 @@ int hda_dsp_probe(struct snd_sof_dev *sdev)
+ 		hda_dsp_ctrl_ppcap_enable(sdev, false);
+ 	}
+ free_ipc_irq:
++	hda_dsp_ctrl_stop_chip(sdev);
+ 	free_irq(sdev->ipc_irq, sdev);
+ free_irq_vector:
+ 	if (sdev->msi_enabled)
+@@ -1006,6 +1007,9 @@ void hda_dsp_remove(struct snd_sof_dev *sdev)
+ 		snd_dma_free_pages(&hda->iccmax_dmab);
  
-+	/*
-+	 * One for the user space visible state that goes away when reaped.
-+	 * One for the scheduler.
-+	 */
-+	refcount_set(&p->rcu_users, 2);
+ skip_disable_dsp:
++	/* stop CORB/RIRB and position buffer DMA before the buffers are freed */
++	hda_dsp_ctrl_stop_chip(sdev);
 +
- 	/*
- 	 * Copy seccomp details explicitly here, in case they were changed
- 	 * before holding sighand lock.
+ 	free_irq(sdev->ipc_irq, sdev);
+ 	if (sdev->msi_enabled)
+ 		pci_free_irq_vectors(pci);
 -- 
 2.53.0
 
