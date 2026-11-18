@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060304;
-	b=xKR1C0fgdKy2yZRjmTNZJDDWd731fG7HOgi+PUxvyjePHS9wmOLESl0cIpyC6dIJYLox
-	 +5Q6pBoIioV1JCu+642bkuQxuz0Flhc5oPX858SmNRbdE5Zz2WJbY6oUteD/iLfzq77dg
-	 DGC6wE+dRl4iSR1P6Gd6VnKBz8xrPJVW8aliMEkT3rQvKxRWR58GUfQooUef9lQmVUjDz
-	 TB78ZK07YTHdeBsFzNtKL98IUVgAyUjjl+EF65pCI2hWhlw7lbZbW0yqVtXENP/aGziO2
-	 rBOiZond0tZsapSc3U5ywygtZ1KRmmj7G2PmFgAW0wFJ2ET9xZgzhUARY2rpY/sfnXQ==
+	t=1795060307;
+	b=W4fLpd5hXJ6Hzu4xHkiJ7u5D4AxEhrFmgsZ4Y+ktvQOgzthbJTsPCOUC6fLLOdFUqIvg
+	 sOqit4cPcTXZ/Yc7LRrx0N+s/oWqJ3CRG5M8FWQSDIaw9xUkWAwyTMd8I0Mwug7Xe/dgA
+	 kX2U/QfEZFnx0Hs2e+hjQbe88vr9D8ZCpD5eaJi5IRYTjlZyLTjaWp68OZ2W6sSAj61Kn
+	 zQ9rIerr/X7gL9wiOYflQiBLoOxnCv1eqG8Ld26ZUHlSAz8LSSkzAtfrYzR/y/9jYcwp4
+	 l4l1NjBjfq/ny+7pCMPVnQWkzqXr+4+keJnq8IV01PpS9t/1PEA1Bn62NSxLlXJl4aA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DjfWTKuK+CJWfTB4sVbwS4kOuoZZwxyTEwSsXbMq9RY=;
-	b=NgoKiP7selWYG6xt4I3Y47scQ0OtHXArmJEt3BJgTW0jTTqWDCi+Ok40iyTtABB4ouPN
-	 gJwg+KOPPUIEhG+IfeYm7xpPBCIhdFYNUIlhpUaaEoj4EaJ2G6/3o7K7kRhbEoye1UYew
-	 5SaTpSbHKCcqXT31blBtZjOokmGHpkaVJL4CkTSbTPwjw+vtkYR7R7x9Ritw7pkK7/DpW
-	 /KRBIQpYiphpgs35WJYZD+2zcfaGNkacL8sI8zC+7GMRwZ9E/iD+YwW9LMeew/Gf+7cqU
-	 3EVVvP6wR70+6CbpFuLiltJDVgkNIpavTiRcLEvl52RvxqoDX2FcBgWZop9e9efm8yw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=h3xlPtATL59b6DMcTOpOjWyqj/1vFYofrrwUzj+dnCU=;
+	b=IjWFyaU73PNt0w1bLrR7J/0n8FYTPWYUqC76KLfuWbb+oZ4LpyJWRWsV8B9adEXX8fkI
+	 BnCjtR5FyQ2T73LBOO4hnBbBuu64tBvdmcieBuGc0VZ2onfK5Xn7Qj278mrYWSuM2GGe/
+	 vRZR5px5qQRn8xfG3a2fG7FnE26LEuV4HC5wInhZWhm/gVZeC5HAWiOjxAReTkT8iYTWR
+	 ayhX0eIIgETwr4lQRK1g7D1b1uU+c2NA/c41pFwLztTGUtVRF20K89pdUxD9OZlj/yV9H
+	 C7LuxC+84y028P51ecPvU5SpQyD+BXy14m/J4E1889SFXcigcWTgEBtfL90ph60WrDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dRIvvhCm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfjJz6Al;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35DC606A330;
-	Thu, 19 Nov 2026 03:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9E4606A32C;
+	Thu, 19 Nov 2026 03:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dRIvvhCm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AA61F000C4;
-	Thu, 19 Nov 2026 03:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfjJz6Al
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0091F000C4;
+	Thu, 19 Nov 2026 03:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060304;
-	bh=DjfWTKuK+CJWfTB4sVbwS4kOuoZZwxyTEwSsXbMq9RY=;
+	s=korg; t=1795060307;
+	bh=h3xlPtATL59b6DMcTOpOjWyqj/1vFYofrrwUzj+dnCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dRIvvhCmtm/smVYHV94SnXOXQxwTJ1eNbqj+0XbGPpWDthPlEv2keY8tdoJnhpM4D
-	 uJvpVgyBIwoY+LfS18TsBwFwvLhQF5TB6dagBgkN3noEGhy+b2oFHbcz9Nh8pYfWpy
-	 PUuyoUv+7W5nWEkcbV2siqteSFcCfxaHTqn1jaus=
+	b=HfjJz6AlpVWKgBuE9X4HXUPXSSWHRFoujBVN6Xy1dBsfijN8y0kC5zImTTFpqbctt
+	 8wM0F3B0A3gqxc5lJGbqamllS+HEB0sEww1auuaGk5EURcplyMYmjkPZbJLyUqBAFr
+	 rb+wyyK7cBqafYzv/u0g8ZHbyYHE+746IFTeCsXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1149/1848] pwm: renesas-tpu: Rename variables to match the usual naming
-Date: Wed, 18 Nov 2026 15:53:07 +0100
-Message-ID: <20261118150007.841766080@linuxfoundation.org>
+Subject: [PATCH 5.10 1111/1848] ocfs2: validate move extents against a stable EOF
+Date: Wed, 18 Nov 2026 15:52:29 +0100
+Message-ID: <20261118150005.854030373@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,367 +68,178 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 208ab8676b9c787b4285364fcb52a159f94b861d ]
+[ Upstream commit 84db6619cb702c37cf848b450c21b9c9706b0775 ]
 
-The driver used "pwm" for struct tpu_pwm_device pointers. This name is
-usually only used for struct pwm_device pointers which this driver calls
-"_pwm". So rename to the driver data pointers to "tpd" which then allows
-to drop the underscore from "_pwm".
+The move-extents range must be bounded by the inode size used for extent
+movement.  ocfs2_ioctl_move_extents() checks and clamps the request before
+taking the local inode and cluster locks in ocfs2_move_extents().  It also
+uses separate i_size_read() calls for the range check and subtraction.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 62cff15fbf2b ("pwm: renesas-tpu: Fix runtime PM reference leak")
+A concurrent truncate can invalidate the first check and make the later
+unsigned subtraction underflow:
+
+  Move-extents ioctl                  Truncate
+  ------------------                  --------
+  check me_start <= i_size
+                                      take inode and cluster locks
+                                      shrink EOF below me_start
+                                      release locks
+  compare me_start + me_len with EOF
+  set me_len = EOF - me_start
+    [unsigned underflow]
+  acquire inode and cluster locks
+  select extents using the bad range
+
+A truncate after clamping can also leave the range extending beyond EOF.
+Conversely, the cached size may be smaller than the size refreshed when
+the cluster inode lock is acquired.  Early validation can then reject a
+valid start or permanently shorten the requested length and threshold.
+The me_start + me_len comparison can also wrap for a large input length.
+
+Validate and adjust the original request once, after inode_lock(), the
+exclusive rw lock and ocfs2_inode_lock() have stabilized and refreshed the
+size.  Read EOF once, reject a start beyond it, and bound the length by
+EOF minus start.  Normalize the threshold using the same EOF snapshot.
+This keeps zero as the default-threshold sentinel until validation uses
+the size that will govern extent movement.
+
+Move goal validation after range adjustment as well.  Its allocation-group
+capacity check uses me_len and must see the EOF-clamped length.  Both
+validation failures use the existing inode-lock unwind path before any
+extent movement or transaction starts.
+
+Range errors now reach the ioctl's normal copyout path, as goal errors
+already did.  Unlike the old early rejection, a failed copyout can
+therefore override -EINVAL with -EFAULT.
+
+Link: https://lore.kernel.org/pm-ocfs2-move-extents-isize-rrw-v6-395bdee84ea81149068e@gmail.com
+Fixes: 53069d4e7695 ("Ocfs2/move_extents: move/defrag extents within a certain range.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: inlined range validation into ocfs2_move_extents() instead of adding a separate helper ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-renesas-tpu.c | 172 +++++++++++++++++-----------------
- 1 file changed, 86 insertions(+), 86 deletions(-)
+ fs/ocfs2/move_extents.c | 62 ++++++++++++++++++++---------------------
+ 1 file changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/pwm/pwm-renesas-tpu.c b/drivers/pwm/pwm-renesas-tpu.c
-index 7f5d2bc3d5dda..62213a7657e20 100644
---- a/drivers/pwm/pwm-renesas-tpu.c
-+++ b/drivers/pwm/pwm-renesas-tpu.c
-@@ -89,71 +89,71 @@ struct tpu_device {
- 
- #define to_tpu_device(c)	container_of(c, struct tpu_device, chip)
- 
--static void tpu_pwm_write(struct tpu_pwm_device *pwm, int reg_nr, u16 value)
-+static void tpu_pwm_write(struct tpu_pwm_device *tpd, int reg_nr, u16 value)
+diff --git a/fs/ocfs2/move_extents.c b/fs/ocfs2/move_extents.c
+index a16c132188eae..d9f7e542fd53a 100644
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -908,8 +908,10 @@ static int __ocfs2_move_extents_range(struct buffer_head *di_bh,
+ static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
  {
--	void __iomem *base = pwm->tpu->base + TPU_CHANNEL_OFFSET
--			   + pwm->channel * TPU_CHANNEL_SIZE;
-+	void __iomem *base = tpd->tpu->base + TPU_CHANNEL_OFFSET
-+			   + tpd->channel * TPU_CHANNEL_SIZE;
- 
- 	iowrite16(value, base + reg_nr);
- }
- 
--static void tpu_pwm_set_pin(struct tpu_pwm_device *pwm,
-+static void tpu_pwm_set_pin(struct tpu_pwm_device *tpd,
- 			    enum tpu_pin_state state)
- {
- 	static const char * const states[] = { "inactive", "PWM", "active" };
- 
--	dev_dbg(&pwm->tpu->pdev->dev, "%u: configuring pin as %s\n",
--		pwm->channel, states[state]);
-+	dev_dbg(&tpd->tpu->pdev->dev, "%u: configuring pin as %s\n",
-+		tpd->channel, states[state]);
- 
- 	switch (state) {
- 	case TPU_PIN_INACTIVE:
--		tpu_pwm_write(pwm, TPU_TIORn,
--			      pwm->polarity == PWM_POLARITY_INVERSED ?
-+		tpu_pwm_write(tpd, TPU_TIORn,
-+			      tpd->polarity == PWM_POLARITY_INVERSED ?
- 			      TPU_TIOR_IOA_1 : TPU_TIOR_IOA_0);
- 		break;
- 	case TPU_PIN_PWM:
--		tpu_pwm_write(pwm, TPU_TIORn,
--			      pwm->polarity == PWM_POLARITY_INVERSED ?
-+		tpu_pwm_write(tpd, TPU_TIORn,
-+			      tpd->polarity == PWM_POLARITY_INVERSED ?
- 			      TPU_TIOR_IOA_0_SET : TPU_TIOR_IOA_1_CLR);
- 		break;
- 	case TPU_PIN_ACTIVE:
--		tpu_pwm_write(pwm, TPU_TIORn,
--			      pwm->polarity == PWM_POLARITY_INVERSED ?
-+		tpu_pwm_write(tpd, TPU_TIORn,
-+			      tpd->polarity == PWM_POLARITY_INVERSED ?
- 			      TPU_TIOR_IOA_0 : TPU_TIOR_IOA_1);
- 		break;
- 	}
- }
- 
--static void tpu_pwm_start_stop(struct tpu_pwm_device *pwm, int start)
-+static void tpu_pwm_start_stop(struct tpu_pwm_device *tpd, int start)
- {
- 	unsigned long flags;
- 	u16 value;
- 
--	spin_lock_irqsave(&pwm->tpu->lock, flags);
--	value = ioread16(pwm->tpu->base + TPU_TSTR);
-+	spin_lock_irqsave(&tpd->tpu->lock, flags);
-+	value = ioread16(tpd->tpu->base + TPU_TSTR);
- 
- 	if (start)
--		value |= 1 << pwm->channel;
-+		value |= 1 << tpd->channel;
- 	else
--		value &= ~(1 << pwm->channel);
-+		value &= ~(1 << tpd->channel);
- 
--	iowrite16(value, pwm->tpu->base + TPU_TSTR);
--	spin_unlock_irqrestore(&pwm->tpu->lock, flags);
-+	iowrite16(value, tpd->tpu->base + TPU_TSTR);
-+	spin_unlock_irqrestore(&tpd->tpu->lock, flags);
- }
- 
--static int tpu_pwm_timer_start(struct tpu_pwm_device *pwm)
-+static int tpu_pwm_timer_start(struct tpu_pwm_device *tpd)
- {
- 	int ret;
- 
--	if (!pwm->timer_on) {
-+	if (!tpd->timer_on) {
- 		/* Wake up device and enable clock. */
--		pm_runtime_get_sync(&pwm->tpu->pdev->dev);
--		ret = clk_prepare_enable(pwm->tpu->clk);
-+		pm_runtime_get_sync(&tpd->tpu->pdev->dev);
-+		ret = clk_prepare_enable(tpd->tpu->clk);
- 		if (ret) {
--			dev_err(&pwm->tpu->pdev->dev, "cannot enable clock\n");
-+			dev_err(&tpd->tpu->pdev->dev, "cannot enable clock\n");
- 			return ret;
- 		}
--		pwm->timer_on = true;
-+		tpd->timer_on = true;
+ 	int status;
++	u64 i_size;
+ 	handle_t *handle;
+ 	struct inode *inode = context->inode;
++	struct ocfs2_move_extents *range = context->range;
+ 	struct ocfs2_dinode *di;
+ 	struct buffer_head *di_bh = NULL;
+ 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
+@@ -934,6 +936,35 @@ static int ocfs2_move_extents(struct ocfs2_move_extents_context *context)
+ 		goto out_rw_unlock;
  	}
  
++	i_size = i_size_read(inode);
++	if (range->me_start > i_size) {
++		status = -EINVAL;
++		mlog_errno(status);
++		goto out_inode_unlock;
++	}
++
++	if (range->me_len > i_size - range->me_start)
++		range->me_len = i_size - range->me_start;
++
++	/*
++	 * The default threshold for defragmentation is 1 MiB, which
++	 * matches the maximum OCFS2 cluster size.
++	 */
++	if (!range->me_threshold)
++		range->me_threshold = 1024 * 1024;
++
++	if (range->me_threshold > i_size)
++		range->me_threshold = i_size;
++
++	/* The goal check depends on the adjusted range length. */
++	if (!context->auto_defrag) {
++		status = ocfs2_validate_and_adjust_move_goal(inode, context->range);
++		if (status) {
++			mlog_errno(status);
++			goto out_inode_unlock;
++		}
++	}
++
  	/*
-@@ -161,8 +161,8 @@ static int tpu_pwm_timer_start(struct tpu_pwm_device *pwm)
- 	 * completely. First drive the pin to the inactive state to avoid
- 	 * glitches.
+ 	 * rememer ip_xattr_sem also needs to be held if necessary
  	 */
--	tpu_pwm_set_pin(pwm, TPU_PIN_INACTIVE);
--	tpu_pwm_start_stop(pwm, false);
-+	tpu_pwm_set_pin(tpd, TPU_PIN_INACTIVE);
-+	tpu_pwm_start_stop(tpd, false);
+@@ -1026,49 +1057,18 @@ int ocfs2_ioctl_move_extents(struct file *filp, void __user *argp)
+ 		goto out_free;
+ 	}
  
+-	if (range.me_start > i_size_read(inode)) {
+-		status = -EINVAL;
+-		goto out_free;
+-	}
+-
+-	if (range.me_start + range.me_len > i_size_read(inode))
+-			range.me_len = i_size_read(inode) - range.me_start;
+-
+ 	context->range = &range;
+ 
+-	/*
+-	 * ok, the default theshold for the defragmentation
+-	 * is 1M, since our maximum clustersize was 1M also.
+-	 * any thought?
+-	 */
+-	if (!range.me_threshold)
+-		range.me_threshold = 1024 * 1024;
+-
+-	if (range.me_threshold > i_size_read(inode))
+-		range.me_threshold = i_size_read(inode);
+-
+ 	if (range.me_flags & OCFS2_MOVE_EXT_FL_AUTO_DEFRAG) {
+ 		context->auto_defrag = 1;
+ 
+ 		if (range.me_flags & OCFS2_MOVE_EXT_FL_PART_DEFRAG)
+ 			context->partial = 1;
+-	} else {
+-		/*
+-		 * first best-effort attempt to validate and adjust the goal
+-		 * (physical address in block), while it can't guarantee later
+-		 * operation can succeed all the time since global_bitmap may
+-		 * change a bit over time.
+-		 */
+-
+-		status = ocfs2_validate_and_adjust_move_goal(inode, &range);
+-		if (status)
+-			goto out_copy;
+ 	}
+ 
+ 	status = ocfs2_move_extents(context);
+ 	if (status)
+ 		mlog_errno(status);
+-out_copy:
  	/*
- 	 * - Clear TCNT on TGRB match
-@@ -172,80 +172,80 @@ static int tpu_pwm_timer_start(struct tpu_pwm_device *pwm)
- 	 * - Output 1 until TGRA, output 0 until TGRB (active high polarity
- 	 * - PWM mode
- 	 */
--	tpu_pwm_write(pwm, TPU_TCRn, TPU_TCR_CCLR_TGRB | TPU_TCR_CKEG_RISING |
--		      pwm->prescaler);
--	tpu_pwm_write(pwm, TPU_TMDRn, TPU_TMDR_MD_PWM);
--	tpu_pwm_set_pin(pwm, TPU_PIN_PWM);
--	tpu_pwm_write(pwm, TPU_TGRAn, pwm->duty);
--	tpu_pwm_write(pwm, TPU_TGRBn, pwm->period);
-+	tpu_pwm_write(tpd, TPU_TCRn, TPU_TCR_CCLR_TGRB | TPU_TCR_CKEG_RISING |
-+		      tpd->prescaler);
-+	tpu_pwm_write(tpd, TPU_TMDRn, TPU_TMDR_MD_PWM);
-+	tpu_pwm_set_pin(tpd, TPU_PIN_PWM);
-+	tpu_pwm_write(tpd, TPU_TGRAn, tpd->duty);
-+	tpu_pwm_write(tpd, TPU_TGRBn, tpd->period);
- 
--	dev_dbg(&pwm->tpu->pdev->dev, "%u: TGRA 0x%04x TGRB 0x%04x\n",
--		pwm->channel, pwm->duty, pwm->period);
-+	dev_dbg(&tpd->tpu->pdev->dev, "%u: TGRA 0x%04x TGRB 0x%04x\n",
-+		tpd->channel, tpd->duty, tpd->period);
- 
- 	/* Start the channel. */
--	tpu_pwm_start_stop(pwm, true);
-+	tpu_pwm_start_stop(tpd, true);
- 
- 	return 0;
- }
- 
--static void tpu_pwm_timer_stop(struct tpu_pwm_device *pwm)
-+static void tpu_pwm_timer_stop(struct tpu_pwm_device *tpd)
- {
--	if (!pwm->timer_on)
-+	if (!tpd->timer_on)
- 		return;
- 
- 	/* Disable channel. */
--	tpu_pwm_start_stop(pwm, false);
-+	tpu_pwm_start_stop(tpd, false);
- 
- 	/* Stop clock and mark device as idle. */
--	clk_disable_unprepare(pwm->tpu->clk);
--	pm_runtime_put(&pwm->tpu->pdev->dev);
-+	clk_disable_unprepare(tpd->tpu->clk);
-+	pm_runtime_put(&tpd->tpu->pdev->dev);
- 
--	pwm->timer_on = false;
-+	tpd->timer_on = false;
- }
- 
- /* -----------------------------------------------------------------------------
-  * PWM API
-  */
- 
--static int tpu_pwm_request(struct pwm_chip *chip, struct pwm_device *_pwm)
-+static int tpu_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
- {
- 	struct tpu_device *tpu = to_tpu_device(chip);
--	struct tpu_pwm_device *pwm;
-+	struct tpu_pwm_device *tpd;
- 
--	if (_pwm->hwpwm >= TPU_CHANNEL_MAX)
-+	if (pwm->hwpwm >= TPU_CHANNEL_MAX)
- 		return -EINVAL;
- 
--	pwm = kzalloc(sizeof(*pwm), GFP_KERNEL);
--	if (pwm == NULL)
-+	tpd = kzalloc(sizeof(*tpd), GFP_KERNEL);
-+	if (tpd == NULL)
- 		return -ENOMEM;
- 
--	pwm->tpu = tpu;
--	pwm->channel = _pwm->hwpwm;
--	pwm->polarity = PWM_POLARITY_NORMAL;
--	pwm->prescaler = 0;
--	pwm->period = 0;
--	pwm->duty = 0;
-+	tpd->tpu = tpu;
-+	tpd->channel = pwm->hwpwm;
-+	tpd->polarity = PWM_POLARITY_NORMAL;
-+	tpd->prescaler = 0;
-+	tpd->period = 0;
-+	tpd->duty = 0;
- 
--	pwm->timer_on = false;
-+	tpd->timer_on = false;
- 
--	pwm_set_chip_data(_pwm, pwm);
-+	pwm_set_chip_data(pwm, tpd);
- 
- 	return 0;
- }
- 
--static void tpu_pwm_free(struct pwm_chip *chip, struct pwm_device *_pwm)
-+static void tpu_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
-+	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
- 
--	tpu_pwm_timer_stop(pwm);
--	kfree(pwm);
-+	tpu_pwm_timer_stop(tpd);
-+	kfree(tpd);
- }
- 
--static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
-+static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 			  int duty_ns, int period_ns, bool enabled)
- {
- 	static const unsigned int prescalers[] = { 1, 4, 16, 64 };
--	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
-+	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
- 	struct tpu_device *tpu = to_tpu_device(chip);
- 	unsigned int prescaler;
- 	bool duty_only = false;
-@@ -285,29 +285,29 @@ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
- 		"rate %u, prescaler %u, period %u, duty %u\n",
- 		clk_rate, prescalers[prescaler], period, duty);
- 
--	if (pwm->prescaler == prescaler && pwm->period == period)
-+	if (tpd->prescaler == prescaler && tpd->period == period)
- 		duty_only = true;
- 
--	pwm->prescaler = prescaler;
--	pwm->period = period;
--	pwm->duty = duty;
-+	tpd->prescaler = prescaler;
-+	tpd->period = period;
-+	tpd->duty = duty;
- 
- 	/* If the channel is disabled we're done. */
- 	if (!enabled)
- 		return 0;
- 
--	if (duty_only && pwm->timer_on) {
-+	if (duty_only && tpd->timer_on) {
- 		/*
- 		 * If only the duty cycle changed and the timer is already
- 		 * running, there's no need to reconfigure it completely, Just
- 		 * modify the duty cycle.
- 		 */
--		tpu_pwm_write(pwm, TPU_TGRAn, pwm->duty);
--		dev_dbg(&tpu->pdev->dev, "%u: TGRA 0x%04x\n", pwm->channel,
--			pwm->duty);
-+		tpu_pwm_write(tpd, TPU_TGRAn, tpd->duty);
-+		dev_dbg(&tpu->pdev->dev, "%u: TGRA 0x%04x\n", tpd->channel,
-+			tpd->duty);
- 	} else {
- 		/* Otherwise perform a full reconfiguration. */
--		ret = tpu_pwm_timer_start(pwm);
-+		ret = tpu_pwm_timer_start(tpd);
- 		if (ret < 0)
- 			return ret;
- 	}
-@@ -317,29 +317,29 @@ static int tpu_pwm_config(struct pwm_chip *chip, struct pwm_device *_pwm,
- 		 * To avoid running the timer when not strictly required, handle
- 		 * 0% and 100% duty cycles as fixed levels and stop the timer.
- 		 */
--		tpu_pwm_set_pin(pwm, duty ? TPU_PIN_ACTIVE : TPU_PIN_INACTIVE);
--		tpu_pwm_timer_stop(pwm);
-+		tpu_pwm_set_pin(tpd, duty ? TPU_PIN_ACTIVE : TPU_PIN_INACTIVE);
-+		tpu_pwm_timer_stop(tpd);
- 	}
- 
- 	return 0;
- }
- 
--static int tpu_pwm_set_polarity(struct pwm_chip *chip, struct pwm_device *_pwm,
-+static int tpu_pwm_set_polarity(struct pwm_chip *chip, struct pwm_device *pwm,
- 				enum pwm_polarity polarity)
- {
--	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
-+	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
- 
--	pwm->polarity = polarity;
-+	tpd->polarity = polarity;
- 
- 	return 0;
- }
- 
--static int tpu_pwm_enable(struct pwm_chip *chip, struct pwm_device *_pwm)
-+static int tpu_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
-+	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
- 	int ret;
- 
--	ret = tpu_pwm_timer_start(pwm);
-+	ret = tpu_pwm_timer_start(tpd);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -347,23 +347,23 @@ static int tpu_pwm_enable(struct pwm_chip *chip, struct pwm_device *_pwm)
- 	 * To avoid running the timer when not strictly required, handle 0% and
- 	 * 100% duty cycles as fixed levels and stop the timer.
- 	 */
--	if (pwm->duty == 0 || pwm->duty == pwm->period) {
--		tpu_pwm_set_pin(pwm, pwm->duty ?
-+	if (tpd->duty == 0 || tpd->duty == tpd->period) {
-+		tpu_pwm_set_pin(tpd, tpd->duty ?
- 				TPU_PIN_ACTIVE : TPU_PIN_INACTIVE);
--		tpu_pwm_timer_stop(pwm);
-+		tpu_pwm_timer_stop(tpd);
- 	}
- 
- 	return 0;
- }
- 
--static void tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *_pwm)
-+static void tpu_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- {
--	struct tpu_pwm_device *pwm = pwm_get_chip_data(_pwm);
-+	struct tpu_pwm_device *tpd = pwm_get_chip_data(pwm);
- 
- 	/* The timer must be running to modify the pin output configuration. */
--	tpu_pwm_timer_start(pwm);
--	tpu_pwm_set_pin(pwm, TPU_PIN_INACTIVE);
--	tpu_pwm_timer_stop(pwm);
-+	tpu_pwm_timer_start(tpd);
-+	tpu_pwm_set_pin(tpd, TPU_PIN_INACTIVE);
-+	tpu_pwm_timer_stop(tpd);
- }
- 
- static int tpu_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	 * movement/defragmentation may end up being partially completed,
+ 	 * that's the reason why we need to return userspace the finished
 -- 
 2.53.0
 
