@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035324;
-	b=zXXZ5tZ0D7DbX08ao5X5pyo6mE4xdMVdXLUrEBZzVxD7Yf630mH0hEvGtLuBq3RQlCbC
-	 oqqYCcNqgAqlG7cjL0J76UyeMs8Ry3jur9seA89nYYrk1bBstu7cdmSNgQpp8TLffWoZ9
-	 XoWMbD5V9yXKPZI9EYA7Emy5Mz8LSMVuYyp5Svq6+kaL97wXQ12/Hp6+sowFQoc2ERiui
-	 7URC0ljySc0pFwb27NYt7EyHy1BkEQ8F7uPJwWB8PakITwHcd1X/j1rf0oVd7FG4TXuzv
-	 es7zK52OTLcdo7lfjXxGiKKY1j92uSPuWrk+BfRKo50njiR0VpnFsVKojgzQDMrLUOw==
+	t=1795035326;
+	b=PvyBIur7DjajtN7aESODdTnRe8m1H3W+vHrDZqTdjlQKgxTHGXQuKsfD0/WZeKEBhEzy
+	 Y3qJaMHSMndmBGDo9F9UNN7zPuCjn8AcvpozWjqX76wr/GE0JGd2Kqbsdl01y/+CBbJGv
+	 k4YJcZRg0EMJ7A/xxoXAOQBXS+gawbouLGz8bHfCOHL4BYDKaQancvkoWgTa5x6ci0iLJ
+	 JK6HL5hVWbaeZDeigctHW3qd/V9YUmuqWKacuZ3jLmvqqmEkYqfaNpbqBDFkyvWtATo19
+	 w5H5gWFlxgHfyZ8muB0dgx74yNjuCAmrOm4LSIXba5EYTHYHc6IxvlGN3pF5xVoFALw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3GhLFCYrhqo3VGWNz/07AX/ARmHZfsFrWSAWxQJ7OBU=;
-	b=0sZYdy7jJ18nq/O5/KWEC4O8LdHftaCMdwm/8XT48o+wnAYg50RmSUUYdmGjcR1aEKbx
-	 cJKjUc0JRGEzBfjh4cjxRSSfqXov5lGQzC8SCU0FUwTiCDCKuK8tTUOLrHYpR82iKGlu6
-	 SBY2jrr+ThieJNBuxtGMQ9rF3BO/eATOPE5vbJieVoUtsA7Xv8S4e9v1ChMtxCxxki73Y
-	 VAHDQYA+4eQoWaJv6KR7pXJ4xQPfo4aoAMmstK5GkQnoH//ZcEzYw0T4G8frrhS4N7Pvr
-	 nHdKt94E5T0zZbVmO3NqGfRWkX2R+q/DBZN08xd9UKdCIKUBX/YBYqoPa80AOz8Er8g==
+	bh=nNwZbxkt/9vRxVnFLY97KERc901fQwYxOWgUzJnHI/Q=;
+	b=SFHtb5ooMyJvw99kWeiDVAX8mc4ZtE16c2g0P35jgInio/iHjYpWudulr9BZBofUaFa2
+	 BLzARxkkSsi2v7E8ObchuO1xn7zCLEo2bXhJ9VS2ZXA3VCokW3GCmjhGomDnOz4pgMGeu
+	 64HEYIGCFOqL9y8GOZgFQC5n5wSV3pzrr4fW6gurx2cBhSNm/ClVDQdkdnEPS3RAv4f6t
+	 uKUyK/njohFCibvxc1MuhGlW3dm/vM6RK9641ArWQgdBURiZLyHdr0Y4afZaqksnRHO+7
+	 yi1Vg3G1+lW9FQsX/31/M92gkQuHeiitLhK8ca1yFYg7sjfDTthpiIZG/Clvno/uLqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMjoUvvA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6PEsQya;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EE8606A31C;
-	Wed, 18 Nov 2026 20:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DA6606A31C;
+	Wed, 18 Nov 2026 20:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMjoUvvA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14EBE1F000C4;
-	Wed, 18 Nov 2026 20:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6PEsQya
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78F41F000C4;
+	Wed, 18 Nov 2026 20:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035323;
-	bh=3GhLFCYrhqo3VGWNz/07AX/ARmHZfsFrWSAWxQJ7OBU=;
+	s=korg; t=1795035326;
+	bh=nNwZbxkt/9vRxVnFLY97KERc901fQwYxOWgUzJnHI/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMjoUvvAXzUNh8lDn/24xuiYNEm0Sy+QpBD02ewwsI1ZNkA4ZTz0MGrvn29Oih/qO
-	 kkq49uVFiVBqPxt67UOy3juBh5VBmvK7CGzLQdPojnv1QiMbRx7oVulxkYw3i72e9K
-	 IBncoKyyCbAX/NMvEIh5oxcONjenWB6QC6hFjIK4=
+	b=u6PEsQyauoK38sSugO0tfzQ3MzqfHMQ2YmN0e1p5O0v/UE8V7BetYfGvDtyCfmU//
+	 dPqctLxiG+SUXpApyEOos6/nzaT/svCFGm1gAoeORwvq5IHl969U+1vB1fA0rJAHyC
+	 axT8JBKFQe3YW6aGzNjtjMOxap+kEFBAPRg7qjac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gillian Laming <glaming@microsoft.com>,
-	Siddharth Chintamaneni <sidchintamaneni@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0663/3318] smb: client: fix busy dentry warning on unmount after DIO
-Date: Wed, 18 Nov 2026 15:21:25 +0100
-Message-ID: <20261118150337.969289299@linuxfoundation.org>
+Subject: [PATCH 6.6 0664/3318] ufs: fix ufs_read_cylinder() failure handling
+Date: Wed, 18 Nov 2026 15:21:26 +0100
+Message-ID: <20261118150338.007993947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,266 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 75f5c412fa867efa0bf9b646bffe0d912109e84a upstream.
+commit 0bfd3e1078c537cd66a8addb1c01835de4234a4c upstream.
 
-In mainline, commit 75f5c412fa86 ("smb: client: fix busy dentry warning
-on unmount after DIO") fixes a busy-dentry warning during unmount by
-tracking in-flight netfs_io_request instances in cifs_init_request() and
-cifs_free_request(), waiting for the counter to reach zero in
-cifs_kill_sb() before kill_anon_super(), and then flushing
-serverclose_wq and fileinfo_put_wq. Because mainline routes all CIFS I/O
-(direct I/O, uncached I/O, buffered readahead, and buffered writeback)
-through netfs_io_request, that single counter covers every path that
-holds a cifsFileInfo reference across asynchronous I/O completion.
+1) ufs_load_cylinder() should return NULL on ufs_read_cylinder() failures.
+ufs_error() is not enough.  As it is, IO failure on attempt to read a part
+of cylinder group metadata is likely to end up with an oops.
 
-Kernel 6.6 predates the netfs I/O request conversion and instead splits
-I/O across three reference-counted structures that each hold a
-cifsFileInfo reference:
-- struct cifs_aio_ctx, used by direct and uncached I/O (__cifs_readv()
-  and __cifs_writev()).
-- struct cifs_readdata, allocated for uncached reads
-  (cifs_send_async_read()) and directly without a cifs_aio_ctx for
-  buffered readahead (cifs_readahead()).
-- struct cifs_writedata, allocated for uncached writes
-  (cifs_write_from_iter(), cifs_writev_requeue()) and directly without a
-  cifs_aio_ctx for buffered writeback
-  (cifs_write_back_from_locked_folio()).
+2) we drop the wrong buffer heads when undoing sb_bread() on IO failure
+halfway through the read - we need to brelse() what we've got from
+sb_bread(), TYVM...
 
-In both the DIO/uncached paths (where collect_uncached_read_data() and
-collect_uncached_write_data() signal completion via complete(&ctx->done)
-or ctx->iocb->ki_complete() before the worker drops its rdata/wdata and
-ctx references) and the buffered paths (where cifs_readahead_complete()
-unlocks folios and cifs_writev_complete() ends folio writeback before
-calling kref_put() on rdata/wdata to drop their cfile reference), a
-racing close() and umount() can reach shrink_dcache_for_umount() before
-the final cifsFileInfo_put() has been queued and flushed. This triggers:
-
-  BUG: Dentry ... still in use (1) [unmount of cifs cifs]
-
-followed by a use-after-free when deferred cifsFileInfo_put_work runs
-after superblock teardown.
-
-Fix this in 6.6 by:
-1. Adding cifs_sb->outstanding_aio and incrementing it whenever
-   ctx->cfile, rdata->cfile, or wdata->cfile is assigned.
-2. Releasing wdata->cfile and rdata->cfile before dropping ctx->refcount
-   in cifs_uncached_writedata_release() and cifs_readdata_release().
-3. Decrementing cifs_sb->outstanding_aio in cifs_aio_ctx_release(),
-   cifs_readdata_release(), and cifs_writedata_release() only after
-   cifsFileInfo_put() has been called, and waiting for it to reach zero
-   in cifs_kill_sb() before flushing serverclose_wq and fileinfo_put_wq.
-
-Fixes: 340cea84f691 ("cifs: open files should not hold ref on superblock")
-Tested-by: Gillian Laming <glaming@microsoft.com>
-Signed-off-by: Siddharth Chintamaneni <sidchintamaneni@gmail.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifs_fs_sb.h |  1 +
- fs/smb/client/cifsfs.c     | 11 +++++++++++
- fs/smb/client/connect.c    |  1 +
- fs/smb/client/file.c       | 33 ++++++++++++++++++++++++++++-----
- fs/smb/client/misc.c       |  4 ++++
- 5 files changed, 45 insertions(+), 5 deletions(-)
+ fs/ufs/cylinder.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/fs/smb/client/cifs_fs_sb.h b/fs/smb/client/cifs_fs_sb.h
-index 6517591922801..5011dd639dd9b 100644
---- a/fs/smb/client/cifs_fs_sb.h
-+++ b/fs/smb/client/cifs_fs_sb.h
-@@ -54,6 +54,7 @@ struct cifs_sb_info {
- 	struct nls_table *local_nls;
- 	struct smb3_fs_context *ctx;
- 	atomic_t active;
-+	atomic_t outstanding_aio;	/* nr of AIO contexts not yet fully deinitialized */
- 	unsigned int mnt_cifs_flags;
- 	struct delayed_work prune_tlinks;
- 	struct rcu_head rcu;
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 3154b21bfe8a2..700dd3005ba89 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -301,6 +301,17 @@ static void cifs_kill_sb(struct super_block *sb)
- 		/* Wait for all opened files to release */
- 		flush_workqueue(deferredclose_wq);
- 
-+		/*
-+		 * Wait for all in-flight AIO contexts to finish cleanup so
-+		 * that their cifsFileInfo final puts have been queued, then
-+		 * drain the workqueues so the dentry refs are dropped before
-+		 * kill_anon_super().
-+		 */
-+		wait_var_event(&cifs_sb->outstanding_aio,
-+			       !atomic_read(&cifs_sb->outstanding_aio));
-+		flush_workqueue(serverclose_wq);
-+		flush_workqueue(fileinfo_put_wq);
-+
- 		/* finally release root dentry */
- 		dput(cifs_sb->root);
- 		cifs_sb->root = NULL;
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 1c21ae3d61e24..3d0fd8bf8f352 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3396,6 +3396,7 @@ int cifs_setup_cifs_sb(struct cifs_sb_info *cifs_sb)
- 
- 	spin_lock_init(&cifs_sb->tlink_tree_lock);
- 	cifs_sb->tlink_tree = RB_ROOT;
-+	atomic_set(&cifs_sb->outstanding_aio, 0);
- 
- 	cifs_dbg(FYI, "file mode: %04ho  dir mode: %04ho\n",
- 		 ctx->file_mode, ctx->dir_mode);
-diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
-index d329b8a3b756d..0ca0381fd7bb3 100644
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2618,6 +2618,8 @@ cifs_writedata_release(struct kref *refcount)
+diff --git a/fs/ufs/cylinder.c b/fs/ufs/cylinder.c
+index 5781c7db97276..b930ee1cf8530 100644
+--- a/fs/ufs/cylinder.c
++++ b/fs/ufs/cylinder.c
+@@ -26,7 +26,7 @@
+  * Read cylinder group into cache. The memory space for ufs_cg_private_info
+  * structure is already allocated during ufs_read_super.
+  */
+-static void ufs_read_cylinder (struct super_block * sb,
++static bool ufs_read_cylinder(struct super_block *sb,
+ 	unsigned cgno, unsigned bitmap_nr)
  {
- 	struct cifs_writedata *wdata = container_of(refcount,
- 					struct cifs_writedata, refcount);
-+	struct cifs_sb_info *cifs_sb = NULL;
-+
- #ifdef CONFIG_CIFS_SMB_DIRECT
- 	if (wdata->mr) {
- 		smbd_deregister_mr(wdata->mr);
-@@ -2625,10 +2627,15 @@ cifs_writedata_release(struct kref *refcount)
- 	}
- #endif
- 
--	if (wdata->cfile)
-+	if (wdata->cfile) {
-+		cifs_sb = CIFS_SB(wdata->cfile->dentry->d_sb);
- 		cifsFileInfo_put(wdata->cfile);
+ 	struct ufs_sb_info * sbi = UFS_SB(sb);
+@@ -46,9 +46,11 @@ static void ufs_read_cylinder (struct super_block * sb,
+ 	 * We have already the first fragment of cylinder group block in buffer
+ 	 */
+ 	UCPI_UBH(ucpi)->bh[0] = sbi->s_ucg[cgno];
+-	for (i = 1; i < UCPI_UBH(ucpi)->count; i++)
+-		if (!(UCPI_UBH(ucpi)->bh[i] = sb_bread(sb, UCPI_UBH(ucpi)->fragment + i)))
++	for (i = 1; i < UCPI_UBH(ucpi)->count; i++) {
++		UCPI_UBH(ucpi)->bh[i] = sb_bread(sb, UCPI_UBH(ucpi)->fragment + i);
++		if (!UCPI_UBH(ucpi)->bh[i])
+ 			goto failed;
 +	}
- 
- 	kfree(wdata);
-+
-+	if (cifs_sb && atomic_dec_and_test(&cifs_sb->outstanding_aio))
-+		wake_up_var(&cifs_sb->outstanding_aio);
+ 	sbi->s_cgno[bitmap_nr] = cgno;
+ 			
+ 	ucpi->c_cgx	= fs32_to_cpu(sb, ucg->cg_cgx);
+@@ -77,13 +79,14 @@ static void ufs_read_cylinder (struct super_block * sb,
+ 		goto failed;
+ 	}
+ 	UFSD("EXIT\n");
+-	return;	
++	return true;
+ 	
+ failed:
+ 	for (j = 1; j < i; j++)
+-		brelse (sbi->s_ucg[j]);
++		brelse(UCPI_UBH(ucpi)->bh[j]);
+ 	sbi->s_cgno[bitmap_nr] = UFS_CGNO_EMPTY;
+ 	ufs_error (sb, "ufs_read_cylinder", "can't read cylinder group block %u", cgno);
++	return false;
  }
  
  /*
-@@ -2690,6 +2697,7 @@ cifs_writev_requeue(struct cifs_writedata *wdata)
- 			if (!is_retryable_error(rc))
- 				rc = -EBADF;
+@@ -166,15 +169,14 @@ struct ufs_cg_private_info * ufs_load_cylinder (
+ 				UFSD("EXIT (FAILED)\n");
+ 				return NULL;
+ 			}
+-			else {
+-				UFSD("EXIT\n");
+-				return sbi->s_ucpi[cgno];
+-			}
  		} else {
-+			atomic_inc(&CIFS_SB(inode->i_sb)->outstanding_aio);
- 			wdata2->pid = wdata2->cfile->pid;
- 			rc = server->ops->async_writev(wdata2,
- 						       cifs_writedata_release);
-@@ -2998,6 +3006,7 @@ static ssize_t cifs_write_back_from_locked_folio(struct address_space *mapping,
- 	wdata->pid = cfile->pid;
- 	wdata->credits = credits_on_stack;
- 	wdata->cfile = cfile;
-+	atomic_inc(&cifs_sb->outstanding_aio);
- 	wdata->server = server;
- 	cfile = NULL;
- 
-@@ -3491,9 +3500,10 @@ cifs_uncached_writedata_release(struct kref *refcount)
- {
- 	struct cifs_writedata *wdata = container_of(refcount,
- 					struct cifs_writedata, refcount);
-+	struct cifs_aio_ctx *ctx = wdata->ctx;
- 
--	kref_put(&wdata->ctx->refcount, cifs_aio_ctx_release);
- 	cifs_writedata_release(refcount);
-+	kref_put(&ctx->refcount, cifs_aio_ctx_release);
- }
- 
- static void collect_uncached_write_data(struct cifs_aio_ctx *ctx);
-@@ -3704,6 +3714,7 @@ cifs_write_from_iter(loff_t fpos, size_t len, struct iov_iter *from,
- 		wdata->sync_mode = WB_SYNC_ALL;
- 		wdata->offset	= (__u64)fpos;
- 		wdata->cfile	= cifsFileInfo_get(open_file);
-+		atomic_inc(&cifs_sb->outstanding_aio);
- 		wdata->server	= server;
- 		wdata->pid	= pid;
- 		wdata->bytes	= cur_len;
-@@ -3852,6 +3863,7 @@ static ssize_t __cifs_writev(
- 		return -ENOMEM;
- 
- 	ctx->cfile = cifsFileInfo_get(cfile);
-+	atomic_inc(&cifs_sb->outstanding_aio);
- 
- 	if (!is_sync_kiocb(iocb))
- 		ctx->iocb = iocb;
-@@ -4067,19 +4079,27 @@ cifs_readdata_release(struct kref *refcount)
- {
- 	struct cifs_readdata *rdata = container_of(refcount,
- 					struct cifs_readdata, refcount);
-+	struct cifs_aio_ctx *ctx = rdata->ctx;
-+	struct cifs_sb_info *cifs_sb = NULL;
- 
--	if (rdata->ctx)
--		kref_put(&rdata->ctx->refcount, cifs_aio_ctx_release);
- #ifdef CONFIG_CIFS_SMB_DIRECT
- 	if (rdata->mr) {
- 		smbd_deregister_mr(rdata->mr);
- 		rdata->mr = NULL;
+-			ufs_read_cylinder (sb, cgno, cgno);
+-			UFSD("EXIT\n");
+-			return sbi->s_ucpi[cgno];
++			if (unlikely(!ufs_read_cylinder (sb, cgno, cgno))) {
++				UFSD("EXIT (FAILED)\n");
++				return NULL;
++			}
+ 		}
++		UFSD("EXIT\n");
++		return sbi->s_ucpi[cgno];
  	}
- #endif
--	if (rdata->cfile)
-+	if (rdata->cfile) {
-+		cifs_sb = CIFS_SB(rdata->cfile->dentry->d_sb);
- 		cifsFileInfo_put(rdata->cfile);
-+	}
- 
- 	kfree(rdata);
-+
-+	if (ctx)
-+		kref_put(&ctx->refcount, cifs_aio_ctx_release);
-+
-+	if (cifs_sb && atomic_dec_and_test(&cifs_sb->outstanding_aio))
-+		wake_up_var(&cifs_sb->outstanding_aio);
- }
- 
- static void collect_uncached_read_data(struct cifs_aio_ctx *ctx);
-@@ -4234,6 +4254,7 @@ cifs_send_async_read(loff_t fpos, size_t len, struct cifsFileInfo *open_file,
- 
- 		rdata->server	= server;
- 		rdata->cfile	= cifsFileInfo_get(open_file);
-+		atomic_inc(&cifs_sb->outstanding_aio);
- 		rdata->offset	= fpos;
- 		rdata->bytes	= cur_len;
- 		rdata->pid	= pid;
-@@ -4387,6 +4408,7 @@ static ssize_t __cifs_readv(
- 	ctx->direct_io	= direct;
- 	ctx->len	= len;
- 	ctx->cfile	= cifsFileInfo_get(cfile);
-+	atomic_inc(&cifs_sb->outstanding_aio);
- 	ctx->nr_pinned_pages = 0;
- 
- 	if (!is_sync_kiocb(iocb))
-@@ -4881,6 +4903,7 @@ static void cifs_readahead(struct readahead_control *ractl)
- 		rdata->offset	= ra_index * PAGE_SIZE;
- 		rdata->bytes	= nr_pages * PAGE_SIZE;
- 		rdata->cfile	= cifsFileInfo_get(open_file);
-+		atomic_inc(&cifs_sb->outstanding_aio);
- 		rdata->server	= server;
- 		rdata->mapping	= ractl->mapping;
- 		rdata->pid	= pid;
-diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
-index 8937095184ca6..48197d47ee821 100644
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -1185,6 +1185,7 @@ cifs_aio_ctx_release(struct kref *refcount)
- {
- 	struct cifs_aio_ctx *ctx = container_of(refcount,
- 					struct cifs_aio_ctx, refcount);
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(ctx->cfile->dentry->d_sb);
- 
- 	cifsFileInfo_put(ctx->cfile);
- 
-@@ -1211,6 +1212,9 @@ cifs_aio_ctx_release(struct kref *refcount)
+ 	/*
+ 	 * Cylinder group number cg is in cache but it was not last used, 
+@@ -205,7 +207,10 @@ struct ufs_cg_private_info * ufs_load_cylinder (
+ 			sbi->s_ucpi[j] = sbi->s_ucpi[j-1];
+ 		}
+ 		sbi->s_ucpi[0] = ucpi;
+-		ufs_read_cylinder (sb, cgno, 0);
++		if (unlikely(!ufs_read_cylinder (sb, cgno, 0))) {
++			UFSD("EXIT (FAILED)\n");
++			return NULL;
++		}
  	}
- 
- 	kfree(ctx);
-+
-+	if (atomic_dec_and_test(&cifs_sb->outstanding_aio))
-+		wake_up_var(&cifs_sb->outstanding_aio);
- }
- 
- /**
+ 	UFSD("EXIT\n");
+ 	return sbi->s_ucpi[0];
 -- 
 2.53.0
 
