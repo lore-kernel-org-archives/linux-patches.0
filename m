@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058917;
-	b=HBEoyXaQ6IHdVsbIegiq8tCNeJmqQlfXKhZTtFRPvUA6XbChQDZIQKWfbjN1asqTlws/
-	 dCVuFwEKaHK0RlLUmS1OIFhzV67xg2exRFFgbHkF0nouH5ElAc3UrDL5OFJgsK+9xEv1o
-	 0do4Nl78z2+ZhRJ/YH4dOe74kFCU825zoWtHCT4PcFBn9reyQ3fidIyUGtH3mIZVSrvj9
-	 NfdP0bjC2C2L27979JUyHgVmQlR4VqokwhoM3bn7fC9aETs4tPL0jrXbMHQMdISImRISh
-	 1OuZG7J2HIvP/JG0+Y0F/giT+szI8yAUks82QPiCYjPZiwkqAwZqHyr5CN7Ja3SqDDA==
+	t=1795058920;
+	b=RJfpVt8ns5/1PGq/ZfbC7e78Ys27IJmJ6+3amZkfcMczDC9uAGyyxNfTtgktWnYp7imt
+	 hfOPxNcFU1turensGk7Nl78qhN944iNgvkgl/1DuV9ra8n6VbzIR8exvO6flefOvdu+oW
+	 ALCfZmtxi0/PIAxLiVrE+tmJweNryUHomnhX59vGWHBPqt8UcGltDl7aWPPoo0dYL8syC
+	 MRLzAnKRK7EftrhrE399PbwwJZeTnLva9VgclPlv3UcIbZ6teEVyBqutq5X94ewfs0TY1
+	 zDbl5u/geJbgnZJFK0AaJTV490U/hYRuOmyp7FPF8P1M749G33MwNEHF+6LSz+ciSRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XGBbnFInffFpnHlUn2JZT7vInJP+HC1goaI2JP/zoUE=;
-	b=AlU4x83p3+Uqcd8f6spubXYzLA/FOkvEdbtsasY7+1X2aZ2+U4D//DHMc+vpE/Yjt5BF
-	 C/qguYAe822V7o+xzyfr1wJ0zAozuP3pcYdW58Y71YoWNcgHDZSNImIllsTlDbe596zd1
-	 uJJfqhNJuUXApk+PQvSAA7MGljphadh7e51NX/aOm0ObI/sug8R6vqp8ap+jQ17VcbnOa
-	 RjnJrV9taV8cqqsyoHTd6oLDaTSlUrUzfcZY2hpxLWQNr5YzC+LlUtzpQMKELQ8QBOW1V
-	 bNbPTga9ANjQtsoV7jgkt4O97fklGBntb0KO8rAYvq4NQOW4H1LvFqZ/0WXhpUryMug==
+	bh=/02S7qt8gzwgYfxzT+PeccMcpfePVbojiPXuah63K9M=;
+	b=VmGR90VlwOSl82oU/ynC8YtdmX/ujIIo7YHJFFcqMgg9VegN/w8DhCklMFJm9iA3Si1n
+	 clr4RFwxSyaqjpjao6p9Y7XugDwQTP/sPvF5XsX7ZSVJzb4gdQcVuznwsUSRdAZ2OX/35
+	 9pZu9VyUsFyL3OR8b20nQYq5omYb1F6m+O1rctobAhXfEVjeVugAWz3m9SoeX7kgpusTk
+	 LLT108AGrwvlPids05Cb8aPC3mzW0cellEQUE8L8auz1CV1hgShiceONZH1E6joGgaWTc
+	 fppZyF4UTNWZCAg7BHS3VDQ4V8Q1YOJMhtVE11WsOcMvqwkMG+PlzJi//0iPtyMXk8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x/5MncIX";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FDVV40ST;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACABA606A320;
-	Thu, 19 Nov 2026 03:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2206606A326;
+	Thu, 19 Nov 2026 03:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x/5MncIX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077591F000C5;
-	Thu, 19 Nov 2026 03:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FDVV40ST
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC1E1F000C4;
+	Thu, 19 Nov 2026 03:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058917;
-	bh=XGBbnFInffFpnHlUn2JZT7vInJP+HC1goaI2JP/zoUE=;
+	s=korg; t=1795058920;
+	bh=/02S7qt8gzwgYfxzT+PeccMcpfePVbojiPXuah63K9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x/5MncIXezax2qiOZZcy3DwYxzzKG9lIeNzDcb7f6hGivifokSha38LMHbg/4YvVl
-	 svTx7fN9U2zT8TNmBX11ykpVl9JgCiW7ggj8I35KibB5KD0SCD4QQc7BeplGZ0Pq6l
-	 Y6AV6dpjU7nsEv6qRcmmVMlfgm9B3IX/gCF+8eQQ=
+	b=FDVV40SThzWhNm/RDNI/kxdiZ3idIh6SHI1RR9jEFo4ukNk1gsUsK4JCzZ4e3pCmx
+	 n8yxkALZQ6ZIzJqqLiVBUz9ynBXiBGOSCFj2NTZMtO9GALoPNlAR2dr+MvlOBm2VIC
+	 MvEYJwP7KIfdVQj6DU5KOKRU3YmR0+0r1KUikIrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0656/1848] net: bgmac: enable interrupts only after NAPI is ready
-Date: Wed, 18 Nov 2026 15:44:54 +0100
-Message-ID: <20261118145943.258274648@linuxfoundation.org>
+Subject: [PATCH 5.10 0621/1848] ovl: check that the parents of volatile/dirty are dirs
+Date: Wed, 18 Nov 2026 15:44:19 +0100
+Message-ID: <20261118145941.375298822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,77 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit ac1f6e58cb77bb66b8811f7d98703e0f076a8f65 ]
+[ Upstream commit e34d2ef818e4c7676d8d8e1bf43e6a1ed39efb2a ]
 
-bgmac_open() calls bgmac_chip_init(), which unmasks the interrupts and
-enables the MAC receiver, before request_irq() and napi_enable().
-bgmac_enet_resume() also enables NAPI only after bgmac_chip_init().
+An unprivileged user crashes the kernel by mounting overlayfs with the
+volatile option.
 
-When frames arrive in that window, the first RX interrupt masks all
-interrupts in bgmac_interrupt() and calls napi_schedule() on a NAPI
-instance that is still disabled, so nothing is scheduled. Nothing
-unmasks the interrupts again, the RX ring fills up and the interface
-stays deaf until it is brought down and up without traffic.
+A dentry that serves as the parent of a lookup must be a directory.
+ovl_create_volatile_dirty() walks work/incompat/volatile/dirty by name,
+and ovl_lookup_or_create() returns an existing entry whatever its type.
+A file or a symlink that another task creates during the mount becomes
+the parent of the next lookup, which calls a NULL ->lookup.
 
-On an Asus RT-N16 (BCM4716) a single "ip link set eth0 down/up" while
-a host sends UDP to the router left INT_MASK at 0, INT_STATUS with RX
-pending and the RX DMA idle on a full ring, with the RX packet and
-interrupt counters no longer moving. With this change, 10 of 10 such
-cycles recovered on their own.
+An unprivileged user mounted overlayfs with "volatile" in a user
+namespace while a second process created a symlink named work/incompat,
+and the mount task oopsed on a NULL ->lookup call.
 
-Request the IRQ and enable NAPI before the chip is initialized.
+Fix this by returning -ENOTDIR from ovl_lookup_or_create() when the
+caller asked for a directory and the existing entry is a non-dir.
 
-Fixes: dd4544f05469 ("bgmac: driver for GBit MAC core on BCMA bus")
-Fixes: f3537b3494c0 ("net: ethernet: bgmac: driver power manangement")
+Fixes: c86243b090bc ("ovl: provide a mount option "volatile"")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261010070011.60403-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+[ sashal: replaced end_creating(child) with dput(child) while retaining the existing explicit parent unlock ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/overlayfs/super.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
-index a4f6143e66fe9..19177f90c2329 100644
---- a/drivers/net/ethernet/broadcom/bgmac.c
-+++ b/drivers/net/ethernet/broadcom/bgmac.c
-@@ -1183,9 +1183,6 @@ static int bgmac_open(struct net_device *net_dev)
- 	if (err)
- 		return err;
+diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
+index 5d7df839902df..5b50a3c2289aa 100644
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1242,16 +1242,23 @@ static int ovl_check_rename_whiteout(struct dentry *workdir)
+ }
  
--	/* Specs say about reclaiming rings here, but we do that in DMA init */
--	bgmac_chip_init(bgmac);
--
- 	err = request_irq(bgmac->irq, bgmac_interrupt, IRQF_SHARED,
- 			  net_dev->name, net_dev);
- 	if (err < 0) {
-@@ -1195,6 +1192,9 @@ static int bgmac_open(struct net_device *net_dev)
+ static struct dentry *ovl_lookup_or_create(struct dentry *parent,
+-					   const char *name, umode_t mode)
++					   const char *name, bool is_dir)
+ {
+ 	size_t len = strlen(name);
+ 	struct dentry *child;
+ 
+ 	inode_lock_nested(parent->d_inode, I_MUTEX_PARENT);
+ 	child = lookup_one_len(name, parent, len);
+-	if (!IS_ERR(child) && !child->d_inode)
+-		child = ovl_create_real(parent->d_inode, child,
+-					OVL_CATTR(mode));
++	if (!IS_ERR(child)) {
++		if (!child->d_inode) {
++			child = ovl_create_real(parent->d_inode, child,
++						OVL_CATTR(is_dir ? S_IFDIR :
++								   S_IFREG));
++		} else if (is_dir && !d_can_lookup(child)) {
++			dput(child);
++			child = ERR_PTR(-ENOTDIR);
++		}
++	}
+ 	inode_unlock(parent->d_inode);
+ 	dput(parent);
+ 
+@@ -1272,7 +1279,7 @@ static int ovl_create_volatile_dirty(struct ovl_fs *ofs)
+ 	const char *const *name = volatile_path;
+ 
+ 	for (ctr = ARRAY_SIZE(volatile_path); ctr; ctr--, name++) {
+-		d = ovl_lookup_or_create(d, *name, ctr > 1 ? S_IFDIR : S_IFREG);
++		d = ovl_lookup_or_create(d, *name, ctr > 1);
+ 		if (IS_ERR(d))
+ 			return PTR_ERR(d);
  	}
- 	napi_enable(&bgmac->napi);
- 
-+	/* Specs say about reclaiming rings here, but we do that in DMA init */
-+	bgmac_chip_init(bgmac);
-+
- 	phy_start(net_dev->phydev);
- 
- 	netif_start_queue(net_dev);
-@@ -1609,10 +1609,10 @@ int bgmac_enet_resume(struct bgmac *bgmac)
- 	if (rc)
- 		return rc;
- 
--	bgmac_chip_init(bgmac);
--
- 	napi_enable(&bgmac->napi);
- 
-+	bgmac_chip_init(bgmac);
-+
- 	netif_tx_lock(bgmac->net_dev);
- 	netif_device_attach(bgmac->net_dev);
- 	netif_tx_unlock(bgmac->net_dev);
 -- 
 2.53.0
 
