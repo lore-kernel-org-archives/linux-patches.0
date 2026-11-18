@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024595;
-	b=wz/0YGVFrofNHQcwXViqo9C5oj4I7W5hJF59yx44ZwL+6nxvfuP6bsg6aEu96hW7Dm0n
-	 TldpZSTMXceQ8NuSlSNP0PAAUXu3Y/09ZgxufYWv6FeSJ21KzVbX5IIa4/b7iY5hTc2vc
-	 IQgRVY1xmhd1rGSM7juX44y3azG62DrUmYxs/g7yVkFcvxjQ0XpP35Y1meUk93RHkU5fU
-	 957uaSgYCWnSJQtVkWRsXOWa29hg03tr98U78RwPS5FaEvQxbDhmK6HF8E+aLg5O7lVCv
-	 R+zO3DSL6USTLLcNASsdvnnn503alHkMOckhGFcvPDJrS2UwvetsEvViHJ9tFYloIFg==
+	t=1795024598;
+	b=OyPk0GD9guhbTKY7L2L+TCNahzS4kxnW+8nmE5NekmdHP77pDTfOOFk3H41149AjGJ9f
+	 p1OfBreHXmJsY/Z8di15eKT4YOycrQTnx4/EnALL0TLgyPLanXpsU3gIit2l/gMcKZQM8
+	 LuAZKm/AvkZfJLLTAwfjovdwy8AGXzKKQ0zP9mMkLPGl4IKSU5b5O5JdZKzAUKUjQNvHs
+	 CqnD9wxug7nc2alUtKRgFR7oDawuROwXhuU5aE+Alc6Qy/XMp8GgTO8aXDF3aTVsKrFow
+	 Vy7qOpvbeOwIGdGMu76b/zhPbR5zq07i3nynZduvGegtfJSMet8TA/ZZNHX7/1Lk6Mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jP5QSwDtKLD6WK26wmN4mNpFDinIrg2OxP35ROZCe5M=;
-	b=Yie/kdsTrl83OgUzls7RToX+Qc6TAOH5WrZUT0ZsX6SSJhvH0c9x0VQ3+5knFiJ2uW4/
-	 p5nfqLxP1wgt+WqQe4aFO/6XJvvHFXDYvesu0FMLNTncOuwtIXUEMuC0gybZV1ufXg73k
-	 cZWa1QapBjmzarqvzNm6wjgnWx0sSlFJGwypkkKy7Bzy5BQ0cP8OouI1X++l1HCs24S/m
-	 Bc8/AAozKY1U8iEUmGsLYK47X0d5NntpBGNQqFp3DdS3ZAhI7Bz0aIkBbga9sz1nRDSBq
-	 z/RvzMGvcLU2OZx94XW/DM7ohSulEey+iKOEQSfulXMixmiyGV0SUOS+8udOB4vO3sA==
+	bh=TlVUF7DtHJ0UU6atR/+FJ/BJkxi/qV0M7i8Y9SnTh18=;
+	b=fRiO7+KaOm7lHNj+IPq/qyVmnE8jpiZnbWxWkDIgOPmrmBxVFmduIRk2Vcei4W7371nP
+	 35ceBg2P1YW7Aa3hw4pbR7iLOfPUpRzChIlnje20vzas6r4v4Wn8tgIfYSZpxTRiFpplY
+	 uDZbImmfZTUmC60mnH0em4uUdEjA5PDUI8mc5j59GwczZ6gG+sZ/XhJTfaDNQmwxnhl5b
+	 +xEzKI+a4W5eMjxEEmHEkuShd7UugjPrW9RwRzniJtp8tAMIu9BItKdpftyMJ72+NkImG
+	 fa4mg+EaYG4ZMcT1tFr+bXVGsUc+GhoVbyJQWzPf09pYSYmHNBRNLKnAnkRk3wUCpOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNN0dX7T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUjzAYOQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E37606A320;
-	Wed, 18 Nov 2026 17:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1983F606A325;
+	Wed, 18 Nov 2026 17:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNN0dX7T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B801F000C4;
-	Wed, 18 Nov 2026 17:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUjzAYOQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722FF1F000C4;
+	Wed, 18 Nov 2026 17:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024595;
-	bh=jP5QSwDtKLD6WK26wmN4mNpFDinIrg2OxP35ROZCe5M=;
+	s=korg; t=1795024598;
+	bh=TlVUF7DtHJ0UU6atR/+FJ/BJkxi/qV0M7i8Y9SnTh18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BNN0dX7TSdeVvsdV2fV7qk31GKaUThAHQOut1oSwoCoJ/oFlaE2e/svPVgRdy5uyT
-	 +gtyqUlRjvFGqrWJQ6f4ICqt/q7iniU5suUqPTNHs9jLH1BItF2L3/qcyBpNW4iN0m
-	 O7EhedGM0xMTTrpXPaftkzoo3Kp7+5+FHk9xl74s=
+	b=DUjzAYOQg/Wtsr+PsXLwPik4jvmK1xYTp0ZSAerEk6FtdljnPuKIkgRwsW5LKrPeC
+	 4lEIgWxWKiXiM1bNJLYJ3yt63qQkD97CLP9TRh1XBirkon2S6E3d7PBcKF2JlXyTBk
+	 V1SF9QIKZUOt7IFXk+fS0iJ/RjKTQBqfRczmQgmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0740/2151] wifi: ath12k: avoid double DMA unmap of held monitor RX buffers
-Date: Wed, 18 Nov 2026 15:41:15 +0100
-Message-ID: <20261118150148.999956654@linuxfoundation.org>
+Subject: [PATCH 6.18 0741/2151] wifi: ath11k: fix reg_info_store leak in ath11k_service_ready_ext_event()
+Date: Wed, 18 Nov 2026 15:41:16 +0100
+Message-ID: <20261118150149.035842182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,64 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <kang.yang@oss.qualcomm.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit febe1f8cbccc3434790bfc4d94d40c9dbd803065 ]
+[ Upstream commit 64828f091c7de5c1324427b140fb545f93ef073f ]
 
-ath12k_dp_cc_cleanup() assumes that every rx_desc_info entry with a
-non-NULL skb still has an active DMA mapping and therefore always
-calls dma_unmap_single() before freeing the skb.
+Currently, while processing the WMI Service Ready Ext event, the iterator
+in ath11k_service_ready_ext_event() can dispatch the HAL Regulatory
+Capabilities handler ath11k_wmi_tlv_ext_soc_hal_reg_caps_parse() which can
+allocate ab->reg_info_store.
 
-This assumption is not true for the monitor RX path.
-ath12k_wifi7_dp_rx_mon_mpdu_pop() may DMA-unmap a buffer and mark
-rxcb->unmapped before returning early to hold the MSDU for later
-reprocessing. In that state desc_info->skb remains populated, so
-module removal can trigger a second dma_unmap_single() from
-ath12k_dp_cc_cleanup().
+If a subsequent failure occurs during iteration, the ab->reg_info_store
+allocation is leaked.
 
-IOMMU reports the issue as:
-  dma_unmap_phys()
-  dma_unmap_page_attrs()
-  ath12k_dp_cc_cleanup()
-  ath12k_dp_cmn_device_deinit()
-  ath12k_core_stop()
+Directly free and clear the pointer on the error path.
 
-Skip dma_unmap_single() when rxcb->unmapped is already set and free
-the skb directly.
+Note that the normal cleanup function ath11k_reg_free() cannot be used
+since other regulatory-related fields are not yet populated at this point.
 
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+Compile tested only.
 
-Fixes: 72bfbf19b7da ("wifi: ath12k: add support to reap and process mon dest ring")
-Signed-off-by: Kang Yang <kang.yang@oss.qualcomm.com>
+Fixes: 7004bdceef60 ("wifi: ath11k: store cur_regulatory_info for each radio")
+Assisted-by: Claude:claude-sonnet-4-6
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260916060325.854-7-kang.yang@oss.qualcomm.com
+Link: https://patch.msgid.link/20260817-reg_info_store-leak-v1-1-77025a99b074@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp.c b/drivers/net/wireless/ath/ath12k/dp.c
-index 4a54b8c353111..f89dd62a117a0 100644
---- a/drivers/net/wireless/ath/ath12k/dp.c
-+++ b/drivers/net/wireless/ath/ath12k/dp.c
-@@ -1180,10 +1180,11 @@ static void ath12k_dp_cc_cleanup(struct ath12k_base *ab)
- 				if (!skb)
- 					continue;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index c6b9e84b169c9..f12c1c380ed2a 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -5084,6 +5084,15 @@ static int ath11k_service_ready_ext_event(struct ath11k_base *ab,
  
--				dma_unmap_single(ab->dev,
--						 ATH12K_SKB_RXCB(skb)->paddr,
--						 skb->len + skb_tailroom(skb),
--						 DMA_FROM_DEVICE);
-+				if (!ATH12K_SKB_RXCB(skb)->unmapped)
-+					dma_unmap_single(ab->dev,
-+							 ATH12K_SKB_RXCB(skb)->paddr,
-+							 skb->len + skb_tailroom(skb),
-+							 DMA_FROM_DEVICE);
- 				dev_kfree_skb_any(skb);
- 			}
- 
+ err:
+ 	kfree(svc_rdy_ext.mac_phy_caps);
++
++	/*
++	 * During TLV iteration the WMI_TAG_SOC_HAL_REG_CAPABILITIES
++	 * handler may have allocated ab->reg_info_store, so free it
++	 * on error to avoid a memory leak
++	 */
++	kfree(ab->reg_info_store);
++	ab->reg_info_store = NULL;
++
+ 	ath11k_wmi_free_dbring_caps(ab);
+ 	return ret;
+ }
 -- 
 2.53.0
 
