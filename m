@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018179;
-	b=TiejvWiijv/rdofk51urrIm9VgOy817Zyz7yrDKrinL1IEf/3YeuYeHLUz6ICP2koCdy
-	 mtHQWgZCIxcpq4FQSJ/bv0xEQRQ/m+JrK2aCBjgXDE537h9lvKRWHfr/K7HgdFra3LNiJ
-	 v6eUKKLH553R8/ZeVjKC5tErUBwwwPnw+p7Jf4Gf554Y+MX/dE8lMu+cHX5F4iTkTrAYL
-	 GCjvOwaKOuQofWq/cfxrQAX58ogMZm8ywzm2AzZRHn6Nbj2kIKXiw3L4Xd1GY71o7i/lr
-	 aV2801XD6El1442zrSXt85QRcNg/NKaDa0XXDP1ZLgkaeByRtB9LAC5tzVwlz9gZqyA==
+	t=1795018182;
+	b=RvDN9ksDym8IkfGpHrWEzPe7xdg3XrX9/OCCq0u8gt2IRriZaky5NC8aCbrU1I4raHZ0
+	 lKia56ydz+SHEHVCzHF+Je7qEQQmDMcb0y4x6/UN9q+3uqDAzXLpjqzzy7IW+Jod2Yt0T
+	 2u6zkUoV67guh4ZJLpZwmwZ+BVHxrW/If985ulw3B+1le7hAu6yePmXbx1D/Rw2J1yLvI
+	 AWu2vEVQ7aEhxovtnTP7UgNkOwfLrY/B02Z6M8iqwE1JQGg08jd42GipQ3PtXHRghqHnC
+	 NfSVdkeWqlFWwK7uokIj3vbccVTIOsNDLua/A3D04VO9614Dodxiu9FfAtFEAA67ozg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018179;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ExV3F7qTViIOma2PbQ7XfMiANQty8Pnxib7/F6IssBY=;
-	b=ZnHcNcrioggeWp1C5mC1mLpp9jwvRvP3baRNbwbTJOM/aiGfTdg6qb3H5xJCc+bVg3pt
-	 h624KlDOmX14pxgkptdaMeN6oyt406XAGfuFGBG49XqgNFEhWuUfWQ2qwdv+NWPV76+l/
-	 hAJVblo4bu8lKAwzSKw8hP5sdAWfjv6J3GDfcsNPEN2eqbNI21D6y3dFnD2sxtFaXRNBn
-	 NPWoDvef/DX+/vQTcxxOeXXxbpC5eFjD6Djmqs1nBd8NegM5coleDfEjb9ynhmyQInayv
-	 XAVxqopCSo+Gw5V8smkacaFmQqbGvlL2UeaWmBAlpVtGCytOZUXs1ACH8s64G+KDAsg==
+	bh=/kHln4jl65lESf+29oW14mvkmbLA+0zAgU7vOw3RmKo=;
+	b=4urnaDqV2+Q8oaYS9XksFvV9bToyc09BRcLKs2zU5InImXGkxcE+JxLigyVRGtcMhK/F
+	 aBd+SIRe+oSHa4QcdNE+eGAmg/VPpfQT53RwHpp1B0H+0nDXVfwq1ViFzN4JezSIrXqCf
+	 T0lhSpo4W0czYcOwX/Q3vxplsD+Rj+B6C5DbQipfR0stwtdiZnRKUWlgmrPo5kGpmKD4F
+	 yCieTqHLV5YthI3pHhnrR0yZy3l/eFX9byUh5eySonSoOnkD74LH0YMVDBKj8CK4sLA8G
+	 vipZs0kG168pAcJOcsuIdsX3PUOPhZl5V60rEc9dWpDzIcV8XBc+lrJ9CMkJ+VZa0lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FATOzonN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ndag1r4A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE21E606A320;
-	Wed, 18 Nov 2026 16:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F80D606A32A;
+	Wed, 18 Nov 2026 16:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FATOzonN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4C01F000CC;
-	Wed, 18 Nov 2026 16:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ndag1r4A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A641F000CC;
+	Wed, 18 Nov 2026 16:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018179;
-	bh=ExV3F7qTViIOma2PbQ7XfMiANQty8Pnxib7/F6IssBY=;
+	s=korg; t=1795018182;
+	bh=/kHln4jl65lESf+29oW14mvkmbLA+0zAgU7vOw3RmKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FATOzonNvh7Gm7mqI6f+RgviYNLIioGvNrcOAbUrvbIjiixL3pDumub1kVDMjUHt6
-	 69zT3goejbxRAgowzVLbAR59SLxN0ovYRnzrzdJrj47KWNhumokO8aSADgFjuX8qg7
-	 dkYIJNdBi9T9ubHuOiR72N2i9HOLamDg9xozclHo=
+	b=ndag1r4A7lkplODtt3Y+rt74uWk06uw8FwBdrByGHMT++akETJhX1/5VWsL9QNN9J
+	 fHPM7jtfcdL31IDz9w+qFx2NYkcfAz+SCEoIQRuoib99B9WcXQc+gGY+JRhI+pC0Ee
+	 IGVUK6vShilFajGhz1dS9B6rqwX45Jp4FFoLqHzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Adrian Tomasov <atomasov@redhat.com>,
+	Kris Pan <kris.pan@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1131/2651] drm/amd/display: fix unused function warnings
-Date: Wed, 18 Nov 2026 15:39:31 +0100
-Message-ID: <20261118150328.725720300@linuxfoundation.org>
+Subject: [PATCH 7.3 1149/2651] net: iterate online nodes in skb_defer_free_flush()
+Date: Wed, 18 Nov 2026 15:39:49 +0100
+Message-ID: <20261118150329.373713512@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,59 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kris Pan <kris.pan@intel.com>
 
-[ Upstream commit a387d5d707850627b0a6d6fd479afc7c83cdb02a ]
+[ Upstream commit 56fbbb662795b29f4d12a55cb1b456553a6ec3b0 ]
 
-When CONFIG_DRM_AMD_DC_DCE is disabled, most functions insde dce110_hwseq.c
-are no longer referenced, causing a lot of warnings such as
+skb_attempt_defer_free() only queues skbs on the current CPU's node
+(numa_node_id() of a running CPU), which is always online, so the
+flush loop never needs to visit nodes that are merely possible.
 
-drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dce110/dce110_hwseq.c:3510:13: error: 'dce110_enable_analog_link_output' defined but not used [-Werror=unused-function]
- 3510 | static void dce110_enable_analog_link_output(
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dce110/dce110_hwseq.c:3391:13: error: 'dce110_set_cursor_attribute' defined but not used [-Werror=unused-function]
- 3391 | static void dce110_set_cursor_attribute(struct pipe_ctx *pipe_ctx)
+for_each_node() walks node_possible_map.  On machines where the
+possible map is much larger than the online map -- e.g. a POWER10
+LPAR with 32 possible but 1 online node -- the flush loop touches 31
+cold, always-empty per-node lists on every softirq pass.
 
-Replace the #ifdef with an IS_ENABLED() check that leads to an empty function
-in this configuration, so the compiler can eliminate the unused functions
-and not complain about it.
+Use for_each_online_node() to iterate only node_online_map.  Nodes
+that go offline are drained by dev_cpu_dead() ("net: flush
+skb_defer_nodes in dev_cpu_dead()"), so the flush no longer needs to
+visit offline nodes.
 
-Fixes: cd2cfe4d1504 ("drm/amd/display: gate DCE ASIC code behind CONFIG_DRM_AMD_DC_DCE")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Loopback UDP throughput in a QEMU guest with 32 possible / 1 online
+nodes (bench_udp, 8 senders, interleaved runs) improves by ~5%.
+
+Fixes: 5628f3fe3b16 ("net: add NUMA awareness to skb_attempt_defer_free()")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Suggested-by: Adrian Tomasov <atomasov@redhat.com>
+Closes: https://lore.kernel.org/oe-lkp/202512112119.5b9829a-lkp@intel.com
+Signed-off-by: Kris Pan <kris.pan@intel.com>
+Link: https://patch.msgid.link/20260928014708.3903028-1-kris.pan@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c  | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index f974968af21b2..f593aae34745e 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -3619,7 +3619,6 @@ void dce110_disable_link_output(struct dc_link *link,
- 	dc->link_srv->dp_trace_source_sequence(link, DPCD_SOURCE_SEQ_AFTER_DISABLE_LINK_PHY);
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index e0ce0fd728a8b..455ee43c248b1 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -6972,7 +6972,7 @@ static void skb_defer_free_flush(void)
+ 	struct skb_defer_node *sdn;
+ 	int node;
  
--#if defined(CONFIG_DRM_AMD_DC_DCE)
- static const struct hw_sequencer_funcs dce110_funcs = {
- 	.program_gamut_remap = program_gamut_remap,
- 	.program_output_csc = program_output_csc,
-@@ -3685,9 +3684,8 @@ static const struct hwseq_private_funcs dce110_private_funcs = {
- 
- void dce110_hw_sequencer_construct(struct dc *dc)
- {
--	dc->hwss = dce110_funcs;
--	dc->hwseq->funcs = dce110_private_funcs;
-+	if (IS_ENABLED(CONFIG_DRM_AMD_DC_DCE)) {
-+		dc->hwss = dce110_funcs;
-+		dc->hwseq->funcs = dce110_private_funcs;
-+	}
- }
--
--#endif /* CONFIG_DRM_AMD_DC_DCE */
--
+-	for_each_node(node) {
++	for_each_online_node(node) {
+ 		sdn = this_cpu_ptr(net_hotdata.skb_defer_nodes) + node;
+ 		__skb_defer_free_flush(sdn, 1);
+ 	}
 -- 
 2.53.0
 
