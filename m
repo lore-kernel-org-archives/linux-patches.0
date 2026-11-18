@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015831;
-	b=4OV5vX7p15oeWhBMI3pqNJ+trtv2u7WdvVIoRIotxFf8EDmSM2TzaXMdPeXCx3b3fi5B
-	 BrfxTD4cpxG1pq/YUIym3NXX1yt6u3Q7WH4FaKq1s0dLaadclfEcpWkCX/6dZNTTaS4D+
-	 hq7O+0pfu7OZtMSm+nsk1klbho1sFh8C7qiyOLvIjg8cACZO5kHGWDgyLgeXDANYhQgdY
-	 8XhqBt17EmcRv2IDYlbOV/D8IV4cFKU+RqxTLpNobb8lMgA7On6BtsSln8PUJ5s1su867
-	 KwtO7NjTPhqCMN4oxskDYjsRFvyNCpdJF+9hneW/Nyc+p2PUrvcBUSCpciBuIeaXexA==
+	t=1795015834;
+	b=R/YgzWSfYy2hplUv5/N2WXULlrr2J/I7dZ8d4bARXbkvx/Qm1hS3XuyX0ziMPcnqGz5t
+	 k71sNdrguZLaDOpCRTzw1fOL46BOWaqZNOz+AUvksgrhqiarAGtEFpjT5IMfSZg3WGMQW
+	 oqL6HalepL9XCJ5/JZBa/EN9dF2R3rlJOlw76Kd3zkukdiusBrLR1LBhQ27iYG6ZNNEVG
+	 WVuJb8PEzIoyqHGPSF/WLZX6Br3Vmha95SHNdmecUTAUbEQ0suTGZmuNbnY5cEXLZ40KY
+	 T/Ziae52o+Fypoc8rRpLcqKwlx/IfdtmpzIe0H2voxShwvdTP/mbayg8NArVQEUkM3Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015834;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/YHzInVqNnYJiO5BLtedYH7yYsJsEOCGOaq6ylf7w2c=;
-	b=2BqhEgtAoQPC0WBMkCIrN1IPkJYwwZvarg1PTmdIM9uEw5ocBofkthOpq6+QzRgn5rQy
-	 /msVoNTvvq+GEhnFiYZIdl3lhSYrL9aus4RxOQK9Ykv4otX/TwOtF6lVXmNCzLExMradj
-	 d2zu9NYTyj0MPyKF4qGoR+TYtOnglDeXV0OQPRArJ9BpSohW4JMvt6LLjYieC5O59JvbA
-	 aGrPuoX4indRrIaZzSKeT7je/iVt0NEF5rzXK0dw8fEVDXQgP5uv7ALdffgme7iel0PPq
-	 nJ56sR2QJzPyqqUx+VnTg64/b5c+ffp4T4oA4AklO5whprUIjbHL2iqfRuvStLFrxFA==
+	bh=zIfaAGqvHmRqw6+/JfP58lSXWq7buYaIQRNDyuvjW6c=;
+	b=TfDU+VSnlA4zdAyrVJB9QxyRMKodSqz5/p3VxhF2i2x3s5XgamzM13F6oW94qURDV3Qu
+	 rau4JWRwLeCE7xKRC6eXK0EwEw8NxddGGldTFA2V21x2esx+FbHBo5KreudFfUpYBqoWJ
+	 96Lm/Rf6Uhih5ZJC5xohSUAFDPuoM7pU/d8lESlvAJhxXj09e7kTiJBjzq1eO+AsasyvU
+	 52RRQpFgrJ+uvj+eloy+zhvLyBb4nMgadyZ7TPSGiIoYnOrACQCWgg5MayFciOLNxb4t0
+	 tfqDkDV3e8X5pVHWA+zxZwiSIzU+sq23wSUG6VX6lB3S9afsAau1hGhtXqFwVr4elzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nP5APk2c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fpFxer/g";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE2E60A2636;
-	Wed, 18 Nov 2026 15:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BBC6606A32A;
+	Wed, 18 Nov 2026 15:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nP5APk2c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35FB1F000C4;
-	Wed, 18 Nov 2026 15:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpFxer/g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 958BC1F000C4;
+	Wed, 18 Nov 2026 15:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015831;
-	bh=/YHzInVqNnYJiO5BLtedYH7yYsJsEOCGOaq6ylf7w2c=;
+	s=korg; t=1795015834;
+	bh=zIfaAGqvHmRqw6+/JfP58lSXWq7buYaIQRNDyuvjW6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nP5APk2cHc3a/gHFmZIBEC32IMwMM/c6aQRU1W/CnNjY9/1y6DBILa76RA339moX5
-	 H6IWA0rYY/a6+EBVHlK3qLYctEimzadCzfyfg8/Hs+d62IYbjBD1RGh5lKBmRfq02Z
-	 AsRV1zRzqCPjekWto0hG7kTt0wQ3ly/TYUJSXE5o=
+	b=fpFxer/gWKU10NgWY0YgUfej4inIMxtYJkRpGSopZov4xUGv3A7zFvhOwNyJMLuSx
+	 UejZ2S+mBJ62N7zoUu+KQIF+utywIs+MLcgNT60po4TJ/XKtMu7BOxj/Aj7suIPK+J
+	 qO4w9HbQONiSED/eLz4gBtaHpRVYDfRh6wjf6KAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0313/2651] ASoC: rt1320: avoid re-initialize in advanced mode
-Date: Wed, 18 Nov 2026 15:25:53 +0100
-Message-ID: <20261118150259.157266904@linuxfoundation.org>
+Subject: [PATCH 7.3 0314/2651] wifi: ath11k: modify null check logic in ath11k_ce_rx_post_pipe()
+Date: Wed, 18 Nov 2026 15:25:54 +0100
+Message-ID: <20261118150259.188214315@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,42 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
 
-[ Upstream commit 04c3ee0f5d158f6e2027c7ef617044cb649ab4ab ]
+[ Upstream commit 52953d149ab4da0432d54b09f3c8add42b4d4a82 ]
 
-On some machines, speaker protection is enabled.
-We call this advanced mode, which loads the DSP firmware and changes settings
-based on the basic mode, including blind writes.
-The amplifier can retain the advanced mode settings until a POR or power loss occurs.
-Therefore, the driver does not need to switch from basic mode to advanced mode
-when the system performs a warm reboot.
-We only need to check the function_status to determine
-whether the system has undergone a cold or warm reboot.
+The previous logic in ath11k_ce_rx_post_pipe() incorrectly required both
+dest_ring and status_ring to be NULL in order to exit the function.
+This caused the function to continue even if only one of the pointers
+was NULL, potentially leading to null pointer dereferences in
+ath11k_ce_rx_buf_enqueue_pipe().
 
-Fixes: 9b30521074f0 ("ASoC: rt1320: run the initialisation preset on the first hardware init")
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260909091806.872977-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the condition by modifying the logic so that the function returns
+early if either dest_ring or status_ring is NULL.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://patch.msgid.link/20240909150824.28195-1-m.lobanov@rosalinux.ru
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1320-sdw.c | 2 +-
+ drivers/net/wireless/ath/ath11k/ce.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
-index 72af413306fa9..444a91755be98 100644
---- a/sound/soc/codecs/rt1320-sdw.c
-+++ b/sound/soc/codecs/rt1320-sdw.c
-@@ -2470,7 +2470,7 @@ static int rt1320_io_init(struct device *dev, struct sdw_slave *slave)
- 	dev_dbg(dev, "%s amp func_status=0x%x\n", __func__, amp_func_status);
+diff --git a/drivers/net/wireless/ath/ath11k/ce.c b/drivers/net/wireless/ath/ath11k/ce.c
+index c56dd8a867606..1e08b0970b148 100644
+--- a/drivers/net/wireless/ath/ath11k/ce.c
++++ b/drivers/net/wireless/ath/ath11k/ce.c
+@@ -325,7 +325,7 @@ static int ath11k_ce_rx_post_pipe(struct ath11k_ce_pipe *pipe)
+ 	dma_addr_t paddr;
+ 	int ret = 0;
  
- 	/* initialization write */
--	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION) || !rt1320->first_hw_init) {
-+	if ((amp_func_status & FUNCTION_NEEDS_INITIALIZATION)) {
- 		switch (rt1320->dev_id) {
- 		case RT1320_DEV_ID:
- 			if (rt1320->version_id < RT1320_VC)
+-	if (!(pipe->dest_ring || pipe->status_ring))
++	if (!pipe->dest_ring || !pipe->status_ring)
+ 		return 0;
+ 
+ 	spin_lock_bh(&ab->ce.ce_lock);
 -- 
 2.53.0
 
