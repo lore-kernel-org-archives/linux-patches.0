@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043513;
-	b=JSXSvqV0NfQgxv/7mwm2jxuJ3RAc93hhZ+XnydFUgQBzazUwrnwQ5mE5fFSG43rgSoFC
-	 byTpBxCSlXjs4bJckKR+yy8N1S2QCot1WgsuzFoEIcA0QIr6PQEPXyFSoLU8WaatrSIYN
-	 dqvPHhwHTfueoSJM5P7Jpcn/Ycgf1xwzBzprM4GVAqSA0oO9BF2Iq7DKR4Z3d2RYgbeZW
-	 YYyKKkkKa0QMVrud45dptvmxTjZ5FKflFljOsnh/xQpQHW+ZxvZFVNaSRuddz2tVnoZvz
-	 cNfFoRYkyLrk7GO9slpk0CErB4RqYaRR8VER0H1uVi0Zzz/PTppjSzu0L4DJrElwi9A==
+	t=1795043516;
+	b=zc8qnHuT1Yqaz8c2sLLrAP7H8Uzt/GnlKm6TdDJNxYM8KCmkl3FNMt4GFTItcwlFM+T9
+	 8LjFn7zhL52H2Qp8Mp9/X1fUY5nfz3F9HBqhbbvuJakvG9XCQGLz+dK/NRCfqFBGsG98d
+	 n9oh39uYKk8r5mzt7KHVruXZFZyLTjY66maNS1YasxlunryeCy8N4A4GCkmUHODCQnTVA
+	 Ci/HWzxTjq8RFQ49S2dixNz0i9ja4l/KhvMCx3sWMGe6xNMWVQ6mSWGkRYOVm8jE8qwAi
+	 NSTJMjcU2I2ygUY6wG6Og2bcXBYnzhHPSmoj6ugmnjzWOQVcltsougp5qRnoebaAvTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043513;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y4y+cICMcD36g+CbCGJWW4g1Wcrl3liuKotAUBe/gr0=;
-	b=2FTKNjoeZnwWY7pLApzQQNZt1jndDlji8fdJQOXK0FgWdA7G47e7QKdUqSHT9bpdz7gm
-	 1FXhuF5ewqpQAModzRv6pgN0fIHxFHuF8/xqit2ETTwjjyMS2D9u1WPOOMC4uZUCDyL2w
-	 JZfjDluHe2WloK9hiLj/bZMzsn3R2JlwTt3HoVe5b6G1Szlrp+YIXmkTGGS4os85ptu0S
-	 jA4e9vV+gWVAeEBDKP/dBMCvKcX0elbuGnMODxWyPs24VGawet6Eb16NVtK1dgwbU41mK
-	 L1SOQebQbffLoSFEld5hZD3CuGz875DCNLz/mrOzh3framBdLM6MGTee28dK0QUHzyg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=H/R3wI7vrar9OR5vqHy5uVh253M2wYuG5r4WJDVAsVA=;
+	b=txyRQoNw5r4LrxUfSJvKRddykWb9rIKdYaKYf20BdNzlaKE2AoPjHmUzJF+k83KYBwpp
+	 bmZkClj5ZOFWCyu9lFkdublBz5a+/XOP+D7ALXW0zO0qxhku6IYgzKAfnoNV41bB5cfol
+	 kpSt3da3akJa+l9d2xVkk1mHe8ndgf1Ol/V5ek/1KZT4xSNvbspg66TgFQdKOxjVHaaH0
+	 s27vusIA7LMyTxvOMT1g18oninQbMHGieSYrfJfHKr/qA2vZxrnqzqQtizcp/BviXbmed
+	 nDLiZgvE9vnJ4JQbQ9LCfnl/Q5HLGTNPD22H5fyxWuzpj0z1CDSVzBlfU44IPrKdXdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qffHoDNT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQdSZ6nK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32FD606A32A;
-	Wed, 18 Nov 2026 23:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40053606A320;
+	Wed, 18 Nov 2026 23:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qffHoDNT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08711F000C4;
-	Wed, 18 Nov 2026 23:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RQdSZ6nK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B131F000C4;
+	Wed, 18 Nov 2026 23:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043513;
-	bh=Y4y+cICMcD36g+CbCGJWW4g1Wcrl3liuKotAUBe/gr0=;
+	s=korg; t=1795043516;
+	bh=H/R3wI7vrar9OR5vqHy5uVh253M2wYuG5r4WJDVAsVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qffHoDNTl2HQCvc4g7+i9ft4C+J0MxwojAdvvSXvqQJtmE65jheXQQ/OGf8iqFnO8
-	 IVGYlxnp4iqGNTAsFDpC9suo2lKd/pMjP3aFlKzmPsOhLrlOqW6I4qkcrN45Vtnbhg
-	 uFjt6NDjT7JkM1o29wMnu/cVBtxS1GrtPDrJhk6w=
+	b=RQdSZ6nKghu8faJ4GtzFLM2kMW8B0EAm2xD9Y1kobmiikzyY0toqZEbucPtm0AHLZ
+	 b7EWqgpDToWfxfZVhS/KNwHJB9zj44nZWfhsGAieMLFD0MkcoPM2tyC946hVUIsAiR
+	 6V+cDAmJ56xt0Rflsas+V8501VWtNNKp1nBpxMdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0201/2857] soundwire: dmi-quirks: Disable ghost Realtek on Asus Zenbook Duo
-Date: Wed, 18 Nov 2026 15:20:35 +0100
-Message-ID: <20261118150208.589981970@linuxfoundation.org>
+Subject: [PATCH 6.1 0192/2857] net/rds: hold the socket while an rds_mr references it
+Date: Wed, 18 Nov 2026 15:20:26 +0100
+Message-ID: <20261118150208.271149243@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,48 +63,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit ca02ffd4975ca5249abf0cfb750a495d23b453ee ]
+[ Upstream commit 9079adef042c1e7a6141dcdfd3041acd30607297 ]
 
-The Asus Zenbook Duo also has a Realtek device in the ACPI that
-doesn't exist in the physical hardware. This confuses the machine
-driver into attempting to create DAI links for the device. Add a
-quirk to remove this device.
+Each rds_mr stores a bare back pointer to the socket that created it
+(mr->r_sock) but takes no reference on it.  When the mr is destroyed it
+references the rs. Hence, provisions must be made to avoid the rs
+being destroyed before all mrs referencing it have been destroyed.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260720095741.3592825-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The MR itself is refcounted, and in-flight messages legitimately hold
+MR krefs that can outlive the socket: rds_release() drops the rb-tree
+references via rds_rdma_drop_keys(), but a send completion arriving
+afterwards drops the final message reference from the CQ handler and
+ends up in
+
+  rds_message_purge()
+    __rds_put_mr_final()
+      rds_destroy_mr()   -> takes rs->rs_rdma_lock
+
+dereferencing a socket that may already have been freed.
+
+Oracle UEK fixed the same use-after-free ("rds: Add proper refcnt when
+an RDS MR references an RDS Socket") after seeing crashes of the form:
+
+  PF: supervisor write access in kernel mode
+  _raw_spin_lock_irqsave+0x4a/0x6a
+  __rds_put_mr_final+0x2c/0xe0 [rds]
+  rds_message_purge+0x13c/0x150 [rds]
+  rds_message_put+0x39/0x54 [rds]
+  rds_ib_send_cqe_handler+0x147/0x3dd [rds_rdma]
+
+To fix this, take a socket reference when an MR is created and drop it
+when the final MR kref goes away.  The reference cycle is broken by
+rds_release(), which always runs rds_rdma_drop_keys() on close.  So the
+socket reference held by an MR never prevents release, it only delays
+sk_free() until the last MR user is done.
+
+The hold sits next to kref_init() at both allocation sites -
+__rds_rdma_map() and the on-demand-paging path in
+rds_cmsg_rdma_args() - so every MR owns exactly one socket reference
+from the moment it becomes kref-managed.  For that to work on the ODP
+path, its get_mr() error handling is converted from a bare kfree() to
+kref_put(..., __rds_put_mr_final), with r_trans_private cleared first
+since it holds an ERR_PTR there; both sites then tear down through
+the same path and a future error-path change cannot silently leak or
+double-drop the reference.
+
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+[achender: port to net-next (sock_hold/sock_put in place of the UEK
+ rds_sock_addref/rds_sock_put helpers); also balance the reference on
+ the rds_cmsg_rdma_args() ODP path and unify its error path with
+ __rds_put_mr_final(); update commit message]
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260730041629.3512480-3-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/rds/rdma.c | 14 +++++++++++++-
+ net/rds/rds.h  |  5 ++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 62cee6e2179da..f738e547a1f30 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -200,6 +200,13 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)ghost_realtek,
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
-+			DMI_MATCH(DMI_BOARD_NAME, "UX8407AA"),
-+		},
-+		.driver_data = (void *)ghost_realtek,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+diff --git a/net/rds/rdma.c b/net/rds/rdma.c
+index 37695056756be..062c12d9318e9 100644
+--- a/net/rds/rdma.c
++++ b/net/rds/rdma.c
+@@ -117,6 +117,7 @@ void __rds_put_mr_final(struct kref *kref)
+ 	struct rds_mr *mr = container_of(kref, struct rds_mr, r_kref);
+ 
+ 	rds_destroy_mr(mr);
++	sock_put(rds_rs_to_sk(mr->r_sock));
+ 	kfree(mr);
+ }
+ 
+@@ -243,7 +244,11 @@ static int __rds_rdma_map(struct rds_sock *rs, struct rds_get_mr_args *args,
+ 	kref_init(&mr->r_kref);
+ 	RB_CLEAR_NODE(&mr->r_rb_node);
+ 	mr->r_trans = rs->rs_transport;
++	/* The MR can outlive its socket: a socket reference is held
++	 * until the final kref is dropped in __rds_put_mr_final().
++	 */
+ 	mr->r_sock = rs;
++	sock_hold(rds_rs_to_sk(rs));
+ 
+ 	if (args->flags & RDS_RDMA_USE_ONCE)
+ 		mr->r_use_once = 1;
+@@ -762,7 +767,12 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
+ 			RB_CLEAR_NODE(&local_odp_mr->r_rb_node);
+ 			kref_init(&local_odp_mr->r_kref);
+ 			local_odp_mr->r_trans = rs->rs_transport;
++			/* The MR can outlive its socket: a socket
++			 * reference is held until the final kref is
++			 * dropped in __rds_put_mr_final().
++			 */
+ 			local_odp_mr->r_sock = rs;
++			sock_hold(rds_rs_to_sk(rs));
+ 			local_odp_mr->r_trans_private =
+ 				rs->rs_transport->get_mr(
+ 					NULL, 0, rs, &local_odp_mr->r_key, NULL,
+@@ -771,7 +781,9 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
+ 				ret = PTR_ERR(local_odp_mr->r_trans_private);
+ 				rdsdebug("get_mr ret %d %p\"", ret,
+ 					 local_odp_mr->r_trans_private);
+-				kfree(local_odp_mr);
++				local_odp_mr->r_trans_private = NULL;
++				kref_put(&local_odp_mr->r_kref,
++					 __rds_put_mr_final);
+ 				ret = -EOPNOTSUPP;
+ 				goto out_pages;
+ 			}
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index 6090a6045379a..a411e9ba60a43 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -299,7 +299,10 @@ struct rds_mr {
+ 	unsigned int		r_invalidate:1;
+ 	unsigned int		r_write:1;
+ 
+-	struct rds_sock		*r_sock; /* back pointer to the socket that owns us */
++	struct rds_sock		*r_sock; /* socket that owns us; counted
++					  * reference, dropped by
++					  * __rds_put_mr_final()
++					  */
+ 	struct rds_transport	*r_trans;
+ 	void			*r_trans_private;
+ };
 -- 
 2.53.0
 
