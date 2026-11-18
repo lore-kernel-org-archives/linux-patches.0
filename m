@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015668;
-	b=AYR1QSifR6+BMHb2VFmfdiw0HPnbzcsOd3YJZaqa9LgNJKRWFIlNy+sChfKTx4b/EiVQ
-	 Mb/i0ljDw4J1/CS/Ft/a/X3+D2QWlUcUczL0GIQygK5Zr2AYqO5pIdETtWAze3lljMWJM
-	 ernqF2YFhnxwIH9VPDH6cKrhxeUFrcXQfi0j8zNNZqXY77WP/RXNVSPZSqNvUP9d8GPez
-	 O3jvoGSt+Lekvmg4HKJzud86HCMMMwPJIaKh8K/uaa3+W4QS4PSSBn6LHA5l1jMHgg5yB
-	 GrWhapEpALl+vUEkeZwambqOuzPE8/PCUwudIxMRuRGzamCc9rpY2NuZm1wKckjcztA==
+	t=1795015670;
+	b=IPG27dlVL1j/5dLxbkbbfX9R9bO64n+I9WTJM/jzREYHhHofNh+9yLf4+Nr0QZf25vh0
+	 EZFTemNhrvU4NdIP3bY0RqEKpCGLAcwdPFjppF3+9mpy8iRZZUxm4Q8R0GVQ5SDy0U0s0
+	 GX/2fsFHRpi57VhCEx+YV7Seg1f4h8qRjOuPMW23tQvWRgrfRa/0UpaLj2jUTt2fC1ckx
+	 zN5EIMx/o2Luy/UDZcVU6shPoJmjrr7GILrGIIKboOhwLnvEzJy9MqRWUOz7ADt3j6Pbg
+	 SZsDRro8D4Oq++kLPCGCULrl8eZ45tTZw7xJy86sKgZuwac0l29kqGlRBWBpr574RaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mfrca/XdGJMlMs8nRUO7hC2qIBv8jYfIvc70ZmDjLdU=;
-	b=WIM9g3N11P11zaXpzSQmdC5GLnL8ojxMhgfoFsF9oJgESRa4s+LUA8PyOAYbrRkVEA9f
-	 wtQEmj1AMyZr27C+ygvrggTqQ0ufzRRv6nTg2IX8PSJc8v0PTYyxoxTgbqxTVXov5g6SR
-	 kYZTXUTVQ/akBjvpU65+/wOfzo3tQXH+UqgEDQSxy1PfXq2QD5se4W3zAaYu0CIs2Qhaw
-	 0zBYO6XXBBviQf3xfh3OOH0sVczPHiA9Ft/bneBnN0oH8XLz+iptI2KvMeYeg9r5MM6TN
-	 AilYErTP8GiXOdpyH4N0/fqmUWXT5HAdRLIridMg1t+zv2HQhZVXxHlOBfuKHn+CL6g==
+	bh=Q+MhBJpF6rvJczHB65EWp22RMS4VH6s2Dj6RAamPOU0=;
+	b=rXXrYZooBYUsqLDcjqylD4WdpBRlWQkaY6Jjl3OoM8/qxzLqUooRRTQUITd2xkP3pcHg
+	 Ddl+jEhHbQMBnxJ7RNEbjW3jCUFhxzztG4/h2s7W6+r96RGkQgpMvHn9tJRilyDVHlbWI
+	 UxDbJjSoL84sc1Hngbc64M/9U0IYPf1NYoAY0AktQPUgJmT0+iDH+NuzFTdweRUK86jjk
+	 aoutVIem8QqQmyEhgwe5UovRJU16h7+RbSErfko8hqhDW/isp5hugmvAzQ1d3XWGQaAbJ
+	 Y/sQnmQ9zjFOt0mz3AyDCGQJv2Nvw3a3qmfQmZ02mB1aKNi3rRiFLTUGkg+b+nOUPag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDVNUMAn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eS+nsSWq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BF860A2601;
-	Wed, 18 Nov 2026 15:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D46E606A338;
+	Wed, 18 Nov 2026 15:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nDVNUMAn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30591F000C5;
-	Wed, 18 Nov 2026 15:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eS+nsSWq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997AB1F000C5;
+	Wed, 18 Nov 2026 15:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015667;
-	bh=mfrca/XdGJMlMs8nRUO7hC2qIBv8jYfIvc70ZmDjLdU=;
+	s=korg; t=1795015670;
+	bh=Q+MhBJpF6rvJczHB65EWp22RMS4VH6s2Dj6RAamPOU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nDVNUMAnII1LYI+5lqtH+i2r8PycaA/Hs+d+aA1Eo3XJFf4MrvaR0Liao8xh8/9uJ
-	 F+pUHjebzC8hibYASXBvBIVVu6JgTrQAdXXWmtrTPQ7Luplve1LFScUmPdjvOvwjkQ
-	 duOqmYFU7yXGm1q0oBK8tj6vC67d/+d5pB/beBcw=
+	b=eS+nsSWquua55TYJhILdkGXRsidWhZU5MhYxeHkdJmfjINrp/TcW+txTEXEbCDWrF
+	 ptMFJryA4EBPTRDHDrJywBQ2usItUgD/JK2vTAqh1BO5n6+u4RAbfU3Aa3rEnK3qFU
+	 BdpHDTS1H3Rw3WLW9C93g1jKomczA+FsmCBijcDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0248/2651] RDMA/nldev: Put the device when dellink fails
-Date: Wed, 18 Nov 2026 15:24:48 +0100
-Message-ID: <20261118150256.787466136@linuxfoundation.org>
+Subject: [PATCH 7.3 0257/2651] drivers/base/node: fix UAF on device_register() failure
+Date: Wed, 18 Nov 2026 15:24:57 +0100
+Message-ID: <20261118150257.115523868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 0ff7fcd6aac16dd149ad322687a10c8ea7d806b2 ]
+[ Upstream commit 6d7e9bc51d8f2d73b3403c759c769f880082f9ae ]
 
-nldev_dellink() takes a device reference through
-ib_device_get_by_index() and normally hands it over to
-ib_unregister_device_and_put(). The error path of the ->dellink
-callback returns without releasing it, so the reference is leaked.
+node_init_node_access() frees the access node with kfree() if
+device_register() fails. After device_register() the embedded device is
+initialized and must be released with put_device() so that
+node_access_release() can free it.
 
-Once that happens, any later unregistration of the device blocks
-forever, because disable_device() drops its own reference and then
-waits for the refcount to drain. No in-tree driver returns an error
-from ->dellink today, so the leak is currently latent.
-
-Put the device before returning the error.
-
-Fixes: a60e3f3d6fba ("RDMA/nldev: Add dellink function pointer")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260903082550.2257-1-lirongqing@baidu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 08d9dbe72b1f ("node: Link memory nodes to their compute nodes")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260907024732.1452228-1-gonglinkai@kylinos.cn
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/node.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 4e8fbee347454..3f715a1faaeca 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -1895,8 +1895,10 @@ static int nldev_dellink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 		mutex_lock(&nldev_dellink_mutex);
- 		err = device->link_ops->dellink(device);
- 		mutex_unlock(&nldev_dellink_mutex);
--		if (err)
-+		if (err) {
-+			ib_device_put(device);
- 			return err;
-+		}
- 	}
+diff --git a/drivers/base/node.c b/drivers/base/node.c
+index 3da91929ad4e3..dcdc8626627a8 100644
+--- a/drivers/base/node.c
++++ b/drivers/base/node.c
+@@ -167,20 +167,19 @@ static struct node_access_nodes *node_init_node_access(struct node *node,
+ 	dev->parent = &node->dev;
+ 	dev->release = node_access_release;
+ 	dev->groups = node_access_node_groups;
+-	if (dev_set_name(dev, "access%u", access))
+-		goto free;
++	if (dev_set_name(dev, "access%u", access)) {
++		kfree(access_node);
++		return NULL;
++	}
  
- 	ib_unregister_device_and_put(device);
+-	if (device_register(dev))
+-		goto free_name;
++	if (device_register(dev)) {
++		put_device(dev);
++		return NULL;
++	}
+ 
+ 	pm_runtime_no_callbacks(dev);
+ 	list_add_tail(&access_node->list_node, &node->access_list);
+ 	return access_node;
+-free_name:
+-	kfree_const(dev->kobj.name);
+-free:
+-	kfree(access_node);
+-	return NULL;
+ }
+ 
+ #ifdef CONFIG_HMEM_REPORTING
 -- 
 2.53.0
 
