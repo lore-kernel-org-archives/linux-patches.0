@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024629;
-	b=2oqDLpqlxofgYIhfOr1776vXfFG5XCqOaanYJHumDw7ej1eXgkMIhD0uTMNn8OvFS1n2
-	 +xVdIgWbiwGMPAFK63a/8QlUHULfwqp9sqUywojasr8RY1igSGIuQ4WLZ8/1uNsY6vz1B
-	 JrKmWCi2FcqoA+8Op5mN6Eni+bBVPKzyP0HTLOQjwICjEGcmh8lj5J8fR82ioKoarct7d
-	 TwMUxSOS4xmlqQWf3aJuO8+k9ZIZbydqLqWOhn/sbmZK0qTAYkR7zt6jJdMGsn/b2Nzbn
-	 nXqpXPOAPS6+67aQn752QaPWV5ZN/BUdC+qH4/a80o31pnzY73XZe0+WHrOMPn9uXhw==
+	t=1795024632;
+	b=L1NHakXhPaS2lisainsDMrU/5aHQHIYB2BusnmCvoe2+ssM4rTIpEeC3klsSn/vWutX1
+	 RjQ0tCnmtQGhuV9KE2dpGsSB+c+ZAi27ft4DoB9oeZYnWfJMyOWy3X/Oy/JF5figl8AOH
+	 x7E6KVdWDQMGnUNDrTa4SKy6w3YR8Og9TwE/s3zeKuUmpnrBrS907E4LIZEWKlIO4jnwB
+	 31aPmrXwWqEgJmRAQJvtEwhdlRBhI5R5n5sWStsLVUbhy/MrNSDv1bPMjcTRjss1+yeP8
+	 2boSxr6peP5ptiDaA+NYN/srJBZSbtn4QnAgqcw3oR0hrqi7ykdv5rrTHW5DwFM6JLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024629;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024632;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pN/Ln6JV14XelAN58IY9vuJ2SClpfq74ewDsErXzuSM=;
-	b=GWJHQplqXLS2DXgqo46zz2vfXUO13zOkjj8uER1/4PfKq1nCSey9RpDrTRoX9nU3r/D/
-	 I/xAvQXZlILrSWOxr+O4Fapp2IGp4vJ+pXnZyWtGtUOOiMXmkiBuEWU3Ji8EJcCCech2R
-	 KrFdWJXsLs1N2b0YTsRmIncf1QzMgPpT1u+7Mizng/5UkbYLrNyD+e2tCF3/7ibT/usrO
-	 xtI6Mle2ZXcy9jg8xBqFYCx1Z6CqmIpY/9GgdYMLlFt5k/WkrKK3PGoTwa+0yDhw60BVe
-	 hE0p2ZUzohdgeb/Y5rZxTUtWbSEKXGw0AG+fH7g6khauOKkJGFp/grn4lGGPbi2Fm1Q==
+	bh=pjEXqhCVOrlw4+6hj+j25OfoeVksUDs7qGPHB3rZBbw=;
+	b=wqM38w7KTcspJsy+MVa9aDWYNfFeZeqW+nK2lPG1g4Hnqj/NStsYDmnYyw2yEaJT9lwg
+	 CYIucF8TUsiMUaX9DIDoc7JE4S4TD3XFRkw7asqZ+Fylzce7BKlKBjFrweF+byIEIe8LB
+	 rbHscxQgtsDFVD1UE/bh0RxPGbVPSW/6L8d0+878pdbsyyGKauy43DjD/LdG9DlHhSzEo
+	 01U6EyWj0m20ZgRwMcHPyOeX76VenaKiY7IobxK1rfZR/qRlLx3oELNc5YV3obYYOkdtL
+	 VBZcY1azc2J+1IB23hnP9ZqWkQHKZuOTxr/gDHVNJJaIw7i8W0ITpxjmkrNniWABZMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjQIsyM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tyLCFXt7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD3B606A330;
-	Wed, 18 Nov 2026 17:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA56A606A31C;
+	Wed, 18 Nov 2026 17:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TdjQIsyM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBD51F000C4;
-	Wed, 18 Nov 2026 17:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tyLCFXt7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FC41F000C4;
+	Wed, 18 Nov 2026 17:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024628;
-	bh=pN/Ln6JV14XelAN58IY9vuJ2SClpfq74ewDsErXzuSM=;
+	s=korg; t=1795024631;
+	bh=pjEXqhCVOrlw4+6hj+j25OfoeVksUDs7qGPHB3rZBbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TdjQIsyM8ZLJYUvJ7BpiQ3bQnmk9YfsGiUH4VHShoh9NW5Ne835eI2ufFaKS9v/53
-	 Mj9HG7aDX3jYgftxIPBOgs237545yCf7IHPc/BRNCGhtFWv/R4AuNhQVGZsB2slQ6d
-	 It8QzRW/qDqsgZl8cxMxyTVmqBDva2FXyVM/SqaY=
+	b=tyLCFXt7k/eHrmQok2qDa1mdRbpH1kg275QNKmyWkDyAF2N9BsyvlP55JY/jyZtct
+	 B5m95Eq34ldcIYJdR1J0Z/vW6PpcZLvGl2VhVzKyex47tsKBbcmidseVgTDrYQKt6E
+	 DycGkB5PwgXXsFYSDiAo6qi5I5+PsDff19+zXFfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Nowicki <mateusz.nowicki@posteo.net>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Ginger Li <ginger.jzllee@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0794/2151] arm64: dts: st: fix arm,smc-id of the SMC watchdog on stm32mp2
-Date: Wed, 18 Nov 2026 15:42:09 +0100
-Message-ID: <20261118150151.015896264@linuxfoundation.org>
+Subject: [PATCH 6.18 0795/2151] wifi: mac80211: Fix a race when expiring a mesh path
+Date: Wed, 18 Nov 2026 15:42:10 +0100
+Message-ID: <20261118150151.049837204@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,52 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+From: Ginger Li <ginger.jzllee@gmail.com>
 
-[ Upstream commit ae4d08bbe3f4f5ec920dbdba26091adf0ae6ba71 ]
+[ Upstream commit 6571b6a24cc37c650a1815b1c320e30db5de466f ]
 
-OP-TEE implements the STM32MP2 watchdog SMC service with function ID
-0xbc000000 (CFG_WDT_SM_HANDLER_ID), not 0xb200005a. With the current
-value the arm_smc_wdt probe fails with -EIO and the IWDG started by the
-bootloader is never refreshed.
+My static analyzer identified a potential issue in 'net/mac80211/mesh_pathtbl.c':
+mpath_expired() reads mpath->flags and mpath->exp_time without holding
+mpath->state_lock, while mesh_path_fix_nexthop() and the other writers update
+both fields under that lock.  In mpath_lookup() and
+__mesh_path_lookup_by_idx() the unlocked check is followed by taking the lock
+and clearing MESH_PATH_ACTIVE, so the check and the update are not atomic:
 
-Fixes: 89fca38168c9 ("arm64: dts: st: add arm-wdt node for watchdog support on stm32mp251")
-Fixes: e9b03ef21386 ("arm64: dts: st: introduce stm32mp23 SoCs family")
-Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Link: https://lore.kernel.org/r/20260907091400.55954-1-mateusz.nowicki@posteo.net
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+CPU0 (mpath_lookup)                    CPU1 (mesh_path_fix_nexthop)
+  mpath_expired() reads the stale
+  flags/exp_time and returns true
+                                        spin_lock_bh(&mpath->state_lock)
+                                        mpath->exp_time = 0;
+                                        mpath->flags = FIXED|SN_VALID;
+                                        mesh_path_activate(mpath);
+                                        spin_unlock_bh(&mpath->state_lock)
+  spin_lock_bh(&mpath->state_lock)
+  mpath->flags &= ~MESH_PATH_ACTIVE;
+  spin_unlock_bh(&mpath->state_lock)
+
+A path which mesh_path_fix_nexthop() has just set up as MESH_PATH_FIXED and
+MESH_PATH_ACTIVE then has MESH_PATH_ACTIVE cleared again, and forwarding to
+that destination silently stops.
+
+Take mpath->state_lock before evaluating mpath_expired() so that the check and
+the clearing of MESH_PATH_ACTIVE are atomic with respect to the writers.
+
+Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
+Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
+Link: https://patch.msgid.link/20260922054253.11976-1-ginger.jzllee@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/st/stm32mp231.dtsi | 2 +-
- arch/arm64/boot/dts/st/stm32mp251.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/mesh_pathtbl.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/st/stm32mp231.dtsi b/arch/arm64/boot/dts/st/stm32mp231.dtsi
-index 88e214d395ab7..57ab9d785f347 100644
---- a/arch/arm64/boot/dts/st/stm32mp231.dtsi
-+++ b/arch/arm64/boot/dts/st/stm32mp231.dtsi
-@@ -35,7 +35,7 @@ arm-pmu {
+diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
+index 5b492ed5e5a35..33a0ef5285e10 100644
+--- a/net/mac80211/mesh_pathtbl.c
++++ b/net/mac80211/mesh_pathtbl.c
+@@ -247,9 +247,10 @@ static struct mesh_path *mpath_lookup(struct mesh_table *tbl, const u8 *dst,
  
- 	arm_wdt: watchdog {
- 		compatible = "arm,smc-wdt";
--		arm,smc-id = <0xb200005a>;
-+		arm,smc-id = <0xbc000000>;
- 		status = "disabled";
- 	};
+ 	mpath = rhashtable_lookup(&tbl->rhead, dst, mesh_rht_params);
  
-diff --git a/arch/arm64/boot/dts/st/stm32mp251.dtsi b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-index e4e6f9f818d81..371bfa26bdd57 100644
---- a/arch/arm64/boot/dts/st/stm32mp251.dtsi
-+++ b/arch/arm64/boot/dts/st/stm32mp251.dtsi
-@@ -36,7 +36,7 @@ arm-pmu {
+-	if (mpath && mpath_expired(mpath)) {
++	if (mpath) {
+ 		spin_lock_bh(&mpath->state_lock);
+-		mpath->flags &= ~MESH_PATH_ACTIVE;
++		if (mpath_expired(mpath))
++			mpath->flags &= ~MESH_PATH_ACTIVE;
+ 		spin_unlock_bh(&mpath->state_lock);
+ 	}
+ 	return mpath;
+@@ -290,11 +291,11 @@ __mesh_path_lookup_by_idx(struct mesh_table *tbl, int idx)
+ 	if (!mpath)
+ 		return NULL;
  
- 	arm_wdt: watchdog {
- 		compatible = "arm,smc-wdt";
--		arm,smc-id = <0xb200005a>;
-+		arm,smc-id = <0xbc000000>;
- 		status = "disabled";
- 	};
+-	if (mpath_expired(mpath)) {
+-		spin_lock_bh(&mpath->state_lock);
++	spin_lock_bh(&mpath->state_lock);
++	if (mpath_expired(mpath))
+ 		mpath->flags &= ~MESH_PATH_ACTIVE;
+-		spin_unlock_bh(&mpath->state_lock);
+-	}
++	spin_unlock_bh(&mpath->state_lock);
++
+ 	return mpath;
+ }
  
 -- 
 2.53.0
