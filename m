@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016348;
-	b=n2wcUtTGDnEBmu0/e1ORIMNOcVvFTalYamIq8reXfKDjyZfheX/w/HLuCzIqqghIvyd5
-	 vkkHFGJn/eCosfqWSewmgXF4zt7aXsK/5TElYU1sjzBgR2oMq9INiKP7qQ7XXlAqW5qF9
-	 xPB4EDhkmHRcR5fLm0de3hKO4qMZYdtvmGe6dyS3GNUW6OU46qIF5opi4eaA+rh4hg/SJ
-	 6cQ7UD7hvWPiaPucBz3sttHXg3O2gQhxafEspfHbun+8fhC/+6JJZAI4NqQws/OhPNA22
-	 QdQKU2P23lnnGqNje92NqyLfNR9GpQJ9YX99cqgKJK8rwPXtqjfcaQGIwWlKpXfnS3A==
+	t=1795016351;
+	b=LXfGlIRk+2PWSdhCIQkufXa/jY05O3TUANkrRJhwE8tDWAtGk4iroaKfGqgBZ124/jGb
+	 MdDIaZHNvYsVT3+BaXfmMtXjxJslb+DvgFsEYwqoqMQsIoiMBterD3bGEY4TjIb+q7/Q1
+	 3gJuT8WI9LBRj1OIoHU5dyAvy0GAgkt3JXqdxeFwVEZaGBvBLHGdL+gUzpzjNy6q65+Yk
+	 cJuYiFwSwC6u/DMyAzP7dqsB+zFlKk6MHCUNoQnLinGgepFzgerH8oF6iEYUQeS0KzP4a
+	 u3FzMiXxX1d4EQ3XD/OkhsvliwyaCJNfmHZdqJAdxvuyvifB3biIILQGpRmROZAFEbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1i7Ei4fS/wEIy7ASgaAiGIdpgbqZM6WLlpJIOUCYX4Q=;
-	b=VuatzGNQLYLO+6c0guuo+7Wr9i+qp/X9inQhlU6kTSZpEzLjoMGD0dEPuEDjwMcOInQC
-	 QzZ+q1N1yinoOEJzldUVgyTA7gWq+cVlXY801jeJNzmV+Sa+CMPILUdkUF4R7DQy6ufuQ
-	 vDkdyn2ZxcJwvv1k9Q38NkcCR543x4gGay0LtBKPw76MAmgTfFgogLzslZX7MX02Sipv4
-	 2tfHGnPt+PIM7z1y6GxkrVCBFdna6DmZI2qT0uENUtLzTLE16k8RW+MkVsGRDFXMPkyNG
-	 0rLtSpGdw3gZE8/+gTwiJs5M4JNcmrkKIgsiCeFdNcrtBVoi3utOjmBxRkhqYo80nng==
+	bh=4HmKIMvgF48emDhsXYS1rMPRpyzxmE/75AARYN136uQ=;
+	b=v2hgxaVi8pvwolkZGJC0YJoSNZNNKkTRlpkLxdzA1QzG84jZZhn7GMRgmpSPqSQ40vd1
+	 fAxfVtfgInjaQ//tUUvBSE6R0sl5XHHBdxtTt5nmrIP8kv9RJNAYdKvcMJkqpeQbqa0bp
+	 VFEDHTsr45AadhEPu002GqWMDLbPGbklLaZUsDsAT3z9IAaJzmA0N1jeqYc5PVwyXGnun
+	 HUhEdlr45w/LSiq80c7FrG+FK53EOgbhu8T9HiHRV7PIb5CW09ZKJJhwvO87u5kVOrlTa
+	 CIEoGmqAyzO5vW9SaQBJ90toXyc2CXunj/ngY9n+42J3tLB654vzx7/ja4J+1fnUzEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZovEM95Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tB4FmlKI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578D0606A33F;
-	Wed, 18 Nov 2026 15:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0F4606A31C;
+	Wed, 18 Nov 2026 15:39:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZovEM95Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2D81F000C4;
-	Wed, 18 Nov 2026 15:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tB4FmlKI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC8A1F000C5;
+	Wed, 18 Nov 2026 15:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016348;
-	bh=1i7Ei4fS/wEIy7ASgaAiGIdpgbqZM6WLlpJIOUCYX4Q=;
+	s=korg; t=1795016351;
+	bh=4HmKIMvgF48emDhsXYS1rMPRpyzxmE/75AARYN136uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZovEM95ZPeM1gZdjOMAmOgnHEtePY0TYFDAWMA/LvZLoQf5I0w3AS7eeF/qUM6Pg/
-	 +6DanmMH4F4PcGRxQ8vOVK731Sc7mh8+1Fk+zwU+0BXlmSVHWmMXO65ctebQ1nUMBZ
-	 uufPeNkUa/r8qdWDNK5YbIWhBXdQrdkOxCbp1vXc=
+	b=tB4FmlKIKPZDwC2O+2I/IORRhLMGAJfFpHahrLr717wZwcQwzmM5yIbra5gH4D41m
+	 N4jU4XjqLtXQ7h7MSYPPMiY2ZqdPqL8GuANRQAaOoJBBqBX4qgCVMsxOgeOlKHiTv5
+	 AoG7QrmKvqMmXn/kN0aaQjSf6cpryZiL7cYaAO3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Chen-Yu Tsai <wenst@chromium.org>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0497/2651] arm64: dts: mediatek: mt8173: Fix MFG_ASYNC power domain clock
-Date: Wed, 18 Nov 2026 15:28:57 +0100
-Message-ID: <20261118150305.662174267@linuxfoundation.org>
+Subject: [PATCH 7.3 0498/2651] ACPI: tables: handle failed initrd override mappings
+Date: Wed, 18 Nov 2026 15:28:58 +0100
+Message-ID: <20261118150305.695746914@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,43 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit c9b3c82c9f1f86cdb2449d47e4ca66a19159ee12 ]
+[ Upstream commit 047c834d939df75386cfc0603c7ddeaa23a349a4 ]
 
-The MFG_ASYNC domain, which is likely associated to the whole MFG block,
-currently specifies clk26m as its domain clock. This is bogus, since the
-clock is an external crystal with no controls. Also, the MFG block has
-a independent CLK_TOP_AXI_MFG_IN_SEL clock, which according to the block
-diagram, gates access to the hardware registers. Having this one as the
-domain clock makes much more sense. This also fixes access to the MFGTOP
-registers.
+The runtime AML table-loading path can invoke initrd override after
+permanent mappings are enabled. Mapping bookkeeping can then fail.
 
-Change the MFG_ASYNC domain clock to CLK_TOP_AXI_MFG_IN_SEL.
+Return AE_NO_MEMORY in that case to prevent a NULL pointer dereference
+when attempting to read the table length.
 
-Fixes: 8b6562644df9 ("arm64: dts: mediatek: Add mt8173 power domain controller")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Detected by static analysis and reviewed with AI-assisted source auditing.
+
+Fixes: b2a35003dfbc ("ACPI: Implement physical address table override")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+[ rjw: Added empty code line after conditional, changelog edits ]
+Link: https://patch.msgid.link/20260913125123.109803-1-bolin.liu@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/tables.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173.dtsi b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-index 78c2ccd5be132..556e806b77878 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-@@ -505,7 +505,7 @@ power-domain@MT8173_POWER_DOMAIN_USB {
- 				};
- 				mfg_async: power-domain@MT8173_POWER_DOMAIN_MFG_ASYNC {
- 					reg = <MT8173_POWER_DOMAIN_MFG_ASYNC>;
--					clocks = <&clk26m>;
-+					clocks = <&topckgen CLK_TOP_AXI_MFG_IN_SEL>;
- 					clock-names = "mfg";
- 					#address-cells = <1>;
- 					#size-cells = <0>;
+diff --git a/drivers/acpi/tables.c b/drivers/acpi/tables.c
+index eb93c060426ff..aaa1de79bccfd 100644
+--- a/drivers/acpi/tables.c
++++ b/drivers/acpi/tables.c
+@@ -560,6 +560,9 @@ acpi_table_initrd_override(struct acpi_table_header *existing_table,
+ 	while (table_offset + ACPI_HEADER_SIZE <= all_tables_size) {
+ 		table = acpi_os_map_memory(acpi_tables_addr + table_offset,
+ 					   ACPI_HEADER_SIZE);
++		if (!table)
++			return AE_NO_MEMORY;
++
+ 		if (table_offset + table->length > all_tables_size) {
+ 			acpi_os_unmap_memory(table, ACPI_HEADER_SIZE);
+ 			WARN_ON(1);
 -- 
 2.53.0
 
