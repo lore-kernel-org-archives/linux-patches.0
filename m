@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052868;
-	b=X3Dm2UjVz41HkKSeRoaQiQ9UbggOv0cNUtLrplaTn34wOXdbSZfpp3yBaX6og4j2t1mP
-	 Xxclk/K4bh0NmVqHk7CoSkhJs4oFjh0bV4CFEV4uPCAnK1VTXpAW4BmgsEI++h+i7pt++
-	 dTALIifnjWSETGt/1rGh3dMAcpibgXGpQ4Vpxlc+/mkBlnEVQ9cnOnm/nPhMRcZX7txG6
-	 Fr7dOmt1dXEoEp08efKny9to/O7BPhjgQSNDnmYdehKc2Yg1DfrBSqkViZigMIy6Hblgb
-	 s4rZOZcCUT8VMAq2Jop0bjjwReDJB/xHk0q9PLCl8GxSzwhYyNJXhLh/vi3o5ZUJqVg==
+	t=1795052871;
+	b=BacDaMxJgbLDWJhSD2wUlflxAnUHBDg8C4PT+Om36CBO2UlVONEHIJz1gu/BWlKYnEtO
+	 FO8lT+goGwPV3gVT60hOHswcoFXSC+WJxek1ZpPDVivkxJBl3ROgPsLT5abgNQNzP0Qxq
+	 4WRAzcEyptXKHW6pf6+jegKhhoGW8MW4IWQ9bjV9WkUFVSe2Se4DrDrLnfHChSb1GNlvO
+	 5tC0DuxQFBmGJau/vSxsWjQMtok+JmuPPwnJG2OoeeW8T7UQdNF7R0CHEtY87eq2AZu79
+	 nZl7tOM/4MyvIKK8OPWJT01BqcGUvbjDHk6ZQOSNZLJQP5aBtRpbzlQi6nxTOzZfZMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d1/q4hZc5vjM876TpSUr0Cv8juZ1+ukFuhYUNxMOO2M=;
-	b=sGTBwnq/wSx3U6Jk7YYQ+L1PoakVhtYCmt3mHhdReKbABXQRnHHAiDSUdN03kq2+M9f/
-	 QXfNbrIrgSFyzgX3tEuJVpeR/KTLE4xYwIgK1DNGaCvi2YCMYJHKxQnfONP/sLmep9r3G
-	 52wFX7GVq3BQVJ6iS3091rvFGvZBQuZKhjWo84dejWhnGuuPOYHORCwtWereAyRjzAzbz
-	 PoVJMFG6zn6If52zu8qGB1ovHjYrYPoR/Y3nqJreX4mefx06UKhG3nDt0cDm6pKyGYeEo
-	 XerZUosWBgL3Xvev6eM26oOQLyLshmo5PJ/cqN+GvNH1YPC1IyeMWssc1yTaYWCbrHA==
+	bh=FIaX9rLT/zS730Qy24TmYXIcvqFKI8N4GshoyxXyxxY=;
+	b=E6Y9bk/JTEv5R8Cvwm15dEuCOkoSwjSRNCnWV2DBwBmCDsKTLgEdr/f+s//jX8Sx1tCG
+	 UewZqc+liRzRgGZYxFlstvyivkhbQrpS0YWpJllY4YtExOGRSHFls2Ag5ZJLHt9392ejU
+	 +x/OFVkyhY9cTnm66Tu+R9FlkXhm8XoR7n/alMrY7cnyG9kU/DSPUIAG/EimUaQIkYYxN
+	 BomiqqCs9VcSP991CR3I030np/masz9mWFDzB/9vwWrN8NdVKNtwEUrfbBQUfElfS1D+c
+	 yWfzFVvPVIrFg7c3kqjutZpi4oMxfT9+i7MvxgoISCFwObfuceFsPXZ5HBYIpMg7Vdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LBov7kdJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdBdJOq5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A6E606A31C;
-	Thu, 19 Nov 2026 01:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09164606A31C;
+	Thu, 19 Nov 2026 01:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LBov7kdJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A6F1F000C5;
-	Thu, 19 Nov 2026 01:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sdBdJOq5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABEC1F000C4;
+	Thu, 19 Nov 2026 01:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052868;
-	bh=d1/q4hZc5vjM876TpSUr0Cv8juZ1+ukFuhYUNxMOO2M=;
+	s=korg; t=1795052870;
+	bh=FIaX9rLT/zS730Qy24TmYXIcvqFKI8N4GshoyxXyxxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LBov7kdJhheOu+27tV6MXlxrddN3HsQ+Zc3no8sqSA4NXhkZcgEJquX+u68q74Od/
-	 DUNiJdJtddlYy2fqb6KxGLjn+ntGvp5PZz+vqPGRbtz8J9n6Jok5almdXogqjuNTD1
-	 RDRfh9io3B2T9N66ACvNhydjc9r982WWoOqIGMEc=
+	b=sdBdJOq5RTReV1fJ62gL0fdzZzEj48V1G0ToMErHjKRXV1xuthOw+VnFICEyCHrtf
+	 5gRMBt0NHwMPC6PXprnnQMDHsyiBkNDA0Vw0eBikp6HrE82oqK7PPAJZU1mIZmcTsK
+	 XGS5K0ALjo0ukfh5DVLSS0m3HHBHObFai8ACtiQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Hoffmann <f3lix.dev@gmx.de>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0715/2214] libceph: reject mismatched CRUSH weight-set sizes
-Date: Wed, 18 Nov 2026 15:39:51 +0100
-Message-ID: <20261118150040.407321440@linuxfoundation.org>
+Subject: [PATCH 5.15 0716/2214] ceph: Fix xattr buffer leak in __send_cap()
+Date: Wed, 18 Nov 2026 15:39:52 +0100
+Message-ID: <20261118150040.444970055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,71 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Hoffmann <f3lix.dev@gmx.de>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit d8fc89b5bfe4cb3aebe4c8a818247d11291b841c ]
+[ Upstream commit e51cf76e7275d1bb5ad2d529bb00feade632dadc ]
 
-A CEPH_MSG_OSD_MAP message can contain CRUSH choose args with replacement
-weight vectors for straw2 buckets.  decode_choose_args() validates the
-optional IDs vector against the referenced bucket, but does not validate
-the size of any replacement-weight vector.
+__prep_cap() takes a reference on the xattr blob via ceph_buffer_get()
+and also grabs a reference to the old xattr blob returned by
+__ceph_build_xattrs_blob(). These references are normally dropped in
+__send_cap() after the cap message has been sent, but when ceph_msg_new()
+fails, __send_cap() requeues the cap and returns early without dropping
+them, leaking both buffers on every allocation failure.
 
-The CRUSH mapper assumes that each replacement vector has exactly as many
-entries as the bucket.  A zero-length vector for a nonempty bucket makes
-bucket_straw2_choose() dereference NULL, while a shorter nonzero vector
-causes an out-of-bounds read.  An authenticated monitor or OSD can deliver
-such a map and crash a kernel client when it performs placement for an
-ordinary request.
-
-Reject a nonempty collection of weight sets for an absent bucket and
-require every replacement-weight vector to match its bucket size.
+Release arg->old_xattr_buf and arg->xattr_buf on the ceph_msg_new()
+failure path before returning.
 
 Cc: stable@vger.kernel.org
-Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
+Fixes: 16d68903f56a ("ceph: break up send_cap_msg")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osdmap.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/ceph/caps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
-index 306cf13318eac..13d0ad66e3896 100644
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -362,7 +362,9 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
- 		ceph_decode_32_safe(p, end, num_buckets, e_inval);
- 		while (num_buckets--) {
- 			struct crush_choose_arg *arg;
-+			struct crush_bucket *bucket;
- 			u32 bucket_index;
-+			u32 i;
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 42af046aef510..9f949bc290c5e 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -1450,6 +1450,8 @@ static void __send_cap(struct cap_msg_args *arg, struct ceph_inode_info *ci)
+ 		spin_lock(&ci->i_ceph_lock);
+ 		__cap_delay_requeue(arg->session->s_mdsc, ci);
+ 		spin_unlock(&ci->i_ceph_lock);
++		ceph_buffer_put(arg->old_xattr_buf);
++		ceph_buffer_put(arg->xattr_buf);
+ 		return;
+ 	}
  
- 			ceph_decode_32_safe(p, end, bucket_index, e_inval);
- 			if (bucket_index >= arg_map->size)
-@@ -373,10 +375,18 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
- 			if (ret)
- 				goto fail;
- 
-+			bucket = c->buckets[bucket_index];
- 			if (arg->ids_size &&
--			    (!c->buckets[bucket_index] ||
--			     arg->ids_size != c->buckets[bucket_index]->size))
-+			    (!bucket || arg->ids_size != bucket->size))
- 				goto e_inval;
-+
-+			if (arg->weight_set_size && !bucket)
-+				goto e_inval;
-+
-+			for (i = 0; i < arg->weight_set_size; i++) {
-+				if (arg->weight_set[i].size != bucket->size)
-+					goto e_inval;
-+			}
- 		}
- 
- 		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
 -- 
 2.53.0
 
