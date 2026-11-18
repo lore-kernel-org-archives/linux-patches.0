@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026088;
-	b=VU5LavFbvMcQWbi1cDOLz1GtCbr/KQiOSWzP8cGLwkmOdPNI6/R1aDYi0I9edx9cu9ui
-	 tuuTPAQsOca9IdJrNd7RZ2hni1+6HXyaN9J4P/olJkNeSqWFGaJFZhXFcu1nMex9yum+I
-	 4neOk90nc61AFhzmVC0JnKOUcwUE5MOaljmeojvzw1IDxe2peWvUGfNHCRQ99tesYlOCR
-	 OgN3EHnzc9t1oHUo2qLcmRCCK3/EwN/IlES8eI7FbbGh2MlVpAeBcU+/1Nbnfn1NF4oz8
-	 ggh4eJc2xHjWzTRBbFgY4aFeY9vQAlg/JBsvHh+fgRjRrjWvD9QFdUNlY+9Y3A79AfQ==
+	t=1795026091;
+	b=Ye0APTKAdh/lPYpClMMPcbuFX7+Yt3unj6WIT4PWl68ehEy7XbC824FSzttlDGXtxeWy
+	 Ai1VbdlpTvhoAenZ6nITky5Mq62JDBNA6AezIjtKlOU8KY60kvQbNGZtwxeMlQsGqvznh
+	 s1tVgiBv35tCU6yzxt4xFidM6kWRasfEy4cFGfEqwUFNa/TkrIMnuG6mkkQGIF4V3MWQf
+	 qmKHGgYF2N4M6KW1+ikZEApXcYwFQUi5EIcTQJWH8qtnd6lR66jOXTTa6j7pYJkDb0LNs
+	 jmy0jTFOd4fRhq7175paGZ7Akeq1bPG4vWCyHGkH2borV/l4cqdE5lsrIwjE1FLtPLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026088;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026091;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aBR0WldBqEy8NmVY2CYtbyv4EeuxzoXsZL4GrkhJxZM=;
-	b=tDRnzxx1h+UpVWTGXaOcZTaKUJyJGj4E8eLJ34eclDTv3Eun4hC3gNcai/FjMEiNeW6z
-	 DLdC9glpxjgJ5jTs2I3trngTp7Mv87e83BlwxZItsxzA3zcoQbfJ3csj1IhGEaI2b2o2U
-	 t/f3vVROlzNDHbHG81GuPkGAYmvzwg/DvJwNmvkHcKQ2Nk4CGNAegF8xuQaXKH3ymK4kX
-	 v8tfQ4i95Op/XhahaASmgN2cyRov2iCR44pmIs6f+NkOsBLDLwfWXhs4qFPAem0SinVK5
-	 WF9jb5hrw60VoWPYaF2+l8ImUlwC21X/ivdShGFxpNNcA9jRUliVUwcZGifD4HrenWQ==
+	bh=W3HRqvqx7J25SMpHNlHLLXeiasAlWzcOZQn+OqEc5Xw=;
+	b=HZkGDlrnbWAeEU5+z3HqVFgbjTMHV0ipLFwv6o5MHjoQD71NQ5x9tpVwXlLqf5v+sr4P
+	 SELSVPwa8g+fBpPU3ggKKwSEJEDvi2ctns60IU81ygE+uURdNrsyDYaI9ojRTp3C9qmNy
+	 opGLkm/uu8Q5Zrg8qFpiYJ36489B7oXuWWcjBIi6gaWK5U3tLWFDsc7XVYJdOE8PJmpoV
+	 NBnzn0I81V6EO+1zbQkkag3s04m9MvmLfT/ZmiWSytx+znyzBd6U7P927pOsxYxvtwzSt
+	 VVIqzPCJZcIyOF8kq/gW4p9duB4L4/k85jSV23fGxlH9n38jZ0eZEUJuJbsRasZ1rZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptxfVNEx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiCJAce9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF79606A31C;
-	Wed, 18 Nov 2026 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1223B606A320;
+	Wed, 18 Nov 2026 18:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptxfVNEx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967961F000C4;
-	Wed, 18 Nov 2026 18:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiCJAce9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D8F1F000C4;
+	Wed, 18 Nov 2026 18:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026088;
-	bh=aBR0WldBqEy8NmVY2CYtbyv4EeuxzoXsZL4GrkhJxZM=;
+	s=korg; t=1795026090;
+	bh=W3HRqvqx7J25SMpHNlHLLXeiasAlWzcOZQn+OqEc5Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptxfVNExh+TpHOCQBGgCN41UeccFnG2JjR7XlkyVLqC3smqgefv2ISiBI1sCuQuto
-	 WTXZ/6epG5CQN2h2WhVGZ+RAxP9QXYnZkncGIPX6FU/ZYMyCHXokx8ZkRBzclPULyC
-	 WqMWcv71D62PrS9dn3CbjdaOouVg/1oRLwXfdIyc=
+	b=OiCJAce95ZzRB7GkTlapbxQxmiBN5ihUNOseN7P7uWLLye/Q6vB0GkrsouBjU2nsP
+	 3LpNJbknhDHZoWW+n1Dkt1veyHmqW7JKYVYvDl31ZOwuhf0iGQpHxZrcGWgCPS54Li
+	 /8oDutBYe5qRHNPHT3VgGluRRwkmmpwq0bYJREQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1310/2151] cxl/pci: Update only the Port GPF timeout fields
-Date: Wed, 18 Nov 2026 15:50:45 +0100
-Message-ID: <20261118150209.822489260@linuxfoundation.org>
+Subject: [PATCH 6.18 1311/2151] fs/resctrl: Ensure default group reports tasks on monitor-only systems
+Date: Wed, 18 Nov 2026 15:50:46 +0100
+Message-ID: <20261118150209.857461940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,46 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit b5d14009bdb1973d54a6ea111a660b3dae115be5 ]
+[ Upstream commit 2c10b3fa5bdf61e344bc522e6c2e00d870ce7ab8 ]
 
-update_gpf_port_dvsec() rebuilds the phase control register from just
-the timeout base and scale, so the rest of the register is cleared by
-the write. The other bits are reserved today and nothing is lost, but
-the full-register rewrite would clobber any field the spec defines
-there later.
+resctrl can be mounted on a system that supports monitoring but not allocation.
 
-Read-modify-write the register and change only the two timeout
-fields.
+On such a system reading the "tasks" file in the default group reports no
+tasks, even when there are tasks assigned to the default group. This problem
+occurs because the check for whether a task belongs to a CTRL_MON group is
+gated by a check for whether the system supports allocation.
 
-Fixes: a52b6a2c1c99 ("cxl/pci: Support Global Persistent Flush (GPF)")
-Assisted-by: LLM
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20261008034619.28059-4-kanie@linux.alibaba.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+The resctrl_arch_alloc_capable() check in is_closid_match() breaks task
+reporting for the default group on monitor-only systems so remove this check.
+On systems that support allocation the check is redundant.
+
+Fixes: e6b2fac36fcc ("x86/resctrl: Use is_closid_match() in more places")
+Closes: https://sashiko.dev/#/patchset/20260831174421.13921-1-tony.luck%40intel.com?part=9
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Link: https://patch.msgid.link/20261009193923.15498-1-tony.luck@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/resctrl/rdtgroup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/pci.c b/drivers/cxl/core/pci.c
-index e54991c74e6b3..cb28b33c03eae 100644
---- a/drivers/cxl/core/pci.c
-+++ b/drivers/cxl/core/pci.c
-@@ -870,8 +870,8 @@ static int update_gpf_port_dvsec(struct pci_dev *pdev, int dvsec, int phase)
- 	    FIELD_GET(scale, ctrl) == GPF_TIMEOUT_SCALE_MAX)
- 		return 0;
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index df92305f2a19b..0d39e268f4a42 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -681,7 +681,7 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
  
--	ctrl = FIELD_PREP(base, GPF_TIMEOUT_BASE_MAX);
--	ctrl |= FIELD_PREP(scale, GPF_TIMEOUT_SCALE_MAX);
-+	FIELD_MODIFY(base, &ctrl, GPF_TIMEOUT_BASE_MAX);
-+	FIELD_MODIFY(scale, &ctrl, GPF_TIMEOUT_SCALE_MAX);
+ static bool is_closid_match(struct task_struct *t, struct rdtgroup *r)
+ {
+-	return (resctrl_arch_alloc_capable() && (r->type == RDTCTRL_GROUP) &&
++	return (r->type == RDTCTRL_GROUP &&
+ 		resctrl_arch_match_closid(t, r->closid));
+ }
  
- 	rc = pci_write_config_word(pdev, dvsec + offset, ctrl);
- 	if (rc) {
 -- 
 2.53.0
 
