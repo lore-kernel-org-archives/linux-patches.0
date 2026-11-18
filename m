@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037863;
-	b=47UtUrIxQ+WWvSoMYWkK1Bul/O+7POr94js0PgaqBJU7+huzzR8zIl23o/XcHz4Sgzj7
-	 Pru8iUizW4AyunZPQgs7i6KZ9hfNkbYI5ns0/7AZlkICuXx0VmqAZN+Sf1HCfhqYBBm3j
-	 HKWt1aSTbUrRQOyekz7qT+UL31imqFoBXzu24ZYOW1adlmYzaPF58j/24uCMshDHnmXUV
-	 9MZhQcf3QHFy1WstIFhY8NGCvsMSgyYlFHiJyZ/TOpSxMw2NzsTROszHhCObPu2VuDTw0
-	 kOmqgi0umblHDDSzdJLx4bCcgwh12zxkrD2tK4a5mInQo6Ixta066vFdTQGwA4a2IEQ==
+	t=1795037865;
+	b=BPR7PonbdgKaAUx3EKq6RnNXdJ/eFhywhijJ82Yh/HIpgBMkDP89S8+OZl27eeA9oGJn
+	 aMBFfGC01qhCSL2CAdt9UgxjyFr5g3VNfIQVC45SkLBnY8ecwDR04wtsD6XMP1G1YtE3N
+	 mr2tXD/J/cb7y1phaIqWrB+fq5m+zkCqdQO6ilg8LLyBNq+rsht022ky+Xl7K2WeK3spN
+	 evzXzjG9CbHwiydTNpyztr7OyYMnqfMaZ7PUJuMtFjxoHyQbpnZjjQ0+2wGN0JNA86RqR
+	 03yBsk2v5NVsCEAa6QjKqe5SJB8KojzGZdjuVbkvf9mcb/dh2c9aguf9wONvb2iYsTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xt2Q7zW5OlNwQMHzhRnxQRDjkR/NJ1LBPcmCSfDDnPQ=;
-	b=YfH8LUfBvUpUHBQM7OKRSKR0uZnWkWdEm0hpmIgAl2eYNDYBzYjM+cexuY5vZKzzJ5r7
-	 LnfCdSAswF99F/MKVIBS8MzB6mClTWJ43duVcpq82RkDrulHp5l+MxEZ6dvxUpeQB670S
-	 6qqmaJRwepf4tKmWQCv/D05IjJ0nyWbbY+kvbu1PO5VsaU+drJnARf9o6lqRw7bbbEfUx
-	 hAB8dc+tz3tdU5N1E2YbjwLx/y4DNoJND+JoEUqQCTtETVQYUJPf6swFyM8BISOFcmmDP
-	 X0q6VbzYvMrYIdse3qrEzB6oM/adZ+e8YMwKZEwb8YI2iZvuGw1DiXfT1wNHa0nh+3w==
+	bh=ZhXbUeGbilm0+jV8Yu4FPWFaSp9bYhwR07FVV1Tafjk=;
+	b=ilzuZYEK5dD9a+beXVYbaYQ9yyE02HFen6SUEeUay/FgGL4IW5wmhyrmRYJliRR7gGTp
+	 QiZKYDovpoXVo1b9aN9MpzjarIfr5hpxB1DqixMsFNVFbrPvcOE0abENXzAvxqOKFP2y/
+	 lXc0fPNYzr6EaWxJag6uUI8RJfymdUm6Zy+ak0K7JWTsKEt8bgSwB0frI6/Kh4cj6PIni
+	 e8+JVH7I4pRloHHCxo7a8UuUmrcnsEov3coXaR3hlXRIHDzFmWU3E0lMEBAYI5w1Azc1I
+	 7tMMLn/Yb5Y2OTXq3VntQBAxuuLPrEYJKAacoBwgO0+ChGUGFKpzHN94riCnYzRULOQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJAAa44G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PcTj5QmK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E420D606A325;
-	Wed, 18 Nov 2026 21:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896B4606A320;
+	Wed, 18 Nov 2026 21:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJAAa44G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050731F000C4;
-	Wed, 18 Nov 2026 21:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PcTj5QmK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BC91F000C4;
+	Wed, 18 Nov 2026 21:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037862;
-	bh=xt2Q7zW5OlNwQMHzhRnxQRDjkR/NJ1LBPcmCSfDDnPQ=;
+	s=korg; t=1795037865;
+	bh=ZhXbUeGbilm0+jV8Yu4FPWFaSp9bYhwR07FVV1Tafjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qJAAa44GJYvof0KV5ynmCTY6kmoLj3x29jzt0M/oqS1NMhiA1suNQ2kkvr+ZA9uaU
-	 WD3qV/OCCDCBmOSWOJbVunkyIPIfVCLc6t7Wj/fuNtytlT7cXc71SrvN+nch6xovid
-	 9ayYFep6oAJoWSeAzJ0MKLOv7/PkJl6qc6NFi4r4=
+	b=PcTj5QmKfIn3lId65E5RuIfRFx2oU9ncSSiL3lmLn9XpmwgJLTiGDupHJfMfmgfZ8
+	 dcxsTR8qxe/z0o1faXn0HpRFs1fID8AtTEu9XqBZDImYZ1txb3JpoBthMUFGofhjSZ
+	 KJOwVIH0Q9YC9/xjdIS/MT72QDI72F1sMyjZopAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
 	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1543/3318] ALSA: bcd2000: Fix use-after-free of MIDI URBs on file close
-Date: Wed, 18 Nov 2026 15:36:05 +0100
-Message-ID: <20261118150407.273155085@linuxfoundation.org>
+Subject: [PATCH 6.6 1544/3318] ALSA: usx2y: Refuse a retried DSP load after a failure
+Date: Wed, 18 Nov 2026 15:36:06 +0100
+Message-ID: <20261118150407.305139846@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,79 +72,72 @@ Content-Transfer-Encoding: 8bit
 
 From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit f6c7bb1f0799591a62be75b9bcf84245b4f208b7 ]
+[ Upstream commit 1f8101b6adc87a3ddbd51fcb6609251591758026 ]
 
-bcd2000_disconnect() calls snd_card_disconnect(), which only prevents
-new opens, and then frees the MIDI URBs.  A rawmidi file that was
-already open can still be closed afterwards, and its close callback,
-bcd2000_midi_output_close(), calls usb_kill_urb() on midi_out_urb.
+snd_usx2y_hwdep_dsp_load() sets up the asynchronous sequence URBs and
+the interrupt URB when the FPGA firmware image with index 1 is loaded,
+and then creates the ALSA devices.  If usx2y_in04_init() or
+usx2y_create_alsa_devices() fails, the URBs that were already set up
+are left in place.
 
-The URB pointers are cleared on disconnect and their accesses are
-serialized with midi_lock, but bcd2000_midi_output_close() reads
-midi_out_urb without that lock.  The check can therefore pass just
-before the pointer is cleared, and usb_kill_urb() then runs on the URB
-that has already been freed:
+The core keeps the index unloaded when the callback fails, so user
+space may issue the same request again.  The second attempt then enters
+usx2y_async_seq04_init() or usx2y_in04_init() with the URBs still
+allocated and trips WARN_ON(usx2y->as04.buffer) or
+WARN_ON(usx2y->in04_urb).
 
-  BUG: KASAN: slab-use-after-free in usb_kill_urb+0x74/0x80
-  Read of size 8 at addr ffff8880078e7d40
-   usb_kill_urb
-   bcd2000_midi_output_close
-   close_substream
-   rawmidi_release_priv
-   snd_rawmidi_release
+The URBs cannot be released at this point: the card may already have
+registered PCM devices that user space can still open, and the
+disconnect handler accesses the URBs without holding the DSP lock.
+Mark the chip as hung instead, so that a retried request is refused
+with -ENODEV and the assertions keep their meaning.  The URBs are
+released by snd_usx2y_card_private_free() when the card is freed.
 
-  Allocated by: usb_alloc_urb <- bcd2000_init_midi <- bcd2000_probe
-  Freed by:     usb_free_urb <- bcd2000_midi_free
-                <- bcd2000_disconnect
+A failing usx2y_async_seq04_init() still releases its own URBs, so that
+path remains retryable.
 
-Take the lock in bcd2000_midi_output_close() and reference the URB with
-usb_get_urb() before releasing it.  The URB then stays valid until
-usb_put_urb() after usb_kill_urb() has returned, even if a disconnect
-frees it in the meantime.  usb_kill_urb() itself cannot run under
-midi_lock, as the completion handler takes the same lock.
-
-Fixes: b47a22290d58 ("ALSA: MIDI driver for Behringer BCD2000 USB device")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261031190936.5696-1-25031212351@stu.xidian.edu.cn
+Link: https://patch.msgid.link/20261031191557.8460-1-25031212351@stu.xidian.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/bcd2000/bcd2000.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ sound/usb/usx2y/usX2Yhwdep.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/usb/bcd2000/bcd2000.c b/sound/usb/bcd2000/bcd2000.c
-index dce6d1f611f94..fc18a4348265b 100644
---- a/sound/usb/bcd2000/bcd2000.c
-+++ b/sound/usb/bcd2000/bcd2000.c
-@@ -183,10 +183,24 @@ static int bcd2000_midi_output_open(struct snd_rawmidi_substream *substream)
- static int bcd2000_midi_output_close(struct snd_rawmidi_substream *substream)
- {
- 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
-+	struct urb *urb = NULL;
+diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
+index 2cc0f90a23be3..be755a8afaf26 100644
+--- a/sound/usb/usx2y/usX2Yhwdep.c
++++ b/sound/usb/usx2y/usX2Yhwdep.c
+@@ -179,6 +179,9 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
+ 	int lret, err;
+ 	char *buf;
  
--	if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
--		usb_kill_urb(bcd2k->midi_out_urb);
--		bcd2k->midi_out_active = 0;
-+	/*
-+	 * Reference the URB under the lock so that it stays valid until
-+	 * usb_kill_urb() returns, even if a disconnect frees it in the
-+	 * meantime.  usb_kill_urb() cannot run under the lock, as the
-+	 * completion handler takes the same lock.
-+	 */
-+	scoped_guard(spinlock_irqsave, &bcd2k->midi_lock) {
-+		if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
-+			urb = usb_get_urb(bcd2k->midi_out_urb);
-+			bcd2k->midi_out_active = 0;
-+		}
-+	}
++	if (priv->chip_status & USX2Y_STAT_CHIP_HUP)
++		return -ENODEV;
 +
-+	if (urb) {
-+		usb_kill_urb(urb);
-+		usb_put_urb(urb);
- 	}
- 
- 	return 0;
+ 	buf = memdup_user(dsp->image, dsp->length);
+ 	if (IS_ERR(buf))
+ 		return PTR_ERR(buf);
+@@ -201,11 +204,13 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
+ 		err = usx2y_in04_init(priv);
+ 		if (err) {
+ 			dev_err(&dev->dev, "usx2y_in04_init error\n");
++			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
+ 			return err;
+ 		}
+ 		err = usx2y_create_alsa_devices(hw->card);
+ 		if (err) {
+ 			dev_err(&dev->dev, "usx2y_create_alsa_devices error %i\n", err);
++			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
+ 			return err;
+ 		}
+ 		priv->chip_status |= USX2Y_STAT_CHIP_INIT;
 -- 
 2.53.0
 
