@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039468;
-	b=PsjVbMnZBtaz6sa1J28K4h6tsEcuKOTrqge4tRZytoQN6+nUmVGIcwDAN5md3UvGtUnk
-	 VdoisSYt9tq2yPK2nLcX5k45ByUQt6hurJo/HFLSTPd5gGPe5bjEAyNIcuOTPziZqaglm
-	 tQiVgBM/frw9B9F7yBarx3GMC7lQbHn8dqj27b5zbqzHdj+0f9gzX0KfICmJucyV3FEpo
-	 xaWlVNt48BWDL+/SaryUS88cYlPKVVsHUApCT97zLqOxxve/NxxW4ki9NsNeoZ8KJNyAn
-	 +U3/myxrHbHgENoAqJ/S0/ZLPZjhN0uSIPqDM0eMoKzNJanstDLW9N6b+eXN1EatVrQ==
+	t=1795039471;
+	b=2gPlv8chqF+e0IUec7rr5DxzVHboYWqQp5Rnmc5boaZKI0YdCnc7pKMDgafiKUOQIgrL
+	 ++779okpcNlWFJX+7NZqRd+zELVl6D8UVjAuVJxfg2tRYtUtVf5EbC2uqwmtqYyOdkAxV
+	 IaDLQ9UiXT7z+42y7o7J/IIM9KnUfZRExY1OXy73yZSvpWMvCbf0ozJZH5s30bXA4PUnf
+	 2kKx+8i3taLIb8zSjM4CanIEtXaiisgmbLyX1Y8AwuE0/RZfeKNQvuzBl0Ghak4gy1aVv
+	 gXhzgatOKxKd6JjxS9ghw5GWBNqVZFmqb25igtl7talcRa78FQ1wNJITIU3HDyW/ifQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039468;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l8JngaKH02pyIB+gHpw2t7lYi//hPBmNaGSNXagfmp0=;
-	b=JvaIFNy0oLBhzj86bn3S7JhpyoT+Qaefe0qaY9fi3EcxQJjbHm+Z+SnvM3TD4TbX11Sp
-	 E1lHoi/MGYJqUCVVp4AJgaQQBqeARuV1BS5EFFR1YBAfC09Cuu6jPuqakAoM6mtE/8BM1
-	 SluGLeWQDKuQewhpoSY6xryo8AK8sX3IsFAkzFHCQ349GTJzo515oU3KzVXACnHnGD+A6
-	 QdIiUA5Ih97jwq9CLPhWk19GO8EdeRzKMppTNZR1hLWg0tUmuz0x5zRIvmmD/V+RzXtUl
-	 mwQixt5htMDD47NiKSe6ipHCz73E89TNnKWjiWDlEO11bz5MUBqhn03khZ6Hos9SZPw==
+	bh=RcoXEdDc+tXbQsqnKIRSDWfMMiVEYHesEVc0GWdrHr8=;
+	b=nDXp2o8yGk1EEI/cbb7CAcg+bBsrkNWrobnnMDi7PnfHvJZmjPgh5oDdo4n4i5eefkcZ
+	 2nFu4P0ZXSTGTKDpoAXaR4Rcy4yZevX0Ps5JER4pQ3XnGhJGIOOSk5Or56rtYzyvemnqF
+	 zWrQVu4PW8/3+swjU3u11Jv/wxH0m9wq035r04xciX5L+j8AaY+3KAN7TDaQYTfzc2wwt
+	 TqRCrAjhnNh1YbWBDIlJNvMJRnkbygHWdIvaqP6M7o2y03hqed/OjOJBzmkW9wR7GQxZA
+	 gHN4oN/vyeH4ku9EI8t3SAG6raeWk8bcZE9u+EsYG75LWNJwp+dOh347f1eCxIoCs8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hbr7943T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxLxDXbS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313D6606A31C;
-	Wed, 18 Nov 2026 22:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA47606A320;
+	Wed, 18 Nov 2026 22:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hbr7943T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0111F000C6;
-	Wed, 18 Nov 2026 22:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YxLxDXbS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB8B1F000C4;
+	Wed, 18 Nov 2026 22:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039468;
-	bh=l8JngaKH02pyIB+gHpw2t7lYi//hPBmNaGSNXagfmp0=;
+	s=korg; t=1795039470;
+	bh=RcoXEdDc+tXbQsqnKIRSDWfMMiVEYHesEVc0GWdrHr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hbr7943TZznj3XskfvtXFV0NVmhAZTfewtTEWxwEnq6/b59Zudql3gBtzdoVbsjDo
-	 /O0AfEOpdmuQuMn++hifcdkhC7RHj+oDveE5vQUPA10DunU/pdCcUA6nTmfp97lfdY
-	 QlaBH8PkS8mpJovCtn4uqLBWj/wcJdrju6hkLcdU=
+	b=YxLxDXbSQqNm1yvodNa8iltlexutfMDc86P3Gu48A9akVCeQOXfBU0TD2mfNb6et/
+	 5srBS67fpOLFnbkkeKGMPSi8EP2ijvUiy2dNNA//ntAAUWA54TotKCj779HtBbmyR+
+	 tLLyCNCdNrcAI/Eb8d8hNply+C2Mz7x/J9S6fww8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Golla Nagendra <nagendra.golla@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2112/3318] selftests: net: csum: filter packets by source address and port
-Date: Wed, 18 Nov 2026 15:45:34 +0100
-Message-ID: <20261118150425.432337251@linuxfoundation.org>
+Subject: [PATCH 6.6 2095/3318] dmaengine: zynqmp_dma: Fix chan probe/remove error handling
+Date: Wed, 18 Nov 2026 15:45:17 +0100
+Message-ID: <20261118150424.940133836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,176 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Golla Nagendra <nagendra.golla@amd.com>
 
-[ Upstream commit 8342c68435dd34b1ecd65b02fff9745cadab2616 ]
+[ Upstream commit 0266dac57019201a14a81245d22750ab221d6c66 ]
 
-Add source address and port verification in recv_verify_packet_* and
-recv_udp: non-matching packets are skipped.
+Keep the real platform_get_irq() error by returning ret directly, stage
+IRQ setup via a local ret variable, and assign chan->irq only after
+devm_request_irq() succeeds.
 
-The receiver reads from PF_PACKET and UDP sockets to verify incoming
-packets to test hardware checksum offload. It did not validate the
-packet source address or source port.
+Initialize chan->irq to -1 and initialize chan->common.device_node
+before it may be touched by teardown. In channel remove, free IRQ only
+for valid IRQ numbers and delete the channel node only when it is linked.
 
-During tests expecting an invalid checksum (-E) or zero checksum (-Z),
-background packets can fail the test.
+Register the channel node only after successful IRQ setup. On channel
+probe failure in zynqmp_dma_probe(), route cleanup through the existing
+free_chan_resources teardown path.
 
-For -Z, build_packet_udp chooses a specific source port that causes
-the checksum to sum to zero. When running in receive-only mode (-R),
-call build_packet in do_rx to compute the expected source port so
-that source port filtering can be applied to -Z as well.
-
-Also
-- add an inter-packet delay to avoid drops from bursts.
-- remove a comment that is no longer correct.
-
-Fixes: 91a7de85600d ("selftests/net: add csum offload test")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260908155537.813889-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260814045616.1661199-4-nagendra.golla@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/csum.c | 55 +++++++++++++++++++++++++++---
- 1 file changed, 50 insertions(+), 5 deletions(-)
+ drivers/dma/xilinx/zynqmp_dma.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/net/csum.c b/tools/testing/selftests/net/csum.c
-index 89d3bfd969099..275f2b5772f58 100644
---- a/tools/testing/selftests/net/csum.c
-+++ b/tools/testing/selftests/net/csum.c
-@@ -2,8 +2,7 @@
+diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
+index e8068cf62613b..7d4aa37bc38bb 100644
+--- a/drivers/dma/xilinx/zynqmp_dma.c
++++ b/drivers/dma/xilinx/zynqmp_dma.c
+@@ -205,7 +205,7 @@ struct zynqmp_dma_desc_sw {
+  * @desc_pool_p: Physical allocated descriptor base
+  * @desc_free_cnt: Descriptor available count
+  * @dev: The dma device
+- * @irq: Channel IRQ
++ * @irq: Linux IRQ number, or -1 when not registered
+  * @is_dmacoherent: Tells whether dma operations are coherent or not
+  * @tasklet: Cleanup work after irq
+  * @idle : Channel status;
+@@ -887,10 +887,11 @@ static void zynqmp_dma_chan_remove(struct zynqmp_dma_chan *chan)
+ 	if (!chan)
+ 		return;
  
- /* Test hardware checksum offload: Rx + Tx, IPv4 + IPv6, TCP + UDP.
-  *
-- * The test runs on two machines to exercise the NIC. For this reason it
-- * is not integrated in kselftests.
-+ * The test runs on two machines to exercise the NIC.
-  *
-  *     CMD=$((./csum -[46] -[tu] -S $SADDR -D $DADDR -[RT] -r 1 $EXTRA_ARGS))
-  *
-@@ -236,7 +235,8 @@ static void *build_packet_udp(void *_uh)
- 		uh->source = 0;
- 		uh->source = checksum(uh, IPPROTO_UDP, sizeof(*uh) + cfg_payload_len);
- 
--		fprintf(stderr, "tx: changing sport: %hu -> %hu\n",
-+		fprintf(stderr, "%s: changing sport: %hu -> %hu\n",
-+			cfg_do_tx ? "tx" : "rx",
- 			cfg_port_src, ntohs(uh->source));
- 		cfg_port_src = ntohs(uh->source);
- 	}
-@@ -249,7 +249,8 @@ static void *build_packet_udp(void *_uh)
- 	if (cfg_bad_csum)
- 		uh->check = ~uh->check;
- 
--	fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
-+	if (cfg_do_tx)
-+		fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
- 	return uh + 1;
+-	if (chan->irq)
++	if (chan->irq >= 0)
+ 		devm_free_irq(chan->zdev->dev, chan->irq, chan);
+ 	tasklet_kill(&chan->tasklet);
+-	list_del(&chan->common.device_node);
++	if (!list_empty(&chan->common.device_node))
++		list_del(&chan->common.device_node);
  }
  
-@@ -571,15 +572,36 @@ static int recv_prepare_packet(void)
- static int recv_udp(int fd)
- {
- 	static char buf[MAX_PAYLOAD_LEN];
-+	struct sockaddr_storage addr;
-+	socklen_t addrlen;
- 	int ret, count = 0;
+ /**
+@@ -906,13 +907,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+ 	struct zynqmp_dma_chan *chan;
+ 	struct device_node *node = pdev->dev.of_node;
+ 	const struct zynqmp_dma_config *match_data;
+-	int err;
++	int err, ret;
  
- 	while (1) {
--		ret = recv(fd, buf, sizeof(buf), MSG_DONTWAIT);
-+		addrlen = sizeof(addr);
-+		ret = recvfrom(fd, buf, sizeof(buf), MSG_DONTWAIT,
-+			       (struct sockaddr *)&addr, &addrlen);
- 		if (ret == -1 && errno == EAGAIN)
- 			break;
- 		if (ret == -1)
- 			error(1, errno, "recv r");
+ 	chan = devm_kzalloc(zdev->dev, sizeof(*chan), GFP_KERNEL);
+ 	if (!chan)
+ 		return -ENOMEM;
+ 	chan->dev = zdev->dev;
+ 	chan->zdev = zdev;
++	chan->irq = -1;
  
-+		if (cfg_family == PF_INET) {
-+			struct sockaddr_in *sin = (void *)&addr;
-+
-+			if (sin->sin_addr.s_addr != cfg_saddr4.sin_addr.s_addr)
-+				continue;
-+			if (sin->sin_port != htons(cfg_port_src))
-+				continue;
-+		} else {
-+			struct sockaddr_in6 *sin6 = (void *)&addr;
-+
-+			if (memcmp(&sin6->sin6_addr, &cfg_saddr6.sin6_addr,
-+				   sizeof(sin6->sin6_addr)))
-+				continue;
-+			if (sin6->sin6_port != htons(cfg_port_src))
-+				continue;
-+		}
-+
- 		fprintf(stderr, "rx: udp: len=%u\n", ret);
- 		count++;
- 	}
-@@ -620,6 +642,9 @@ static int recv_verify_packet_tcp(void *th, int len)
- 	if (len < sizeof(*tcph) || tcph->dest != htons(cfg_port_dst))
- 		return -1;
+ 	chan->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(chan->regs))
+@@ -945,22 +947,26 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+ 	INIT_LIST_HEAD(&chan->pending_list);
+ 	INIT_LIST_HEAD(&chan->done_list);
+ 	INIT_LIST_HEAD(&chan->free_list);
++	INIT_LIST_HEAD(&chan->common.device_node);
  
-+	if (tcph->source != htons(cfg_port_src))
-+		return -1;
+ 	dma_cookie_init(&chan->common);
+ 	chan->common.device = &zdev->common;
+-	list_add_tail(&chan->common.device_node, &zdev->common.channels);
+-
+ 	zynqmp_dma_init(chan);
+-	chan->irq = platform_get_irq(pdev, 0);
+-	if (chan->irq < 0)
+-		return -ENXIO;
+-	err = devm_request_irq(&pdev->dev, chan->irq, zynqmp_dma_irq_handler, 0,
++	ret = platform_get_irq(pdev, 0);
++	if (ret < 0)
++		return ret;
 +
- 	return recv_verify_csum(th, len, ntohs(tcph->source), tcph->check);
++	err = devm_request_irq(&pdev->dev, ret, zynqmp_dma_irq_handler, 0,
+ 			       "zynqmp-dma", chan);
+ 	if (err)
+ 		return err;
+ 
++	chan->irq = ret;
++
+ 	chan->desc_size = sizeof(struct zynqmp_dma_desc_ll);
+ 	chan->idle = true;
++	list_add_tail(&chan->common.device_node, &zdev->common.channels);
++
+ 	return 0;
  }
  
-@@ -647,6 +672,9 @@ static int recv_verify_packet_udp(void *th, int len)
- 		return recv_verify_packet_udp_encap(udph + 1,
- 						    len - sizeof(*udph));
- 
-+	if (udph->source != htons(cfg_port_src))
-+		return -1;
-+
- 	return recv_verify_csum(th, len, ntohs(udph->source), udph->check);
- }
- 
-@@ -659,6 +687,9 @@ static int recv_verify_packet_ipv4(void *nh, int len)
- 	if (len < sizeof(*iph) || iph->protocol != proto)
- 		return -1;
- 
-+	if (iph->saddr != cfg_saddr4.sin_addr.s_addr)
-+		return -1;
-+
- 	ip_len = ntohs(iph->tot_len);
- 	if (ip_len > len || ip_len < sizeof(*iph))
- 		return -1;
-@@ -680,6 +711,9 @@ static int recv_verify_packet_ipv6(void *nh, int len)
- 	if (len < sizeof(*ip6h) || ip6h->nexthdr != proto)
- 		return -1;
- 
-+	if (memcmp(&ip6h->saddr, &cfg_saddr6.sin6_addr, sizeof(ip6h->saddr)))
-+		return -1;
-+
- 	payload_len = ntohs(ip6h->payload_len);
- 	if (payload_len > len - sizeof(*ip6h))
- 		return -1;
-@@ -928,6 +962,9 @@ static void do_tx(void)
- 			cfg_payload_len = rand() % MAX_PAYLOAD_LEN;
- 			buf = build_packet(_buf, sizeof(_buf), &len);
- 		}
-+
-+		/* avoid bursting */
-+		usleep(20);
+@@ -1125,7 +1131,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+ 	ret = zynqmp_dma_chan_probe(zdev, pdev);
+ 	if (ret) {
+ 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
+-		goto err_disable_pm;
++		goto free_chan_resources;
  	}
  
- 	if (close(fd))
-@@ -940,6 +977,14 @@ static void do_rx(int fdp, int fdr)
- 	long tleft, tstop;
- 	struct pollfd pfd;
- 
-+	if (!cfg_do_tx && cfg_zero_sum) {
-+		static char _buf[MAX_HEADER_LEN + MAX_PAYLOAD_LEN];
-+		int len;
-+
-+		/* calculate source port that causes csum to add up to zero */
-+		build_packet(_buf, sizeof(_buf), &len);
-+	}
-+
- 	tstop = gettimeofday_ms() + cfg_timeout_ms;
- 	tleft = cfg_timeout_ms;
- 
+ 	p->dst_addr_widths = BIT(zdev->chan->bus_width / 8);
 -- 
 2.53.0
 
