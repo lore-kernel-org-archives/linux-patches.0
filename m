@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022436;
-	b=DwzRVmM1Juk3pfqmlKG8+PgXlsjJvKSOl8RCdSPWBXsR+JFjEKUZIgDsXoLGhBwb9pzV
-	 ayYzueokLrsrl/f3oeMLV5/gNqlCvM73rYmpnREB1bw+dvftZn5+0/Goha5QrpSeBWsMA
-	 95dy0Cm6Yg5byC+LGGQUa6UUzxf0OVY4xMzOwnGBv7ZvK+25Pg4K96CFRrWFvLtDxMKux
-	 ORSzq180Z46FQu6UjDDDU/P1Lu9FFFZRtamzNLWbfC8E/9d5r92Ae7hiUP7ena+ekC1Xv
-	 4MODpfFCP9VIESF509x/3XYFOJPl4U8M7ouAeEA0fKbuJhWJS1v1D7bAdonzGH9CCBg==
+	t=1795022439;
+	b=FHCx6OcWU+UysBYI/UBvNs942OQ8EOXNrBpCpz2BUlgQC+iFIl7OQnxvgHKVknbooIY4
+	 rfB7z99Pb+3wg1Pu5g0V7/uiKOVaJ1ZFREEPUgA9B9sVTKTQq1rh6knyoswCtirxlQNqY
+	 98eAz3085rzI7cyDhoWNwkR/Q2PBLZ6xcDse7EkutNWBLQnUg4k1+8yh8yKy/uyPCrHxl
+	 +1sDChT36KPrPLDWOcpPWynG4a3jbOsTFlUd1HYuAlEM+xQNNim9vgnpICnq/dAwA+e8y
+	 TMRvTy0QV38hGrM5LwYHF7uib5KrPg0teXVaXWNGNNbEjVgcrIl7H4NZy6/LVw8DvPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sunzh/+mB1xuCqI463xnIyvOz2vgDDK0AH1piXJb/t0=;
-	b=sI0Qy5Dg2RtS/+YHEihcYaO9up/4NQMhEU7Tpibz8WXj2l8U/TMMHE9TrT/+VvXT3CW+
-	 hPHe5NJf5ji7qvOU59W4l2aSXj+oAGlKcD7RM9jf81MDzOREO01MNpBms/V72iPwLZDSC
-	 CmhFhtl+tvTAh4YN4h2+LjKmNSxmRWQWlWjPYppTg5Z6Ns88n1T++HkMtX6q3jSPHsk7R
-	 FcaNDnneegHvTVbyk/VtIFVhY0pRXpc2OSkeo1i2NR9S9qkY9RbMQ5ZNRTlnhN7MCETst
-	 3a1WuPWb/cFif+FISbxBoehwxSz2c5hhIcAVZwKWo2I0ewuJ1C6EsdTud/breBOcINA==
+	bh=ATmVp5ni+2wqgj/2PVYu6e2Id8cdpJ/RGyTaC+wSybk=;
+	b=wOPGWqPKSXVfmLfNJBS5JLlvgs0/UP24Fk19d2KL1l+qKMv+Y8Vsdi48I6ckps4lQe7f
+	 z5z8rnVPx4XhtAUs7F7qEkCnood6EF3reV/Yvo1jHdRVHKGOoqHD9yoS3j/69MtM6JCMg
+	 IlhKE677pUQZzXUCZpBH6Jk3bcB21mPFAWI4D1du1AhbZMUMdR0fkXnHalgq9P/GSLzrv
+	 IDLLOMCHbFj/ioF+VimN1+iEhQuv57pHwjjqNoiQqiN74sT9mqJIIXoD0gkH6OD1NPrSI
+	 FaMFFNjukDBlUAI95+0sXlz4a9mtW2mo8fNmM5wfF2va0l4cv/dDIL1kLNWNFRSkfaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWxtmPya;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3zHrbDP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88666606A32A;
-	Wed, 18 Nov 2026 17:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E2D606A31C;
+	Wed, 18 Nov 2026 17:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWxtmPya
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF06B1F000C5;
-	Wed, 18 Nov 2026 17:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o3zHrbDP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBB41F000C4;
+	Wed, 18 Nov 2026 17:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022436;
-	bh=sunzh/+mB1xuCqI463xnIyvOz2vgDDK0AH1piXJb/t0=;
+	s=korg; t=1795022439;
+	bh=ATmVp5ni+2wqgj/2PVYu6e2Id8cdpJ/RGyTaC+wSybk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MWxtmPyaoo2ERMySn9/gveic4xosTOnMFnTw2FXsAm5RpNSV2iGTMokAd95XeXOHV
-	 GD9fcy9csA1TWQ814ZX0PSicbZOsgEyBGWxI/HIUzgDxDCA72Z1j7rZYvbNsxfOuIi
-	 vtL6wzL7c7M26uN7vuufXCDax0OffI3Rb2JHyfU8=
+	b=o3zHrbDPHOf6kli0/thsx7v+3hpCZWBuoQApJgvyQ8MnoKEHxs0UhuB0rX//5s2m6
+	 vmLg2RP1iF1BvQQfTv33S12u+A52frVWa3L+IQiNtOQOpQsxw6ns2vQn23qejPNYbE
+	 GAtPCKpbxz0rJEx5lIAkBbRw/IKcs1De76czbVHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	William Palacek <William.Palacek@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0013/2151] ASoC: SOF: Intel: hda-sdw-bpt: Stop active DMA before closing BPT streams
-Date: Wed, 18 Nov 2026 15:29:08 +0100
-Message-ID: <20261118150122.124669889@linuxfoundation.org>
+Subject: [PATCH 6.18 0014/2151] drm/amdkfd: Validate the control stack of a restored queue
+Date: Wed, 18 Nov 2026 15:29:09 +0100
+Message-ID: <20261118150122.159823541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,50 +68,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: William Palacek <William.Palacek@amd.com>
 
-[ Upstream commit 348bc756d912dd8f47fd36c167075717951a515e ]
+[ Upstream commit 90d91a192751cd9a7d9d2286299bc72ec1c28179 ]
 
-When sdw_enable_stream() fails in intel_ace2x_bpt_send_async() after
-hda_sdw_bpt_send_async() has already started the TX and RX DMA streams,
-intel_ace2x_bpt_close_stream() invokes hda_sdw_bpt_close() directly
-without calling hda_sdw_bpt_wait().  As a result,
-hda_sdw_bpt_dma_deprepare() tears down the DMA buffers and BDL while
-the DMA hardware is still running.
+kfd_criu_restore_queue() takes the control stack size from the
+checkpoint image without the topology check create-queue does in
+kfd_queue_acquire_buffers(), which restore stopped calling in
+commit 1cafa8b29e02 ("drm/amdkfd: Don't acquire buffers
+during CRIU queue restore."). An image size of 0x300000 is accepted and
+sizes the MQD allocation, and 0xFFFFFFFF trips a page allocator warning
+in kmalloc().
 
-Disable any running TX or RX BPT DMA stream at the start of
-hda_sdw_bpt_close() before unmapping channels and depreparing DMA
-resources.
+restore_mqd() also keeps the image's cp_hqd_cntl_stack_size,
+cp_hqd_cntl_stack_offset and cp_hqd_wg_state_offset. With offset > size
+or wave state offset < size, get_wave_state() returns wrapped sizes.
 
-Fixes: 4c1ce9f37d8a ("soundwire: intel_ace2x: add BPT send_async/wait callbacks")
-Closes: https://sashiko.dev/#/bug/linux-ff0012de-abdd-4796-875e-b1fbbf47235f
+Take the per-XCC size from topology, 0 for queues without a control
+stack, and reject larger images. In restore_mqd(), set the size to it
+and bound both offsets as init_mqd() does.
+
+Fixes: 626f7b3190b4 ("drm/amdkfd: CRIU add queues support")
+Fixes: 42c6c48214b7 ("drm/amdkfd: CRIU checkpoint and restore queue mqds")
+Signed-off-by: William Palacek <William.Palacek@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 92249023caee17bfc6f29c71d6aaa5f2298cf507)
 Cc: stable@vger.kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261030104840.3361217-6-lee@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[ sashal: inlined the upstream helper into four existing restore functions to avoid adding a new function ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda-sdw-bpt.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c  |  3 ++
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c  |  3 ++
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c   |  3 ++
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c   |  3 ++
+ .../amd/amdkfd/kfd_process_queue_manager.c    | 30 +++++++++++++------
+ 5 files changed, 33 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-sdw-bpt.c b/sound/soc/sof/intel/hda-sdw-bpt.c
-index 4e5c99413c750..5eaa2e0563c16 100644
---- a/sound/soc/sof/intel/hda-sdw-bpt.c
-+++ b/sound/soc/sof/intel/hda-sdw-bpt.c
-@@ -431,6 +431,12 @@ int hda_sdw_bpt_close(struct device *dev, int link_id, struct hdac_ext_stream *b
- 	int ret;
- 	int ret1;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+index 4a621791da230..99fdbf666c87d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+@@ -293,6 +293,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
  
-+	if (bpt_rx_stream && hdac_stream(bpt_rx_stream)->running)
-+		hda_sdw_bpt_dma_disable(dev, bpt_rx_stream);
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+index ca90454b01acc..2f4caf637a065 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -344,6 +344,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+index f0e7a7244a33f..e7bb62a0ac7e1 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -429,6 +429,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
+index f0de0893bc597..ae3bd2bb410a5 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
+@@ -305,6 +305,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 6f3cfb9245c4a..b2a0caa7e1ca0 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -26,6 +26,7 @@
+ #include <linux/list.h>
+ #include "kfd_device_queue_manager.h"
+ #include "kfd_priv.h"
++#include "kfd_topology.h"
+ #include "kfd_kernel_queue.h"
+ #include "amdgpu_amdkfd.h"
+ #include "amdgpu_reset.h"
+@@ -968,7 +969,7 @@ int kfd_criu_checkpoint_queues(struct kfd_process *p,
+ }
+ 
+ static void set_queue_properties_from_criu(struct queue_properties *qp,
+-					  struct kfd_criu_queue_priv_data *q_data, uint32_t num_xcc)
++					  struct kfd_criu_queue_priv_data *q_data)
+ {
+ 	qp->is_interop = false;
+ 	qp->queue_percent = q_data->q_percent;
+@@ -981,11 +982,6 @@ static void set_queue_properties_from_criu(struct queue_properties *qp,
+ 	qp->eop_ring_buffer_size = q_data->eop_ring_buffer_size;
+ 	qp->ctx_save_restore_area_address = q_data->ctx_save_restore_area_address;
+ 	qp->ctx_save_restore_area_size = q_data->ctx_save_restore_area_size;
+-	if (q_data->type == KFD_QUEUE_TYPE_COMPUTE)
+-		qp->ctl_stack_size = q_data->ctl_stack_size / num_xcc;
+-	else
+-		qp->ctl_stack_size = q_data->ctl_stack_size;
+-
+ 	qp->type = q_data->type;
+ 	qp->format = q_data->format;
+ }
+@@ -997,6 +993,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ {
+ 	uint8_t *mqd, *ctl_stack, *q_extra_data = NULL;
+ 	struct kfd_criu_queue_priv_data *q_data;
++	struct kfd_topology_device *topo_dev;
+ 	struct kfd_process_device *pdd;
+ 	uint64_t q_extra_data_size;
+ 	struct queue_properties qp;
+@@ -1033,6 +1030,24 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 		goto exit;
+ 	}
+ 
++	memset(&qp, 0, sizeof(qp));
++	set_queue_properties_from_criu(&qp, q_data);
 +
-+	if (bpt_tx_stream && hdac_stream(bpt_tx_stream)->running)
-+		hda_sdw_bpt_dma_disable(dev, bpt_tx_stream);
++	/* Per-XCC control stack size from topology, as create-queue requires */
++	if (qp.type == KFD_QUEUE_TYPE_COMPUTE && pdd->dev->kfd->cwsr_enabled) {
++		topo_dev = kfd_topology_device_by_id(pdd->dev->id);
++		if (!topo_dev) {
++			ret = -EINVAL;
++			goto exit;
++		}
++		qp.ctl_stack_size = topo_dev->node_props.ctl_stack_size;
++	}
 +
- 	/*
- 	 * In the case of SoundWire we need to reset the PCMSyCM registers.
- 	 * Need to continue depreparing the DMA buffers even if this fails.
++	if (q_data->ctl_stack_size > (u64)qp.ctl_stack_size * NUM_XCC(pdd->dev->xcc_mask)) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	*priv_data_offset += sizeof(*q_data);
+ 	q_extra_data_size = (uint64_t)q_data->ctl_stack_size + q_data->mqd_size;
+ 
+@@ -1062,9 +1077,6 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 	mqd = q_extra_data;
+ 	ctl_stack = mqd + q_data->mqd_size;
+ 
+-	memset(&qp, 0, sizeof(qp));
+-	set_queue_properties_from_criu(&qp, q_data, NUM_XCC(pdd->dev->xcc_mask));
+-
+ 	ret = kfd_queue_acquire_buffers(pdd, &qp);
+ 	if (ret) {
+ 		pr_debug("failed to acquire user queue buffers for CRIU\n");
 -- 
 2.53.0
 
