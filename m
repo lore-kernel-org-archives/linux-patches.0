@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040262;
-	b=H26tEsm7/jo5KXF9DEOIO1561dARkaRSo//+i49RkARIlsO6XuWYsS/SY9IGX4deolmt
-	 HYmYvU/7EyBaf2cTM9cn9XDX98FNCbLiBX3x8ZeCGS+uz7db55LIll6jj9aaLm39Dc1X9
-	 4+dPaXJc4OrNZWN6TxXEgyM7eQNQd/a4BOkqrUli1/lexNh3o+pBhSWtNaXNxYDrtN+/A
-	 Gx/N7QMNXRQg9Vjpi3/AfgEKRMs+AR3o9jLyciiJ6MwSv32nNHeBMluX0Gqlw86BeuxXT
-	 b+1FitvWAyos+jZup9q9QDkjJwr9XIHMMdlc8B3tdZhJpa042pjhM2PqSDexw4MEnfw==
+	t=1795040265;
+	b=eZqtuL6S7VuQBf6jDLLBSZik3Tohq0TOXofQPtRnPYVhueNXPZHPEEjj5otFKXEmVnWB
+	 Nnyja2Df7O1zMSIZHLp6v6Me9Oa07ayeBT84xZGUZJcJcxXVXwXnPE+A1ri8pLZHaoi+q
+	 cboUrwf0KsokfTdPZ6GH73P365gKpm7UjohM6927+uQEG7U5/chFhPjC/xMNpVsrfXSIi
+	 OUv7D9agaFzyyOwQvQUlyUuRrpXFWFvIczpu1YKv2e5sxAlMhV1bvKgC+9npc53pZVJ6H
+	 k1HLzvYH9zjVIAusNgG4xfXxlAtgjG3gkFYDCgip0fpSiKJBNQvwWwnnpVEHwFhwNAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040262;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040265;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zLNIR8wN/0NwI2HlY1AooThKGRQx8nleRMkmQK/HjN0=;
-	b=h2tOUCvje/89Jvi3+ZPYr9VVf1A2qZsDxjHE2JfGt4JqmMU6MUdrkWiUbPBIY7ybHgCN
-	 3VyXItjnDwuxCwoJzghFYKrxseMwWi4zLt6gMsh/fGF4c2jzwhnP8hcVqqdHhpUA5so67
-	 h/DHqi4uYEhSQFd0T9FljxE26lNENe8A71OWuEhuiMzRRBeLJKYS4EgU3Ocw+U7fJAxVU
-	 0Fqd3jaY9HEzlus50YhE+5TxxOxdU9nVhxVz69Is6sa4iZI+Dg6C7JRu1n1Pe5/jj0Rep
-	 GmvBjYfEj3aylsW5VZqKz7kig1azZ18sIRD6+dE+aJDgFJRFKnNrXxBgtGw5m0/lh/g==
+	bh=HwWspy37jgK6D1NvRqtB1CgSFi93me0osfmFMS5m77w=;
+	b=zpvzKW6RB+D/LyNiyWAMfwyFcftaJc68zYyw/tlMqITcTh1EKr8JEkQkjLKp5AfmdavD
+	 UrARYLAGFsZ4MXFvIKYpNnFmIoT1RVFtps3bClOfXR1Z0W336OmWpi3UrPcWb83TuaxBX
+	 WnJBz8LG9Vnr3CBph7JvhjszJQHqB853LunJBNfNtRoG6on67aAukS/CyZIPE20KEF+jw
+	 3Qkdyb5d0uglCT3IJCbxCWAO23sHDC6ajeDRqPat1uKejpRvBHSHN3rupZOHwdzsJF1ne
+	 28y2nABKyZbErCcfiNhXHXJedLzZnU/tThMA3Y5/Jzd/8CxSChfMGlh99LCtqWr/Bkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZvOVFiHR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAmgYKhW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA239606A333;
-	Wed, 18 Nov 2026 22:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE77606A320;
+	Wed, 18 Nov 2026 22:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZvOVFiHR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41431F000C4;
-	Wed, 18 Nov 2026 22:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FAmgYKhW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E551F000C4;
+	Wed, 18 Nov 2026 22:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040262;
-	bh=zLNIR8wN/0NwI2HlY1AooThKGRQx8nleRMkmQK/HjN0=;
+	s=korg; t=1795040265;
+	bh=HwWspy37jgK6D1NvRqtB1CgSFi93me0osfmFMS5m77w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZvOVFiHRM0uTQL9kSXDvkxU7Rz8WhNC3yH/3I7RKyWOAYnm7CelFJtVv0hNYfYPq8
-	 ipySehhVlt9YCx1q+Exo76DUXIR7+3kULpcg6as1jjuc9Xlr/IJOBT86Zjz13Ht2/T
-	 SPTc2+fgZx0EA4dEKgHo21EyMnrbwuoXMHxaIS98=
+	b=FAmgYKhWohPzDSVMK4vMEm7Pkykizgtrb7xuTbw3jt0bMf6cmab80ySiLTYS+UwBr
+	 n3CcPdctelnAH9gmuqfoj7/G/tfzHBmwp4SA+cPOU+oGHac+iGNphNdvzm3pSQO5rq
+	 WES07LtuRdFkJu6F1/AKuQEbm/skqBKd9/JwpJ9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2393/3318] drm/msm/a6xx: Fix secondary rail vote in ARC votes
-Date: Wed, 18 Nov 2026 15:50:15 +0100
-Message-ID: <20261118150433.305481996@linuxfoundation.org>
+Subject: [PATCH 6.6 2394/3318] netfilter: synproxy: fix reset of ct seqadj when reopening a connection
+Date: Wed, 18 Nov 2026 15:50:16 +0100
+Message-ID: <20261118150433.333040683@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,46 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 128a0edde50780ed9eb93ab5d2e18ca24c1f1c43 ]
+[ Upstream commit a8708aa9fe1095ca7859cb3f102b6a3fa0fb98bd ]
 
-Using the requested level can pick a secondary corner lower than the one
-required to support the chosen primary corner, under-voting the
-dependent rail. To fix this, match against the selected primary voltage
-instead.
+SYNPROXY is resetting conntrack seqadj when a closed connection is
+re-opened, but it was using nf_ct_seqadj_init() which is a no-op for a
+zero offset.
 
-Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/755592/
-Message-ID: <20260923-hawi-gpu-v1-2-0c3c79a1a470@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+This patch introduces nf_ct_seqadj_reset() which sets the offset values
+directly to zero and avoid setting IPS_SEQ_ADJUST_BIT flag, it changes
+SYNPROXY code to use it when needed.
+
+Fixes: 48b1de4c110a ("netfilter: add SYNPROXY core/target")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_conntrack_seqadj.h |  1 +
+ net/netfilter/nf_conntrack_seqadj.c         | 17 +++++++++++++++++
+ net/netfilter/nf_synproxy_core.c            |  4 ++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index b5b77d9f6b7c8..b9c0a757e76f5 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1293,10 +1293,14 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
- 		/*
- 		 * Look for a level in in the secondary list that matches. If
- 		 * nothing fits, use the maximum non zero vote
-+		 *
-+		 * The secondary rail depends on the primary rail, so match it
-+		 * against the quantized primary voltage (which is >= the
-+		 * requested level), not the requested level itself.
- 		 */
+diff --git a/include/net/netfilter/nf_conntrack_seqadj.h b/include/net/netfilter/nf_conntrack_seqadj.h
+index 883c414b768ee..0f5bbb14a25aa 100644
+--- a/include/net/netfilter/nf_conntrack_seqadj.h
++++ b/include/net/netfilter/nf_conntrack_seqadj.h
+@@ -33,6 +33,7 @@ static inline struct nf_conn_seqadj *nfct_seqadj_ext_add(struct nf_conn *ct)
  
- 		for (j = 0; j < sec_count; j++) {
--			if (sec[j] >= level) {
-+			if (sec[j] >= pri[pindex]) {
- 				sindex = j;
- 				break;
- 			} else if (sec[j]) {
+ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		      s32 off);
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo);
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off);
+ void nf_ct_tcp_seqadj_set(struct sk_buff *skb, struct nf_conn *ct,
+diff --git a/net/netfilter/nf_conntrack_seqadj.c b/net/netfilter/nf_conntrack_seqadj.c
+index b7e99f34dfce8..8dba6a0d5dc21 100644
+--- a/net/netfilter/nf_conntrack_seqadj.c
++++ b/net/netfilter/nf_conntrack_seqadj.c
+@@ -29,6 +29,23 @@ int nf_ct_seqadj_init(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_seqadj_init);
+ 
++void nf_ct_seqadj_reset(struct nf_conn *ct, enum ip_conntrack_info ctinfo)
++{
++	struct nf_conn_seqadj *seqadj = nfct_seqadj(ct);
++	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
++	struct nf_ct_seqadj *this_way;
++
++	if (unlikely(!seqadj))
++		return;
++
++	spin_lock_bh(&ct->lock);
++	this_way = &seqadj->seq[dir];
++	this_way->offset_before	 = 0;
++	this_way->offset_after	 = 0;
++	spin_unlock_bh(&ct->lock);
++}
++EXPORT_SYMBOL_GPL(nf_ct_seqadj_reset);
++
+ int nf_ct_seqadj_set(struct nf_conn *ct, enum ip_conntrack_info ctinfo,
+ 		     __be32 seq, s32 off)
+ {
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index 35c38c3268a6a..4574bf40540b4 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -685,7 +685,7 @@ ipv4_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
+@@ -1115,7 +1115,7 @@ ipv6_synproxy_hook(void *priv, struct sk_buff *skb,
+ 		 * adjustments, they will get initialized once the connection is
+ 		 * reestablished.
+ 		 */
+-		nf_ct_seqadj_init(ct, ctinfo, 0);
++		nf_ct_seqadj_reset(ct, ctinfo);
+ 		synproxy->tsoff = 0;
+ 		this_cpu_inc(snet->stats->conn_reopened);
+ 		fallthrough;
 -- 
 2.53.0
 
