@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019119;
-	b=3Vrgax7e1pYd6OY/mfYVR8fLvuBjscW+j6D7nZ0+2yAWUfasL9xu0wMJkyOAumoaQwNA
-	 ClpBkcgT7846Ix416D2N8SxabTK9+5bjczdXd2xeBvCwXUb5YeX137JX8GjIeCXHBLa4+
-	 7RABV8l0Jom2ofIZ9y9SswsDXJBXv0JMb2xJtZ9lpzgO3HUAnGYaEz0Ik+WuXM0Q+XQYh
-	 EkXisxmBDFV0Lg7W+DbjbI0bz1Emy7LwBVFm0DYJMN35Gzy01d+eqLXbk8Ptbk1nUmoE7
-	 mX3Kov+rABDl1RtXRpYxDL88JA0IwW6Lyezkoyj8uSNGEQ5k+zGBYP4fDleep4fj/Kw==
+	t=1795019121;
+	b=dCEVVIrGRehg9XMJ6hVYDXhrLQjxtVBWeAqX73qKiwA0nRVhiwPg7WgOWBHN7xnWvBqa
+	 RB8QPw6/Dhou6Zv+5ql3+E0RouSEA7m//JfUpEu0R4xVf2nKGORzwpW/gWMbxeCUCaPlJ
+	 iQgIvoDztI9Rgo3hiy8sjR2jyB85/U+Qbgf6ygT7YqwsUPdai3RAP+fLzUfcRYZDn2xxR
+	 cilA8mtJUglcX3UdvNyTlEJ2DYjEdjqKkbv65oZMQhtW0OI6H+TtC4Ww7xc7x6GEmeSS9
+	 KbbfEhDGuPeaYsOuC0WCBmYF2zKaEFFENtyaa+Tjg0FMwIEEUQoLRrG6aTRt+J6B7ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019121;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6wR/wO9rp89/84Ccj+7BSpvVBZSTlsrhkxnkxWSozAo=;
-	b=hjXpe5/75ACZBC57D5nof3Dgtqp7jqOrVvTtS4NNfUBRp2ZxVi+68frC00zC5w6d2e9k
-	 CpvdmWeaPpTQoeRCep/7/fE0VLdB8WLD12jhRoQWDzTBS+zF2vRGgcDfZrpNF1F0K9hUZ
-	 qV5b0p/tAMHSqPJTZpXqQM1/9SQbskhO5k+bu77qch9CoMg0JqlggCLxRgRxuDKPNB8p8
-	 xFKDQvzprLevnH/VnJhoa3c7E2KwsU4oQZVPYSdGK7piJKcFQrhxyhoDFTGNfM1N6N/2j
-	 1npj+JIN3JFB6dJnz/QQVCgml34NgDdKLxXUYTqRNPsTvbOBjcPBx1aSyzPPjrKNI+A==
+	bh=luK+cLGFc8aM3rNj8E+mJ4vnZ6QDu1bLM+rbpzpNfns=;
+	b=fpcLCkFGk/tetYQf0VbMiyTcDWBxBNW1QAmFVZnu31mkXoGTrwHDclKHzVXwXNKk94p9
+	 DDJOAoO1xLXvZ5iWLAliqL4r3oRwQSwSc7ODS391TYzIx21xtR8ZP+8XAzuHcseamECFZ
+	 mH1IB7VdL2EpnJrBM6kkDT3rj/zIRQhq3pATUj2srdM0PzISyYY8fdxvhnRIQznKzDAxZ
+	 Ai1xSLT1B2/L+9kbFFmkbcgDIWzB46ngz/H8KeIfyhC4dMPALaEZBLxOHYehnwOiqtSOH
+	 V5YW7otru55u6epwA9LRxZXins7K2pc6UlRqwtif4uHagdNrnZsFvsQr5Mcyh7YzC6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ii6YUpwK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=retFPzYw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50901606A31C;
-	Wed, 18 Nov 2026 16:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF67606A31C;
+	Wed, 18 Nov 2026 16:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ii6YUpwK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501F31F000C4;
-	Wed, 18 Nov 2026 16:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=retFPzYw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1B41F000C4;
+	Wed, 18 Nov 2026 16:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019118;
-	bh=6wR/wO9rp89/84Ccj+7BSpvVBZSTlsrhkxnkxWSozAo=;
+	s=korg; t=1795019121;
+	bh=luK+cLGFc8aM3rNj8E+mJ4vnZ6QDu1bLM+rbpzpNfns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ii6YUpwK/7h79jxPbrWVrw1UCPxOa2EirBDq/cvu+lz2nVRRUDZCXt2HBWv+EhSF9
-	 w76gLsWGZprzJrdniGuHXMplkVqaDpc4ZM8CT6bqRMToWAfpK7FYNOVGZEhlc/C2ib
-	 YMcDnPvgoaoa+iGD4OFb5a8XjdP4CohofZkNBjU4=
+	b=retFPzYwbT0j1jZF83jZAyMLbDwJKUJe9q0g9cqbBZ/6fZVVyywgfb3HoN6+x8MeH
+	 PM1LOs3cxGYLGa35oaYgWLktGymkfjwsro1SjwMxOknZa4RKp1jiw160ISjaNTUVXi
+	 DBDlrkQdLR+oxbmuCOA5ulwT4gwrd5tDXm08ejok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1480/2651] wifi: mt76: mt7996: add the station BMC entry as new once per BSSID
-Date: Wed, 18 Nov 2026 15:45:20 +0100
-Message-ID: <20261118150341.306804141@linuxfoundation.org>
+Subject: [PATCH 7.3 1441/2651] wifi: mt76: mt7921: honour FIF_FCSFAIL instead of hardcoding drop_err
+Date: Wed, 18 Nov 2026 15:44:41 +0100
+Message-ID: <20261118150339.921156654@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,117 +68,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 854c8d4358272ad1204e9436996dec264fe334b1 ]
+[ Upstream commit f8794eb3ff6dedbba0337c5197626b62da0ef057 ]
 
-A station link sends its broadcast STA_REC with EXTRA_INFO_NEW on every
-BSS_CHANGED_BSSID. Commit 8e3e7567b8c1 ("mt76: mt7915: add sta_rec with
-EXTRA_INFO_NEW for the first time only") notes that the firmware may
-remove an entry that is added as new twice. Since a removed vif link
-keeps its firmware entry, this happens on a link that is deactivated and
-activated again: _ieee80211_set_active_links() reports
-BSS_CHANGED_BSSID with the same BSSID, after ieee80211_key_switch_links()
-has installed the group keys of the link, and nothing in the driver
-installs them again after the entry is added as new.
+When a monitor interface asks to see frames that failed their checksum,
+mac80211 passes the request down to the driver. mt7921 works out the
+answer, sends it to the firmware as a receive filter, and then configures
+the sniffer with a hardcoded byte telling it to drop those frames anyway.
+The answer is used once and never kept, so the sniffer never gets to see
+it.
 
-Record the BSSID the entry was added with, and add it as new only for
-a different BSSID. A BSSID that goes to zero on disconnection clears
-the record, so that the next association adds the entry as new again.
-A link that is set up clears the record as well, since the firmware has
-no entry for it then.
+That matters to anyone using monitor mode to judge a link honestly, which
+is most of the reason to be in monitor mode at all.
 
-Fixes: 08813703ac41 ("wifi: mt76: mt7996: Destroy vif active links in mt7996_remove_interface()")
-Link: https://patch.msgid.link/20261006205936.669125-16-nbd@nbd.name
+Mark Anthony Agarro posted the same change for mt7925: keep what mac80211
+asked for on the phy, and read it back when the sniffer is configured.
+This does that for mt7921, and applies on top of it, since that patch is
+what adds the field.
+
+https://lore.kernel.org/linux-wireless/20260826091757.469953-1-markanthonyagarro@gmail.com/
+
+The stored value is read in one place only, configuring the sniffer, which
+has a single caller, and that call sits inside a branch reached only by a
+monitor interface. Nothing else changes.
+
+Measured on an MT7922 with a read-only probe on the command as the driver
+sends it, so these are the driver's own bytes rather than an inference
+from what came back:
+
+  request  arm      drop_err
+  none     stock    1 1 1 1
+  none     patched  1 1 1 1
+  fcsfail  stock    1 1
+  fcsfail  patched  0 0
+
+Stock sends the drop byte whether or not anyone asked for it. Patched
+sends it only when nobody did. Withdrawing the request and making it again
+inside one driver load moves the byte back and forth, 0 then 1 then 0
+across three changes, so nothing sticks once set.
+
+If it does appear to stick when trying this against an MT7927, that is
+mac80211 rather than the driver. It raises the filter count
+unconditionally when a monitor comes up, but skips lowering it again for
+drivers that set NO_VIRTUAL_MONITOR, and that is the only chip in this
+family which does.
+
+Fixes: 914189af23b8 ("wifi: mt76: mt7921: fix channel switch fail in monitor mode")
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260826231029.39632-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 38 ++++++++++++-------
- .../wireless/mediatek/mt76/mt7996/mt7996.h    |  1 +
- 2 files changed, 26 insertions(+), 13 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 8 +++-----
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c    | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 5 +++++
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 8a00ab49d90dc..3e55f7b19895a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -341,6 +341,7 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
- 		return -ENOSPC;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 623ccb41a368a..d041df807f615 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -668,12 +668,8 @@ static void mt7921_configure_filter(struct ieee80211_hw *hw,
+ 				    unsigned int *total_flags,
+ 				    u64 multicast)
+ {
+-#define MT7921_FILTER_FCSFAIL    BIT(2)
+-#define MT7921_FILTER_CONTROL    BIT(5)
+-#define MT7921_FILTER_OTHER_BSS  BIT(6)
+-#define MT7921_FILTER_ENABLE     BIT(31)
+-
+ 	struct mt792x_dev *dev = mt792x_hw_dev(hw);
++	struct mt792x_phy *phy = mt792x_hw_phy(hw);
+ 	u32 flags = MT7921_FILTER_ENABLE;
  
- 	link->mld_idx = mld_idx;
-+	eth_zero_addr(link->bmc_bssid);
- 	mlink->omac_idx = idx;
- 	mlink->band_idx = band_idx;
- 	mlink->wmm_idx = vif->type == NL80211_IFTYPE_AP ? 0 : 3;
-@@ -905,6 +906,23 @@ mt7996_update_mu_group(struct ieee80211_hw *hw, struct mt7996_vif_link *link,
- 	mt76_wr(dev, MT_WF_PHYRX_BAND_GID_TAB_POS3(band), mu[3]);
- }
+ #define MT7921_FILTER(_fif, _type) do {			\
+@@ -685,6 +681,8 @@ static void mt7921_configure_filter(struct ieee80211_hw *hw,
+ 	MT7921_FILTER(FIF_CONTROL, CONTROL);
+ 	MT7921_FILTER(FIF_OTHER_BSS, OTHER_BSS);
  
-+static void
-+mt7996_vif_link_bss_add(struct mt7996_phy *phy, struct ieee80211_vif *vif,
-+			struct ieee80211_bss_conf *link_conf,
-+			struct mt7996_vif_link *link, bool newly)
-+{
-+	if (vif->type == NL80211_IFTYPE_STATION) {
-+		newly = !ether_addr_equal_unaligned(link->bmc_bssid,
-+						    link_conf->bssid);
-+		memcpy(link->bmc_bssid, link_conf->bssid, ETH_ALEN);
-+	}
++	phy->rxfilter = flags;
 +
-+	mt7996_mcu_add_bss_info(phy, vif, link_conf, &link->mt76,
-+				&link->msta_link, true);
-+	mt7996_mcu_add_sta(phy->dev, link_conf, NULL, link, NULL,
-+			   CONN_STATE_PORT_SECURE, newly);
-+}
+ 	mt792x_mutex_acquire(dev);
+ 	mt7921_mcu_set_rxfilter(dev, flags, 0, 0);
+ 	mt792x_mutex_release(dev);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 40546005c743b..c90d0da706a1a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -1231,7 +1231,7 @@ int mt7921_mcu_config_sniffer(struct mt792x_vif *vif,
+ 			.len = cpu_to_le16(sizeof(req.tlv)),
+ 			.control_ch = chandef->chan->hw_value,
+ 			.center_ch = ieee80211_frequency_to_channel(freq1),
+-			.drop_err = 1,
++			.drop_err = !(vif->phy->rxfilter & MT7921_FILTER_FCSFAIL),
+ 		},
+ 	};
+ 	if (chandef->chan->band < ARRAY_SIZE(ch_band))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+index fb8654b7c5e7e..f7ed11353d289 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+@@ -7,6 +7,11 @@
+ #include "../mt792x.h"
+ #include "regs.h"
+ 
++#define MT7921_FILTER_FCSFAIL		BIT(2)
++#define MT7921_FILTER_CONTROL		BIT(5)
++#define MT7921_FILTER_OTHER_BSS		BIT(6)
++#define MT7921_FILTER_ENABLE		BIT(31)
 +
- static void
- mt7996_vif_cfg_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 		       u64 changed)
-@@ -936,12 +954,8 @@ mt7996_vif_cfg_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 			if (!phy)
- 				continue;
+ #define MT7921_MAX_AID                  20
  
--			mt7996_mcu_add_bss_info(phy, vif, link_conf,
--						&link->mt76, &link->msta_link,
--						true);
--			mt7996_mcu_add_sta(dev, link_conf, NULL, link, NULL,
--					   CONN_STATE_PORT_SECURE,
--					   !!(changed & BSS_CHANGED_BSSID));
-+			mt7996_vif_link_bss_add(phy, vif, link_conf, link,
-+						!!(changed & BSS_CHANGED_BSSID));
- 		}
- 	}
- 
-@@ -987,13 +1001,11 @@ mt7996_link_info_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	 * and then peer references bss_info_rfch to set bandwidth cap.
- 	 */
- 	if ((changed & BSS_CHANGED_BSSID && !is_zero_ether_addr(info->bssid)) ||
--	    (changed & BSS_CHANGED_BEACON_ENABLED && info->enable_beacon)) {
--		mt7996_mcu_add_bss_info(phy, vif, info, &link->mt76,
--					&link->msta_link, true);
--		mt7996_mcu_add_sta(dev, info, NULL, link, NULL,
--				   CONN_STATE_PORT_SECURE,
--				   !!(changed & BSS_CHANGED_BSSID));
--	}
-+	    (changed & BSS_CHANGED_BEACON_ENABLED && info->enable_beacon))
-+		mt7996_vif_link_bss_add(phy, vif, info, link,
-+					!!(changed & BSS_CHANGED_BSSID));
-+	else if (changed & BSS_CHANGED_BSSID)
-+		eth_zero_addr(link->bmc_bssid);
- 
- 	if (changed & BSS_CHANGED_HT || changed & BSS_CHANGED_ERP_CTS_PROT)
- 		mt7996_mcu_set_protection(phy, link, info->ht_operation_mode,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 82a2a8a5db69e..03fc0e7fd4f1c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -279,6 +279,7 @@ struct mt7996_vif_link {
- 	struct cfg80211_bitrate_mask bitrate_mask;
- 
- 	u8 mld_idx;
-+	u8 bmc_bssid[ETH_ALEN];
- };
- 
- struct mt7996_vif_link_info {
+ #define MT7921_TX_RING_SIZE		2048
 -- 
 2.53.0
 
