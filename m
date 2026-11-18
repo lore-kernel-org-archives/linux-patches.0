@@ -1,60 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042479;
-	b=wulfhip0EC10S6HOw+NCmDCCU3w7wS9dl+OI999B++nbt7bu3g6eLH4DiUYJb13tpYKb
-	 RLdcGVmI0+4FU1cKBI2Lm7kNJQSNBxWerJTQ2Bk3onrR2yN01fksZuHNnqKChnUkVASaG
-	 9noyb3PE3tgxexkdRZ0KXrFQ+aSkaPbMj6HzRFxzrVG3/IatRU7CPQ5LcjCDZ38xxqE2P
-	 FqOF/XgYWjcWNOIwll2/04x9IroXCeX0kTfSPRLQ6/xTvGumZXpIdD75Sq8q74nlSSMow
-	 +zA0KNTzt/vaEHn4OwrhSDArsbIOCACfUS7YMRiKMYXNG8mNlBzo9mIrYc8/0fmDf6g==
+	t=1795042482;
+	b=yAOWNDK0LuerTHcpUBEERMWGvtO+xugXkhn/rxI7BpixTx5TCp2+8qLoFph9aciNEm/k
+	 GRsLA2yWrXZJmrDnudDXhdWe25AnWEide3hA8L7cN7tAcTjmQ8ECSzBPXWN1f/8oztVpH
+	 vutnPGFpNAj46IDzFGHbt5u+caZWHj/SBwXg/PhX+FkYkiC+UuLpUP/IurUdLVqm9LAYI
+	 1wuRbBeexayjmpCG7QfLa4q00lyfXTRGjSZaFRNzFESSbX21fp7rgbk1JJcDQXbaERtos
+	 fi64kdbyQRUC2nbtlWlrvuniWNBiRgxwN6zxhaX0xo9UkaOr3c6RadE1gKIhII+fflg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042479;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042482;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lMVtKF7fznbmm1eq4/4iuNKnq3dehAV9EZw5Cn6oK+E=;
-	b=ldAMBxT4YvoPvCXo2zzzL2OnZKJV0YS2gW0yzOgWuM69RhZiCwHicfppQHFub5X/5CTV
-	 H6fPZu6NxoLsWTwA8qAgayS8l8Ukii39zJdnlKDqqDzwowRtMBKg/+I2gyUWDk2XPGOG4
-	 LGQUW6Y95EzUAl+sOZYCj1kgthqcVR9znl0A/zDvXciiZrczXeBVf7fdCgJObQC58avzj
-	 pACafQWk6iKGxpk+8FUYdYwFVVtWuPehTknq2wERV2fCsoj1hbyB8KJeXRtuVv6n3bPXW
-	 1DnDMLMT+yNwvfQY1hDcuMm7+QeG7evNWGBrUIucf0py7HgUS9jBptkpQmg7/0ArhOw==
+	bh=hSwAxusSCDA/zyivC4o9AdGS8veDNdVHknhxu0yaGvc=;
+	b=yTOHySabmToTUuEXAFccy1z75eonuwduH1nwxBbzA+6qPXqGcc8ULMkW1U78/i5S8uF9
+	 I6rd8LTtZsn9S/RgrdKyeD97NMInj0q3jxvx8ZjfNNM/jGxNqNpjx11nFkxnJV+oEyt0O
+	 ciZ9m2xIAQVGQkS8wFLSZiFOHRxyD5fp2ufazyPRlIUb+CUU0yvZAAD7iVDp4vM0/A8OU
+	 FOOssPaU+GBo3xTyQj9dgZ04Cn9JOxFDwBSNbhcVHMOc8v2XUJc/K2/1Kfv98OITC6FRM
+	 NiAxa9clSwGuq2N5r+EpSMIVo+iHSUibE6oAfrgXPVxVdSJzzlSAPaEOAiQABmoO5Hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UfIe79n7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TvZ0lJR4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641DE606A32F;
-	Wed, 18 Nov 2026 22:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24315606A320;
+	Wed, 18 Nov 2026 22:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UfIe79n7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0571F000C6;
-	Wed, 18 Nov 2026 22:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TvZ0lJR4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796A21F000C4;
+	Wed, 18 Nov 2026 22:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042479;
-	bh=lMVtKF7fznbmm1eq4/4iuNKnq3dehAV9EZw5Cn6oK+E=;
+	s=korg; t=1795042482;
+	bh=hSwAxusSCDA/zyivC4o9AdGS8veDNdVHknhxu0yaGvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UfIe79n7whcq0JFuN0G8sa+kZH1Z2KdDLAkGBEWDnyOCagweOaYJerOYG9rNgoLrv
-	 w/jU3RSOjZskQJMz8oNoexCAtR6JP5bgy1Kn3xmUPXinu8j2v/Sf7yRDj7cDTMdPFP
-	 kFBjCoOoqMNj7bR3e/Q2eSSlFisNzah49i2VG/Kg=
+	b=TvZ0lJR4OiVilTLAJ+8e8q4hI4qUkSD88JB0WSx/5iqudbc1WI2Dl8ZShDzvn8Pnj
+	 lrAcCAKN89Pg25m8xLB+olsOFHd5pQ62NL2pol0Hc7dFBFsYLdvVaEDMRh93GXLPtp
+	 A9cTkrN8plcyiHiHxOHjWtca9EtmM+T7PZZ6N+Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkman <daniel@iogearbox.net>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Binbin Deng <18983559317@163.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3158/3318] scripts/gdb/radix-tree: add lx-radix-tree-command
-Date: Wed, 18 Nov 2026 16:03:00 +0100
-Message-ID: <20261118150454.599807105@linuxfoundation.org>
+Subject: [PATCH 6.6 3185/3318] net: atlantic: Unregister before clearing RXNFC rules
+Date: Wed, 18 Nov 2026 16:03:27 +0100
+Message-ID: <20261118150455.356013576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -76,213 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit caa71919a622e3f7d290d4f17ae538b15f5cb6d3 ]
+[ Upstream commit 13b364c765e69db1f8446399d8db0b331c23b50c ]
 
-Patch series "scripts/gdb/symbols: make BPF debug info available to GDB",
-v2.
+aq_pci_remove() clears the driver's RXNFC rule list before unregistering
+the netdevice.  Until unregister_netdev() returns, ethtool operations can
+still call aq_get_rxnfc_rule(), aq_get_rxnfc_all_rules(),
+aq_add_rxnfc_rule(), or aq_del_rxnfc_rule().  Those paths traverse the
+same unlocked hlist that aq_clear_rxnfc_all_rules() is mutating and
+freeing.
 
-This series greatly simplifies debugging BPF progs when using QEMU gdbstub
-by providing symbol names, sizes, and line numbers to GDB.
+The race is reachable by issuing RXNFC ethtool commands concurrently with
+PCI device removal or driver unbind.  A reader can dereference a node that
+has just been freed, and two writers can corrupt the list or free the same
+rule more than once, causing KASAN reports, list corruption, or a kernel
+panic.
 
-Patch 1 adds radix tree iteration, which is necessary for parsing
-prog_idr.  Patch 2 is the actual implementation; its description contains
-some details on how to use this.
+Reverse the removal order: unregister the netdevice first, then clear the
+RXNFC rules.  After unregister_netdev() returns, ethtool can no longer
+enter the driver, while the PCI device is still available for the
+rule-clearing routine to issue hardware commands.
 
-This patch (of 2):
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
 
-Add a function and a command to iterate over radix tree contents.
-Duplicate the C implementation in Python, but drop support for tagging.
-
-Link: https://lkml.kernel.org/r/20251106124600.86736-1-iii@linux.ibm.com
-Link: https://lkml.kernel.org/r/20251106124600.86736-2-iii@linux.ibm.com
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 66d190b072b4 ("scripts/gdb: fix radix tree lookup pointer handling")
+Fixes: 8d0bcb012f57 ("net: aquantia: add infrastructure for ntuple rules")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Link: https://patch.msgid.link/20261020022630.515209-1-18983559317@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/radixtree.py | 139 +++++++++++++++++++++++++++++++--
- 1 file changed, 132 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
-index 074543ac763d2..bc2954e45c327 100644
---- a/scripts/gdb/linux/radixtree.py
-+++ b/scripts/gdb/linux/radixtree.py
-@@ -30,13 +30,16 @@ def entry_to_node(node):
- def node_maxindex(node):
-     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+index 775cbbc1aa421..6da729c386196 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -346,9 +346,9 @@ static void aq_pci_remove(struct pci_dev *pdev)
+ 	struct aq_nic_s *self = pci_get_drvdata(pdev);
  
--def lookup(root, index):
-+def resolve_root(root):
-+    if root.type == radix_tree_root_type.get_type():
-+        return root
-     if root.type == radix_tree_root_type.get_type().pointer():
--        node = root.dereference()
--    elif root.type != radix_tree_root_type.get_type():
--        raise gdb.GdbError("must be {} not {}"
--                           .format(radix_tree_root_type.get_type(), root.type))
-+        return root.dereference()
-+    raise gdb.GdbError("must be {} not {}"
-+                       .format(radix_tree_root_type.get_type(), root.type))
+ 	if (self->ndev) {
+-		aq_clear_rxnfc_all_rules(self);
+ 		if (self->ndev->reg_state == NETREG_REGISTERED)
+ 			unregister_netdev(self->ndev);
++		aq_clear_rxnfc_all_rules(self);
  
-+def lookup(root, index):
-+    root = resolve_root(root)
-     node = root['xa_head']
-     if node == 0:
-         return None
-@@ -71,14 +74,120 @@ def lookup(root, index):
- 
-     return node
- 
--class LxRadixTree(gdb.Function):
-+def descend(parent, index):
-+    offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
-+    return offset, parent["slots"][offset]
-+
-+def load_root(root):
-+    node = root["xa_head"]
-+    nodep = node
-+
-+    if is_internal_node(node):
-+        node = entry_to_node(node)
-+        maxindex = node_maxindex(node)
-+        return int(node["shift"]) + constants.LX_RADIX_TREE_MAP_SHIFT, \
-+               nodep, maxindex
-+
-+    return 0, nodep, 0
-+
-+class RadixTreeIter:
-+    def __init__(self, start):
-+        self.index = 0
-+        self.next_index = start
-+        self.node = None
-+
-+def xa_mk_internal(v):
-+    return (v << 2) | 2
-+
-+LX_XA_RETRY_ENTRY = xa_mk_internal(256)
-+LX_RADIX_TREE_RETRY = LX_XA_RETRY_ENTRY
-+
-+def next_chunk(root, iter):
-+    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
-+
-+    index = iter.next_index
-+    if index == 0 and iter.index != 0:
-+        return None
-+
-+    restart = True
-+    while restart:
-+        restart = False
-+
-+        _, child, maxindex = load_root(root)
-+        if index > maxindex:
-+            return None
-+        if not child:
-+            return None
-+
-+        if not is_internal_node(child):
-+            iter.index = index
-+            iter.next_index = (maxindex + 1) & mask
-+            iter.node = None
-+            return root["xa_head"].address
-+
-+        while True:
-+            node = entry_to_node(child)
-+            offset, child = descend(node, index)
-+
-+            if not child:
-+                while True:
-+                    offset += 1
-+                    if offset >= constants.LX_RADIX_TREE_MAP_SIZE:
-+                        break
-+                    slot = node["slots"][offset]
-+                    if slot:
-+                        break
-+                index &= ~node_maxindex(node)
-+                index = (index + (offset << int(node["shift"]))) & mask
-+                if index == 0:
-+                    return None
-+                if offset == constants.LX_RADIX_TREE_MAP_SIZE:
-+                    restart = True
-+                    break
-+                child = node["slots"][offset]
-+
-+            if not child:
-+                restart = True
-+                break
-+            if child == LX_XA_RETRY_ENTRY:
-+                break
-+            if not node["shift"] or not is_internal_node(child):
-+                break
-+
-+    iter.index = (index & ~node_maxindex(node)) | offset
-+    iter.next_index = ((index | node_maxindex(node)) + 1) & mask
-+    iter.node = node
-+
-+    return node["slots"][offset].address
-+
-+def next_slot(slot, iter):
-+    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
-+    for _ in range(iter.next_index - iter.index - 1):
-+        slot += 1
-+        iter.index = (iter.index + 1) & mask
-+        if slot.dereference():
-+            return slot
-+    return None
-+
-+def for_each_slot(root, start=0):
-+    iter = RadixTreeIter(start)
-+    slot = None
-+    while True:
-+        if not slot:
-+            slot = next_chunk(root, iter)
-+            if not slot:
-+                break
-+        yield iter.index, slot
-+        slot = next_slot(slot, iter)
-+
-+class LxRadixTreeLookup(gdb.Function):
-     """ Lookup and return a node from a RadixTree.
- 
- $lx_radix_tree_lookup(root_node [, index]): Return the node at the given index.
- If index is omitted, the root node is dereference and returned."""
- 
-     def __init__(self):
--        super(LxRadixTree, self).__init__("lx_radix_tree_lookup")
-+        super(LxRadixTreeLookup, self).__init__("lx_radix_tree_lookup")
- 
-     def invoke(self, root, index=0):
-         result = lookup(root, index)
-@@ -87,4 +196,20 @@ If index is omitted, the root node is dereference and returned."""
- 
-         return result
- 
-+class LxRadixTree(gdb.Command):
-+    """Show all values stored in a RadixTree."""
-+
-+    def __init__(self):
-+        super(LxRadixTree, self).__init__("lx-radix-tree", gdb.COMMAND_DATA,
-+                                          gdb.COMPLETE_NONE)
-+
-+    def invoke(self, argument, from_tty):
-+        args = gdb.string_to_argv(argument)
-+        if len(args) != 1:
-+            raise gdb.GdbError("Usage: lx-radix-tree ROOT")
-+        root = gdb.parse_and_eval(args[0])
-+        for index, slot in for_each_slot(root):
-+            gdb.write("[{}] = {}\n".format(index, slot.dereference()))
-+
- LxRadixTree()
-+LxRadixTreeLookup()
+ #if IS_ENABLED(CONFIG_MACSEC)
+ 		aq_macsec_free(self);
 -- 
 2.53.0
 
