@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022876;
-	b=LiakWg/Tdp2BdxQmEUBw4mR37J669WvyxYMzDxcVf+yfPtCv//JlbyGlOZK/2IsSwni4
-	 6RHEUMsNwIt1NL/qhDusBWpzYEk+ezpnSUhjVDxzZzzC2XCY3dyOOUhspOme9sZ6Sps6g
-	 Y/YcpEX3LbwYA1pD4bwm4a55KCls6ZCjIVDpv2bDPGIGhP1vaWp/tNVM2kUBEfsRyB3Pk
-	 lObGTsjbPlTx7c6687VrPx3cUsC1EtgAbf8Fts+KNkBRcCgcOdXkJTFa+6tLLrv4XCuv2
-	 aVWzcd4o0dHtEQGw9l1IaX/FgGv8yT7IZT9GmlpTc+kz6XUy4oIHAsFoe1hpEgbTwuA==
+	t=1795022879;
+	b=kZ9BlhQhGXVP89fEIODxOBkGEMoA4Ei2tgcIeBswdwlHB4Z/VtjOwewJODKstf8SG2p+
+	 cMXHG0oXQVy4UuXTMrkRY0WBhB2yKpyMmWSf9/ZPR0ecuN6kMw0bx/HATG7tHmKNCD9Df
+	 3sKJguk39EuUAVXkDcRa/tlimk4N0kEWL8KxBBsPW/RXeeXq/jBNnfunxR8Z8QB/tQ5Qv
+	 HtZ8yXZExn4yitPPaUnKL2+RW47FlJ9oUAQ3RwBAUval6j438DEL1uNC0bMBlkZKnz+Om
+	 QlJGSfNXEC97Qx/mw3leM5LbzQLsEupQDnKt72BZWE+rO4KROYKf3rlyEXgt+CuN+zA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022876;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022879;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=7We9Lol7B9Y6/1Ju6kbMmDl92PN3cKMAByte3GN3Pbk=;
-	b=TLYbShIxnWBAHcSzeI2yDvqYtE40MjcNZmr8VrsnqfrRqRCshANMlmgWCPiTKxWX+HfN
-	 R8sN46kaLR3zmgO1SfsRvGjQCWj1OamRx3gqXWz8iaufdqHzFvPDEhg/TM0AkFRR33u1y
-	 x9qnxVJrV0fQzzjwDqf8CNFMh/Uw9QLCxEIuBdvEj5RDAYiB1Mcs5/lQmisC1ZHMfXYiu
-	 cqnCfYpEfByr5IIDHV3leCvbLwpq6oTMqjQTjB9h7QPOvQx/u0639BS3/s0xo7T02C8lC
-	 eRiGWwEoZyaHMUgnzPHI/AmPEeZf4o8OzpuQKgL9M/b0VPcBi6OHR5rqdL22Ln532KQ==
+	bh=qEzam23izLWHX6S8Ij0lMMigRE+FIcn2wleveJ8Rc74=;
+	b=0O0tTZtBgv+8yX0y8mUFFsDk4M0jw239k6oT5xO9ekgbF713FVg9PUX/CyvOVfkRVzqD
+	 /vZQsWdE0GX8axHabT4qWvYKWkJnemKeTiCFAdf7h6XGXlJof4UfUSNLANTeCDL0jU6nF
+	 bLw7ooYjaw3RmAJ1AgPZBz0ioRJkiSAsYBt2B5MRSCKYxdZg9bHm3BEYYTPHNpIH/ufWD
+	 55o/vsSxdc658XTkUy8blcc72fihGyYlUVVZon6mCWasvAGM4AL8Dve9GEqVWOguI8OqQ
+	 jke6ueNjB475YVJdwYfiGLRzmAUDpmrlX//R6DAxtSC92KwFnFHNFqrXPTUacXajuWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fHLyccgw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z9uAG93v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27332606A32C;
-	Wed, 18 Nov 2026 17:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00504606CA5C;
+	Wed, 18 Nov 2026 17:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fHLyccgw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F37D1F000C4;
-	Wed, 18 Nov 2026 17:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z9uAG93v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5266B1F000C6;
+	Wed, 18 Nov 2026 17:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022876;
-	bh=7We9Lol7B9Y6/1Ju6kbMmDl92PN3cKMAByte3GN3Pbk=;
+	s=korg; t=1795022878;
+	bh=qEzam23izLWHX6S8Ij0lMMigRE+FIcn2wleveJ8Rc74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fHLyccgwinMRnUqavatC8Otlq63SoXzuozUKIcHZ2uwMPIxEMi3TKvbPLJ6gh6gKU
-	 N8R1wSxlTRVoKk3AJuQ+vBCyOKNncmRGwYWelIqauXuxZbxdwme3gURLRY3dPf7crg
-	 igU/hMPJ+6xawuUDNVH01j5K2B1oVqZfm3GTUkxQ=
+	b=Z9uAG93vdgoDKIgJQb1l/HsBL2cCjKcDvLux6K1PQmhRRQAiibtrsuWtjcyHVhleG
+	 YeJeWGcj+QsRiI6YjlcINxXW7V1Edv6VfIWkYLQNgmYsP1R7EPo9Wv+0+NLP/aYY4f
+	 SUkBfusUVtsyWVg1w2OoaK6H2NeXBDu9FtsCdPTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0168/2151] perf jitdump: Use dirname() return value in jit_open()
-Date: Wed, 18 Nov 2026 15:31:43 +0100
-Message-ID: <20261118150127.864418675@linuxfoundation.org>
+Subject: [PATCH 6.18 0169/2151] perf jitdump: Validate debug entries on native (non-swap) path
+Date: Wed, 18 Nov 2026 15:31:44 +0100
+Message-ID: <20261118150127.897934846@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -73,17 +73,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4eddf7d9e341eb8c41704b8aa27b4a91f4e2c7c9 ]
+[ Upstream commit 51e14e495f0cea061bbad33e7635f7fd857113ad ]
 
-jit_open() calls dirname(jd->dir) but ignores the return value.  POSIX
-says dirname() may return a pointer to internal static storage — glibc
-does this when the path has no '/', returning "." from a static buffer
-and leaving jd->dir unchanged with the original filename.
+The bounds-checking and nr_entry clamping added for the byte-swap path
+only runs when jd->needs_bswap is true.  On native-endian files, nr_entry
+passes through unvalidated to jit_repipe_debug_info(), which stores it
+as jd->nr_debug_entries.  Downstream, jit_process_debug_info() in
+genelf_debug.c iterates nr_debug_entries times via debug_entry_next(),
+which calls strlen() on each entry's name field — a crafted nr_entry
+causes OOB reads and writes.
 
-Capture the return value and copy it back to jd->dir when dirname()
-returns a different pointer.
+Add bounds-checked iteration in jit_repipe_debug_info() that validates
+each debug_entry fits in the payload and its name is NUL-terminated
+before calling debug_entry_next().  Clamp nr_debug_entries to the count
+of valid entries.
 
-Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
+Fixes: 598b7c6919c7bbcc ("perf jit: add source line info support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: Stephane Eranian <eranian@google.com>
@@ -91,32 +96,55 @@ Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/jitdump.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 343ee182b946e..b82a2875a7748 100644
+index b82a2875a7748..517deb8466493 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -146,6 +146,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
- 	ssize_t bs, bsz = 0;
- 	void *n, *buf = NULL;
- 	int ret, retval = -1;
-+	char *dname;
+@@ -692,8 +692,10 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
  
- 	nsinfo__mountns_enter(jd->nsi, &nsc);
- 	jd->in = fopen(name, "r");
-@@ -241,7 +242,9 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ {
+-	void *data;
+-	size_t sz;
++	struct debug_entry *ent;
++	void *data, *end;
++	size_t sz, valid;
++	uint64_t i;
+ 
+ 	if (!(jd && jr))
+ 		return -1;
+@@ -713,10 +715,25 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	jd->debug_data       = data;
+ 
+ 	/*
+-	 * we must use nr_entry instead of size here because
+-	 * we cannot distinguish actual entry from padding otherwise
++	 * Clamp nr_debug_entries to entries that actually fit in the
++	 * payload.  The byte-swap path already does this for cross-endian
++	 * files; validate on the native path too, since downstream
++	 * jit_process_debug_info() iterates via debug_entry_next() which
++	 * calls strlen() on each entry's name field.
  	 */
- 	strncpy(jd->dir, name, PATH_MAX);
- 	jd->dir[PATH_MAX - 1] = '\0';
--	dirname(jd->dir);
-+	dname = dirname(jd->dir);
-+	if (dname != jd->dir)
-+		strlcpy(jd->dir, dname, sizeof(jd->dir));
- 	free(buf);
+-	jd->nr_debug_entries = jr->info.nr_entry;
++	end = data + sz;
++	ent = data;
++	valid = 0;
++	for (i = 0; i < jr->info.nr_entry; i++) {
++		if ((void *)ent + sizeof(*ent) > end)
++			break;
++		/* name must be NUL-terminated within the payload */
++		if (!memchr(ent->name, '\0', (char *)end - ent->name))
++			break;
++		ent = debug_entry_next(ent);
++		valid++;
++	}
++	jd->nr_debug_entries = valid;
  
  	return 0;
+ }
 -- 
 2.53.0
 
