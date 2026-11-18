@@ -1,52 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047142;
-	b=eh4YSAWCKq2UoQ0/GMHq7Vb6jlgenCKtbkDplhvrTfq0Dq1TO9vEww2stxG5cwzkQ8li
-	 gW7ULs5SJUbGsPcdaziEjmVzWAvmb3C7BRUfKWkKOuz5FvAZN8fzGwIM/kCax1eFfOTWL
-	 f0w3mSyz5cZtR0hdFhuslR0oEH4RkwMNJhFwYPsxPepLd+hrIbkWPz0kQRDYIMofvCzd2
-	 p+eDTIA2VL5h3+h9YO49x/vTK7CHB5CfG5q9ZgY/KncDTiLMe4F1hUR2vAoBshe69sfU4
-	 8/62mWVKEhZIlYHhEsgQx2nplreQISafNddLrKuklG1gGJo1A0mu6JcyZdtSOCPY5sQ==
+	t=1795047145;
+	b=M9NGqFMeTe86N8iM8js/u2lnnWOrTANbeUz1aOjEqXE+Rq0fwz+EJGhmCIXxfP966bEY
+	 pdb856YQ4U6BTo0+FE2VwIHu6B+LA3ceITnfHQe+hrEufnyquvG0zM4zWrwk2vaVNwSCi
+	 ja65QWv4zdbQ0af3sl1Z4BDEU2nQ7mVLcMqVGbx01F3azirO0w0+9uwQKMPQ4UKvhmH5k
+	 ushCcBnwzIasXHsncdeboht4ek10mSh6Rq3FRhEeg8NMjhGTRZZgxury3ptlT37284HN/
+	 di1vwjOKZqgueRxn8anRYTM4GolFNYg5It4PwzdKlZe8peD6UQ6wdGTp8eDRYOHsJfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047142;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047145;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+XJ7fKKAz84ihznKEsxIIiHoB3qDP7qqSgmwPbUIhKc=;
-	b=POsZlA12syW8CHvLfZOH/xm+EgjDUZoeWlMmgjVB6WxNUmbEfo76OGNuj/SeunTEB+oJ
-	 CUDAcWlMcVuqcdY8aiwVNTTWSa62mEYNSNWBTfI3U+ltATS7/VkCa2cTTaDFSOjKz6cRC
-	 OWc4aCC9G3w1krYW+hxMeVqF1h6+k4dTflvNOjRSvhCRbzOkOs21CPx2LNO9IVLlnUWcL
-	 nC2XKayiDOP0nZrLmyli0SFvbRH/qfsq6HcxbJZ3OoXTaKThxsCKsPeuwYS7rbqNGpd/P
-	 fd4S5XjJLz17SAmJwboYRSCZGOGofXPkRhoL8CXTzOhTVo1iXu3rYEpSly4tcrTJHKg==
+	bh=FyTXTjZBX790EVWov6yh+ESQ3EiMqgybBdp1L2+mQxY=;
+	b=JkrSklQMKkxBlup/ES/p3odSZRzkYMYR3hA3l2mNm1LdunpDH2KitL5pmzwnd7tLO1Sn
+	 8rxzKSUp36IiJ/wYw05svshVW4xo2gfJ/abwCnLcezLk6kMBqWHe0Zd0V3anLwuzy3/P2
+	 SiASK+/Ok2OWC/1iOsB7Y5pQV9WbqMcg7lUVazWDisvvJz69Yd1gckeEeUH7VkhjNNAQO
+	 mt64znILcyikizDNfu/zB6Qeoaw3G9voXFocGqoGjzQ8vBbDjsl/GzYMjD+RfiUsBNs39
+	 ECPVD+A4ghm/lfYmVktqvaNp/7Ft/eB8+hW52/d5RGbmP5nZxY/EL9+a6guiuTe/8fQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgG3+12W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ik0dhV08;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D811606A320;
-	Thu, 19 Nov 2026 00:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2C3606A320;
+	Thu, 19 Nov 2026 00:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgG3+12W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11121F000C4;
-	Thu, 19 Nov 2026 00:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ik0dhV08
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C411F000C4;
+	Thu, 19 Nov 2026 00:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047142;
-	bh=+XJ7fKKAz84ihznKEsxIIiHoB3qDP7qqSgmwPbUIhKc=;
+	s=korg; t=1795047144;
+	bh=FyTXTjZBX790EVWov6yh+ESQ3EiMqgybBdp1L2+mQxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgG3+12WT9MdXuy49EQCuoZVhH0AUlj5UgrrAyX+tkcDorUZwKU7TPcE1LzT3n4Rh
-	 +99eFtMTlu39tXFgPpampRwdKYKaER5bZsBbpaHymkGkabtOgq67tK3oamws4cXXBg
-	 4UPXY8siGJup5oTuWD4eR0RcjZQxOSM2FYG5MFVo=
+	b=Ik0dhV08CPA8wUtq84oPmRFovAOYzA0O1t/r8lGgPWmYaDhULMP1IX39GSReszHo0
+	 OBRvv/wKUhj6zUloqFajimkDepT0D61gRO2K1UKSbPYP8/lc0eEb7FY2gJ7hL5cjOf
+	 KvoB/ak8yuFdgKzjG9wAB2bW8yM+59OSC0Vvz5CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Qi Xi <xiqi2@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1533/2857] ASoC: hdac_hda: Restore the codec device type on unbind
-Date: Wed, 18 Nov 2026 15:42:47 +0100
-Message-ID: <20261118150256.515465347@linuxfoundation.org>
+Subject: [PATCH 6.1 1534/2857] mm/page_isolation: fix UBSAN shift-out-of-bounds warning
+Date: Wed, 18 Nov 2026 15:42:48 +0100
+Message-ID: <20261118150256.551667459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,62 +76,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-[ Upstream commit 08a44bde821d4fe22c0b6e63da04b3c59ac243a8 ]
+[ Upstream commit eba0e6297edd60a85bc96ff5cfb734d066af62dd ]
 
-hdac_hda_codec_probe() changes the type of the codec device to
-HDA_DEV_ASOC to prevent snd_hda_codec_unregister() from unregistering
-the device when the card is freed.
+Patch series "mm/page_isolation: fix UBSAN shift-out-of-bounds in
+isolate_single_pageblock", v3.
 
-The type is never restored, and hda_bus_match() requires the device and
-driver types to be equal. After unbinding the codec driver via sysfs the
-HDA_DEV_LEGACY codec drivers no longer match the device and bind fails
-with -ENODEV.
+Patch 1 fixes a UBSAN shift-out-of-bounds warning in the PageBuddy branch
+of isolate_single_pageblock() triggered by concurrent buddy allocation.
 
-Restore HDA_DEV_LEGACY with a device managed action registered before
-the component, so it runs after the component and the card are gone.
+Patch 2 addresses the same class of issue in the PageCompound branch,
+where racy compound_order() and compound_head() reads could lead to
+out-of-range shifts or incorrect page skipping.
 
-Fixes: b60ee2e281b6 ("ASoC: hdac_hda: overwrite hdev type to HDA_DEV_ASOC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch (of 2):
+
+A contig-range allocation racing with buddy allocation on the adjacent
+pageblock can trigger:
+
+ UBSAN: shift-out-of-bounds in mm/page_isolation.c:393:15
+ shift exponent -749042176 is negative
+ Call trace:
+  isolate_single_pageblock
+  start_isolate_page_range
+  alloc_contig_frozen_range_noprof
+  alloc_contig_range_noprof
+
+isolate_single_pageblock() first calls set_migratetype_isolate() with
+zone->lock held, which marks the pageblock MIGRATE_ISOLATE and moves any
+free page straddling the boundary out of the way.  Once the lock is
+dropped, it scans the MAX_ORDER_NR_PAGES-aligned window [start_pfn,
+boundary_pfn) locklessly, only to skip the free pages already handled
+above and to detect in-use pages straddling the boundary.  Since this
+scan only reads page state to decide how far to skip and returns -EBUSY
+on a straddling in-use page, it does not take the lock.
+
+The window also covers the adjacent pageblock, whose free pages stay on
+the normal movable/CMA freelist and can be allocated concurrently.  So
+after the scan observes PageBuddy(page), another CPU can allocate the
+page, leaving a stale value in page->private that makes "1 << order" shift
+out of range.
+
+Use buddy_order_unsafe() with READ_ONCE to read the order, and validate
+it is within MAX_PAGE_ORDER before shifting to prevent UBSAN warnings.
+
+Since pageblock_isolate_and_move_free_pages() already handles free pages
+straddling boundary_pfn under zone->lock, bail out with -EBUSY instead
+of VM_WARN_ON_ONCE() when a PageBuddy page appears to cross the boundary
+during the lockless scan.
+
+Link: https://lore.kernel.org/20260825120549.966271-2-xiqi2@huawei.com
+Fixes: b2c9e2fbba32 ("mm: make alloc_contig_range work at pageblock granularity")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted the order check to use MAX_ORDER while preserving existing boundary-split handling ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/page_isolation.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index e1f53e8fb8295..8fd6849e0ddbb 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -604,6 +604,13 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
- 	.endianness		= 1,
- };
+diff --git a/mm/page_isolation.c b/mm/page_isolation.c
+index 47fbc1696466f..bf098a6d863c0 100644
+--- a/mm/page_isolation.c
++++ b/mm/page_isolation.c
+@@ -372,7 +372,11 @@ static int isolate_single_pageblock(unsigned long boundary_pfn, int flags,
+ 		 * always be in the range.
+ 		 */
+ 		if (PageBuddy(page)) {
+-			int order = buddy_order(page);
++			unsigned int order = buddy_order_unsafe(page);
++
++			/* buddy_order_unsafe() is racy. Validate the order before shifting. */
++			if (order > MAX_ORDER)
++				goto failed;
  
-+static void hdac_hda_restore_dev_type(void *data)
-+{
-+	struct hdac_device *hdev = data;
-+
-+	hdev->type = HDA_DEV_LEGACY;
-+}
-+
- static int hdac_hda_dev_probe(struct hdac_device *hdev)
- {
- 	struct hdac_hda_priv *hda_pvt;
-@@ -620,6 +627,11 @@ static int hdac_hda_dev_probe(struct hdac_device *hdev)
- 		hda_pvt->need_display_power = true;
- 	dev_set_drvdata(&hdev->dev, hda_pvt);
- 
-+	/* Allow the legacy codec driver to match again after unbind */
-+	ret = devm_add_action(&hdev->dev, hdac_hda_restore_dev_type, hdev);
-+	if (ret)
-+		return ret;
-+
- 	/* hold the ref while we probe */
- 	hlink = snd_hdac_ext_bus_get_link(hdev->bus, dev_name(&hdev->dev));
- 	if (!hlink) {
+ 			if (pfn + (1UL << order) > boundary_pfn) {
+ 				/* free page changed before split, check it again */
 -- 
 2.53.0
 
