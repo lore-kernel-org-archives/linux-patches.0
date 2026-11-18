@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016977;
-	b=eFxFP2mu1f84GLsMSM0r7TQWt0h5J11vJY2ljplY2UjFKOedEoa12ajrngd2dfQJlX2+
-	 wOLHT3s/p6QrW8AS1FuYghNVav4ipdLfUShMq0eFf6W2i4Qzagsupq3bLY1VHe4DexUnh
-	 /wxBzgkY3ULn08dKUXTn5K7ARMEnnMfVQnqfOjz62AZ4bNYxBjLaWojAVcNoMT6r/w/Os
-	 6wYL9YrG3ibTv/04TVTRusoBdeZDPA7QA35cNMQZ9aNCJrz5+xs8tDEkRjwVhCSHU/gU6
-	 7g0O+bhy9Q6KwiGo4OyKlbYMMiJFMDsi69bG2wB5WtMwh8cpi0hRi2K3uHY6azL+7xg==
+	t=1795016980;
+	b=lhyhXEDNyV8xW5lsUv9MV8degFj6ZsS2EoYljxc4Zhh5+p7+XzO7CmXgcvTxURYTwKnQ
+	 O3AD7FD0S6/iaiaovlPd/gZ3yESE/pg3opY4TUA5ZtY4vBy+0X7nCsRPi7vpaSSaw2L4k
+	 oxhGVc+KCx0H4bD0HsPuB16ObtSblK4pdYHarnRfuDHMudWvEfIKfSnmrYbHvnCBHCQ18
+	 SG3Pq0C246qKGV88iaeuZWvuSCa2yCzUdBPb1YQWw5kohsnqLE+TgSmDUuA6KIDFeKCrW
+	 ctvEPHuSIuaUKE5d3jbn6dgRENNOVu8st8SmlX+z3KU0TzHn91kgGGJmKgSFGHvH3WQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kEQbs5Yax4VXJQdtv5CEQrXm0TdwfQ7W3sR38ypabes=;
-	b=LAkHtvm1HJvRFQDMaokOQ5LY3R+iKyEV4NCVQfyoDlG181aLT7faSmk28+fY2/3gM3yG
-	 gXeHYJPo0MfFJJ8ByDuz2vYpfD7qqqJvG9s0mw9ioERNiQ3oY6h5TlUclwKvyG07Lz7KH
-	 wwaGiuvm3cpe4OEofd3+sj8RJSB8giQVYpriEsCnHyD/LS4Tjw2os1VvgnASVzoO+9YiI
-	 jJ0Kmu5VsOLSp/BCr7JksqGpCb7Alp45hcWPekJoyHzDSdSlf6h0T+6myyNB5XmE2GJzd
-	 g8d4h3xvU95HQXC7sq77LSJVovxTXCd0IgI0RPo4B9hxYJ58AUcNYgMQNUEmePgRUiA==
+	bh=1U2H6eDKmWM8x09hR4AyhjCzd7L6gA313OlUEjmXhKc=;
+	b=zKWbQWVuq/jl5Ku7lAUg74cr604EGd3RV6LztxUESWnHA5OuQK6IlAddYbXAP0Vyso37
+	 jSICZQ+2apLKjZwdUMFOZHaPYw8ioYfgSS1HLRSdfaThGbcQ3eaY9SPA4veDyxpI3yExA
+	 7jvswuczCgtZ6FI1Onzo8ch5QHkT4uQcn10nfS6u6W3RypuL7dOo6fg/37wQJ0jlT55LN
+	 BVj9b/qaJbJdmGlBVjblso/asRfKhn/Bjn1qditMP65S4bf9d/T2tgzYfIMHvsqgxYXyn
+	 vHZi03/vdNxdMQVcRHkOjRSjUJlQbenuaB0f65BwJF395xVNvBq/hChAloSPYm9eQSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imjvPEbi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Z/yA2nAW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AFA606A31C;
-	Wed, 18 Nov 2026 15:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADE6606A320;
+	Wed, 18 Nov 2026 15:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imjvPEbi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD271F000C4;
-	Wed, 18 Nov 2026 15:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z/yA2nAW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808491F000C4;
+	Wed, 18 Nov 2026 15:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016977;
-	bh=kEQbs5Yax4VXJQdtv5CEQrXm0TdwfQ7W3sR38ypabes=;
+	s=korg; t=1795016980;
+	bh=1U2H6eDKmWM8x09hR4AyhjCzd7L6gA313OlUEjmXhKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=imjvPEbiASaDWR+6ZvODu9R5KBY6aArtcGlG6T+KrPdHSMTQfxUzpbHW+8SvJPfrG
-	 1CJkfd5alWKNDujRxkjDZRAnJS5yN6mDGUUmPhLur5DeYjiA7tYRau+2VZf3Kkx0tf
-	 ApPjeXnio8IB4iC4UcRUbJ1r80GGODASvhZDKEI0=
+	b=Z/yA2nAW5ErAomY1E+smdWtVR/PXCYIV0zST4O+6COrLQJAI5jB/CNLpwyjgAH5Hq
+	 1J/QIdX9D5aOuQTobg+jYNxHYMAHg8tDOacl2ASv+ZOVlbrCezWEvTZRlZVq5oCyD+
+	 zFCdweZnPD1aeIzCfoQXlp+teNf74bXNiuwFsFCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0720/2651] swim: Check drive ready bit
-Date: Wed, 18 Nov 2026 15:32:40 +0100
-Message-ID: <20261118150313.795959247@linuxfoundation.org>
+Subject: [PATCH 7.3 0694/2651] crypto: hisilicon/hpre - remove dma_free_coherent on NULL req->dst in ECDH
+Date: Wed, 18 Nov 2026 15:32:14 +0100
+Message-ID: <20261118150312.830638953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,115 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit abae04f5bed924590e98fe1519566a6e0144e6b5 ]
+[ Upstream commit 5b87f619cc5c0a55dcd85ce97974e3f5b9333b7b ]
 
-The drive provides a readiness signal that has to be tested before
-certain commands are issued to the drive. Rename the SEEK_COMPLETE flag
-as READY because that's how it's known in the documentation as well as
-the mkLinux source code.
+In hpre_ecdh_hw_data_clr_all(), req->dst is always NULL because
+hpre_ecdh_dst_data_init() sets hpre_req->dst = NULL before mapping
+the user buffer with dma_map_single(). The dma_free_coherent() call
+on req->dst is therefore dead code. Remove it.
 
-Poll for that signal after stepping the heads and also after switching
-to MFM mode, as that's what mkLinux does. Check for readiness when
-stepping because testing shows that some drives require this.
-
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/8d6fc833c719de2248b64ee521418b1032b1e509.1788513997.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 05e7b906aa7c ("crypto: hisilicon/hpre - add 'ECDH' algorithm")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 59e00fb2bff5d..601ce79c96b25 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -117,7 +117,7 @@ struct iwm {
- #define TACHO		0x103
- #define READ_DATA_1	0x104
- #define GCR_MODE	0x105
--#define SEEK_COMPLETE	0x106
-+#define READY		0x106
- #define TWOMEG_MEDIA	0x107
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 0861f06da8eea..6ca34f3bf9ffc 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -1411,8 +1411,6 @@ static void hpre_ecdh_hw_data_clr_all(struct hpre_ctx *ctx,
+ 	if (unlikely(dma_mapping_error(dev, dma)))
+ 		return;
  
- /* Bits in handshake register */
-@@ -313,6 +313,14 @@ static inline bool swim_readbit(struct swim __iomem *base, int bit)
- #define swim_readbit_timeout(base, bit, val, timeout_us) \
- 	poll_timeout_us(, swim_readbit(base, bit) == val, 1000, timeout_us, false)
- 
-+#define swim_READY_timeout(base) \
-+({ \
-+	int ret = swim_readbit_timeout(base, READY, true, 1000 * 1000); \
-+	if (ret) \
-+		printk(KERN_DEBUG "%s: drive not ready\n", __func__); \
-+	ret; \
-+})
-+
- static inline void swim_drive(struct swim __iomem *base,
- 			      enum drive_location location)
- {
-@@ -351,8 +359,6 @@ static inline void swim_eject(struct swim __iomem *base)
- 
- static inline void swim_head(struct swim __iomem *base, enum head head)
- {
--	/* wait drive is ready */
--
- 	if (head == UPPER_HEAD)
- 		swim_select(base, READ_DATA_1);
- 	else if (head == LOWER_HEAD)
-@@ -387,20 +393,25 @@ static inline int swim_track00(struct swim __iomem *base)
- 
- static inline int swim_seek(struct swim __iomem *base, int step)
- {
--	if (step == 0)
--		return 0;
--
- 	if (step < 0) {
- 		swim_action(base, SEEK_NEGATIVE);
- 		step = -step;
--	} else
-+	} else if (step > 0)
- 		swim_action(base, SEEK_POSITIVE);
- 
-+	swim_READY_timeout(base);
-+
-+	if (step == 0)
-+		return 0;
-+
- 	for ( ; step > 0; step--) {
- 		if (swim_step(base))
- 			return -1;
- 	}
- 
-+	msleep(30);
-+	swim_READY_timeout(base);
-+
- 	return 0;
+-	if (req->dst)
+-		dma_free_coherent(dev, ctx->key_sz << 1, req->dst, dma);
+ 	if (dst)
+ 		dma_unmap_single(dev, dma, ctx->key_sz << 1, DMA_FROM_DEVICE);
  }
- 
-@@ -482,6 +493,8 @@ static blk_status_t floppy_read_sectors(struct floppy_state *fs,
- 
- 
- 	swim_drive(base, fs->location);
-+	swim_READY_timeout(base);
-+
- 	for (i = req_sector; i < req_sector + sectors_nb; i++) {
- 		int x;
- 		track = i / fs->secpercyl;
-@@ -602,6 +615,8 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
- 
- 	swim_motor(base, ON);
- 	swim_action(base, SETMFM);
-+	msleep(30);
-+	swim_READY_timeout(base);
- 
- 	set_capacity(fs->disk, fs->total_secs);
- 
 -- 
 2.53.0
 
