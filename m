@@ -1,53 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049818;
-	b=yaQvBaBbOB27YN5x+/8V2ogUc0wUpNT19EWPomL+UehDNcsvfr0rZXYSiYFBoHR2GT1E
-	 MPeb5PpXA23xmHL8xu1r//aLPRbgb23nxSYI4zopv+tZ74oHp+9qY3q7Mazq06Mj1B1i7
-	 PRx+XtnWXxq6v11Pp2JaLHvMBuBcCwQMNpLzezIfWDEeVf7sggiWdpf7y8BXQA9fJzQQJ
-	 S+UMuOcNA3WG/EHknrwq057h089JrYoTmatWxZ9R84Ivn1JrLoNBReY5c65m0CqZTAGVy
-	 BpP4UAlc3o/DRhCPE49/Gl0gxjbKzHgI2Isa99/Xz4N8crHbuX2SaJuo9SSUA9k3VeQ==
+	t=1795049821;
+	b=EIjT153FbvGGXRkBfXoa4Msc0qtKQ8iq3on0ucJIMm6ElVvhZcPvnBaBo3rTsydCuMAV
+	 x0bvSdG1brKbU3u4cNDfZlIwERvTZuyADBo2MKds1DONXlYR1k1isZu+7sOjoeVDQPh3F
+	 q1L8JhBt7uM42qSSIbYaF3taaUxUY67u1I5w7ONsj5xGv3NPc6KdMaPCL7mc3JndZABc3
+	 bSW8IAmXX+SyQgbwA9LtKNdO/bjaistJ3ZFSJiq0lXN5wBZvfvZw+7ZhmwCmKgVOXbNje
+	 kxNtzH4b4VMjD5b8GH6WIBy37S/ikVnmSO7SIP8MF3rqdpYkNmGVLAx/tC75NJI+abA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049818;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049821;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L8zmXXG/UuR+dOIWx2tH0FmCU0bkaBB2yqLqXUMIW1k=;
-	b=25SXvV9Pa8j+2agrV04r2vDXR4kbqcaQboLvgyaqce+6fybQQmYgoY4sHcd4/T/EyToR
-	 OWFmvnqXmRaSXkRWi4R57/yQdTpE5939xn4ZkB2V6shEU42k8nq1rvT8xISHQyt8irNb8
-	 RMtX0AQAzbxAztb4CMNNjQi9yhI3xCn1hAVyppkxy6PYouBwZkQ4UDW4Lq75/5IyTjDjA
-	 /SuMq3iR4VPF8C9ArIbkqewJVUmNg8XMmX5d/xl/6CZNXhT9wzn9wnpujuqVui2WPEt7q
-	 5IEkccIfoFf86DM2E62FvIYlFyG1M4880w7Fw1kZhc4G7LUmaTOPzHOpp+dS9qiAJ1w==
+	bh=7+Q808KgD0pvHB/jMXYYn+x5GEx1Cnm2FPuQeyzE30Q=;
+	b=BqhSRl/euJq9uJaiDl4UMnJVBcvfx7tZ/bSNApV8uLCepCXY/J7uJs82zl26t2i3kD0s
+	 mIY7cCEc1cN6weAHFildQCHrmZouizlsWuUbpqioRI1bDkBgI4yFkQtK25gnB4g8BXaAz
+	 bj82LG6rTUifs89Lie3ZKybdLVWAPthMXQls5rlVGuJLB475VubONhl7C8HOhb1OpexXh
+	 cWyHmSmljQRzrkCZ/llX5mpaw8G1vCQIYb56ogY6HDQm775wQwf9iZyqIshyR664gC26Q
+	 DxMBgAAOaTOZ6L6OKR9bPHLh5FjKMSzqfH58zFUexJ/icsgZxZl1cyndufXrF6zi/Lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ulmlXSLp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usEjY3js;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655B3606A325;
-	Thu, 19 Nov 2026 00:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0156C606A320;
+	Thu, 19 Nov 2026 00:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ulmlXSLp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A201F000C4;
-	Thu, 19 Nov 2026 00:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=usEjY3js
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6322B1F000C4;
+	Thu, 19 Nov 2026 00:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049818;
-	bh=L8zmXXG/UuR+dOIWx2tH0FmCU0bkaBB2yqLqXUMIW1k=;
+	s=korg; t=1795049820;
+	bh=7+Q808KgD0pvHB/jMXYYn+x5GEx1Cnm2FPuQeyzE30Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ulmlXSLp4b1inSnBi5TIc87Xnk/DCgShZzroZly4EDc+5gtZENB41EhcH1Z4F5PPw
-	 sKXVB64Be01R5ckY5NIQvnxDIpJVrG8vyPuwLUXM4nXB6JkkjcZgPL0dLu4kDiza1l
-	 MURdmMUuhQWDhI4ZWxqJBcwtJ4CF8RLts6QKNYwA=
+	b=usEjY3js4yJS/uFfN7MwDDBaFGqEdYYaGwo4dMU+QYlYeAZYSHCbNdEDN9QOALYqb
+	 GkPVjIirqX+XwUC1FvZ3wV/yNfT20OKSBnk/qTlojE2QFPN+lSHYZovZRYJh9d0Rfy
+	 caEZJXsjfsWra+fSWvnjJMZFp+kwJVvxSUaz5RBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alex Williamson <alex@shazbot.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2486/2857] PCI: Fix out-of-bounds MMIO read in nvme_disable_and_flr()
-Date: Wed, 18 Nov 2026 15:58:40 +0100
-Message-ID: <20261118150331.075666239@linuxfoundation.org>
+Subject: [PATCH 6.1 2451/2857] ocfs2: retain all security xattrs during inode creation
+Date: Wed, 18 Nov 2026 15:58:05 +0100
+Message-ID: <20261118150329.818391447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,43 +75,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 6aaa3f42e3410ea8e26c857477260159f724cb1d ]
+[ Upstream commit d637475617d8468c2740a3436428681bcc8d3572 ]
 
-In nvme_disable_and_flr(), the PCI bar is mapped using
-NVME_REG_CC + sizeof(cfg) which is (0x14 + 4 = 0x18 bytes)
+When creating a new inode, ocfs2_init_security_get() stores the security
+xattr returned by the LSM framework in ocfs2_security_xattr_info so that
+it can be written later within the same transaction.  But
+ocfs2_initxattrs() only ever looks at the first element of the xattr
+array, and it keeps the name as a bare pointer into memory owned by the
+security layer instead of copying it.  The value, by contrast, is already
+duplicated with kmemdup().
 
-However, the function later reads the controller status from
-NVME_REG_CSTS - offset 0x1C, which is outside the mapped 0x18 byte
-boundary. This violates the API contract.
+With stacked LSMs, security_inode_init_security() provides one xattr per
+LSM, so all labels but the first are silently dropped and never written to
+disk, leaving newly created files without the security xattrs the other
+LSMs rely on.
 
-Fix this by increasing the mapping size to include NVME_REG_CSTS. Also
-change sizeof(cfg) to sizeof(u32) to make the intent clearer.
+The borrowed name is not an outright bug with the LSMs in tree today:
+security_inode_init_security() frees only ->value once the callback
+returns, and documents ->name as the attribute name suffix, so the pointer
+stays valid for as long as ocfs2 uses it.  It is fragile though, as an LSM
+that allocates the name together with the value would turn it into a
+use-after-free, so the rework below copies the names as well.
 
-Fixes: ffb0863426eb9 ("PCI: Disable Samsung SM961/PM961 NVMe before FLR")
-Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alex Williamson <alex@shazbot.org>
-Link: https://patch.msgid.link/20260903164615.5744-1-raizudeen.kerneldev@gmail.com
+Fix this by storing copies of all the security xattrs: allocate an array
+in ocfs2_initxattrs(), copy the names and values, account for all of them
+in the credit calculations, and write each one in
+ocfs2_init_security_set().
+
+While at it, switch the allocations from GFP_KERNEL to GFP_NOFS.  The
+callback runs in the inode creation path with the parent directory locked,
+and the security layer allocates the very same xattr array with GFP_NOFS,
+so direct reclaim must not be allowed to recurse into the filesystem from
+here.
+
+Link: https://lore.kernel.org/20260917014825.678947-1-joseph.qi@linux.alibaba.com
+Fixes: de3004c874e7 ("ocfs2: Switch to security_inode_init_security()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/namei.c |   6 +--
+ fs/ocfs2/xattr.c | 133 +++++++++++++++++++++++++++++++++++++----------
+ fs/ocfs2/xattr.h |  12 +++--
+ 3 files changed, 116 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index ab89ac0cab833..f15f576879dbd 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -3988,7 +3988,7 @@ static int nvme_disable_and_flr(struct pci_dev *dev, bool probe)
- 	if (probe)
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index 60770904b243b..48c66699f0bec 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -244,7 +244,6 @@ static int ocfs2_mknod(struct user_namespace *mnt_userns,
+ 	int want_meta = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
+-		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota_inode = 0;
+@@ -471,7 +470,7 @@ static int ocfs2_mknod(struct user_namespace *mnt_userns,
+ 
+ 	brelse(new_fe_bh);
+ 	brelse(parent_fe_bh);
+-	kfree(si.value);
++	ocfs2_free_security_xattrs(&si);
+ 
+ 	ocfs2_acl_init_release(&acl_state);
+ 
+@@ -1816,7 +1815,6 @@ static int ocfs2_symlink(struct user_namespace *mnt_userns,
+ 	int want_clusters = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
+-		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota = 0, did_quota_inode = 0;
+@@ -2048,7 +2046,7 @@ static int ocfs2_symlink(struct user_namespace *mnt_userns,
+ 
+ 	brelse(new_fe_bh);
+ 	brelse(parent_fe_bh);
+-	kfree(si.value);
++	ocfs2_free_security_xattrs(&si);
+ 	ocfs2_free_dir_lookup_result(&lookup);
+ 	if (inode_ac)
+ 		ocfs2_free_alloc_context(inode_ac);
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 6a462fef115fc..d45c87d20fd36 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -580,10 +580,15 @@ int ocfs2_calc_security_init(struct inode *dir,
+ 			     int *xattr_credits,
+ 			     struct ocfs2_alloc_context **xattr_ac)
+ {
++	int i;
+ 	int ret = 0;
+ 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
+-	int s_size = ocfs2_xattr_entry_real_size(strlen(si->name),
+-						 si->value_len);
++	int s_size = 0;
++
++	for (i = 0; i < si->count; i++)
++		s_size += ocfs2_xattr_entry_real_size(
++				strlen(si->xattrs[i].name),
++				si->xattrs[i].value_len);
+ 
+ 	/*
+ 	 * The max space of security xattr taken inline is
+@@ -600,14 +605,27 @@ int ocfs2_calc_security_init(struct inode *dir,
+ 		*xattr_credits += OCFS2_XATTR_BLOCK_CREATE_CREDITS;
+ 	}
+ 
+-	/* reserve clusters for xattr value which will be set in B tree*/
+-	if (si->value_len > OCFS2_XATTR_INLINE_SIZE) {
+-		int new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
+-							    si->value_len);
++	/*
++	 * when blocksize = 512, the security xattrs may not fit in the
++	 * single block reserved above and a bucket has to be allocated
++	 * for them, so reserve the cluster it needs as well.
++	 */
++	if (dir->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE &&
++	    s_size > OCFS2_XATTR_FREE_IN_BLOCK(dir)) {
++		*want_clusters += 1;
++		*xattr_credits += ocfs2_blocks_per_xattr_bucket(dir->i_sb);
++	}
+ 
+-		*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
+-							   new_clusters);
+-		*want_clusters += new_clusters;
++	/* reserve clusters for xattr value which will be set in B tree*/
++	for (i = 0; i < si->count; i++) {
++		if (si->xattrs[i].value_len > OCFS2_XATTR_INLINE_SIZE) {
++			int new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
++						si->xattrs[i].value_len);
++
++			*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
++								   new_clusters);
++			*want_clusters += new_clusters;
++		}
+ 	}
+ 	return ret;
+ }
+@@ -617,12 +635,16 @@ void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+ 			   int *want_clusters, int *xattr_credits,
+ 			   int *want_meta, struct ocfs2_acl_state *acl_state)
+ {
++	int i;
+ 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
+ 	int s_size = 0, a_size = 0, acl_len = 0, new_clusters;
+ 
+-	if (si->enable)
+-		s_size = ocfs2_xattr_entry_real_size(strlen(si->name),
+-						     si->value_len);
++	if (si->enable) {
++		for (i = 0; i < si->count; i++)
++			s_size += ocfs2_xattr_entry_real_size(
++					strlen(si->xattrs[i].name),
++					si->xattrs[i].value_len);
++	}
+ 
+ 	if (osb->s_mount_opt & OCFS2_MOUNT_POSIX_ACL) {
+ 		if (acl_state->default_acl && S_ISDIR(mode)) {
+@@ -669,12 +691,14 @@ void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+ 	 * reserve credits and clusters for xattrs which has large value
+ 	 * and have to be set outside
+ 	 */
+-	if (si->enable && si->value_len > OCFS2_XATTR_INLINE_SIZE) {
+-		new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
+-							si->value_len);
+-		*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
+-							   new_clusters);
+-		*want_clusters += new_clusters;
++	for (i = 0; si->enable && i < si->count; i++) {
++		if (si->xattrs[i].value_len > OCFS2_XATTR_INLINE_SIZE) {
++			new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
++						si->xattrs[i].value_len);
++			*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
++								   new_clusters);
++			*want_clusters += new_clusters;
++		}
+ 	}
+ 	if (osb->s_mount_opt & OCFS2_MOUNT_POSIX_ACL) {
+ 		if (acl_state->default_acl && S_ISDIR(mode)) {
+@@ -7438,17 +7462,46 @@ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array
+ {
+ 	struct ocfs2_security_xattr_info *si = fs_info;
+ 	const struct xattr *xattr;
++	struct ocfs2_security_xattr *xattrs;
++	int count = 0, i;
+ 	int err = 0;
+ 
+ 	if (si) {
+-		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
+-				    GFP_KERNEL);
+-		if (!si->value)
++		for (xattr = xattr_array; xattr->name != NULL; xattr++)
++			count++;
++
++		xattrs = kcalloc(count, sizeof(*xattrs), GFP_NOFS);
++		if (!xattrs)
+ 			return -ENOMEM;
+ 
+-		si->name = xattr_array->name;
+-		si->value_len = xattr_array->value_len;
++		for (i = 0; i < count; i++) {
++			xattrs[i].name = kstrdup(xattr_array[i].name, GFP_NOFS);
++			if (!xattrs[i].name) {
++				err = -ENOMEM;
++				goto out_err;
++			}
++
++			xattrs[i].value = kmemdup(xattr_array[i].value,
++						  xattr_array[i].value_len,
++						  GFP_NOFS);
++			if (!xattrs[i].value) {
++				err = -ENOMEM;
++				goto out_err;
++			}
++			xattrs[i].value_len = xattr_array[i].value_len;
++		}
++
++		si->xattrs = xattrs;
++		si->count = count;
  		return 0;
++
++out_err:
++		for (; i >= 0; i--) {
++			kfree(xattrs[i].name);
++			kfree(xattrs[i].value);
++		}
++		kfree(xattrs);
++		return err;
+ 	}
  
--	bar = pci_iomap(dev, 0, NVME_REG_CC + sizeof(cfg));
-+	bar = pci_iomap(dev, 0, NVME_REG_CSTS + sizeof(u32));
- 	if (!bar)
- 		return -ENOTTY;
+ 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
+@@ -7461,6 +7514,19 @@ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array
+ 	return err;
+ }
  
++void ocfs2_free_security_xattrs(struct ocfs2_security_xattr_info *si)
++{
++	int i;
++
++	for (i = 0; i < si->count; i++) {
++		kfree(si->xattrs[i].name);
++		kfree(si->xattrs[i].value);
++	}
++	kfree(si->xattrs);
++	si->xattrs = NULL;
++	si->count = 0;
++}
++
+ int ocfs2_init_security_get(struct inode *inode,
+ 			    struct inode *dir,
+ 			    const struct qstr *qstr,
+@@ -7478,7 +7544,7 @@ int ocfs2_init_security_get(struct inode *inode,
+ 		 * security_inode_init_security() does not return -EOPNOTSUPP,
+ 		 * we have to check the xattr ourselves.
+ 		 */
+-		if (!ret && !si->name)
++		if (!ret && !si->count)
+ 			si->enable = 0;
+ 
+ 		return ret;
+@@ -7495,10 +7561,21 @@ int ocfs2_init_security_set(handle_t *handle,
+ 			    struct ocfs2_alloc_context *xattr_ac,
+ 			    struct ocfs2_alloc_context *data_ac)
+ {
+-	return ocfs2_xattr_set_handle(handle, inode, di_bh,
+-				     OCFS2_XATTR_INDEX_SECURITY,
+-				     si->name, si->value, si->value_len, 0,
+-				     xattr_ac, data_ac);
++	int i;
++	int ret = 0;
++
++	for (i = 0; i < si->count; i++) {
++		ret = ocfs2_xattr_set_handle(handle, inode, di_bh,
++					     OCFS2_XATTR_INDEX_SECURITY,
++					     si->xattrs[i].name,
++					     si->xattrs[i].value,
++					     si->xattrs[i].value_len, 0,
++					     xattr_ac, data_ac);
++		if (ret)
++			break;
++	}
++
++	return ret;
+ }
+ 
+ const struct xattr_handler ocfs2_xattr_security_handler = {
+diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
+index 016374e9a147e..78cb52af03692 100644
+--- a/fs/ocfs2/xattr.h
++++ b/fs/ocfs2/xattr.h
+@@ -20,13 +20,18 @@ enum ocfs2_xattr_type {
+ 	OCFS2_XATTR_MAX
+ };
+ 
+-struct ocfs2_security_xattr_info {
+-	int enable;
+-	const char *name;
++struct ocfs2_security_xattr {
++	char *name;
+ 	void *value;
+ 	size_t value_len;
+ };
+ 
++struct ocfs2_security_xattr_info {
++	int enable;
++	struct ocfs2_security_xattr *xattrs;
++	int count;
++};
++
+ extern const struct xattr_handler ocfs2_xattr_user_handler;
+ extern const struct xattr_handler ocfs2_xattr_trusted_handler;
+ extern const struct xattr_handler ocfs2_xattr_security_handler;
+@@ -47,6 +52,7 @@ int ocfs2_xattr_remove(struct inode *, struct buffer_head *);
+ int ocfs2_init_security_get(struct inode *, struct inode *,
+ 			    const struct qstr *,
+ 			    struct ocfs2_security_xattr_info *);
++void ocfs2_free_security_xattrs(struct ocfs2_security_xattr_info *);
+ int ocfs2_init_security_set(handle_t *, struct inode *,
+ 			    struct buffer_head *,
+ 			    struct ocfs2_security_xattr_info *,
 -- 
 2.53.0
 
