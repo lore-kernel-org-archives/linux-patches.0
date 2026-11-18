@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036483;
-	b=185vFRfgTZepMkT7O3hUy++B3kwCmOYWEZpjhMWeSlQx20rjMu36nUUQU6L0FAyr7hVH
-	 BFND+tsKEQRH8PoKk6uoddkHDb6MQfc6hohLLd9B4Wv81X8gGLx0PbcDhnRa3LfrhTUNL
-	 Se/avVb/C/hpiYT+6EZeyDP1IUhTGX5PTrVjPK/z7Wizo551tItamT08rhol+yEfQZpDu
-	 EprT5GnBY4dCt+sk3uytbhoB3vCngbNfwrhMsbyz1cvcvwFJy8L+/Gtn62PuRk/fQGsT6
-	 rvnGAC7NA16/ZUg0Pe5TvQFC7iwYCJOyNZcDws8RJu5l60jFdxdWvy4GgeZ9Z68qB4g==
+	t=1795036486;
+	b=UJVdJKzZbJj7HuRnMJZDibadk4lFjoe37KLYTjuL8mAqhqqPA7ieje7FTfmNqgBrFr60
+	 +iDoC4bqWynDbRFf6GDrxTAl6EUUrNvyOfYypI6BPcpiT0RLR2RsnQLCPika+dU7yq5Ad
+	 HOJufCRDm5wwWWq4Co1t5L90xvLeoa2lcwxFVZDxUqBxaC5DcQtabLYgqloKBMZ8zVrRA
+	 qe1jtfcUIWwP0Kze8S62cYNXfUZgrQYzfYe5pY63wHt+wEen7qfgO1hfi61pt0IomhfeH
+	 Q0cjmuxib4vOq4oZL0VsmUGcpxeVhv2inmgsMEXbn9tJfyYJtg9jja4hZBdZjmh6ChQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=F1u6g0qmfbV/CsmoDPM9agq5DLLn6vIh2rjKiNvq38I=;
-	b=oqdCVT0iMpYSUnRiQsBpTRCLZVNr5k2qtaiSFpADMHPoUo7YSTaV45aFZlwbLTlpPF6q
-	 1FddXaGOeS4P2TJNvOj53GgljTwB91WROk80DZh0SaJ+vHn4l0AHPXpyxJ1WrU/YaXMgg
-	 ZdYHRfCpzI0WyVegR1eoEnYeeE4wBiwPhJhDgAUQfGuggcVLCBfBN3MBxJRE81H93DS3X
-	 0oSQDabuxCpewKYrtxuWKxgXiqqW93h/KYIW2nOBXfsquUm7cFJqRaDx2AM6SpWxRC0ER
-	 ZYBrEuKAh65awLVjSmkqLDqXKTx+tKzxLezuw21cFlP9hXLS/Ce8Fs/VsaUiocRByhQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=JnpQy7oZzGf+yl1TFQxVsydFSW1+ynj0W51PA7FezQo=;
+	b=o6VukRnZPZMWy9CpH9iJIubxgoXnpbovOIFjMp8rua5M2k5w/B969s01y3CWgk6kf1nX
+	 m/nsT/E85OjpAo6w2E7n/U5lNZB1uWFtnzmn9+zlxwp33YwawbvTXnGPrkKCrX/osd+lJ
+	 S6sTiCbmz0smsaFCmjkY9q8eEBWNm7xy4j+USCOQ41DF0fw9AiUgEqMf5MwPt43exqSAl
+	 VNoNMgz1/f5L/AWHLd/IYUtDV8zIXMAZPnzjy/qj1xPwkSbGK2wPkl+f8AeRYLWW7Luc/
+	 ZDjgVXbheEwc6zMmS3bCt97TM11Oewi93gqaZHYsWjkmdouJ/BKjIPVOkAw0p3sqxLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lf5jVped;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QcAasoLx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A01C606A325;
-	Wed, 18 Nov 2026 21:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD4B606A31C;
+	Wed, 18 Nov 2026 21:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lf5jVped
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D758F1F000C4;
-	Wed, 18 Nov 2026 21:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QcAasoLx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1F41F000C4;
+	Wed, 18 Nov 2026 21:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036483;
-	bh=F1u6g0qmfbV/CsmoDPM9agq5DLLn6vIh2rjKiNvq38I=;
+	s=korg; t=1795036486;
+	bh=JnpQy7oZzGf+yl1TFQxVsydFSW1+ynj0W51PA7FezQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lf5jVped3bPnS0nNT6Tgs6wq3OtJsqXaGbnl3Z1UvlI3g7MrVolkhgoIDGEORrOxO
-	 lgVEQ7sNsrkGoS0LBLmtA9/klWM2JS5aDjPGro4YRsfLjL4oUMHB1fLcxMHweCGyfd
-	 MmZQS5YvbT3JLzqKeVAmJIMVp1wjtuWRxTdDaoHI=
+	b=QcAasoLxf32Wy/OBzugwNtulUscRtWbxEY8Ft6GnKlRNUjoWRp5vFgQM6unwhWwN1
+	 npfD0FD9NguDeXf0xXnzN2rBfoWuITrlcdwFG/cBz4FdWiGAmZZiwBhP5hfcwwp6CL
+	 TWGeSxtdKIIbxT7GEPlJ4QOZdfTYFQjVUMDOx8Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <david@davidgow.net>,
+	Josh Snyder <josh@code406.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1077/3318] mm/damon/core: charge only the part of a region the filter left
-Date: Wed, 18 Nov 2026 15:28:19 +0100
-Message-ID: <20261118150352.279916417@linuxfoundation.org>
+Subject: [PATCH 6.6 1078/3318] platform/x86: hp-bioscfg: fix 16-byte heap overflow for empty auth token
+Date: Wed, 18 Nov 2026 15:28:20 +0100
+Message-ID: <20261118150352.308672215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -65,76 +63,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit 4ff3b4a54a32142497fb44b79d0920aa6ba3393d ]
+[ Upstream commit 540b8ae192afb5566c1b13b6884aee87107a26b9 ]
 
-Patch series "mm/damon/core: fix the size charged for a filter-trimmed
-region", v2.
+hp_calculate_security_buffer() special-cases an empty authentication
+string and returns a fixed 4 bytes (sizeof(u16) * 2). But
+hp_populate_security_buffer() does not special-case that same input:
+for any authentication string that does not start with BEAM_PREFIX,
+including the empty string, it always builds "UTF_PREFIX +
+authentication" and converts the result to UTF-16, writing a 2-byte
+length header plus 2 bytes per character of "<utf-16/>" (9 characters),
+20 bytes total, regardless of how long "authentication" itself is.
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits it, so the scheme action reaches only one side of the boundary.
-damos_apply_scheme() reads the region size before that split and never
-re-reads it, so the quota charge and schemes/<S>/stats/sz_tried account
-for the whole original region.
+The caller, hp_set_attribute(), sizes its kmalloc() buffer using
+hp_calculate_security_buffer()'s return value, so for an empty
+authentication token it allocates 4 bytes for the security area but
+hp_populate_security_buffer() then writes 20 bytes into it, causing a
+16-byte heap buffer overflow.
 
-Patch 1 re-reads the size after the core filters have run.  Patch 2 adds
-KUnit coverage for what the function charges and reports, for the trimmed
-cases and for the cases that must not change.
+The authentication token used here is the current admin/setup
+password, which is an empty string by default until one is
+configured. Any write to a writable BIOS attribute while no admin
+password has been set reaches this path.
 
-This patch (of 2):
+Fix by removing the special-case early return for an empty string in
+hp_calculate_security_buffer(). The generic calculation that follows
+already accounts for the UTF_PREFIX correctly, which naturally yields
+the same 20 bytes that hp_populate_security_buffer() writes for an empty
+string, avoiding duplicate logic for special cases.
 
-An address range DAMOS filter that partially overlaps a monitoring region
-splits the region at the filter boundary, so the scheme action is applied
-to only one side of it.  damos_apply_scheme() reads the region size once
-on entry, before damos_core_filter_out() performs that split.
-
-The quota charge and the statistics update therefore account for the
-region as it was before the trim.  schemes/<S>/stats/sz_tried counts
-memory the filter excluded, which Documentation/mm/damon/design.rst says
-is not counted as tried, and with quotas/bytes set the excluded part is
-charged against the budget, throttling the scheme to a fraction of what
-was configured.
-
-User impact is that DAMOS could unexpectedly slowly run, due to
-over-charged quota.  DAMOS stat could also be confusing.  No critical
-events such as crashes or leask happen.
-
-Re-read the region size after the core filters have run.
-
-Link: https://lore.kernel.org/20260921152443.80132-1-sj@kernel.org
-Link: https://lore.kernel.org/20260921152443.80132-2-sj@kernel.org
-Fixes: ab9bda001b68 ("mm/damon/core: introduce address range type damos filter")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <david@davidgow.net>
-Cc: <stable@vger.kernel.org>
+Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
+Reported-by: Josh Snyder <josh@code406.com>
+Closes: https://lore.kernel.org/platform-driver-x86/20260402-hp-bioscfg-overflow-v1-1-6985f8c9e67c@code406.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260919060037.84602-1-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index b5b6d00d7a3b5..c106219d33dd9 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1008,6 +1008,7 @@ static void damos_apply_scheme(struct damon_ctx *c, struct damon_target *t,
- 		}
- 		if (damos_filter_out(c, t, r, s))
- 			return;
-+		sz = damon_sz_region(r);
- 		ktime_get_coarse_ts64(&begin);
- 		if (c->callback.before_damos_apply)
- 			err = c->callback.before_damos_apply(c, t, r, s);
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+index cc6b8795a5bff..c9ed2134d39fb 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
+@@ -47,9 +47,6 @@ size_t hp_calculate_security_buffer(const char *authentication)
+ 		return sizeof(u16) * 2;
+ 
+ 	authlen = strlen(authentication);
+-	if (!authlen)
+-		return sizeof(u16) * 2;
+-
+ 	size = sizeof(u16) + authlen * sizeof(u16);
+ 	if (!strstarts(authentication, BEAM_PREFIX))
+ 		size += strlen(UTF_PREFIX) * sizeof(u16);
 -- 
 2.53.0
 
