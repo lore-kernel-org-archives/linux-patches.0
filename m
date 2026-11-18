@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035132;
-	b=uaRYq5a/aJA4iALuPk1xBYE4UKP6SAvDseS8/MNXHoSntK4DqwQtybhqHi5yGLQYLv+s
-	 sVeqeo7Ifx5t48Mz67qnh3pkUJwXjR614S2M3SvijnIsI5Qth3yyTfW+7xVDP8F7+dIrE
-	 GRl/dHmHE+KWvhFzojhVKvXMl56ITDVNF1pGVT7+t3C8RsiOQZr++qBAnIhMUxJKM3Okp
-	 SYAsTswJAeC5uGQFthtM4TqoEBC7Bq3CqFDNUT4c394vJXNjQG/jYyXBCQoB06e8FiXiz
-	 mGhfOgh2723iLeLcKAK5EKQ46xWwFuBQ3nt1KMdUmsKCzVdVemhg9zuAK4J6TmxARqw==
+	t=1795035135;
+	b=ro/PiPTN45FmeU6amYpY3xBWyPXzXaZJUAMnVFL+8Th/OUuMZ+OHBi+qUXSjFzC4p7rN
+	 fFWKuIQHfq1e7jF/tj4K21Op/Bm7i4vGkHdmOHFgOCkDbgGtYdWl6nh+yKhpQOK/7o6VA
+	 sljjlVCCVSW2IFuRBNk17qgeRQb4pKi8Fb/tNJwWPjlfXxBR2EGyHSjWTxXLX4WqVvtHy
+	 AYnP+x2a61vPnvlWpaB48jmhNUzfSl9XqXklSoGoXajkZPJlH2q69vv7OhSayle/29S3E
+	 TauHS7Zz1u7uEe6loFVLhMS9spA2D66k8AAlhbH7LtypeQuAG9sj4Ru/QDludf4w6FQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ej+G/WiyeIq26gd1LCUSACeh7Wb63p+hhYp7VsaNw8w=;
-	b=sMx9W9f73Jq6wITDvGj0U1vwwZ/9PXJWd3zd+5syOxWisXR+K6D8O5jdSexztBOz4Vet
-	 gIs8kPrjNH8TsXjRQ7FNZoQGT+kGH6HL8xylI0YF9lcYSoeM15cJhDpwL/LyuNnrlEc/L
-	 8LDwCpcMLXSMBj5BEDmt0vnIvfeUfOQvtVBgBMiKS4GYhDUazXIL1rftqiDkYrDakC0sc
-	 DjLIwOKMl+W+mwxvpZOD79O/76DhdFoSBfP0m0dm6JANvfAdy9KYfE5/+ClGoPgepMMc/
-	 qpzphWAEZuE3TfLN7y7lpUrfXt8cEZZBV294mBQlbtV2xDdS07IO7P33k/xRImNyoEg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0iqkEbMNLSLa45QmaLDBgp2QDQtLVWCkd7kTitpuH8Y=;
+	b=odHgCwb9tODBzn23tjyh/Xfn+b6OVFi4ZBh4itQuHh8PZBDrUWrlVPTLHQbEDABuH3SU
+	 QCku4gXMoPmZ+2lOQh0cKg8JVVNfSsVUcKOHzAOpPTdUd6+fNJ/TeccQy9gkl2Reol3t2
+	 b7Bk0/meNgp06gnd4jN4s1YXQ/5BV91cc5G1V/6y0tkGjgVWdKpX23L1Joe5FuofCUruj
+	 VZamRobQwnJAxESEGNc2OHlfLVgOKZkQK9Zf3pbvJHvGJtdYIlEv9maGo9Dnb+Tpvj0H+
+	 hH6brf6fBV2Wdmmy1UQzD7y1VGFsQsiXweUzQQx6omKb0YU9SioKrgT91uT4jyMtqFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KKhbr0Cr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYvV1kCt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4EB606A31C;
-	Wed, 18 Nov 2026 20:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADC9606A31C;
+	Wed, 18 Nov 2026 20:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KKhbr0Cr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43ED1F000C4;
-	Wed, 18 Nov 2026 20:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYvV1kCt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB1C1F000C4;
+	Wed, 18 Nov 2026 20:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035132;
-	bh=Ej+G/WiyeIq26gd1LCUSACeh7Wb63p+hhYp7VsaNw8w=;
+	s=korg; t=1795035135;
+	bh=0iqkEbMNLSLa45QmaLDBgp2QDQtLVWCkd7kTitpuH8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KKhbr0CrSBes0HqRLG7DUd4X9j3FaX68d3iyImImShWy4L9Gmyz3qnFrCvOin2W2h
-	 vuAaq4NN0sC4V2nNyQUeZ0/JGhIMi6HHG/H9Pg4/Kxc655ylEKoYpQNzqi9Hj5m2NU
-	 816+CLOkzvzw58QSV7oZlH8XFJebaZVO2OHmq23M=
+	b=OYvV1kCt0xR5OrLBUB6Jsd7RmYpN3w+h8mIwxUivi5bmTgN3TyxFAnS7hkkuKOgmm
+	 xIHSLJarXNsNvsE57lfY1FJqdH1MyqQt05VoDYmQ7f21+g+qZSZl0Kbg3tLmiYqN1K
+	 ZRgTHsn8nogXfJhBCTuPJ+ymKdISt6uXCrEe8flc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 0617/3318] io_uring/io-wq: save worker type before dropping its reference
-Date: Wed, 18 Nov 2026 15:20:39 +0100
-Message-ID: <20261118150336.316074071@linuxfoundation.org>
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 0618/3318] KVM: PPC: Book3S HV: Add SRCU protection for virtual-mode HPT hcalls
+Date: Wed, 18 Nov 2026 15:20:40 +0100
+Message-ID: <20261118150336.352321629@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -61,58 +62,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-commit 37e425460b7c41687e51e3254b1eb1d799da9614 upstream.
+commit 61a39797bb136243c48b46e2586d8a9e2cea6a89 upstream.
 
-io_wq_cancel_tw_create() inspects cb->func after calling
-io_worker_cancel_cb(). For an existing worker, that call can drop the
-last worker reference and wake io_worker_exit(). If the canceling task
-is preempted, the worker can be unlinked and freed by kfree_rcu() before
-the callback function is inspected. KASAN reports a slab-use-after-free
-read in this path.
+The virtual-mode HPT hcall handlers (H_ENTER, H_REMOVE, H_BULK_REMOVE,
+H_CLEAR_REF, H_CLEAR_MOD) call into book3s_hv_rm_mmu.c, which accesses
+memslots via kvm_memslots_raw().  kvm_memslots_raw() uses
+rcu_dereference_raw_check() to bypass SRCU lockdep annotation checking.
+This is safe in real mode because the entire guest entry/exit is wrapped
+in srcu_read_lock/unlock inside kvmppc_run_core() and
+kvmhv_run_single_vcpu().
 
-Save whether the callback belongs to an unpublished continuation worker
-while its reference is still held, then use the saved result for the
-conditional free. This preserves the existing accounting and frees only
-the worker allocated for the canceled continuation.
+However, since commit 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual
+mode handlers for HPT hcalls and page faults"), these same handlers are
+also executed in virtual mode via kvmppc_pseries_do_hcall(), which runs
+after SRCU has already been released on guest exit.
 
-Fixes: e6db6f9398da ("io_uring/io-wq: only free worker if it was allocated for creation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+A concurrent KVM_SET_USER_MEMORY_REGION deletion or move can therefore
+call synchronize_srcu_expedited() — which does not wait for this thread —
+and then kfree(slot) and vfree(slot->arch.rmap) while the hcall handler
+still holds a raw pointer to the memslot.  lock_rmap() then writes to
+freed vmalloc memory, leading to use-after-free and memory corruption.
+Because kvm_memslots_raw() suppresses lockdep checks, this race is
+entirely silent.
+
+Fix this by factoring out the 7 HPT hcall handlers (H_REMOVE, H_ENTER,
+H_READ, H_CLEAR_MOD, H_CLEAR_REF, H_PROTECT, H_BULK_REMOVE) into a
+helper function, kvmppc_pseries_do_hpt_hcall(), and wrapping its call
+site in srcu_read_lock(&kvm->srcu) / srcu_read_unlock(&kvm->srcu, idx).
+Targeting only the HPT hcalls avoids wrapping non-HPT hcalls that sleep
+(such as H_CONFER, H_REGISTER_VPA, H_PAGE_INIT) or handlers that already
+acquire SRCU internally (such as H_RTAS).
+
+Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
+Cc: stable@vger.kernel.org # v5.14+
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260928122837.8782-2-amachhiw@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c |   70 +++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 35 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1326,14 +1326,16 @@ static void io_wq_cancel_tw_create(struc
- 
- 	while ((cb = task_work_cancel_match(wq->task, io_task_work_match, wq)) != NULL) {
- 		struct io_worker *worker;
-+		bool free_worker;
- 
- 		worker = container_of(cb, struct io_worker, create_work);
--		io_worker_cancel_cb(worker);
- 		/*
- 		 * Only the worker continuation helper has worker allocated and
--		 * hence needs freeing.
-+		 * hence needs freeing. Save this before dropping its reference.
- 		 */
--		if (cb->func == create_worker_cont)
-+		free_worker = cb->func == create_worker_cont;
-+		io_worker_cancel_cb(worker);
-+		if (free_worker)
- 			kfree(worker);
- 	}
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -1088,6 +1088,38 @@ static long kvmppc_h_rpt_invalidate(stru
+ 	return H_SUCCESS;
  }
+ 
++static long kvmppc_pseries_do_hpt_hcall(struct kvm_vcpu *vcpu, unsigned long req)
++{
++	switch (req) {
++	case H_REMOVE:
++		return kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
++				       kvmppc_get_gpr(vcpu, 5),
++				       kvmppc_get_gpr(vcpu, 6));
++	case H_ENTER:
++		return kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
++				      kvmppc_get_gpr(vcpu, 5),
++				      kvmppc_get_gpr(vcpu, 6),
++				      kvmppc_get_gpr(vcpu, 7));
++	case H_READ:
++		return kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
++				     kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_MOD:
++		return kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_CLEAR_REF:
++		return kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
++					  kvmppc_get_gpr(vcpu, 5));
++	case H_PROTECT:
++		return kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
++					kvmppc_get_gpr(vcpu, 5),
++					kvmppc_get_gpr(vcpu, 6));
++	case H_BULK_REMOVE:
++		return kvmppc_h_bulk_remove(vcpu);
++	}
++
++	return H_FUNCTION;
++}
++
+ int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
+ {
+ 	struct kvm *kvm = vcpu->kvm;
+@@ -1103,47 +1135,15 @@ int kvmppc_pseries_do_hcall(struct kvm_v
+ 
+ 	switch (req) {
+ 	case H_REMOVE:
+-		ret = kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_ENTER:
+-		ret = kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6),
+-					kvmppc_get_gpr(vcpu, 7));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_READ:
+-		ret = kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_MOD:
+-		ret = kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_CLEAR_REF:
+-		ret = kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_PROTECT:
+-		ret = kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
+-					kvmppc_get_gpr(vcpu, 5),
+-					kvmppc_get_gpr(vcpu, 6));
+-		if (ret == H_TOO_HARD)
+-			return RESUME_HOST;
+-		break;
+ 	case H_BULK_REMOVE:
+-		ret = kvmppc_h_bulk_remove(vcpu);
++		idx = srcu_read_lock(&kvm->srcu);
++		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
++		srcu_read_unlock(&kvm->srcu, idx);
+ 		if (ret == H_TOO_HARD)
+ 			return RESUME_HOST;
+ 		break;
 
 
