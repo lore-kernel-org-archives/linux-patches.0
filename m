@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018874;
-	b=LMm8yMqTjGYCj+/W+lLrsy9TC9tMbKMG9X7E1swO3k0zyPg+qKHhbaNCcdIk6YBPcGd1
-	 vAxkS+rA4jtbnhjLpM7IGdNuRCDmFkGvqB+g1aatNLGpgkPeeMQl9rMvOGOWXwPsM85lG
-	 MBN33cCqcb59Lgh03dpQP8tXI9zXzPusptfglnxOR4vrWl4sPl1U54Jy1SvL2dD003Nf6
-	 IUYQXIttqVlsAYcIpO5y9iex12SFwRk1N2L3D1bSpy/QLSeA3aNF8F/M78lCYlwKTEX2N
-	 ATl2BPDat+YWGPu5PPRyKRiUpyto5mtTokqLCtSua9T2kXv3nQdF+rD1HPp+wJY+qgA==
+	t=1795018876;
+	b=qcBPZSlVKNyxRiJa9DIG70mqmNI5qShj8stXXRC2K6Dt/esKcvOT4aiM4MJHMH6UtSQ2
+	 UgPuLcS2/Cc4073r2qlj2fiMF4gy9+T6EoVOrRqYJHF3rqF1BrDtEc91vSbkgJPQhF0q2
+	 MHATdwQ1fvz5ogYNsybnxmxMMCy823AfijjpM6py0yebz4qttZuSEUQB+9XPmQqc9CTDR
+	 erP4poB3kJ655M39Ui7KlEYb1JSQtgGOPKjOJ6lLkXfE4TTcwN5qrB4fMqQwMyHDkCZM4
+	 vsn2I8g8HA6vfWQfRnWvrhXUIJqed1nFPrWFWP4AndbQJ/qyaWLLhKx1H5oGdNk0cLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018876;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wJNfnu4tkzL5zDw7EEE5QjN7n8pCC0SVSwr9ZbOYIzQ=;
-	b=pGREMELxcblQ4RQCjvrjcv4kui5KVPxTI7VhOxLVc0qx3795j4kBQsNt4E7m4SeMmBm/
-	 dXNDP9z5jVbwVmnNlFRGCwxhX2VcmBNMGLINretZMs0e/M0qxQi6ovxvGkg3VhH+oMPWg
-	 eOzb+Ybs2h7FfMF+10DDxlMMAV8ZPEgNDI8fULYT4WJe8CA9RDagJlO4l/es5UEET99TG
-	 j9nSLAZeq/jlwSE0BjdC0z3EFQ+zCDAutpvogJAFrcqOz7nA6C4hv3Y24T/H01FNE1jp2
-	 ENMecxtaXEh55uqz2FBOzapAF6apDKDeW+fQCNB3xTkM/Q96iWs+ihsagPKQ3qMEbaw==
+	bh=RmcIDazIhPxwpxyQed7Nf0+2sYNpyGRHadjFtkGsLcE=;
+	b=ijlcoH8BIsVqfZFODuGtMbUKpkt/vF5zPFKn9XKXxqzUldIVqT9HaR7hNjHeiIcD44ow
+	 jq0lDzHR478KfWA83V+R78IWdrzT+h1fs7rVNaMofGvdGf9CCKI4R/zn1i+iBTh18km8f
+	 gwe+oTZ6i74G7RzB6WcxF0hWVh9kSmx+Rwj+WwjB/bfF8Oe1adoCEfSgMmzBUqkvRyFUL
+	 14JThabRwHOnDlnWosmz92bqdt4YazkFzW706qGutJocoXx51NtfbxSLBXodZxQj/IHuc
+	 FFoU5LwSw30pq3e4hpTMCUys7dZ8i+f28p3eHPB7lAX2DNDd5DpRFSECqV4jkfTnT1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTwCxx22;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a69fHGH3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A126606A31C;
-	Wed, 18 Nov 2026 16:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD71606A32F;
+	Wed, 18 Nov 2026 16:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jTwCxx22
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331F31F000C4;
-	Wed, 18 Nov 2026 16:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a69fHGH3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B851F000C4;
+	Wed, 18 Nov 2026 16:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018873;
-	bh=wJNfnu4tkzL5zDw7EEE5QjN7n8pCC0SVSwr9ZbOYIzQ=;
+	s=korg; t=1795018876;
+	bh=RmcIDazIhPxwpxyQed7Nf0+2sYNpyGRHadjFtkGsLcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jTwCxx22VolEwIn/+MvtswiQBUOUwaQytX9XsRMzwNhjcvubKe2yzT+a/cD4cO914
-	 lv2CkiJs/gDLuTGIQPpFU66QPZumkyOt9D8zDpX3aFu5UWxcIl1wzywIfPbCkVGG+X
-	 +2iKyyBXemqMwffbVw9De6I2JDJvO0r+cW/Dm3BM=
+	b=a69fHGH3rxMIA6Y1reDrjRKRoRXdyAD7zI2xjs+dX8jz1UfdjyGquOoqiGMdTv5QW
+	 Kw6zDcF6JW+PiYtYmlltrlyUAVR7qCZ9JVf5X3LCHnKmcoMpLVoP9qS2YDrdp5fkh/
+	 AcgtsLYkJh3foZIUGt8ptaCxv3JvrC+Cg5cFF59U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Scott Gauche <scott-dev@scottgauche.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1354/2651] dmaengine: ste_dma40: Validate memcpy configuration
-Date: Wed, 18 Nov 2026 15:43:14 +0100
-Message-ID: <20261118150336.768932801@linuxfoundation.org>
+Subject: [PATCH 7.3 1355/2651] ALSA: hda/realtek: Fix audio after Windows reboot on ASUS Q423SA
+Date: Wed, 18 Nov 2026 15:43:15 +0100
+Message-ID: <20261118150336.808311065@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,79 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Scott Gauche <scott-dev@scottgauche.com>
 
-[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
+[ Upstream commit 8acd6469f42784f38872ad83b14c41152d986b63 ]
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+The ASUS Vivobook S 14 Q423SA-U5512 (DMI family S5406SA) with the
+ALC294 codec has working analog audio when booted directly after a full
+shutdown. After a warm reboot from Windows 11, audio works briefly during
+Linux startup, then both the internal speakers and headphones become
+silent. PCM playback continues without errors.
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+Coefficient 0x1b is 0x4e4b on a direct cold boot, but 0x4a4b after the
+Windows warm reboot. Restoring bit 10 changes it back to 0x4e4b and
+immediately enables both analog outputs. Speaker playback, headphone
+playback, jack switching, cold boot, and suspend/resume were tested
+successfully. The same 0x4a4b state and immediate recovery with 0x4e4b
+were independently confirmed on another S5406SA with subsystem 1043:10c4.
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+The same coefficient write is already used by
+ALC294_FIXUP_ASUS_COEF_1B for the ASUS UX431DA. That fixup cannot be
+reused here because it chains to ALC289_FIXUP_ASUS_GA401 and applies
+unrelated DAC routing and microphone pin configuration.
 
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Add a model-specific fixup for subsystem 1043:10c4 and chain it to the
+existing ALC2XX_FIXUP_HEADSET_MIC fixup instead.
+
+Link: https://github.com/thesofproject/sof/issues/11051
+Fixes: f2d08f3651fb ("ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA")
+Signed-off-by: Scott Gauche <scott-dev@scottgauche.com>
+Link: https://patch.msgid.link/20261005154017.1164657-1-scott-dev@scottgauche.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 57868e5cd63e3..c93068fc757bf 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1895,7 +1895,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
- 
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2190,12 +2191,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
- {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
- 
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2203,6 +2209,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 49c4d01759b06..8d8a0b85d5618 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -4214,6 +4214,7 @@ enum {
+ 	ALC294_FIXUP_ASUS_I2C_HEADSET_MIC,
+ 	ALC294_FIXUP_ASUS_SPI_HEADSET_MIC,
+ 	ALC294_FIXUP_ASUS_SPK,
++	ALC294_FIXUP_ASUS_Q423SA,
+ 	ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
+ 	ALC285_FIXUP_LENOVO_PC_BEEP_IN_NOISE,
+ 	ALC255_FIXUP_ACER_HEADSET_MIC,
+@@ -5742,6 +5743,17 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC
+ 	},
++	[ALC294_FIXUP_ASUS_Q423SA] = {
++		.type = HDA_FIXUP_VERBS,
++		.v.verbs = (const struct hda_verb[]) {
++			/* Restore bit 10 lost after reboot from Windows */
++			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x1b },
++			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4e4b },
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
++	},
+ 	[ALC295_FIXUP_CHROME_BOOK] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc295_fixup_chromebook,
+@@ -7899,7 +7911,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10a4, "ASUS TP3407SA", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+-	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS S5406SA/Q423SA", ALC294_FIXUP_ASUS_Q423SA),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x1154, "ASUS TP3607SH", ALC287_FIXUP_TAS2781_I2C),
 -- 
 2.53.0
 
