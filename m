@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032982;
-	b=Nt2CUaf9V4OrQYsMkGkisrtjouDdIKh+/vNENTWCVsh7OdFcPh8b5jAi3x8JQj3tAEL0
-	 bdbbz5YbiPsp0C9h15zSFLqso/7UQdLC1diX+zw1A6IZVFdkCBQ0/N5c6veGS+UfOOvK0
-	 QRxc/LndLOFAXDpfr2AUh6N00lv099GddZhwBJdY4X1ljQPaqkGMBYF9inlOXHNgbMRIS
-	 ysW1qaNViMDnbsoMTcqhZR7Yn7dWJdUjkGaxfO+M0KBvxdt1kbBALgQ2Tp+0CibiFx4KH
-	 fqAGRzjdBtZLaYsFJWynYIrwZ1nk7QTvLHmejb/+jgEIe0PgOQ7Ajk1pI4YcwSbLYTg==
+	t=1795032984;
+	b=WWNkGDFy2Z3Hw7aBmqQ220ud5j1anM9kvA0ToMX8fDd5eZYfYHKudXaJMOwuoqapFfE7
+	 a3lfcU+Xye0+GzcSHFVU+noZlN6aQMQoPz+hejBEZMqPfeYfd/0Y20wu5tigbWVGXsPcw
+	 od56oyf/x7JEaxIufquZ+VRMz1GNr795eGcnjtu1xEDTbb0q2ci8tjW65rVthEnI4dK5j
+	 f9vkLQViYqjX/ZtHTh+j2R8udQZgIgnNze++eYLguBS/Gms1OeoQA78hGLTEFtGbVQtnO
+	 8i/s+sguVz+tRStSeglmhXesTAiPaa4YHd4P/DZogYyVl4Tr8V+yDU+q1Rud6BENiYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sfJ/9dIoYW/qSv5PsaRbBX9MfcQIWSQL+XHl0r/46jw=;
-	b=vMHfOgECQdlStS+pQM3b0icomhsshR97o/ZlOvSe8qaISpiB2TjFcws9Su+KA9qcSYGZ
-	 QnHBzAmW9J/mmtaUvv4jxOOwd4u3JMsCUEJIp/mcW2n83qwRL68zOhLp9783LEslt5593
-	 b/zMUXJGPgqIZXamj8FeXZWec2DNNxwXXXZxTGP6A2ORxgufijvro5lbQYA6/hQTVFGMm
-	 Dh/i/0TTD0Oc0o1ZFLUZLzz7RCG8gutrNkxVRIN0Psj9u9kQsz5+lb17QgsrttDTY7J7K
-	 KgKM0hSzeE8Jmm4+QA2tsTTv9GE8Et/k7yMdjxUZrTeDAyKVflrV9B5ElOpwpu//nJQ==
+	bh=wJNoWq+NlqA2WIoKjeHDQ/n0duvM0/U465Pc0EEDNsM=;
+	b=WTivbqclOiaI9Y0e6jtj9SX8R70rdz+ALndtIw0caFC3EJRlUFz/GLHI1VsKy9hCdXgE
+	 zdyIxwrWzhvTuDuMW5b2zkqpRZBqEsG/LRzBi1NfuXjL2SCCVNSXuA/Ym7Z7BzsDeaOwr
+	 ebYAygOwUhdGIJE9kXz+mCZ2k21ApipgXc3jc+Aab/Jj2dyVtSqu6QArFvPeaiJsdur2Z
+	 2KGUEdkvqmufNNwelW6F3eJxmwn5FVwDDkLOQMeeT+3L8Xnvs043oH/pHDuopSbFGF37h
+	 +d+I03NSQkxdS+iW2+exV3znn5QcLPfb9jvuqkrrqAJaZ2n4ncghSLxvycZ6NGoHPQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iVN4+sGP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CyxMrq0K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3DF606A320;
-	Wed, 18 Nov 2026 20:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99734606A31C;
+	Wed, 18 Nov 2026 20:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iVN4+sGP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473761F000C4;
-	Wed, 18 Nov 2026 20:16:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CyxMrq0K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41FA1F000C4;
+	Wed, 18 Nov 2026 20:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032981;
-	bh=sfJ/9dIoYW/qSv5PsaRbBX9MfcQIWSQL+XHl0r/46jw=;
+	s=korg; t=1795032984;
+	bh=wJNoWq+NlqA2WIoKjeHDQ/n0duvM0/U465Pc0EEDNsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iVN4+sGPBWf1bH8qDvWnE/xrkhOViQOfqnGgyykhc81yLcadMgSGFedgNqlVo4m8E
-	 EnxDdSgA7dld2OjJgrMHfvGi++U/HXOewXn4ygEHSB6PLlPkaLxTcv6xD3swAS+IQR
-	 Vpt/mAP6s3uqWqvNCh5WSy41vkFdPX02bvAlXFkM=
+	b=CyxMrq0KHEmCFv/kea5kUK/XRuz0QJA1WCyITBq01JKs2vrJVjy5dvkXpMWU7FzzT
+	 JJxdAxBFzIgw25x8KRqqFEqK70cgY53gQHSY7OmWExFOHrlUnalhOwfCFkXnEe4g6L
+	 6lVP/kFNN/2Rp8SV113IYLxInR2M/lZJkIpb9VVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1564/1756] ceph: mark the superblock active after mounting
-Date: Wed, 18 Nov 2026 16:01:31 +0100
-Message-ID: <20261118150111.764958450@linuxfoundation.org>
+Subject: [PATCH 6.12 1555/1756] maple_tree: Use kfree_rcu in ma_free_rcu
+Date: Wed, 18 Nov 2026 16:01:22 +0100
+Message-ID: <20261118150111.092112123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,54 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubo.li@clyso.com>
+From: Pedro Falcato <pfalcato@suse.de>
 
-[ Upstream commit 32eacfae3b16f6a9c0c20f946115abf5a091c922 ]
+[ Upstream commit 9b60811cb3b42fe9a8e3f0aa3e007cd9cc814a78 ]
 
-ceph_get_tree() calls sget_fc() directly and so never goes through
-vfs_get_super(), which is what sets SB_ACTIVE after fill_super for
-filesystems that use it.  Before commit 82995cc6c5ae ("libceph, rbd,
-ceph: convert to use the new mount API") the flag used to be set by
-get_sb_nodev(), which did this for ceph, but the conversion dropped it.
+kfree_rcu is an optimized version of call_rcu + kfree. It used to not be
+possible to call it on non-kmalloc objects, but this restriction was
+lifted ever since SLOB was dropped from the kernel, and since commit
+6c6c47b063b5 ("mm, slab: call kvfree_rcu_barrier() from kmem_cache_destroy()").
 
-SB_ACTIVE is required for iput_final() to retain an inode on the
-inode LRU instead of evicting it once its last reference goes away.
-This has gone unnoticed because ceph sets inode_just_drop() for
-->drop_inode, which always asks for eviction, so the retain branch in
-iput_final() was never reachable.  The next patch makes ->drop_inode()
-able to retain inodes, and that needs the flag to actually work.
+Thus, replace call_rcu + mt_free_rcu with kfree_rcu.
 
-Set it once the mount is up, like nfs_get_tree() does.
-
-Fixes: 82995cc6c5ae ("libceph, rbd, ceph: convert to use the new mount API")
-Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Stable-dep-of: baed735a956f ("maple_tree: fix maple_range_64 crashes in RCU mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/super.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ lib/maple_tree.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ceph/super.c b/fs/ceph/super.c
-index 96d582f71beaa..bd315aaaff13c 100644
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -1348,6 +1348,15 @@ static int ceph_get_tree(struct fs_context *fc)
- 	doutc(fsc->client, "root %p inode %p ino %llx.%llx\n", res,
- 		    d_inode(res), ceph_vinop(d_inode(res)));
- 	fc->root = fsc->sb->s_root;
-+
-+	/*
-+	 * The mount is up.  sget_fc() leaves SB_ACTIVE unset, and, unlike
-+	 * filesystems that go through vfs_get_super(), nothing else sets
-+	 * it here, so iput_final() would always evict an inode whose
-+	 * ->drop_inode() asks to retain it.  Set it like nfs_get_tree()
-+	 * does.
-+	 */
-+	sb->s_flags |= SB_ACTIVE;
- 	return 0;
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index c7e3f91fd91c6..41fb935134917 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -179,13 +179,6 @@ static inline void mt_free_bulk(size_t size, void __rcu **nodes)
+ 	kmem_cache_free_bulk(maple_node_cache, size, (void **)nodes);
+ }
  
- out_splat:
+-static void mt_free_rcu(struct rcu_head *head)
+-{
+-	struct maple_node *node = container_of(head, struct maple_node, rcu);
+-
+-	kmem_cache_free(maple_node_cache, node);
+-}
+-
+ /*
+  * ma_free_rcu() - Use rcu callback to free a maple node
+  * @node: The node to free
+@@ -196,7 +189,7 @@ static void mt_free_rcu(struct rcu_head *head)
+ static void ma_free_rcu(struct maple_node *node)
+ {
+ 	WARN_ON(node->parent != ma_parent_ptr(node));
+-	call_rcu(&node->rcu, mt_free_rcu);
++	kfree_rcu(node, rcu);
+ }
+ 
+ static void mas_set_height(struct ma_state *mas)
+@@ -5301,7 +5294,7 @@ static void mt_free_walk(struct rcu_head *head)
+ 	mt_free_bulk(node->slot_len, slots);
+ 
+ free_leaf:
+-	mt_free_rcu(&node->rcu);
++	mt_free_one(node);
+ }
+ 
+ static inline void __rcu **mte_destroy_descend(struct maple_enode **enode,
+@@ -5385,7 +5378,7 @@ static void mt_destroy_walk(struct maple_enode *enode, struct maple_tree *mt,
+ 
+ free_leaf:
+ 	if (free)
+-		mt_free_rcu(&node->rcu);
++		mt_free_one(node);
+ 	else
+ 		mt_clear_meta(mt, node, node->type);
+ }
 -- 
 2.53.0
 
