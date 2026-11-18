@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024924;
-	b=N26CoeXvJZ4Gtl7cXkUO2hm5AumvVLXWJX9g4afpf72MZ/Y1jmFfEAFU1MEJSw+LpgNg
-	 RywsiPE6P2e5iBhn2qIyjd7l3koRqtYxMrUwhBxybg33ASAnCUy61Abrzse2Ze7+Wo6NG
-	 V7pyb9NVulibnnJASVOXhB8I4pXCGdJTCgBFqXCKaP1e+FXQE6yTr2YI6Nq8qGa553fzf
-	 D0969z2am5LYweSMeK1Y3/PKpSX5mwsG84SVawUonKiPW4vxCVK9gGmcCoi8Et/SHdUeV
-	 ZnthRK6f4dp1uxaaK1UjqefJXVGpngPt5FuVz3PO32X4dEdwYeQyXiUTb12qjY0Vl1A==
+	t=1795024927;
+	b=tliLq7SwOYjqTQ8etWtTm+6RG9O6uOrzXDDie6MxLeqJWpAWBAhXa9sbeqrs2MZKnroB
+	 jtRHtkwrF2IUVoHO3BGdS1hHkV0OzG4PgfwvRPU4jal+5ttBIsW6nfFUt1rCufrgCadWY
+	 ClCKsGFR1ys057nhGRHjs8YVP+URTd8wnxWNVAmwjy/11fRGQg+75KI39pGxc9f0W8gyv
+	 d91pBMjv+0dNcpp6imwGjWtO8y06l8iIDVif2YY5HxQ50+wNQTzXVMzyLMRIucmU0jvVc
+	 4qHIM9R2QC1lfg2CcaYHiM3gFnue9OdcAJ2WDBBYGtiZI8ESOR4gUE5evwQAl1ctxTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=neWsZn9Q51fF3u3C1/i04ZkQDeOSzBXIdc0hwPMiDTc=;
-	b=mpCU/t17WOR1IPwBco0wQgp0qjzSqPTtkUhwcpfzHicObQFUb81U9Qu3shIKUmSN8411
-	 l07KNk/W9TFgodb/IS3tuex8hk9NcefpqaD5faDAVW8GlJiiacuce0/GUEOFaq9+QLmIs
-	 YxvAjvXf7SF7p37sVZwOFtcnFYsQCJ9BYTUcsTTYHESsJKqwkKUlu+/X9UaMrSo059fZO
-	 Q0zqoIoGl/nt+cMDinWFQpL/vHkdAaNMx6Z6l3NqlxUN7xEoNT3p8E51zu5bzFJ8lZ7w5
-	 0wlpXGKjPs8L46QFxrf2brYphAOI+3W0vrnb6lzMQTm4ANxa4ORRNt6r8yotAzqznZg==
+	bh=aMtrEINGOqEiY/nf77ja7I2VfqaOwzvHuPWpNKstuqk=;
+	b=4OTRkgxojG8ekVTB1CLKJ61pDHKjOHZTbj3NCg3+EI/mHVsAxjXeH7CZ3PZUfOR0XpUk
+	 haGqOKmV4G5CjiPRdRUjSS/DhHMt48k6Q17E/SnLcVlNa/1IKgxmnnZ+C3evPSyXzqcl1
+	 01eNmI7X1OBBANQPyywHx8ehdPQUM6ob+7MesXflAHC1lS8Dea4y36T2NQCteh8mzFUSL
+	 VCyDWDHdUtg1Vf4M67X18hSUrT+fIFE5RjSWShUVVmPWuNWswfDnBfZVXtIi59jY/G769
+	 jZO2IZLMWbfkLDB0S2P8v1cSBA+CUSKsufzS8oraFXACX3bcqp1mlgqp8PuC8oEW04g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fS7Zs1Jp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngAygBK3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D63F606A31C;
-	Wed, 18 Nov 2026 18:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1057606A31C;
+	Wed, 18 Nov 2026 18:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fS7Zs1Jp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513341F000C4;
-	Wed, 18 Nov 2026 18:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngAygBK3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB511F000C4;
+	Wed, 18 Nov 2026 18:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024923;
-	bh=neWsZn9Q51fF3u3C1/i04ZkQDeOSzBXIdc0hwPMiDTc=;
+	s=korg; t=1795024926;
+	bh=aMtrEINGOqEiY/nf77ja7I2VfqaOwzvHuPWpNKstuqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fS7Zs1JpYypF5QrxOEBNtA1jeaId/AA9Da6Pv14SsLsB4QskSps4KHA6T7FK53awi
-	 Z23D4OWk76kbWQajgEmqQ1oda59eiXceJw/6QhR4j+ug5FoH1v/98dCghfPM7QYvMK
-	 OXDWcezCmFjBzFn9NeUlUN2DPPhgUOigkfBE9m5w=
+	b=ngAygBK3mQFNoTinZV8ewscOzQvG/icE1PlKEmL99zS9lZuBNDJhjA2tyf7o9/M9h
+	 CI/Fpca/g5wIe3zbb4Khp1WJ8Rrza9ZvFxwGtbShBAY2hD3E33IRZYp1wpI/9I8tU1
+	 d3jsKyqKNTnBwzrFCS4R3LCTrfLRFedETWKPN4Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0896/2151] pinctrl: nuvoton: Fix clock reference leak in ma35_get_bank_data()
-Date: Wed, 18 Nov 2026 15:43:51 +0100
-Message-ID: <20261118150154.936579270@linuxfoundation.org>
+Subject: [PATCH 6.18 0897/2151] pinctrl: stm32: Fix clock reference leak in stm32_pctl_probe()
+Date: Wed, 18 Nov 2026 15:43:52 +0100
+Message-ID: <20261118150154.968965216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,49 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit a854aa8e550502ef05c2836a4b426141d735bed1 ]
+[ Upstream commit dfd8259507c53a3c7eb0dd11c1152c88e12aa316 ]
 
-ma35_get_bank_data() obtains the bank clock with of_clk_get() and
-stores it in bank->clk, but returns clk_prepare_enable() directly.  If
-that call fails, the reference taken by of_clk_get() is never dropped,
-and the driver has no other clk_put() for it.
+stm32_pctl_probe() obtains one clock per bank with
+of_clk_get_by_name(), but none of the error paths drop those
+references: the loop returns directly when a later clock lookup fails,
+and both the clk_bulk_prepare_enable() failure and the err_register
+path return without calling clk_bulk_put().  clk_bulk_disable_unprepare()
+only disables the clocks, it does not release them.
 
-Drop the reference when clk_prepare_enable() fails.
+Release the references on these paths; the success path keeps them as
+the driver needs them for suspend/resume.
 
-Fixes: f805e356313b ("pinctrl: nuvoton: Add ma35d1 pinctrl and GPIO driver")
+Fixes: 451bc9aea9a1 ("pinctrl: stm32: Add check for clk_enable()")
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/nuvoton/pinctrl-ma35.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-ma35.c b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
-index f5efa6725c405..3da7e517d1b6e 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-ma35.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
-@@ -561,6 +561,8 @@ static int ma35_gpiolib_register(struct platform_device *pdev, struct ma35_pinct
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index f64dbb29a99dc..384fdc13a504b 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1763,6 +1763,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
+ 		pctl->clks[i].clk = of_clk_get_by_name(np, NULL);
+ 		if (IS_ERR(pctl->clks[i].clk)) {
+ 			fwnode_handle_put(child);
++			clk_bulk_put(i, pctl->clks);
+ 			return dev_err_probe(dev, PTR_ERR(pctl->clks[i].clk),
+ 					     "failed to get clk\n");
+ 		}
+@@ -1773,6 +1774,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
+ 	ret = clk_bulk_prepare_enable(banks, pctl->clks);
+ 	if (ret) {
+ 		dev_err(dev, "failed to prepare_enable clk (%d)\n", ret);
++		clk_bulk_put(banks, pctl->clks);
+ 		return ret;
+ 	}
  
- static int ma35_get_bank_data(struct ma35_pin_bank *bank)
- {
-+	int ret;
-+
- 	bank->reg_base = fwnode_iomap(bank->fwnode, 0);
- 	if (!bank->reg_base)
- 		return -ENOMEM;
-@@ -573,7 +575,11 @@ static int ma35_get_bank_data(struct ma35_pin_bank *bank)
- 	if (IS_ERR(bank->clk))
- 		return PTR_ERR(bank->clk);
+@@ -1797,6 +1799,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
+ 	}
  
--	return clk_prepare_enable(bank->clk);
-+	ret = clk_prepare_enable(bank->clk);
-+	if (ret)
-+		clk_put(bank->clk);
-+
-+	return ret;
+ 	clk_bulk_disable_unprepare(banks, pctl->clks);
++	clk_bulk_put(banks, pctl->clks);
+ 	return ret;
  }
- 
- static int ma35_pinctrl_get_soc_data(struct ma35_pinctrl *pctl, struct platform_device *pdev)
+ EXPORT_SYMBOL(stm32_pctl_probe);
 -- 
 2.53.0
 
