@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041231;
-	b=kw0F1Oket6jHNxbt3wJX6UumXHfWESl0kwPAjyW4l/67lnUsYAE89L02D9kH2MCZo6rf
-	 OmXC4gLHWCEip730qyCpw2Fx4tbXVvdYS/VBzDC5OR3/qpxG9X7lPUED6qltYW93B3r4J
-	 k05oM0DtNQc9uH8PQYJImKY1TvWyTTtHxHZJCKV3ruhdBmk7y6mikm3O+T0Cd7w94Ymt3
-	 TEx0GQ6LpaRIAE2G0iGgqsWovTUYdz+V77jGigUApDWjBpqX0B284X0eNzvVno6rQr0wL
-	 sJtDyfi+UXZYoLD2iigYPkHh3+xig1AShWVcIjkHieKHlp60SNm2Yj8ztNcbAOyT5JQ==
+	t=1795041233;
+	b=4OIsxj8PbFWXA+3NXde3mNi/LcRvZ62izY0porq5WuF9qSbuagYMXWY9II5ifQBC783q
+	 u2nfh/MoIXn4JLGjdIjAL2cPZNLnqlhVL2QuvWef8S3tglnkOueCHSNXzjQBAL4Cu3mf5
+	 pAyH60hIgAyUzQ4PWmKrdZODKf+kf56kRJC0AYJkekYEapV27SVglSPKm+fQylSenTb9e
+	 1d57oWtfe3a4W1SwhpHxIY7fW8E391Xctrl3C47z5WqnG5T/7PMin3fC9m4/O6pwo7Y4Z
+	 veF1F48uDIUyIhudER3IMg11geCxT4XpVXqm8cfrK7Vv9qsOMZ30MWqeJjo+ivYwMIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041233;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9AF4EwHb0709EpciPMaXKVos1OIencKAGIIM3qdu1To=;
-	b=iNOdNNAjFzg+6yHv8iWXjJ0a9PZqRDQ8yU+Gm4nj33BC2O+GwwLQaLn8i6cvSoIcvRFM
-	 cWpEqgQfrRkaMN0x6A5+9RQE8IDoRy7w4hrAGch2A43usYQSHEHIEXT1lvVhGTdkXHEg6
-	 XaExihNXrIhvOfIuUv8NitY5HRZIMDbAeF4PzfdcJYLLZulYToiBs/TpVaYOjBjlSYQLc
-	 TphMGsS3KPhbBY2mB/2i25S4Yu/TRsRly5RakemOwf8C/3U1iIaJAXl/zZ4mKlz1wi8SK
-	 91G8qrrtEGdTM/ZYDBK/3u9a+Jel/auu2a4iP4+lsueSZvM8afMepFrbUyHQqEU15NQ==
+	bh=KMvEJM2K7b2OpO6K0zKUqu1Y48vOCxIeMNalOssNAO8=;
+	b=bAdDr991120CJ9eIiBJXG2KuKOfLUi7NNSN1SvmCxc2+fGErBA+xNYJoXHgEZfy2hwUV
+	 pnrqqO3MeF8T+gPU1WVbP+IQG39rsZZogaQ9LSl1Yf/jjoy8x7ex/1IaMRjK3N8JHUvxW
+	 YnhNq9ONhm7vyqEhOvrRHoojsqtt/wBcaXwvYOtzIj+C+ynukek4EUDWsgyzcQjRDu4Wc
+	 7Z4viEY8MPia/eMgk2nOJMNShIeVgnzlfF0FlrOnK9F89HomWU6TYE2ci2+ZkZO0h+Vwe
+	 h5u5uL9aybGzB5LvIS6Z2pQoz1+JxT5itIvAwAdedYrDOzD2IQOQ857Ad2urhhqJGrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQZHSpSd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfjlGEfk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F2E606A320;
-	Wed, 18 Nov 2026 22:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE038606A32A;
+	Wed, 18 Nov 2026 22:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nQZHSpSd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE971F000C4;
-	Wed, 18 Nov 2026 22:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfjlGEfk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE3B1F000C4;
+	Wed, 18 Nov 2026 22:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041230;
-	bh=9AF4EwHb0709EpciPMaXKVos1OIencKAGIIM3qdu1To=;
+	s=korg; t=1795041233;
+	bh=KMvEJM2K7b2OpO6K0zKUqu1Y48vOCxIeMNalOssNAO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nQZHSpSdzkXA7Sm+tbIVcK2R75dOJlG8QPClLEFSRilwI4XBQwzajz4WNDSfYiH9s
-	 cZbm9Na3AvkWt2Cu/QgqOo3p2ZQ0f2DyWdsHH+w0ql6m3lb6fyVCD5s62ySYnxv0Mb
-	 7D+Ievhq+1Q0Nf7qr09vvCLURFDxgap9knbfB330=
+	b=VfjlGEfkqGP5fqjnZhaHkBgV8SIZ80nlUGxkE8Y5B9Y4/0oQj/VQDpaqB8R9/SN0b
+	 /B4It6Y2bcWOxTWU6U+L1PPJ0QYyb+j6JzRxOPlQxI02/k6xvzQDTCiPQcRjfyiVIr
+	 tD5C5/T5EeGG9H3Ow0EX2JEnYbU7VL0p190lbdfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Quentin Monnet <qmo@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2739/3318] bpftool: Fix out-of-bounds read in kprobe_multi link info dump
-Date: Wed, 18 Nov 2026 15:56:01 +0100
-Message-ID: <20261118150442.960594754@linuxfoundation.org>
+Subject: [PATCH 6.6 2740/3318] dm-snapshot: make the chunk list sorted by the chunk number
+Date: Wed, 18 Nov 2026 15:56:02 +0100
+Message-ID: <20261118150442.986667583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,70 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 0d5e3fc78a6f2522e6339743b8e5ecc02351a9dd ]
+[ Upstream commit bbd6f974d0386036e560af332b6b8cdd17010a72 ]
 
-show_kprobe_multi_{plain,json}() walk the sorted kallsyms array against
-the sorted addr/cookie array with j as a cursor into the latter. The
-loop terminating condition is checked after the cursor has already been
-used to access the array:
+Commit 8581b19eb2c5 ("dm-snapshot: fix 'scheduling while atomic' on
+real-time kernels") replaced hlist_bl_for_each_entry with
+hlist_for_each_entry, but the two iteration macros differ after the loop
+ends: hlist_bl_for_each_entry leaves "e" pointing at the last element,
+while hlist_for_each_entry() sets it to NULL.
 
-    if (j++ == info->kprobe_multi.count)
-            break;
+The result is that the list is no longer sorted by chunk number as it was
+intended to be. This bug doesn't cause data corruption because
+dm_lookup_exception walks the full list.
 
-After all count entries have been printed, j has been bumped to count,
-but the loop keeps running and dereferences data[count] -- one element
-past the end of the calloc(count, sizeof(*data)) allocation -- while
-comparing every remaining kallsyms symbol. If the out-of-bounds value
-happens to match a symbol address, a bogus entry with a garbage
-addr/cookie pair is printed to boot.
+Restore the invariant by tracking the list tail in the "prev" variable
+and appending after it with hlist_add_behind.
 
-Fix the off-by-one by advancing the cursor before the comparison, so the
-loop terminates as soon as the last entry has been printed.
-
-Verified with an ASAN build of bpftool against a live kprobe_multi link
-of 3 symbols:
-
-  before: ERROR: AddressSanitizer: heap-buffer-overflow READ of size 8
-          at link.c:860 (show_kprobe_multi_plain) and link.c:352
-          (show_kprobe_multi_json), 0 bytes after the 48-byte
-          get_addr_cookie_array() allocation
-  after:  clean output, no ASAN report
-
-Fixes: edd7f49bb884 ("bpftool: Show kprobe_multi link info")
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Acked-by: Yafang Shao <laoar.shao@gmail.com>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20261010074435.1415234-1-chenyuan_fl@163.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 8581b19eb2c5 ("dm-snapshot: fix 'scheduling while atomic' on real-time kernels")
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/link.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-snap.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/tools/bpf/bpftool/link.c b/tools/bpf/bpftool/link.c
-index 250d1cf82ed94..45ec889474720 100644
---- a/tools/bpf/bpftool/link.c
-+++ b/tools/bpf/bpftool/link.c
-@@ -287,7 +287,7 @@ show_kprobe_multi_json(struct bpf_link_info *info, json_writer_t *wtr)
- 			jsonw_string_field(json_wtr, "module", dd.sym_mapping[i].module);
- 		}
- 		jsonw_end_object(json_wtr);
--		if (j++ == info->kprobe_multi.count)
-+		if (++j == info->kprobe_multi.count)
- 			break;
- 	}
- 	jsonw_end_array(json_wtr);
-@@ -695,7 +695,7 @@ static void show_kprobe_multi_plain(struct bpf_link_info *info)
- 		else
- 			printf("  ");
+diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
+index ebe5fa1566c8a..a34bddbf2721c 100644
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -770,7 +770,7 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+ 				struct dm_exception *new_e)
+ {
+ 	struct hlist_head *l;
+-	struct dm_exception *e = NULL;
++	struct dm_exception *e = NULL, *prev = NULL;
  
--		if (j++ == info->kprobe_multi.count)
-+		if (++j == info->kprobe_multi.count)
+ 	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
+ 
+@@ -802,21 +802,23 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+ 
+ 		if (new_e->old_chunk < e->old_chunk)
  			break;
++
++		prev = e;
+ 	}
+ 
+ out:
+-	if (!e) {
++	if (e && new_e->old_chunk < e->old_chunk) {
++		/* Add before an existing exception */
++		hlist_add_before(&new_e->hash_list, &e->hash_list);
++	} else if (prev) {
++		/* Add to l's tail: prev is the last exception in this slot */
++		hlist_add_behind(&new_e->hash_list, &prev->hash_list);
++	} else {
+ 		/*
+ 		 * Either the table doesn't support consecutive chunks or slot
+ 		 * l is empty.
+ 		 */
+ 		hlist_add_head(&new_e->hash_list, l);
+-	} else if (new_e->old_chunk < e->old_chunk) {
+-		/* Add before an existing exception */
+-		hlist_add_before(&new_e->hash_list, &e->hash_list);
+-	} else {
+-		/* Add to l's tail: e is the last exception in this slot */
+-		hlist_add_behind(&new_e->hash_list, &e->hash_list);
  	}
  }
+ 
 -- 
 2.53.0
 
