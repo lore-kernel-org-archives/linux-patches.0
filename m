@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039047;
-	b=oZApzN+5/m9xjHnWJMSzrEeZeo/J+2tdIRSvHZu5A+QSmp0lEzS3pdH1v31ft9HscUSN
-	 R1atJRi8QOcFwb7qlfaRa4vhaK2w4Ftwpm60/tntV7tGNMvnuKb0F2eD7+VHQqMPWfqwE
-	 IwEtKDGSqFuhW5tcQTOy4ZqcKRAvICdivW11tzGfKAcOiy95z+7cGmcX/tDa1nuWOQ7eR
-	 K66LfwU74fuToIw/SZjNMz7QQAoDHX5FWWAlnpPHygRd2ythubVmRAuByrfCZtnFyMARL
-	 M5evHZCHVgkc4s17mjUl8xdsHQujDo+k4NIZkadIc6t2O5LIl5g3xEq1m8i6ID8Ufmg==
+	t=1795039050;
+	b=EHpwuKpQYGqrz+R2wynj48L/V56Jjwh+TMfifXcnFFmFmRZGEdST39jz/SW6v9DUiHi9
+	 8hMIMQuWZbERR2YH5x2nmunVH6g/0s7pKHk9EOWfAkO7YqGSl6tGW6Oo7lvQqq6tLSo2T
+	 5vmXaR827rN9b6dDUBKdwj8KmXxZ32PwxnDPqyw692scvtZ/1zhMNNt46jAB68lcoC0B7
+	 drkc6S9MEGpgynt315Ne0V2M5aq/lF0m0tI1eSNPLmZ5Tw2/1/si4I/AsMA9D+elS1qAo
+	 ZM2F/qmickQ+RAIaaHnle/QDiAKeRTXxLK4jOXh+q3zSpvvkjvVEYvstpX5fm9nJk5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7wNa1ymWABzuFAcqp2HYDUKQ8ZTC2Yl94i9VgvR1wlE=;
-	b=UEFuZY4DPtlyxc6zihTxjrIeB5HdzXCvNygjM7kRrilcfOBi3fnTgAX/W+lfLfrTsInA
-	 OPW8ZaKdPdoh7/+/3oQf9/uxARxJW4jIKTN6KePno4oLmW2DJeUH89DwTGWAnuj/OrTsy
-	 KZED5T/fiBrmLkCzMMYKgVYY/QGs9SPbmmqdV9L4Zyaa83pgwbZOz3EGoJo13NtQue2z0
-	 jpYrkV5KxgAJ75V4UvowWij3HEI89VePy48+K0zb9IqMfhdUHKkqP+4mgUBG5uMby08FJ
-	 ipXD6QAbxQb2hdmQjXUlaTQMfI5qmjKEs34BUx4a3DwaJyvERe8+Z1wkt99QkI1Y9nw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=5O+DVS8OmawV8vYlC3Bu6is3qKyKBz/Og/iUyqy5ARg=;
+	b=YsS+YtJTSMCChswQtMQcQKLf3eEB26Em5Ec5XWYVePGg4V/1bYZo6rakjNscDoJuLXlC
+	 kU/Copa6GJX4hKulpQa1GYExrijHtmgddIY3+HOyJiIw70O53EMD8nClsAR73uolEYdFo
+	 dafLBVVrA1rlPPxCMDcCTsWmvGbxb6FKAImoXa7te0g/XOsueXVnFi/Z+CX+aTGtenYTA
+	 xvI+ITv7+Z9b8NcXJSZKp3g3uarSjxAQLAC1m//tiYKP482kuzKzFaO4enQ1kKISLDqXs
+	 BK24w4ccOVuT/wwNSro3QcLyAZES0MmQKEol13uJM/GuO5pGc4o9nX0rPqrmuH0NPAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKbFwbe5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnmL5J1+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62E7606A333;
-	Wed, 18 Nov 2026 21:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88575606A32F;
+	Wed, 18 Nov 2026 21:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gKbFwbe5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EBA1F000CD;
-	Wed, 18 Nov 2026 21:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rnmL5J1+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABE31F000CD;
+	Wed, 18 Nov 2026 21:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039047;
-	bh=7wNa1ymWABzuFAcqp2HYDUKQ8ZTC2Yl94i9VgvR1wlE=;
+	s=korg; t=1795039050;
+	bh=5O+DVS8OmawV8vYlC3Bu6is3qKyKBz/Og/iUyqy5ARg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gKbFwbe525CcHkaCOzDF7+bysC7QgO4OJ5OPoBzvA9ipc5D1/zxJkdbXrjWFYotxz
-	 pIiEaKP8CtDwyo4T2ITB1MXNgh0wVE/d+UTknhPBJvSvRwiGVu32jT9NZq4MLxa+lg
-	 Zt8hbefsDKJCKPututV/u6ToZQBH8vuZoKeUZ9hg=
+	b=rnmL5J1+z9niz74G1JwiynIsu7AFBsl8johCaCs4TkA+ajTtKtZYm6dtJbB+mpoRo
+	 GbTNJI/sXFDefB2NpH4qd4qKY2RD7vupuPtPyRzywZeDFnu55RevCV7Ee2J3ajMQMw
+	 7v/n6HVTz4LZFSxw27CBjdiCPvLf4LREiAZ7t9f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1958/3318] mm/shmem: make shmem_file() check the files inode
-Date: Wed, 18 Nov 2026 15:43:00 +0100
-Message-ID: <20261118150420.824332305@linuxfoundation.org>
+Subject: [PATCH 6.6 1959/3318] drm/i915/display: Add enabled pipe planes into state for selective fetch
+Date: Wed, 18 Nov 2026 15:43:01 +0100
+Message-ID: <20261118150420.853524133@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,126 +63,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit d3710111839d11339e414b1bb3fea3d05ab83f6e ]
+[ Upstream commit 94cb1f08b197d9ae932ff98c741bd0dbc96e17e8 ]
 
-shmem_file() only checks if file->f_mapping is a shmem mapping. This
-mapping can belong to another file, however, as with a Coda file backed
-by a tmpfs container after mmap().
+Selective fetch support for biplanar formats relies on linking of UV and
+the Y planes. Planes that are not part of the atomic state are pulled in by
+the drm_atomic_add_affected_planes. If the UV plane is added into the state
+by drm_atomic_add_affected_planes in the selective fetch calculation, the
+linking isn't done anymore and the Y plane is left disabled.
 
-So it does not guarantee that the file inode is an actual shmem inode.
+Fix this by adding affected planes already in intel_add_affected_planes if
+selective fetch is enabled.
 
-Seal handling and memfd preservation use this check before accessing
-shmem inode state, so they can access an inode of the wrong type.
+Remove redundant drm_atomic_add_affected_planes from
+intel_psr2_sel_fetch_update and redundant check for plane selective fetch
+support that is not needed as all planes are already in atomic state on
+first loop iterating them. Also switch to intel_atomic_get_new_plane_state
+for linked plane new plane state.
 
-Let's make shmem_file() check the inode's file operations instead, to
-identify shmem inodes reliably. This will identify regular shmem inodes,
-including memfds and ordinary tmpfs files, independently of wrapper file
-operations.
-
-Use shmem_mapping() in collapse_file() instead to not change the behavior
-of collapse_file(): it operates on the page cache and uses mapping->host
-for shmem inode operations. Focusing on the file does not seem relevant.
-
-Fixes: c49fcfcda8b5 ("mm/shmem: update file sealing comments and file checking")
-Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
-Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <mason@kernel.org>
-Suggested-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-3-d6437171ecc3@kernel.org
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adjusted context to preserve the existing inline shmem_mapping() helper and surrounding declarations. ]
+Fixes: 3809991ff5f4 ("drm/i915/display: Add initial selective fetch support for biplanar formats")
+Cc: <stable@vger.kernel.org> # v5.17+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20260929094434.77129-3-jouni.hogander@intel.com
+(cherry picked from commit 0d173898b11157d37de3e5f01ef28a48582167d8)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[ sashal: adapted early plane collection to intel_atomic_check_planes() using the existing intel_atomic_add_affected_planes() helper ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/shmem_fs.h | 15 ++++++---------
- mm/khugepaged.c          |  2 +-
- mm/shmem.c               |  5 +++++
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display.c | 12 ++++++++++++
+ drivers/gpu/drm/i915/display/intel_psr.c     | 17 ++++-------------
+ 2 files changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
-index 134c686c8676c..e4b24b4442bb9 100644
---- a/include/linux/shmem_fs.h
-+++ b/include/linux/shmem_fs.h
-@@ -93,12 +93,18 @@ extern unsigned long shmem_get_unmapped_area(struct file *, unsigned long addr,
- 		unsigned long len, unsigned long pgoff, unsigned long flags);
- extern int shmem_lock(struct file *file, int lock, struct ucounts *ucounts);
- #ifdef CONFIG_SHMEM
-+bool shmem_file(struct file *file);
- extern const struct address_space_operations shmem_aops;
- static inline bool shmem_mapping(struct address_space *mapping)
- {
- 	return mapping->a_ops == &shmem_aops;
- }
- #else
-+static inline bool shmem_file(struct file *file)
-+{
-+	return false;
-+}
-+
- static inline bool shmem_mapping(struct address_space *mapping)
- {
- 	return false;
-@@ -159,15 +165,6 @@ static inline struct page *shmem_read_mapping_page(
- 					mapping_gfp_mask(mapping));
- }
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 28d132c238d19..f8c3cba3ca620 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -5672,6 +5672,18 @@ static int intel_atomic_check_planes(struct intel_atomic_state *state)
+ 	struct intel_crtc *crtc;
+ 	int i, ret;
  
--static inline bool shmem_file(struct file *file)
--{
--	if (!IS_ENABLED(CONFIG_SHMEM))
--		return false;
--	if (!file || !file->f_mapping)
--		return false;
--	return shmem_mapping(file->f_mapping);
--}
++	for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i) {
++		/*
++		 * Add affected plane here to ensure UV and Y plane linking is
++		 * in place if UV plane is added as a part of selective update.
++		 */
++		if (new_crtc_state->enable_psr2_sel_fetch) {
++			ret = intel_atomic_add_affected_planes(state, crtc);
++			if (ret)
++				return ret;
++		}
++	}
++
+ 	ret = icl_add_linked_planes(state);
+ 	if (ret)
+ 		return ret;
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 107172e630aae..3533ef97ce58d 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2043,7 +2043,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		.y2 = crtc_state->hw.adjusted_mode.crtc_vdisplay,
+ 	};
+ 	bool full_update = false;
+-	int i, ret;
++	int i;
+ 
+ 	if (!crtc_state->enable_psr2_sel_fetch)
+ 		return 0;
+@@ -2144,10 +2144,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	    crtc_state->splitter.enable)
+ 		pipe_clip.y1 = 0;
+ 
+-	ret = drm_atomic_add_affected_planes(&state->base, &crtc->base);
+-	if (ret)
+-		return ret;
 -
- /*
-  * If fallocate(FALLOC_FL_KEEP_SIZE) has been used, there may be pages
-  * beyond i_size's notion of EOF, which fallocate has committed to reserving:
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 8a907d636c454..25fb56d4d13f9 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1785,6 +1785,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 			 struct collapse_control *cc)
- {
- 	struct address_space *mapping = file->f_mapping;
-+	const bool is_shmem = shmem_mapping(mapping);
- 	struct page *page;
- 	struct page *tmp, *dst;
- 	struct folio *folio, *new_folio;
-@@ -1793,7 +1794,6 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 	LIST_HEAD(pagelist);
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
- 	int nr_none = 0, result = SCAN_SUCCEED;
--	bool is_shmem = shmem_file(file);
+ 	intel_psr2_sel_fetch_pipe_alignment(crtc_state, &pipe_clip);
  
- 	VM_BUG_ON(!IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS) && !is_shmem);
- 	VM_BUG_ON(start & (HPAGE_PMD_NR - 1));
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 0f7c7ec48837a..74517e446f63f 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -263,6 +263,11 @@ static const struct vm_operations_struct shmem_vm_ops;
- static const struct vm_operations_struct shmem_anon_vm_ops;
- static struct file_system_type shmem_fs_type;
+ skip_su_area_calc:
+@@ -2171,11 +2167,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		if (!drm_rect_intersect(&inter, &new_plane_state->uapi.dst))
+ 			continue;
  
-+bool shmem_file(struct file *file)
-+{
-+	return file && file_inode(file)->i_fop == &shmem_file_operations;
-+}
-+
- bool vma_is_anon_shmem(struct vm_area_struct *vma)
- {
- 	return vma->vm_ops == &shmem_anon_vm_ops;
+-		if (!psr2_sel_fetch_plane_state_supported(new_plane_state)) {
+-			full_update = true;
+-			break;
+-		}
+-
+ 		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
+ 		sel_fetch_area->y1 = inter.y1 - new_plane_state->uapi.dst.y1;
+ 		sel_fetch_area->y2 = inter.y2 - new_plane_state->uapi.dst.y1;
+@@ -2189,9 +2180,9 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 			struct intel_plane_state *linked_new_plane_state;
+ 			struct drm_rect *linked_sel_fetch_area;
+ 
+-			linked_new_plane_state = intel_atomic_get_plane_state(state, linked);
+-			if (IS_ERR(linked_new_plane_state))
+-				return PTR_ERR(linked_new_plane_state);
++			linked_new_plane_state = intel_atomic_get_new_plane_state(state, linked);
++			if (!linked_new_plane_state)
++				return -EINVAL;
+ 
+ 			linked_sel_fetch_area = &linked_new_plane_state->psr2_sel_fetch_area;
+ 			linked_sel_fetch_area->y1 = sel_fetch_area->y1;
 -- 
 2.53.0
 
