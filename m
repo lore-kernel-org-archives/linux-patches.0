@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043986;
-	b=2RGDN72iLG3G4W3qdyexj+maeRg2SXV2gVcpzKYq6wqasfwKRHAMh1Je9P4bP84l4DeK
-	 igoRtV3yNmND6gmi1NSVHP2RFzMeM9cuKBYZQ+puEDLZZuO6dXkb9ebjX2eBLFFTlKdNP
-	 HfB1lVLAThkxRAB80hO5Q2ry2Ltn9j6M5wop2WVCp9z7WT1w3hgePDLcShOeq2BUsERtP
-	 XUzwEMqtve1aRzNQmMNG/S1OTPU6hzZ3hDAlzglcL0QuaFWU6amsKHJXLBBU4LR9y6OCg
-	 tz/arxSThuIaDm4pUpdvbdNJ3y/TxF4a3I5NZ4eH7FB9SqAQlinwPSXKGcWcC7+JUcw==
+	t=1795043989;
+	b=lSNKMhwyUUwBVxlnS3n6K7OJUqrUIYdNTTTkMxY+MJfP51qbsb7nkkwlptx8AFvSilSd
+	 9353/PXHikeNoBqYrOFkAwj4ktFDJ0qO+RncWmWov/z28Hdgf6+almrPdpk100H9phDIJ
+	 0iXPSkxRsGvo6aeTAJ1B56aXoGqfjbVMAWKjdBcdYM2jOL+QH2V+srHtW4AjEg+RpP+yy
+	 MfMDKnQa6fefWYuxJZ/21x9AbFt8A+RLazdxL2DqppKNRB7bvnvXwK1YPlo6kpH0EmQRy
+	 5aKhL72lMTuOn756x3D1chsErPogtJfs4gfSZ27wHPaBRt2PIkrAVQ1UPLvYn5ILJiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043986;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043989;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EcV+xzWRqkZY5aggZf97fnFDeHmQYS8pt+4BxMy0EfI=;
-	b=tUFkAMG3rVGQJ/xOQwpAn51hujqoFchCERZQQEzJCFTsTLlyaRnBVmol9AhSKQe7Kk3y
-	 Rfm51eqrAPYRdUOHSoO98B+UKbB1DgeevSIN+kloBwlclPm9sQF4c6edLRGGktw/upj06
-	 PHRwME6LPnxKDPe7kywkErDG/vtaO37V9/F2GfZKaxCmDl0Xtb7dDEvukHDOO9lssVkLl
-	 gkNiJF5EuBaQhxO0EwQ1/Ouw8cXodU2B8l27As4IPu/QaEadF3GFTEygAv22Vq3BAjEKt
-	 L/hHvD2ArDAJVs1HMDol/IA7wFzyFrrlt3SDnitiVSB0zTCCTA8DUw/ZvZLED6AotBw==
+	bh=2JEWgnvM2cUeGSO17sd7XPoOy/tgju4ccTdPjd2UpbE=;
+	b=hzX6QVTKje6nnuAXF2l4s13YjqMXNvuwIfsuokwZf4BSAcaGJYIYAvMTODddGsSg48G1
+	 fYQgJTKL4h1kGYhpIuZGm2SFlxMhtGUEldYvSOqWw5cEkrlE5udoU8TG1CnCDn/z40/4g
+	 hd1iKvobkSv4jhuo9D5tWDNGHPpMYWcv3Fmu6HcQ3/Ej8dDtpQ3QRYoDfRxygTNuMx1Ie
+	 Dp94ktgA4JpXMZ2R/CT3mGbPROmsGxqeEcfZUBxxNPAZRS9RX0h/G2JQpvu2QU4eFLDqd
+	 Qe1E5jEP6aANS37jqy3jTxMafrGtVlpM/MhB+Z8g9Cmz6m97tkVORx3bL9fcwv0tCHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9lWwTdY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Do4i+zWO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2B260A2621;
-	Wed, 18 Nov 2026 23:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA4360A381B;
+	Wed, 18 Nov 2026 23:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t9lWwTdY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA3E1F000C4;
-	Wed, 18 Nov 2026 23:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Do4i+zWO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD721F000D3;
+	Wed, 18 Nov 2026 23:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043986;
-	bh=EcV+xzWRqkZY5aggZf97fnFDeHmQYS8pt+4BxMy0EfI=;
+	s=korg; t=1795043989;
+	bh=2JEWgnvM2cUeGSO17sd7XPoOy/tgju4ccTdPjd2UpbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9lWwTdYVGu8DaLXo066p4yYfCe+fGG1be1PCQ3/YZpPEPpJtSQcmBLr9z7HvzFRs
-	 YkxIR2yUkwCvsHjK9MGJ+943/e78C3q65CBoqv74s7cXCZMemNsaXYaZwrXDZFBU4V
-	 OTl9/NJU2B6r9SXMKMUasP8V5GwuRzNHX0mS7rt0=
+	b=Do4i+zWOR5e55D9YQUEgEOcEu9Y9PEs0hEaH8VSKCdD8aAeyw4thtK5e4lrcQLT8j
+	 VzQLvXdSJG9C1hMBQL56bONXILCNrvZC63GvQZ02pTnsEyXS6Dlisw2NJsGbAFEvdv
+	 hxL6WrEMZrAGBIKumUkvb+jBY6I4ZjUOPpgadgzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0404/2857] path: add cleanup helper
-Date: Wed, 18 Nov 2026 15:23:58 +0100
-Message-ID: <20261118150215.936973721@linuxfoundation.org>
+Subject: [PATCH 6.1 0405/2857] configfs:get_target() - release path as soon as we grab configfs_item reference
+Date: Wed, 18 Nov 2026 15:23:59 +0100
+Message-ID: <20261118150215.971587697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,42 +69,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit ff2c570ef7eaa9ded58e7a02dd7a68874a897508 ]
+[ Upstream commit 1b25dea3867abc9bad6f0337d395c6f0ce4e4f6f ]
 
-Add a simple cleanup helper so we can cleanup struct path easily.
-No need for any extra machinery. Avoid DEFINE_FREE() as it causes a
-local copy of struct path to be used. Just rely on path_put() directly
-called from a cleanup helper.
+... and get rid of path argument - it turns into a local variable in get_target()
 
-Link: https://lore.kernel.org/r/20240607-vfs-listmount-reverse-v1-2-7877a2bfa5e5@kernel.org
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Stable-dep-of: a7c1290eef60 ("configfs: pin the symlink target's dirent instead of chasing ->ci_dentry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/path.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/configfs/symlink.c | 33 +++++++++++++--------------------
+ 1 file changed, 13 insertions(+), 20 deletions(-)
 
-diff --git a/include/linux/path.h b/include/linux/path.h
-index 475225a03d0dc..ca073e70decd5 100644
---- a/include/linux/path.h
-+++ b/include/linux/path.h
-@@ -24,4 +24,13 @@ static inline void path_put_init(struct path *path)
- 	*path = (struct path) { };
+diff --git a/fs/configfs/symlink.c b/fs/configfs/symlink.c
+index 0623c3edcfb9d..31b3a4ad5ea66 100644
+--- a/fs/configfs/symlink.c
++++ b/fs/configfs/symlink.c
+@@ -114,26 +114,21 @@ static int create_link(struct config_item *parent_item,
  }
  
-+/*
-+ * Cleanup macro for use with __free(path_put). Avoids dereference and
-+ * copying @path unlike DEFINE_FREE(). path_put() will handle the empty
-+ * path correctly just ensure @path is initialized:
-+ *
-+ * struct path path __free(path_put) = {};
-+ */
-+#define __free_path_put path_put
-+
- #endif  /* _LINUX_PATH_H */
+ 
+-static int get_target(const char *symname, struct path *path,
+-		      struct config_item **target, struct super_block *sb)
++static int get_target(const char *symname, struct config_item **target,
++		      struct super_block *sb)
+ {
++	struct path path __free(path_put) = {};
+ 	int ret;
+ 
+-	ret = kern_path(symname, LOOKUP_FOLLOW|LOOKUP_DIRECTORY, path);
+-	if (!ret) {
+-		if (path->dentry->d_sb == sb) {
+-			*target = configfs_get_config_item(path->dentry);
+-			if (!*target) {
+-				ret = -ENOENT;
+-				path_put(path);
+-			}
+-		} else {
+-			ret = -EPERM;
+-			path_put(path);
+-		}
+-	}
+-
+-	return ret;
++	ret = kern_path(symname, LOOKUP_FOLLOW|LOOKUP_DIRECTORY, &path);
++	if (ret)
++		return ret;
++	if (path.dentry->d_sb != sb)
++		return -EPERM;
++	*target = configfs_get_config_item(path.dentry);
++	if (!*target)
++		return -ENOENT;
++	return 0;
+ }
+ 
+ 
+@@ -141,7 +136,6 @@ int configfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 		     struct dentry *dentry, const char *symname)
+ {
+ 	int ret;
+-	struct path path;
+ 	struct configfs_dirent *sd;
+ 	struct config_item *parent_item;
+ 	struct config_item *target_item = NULL;
+@@ -188,7 +182,7 @@ int configfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 	 *  AV, a thoroughly annoyed bastard.
+ 	 */
+ 	inode_unlock(dir);
+-	ret = get_target(symname, &path, &target_item, dentry->d_sb);
++	ret = get_target(symname, &target_item, dentry->d_sb);
+ 	inode_lock(dir);
+ 	if (ret)
+ 		goto out_put;
+@@ -210,7 +204,6 @@ int configfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 	}
+ 
+ 	config_item_put(target_item);
+-	path_put(&path);
+ 
+ out_put:
+ 	config_item_put(parent_item);
 -- 
 2.53.0
 
