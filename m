@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059614;
-	b=eq35P7r9IVA0ttUvlT/xuN9cggUFAEQ0j6mbH4E4SQnyfCwUfk885F5jLClLiNUo9khF
-	 tmtCfP3k5phl5hSXxvnbIYaos2rP6JbAxNsnVjyUzidqQkzCBX2SHr+5XXY/qZPBoEcKl
-	 LQsy6cFeS+tt2owqxyJPRQrE0QVthrVasoih6QtDuxoq3DTJ45xwsmYgjBprIq6Wjp68C
-	 liZTJeSZrLqd72bWhSk3eH4pmdLs3wVybUfKwrpKc/EzyCdAEDDFCeAqYTz1wm+3hRXpp
-	 2K9J1c1BMXIYvsRLaqZuBYuDonrpDPGDdkdIY0XpwAPnlGozJ/fbaMj1V88YH9yrViw==
+	t=1795059617;
+	b=cORyG81KEDS74kX3dSels+/zqVlByEPd+HO4X0rHiRvHpGz2tldNcW+qI3MXkQ6hAk7w
+	 jaScvtn9DilV0Rt85TMjbIPZZfO8Tn94swvcBSTF06qgCFYJy59YaJiuGazSCKwwgW2Yv
+	 iEPxeFL8x1tx8hEU7ihY+XKYzTQXR9t5xGJcttDV65rCoBsaeR6GqTfimXpLD7rwxxgZg
+	 5MAyqg1X0AG7NkujiN8uLaLmlsjlZLGUOMOBoj/kZfgZLrJhhEdK6ZViRvxfqXykS7Tni
+	 9p5qSFYZKrD//yI4flN3afHinADRTQdZ5DdbSG7FE+ngQuId/4HAbfjqVAbQAl2HXPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=N3jVc1W/+vdsiVN5zFXzvo6R/fHa54sUprrLjLUnhuA=;
-	b=xZtGsLPInFk6zQzuwfi7LjssVurGuHoBpm10nPeJvos9vST1dRsd9iEHMDNWDOr4qG8S
-	 RjhtbEjk6pU/XwMuzaQssgxp8GYzhNP2Zkd5qT7+sMWQcwtZGDagZy8VL4lMSXB0PMvqO
-	 9YPixLYkmoQDZE2yHM6Ngguryi6gOqF4+NUqrN7UO73Ef9kCF3NJBs2f9vU17LBLbQhqo
-	 LpL5uYMEs60JG5SqkZOTzn/cpB/WTssrykHDptaQ40rr45OSKR9NqUOGcZmfFsROn0SNF
-	 ZHMBzl2oTjirQBfR0qbpWO6djrPhYxK14f1Mq7pwklZN1J4RTRalDJxw0Bvc8vG+/Zg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=gUPTKZ6nZZRi9kzSlZiKeLn96PTVrCzT5SewO0UTCQU=;
+	b=jg5+J6QKKP7sUrr3WOPmi4QACXdTNAhIbcWaGfJY5I+5wQdduaK/xx+Gr88fFiZYtTP5
+	 GA1qO5iyxNF0JVM6oQGIO/a5YA3x2AlnH139/qtGpL1NsjetTgKaqsVd/JY8Na0GQjnY8
+	 3dBW4kIO8MgOpaU/MGWNVupVRtj0QVtV4xDleneR8bBsX6nN/5JsM8Ip9zGHFF7Zq86Le
+	 hZfw3+tvUNnyNMIkCwDIMdZ/JgWoDSVpM5E6oYngQx98NMghY3j5DcjrQRD/PQf61kk1q
+	 beTPQPqscCwXowmvy6nxuSmZqQW3cIvow+1bwShvKuRW+vBO9cqxZjx0cn4U+9Qtkrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IrGbYv6z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNAD78YS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FEB60A2635;
-	Thu, 19 Nov 2026 03:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577DC60A261F;
+	Thu, 19 Nov 2026 03:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IrGbYv6z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA481F000C7;
-	Thu, 19 Nov 2026 03:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jNAD78YS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67E31F000C9;
+	Thu, 19 Nov 2026 03:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059614;
-	bh=N3jVc1W/+vdsiVN5zFXzvo6R/fHa54sUprrLjLUnhuA=;
+	s=korg; t=1795059617;
+	bh=gUPTKZ6nZZRi9kzSlZiKeLn96PTVrCzT5SewO0UTCQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IrGbYv6zRRwissj+VAflmYG3aObdF3at+KSMYWAk9dC/Holdtq+J3hz1B93PwQK+y
-	 LGiBB00mKYK1lgGCZUjmanL87xyFOzt+zuD71fNEkoNbc+7t404f7Ir0H6UNORfate
-	 G4lu4/D1Ts8H3FB/m4rDg8xgYzA2Ct+ddSw8Y9x8=
+	b=jNAD78YSTusKJP2M+i99L4/1r5HSLg1048BDBGw/y2TGNPTdDPmTe0RQS8EeazxGw
+	 RhjuxBFfRnD/5W4rifXpQabBZjAHm+/niqQ23MA33tl+sXiMqz9FPI8dOxjvH2CwGx
+	 F7+MplEWyPwjbV3RQ4my6wwrYRhjxnHmXPZ3CF+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	Denis Benato <denis.benato@linux.dev>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0887/1848] platform/x86: asus-wmi: Serialize WMI method evaluations with a mutex
-Date: Wed, 18 Nov 2026 15:48:45 +0100
-Message-ID: <20261118145953.636694898@linuxfoundation.org>
+Subject: [PATCH 5.10 0905/1848] irqchip/imx-intmux: Fix runtime PM teardown on remove
+Date: Wed, 18 Nov 2026 15:49:03 +0100
+Message-ID: <20261118145954.670260169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -64,104 +64,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit b9428edaf4109e86a97254228d831767d0acc1f8 ]
+[ Upstream commit b167c1a30e9e020e4c5e102c7a555943742c024b ]
 
-Concurrent evaluations of ASUS WMI management methods (from ACPI notify,
-HID, userspace daemons, and debugfs) enter the BIOS ACPI/SMM interface
-simultaneously, triggering re-entrant SMIs or EC mailbox buffer corruption.
+imx_intmux_probe() enables the IPG clock and then drops its runtime PM
+reference with pm_runtime_put(). With CONFIG_PM enabled, the runtime
+suspend callback disables the IPG clock. With CONFIG_PM disabled, the
+clock remains enabled after probe.
 
-Fix this at the root by introducing a centralized evaluation helper
-(asus_wmi_evaluate_method_locked()) protected by a global mutex
-(asus_wmi_eval_lock) using guard(mutex). Route all evaluations of
-ASUS_WMI_MGMT_GUID (method3, method5, method_buf, and show_call) through
-this helper.
+imx_intmux_remove() accesses the CHANIER registers without first making
+sure that the device is runtime active. The device may therefore be
+runtime suspended with the IPG clock disabled when these registers are
+accessed. In addition, the remove path only calls pm_runtime_disable()
+and does not balance the clock enable when CONFIG_PM is disabled.
 
-A static mutex is required because asus_wmi_evaluate_method() is an
-exported symbol used by external modules (such as hid-asus and
-asus-armoury) that lack access to struct asus_wmi drvdata, and the
-underlying ASUS ACPI/EC management method is a single physical platform
-resource.
+Resume the device and acquire a runtime PM reference before accessing
+the registers. If resume fails, skip the register accesses but still
+tear down the chained handlers and IRQ domains. Disable runtime PM
+afterwards, drop the acquired reference without triggering another
+runtime suspend, and explicitly disable the IPG clock.
 
-The mutex is non-recursive: nested ACPI/WMI notify handlers must not call
-back into evaluate on the same task (defer via workqueue, as
-asus_rfkill_notify already does).
+This keeps the clock enabled while the hardware registers are accessed
+and balances the clk_prepare_enable() performed during probe for both
+CONFIG_PM configurations.
 
-The sysfs-versus-notify race predates the later export of
-asus_wmi_evaluate_method(), so Fixes points at the original shared
-evaluate helper rather than that export.
+This issue was found by manual code inspection.
 
-Link: https://github.com/OpenGamingCollective/asusctl/issues/328
-Fixes: d33da3b68669 ("asus-wmi: factorise wmi_evaluate_method call")
+Fixes: bb403111e017 ("irqchip/imx-intmux: Implement intmux runtime power management")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Radu Rendec <radu@rendec.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/b6a1981777e63f0c28bd719d8203ebbda57d6957.1789722252.git.scardracs@disroot.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-[ sashal: replaced the guard(mutex) wrapper with explicit mutex_lock() and mutex_unlock() calls at existing call sites ]
+Link: https://patch.msgid.link/20260914134211.1734163-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/irqchip/irq-imx-intmux.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 4f56f853b756b..9256d6edca5b4 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -15,6 +15,7 @@
- 
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/init.h>
- #include <linux/types.h>
- #include <linux/slab.h>
-@@ -236,6 +237,12 @@ struct asus_wmi {
- 
- /* WMI ************************************************************************/
- 
-+/*
-+ * Concurrent evaluations of ASUS WMI methods can re-enter firmware
-+ * SMI/EC mailbox handling and corrupt the mailbox.
-+ */
-+static DEFINE_MUTEX(asus_wmi_eval_lock);
-+
- static int asus_wmi_evaluate_method3(u32 method_id,
- 		u32 arg0, u32 arg1, u32 arg2, u32 *retval)
+diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
+index 576f28c9ebdb3..37f9be67f7c58 100644
+--- a/drivers/irqchip/irq-imx-intmux.c
++++ b/drivers/irqchip/irq-imx-intmux.c
+@@ -289,12 +289,16 @@ static int imx_intmux_probe(struct platform_device *pdev)
+ static void imx_intmux_remove(struct platform_device *pdev)
  {
-@@ -250,8 +257,10 @@ static int asus_wmi_evaluate_method3(u32 method_id,
- 	union acpi_object *obj;
- 	u32 tmp = 0;
+ 	struct intmux_data *data = platform_get_drvdata(pdev);
+-	int i;
++	int i, ret;
++
++	ret = pm_runtime_resume_and_get(&pdev->dev);
++	if (ret < 0)
++		dev_warn(&pdev->dev, "failed to resume device: %d\n", ret);
  
-+	mutex_lock(&asus_wmi_eval_lock);
- 	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID, 0, method_id,
- 				     &input, &output);
-+	mutex_unlock(&asus_wmi_eval_lock);
+ 	for (i = 0; i < data->channum; i++) {
+ 		/* disable all interrupt sources of this channel */
+-		writel_relaxed(0, data->regs + CHANIER(i));
+-
++		if (ret >= 0)
++			writel_relaxed(0, data->regs + CHANIER(i));
+ 		irq_set_chained_handler_and_data(data->irqchip_data[i].irq,
+ 						 NULL, NULL);
  
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
-@@ -2605,9 +2614,11 @@ static int show_call(struct seq_file *m, void *data)
- 	union acpi_object *obj;
- 	acpi_status status;
+@@ -302,6 +306,11 @@ static void imx_intmux_remove(struct platform_device *pdev)
+ 	}
  
-+	mutex_lock(&asus_wmi_eval_lock);
- 	status = wmi_evaluate_method(ASUS_WMI_MGMT_GUID,
- 				     0, asus->debug.method_id,
- 				     &input, &output);
-+	mutex_unlock(&asus_wmi_eval_lock);
+ 	pm_runtime_disable(&pdev->dev);
++	if (ret >= 0) {
++		pm_runtime_put_noidle(&pdev->dev);
++		clk_disable_unprepare(data->ipg_clk);
++		pm_runtime_set_suspended(&pdev->dev);
++	}
+ }
  
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
+ #ifdef CONFIG_PM
 -- 
 2.53.0
 
