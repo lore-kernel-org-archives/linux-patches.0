@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046287;
-	b=OBXjpsqKgH/f2TRXBJMgVLYtYZBpIwTHzJaSy0/MYkhTca/2H02sGKtTXDdl+fZKEBxX
-	 w2QzjMyRv8N3I2WCTE1qwWSgQuAPIzk/mnIgfU5Tmk3xViMrEcF6dQTcY5Nzq0CgcBYMC
-	 woN3BdKEFtA6/3IGq9LS+55IIvAyFwVDpMkEs1PV67EJKRNK6+luqjYQEueVSSoN+YIf1
-	 aTJNJSz1ZEGCjOBW/keLpW7uOYhVVwL9/hkzso7pb5BTJfv06BRytfEfirGuPzX8btWu9
-	 ChPMIvDW7RM8UlkwpH6FS449FtJWprDsSxNUUiKC9KQeJXjaYguzvPQ5cZu/fTMZ2GQ==
+	t=1795046290;
+	b=lqRGm+l+GYl+OsFneBHDrIYuLMhiyXHyrPUZfWP2Z/npSWCpO2Hb3Efjrp9TacaJ7AGe
+	 krZTDBjpuTOq80ZRgGPOEkNGFuPB4G4JfAOH8GTNRC2w8okUAiis5/RJt9TKqPSpnc6JK
+	 OXztluchANWBKb6I0hpamOGImdpneZ0ZEANGSRb76/2s6ROsZBqZTbxsMFJ0AxWIGLek0
+	 yHG+iNSdmXIjXRhES3Xhw7ZCDqZBfdqS1rB6wgADBt8gjJ/cxUu1HAJ0EQOHmiKsDekPz
+	 9uNXawIuq8srOQczu6lmLVYV6E4UzjttW4Du5qRXjaFjSVo9dCtjQ2n5tg5RVdnfSrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046290;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PQTJ7VJsdEKf2qvQGNjA0v56fetswOIZ99/y/I4wIz0=;
-	b=F61RL4E2xHb48MHseWgcEHWDASdVFLOLjlZKI4GDd4ON+OPeDCKi29RvDBiKjiasaRWB
-	 5GQXpgDSLIEnplxmb+MACod4reblsmTEPHBZahZxnM1TuNgg3eFLDZNvbzrhk3caClp6m
-	 zSChsTlIoIzYDAlCfXOT49SJ1BiH2Q5XbppIvMAAZdN5h9qrpv33/gsAMxEaly4xKp35/
-	 C9yyQ+OjvqEkT5qS2YGYWnA7PCWc76aPcEqUUiuBrG8b4fSck2lE+wBeRy2JhbUueYEpQ
-	 2dvyak3w6dFz92xtA3g05PcQ379AzZ+L2svfUPiLf0K6caNC9GWJFG1S+95R1vwI4Jw==
+	bh=sZ9iv4SnwdMPH45pt6vWooWTdWdgrocIz3ynfq1TiIg=;
+	b=heUU3xenKLpZGfkTjwSHEafvKfseeoTtOJIHvg9DCEZ6euyE4SRFuJrDnxXRGfrsfktw
+	 f88dpafFWU0vUlDAlkMq4IKXz7C1EVmDGesTAe9QUUwAYLThCY0fY3cGk6Ivp3WPUEk6u
+	 AG7lOL2EjO/QqUpsBJU6fSSfuNpj469/0DKzysFhzyZHnENJXqiQ0F9iOG76ktNGVrDJC
+	 p7yLu9yQhvBRTGCUIH8b3bXFRpIldO7wJzHDJJXATjGHbytCCyCk3+cWD1EnJ5u/Fty/9
+	 8MSUcco3Br/DadifcbAa3zZJNyq6pzMrhpx+Mx+4KBhfdtU/rLX2LxTGpvx91uVaJMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vklWgdCR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6Rp3MH1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740F2606A31C;
-	Wed, 18 Nov 2026 23:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3642A606A320;
+	Wed, 18 Nov 2026 23:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vklWgdCR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4011F000C4;
-	Wed, 18 Nov 2026 23:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6Rp3MH1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5251F000C4;
+	Wed, 18 Nov 2026 23:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046287;
-	bh=PQTJ7VJsdEKf2qvQGNjA0v56fetswOIZ99/y/I4wIz0=;
+	s=korg; t=1795046290;
+	bh=sZ9iv4SnwdMPH45pt6vWooWTdWdgrocIz3ynfq1TiIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vklWgdCRr77x6ZiUoKc7zyYVxErpJ+uX+j6/V4iEYErWAdVwUpWtuFawYB4gBaL/J
-	 CZevYS2uE8uQAJ4INpqaG3Kr723flfUqD33aQYPAGSzNACkzuYEvSQ7L4UbU5bomK+
-	 Zggx9AuQXwO0GBJzGN+uUIDGTR/4jCQx6YaYb6vQ=
+	b=C6Rp3MH1cL7Jwq+rXaPM7iwQaZQ1XxLzvdOz/mNGizIEvZytUovg8uKAPw3ZQ/oEH
+	 DDoyH69mONVus5uAM7TVGLf0PbpNuAEN3+PxFeCo/a+A9BxzHf2HViZ8f/cW1wyGje
+	 2gzy+AXFS5kmy3yBa2RZ62wIp2bMxsblsPDCD7OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1227/2857] mm/shmem: discard whole new large folios on fallocate rollback
-Date: Wed, 18 Nov 2026 15:37:41 +0100
-Message-ID: <20261118150245.743231160@linuxfoundation.org>
+Subject: [PATCH 6.1 1228/2857] mm/shmem: fix truncation of files containing only swapin-error markers
+Date: Wed, 18 Nov 2026 15:37:42 +0100
+Message-ID: <20261118150245.777733585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -73,47 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 23f2a880c0b9518fcb7e7e2ad54a29c0a2c4fba0 ]
+[ Upstream commit 59511d630a6942356ac4b6984797998a8f3a9017 ]
 
-When undoing a failed fallocate(), shmem_undo_range() must discard each
-newly allocated folio. Its second scan instead passes large
-folios to truncate_inode_partial_folio(), which does not necessarily
-discard the entire large folio, but instead tries splitting it to
-discard only the requested range.
+It might not be very common, but we can end up with shmem files that are
+composed only of swapin-error/poison markers.
 
-For example, with huge=always, a failed allocation starting at offset
-4 KiB can leave page 0 allocated in an otherwise empty file.
+Such markers are not counted in info->alloced. Consequently,
+shmem_setattr() can skip shmem_truncate_range(), leaving the markers
+behind.
 
-Discard the whole folio when unfalloc is set. Note that we enter this
-path only for folios that are not uptodate, and can consequently be
-dropped without losing any data.
+Truncating the file to zero and growing it again will result in reads
+failing with -EIO instead of returning zeroes.
 
-Fixes: 55ac8bbe358b ("mm/shmem: fix race in shmem_undo_range w/THP")
+Check whether the mapping contains entries, in addition to
+info->alloced, before skipping the truncation. Keep the info->alloced
+check so that shmem_recalc_inode(), called at the end of
+shmem_undo_range(), can fix up accounting after reclaim has emptied the
+mapping.
+
+Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
 Cc: stable@vger.kernel.org
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-9-392fc715d8f6@kernel.org
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-15-392fc715d8f6@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/shmem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/mm/shmem.c b/mm/shmem.c
-index d277144d15e13..be1a6dc9a3dfa 100644
+index be1a6dc9a3dfa..289707965dd1c 100644
 --- a/mm/shmem.c
 +++ b/mm/shmem.c
-@@ -1043,7 +1043,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 				if (!unfalloc && folio_test_large(folio))
- 					folio_mark_dirty(folio);
- 
--				if (!folio_test_large(folio)) {
-+				if (unfalloc || !folio_test_large(folio)) {
- 					truncate_inode_folio(mapping, folio);
- 				} else if (truncate_inode_partial_folio(folio, lstart, lend)) {
- 					/*
+@@ -1164,7 +1164,8 @@ static int shmem_setattr(struct user_namespace *mnt_userns,
+ 			if (oldsize > holebegin)
+ 				unmap_mapping_range(inode->i_mapping,
+ 							holebegin, 0, 1);
+-			if (info->alloced)
++			/* Swapin-error markers are not counted in alloced. */
++			if (info->alloced || !mapping_empty(inode->i_mapping))
+ 				shmem_truncate_range(inode,
+ 							newsize, (loff_t)-1);
+ 			/* unmap again to remove racily COWed private pages */
 -- 
 2.53.0
 
