@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025756;
-	b=JPP4xoEiOdX8/+8yTTzRsBnHZNnt/mfg2YhNSLXWnauBuYlfxxn9K9Gk26hxXsUfmGWS
-	 FZAYRtTmHsBxy4bIQu07vPmIN87jcSdC8HkVvRahrtH+06L54lDWMots3zv64/iriz9Op
-	 YUWk1FN9TFx+Fd6I+y41cplKhAvWrvWBXn15I0e7ZawdEXjoK2rASoeDOqeu8l40Ct99X
-	 VImE5P5r4eh95F/FLk18QNUKAsN9YnKam3en4VyyWh9hS0XLFWcVbbMOvsdXd7QD+GSCp
-	 z8VrANwl+KGHIePZjSN3ibZ6bpVIJtZs8MjUAUpCPhwlTUqPulgGqV7XC7Cd1/p+Hkg==
+	t=1795025759;
+	b=gOY/b/rOIXLuc/JvbVkQjEquBcZWtHX7EUqhOQXXMQB/nmja8gBMLyX6VEDBXMf0OEP/
+	 eQo6lwL7blZrF2EN0Xjw70n3MejIS0ygw/fAZYD29cFPx4sV2ZXo1gM79zHgj8tS3wXqa
+	 +llDkPJeXjN1ufAqBQn7aP8zL2NiJ5AUv3/ZAxTFoS9xczbLwXcRHOV7KJyaL6DsiTL9X
+	 efkVsQR9Rk/TNRWfSXuAzer24f/1BfzVwn6Ogh/kjUoeD7VRf1DG9HJYghXHi1GFtm249
+	 N9bd1PR/UaTzDguBqMvW+M2j4qiNFt0qggnbiOvY8unO6N5d1bYDvHKllzmgp7LARRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xhgjQxa5ILY0ge95l7bglVn3dBl8mr21/TL49bquPZg=;
-	b=QlHG9DFjuvyXa7ldtu+EzxL4N+0+KxWdj1lr+J2xzby6IYY3TC8gFN5FUaEiOaF9XRKF
-	 3byNQn2fYXJxF9alcb83RTScDcKp9FIU1KxI4r8SOLeRyq1/kxxkyVlxgj1sDkByeUJ7T
-	 qdJhFOOaJQ/rECy1Ep9Z5T6X86LoHVH45yak+T8jNbcEia67I5Nh+FQHkyI66ewV+LfVB
-	 dxFlhooehXogtcT4sivTrh7zTQa3DRnB98/bboFHBTyBnxjOgVTOiCO6mG1KiKbyFzi+T
-	 wPIyoG0DKp3eUb2YLJQvQPxH3U4UPrvIm+MfxX3R47aRTBgFNhF2nVH1DHEKjRyk1/Q==
+	bh=wAQmR4Kb17WXdHdOviR0ajchyjQ1rlM+t1mZjgJhkXU=;
+	b=mBMus/rewF5a+FJVamHw3+vS59iirMMOK8U3SzjZeX25CsrjDrEYYnILwKyLhW0879IF
+	 Hrt3xNvV3JXHTAE21VH2wNFSa1KLR0rlqqZf6TauxOh5S9Le00g1ygPgYF4DkCiTLTpXd
+	 v/6Wth7B9hHqnGbaCEonENc1AQOn2YZdxoqcEy0SsbV024QmExr14c8z2pu5N4pjTLEn8
+	 2FLmmr6BW0EC7JaFvgrbzBL/MqvkdDm0yuqNDHLXeNlG0kelh7jTzlEL9Qs0LpS74LRAF
+	 nu9NnnuH7LXKT8ve1FtpANVK0i6G+UsS4u8qfHDlIqZ6c2fvqDeW9M+kirDcCLvXC8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VX1jEtMC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXN7DUVg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D123C606A32F;
-	Wed, 18 Nov 2026 18:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B781B606A31C;
+	Wed, 18 Nov 2026 18:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VX1jEtMC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F10B1F000C4;
-	Wed, 18 Nov 2026 18:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LXN7DUVg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107961F000C5;
+	Wed, 18 Nov 2026 18:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025756;
-	bh=xhgjQxa5ILY0ge95l7bglVn3dBl8mr21/TL49bquPZg=;
+	s=korg; t=1795025759;
+	bh=wAQmR4Kb17WXdHdOviR0ajchyjQ1rlM+t1mZjgJhkXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VX1jEtMC1tzb9na4QyW4ofHteGQo5H2jZHUJhVR9nw0YqzChTgnDKXcoVNUeMIJ8I
-	 ND0GjbZCK8fCNz6tPY+XgNhxRRMOpwdmCII2BwxocM7pwJTwjk/jHhY6n84lYqoymk
-	 4u35+7e4OJxNYS0EdlwTMw5iUV8B3TLOM8Jf9K+0=
+	b=LXN7DUVgubiEpilz/OssDAhvBMwS8D0idffuQLm8RGj6KQM19Ul55LhfONr7W0kS3
+	 bMfVyhwfFAQh3iJgbWOyZokTcyDkbQIjjniRThgqBqbw6EZJVXB+OihHyePWI9/lJv
+	 o9s6D/aQ5rQjM7akYfGCWix2U+jYPnr9hWTvY1Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1155/2151] efi/libstub: make local GUID variables static
-Date: Wed, 18 Nov 2026 15:48:10 +0100
-Message-ID: <20261118150204.244267782@linuxfoundation.org>
+Subject: [PATCH 6.18 1191/2151] wifi: mt76: optimize ROC for same-channel case
+Date: Wed, 18 Nov 2026 15:48:46 +0100
+Message-ID: <20261118150205.607629955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,378 +67,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e57b05932a49b1ef54c6f116b9b044ce37db7dcc ]
+[ Upstream commit f72dd74dd0b69e3a87b4702f3c860e9a7318d5dd ]
 
-Local efi_guid_t variables with automatic storage produce assembly
-similar to passing the address of the GUID macro directly. For the same
-reason, make these GUID variables static.
+mt76_remain_on_channel() always creates an HT20 chandef and goes
+offchannel, even when the ROC channel matches the operating channel.
+This unnecessarily narrows bandwidth and triggers beacon stop/restart.
 
-Put the static declarations first in their local declaration block to
-visually separate them from the automatic variables.
+When the ROC channel matches the current operating channel, preserve
+the full chandef and skip the offchannel transition, matching the
+optimization already present in the scan code.
 
-For an x86_64 build with gcc 15.3.0, bloat-o-meter reports:
+Extract the shared same-channel detection into mt76_offchannel_chandef()
+and use it in both ROC and scan paths.
 
-  add/remove: 15/0 grow/shrink: 0/10 up/down: 336/-742 (-406)
-  Function                                     old     new   delta
-  tbl_guid                                       -      32     +32
-  rng_proto                                      -      32     +32
-  pci_proto                                      -      32     +32
-  guid                                           -      32     +32
-  fs_proto                                       -      32     +32
-  cc_guid                                        -      32     +32
-  tpm2_guid                                      -      16     +16
-  text_to_dp_guid                                -      16     +16
-  tcg2_guid                                      -      16     +16
-  rng_table_guid                                 -      16     +16
-  rng_algo_raw                                   -      16     +16
-  proto                                          -      16     +16
-  linux_eventlog_guid                            -      16     +16
-  lf2_proto_guid                                 -      16     +16
-  info_guid                                      -      16     +16
-  efi_get_memory_map                           707     696     -11
-  efi_pci_disable_bridge_busmaster            1199    1184     -15
-  efi_get_random_bytes                         216     188     -28
-  efi_remap_image                              357     328     -29
-  efi_load_initrd                             1113    1065     -48
-  efi_random_get_seed                         1368    1297     -71
-  efi_measure_tagged_event                     935     854     -81
-  efi_retrieve_eventlog                       1686    1570    -116
-  handle_cmdline_files                        2501    2341    -160
-  efi_stub_entry                              4136    3953    -183
-  Total: Before=28877, After=28471, chg -1.41%
-
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
+Link: https://patch.msgid.link/20260309060730.87840-6-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 3aaa4871006d ("wifi: mt76: clear offchannel state if a scan has no channel to restore")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efi-stub-entry.c    |  2 +-
- drivers/firmware/efi/libstub/efi-stub-helper.c   | 10 +++++-----
- drivers/firmware/efi/libstub/efi-stub.c          |  2 +-
- drivers/firmware/efi/libstub/file.c              |  8 ++++----
- drivers/firmware/efi/libstub/kaslr.c             |  2 +-
- drivers/firmware/efi/libstub/mem.c               |  2 +-
- drivers/firmware/efi/libstub/pci.c               |  2 +-
- drivers/firmware/efi/libstub/random.c            |  8 ++++----
- drivers/firmware/efi/libstub/riscv.c             |  2 +-
- drivers/firmware/efi/libstub/tpm.c               |  8 ++++----
- drivers/firmware/efi/libstub/unaccepted_memory.c |  2 +-
- drivers/firmware/efi/libstub/x86-stub.c          | 10 +++++-----
- 12 files changed, 29 insertions(+), 29 deletions(-)
+ drivers/net/wireless/mediatek/mt76/channel.c |  4 ++--
+ drivers/net/wireless/mediatek/mt76/mt76.h    | 12 ++++++++++++
+ drivers/net/wireless/mediatek/mt76/scan.c    |  6 +-----
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
-index a6c0498351905..2ebb81fd9f42a 100644
---- a/drivers/firmware/efi/libstub/efi-stub-entry.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
-@@ -30,13 +30,13 @@ struct screen_info *alloc_screen_info(void)
- efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 				   efi_system_table_t *systab)
- {
-+	static efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
- 	efi_loaded_image_t *image;
- 	efi_status_t status;
- 	unsigned long image_addr;
- 	unsigned long image_size = 0;
- 	/* addr/point and size pairs for memory management*/
- 	char *cmdline_ptr = NULL;
--	efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
- 	unsigned long reserve_addr = 0;
- 	unsigned long reserve_size = 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
+index 08c910bd835f2..286a98fae760b 100644
+--- a/drivers/net/wireless/mediatek/mt76/channel.c
++++ b/drivers/net/wireless/mediatek/mt76/channel.c
+@@ -395,8 +395,8 @@ int mt76_remain_on_channel(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 	mlink->mvif->roc_phy = phy;
+ 	phy->roc_vif = vif;
+ 	phy->roc_link = mlink;
+-	cfg80211_chandef_create(&chandef, chan, NL80211_CHAN_HT20);
+-	ret = __mt76_set_channel(phy, &chandef, true);
++	ret = __mt76_set_channel(phy, &chandef,
++				 mt76_offchannel_chandef(phy, chan, &chandef));
+ 	if (ret) {
+ 		mlink->mvif->roc_phy = NULL;
+ 		phy->roc_vif = NULL;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 9542c4fbdee23..7de5e5f19a66a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1781,6 +1781,18 @@ void mt76_queue_tx_complete(struct mt76_dev *dev, struct mt76_queue *q,
+ 			    struct mt76_queue_entry *e);
+ int __mt76_set_channel(struct mt76_phy *phy, struct cfg80211_chan_def *chandef,
+ 		       bool offchannel);
++
++static inline bool
++mt76_offchannel_chandef(struct mt76_phy *phy, struct ieee80211_channel *chan,
++			struct cfg80211_chan_def *chandef)
++{
++	cfg80211_chandef_create(chandef, chan, NL80211_CHAN_HT20);
++	if (phy->main_chandef.chan != chan)
++		return true;
++
++	*chandef = phy->main_chandef;
++	return false;
++}
+ int mt76_set_channel(struct mt76_phy *phy, struct cfg80211_chan_def *chandef,
+ 		     bool offchannel);
+ void mt76_scan_work(struct work_struct *work);
+diff --git a/drivers/net/wireless/mediatek/mt76/scan.c b/drivers/net/wireless/mediatek/mt76/scan.c
+index 2faa84c516e7b..69a6b793b1fcc 100644
+--- a/drivers/net/wireless/mediatek/mt76/scan.c
++++ b/drivers/net/wireless/mediatek/mt76/scan.c
+@@ -142,11 +142,7 @@ void mt76_scan_work(struct work_struct *work)
+ 	}
  
-diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
-index 7aa2f9ad29356..5c093af8eaa41 100644
---- a/drivers/firmware/efi/libstub/efi-stub-helper.c
-+++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
-@@ -244,6 +244,7 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
- 					     unsigned long load_size,
- 					     enum efistub_event_type event)
- {
-+	static efi_guid_t tcg2_guid = EFI_TCG2_PROTOCOL_GUID;
- 	union {
- 		efi_status_t
- 		(__efiapi *hash_log_extend_event)(void *, u64, efi_physical_addr_t,
-@@ -253,7 +254,6 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
- 	struct efistub_measured_event *evt __free(efi_pool) = NULL;
- 	int size = struct_size(evt, tagged_event.tagged_event_data,
- 			       events[event].event_data_len);
--	efi_guid_t tcg2_guid = EFI_TCG2_PROTOCOL_GUID;
- 	efi_tcg2_protocol_t *tcg2 = NULL;
- 	union efistub_event ev;
- 	efi_status_t status;
-@@ -272,7 +272,7 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
- 		method.hash_log_extend_event =
- 			(void *)efi_table_attr(tcg2, hash_log_extend_event);
- 	} else {
--		efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
-+		static efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
- 		efi_cc_protocol_t *cc = NULL;
+ 	dev->scan.chan = req->channels[dev->scan.chan_idx++];
+-	cfg80211_chandef_create(&chandef, dev->scan.chan, NL80211_CHAN_HT20);
+-	if (phy->main_chandef.chan == dev->scan.chan) {
+-		chandef = phy->main_chandef;
+-		offchannel = false;
+-	}
++	offchannel = mt76_offchannel_chandef(phy, dev->scan.chan, &chandef);
  
- 		efi_bs_call(locate_protocol, &cc_guid, NULL, (void **)&cc);
-@@ -548,7 +548,7 @@ static
- efi_status_t efi_load_initrd_dev_path(struct linux_efi_initrd *initrd,
- 				      unsigned long max)
- {
--	efi_guid_t lf2_proto_guid = EFI_LOAD_FILE2_PROTOCOL_GUID;
-+	static efi_guid_t lf2_proto_guid = EFI_LOAD_FILE2_PROTOCOL_GUID;
- 	efi_device_path_protocol_t *dp;
- 	efi_load_file2_protocol_t *lf2;
- 	efi_handle_t handle;
-@@ -610,7 +610,7 @@ efi_status_t efi_load_initrd(efi_loaded_image_t *image,
- 			     unsigned long hard_limit,
- 			     const struct linux_efi_initrd **out)
- {
--	efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
-+	static efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
- 	efi_status_t status = EFI_SUCCESS;
- 	struct linux_efi_initrd initrd, *tbl;
+ 	mt76_set_channel(phy, &chandef, offchannel);
  
-@@ -721,7 +721,7 @@ efi_status_t efi_wait_for_key(unsigned long usec, efi_input_key_t *key)
- void efi_remap_image(unsigned long image_base, unsigned alloc_size,
- 		     unsigned long code_size)
- {
--	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
-+	static efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
- 	efi_memory_attribute_protocol_t *memattr;
- 	efi_status_t status;
- 	u64 attr;
-diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
-index adc5d121a33c5..fbf0e824f9897 100644
---- a/drivers/firmware/efi/libstub/efi-stub.c
-+++ b/drivers/firmware/efi/libstub/efi-stub.c
-@@ -69,8 +69,8 @@ static struct screen_info *setup_graphics(void)
- 
- static void install_memreserve_table(void)
- {
-+	static efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
- 	struct linux_efi_memreserve *rsv;
--	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
- 	efi_status_t status;
- 
- 	/*
-diff --git a/drivers/firmware/efi/libstub/file.c b/drivers/firmware/efi/libstub/file.c
-index bd626d55dcbc2..0dff9e08d49ed 100644
---- a/drivers/firmware/efi/libstub/file.c
-+++ b/drivers/firmware/efi/libstub/file.c
-@@ -39,7 +39,7 @@ static efi_status_t efi_open_file(efi_file_protocol_t *volume,
- 				  efi_file_protocol_t **handle,
- 				  unsigned long *file_size)
- {
--	efi_guid_t info_guid = EFI_FILE_INFO_ID;
-+	static efi_guid_t info_guid = EFI_FILE_INFO_ID;
- 	efi_file_protocol_t *fh;
- 	unsigned long info_sz;
- 	efi_status_t status;
-@@ -74,7 +74,7 @@ static efi_status_t efi_open_file(efi_file_protocol_t *volume,
- static efi_status_t efi_open_volume(efi_loaded_image_t *image,
- 				    efi_file_protocol_t **fh)
- {
--	efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
-+	static efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
- 	efi_simple_file_system_protocol_t *io;
- 	efi_status_t status;
- 
-@@ -128,9 +128,9 @@ static int find_file_option(const efi_char16_t *cmdline, int cmdline_len,
- static efi_status_t efi_open_device_path(efi_file_protocol_t **volume,
- 					 struct finfo *fi)
- {
--	efi_guid_t text_to_dp_guid = EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID;
-+	static efi_guid_t text_to_dp_guid = EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID;
-+	static efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
- 	static efi_device_path_from_text_protocol_t *text_to_dp = NULL;
--	efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
- 	efi_device_path_protocol_t *initrd_dp;
- 	efi_simple_file_system_protocol_t *io;
- 	struct efi_file_path_dev_path *fpath;
-diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
-index 4bc963e999eb9..f5074656457a6 100644
---- a/drivers/firmware/efi/libstub/kaslr.c
-+++ b/drivers/firmware/efi/libstub/kaslr.c
-@@ -18,7 +18,7 @@
-  */
- u32 efi_kaslr_get_phys_seed(efi_handle_t image_handle)
- {
--	efi_guid_t li_fixed_proto = LINUX_EFI_LOADED_IMAGE_FIXED_GUID;
-+	static efi_guid_t li_fixed_proto = LINUX_EFI_LOADED_IMAGE_FIXED_GUID;
- 	void *p;
- 
- 	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
-diff --git a/drivers/firmware/efi/libstub/mem.c b/drivers/firmware/efi/libstub/mem.c
-index 9c82259eea816..fe623a0126ecb 100644
---- a/drivers/firmware/efi/libstub/mem.c
-+++ b/drivers/firmware/efi/libstub/mem.c
-@@ -20,10 +20,10 @@
- efi_status_t efi_get_memory_map(struct efi_boot_memmap **map,
- 				bool install_cfg_tbl)
- {
-+	static efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
- 	struct efi_boot_memmap tmp, *m __free(efi_pool) = NULL;
- 	int memtype = install_cfg_tbl ? EFI_ACPI_RECLAIM_MEMORY
- 				      : EFI_LOADER_DATA;
--	efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
- 	efi_status_t status;
- 	unsigned long size;
- 
-diff --git a/drivers/firmware/efi/libstub/pci.c b/drivers/firmware/efi/libstub/pci.c
-index 1dccf77958d3a..5daa7a0a0e87a 100644
---- a/drivers/firmware/efi/libstub/pci.c
-+++ b/drivers/firmware/efi/libstub/pci.c
-@@ -15,7 +15,7 @@
- 
- void efi_pci_disable_bridge_busmaster(void)
- {
--	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
-+	static efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
- 	efi_handle_t *pci_handle __free(efi_pool) = NULL;
- 	unsigned long pci_handle_num;
- 	efi_handle_t handle;
-diff --git a/drivers/firmware/efi/libstub/random.c b/drivers/firmware/efi/libstub/random.c
-index 7109b8a2dcba8..3ca230fa7aa3e 100644
---- a/drivers/firmware/efi/libstub/random.c
-+++ b/drivers/firmware/efi/libstub/random.c
-@@ -38,7 +38,7 @@ union efi_rng_protocol {
-  */
- efi_status_t efi_get_random_bytes(unsigned long size, u8 *out)
- {
--	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
-+	static efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
- 	efi_status_t status;
- 	efi_rng_protocol_t *rng = NULL;
- 
-@@ -64,9 +64,9 @@ efi_status_t efi_get_random_bytes(unsigned long size, u8 *out)
-  */
- efi_status_t efi_random_get_seed(void)
- {
--	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
--	efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
--	efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
-+	static efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
-+	static efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
-+	static efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
- 	struct linux_efi_random_seed *prev_seed, *seed = NULL;
- 	int prev_seed_size = 0, seed_size = EFI_RANDOM_SEED_SIZE;
- 	unsigned long nv_seed_size = 0, offset = 0;
-diff --git a/drivers/firmware/efi/libstub/riscv.c b/drivers/firmware/efi/libstub/riscv.c
-index f66f33ceb99e3..49db47c05bfe9 100644
---- a/drivers/firmware/efi/libstub/riscv.c
-+++ b/drivers/firmware/efi/libstub/riscv.c
-@@ -45,7 +45,7 @@ static int get_boot_hartid_from_fdt(void)
- 
- static efi_status_t get_boot_hartid_from_efi(void)
- {
--	efi_guid_t boot_protocol_guid = RISCV_EFI_BOOT_PROTOCOL_GUID;
-+	static efi_guid_t boot_protocol_guid = RISCV_EFI_BOOT_PROTOCOL_GUID;
- 	struct riscv_efi_boot_protocol *boot_protocol;
- 	efi_status_t status;
- 
-diff --git a/drivers/firmware/efi/libstub/tpm.c b/drivers/firmware/efi/libstub/tpm.c
-index a5c6c4f163fce..73f0011147323 100644
---- a/drivers/firmware/efi/libstub/tpm.c
-+++ b/drivers/firmware/efi/libstub/tpm.c
-@@ -28,8 +28,8 @@ static const efi_char16_t efi_MemoryOverWriteRequest_name[] =
-  */
- void efi_enable_reset_attack_mitigation(void)
- {
-+	static efi_guid_t var_guid = MEMORY_ONLY_RESET_CONTROL_GUID;
- 	u8 val = 1;
--	efi_guid_t var_guid = MEMORY_ONLY_RESET_CONTROL_GUID;
- 	efi_status_t status;
- 	unsigned long datasize = 0;
- 
-@@ -52,7 +52,7 @@ static void efi_retrieve_tcg2_eventlog(int version, efi_physical_addr_t log_loca
- 				       efi_bool_t truncated,
- 				       struct efi_tcg2_final_events_table *final_events_table)
- {
--	efi_guid_t linux_eventlog_guid = LINUX_EFI_TPM_EVENT_LOG_GUID;
-+	static efi_guid_t linux_eventlog_guid = LINUX_EFI_TPM_EVENT_LOG_GUID;
- 	efi_status_t status;
- 	struct linux_efi_tpm_eventlog *log_tbl = NULL;
- 	unsigned long first_entry_addr, last_entry_addr;
-@@ -150,9 +150,9 @@ static void efi_retrieve_tcg2_eventlog(int version, efi_physical_addr_t log_loca
- 
- void efi_retrieve_eventlog(void)
- {
-+	static efi_guid_t tpm2_guid = EFI_TCG2_PROTOCOL_GUID;
- 	struct efi_tcg2_final_events_table *final_events_table = NULL;
- 	efi_physical_addr_t log_location = 0, log_last_entry = 0;
--	efi_guid_t tpm2_guid = EFI_TCG2_PROTOCOL_GUID;
- 	int version = EFI_TCG2_EVENT_LOG_FORMAT_TCG_2;
- 	efi_tcg2_protocol_t *tpm2 = NULL;
- 	efi_bool_t truncated;
-@@ -173,7 +173,7 @@ void efi_retrieve_eventlog(void)
- 				get_efi_config_table(EFI_TCG2_FINAL_EVENTS_TABLE_GUID);
- 		}
- 	} else {
--		efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
-+		static efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
- 		efi_cc_protocol_t *cc = NULL;
- 
- 		status = efi_bs_call(locate_protocol, &cc_guid, NULL, (void **)&cc);
-diff --git a/drivers/firmware/efi/libstub/unaccepted_memory.c b/drivers/firmware/efi/libstub/unaccepted_memory.c
-index 757dbe734a47a..2a7eac7fef862 100644
---- a/drivers/firmware/efi/libstub/unaccepted_memory.c
-+++ b/drivers/firmware/efi/libstub/unaccepted_memory.c
-@@ -9,7 +9,7 @@ struct efi_unaccepted_memory *unaccepted_table;
- efi_status_t allocate_unaccepted_bitmap(__u32 nr_desc,
- 					struct efi_boot_memmap *map)
- {
--	efi_guid_t unaccepted_table_guid = LINUX_EFI_UNACCEPTED_MEM_TABLE_GUID;
-+	static efi_guid_t unaccepted_table_guid = LINUX_EFI_UNACCEPTED_MEM_TABLE_GUID;
- 	u64 unaccepted_start = ULLONG_MAX, unaccepted_end = 0, bitmap_size;
- 	efi_status_t status;
- 	int i;
-diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
-index 761121a77f9e4..c9e7a01136a59 100644
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -114,9 +114,9 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
-  */
- static void setup_efi_pci(struct boot_params *params)
- {
-+	static efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
- 	efi_status_t status;
- 	efi_handle_t *pci_handle __free(efi_pool) = NULL;
--	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
- 	struct setup_data *data;
- 	unsigned long num;
- 	efi_handle_t h;
-@@ -155,7 +155,7 @@ static void setup_efi_pci(struct boot_params *params)
- 
- static void retrieve_apple_device_properties(struct boot_params *boot_params)
- {
--	efi_guid_t guid = APPLE_PROPERTIES_PROTOCOL_GUID;
-+	static efi_guid_t guid = APPLE_PROPERTIES_PROTOCOL_GUID;
- 	struct setup_data *data, *new;
- 	efi_status_t status;
- 	u32 size = 0;
-@@ -345,7 +345,7 @@ efi_status_t efi_adjust_memory_range_protection(unsigned long start,
- 
- static void setup_unaccepted_memory(void)
- {
--	efi_guid_t mem_acceptance_proto = OVMF_SEV_MEMORY_ACCEPTANCE_PROTOCOL_GUID;
-+	static efi_guid_t mem_acceptance_proto = OVMF_SEV_MEMORY_ACCEPTANCE_PROTOCOL_GUID;
- 	sev_memory_acceptance_protocol_t *proto;
- 	efi_status_t status;
- 
-@@ -407,7 +407,7 @@ static void __noreturn efi_exit(efi_handle_t handle, efi_status_t status)
- static efi_status_t efi_allocate_bootparams(efi_handle_t handle,
- 					    struct boot_params **bp)
- {
--	efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
-+	static efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
- 	struct boot_params *boot_params;
- 	struct setup_header *hdr;
- 	efi_status_t status;
-@@ -814,7 +814,7 @@ void __noreturn efi_stub_entry(efi_handle_t handle,
- 			       struct boot_params *boot_params)
- 
- {
--	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
-+	static efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
- 	const struct linux_efi_initrd *initrd = NULL;
- 	unsigned long kernel_entry;
- 	struct setup_header *hdr;
 -- 
 2.53.0
 
