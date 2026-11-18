@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017588;
-	b=dYzAOkADOV6SrvMclJGuPbezcesk+lZ1LD4IvWzc5qQ2tFEZlrIBSICxTSw0ShGVZGap
-	 +F9q23KOl6Lzari2aPtGy/Ht6jA8QNerPQhzN8QyVWNFkQuCvYidjjTIQtKF3cTeRVAlD
-	 YE329Z/fnJffv7H0jDlLhCVlvIcBXjgAL7jPhWgKGaC5XfuMyOTPHjhASvopDavQ3mMps
-	 G3pB0B6HwGpyWfRNPjO8gA+ihLqjeLp3Z0ec0bk48671/GyXppb8O1xZ2bR0zQKab29/Y
-	 TuzlArksnsTJstXIWiSAafuYj/hNaQJorP4NpCrm9Y2XuXdsJS9ayiL1fo9VTXP0fwA==
+	t=1795017592;
+	b=nbGemBgX3z9eomPIa03UfkSVCxCVTgeQLupkwYBoMA6baf5AALG+qo4QjM0cZMa55Dpt
+	 8sNKb3ZWPuNtkfx/itrkdfJM0Emuk6pojVcYWx0/VNi6+ix9OwSX+UDxcZscBwmU56a6M
+	 roRSD+euhmKhdRNh5chmsZK9YWx5GoLu4hswC4j39vsPJzwN8kC2n1cfXnSEE7SKN8cuh
+	 AlfzhPDdn9rLI2pX+MLi/4nPUXecfeAf3OBbVsDzq/HSYc2ZFU8xnKHGpBPaAKDscIk/N
+	 BiGpoaD+f2yCi6RAxiYponpZsOyWuVy3IZjcxF3i3GXG1fjSlI4hAgQjxehRb3XJCeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017592;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BSVkXlP8rzx3wMyMJciAOZs1jy5mb5HpXZP2nbJm7Ek=;
-	b=AujjurhLSGJ8g3typWP/8Iw2dM7ldqFCxzFA1wwCBHNrNQy0IV6/XApvO0y/c/GRug8u
-	 Ixa1u1bFo5thMipGWd2ofhWy6O/OdBG5377bgUYEPdlPJlGp/KxM8ae9I2KTDilqDoCF8
-	 DKBHZh4Evv9eEsKmenEi8ImcPOoPyOpu+XJ6GUyIip/2t81MI/BUdfv2M6SvZ3jZy+w3s
-	 kM36/q1GQTdMQLNXBStU48PYkFGyrdJMbMoi6lPaqq2PXsMTzR29vzoBaAVFAYPRkZleN
-	 7FezvInXqj0MY+GxcbtziBM0JAsC+xeCAuKbk31krVUMa4Nn2j6L+lLMbB/UpQkCHTg==
+	bh=rDMSAzOWq1TSB37ncxsw8oeeKnD6ycM1rDj7h+LUnuE=;
+	b=rtFWK7Vuy7xWc4Qek2bBlnYlz8WCbkg8GL12Rz9f1xokEpzNTt/8vsQg34NLLfKRvsbX
+	 0OgIdUMFsaf9uSwOs+R4NwnZcOaphziliW5Bn2DLaZiEXmhF2TD7J94VGtC6nHKtop2Tr
+	 O0hEusjmL1zQRpPUAKmBevQ2+XhdK6KcfUXJak714TFWhoZW/+kZCnoLyoy9ETr1/LcCA
+	 KeCDCUoAbXyJ6tYBv/XAd4qqWEmXDg5DivBVJ894DYvzHtg0trdykyjc/aXj24uNhBaMU
+	 godDYj3qmOv/yww2gzHe4f8EBFFjTYC4Q1SPnFEfd4x8ISqHvR2wCRc+BaklMJ88Hzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mT14hXeM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EagXfD3u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33B4606A325;
-	Wed, 18 Nov 2026 15:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC113606A31C;
+	Wed, 18 Nov 2026 15:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mT14hXeM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308131F000C4;
-	Wed, 18 Nov 2026 15:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EagXfD3u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B611F000C4;
+	Wed, 18 Nov 2026 15:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017588;
-	bh=BSVkXlP8rzx3wMyMJciAOZs1jy5mb5HpXZP2nbJm7Ek=;
+	s=korg; t=1795017591;
+	bh=rDMSAzOWq1TSB37ncxsw8oeeKnD6ycM1rDj7h+LUnuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mT14hXeMGu+KBL8g+VUZ3naQfxJqeYwdrxOA82VqZ1pSQ4fTfyOl2WmZuJM5PBmyM
-	 NKh0G56xOhwJqphjUxPJTfZxaMUwxjgWgXHHxHd/fKqddkJvdTa135TDRWevg5cPWD
-	 I1XKHRGGJV4Xi4KtiO5em+4N6I4WtvjYFnyMQOq0=
+	b=EagXfD3uWajlLjj1QdxuWRBJp7djzpbrREvV7ctf0ggwLSMvmzmVdyq08FXoAFSQT
+	 brYdMU3cQEbbbrnW4Qb31ykvy89DnKwYdRqyuDt0cDMER7yfXZWJ4HMLmwTQQynDqJ
+	 39AnPNf1LRoHGC2bNiUdxL66dpIIb8MdI8Jd421E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yishai Hadas <yishaih@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0938/2651] RDMA/mlx5: Set WQ event handler before firmware RQ insertion
-Date: Wed, 18 Nov 2026 15:36:18 +0100
-Message-ID: <20261118150321.653448274@linuxfoundation.org>
+Subject: [PATCH 7.3 0939/2651] RDMA/mlx5: Set SRQ event handler before xarray insertion
+Date: Wed, 18 Nov 2026 15:36:19 +0100
+Message-ID: <20261118150321.687689839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,43 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 28c559d1e25de46bb6dd39e6fa1e93ea6abdf1f6 ]
+[ Upstream commit d2aa15620e98dc4c6516944397ebea03b7a62b90 ]
 
-create_rq() inserts the RQ into dev->qp_table.tree, making it visible to
-rsc_event_notifier() before rwq->core_qp.event was assigned. A firmware
-WQ_CATAS_ERROR event in that window finds a NULL event pointer.
+mlx5_cmd_create_srq() stores the SRQ into the xarray before
+srq->msrq.event was assigned. A firmware SRQ event arriving in that
+window calls through a NULL pointer.
 
-Move the assignment before create_rq().
+Move the assignment before mlx5_cmd_create_srq().
 
-Fixes: 350d0e4c7e4b ("IB/mlx5: Track asynchronous events on a receive work queue")
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
 Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://patch.msgid.link/20260915140933.40580-11-yishaih@nvidia.com
+Link: https://patch.msgid.link/20260915140933.40580-12-yishaih@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/srq.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index fdc33fe589fdb..a19572bfaf8af 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -5619,6 +5619,7 @@ struct ib_wq *mlx5_ib_create_wq(struct ib_pd *pd,
- 		rwq = kzalloc_obj(*rwq);
- 		if (!rwq)
- 			return ERR_PTR(-ENOMEM);
-+		rwq->core_qp.event = mlx5_ib_wq_event;
- 		err = prepare_user_rq(pd, init_attr, udata, rwq);
- 		if (err)
- 			goto err;
-@@ -5642,7 +5643,6 @@ struct ib_wq *mlx5_ib_create_wq(struct ib_pd *pd,
- 			goto err_copy;
+diff --git a/drivers/infiniband/hw/mlx5/srq.c b/drivers/infiniband/hw/mlx5/srq.c
+index a973c1b7515f7..6a4a937d97ce9 100644
+--- a/drivers/infiniband/hw/mlx5/srq.c
++++ b/drivers/infiniband/hw/mlx5/srq.c
+@@ -284,6 +284,7 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
+ 
+ 	in.pd = to_mpd(ib_srq->pd)->pdn;
+ 	in.db_record = srq->db.dma;
++	srq->msrq.event = mlx5_ib_srq_event;
+ 	err = mlx5_cmd_create_srq(dev, &srq->msrq, &in);
+ 	kvfree(in.pas);
+ 	if (err) {
+@@ -292,8 +293,6 @@ int mlx5_ib_create_srq(struct ib_srq *ib_srq,
  	}
  
--	rwq->core_qp.event = mlx5_ib_wq_event;
- 	rwq->ibwq.event_handler = init_attr->event_handler;
- 	return &rwq->ibwq;
+ 	mlx5_ib_dbg(dev, "create SRQ with srqn 0x%x\n", srq->msrq.srqn);
+-
+-	srq->msrq.event = mlx5_ib_srq_event;
+ 	srq->ibsrq.ext.xrc.srq_num = srq->msrq.srqn;
  
+ 	if (udata) {
 -- 
 2.53.0
 
