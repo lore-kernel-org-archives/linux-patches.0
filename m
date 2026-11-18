@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022867;
-	b=KWMgcLsOUZ7U+KTz+bounZGuk+AztkYgjUaqmdtbG4TfSgwDBVAoQc4esFI9uw5oeWeF
-	 Gh2Nx1Ro6Cle+lgJmZ07DAbhUH2JbWlN8F1/eL+iJ0jOQmGKH5DK+u0/IuoxD6mbStr2p
-	 sul58x7GmVwCxl4NPj7BHPRn/rH9DGVd8Bs3ff5QSUSkQicGwfRy9J/bTC5mAYIiYQ1VV
-	 FsCVjsdE/MV+DLj4TUAwqPF3QqS69zUE2JBifJgnH3+1ury1fB9/0TtxIIprPq28SOwYP
-	 KqL++fgqn3BT9uQY01X7vHuDbdb8Yub2+cPQj8zeIO3If0GgaEEX9UylY5CcmU/X1Tg==
+	t=1795022870;
+	b=qu8e7MADjWHqgZi8eXShXgVVKB89RySPHqIZwllPBKB/vmpfQ9cm4QCQj3SmTGorSTQc
+	 /rTRPHRq9eztOptUlorDp3Sa7ZVsmFBIVIcOmsgV5J20jcXbfDbBVeKUIAExNaOhZS+KS
+	 6FJVv+V/ADXEMX9CLpfPuvkwYWlZxjuIYgdaGZRS/yBi9r8Fdj0gxMdNKNtqbzycFI9iG
+	 u5aeTXpOEEIQbqq7GnWJPNnnkTnsFCqh3AvQMdtcKVP3dGK/wocxrskdFHSXSvNDR62p4
+	 rM5fQYFsqqZhvC4W8a3QzuKcXzFgx97XLFQ3eT+JbAdTsyrhH3aIImtPEKfnT9v8ARA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022870;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=oIqVsmLA2dFiup2SHnwV86YEgC8amCeK83S9pEtjqBA=;
-	b=uDI2gtLB+a6BqE8MnNVbd+ng1cIa3ws/OtPqFMcdjWjlqPpTkBw7RXaSIBGrya9mUTRN
-	 BwD6ksCeOaXBbyniCzP4tjv897JaLpRsottXL/Lz8XIHdxA7bjOF+qLunAHtFYTmhak8J
-	 O5R+RgGEDWv9RBL8uUWTi9vdtgj7et8yJT/UTNSnVTNet5u2o+u2bP7ERcTeqxJDAuWJ1
-	 dxoIm4tfC+pDQt/vspHYTa4d9/gW/Xx5ktkKQ/3NeK4vE0i72U3Dl1wqTQuuVsE2VmGas
-	 4ImMfDKEdEU03shY/SeTU1ZhB9SCQRP16rQ+0fON2caZa0QcJaebnKg6l5BTcoTC5Vw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jpxypCy13igPLHbgjL5bb+Tvot9bEhmCTglsAPuvcwk=;
+	b=rfoA1VIvr4pZRpu1sU6CYmT1QpwVg6DTC14d0RtCwFvZAvP2y3klG5Rsu5DdCrK8bACJ
+	 na5f1E5EHeSb9PUfgk2r7DH0dGjtdeWCiSlgLulg0YaTPQcVsErhxyBIOAiqaOnk5w+86
+	 1nDe8s9+q/ASPC3yoUb+7Oe4HN2dZ1xneWCamiIbE1qnWb0l0C30W6NblFKhyIg3AACgz
+	 2Rmh+i88JQiCq48ChuQpQ/f4jJmREwh8R5LpjS8GnqTX91r8dgFEUvNOcFuNpaSmN0rDV
+	 sWT1Phg8jBCoszGSOfcgd5Nygm3gYRxVa4+lSMMdXrTtQZYKn3Lo3z/i4QeYUj6hSOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5w2B1rI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eD+OtvOH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5205606B5E8;
-	Wed, 18 Nov 2026 17:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E01606B5ED;
+	Wed, 18 Nov 2026 17:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5w2B1rI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31281F000C4;
-	Wed, 18 Nov 2026 17:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eD+OtvOH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AD81F000C4;
+	Wed, 18 Nov 2026 17:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022867;
-	bh=oIqVsmLA2dFiup2SHnwV86YEgC8amCeK83S9pEtjqBA=;
+	s=korg; t=1795022870;
+	bh=jpxypCy13igPLHbgjL5bb+Tvot9bEhmCTglsAPuvcwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E5w2B1rItcYpw3zVIM5YfRB2ICN2aGqUgUp4aerV2p/+4q6nq7xRjiv3C/lveCKDx
-	 WgC6SBExsGnME4DQNhRoH+8phHLYq61dK5KoCl95l1qXHmYxk/75KAow865fwEcT5j
-	 Zof66aRQTDLopyOvTSXwzrRMALxJfXnYBE4IIQVk=
+	b=eD+OtvOHqDBT9V+qyfvzj62OOHv5/weE9fDb4PoySkITleM5mXC2sK6RR4dVZ9blk
+	 N+am5/fJI+oaNp4KydEIAkya6G8XRCtRcjFQkjMpqe7f1LcgEupFQFGNpi+fuRyKDm
+	 hyFzu96IEoH0aaskhpoR1etuRH/8/V78nNDNxFr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0165/2151] perf jitdump: Fix funlockfile on unlocked stream in jit_open() error path
-Date: Wed, 18 Nov 2026 15:31:40 +0100
-Message-ID: <20261118150127.758321454@linuxfoundation.org>
+Subject: [PATCH 6.18 0166/2151] perf jitdump: Free event in jit_repipe_code_move()
+Date: Wed, 18 Nov 2026 15:31:41 +0100
+Message-ID: <20261118150127.794164852@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,6 +64,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -72,17 +73,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit bfde6848c1e24fd979d0138c57c1cc28c35093c3 ]
+[ Upstream commit 7fc5851aac606b9e4143f6857710cc5f346770c5 ]
 
-If the malloc() for the initial read buffer fails, jit_open() jumps to
-the error label which calls funlockfile(jd->in).  However, flockfile()
-is called later in the function, so at this point the stream was never
-locked.  Calling funlockfile() on an unlocked stream is undefined
-behavior per POSIX.
+jit_repipe_code_move() allocates a perf_event with calloc but never
+frees it — the 'out' label exits with only perf_sample__exit().
 
-Split the error path into two labels: 'error' (after flockfile) calls
-funlockfile before cleanup, 'error_noflock' (before flockfile) skips
-the unlock.
+The sibling function jit_repipe_code_load() correctly calls
+free(event) at its out label.  Add the same free(event) to
+jit_repipe_code_move().
 
 Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -92,33 +90,21 @@ Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/util/jitdump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 8e561a0eeaa7d..8694f29d3b652 100644
+index 8694f29d3b652..5f4af5d890ac6 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -157,7 +157,7 @@ jit_open(struct jit_buf_desc *jd, const char *name)
- 
- 	buf = malloc(bsz);
- 	if (!buf)
--		goto error;
-+		goto error_noflock;
- 
- 	/*
- 	 * protect from writer modifying the file while we are reading it
-@@ -245,8 +245,9 @@ jit_open(struct jit_buf_desc *jd, const char *name)
- 
- 	return 0;
- error:
--	free(buf);
- 	funlockfile(jd->in);
-+error_noflock:
-+	free(buf);
- 	fclose(jd->in);
- 	return retval;
+@@ -682,6 +682,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
+ 		build_id__mark_dso_hit(tool, event, &sample, NULL, jd->machine);
+ out:
+ 	perf_sample__exit(&sample);
++	free(event);
+ 	return ret;
  }
+ 
 -- 
 2.53.0
 
