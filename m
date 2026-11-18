@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042086;
-	b=BRgexgZ+6K7bMCzWqX26tKx5gYoS+6+iz2Mp+YkhZL5V6jPQJhaODl5bmkMtLJsAD4Mv
-	 QQ6gZGb1eoOvew7yQWelUxnhZjXBzk6YiwIkvjQbd8PaNhinSUUl2PqBuwiA3xVNTfC8I
-	 YtnNKY0oT2eTuEVJmtRyEA6RsYvM9wNFtMR6F3M9SkT/xRUsqgdHy7F1Lbvf/1yOLMWy5
-	 h28MEL3adWwQ1dy/veJmfvFnnYlG4FO2xUZhBf9cfpqJy+pvaCAxh2fo7b7v/dnoOHHrn
-	 bCUPNOkRVrZ2FVLxR7+gDVm6nqUR+e04v/kAh6RrF2Zdl9uaFTVh3Jpj7xqGY7xkmsw==
+	t=1795042089;
+	b=BkPsaDBV/WSoCAVMbloxdwRnTIchzMnkxK4AXCsLt2FjhjYPRR00kW/NB+gF6sgcoWoR
+	 gYHljfeniLmu7UT7KvDCMHOGhZ9Q6MjihiQ7KMB331CA5h3W3h9NfcbrIflp842dbdftS
+	 4Aa0aYLh+ZnnDbqNCi3ErYqlTaQciIdZN3YuOiGTTElDWS3tuvY+FuLIhVtO+f7IGYqRJ
+	 RQU7EFguNaaRHXWHfZ4AdtA7VYBTwIJidVNW5lCM4HkM7zsIebNLGg6hQXIIcPTT7nvQ3
+	 D1BFrWI048lx1fjsGPAyQ6koxgRrAhPMTdfW0MbD13qxq1BbMkqDQvzXSq8pScY0B5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CNMqdxIv+SdlgO/3441AxtVZOUsL0AWGhViq0NdDXbg=;
-	b=b7He/7LXWynDkcwqlW2we4p9c9iNJYbUI4IzS7d9TWDGwr4BAX9a/230u6/KGZ17zD7S
-	 SSaBzoeEfZCPunKRSZ19yQTMOBV3Fvh0y3F1cDXgpzmLplGeWliietyBBRfXZU1c/lbQM
-	 qUYmfqVV0UF9MkmtuCDNNl0O6K2nXv9+Wc3NWHpoVweI6wzJIvFz5ymXxCYvMbX1AmcUB
-	 MQ2Bg0/8d++6quVe5/b++8DlAByevLN+emPPQGqtca02LBk9tj/9ZwM2sn4vBYHpVf4Pu
-	 zqybn5WYiU9/Nq3J/ffoXoPigUYr/T+D7eeZT7ghOiAB3FQP/AOBJ4AlZBAplCH445w==
+	bh=wzmq3J+tOcasVwGsKpj9N5L5Lh50rrfsTPMblseRVwM=;
+	b=KHM2Vpva0J0d6QET9HLLgNGntECfA32UJVDUwQXUNRkRw+CzMIYqvsUwj1xQ8FbawS7J
+	 KAjAFzoGx2YvplnVd7j/qhbdnPaPZrUxyR3HxWQf1dCrQaS+Sbe/ReMxZ5mKlGqklmGOY
+	 YeWnlxqIwHRqr6Vm7LWRdZmg0ZSSLtFQXH1YcknJq2oDEYZKGXifZoRO8zmCck9e0h4Wl
+	 TVNvP4laaoqu7ibJpS+hMij4JEWZTNHtlQca1TVPJC14Xg4Z6+sJ5j1hydTchzSjjaG4l
+	 KCLH5VI7vVc4dw6AYa5/olbkilCEAt3gPVi60Gj7vYIAY2xNs7VQRMUJWXrhhva2fWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KX4hXZ5F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BGNVrgpv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265DB606A325;
-	Wed, 18 Nov 2026 22:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5B3606A325;
+	Wed, 18 Nov 2026 22:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KX4hXZ5F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DDD1F000C7;
-	Wed, 18 Nov 2026 22:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BGNVrgpv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33FF1F000C4;
+	Wed, 18 Nov 2026 22:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042086;
-	bh=CNMqdxIv+SdlgO/3441AxtVZOUsL0AWGhViq0NdDXbg=;
+	s=korg; t=1795042089;
+	bh=wzmq3J+tOcasVwGsKpj9N5L5Lh50rrfsTPMblseRVwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KX4hXZ5F7UW8EI8neXdkt7Dm6JsO5pDE9f/vu9DvLo8ipZn1adEeU1ZmG+l6yduW5
-	 n5BM8eCLlyYJ+d7OJ+4IdhtAiY664D4oFiC/M/9LQdpKlnMzFAP2AFYMhMjno5iTAB
-	 25tf+SaRym2xgsg0XXB9HvEt94muElU5slnBel1o=
+	b=BGNVrgpvrHHEfJOYDyB6De6j1XnXPkEludNZQn0CDdbXbTh1LyffrEO4i6OsF0QzN
+	 uDSnUGcq4pdQkK+OwVv7BlMLZ8bwSbfDSbI8KWDMGspn+aujWCte7ejPUPQUwlT9Hx
+	 pO5GUEJzkNuLlYBbp1GQNaUqt/G7ZliTgT8QHTNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangfeng He <huangya90@gmail.com>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3045/3318] netfilter: flowtable: use the vlan id, not the full tci, in the tuple key
-Date: Wed, 18 Nov 2026 16:01:07 +0100
-Message-ID: <20261118150451.508736467@linuxfoundation.org>
+Subject: [PATCH 6.6 3046/3318] netfilter: xt_dccp: handle reserved options as single-byte
+Date: Wed, 18 Nov 2026 16:01:08 +0100
+Message-ID: <20261118150451.537237419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,63 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangfeng He <huangya90@gmail.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit c203ecf905745d979de5df28fa657121f2e9342d ]
+[ Upstream commit 2edda78aa4eb04cd8f112a81897510ee0cdd7099 ]
 
-nf_flow_tuple_encap() stores the skb vlan tag in the encap tuple id
-using skb_vlan_tag_get(), which returns the unmasked TCI including
-the 3 PCP priority bits. The flowtable entry, however, is programmed
-by nf_dev_path_info() with vlan_dev_vlan_id(), a plain 12-bit VID.
+The DCCP UAPI defines option numbers 3 through 31 as reserved.  Like
+Padding and Mandatory, these options occupy one byte.  dccp_find_option()
+only treats values below 2 as single-byte and interprets the byte after a
+reserved option as a TLV length.
 
-When a NIC delivers RX vlan offload skbs with a non-zero priority
-(an RTL9617C EPON ONU was observed handing over vid 818 skbs with
-tci 0x6332, PCP 3), the runtime lookup key never matches the
-programmed entry, so every packet misses the flow table and
-software flow offload is silently defeated.
+This can skip a later option and invert an XT_DCCP_OPTION rule result.  A
+local production-hook fixture installed the same DROP rule for IPv4 and
+IPv6.  In three fresh boots per kernel, a target-only packet was dropped
+20/20 times, while adding reserved option 3 before the same target let
+20/20 packets reach the protected receiver.  The fixed kernel dropped all
+trigger packets in three fresh boots and preserved the normal controls.
 
-Mask both parse sites to the 12-bit VID so the lookup key matches
-for any priority. The in-header variant has the same problem for
-frames received with PCP != 0 on a non-offload path.
+Treat every option up to DCCPO_MAX_RESERVED as single-byte, matching the
+protocol definition.  Triggering requires
+CONFIG_NETFILTER_XTABLES_LEGACY, CONFIG_NETFILTER_XT_MATCH_DCCP, an
+option-based rule, and remote protocol-33 reachability.  The touched source
+is unchanged at 0c2669a9f4a1d607e7591ae50ccf3c432a0aff08, where the patch
+applies and builds cleanly.
 
-The egress side is unaffected: nf_flow_encap_push() restores tags
-from the programmed tuple id, which never carried priority bits.
-
-Measured on an RTL9617C ONU (PPPoE over VLAN 818 WAN, NATed 6-flow
-download over a 1G EPON line), before -> after:
-
-  download throughput      377 Mbps -> 936 Mbps
-  CPU0 %soft at that rate    91.5%  ->  70.9%
-
-Fixes: 4cd91f7c290f ("netfilter: flowtable: add vlan support")
-Signed-off-by: Shuangfeng He <huangya90@gmail.com>
+Fixes: 1d3de414eb20 ("[NETFILTER]: New iptables DCCP protocol header match")
+Assisted-by: LLM
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_ip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/xt_dccp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_flow_table_ip.c b/net/netfilter/nf_flow_table_ip.c
-index 24f1e6917d4ac..9ca4c96b30d0e 100644
---- a/net/netfilter/nf_flow_table_ip.c
-+++ b/net/netfilter/nf_flow_table_ip.c
-@@ -146,14 +146,14 @@ static void nf_flow_tuple_encap(struct sk_buff *skb,
- 	int i = 0;
+diff --git a/net/netfilter/xt_dccp.c b/net/netfilter/xt_dccp.c
+index 037ab93e25d0a..bab2fd6dba5fd 100644
+--- a/net/netfilter/xt_dccp.c
++++ b/net/netfilter/xt_dccp.c
+@@ -62,7 +62,7 @@ dccp_find_option(u_int8_t option,
+ 			return true;
+ 		}
  
- 	if (skb_vlan_tag_present(skb)) {
--		tuple->encap[i].id = skb_vlan_tag_get(skb);
-+		tuple->encap[i].id = skb_vlan_tag_get_id(skb);
- 		tuple->encap[i].proto = skb->vlan_proto;
- 		i++;
- 	}
- 	switch (skb->protocol) {
- 	case htons(ETH_P_8021Q):
- 		veth = (struct vlan_ethhdr *)skb_mac_header(skb);
--		tuple->encap[i].id = ntohs(veth->h_vlan_TCI);
-+		tuple->encap[i].id = ntohs(veth->h_vlan_TCI) & VLAN_VID_MASK;
- 		tuple->encap[i].proto = skb->protocol;
- 		break;
- 	case htons(ETH_P_PPP_SES):
+-		if (op[i] < 2 || i == optlen - 1)
++		if (op[i] <= DCCPO_MAX_RESERVED || i == optlen - 1)
+ 			i++;
+ 		else
+ 			i += op[i + 1] ? : 1;
 -- 
 2.53.0
 
