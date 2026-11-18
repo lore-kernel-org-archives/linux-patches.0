@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046980;
-	b=nPei9avFNN/HuVL6nSK38Fezt+TLMBwuGiVjUd5hiN/hKk/T71KTztXAszTnaaNlxUIa
-	 AmUYRtHZMFXspFey7aA0ExHDJ3y8vyMNX1lHEjeUdZFbZz5ZURn79JJRhvIo48sHHRTzM
-	 F6OklIa7bod1DjfykWGmeTHioRBcb4MyZxmSsG99FrxKVJ0VhpH4MXf/caWjKPcHECCIk
-	 mmfusgM3phBkoGoCdEyGRH3Li4b5e0cEBQRQPixT1djRBUPc7M25IytAavBC0+uSE8YTN
-	 LGNZlyxMOc3uhJFMHiEWJ+N920hleikdbe7If6KLoDaVgB0a4zkZp+IY+2cYYGvJloA==
+	t=1795046982;
+	b=G4M98T26tcg0dNM729aSuww/cTdGjrX8qlFqTj+80QXGoEQkIIUWRRUxpJoGD+S0oKP+
+	 gAp/HcidnQQS9IKd7PRJyMT+FHf4v0PGwCHyQV9RmH63lN7WOyDbJf5N5s+0UAg3a5VOw
+	 Q46Fa4g3VIxelq8sLbQkIU082Zyg5XU6DXTPLRG9Kdo+yAvkasohxgIOs79E6VniU6rCA
+	 Os5LHwgQ2NmOSwnBB/kjFzJM14Cw4XO/gbqQzmiDTufgu8zknxu+oXy4LlTbMgCJfUUNK
+	 Eq50EbCFa07XAur+dBRThvkItC8ix2bquKT1DXNZYFxSJVLYSG6DZsMizv4Z4bWamCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046980;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046982;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=MHK8VWZtxoU0sQLvB6AjHFZKU31HwfjbvnWM9XYg+ZY=;
-	b=y7DHCX5zEcUsbPGWJ5j+VgVJbrzZXufzdKsU5FbVyngLax3BKkspANLWzo+jmBSTpB5K
-	 xXAV41ecjrGfFzt1u5EJx34vRYeamXTim7tOD35UL9+8UiKyzGF4GoeNOEV1RKlbgJs4k
-	 1j+1OyOhp/G1UohvHG1IsJviFm0vd4UXHxgX2n4S5ZlVhsQennk1jcYM/WSJoHQqE4+1X
-	 8TPxR4Bf9/cATTyOARyVB+DlflRIWFmnQelM15pOZGrEDY4Z29T10Yzz/hdxx3HtvvjrI
-	 xytnpYkuc/NEJm6bKa02vp2DjdCg6+YNAI2Ydz/L8UcwCgrloR4T0xcPhctz7KTwaZA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=DgtDhHzwknjD9AD44ppqdauFPrW+VabpGySmcFiZD/8=;
+	b=RjufFK8CF66zgI/FE9xYhfigyC7kE4tunQqQAqZu9ox1W5x0wH/q6alwLamYnqlDZWoa
+	 ESMk0Pa9cO3cHdAW5PMhBGJawXzEcQZQtpO9/bmg82w3BzW9S2tURbaFB7rUAWIsUAts1
+	 lcFyUe5WyIf1XmxyxUbAqjxz9E17LFu3rNVloDeJ1rNuO5etoxcR6srNby/qEVajusc1l
+	 7REYw5gNm9AtaF69J1pZa1yVsiealXURmpKE6Tpu/Me7XZxgJdVOeM8OdfKo1ebvzXPss
+	 337NqtYE/0irG+1VEjCpUvhKblwLbVdkJlTXVrZeIDeE4hAcakQdkh0ZJYHvy/x7Fvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSg4hDrl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02Ru+Gsi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7335606A31C;
-	Thu, 19 Nov 2026 00:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5A3606A325;
+	Thu, 19 Nov 2026 00:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VSg4hDrl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471421F000C4;
-	Thu, 19 Nov 2026 00:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02Ru+Gsi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186521F000C4;
+	Thu, 19 Nov 2026 00:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046979;
-	bh=MHK8VWZtxoU0sQLvB6AjHFZKU31HwfjbvnWM9XYg+ZY=;
+	s=korg; t=1795046982;
+	bh=DgtDhHzwknjD9AD44ppqdauFPrW+VabpGySmcFiZD/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSg4hDrl1Xkr9fV85bG2rkXeE0GVl2w9GG3F2lontSSGDzf6UgE6H/Abud/YxyRZh
-	 LDpUGXC69YjS79wzTqgTyIwH+aBj6TE1aJpKcL1nTowSQT71mCh7e5vparsICiAEP3
-	 wT+sdxyg8B/G5rVlLOAMRgr7VGzgbqJNQopQHIIU=
+	b=02Ru+Gsib+713ydQIEj8lgQypDpGYUfKvO/6UVUoIeTQpo0kWoX+IvovKA5yvafHg
+	 g3pr/qMCB65c4OljfU9SdT0vyY/a4YiLKU5bsSbXNhzRvy8wtXaj9nWJZS1ZLLYU6N
+	 NeQskGPG011vOqW1tRbcL+PwTjJlWNOzn9BQ/nh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1476/2857] nilfs2: force clear dirty state when restoring from the shadow map
-Date: Wed, 18 Nov 2026 15:41:50 +0100
-Message-ID: <20261118150254.456112241@linuxfoundation.org>
+Subject: [PATCH 6.1 1477/2857] IB/hfi1: Shutdown self-rearming timers before freeing
+Date: Wed, 18 Nov 2026 15:41:51 +0100
+Message-ID: <20261118150254.491587887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,220 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit cb6702e63e0a16afd83875294e5ce53becdd1b1f ]
+[ Upstream commit 9d3259e41ccd5016cd2c6d013232b89df6d73011 ]
 
-When garbage collection fails, nilfs2 rolls the DAT metadata file's page
-cache back to a shadow copy taken before GC started.
-nilfs_clear_dirty_pages() drops the dirty state of the folios in the DAT
-cache, then nilfs_copy_back_pages() overwrites them with the saved
-contents and warns if one is still dirty:
+The HFI1 receive error and synthetic counter timers rearm themselves from
+their callbacks. Their cleanup paths use timer_delete_sync(), which only
+waits for a running callback and does not prevent a concurrent or
+subsequent rearm.
 
-	/* overwrite existing folio in the destination cache */
-	WARN_ON(folio_test_dirty(dfolio));
+Use timer_shutdown_sync() when releasing these timers. This prevents a
+callback from enqueueing either timer after cleanup begins, before the
+containing hfi1_devdata is freed.
 
-nilfs_clear_dirty_pages() used to clear the dirty state unconditionally,
-which is safe here because the rollback runs with the log writer
-stopped, so nothing else can dirty the cache while it runs.  The same
-helper is also used when writeback finds dirty folios after the
-filesystem has degraded to read-only, where it does run concurrently
-with the log writer, so commit ca76bb226bf4 ("nilfs2: do not force clear
-folio if buffer is referenced") made nilfs_clear_folio_dirty() skip a
-folio if any of its buffer heads is busy.  The rollback caller shares
-that helper, so its clearing step can now return with a folio still
-dirty.
+Preserve the existing work cancellation and workqueue destruction ordering
+for synthetic counters.
 
-A DAT folio can hold a busy buffer head without anyone modifying the
-folio: nilfs_mdt_read_block() submits read-ahead for the blocks
-following the one it was asked for and waits only for the first, so the
-read-ahead buffers are still locked when it returns.  With a block size
-smaller than the page size, a locked read-ahead buffer can share a folio
-with a block that GC dirtied and keep the whole folio dirty past the
-clearing step.
-
-Add a force flag to nilfs_clear_dirty_pages() and
-nilfs_clear_folio_dirty() that skips the busy buffer check, and set it
-in the two calls from nilfs_mdt_restore_from_shadow_map().  The
-read-only fallback callers keep passing false, so that commit still
-protects them and the WARN_ON() is left alone.
-
-Fixes: ca76bb226bf4 ("nilfs2: do not force clear folio if buffer is referenced")
-Closes: https://lore.kernel.org/lkml/CANypQFZSYrtcshnUzOPiqatyLd-M8_OReOewQoAi_V5yY0dTtg@mail.gmail.com/
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
 Cc: stable@vger.kernel.org
-Suggested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Assisted-by: Claude Code:claude-opus-5
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Acked-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-[ sashal: adapted folio-based changes to page APIs, including the retained nilfs_writepage() caller’s new argument ]
+Assisted-by: LLM
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260930070455.2934286-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[ sashal: adjusted context for existing del_timer_sync() calls instead of timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/inode.c |  4 ++--
- fs/nilfs2/mdt.c   |  6 +++---
- fs/nilfs2/page.c  | 50 +++++++++++++++++++++++++++--------------------
- fs/nilfs2/page.h  |  4 ++--
- 4 files changed, 36 insertions(+), 28 deletions(-)
+ drivers/infiniband/hw/hfi1/chip.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
-index eaf4e61113afd..f1ee44dfcfe02 100644
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -162,7 +162,7 @@ static int nilfs_writepages(struct address_space *mapping,
- 	int err = 0;
- 
- 	if (sb_rdonly(inode->i_sb)) {
--		nilfs_clear_dirty_pages(mapping);
-+		nilfs_clear_dirty_pages(mapping, false);
- 		return -EROFS;
- 	}
- 
-@@ -185,7 +185,7 @@ static int nilfs_writepage(struct page *page, struct writeback_control *wbc)
- 		 * have dirty pages that try to be flushed in background.
- 		 * So, here we simply discard this dirty page.
- 		 */
--		nilfs_clear_dirty_page(page);
-+		nilfs_clear_dirty_page(page, false);
- 		unlock_page(page);
- 		return -EROFS;
- 	}
-diff --git a/fs/nilfs2/mdt.c b/fs/nilfs2/mdt.c
-index 233954e224487..d0808953296ac 100644
---- a/fs/nilfs2/mdt.c
-+++ b/fs/nilfs2/mdt.c
-@@ -411,7 +411,7 @@ nilfs_mdt_write_page(struct page *page, struct writeback_control *wbc)
- 		 * have dirty pages that try to be flushed in background.
- 		 * So, here we simply discard this dirty page.
- 		 */
--		nilfs_clear_dirty_page(page);
-+		nilfs_clear_dirty_page(page, false);
- 		unlock_page(page);
- 		return -EROFS;
- 	}
-@@ -634,10 +634,10 @@ void nilfs_mdt_restore_from_shadow_map(struct inode *inode)
- 	if (mi->mi_palloc_cache)
- 		nilfs_palloc_clear_cache(inode);
- 
--	nilfs_clear_dirty_pages(inode->i_mapping);
-+	nilfs_clear_dirty_pages(inode->i_mapping, true);
- 	nilfs_copy_back_pages(inode->i_mapping, shadow->inode->i_mapping);
- 
--	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping);
-+	nilfs_clear_dirty_pages(ii->i_assoc_inode->i_mapping, true);
- 	nilfs_copy_back_pages(ii->i_assoc_inode->i_mapping,
- 			      NILFS_I(shadow->inode)->i_assoc_inode->i_mapping);
- 
-diff --git a/fs/nilfs2/page.c b/fs/nilfs2/page.c
-index 89cd1510bf715..a49ca08b9fcc2 100644
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -367,8 +367,9 @@ void nilfs_copy_back_pages(struct address_space *dmap,
- /**
-  * nilfs_clear_dirty_pages - discard dirty pages in address space
-  * @mapping: address space with dirty pages for discarding
-+ * @force: whether to clear the dirty state regardless of busy buffer heads
-  */
--void nilfs_clear_dirty_pages(struct address_space *mapping)
-+void nilfs_clear_dirty_pages(struct address_space *mapping, bool force)
+diff --git a/drivers/infiniband/hw/hfi1/chip.c b/drivers/infiniband/hw/hfi1/chip.c
+index 3ef47ffd3859f..8d9a64637f2cf 100644
+--- a/drivers/infiniband/hw/hfi1/chip.c
++++ b/drivers/infiniband/hw/hfi1/chip.c
+@@ -5575,7 +5575,7 @@ static int init_rcverr(struct hfi1_devdata *dd)
+ static void free_rcverr(struct hfi1_devdata *dd)
  {
- 	struct pagevec pvec;
- 	unsigned int i;
-@@ -389,7 +390,7 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
- 			 * was acquired.  Skip processing in that case.
- 			 */
- 			if (likely(page->mapping == mapping))
--				nilfs_clear_dirty_page(page);
-+				nilfs_clear_dirty_page(page, force);
+ 	if (dd->rcverr_timer.function)
+-		del_timer_sync(&dd->rcverr_timer);
++		timer_shutdown_sync(&dd->rcverr_timer);
+ }
  
- 			unlock_page(page);
- 		}
-@@ -401,13 +402,16 @@ void nilfs_clear_dirty_pages(struct address_space *mapping)
- /**
-  * nilfs_clear_dirty_page - discard dirty page
-  * @page: dirty page that will be discarded
-+ * @force: whether to clear the states regardless of busy buffer heads
-  *
-  * nilfs_clear_dirty_page() clears working states including dirty state for
-- * the page and its buffers.  If the page has buffers, clear only if it is
-- * confirmed that none of the buffer heads are busy (none have valid
-- * references and none are locked).
-+ * the page and its buffers.  If the page has buffers and force is false,
-+ * clear only if it is confirmed that none of the buffer heads are busy (none
-+ * have valid references and none are locked).  If force is true, the states
-+ * are cleared unconditionally, the caller should guarantee that the page is
-+ * not being modified concurrently.
-  */
--void nilfs_clear_dirty_page(struct page *page)
-+void nilfs_clear_dirty_page(struct page *page, bool force)
- {
- 	BUG_ON(!PageLocked(page));
+ static void handle_rxe_err(struct hfi1_devdata *dd, u32 unused, u64 reg)
+@@ -12306,7 +12306,7 @@ static void free_cntrs(struct hfi1_devdata *dd)
+ 	int i;
  
-@@ -418,24 +422,28 @@ void nilfs_clear_dirty_page(struct page *page)
- 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
- 			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
- 			 BIT(BH_Delay));
--		bool busy, invalidated = false;
-+
-+		if (!force) {
-+			bool busy, invalidated = false;
- 
- recheck_buffers:
--		busy = false;
--		bh = head;
--		do {
--			if (atomic_read(&bh->b_count) | buffer_locked(bh)) {
--				busy = true;
--				break;
-+			busy = false;
-+			bh = head;
-+			do {
-+				if (atomic_read(&bh->b_count) |
-+				    buffer_locked(bh)) {
-+					busy = true;
-+					break;
-+				}
-+			} while (bh = bh->b_this_page, bh != head);
-+
-+			if (busy) {
-+				if (invalidated)
-+					return;
-+				invalidate_bh_lrus();
-+				invalidated = true;
-+				goto recheck_buffers;
- 			}
--		} while (bh = bh->b_this_page, bh != head);
--
--		if (busy) {
--			if (invalidated)
--				return;
--			invalidate_bh_lrus();
--			invalidated = true;
--			goto recheck_buffers;
- 		}
- 
- 		bh = head;
-diff --git a/fs/nilfs2/page.h b/fs/nilfs2/page.h
-index f5432f6a2fb6f..1cf9f03ef725a 100644
---- a/fs/nilfs2/page.h
-+++ b/fs/nilfs2/page.h
-@@ -41,8 +41,8 @@ void nilfs_page_bug(struct page *);
- 
- int nilfs_copy_dirty_pages(struct address_space *, struct address_space *);
- void nilfs_copy_back_pages(struct address_space *, struct address_space *);
--void nilfs_clear_dirty_page(struct page *page);
--void nilfs_clear_dirty_pages(struct address_space *mapping);
-+void nilfs_clear_dirty_page(struct page *page, bool force);
-+void nilfs_clear_dirty_pages(struct address_space *mapping, bool force);
- unsigned int nilfs_page_count_clean_buffers(struct page *, unsigned int,
- 					    unsigned int);
- unsigned long nilfs_find_uncommitted_extent(struct inode *inode,
+ 	if (dd->synth_stats_timer.function)
+-		del_timer_sync(&dd->synth_stats_timer);
++		timer_shutdown_sync(&dd->synth_stats_timer);
+ 	cancel_work_sync(&dd->update_cntr_work);
+ 	ppd = (struct hfi1_pportdata *)(dd + 1);
+ 	for (i = 0; i < dd->num_pports; i++, ppd++) {
 -- 
 2.53.0
 
