@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048054;
-	b=SpymT/hlgHVCWGKM/SNuE4PtHt/jBMO3pVsoCYY/MXPaIt8M6/PVCoFtY7WcM/neWvUF
-	 n5XVWAhe21Xr6vwd+CAdU4dnT23L3MuxRa+OTVwRAqnAqdR3L9d39buq3Gr+HkJZsxB/4
-	 n3klu0m5MuYAGTKDsQ2nLkYOQXWRAnlCovHu5RzR7u6sbN6r0+AkGRHRPbvcgv8j7fcaM
-	 PizNZeJgdHwjhlU/c/zWXtMfSCS6O2CIxsTTeFvgHbuUgLdrP9YqMIC+urxWBJDZL4WjW
-	 8VvF+3Oo5yQDihizWMUtitsAsZM7ehid00BG7duLzegta9Us1CqNLzWEtJqPJ1PAc2g==
+	t=1795048056;
+	b=viGVRX+CMZLB5blNc9OfhJjb+A6+joQYlp2rxWsmrc2h+UAH68YzTNO7jajPBhI+CFaZ
+	 3MvcxuIhXARySdKZNTDd5gAoaIPNIv5YO7/j+ccE+a+fksJfbJGsutzZYl12TlmLF01Am
+	 AS0r6xSjN562BqC3FLqdWsWuKpxYi+k4Z3D0qabkMoSagdoZMcUdUV/PR3Dk5gt8+oTCd
+	 kTQJfcroRQ0/oArSVJyGU7bPOmj0wAhEUIgdeeJFwFNkNs5ZoS8mi0Nc4ZFnanIXSOOV2
+	 YUFTqDn00VU3qGQ5CcaWY5F44XoUVBJOQ0i8j/jU26y4Lh7SeYgLZ9tiIEWdJDnQuTA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048054;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048056;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=cbMOlzE88cqbClmoq3OHI5t9XiyHF+ZEcaD+Ai17cYc=;
-	b=Ni/p8J+UfhvF8293ALqECgj/mo0nlF/BRLf8PzcTpX2ce02vnvm/e0eSyBbZQR+MzPRr
-	 3cudIFk/hn/+YdQMVQWpzwECP/D7yuyMtANEvJ/ckZjDbN6Q873eU9JKE47EjKgaqXMWG
-	 ERUWkicJnJw6iQM6CnzWoxDZPE3kPqCYYw8OZHlUi7kKw7eJo5PQVkOjZv71ahk7tVqdV
-	 bhu/BpT6wElmbXpZBnFfWQkQ0wup/tpW6PY3cNVApWWHStFoJYGwOnfoviYKYQam2Ooos
-	 OknHyENju3A91m5DftwNHgFhh2Q1CLInq1b0v+9T/tSL1IVJM1bRHeF+r9dimVxMC7A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=PVQrddNJ37P5Sd3Jp95FV2SP7OaPjZd6XfgLZILjXSM=;
+	b=u+NcX+BJuZRHIjbSYVpXyltNl66P0/IDdjwDWMjB6zRZg4EmtFffNq/IbFjQMvDYItP3
+	 upiXRsPUqU0WAveKzuHvcF9NkfKIXhtPhJ82VKheEiDb4vo7QP9isiq255HL2TbOpt3d/
+	 CA9yTtr2SlDr8wDUZmenoP7Os0aCPDUD36twAQKCkM6FwU9Vgrn/YHWRSKcxRFsk6XBxl
+	 GEQg9ew1WLrWZ9Q+1cVNMxMj+BUtcPUHlZpARes5iV8l+kblXc7EI7SfGKib8O89glks4
+	 AhJUAM3t7ZBvNO2DlApw79WlRamjhG/K84r56EyWqBkm7oh5gZO3qrx6nau90XRBCOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqYRrOWv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/PZxfpa";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1583F606A325;
-	Thu, 19 Nov 2026 00:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA16C606A31C;
+	Thu, 19 Nov 2026 00:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqYRrOWv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692841F000C4;
-	Thu, 19 Nov 2026 00:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/PZxfpa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CADA1F000C4;
+	Thu, 19 Nov 2026 00:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048053;
-	bh=cbMOlzE88cqbClmoq3OHI5t9XiyHF+ZEcaD+Ai17cYc=;
+	s=korg; t=1795048056;
+	bh=PVQrddNJ37P5Sd3Jp95FV2SP7OaPjZd6XfgLZILjXSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqYRrOWvOqD3GKsvhdqxwSMxoREcW9qrd1Pct7i4s9Pwd7jxXa9L461be1Lg1x3cV
-	 N2YKGgaRyH7TvBpW7jAghf5fxCUoxz32E7huKwhH+FNEn3/GeAH231XuMKlW8ZFF5B
-	 HFwVVuOCt38bHXbYK3tiTjXAPRah5bjEICoTPrFQ=
+	b=B/PZxfpajYevRBpXayDApTim+KRG+k8Qxx5T4pyvmxIltMEXWHaQZfv89zgiik7WP
+	 HMhYzz3/3AlEo1R51+dmJ/nCP9dH4QcxJdyBSN2yHR9E9wzJ9xpNZA3648PFimFnB9
+	 QKRFsyOaBlB7wLwL01SMqKHPddJvLhDWYQHLSCEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1818/2857] ASoC: mediatek: mt6797: fix wrong unwind order and error code in enable_clock
-Date: Wed, 18 Nov 2026 15:47:32 +0100
-Message-ID: <20261118150306.727361975@linuxfoundation.org>
+Subject: [PATCH 6.1 1819/2857] pwm: lp3943: Drop usage of pwm_[gs]et_chip_data()
+Date: Wed, 18 Nov 2026 15:47:33 +0100
+Message-ID: <20261118150306.765215703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,86 +62,116 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit e967d479b65c778cd2394ab185e289beefcf996d ]
+[ Upstream commit 06cc4767750337ad162a0a7bcfd6f6eff6e0fe92 ]
 
-The error paths in mt6797_afe_enable_clock() use incorrect goto labels,
-causing clocks that failed to enable to be disabled during cleanup.
+Instead of distributing the driver's bookkeeping over 3 (i.e.
+LP3943_NUM_PWMS + 1) separately allocated memory chunks, put all together
+in struct lp3943_pwm. This reduces the number of memory allocations and
+so fragmentation and maybe even the number of cache misses. Also
+&lp3943_pwm->pwm_map[pwm->hwpwm] is cheaper to evaluate than
+pwm_get_chip_data(pwm) as the former is just an addition in machine code
+while the latter involves a function call.
 
-Fix the goto labels to only unwind clocks that were successfully
-enabled, and return the actual error code.
-
-Fixes: c5e7fca928d3 ("ASoC: mt6797: add structure define and clock control function for 6797")
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260821122840.41266-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20230705080650.2353391-5-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 17dbb6938d3a ("pwm: lp3943: fix NULL pointer dereference for an unconfigured channel")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt6797/mt6797-afe-clk.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ drivers/pwm/pwm-lp3943.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt6797/mt6797-afe-clk.c b/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
-index 6f3e6acfcfab2..0ac04d73b7772 100644
---- a/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
-+++ b/sound/soc/mediatek/mt6797/mt6797-afe-clk.c
-@@ -63,21 +63,21 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
- 	if (ret) {
- 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_SYS_AUD], ret);
--		goto CLK_INFRA_SYS_AUDIO_ERR;
-+		return ret;
+diff --git a/drivers/pwm/pwm-lp3943.c b/drivers/pwm/pwm-lp3943.c
+index 215ef90691144..ab11edec79372 100644
+--- a/drivers/pwm/pwm-lp3943.c
++++ b/drivers/pwm/pwm-lp3943.c
+@@ -23,6 +23,7 @@ struct lp3943_pwm {
+ 	struct pwm_chip chip;
+ 	struct lp3943 *lp3943;
+ 	struct lp3943_platform_data *pdata;
++	struct lp3943_pwm_map pwm_map[LP3943_NUM_PWMS];
+ };
+ 
+ static inline struct lp3943_pwm *to_lp3943_pwm(struct pwm_chip *_chip)
+@@ -35,13 +36,9 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
+ {
+ 	struct lp3943_platform_data *pdata = lp3943_pwm->pdata;
+ 	struct lp3943 *lp3943 = lp3943_pwm->lp3943;
+-	struct lp3943_pwm_map *pwm_map;
++	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[hwpwm];
+ 	int i, offset;
+ 
+-	pwm_map = kzalloc(sizeof(*pwm_map), GFP_KERNEL);
+-	if (!pwm_map)
+-		return ERR_PTR(-ENOMEM);
+-
+ 	pwm_map->output = pdata->pwms[hwpwm]->output;
+ 	pwm_map->num_outputs = pdata->pwms[hwpwm]->num_outputs;
+ 
+@@ -49,10 +46,8 @@ lp3943_pwm_request_map(struct lp3943_pwm *lp3943_pwm, int hwpwm)
+ 		offset = pwm_map->output[i];
+ 
+ 		/* Return an error if the pin is already assigned */
+-		if (test_and_set_bit(offset, &lp3943->pin_used)) {
+-			kfree(pwm_map);
++		if (test_and_set_bit(offset, &lp3943->pin_used))
+ 			return ERR_PTR(-EBUSY);
+-		}
  	}
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_INFRA_SYS_AUD_26M]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_SYS_AUD_26M], ret);
--		goto CLK_INFRA_SYS_AUD_26M_ERR;
-+		goto CLK_INFRA_SYS_AUDIO_ERR;
- 	}
+ 	return pwm_map;
+@@ -67,7 +62,7 @@ static int lp3943_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	if (IS_ERR(pwm_map))
+ 		return PTR_ERR(pwm_map);
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_TOP_MUX_AUD]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_TOP_MUX_AUD], ret);
--		goto CLK_MUX_AUDIO_ERR;
-+		goto CLK_INFRA_SYS_AUD_26M_ERR;
- 	}
- 
- 	ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUD],
-@@ -93,13 +93,11 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
- 	if (ret) {
- 		dev_err(afe->dev, "%s(), clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_TOP_MUX_AUD_BUS], ret);
--		goto CLK_MUX_AUDIO_INTBUS_ERR;
-+		goto CLK_MUX_AUDIO_ERR;
- 	}
- 
--	return ret;
+-	return pwm_set_chip_data(pwm, pwm_map);
 +	return 0;
- 
--CLK_MUX_AUDIO_INTBUS_ERR:
--	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD_BUS]);
- CLK_MUX_AUDIO_ERR:
- 	clk_disable_unprepare(afe_priv->clk[CLK_TOP_MUX_AUD]);
- CLK_INFRA_SYS_AUD_26M_ERR:
-@@ -107,7 +105,7 @@ int mt6797_afe_enable_clock(struct mtk_base_afe *afe)
- CLK_INFRA_SYS_AUDIO_ERR:
- 	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_SYS_AUD]);
- 
--	return 0;
-+	return ret;
  }
  
- int mt6797_afe_disable_clock(struct mtk_base_afe *afe)
+ static void lp3943_pwm_free_map(struct lp3943_pwm *lp3943_pwm,
+@@ -80,14 +75,12 @@ static void lp3943_pwm_free_map(struct lp3943_pwm *lp3943_pwm,
+ 		offset = pwm_map->output[i];
+ 		clear_bit(offset, &lp3943->pin_used);
+ 	}
+-
+-	kfree(pwm_map);
+ }
+ 
+ static void lp3943_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+ {
+ 	struct lp3943_pwm *lp3943_pwm = to_lp3943_pwm(chip);
+-	struct lp3943_pwm_map *pwm_map = pwm_get_chip_data(pwm);
++	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[pwm->hwpwm];
+ 
+ 	lp3943_pwm_free_map(lp3943_pwm, pwm_map);
+ }
+@@ -159,7 +152,7 @@ static int lp3943_pwm_set_mode(struct lp3943_pwm *lp3943_pwm,
+ static int lp3943_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ {
+ 	struct lp3943_pwm *lp3943_pwm = to_lp3943_pwm(chip);
+-	struct lp3943_pwm_map *pwm_map = pwm_get_chip_data(pwm);
++	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[pwm->hwpwm];
+ 	u8 val;
+ 
+ 	if (pwm->hwpwm == 0)
+@@ -178,7 +171,7 @@ static int lp3943_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ static void lp3943_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ {
+ 	struct lp3943_pwm *lp3943_pwm = to_lp3943_pwm(chip);
+-	struct lp3943_pwm_map *pwm_map = pwm_get_chip_data(pwm);
++	struct lp3943_pwm_map *pwm_map = &lp3943_pwm->pwm_map[pwm->hwpwm];
+ 
+ 	/*
+ 	 * LP3943 outputs are open-drain, so the pin should be configured
 -- 
 2.53.0
 
