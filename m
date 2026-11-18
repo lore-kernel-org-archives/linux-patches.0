@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028518;
-	b=gpdQLdniWdhVGgjbIN31WpXlurx9OMDSxyhUHSSsR+XOKVK2/fl7IqCfoVteqMmOGUTf
-	 2MDvJdklsZBLdurHvl/0ptrR8BpNLAJ1uhZAJENQqxGTV3siVydqweSb+oO4Gybd9FM6x
-	 g1w7jT2Q+Ng4z2p2L3kMZhEsUm4a6DgbY4DMIh1H9OnnUy+gLk+DjWvBBKDl4n3WsridL
-	 Pk9muLZIhtEOdKIpSu3N0v2oMN4Dw45GJWb7t4gV05K1OsxlHLt2KQmyTt2zz8Qkp5XwN
-	 db5xW/qvFHgE/Cu/PsLGaVT5FK8L3xuwjPQ7Cl2dQvQ64L0Y0n/knNxUmvGolDS02yA==
+	t=1795028521;
+	b=VAlp96zcVyjzO7sNO53xinyupuaqKAx0kr5y4uAZ8NZmca5uN2Rq5vlwKzM1hjWNemKA
+	 I8VcDrSJg8vLfE7/AV7uudGU4rkX+2BnNSlgNYiNLlGDq/WrEEfoJz9uh4kQv1ipjnVdp
+	 pgn8ZV3l634OyApiIm2r8npdm027YsWkyTl1u7XKl2cYVfl6Xwcdv/odDunuDnz9cUTjJ
+	 c2MCdhO6W3UAPc2j8f/lKll+8ISk3WJHB0R5FsfDxc9SIH1alQkNigDpDLvPnwryybrxJ
+	 uxnY3ZZvTilWm+4bR89RSLcUwLJ65IRsnYSMdJUg5UsDChVEcuVxN0P1+i290rxQAZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L1xfIPc4Migo4ve67S1VXU2opA5k6PCyx7Exj6zf95o=;
-	b=ipk27q0WauPgcmvx3C8FHAlaavQA21ewCrOUoUP1AfW/MGbKDkCkpjN9IKteJAShrGXn
-	 hDn+ddfrg0629uP2gpVnR5r2CMokUQTZRSq/ktZsXBKcU6eUOyX4zmJnWU7qCRMgCQ3dG
-	 haFTBDj+Q1r0wimapF6hvzCYM9ku4MB88he1gbaXqlaXn2f9tj7Odi5KcjdUYoJsbcL0f
-	 1nC7XHYp66wdBlU5xHPCuBYi2Y27WMAAjMe6pN6YKEZkzNSXhUktL0deLOyLk9hSaMa8R
-	 T2+LoeENZqfKDMafbdQELicms1NnX8/fXprOlR8SzFnylMWoGddVFfYoX9+kCvwUDew==
+	bh=15XOxQ60OU7Qj0k1bzxji2LmJa+dVx7r2401ZmptgIY=;
+	b=gGLJHACg5YYzWlR7Z+Rz4EkrD9dBxil21hRvYZccBqdxLSruvMbiOkhyOwjNYudbcRq4
+	 Njrhlj4V6fqAFGUqSC7rPWIp/u0cJLZMMkqWMM/W5r7oL9REW7t629i1ETZGF2PMN2WPz
+	 7sjT/OVCLeHL15xhlMNeOBuHqmBGo5FkXtPcdL1sXLIbOA8BRTa/FP5fiPbhMkFBLf+NW
+	 htVi8MYGf6J4dBbpFwXsZYxrH1vXgXrvbYU0qTvEpeZHRmWDzZE1fk3uldRreiQ7kysrm
+	 rGvoet9uASfp+yzMqdk88i0eYXAmcwwqVnrZKx6vDisGgSrfROVeyWwtwHrVx8o0HKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKGnA4fv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ll8UJsx6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53A4606A32C;
-	Wed, 18 Nov 2026 19:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE5A606A31C;
+	Wed, 18 Nov 2026 19:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NKGnA4fv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B38B1F000C4;
-	Wed, 18 Nov 2026 19:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ll8UJsx6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB3A1F000C9;
+	Wed, 18 Nov 2026 19:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028518;
-	bh=L1xfIPc4Migo4ve67S1VXU2opA5k6PCyx7Exj6zf95o=;
+	s=korg; t=1795028521;
+	bh=15XOxQ60OU7Qj0k1bzxji2LmJa+dVx7r2401ZmptgIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NKGnA4fvFs3U0Rq5ar7FzBMxKaNWFfmbOIxVchguAeeGrpvigqVIDADo+FOgs1qEq
-	 GgM3hpte4TjvohRpxFE4sCir0bQ2FpbCQjSr9gvRW0VoBhAY63R8grBx7lQgRyWeCd
-	 kEwhE6QorWR52qyfx3f8rQARp1QJAxCwtbApUk2o=
+	b=ll8UJsx6nRnQP/hbHHaKjleVP+C7xjBf0FDm39tBDZTOBhsU0HYnIjwV31Tz33T4Y
+	 eYv30ix8Ba8+dc8bf92lKAR2u4LOH/NrigVe71lHYbfjl90c3BIGRn1sDwFuUgHvOw
+	 BU3iOTrwLDeyfBU0cf7V/4Uh6wNhIevHko/t1HTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Rik van Riel <riel@surriel.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	William Palacek <William.Palacek@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0011/1756] mm/memcontrol: fix stuck FLUSHING_CACHED_CHARGE bit on isolated cpus
-Date: Wed, 18 Nov 2026 15:35:38 +0100
-Message-ID: <20261118150008.411907418@linuxfoundation.org>
+Subject: [PATCH 6.12 0012/1756] drm/amdkfd: Validate the control stack of a restored queue
+Date: Wed, 18 Nov 2026 15:35:39 +0100
+Message-ID: <20261118150008.447493013@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -73,53 +68,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: William Palacek <William.Palacek@amd.com>
 
-[ Upstream commit d2f28a1a652e0a43f6f63de9b4e4d8d5f2716803 ]
+[ Upstream commit 90d91a192751cd9a7d9d2286299bc72ec1c28179 ]
 
-When drain_all_stock() sets FLUSHING_CACHED_CHARGE before checking
-isolation, schedule_drain_work() can drop the work in a separate RCU
-critical section, and housekeeping_update()'s synchronize_rcu() can race
-that second check, leaving the flag set.
+kfd_criu_restore_queue() takes the control stack size from the
+checkpoint image without the topology check create-queue does in
+kfd_queue_acquire_buffers(), which restore stopped calling in
+commit 1cafa8b29e02 ("drm/amdkfd: Don't acquire buffers
+during CRIU queue restore."). An image size of 0x300000 is accepted and
+sizes the MQD allocation, and 0xFFFFFFFF trips a page allocator warning
+in kmalloc().
 
-drain_local_stock() only clears the bit for work that ran, so the flag
-remains set and the stock is never drained again.
+restore_mqd() also keeps the image's cp_hqd_cntl_stack_size,
+cp_hqd_cntl_stack_offset and cp_hqd_wg_state_offset. With offset > size
+or wave state offset < size, get_wave_state() returns wrapped sizes.
 
-Have schedule_drain_work() return whether the work was queued, and clear
-FLUSHING_CACHED_CHARGE in drain_all_stock() when the remote CPU is
-isolated, so future drains can retry.
+Take the per-XCC size from topology, 0 for queues without a control
+stack, and reject larger images. In restore_mqd(), set the size to it
+and bound both offsets as init_mqd() does.
 
-Link: https://lore.kernel.org/20260828135036.7d44361f@fangorn
-Fixes: 6a792697a53a ("memcg: do not drain charge pcp caches on remote isolated cpus")
-Suggested-by: Michal Hocko <mhocko@suse.com>
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-[ sashal: Adapted schedule_drain_work() result handling to an inline branch in drain_all_stock() for the combined charge cache. ]
+Fixes: 626f7b3190b4 ("drm/amdkfd: CRIU add queues support")
+Fixes: 42c6c48214b7 ("drm/amdkfd: CRIU checkpoint and restore queue mqds")
+Signed-off-by: William Palacek <William.Palacek@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 92249023caee17bfc6f29c71d6aaa5f2298cf507)
+Cc: stable@vger.kernel.org
+[ sashal: Removed the NUM_XCC() multiplier because the existing restore path handles one control stack per image. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c  |  3 +++
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c  |  3 +++
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c   |  3 +++
+ .../gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c   |  3 +++
+ .../amd/amdkfd/kfd_process_queue_manager.c    | 24 +++++++++++++++----
+ 5 files changed, 32 insertions(+), 4 deletions(-)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 2aae088c86082..de7bd67619533 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1871,6 +1871,8 @@ void drain_all_stock(struct mem_cgroup *root_memcg)
- 				drain_local_stock(&stock->work);
- 			else if (!cpu_is_isolated(cpu))
- 				schedule_work_on(cpu, &stock->work);
-+			else
-+				clear_bit(FLUSHING_CACHED_CHARGE, &stock->flags);
- 		}
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+index 4a621791da230..99fdbf666c87d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+@@ -293,6 +293,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+index ca90454b01acc..2f4caf637a065 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -344,6 +344,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+index 1e220e8810922..0d22a377f3e33 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -416,6 +416,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
+index f0de0893bc597..ae3bd2bb410a5 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_vi.c
+@@ -305,6 +305,9 @@ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 	addr = mqd_mem_obj->gpu_addr;
+ 
+ 	memcpy(m, mqd_src, sizeof(*m));
++	m->cp_hqd_cntl_stack_size = qp->ctl_stack_size;
++	m->cp_hqd_cntl_stack_offset = min(m->cp_hqd_cntl_stack_offset, qp->ctl_stack_size);
++	m->cp_hqd_wg_state_offset = max(m->cp_hqd_wg_state_offset, qp->ctl_stack_size);
+ 
+ 	*mqd = m;
+ 	if (gart_addr)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index bf3c7d055fc33..445fba8e4bbdd 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -26,6 +26,7 @@
+ #include <linux/list.h>
+ #include "kfd_device_queue_manager.h"
+ #include "kfd_priv.h"
++#include "kfd_topology.h"
+ #include "kfd_kernel_queue.h"
+ #include "amdgpu_amdkfd.h"
+ #include "amdgpu_reset.h"
+@@ -984,7 +985,6 @@ static void set_queue_properties_from_criu(struct queue_properties *qp,
+ 	qp->eop_ring_buffer_size = q_data->eop_ring_buffer_size;
+ 	qp->ctx_save_restore_area_address = q_data->ctx_save_restore_area_address;
+ 	qp->ctx_save_restore_area_size = q_data->ctx_save_restore_area_size;
+-	qp->ctl_stack_size = q_data->ctl_stack_size;
+ 	qp->type = q_data->type;
+ 	qp->format = q_data->format;
+ }
+@@ -996,6 +996,7 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ {
+ 	uint8_t *mqd, *ctl_stack, *q_extra_data = NULL;
+ 	struct kfd_criu_queue_priv_data *q_data;
++	struct kfd_topology_device *topo_dev;
+ 	struct kfd_process_device *pdd;
+ 	uint64_t q_extra_data_size;
+ 	struct queue_properties qp;
+@@ -1032,6 +1033,24 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 		goto exit;
  	}
- 	migrate_enable();
+ 
++	memset(&qp, 0, sizeof(qp));
++	set_queue_properties_from_criu(&qp, q_data);
++
++	/* Per-XCC control stack size from topology, as create-queue requires */
++	if (qp.type == KFD_QUEUE_TYPE_COMPUTE && pdd->dev->kfd->cwsr_enabled) {
++		topo_dev = kfd_topology_device_by_id(pdd->dev->id);
++		if (!topo_dev) {
++			ret = -EINVAL;
++			goto exit;
++		}
++		qp.ctl_stack_size = topo_dev->node_props.ctl_stack_size;
++	}
++
++	if (q_data->ctl_stack_size > qp.ctl_stack_size) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	*priv_data_offset += sizeof(*q_data);
+ 	q_extra_data_size = (uint64_t)q_data->ctl_stack_size + q_data->mqd_size;
+ 
+@@ -1058,9 +1077,6 @@ int kfd_criu_restore_queue(struct kfd_process *p,
+ 	mqd = q_extra_data;
+ 	ctl_stack = mqd + q_data->mqd_size;
+ 
+-	memset(&qp, 0, sizeof(qp));
+-	set_queue_properties_from_criu(&qp, q_data);
+-
+ 	ret = kfd_queue_acquire_buffers(pdd, &qp);
+ 	if (ret) {
+ 		pr_debug("failed to acquire user queue buffers for CRIU\n");
 -- 
 2.53.0
 
