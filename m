@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054415;
-	b=ouBif66Nd6utAoXPLNX1PssZFUAzvvrUKaf5SgmT0dcFk9Bk7kYsgk58+tk9gsFM9506
-	 DXMwT6dB2hpyctAsOfuWHIEmwSctxEcfGb3bxJW+JJMStu0LH8oj6YGY/z04axUnIWyhM
-	 wbkSfVCl5Wp42oJRGww1YpD+ODScZgxFpA6fkRd5zg7EtYl9sixv7VPjJ1gkJWXrZUvRO
-	 ke3/n2ghC49BnNpWkfPSLQZkvE3OHcScoMn0lLEsAzD3os3TDFiXEV6h4hoqcTH0dPPuD
-	 3+Ja/yEE0vEF4zgL4+q8lxUP56lJ6zFvECxec2hjOpzCRs7qE8Ca1QbuWxia9vOHDIg==
+	t=1795054418;
+	b=3CSAww1YE8rg2st3ogboLK/xvk94qh9OVih1Hjvo4kYCrQeSv01KxH2tB6BUppyB1tTX
+	 +k3+FVoaKvmJRLzfuXricTDSb4ahEdnawOZ4sWkCRuw5h0bb18XyxUwUl2ma/zwuRkmgu
+	 HfiZmAz/aRThkoqObqzKRen5vHGOMJhO1PR/Os9wg5PJcbKyDIUGHp0zgfiStKI/RlfoA
+	 vZT9LHT1K2UjBjtLTCkdjYRXvlKJCkfG8aTNQwmJNbqY6NUT4zkNFOYnfGfxH3zEpQ3t0
+	 Yfm2y4LvYWP9StUPbLn/xRfWKAk/hmsOpyp/xys0t6RUb7vjv0nS2GDn0Vrowraxmlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054418;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fehR5a6j7ABePCuyJowoiWMQH2OL8tXKMrvSgcpAyLA=;
-	b=Es5fHWsDUFrzc3ynLBBnKeSP7J8CkBWEycmSYsKbPp56AqWeYIaKHlAd23G9E0wPET44
-	 mhJnHq95pQxnTxpFPmerjNBembwQ1PB64+zU4TUbo88KeGKXMNL6Imb0GripA6yFSWGSx
-	 3v04xMIH69QFGW9fZB/UAeU9pB/v5R/RVAiYAsfUBkfPnYQGbBhXv/zkc+qXhDLR32su0
-	 tama5uz/hCw4QZE2EHWzLgAo2S8nKN2ssIFsNwgahN3097ugw6qVrcMifbdIvJyR82vkb
-	 C14Ch7FgTchGWnoWlGEFhA9tJ0SUEyq/BgAbt1JoRiYa+5sQKf2CtrLHlxYLOnD4W7g==
+	bh=4WvIpjJlLpOle5tVY82RYkri1uBggxadlhL2YuYB7mo=;
+	b=m+DdKigSz0yelEGs2Q2Hn1egDc0FaAGr2HhogU+zTbARCRBqn5wXoZFYGRiAzppwXYtD
+	 vyF9i3s8sIDNdPXCR1UzJdGIFpnw2X1OZnwzieTHKr2Wznx+89OSp8qVmCJioVTRDZIoC
+	 WiJ1ZVqZevOh6OWK2pSy/kN5RuxVe5WQQJf++hS0clwLuUM4hf2+Bc47WfMRitcRJoifa
+	 6MSIBhG89FlEgiCTNGe4c6QsZgl0UlDy9QD0dH0VrCYXSYyqb7W9OaEGzjcmEwEDideDo
+	 7ZNdPxXHsjuArlRbAF4xGIg3JCkmTLjEWN6f6SBRR55TezdkSe1xnz3PryHunMA/+2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpuhfGC4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nC50R0ju;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CC2606A32C;
-	Thu, 19 Nov 2026 02:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E926606A320;
+	Thu, 19 Nov 2026 02:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NpuhfGC4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7DF1F000C4;
-	Thu, 19 Nov 2026 02:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nC50R0ju
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8851F000C4;
+	Thu, 19 Nov 2026 02:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054415;
-	bh=fehR5a6j7ABePCuyJowoiWMQH2OL8tXKMrvSgcpAyLA=;
+	s=korg; t=1795054418;
+	bh=4WvIpjJlLpOle5tVY82RYkri1uBggxadlhL2YuYB7mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NpuhfGC4skK57/5x/x4ivMMFXZ8MNZ66zlLNUdHU0PqIHaaimXYqRB8G1dUCtHbJv
-	 Yikc50w+7fb9QjsSHuGURfnM5mIINzskCeZPjFpdbwcuzKlm4yqZOWjS/hR0WMcqQe
-	 ASKP9c2PxBQ7dIhQC8//FG1hvGKpHY6/P1REEbA8=
+	b=nC50R0juq8kLjT/3UArYrMT48Puaj35lPO7V6ymttKAB3DsDZsrBkTZu6IwTTV0An
+	 Kdt6MO7SPNHoS2JhhYyiXSpzB2ern1EpkqtItE+olpJF6ihe2WeUKiRGt91DnBsgWk
+	 AlRdTX2eoWhnugGIsuJh/tTbCAl74PScnY4JzFK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Matthias Goergens <matthias.goergens@gmail.com>,
+	Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1266/2214] udf: fix preallocation discarding before an empty allocation extent
-Date: Wed, 18 Nov 2026 15:49:02 +0100
-Message-ID: <20261118150102.268925734@linuxfoundation.org>
+Subject: [PATCH 5.15 1267/2214] fbdev: kyro: Use devm_ioremap() for mmio registers
+Date: Wed, 18 Nov 2026 15:49:03 +0100
+Message-ID: <20261118150102.303853772@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,73 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
 
-[ Upstream commit 0c52750caaaccee8b0e929450fe6538ec4985722 ]
+[ Upstream commit e0bf12a43243e6afc5a03fc55c58ec48aba48088 ]
 
-udf_discard_prealloc() finds the last extent of a file by peeking at
-the next one with udf_next_aext() and stopping when that returns 0.
-The peek reads into eloc and elen, and the code then uses them as the
-last extent.  But when udf_next_aext() returns 0 they hold no defined
-value: if the extent list ends in a continuation descriptor that leads
-to an empty allocation extent, they describe that continuation, i.e.
-the block of the empty allocation extent, one block long.
+Replace the manual ioremap() call for the MMIO registers with the
+device-managed devm_ioremap() variant.
 
-The kernel creates such lists itself: when udf_delete_aext() removes
-the only descriptor of the last allocation extent in a list, it leaves
-that allocation extent empty and the continuation to it in place.
+This simplifies the driver's resource management by ensuring the memory is
+automatically unmapped when the driver detaches from the device.
 
-If the last extent is a preallocation, udf_discard_prealloc() deletes
-it with udf_delete_aext(), which finds the following allocation extent
-empty, so it also removes the continuation and frees that allocation
-extent's block.  udf_discard_prealloc() then frees eloc and elen: that
-block a second time, instead of the preallocated blocks.  On a space
-bitmap the preallocated blocks leak and the free block count drifts.
-On an unallocated space table the second free adds a second free
-extent for the same block, which is later handed out twice: fsx as run
-by generic/091 and generic/263 ends up with two parts of its test file
-in one block and reads back bad data.
-
-Peek into separate variables, so that eloc and elen keep the last
-extent that udf_next_aext() returned with 1.
-
-Fixes: cfe4c1b25dd6 ("udf: Fix preallocation discarding at indirect extent boundary")
-Cc: stable@vger.kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/480eccd1264a4cea5226fc36ed108931b2c403fb.1793349907.git.matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ sashal: adapted udf_next_aext() calls to the older API that returns the extent type directly ]
+Signed-off-by: Giovanni Di Santi <giovanni.disanti.lkl@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: d3bc005a6294 ("fbdev: kyro: Release WC setup on registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/truncate.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/video/fbdev/kyro/fbdev.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/udf/truncate.c b/fs/udf/truncate.c
-index 036ebd892b852..a0b61b0dcb973 100644
---- a/fs/udf/truncate.c
-+++ b/fs/udf/truncate.c
-@@ -122,8 +122,8 @@ void udf_discard_prealloc(struct inode *inode)
- {
- 	struct extent_position epos = {};
- 	struct extent_position prev_epos = {};
--	struct kernel_lb_addr eloc;
--	uint32_t elen;
-+	struct kernel_lb_addr eloc, tmpeloc;
-+	uint32_t elen, tmpelen;
- 	uint64_t lbcount = 0;
- 	int8_t etype = -1, netype;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
-@@ -136,7 +136,8 @@ void udf_discard_prealloc(struct inode *inode)
- 	epos.block = iinfo->i_location;
+diff --git a/drivers/video/fbdev/kyro/fbdev.c b/drivers/video/fbdev/kyro/fbdev.c
+index 4979339dbc008..7441d48faea77 100644
+--- a/drivers/video/fbdev/kyro/fbdev.c
++++ b/drivers/video/fbdev/kyro/fbdev.c
+@@ -713,13 +713,14 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	kyro_fix.mmio_len   = pci_resource_len(pdev, 1);
  
- 	/* Find the last extent in the file */
--	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 0)) != -1) {
-+	while ((netype = udf_next_aext(inode, &epos, &tmpeloc, &tmpelen,
-+				       0)) != -1) {
- 		brelse(prev_epos.bh);
- 		prev_epos = epos;
- 		if (prev_epos.bh)
+ 	currentpar->regbase = deviceInfo.pSTGReg =
+-		ioremap(kyro_fix.mmio_start, kyro_fix.mmio_len);
++		devm_ioremap(&pdev->dev, kyro_fix.mmio_start,
++			     kyro_fix.mmio_len);
+ 	if (!currentpar->regbase)
+ 		goto out_free_fb;
+ 
+ 	info->screen_base = pci_ioremap_wc_bar(pdev, 0);
+ 	if (!info->screen_base)
+-		goto out_unmap_regs;
++		goto out_free_fb;
+ 
+ 	if (!nomtrr)
+ 		currentpar->wc_cookie = arch_phys_wc_add(kyro_fix.smem_start,
+@@ -768,8 +769,6 @@ static int kyrofb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 
+ out_unmap:
+ 	iounmap(info->screen_base);
+-out_unmap_regs:
+-	iounmap(currentpar->regbase);
+ out_free_fb:
+ 	framebuffer_release(info);
+ 
+@@ -792,7 +791,6 @@ static void kyrofb_remove(struct pci_dev *pdev)
+ 	deviceInfo.ulOverlayOffset = 0;
+ 
+ 	iounmap(info->screen_base);
+-	iounmap(par->regbase);
+ 
+ 	arch_phys_wc_del(par->wc_cookie);
+ 
 -- 
 2.53.0
 
