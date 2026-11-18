@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019610;
-	b=X7uoK8SfihW70SNe5gmIr22hbHPwSvAiSxlq+fFDm7ZgfTcUJ3R3DE0gwy7M/obXjATS
-	 vN/i9BwmHx95LyWTxw0kTemP0TZXu4lKIgoZ3vCydgI+LN5E3vfV0hQt+1o2hGCLYn5/M
-	 BscrjlwgLXjzWSysH7ZIu9BhH1idjGq+rQHwwddkRpO+ZPbCy0l5w15kY/JD7G8LFoahF
-	 MZ+FszdATp3ieGOKlgry7uOZ4HIbCi/wehUy6kgTDjh9HVqEGFufweKITJm+JssW0LTyN
-	 AG8FBHCdMXdiHMjH6VNg4XWsj6t8++kL/5HN0rJOoN/EXhMVA3Qinkm/hMZ1475FUfA==
+	t=1795019613;
+	b=eBX1Fv4BMXktkJmJXbg9AvXQ+2xyImleeSyTHnvxUiJh34BJ8gwteeslzZHdEA3nihGv
+	 H2BHdnIMK492KNnJ0DzJPDtepPgPb6AANOuYLc7fNmPtBoWZI2k0zCifux9tPH/8n177j
+	 5sHkJ87VmTkmsQ4hWSBRYkcjxdcagJfRxbzIAyS3yJbUH4nkGIfZDe29lHpHHYpa4gW4R
+	 SjS03AGDn+QX0PWh5BAMU4SgP569DYpQ40E27kYLLAs8rLRil9VdlQUpGSiJmvJC7aqon
+	 j0cEHZXyNEru/3UWrDZK9rwOulC9IbpqX3Xa+JVFndYf63cxsOoFX8vJfbV2Z1Q7Pug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EQqT8Sn52nYZrkO1YIike1DfUsyVmnU3E/cPQTz1vN0=;
-	b=JqgCdJJl8Xt5f5WiZcQmb6KPUJ9cX1oN07AZiSPQlXQe2Wg/4LtmX6yLmzwCBwTU4ZE8
-	 tjpkviSGXz/G0hD9+Nsc+5ThMpHk+6Boa9I5eQ61lLCc5hXNNHIjyXlGwaUtPEtos062+
-	 AqxYjMff5oD4iB1TDH5VAkYndPcv5iD7Rb8Ep3BR2dwIdo1qPxW2UeBUnSzc1RYg8bKJ2
-	 ppb4I7GRrepj7FRjswMFiXodN9VbP8RXGytbAXhhsy/Sq5LyjTsNBomTbrH52OteA76m3
-	 E4ulnbe79eRNVGXuiEJZYEJKTmDHDWrdUZKOEqffFziWrG6dkCyQahmYIxKS0MXjV+w==
+	bh=oUo6PdTxS54CRPrFhXWSB2r6sR7zTOT3Amo3e3nWKF4=;
+	b=J2FE0cuuJSVJfZWqJkIYHs1wlCJdfwg6Cah4SU9fg2U1EjnHvylHzn+YN+wS7BTeW4w+
+	 Wf90Rvrteo46KRRhnvqIWt3RDMXBpsyqdCnrLgDq4uZuSRG1X/ddoRuo3s1as6FssDkKS
+	 XFw2jyXh06omjKzu9xB5EKKdJgzVgarfS8QDRPN27ZSp6cI0LbKm3wmEcGTxCN7N8+qAH
+	 pUnaST7FYmSj98DkWnxw+m5ofYIeZ/+sznTxDZ/ZykE6vBmslzkxokC/SDDg8DSxuFLBH
+	 GDNRCckkQIhyj8MffRuNYb1F3ptv3TCA6tQcLFkthXWz8BBmwCjIhYAoEePFdH3zjIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a28tMEZj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TGP1lijj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F40B606A33E;
-	Wed, 18 Nov 2026 16:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31959606A7C8;
+	Wed, 18 Nov 2026 16:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a28tMEZj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24AB1F000C4;
-	Wed, 18 Nov 2026 16:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TGP1lijj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828471F000C4;
+	Wed, 18 Nov 2026 16:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019610;
-	bh=EQqT8Sn52nYZrkO1YIike1DfUsyVmnU3E/cPQTz1vN0=;
+	s=korg; t=1795019613;
+	bh=oUo6PdTxS54CRPrFhXWSB2r6sR7zTOT3Amo3e3nWKF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a28tMEZjMboMGvkIuoGIlmYzt2+V6wpvKREjJ7jtjGObB0FwOZ/Vmh4mVzaaW1dgI
-	 0OoYiYgeVK4zWdGjlfA5WW/tw7jeOosi0SsZpSKa5ojohfTte3vNYQSYhOY8lBdXmB
-	 pnIGcicusRe/e4aVWdL7ZlCRuE5DKtCzxQr+Cim4=
+	b=TGP1lijjDHWaq1r7TPtMgPpsh+oCLY8Y3jgb8NwanteFVFIM5HQCgP1AL6BMEZ/bQ
+	 jgv5KAz9fQ5a4zr8qnxKOUO+piT/ZLpulUZ8RKk3DbocWI/I5FcdgQaa7/NdKrcBea
+	 Bimur1H89LeLNG8AQsjiv+ovLyuG6Q4ST7dqj42c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vacek <neelx@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1655/2651] btrfs: zoned: fix double list add in btrfs_load_block_group_zone_info
-Date: Wed, 18 Nov 2026 15:48:15 +0100
-Message-ID: <20261118150347.340312739@linuxfoundation.org>
+Subject: [PATCH 7.3 1656/2651] btrfs: fix incomplete iteration over fs state when logging messages
+Date: Wed, 18 Nov 2026 15:48:16 +0100
+Message-ID: <20261118150347.373862663@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,46 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 9bdef63e2b5d4a88810329a1cab3642d6378a895 ]
+[ Upstream commit d1d74665ab9a8971d42177ca865cfbe2897c1fc7 ]
 
-For DUP and RAID profiles with zones in a mismatching active state, i.e.
-due to one of the zones of the block-group being on a conventional
-zone, btrfs_zone_activate() has already put the block group on the list.
+In btrfs_state_to_string() we iterate over all the bits set in
+fs_info->fs_state using for_each_set_bit(), which requires its third
+argument to match the number of bits, but we pass it the number of bytes
+of the type used by fs_info->fs_state, an unsigned long, which is 8 on
+64 bits platforms and 4 on 32 bits platforms. This means we are not
+iterating over bits in the ranges [8, 63] or [4, 31].
 
-This leads to a double list add and refcounting problems.
+Fix this by passing BTRFS_FS_STATE_COUNT instead of sizeof(fs_state).
+Note that we could pass BITS_PER_TYPE(fs_state), but since
+BTRFS_FS_STATE_COUNT is 11 and we have no bits beyond that, it would
+cause pointless iterations over fs_state.
 
-Fixes: 265f7237dd25 ("btrfs: zoned: allow DUP on meta-data block groups")
-Fixes: 568220fa9657 ("btrfs: zoned: support RAID0/1/10 on top of raid stripe tree")
-Reviewed-by: Daniel Vacek <neelx@suse.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+This also makes pointless the checks for the bit being inside the limit
+of BTRFS_FS_STATE_COUNT inside the loop.
+
+Fixes: c067da878156 ("btrfs: add filesystems state details to error messages")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/btrfs/messages.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 08a15465a0877..3b41e964d2096 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2005,10 +2005,12 @@ int btrfs_load_block_group_zone_info(struct btrfs_block_group *cache, bool new)
- 	if (!ret) {
- 		cache->meta_write_pointer = cache->alloc_offset + cache->start;
- 		if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &cache->runtime_flags)) {
--			btrfs_get_block_group(cache);
- 			spin_lock(&fs_info->zone_active_bgs_lock);
--			list_add_tail(&cache->active_bg_list,
--				      &fs_info->zone_active_bgs);
-+			if (list_empty(&cache->active_bg_list)) {
-+				btrfs_get_block_group(cache);
-+				list_add_tail(&cache->active_bg_list,
-+					      &fs_info->zone_active_bgs);
-+			}
- 			spin_unlock(&fs_info->zone_active_bgs_lock);
+diff --git a/fs/btrfs/messages.c b/fs/btrfs/messages.c
+index 198d1747c80aa..6debf0d4acadf 100644
+--- a/fs/btrfs/messages.c
++++ b/fs/btrfs/messages.c
+@@ -42,9 +42,8 @@ static void btrfs_state_to_string(const struct btrfs_fs_info *info, char *buf)
+ 		states_printed = true;
+ 	}
+ 
+-	for_each_set_bit(bit, &fs_state, sizeof(fs_state)) {
+-		WARN_ON_ONCE(bit >= BTRFS_FS_STATE_COUNT);
+-		if ((bit < BTRFS_FS_STATE_COUNT) && fs_state_chars[bit]) {
++	for_each_set_bit(bit, &fs_state, BTRFS_FS_STATE_COUNT) {
++		if (fs_state_chars[bit]) {
+ 			*curr++ = fs_state_chars[bit];
+ 			states_printed = true;
  		}
- 	} else {
 -- 
 2.53.0
 
