@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019279;
-	b=t3szbbn/n36gvuyOcblXPN42Ym41X6k5bZVbT0FFJztxDCYn59qH7vQ2wsZKdVMJ3doc
-	 Y31p0wax50A/sM393OcADvps7/eNUb3iGWgA5wm+tNIr59oP7uUSRWG4H4qynVFfPNZ3R
-	 PBB9afZPqLdmlNPmbmWYqjDvE/hVgIxwbPy5QJPJBmoON8um+o1dlMbPgh+4m4mPG/7Cg
-	 NZHe1ZuSzh5vkG9wS4ZLlg5aezugIuwP7ZrC/DO/JxCYDtPN/3cK2EeZNigj6WbCnkAXw
-	 Cs8jyEKgdedo4GVU4XErf8m5v8KgZt2SCOeQACyc5G6iAqSKDJQlFHLxvtZeqrapclw==
+	t=1795019282;
+	b=Xpa+OXt1Frtj6R6MLZEmf8NSDmOg/uPgiAZhT6GKeQ5F/BhbgrbYbWSLXSfdMDMDIpt6
+	 0XQC0JTh6Docx+zaJuAMgfSmqQSTTfBmF1gd2GFq16p3Yawz7nEb8qC19c3vJfiu8fSgZ
+	 4cT4+tTicOB4O7v3xb7YIVMXEtZ7XsxLpbi8q6p60Jod5sFxdaTaezXdIiW/H27zptsSY
+	 i+9rwrbp7kkGSa6LHlyJYQ9+Bsnjfu8vbT8GpJQLUeAvcF8XbZHtxdT45otqqAV8sta1c
+	 6UWI7cwCBwRsmebULe9CuW8EjeId2jfCV6FLaL307mR2hpVXmVZ4g121Lth8uoCMHNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019279;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019282;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QalnlfxNLK6kpRIAovE3FWYaWuA9ELkABCXEZbjB7Ww=;
-	b=rmFrrx7UcOggxZSpfchC0GjtSERuQlYf7FCLlZIHyf0o59wW16nF1zcz4zCh28oZqSuz
-	 exvXHQFzFWGmc6F2vJLE1EH0X2NZeerSopn+kOBf7L849LJkT6e6pWnwuUWf7cx+JWH8/
-	 uF6knXEEJD7yaZVJqT3B6QSruPaYOJH7DUfRI/tbLZ4WPMA05tM6ocukzuQLEMPV8FQDy
-	 YiRzYOuTzQSDq2aVNweSCdgHwnci1uWBTMf2QdKhJVzQLcnJgsYG3jm5MCMH8enJTLLBZ
-	 mvi3QkWFYl1EwLtSpKZRo9EYTXgPNNXKT7BCQqK9Q5cjvQ/liKkWoigHvlu50fyWkMw==
+	bh=FAzBKWkESUsH8cNV1vVGIQW9DIg3FwjQOsU5xALSb30=;
+	b=J8M+XJsZRXnbVttH9WZXfzR02D5Il3YDgE3YkR+8afYxPhoaWZ7NFUroFE+hdb+PG5vm
+	 PImKE7Ov2CUpVa/GOMjznPUbYHTuEj4q/ppOBWjkwyinC4sIo3EdTTsEN+rZi2nT5sN1d
+	 Ks4SoJn1bOnoGBS1BarzJYpg4SvuBmuVibPENSX2zLTq5U/UBA7sPmaPgUrS8mYjgZHZ4
+	 9JcJfVm5+7Alu+hoz2e34LRQ4TDpZzWZGV4pS37dM0ibe6KGxdKAtu+8V6Tn3XqG3R3q6
+	 ukjh5qTpiYHDQ2oz1W7dsczFu7dFhfb757uLaTcUorE2j3zfiidvUv0XRZIDawXiDsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3mFFWo0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LGapvQ1b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF3C60A2614;
-	Wed, 18 Nov 2026 16:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1C1606A332;
+	Wed, 18 Nov 2026 16:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g3mFFWo0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E141F000C4;
-	Wed, 18 Nov 2026 16:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LGapvQ1b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8C71F000C4;
+	Wed, 18 Nov 2026 16:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019279;
-	bh=QalnlfxNLK6kpRIAovE3FWYaWuA9ELkABCXEZbjB7Ww=;
+	s=korg; t=1795019282;
+	bh=FAzBKWkESUsH8cNV1vVGIQW9DIg3FwjQOsU5xALSb30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g3mFFWo03fxu8jJ0UGvrwZYf0VaMb6+JjazZXE9y9xg5RVlL1clBDtB2LUHo1d/di
-	 Ei48onhMXHQXFnTfeBecymM2sJ4Ir45jHQ1UgkTe33SEKWxfvGFszkEMC6Xyp4T5IH
-	 Bg1eCg2v+OBdjpPwxO3Yk7xIgUafS1Wy9iQLtq5c=
+	b=LGapvQ1bWlGPXffNFTCwrNXY7ttgrx48iJS+9M+ZwlV/wCBz5ccA5jkehGn7T+CJH
+	 re2AgIwx7koifeLyfFOXtO+EekfIXDN3FSkYsiDQT08H+CcYYk4BWn697N8GEany9T
+	 1AQ4CK4qtgX6a4lWxRCAyjRAaNztUCWGNa2Yf0ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Yury Norov <ynorov@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andrew Ballance <andrewjballance@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1540/2651] cpufreq: qcom-cpufreq-hw: fix device node refcount leak in phandle parsing
-Date: Wed, 18 Nov 2026 15:46:20 +0100
-Message-ID: <20261118150343.410933338@linuxfoundation.org>
+Subject: [PATCH 7.3 1541/2651] lib: fix lock initialization in region allocation benchmark
+Date: Wed, 18 Nov 2026 15:46:21 +0100
+Message-ID: <20261118150343.448402553@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,50 +73,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Yury Norov <ynorov@nvidia.com>
 
-[ Upstream commit 6fa50b1988b8dfd2e92a9cecba073fe4347a5e23 ]
+[ Upstream commit 718de76e2d3dc38a30026f23909842ad26010b6e ]
 
-of_parse_phandle_with_args() transfers a reference to the provider node
-in out_args->np, which the caller is responsible for releasing with
-of_node_put().  Neither qcom_get_related_cpus() nor
-qcom_cpufreq_hw_cpu_init() ever puts args.np: they only put cpu_np, which
-is a different node obtained from of_cpu_device_node_get().  The
-reference is therefore leaked on every successful call, and
-qcom_get_related_cpus() leaks one per present CPU.
+The Maple Tree benchmark uses MTREE_INIT() for a stack-allocated tree.
+Its static spinlock initializer leaves lockdep to use the lock address as
+the class key.  Since the address is on the stack, the first allocation
+triggers "INFO: trying to register non-static key" and disables lockdep.
 
-Release args.np after the parsed index has been read in both call sites.
+The IDA benchmark has the same problem through IDA_INIT(), but runs after
+Maple Tree and therefore encounters an already disabled lockdep.
 
-Fixes: 2849dd8bc72b ("cpufreq: qcom-hw: Add support for QCOM cpufreq HW driver")
-Assisted-by: DeepSeek-V4.1-Flash
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Use mt_init_flags() and ida_init() to initialize the locks with persistent
+lock-class keys.  Keep initialization outside the timed allocation paths.
+
+Link: https://lore.kernel.org/20260911155244.1406122-1-ynorov@nvidia.com
+Fixes: f4806cc63cc6 ("lib: test bitmap vs IDA vs Maple Tree performance for region allocations")
+Signed-off-by: Yury Norov <ynorov@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://lore.kernel.org/oe-lkp/202609101106.771b567e-lkp@intel.com
+Acked-by: Liam R. Howlett (Oracle) <liam@infradead.org>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: Andrew Ballance <andrewjballance@gmail.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ lib/region_alloc_benchmark.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 874ff3fb9d978..060a460716f79 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -322,6 +322,8 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
+diff --git a/lib/region_alloc_benchmark.c b/lib/region_alloc_benchmark.c
+index e88b4cf55c629..a644f3d5431a0 100644
+--- a/lib/region_alloc_benchmark.c
++++ b/lib/region_alloc_benchmark.c
+@@ -78,11 +78,13 @@ static size_t __init ida_size(unsigned long nr_ids)
  
- 		if (index == args.args[0])
- 			cpumask_set_cpu(cpu, m);
+ static unsigned long __init benchmark_ida(unsigned long cap)
+ {
+-	struct ida ida = IDA_INIT(ida);
++	struct ida ida;
+ 	unsigned long cnt, idx, off, nr_ids = 0;
+ 	ktime_t alloc_time, free_time;
+ 	int id = -ENOSPC;
+ 
++	ida_init(&ida);
 +
-+		of_node_put(args.np);
- 	}
- }
+ 	alloc_time = ktime_get();
+ 	for (cnt = 0; cnt <= cap; cnt++) {
+ 		for (off = 0; off < reg_sz[cnt]; off++) {
+@@ -125,12 +127,14 @@ static unsigned long __init benchmark_ida(unsigned long cap)
  
-@@ -554,6 +556,7 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 		return ret;
+ static unsigned long __init benchmark_maple_tree(unsigned long cap)
+ {
+-	struct maple_tree mt = MTREE_INIT(mt, MT_FLAGS_ALLOC_RANGE);
++	struct maple_tree mt;
+ 	unsigned long cnt, idx;
+ 	ktime_t alloc_time, free_time;
+ 	size_t sz;
+ 	int ret;
  
- 	index = args.args[0];
-+	of_node_put(args.np);
- 	data = &qcom_cpufreq.data[index];
- 
- 	/* HW should be in enabled state to proceed */
++	mt_init_flags(&mt, MT_FLAGS_ALLOC_RANGE);
++
+ 	alloc_time = ktime_get();
+ 	for (cnt = 0; cnt <= cap; cnt++) {
+ 		ret = mtree_alloc_range(&mt, &idx, xa_mk_value(cnt + 1),
 -- 
 2.53.0
 
