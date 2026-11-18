@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041746;
-	b=pyJORDLwnFbh/9Eu+sjc2df46r9BBad25PaMo6PgPVBr4c79urbi/XQ5tW3x1RFX2Qml
-	 6e2VOAbWPOQErqmcl9npdMMTGgMLAr04dPXgBB06qhaupOULfYiUNS0PHwl7ZI4ghtlwQ
-	 gcoSuZw5TXIwo88f5fq2WYtAMRy/PUXi1rSGvDdLts+VwVAuAd6lTNXYlXIPZMQKp+qpK
-	 ka94PHfDN2u7shyboVzGyUVI3lwtqy9KxoxAOVkE7JpDnv+0YrBTJdy77/NkAW2d1bRSj
-	 ks6UMlLrEJ2QB9HGXsz9/YFuABK1Owy7d59wrIfhX33t6vmBFlZFyUGO6iGkdtGPoJg==
+	t=1795041749;
+	b=LI8nWvje62sHkM92+qYE3eW9F+X2Csa1edCCDsOVyWqZ9w4qRIbB8x6APMv/V2Wzlj2Q
+	 vAuqNWoyEnZwmVVdihPCA7RVTlybEvOMcK3ZxG67z9JAiz7haOzIHo/cevLup9U1GNt1P
+	 xjkJ7nD1Zfd0dQ/Zo5P82QMeCZYqn+b76jKD6llxAWQtEgsum8e4cBrxnFyyN9H07jEwH
+	 hWgsSGk8JEShbGuujOHGcxinExgpLwq3AhvxeIYGgs7YaMNWc+I2OZTRMQygw6WxT2SyU
+	 /BZ5M6CxfL50vZRuJNey4HOunVczlPENe7jcuPTau9hqIKOs1lH7q9X9x/07uoRaC9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041749;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fn9BiOhGXKcztFQ3ZqMB0sLC8E6wanxDOKsyGTSRiLI=;
-	b=St0PZLfJRJJjhrXxAU2aKPhP9Dm8x1+7RWc2NXCjU2OHz6dnyOx5ebZe6q+V144bUwcg
-	 cwJIg0RB8W4zkPWoQPX2QNX1KBR2UpP7XLZ5kO1TrkONEdDTBjQPiMWRGVmDj5svHAqxl
-	 LatghnJqixTo18ueFvzSXAY9znO1MRiJxalwJ8sb8Y8KOE7ONjaS/Fh1n9/8tKfz2S4HB
-	 1wzwxLqWDkGLcin4qv+097FiaxFKQdTZ+p9yQAEF2kgr2nxQw6ZH8yahjhsD7m+Ekp6+q
-	 +S3jSrsde6BUsJ4XCb3mQqiC+FM6b4k7nraHsKonCDTEYIa+sXx5rAq+BQHN59nbjhA==
+	bh=fBUJzsdW032kaBYpyj8+NnxMleEODbnywk/JeuU9Y2c=;
+	b=o87Xq3VjvmYxkQGZkUH6maIYdmQiUAu5Y75Ii1wH7aO9ZjoF4E/E3alwRjx7KhWj8cga
+	 SAOK9I0zpjs8NbLX+ULSDgZ0+DVkKQrVAtap4oIstepoViYuv8aSsjzsv3/TIkrE+EiAJ
+	 LDNv8bwEAdlgiR5fpzcFsPU+QbaKk8DBcwtHkFrxANPUCk+YkbE4rlwn8cP4JI9YSpKNC
+	 6Y0Kml85WUaxxv4TY+OFra8tRF4H2I33tufxCMdz41bMyreuZHxID4+Qg0A3BPmnszcUM
+	 MTqP3PDRDajoOEj3H8ZfXVgqjARRrXNqsEj5x8fHWkEMrO5z+TZwc9tFrQeMu37st9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AHswPDDq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHn5H6oI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D42606A320;
-	Wed, 18 Nov 2026 22:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD598606A320;
+	Wed, 18 Nov 2026 22:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AHswPDDq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285491F000C4;
-	Wed, 18 Nov 2026 22:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pHn5H6oI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F601F000C4;
+	Wed, 18 Nov 2026 22:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041746;
-	bh=Fn9BiOhGXKcztFQ3ZqMB0sLC8E6wanxDOKsyGTSRiLI=;
+	s=korg; t=1795041749;
+	bh=fBUJzsdW032kaBYpyj8+NnxMleEODbnywk/JeuU9Y2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AHswPDDq/qsqthFrgDLzB5aji9A2o6tEcb2j5kd/Y0VtJgytwBPfkto8NbSbeAXS2
-	 zV5dnoJyiriN8OH1yTFsKGwamzFD+J9WSiDT08meaxrA9HGcMcRNeNiBJsfwNBYgXb
-	 zBQvIyZLj8Q1crfbEiGYt7Jhr886WpcHGJdh1BSM=
+	b=pHn5H6oIXFetn3aO4Pl/pBqtSwGAfGyUEK7mDMLMw8meiWV+CQbS8ystQoDWPREp7
+	 gRLf0QvcB/xjFjnsiud5utPMNci9lI+AL1L6EOeTkAYq89ihTS2sxiJjk/E+aeZ5xO
+	 aOr0ApXHl00VtDOADuExNikRBGPZGjTEZ2HlCNgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jaewon Jung <jaewon8868@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2923/3318] RDMA/rxe: bound the WQE opcode before indexing rxe_wr_opcode_info[]
-Date: Wed, 18 Nov 2026 15:59:05 +0100
-Message-ID: <20261118150448.098659334@linuxfoundation.org>
+Subject: [PATCH 6.6 2924/3318] selftests/ftrace: Avoid unlink error on first run
+Date: Wed, 18 Nov 2026 15:59:06 +0100
+Message-ID: <20261118150448.125334455@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,49 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: Jaewon Jung <jaewon8868@gmail.com>
 
-[ Upstream commit c887e53e1c852b88bd5442d1bf4717ee3e7aadda ]
+[ Upstream commit 0abfa9ad5c6917cb9a509276f32009d944b3c269 ]
 
-wr_opcode_mask() indexes the global rxe_wr_opcode_info[] array with
-a caller-supplied opcode and no bounds check. For a user QP the WQE
-comes from an mmap'd SQ ring, so wqe->wr.opcode is an
-attacker-controlled __u32 read back by the requester
-(req_next_wqe() -> rxe_requester()); rxe_post_send() takes the
-qp->is_user branch and never runs validate_send_wr(), whose only
-opcode check is itself !wr_opcode_mask() (it indexes before it
-checks). rxe_wr_opcode_info[] has entries only up to IB_WR_REG_MR,
-so an out-of-range opcode reads out of bounds and the result is used
-as a mask and dereferenced; observed as a KASAN global-out-of-bounds
-"Read of size 4" and a wild-pointer oops.
+On the first run, ftracetest tries to unlink a symlink that does not
+exist.
+Use rm -f to avoid the "No such file or directory" error.
 
-Return a zero mask for an out-of-range opcode, matching how
-validate_send_wr() already treats a zero mask (an invalid WR), so no
-path indexes the array out of bounds.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261002164552.294749-1-ays511.kr@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/r/20261014114839.6258-1-jaewon8868@gmail.com
+Fixes: 7dc1e125f07a ("ftrace/selftests: Add softlink to latest log directory")
+Signed-off-by: Jaewon Jung <jaewon8868@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_loc.h | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/ftrace/ftracetest | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
-index f86778678cce7..5f4c19a581b5a 100644
---- a/drivers/infiniband/sw/rxe/rxe_loc.h
-+++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -179,6 +179,9 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
- 
- static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
- {
-+	if (unlikely(opcode < 0 || opcode > IB_WR_REG_MR))
-+		return 0;
-+
- 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
- }
- 
+diff --git a/tools/testing/selftests/ftrace/ftracetest b/tools/testing/selftests/ftrace/ftracetest
+index 22d0f5ec9bd28..370a2893dc545 100755
+--- a/tools/testing/selftests/ftrace/ftracetest
++++ b/tools/testing/selftests/ftrace/ftracetest
+@@ -223,7 +223,7 @@ else
+   mkdir -p $LOG_DIR || errexit "Failed to make a log directory: $LOG_DIR"
+   date > $LOG_FILE
+   if [ "x-$LINK_PTR" != "x-" ]; then
+-    unlink $LINK_PTR
++    rm -f $LINK_PTR
+     ln -fs $LOG_DATE $LINK_PTR
+   fi
+ fi
 -- 
 2.53.0
 
