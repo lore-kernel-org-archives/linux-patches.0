@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059922;
-	b=sCsLhhZLAAYKUKTB9kp00tkm0gdv/AvJmgHiK/mwJSSIJ3T6FxRsi9JPq800jIlY7fsF
-	 KjairxKJ0mO+hlk5CQr/u/0kf4ZPgxw3LSVXw9Z+f4p2soqdx5wOrOwwbRY7Dg8d68rGl
-	 XVv/z6d7128Gr3kJFszz96TciLTWa/MVcOPwhjBNm1u+4Y1MmSd9ywjrZNWwdHev9M7D7
-	 gCGWJ83jRopYm+dfv0LqRtA1Tp02Mpu8L3PAd+sI6QU8bvcrI3Y7nihfnhRrqhf3nzJPN
-	 GUQROxxcmX9qSENXYLKD2BbVrT8DegyinowJAIO/BS4WSsH2+cRmlToGQRDJ67b9YDQ==
+	t=1795059924;
+	b=PDfun9BqKAr42B72uLk3pmyILZHx9dJOXLYWFuFidrTBfsdJ7CDwTlbNh0eNs0AjfoAQ
+	 OOC5kxMOeCexH2w7nUWH0gD1/AaYULd25RKsru/Jf7VRjVdZCMugjtQSbiBhKsmexYfhb
+	 O/+MdxPm3QSOuxx32rzxU7Zo8DTTgEiNiKJCa1ydayUJD6yu7cxLNk8OwhBaZcD9lO7gf
+	 uKWFbcFltj+cll+tCtydAHOmyaUyMaIoNxkW2Vs+lz3va+wC3hPuYbAFskfbo7qR+zmgI
+	 4IWqjMNuXycVg4Rz/UEE2qyO3H0vN2pbDca7+HGpxGyq8H+OvJeIPsMIe88/J7l6rfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059922;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hsn61N9NOH1nVmiK63u6xkjUaQD97ymNnACwXXYM8Lk=;
-	b=x9sy4V7WWDS6lKf1CFc0j9A42ptwD9OdqYOAPDtDqDrQHSDZCtXsRINpQpcse42e+1im
-	 a731uaNQDfz7Mzq1xL8IAsD2yXYY6rVUwm8en6hhFf+oV7bUNQ/8YQ/zJ57gwue/IPqF1
-	 XliO/k+/mDeyqMTZZJLHizdKM0dukqOEgTFGXhZ8uiVZyG09N9Qj1KeqNYh7UB0yHQrQX
-	 I+biZfT8wIaoBwmQEQ4M+fL9vk9Oa7n8WxOl5/GM5W6xQNYFpPUzdlQ6q44sieJdaseiw
-	 0hwXhRrxwO4Ez3vWNKYwmPh5mmUuI5NwQq8fz/aXT7yeASm/vQhkcfwqdgOACd72XUg==
+	bh=i7nM3ondmac8NpI7UnQ2k8guOda7zwXGfNBm5c54h08=;
+	b=nZtrvUPx089w6IZPUnd1hkFKmCO4cOcs7fi7dVrwALKaqwQv22C0ggC+OAZRkwgT0uc7
+	 Nst6xqlUwcBVRkmGFDaeGR2TNbUVQ5icDVgGOJd/wHkesE8M1uy8hS9v2xxXAMJgJJU/8
+	 18sU6mDcPkTixBd/F+n7BX2k0+ZTDJ0WatFb9vYiQ/gAiNW4ur4FcJryZvC1atDR0lofC
+	 HYzDjwG2fds8iv4fYKYGTkmmDu4u0DRul56aB/mT0kt6oU410viYsdQPF6Wo3wm/PvpvO
+	 2pKmj3qqIKgw/dnBl/4bj2SGbjp2D8eHosV3EY3tFBhK0s19pLr25YgAysuTX/OHu3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AOKMOwDi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UdvdxrD0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C38606A325;
-	Thu, 19 Nov 2026 03:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BCA606A320;
+	Thu, 19 Nov 2026 03:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AOKMOwDi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D1C1F000C4;
-	Thu, 19 Nov 2026 03:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UdvdxrD0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313DE1F000C5;
+	Thu, 19 Nov 2026 03:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059921;
-	bh=hsn61N9NOH1nVmiK63u6xkjUaQD97ymNnACwXXYM8Lk=;
+	s=korg; t=1795059924;
+	bh=i7nM3ondmac8NpI7UnQ2k8guOda7zwXGfNBm5c54h08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AOKMOwDiclMeBZj2h7iYc0p2JC9Svfr/lWVapwInnWiVmlxTPwsqYZ1V2Khir5fd9
-	 VrDIoq1stF5efutHhz6rKEFAuvD29Zwd3tcU/uMXKbiJHbLcevpQlpRDUFtGZx0nDD
-	 3axI+myNG5nt5FyFv5B95+iVdlh1AwkZ2omBvIjE=
+	b=UdvdxrD0UD+TU2DjSCwWZQHcB4s3Kv1rnkHEe0MtxgOhVe5D2KGfXrhyh1jaRa/bx
+	 ggEJacbrjchh+9IUATy7tXgKmxySP1ZYW95IWYstTieieTql6nNIdGmsGwR3F2YC7A
+	 cY7rC2cp4xmQ6NilGlKdJLSPsppqt/dGwvg8F614=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Enquist <henrik.enquist@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0977/1848] ALSA: aloop: Update the PCM Slave controls for a matching playback
-Date: Wed, 18 Nov 2026 15:50:15 +0100
-Message-ID: <20261118145957.851286246@linuxfoundation.org>
+Subject: [PATCH 5.10 1013/1848] assoc_array: move shortcut creation into a function of its own
+Date: Wed, 18 Nov 2026 15:50:51 +0100
+Message-ID: <20261118145959.306887308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,69 +68,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Enquist <henrik.enquist@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit c3bde2beacbcb40790f0e3c3f909f9e16bbced9c ]
+[ Upstream commit fdc6124c55dd0c5aa8e3ec30e6425b4d423ada24 ]
 
-The "PCM Slave" format, rate, channels and access controls report the
-parameters of the playback side of a cable. loopback_check_format()
-updates them when a playback starts, but returns early when a capture
-is open and its parameters match. The controls then keep the module
-defaults, or the parameters of an earlier stream.
+Move the code after the all_leaves_cluster_together label into
+assoc_array_insert_shortcut(), which returns the new shortcut, or NULL
+when it cannot allocate one.  The caller installs it and jumps to
+do_split_node as before.
 
-A playback that joins an open capture with the same parameters is the
-normal case without notify, where it is constrained to the capture's
-parameters, and also with notify whenever the player happens to use
-them. An application that reads the controls to find the playback's
-parameters, for example to reopen the capture side at the right rate
-after a restart, then gets the wrong values.
+No functional change.
 
-Only skip the capture stop when the parameters match, and update the
-controls in every case. A value event is still sent only for a control
-whose value changes.
-
-Reproducer:
-  arecord -D hw:Loopback,1,0 -r 44100 -f S16_LE -c 2 /dev/null &
-  aplay -D hw:Loopback,0,0 -t raw -r 44100 -f S16_LE -c 2 /dev/zero &
-  amixer -c Loopback cget "iface=PCM,name='PCM Slave Rate',device=1"
-Before: the control reports 48000, the module default.
-After: it reports 44100.
-
-Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
-Cc: stable@vger.kernel.org
-Signed-off-by: Henrik Enquist <henrik.enquist@gmail.com>
-Link: https://patch.msgid.link/20261021-aloop-slave-controls-v1-1-62297727177f@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: adapted the checks to the existing err/goto unlock flow and snd_pcm_running() helper ]
+Assisted-by: LLM
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+[ sashal: used kzalloc(struct_size()) instead of kzalloc_flex() ]
+Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/aloop.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ lib/assoc_array.c | 146 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 82 insertions(+), 64 deletions(-)
 
-diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
-index 5ff8fdaf8989d..6f0aa9a6f6dcf 100644
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -352,12 +352,15 @@ static int loopback_check_format(struct loopback_cable *cable, int stream)
- 		check = runtime->format != cruntime->format ||
- 			runtime->rate != cruntime->rate ||
- 			runtime->channels != cruntime->channels;
--		if (!check)
--			goto unlock;
--		if (stream == SNDRV_PCM_STREAM_CAPTURE) {
-+		/*
-+		 * Matching params also go on to the update below, so that
-+		 * the setup controls follow a playback that joins an open
-+		 * capture.
-+		 */
-+		if (check && stream == SNDRV_PCM_STREAM_CAPTURE) {
- 			err = -EIO;
- 			goto unlock;
--		} else if (snd_pcm_running(dpcm_capt->substream)) {
-+		} else if (check && snd_pcm_running(dpcm_capt->substream)) {
- 			/* close must not free the peer runtime below */
- 			atomic_inc(&cable->stop_count);
- 			stop_capture = true;
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index 17dc15d123913..74946e7ec1c60 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -647,6 +647,84 @@ static void assoc_array_split_node(struct assoc_array_edit *edit,
+ 	}
+ }
+ 
++/*
++ * All the leaves, new and old, want to cluster together in this node in the
++ * same slot, so we have to replace this node with a shortcut to skip over
++ * the identical parts of the key, leading to new_n0.  The caller then splits
++ * the leaves between new_n0 and new_n1 at the shortcut's far end, for which
++ * this fills in the segment cache.
++ */
++static struct assoc_array_shortcut *
++assoc_array_insert_shortcut(struct assoc_array_edit *edit,
++			    const struct assoc_array_ops *ops,
++			    const void *index_key,
++			    struct assoc_array_node *node, int level,
++			    struct assoc_array_node *new_n0)
++{
++	struct assoc_array_shortcut *new_s0;
++	unsigned long base_seg, blank;
++	size_t keylen;
++	int diff, i;
++
++	/* Firstly we need to work out where the leaves start diverging as a
++	 * bit position into their keys so that we know how big the shortcut
++	 * needs to be.
++	 *
++	 * We only need to make a single pass of N of the N+1 leaves because if
++	 * any keys differ between themselves at bit X then at least one of
++	 * them must also differ with the base key at bit X or before.
++	 */
++	pr_devel("all leaves cluster together\n");
++	diff = INT_MAX;
++	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
++		int x = ops->diff_objects(assoc_array_ptr_to_leaf(node->slots[i]),
++					  index_key);
++		if (x < diff) {
++			BUG_ON(x < 0);
++			diff = x;
++		}
++	}
++	BUG_ON(diff == INT_MAX);
++	BUG_ON(diff < level + ASSOC_ARRAY_LEVEL_STEP);
++
++	keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
++	keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
++
++	new_s0 = kzalloc(struct_size(new_s0, index_key, keylen), GFP_KERNEL);
++	if (!new_s0)
++		return NULL;
++	edit->new_meta[2] = assoc_array_shortcut_to_ptr(new_s0);
++
++	new_s0->back_pointer = node->back_pointer;
++	new_s0->parent_slot = node->parent_slot;
++	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
++	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
++	new_n0->parent_slot = 0;
++
++	new_s0->skip_to_level = level = diff & ~ASSOC_ARRAY_LEVEL_STEP_MASK;
++	pr_devel("skip_to_level = %d [diff %d]\n", level, diff);
++	BUG_ON(level <= 0);
++
++	for (i = 0; i < keylen; i++)
++		new_s0->index_key[i] =
++			ops->get_key_chunk(index_key, i * ASSOC_ARRAY_KEY_CHUNK_SIZE);
++
++	if (level & ASSOC_ARRAY_KEY_CHUNK_MASK) {
++		blank = ULONG_MAX << (level & ASSOC_ARRAY_KEY_CHUNK_MASK);
++		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, level, blank);
++		new_s0->index_key[keylen - 1] &= ~blank;
++	}
++
++	/* This now reduces to a node splitting exercise for which we'll need
++	 * to regenerate the disparity table.
++	 */
++	assoc_array_fill_segment_cache(edit, ops, node, level);
++	base_seg = ops->get_key_chunk(index_key, level);
++	base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
++	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = base_seg & ASSOC_ARRAY_FAN_MASK;
++	return new_s0;
++}
++
+ /*
+  * Handle insertion into a terminal node.
+  */
+@@ -658,10 +736,9 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	struct assoc_array_shortcut *new_s0;
+ 	struct assoc_array_node *node, *new_n0, *new_n1;
+ 	struct assoc_array_ptr *ptr;
+-	unsigned long dissimilarity, base_seg, blank;
+-	size_t keylen;
++	unsigned long dissimilarity, base_seg;
+ 	bool have_meta;
+-	int level, diff;
++	int level;
+ 	int i;
+ 
+ 	node	= result->terminal_node.node;
+@@ -766,70 +843,11 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	return true;
+ 
+ all_leaves_cluster_together:
+-	/* All the leaves, new and old, want to cluster together in this node
+-	 * in the same slot, so we have to replace this node with a shortcut to
+-	 * skip over the identical parts of the key and then place a pair of
+-	 * nodes, one inside the other, at the end of the shortcut and
+-	 * distribute the keys between them.
+-	 *
+-	 * Firstly we need to work out where the leaves start diverging as a
+-	 * bit position into their keys so that we know how big the shortcut
+-	 * needs to be.
+-	 *
+-	 * We only need to make a single pass of N of the N+1 leaves because if
+-	 * any keys differ between themselves at bit X then at least one of
+-	 * them must also differ with the base key at bit X or before.
+-	 */
+-	pr_devel("all leaves cluster together\n");
+-	diff = INT_MAX;
+-	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
+-		int x = ops->diff_objects(assoc_array_ptr_to_leaf(node->slots[i]),
+-					  index_key);
+-		if (x < diff) {
+-			BUG_ON(x < 0);
+-			diff = x;
+-		}
+-	}
+-	BUG_ON(diff == INT_MAX);
+-	BUG_ON(diff < level + ASSOC_ARRAY_LEVEL_STEP);
+-
+-	keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+-	keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
+-
+-	new_s0 = kzalloc(struct_size(new_s0, index_key, keylen), GFP_KERNEL);
++	new_s0 = assoc_array_insert_shortcut(edit, ops, index_key,
++					     node, level, new_n0);
+ 	if (!new_s0)
+ 		return false;
+-	edit->new_meta[2] = assoc_array_shortcut_to_ptr(new_s0);
+-
+ 	edit->set[0].to = assoc_array_shortcut_to_ptr(new_s0);
+-	new_s0->back_pointer = node->back_pointer;
+-	new_s0->parent_slot = node->parent_slot;
+-	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
+-	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
+-	new_n0->parent_slot = 0;
+-
+-	new_s0->skip_to_level = level = diff & ~ASSOC_ARRAY_LEVEL_STEP_MASK;
+-	pr_devel("skip_to_level = %d [diff %d]\n", level, diff);
+-	BUG_ON(level <= 0);
+-
+-	for (i = 0; i < keylen; i++)
+-		new_s0->index_key[i] =
+-			ops->get_key_chunk(index_key, i * ASSOC_ARRAY_KEY_CHUNK_SIZE);
+-
+-	if (level & ASSOC_ARRAY_KEY_CHUNK_MASK) {
+-		blank = ULONG_MAX << (level & ASSOC_ARRAY_KEY_CHUNK_MASK);
+-		pr_devel("blank off [%zu] %d: %lx\n", keylen - 1, level, blank);
+-		new_s0->index_key[keylen - 1] &= ~blank;
+-	}
+-
+-	/* This now reduces to a node splitting exercise for which we'll need
+-	 * to regenerate the disparity table.
+-	 */
+-	assoc_array_fill_segment_cache(edit, ops, node, level);
+-
+-	base_seg = ops->get_key_chunk(index_key, level);
+-	base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
+-	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = base_seg & ASSOC_ARRAY_FAN_MASK;
+ 	goto do_split_node;
+ }
+ 
 -- 
 2.53.0
 
