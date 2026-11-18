@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016751;
-	b=TF1DwGzewO7lv+6mPrYyHFh7K1b+4xh6T++1/BP3kkqMAR0fOx6UvFXsp8Hvqp7j5FfA
-	 S6tpUQNCAcqRPw/aGqhG40uS8QNCG2QSAsuo/q+SVurNH+57hZmfpIzo4DDSmlhbS7uEL
-	 LnZ2ffJ96aEf807xuta0aft/x8iDBxr1LG2LjvdShTYvVXEoX8gB0ZiFk92dLBqP92Kkh
-	 S+mq5SuGxlFeHmYUD3Rgbh3GnF9PZawY4v/CpRdwSP34JOEgcTqEA9hm5gBDQ45SkAezF
-	 OC8jIl/hAt/4oi0fVTsYfTQHza7HWp+sZp4dmZg7k0AcMZfaqESwwe4iP1Voa7za99g==
+	t=1795016754;
+	b=vQPWyLbNEotqhQdbHZ43AuQvuuZ8QdmxjLpv1YmurkqU38luBd6lfmU5b7F4HH7J4gXG
+	 Gt0+F4tofkpF67kLdLO0SJuxR2zGVQRRRMeMabODetOrGa5LQ9n6/INAWvkA4PmFH0vL5
+	 GOCY4uExLI56VfO4kxotAmRP14IuXSj5+BunRuyURx5riO0o2ODF8fuErfRxpVsHTcMHp
+	 Fk+8qunHj26CVuSHoZlfNtg834pIXzCA4z7aHnUs+eGtOFEOp8LivwnekPSsPuU66QcFb
+	 o7/cRTyhKqE/I2+YNO3mp9CJeDe0SqGdnz42x54yfDKOQUeTCIlqG66vuV0APIkH6Dw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X/OeemPeTiWTThPYzSsEhCtQN9POxzoiK45DOHpFCEI=;
-	b=xPPiY4KP9ULhJX6PzGWpcSSDF49Y8KZb5J104uMf8Z1CD82wiQJYOqSLCzTuAiWS5cMO
-	 AqW43ykotnmmVhHtwWjXHBRHy/05iemlB6vARifCcb21H03ezoqJbHOPvrj+hGEr8+YuZ
-	 NU/FAjraZAu1AVbhPbmlgvkYsWvPqLaTDfXWZw/SlwVfEPUoov2CShGfvbQncOjeamKas
-	 6qnl4ldLIOXHt40lI1e6f9aLkA9TPIC7IIuUmcS/viG5Dx+KzxI7cfAv7bdncGQsVPlM4
-	 YKUMV/3LIs0BGm/AKWoPrOfacVRGuBaY/de7zlJU3mkWcskFp+idVOj9ccTkDogqjNA==
+	bh=gPf7lVc+h/xv5Y+5ZnAf1saHUj8h7W6WJ3qYdwNQlVo=;
+	b=oOTbljBVgtSQHdjgNelTB7cYgl23pDalN7JjWWURV8hcvl/Y3gKv/qI3KuB07DPf5qf/
+	 /SNhQS9QC/7SBuXtxwBc4nGeQSbNNY0xBHsVnzWWYVtLvFNm6F3qgTU2Ch6dsXc7p+Nr0
+	 CbErU60HHV/zMSAbkCXPkcD2NVjHbE9ty6C9LSDP2NIP+psCrz3jgSr7uPQuvOKhWJd6Y
+	 vbk/rE5AFyOjQPLYuOZql471z1o8aqtjxyUC6E3raeNL68Fhla7wZHpMf7Ff8ldcoORUk
+	 VEUM84tYiHOxUlXvXeKRIcpOqHMpxY5ykSPoMIgHpYG9/TV+XYhpvShfmIVRDY2Duaw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tykxHyIY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3L7Q5iv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57EE606A31C;
-	Wed, 18 Nov 2026 15:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889B2606A325;
+	Wed, 18 Nov 2026 15:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tykxHyIY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0270C1F000C5;
-	Wed, 18 Nov 2026 15:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d3L7Q5iv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD71F000C5;
+	Wed, 18 Nov 2026 15:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016751;
-	bh=X/OeemPeTiWTThPYzSsEhCtQN9POxzoiK45DOHpFCEI=;
+	s=korg; t=1795016754;
+	bh=gPf7lVc+h/xv5Y+5ZnAf1saHUj8h7W6WJ3qYdwNQlVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tykxHyIYR3vpZ5asJIH/JJ9h+6GbfXy2Bupo1awnQ6R9uIGnx7fLVkTr6AQy7EvZU
-	 SW6iScfLs4SNTJu/8neB75dXY2chKg5BjhjOg3A5iy2WKLrrXZ7oIF+MJU0MOnhioA
-	 Hi+eqqALb+JFp3j49XmLvQL4TB467CNrh+Wew4pY=
+	b=d3L7Q5ivV/Z9cD/b2zLR1hK0rcUkilJsmjYrvLdIWNkJP0QIbcJxFH7zD04jQIgQd
+	 wHLvXVIRXcxuVJz9gVfR2NQaLoFl7bDAe35pigta6bBjOmX4GAnsM6Tfz+5H4IDBdz
+	 7oe3QVGHP0EBNsM64aKIAxN17fNlYXtWhocspr7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
-	Chen Pei <cp0613@linux.alibaba.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0639/2651] perf test: Fix a leaked map reference in the arch dwarf unwind tests
-Date: Wed, 18 Nov 2026 15:31:19 +0100
-Message-ID: <20261118150310.690306775@linuxfoundation.org>
+Subject: [PATCH 7.3 0640/2651] perf libbfd: Fix the clang -Wthread-safety build failure
+Date: Wed, 18 Nov 2026 15:31:20 +0100
+Message-ID: <20261118150310.723684877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,64 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1622c9ae39e2882fcbbae7c9d27dda13f1880b93 ]
+[ Upstream commit c4c43343501bd9fc24ec501ecaf43b7ef2da44d2 ]
 
-maps__find() has returned a reference to the map it finds since
-commit 42fd623b58db ("perf maps: Get map before returning in
-maps__find"), which updated arch/x86/tests/dwarf-unwind.c but missed
-the arm, arm64 and powerpc copies. Release the map after reading its
-end, as x86 does. All other callers of maps__find() already release
-what they get.
+perf_bfd_lock() and perf_bfd_unlock() are the callbacks given to
+bfd_thread_init(), so by design they acquire and release the lock on
+libbfd's behalf and the lock state differs between entry and exit.
+clang's thread safety analysis, which perf builds with as an error,
+flags both:
 
-Fixes: 42fd623b58dbcc48 ("perf maps: Get map before returning in maps__find")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+  util/libbfd.c:56:1: error: mutex 'bfd_mutex' is still held at the end of function [-Werror,-Wthread-safety-analysis]
+  util/libbfd.c:60:2: error: releasing mutex 'bfd_mutex' that was not held [-Werror,-Wthread-safety-analysis]
+
+Mark both functions NO_THREAD_SAFETY_ANALYSIS so that libbfd.c compiles
+with "make CC=clang BUILD_NONDISTRO=1".
+
+Fixes: b72b8132d8fd2d6b ("perf libbfd: Ensure libbfd is initialized prior to use")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
+Acked-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/arm/tests/dwarf-unwind.c     | 1 +
- tools/perf/arch/arm64/tests/dwarf-unwind.c   | 1 +
- tools/perf/arch/powerpc/tests/dwarf-unwind.c | 1 +
- 3 files changed, 3 insertions(+)
+ tools/perf/util/libbfd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/arch/arm/tests/dwarf-unwind.c b/tools/perf/arch/arm/tests/dwarf-unwind.c
-index f421910e07097..d4707e9ffd2a8 100644
---- a/tools/perf/arch/arm/tests/dwarf-unwind.c
-+++ b/tools/perf/arch/arm/tests/dwarf-unwind.c
-@@ -34,6 +34,7 @@ static int sample_ustack(struct perf_sample *sample,
- 	}
+diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
+index 936555217e81a..d1d1c9b2ef223 100644
+--- a/tools/perf/util/libbfd.c
++++ b/tools/perf/util/libbfd.c
+@@ -39,13 +39,13 @@ struct a2l_data {
+ 	asymbol **syms;
+ };
  
- 	stack_size = map__end(map) - sp;
-+	map__put(map);
- 	stack_size = stack_size > STACK_SIZE ? STACK_SIZE : stack_size;
+-static bool perf_bfd_lock(void *bfd_mutex)
++static bool perf_bfd_lock(void *bfd_mutex) NO_THREAD_SAFETY_ANALYSIS
+ {
+ 	mutex_lock(bfd_mutex);
+ 	return true;
+ }
  
- 	memcpy(buf, (void *) sp, stack_size);
-diff --git a/tools/perf/arch/arm64/tests/dwarf-unwind.c b/tools/perf/arch/arm64/tests/dwarf-unwind.c
-index 440d00f0de141..fbc161a493697 100644
---- a/tools/perf/arch/arm64/tests/dwarf-unwind.c
-+++ b/tools/perf/arch/arm64/tests/dwarf-unwind.c
-@@ -34,6 +34,7 @@ static int sample_ustack(struct perf_sample *sample,
- 	}
- 
- 	stack_size = map__end(map) - sp;
-+	map__put(map);
- 	stack_size = stack_size > STACK_SIZE ? STACK_SIZE : stack_size;
- 
- 	memcpy(buf, (void *) sp, stack_size);
-diff --git a/tools/perf/arch/powerpc/tests/dwarf-unwind.c b/tools/perf/arch/powerpc/tests/dwarf-unwind.c
-index 66af884baa660..b4bade5d59e24 100644
---- a/tools/perf/arch/powerpc/tests/dwarf-unwind.c
-+++ b/tools/perf/arch/powerpc/tests/dwarf-unwind.c
-@@ -34,6 +34,7 @@ static int sample_ustack(struct perf_sample *sample,
- 	}
- 
- 	stack_size = map__end(map) - sp;
-+	map__put(map);
- 	stack_size = stack_size > STACK_SIZE ? STACK_SIZE : stack_size;
- 
- 	memcpy(buf, (void *) sp, stack_size);
+-static bool perf_bfd_unlock(void *bfd_mutex)
++static bool perf_bfd_unlock(void *bfd_mutex) NO_THREAD_SAFETY_ANALYSIS
+ {
+ 	mutex_unlock(bfd_mutex);
+ 	return true;
 -- 
 2.53.0
 
