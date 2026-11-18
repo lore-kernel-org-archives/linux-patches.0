@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023665;
-	b=2tj+bRnzqGiKtsAL0FOQeZjpph5pn628qRPPDOB93naJ9kYpYRi/Sz6vKJ491uKknrLM
-	 ohI5IB/opEpQ+dFAe89IrALhzKVhs6A84ZoZ2GLpuNDla7LoWoiTDTKMruUdNpfqK/EJv
-	 czIe1OHNE+zb1HBYkYMeisYx7f2Zn0RQp4lY9NOyZzsTWqEkVUfUCHu30DUqigH7kKZzv
-	 THtg/Fj/8U5VUNdkLzNukLQZ1iN4Ob1ITJGPdeepFgYkmA5Q2btDwS1pZmXToCZO+5s1Q
-	 xgPprWeGE3xyLx2HSPAsl2hs89EhS9J/6HIzOVlaeLmUpXlxDCc7U/isCRhPcbyVsqw==
+	t=1795023667;
+	b=GcomL/DMSz8ZMUfNeRcATC9i7M9IWj2vgi6GOVOXY0AEMG4Lq0Z8f5yUT4fo/APLvjU9
+	 nstgK6zz0jhZYfhujKbHVRdNIc5VbtUufCoaAnS4w6Im8sf65IwyE1l4/i0zrvD4QFMXT
+	 DBDIFsK7Fa0W5Oz94TfFSVIDD5Q6Bo4RRhkp2ni3/ZikYY6xHNX/y0aoGyVdTUupG8T1h
+	 avEYlfC508/U9fs0zxx0E4jGREjFIQILAu5wuJVYvv84ydiyb0Ty3LbMxB5kgQjRWpn2H
+	 YbPMW9jwuocTDrZN0zLoOoCmF5iZkRlOsLOt5SpSJTedG6ryDJ8PCWUYiGTfTuqA+ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023665;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023667;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KHvV1BvEUhvSVTAZzBDrG9LdDmXTInbljTnSRAjk0rI=;
-	b=e4cdL8xAu6ovZ/DNe77BWEEL2P5kXUkSjhDjliq9SkDUiZ2ex+hDVcBVbJlUDcVhxWAK
-	 6lOmgDK3wwjOFAZLuVm/GfNpyeFcrqAWOuGNdD/QAASmgHOvcb0hOQZa3ca830IrPPEst
-	 n6NaPVvK8sVe3AdF7JGTqkztbLCYryEL/MIP5fdvWlkPK8SbUE2wcEqOMcIvzYSjaY3nZ
-	 lkj5mfMw/SoiuUYkiohEKbKYoK2Exc9Tw1D6fR7l14yFbZEyoVbq/NhreYpLFRUPrvLSb
-	 P21M8lp5AGo6KE+10CNuJQ2fSrMDSpt1oIyPaO5daU7yWhDJ69DSjjk7lMWDPH78ANw==
+	bh=a0v1LPy4BgI3tkTkQaR+CKmbSJfRLCv+2naSdDE4ZOE=;
+	b=G/atYiQsJn1fwnP5wR4h5k9csKrkjxKQ2IB9QZ36ELLvHKoCLfLvvRyfxeo8pKna6yrI
+	 9b420Nx2EswIJ9CQC18tDhO/EcJFr7z9FzY1cQ7xHGhjZFENboKxO8EzQZrZaTLeCGtjr
+	 tH1y/uFguy9cHLzcnlBh9VU+gXM/cYYe/1hOqrfcN7IXDdZZnRaqlC9EBK21Czluh2UYd
+	 XRBXyhJC/90efj+UMT/iA/3FKOU83i5UrDAUUBadk16m2wkAq0wn95sukBHjpTMs+euHF
+	 WnKwTSjfD4uzBIkAHGnLcdtcJAKvoN7kt31YTsql3vJK6vIURfBuVrKg/pzeuUZkOiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="AS/eCg78";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0SJdtyq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE23606A31C;
-	Wed, 18 Nov 2026 17:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50CD606A31C;
+	Wed, 18 Nov 2026 17:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AS/eCg78
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C4B1F000C4;
-	Wed, 18 Nov 2026 17:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0SJdtyq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0817B1F000C4;
+	Wed, 18 Nov 2026 17:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023664;
-	bh=KHvV1BvEUhvSVTAZzBDrG9LdDmXTInbljTnSRAjk0rI=;
+	s=korg; t=1795023667;
+	bh=a0v1LPy4BgI3tkTkQaR+CKmbSJfRLCv+2naSdDE4ZOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AS/eCg785XgPetj4YIx9315Zot160KMwV6X0jvSd465Zp5gSeF3mOvBL/deUTZR2J
-	 hqUTpYPgDenl8DJWTyiNS98KHBPONdaOydrcqs3gzTpvAoN3wN83Uwy6e3Gw7Xa2rs
-	 XmEH6gxgRekt6qnClq4AA3/iWAWbrCs+pncmj9Wg=
+	b=O0SJdtyqexv41nnTk3V4Z9G5eN2qOjEGc4wnTmEkyCSmOFmsnx1T1Hr20Jae1mPFI
+	 nCCtmkvkqLAbh2mC5uEjf6Anc6+82abyHp5VpqjKHaoi5QpNiQsg2gNLGqH6/CGCSk
+	 vFiAliPEU8H1VRpRkGCa/r3E8SLcVgs4KzkWZuYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Nicolas Morey <nmorey@suse.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0450/2151] RDMA/rxe: Use validated num_sge in local buffer
-Date: Wed, 18 Nov 2026 15:36:25 +0100
-Message-ID: <20261118150138.427199320@linuxfoundation.org>
+Subject: [PATCH 6.18 0451/2151] RDMA/uverbs: Make CQ handle mandatory for WQ creation
+Date: Wed, 18 Nov 2026 15:36:26 +0100
+Message-ID: <20261118150138.460418594@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,66 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Morey <nmorey@suse.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit a4368022a3ac5324356ae8d88e3a42d115956fd6 ]
+[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
 
-For both SRQ and non-SRQ receive paths, the WQE is copied into a local
-buffer to provide a kernel-owned, validated copy. While calculating the
-memcpy size from the validated num_sge prevents overflow during the
-copy, memcpy() itself still copies num_sge from shared memory.
+UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
+method definition, so the mandatory attribute bitmap does not enforce
+its presence.  When userspace omits it, uverbs_attr_get_obj() returns
+ERR_PTR(-ENOENT) and the handler stores that error pointer into
+wq_init_attr.cq without validation.
 
-A concurrent userspace modification before or during memcpy() leaves
-an unvalidated num_sge in the local buffer, leading to potential
-out-of-bounds reads in rxe_resp_check_length() and copy_data() causing:
+The bogus cq pointer is then passed to the driver's create_wq callback.
+In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
+container_of to the ERR_PTR value, producing a near-NULL pointer.  The
+subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
+dereference:
 
-  BUG: KASAN: slab-out-of-bounds in rxe_receiver+0x8109/0x9ec0 [rdma_rxe]
-  Read of size 4 at addr ffff88812c4867f8 by task kworker/u9:6/361
-  Workqueue: rxe_wq do_work [rdma_rxe]
+  BUG: kernel NULL pointer dereference, address: 0000000000000296
+  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
   Call Trace:
-   rxe_receiver+0x8109/0x9ec0 [rdma_rxe]
-   do_work+0x149/0x610 [rdma_rxe]
-   process_one_work+0x726/0x10a0
+   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
+   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
+   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
+   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
+   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
 
-  The buggy address belongs to the object at ffff88812c486000
-   which belongs to the cache kmalloc-part-13-2k of size 2048
-  The buggy address is located 0 bytes to the right of
-   allocated 2040-byte region [ffff88812c486000, ffff88812c4867f8)
+A WQ without a CQ was never valid; the legacy write path always required
+one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
+attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
+when the CQ handle is missing, before the handler ever runs.
 
-Explicitly assign the validated num_sge to the local buffer after the
-copy to prevent this race.
-
-Fixes: 22b8fbded65b ("RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe")
-Fixes: d6ab440240a0 ("RDMA/rxe: Copy WQE to local buffer in non-SRQ receive path")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Nicolas Morey <nmorey@suse.com>
-Link: https://patch.msgid.link/20260909160132.1491248-1-nmorey@suse.com
+Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 6aabf1d07ea34..761362de74c46 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -287,6 +287,7 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
- 	}
- 	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
- 	memcpy(&qp->resp.srq_wqe, wqe, size);
-+	qp->resp.srq_wqe.wqe.dma.num_sge = num_sge;
- 
- 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
- 	queue_advance_consumer(q, QUEUE_TYPE_FROM_CLIENT);
-@@ -327,6 +328,7 @@ static enum resp_states rxe_get_recv_wqe(struct rxe_qp *qp)
- 	}
- 	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
- 	memcpy(&qp->resp.srq_wqe, wqe, size);
-+	qp->resp.srq_wqe.wqe.dma.num_sge = num_sge;
- 
- 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
- 	return RESPST_CHK_LENGTH;
+diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
+index 7ded8339346f3..c23f455231bf0 100644
+--- a/drivers/infiniband/core/uverbs_std_types_wq.c
++++ b/drivers/infiniband/core/uverbs_std_types_wq.c
+@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
+ 			UVERBS_OBJECT_CQ,
+ 			UVERBS_ACCESS_READ,
+-			UA_OPTIONAL),
++			UA_MANDATORY),
+ 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
+ 		       UVERBS_OBJECT_ASYNC_EVENT,
+ 		       UVERBS_ACCESS_READ,
 -- 
 2.53.0
 
