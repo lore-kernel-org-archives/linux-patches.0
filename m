@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028014;
-	b=X6MyW9okaZurwUOF4xHDbZQbp0Xe034c+XQOiZ39js6uYafMzEbMJPdxvhVNU3Um43nP
-	 XlIKRpYVj5eKcQUQ0/003UwThpUegyG56TmsHIB1fPWIlAXfLljk4SAXeuoV60m2n2mSn
-	 d9GjEvWrThDvDAlboU8WUa9SciE0I7klvmCHP2Y523mRCqseTfJ6clxxjCsJ9G2N6BHIr
-	 dzWG3cfUVJw6U11Av2oTvjeGhDDvfaq19cv4frUaevwJQWgQdsRS+6xiZThkfyqJpjg10
-	 UdbYYnLCj162TH0O2G01odjjdJML+qHgmTnsL/jE8NPFDQuovmfAGz5w7YcPrO219aA==
+	t=1795028017;
+	b=Lvz3duffCA78azChvJunqADV2S+RFgHAG7Ac18mwTeAPXXcdVFifrl9onLIjzhURgobl
+	 SVtrkVkVJbUHRse2OMhiblaw2M8xJ3v7EcyjswKLgfhIACm2/UF6LTTdChmypyHSso/xM
+	 KVqsRnscyA6c8g9MX3bvRTfZfL7w/xd5x6kmx9B5ZDCkkIH1fS7nGqo1Mmfm2Pr0WFAdr
+	 +151XjI+jJD2Uz8Chdqsg5cMziqX/ywpoSZGLQSaB9ZRAID4MiLdZgaSVON1TmlzyPh1Q
+	 djRoStErT+raRBQnR9ZvvdNmVWWnpkS2JtTP31wBPJySJp4IINXXwtqhAbvi0e/YEdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KkiIgYCybNleoD7L7kSWL/pHwj7g3gZwgqzYIURcdcs=;
-	b=oTX95rkk15dDCQ079Gx+MDfdKFaAyQMn1WWT7INXUQA3Fw8qjgY0Zn2RemtDEsx4Ciry
-	 K4a27aFeXqRd09epg8JmRu5SEIZOU82Q4SecleYCAQgqlPZaqX/RURXZDIononkk94W9J
-	 1GhYfhKD0Ti1i28LyT+9RF9sJqNsX3E7A9/8Qzd5kZvdvBY7M6wRIXzTBMnEwROrF4wiz
-	 kzZIRkeiyJevSfmzgV2OUewW0Vy5YproMPcek9Kz1RBCm+c5rgr1+00lqvBiV9ZzoNcPv
-	 uWU3qo3ssb9XD6RUEnqAhfdNADouap+OWu2DYiohVzWXAaS5U0XXwelOEiaFMIGfhVA==
+	bh=4pmSIAOxfwweAqOstxFcPpWkaj9ue3XJu+Usau+wq0o=;
+	b=n0zupEJADObUeElzJndRFkZTYeVHfMhXcTa0ji6t1QwLdYimwIJO8yX6vzEd4Pn4mwLK
+	 3ULt1KHcnB2MpYzXGjU6NZlllMkwJUncnTGAjFBTQ+d4ksKDP4wrwqrM910YOxG9vn4Bp
+	 552tkbeK6e9RFk/z1SKejqK8+YpS7OqmgnyfnQ2/+qXD7gLIQSjxnciV9E3vbdmg/l7u0
+	 eLMoN6DhKvXblyds2XTmZPNTOCWrPsbNsWrYLuFs7PcQxic/wu2oOp84SJzPzMLwahj30
+	 ooB3lwu3gPmEc5rHsyvZvuLrps1Hp4pciNIwxiq137KgtsXlBlmnoPP0p+BkE8mGOrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRsvdjJA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFixMtU+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4190C606A31C;
-	Wed, 18 Nov 2026 18:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2508C606A31C;
+	Wed, 18 Nov 2026 18:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRsvdjJA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D2F1F000C4;
-	Wed, 18 Nov 2026 18:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OFixMtU+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746F81F000C4;
+	Wed, 18 Nov 2026 18:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028014;
-	bh=KkiIgYCybNleoD7L7kSWL/pHwj7g3gZwgqzYIURcdcs=;
+	s=korg; t=1795028017;
+	bh=4pmSIAOxfwweAqOstxFcPpWkaj9ue3XJu+Usau+wq0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cRsvdjJA7+IavJRvz8wFn8gJApxX0L6Fka/pNAQGCWIfRYoTfISZoATtnwfcEej9z
-	 nTwq2g0VvYcy9nreCi+hYChaF/RDStlGljB+XxxYfLWbE7Z81D4LniVDkzxy1fxnt4
-	 WOMAIB+Xvm6260ONxHhafYA+rkmTzqwz7xEczDEo=
+	b=OFixMtU++dhFTB3Q32cxzhwAa/W8kg3nrbQXwLLSQtPV7ghoSYD/hjkroWu0FRvTn
+	 Z0C3m1Q8zfFmdqnnipUcKqbwUp6m2OK2tgBsz2Vauq+Z/UHBGl407DpWbae3jly1uU
+	 kSI1gI8vEcxHA4QpZzx+qRq3MAOhTEipcZ8ZA68A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Laimer <h.laimer@proxmox.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Petr Machata <petrm@nvidia.com>,
-	Gabriel Goller <g.goller@proxmox.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1993/2151] vxlan: keep reserved_bits across changelink
-Date: Wed, 18 Nov 2026 16:02:08 +0100
-Message-ID: <20261118150234.324859900@linuxfoundation.org>
+Subject: [PATCH 6.18 1958/2151] ceph: dont keep a mon_addr string that failed to parse
+Date: Wed, 18 Nov 2026 16:01:33 +0100
+Message-ID: <20261118150233.086715166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,77 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Laimer <h.laimer@proxmox.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit e3a629477d52a9f49d50d72903be06a4d1f4aa58 ]
+[ Upstream commit 6c82bff8561f4c20dc0113f81cb2f6e6e2b4cf70 ]
 
-vxlan_nl2conf() derives reserved_bits from the extension attributes
-set in the netlink message if IFLA_VXLAN_RESERVED_BITS is absent. A
-changelink having it set is rejected, so this means that every
-changelink will reset all extension bits and reserve them again.
-vxlan_nl2flag() rejects setting a flag on an attribute that is
-create-only on changelink. So also setting an extension attribute will
-fail before it can un-reserve its fields.
+ceph_parse_mon_addr() stores the string in fsopt->mon_addr before handing
+it to ceph_parse_mon_ips(), and then returns that function's error. So
+after a mon_addr= that does not parse, fsconfig() reports the failure but
+the mount context keeps the rejected string.
 
-The extension's header bits being reserved again then makes
-vxlan_rcv() drop frames that have them set in their header as invalid.
-The device still reports the extension as enabled, because only the
-reserved_bits are rebuilt and the flags are just copied.
+That matters because ceph_get_tree() uses fsopt->mon_addr as the "monitor
+addresses were supplied" test:
 
-A simple reproducer is
+	if (fsopt->new_dev_syntax && !fsopt->mon_addr)
+		return invalfc(fc, "No monitor address");
 
-    ip link add vxgbp type vxlan id 1 dstport 4789 local 10.0.0.1 gbp
-    ip link set dev vxgbp type vxlan ageing 300
+Userspace is free to ignore the error from fsconfig(FSCONFIG_SET_STRING)
+and go straight to FSCONFIG_CMD_CREATE. The check then passes on a value
+that was rejected, and the mount continues with ceph_options::num_mon
+still 0 - which is how syzbot reached the BUG_ON() in pick_new_mon()
+fixed by the previous patch.
 
-After setting the unrelated ageing, incoming packets with the GBP bit
-set in the header start getting dropped.
+Parse first and commit only on success. A failed mon_addr= now leaves any
+previously accepted value in place instead of replacing it with one that
+does not parse.
 
-Keeping the reserved_bits on changelink is safe because anything a
-changelink accepts leaves the header bits enabled extensions use
-unchanged.
-
-Ran into this when adding support for the GBP flag in ifupdown2, see
-link below. The device kept dropping packets after some time, it
-turned out it always started after a changelink.
-
-Tested this by changing ageing by hand on a vxlan device that was
-created by ifupdown2 with the gbp flag, and checking the reserved bits
-using
-
-    ip -d link show vxgbp | grep -o 'reserved_bits 0x[0-9a-f]*'
-
-Without the fix I got 0xf7ffffff000000ff after the changelink, and
-with the fix it stayed 0x77000000000000ff. The following patch
-contains a selftest that fails without the fix and passes with it.
-
-Fixes: e4f8647767cf ("vxlan: Track reserved bits explicitly as part of the configuration")
-Link: https://lore.proxmox.com/pve-devel/20260828134708.692354-1-h.laimer@proxmox.com/
-Signed-off-by: Hannes Laimer <h.laimer@proxmox.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20261023-b4-vxlan-changelink-gbp-v1-1-f0d13951c09b@proxmox.com
-Tested-by: Gabriel Goller <g.goller@proxmox.com>
-Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7b19b4db5add ("ceph: new device mount syntax")
+Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
+Assisted-by: Cursor
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/super.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 090d50b163816..424f57400933c 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -4350,7 +4350,7 @@ static int vxlan_nl2conf(struct nlattr *tb[], struct nlattr *data[],
- 		}
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index 4ca777f30a48e..25e32c717a406 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -388,13 +388,18 @@ static int ceph_parse_mon_addr(struct fs_parameter *param,
+ {
+ 	struct ceph_parse_opts_ctx *pctx = fc->fs_private;
+ 	struct ceph_mount_options *fsopt = pctx->opts;
++	int ret;
++
++	ret = ceph_parse_mon_ips(param->string, strlen(param->string),
++				 pctx->copts, fc->log.log, '/');
++	if (ret)
++		return ret;
  
- 		conf->reserved_bits = reserved_bits;
--	} else {
-+	} else if (!changelink) {
- 		/* For backwards compatibility, only allow reserved fields to be
- 		 * used by VXLAN extensions if explicitly requested.
- 		 */
+ 	kfree(fsopt->mon_addr);
+ 	fsopt->mon_addr = param->string;
+ 	param->string = NULL;
+ 
+-	return ceph_parse_mon_ips(fsopt->mon_addr, strlen(fsopt->mon_addr),
+-				  pctx->copts, fc->log.log, '/');
++	return 0;
+ }
+ 
+ static int ceph_parse_mount_param(struct fs_context *fc,
 -- 
 2.53.0
 
