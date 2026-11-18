@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032280;
-	b=njJ/yB/KDIKVH+IUWccRjcNrm3C9y2nM7FrT1NgbOHhcCpZuwIAZ0E/l3D7J0igOABO8
-	 iVtzQEA8I/sWRv/Rg7i4ifNbaQ9wrVG8pdy2eKy4kohuMDayxdwFR4Q07wVT6hs8EHdWp
-	 qEpb+NyhaGNiS4q+k6ZDArVNZGbOYXMMNDwf89mAvw8bao0vUhILpWI62by9QVXc6rmTf
-	 LZPFIvT9eoCd8a+lPPg5T5LYbMg2HA0cQ7NsUUzTWaMC9D62HMve53GQmvcHInIYzGSuH
-	 9VbmYITAOb15q5KqUxAA0hc0PjNgDjVlQLUc56fnUUaLrIY3/wxAOEyb7OInj1f4WAw==
+	t=1795032283;
+	b=aOEQHHzKl4to/hqAaRl07qumShNjcCbVgU66TZwjJ27YvWBqupS4Bb+mkmM+EW9Zc90J
+	 joJXlhET3Q6aZJ4+l/D6dtTlPthZaxooeBErHjfe62+kSKGgbAmHYGvfaVIiej7FDkdNI
+	 hY8gEPYEYvcMgUYTi8lts+g6nnLY9kAUqVFhRmRzR5FCFEw7Nz+7XCMJErDGVtiPKgGQa
+	 hgtfuYFCB1X/SiA9eailjUVNGB6ytLSlhrViJ9A2sjQAS0SMYEIoeGIc9hpU7HVR1FFu6
+	 Yvg+thCGuw0v4pJUE57Td0K8lLkS8RWip2VP2ZEYpgaGw1Vh3yjO0AmhdoUKwUQjuRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mcZNK5KmhxAv779hCbNPU0TSXboDTjTuCqF6AcKhtjw=;
-	b=xbpIS4h8ape+yhYU+AdrvwI7S+ts4YZzYrwEhl0/LSD3XjuieYhGq1WYbfl0vQLocGjQ
-	 zLAOMw41qXbooFmD+sKzoD9CpuapADLUpPY0oQ6WwC3o20Zt2Q3FTuaRJeEWAFVY0QmDl
-	 UPAhb25lu9XF5Wwlm138n/iWDjLKKjU6BuetvluArQhTB2uFyFZATo4xmRwKxOMXTycYa
-	 Xx3uYozMNECbiPLVpeUHFvoeemC3hsAxif+W7ryYh2iv2SY/hyn9f1tkTOGqZQJEDYqHe
-	 jMz7VTDos9B1SHeMDdQRC4p2IZXuViGAlTQfSrK4/5/3w0X8MKFb/lgZGjqh64nRh+g==
+	bh=WpiXPo50LAZs6/eS5TtZHWKLzWpAxGL/G0qAdjZzwYY=;
+	b=0n3IXfW98jqFvICoHNKKst+LX4r4ChcQeJ9XA4kh6ecwweulGk8pUJftYJ9xf8oqhgXC
+	 uIhtaPqqyysZZlUrypRD6Vphe/E4IoSbH4sirINMO2/J8BMhGseqqSvQGnHQajZ9kPTVX
+	 N8g+VCNhaxX+DFjUEpAilEzcZo+YfH6Zt3jvb/0zMRPouQnh1j9Xkc1OeJ+v7MOjXliGE
+	 XQ+WBc/anqJ4yL8DafMdDrZlLz9rlgm3c7Sz/A47kx71f6IoarxWgjbhv/jBxjdUYJuZh
+	 63DW2zVHaG4dPm1SMzoudOm/e7fYam7r5H2YXQaX0pRDZ0WIyg2KFd7D+rrs3lC3upw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kv5xLUnR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUElZvip;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA94606A31C;
-	Wed, 18 Nov 2026 20:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3119B606A31C;
+	Wed, 18 Nov 2026 20:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kv5xLUnR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C891F000C4;
-	Wed, 18 Nov 2026 20:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sUElZvip
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D2D1F000C4;
+	Wed, 18 Nov 2026 20:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032280;
-	bh=mcZNK5KmhxAv779hCbNPU0TSXboDTjTuCqF6AcKhtjw=;
+	s=korg; t=1795032283;
+	bh=WpiXPo50LAZs6/eS5TtZHWKLzWpAxGL/G0qAdjZzwYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kv5xLUnRT/CIoDESMzQXV5NuXEXfrGSQqg1AQw5iJT9Tk6aFNKyjriJ6aKsOZCGsF
-	 BieZ3ggDvaWZBIKglHDfdqcA5LAP3Avs5qH9cq/8IlKt+pb/rcuSej3Q24U8pFUabE
-	 8wFpLuoiFfVRZzYQYqxiLFVjYxnBq7UeiUtZtRj4=
+	b=sUElZvipRfBBttXGF9NfEOa/Zzm5SwFzSKAlodSygWnKecvY2jwV4Xx3EvHzndlzo
+	 QeNg9MQybxj6hxh+KvMjci2VVViQEDEtTZOqNXL5iBFd4owD/+egOu1w+HSxFnSEkJ
+	 9WdLwB3gg3grqJCFn2cBTt9pBhj9PgemKVkcn4Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1355/1756] ALSA: jack: Protect the index scan against control removal
-Date: Wed, 18 Nov 2026 15:58:02 +0100
-Message-ID: <20261118150103.242977927@linuxfoundation.org>
+Subject: [PATCH 6.12 1356/1756] bpf: Fix verifier WARN on narrow read of bpf_tcp_sock u64 fields
+Date: Wed, 18 Nov 2026 15:58:03 +0100
+Message-ID: <20261118150103.276339238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,70 +71,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit ba8c3d5fc27ac3f86962641dd3b6600906234bab ]
+[ Upstream commit af873495cbcb066ab029f7f63b94410d4db47628 ]
 
-A control found during a jack-name index scan must remain alive until
-snd_ctl_find_id() finishes comparing its ID and count. However,
-get_available_index() calls it without holding card->controls_rwsem.
-With CONFIG_SND_CTL_FAST_LOOKUP enabled, the lookup loads a raw control
-pointer from ctl_hash and dereferences it in elem_id_matches() without
-any lock that excludes removal.
+A BPF program can read the middle of a u64 field in struct bpf_tcp_sock:
 
-This can happen when a jack is created while a different jack owner on
-the same card removes an existing control with the same name and index.
-For example, probe and unbind of different HDA codecs can reach these
-paths on a shared card if their generated jack names match.
-The codec device locks do not serialize operations on different
-codecs. The unbind path can free the control during the index scan:
+	tp = bpf_tcp_sock(listener);
+	/* +0x54 is in the middle of the u64 bytes_received */
+	unsigned hi = *(unsigned *)((char *)tp + 0x54);
 
-  Codec A: probe                  Codec B: unbind
-  --------------                  ---------------
-  get_available_index()
-    snd_ctl_find_id()
-      kctl = xa_load(...)
-                                  hda_codec_driver_remove()
-                                    snd_hda_codec_cleanup_for_unbind()
-                                      snd_hda_jack_tbl_clear()
-                                        snd_device_free()
-                                          __snd_device_free()
-                                            snd_jack_dev_free()
-                                              snd_ctl_remove()
-                                                snd_ctl_remove_locked()
-                                                  __snd_ctl_remove()
-                                                    snd_ctl_free_one()
-                                                      kfree(kctl)
-      elem_id_matches(kctl, ...)
-        read freed id/count -> UAF
+bpf_tcp_sock_is_valid_access() allows this 4-byte read (the default case
+only checks size == 4), but bpf_tcp_sock_convert_ctx_access() only knows
+the field starts and has no idea how to handle such an offset. It emits
+no instruction, cnt stays 0 and the fixup pass trips verifier_bug():
 
-Hold controls_rwsem for read across the index scan so removal cannot
-free a control until the lookup has finished using it. Release the lock
-when get_available_index() returns, before the caller adds the new
-control under the write lock.
+	verifier bug: error during ctx access conversion (0)
 
-Fixes: 38ea4c3dc306 ("ALSA: control: Optimize locking for look-up")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/pm-pmb-f08c844bb1163c8d4fa1-v2-2f3c99e40f90134846ee@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Just disallow the narrower access by matching the whole u64 range of the
+two fields, so it is turned down at check time:
+
+	invalid tcp_sock access off=84 size=4
+
+Fixes: 655a51e536c0 ("bpf: Add struct bpf_tcp_sock and BPF_FUNC_tcp_sock")
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017143819.209510-1-jiayuan.chen@linux.dev
+Closes: https://lore.kernel.org/bpf/7a8ff335.1024c.1a14395f3e5.Coremail.kaiyanm@hust.edu.cn/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ctljack.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/filter.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/ctljack.c b/sound/core/ctljack.c
-index 709b1a9c2caa3..e6b0d98ca480e 100644
---- a/sound/core/ctljack.c
-+++ b/sound/core/ctljack.c
-@@ -37,6 +37,7 @@ static int get_available_index(struct snd_card *card, const char *name)
- 	sid.iface = SNDRV_CTL_ELEM_IFACE_CARD;
- 	strscpy(sid.name, name, sizeof(sid.name));
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 2d6e2f772a600..c1e4825bba4dd 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7238,8 +7238,8 @@ bool bpf_tcp_sock_is_valid_access(int off, int size, enum bpf_access_type type,
+ 		return false;
  
-+	guard(rwsem_read)(&card->controls_rwsem);
- 	while (snd_ctl_find_id(card, &sid)) {
- 		sid.index++;
- 		/* reset numid; otherwise snd_ctl_find_id() hits this again */
+ 	switch (off) {
+-	case offsetof(struct bpf_tcp_sock, bytes_received):
+-	case offsetof(struct bpf_tcp_sock, bytes_acked):
++	case bpf_ctx_range(struct bpf_tcp_sock, bytes_received):
++	case bpf_ctx_range(struct bpf_tcp_sock, bytes_acked):
+ 		return size == sizeof(__u64);
+ 	default:
+ 		return size == sizeof(__u32);
 -- 
 2.53.0
 
