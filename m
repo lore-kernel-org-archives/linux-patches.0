@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020496;
-	b=r7Cir1fMWulu3wVWxVOgvBre6T4yxAJNhmQ1hEU36mL2PUuP9vQ7T4Mam80kAfJwaEy4
-	 emeCXr5ovI7UChP5EnOswIQ1dKcJlHS4k5G0y/h11YMuD/REPiaRqZ6Jmc6Gg6yn23vvv
-	 tp8ldHvsdywR58H9X91Msa1Jg81gwWLTGb2Y5yVwmVQQ7iG4nlAof2v4ie93mtRw7anmR
-	 ptc5w3b2SfkXr3muzzbr0ajIogAvzvBCjcGoiZzmpswGnMOOQCIDCGF7cw7YFpdyKPLh4
-	 0n1GzUmku8F3tKjiYjUvaBE7kRKTAk0BrLnQmFQLfeGrwrtnrlJUHsGjeWd+gQp7Srw==
+	t=1795020499;
+	b=oExWcrcDMa5VahkXwSHuRKhWkOcr63WZXJt9xVimxobDtkpdBkqg/4SAKisHvCE9Pb8N
+	 yHHp0SysrvyniKxsUe1bAARFUCIIJUI+mvAgv1WBgm1sYLL6QnaOS/+q1wAWWbUHe5b1i
+	 EtTQ1IajkK6sZBdshadeSN5x9tUwM6nVOFkB0pJpMlPUKytH/O8nw5m7sLGzrY5KhbRzi
+	 h5TNBh+7gbO/rjBMtz+xaRwFJ+TLmeShUguSmPiTt3Le8SGyUfQN3Zqh/NQJYZpYRJ/R1
+	 znN7NkmegcdwVL/58P0qbzZiY1m2KnUPXlkjG5cFVA+0MgeVUBy2yxGA6Lxg57qitOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020496;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020499;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SK3W3UG6ltOt2PIXcSaFIM54ISQIJmSLR248Phklzqg=;
-	b=BKVxXk8Mj/DyyUvanAh6Q0/JUnOvxw8cjofmzWssuDSX2d2YpvNfUB2A6bM4JdYk8pP4
-	 BV7j0sigLpFULpLl3pAKjcgXhN32KRF5tTo/4+UTHQsLaFzG20tkFY8KbmA4lznXRy95j
-	 oH0P3cbP2Mc9ra3bAAHjaF6FLqgfAZFfGYfPFM8fNXkD6+ec6UGzEWHA44kxbW/dmTrHi
-	 GXhIlb7LbvfarPRugR3fyx9Wy/fIryeCeEAQqlVvzr4Fqa9NWisT15Ex0evT63T3BNcei
-	 DaHFJsoNMdaqaLOBJpxGgxZlac+6dTAb4bn1Iy8idnPtn6y0jhmpY1+CwdndJ3azmnQ==
+	bh=AgCMgJBC5VJq/4au6a3SNTaWS865UE7J1sIZw5u6H9Y=;
+	b=Uzz2piiFA4clrxuNF1LBrt1guxm8HG9dN+E2cf1VCX8jvVmzYTLF/UFCh9vzCKNLkqGQ
+	 /i4Q+dJyNzCzDanE6nmce9GlGo37m3asY7NeDtQ6s3qyhnaovVEGFWl6phTydjnmdb9yI
+	 oksdJQhiW4/0BuuPdnHQQsYhgiTvQeHu9sFQi+Vq4sr6myCB6M+KVBEVldHApd2vOOehu
+	 +krHDoqcjcdXvWFRWJCIm/+HTXhK2yOCZ0Gs8SV+8SMQJDj6NEclN7VCTAB/+rt2wJQTm
+	 /AsZoqE+BU2WOEh/2Daz72z2VbMGuxKxQjnjguON96aiSl1rc0eEWQEoyTXlWuVRObQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdo0OGl0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgDWwtXE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE3A606A320;
-	Wed, 18 Nov 2026 16:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D39606A325;
+	Wed, 18 Nov 2026 16:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vdo0OGl0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397D61F000C4;
-	Wed, 18 Nov 2026 16:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgDWwtXE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9341F000C5;
+	Wed, 18 Nov 2026 16:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020496;
-	bh=SK3W3UG6ltOt2PIXcSaFIM54ISQIJmSLR248Phklzqg=;
+	s=korg; t=1795020499;
+	bh=AgCMgJBC5VJq/4au6a3SNTaWS865UE7J1sIZw5u6H9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vdo0OGl0XpHpCswg/H/ux4lNX2Ekjv7EnYCKiLE0ke78kWnLiyy61UWBhO2oGVbrI
-	 WPp2qvxOAFQB/B96PnE6kVAuun03VSSZgfkq9mkoNQrWFO7v5ToAKgNX1fLDrSnvPC
-	 yi7bU4QcumFqHFV8M9XoYT175RiUa1VZ92JOu6cE=
+	b=WgDWwtXEM0xbEnxYH4vRPMuQIsJcFScs0B5EgLyDWy170I41qwLoRBPHC9HTpEM4F
+	 7o5pSvwXNfapInn5ONuNIEwLMbJq7yH+8qkVYF7dtHQIHFOmMBRRW44cwiAvKiNfMt
+	 BsebXaTWdzZHu0nq6Kccu3nuJnHjRDH9XwXetX8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	syzbot@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1921/2651] spmi: mtk-pmif: Add workaround for FSM lockup/error in read operation
-Date: Wed, 18 Nov 2026 15:52:41 +0100
-Message-ID: <20261118150355.902216215@linuxfoundation.org>
+Subject: [PATCH 7.3 1966/2651] ext4: fix orig_mlen initialization in ext4_map_blocks()
+Date: Wed, 18 Nov 2026 15:53:26 +0100
+Message-ID: <20261118150357.273498561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,112 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 84c72fc05f73df3473b3bfac89c0a7eae765513a ]
+[ Upstream commit 3ec0eefc07cb9e2bb1193f1fa3d8157302a737f5 ]
 
-The SPMI PMIF in some SoCs like MT8196 is affected by a hardware
-issue that makes the first read operation on each SID to fail as
-the FSM locks up after sending the read command, and this happens
-at least in the following conditions:
- - At boot, after bootloader handoff; and
- - At every suspend->resume cycle.
+Save orig_mlen after clamping map->m_len to INT_MAX. Otherwise, the
+unclamped value may be passed below, bypassing its overflow protection.
 
-This critical bug may produce unwanted issues in regulator drivers
-which may fail to set voltages, making the platform to end up in a
-undervoltage or, a bit more critically, an overvoltage condition,
-producing instability or ... worse.
-
-In order to work around this issue, add a retry mechanism into the
-pmif_spmi_read_cmd() callback which will resend the read command
-up to 3 times in the following conditions:
- - Software Interface returns an error; or
- - Software Interface never gets in WFVLDCLR state.
-
-As to avoid uselessly blocking for too much time, only during the
-read-retry loop, the maximum SWINF polling time for each trial is
-reduced to PMIF_TIMEOUT_US / 2: this was tested on multiple SoCs
-and seems to always be enough, as when any read succeeds it will
-always take less than 40ms.
-In any case, this is still allowing 1.5 times the previous maximum
-polling time, reaching a total maximum (for 3 retries) of 150ms.
-
-Worst case testing that I performed saw a third retry only 3 times
-out of ~100 reboots.
-
-Fixes: 1f5be2d7f743 ("spmi: mtk-pmif: Add support for MT8196 SPMI Controller")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 5bb12b1837c0 ("ext4: Add support for EXT4_GET_BLOCKS_QUERY_LEAF_BLOCKS")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: syzbot@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20261009103033.2920530-6-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spmi/spmi-mtk-pmif.c | 38 +++++++++++++++++++++++++++---------
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ fs/ext4/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
-index 1048420b5afb6..61c916edaec4c 100644
---- a/drivers/spmi/spmi-mtk-pmif.c
-+++ b/drivers/spmi/spmi-mtk-pmif.c
-@@ -21,6 +21,7 @@
- #define SWINF_WFVLDCLR	0x06
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 6697c33d3aa33..bd1c14b983768 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -703,7 +703,7 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
+ 	struct extent_status es;
+ 	int retval;
+ 	int ret = 0;
+-	unsigned int orig_mlen = map->m_len;
++	unsigned int orig_mlen;
+ #ifdef ES_AGGRESSIVE_TEST
+ 	struct ext4_map_blocks orig_map;
  
- #define GET_SWINF(x)	(((x) >> 1) & 0x7)
-+#define GET_SWINFERR(x) (((x) >> 18) & 0x1)
+@@ -719,6 +719,7 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
+ 	 */
+ 	if (unlikely(map->m_len > INT_MAX))
+ 		map->m_len = INT_MAX;
++	orig_mlen = map->m_len;
  
- #define PMIF_CMD_REG_0		0
- #define PMIF_CMD_REG		1
-@@ -349,6 +350,7 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 	struct pmif *arb = to_mtk_pmif(ctrl);
- 	struct ch_reg *inf_reg;
- 	int ret;
-+	u8 retry = 0;
- 	u32 data, cmd;
- 	unsigned long flags;
- 
-@@ -385,17 +387,35 @@ static int pmif_spmi_read_cmd(struct spmi_controller *ctrl, u8 opc, u8 sid,
- 		return ret;
- 	}
- 
--	/* Send the command. */
- 	cmd = (opc << 30) | (sid << 24) | ((len - 1) << 16) | addr;
--	pmif_writel(arb, pbus, cmd, inf_reg->ch_send);
-+	do {
-+		/* Send the command. */
-+		pmif_writel(arb, pbus, cmd, inf_reg->ch_send);
-+
-+		/*
-+		 * Wait for Software Interface FSM state to be WFVLDCLR or to
-+		 * return an error.
-+		 *
-+		 * If this is WFVLDCLR, read the data and clear the valid flag;
-+		 * If error or timeout, retry for a maximum of 3 times as a
-+		 * workaround for an hardware issue.
-+		 */
-+		ret = readl_poll_timeout_atomic(pbus->base + arb->data->regs[inf_reg->ch_sta],
-+						data,
-+						GET_SWINF(data) == SWINF_WFVLDCLR ||
-+						GET_SWINFERR(data),
-+						PMIF_DELAY_US, PMIF_TIMEOUT_US / 2);
-+		if (ret < 0)
-+			continue;
-+
-+		if (GET_SWINFERR(data)) {
-+			ret = -EIO;
-+			continue;
-+		}
-+
-+		break;
-+	} while (++retry < 3);
- 
--	/*
--	 * Wait for Software Interface FSM state to be WFVLDCLR,
--	 * read the data and clear the valid flag.
--	 */
--	ret = readl_poll_timeout_atomic(pbus->base + arb->data->regs[inf_reg->ch_sta],
--					data, GET_SWINF(data) == SWINF_WFVLDCLR,
--					PMIF_DELAY_US, PMIF_TIMEOUT_US);
- 	if (ret < 0) {
- 		raw_spin_unlock_irqrestore(&pbus->lock, flags);
- 		dev_err(&ctrl->dev, "failed to wait for SWINF_WFVLDCLR\n");
+ 	/* We can handle the block number less than EXT_MAX_BLOCKS */
+ 	if (unlikely(map->m_lblk >= EXT_MAX_BLOCKS))
 -- 
 2.53.0
 
