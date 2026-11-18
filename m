@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045796;
-	b=3lDtaXEJ+CwX8/1wg7XT3DleZpEsTFSXk3LK6rAiLoTmP4Y7MDpVdxQ/UfmwA7NuzFLu
-	 sEtYIaMspCTNEu9RHdNVjxBLirDbjfNCmaxrXPrZrTVhtAVkgJpB7qMOx22/+U7uWxeE5
-	 6cE43Ijd1S8k1jcF3I77ye9Kbkrc82fRT+B7EdmhlAUjCvyJjRQacnp1IGww53KYYs1i9
-	 iNwGaH7lY8Xhk/pfnviAD49WHUoKEiJr/yq8Jw+aw/4mpUBMmHkaDFqv7y/A1AnSafstr
-	 WC8keikCyNYXdSF8zqUXlJn8X4t35iYty0wRM4wbHIDmrjkqNqRq7Y8BrG9z5U+tRLA==
+	t=1795045799;
+	b=LCWI9OI4vo481g8rPN83uiFP0RNYTTnZdvse0g8AMMxO8hTNoUBaIbvv4S8ov20sRLB2
+	 o83jztfXkhH8j7UEbRNAD6QtqK7BRHfuRy59LwIeZCmUpoyMWNpGTAu7CpUtW+2N6GG4O
+	 9XKozrPkXwv/sSdKSAfjcN8xoA9taWASk4TRiq7asMQwi/QzpTporgCFes3eR/N1UzinE
+	 pr966+MGT3C6Ertlh0ydpNPau1GIzbHI2CaPdJ1UoUKoP2d0pu9a0Ts7yWvRNrqbR1oTy
+	 YIOshwd5dMUOvQQw5t4wa4ZAgx+YtXNQy6Vgs7nwtV4xv9X6x2Uxj4GFDzPoq4fR61A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i/cd7Hmdl1qSmZF2duwVeTy4Oc9FsDZWZ4bC6ddF010=;
-	b=JHSgCR5vREdu1svm30LanPCjluOV0UXqNdLWQSl5eTfa8mZM/BLB5FhIkGiyw/d1G1Zn
-	 sFRnxVVNrdCulI/Z5B0jUSH16rK1BQP/9x2t4neFVPOkSd8Eb1zHRD6XW+deJLTjOV9w/
-	 fVadlR6F7pK+Ep0IZYRuLDNI+oODjVEE0RsngEp4/su3p485OsmHceSxF/NXuI6ufoBxM
-	 m737imp9PzpwIilmIhjRcwMvmepcBhPH+SHJiQyrghwwWd2eT72g0KV1ioHJXPmI/YYJk
-	 BxijOEkBcRLnbkHZX2oSWpozjZFTAbKdchX3Z+lcPUcrQIjgjBzxMbhdYvFKHCLsfsA==
+	bh=p3utdxx372rhk2k8MmuXyxkAfojSbuGmN5cuWnayeDI=;
+	b=gHtayw5Ysrlg4LomH+R2hk4Q43zwszHf0br9Y2jCi+lsDxKG/DWicB0GOCuj/FoNV/6i
+	 Vk0AC/MFGBjQrC3sjSsTrzJrxxYBcNCVCcpKXYCIIHuV9o7UmU2Xp2/1kIMH3nkCOdlaF
+	 kGQYMBbVea1ASPMI+OOQTUzsvYMg/cR4Sn9KyqRw0R9j/4mo6//alO0T8qcEcd1qOUrzA
+	 Tc2/Ny4y+RuwFKBtTkegj4WBBh748qm+Bsm/mwWA63YxLb5e2k/nBj8cDc+FNvHJo7Jln
+	 x/fT14iNVtHODyNRlla0qK8YGIXctPWQdgWivK5QXkYK8nuFFBXT+HEZolMPfW8jdDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8qiJdeS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxYETiJ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BD6606A325;
-	Wed, 18 Nov 2026 23:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C055606A325;
+	Wed, 18 Nov 2026 23:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8qiJdeS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFE41F000C4;
-	Wed, 18 Nov 2026 23:49:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxYETiJ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593551F000C4;
+	Wed, 18 Nov 2026 23:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045796;
-	bh=i/cd7Hmdl1qSmZF2duwVeTy4Oc9FsDZWZ4bC6ddF010=;
+	s=korg; t=1795045798;
+	bh=p3utdxx372rhk2k8MmuXyxkAfojSbuGmN5cuWnayeDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8qiJdeSeE1x5yjHvRP+q6G+HBMChkEK6G5aMX1RfRUjmeounQCY8dBSPCmoAC226
-	 KyQK66yjqE5tOPCeDjl3iGqFtahKHzNIiQG7TxdNMFj2ANdJybnUDIgzY/4WVRDdjz
-	 tbv7r/rnBluUcw7Hqh66NBtB635+fPdo0tuCXWJ4=
+	b=pxYETiJ3IFLUHMOQ30HHQNYvWw11M81gir8wRX6InWzgf3qSiYbY1YUF33jIBkO/Z
+	 KV846nbmyD2KzrVxz3/6voMLMpzV87EkLH1sN3eYOnzk8sd3LMOORoOh9layr/pE0Y
+	 YG8XmBWks+07frpimbkMm0Umr8pvO//7bkaJSXL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Hoffmann <f3lix.dev@gmx.de>,
+	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1051/2857] libceph: reject mismatched CRUSH weight-set sizes
-Date: Wed, 18 Nov 2026 15:34:45 +0100
-Message-ID: <20261118150239.435164666@linuxfoundation.org>
+Subject: [PATCH 6.1 1052/2857] libceph: reject an initial monmap with no monitors
+Date: Wed, 18 Nov 2026 15:34:46 +0100
+Message-ID: <20261118150239.470793340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,71 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Hoffmann <f3lix.dev@gmx.de>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit d8fc89b5bfe4cb3aebe4c8a818247d11291b841c ]
+[ Upstream commit 94dbce2ae4fdb57bdb53ffa3456da777a5cfb981 ]
 
-A CEPH_MSG_OSD_MAP message can contain CRUSH choose args with replacement
-weight vectors for straw2 buckets.  decode_choose_args() validates the
-optional IDs vector against the referenced bucket, but does not validate
-the size of any replacement-weight vector.
+build_initial_monmap() takes the monitor count straight from
+ceph_options::num_mon and builds a monmap with that many entries without
+checking that there is at least one. ceph_parse_ips() writes *count only
+after it has parsed an address successfully, so a ceph_options that went
+through a failed parse still has num_mon == 0 and the resulting monmap
+has no monitors in it at all.
 
-The CRUSH mapper assumes that each replacement vector has exactly as many
-entries as the bucket.  A zero-length vector for a nonempty bucket makes
-bucket_straw2_choose() dereference NULL, while a shorter nonzero vector
-causes an out-of-bounds read.  An authenticated monitor or OSD can deliver
-such a map and crash a kernel client when it performs placement for an
-ordinary request.
+The first thing the client does with that monmap is open a session, and
+pick_new_mon() asserts the invariant that it is non-empty:
 
-Reject a nonempty collection of weight sets for an absent bucket and
-require every replacement-weight vector to match its bucket size.
+  kernel BUG at net/ceph/mon_client.c:211!
+  RIP: 0010:pick_new_mon net/ceph/mon_client.c:211 [inline]
+  RIP: 0010:__open_session+0x60f/0x740 net/ceph/mon_client.c:245
+  Call Trace:
+   ceph_monc_open_session+0x46/0x60 net/ceph/mon_client.c:534
+   __ceph_open_session+0x135/0x590 net/ceph/ceph_common.c:798
+   ceph_real_mount fs/ceph/super.c:1173 [inline]
+   ceph_get_tree+0xd98/0x1fd0 fs/ceph/super.c:1362
+   vfs_get_tree+0x92/0x320 fs/super.c:1947
+   vfs_cmd_create+0xd7/0x2a0 fs/fsopen.c:231
+   __do_sys_fsconfig+0x55a/0xcb0 fs/fsopen.c:463
+
+The reproducer gets there through the new device syntax: an fsconfig()
+mon_addr= that does not resolve ("libceph: resolve '127.0.0.' (ret=-3):
+failed") leaves fsopt->mon_addr set but num_mon at 0, so the "No monitor
+address" check in ceph_get_tree() passes and the mount proceeds with an
+empty monmap. The next patch stops that string from being kept, but the
+assertion should not be reachable from a mount option in the first place.
+
+Commit 40480eee361e ("libceph: Reject monmaps advertising zero monitors")
+made the same BUG_ON() unreachable from the wire by rejecting
+num_mon == 0 in ceph_monmap_decode(). Apply the same rule to the initial
+monmap, which is the only other way one gets built, and fail the mount
+with -EINVAL rather than assert afterwards.
 
 Cc: stable@vger.kernel.org
-Fixes: 5cf9c4a9959b ("libceph, crush: per-pool crush_choose_arg_map for crush_do_rule()")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Felix Hoffmann <f3lix.dev@gmx.de>
+Fixes: 7b19b4db5add ("ceph: new device mount syntax")
+Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
+Assisted-by: Cursor
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/osdmap.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/ceph/mon_client.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ceph/osdmap.c b/net/ceph/osdmap.c
-index 68bd45852fc37..e812b30778d57 100644
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -378,7 +378,9 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
- 		ceph_decode_32_safe(p, end, num_buckets, e_inval);
- 		while (num_buckets--) {
- 			struct crush_choose_arg *arg;
-+			struct crush_bucket *bucket;
- 			u32 bucket_index;
-+			u32 i;
+diff --git a/net/ceph/mon_client.c b/net/ceph/mon_client.c
+index 88d76ebfff4c5..a53a320045f6e 100644
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -1141,6 +1141,9 @@ static int build_initial_monmap(struct ceph_mon_client *monc)
+ 	int num_mon = opt->num_mon;
+ 	int i;
  
- 			ceph_decode_32_safe(p, end, bucket_index, e_inval);
- 			if (bucket_index >= arg_map->size)
-@@ -389,10 +391,18 @@ static int decode_choose_args(void **p, void *end, struct crush_map *c)
- 			if (ret)
- 				goto fail;
- 
-+			bucket = c->buckets[bucket_index];
- 			if (arg->ids_size &&
--			    (!c->buckets[bucket_index] ||
--			     arg->ids_size != c->buckets[bucket_index]->size))
-+			    (!bucket || arg->ids_size != bucket->size))
- 				goto e_inval;
++	if (num_mon < 1 || num_mon > CEPH_MAX_MON)
++		return -EINVAL;
 +
-+			if (arg->weight_set_size && !bucket)
-+				goto e_inval;
-+
-+			for (i = 0; i < arg->weight_set_size; i++) {
-+				if (arg->weight_set[i].size != bucket->size)
-+					goto e_inval;
-+			}
- 		}
- 
- 		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
+ 	/* build initial monmap */
+ 	monc->monmap = kzalloc(struct_size(monc->monmap, mon_inst, num_mon),
+ 			       GFP_KERNEL);
 -- 
 2.53.0
 
