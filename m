@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047647;
-	b=tFOIHt2vEBj7t0TniDl7LAx/1a+sCfb+LvRDx8JDSqTbNgKB/SnD/G2gSVXvWtyICXvc
-	 5prdh3WIBcnJoJfFSmO9tLh9HpJoH9d1VhcnvDQeplLkoIZ5hSmc6kan+3ThHqFsKVZtH
-	 32CjnILJ/xJUWsS7TPc8W4SZqu7BMKoW3QZrv78MbDJh7eFjBj8oEyQyjSvE0EUIF9CY9
-	 hN5djTNWKYt5RdovsOVRK1Y6HkK7sh0MHCcY9DlhMcujYQSHg1AmnvI0IpAZ9hSg5CEX+
-	 YSYOLN3wqpuWPu4Bw1+ftod8y6yis3ZEqZWXWcXfl/m4g6z6Iam1Y9m5qDvwQSgthaA==
+	t=1795047650;
+	b=MFGA2+1tbb2UgBhaqxpdZmVepJ6L7QM6OyG+DpzMXOrbvS5FJkzSHoeFLJ0O5DqXlsMz
+	 +MZ+mbtWMYDQBuyR/nIMoVOAuH5LQ6FidwkvMOIz659DIBWUecBMp2Cznlo0YmKjT8orp
+	 udPT3bUJmV1gE7GvWJw3QSMbmBzBDAWSUIa44sOFJWMkOTk6ZxoaAT3QR9/SbDxmGOK2t
+	 EquEJ8+HMfsM84EqFoRS3S9rEHC3Sjcl0JIGKarrfYZU4os87TJ2pJhHwnDEtTqqtSue4
+	 GoRFexFdUMfK8oVhq5cmCDF2GEDhuAmb3P8NjG7ZCDuy0rg6LZoNqnEZQ55lqAXxx6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047647;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047650;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ryq2YJagZP65LrAnpjNz/ieullQbCGnSfPWIdGxH+YU=;
-	b=YUAUxRL86FdxOTMxZ/wumlgftSZGrrbYv6lQRTG8eP3tKFCBRrHans2ouRAGqLlOoQXr
-	 ZGBrG1r6HCtZZpugpbnXa5byGn+55yRr8+gwZLf1qFJi/qBjGzTrVwbFRnH30GVjER9EP
-	 3/pxJ0Y8SAt9WtIvesINLaPq0Ujinah5WQgyZKgGDy/thomuaI8CgCLPhSMY6mFQrdBlF
-	 bOfXkJ1OqzA2vecvlE84WfKaYpw9Z7+DYYhfMi7NqgVXZ5cmZDfafg2v/byA6Kub+gc1O
-	 GYjgs4LRtZ6HfrkG9dKiVEeFNsRBRIzFWRKbannqavTtPSisnrEIzOqTbaANkNbX9aQ==
+	bh=/rZqDpRI9YKLTfIr9sEzNl8MX1aY7oyEWoaC5FSh4Uk=;
+	b=iMTedcdzr5QdhMUZFtAe0uaL5o0K4WbReh8cmL/rmnOzSVbjbToBz3NLFBfnKQ+VsYZr
+	 F+62hDF23cvGXwAVwCd3K4j7cuD2Kuv6W1IaUfl1fpe1syYmk5rHEdLO0f59c1SX+mVWN
+	 LTGFR7/vGQZrNVV/YwIqpQ0pmpYexFz7BCdCxtpS5FJGWODSHB9Cda11ebG7Ur1JQKXfi
+	 ZjDOX33eej7bA5aoa+4avAx4rwCUjvBqW73C/0Ng8yGoHc83VuMD2+s75HFd1aB2Kyro7
+	 I/5xRTcZZvcarFbLep3WMiMk/89p4Ijdm52UnpvfICROdV4ciSIKyZQQkkKeAbhCDMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwVQiizW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=skUJxdS6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76915606A320;
-	Thu, 19 Nov 2026 00:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E680606A320;
+	Thu, 19 Nov 2026 00:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AwVQiizW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB071F000C4;
-	Thu, 19 Nov 2026 00:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=skUJxdS6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F421F000CC;
+	Thu, 19 Nov 2026 00:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047647;
-	bh=ryq2YJagZP65LrAnpjNz/ieullQbCGnSfPWIdGxH+YU=;
+	s=korg; t=1795047650;
+	bh=/rZqDpRI9YKLTfIr9sEzNl8MX1aY7oyEWoaC5FSh4Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwVQiizWEtYtf7J9Z4aqMNaU1jAUbVXnVfzOdmxcXjxF2zO5EDUplXg/UlyHtW5FE
-	 kzFd6bQ9s2yLyDvBkfo0WGF7WhvPNA8wLoLi6rxciBHKudrqRtC2aCtaidSfo+G3v+
-	 mXwe3nAT+oR8PWISv3JrB2LXdNU5mSZ2Rj1Qs77I=
+	b=skUJxdS6Ul3E3aD+pNS4C/5qFizmIQmu9XuyxsanIVK2ehuBuOa4LGBUihnhKTMn8
+	 2TP2X0WoxA8stSjx6QL2qrUl0KiZjHw1VnThD5lnc4TnRvhies7FOU77Tm+/A4ZlB/
+	 CUCc6CWuxHI7BPit2n11L01OSphY+OapUBLgyzXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <songmuchun@bytedance.com>,
+	Li Zhe <lizhe.67@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1712/2857] mm: hugetlb: move hugeltb sysctls to its own file
-Date: Wed, 18 Nov 2026 15:45:46 +0100
-Message-ID: <20261118150302.970816368@linuxfoundation.org>
+Subject: [PATCH 6.1 1713/2857] mm/hugetlb: fix mremap move length truncation
+Date: Wed, 18 Nov 2026 15:45:47 +0100
+Message-ID: <20261118150303.006838331@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,185 +74,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
+From: Li Zhe <lizhe.67@bytedance.com>
 
-[ Upstream commit 962de54828c5bb100eb8de881b79ed9c8b7468c0 ]
+[ Upstream commit dfb190302d2b4af86c6ae48af0d3b09f28b35460 ]
 
-This moves all hugetlb sysctls to its own file, also kill an
-useless hugetlb_treat_movable_handler() defination.
+Patch series "mm/hugetlb: fix mremap bugs", v3.
 
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Stable-dep-of: dfb190302d2b ("mm/hugetlb: fix mremap move length truncation")
+This series fixes a few hugetlb mremap bugs.
+
+Patch 1 fixes the return type of move_hugetlb_page_tables(), so large
+hugetlb moves cannot be truncated when reported back to the generic
+mremap code.
+
+Patch 2 disables hugetlb PMD sharing for UFFD missing mode, so
+UFFDIO_POISON markers cannot become visible through shared PMD page
+tables.
+
+Patch 3 fixes the recursive i_mmap_rwsem deadlock in the hugetlb mremap
+path by avoiding the destination PMD sharing allocation path while the
+mapping lock is already held for write.
+
+This patch (of 3):
+
+move_hugetlb_page_tables() returns the number of bytes moved, but
+its return type is int while the generic move_page_tables() path uses
+unsigned long lengths.
+
+A hugetlb mremap() move length above INT_MAX can therefore be
+misreported to copy_vma_and_data(). The out-of-range conversion to int
+is implementation-defined; on common 64-bit builds, for example, a
+4 GiB move can be reported as zero, making the caller treat the move as
+a failure and use the wrong length for rollback.
+
+Return unsigned long from move_hugetlb_page_tables(), matching
+move_page_tables() and preserving the full byte count.
+
+Link: https://lore.kernel.org/20261022034543.51226-1-lizhe.67@bytedance.com
+Link: https://lore.kernel.org/20261022034543.51226-2-lizhe.67@bytedance.com
+Fixes: 550a7d60bd5e ("mm, hugepages: add mremap() support for hugepage backed vma")
+Signed-off-by: Li Zhe <lizhe.67@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h |  8 -------
- kernel/sysctl.c         | 32 --------------------------
- mm/hugetlb.c            | 51 ++++++++++++++++++++++++++++++++++++++---
- 3 files changed, 48 insertions(+), 43 deletions(-)
+ include/linux/hugetlb.h | 15 ++++++---------
+ mm/hugetlb.c            |  7 +++----
+ 2 files changed, 9 insertions(+), 13 deletions(-)
 
 diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index aa089e58bc41f..a9f175cda955c 100644
+index a9f175cda955c..86262b82ef8ad 100644
 --- a/include/linux/hugetlb.h
 +++ b/include/linux/hugetlb.h
-@@ -137,14 +137,6 @@ void hugepage_put_subpool(struct hugepage_subpool *spool);
+@@ -137,10 +137,9 @@ void hugepage_put_subpool(struct hugepage_subpool *spool);
  
  void hugetlb_dup_vma_private(struct vm_area_struct *vma);
  void clear_vma_resv_huge_pages(struct vm_area_struct *vma);
--int hugetlb_sysctl_handler(struct ctl_table *, int, void *, size_t *, loff_t *);
--int hugetlb_overcommit_handler(struct ctl_table *, int, void *, size_t *,
--		loff_t *);
--int hugetlb_treat_movable_handler(struct ctl_table *, int, void *, size_t *,
--		loff_t *);
--int hugetlb_mempolicy_sysctl_handler(struct ctl_table *, int, void *, size_t *,
--		loff_t *);
--
- int move_hugetlb_page_tables(struct vm_area_struct *vma,
- 			     struct vm_area_struct *new_vma,
- 			     unsigned long old_addr, unsigned long new_addr,
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 5dd6fd4b48c81..e1a964ef48617 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -2162,38 +2162,6 @@ static struct ctl_table vm_table[] = {
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
--#endif
--#ifdef CONFIG_HUGETLB_PAGE
--	{
--		.procname	= "nr_hugepages",
--		.data		= NULL,
--		.maxlen		= sizeof(unsigned long),
--		.mode		= 0644,
--		.proc_handler	= hugetlb_sysctl_handler,
--	},
--#ifdef CONFIG_NUMA
--	{
--		.procname       = "nr_hugepages_mempolicy",
--		.data           = NULL,
--		.maxlen         = sizeof(unsigned long),
--		.mode           = 0644,
--		.proc_handler   = &hugetlb_mempolicy_sysctl_handler,
--	},
--#endif
--	 {
--		.procname	= "hugetlb_shm_group",
--		.data		= &sysctl_hugetlb_shm_group,
--		.maxlen		= sizeof(gid_t),
--		.mode		= 0644,
--		.proc_handler	= proc_dointvec,
--	 },
--	{
--		.procname	= "nr_overcommit_hugepages",
--		.data		= NULL,
--		.maxlen		= sizeof(unsigned long),
--		.mode		= 0644,
--		.proc_handler	= hugetlb_overcommit_handler,
--	},
- #endif
- 	{
- 		.procname	= "lowmem_reserve_ratio",
+-int move_hugetlb_page_tables(struct vm_area_struct *vma,
+-			     struct vm_area_struct *new_vma,
+-			     unsigned long old_addr, unsigned long new_addr,
+-			     unsigned long len);
++unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
++		struct vm_area_struct *new_vma, unsigned long old_addr,
++		unsigned long new_addr, unsigned long len);
+ int copy_hugetlb_page_range(struct mm_struct *, struct mm_struct *,
+ 			    struct vm_area_struct *, struct vm_area_struct *);
+ long follow_hugetlb_page(struct mm_struct *, struct vm_area_struct *,
+@@ -296,11 +295,9 @@ static inline int copy_hugetlb_page_range(struct mm_struct *dst,
+ 	return 0;
+ }
+ 
+-static inline int move_hugetlb_page_tables(struct vm_area_struct *vma,
+-					   struct vm_area_struct *new_vma,
+-					   unsigned long old_addr,
+-					   unsigned long new_addr,
+-					   unsigned long len)
++static inline unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
++		struct vm_area_struct *new_vma, unsigned long old_addr,
++		unsigned long new_addr, unsigned long len)
+ {
+ 	BUG();
+ 	return 0;
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index a4b5243281af0..f036b1d5babc7 100644
+index f036b1d5babc7..7d32a2e64da72 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -4274,6 +4274,12 @@ static void __init hugetlb_sysfs_init(void)
- 	hugetlb_register_all_nodes();
+@@ -5308,10 +5308,9 @@ static void move_huge_pte(struct vm_area_struct *vma, unsigned long old_addr,
+ 	spin_unlock(dst_ptl);
  }
  
-+#ifdef CONFIG_SYSCTL
-+static void hugetlb_sysctl_init(void);
-+#else
-+static inline void hugetlb_sysctl_init(void) { }
-+#endif
-+
- static int __init hugetlb_init(void)
+-int move_hugetlb_page_tables(struct vm_area_struct *vma,
+-			     struct vm_area_struct *new_vma,
+-			     unsigned long old_addr, unsigned long new_addr,
+-			     unsigned long len)
++unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
++		struct vm_area_struct *new_vma, unsigned long old_addr,
++		unsigned long new_addr, unsigned long len)
  {
- 	int i;
-@@ -4329,6 +4335,7 @@ static int __init hugetlb_init(void)
- 
- 	hugetlb_sysfs_init();
- 	hugetlb_cgroup_file_init();
-+	hugetlb_sysctl_init();
- 
- #ifdef CONFIG_SMP
- 	num_fault_mutexes = roundup_pow_of_two(8 * num_possible_cpus());
-@@ -4660,7 +4667,7 @@ static int hugetlb_sysctl_handler_common(bool obey_mempolicy,
- 	return ret;
- }
- 
--int hugetlb_sysctl_handler(struct ctl_table *table, int write,
-+static int hugetlb_sysctl_handler(struct ctl_table *table, int write,
- 			  void *buffer, size_t *length, loff_t *ppos)
- {
- 
-@@ -4669,7 +4676,7 @@ int hugetlb_sysctl_handler(struct ctl_table *table, int write,
- }
- 
- #ifdef CONFIG_NUMA
--int hugetlb_mempolicy_sysctl_handler(struct ctl_table *table, int write,
-+static int hugetlb_mempolicy_sysctl_handler(struct ctl_table *table, int write,
- 			  void *buffer, size_t *length, loff_t *ppos)
- {
- 	return hugetlb_sysctl_handler_common(true, table, write,
-@@ -4677,7 +4684,7 @@ int hugetlb_mempolicy_sysctl_handler(struct ctl_table *table, int write,
- }
- #endif /* CONFIG_NUMA */
- 
--int hugetlb_overcommit_handler(struct ctl_table *table, int write,
-+static int hugetlb_overcommit_handler(struct ctl_table *table, int write,
- 		void *buffer, size_t *length, loff_t *ppos)
- {
- 	struct hstate *h = &default_hstate;
-@@ -4706,6 +4713,44 @@ int hugetlb_overcommit_handler(struct ctl_table *table, int write,
- 	return ret;
- }
- 
-+static struct ctl_table hugetlb_table[] = {
-+	{
-+		.procname	= "nr_hugepages",
-+		.data		= NULL,
-+		.maxlen		= sizeof(unsigned long),
-+		.mode		= 0644,
-+		.proc_handler	= hugetlb_sysctl_handler,
-+	},
-+#ifdef CONFIG_NUMA
-+	{
-+		.procname       = "nr_hugepages_mempolicy",
-+		.data           = NULL,
-+		.maxlen         = sizeof(unsigned long),
-+		.mode           = 0644,
-+		.proc_handler   = &hugetlb_mempolicy_sysctl_handler,
-+	},
-+#endif
-+	{
-+		.procname	= "hugetlb_shm_group",
-+		.data		= &sysctl_hugetlb_shm_group,
-+		.maxlen		= sizeof(gid_t),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dointvec,
-+	},
-+	{
-+		.procname	= "nr_overcommit_hugepages",
-+		.data		= NULL,
-+		.maxlen		= sizeof(unsigned long),
-+		.mode		= 0644,
-+		.proc_handler	= hugetlb_overcommit_handler,
-+	},
-+	{ }
-+};
-+
-+static void hugetlb_sysctl_init(void)
-+{
-+	register_sysctl_init("vm", hugetlb_table);
-+}
- #endif /* CONFIG_SYSCTL */
- 
- void hugetlb_report_meminfo(struct seq_file *m)
+ 	struct hstate *h = hstate_vma(vma);
+ 	struct address_space *mapping = vma->vm_file->f_mapping;
 -- 
 2.53.0
 
