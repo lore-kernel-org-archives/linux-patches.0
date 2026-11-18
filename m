@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024517;
-	b=d+lxAvzH5anEwM4yMawMD9y8LtJIQLVF0FBoBQTcNY7ZaZFA4uXirdA9kfJZKr2GxW9q
-	 E/bTQq+8TRFF+LXJSf5KbHExI+dHk92SDXKsLZ8uvnavvK/dTUuWmsr9SrsKJbm1C0Lrl
-	 /KmaIxNNcsi8xt08BnLndmALn8EZwWHt31daro4VN7d/KUR2/wFSlV86OQwpYuQTzGOaC
-	 TQLfeXGlamaiszEQ/c8Hyfr3OkYUWZLhISppSTUbS2h23bdEkyF4bso65MHlgwrvnGaoK
-	 TaZQKpATEvgT21wThJsfYH5CdfqZwhCii4IHzWjdXGgZdUof3sD8EDhBlJLT4Qf0A6A==
+	t=1795024519;
+	b=qGxvS9+FjbLMcMPMRdDpzbulON7UnVub8Eih1BnXxeqaqM08dIBxW+J1CA51al9p8/w4
+	 Jxq0KC/F2ACNwJ3vcp7tZ/J6VyZFSOh0W0Hjm0mo2/7/kptvWUZ408LcHAMe1J71BpwJP
+	 po00RKFdP0atVDmm8plUcVgPnWNJbRLwoIMCz/HANA4AwRizFLOvIFSFkMP58n8ElgANM
+	 W+yb8qxkdu14mjbSTElHjNZsdlrqXm1XmebKcRWbWxCt4Apezy2BwMsteYKlQq+2lehym
+	 S5NH4hkZ+mF924hbOAjOvvQKS6k+ilqb2mDp5xyil1GrwO4981XRxQBY0zYlvV5jGyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024517;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iWU2Mt4mhr1cZ5q61eamAOlaOpdIOj6F4ANiA79YnlU=;
-	b=LuZzExfdD+lK5o8tRTz0QcJSIHaonUEHlNbYUgxuDrXSXqjdBtaF8i9rjJdowh7/Kkxo
-	 Sc1ELtIBCnOxTHM1HvCykrgGBOSHEb79h+nwhH3B2Sx1sQ4ZjyZoiXP8yIr1CaO/ajPF0
-	 uGLqqnxuA5y/vUPq2JtWK8UbyB7nWs3jaHjhvtOryzqV/Pve8ENYg5tBv0P0sOntU03J6
-	 FolXRvcQCk1tlrVG43m20SeHLoxpWEctOeQvbm98o7xDgHz58cneZbpPUtwIRwdtym+uM
-	 fXB8MFTufkVRBmV9y7sQJjmT8wD56WKTftWPMI/wD/+5v7cliDWDuAUqCbWObgsnDgg==
+	bh=CCFvlb9Pvdo3AdX7aNWQwDeBUfFtQ5Pohzy6w5PKoTg=;
+	b=m6cHdz51llOhTPMniGGuuhEQoLFOU+1wHs0xezQaNiAdxyJ7AxzAPl/FBL5w8i/kAAGv
+	 04qUGArCfdjBCxU6mEGs8loD9jf2dJJmRx6qfMUU7tjbCARzfpmjf8x34mSOKFTF0hXTB
+	 4Tj8ERuuGVJ6AVO3096+lU+Dyqjz2qbuduX4Juhlc+o+xVTkHGj7KpeJSX7sWZZFCBm2d
+	 xRPavBCcixT+JEVja1fGs2X0VgcaPbZ9O2HHJdtJb4JElNkZprRzDNPWN3zZTzbLRKHlm
+	 ueCG6xRzm55fhiqu4U4I//aNZXFiGJwDtKDD3DXVN4hersOt+iSLTiaFLulWvlD36mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j1vkx9bQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2W+KLjuJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1371F606A320;
-	Wed, 18 Nov 2026 17:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3B0606A325;
+	Wed, 18 Nov 2026 17:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j1vkx9bQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6772B1F000C7;
-	Wed, 18 Nov 2026 17:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2W+KLjuJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFA91F000C5;
+	Wed, 18 Nov 2026 17:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024516;
-	bh=iWU2Mt4mhr1cZ5q61eamAOlaOpdIOj6F4ANiA79YnlU=;
+	s=korg; t=1795024519;
+	bh=CCFvlb9Pvdo3AdX7aNWQwDeBUfFtQ5Pohzy6w5PKoTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j1vkx9bQTuWhqdMDhicgD1Rm7B9SIkPkcDHh0unAL3LY9n1l2E6IkcpChBQU4y63C
-	 J2CKDjceRLTv4lYz2wBIFkhUQl256UnNToNhwf5lTftgt1tZb9jfrbnY2JJ1QorJYh
-	 +lOxnC4WaLAChpN3OxpUuF9y7+relEvznqcrg8ms=
+	b=2W+KLjuJ+aj+j27sCB5nt/v7/EsjlTAUv76ACaW0o+4bjF14hJlyM07dzpS/jdoao
+	 QQgmKTRyNERlqaPcNSUFioG+uaAhdFcDL49TI7yaTQyIJ1oFC4Mc/JomJMGKm0qPlh
+	 I3dkMqONl3Mc1AKWo7iEVvSLdwXFMo/9k1OV/Gnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Vagin <avagin@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Alexander Mikhalitsyn <alexander@mihalicyn.com>,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0753/2151] x86/fpu: Fix potential underflow in xstate_calculate_size()
-Date: Wed, 18 Nov 2026 15:41:28 +0100
-Message-ID: <20261118150149.469378326@linuxfoundation.org>
+Subject: [PATCH 6.18 0754/2151] arm64: dts: qcom: lemans-ride-common: fix SerDes PHY regulator supplies
+Date: Wed, 18 Nov 2026 15:41:29 +0100
+Message-ID: <20261118150149.518994956@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,54 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Vagin <avagin@google.com>
+From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 
-[ Upstream commit f1751b220bc8a9bd2dc38ecf61f5c29f3826ace0 ]
+[ Upstream commit 0d567fb7def9564d15c334ec0fa5f5f6a0114ffa ]
 
-xstate_calculate_size() calculates the size required for a given set of
-xfeatures. It determines the topmost feature by finding the most
-significant bit in xfeatures using fls64(xfeatures) - 1.
+Both SerDes PHY nodes were configured with 'phy-supply = <&vreg_l5a>',
+which was incorrect on two counts: vreg_l5a is not a supply the PHY
+requires, and only one rail was described where the hardware needs two.
 
-If xfeatures is 0, fls64(0) returns 0, and topmost becomes -1.
-Previously, topmost was unsigned int, so -1 underflowed to UINT_MAX.
-This caused the subsequent check `topmost <= XFEATURE_SSE` to fail, and
-the code proceeded to access xstate arrays using topmost (UINT_MAX) as
-an index, leading to an out-of-bounds access.
+The PHY requires vdda-0p9 (vreg_l4a) and vdda-1p2 (vreg_l1c). Replace
+the incorrect phy-supply with these two named properties on both nodes.
 
-  [ bp: Remove text explaining what the patch does. ]
-
-Fixes: d6d6d50f1e80 ("x86/fpu/xstate: Consolidate size calculations")
-Signed-off-by: Andrei Vagin <avagin@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Reviewed-by: Chang S. Bae <chang.seok.bae@intel.com>
-Link: https://patch.msgid.link/20260925162454.1403405-6-avagin@google.com
+Fixes: 5ef26fb8b3ed ("arm64: dts: qcom: sa8775p-ride: enable the SerDes PHY")
+Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-4-c4bc688177dd@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/fpu/xstate.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
-index 5f54a207ace46..582f226ca97f5 100644
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -588,12 +588,13 @@ static bool __init check_xstate_against_struct(int nr)
+diff --git a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
+index c69aa2f41ce29..37b140dbb7b23 100644
+--- a/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans-ride-common.dtsi
+@@ -778,12 +778,16 @@ &qup_uart17_rx {
+ };
  
- static unsigned int xstate_calculate_size(u64 xfeatures, bool compacted)
- {
--	unsigned int topmost = fls64(xfeatures) -  1;
--	unsigned int offset, i;
-+	unsigned int topmost, offset, i;
- 
--	if (topmost <= XFEATURE_SSE)
-+	if (!(xfeatures & ~XFEATURE_MASK_FPSSE))
- 		return sizeof(struct xregs_state);
- 
-+	topmost = fls64(xfeatures) -  1;
+ &serdes0 {
+-	phy-supply = <&vreg_l5a>;
++	vdda-0p9-supply = <&vreg_l4a>;
++	vdda-1p2-supply = <&vreg_l1c>;
 +
- 	if (compacted) {
- 		offset = xfeature_get_offset(xfeatures, topmost);
- 	} else {
+ 	status = "okay";
+ };
+ 
+ &serdes1 {
+-	phy-supply = <&vreg_l5a>;
++	vdda-0p9-supply = <&vreg_l4a>;
++	vdda-1p2-supply = <&vreg_l1c>;
++
+ 	status = "okay";
+ };
+ 
 -- 
 2.53.0
 
