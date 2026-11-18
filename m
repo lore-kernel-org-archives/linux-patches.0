@@ -1,59 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020057;
-	b=JJBL5UXqKMM3sQBJhVX07SUE300unQJaaHLs0wbsYM12NAd+2vgWnlA7p3aQGwssvJ4n
-	 gmzAGxuuJtMn1SaayLSikVG+X2rVmPk5VcMVaFTv0iqx0Oyf7qGyYIP2Wr4e48BeAvYal
-	 kBP8lwAgCcJNEOjXRLBjpBj9veBZd5mEjfIgDkZgLDK1u6hTUzmu/yI0PxmbBdzO5k4zD
-	 KR1IGO4ESgCT2s+x5Aij0/B0teaglt4mHtWw0ilUWaf0C41KmixBaEw9qGXTfsgHAk1h3
-	 lzctSRWFr1owUtgA/0HLFf/3rAz8Q7dnK/VhPs0tqE53w8VxBLuDvBrhiVrkcadR29A==
+	t=1795020059;
+	b=Epa6/hdhlU6gdfnqMQU1i6DrFKBjqW8yzwR/XIxvRbHRNGV158NbwFqSzZiq5DpRwh2s
+	 IiOJIsid6sbHLUxegh/iNFXvL8weoEcbWA5WLl4wCtFOJMwSpLpWfGGIfITfrsoDigx8a
+	 YLr4jKwp2zsBN4uzP9DQvPds0377gHtc9hyyIJlOPiQ3eL3ivItNgeceLed+FOYYMW3d7
+	 Ednt/PQLr9VAFYPDCE9PV91+quaq187Dz9nRCj1RBKrs5Lthlwg/U72ujTsb1Y7UeKifM
+	 JEhM9FFiK6lsL/mq8MiikOO+rom5BLNeADlEAj31dHdfsi7Sa5FTJ3kAp1fkaKY4lJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020059;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GZhew7Qv1dYPeJylyVLgY0uQFNw9RdxY34q+6AjMgkA=;
-	b=rYWoPuZ/8/hZYFbdSwD7ITT2Z2ueTJ/61PGo4JWjQSJ10WIA1mkS8a1c0oMRQCaG21cf
-	 0hI2zGqCO/SyCid+yiwPXGQpKKa9f7VvrzyDYPx8eQ3iYSkvqtjIWzlKgSxGjdhzeXAi8
-	 6qi1pnrire2RJfjHhLViWEshP8Sn7ZA2DALS5Sd2hnn2VSa9b/QQIgmD5Ia3wJUs1jKKG
-	 +ftIdsAWPxJ3I9FFw5T9hRQldFPVJgvHqqIF3IBC+tIULqa8p75HXrrbFh2X8Bez/HRNT
-	 zMzeMp59ToLm2CKmSe95vw9rSwycA1sX8+2uUjMaxl+/fTcurQtsjkpgOXf+wJyACmA==
+	bh=GOy00IkBAhXxmJAnHzKRDCIKh01BUTSmfqt5xoAQaIA=;
+	b=QG+XfKRMIcnXv5bnoIWypeYuv4ApIgHULHBcxNkNb/12Da33zx5TOIxpeslWNyboOL+J
+	 3Zy/E2qyML8osr1r/X1Ouc3SCeF4jZ/MVQ+OUpo6b7svF16vW4tj/9Y8dxRSWbT2y+XgP
+	 jIfOu/Z5YgdXgt8/pmYETIEfJNvBOvBepeL1kb6gY4cDVKFxTpH2IW9HMs6aqobjMHhnu
+	 oMJq15Rmb1Hm5TMOOD8xc4aFLz1xC9oh/nQikrhbN+T0m2pdVI0pN6MWUNLpDGG8vR/y/
+	 VVJjbEQgpvvgs6Jg3ibv3hTG9/NPmjwEfwlgfxWAzfdoid4Vof34/wijkxt5q+6NO/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KkZlMHDt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnR+NtV1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E81606A33D;
-	Wed, 18 Nov 2026 16:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29FC606A33F;
+	Wed, 18 Nov 2026 16:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KkZlMHDt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715BF1F000C4;
-	Wed, 18 Nov 2026 16:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnR+NtV1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1601F000C4;
+	Wed, 18 Nov 2026 16:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020056;
-	bh=GZhew7Qv1dYPeJylyVLgY0uQFNw9RdxY34q+6AjMgkA=;
+	s=korg; t=1795020059;
+	bh=GOy00IkBAhXxmJAnHzKRDCIKh01BUTSmfqt5xoAQaIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KkZlMHDtPpqiV331eytNAmzb9oInLH5D6lMe7SK6Zn0aBVtLn0/uLy8lTx4utJfw5
-	 faVQ+pkL2diVJQHJJhPTg/2vgk7RfClTshnBN9KA5eVd4JZQxQqMX1ybwA3b+y9dk7
-	 7W2NHirlplK50MQmvoP7r1GC07KCjlpRAwm3I5JI=
+	b=nnR+NtV1ODTI0mmPuGzC345xa1COfv5pzXad8DfvXmFI1Bz/lmfcSB2eRO8J3zxLO
+	 1YJEuXvOqiHYf8KwcNnSl7hkrsEl+nI0YIps+lG7DQKEal4eQjw0Z/R/Zh7daD86qO
+	 UagO1kof2dJx9MbHoOshQKbqvFosGEKm5cWxo5gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Potapenko <glider@google.com>,
 	Bradley Morgan <brads@mainlining.org>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Bradley Morgan <include@grrlz.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Thorsten Blum <blum@kernel.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1816/2651] kcov: report spurious PCs in the interrupt selftest
-Date: Wed, 18 Nov 2026 15:50:56 +0100
-Message-ID: <20261118150352.585910781@linuxfoundation.org>
+Subject: [PATCH 7.3 1817/2651] watchdog/perf: one digit too short in the raw event config copy
+Date: Wed, 18 Nov 2026 15:50:57 +0100
+Message-ID: <20261118150352.616451165@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -75,118 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Bradley Morgan <brads@mainlining.org>
 
-[ Upstream commit 5d9f31ed855fa89e533b222d0365da81ad3b10cc ]
+[ Upstream commit b682d597aa273cad6e99e665e0fd2a7eb8aa2cef ]
 
-The KCOV interrupt selftest enables KCOV_MODE_TRACE_PC without a coverage
-area so that spurious coverage causes a fault.  If the fault path is
-instrumented, the coverage callback faults recursively.  Observed failure
-modes include a stack overflow on x86_64 and arm32 getting stuck in abort
-handling, neither of which identifies the original coverage event.
+Commit 6164be01f179 ("watchdog/perf: optimize bytes copied and remove
+manual NUL-termination") swapped strscpy(buf, str, sizeof(buf)) plus a
+manual buf[len] = 0 for strscpy(buf, str, len), and that count is one
+short.  strscpy() keeps the last byte of the destination for the NUL, so
+the config loses its final digit, nmi_watchdog=r300,panic for example ends
+up with buf = "30" and arms the raw event with the wrong config.
 
-The recursive failure is not new, but commit 9a79524d1420 ("kcov: use
-WRITE_ONCE() for selftest mode stores") made the selftest effective on
-configurations where the compiler had previously removed the mode store,
-exposing it more broadly.
+The empty case falls over too, strscpy() with a zero count writes nothing
+at all, so nmi_watchdog=r,1 leaves buf uninitialized and kstrtoull() reads
+whatever stack garbage is sitting there.
 
-Replace the open-coded kcov_mode stores with kcov_start() and kcov_stop(),
-passing a 16-word buffer that records up to 15 spurious PCs, with the
-first word holding the count.  Keep KCOV enabled for the original 300 ms
-window, then disable it, print all recorded PCs and panic if any were
-recorded.  Once the buffer fills, further PCs are discarded by the
-existing coverage callback.  This preserves the selftest's hard failure
-while avoiding the recursive fault path.
+The old code was safe on both by accident, it filled the whole buffer
+first and buf[len] = 0 then stomped the comma position, so the worst you
+got was a truncated parse failure.
 
-Add decanonicalize_ip() as the inverse of canonicalize_ip(), which
-subtracts kaslr_offset() from recorded PCs.  Restore that offset before
-printing the PCs with %pB, since KCOV records return addresses.
+Pass len + 1 so the copy includes the character the NUL replaces, and
+reject len >= sizeof(buf) like it was before the optimization, which also
+turns an empty config back into a clean parse failure.
 
-Link: https://lore.kernel.org/20261002181357.14293-1-kmehltretter@gmail.com
-Fixes: 6cd0dd934b03 ("kcov: Add interrupt handling self test")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/20261003110200.3-brads@mainlining.org
+Fixes: 6164be01f179 ("watchdog/perf: optimize bytes copied and remove manual NUL-termination")
+Signed-off-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Tested-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Tested-by: Bradley Morgan <brads@mainlining.org> # Power10
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Assisted-by: LLM
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Bradley Morgan <include@grrlz.net>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Cc: Thorsten Blum <blum@kernel.org>
 Cc: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcov.c | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ kernel/watchdog_perf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/kcov.c b/kernel/kcov.c
-index 54eaae97bfd67..9402227bd7ba8 100644
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -198,6 +198,16 @@ static notrace unsigned long canonicalize_ip(unsigned long ip)
- 	return ip;
- }
+diff --git a/kernel/watchdog_perf.c b/kernel/watchdog_perf.c
+index cf05775a96d33..a4f677c16b206 100644
+--- a/kernel/watchdog_perf.c
++++ b/kernel/watchdog_perf.c
+@@ -301,10 +301,10 @@ void __init hardlockup_config_perf_event(const char *str)
+ 	} else {
+ 		unsigned int len = comma - str;
  
-+#ifdef CONFIG_KCOV_SELFTEST
-+static unsigned long __init decanonicalize_ip(unsigned long ip)
-+{
-+#ifdef CONFIG_RANDOMIZE_BASE
-+	ip += kaslr_offset();
-+#endif
-+	return ip;
-+}
-+#endif
-+
- /*
-  * Entry point from instrumented code.
-  * This is called once per basic-block/edge.
-@@ -1107,9 +1117,11 @@ struct kcov_common_handle_id kcov_common_handle(void)
- EXPORT_SYMBOL(kcov_common_handle);
+-		if (len > sizeof(buf))
++		if (len >= sizeof(buf))
+ 			return;
  
- #ifdef CONFIG_KCOV_SELFTEST
-+static unsigned long selftest_area[16] __initdata;
-+
- static void __init selftest(void)
- {
--	unsigned long start;
-+	unsigned long start, i, ip, count;
- 
- 	pr_err("running self test\n");
- 	/*
-@@ -1119,15 +1131,26 @@ static void __init selftest(void)
- 	 * leaks out of that section and leads to spurious coverage.
- 	 * It's hard to call the actual interrupt handler directly,
- 	 * so we just loop here for a bit waiting for a timer interrupt.
--	 * We set kcov_mode to enable tracing, but don't setup the area,
--	 * so any attempt to trace will crash. Note: we must not call any
-+	 * A small coverage area records the PCs of any leaks. The first word
-+	 * holds the count, leaving room for 15 PCs. Note: we must not call any
- 	 * potentially traced functions in this region.
- 	 */
-+	kcov_start(current, NULL, ARRAY_SIZE(selftest_area),
-+		   selftest_area, KCOV_MODE_TRACE_PC, 0);
- 	start = jiffies;
--	WRITE_ONCE(current->kcov_mode, KCOV_MODE_TRACE_PC);
- 	while ((jiffies - start) * MSEC_PER_SEC / HZ < 300)
--		;
--	WRITE_ONCE(current->kcov_mode, 0);
-+		cpu_relax();
-+	kcov_stop(current);
-+
-+	count = READ_ONCE(selftest_area[0]);
-+	if (count) {
-+		pr_err("spurious coverage detected during interrupt selftest:\n");
-+		for (i = 1; i <= count; i++) {
-+			ip = decanonicalize_ip(selftest_area[i]);
-+			pr_err("  %pB\n", (void *)ip);
-+		}
-+		panic("kcov: interrupt selftest detected spurious coverage");
-+	}
- 	pr_err("done running self test\n");
- }
- #endif
+-		strscpy(buf, str, len);
++		strscpy(buf, str, len + 1);
+ 		if (kstrtoull(buf, 16, &config))
+ 			return;
+ 	}
 -- 
 2.53.0
 
