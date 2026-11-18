@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049019;
-	b=ssmBFrJoAyixoHq54rlTl/0ins2Hf8hiIBfRUc6Bzo2WGWDNRMhywpqidE58LoKiRvNQ
-	 7Kb7X7mq/ddHh9HnkjmkI3fZwZg5SoOGib5MwVAI0hnhDzcebSns+j1eJZW/Ifv1zKwBd
-	 uwZjrAokX4YOLGuniOngNu+pqoPSpX//IDaB8ikgc923HDNxpxy1JujntMMiYO8q5AFLv
-	 b4iVdgBq+jeuhbkkY8nl+eignzZPgRi6XFJR7SR30eiarjeInPVMXu7JP69VFrsM3ZXXc
-	 DN4kDXxJtbFgTgdy0JwaTc7cs4e1xMQnAfgXC/pDB3ASdVYWwSLuSKXziDFiR2RjlpQ==
+	t=1795049022;
+	b=CBYGtxXVzvCeA4R9LadR0FWMpX82Qml+OGcLFUIMdXYKLL/sVf2FYJFD8bjNA2TZURo9
+	 JInIA9txJ2/QYB1TOVT+xDMWm2ythm1klPr3nzHqTuJp09DfucKRf4M9FRVivfPFQp2O7
+	 WIL+AEipk2PsALzNkslwJeQK1env7Bf+RmXrtxx0aIV7hfl7h74AcxWBncRzkJadLBh3m
+	 AeClObusSOu5x1aIxkhHNWm7QJPNT8JfSGnp2cJovQCmVloFWHWAKyy9+ufnpdrnLVRz4
+	 +14suXiqcLvQFe8CENu12LARDlZOnbq8IQEhZupQ4n/5M62WZTOLZ/DO6YT3WJUK+og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049019;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049022;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YeznjIlO7hZyurY6sieFokZtiGpdZFdVVwt4CQ/w7Yo=;
-	b=t6E5vhhqE4btzIIUW/XgOpNPIKy7//1i3rJ+oQthL6IIB7h5BZKK7pfA57JgEg4K3eOI
-	 5sU/1z5X9NBSDhoG8WqeM4JrHlsmJwyRKSiS9gsHgqKdV9B/gwXOY0Ak/q/nQ4djzsl54
-	 UMFrU6+CA38t4OZXQrGrGBe2wODoqXUYlEurqpUGj9kefiJ7LOBYhqOKzQemH98sJiRVI
-	 h3PtRdyW71kmuI7hrVUxbb4nfzRQ2CH6wItqtNovv9agcjbotrGDAW1sjzkLkQXc4awwm
-	 ThaqLXA0d3dXWDyFdaWKTwmcipn7VuiC00p/JVOaP5nlyWx8RB/EnJHqHPCAKAnBiKQ==
+	bh=r/RY5qAD1PHcFI6hGWqNWiGnUq19IJtVXGNIkt/28XQ=;
+	b=xITMoqKBVcrzfPNsSdCSvMNn7ygBETTM0HCELTOob+3b5yD84salsZXXofrRgANHUZFK
+	 yTkPG4Ib3TiETNRfU8BthVNtP2D/v8ML/yJTAutMVkwZ6feku4ewz65DH8WkhNFo2Eqso
+	 /RMF4DXsY7z4Hx8CrqXvQXS98P9tNjxgTL3qjSeNrn1okvJS/Z2cIT4rZdxcXULx261Fd
+	 ovIBbiVXnyjGu1AQcTvNwHaax2JCkMy4GC09M5uv6/bECq5GOwG8ox+/ZyAymGOqjr5Zo
+	 KvyEVtUwbWlk7bzN9AW6JInijvsTLnl4GYgXJ3FD2WRhwoanyg8OWDr/Y8ivRPmiD5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfs3hhCH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRQcWFn8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6315E606A31C;
-	Thu, 19 Nov 2026 00:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BE8606A31C;
+	Thu, 19 Nov 2026 00:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfs3hhCH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73351F000C4;
-	Thu, 19 Nov 2026 00:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRQcWFn8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3171F000C4;
+	Thu, 19 Nov 2026 00:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049019;
-	bh=YeznjIlO7hZyurY6sieFokZtiGpdZFdVVwt4CQ/w7Yo=;
+	s=korg; t=1795049021;
+	bh=r/RY5qAD1PHcFI6hGWqNWiGnUq19IJtVXGNIkt/28XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfs3hhCHd0NoFurJOUcccCaBqWV2EPeWS+5kSLSVwyHCTbZ5/Gu8MyaM0vQO5ZaDl
-	 E6yCWRRmydRTIaz0kT9aIRcyFSTtwvDMOkzyK4e0Ulg2N+7JLccZvXipjiobfFnyQc
-	 c4YTCEO3TxRugSA7FAWfIH2rvjTTF1iPSKae7bRA=
+	b=DRQcWFn8w49v2LfrJTk+jDnBwWDZBiK68hdKRNNl/8DPIKUhk698lbvgL3j64hCLW
+	 +bTd9l/mg8no2I4JrNiZ0/jpEsFzCQNTDINsWKXKhHZFh0xtoiqbHv0+Ycp1zIaDaP
+	 VWanxfMNxmgrVXSgHoIiGKjjoFrp7E+a/cLP2i+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Keri <okerixx@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2185/2857] drm/msm/dp: dont report link training success after a reinit
-Date: Wed, 18 Nov 2026 15:53:39 +0100
-Message-ID: <20261118150320.077406302@linuxfoundation.org>
+Subject: [PATCH 6.1 2203/2857] dt-bindings: power: supply: ab8500: Add AB8505 charger
+Date: Wed, 18 Nov 2026 15:53:57 +0100
+Message-ID: <20261118150320.749628390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,43 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Keri <okerixx@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit a47987366e7fc2c05aeffc97f8e1f776e583f792 ]
+[ Upstream commit 80d28539c1f9baab72210501729d67e3d9daa4b8 ]
 
-When every training attempt fails, the retry loop in
-msm_dp_ctrl_on_link() ends on a successful
-msm_dp_ctrl_reinitialize_mainlink(), leaving rc at 0. The caller then
-enables the stream on an untrained link and the display stays dark.
+AB8500 and AB8505 expose different charger interrupt sets. Add a unique
+AB8505 charger compatible with the AB8500 compatible as its fallback.
+Use the variant-specific string to require the fourteen main and USB
+charger interrupts on AB8500 and the nine USB charger interrupts on
+AB8505.
 
-The retry counter only reaches zero in that case, so treat it as a
-training failure.
+Also clarify that autopower_cfg describes the AB8500 facility, since the
+corresponding AB8505 register bit is reserved.
 
-Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
-Signed-off-by: Oleg Keri <okerixx@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/756528/
-Link: https://lore.kernel.org/r/20260925125314.16563-1-okerixx@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: eb917497734c ("dt-bindings: power: supply: ab8500: Convert to DT schema format")
+Assisted-by: LLM
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260925-ab8500-charger-dt-v3-1-f80b8d295e2d@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../supply/stericsson,ab8500-charger.yaml     | 76 ++++++++++++++-----
+ 1 file changed, 56 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 3c001b792423b..8abd5e512cf6d 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1770,6 +1770,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
- 		return rc;
+diff --git a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
+index e33329b3af619..b653fc9c45436 100644
+--- a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
+@@ -10,12 +10,13 @@ title: AB8500 Charger
+ maintainers:
+   - Sebastian Reichel <sre@kernel.org>
  
-+	if (!link_train_max_retries)
-+		rc = -ETIMEDOUT;
+-allOf:
+-  - $ref: power-supply.yaml#
+-
+ properties:
+   compatible:
+-    const: stericsson,ab8500-charger
++    oneOf:
++      - const: stericsson,ab8500-charger
++      - items:
++          - const: stericsson,ab8505-charger
++          - const: stericsson,ab8500-charger
+ 
+   monitored-battery:
+     $ref: /schemas/types.yaml#/definitions/phandle
+@@ -30,27 +31,15 @@ properties:
+ 
+   autopower_cfg:
+     type: boolean
+-    description: automatic poweron after powerloss
++    description: AB8500 automatic poweron after powerloss
+ 
+   interrupts:
++    minItems: 9
+     maxItems: 14
+ 
+   interrupt-names:
+-    items:
+-      - const: MAIN_CH_UNPLUG_DET
+-      - const: MAIN_CHARGE_PLUG_DET
+-      - const: MAIN_EXT_CH_NOT_OK
+-      - const: MAIN_CH_TH_PROT_R
+-      - const: MAIN_CH_TH_PROT_F
+-      - const: VBUS_DET_F
+-      - const: VBUS_DET_R
+-      - const: USB_LINK_STATUS
+-      - const: USB_CH_TH_PROT_R
+-      - const: USB_CH_TH_PROT_F
+-      - const: USB_CHARGER_NOT_OKR
+-      - const: VBUS_OVV
+-      - const: CH_WD_EXP
+-      - const: VBUS_CH_DROP_END
++    minItems: 9
++    maxItems: 14
+ 
+   io-channels:
+     minItems: 2
+@@ -77,6 +66,53 @@ required:
+   - io-channels
+   - io-channel-names
+ 
++allOf:
++  - $ref: power-supply.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: stericsson,ab8505-charger
++    then:
++      properties:
++        interrupts:
++          minItems: 9
++          maxItems: 9
 +
- 	if (rc == 0) {  /* link train successfully */
- 		/*
- 		 * do not stop train pattern here
++        interrupt-names:
++          items:
++            - const: VBUS_DET_F
++            - const: VBUS_DET_R
++            - const: USB_LINK_STATUS
++            - const: USB_CH_TH_PROT_R
++            - const: USB_CH_TH_PROT_F
++            - const: USB_CHARGER_NOT_OKR
++            - const: VBUS_OVV
++            - const: CH_WD_EXP
++            - const: VBUS_CH_DROP_END
++    else:
++      properties:
++        interrupts:
++          minItems: 14
++          maxItems: 14
++
++        interrupt-names:
++          items:
++            - const: MAIN_CH_UNPLUG_DET
++            - const: MAIN_CHARGE_PLUG_DET
++            - const: MAIN_EXT_CH_NOT_OK
++            - const: MAIN_CH_TH_PROT_R
++            - const: MAIN_CH_TH_PROT_F
++            - const: VBUS_DET_F
++            - const: VBUS_DET_R
++            - const: USB_LINK_STATUS
++            - const: USB_CH_TH_PROT_R
++            - const: USB_CH_TH_PROT_F
++            - const: USB_CHARGER_NOT_OKR
++            - const: VBUS_OVV
++            - const: CH_WD_EXP
++            - const: VBUS_CH_DROP_END
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
