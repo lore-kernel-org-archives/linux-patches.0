@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019514;
-	b=zAnEdWlFepQBC9Co5ueE2/gGbJya4EzCKKi7yigAfYcdSU4otl8Byz1qRjs8czUm0cBK
-	 KfDw8NT+eVGZcombNb4wKbhY7UFFyiu77bM0vvibwtjVAn+wQG2Ennp0X3aHAtzSNp6F2
-	 3vJ56ZpQuyML/26vJ3IhtGWyiVncRk09DBbpb3slhI4xjfLfd8gKH9yRagWUWcpdj4Yu/
-	 HrRU7c7gdI0H1XQYOLxAjiapO5cuh3LD3rJkA9LR/M0+vv9vgIfbDy/E36dtyaVgNUeIR
-	 ZFOo7ZxM+wUc+wcsr5PH1QdikNp/59anL2oXD8e9OTpwtDjOZc4HTScKJv9z/XhX95Q==
+	t=1795019517;
+	b=XZRQ52VfZQapSYogTxQeIaC37ctwA7hcqbnuMWfibVRmohf/WeCVNCrDt5DB9vX1UbL+
+	 RvsQG9xZmFyKoUP0LriTcKuBBZQ7NWjy/SUQaQS4WOWb7wzNtRZksv8kpSeSMgy5871zt
+	 JHDKEkWu+tFzaofIl2tBDSAjA3uH2Q4GmD0Rjl/UDAizES+dIU5Zo1eHG1ivyevaAVO52
+	 JzgsA9G8bFe7qaX95AzDzI2/unzBhzzGGbmFVOafVDqJaQQ9tNidma2VzYQ5XD+JAo7RS
+	 jQgDulSkJUlRqHrNUSu9xZuO/Rj4cnPY1tzrpkTZSQ3kjlhPhN5lPXQdYps5dQ4gEeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y+4D0rXW9j75+jIq3Mow0nrWUIWuywfBc+/Ask4kFWw=;
-	b=FL9e5ZVciMN9mDf+Dg6SCe3zOsZRlXd46MA3bWYAJw9yVXM2k0MDEkv9eU6nTurYFUfF
-	 3FA5EZxAe4xazqGHGGtoNY/aBvlg0opq4I5wasxMHuqs7RQGJEYAGWcPin11TYst3mGyT
-	 XLuYqmb08f4XaNjnkJ3GBtw6id7m2v51G7fZsXJTnXORfGmK092JjwZgcrNM8hnHKoa/v
-	 yG19DctXsOKl8TLhVLsZeFQ0UINoVLBWjwiHEmuwOe2u3+tGPSWUOIy3P28ex09cwSjnr
-	 sv6Er5a6SE0fWBnUkNBkv1cHpubM9zw/CvQ5xALb1hSUOG2GsoaEIRwfv+KA8EbSdWw==
+	bh=rUKKcgc0PxpLTOLKD+BzEvmIGODWQjFenZ0o52h14Mk=;
+	b=vC60/C1M7fNhld/2eXhECVf8LkS5zYuw9EkeTcaAliYKHm8XkCy4Hge5qUCkldXlcBtZ
+	 CQj1w20ZxzCq48oZLuamriaqcKoaFTWshWduipQ+RvX5aXem1OnS7VZ7ywqFqv1Tn5ucc
+	 i5qGYRkoTI4GV+kdt7uv21oqS3HLw7Irw5oFYxl47C2vUqXp7Vo8TRhD1IQZi9AWatAWf
+	 3RTsa1jHdfqjQIDBx0vXKepH4Puyb1PGP1NnKbpRgXDXFTF0aAe/gK0J5la58uOzKfNMm
+	 N+xtnOBj/k5VC9qUbrs7txNMgalwUF7mgAHqvDO8d67pBQOTsJMe7wtyfjFuIHtQDSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdBUBZMF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHllQfem;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A18606A7CD;
-	Wed, 18 Nov 2026 16:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44528606A33A;
+	Wed, 18 Nov 2026 16:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MdBUBZMF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C8D1F000C4;
-	Wed, 18 Nov 2026 16:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oHllQfem
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3351F000C4;
+	Wed, 18 Nov 2026 16:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019514;
-	bh=y+4D0rXW9j75+jIq3Mow0nrWUIWuywfBc+/Ask4kFWw=;
+	s=korg; t=1795019517;
+	bh=rUKKcgc0PxpLTOLKD+BzEvmIGODWQjFenZ0o52h14Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdBUBZMFTaFoIcnbrEBn92N1/laG1WdrQM1llOXGLQ/I4ptemciQQ6q07+Vf6jIIE
-	 62M/KDCqZQKz39uSR5d7OlJhQ2HzwA6JwexAMUkLM6MV5csnIuFA4MkeKbDvJ52qGv
-	 am0TTALt/9sv0TU/EtKW2WXzqu9NcUAVvLIkDZf8=
+	b=oHllQfemjexdXH2xrlDFKHfn3BavJkADRjVr+stJaYHl70Cs0qQgblgZTvKcxyfUh
+	 WMAVno720Sckux+XQgYWYyP/Dp6H3UVOyPok2G+OyqnizRasLsVy4U3ZbaL8ywr8nF
+	 QKZUNob4yhBJxwv0uByzTZWaxpCYWLXjGXMuLCPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mina Almasry <almasrymina@google.com>,
 	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1624/2651] net: devmem: replace gen_pool with freelist
-Date: Wed, 18 Nov 2026 15:47:44 +0100
-Message-ID: <20261118150346.323975781@linuxfoundation.org>
+Subject: [PATCH 7.3 1625/2651] net: devmem: embed net_iov_area in binding
+Date: Wed, 18 Nov 2026 15:47:45 +0100
+Message-ID: <20261118150346.359811845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,390 +71,247 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 083e64a3af7717363d1918baede5757235f94a87 ]
+[ Upstream commit 13648ba787223c88086b383beead242427e5747a ]
 
-devmem only needs fixed-size net_iov allocations for each dma-buf binding.
-The gen_pool tracks the same free set indirectly through DMA addresses,
-which makes devmem depend on the generic allocator even though the users
-are fixed-size net_iov chunks.
+After replacing the gen_pool with a binding-level freelist, devmem no
+longer needs a separate chunk owner object. There is only one
+net_iov_area for the binding, so store it directly in struct
+net_devmem_dmabuf_binding.
 
-Mirror the io_uring zcrx model more closely by keeping a binding-level
-freelist protected by spin_lock_bh(). Use a single net_iov_area owner for
-the binding, populate each net_iov's DMA address while walking the SG
-table, and check at teardown that all net_iovs have returned to the
-freelist.
+Derive the binding from net_iov_owner() with container_of(), matching the
+pattern used by io_uring zcrx. This removes the leftover
+dmabuf_genpool_chunk_owner wrapper and its allocation/free path.
 
-Validate the DMA-BUF size against the net_iov size up front and derive the
-RX and TX entry count from it, avoiding a separate SG-table pass.
-
-Drop the NET_DEVMEM select of GENERIC_ALLOCATOR now that devmem no longer
-calls gen_pool APIs.
-
+Reviewed-by: Mina Almasry <almasrymina@google.com>
 Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260917181116.3319017-2-sdf@fomichev.me
+Link: https://patch.msgid.link/20260917181116.3319017-3-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 3a82195416fd ("net: devmem: check uid and netns in net_devmem_get_binding()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/Kconfig       |   1 -
- net/core/devmem.c | 182 +++++++++++++++++++++-------------------------
- net/core/devmem.h |  15 ++--
- 3 files changed, 88 insertions(+), 110 deletions(-)
+ net/core/devmem.c | 61 ++++++++++++++---------------------------------
+ net/core/devmem.h | 25 +++++--------------
+ 2 files changed, 24 insertions(+), 62 deletions(-)
 
-diff --git a/net/Kconfig b/net/Kconfig
-index e384773935515..76ab44aa439a6 100644
---- a/net/Kconfig
-+++ b/net/Kconfig
-@@ -68,7 +68,6 @@ config SKB_EXTENSIONS
- 
- config NET_DEVMEM
- 	def_bool y
--	select GENERIC_ALLOCATOR
- 	depends on DMA_SHARED_BUFFER
- 	depends on PAGE_POOL
- 
 diff --git a/net/core/devmem.c b/net/core/devmem.c
-index f4d60654ce7fd..2ac9d74010a9f 100644
+index 2ac9d74010a9f..7cac0dab8ea87 100644
 --- a/net/core/devmem.c
 +++ b/net/core/devmem.c
-@@ -8,7 +8,6 @@
-  */
- 
- #include <linux/dma-buf.h>
--#include <linux/genalloc.h>
- #include <linux/mm.h>
- #include <linux/netdevice.h>
- #include <linux/types.h>
-@@ -30,23 +29,13 @@ static DEFINE_XARRAY_FLAGS(net_devmem_dmabuf_bindings, XA_FLAGS_ALLOC1);
+@@ -29,15 +29,6 @@ static DEFINE_XARRAY_FLAGS(net_devmem_dmabuf_bindings, XA_FLAGS_ALLOC1);
  
  static const struct memory_provider_ops dmabuf_devmem_ops;
  
--static void net_devmem_dmabuf_free_chunk_owner(struct gen_pool *genpool,
--					       struct gen_pool_chunk *chunk,
--					       void *not_used)
-+static void
-+net_devmem_dmabuf_free_chunk_owner(struct dmabuf_genpool_chunk_owner *owner)
- {
--	struct dmabuf_genpool_chunk_owner *owner = chunk->owner;
--
--	kvfree(owner->area.niovs);
--	kfree(owner);
+-static void
+-net_devmem_dmabuf_free_chunk_owner(struct dmabuf_genpool_chunk_owner *owner)
+-{
+-	if (owner) {
+-		kvfree(owner->area.niovs);
+-		kfree(owner);
+-	}
 -}
 -
--static dma_addr_t net_devmem_get_dma_addr(const struct net_iov *niov)
--{
--	struct dmabuf_genpool_chunk_owner *owner;
--
--	owner = net_devmem_iov_to_chunk_owner(niov);
--	return owner->base_dma_addr +
--	       ((dma_addr_t)net_iov_idx(niov) << owner->binding->niov_shift);
-+	if (owner) {
-+		kvfree(owner->area.niovs);
-+		kfree(owner);
-+	}
- }
- 
  static void net_devmem_dmabuf_binding_release(struct percpu_ref *ref)
-@@ -62,24 +51,20 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
  {
+ 	struct net_devmem_dmabuf_binding *binding =
+@@ -52,12 +43,11 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
  	struct net_devmem_dmabuf_binding *binding = container_of(wq, typeof(*binding), unbind_w);
  
--	size_t size, avail;
--
--	gen_pool_for_each_chunk(binding->chunk_pool,
--				net_devmem_dmabuf_free_chunk_owner, NULL);
--
--	size = gen_pool_size(binding->chunk_pool);
--	avail = gen_pool_avail(binding->chunk_pool);
--
--	if (!WARN(size != avail, "can't destroy genpool. size=%zu, avail=%zu",
--		  size, avail))
--		gen_pool_destroy(binding->chunk_pool);
-+	if (binding->freelist)
-+		WARN(binding->free_count != binding->chunk_owner->area.num_niovs,
-+		     "destroying dmabuf binding with outstanding net_iovs: total=%zu, free=%zu",
-+		     binding->chunk_owner->area.num_niovs,
-+		     binding->free_count);
+ 	if (binding->freelist)
+-		WARN(binding->free_count != binding->chunk_owner->area.num_niovs,
++		WARN(binding->free_count != binding->area.num_niovs,
+ 		     "destroying dmabuf binding with outstanding net_iovs: total=%zu, free=%zu",
+-		     binding->chunk_owner->area.num_niovs,
+-		     binding->free_count);
++		     binding->area.num_niovs, binding->free_count);
  
-+	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
+-	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
++	kvfree(binding->area.niovs);
  	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
  					  binding->direction);
  	dma_buf_detach(binding->dmabuf, binding->attachment);
- 	dma_buf_put(binding->dmabuf);
- 	xa_destroy(&binding->bound_rxqs);
- 	percpu_ref_exit(&binding->ref);
-+	kvfree(binding->freelist);
- 	kvfree(binding->tx_vec);
- 	kfree(binding);
- }
-@@ -87,21 +72,15 @@ void __net_devmem_dmabuf_binding_free(struct work_struct *wq)
- struct net_iov *
- net_devmem_alloc_dmabuf(struct net_devmem_dmabuf_binding *binding)
- {
--	struct dmabuf_genpool_chunk_owner *owner;
--	unsigned long dma_addr;
- 	struct net_iov *niov;
--	ssize_t offset;
--	ssize_t index;
--
--	dma_addr = gen_pool_alloc_owner(binding->chunk_pool,
--					1UL << binding->niov_shift,
--					(void **)&owner);
--	if (!dma_addr)
-+	spin_lock_bh(&binding->freelist_lock);
-+	if (unlikely(!binding->free_count)) {
-+		spin_unlock_bh(&binding->freelist_lock);
- 		return NULL;
-+	}
- 
--	offset = dma_addr - owner->base_dma_addr;
--	index = offset >> binding->niov_shift;
--	niov = &owner->area.niovs[index];
-+	niov = binding->freelist[--binding->free_count];
-+	spin_unlock_bh(&binding->freelist_lock);
- 
- 	niov->desc.pp_magic = 0;
- 	niov->desc.pp = NULL;
-@@ -113,14 +92,16 @@ net_devmem_alloc_dmabuf(struct net_devmem_dmabuf_binding *binding)
- void net_devmem_free_dmabuf(struct net_iov *niov)
- {
+@@ -94,8 +84,7 @@ void net_devmem_free_dmabuf(struct net_iov *niov)
  	struct net_devmem_dmabuf_binding *binding = net_devmem_iov_binding(niov);
--	unsigned long dma_addr = net_devmem_get_dma_addr(niov);
--	size_t niov_size = 1UL << binding->niov_shift;
  
--	if (WARN_ON(!gen_pool_has_addr(binding->chunk_pool, dma_addr,
--				       niov_size)))
-+	spin_lock_bh(&binding->freelist_lock);
-+	if (WARN_ON_ONCE(binding->free_count >=
-+			 binding->chunk_owner->area.num_niovs)) {
-+		spin_unlock_bh(&binding->freelist_lock);
+ 	spin_lock_bh(&binding->freelist_lock);
+-	if (WARN_ON_ONCE(binding->free_count >=
+-			 binding->chunk_owner->area.num_niovs)) {
++	if (WARN_ON_ONCE(binding->free_count >= binding->area.num_niovs)) {
+ 		spin_unlock_bh(&binding->freelist_lock);
  		return;
-+	}
- 
--	gen_pool_free(binding->chunk_pool, dma_addr, niov_size);
-+	binding->freelist[binding->free_count++] = niov;
-+	spin_unlock_bh(&binding->freelist_lock);
- }
- 
- void net_devmem_unbind_dmabuf(struct net_devmem_dmabuf_binding *binding)
-@@ -194,12 +175,15 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 	}
+@@ -175,13 +164,11 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
  		       struct netlink_ext_ack *extack)
  {
  	struct net_devmem_dmabuf_binding *binding;
-+	struct dmabuf_genpool_chunk_owner *owner;
+-	struct dmabuf_genpool_chunk_owner *owner;
  	size_t niov_size = 1UL << niov_shift;
  	static u32 id_alloc_next;
  	struct scatterlist *sg;
  	struct dma_buf *dmabuf;
--	unsigned int sg_idx, i;
--	unsigned long virtual;
-+	unsigned int sg_idx;
-+	size_t total_niovs;
-+	size_t niov_idx;
-+	size_t i;
+ 	unsigned int sg_idx;
+-	size_t total_niovs;
+ 	size_t niov_idx;
+ 	size_t i;
  	int err;
- 
- 	if (!dma_dev) {
-@@ -249,33 +233,55 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
- 		goto err_detach;
+@@ -241,16 +228,18 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 		goto err_unmap;
  	}
  
-+	if (!IS_ALIGNED(dmabuf->size, niov_size)) {
-+		err = -EINVAL;
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "dmabuf size %zu not aligned to niov size %zu",
-+				   dmabuf->size, niov_size);
-+		goto err_unmap;
-+	}
-+
-+	total_niovs = dmabuf->size >> niov_shift;
+-	total_niovs = dmabuf->size >> niov_shift;
++	binding->area.base_virtual = 0;
++	binding->area.num_niovs = dmabuf->size >> niov_shift;
  	if (direction == DMA_TO_DEVICE) {
--		if (!IS_ALIGNED(dmabuf->size, PAGE_SIZE)) {
--			err = -EINVAL;
--			NL_SET_ERR_MSG(extack, "TX dma-buf size must be a multiple of PAGE_SIZE");
-+		binding->tx_vec = kvmalloc_objs(struct net_iov *, total_niovs);
-+		if (!binding->tx_vec) {
-+			err = -ENOMEM;
- 			goto err_unmap;
- 		}
--		binding->tx_vec = kvmalloc_objs(struct net_iov *,
--						dmabuf->size / PAGE_SIZE);
--		if (!binding->tx_vec) {
-+	} else {
-+		spin_lock_init(&binding->freelist_lock);
-+		binding->freelist = kvmalloc_array(total_niovs,
-+						   sizeof(binding->freelist[0]),
-+						   GFP_KERNEL);
-+		if (!binding->freelist) {
+-		binding->tx_vec = kvmalloc_objs(struct net_iov *, total_niovs);
++		binding->tx_vec = kvmalloc_objs(struct net_iov *,
++						binding->area.num_niovs);
+ 		if (!binding->tx_vec) {
  			err = -ENOMEM;
  			goto err_unmap;
  		}
+ 	} else {
+ 		spin_lock_init(&binding->freelist_lock);
+-		binding->freelist = kvmalloc_array(total_niovs,
++		binding->freelist = kvmalloc_array(binding->area.num_niovs,
+ 						   sizeof(binding->freelist[0]),
+ 						   GFP_KERNEL);
+ 		if (!binding->freelist) {
+@@ -258,24 +247,13 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+ 			goto err_unmap;
+ 		}
  	}
-+	owner = kzalloc_node(sizeof(*owner), GFP_KERNEL,
-+			     dev_to_node(&dev->dev));
-+	if (!owner) {
-+		err = -ENOMEM;
-+		goto err_free_freelist;
-+	}
- 
--	binding->chunk_pool = gen_pool_create(niov_shift,
--					      dev_to_node(&dev->dev));
--	if (!binding->chunk_pool) {
-+	owner->area.base_virtual = 0;
-+	owner->area.num_niovs = total_niovs;
-+	owner->binding = binding;
-+	owner->area.niovs = kvmalloc_objs(*owner->area.niovs,
-+					  owner->area.num_niovs);
-+	if (!owner->area.niovs) {
+-	owner = kzalloc_node(sizeof(*owner), GFP_KERNEL,
+-			     dev_to_node(&dev->dev));
+-	if (!owner) {
++	binding->area.niovs = kvmalloc_objs(*binding->area.niovs,
++					    binding->area.num_niovs);
++	if (!binding->area.niovs) {
  		err = -ENOMEM;
--		goto err_tx_vec;
-+		goto err_free_owner;
+ 		goto err_free_freelist;
  	}
-+	binding->chunk_owner = owner;
  
--	virtual = 0;
-+	niov_idx = 0;
+-	owner->area.base_virtual = 0;
+-	owner->area.num_niovs = total_niovs;
+-	owner->binding = binding;
+-	owner->area.niovs = kvmalloc_objs(*owner->area.niovs,
+-					  owner->area.num_niovs);
+-	if (!owner->area.niovs) {
+-		err = -ENOMEM;
+-		goto err_free_owner;
+-	}
+-	binding->chunk_owner = owner;
+-
+ 	niov_idx = 0;
  	for_each_sgtable_dma_sg(binding->sgt, sg, sg_idx) {
  		dma_addr_t dma_addr = sg_dma_address(sg);
--		struct dmabuf_genpool_chunk_owner *owner;
- 		size_t len = sg_dma_len(sg);
- 		struct net_iov *niov;
-+		size_t nr_niovs;
- 
- 		if (!IS_ALIGNED(dma_addr, niov_size) ||
- 		    !IS_ALIGNED(len, niov_size)) {
-@@ -283,64 +289,40 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+@@ -289,13 +267,13 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
  			NL_SET_ERR_MSG_FMT(extack,
  					   "dmabuf sg entry (addr=%pad, len=%zu) not aligned to niov size %zu",
  					   &dma_addr, len, niov_size);
--			goto err_free_chunks;
--		}
--
--		owner = kzalloc_node(sizeof(*owner), GFP_KERNEL,
--				     dev_to_node(&dev->dev));
--		if (!owner) {
--			err = -ENOMEM;
--			goto err_free_chunks;
-+			goto err_free_chunk_owner;
+-			goto err_free_chunk_owner;
++			goto err_free_niovs;
  		}
  
--		owner->area.base_virtual = virtual;
--		owner->base_dma_addr = dma_addr;
--		owner->area.num_niovs = len >> niov_shift;
--		owner->binding = binding;
--
--		err = gen_pool_add_owner(binding->chunk_pool, dma_addr,
--					 dma_addr, len, dev_to_node(&dev->dev),
--					 owner);
--		if (err) {
--			kfree(owner);
--			err = -EINVAL;
--			goto err_free_chunks;
--		}
--
--		owner->area.niovs = kvmalloc_objs(*owner->area.niovs,
--						  owner->area.num_niovs);
--		if (!owner->area.niovs) {
--			err = -ENOMEM;
--			goto err_free_chunks;
--		}
--
--		for (i = 0; i < owner->area.num_niovs; i++) {
--			niov = &owner->area.niovs[i];
-+		nr_niovs = len >> niov_shift;
-+		for (i = 0; i < nr_niovs; i++, niov_idx++) {
-+			niov = &owner->area.niovs[niov_idx];
- 			net_iov_init(niov, &owner->area, NET_IOV_DMABUF);
+ 		nr_niovs = len >> niov_shift;
+ 		for (i = 0; i < nr_niovs; i++, niov_idx++) {
+-			niov = &owner->area.niovs[niov_idx];
+-			net_iov_init(niov, &owner->area, NET_IOV_DMABUF);
++			niov = &binding->area.niovs[niov_idx];
++			net_iov_init(niov, &binding->area, NET_IOV_DMABUF);
  			page_pool_set_dma_addr_netmem(net_iov_to_netmem(niov),
--						      net_devmem_get_dma_addr(niov));
-+						      dma_addr);
+ 						      dma_addr);
  			if (direction == DMA_TO_DEVICE)
--				binding->tx_vec[owner->area.base_virtual / PAGE_SIZE + i] = niov;
-+				binding->tx_vec[niov_idx] = niov;
-+			else
-+				binding->freelist[binding->free_count++] = niov;
-+			dma_addr += niov_size;
- 		}
--
--		virtual += len;
- 	}
- 
- 	err = xa_alloc_cyclic(&net_devmem_dmabuf_bindings, &binding->id,
+@@ -310,17 +288,14 @@ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
  			      binding, xa_limit_32b, &id_alloc_next,
  			      GFP_KERNEL);
  	if (err < 0)
--		goto err_free_chunks;
-+		goto err_free_chunk_owner;
+-		goto err_free_chunk_owner;
++		goto err_free_niovs;
  
  	list_add(&binding->list, &priv->bindings);
  
  	return binding;
  
--err_free_chunks:
--	gen_pool_for_each_chunk(binding->chunk_pool,
--				net_devmem_dmabuf_free_chunk_owner, NULL);
--	gen_pool_destroy(binding->chunk_pool);
--err_tx_vec:
-+err_free_chunk_owner:
-+	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
-+	goto err_free_freelist;
-+err_free_owner:
-+	kfree(owner);
-+err_free_freelist:
-+	kvfree(binding->freelist);
+-err_free_chunk_owner:
+-	net_devmem_dmabuf_free_chunk_owner(binding->chunk_owner);
+-	goto err_free_freelist;
+-err_free_owner:
+-	kfree(owner);
++err_free_niovs:
++	kvfree(binding->area.niovs);
+ err_free_freelist:
+ 	kvfree(binding->freelist);
  	kvfree(binding->tx_vec);
- err_unmap:
- 	dma_buf_unmap_attachment_unlocked(binding->attachment, binding->sgt,
 diff --git a/net/core/devmem.h b/net/core/devmem.h
-index 4a293a7d1149c..db2eb6372aee9 100644
+index db2eb6372aee9..6ed16b4b4687e 100644
 --- a/net/core/devmem.h
 +++ b/net/core/devmem.h
-@@ -14,6 +14,7 @@
+@@ -14,9 +14,9 @@
  #include <net/netdev_netlink.h>
  
  struct netlink_ext_ack;
-+struct dmabuf_genpool_chunk_owner;
+-struct dmabuf_genpool_chunk_owner;
  
  struct net_devmem_dmabuf_binding {
++	struct net_iov_area area;
  	struct dma_buf *dmabuf;
-@@ -26,7 +27,7 @@ struct net_devmem_dmabuf_binding {
+ 	struct dma_buf_attachment *attachment;
+ 	struct sg_table *sgt;
+@@ -27,7 +27,6 @@ struct net_devmem_dmabuf_binding {
  	 * dereferenced.
  	 */
  	void *vdev;
--	struct gen_pool *chunk_pool;
-+	struct dmabuf_genpool_chunk_owner *chunk_owner;
+-	struct dmabuf_genpool_chunk_owner *chunk_owner;
  	/* Protect dev */
  	struct mutex lock;
  
-@@ -57,6 +58,10 @@ struct net_devmem_dmabuf_binding {
- 	/* rxq's this binding is active on. */
- 	struct xarray bound_rxqs;
- 
-+	spinlock_t freelist_lock ____cacheline_aligned_in_smp;
-+	size_t free_count;
-+	struct net_iov **freelist;
-+
- 	/* ID of this binding. Globally unique to all bindings currently
- 	 * active.
- 	 */
-@@ -77,17 +82,9 @@ struct net_devmem_dmabuf_binding {
+@@ -82,11 +81,6 @@ struct net_devmem_dmabuf_binding {
  };
  
  #if defined(CONFIG_NET_DEVMEM)
--/* Owner of the dma-buf chunks inserted into the gen pool. Each scatterlist
-- * entry from the dmabuf is inserted into the genpool as a chunk, and needs
-- * this owner struct to keep track of some metadata necessary to create
-- * allocations from this chunk.
-- */
- struct dmabuf_genpool_chunk_owner {
- 	struct net_iov_area area;
- 	struct net_devmem_dmabuf_binding *binding;
+-struct dmabuf_genpool_chunk_owner {
+-	struct net_iov_area area;
+-	struct net_devmem_dmabuf_binding *binding;
+-};
 -
--	/* dma_addr of the start of the chunk.  */
--	dma_addr_t base_dma_addr;
- };
- 
  void __net_devmem_dmabuf_binding_free(struct work_struct *wq);
+ struct net_devmem_dmabuf_binding *
+ net_devmem_bind_dmabuf(struct net_device *dev, void *vdev,
+@@ -101,18 +95,11 @@ int net_devmem_bind_dmabuf_to_queue(struct net_device *dev, u32 rxq_idx,
+ 				    struct net_devmem_dmabuf_binding *binding,
+ 				    struct netlink_ext_ack *extack);
+ 
+-static inline struct dmabuf_genpool_chunk_owner *
+-net_devmem_iov_to_chunk_owner(const struct net_iov *niov)
+-{
+-	struct net_iov_area *owner = net_iov_owner(niov);
+-
+-	return container_of(owner, struct dmabuf_genpool_chunk_owner, area);
+-}
+-
+ static inline struct net_devmem_dmabuf_binding *
+ net_devmem_iov_binding(const struct net_iov *niov)
+ {
+-	return net_devmem_iov_to_chunk_owner(niov)->binding;
++	return container_of(net_iov_owner(niov),
++			    struct net_devmem_dmabuf_binding, area);
+ }
+ 
+ static inline u32 net_devmem_iov_binding_id(const struct net_iov *niov)
+@@ -122,11 +109,11 @@ static inline u32 net_devmem_iov_binding_id(const struct net_iov *niov)
+ 
+ static inline unsigned long net_iov_virtual_addr(const struct net_iov *niov)
+ {
+-	struct dmabuf_genpool_chunk_owner *co =
+-		net_devmem_iov_to_chunk_owner(niov);
++	struct net_devmem_dmabuf_binding *binding =
++		net_devmem_iov_binding(niov);
+ 
+ 	return net_iov_owner(niov)->base_virtual +
+-	       ((unsigned long)net_iov_idx(niov) << co->binding->niov_shift);
++	       ((unsigned long)net_iov_idx(niov) << binding->niov_shift);
+ }
+ 
+ static inline bool
 -- 
 2.53.0
 
