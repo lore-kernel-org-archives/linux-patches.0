@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044541;
-	b=waN35ZJag6JhlkTGLWkpXb35BiQmZqocZ5VE8mwg6/6vDVohhP4VUaC7idNYpkjTukRX
-	 bya5ZeBQzzGfUYWPTd6cwZKhUBBVw+Klz9EnTuhlZN18N/QE2bT4fheaZwdyNqynu3zen
-	 eXdFLmjmeBYzj+JKH6Jzv3NU1RBQB6acr76JA0Gs4cETUJ+UTE7XeEFBOIrcTbW3i3ls4
-	 1JaxvC2ykLeHimjrLbquFviuYMX/tRNFYhhysWUk5eUcOQXPxcUsTOc/YmjjJfIkDyySU
-	 tNT1OnsEEw0mZQ46eiBuvG9T1tlFcg4O4wVwFO3v5uc8vatZBWVnA06VoOo3dtVyixw==
+	t=1795044544;
+	b=CIxyi5uW17jsoRSWmFr+SvDTx+SizCc5xOV9cWfyaVbX+l0xX0tJanhhKSobGr2aG3cx
+	 3gVNkCs1YhJQ5X+4iyNrSK9ttvCy8e4YQzG9XofJ5Hhr/d7FEnwHAIPD/Dhuj6qKXIuXN
+	 d7t9IiiHYA3mzILP4guHFqiRdYsIFdTyCI56vIrsgqjVfWSJs6Fz4KXCM309AGuNwg4Be
+	 sRnk9B4vz5RUDtMfGEfUkSTk31DISIanb6bYbgKGpmIpsr9f8EDB6xItQCe3oqHkIQ6qC
+	 STnPJA39gUv/MIsySi67UkeSc1qRmCuecMDooNhvXYl0v3Nwfc0dpWoR5KhUSKxf27w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044541;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6lihO+I0WNr/oDRG54GxRvHDxbrJwqVc8fl6TBlkNdI=;
-	b=TQ1hB5LtFPlGeWa879gMe1BVGgBbEdu57t7bo00KmEweUnY2pPK/LUZZMPpEXfKyI4oC
-	 m5p7uzr5P+Pomwz6qvwzn54Com/6WF44pt4EnPM8KpFyZEc2mgSYN9EZvZiVOaZx26Uwe
-	 TyfC2Bt73+4LgCf5p+7x0++iDwN/B0gKj/hbDRFAGwMepTRWQdeUu3jVxlTvZB5uIEg9r
-	 KgaiOjPKExJ1xiSRAj7ElHVpx2Ic1FH+A5QnpAREFg/45uT9E98KWinQB2nraa7cUTaKy
-	 ed1NZgee3PAuetJpo0+u1+ux2z6tWC12sX0Pp1ZPXesnGGEmGegpIephQhzIATUU8UA==
+	bh=HYVUBjRWJpuqOJ/v8yQzGW5hzbkNFcN+5xqf3IOrmMU=;
+	b=c07R9WT41DfWqgnrtRYOjv04ufqrGJL+fGBgj7R6hjntKga2McI5UjzuCqhS8HbwFQpy
+	 LHmmNBGUFKL1zlycjMcm0Qrhqx8+KJFTqpuYD9xRPNqX3gX8tajxWQTHVcXXfH3hV7ef2
+	 iy9vEoxv+uMw65GJPaRg/OXQLDg++VtnD5kv4Xh4q36wLW+yJd6//bL6CE+2KgbvCy+oR
+	 Hu9PibDWEpLeA2uab1q9zwM8l0jluwMYdXU90ms+yCH5bXi3bzVCKwpHRR/sbkxGtBcjg
+	 VN/44kL5zIm3yQv7zS/RiywdkhYlaifhCKHnyL6ipKWfw+yiiPLZ5OVynqlbgsyO/HA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKQpfcRM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAhob7BP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB44E606A325;
-	Wed, 18 Nov 2026 23:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDB6606A320;
+	Wed, 18 Nov 2026 23:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kKQpfcRM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8691F000C4;
-	Wed, 18 Nov 2026 23:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RAhob7BP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BF11F000C4;
+	Wed, 18 Nov 2026 23:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044540;
-	bh=6lihO+I0WNr/oDRG54GxRvHDxbrJwqVc8fl6TBlkNdI=;
+	s=korg; t=1795044544;
+	bh=HYVUBjRWJpuqOJ/v8yQzGW5hzbkNFcN+5xqf3IOrmMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kKQpfcRMtUsV7crvEdX1vSm+c2+ZwLWzs1985bGdvB3lxTsAH/Hx1Xy8NuxC46sK/
-	 1GcD1y/is2B7S2rwtb0HS/ZoJ5RIGR+LMTzj0I31K/Z4P17czgSshdM6Jd/SaZfiHk
-	 cmT0LPOGV/NxdWXKl2T/mmQ0ZHRg1DKeDTLyaeqc=
+	b=RAhob7BPT5pKTqEl8Z9k3wKeG1vDErH7mG96xeC0U1FHFIt713y47tG7yFtn+2Ri8
+	 lHUZtJNX2w0OFZ0pbEy+BAXSuh7iotNHHcszPhgPLFgfIaaS+YXIxJpofzL5CH5qVr
+	 sEebpG4EE/4sJs7jt0xM1d4+TdN67lvaiyJJ5Rkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0603/2857] nfsd: clear XDR padding in GETXATTR replies
-Date: Wed, 18 Nov 2026 15:27:17 +0100
-Message-ID: <20261118150223.205113235@linuxfoundation.org>
+Subject: [PATCH 6.1 0604/2857] NFSD: copy SETXATTR data from all XDR buffer segments
+Date: Wed, 18 Nov 2026 15:27:18 +0100
+Message-ID: <20261118150223.240517648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,41 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit daba58690339ae86f1ebeb5197aa1369fae37e57 upstream.
+commit b01319947c69b0e3ea0fcd4b675eb892f9cad8a0 upstream.
 
-nfsd4_vbuf_to_stream() uses a raw memcpy() for the first fragment of an
-attribute value. xdr_reserve_space() aligns the reservation but does not
-initialize the extra bytes. If the complete value fits in that fragment,
-the loop that clears padding for the final fragment is never entered.
+nfsd4_vbuf_from_vector() manually copies the head followed by whole
+pages starting at offset zero. This assumes that all remaining data
+starts at the beginning of the page array and that no data is stored
+in the tail.
 
-A remote client reading an attribute whose length is not a multiple of
-four can therefore receive one to three stale bytes from the response
-page.
+However, nfsd4_decode_setxattr() passes an xdr_buf returned by
+xdr_stream_subsegment(). Such a sub-buffer can have a nonzero
+page_base and can span its page and tail segments. Ignoring that
+layout can copy the wrong bytes into the value passed to
+vfs_setxattr().
 
-Encode the first fragment with xdr_encode_opaque_fixed(), matching the
-final-fragment path and ensuring that any XDR padding is zeroed.
+Use read_bytes_from_xdr_buf(), which observes the complete xdr_buf
+layout.
 
-Fixes: 23e50fe3a5e6 ("nfsd: implement the xattr functions and en/decode logic")
+Fixes: c1346a1216ab ("NFSD: Replace the internals of the READ_BUF() macro")
 Cc: stable@vger.kernel.org
 Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260915160119.3105745-1-qwe.aldo@gmail.com
+Link: https://patch.msgid.link/20260915160022.3105295-1-qwe.aldo@gmail.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
 --- a/fs/nfsd/nfs4xdr.c
 +++ b/fs/nfsd/nfs4xdr.c
-@@ -5044,7 +5044,7 @@ nfsd4_vbuf_to_stream(struct xdr_stream *
- 	if (!p)
- 		return nfserr_resource;
+@@ -2117,10 +2117,8 @@ static __be32
+ nfsd4_vbuf_from_vector(struct nfsd4_compoundargs *argp, struct xdr_buf *xdr,
+ 		       char **bufp, u32 buflen)
+ {
+-	struct page **pages = xdr->pages;
+ 	struct kvec *head = xdr->head;
+-	char *tmp, *dp;
+-	u32 len;
++	char *tmp;
  
--	memcpy(p, buf, cplen);
-+	xdr_encode_opaque_fixed(p, buf, cplen);
- 	buf += cplen;
- 	buflen -= cplen;
+ 	if (buflen <= head->iov_len) {
+ 		/*
+@@ -2135,19 +2133,8 @@ nfsd4_vbuf_from_vector(struct nfsd4_comp
+ 	if (tmp == NULL)
+ 		return nfserr_jukebox;
  
+-	dp = tmp;
+-	memcpy(dp, head->iov_base, head->iov_len);
+-	buflen -= head->iov_len;
+-	dp += head->iov_len;
+-
+-	while (buflen > 0) {
+-		len = min_t(u32, buflen, PAGE_SIZE);
+-		memcpy(dp, page_address(*pages), len);
+-
+-		buflen -= len;
+-		dp += len;
+-		pages++;
+-	}
++	if (read_bytes_from_xdr_buf(xdr, 0, tmp, buflen))
++		return nfserr_bad_xdr;
+ 
+ 	*bufp = tmp;
+ 	return 0;
 
 
