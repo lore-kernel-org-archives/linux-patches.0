@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051872;
-	b=U6e6+RB+GiIEaCHAa4h+hj9QzRa4v0h/vrfQ2bCQ2tVvanAP6B9lubnd5opDltLHnd0a
-	 BcymhNNUNF4yFH2ASS03a5hqqx4g8/w4HK36bxMEJBQ5fqYQ/H8pOZcDsenx6YIE0Uqj+
-	 glhmCuT3nbTlPFAkL5cRi4u/scSwnBtIGozLdfj4dd832JE9xeyQpfpCGPMzzYQ418JhQ
-	 bq94B7JtdOxqZI/6+ZLwlkzTHao47+J0MLwvSxL/FfOEwtNwULY/LjFRugQsD6WVsX0MM
-	 5gFc6koaR+oYS137XiQVzUTU8IN98Gve9MciD6reSMhFwOurV9L5sDurtq1lf8Qpolg==
+	t=1795051875;
+	b=vx1YSqon1oAey4i3ww0yhTAXpH43zo5SgzeciDQ6MDPSXTM7SKUU/roRsMJekvpF78Bv
+	 HaSZuXUOjtUtnLlPUV7Jw45WdQj93OqYLgHimOZrt+tZ1PTBAHPsuTWJRE5aQ++9xOUX2
+	 G5NcPCi3DnEyDMPf39HHxpdQfU05zZ6hiSBq2anuf3Oqb/wggS6U5fG0n6ApcBekd29jn
+	 LovLOPKjhAMdA9NxNJXVkk3keXp+MMP77eHVd50G2RFj15EX81zy2BqXzSmmyulgsdnz4
+	 FUGF3bDfIWLPeNO12D2FRBOfct97Hfom3GOjINAFkloJPI4FagteCto7LczwVDp0fxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l4X57mJF20PKWRiMX1DW5KqcVY8YCCq7T7pCjaGXisA=;
-	b=d6KV2fZys0bw8pRXk/iW/P1oONlrLxcHV/zLV50xrMtlHBzz9uwyJGHt5bNPkYNVaRvb
-	 ocVUXcbJjieN/jNsvptYzFmyCiTPzX+ntubCAyGz4zYhPxzYWGOGUy9WOAU2b6vrkIau6
-	 3PkObLB3TY4PFKPuL9Dgy7X3bi1bPPdxb5wIst02MymQvSOABIeZA3XT/qaLfApEoa4ID
-	 2VVKgfu8e56SSD5seNBsa9VdsccYZz/peM5TdWPCTYcmmRaSlpYFNKjdNuu+eIJvlCbt5
-	 jjCN9/xP+yCQFUf0YK2xK6LQWWLx0uJAohng+Zzp8yP1YthffuDedVcPhhGVCLeRoAQ==
+	bh=apBhJnxBEwNIWmhuDVFunnYYgDGTlu/JeaDXUwAh+M4=;
+	b=RfEFlev8KgvPuuTY0oxI37ChTO7Af8YlBR9HkAbi9egLLetnhZ37SInFSSG4g80ZcnAB
+	 WlETWAw/sy/N0HBzje3fCmu45CG09f5DbWrDcNI25JOVTq+/ANISKT5C63uSVg0eNuIPn
+	 zoGqagf9M8VBgYD9EWjtdee4fUrXd2mQTrCW6p9ruJFMcnkRf6T4wZJE8nFQLrqf9H8Z7
+	 H2KDngQjdy9mj/7WQmnxs0/gUaz5MibTqQroPSYgaZRdr/6vY0+Dv22OUnbd4LHf0gtlj
+	 jxTmLeBRzWD1bkjMMaCYGVpbY36bbPeGXI1AKXHtVKYqmKKQC1b7OpBOiyDCO9W1GsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMyd6HYv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCxHBNIZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B46E606A31C;
-	Thu, 19 Nov 2026 01:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8D8606A31C;
+	Thu, 19 Nov 2026 01:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMyd6HYv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30441F000C4;
-	Thu, 19 Nov 2026 01:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCxHBNIZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDFE1F000C4;
+	Thu, 19 Nov 2026 01:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051872;
-	bh=l4X57mJF20PKWRiMX1DW5KqcVY8YCCq7T7pCjaGXisA=;
+	s=korg; t=1795051875;
+	bh=apBhJnxBEwNIWmhuDVFunnYYgDGTlu/JeaDXUwAh+M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMyd6HYvDzl5nl64gz/izZTdUk8jgRs625coSInB01s8/PLYSZHzBNV+8dxWl+Dx8
-	 SmPnYDhI/GgbRx3bjq5LcuYkvHuGQ+FvH2oWntzi9NUGyXCboAm+v3cTmzEoMPHN/P
-	 EzHpWO90m5wq8lyozhbmUlQIG05V3r86aP6rzjbo=
+	b=iCxHBNIZdUWNWD3mHijaQ/+XPrr74uBnRddrh5VlfLea4KfaKslSHLiaC3bSix02M
+	 qxPsOe9U53B32CbCMRyhoIq1m1eh8KTN8hdGq7CCSvOptd7FXtv/P6GzV811178S/b
+	 HJeVpa2zNS12Dp+/2cXHjabTdqWXxVCfME/PF72w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 5.15 0360/2214] SUNRPC: keep the first error in svc_register()
-Date: Wed, 18 Nov 2026 15:33:56 +0100
-Message-ID: <20261118150025.086564456@linuxfoundation.org>
+Subject: [PATCH 5.15 0361/2214] sunrpc: pin gss module across auth_domain RCU free
+Date: Wed, 18 Nov 2026 15:33:57 +0100
+Message-ID: <20261118150025.120967958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,48 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chris Mason <clm@meta.com>
 
-commit 9ed91d7c4698e611ea5bfca45076008def831fb3 upstream.
+commit b64d21116374688c33302a6704387c27d1156d72 upstream.
 
-svc_register() assigns every pg_rpcbind_set() result to the same "error"
-variable and returns the last one, so a later result erases an earlier
-failure.
+A gss auth_domain stores a raw pointer to svcauthops_gss in
+dom->flavour, and its release queues svcauth_gss_domain_release_rcu()
+via call_rcu(). Both live in auth_rpcgss.ko text, and nothing pins the
+module while a domain referencing it is reachable. rmmod auth_rpcgss
+can therefore unmap that text while an NFSD export still holds a
+reference to the domain.
 
-Keep the first error instead of the last.
+The export cache is one such holder. When the export is finally
+released, the domain reference drops from module text:
 
-Fixes: 642ee6b209c2 ("SUNRPC: Allow further customisation of RPC program registration")
+    svc_export_put()
+      auth_domain_put(exp->ex_client)
+        auth_domain_release()
+          dom->flavour->domain_release(dom)   /* into module text */
+            svcauth_gss_domain_release()
+              call_rcu(&dom->rcu_head,
+                       svcauth_gss_domain_release_rcu)
+
+Once auth_rpcgss is unloaded, the domain_release call lands in
+unmapped memory. The rcu_barrier() in exit_rpcsec_gss() does not
+help: it waits only for callbacks already queued, and this one is
+not queued until the export goes away.
+
+NFSD's NFSv4 objects import symbols from auth_rpcgss.ko, so only a
+server built without CONFIG_NFSD_V4 can unload auth_rpcgss while
+exports still name a gss domain.
+
+Take a module reference in svcauth_gss_register_pseudoflavor() before
+publishing the domain and drop it at the end of
+svcauth_gss_domain_release_rcu(). The rcu_barrier() then holds the
+module image until this callback has returned.
+
+Fixes: 608a0ab2f54a ("SUNRPC: Add lockless lookup of the server's auth domain")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-3-a540d86668b0@kernel.org
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+[ cel: rewrote description ]
+Link: https://patch.msgid.link/20260913160706.384180-1-cel@kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1102,13 +1102,16 @@ int svc_register(const struct svc_serv *
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -847,12 +847,18 @@ svcauth_gss_register_pseudoflavor(u32 ps
+ 	new->h.flavour = &svcauthops_gss;
+ 	new->pseudoflavor = pseudoflavor;
  
- 	for (progp = serv->sv_program; progp; progp = progp->pg_next) {
- 		for (i = 0; i < progp->pg_nvers; i++) {
-+			int ret;
++	if (!try_module_get(svcauthops_gss.owner)) {
++		stat = -ENODEV;
++		goto out_free_name;
++	}
++
+ 	test = auth_domain_lookup(name, &new->h);
+ 	if (test != &new->h) {
+ 		pr_warn("svc: duplicate registration of gss pseudo flavour %s.\n",
+ 			name);
+ 		stat = -EADDRINUSE;
+ 		auth_domain_put(test);
++		module_put(svcauthops_gss.owner);
+ 		goto out_free_name;
+ 	}
+ 	return test;
+@@ -1899,9 +1905,11 @@ svcauth_gss_domain_release_rcu(struct rc
+ {
+ 	struct auth_domain *dom = container_of(head, struct auth_domain, rcu_head);
+ 	struct gss_domain *gd = container_of(dom, struct gss_domain, h);
++	struct module *owner = dom->flavour->owner;
  
--			error = progp->pg_rpcbind_set(net, progp, i,
-+			ret = progp->pg_rpcbind_set(net, progp, i,
- 					family, proto, port);
--			if (error < 0) {
-+			if (ret < 0) {
- 				printk(KERN_WARNING "svc: failed to register "
- 					"%sv%u RPC service (errno %d).\n",
--					progp->pg_name, i, -error);
-+					progp->pg_name, i, -ret);
-+				if (!error)
-+					error = ret;
- 				break;
- 			}
- 		}
+ 	kfree(dom->name);
+ 	kfree(gd);
++	module_put(owner);
+ }
+ 
+ static void
 
 
