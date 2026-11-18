@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020516;
-	b=vzS3b5YRBxaRck3QlmtG8SA7CGkMlIXjtdoaWvRDd3hFweh5iCKW9yv0OgBwNDEYmGv1
-	 LvmkLxIZyl4fzYYHsgrzB/sfbN+gXISF6ec8zKpVgO850+NCc8cunEYFD1CHVVIZR0hEO
-	 bPSIGZaKGfy3wMNhHLY2xoyMtSbYHvZM7ZezvrfRdPr5JY/OVL6WoFoZhuycv2E4gpZIh
-	 jDdZxmw+2RGgjjxHdGqOSf5ePqqKLAg06weO9XU//s04m2i0ytdlKdEp6IHf+lhaQQcVT
-	 pcq0II0/bzmLWW6bRxU/P4hEi0Kn7mMSr0x/DHdbhnrGp9p9cY5+og9eLVypRBZeKuA==
+	t=1795020519;
+	b=a8y9RXfluGoxnH9DzGRbrg5UUbbWQyfwx4Yy3+Ev70NWWwD9e37BbIO0IHGOu6GeEeTI
+	 S1fYbNEoOkPryiCesiug9U7iND67Dsq1d2oOg8R5ZpDiIUyqiDGJzLioc+w1kjMin3czC
+	 fzgfpzNoF62CcAbSx3+PUIzMBfB0hfp9Ad90E+Dj5Trg6QHj9bxvg9LG0fUUrzbLQuwOT
+	 Jcse0yigL8LRZFBlYkyXLQG7ODuOlzt5RUqKv83ZjdKlAqijHlLpQg/NL01gxbWFc40fh
+	 gFiG4I1TAPTrAauRrXKihcskysZcrr3g/QQFSROek3BXhYYyRSFey6zKitYYbIGWuyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020516;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020519;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eFZuguYYkvR8/7V6HSM/lvZTlOZHfDtPWlVxBRwaxd8=;
-	b=b3GHNFZY/T+59bzzvDLhuU9x9auSJtLFmY1GKySRwJvzastM0MsyRiQ+hq0ppJPaqOm+
-	 F8hVeaRlwmoBGo6WVNo5MMSSKIKnXKdP5Zpb5N8qvQBAPSG3OQ4LsV7H19Bjimf/7Wrpi
-	 NFKie55am4YUdd6RW35MHDXVLTlnDd0Cs7qBkTMZXwec7mzgjpAT2gXnKcaVb573+46Nh
-	 1jD+w7Wj+dqgrHYyZwKnKeLdymU54FK0+1q9eVaT2mVXkVXrt0htgjgl3lhsuBzRSSlp/
-	 vSIXrANWcskuhbXCKHolR+/TURwBvwtlIeywmVmDDOMvP1Qob6P1qHVzISa8tzgf2ag==
+	bh=tVVsI3NEoWTYKvIo/VSahIIPX1AhAWBZRL88PBFdU5w=;
+	b=tPNpMWDsIJpMR0NMZRHdQdA15vmL1lqza/qx75npvNkvk+UKJaX8eH7IJOlQVfe6vw26
+	 LBuCt5nPBa+cRL0GibX/ywX+f1Lr2y2rgjIQZCLIyHx05nQlkQKgLurlGQooYpFxG5G4j
+	 1s1rWwOMQIgFWaUBpGc2KlyWWm/KsywFYScLrPeau+wV1P6Ol9g0UVauZ9Xlr58C1tlqF
+	 sY/itSUlUoxoXyZAsaMXRna/d2EMhel1g+qIToVbxb7mwSnKnL/S0gITnXPCxoe61M6cp
+	 jIf+YFr1pl28cba5Df0uD10QTuLYoaXZESNIQiQT10qx7UpAgR86svD9AjvT2JjjUGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OUgsiAta;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qlPKqkUo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA6C606A31C;
-	Wed, 18 Nov 2026 16:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A337606A31C;
+	Wed, 18 Nov 2026 16:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OUgsiAta
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A8E1F000C4;
-	Wed, 18 Nov 2026 16:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qlPKqkUo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0811F000C4;
+	Wed, 18 Nov 2026 16:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020516;
-	bh=eFZuguYYkvR8/7V6HSM/lvZTlOZHfDtPWlVxBRwaxd8=;
+	s=korg; t=1795020519;
+	bh=tVVsI3NEoWTYKvIo/VSahIIPX1AhAWBZRL88PBFdU5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OUgsiAtawo8rcipaSdxZlPpHOd2iUrT8KIyQm+qGO69gD4e2470h+NLYvxjcsDJIf
-	 JEZEWp3UjSBgQ1uAN0TkdHkMLS1H8VvKoihwqbfA8E6PpZdOQ8RKLDaE+b1BbHFF1t
-	 PR8uWUy4UmoIHHnN4uDBie+NsdUgIadv6U8TeatA=
+	b=qlPKqkUo5a0DQmtdLxwpsFP1FU+t8NscG9loyq80gN30jojRPzLTau1Ssl4tUsfas
+	 LF7qFuHfJzeV8pUVD5o6SxhyYm8OYmDpdyvCxNEGOPQopaD7+2u+krPflWwjL7IZzA
+	 RWsiKbV7saVoeBRzfDjMgQTFHTIOZIfWeU7mpKcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1980/2651] ASoC: Intel: avs: Unprepare a stream when recovery occurs
-Date: Wed, 18 Nov 2026 15:53:40 +0100
-Message-ID: <20261118150357.698349326@linuxfoundation.org>
+Subject: [PATCH 7.3 1981/2651] ASoC: Intel: avs: Prevent module info underflow
+Date: Wed, 18 Nov 2026 15:53:41 +0100
+Message-ID: <20261118150357.730204163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,43 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 85bc213f96ac03d74a3e531968c68861e5598281 ]
+[ Upstream commit 05c2975b4267246219e7aead0467626107e204e9 ]
 
-Recovery on alsa-lib side is handled with either:
-1) snd_pcm_prepare(state=XRUN)
-2) snd_pcm_drop/drain() -> snd_pcm_prepare(state=SETUP)
+Typically modules information is first initialized when loading the base
+AudioDSP base firmware and then expanded when loadable DSP modules are
+requested by platform-components, see avs_component_load_libraries().
 
-before starting the PCM anew. Relying solely on state=XRUN leaves 2)
-unaccounted for. sound/core/pcm_native.c ensures correctness of the
-state machine so plain state!=PREPARED check suffices.
+While theoretically not possible in a production scenario, there is no
+reason to continue the IDAs preparation if an event caused the newly
+obtained module information to be smaller or equal than the existing
+information.
 
-This is the BE equivalent of job done previously for FE side only with
-commit cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN
-occurs") and its follow up titled: ("ASoC: Intel: avs: Reset the stream
-unless it is already prepared").
-
-Link: https://lore.kernel.org/linux-sound/20261010103753.16969-1-stiraspo@gmail.com/T/
-Fixes: d070002a20fc ("ASoC: Intel: avs: HDA PCM BE operations")
+Fixes: c1a427e8da93 ("ASoC: Intel: avs: Firmware resources management utilities")
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261015190240.729793-2-cezary.rojewski@intel.com
+Link: https://patch.msgid.link/20261015190240.729793-4-cezary.rojewski@intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/pcm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/intel/avs/utils.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
-index 880cd7a9fb346..13a38ec8c917e 100644
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -461,6 +461,8 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
- 	link_stream = data->link_stream;
- 	p = &be->dpcm[substream->stream].hw_params;
+diff --git a/sound/soc/intel/avs/utils.c b/sound/soc/intel/avs/utils.c
+index ea14ec1738552..f19a62e7e8b5a 100644
+--- a/sound/soc/intel/avs/utils.c
++++ b/sound/soc/intel/avs/utils.c
+@@ -116,9 +116,11 @@ avs_module_ida_alloc(struct avs_dev *adev, struct avs_mods_info *newinfo, bool p
+ 	int i;
  
-+	if (substream->runtime->state != SNDRV_PCM_STATE_PREPARED)
-+		link_stream->link_prepared = false;
- 	if (link_stream->link_prepared)
- 		return 0;
+ 	if (!purge && oldinfo) {
+-		if (oldinfo->count >= newinfo->count)
+-			dev_warn(adev->dev, "refreshing %d modules info with %d\n",
++		if (oldinfo->count >= newinfo->count) {
++			dev_warn(adev->dev, "modules info underflow, old: %d, new: %d\n",
+ 				 oldinfo->count, newinfo->count);
++			return -EPROTO;
++		}
+ 		tocopy_count = oldinfo->count;
+ 	}
  
 -- 
 2.53.0
