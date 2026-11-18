@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035609;
-	b=lhwQBY3LadQiau8JE2qRtvXjgFfgfzAbHbXbAbzjZifcZqtCt1EBaOMG/f7gReu2o/5H
-	 vfbUqItUahS0/gfKvt4N7SzSo1ruPC6zYqUrxOFGVaJnZpcvru4/WG2vZ3tPMpdh4QLOt
-	 OODMSLCKyiiHrNZSfpP19QpNHTKdt1FSekrAiO4lDxul+WOuRvrpX11kJdzYZT/D4VEuA
-	 bKEZaQ4Cq54tFRsMFHdh2G6SHacbqNin9BvaSwYmUWUswG86gU6id7ke/wVXvX7k9r/zS
-	 rFE/Tbzo9odXVGAQBLu2wo99DzMIGfYRm1TcWwWOOQ7cbvcoVs2NJiR54RCYQkftJ0A==
+	t=1795035611;
+	b=gHRln7E4b9KriZxvJDCX4NrSc1ZfZ/Q95qEVgdqOtCCsesCuddOmGunl3ghqevfRxjDh
+	 krbIMyRcD+brSaWzeuoqMUUzYsdkonDgx5h/yqSF5ezTCg4mVwxdMAsK1vftMDUM8rkp/
+	 laX93pjLvaRZB4PrS2+6QY9oIm9EzE9lknBMXpJ6ttWqbSbk6foy6JxBhFWQPcKpmPcWt
+	 W9BU0YkayHBXG8jwa42hObVeuZ/QPkP45lnoc/q+UOYeCvM1kKyE6u/utDVVjceyEUvhh
+	 ixzS+nsDxUY8EPjetznrN9Fw5ttY5KJdvC3EBuc6uj4+ql4GYpptTK8VolmCLLCAtZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035609;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Lmb0+sgkL200K8sYUD+vurE2iSXYEP/7X0/5bGrBcPc=;
-	b=N8ynbjrcTtr0k9VLXvRD4dBhaGz6B8Tp0GONnjvDGFWgp97hC6E0OQMYzx7qBLVWKa39
-	 I1KvaqKsHfaczHtJ4vkv5+pKHSh0AteZWBU/vrCKeof7ely808P5dPmFENSbogrsicfcH
-	 cm+epfYrZSSQtAtvEsZWufPbEB0btC3sVt/OLujUqJh0aeeqQfMqoGJahiQx2vzGlEPk9
-	 wMsPvJPDjFN+oMsNV36fAx2yoom0Nzp8zMwRvaIq1J2i7drha/v+vL4MiuEDoG/QzoJ9j
-	 3YaE357L/7JXhbzS2g1udu4VVpWYPgs07y+aOdmjo32jRZpjcCAn9mdUfyxdUIICLXQ==
+	bh=ubyt2Z6oNk20cbfheAMRP5JvriugTKOoX0av5PiLSqs=;
+	b=te+IjZv75HfGgXAOozkJa4TABe9S+FcC9yI9uUhP9Bl9wEuRcAA0OhD7CCQ8Jyw3fZw/
+	 pAmUTzLajI/8EeIt2xAQjPSFRjHgR9uKTFdlATXdhPJ+bAwhabqRVtCfQ7IAplLBJZJlJ
+	 Yf7KAOvNL3rcqs8uzJ3VVtz5/ggectkC9KfYRoYT0WXr+txE7FfzVT7HgmvkyJ+wk23G0
+	 8U2fgWXXZIdoDhqWF2lddH4xISvLeZDMH5SxoypAp+96mxOuQVK3ZuNESPfEoe+oSdfhl
+	 mbyxKHuGWNonHTg4jljx6Cn52ARBmBG6JDop1ZLWwKfENeMgw9ldF5TSr4N8DE0aRbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4Dtqodu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="n/ra+Aqm";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0120F606A331;
-	Wed, 18 Nov 2026 21:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1D4606A320;
+	Wed, 18 Nov 2026 21:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4Dtqodu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E37F1F000C4;
-	Wed, 18 Nov 2026 21:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n/ra+Aqm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCDF1F000C4;
+	Wed, 18 Nov 2026 21:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035608;
-	bh=Lmb0+sgkL200K8sYUD+vurE2iSXYEP/7X0/5bGrBcPc=;
+	s=korg; t=1795035611;
+	bh=ubyt2Z6oNk20cbfheAMRP5JvriugTKOoX0av5PiLSqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4DtqoduniwgY2CF8rr/ZrbRPXe4idb84ailUbUIMiBYR2OkrNnaw7XQgkR3ejl9u
-	 zQgxsOL3cZ8QVA1t4d8DBeMu9HGEtlZ311djR0mzmsDtITk/mJQqjf9tP0OLG3RSyF
-	 wlb9PEOUOEvzAIJObBSc+SvX2qWrAIWrptIE043U=
+	b=n/ra+AqmqW3yJKkeFRdwMA6wL72lCOOi4bhO4/XwIMB3UyZ+TC/kAW/5zdUNCBwGI
+	 5zNnP266QCOUBed5QQj2vaN8DO6/BR2PZC4mD6DjEhhUd/Udl4SQliEWf4z7xHo7hy
+	 aTxsXo2ot57UIDECEiaDa3KuEcIale27vmDMBKWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Bridges <icb@fastmail.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	sashiko-bot@kernel.org,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0764/3318] ksmbd: fix use-after-free after a failed durable reconnect
-Date: Wed, 18 Nov 2026 15:23:06 +0100
-Message-ID: <20261118150341.646802804@linuxfoundation.org>
+Subject: [PATCH 6.6 0765/3318] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
+Date: Wed, 18 Nov 2026 15:23:07 +0100
+Message-ID: <20261118150341.680635821@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,138 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-[ Upstream commit 248b5819591c577727930e4e255a455235fab50a ]
+[ Upstream commit cef48693da1e964e9f192bfc16cd0ed287c48337 ]
 
-ksmbd_reopen_durable_fd() republishes a detached durable handle in the
-reconnecting session's file table and takes no reference for that entry.
-If smb2_open() then fails, cleanup relies on the final ksmbd_fd_put() to
-remove the volatile id.
+Preserve the negative return value from __vmx_handle_exit() when a bus
+lock is detected, instead of always overwriting it with 0.
 
-Two reconnects of the same handle can both take a lookup reference before
-either attaches it. If the one that reopens first then fails and drops
-its references first, the other request makes the final put through
-ksmbd_put_durable_fd(). That frees the handle without removing the first
-session's table entry, so tearing that session down writes to freed
-memory.
+The purpose of bus_lock_detected handling is to force a userspace exit to
+inform userspace that a bus lock happened. The negative return value can
+achieve this purpose, and changing the negative value to 0 fails to return
+an error to userspace. So, preserve the negative return value.
 
-  BUG: KASAN: slab-use-after-free in __close_file_table_ids+0x14d/0x740 [ksmbd]
-  Call Trace:
-   __close_file_table_ids+0x14d/0x740 [ksmbd]
-   ksmbd_destroy_file_table+0x76/0x100 [ksmbd]
-   ksmbd_session_destroy+0xf8/0x480 [ksmbd]
-   ksmbd_dispose_sessions+0x13e/0x200 [ksmbd]
-   ksmbd_conn_sessions_cleanup+0x4c3/0x6d0 [ksmbd]
-  Freed by task 1030:
-   __ksmbd_close_fd+0x97d/0x1000 [ksmbd]
-   smb2_open+0x14eb/0xd9f0 [ksmbd]
-
-Commit 3515503322f4 ("ksmbd: fix durable reconnect error path file
-lifetime") handles a final put made by the reconnecting request, but not
-one made by another holder.
-
-Remove the volatile id under the file-table lock on this error path,
-before the references are dropped, as ksmbd_close_fd() does on the
-request_open path just above. Removal then no longer depends on which
-holder makes the final put. The stale comment in the reconnect cleanup
-is updated to match. A successful reconnect is unchanged.
-
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: adapted the cleanup hook to the simpler if (fp) error path in smb2_open() ]
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c   | 12 +++++++-----
- fs/smb/server/vfs_cache.c | 28 ++++++++++++++++++++++++++++
- fs/smb/server/vfs_cache.h |  2 ++
- 3 files changed, 37 insertions(+), 5 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 9555ff2034a79..be86f1fbde1fd 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3872,8 +3872,11 @@ int smb2_open(struct ksmbd_work *work)
- 		if (!rsp->hdr.Status)
- 			rsp->hdr.Status = STATUS_UNEXPECTED_IO_ERROR;
- 
--		if (fp)
-+		if (fp) {
-+			if (dh_info.reconnected && fp == dh_info.fp)
-+				ksmbd_unpublish_reopened_fd(work, fp);
- 			ksmbd_fd_put(work, fp);
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index a744ab98440e8..498549e823874 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6622,11 +6622,12 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
+ 	 * a bus lock in guest.
+ 	 */
+ 	if (to_vmx(vcpu)->exit_reason.bus_lock_detected) {
+-		if (ret > 0)
++		if (ret > 0) {
+ 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
++			ret = 0;
 +		}
- 		smb2_set_err_rsp(work);
- 		ksmbd_debug(SMB, "Error response: %x\n", rsp->hdr.Status);
- 	}
-@@ -3881,10 +3884,9 @@ int smb2_open(struct ksmbd_work *work)
- 	if (dh_info.reconnected) {
- 		/*
- 		 * If reconnect succeeded, fp was republished in the
--		 * session file table.  On a later error, ksmbd_fd_put()
--		 * above drops the session reference; drop the durable
--		 * lookup reference through the same session-aware path so
--		 * final close removes the volatile id before freeing fp.
-+		 * session file table, and the error path above has
-+		 * already removed its volatile id.  Drop the durable
-+		 * lookup reference through the same session-aware path.
- 		 */
- 		if (rc && fp == dh_info.fp)
- 			ksmbd_fd_put(work, dh_info.fp);
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 286bb3af85872..42d2b9cbdd894 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -486,6 +486,34 @@ static void set_close_state_blocked_works(struct ksmbd_file *fp)
- 	spin_unlock(&fp->f_lock);
- }
  
-+/**
-+ * ksmbd_unpublish_reopened_fd() - remove a reopened durable handle from the
-+ *	session file table after its CREATE failed
-+ * @work:	smb work of the failed CREATE
-+ * @fp:		durable handle republished by ksmbd_reopen_durable_fd()
-+ *
-+ * The reopen publishes @fp in this session's table without taking a reference
-+ * for the entry, so the CREATE error path's puts need not be the last ones.
-+ * Another holder of a global-table reference, such as a concurrent reconnect
-+ * of the same handle, can drop the last one through ksmbd_put_durable_fd(),
-+ * which frees @fp without touching this table.  Remove the id here, while
-+ * the caller still holds its references.
-+ *
-+ * Every path that removes the id before the final put also clears
-+ * @fp->volatile_id under ft->lock, so a valid id is still @fp's entry.
-+ */
-+void ksmbd_unpublish_reopened_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
-+{
-+	struct ksmbd_file_table *ft = &work->sess->file_table;
-+
-+	write_lock(&ft->lock);
-+	if (has_file_id(fp->volatile_id)) {
-+		idr_remove(ft->idr, fp->volatile_id);
-+		fp->volatile_id = KSMBD_NO_FID;
-+	}
-+	write_unlock(&ft->lock);
-+}
-+
- int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- {
- 	struct ksmbd_file	*fp;
-diff --git a/fs/smb/server/vfs_cache.h b/fs/smb/server/vfs_cache.h
-index e39d6e9023504..e54690a8e3a27 100644
---- a/fs/smb/server/vfs_cache.h
-+++ b/fs/smb/server/vfs_cache.h
-@@ -155,6 +155,8 @@ static inline bool ksmbd_stream_fd(struct ksmbd_file *fp)
- int ksmbd_init_file_table(struct ksmbd_file_table *ft);
- void ksmbd_destroy_file_table(struct ksmbd_session *sess);
- int ksmbd_close_fd(struct ksmbd_work *work, u64 id);
-+void ksmbd_unpublish_reopened_fd(struct ksmbd_work *work,
-+				 struct ksmbd_file *fp);
- struct ksmbd_file *ksmbd_lookup_fd_fast(struct ksmbd_work *work, u64 id);
- struct ksmbd_file *ksmbd_lookup_foreign_fd(struct ksmbd_work *work, u64 id);
- struct ksmbd_file *ksmbd_lookup_fd_slow(struct ksmbd_work *work, u64 id,
+ 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
+-		return 0;
+ 	}
+ 	return ret;
+ }
 -- 
 2.53.0
 
