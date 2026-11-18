@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031256;
-	b=wTcCcCiQhc++Py48t5oa4YasyeJM3+geST3Hy/Gs2S+JwM1JTpbRwwH6d5SxBaQIth1O
-	 qN1d86uPXMOI7jtYyYE2yklc1rCf0rWC9WuasSUwTIFgqjnkAhQLOlSLmWO0YInSJnf7+
-	 uL26ry91g+FGiLfu+TpCWxUIUtSBF3oP+8m9IlCTbfxe0Ft/UfrN2niNWbvHyF6vlpqgX
-	 ZQgsOji6Dm8DS6oX7SCpbpY69HEzuHuFaHxP4jOoZMzHt1KwKgXvB4j/RKInq13Tq7Hb4
-	 GxtAY5lkawBhsHt0yMpKcfKatAop+oQQOxA7ZjFRmDfPPTpcuXGt0VX7uNgBu9B8+iw==
+	t=1795031259;
+	b=xSkTQaBdHPE5eX2h39AmEaZaeaXqLDswOfX017R0aCdbecqkuns08044w02LpAfz7umz
+	 3Jd6K+Uh9oUyNbr3S6A6g2LxkLX+vqmiLEx0Tji0AKEtHg9zzK/zeFTnwJfrkuE0gx20j
+	 2Yj8yWRaZRNnogztDNTkiPeE36FNzoJ7HEQ60HU9LqX0KMnrPe6eWA+lDNjbYs/yv1xGF
+	 xpsqVRQj5eYSC0Q9WY+iDxjr71FVVkNtlgFVjignWV1LYh66+mhuG8YE++Q50rscJQre8
+	 fu7QC1KkK/8JQXveN4MNB52sh56Vb8ZbGelpq3KvoLCrZk2d7KlkwzFmOXLkp7Bkm8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2qzel9p3EChm5ZnBTU4Mb41Rc5ZZ0W0GW0eQnSP7BkY=;
-	b=5DuGYxH3zeQDR0RDh4s8V9wOnHoj+vOkpmEoR6gphhR9Ni6IWD8cJqpRlEA8CdT0hP+L
-	 m/S2xY5/f8ScOvPhN9Kb/y054B3FNtvNs/NU48A8wV4mf++uvHPExTIWlYpXmQVmeL6aU
-	 6fz5OJR7Fbw0SHUvLHytuXfgdKazv4GLqWFsaCjjB6d6y9bG0Hwt2kBrvKIWjFT0i4Dya
-	 lLX5fu57RsiqDJ/s7swZdh0QrDSOHJbG8RTLua4Lm2m6Fpd0PmzEqp/vA/mKY9jKaj/Ni
-	 LKtrt39r6AIZEcapqEZln9+Hh1w6k89FywcE6ptkxuMMUeWcKIblSCctZJ6J6ZTRHiA==
+	bh=SQk6yo3E4SCtzEA+i8ngUlX8/a3tyo96T0Yn4bWQaLI=;
+	b=ztwoRPq7wTxjaULelS3erJUZQ5Tm4qHUVKvls1S1zvRCxFxXT45nPs8TdNxtAbbtB1j0
+	 os8gf2/NwXbP/m+LmNwTKlk+XEHSSzUcQv8xTNgSSwRkuTTXl+ZjyS5mSTNr76eEecXA3
+	 WJiU+mAYjCKEMoz5kHCylWfjQjU59x5uwN80xyzHdL6k5JyOqfbFZg+Y88Dg7JWBBByiV
+	 wm6XZ25APZiyOgscAvaFuMzDAREmcTyN6aBgw95Ct+MbcWuT/sy47rbWLEaylh9UmqVa+
+	 XQCCFvpHWxy/SsK8DYFDiZvNDM4Oo5QD2eSltmhpC5w9e0qgI4wSbDXuv3YdqafvuMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKNpkiAp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJGK5wuX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8327606A31C;
-	Wed, 18 Nov 2026 19:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB7606A31C;
+	Wed, 18 Nov 2026 19:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKNpkiAp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED301F000C4;
-	Wed, 18 Nov 2026 19:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJGK5wuX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37051F000C4;
+	Wed, 18 Nov 2026 19:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031256;
-	bh=2qzel9p3EChm5ZnBTU4Mb41Rc5ZZ0W0GW0eQnSP7BkY=;
+	s=korg; t=1795031259;
+	bh=SQk6yo3E4SCtzEA+i8ngUlX8/a3tyo96T0Yn4bWQaLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sKNpkiApoP65wjKlNcLCzwztru8x5u/qLQHXJsjyQij01RFaUsS2K22a1Dey6AMJl
-	 JUt5eNnKr0RVqA0hW92Hd/T9btkBvA97MGMGQoZ3ysF96z4KsMnHetT6ua6yDD4xzG
-	 LrwrAshWdqgDvMd7TQGYD/JhxPjlwGpbeHlbc5yM=
+	b=xJGK5wuXYRCISXfJyNwtuFT6pMsW4N7D6NUhCO+huppRAzO25zAGBRBRKs2zGxGeo
+	 z0BNu/trSbY31hIbIPDYzhyWI6UmMTQYIc5TZtbuur+uhbNkIj6gibJni+EkeECNsJ
+	 mFtnlntNToG4WwTQEitAsU1UtP496aLtIBu9aiqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0994/1756] ALSA: pcmtest: Fix a bogus pointer read in snd_pcmtst_pcm_pointer()
-Date: Wed, 18 Nov 2026 15:52:01 +0100
-Message-ID: <20261118150049.751606620@linuxfoundation.org>
+Subject: [PATCH 6.12 0995/1756] ALSA: core: Add missing barriers for power_ref vs card->shutdown
+Date: Wed, 18 Nov 2026 15:52:02 +0100
+Message-ID: <20261118150049.796339498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,56 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 905a07c711baf184d01aebd3cf9028a89bcd8b7f ]
+[ Upstream commit a6913835735469751f56473f5212eb291a4805e7 ]
 
-Sashiko reported a potential bogus value for a pcmtest driver when a
-concurrent call to PCM pointer is invoked while the pcmtest's timer
-callback is running: since the position is updated in the timer
-callback without locking, the following wrapping in inc_buf_pos()
-might be screwed up:
-	if (v_iter->buf_pos >= bytes)
-		v_iter->buf_pos %= bytes;
-Although it was reported as an OOB, the actual return is corrected
-inside buffer_size, so no corruption is expected in this scenario, but
-an error message could show a bogus value.
+snd_power_ref_and_wait() increments card->power_ref and then reads
+card->shutdown (and the power state) locklessly, while
+snd_card_disconnect() sets card->shutdown and then waits for
+power_ref to drop to zero via snd_power_sync_ref().  Due to the
+missing barrier on both sides, the caller proceeds with shutdown still
+seen as false, while the disconnect side sees a zero refcount and
+continues tearing down incorrectly.
 
-Also, the whole state is read and modified locklessly in the timer
-callback, which can be racy against the pause operation, too.
+For addressing the potential race, add smp_mb__after_atomic() after
+the refcount increment and smp_mb() before snd_power_sync_ref() in
+snd_card_disconnect().
 
-For avoiding those races, simply put the PCM stream lock in the timer
-callback (while the snd_pcm_period_elapsed() must be changed to its
-*_under_stream_lock() variant for avoiding the deadlock).
-
+Fixes: e94fdbd7b25d ("ALSA: control: Track in-flight control read/write/tlv accesses")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
+Assisted-by: LLM
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261007172051.13240-7-tiwai@suse.de
+Link: https://patch.msgid.link/20261007172051.13240-9-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/core/init.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index acdafeb43858c..4a53dd84b19af 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -344,6 +344,7 @@ static void timer_timeout(struct timer_list *data)
- 	v_iter = from_timer(v_iter, data, timer_instance);
- 	substream = v_iter->substream;
- 
-+	guard(pcm_stream_lock_irqsave)(substream);
- 	if (v_iter->suspend)
- 		return;
- 
-@@ -357,7 +358,7 @@ static void timer_timeout(struct timer_list *data)
- 	v_iter->period_pos += v_iter->b_rw;
- 	if (v_iter->period_pos >= v_iter->period_bytes) {
- 		v_iter->period_pos %= v_iter->period_bytes;
--		snd_pcm_period_elapsed(substream);
-+		snd_pcm_period_elapsed_under_stream_lock(substream);
+diff --git a/sound/core/init.c b/sound/core/init.c
+index b37269b86be89..d39dc0198370e 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -552,6 +552,8 @@ void snd_card_disconnect(struct snd_card *card)
+ 		clear_bit(card->number, snd_cards_lock);
  	}
  
- 	if (!v_iter->suspend)
++	/* order card->shutdown store against power_ref read */
++	smp_mb();
+ 	snd_power_sync_ref(card);
+ }
+ EXPORT_SYMBOL(snd_card_disconnect);
+@@ -1142,6 +1144,8 @@ EXPORT_SYMBOL(snd_card_file_remove);
+ int snd_power_ref_and_wait(struct snd_card *card)
+ {
+ 	snd_power_ref(card);
++	/* order power_ref increment against card->shutdown read */
++	smp_mb__after_atomic();
+ 	if (snd_power_get_state(card) != SNDRV_CTL_POWER_D0) {
+ 		wait_event_cmd(card->power_sleep,
+ 			       card->shutdown ||
 -- 
 2.53.0
 
