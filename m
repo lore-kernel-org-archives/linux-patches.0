@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054633;
-	b=1VETfTcTjCLN/lPOZLlmiWRB13G7WiDBNeeJ3vzSWnciCyL8LSsoY49Cs3MjJat36ruV
-	 WBmvi2YixhAtrF7eXQRa6nZ5wm7MZ4PkpPXtWgXKd8QkA0qpFQhyd4Bq5uXQ1htA5HcOx
-	 2ermyvBHNfgsh2BeTBA58IRjKfwpQxUQ01RV8De4t8NQ70ujwdV+iW574e6JjcZqUM8vI
-	 ruPnmt55a8tlUYocJ2IVWNHdUkZmk0oqHzc1r40vAY9ypuVl5XJLs2P7xnoxJX541m0ri
-	 ilLZU9swo1nlzrx0Sne3OOniSnvIchQ2oGsNBtJ4P8yTgcuGxj5RY63ER11UiOMvZMw==
+	t=1795054636;
+	b=j+ou2a6ZXdieTGQQtuj6n2EeTkGB+Y8kQgg+uKgAYrlqFbByujVF8mIwgxsKEO6APfhK
+	 JUQnOffdnmDN+sSzc96mxcAxMeCHXVJ+fJ4ZPZGXvVDH+aEReZ2b3DN+d7/43B795xKD8
+	 yt0QwWIh4X0wNxrCveQt8xVmSXuDqIpPxVBqIHu/2/uioauVuHzc/YxqSsETJGGh2QtE/
+	 GDDGI9buvbbsnz5xzirrYDE+PhUk0auDMy/W8JS/Zhbnm7qbO7Q/kbHpirKeWdGia7SbN
+	 xrgn9g8SLl06o1pEJFMPD0KNqdxLlOKwTF1M8A5WlYx09a6VTgoEnjg9USqFQARVu+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=TJDWI4NzfrNd5+WGQ8n4eZRrGro6RrfG3Ra3ntXx1eg=;
-	b=hKvUfLCkXU4iglyiZLXdltMBkowc1Bq82jdW6cxX8TcNHDHZm21UxIDx72WXotyDngpi
-	 KMMBuZKtk/fy5K3tVkIt3gSgN+CTZDJj7pWduvQrl+0vJcUFw7stJ6u2YQm7B6vUkD/ph
-	 Zmln5ssu+kxBGJrPHpWRHfOXRNsefxQmcoDB8SNxVTcBRoo8aw9Ah5VpyjP+NTRoUuqgT
-	 boCFzgIHR/osWqnqS2pkbdIxv0V6wnGw7HH4xz/Z6o7X41wB9fLzPUnRyiuvCVCQs1maX
-	 JGacxQlUqYvuuLCVfjSAtvZzIzsW2vo11tJ3/i9PcUEbLhDuQs3liqXqai70RcsGfQA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=d1ndkO6nxV/CJyOO5u7Ejf80C3k/QY2yIsZZ3UdUxiU=;
+	b=4UX2MpmlAEuCUYw8gJszDvTdfaB5+wl76Ab8NI8B8YHS29kfn50d5chrj/jBGwrf1SLB
+	 bRNDd1fKoeQ42x9G0uqeJz8Kw9YN17OllDRPtGTYSUCspgTrerZBENSrPVIq//6UskKs7
+	 1lb9s7lu62JCMW173t8j8BtcXUR1lC8Cl2cuatoYWrFRoZzAPd3HK0nEInEJKEcDzc6bs
+	 mjnal1XrjZlu0e5qEgBMdUOQpRy3uurKQ0YgHtNeglTeOlAI9iwadI9QDYPF2qIIfO2lA
+	 aMzS7TJ252TE6CfvLmwJI6edsyNT5rxjFtbBhZfAl3XU27VX4gYC56CW5eG3/GeM1tg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpzxfQuF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Is9qHvEv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F4C606A325;
-	Thu, 19 Nov 2026 02:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB05606A31C;
+	Thu, 19 Nov 2026 02:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vpzxfQuF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B95A1F000C4;
-	Thu, 19 Nov 2026 02:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Is9qHvEv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5210F1F000C4;
+	Thu, 19 Nov 2026 02:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054633;
-	bh=TJDWI4NzfrNd5+WGQ8n4eZRrGro6RrfG3Ra3ntXx1eg=;
+	s=korg; t=1795054635;
+	bh=d1ndkO6nxV/CJyOO5u7Ejf80C3k/QY2yIsZZ3UdUxiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vpzxfQuF+NYzkLbOtr4ZljyYVKiCpIfsL9fsweN6piJx3Re6BRV53PgIlTMdOtfP/
-	 ORoRKropfQ8D/shabuym3O6HSZ9uDcTaOprJPqPLjITdpsDN+Jspl/WHzgAqQ2/CK/
-	 uFG79sYSJTHmQj7akQMtD6X2lcg+LJLFEo3gPa1Y=
+	b=Is9qHvEvhKqOqGH64Xj+nmU5AqCWqINq3eT+MgLXaN/eIbuFZgCX6k1hWeYODiAyr
+	 zGfxOcMqTJtR2x9tbCm7nLA5YXujPmupYRwPlakLE6dVtsTgKFvdriG5Cp7BnYbm73
+	 W7VDPQfTn+u09sm45FAOqDo+bhlvVnnjoo1Ndgyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,12 +44,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot <sashiko-bot@kernel.org>,
 	Ian Rogers <irogers@google.com>,
 	Stephane Eranian <eranian@google.com>,
-	Stefano Sanfilippo <ssanfilippo@chromium.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1345/2214] perf jitdump: Prevent integer underflow in debug info size calculation
-Date: Wed, 18 Nov 2026 15:50:21 +0100
-Message-ID: <20261118150105.265506939@linuxfoundation.org>
+Subject: [PATCH 5.15 1346/2214] perf jitdump: Bounds-check debug entry byte-swap loop
+Date: Wed, 18 Nov 2026 15:50:22 +0100
+Message-ID: <20261118150105.300953862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -65,6 +64,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -73,59 +73,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit dfe8fe96efca3c32979dc0859f88e15b677d25f1 ]
+[ Upstream commit ede3cd8151675c2983cd49104b1e9b25a3712ed8 ]
 
-jit_repipe_debug_info() and jit_repipe_unwinding_info() compute payload
-sizes by subtracting the fixed header size from total_size:
+The byte-swap loop for JIT_CODE_DEBUG_INFO uses array indexing
+(jr->info.entries[n]) to iterate debug entries.  struct debug_entry has
+a flexible array member name[], so each entry has a different size.
+Array indexing computes offsets assuming fixed-size elements, landing
+inside variable-length name strings after the first entry and
+byte-swapping garbage.
 
-  sz = jr->prefix.total_size - sizeof(jr->info);
+Additionally, nr_entry is read from untrusted jitdump input without
+validation against total_size, so a crafted value causes OOB reads.
 
-When total_size is smaller than the header struct (from a truncated or
-corrupted jitdump record), the subtraction underflows to a massive
-value, causing an oversized allocation followed by an OOB memcpy.
+Replace the array indexing with debug_entry_next() pointer arithmetic
+(which correctly accounts for the variable-length name) and
+bounds-check each entry against the record's total_size before
+byte-swapping.
 
-Validate that total_size covers at least the fixed header before the
-subtraction in both functions.
-
-Fixes: 598b7c6919c7 ("perf jit: add source line info support")
-Fixes: 0284fecd13b6 ("perf jit: Add unwinding support")
+Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
 Cc: Stephane Eranian <eranian@google.com>
-Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
 Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/perf/util/jitdump.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 4ba0a87f5facd..e15cf845fa86d 100644
+index e15cf845fa86d..12337ff564ece 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -655,6 +655,10 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 	if (!(jd && jr))
- 		return -1;
- 
-+	/* total_size must cover at least the fixed header */
-+	if (jr->prefix.total_size < sizeof(jr->info))
-+		return -1;
+@@ -323,14 +323,32 @@ jit_get_next_entry(struct jit_buf_desc *jd)
+ 	switch(id) {
+ 	case JIT_CODE_DEBUG_INFO:
+ 		if (jd->needs_bswap) {
++			void *end = (void *)jr + jr->prefix.total_size;
++			struct debug_entry *ent;
+ 			uint64_t n;
 +
- 	sz  = jr->prefix.total_size - sizeof(jr->info);
- 	data = malloc(sz);
- 	if (!data)
-@@ -683,6 +687,10 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 	if (!(jd && jr))
- 		return -1;
- 
-+	/* total_size must cover at least the fixed header */
-+	if (jr->prefix.total_size < sizeof(jr->unwinding))
-+		return -1;
+ 			jr->info.code_addr = bswap_64(jr->info.code_addr);
+ 			jr->info.nr_entry  = bswap_64(jr->info.nr_entry);
+-			for (n = 0 ; n < jr->info.nr_entry; n++) {
+-				jr->info.entries[n].addr    = bswap_64(jr->info.entries[n].addr);
+-				jr->info.entries[n].lineno  = bswap_32(jr->info.entries[n].lineno);
+-				jr->info.entries[n].discrim = bswap_32(jr->info.entries[n].discrim);
 +
- 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
- 	unwinding_data = malloc(unwinding_data_size);
- 	if (!unwinding_data)
++			/*
++			 * debug_entry has a variable-length name[], so array
++			 * indexing would compute wrong offsets — use
++			 * debug_entry_next() and bounds-check each entry.
++			 */
++			ent = &jr->info.entries[0];
++			for (n = 0; n < jr->info.nr_entry; n++) {
++				if ((void *)ent + sizeof(*ent) > end)
++					break;
++				/* name must be NUL-terminated within the record */
++				if (!memchr(ent->name, '\0', (char *)end - ent->name))
++					break;
++				ent->addr    = bswap_64(ent->addr);
++				ent->lineno  = bswap_32(ent->lineno);
++				ent->discrim = bswap_32(ent->discrim);
++				ent = debug_entry_next(ent);
+ 			}
++			/* clamp so downstream consumers don't overrun */
++			jr->info.nr_entry = n;
+ 		}
+ 		break;
+ 	case JIT_CODE_UNWINDING_INFO:
 -- 
 2.53.0
 
