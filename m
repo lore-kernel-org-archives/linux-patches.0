@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047070;
-	b=TPSFJD18LHK7cWeCSQTdvg+87+e/dO16qgdGs4w/QnyJxEqD/nX4/aTIWTXW8Iav0XKX
-	 FKH19A7otDwyYV2tGcchbaSwZVR+u4y/arJzbx6z7FCZ1lazaN245jBtdESZKGlC5UPRQ
-	 A9Xj7yMoIYsgTi/L3QSoFLU+4KX6YYvjsUlcSMC+VczOSMF5mBirHs7V3qt1c+IlrgjP/
-	 aBQ3sqEOd0i24CUzyoXvunosc+nGxWmBKBmyy/x7Mqpr1qUCQkFtc76l/oH6Y8mj+Edx6
-	 nQA8IdT6DCYDdxPUF2ff2kdmkcFwDrbByIlbUhdrZ+w13TYEH7m1XsjL4t6a2jTmaMA==
+	t=1795047073;
+	b=LttrUQfIsJwk+b+w7iSMX1RP21SGSeAmiYPogkcviZKzVIMhEnS+VQzm0tOadDhgxd6l
+	 IZX7jKbMz7HRGBTU5poZgRZLJHk2vloiDmvT1VoK0QT+KVIusSwBX4v3kJRirC9WBXqss
+	 UsDsXNAQhPGg0S1oI9ljZ8gbD7NUM/tViT1kTRJvToN+od2TbqBlAd8xGNe+pk380PtKC
+	 Y9TabWV8rajSMbeDPSnN34+uHiqDQyT3GAcc0Ns9eZoziCLlgX7PNMscZHlRZOchdoRFq
+	 ru/K5Z2lXLyNrWVFTK4PI5SlZIhz2PgETufV0nha7WCciW4KSOUBAx79nXbk51j9moA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047070;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047073;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Kpmia1o7GjxBNqYbFt3V02QAnp75gQ68wHeK1Muc/hU=;
-	b=hwHayjHoMrRrq+h7cYkkPpMqwfNmJCyVQIgOOTRK/8TSJJhaBWcTCQNvPpwBjNgx74Pc
-	 KEL3NQK2L8QLqfS+9sxForBSepjBcXQZNdlg0IoN6bFW3+ulfRCopr/tp5RdO6WXrV/B1
-	 eu+g3IZIaQABXE98PlyxoF+hyVFdnLmNrPyGUAPyM29iJ9Xrla0ZRKfCLp5gecyTPyFGC
-	 H7neoWQLbMje6855f+APSYEotGcEgIVOAsUBQ43hzJjK9braNvL2duSDHzWWWmi4gauf/
-	 WdMrSGbjOmBGP/6SEjlxKcO2JuOzICGJotmgsEqTW+aJNyDsFTxv8x2d6K+pPAKY9yA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=pIg0VIQm8IQo09HKHoQMctATFXiSX7wll9o4jQFr0NA=;
+	b=JJMgsGp8QNT7PWyy9V1ZAQiaA08m3mRjv9P3T9YNPcmoXPnaK1kovwTZah4a65htFfcb
+	 SgpphgbAa97eOGflCSwlywna1wXGHkOGhcxsEZyJMsfZpxBpNnX9MWs3tnXZEl3QLgBRS
+	 6a6f8p4G1yxwO3jfCbU0ZAXxkr17mZwEEQUJncdP3aL/oEkO3ezw2phIJrmSwZCRzDQCM
+	 vIBRA691tuvW2piLIVeu/cp61qCGJtVzE8BfCU6ftrwTG5x0Iw+4eXV+VjJjdrSr0XGq1
+	 Kr1Epjij2ckDRhDnBhImH20E47jxJ3Pp/W6s39K4DIXGmexANDofHX3vwd7V1Pr1Q5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJCZmQRA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yubyKp8j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE797606A31C;
-	Thu, 19 Nov 2026 00:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73494606A31C;
+	Thu, 19 Nov 2026 00:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJCZmQRA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119281F000C4;
-	Thu, 19 Nov 2026 00:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yubyKp8j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED951F000C4;
+	Thu, 19 Nov 2026 00:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047070;
-	bh=Kpmia1o7GjxBNqYbFt3V02QAnp75gQ68wHeK1Muc/hU=;
+	s=korg; t=1795047073;
+	bh=pIg0VIQm8IQo09HKHoQMctATFXiSX7wll9o4jQFr0NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GJCZmQRA+Z3AnCxfZZVVRffIlu9M1aD1na1n5EXEOM9aw2mNBkpFOuvo9FWQkSmjf
-	 fJcq14ALzcPFUFSuzDrTGaQkVJYfbscopSUVUNL9+xVW7Mf7JZPmLthhNcfKk7lutr
-	 k8sRd9snXcPo5hjaxPknHyV3khMEL0N+a7398oQY=
+	b=yubyKp8jPjPAd8mIAO8AN//Lmo+yLrHqKzp1kWgtzMZuYS9cHjw2tph/Np96fQnCv
+	 Dh75ibJSPKZBEiIQ+54pkFcL5NNPzAZEoCsebCp/XiNJJ9iLvVH7k0jXlGCG1y9Hx+
+	 WoYP+bP3XwZLcbg5x3SD6pOIkoZyVcKcu5JH6qc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
-	Juergen Gross <jgross@suse.com>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Vega <vega@nebusec.ai>,
+	Ye Liu <liuye@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1505/2857] xen-blkfront: Fix IO race during unplug
-Date: Wed, 18 Nov 2026 15:42:19 +0100
-Message-ID: <20261118150255.522012432@linuxfoundation.org>
+Subject: [PATCH 6.1 1468/2857] mm/page_table_check: skip zero pages
+Date: Wed, 18 Nov 2026 15:41:42 +0100
+Message-ID: <20261118150254.168525550@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,59 +65,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-[ Upstream commit 61b6d1df1d6234c38a6ea7e4f58e7da035ef6ab4 ]
+[ Upstream commit 33afd07412a1efe5b750a3fd5eb0272ebdd12761 ]
 
-During unplug, blkfront stops the hw queues and marks the disk as dead,
-then later during removal calls del_gendisk(). However, IO issued after
-the hw queues are stopped but before the call to del_gendisk() will be
-queued but never handled. This causes del_gendisk() to hang forever
-waiting for the queue refcount to drop to zero.
+page_table_check_set() accounts pages by whether they are PageAnon().  The
+shared zero page is a special page, not an ordinary file-backed page.
+Read faults on private anonymous mappings can install many read-only PTEs
+that point at the zero page, but page_table_check currently accounts them
+in file_map_count.
 
-This can be reproduced by issuing IO during an artificial delay after
-stopping the hw queues.
+That lets an unprivileged process populate enough zero-page mappings to
+overflow file_map_count and trip the BUG_ON() in page_table_check_set().
 
-Fix this by simply not stopping the hw queues directly. Marking the disk
-as dead already freezes the queue which prevents new requests being
-added and it synchronously runs the hw queues to clear anything pending.
-If the hw queues are stopped when calling blk_mark_disk_dead(), running
-the hw queues is a no-op and can leave queued requests unprocessed.
+Skip zero pages in page_table_check accounting.  They do not need the
+anonymous/file mapping conflict checks that page_table_check performs for
+ordinary pages, and this keeps the existing counter size and page_ext
+layout unchanged.
 
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Acked-by: Roger Pau Monné <roger@xenproject.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261006163411.2583538-1-ross.lagerwall@citrix.com>
+Link: https://lore.kernel.org/1f8848512d2e3ded944f8d595c29faee8fdaeab0.1784645969.git.roxy520tt@gmail.com
+Fixes: df4e817b7108 ("mm: page table check")
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Cc: Ye Liu <liuye@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+[ sashal: Replaced unavailable is_huge_zero_pfn() with is_huge_zero_page(compound_head(pfn_to_page(pfn))). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkfront.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/page_table_check.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index 7ad03bcd9f274..207a2ec844849 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -2131,10 +2131,8 @@ static void blkfront_closing(struct blkfront_info *info)
+diff --git a/mm/page_table_check.c b/mm/page_table_check.c
+index 451114bdc3401..631470b230358 100644
+--- a/mm/page_table_check.c
++++ b/mm/page_table_check.c
+@@ -64,7 +64,8 @@ static void page_table_check_clear(struct mm_struct *mm, unsigned long addr,
+ 	unsigned long i;
+ 	bool anon;
+ 
+-	if (!pfn_valid(pfn))
++	if (!pfn_valid(pfn) || is_zero_pfn(pfn) ||
++	    is_huge_zero_page(compound_head(pfn_to_page(pfn))))
  		return;
  
- 	/* No more blkif_request(). */
--	if (info->rq && info->gd) {
--		blk_mq_stop_hw_queues(info->rq);
-+	if (info->gd)
- 		blk_mark_disk_dead(info->gd);
--	}
+ 	page = pfn_to_page(pfn);
+@@ -105,7 +106,8 @@ static void page_table_check_set(struct mm_struct *mm, unsigned long addr,
+ 	unsigned long i;
+ 	bool anon;
  
- 	for_each_rinfo(info, rinfo, i) {
- 		/* No more gnttab callback work. */
+-	if (!pfn_valid(pfn))
++	if (!pfn_valid(pfn) || is_zero_pfn(pfn) ||
++	    is_huge_zero_page(compound_head(pfn_to_page(pfn))))
+ 		return;
+ 
+ 	page = pfn_to_page(pfn);
 -- 
 2.53.0
 
