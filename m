@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030284;
-	b=KGyCuRlq9Xc3IdNyAldnA/Vsp2NeBS69uUFt5JhgcvriqQ9RO3I0/JMh59LO+tqiet9Y
-	 szMGxXdRWjhFJGYuiLAD8XkgXFbff8MrLoUSP/WO9yjbXR9ZQew+UYaaZoTpVI0KKZjLG
-	 wYV71a0jmnEKUNPVsXR9alqoqd7y2EWmjpjUdc4XP8lLhirA4yzB06zUYHXPlq6FvGq2J
-	 0kn6a4RwTaivn+l7LQlXlybVgp0caWy9cqJofsu/mKHfWDRZjAPLrtTXkhhXoSkPeWkq8
-	 9Hsv/La/I+Q7xECY/JzJsg0xnqAhUPi3cPfwmk6wZjJwHaj1CFfvMQGbokj71x/JXxg==
+	t=1795030287;
+	b=qzjbyNvB8uXoSs8RShLhqdsROqNjzs7DEZ3VUX3Hmi9XyKjA+m0Byn7JgLRtu3zweLGy
+	 qH0aMTH12/Eori3ZdvvZxQEDxmEW2GnQXPoDy5BGdVvEsCY9PUvSfoq/L/o23uErXtFLx
+	 TXuZoiuHmekWtSVo7slldCfDvcO0kaX+qXGOLmVK83b8K8I5hxMv5mZTXjbEDauP9rKfZ
+	 ZglsH7jBV6guo2esgdDrfZ9VZr2H3451zC8u5YMV1qowm+FGFcQFEItFg2lD4HUDzu3fB
+	 5PrvRxLzHQODF5JOI5XpQpK36bHoenXlIyzqo8vVmbOkNKwLzxjM4zTSUrgJuwFP7/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o82GvH6JJd3S/vuFlXXmwuoNjsil04nOvWP0ZBW8qks=;
-	b=NXf4KW/+CFyGwdvRycTHIHjYWGr31JAMZ3JK7onpSaLqx5SjbgYNWkrLzcRjL/9p95XE
-	 toGIl8810P4LUcy19sX0Tb1zfhyhZlwDvZKI2yc6jTplMO5XWYfn6jvuiNQI1LiEkG/7I
-	 pFxWHc8D+M+/Gr17WZq0qEqtV9FydkKsXDpbKADdObWDUKwWEzRtitgnwwmqSipLVburM
-	 F3Od/CJOp9WoqbyfMNkwRKeIoRe8wPuqWcWxwuzfs4WmUDubN0z23Lckyf2Mn2BXmoJPA
-	 TzslLeH6YjAMz22tbDBJVjrfI/ep4TtjWIR14Nt7HdNSmx4YMAw6BYCVE7Ge0bdZSzw==
+	bh=kNd8qoE3PufsPravOCLa4F8JuEmEb0hhm/MxCqqLqno=;
+	b=X6kFK7mVp2WEX/20OhjEXgLfrR37n/o+CJ9y3q/sh8uOjqS1JfQDwMIfZ56JjC7q5EV4
+	 LwnrpriKN+jZdCVuQULzKcIFrkVSYZCJ4j3gPpe4wdqxMBmU3/tGHW8CLBQxV5pSaKK7Q
+	 JB0c1P7dQd4ZuYyumppBLDtiAlWu7XNz0+cE77KMqZM3AhvuUByhTTfknbQy7AIfXlI9T
+	 /DYQJaiMU70WZgFWKxjL08MJtk+iEpBD5TycbUDPA2NiEO8wF1ZMlFTbYxIA2U6RdPG7d
+	 nUVl7e0DcHoQafyDVaQEARRWVBEnF7o4wiXVNuk31gwrUvmvEdKQ5cu9LKIj6Kxti6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZ6+1+6V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lePkvVIQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E354606A7D9;
-	Wed, 18 Nov 2026 19:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F3B606A909;
+	Wed, 18 Nov 2026 19:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GZ6+1+6V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F771F000C4;
-	Wed, 18 Nov 2026 19:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lePkvVIQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564BA1F000C4;
+	Wed, 18 Nov 2026 19:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030284;
-	bh=o82GvH6JJd3S/vuFlXXmwuoNjsil04nOvWP0ZBW8qks=;
+	s=korg; t=1795030286;
+	bh=kNd8qoE3PufsPravOCLa4F8JuEmEb0hhm/MxCqqLqno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GZ6+1+6VspcdS1SKzejxAEITWk59FJ3AanTVM66L+bMlrc6VcIGwvaoyqttsNNj56
-	 5j2lVKaLPcaglSIpFnXhop8DxiDGELlQj9a5KW2Iv4YcFGAlCMl8Bpg93tq1+ME9Tr
-	 l6JxV+wVlT+nyELuK+vfKCQOFyHYqJEJnBIbh2rs=
+	b=lePkvVIQJA9iDF4rBQrLxIYbKKY5+d+u+6H0ZJ5tmSWZzlAGJG9077pfELgSC49i0
+	 nCw1bavsrxuWCa4Vy5EpINr4uIX7Aom+TKOx/zKAdKsVc0urLA462rwI7p1WMp/MQF
+	 jvZZTNtEAP1AoSnyN8Mt5PPzWi8ynrX4FtSeIEPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Chun-Hung Wu <chun-hung.wu@mediatek.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Orgad Shaneh <orgads@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0609/1756] scsi: ufs: core: Serialize AHIT register access between sysfs and host driver
-Date: Wed, 18 Nov 2026 15:45:36 +0100
-Message-ID: <20261118150033.201167822@linuxfoundation.org>
+Subject: [PATCH 6.12 0610/1756] MIPS: Octeon: size the swiotlb for a modular OHCI platform driver
+Date: Wed, 18 Nov 2026 15:45:37 +0100
+Message-ID: <20261118150033.235218370@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,122 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Orgad Shaneh <orgads@gmail.com>
 
-[ Upstream commit 7dec5cedf7b248036da606c16f9f3f9aa350b417 ]
+[ Upstream commit f1dd1f0c8d595a019be503d40060d25721313b4a ]
 
-A race exists between ufshcd_auto_hibern8_update() and
-ufs_mtk_pwr_change_notify() when both paths concurrently access
-REG_AUTO_HIBERNATE_IDLE_TIMER. Additionally, the static local variable used
-to save/restore AHIT in the power change path is not re-entrant and may
-hold a stale value if a sysfs write races with a gear change.
+plat_swiotlb_setup() raises the swiotlb to 64 MB on OCTEON II with
+memory above 4 GB, because that OHCI can only DMA to 32 bits. The test
+is "#ifdef CONFIG_USB_OHCI_HCD_PLATFORM", which is false when the driver
+is a module - the usual way to build it - so the bump is silently
+skipped.
 
-Introduce ahit_mutex and ahit_disable_depth in struct ufs_hba to
-serialize AHIT register access. The depth counter tracks how many
-host-driver paths have forced AHIT off; sysfs writes are suppressed
-while it is non-zero and the register is restored from hba->ahit
-only when the last disabler drops it to zero.
+What is left depends on the rest of the function: with PCI enabled the
+"memory past the BAR1 hole" branch happens to ask for the same 64 MB,
+but with CONFIG_PCI off - which is normal on these SoCs when no PCI
+devices are wired - swiotlbsize stays at the PAGE_SIZE it was
+initialised to. A full- or low-speed device on an OCTEON II board with
+more than 4 GB of RAM then has no bounce buffer to speak of.
 
-Fixes: f5ca8d0c7a63 ("scsi: ufs: host: mediatek: Disable auto-hibern8 during power mode changes")
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Chun-Hung Wu <chun-hung.wu@mediatek.com>
-Link: https://patch.msgid.link/20260914085148.136429-3-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Use IS_ENABLED() so a modular OHCI gets the same sizing as a built-in
+one. Seen on a CN6635 board with 8 GB of RAM and
+CONFIG_USB_OHCI_HCD_PLATFORM=m.
+
+Fixes: a8667d706dfa ("MIPS: OCTEON: dma-octeon: fix OHCI USB config check")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c       | 14 +++++++++++++-
- drivers/ufs/host/ufs-mediatek.c | 16 ++++++++++++----
- include/ufs/ufshcd.h            |  8 ++++++++
- 3 files changed, 33 insertions(+), 5 deletions(-)
+ arch/mips/cavium-octeon/dma-octeon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 798ad0338cd97..9dd1607c49d07 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4544,7 +4544,17 @@ void ufshcd_auto_hibern8_update(struct ufs_hba *hba, u32 ahit)
- 	if (!pm_runtime_suspended(&hba->ufs_device_wlun->sdev_gendev)) {
- 		ufshcd_rpm_get_sync(hba);
- 		ufshcd_hold(hba);
--		ufshcd_configure_auto_hibern8(hba);
-+		/*
-+		 * Serialize with the host driver's AHIT control. Skip the
-+		 * register write while the driver has AHIT forced off; the
-+		 * driver programs hba->ahit back when it re-enables it.
-+		 * Mutex is taken here (not across the rpm calls above) so it
-+		 * never blocks a resume that the driver's path may need.
-+		 */
-+		mutex_lock(&hba->ahit_mutex);
-+		if (!hba->ahit_disable_depth)
-+			ufshcd_configure_auto_hibern8(hba);
-+		mutex_unlock(&hba->ahit_mutex);
- 		ufshcd_release(hba);
- 		ufshcd_rpm_put_sync(hba);
+diff --git a/arch/mips/cavium-octeon/dma-octeon.c b/arch/mips/cavium-octeon/dma-octeon.c
+index 9fbba6a8fa4c5..c049632fbcc33 100644
+--- a/arch/mips/cavium-octeon/dma-octeon.c
++++ b/arch/mips/cavium-octeon/dma-octeon.c
+@@ -228,7 +228,7 @@ void __init plat_swiotlb_setup(void)
+ 		swiotlbsize = 64 * (1<<20);
  	}
-@@ -10668,6 +10678,8 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 
- 	mutex_init(&hba->wb_mutex);
- 
-+	mutex_init(&hba->ahit_mutex);
-+
- 	init_rwsem(&hba->clk_scaling_lock);
- 
- 	ufshcd_init_clk_gating(hba);
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index e4156238f51d9..ffce98cca2d81 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1266,20 +1266,28 @@ static int ufs_mtk_pwr_change_notify(struct ufs_hba *hba,
- 				     struct ufs_pa_layer_attr *dev_req_params)
- {
- 	int ret = 0;
--	static u32 reg;
- 
- 	switch (stage) {
- 	case PRE_CHANGE:
- 		if (ufshcd_is_auto_hibern8_supported(hba)) {
--			reg = ufshcd_readl(hba, REG_AUTO_HIBERNATE_IDLE_TIMER);
-+			/* Block sysfs AHIT writes while we force AHIT off */
-+			mutex_lock(&hba->ahit_mutex);
-+			hba->ahit_disable_depth++;
-+			mutex_unlock(&hba->ahit_mutex);
- 			ufs_mtk_auto_hibern8_disable(hba);
- 		}
- 		ret = ufs_mtk_pre_pwr_change(hba, dev_max_params,
- 					     dev_req_params);
- 		break;
- 	case POST_CHANGE:
--		if (ufshcd_is_auto_hibern8_supported(hba))
--			ufshcd_writel(hba, reg, REG_AUTO_HIBERNATE_IDLE_TIMER);
-+		if (ufshcd_is_auto_hibern8_supported(hba)) {
-+			mutex_lock(&hba->ahit_mutex);
-+			/* re-enable only when the last disabler drops off */
-+			if (!--hba->ahit_disable_depth)
-+				ufshcd_writel(hba, hba->ahit,
-+					      REG_AUTO_HIBERNATE_IDLE_TIMER);
-+			mutex_unlock(&hba->ahit_mutex);
-+		}
- 		break;
- 	default:
- 		ret = -EINVAL;
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 70dcc13d136d6..cca831cc800f3 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1001,6 +1001,14 @@ struct ufs_hba {
- 
- 	/* Auto-Hibernate Idle Timer register value */
- 	u32 ahit;
-+	/* Serializes AHIT register access between sysfs and the host driver */
-+	struct mutex ahit_mutex;
-+	/*
-+	 * Nesting count of host-driver paths that have AHIT forced off.
-+	 * Non-zero blocks sysfs AHIT writes; AHIT is reprogrammed only when
-+	 * the last disabler drops it back to zero. Guarded by ahit_mutex.
-+	 */
-+	int ahit_disable_depth;
- 
- 	struct ufshcd_lrb *lrb;
- 
+ #endif
+-#ifdef CONFIG_USB_OHCI_HCD_PLATFORM
++#if IS_ENABLED(CONFIG_USB_OHCI_HCD_PLATFORM)
+ 	/* OCTEON II ohci is only 32-bit. */
+ 	if (OCTEON_IS_OCTEON2() && max_addr >= 0x100000000ul)
+ 		swiotlbsize = 64 * (1<<20);
 -- 
 2.53.0
 
