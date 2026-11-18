@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039773;
-	b=F8oSe2D+/ywKSLZuEQtK/jp/sJoTkV2EeF6DaEzZGhmwcqiBiH453m0CxbHIngY4AgOx
-	 j1kJtiNtNvjG+ANrKR8osYdKHuajMU0Z7MuMMUCeY4fdmhJLdBaldSQL8iJh/OO0u+30z
-	 DBJyzoVb5sYsDeJy2t6DT5Sprg/Y6IBn9/b/HI/iLPjZXUlPn2efcTQIfb/NnmNFkOEjI
-	 myXNzjxtmE3Fsy6daRBGPrAZSD2CW7r7YmsYjLaQ6l7rkbt8wpwKkgOrSJ8AMpDEmzGJ6
-	 vJI218WLvAb09ZeilfMvLkvwEXSY8/IDfaTwZnD036vdrvLR0TWIbOseYNDD4N9KNew==
+	t=1795039776;
+	b=knybMS/WozExypdPGdMdMXsSV1Sj5eHjoZtkfgaWt/S1GfLPotKcbLbN0S9XlwdDKnLf
+	 9us8F7/XvKkvUCzhAroaElMOyDWAGObmSPqvTwRwylCwAANpHEqlGePfk6j6Hk/mKTIXI
+	 Ne7KzQjGbIq/K+8ZVFGw2P37UaV5/fRHygoo8I0enxa3L6LjjRCMbtOCQsgBtKrmvpqIE
+	 2ffFbZGE4k+crgDkmLgbMCXuPXcdRTIaC0COkMaAeXTiLaEUMo6OVQ6yN3cOZdnYjbvYZ
+	 A7c2Rbk+Z6zE+GFcUtkc+b98QFZnxA5pi183aGm2KBgd/SYMD1kMsGG48CD+uQ8YY0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039776;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kqyJcVTlOhUVnAP6/anwoOgy1WwGNkhEgkugU+//rqA=;
-	b=UhSOKdHcy0br0gvMHCsK7DeX1uITh0BC7BEjFcnGkPTQi4IWnISbP7S0Gro3FgSiNOEJ
-	 GZfSfJDSiUDoutdml5fxfnCk1cOvhDA3YMP3do5tprUa/8FjMPfZQZzB9SyAeJwFbgQEF
-	 x7qQasuwXT32AMlV3tfcUFyju8C1Ab5zKZ9cmUs1oX3ytc/dEjonJcVjy5ouO6Fyj61MP
-	 gsNLRIi2qMqzNyU48c01h7i4cLaEaeJ8ua9jrGuYMT+elGiOxKbcSHi3KQ1ugzXcqfYeG
-	 PZG/BWUUXN0jADH5lhB/fW+gXtGiu51deO6+ypr7PWSffyglKzFL8/aCGEQ42Clh3mA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=om6SkVk0g0DhtsM67IM4JSQoL9hIrIQkcjQdMGuOeV4=;
+	b=wsveqDtUZh0FFnZg0fqlUkw5qsYYlSLvh6PZ4+9O/qYQ2BVA9+8dso9io36i6IuNXMkQ
+	 qYrAVNhlJvIkKUMi6LSXsBPXRNs8uyqTGV/1yqqX+XxM88BYDDxV3jcr91tQD9rSKVSfa
+	 srm6H3iS1c+etjbAxmKtpFLAnk0dY62Dy6PJ/hW6QLLaiVLAL++5DViTj/GgTVEu0EUvm
+	 DuPJE78hUmXpY/7niq7S1Px6tvQQCtbd++ifF0xm5NUeL+cYdfHAxWbepGaxITPAIqnWt
+	 TiXMbvIbkeGZN5i5eAOnJqxSh85fvWDfTtfZ0QyDNXZwQ448ohIxfYJtnyJkGa6dZAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiPuwmlS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvrlPy8V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C4D606A325;
-	Wed, 18 Nov 2026 22:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C29606A31C;
+	Wed, 18 Nov 2026 22:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OiPuwmlS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F481F000C4;
-	Wed, 18 Nov 2026 22:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvrlPy8V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620A91F000C4;
+	Wed, 18 Nov 2026 22:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039773;
-	bh=kqyJcVTlOhUVnAP6/anwoOgy1WwGNkhEgkugU+//rqA=;
+	s=korg; t=1795039775;
+	bh=om6SkVk0g0DhtsM67IM4JSQoL9hIrIQkcjQdMGuOeV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OiPuwmlSM1dYnJZQNFjwWvVMA+Tv5WJJGSRE3hQtrJJrrpE4+cR6N8IBq1Z+WrPkb
-	 0XXMVyCVJxwo+1F9qUVQrRnfCilukjuJ8G69RT2pvuTKz2QQComWAlLw8lyvHp+TDw
-	 ZrD0HWEdO2XAcRvZSUbxllsLOOantoxREXTxlWMg=
+	b=PvrlPy8VNbdoE4dDQT3PS5je8Ui8JR8uI5VRJO3zLAU+WXlGJm69EE0rdF+cc0PFp
+	 eU+3et91tKZi2gzt3mzW8eQa1h4okJBBu1uGZi8oQCGvbsY5DmYY6NpjPLZbKpgNEv
+	 tB81nfegOMxtir7WZC0MfXsXiILrCE91W4AjPW3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2219/3318] phy: cadence: Sierra: Do not modify register when getting parent clock
-Date: Wed, 18 Nov 2026 15:47:21 +0100
-Message-ID: <20261118150428.465156246@linuxfoundation.org>
+Subject: [PATCH 6.6 2220/3318] memory: emif: Convert to platform remove callback returning void
+Date: Wed, 18 Nov 2026 15:47:22 +0100
+Message-ID: <20261118150428.494200477@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,66 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregory CLEMENT <gregory.clement@bootlin.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 955e68eb3067842067b7b5395a3f8c278428802a ]
+[ Upstream commit c8a53461990cb697ca494d6671fab9e196d20ce4 ]
 
-The get_parent() callback for the PLL_CMNLC1 clock was incorrectly
-writing to the register while determining the parent clock index. This
-unintended register access forces the PHY back into training mode. If
-the PHY is already configured, this unexpected change prevents it from
-exiting training mode.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Remove the register write operation to ensure the PHY remains stable
-during the get_parent() callback.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Fixes: da08aab940092 ("phy: cadence: Sierra: Fix to get correct parent for mux clocks")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260306-fix_sierra_get_parent-v2-1-cafe89ee5382@bootlin.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/da2fa8d040d542edc1318aeae5117317bb22aa06.1702822744.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 314ef67d6732 ("memory: emif: fix device_node reference leak on np_ddr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/cadence/phy-cadence-sierra.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/memory/emif.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/cadence/phy-cadence-sierra.c b/drivers/phy/cadence/phy-cadence-sierra.c
-index d4eb93ce82323..c0e8ed769e6ad 100644
---- a/drivers/phy/cadence/phy-cadence-sierra.c
-+++ b/drivers/phy/cadence/phy-cadence-sierra.c
-@@ -694,23 +694,16 @@ static const struct phy_ops noop_ops = {
- static u8 cdns_sierra_pll_mux_get_parent(struct clk_hw *hw)
- {
- 	struct cdns_sierra_pll_mux *mux = to_cdns_sierra_pll_mux(hw);
--	struct regmap_field *plllc1en_field = mux->plllc1en_field;
--	struct regmap_field *termen_field = mux->termen_field;
- 	struct regmap_field *field = mux->pfdclk_sel_preg;
- 	unsigned int val;
- 	int index;
- 
- 	regmap_field_read(field, &val);
- 
--	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1])) {
-+	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1]))
- 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC1], 0, val);
--		if (index == 1) {
--			regmap_field_write(plllc1en_field, 1);
--			regmap_field_write(termen_field, 1);
--		}
--	} else {
-+	else
- 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC], 0, val);
--	}
- 
- 	return index;
+diff --git a/drivers/memory/emif.c b/drivers/memory/emif.c
+index f305643209f03..434982545be63 100644
+--- a/drivers/memory/emif.c
++++ b/drivers/memory/emif.c
+@@ -1159,13 +1159,11 @@ static int __init_or_module emif_probe(struct platform_device *pdev)
+ 	return -ENODEV;
  }
+ 
+-static int __exit emif_remove(struct platform_device *pdev)
++static void __exit emif_remove(struct platform_device *pdev)
+ {
+ 	struct emif_data *emif = platform_get_drvdata(pdev);
+ 
+ 	emif_debugfs_exit(emif);
+-
+-	return 0;
+ }
+ 
+ static void emif_shutdown(struct platform_device *pdev)
+@@ -1185,7 +1183,7 @@ MODULE_DEVICE_TABLE(of, emif_of_match);
+ #endif
+ 
+ static struct platform_driver emif_driver = {
+-	.remove		= __exit_p(emif_remove),
++	.remove_new	= __exit_p(emif_remove),
+ 	.shutdown	= emif_shutdown,
+ 	.driver = {
+ 		.name = "emif",
 -- 
 2.53.0
 
