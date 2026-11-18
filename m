@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045199;
-	b=UKm7wYMLaFgwyLPf9FxBuhKlkjuJIGcwYyKQl4BxOQNZd3+U/5EQkPhO7t1UpILJPmGa
-	 FEPRNXl4zhwcUYdbXl3fLew19dl/q2N+HISoY/91lOWG1EgzBmf5VE7AGqcuJJG5jOlpl
-	 ZTcqNjMOn5sIaHZuvAUyaE0V1udWsyf+ax5ztA+xXKt8xd/fUdueoyU5UeSTAXTB6E9JE
-	 Ef7g5441rdyfXNZjzczLoOzj8DTSV21uK/1UlmI4RdHEoi2rp201w10zxM+w8j7uFv5fr
-	 fUHMjOr13rtTo1ix1pPZdfEB1toc2NqGPHLUgtZmHnVjwL656oOHvBuY0XFAylWnrxg==
+	t=1795045202;
+	b=oTg0K0BE4KaYCOy0pAjPxd6ilHikmStPNNEoH7ljwwE2eipob+f+90gcdhlHu0vy5iC2
+	 DunazPz7w3so1zUXbr//r5NjgBW6xEW8TvLkyo6s1ygjTMi9zvLIMDGzvSgtUGdb/yI2p
+	 4i5SAHYdkTuwDHUH11yPBpCB/OAd8aCPIdK5UTqH4ekoZE+lZCteNleiDzim76GBRBCSz
+	 7NzTGF1NLgjjkpSMNzI4ForHlj52tlfyWtRqt3AnBQwIFIvyHhECPAbBVnXT7sualUoKW
+	 +v+h8v9WL0hhjQZlFnp6k1TdleewY3t431BBxmgaa9HQPRdpJRdb1x1GGQI6rTKP33g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UwekoCrJ+NLbKVOx2QmX/HkktaL6TqhmGkAESTmg6Tc=;
-	b=c45GgclLs4zo7q/O+OXMAIgFOmF0yylXOFQhpBvOhdQxzeagvJOi2thhL/rgH2ldISWR
-	 prWhnYzt5ggg+XCUX06Gkq3CdCxCchocfYgwBIshJ9EIL74KhOlghah7ciCN1XAvtSKd+
-	 eZnfC+uXnxqcFfms9wFyd7EkLejWzM1nkVkPiQeWurfT9iWsCLduqrdT0WB1VuLmnFzYo
-	 qMtCCEYNaX2dJdlWE3BsR+7HISqf72Rg+3fGIxrPXhfsAo9L9j4iUoacBFnZSk7ZLTuNd
-	 8ApZo2NmKRccNB9xp6d4zcQ7Q4f0wrU9nMNkTYM6hFoc1kB7LnROxcXXS4nhFybmS5Q==
+	bh=2WApkyQPk891DI2cEAcPPQ3+q7f5lVUnKDRXmmhy+Lo=;
+	b=cjbzSFmlpURTC01MnD/XiuPoSDl7xPcLmYGccv1b4Tlge3YyrL4KGGkluYotfSo+aQ/R
+	 rEpn1k7a1lHaCzFabldWdJKa/ykuomX0C2l7X5CEZd57vkEGBu+qyCcb4K+mA4aiKIvVz
+	 nyTXhnLIqc5oX7b2S8F7bJhb6ymblWN/4m3gQ1Uo6eKgWexc+Z4D3++bA5ZCGeFWThcwr
+	 qepaIhSG4w+9uBXwIK/DDqhbFk20qOSqRkuh5loHlzNM+/6BgiwripR9IQUTLyjgWMN8/
+	 JelGlkMcxia+CwCcURRvDjjvSssaWCOHZDZTLfMjxSvlNl7JSBX+JUddozUHadzEscw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qD4Nashv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wiR25RA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69872606A325;
-	Wed, 18 Nov 2026 23:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3677A606A320;
+	Wed, 18 Nov 2026 23:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qD4Nashv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78481F000C4;
-	Wed, 18 Nov 2026 23:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wiR25RA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A77F1F000C5;
+	Wed, 18 Nov 2026 23:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045199;
-	bh=UwekoCrJ+NLbKVOx2QmX/HkktaL6TqhmGkAESTmg6Tc=;
+	s=korg; t=1795045202;
+	bh=2WApkyQPk891DI2cEAcPPQ3+q7f5lVUnKDRXmmhy+Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qD4Nashvjyj1k+K/DGvOLKmKLY8doFM8VtPoBhRT4baFXwZ0qb/39u5AoGyOgG0sE
-	 +g54k0aRTgztQ9fgpA+WI11Jd5W1R7deScDGYMSktqcJmMsMKKJgDlvRT9ZRX9rQXf
-	 wSVh27RCcJkYEd5KjMNVvlLJgp6q/OGsHqvhW5EI=
+	b=0wiR25RAkSrCTxCxYI4QBTDz2U6Cf0TCPtgKX3l7KYxAzOheQIdWifkBNuX3NLEBF
+	 e588tmdUCOvdrt1Z0FOt/HdQEAm9E4wDtOOcNpF8CzEOD7btXeJ2sNv7MZ3Uf0eqQo
+	 /yzDXTjMTIqCsAMrAAAWUNHg7hoCVci+TXWKCRoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Shehryar Ahmad <shehryar.amd@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0835/2857] fs/ntfs3: fix integer overflow in find_log_rec() causing OOB read
-Date: Wed, 18 Nov 2026 15:31:09 +0100
-Message-ID: <20261118150231.636013341@linuxfoundation.org>
+Subject: [PATCH 6.1 0788/2857] iio: accel: adis16201: fix channel order for buffer mode
+Date: Wed, 18 Nov 2026 15:30:22 +0100
+Message-ID: <20261118150229.939103861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,111 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Shehryar Ahmad <shehryar.amd@gmail.com>
 
-[ Upstream commit e2fcb0040b0b4097b2e97f3fbe77d3b66df9e816 ]
+[ Upstream commit a4b9f1137b76faab6891ce0bd3f5c02dda7c392d ]
 
-find_log_rec() validates the on-disk LFS_RECORD_HDR.client_data_len
-field (`len`, a raw u32 read straight from a mounted $LogFile page)
-against the log's total available space:
+Reshuffle adis16201_channels to ascending scan_index order to avoid data
+corruption during IIO core demultiplexing since the ADIS driver builds
+the buffer in channel array order, while the IIO core demultiplexes it
+in scan_index order.
 
-    len = le32_to_cpu(rh->client_data_len);
-    rec_len = len + log->record_header_len;
-    if (rec_len >= log->total_avail)
-            return -EINVAL;
+This changes the raw buffer byte layout for existing adis16201 users
+reading buffered data directly.
 
-The addition is unchecked. For len in [0xffffffd0, 0xffffffff] (i.e.
-log->record_header_len away from UINT_MAX), `rec_len` wraps to a small
-u32 value that trivially clears the `rec_len >= log->total_avail`
-guard, so a record whose declared length is actually ~4 GiB is
-reported as valid and in-page.
-
-Because find_log_rec() wrongly accepts the record, its caller
-read_log_rec_lcb() hands it back to log_replay() as good. On the
-transaction-table replay leg, log_replay() re-derives the record
-length directly from the same raw, still-unclamped client_data_len
-field and uses it to size the restart-table blob:
-
-    rec_len = le32_to_cpu(frh->client_data_len);   /* ~0xffffffff */
-    ...
-    t16 = le16_to_cpu(lrh->redo_off);
-    rt  = Add2Ptr(lrh, t16);
-    t32 = rec_len - t16;                            /* still ~4 GiB */
-    if (!check_rstbl(rt, t32))
-            return -EINVAL;
-
-check_rstbl()'s own `bytes < ts` bounds guard is defeated because the
-caller-supplied `bytes` (t32) is itself the poisoned ~4 GiB value, so
-the guard can never trigger. The subsequent entry-validation loop then
-walks `rt->used` (also attacker-controlled) entries of
-sizeof(struct RESTART_TABLE) == 0x18 bytes each straight past the end
-of the kmalloc(log->page_size) log-page buffer allocated in
-read_log_page(), producing an out-of-bounds read that is reachable
-simply by mounting a crafted $LogFile (no genuine dirty-page /
-crash-recovery state is required). Confirmed via KASAN as a
-slab-out-of-bounds read in check_rstbl(), called from log_replay() ->
-ntfs_loadlog_and_replay() -> ntfs_fill_super() -> mount(2).
-
-Fix the root cause instead of hardening every downstream consumer of
-the poisoned length: make the addition in find_log_rec() overflow-safe
-with check_add_overflow(), mirroring the pattern fs/ntfs3/run.c
-already uses to validate other attacker-controlled on-disk
-length/offset arithmetic decoded from MAPPING_PAIRS runs, e.g.:
-
-    if (check_add_overflow(vcn64, len, &next_vcn))
-            return -EINVAL;
-    ...
-    if (check_add_overflow(lcn, len, &lcn_end))
-            return -EINVAL;
-
-(fs/ntfs3/run.c, run_unpack()).
-
-With the overflow rejected instead of silently wrapped, `rec_len` is
-only ever a true, non-wrapped sum, so the existing
-`rec_len >= log->total_avail` check now correctly rejects any
-oversized record up front. log_replay()'s transaction-table leg then
-never gets a chance to re-read the poisoned client_data_len, and
-check_rstbl() is never invoked with an attacker-inflated `bytes` for
-this path.
-
-Verified on a v6.19 KASAN build: mounting a crafted $LogFile whose
-client_data_len overflows trips a KASAN slab-out-of-bounds-read
-report in check_rstbl() before this fix; with check_add_overflow()
-applied, the same image is cleanly rejected during log replay and no
-KASAN report fires.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Fixes: 591298e54cea ("Staging: iio: accel: adis16201: Move adis16201 driver out of staging")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Shehryar Ahmad <shehryar.amd@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/accel/adis16201.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index df80905fe9805..33a522d18eb90 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -7,6 +7,7 @@
+diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
+index f063226a42f37..a41c861ff8c02 100644
+--- a/drivers/iio/accel/adis16201.c
++++ b/drivers/iio/accel/adis16201.c
+@@ -202,19 +202,19 @@ static int adis16201_write_raw(struct iio_dev *indio_dev,
+ }
  
- #include <linux/blkdev.h>
- #include <linux/fs.h>
-+#include <linux/overflow.h>
- #include <linux/random.h>
- #include <linux/slab.h>
+ static const struct iio_chan_spec adis16201_channels[] = {
+-	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
+-			 12),
+-	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
+ 	ADIS_ACCEL_CHAN(X, ADIS16201_XACCL_OUT_REG, ADIS16201_SCAN_ACC_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+ 	ADIS_ACCEL_CHAN(Y, ADIS16201_YACCL_OUT_REG, ADIS16201_SCAN_ACC_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
+-	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
+ 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+ 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
+ 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
+-	IIO_CHAN_SOFT_TIMESTAMP(7)
++	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
++			 12),
++	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
++	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
++	IIO_CHAN_SOFT_TIMESTAMP(7),
+ };
  
-@@ -2459,7 +2460,8 @@ static int find_log_rec(struct ntfs_log *log, u64 lsn, struct lcb *lcb)
- 	 * Check that the length field isn't greater than the total
- 	 * available space the log file.
- 	 */
--	rec_len = len + log->record_header_len;
-+	if (check_add_overflow(len, log->record_header_len, &rec_len))
-+		return -EINVAL;
- 	if (rec_len >= log->total_avail)
- 		return -EINVAL;
- 
+ static const struct iio_info adis16201_info = {
 -- 
 2.53.0
 
