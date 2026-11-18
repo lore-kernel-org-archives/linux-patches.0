@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040680;
-	b=JaNX8hU4M64rX9ZZ0aA07gy+uYK5WHzB9wxvvgPx8jhZdNo6fRCih7clnBnscgGUCyZc
-	 ObZGhMRL3r6Ve9S83uWciWPU3lsK9QhhaM1ZKIBm7DGYiRO0d8bOdy4WRi30k1HkimSl4
-	 vYSkaydUG/cDUHNU/BZut1DhChHuqYQJwx64Wh5ug08rvPwSnBdnA8kjNYiGMyi89tqD2
-	 4JGKmiIhoALRentf3IQqkIfzYm4zdhQKf0lF+T1626d8Q2v32s5NJKdZITktqMWkjraaj
-	 N5/W8PEneuy72GE7374LTuYTyMWGXrkktHuiAC5NXViZXhsKxg0r2MXIXoKTBm1/O5Q==
+	t=1795040683;
+	b=WbkDXquuCnre5hZoZ6Mlu3x42hRcWRgQL/wvJKzPwcVfMrCl2Ljh0/iC1MtWxhMqU3ew
+	 i0LMJyXK2cjGJCcw4Qiz/rkmjUht6l8ac57oUyPBVLzA5RF8OeSDesiBWcJbXc6XzkI9c
+	 n+wLNIpFyBXEQUCyb3Bq7qDHWTgI33SXg+F5GLqnSkv5/3nEPwNbMCgh5wuARDvnWycIo
+	 BxXxLja5wcLqaqJ/5U9ML8OrhWRGmvqowR8fBrsa1l45K2MF4JKaRw8B3n/637zbvb9Ja
+	 EqXFQKW8JnsdCDZ1lMch28KDhFxolvgz987if+C/RLnwF5UwPFgGA02/MpnVI4BJe8w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2w7AITDMdQo6R5i/xYhef/y3xQ/HWvByBwivskJVET0=;
-	b=MunjgPkRY6+P7AN2jbh6nqgXy6V0UaCnQYm/begusdoHuXJ8VMcbKf0iTWPq8g650G3t
-	 ccA5JOTi7vkhyrqd+6Q+qkjEQSngNQ/QiZ6gs3OBAUoCZ2UL1IZCUve2asiL1l8T2ahMJ
-	 qxZkVmas2jP/k3HAqntn0fd67AdaQUFj/1njjnWINhR2vzS4fLDaGEvGXb9XpiloVeWFT
-	 11G1V2QpxF0u3ixPQCQ3geYBJrA7NTc2cfhjghZWpfmVmTPUspx5HO3CQ12bmxcByg7q/
-	 9pYjBsooFU7/lT48l3n8O5sP+hE24XPUr7hLO3504zCYFOB5b84EM7lrhwMHarVIxIg==
+	bh=Cb0Zci2KJyueMmjgGGRLTz7mMmT4wyrv7zPC6ilNM3U=;
+	b=f+lUfD5JyFjRP+zX9YjP8BC0dkZG/XOjnIvezNdjhN2We1umzg97YCTVf/koOXgk+JOq
+	 DSBXg48sahWcKfyQmUZoowuhGI66zxZmde2x3WAucncGkdUt4jVuvHkE9jtz3w+N99BFP
+	 Liy2ehhzcw3s3jA0JdZ83dxd8KBsnORjxyhqcrWRv7QcGKqQl9urDlyeSY8c3fHvHO9Zm
+	 L/W7rJlrF6DPT9hDJuoauxBhGPGmdeKWRXpvlh2LBPhfM1eIKf2vk3TNw8tTbd3UYLNd9
+	 JO6miSsfRRwDZdRuwBY7qjn9mZWuz371NoyonHXdufIBAitfhVw41Vgj94TdyaR4/eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tw7gs3G9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBANMLoK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63EB606A325;
-	Wed, 18 Nov 2026 22:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58477606A32A;
+	Wed, 18 Nov 2026 22:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tw7gs3G9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77C51F000C4;
-	Wed, 18 Nov 2026 22:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uBANMLoK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AD71F000C4;
+	Wed, 18 Nov 2026 22:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040680;
-	bh=2w7AITDMdQo6R5i/xYhef/y3xQ/HWvByBwivskJVET0=;
+	s=korg; t=1795040683;
+	bh=Cb0Zci2KJyueMmjgGGRLTz7mMmT4wyrv7zPC6ilNM3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tw7gs3G9gmYszKlynckxRMhQILtUvNnY1bIfIlJDzdj1khDg1DsYlHUclerzKD0qW
-	 4AcrnHjXcvWR3drqbQ68AYGYtxC0T40Rb9JUX/13H0ScZv7ExLSrR8iYBpXGOC3auU
-	 VrXobozsQe8UNbNY9deMJLAzFPJmqlTKRbyvDefI=
+	b=uBANMLoK84JuX8NFar04jFgiNGYLaotKJGv6VCdHBwIlbJJmsoBPLZManBnr+QDHX
+	 HqfQ74ldJ1JSmqKUFWb1ZG0u/mS1ZXIufhkNuXIb/GA/Bv+MI3yUL9P9OHXvd074Br
+	 K7p8GBRUw8CBLwG/eiwOIPDIEyDga5h6FZhgMMlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mario Limonciello <superm1@kernel.org>,
+	Omar Ramadan <omar@blockcast.net>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2504/3318] cpufreq: amd-pstate: Propagate cppc_set_auto_sel() errors on mode change
-Date: Wed, 18 Nov 2026 15:52:06 +0100
-Message-ID: <20261118150436.498926988@linuxfoundation.org>
+Subject: [PATCH 6.6 2495/3318] amt: pull the AMT header behind the transport header in amt_parse_type()
+Date: Wed, 18 Nov 2026 15:51:57 +0100
+Message-ID: <20261118150436.238895585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,56 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Omar Ramadan <omar@blockcast.net>
 
-[ Upstream commit 8de705037124dd1cd49bd8cae6536d63ec4e1807 ]
+[ Upstream commit eb0c18404c8943356f4aa164e5db9067b79ea93c ]
 
-amd_pstate_change_mode_without_dvr_change() iterates over the online CPUs
-and calls cppc_set_auto_sel() to enable or disable hardware autonomous
-selection, but discards its return value and unconditionally returns 0.
+A gateway's encap socket passes ICMP errors to amt_err_lookup(), which
+calls amt_parse_type() on the quoted datagram to see which AMT message
+failed. On that path skb->data points at the quoted IP header and the
+transport header at the quoted UDP header, and icmp_socket_deliver()
+only guarantees the quoted IP header plus 8 bytes, that is, up to the
+end of the UDP header.
 
-If the firmware rejects the request, the failure is hidden: the cpufreq
-core records the mode transition as successful while the hardware stays in
-its previous autonomous-selection state.  The software mode and the actual
-hardware behaviour then disagree, breaking the expected frequency scaling.
+amt_parse_type() pulls sizeof(struct udphdr) + sizeof(struct amt_header)
+bytes from skb->data, which on this path stays inside the quoted IP
+header, and then reads the AMT header behind udp_hdr(skb). An ICMP error
+that quotes only the IP and UDP headers of a Request, the minimum RFC 792
+asks for, therefore makes it read past the pulled data, and past the end
+of the packet when nothing follows.
 
-Check the return value of cppc_set_auto_sel() and propagate the first
-error to the caller so the sysfs write reports the failure.
+Pull up to the transport header plus the UDP and AMT headers, as
+vxlan_err_lookup() does. amt_rcv() is called with the transport header
+at skb->data, so the pull on the receive path does not change.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-d114a94a-655b-43a6-91b1-9484889726c9
-Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20260921190235.3651688-2-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Signed-off-by: Omar Ramadan <omar@blockcast.net>
+Reviewed-by: Eric Dumazet <edumazet@@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260928181557.85796-1-omar@blockcast.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/amt.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 39b234d6755d8..f6b5af0fe9f5f 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1205,6 +1205,7 @@ static int amd_pstate_unregister_driver(int dummy)
- static int amd_pstate_change_mode_without_dvr_change(int mode)
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 9bdc6c0e7bf9c..ad855130b4300 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -1284,8 +1284,12 @@ static int amt_parse_type(struct sk_buff *skb)
  {
- 	int cpu = 0;
-+	int ret;
+ 	struct amt_header *amth;
  
- 	cppc_state = mode;
+-	if (!pskb_may_pull(skb, sizeof(struct udphdr) +
+-			   sizeof(struct amt_header)))
++	/* skb->data is the UDP header on receive, but the quoted IP header
++	 * when amt_err_lookup() parses an ICMP error, so pull up to the
++	 * transport header rather than from skb->data.
++	 */
++	if (!pskb_may_pull(skb, skb_transport_offset(skb) +
++			   sizeof(struct udphdr) + sizeof(struct amt_header)))
+ 		return -1;
  
-@@ -1212,7 +1213,9 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
- 		return 0;
- 
- 	for_each_online_cpu(cpu) {
--		cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+		ret = cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	return 0;
+ 	amth = (struct amt_header *)(udp_hdr(skb) + 1);
 -- 
 2.53.0
 
