@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042174;
-	b=qDqub2QVMJp51+3ig+tBsMZkP1VDe4Grv7lOsBsRO/N3pMyevJZzSSn5P0Ds7TiiQAPb
-	 8UJAhEo/x6T+bBs5EQRnuHuOZ4h1q66otviPGikCGG5pofK5ILiimb1pswz5iYOxTyKLz
-	 9B6gFbmNdta08GF9tbrGU384NBft3XzH+3T73RxcfhD02/YoYmGAUM3SQDcNoBHTbbm1f
-	 OluvgGJM8Vq1Sh7F+pgNE83Y2MDOnrM2J4sKmphr5NOvjJOyv7Xl48sj0Kfj2DoJAOjFY
-	 xaw4zlbJXsDo+h1e583t1zKqmbwOrzC9VZUjlOo38EflIOzWud/vkDNUA+q4mxyOgqg==
+	t=1795042177;
+	b=OOpmDYB8DZVCY23vPwbVkkn2vWWwHIT8mvDcOl6kMo2beFF3EL5z4tVCZl3rRLlWuEQg
+	 QMA6kNPBWOytULq6Oe3uWRDd8S6b/rqyN4HKJWaX2fytbvIt+bjD/SQu2BUaQRvCBItxl
+	 XVgAHRdB75bpEp5o9A5Z2K1sinLpcM0S78YTHLU8GD/JUNoZrWn5Wa5IHQNnenR/l3/i0
+	 KfgvkchxQFeIcjmLYcODJvQWSGnPBtOAFNyo/OIuFt1KYDKSyOt5HoI99wu/AJ9Rhor6r
+	 m9HrKJShq1lDFSNJiEUZE+IltFrUeraUSnl5xy6cAeZklV/jU84noET0ex0xg6+hQCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rp4yind+agSxvhBKGkKQRy4vVl5j2BVAA+pYlwLN3v8=;
-	b=WkzfTKsjHPj8dR7lObij3+xIK6vrshiABrSx17Q8WlWfGDS1nxvNa9Auh4Y05tjqdAdl
-	 QkXTHYQaA21MqE1re/jrz+l03NkgwWsPGK4ApIP1fkT/UPD8/0nxxdZkLHiT1eOdtOzgy
-	 nzsTsr1yXQ4Jccv2Uf8Jwy+c0lLpUPSDr2ftxNUljbEwEWrTr3FCqR7+mcyoNQ2kSI0XR
-	 nyqdV7SvWQf5ZLFI9dkBZ7LxVQQdCfcyC8IRFltIhcOco9ZGUUK1fTD7dECnoLLnCCgf2
-	 hA+Ksd1j1uwtlMuYCGbiqQF3i6WT+WgYbcTzQu/EKol2MYiPDTEMNugdgPS85ewqPtw==
+	bh=TxLsZri/Me3GeYyHKTEeIH7qW/8vnPPyLukwl5Udcw4=;
+	b=0PB/5YWzCq6UfdYalIZUA9gdE4/T4J1MX2RZj0O1qXXRRE/jMJJy4o7XcraJ4sLZx0Jt
+	 yV4pWuJS06/g5YJRhRNv4x8iIQVjjL1KQD3ShLZDFJCw+rwP5yvlawCdtgKSeR8YrohUC
+	 rbTRtM+NlqNJ2QB9VjrXWRmCZBvSde/ljOZA+268bBoSr2spC51hXxYRz8HjW3ZE4E+6A
+	 ZGfxh4EpD4hEgt1meom26zmtOn63eu079FMI+JntHx+RRTtZn7GDen27i9NY2ZPclG2BN
+	 pDfaGMua28pI/1azhBbi5HF04iPNJfNqNN/NlcxjlSZWAMXHbfTLvXfinSsGopm4QVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzthaHhz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3INPoN7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92408606A31C;
-	Wed, 18 Nov 2026 22:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4BB606A31C;
+	Wed, 18 Nov 2026 22:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzthaHhz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18D91F000C4;
-	Wed, 18 Nov 2026 22:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X3INPoN7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0D51F000C4;
+	Wed, 18 Nov 2026 22:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042174;
-	bh=Rp4yind+agSxvhBKGkKQRy4vVl5j2BVAA+pYlwLN3v8=;
+	s=korg; t=1795042176;
+	bh=TxLsZri/Me3GeYyHKTEeIH7qW/8vnPPyLukwl5Udcw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QzthaHhzUWCeBLfqF/O6fhVL+Q2/xDxpFtsS8fRZvv6NOhJtokBX/LqyNT9TjmKS/
-	 Z/cId5FGYWKdgCIMoPMob9NUy5D4zxuxQyZk6jYD4Rs0V6KEvv84J5djvtwL3+e9Xa
-	 ECTWzgoRtdsfZwQQnQfuBiVUpqmZGafW/6QSfwmw=
+	b=X3INPoN7zHHwFZl1NKYpxNE/jHYd3BDCbtDEqg3QsWCl4O9MyqpTgm1tDoRjySm2Q
+	 /V7re5uzAJUMrmITgbYfF4Zoq+auYcxcB1QphPLhmqAn7Mh9XtY9VLocu6RBrT/oyc
+	 BUabUJiCcQy9BhAnkGoomX9/c6DZOnLOMGvMycLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Yunlong Ma <yunlong_ma@buaa.edu.cn>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Gabriel Goller <g.goller@proxmox.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3077/3318] net: bcmasp: account for offload header in TX short packet padding
-Date: Wed, 18 Nov 2026 16:01:39 +0100
-Message-ID: <20261118150452.393359160@linuxfoundation.org>
+Subject: [PATCH 6.6 3078/3318] bridge: mcast: Delete empty MDB entry when port group creation fails
+Date: Wed, 18 Nov 2026 16:01:40 +0100
+Message-ID: <20261118150452.419863441@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,82 +71,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 74667a55122ad2fad88af4fd7672e4c8175c2558 ]
+[ Upstream commit 1d0590f96fa4133578b7370ea9ce1d871f6bfc21 ]
 
-When hardware checksum offload is enabled for an skb,
-bcmasp_csum_offload() prepends a struct bcmasp_pkt_offload header
-(20 bytes) to the skb via skb_push(). This increases skb->len and
-skb_headlen(skb) by sizeof(struct bcmasp_pkt_offload).
+When a port group cannot be created for a new group, the MDB entry that
+was created for it is left with no ports and is not joined by the host.
+Its timer is never armed, so the entry is never deleted, but it is
+counted towards mcast_hash_max. When this maximum is reached, the bridge
+disables multicast snooping.
 
-Because the hardware descriptor processor strips this offload header
-before transmitting the packet on the wire, the wire packet length is
-smaller by sizeof(struct bcmasp_pkt_offload). The padding calculation
-must account for this extra header; otherwise, short frames are sent on
-the wire smaller than the minimum Ethernet frame size (ETH_ZLEN +
-ETH_FCS_LEN).
+Since commit b57e8d870d52 ("net: bridge: Maintain number of MDB entries
+in net_bridge_mcast_port"), port group creation also fails when the port
+reached its mcast_max_groups limit. A host behind such a port can
+therefore disable snooping by sending reports for new groups, which is
+what the limit is meant to prevent. The RTM_NEWMDB path has the same
+problem.
 
-Furthermore, small frames with payload in page fragments (such as small
-TCP segments with CHECKSUM_PARTIAL) have nr_frags > 0 and were skipping
-padding entirely because the padding check was restricted to
-nr_frags == 0.
+Fix by deleting the entry after a failure if it is unused. Delete it
+immediately rather than arming its timer, so that it stops counting
+towards the maximum right away.
 
-Perform the padding check on skb->len before the descriptor loop using
-skb_put_padto(), adding sizeof(struct bcmasp_pkt_offload) to min_size
-when checksum offload is enabled, and re-read nr_frags after padding in
-case the skb was linearized.
-
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Reviewed-by: Justin Chen <justin.chen@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-6-florian.fainelli@broadcom.com
+Fixes: b57e8d870d52 ("net: bridge: Maintain number of MDB entries in net_bridge_mcast_port")
+Reported-by: Yunlong Ma <yunlong_ma@buaa.edu.cn>
+Closes: https://lore.kernel.org/netdev/2f5b61e2.1e71a.1a11fcb3809.Coremail.yunlong_ma@buaa.edu.cn/
+Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Gabriel Goller <g.goller@proxmox.com>
+Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
+Link: https://patch.msgid.link/20261016101407.2030133-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/asp2/bcmasp_intf.c    | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/bridge/br_mdb.c       | 16 +++++++++++++---
+ net/bridge/br_multicast.c |  9 +++++++++
+ net/bridge/br_private.h   |  1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index 4e9fa6463831a..f5874190dbf64 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -268,7 +268,7 @@ static const struct bcmasp_intf_ops bcmasp_intf_ops = {
- static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct bcmasp_intf *intf = netdev_priv(dev);
--	unsigned int total_bytes, size;
-+	unsigned int total_bytes, size, min_size;
- 	int spb_index, nr_frags, i, j;
- 	struct bcmasp_tx_cb *txcb;
- 	dma_addr_t mapping, valid;
-@@ -294,16 +294,21 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
- 	if (!skb)
- 		return NETDEV_TX_OK;
+diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
+index 96bea0c8408fe..8a93630d0791c 100644
+--- a/net/bridge/br_mdb.c
++++ b/net/bridge/br_mdb.c
+@@ -791,6 +791,7 @@ static int br_mdb_add_group_src_fwd(const struct br_mdb_config *cfg,
+ 	struct br_mdb_config sg_cfg;
+ 	struct br_ip sg_ip;
+ 	u8 flags = 0;
++	int err;
  
-+	min_size = ETH_ZLEN + ETH_FCS_LEN;
-+	if (csum_hw)
-+		min_size += sizeof(struct bcmasp_pkt_offload);
+ 	sg_ip = cfg->group;
+ 	sg_ip.src = src_ip->src;
+@@ -814,7 +815,11 @@ static int br_mdb_add_group_src_fwd(const struct br_mdb_config *cfg,
+ 	sg_cfg.filter_mode = MCAST_INCLUDE;
+ 	sg_cfg.rt_protocol = cfg->rt_protocol;
+ 	sg_cfg.nlflags = cfg->nlflags;
+-	return br_mdb_add_group_sg(&sg_cfg, sgmp, brmctx, flags, extack);
++	err = br_mdb_add_group_sg(&sg_cfg, sgmp, brmctx, flags, extack);
++	if (err)
++		br_multicast_del_group(sgmp);
 +
-+	if (skb->len < min_size) {
-+		if (skb_put_padto(skb, min_size))
-+			return NETDEV_TX_OK;
-+		nr_frags = skb_shinfo(skb)->nr_frags;
-+	}
++	return err;
+ }
+ 
+ static int br_mdb_add_group_src(const struct br_mdb_config *cfg,
+@@ -1019,6 +1024,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
+ 	struct net_bridge_mcast *brmctx;
+ 	struct br_ip group = cfg->group;
+ 	unsigned char flags = 0;
++	int err;
+ 
+ 	brmctx = __br_mdb_choose_context(br, entry, extack);
+ 	if (!brmctx)
+@@ -1045,9 +1051,13 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
+ 		flags |= MDB_PG_FLAGS_PERMANENT;
+ 
+ 	if (br_multicast_is_star_g(&group))
+-		return br_mdb_add_group_star_g(cfg, mp, brmctx, flags, extack);
++		err = br_mdb_add_group_star_g(cfg, mp, brmctx, flags, extack);
+ 	else
+-		return br_mdb_add_group_sg(cfg, mp, brmctx, flags, extack);
++		err = br_mdb_add_group_sg(cfg, mp, brmctx, flags, extack);
++	if (err)
++		br_multicast_del_group(mp);
 +
- 	spb_index = intf->tx_spb_index;
- 	valid = intf->tx_spb_dma_valid;
- 	for (i = 0; i <= nr_frags; i++) {
- 		if (!i) {
- 			size = skb_headlen(skb);
--			if (!nr_frags && size < (ETH_ZLEN + ETH_FCS_LEN)) {
--				if (skb_put_padto(skb, ETH_ZLEN + ETH_FCS_LEN))
--					return NETDEV_TX_OK;
--				size = skb->len;
--			}
- 			mapping = dma_map_single(kdev, skb->data, size,
- 						 DMA_TO_DEVICE);
- 		} else {
++	return err;
+ }
+ 
+ static int __br_mdb_add(const struct br_mdb_config *cfg,
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index f7c8602bec338..db8a87852768e 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -646,6 +646,14 @@ static void br_multicast_del_mdb_entry(struct net_bridge_mdb_entry *mp)
+ 	queue_work(system_long_wq, &br->mcast_gc_work);
+ }
+ 
++void br_multicast_del_group(struct net_bridge_mdb_entry *mp)
++{
++	if (mp->ports || mp->host_joined)
++		return;
++
++	br_multicast_del_mdb_entry(mp);
++}
++
+ static void br_multicast_group_expired(struct timer_list *t)
+ {
+ 	struct net_bridge_mdb_entry *mp = from_timer(mp, t, timer);
+@@ -1560,6 +1568,7 @@ __br_multicast_add_group(struct net_bridge_mcast *brmctx,
+ 	p = br_multicast_new_port_group(pmctx->port, group, *pp, 0, src,
+ 					filter_mode, RTPROT_KERNEL, NULL);
+ 	if (unlikely(!p)) {
++		br_multicast_del_group(mp);
+ 		p = ERR_PTR(-ENOMEM);
+ 		goto out;
+ 	}
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 958d12ebb660f..54a7408ba0f6a 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -979,6 +979,7 @@ struct net_bridge_mdb_entry *
+ br_mdb_ip_get(struct net_bridge *br, struct br_ip *dst);
+ struct net_bridge_mdb_entry *
+ br_multicast_new_group(struct net_bridge *br, struct br_ip *group);
++void br_multicast_del_group(struct net_bridge_mdb_entry *mp);
+ struct net_bridge_port_group *
+ br_multicast_new_port_group(struct net_bridge_port *port,
+ 			    const struct br_ip *group,
 -- 
 2.53.0
 
