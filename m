@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025008;
-	b=NF9U9pWy3obGyb5E4ThP2dzsjmSQ6kK7vWQ+jvPgAu63qSQOL2sNH3KhpocpCN9G5KDb
-	 vjchYkBm1DkiSbZ3uHyvbPBgiDO01Mcyk486LMikCUIqNJ+021ndw7t8jEG5IoCIMGNoT
-	 jCsI9prwsv+4pa/6TC1ExhJJ+7brfiM1BzIfQh9y108YsvSRf/Dd6xZhdcmLbjrwcgXu8
-	 uTwMaGoVe45aoC+3uFyzsMaQHsjdAcroqPdYApbpH54zpOv6M4aLv7pKkP3wzYyUxGJ94
-	 EcbMCbaVRARIXbL4vbT2ShD81bLOUbDjRzEd9RRHMdGPO1Qjt+BAboSjPD1aMuEwChA==
+	t=1795025010;
+	b=fle33+mUEX6fXNvsV3K2G3nWWnuhaglpxHb4XIfBAovyo50rxDDweXcWgowYNO4AhuaR
+	 QvQFpW348xPt/2B1iLZu3SS1l68FQdJpaIedZ6zb088egMhWxF3RkySDABYdCJWVvJMr9
+	 I6b/byMO66KCkjThOgcmZNNhLb/xkwVmjyMBS4VFfGGWKnOGPpxJNclq56Fou1PfTwHJ0
+	 2nNpb2yR6VAhTgFPOdt8VSnm9ZVUoGfurLsfhpIuaM0oUK9KhKe7+aApfwmrtqjhXN1Pd
+	 PsbDqqaFRk2o0QxybEMNKV8COIl1PWfLoACovMSQMtBcRFK0azTOwd29cdh7/vx1S7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025008;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025010;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eF2XXV3eoaAN9M+IiXoNeJWFWyVkoSMxGraUM0L/UBc=;
-	b=xVf3RFCh13yrR+JpDJYxQ4s4C4y1lpNkNxXjZ00AzEV5vLtRl+XDW1Q0KYDWgZ53hqif
-	 FXS3+Nj9yQvwtMqx4uOBz7Bkc7Cy3c73/vthMAoD/kOFZEqfL6sFawQHYKaib48u/nk5K
-	 kb4+ek5Kay0NALzMh7OAiJHLksJ+qF/W0xtej2liY7ZBEx3NKl588LrQx8SQ3uTFDpwpF
-	 N7P/O9XC77bUlT80rDmXiOV6psJPYkKcHUH38k6CUTj6iSM/PlbKAiDXgih/yIIkNiOne
-	 P2nFSdHbiBNu3GdsFf/zLVnbbZWGZCDeUYZ69/abRdS3QP6CCBNJtPytAVA4ANPQpJQ==
+	bh=otmkUwM+bD939Odxn/9YXnQapyk079c+VbqmbyuejVo=;
+	b=V/2jBYroQOeU3PFOzafyllT61facL4W9lp1k9gA4fKKs3zbTAoFZUX3DBKEI/Rt0wgfC
+	 xkATNMUh3BchRWhP19FCPR+EVr0A2BHk4luQo8f2QCNLdUeLolPZSTgpXR67gC4vUdqGP
+	 eWGtXlU8etfr/FkrgTpPnx0rqp5vF8m2js8EIoaCai2IYGF68ZlLbgTqjy4CCM9SImqt5
+	 USUFnrDwTNe4CDOv6q08KcHKKk1pSQSq66BjSlW2bmw0TGCGHOVZFMTYuS/xfHqgzBx9a
+	 uL9IahMXHQ0UHtxYXn3gL0tFxAgvq6hLKzOckcZMTDevcuZSPJdPVj+D2ZBhYJ5w0mw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6gdoyAj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qmh1Z9Vb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0729660A2615;
-	Wed, 18 Nov 2026 18:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AE9606A325;
+	Wed, 18 Nov 2026 18:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6gdoyAj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3171F000C4;
-	Wed, 18 Nov 2026 18:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qmh1Z9Vb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 359921F000C4;
+	Wed, 18 Nov 2026 18:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025007;
-	bh=eF2XXV3eoaAN9M+IiXoNeJWFWyVkoSMxGraUM0L/UBc=;
+	s=korg; t=1795025010;
+	bh=otmkUwM+bD939Odxn/9YXnQapyk079c+VbqmbyuejVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p6gdoyAjVKnsr6si2lCa7+p6AE7E/rxmX78WD0y0mVuEXN9zd/IqnCTXvCL4R5f88
-	 Z7QLVv0Y8G2FjqTkqsmV1QJbHMM+j65qDEgbQ7xo2cCsHgXGgK10VXx/GpaWJcYRNx
-	 JndXndAaDXdnleFRmieMAIbQC/MWLSqkQj8jPdiM=
+	b=Qmh1Z9VbkPq0WNHpqlTMJRRyeZZsVTQY6Iv06zZqkbyRECwb0uwqQbVI3pMuLf6w6
+	 mSIoG3K0Wl/5XOZ8C1CD8L4OjPvkhN8B2CE7vMEjgVaOnK7pSMXJqSFRUxQs5EErpN
+	 /Ftii9M6ClmyNYa6Z2nIwUjR8P/wkpPnskGgHfwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Julian Ruess <julianr@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0912/2151] s390/ism: Zerorize dmb at allocation
-Date: Wed, 18 Nov 2026 15:44:07 +0100
-Message-ID: <20261118150155.612244991@linuxfoundation.org>
+Subject: [PATCH 6.18 0913/2151] drm/msm: Properly handle msm_ioremap() without name
+Date: Wed, 18 Nov 2026 15:44:08 +0100
+Message-ID: <20261118150155.649014040@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,72 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit a0227fa24e8a2a0397cc4eb669731ff8d9161bbd ]
+[ Upstream commit 14fe0ea79e0e25efc603f6f4bc81cb5b813f0e69 ]
 
-Sashiko reported [1] that 'Missing __GFP_ZERO in folio_alloc() causes
-uninitialized kernel memory to be exposed in the receive message buffer'.
-An ism dmb is receive-only, so the data is not leaked to a remote peer.
-In general the smc kernel module (dibs client) will only push newly
-received data to userspace. We still should not have uninitialized data
-in a receive buffer.
+msm_ioremap() accepts being called without name of the region to map and
+in such case maps by index 0.  However error paths still use the name in
+error message.
 
-Since
-commit 750afb08ca71 ("cross-tree: phase out dma_zalloc_coherent()")
-dma_alloc_coherent no longer required the __GFP_ZERO flag, but when
-commit 83781384a96b ("s390/ism: Properly fix receive message buffer allocation")
-switched to folio_alloc(), it should have added back the __GFP_ZERO flag.
-
-Add __GFP_ZERO flag and state in dibs.h that register_dbm() provides
-a zerorized buffer (dibs_lo already does).
-
-Link: https://lore.kernel.org/linux-s390/20260903143746.A5CC41F00A3A@smtp.kernel.org/ [1]
-Fixes: 83781384a96b ("s390/ism: Properly fix receive message buffer allocation")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
-Link: https://patch.msgid.link/20260928151420.383105-1-wintera@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752660/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-5-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/ism_drv.c | 3 ++-
- include/linux/dibs.h       | 6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/msm_io_utils.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-index da1e0baacc067..d1307c8baa2ec 100644
---- a/drivers/s390/net/ism_drv.c
-+++ b/drivers/s390/net/ism_drv.c
-@@ -257,7 +257,8 @@ static int ism_alloc_dmb(struct ism_dev *ism, struct dibs_dmb *dmb)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
+index a6efe1eac2712..99221b0d7e3f0 100644
+--- a/drivers/gpu/drm/msm/msm_io_utils.c
++++ b/drivers/gpu/drm/msm/msm_io_utils.c
+@@ -77,7 +77,8 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
  
- 	folio = folio_alloc(GFP_KERNEL | __GFP_NOWARN | __GFP_NOMEMALLOC |
--			    __GFP_NORETRY, get_order(dmb->dmb_len));
-+			    __GFP_NORETRY | __GFP_ZERO,
-+			    get_order(dmb->dmb_len));
+ 	if (!res) {
+ 		if (!quiet)
+-			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
++			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n",
++				      (name ?: "#0"));
+ 		return ERR_PTR(-EINVAL);
+ 	}
  
- 	if (!folio) {
- 		rc = -ENOMEM;
-diff --git a/include/linux/dibs.h b/include/linux/dibs.h
-index d3e0777f25ae0..0c10c224bccad 100644
---- a/include/linux/dibs.h
-+++ b/include/linux/dibs.h
-@@ -261,12 +261,12 @@ struct dibs_dev_ops {
- 	 *	@vlan_id: deprecated, ignored if device does not support vlan
- 	 * Upon return in addition the following fields will be valid:
- 	 *	@dmb_tok: for usage by remote and local devices and clients
--	 *	@cpu_addr: allocated buffer
-+	 *	@cpu_addr: allocated, zerorized buffer
- 	 *	@idx: dmb index, unique per dibs device
- 	 *	@dma_addr: to be used by device driver,if applicable
- 	 *
--	 * Allocate a dmb buffer and register it with this device and for this
--	 * client.
-+	 * Allocate and zerorize a dmb buffer and register it with this device
-+	 * and for this client.
- 	 * Return: zero on success
- 	 */
- 	int (*register_dmb)(struct dibs_dev *dev, struct dibs_dmb *dmb,
+@@ -86,7 +87,8 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
+ 	ptr = devm_ioremap(&pdev->dev, res->start, size);
+ 	if (!ptr) {
+ 		if (!quiet)
+-			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
++			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n",
++				      (name ?: "#0"));
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
 -- 
 2.53.0
 
