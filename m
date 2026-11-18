@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045210;
-	b=od/3rlxaTTHdYfd/jkttJNecrFrf2+mlB39TpuSuJYqdkcLfuKfYKAlg5Q9UF0P8NyNk
-	 BfNFl7NgS+W9vhdwnbLMzOB7x2YOfnKQ2jCMnQPta5/XnEpHiXmKDvIK5+hj6K4E4H6kE
-	 ZMB+VIb9vguNYuduN/oBZ7iVy9vuka7k8DNjRwm4K8IymLqPhF3Dlu+KeZzSeOAy6dlAs
-	 TdHVhKs9LYZ2c/pA48Fq5Gttpn4SfA9BUbq2+QW3wCRsqr/Fq1yjs/YUu1MXPLumucM9v
-	 OuUcTpN7eafqo1GkjX8rSCkdARPocf33uwEcmR+Hi+FewlEWnK1RdrnCAYodVSMuKvA==
+	t=1795045213;
+	b=GgM8QL/goh/M3B52kgYSEcEXQHRC4z1vZ8kcMOiRPkP8PM8gKDv2EuL/8fSvNo7orWDP
+	 f04j1ZZPT94uQi3glXpxAoQ7dumqnVTpZmWPC3x+a4Ho7Bj3nlH1y+K27HZY4re4gRIeQ
+	 hTo3HEps50BgOjmoDNJgXocMVrqbE02DUYH4vkNMPsMCwLMeKs5wwaKz0DXDN4kRjjr/1
+	 WEX33WD2UBOv69oCg1Rl/PIicY5RDpTWjOYe0h6ece184yaT6gb80HuU0AoUsUbYa3PBn
+	 gHx25BgqmrX6O2FG3AKuck3gshgy1p0WLSoM7EDrqRYy7KTFIZVgvN/4quDcrdlxCqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045210;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q+35uPy7OBS1+pYXo25ZFdDDNU32UuX0/QHQ4KhAJbo=;
-	b=FPSDlqURXTruiQiblZ+KWnP/5dJaJ/tSz7l6WTgS5zxOsvMc9bhpaQxgGyE1BO7L6B1l
-	 wMxDcsdtlnsD0hLsbRBhGUGcPCctyo0vQMUefQkJqvHUsoLhZrk+ED5pVWaH3YrSJczK/
-	 io1yAVYdilF7kD6Xr19Omy5JKsDdnL+PPMrBNwJlbCM/ChdaDi6g4ka3jcUXDBN0eXIfd
-	 Wv6+TYXh0pcNTMAXB2r+xSMfZtumj2xuZ7D9WW2Ac8n17AIGJpdT1yTwdQCshqUNP5KVU
-	 xB7Dg8JCg656yRh/RzJTquPv04oFP9o9TvCuhFFp4Ypqxzyhq9MxDuHVaI1Nd2UgMUw==
+	bh=GFITs5RF+70Jqsou389YxmsB1qaSflXpLWdP8uq/YEQ=;
+	b=JdfKmLbxgjwv8YbGZFht4+UKuj+53oDP5VMWuQIIdgZ7JZVawIMbQ1o1fr3YNXdQ4TTD
+	 o+damUp2JscjRlOFNgqCZoraAj9z392qgjViIT6drLws+TayD2zKQ40e6ZcUAOpKh6+0i
+	 eSYYAbA4CMTmym2dL1+hugYMbHS59CIHEY2+z74pY2SCZKWxujr0Pp5OIUquWAWKfHguy
+	 dxgyBR2cPHGESfdA52ZoSdCjtfieYG6lbvBu10T7mb4zg/cPMrM1+SZg86Hy2gDtz7D0B
+	 O2BFaDhgeOIJFxW3MHLIb7lUDTCOmB1tufT6++te14rIOb0z421KqJB9EIAxrJPtOsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQdY4Wq1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiGXq9IW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEF8606A32C;
-	Wed, 18 Nov 2026 23:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AF2606A339;
+	Wed, 18 Nov 2026 23:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KQdY4Wq1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71761F000C4;
-	Wed, 18 Nov 2026 23:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KiGXq9IW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47221F000C6;
+	Wed, 18 Nov 2026 23:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045210;
-	bh=Q+35uPy7OBS1+pYXo25ZFdDDNU32UuX0/QHQ4KhAJbo=;
+	s=korg; t=1795045213;
+	bh=GFITs5RF+70Jqsou389YxmsB1qaSflXpLWdP8uq/YEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQdY4Wq1MWEYthOtuIkLIiw2ta5HLZHAwA/Idzt7e7jzLQvhGFcnFDSFA2gsrisKw
-	 T0995EV7A8xy0SZQpP9mn4Bdx8u/vx0ZWbCxp0ZE5pw5nj7eMAH+WdAaK4dabAEN+m
-	 EsZevmFcXU74fmVmFdQYcUl+vnEBCD/pPJ4eRJII=
+	b=KiGXq9IWKPm9dNCE3EqyQ6BQMHYDZAZ0FmMGRYdCk3a5bnnBgdhqEg8ojTEX536aa
+	 2UmF/MFIqmVGU1RQqxB1exGwOxpg6iYsTHgwvIu6slOgpTCoP04vpSes0RrT8zAzyW
+	 cyTU4Ha5NAB90rHv32fm2ubKJvL9bfrLdiYw+KKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Cong Nguyen <congnt264@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Martin Wilck <mwilck@suse.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0791/2857] staging: media: imx: csc-scaler: fix ipu_image_convert_run leak on queue error
-Date: Wed, 18 Nov 2026 15:30:25 +0100
-Message-ID: <20261118150230.048909154@linuxfoundation.org>
+Subject: [PATCH 6.1 0782/2857] md/raid5: validate payload size before calculating payload_len
+Date: Wed, 18 Nov 2026 15:30:16 +0100
+Message-ID: <20261118150229.724453785@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,49 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Martin Wilck <martin.wilck@suse.com>
 
-[ Upstream commit 07643be7b1eff94f7a49e142c1e92a1029d3db21 ]
+[ Upstream commit 38c795105992bbaa3418dd39cbff7348ad17537c ]
 
-device_run() allocates an ipu_image_convert_run object and, on the
-success path, hands it to the IPU image conversion core via
-ipu_image_convert_queue(); the run object is then freed asynchronously
-by the completion callback ipu_ic_pp_complete().
+Commit b0cc3ae97e89 ("md/raid5: validate payload size before accessing
+journal metadata") introduced a bounds check to verify that a given payload
+fits into the current metadata block. In order to calculate the payload
+size, it has to access the members payload->header.type and payload->size,
+the offset of which may already be past the end of the metadata block,
+because the loop condition only checks that the first byte of the payload
+is inside, and the payload entries have variable sizes. Later on,
+payload->checksum[0] and payload->checksum[1] are accessed without
+verifying that payload->size is large enough.
 
-However, if ipu_image_convert_queue() fails, the core never takes
-ownership of the run object and the completion callback is never
-invoked. The "err" label finishes the mem2mem job and reports the
-buffers as errored, but never frees the run object that was just
-allocated, leaking it on every queue failure.
+Add another check to make sure that payload->size can be safely
+accessed, and make sure that the checksum fields are accessible.
 
-Free the run object in the error path. There is no risk of a double
-free: the completion callback only runs after the object was
-successfully queued, which is mutually exclusive with reaching the
-error path. It is also safe for the earlier "goto err" on allocation
-failure, since run is NULL there and kfree(NULL) is a no-op.
+This issue has been found by AI (gemma4, Gemini) during a backport
+review.
 
-Fixes: a8ef0488cc59 ("media: imx: add csc/scaler mem2mem device")
-Cc: stable@kernel.org
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: Junrui Luo <moonafterrain@outlook.com>
+Cc: stable@vger.kernel.org
+Fixes: b0cc3ae97e89 ("md/raid5: validate payload size before accessing journal metadata")
+Signed-off-by: Martin Wilck <mwilck@suse.com>
+Link: https://patch.msgid.link/20260907155103.2325511-1-mwilck@suse.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/imx/imx-media-csc-scaler.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid5-cache.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/staging/media/imx/imx-media-csc-scaler.c b/drivers/staging/media/imx/imx-media-csc-scaler.c
-index 07104e7f5a5f9..6643f09aa44d0 100644
---- a/drivers/staging/media/imx/imx-media-csc-scaler.c
-+++ b/drivers/staging/media/imx/imx-media-csc-scaler.c
-@@ -144,6 +144,7 @@ static void device_run(void *_ctx)
- 	v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_ERROR);
- 	v4l2_m2m_buf_done(dst_buf, VB2_BUF_STATE_ERROR);
- 	v4l2_m2m_job_finish(priv->m2m_dev, ctx->fh.m2m_ctx);
-+	kfree(run);
- }
+diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
+index df1b64c81ebc5..cf3191cc40373 100644
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -2011,27 +2011,36 @@ r5l_recovery_verify_data_checksum_for_mb(struct r5l_log *log,
+ 	if (!page)
+ 		return -ENOMEM;
  
- /*
+-	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++	while (mb_offset + sizeof(struct r5l_payload_header) <= le32_to_cpu(mb->meta_size)) {
++		u32 payload_size;
+ 		sector_t payload_len;
+ 
+ 		payload = (void *)mb + mb_offset;
+ 		payload_flush = (void *)mb + mb_offset;
+ 
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) {
++			if (mb_offset + sizeof(struct r5l_payload_data_parity)
++			    > le32_to_cpu(mb->meta_size))
++				goto mismatch;
++			payload_size = le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9);
+ 			payload_len = sizeof(struct r5l_payload_data_parity) +
+-				(sector_t)sizeof(__le32) *
+-				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
+-			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++					(sector_t)sizeof(__le32) * payload_size;
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size) ||
++			    payload_size < 1)
+ 				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+ 				    payload->checksum[0]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_PARITY) {
++			if (mb_offset + sizeof(struct r5l_payload_data_parity)
++			    > le32_to_cpu(mb->meta_size))
++				goto mismatch;
++			payload_size = le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9);
+ 			payload_len = sizeof(struct r5l_payload_data_parity) +
+-				(sector_t)sizeof(__le32) *
+-				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
+-			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++					(sector_t)sizeof(__le32) * payload_size;
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size) ||
++			    payload_size < conf->max_degraded)
+ 				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+@@ -2045,6 +2054,9 @@ r5l_recovery_verify_data_checksum_for_mb(struct r5l_log *log,
+ 				    payload->checksum[1]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
++			if (mb_offset + sizeof(struct r5l_payload_flush)
++			    > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 			payload_len = sizeof(struct r5l_payload_flush) +
+ 				(sector_t)le32_to_cpu(payload_flush->size);
+ 			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
+@@ -2106,7 +2118,7 @@ r5c_recovery_analyze_meta_block(struct r5l_log *log,
+ 	mb_offset = sizeof(struct r5l_meta_block);
+ 	log_offset = r5l_ring_add(log, ctx->pos, BLOCK_SECTORS);
+ 
+-	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++	while (mb_offset + sizeof(struct r5l_payload_header) < le32_to_cpu(mb->meta_size)) {
+ 		sector_t payload_len;
+ 		int dd;
+ 
+@@ -2116,6 +2128,9 @@ r5c_recovery_analyze_meta_block(struct r5l_log *log,
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+ 			int i, count;
+ 
++			if (mb_offset + sizeof(struct r5l_payload_flush) >
++			    le32_to_cpu(mb->meta_size))
++				return -EINVAL;
+ 			payload_len = sizeof(struct r5l_payload_flush) +
+ 				(sector_t)le32_to_cpu(payload_flush->size);
+ 			if (mb_offset + payload_len >
+@@ -2140,6 +2155,9 @@ r5c_recovery_analyze_meta_block(struct r5l_log *log,
+ 		}
+ 
+ 		/* DATA or PARITY payload */
++		if (mb_offset + sizeof(struct r5l_payload_data_parity) >
++		    le32_to_cpu(mb->meta_size))
++			return -EINVAL;
+ 		payload_len = sizeof(struct r5l_payload_data_parity) +
+ 			(sector_t)sizeof(__le32) *
+ 			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
 -- 
 2.53.0
 
