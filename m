@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032235;
-	b=IVKVluMBiTmyfBgcd3yUwiVPg0AVErJw7F+qoDOOktehnzrSJpuzefSo/ZVZufR1wX2C
-	 F4PJU2DORA3vkJpRdE4mRVAHGA+c24Zza1oMkxOkgRA08pHttuvbK1E4G9+JeFm4jyNLa
-	 tKHXrDUFPSwXCqyR6KfJXERr4cJgqwaoUgTd/XfsQuItKYMOlobfCUpzDNsv2x2n+Z0jo
-	 GSVCo51lj5NaWfpsRQ+dRniXQ+/Co4Pta6DRd/vHaASj3gl5vCKVAAuDu7YC8WbvdwUSF
-	 EugKvHbdVNOYIafBqQ/Z1geHi1f0v56I2Z24rcSQSga/zw2QMmfS9XIlO2MYzf3rW1A==
+	t=1795032238;
+	b=D101banShwzwHSgYe6F+D1gASietXkf0NZ6oH3NhyoVzUK5FJ0HPACygOJ3+wR3Vgfk6
+	 /cgddAiBFQS9NSSYJADoQpC/AiiCPgepw3T1VmmzMsxdXrK3cRprI4GM46hzLy8rSvyVt
+	 cC0J9iY1XKpcZGipx33o4y19h3p+b1SS5XLXfyzliTEPbA69Tk7wU3Wnj+bXw391fwh94
+	 flzVz5RVcNX0lIkrp9UT0UXibVx59WZsG7bXD4x4OtHewSX7qd85MhOA71br0WxJSAkmC
+	 miyLC5E0ob7LMMgF/VjSJIQaMN15kPZvoUBPKHG9CF0Ket5QTUGr2pyBrx2j87PQYYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032235;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032238;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=zmu2XYCGyr5s8mYOk2ksjWWveOHRicPYB09TQtGlx4Y=;
-	b=5g9krZLaZ21cIJNerwDLvx8alq/wmXpDrnilR/RERhLfgeYxt4vskDBzHFYWrvjP1O3+
-	 zN6OOedyZD5c5uoeUlG9SY/XMv6SiAXzF/xgEDYj+Q0KDV0Nac3KoZW2TZSM0EygajR5q
-	 m0ZxoYEgPbkOnGLzrtemUQmoNTqBYUNhru3hoVl2P4Uv0rKPlpg2qzWSsoJXRNqddjisQ
-	 xz/15ZvQAz9nG4qZQ0Bxei2G9IqeiHVnWb8T2+8KgeMxOY6WX8RxU1mQyJh4yFJUjEYyp
-	 tFsdNkEybBM4A3mds4XuupVwLTUY6lf0WgG4n1Y+aeGtKIorf8WljYjChRjhXUZJYOA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=HVgQHxe5sgeG9L3rwru7HBncDkj/r2kl3yk4tGNkzhA=;
+	b=Fdr997tguS/ziClLlovPJeIFI/iuwdcWyIHmo/B4GyA+pvewMss6qCcC8wgvnlveoifZ
+	 Nk/90e6Cy1r4NVMBHb/MVnAV13XAKOZikKcGafqD4Lq7w43u0AomaBMD2ZLAjQBtkuNLp
+	 aiSV1cZtuoc17lNmLX38i3A3+SIlmqAZXS/ccEWFRV4lkNLAHK36kQ17qSbyEuAi6ewBf
+	 i3Q1olk9HyN/xw6YSJpAfBNJYeSSVq5KSaQW0y2g8EyAt3hXfH5oE1Wzg1UlLV8seunCk
+	 OaFlE0aq2914TFrIqYPrqZ4KdLITsqyU7YCrkPneMfz2YggDdx5Xdj/24cVsRRGZzyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAso0p1t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQmymY9I;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533DD606A325;
-	Wed, 18 Nov 2026 20:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4B9606A330;
+	Wed, 18 Nov 2026 20:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAso0p1t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83441F000C4;
-	Wed, 18 Nov 2026 20:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQmymY9I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC841F000C5;
+	Wed, 18 Nov 2026 20:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032235;
-	bh=zmu2XYCGyr5s8mYOk2ksjWWveOHRicPYB09TQtGlx4Y=;
+	s=korg; t=1795032238;
+	bh=HVgQHxe5sgeG9L3rwru7HBncDkj/r2kl3yk4tGNkzhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAso0p1tywz0vIor18KtXio6R30aYSHWZLnRradQ30jJGaId3phAe4LG3SqqFA91C
-	 xfTFOA3Tg0vqQO8K2PQBxwrkpy63KjfnegMMIe65PjKj6RKJ57TUrf6kInmD/9MJ8v
-	 LEiCkINlf849rpumwg1qc98m3sbgtMO3Z5ZJrIB8=
+	b=pQmymY9I7KsGksQD5B78/TQxWcVR78ByKPmXfBUNKMtFYneSAMqllO+lbfG4RqJoe
+	 xq+7vhnAvIEMfuS8YEeOBxRfAzkmtmyTYZF9jUJ+/wLtcrVgTy+VyQdirEkcppOM4S
+	 Gt7+xuo6zWPW4MN8sJRcw+KJyWeU5YlSY6SYFhsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Piotr=20Gli=C5=BAniewicz?= <p.glizniewicz@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1341/1756] platform: cznic: turris-omnia-mcu: stop button emulation producers
-Date: Wed, 18 Nov 2026 15:57:48 +0100
-Message-ID: <20261118150102.727503430@linuxfoundation.org>
+Subject: [PATCH 6.12 1342/1756] ALSA: 6fire: take stream_mutex in the Digital Thru control
+Date: Wed, 18 Nov 2026 15:57:49 +0100
+Message-ID: <20261118150102.765617990@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,97 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
 
-[ Upstream commit 0045cd6b8ab2319e9d8de46e5e329cdc35ce6d05 ]
+[ Upstream commit d030561d53cb272bb55ba2dd11aaa609e8240b7e ]
 
-The legacy MCU IRQ thread can requeue button-release emulation work
-after its managed cleanup has canceled it. Since the IRQ is still active
-at that point, the newly queued work can outlive device teardown and
-access freed MCU state.
+usb6fire_control_digital_thru_put() calls
+usb6fire_control_streaming_update(), which on an idle card with Digital
+Thru on selects altsetting 2 and writes the clock register for 96 kHz
+through usb6fire_control_set_rate(). usb6fire_pcm_prepare() calls both
+functions through usb6fire_pcm_set_rate() under rt->stream_mutex. The
+put does not take stream_mutex, so the two can run at the same time.
 
-Use disable_delayed_work_sync() to prevent further queueing and drain
-the worker before the IRQ action is released. Keep the parent IRQ active
-while the worker completes. devm_add_action_or_reset() also drains the
-work if action registration fails.
+500 runs of a 0.2 s aplay at 48 kHz while a second loop toggled
+"Digital Thru Playback Route" with amixer (12693 on/off cycles, kernel
+7.2.9): in 216 cases the two usb_set_interface() calls ran at the same
+time and the kernel logged "sysfs: cannot create duplicate filename
+'.../3-2:1.1/ep_82'" with a stack dump. 27 of the aplay runs failed,
+and for each of them the kernel logged "could not start pcm stream".
 
-This issue was identified as part of our ongoing research while
-reviewing kernel code.
+Take stream_mutex in the put. The pcm runtime is created before the
+controls and freed with the card, so chip->pcm is valid whenever the
+put runs. The put waits for a running prepare, which makes synchronous
+USB transfers under stream_mutex; on a card that responds late the wait
+can reach about 12 s, or 24 s with Digital Thru on, and during the wait
+the other controls of the card can be neither read nor written, because
+snd_ctl_elem_write() holds controls_rwsem around the put. Before this
+patch the put already made transfers of the same kind under
+controls_rwsem. No code that holds stream_mutex takes controls_rwsem.
 
-Fixes: dfa556e45ae9 ("platform: cznic: turris-omnia-mcu: Add support for MCU connected GPIOs")
+The same test on kernel 7.2.10 with this patch (12863 cycles) gave no
+failed aplay run and no "duplicate filename" message.
+
+Fixes: 2475b0d40761 ("ALSA: 6fire - Add support of digital-thru mixer")
 Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://lore.kernel.org/r/20261016013918.3492835-1-mhun512@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261016073132.109288-2-p.glizniewicz@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/cznic/turris-omnia-mcu-gpio.c    | 31 +++++++++----------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ sound/usb/6fire/control.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/cznic/turris-omnia-mcu-gpio.c b/drivers/platform/cznic/turris-omnia-mcu-gpio.c
-index 88e208d458820..13cf9d0b02aab 100644
---- a/drivers/platform/cznic/turris-omnia-mcu-gpio.c
-+++ b/drivers/platform/cznic/turris-omnia-mcu-gpio.c
-@@ -11,7 +11,6 @@
- #include <linux/bug.h>
- #include <linux/cleanup.h>
- #include <linux/device.h>
--#include <linux/devm-helpers.h>
- #include <linux/errno.h>
- #include <linux/gpio/driver.h>
- #include <linux/i2c.h>
-@@ -831,6 +830,18 @@ static void button_release_emul_fn(struct work_struct *work)
- 	generic_handle_irq_safe(mcu->client->irq);
- }
+diff --git a/sound/usb/6fire/control.c b/sound/usb/6fire/control.c
+index 7c2274120c765..4474bdc78e535 100644
+--- a/sound/usb/6fire/control.c
++++ b/sound/usb/6fire/control.c
+@@ -20,6 +20,7 @@
+ #include "control.h"
+ #include "comm.h"
+ #include "chip.h"
++#include "pcm.h"
  
-+static void omnia_disable_button_release_work(void *data)
-+{
-+	struct delayed_work *work = data;
-+
+ static const char * const opt_coax_texts[2] = { "Optical", "Coax" };
+ static const char * const line_phono_texts[2] = { "Line", "Phono" };
+@@ -383,6 +384,12 @@ static int usb6fire_control_digital_thru_put(struct snd_kcontrol *kcontrol,
+ 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
+ 	int changed = 0;
+ 
 +	/*
-+	 * The IRQ thread may requeue this work while the IRQ remains active.
-+	 * Disable and drain it before releasing the IRQ action and the MCU
-+	 * state used by the worker.
++	 * with Digital Thru on, streaming_update() selects the altsetting and
++	 * writes the clock register of an idle card; prepare does the same
++	 * under stream_mutex
 +	 */
-+	disable_delayed_work_sync(work);
-+}
-+
- static void
- fill_int_from_sts(unsigned long *rising, unsigned long *falling,
- 		  unsigned long rising_sts, unsigned long falling_sts,
-@@ -1072,21 +1083,9 @@ int omnia_mcu_register_gpiochip(struct omnia_mcu *mcu)
- 		return dev_err_probe(dev, err, "Cannot request IRQ\n");
- 
- 	if (!new_api) {
--		/*
--		 * The button_release_emul_work has to be initialized before the
--		 * thread is requested, and on driver remove it needs to be
--		 * canceled before the thread is freed. Therefore we can't use
--		 * devm_delayed_work_autocancel() directly, because the order
--		 *   devm_delayed_work_autocancel();
--		 *   devm_request_threaded_irq();
--		 * would cause improper release order:
--		 *   free_irq();
--		 *   cancel_delayed_work_sync();
--		 * Instead we first initialize the work above, and only now
--		 * after IRQ is requested we add the work devm action.
--		 */
--		err = devm_add_action(dev, devm_delayed_work_drop,
--				      &mcu->button_release_emul_work);
-+		err = devm_add_action_or_reset(dev,
-+					       omnia_disable_button_release_work,
-+					       &mcu->button_release_emul_work);
- 		if (err)
- 			return err;
- 	}
++	guard(mutex)(&rt->chip->pcm->stream_mutex);
+ 	if (rt->digital_thru_switch != ucontrol->value.integer.value[0]) {
+ 		rt->digital_thru_switch = ucontrol->value.integer.value[0];
+ 		usb6fire_control_streaming_update(rt);
 -- 
 2.53.0
 
