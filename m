@@ -1,57 +1,69 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019669;
-	b=32wK7JMDu1hzawcD6PIYvojN0rJRks3D1803/Ck6SKSuqDIDvxt6BwwSXDLrrrC9aTC/
-	 GZaZ+COeQjVOkj4Jwl+5GfqrA276iA3taZVeUho55GqCHduizk2+x0akYqP1cEsijdrc3
-	 bki94Bbym2ZMotrQktiBkCUeLBsHd53y1aWohgLk9oJyMB3JjfCGZrUHogqwtUNNNYcAJ
-	 xG8XmKtOSixcbSD+sRHq7RfePpBIzWg+O+WocDGz61GhXbYKuaKYtFqedwErXu5WBzJaX
-	 a3jiISs0mLiQi1Gl2JmRJ8X0GwqynHht3mOqb88kyg/g+yjs6YnMTGZoWDy2/zZA3/Q==
+	t=1795019672;
+	b=P5lIEdfl7b7SUrrn+exQHsj1sjMdfwqTSygdJOSgeNxnpG9HwMkOcUW3xRfOJEqf4TMv
+	 XGeoXpZpb4t9VUiikeVVseK+A4aVi4ccIQAF+WJfPpUdKHr5IlZh2lmufK791dI4CYHqe
+	 K5VROt3oSnM9HQa6+E7cp3GpcUZHdNJshOpJGh+euZPOOq3RtnQMtfmaA7MJuJRXdnN5L
+	 kXYACrHY2/a/0BpvJ58Yq5TmqR3Y2HFX0+5wJ1jRCVIThmcg1SiWOGjP4IVa60uPFbRCV
+	 fXnlcHE66CKr+xUGEdZlmyiqju8gkfM54lh2lBLOs4cGPTfPSGAtHw9X9fmqVjHCY4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UFLNg4VIA5VXALpM8w3abM8roQw5Bo9Qai8/DGOqDoE=;
-	b=ClcwZlObk7WpS8LA5chFgwj4h3niPJReGKMeKLq7KLnCXMrgOjBrPHCSFpb5ze47AocO
-	 DrlnPL2SOalglflGdj4jJ6Hz0ZchWFwmcoQOmW/XMKyDzQ+ZfgVyfy61oJmJx0HNHhZ07
-	 kU6N3Ugp59kZa90LhZvHnedJMjzBpltt5dZ790/UktQF3yPJqiKX3XEGA1z9gHqnF09ox
-	 vDTokXB/ILRlgXBK2uuxQ8orsq1M/OMbnPh4O98shlyjSqyMatTLKEiYu/Vg5TkjoFMZy
-	 jxRj2u9/7Zki4wR+tW/ycbUijpUoHlIrFQ3whe6VsOImDxZGdWtYAt6wQDhCIgU9c4w==
+	bh=/AY97MgLowgAjJPPg99vNOE+tYAdAy8bI31JqjsQorI=;
+	b=wxqh9HNcpXCXW29GAeT1VhTSoQpK52awi8k1Q1HS/AQjjqG1LfP406R0FybCYZ+cFtlf
+	 nXlhE0lMGB4Yjm1yTStSr8S8S4gcKH99ElS0vVpJuZx+DMyIChHGroUDd1OIs0sPO2a2S
+	 sQUmFbqzUD9lSUj3DxnYi73Y1gZlFKhkJkfjcJm0NBrD7hBDbeZWz+v1Hv9zz7tee+ypB
+	 qkfjOgQHNifoeqvaDC+qYAaW5uBQein+GBqyBjGgEIW8tzIJTY172TD+fZ417s9nmY0B6
+	 hILHLv4weKdae9hL80L5KKo2ez6eREUPjXnGm78Ptzd4xJu88RIuPXz5Ryd1nPQQs/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPjw3aoy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PC/nChxY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E64606A33E;
-	Wed, 18 Nov 2026 16:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09551606A332;
+	Wed, 18 Nov 2026 16:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SPjw3aoy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A6B1F000C4;
-	Wed, 18 Nov 2026 16:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PC/nChxY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A74B1F000C5;
+	Wed, 18 Nov 2026 16:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019669;
-	bh=UFLNg4VIA5VXALpM8w3abM8roQw5Bo9Qai8/DGOqDoE=;
+	s=korg; t=1795019671;
+	bh=/AY97MgLowgAjJPPg99vNOE+tYAdAy8bI31JqjsQorI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SPjw3aoyrMsB6FFGq5zyJ77pC6xADkmJNpms8NmreHYzc8oDWCq/BGgbwhu8A2ZBZ
-	 7cAedOHKwWmMfqG2qC8Iu1bv1uNaRvv/B7i35ivtP1fW1DA2w3oxD21SJDUjMVGezM
-	 y3xfkUnqmz9lVb951tPBc7jJAcY9bSQka7jDUglc=
+	b=PC/nChxYXb4oVzIbDHYaIH7y4ZhX1f0k0DNrlkO+bERhSEGvvgkzAlLbY9xJslCnx
+	 72dJk3tS3IVkVRITbrmUsK3gvz7dCr9O1Uo67Ech5zCJifRSZ59zXMbFaGCfwsfvQg
+	 0VkqqO9xt66Y8UrCKH7hyrcP/MMLDZy3Er0P6Anw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@davidgow.net>,
+	David Hildenbrand <david@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Eva Kurchatova <eva.kurchatova@virtuozzo.com>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	Lian Wang <lianux.mm@gmail.com>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1678/2651] smb: client: log the selected security type on session setup failure
-Date: Wed, 18 Nov 2026 15:48:38 +0100
-Message-ID: <20261118150348.093580568@linuxfoundation.org>
+Subject: [PATCH 7.3 1679/2651] selftests/damon: stop kdamond on error exits of no-op commit test
+Date: Wed, 18 Nov 2026 15:48:39 +0100
+Message-ID: <20261118150348.129933704@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,50 +85,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 
-[ Upstream commit a4111beeade900346726acb2746f22a6313aeaf0 ]
+[ Upstream commit 65c7e923ed1afa7329f8b910327ebf6ae10a5fb6 ]
 
-When mounting without an explicit sec= option, ses->sectype stays
-Unspecified while the real mechanism is chosen later through
-->select_sectype(), so a failed session setup logs a useless name:
+Patch series "mm/damon: misc improvements in tests and documents".
 
-  CIFS: VFS: \\server failed to create a new SMB session with Unknown: -13
+Add various improvements to DAMON tests and documents.
 
-Resolve the mechanism through ->select_sectype() before formatting it, as
-cifs_debug.c already does, so the message names the actual security type.
+Patch 1 and 2 from Zenghui Yu (Huawei) let DAMON selftest to clean up its
+state and output after running the tests.  Patch 3 from Eva Kurchatova
+makes a few selftest be able to run with Python's safe path mode.  Patch 4
+from Kunwu Chan improves coverage of DAMON kunit tests.  Finally, patches
+5 and 6 from Liew Rui Yan clarify and fix typos on documents for DAMOS
+quota behaviors.
 
-Fixes: a8fce7c807b1 ("smb: client: improve error message when creating SMB session")
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
+Below are notes that can be removed in the final commit message.
+
+This is a batched repost of DAMON patches that were individually posted.
+Please refer to each patch for changelog.
+
+This patch (of 6):
+
+The sysfs_no_op_commit_break test starts a kdamond via sysfs, but its
+error paths (e.g., drgn not installed) exit without stopping it.  The
+leaked kdamond then makes subsequent tests, e.g.  lru_sort.sh and
+reclaim.sh, skip with "Another kdamond is running".
+
+Wrap the post-start logic in try-finally so that kdamonds.stop() is
+executed on every exit path.
+
+Link: https://lore.kernel.org/20260914141952.91465-1-sj@kernel.org
+Link: https://lore.kernel.org/20260914141952.91465-2-sj@kernel.org
+Fixes: 10725cd2b09a ("selftests/damon: test no-op commit broke DAMON status")
+Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Reviewed-by: SJ Park <sj@kernel.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: GLM-5.3 OpenCode
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: David Gow <davidgow@davidgow.net>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Eva Kurchatova <eva.kurchatova@virtuozzo.com>
+Cc: Kunwu Chan <kunwu.chan@gmail.com>
+Cc: Lian Wang <lianux.mm@gmail.com>
+Cc: Liew Rui Yan <aethernet65535@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../damon/sysfs_no_op_commit_break.py         | 35 ++++++++++---------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 9795aa0661d55..230b7a4a500e5 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4184,8 +4184,12 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
+diff --git a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+index 2c65cffe6b545..81774ddc55ac4 100755
+--- a/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
++++ b/tools/testing/selftests/damon/sysfs_no_op_commit_break.py
+@@ -47,26 +47,27 @@ def main():
+         print('kdamond start failed: %s' % err)
+         exit(1)
  
- 	if (rc) {
- 		if (new_ses) {
-+			enum securityEnum sectype;
-+
-+			sectype = server->ops->select_sectype(server,
-+							      ses->sectype);
- 			cifs_server_dbg(VFS, "failed to create a new SMB session with %s: %d\n",
--					get_security_type_str(ses->sectype), rc);
-+					get_security_type_str(sectype), rc);
- 		}
- 		spin_lock(&ses->ses_lock);
- 		if (ses->ses_status == SES_IN_SETUP)
+-    before_commit_status, err = \
+-        dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+-    if err is not None:
+-        print('before-commit status dump failed: %s' % err)
+-        exit(1)
++    try:
++        before_commit_status, err = \
++            dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++        if err is not None:
++            print('before-commit status dump failed: %s' % err)
++            exit(1)
+ 
+-    kdamonds.kdamonds[0].commit()
++        kdamonds.kdamonds[0].commit()
+ 
+-    after_commit_status, err = \
+-        dump_damon_status_dict(kdamonds.kdamonds[0].pid)
+-    if err is not None:
+-        print('after-commit status dump failed: %s' % err)
+-        exit(1)
+-
+-    if before_commit_status != after_commit_status:
+-        print(f'before: {json.dumps(before_commit_status, indent=2)}')
+-        print(f'after: {json.dumps(after_commit_status, indent=2)}')
+-        exit(1)
++        after_commit_status, err = \
++            dump_damon_status_dict(kdamonds.kdamonds[0].pid)
++        if err is not None:
++            print('after-commit status dump failed: %s' % err)
++            exit(1)
+ 
+-    kdamonds.stop()
++        if before_commit_status != after_commit_status:
++            print(f'before: {json.dumps(before_commit_status, indent=2)}')
++            print(f'after: {json.dumps(after_commit_status, indent=2)}')
++            exit(1)
++    finally:
++        kdamonds.stop()
+ 
+ if __name__ == '__main__':
+     main()
 -- 
 2.53.0
 
