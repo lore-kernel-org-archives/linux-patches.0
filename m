@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022623;
-	b=QaDONsNrbS0G6FSQ/UeI11qJiduxOTfCrdsqo9Gxao9DyuD3bN4ULY5vozr7g2h9afZa
-	 yHefmSNh4OR3Sx0lngrMjG/HWXcChUQZ0K9qkY0CXhMu3d4dfYOTt/UNKmtIGTC2juFG8
-	 sybyfgwzDP1RUtsO7eUe2GfFuWGvY8khSWLYtyu7RFpkmrEWRnyJrzTWaKezTJpHzwSMl
-	 LJHdYy4IeNFI5hI5ofnDCCmn2R+nPqoIT+D1m+oRpbwEU7oDqQKiC5RDJXTfBjEersIf7
-	 QiAvnrOgR7pNs7sdb2b5pjA0MRVxT6jPN3w3x6YKs8pSIjJV5cynBw1SfJRf9okBWIQ==
+	t=1795022626;
+	b=eYTrvYENp+Uej5a9wQ2eT2lPlgjSj3WIrVfdO9pHQ9QBk1F5zzEHPQTJPnwYr6IUp4ct
+	 BI2Gy/LyuqeKAnp3YK/Kjoo3CYbE33+hItKwoDnZFeJ3Kq0YKpRuwW4YNhRDTuGE9Q8OT
+	 Rlc8lO4pd5beF1X6FRWzjUlZpkjTCXTK279MXOgcRFtsWq5wYfq2ftEWpX3ut/XbdpIO4
+	 xy7pGnk8SC17kV15AtbwufUxSQ5saRaoslrl8WkODUFOxLSQHpOVJ65tSXYFf1WDoIWE5
+	 MwY2H9FKM2i9AZeE6rBzsAr5hocCk8Y0AbZQwz4lilEN+DKHaozZLa89Djoh01pKL8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7Xs2XMv5Ac0I/3HnsQBOpC3vjmG4nkaqBRk+x1uU1I0=;
-	b=mO3whz3aq3hoIJCAMQwZN4YnApjAqLegC0fnDh4TO3zK6AxDuNv5O5IOtr7sKknWpRYY
-	 F4W2jIUpHnR/PrTO2uttIV3gpnjAghWR7CXCyMZsfUKcdk6LgkvbCBiL6aPNDYprUZUsv
-	 kqQ5655uEdeNAW6v2R1D5Ri779s3xj/ENSEZmx3eFsTCulGq8CVPS5758CYCv0FZ5TA3H
-	 TIYdKE65KaYt+0if4gmDKiEuvcIpSV4RnSX+y/GUE9WwwQNyp/GyUkj+wkQO3Sbo2fCv8
-	 KycZk3Lr7Abi9GzfcvHHwtM04rwrnSV5TybVqu/eVPsmYXwvcjXHSjSDP6nfLOy/Mgg==
+	bh=7vJvmoK29SlI5e0LGc7raJYoKbgKzDA+OpJR3VRbH6M=;
+	b=vz1G7OGSv1NOK5lcgMH7ut2f353bAqkcBG+wOx3JrDe7RlsyebGt/nOYMcIeZv+w1YF1
+	 mQPRJDGwxBQ+t2hh17Zp1zij5viFIj5CVU7iAaTMCZoHSGn7SA75nFTvt9I/rMdlXsXaR
+	 BoIJ6fTLH5nZUKtfhWX1vW0pwSBA9QE430mVzAg28ixg8q3hXS7SMymqTcCpJfKmvbXPQ
+	 YhGENZWtKzODUKsOdwriSEZnDPEV6v20ltNhSTqOv1BBJ9MEjGSCal7ADrTFfWRH4uoqr
+	 I63vinwo6ljiYkyXzRCAiEjc96qmjxYXuqLvFU7O+nyk3JX7l8zK61Z5z8MyVTt189Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRCIORK3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NFh1eNBZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5298A606A332;
-	Wed, 18 Nov 2026 17:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BE7606A31C;
+	Wed, 18 Nov 2026 17:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CRCIORK3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31281F000C4;
-	Wed, 18 Nov 2026 17:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NFh1eNBZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA6E1F000C4;
+	Wed, 18 Nov 2026 17:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022623;
-	bh=7Xs2XMv5Ac0I/3HnsQBOpC3vjmG4nkaqBRk+x1uU1I0=;
+	s=korg; t=1795022626;
+	bh=7vJvmoK29SlI5e0LGc7raJYoKbgKzDA+OpJR3VRbH6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CRCIORK3XS1Ko140LgFCNeBkicW+XAAJxmStiI0/xiSp+IUbOC+2WgsDl4scdMqX9
-	 7F+nCqMSIe8i79Xrumye4NS5azwAJClQ9TvNovWnOgVenvOl0LmIazFse0GtCJQpLs
-	 OSB5sOTdh7U4VmbfmvMrRRwSBGwNMjqZu5Sj9DpQ=
+	b=NFh1eNBZEPdGCS0hR+kxv39S1Naswwzq6DrUgOcanrhUGGtWkvK9v4F+vJlRwzeW/
+	 7TIxOu7R/j46mtAOpXL+G5/eeBc0VQA7ZL5XBo8pXEm7acU6/0fR8JPA9dSB+9c7rI
+	 GXmUtTqjSUHCh8SNJBPnUY7cLuMVjM0QEffc9gpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Aditya Sharma <adi.sharma@zohomail.in>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Liam Howlett <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0078/2151] l2tp: snapshot sequencing state when building transmit headers
-Date: Wed, 18 Nov 2026 15:30:13 +0100
-Message-ID: <20261118150124.608022703@linuxfoundation.org>
+Subject: [PATCH 6.18 0079/2151] mm/memory: update stale locking comments for fault handlers
+Date: Wed, 18 Nov 2026 15:30:14 +0100
+Message-ID: <20261118150124.643337358@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,340 +74,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Aditya Sharma <adi.sharma@zohomail.in>
 
-[ Upstream commit d06ae66516e1aaf023808912af6292aef09d46c3 ]
+[ Upstream commit 214f9ab72ce6e16120c20ad670389656f059e685 ]
 
-Updates to send_seq from netlink, PPP setsockopt and receive-side
-negotiation race with packet transmission. The header length is updated
-separately, while transmit reads both fields repeatedly without
-synchronization.
+Update the comments for wp_page_copy(), do_wp_page(), do_swap_page(),
+do_anonymous_page(), __do_fault(), do_fault(), handle_pte_fault(),
+__handle_mm_fault(), and handle_mm_fault() to concisely clarify that they
+can be entered holding either the mmap_lock or the VMA lock, and that the
+lock may be released upon returning VM_FAULT_RETRY.
 
-For example, transmit can push a ten-byte L2TPv2 header, then a concurrent
-writer clears send_seq before the header builder reads it. The builder
-writes only six bytes, leaving four bytes of uninitialized skb headroom
-in the outgoing packet. The reverse mismatch overwrites the beginning of
-the payload. A later hdr_len read can also make the UDP length disagree
-with the skb length.
+Additionally, make the following corrections:
+- In do_anonymous_page(), correct the outdated claim that the function
+  is entered with the PTE "mapped but not yet locked". Since
+  handle_pte_fault() unmaps the empty PTE before routing to
+  do_pte_missing(), the comment now correctly states it is entered
+  with the PTE unmapped and unlocked.
+- In __do_fault(), update the stale reference from __lock_page_retry()
+  to __folio_lock_or_retry().
 
-KCSAN reported:
-
-  BUG: KCSAN: data-race in l2tp_session_set_header_len / l2tp_xmit_skb
-
-  write to 0xffff888100d0944a of 2 bytes by task 116 on cpu 1:
-   l2tp_session_set_header_len+0x81/0xc0
-   l2tp_nl_cmd_session_modify+0x122/0x2c0
-   genl_family_rcv_msg_doit+0x170/0x1d0
-
-  read to 0xffff888100d0944a of 2 bytes by task 115 on cpu 0:
-   l2tp_xmit_skb+0x9c/0xc80
-   pppol2tp_sendmsg+0x21c/0x2a0
-   __sys_sendto+0x28c/0x2a0
-
-The bug can lead to leak kernel base address for KASLR bypass, the
-corresponding reproducer can be provided per request.
-
-Initialize hdr_len to the maximum header size and leave it unchanged
-when sequencing is toggled. Snapshot send_seq once per packet and use
-that snapshot for the actual header length and header construction,
-including the sequence flag. Use the same length for headroom, the header
-push and the UDP length. PPP callers can safely reserve the maximum size;
-L2TPv3 header sizes do not depend on sequencing.
-
-Make send_seq a separate bool so READ_ONCE() and WRITE_ONCE() can be used
-without sharing a bitfield storage unit with other configuration flags.
-Preserve the netlink attribute's existing low-bit truncation.
-
-Fixes: 3557baabf280 ("[L2TP]: PPP over L2TP driver core")
-Cc: stable@vger.kernel.org
-Assisted-by: GPT-6 Astra
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Link: https://patch.msgid.link/20261013090500.1180376-1-nicoyip.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ sashal: Preserved the existing po->chan.hdrlen update in pppol2tp_session_setsockopt(), which upstream had removed. ]
+Link: https://lore.kernel.org/20260424092217.263648-1-adi.sharma@zohomail.in
+Signed-off-by: Aditya Sharma <adi.sharma@zohomail.in>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: f681d4580d5c ("mm: fix address wraparound when scanning large folio PTEs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_core.c    | 51 +++++++++++++++++++----------------------
- net/l2tp/l2tp_core.h    |  6 ++---
- net/l2tp/l2tp_debugfs.c |  4 ++--
- net/l2tp/l2tp_netlink.c | 11 ++++-----
- net/l2tp/l2tp_ppp.c     |  8 +++----
- 5 files changed, 35 insertions(+), 45 deletions(-)
+ mm/memory.c | 55 ++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 29 insertions(+), 26 deletions(-)
 
-diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
-index e78e8ea93bb7b..1d575005a58e2 100644
---- a/net/l2tp/l2tp_core.c
-+++ b/net/l2tp/l2tp_core.c
-@@ -924,11 +924,9 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
- 		 * check if we sre sending sequence numbers and if not,
- 		 * configure it so.
- 		 */
--		if (!session->lns_mode && !session->send_seq) {
-+		if (!session->lns_mode && !READ_ONCE(session->send_seq)) {
- 			trace_session_seqnum_lns_enable(session);
--			session->send_seq = 1;
--			l2tp_session_set_header_len(session, tunnel->version,
--						    tunnel->encap);
-+			WRITE_ONCE(session->send_seq, true);
- 		}
- 	} else {
- 		/* No sequence numbers.
-@@ -946,12 +944,10 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
- 		 * If we're the LNS and we're sending sequence numbers, the
- 		 * LAC is broken. Discard the frame.
- 		 */
--		if (!session->lns_mode && session->send_seq) {
-+		if (!session->lns_mode && READ_ONCE(session->send_seq)) {
- 			trace_session_seqnum_lns_disable(session);
--			session->send_seq = 0;
--			l2tp_session_set_header_len(session, tunnel->version,
--						    tunnel->encap);
--		} else if (session->send_seq) {
-+			WRITE_ONCE(session->send_seq, false);
-+		} else if (READ_ONCE(session->send_seq)) {
- 			pr_debug_ratelimited("%s: recv data has no seq numbers when required. Discarding.\n",
- 					     session->name);
- 			atomic_long_inc(&session->stats.rx_seq_discards);
-@@ -1147,7 +1143,8 @@ static void l2tp_udp_encap_err_recv(struct sock *sk, struct sk_buff *skb, int er
- 
- /* Build an L2TP header for the session into the buffer provided.
+diff --git a/mm/memory.c b/mm/memory.c
+index e37ae367c8c19..c9597d7f8ba0a 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3673,8 +3673,8 @@ vm_fault_t __vmf_anon_prepare(struct vm_fault *vmf)
+  * Handle the case of a page which we actually need to copy to a new page,
+  * either due to COW or unsharing.
+  *
+- * Called with mmap_lock locked and the old page referenced, but
+- * without the ptl held.
++ * Called with either the VMA lock or the mmap_lock held (see FAULT_FLAG_VMA_LOCK)
++ * and the old page referenced, but without the ptl held.
+  *
+  * High level logic flow:
+  *
+@@ -4075,9 +4075,9 @@ static bool wp_can_reuse_anon_folio(struct folio *folio,
+  * though the page will change only once the write actually happens. This
+  * avoids a few races, and potentially makes it more efficient.
+  *
+- * We enter with non-exclusive mmap_lock (to exclude vma changes,
+- * but allow concurrent faults), with pte both mapped and locked.
+- * We return with mmap_lock still held, but pte unmapped and unlocked.
++ * We enter with either the VMA lock or the mmap_lock held (see
++ * FAULT_FLAG_VMA_LOCK) and pte both mapped and locked. We return with
++ * the same lock still held, but pte unmapped and unlocked.
   */
--static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
-+static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf,
-+				    bool send_seq)
+ static vm_fault_t do_wp_page(struct vm_fault *vmf)
+ 	__releases(vmf->ptl)
+@@ -4605,12 +4605,12 @@ static struct folio *alloc_swap_folio(struct vm_fault *vmf)
+ static DECLARE_WAIT_QUEUE_HEAD(swapcache_wq);
+ 
+ /*
+- * We enter with non-exclusive mmap_lock (to exclude vma changes,
+- * but allow concurrent faults), and pte mapped but not yet locked.
++ * We enter with either the VMA lock or the mmap_lock held (see
++ * FAULT_FLAG_VMA_LOCK), and pte mapped but not yet locked.
+  * We return with pte unmapped and unlocked.
+  *
+- * We return with the mmap_lock locked or unlocked in the same cases
+- * as does filemap_fault().
++ * When returning, the lock may have been released in the same cases
++ * as done by filemap_fault().
+  */
+ vm_fault_t do_swap_page(struct vm_fault *vmf)
  {
- 	struct l2tp_tunnel *tunnel = session->tunnel;
- 	__be16 *bufp = buf;
-@@ -1156,14 +1153,14 @@ static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
- 	u32 tunnel_id = tunnel->peer_tunnel_id;
- 	u32 session_id = session->peer_session_id;
- 
--	if (session->send_seq)
-+	if (send_seq)
- 		flags |= L2TP_HDRFLAG_S;
- 
- 	/* Setup L2TP header. */
- 	*bufp++ = htons(flags);
- 	*bufp++ = htons(tunnel_id);
- 	*bufp++ = htons(session_id);
--	if (session->send_seq) {
-+	if (send_seq) {
- 		*bufp++ = htons(session->ns);
- 		*bufp++ = 0;
- 		session->ns++;
-@@ -1174,7 +1171,8 @@ static int l2tp_build_l2tpv2_header(struct l2tp_session *session, void *buf)
- 	return bufp - optr;
+@@ -5161,9 +5161,10 @@ static struct folio *alloc_anon_folio(struct vm_fault *vmf)
  }
  
--static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf)
-+static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf,
-+				    bool send_seq)
+ /*
+- * We enter with non-exclusive mmap_lock (to exclude vma changes,
+- * but allow concurrent faults), and pte mapped but not yet locked.
+- * We return with mmap_lock still held, but pte unmapped and unlocked.
++ * We enter with either the VMA lock or the mmap_lock held (see
++ * FAULT_FLAG_VMA_LOCK), and pte unmapped and unlocked.
++ * We return with the lock still held, but pte unmapped and unlocked.
++ * If VM_FAULT_RETRY is returned, the lock may have been released.
+  */
+ static vm_fault_t do_anonymous_page(struct vm_fault *vmf)
  {
- 	struct l2tp_tunnel *tunnel = session->tunnel;
- 	char *bufp = buf;
-@@ -1200,7 +1198,7 @@ static int l2tp_build_l2tpv3_header(struct l2tp_session *session, void *buf)
- 	if (session->l2specific_type == L2TP_L2SPECTYPE_DEFAULT) {
- 		u32 l2h = 0;
- 
--		if (session->send_seq) {
-+		if (send_seq) {
- 			l2h = 0x40000000 | session->ns;
- 			session->ns++;
- 			session->ns &= 0xffffff;
-@@ -1234,19 +1232,24 @@ static int l2tp_xmit_queue(struct l2tp_tunnel *tunnel, struct sk_buff *skb, stru
- static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, unsigned int *len)
- {
- 	struct l2tp_tunnel *tunnel = session->tunnel;
-+	bool send_seq = READ_ONCE(session->send_seq);
- 	unsigned int data_len = skb->len;
- 	struct sock *sk = tunnel->sock;
-+	u16 hdr_len = session->hdr_len;
- 	int headroom, uhlen, udp_len;
- 	int ret = NET_XMIT_SUCCESS;
- 	struct inet_sock *inet;
- 	struct udphdr *uh;
- 
-+	if (tunnel->version == L2TP_HDR_VER_2 && !send_seq)
-+		hdr_len -= 4;
-+
- 	/* Check that there's enough headroom in the skb to insert IP,
- 	 * UDP and L2TP headers. If not enough, expand it to
- 	 * make room. Adjust truesize.
- 	 */
- 	uhlen = (tunnel->encap == L2TP_ENCAPTYPE_UDP) ? sizeof(*uh) : 0;
--	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + session->hdr_len;
-+	headroom = NET_SKB_PAD + sizeof(struct iphdr) + uhlen + hdr_len;
- 	if (skb_cow_head(skb, headroom)) {
- 		kfree_skb(skb);
- 		return NET_XMIT_DROP;
-@@ -1254,9 +1257,9 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
- 
- 	/* Setup L2TP header */
- 	if (tunnel->version == L2TP_HDR_VER_2)
--		l2tp_build_l2tpv2_header(session, __skb_push(skb, session->hdr_len));
-+		l2tp_build_l2tpv2_header(session, __skb_push(skb, hdr_len), send_seq);
- 	else
--		l2tp_build_l2tpv3_header(session, __skb_push(skb, session->hdr_len));
-+		l2tp_build_l2tpv3_header(session, __skb_push(skb, hdr_len), send_seq);
- 
- 	/* Reset control buffer */
- 	memset(skb->cb, 0, sizeof(skb->cb));
-@@ -1299,7 +1302,7 @@ static int l2tp_xmit_core(struct l2tp_session *session, struct sk_buff *skb, uns
- 		uh = udp_hdr(skb);
- 		uh->source = inet->inet_sport;
- 		uh->dest = inet->inet_dport;
--		udp_len = uhlen + session->hdr_len + data_len;
-+		udp_len = uhlen + hdr_len + data_len;
- 		if (udp_len > U16_MAX) {
- 			kfree_skb(skb);
- 			ret = NET_XMIT_DROP;
-@@ -1768,16 +1771,11 @@ static void l2tp_session_del_work(struct work_struct *work)
- 	l2tp_session_put(session);
+@@ -5281,9 +5282,10 @@ static vm_fault_t do_anonymous_page(struct vm_fault *vmf)
  }
  
--/* We come here whenever a session's send_seq, cookie_len or
-- * l2specific_type parameters are set.
-- */
--void l2tp_session_set_header_len(struct l2tp_session *session, int version,
--				 enum l2tp_encap_type encap)
-+static void l2tp_session_set_header_len(struct l2tp_session *session, int version,
-+					enum l2tp_encap_type encap)
+ /*
+- * The mmap_lock must have been held on entry, and may have been
+- * released depending on flags and vma->vm_ops->fault() return value.
+- * See filemap_fault() and __lock_page_retry().
++ * Either the VMA lock or the mmap_lock must have been held on entry
++ * (see FAULT_FLAG_VMA_LOCK) and may have been released depending on
++ * flags and vma->vm_ops->fault() return value.
++ * See filemap_fault() and __folio_lock_or_retry().
+  */
+ static vm_fault_t __do_fault(struct vm_fault *vmf)
  {
- 	if (version == L2TP_HDR_VER_2) {
--		session->hdr_len = 6;
--		if (session->send_seq)
--			session->hdr_len += 4;
-+		session->hdr_len = 10;
- 	} else {
- 		session->hdr_len = 4 + session->cookie_len;
- 		session->hdr_len += l2tp_get_l2specific_len(session);
-@@ -1785,7 +1783,6 @@ void l2tp_session_set_header_len(struct l2tp_session *session, int version,
- 			session->hdr_len += 4;
- 	}
+@@ -5844,11 +5846,11 @@ static vm_fault_t do_shared_fault(struct vm_fault *vmf)
  }
--EXPORT_SYMBOL_GPL(l2tp_session_set_header_len);
  
- struct l2tp_session *l2tp_session_create(int priv_size, struct l2tp_tunnel *tunnel, u32 session_id,
- 					 u32 peer_session_id, struct l2tp_session_cfg *cfg)
-diff --git a/net/l2tp/l2tp_core.h b/net/l2tp/l2tp_core.h
-index ffd8ced3a51ff..25ae4c25d3eff 100644
---- a/net/l2tp/l2tp_core.h
-+++ b/net/l2tp/l2tp_core.h
-@@ -76,7 +76,7 @@ struct l2tp_session {
- 	u8			peer_cookie[8];
- 	int			peer_cookie_len;
- 	u16			l2specific_type;
--	u16			hdr_len;
-+	u16			hdr_len;	/* maximum L2TP header length */
- 	u32			nr;		/* session NR state (receive) */
- 	u32			ns;		/* session NR state (send) */
- 	struct sk_buff_head	reorder_q;	/* receive reorder queue */
-@@ -94,8 +94,8 @@ struct l2tp_session {
+ /*
+- * We enter with non-exclusive mmap_lock (to exclude vma changes,
+- * but allow concurrent faults).
+- * The mmap_lock may have been released depending on flags and our
++ * We enter with either the VMA lock or the mmap_lock held (see
++ * FAULT_FLAG_VMA_LOCK).
++ * The lock may have been released depending on flags and our
+  * return value.  See filemap_fault() and __folio_lock_or_retry().
+- * If mmap_lock is released, vma may become invalid (for example
++ * If the lock is released, vma may become invalid (for example
+  * by other thread calling munmap()).
+  */
+ static vm_fault_t do_fault(struct vm_fault *vmf)
+@@ -6176,10 +6178,11 @@ static vm_fault_t wp_huge_pud(struct vm_fault *vmf, pud_t orig_pud)
+  * with external mmu caches can use to update those (ie the Sparc or
+  * PowerPC hashed page tables that act as extended TLBs).
+  *
+- * We enter with non-exclusive mmap_lock (to exclude vma changes, but allow
+- * concurrent faults).
++ * On entry, we hold either the VMA lock or the mmap_lock
++ * (see FAULT_FLAG_VMA_LOCK).
+  *
+- * The mmap_lock may have been released depending on flags and our return value.
++ * The mmap_lock or VMA lock may have been released depending on flags
++ * and our return value.
+  * See filemap_fault() and __folio_lock_or_retry().
+  */
+ static vm_fault_t handle_pte_fault(struct vm_fault *vmf)
+@@ -6272,8 +6275,8 @@ static vm_fault_t handle_pte_fault(struct vm_fault *vmf)
  
- 	char			name[L2TP_SESSION_NAME_MAX]; /* for logging */
- 	char			ifname[IFNAMSIZ];
-+	bool			send_seq;	/* send packets with sequence numbers? */
- 	unsigned int		recv_seq:1;	/* expect receive packets with sequence numbers? */
--	unsigned int		send_seq:1;	/* send packets with sequence numbers? */
- 	unsigned int		lns_mode:1;	/* behave as LNS?
- 						 * LAC enables sequence numbers under LNS control.
- 						 */
-@@ -257,8 +257,6 @@ void l2tp_recv_common(struct l2tp_session *session, struct sk_buff *skb,
- int l2tp_udp_encap_recv(struct sock *sk, struct sk_buff *skb);
+ /*
+  * On entry, we hold either the VMA lock or the mmap_lock
+- * (FAULT_FLAG_VMA_LOCK tells you which).  If VM_FAULT_RETRY is set in
+- * the result, the mmap_lock is not held on exit.  See filemap_fault()
++ * (see FAULT_FLAG_VMA_LOCK).  If VM_FAULT_RETRY is set in
++ * the result, the lock is not held on exit.  See filemap_fault()
+  * and __folio_lock_or_retry().
+  */
+ static vm_fault_t __handle_mm_fault(struct vm_area_struct *vma,
+@@ -6501,9 +6504,9 @@ static vm_fault_t sanitize_fault_flags(struct vm_area_struct *vma,
  
- /* Transmit path helpers for sending packets over the tunnel socket. */
--void l2tp_session_set_header_len(struct l2tp_session *session, int version,
--				 enum l2tp_encap_type encap);
- int l2tp_xmit_skb(struct l2tp_session *session, struct sk_buff *skb);
- 
- /* Pseudowire management.
-diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
-index 90fc0a59d50ac..17c3a6db4c227 100644
---- a/net/l2tp/l2tp_debugfs.c
-+++ b/net/l2tp/l2tp_debugfs.c
-@@ -182,12 +182,12 @@ static void l2tp_dfs_seq_session_show(struct seq_file *m, void *v)
- 		   session->pwtype == L2TP_PWTYPE_ETH ? "ETH" :
- 		   session->pwtype == L2TP_PWTYPE_PPP ? "PPP" :
- 		   "");
--	if (session->send_seq || session->recv_seq)
-+	if (READ_ONCE(session->send_seq) || session->recv_seq)
- 		seq_printf(m, "   nr %u, ns %u\n", session->nr, session->ns);
- 	seq_printf(m, "   refcnt %d\n", refcount_read(&session->ref_count));
- 	seq_printf(m, "   config 0/0/%c/%c/-/%s %08x %u\n",
- 		   session->recv_seq ? 'R' : '-',
--		   session->send_seq ? 'S' : '-',
-+		   READ_ONCE(session->send_seq) ? 'S' : '-',
- 		   session->lns_mode ? "LNS" : "LAC",
- 		   0,
- 		   jiffies_to_msecs(session->reorder_timeout));
-diff --git a/net/l2tp/l2tp_netlink.c b/net/l2tp/l2tp_netlink.c
-index fbdd3d055dbc7..a9221c7360b70 100644
---- a/net/l2tp/l2tp_netlink.c
-+++ b/net/l2tp/l2tp_netlink.c
-@@ -697,12 +697,9 @@ static int l2tp_nl_cmd_session_modify(struct sk_buff *skb, struct genl_info *inf
- 	if (info->attrs[L2TP_ATTR_RECV_SEQ])
- 		session->recv_seq = nla_get_u8(info->attrs[L2TP_ATTR_RECV_SEQ]);
- 
--	if (info->attrs[L2TP_ATTR_SEND_SEQ]) {
--		struct l2tp_tunnel *tunnel = session->tunnel;
--
--		session->send_seq = nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]);
--		l2tp_session_set_header_len(session, tunnel->version, tunnel->encap);
--	}
-+	if (info->attrs[L2TP_ATTR_SEND_SEQ])
-+		WRITE_ONCE(session->send_seq,
-+			   nla_get_u8(info->attrs[L2TP_ATTR_SEND_SEQ]) & 1);
- 
- 	if (info->attrs[L2TP_ATTR_LNS_MODE])
- 		session->lns_mode = nla_get_u8(info->attrs[L2TP_ATTR_LNS_MODE]);
-@@ -745,7 +742,7 @@ static int l2tp_nl_session_send(struct sk_buff *skb, u32 portid, u32 seq, int fl
- 	    (session->peer_cookie_len &&
- 	     nla_put(skb, L2TP_ATTR_PEER_COOKIE, session->peer_cookie_len, session->peer_cookie)) ||
- 	    nla_put_u8(skb, L2TP_ATTR_RECV_SEQ, session->recv_seq) ||
--	    nla_put_u8(skb, L2TP_ATTR_SEND_SEQ, session->send_seq) ||
-+	    nla_put_u8(skb, L2TP_ATTR_SEND_SEQ, READ_ONCE(session->send_seq)) ||
- 	    nla_put_u8(skb, L2TP_ATTR_LNS_MODE, session->lns_mode) ||
- 	    (l2tp_tunnel_uses_xfrm(tunnel) &&
- 	     nla_put_u8(skb, L2TP_ATTR_USING_IPSEC, 1)) ||
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index c67ba1eab4769..dda3d12337802 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -1193,15 +1193,13 @@ static int pppol2tp_session_setsockopt(struct sock *sk,
- 			err = -EINVAL;
- 			break;
- 		}
--		session->send_seq = !!val;
-+		WRITE_ONCE(session->send_seq, !!val);
- 		{
- 			struct pppox_sock *po = pppox_sk(sk);
- 
- 			po->chan.hdrlen = val ? PPPOL2TP_L2TP_HDR_SIZE_SEQ :
- 				PPPOL2TP_L2TP_HDR_SIZE_NOSEQ;
- 		}
--		l2tp_session_set_header_len(session, session->tunnel->version,
--					    session->tunnel->encap);
- 		break;
- 
- 	case PPPOL2TP_SO_LNSMODE:
-@@ -1311,7 +1309,7 @@ static int pppol2tp_session_getsockopt(struct sock *sk,
- 		break;
- 
- 	case PPPOL2TP_SO_SENDSEQ:
--		*val = session->send_seq;
-+		*val = READ_ONCE(session->send_seq);
- 		break;
- 
- 	case PPPOL2TP_SO_LNSMODE:
-@@ -1557,7 +1555,7 @@ static void pppol2tp_seq_session_show(struct seq_file *m, void *v)
- 		   state, user_data_ok);
- 	seq_printf(m, "   0/0/%c/%c/%s %08x %u\n",
- 		   session->recv_seq ? 'R' : '-',
--		   session->send_seq ? 'S' : '-',
-+		   READ_ONCE(session->send_seq) ? 'S' : '-',
- 		   session->lns_mode ? "LNS" : "LAC",
- 		   0,
- 		   jiffies_to_msecs(session->reorder_timeout));
+ /*
+  * By the time we get here, we already hold either the VMA lock or the
+- * mmap_lock (FAULT_FLAG_VMA_LOCK tells you which).
++ * mmap_lock (see FAULT_FLAG_VMA_LOCK).
+  *
+- * The mmap_lock may have been released depending on flags and our
++ * The lock may have been released depending on flags and our
+  * return value.  See filemap_fault() and __folio_lock_or_retry().
+  */
+ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
 -- 
 2.53.0
 
