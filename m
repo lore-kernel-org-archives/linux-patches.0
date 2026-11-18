@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041708;
-	b=ewhXJkpCUB3MW3wqiQjrhjJatOUurj6f/0EkdJnQSEhDDs8jAnDYYCDLaPSBa0aoP4A+
-	 gZaLd/7kjXB8F3Fvm2QwuGjI5R+A1Etj0W+yW7uF1a/5tRWETb8i1zPJekyVgRuD2Aomd
-	 7nc8RiOnTaZFMtCv7ecZQKMx37u1bi+d0lSLClj4iUBntI5uP9Z293sOTtZEOyl7u7UcH
-	 9oUZWo6Gd7j9HAMHJxtn8q03S/mMW46yOTRrYrtO/42d7s+bYoEyYGRBklSK5jyetRlIE
-	 rmrPcl4JYnOlQgv3JY6hLwxEwlvG+6Fs78WC2j8sHnwUptDYHfx2ZmLhTOC7mDFSZqA==
+	t=1795041710;
+	b=rEK2AssBsqDwUEmUWYGblc75N4NmISRVHEvoDLMwmbYKzi31a/+mZD3uGfhDsgfBHEkM
+	 0jPMI+YLscUCtcxt+b1vkBl3cVvEPG3kDvNQNSOjkm1pAOuSF6/6kKjw8EPQggfq4M9e6
+	 U3Cu7v5fL2oVnUIYe8dUIw8BhdH7xkTgRLKxSBairtwrCaVTN11B5SLKk8aoHjqx9BSyF
+	 XUpYAm2/qOvzq7XzN75yQgUgu9PeShIHG/e9zadQA8NQ/LsyHwVM2ki1G8kYkxbjLSYM4
+	 SIbbvb2XVgliEMjcb9oukNyTMNA0hjWwEsB8ELuKD7vXCriBva+JkXspaVqSlFVKnug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041710;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cTPXwaB5t4+EG4jO/BSIP8PqZf0asnqFJn0PhXAHILU=;
-	b=GuIgzV56JHDSpin6ebkQxwNlHpQaAu6keRr/x7HKv7SetjIaQg+vmrNzrzCVnMS7h3i0
-	 Cuwb5GtfI22lFN5FHQQXj8iDt91c+s2yIXWVCPdWrj2spxr6kYxDjqn1o1g5xTulA9fAw
-	 OlWp9SPtSD7K42dobDv/2Zi06KBSf6Spw1+hs0Iw4mPo5BWMALx20p5qOmPFo2X6wxZfV
-	 M+flEVwkKfDzjqFf06keKqu0zdN6RkY9ZVc0GyrnLgMnxpK/chVo/OnRX9J02bL1W6NJu
-	 unFgEb4RyDHWi63Q8/V7QFY3Y7EVgfcmL6k7B3rGvH8mbMfyrMtkBciaTNsLH4z3zww==
+	bh=TVO5w2K35hYAMTVfTPRl9oEmEDK1RnWkRmpCIDPwcM4=;
+	b=IREA7b6UKVw3nfEJQ4eWb+eag1UNHjqWPzee6kgrwoNFjU8jhu0K/iByZt+AL9Gi8Gvh
+	 +2rAT1lCfrDZ2KQH6kJmrc8AxcO7B1WAQatYmpCvnmF+8tYp9eLPgTuQ1MFeX+BKiIg7V
+	 oXcD+V1BnA6fXFL6aLkcg45RqrovVSRg9tuF9Fp6wflzOFM6Mbn5LKMDsh42AYv8uuNAQ
+	 oNw7IADfgSpL7n5KBkTJg7LSrQccfKidl4wYTo7Jv9gkmdVtoBfnBmtbkSD3fD2mbXFJT
+	 7bhpIe6pX9pgIl9GeSq8FS9wopWooQgDrFkdZRd3kuIPEXA/tAuR89LM1WHX9j/ND9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQRqKTI2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tQ9VBo2X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E157F606A331;
-	Wed, 18 Nov 2026 22:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B898606A325;
+	Wed, 18 Nov 2026 22:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQRqKTI2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7811F000C4;
-	Wed, 18 Nov 2026 22:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tQ9VBo2X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47F21F000C4;
+	Wed, 18 Nov 2026 22:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041707;
-	bh=cTPXwaB5t4+EG4jO/BSIP8PqZf0asnqFJn0PhXAHILU=;
+	s=korg; t=1795041710;
+	bh=TVO5w2K35hYAMTVfTPRl9oEmEDK1RnWkRmpCIDPwcM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQRqKTI2gKth4OXEawheuuDGtnATT2Jlx2Ef4/pMNgNCIGS1Lkmq6Bjs9aJmdz3g7
-	 VDYViN+uloTaVlHghoB7DbgSrs/VOt9pZ6de+KP/eQCADAkzdPiaf+g+0A7lbu6F7H
-	 BXmAzKqswLY3R5UyyG0AzVIlEG066Uq7fygyaL7E=
+	b=tQ9VBo2XSuvnTv05J8W/rnZp9q8psmJ+3Xc9HgBwJVMyMqOtgWbK5Rw4+woFJstln
+	 Afy2YyJ0th2ao+4duEndTraALs9yAzbP2ZBrzkhtXukhOTeRU1woIbnAl1PCjjpARg
+	 2Nn7tMOTjIb+IL1/P745/UqmyogXO5F7L7VQVrL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Ling <zhuling2709@phytium.com.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Radu Rendec <radu@rendec.net>,
-	Marc Zyngier <maz@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2910/3318] irqchip/gic: Fix UBSAN shift-out-of-bounds in GIC helpers
-Date: Wed, 18 Nov 2026 15:58:52 +0100
-Message-ID: <20261118150447.756640377@linuxfoundation.org>
+Subject: [PATCH 6.6 2911/3318] ALSA: Add simple refcount helper functions
+Date: Wed, 18 Nov 2026 15:58:53 +0100
+Message-ID: <20261118150447.783724797@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,98 +67,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Ling <zhuling2709@phytium.com.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 13ce14ca41a35f5ee90b77ffa57da91ce6048a2d ]
+[ Upstream commit dcca9b6064c33c84fbeb9f09814178a206321249 ]
 
-When running with UBSAN enabled, enabling a GPIO controller that uses a
-GIC interrupt as its parent triggers several shift-out-of-bounds warnings:
+There are many open-code to manage the same pattern for refcount +
+wakeup sync at closing.  Let's provide the common helper functions to
+replace the open-code.
 
-  shift-out-of-bounds in drivers/irqchip/irq-gic-common.c:50:21
-  left shift of 2 by 30 places cannot be represented in type 'int'
+- The recount is kept in struct snd_refcount, where it's initialized
+by snd_refcount_init().
+- The user can simply reference or unreference via snd_refcount_get()
+and snd_refcount_put() functions
+- The user can wait for the all usages gone by snd_refcount_sync()
 
-Similar reports are emitted from gic_poke_irq() and gic_peek_irq() in
-drivers/irqchip/irq-gic-v3.c. The corresponding GICv2 helpers use the
-same signed-shift pattern. These masks are generated by shifting signed
-integer constants, which invokes undefined behavior when bit 31 is
-selected.
+Note that here we use atomic_t instead of refcount_t since the current
+users allow reusing the refcount after sync again.  The design of
+refcount_t prevents exactly this behavior, so it doesn't fit.
 
-Use BIT() to generate the masks with an unsigned type and make their
-intent explicit.
-
-Fixes: f27ecacc54cc ("[ARM] Add support for ARM GIC")
-Fixes: 5c0c1f08abf0 ("ARM: 6150/1: gic: implement set_type")
-Fixes: 021f653791ad ("irqchip: gic-v3: Initial support for GICv3")
-Signed-off-by: Zhu Ling <zhuling2709@phytium.com.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/2fJDwUUYdEf2_eaRa041L9xkT8RkSWFeo7euOnqMbbPhUatLlEaAvGfB6sOspDmXaxO87Eh7bQLV9UolyjbMtZBT1wB2UGypjPOo0Z-RC0Q=@proton.me
-Link: https://patch.msgid.link/20260929031050.16988-1-zhuling2709@phytium.com.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260610154538.51076-2-tiwai@suse.de
+Stable-dep-of: 91d0048a97e0 ("ALSA: pcm: Add refcount for races between drain and unlink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-common.c | 2 +-
- drivers/irqchip/irq-gic-v3.c     | 4 ++--
- drivers/irqchip/irq-gic.c        | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ include/sound/core.h | 21 +++++++++++++++++++++
+ sound/core/misc.c    | 24 ++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-common.c b/drivers/irqchip/irq-gic-common.c
-index afd6a1841715a..2efbb880bbc46 100644
---- a/drivers/irqchip/irq-gic-common.c
-+++ b/drivers/irqchip/irq-gic-common.c
-@@ -47,7 +47,7 @@ void gic_enable_quirks(u32 iidr, const struct gic_quirk *quirks,
- int gic_configure_irq(unsigned int irq, unsigned int type,
- 		       void __iomem *base, void (*sync_access)(void))
- {
--	u32 confmask = 0x2 << ((irq % 16) * 2);
-+	u32 confmask = BIT(((irq % 16) * 2) + 1);
- 	u32 confoff = (irq / 16) * 4;
- 	u32 val, oldval;
- 	int ret = 0;
-diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-index 90e72f95609cc..c1bd054daab9f 100644
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -372,7 +372,7 @@ static int gic_peek_irq(struct irq_data *d, u32 offset)
- 	u32 index, mask;
+diff --git a/include/sound/core.h b/include/sound/core.h
+index f9d85dd653066..11784021da3a7 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -75,6 +75,27 @@ struct snd_device {
  
- 	offset = convert_offset_index(d, offset, &index);
--	mask = 1 << (index % 32);
-+	mask = BIT(index % 32);
+ #define snd_device(n) list_entry(n, struct snd_device, list)
  
- 	if (gic_irq_in_rdist(d))
- 		base = gic_data_rdist_sgi_base();
-@@ -388,7 +388,7 @@ static void gic_poke_irq(struct irq_data *d, u32 offset)
- 	u32 index, mask;
++/*
++ * A simple reference counter with a wait queue;
++ * typically used for usage counts, and you can synchronize at finishing
++ * via snd_refcount_sync(), which is woken up when the refcount reaches to
++ * zero again.
++ */
++struct snd_refcount {
++	atomic_t count;
++	wait_queue_head_t waiter;
++};
++
++void snd_refcount_init(struct snd_refcount *ref);
++
++static inline void snd_refcount_get(struct snd_refcount *ref)
++{
++	atomic_inc(&ref->count);
++}
++
++void snd_refcount_put(struct snd_refcount *ref);
++void snd_refcount_sync(struct snd_refcount *ref);
++
+ /* main structure for soundcard */
  
- 	offset = convert_offset_index(d, offset, &index);
--	mask = 1 << (index % 32);
-+	mask = BIT(index % 32);
- 
- 	if (gic_irq_in_rdist(d))
- 		base = gic_data_rdist_sgi_base();
-diff --git a/drivers/irqchip/irq-gic.c b/drivers/irqchip/irq-gic.c
-index 95cc1416407e5..6fbc64a065b87 100644
---- a/drivers/irqchip/irq-gic.c
-+++ b/drivers/irqchip/irq-gic.c
-@@ -178,14 +178,14 @@ static inline bool cascading_gic_irq(struct irq_data *d)
-  */
- static void gic_poke_irq(struct irq_data *d, u32 offset)
- {
--	u32 mask = 1 << (irqd_to_hwirq(d) % 32);
-+	u32 mask = BIT(irqd_to_hwirq(d) % 32);
- 
- 	writel_relaxed(mask, gic_dist_base(d) + offset + (irqd_to_hwirq(d) / 32) * 4);
+ struct snd_card {
+diff --git a/sound/core/misc.c b/sound/core/misc.c
+index fd891a3ceb963..19ad0a2cc7e1a 100644
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -245,3 +245,27 @@ void snd_fasync_free(struct snd_fasync *fasync)
+ 	kfree(fasync);
  }
- 
- static int gic_peek_irq(struct irq_data *d, u32 offset)
- {
--	u32 mask = 1 << (irqd_to_hwirq(d) % 32);
-+	u32 mask = BIT(irqd_to_hwirq(d) % 32);
- 
- 	return !!(readl_relaxed(gic_dist_base(d) + offset + (irqd_to_hwirq(d) / 32) * 4) & mask);
- }
+ EXPORT_SYMBOL_GPL(snd_fasync_free);
++
++/*
++ * generic refcount helper
++ */
++
++void snd_refcount_init(struct snd_refcount *ref)
++{
++	atomic_set(&ref->count, 0);
++	init_waitqueue_head(&ref->waiter);
++}
++EXPORT_SYMBOL_GPL(snd_refcount_init);
++
++void snd_refcount_put(struct snd_refcount *ref)
++{
++	if (atomic_dec_and_test(&ref->count))
++		wake_up(&ref->waiter);
++}
++EXPORT_SYMBOL_GPL(snd_refcount_put);
++
++void snd_refcount_sync(struct snd_refcount *ref)
++{
++	wait_event(ref->waiter, !atomic_read(&ref->count));
++}
++EXPORT_SYMBOL_GPL(snd_refcount_sync);
 -- 
 2.53.0
 
