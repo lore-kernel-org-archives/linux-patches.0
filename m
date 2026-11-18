@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055296;
-	b=Wf/XuYX259Q1Gbzs10zEQNhQybav7wovQUJEfnn8jSe5I2BgNwjbm1Wf8cQrZ17vXMS6
-	 EbtqAp4v6wBH894egq7QRQyQ3PpWa80tiAIgiu/wTQHJ2los7ozD+HeTxT85il6lWsF0j
-	 FWlCpZlWdQud3qZ9XOpV6mCChFoIZNWdNzFMFzcLr3s1HolPaqo9b/f+EYWxsfOW5yofJ
-	 viEohSoZ3yaQ4N0Kv0YOUVs64w07MWuTnnQgsBspQPIbRlRg9M3qIpUccQzeEhKwY45rS
-	 yd64llu5UT+eX1kkEcCLTB6WDSAxCPaxhk96+vEx/ftPTKiPQfhAJjNynN8zn4SCuCw==
+	t=1795055299;
+	b=jvieip6IXEqhZltyQJfi3GGrGRqC2+uerUyaeVqGStqPi9A6a5nv3nNOdLz+0fseRbd1
+	 DC7vetIe31keRom87GwVvZG/K007CMwN3GDIuIHsSXh4+FjgnBElKSvyMOUlsi1I/PN7f
+	 6i52oBToGSENZIlIyEla6cI6wS8CaBUiRjzk5ZxgUyyhqW12FcXhuqrGapG0Tf5Wub90x
+	 Uh8B3aRWNVVdHEXjY1fD8Vc0MwQyQWNcAe/IEJUI0zrLIAuh1h+rNnLq2WQRRplLAh0t7
+	 WLrVgstALsFloJtVMzeo1X7pdYQdhtijObhlAABVyxETpqlGOu8KZPm+6pUwnT0UPPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055296;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055299;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PgdYYT3sOWwBn/5WA3Y8YnyISvIPtHckcPcIfLXRDsI=;
-	b=LgXq1qyZr60KuRm+P3HmrjxTeCjIkTx6I8memKaONWa2giVpUZLda2gl49dmsn8YBTmU
-	 BS6fxxIBlcIOsH/eZ/5sIVeJWvsM+gYfh5w5GDI2uElY9VL/eGuuBXGVEVUCr48ZM9j2B
-	 8qnU86AhPKL4nLEs0t1bE6pd/nWj3ycrEYbZUOrGPqjj+wP5LL3PlTXx/fIU6QVnQ/BZK
-	 c94L03M5HERskZscxX+Hoqh0s1+iBuzt8cPnul5JeignAjp9KkurlkG1pWtArFqw3AZLg
-	 dss9QRqL7Vx7yYac0KPGk4sntSqYWXZlTEvmIPp4iFqDJVBZiwjr15jINx1i/wHFkSg==
+	bh=WqN1H/wHdVfpA+vdMTkhNfgBmxtJ6mF4f1s1aossiy4=;
+	b=SxXq0HB6+DVA42Vl0aSIObFIHHks9kPeUxsLZiUcrQvOXUVEOCqrOJxXzqE51Xmilq2g
+	 JX/ySffyN1aw7dfcY5sUOhruAid2lIgtyuF+UDSN+T+b3DkPCWCK9dirxijv7F0JLRZCX
+	 TPHJ3+Lf++20GKj9nnNSE6tkl22v0Hd4TuAgMwnZ/QwG8unWv3MEhaTGHxAPL4dOfxkax
+	 h6BaXNSvkIZVmOHyFNXHSB4KToTilwLv4Jun97aesrJ0zzyCZx8r0dDRgmcH8CQXUkcCS
+	 WOlEF259TOK3AcJaMt2jpKGuEiHjwS6CWqZBnhWMcKDFirFLFO4MKaxjg0NiiGECpdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DDNSYpt8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI1TpRw0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E01F606A330;
-	Thu, 19 Nov 2026 02:28:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1924606A330;
+	Thu, 19 Nov 2026 02:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DDNSYpt8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D721F000C4;
-	Thu, 19 Nov 2026 02:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QI1TpRw0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D371F000C4;
+	Thu, 19 Nov 2026 02:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055296;
-	bh=PgdYYT3sOWwBn/5WA3Y8YnyISvIPtHckcPcIfLXRDsI=;
+	s=korg; t=1795055298;
+	bh=WqN1H/wHdVfpA+vdMTkhNfgBmxtJ6mF4f1s1aossiy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DDNSYpt8w7IX1EMycfOBCALF+v0CzQHxnZkWVkqY5rKnZUvt8ue5NG+AmEbq+25RN
-	 aETveLdHi/2PXgafIl7c74BOBp6WHb+erq3T7LS/OqC+C+6rTbEXuuvUneNsZxtk5A
-	 6izP7pQJp7Gz0ttVrs6s/CQz4UduBzIU8eJqtHu4=
+	b=QI1TpRw0JiNCeyl5rCxus7lD/oBGfhVU6schVyENV2oUNJ4WamxJgeiGZW0XYOw3j
+	 SXIz96EJWZKn2tM+Z/w4G9Y+kefxCSVw2Sibx7s2D+whcUjzTx8EQyovsUiI5CiMef
+	 x+i13UBEw9qjlF/hscd10HDTaMyVNmxFfCQwmFQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1579/2214] swim: Remove redundant RELAX actions
-Date: Wed, 18 Nov 2026 15:54:15 +0100
-Message-ID: <20261118150115.193479562@linuxfoundation.org>
+Subject: [PATCH 5.15 1580/2214] swim: Deduplicate polling loops
+Date: Wed, 18 Nov 2026 15:54:16 +0100
+Message-ID: <20261118150115.225847314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,82 +72,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 04cb277e6841b55b950b42063fe11501b5d1676a ]
+[ Upstream commit b736189c93c9ad1056521a4229ec2f252b714b5a ]
 
-Wherever we have a swim_select() or swim_readbit() call there is an
-implicit RELAX. That means the caller doesn't have to do it. Remove the
-redundant code.
+Replace duplicated polling loops with poll_timeout_us(). Change the
+interruptible sleep to uninterruptible because signal delivery shouldn't
+be allowed to shorten delays required by the drive hardware.
 
-BTW, Inside Macintosh says, "Be sure [...] that CA0 and CA1 are set high
-before changing SEL." Hence the RELAX found in swim_select(). The SwimIII
-driver in mkLinux also has that. But the swim3.c driver in Linux is odd:
-it scatters RELAX actions around as though SEL was not actually under its
-control... In anycase, swim.c really does control SEL so there's no need
-for that here.
+Change the timeout for the !STEP transition to 20 ms in accordance with
+the maximum interval required by the UPD72070 spec. The existing 1 second
+timeout is impractical considering the number of steps in a typical seek.
 
+Change the return type of swim_readbit() to bool because that way the
+bit names make sense i.e. the reader doesn't have to remember to invert
+the active-low logic used for drive signals.
+
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/08ab67c2780c9107b87a1ece8b5f9cb54a8cea70.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/0ea2d3313dea26f8b4c2abc4d29055ac95aeb74b.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: b736189c93c9 ("swim: Deduplicate polling loops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/block/swim.c | 39 ++++++++-------------------------------
+ 1 file changed, 8 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index f4fbe195cbc09..adde8dc537259 100644
+index adde8dc537259..795058cdf4343 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -336,7 +336,6 @@ static inline void swim_motor(struct swim __iomem *base,
- 		swim_action(base, MOTOR_ON);
- 
- 		for (i = 0; i < 2*HZ; i++) {
--			swim_select(base, RELAX);
- 			if (swim_readbit(base, MOTOR_ON))
- 				break;
- 			set_current_state(TASK_INTERRUPTIBLE);
-@@ -344,7 +343,7 @@ static inline void swim_motor(struct swim __iomem *base,
- 		}
- 	} else if (action == OFF) {
- 		swim_action(base, MOTOR_OFF);
--		swim_select(base, RELAX);
-+		swim_write(base, phase, RELAX | PHASE_PIN_DIR);
- 	}
+@@ -19,6 +19,7 @@
+ #include <linux/major.h>
+ #include <linux/mutex.h>
+ #include <linux/hdreg.h>
++#include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/delay.h>
+ #include <linux/platform_device.h>
+@@ -296,7 +297,7 @@ static inline void swim_action(struct swim __iomem *base, int action)
+ 	local_irq_restore(flags);
  }
  
-@@ -355,13 +354,11 @@ static inline void swim_eject(struct swim __iomem *base)
- 	swim_action(base, EJECT);
+-static inline int swim_readbit(struct swim __iomem *base, int bit)
++static inline bool swim_readbit(struct swim __iomem *base, int bit)
+ {
+ 	int stat;
  
- 	for (i = 0; i < 2*HZ; i++) {
--		swim_select(base, RELAX);
- 		if (!swim_readbit(base, DISK_IN))
- 			break;
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		schedule_timeout(1);
- 	}
--	swim_select(base, RELAX);
+@@ -309,6 +310,9 @@ static inline int swim_readbit(struct swim __iomem *base, int bit)
+ 	return (stat & SENSE) == 0;
+ }
+ 
++#define swim_readbit_timeout(base, bit, val, timeout_us) \
++	poll_timeout_us(, swim_readbit(base, bit) == val, 1000, timeout_us, false)
++
+ static inline void swim_drive(struct swim __iomem *base,
+ 			      enum drive_location location)
+ {
+@@ -331,16 +335,8 @@ static inline void swim_motor(struct swim __iomem *base,
+ 			      enum motor_action action)
+ {
+ 	if (action == ON) {
+-		int i;
+-
+ 		swim_action(base, MOTOR_ON);
+-
+-		for (i = 0; i < 2*HZ; i++) {
+-			if (swim_readbit(base, MOTOR_ON))
+-				break;
+-			set_current_state(TASK_INTERRUPTIBLE);
+-			schedule_timeout(1);
+-		}
++		swim_readbit_timeout(base, MOTOR_ON, true, 2000 * 1000);
+ 	} else if (action == OFF) {
+ 		swim_action(base, MOTOR_OFF);
+ 		swim_write(base, phase, RELAX | PHASE_PIN_DIR);
+@@ -349,16 +345,8 @@ static inline void swim_motor(struct swim __iomem *base,
+ 
+ static inline void swim_eject(struct swim __iomem *base)
+ {
+-	int i;
+-
+ 	swim_action(base, EJECT);
+-
+-	for (i = 0; i < 2*HZ; i++) {
+-		if (!swim_readbit(base, DISK_IN))
+-			break;
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		schedule_timeout(1);
+-	}
++	swim_readbit_timeout(base, DISK_IN, false, 2000 * 1000);
  }
  
  static inline void swim_head(struct swim __iomem *base, enum head head)
-@@ -385,7 +382,6 @@ static inline int swim_step(struct swim __iomem *base)
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		schedule_timeout(1);
+@@ -373,19 +361,8 @@ static inline void swim_head(struct swim __iomem *base, enum head head)
  
--		swim_select(base, RELAX);
- 		if (!swim_readbit(base, STEP))
- 			return 0;
- 	}
-@@ -399,8 +395,6 @@ static inline int swim_track00(struct swim __iomem *base)
- 	swim_action(base, SEEK_NEGATIVE);
- 
- 	for (try = 0; try < 100; try++) {
+ static inline int swim_step(struct swim __iomem *base)
+ {
+-	int wait;
 -
--		swim_select(base, RELAX);
- 		msleep(3);
+ 	swim_action(base, STEP);
+-
+-	for (wait = 0; wait < HZ; wait++) {
+-
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		schedule_timeout(1);
+-
+-		if (!swim_readbit(base, STEP))
+-			return 0;
+-	}
+-	return -1;
++	return swim_readbit_timeout(base, STEP, false, 20 * 1000);
+ }
  
- 		if (swim_readbit(base, TRACK_ZERO))
+ static inline int swim_track00(struct swim __iomem *base)
 -- 
 2.53.0
 
