@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032836;
-	b=MF3xym6W4uCRS42aE91vOMy6Q6F6vrExU1C9+wL5bBEvnKHO2hp+hst+ay59JCkNl1/W
-	 ZoTBN5wVcIpDtQ2fyhf+gvEaCF34KhnKJDGdhUPOqQggtNJvW3wLJQmOfz+lBJgk6K4Ug
-	 0M7kph4xtqpTfQLj2ZVA4eYGk6fto+BsvZ1+YUYD7cISfpsoK81vcjUp+/mGptI3cmvo3
-	 5ZO/Ebg0YncrJz0AhP5byWRaju617GQe1XKuYvg6/WBJVDCfy+Ad2mgpdLY9SBcSv271l
-	 HGRx7x2pFt140Bob21/ssCer4XsCsNa7sM3G7KVEjRn8JirNfjYO1M5MHe6N8BPBy2A==
+	t=1795032839;
+	b=HKspMrWAAUp0ZBVr1BAXCkI9uAMsRX5R1+ZqVO4Fj+tIxTXNxCmmBX+HBFdQVys2aeLq
+	 YwQdplDFyT9WSTnIGpoFp8erb3Wtiuz/+pikkisS9G8+fNWZJh6bXtS/DTFUUjW/EzOFg
+	 VVvxvqcuimW6BO7uNgqoEiVx98/jRObxo1Lccrg6pslWxR+4Zv/HvZ/aJiTTtMwGQXYLY
+	 cdzDONOP3Qvbr/QKZBy4XSCMn7oQDBEguyfmCZ/YGKPQBX0GbhQEi5WfmdhX3kT7/3jjA
+	 Q62Ja9UQpvOrMnIYQubyordBKcmUruKChKQbe1QS0Di0dNqEeu2O8RPtGTMI5wGZeIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032836;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=481OigVuC9jHq3dNLFzfbL51TUrgFBjnWSIoa/W5W0k=;
-	b=P0YZOkMA1IvdNNsRS/4JCzcMLr2eSXyR4VvH5Z7esD6M0dBZ+zOYheCjyLHpwT1qXFaR
-	 fza8eWD9yjMGlCykfWtMQsVOQIOctmwHPQF2ChGvh1CtvcdiphfCsHNVcGuD4BSobdr2k
-	 PANY54ojkgyNQ6/reDtmTt2tg2CqyHHgf2YJwWtff1Jc+mdnnVZayEYXyZkZyT2VFZW1N
-	 tBr+Qqu9SUkk63UKl9nB5mhR6E/hAS6UaC8pmPS/CHO3EjGf9nLngQ8cX0057ykdm7fe5
-	 p6RahJLRXxnOpli0PHvAWZOlKMEuSIdmpfshtH84X3DznC/uz9Hpzg0kebPP3+PcH8Q==
+	bh=+W+zsdcjBqW8VQ5Q5Q6ILTdiYbzQG0laVpgCbotMbdY=;
+	b=vcG5rXg6e1o9Tp3dSHNjX3AkuRIGKyH+DRDI/j4lnokG226HqncufJu+inHl0/qSWDz3
+	 R8WsUKhZRjG/v7UdpygTNfAJ36x+a9Jx7zLEzr9oI/6A2wE83nSX+5LraYqkdJNwUYn4Q
+	 uqIcTTviw9uEHcVIaMVxKlaRrW1iXQXsO1vWB22f/pJa89K9u4yIaoe477fAGhI2X+J35
+	 iTv1VexEkF0KNBoC+bmXO6HrgWRHMuJrC1RYXRSIZkXX7W6busnmwMW+BMD+O9ge5laGG
+	 kLOPOB+SfcaQqAKRmlsK6Z8LhsDBQHmLDcwZAeXrvCDrZOtGlrqjWJpqAw524yfC4PQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4lC1iJA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s0tsaoZI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65FB60A262D;
-	Wed, 18 Nov 2026 20:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5066060A380B;
+	Wed, 18 Nov 2026 20:13:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q4lC1iJA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086C51F000C4;
-	Wed, 18 Nov 2026 20:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s0tsaoZI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B136C1F000C7;
+	Wed, 18 Nov 2026 20:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032836;
-	bh=481OigVuC9jHq3dNLFzfbL51TUrgFBjnWSIoa/W5W0k=;
+	s=korg; t=1795032839;
+	bh=+W+zsdcjBqW8VQ5Q5Q6ILTdiYbzQG0laVpgCbotMbdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4lC1iJADmvASCvVqAYjzVufT3a60SoHO7Dj2kex/jeawfMGgpQE4TSugxSH9kWmy
-	 uKcvSunFIwHa27fof4C2wYaKYeKzut2lnnDB78j1H4aRAmuo0z4znAG3bjf12M2QyK
-	 HGGJf9dN9uhc4zIODTQFJQzgFxm2e4Oqvn0Pztxg=
+	b=s0tsaoZIWBr4YylTmfMVZg9D5n3vBkkDXPwATGFsXB6SCCmO5SSonRxeM+zpQCRgO
+	 cxIQChj0EQa7yH/BMA7C1v2m+Wym7+4UhlI6PHh8LYvygKS2GCz9WvGx/CYTTcwf5O
+	 L3zU8vSgJtMKvX9wSaMWw40Nj/sNKYGIeO5VkKzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kieran Bingham <kbingham@kernel.org>,
 	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1551/1756] scripts/gdb: fix radix tree lookup pointer handling
-Date: Wed, 18 Nov 2026 16:01:18 +0100
-Message-ID: <20261118150110.801047422@linuxfoundation.org>
+Subject: [PATCH 6.12 1552/1756] scripts/gdb: fix stack depot out-of-bounds diagnostic
+Date: Wed, 18 Nov 2026 16:01:19 +0100
+Message-ID: <20261118150110.870825400@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -73,51 +73,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Ting-Han Hou <ue081723@gmail.com>
 
-[ Upstream commit 66d190b072b4e261aff35debb53872ace9b80628 ]
+[ Upstream commit b6232ca8d194c60ee603586e42b5ea584d4b7be9 ]
 
-Patch series "scripts/gdb: fix radix tree lookup and stack depot
-diagnostic", v2.
+The pool_index field was renamed to pool_index_plus_1, but the
+out-of-bounds diagnostic in stack_depot_fetch() still accesses the old
+field.  Looking up a handle whose pool index is outside stack_pools
+therefore raises "There is no member named pool_index" instead of printing
+the diagnostic and returning an empty result.
 
-Two scripts/gdb fixes.
+Use the already decoded pool_index variable in the diagnostic.
 
-Patch 1 fixes $lx_radix_tree_lookup(), which dereferenced slot contents
-as if they were node pointers. v2 also handles the XArray sibling,
-retry and zero entries that Sashiko pointed out: they carry the
-internal tag but are not node pointers, and the v1 patch raised a GDB
-MemoryError on them. Large folios in the page cache make sibling
-entries common, so this was worth fixing rather than documenting.
-
-Patch 2 is unchanged from v1 apart from being resent with git
-send-email, since the earlier copy was word-wrapped by the mail
-client. Sorry about that.
-
-Both patches are tested against standalone GCC-built fixtures that use
-the kernel struct layouts (details below the --- line of each patch),
-not against a running kernel.
-
-This patch (of 2):
-
-lookup() casts each slot to a pointer to a node pointer and then
-dereferences it. Since the slot already contains an entry pointer,
-this reads the entry's contents as another pointer instead of
-returning the entry itself. Internal entries also keep their tag
-bits when descending, so multi-level trees are read from the wrong
-address and $lx_radix_tree_lookup() fails with a memory error.
-
-Sibling, retry and zero entries carry the same internal tag but are
-small integers rather than node pointers, so the tag alone must not
-decide whether to descend. A page cache populated with large folios
-has a sibling entry in every slot but the first of each folio.
-
-Walk the tree the way xas_load() does: descend only through entries
-that xa_is_node() would accept, follow sibling entries to the
-canonical slot of a multi-index entry, and treat retry and zero
-entries like empty slots since they hold no data. Remove the explicit
-shift counter, as traversal now follows the entry type.
-
-Link: https://lore.kernel.org/20261011023044.1722-1-ue081723@gmail.com
-Link: https://lore.kernel.org/20261011023044.1722-2-ue081723@gmail.com
-Fixes: b7235d6bb516 ("scripts/gdb: add a Radix Tree Parser")
+Link: https://lore.kernel.org/20261011023044.1722-3-ue081723@gmail.com
+Fixes: 9d938f40b228 ("scripts/gdb: rename pool_index to pool_index_plus_1")
 Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Assisted-by: LLM
@@ -126,100 +93,22 @@ Cc: Kieran Bingham <kbingham@kernel.org>
 Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/radixtree.py | 66 ++++++++++++++++++++--------------
- 1 file changed, 40 insertions(+), 26 deletions(-)
+ scripts/gdb/linux/stackdepot.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
-index bc2954e45c327..8ce9936dfa50f 100644
---- a/scripts/gdb/linux/radixtree.py
-+++ b/scripts/gdb/linux/radixtree.py
-@@ -27,6 +27,24 @@ def entry_to_node(node):
-     indirect_ptr = node.cast(long_type) & ~constants.LX_RADIX_TREE_INTERNAL_NODE
-     return indirect_ptr.cast(radix_tree_node_type.get_type().pointer())
+diff --git a/scripts/gdb/linux/stackdepot.py b/scripts/gdb/linux/stackdepot.py
+index 37313a5a51a0d..aaa18af25cd12 100644
+--- a/scripts/gdb/linux/stackdepot.py
++++ b/scripts/gdb/linux/stackdepot.py
+@@ -39,7 +39,7 @@ def stack_depot_fetch(handle):
  
-+def is_node(entry):
-+    # Like xa_is_node(): internal entries below 4096 are sibling, retry
-+    # or zero entries rather than pointers to a struct xa_node.
-+    ulong_type = utils.get_ulong_type()
-+    return is_internal_node(entry) and entry.cast(ulong_type) > 4096
-+
-+def is_sibling(entry):
-+    # Like xa_is_sibling(): a multi-index entry occupies several slots,
-+    # and all but the first hold a sibling entry that encodes the offset
-+    # of the first one.
-+    ulong_type = utils.get_ulong_type()
-+    return is_internal_node(entry) and entry.cast(ulong_type) < \
-+        xa_mk_internal(constants.LX_RADIX_TREE_MAP_SIZE - 1)
-+
-+def sibling_offset(entry):
-+    ulong_type = utils.get_ulong_type()
-+    return int(entry.cast(ulong_type)) >> 2
-+
- def node_maxindex(node):
-     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
+     pool_index = parts['pool_index_plus_1'] - 1
+     if pool_index >= pools_num:
+-        gdb.write("pool index %d out of bounds (%d) for stack id 0x%08x\n" % (parts['pool_index'], pools_num, handle))
++        gdb.write("pool index %d out of bounds (%d) for stack id 0x%08x\n" % (pool_index, pools_num, handle))
+         return gdb.Value(0), 0
  
-@@ -40,39 +58,35 @@ def resolve_root(root):
- 
- def lookup(root, index):
-     root = resolve_root(root)
--    node = root['xa_head']
--    if node == 0:
--        return None
-+    entry = root['xa_head']
- 
--    if not (is_internal_node(node)):
--        if (index > 0):
-+    if is_node(entry):
-+        node = entry_to_node(entry)
-+        if index > node_maxindex(node):
-             return None
--        return node
- 
--    node = entry_to_node(node)
--    maxindex = node_maxindex(node)
--
--    if (index > maxindex):
--        return None
--
--    shift = node['shift'] + constants.LX_RADIX_TREE_MAP_SHIFT
--
--    while True:
--        offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
--        slot = node['slots'][offset]
-+        # Walk down the tree like xas_load() does.
-+        while True:
-+            offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
-+            entry = node['slots'][offset]
- 
--        if slot == 0:
--            return None
-+            while is_sibling(entry):
-+                entry = node['slots'][sibling_offset(entry)]
-+                if node['shift'] and is_node(entry):
-+                    # xas_descend() turns this into a retry entry.
-+                    return None
- 
--        node = slot.cast(node.type.pointer()).dereference()
--        if node == 0:
--            return None
-+            if not is_node(entry) or node['shift'] == 0:
-+                break
-+            node = entry_to_node(entry)
-+    elif index > 0:
-+        return None
- 
--        shift -= constants.LX_RADIX_TREE_MAP_SHIFT
--        if (shift <= 0):
--            break
-+    # Empty slots and retry or zero entries hold no data.
-+    if entry == 0 or is_internal_node(entry):
-+        return None
- 
--    return node
-+    return entry
- 
- def descend(parent, index):
-     offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
+     stack_pools = gdb.parse_and_eval('stack_pools')
 -- 
 2.53.0
 
