@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052486;
-	b=w3Ym3c2/A5W+lAoUwsCRI9+7CClMbFxFwp+zdJqlYKpZCgiMHAeZHMQodNXGfsUiYYKZ
-	 kjqNFlJgjj5e2sFINE0PEQ2SOX21RFEjbkdxiFe2eH9N5IW7EYTjj3K4va8AioIIblAeF
-	 0vn8Q5Luoi/Ked5X+L328MJkWzPdudPtRKUaiaePrw+SP6ISD+MUUzMBVPGm4WYroJGgi
-	 o2Js8P0eHJvZMb5hWWplbkQaneXH20RY3NdmBuVeSwb7OPACiouLWqK2zpy7UjTewWFtr
-	 fYggXtEK3XhIa5KwCUK8vItjLhi2pQUD2dJ/+CoMoxpwxyFC4xqS4IbXvAsjMRYlQiA==
+	t=1795052489;
+	b=aUNJZhRWMVPzncoEQ3NVNwjWnIknl5vTx+b3Kyb9X7pUcKSChB+I7QnsF8jskCGHxcWE
+	 g/OaInZxl0DY8ZR0ru/lcJcBgIu9Yy1iT5hGz7qNSq9SYvDlqgkgU2AoJzWb5B74Bq9xU
+	 0Fp29dG2m5qSv4mKAI3paHq1TxXYga9EhWLnP6i7ixVXqFuOcSWor0E+KLHohHl6R7h5/
+	 kKiUxuY0+N+bLLySbsR7y+mKfKU/27C8VzWs1l+JKXUOmKkktbBXVdaZa6ulUqfM0k/aX
+	 /HBzXy0lU9EXNprSZ0ggZVwoHOg5ou/Zd2euJCVURauh7D4tTIizwrzKF4Afsjzk2bw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BZHNg7eL01XIukBSmBohPosneeoi7MZXpg8yGt1VNpY=;
-	b=fMM/o2Z7AvGXI8dnlIOnC+pini/OGwABCxFwb9g+5f6xnIokhFsFCNMd+5dakAjGwZzZ
-	 Ox746f+6Or1oiTSY422l1MCay9vSPqhb30a6Ttq+lx2PIPdgR8dwirt0dtPuytpL/BWCt
-	 TVhO3DrWsb4lXcJfwQdZ6cg8/Gi7rvov61VAYwX9J+AaEJdj/SQ0SZRoEO7tftb9F5BL/
-	 BLDRJbejeVLmCiHfl9ZtQNI0RlxZE9N0Y+fNJEq46UxnOB4VesatKM5h2IQVQP1mgBhnQ
-	 bS3MbnF1zwD/ovJQwuxTvT+WHiM+F7TmFsuhbVLRPoCNt/H6KPb2BHUYP7UOF/S+K4w==
+	bh=IeqsGpbtnbzSNVJ8wUvrzc8ZjB9NSZHEGyxyiGyUvzs=;
+	b=NS0BLFzEqVci9CzWbW7+rZiz2fLZ9t+3jaY6Z7Vwops5x/yziysOdC5BDOA6GiaI1ndT
+	 fWilLx4PjdVcO9CA3z27MV+UDwHmQjCBkbszS4MzipQSKQecW2iJmmkETBeZ6R7gw9wYo
+	 pJr7DOH4auYptrBtJzAc3UXg9SopH1Xv0apE+ZdWiA6izmMhgYYhJwDQKboAaFLl28n6Y
+	 Aptz56eVvgA5gTDkbDwSyiPOsK/r2xQH2PS9OO+5DKOp7mD/Zush5YGIkKQtT0u+Ec5BE
+	 R7dia6vsBOBzNgSTFSW4trVMFKx9qX9FNBW6oNS5IfftjkBE9gtDKf08SLClHABacPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fKbOBwUx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l9PhT7KR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFD9606A31C;
-	Thu, 19 Nov 2026 01:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03890606A320;
+	Thu, 19 Nov 2026 01:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fKbOBwUx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00D31F000C4;
-	Thu, 19 Nov 2026 01:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l9PhT7KR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5A11F000C4;
+	Thu, 19 Nov 2026 01:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052486;
-	bh=BZHNg7eL01XIukBSmBohPosneeoi7MZXpg8yGt1VNpY=;
+	s=korg; t=1795052488;
+	bh=IeqsGpbtnbzSNVJ8wUvrzc8ZjB9NSZHEGyxyiGyUvzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fKbOBwUxuT0h9LR+lHharHLzYuxvk7d7WvnAhZKKHKFKsO2o2bh60rQbqrOjPjALI
-	 WmpfGKICIWfeo0T0MKiXfh6x9WEspfWoKrNANwn4IvmXSKW1ZIb6a/SH1fstXoqhnR
-	 Gx4V9zUBUEv3lKidAfQHscL4iugq4IsL7Z4YeucA=
+	b=l9PhT7KRKdb8YpgBtvc89kLRjssvSIpweUdV1hdGXcLC5862KZyeZoSFMyL1Jp1X+
+	 sQoSaF0dX/prj6R/tAPkOYanSdh4YVUTLVaOiWLt/yF3lqBtiGLempplaB28lqbtuA
+	 lyDj/7/7S+V131qTfruYRdeY1rA3QywdBfPI9KCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0521/2214] crypto: hisilicon/hpre - fix GFP flags for dma_alloc_coherent
-Date: Wed, 18 Nov 2026 15:36:37 +0100
-Message-ID: <20261118150031.928260734@linuxfoundation.org>
+Subject: [PATCH 5.15 0575/2214] power: supply: ab8500_fg: Report sub-percent charge changes
+Date: Wed, 18 Nov 2026 15:37:31 +0100
+Message-ID: <20261118150033.953774630@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,99 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weili Qian <qianweili@huawei.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 40ec9605cb195e065470f8f23ef94b1b541411a3 ]
+[ Upstream commit 4d40dba1815d46c6ef9019ed80e3b998b0fc443d ]
 
-The HPRE driver hard-codes GFP_ATOMIC for RSA/DH and GFP_KERNEL for
-ECDH. This may cause "scheduling while atomic" in atomic context or
-unnecessary allocation failures under memory pressure.
+The fuel gauge updates bat_cap.mah from the coulomb counter but exposes
+bat_cap.prev_mah through CHARGE_NOW and ENERGY_NOW. It only refreshes
+prev_mah when the rounded integer capacity percentage changes, making the
+momentary properties appear frozen between percentage steps.
 
-Select GFP flags dynamically based on CRYPTO_TFM_REQ_MAY_SLEEP and
-store them in hpre_asym_request::flags. The areq field is a union of
-rsa/dh/ecdh request pointers; reading base.flags through any union
-member other than the one that was written would be type-punning, so
-a dedicated flags field avoids that.
+Refresh prev_mah and notify userspace whenever the new charge remains
+within the currently accepted percentage. If a discharge estimate tries
+to cross upward into a higher percentage, the existing rejection still
+leaves both the reported percentage and charge unchanged.
 
-Fixes: 98dfa9343f37 ("crypto: hisilicon/hpre - don't use GFP_KERNEL to alloc mem during softirq")
+The AB8500 fuel-gauge implementations in the Samsung-GT-I8160-Codina,
+Samsung-GT-I8160_HD-Codina, Samsung-GT-I8530-Gavini,
+Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle and
+Samsung-SGH-T599-Codina-TMO product trees retain the same percentage-gated
+prev_mah update and contain no finer-grained reporting workaround.
+
+Fixes: 13151631b5bd ("ab8500-fg: A8500 fuel gauge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-2-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_crypto.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/power/supply/ab8500_fg.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-index 72b6a7452ccaa..d77056178d7ff 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
-@@ -139,6 +139,7 @@ struct hpre_asym_request {
- 	int req_id;
- 	hpre_cb cb;
- 	struct timespec64 req_time;
-+	u32 flags;
- };
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index eb7eac23da70f..61235937426d2 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -1374,6 +1374,13 @@ static void ab8500_fg_check_capacity_limits(struct ab8500_fg *di, bool init)
+ 		}
+ 	}
  
- static int hpre_alloc_req_id(struct hpre_ctx *ctx)
-@@ -243,6 +244,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
- 				struct scatterlist *data, unsigned int len,
- 				int is_src, dma_addr_t *tmp)
- {
-+	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
- 	struct hpre_ctx *ctx = hpre_req->ctx;
- 	struct device *dev = ctx->dev;
- 	void *ptr;
-@@ -252,7 +254,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
- 	if (unlikely(shift < 0))
- 		return -EINVAL;
- 
--	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, GFP_ATOMIC);
-+	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, gfp);
- 	if (unlikely(!ptr))
- 		return -ENOMEM;
- 
-@@ -514,6 +516,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
- 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 		h_req->cb = hpre_rsa_cb;
- 		h_req->areq.rsa = akreq;
-+		h_req->flags = akreq->base.flags;
- 		msg = &h_req->req;
- 		memset(msg, 0, sizeof(*msg));
- 	} else {
-@@ -528,6 +531,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
- 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 		h_req->cb = hpre_dh_cb;
- 		h_req->areq.dh = kreq;
-+		h_req->flags = kreq->base.flags;
- 		msg = &h_req->req;
- 		memset(msg, 0, sizeof(*msg));
- 		msg->key = cpu_to_le64(ctx->dh.dma_xa_p);
-@@ -1487,6 +1491,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
- 	h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
- 	h_req->cb = hpre_ecdh_cb;
- 	h_req->areq.ecdh = req;
-+	h_req->flags = req->base.flags;
- 	msg = &h_req->req;
- 	memset(msg, 0, sizeof(*msg));
- 	msg->in = cpu_to_le64(DMA_MAPPING_ERROR);
-@@ -1508,6 +1513,7 @@ static int hpre_ecdh_msg_request_set(struct hpre_ctx *ctx,
- static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
- 				   struct scatterlist *data, unsigned int len)
- {
-+	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
- 	struct hpre_sqe *msg = &hpre_req->req;
- 	struct hpre_ctx *ctx = hpre_req->ctx;
- 	struct device *dev = ctx->dev;
-@@ -1521,7 +1527,7 @@ static int hpre_ecdh_src_data_init(struct hpre_asym_request *hpre_req,
- 	if (unlikely(shift < 0))
- 		return -EINVAL;
- 
--	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, GFP_KERNEL);
-+	ptr = dma_alloc_coherent(dev, ctx->key_sz << 2, &dma, gfp);
- 	if (unlikely(!ptr))
- 		return -ENOMEM;
- 
++	/* Keep the charge properties current between percentage changes. */
++	if (di->bat_cap.prev_percent == percent &&
++	    di->bat_cap.prev_mah != di->bat_cap.mah) {
++		di->bat_cap.prev_mah = di->bat_cap.mah;
++		changed = true;
++	}
++
+ 	if (changed) {
+ 		if (di->bm->capacity_scaling) {
+ 			di->bat_cap.cap_scale.scaled_cap =
 -- 
 2.53.0
 
