@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037693;
-	b=xXioeVSYWPzFLj9iK1M1Sadjp7x730J05uYKgInOavK+CU7JcS9K5cfkjbMaromtsRaJ
-	 aW4glbro5agkPxTgNvSsnkfk/bAq5Of5kid9UtES/RCQJhVfoSGhP1ctzs89AqZjRqcWi
-	 WWfClnp5qOSDRdquOu8JPtruL1OsnT+LXM5jlVf+pmlJC071b34Nmmx054zGXg4K4nNFj
-	 otfZxA2J+O59WHsWbthvYMjseEiOz8sujnIvQ2tANz1ZB1kM9o54EZV7pIZkR4oKlz9gw
-	 wyvbDlZbYlz8wRLYXLHhJWDCrMQFIQTU+JE7rQGAvH9f9nFv0p0KbUjIGL/6B6oND6A==
+	t=1795037696;
+	b=p8gBHd3dJ3Wx99/OOs1xrtRbawuaxws+hS38D2lcDcHtH9x1J77yocPAnkJ7igXdwDc1
+	 0vZKU1XVg3L47b71x72Qt3bOslqrngZENG4cl83KTGkF/Sh5f+1HyMVpPFKRXa85/uf7X
+	 TmfcjrpcvKS4YRYCX9TurFUIIwzyKeok93oIscpLufWIJosXpXfZqyliggJZCu25y5fhP
+	 EWEBbQHc7TFlSWHauDmKfq4+66RRiNyJvAcXJD8VVJNv1HO4EruUSE+lVrDh6e097rEOM
+	 Mf8qJARGhTwbpULNZHo+3+z8Yf+tRtIiBCrsuEosrxR2WSLuNneEzl2qMVU2mOQOPnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037693;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A80Bp4sRQq75YzGdWJ7wbfeWsVrXKyJYsxqa1NHMLyc=;
-	b=5CV7peiH0jilj9I3+8F8Ey206+G4/OAPDzE+/bCEGgyD40dG/78gmhOlKGvyyEOLFkXD
-	 M1hPiBMpUxR41WwKTW9C8jXbn/0caK4ERlQpOOx1rrTn19FThXfLoavIThVHGJjfj8W0D
-	 p91gQODpwNXq0B3MqEa45xqiAdgvfs/oJLyo1BSMk8o6tUwlveeA2RAireRZ+mSv8ejri
-	 kgmwksTjDNNNzD+R83HmtUrMTjm5AnrcPSQDanhW2jEjAnOtgf85P+f42SOQ37B6HzGkt
-	 mW0+GGMBLTxIYJ+TeeZOibwazORz5jX0Ed4LMretmeIDfnlyyYvgK2MW2Flr4KjhH3g==
+	bh=M7k/Ya37UkUr9XiDs83aZ8UYO4glaNV0DbUjuB05ZGE=;
+	b=NAz8tJOSefXV3kvKoFJOI2KKgUF0DSL/9p/6KCS4ippJzmNHnAC8Lips6U/zleMba/u/
+	 6tfJhucrRbkdVsBNyfiw2mXB/VOnO2dXK+bef92M/XVN0pcgPLS89gk19QMfsly6S/S1A
+	 x17YpBA7thnHSOcj8m0j8bwajBBdMjtPX00+kt1MhTItNruO+OQYtm6tInIamrjt1Mujt
+	 eUbopDbH9lwCe+wv03uw+nhlzdbG12Cw8K7V+JxRKZ+KUD1bRDrdXid/DRdHYasUTXw5r
+	 ldsHILb7LjrMWAlK05012k3JdL3VUxGqfJt2csrEACVCEecrpsPKjhONKWSk/pqiYog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nogLtBs4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ok88KIFv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4EF606A31C;
-	Wed, 18 Nov 2026 21:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1456F606A31C;
+	Wed, 18 Nov 2026 21:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nogLtBs4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B341F000C6;
-	Wed, 18 Nov 2026 21:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ok88KIFv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC7C1F000C4;
+	Wed, 18 Nov 2026 21:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037693;
-	bh=A80Bp4sRQq75YzGdWJ7wbfeWsVrXKyJYsxqa1NHMLyc=;
+	s=korg; t=1795037695;
+	bh=M7k/Ya37UkUr9XiDs83aZ8UYO4glaNV0DbUjuB05ZGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nogLtBs4GTJZCkJ37J5Tb6CduB2oPyd1S+HmvT8ZB2/Od3rdp8E6rpqag3ar3j1B5
-	 OEEgzdt1TSb7SkD3jo9GD9V3AUplQCGA1wzM1nYUIKZkgv45gmrBOv2f0P9B47UFnx
-	 XN/rmihIpg6nXwgZlZHEvrD2M5/ko7bRI2CRa/z0=
+	b=Ok88KIFvEeFBGjn3g8MiwSmjIXMTyn6MJlNmXkag/VSWQXjoUX2mwK8lgu02zGHLj
+	 WJBGTE4hq7nY4qhxlKdYDKobzaojY+iqIYCucBRbcxzVca3DKjs1B4x4TV/TlCj8cC
+	 SYY5VbmVNUUTp4FtVNm9JQRmVsxchB7Hl0EWkSZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw2@infradead.org>,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1469/3318] KVM: x86: Conditionally resched when restarting REP string emulation
-Date: Wed, 18 Nov 2026 15:34:51 +0100
-Message-ID: <20261118150404.965870155@linuxfoundation.org>
+Subject: [PATCH 6.6 1487/3318] ocfs2: keep locking_state within the cluster connection lifetime
+Date: Wed, 18 Nov 2026 15:35:09 +0100
+Message-ID: <20261118150405.512173152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,56 +74,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit ae85ac25eb671d174811cc3101549448671fd505 ]
+[ Upstream commit 5bdef466851e39ba752634cbea68e5ea24ccfb24 ]
 
-When restarting emulation, e.g. of a REP-prefixed string instruction,
-conditionally reschedule as emulating guest writes can be deceptively slow
-and expensive, e.g. when shadow paging is in use and each write can trigger
-write tracking.
+The locking_state reader calls ocfs2_dlm_lvb() through the selected
+cluster stack.  Its debug-object reference keeps the tracking list alive,
+but does not keep that stack selected without a cluster connection.
 
-In a perfect world, restarting emulation (or not) would be less arbitrary,
-e.g. would honor not only host events (NEED_RESCHED, signals, etc.) but
-also guest events (e.g. by checking kvm_vcpu_has_events()).  Unfortunately,
-as pointed out by Sashiko, pio_in_emulated()'s read-ahead logic is baked
-into the restart logic, as KVM relies on restarting emulation to drain the
-cache and avoid duplicate reads from the I/O port.  I.e. re-entering the
-guest on kvm_vcpu_has_events() or __xfer_to_guest_mode_work_pending() would
-introduce architecturally-incorrect, guest-visible changes.
+DLM initialization publishes the file before establishing its connection,
+and DLM shutdown drops the connection while the file still exists.  Both
+the mount error unwind in ocfs2_mount_volume() and ocfs2_dismount_volume()
+remove the debugfs subtree only after ocfs2_dlm_shutdown() has returned.
+Whenever the disconnect releases the last stack reference, which is the
+case for a failed mount and for any unmount without a pending hangup, a
+concurrent reader dereferences a NULL active_stack:
 
-Fixes: 5cd21917da24 ("KVM: x86 emulator: restart string instruction without going back to a guest.")
-Cc: stable@vger.kernel.org
-Cc: David Woodhouse <dwmw2@infradead.org>
-Reported-by: Stefan Teodorescu <fane@google.com>
-Suggested-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261028173638.1765329-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+  Mount error unwind                  Debugfs reader
+  ------------------                  --------------
+  ocfs2_mount_volume(): out_dlm
+    ocfs2_dlm_shutdown()
+      disconnect last cluster
+        clear active_stack
+                                      read locking_state
+                                        ocfs2_dlm_seq_show()
+                                          ocfs2_dlm_lvb()
+                                            dereference active_stack
+  fill_super(): out_debugfs
+    remove debugfs subtree
+
+Publish the debug files only after the connection and the mount lock
+resources are initialized, so a failed DLM initialization has no debug
+reference to drop.  Remove them again in the common DLM shutdown helper
+before the connection is dropped: debugfs removal waits for readers that
+are inside the file operations, and the parent directory is still present
+at that point in every caller.  This covers the mount error unwind, the
+ocfs2_fill_super() failures after a successful mount that dismount with
+mnt_err set, and unmounts whose disconnect releases the stack directly.
+
+Only the relevant frames of the report are kept:
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:ocfs2_dlm_lvb+0x38/0xf0
+Call Trace:
+ <TASK>
+ ocfs2_dlm_seq_show+0x36a/0xb70
+ seq_read_iter+0x480/0x1110
+ seq_read+0x362/0x5a0
+ full_proxy_read+0x11f/0x180
+ vfs_read+0x1a0/0xc20
+ ksys_read+0x111/0x200
+ </TASK>
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0011-v7-61e3ef8b1ad44ac2e817@gmail.com
+Fixes: 286eaa95c5c5 ("ocfs2: Break out stackglue into modules.")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ocfs2/dlmglue.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index 1c785fc364b3f..a09ce0f97c22b 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9130,10 +9130,12 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 	} else if (vcpu->arch.complete_userspace_io) {
- 		writeback = false;
- 		r = 0;
--	} else if (r == EMULATION_RESTART)
-+	} else if (r == EMULATION_RESTART) {
-+		cond_resched();
- 		goto restart;
--	else
-+	} else {
- 		r = 1;
-+	}
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index cbeb4c4bd044c..6ff52ebe9fa3c 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3339,6 +3339,14 @@ static void ocfs2_dlm_shutdown_debug(struct ocfs2_super *osb)
+ {
+ 	struct ocfs2_dlm_debug *dlm_debug = osb->osb_dlm_debug;
  
- writeback:
- 	if (writeback) {
++	/*
++	 * Drain the readers before the cluster stack goes away: the
++	 * locking_state reader resolves ocfs2_dlm_lvb() through the
++	 * stack. Every caller removes the parent directory later.
++	 */
++	debugfs_lookup_and_remove("locking_state", osb->osb_debug_root);
++	debugfs_lookup_and_remove("locking_filter", osb->osb_debug_root);
++
+ 	if (dlm_debug)
+ 		ocfs2_put_dlm_debug(dlm_debug);
+ }
+@@ -3353,8 +3361,6 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
+ 		goto local;
+ 	}
+ 
+-	ocfs2_dlm_init_debug(osb);
+-
+ 	/* launch downconvert thread */
+ 	osb->dc_task = kthread_run(ocfs2_downconvert_thread, osb, "ocfs2dc-%s",
+ 			osb->uuid_str);
+@@ -3394,9 +3400,10 @@ int ocfs2_dlm_init(struct ocfs2_super *osb)
+ 	ocfs2_orphan_scan_lock_res_init(&osb->osb_orphan_scan.os_lockres, osb);
+ 
+ 	osb->cconn = conn;
++	if (conn)
++		ocfs2_dlm_init_debug(osb);
+ bail:
+ 	if (status < 0) {
+-		ocfs2_dlm_shutdown_debug(osb);
+ 		if (osb->dc_task)
+ 			kthread_stop(osb->dc_task);
+ 	}
+@@ -3426,10 +3433,11 @@ void ocfs2_dlm_shutdown(struct ocfs2_super *osb,
+ 	ocfs2_lock_res_free(&osb->osb_orphan_scan.os_lockres);
+ 
+ 	if (osb->cconn) {
++		/* The disconnect below may release the selected stack. */
++		ocfs2_dlm_shutdown_debug(osb);
++
+ 		ocfs2_cluster_disconnect(osb->cconn, hangup_pending);
+ 		osb->cconn = NULL;
+-
+-		ocfs2_dlm_shutdown_debug(osb);
+ 	}
+ }
+ 
 -- 
 2.53.0
 
