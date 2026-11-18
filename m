@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038275;
-	b=aNivDGRDS/zgwFpOebbERNWjDT6IbxQliLv+g+LHYjySTLEE94YCZw7S1brWaB9UvCy/
-	 SPcRGQNp7Jz+OfOCPIjjREvaKRhCEnLU57AsNjXt6X3Lg5cjteYL1dpyDSa9C/ZFh8Qyg
-	 0TB4vpcVIKQaS42HlS1lIPfbebsFwhE0eXfTk2DxQVwMNkFtk0k5f4E6ijlFL/zECKs45
-	 AAJW9MSABXJkI5HyyTJJYGWirFYVR+woOIsXjujP3pCYJzvs+z9wS7Cd/9Yr+odt5qlAu
-	 aiCc2w9qKdHeMr9vAvOFls0KOG3pZ7LBklLV2rvWpZLnchSJRiOx3QFdFIaaUnA7C+Q==
+	t=1795038277;
+	b=YJ5AD9/h5gycFlpC2fQR5uDujB5unzTcpjwgOTqC+rGkWBg9GrKakGBkn1dnyaVnMCy4
+	 ziQWoZ5cRCro6acx+l7PjQE7dXP17eRwQG3EGY2RHmyApXBljGyWRjQK7xP5dlm7Iclje
+	 6G6wdmMj6KCL3cCRThvm01IzG/+VtBBvGQaBEX2/kFV3s+D0XVkdj8c8+36lNhOzBmVKh
+	 tLp4KuZPiXO/dfEqcYUByDzx6GBYckutdhNjGe5oYnD/7VbQ4fFChZVtYviNf8xVxQ5nl
+	 kS82RGPud5OZqzefCOMtj0pb2zzS5Sxfbnfj2WSX7ym1ys6ohJ0MSHpYyMlvqyoEpWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UqEiv44GDJW7mtUgLoJBDFhnks/uLSf9sHF5UYL8q/U=;
-	b=HvY4EtTEW0y/IhN2xXeuWCaKt7tucDi45o8kzJTNPF2NUkmpKgX3Y8r9dNfRW1ACJsKn
-	 UK/Td7H0F291gnYjz+xBiTYfsbI9UMDKVVXLkQQPYZNOlRNMsyQy4HPDrYmEp7IBLcYgO
-	 5qRAND2RJ7swVxSpjz3KtSxwW6NYF6MxzabxDvZZGRdy0yHmewtuHGpvhN4J5uFiBA110
-	 Ag5YcWMcXnUl9IynGM2wr0yX8AM4fS9dHNi7GXYJvsvPSw/y7Sp+Dql7e3ZbZT1Rz9Ar7
-	 Mk9Znl2GCJLh2T6LJN/Wgb6aarafiUOwffIK8X4Q5GDc4Qbbd17+rE/ZuLPWR5Cwbqw==
+	bh=xZGB4Swt+V2ca4AJrGrNrPJXCTD6baKHR42/q77wpCU=;
+	b=aTZpTpDJvVmkiG+9yM8siJYOYTl3qyMLXQ8B7fadp8k3CXWd3fZg6kHqG0nIiOwwl1Vp
+	 LsTifz2g4aKK+VNCpmWWmSmNNr1PyUqyCqbsjJFcsO9BnN+4Vd/Bt25f0KbgXNz9X1NNd
+	 IeKhBH0HOPwm4zydabJQ/M22fWILjrwVtoLjXN6xrXArkxHM/82Bry5h9pTQlvMMiQUlc
+	 XwvrTrZXQ1sOEh509OJAN/4LNJkegWoXegOtIHAW7HvJ2r3/MO8ttyMvX+TqSIDNeHwPm
+	 JfCFr821SnEXVY/rVT1VCbi1bV1kWq8WY7TtcBZWkTcw7ugYcxqugHb4Qg7+ukTcBNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKMZDOLY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLZMTvbg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47506606A325;
-	Wed, 18 Nov 2026 21:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25B660A2601;
+	Wed, 18 Nov 2026 21:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKMZDOLY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F7D1F000C5;
-	Wed, 18 Nov 2026 21:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLZMTvbg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191CA1F000C4;
+	Wed, 18 Nov 2026 21:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038274;
-	bh=UqEiv44GDJW7mtUgLoJBDFhnks/uLSf9sHF5UYL8q/U=;
+	s=korg; t=1795038277;
+	bh=xZGB4Swt+V2ca4AJrGrNrPJXCTD6baKHR42/q77wpCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cKMZDOLYSwtrG6Z+O53Je08yu/8Boz7fQRV+lxfZxUP2a8Vlg2hsARa+UO07zI2zv
-	 odHzSb8kwYlUqay0br2k6WvJkthrhOBkAIiAZuE3QJ4czzWBqRtVvoY5sykaD1hEtL
-	 eEcA99+JoCmbQcUnvnuUIITlbfiU8k6C+AfzEABM=
+	b=iLZMTvbgSuCWPpFNknR3Zv1qtg+F5+m97THbD9rr6LRJqgWxb7KRXYPbukLTKM0cd
+	 ZWkUuGeGIX+X2slxI7BtMxGdPTXxTQ6kdDt27F2a4zmiRLo2xH16sRN/IHV7gbPdqI
+	 R0X2r/+RuLmTzKPaZ/sRUIAlIHGV1IP8+WK9Z19k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	"Brian G ." <gissf1@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	stable@kernel.org,
+	TencentOS Corvus AI <corvus@tencent.com>,
+	Jun Yang <junvyyang@tencent.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1686/3318] nilfs2: correct return value kernel-doc descriptions for the rest
-Date: Wed, 18 Nov 2026 15:38:28 +0100
-Message-ID: <20261118150412.398888505@linuxfoundation.org>
+Subject: [PATCH 6.6 1651/3318] sctp: re-point retained control chunks on association migration
+Date: Wed, 18 Nov 2026 15:37:53 +0100
+Message-ID: <20261118150411.294264340@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,298 +71,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-[ Upstream commit 343d4a33f26d048fde4b02cfc3681f766b3f1b12 ]
+[ Upstream commit 52ffeaa358d1f3d91aa87a26ad90d77769cff74b ]
 
-Similar to the previous changes to fix return value descriptions, this
-fixes the format of the return value descriptions of functions for the
-rest.
+sctp_sock_migrate() transfers DATA chunk ownership but leaves retained
+control chunks pointing at the old socket. A later retransmission can
+therefore access the socket after it has been freed.
 
-Link: https://lkml.kernel.org/r/20250110010530.21872-6-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: "Brian G ." <gissf1@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 7131aaa74bcc ("nilfs2: ignore non-fatal signals during synchronous log write wait")
+Extend the migration walk to cover retained control chunks and use
+sctp_control_set_owner_w() to assign their new owner. Reuse the DATA
+ownership check so each chunk is processed once per pass, even when it
+is reachable through multiple lists or retained pointers.
+
+Preserve a control chunk's existing authentication key across migration
+so its final release can still generate SCTP_AUTH_FREE_KEY when needed.
+
+Fixes: d04adf1b3551 ("sctp: reset owner sk for data chunks on out queues when migrating a sock")
+Cc: stable@kernel.org
+Reported-by: TencentOS Corvus AI <corvus@tencent.com>
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261009074244.3718-3-juny24602@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/gcinode.c   | 24 +++++++++-------------
- fs/nilfs2/inode.c     | 12 +++--------
- fs/nilfs2/recovery.c  | 32 +++++++++++------------------
- fs/nilfs2/segbuf.c    | 12 ++---------
- fs/nilfs2/segment.c   | 48 ++++++++++++++++---------------------------
- fs/nilfs2/the_nilfs.c | 12 +++++------
- 6 files changed, 50 insertions(+), 90 deletions(-)
+ include/net/sctp/sm.h    |  1 +
+ net/sctp/sm_make_chunk.c |  5 ++--
+ net/sctp/socket.c        | 53 ++++++++++++++++++++++++++++++----------
+ 3 files changed, 44 insertions(+), 15 deletions(-)
 
-diff --git a/fs/nilfs2/gcinode.c b/fs/nilfs2/gcinode.c
-index 3a50fe0424770..a2dd5639c4833 100644
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -46,14 +46,11 @@
-  * specified by @pbn to the GC pagecache with the key @blkoff.
-  * This function sets @vbn (@pbn if @vbn is zero) in b_blocknr of the buffer.
-  *
-- * Return Value: On success, 0 is returned. On Error, one of the following
-- * negative error code is returned.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-- *
-- * %-ENOENT - The block specified with @pbn does not exist.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EIO	- I/O error (including metadata corruption).
-+ * * %-ENOENT	- The block specified with @pbn does not exist.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- int nilfs_gccache_submit_read_data(struct inode *inode, sector_t blkoff,
- 				   sector_t pbn, __u64 vbn,
-@@ -114,12 +111,11 @@ int nilfs_gccache_submit_read_data(struct inode *inode, sector_t blkoff,
-  * specified by @vbn to the GC pagecache.  @pbn can be supplied by the
-  * caller to avoid translation of the disk block address.
-  *
-- * Return Value: On success, 0 is returned. On Error, one of the following
-- * negative error code is returned.
-- *
-- * %-EIO - I/O error.
-- *
-- * %-ENOMEM - Insufficient amount of memory available.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EIO	- I/O error (including metadata corruption).
-+ * * %-ENOENT	- Invalid virtual block address.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- int nilfs_gccache_submit_read_node(struct inode *inode, sector_t pbn,
- 				   __u64 vbn, struct buffer_head **out_bh)
-diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
-index 410da542a3b90..5e17408c80ae6 100644
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -676,10 +676,7 @@ struct inode *nilfs_iget_for_gc(struct super_block *sb, unsigned long ino,
-  * or does nothing if the inode already has it.  This function allocates
-  * an additional inode to maintain page cache of B-tree nodes one-on-one.
-  *
-- * Return Value: On success, 0 is returned. On errors, one of the following
-- * negative error code is returned.
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: 0 on success, or %-ENOMEM if memory is insufficient.
-  */
- int nilfs_attach_btree_node_cache(struct inode *inode)
+diff --git a/include/net/sctp/sm.h b/include/net/sctp/sm.h
+index 64c42bd56bb24..84e71381e19bc 100644
+--- a/include/net/sctp/sm.h
++++ b/include/net/sctp/sm.h
+@@ -253,6 +253,7 @@ struct sctp_chunk *sctp_make_fwdtsn(const struct sctp_association *asoc,
+ 				    struct sctp_fwdtsn_skip *skiplist);
+ struct sctp_chunk *sctp_make_auth(const struct sctp_association *asoc,
+ 				  __u16 key_id);
++void sctp_control_set_owner_w(struct sctp_chunk *chunk);
+ struct sctp_chunk *sctp_make_strreset_req(const struct sctp_association *asoc,
+ 					  __u16 stream_num, __be16 *stream_list,
+ 					  bool out, bool in);
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index c2f716e68d6e0..c1a5384eed75f 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -95,7 +95,7 @@ static void sctp_control_release_owner(struct sk_buff *skb)
+ 	}
+ }
+ 
+-static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
++void sctp_control_set_owner_w(struct sctp_chunk *chunk)
  {
-@@ -740,11 +737,8 @@ void nilfs_detach_btree_node_cache(struct inode *inode)
-  * in one inode and the one for b-tree node pages is set up in the
-  * other inode, which is attached to the former inode.
-  *
-- * Return Value: On success, a pointer to the inode for data pages is
-- * returned. On errors, one of the following negative error code is returned
-- * in a pointer type.
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: a pointer to the inode for data pages on success, or %-ENOMEM
-+ * if memory is insufficient.
-  */
- struct inode *nilfs_iget_for_shadow(struct inode *inode)
+ 	struct sctp_association *asoc = chunk->asoc;
+ 	struct sk_buff *skb = chunk->skb;
+@@ -108,7 +108,8 @@ static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
+ 	 *  For now don't do anything for now.
+ 	 */
+ 	if (chunk->auth) {
+-		chunk->shkey = asoc->shkey;
++		if (!chunk->shkey)
++			chunk->shkey = asoc->shkey;
+ 		sctp_auth_shkey_hold(chunk->shkey);
+ 	}
+ 	skb->sk = asoc ? asoc->base.sk : NULL;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index d974d5d147771..137916dfaacba 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -156,9 +156,24 @@ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
+ 
+ static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
  {
-diff --git a/fs/nilfs2/recovery.c b/fs/nilfs2/recovery.c
-index ce30b51ac593c..b5207e4c50007 100644
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -741,18 +741,13 @@ static void nilfs_abort_roll_forward(struct the_nilfs *nilfs)
-  * @sb: super block instance
-  * @ri: pointer to a nilfs_recovery_info struct to store search results.
-  *
-- * Return Value: On success, 0 is returned.  On error, one of the following
-- * negative error code is returned.
-- *
-- * %-EINVAL - Inconsistent filesystem state.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOSPC - No space left on device (only in a panic state).
-- *
-- * %-ERESTARTSYS - Interrupted.
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EINVAL		- Inconsistent filesystem state.
-+ * * %-EIO		- I/O error.
-+ * * %-ENOMEM		- Insufficient memory available.
-+ * * %-ENOSPC		- No space left on device (only in a panic state).
-+ * * %-ERESTARTSYS	- Interrupted.
-  */
- int nilfs_salvage_orphan_logs(struct the_nilfs *nilfs,
- 			      struct super_block *sb,
-@@ -817,14 +812,11 @@ int nilfs_salvage_orphan_logs(struct the_nilfs *nilfs,
-  * segment pointed by the superblock.  It sets up struct the_nilfs through
-  * this search. It fills nilfs_recovery_info (ri) required for recovery.
-  *
-- * Return Value: On success, 0 is returned.  On error, one of the following
-- * negative error code is returned.
-- *
-- * %-EINVAL - No valid segment found
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EINVAL	- No valid segment found.
-+ * * %-EIO	- I/O error.
-+ * * %-ENOMEM	- Insufficient memory available.
-  */
- int nilfs_search_super_root(struct the_nilfs *nilfs,
- 			    struct nilfs_recovery_info *ri)
-diff --git a/fs/nilfs2/segbuf.c b/fs/nilfs2/segbuf.c
-index 6e59dc19a7324..7416fb6e3fd4b 100644
---- a/fs/nilfs2/segbuf.c
-+++ b/fs/nilfs2/segbuf.c
-@@ -403,12 +403,7 @@ static int nilfs_segbuf_submit_bh(struct nilfs_segment_buffer *segbuf,
-  * @segbuf: buffer storing a log to be written
-  * @nilfs: nilfs object
-  *
-- * Return Value: On Success, 0 is returned. On Error, one of the following
-- * negative error code is returned.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: Always 0.
-  */
- static int nilfs_segbuf_write(struct nilfs_segment_buffer *segbuf,
- 			      struct the_nilfs *nilfs)
-@@ -449,10 +444,7 @@ static int nilfs_segbuf_write(struct nilfs_segment_buffer *segbuf,
-  * nilfs_segbuf_wait - wait for completion of requested BIOs
-  * @segbuf: segment buffer
-  *
-- * Return Value: On Success, 0 is returned. On Error, one of the following
-- * negative error code is returned.
-- *
-- * %-EIO - I/O error
-+ * Return: 0 on success, or %-EIO if I/O error is detected.
-  */
- static int nilfs_segbuf_wait(struct nilfs_segment_buffer *segbuf)
+-	sctp_set_owner_w(chunk);
+-	if (chunk->shkey)
+-		sctp_auth_shkey_release(chunk->shkey);
++	struct sctp_shared_key *shkey = chunk->shkey;
++
++	if (chunk->msg)
++		sctp_set_owner_w(chunk);
++	else
++		sctp_control_set_owner_w(chunk);
++
++	if (shkey)
++		sctp_auth_shkey_release(shkey);
++}
++
++static void sctp_process_tx_chunk(struct sctp_association *asoc,
++				  struct sctp_chunk *chunk, bool clear,
++				  void (*cb)(struct sctp_chunk *))
++{
++	if ((clear && asoc->base.sk == chunk->skb->sk) ||
++	    (!clear && asoc->base.sk != chunk->skb->sk))
++		cb(chunk);
+ }
+ 
+ #define traverse_and_process()	\
+@@ -166,17 +181,14 @@ do {				\
+ 	msg = chunk->msg;	\
+ 	if (msg == prev_msg)	\
+ 		continue;	\
+-	list_for_each_entry(c, &msg->chunks, frag_list) {	\
+-		if ((clear && asoc->base.sk == c->skb->sk) ||	\
+-		    (!clear && asoc->base.sk != c->skb->sk))	\
+-			cb(c);	\
+-	}			\
++	list_for_each_entry(c, &msg->chunks, frag_list)	\
++		sctp_process_tx_chunk(asoc, c, clear, cb);	\
+ 	prev_msg = msg;		\
+ } while (0)
+ 
+-static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
+-				       bool clear,
+-				       void (*cb)(struct sctp_chunk *))
++static void sctp_for_each_tx_chunk(struct sctp_association *asoc,
++				   bool clear,
++				   void (*cb)(struct sctp_chunk *))
+ 
  {
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index be67304825201..ab2359959b566 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -191,12 +191,10 @@ static int nilfs_prepare_segment_lock(struct super_block *sb,
-  * When @vacancy_check flag is set, this function will check the amount of
-  * free space, and will wait for the GC to reclaim disk space if low capacity.
-  *
-- * Return Value: On success, 0 is returned. On error, one of the following
-- * negative error code is returned.
-- *
-- * %-ENOMEM - Insufficient memory available.
-- *
-- * %-ENOSPC - No space left on device
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-ENOMEM	- Insufficient memory available.
-+ * * %-ENOSPC	- No space left on device (if checking free space).
-  */
- int nilfs_transaction_begin(struct super_block *sb,
- 			    struct nilfs_transaction_info *ti,
-@@ -2295,18 +2293,13 @@ static void nilfs_segctor_wakeup(struct nilfs_sc_info *sci, int err, bool force)
-  * nilfs_construct_segment - construct a logical segment
-  * @sb: super block
-  *
-- * Return Value: On success, 0 is returned. On errors, one of the following
-- * negative error code is returned.
-- *
-- * %-EROFS - Read only filesystem.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOSPC - No space left on device (only in a panic state).
-- *
-- * %-ERESTARTSYS - Interrupted.
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EIO		- I/O error (including metadata corruption).
-+ * * %-ENOMEM		- Insufficient memory available.
-+ * * %-ENOSPC		- No space left on device (only in a panic state).
-+ * * %-ERESTARTSYS	- Interrupted.
-+ * * %-EROFS		- Read only filesystem.
-  */
- int nilfs_construct_segment(struct super_block *sb)
- {
-@@ -2330,18 +2323,13 @@ int nilfs_construct_segment(struct super_block *sb)
-  * @start: start byte offset
-  * @end: end byte offset (inclusive)
-  *
-- * Return Value: On success, 0 is returned. On errors, one of the following
-- * negative error code is returned.
-- *
-- * %-EROFS - Read only filesystem.
-- *
-- * %-EIO - I/O error
-- *
-- * %-ENOSPC - No space left on device (only in a panic state).
-- *
-- * %-ERESTARTSYS - Interrupted.
-- *
-- * %-ENOMEM - Insufficient memory available.
-+ * Return: 0 on success, or one of the following negative error codes on
-+ * failure:
-+ * * %-EIO		- I/O error (including metadata corruption).
-+ * * %-ENOMEM		- Insufficient memory available.
-+ * * %-ENOSPC		- No space left on device (only in a panic state).
-+ * * %-ERESTARTSYS	- Interrupted.
-+ * * %-EROFS		- Read only filesystem.
-  */
- int nilfs_construct_dsync_segment(struct super_block *sb, struct inode *inode,
- 				  loff_t start, loff_t end)
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index f9b10b4e22c01..013aea9dc355d 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -50,8 +50,8 @@ void nilfs_set_last_segment(struct the_nilfs *nilfs,
-  * alloc_nilfs - allocate a nilfs object
-  * @sb: super block instance
-  *
-- * Return Value: On success, pointer to the_nilfs is returned.
-- * On error, NULL is returned.
-+ * Return: a pointer to the allocated nilfs object on success, or NULL on
-+ * failure.
-  */
- struct the_nilfs *alloc_nilfs(struct super_block *sb)
- {
-@@ -202,8 +202,7 @@ static int nilfs_store_log_cursor(struct the_nilfs *nilfs,
-  * exponent information written in @sbp and stores it in @blocksize,
-  * or aborts with an error message if it's too large.
-  *
-- * Return Value: On success, 0 is returned. If the block size is too
-- * large, -EINVAL is returned.
-+ * Return: 0 on success, or %-EINVAL if the block size is too large.
-  */
- static int nilfs_get_blocksize(struct super_block *sb,
- 			       struct nilfs_super_block *sbp, int *blocksize)
-@@ -546,7 +545,7 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
-  * area, or if the parameters themselves are not normal, it is
-  * determined to be invalid.
-  *
-- * Return Value: true if invalid, false if valid.
-+ * Return: true if invalid, false if valid.
-  */
- static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
- {
-@@ -677,8 +676,7 @@ static int nilfs_load_super_block(struct the_nilfs *nilfs,
-  * reading the super block, getting disk layout information, initializing
-  * shared fields in the_nilfs).
-  *
-- * Return Value: On success, 0 is returned. On error, a negative error
-- * code is returned.
-+ * Return: 0 on success, or a negative error code on failure.
-  */
- int init_nilfs(struct the_nilfs *nilfs, struct super_block *sb, char *data)
- {
+ 	struct sctp_datamsg *msg, *prev_msg = NULL;
+@@ -199,6 +211,21 @@ static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
+ 
+ 	list_for_each_entry(chunk, &q->out_chunk_list, list)
+ 		traverse_and_process();
++
++	list_for_each_entry(chunk, &q->control_chunk_list, list)
++		sctp_process_tx_chunk(asoc, chunk, clear, cb);
++
++	list_for_each_entry(chunk, &asoc->asconf_ack_list, transmitted_list)
++		sctp_process_tx_chunk(asoc, chunk, clear, cb);
++
++	list_for_each_entry(chunk, &asoc->addip_chunk_list, list)
++		sctp_process_tx_chunk(asoc, chunk, clear, cb);
++
++	if (asoc->strreset_chunk)
++		sctp_process_tx_chunk(asoc, asoc->strreset_chunk, clear, cb);
++
++	if (asoc->addip_last_asconf)
++		sctp_process_tx_chunk(asoc, asoc->addip_last_asconf, clear, cb);
+ }
+ 
+ static void sctp_for_each_rx_skb(struct sctp_association *asoc, struct sock *sk,
+@@ -9708,9 +9735,9 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
+ 	 * paths won't try to lock it and then oldsk.
+ 	 */
+ 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
+-	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
++	sctp_for_each_tx_chunk(assoc, true, sctp_clear_owner_w);
+ 	sctp_assoc_migrate(assoc, newsk);
+-	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
++	sctp_for_each_tx_chunk(assoc, false, sctp_set_owner_w_migrate);
+ 
+ 	/* If the association on the newsk is already closed before accept()
+ 	 * is called, set RCV_SHUTDOWN flag.
 -- 
 2.53.0
 
