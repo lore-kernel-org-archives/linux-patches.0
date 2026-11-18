@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034157;
-	b=LxrPPNL8PLS4YMcy6v6DBqTNsQYS1G5B36aO3MsWb8BDj0jq28QNeYII5PFFB4ssMSqb
-	 5p9feT2+2Wn4lk5wjgaa+ojISjyQBWponeBrl0FT5uGlcxNjPhA4pX689cJ601D56eCUg
-	 PUPgiE1tlK3fE32hOj+wPKUe5hpqKMiWlpcZhu0z953mMje12My/ooghktHZyKKzhHOI0
-	 8gCWe4yOrp8hxQgH5SEyFyNBuV5im/5aUmnhUXu+O6Y/4MMrxohKsJLXttRj2lGnAsB4E
-	 go3gPe0hf0xH1pZ+lgRbWV6DAK/bPpuJ7PUzNOK1M1zC2Ci9EZMvyGcaStH7vstluXw==
+	t=1795034160;
+	b=e88RoenvkR5PmneckkOwZlyJTNICC5bYql7NzqEf+U76SGeKP62odqgeBhIB3v/vKrg3
+	 lG0FYCFC6GXMRgB7Ulroud6lmJv2nWmQpDn07V1/fQYJ19j/3bxJNzFDMe86XfU1UsnPW
+	 kNCzl38QLS0BwqYrgT7o0sY9PqQs6puaU3glwXFmjKSkFI9mSbxWNZUghqQAz/ANkvZza
+	 zM4P4wh2J8e61/zzJuXWuSBqbMqaBnzLzdyGZzH0GtANxWnxNP7eW/dfQzUSFgCk7CWZL
+	 9ajl/W9dvll6nwBX7iblZCQkurlOEOPt1ZBl1BdUcvRWMaAwLKf1QslB32AkTtuyl+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034157;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034160;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gIKFceCQ9FJoHqURFsJtFnm3bssTo7Eh0+RKRfP4BpU=;
-	b=OW48kp0J60qFf/quqIpUxP7L7UDHwlib16sO6wNBI3yvjAglgtSzPWosnvtrxH1AOgFt
-	 2TTpMD/GXO7873Ufn1x6GUr/A3E2Lp4sTk5IyGyOc1XKvW6BxJObvXFCrXEYRJgjXdjdT
-	 5PLrU86jbz22IgA7t6jiG2y77w4lZ2jr9/M6L9cx6qI+RAootsqH6ETn6xlKKsLzzGSdd
-	 LBEFPeM3kWR0NljAgV8Mh5cYR58CNX23gzdBQz+zGb2fvZwETib4aYES9eMFnIYk87GiL
-	 gtU05hRBpf+8D5G0bqL6BiSL/gol7cW3l2GHpqiSUAR30baIxaDHMJsPCJ6e1r/aBeQ==
+	bh=xI9Z65mybUSXghorgEYb/yAsRYputr/9hoj9zGgmm7Y=;
+	b=nJ8a80RR4Cz3Aod7MfFhR/Ctq798Wbo0RDTAf//eKVwj84CSVMp1J1O3GRc5WasNPMXX
+	 9yD4gEPtTUc0Etkx388AOpRBu1kAoXkZkxfN4swgpd8XLknjWZYS6GNYaMRGeYLHJ2fBu
+	 s0QnRw4zIBAwwTcsvImsq+kUuo3C991flb/Zx61K/3PzEC7qSAQwPxASL8Rff9WwamEMD
+	 PLZwF5lyYFLk4179H05c6GIZTjdaUk2P2ynYyTqdmvtKpDRnAF77vtiYdjVIj2voNrM6E
+	 4xqAmFq28OTK2V65yd1CMMStVvVjYCxS+/5ceOiY1mjU1UNJ1lYjfnHGOdUHw3qWAzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imrDrX1L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWCV7cD3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE715606A320;
-	Wed, 18 Nov 2026 20:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717FE606A31C;
+	Wed, 18 Nov 2026 20:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=imrDrX1L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBA31F000C4;
-	Wed, 18 Nov 2026 20:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QWCV7cD3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C774A1F000C4;
+	Wed, 18 Nov 2026 20:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034157;
-	bh=gIKFceCQ9FJoHqURFsJtFnm3bssTo7Eh0+RKRfP4BpU=;
+	s=korg; t=1795034160;
+	bh=xI9Z65mybUSXghorgEYb/yAsRYputr/9hoj9zGgmm7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=imrDrX1LkqvZLB5xsFcVEa2LsmH+V2g2X7bf+GJY8qdF4W6/FkZCwAaH5X/ikFoWf
-	 W/3etOpwiV+DKcJQ4+EhxBFRPxNhkwKfa0LPQ/Yrr13w3N2NK79lyDme7CtI8cAuK0
-	 kkmsVWnjUPEHtM2oAl/u1Y6DQv8tH+Yp/oOQVRns=
+	b=QWCV7cD3vyEIFMF/BIXpOsxGO0qtg941gdITKlN+vkuZRPd2dPlsx0J5olwrBoaS9
+	 wN87psskvEt6yvpoWJsXiuyGktEMZ+sKCSwHK9b8VNoKNOPDWHQQE88qLhMiWsoo/i
+	 oFxPODg1MO6PUZPnE2kCXjZAhUYS78TmlEz+grTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Turner <mattst88@gmail.com>,
-	Magnus Lindholm <linmag7@gmail.com>,
+	Dmytro Moroziuk <dmorozyk1@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0270/3318] alpha: run the remote RTC access in a worker, not an IPI callback
-Date: Wed, 18 Nov 2026 15:14:52 +0100
-Message-ID: <20261118150323.539741327@linuxfoundation.org>
+Subject: [PATCH 6.6 0271/3318] ALSA: hda/conexant: Add mute LED quirk for HP ProBook 440 G5
+Date: Wed, 18 Nov 2026 15:14:53 +0100
+Message-ID: <20261118150323.575699470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,155 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Turner <mattst88@gmail.com>
+From: Dmytro Moroziuk <dmorozyk1@gmail.com>
 
-[ Upstream commit 6f45effbd74012f1715584ba51abaa3196a47c08 ]
+[ Upstream commit 191fe151eb85ff6cb24189fc88c970745497c057 ]
 
-On Marvel the CMOS clock is only reachable from the boot cpu, so
-remote_read_time() and remote_set_time() bounce the access there with
-smp_call_function_single(), whose callback runs in hard interrupt
-context.
+The HP ProBook 440 G5 requires the CXT_FIXUP_MUTE_LED_GPIO quirk to
+properly toggle the physical mute and mic-mute LEDs via the CX8200 codec.
+Without this quirk, the LEDs remain permanently dark.
 
-alpha_rtc_read_time() calls mc146818_get_time() with a 10 ms timeout.
-That waits out the RTC update cycle in mc146818_avoid_UIP(), which drops
-rtc_lock and udelay()s 100 us at a time until the update completes or
-the timeout expires:
-
-	for (i = 0; UIP_RECHECK_LOOPS_MS(i) < timeout; i++) {
-		spin_lock_irqsave(&rtc_lock, flags);
-		...
-		if (CMOS_READ(RTC_FREQ_SELECT) & RTC_UIP) {
-			spin_unlock_irqrestore(&rtc_lock, flags);
-			udelay(UIP_RECHECK_DELAY);
-			continue;
-		}
-
-So a clock read from a non-boot cpu can spin for up to 10 ms in hard
-interrupt context on the boot cpu, while the cpu that sent the request
-spins in smp_call_function_single() waiting for it to finish.
-
-mc146818_set_time() does not poll, but it takes rtc_lock too, and
-rtc_lock is a spinlock_t.  Only raw spinlocks may be taken in hard
-interrupt context, so lockdep reports the write path as soon as a
-non-boot cpu sets the clock:
-
-  [ BUG: Invalid wait context ]
-  -----------------------------
-  swapper/0/0 is trying to lock:
-  fffffc0003690470 (rtc_lock){....}-{3:3}, at: mc146818_set_time+0x74/0x450
-  other info that might help us debug this:
-  context-{2:2}
-  no locks held by swapper/0/0.
-  stack backtrace:
-  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc1 #1 NONE
-  Trace:
-  [<fffffc000102ebb0>] dump_stack+0x28/0x44
-  [<fffffc000110efcc>] __lock_acquire+0xb0c/0x1060
-  [<fffffc000110f5f0>] lock_acquire.part.0+0xd0/0x300
-  [...]
-  [<fffffc0001b0d834>] mc146818_set_time+0x74/0x450
-  [<fffffc0001f090cc>] _raw_spin_lock_irqsave+0x7c/0xc0
-  [<fffffc0001042f90>] do_remote_set+0x90/0xc0
-  [<fffffc000119c1a4>] __flush_smp_call_function_queue+0x314/0x5c0
-  [<fffffc000119c474>] generic_smp_call_function_single_interrupt+0x24/0x40
-  [<fffffc000103d984>] handle_ipi+0xa4/0x230
-  [<fffffc0001037044>] do_entInt+0x1a4/0x2e0
-
-The rtc class ops are always called from process context, so there is no
-reason to run the access from an interrupt at all.  Use work_on_cpu() to
-run it in a worker on the boot cpu.  Alpha does not support cpu hotplug,
-so the boot cpu cannot go offline while the work is pending.
-
-Tested on an AlphaServer ES47 (Marvel/EV7): hwclock read and write
-pinned to a non-boot cpu, twenty times, with no splat.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20260810202835.3592833-1-mattst88@gmail.com
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Dmytro Moroziuk <dmorozyk1@gmail.com>
+Link: https://patch.msgid.link/20260812121856.30353-1-dmorozyk1@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/rtc.c | 37 ++++++++++++-------------------------
- 1 file changed, 12 insertions(+), 25 deletions(-)
+ sound/pci/hda/patch_conexant.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/alpha/kernel/rtc.c b/arch/alpha/kernel/rtc.c
-index cfdf90bc8b3f8..9e7d714ef6f85 100644
---- a/arch/alpha/kernel/rtc.c
-+++ b/arch/alpha/kernel/rtc.c
-@@ -15,6 +15,7 @@
- #include <linux/bcd.h>
- #include <linux/rtc.h>
- #include <linux/platform_device.h>
-+#include <linux/workqueue.h>
- 
- #include "proto.h"
- 
-@@ -142,54 +143,40 @@ static const struct rtc_class_ops alpha_rtc_ops = {
- };
- 
- /*
-- * Similarly, except do the actual CMOS access on the boot cpu only.
-- * This requires marshalling the data across an interprocessor call.
-+ * Similarly, except do the actual CMOS access on the boot cpu only.  The
-+ * access polls for the RTC update cycle and takes rtc_lock, so run it in a
-+ * worker on that cpu rather than from an interprocessor interrupt.
-  */
- 
- #if defined(CONFIG_SMP) && \
-     (defined(CONFIG_ALPHA_GENERIC) || defined(CONFIG_ALPHA_MARVEL))
- # define HAVE_REMOTE_RTC 1
- 
--union remote_data {
--	struct rtc_time *tm;
--	long retval;
--};
--
--static void
-+static long
- do_remote_read(void *data)
- {
--	union remote_data *x = data;
--	x->retval = alpha_rtc_read_time(NULL, x->tm);
-+	return alpha_rtc_read_time(NULL, data);
- }
- 
- static int
- remote_read_time(struct device *dev, struct rtc_time *tm)
- {
--	union remote_data x;
--	if (smp_processor_id() != boot_cpuid) {
--		x.tm = tm;
--		smp_call_function_single(boot_cpuid, do_remote_read, &x, 1);
--		return x.retval;
--	}
-+	if (smp_processor_id() != boot_cpuid)
-+		return work_on_cpu(boot_cpuid, do_remote_read, tm);
- 	return alpha_rtc_read_time(NULL, tm);
- }
- 
--static void
-+static long
- do_remote_set(void *data)
- {
--	union remote_data *x = data;
--	x->retval = alpha_rtc_set_time(NULL, x->tm);
-+	return alpha_rtc_set_time(NULL, data);
- }
- 
- static int
- remote_set_time(struct device *dev, struct rtc_time *tm)
- {
--	union remote_data x;
--	if (smp_processor_id() != boot_cpuid) {
--		x.tm = tm;
--		smp_call_function_single(boot_cpuid, do_remote_set, &x, 1);
--		return x.retval;
--	}
-+	if (smp_processor_id() != boot_cpuid)
-+		return work_on_cpu(boot_cpuid, do_remote_set, tm);
- 	return alpha_rtc_set_time(NULL, tm);
- }
- 
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 7000245f083d5..8674ef6edf04d 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -1111,6 +1111,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x829a, "HP 800 G3 DM", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x82b4, "HP ProDesk 600 G3", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x836e, "HP ProBook 455 G5", CXT_FIXUP_MUTE_LED_GPIO),
++	SND_PCI_QUIRK(0x103c, 0x837b, "HP ProBook 440 G5", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x837f, "HP ProBook 470 G5", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x83b2, "HP EliteBook 840 G5", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x83b3, "HP EliteBook 830 G5", CXT_FIXUP_HP_DOCK),
 -- 
 2.53.0
 
