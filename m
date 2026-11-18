@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028356;
-	b=o1tRvnGYGtxhX+paEfuYM+/j000DNqwafv7oervtCZO9PsZvnWrwZcgXuJQQXYLqSYyG
-	 qMYBX0LkINO5YOeZtvgUIuXToUGeWTP2IaJZ3psN/MyjLjuHj5Ye63kdnghz8MK7Xdu02
-	 SnzMwq9+fDvn4f5TfFiPR+sTduC5g2Dg3ZZwjKAl2yXCcSLfWzqTKCo1vXJYfo//xjkQR
-	 UYEaTzIv7/YNA+ESOkliDM/rbPGwoqYfq+ZC5N2uyGd6TdM7X2QYsCk+iQgzTEPtObvA6
-	 ibc04akLm+I40K5wQjgm80LMjZuVzm8n5CluIjUfqYtSosfZ4bs5iCzQVe52/pyR6xg==
+	t=1795028359;
+	b=Kzb1YyoLstUWyaqQGvTp7cxWd2nujQimZ39xUpdXdUk3GfxHijbcM/uaIDf0hm2N5CQL
+	 Qdew8tNEE7QRPzWnaNfSx5jU3nXIjWBj6BZ910ZowBlIM+N+2zwqYvjk9EW+bS76bKH0K
+	 m/FYLm7ZgIlA2MovzQSQCi0sZGuZaHtotdn/n1zCYUKbj4q4jhStelROIDZ2KSxTJ0pFU
+	 YemWUth6A2zOObBWpJKVAaUfPsURr81B2/IwiBoz1/0sWMXn1+QTyYHVkBWCy6w3cZrLI
+	 9Yb1FzCtJqfj4E008Qxzy4JHUtmWy1WHtXRDzqX265PmUnj1z71c5qYt0nJBX1kCEEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028356;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vg2r2XIpeinD+a9dhoKfzvRx3/pmZI/DOVvMJrcsIXM=;
-	b=Ir8/Yxnpf6dopdvtjmd+p8PE6KenThkzqUwNOwrwDKV5l4yg7dtkR2ViXvT0Mjbu+wst
-	 5xX+3C/C9zd91PEDThwAePjx2s+yuwv0HgDrbRDZsmiq1gvhw7sXYKNfXPkamhVM26L6s
-	 oTJkXjdw8rwqWsyxS4JhcipaOifybWcMMZmLhddar3I6FYVCHO1XNy9QCCx8S/S2s9hwM
-	 KfW0Ngtk908IUzJ5HcCWqjB9YtSCiRD1F6YEi7jZ+OXTVzI5M1bK6Ni7oegwAjsXBv3/y
-	 /yQaaZZz8XWsAbYz2Mw7IPgEQb4AUgabixWHLJgp1JcrvG80Ak41xWEmqKZj2QWUaQQ==
+	bh=76HV8aoN3J3tKljlS2uOsPrLXvEUx653BTqNB2Ri8vA=;
+	b=4gL3B1hzLL6yhsH1itAe9uJ3KlGHx+3ehdJs/8Zcq1QgKfKg97HDufj3boM7AVkheQyO
+	 NsSK30zFgSfiLRbTa4ExXq6UEMMO5uh8yg8lbZOkwEoDI49YpXb1C8lz5btogmlJZVQ+a
+	 HZ/lYQbwlBIvVlwbWp71kh87Y7cBDsLMmAI9zRQsxjlLB473quZtGc48Qxd9XbMv5YqlH
+	 9k99HZF/26v5Nl82ECAMx3JRA9q0oXjAylAZwYEgpzsTqyK8Izy+xfzdLwh9nlenw/7Ap
+	 9UdMVIr/squOWidjZ8enIkmYk1fLB2VKxoxWcwAr3U7pk/FnFWZq1L4oCytQMJrGMxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msn9UZkL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrSR2jUZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C16D606A32A;
-	Wed, 18 Nov 2026 18:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8AF606A330;
+	Wed, 18 Nov 2026 18:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=msn9UZkL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A990B1F000C4;
-	Wed, 18 Nov 2026 18:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GrSR2jUZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE9E1F000C4;
+	Wed, 18 Nov 2026 18:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028356;
-	bh=vg2r2XIpeinD+a9dhoKfzvRx3/pmZI/DOVvMJrcsIXM=;
+	s=korg; t=1795028358;
+	bh=76HV8aoN3J3tKljlS2uOsPrLXvEUx653BTqNB2Ri8vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msn9UZkLcFwe0eNPfm8mmEDUa5zxiXgHG3TnC+/+/BveIw24LpfRfx/gvEpbJWSP3
-	 DOqMD8N/PSprzi5r9q9zIcvOyiCFzT+2lZXnsH83+l3GkHX0LRcixsvMaQjrYHX/Mo
-	 wj43uu9F/lZNg7iYREEc8SOwPZc5bkRgPNPGUOCg=
+	b=GrSR2jUZauHl+L38fDXM+h0Ukn8QBdgY2fqBTPeFDfkS7K+7iP9JWMIMjO5VDIk57
+	 IeB6JvXmsBtd+byQ+N6HdmX1Ngo0HM0AjZhHl20USt8a3k0mUaOcCyiJTjTyuCzuxn
+	 +1Icay4tfCA7fdBQ/qOFPuYctkRPZKZGar+ozB0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jamie Nguyen <jamien@nvidia.com>,
 	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2116/2151] openvswitch: use eth_type_trans_careful() in internal_dev_recv()
-Date: Wed, 18 Nov 2026 16:04:11 +0100
-Message-ID: <20261118150238.774113999@linuxfoundation.org>
+Subject: [PATCH 6.18 2090/2151] selftests: net: txtimestamp: fix out-of-bounds read in raw UDP checksum
+Date: Wed, 18 Nov 2026 16:03:45 +0100
+Message-ID: <20261118150237.835723721@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,76 +70,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Jamie Nguyen <jamien@nvidia.com>
 
-[ Upstream commit b55e5a0159c8f53edefcb7848d95eb93db37bce1 ]
+[ Upstream commit 8daacee78b3d2798fcf92398b6dff364eab64466 ]
 
-OVS actions like pop_eth followed by pop_mpls(ETH_P_TEB) or pop_nsh
-can expose an inner Ethernet header which is not in the linear part
-of the skb. Output to an internal port then crashes in eth_type_trans():
+With -r (SOCK_RAW, IPPROTO_UDP) the test writes only the UDP header and
+payload, and the kernel adds the IP header. get_udp_csum() still expects
+the IP source and destination addresses to directly precede the UDP
+header, and reads 2 * alen bytes before the start of the buffer: 8 bytes
+for IPv4, 32 bytes for IPv6.
 
-  flow: in_port(0),eth(),eth_type(0x8847),mpls(lse=0x00010140)
-  actions: pop_eth,pop_mpls(0x6558),0
-  # AF_PACKET SOCK_RAW on dp0: eth / mpls / eth / 4096 bytes of payload
+ASan reports a heap-buffer-overflow for both -4 -r and -6 -r. Without
+ASan the read usually goes unnoticed, but it faults when the buffer is
+the first chunk in the heap. That happens on Ubuntu 26.04, where the
+kselftest runner wraps the test in uutils stdbuf, and txtimestamp.sh
+fails with SIGSEGV on every run.
 
-  kernel BUG at include/linux/skbuff.h:2839!
-  RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
-  Call Trace:
-   internal_dev_recv (net/openvswitch/vport-internal_dev.c:202) openvswitch
-   do_execute_actions (net/openvswitch/actions.c:1296) openvswitch
-   ovs_execute_actions (net/openvswitch/actions.c:1606) openvswitch
-   ovs_dp_process_packet (net/openvswitch/datapath.c:310) openvswitch
-   ovs_vport_receive (net/openvswitch/vport.c:448) openvswitch
-   internal_dev_xmit (net/openvswitch/vport-internal_dev.c:42) openvswitch
-   dev_hard_start_xmit (include/linux/netdevice.h:5455 include/linux/netdevice.h:5464 net/core/dev.c:4057 net/core/dev.c:4073)
-   __dev_queue_xmit (net/core/dev.c:5066)
-   packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+Even without a crash, -r packets were sent with a checksum computed
+over unrelated heap memory, so their UDP checksum was invalid.
 
-Use eth_type_trans_careful(), and drop the packet if the Ethernet
-header can not be pulled. This covers all OVS actions at the consumer,
-instead of fixing each producer.
+Build the pseudo-header from the destination address and checksum only
+the UDP header and payload. -R and -P already write daddr as both the
+source and destination address, so their checksums are unchanged. With
+-r the kernel selects the source address, which equals daddr for the
+loopback addresses used by txtimestamp.sh.
 
-Fixes: b2d0f5d5dc53 ("openvswitch: enable NSH support")
-Fixes: f66b53fdbb22 ("openvswitch: New MPLS actions for layer 2 tunnelling")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b52354aa068e ("selftests: expand txtimestamp with ipv6 dgram + raw and pf_packet")
+Signed-off-by: Jamie Nguyen <jamien@nvidia.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028122703.2093730-5-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261027162945.2122306-1-jamien@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/vport-internal_dev.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/txtimestamp.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/net/openvswitch/vport-internal_dev.c b/net/openvswitch/vport-internal_dev.c
-index 125d310871e93..06a363df81556 100644
---- a/net/openvswitch/vport-internal_dev.c
-+++ b/net/openvswitch/vport-internal_dev.c
-@@ -186,6 +186,7 @@ static void internal_dev_destroy(struct vport *vport)
- static int internal_dev_recv(struct sk_buff *skb)
+diff --git a/tools/testing/selftests/net/txtimestamp.c b/tools/testing/selftests/net/txtimestamp.c
+index dae91eb97d699..0a24f8afaacdc 100644
+--- a/tools/testing/selftests/net/txtimestamp.c
++++ b/tools/testing/selftests/net/txtimestamp.c
+@@ -420,19 +420,25 @@ static uint16_t get_ip_csum(const uint16_t *start, int num_words,
+ 	return ~sum;
+ }
+ 
+-static uint16_t get_udp_csum(const struct udphdr *udph, int alen)
++static uint16_t get_udp_csum(const struct udphdr *udph, bool is_ipv4)
  {
- 	struct net_device *netdev = skb->dev;
-+	enum skb_drop_reason reason;
+-	unsigned long pseudo_sum, csum_len;
+-	const void *csum_start = udph;
++	const void *addr = is_ipv4 ? (void *)&daddr.sin_addr : &daddr6.sin6_addr;
++	int alen = is_ipv4 ? sizeof(struct in_addr) : sizeof(struct in6_addr);
++	uint16_t addr16[sizeof(struct in6_addr) / sizeof(uint16_t)];
++	unsigned long pseudo_sum;
++	int i;
  
- 	if (unlikely(!(netdev->flags & IFF_UP))) {
- 		kfree_skb(skb);
-@@ -197,7 +198,12 @@ static int internal_dev_recv(struct sk_buff *skb)
- 	nf_reset_ct(skb);
+ 	pseudo_sum = htons(IPPROTO_UDP);
+ 	pseudo_sum += udph->len;
  
- 	skb->pkt_type = PACKET_HOST;
--	skb->protocol = eth_type_trans(skb, netdev);
-+	reason = eth_type_trans_careful(skb, netdev);
-+	if (unlikely(reason)) {
-+		dev_core_stats_rx_dropped_inc(netdev);
-+		kfree_skb_reason(skb, reason);
-+		return NETDEV_TX_OK;
-+	}
- 	skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
- 	dev_sw_netstats_rx_add(netdev, skb->len);
+-	/* checksum ip(v6) addresses + udp header + payload */
+-	csum_start -= alen * 2;
+-	csum_len = ntohs(udph->len) + alen * 2;
++	/* pseudo-header source and destination: both are daddr */
++	memcpy(addr16, addr, alen);
++	for (i = 0; i < alen / 2; i++)
++		pseudo_sum += 2 * addr16[i];
  
+-	return get_ip_csum(csum_start, csum_len >> 1, pseudo_sum);
++	/* checksum udp header + payload */
++	return get_ip_csum((const uint16_t *)udph, ntohs(udph->len) >> 1,
++			   pseudo_sum);
+ }
+ 
+ static int fill_header_ipv4(void *p)
+@@ -481,8 +487,7 @@ static void fill_header_udp(void *p, bool is_ipv4)
+ 	udph->len    = ntohs(sizeof(*udph) + cfg_payload_len);
+ 	udph->check  = 0;
+ 
+-	udph->check  = get_udp_csum(udph, is_ipv4 ? sizeof(struct in_addr) :
+-						    sizeof(struct in6_addr));
++	udph->check  = get_udp_csum(udph, is_ipv4);
+ }
+ 
+ static void do_test(int family, unsigned int report_opt)
 -- 
 2.53.0
 
