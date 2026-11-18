@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038524;
-	b=w9a72AhKWKC8efpC+qnjQ6ex5E82lMrTTuFWXWo6LwlOKNK+Qrh4WX7UrlN7ahkeiT+Y
-	 uA7Czk0NcIQSDo4DbrDVT1+iEbyUpmfyhcBdvaeo9hE3hZoM9UIV1ERsFwoqqD1pvF87/
-	 dThjCwkz6p6xX68s1BwVJeMnvKEOajt9SKyOlSm3rEPtKdziuIs7BQx3br4Pv69XHLSaY
-	 AHqFbYAseeOX/IRktObReQiXcp2JF7flYVyZIE0STaQ6fnCskV6RrF+t6K0yawWxZvnaJ
-	 iJtNUwR7vZ/4PPZmi0pDof2q2x1hywvPqquPh93FMd6hm+MSKpvGhQVoOZRqJpMUsXg==
+	t=1795038526;
+	b=DxbA/U+r3xBM3tKE3I4okK5cISTdhi97sSRub9NS6ekfoeCytEmym4hDbFBthchQBezL
+	 gWIEGHmVzrClq1kEKqCrUw/IUo5tj8QqAe5QvSDoOfCo+Jvfq+cOIx4rYGxxSF9RydjRV
+	 hfRFh3dzP92oi6Mb8Ft61HmCZNdafJhTtGSfSMOIzwvP/Ru806qZLd7lATOOt0G1nN4r7
+	 oQ5p9tfCv69zN1w7pmojJI+08Er1HEadw26YqohTCkJOkVZCgAuQZ2aU0oWVpdhYpp5/X
+	 vGEpBrgaB07nhFHDuRQwNW/yX8FeXwE597mAmyPTzcLQvgjc1oNso/ODjb1y3ayt8RQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038524;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038526;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ltzy3seZVpcOlc79fNLB/RSlVRP22aSlkalZ+8Fo4H4=;
-	b=GYajHYP1mwLtmAmwEp39kwYCBXsHpfT4AqKLWmQX0MzDLNfPCe7VnN13IPgdWTLXo3zI
-	 KBRFkyXV8mSEZ0JNYbGuObtPoypx0+zaVgYhg23VSdcS5BjTjiy6uoJuXxGIRBmad5xTd
-	 vFOlhOIAqyFitk3hmQtAscPqwnTGZsT83F9/MPQ/jeNy4FpJ+uKhTKBsKsnjfd0FG1Gqy
-	 L2AoHRG40OIWD/TYtldA8KLQOGKJZ6/i+0Tdfde0+688mLjLqXevc4OzhOarPIv4gz7cS
-	 l9xBkKKS6qI41G5ctoTbx9+UXFHy3Q3v6wynRE1xzo4AAJM7KPrUwsJ+GLEPbVjo7mg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=N91xi278zLV+GuOxXs1V1frAy0sVOK9ZMjL9skUMePI=;
+	b=vAxcKa6HUgzZj2TChC3W+c8jpX0WXU+a1cd09YtuL2DJ0UQu5m8TQ1aic89jF5jFnJj8
+	 RpzlZU175s7Ne/jhRINhAm636FWEEPaUBZGoaeWBO0FHCgemZtguMXWbXORptRdDH/P6r
+	 U3yn7NrsW2+n3BhpmU+Ofe9tly69eqhJRs2mUTr0pgWCB8SvW/tYn7bmu2wANreQUpzNA
+	 8M82bB1JPq7BlnCqKFTBhpUPVpRF9xg96/EZql8u2a5Txt3helfjMWWfK2GpxtdxjWoD9
+	 xnA8eIfdzWOS35pis/f0p3VaVyoiFTZWtwN9dNovj9YEOgJILU+rPsFfhmp2nI8MTOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsJex7sG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNWXOODg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1577A606A325;
-	Wed, 18 Nov 2026 21:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8ADB606A31C;
+	Wed, 18 Nov 2026 21:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsJex7sG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F381F000C6;
-	Wed, 18 Nov 2026 21:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNWXOODg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FB61F000C5;
+	Wed, 18 Nov 2026 21:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038523;
-	bh=ltzy3seZVpcOlc79fNLB/RSlVRP22aSlkalZ+8Fo4H4=;
+	s=korg; t=1795038526;
+	bh=N91xi278zLV+GuOxXs1V1frAy0sVOK9ZMjL9skUMePI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IsJex7sGCEQYchvgDi+FyAC08FoxcDB8DH8b4Xmu1gRucYkQR/CO0eODyRc8yVO8k
-	 T4gYOLzgIN+GChgP8wYz5ZoTjRVfvFC6LCnCQVDAJTGafxHOtzAIPV10eCiU55O9eW
-	 tG7n5pJQxCHyyJKUWqosKSI7noJt530u+oe6BdrU=
+	b=fNWXOODgyEEty+O7r3divNiOECLqUPzgIsV+yxLRi68cCljoWP6zAzeWVf96dzgdR
+	 3HU+1etT3IKR12KPITlTSuCjkj/h3uQHTempqBWt6BTJKhlVS/ig7/IvA1Nn7MU1DD
+	 uxARm8KRZpSmSC1ba3OK3Cuh6zCGvB5IgJheDQ98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Maciej Kucharek <qchcio@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1772/3318] drm/amdgpu: reset SI ASIC on MacBookPros with VRAM at 0
-Date: Wed, 18 Nov 2026 15:39:54 +0100
-Message-ID: <20261118150415.017966329@linuxfoundation.org>
+Subject: [PATCH 6.6 1773/3318] Input: matrix_keypad - convert to platform remove callback returning void
+Date: Wed, 18 Nov 2026 15:39:55 +0100
+Message-ID: <20261118150415.050028524@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,88 +62,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Kucharek <qchcio@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 5b56ede880317bd912f914d5cd38ba1d357677fa ]
+[ Upstream commit af90388a598d39584283c18e4047124fee8f1801 ]
 
-On MacBookPros with switchable graphics, the firmware puts VRAM at MC
-address 0 when the iGPU is enabled.  The EFI stub enables the iGPU on
-these machines through apple_set_os().  On a MacBookPro11,5 (Radeon R9
-M370X, 1002:6821, subsystem 106b:0149), the driver adopts this layout
-at init:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-  MC_VM_FB_LOCATION=0x007f0000, HDP_NONSURFACE_BASE=0
-  VRAM at 0x0-0x7fffffff, GART table at 0x1400000
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-The driver posts the ASIC again on S3 resume and after a GPU reset.
-The VBIOS asic_init table then moves VRAM back to the VBIOS default:
-
-  MC_VM_FB_LOCATION=0xf47ff400, HDP_NONSURFACE_BASE=0xf4000000
-
-gmc_v6_0 does not reprogram these registers.  The GART table is then
-no longer in VRAM, and the gfx ring test times out:
-
-  amdgpu: ring gfx test failed (-110)
-  amdgpu: resume of IP block <gfx_v6_0> failed -110
-
-Reset and post the ASIC at driver load on Apple boards with VRAM at 0.
-The driver then uses the VBIOS layout (VRAM at 0xf400000000) from the
-start, and later posts keep it.  After the reset, FB_BASE is not 0, so
-a module reload does not reset the ASIC again.
-
-The test is the same one that commit c54e4d105077 ("drm/amdgpu: make
-Mac FB workaround generic") uses: an Apple subsystem vendor and VRAM at
-0.  The VI quirk for the MacBookPro14,3 resets at load for the same
-reason:
-
-  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
-
-Other Apple SI boards get the same reset if FB_BASE reads 0 at load.
-
-Tested on a MacBookPro11,5 with 7.2.5 and this patch: the panel comes
-up at boot, and 4 of 4 deep S3 cycles resume.  Without the patch, S3
-resume fails every time.  The GPU reset path is not tested.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5978
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 60dd16ae10f286cb9cce5b6027b2d5ee869637af)
-Cc: stable@vger.kernel.org
-[ sashal: Replaced MC_VM_FB_LOCATION__FB_BASE_MASK with its equivalent literal 0xFFFF to avoid conflicting header definitions. ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230920125829.1478827-6-u.kleine-koenig@pengutronix.de
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: 1527451f87df ("Revert "Input: matrix_keypad - force switch rows to input mode"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/si.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/input/keyboard/matrix_keypad.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/si.c b/drivers/gpu/drm/amd/amdgpu/si.c
-index 4b81f29e5fd5a..5d4561ca22549 100644
---- a/drivers/gpu/drm/amd/amdgpu/si.c
-+++ b/drivers/gpu/drm/amd/amdgpu/si.c
-@@ -1509,6 +1509,16 @@ static bool si_need_full_reset(struct amdgpu_device *adev)
- 
- static bool si_need_reset_on_init(struct amdgpu_device *adev)
- {
-+	/*
-+	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
-+	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
-+	 * the vbios default, so reset and post on load to start with the
-+	 * vbios layout.
-+	 */
-+	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
-+	    !(RREG32(mmMC_VM_FB_LOCATION) & 0xFFFF))
-+		return true;
-+
- 	return false;
+diff --git a/drivers/input/keyboard/matrix_keypad.c b/drivers/input/keyboard/matrix_keypad.c
+index a1b037891af25..50fa764c82d2b 100644
+--- a/drivers/input/keyboard/matrix_keypad.c
++++ b/drivers/input/keyboard/matrix_keypad.c
+@@ -549,15 +549,13 @@ static int matrix_keypad_probe(struct platform_device *pdev)
+ 	return err;
  }
  
+-static int matrix_keypad_remove(struct platform_device *pdev)
++static void matrix_keypad_remove(struct platform_device *pdev)
+ {
+ 	struct matrix_keypad *keypad = platform_get_drvdata(pdev);
+ 
+ 	matrix_keypad_free_gpio(keypad);
+ 	input_unregister_device(keypad->input_dev);
+ 	kfree(keypad);
+-
+-	return 0;
+ }
+ 
+ #ifdef CONFIG_OF
+@@ -570,7 +568,7 @@ MODULE_DEVICE_TABLE(of, matrix_keypad_dt_match);
+ 
+ static struct platform_driver matrix_keypad_driver = {
+ 	.probe		= matrix_keypad_probe,
+-	.remove		= matrix_keypad_remove,
++	.remove_new	= matrix_keypad_remove,
+ 	.driver		= {
+ 		.name	= "matrix-keypad",
+ 		.pm	= pm_sleep_ptr(&matrix_keypad_pm_ops),
 -- 
 2.53.0
 
