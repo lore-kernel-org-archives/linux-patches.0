@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023927;
-	b=HtXtR+EfU1jYxEyfUQCO7VFPd9iHU0tVyl9VGJiMb+/TNHqD1OGFxGzs9UYai3OH3QAB
-	 C2+xrzAFCw1bRC3OUX2cZBfdjFBcNsCXngYEqYxQjNh5ESPcpzdmaOsbnmft/JmHmxCQd
-	 HZIR0gjGME/Brve2opjU7TdVL/7MexQIF4WfqIejcn6lzdRHIUaGcLJjq3vrIrELk5YO4
-	 X2vKgH/l6W1GLLgLSBXSjoUeYdc0ezeXlvad46ZvafwOYlelZZ4ksdyYCc9YPbkl74zgY
-	 8qWNS44q5co/3lbFOR5CDNUN4IJA4zQiD7Gdu1WnAjzBAyv3qabKtMqCo8hFg+1K34w==
+	t=1795023930;
+	b=jm3RJi5j5y/jKgzDBkJ6rWhvrzlnsx5gEKi9eNNJJCCjIvmIszQgwknkC0NgengDPrN8
+	 Rsf7nc6BjQilZ7czSnNxj8Eo5H8C7znck//TvhqrVLBXmbz9Fgu7SO3VOWbA5wpIOc/8o
+	 xUBowwqE11z75SLVdjXct5iw4bUg+pczuvvAJhMYn0oCxE6lICrjLb8up+T86Iviv8e37
+	 rAXNWflGDnBxQJckDyXvFNtKQYJMD+MjciS/SRJ5cm2b11R1DKf7bjPWjvlS9O71B3VPv
+	 3rlgNwBQQemFjcf2BPhUT4vvp7tI8BkJ2lwNqvr1lG9AhuXc5vBhkI15fM0xrVt8W6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023927;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LkYSCQI0jdmlSe+y3wRAxFb8jv9MIuUDekyXfMPv1Hs=;
-	b=mI+o7vQTe2cSyp0FDt2lGDurPd4SyuTheRoUFryINag8sNSXJNaigWUeHq3OXtsAAcID
-	 rjaW8qul6GTJUzYmIenFyJ6ThckYCng3YeDC10xR0ODOHB6v8eBbbihR+l2j8pDGxfhwM
-	 lneuqUH6evlH2uxECIjpxxOgiUFCO/osUfiiYJy9VbtPXpISNS50U+W0ca4i+mFbSGInl
-	 vZEdR6caVRj/37GV3fyuKoRuTbtBO0OvLweqxs4rX25MJ1UZZrhTmEpEMXOw1HhXrcr9d
-	 IyfttR4DY6aec6tlyOgaaGFoM/33JzxZqILQQyFhHgBj9U97BFxS8CCblQ7BZeYTEww==
+	bh=N0Vz/956DtT2WoqZAE0uHMqjfAJ6KezF58O8qfMrLQ0=;
+	b=F3nhpZn1A4WYDgIWWVYwGhcdYc4G7FyH9id0FlY2H0OHtEQZ4ap9fPrG223f5/n0qiAw
+	 448tGX6YeFA3OBWmNoPr8tj0Y0k2j4blOc7nG2hdMbHLACSBCxXd9OywcXv3SWH9VJidB
+	 VwYjHj3eFBFQdOAcRJUsicjIPeY/lXKASYiwUv3/IZTAe76Ai4/vtr2dzE5TV7J9xEctR
+	 Y20Alhzga+SuOzXncmIBnkSjhZlUj3nqwuM9pnpxhgnHZrlK74KXKhcA+cUtyWafXzbvj
+	 3awoQ+4b5W40vi5W2TgInQoxS/Vk2659NFIgvLkPiYKLUogUEfg6v9ncqeYqt5ySflQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjuLPBhK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y38jm+Ql;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E00F606A325;
-	Wed, 18 Nov 2026 17:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3045606A325;
+	Wed, 18 Nov 2026 17:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjuLPBhK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB3D1F000C4;
-	Wed, 18 Nov 2026 17:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y38jm+Ql
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D9E1F000C4;
+	Wed, 18 Nov 2026 17:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023927;
-	bh=LkYSCQI0jdmlSe+y3wRAxFb8jv9MIuUDekyXfMPv1Hs=;
+	s=korg; t=1795023929;
+	bh=N0Vz/956DtT2WoqZAE0uHMqjfAJ6KezF58O8qfMrLQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kjuLPBhKSIt0R5zqPIQxBrpG/bIVmAN/FFdodzzP23vAYUzdL+3UrR/ruAAPDq9vB
-	 y213ZbD+gdPwznt05RvQTztRxkDKnCFusD+Rxnrqba2f4pJxvNAqgVAZt5CttV+vG0
-	 f8lFKAfkGv7r5iMdWrI38f+mc++XXwrIJhlY7ho4=
+	b=Y38jm+Ql8mjCHHmBJHjtVXg0pSDztW3Gg6DFQVLY8Z9n5mbw60UXm+vfdQZGQmKip
+	 38RvaYME+zQMp8IuqdU6xFHHsbQGLfHlQvhldDCQszs9SfIL7NmUj1nG5Th4/ZagjC
+	 4zHy6LTyzC3D/MDZxKH9OOD6pPRnNq7g0yrUGAFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Zide Chen <zide.chen@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0543/2151] perf topdown: Dont require config1==0 for a slots event
-Date: Wed, 18 Nov 2026 15:37:58 +0100
-Message-ID: <20261118150141.764316194@linuxfoundation.org>
+Subject: [PATCH 6.18 0517/2151] cxl/port: Move dport RAS setup to dport add time
+Date: Wed, 18 Nov 2026 15:37:32 +0100
+Message-ID: <20261118150140.877539287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,113 +70,256 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 0824af00a8d2ede0d8bc70bdc0b493ecfd167900 ]
+[ Upstream commit 7f5ff740ce0bcde242dafcc3f9bb3cbe6b5b8f3a ]
 
-arch_is_topdown_slots() requires config1 == 0, so it misidentified
-"cpu/slots,metrics_clear=1/" as not being the slots event, and an
-additional slots event gets inserted, which fails event scheduling
-since the group now needs two fixed counter 3.
+Towards the end goal of making all CXL RAS capability handling uniform
+across host bridge ports, upstream switch ports, and endpoint ports, move
+dport RAS setup. Move it to cxl_switch_port_probe() context for switch / VH
+dports (via cxl_port_add_dport()) and cxl_endpoint_port_probe() context for
+an RCH dport. Rename the RAS setup helper to devm_cxl_dport_ras_setup() for
+symmetry with devm_cxl_switch_port_decoders_setup().
 
-  $ perf stat -e "{cpu/slots,metrics_clear=1/,cpu/topdown-retiring/}" -- sleep 1
-  WARNING: events were regrouped to match PMUs
-       <not counted>      slots
-     <not supported>      cpu/slots,metrics_clear=1/
-       <not counted>      cpu/topdown-retiring/
+Only the RCH version needs to be exported and the cxl_test mocking can be
+deleted with a dev_is_pci() check on the dport_dev.
 
-Drop the config1 == 0 check from arch_is_topdown_slots(). This is
-safe: config1 has no bearing on the event's identifying config value
-(TOPDOWN_SLOTS, 0x0400).
-
-The attr.type == PERF_TYPE_RAW check is what actually matters: only the
-core PMU is registered with PERF_TYPE_RAW, and on x86, 0x400 is
-guaranteed to be slots event on core CPU.
-
-arch_is_topdown_metrics() keeps its own config1 == 0 check, since
-genuine metrics events have no "metrics_clear" and config1 remains 0.
-
-Add a test verifying that an explicit "slots,metrics_clear=1" event in
-a group does not trigger an extra slots event injection.
-
-Fixes: 5b546de9cc177936 ("perf topdown: Use attribute to see an event is a topdown metic or slots")
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-[ Add missing stdio.h and string.h as noticed by Sashiko ]
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20260131000403.2135324-7-dan.j.williams@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 0de71a1ab211 ("cxl/core: Fix dport use-after-free via the einj_inject debugfs file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/x86/tests/topdown.c | 30 +++++++++++++++++++++++++++++
- tools/perf/arch/x86/util/topdown.c  |  3 +--
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ drivers/cxl/core/core.h       | 10 ++++++++++
+ drivers/cxl/core/port.c       | 12 +++---------
+ drivers/cxl/core/ras.c        | 30 ++++++++++++++++++------------
+ drivers/cxl/cxlpci.h          |  7 ++++---
+ drivers/cxl/mem.c             |  2 --
+ drivers/cxl/port.c            | 12 ++++++++++++
+ tools/testing/cxl/Kbuild      |  1 -
+ tools/testing/cxl/test/mock.c | 12 ------------
+ 8 files changed, 47 insertions(+), 39 deletions(-)
 
-diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
-index 221f2c4bbb615..2ccbfa0ebbb41 100644
---- a/tools/perf/arch/x86/tests/topdown.c
-+++ b/tools/perf/arch/x86/tests/topdown.c
-@@ -1,5 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <errno.h>
-+#include <stdio.h>
-+#include <string.h>
- #include "arch-tests.h"
- #include "../util/topdown.h"
- #include "debug.h"
-@@ -229,10 +231,38 @@ static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unu
- 	return TEST_OK;
- }
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index c38cd0fdb04c7..6058edfd9c12e 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -144,6 +144,14 @@ int cxl_pci_get_bandwidth(struct pci_dev *pdev, struct access_coordinate *c);
+ int cxl_port_get_switch_dport_bandwidth(struct cxl_port *port,
+ 					struct access_coordinate *c);
  
-+/*
-+ * An explicit "slots,metrics_clear=1" event is still the slots event and
-+ * must not cause an extra slots event to be injected into the group.
-+ */
-+static int test__x86_topdown_metrics_clear(struct test_suite *test __maybe_unused,
-+					   int subtest __maybe_unused)
++static inline struct device *dport_to_host(struct cxl_dport *dport)
 +{
-+	struct perf_pmu *pmu;
-+	char event_str[128];
-+	int ret;
++	struct cxl_port *port = dport->port;
 +
-+	if (!topdown_sys_has_perf_metrics())
-+		return TEST_OK;
-+
-+	pmu = perf_pmus__find_by_type(PERF_TYPE_RAW);
-+	if (!pmu || !perf_pmu__has_format(pmu, "metrics_clear"))
-+		return TEST_OK;
-+
-+	snprintf(event_str, sizeof(event_str),
-+		 "{%s/slots,metrics_clear=1/,%s/topdown-retiring/}",
-+		 pmu->name, pmu->name);
-+	ret = test_sort(event_str, 2, 1);
-+	TEST_ASSERT_EQUAL("explicit metrics_clear slots event isn't duplicated", ret, TEST_OK);
-+
-+	return TEST_OK;
++	if (is_cxl_root(port))
++		return port->uport_dev;
++	return &port->dev;
 +}
-+
- static struct test_case x86_topdown_tests[] = {
- 	TEST_CASE("topdown events", x86_topdown),
- 	TEST_CASE("topdown sorting", x86_topdown_sorting),
- 	TEST_CASE("topdown slots injection", x86_topdown_slots_injection),
-+	TEST_CASE("topdown metrics_clear no extra slots", x86_topdown_metrics_clear),
- 	{ .name = NULL, }
- };
- 
-diff --git a/tools/perf/arch/x86/util/topdown.c b/tools/perf/arch/x86/util/topdown.c
-index bafd285119d7a..64bc64e335a2a 100644
---- a/tools/perf/arch/x86/util/topdown.c
-+++ b/tools/perf/arch/x86/util/topdown.c
-@@ -37,8 +37,7 @@ bool topdown_sys_has_perf_metrics(void)
- bool arch_is_topdown_slots(const struct evsel *evsel)
+ #ifdef CONFIG_CXL_RAS
+ int cxl_ras_init(void);
+ void cxl_ras_exit(void);
+@@ -152,6 +160,7 @@ void cxl_handle_cor_ras(struct cxl_dev_state *cxlds, void __iomem *ras_base);
+ void cxl_dport_map_rch_aer(struct cxl_dport *dport);
+ void cxl_disable_rch_root_ints(struct cxl_dport *dport);
+ void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds);
++void devm_cxl_dport_ras_setup(struct cxl_dport *dport);
+ #else
+ static inline int cxl_ras_init(void)
  {
- 	return evsel->core.attr.type == PERF_TYPE_RAW &&
--	       evsel->core.attr.config == TOPDOWN_SLOTS &&
--	       evsel->core.attr.config1 == 0;
-+	       evsel->core.attr.config == TOPDOWN_SLOTS;
+@@ -170,6 +179,7 @@ static inline void cxl_handle_cor_ras(struct cxl_dev_state *cxlds, void __iomem
+ static inline void cxl_dport_map_rch_aer(struct cxl_dport *dport) { }
+ static inline void cxl_disable_rch_root_ints(struct cxl_dport *dport) { }
+ static inline void cxl_handle_rdport_errors(struct cxl_dev_state *cxlds) { }
++static inline void devm_cxl_dport_ras_setup(struct cxl_dport *dport) { }
+ #endif /* CONFIG_CXL_RAS */
+ 
+ int cxl_gpf_port_setup(struct cxl_dport *dport);
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 1d34ade204a18..c049b0e5eca7c 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1164,15 +1164,6 @@ static void cxl_dport_unlink(void *data)
+ 	sysfs_remove_link(&port->dev.kobj, link_name);
  }
  
- bool arch_is_topdown_metrics(const struct evsel *evsel)
+-static struct device *dport_to_host(struct cxl_dport *dport)
+-{
+-	struct cxl_port *port = dport->port;
+-
+-	if (is_cxl_root(port))
+-		return port->uport_dev;
+-	return &port->dev;
+-}
+-
+ static void free_dport(void *dport)
+ {
+ 	kfree(dport);
+@@ -1306,6 +1297,9 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 
+ 	cxl_debugfs_create_dport_dir(dport);
+ 
++	if (!dport->rch)
++		devm_cxl_dport_ras_setup(dport);
++
+ 	/* keep the group, and mark the end of devm actions */
+ 	cxl_dport_close_dr_group(dport, no_free_ptr(dport_dr_group));
+ 
+diff --git a/drivers/cxl/core/ras.c b/drivers/cxl/core/ras.c
+index 34fd019da1cdc..eb663c9eaa5f8 100644
+--- a/drivers/cxl/core/ras.c
++++ b/drivers/cxl/core/ras.c
+@@ -152,26 +152,32 @@ static void cxl_dport_map_ras(struct cxl_dport *dport)
+ }
+ 
+ /**
+- * cxl_dport_init_ras_reporting - Setup CXL RAS report on this dport
++ * devm_cxl_dport_ras_setup - Setup CXL RAS report on this dport
+  * @dport: the cxl_dport that needs to be initialized
+- * @host: host device for devm operations
+  */
+-void cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device *host)
++void devm_cxl_dport_ras_setup(struct cxl_dport *dport)
+ {
+-	dport->reg_map.host = host;
++	dport->reg_map.host = dport_to_host(dport);
+ 	cxl_dport_map_ras(dport);
++}
+ 
+-	if (dport->rch) {
+-		struct pci_host_bridge *host_bridge = to_pci_host_bridge(dport->dport_dev);
++void devm_cxl_dport_rch_ras_setup(struct cxl_dport *dport)
++{
++	struct pci_host_bridge *host_bridge;
+ 
+-		if (!host_bridge->native_aer)
+-			return;
++	if (!dev_is_pci(dport->dport_dev))
++		return;
+ 
+-		cxl_dport_map_rch_aer(dport);
+-		cxl_disable_rch_root_ints(dport);
+-	}
++	devm_cxl_dport_ras_setup(dport);
++
++	host_bridge = to_pci_host_bridge(dport->dport_dev);
++	if (!host_bridge->native_aer)
++		return;
++
++	cxl_dport_map_rch_aer(dport);
++	cxl_disable_rch_root_ints(dport);
+ }
+-EXPORT_SYMBOL_NS_GPL(cxl_dport_init_ras_reporting, "CXL");
++EXPORT_SYMBOL_NS_GPL(devm_cxl_dport_rch_ras_setup, "CXL");
+ 
+ void cxl_handle_cor_ras(struct cxl_dev_state *cxlds, void __iomem *ras_base)
+ {
+diff --git a/drivers/cxl/cxlpci.h b/drivers/cxl/cxlpci.h
+index 970e84cf49e9a..bec6018e01ccd 100644
+--- a/drivers/cxl/cxlpci.h
++++ b/drivers/cxl/cxlpci.h
+@@ -135,7 +135,7 @@ void read_cdat_data(struct cxl_port *port);
+ void cxl_cor_error_detected(struct pci_dev *pdev);
+ pci_ers_result_t cxl_error_detected(struct pci_dev *pdev,
+ 				    pci_channel_state_t state);
+-void cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device *host);
++void devm_cxl_dport_rch_ras_setup(struct cxl_dport *dport);
+ #else
+ static inline void cxl_cor_error_detected(struct pci_dev *pdev) { }
+ 
+@@ -145,8 +145,9 @@ static inline pci_ers_result_t cxl_error_detected(struct pci_dev *pdev,
+ 	return PCI_ERS_RESULT_NONE;
+ }
+ 
+-static inline void cxl_dport_init_ras_reporting(struct cxl_dport *dport,
+-						struct device *host) { }
++static inline void devm_cxl_dport_rch_ras_setup(struct cxl_dport *dport)
++{
++}
+ #endif
+ 
+ #endif /* __CXL_PCI_H__ */
+diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
+index 6e6777b7bafb5..4bf59573a1b5e 100644
+--- a/drivers/cxl/mem.c
++++ b/drivers/cxl/mem.c
+@@ -166,8 +166,6 @@ static int cxl_mem_probe(struct device *dev)
+ 	else
+ 		endpoint_parent = &parent_port->dev;
+ 
+-	cxl_dport_init_ras_reporting(dport, dev);
+-
+ 	scoped_guard(device, endpoint_parent) {
+ 		if (!endpoint_parent->driver) {
+ 			dev_err(dev, "CXL port topology %s not enabled\n",
+diff --git a/drivers/cxl/port.c b/drivers/cxl/port.c
+index 913c469e067a1..929f7e259f0d3 100644
+--- a/drivers/cxl/port.c
++++ b/drivers/cxl/port.c
+@@ -71,6 +71,7 @@ static int cxl_switch_port_probe(struct cxl_port *port)
+ static int cxl_endpoint_port_probe(struct cxl_port *port)
+ {
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(port->uport_dev);
++	struct cxl_dport *dport = port->parent_dport;
+ 	int rc;
+ 
+ 	/* Cache the data early to ensure is_visible() works */
+@@ -86,6 +87,17 @@ static int cxl_endpoint_port_probe(struct cxl_port *port)
+ 	if (rc)
+ 		return rc;
+ 
++	/*
++	 * With VH (CXL Virtual Host) topology the cxl_port::add_dport() method
++	 * handles RAS setup for downstream ports. With RCH (CXL Restricted CXL
++	 * Host) topologies the downstream port is enumerated early by platform
++	 * firmware, but the RCRB (root complex register block) is not mapped
++	 * until after the cxl_pci driver attaches to the RCIeP (root complex
++	 * integrated endpoint).
++	 */
++	if (dport->rch)
++		devm_cxl_dport_rch_ras_setup(dport);
++
+ 	/*
+ 	 * Now that all endpoint decoders are successfully enumerated, try to
+ 	 * assemble regions from committed decoders
+diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
+index af261431aef5b..0fb36cbaa14e1 100644
+--- a/tools/testing/cxl/Kbuild
++++ b/tools/testing/cxl/Kbuild
+@@ -9,7 +9,6 @@ ldflags-y += --wrap=cxl_await_media_ready
+ ldflags-y += --wrap=devm_cxl_add_rch_dport
+ ldflags-y += --wrap=cxl_rcd_component_reg_phys
+ ldflags-y += --wrap=cxl_endpoint_parse_cdat
+-ldflags-y += --wrap=cxl_dport_init_ras_reporting
+ ldflags-y += --wrap=devm_cxl_endpoint_decoders_setup
+ ldflags-y += --wrap=hmat_get_extended_linear_cache_size
+ ldflags-y += --wrap=devm_cxl_add_dport_by_dev
+diff --git a/tools/testing/cxl/test/mock.c b/tools/testing/cxl/test/mock.c
+index 4762d8c40a8b8..93bb7bece9374 100644
+--- a/tools/testing/cxl/test/mock.c
++++ b/tools/testing/cxl/test/mock.c
+@@ -266,18 +266,6 @@ void __wrap_cxl_endpoint_parse_cdat(struct cxl_port *port)
+ }
+ EXPORT_SYMBOL_NS_GPL(__wrap_cxl_endpoint_parse_cdat, "CXL");
+ 
+-void __wrap_cxl_dport_init_ras_reporting(struct cxl_dport *dport, struct device *host)
+-{
+-	int index;
+-	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
+-
+-	if (!ops || !ops->is_mock_port(dport->dport_dev))
+-		cxl_dport_init_ras_reporting(dport, host);
+-
+-	put_cxl_mock_ops(index);
+-}
+-EXPORT_SYMBOL_NS_GPL(__wrap_cxl_dport_init_ras_reporting, "CXL");
+-
+ struct cxl_dport *__wrap_devm_cxl_add_dport_by_dev(struct cxl_port *port,
+ 						   struct device *dport_dev)
+ {
 -- 
 2.53.0
 
