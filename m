@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015218;
-	b=4PWffP29yKqzzpJAqD1MTD2X8bYLZaIj7Y8pmLd8A7G/849R7JuQoxIt4olGCHZIVhaS
-	 d39mZJKtQAM8Ypl4AdRfVP1Z3Qm1J/brmcyt1R3Cs5fGYsDqV0pc7HrO4Ar7sxcmPdoMw
-	 8H0lF9d9CSF+vWrqJF08clQ8PtbjxfsO1/V7wtA3zuTUx3K/9Q8sAGQqOZ8KCUfYmMZpP
-	 yxnmuCPw85q6z59mXfRIKEMrWLSmkDGIRSg5W91QkvES9tJ0OIzQg+9A9gW2A61ZnQGeQ
-	 Y7BTB9Z6DgTgzmHgYLTBXq6+kl4HymACL13qkQhQVlC4+VKtN2HZUi8qECIv+h5LrnQ==
+	t=1795015221;
+	b=IouUS7trd5fz2wxV3HXPGwYSSih/jX2t7r5qNF4tBX1NFMutM2QVNDSIKpyvUrURsDWX
+	 AlWrZQ74l4hGqqf6W+vbixZchEB2voLgLR2W9wCBNmSqS4RMBxNGM4uzYKDtdvfsBFnoM
+	 lXKhooIdrw93MnhuP9XNSYQl0HCbom24tNUgLWNCbYFqMPMx10BxMo4971mWJ4OxspfqY
+	 bbtnWT+Q6lQxLh4Fvs+MOsh6gmP+7MV0zCP/NmsPlW2SRIL+T8QyOfacmfYFiyV/VmMNb
+	 VHvqFFzFZxL7IQlQ5XejjbUhY2hgSZdAw10opXJXXzLzm5tVtfB+AbOL+/ZMJnLgGyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4UW5DrvjCh+oNsRSAMjBeSlKDUY7s4A9f/u4RJ2iI84=;
-	b=jOO8L//g6/mvAIGZrCRKaiBbhxPCPwu3Qw1dnLg7epyJv3MougX0Ztpe3Y1HAVTHLRmb
-	 7/8TkvoaDjAQ2Z+HNMoBydvE4jyOfi/fQ1MajQFdqugMv1RV/RubrGKVQotgH0Cgrk4Sz
-	 0Xsuml3wi1zyxKkz40eljO2+o/GxOwJ+n8RxSYQ5D7NwMZe6197CQmUrJ1YAUWjf4JYeA
-	 9kSRTlrVx9Rlv1kaalbHl6UtQrE8GBsrDuKIzqaB48PBiFM/Vggl1P/m8NUJdmr3gKmSb
-	 +RPjgZ8yWIstPYiog6ZTAo1RhyhVnNyj1q+uGJcNqJyG6Po6uaMGD4zE0VOoLn5k2tA==
+	bh=kXYEPvh8DfA7cmYP+ZU1MWCcPSRrRlMCJ3TuwBl4zJQ=;
+	b=VDzmZZYU60zTDcxcI07sTlxcabpv4DPXq299KujAVUpIvOdwgvdvsx79IbLHrsHd63Vs
+	 liEGcPay8yALr8sKOdETytC406lnF/zgzGzR6gh/bnnSiTOgiDTwg/8J86PwAPxGIkqYQ
+	 kLvH9Z/cc6oQvweowqLKqqPvppyEv/HvzK9eRHvyZRsm68lEfZxonfO9PrbS1K71sM9yc
+	 m81Ubc+5N3cX87NuQ11Pptk4ODZkof9O9Be2FYbMb/0027BMtE/W70dbLhepwGk/vN1dD
+	 ZrCnKlizCBtXnoHMDnHoXcenfv4Fg/wNzoKqvTddy37b2iGk0UsyaV+slULvzh75X+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1qYMni6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HM4Gtied;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F656606A339;
-	Wed, 18 Nov 2026 15:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692D360A260F;
+	Wed, 18 Nov 2026 15:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D1qYMni6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BCF1F000C5;
-	Wed, 18 Nov 2026 15:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HM4Gtied
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836901F000D1;
+	Wed, 18 Nov 2026 15:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015218;
-	bh=4UW5DrvjCh+oNsRSAMjBeSlKDUY7s4A9f/u4RJ2iI84=;
+	s=korg; t=1795015221;
+	bh=kXYEPvh8DfA7cmYP+ZU1MWCcPSRrRlMCJ3TuwBl4zJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D1qYMni6haE/d/pqV5c4r4ulbPgdxuZ1QOE1HUqxhsfQJluYHcAdVhAfYKzMplUD9
-	 503TYu2UyR28ZrfdIYVdM4rhEKZXdy+f9wGwy0cdA1sw5h4M/1QsuxGI0tcA//tyA9
-	 I8rOO1CPmfuXes6ANHsif25e6BPOpq+IjSsWvzD8=
+	b=HM4GtiedtT1Nhe4VOdWOgCb+G9Mn6lebtfMenjXIrboEcQuQYeuSlhUCqu69sY9pU
+	 kNKN+QYNfO2KkHVQQN32FsUv16YRXzIZlNxeGYpYLAu1U9XFuJAw3DgPy3yXeqeMFD
+	 LGrar9xQiv5+IKL7WeLHDaDkGg2mr36h199oQgb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Lucas Tanure <tanure@linux.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0095/2651] iio: pressure: rohm-bm1390: Fix AVE_NUM initialization
-Date: Wed, 18 Nov 2026 15:22:15 +0100
-Message-ID: <20261118150251.323023637@linuxfoundation.org>
+Subject: [PATCH 7.3 0096/2651] clk: meson: t7: keep the memory fabric clocks running
+Date: Wed, 18 Nov 2026 15:22:16 +0100
+Message-ID: <20261118150251.356442756@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Lucas Tanure <tanure@linux.com>
 
-[ Upstream commit 64f4173ad1a7f1b247296c84e624f5095be170c7 ]
+[ Upstream commit 43e1705ecab981c66baee89041e6f728c0436f19 ]
 
-The BM1390 tries to initialize the AVE_NUM to 110b at the start-up. The
-field location is not taken into account, and value is written unsifted.
-This causes the AVE_NUM to be initialized to zero.
+Four clocks feed the bus that moves data between the peripherals and
+memory. Nothing in Linux claims them, so they were switched off shortly
+after boot, and any device that started a transfer after that point
+simply stopped. The SD card, which comes up about two seconds in, never
+finished reading its identification.
 
-Use FIELD_PREP() to shift the intended AVE_NUM value to correct field.
+There is no device these clocks belong to, so mark them as always
+needed.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 81ca5979b6ed ("iio: pressure: Support ROHM BU1390")
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Fixes: fab4d651b592 ("clk: meson: t7: add t7 clock peripherals controller driver")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Lucas Tanure <tanure@linux.com>
+Link: https://patch.msgid.link/20260829094758.23248-2-tanure@linux.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/pressure/rohm-bm1390.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/meson/t7-peripherals.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iio/pressure/rohm-bm1390.c b/drivers/iio/pressure/rohm-bm1390.c
-index f9deb48e6a41c..d1268c289831d 100644
---- a/drivers/iio/pressure/rohm-bm1390.c
-+++ b/drivers/iio/pressure/rohm-bm1390.c
-@@ -479,6 +479,7 @@ static const struct iio_info bm1390_info = {
- 
- static int bm1390_chip_init(struct bm1390_data *data)
- {
-+	u8 regval;
- 	int ret;
- 
- 	ret = regmap_write_bits(data->regmap, BM1390_REG_POWER,
-@@ -512,8 +513,9 @@ static int bm1390_chip_init(struct bm1390_data *data)
- 	 * Default to use IIR filter in "middle" mode. Also the AVE_NUM must
- 	 * be fixed when IIR is in use.
- 	 */
-+	regval = FIELD_PREP(BM1390_MASK_AVE_NUM, BM1390_IIR_AVE_NUM);
- 	ret = regmap_update_bits(data->regmap, BM1390_REG_MODE_CTRL,
--				 BM1390_MASK_AVE_NUM, BM1390_IIR_AVE_NUM);
-+				 BM1390_MASK_AVE_NUM, regval);
- 	if (ret)
- 		return ret;
- 
+diff --git a/drivers/clk/meson/t7-peripherals.c b/drivers/clk/meson/t7-peripherals.c
+index 214db7850d865..55d09e78593b0 100644
+--- a/drivers/clk/meson/t7-peripherals.c
++++ b/drivers/clk/meson/t7-peripherals.c
+@@ -945,11 +945,16 @@ static T7_SYS_PCLK(sys_aucpu,		SYS_CLK_EN0_REG0, 14,	0);
+ static T7_SYS_PCLK(sys_cec,		SYS_CLK_EN0_REG0, 16,	0);
+ static T7_SYS_PCLK(sys_gdc,		SYS_CLK_EN0_REG0, 17,	0);
+ static T7_SYS_PCLK(sys_deswarp,		SYS_CLK_EN0_REG0, 18,	0);
+-static T7_SYS_PCLK(sys_ampipe_nand,	SYS_CLK_EN0_REG0, 19,	0);
++/*
++ * NOTE: sys_ampipe_nand and sys_am2axi0..2 provide the clock to the AXI bus
++ * used for DMA between the peripherals and the DRAM. After the clocks are
++ * disabled, a device that starts a transfer cannot complete it.
++ */
++static T7_SYS_PCLK(sys_ampipe_nand,	SYS_CLK_EN0_REG0, 19,	CLK_IS_CRITICAL);
+ static T7_SYS_PCLK(sys_ampipe_eth,	SYS_CLK_EN0_REG0, 20,	0);
+-static T7_SYS_PCLK(sys_am2axi0,		SYS_CLK_EN0_REG0, 21,	0);
+-static T7_SYS_PCLK(sys_am2axi1,		SYS_CLK_EN0_REG0, 22,	0);
+-static T7_SYS_PCLK(sys_am2axi2,		SYS_CLK_EN0_REG0, 23,	0);
++static T7_SYS_PCLK(sys_am2axi0,		SYS_CLK_EN0_REG0, 21,	CLK_IS_CRITICAL);
++static T7_SYS_PCLK(sys_am2axi1,		SYS_CLK_EN0_REG0, 22,	CLK_IS_CRITICAL);
++static T7_SYS_PCLK(sys_am2axi2,		SYS_CLK_EN0_REG0, 23,	CLK_IS_CRITICAL);
+ static T7_SYS_PCLK(sys_sd_emmc_a,	SYS_CLK_EN0_REG0, 24,	0);
+ static T7_SYS_PCLK(sys_sd_emmc_b,	SYS_CLK_EN0_REG0, 25,	0);
+ static T7_SYS_PCLK(sys_sd_emmc_c,	SYS_CLK_EN0_REG0, 26,	0);
 -- 
 2.53.0
 
