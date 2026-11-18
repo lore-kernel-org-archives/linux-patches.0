@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018955;
-	b=ANvpkDFmL14yP+asb50WUTxbk2rMk599FAMystliqCHWI/n1EnIlx4KzCGOGGdw8uwMG
-	 Q3PcKgfUcPlc9muZ3KCtcYE78FKYZmGZ7ehDkCspdUmfFtb3khiW2xb1njGKJMRZlOP3G
-	 fZRS2IKJhiiUwP9Hv5j74ehh2sliI3u0ApVrmFbmEKoE2C80FFxf+/rlj2tVPixDKf1WT
-	 iVY88pdH0yOZ7TrA092F9lDNDd4keaiNiBFaoOfLIYLKp03wqjU2aoHWG5vHBLrq4wuzQ
-	 9PMpE2YB8kfueNYdTO78vY3ytFV6HBypvwbRMGNstDbBmVm3YdYq/2Ls/9PaOXQnKqQ==
+	t=1795018958;
+	b=pMSveKKHSKroNTQ7OyanHU85m6xp/J86adUv4IoX++tZrbGQfqHiM90RKlerSflZFfcp
+	 iGOcvZ679MHIDGMiWuD86CkQ7xOXee/7kv84G2tu8VXh49pOOqKQalZsQDfjn9iqcXfjF
+	 lh4rTeLbCAZ85eRbqg7uzoAkwTuL5oOkb7D/qMy4vuFR10W6lgQE/0XzxiAVjdal/RbjM
+	 dsi8EdZlw9X0lZbOYogxuRlbfrbIh0wiMqyaN49uxaf+oXcZ9jkXBGsC/aAOLqNABGlUS
+	 BLco+7CDxyjN/A6R2aJaQ+telA2ilinvuHAm2EVVEllBfMDbo+G/jHkRo7hC7WFKQag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Bwo/uy6CEEz3jBAEuQi1l2X+lGN37Wtu3wXnugMmPb8=;
-	b=NccqYlFGU5lFNoNy1rBitWI+tvS7ardpNev60o+H41ui3LyXJmLcIbcYdeZmPbKfAY8r
-	 +6SvU1JcmZSlK9ncKMJ7T6I0voZXdoyCRwa9jrUSOF7iP66fRnjfwKTEsDmRWV75rN6G+
-	 zYzpe0A5jKuWSB0km05MdaIy3fJfkvC4ogFPhzy0VBpr1oRqp8CqVzCUJvFFOGXEymmI/
-	 v4L0B6YZEXH2Nz3YAly70t57wpDCENcqrOfx1ip6KJwjevRjmS3G12mBu47UzAFocOwA6
-	 STdpDnCsEoJ4lFeSJavqgKGLzP8fPO7tp1XEW9ipOIldXULLjNk8NRtLp+7fqfAjTnw==
+	bh=/6W70Buf3kN21YUoCIQ6wEwu3T4cBgscQq4ymYS3098=;
+	b=Nn1iHwlnT9ZF3icDfu8n0QVqzyYgRLAHc6q5Cv6IX2333rqlkS5GUAgmY1p9gWeMiEsU
+	 p3FTGHG40fLnlz/fR0ZnBVxRikJhSOwgRgSysM/nLNVhp+88WyLV+4kaesTA90+7Wblij
+	 GZc+/P/yCvS/t4uEbMvOCQusllXISy4/FUhDVtu+V8SZ5HUfTFnQESppQRbbqqLdXhkT1
+	 n+MxgvPJ1hQ7JXWUvdwhZh7YZSetyvUx80Zadw4hpgxoLYwjJ/glU35Mn5t3B5EipAdKy
+	 dne+i/Vt+MJTv6S0PpMvaBe7/k5o7vreXWuC5xvrS5UzUZddJBIJHmGGw9zpgNl5N8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thYAAPyY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvmIFrME;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7106606A31C;
-	Wed, 18 Nov 2026 16:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA38606A31C;
+	Wed, 18 Nov 2026 16:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=thYAAPyY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3931F000C4;
-	Wed, 18 Nov 2026 16:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvmIFrME
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA2C1F000C8;
+	Wed, 18 Nov 2026 16:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018954;
-	bh=Bwo/uy6CEEz3jBAEuQi1l2X+lGN37Wtu3wXnugMmPb8=;
+	s=korg; t=1795018958;
+	bh=/6W70Buf3kN21YUoCIQ6wEwu3T4cBgscQq4ymYS3098=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=thYAAPyYhmrqGLn3pfr/gMb/PhSUnmkaQfpSOUhG46HfXHTzdnTQaRdXAmBooG9fr
-	 /8BaeQlhjCrX+QnyXSbMOos//7AAS5QTV1OA/pw/8TljMl7sqKflccmAqQjKoVTM8R
-	 uqc62P2KBwnA9JktlmEKxmvKsYhXEVVl5l7hJGW4=
+	b=xvmIFrMECL4tH4GPMiRvi/ERtM9Yq6ShaJXVJhNpX92ddu44gYQcPaABTtHMXKH5i
+	 VZrmkCoB1daqG9sPSnz8ifg32hoHlMleFala0aERWfHbcUU1nkLxV7ElUSyAYslCm7
+	 hTpaIAKS4pRRpye2dHv7l1zuYsZbuNCfIBqetdRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stella Liu <yu-ching.liu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1423/2651] wifi: mt76: mt7925: drop deferred NAN local schedule update handling
-Date: Wed, 18 Nov 2026 15:44:23 +0100
-Message-ID: <20261118150339.281199046@linuxfoundation.org>
+Subject: [PATCH 7.3 1424/2651] wifi: mt76: mt7925: use OFDM-only PHY mode for NAN STA records
+Date: Wed, 18 Nov 2026 15:44:24 +0100
+Message-ID: <20261118150339.313656916@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,65 +71,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Stella Liu <yu-ching.liu@mediatek.com>
 
-[ Upstream commit 851b8f026ac10afa978f8d8af3eb2af4a4930c92 ]
+[ Upstream commit b757f5b8c346d02d69c88e4520537ecbb4cfef90 ]
 
-The deferred NAN local schedule update path in
-mt7925_nan_local_sched_changed() is removed for now; it will be
-implemented separately. Drop the now set-but-unused ret variable
-along with it.
+NAN operates with OFDM and does not support CCK, so the phy, rate
+control and BSS rate TLVs must not fall back to 2.4 GHz. Borrow the
+5 GHz band lookup to keep the STA records OFDM-only.
 
-Fixes: 0f3605e4f8de ("wifi: mt76: mt7925: wire up NAN operations")
+Fixes: 9824fb4edbf3 ("wifi: mt76: mt7925: add NAN MCU handling")
 Co-developed-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
 Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
-Link: https://patch.msgid.link/20260824195227.12589-7-sean.wang@kernel.org
+Link: https://patch.msgid.link/20260824195227.12589-8-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/nan.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-index c3a9a592dddf3..2be2251aeadb6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/nan.c
-@@ -602,15 +602,12 @@ void mt7925_nan_local_sched_changed(struct mt792x_dev *dev,
- {
- 	struct mt7925_nan_common_hdr *hdr;
- 	struct mt76_dev *mdev;
--	bool deferred;
- 	struct sk_buff *skb;
--	int ret = -ENOMEM;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index fa29c486a4553..1cfc209f9be5c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -1914,11 +1914,9 @@ mt7925_mcu_sta_phy_tlv(struct sk_buff *skb,
+ 	phy = (struct sta_rec_phy *)tlv;
  
- 	if (!dev || !vif)
- 		return;
+ 	if (mt7925_vif_is_nan(vif)) {
+-		enum nl80211_band band = chandef->chan ? chandef->chan->band
+-						       : NL80211_BAND_2GHZ;
+ 		phy->phy_type = PHY_TYPE_BIT_OFDM | PHY_TYPE_BIT_ERP;
+ 		phy->phy_type |= mt76_connac_get_phy_mode_v2(mvif->phy->mt76, vif,
+-							     band,
++							     NL80211_BAND_5GHZ,
+ 							     link_sta);
+ 	} else {
+ 		phy->phy_type = mt76_connac_get_phy_mode_v2(mvif->phy->mt76, vif,
+@@ -2003,7 +2001,11 @@ mt7925_mcu_sta_rate_ctrl_tlv(struct sk_buff *skb,
+ 	ra_info = (struct sta_rec_ra_info *)tlv;
  
- 	mdev = &dev->mt76;
--	deferred = vif->cfg.nan_sched.deferred;
+ 	if (mt7925_vif_is_nan(vif))
+-		band = chandef->chan ? chandef->chan->band : NL80211_BAND_2GHZ;
++		/* NAN is OFDM-only per spec; borrow the 5 GHz band lookup to
++		 * avoid PHY_TYPE_BIT_HR_DSSS/CCK bits being added to phy_type.
++		 * NAN interfaces have no chanctx, so chandef->chan is always NULL.
++		 */
++		band = NL80211_BAND_5GHZ;
+ 	else
+ 		band = chandef->chan->band;
  
- 	mt792x_mutex_acquire(dev);
+@@ -2847,7 +2849,7 @@ mt7925_mcu_bss_bmc_tlv(struct sk_buff *skb, struct mt792x_phy *phy,
+ 	bmc = (struct bss_rate_tlv *)tlv;
  
-@@ -627,19 +624,9 @@ void mt7925_nan_local_sched_changed(struct mt792x_dev *dev,
- 		goto out;
- 	}
+ 	if (mt7925_vif_is_nan(vif))
+-		band = chandef->chan ? chandef->chan->band : NL80211_BAND_2GHZ;
++		band = NL80211_BAND_5GHZ;
+ 	else
+ 		band = chandef->chan->band;
  
--	ret = mt76_mcu_skb_send_msg(mdev, skb,
--				    MCU_UNI_CMD(NAN), true);
-+	mt76_mcu_skb_send_msg(mdev, skb, MCU_UNI_CMD(NAN), true);
- out:
- 	mt792x_mutex_release(dev);
--
--	if (deferred) {
--		if (ret)
--			dev_err(mdev->dev,
--				"NAN: local schedule update failed: %d\n",
--				ret);
--
--		ieee80211_nan_sched_update_done(vif);
--	}
- }
- 
- static int mt7925_nan_peer_rec_tlv(struct sk_buff *skb,
 -- 
 2.53.0
 
