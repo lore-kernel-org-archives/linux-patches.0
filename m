@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029912;
-	b=ZN/qY6IbSvIgceh4gJ9htcZwwbJtaf6kLXN3GxC2rGJF3QBEWqo+SQKYpz3kWdAUQROM
-	 Xi5XEF0WiK+0oT4s2L7yX0s9z/riVdHJhrDZN1kuUjP1F5d7XUMbHKIwgBaan2J0h8dy2
-	 HFwpuNxcQqbvqLxN6O2gHY4G1qJohaT4NCD03KJCIVBrfmU0o5TYzu/7/Ub5rUVrU8Zd1
-	 rnnp7pzkxZg6+FiNs5MFTU5c7i6xu4QYSXwW+nB0zrd77UE5qdieNN8VUBGIAqKan+ajy
-	 G/7N++6v64UhU7osKGj8sU0nDlrZTrKJZqY3/n0XZGpG4haNT4dEqYS2kqazgRgAHrA==
+	t=1795029915;
+	b=dOuYYDPHMGa8h3gB1QDIQ2SyYBJzPBfN7OtVFK7m/if7DbVje5IagdKoxBt5MfCwleuW
+	 8djHcOg8tnv+arg2F1LgHRX1r/mb/9EEvunJSP5T6+EGQcZqBSkW4uxu1TYpDu5K1wDTR
+	 TTQwTBZL/nRAYhMkJXLiUoJDeJnEhN8P8a2pWmykSQgRgvpzHuh1SIDxmgd1HUl7ZgHEw
+	 pxjklk3NyMc0N8WBUPXu62s5yRaThf8133iWCHxAKnvq06X7Rr0I0BkbnhRzDIEoRMYnv
+	 UP6YfkyI6lrURb0tCT2DatkhHZy0VTWGjKDIkoIFpAEhWEhPRFx7e6r3QkKHM6bMu+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0B86w9upqn5yusWY1pur+KfeHiPVckP6YV6pawOXAtA=;
-	b=GRkQJA1OOVWkWsIPxTb98dVB4ZZjliFe5u7wmfFnK7LQczVrnF0aCqtuNWfjaenDyRSa
-	 eAbL+RvJaGJuGI1PpHtvPYY3qzL20peyXiubyovZJY9bn/bvTDuQjJtJ6lJpp36U53S6K
-	 UNQf1qkajdPwiCgbDxVXW2o00gjvK5hVioBxEyVMXuy3sOtLKy32KdYTV9W5D2cFMEhZd
-	 s06abLmvBpJvOKq+anCeMNEZg4U79wVwRjaLBfh4Kedn8lROgdPYyv/aULPLkp+E142Ec
-	 ZQVwcfjwfj7buT9p470w8ARG8x1ZYV8kPQlfFbhbOwf2lLP+pNGpEXAuSB/6TwkcBrA==
+	bh=SMEHSxJ3QHDJM+zPEbuZfU2IQUI0omWeTVcZberv42U=;
+	b=LPRQMsjsZlCD7CGPCd9kxh1LNF4i7rFCUSWm7iyRx3l90UR1mNRdodyL58PD9CicmwNl
+	 WQcZhDJ+PqbpJJBVvHGPmPohVlFxbVQjQLdfRK/vm+w/PYY8SSf2w20j3/HqfHri0m9A4
+	 uSNpXIByZ30+SFAlE9Qdas1hQXckAxy3QN7xu8C5Kl8ksSF7GqbwaqeU53e3qxC6hqcNP
+	 WJmlW0v6iU3gNQ+TQOaE2YC8DE4676mQhY1j3FYnDAWmyjV4cCwOyYYqQGoj/PeAJv/Cc
+	 Sj8z/8TX67z5FdHOaFTfs7zd14XnhHsi1c+Wf02k8hRNOITi0NopByxO6fVKi1FTihg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1eEwaNL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bvaMKxoN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4733060A2628;
-	Wed, 18 Nov 2026 19:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6297160A3801;
+	Wed, 18 Nov 2026 19:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d1eEwaNL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9852C1F0089E;
-	Wed, 18 Nov 2026 19:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bvaMKxoN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E391F000C6;
+	Wed, 18 Nov 2026 19:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029912;
-	bh=0B86w9upqn5yusWY1pur+KfeHiPVckP6YV6pawOXAtA=;
+	s=korg; t=1795029914;
+	bh=SMEHSxJ3QHDJM+zPEbuZfU2IQUI0omWeTVcZberv42U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d1eEwaNLkcJ5dMqM2nrOPA67dqfUzevoqxe0biK1zra83Lvidf4/qJTCG0nZpTMAe
-	 cyfyjh9d73iDOUzyrC/Fx1eZkJxoNNhDN+QhNtPq3LyWHLm1L6eKD4TxG2yh4SQiSS
-	 oiTXAwwe0go7WdObl+7HUQYwGNKjzJTvwsYjgEjs=
+	b=bvaMKxoNJS4lIpxzX4C/Ll+OHHdOlJXssXMHIYlrJW0KJb64oDtTB88LUbVYH2YUc
+	 4guLpTlkYzj1hSigAHpWkGB6aj6QF6D4SJN9QCgnfc7AqtpP72VlRmfLv1SqkrtFqZ
+	 qyy4YfWgIew+odl5rf75s7uB2FbDs/bM66RBLjLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0466/1756] ACPI: CPPC: Validate the _CPC package header
-Date: Wed, 18 Nov 2026 15:43:13 +0100
-Message-ID: <20261118150027.392321651@linuxfoundation.org>
+Subject: [PATCH 6.12 0512/1756] crypto: starfive - propagate clock and reset errors
+Date: Wed, 18 Nov 2026 15:43:59 +0100
+Message-ID: <20261118150029.562564387@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,88 +68,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fb345025f161d17fe7c8a6048c7e80e467fa8ddf ]
+[ Upstream commit c8acdd77a62374507ed8e70d59e124269d999b75 ]
 
-The _CPC NumEntries field includes every package element, including
-NumEntries and Revision. acpi_cppc_processor_probe() nevertheless reads
-those first two elements before checking that they exist and trusts
-NumEntries when walking the remaining elements.
+starfive_cryp_probe() publishes the crypto device after enabling its clocks
+and deasserting its reset without checking whether those operations
+succeeded.
 
-Reject packages with fewer than two elements and NumEntries values which
-exceed the package count before accessing Revision or iterating over
-register descriptors. Although the specification defines NumEntries as the
-number of package elements, tolerate additional trailing elements because
-ignoring them is safe and avoids rejecting padded firmware.
+Check each hardware activation step and unwind only the resources that were
+actually enabled before returning the error.
 
-Revision is specified as a BYTE, but the parser assigns its 64-bit AML
-Integer to an unsigned int before validating it. Reject values above U8_MAX
-before conversion so, for example, 0x100000004 cannot truncate to revision
-4.
-
-Fixes: 337aadff8e45 ("ACPI: Introduce CPU performance controls using CPPC")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260724134251.1632824-1-christian.loehle%40arm.com
-Link: https://sashiko.dev/#/patchset/20260808082644.1251332-1-christian.loehle%40arm.com
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-2-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 42ef0e944b01 ("crypto: starfive - Add crypto engine support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/crypto/starfive/jh7110-cryp.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 95ab801679e83..bc8481a8c534b 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -737,6 +737,11 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	}
+diff --git a/drivers/crypto/starfive/jh7110-cryp.c b/drivers/crypto/starfive/jh7110-cryp.c
+index a373eba869cc1..9684daa3f03e5 100644
+--- a/drivers/crypto/starfive/jh7110-cryp.c
++++ b/drivers/crypto/starfive/jh7110-cryp.c
+@@ -131,11 +131,12 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 		return ret;
  
- 	out_obj = (union acpi_object *) output.pointer;
-+	if (out_obj->package.count < 2) {
-+		pr_debug("Unexpected _CPC package count (%u) for CPU:%d\n",
-+			 out_obj->package.count, pr->id);
-+		goto out_buf_free;
-+	}
- 
- 	cpc_ptr = kzalloc(sizeof(struct cpc_desc), GFP_KERNEL);
- 	if (!cpc_ptr) {
-@@ -747,12 +752,15 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	/* First entry is NumEntries. */
- 	cpc_obj = &out_obj->package.elements[0];
- 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
--		num_ent = cpc_obj->integer.value;
--		if (num_ent <= 1) {
--			pr_debug("Unexpected _CPC NumEntries value (%d) for CPU:%d\n",
--				 num_ent, pr->id);
-+		if (cpc_obj->integer.value < 2 ||
-+		    cpc_obj->integer.value > out_obj->package.count) {
-+			pr_debug("Invalid _CPC NumEntries (%llu) for package count (%u) on CPU:%d\n",
-+				 cpc_obj->integer.value, out_obj->package.count,
-+				 pr->id);
- 			goto out_free;
- 		}
+ 	ret = clk_prepare_enable(cryp->ahb);
+-	if (ret) {
+-		clk_disable_unprepare(cryp->hclk);
+-		return ret;
+-	}
+-	reset_control_deassert(cryp->rst);
++	if (ret)
++		goto disable_hclk;
 +
-+		num_ent = cpc_obj->integer.value;
- 	} else {
- 		pr_debug("Unexpected _CPC NumEntries entry type (%d) for CPU:%d\n",
- 			 cpc_obj->type, pr->id);
-@@ -762,6 +770,12 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	/* Second entry should be revision. */
- 	cpc_obj = &out_obj->package.elements[1];
- 	if (cpc_obj->type == ACPI_TYPE_INTEGER)	{
-+		if (cpc_obj->integer.value > U8_MAX) {
-+			pr_debug("Invalid _CPC Revision (%llu) for CPU:%d\n",
-+				 cpc_obj->integer.value, pr->id);
-+			ret = -EINVAL;
-+			goto out_free;
-+		}
- 		cpc_rev = cpc_obj->integer.value;
- 	} else {
- 		pr_debug("Unexpected _CPC Revision entry type (%d) for CPU:%d\n",
++	ret = reset_control_deassert(cryp->rst);
++	if (ret)
++		goto disable_ahb;
+ 
+ 	spin_lock(&dev_list.lock);
+ 	list_add(&cryp->list, &dev_list.dev_list);
+@@ -185,9 +186,11 @@ static int starfive_cryp_probe(struct platform_device *pdev)
+ 	list_del(&cryp->list);
+ 	spin_unlock(&dev_list.lock);
+ 
+-	clk_disable_unprepare(cryp->hclk);
+-	clk_disable_unprepare(cryp->ahb);
+ 	reset_control_assert(cryp->rst);
++disable_ahb:
++	clk_disable_unprepare(cryp->ahb);
++disable_hclk:
++	clk_disable_unprepare(cryp->hclk);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
