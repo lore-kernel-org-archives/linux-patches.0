@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057337;
-	b=5GXs8ajvicD5iPJe9es912j47pKUAxufFCBmyDArwL15XKndqqG6ho6XG8pSP20XHv70
-	 44vas/Ckz6y6sEZIZ2cgazifZRo5bBk6P5TdmpqjuR9u8f2H0wNwLrTFPllcnKCBIhpNf
-	 k1NHTfRiss9G3/u0Z1Bu3NP/XNEkmoWrE99PC8OfKWt1KHYpnAzhg0dBbC4MPgsG0wL3T
-	 broptTy3Gt7M5lPxPg1cSSV6uLUSgoSLR7zvNEp2N0TiBziPT2sSGBjULV7rDbbYh6IqB
-	 TferfhQB+2AQswn6gYTLE/p8Utl9Kl87FgGF8IiieCZ+qQn10Ua4JpGyOo5jf0e/bzw==
+	t=1795057340;
+	b=4uk1/34av6AkSIky6BCc53I7FPJuu0P7nmJpxfbiq+s9mxNTMZ/sY8vGtwPa8oa5aSxt
+	 dlHa1nWaxnBj6QMMrYVDYKMZ47yto4yOsGRJzO7b8NMxqi4JbP27/n0adHX7gpco8TnjL
+	 65GPm6Ylf/ChK3G3O1+ImILBJ3OvtCi5cJ4fxLQV6GJnm+tL1CekURzkN+EtSVCICfz02
+	 WDdhT02GqbbYkvMGLTI4bPV29f33VMwwDbYGvQndLtiOSCaXylLu6l7Ane85Wk82aJqQu
+	 tK0A3RMLokFcYzHIboP4Tzli1PCrbdKNVPUD5ciLas+BzS/jhabWyDlD1W84eoIe6vg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057337;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057340;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wdz6Vz2N10HmTMLUcceYiiw0wSGDaZfpUVhJ0c6IZGA=;
-	b=YywlyfeTuIzIFjhZuXwA121FNHRSh2XkvIravcOqWCttneHI4kPeB+EuP5JuO5dmLzw6
-	 3pTzpS+bJ+9wmR0tG8t2NeQWvzMZmY4Qt5+rt/ljH6KTL8T2m321D93bBz0wENL1uSirs
-	 40pwfk0hLCFfPKS2pKiWjpWNHa5JZNbodngvBGdf4Sg+FosAghaViGtNXbO4t69bpuloq
-	 Oj0BIVMIvo0Ef4QOYwAWY1ABaTaKOdshCZTu1Ll2O29GR2S0iEJcS7DHpjzj1bp1rK6Q9
-	 M5o7J91380v0zSFQeJyP18UgfRjRSAEj/kiexKBsX5MrnyPI43NSzaz0vFGjXXYHFsA==
+	bh=BB/L+5NTFU/JMN+5b+Y1drjSYsUmx6AlxvQPMPi0UtQ=;
+	b=Dv8B8BJgx+qEScaX80oDHKdRSfSBnDsxQ8MdvOXU0D6UfD9K9W5zViyrjwPa0FXTbp8w
+	 PSDNWWFt9ycirrcmGfzRbjMOsxFjYffWs9YbsLUJQbUNZJxtOyt62iAXAaufmu//yzLjt
+	 BsFVoTfO/n8j+4yC3xUmpmMTPYGF560AMj13UfhP4BK+foCiuau/0dSXQ5Exo80eiYNKX
+	 F6jD9Ej1nK1Zq49PfsO3+IGkHymZjhXl1XiNnxG2UNW6rCLTa7e7OdFxHW3Ameea+iA5V
+	 +vGRzU4MDkcK2/VtQdTv0zvzzKC4ckOtM/R9tH5KiWGBK2NWchLz03ADJWpmLs1NgCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="RF/Jo5Om";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SAC4vKnt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C9E60A262A;
-	Thu, 19 Nov 2026 03:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEB460A2629;
+	Thu, 19 Nov 2026 03:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RF/Jo5Om
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018311F000C4;
-	Thu, 19 Nov 2026 03:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SAC4vKnt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA10F1F000C4;
+	Thu, 19 Nov 2026 03:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057337;
-	bh=Wdz6Vz2N10HmTMLUcceYiiw0wSGDaZfpUVhJ0c6IZGA=;
+	s=korg; t=1795057340;
+	bh=BB/L+5NTFU/JMN+5b+Y1drjSYsUmx6AlxvQPMPi0UtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RF/Jo5OmHStAWGFvKKECoDl/xc6REIHFKQV/BTMi0zZc5NxmmIf86nrhgsWBOt8tX
-	 OdvHIuqjF5iWZBc1MrNVPiqLtHEyC56z2zik8B24e7yhCvxdyxGjG7ahRf0s2VIm+l
-	 RnTYsejzHcEOojvG72PtI4k1HRva42OZHFsHS5iI=
+	b=SAC4vKntHGZOPxWmACeukiE+VMlOnW4WmWSOypUlLjnuSw/mDIW17Rbsl29vUITeo
+	 yWd0UoSeEA7sre0eEUzH/M7JwdgcQAJShLEWR9rxXlda8JRjEymxWuRX5CVW0bz5TQ
+	 lCsnup4ZAIceEXfPgHQnAWHJiCKzWzMmJgLavucE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xixin Liu <liuxixin@kylinos.cn>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0054/1848] nvme: zns: cap zone report nr_zones by DMA buffer size
-Date: Wed, 18 Nov 2026 15:34:52 +0100
-Message-ID: <20261118145913.386023406@linuxfoundation.org>
+Subject: [PATCH 5.10 0055/1848] PCI/ATS: Ensure pci_ats_supported() is PF-aware for VFs
+Date: Wed, 18 Nov 2026 15:34:53 +0100
+Message-ID: <20261118145913.417157580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,57 +74,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Pranjal Shrivastava <praan@google.com>
 
-[ Upstream commit 09c9062d4f62199a634a45e2bb9e6e8e572cc78c ]
+[ Upstream commit 4f2cd6091ac41566a7300f5a4590d20a99aaa8bc ]
 
-With Partial Report (PR=1), the Number of Zones (NZ) field in the report
-header must equal the number of zone descriptors fully transferred in the
-DMA buffer (ZNS Command Set Specification Rev 1.2, section 3.4.2).
+Update pci_ats_supported() to additionally check the associated PF's
+status when called on a VF. This ensures that PF-level quirks and
+untrusted status are correctly propagated to VFs, providing a robust
+support check that aligns with the kernel's PF-centric ATS configuration
+model and is immune to the timing of VF-specific fixups.
 
-nvme_ns_report_zones() does not cap the parse loop by max_in_buf derived
-from buflen.  Cap nz with min3() over the device-reported count, nr_zones -
-zone_idx, and max_in_buf.
-
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/zns.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/ats.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/zns.c b/drivers/nvme/host/zns.c
-index 67e87e9f306f1..ddf73f675f399 100644
---- a/drivers/nvme/host/zns.c
-+++ b/drivers/nvme/host/zns.c
-@@ -172,13 +172,16 @@ static int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 	struct nvme_zone_report *report;
- 	struct nvme_command c = { };
- 	int ret, zone_idx = 0;
--	unsigned int nz, i;
-+	unsigned int max_in_buf, nz, i;
- 	size_t buflen;
+diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
+index 0d3719407b8b9..9d8d3b8feda67 100644
+--- a/drivers/pci/ats.c
++++ b/drivers/pci/ats.c
+@@ -39,10 +39,13 @@ void pci_ats_init(struct pci_dev *dev)
+  */
+ bool pci_ats_supported(struct pci_dev *dev)
+ {
+-	if (!dev->ats_cap)
++	if (!dev->ats_cap || dev->untrusted)
+ 		return false;
  
- 	report = nvme_zns_alloc_report_buffer(ns, nr_zones, &buflen);
- 	if (!report)
- 		return -ENOMEM;
- 
-+	max_in_buf = (buflen - sizeof(struct nvme_zone_report)) /
-+		sizeof(struct nvme_zone_descriptor);
+-	return (dev->untrusted == 0);
++	if (dev->is_virtfn)
++		return pci_ats_supported(pci_physfn(dev));
 +
- 	c.zmr.opcode = nvme_cmd_zone_mgmt_recv;
- 	c.zmr.nsid = cpu_to_le32(ns->head->ns_id);
- 	c.zmr.numd = cpu_to_le32(nvme_bytes_to_numd(buflen));
-@@ -198,7 +201,8 @@ static int nvme_ns_report_zones(struct nvme_ns *ns, sector_t sector,
- 			goto out_free;
- 		}
- 
--		nz = min((unsigned int)le64_to_cpu(report->nr_zones), nr_zones);
-+		nz = min3((unsigned int)le64_to_cpu(report->nr_zones),
-+			  nr_zones - zone_idx, max_in_buf);
- 		if (!nz)
- 			break;
++	return true;
+ }
+ EXPORT_SYMBOL_GPL(pci_ats_supported);
  
 -- 
 2.53.0
