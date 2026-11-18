@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054371;
-	b=rtfeiAvCWAqpWav+uwIb6zKEJMtNe2rvP5kAIsa28pK1BG5wq5OmE69syfHvZmaOcWhF
-	 MSKunMmO7Bm8YebniQgL7nR39LYFOEVIceSHjwkkO0t9Ebo4ATnvccBgzUi98rsp+LKVS
-	 9Vv9GKID1KPg5S7zHUP6mnQdV2FfyDAZlXvLAXO9zO1qoouziepVgXoy2IJ1kimw48YY7
-	 CXm5H3J13Fl4l7iukMmv4VXn8fnI234N7HAvPy45M0unkIP1OfHVmu1nBBmnNmyUry7pr
-	 MszlCSzLOcYqC87v8LSCGcdDZHO5+sJMM7D1OYKOUJ92TStWosqw9607fAYu2hM21GQ==
+	t=1795054374;
+	b=e0lW51Ycxb+rnEBM11+/7omxqx4pYHuIJBd1S8HUqZQIur/LGquTdk8sgIu47nk/h8Sv
+	 wPlujt184oSjMp1TTV4ewo9K6JsqwYqyLj2BJQq3AhtKbNSSC6/9qsKqG0GB/shFW7zAb
+	 YE8Sp7iFKqT00DL7BspCDlbiiAfxzKNYJfgiw5Err5zlOMoviDGA5JikUvsCzxd0xM/sp
+	 2/26d+4V1ahxbBd7kcw62z/EUSeT85DPiMKRaNJE98GA09uEFGuo4vp1tN5sgv6vdiKgd
+	 FP7oD7gl48mpKWrx3bcgZvFmXabFg2t+uOaYQkrw0+YOepJUJswdReHi2gmSXuzdEjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054371;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054374;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QRls/vm5ZB3w63M7rtBsf4AFRfLkXqaiFjk2P4NRczU=;
-	b=18flqTd/fBZ4HkaVCYzxO+pL1lxCJd9owcA0R14fJRF6aI7o4JvrJXJ38D8D1R3vmBl0
-	 TF4rHEqB7pygPz6RdiOnZJfPw+SE0IIoUQak1Q0dw5f5KMNpaRUaP1Tku9Fh/D6slTLiZ
-	 gcRWKVtSOKhIgP8F+eTdzjHTc7aG/Hom1ZjaF4K2TBFN8wlcwo8AABoA1czVjCBGgoWD1
-	 ZXnRkubehoSpxTP39EuNAxUwJ4MI35bCRy79PtPsWO5nXSBTXEe9JT0EGHVFqi8EfqEZ/
-	 QBy3q0LukL0Fb/xHp7q/cqsmdNNThYg12Kd5VAu90wDAEflAVHc7hIqsxLQTDKh0o9g==
+	bh=YmYmNguBwtN7JJBNdRLG8FDwsVzaW5G03AbO0Nx9nXY=;
+	b=Z9pYWH0Y5w3mUFS1Un8Umu4X08FDtzh2LmdVgHXV3SglIO3hKPCKCIHAjWU+BU6dCHvp
+	 cuk4O0/oQhb5O6sH3GPfeylEFaX5w7Q5rVpJ2cRoQf+iM4BsmNs2TJDSReNhHTmB9dYNY
+	 L9PYt57Sv7Fu0faFysZH0kkY+QIhoHkLdaQKNGhCZN8Z9jPGhqtu1I1KBeurcyAKHGe5U
+	 UsQDNMhtyI4YwxSboT49dd+IZaQNFkMuMuvxtKL4xseZDM/eBSpOYBmr2iU9JqmS373vH
+	 gdFIMccxE0Hwkv7ROyBRtR3nD+J0ji8YE1QArlXT7BIZ5bvAs1S1BzaRuvzg+9w/nWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcQbIDVH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vr07weeC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55399606A31C;
-	Thu, 19 Nov 2026 02:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4CC606A325;
+	Thu, 19 Nov 2026 02:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcQbIDVH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647C31F000C4;
-	Thu, 19 Nov 2026 02:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vr07weeC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1DC1F000C5;
+	Thu, 19 Nov 2026 02:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054370;
-	bh=QRls/vm5ZB3w63M7rtBsf4AFRfLkXqaiFjk2P4NRczU=;
+	s=korg; t=1795054373;
+	bh=YmYmNguBwtN7JJBNdRLG8FDwsVzaW5G03AbO0Nx9nXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcQbIDVH0nwLEV6siu/v/Zojrou+Sd+ORc1nkc2gRHEvIPz23PZKAMyCWPsKmRmxt
-	 HklrcHpQUVqa9nuBkl5SjJoOcxTKVAI5Rok/wfuucpK9NipJRE24fKJJwPP62e+dCq
-	 GDMNqHSZEgOImScZNvrD6sFcrbABtfzwH47cFZ6o=
+	b=Vr07weeCk38rf3ZWPX8wRfW91RGNVXXLUEPFOiSh/nehlBDux8j9KqtYd+z5rbZ++
+	 4Snmd0flaPG3IrV+fNaSlMnSzJyphVuuXh3i514AbBlOjPVgDHyzCcdh53+eL4lgBB
+	 goUQeAVJAcOf3tUuEir93utFVSzJPRzTLfc5Jdr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ollrogge <nils-ollrogge@outlook.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Howells <dhowells@redhat.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1209/2214] assoc_array: dont chain a new shortcut onto an existing one
-Date: Wed, 18 Nov 2026 15:48:05 +0100
-Message-ID: <20261118150100.192705216@linuxfoundation.org>
+Subject: [PATCH 5.15 1200/2214] ip6mr: fix UAF issue in ip6mr_sk_done() when addrconf_init_net() failed
+Date: Wed, 18 Nov 2026 15:47:56 +0100
+Message-ID: <20261118150059.873087507@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,112 +69,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 48691075b0adc590a6831390723e3603dfca76fc ]
+[ Upstream commit 1ca695207ed2271ecbf8ee6c641970f621c157cc ]
 
-When a full node's leaves and the new key all share the node's segment,
-assoc_array_insert_into_terminal_node() replaces the node with a
-shortcut to a pair of new nodes.  If the node is itself the target of a
-shortcut, the new shortcut is installed as that shortcut's next node,
-and a shortcut leading to a shortcut is something nothing expects:
-assoc_array_walk() indexes the second one as a node, and
-assoc_array_apply_edit() hits the BUG_ON() in the loop that adjusts
-nr_leaves_on_branch, on that same insertion.
+If the initialization fails in calling addrconf_init_net(), devconf_all is
+the pointer that has been released. Then ip6mr_sk_done() is called to
+release the net, accessing devconf->mc_forwarding directly causes invalid
+pointer access.
 
-Deletion gets a node there.  When the subtree below a shortcut shrinks
-enough, assoc_array_delete() collapses it into one node below the
-shortcut, and the leaves it collects can all share that node's segment.
-The next key that shares it too takes this path.  Eighteen insertions
-and a deletion are enough: sixteen keys that agree on bits 0-11, one
-that leaves them at bit 8 and is deleted again, and one more that agrees
-with the sixteen.
+The process is as follows:
+setup_net()
+	ops_init()
+		addrconf_init_net()
+		all = kmemdup(...)           ---> alloc "all"
+		...
+		net->ipv6.devconf_all = all;
+		__addrconf_sysctl_register() ---> failed
+		...
+		kfree(all);                  ---> ipv6.devconf_all invalid
+		...
+	ops_exit_list()
+		...
+		ip6mr_sk_done()
+			devconf = net->ipv6.devconf_all;
+			//devconf is invalid pointer
+			if (!devconf || !atomic_read(&devconf->mc_forwarding))
 
-Have the new shortcut replace the one in front of the node as well.
-assoc_array_insert_shortcut() gives it that shortcut's back pointer and
-parent slot, so the caller installs it where that one was, and excises
-the old shortcut along with the node, which takes a second entry in
-excised_meta[].  The new shortcut's index key comes from the new key up
-to the new skip level, so it covers what the old one did.
+The following is the Call Trace information:
+BUG: KASAN: use-after-free in ip6mr_sk_done+0x112/0x3a0
+Read of size 4 at addr ffff888075508e88 by task ip/14554
+Call Trace:
+<TASK>
+dump_stack_lvl+0x8e/0xd1
+print_report+0x155/0x454
+kasan_report+0xba/0x1f0
+kasan_check_range+0x35/0x1b0
+ip6mr_sk_done+0x112/0x3a0
+rawv6_close+0x48/0x70
+inet_release+0x109/0x230
+inet6_release+0x4c/0x70
+sock_release+0x87/0x1b0
+igmp6_net_exit+0x6b/0x170
+ops_exit_list+0xb0/0x170
+setup_net+0x7ac/0xbd0
+copy_net_ns+0x2e6/0x6b0
+create_new_namespaces+0x382/0xa50
+unshare_nsproxy_namespaces+0xa6/0x1c0
+ksys_unshare+0x3a4/0x7e0
+__x64_sys_unshare+0x2d/0x40
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+RIP: 0033:0x7f7963322547
 
-Found by a userspace test doing random insertions and deletions on keys
-that share long prefixes; a targeted case builds a shortcut, deletes
-down to the collapse and inserts one more key.
+</TASK>
+Allocated by task 14554:
+kasan_save_stack+0x1e/0x40
+kasan_set_track+0x21/0x30
+__kasan_kmalloc+0xa1/0xb0
+__kmalloc_node_track_caller+0x4a/0xb0
+kmemdup+0x28/0x60
+addrconf_init_net+0x1be/0x840
+ops_init+0xa5/0x410
+setup_net+0x5aa/0xbd0
+copy_net_ns+0x2e6/0x6b0
+create_new_namespaces+0x382/0xa50
+unshare_nsproxy_namespaces+0xa6/0x1c0
+ksys_unshare+0x3a4/0x7e0
+__x64_sys_unshare+0x2d/0x40
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Reported-by: Ollrogge <nils-ollrogge@outlook.de>
-Assisted-by: LLM
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Freed by task 14554:
+kasan_save_stack+0x1e/0x40
+kasan_set_track+0x21/0x30
+kasan_save_free_info+0x2a/0x40
+____kasan_slab_free+0x155/0x1b0
+slab_free_freelist_hook+0x11b/0x220
+__kmem_cache_free+0xa4/0x360
+addrconf_init_net+0x623/0x840
+ops_init+0xa5/0x410
+setup_net+0x5aa/0xbd0
+copy_net_ns+0x2e6/0x6b0
+create_new_namespaces+0x382/0xa50
+unshare_nsproxy_namespaces+0xa6/0x1c0
+ksys_unshare+0x3a4/0x7e0
+__x64_sys_unshare+0x2d/0x40
+do_syscall_64+0x35/0x80
+entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: 7d9b1b578d67 ("ip6mr: fix use-after-free in ip6mr_sk_done()")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221017080331.16878-1-shaozhengchao@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/assoc_array_priv.h |  2 +-
- lib/assoc_array.c                | 24 ++++++++++++++++++++----
- 2 files changed, 21 insertions(+), 5 deletions(-)
+ net/ipv6/addrconf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/assoc_array_priv.h b/include/linux/assoc_array_priv.h
-index dca733ef67503..37a9f76e1505b 100644
---- a/include/linux/assoc_array_priv.h
-+++ b/include/linux/assoc_array_priv.h
-@@ -80,7 +80,7 @@ struct assoc_array_edit {
- 	struct assoc_array_ptr		**leaf_p;
- 	struct assoc_array_ptr		*dead_leaf;
- 	struct assoc_array_ptr		*new_meta[3];
--	struct assoc_array_ptr		*excised_meta[1];
-+	struct assoc_array_ptr		*excised_meta[2];
- 	struct assoc_array_ptr		*excised_subtree;
- 	struct assoc_array_ptr		**set_backpointers[ASSOC_ARRAY_FAN_OUT];
- 	struct assoc_array_ptr		*set_backpointers_to;
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index ddab703561875..0a210e12d18e9 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -679,9 +679,10 @@ static void assoc_array_split_node(struct assoc_array_edit *edit,
- /*
-  * All the leaves, new and old, want to cluster together in this node in the
-  * same slot, so we have to replace this node with a shortcut to skip over
-- * the identical parts of the key, leading to new_n0.  The caller then splits
-- * the leaves between new_n0 and new_n1 at the shortcut's far end, for which
-- * this fills in the segment cache.
-+ * the identical parts of the key, leading to new_n0.  If the node is the
-+ * target of a shortcut, the new one replaces that shortcut as well.  The
-+ * caller then splits the leaves between new_n0 and new_n1 at the shortcut's
-+ * far end, for which this fills in the segment cache.
-  */
- static struct assoc_array_shortcut *
- assoc_array_insert_shortcut(struct assoc_array_edit *edit,
-@@ -726,6 +727,20 @@ assoc_array_insert_shortcut(struct assoc_array_edit *edit,
- 
- 	new_s0->back_pointer = node->back_pointer;
- 	new_s0->parent_slot = node->parent_slot;
-+
-+	/* A shortcut has to lead to a node, so a node at the end of a shortcut
-+	 * is replaced together with that shortcut.  The new one holds the index
-+	 * key from the root, so it covers what the old one did.
-+	 */
-+	if (node->back_pointer &&
-+	    assoc_array_ptr_is_shortcut(node->back_pointer)) {
-+		struct assoc_array_shortcut *above =
-+			assoc_array_ptr_to_shortcut(node->back_pointer);
-+
-+		new_s0->back_pointer = above->back_pointer;
-+		new_s0->parent_slot = above->parent_slot;
-+		edit->excised_meta[1] = node->back_pointer;
-+	}
- 	new_s0->next_node = assoc_array_node_to_ptr(new_n0);
- 	new_n0->back_pointer = assoc_array_shortcut_to_ptr(new_s0);
- 	new_n0->parent_slot = 0;
-@@ -807,7 +822,8 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
- 		/* The node only contains leaves and all the leaves cluster in
- 		 * the same slot, so we need to insert a shortcut to skip the
- 		 * common portion of the key and split the node at the
--		 * shortcut's far end.
-+		 * shortcut's far end.  The shortcut goes wherever its back
-+		 * pointer says, which may be further up than the node.
- 		 */
- 		new_s0 = assoc_array_insert_shortcut(edit, ops, index_key,
- 						     node, level, new_n0);
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index aa033c2cd8a0d..e429bcadd821e 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -7273,9 +7273,11 @@ static int __net_init addrconf_init_net(struct net *net)
+ 	__addrconf_sysctl_unregister(net, all, NETCONFA_IFINDEX_ALL);
+ err_reg_all:
+ 	kfree(dflt);
++	net->ipv6.devconf_dflt = NULL;
+ #endif
+ err_alloc_dflt:
+ 	kfree(all);
++	net->ipv6.devconf_all = NULL;
+ err_alloc_all:
+ 	kfree(net->ipv6.inet6_addr_lst);
+ err_alloc_addr:
 -- 
 2.53.0
 
