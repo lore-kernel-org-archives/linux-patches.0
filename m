@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045295;
-	b=iQUCdomDcaBSZ1zBh5oDE7rR+l8zgD34GQYw6fSDNy9LVMmrGIKqlhgiaDVgSHTaMeTt
-	 /D00hF7rI27bvAyf8IMrltMVOPBz0u7Eba0UpAGZBmszt+2sz9wiu22Vj3UvpWjQZInUL
-	 VIDEMqzWXmPjVR84KJnJGfS242wHUhEAjXMQGGmMCfBnwx8DN+tQ4IVud8wChu+wD/i3W
-	 HhZ9b4isMZ6tNzwXW9JeE5gPobk6pMduSJbzqQmw0R67msYxTcuMw/0zZEacxUrs01kaw
-	 SfRRjA4GZ8x0Ba7eQKCXi6JcOQ7DFXSnmzisYpbqPGIE6cd1t+/x5IAWxtyt/WeRLJA==
+	t=1795045297;
+	b=hi40XcJxM4BrlX8yXsZneAYiRT+1J3UpU2XEIfYrVWrlL7FLRHxfFJDui+TX3VXe8QOK
+	 XkUMotILz5WUt+OxApWeMOhaweLl0gLqY+5I6Ov9RqVmNI/R0sW1vmTm4ex0ANL3RLfel
+	 D0KxWdrQiwITdOGmGkvVJmD7moJjvLvQ9IlcZDnV27QErkpts/aogmEVhUITRHM1r6XuF
+	 WszYLlOmA64yO+AMmwa9fKdntG/bzUR8kDpy7jFeSHqhB7Zrqr3kLa8mD7VROALstPDN2
+	 eK2dCsoZ4klvmeAj+MeTtrwLOwOG+EdTWUh4IHhRzFwc8zqUIJuqo57LJxFFDn0OabQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EfQ7cwiM0kmaWhA/yExiOgQAHoKX/cDFxyXnMrnGSz0=;
-	b=zZtc3g7zmIc9VHvaEi26aPfGcVz53itRWBW5mRDvJv9e+ZNJaY3iwkfI0xIfXIzR4n0C
-	 eu2rXYfFLhhAxXnTwE8YmqfEeBmVPAEKGtkRUbLUCdL6zSUKfiv+ge8lLPXu94NZW3UCu
-	 HFlNioxHLvHiqqgzbxnqeCH8O9hv5zlkEk4ekMFp6QA/RVNiC5zUeQgfBM1/ta8HLgQS0
-	 pG/RZ+a7yUnzUTux5vxhsSKWovdROe9NuXi85A3c/cqk3c75qOU48IjfH/D+nKwk0MMwX
-	 4JoX+iTCZfpbCemKe5P4eSfGOyw9YqJUCJqHR0prW5AAU5WBJNfJh5firC+R3NoqBxQ==
+	bh=2IVUq3344DA5JHqpYTCvj4c6TTIhaoPiKx+RrMiSeOI=;
+	b=yitdkKygfjvs2jy2q3De6gdL8vO5m04yi8jlpj9KfUA5Q35L3bsbeQMl2KaRisoXFm53
+	 ObvKTEWIxxT9H2FCwAAVeJAzmyvpRLwLEghdRf4Jcw9LB/Ra87eTN5hrsQMqStsJzQr9U
+	 5GVYU4dvz7fS+nfRGBrrann2Z9vMEVJVxp1EkGVHiNmUSAE1Rl+ra4l3hqNbzFbELENrD
+	 IMokhxG9n3h70Q61eVMORrGlYtLsDrzon6PLUNju80Im0Kwouo8ujw640icgsYzCrUVV1
+	 g8ESYOrebY5uh6CV8ovaRjPY0QrFvRLrfWICbzLkyvwG3ZQwXdDtDlBb8tkMPayBsGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uwZxpA8n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okHnXdOX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36F4606A32A;
-	Wed, 18 Nov 2026 23:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C45606A339;
+	Wed, 18 Nov 2026 23:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uwZxpA8n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FDD1F000C9;
-	Wed, 18 Nov 2026 23:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okHnXdOX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250B41F000CC;
+	Wed, 18 Nov 2026 23:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045294;
-	bh=EfQ7cwiM0kmaWhA/yExiOgQAHoKX/cDFxyXnMrnGSz0=;
+	s=korg; t=1795045297;
+	bh=2IVUq3344DA5JHqpYTCvj4c6TTIhaoPiKx+RrMiSeOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uwZxpA8nBC5Q034k/qplkNLyU5fU99pXh6m528jdHbWxizYrSmofJkdL6g0y7293j
-	 tWZRx/O4F5XlA6s2So9VVDWS1Oek4zTPDzaU6sNwWC6zIWSL2+omlYsqoTna+hmk6H
-	 ItdP6+mqhKez0XUNO5Dg77VMa3MJXt2+U0Juv5xQ=
+	b=okHnXdOX5V3A8Y8vC+V3qhUJN3/Oi71xJCVR0qcS7bBkinGx1JyclQpiYzKoMbBOI
+	 QWBacIYCkhQ5PAU1hqvKZX1FSp4nS1XKNNFcT2buwGDXQEpKbEEJMs6JpvK5HlIrbR
+	 eQpU0sWRMwqS2PEqNQnMPAV104b+DoGqBsEYAOm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0871/2857] media: mediatek: vpu: release reserved memory on remove
-Date: Wed, 18 Nov 2026 15:31:45 +0100
-Message-ID: <20261118150232.923218550@linuxfoundation.org>
+Subject: [PATCH 6.1 0872/2857] media: vicodec: fix NULL deref on oversized frame
+Date: Wed, 18 Nov 2026 15:31:46 +0100
+Message-ID: <20261118150232.959998589@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 8af0e2bdd9791848d9caf3761825ac51a67c2b9c ]
+[ Upstream commit c657eb609197e289b054bc2c4e86a0fc32dd7ebe ]
 
-mtk_vpu_probe() may assign a reserved memory region to the VPU device
-with of_reserved_mem_device_init(). The probe failure path releases the
-assignment with of_reserved_mem_device_release(), but the normal remove
-path does not perform the corresponding cleanup.
+job_ready() only honours the is_header_valid() verdict when
+ctx->comp_has_frame is set, and comp_has_frame is only set once
+comp_size reaches the full frame size. Since the copy is clamped to
+ctx->comp_max_size, a header advertising a larger size leaves comp_size
+stuck at comp_max_size, so comp_has_frame stays false and the failed
+validation is discarded.
 
-As a result, removing the VPU driver after a successful probe can leave
-the reserved memory assignment associated with the device after its
-lifetime has ended.
+Control then falls into the resolution change branch, which calls
+update_capture_data_from_header(). That function re-derives info via
+info_from_header(), assigns it to q_dst->info and dereferences it as
+q_dst->info->sizeimage_mult, with no NULL check of its own.
+is_header_valid() does check that same info_from_header() result --
+if (!info) return false which is precisely the false verdict
+job_ready() discarded above. info_from_header() returns NULL whenever the
+header flags resolve to no supported pixel format.
 
-Release the reserved memory assignment after freeing the VPU external
-firmware memory, matching the cleanup performed by the probe failure
-path.
+Drop the comp_has_frame conjunct so an invalid header always bails out.
+The resolution change path is unaffected, as it is entered with a valid
+header. Oversized frames are then rejected by device_process(), which
+already returns -EINVAL when comp_frame_size exceeds comp_max_size.
 
-This issue was found by manual code inspection.
-
-Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
+Fixes: 3b15f68e19c2 ("media: vicodec: Add support for resolution change event.")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/test-drivers/vicodec/vicodec-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-index 37c0a4abfe8df..cfcaddda96443 100644
---- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-+++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-@@ -967,6 +967,7 @@ static int mtk_vpu_remove(struct platform_device *pdev)
- 		destroy_workqueue(vpu->wdt.wq);
- 	vpu_free_ext_mem(vpu, P_FW);
- 	vpu_free_ext_mem(vpu, D_FW);
-+	of_reserved_mem_device_release(&pdev->dev);
- 	mutex_destroy(&vpu->vpu_mutex);
- 	clk_unprepare(vpu->clk);
- 
+diff --git a/drivers/media/test-drivers/vicodec/vicodec-core.c b/drivers/media/test-drivers/vicodec/vicodec-core.c
+index fb55908d9ee96..31e13ea6a7e91 100644
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -650,7 +650,7 @@ static int job_ready(void *priv)
+ 	 * if the header is invalid the device_run will just drop the frame
+ 	 * with an error
+ 	 */
+-	if (!is_header_valid(&ctx->state.header) && ctx->comp_has_frame)
++	if (!is_header_valid(&ctx->state.header))
+ 		return 1;
+ 	flags = ntohl(ctx->state.header.flags);
+ 	hdr_width_div = (flags & V4L2_FWHT_FL_CHROMA_FULL_WIDTH) ? 1 : 2;
 -- 
 2.53.0
 
