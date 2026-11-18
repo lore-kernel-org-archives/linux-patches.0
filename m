@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060507;
-	b=wkvzviq3lybYr2BIN/AE3B43oeDD/D1/SeBhXy5JFaD+ozCaHQ7toVcraiZlcRSM9blW
-	 /YHhytN/t1613KA6/k9Lxt4qeZhIBhKqcOTzeXuv5IXWO2ywcv5jhatkvv1eM4H+uZasD
-	 Bcll0WFHB/VZyT2u9EbT6BgnQ0xtZWsz09ouDcIggp7sc1lBfdrUlqsZrITs5HJM/rKbA
-	 zfSrfC+7LqurGW6t+o5ctI/rLBIyp8WHvC1ROkALSKcV/2h+zxw5F5SzLk/2B80J9l5Kw
-	 kitDwYLYcgOuBueQP31H1dO9Q6elDZpdginRno3wx7b9CTR9o54WkHk079OZeeV96RQ==
+	t=1795060509;
+	b=RJsX5+dRJ4y9PHeWDyfGEsacuGeM1AsUysq1b72lOkB5EQH+w2Tb44IZpd/4txjJmzSa
+	 fE4r4nfXRUHt/Nl8md1U/UtrSPXVAWgs/1tVJLIhQA0K0WrR35J+vr86wokTuwOk8AozT
+	 pQ9HiFPj+RV4bVmjVzfTqqjkw0w7AemiVq8lJpFHUV//B5ua7vMxRbvr4cXi3l48WOico
+	 ZF79yS0mHmTYnLiXZG6KlZ5funSIyPRt2cPMR6D2jF8X6knyN2pmZxn3E4dMd4Wvm89Og
+	 gIhhA16Wr/rRPulsIxrOnbWBA/Xhp1ZFUbCuGU/qAkyb9Dol7Q98GX84szxOyAJDoCg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060507;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3b6//8DIuEKiwqAG4XCijOguCsoeEhHaEQp21lxlemk=;
-	b=wUHisNSigRRszdKxugQm4cNeKsvDkGDvpC7EfcPnE6JQvAHhBvfO6qWXoD7kPypjjdCc
-	 cOy2yQdsX05Ubrs3thMmAkE5LZZiqr+tbrTX9ZXXN9o9H4mgARj39QFt6kUCNg1v60LvO
-	 E+d2yeOxSfhypaZN1vmuQzuM28GnDL7dEOFRPdm2yTAN+Uod9MXiqimnIESYQf6enU9ws
-	 e1Wfp8f6cagJ8ROsD0zh1rbm1dPWUZwqpU+QZ2qft3eXeWiMVoNwfq53VNH5Xr+2nelu1
-	 9532pvwMVxESab+O3GkIOORNQnzl3JY3uPk4eIbqeaPNkgYI8d64e9f3Cquiu2xza9g==
+	bh=sScUw/sNg40ZJVQA/4nz0+2bh5WOQnGX1gPmSIEr3aw=;
+	b=X2qPZ9LjB70Lph0arrmAHCDUrOGC1LoH38lSVV/5RUkW0Fz89rzn9i8cW9JtXitHtOX9
+	 XT/tQS8rlLqEWn6DfxGbTAH30jYaMm2uR6M/hlJ48QJKqmVxq3w4Tkwuzy2GwF5g5u9xb
+	 ahs3mSu2YW4UjNa6b8tUxhGrpR0lF8aMHwDJ14Aelmrx84ENXr4Sj+4XMGBH0crTI5xhB
+	 S2pLfoVXNsA3xi8SyQ21Vrqbr7h6OMGpTLfqP8JZHu16AWjrIzKeEb5zQhd+1MVmexkJb
+	 G4Npyv6011eK9VLEC+iLOE12He2z63bRdMwUUtFMD3mfDoMo1B0OJM3jC0xO8iaCOuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ga9dz5l4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jfzndjkl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3E8606A325;
-	Thu, 19 Nov 2026 03:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A88606A325;
+	Thu, 19 Nov 2026 03:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ga9dz5l4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BE91F000C4;
-	Thu, 19 Nov 2026 03:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jfzndjkl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F60F1F000C4;
+	Thu, 19 Nov 2026 03:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060506;
-	bh=3b6//8DIuEKiwqAG4XCijOguCsoeEhHaEQp21lxlemk=;
+	s=korg; t=1795060509;
+	bh=sScUw/sNg40ZJVQA/4nz0+2bh5WOQnGX1gPmSIEr3aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ga9dz5l4mmyiuzSbrvLvnbtTsqY8ljWPkXswbQKsldvaXZV8g4ZvEdEfIH3HChQVq
-	 9hMcjxli4x9RlphCU5EnxtZdq9P1kVWx6bbO+E5eCi+lBxNDxf2keFRQj2QkGzl46i
-	 FYNyZOKm54ntts86zOVbqLSd2RiuOXHsksbEb+w0=
+	b=JfzndjklKnuhZmOzqnjwFEuNfZQIU/BrF/TBMHS/p2RedbnuBF6quEmkKRL1s34Po
+	 ys0Qjg6AKirqRxJmDlNvXpsVI4g0JrFL9FVw2ehY3xnSB9hY9MEyZVPwsXHPgVM3j7
+	 7Y53bSJrngK4hPSn2Cyk5aNUqS0R7NRdAZ2aE+eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1223/1848] regulator: ab8500: Treat cut 1.0 VAUX3 as fixed
-Date: Wed, 18 Nov 2026 15:54:21 +0100
-Message-ID: <20261118150011.135285444@linuxfoundation.org>
+Subject: [PATCH 5.10 1197/1848] power: supply: mp2629: Use the full batt_impedance_compensation name in the ABI document
+Date: Wed, 18 Nov 2026 15:53:55 +0100
+Message-ID: <20261118150009.775237984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,51 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b9fc8a8d31b914b09329240f532ff0e9c00cd727 ]
+[ Upstream commit 1101833121a447999309a01f03d5b35bc1652e09 ]
 
-The early-cut workaround currently gives AB8500 cut 1.0 the 16
-programmable VAUX3 settings introduced with cut 1.1. On cut 1.0 the
-selector is not programmable and VAUX3 is fixed at 1.2 V.
+drivers/power/supply/mp2629_charger.c creates the attribute with
+DEVICE_ATTR_RW(batt_impedance_compensation). The ABI file documents it
+under the truncated name batt_impedance_compen, which does not exist in
+sysfs.
 
-Register VAUX3 as a fixed-voltage regulator on cut 1.0 and retain the
-16-value workaround only for cut 1.1.
+Use the full name.
 
-Reference: AB8500 User Manual, UM0836 Rev 3, p. 240
-
-Fixes: 2b75151a1041 ("regulators: Added ab8500 v2 support")
+Fixes: fe27f04e0cdc ("power: supply: mp2629: Add impedance compensation config")
 Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-4-fe88b01829bf@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260905101849.42830-1-kmehltretter@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ Documentation/ABI/testing/sysfs-class-power-mp2629 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 147456e526fed..ba39ff87339cd 100644
---- a/drivers/regulator/ab8500.c
-+++ b/drivers/regulator/ab8500.c
-@@ -1669,9 +1669,14 @@ static int ab8500_regulator_register(struct platform_device *pdev,
- 	config.driver_data = info;
- 	config.of_node = np;
- 
--	/* fix for hardware before ab8500v2.0 */
--	if (is_ab8500_1p1_or_earlier(ab8500)) {
--		if (info->desc.id == AB8500_LDO_AUX3) {
-+	/* Handle the different VAUX3 implementations in early AB8500 cuts. */
-+	if (info->desc.id == AB8500_LDO_AUX3) {
-+		if (is_ab8500_1p0_or_earlier(ab8500)) {
-+			info->desc.ops = &ab8500_regulator_mode_ops;
-+			info->desc.n_voltages = 1;
-+			info->desc.volt_table = fixed_1200000_voltage;
-+			info->voltage_mask = 0;
-+		} else if (is_ab8500_1p1_or_earlier(ab8500)) {
- 			info->desc.n_voltages =
- 				ARRAY_SIZE(ldo_vauxn_voltages);
- 			info->desc.volt_table = ldo_vauxn_voltages;
+diff --git a/Documentation/ABI/testing/sysfs-class-power-mp2629 b/Documentation/ABI/testing/sysfs-class-power-mp2629
+index 914d67caac0d7..a85f926ce9c26 100644
+--- a/Documentation/ABI/testing/sysfs-class-power-mp2629
++++ b/Documentation/ABI/testing/sysfs-class-power-mp2629
+@@ -1,4 +1,4 @@
+-What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compen
++What:		/sys/class/power_supply/mp2629_battery/batt_impedance_compensation
+ Date:		April 2020
+ KernelVersion:	5.7
+ Description:
 -- 
 2.53.0
 
