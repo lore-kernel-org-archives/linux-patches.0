@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016743;
-	b=ufwwQc9V7kg/E6ydp0vR3x5uITNNYu4/4HCxFcO0vgYclfc2a8m+I5L5vbD7mC33/G8n
-	 FvRhzIVlYSWEPXBIxthEX6EY2WWPo06uI2mXDIgt23i2JTaDILwDI+Fu3uMoH080L1UOW
-	 5ozocp1qACe9kKmV/iyPqeW8miHlCfwgEG+kqS9PXhNKQrhwry82VDwfxBWyKcI9REaDd
-	 fJqJvKWEXbDZNBNqzwyQ6Uc7S9saJeA4aLtvYuhRS19HkpYso4pXvy2hjQdwq0f1ZaYN9
-	 LhVmqcY2te5wYuLdVnNsPou8Zi3hXH4gWXpXJDL8BVLD4FMXw3LfZaXvUNQiDW5326A==
+	t=1795016746;
+	b=Y1kcT4X9AEXumoELf3fSzfjbChhWF3tZsnLWLrturb7qT7qaiDRZ2xJpWqWOQLowyIGg
+	 s9E6lLJYTBSwLq0RITxyMGozWkYiTPoXhAcTSet7KbLGMt4vZgv1wOwCphWOKj3MDoghS
+	 /jfr+YT0QnPOyZw4AbP494qif0cb3q2lJt+JdQBX0vnLn1U8xeQgemomGqw6EVeMq9rCn
+	 3oMMX5Gjs304VU4LS4SZdwohOpKmcLQE67WwYaWCQ5ZL85wOnk2WTrqpZpxmZczV3BtaQ
+	 dw/d0NBpe7Q91A6iaK23RIvaZtJ7rq3J9Evx67P92GA9dDF/RMtFP7X1vB1VtebLhpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016743;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nuuiYF893+7br/jA4K3EEBqP+UYxNNEhDDkAtqb0ptw=;
-	b=kZozLuB3oCLvijzLtEFEIUO6A8sSuiCK5rJ44KhEM3UWyGKRjKof9MPNCNw7+L5e4dpd
-	 toSAxKz4Qo5o8fNqFAhQe62NribL8FBfBG5a7sPsfF1/T5hK6Xs5jskQJW8takuaEGVa5
-	 bRKe0/XvP/MK5mbi6Aq0rvw/9VtF0XCe6ZDcpb0xdvBzExFnjgJMRr2DzaWLnroMz3Shp
-	 QH/E6HhMQOIaSk6YrPTU3ElFLIN2BSHZR7MucndVlgUni3ztA5eIqvicDRyhXooOchzH1
-	 4vNyGzUmwoRERUihTu1it48+vLN4OTd6hzf+QqkAEcTW0uWRosfANaiAvbll6hozO8A==
+	bh=JJsG5fu4XfSdcUjVNr5qAWqKihCDNrRIPZR4itTkIso=;
+	b=fcLvre97kk+mHr+VAJSalbgEIulwth5WoTuDPgMGErY0kf/FhCvQDrcb/GZ1rINTY5U0
+	 67it7C1XAnn2PJhJzAyPbDNGPdA/GkHLXRJ4Luvf5T4nsWz8kLkv2Ppc57R+G/c4cT8id
+	 DT7NMnPYPgDC4elEXGgLM8C2ZR7IZ2M/ZWZsfm2eEElz/sUTO+6UnHqLMyUXYIUSeQ6n9
+	 iW1DrDdQbLrxwNTFjjdLNYqAgbu40M7Sh/gPdvC+t8nbbf4nu5pIl7Vzhk08FHxerpqJZ
+	 FZmJeEqYeOYGMk/je1gBUHRkPg0YlGHd3WT0AwVBUdK/5gZhdY5hv4zySUGoBHF2klQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02eEtQql;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpPGk2UN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C220606A31C;
-	Wed, 18 Nov 2026 15:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3AF606A31C;
+	Wed, 18 Nov 2026 15:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=02eEtQql
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10811F000C4;
-	Wed, 18 Nov 2026 15:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fpPGk2UN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F1B1F000C4;
+	Wed, 18 Nov 2026 15:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016743;
-	bh=nuuiYF893+7br/jA4K3EEBqP+UYxNNEhDDkAtqb0ptw=;
+	s=korg; t=1795016746;
+	bh=JJsG5fu4XfSdcUjVNr5qAWqKihCDNrRIPZR4itTkIso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=02eEtQqlsMTXB0HPNubRx1VssZAKHU7xYxEtBlHrm36LrSm3Km0POP6WCoSz6dDK8
-	 mr4KJ+LeZOlDTnZEEzUG+nifgyW6rrFnjgiyJau6emV/6JPW6HId+5QdPnNRh6B8FF
-	 fN4VKlGkYy4DAP/T28fIzluB/4pH1WIjFoLGeQ18=
+	b=fpPGk2UNV1BCHdiWIwfR9ulN2R5S+peHedzK/tv8Rs7Ms17TBe5jUVPBjoS/GmUWF
+	 X9W07RifN5aTqPGM7c1Hu6bgWis6OuFNtfliVv6uaMSXLZZ+um46x8tG5J+yQn4zD/
+	 VaLWiF14PbCatXS7RhyUmRzx8OOg+FCI8bLihQJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0636/2651] selftests/coredump: discard the right amount after the coredump request
-Date: Wed, 18 Nov 2026 15:31:16 +0100
-Message-ID: <20261118150310.581956691@linuxfoundation.org>
+Subject: [PATCH 7.3 0637/2651] leds: pca9532: Check i2c_smbus_read_byte_data() return value
+Date: Wed, 18 Nov 2026 15:31:17 +0100
+Message-ID: <20261118150310.621189232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,58 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 73337f1ac1379e31cc37868e5a61e4202f095a88 ]
+[ Upstream commit 1b75f038e5f71ed32ce6593b5763f9776ec58a25 ]
 
-read_coredump_req() gets the leftover wrong twice.
+Coverity report INTEGER_OVERFLOW (tainted_data_return ->
+cast_underflow -> overflow) in pca9532_getled().
+pca9532_getled() stored the return value of i2c_smbus_read_byte_data()
+into a char and used it directly to compute the LED state without
+checking for an error. i2c_smbus_read_byte_data() returns a negative
+error code on failure. On an I2C read error the negative value was
+assigned to an unsigned type, triggering an integer underflow/overflow,
+and a meaningless LED state was returned to the caller.
 
-It takes the absolute difference of the two sizes, so a test binary that
-knows a larger struct coredump_req than the kernel sends tries to discard
-bytes that were never sent. And it hands recv() sizeof(buffer) instead of
-the number of bytes it wants. So MSG_WAITALL waits for a whole page.
-Either one blocks until the kernel closes the socket. Which it won't
-because it is waiting for the coredump ack...
+Read the value into an int, check for the error, and fall back to
+PCA9532_OFF while emitting a warning when the read fails.
 
-It's benign today because struct coredump_req hasn't grown. But let's fix
-it for the future. Compute the leftover as what the kernel sent beyond
-what was consumed.
-
-Fixes: 59cd658eaf40 ("selftests/coredump: add coredump server selftests")
-Link: https://patch.msgid.link/20260820-work-coredump-sparse-v2-4-ba32dd718c51@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 28c5fe99016d ("leds: pca9532: Extend pca9532 device tree support")
+Assisted-by: VeroCoder:vero-1 [cli]
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260727-led-fix-v1-1-d635c5037109@nxp.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/coredump/coredump_test_helpers.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/leds/leds-pca9532.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/coredump/coredump_test_helpers.c b/tools/testing/selftests/coredump/coredump_test_helpers.c
-index 2a20faf9cb0ad..524fa5370593a 100644
---- a/tools/testing/selftests/coredump/coredump_test_helpers.c
-+++ b/tools/testing/selftests/coredump/coredump_test_helpers.c
-@@ -235,10 +235,10 @@ bool read_coredump_req(int fd, struct coredump_req *req)
- 	fprintf(stderr, "Read coredump request with size %u and mask 0x%llx\n",
- 		req->size, (unsigned long long)req->mask);
+diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
+index b2e081c8f1393..1133fa348e246 100644
+--- a/drivers/leds/leds-pca9532.c
++++ b/drivers/leds/leds-pca9532.c
+@@ -298,12 +298,15 @@ static enum pca9532_state pca9532_getled(struct pca9532_led *led)
+ 	struct i2c_client *client = led->client;
+ 	struct pca9532_data *data = i2c_get_clientdata(client);
+ 	u8 maxleds = data->chip_info->num_leds;
+-	char reg;
+-	enum pca9532_state ret;
++	int reg;
++	enum pca9532_state ret = PCA9532_OFF;
  
--	if (user_size > kernel_size)
--		remaining_size = user_size - kernel_size;
--	else
-+	if (kernel_size > user_size)
- 		remaining_size = kernel_size - user_size;
+ 	mutex_lock(&data->update_lock);
+ 	reg = i2c_smbus_read_byte_data(client, LED_REG(maxleds, led->id));
+-	ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
++	if (reg >= 0)
++		ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
 +	else
-+		remaining_size = 0;
- 
- 	if (PAGE_SIZE <= remaining_size)
- 		return false;
-@@ -250,7 +250,7 @@ bool read_coredump_req(int fd, struct coredump_req *req)
- 	if (remaining_size) {
- 		char buffer[PAGE_SIZE];
- 
--		ret = recv(fd, buffer, sizeof(buffer), MSG_WAITALL);
-+		ret = recv(fd, buffer, remaining_size, MSG_WAITALL);
- 		if (ret != remaining_size)
- 			return false;
- 		fprintf(stderr, "Discarded %zu bytes of data after coredump request\n", remaining_size);
++		dev_warn(&client->dev, "failed to read LED register: %d\n", reg);
+ 	mutex_unlock(&data->update_lock);
+ 	return ret;
+ }
 -- 
 2.53.0
 
