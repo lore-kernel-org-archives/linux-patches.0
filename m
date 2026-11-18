@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034336;
-	b=BjhTXEArU4KvARLBLh1S0YhsFGZ+eLsxenWAzZdhjPH2rYGQdJi7GGcZNee6ER0vnxJf
-	 9cHTd+FlkKEI2bNXgf9TTRoOhSzTRm4E4ShOwRRm4qvsN9+ZAkgJ1Rt6+GQ/h9lSVi0Uj
-	 P8DEZlbIw4xVMdSDRpUPN4SQbDmvAgrAw185OcnOnPSWrmZBImEeWGB/tMQFJkSdpNglE
-	 xZFFKuSDXKOPJ+S/zYJj85GI0tK0ybQtKag4o4pu2c67DfNEhclR/nrhqQjRHBDBlPSbw
-	 K5UB+CDgyv8pfO9T20LK7nRh43tHx96Rxo8uom8jZDcN0cilEPJk6EK44ZD2tzlvgPg==
+	t=1795034339;
+	b=J9ULuHHPXOqBopQZlLixJ3V6jIl0pQc1jNSurFFD+lCDp23vMW33MIZa8Rbf/x2dc81A
+	 9ayjXioSa1kyPaXsHKWAHMZWQ1eI51Ha6GtoIVmn0tSqQZ0nSCl7BT0TOSBciQMe9ULoz
+	 NmPanAcQU+b4JEqh7uh+mTqpKPvA6j4b8X3kKPXhxUdBWL0E8FeCcXJ5HT1g7ZRkQPuP8
+	 gHWM4fPU+XdGTmdmzIgGFl3Hu+eWvxRUWvYwfZVpdNhyG8IcTXUhMQnQrhNKP6DtSDYMn
+	 yTKJIHx5vHPLFbart5+/aQCEbtcvbBOA36201WSkdBewKZCt1m8ymTns49vMcUH9zdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034336;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034339;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IJfcLJng9sMWOmKqF4gY6AZwjrsgbNaG2WTHO5ceVro=;
-	b=1YBlp0RIZMStGPCNWiYHPGH08dPOwh4Z65q2JyXA1EOW/2A+InKEDEbHTNH5tucTdlbH
-	 goNFYl1nKjMF0karqasMw/QqWVUIHG9iC3u0k2Qs9VM9ESMDhDwVKRz4VR+5rpuaPaSHw
-	 n0CdVxT889q31IqgM2ANWk6gZ6V+LSRPOb5POzZjir0tuacXj4EY6adva6qEe22C/RVFa
-	 CfjcFt8tEa6n30HkO4ZY+BRFhRyj5Xoe/+4vEdOzJu+n68gPk0tMHloutUSWATMmujcba
-	 7L6aZHoYtGR/OJbSxtkk13N35wzC35Jyhky/YkNMRhz4dblzMkX4Vo/TDv1fvXryzXg==
+	bh=BzlKmj7GZSuUAPDvq5NgQzPxnM0v3PaaXFp1QX09Dag=;
+	b=zZAhdOn+xQZYFiI570zobRwPC2uho6xUWkoZJ7u6zz3+yHWhEV+8DSNjmbxRxsZyLnBm
+	 WlMm1sWNgIcIyFFLNYn9315SQfpnLwPdYYzO5bSEiflKPrfgXmEL5cGawE2K7z/qFrG9l
+	 8B2ZiyJEZ5d2GHYsyPo73XR1D4Ii4w12b7cNr5vHwN+VajpbnuwNM82nglWEZDQEMJ0Wr
+	 8t2Nu0VEOeUd8jQ0JDHb43RXr2d7PB8K0JlURaTxhpONY/xLZ+DGFjtV9JXqnMvMKLKZg
+	 otVIEnobAPhyIe6xkKP0AcD28yiRD+3zFn50Shg71VMSMDw8sXynbJyjpeJt4AxMM5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yfq6IM08;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6X6Y206;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D8606A31C;
-	Wed, 18 Nov 2026 20:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845A4606A320;
+	Wed, 18 Nov 2026 20:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yfq6IM08
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFBA01F000C4;
-	Wed, 18 Nov 2026 20:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6X6Y206
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CC61F000C4;
+	Wed, 18 Nov 2026 20:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034336;
-	bh=IJfcLJng9sMWOmKqF4gY6AZwjrsgbNaG2WTHO5ceVro=;
+	s=korg; t=1795034339;
+	bh=BzlKmj7GZSuUAPDvq5NgQzPxnM0v3PaaXFp1QX09Dag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yfq6IM08ot2V6hYOohdSdknTY5f4FiccNCRs62UFnvPxBJy72msmUiMkQkYG6/031
-	 32X4d44WjhiIsusU5JNCTlGDuY5EMQQwziCWSr6xHLiLi6KvI/onia3BonCgFKVrgn
-	 1OBIjrMzrgWYBAseEl+aeUTI1jg4CE00L2CjNIF4=
+	b=l6X6Y206IKGOj0GSh6W+7NwtQ9UhfOIsHSYQBDxsIddnJqC0zPrle75pIGOdD/DtM
+	 hEmTZWcECi6yp5M+KY/2OvCXrjkLeU4O+6FgSmWgIWY4Gk2E8dGSESfoOoVWzOQf6K
+	 c80l/KY+s7LkZ3QFjow2Y+90ve+U5L43EnLXwfIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0292/3318] ksmbd: allow FSCTL_SET_SPARSE without input buffer
-Date: Wed, 18 Nov 2026 15:15:14 +0100
-Message-ID: <20261118150324.378309607@linuxfoundation.org>
+Subject: [PATCH 6.6 0293/3318] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
+Date: Wed, 18 Nov 2026 15:15:15 +0100
+Message-ID: <20261118150324.418596501@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,48 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 86c84cc760080929b7be44bceebe5854957b99da ]
+[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
 
-FSCTL_SET_SPARSE without an input buffer sets a file sparse.  Treat a
-zero-length input buffer as SetSparse=true and keep rejecting truncated
-non-empty buffers.
+smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
+client's CREATE request includes an AllocationSize create context.
+For a stream handle, fp->filp refers to the base file's data fork
+(streams are xattr-backed on the same underlying file, not separate
+files), so this pre-allocates storage on the base file's actual data
+instead of doing anything meaningful for the stream -- fallocate has
+no applicability to an xattr-backed stream at all.
 
+Skip the fallocate call for stream handles.
+
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 07cd069d2ec47..60d13595025d1 100644
+index 60d13595025d1..58d2113cd44b2 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -8548,15 +8548,21 @@ int smb2_ioctl(struct ksmbd_work *work)
- 				rsp);
- 		break;
- 	case FSCTL_SET_SPARSE:
--		if (in_buf_len < sizeof(struct file_sparse)) {
-+	{
-+		struct file_sparse sparse = {0};
-+
-+		if (in_buf_len && in_buf_len < sizeof(struct file_sparse)) {
- 			ret = -EINVAL;
- 			goto out;
+@@ -3606,13 +3606,22 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "request smb2 create allocate size : %llu\n",
+ 				    alloc_size);
+-			smb_break_all_levII_oplock(work, fp, 1);
+-			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
+-					    alloc_size);
+-			if (err < 0)
+-				ksmbd_debug(SMB,
+-					    "vfs_fallocate is failed : %d\n",
+-					    err);
++			/*
++			 * fp->filp is the base file's data fork for a stream
++			 * handle (streams are xattr-backed on the same
++			 * underlying file) -- fallocate has no meaning for a
++			 * stream and would otherwise pre-allocate storage on
++			 * the base file's data instead.
++			 */
++			if (!ksmbd_stream_fd(fp)) {
++				smb_break_all_levII_oplock(work, fp, 1);
++				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
++						    alloc_size);
++				if (err < 0)
++					ksmbd_debug(SMB,
++						    "vfs_fallocate is failed : %d\n",
++						    err);
++			}
  		}
  
--		ret = fsctl_set_sparse(work, id, (struct file_sparse *)buffer);
-+		*(u8 *)&sparse = 1;
-+		ret = fsctl_set_sparse(work, id, in_buf_len ?
-+				       (struct file_sparse *)buffer : &sparse);
- 		if (ret < 0)
- 			goto out;
- 		break;
-+	}
- 	case FSCTL_SET_ZERO_DATA:
- 	{
- 		struct file_zero_data_information *zero_data;
+ 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
 -- 
 2.53.0
 
