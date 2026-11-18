@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016353;
-	b=4XJYED0NjXT/dHWSkXGWz/b6Z86xuh1ywFU92vJatDQLeZUHa+AJmUlNoziiBkDHYQ+e
-	 EEvX1zGCwZYqsXAqDEvApIp+XETCwNYdFAnf32RiMRxua61i0eRh12Vv3/6xGy3T7oEpV
-	 xB4CaeNOuvh88I6Fq+xQSEeuHOVgClmOhGmMh1mg1DJ7ABktOPADCOAUppSPDoAbJtDoc
-	 AO8cw5COly45Q0RzqpCImFGt3ICyjbaO10JVSyQ/PcgKAX2dTNa8aTsFzr8BW9sa5/SPc
-	 zg0aArgEEYJ+iWWZlP71zVjlotbTL8Cbg2bY6ECc/g/TqujxIt7nP7ZqAOTnPhziiPw==
+	t=1795016356;
+	b=p/YPmWIAS8mcqtn9rHZoKnZ1q1fCbmR67SJs80KcgayXdS1/RvtQFEf1BmxtQdZrwc1Q
+	 dVdQCYoh8dsD0y9nXLR6ZvmzrL2gbMsK4bSEO58YE+FQcJGEjm/wFzIPAwgxiDfPgpPoH
+	 yptcOLXFxi8JX6EZeQtNk4HftTXiCqIZKVhoCWU7OAGZ+r0El65g7wOcMUX2y5HF53Vug
+	 Hxgr2GQRvJ5aeY9UC9ekOQPyNuCcGk89iQ3l184qZ9TEqsNDxqcMUFFjN26GqimF3+G9D
+	 erkRTqm8m4sUWF43Qvu8MVJKfYLV2GH/kZ35upRxMAXKbJnJunbcBZOghIJHPSJ0B5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016356;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wSf2ALq2pc6b2LyvOALsQVsIG/91c/TevBuSsERWvxk=;
-	b=4PBTcJu3HzCxPQIvIWvoNZezkH/5U9Y9bZrFzBKt7Q5IPd5HIO0g6n9CNBKGlE/Zrdl7
-	 u4jxvTuqgXr8K/0X9U2wyomS8nUGh0O9OmXvxSjbhLBnaeBfazMiRciu+OEkPva+RIqXp
-	 bLNC14fD2WGinTOuFuIoU/ibMLIxS8UUiakY0+Fx8Iu/mUu5lJNvU4rYKvLUh3qjVq5qF
-	 KDuDCof2w49FiqWfg05Hd2lzsZfAJnl4uvIvyx99SY3B6cFAa7CKEBTVJzQG/7WS0c4ZR
-	 qWp3g7S4IVO0LLO6/EhwXeT5UlE7KdtQms9W5tCxgtsI+MT8Z6MaCcj1CtClpqI/Bmw==
+	bh=M2eabZMAzhMdiryLpIY1TIl93LsEG0dN9mbgkQD6mHM=;
+	b=q1CQzyZaRtA2aRcSqoQP8fQ+Fx22rXjf3FCMsFQL/nkVEgk5imnOjdBZWTsqLtp3mEdt
+	 Rzk7gUdtQcqiyp7DTsStCRuowpMWGsS13AxV5hXjGXpV/gZcobg6/8KBFt4G8Zi3FeuED
+	 IGtQyxoHngerp5KZtfUwmM8l7EtCk74oOZ49QJFcDS3XXikz4sqEFpzpjL8ZhjIy/BURG
+	 RF7mYYoTuqIUSFRVaC0asLJvMdv4qlTg3M4+rVhfkZvhh/9nzFUkaLkzVRWB4g2KBWgUr
+	 n/HVSqcPGH8SY+o6DaXSNbJqa3X3izrV1yw4XnAfq2a0ETzwA+sSH1tAvVjO9kc1ADg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JldU+v4d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4w2khOu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B7B60A260F;
-	Wed, 18 Nov 2026 15:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC97F606A333;
+	Wed, 18 Nov 2026 15:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JldU+v4d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5201F000C4;
-	Wed, 18 Nov 2026 15:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E4w2khOu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FB81F000C4;
+	Wed, 18 Nov 2026 15:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016353;
-	bh=wSf2ALq2pc6b2LyvOALsQVsIG/91c/TevBuSsERWvxk=;
+	s=korg; t=1795016356;
+	bh=M2eabZMAzhMdiryLpIY1TIl93LsEG0dN9mbgkQD6mHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JldU+v4dppeo9q/7fNbUlvsb25eVQFf1iZhMQm8mNJsCuQ07uF+zJXY+pn6zctMyl
-	 Vg11toc4zr22XrtXcMfvguMNjeQgRu3GxttX3yzzgU9mfr6HVCrzyry0+L02hyW4cn
-	 D/4S3tk6YcbPNNIEkWqmNeLKtgkyUpmGywSVbFYA=
+	b=E4w2khOudbZ4x5ya3mo5GU4pgfunxKAZzKAU1QqZcFc7rBxWnyhCWM4BYMj5LPkez
+	 rChtStcFrys8Cf12f+R8RElt5w3myuy+bQ38exgcZ5kCz9p/0lnXspbOTB14uhnPvv
+	 HtMZx4983wm/AtZQemAhHFhsl0RYJjXjAWG1iUIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Krause <mileskrause5200@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Richard Cheng <icheng@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0472/2651] memory: emif: fix device_node reference leak on np_ddr
-Date: Wed, 18 Nov 2026 15:28:32 +0100
-Message-ID: <20261118150304.781786646@linuxfoundation.org>
+Subject: [PATCH 7.3 0499/2651] cxl/hdm: Reject switch decoder interleave ways that overflow targets
+Date: Wed, 18 Nov 2026 15:28:59 +0100
+Message-ID: <20261118150305.732444267@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,62 +71,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miles Krause <mileskrause5200@gmail.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 314ef67d673284d4c070455bd62d332f6d0f8634 ]
+[ Upstream commit 3696326ca14cf018788d64232a068fdf26b1ff31 ]
 
-of_get_memory_device_details() takes a reference on the DDR device
-node via of_parse_phandle() and stores it in emif->np_ddr for later
-use, but drops that reference without calling of_node_put() on two
-error paths: the devm_kzalloc() allocation-failure check and the
-is_dev_data_valid() check. Both return NULL immediately, leaking the
-node reference each time either failure triggers.
+Switch decoder enumeration validates that the interleave ways encoding
+is legal, but not that the resulting number of ways fits the available
+targets. This can overrun the target array (target_list.target_id[])
+during enumeration of 12 or 16 way interleaves.
 
-The same reference is also never released on the success path: it is
-kept for the life of the bound device (compared against a later
-instance's np_ddr in the duplicate-DDR-geometry check) but
-emif_remove() never calls of_node_put() on it, leaking it every time
-an EMIF device unbinds. of_node_put() on a NULL pointer is a no-op, so
-this is also safe for the non-DT get_device_details() path, where
-np_ddr is left NULL by devm_kzalloc().
+Bound the target count where it is established rather than at each use.
+Reject an HDM capability whose reported target count is zero or exceeds
+the target list register capacity, and reject a zero target switch
+decoder allocation in cxl_switch_decoder_init(). Enumeration is then
+left with a single check: reject a decoder whose interleave ways exceed
+the targets it has.
 
-Fixes: e6b42eb6a66c ("memory: emif: add device tree support to emif driver")
-Signed-off-by: Miles Krause <mileskrause5200@gmail.com>
-Link: https://patch.msgid.link/20260909-master-v1-1-8800f5647ab2@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Add a clarifying comment that target_count is a direct count, not
+0-based like decoder_count.
+
+Link: https://sashiko.dev/#/patchset/20260711180755.1779002-1-alison.schofield@intel.com?part=1
+Fixes: d17d0540a0db ("cxl/core/hdm: Add CXL standard decoder enumeration to the core")
+Tested-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Link: https://patch.msgid.link/af094094813d7f51d86cbf608936270b7d85526e.1786143520.git.alison.schofield@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/emif.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/cxl/core/hdm.c  | 24 ++++++++++++++++++++++++
+ drivers/cxl/core/port.c |  2 +-
+ drivers/cxl/cxl.h       |  2 ++
+ 3 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/memory/emif.c b/drivers/memory/emif.c
-index 2fadad0666b1f..44ccc25618354 100644
---- a/drivers/memory/emif.c
-+++ b/drivers/memory/emif.c
-@@ -922,6 +922,7 @@ static struct emif_data *of_get_memory_device_details(
- 	if (!emif || !pd || !dev_info) {
- 		dev_err(dev, "%s: Out of memory!!\n",
- 			__func__);
-+		of_node_put(np_ddr);
- 		goto error;
- 	}
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index 0c80b76a5f9b4..c394b3d54d362 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -76,6 +76,8 @@ static void parse_hdm_decoder_caps(struct cxl_hdm *cxlhdm)
  
-@@ -946,6 +947,7 @@ static struct emif_data *of_get_memory_device_details(
- 			pd->device_info->io_width, pd->phy_type, pd->ip_rev,
- 			emif->dev)) {
- 		dev_err(dev, "%s: invalid device data!!\n", __func__);
-+		of_node_put(np_ddr);
- 		goto error;
- 	}
- 	/*
-@@ -1140,6 +1142,7 @@ static void emif_remove(struct platform_device *pdev)
- 	struct emif_data *emif = platform_get_drvdata(pdev);
+ 	hdm_cap = readl(cxlhdm->regs.hdm_decoder + CXL_HDM_DECODER_CAP_OFFSET);
+ 	cxlhdm->decoder_count = cxl_hdm_decoder_count(hdm_cap);
++
++	/* target_count is a direct count (1h..8h), not 0-based like decoder_count */
+ 	cxlhdm->target_count =
+ 		FIELD_GET(CXL_HDM_DECODER_TARGET_COUNT_MASK, hdm_cap);
+ 	if (FIELD_GET(CXL_HDM_DECODER_INTERLEAVE_11_8, hdm_cap))
+@@ -1084,6 +1086,16 @@ static int init_hdm_decoder(struct cxl_port *port, struct cxl_decoder *cxld,
+ 		cxld->interleave_ways, cxld->interleave_granularity);
  
- 	emif_debugfs_exit(emif);
-+	of_node_put(emif->np_ddr);
- }
+ 	if (!cxled) {
++		struct cxl_switch_decoder *cxlsd = to_cxl_switch_decoder(&cxld->dev);
++
++		if (cxld->interleave_ways > cxlsd->nr_targets) {
++			dev_err(&port->dev,
++				"decoder%d.%d: interleave ways: %d exceeds targets: %d\n",
++				port->id, cxld->id, cxld->interleave_ways,
++				cxlsd->nr_targets);
++			return -ENXIO;
++		}
++
+ 		lo = readl(hdm + CXL_HDM_DECODER0_TL_LOW(which));
+ 		hi = readl(hdm + CXL_HDM_DECODER0_TL_HIGH(which));
+ 		target_list.value = (hi << 32) + lo;
+@@ -1161,6 +1173,18 @@ static int devm_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm,
+ 	int i;
+ 	u64 dpa_base = 0;
  
- static void emif_shutdown(struct platform_device *pdev)
++	/*
++	 * Per CXL 4.0 8.2.4.20.1 Target Count is the number of target ports
++	 * per decoder, max 8. Endpoint decoders have no targets.
++	 */
++	if (!is_cxl_endpoint(port) &&
++	    (cxlhdm->target_count < 1 ||
++	     cxlhdm->target_count > CXL_HDM_DECODER0_TL_TARGETS)) {
++		dev_err(&port->dev, "Invalid decoder target count: %u\n",
++			cxlhdm->target_count);
++		return -ENXIO;
++	}
++
+ 	cxl_settle_decoders(cxlhdm);
+ 
+ 	for (i = 0; i < cxlhdm->decoder_count; i++) {
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index cd9e58d8144f1..25ef2c3e9f5d4 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -2016,7 +2016,7 @@ static int cxl_switch_decoder_init(struct cxl_port *port,
+ 				   struct cxl_switch_decoder *cxlsd,
+ 				   int nr_targets)
+ {
+-	if (nr_targets > CXL_DECODER_MAX_INTERLEAVE)
++	if (nr_targets < 1 || nr_targets > CXL_DECODER_MAX_INTERLEAVE)
+ 		return -EINVAL;
+ 
+ 	cxlsd->nr_targets = nr_targets;
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index cab8ce39f4653..b6853bc8fd818 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -67,6 +67,8 @@ extern const struct nvdimm_security_ops *cxl_security_ops;
+ #define   CXL_HDM_DECODER0_CTRL_HOSTONLY BIT(12)
+ #define CXL_HDM_DECODER0_TL_LOW(i) (0x20 * (i) + 0x24)
+ #define CXL_HDM_DECODER0_TL_HIGH(i) (0x20 * (i) + 0x28)
++/* Target list capacity, i.e. max interleave ways for a non-endpoint decoder */
++#define CXL_HDM_DECODER0_TL_TARGETS 8
+ #define CXL_HDM_DECODER0_SKIP_LOW(i) CXL_HDM_DECODER0_TL_LOW(i)
+ #define CXL_HDM_DECODER0_SKIP_HIGH(i) CXL_HDM_DECODER0_TL_HIGH(i)
+ 
 -- 
 2.53.0
 
