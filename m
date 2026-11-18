@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033072;
-	b=brhuRcER0mM6X3qP2ycZ36waDV16yJF5uyRVEQhbuBu/1paXGnFfW3hpmRp0mlbRFF9M
-	 9MgKKFGTV0dvYoSOefLFrrw2MZ7wXbxvExCQAsjPjVvQWqRJSpoVujaQlP49jaBSph+ND
-	 KROBWikEye6aGXCV1g9rma++LGdYtI8ZsQtQK/K974OKVbtdzMGCAwXQUU5fBDeTtwZ1a
-	 sAQGgO3nez0pUez5GmADQ77VWBZcPVVmNWbeZln0w1aDvivOUx6hWIhtSeqgnmBNsXGaq
-	 uuGGNbLU5+SJUm96BSNNIVM981r+zx3yf6SFPtbVOONKZsiZ5M89bXz8Cic9f/VwZEQ==
+	t=1795033075;
+	b=ynZlZEL6NBb1KOlOEz23INnM/V4lKogPf/5stDo0eYxIzIlW0XGGVzSi16KefEwZARPm
+	 TVUZ8LaCS/2rJ0P/+nffA3pbP0ULCQVy8lFrDKMpG8T3OwBiQgg6S36ceaDN8LlcNbyaq
+	 lnL+Z+OihpzWvr8dz+FtuIglCw06iqNXZz6n/t42z7VZhOYUekOm/Rk/iCMzWOH+RT2a6
+	 9hVe+IZ0dmkxzoBSHfsR4xqdG5V5d1XVh+4T2Bt7zcStaZmulDNqYDwz25ekEHEY5VE5x
+	 3Z1Lc4rJajMMcb2gd0+lHd9X4Y2YXNGYYX2MpyGT6YbqHd0VquNJp7jyRWWBUOyVO9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033072;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bWgfgnySF3ezHtBDQXzoKOp6MWYQ4xjsOovKhZQddRg=;
-	b=KZRpS0OdRHGEO90Q55zxs0uNUQaGICUokzgHqeZRRNn7G/TRhyCcDMMieGzMUC9B6Jzf
-	 Va9B00O8IaeP78gWSwq8rgkG6u2VhR+UTMvVgbvuhPBAKkEW1B73mmr3KSOBsV+91IRpk
-	 T0JyPC/OIvJkI8cruiPBxp3tJE4EV6HESaIEeTjG+dndDdQSt2ZR2xxAs0OA9PtjUPIo+
-	 xVf0UglrxDT3/XxG9i3seWgJyHuhislht1XBGe/svCG1U3St4qOl27MFzzUiuusfvSzrv
-	 Kgqw2DoC0J2Pqu3/wywjxT1k/PN48j4QigMfhUOFSaEGtp3OYemILwhE0M14nzaox0A==
+	bh=/nT1xai0NbAM9okUl+jF+j+D+HbQWLfR9/nPqOD29F4=;
+	b=jjscnF6FGawnZl8xFB3O/Uczw+k0+RCAB9ETCa20xG+lVhYYpMAYQ/DhMcr9xLlB6+4Z
+	 k35cU81jVhM9vlFAfa5lDxgsxbAn0JaGOPs5fbTdSIiJLGm2wgpsjffz4j5wVuEwS9hoW
+	 E5Nbqv/SCIj6Pua54sY9BY5vgDUNeBbQnxFHPjpzlJVII6W/dwedpB4BzTXYubYnGAlpf
+	 JMueeM4eiV98AOTbdU2TUIZAEZVUJXyXgih/FUfe5cGJbYE7YeyUUpN7UbmGOoe7/If0A
+	 x5IBXKBWARqEj8/zPP3ibIanBx62NrFF389eNdFTGakAoZw0PbHVraa+Kk1bT4uMi3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BvkiYDe/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YmamVj1y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391F1606A325;
-	Wed, 18 Nov 2026 20:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AD3606A320;
+	Wed, 18 Nov 2026 20:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BvkiYDe/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955D21F000C5;
-	Wed, 18 Nov 2026 20:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YmamVj1y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAF51F000C4;
+	Wed, 18 Nov 2026 20:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033072;
-	bh=bWgfgnySF3ezHtBDQXzoKOp6MWYQ4xjsOovKhZQddRg=;
+	s=korg; t=1795033074;
+	bh=/nT1xai0NbAM9okUl+jF+j+D+HbQWLfR9/nPqOD29F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BvkiYDe/yG0ofv6EYWHoVry6Lu5vy3oiynRT59E7gOGe8L2+ktrJlK9Ac50homA0B
-	 tnsVOqOiGBs+nHABEaToybfxny14mpdB09MacHJPW0AlsOPbnb1DXieswaahU+8NDq
-	 A3AGrW4VlL+oj2sc/jCAG6w/2V4rMDyGWdPnrEPQ=
+	b=YmamVj1yt3EFyVgM7Fjl3PBspRuD+4FVWvk5ZT34LWW1Z1eZLmiD/ewOEZgIGfpg5
+	 Am3HDvNzA87rpSBqD67BHjRenm0AaEM+0HLTRihfHsbqzWF/Ifrl7Stfmv75mM7crq
+	 IJv/ttU0A/kAXwrItRsGnlU6Os3qy1hBw22yT7p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -48,9 +48,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1636/1756] nvmet-rdma: disable interrupts under rsp_wr_wait_lock
-Date: Wed, 18 Nov 2026 16:02:43 +0100
-Message-ID: <20261118150114.907281463@linuxfoundation.org>
+Subject: [PATCH 6.12 1637/1756] nvmet-rdma: fix double puts after a failed RDMA WRITE
+Date: Wed, 18 Nov 2026 16:02:44 +0100
+Message-ID: <20261118150114.946891045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -74,24 +74,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 14e4e09443ac2b5cd90c1e313ee3c0bdd4928e0d ]
+[ Upstream commit f1dac2a2e75260d1466d9f03ccf0944d6d0449a4 ]
 
-rsp_wr_wait_lock protects the list of commands waiting for room in the
-send queue, and it's taken with plain spin_lock(). But
-nvmet_rdma_queue_response() calls nvmet_rdma_release_rsp() directly if
-ib_post_send() fails, and that processes the wait list. The call chain
-starts in nvmet_req_complete(), which for a block device namespace runs
-from the bio end_io callback, which can be in hard interrupt context.
-An interrupt that completes a command on a CPU holding the lock for the
-same queue spins forever. Lockdep over siw with a null_blk namespace:
+For a read with T10-PI the RDMA WRITE is posted alone and
+nvmet_rdma_write_data_done() posts the SEND once the metadata check
+result is known. By then the request has been completed and its
+references put: __nvmet_req_complete() put ns->ref and the pc_ref, and
+nvmet_req_complete() sq->ref, right after queuing the response. The
+error branch of nvmet_rdma_write_data_done() copies the one from
+nvmet_rdma_read_data_done() and calls nvmet_req_uninit(), which puts
+all three again. A WRITE fails whenever the connection ends with reads
+in flight, which is up to the host. Depending on timing the sq->ref
+count goes to zero early and the queue is freed under the remaining
+completions, or never reaches zero and nvmet_sq_destroy() sleeps
+forever, or percpu_ref_put() dereferences NULL after percpu_ref_exit().
+ns->ref stays too low for good, so disabling the namespace hangs too.
+Reproduced with KASAN over rxe with a test patch forcing the PI path.
 
-  inconsistent {HARDIRQ-ON-W} -> {IN-HARDIRQ-W} usage
+Drop the nvmet_req_uninit(). The branch still releases the RDMA context
+and the response, which is all the request owns at that point.
 
-Use spin_lock_irqsave() for both takers. The processing loop still
-drops the lock, and restores the caller's interrupt state, around
-nvmet_rdma_execute_command().
-
-Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
+Fixes: b09160c3996c ("nvmet-rdma: add metadata/T10-PI support")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
@@ -100,64 +103,25 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/nvme/target/rdma.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 4c16cc9aaaa00..9a336cee93a4f 100644
+index 9a336cee93a4f..7e715d0436f8b 100644
 --- a/drivers/nvme/target/rdma.c
 +++ b/drivers/nvme/target/rdma.c
-@@ -513,7 +513,9 @@ static int nvmet_rdma_post_recv(struct nvmet_rdma_device *ndev,
+@@ -803,7 +803,10 @@ static void nvmet_rdma_write_data_done(struct ib_cq *cq, struct ib_wc *wc)
  
- static void nvmet_rdma_process_wr_wait_list(struct nvmet_rdma_queue *queue)
- {
--	spin_lock(&queue->rsp_wr_wait_lock);
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&queue->rsp_wr_wait_lock, flags);
- 	while (!list_empty(&queue->rsp_wr_wait_list)) {
- 		struct nvmet_rdma_rsp *rsp;
- 		bool ret;
-@@ -522,16 +524,16 @@ static void nvmet_rdma_process_wr_wait_list(struct nvmet_rdma_queue *queue)
- 				struct nvmet_rdma_rsp, wait_list);
- 		list_del(&rsp->wait_list);
- 
--		spin_unlock(&queue->rsp_wr_wait_lock);
-+		spin_unlock_irqrestore(&queue->rsp_wr_wait_lock, flags);
- 		ret = nvmet_rdma_execute_command(rsp);
--		spin_lock(&queue->rsp_wr_wait_lock);
-+		spin_lock_irqsave(&queue->rsp_wr_wait_lock, flags);
- 
- 		if (!ret) {
- 			list_add(&rsp->wait_list, &queue->rsp_wr_wait_list);
- 			break;
- 		}
- 	}
--	spin_unlock(&queue->rsp_wr_wait_lock);
-+	spin_unlock_irqrestore(&queue->rsp_wr_wait_lock, flags);
- }
- 
- static u16 nvmet_rdma_check_pi_status(struct ib_mr *sig_mr)
-@@ -977,6 +979,7 @@ static bool nvmet_rdma_execute_command(struct nvmet_rdma_rsp *rsp)
- static void nvmet_rdma_handle_command(struct nvmet_rdma_queue *queue,
- 		struct nvmet_rdma_rsp *cmd)
- {
-+	unsigned long flags;
- 	u16 status;
- 
- 	ib_dma_sync_single_for_cpu(queue->dev->device,
-@@ -995,9 +998,9 @@ static void nvmet_rdma_handle_command(struct nvmet_rdma_queue *queue,
- 		goto out_err;
- 
- 	if (unlikely(!nvmet_rdma_execute_command(cmd))) {
--		spin_lock(&queue->rsp_wr_wait_lock);
-+		spin_lock_irqsave(&queue->rsp_wr_wait_lock, flags);
- 		list_add_tail(&cmd->wait_list, &queue->rsp_wr_wait_list);
--		spin_unlock(&queue->rsp_wr_wait_lock);
-+		spin_unlock_irqrestore(&queue->rsp_wr_wait_lock, flags);
- 	}
- 
- 	return;
+ 	if (unlikely(wc->status != IB_WC_SUCCESS)) {
+ 		nvmet_rdma_rw_ctx_destroy(rsp);
+-		nvmet_req_uninit(&rsp->req);
++		/*
++		 * Unlike in nvmet_rdma_read_data_done(), the request has been
++		 * completed and its references are put: no nvmet_req_uninit().
++		 */
+ 		nvmet_rdma_release_rsp(rsp);
+ 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
+ 			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
 -- 
 2.53.0
 
