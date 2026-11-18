@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022506;
-	b=Aq5kE6h820WLyIam27Mr6SJxzoHcs7SMjroTV8cniCMUqGK9ZW1zLfsp1YyAR+YLznSI
-	 ueG0QEipmTPaH1wRd8RWh49giG8CbVyuVf1t6wQsjHxcCNWDvzUVqJ5oy3OnLKKNYscp3
-	 ztXcNkrqBHu/dS4jtIiFZDm9Rd/tMKgEH0mmW6VGCBVCf6Lsy8m++kAp3aKOOKVn6Hc2E
-	 ZjvAphylzYH+IdQRFgQyp3Kz5wLoc13Y4pOwKvwR59rzEX8wB0aAh3yu28Vr/jivfv2Bh
-	 3LxyaMqBLsqcQpVEwCRi54ishVjOL2YxOWWmnaswEOl611vcWQ5KCbQEiujdD34xRmA==
+	t=1795022509;
+	b=hmLRLoDHrbXbrdbYSxvjKGod9QxA2tso6C8yShNGu0zQRGkyHfC8Qt4eRWdqXtMTNsDP
+	 8+nhDMzidy63RvDTIVn0wYw3RBxZvPTm5fqrz6jgWeYkOFdxpuI+Dlcv7pO6WI6g1Im9A
+	 4uHWqxzhVtNg19sWG5lHTp/0bs86GfgWf0ppQL+92gRzdw7JsQEjhjf2eerNtIrYv/2EO
+	 Z1YLWGbfV8lNCgf86dUHJv+5qkQZnZdX9G8y65m7UnR9boSvy5jXQvftwPXV4Nj+BXJBK
+	 /ZjAZsPp8Br5k5WaAzWClPei8RGb8EKiYJrh6Gxmc6+2bEUPVQvWhNvshtjS/Qr6SjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=eTdshrLFSH1xxygI4gW1CQ7bMu/6lHXjK+yRePvciIg=;
-	b=V6RfMkdwFWFiHpWyudunB811eeMtL5K8zJA0uf6IAky1WJUST4AKSvMMJ1qI4c7t9IqZ
-	 5ln7Si1IcvLs9h2set8CitVWmA1NpuH+X2XnOwnRsA3HRuCj5pSABvoSjjh4FbRPHZ7qf
-	 oeWcPtpp6QyZfrD7YrOaDdEoFDw1dVbv7abFFzKI+1XjGQgCJJBgnLFi8DI69Cmiz0uNQ
-	 NnKFHZakW50LjAkq2ZuPvUSRNZaUciZHpeStO/Ohjns3hN+J/7j18mfRIXuo6E8Jtun9S
-	 bRS40BEFCFARRM9g0U5yqeHnVb0vjjHxu0VrPekRQlQIICcs7MNRUnz6VrygOwUDIcw==
+	bh=PTFSPUrrPWDWRMWl19X1RcDgPKaVRU+xQdJUa6VU9BY=;
+	b=ks7NbAjZSAmNVfoKXBUSsSr0gCxu+90YFlqZii/+gh0P+4CWW/MGSXNwtebmx/NgRZF5
+	 MSVo5TDfFgHaTn4acmUptx7mDDQrpH0OaMA0RMfH84JlXMaDrDhOiDl+vpozckqSKsyKr
+	 ES1K3gUAmsVGaYsD4ekVJq5rbu1xcOpa4z5Pf1qhS586ssX7LuSsiI6Zr6y4v6De6iT8L
+	 IXb9TdpD08dfhElsxf4h1hFp5Rt0M4SP0PvRXQpe1BPEqEv6nM0c1n0G/ZBvd9oRU0Szt
+	 cRSdapqjI+VVQTzjjO3A21U3XPpbadZiWRZCxORfG2IGebukwoMK9i5Sy+D2Otapz8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TiLJLZzi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YalCocOA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59814606A32A;
-	Wed, 18 Nov 2026 17:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5678606A31C;
+	Wed, 18 Nov 2026 17:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TiLJLZzi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBBF1F000C4;
-	Wed, 18 Nov 2026 17:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YalCocOA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF3B1F000C4;
+	Wed, 18 Nov 2026 17:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022505;
-	bh=eTdshrLFSH1xxygI4gW1CQ7bMu/6lHXjK+yRePvciIg=;
+	s=korg; t=1795022508;
+	bh=PTFSPUrrPWDWRMWl19X1RcDgPKaVRU+xQdJUa6VU9BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TiLJLZzi1y+jDGgXmM3AEzQodMoZ1dq0aV0EMkNthgrQi7k8YpZLOLYoFYYn+UKNG
-	 IJG8zMKoXwxp7jfXRFYYuOSLMbYaSMncDwsOMgmZOT9SHt4P1ufLiWZO7CAXiccq41
-	 dK8QC3xHvLkg49f96gkRc3/tTZxBSkBXBqhIMsPo=
+	b=YalCocOARGVzIb574mWGBHgKfiBBbuuV5t+c8AIcXGMwsqPhdntdEpJyVcY9IrCRk
+	 MyWw3FIHb6wtyIFonKXhDGYKPGDNTIwKXg0dFcrm65lH7CCcN/5TQyFSvJZtYc5YPl
+	 7GWdhBfxxVTvfw8bszr0r3NnuFa7veombQRyXu18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Luiz Capitulino <luizcap@redhat.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Jann Horn <jannh@google.com>,
-	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0036/2151] mm/vma: fix expansion of VMA_MIXEDMAP_BIT VMAs
-Date: Wed, 18 Nov 2026 15:29:31 +0100
-Message-ID: <20261118150122.974316232@linuxfoundation.org>
+Subject: [PATCH 6.18 0037/2151] drm/amdgpu: drop the gang leader reference when freeing gang jobs
+Date: Wed, 18 Nov 2026 15:29:32 +0100
+Message-ID: <20261118150123.043374326@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -75,93 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 8146c6478224d8f6395c6b08a19c344a56d79867 ]
+[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
 
-Commit ca3d76b0aa80 ("mm: add merging after mremap resize") combined
-merging with expansion of mremap()'d VMAs, however it also unintentionally
-disallowed the expansion of unmergeable VMAs.
+Every job of a gang except the leader holds a reference to the
+scheduled fence of the leader in job->gang_submit. Only
+amdgpu_job_free(), used for jobs which never ran, drops it, so for every
+gang submission which completes the scheduler fence of the leader, and
+with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
+for the leader only after drm_sched_job_cleanup() cleared the scheduler
+fence, so a leader freed there drops a reference it never took.
 
-Previously it was possible to expand a mixed mapping which mremap() had
-already ensured was a legal expansion.
+On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
+drm_sched_fence is merged into by 60 to 180 objects each time, while
+100 GFX only submissions don't.
 
-This is clearly seen in the mremap() logic, as it checks
-vma_is_fixed_mapping() to determine legality of an expansion rather than
-vma_can_merge().
+Use amdgpu_job_free() for the jobs the scheduler frees too, and check
+for the gang leader there before drm_sched_job_cleanup() clears the
+scheduler fence. As the scheduler clears the entity of the jobs it
+picked up, check for the scheduler fence instead to tell whether the job
+needs cleaning up.
 
-Additionally, copy_vma() allows for a failed merge to result in a new VMA
-being instantiated if MREMAP_MAYMOVE is specified.
+Keep freeing the remaining IBs with amdgpu_job_free_resources() after
+drm_sched_job_cleanup(), so that it frees them with the hardware fence or
+right away and not with the scheduler fence, which nobody signals for
+jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
 
-However, this is not attempted, as a failure in vma_merge_extend() is
-assumed to be an -ENOMEM failure.
+v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
+    free the remaining IBs with the scheduler fence
+v3: drop the comments (Christian)
+v4: free the IBs with amdgpu_job_free_resources() again (Christian)
 
-Since vma_merge_extend() is used exclusively by mremap() to perform a merge
-and/or expansion, resolve the issue by invoking vma_expand() for
-unmergeable VMAs there.
-
-Explicitly assert that the VMA is both non-fixed and a mixed mapping.
-This provides double insurance against broken changes in future.
-
-Note that khugepaged_enter_vma() (which vma_merge_new_range() runs) is
-redundant in this case, as a mixed mapping is not subject to khugepaged.
-
-Also update the VMA userland tests to add a required predicate.
-
-Link: https://lore.kernel.org/20261023-vma-expansion-fix-v1-1-6142baf1f46b@kernel.org
-Fixes: ca3d76b0aa80 ("mm: add merging after mremap resize")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Luiz Capitulino <luizcap@redhat.com>
-Closes: https://lore.kernel.org/all/20261023023106.515365-1-luizcap@redhat.com/
-Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Jakub Matěna <matenajakub@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: replaced newer VMA helpers with equivalent vm_flags checks using the existing is_vm_hugetlb_page() helper ]
+Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
+Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
+Cc: stable@vger.kernel.org
+[ sashal: Adjusted amdgpu_job_free_cb() context for embedded hardware fences instead of separately allocated fences. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vma.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index 0d4f344956642..574585a800fc8 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -1775,12 +1775,28 @@ struct vm_area_struct *vma_merge_extend(struct vma_iterator *vmi,
- 					struct vm_area_struct *vma,
- 					unsigned long delta)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+index ffc720d189007..d013fd68b1b14 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -264,17 +264,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
+ 
+ static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
  {
--	VMG_VMA_STATE(vmg, vmi, vma, vma, vma->vm_end, vma->vm_end + delta);
-+	const bool can_merge = !(vma->vm_flags & (VM_PFNMAP | VM_DONTEXPAND |
-+						  VM_MIXEDMAP)) &&
-+			      !is_vm_hugetlb_page(vma);
-+	const unsigned long start =
-+		can_merge ? vma->vm_end : vma->vm_start;
-+	VMG_VMA_STATE(vmg, vmi, vma, vma, start, vma->vm_end + delta);
- 
--	vmg.next = vma_iter_next_rewind(vmi, NULL);
- 	vmg.middle = NULL; /* We use the VMA to populate VMG fields only. */
- 
--	return vma_merge_new_range(&vmg);
-+	if (can_merge) {
-+		vmg.next = vma_iter_next_rewind(vmi, NULL);
-+		return vma_merge_new_range(&vmg);
-+	}
-+
-+	/* Mixed mappings are permitted to be expanded, not merged. */
-+	VM_WARN_ON_ONCE(vma->vm_flags & (VM_PFNMAP | VM_DONTEXPAND));
-+	VM_WARN_ON_ONCE(!(vma->vm_flags & VM_MIXEDMAP));
-+	vma_prev(vmi); /* Reposition to start of VMA. */
-+	vmg.target = vma;
-+	if (vma_expand(&vmg))
-+		return NULL;
-+	return vma;
+-	struct amdgpu_job *job = to_amdgpu_job(s_job);
+-
+-	drm_sched_job_cleanup(s_job);
+-
+-	amdgpu_sync_free(&job->explicit_sync);
+-
+-	/* only put the hw fence if has embedded fence */
+-	if (!job->hw_fence.base.ops)
+-		kfree(job);
+-	else
+-		dma_fence_put(&job->hw_fence.base);
++	amdgpu_job_free(to_amdgpu_job(s_job));
  }
  
- void unlink_file_vma_batch_init(struct unlink_vma_file_batch *vb)
+ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+@@ -295,13 +285,14 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+ 
+ void amdgpu_job_free(struct amdgpu_job *job)
+ {
+-	if (job->base.entity)
++	if (job->gang_submit != &job->base.s_fence->scheduled)
++		dma_fence_put(job->gang_submit);
++
++	if (job->base.s_fence)
+ 		drm_sched_job_cleanup(&job->base);
+ 
+ 	amdgpu_job_free_resources(job);
+ 	amdgpu_sync_free(&job->explicit_sync);
+-	if (job->gang_submit != &job->base.s_fence->scheduled)
+-		dma_fence_put(job->gang_submit);
+ 
+ 	if (!job->hw_fence.base.ops)
+ 		kfree(job);
 -- 
 2.53.0
 
