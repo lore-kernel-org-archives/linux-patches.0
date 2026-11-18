@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040213;
-	b=QU2y+R+wdzUTKCET/kY4mHv1c6WKG1IFnlBUzxR8A1AaQyVHYWZy+qULBwSo/70l+IjS
-	 7oonuNBiI6NaK8NwMP2aRmIsFlh2rUj1WMClA6QvJYRP2k1KT9Nsudz0Yy3Jvqhq6MVVA
-	 zYJOp0H6OOP07pwKfFjpYOxLcqKGlcoZ4X2PbZi5kzUkU1zpxNPxPbx9ltcgFAk5DClIX
-	 WIdaYpJAxbNzNphkd81hxZ/WVc9XxoKAdNLUhH/yXcCnNsyxYiXLEvEGEkF3aIiU5cpUJ
-	 +1tua7zAXdY/oxUAzcJ30n1MGqc3dwZZNRL16wg/9nbLxtGQspVTnwC+tovyAjrVSzA==
+	t=1795040216;
+	b=0aSK3B8x7GV2pKxPujbZZs8YYvYYLjCiDoyfNegg35hozMIB9aMoN3DjqSvmNVWUNIlV
+	 ahq80I90Oz3v6t+/ykVm5rrR3w6hDKB+MUyukgGu0VtKy8F7z3cVDgUFNwQXUOcpeL+o+
+	 TK1kSLtzK+M+v0MTZFLc7F3w6sf+yBStbfPHaFty+IYtyEQkFPW1ZYXJJr8f3oQCuk816
+	 rZo1o38gCHx77xmvM4IuFNhMyh+f3IcB/usrOkxFpoPkzBv/9F7GjGNmM1RZglsXuY4l0
+	 LFCV2Su0lerXY2E+6n/ITwDrcONr3/5Qn5X6HUEuF04ijsBGkilNMcF8DXnxRAOcwtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040213;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040216;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6qZZNHacPpX1n0BIyZYNftTVWud2yK4Rw168gM3TkpU=;
-	b=dXCOGtEYmDsCE53+dh+zSTl+lRBHwPF5dvc9T+uGZ6XTdBDlqxwlRko+Hak2SA3dzvzH
-	 jOLM4gB6+EJftRb2v6sEc4v51qiMTzZVFJKnl3ERFNXZTXX0s/Un6YXBH9ZUUjJoFSO/U
-	 crnpmilpr7uxgidu8CjnZKs8SDraYoGPCzwUWNcC8fZG5N1fxJgwe7dSw11m2BDB91w/4
-	 ALV2duJtLslba/ltFCamstZ7xMQII8i3cIozMXIk5UmlbZUjF+WX8x0wWcjxMO5c7Q8iY
-	 3ZisWMiG/HsLsP1uI39sqbZarsc4IkCeykbRYrcJ/IyBomqX8Lv4JWnO9ZpWrjXRw7g==
+	bh=mQVPgdrAhxgX9VtTokSCVBYcwfg/V8VJU3CkmLgfPz8=;
+	b=LPBR5hbHq7bP3ieFGsWDgSS+koBIgJ5ot1Q57Nw0ZxIZJsOEARnT7BIHQ5e/RTgQCHPY
+	 J4e4LXr87Cbc91NkWWAG8OHAZxc5s+A7LJVnpi2BnQ15WWfILofBJNZAIY0cyOIahd3XS
+	 IvJPXHgcjXJRFlRGgekaoWN/55wFtSkGc45VnWvdW8CY0TzKguGYhoC+a/dFE3YX5l1rV
+	 tI3zQ+ThK7f5kJ/4Z6GaWzDDgvgyYRFOV/Ni+J+86nzZ5jEP/iaVdO7TNgWlBpGGvZ3bx
+	 jqkwj+P16qTDc4qVBKS+nLMbSclcbDw8fT3cyDyNnmPfxkVE8RFrJDAFGzfIHZ/RC5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vHI/OuiG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xka2MxZP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61783606A325;
-	Wed, 18 Nov 2026 22:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8D3606A320;
+	Wed, 18 Nov 2026 22:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vHI/OuiG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DF51F000C4;
-	Wed, 18 Nov 2026 22:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xka2MxZP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A771F000C4;
+	Wed, 18 Nov 2026 22:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040213;
-	bh=6qZZNHacPpX1n0BIyZYNftTVWud2yK4Rw168gM3TkpU=;
+	s=korg; t=1795040215;
+	bh=mQVPgdrAhxgX9VtTokSCVBYcwfg/V8VJU3CkmLgfPz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vHI/OuiG9WL6PWtyNV0knCJN2wKLdGIei7ZsN3ydn/FcKPhBI+BjSEBT/vC5jFy9z
-	 AhwLRGTD4aMdpICPEETqba9iKgUjixtP6DEwPdqoS0zPiiQL73y4mU867YIcg3U1BC
-	 Bkfy0eno2sae+boSna+dm+4RBb6/x9BoGjJu2UC4=
+	b=Xka2MxZPiETHW3r1lGjL77i7/D5TfruhoQjADe/sIczs4gq4F816b5Q8k3BYm225i
+	 E9x/3disHK2UmIQe/i/KMnABcD2SX+aFfVc/695VMLt0+y6cu+yvnnxj/9sVdtrDr+
+	 DLjQjkFlNR4aypFY5QkKY8NLG8gAxiz5LOpnyTrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2378/3318] arm64: dts: qcom: lemans-ride-common: fix SerDes PHY regulator supplies
-Date: Wed, 18 Nov 2026 15:50:00 +0100
-Message-ID: <20261118150432.885573589@linuxfoundation.org>
+Subject: [PATCH 6.6 2361/3318] ASoC: mediatek: mt8188: mt8188-afe-pcm: Handle runtime resume errors
+Date: Wed, 18 Nov 2026 15:49:43 +0100
+Message-ID: <20261118150432.416727149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,51 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 0d567fb7def9564d15c334ec0fa5f5f6a0114ffa ]
+[ Upstream commit f5f6941d92972ba66829a99999fa825e63da5162 ]
 
-Both SerDes PHY nodes were configured with 'phy-supply = <&vreg_l5a>',
-which was incorrect on two counts: vreg_l5a is not a supply the PHY
-requires, and only one rail was described where the hardware needs two.
+Errors from clock enable and regcache synchronization are currently
+ignored during runtime resume.
+Check the return values from mt8188_afe_enable_reg_rw_clk(),
+regcache_sync(), and mt8188_afe_enable_main_clock(), and abort the
+runtime resume if any of them fails.
+On failure, disable the previously enabled reg_rw clocks and restore
+the regmap to cache-only mode.
 
-The PHY requires vdda-0p9 (vreg_l4a) and vdda-1p2 (vreg_l1c). Replace
-the incorrect phy-supply with these two named properties on both nodes.
-
-Fixes: 5ef26fb8b3ed ("arm64: dts: qcom: sa8775p-ride: enable the SerDes PHY")
-Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-4-c4bc688177dd@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: bf106bf09376 ("ASoC: mediatek: mt8188: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260907120310.135693-6-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 864ad109371ca..8cb23f4f4a20b 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -507,12 +507,16 @@ &qupv3_id_2 {
- };
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+index b2e2eb959aa5f..ae2b21ac604e1 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
+@@ -3009,22 +3009,33 @@ static int mt8188_afe_runtime_resume(struct device *dev)
+ 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
+ 	struct mt8188_afe_private *afe_priv = afe->platform_priv;
+ 	struct arm_smccc_res res;
++	int ret;
  
- &serdes0 {
--	phy-supply = <&vreg_l5a>;
-+	vdda-0p9-supply = <&vreg_l4a>;
-+	vdda-1p2-supply = <&vreg_l1c>;
+ 	arm_smccc_smc(MTK_SIP_AUDIO_CONTROL,
+ 		      MTK_AUDIO_SMC_OP_DOMAIN_SIDEBANDS,
+ 		      0, 0, 0, 0, 0, 0, &res);
+ 
+-	mt8188_afe_enable_reg_rw_clk(afe);
++	ret = mt8188_afe_enable_reg_rw_clk(afe);
++	if (ret)
++		return ret;
+ 
+ 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
+-		goto skip_regmap;
++		return 0;
+ 
+ 	regcache_cache_only(afe->regmap, false);
+-	regcache_sync(afe->regmap);
++	ret = regcache_sync(afe->regmap);
++	if (ret)
++		goto err;
 +
- 	status = "okay";
- };
++	ret = mt8188_afe_enable_main_clock(afe);
++	if (ret)
++		goto err;
  
- &serdes1 {
--	phy-supply = <&vreg_l5a>;
-+	vdda-0p9-supply = <&vreg_l4a>;
-+	vdda-1p2-supply = <&vreg_l1c>;
-+
- 	status = "okay";
- };
+-	mt8188_afe_enable_main_clock(afe);
+-skip_regmap:
+ 	return 0;
++err:
++	mt8188_afe_disable_reg_rw_clk(afe);
++	regcache_cache_only(afe->regmap, true);
++	return ret;
+ }
  
+ static int init_memif_priv_data(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
