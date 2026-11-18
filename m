@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041490;
-	b=eLT+6ZLdeftKx7zpSsRsAeXuyXMHGUhMPcLMoUsIA6j3D9oOqIGwnb4ezQyOxC5TseSg
-	 NR0USoV/dWOom43WXCy9ZVCoIzrZQ8LZGPqonUVw7R7GmZNfiwbE4tbJhjCgvx+UOpykJ
-	 SUBV9yxpa/7bv5oFDfSaE2CCgL1wQXFdLUTS1J3Vl7BuRNUJCv68zRAfprpnf0zSou+vj
-	 rNXswWrg95p5wEmqSYZ9ZZTz8QFpTnnqNTlw8FTao7N/Pfj/bsYoeVN4PQSgRXacNJCAE
-	 46isUvMurMRVyW56gjoXklWP6FnCWM9E/aUpjwEAaAuqjlqZYWOYKd2mdtY9zI5ApXQ==
+	t=1795041493;
+	b=cUXz+DKjRhz0skYTHpNkxZK8M8oKn+EJqJJDYO3ACsugZA6DQO8wJD1zp8X9eceqN7PN
+	 nhttfng5vw+JzcJ6oFbDbbAKObNatpQARkMHJZikB3zbN7fnrHHvd79K8iJ9Pjm4H5D03
+	 FyMn1f8TExFsgJKB4miy3WRSMVvLk3DU3Ttr8wBCoKumyHLcj1YNqA99UGUeugZByq7Bq
+	 +L8gxEBhbF6ZBn+XF64Kn5AYLP1CybxJeEeQd2SUbs8McghUs9tANAj1xA/8dR/3vKKfR
+	 aLIxZHRRtRCyaVnlGnpgpIihd5a5M4ZOciiyjCFfitZJntNF0/8Sm5AfZwwQRicYOpQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JdDv6dL0+Ui/Xikn0ktd0Rj+RBNZoDHW0yarmnT+t2c=;
-	b=mhtgGAX/zHJssq5qKr5eZhp3YqTaYf0xPw1iMh7tkri4PJ570F/bxCVmU+ya/EomR9Nt
-	 D33PFRKw1fVlDytdc4l1CUu/gdQoqJu8otNT8JZBMkzbaiRyw3wdjZlYrYQO4qMdADz7M
-	 gLK5iDoGcREu+D2+eqjfOj2xX6HrUCK7sWfQ19v77R4Vp2KwSiM4WNt/jBx+lxfnK7Lcs
-	 VeD3GYvMb58XM5ZWW7ffdAMRZP3YA6HJx9gFA1gH0e180CNEx9/YLFWDdGYwmjm9pte3K
-	 UgpHuX6mnWJ/9n4u6qbIVIxxdiZ/jedC6vOc/ddE+mKHF6QpGfN9Z92cUMd269m9M0w==
+	bh=6Hy8VWxkCdicaSSGcUq0yvmIDJNKyXwQLyBJdgwrexY=;
+	b=5D5dSn8wS+WiWGu6QUs/XjtXiAEzUCjXwAP158zgR2fKtDffpugMQbO9aKdZYCxkcWEm
+	 tHGHO4o1YjoJkeda4xA1OfJcVAC9Kk7Fu9thnHLBwsLpHFY3b2hiwyj4unyCfPGk3X78K
+	 sY9YXa/KpIVu70vp3NxqIbzZnLKRGs7IHssdhySP8nwE8VQQKOGhAa2+Km/e3aYYth6f7
+	 DhHrbyd93xTfzdSLgbmGzhfd7gVZhEY8XrObn52M1+ZyxRGSKoHenNYV74QzEKELAGh2G
+	 eFZwGVFs3CB9PZrKMjoPRWJ/q4ru3dbuHfJ0W7Y4kjjRCXfdqZ306w9f1dP/uvJAeyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIELXuPo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TlE9AGec;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E7960A2627;
-	Wed, 18 Nov 2026 22:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B43C606A980;
+	Wed, 18 Nov 2026 22:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIELXuPo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BAC1F000C8;
-	Wed, 18 Nov 2026 22:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TlE9AGec
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7961F000C4;
+	Wed, 18 Nov 2026 22:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041490;
-	bh=JdDv6dL0+Ui/Xikn0ktd0Rj+RBNZoDHW0yarmnT+t2c=;
+	s=korg; t=1795041493;
+	bh=6Hy8VWxkCdicaSSGcUq0yvmIDJNKyXwQLyBJdgwrexY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIELXuPoXgzDfUXUGLK3eSRUBmg55ErireO7F4Z/MtmTkDV1wK9a9wt/iWUqMcXlO
-	 pty4G8iabLlJaJq3te6RH/gInPOLun97Rkw6mYP7g5mIWSkYWM9pM1JwUHHRd4t4Al
-	 uSgW5Xyyd7D32pn/Q8UVYFChoAzYlbjvai6guj5I=
+	b=TlE9AGec4JhEW0VwZr78mf/isMNKkVIfrIiKrp/YbNModxjovM6EsrYl+70kRBLRH
+	 DTchtrzhA0/LeTtBZebNJT5E3Pm5q8fJjmUC/PZJ6k+IY77zpmEDf9ph2uN7gJCsD8
+	 P5k1emVn/M6ikEpzoPmdDjIMhaUJlyKcnYXBTIYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2831/3318] ASoC: atmel-i2s: use optional API for muxclk
-Date: Wed, 18 Nov 2026 15:57:33 +0100
-Message-ID: <20261118150445.562116687@linuxfoundation.org>
+Subject: [PATCH 6.6 2832/3318] ASoC: atmel-i2s: use optional API for gclk
+Date: Wed, 18 Nov 2026 15:57:34 +0100
+Message-ID: <20261118150445.590406632@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,61 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit be952abd69c1f2c845e42e72147751e4c910cd81 ]
+[ Upstream commit b431a055fb7688c0d3725fa3c55aeef852991178 ]
 
-The muxclk is an optional clock according to the device tree
-binding.
+The gclk is an optional clock according to the device tree binding.
 
-Use devm_clk_get_optional() to handle the optional muxclk instead of
-handling the missing clock explicitly.
-
-When muxclk is not available, devm_clk_get_optional() returns NULL.
-clk_set_parent() returns 0 when passed NULL, preserving the existing
-behavior.
+Use devm_clk_get_optional() to handle the optional gclk directly.
 
 Unlike the existing code, errors other than -EPROBE_DEFER are now
 returned instead of being silently ignored.
 
-Fixes: b543e467d1a9 ("ASoC: atmel-i2s: add driver for the new Atmel I2S controller")
+Fixes: 73ad0df57290 ("ASoC: atmel-i2s: Remove unnecessary audio PLL clock (aclk)")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261002043856.97295-3-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20261002043856.97295-4-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/atmel/atmel-i2s.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ sound/soc/atmel/atmel-i2s.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/sound/soc/atmel/atmel-i2s.c b/sound/soc/atmel/atmel-i2s.c
-index e26d6cf864dec..d6ac5a2d067b6 100644
+index d6ac5a2d067b6..3b9aba680d68c 100644
 --- a/sound/soc/atmel/atmel-i2s.c
 +++ b/sound/soc/atmel/atmel-i2s.c
-@@ -585,21 +585,15 @@ static int atmel_i2s_sama5d2_mck_init(struct atmel_i2s_dev *dev,
- 				      struct device_node *np)
- {
- 	struct clk *muxclk;
--	int err;
+@@ -666,13 +666,10 @@ static int atmel_i2s_probe(struct platform_device *pdev)
+ 	}
  
- 	if (!dev->gclk)
- 		return 0;
- 
--	/* muxclk is optional, so we return error for probe defer only */
--	muxclk = devm_clk_get(dev->dev, "muxclk");
--	if (IS_ERR(muxclk)) {
--		err = PTR_ERR(muxclk);
--		if (err == -EPROBE_DEFER)
+ 	/* Get audio clock to generate the I2S Master Clock (I2S_MCK) */
+-	dev->gclk = devm_clk_get(&pdev->dev, "gclk");
+-	if (IS_ERR(dev->gclk)) {
+-		if (PTR_ERR(dev->gclk) == -EPROBE_DEFER)
 -			return -EPROBE_DEFER;
--		dev_dbg(dev->dev,
--			"failed to get the I2S clock control: %d\n", err);
--		return 0;
+-		/* Master Mode not supported */
+-		dev->gclk = NULL;
 -	}
-+	/* muxclk is optional */
-+	muxclk = devm_clk_get_optional(dev->dev, "muxclk");
-+	if (IS_ERR(muxclk))
-+		return dev_err_probe(dev->dev, PTR_ERR(muxclk),
-+				     "failed to get the I2S clock control\n");
- 
- 	return clk_set_parent(muxclk, dev->gclk);
- }
++	dev->gclk = devm_clk_get_optional(&pdev->dev, "gclk");
++	if (IS_ERR(dev->gclk))
++		return PTR_ERR(dev->gclk);
++
+ 	dev->dev = &pdev->dev;
+ 	dev->regmap = regmap;
+ 	platform_set_drvdata(pdev, dev);
 -- 
 2.53.0
 
