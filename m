@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060041;
-	b=UfAWkspIsIza9FMExDZEQoyQZc4ks80gNpAp+WhAJ7Q8qbdd6kkk6njpmmwnsTolUwVp
-	 Lp8+1yv0qMQ0/5Oy0HiF+oRgPUp70ipGrniqNhf4bkQNZ4H0HaGGyvQl7fVem0+X2vOMZ
-	 S4D1e3VX6+XxCOeDXofslnkwbdQMpag00K2oLvQTrZ9WafCkm3A8qG3NAOH4/cPspVWp8
-	 JtbzNmOxpgun29bwFCSMV1VhOtqXmsAg/Tf/PcHWRJku7/lUmw0vaszwGutiSnQTO7wWL
-	 MvfMPFCIZluECZT8bN6DbgvfM2a/Zwnr+3vKkPQlFlqljpBY6EMO4QgPIWoNS6sPnCA==
+	t=1795060044;
+	b=0nhAORHPM2NXK9PuKVZMkHJDcZnY33vohwBibNej1sKZ+jEspnk2qzb6+jOXQ4jFS5Px
+	 KMDs8UZz+RflpIsD6UGoApVL+4pCx/a+LAdO1Q5Y4K7dVDhPchjQ4f2+Qmuy3BIp+6psn
+	 2nnRyRvFCflMM1sm3d7iXW/S9NBAa9SRVyVup8GMIn9l9sZbq20fXDbyM07uK1Vn6ymku
+	 KInNh6CbSt3h9SIdMZ63EXjCK7tyQHPMLdiU0Ed50SqKq/tWpOIxMzR2PuzZq3Lbjz9A/
+	 L+BWeHRDftJOTN+KkkgUY59Y5G9E91xBY9op5ku5t0rFf2nRoIFql8WMasAWMlYGWew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=++WYrMx0xI6W7KpXdEZWKy0x6ypcqxwmvovIOiTZpgo=;
-	b=NGqIw8DYeJ3qJ+GdUmJetkfiAqBHkoHOk1v6yaNJhNh5jC7sl+/dWsbGPcY3QaRmVGNu
-	 u6NkN0ef/7U2DFeekEmrUBBPD34FBKY0gJBkUxWOBC+M6NQ7E+/hhb2VROlTgsKSqn0C8
-	 8e/W+jmOciis7/mlLip77rEZ+n9lyuRXL3U8g60cBBCywEeIyQWDSL5i/soYqgeyAEMMA
-	 NVprr4bR1XbstADAyWOyzvtuiSYalSqmyaBVxAKnx/jxRfFtiZzolv3lx8K8F9L/tTFb9
-	 914zaPy6iYwXZCEXjCHCpAL132BYN9S0fBUpUT4nlIa1L12VSTPhCO6qzC+FCxypRcA==
+	bh=mIdIbU+EbhzeA/FJ6u7Naz4xPUx3inKWfDGadwyPWNo=;
+	b=zyT0Ipv/OAGvXY/Rt6+I2z0xuVsjACdg0t6m7qFnOiEVMr+CraEDm8bhUDsr7pXoJrfh
+	 Ozpuks90kQNCNW70A5KLIMRb3IuSItVGbWvpdgRPiydXtmoyCVPtlF1/BE512fT99Fxbc
+	 IMSxRoIrAIG7dpdtVljgVw59KVQi5CQh84ElnYW+uDjy24BMRgQWmsq7l+ieyYyfQrd4S
+	 D/l/0vp6D/Yd6MOOKOzMz8AKgg2Lovb9HXxx0CTU6LOXVF57mEufwFcelGLOILizRCA7s
+	 k11jYQwR7b775E1aTJVMKXWKMUI1mH38C9xM9C9z1hXaCI6rY4x3+gF+qL1TU+IwTqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxrA1lQb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9PzbLq2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9AB606A320;
-	Thu, 19 Nov 2026 03:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07F8606A320;
+	Thu, 19 Nov 2026 03:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kxrA1lQb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEDD1F000C7;
-	Thu, 19 Nov 2026 03:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H9PzbLq2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54AF1F000C9;
+	Thu, 19 Nov 2026 03:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060041;
-	bh=++WYrMx0xI6W7KpXdEZWKy0x6ypcqxwmvovIOiTZpgo=;
+	s=korg; t=1795060044;
+	bh=mIdIbU+EbhzeA/FJ6u7Naz4xPUx3inKWfDGadwyPWNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kxrA1lQb1Z1cGa22mtsjG8g1sFjmGq5YAUjOduAK8/Sy0zt64BHockbYdkWCy6VC4
-	 aLKol5ErFBKFTt2wcr4HVg7v3f6BDMk91GaRSzZE0adTuTQVyf59HY+hCodjrt0wPP
-	 A3aEoACXA1WPO7MySXBc35oHSAVJzyQAZxJF7+kY=
+	b=H9PzbLq2zcDDAfeeaJCEApFC4bh1lPEfXbkUWH4AaKrB0+FQmtpasH0F+PgEosiSL
+	 0Ig1QGxLX+DHTU4UTqVMSXtSNAMqPNAkkay4OqK3uohGEDWpqADphh/xD9/zbVriNe
+	 KEvvbYV5U5VkC6+T1+1YzS6Dnka1umQZAHg2L6Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Wang Zhan <wang.zhan@smartx.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1056/1848] drm/msm/hdmi: Handle msm_hdmi_power_on() errors during .atomic_pre_enable()
-Date: Wed, 18 Nov 2026 15:51:34 +0100
-Message-ID: <20261118150001.628603939@linuxfoundation.org>
+Subject: [PATCH 5.10 1021/1848] inet: frags: limit the truesize of a reassembly queue
+Date: Wed, 18 Nov 2026 15:50:59 +0100
+Message-ID: <20261118145959.916068619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,95 +73,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit dd6ecace57851878e62367a6f1a26dd5b9aa217f ]
+[ Upstream commit 3ae20e4697eb969104fe4b1e98a675f0100382b6 ]
 
-Properly handle power up failures during .atomic_pre_enable() by
-aborting the .atomic_pre_enable() to avoid accessing registers why
-blocks did not bring up.  Otherwise this could lead to imprecise aborts
-when accessing MMIO while entire power domain is off.
+The truesize of fragments in a reassembly queue is only bounded by
+the per netns ipfrag_high_thresh sysctl, which has no upper limit.
 
-Cc: <stable@vger.kernel.org>
-Fixes: ba3d7bf3a7ab ("drm/msm/hdmi: Convert PHY files according to new design")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752652/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-2-87bdb9f1987f@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-[ sashal: adapted error handling to the non-atomic pre_enable callback and regulator/power-clock arrays without state_mutex locking ]
+inet_frag_reasm_finish() sums the truesize of all fragments in an int.
+If this sum reaches 2^32, it wraps, and the final sk_wmem_alloc
+adjustment of the socket owning the reassembled skb can cancel its own
+reference, leading to a use-after-free of this socket.
+
+This can be triggered from an unprivileged user/network namespace,
+raising ipfrag_high_thresh and using padded TUN packets, which keep
+a large truesize after being trimmed by ip_rcv_core().
+
+Track the sum of the truesize of fragments in each queue, and refuse
+a fragment that would make it bigger than INT_MAX / 2. Callers kill
+the queue on this error. This bound is far above the needs of
+legitimate traffic.
+
+Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
+Cc: stable@vger.kernel.org
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Cc: Florian Westphal <fw@strlen.de>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Tested-by: Wang Zhan <wang.zhan@smartx.com>
+Link: https://patch.msgid.link/20261030081225.2575462-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: moved the truesize reset from inet_frag_queue_flush() to ip_frag_reinit() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 30 +++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ include/net/inet_frag.h  | 9 +++++++++
+ net/ipv4/inet_fragment.c | 4 ++++
+ net/ipv4/ip_fragment.c   | 1 +
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index dcfefc12385ab..d7dc6cbbea463 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -17,7 +17,7 @@ void msm_hdmi_bridge_destroy(struct drm_bridge *bridge)
- 	msm_hdmi_hpd_disable(hdmi_bridge);
- }
- 
--static void msm_hdmi_power_on(struct drm_bridge *bridge)
-+static int msm_hdmi_power_on(struct drm_bridge *bridge)
+diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
+index 4cbd413e71a3f..400375468536c 100644
+--- a/include/net/inet_frag.h
++++ b/include/net/inet_frag.h
+@@ -71,6 +71,7 @@ struct frag_v6_compare_key {
+  * @meat: length of received fragments so far
+  * @flags: fragment queue flags
+  * @max_size: maximum received fragment size
++ * @truesize: sum of the truesize of queued fragments
+  * @fqdir: pointer to struct fqdir
+  * @rcu: rcu head for freeing deferall
+  */
+@@ -91,6 +92,7 @@ struct inet_frag_queue {
+ 	int			meat;
+ 	__u8			flags;
+ 	u16			max_size;
++	unsigned int		truesize;
+ 	struct fqdir		*fqdir;
+ 	struct rcu_head		rcu;
+ };
+@@ -173,6 +175,13 @@ extern const u8 ip_frag_ecn_table[16];
+ #define IPFRAG_OK	0
+ #define IPFRAG_DUP	1
+ #define IPFRAG_OVERLAP	2
++#define IPFRAG_TOOBIG	4
++
++/* Max sum of the truesize of fragments in a queue. This keeps the sums
++ * done in inet_frag_reasm_prepare() and inet_frag_reasm_finish() well
++ * below INT_MAX. Legitimate traffic stays far below this limit.
++ */
++#define INET_FRAG_MAX_TRUESIZE	(INT_MAX / 2)
+ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 			   int offset, int end);
+ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 18217537cb298..6d6d90123be02 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -353,6 +353,9 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
  {
- 	struct drm_device *dev = bridge->dev;
- 	struct hdmi_bridge *hdmi_bridge = to_hdmi_bridge(bridge);
-@@ -25,11 +25,15 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
- 	const struct hdmi_platform_config *config = hdmi->config;
- 	int i, ret;
+ 	struct sk_buff *last = q->fragments_tail;
  
--	pm_runtime_get_sync(&hdmi->pdev->dev);
-+	ret = pm_runtime_resume_and_get(&hdmi->pdev->dev);
-+	if (ret)
-+		return ret;
- 
- 	ret = regulator_bulk_enable(config->pwr_reg_cnt, hdmi->pwr_regs);
--	if (ret)
-+	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "failed to enable pwr regulator: %d\n", ret);
-+		goto err_pm_put;
-+	}
- 
- 	if (config->pwr_clk_cnt > 0) {
- 		DBG("pixclock: %lu", hdmi->pixclock);
-@@ -45,8 +49,19 @@ static void msm_hdmi_power_on(struct drm_bridge *bridge)
- 		if (ret) {
- 			DRM_DEV_ERROR(dev->dev, "failed to enable pwr clk: %s (%d)\n",
- 					config->pwr_clk_names[i], ret);
-+			goto err_clk_disable;
- 		}
- 	}
++	if (skb->truesize > INET_FRAG_MAX_TRUESIZE - q->truesize)
++		return IPFRAG_TOOBIG;
 +
-+	return 0;
-+
-+err_clk_disable:
-+	while (i--)
-+		clk_disable_unprepare(hdmi->pwr_clks[i]);
-+	regulator_bulk_disable(config->pwr_reg_cnt, hdmi->pwr_regs);
-+err_pm_put:
-+	pm_runtime_put(&hdmi->pdev->dev);
-+	return ret;
+ 	/* An IP fragment is never a GSO packet, but an untrusted source
+ 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
+ 	 * that reach the reassembled skb, whose head keeps the first
+@@ -415,6 +418,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 
+ 	FRAG_CB(skb)->ip_defrag_offset = offset;
+ 
++	q->truesize += skb->truesize;
+ 	return IPFRAG_OK;
  }
+ EXPORT_SYMBOL(inet_frag_queue_insert);
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 5cdc65a5c010b..00dff2c866154 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -263,6 +263,7 @@ static int ip_frag_reinit(struct ipq *qp)
+ 	qp->q.rb_fragments = RB_ROOT;
+ 	qp->q.fragments_tail = NULL;
+ 	qp->q.last_run_head = NULL;
++	qp->q.truesize = 0;
+ 	qp->iif = 0;
+ 	qp->ecn = 0;
  
- static void power_off(struct drm_bridge *bridge)
-@@ -141,8 +156,13 @@ static void msm_hdmi_bridge_pre_enable(struct drm_bridge *bridge)
- 	DBG("power up");
- 
- 	if (!hdmi->power_on) {
--		msm_hdmi_phy_resource_enable(phy);
--		msm_hdmi_power_on(bridge);
-+		if (msm_hdmi_phy_resource_enable(phy))
-+			return;
-+
-+		if (msm_hdmi_power_on(bridge)) {
-+			msm_hdmi_phy_resource_disable(phy);
-+			return;
-+		}
- 		hdmi->power_on = true;
- 		if (hdmi->hdmi_mode) {
- 			msm_hdmi_config_avi_infoframe(hdmi);
 -- 
 2.53.0
 
