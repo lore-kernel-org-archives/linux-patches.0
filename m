@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042869;
-	b=clKY2rO4tSF/MsQz9eJR/6IWgJqeu5tkG2HEY3UZ1cdb7q3Y2xwy/BKRg8AvH3lDfCrY
-	 gyLnhYgCi/Xr0GCKK+p2oD7hy77dwKGylKvWfQXOA5Q44YYqYRmdLUkOGILnbpRPiFUzu
-	 IHGvp2MaWBKjyGKyqQ3OR7qaiFMgB6t2AgmA+OIISByZfGF9ibFhC/v9QRyUbjL5dSAkz
-	 Py1UsQxo1X+iuFOpFe4/X/eiKqC2T7nwA9T7qNkoppRFSd3uuf9dKDNs2U0LjJe6nD3hP
-	 PZnBdjiAjlD14unCNEL5nyfAt0sV+2VjuLxS64yvCcKKErQlCBLvzbrJcrKnIfLzNzQ==
+	t=1795042872;
+	b=T0PeZ13U7vi8A/KyrWKjmubx6V613s6rsngzmOo4/fZDG58lScKwEDaBV/Kx+0ShvOnJ
+	 oi9rat+yqtoA+eS13vgH2VaaRJz6pD0SNrm6GhunrycI2vobteJhbUfN902/IMoO78jqy
+	 2x88mPfyyoXXBMHeF/bVTB9OU1Twl2DhfsfntPaUl98wCMjLgd9mZVSVR2RrGGrQtoNJb
+	 9AW2rqMQD3qHbHlewCBH3a7aL/asWHLdMidOBdLRZpXlnhWqIbX6xL0SgKlO0FIScFiF0
+	 HfbZmVASItnUwYVFBSigSTQeDLATEDhhUwcEWH/6ERAphRN7nFnLHTXvGZqE/f0kBNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042869;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042872;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m9AoDkMZ6RJOO+y5FCnR2/oT4N1j2cn2fCXalgxbZw8=;
-	b=Hj5YMzIoxlwusr1tz8YKj3UgXwC4D8W4Mx/Bw/EYRNq4I3RyaEQu6M2stk0UQEGV7i8A
-	 OOCyakRvpo9zw7lEYz9LcB3XYQLLukyc1kqR9bdvwm9AQ7t58WmYlZ9Z0pRbXRhIMQG5E
-	 pMx21tjqSkUiAIipZKBrgwiRAFnghz3R99oa+EBDLBYRTmDIFoSStJU7s+/VJXpbDroCV
-	 s7IMf+pKYPckh1PoosyqFD+OA6Mx0tl+HH+JKHAB7FqYivrVunzPB8SeW3tBu7Ep7wO1j
-	 QJdgmcJAthj36MHz36IqBvHk/ZZJ1TxI5hhptq7hRtlLumoGReFrKChEsLuD1QR8vTg==
+	bh=EzCJZ8AUZMOJEHfjq3K8uxMn6P/FS/z+pX+pKHTFCEg=;
+	b=Olz8g1w/YLv8zrVycfIB2CR1twPohYAIfVVwJBbdNNL3HJzNsG1ImSblv57Nr2v7j6VP
+	 7iFpzHlLIUl12CzwmGTwC9EuGYwdMaMvL3kzuJA40qkjEERZyO1vkKNiPnKn92eaRzk8P
+	 n86D7xzZV2tUAfkmjI4vG8hL5P5NR5+3SQ2PMSaLwqDAevDMz6thmHdFUUC5+E5UbjaKj
+	 vru84+szFyIyy9Hkg/VxggIxf1RjXXTnq1rRemGTPAq9IVyuM/yKRgMCLs71QrrSEV9L3
+	 5EHyH7RDell7brkr/NWCWs9Sw3UTCXWspHuHQrpywShxLeaCKAnE22B5kSnNk8D69Ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSs9I6wc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1ZCKU3h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5875E606A330;
-	Wed, 18 Nov 2026 23:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4936606A32C;
+	Wed, 18 Nov 2026 23:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TSs9I6wc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DA31F000CE;
-	Wed, 18 Nov 2026 23:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p1ZCKU3h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E0F1F000CB;
+	Wed, 18 Nov 2026 23:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042869;
-	bh=m9AoDkMZ6RJOO+y5FCnR2/oT4N1j2cn2fCXalgxbZw8=;
+	s=korg; t=1795042871;
+	bh=EzCJZ8AUZMOJEHfjq3K8uxMn6P/FS/z+pX+pKHTFCEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TSs9I6wcJiy0YT/ML5491fB1/F4FZ/TC3nSYkVB0eFf6GjDXWYlPPxlIvHXkR2kA7
-	 5OGkWvJkuU815bLy0fsI9O3Z0RJSSbUrUe5FNzT5AKe5hi7ytkZ76QhzcsPQ8XdcHO
-	 l/4jbX8vx0TCRaT3Vt951uUzMeZvd3SRafS1Viwg=
+	b=p1ZCKU3hsgE0m4VxAVDg2hWaWvKQFgHUBGr5SYlOGhBm6GyA+c91lfPVZTdJW4geP
+	 kok4CcTmZ4pzaS8DlSpdt/q7VW9YYK2K5TiQlcne4a9TewiljEa1jeQHhpNqIiriOb
+	 GTQKVUSfMZl+Ln0eYo2kgqAB/yzpV6Yzm/jG3Jmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Joshua Kinard <linux@kumba.dev>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3293/3318] fs_pin: do not trust the pin after a spurious wakeup in pin_kill()
-Date: Wed, 18 Nov 2026 16:05:15 +0100
-Message-ID: <20261118150458.385957540@linuxfoundation.org>
+Subject: [PATCH 6.6 3294/3318] rtc: ds1685: arm the wake-up alarm at power-off only if an alarm is set
+Date: Wed, 18 Nov 2026 16:05:16 +0100
+Message-ID: <20261118150458.416245420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,71 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit f3a6dae67c9ca3d913cbb42fe324c9b47c8d9e53 ]
+[ Upstream commit c2373bcd50d9654b76eac585c7c98105665b3321 ]
 
-A task waiting in pin_kill() for another task's ->kill() can take
-p->wait.lock after the pin has been freed, and can return with its
-on-stack wait entry still on p->wait. With BSD process accounting this
-is a use-after-free of the acct structure when umount() of the mount
-holding the accounting file races with acct(2).
+ds1685_rtc_poweroff() always sets WIE. The wake-up alarm then compares
+the time-of-day and date alarm registers, which hold whatever was last
+written to them, and a match powers the machine straight back on.
 
-pin_kill() takes a still-queued entry as proof that pin_remove() has not
-run, so p is alive. But autoremove_wake_function() dequeues only when
-try_to_wake_up() succeeds: if the waiter was already woken spuriously,
-pin_remove() leaves the entry queued, acct_pin_kill() frees the acct
-with kfree_rcu(), and the grace period can end while the waiter sits
-between schedule() and rcu_read_lock().
+Set WIE only when AIE is set in Control B, and clear it otherwise.
 
-Dequeue the entry unconditionally in a private wake function;
-pin_remove() is the only waker and sets p->done first.
-
-Reproduced under QEMU with KASAN and test-only delays: a
-slab-use-after-free in pin_kill() before the patch, no report after.
-
-Fixes: 59eda0e07f43 ("new fs_pin killing logics")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261027015813.841821-1-nickolai@csail.mit.edu
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: aaaf5fbf56f1 ("rtc: add driver for DS1685 family of real time clocks")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Acked-by: Joshua Kinard <linux@kumba.dev>
+Link: https://patch.msgid.link/20261013120208.11268-2-kaloz@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs_pin.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-ds1685.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/fs/fs_pin.c b/fs/fs_pin.c
-index 1a508f2167e0a..a4e5a5a7aca8d 100644
---- a/fs/fs_pin.c
-+++ b/fs/fs_pin.c
-@@ -28,6 +28,19 @@ void pin_insert(struct fs_pin *pin, struct vfsmount *m)
- 	spin_unlock(&pin_lock);
- }
- 
-+/*
-+ * Unlike autoremove_wake_function(), dequeue even if the waiter was already
-+ * running: pin_kill() trusts @p only while its entry is still queued.
-+ */
-+static int pin_kill_wake_function(struct wait_queue_entry *wait,
-+				  unsigned int mode, int sync, void *key)
-+{
-+	int ret = default_wake_function(wait, mode, sync, key);
-+
-+	list_del_init_careful(&wait->entry);
-+	return ret;
-+}
-+
- void pin_kill(struct fs_pin *p)
+diff --git a/drivers/rtc/rtc-ds1685.c b/drivers/rtc/rtc-ds1685.c
+index 04dbf35cf3b70..dd509b3de6abc 100644
+--- a/drivers/rtc/rtc-ds1685.c
++++ b/drivers/rtc/rtc-ds1685.c
+@@ -1370,7 +1370,7 @@ module_platform_driver(ds1685_rtc_driver);
+ void __noreturn
+ ds1685_rtc_poweroff(struct platform_device *pdev)
  {
- 	wait_queue_entry_t wait;
-@@ -36,7 +49,7 @@ void pin_kill(struct fs_pin *p)
- 		rcu_read_unlock();
- 		return;
- 	}
--	init_wait(&wait);
-+	init_wait_func(&wait, pin_kill_wake_function);
- 	spin_lock_irq(&p->wait.lock);
- 	if (likely(!p->done)) {
- 		p->done = -1;
+-	u8 ctrla, ctrl4a, ctrl4b;
++	u8 ctrla, ctrlb, ctrl4a, ctrl4b;
+ 	struct ds1685_priv *rtc;
+ 
+ 	/* Check for valid RTC data, else, spin forever. */
+@@ -1397,6 +1397,8 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 		ctrla &= ~(RTC_CTRL_A_DV2);
+ 		rtc->write(rtc, RTC_CTRL_A, ctrla);
+ 
++		ctrlb = rtc->read(rtc, RTC_CTRL_B);
++
+ 		/*
+ 		 * Read Control 4A and check the status of the auxillary
+ 		 * battery.  This must be present and working (VRT2 = 1)
+@@ -1411,13 +1413,17 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 
+ 			/*
+ 			 * The auxillary battery is present and working.
+-			 * Enable extended functions (ABE=1), enable
+-			 * wake-up (WIE=1), and enable kickstart (KSE=1)
+-			 * in Control 4B.
++			 * Enable extended functions (ABE=1) and kickstart
++			 * (KSE=1) in Control 4B.  Enable wake-up (WIE=1) only
++			 * if an alarm is set, else stale alarm registers
++			 * can power the system back on.
+ 			 */
+ 			ctrl4b = rtc->read(rtc, RTC_EXT_CTRL_4B);
+-			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_WIE |
+-				   RTC_CTRL_4B_KSE);
++			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_KSE);
++			if (ctrlb & RTC_CTRL_B_AIE)
++				ctrl4b |= RTC_CTRL_4B_WIE;
++			else
++				ctrl4b &= ~(RTC_CTRL_4B_WIE);
+ 			rtc->write(rtc, RTC_EXT_CTRL_4B, ctrl4b);
+ 		}
+ 
 -- 
 2.53.0
 
