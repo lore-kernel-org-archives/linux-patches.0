@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036794;
-	b=JIHcgD992yr9V49rlVaR7bRpHrN2iQmDLL7TnjtNcmp2GCautsmS3N9JKcrQbV6Sobg8
-	 kqWLxBCfSxkqPtyR6yxi+wp7K7ro84i/G1SBzwrQ/2SlVp4+MIAMePQnJMF1lbL62Yo96
-	 hiO84WRASVtbyDAq78Vg/YMInoef55suJo1Zr4kP2bQBZyAaiVSgUBr98Z3Eb1+pbP1/9
-	 3CoNPqAclEsU7Y6Pzpc86tChsey0A+kvL2mM5OUd5hhkyIu2hsc09yGHsRmOC0j0f6sH2
-	 j9tVZ4r27FaFWcgE8rQeTmMDVK1PHU/Ka0dc+6fZhkbjTYsgdJdBA7BekrvMWM6JPFw==
+	t=1795036797;
+	b=UZqEjj3kaYh8rm/zkx57vBWNKauvCD4FLaycFiV5r4FC0upR3EJFukT8lJ2T42MaysMI
+	 pX/52R6BwqmdpwupaHjiKgSQUDZy13JAzM6sFVZYwedd7eyWlAylXo2wE5hdrf4kxnADr
+	 sRQq+89IvMOfDxsiG3kg4sZvOanDAwwa11P3CkbtUr41GQzOZFNbJf+KYDgC6YjIJKpPi
+	 nEAVtwAWm5GLT5WH3HLbRgcfeHi6awWCs9QyfHEL0y71nlX2VepCzEM704qRXVyAWlWTj
+	 r0KlSOibkdfRiWr0XtNoIcpJyva4e94asN19LeXrwKA5aUj9YlwtRDTYI7tvCiVniNA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uvWGNvbbrBhUzxTyMk7xgfeljzxvLtBcDaE/ft1fiFg=;
-	b=S175XQ7VYNFETNm2ErKOZm5nTZySzq8xSpM1im0Xep5zg3L0PYI9RIgsY8ug/LModlFw
-	 cphrs+45DLb0uLGTcmjpaziBxsW1QdXrSX7jsm1QWIZAZRjmrHTvSHoAPjEAiuFcbn0Jt
-	 mwzur5aP8xu6vFi/cB9ST+jnE38sgTsmjXorZOahiX2cCsLm3yV9Lt2YZa0CeyNvTp2fn
-	 eoipdOk8qq4Sl5mlmNIW/K3rS9But9fi/VcqTA6ikUH0s6Gpqq7YVjHPkwzxYo4QTBxu/
-	 wstX2k3LkOUB7zkkEOpDSBV5F7T9olz756gi4CHdlQQwCvciFSGOk5c5ckkO68Qd6uA==
+	bh=ITanPRr1+G0qKo1cDn9TDcCpnohW20qHAFZmTgA69ls=;
+	b=ASXnaDkknfCN7giheIIBmI2ZSHT6vJFyNQnOf0AIPb6kDaAcjjvfvJNBnVp70bmk+ZN1
+	 2d1k2mLBjnivN+ydTlcyyeF3EkRXWNOqfYdAHiWftcuTEMOVcICyRnaI7kS1WU4S+x59n
+	 zWzGCI8r8c3EKxYSGCwy86ZlGHShgucElSc1TtuT7HM6I/RsPikz162SJgRNjvqtuJ6oM
+	 wFeg4ih7MpChmtQwAGOnaDAn02weCXi8O517dYxNbhhNaRUgyGPGIajcraZeatEZvqinW
+	 RCzhuuqb5ihYwrcIE0pibPHx5GOxWXfYskBXS40SDw4EJOaXcEbf44S80u+JnZkPdmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PA6fiPq2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Khgt2jgV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD635606A325;
-	Wed, 18 Nov 2026 21:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C956606A320;
+	Wed, 18 Nov 2026 21:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PA6fiPq2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFCD1F000C4;
-	Wed, 18 Nov 2026 21:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Khgt2jgV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6F11F000C4;
+	Wed, 18 Nov 2026 21:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036794;
-	bh=uvWGNvbbrBhUzxTyMk7xgfeljzxvLtBcDaE/ft1fiFg=;
+	s=korg; t=1795036797;
+	bh=ITanPRr1+G0qKo1cDn9TDcCpnohW20qHAFZmTgA69ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PA6fiPq2p51oqMcjFkM+bSrORY3cSXE1hdmVOCFqrWOH6sv1+ERxUlDIhtKxxWtxT
-	 h8MBJwqj07m9Vl7WFb7iqGVsR2J8CavMhYA0U92oHiesz89PkjzudEgAcgXpYyjwgT
-	 CrefcWcCKxmAiOlHGiD19Re+uMQdHTk0DN+sHPRg=
+	b=Khgt2jgVwLtrzYEG5kCi2K2mcYCgasScuW8wdcUPOHA8cPIKmV+bQIyUc1CAgD1qm
+	 A3EUpVU/OutE9aszsfbLfdODPeizd8FE4iwfxmWrCla2srfBNnMdx2EgnMK2N2YQ7W
+	 IDh1DVKoH7AaQklJa8jSg8UyxXWBIktjI7vUTqtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Anderson Ferneda <anderson.ferneda@braza.com.br>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1185/3318] ocfs2: reserve value tree metadata when moving an xattr into the inode
-Date: Wed, 18 Nov 2026 15:30:07 +0100
-Message-ID: <20261118150355.700612689@linuxfoundation.org>
+Subject: [PATCH 6.6 1186/3318] ocfs2: deal with legacy signed dir index name hash values
+Date: Wed, 18 Nov 2026 15:30:08 +0100
+Message-ID: <20261118150355.734927621@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,75 +74,245 @@ Content-Transfer-Encoding: 8bit
 
 From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit f5aee8ae5f85f8dfa78160e5c4963494319cdd64 ]
+[ Upstream commit d1b49d5ea1bf43cce2b0e249a7f7a30dde133907 ]
 
-ocfs2_calc_xattr_set_need() charges no metadata for the case where an
-xattr living in an xattr block or bucket moves back into the inode:
+Patch series "ocfs2: deal with legacy signed name hash values", v2.
 
-        if (old_in_xb) {
-                if (ocfs2_xattr_can_be_in_inode(inode, xi, xis)) {
-                        clusters_add += new_clusters;
-                        credits += ...;
-                        if (!ocfs2_xattr_is_local(xe))
-                                credits += ocfs2_calc_extend_credits(...);
-                        goto out;
-                }
-        }
+Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") turned on
+-funsigned-char globally, which changed the result of two naked 'char'
+loads in ocfs2 hashing code:
 
-The credits for extending a value tree are there but the matching blocks
-are not, so meta_add stays 0, ocfs2_init_xattr_set_ctxt() skips
-ocfs2_reserve_new_metadata_blocks() and ctxt->meta_ac is left NULL.
+	str2hashbuf()            val = msg[i] + (val << 8);
+	ocfs2_xattr_name_hash()  hash = (hash << 5) ^ (hash >> 27) ^ *name++;
 
-This is the shape commit 0cdc7dde00ec ("ocfs2: fix missing metadata
-reservation for large xattrs") fixed for the xattr block case, and it is
-reached the same way: namevalue_size() charges a value larger than
-OCFS2_XATTR_INLINE_SIZE as only OCFS2_XATTR_ROOT_SIZE, so
-ocfs2_xattr_can_be_in_inode() accepts a new value that will be stored
-outside.  ocfs2_xa_prepare_entry() installs a value root from def_xv and
-grows it, and once the cluster allocator is fragmented enough to need a
-second extent ocfs2_add_clusters_in_btree() finds the root full with no
-meta_ac at all and answers RESTART_META.  ocfs2_xattr_extend_allocation()
-turns that into -ENOSPC, or into a BUG_ON() without that commit, and
-ocfs2_xa_cleanup_value_truncate() takes its !orig_clusters arm, dropping
-the entry and leaking the clusters already handed out until fsck.ocfs2
-reclaims them.
+A name byte >= 0x80 used to sign-extend and now zero-extends.  Both
+results are written to disk, the first into the dx leaf when a directory
+entry is indexed and the second into xe_name_hash when an xattr is
+stored, so anything written by a pre-6.2 kernel is looked up under a
+different hash and is no longer found.  readdir and listxattr still list
+those names because neither of them hashes, which makes this look like
+the filesystem losing entries rather than like a lookup bug.  Anderson
+Ferneda reported it that way for directories with non-ASCII names [1].
 
-Reserve for the value tree here too.  The entry moves back into the inode
-rather than into a new xattr block, so unlike the create side of
-meta_guess this needs no block of its own.
+Patches 1 and 3 do what ext4 did in commit f3bbac32475b2 ("ext4: deal
+with legacy signed xattr name hash values"): look up with the current
+unsigned hash, retry with the legacy signed one on a miss, and always
+store new entries under the unsigned hash.  The retry is skipped when the
+two hashes come out equal, so an ASCII name does not walk the index
+twice.  Both hash functions now spell out the signedness instead of
+leaving it to -funsigned-char, as commit 854f0912f813 ("ext4: make xattr
+char unsignedness in hash explicit") did, so a backport to a kernel
+without the flag still computes both variants correctly.
 
-Link: https://lore.kernel.org/20261010113454.1420939-3-joseph.qi@linux.alibaba.com
-Fixes: 78f30c314a74 ("ocfs2/xattr: Reserve meta/data at the beginning of ocfs2_xattr_set.")
+Patch 2 is a separate fix, placed before patch 3 so that every commit in
+the series is correct on its own.  ocfs2_check_xattr_bucket_collision()
+recomputes the hash of the name to decide whether splitting a full bucket
+can make room for the entry being set.  That is right for a new entry and
+wrong for one that already exists, since an update leaves xe_name_hash
+alone.  Against a bucket holding legacy hashes the comparison does not
+match, so the split goes ahead and cannot help: a bucket whose entries
+all share one hash has no divide position.  How that ends depends on
+where the unsigned hash sorts.  Below the legacy ones, the set fails with
+-ENOSPC after growing the tree for nothing.  Above them, it lands in the
+empty bucket the split just appended and stores a second copy of the
+entry there while the original stays behind, so listxattr reports the
+name twice.  Using the stored hash closes both.
+
+Nothing retires a legacy hash at runtime.  Deleting or updating an entry
+does not rewrite it, and the only code that rehashes existing dirents is
+ocfs2_expand_inline_dir() on the inline to extent conversion, so the
+retry stays for as long as the legacy entries do.  Rebuilding the index
+offline is what removes it for good.
+
+This patch (of 3):
+
+Commit 3bc753c06dd0 ("kbuild: treat char as always unsigned") set
+-funsigned-char globally, which changed the result of the naked 'char'
+load in str2hashbuf():
+
+	val = msg[i] + (val << 8);
+
+A name byte >= 0x80 used to sign-extend and now zero-extends, so
+ocfs2_dx_dir_name_hash() computes a different hash pair for every name
+containing one.  The pair is written into the dx leaf when the entry is
+created, so an index built by an older kernel no longer matches and
+ocfs2_dx_dir_search() returns -ENOENT for a name that readdir still
+lists.
+
+Search with the current unsigned hash and, on a miss, retry with the
+legacy signed one, as ext4 does in commit f3bbac32475b2 ("ext4: deal
+with legacy signed xattr name hash values").  New entries are always
+indexed under the unsigned hash.  Skip the retry when the two hashes
+are equal, so that a miss on an ASCII name does not walk the index
+twice.
+
+The retry costs a second walk of the dx tree, so a negative lookup of a
+name containing a byte >= 0x80 does twice the work.  That is bounded and
+worth it, and directories whose dx root is still inline pay nothing
+extra, since there the retry only rescans the root block that is already
+loaded.  Nothing retires it at runtime: a legacy entry keeps its legacy
+hash, because neither deleting nor updating an entry rewrites the dx
+hash, and the only code that rehashes existing dirents is
+ocfs2_expand_inline_dir() on the inline to extent conversion.
+Rebuilding the index offline is what removes the cost for good.
+
+Also spell out the signedness in str2hashbuf() instead of leaving the
+current hash to -funsigned-char, as commit 854f0912f813 ("ext4: make
+xattr char unsignedness in hash explicit") did, so that both variants
+stay correct if this is backported to a kernel without the flag.
+
+Link: https://lore.kernel.org/20261009083002.2621201-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20261009083002.2621201-2-joseph.qi@linux.alibaba.com
+Fixes: 3bc753c06dd0 ("kbuild: treat char as always unsigned")
 Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
+Reported-by: Anderson Ferneda <anderson.ferneda@braza.com.br>
+Closes: https://lore.kernel.org/ocfs2-devel/CP5P284MB2780AC2C3C2AB2CF2B6CB7AFBE942@CP5P284MB2780.BRAP284.PROD.OUTLOOK.COM/
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
-Cc: <stable@vger.kernel.org>
+Cc: <stable@vger.kernel.org> # 6.2+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ocfs2/dir.c | 76 ++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 65 insertions(+), 11 deletions(-)
 
-diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
-index 5cd52de9bb32a..00ef185748f19 100644
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -3358,6 +3358,14 @@ static int ocfs2_calc_xattr_set_need(struct inode *inode,
- 				credits += ocfs2_calc_extend_credits(
- 							inode->i_sb,
- 							&def_xv.xv.xr_list);
-+			/*
-+			 * A value too big to stay inline is only charged as
-+			 * OCFS2_XATTR_ROOT_SIZE above, so it can still need a
-+			 * value tree of its own.  No xattr block is allocated
-+			 * on this path, so the tree is all we reserve for.
-+			 */
-+			if (xi->xi_value_len > OCFS2_XATTR_INLINE_SIZE)
-+				meta_add += ocfs2_extend_meta_needed(&def_xv.xv.xr_list);
- 			goto out;
- 		}
- 	}
+diff --git a/fs/ocfs2/dir.c b/fs/ocfs2/dir.c
+index 906c59783713f..1ee8802dd6ea9 100644
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -221,7 +221,8 @@ static void TEA_transform(__u32 buf[4], __u32 const in[])
+ 	buf[1] += b1;
+ }
+ 
+-static void str2hashbuf(const char *msg, int len, __u32 *buf, int num)
++static void str2hashbuf(const char *msg, int len, __u32 *buf, int num,
++			bool legacy_signed)
+ {
+ 	__u32	pad, val;
+ 	int	i;
+@@ -235,7 +236,10 @@ static void str2hashbuf(const char *msg, int len, __u32 *buf, int num)
+ 	for (i = 0; i < len; i++) {
+ 		if ((i % 4) == 0)
+ 			val = pad;
+-		val = msg[i] + (val << 8);
++		if (legacy_signed)
++			val = (signed char)msg[i] + (val << 8);
++		else
++			val = (unsigned char)msg[i] + (val << 8);
+ 		if ((i % 4) == 3) {
+ 			*buf++ = val;
+ 			val = pad;
+@@ -248,8 +252,9 @@ static void str2hashbuf(const char *msg, int len, __u32 *buf, int num)
+ 		*buf++ = pad;
+ }
+ 
+-static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
+-				   struct ocfs2_dx_hinfo *hinfo)
++static void __ocfs2_dx_dir_name_hash(struct inode *dir, const char *name,
++				     int len, struct ocfs2_dx_hinfo *hinfo,
++				     bool legacy_signed)
+ {
+ 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
+ 	const char	*p;
+@@ -279,7 +284,7 @@ static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
+ 
+ 	p = name;
+ 	while (len > 0) {
+-		str2hashbuf(p, len, in, 4);
++		str2hashbuf(p, len, in, 4, legacy_signed);
+ 		TEA_transform(buf, in);
+ 		len -= 16;
+ 		p += 16;
+@@ -290,6 +295,19 @@ static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
+ 	hinfo->minor_hash = buf[1];
+ }
+ 
++static void ocfs2_dx_dir_name_hash(struct inode *dir, const char *name, int len,
++				   struct ocfs2_dx_hinfo *hinfo)
++{
++	__ocfs2_dx_dir_name_hash(dir, name, len, hinfo, false);
++}
++
++static void ocfs2_dx_dir_name_hash_signed(struct inode *dir, const char *name,
++					  int len,
++					  struct ocfs2_dx_hinfo *hinfo)
++{
++	__ocfs2_dx_dir_name_hash(dir, name, len, hinfo, true);
++}
++
+ /*
+  * bh passed here can be an inode block or a dir data block, depending
+  * on the inode inline data flag.
+@@ -953,10 +971,10 @@ static int ocfs2_dx_dir_lookup(struct inode *inode,
+ 	return ret;
+ }
+ 
+-static int ocfs2_dx_dir_search(const char *name, int namelen,
+-			       struct inode *dir,
+-			       struct ocfs2_dx_root_block *dx_root,
+-			       struct ocfs2_dir_lookup_result *res)
++static int __ocfs2_dx_dir_search(const char *name, int namelen,
++				 struct inode *dir,
++				 struct ocfs2_dx_root_block *dx_root,
++				 struct ocfs2_dir_lookup_result *res)
+ {
+ 	int ret, i, found;
+ 	u64 phys;
+@@ -969,8 +987,6 @@ static int ocfs2_dx_dir_search(const char *name, int namelen,
+ 	struct ocfs2_extent_list *dr_el;
+ 	struct ocfs2_dx_entry_list *entry_list;
+ 
+-	ocfs2_dx_dir_name_hash(dir, name, namelen, &res->dl_hinfo);
+-
+ 	if (ocfs2_dx_root_inline(dx_root)) {
+ 		entry_list = &dx_root->dr_entries;
+ 		goto search;
+@@ -1067,6 +1083,44 @@ static int ocfs2_dx_dir_search(const char *name, int namelen,
+ 	return ret;
+ }
+ 
++static int ocfs2_dx_dir_search(const char *name, int namelen,
++			       struct inode *dir,
++			       struct ocfs2_dx_root_block *dx_root,
++			       struct ocfs2_dir_lookup_result *res)
++{
++	struct ocfs2_dx_hinfo legacy;
++	int ret;
++
++	ocfs2_dx_dir_name_hash(dir, name, namelen, &res->dl_hinfo);
++
++	ret = __ocfs2_dx_dir_search(name, namelen, dir, dx_root, res);
++	if (ret != -ENOENT)
++		return ret;
++
++	/*
++	 * Nothing under the current hash.  The entry may have been indexed by
++	 * an older kernel, which sign-extended the name bytes when hashing.
++	 * New entries are always indexed under the unsigned hash, so only fall
++	 * back to the legacy signed one when it can actually differ: an ASCII
++	 * name hashes the same either way, and a genuine miss on one should
++	 * not have to walk the index twice.
++	 */
++	ocfs2_dx_dir_name_hash_signed(dir, name, namelen, &legacy);
++	if (legacy.major_hash == res->dl_hinfo.major_hash &&
++	    legacy.minor_hash == res->dl_hinfo.minor_hash)
++		return ret;
++
++	res->dl_hinfo = legacy;
++
++	ret = __ocfs2_dx_dir_search(name, namelen, dir, dx_root, res);
++	if (ret)
++		return ret;
++
++	pr_warn_once("ocfs2: directory index with signed name hash\n");
++
++	return 0;
++}
++
+ static int ocfs2_find_entry_dx(const char *name, int namelen,
+ 			       struct inode *dir,
+ 			       struct ocfs2_dir_lookup_result *lookup)
 -- 
 2.53.0
 
