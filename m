@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015856;
-	b=Ld5OifAXlNZ3X8kycXTv6+b2QD7cFBGBLAu13xbZzIIJ2SAdvaTO8gGasDGvfHA8aru0
-	 gFF0E3APLoM02sB0YWZ3u39GS8ogXlZPRTsxK/d+aQrFKeCn4BRb8A5XX/G3ya+cpbkBM
-	 lFcdeeI9SuXeJIHv26RKSbyecpDiFDoVIJnw1aDlzkp8I4k6ZA1Gu2BFE45ZVuP1ijs4A
-	 bAD4vYIbfd4MK+U8rxmo2wrj74J720Vk0pee6sQ6jq723uuPUYja7fsimf/S2QH4MHy+w
-	 +y7+Q+e9IlPylXprqSi8931x0LzeJBSLroxop5Nxsc5HOGfuAWF89JQ5ee0G6BJqX9w==
+	t=1795015859;
+	b=rgpm8GusFhqrd3fCedO8UpcpWeSQ1tOc2ywcyJK8WZ87nAxwililxKSuXhVFB5GNDc7A
+	 XbSiwGvWSNyo+CuTPJjUFAkw7PL7cSaUYg3H17NZ/m7ciM7MI7p5sUwIc8GzCWBcfvFSK
+	 Y3mDyNA+HQhKwg8QrklblwyKijrik5TTK4f1517k57fxOdeVcPIYkIRhAW20aMwFZonn1
+	 OCahoqEqXg41rK1QeLsJleEWU4QiDXYQeduzM/0J4fTpzrfgr1g4NonJAHCuaTD4lumzH
+	 +AuHolgO9RsCgI9m39/EbHZyLk2ttv/+cvCXsdfUbmzknlM4tH2xj2RRsZe18U3ISBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015859;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=tQFjUd6IIP/sxORKS3d2tdBjl5dW65cXXq7duAtX0EQ=;
-	b=5QcXzEvjcSEEcBhFa5k+tLq0jipsZjC6FSf8ArOfJoy2XyBkBSQV1avDvxxnz9EiH0lh
-	 QoSPhk4jEnYB21MAEILvio7ndBmyLLfgroBypoxjmiMGapEOjgVv6qmI71RPe5vEZ/clg
-	 H9AQGYemuLsiz1fcIIezSiwbUhT2tDQ5nXuXSLQ4ASVnoU/0PVUzt/eoXqlo/PcP753YN
-	 PQvMBpzx9bThDmS71p+xQScsT1NPwTF4KxjggYBhXQvLUyE93VbsQqG3kDECdFnlOlYSY
-	 aUyRgkcB0JupZZ2Lnubhx6WLcuXAozX6E34FE1ci/yEZG/x/uTU9uEXZ5XFARLannrg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=m6AM6N0PKdKD5qWD5l3JP4/fWqgBLedysQJRzaXpuN4=;
+	b=hTGjEfA7HYtHZpJlCKGtR0OEYFVcoVhjQYPmBZcL4LArvWPBxDGHiJ8bw5DX5+vDSe4v
+	 nBzudjq3caCHFL0U3coJcylTmTTSK98Ql0IMGJ6lIti5l5F4Hawfz2rn8Y+ABM1ZrEf3q
+	 CD/J8sGQgDINZrXNxf8A6zZBRYE4FKAT10zXI3U7tOPcIDu50/M8Ne/i5ImsrzDZIYGV4
+	 +Em4675bFRwXSyFpPsw6H9p2u1ZsFgbjMRkggB+imYq932Zn4+Xu1yrqtgqSq0wywLrg/
+	 TdKxQNxX32NcrmjsK1E5wWxhMKA8uoUc2NQm+wsiMsUX6L/4Kvg76JQiPu/Gf96AYJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eeJ8LruL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yio+2ovz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5A460A263C;
-	Wed, 18 Nov 2026 15:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC1760A3816;
+	Wed, 18 Nov 2026 15:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eeJ8LruL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59301F000D1;
-	Wed, 18 Nov 2026 15:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yio+2ovz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7209C1F000C7;
+	Wed, 18 Nov 2026 15:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015856;
-	bh=tQFjUd6IIP/sxORKS3d2tdBjl5dW65cXXq7duAtX0EQ=;
+	s=korg; t=1795015859;
+	bh=m6AM6N0PKdKD5qWD5l3JP4/fWqgBLedysQJRzaXpuN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eeJ8LruLg/8KpRDE6UXDDBGP/tpVctzX5R/0AYw9YkSg+vtKtuzSfq6iUb7JaoxUc
-	 6hTcOQFT5KbHQoLFsuzYDjVPLQfI5EZkW0TBr5KarZswT0X+yAMI0yMKX3D/ucqgOF
-	 MfyfOen1YaygOE1miq/xljPSambjwABn8LND9ohQ=
+	b=Yio+2ovzaL6MOXFahKgl91zgsrM3jSnXZjrprxXr7u+ANze7g2MCb75z8+jqI9buH
+	 Z7X+5z3ujeMX7a0t63b8ZhW5YKKrL7Rpt+PIAFIalxQ3Zt0VAUk5loBlP4pyKidxZu
+	 FBcYdXau0OBcGJ1QAUrQqdVPtnvOFZIH3HOUAZYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0295/2651] dmaengine: at_hdmac: Fix use-after-free by proper tasklet cleanup
-Date: Wed, 18 Nov 2026 15:25:35 +0100
-Message-ID: <20261118150258.526055227@linuxfoundation.org>
+Subject: [PATCH 7.3 0322/2651] selftests: net: csum: filter packets by source address and port
+Date: Wed, 18 Nov 2026 15:26:02 +0100
+Message-ID: <20261118150259.463077357@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,103 +63,182 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 13f2d32a09609d083ace2d589fbdc68e970ae34c ]
+[ Upstream commit 8342c68435dd34b1ecd65b02fff9745cadab2616 ]
 
-Current cleanup paths have a use-after-free vulnerability:
-- vchan_init() creates tasklets that access at_dma_chan memory
-- free_irq() only waits for IRQ handler, NOT tasklets
-- atdma is devm-managed and freed after probe/remove
-- Running tasklets accessing freed memory → Use-After-Free!
+Add source address and port verification in recv_verify_packet_* and
+recv_udp: non-matching packets are skipped.
 
-The fix requires careful ordering:
-- free_irq() FIRST to synchronize with running IRQ handlers and prevent
-  them from scheduling new tasklets
-- Then kill tasklets to wait for already-scheduled ones to complete
-- Only then free other resources
+The receiver reads from PF_PACKET and UDP sockets to verify incoming
+packets to test hardware checksum offload. It did not validate the
+packet source address or source port.
 
-Fixes: ac803b56860f ("dmaengine: at_hdmac: Convert driver to use virt-dma")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260604073945.54B311F00898@smtp.kernel.org/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Suggested-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727061705.45169-1-zenghongling@kylinos.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+During tests expecting an invalid checksum (-E) or zero checksum (-Z),
+background packets can fail the test.
+
+For -Z, build_packet_udp chooses a specific source port that causes
+the checksum to sum to zero. When running in receive-only mode (-R),
+call build_packet in do_rx to compute the expected source port so
+that source port filtering can be applied to -Z as well.
+
+Also
+- add an inter-packet delay to avoid drops from bursts.
+- remove a comment that is no longer correct.
+
+Fixes: 91a7de85600d ("selftests/net: add csum offload test")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260908155537.813889-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_hdmac.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ tools/testing/selftests/net/lib/csum.c | 55 +++++++++++++++++++++++---
+ 1 file changed, 50 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
-index 7c071e6496371..7fa6af973fd83 100644
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -1940,6 +1940,20 @@ static void at_dma_off(struct at_dma *atdma)
- 		cpu_relax();
+diff --git a/tools/testing/selftests/net/lib/csum.c b/tools/testing/selftests/net/lib/csum.c
+index e28884ce3ab39..ad960e07e31bd 100644
+--- a/tools/testing/selftests/net/lib/csum.c
++++ b/tools/testing/selftests/net/lib/csum.c
+@@ -2,8 +2,7 @@
+ 
+ /* Test hardware checksum offload: Rx + Tx, IPv4 + IPv6, TCP + UDP.
+  *
+- * The test runs on two machines to exercise the NIC. For this reason it
+- * is not integrated in kselftests.
++ * The test runs on two machines to exercise the NIC.
+  *
+  *     CMD=$((./csum -[46] -[tu] -S $SADDR -D $DADDR -[RT] -r 1 $EXTRA_ARGS))
+  *
+@@ -236,7 +235,8 @@ static void *build_packet_udp(void *_uh)
+ 		uh->source = 0;
+ 		uh->source = checksum(uh, IPPROTO_UDP, sizeof(*uh) + cfg_payload_len);
+ 
+-		fprintf(stderr, "tx: changing sport: %hu -> %hu\n",
++		fprintf(stderr, "%s: changing sport: %hu -> %hu\n",
++			cfg_do_tx ? "tx" : "rx",
+ 			cfg_port_src, ntohs(uh->source));
+ 		cfg_port_src = ntohs(uh->source);
+ 	}
+@@ -249,7 +249,8 @@ static void *build_packet_udp(void *_uh)
+ 	if (cfg_bad_csum)
+ 		uh->check = ~uh->check;
+ 
+-	fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
++	if (cfg_do_tx)
++		fprintf(stderr, "tx: sending checksum: 0x%x\n", uh->check);
+ 	return uh + 1;
  }
  
-+static void at_dma_cleanup_channels(struct at_dma *atdma)
-+{
-+	struct dma_chan *chan, *_chan;
-+	int i = 0;
+@@ -571,15 +572,36 @@ static int recv_prepare_packet(void)
+ static int recv_udp(int fd)
+ {
+ 	static char buf[MAX_PAYLOAD_LEN];
++	struct sockaddr_storage addr;
++	socklen_t addrlen;
+ 	int ret, count = 0;
+ 
+ 	while (1) {
+-		ret = recv(fd, buf, sizeof(buf), MSG_DONTWAIT);
++		addrlen = sizeof(addr);
++		ret = recvfrom(fd, buf, sizeof(buf), MSG_DONTWAIT,
++			       (struct sockaddr *)&addr, &addrlen);
+ 		if (ret == -1 && errno == EAGAIN)
+ 			break;
+ 		if (ret == -1)
+ 			error(1, errno, "recv r");
+ 
++		if (cfg_family == PF_INET) {
++			struct sockaddr_in *sin = (void *)&addr;
 +
-+	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
-+			device_node) {
-+		/* Disable interrupts */
-+		atc_disable_chan_irq(atdma, i++);
-+		tasklet_kill(&to_at_dma_chan(chan)->vc.task);
-+		list_del(&chan->device_node);
++			if (sin->sin_addr.s_addr != cfg_saddr4.sin_addr.s_addr)
++				continue;
++			if (sin->sin_port != htons(cfg_port_src))
++				continue;
++		} else {
++			struct sockaddr_in6 *sin6 = (void *)&addr;
++
++			if (memcmp(&sin6->sin6_addr, &cfg_saddr6.sin6_addr,
++				   sizeof(sin6->sin6_addr)))
++				continue;
++			if (sin6->sin6_port != htons(cfg_port_src))
++				continue;
++		}
++
+ 		fprintf(stderr, "rx: udp: len=%u\n", ret);
+ 		count++;
+ 	}
+@@ -620,6 +642,9 @@ static int recv_verify_packet_tcp(void *th, int len)
+ 	if (len < sizeof(*tcph) || tcph->dest != htons(cfg_port_dst))
+ 		return -1;
+ 
++	if (tcph->source != htons(cfg_port_src))
++		return -1;
++
+ 	return recv_verify_csum(th, len, ntohs(tcph->source), tcph->check);
+ }
+ 
+@@ -647,6 +672,9 @@ static int recv_verify_packet_udp(void *th, int len)
+ 		return recv_verify_packet_udp_encap(udph + 1,
+ 						    len - sizeof(*udph));
+ 
++	if (udph->source != htons(cfg_port_src))
++		return -1;
++
+ 	return recv_verify_csum(th, len, ntohs(udph->source), udph->check);
+ }
+ 
+@@ -659,6 +687,9 @@ static int recv_verify_packet_ipv4(void *nh, int len)
+ 	if (len < sizeof(*iph) || iph->protocol != proto)
+ 		return -1;
+ 
++	if (iph->saddr != cfg_saddr4.sin_addr.s_addr)
++		return -1;
++
+ 	ip_len = ntohs(iph->tot_len);
+ 	if (ip_len > len || ip_len < sizeof(*iph))
+ 		return -1;
+@@ -680,6 +711,9 @@ static int recv_verify_packet_ipv6(void *nh, int len)
+ 	if (len < sizeof(*ip6h) || ip6h->nexthdr != proto)
+ 		return -1;
+ 
++	if (memcmp(&ip6h->saddr, &cfg_saddr6.sin6_addr, sizeof(ip6h->saddr)))
++		return -1;
++
+ 	payload_len = ntohs(ip6h->payload_len);
+ 	if (payload_len > len - sizeof(*ip6h))
+ 		return -1;
+@@ -940,6 +974,9 @@ static void do_tx(void)
+ 			cfg_payload_len = rand() % MAX_PAYLOAD_LEN;
+ 			buf = build_packet(_buf, sizeof(_buf), &len);
+ 		}
++
++		/* avoid bursting */
++		usleep(20);
+ 	}
+ 
+ 	if (close(fd))
+@@ -952,6 +989,14 @@ static void do_rx(int fdp, int fdr)
+ 	long tleft, tstop;
+ 	struct pollfd pfd;
+ 
++	if (!cfg_do_tx && cfg_zero_sum) {
++		static char _buf[MAX_HEADER_LEN + MAX_PAYLOAD_LEN];
++		int len;
++
++		/* calculate source port that causes csum to add up to zero */
++		build_packet(_buf, sizeof(_buf), &len);
 +	}
-+}
 +
- static int __init at_dma_probe(struct platform_device *pdev)
- {
- 	struct at_dma		*atdma;
-@@ -2105,6 +2119,8 @@ static int __init at_dma_probe(struct platform_device *pdev)
- err_of_dma_controller_register:
- 	dma_async_device_unregister(&atdma->dma_device);
- err_dma_async_device_register:
-+	disable_irq(platform_get_irq(pdev, 0));
-+	at_dma_cleanup_channels(atdma);
- 	dma_pool_destroy(atdma->memset_pool);
- err_memset_pool_create:
- 	dma_pool_destroy(atdma->lli_pool);
-@@ -2118,23 +2134,17 @@ static int __init at_dma_probe(struct platform_device *pdev)
- static void at_dma_remove(struct platform_device *pdev)
- {
- 	struct at_dma		*atdma = platform_get_drvdata(pdev);
--	struct dma_chan		*chan, *_chan;
+ 	tstop = gettimeofday_ms() + cfg_timeout_ms;
+ 	tleft = cfg_timeout_ms;
  
- 	at_dma_off(atdma);
- 	if (pdev->dev.of_node)
- 		of_dma_controller_free(pdev->dev.of_node);
- 	dma_async_device_unregister(&atdma->dma_device);
- 
--	dma_pool_destroy(atdma->memset_pool);
--	dma_pool_destroy(atdma->lli_pool);
- 	free_irq(platform_get_irq(pdev, 0), atdma);
- 
--	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
--			device_node) {
--		/* Disable interrupts */
--		atc_disable_chan_irq(atdma, chan->chan_id);
--		list_del(&chan->device_node);
--	}
-+	at_dma_cleanup_channels(atdma);
-+	dma_pool_destroy(atdma->memset_pool);
-+	dma_pool_destroy(atdma->lli_pool);
- 
- 	clk_disable_unprepare(atdma->clk);
- }
 -- 
 2.53.0
 
