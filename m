@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045409;
-	b=QCHgaagnULMF27NNxZGy5vzXmtiBf03QHscznYxDoID5ITxpJRT10PuWc7rDLZG4Sqc4
-	 gphVJK9gHYhs6MONMhrNHLCCPTuG9Q3XRiOMi/3sAKyvOmtlbZK4t4IlkO5jyOvvuoAa/
-	 z/OZInkHFo08FvG7+HLYvk+8vdIMttuXjpRXjXnFTG6C6DNLypStR6O3iRhmD6jUjesSx
-	 yh8g2h2/dpBOC1QCmodfLx8Ha7Nm8tD3X3V1nBRJiDB2TmG5v3sST13udsDNDRaFoZkJ/
-	 u1qaPE2el2XG+ZWXZHVxCv31JWLUpSXmVtEfIXQ8AfyU27AxRecJzPm+pglcSOChBkw==
+	t=1795045412;
+	b=YjSGphVa8IymDjok3SelpJDYi63lcrng6BpBQF/MqTt5Q8nvv1PZge25wh3rA5CgeEs3
+	 p9VF273rMvLRtL/yeyABcyGlLfSi7QGXo3M36lma5FccQczNIn9thpD3+zgTJyS2N6w7K
+	 ZvsdSQ8vNXNrCFy3rVmUBP75QpY8nwJApSV4mbXogT3KIVgNP8nEXU0j7iBYROF3Tujv3
+	 46jdlgc1BJB5lpE4Utflqg1a8QVyiPf4qXpeAV7OqgpvlbheVtVKoiqMPVFWz0adO6wPY
+	 Cst/scPTPxEo01dWqUQFBGRMycJWE4whc9uVrCgn161F10Wro/o3PbTfQphbKfECr5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q9qaCxmTnFIOj9IH8nnwM3G2y1ALOeIyjV73Dy9b3yY=;
-	b=WrZpwjhmJGT1jADOWgEh9OaiqMlau/t8/CzbicVfFu4a2tuKf00B4mfWkq5/aWR+RySz
-	 yBakixAgApwoShx7zI//c6MNQ51d04XWV2OryvGbGFYI0uc71WnzRej0Qp6XnsqhaAZbZ
-	 oAxbQQBiLjL6oNsODloe/k00cxS9E1/O1VnfuJKQKWOxO1dEOxF+OUbIbDgYcHFO7RqSv
-	 gm4HVi8cVhfaf8BfBugUfpv/9K94rCjSgbiSEywJeYoHsMiQAGkAsh8KkuewzgzjSxg5S
-	 mfl2Fk8pnNe/+sUSd+wNvz+qWUmMlbFAgdOXZgn4hlB6SKSlYoFpK/ilZESlHiA4Bcw==
+	bh=KaHmPN32WK2eFkqjjgSLo/a4hbY9LmpVJAKh0mCKi0s=;
+	b=V9IMTsBlGCWeBKbHzx/mHaVql0IUAI77Bu0N4/p3jzZ3tmS7ie6MpfQh8PZe+d5Qtl0t
+	 eaWHTRG//XwJFa+iGhL9u72McnDVS1B3aDO1tVSeJ+PWZ2SjJw3jqDrgcGILjBMJzcAyw
+	 gS9f/wbjpKYB3iAKtcUD2rwzylepkLioYulWAl0ZLRvRbh+gzHkIaDMlmT/sANFL8LkFj
+	 svh2bvIO+1Zf/QH2dJi4Pp+ZrF92bCGT/uqIps3Ij/llapYN+k5hE/JwoLtgtaiZdhMDS
+	 HWRJeZmcXqyFiiMMtllNfJvWuyeiOockWoxJpwedKrfNZZJ3UvtTJAE65dvs1bL6kng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPwSvuKE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9KifYbX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6944F606A325;
-	Wed, 18 Nov 2026 23:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BF0606A31C;
+	Wed, 18 Nov 2026 23:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OPwSvuKE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25EC1F000C4;
-	Wed, 18 Nov 2026 23:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9KifYbX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4621F000C4;
+	Wed, 18 Nov 2026 23:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045409;
-	bh=Q9qaCxmTnFIOj9IH8nnwM3G2y1ALOeIyjV73Dy9b3yY=;
+	s=korg; t=1795045412;
+	bh=KaHmPN32WK2eFkqjjgSLo/a4hbY9LmpVJAKh0mCKi0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OPwSvuKEl4JVgjcZLTGIZg9z3PEdJeUwB98eBVi0Kpj4qWeBv9m+GFMJjZptfTWUd
-	 x/XRbcywfLWWCRuZ1P+kyCT2Kn5UVchrVXEAnuSgyuuCbiynaEw8HXpXhz5bVUnhVN
-	 DROEB9ooaedvzfXMReKH2GDRLaIfEsTAUuJ97dWk=
+	b=i9KifYbX4AIGogeM3lNcJIWcWYAc9igFDH8hFdjPjyo280BcY0SIk70P0oQalJxr0
+	 dUtPUPxCukJXaiaTQ0eysKLEW9nyWsrmazIAghX3oIwuDprBOtx1iVxSQy80eP1dii
+	 XmB7xofTnl7nULkZaNDLbaO68ej0tGJqoqbChHGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
+	Michael Wyraz <michael@wyraz.de>,
 	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0913/2857] USB: serial: option: add Rolling Wireless RN947R
-Date: Wed, 18 Nov 2026 15:32:27 +0100
-Message-ID: <20261118150234.455545901@linuxfoundation.org>
+Subject: [PATCH 6.1 0914/2857] USB: serial: option: add support for ASR 1286:4e3c modem
+Date: Wed, 18 Nov 2026 15:32:28 +0100
+Message-ID: <20261118150234.490508633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,80 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+From: Michael Wyraz <michael@wyraz.de>
 
-[ Upstream commit 931aad81f3f2d26276fff6b7bda6793267a65725 ]
+[ Upstream commit 87c56085bcdfec305f5c350fe1c58a62a7f65843 ]
 
-Add Rolling Wireless RN947R 0x9300 compositions:
+The ASR modem used in the Tuoshi LT22M exposes an RNDIS function on
+interfaces 0 and 1, a diagnostic port on interface 2, and AT ports on
+interfaces 3 and 4. Match only the vendor-specific serial interfaces
+so option does not bind to the RNDIS function.
 
-Standard mode: DIAG + ADB + NMEA + MODEM + RMNET + QDSS + ADPL
-
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=9300 Rev= 0.00
-S:  Manufacturer=Rolling Wireless
-S:  Product=RN947R
-S:  SerialNumber=xxxxxxxxxxx
-C:* #Ifs= 7 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 8 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=21 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#=22 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-QDL mode:
-
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=02 Dev#= 12 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=9300 Rev= 0.00
-S:  Manufacturer=Rolling Wireless
-S:  Product=RN947R
-S:  SerialNumber=xxxxxxxxxxx
-C:* #Ifs= 1 Cfg#= 1 Atr=a0 MxPwr=  2mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=10 Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
+Link: https://lore.kernel.org/all/d12635f9-9706-4dbd-8adb-d673c6a77202@wyraz.de/
+Signed-off-by: Michael Wyraz <michael@wyraz.de>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/serial/option.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index 3690fb93a844e..ea418fbd7149c 100644
+index ea418fbd7149c..6663b352d7a63 100644
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -2511,6 +2511,10 @@ static const struct usb_device_id option_ids[] = {
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff),			/* Rolling RW135R-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x33f8, 0x9300, 0xff, 0xff, 0x30) },	/* Rolling RN947R */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x33f8, 0x9300, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x33f8, 0x9300, 0xff, 0xff, 0x10),
-+	  .driver_info = ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x3466, 0x3301, 0xff) },			/* TDTECH MT5710-CN */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
+@@ -2444,6 +2444,7 @@ static const struct usb_device_id option_ids[] = {
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x30) },	/* Compal EXM-G1x */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x04b7, 0x8217, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1286, 0x4e3c, 0xff) },			/* ASR modem */
+ 	{ USB_DEVICE(0x1508, 0x1001),						/* Fibocom NL668 (IOT version) */
+ 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
 -- 
 2.53.0
 
