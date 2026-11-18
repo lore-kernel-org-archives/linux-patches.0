@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061361;
-	b=CzRxBO2REjlN1q6SDVsl1Ge4KAoYYoA/zUTTv1jLyJ30saG50Hg9Eo8sWnWdhy8c5fPH
-	 GvbE27D52U4ID5y4BovmlJxHFqCyACFiQglTqnkbO7Wr6Z/1UU0hW92nLiSsv58Rktt5s
-	 RM8bessoerq9uKxCKjW2W5WFwzBB2ADh/3ZJxtcQno/R3NrIDTe1ETQyJnguXad5iespP
-	 yEAgxKFoMbgb4ycxsmGIe6b39tq/4mHHJYX4fY8F+MAUZuAT9/UL+o07G1b13aSPoEaEM
-	 Oz3iHh9eDZ2WfHZTDagIzSD+VFZaIblfp+/ekHzlirnaGtr9ahdfIWLKs8tynqRERew==
+	t=1795061364;
+	b=1OTPC6ZNZIZGdNXHukEnYPfsKqK99u1dI6+vXZ+hI3Bl6lLPFq379sflxX6QAwt+6Vuk
+	 9/9FZTA3q4T++VFcsS8qvLLgWtwGXRaYzcMBSihzoeuYs3Pfy4DZY7oiP2lUacI5083/e
+	 Trn7xUdOe8UMz8pvgSB5AxegWUB9xYjkSfFyP+0u/y+HLkGuapKc+E/xaA66wmuIxGLZF
+	 6uxLrPnEq4L1R5HC/O08NKLB7oEgRaGjUwfWdtxFzz5/8whu0o/BugI0tTyFNMGsLiObo
+	 1EmLpq38FEqD0tXz19Ken9FMuFLJpeUXMxPuQBbrrtgj4L+PIUGH8kNuPK3c2XveN/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oLz9ltabK2fPeNTybjG9T9Rpzzckb3NwiuhKo6UBrgk=;
-	b=3oaKTL5ajobXdjKMwOPo+lWkElqSPBuB4CAgVxfFIldGtT5WhuByBWZv+POggXe3mkFQ
-	 900SeN3bBNcRrDWjJk00bZKEOmrwWcDVZA0PlnOQfMbkvTn5VPfRosT2kTZ09ixVd5I1f
-	 UIp4GMYvbCCZ8MKWRmXdn2XdqEF5vV+ipNUbXOcneTDWdGLg7TXBMBm/pKVdHJikBA9+f
-	 aBZCCvsxnOe+4K2RnjC2yhM4FYV/npkVLS67AXgliiNi129kT67NnZ16ooVFYCs/yYN35
-	 RtCnhYBHUytzmGkivV4Oez2WtjHPToFgBac5+0h3GwU3xTtYG88rGvN5UlJ+SzoMSMw==
+	bh=MQ1icKMHM5Sm04qym/I/3jfWWAR6TMX+wvn3/6Q+Sw4=;
+	b=uSudprazZTUu4JjyeyIT4FbtJIlk31/zmiHTt8VqcskAXHxJQSlrCVXrJuCE7PP1yEtc
+	 3McffY1xu05YwkAUsvDEdsWAEotkePNSptCge0chW0UUS/Hg798j+yiKKcs9X0I2elD80
+	 lkiJ3gmwDC3zf+Ta+O8C5Y/qFEa2I4EtIRdvg8NRRbQ2g1vf5cKTS7tji2xf89EItM4sc
+	 2MySsfakd/IY0/gQcPiN1CqzjXuEBg7JAKZJD5VMZwnv6Tquzqtj2+e9M1akMLkIPdV7F
+	 iy68M7vpkY2ZshEopYeXkYf8sCQlTcSvZyqAwA1NzkDIjKzsVIvJVNK+GfIq663kfyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qjn8krhr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dPrxspem;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B98C606A32C;
-	Thu, 19 Nov 2026 04:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19084606A32C;
+	Thu, 19 Nov 2026 04:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qjn8krhr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6661F000C5;
-	Thu, 19 Nov 2026 04:09:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dPrxspem
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CAF31F000C4;
+	Thu, 19 Nov 2026 04:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061361;
-	bh=oLz9ltabK2fPeNTybjG9T9Rpzzckb3NwiuhKo6UBrgk=;
+	s=korg; t=1795061363;
+	bh=MQ1icKMHM5Sm04qym/I/3jfWWAR6TMX+wvn3/6Q+Sw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qjn8krhrJ4AKR8nnvSy5Krc8ia6s5qOQvRflEb0WlcxIoItC8x6fZmclsvZfphW7H
-	 yRrdOVhnK5OPyBbLnS4cnK9TbuLHv5ajrQdDwoB2iMMfuF1+vfEkgCCb7dmUZW6r5/
-	 2Hlapbw9qSpWgDwbAxgEyvMxbwDU2hE1COcOEXOo=
+	b=dPrxspemTbGVNgiS6oAWLEkCUn9YlmZNR7wga2TcCL0YSZz39mITXdIl3yvI2y2Vd
+	 WCnaPxZb4WmV++eHCJ5viOc2CNH1PBkb+Bv4Ot9fs46E30vbV5X9rtmSoBzZQKQWZU
+	 A/se+OKG+ciubby0Dmg+Bka2JJTVVKw3w5nkr50U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1508/1848] arm64: dts: allwinner: sun50i-h6: Add missing SRAM region for video engine
-Date: Wed, 18 Nov 2026 15:59:06 +0100
-Message-ID: <20261118150022.455059587@linuxfoundation.org>
+Subject: [PATCH 5.10 1526/1848] pinctrl: sprd: free maps on DT map failure
+Date: Wed, 18 Nov 2026 15:59:24 +0100
+Message-ID: <20261118150023.292193546@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,37 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit d7287d940f3cd8d5945009076058a8120281744b ]
+[ Upstream commit e873c665e503ebfb6dafaf9346c3956695686226 ]
 
-The SRAM C region contains a partial alias to the VE SRAM already
-referenced by the video engine. To avoid access through this alias
-window, the region should also be claimed by the video engine.
+sprd_dt_node_to_map() reserves map storage before adding mux and
+configuration entries.  If a later operation fails, the error path only
+frees the temporary configurations and leaves the map allocation reachable
+through the output pointer.
 
-Add a reference to the SRAM C region to the video engine node.
+Free the partially built map on failure.  The caller ignores the output
+parameters when the mapping callback returns an error, so they do not need
+to be reset after freeing the map.
 
-Fixes: b542570e5605 ("arm64: dts: allwinner: h6: Add Video Engine node")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260712030011.3778169-6-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 41d32cfce1ae ("pinctrl: sprd: Add Spreadtrum pin control driver")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/sprd/pinctrl-sprd.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-index 4592fb7a6161d..44b69c3dd77cb 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-@@ -161,7 +161,7 @@ video-codec@1c0e000 {
- 			clock-names = "ahb", "mod", "ram";
- 			resets = <&ccu RST_BUS_VE>;
- 			interrupts = <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
--			allwinner,sram = <&ve_sram 1>;
-+			allwinner,sram = <&ve_sram 1>, <&de2_sram 1>;
- 			iommus = <&iommu 3>;
- 		};
+diff --git a/drivers/pinctrl/sprd/pinctrl-sprd.c b/drivers/pinctrl/sprd/pinctrl-sprd.c
+index 08dc1931b358d..c59ac62456b5e 100644
+--- a/drivers/pinctrl/sprd/pinctrl-sprd.c
++++ b/drivers/pinctrl/sprd/pinctrl-sprd.c
+@@ -327,6 +327,9 @@ static int sprd_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 
+ out:
+ 	kfree(configs);
++	if (ret < 0)
++		pinctrl_utils_free_map(pctldev, *map, *num_maps);
++
+ 	return ret;
+ }
  
 -- 
 2.53.0
