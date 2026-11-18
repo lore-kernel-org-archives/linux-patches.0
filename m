@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017261;
-	b=M30xpMVBrgSm3Qd9H3n48pG8kToXYiSYjCXaqUzTrgVa/qyt4hkODWPvoTk3+nkabXck
-	 QTREP1NQoNf+WFSg1RNKjh4PONZhXLyX2CLxtBjdwPecibdP3//AfLFpX/a+DlGA/RCvu
-	 Cxhj/fuzPAYg+14fJfMXxocpOyl1SACysRKtdJIIR0iwpYYKnjoE357qpSMBszIEEqGE8
-	 XHg2yGrU4JJs0BvjFPCJY6nYBaFBipRcHK9Mmg3H0Ff9gjdIKnfcr5CJ6GIi6lvcfGWlJ
-	 Bo6XMXGosqB28Xd0htHsf7EgNlk9LB9CUcI9qoGnOBDKa/kTgeil9wc94FLupXTeUyA==
+	t=1795017264;
+	b=HA8ngLU0f1p77byvrIJXOc2rom7IcuIzGdu0yjXRsFRg9C9PPJdNaU173SUuREyAV27n
+	 Gpygr+mHyEfnIMO2dbX21m7W1pf547bn5iH9jR1EqFnHwTlxZRXL1h5SGVCj8ZQmBoeSI
+	 LWztOq2PXO7dFWtGV661GRyMUrgRmQ5Ib5KUfnaBoujp8hFu+oAGBeiNLu5EQPvGZX1H2
+	 Bmgk3jcXn1abAmbGUswfFsEdzF3/Gy6wEif68bObFj44U53R4ADywUKkYP6XeU3eSYTy8
+	 qoy1sH40kYSZ89iyA35veUKIHzbH5LXZcW0FnFkw+aunn9O+S3hVJ3fu3U/Y3oMSexQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017261;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017264;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=68fqJL1AYNsU2B+r1ZSrADkBw2+p9tbe+JJ3PLiR9ys=;
-	b=FPEO8GpD8RBzjdhEEOPo2B0PZ55y8ZuxlESDtbsxDyIm6YHjZTRG9xe/6B5MQJrhZP9/
-	 4zmfPekOuE1EypbU/zbK81w2ET9hCOmYBX8FFi6DwJRTWtJdsCa84wWEz6JctmDRLaTaO
-	 0Ah1bQ43dF6oil0V9SncCblnQRwkhjKLjtO0nJnVW/58eKxPS9FsJxtMJQ54M3EU/2ohI
-	 oUXPzhxhdqykZsJrv4OH7N9t+x7YXU4GBfas1AgdYOvE8fXOwajOpM6mG/npdeMg96NLS
-	 p+SHdD4xrQoj7f3ckIRa7tYDUusCbttXkRzP33x1Iq5tSwUMLqo/Yopvk/D7h6bFQKg==
+	bh=6tLVyPwAC6hcZZ9AVYL96fLuY89d4HQa1ll4pXxyQfo=;
+	b=reWo/QFHl/IO+qafVCOkRXBayDnm0wUjrbCW0ehaM5ga0KqSdttU/n2wPsexNBdDN0iH
+	 JxKz1zPv5p6N10p20TrX+1s5LuyOaaz+bX08zz9kC6dDVaYApdTlVz/xq4yRRzn666DAZ
+	 sIn2qj9RXVNdmzXxQ0I3xFa/IRBTsVifV5cpmeI4KRuLYQoV/+JO8huDNg2pmgH/axCDw
+	 new3pya2fYjlcXayvtViyIC6GlzvZ83e28bqhwzqKlwcWFlyEyQZUhzai76tnrhzzXJ5y
+	 1cbNCB9Jp+Nc+fbSOm3zvLIVhYeyy5vdWQsLKKjP6SgqzliWLh0llB9QcTRBHb4xuFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ytP79Adu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhJbrQn9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99120606A32A;
-	Wed, 18 Nov 2026 15:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A427606A31C;
+	Wed, 18 Nov 2026 15:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ytP79Adu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE661F000C4;
-	Wed, 18 Nov 2026 15:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhJbrQn9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896631F000C4;
+	Wed, 18 Nov 2026 15:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017261;
-	bh=68fqJL1AYNsU2B+r1ZSrADkBw2+p9tbe+JJ3PLiR9ys=;
+	s=korg; t=1795017264;
+	bh=6tLVyPwAC6hcZZ9AVYL96fLuY89d4HQa1ll4pXxyQfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ytP79AduBaWJ+UX5DX/D+tm9mIZhPczjMpayFM3UpuYJCsg121eVWJFDHZuWBE8/S
-	 y0zGU2VIoqrBnPGdSnKIUW2p0CPmo1zQGtg0K2wUXVRwZnDB2pjgzZbjMpXYsQ9KTB
-	 omDquigZKBMhHTbFEH09FMeJezXVB3dwvniSqWmU=
+	b=qhJbrQn97vCgI7g6gl37jGMhJu4KBnTgmnT4rlvywWKbYvz7lGqBUwnTfRDAcZIXN
+	 Cz4z9qxpyqSORs6A0CgWSGm9Ab8LQy+68EV24dWYT25Mml0DDneut+HCL88IVTok4u
+	 CZ889PG4PmoEyC2xqG9j09/uBasN11oDHIwUV+bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <hppiscas@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0819/2651] iio: accel: bma220: publish the SPI driver ACPI alias
-Date: Wed, 18 Nov 2026 15:34:19 +0100
-Message-ID: <20261118150317.379292017@linuxfoundation.org>
+Subject: [PATCH 7.3 0820/2651] dt-bindings: arm: mediatek: Fix MT6779 audsys compatible
+Date: Wed, 18 Nov 2026 15:34:20 +0100
+Message-ID: <20261118150317.414690237@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,47 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <hppiscas@163.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit cdc7d3dd101251a6373332726b8d6fad35e83b8a ]
+[ Upstream commit 034b3b1ce25a62222920e2bb3b6a0c7ef160b108 ]
 
-The SPI driver advertises an ACPI match for BMA0220 but does not export
-that table. A modular build therefore lacks the ACPI alias used to load
-the driver when the device is enumerated through ACPI.
+The correct name for the MediaTek MT6779 audsys compatible is
+"mediatek,mt6779-audio", not "mediatek,mt6779-audsys". The original .txt
+binding was correct.
 
-Export the ACPI table. Move the existing SPI export next to its SPI ID
-table so each export is adjacent to the table it describes.
-
-The issue was found by our static-analysis tool.
-
-Fixes: bf2a5600a3eb ("iio: accel: Add support for Bosch BMA220")
+Fixes: e97c618234d9 ("dt-bindings: arm: mediatek: convert audsys and mt2701-afe-pcm to yaml")
 Assisted-by: LLM
-Signed-off-by: Pengpeng Hou <hppiscas@163.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260921232819.3137721-1-robh@kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/bma220_spi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/arm/mediatek/mediatek,audsys.yaml       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/accel/bma220_spi.c b/drivers/iio/accel/bma220_spi.c
-index d6c1087cc3c0f..d7a95289df481 100644
---- a/drivers/iio/accel/bma220_spi.c
-+++ b/drivers/iio/accel/bma220_spi.c
-@@ -28,12 +28,13 @@ static const struct spi_device_id bma220_spi_id[] = {
- 	{ .name = "bma220" },
- 	{ }
- };
-+MODULE_DEVICE_TABLE(spi, bma220_spi_id);
- 
- static const struct acpi_device_id bma220_acpi_id[] = {
- 	{ "BMA0220", 0 },
- 	{ }
- };
--MODULE_DEVICE_TABLE(spi, bma220_spi_id);
-+MODULE_DEVICE_TABLE(acpi, bma220_acpi_id);
- 
- static const struct of_device_id bma220_of_spi_match[] = {
- 	{ .compatible = "bosch,bma220" },
+diff --git a/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml b/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml
+index 9aa39b002361d..5ede7d277488c 100644
+--- a/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml
++++ b/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml
+@@ -19,7 +19,7 @@ properties:
+           - enum:
+               - mediatek,mt2701-audsys
+               - mediatek,mt6765-audsys
+-              - mediatek,mt6779-audsys
++              - mediatek,mt6779-audio
+               - mediatek,mt7622-audsys
+               - mediatek,mt8167-audsys
+               - mediatek,mt8173-audsys
 -- 
 2.53.0
 
