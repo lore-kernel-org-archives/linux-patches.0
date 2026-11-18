@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027434;
-	b=R5TkH5ksUGcNYtZ7v5BW7RBa6wo3HYNc3dFj5Y2kjfUH6qaH817vSJtIW0W15+FNAiLk
-	 9dpokNTVR61wQCgD89NYWyBDBp1JPsO64l2rjqUOOVqmzjJpxivvER/rBVUD7D1ESw3Rs
-	 npGu6Le+i/23ygbw1nxLgJXpInDbHV4uO192jmcge71S02jijK+wr4S51l27tJ+mOihJa
-	 xEgP8So0BT5zdrg25gPYApIAT8Jl6vNNhQ50TyoFI7FgpRB4MWzXIMXMT7oW/7IogosNL
-	 Tp1bWShbhmabKMzrffi3d9XIT8tEZIY0KKijqpcvtBvG7uof/XFya+ydbgB2Q6vy7Qw==
+	t=1795027436;
+	b=ehVJpe44Q1EzSyLqM91Vs4iNSo3EquCtVnRKgDUx3CPBsRsVmph2u02MbX4mNmPkDWhi
+	 3xv8KHJ5jAH5ozxiJFm7u0eAKdzI7KsIW2gzqR4Ot7e844yJPSoTAZovrdlr93GHaEXd/
+	 kL8OdlaAReNBXaQpPi5sC8IX4G7/cI4zI4ar3xkPKCn5qEIvUhyNBFN4vyxSptlC9Bqx6
+	 5bX3ydoFWoZuvTfHKTAq2BSlu3wy8CRfGob8MsOt9gIU1uP4nk9xJ4BrVZfrdVAv60ZZ/
+	 DXzdIPH09kzQ18wGHVPXcCt3bEnz8Rl5fbQGcjSp6EPNHFXlxveMWlak3zaj6Z+Xp8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XuW4iSTYynqk2QMsjNNKtGlhyxwP/K74fDtu39SCvTs=;
-	b=3NtgZzeE2X6QocRQacZatpNu3qCn317RxpE4fzFNPF7BuEtf9wX8mLUR/Jj/NxxZF8x9
-	 ESxuHYw0/XmbyQuFIlnFGNcGUY2SzthYL21X5Lq4Xk3OYUpUcUrfUByxwO4qZu/EQSrsJ
-	 10zqAmpMkElOKi2oPO5TqjCLGllBYIO0SQ1ngX7dzQJT2ToIHTHppdYMvoO6rVnozNRnJ
-	 qvOekj3iLWhAjSiMclIYxr6ZllS4zx5v0dOv90reuaPdoypzUfTANMZpe+iKQ1kA4W5mj
-	 SxJg7wdbn2j75r2ldykqs8u7r3+2xRAAAtm2xM/X1jjq9+OXo7UhHLiXDi+ajjHIXyQ==
+	bh=XznJR5nk8XA4IxC1CY5+K9LpLhlzTrD2nOpzpIHQs00=;
+	b=YUtOa/Az5TYFOeqLsZ2HEYY5zos9YIaZFqg/TVH2CA/PkA7BrwlQbIOz85sYqnt3eOY8
+	 lh8+FPburBrLWNwc31X2zcZQotTIUpqFuB0s8iDIMzsRS9buIYoFjnDdXU7te0x1mGz/t
+	 ObiQCu1zlKdgKBTnXZnj8B63+Yv+ToOYmmcEgdCABRMom23nI8whR+2aluLPybHtwrdXY
+	 xze4n2F6jhs/ZqINaVsSFJn+Y370CLp9m/e96ZUDTbqhzJXIoXOZhStDGCZUYaTPOeHED
+	 nxQiJjDiA3Gzkb7mE5saNMtKeWqqyDzhgdOxQ9P4KXaTaJiEmrkKMQX2pPmXr9Fr1fg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TE6v1AK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHpLXRCk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5AE606A33D;
-	Wed, 18 Nov 2026 18:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C2460A260D;
+	Wed, 18 Nov 2026 18:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1TE6v1AK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726531F000C4;
-	Wed, 18 Nov 2026 18:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tHpLXRCk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341261F000C4;
+	Wed, 18 Nov 2026 18:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027434;
-	bh=XuW4iSTYynqk2QMsjNNKtGlhyxwP/K74fDtu39SCvTs=;
+	s=korg; t=1795027436;
+	bh=XznJR5nk8XA4IxC1CY5+K9LpLhlzTrD2nOpzpIHQs00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1TE6v1AKph6znedBQI4dRjUr+Viz+ebA2O6BWsJPTSaM+pqBmtrb80X5hZFHMAnxv
-	 L3vA2/FFhahtql2vjN9zMXJy2beQL43GmMHSh4RLrUaD/OIxo+FPOALjC/LdAKiX2h
-	 h7/0uaKjdnroeNwF+asWqt2A12MHXZu5yJ0c/Mc8=
+	b=tHpLXRCkTZNzZtun1gMgmctkKHYv8ioz2hZxrE0Yzh5yn3pDf/GB/dLxgPqcQZ1T1
+	 BmA4hD40DRro6zm8OInoKtfN15au9e8aniwgbvA6oeGDjxAlZxRPs+VW5MIYjR+pJb
+	 ku2AklEjE2D0SaetE/LDdo/1fBakWEtUPjrRtKl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Tejun Heo <tj@kernel.org>,
+	Manuel Ebner <manuelebner@mailbox.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Fan Wu <wufan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1789/2151] cgroup/cpuset: use mems_allowed_seq when checking a policy nodemask
-Date: Wed, 18 Nov 2026 15:58:44 +0100
-Message-ID: <20261118150226.988685200@linuxfoundation.org>
+Subject: [PATCH 6.18 1790/2151] ipe: fix invalid sgid value in audit event documentation
+Date: Wed, 18 Nov 2026 15:58:45 +0100
+Message-ID: <20261118150227.025439871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,68 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Manuel Ebner <manuelebner@mailbox.org>
 
-[ Upstream commit b0cec62d2867ab3ed27604d5c177b8960c43b17a ]
+[ Upstream commit edf43c031902787117822b23324cf08ccc023bf6 ]
 
-A cpuset update changes the task's mems_allowed and rebinds its
-mempolicy in separate steps under mems_allowed_seq, but the check
-reads both without it.  This can cause a spurious numa placement
-miss under some cpuset/mempolicy combinations.
+The audit event example in the IPE documentation contains 'sgid=)',
+which is not a valid Set Group ID value. Fix it to use 'sgid=0'.
 
-A reader that loads one mask before the update and the other after
-it can see a spurious empty intersection and drop the nodemask.
-
-For example, a task with cpuset.mems={0} and MPOL_BIND={0}.  If the
-cpuset moves to mems={1,2}, the policy is rebound to {1}.
-
-The allocator can race and compare the old mems_allowed {0} against
-the new policy {1} - which will result in a dropped nodemask and a
-misplaced allocation on node 2.
-
-Simply retry the intersection until mems_allowed_seq is stable.
-
-This covers the task policy, which is rebound under mems_allowed_seq.
-VMA policies are rebound afterwards by mpol_rebind_mm(), outside
-mems_allowed_seq, and are not covered by this change.
-
-Fixes: cc9a6c877661 ("cpuset: mm: reduce large amounts of memory barrier related damage v3")
-Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ac6731870ed9 ("documentation: add IPE documentation")
+Signed-off-by: Manuel Ebner <manuelebner@mailbox.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Fan Wu <wufan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ Documentation/admin-guide/LSM/ipe.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 968a50997ac1e..4f73656ff5c37 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -4367,10 +4367,21 @@ nodemask_t cpuset_mems_allowed(struct task_struct *tsk)
-  * @nodemask: the nodemask to be checked
-  *
-  * Are any of the nodes in the nodemask allowed in current->mems_allowed?
-+ *
-+ * A cpuset update rebinds the task's mempolicy and changes mems_allowed in
-+ * separate steps, so retry if an update raced with the check.
-  */
- int cpuset_nodemask_valid_mems_allowed(nodemask_t *nodemask)
- {
--	return nodes_intersects(*nodemask, current->mems_allowed);
-+	unsigned int seq;
-+	int ret;
-+
-+	do {
-+		seq = read_mems_allowed_begin();
-+		ret = nodes_intersects(*nodemask, current->mems_allowed);
-+	} while (read_mems_allowed_retry(seq));
-+
-+	return ret;
- }
+diff --git a/Documentation/admin-guide/LSM/ipe.rst b/Documentation/admin-guide/LSM/ipe.rst
+index dc7088451f9d9..58183f05250fc 100644
+--- a/Documentation/admin-guide/LSM/ipe.rst
++++ b/Documentation/admin-guide/LSM/ipe.rst
+@@ -489,11 +489,11 @@ The following table lists the error codes that may appear in the errno field whi
+ Event Examples::
  
- /*
+    type=1404 audit(1653425689.008:55): enforcing=0 old_enforcing=1 auid=4294967295 ses=4294967295 enabled=1 old-enabled=1 lsm=ipe res=1
+-   type=1300 audit(1653425689.008:55): arch=c000003e syscall=1 success=yes exit=2 a0=1 a1=55c1065e5c60 a2=2 a3=0 items=0 ppid=405 pid=441 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=)
++   type=1300 audit(1653425689.008:55): arch=c000003e syscall=1 success=yes exit=2 a0=1 a1=55c1065e5c60 a2=2 a3=0 items=0 ppid=405 pid=441 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0
+    type=1327 audit(1653425689.008:55): proctitle="-bash"
+ 
+    type=1404 audit(1653425689.008:55): enforcing=1 old_enforcing=0 auid=4294967295 ses=4294967295 enabled=1 old-enabled=1 lsm=ipe res=1
+-   type=1300 audit(1653425689.008:55): arch=c000003e syscall=1 success=yes exit=2 a0=1 a1=55c1065e5c60 a2=2 a3=0 items=0 ppid=405 pid=441 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=)
++   type=1300 audit(1653425689.008:55): arch=c000003e syscall=1 success=yes exit=2 a0=1 a1=55c1065e5c60 a2=2 a3=0 items=0 ppid=405 pid=441 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0
+    type=1327 audit(1653425689.008:55): proctitle="-bash"
+ 
+ This record will always be emitted in conjunction with a ``AUDITSYSCALL`` record for the ``write`` syscall.
 -- 
 2.53.0
 
