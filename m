@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042621;
-	b=L2IC/hFM1Mlv1Wd6HJYNmTizeBT98q/mqtw/CWv+rQRw0dDg9DKKpEubxPR3YrrgtKHc
-	 2zEde58e1j5aJnOdn9VxqiewBDXQAkDry4mlFoZuSeWFcIcO2BNei2aw+APhKVqiTNdU4
-	 +JRPmQY3ihY2HJg6EV5yOnlCa+51yc++8yltMHT4hwW+0mHzwBfjiJOKCQ/7m+1Kl0W61
-	 4gch0clcrgnsPTsf7MQfZrXG1PgkoH5MVTeuSlGzaf532Wp7ST2L9KfSjsv1/kGlIqZx1
-	 /cwrOUGgCNopcc6KS0rE843NMkBlAZ8i1q3IpU74ZduGV8gGk3Fqbs1yBUn6cJuO4pQ==
+	t=1795042624;
+	b=bDJBknocpO19tXK7X+E+Ri8hh03mrcGnb3D0nGS9Da93G4Zg/TQCP+VbtxJflJnHlhXb
+	 /B/8aahMX4HVyPtjovzskLG6GYIzavzYnDJxiVu4qiElCpbprmOsOoygxIkxBtqibEFh8
+	 KJD3wGqzPEXu8H96c0ist8PHYpMyid7KjWWBRZGGDzcHsEeaj3lr791TeOlU9Wz1LhMaO
+	 e2OwYf7oihqoF9EFckKN+gJAUeSWT2TlPMeGRRLWrZDFlaS3tr4duJyIWwpAq1gFx504k
+	 dMYjAay8k0Qv1xH3P7GYRBsILGNhZ9Bt1mhqVilf6UVmgmRr/7uVhyZRtiiB949t1Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZJlkEuNHYC/2e3MuIt7t7VSQVn9VVIw3qOgl7OceiLg=;
-	b=oR4KSvE3treg2OUp4MP7dH939Z2I61iPrRDmN+to5QhESipNon4qR9rTkjRNHCKiYvJB
-	 AnH60nrQVbP8ZvnfrDd9/38INUybnEi4gqB65Ih2YO0Wbc2JSgzYJikNy65NsLQ/+2zhv
-	 50P+fbj8ca+cn7F3fRiCc49SNaVBy7dWYCLbLkAv/dOtz1TjwAMwShHW9t+xnyTDT+/ct
-	 i4aTRs/Ehz2tsmvrd6jxFemYiX44pqlnuYdZScH2N3HYoGwcRu0qqU3RDsq4v/ZI3yGyy
-	 MBs5Qr4P6faqgkEvardOE63wuLsMFCrwt17kKcn/toPd7h4aoqTvWruvhvXHsUpbyBw==
+	bh=KRZBmYL4vvlCu0cy73P10AU6bo295Q7RUx3UZOdsc34=;
+	b=q06r20a9GEiaOBRYBov64shCOJISoi2AQaxD83pXeRWy+TlmcNPc35qgXmBYhE+BR1bn
+	 d2Gf0JG5U8G+6vTPsUS/GwRs33HOa9mCAyzcq2Zm6gv0r7X+mQ4CGCa6M52WC/6dWK0w9
+	 DBVclh8S9QJO/5um+Dsok5Lj+lSHpreupNBw62JAuCyVO1+21BbfSXAiMm7RCMKxMZf7h
+	 szlng4XXya3tfTrCih4ugcjiyp2Bz2D6ZadbcL5N4yemGJArLxVsTNpzkWxR7mICb5kPU
+	 Gr+JxdS6H7HkYWEORUCFTtpQf6Fpj3TXHrE7N/ImNZTb9BuXJFu7fF4PJILmINikHGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kf8LzwSE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d/DW4OGK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC757606A320;
-	Wed, 18 Nov 2026 22:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0A5606A325;
+	Wed, 18 Nov 2026 22:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kf8LzwSE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEE31F000C4;
-	Wed, 18 Nov 2026 22:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d/DW4OGK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31421F000C4;
+	Wed, 18 Nov 2026 22:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042621;
-	bh=ZJlkEuNHYC/2e3MuIt7t7VSQVn9VVIw3qOgl7OceiLg=;
+	s=korg; t=1795042624;
+	bh=KRZBmYL4vvlCu0cy73P10AU6bo295Q7RUx3UZOdsc34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kf8LzwSEabKI/bkrqJ614JoIyLVglCSdjIs1TQ9Y3bmOzZw20Au9XrV3Au/O+FY2o
-	 kNWPHIC2yjo3oRMeWCTWMqmupHr8z9dRCIGvD4NgiZsmyUYOn39a+Sw63QCfqzgldi
-	 PCAnS3CET8ccSmlf6ITw5gvHnjKE0of6H4LJKHG8=
+	b=d/DW4OGKotPkf53WSYfkhZRC9EUDYWqeVl+I4dvycNv+rUFs+P94ldasshjihGrLh
+	 RxmSOOiRE33em7bIb5NyBz0p2cYY/Vp1XFpkuKo7H3Y2N43PYrAFHgaUvtTjRo+xYG
+	 wZdbCkFzvYPE6N1RChiQY7o7dCYJjOhnQs9EP18c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3235/3318] net: dcb: initialize PFC value before calling getpfccfg
-Date: Wed, 18 Nov 2026 16:04:17 +0100
-Message-ID: <20261118150456.746358268@linuxfoundation.org>
+Subject: [PATCH 6.6 3236/3318] ice: set in_use only after preparing Tx timestamp index
+Date: Wed, 18 Nov 2026 16:04:18 +0100
+Message-ID: <20261118150456.772528822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,65 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit ca87a2dffbb550fc934647d5e8d1c4ae85590132 ]
+[ Upstream commit 50870d62116038e6f1e17a6aedcf2a95cec37ec7 ]
 
-dcbnl_getpfccfg() and dcbnl_cee_fill() pass the address of an
-uninitialized stack u8 to the driver's getpfccfg() op and then put it
-into the netlink reply unconditionally.  The op returns void, so the
-core cannot tell whether the driver wrote the value.
+The ice_ptp_request_ts() function is used to request a timestamp index for
+use with a packet. When reserving an index, it sets the start time and
+saves a pointer to the skb into the appropriate index. The function marks
+the in_use bit first before doing any of these steps. The IRQ handler which
+clears the timestamps reads the in_use bits uses a lockless flow for
+reading the in_use bits to determine which ones are in-use. This is
+necessary as actually processing a complete timestamp must be able to sleep
+so we cannot hold the timestamp tracker lock over the entire sequence.
+Additionally, blocking the Tx hotpath with such a lock indefinitely would
+be problematic.
 
-i40e_dcbnl_get_pfc_cfg() and ice_dcbnl_get_pfc_cfg() return without
-writing *setting unless the DCBX agent is host managed and in CEE mode.
-Both drivers normally run with firmware managed DCBX
-(DCB_CAP_DCBX_LLD_MANAGED), and i40e with FW LLDP disabled runs host
-managed in IEEE mode, so on a DCB capable i40e/ice port the PFC values
-in DCB_CMD_PFC_GCFG and DCB_CMD_CEE_GET replies, and in the CEE part of
-RTNLGRP_DCB notifications, come from uninitialized stack.  The same u8
-is reused for all eight priorities, so this is one byte per reply.
+However, the existing flow now has a very narrow window where the IRQ
+handler could see a timestamp as in-use but read a stale value for its
+"start" time.
 
-dcb_doit() only requires CAP_NET_ADMIN for RTM_SETDCB, so the GET
-commands are available to unprivileged users.
+Fix this by ordering the sequence to mark the in_use bit last, and add a
+memory barrier to prevent re-ordering of the previous writes to setup the
+index.
 
-Set the value to 0 before each call, like the PG config path already
-presets its outputs to DCB_ATTR_VALUE_UNDEFINED.  0 is also what the
-reply contains today on kernels built with CONFIG_INIT_STACK_ALL_ZERO,
-so nothing changes for those.
+This was found and reported by Sashiko while reviewing an unrelated change.
 
-Found by code inspection, compile-tested only (W=1).  I don't have
-i40e/ice hardware to check the reply.
-
-Fixes: b94b013eb626 ("ice: Implement DCBNL support")
-Fixes: 5effa78e7c94 ("i40e: Add netlink callbacks support for software based DCB")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Link: https://patch.msgid.link/179289284460.50470.572724041164324949@gmail.com
+Closes: https://sashiko.dev/#/patchset/20260821-jk-e825c-minimized-fixes-v1-0-9d0731eb4858%40intel.com?part=7
+Fixes: ea9b847cda64 ("ice: enable transmit timestamps for E810 devices")
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20261027-reduction-v1-2-81237c67a361@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dcb/dcbnl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_ptp.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/dcb/dcbnl.c b/net/dcb/dcbnl.c
-index 2e6b8c8fd2ded..1d82a9cbc2c4c 100644
---- a/net/dcb/dcbnl.c
-+++ b/net/dcb/dcbnl.c
-@@ -281,6 +281,7 @@ static int dcbnl_getpfccfg(struct net_device *netdev, struct nlmsghdr *nlh,
- 		if (!getall && !data[i])
- 			continue;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index df88304c9a1b1..8427b36bd8b55 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -696,6 +696,12 @@ static void ice_ptp_process_tx_tstamp(struct ice_ptp_tx *tx)
+ 		bool drop_ts = !link_up;
+ 		struct sk_buff *skb;
  
-+		value = 0;
- 		netdev->dcbnl_ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0,
- 		                             &value);
- 		ret = nla_put_u8(skb, i, value);
-@@ -1396,6 +1397,7 @@ static int dcbnl_cee_fill(struct sk_buff *skb, struct net_device *netdev)
- 			goto nla_put_failure;
++		/* Paired with smp_mb__before_atomic() in ice_ptp_request_ts()
++		 * to ensure ordering the in_use bitmap and the indexed fields
++		 * in the tstamps array.
++		 */
++		smp_rmb();
++
+ 		/* Drop packets which have waited for more than 2 seconds */
+ 		if (time_is_before_jiffies(tx->tstamps[idx].start + 2 * HZ)) {
+ 			drop_ts = true;
+@@ -2473,11 +2479,13 @@ s8 ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb)
+ 		 * a reference to the skb and the start time to allow discarding old
+ 		 * requests.
+ 		 */
+-		set_bit(idx, tx->in_use);
+-		clear_bit(idx, tx->stale);
+ 		tx->tstamps[idx].start = jiffies;
+ 		tx->tstamps[idx].skb = skb_get(skb);
+ 		skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
++		clear_bit(idx, tx->stale);
++		/* Ensure index is setup before marking it as used */
++		smp_mb__before_atomic();
++		set_bit(idx, tx->in_use);
+ 		ice_trace(tx_tstamp_request, skb, idx);
+ 	}
  
- 		for (i = DCB_PFC_UP_ATTR_0; i <= DCB_PFC_UP_ATTR_7; i++) {
-+			value = 0;
- 			ops->getpfccfg(netdev, i - DCB_PFC_UP_ATTR_0, &value);
- 			if (nla_put_u8(skb, i, value))
- 				goto nla_put_failure;
 -- 
 2.53.0
 
