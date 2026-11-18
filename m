@@ -1,64 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038324;
-	b=hLinSSSGXVWFejzIJnI8XlB4qoYRRPU+0R28kf6OY6nnzTjHAbFkgHi4UFTE/fxzl8SB
-	 l4997O13ye9Lc2eBNvX8emvOFbALX/LPaYGWqQkhcM0gvBJ8Pr6Qp3/PKDRm8aLf+mrZN
-	 WD+i5WJpRf9o74XgbRuGlpkoGp6OXHYNoSVqzoeDpqq1gES9N227jkO2g9VWYfOkMaU3X
-	 fuc/MtWdxokb4ciolobHpXuUTKXvFZKw8Xml7fSCDg80b8AAxS5Q81nQBWiYuOa252QGI
-	 iy4KE83n+Vkj/dxoyYxGIXREKdtH0W3qz3z+JXTC7Tv3KknQx+oGzQgKxvClFJZG70Q==
+	t=1795038326;
+	b=a5tjlLqRKekTfpu4CyoPQa8eIzFEeoEmY6+69iB47DJaKDj6M1l0yX4TQhGxIYo2mE2j
+	 dTgON9v3xX7MUj/Sa60LCsUaAN4F8qD9MG665qoh6Tr0tE64X46ANvQUO2n534mrNrlJm
+	 J99T2wBMqF90bi5Nn3TRyQYm9Oy6ObYRYdIxEjKXNKmmELYW4xPYrpegU8E6YqAtmRH0Z
+	 CpHQeSmWGcBAdFmhUEDtSfUYTVXQQEu6vAPKwdCXhgm0IoUvDDSBYKqZJs8RFuiX4mhcT
+	 a838ORyodF4yAGcgjOb47O6VmnL01o/ZjQcBhoyFZAEijp2cegD5QkaX8p7PJDGyXVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cKEhpL1XHl3WpZIypYLt0WvZMAzkA4Y1UWdGDubEZnw=;
-	b=M1f+V3eytMiZ3H8gi2ro04gozgRCXFKjZOp0uAfN07yzmG1Am5+j1pIFIFBzBc3JQxGW
-	 U7B8jjd+ADUamvrBo+5m9CRxIqhByp4hpR2jEnhvPllCg453JR88UOv2AJCQW+WcTQJ1U
-	 REp5CIdbN8aVfPZ8x32QK7b242FXI8p1PhBaVVIEXlAAhYNKRqZvQ3Owr9okdtq098xTZ
-	 UpMsHzA6O6LNIl/R9VtkpuO4+Q6qkdvXYEOvLPOMYldnWqncbnlYrJ8QX0+tIST3fvSr1
-	 mGldlo6my61XDltojDEBmfMD2R+UPFd91NUY4AYGKVQw7AMz79yKhh005llhuXyZF8g==
+	bh=fYFReU9Yg6V5OTMMDbkm/vZvutTQHFiPIkAQojmvNIs=;
+	b=4cIp+BGRaRZmcNCFCGAk4zy0WaDLitIADAuOk465mIrKV/nLnO7tAz2OjVdCj6PQzWUL
+	 DmgQlD5IoPw2B8EpmRE19HtYPtHiOguc2ok2BAa8ZakeAUWmW9aof4dncuRcObaIuEXbA
+	 T8/cBRrALs1ZDhoYqiYCe9r5Dzje8MJJcElBT5t7L01WohfDnfX3+H3t7wtlF/Uy9YgH2
+	 4putmY7h2BOV632q5Zx647Uv+q4UGBHlJRPLhORIWMj+BuTKkoTVloIeHKpVixXeJTLnt
+	 zw6o19t30RmT9wDKSoGE5AbglznOtD5mlPVYe1fSGfti8U7qhGYmrx4QXMh/i5tizzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwaPUWma;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tyCBZNzI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DD3606A325;
-	Wed, 18 Nov 2026 21:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A72606A332;
+	Wed, 18 Nov 2026 21:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwaPUWma
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3151F000C4;
-	Wed, 18 Nov 2026 21:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tyCBZNzI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CE41F000C4;
+	Wed, 18 Nov 2026 21:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038323;
-	bh=cKEhpL1XHl3WpZIypYLt0WvZMAzkA4Y1UWdGDubEZnw=;
+	s=korg; t=1795038326;
+	bh=fYFReU9Yg6V5OTMMDbkm/vZvutTQHFiPIkAQojmvNIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XwaPUWmaG/bJGLcHiWMwnS9QsVS2qEM5jvinIiJWFr/UKYBjfFtDER22H1tF2ZvrH
-	 wAE2FFCUUrHiuZsofwit05t80IDSmaGJwBIl/0ZLp5Gs7UXTdm9RPHL3SjaAcs0Sjk
-	 exCM3h4ABuZmYbfUzRoH9jz9+pHg0x0uWhDnyfvA=
+	b=tyCBZNzIws3p0Hed16+Mzg3pxLG3Zhu/xpQREeP1jsH7jvjTY8UYyT5Ejv6ABnwkY
+	 ac7xAMLcyWBDAavsbrbix+9glOdAtpkCPdqrk+dW6WgZzaPputg//z121gMV0Ifng0
+	 xr+N3oZfBBWxMe/0me/DgYUr6YhF2ay08kFBV9MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
-	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	Rik van Riel <riel@redhat.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1705/3318] mm: disallow ioremaping ordinary RAM in generic_access_phys()
-Date: Wed, 18 Nov 2026 15:38:47 +0100
-Message-ID: <20261118150413.007723159@linuxfoundation.org>
+Subject: [PATCH 6.6 1706/3318] KVM: arm64: Move IN_GUEST_MODE ahead of state being loaded
+Date: Wed, 18 Nov 2026 15:38:48 +0100
+Message-ID: <20261118150413.039231894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -80,98 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
+[ Upstream commit 22b6557ad05bf05c73246f62c19af3e04017270e ]
 
-generic_access_phys() can end up getting called on CoW PFNMAP mappings,
-resulting in it trying to ioremap anonymous folios, which especially
-the x86 code doesn't enjoy, and which is in general just odd/wrong.
+IN_GUEST_MODE is advertised too late, when state has already been moved
+onto CPU registers and cannot be observed by another CPU anymore.
 
-E.g., with a CoW mapping of a PCI BAR:
+Move the IN_GUEST_MODE publication ahead of the state being loaded, and
+immediately check for pending request. This ensures that there is no
+window of opportunity for another CPU to observe OUTSIDE_GUEST_MODE and
+yet for state to be loaded.
 
-ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
-  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
-  Call Trace:
-   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
-   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
-   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
-   mem_rw+0x2a1/0x670 fs/proc/base.c:912
+This also simplifies the "state rollback", which solely amounts to
+synchronising the timer when no irqchip is present.
 
-But more generically, we should disallow access to anything that looks
-like ordinary RAM in the system: including allocating memory (e.g.,
-alloc_pages) and mapping them in a VM_PFNMAP.
-
-For pages with an online memmap, allow only pages marked as reserved
-(PageReserved). This also includes memblock allocations, however,
-distinguishing them from other MMIO is tricky, and nobody should really
-be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
-do not care about).
-
-So only allow access if there is no online memmap, or if the pages are
-marked reserved. Reject other pages with -EINVAL.
-
-Note that, just like other pfn_to_online_page() users, we won't care about
-concurrent memory offlining; mapping memory that can concurrently get
-offlined is highly dubious.
-
-Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
-Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
-Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
-Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: Rik van Riel <riel@redhat.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: Adapted PFN access and cleanup to the existing follow_pte() API using pte_pfn(pte) and pte_unmap_unlock(ptep, ptl). ]
+Cc: stable@vger.kernel.org
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261015100539.1011760-4-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: adapted removal of kvm_pmu_sync_hwstate() to the existing unconditional call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/kvm/arm.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 6d4a1032ca61a..8376b7c768831 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -5757,6 +5757,7 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	resource_size_t phys_addr;
- 	unsigned long prot = 0;
- 	void __iomem *maddr;
-+	struct page *page;
- 	pte_t *ptep, pte;
- 	spinlock_t *ptl;
- 	int offset = offset_in_page(addr);
-@@ -5769,6 +5770,19 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
- 	if (follow_pte(vma->vm_mm, addr, &ptep, &ptl))
- 		return -EINVAL;
- 	pte = ptep_get(ptep);
-+
-+	/*
-+	 * Reject anything that looks like ordinary RAM, including anonymous
-+	 * folios in CoW mappings or allocated kernel memory. Note that we
-+	 * cannot distinguish memblock allocations from non-RAM reliably, so
-+	 * we cannot easily reject them here.
-+	 */
-+	page = pfn_to_online_page(pte_pfn(pte));
-+	if (page && !PageReserved(page)) {
-+		pte_unmap_unlock(ptep, ptl);
-+		return -EINVAL;
-+	}
-+
- 	pte_unmap_unlock(ptep, ptl);
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 7b7afea4c5363..9ff2984d203fe 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -959,30 +959,33 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
  
- 	prot = pgprot_val(pte_pgprot(pte));
+ 		local_irq_disable();
+ 
+-		kvm_vgic_flush_hwstate(vcpu);
+-
+-		kvm_pmu_update_vcpu_events(vcpu);
+-
+ 		/*
+ 		 * Ensure we set mode to IN_GUEST_MODE after we disable
+ 		 * interrupts and before the final VCPU requests check.
+ 		 * See the comment in kvm_vcpu_exiting_guest_mode() and
+ 		 * Documentation/virt/kvm/vcpu-requests.rst
++		 *
++		 * Requests to self must be posted before this point, or
++		 * won't be taken into account until the next exit. No state
++		 * loading other than what happens at vcpu_load() time can
++		 * be done before we have checked for pending requests.
+ 		 */
+ 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
+ 
+ 		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
+-			isb(); /* Ensure work in x_flush_hwstate is committed */
+-			kvm_pmu_sync_hwstate(vcpu);
+ 			if (unlikely(!irqchip_in_kernel(vcpu->kvm)))
+ 				kvm_timer_sync_user(vcpu);
+-			kvm_vgic_sync_hwstate(vcpu);
+ 			smp_store_release(&vcpu->mode, OUTSIDE_GUEST_MODE);
+ 			local_irq_enable();
+ 			preempt_enable();
+ 			continue;
+ 		}
+ 
++		/* From here onwards, we are commited to entering the guest */
++		kvm_vgic_flush_hwstate(vcpu);
++
++		kvm_pmu_update_vcpu_events(vcpu);
++
+ 		kvm_arm_setup_debug(vcpu);
+ 		kvm_arch_vcpu_ctxflush_fp(vcpu);
+ 
 -- 
 2.53.0
 
