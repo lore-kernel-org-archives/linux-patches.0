@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058254;
-	b=gYIEjzydej4OASXbZ0ooEgUjzPhapejl6C8aMmSzil5GsHji377ZiO45WlhhN3S3gnfa
-	 3PDz3gWCAAqA6bHYNXbDiQDCHaGirbHUKz2MsUhcAufokjTycvnIGmmMhFjwNCmpYTRIw
-	 P20R6NyFApoYBKwqOuLl+M20sRE4HhIlQURKSNAp8Op0qSX7PNMtzvgZA5qtjawbdPsnj
-	 fST/yWaPJ6Yk0U0ai+ejcenHJXCGFu3rzCpnfuFmLFcRe0o/nXkbbi1T+BLN/eqQiVuH5
-	 L4nDh3cK4BL7Rs0n30+DQBI/mmRG+NxT/M1POhLOyJkUnKv5WXmkh2lGgUH6GUqtqJg==
+	t=1795058256;
+	b=pcBqlx/gGRwkMtD+JyDk7MTMkt3A2IWqxo3pTsZZF701GZfnmkohU0zurTYFtQ7YpZRj
+	 hPjhzMpcK/iYxj/K3KTH+aoQ4kL75JQuCLewYsLO37uvCeDECuyRnq+ebvhEYbyUTd/hv
+	 aHgcyPvzoRWQ3imsBN5rDEwbuD4zVVWSlMGCSjrg01dfdca3dUpxGFeCBgxRoK69B1MbM
+	 6NOqjEBOHKwz8cnv4OwD2BYP8l1koVvZco3Kpcjx0sMFG1k4mDnWugq1iF1fTZUOWksV+
+	 Npybqcbs7kanG47Me1e7jEWpiVpvDA+X4oO3gntQh59Ei6R/P/jFUHR18AFMg6qNTTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058256;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dmsldpWRkd6DocN/MiORoCMQv7r4y2HmOHvM8zRIYYA=;
-	b=unCo+VckphEf0EhSIrTRhAipqBS28D07DvNIxSp5GhqHfMHu4n+o5Yvp3BMP/pexdde9
-	 UinvgKGz4S0YdyKLvY+2169HbOkdhgAdzV5KalfxYs7JxvOJHukOi00JYIsLwhoXYYGsV
-	 a8gUUJ56k0xBUWJAj4yOWrsWIpDRgGQSHCnobtli3QScys2iC6LDQPz0us9+PTxT5Lg52
-	 EpQ2HocOfFfuC7FDj4MK2ocThutcTOuVZAh65c7Cx4XkVY053VrQRYTXMTZBHFnpUv1s8
-	 kTGBfeEdgOdJfkTMJLEYnytdx7V5HokwvTlyWF9LrEKUv1dyLuUm5Uz9n4GoWS5YbOw==
+	bh=BsRTC5LS+sfhtPjPoEU+cjTwnu94hI5s+NkchqD/Gmw=;
+	b=ET2303ER3yIlpkkRIvHzcae5mZkFoLQspXslAE1Ry3v+m46Fa1qsEwkrWB13eeqAV7ls
+	 gOyC/IbnuCZHga96Z4CwVqbZSUjGXovgCr3Bih73HH7tf7pG3fkxlZsSuH3khdUAOEgOB
+	 dMk3YO5MS6tx3wq7B9gQL6DcXgfqabayptNUHnOtEIgYIs719YSGgxYzlKBFJSFxi+5u3
+	 EJ5eOzO+iNldFbiDLT4h5ppn191OrWWQRw5RY3OnkkvVwQX7D57OArxm/ZYerwI8g50RR
+	 MrXEn+zbT18sU7Lzw0fKycHFb0fTtDirFgNKtEkHpxg9BiABIKMv52UjJxD7DoVZGjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JeQp54Xa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BLn5+r+M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193CE606A320;
-	Thu, 19 Nov 2026 03:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87B3606A31C;
+	Thu, 19 Nov 2026 03:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JeQp54Xa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA461F000C4;
-	Thu, 19 Nov 2026 03:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BLn5+r+M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F971F000C4;
+	Thu, 19 Nov 2026 03:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058253;
-	bh=dmsldpWRkd6DocN/MiORoCMQv7r4y2HmOHvM8zRIYYA=;
+	s=korg; t=1795058256;
+	bh=BsRTC5LS+sfhtPjPoEU+cjTwnu94hI5s+NkchqD/Gmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JeQp54XadqK8zpCgTBQHrG1aLH6KEImkihRGQZtisjp7k6SeVKK7/uoIJ9dKq+x1Z
-	 fVUFPiDRsbq8RDz5MJZn/3mVm7QfSDjSyZzrWCNLYH8cy7r4IjmRySFDIr1E7aEbO2
-	 tGzRNtp9lwUnI9pzfVmfnj7o0R+XWvTjmuQfhSpY=
+	b=BLn5+r+MsgtVwdqbrN7tjhfDcaJk5xIEam3HzfPvy3Ws8TrQgI8xDrKCUn0rSa6E7
+	 S8rZ9IyFx8p6czvvVyR8m1iXmrFZ0c5rIr7yQ0weRKovLdfDqet9F6FbkTlu2Z4UwK
+	 XHxaz3C6jzPMi/DPYXpCjrlCj6fQqFEYSg0LK+Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Weili Qian <qianweili@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0420/1848] crypto: amlogic - Fix IRQ handler return value and fallthrough logic
-Date: Wed, 18 Nov 2026 15:40:58 +0100
-Message-ID: <20261118145931.566014308@linuxfoundation.org>
+Subject: [PATCH 5.10 0421/1848] crypto: hisilicon/hpre - fix pointer dereference before length check
+Date: Wed, 18 Nov 2026 15:40:59 +0100
+Message-ID: <20261118145931.644595604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,53 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 4b8ae2732070c5669adee2d5d3bb97b14af53a63 ]
+[ Upstream commit 9770bb7d335f8f8db01e99168bbdd9ce2cb6238c ]
 
-In meson_irq_handler(), when an interrupt matches a flow but the status
-register is empty, the driver prints an error but doesn't return. It
-falls through the loop and incorrectly prints an `unknown irq` message.
+In hpre_rsa_drop_leading_zeros(), the loop condition dereferences *ptr
+before checking *len, causing an out-of-bounds read when *len is zero.
 
-Fix this by returning immediately. For empty status registers, return
-IRQ_NONE instead of IRQ_HANDLED to avoid masking spurious interrupts and
-allow the kernel to detect interrupt storms. Also use
-dev_err_ratelimited() to prevent console lockups during an interrupt
-storm.
+Swap to while (*len && !**ptr) to test length first.
 
-Additionally, the handler returned IRQ_HANDLED for genuinely unknown
-interrupts. Return IRQ_NONE instead for unhandled interrupts.
-
+Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
 Cc: stable@vger.kernel.org
-Fixes: 48fe583fe5417 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
-Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Weili Qian <qianweili@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/amlogic/amlogic-gxl-core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/amlogic/amlogic-gxl-core.c b/drivers/crypto/amlogic/amlogic-gxl-core.c
-index 036fb7b44d518..96491774ebbb8 100644
---- a/drivers/crypto/amlogic/amlogic-gxl-core.c
-+++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
-@@ -35,12 +35,13 @@ static irqreturn_t meson_irq_handler(int irq, void *data)
- 				complete(&mc->chanlist[flow].complete);
- 				return IRQ_HANDLED;
- 			}
--			dev_err(mc->dev, "%s %d Got irq for flow %d but ctrl is empty\n", __func__, irq, flow);
-+			dev_err_ratelimited(mc->dev, "%s %d Got irq for flow %d but ctrl is empty\n", __func__, irq, flow);
-+			return IRQ_NONE;
- 		}
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 90c13ebe7e83a..4477a781bc3f9 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -687,7 +687,7 @@ static void hpre_dh_exit_tfm(struct crypto_kpp *tfm)
+ 
+ static void hpre_rsa_drop_leading_zeros(const char **ptr, size_t *len)
+ {
+-	while (!**ptr && *len) {
++	while (*len && !**ptr) {
+ 		(*ptr)++;
+ 		(*len)--;
  	}
- 
--	dev_err(mc->dev, "%s %d from unknown irq\n", __func__, irq);
--	return IRQ_HANDLED;
-+	dev_err_ratelimited(mc->dev, "%s %d from unknown irq\n", __func__, irq);
-+	return IRQ_NONE;
- }
- 
- static struct meson_alg_template mc_algs[] = {
 -- 
 2.53.0
 
