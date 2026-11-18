@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019552;
-	b=n6aQy/JbEFdotjdKhvZ3QvpL+hieLYGSTjuoqGvHZUD0Vkfqi9h5XaxG1xTrTvNRfMRS
-	 MBCoxRNecI0nmUglhVzUuTjSUlnsIUp1YQrNYhqpNqH2+Wvjgz3PCV8NTNrKuCDy4BCH0
-	 /7IndcAv31+nkEtZwjckiGR6z1sWpua/g8roYa048s8YPT8GHQrUxjh1mVtg0eF6uqAbM
-	 q3i7rR0ibZdldoCPjpMNCCv2LMWgCqPygfdFiLw3p/Go52SPG8A7IOb9jYp7jtw8munO9
-	 pGsiDYv5nT8NTyy59cISwYmW8PykNkv+CZUwUftp8tLDHtTX1idIXlbFwYsBYNP49xA==
+	t=1795019555;
+	b=cXfJ8NJo1E1j7zbnxEYQB2OF14ENATCJosuWTkLeL+RXLxJeBww67D63+5A5tofzna9B
+	 oyKQaF0ETJU9Yps6kKNEo0tN1rAOX+Wfn5fZWL5kVgOLRJSXUBQ6ebI54y9nKpkapr1Zn
+	 GO0ZB8F+9yMybvMDuHqfBF5xjyfTlJSZYpXmawsSNJJ7bZTOPWiL3ZfBHbIwjRoZATb4d
+	 CyMEfdiENPcdLB1KD4pWDerQAUONJk1zYqMJMDNkZb8/PPHaH3lCJyPvszpVjE8IttvJZ
+	 5TdEamX1HeheTe/DZVc1IVVrElbdkSyZY96Z1m0rs4OcfztM0GcdbTPejuQRy/cI09A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=2XjQV9rfe6b/1yAq72Fxu3h++l2efdboq/ae3nL9ZYo=;
-	b=BK1dYhSA/rVJzJKbw23H6W0UTMU0+9nhpJCNf4lkIPdrPqL0/+Q/nFB2NAvLfyltI1vv
-	 8T8ddHl5X3DW1jblkV6io3/3yH+D2vUeMCs+MpvDILLQhoLgJPVBsfqYVogehcbLCrL+Y
-	 +h6cLUUQULjoG8uT20terRulh/Qlbgu95PXG1PnM1WneE7xejpuCfN0K3xt8TVPQWHQWh
-	 CqgJ2ilcFsE0TaWwzIDepbS2xU2qL4Vi3/JNrY+sxDY99JQ2ZYa1sfL94hRdNtpyeocGY
-	 Cc8lZcK6miEHnqWvnFUiSCxrmbYiUsJMRNjVE67QbA7RAYbPnH2ZV8Af1YgK1tjhWmA==
+	bh=yFxA37EmQJa3vrcswfS9SO05cQ14zggMADXojoMMSQQ=;
+	b=wQFg1lIXXIMlNd3GqLyZsoWpC9H3CJ96+GPVHwmuwuMj4KGWFsn4ISzjPMiD5XPWpy8t
+	 jQelpQDzrI0tu8FamJxTEnbXvmppFqXDbFJM6TEXIgra2Qx7xV2qkkp03h6i4zApJ7Et2
+	 ET7oMIWNargG3GqP4XY9orACfeFehHF7GkvNdPsgcKCgciPU+HtplQlR5dDrUB5putRtT
+	 9hGrHH1Iinw+iPI2liL/W+BwCe2Yj7tiX5GRawZsKaYxD7hnNp7cMUMuIdXMDN3nqetsS
+	 +st33qSUPi5sPKvr/DjO+K7koLQWcbJdM+RmGmV37xZFfIkuyLFdh8gLGLCPKCwdQkA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsAgtyyR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSrS+4cM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEEF606A7C0;
-	Wed, 18 Nov 2026 16:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95118606A31C;
+	Wed, 18 Nov 2026 16:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsAgtyyR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399111F000C4;
-	Wed, 18 Nov 2026 16:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nSrS+4cM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7FF1F000CB;
+	Wed, 18 Nov 2026 16:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019552;
-	bh=2XjQV9rfe6b/1yAq72Fxu3h++l2efdboq/ae3nL9ZYo=;
+	s=korg; t=1795019555;
+	bh=yFxA37EmQJa3vrcswfS9SO05cQ14zggMADXojoMMSQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fsAgtyyRCA7Ta3nyACE0gJLD/OEFCnWSozKcZccJo7dVXdBHSD5Zp6cYTA25UmMJI
-	 qb41rN5pRv5LxiCnU9NO8aMXHgZHfVTUGu1GzPjjZJT20j7AVS1vCzx260NIOoOeC3
-	 sAXbUn4Q5TY3j79KjAIm90a2px+N8JxxtjuTGRGY=
+	b=nSrS+4cM1hQgTpxNzh6B+VPRAIDVSEirasDgvlzY9RB658b3Nd12FaaWNCwvOj/DW
+	 poFJpB7UT8dHSWwxh9NM1FbS9fb5N8kMu30CZ8CodLJQ1X7OaN3DSrst2WmyGpPbot
+	 dwNuqeRCqAOcwpvyoCf5Jl8D8Pb7QOpJpNXiQZvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>,
 	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.3 1637/2651] drm/rockchip: dw_hdmi_qp: Fix invalid drvdata access in PM ops
-Date: Wed, 18 Nov 2026 15:47:57 +0100
-Message-ID: <20261118150346.764990385@linuxfoundation.org>
+Subject: [PATCH 7.3 1638/2651] drm/rockchip: dw_hdmi_qp: Cancel pending HPD work on suspend
+Date: Wed, 18 Nov 2026 15:47:58 +0100
+Message-ID: <20261118150346.798265061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,93 +74,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit b6e19848c9db535d81d6db85c7cc1324e6611791 ]
+[ Upstream commit 5d0aa771a5308f6a6c83eeaa89351a472ae580c3 ]
 
-The system-sleep PM callbacks fetch the driver state via
-dev_get_drvdata() and dereference it unconditionally.  However, the
-platform device is bound by ->probe(), which merely registers a
-component, hence the callbacks may well run when no valid state is
-available:
+The HPD threaded handler debounces hotplug events by delaying
+hdmi->hpd_work for 150 ms.  Nothing discards that work when the system
+goes to sleep: drm_kms_helper_poll_disable() only disables the HPD IRQ
+line via the bridge .hpd_disable() op, and disable_irq() merely waits
+for the threaded handler, which has already returned after arming the
+timer.
 
-- Before the aggregate driver calls ->bind(), e.g. when the system
-  suspends while probing is still deferred waiting for the VOP,
-  dev_get_drvdata() returns NULL.
+If the debounce expires during suspend, its non-freezable work may probe
+the connector and read the EDID over DDC.  Since genpd powers off the
+HDMI controller's power domain in ->suspend_noirq(), this access may
+hit unpowered hardware and hang the system.
 
-- After ->unbind(), or when ->bind() fails past platform_set_drvdata(),
-  drvdata is left pointing to memory obtained via drmm_kzalloc(), which
-  is released together with the DRM device, while this platform device
-  remains bound and PM-capable.
-
-Publish the driver data only after ->bind() completes successfully, and
-clear it in ->unbind().  This ensures that a non-NULL drvdata always
-represents live state, allowing each PM callback to rely on a single
-NULL check.
+Cancel the work in the suspend callback.  The DRM device is registered
+as a consumer of the HDMI device, so it always suspends first and the
+HPD IRQ is already disabled by that point, meaning nothing can re-arm
+the work behind our back.  No counterpart is needed on resume, as the
+work gets scheduled again on the next hotplug interrupt.
 
 Fixes: 128a9bf8ace2 ("drm/rockchip: Add basic RK3588 HDMI output support")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260702151550.8E14D1F000E9@smtp.kernel.org/
-Closes: https://lore.kernel.org/all/20260723014811.1F9F01F000E9@smtp.kernel.org/
+Closes: https://lore.kernel.org/all/20260723015909.7F79A1F000E9@smtp.kernel.org/
 Tested-by: Robin Räber <robin.raebi@gmail.com>
 Tested-by: Igor Paunovic <royalnet026@gmail.com> # RK3588 Orange Pi 5 Plus, dual HDMI
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20261005-dw-hdmi-qp-scramb-v12-6-195157ba0b40@collabora.com
+Link: https://patch.msgid.link/20261005-dw-hdmi-qp-scramb-v12-7-195157ba0b40@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-index 9c4cf68d79d50..646a4cb968309 100644
+index 646a4cb968309..42f2627e1a052 100644
 --- a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
 +++ b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-@@ -683,8 +683,6 @@ static int dw_hdmi_qp_rockchip_bind(struct device *dev, struct device *master,
- 	if (ret)
- 		return dev_err_probe(hdmi->dev, ret, "Failed to init encoder");
- 
--	platform_set_drvdata(pdev, hdmi);
--
- 	hdmi->hdmi = dw_hdmi_qp_bind(pdev, encoder, &plat_data);
- 	if (IS_ERR(hdmi->hdmi))
- 		return dev_err_probe(hdmi->dev, PTR_ERR(hdmi->hdmi),
-@@ -695,6 +693,8 @@ static int dw_hdmi_qp_rockchip_bind(struct device *dev, struct device *master,
- 		return dev_err_probe(hdmi->dev, PTR_ERR(connector),
- 				     "Failed to init bridge connector\n");
- 
-+	platform_set_drvdata(pdev, hdmi);
-+
- 	return 0;
- }
- 
-@@ -704,6 +704,8 @@ static void dw_hdmi_qp_rockchip_unbind(struct device *dev,
+@@ -728,8 +728,12 @@ static int __maybe_unused dw_hdmi_qp_rockchip_suspend(struct device *dev)
  {
  	struct rockchip_hdmi_qp *hdmi = dev_get_drvdata(dev);
  
-+	dev_set_drvdata(dev, NULL);
-+
- 	cancel_delayed_work_sync(&hdmi->hpd_work);
- }
- 
-@@ -726,7 +728,8 @@ static int __maybe_unused dw_hdmi_qp_rockchip_suspend(struct device *dev)
- {
- 	struct rockchip_hdmi_qp *hdmi = dev_get_drvdata(dev);
- 
--	dw_hdmi_qp_suspend(dev, hdmi->hdmi);
-+	if (hdmi)
-+		dw_hdmi_qp_suspend(dev, hdmi->hdmi);
- 
- 	return 0;
- }
-@@ -735,6 +738,9 @@ static int __maybe_unused dw_hdmi_qp_rockchip_resume(struct device *dev)
- {
- 	struct rockchip_hdmi_qp *hdmi = dev_get_drvdata(dev);
- 
+-	if (hdmi)
+-		dw_hdmi_qp_suspend(dev, hdmi->hdmi);
 +	if (!hdmi)
 +		return 0;
 +
- 	hdmi->ctrl_ops->io_init(hdmi);
++	cancel_delayed_work_sync(&hdmi->hpd_work);
++
++	dw_hdmi_qp_suspend(dev, hdmi->hdmi);
  
- 	dw_hdmi_qp_resume(dev, hdmi->hdmi);
+ 	return 0;
+ }
 -- 
 2.53.0
 
