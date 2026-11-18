@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021886;
-	b=L8cY8+vx3bRj5hoVP2oz2Qe1z1+gEFjodrdyf37DQ0bQqqiRkgBryGqScMZF/8Xs0k1Z
-	 cOnwswUdCHXURlpHXypiqvjpuJuW1tdb/DwRDsxQZ1nwYe12IUftCnnK5sKu4IrOV17oI
-	 MXJJ11QjTsgsNwpyoNl8zoHpBQEdRW5AKht/bmpRVkjDemSPRbJcEpPh1lzb9xP3ShuTJ
-	 PL2DJBc6Ya8BgDPUq61OJfiriuDKPgRd927POvBLL+3zGcbJAF62g0u85RT73CCNtkZly
-	 S82wxeopo/7s0SL5oldtqfoU3Nv4X1ldfFVapRtrRMpSzYZnnw//uej0d27yzpwAs2Q==
+	t=1795021889;
+	b=c62G7hHxyMTsZwH+8BY4hUEq0RZ3FKaX1XcHRuJnmSo0ePQO8zBTVQx1ulremd3rZ4I8
+	 vGVjUgThto4zf2xfgHPvLztU3lTKJGwUN2jyAo1H//ZYklmFkwiWuolDoGW70TVnR229H
+	 006jncYmqSuACnnDvGqDIBaT87fazyBTI5gtOIq2AFMqbQj2uRZD6Y74vkQF0ZEY3nBCO
+	 kwT438M4i0wHpCC2fuMwZJGIXCouhFU61Q7ldOIa6KJg9foz7wZRXoYcTp0d0angCTq+Z
+	 Te5pG+e2FNWrhhLBWu7whbaQlS4rhVUGHUbK0buN7W5UtA6DpXTnnNXUh8QJhc/DAxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021886;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021889;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BU6qqoAnNCbPA4oXYPYz87IaVNDOoLhE8J6pf/eCtVk=;
-	b=Eb9bo9OZyqpKJqHWnbNeJc95h+R31sigxtSx5UVUL2G6cb8uQXim1iaIyN0f6roFf3RG
-	 mAIHuXK2i4ATL/XqZBeiO0HlOXs0jMlYwXRyvXcSCRANCfHFEVYO9uCYIDbo4YIrUSv4Y
-	 1usYm/5eZ20tkwsf6AHPK9lZJERbFgZ+6RfisnPI+gKDS+eRNrgRUWeCT5T6lnPVfHwDY
-	 KIGdU5MV+4rbGISwt7zXIr/Q3E43hL5WvsyDI1dTMBq67ejUypArKmeiORq/D6Aao/hm+
-	 9CB7NQxzeHuITMmaea1+FvF7XJwNAdFJ/LTRyHzuaLqS/xG3z2O1tpl962qonErrwkQ==
+	bh=8+pA4czmPjy0aoRXqDpWLLhRe4Q1afoxxVHeR8A4G4E=;
+	b=o4JBjmqtFgKLYvlGRDLqgP1n0pkKM/7+sFCt385X2I/OZclzo7QZ/Qmas+s+gfgyVbNf
+	 9Tl6l/pYCdgSthU4QAs7aM5nBr4nPOGmC+R7Z2YoYn5pdnZNtdw/TlIUOkh/N4BnMJWDf
+	 AhP8RwvTdBQ9Sgce1zj9M4V0/r8oGx2cOD16nEBmAqRl75sAjQVVs36y1vM1x0Q+hstLx
+	 /PepZWIVFJLwhzrTOwYIG7Ccdeiuje+FE9expR8S8OkgltNkqAwc2rWsRLO8a92Zac7iV
+	 bBpJP7W6DBgPoT8aAfBUQRoNguZRc4TnmMZpUvdkye6+YRap0J0Z5Yf7F6uunDL9RyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rf2Ez273;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR0jjaE6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07B9606A320;
-	Wed, 18 Nov 2026 17:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17859606A31C;
+	Wed, 18 Nov 2026 17:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rf2Ez273
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40C71F000C4;
-	Wed, 18 Nov 2026 17:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yR0jjaE6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F961F000C4;
+	Wed, 18 Nov 2026 17:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021886;
-	bh=BU6qqoAnNCbPA4oXYPYz87IaVNDOoLhE8J6pf/eCtVk=;
+	s=korg; t=1795021888;
+	bh=8+pA4czmPjy0aoRXqDpWLLhRe4Q1afoxxVHeR8A4G4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rf2Ez273HyJ+qiT+uoA6erglMXpZ3+hR9PVxgztJbOg2JTuZ3KEEhjx4peZzGmcPt
-	 w5EFThw1cnnMVDuD4DPBQ09Wws2XDrKm9iaiMxFhq32m3e68b88JPzqnI93KwUKF3/
-	 ypn1hcfbhxCE7Fe7tgg5pQaX6H9toCtlJKpyqDMs=
+	b=yR0jjaE6S9irmSMRHxIJZyoMpjqkGW/6JZSCPg5NNB42mmL7bfPsWYs1WPl426YzB
+	 SF3SoZw8EqQduh7lwoLRFseJTKmZg7mMUpQkvqfhV5kNA4ULv6oKb2Ta2q4mPdnav+
+	 m6kRMNHwbXBBEA8RJ5+QdT5LNuGet7phlQARD3fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Tao Gong <gongtao0607@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2449/2651] ipmr: clear skb->cb[] in reg_vif_xmit()
-Date: Wed, 18 Nov 2026 16:01:29 +0100
-Message-ID: <20261118150413.287892705@linuxfoundation.org>
+Subject: [PATCH 7.3 2467/2651] net: dsa: mt7530: trap frames to conduit in MFC on EN7581 and AN7583
+Date: Wed, 18 Nov 2026 16:01:47 +0100
+Message-ID: <20261118150413.825713570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,58 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Tao Gong <gongtao0607@gmail.com>
 
-[ Upstream commit 389952e8776a4663044df2ae3e8987a9e81964cf ]
+[ Upstream commit a58b221496dd576191095d12996f39cee58cf6a8 ]
 
-reg_vif_xmit() hands the skb to ipmr_cache_report() as an
-IGMPMSG_WHOLEPKT report. When the mroute socket has IP_PKTINFO
-enabled, ipmr_cache_report() calls ipv4_pktinfo_prepare() on the
-original skb, which reads skb->cb[] as IPCB.
+On EN7581, STP BPDUs received on switch user ports never reach the CPU.
 
-By the time the pimreg device transmits the packet, skb->cb[] is not
-IPCB anymore: qdisc_pkt_len_init() overwrites IPCB(skb)->iif with
-qdisc_skb_cb(skb)->pkt_len, and any qdisc installed on the device or a
-tc BPF program writing skb->cb[] fills the area holding the IP options
-and IPCB(skb)->flags.
+Like MT7531 and MT7988, EN7581 and AN7583 only set the CPU port bitmap
+in MT7531_CFC and are skipped by mt753x_conduit_state_change(). On
+EN7581 this is not enough: trapped BPDUs reach the CPU only when
+MT7530_CPU_EN and MT7530_CPU_PORT are also set in MT753X_MFC. Add
+EN7581 and AN7583 to mt753x_conduit_state_change().
 
-For locally generated packets routed out pimreg (they carry an rtable
-dst), the mroute socket can therefore receive a bogus ipi_ifindex
-(the packet length), and the l3mdev slave test in
-ipv4_pktinfo_prepare() is driven by stale qdisc data.
+Tested on an AN7581 board (Gemtek W1700K, airoha,en7581-switch), where
+only lan3 and lan4 are switch user ports. With RSTP BPDUs arriving on
+lan4:
+- without this patch, none reached the CPU;
+- setting CPU_EN and CPU_PORT by hand delivered them, and clearing them
+  stopped them;
+- with this patch, they are received from boot.
 
-Clear IPCB before building the report, as done for IPv6 in
-commit 238164201431 ("ip6mr: clear skb->cb[] in reg_vif_xmit()").
-The skb is freed right after, so nothing else depends on its control
-block.
+Only BPDUs were tested. AN7583 is untested and is included because the
+driver sets it up like EN7581.
 
-Fixes: bb7403655b3c ("ipmr: support IP_PKTINFO on cache report IGMP msg")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261025111337.142787-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2b0229f67932 ("net: dsa: mt7530: Add EN7581 support")
+Fixes: d76556db10bf ("net: dsa: mt7530: Add AN7583 support")
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Signed-off-by: Tao Gong <gongtao0607@gmail.com>
+Link: https://patch.msgid.link/20261022205649.2351696-1-gongtao0607@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/dsa/mt7530.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index f51014b37178b..5bfbb8d88bf4c 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -554,6 +554,11 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
- 	DEV_STATS_ADD(dev, tx_bytes, skb->len);
- 	DEV_STATS_INC(dev, tx_packets);
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 96832852c65a5..5dbcea38209f7 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -3335,10 +3335,13 @@ mt753x_conduit_state_change(struct dsa_switch *ds,
  
-+	/* skb->cb[] holds qdisc/tc state at this point, not IPCB.
-+	 * ipmr_cache_report() reads it as IPCB to build IP_PKTINFO.
-+	 */
-+	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
-+
- 	/* Pairs with WRITE_ONCE() in vif_add() and vif_delete() */
- 	ipmr_cache_report(mrt, skb, READ_ONCE(mrt->mroute_reg_vif_num),
- 			  IGMPMSG_WHOLEPKT);
+ 	/* Set the CPU port to trap frames to for MT7530. Trapped frames will be
+ 	 * forwarded to the numerically smallest CPU port whose conduit
+-	 * interface is up.
++	 * interface is up. On EN7581, trapped BPDUs do not reach the CPU port
++	 * without this, even with the CPU port bitmap set. AN7583 is set up
++	 * the same way as EN7581.
+ 	 */
+ 	if (priv->id != ID_MT7530 && priv->id != ID_MT7621 &&
+-	    priv->id != ID_EN7528)
++	    priv->id != ID_EN7528 &&
++	    priv->id != ID_EN7581 && priv->id != ID_AN7583)
+ 		return;
+ 
+ 	mask = BIT(cpu_dp->index);
 -- 
 2.53.0
 
