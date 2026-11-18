@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021339;
-	b=IGlx4hduSWQ5X3SnddFdVQWgY7qvHSorqbTUyQVh8tpwzKL1vKNMAxMOar37VeCLNbgU
-	 GtXfp9jGD9jj/zCQNI/K21TV13RPTLVbTzhkv/e+iK439i1BpjTwOZjDc7fgM5jzsnvnJ
-	 /WfLn6A7nuXpCjs8XyJoG/6K0LOx/xzeVuLs5QE/28BYET+G/DB97N+jDZH1HAmoED7Xy
-	 1yYoZMWzlooHMoUgBP6F8fEmnbyeyhE8vGeJEQ584lqHCZqz9GITWh+PGXuEzz7rgzgiP
-	 bU8djQkwPtvdS836cvFI/Moyf8MN43cuY5hBR62kVje/5c0xjXTV/voLknBKG/vs/vA==
+	t=1795021342;
+	b=p+vcUeu2E4u61iEB76eu0h7jWcE2mYN4ryuGVSma1oIDWvcU9aebJdztb2QSaLPj0Yp8
+	 /Lw+Rex99hbkusunBtzZvWnsMZtWS1CU6w808XoDesqQKxOqWq3brKO4ULYJuqIm540iV
+	 DoWF8MoA/FgTqv6/GmECrhpHxPpA307lXvDgiC3WwiGxFzXQTjQIa2Y9YvpeIRlSnqFEj
+	 phNKJyt6v9/rkrA6VrW03cVNnuaaOQUmi6A5X1yjHilXfINIq7USEPQm1y7fpRbhfmNBA
+	 C1Fek+oooNTaZzW3uqhobN3s936panwvTAg/E/DMQW3IOZO63ypAi28Jzr1I6Ls/1oA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AYKb/sAk+RmLyCHgJZQspw4h3Xb8S7iyfKz+wmmWhEM=;
-	b=PjHH/V0TbKGRswgsit44OSzlyeAjfr0EnljIFwO2X23IWmJ8u9oyg/Z6CeKdVB2Rls86
-	 RxWveKKfN1f5Z3hnT63x8dFNAfY3ZIH6izeo889gdK9XhvS+FqZs6tHZC9C5XpTQki/HL
-	 MO1E9gf2Ny8dogkgwcna1wpYM+wuMZKaTvxGrAzOU48Rz/C8k1tjphnIIJh0hq8wJgb+6
-	 OFAiy+gJkYKO+kKytTLxfS33vnlfz7nSerq5xmcuxZhLChciGufpPz/gLG7B4i5aRyO+h
-	 ySLoZ3YRQCDNsWLIHERNiSSL0o4fxbk1/nt1DNdO2f8rxVjOfQWesFRjfErCBtn1CwA==
+	bh=A8sWREXOJVA19Fl2RJA8GBdkvCa7SU8FtfJWwnfmuoE=;
+	b=PGr5aaoekVswypi2i9KsZJAZdSqVrBSPJ44Mk8Rk8CkQ7te35ZRBne/yzSu5dagJ0V2w
+	 Zl9ch+dJN17XBvGaVWSZh/epw5qG4ozF62Bw9vxhufNSijU5RX1Zbx1+qq2MUDqIJZYN3
+	 zOpsCkTtUD3bxPLLpKf2w0licUzKkErpkcThyHEJmuOBMYh1/phJbkgXLDbrAe5kv2vRk
+	 MCLBS+KpPBYkoEDIkVyCaN3M2gCUbifPf/uatXF+dAsZ5DsL3o4hK14tzRu/7cO1W+O8L
+	 UHvr2y120z2z0uPOzv/V5ZK9+dOLrTcQWl4b1QW41UJQD7gDRCCAa5uJMQ3d6swX/Hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="s9cvk8/0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlmBsNL7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5C2606A31C;
-	Wed, 18 Nov 2026 17:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5E9606A320;
+	Wed, 18 Nov 2026 17:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s9cvk8/0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998C81F000C8;
-	Wed, 18 Nov 2026 17:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlmBsNL7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546051F000C7;
+	Wed, 18 Nov 2026 17:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021339;
-	bh=AYKb/sAk+RmLyCHgJZQspw4h3Xb8S7iyfKz+wmmWhEM=;
+	s=korg; t=1795021341;
+	bh=A8sWREXOJVA19Fl2RJA8GBdkvCa7SU8FtfJWwnfmuoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s9cvk8/07RC6CPz376p/1woF4tgDWIMxbjWRpEQ2esTPJ8MBHItq55aWsf1ia2sqo
-	 0sS1luhdCkB7wxeqkZRHmnW/oeWNvDTEaYDA3+hnXrAwCw3l9iQfGcHpXLFO0m+hp1
-	 N/6EtAi+qE0IgbhwojAyKQ5YxBN4pq4pPWVT/VoE=
+	b=IlmBsNL7LDiLDe3HrGZiD8dleZo9N4aOOLKRxxRP2M0/D9HW8o4K6zwH92ADCAN3N
+	 pHodiC2iiXDo+BXswVpAHneKggnHMC39uYulZ3czI0QwTdNslU3I9TdsJnbWCUJYEv
+	 THJGi3uWkkb/eH+D350knaqGH1+opgjRO+9N6L3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2270/2651] ibmveth: do not close twice after a failed reopen
-Date: Wed, 18 Nov 2026 15:58:30 +0100
-Message-ID: <20261118150407.082053690@linuxfoundation.org>
+Subject: [PATCH 7.3 2232/2651] net/mlx5: HWS, fix modify header pool creation race
+Date: Wed, 18 Nov 2026 15:57:52 +0100
+Message-ID: <20261118150405.878927922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,119 +71,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit 95811c873d1b97c424a7e6e731730cbf6656ab7e ]
+[ Upstream commit e4ab8ab27ab1c9f0cd1589bee471d93319e20c95 ]
 
-ibmveth_change_mtu(), veth_pool_store(), ibmveth_set_csum_offload()
-and ibmveth_set_tso() call close() and open() directly. If open() fails,
-NAPI is left disabled while IFF_UP stays set, so the next close()
-(ifdown, unregister or another reconfiguration) calls napi_disable()
-again and waits forever with RTNL held. Networking and shutdown
-hang; only a reboot recovers. ethtool -L in that state also wakes
-queues that have no TX buffer and dereferences NULL in
-ibmveth_start_xmit().
+mlx5_cmd_hws_modify_header_alloc() creates a pool at the index after
+the last one if no pool matches the pattern. TC and CT allocate modify
+headers concurrently, meaning two callers can take the same index and
+the second call fails with -EBUSY.
 
-Any open() failure on those paths triggers it, for example an
-allocation failure on an MTU change to jumbo frames.
+Its error path also destroys the pool it just created although another
+caller may already use it. Keep such a pool since cleanup releases it.
 
-Track a successful open in adapter->opened. close() returns early
-when it is clear, and set_channels() checks it instead of IFF_UP.
+Pools now live until cleanup so the lookup needs no lock. A miss looks
+again under a mutex before creating the pool.
 
-The open() error-path leaks were fixed separately in net by
-commit af0524bf4ce1 ("ibmveth: h_free logical LAN on open-fail after
-register") and commit 84bec0bf0352 ("ibmveth: fix TX LTB and filter
-unwind on open-fail"), which are now in net-next too, so a failed
-open() no longer leaves TX buffers or the logical LAN registration
-behind for the early return to skip.
+Tested for regressions on ConnectX-7 with firmware 28.48.1000.
 
-Found in review of the ibmveth multi-queue RX series and confirmed by
-code inspection. Tested on a POWER10 LPAR with ibmveth_open() forced to
-fail by a test-only module parameter (not part of this patch): 'ip link
-set dev eth1 mtu 9000' fails, then 'ip link set dev eth1 down' returns
-at once and 'ip link set dev eth1 up' recovers the interface. No kernel
-selftests cover ibmveth.
-
-Fixes: 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-3-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b36315ca69cb ("net/mlx5: fs, add HWS modify header API function")
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261012100555.1317878-3-acassen@corp.free.fr
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 24 +++++++++++++++++-------
- drivers/net/ethernet/ibm/ibmveth.h |  2 ++
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ .../mellanox/mlx5/core/steering/hws/fs_hws.c  | 53 +++++++++++--------
+ .../mellanox/mlx5/core/steering/hws/fs_hws.h  |  1 +
+ 2 files changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 4a5869183be66..4665447997eaa 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -739,6 +739,7 @@ static int ibmveth_open(struct net_device *netdev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+index fcef2b64f62cc..d6958ba5dcc29 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+@@ -63,6 +63,7 @@ static int mlx5_fs_init_hws_actions_pool(struct mlx5_core_dev *dev,
+ 	xa_init(&hws_pool->el2tol3tnl_pools);
+ 	xa_init(&hws_pool->el2tol2tnl_pools);
+ 	xa_init(&hws_pool->mh_pools);
++	mutex_init(&hws_pool->mh_pools_lock);
+ 	xa_init(&hws_pool->table_dests);
+ 	xa_init(&hws_pool->vport_dests);
+ 	xa_init(&hws_pool->vport_vhca_dests);
+@@ -111,6 +112,7 @@ static void mlx5_fs_cleanup_hws_actions_pool(struct mlx5_fs_hws_context *fs_ctx)
+ 	xa_for_each(&hws_pool->mh_pools, i, pool)
+ 		mlx5_fs_destroy_mh_pool(pool, &hws_pool->mh_pools, i);
+ 	xa_destroy(&hws_pool->mh_pools);
++	mutex_destroy(&hws_pool->mh_pools_lock);
+ 	xa_for_each(&hws_pool->el2tol2tnl_pools, i, pool)
+ 		mlx5_fs_destroy_pr_pool(pool, &hws_pool->el2tol2tnl_pools, i);
+ 	xa_destroy(&hws_pool->el2tol2tnl_pools);
+@@ -1458,6 +1460,23 @@ mlx5_fs_destroy_mh_pool(struct mlx5_fs_pool *pool, struct xarray *mh_pools,
+ 	kfree(pool);
+ }
  
- 	netif_tx_start_all_queues(netdev);
- 
-+	adapter->opened = true;
- 	netdev_dbg(netdev, "open complete\n");
- 
- 	return 0;
-@@ -781,6 +782,14 @@ static int ibmveth_close(struct net_device *netdev)
- 	long lpar_rc;
- 	int i;
- 
-+	/* change_mtu, pool sysfs, set_csum and set_tso call close() and
-+	 * open() directly. If that open() fails, IFF_UP stays set and
-+	 * NAPI is disabled; a second close() would hang in napi_disable().
-+	 */
-+	if (!adapter->opened)
-+		return 0;
-+	adapter->opened = false;
++static struct mlx5_fs_pool *
++mlx5_fs_find_mh_pool(struct xarray *mh_pools,
++		     struct mlx5hws_action_mh_pattern *pattern,
++		     unsigned long *cnt)
++{
++	struct mlx5_fs_pool *pool;
++	unsigned long i;
 +
- 	netdev_dbg(netdev, "close starting\n");
++	*cnt = 0;
++	xa_for_each(mh_pools, i, pool) {
++		if (mlx5_fs_hws_mh_pool_match(pool, pattern))
++			return pool;
++		(*cnt)++;
++	}
++	return NULL;
++}
++
+ static int mlx5_cmd_hws_modify_header_alloc(struct mlx5_flow_root_namespace *ns,
+ 					    u8 namespace, u8 num_actions,
+ 					    void *modify_actions,
+@@ -1468,33 +1487,28 @@ static int mlx5_cmd_hws_modify_header_alloc(struct mlx5_flow_root_namespace *ns,
+ 	struct mlx5_fs_hws_mh *mh_data = NULL;
+ 	struct mlx5hws_action *hws_action;
+ 	struct mlx5_fs_pool *pool;
+-	unsigned long i, cnt = 0;
+-	bool known_pattern;
++	unsigned long cnt;
+ 	int err;
  
- 	napi_disable(&adapter->napi);
-@@ -832,10 +841,10 @@ static int ibmveth_close(struct net_device *netdev)
-  *
-  * @w: pointer to work_struct embedded in adapter structure
-  *
-- * Context: This routine acquires rtnl_mutex and disables its NAPI through
-- *          ibmveth_close. It can't be called directly in a context that has
-- *          already acquired rtnl_mutex or disabled its NAPI, or directly from
-- *          a poll routine.
-+ * Context: This routine acquires rtnl_mutex and, if the device is open,
-+ *          disables its NAPI through ibmveth_close. It can't be called
-+ *          directly in a context that has already acquired rtnl_mutex or
-+ *          disabled its NAPI, or directly from a poll routine.
-  *
-  * Return: void
-  */
-@@ -1129,10 +1138,11 @@ static int ibmveth_set_channels(struct net_device *netdev,
- 		     goal = channels->tx_count;
- 	int rc, i;
+ 	pattern.sz = MLX5_UN_SZ_BYTES(set_add_copy_action_in_auto) * num_actions;
+ 	pattern.data = modify_actions;
  
--	/* If ndo_open has not been called yet then don't allocate, just set
--	 * desired netdev_queue's and return
-+	/* If the device is not open (including a failed close/open with
-+	 * IFF_UP still set) then don't allocate, just set desired
-+	 * netdev_queue's and return
- 	 */
--	if (!(netdev->flags & IFF_UP))
-+	if (!adapter->opened)
- 		return netif_set_real_num_tx_queues(netdev, goal);
+-	known_pattern = false;
+-	xa_for_each(&hws_pool->mh_pools, i, pool) {
+-		if (mlx5_fs_hws_mh_pool_match(pool, &pattern)) {
+-			known_pattern = true;
+-			break;
+-		}
+-		cnt++;
+-	}
+-
+-	if (!known_pattern) {
+-		pool = mlx5_fs_create_mh_pool(ns->dev, &pattern,
+-					      &hws_pool->mh_pools, cnt);
++	pool = mlx5_fs_find_mh_pool(&hws_pool->mh_pools, &pattern, &cnt);
++	if (!pool) {
++		mutex_lock(&hws_pool->mh_pools_lock);
++		pool = mlx5_fs_find_mh_pool(&hws_pool->mh_pools, &pattern,
++					    &cnt);
++		if (!pool)
++			pool = mlx5_fs_create_mh_pool(ns->dev, &pattern,
++						      &hws_pool->mh_pools, cnt);
++		mutex_unlock(&hws_pool->mh_pools_lock);
+ 		if (IS_ERR(pool))
+ 			return PTR_ERR(pool);
+ 	}
++
+ 	mh_data = mlx5_fs_hws_mh_pool_acquire_mh(pool);
+-	if (IS_ERR(mh_data)) {
+-		err = PTR_ERR(mh_data);
+-		goto destroy_pool;
+-	}
++	if (IS_ERR(mh_data))
++		return PTR_ERR(mh_data);
+ 	hws_action = mh_data->bulk->hws_action;
+ 	mh_data->data = kmemdup(pattern.data, pattern.sz, GFP_KERNEL);
+ 	if (!mh_data->data) {
+@@ -1510,9 +1524,6 @@ static int mlx5_cmd_hws_modify_header_alloc(struct mlx5_flow_root_namespace *ns,
  
- 	/* We have IBMVETH_MAX_QUEUES netdev_queue's allocated
-diff --git a/drivers/net/ethernet/ibm/ibmveth.h b/drivers/net/ethernet/ibm/ibmveth.h
-index d87713668ed30..3f2240823f6a3 100644
---- a/drivers/net/ethernet/ibm/ibmveth.h
-+++ b/drivers/net/ethernet/ibm/ibmveth.h
-@@ -172,6 +172,8 @@ struct ibmveth_adapter {
- 	int rx_csum;
- 	int large_send;
- 	bool is_active_trunk;
-+	/* Set by a successful ibmveth_open(), cleared by ibmveth_close(). */
-+	bool opened;
- 	unsigned int rx_buffers_per_hcall;
+ release_mh:
+ 	mlx5_fs_hws_mh_pool_release_mh(pool, mh_data);
+-destroy_pool:
+-	if (!known_pattern)
+-		mlx5_fs_destroy_mh_pool(pool, &hws_pool->mh_pools, cnt);
+ 	return err;
+ }
  
- 	u64 fw_ipv6_csum_support;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h
+index 20cdacd8f12ee..cf068fb5bdbf9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.h
+@@ -19,6 +19,7 @@ struct mlx5_fs_hws_actions_pool {
+ 	struct xarray el2tol3tnl_pools;
+ 	struct xarray el2tol2tnl_pools;
+ 	struct xarray mh_pools;
++	struct mutex mh_pools_lock; /* serializes pool creation */
+ 	struct xarray table_dests;
+ 	struct xarray vport_vhca_dests;
+ 	struct xarray vport_dests;
 -- 
 2.53.0
 
