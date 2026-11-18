@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022932;
-	b=SVGtPlsgCe2mr2e6Wl/tOt4GRxKQX6Rgd4ukAipOAsKwGdF+aTSLOoPeamDCVCzETk6z
-	 ezc+n+vXx5EGalJ/RXX7kOWFXI6WSK0yz1zS906r6n9Z8zpEYXUheTamHPY6ouidK9bGs
-	 /7ODP6wLFFtFBZUFbRgAnsa2KCQYa93LTXC74XlYkGAhFah8r/SrACGZbnAcWnEq8RksD
-	 C9S0Imqhq2x4nWyj4P9y8NIylGl0xg3FblHQzgJ92neOUHTGzsXCpxkdEyG+twtG/6vrb
-	 65+WRNyvnpNOO7vcDUf61RYo5KKLZTpBPt/SSuZkF+D8yoMBkxFEwXKeV8g/gpc4Irg==
+	t=1795022935;
+	b=qrSriT9F49FehAzYKbD6zz7VNhklfultYEL3DmoGUR6KzsqkqDao5SB0BjIrjQsy4Ch1
+	 fMMBRZTCuFOp4QD8CKcz2rnaAGEEMLFbUB7fD1cDM6nAv4sQmwWlNiOZqVH1YIxPpppvU
+	 p4HRRbzEA+cJmLdGeeOGTZSk5JstO6fr9y7znKJ9BOFmsjzQKPICCF5wJaY3I0U7b5Up+
+	 ksyvEdcfYCdisaTsu3ELcXqITYTUtuTOng4NrkuRRD+0N7Gob37iTQ7xlmKTUz8p5IcyQ
+	 /djA1/wBbfqAYc8+LiVFAa1uISE6OvVXW7bfbpncefbRm175zd0LvBWi4UMHPU9ugqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022935;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZsVzYiR0KbZpsUXP9Kf2aNWd7j1yRRe2u+Lg5v8PwEQ=;
-	b=QCX4fUAZQw1gvVnkOSWXeoW+2lrWIxrfORRKy2KVSHOspiHYtuF2wrasb6TmJ++4q7VG
-	 7/QDtnqol1ff5pMDeqKfTq1eWzA0yM4UJt3UMS5LRqwcpHGcOVTJHuSZfx43eOTkKPBoR
-	 +PE9BlCTt/mC7t+HfuQbgtrp07KW1LNhOfurbPVfJgpOLn85BHsTp6IaVNo4DWhDuEsHq
-	 VctNKalHBtnsanUXWAo6bGQitF3ohiHvaui9MZdCeVM2VqyJiFp6vFM5p2utVblbMYO7F
-	 pzUx212IfeDoTDl0Zr2C7mOEN7upKKn3Ei9JMTAinNBi0s8dQFhjUSUGXiMdEpBv3pQ==
+	bh=uzV1LmiI51nGp45+Pe7GGLar8WIqY7Arn8ebPVNG1yU=;
+	b=DDMbRdF/lmDkpGBwarXWP8ndIkjQI6YiugSMej35ZzOYIG72tUHQWatQCeFkq6GsHUKR
+	 Ls2sI+L3XV+5yu0W7sztdnmluffH/VBU6PJ9Yj6ebuAUFSIT0Td0HsG3Z025UF8ER/YDh
+	 nIvdKAn6v4q9Wkr0qH7yvoj5cGFmtavPgRp2hUh5u5s8zvL3cxeNpZE3xhftyq0XeoVpv
+	 xgbz/iDaKDStZPsk2utvAwO8WHY88UgMWm8/pDbR76UI3jK3ZgmOCQcdIVsb4IBqHbiRT
+	 bGuqvsFa51FmcQYqtX5ll/5kVedXHh04mKy+rk7y8Lxr9pqblaZrn7oMexoAddxJk5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+ZEPCrx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UoDLcNlN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A53F606A76A;
-	Wed, 18 Nov 2026 17:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E753C606A758;
+	Wed, 18 Nov 2026 17:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+ZEPCrx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1441F000C4;
-	Wed, 18 Nov 2026 17:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UoDLcNlN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41ACC1F000C4;
+	Wed, 18 Nov 2026 17:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022931;
-	bh=ZsVzYiR0KbZpsUXP9Kf2aNWd7j1yRRe2u+Lg5v8PwEQ=;
+	s=korg; t=1795022934;
+	bh=uzV1LmiI51nGp45+Pe7GGLar8WIqY7Arn8ebPVNG1yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o+ZEPCrxtU4+Xkf3vOjGfeKKEpbvRid1HYojfQctMX4b/Eqn2xjICVjqqZjb/BKO1
-	 LiFZT1pt7gBEDz7Ygj3lrrWOf2T2RAjKe5fXkPy4hLu/CgxB9Jbl7idjt2YrMTxkil
-	 TWHEypH0z1nnfT07mNUdv0DFKGy1Q5Ejh8UjwSJE=
+	b=UoDLcNlNl9U4CpV6oXH7QvT/ZF5Fs4bh+XbF4BhZXhGuKOv5oRxvxobugXstSp0cg
+	 OzMtA9bxsz3DDC3U3TY0Zg9XFcDDGzuI7uQ7FRhD/B6xWlnCgk7w0yqp1cJrVKQ3X5
+	 +KU5HgBsejKaAir4HxgS00vvmEceC+lITOVb0z1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Robert Mader <robert.mader@collabora.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0142/2151] drm/vkms: Fix limited-range YCbCr to RGB conversion scaling
-Date: Wed, 18 Nov 2026 15:31:17 +0100
-Message-ID: <20261118150126.948548780@linuxfoundation.org>
+Subject: [PATCH 6.18 0143/2151] bpftool: Fix spurious batch file read error
+Date: Wed, 18 Nov 2026 15:31:18 +0100
+Message-ID: <20261118150126.983012254@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,303 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Yuan Chen <chenyuan_fl@163.com>
 
-[ Upstream commit 8af5fccd9e8af443efd6f0fec5ba56366f57309a ]
+[ Upstream commit 713c02b59e21840f623a3e31c43d967026c75181 ]
 
-The limited-/studio-range YCbCr to RGB conversion matrices were generated
-with colour.matrix_YCbCr(is_legal=True, bits=8), which normalises the
-narrow range by 2^bits (256 for 8-bit) rather than by the full-range
-maximum 2^bits - 1 (255). As a result the luma scale was 256/219 and the
-chroma scale 256/224 instead of the correct 255/219 and 255/224.
+do_batch() checks errno after the read loop to detect read failures,
+but fgets() does not clear errno on success, so a stale errno left by
+a previously executed command (e.g. map dump's EBADF from a double
+close) makes bpftool report a batch file read failure and exit with an
+error even though every command succeeded.
 
-This over-scales every limited-range conversion by a factor of 256/255,
-producing an error of up to ~3/255 (8-bit) and causing IGT tests that
-compare software-computed surfaces against VKMS-processed ones to fail.
+Clear errno before each fgets() call, so the post-loop check only
+sees the outcome of the last read: zero on success or EOF, E2BIG for
+an overlong line, and a genuine errno when fgets() fails.
 
-Recompute the three limited-range matrices from first principles rather
-than relying on colour's is_legal scaling:
+Since errno is now reset before every read in batch mode, drop the
+USE_LIBCAP errno reset in main() that existed only to keep errno clean
+for the batch mode.
 
- 1. Start from the standard ITU-R YCbCr -> RGB relations for the luma
-    weights Kr, Kb (Kg = 1 - Kr - Kb) of each encoding (BT.601, BT.709
-    and BT.2020 non-constant luminance). These are the same relations
-    that produce the existing full-range matrices.
- 2. Expand the studio input range to full range relative to a full-range
-    maximum of 2^n - 1: the luma coefficient by 255/(235 - 16) and the
-    chroma coefficients by 255/(240 - 16). This matches the DRM UAPI
-    definition and IGT's igt_ycbcr_to_rgb_matrix().
- 3. Convert each coefficient to S31.32 fixed point (round(coeff * 2^32)).
-
-Update the limited-range reference values in the vkms-format KUnit test
-accordingly. Provide a python script to show how the kunit test value
-are calculated.
-
-Fixes: fe22d21e9342 ("drm/vkms: Add YUV support")
-Assisted-by: Copilot:claude-opus-4.8
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Robert Mader <robert.mader@collabora.com>
-Link: https://patch.msgid.link/20260814211816.1219597-3-harry.wentland@amd.com
+Fixes: 71bb428fe2c1 ("tools: bpf: add bpftool")
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260824092657.1789956-2-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/vkms/tests/gen_yuv_conversion.py  | 87 +++++++++++++++++++
- drivers/gpu/drm/vkms/tests/vkms_format_test.c | 38 ++++----
- drivers/gpu/drm/vkms/vkms_formats.c           | 55 ++++++++----
- 3 files changed, 144 insertions(+), 36 deletions(-)
- create mode 100755 drivers/gpu/drm/vkms/tests/gen_yuv_conversion.py
+ tools/bpf/bpftool/main.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/vkms/tests/gen_yuv_conversion.py b/drivers/gpu/drm/vkms/tests/gen_yuv_conversion.py
-new file mode 100755
-index 0000000000000..f4d226137cc2f
---- /dev/null
-+++ b/drivers/gpu/drm/vkms/tests/gen_yuv_conversion.py
-@@ -0,0 +1,87 @@
-+#!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0+
-+"""
-+Derive the VKMS YCbCr -> RGB conversion constants and the vkms-format KUnit
-+reference values.
-+
-+It produces:
-+  1. The S31.32 fixed-point conversion matrices used in
-+     drivers/gpu/drm/vkms/vkms_formats.c and asserted by
-+     vkms_format_test_conversion_matrix.
-+  2. The 16-bit reference YCbCr inputs for the limited-range
-+     yuv_u16_to_argb_u16 round-trip cases (the values changed by the fix).
-+
-+Requires numpy.
-+"""
-+
-+import numpy as np
-+
-+FP = 1 << 32                       # S31.32 scale: fixed = round(coeff * 2^32)
-+
-+# ITU-R luma weights (Kr, Kb); Kg = 1 - Kr - Kb.
-+ENCODINGS = {
-+    "BT601":  (0.299,  0.114),
-+    "BT709":  (0.2126, 0.0722),
-+    "BT2020": (0.2627, 0.0593),    # non-constant luminance
-+}
-+
-+# 8-bit studio-range levels: luma 16..235 (range 219), chroma 16..240
-+# (range 224, neutral 128); full-range maximum is 2^n - 1 = 255.
-+FULL_MAX = 255
-+Y_RANGE  = 235 - 16                # 219
-+C_RANGE  = 240 - 16                # 224
-+
-+# 16-bit RGB test colors.
-+COLORS = {
-+    "white": (0xffff, 0xffff, 0xffff),
-+    "gray":  (0x8080, 0x8080, 0x8080),
-+    "black": (0x0000, 0x0000, 0x0000),
-+    "red":   (0xffff, 0x0000, 0x0000),
-+    "green": (0x0000, 0xffff, 0x0000),
-+    "blue":  (0x0000, 0x0000, 0xffff),
-+}
-+
-+
-+def rgb_matrix(kr, kb, limited):
-+    """Normalized YCbCr -> RGB (Y in [0,1], Cb/Cr in [-0.5, 0.5])."""
-+    kg = 1.0 - kr - kb
-+    # Standard full-range relations.
-+    m = [[1.0,  0.0,                     2 * (1 - kr)],
-+         [1.0, -2 * (1 - kb) * kb / kg, -2 * (1 - kr) * kr / kg],
-+         [1.0,  2 * (1 - kb),            0.0]]
-+    if limited:
-+        # Expand studio input range to full range: luma by 255/219,
-+        # chroma by 255/224 (relative to full-range maximum 2^n - 1).
-+        ys, cs = FULL_MAX / Y_RANGE, FULL_MAX / C_RANGE
-+        m = [[r[0] * ys, r[1] * cs, r[2] * cs] for r in m]
-+    return m
-+
-+
-+def ref_yuv(m, y_offset):
-+    """16-bit YCbCr that VKMS decodes back to each RGB color.
-+
-+    VKMS decode: [R,G,B] = M . [Y - y_offset*257, Cb - 128*257, Cr - 128*257]
-+    (8-bit offsets lifted to 16-bit by *257 = 65535/255), so invert and
-+    re-add the offsets.
-+    """
-+    inv = np.linalg.inv(np.array(m, float))
-+    off = np.array([y_offset * 257, 128 * 257, 128 * 257])
-+    return {name: tuple(int(min(max(round(v), 0), 0xffff))
-+                        for v in inv @ np.array(rgb, float) + off)
-+            for name, rgb in COLORS.items()}
-+
-+print(f"== RGB REFERENCE VALUES ==")
-+for name, rgb in COLORS.items():
-+    print(f"    {name:6} {{ {rgb[0]:#06x}, {rgb[1]:#06x}, {rgb[2]:#06x} }}")
-+print()
-+
-+for enc, (kr, kb) in ENCODINGS.items():
-+    for limited in (False, True):
-+        m = rgb_matrix(kr, kb, limited)
-+        y_offset = 16 if limited else 0
-+        print(f"== {enc} {'LIMITED' if limited else 'FULL'} (y_offset={y_offset}) ==")
-+        for row in m:
-+            print("    { " + ", ".join(str(round(v * FP)) for v in row) + " },")
-+        for name, yuv in ref_yuv(m, y_offset).items():
-+            print(f"    {name:6} {{ {yuv[0]:#06x}, {yuv[1]:#06x}, {yuv[2]:#06x} }}")
-+        print()
-diff --git a/drivers/gpu/drm/vkms/tests/vkms_format_test.c b/drivers/gpu/drm/vkms/tests/vkms_format_test.c
-index a7788fbc45dcc..d2ae6321383b7 100644
---- a/drivers/gpu/drm/vkms/tests/vkms_format_test.c
-+++ b/drivers/gpu/drm/vkms/tests/vkms_format_test.c
-@@ -54,6 +54,8 @@ struct yuv_u16_to_argb_u16_case {
-  * The YUV color representation were acquired via the colour python framework.
-  * Below are the function calls used for generating each case.
-  *
-+ * The limited-range cases are generated by gen_yuv_conversion.py.
-+ *
-  * For more information got to the docs:
-  * https://colour.readthedocs.io/en/master/generated/colour.RGB_to_YCbCr.html
-  */
-@@ -101,12 +103,12 @@ static struct yuv_u16_to_argb_u16_case yuv_u16_to_argb_u16_cases[] = {
- 		.range = DRM_COLOR_YCBCR_LIMITED_RANGE,
- 		.n_colors = 6,
- 		.colors = {
--			{ "white", { 0xeb00, 0x8000, 0x8000 }, { 0xffff, 0xffff, 0xffff, 0xffff }},
--			{ "gray",  { 0x7dee, 0x8000, 0x8000 }, { 0xffff, 0x8080, 0x8080, 0x8080 }},
--			{ "black", { 0x1000, 0x8000, 0x8000 }, { 0xffff, 0x0000, 0x0000, 0x0000 }},
--			{ "red",   { 0x517b, 0x5a34, 0xf000 }, { 0xffff, 0xffff, 0x0000, 0x0000 }},
--			{ "green", { 0x908e, 0x35cc, 0x2237 }, { 0xffff, 0x0000, 0xffff, 0x0000 }},
--			{ "blue",  { 0x28f7, 0xf000, 0x6dc9 }, { 0xffff, 0x0000, 0x0000, 0xffff }},
-+			{ "white", { 0xebeb, 0x8080, 0x8080 }, { 0xffff, 0xffff, 0xffff, 0xffff }},
-+			{ "gray",  { 0x7e6c, 0x8080, 0x8080 }, { 0xffff, 0x8080, 0x8080, 0x8080 }},
-+			{ "black", { 0x1010, 0x8080, 0x8080 }, { 0xffff, 0x0000, 0x0000, 0x0000 }},
-+			{ "red",   { 0x51cd, 0x5a8e, 0xf0f0 }, { 0xffff, 0xffff, 0x0000, 0x0000 }},
-+			{ "green", { 0x911e, 0x3602, 0x2259 }, { 0xffff, 0x0000, 0xffff, 0x0000 }},
-+			{ "blue",  { 0x2920, 0xf0f0, 0x6e37 }, { 0xffff, 0x0000, 0x0000, 0xffff }},
- 		}
- 	},
- 	/*
-@@ -151,12 +153,12 @@ static struct yuv_u16_to_argb_u16_case yuv_u16_to_argb_u16_cases[] = {
- 		.range = DRM_COLOR_YCBCR_LIMITED_RANGE,
- 		.n_colors = 6,
- 		.colors = {
--			{ "white", { 0xeb00, 0x8000, 0x8000 }, { 0xffff, 0xffff, 0xffff, 0xffff }},
--			{ "gray",  { 0x7dee, 0x8000, 0x8000 }, { 0xffff, 0x8080, 0x8080, 0x8080 }},
--			{ "black", { 0x1000, 0x8000, 0x8000 }, { 0xffff, 0x0000, 0x0000, 0x0000 }},
--			{ "red",   { 0x3e8f, 0x6656, 0xf000 }, { 0xffff, 0xffff, 0x0000, 0x0000 }},
--			{ "green", { 0xaca1, 0x29aa, 0x1a45 }, { 0xffff, 0x0000, 0xffff, 0x0000 }},
--			{ "blue",  { 0x1fd0, 0xf000, 0x75bb }, { 0xffff, 0x0000, 0x0000, 0xffff }},
-+			{ "white", { 0xebeb, 0x8080, 0x8080 }, { 0xffff, 0xffff, 0xffff, 0xffff }},
-+			{ "gray",  { 0x7e6c, 0x8080, 0x8080 }, { 0xffff, 0x8080, 0x8080, 0x8080 }},
-+			{ "black", { 0x1010, 0x8080, 0x8080 }, { 0xffff, 0x0000, 0x0000, 0x0000 }},
-+			{ "red",   { 0x3ece, 0x66bc, 0xf0f0 }, { 0xffff, 0xffff, 0x0000, 0x0000 }},
-+			{ "green", { 0xad4e, 0x29d4, 0x1a5f }, { 0xffff, 0x0000, 0xffff, 0x0000 }},
-+			{ "blue",  { 0x1ff0, 0xf0f0, 0x7631 }, { 0xffff, 0x0000, 0x0000, 0xffff }},
- 		}
- 	},
- 	/*
-@@ -201,12 +203,12 @@ static struct yuv_u16_to_argb_u16_case yuv_u16_to_argb_u16_cases[] = {
- 		.range = DRM_COLOR_YCBCR_LIMITED_RANGE,
- 		.n_colors = 6,
- 		.colors = {
--			{ "white", { 0xeb00, 0x8000, 0x8000 }, { 0xffff, 0xffff, 0xffff, 0xffff }},
--			{ "gray",  { 0x7dee, 0x8000, 0x8000 }, { 0xffff, 0x8080, 0x8080, 0x8080 }},
--			{ "black", { 0x1000, 0x8000, 0x8000 }, { 0xffff, 0x0000, 0x0000, 0x0000 }},
--			{ "red",   { 0x4988, 0x60b9, 0xf000 }, { 0xffff, 0xffff, 0x0000, 0x0000 }},
--			{ "green", { 0xa47b, 0x2f47, 0x1902 }, { 0xffff, 0x0000, 0xffff, 0x0000 }},
--			{ "blue",  { 0x1cfd, 0xf000, 0x76fe }, { 0xffff, 0x0000, 0x0000, 0xffff }},
-+			{ "white", { 0xebeb, 0x8080, 0x8080 }, { 0xffff, 0xffff, 0xffff, 0xffff }},
-+			{ "gray",  { 0x7e6c, 0x8080, 0x8080 }, { 0xffff, 0x8080, 0x8080, 0x8080 }},
-+			{ "black", { 0x1010, 0x8080, 0x8080 }, { 0xffff, 0x0000, 0x0000, 0x0000 }},
-+			{ "red",   { 0x49d2, 0x611a, 0xf0f0 }, { 0xffff, 0xffff, 0x0000, 0x0000 }},
-+			{ "green", { 0xa520, 0x2f76, 0x191b }, { 0xffff, 0x0000, 0xffff, 0x0000 }},
-+			{ "blue",  { 0x1d1a, 0xf0f0, 0x7775 }, { 0xffff, 0x0000, 0x0000, 0xffff }},
- 		}
- 	},
- };
-diff --git a/drivers/gpu/drm/vkms/vkms_formats.c b/drivers/gpu/drm/vkms/vkms_formats.c
-index dfb8e13cba87a..4d5fcaeb82c58 100644
---- a/drivers/gpu/drm/vkms/vkms_formats.c
-+++ b/drivers/gpu/drm/vkms/vkms_formats.c
-@@ -788,15 +788,36 @@ static const struct conversion_matrix yuv_bt601_full = {
- };
+diff --git a/tools/bpf/bpftool/main.c b/tools/bpf/bpftool/main.c
+index a829a6a49037a..429376d1f5446 100644
+--- a/tools/bpf/bpftool/main.c
++++ b/tools/bpf/bpftool/main.c
+@@ -358,7 +358,11 @@ static int do_batch(int argc, char **argv)
  
- /*
-- * numpy.around(colour.matrix_YCbCr(K=colour.WEIGHTS_YCBCR["ITU-R BT.601"],
-- *                                  is_legal = True,
-- *                                  bits = 8) * 2**32).astype(int)
-+ * BT.601 limited-/studio-range YCbCr to full-range RGB.
-+ *
-+ * The coefficients are derived as follows:
-+ *
-+ *  1. Take the standard ITU-R YCbCr -> RGB relations for luma weights
-+ *     Kr, Kb (Kg = 1 - Kr - Kb), with Y in [0, 1] and Cb, Cr in
-+ *     [-0.5, 0.5]. For BT.601 Kr = 0.299 and Kb = 0.114:
-+ *
-+ *       R = Y                                + 2 * (1 - Kr)          * Cr
-+ *       G = Y - 2 * (1 - Kb) * Kb / Kg * Cb - 2 * (1 - Kr) * Kr / Kg * Cr
-+ *       B = Y + 2 * (1 - Kb)          * Cb
-+ *
-+ *     These are exactly the yuv_bt601_full coefficients above.
-+ *
-+ *  2. Expand the studio input range to full range, relative to a
-+ *     full-range maximum of 2^n - 1 (255 for 8-bit): the luma
-+ *     coefficient is scaled by 255/(235 - 16) and the chroma
-+ *     coefficients by 255/(240 - 16). This matches the DRM UAPI
-+ *     definition and IGT's igt_ycbcr_to_rgb_matrix(). Note this differs
-+ *     from colour.matrix_YCbCr(is_legal=True), which normalises by 2^n
-+ *     and is thus off by a factor of 256/255.
-+ *
-+ *  3. Convert each coefficient to S31.32 fixed point, i.e.
-+ *     round(coeff * 2^32).
-  */
- static const struct conversion_matrix yuv_bt601_limited = {
- 	.matrix = {
--		{ 5020601039, 0,           6881764740 },
--		{ 5020601039, -1689204679, -3505362278 },
--		{ 5020601039, 8697922339,  0 },
-+		{ 5000989317, 0,           6854882848 },
-+		{ 5000989317, -1682606224, -3491669458 },
-+		{ 5000989317, 8663946082,  0 },
- 	},
- 	.y_offset = 16,
- };
-@@ -816,15 +837,14 @@ static const struct conversion_matrix yuv_bt709_full = {
- };
+ 	if (json_output)
+ 		jsonw_start_array(json_wtr);
+-	while (fgets(buf, sizeof(buf), fp)) {
++	for (;;) {
++		errno = 0;
++		if (!fgets(buf, sizeof(buf), fp))
++			break;
++
+ 		cp = strchr(buf, '#');
+ 		if (cp)
+ 			*cp = '\0';
+@@ -460,16 +464,6 @@ int main(int argc, char **argv)
  
- /*
-- * numpy.around(colour.matrix_YCbCr(K=colour.WEIGHTS_YCBCR["ITU-R BT.709"],
-- *                                  is_legal = True,
-- *                                  bits = 8) * 2**32).astype(int)
-+ * BT.709 limited-range YCbCr to full-range RGB (Kr = 0.2126, Kb = 0.0722).
-+ * Derived as described for yuv_bt601_limited.
-  */
- static const struct conversion_matrix yuv_bt709_limited = {
- 	.matrix = {
--		{ 5020601039, 0,          7729959424 },
--		{ 5020601039, -919487572, -2297803934 },
--		{ 5020601039, 9108275786, 0 },
-+		{ 5000989317, 0,          7699764272 },
-+		{ 5000989317, -915895824, -2288828138 },
-+		{ 5000989317, 9072696586, 0 },
- 	},
- 	.y_offset = 16,
- };
-@@ -844,15 +864,14 @@ static const struct conversion_matrix yuv_bt2020_full = {
- };
+ 	setlinebuf(stdout);
  
- /*
-- * numpy.around(colour.matrix_YCbCr(K=colour.WEIGHTS_YCBCR["ITU-R BT.2020"],
-- *                                  is_legal = True,
-- *                                  bits = 8) * 2**32).astype(int)
-+ * BT.2020 non-constant-luminance limited-range YCbCr to full-range RGB
-+ * (Kr = 0.2627, Kb = 0.0593). Derived as described for yuv_bt601_limited.
-  */
- static const struct conversion_matrix yuv_bt2020_limited = {
- 	.matrix = {
--		{ 5020601039, 0,          7238124312 },
--		{ 5020601039, -807714626, -2804506279 },
--		{ 5020601039, 9234915964, 0 },
-+		{ 5000989317, 0,          7209850391 },
-+		{ 5000989317, -804559491, -2793551177 },
-+		{ 5000989317, 9198842076, 0 },
- 	},
- 	.y_offset = 16,
- };
+-#ifdef USE_LIBCAP
+-	/* Libcap < 2.63 hooks before main() to compute the number of
+-	 * capabilities of the running kernel, and doing so it calls prctl()
+-	 * which may fail and set errno to non-zero.
+-	 * Let's reset errno to make sure this does not interfere with the
+-	 * batch mode.
+-	 */
+-	errno = 0;
+-#endif
+-
+ 	last_do_help = do_help;
+ 	pretty_output = false;
+ 	json_output = false;
 -- 
 2.53.0
 
