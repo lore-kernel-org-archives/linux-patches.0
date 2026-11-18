@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021387;
-	b=FdRC60OfucCmpVzPJB//ktgV5BWNoG5UbJ8lf9fh2c4HfMQ6Vk8r1j2V4ekhx1u8g/BC
-	 mftJykiujJ7eKOP9rTlAjX2Ho65zSMan++2pVVKaqCDUNsnJELyJAk1tc9fLETokGbsoQ
-	 inHhzYYhCDAY/ReODtd9GjSFNlsssN0AQH0oJVeLaX/mNCZvj1xZLBPQGXX3I4NnRhwqP
-	 p+kYYoFa0AK2GTNkou+c9yblo+d31bWU5zdmktZR+MRtXKekPR4hpOKTkIZx8y8yIuog5
-	 0Sv7LAJcVVMY5dMdugft+Cd2GrbKU7aGvORP6aaPi9XvcS6+N45a2c/2W9v2Z26HCfg==
+	t=1795021389;
+	b=OQaDjWrFhf/AMarjasEWwx21BqFPAft5h86cgOMO4w8pNb0JlsGSN+Rp8CfgTP9spfdy
+	 Wwsdc0i/ibO87Y3TlvBXBJETrOaJk28np4fZsNAyBWJqtpa1tk7F3eO8wDeLBsfh2hBt8
+	 Q1Yc70d1w+p5DOpnsrZ2wsfgoal5ad1Mp+AoVukmbNcGS63OEoNFSCQIwG0ZR5rx/7ZlQ
+	 06rreqJby/rg9BRTwg8fWAQNRu4ogbDMGWNmfFfnjM1a/kiRnxl5RLJDpayYno/QJigqe
+	 jPphMiRmhJGGbtr65BQOZdlh8Lqm5AoIizDZ4uLdYvYrKpcw2UzS1x1be/j9v8l0Z7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021387;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=teUeSOOw1lHKyIJ9BCNod2mIlH/loLx1VxrGydLw7LU=;
-	b=sua0sKIU5S4tdojzhLzYUYykbWsCzhHT5r7r8hc7CFHt5TgchNl7dfLgvZwYdIN1dtbI
-	 5PcjBmoK86zlkxRcKE41rBPYZU83QKKmYQbCCSxKdydBR0eu4X6a2K4PfxhlptHij+vK1
-	 M/svetYQH/sPPWw4fm5ejEKsLjtMzXVbola1wo3TSC0K9fUTdmgdSDiC7shl+BJHIRKwI
-	 8zOVX4CfVM5acWo1MBMeGk0LiRHpW8ANFAe0A3tCdvLrLdPeCZdj8h9KdNy88UMDaFwsT
-	 Q/UMW1ShFLV/2ed+8eEyGUAmKE6pNDlCeTIkuZTo3xfhLVqz9PaYqWS4L2DwFO4zWuQ==
+	bh=Bo9E8xLavtM3cIMdzXAPIBt+7rx8b1SoAb771u5wFwU=;
+	b=z1oHwnCBf2Mdf7yu53ZgvbYaCYjZzD10o8rMIFL2OmKCW4u5nb4AigHr1UrYKNaXboee
+	 UhMBSNNHAVmVZJk0iWIhFO5jY85PHoUsxEa7S3aMvTKNtS/mjfnw+2ge3GIlOvvCohHmQ
+	 eualAVf2bt5CtGLE+0QiWQCnhwHM8EYoJjNI8w1O5gT7AmrFdAUey0wpgv4pJluqeHE7Y
+	 xS4MRlM/gawpiW/CHyqBVXXjK6YXaQtnZJDBFwpdzxNzzGOztn1ADyFk84tcp9efyQeFy
+	 gwW+yudGRwTiW18fLQ6vutc2akU5Hpk7zyDyMcSprd6OvjqGdBgETKZ6n74QDXRmhXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=InoNCRwF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9kPcSlk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1833060A2600;
-	Wed, 18 Nov 2026 17:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E0460A2605;
+	Wed, 18 Nov 2026 17:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=InoNCRwF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259A41F000C4;
-	Wed, 18 Nov 2026 17:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u9kPcSlk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF461F000C4;
+	Wed, 18 Nov 2026 17:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021386;
-	bh=teUeSOOw1lHKyIJ9BCNod2mIlH/loLx1VxrGydLw7LU=;
+	s=korg; t=1795021389;
+	bh=Bo9E8xLavtM3cIMdzXAPIBt+7rx8b1SoAb771u5wFwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=InoNCRwFoIKPwyWN5fLUHp7+zgfeTg9vvsS4ZqXqSl8GBNaJuVX3j1VInKjRxUx22
-	 GJh33wfOtHa9YWWb1V3Vf4PVkPKbAmEMuG3ZQXXKDO1S/9jrIpR3uP1i8hO63dxPqf
-	 hGDkTAllFo4+D4cUqz4DqORe5OciDTrYa8/zF7+U=
+	b=u9kPcSlkGbEUXrw5lw3ieHgW7eFr4fyaK+h98pTsunpYyGaM8Sm4oJMpm3lV1DI0v
+	 RPaoOrCvtMs5CGH3HNmCmaXifYuYA80E6B1VdKI2OfEm12nY713Fy37Et7+KIcuqX0
+	 e1zHNGLuZZOCnqKYK5v2m87silAaHnWm4sGPr3+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Mingming Cao <mmc@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2290/2651] ksmbd: disconnect on invalid encryption transform flags
-Date: Wed, 18 Nov 2026 15:58:50 +0100
-Message-ID: <20261118150407.713797638@linuxfoundation.org>
+Subject: [PATCH 7.3 2273/2651] ibmveth: release the pool kobjects when probe fails
+Date: Wed, 18 Nov 2026 15:58:33 +0100
+Message-ID: <20261118150407.171839060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,44 +68,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 0882f124ae329eefb66b00e63b9043f24c006b0e ]
+[ Upstream commit fd052c6823b31eb45f824660567ab3f2da2d5195 ]
 
-MS-SMB2 3.3.5.2.1.1 requires the Flags/EncryptionAlgorithm field in an
-SMB2 transform header to be 0x0001. The server must disconnect the
-connection when it has any other value.
+If register_netdev() fails in ibmveth_probe(), for example with -EINTR
+when the binding task is killed, probe frees the netdev but leaves the
+pool%d kobjects embedded in it registered in sysfs. Reading
+/sys/devices/vio/<unit>/pool0/num is then a use-after-free, and the
+next probe cannot add pool0.
 
-smb3_decrypt_req() currently ignores this field. A client with the
-session key can therefore send a correctly authenticated encrypted
-request with invalid flags and have it processed. Check the field
-before looking up the session key or decrypting the request. The caller
-aborts the connection when this check fails.
+Put the kobjects before freeing the netdev, as ibmveth_remove() does,
+on this path and on the netif_set_real_num_tx_queues() one.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+The kobjects also have no release(). With CONFIG_DEBUG_KOBJECT_RELEASE,
+kobject_put() defers their cleanup, including removing the sysfs files,
+to a work item, so free_netdev() can free them first, here and in
+remove(). Add a release() that signals a per-pool completion, and wait
+for it in both places before free_netdev(). Without that config,
+release() runs from kobject_put() and the wait returns at once.
+
+Found in review of the ibmveth multi-queue RX series and confirmed by
+code inspection; the release() part was raised by the Sashiko review of
+the first version. Tested on a POWER10 LPAR with register_netdev()
+forced to fail with -EINTR by a test-only module parameter (not part of
+this patch): no pool%d directories remain and the device binds again. No
+kernel selftests cover ibmveth.
+
+Fixes: 860f242eb534 ("[PATCH] ibmveth change buffer pools dynamically")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Link: https://patch.msgid.link/20261013182926.30417-6-mmc@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/ibm/ibmveth.c | 52 +++++++++++++++++++++++++-----
+ drivers/net/ethernet/ibm/ibmveth.h |  3 ++
+ 2 files changed, 47 insertions(+), 8 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 4f6cf8df4ae9f..74b4e332317b7 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -12644,6 +12644,12 @@ int smb3_decrypt_req(struct ksmbd_work *work)
- 		return -ECONNABORTED;
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index 919b5831d875c..42aa9f7bd49de 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -1890,6 +1890,40 @@ static const struct net_device_ops ibmveth_netdev_ops = {
+ 	.ndo_features_check	= ibmveth_features_check,
+ };
+ 
++/**
++ * ibmveth_pool_kobj_release - Mark a pool kobject finished
++ * @kobj: kobject embedded in the pool
++ *
++ * The pool kobjects live in netdev_priv(), so the last put must wait
++ * for this before free_netdev().
++ */
++static void ibmveth_pool_kobj_release(struct kobject *kobj)
++{
++	struct ibmveth_buff_pool *pool = container_of(kobj,
++						      struct ibmveth_buff_pool,
++						      kobj);
++
++	complete(&pool->released);
++}
++
++/**
++ * ibmveth_put_pool_kobjs - Drop the pool kobjects and wait for release
++ * @adapter: ibmveth adapter
++ *
++ * With CONFIG_DEBUG_KOBJECT_RELEASE the cleanup, including removing the
++ * sysfs files, runs later from a work item in the kobject; wait for it
++ * so free_netdev() cannot free the pools first.
++ */
++static void ibmveth_put_pool_kobjs(struct ibmveth_adapter *adapter)
++{
++	int i;
++
++	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
++		kobject_put(&adapter->rx_buff_pool[i].kobj);
++	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
++		wait_for_completion(&adapter->rx_buff_pool[i].released);
++}
++
+ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
+ {
+ 	int rc, i, mac_len;
+@@ -2000,6 +2034,7 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
+ 		ibmveth_init_buffer_pool(&adapter->rx_buff_pool[i], i,
+ 					 pool_count[i], pool_size[i],
+ 					 pool_active[i]);
++		init_completion(&adapter->rx_buff_pool[i].released);
+ 		error = kobject_init_and_add(kobj, &ktype_veth_pool,
+ 					     &dev->dev.kobj, "pool%d", i);
+ 		if (!error)
+@@ -2011,8 +2046,7 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
+ 	if (rc) {
+ 		netdev_dbg(netdev, "failed to set number of tx queues rc=%d\n",
+ 			   rc);
+-		free_netdev(netdev);
+-		return rc;
++		goto err_put_pools;
+ 	}
+ 	adapter->tx_ltb_size = PAGE_ALIGN(IBMVETH_MAX_TX_BUF_SIZE);
+ 	for (i = 0; i < IBMVETH_MAX_QUEUES; i++)
+@@ -2027,25 +2061,27 @@ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
+ 
+ 	if (rc) {
+ 		netdev_dbg(netdev, "failed to register netdev rc=%d\n", rc);
+-		free_netdev(netdev);
+-		return rc;
++		goto err_put_pools;
  	}
  
-+	if (tr_hdr->Flags != cpu_to_le16(TRANSFORM_FLAG_ENCRYPTED)) {
-+		pr_err_ratelimited("Invalid transform flags 0x%04x\n",
-+				   le16_to_cpu(tr_hdr->Flags));
-+		return -ECONNABORTED;
-+	}
+ 	netdev_dbg(netdev, "registered\n");
+ 
+ 	return 0;
 +
- 	buf_data_size = pdu_length - sizeof(struct smb2_transform_hdr);
- 	original_msg_size = le32_to_cpu(tr_hdr->OriginalMessageSize);
- 	if (buf_data_size < sizeof(struct smb2_compression_hdr) ||
++err_put_pools:
++	ibmveth_put_pool_kobjs(adapter);
++	free_netdev(netdev);
++	return rc;
+ }
+ 
+ static void ibmveth_remove(struct vio_dev *dev)
+ {
+ 	struct net_device *netdev = dev_get_drvdata(&dev->dev);
+ 	struct ibmveth_adapter *adapter = netdev_priv(netdev);
+-	int i;
+ 
+ 	disable_work_sync(&adapter->work);
+ 
+-	for (i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
+-		kobject_put(&adapter->rx_buff_pool[i].kobj);
++	ibmveth_put_pool_kobjs(adapter);
+ 
+ 	unregister_netdev(netdev);
+ 
+@@ -2221,7 +2257,7 @@ static const struct sysfs_ops veth_pool_ops = {
+ };
+ 
+ static struct kobj_type ktype_veth_pool = {
+-	.release        = NULL,
++	.release        = ibmveth_pool_kobj_release,
+ 	.sysfs_ops      = &veth_pool_ops,
+ 	.default_groups = veth_pool_groups,
+ };
+diff --git a/drivers/net/ethernet/ibm/ibmveth.h b/drivers/net/ethernet/ibm/ibmveth.h
+index 3f2240823f6a3..be0939caa328e 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.h
++++ b/drivers/net/ethernet/ibm/ibmveth.h
+@@ -14,6 +14,8 @@
+ #ifndef _IBMVETH_H
+ #define _IBMVETH_H
+ 
++#include <linux/completion.h>
++
+ /* constants for H_MULTICAST_CTRL */
+ #define IbmVethMcastReceptionModifyBit     0x80000UL
+ #define IbmVethMcastReceptionEnableBit     0x20000UL
+@@ -143,6 +145,7 @@ struct ibmveth_buff_pool {
+     struct sk_buff **skbuff;
+     int active;
+     struct kobject kobj;
++	struct completion released;
+ };
+ 
+ struct ibmveth_rx_q {
 -- 
 2.53.0
 
