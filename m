@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042975;
-	b=tZNH0S0gHK1wJqffoq/a3JSydVGGmfFAAD/tRmpNYO7Hq5DFA+CeAz+gmx2Gc91Z2ctN
-	 6Rtaho2vaspAMJpXR9pMuCogXAr6yLPW0rF9HVyycxY2rVQzfTUR3G31FdWlj8glP2Efn
-	 7qYvdUJ3lfU9g8ixMQzfMT4b2FczxEprf4iqsSNRujz1iQLHfRwbJmyL7iOWs/6epy3q7
-	 WsbaNEuVdHfd4zDSA6FkhxcT6Sp9u5EFqM1zN1Xg79mTejBqxENiwEQIfp5FcywU9A7FK
-	 rzOoe8SUEEKVf5qELGKJMif9zkl6j5HJjvpicd1BJauUJMs7AqX0gKEN7y8mjXLK2oA==
+	t=1795042978;
+	b=zpF3jmuKLiUU4kw3S92KWD+zCB7GuA026AKG5/JVW1cMaiqXO+4UYj2ekX44ctIFiWR1
+	 MvEJ8p1cPNvwdntGeokxGzn52wgWMIn/jyLUV93Dmz0P64/nlTHuTI7FehD00TFkdU1eA
+	 hS0DNMt5RYi7Zm3qgY82uJqFbZPdSPvKlBbbUUVB+3om6u61R22s2upbL/dm0kjksOs4l
+	 f+sy8/Jod6xaTJjzRS32/7z68oZjJzHYN7jQ0xvEtJOsRV+FlDzFbRW5L5MLx16YhEqi8
+	 vD8Jxy2Xk6DkfYZ1nK9OyObL9WcQaKDaJGjiRW20UWCTXxmi+n7nmE98rDWJqvmWMmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042975;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042978;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s5XXoVB4ocnXo3Xi8nKllxkEHNlJJYkrNE/2aRp6ELY=;
-	b=z6Q8PQRR2eDla6CGYb20nQ2khUWsZ/6fP07yi9pW4/kMsLCF+G4rw1Sik5D0vDuwC42n
-	 f8QiC0oGOQvheIKtDy1qu1f/cg0/f+ZxEhR/iz/f80+iXIvoc5fqoE2J0V9SaKKRRJKjG
-	 j6KWUYEG93qtnLStI+eNbaCS0H9VibXW5wt6VK8kbr8ysMqT3R2yC8SDL8FMtozQlEuRJ
-	 fWS9sscqwXQcqy2tCBA0pFHRvP7gwMeCGHJzXc8E+z6UuFo78ucQwdJ15rMaigl1zqg45
-	 AJS7rkryqXALEwlGtKWYU0AitlQPGaiALvJDvTbT5UUm1cjPwRnHgc82h5B7P/sz57w==
+	bh=4wJOZQmWhZcIEPCSymRybaHjO2UyKPJVFzOZUfWyMuI=;
+	b=iEgyLpW1DAvgxn58t9GQDWJ+4f/QnREgtzXjP0UO4O/7JDDo6d/+mD69wrD/CFbk/rjD
+	 9J9DVQL/6JixiU77vDNMvP8VsGQ9pUmuC3yjz5+SneQVN1zqUFuj86HA2M08XEEhpW72d
+	 REvScDOB4jDyozLjqPJfhpvacAahsV+SFvCHDyJj4lA7QLpq6bHH+kIWmDI3OMiKLOoTE
+	 C377HgrSTxTYJ5StzZt3CGU8VYi/9+wp4fp02xGcPyAEZXgQLJeDzmfZpvswQpZEvztM7
+	 oTZqQVYPqce8/avTJD2EUtYjnUv2qrXO1rF1V0XXhuuWkIW2x7MBn81t0tZAIPNY9+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2tJmEW+H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lOPzbQB/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631E5606A31C;
-	Wed, 18 Nov 2026 23:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447DF606A32C;
+	Wed, 18 Nov 2026 23:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2tJmEW+H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80A91F000C4;
-	Wed, 18 Nov 2026 23:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOPzbQB/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999231F000C9;
+	Wed, 18 Nov 2026 23:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042975;
-	bh=s5XXoVB4ocnXo3Xi8nKllxkEHNlJJYkrNE/2aRp6ELY=;
+	s=korg; t=1795042978;
+	bh=4wJOZQmWhZcIEPCSymRybaHjO2UyKPJVFzOZUfWyMuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2tJmEW+HfSfGmykRiTg92MJ3TVG/3MLrzUTjjLswOm/AA9CRbfmFqhgyb/pnUWqSW
-	 1ufC8+6Fru3ar8ehK6RAPU+TKTzACt2q1k9m4SrVn/kS9N433l21XPJJrfettdqCrD
-	 hrJyeT75foeVqy3m220w00rQGZgh1ZRIT9j084GY=
+	b=lOPzbQB/TL+CFGS/TMHvb/HWFe7wQggJxwWFbJlgC0isP5AlyUv7Yt/ph5rWkvl0W
+	 7h2QYe8QyQpcKg2G+oNtCY09u/udLkU/FaPhzDG1bGZccKbhJY0nTnrEVmVQiCl9wo
+	 y9tFo6ypo30WXEOZdK5B2OiLAjJkKxBOiS06pvTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	Philip Yang <philip.yang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com,
+	Petko Manolov <petkan@nucleusys.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0045/2857] drm/amdkfd: add sanity check in svm_range_is_valid
-Date: Wed, 18 Nov 2026 15:17:59 +0100
-Message-ID: <20261118150202.951902579@linuxfoundation.org>
+Subject: [PATCH 6.1 0046/2857] net: usb: rtl8150: handle link status read failures
+Date: Wed, 18 Nov 2026 15:18:00 +0100
+Message-ID: <20261118150202.983286009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,39 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit aa7e29cf9a37092cf5057a612ee09f28df20258f ]
+[ Upstream commit 8c9c5b9a689612dcb92a04a4218c975cd19f19d8 ]
 
-to prevent svm range to be overflow or underflow.
+set_carrier() ignores the result of the USB control transfer and tests
+the stack variable supplied as its receive buffer. If the device rejects
+or aborts the request, that variable remains uninitialized and the driver
+chooses an arbitrary carrier state.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Philip Yang <philip.yang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Leave the existing carrier state unchanged when the link status cannot be
+read. A transient USB error should not be treated as link loss.
+
+Reported-by: syzbot+9db6c624635564ad813c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9db6c624635564ad813c
+Suggested-by: Petko Manolov <petkan@nucleusys.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260630101216.10365-1-alhouseenyousef@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/usb/rtl8150.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 6555a15e016ec..e60ab76d3e6f6 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -3160,7 +3160,13 @@ svm_range_is_valid(struct kfd_process *p, uint64_t start, uint64_t size)
- 	unsigned long start_unchg = start;
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index 647f28b367b99..8c739d898e57d 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -734,7 +734,9 @@ static void set_carrier(struct net_device *netdev)
+ 	rtl8150_t *dev = netdev_priv(netdev);
+ 	short tmp;
  
- 	start <<= PAGE_SHIFT;
--	end = start + (size << PAGE_SHIFT);
+-	get_registers(dev, CSCR, 2, &tmp);
++	if (get_registers(dev, CSCR, 2, &tmp))
++		return;
 +
-+	if (size == 0)
-+		return -EINVAL;
-+
-+	if (check_add_overflow(start, size << PAGE_SHIFT, &end))
-+		return -EOVERFLOW;
-+
- 	do {
- 		vma = find_vma(p->mm, start);
- 		if (!vma || start < vma->vm_start ||
+ 	if (tmp & CSCR_LINK_STATUS)
+ 		netif_carrier_on(netdev);
+ 	else
 -- 
 2.53.0
 
