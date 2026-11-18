@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056463;
-	b=0KpEnbZOzhyfzr7sxsmnEByuA95Ol/VEj2YvZSfZgGQeqrTRJClR6tVotw5vlEJqEMVH
-	 bV4wZzbgIGQdGkbxpp1v8LWmIa9Rw0veCRJdL7gHtXA/W1o5lhPWxcsvb/EQQiTfiRQIm
-	 oKYSNsALg5oygVsxoCbiuKX2moyjPgqHu8zVzQ0q6XTE5d2+zpIUwgLgUy0VnJcROO+Zo
-	 3x/3Vuw583oMJpuuUjhOZKKM3uekxTK0TlADCDC961Q/mh63Q7P7/uhI5yalUso0gUc0g
-	 2DS3pjf0Uo8ivIw9q4HIKQqheM3/VjhIS1Yy7znb/Pu+KSZ3uaD7lKxU314CTaV3Low==
+	t=1795056466;
+	b=rBPl2KDIPJlCClIlWFMM9+g7DnVL0hR6XvI83CE+vESKGACbREBF0YAbXx7LcAO5teL0
+	 C4GpRF4hUcoE38DCxgqsOveilNfbfy3UICWsfmAkymVd4sMMg7WYgetXQlJuQat1g0iau
+	 ca0dSB+cfA9A+LRWV9Itv52TNps+4K8BpPd/V4agfmWnmCgVqJgBXCqPhSVpSZKWE5YTk
+	 +KHLX4rs+0TfSgqVbfoJdTVh/GiXI9zzBiuOr5MFCAPW6zHKfdPyOMEcox58m863jEKUR
+	 9D3lx6dX9OLPZVYm69mXHgPx9gTgwO6sh9SAIleH4UyX7AWRvvUXUx1h1w4jPBbgsTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VTj9wAYDybz8RULtckn95HzyFh19CTENQNQvbQMRWW0=;
-	b=tlMQqCGSYAjPf2FrrfRdJdlgNni82CkqgRJhZhgZqCE28U/W0pis7NhVLjDee2Nn24E6
-	 kZbTPzeqmvlGwSrn/zcLAjWoNMLCXg7Y6PKzCYo1ZnlSf9ufo9d9E+YhTODyPjtZLIiky
-	 cZUagp6ryAfiU0iUodXZpuz7lz+vivF9vPyYX00+FwuqnhFwgmDTtsfBvIJg2UjtnfZrn
-	 nqP8yiVApU3ePbTreft5qV30NeMEEI/NCmIt9HmRZmoN+R7TFt5rclygEaMLl0bFkvrJp
-	 no0aPHWqF37wLY9VogdajsSjgWfDAcgkJDQ2IDxpzbEsbHkLv0IwWs/iCcXNP3BkuZg==
+	bh=YiyBnuFvkNTOPjiN+nG7cPCxj23pSoLNk9cVWI/xof4=;
+	b=1rRFKf9njMM3SNWgACNrElz+Be4gUy7QqVg/hOahFv3utuRxyTimDFqFjBvC4VejIyRl
+	 BDGEpoz0BzTDOo9G85GkuMWCNYy6fek5VYQEf7H+trNQdVnvU7u4Cxu0wTFiLhZWsCC/x
+	 IJGcFlq3x+hgYBbofyvkbeJIbsrAgDjZqurqE1ecg/BBFWCDfH2+HSchQCqHNFx9Z6i/L
+	 AUKtp4paUN3v9HpmRlnsfgokbTtEryC9J9SuRtiV5mCeBWAdgYD+1u4MwxRA1S8ia5gtx
+	 DBy54C1ywvcVMcBjZg3jBcIFroXUya/dfvbzt7J0op5SiY2j0opiK3/sWm7r01xGNgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcW31Qyl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=geknjXLv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A436606A331;
-	Thu, 19 Nov 2026 02:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B4A60A261F;
+	Thu, 19 Nov 2026 02:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcW31Qyl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B1C1F000C5;
-	Thu, 19 Nov 2026 02:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=geknjXLv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884771F000C7;
+	Thu, 19 Nov 2026 02:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056463;
-	bh=VTj9wAYDybz8RULtckn95HzyFh19CTENQNQvbQMRWW0=;
+	s=korg; t=1795056466;
+	bh=YiyBnuFvkNTOPjiN+nG7cPCxj23pSoLNk9cVWI/xof4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kcW31QylAzvb0zBLdw7Au4udzSLprjCBmZE/3Z/k5TrCUCfX/V0ooFJjJPtY/Lroc
-	 C6IAgwbIzfCPzGkRfNAFncjyb9o0zTbxJow5jLRFJ2dKUfw4LKaB1jS7JukP4+jgrt
-	 +597KxbhwZl5imCQ9RqtcoPHohGdDysZRIZNxDYQ=
+	b=geknjXLv1NVy8D2t8y6viW9MY83aZptysM/IzbuhwLPWm1ke3EKZvk8cUURFS2GYt
+	 5GTUqvbxCSqWbOqyOcCulvVphuQKRjQsEEW5sRH2cr3h4rwe+YlsiEoOvFsHe7rYH1
+	 t91EGZEKNN535sU+qH8NWFqpnkSP6mFzTYRuFplg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kalesh Singh <kaleshsingh@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1990/2214] ASoC: mediatek: mt8195: Fix runtime resume error handling
-Date: Wed, 18 Nov 2026 16:01:06 +0100
-Message-ID: <20261118150130.441477803@linuxfoundation.org>
+Subject: [PATCH 5.15 1999/2214] tracing/histogram: Document expression arithmetic and constants
+Date: Wed, 18 Nov 2026 16:01:15 +0100
+Message-ID: <20261118150130.758759166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,66 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Kalesh Singh <kaleshsingh@google.com>
 
-[ Upstream commit 933fbfb6648850e003a1fc47b7bcc08fe3687961 ]
+[ Upstream commit 2d2f6d4b8ce738ef43fc3436b43cecd2fea64152 ]
 
-Check and propagate errors when enabling the register access and main
-clocks during runtime resume.
+Histogram expressions now support division, and multiplication in
+addition to the already supported subtraction and addition operators.
 
-If regcache_sync() or main clock enable fails, restore regmap cache-only
-mode and disable the register access clocks before returning the error.
+Numeric constants can also be used in a hist trigger expressions
+or assigned to a variable and used by refernce in an expression.
 
-Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-10-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20211025200852.3002369-9-kaleshsingh@google.com
+
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: 289e2a775de4 ("tracing: Clamp the printed end of a histogram bucket at U64_MAX")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 23 +++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ Documentation/trace/histogram.rst | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-index 432a14683c5fd..4558c1059433c 100644
---- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
-@@ -2969,18 +2969,31 @@ static int mt8195_afe_runtime_resume(struct device *dev)
- {
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
-+	int ret;
+diff --git a/Documentation/trace/histogram.rst b/Documentation/trace/histogram.rst
+index a78350a8fed43..7a68a5ac33a86 100644
+--- a/Documentation/trace/histogram.rst
++++ b/Documentation/trace/histogram.rst
+@@ -1763,6 +1763,20 @@ using the same key and variable from yet another event::
  
--	mt8195_afe_enable_reg_rw_clk(afe);
-+	ret = mt8195_afe_enable_reg_rw_clk(afe);
-+	if (ret)
-+		return ret;
+   # echo 'hist:key=pid:wakeupswitch_lat=$wakeup_lat+$switchtime_lat ...' >> event3/trigger
  
- 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
--		goto skip_regmap;
-+		return 0;
- 
- 	regcache_cache_only(afe->regmap, false);
--	regcache_sync(afe->regmap);
-+	ret = regcache_sync(afe->regmap);
-+	if (ret)
-+		goto err_restore_cache;
++Expressions support the use of addition, subtraction, multiplication and
++division operators (+-*/).
 +
-+	ret = mt8195_afe_enable_main_clock(afe);
-+	if (ret)
-+		goto err_restore_cache;
- 
--	mt8195_afe_enable_main_clock(afe);
--skip_regmap:
- 	return 0;
++Note that division by zero always returns -1.
 +
-+err_restore_cache:
-+	regcache_cache_only(afe->regmap, true);
-+	mt8195_afe_disable_reg_rw_clk(afe);
++Numeric constants can also be used directly in an expression::
 +
-+	return ret;
- }
++  # echo 'hist:keys=next_pid:timestamp_secs=common_timestamp/1000000 ...' >> event/trigger
++
++or assigned to a variable and referenced in a subsequent expression::
++
++  # echo 'hist:keys=next_pid:us_per_sec=1000000 ...' >> event/trigger
++  # echo 'hist:keys=next_pid:timestamp_secs=common_timestamp/$us_per_sec ...' >> event/trigger
++
+ 2.2.2 Synthetic Events
+ ----------------------
  
- static int mt8195_afe_component_probe(struct snd_soc_component *component)
 -- 
 2.53.0
 
