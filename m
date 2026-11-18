@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053418;
-	b=nAP5kCN3cGqyHhvWjaNtGZAAB3YIJlO4FSi6gCYgdo1ST1L88Ef2nxi3Bet8WM7efEbl
-	 r1zlp0hGR7EzQwxvMN7BxY+kPUmp5PN5Dn8SiozsKG6rfJRUlQReMzOqN0nf5ksbe8zmh
-	 xQKf/rQDuBW8BNKzTotkLB4XiCrp9TM0llVKwH+K19/hl9XwJ+j+jqnOPx8xSjzIceyC9
-	 6aOiZSsgnwObwSSdNZ2lnYFLGzrPIQJjDOIdZm3aJB1vWy+kT+rHHa5d9iG9+/6K0IJPV
-	 SAP1TdD8mAe0/jplSbjPw2XBcPajJ4KB1s6f6g/OiE8+NMVhxaKDJzcBasdREFtBhYg==
+	t=1795053421;
+	b=M5Ie19NaKJNYO3fywYM/jn56heMIhPhQwwYamFKLSrlsP8xOkAXjSJMbo7lDcR6m86zn
+	 kdGRKR4DfaKImvWbR/5L9sglLHJvfzj5U1NWvo5UaRYQFPOM1BHYxoyPU1mToRcID9yfH
+	 bwSj76CIxMTvHoZ1lzzdjhEmgJ5NP5q8TGV/wumNgRLr1oskgqm96IICKGFqpSYg2GS9P
+	 QeF4h1Y+MwJ1Mn0iWxz06yItFzTLS/uQ0FUjPZATTiTCTKys4Q+0EkKxWSEU8DTu1iTL8
+	 z+qpvsXbK9p+5QqFoJ2nRjrVMt9kieYHmFc2XJgQBm6E82cGzyFvst1PvMVi9BzF6rA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZOMevrjzC3wIysS1Jznxhn3e8aDyU35sgpm/hDNZ4tQ=;
-	b=UdVSDpkhUub7WcsBoNdPdohtvFP70qdgUhq+rI6c182IDj28vCbDRuV6nvTS+wVHDWT3
-	 zQAizE3ebN+kejhNyVjTWpFAvkecExp17zc9oJLnTsidRBja363s7fPOK6aBkMjRvZih2
-	 85HBhLD5lPgBncDi9gJYp8f6WvK7KVSs4rUjGQTfNGAb9KAzKRMlWlV56GndRzhW84oiK
-	 FbrQVX/G4VZjZNWPySYYIvmRbKfYOg0/v3UF5p2XRjK7bUj/hHHHhT/n/g+r21tI5UChL
-	 WDSZxJPgQ0KUs6INVR3+6jiOHThoUj1h0LkOgblpmBL9vG9uJP1cLDRIcV0I1n921Eg==
+	bh=MPYIEBTKp3VBzmQiOqrMe8ZBng6VmeGZwhFJeLv/EhU=;
+	b=eIr4hS1/65+/+LBa1NHdLwgneEOthhj/DLWOOuQ44rEPcZlM5MOhsMEgPI4v+rzSVxz5
+	 u3T0yOHaws0m3xlFn17ITN6rFc60grJBzfC9G8htz19LsSlN0701ozWuaNTWnGcgC8fpP
+	 xVqvfMg03duMpf4jMinmWMwTbg8Jz+bV3I3/JpK6j0qLx0vtwe2ioU0Bs1z9QLC4qH7CG
+	 gtEDtQZpY5WGfRJ8iHHcH2XZe/YorpDVJZq1BDoD3Ljffw3IfgfmLsJ35cziVyN/LJGcD
+	 w5zSN8Dm+lhnGAOSHFC3qXb1v8ASoreit6r2ZC0M87IPKC5qcUfoVU0YbmC12zkeSAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=We2CUZX6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="SVkC3rw/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B978C606A320;
-	Thu, 19 Nov 2026 01:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781D2606A320;
+	Thu, 19 Nov 2026 01:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=We2CUZX6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E7A1F000C4;
-	Thu, 19 Nov 2026 01:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SVkC3rw/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE571F000C4;
+	Thu, 19 Nov 2026 01:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053418;
-	bh=ZOMevrjzC3wIysS1Jznxhn3e8aDyU35sgpm/hDNZ4tQ=;
+	s=korg; t=1795053421;
+	bh=MPYIEBTKp3VBzmQiOqrMe8ZBng6VmeGZwhFJeLv/EhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=We2CUZX6eWO3oTwSqgVRnV5qRXOD/EoWR2Pl2+3NugQ741p+sLeJxSMS25MtgsZTW
-	 uiHtHb+USIzZ04rWEspd23SLKjA0rCzEQhPQ4C4Vd7fE513g52SxQ+gG7PUxYeFl93
-	 g709JJRt8uGUzLPDHG9LwFSKP5gxSu+o19Hp4NcI=
+	b=SVkC3rw/yY5phy/Qsl2NJ/QPw6Lks4vj3PzPeqL/psBKcgnQITfNhwnfgYmuiYhjH
+	 nqytHBfOg0zns7Is9xPr5VHN9xwEWYXXcgs/xVsmfMADK6rDNCXu6WGiqFIlHT3CoV
+	 d2OUd23NYq/qUH7RV7w8Bg4CJdLetSLo1NuIUr8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Kazinsky <a.kazinsky@ideco.ru>,
+	Sinan Turunc <enscrpt@pm.me>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0913/2214] ALSA: cs46xx: Handle SCB creation failures before dereferencing
-Date: Wed, 18 Nov 2026 15:43:09 +0100
-Message-ID: <20261118150048.879074658@linuxfoundation.org>
+Subject: [PATCH 5.15 0914/2214] ALSA: line6: Reject capture buffers smaller than two packets
+Date: Wed, 18 Nov 2026 15:43:10 +0100
+Message-ID: <20261118150048.915462261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,61 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Kazinsky <a.kazinsky@ideco.ru>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 023d3e1176202339cd94a3d732e3aec74e36ba22 ]
+[ Upstream commit db51425c9eb038a8e40e09b837afde015ae9e3ec ]
 
-With CONFIG_PM_SLEEP enabled, cs46xx_dsp_create_scb() can return NULL
-if kmemdup() fails to allocate the SCB data saved for resume.
-cs46xx_dsp_scb_and_task_init() and _dsp_create_generic_scb() dereference
-the returned pointer without checking it, causing a NULL pointer
-dereference on allocation failure.
+line6_capture_copy() splits the copy into the ALSA ring buffer once at
+the buffer end and wraps pos_done once, which is only correct when one
+packet holds at most buffer_size frames. The packet size comes from the
+device's endpoint, and the per-device hw structs allow 64-byte periods
+with periods_min 1, so a packet can be larger than the whole buffer.
+audio_in_callback() logs an oversized packet and then copies it anyway.
 
-Check both return values before accessing the SCB descriptors.
-Return -ENOMEM when creating the null SCB fails and propagate NULL
-from _dsp_create_generic_scb().
+The packet size is known at probe time, so constrain
+SNDRV_PCM_HW_PARAM_BUFFER_BYTES in snd_line6_capture_open() to at least
+twice the larger of the two endpoints' packet sizes. Two rather than
+one, because pos_done advances by the packet and wraps once, so a buffer
+of exactly one packet leaves the position unchanged after every packet.
+hw_params then rejects a buffer that cannot hold two packets, and the
+single wrap is valid for every configuration that gets through. Keep a
+guard in line6_capture_copy() that drops an oversized packet with a
+ratelimited error, for the case that should no longer be reachable.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-static analysis tool.
+Reproduced on 7.3-rc7 with a USB/IP device presenting the GuitarPort
+interface layout and 1024-byte packets into a 128-byte buffer: ALSA
+logged "invalid position: pos = 224, buffer size = 32" and the driver
+logged "driver bug: len" on every following packet. With this patch a
+1024-byte buffer is refused at hw_params, and a 2048-byte buffer streams
+for 30 s with no report and with the position moving inside the buffer.
 
-Fixes: 41116e926cb9 ("ALSA: cs46xx - Fix suspend/resume with new DSP")
+Fixes: 705ececd1c60 ("Staging: add line6 usb driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
-Link: https://patch.msgid.link/20261030142529.415697-1-a.kazinsky@ideco.ru
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Link: https://patch.msgid.link/20261103132227.696-1-enscrpt@pm.me
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/cs46xx/dsp_spos.c         | 2 ++
- sound/pci/cs46xx/dsp_spos_scb_lib.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ sound/usb/line6/capture.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
-index dd23b7d68c164..dd37c185bcf07 100644
---- a/sound/pci/cs46xx/dsp_spos.c
-+++ b/sound/pci/cs46xx/dsp_spos.c
-@@ -1110,6 +1110,8 @@ int cs46xx_dsp_scb_and_task_init (struct snd_cs46xx *chip)
+diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
+index 970c9bdce0b21..e77ef16c792f0 100644
+--- a/sound/usb/line6/capture.c
++++ b/sound/usb/line6/capture.c
+@@ -94,6 +94,18 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
+ 	if (runtime == NULL)
+ 		return;
  
- 		null_scb.entry_point = null_algorithm->address;
- 		ins->the_null_scb = cs46xx_dsp_create_scb(chip, "nullSCB", (u32 *)&null_scb, NULL_SCB_ADDR);
-+		if (!ins->the_null_scb)
-+			return -ENOMEM;
- 		ins->the_null_scb->task_entry = null_algorithm;
- 		ins->the_null_scb->sub_list_ptr = ins->the_null_scb;
- 		ins->the_null_scb->next_scb_ptr = ins->the_null_scb;
-diff --git a/sound/pci/cs46xx/dsp_spos_scb_lib.c b/sound/pci/cs46xx/dsp_spos_scb_lib.c
-index 1f90ca723f4df..af5c78e3fd200 100644
---- a/sound/pci/cs46xx/dsp_spos_scb_lib.c
-+++ b/sound/pci/cs46xx/dsp_spos_scb_lib.c
-@@ -285,7 +285,8 @@ _dsp_create_generic_scb (struct snd_cs46xx *chip, char * name, u32 * scb_data, u
- 	dev_dbg(chip->card->dev, "dsp_spos: creating SCB <%s>\n", name);
++	/*
++	 * snd_line6_capture_open() constrains the buffer to hold at least
++	 * two packets, so this cannot happen for a conforming device. Drop
++	 * the packet rather than overrun the single wrap below.
++	 */
++	if (unlikely(frames > runtime->buffer_size)) {
++		dev_err_ratelimited(line6pcm->line6->ifcdev,
++				    "packet of %d frames exceeds %lu-frame buffer, dropping\n",
++				    frames, runtime->buffer_size);
++		return;
++	}
++
+ 	if (line6pcm->in.pos_done + frames > runtime->buffer_size) {
+ 		/*
+ 		   The transferred area goes over buffer boundary,
+@@ -228,6 +240,23 @@ static int snd_line6_capture_open(struct snd_pcm_substream *substream)
+ 	if (err < 0)
+ 		return err;
  
- 	scb = cs46xx_dsp_create_scb(chip,name,scb_data,dest);
--
-+	if (!scb)
-+		return NULL;
++	/*
++	 * line6_capture_copy() wraps the ring buffer once per packet and
++	 * advances pos_done by the packet, which only works when the buffer
++	 * holds more than one packet: with exactly one, pos_done gains a
++	 * buffer and loses it again on every packet. The packet size comes
++	 * from the device, so bound the buffer by two packets here. The
++	 * impulse-response path copies a playback URB into this ring, so
++	 * take the larger of the two endpoints.
++	 */
++	err = snd_pcm_hw_constraint_minmax(runtime,
++					   SNDRV_PCM_HW_PARAM_BUFFER_BYTES,
++					   2 * max(line6pcm->max_packet_size_in,
++						   line6pcm->max_packet_size_out),
++					   UINT_MAX);
++	if (err < 0)
++		return err;
++
+ 	line6_pcm_acquire(line6pcm, LINE6_STREAM_CAPTURE_HELPER, false);
  
- 	scb->sub_list_ptr = ins->the_null_scb;
- 	scb->next_scb_ptr = ins->the_null_scb;
+ 	runtime->hw = line6pcm->properties->capture_hw;
 -- 
 2.53.0
 
