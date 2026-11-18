@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016530;
-	b=ntlKv6IwKzwhCNnHFu1kgzUHgWEuMWT64x3i11DYVXUL7H5UBBdWdbG9b1KgzEH395vj
-	 PhrYcYTN3Sd5qMGhw86VYseNN7GNt/qWs+p7GhoxRY/RlfYkQ7qv8pXu/HWspr7687tGo
-	 zzUCT3Qx6PgCSf5ZurHgoNlumy8SaQvWS1CfHerunBR4XgVDPT3p9xv/cPe32Pl/7ZnoG
-	 UbacuhaPCVoAQOtQbqqOAnzM8mMx0lehTJD3J34aoB5ZInN3b5t5ioDLI1kkUag84cr/X
-	 8b0ZIHSuTdt9k7tqUM0U9GaD5tvHEs0turXCQuS2O/BZBRipAKnZtAIORQxNXuKMVpw==
+	t=1795016533;
+	b=Clc7aTsxbrrPPR2/xzYHOZJnR9LzKj8tgFm2s5iiJ3zGqzNE1fOqctshx+RrcY1aUckC
+	 WiOPi8Qg3RPREvQ2GcrFiQzUbuuzck0h8ufZge23Xk2GVyIjz1UALqabKcXbYIYMChrOM
+	 bnzEeGlKNjLAYza+08YMPux18bmMWJE4euVc3iqcy6U1nbH01gq16pFDWwTwp8w/3E+zV
+	 sgTLTbpUY2IQQOA6QlFMy9+2pjfd73rEa+zmfObWT6aemm/kdTJJXuY6lMJYxtVtjJdeB
+	 SNnIUMUqBKFHR7hwWYyWGm+oU+KSt71a9MQ4L47F9sKy7lZ4mO5VvGllvluzbXezwew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t3Jj1Pp+y2Cmj7NXr/dIDRUX/4ytNNfN9f/VC8iRAJg=;
-	b=lRiSr069a1vdYegEKzGzthBUH6tCL86GKTKMQWN0UTwLt7mhjRc3G3gMpBfZJmcyoZyJ
-	 cUfO7TuXfQIFF4sUkIGlPCtr6BAaimO9964guf1AFhCDVt3ObnD07hfqlfE6ey+EZ3Jha
-	 HyqGFhXma0o9QnaTlSjDtFLHRu77dVHoQdxGYI+kSIGAoVdRinujEaG5Bo0NTiYBvd4gB
-	 wSWW8OTrTQPWfpewCfpMFj78vL5ED8KPnTkVWAMQspc8RPIZc9e6Dpvly580Jsh1whQo0
-	 jnPzQSgKpxrkh/CvjUxAd9qv8PfaMp81DQfxbBW/r6SYkT9r6zgGi0R2ywzmBqDPrKg==
+	bh=Xn7y2G+VWKNuco9CRkf5yIj461tpUsXGY5W4KQRsj/E=;
+	b=VfFv136/KVpxbQUHLQlhipT+S9HZbGtf//kQzCgyi9kvWYrI9I3P3vI5+ROtzwanWZqf
+	 6Pw55lRkoVwWB9ZzMlfqxQKSabDv3re7vmlMJlLZEuFmOew0QMsKEsIKO9jmpMUwwWwQq
+	 VZl5Kcdx4OVi5PRr6Gc3QGpTM1cI0yWG634Hrgd3FLgh/t+6tiOSjUS0RVZzlP4yOSPdT
+	 NRc6f1S5GhSh0E5IaUflXVVOzhUaDesxyEyIYaF+XUq58mmOhqWJX5fgj55PeVD7UdIUx
+	 wKKvzVIwklj1Qu2DBbA70kT2qSu7Kiz/vyfvlJE82+HSvHkOAvXJkF+aQXNzGSIacwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W44hW1hQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhXCq5w9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38D2606A31C;
-	Wed, 18 Nov 2026 15:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AFF606A334;
+	Wed, 18 Nov 2026 15:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W44hW1hQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0D31F000C4;
-	Wed, 18 Nov 2026 15:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhXCq5w9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8FB1F000C4;
+	Wed, 18 Nov 2026 15:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016530;
-	bh=t3Jj1Pp+y2Cmj7NXr/dIDRUX/4ytNNfN9f/VC8iRAJg=;
+	s=korg; t=1795016533;
+	bh=Xn7y2G+VWKNuco9CRkf5yIj461tpUsXGY5W4KQRsj/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W44hW1hQaS9pymLVPG1gIQyn5TaW5j1o2KAyaucWygqJe2k3+z0rbKMWSEmvix1NF
-	 jSdSPOAc5CEJ3PpMBb0idBO5HluEQa/Xt/xIMl/nj9PHuW9whsiLJByOwowdVfwND8
-	 mr/Zv8lA2XnoN01XczDDR/n4qndu0HqXpf70ZFec=
+	b=qhXCq5w9p6hPkItvXKnHFXyWc9iEEr1KmI/A7hPdGFArmgxkoNrhnUMSdY733fpO1
+	 hFec6uvC6u2koDpOmnnLOfCToQ5cR+d3BRtQsW/a6t5Y/cX86XdUqayTMQ+oFCnkVJ
+	 fu7gwazxT372t102NujGKzwBFiKJrXiecBJmF5O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+50f9bc7ab8eb224b7629@syzkaller.appspotmail.com,
-	Zizhi Wo <wozizhi@huawei.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0518/2651] md/raid5: reject a per-device size smaller than one chunk
-Date: Wed, 18 Nov 2026 15:29:18 +0100
-Message-ID: <20261118150306.398483882@linuxfoundation.org>
+Subject: [PATCH 7.3 0519/2651] kernfs: dont hold kernfs_rwsem across notification delivery
+Date: Wed, 18 Nov 2026 15:29:19 +0100
+Message-ID: <20261118150306.434968786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,86 +69,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zizhi Wo <wozizhi@huawei.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit 370ca0760b18c64592a258bcb057ff0a2531aabf ]
+[ Upstream commit 23985e2b1f31623468244a2149b2388cda4925eb ]
 
-Both raid5_run() and raid5_resize() align the per-device size down to a
-whole multiple of the chunk size:
+Recently at Meta we noticed that on multi-tenant systems, a workload
+under extreme memory pressure negatively impacts unrelated workloads and
+system daemons like below [1] and fb-oomd [2]. Mainly we observed that
+system daemons were stuck on kernfs_rwsem in cgroup-related interfaces
+for long periods of time.
 
-	mddev->dev_sectors &= ~(chunk_sectors - 1);
+On further inspection, we found that the workload under pressure had
+registered inotify watches on its memory.events and was continuously
+receiving limit-hitting notifications. The cgroup notification is done in
+kernfs_notify_workfn(), which holds kernfs_supers_rwsem and kernfs_rwsem
+and calls fsnotify(), which allocates the event with
+kmalloc(GFP_KERNEL_ACCOUNT|__GFP_RETRY_MAYFAIL) charged to the watching
+cgroup, which is already under memory pressure. So the notify worker
+ended up in memory reclaim of a cgroup already under pressure, and itself
+kept triggering the limit notifications.
 
-Neither checks the result, so a size smaller than one chunk silently
-becomes zero.
+This notification path takes the locks in read mode, but a waiting writer
+blocks all future readers. That is exactly what is happening in the Meta
+fleet, and it leaves daemons that are critical to the reliability of the
+system stuck for long periods of time.
 
-In raid5_run() that is harmless: the array size is derived from the same
-zero, so the disk just ends up with no capacity.
+Commit 400188ae361a ("kernfs: Acquire kernfs_rwsem in
+kernfs_notify_workfn().") added kernfs_rwsem just to safely read
+kernfs_node::name.  Let's sample the name once before the loop and drop
+the lock.  kernfs_supers_rwsem still covers the list, and the removal
+paths take that one for reading too, so a stalled worker can still hold
+a removal up once a mount or unmount is queued behind it.
 
-In raid5_resize() it leaves the array inconsistent -- mddev->dev_sectors
-becomes zero, while mddev->array_sectors and the gendisk capacity keep the
-previous. A later raid4/raid5 -> raid0 takeover copies the zero into every
-rdev->sectors (raid0_takeover_raid45()), so create_strip_zones() builds a
-strip zone table whose zone_end is zero. Any read then passes
-bio_check_eod() against the stale capacity and hits the BUG() in
-find_zone():
+Two things change for a watcher.  A name longer than NAME_MAX now gives
+an event with no name, where before it gave one with the full name;
+fsnotify() takes the name as optional, so the event still arrives.  And
+the name and the parent are no longer sampled under one lock, so a rename
+between the two would name a file against the directory it moved to.
+That cannot happen today: kernfs_notify() rejects anything that is not a
+file, and no caller of kernfs_rename_ns() renames one.
 
- kernel BUG at drivers/md/raid0.c:318!
- Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
- Call Trace:
-   raid0_make_request
-   md_handle_request
-   submit_bio_noacct_nocheck
-   block_read_full_folio
-   read_part_sector
-   bdev_disk_changed
-   bdev_open
+[1] https://github.com/facebookincubator/below
+[2] https://github.com/facebookincubator/oomd
 
-Reject a size smaller than one chunk in both functions, so that a running
-raid4/raid5 array always has mddev->dev_sectors >= one chunk.
-
-The check is done where the value takes effect, not where it is assigned.
-mddev->dev_sectors is written from several places, and none of them can
-tell whether the value is usable: the chunk size may still change later.
-raid5_run() and raid5_resize() are where every input is final, so one check
-in each covers them all.
-
-Fixes: eea136d69f9f ("md: fix buglet in RAID5 -> RAID0 conversion.")
-Reported-by: syzbot+50f9bc7ab8eb224b7629@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=50f9bc7ab8eb224b7629
-Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Link: https://patch.msgid.link/20260916095137.1157801-1-wozizhi@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 400188ae361a ("kernfs: Acquire kernfs_rwsem in kernfs_notify_workfn().")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20260910045406.485295-1-shakeel.butt@linux.dev
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/kernfs/file.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 45b00c9904215..fbc356e442458 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -8213,6 +8213,12 @@ static int raid5_run(struct mddev *mddev)
+diff --git a/fs/kernfs/file.c b/fs/kernfs/file.c
+index 8e0e90c933720..7e3800526b1e9 100644
+--- a/fs/kernfs/file.c
++++ b/fs/kernfs/file.c
+@@ -904,9 +904,12 @@ static loff_t kernfs_fop_llseek(struct file *file, loff_t offset, int whence)
  
- 	/* device size must be a multiple of chunk size */
- 	mddev->dev_sectors &= ~((sector_t)mddev->chunk_sectors - 1);
-+	if (!mddev->dev_sectors) {
-+		pr_warn("md/raid:%s: device size is smaller than one chunk\n",
-+			mdname(mddev));
-+		ret = -EINVAL;
-+		goto abort;
-+	}
- 	mddev->resync_max_sectors = mddev->dev_sectors;
+ static void kernfs_notify_workfn(struct work_struct *work)
+ {
+-	struct kernfs_node *kn;
++	char name_buf[NAME_MAX + 1];
+ 	struct kernfs_super_info *info;
++	struct kernfs_node *kn;
+ 	struct kernfs_root *root;
++	struct qstr name;
++	bool have_name;
+ repeat:
+ 	/* pop one off the notify_list */
+ 	spin_lock_irq(&kernfs_notify_lock);
+@@ -922,14 +925,20 @@ static void kernfs_notify_workfn(struct work_struct *work)
+ 	root = kernfs_root(kn);
+ 	/* kick fsnotify */
  
- 	if (mddev->degraded > dirty_parity_disks &&
-@@ -8546,6 +8552,8 @@ static int raid5_resize(struct mddev *mddev, sector_t sectors)
- 	if (raid5_has_log(conf) || raid5_has_ppl(conf))
- 		return -EINVAL;
- 	sectors &= ~((sector_t)conf->chunk_sectors - 1);
-+	if (!sectors)
-+		return -EINVAL;
- 	newsize = raid5_size(mddev, sectors, mddev->raid_disks);
- 	if (mddev->external_size &&
- 	    mddev->array_sectors > newsize)
++	/*
++	 * Sample the name once so kernfs_rwsem need not be held across the
++	 * loop.  A name that does not fit is reported without one; fsnotify()
++	 * takes the name as optional, so a watcher loses the name and not the
++	 * event.
++	 */
++	have_name = kernfs_name(kn, name_buf, sizeof(name_buf)) >= 0;
++	name = QSTR(name_buf);
++
+ 	down_read(&root->kernfs_supers_rwsem);
+-	down_read(&root->kernfs_rwsem);
+-	list_for_each_entry(info, &kernfs_root(kn)->supers, node) {
++	list_for_each_entry(info, &root->supers, node) {
+ 		struct kernfs_node *parent;
+ 		struct inode *p_inode = NULL;
+-		const char *kn_name;
+ 		struct inode *inode;
+-		struct qstr name;
+ 
+ 		/*
+ 		 * We want fsnotify_modify() on @kn but as the
+@@ -941,15 +950,14 @@ static void kernfs_notify_workfn(struct work_struct *work)
+ 		if (!inode)
+ 			continue;
+ 
+-		kn_name = kernfs_rcu_name(kn);
+-		name = QSTR(kn_name);
+ 		parent = kernfs_get_parent(kn);
+ 		if (parent) {
+ 			p_inode = ilookup(info->sb, kernfs_ino(parent));
+ 			if (p_inode) {
+ 				fsnotify(FS_MODIFY | FS_EVENT_ON_CHILD,
+ 					 inode, FSNOTIFY_EVENT_INODE,
+-					 p_inode, &name, inode, 0);
++					 p_inode, have_name ? &name : NULL,
++					 inode, 0);
+ 				iput(p_inode);
+ 			}
+ 
+@@ -962,7 +970,6 @@ static void kernfs_notify_workfn(struct work_struct *work)
+ 		iput(inode);
+ 	}
+ 
+-	up_read(&root->kernfs_rwsem);
+ 	up_read(&root->kernfs_supers_rwsem);
+ 	kernfs_put(kn);
+ 	goto repeat;
 -- 
 2.53.0
 
