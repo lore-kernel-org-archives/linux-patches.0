@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048471;
-	b=pSe26h0+RONkc6PINkA4tbFStCU7WUD4jAdrLen2y/WGU7LNbRh/kyZlXTyA8eIQkSma
-	 puWALmW27gIKaYil7Ssl5+0HDBPDzmUxBYZi0sUJlDfyCIIPl5U8zDQ3YWLKQKKX3Q5jl
-	 oq6/I7LSYJgI1ooO4CEtIl7JEaZyyc3/cqj20PkO9xXgA5zfW5mVfx++HT3nF7MgZMiBN
-	 B8LJAIsJ3MxVidzWpI7mXzMyB5Bj68KXCCrZSt6r/BfO8bv8pePx00qpLv21LmfhsKMLn
-	 K/I/h4XiTQBbnOT44eFReruRWmpREAztlzIiXMO1SIZbpYO1pQOeDX/pDXsEiAXTdBA==
+	t=1795048473;
+	b=iTwcHbKZO5xmAUnB5TWV96+QP3zsmFDpA1Aadzd+CqWcC9ouIBEdA4OVcoeSVFJFo7XK
+	 YRHaYISpjoYfpcH+j8pz3ozuXdUIeu224v1p7BxoS3SrWV8+28dLViI0ykgJNJMx/GI1B
+	 nlv/RskqvuV+nN4ZZbpwD4O5RyUbrr98Q7Vmey0cKhOvE+GqSQuSxe+L4B2WkzmEV4WSR
+	 Oo2vnKot1dKYP6JDEK5wOijp9yWbJREOu2WiL3bcd1EO0N2MwKCyuARFOx5TBj5KKvpcv
+	 CGVFEm6FyLJiZnNYAoI6poolTCzMkKh/hN3DKquviOu4zDFSCevkuxZI1aZrgbnxYvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048473;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mvqG7uIGDHWSQhZKEGZleUw0IskAEdehCYeUa8y9sCc=;
-	b=yuzgt7kRkY6JIjoxOJpwFeYzJhnH16fv3o4gjeCtW1bsyGV+Yv6BOrS/7HYmC0Br33tn
-	 UL4EJLIMklsi21u+Hdehu+PCgs2FrD9NqEyEg5wFyYzOTZ8MHx6hq8LMwGa0kBxNSjvTZ
-	 nna9OnhZLnKea9f4Wp/9aimSz08fJIo8AXsOTaOILO6wm5qSYgt2mFscvb8NsdEJvnhH7
-	 QtnVHSHKBLaA9o0xBxakKz5b6jLO9BhvuZiP8ORQrUZDO5mBwEdqrCkB+AXOuIdWr5Sx/
-	 NtKB45Pw5NHL7rZWTqibTMpuyefDz51/+YwOeJSTeHssHSP3dLC2OAyR7CDSflNv7sg==
+	bh=KjyDRFgpWdQDqZqYBmGzyEGl+gsI9IoWeo/3WzYgP08=;
+	b=BX6FUiLjTlXu2C4dCeyon5GujgQy8DTbXjUxKsAt9Wj5yon05UmXLAcXNJ0jht71NQ85
+	 0ZACJ2ehzY480vmJtPX3kSdeU232mVJIWt4Zo/3TwjnxrC6kaXeEa5xy3RRRs/b7M49Op
+	 eHbZOY7qQPcx89p1ZKeaghzu3vbIloaE0T+EtErb8wnGW3ocvcCke88NQeJJq0PkprGsT
+	 D0U8RYQ4pnMeXYJvtTjSOkkONzX3moVuFulExTbog2/MHAk0L1k7/a3BeNcgiYTQHNcCO
+	 QcqLTlqjWWJYfIvsBb9JZYFi7sF0wkLbdvI87+j2fu6vtrhCd/3gOvdpVFeFCIhgiEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jMT3c/Vt";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gadtIrjB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDD4606A31C;
-	Thu, 19 Nov 2026 00:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09E0606A31C;
+	Thu, 19 Nov 2026 00:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jMT3c/Vt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628DB1F000C4;
-	Thu, 19 Nov 2026 00:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gadtIrjB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDD61F000C4;
+	Thu, 19 Nov 2026 00:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048470;
-	bh=mvqG7uIGDHWSQhZKEGZleUw0IskAEdehCYeUa8y9sCc=;
+	s=korg; t=1795048473;
+	bh=KjyDRFgpWdQDqZqYBmGzyEGl+gsI9IoWeo/3WzYgP08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jMT3c/Vth2org5NK+wMhx7m51dQ7ehNV6Hx+HdSHNG2mtJCcb8cQpO/dT1ELEAwUP
-	 V2cF/1/J6/2OrtsPzarO/mx7SKX65E/tTQqM2Xzeli+hxKtB7aAWUX7Ep+1tn44S8b
-	 zRiYhIyA/VOie56dVGgMv31PJCmTnzDKEOfJayxM=
+	b=gadtIrjBATaOCwe44+cQen+5SG7P9YcmdAt+1WN61tbgnNfpXdp5abBpiMLKygccg
+	 Rgaw8bVaefoyT2libJPqhfaONS+Tprk3VOB9L8wNf+rzsFVgTNVgs1upty978WaHlF
+	 bLz8NPUzCoJWyd42MIvPnwyJT5p2vCh6YAwpU5Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kees Cook <kees@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1989/2857] KMSAN: fix memset() when using fortify-source, again
-Date: Wed, 18 Nov 2026 15:50:23 +0100
-Message-ID: <20261118150312.990600529@linuxfoundation.org>
+Subject: [PATCH 6.1 2007/2857] crypto: ccp - kill v3 IRQ tasklet during teardown
+Date: Wed, 18 Nov 2026 15:50:41 +0100
+Message-ID: <20261118150313.662321045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 3555409e524a0279845f91273ba714998658c163 ]
+[ Upstream commit b72a639bdee6e07d8091718ac3e451d9c5cba1b5 ]
 
-Both kmsan and fortify-source replace the memset function. When both
-are enabled at the same time, the kmsan version gets used, which triggers
-a warning about fortify-source being nonfunctional:
+On PCI devices using MSI-X, ccp_irq_handler() schedules irq_tasklet. The
+teardown paths release the IRQ but do not drain a tasklet that was
+already queued, so it can access ccp after the device-managed allocation
+has been released.
 
-warning: unsafe memset() usage lacked '__write_overflow' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow-memset.c
-warning: unsafe memset() usage lacked '__write_overflow_field' symbol in /home/arnd/arm-soc/lib/test_fortify/write_overflow_field-memset.c
+Kill the tasklet after releasing the IRQ in both the initialization
+error path and ccp_destroy().
 
-Commit 78a498c3a227 already tried to address this, but this seems
-to only have worked for memcpy() and memmove() but not memset(),
-which is still lacking the macro definition when KMSAN is enabled.
+Fixes: 7b537b24e76a ("crypto: ccp - Change ISR handler method for a v3 CCP")
 
-Remove the incorrect #ifndef check around the memset() macro.
-
-Fixes: ff901d80fff6 ("x86: kmsan: use __msan_ string functions where possible.")
-Fixes: 78a498c3a227 ("x86: fortify: kmsan: fix KMSAN fortify builds")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260618142951.1739694-1-arnd@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/fortify-string.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/crypto/ccp/ccp-dev-v3.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/fortify-string.h b/include/linux/fortify-string.h
-index 5001a11258e4d..0fe311013efa2 100644
---- a/include/linux/fortify-string.h
-+++ b/include/linux/fortify-string.h
-@@ -341,10 +341,8 @@ __FORTIFY_INLINE void fortify_memset_chk(__kernel_size_t size,
-  * __struct_size() vs __member_size() must be captured here to avoid
-  * evaluating argument side-effects further into the macro layers.
-  */
--#ifndef CONFIG_KMSAN
- #define memset(p, c, s) __fortify_memset_chk(p, c, s,			\
- 		__struct_size(p), __member_size(p))
--#endif
+diff --git a/drivers/crypto/ccp/ccp-dev-v3.c b/drivers/crypto/ccp/ccp-dev-v3.c
+index fe69053b2394d..e85b4ded417aa 100644
+--- a/drivers/crypto/ccp/ccp-dev-v3.c
++++ b/drivers/crypto/ccp/ccp-dev-v3.c
+@@ -506,6 +506,8 @@ static int ccp_init(struct ccp_device *ccp)
+ 			kthread_stop(ccp->cmd_q[i].kthread);
  
- /*
-  * To make sure the compiler can enforce protection against buffer overflows,
+ 	sp_free_ccp_irq(ccp->sp, ccp);
++	if (ccp->use_tasklet)
++		tasklet_kill(&ccp->irq_tasklet);
+ 
+ e_pool:
+ 	for (i = 0; i < ccp->cmd_q_count; i++)
+@@ -545,6 +547,8 @@ static void ccp_destroy(struct ccp_device *ccp)
+ 			kthread_stop(ccp->cmd_q[i].kthread);
+ 
+ 	sp_free_ccp_irq(ccp->sp, ccp);
++	if (ccp->use_tasklet)
++		tasklet_kill(&ccp->irq_tasklet);
+ 
+ 	for (i = 0; i < ccp->cmd_q_count; i++)
+ 		dma_pool_destroy(ccp->cmd_q[i].dma_pool);
 -- 
 2.53.0
 
