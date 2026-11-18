@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040216;
-	b=0aSK3B8x7GV2pKxPujbZZs8YYvYYLjCiDoyfNegg35hozMIB9aMoN3DjqSvmNVWUNIlV
-	 ahq80I90Oz3v6t+/ykVm5rrR3w6hDKB+MUyukgGu0VtKy8F7z3cVDgUFNwQXUOcpeL+o+
-	 TK1kSLtzK+M+v0MTZFLc7F3w6sf+yBStbfPHaFty+IYtyEQkFPW1ZYXJJr8f3oQCuk816
-	 rZo1o38gCHx77xmvM4IuFNhMyh+f3IcB/usrOkxFpoPkzBv/9F7GjGNmM1RZglsXuY4l0
-	 LFCV2Su0lerXY2E+6n/ITwDrcONr3/5Qn5X6HUEuF04ijsBGkilNMcF8DXnxRAOcwtA==
+	t=1795040218;
+	b=EirWyBhCWlbQD//38YTzO20QWdWU+t+12S/tED+eaElWOM4uzXUADgHshHysJxmAeiRG
+	 BxdlDt3+yw2cEaziZGoTzGT17nps9j94jIlIH8EolzaTwZU0RpazcKHdteqmDzZ90zcoC
+	 ptTW/hTsq7ZAXJLl007Rkd+jKmatbctH3zVNDT2eo8N4P+4HePfL0aChOTXtVnT5IBlS+
+	 qANk71XEdAV3vpCHmaqijf8iorMdm/kQa3AobUXkGlWV75M7jSutZYCvttDte9oA0DneY
+	 U/FrZ6Indc4XxM/r8KTB0cT9Xq+KYY3Z66h1CNnzIEVJ69E1o9RWA6KPJgCkMO34LBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040216;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040218;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mQVPgdrAhxgX9VtTokSCVBYcwfg/V8VJU3CkmLgfPz8=;
-	b=LPBR5hbHq7bP3ieFGsWDgSS+koBIgJ5ot1Q57Nw0ZxIZJsOEARnT7BIHQ5e/RTgQCHPY
-	 J4e4LXr87Cbc91NkWWAG8OHAZxc5s+A7LJVnpi2BnQ15WWfILofBJNZAIY0cyOIahd3XS
-	 IvJPXHgcjXJRFlRGgekaoWN/55wFtSkGc45VnWvdW8CY0TzKguGYhoC+a/dFE3YX5l1rV
-	 tI3zQ+ThK7f5kJ/4Z6GaWzDDgvgyYRFOV/Ni+J+86nzZ5jEP/iaVdO7TNgWlBpGGvZ3bx
-	 jqkwj+P16qTDc4qVBKS+nLMbSclcbDw8fT3cyDyNnmPfxkVE8RFrJDAFGzfIHZ/RC5A==
+	bh=zBZ/jJuFTheWfaaIu8sd21JVGs2hKhOuJfG3csDdwfU=;
+	b=5b5TsGeTPfUnX9Vx5ItGw61UlzgbKR3FXfsoqBvhRTNUBsah6ZCrGm0DAiEq91am4iwJ
+	 qCRgCDi+q0kAshK56tdhSk+FFBBB/OY2mDXipnOD6yJjjlQwGndtCeJ4qKgYt2D2fGTnL
+	 Pwru1itzKlgP+xuCJbC2ZXZn+X+YiU8DXrd0pAvBiVLdCxqU8PCU16pvLYznlFvHcm8+Y
+	 cw0/GV+SmR5Stsq5Ou2KlfuFZMSmwJ/8x3j+oYBbio5+E1lC/mpqKeajczjKAJXwI2Zdx
+	 vSWMXbfOyD7ZjqnIB2rufNNaIUlPMGHpe+3Oqyn6LODo0Hw/Yu1fvwpHMCB7eBX1emw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xka2MxZP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WbLX5Jei;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8D3606A320;
-	Wed, 18 Nov 2026 22:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF48D606A320;
+	Wed, 18 Nov 2026 22:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xka2MxZP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A771F000C4;
-	Wed, 18 Nov 2026 22:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WbLX5Jei
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124F41F000C4;
+	Wed, 18 Nov 2026 22:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040215;
-	bh=mQVPgdrAhxgX9VtTokSCVBYcwfg/V8VJU3CkmLgfPz8=;
+	s=korg; t=1795040218;
+	bh=zBZ/jJuFTheWfaaIu8sd21JVGs2hKhOuJfG3csDdwfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xka2MxZPiETHW3r1lGjL77i7/D5TfruhoQjADe/sIczs4gq4F816b5Q8k3BYm225i
-	 E9x/3disHK2UmIQe/i/KMnABcD2SX+aFfVc/695VMLt0+y6cu+yvnnxj/9sVdtrDr+
-	 DLjQjkFlNR4aypFY5QkKY8NLG8gAxiz5LOpnyTrs=
+	b=WbLX5JeioYU10uVRkoHElBi9wOAUyllP72cgxCimDUWcRVnmo1Klnuvd+SQ3vnipD
+	 F4oqHFDtg+lh/Os+5n4ICGpSmXqwwZaNurQjzyw/Dj3z/8/Q7UFeTteFlQS0tYFN7V
+	 x2GXeT3I8+d4nudP7IHjeq3AwRAybjqWesaa7qso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2361/3318] ASoC: mediatek: mt8188: mt8188-afe-pcm: Handle runtime resume errors
-Date: Wed, 18 Nov 2026 15:49:43 +0100
-Message-ID: <20261118150432.416727149@linuxfoundation.org>
+Subject: [PATCH 6.6 2379/3318] ARM: dts: qcom: msm8974: Use the header with DSI phy clock IDs
+Date: Wed, 18 Nov 2026 15:50:01 +0100
+Message-ID: <20261118150432.913167001@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,72 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit f5f6941d92972ba66829a99999fa825e63da5162 ]
+[ Upstream commit 1afdd80d1e021f758c975d857c6beb6da5c891bd ]
 
-Errors from clock enable and regcache synchronization are currently
-ignored during runtime resume.
-Check the return values from mt8188_afe_enable_reg_rw_clk(),
-regcache_sync(), and mt8188_afe_enable_main_clock(), and abort the
-runtime resume if any of them fails.
-On failure, disable the previously enabled reg_rw clocks and restore
-the regmap to cache-only mode.
+Use the header with DSI phy clock IDs to make code more readable.
 
-Fixes: bf106bf09376 ("ASoC: mediatek: mt8188: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260907120310.135693-6-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20250408-dts-qcom-dsi-phy-clocks-v2-2-73b482a6dd02@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 542991a1d77e ("ARM: dts: qcom: msm8974: add MDSS reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8188/mt8188-afe-pcm.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-index b2e2eb959aa5f..ae2b21ac604e1 100644
---- a/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8188/mt8188-afe-pcm.c
-@@ -3009,22 +3009,33 @@ static int mt8188_afe_runtime_resume(struct device *dev)
- 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
- 	struct mt8188_afe_private *afe_priv = afe->platform_priv;
- 	struct arm_smccc_res res;
-+	int ret;
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
+index 4a8eb8b423290..132233cf0d61c 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
+@@ -3,6 +3,7 @@
  
- 	arm_smccc_smc(MTK_SIP_AUDIO_CONTROL,
- 		      MTK_AUDIO_SMC_OP_DOMAIN_SIDEBANDS,
- 		      0, 0, 0, 0, 0, 0, &res);
+ #include <dt-bindings/interconnect/qcom,msm8974.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
++#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
+ #include <dt-bindings/clock/qcom,gcc-msm8974.h>
+ #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+@@ -1837,10 +1838,10 @@ mmcc: clock-controller@fd8c0000 {
+ 				 <&gcc GPLL0_VOTE>,
+ 				 <&gcc GPLL1_VOTE>,
+ 				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
+-				 <&mdss_dsi0_phy 1>,
+-				 <&mdss_dsi0_phy 0>,
+-				 <&mdss_dsi1_phy 1>,
+-				 <&mdss_dsi1_phy 0>,
++				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
+ 				 <0>,
+ 				 <0>,
+ 				 <0>;
+@@ -1927,8 +1928,10 @@ mdss_dsi0: dsi@fd922800 {
+ 				interrupt-parent = <&mdss>;
+ 				interrupts = <4>;
  
--	mt8188_afe_enable_reg_rw_clk(afe);
-+	ret = mt8188_afe_enable_reg_rw_clk(afe);
-+	if (ret)
-+		return ret;
+-				assigned-clocks = <&mmcc BYTE0_CLK_SRC>, <&mmcc PCLK0_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
++				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
++						  <&mmcc PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
  
- 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
--		goto skip_regmap;
-+		return 0;
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_AHB_CLK>,
+@@ -1998,8 +2001,10 @@ mdss_dsi1: dsi@fd922e00 {
+ 				interrupt-parent = <&mdss>;
+ 				interrupts = <4>;
  
- 	regcache_cache_only(afe->regmap, false);
--	regcache_sync(afe->regmap);
-+	ret = regcache_sync(afe->regmap);
-+	if (ret)
-+		goto err;
-+
-+	ret = mt8188_afe_enable_main_clock(afe);
-+	if (ret)
-+		goto err;
+-				assigned-clocks = <&mmcc BYTE1_CLK_SRC>, <&mmcc PCLK1_CLK_SRC>;
+-				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
++				assigned-clocks = <&mmcc BYTE1_CLK_SRC>,
++						  <&mmcc PCLK1_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi1_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss_dsi1_phy DSI_PIXEL_PLL_CLK>;
  
--	mt8188_afe_enable_main_clock(afe);
--skip_regmap:
- 	return 0;
-+err:
-+	mt8188_afe_disable_reg_rw_clk(afe);
-+	regcache_cache_only(afe->regmap, true);
-+	return ret;
- }
- 
- static int init_memif_priv_data(struct mtk_base_afe *afe)
+ 				clocks = <&mmcc MDSS_MDP_CLK>,
+ 					 <&mmcc MDSS_AHB_CLK>,
 -- 
 2.53.0
 
