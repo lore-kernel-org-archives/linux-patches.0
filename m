@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049111;
-	b=ZkriU1jBlr7ZPL8pXAiqVe0FZSqFKqDb9CNwGRy7WAEebXJI/ZFDVFyTmF8wArTTe7pi
-	 cUJsthcUdUJjuX8SCwDVRjheK4AiGaZNfm9te0EqUHhUbtDBg3dZVu27UJ4Dtarm8zPuZ
-	 dGAHldsXr4rz9+6Xtrw2ux9euydCYdRIpYEubkqltbZYuYgFkzr9Aol9rKhZcOW6UNsHA
-	 F/Y5ERlJG4whsyVgcRUeWARTOP5/l0zZVjeG9b4Zq6Qgr7LdHMeCQbQO2mug8LY+3Cc5s
-	 WTtUyBkjpm9dqCL8kSOiQf/0jq3jl9AwWEWbJt4xHMHBViEWYOycJmYvc5Hv8J2yKKw==
+	t=1795049114;
+	b=Y0RUI+XuH1vnZEbLwjrzHNCnfxETZsT+6ENT9k3vDTOSpLEUwEQ3/5qoDh3aDwIxWet9
+	 qkNj9HtSjX81wgU99eiOpPA1e5TGh/aeWOrd8UTC8v35HYQXvdl/cTL73RsYiAQ6ZzR7b
+	 hq3alm3LNj92I+Fslr+2QS+qmMHr0WxBlpL1CC1VffKfAKzeBt3+PKi+U2ytv/yfOA1d4
+	 EQ+9HiNNshrRuU6y+AFzo3CNnNwDUERckBNGPKk0VvQKLYALBswGY+ZzMOcQhKgN3nO7P
+	 H6vZbBPGFk5JQTutn38BXlGfsU2K9yszfPil9V+MCwxsI7/AF2n4741MR3xWIUJybKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049111;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049114;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1UzgObiJWRazU8QH+hAAMP2HNn0uJufHm0RUxOA0vCI=;
-	b=JgyQHmKqJ1h9Ceq64hbV5IXiBo79XgKoqzQkvhbn3xqS+nihhDRgcl+34su3y2vs06Sd
-	 DjYEeEIizZNW3+51+dn6+Ap7ARsqTbPspDI6usR+qy2EAELc29R3XuxPFuQj4BBEUwM2I
-	 id1qMMbAhxVg5oSz0p05CxkCoqcVhQFTQfrW6GmF0qPvU9ZAn9Oqy8V05OE9oO9aDtrjk
-	 s9bugGr2PUjBmowkowUhPDOP8erh4U52lN6r06ljv/1ZDVEcFpEfjNZbKhoIQE7xxqA0p
-	 8Tq/irPw/8uMdeApY3E2gkidDGwiv+HOIl7Ea7+BdhtNRpIhEjAO44jbPrU0HcnqseA==
+	bh=QGy5Uagxc9MORBqVF1/aU52yDMYdv7+llvTZ7+/wpdk=;
+	b=f1kRe0r7/VnjMCaDALwIVyOHvt/wsHrHhulF9QF9+rWr9dL2Si9JV5CNOvjlfxV8hoDO
+	 OAQIvj4OC//7eCB21zlQqLZ2mHofa/xpIde0+5nW6hodbZU58as5n18WqOCV2osa1Eaz9
+	 086FrC76qzQIZiET25zcCuOT3xf4Zs6jsX7XBKeEZ3wV4OzjcdrIxflMYU5j/Cc2e/E/n
+	 nZxbCfJCLe3FBpYLELn7JBsHA5+smJwDlW3ScOamDpgLNEZld9egrezGT3ZepcZWwm/XX
+	 yM/64UPZs3YXPE1ouy3257w4ceUtNmB0Kl/oWN93svNeYQfsh9xd/beGzoNc0KaIjGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ijhU0j0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rcjYSYJw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD1F606A320;
-	Thu, 19 Nov 2026 00:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9BB606A32C;
+	Thu, 19 Nov 2026 00:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ijhU0j0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE66F1F000C4;
-	Thu, 19 Nov 2026 00:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rcjYSYJw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82931F000C4;
+	Thu, 19 Nov 2026 00:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049111;
-	bh=1UzgObiJWRazU8QH+hAAMP2HNn0uJufHm0RUxOA0vCI=;
+	s=korg; t=1795049114;
+	bh=QGy5Uagxc9MORBqVF1/aU52yDMYdv7+llvTZ7+/wpdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ijhU0j0lZNFWQerxw24kPwcen8J/1CRTKGxeUY7Htg1vSHHYyQpwcBrhNy/q7xl4
-	 h8tZMGnQOo3oVRZdiakPIgGNYoCfdt2KshVYCpUKiLRnO7ItGnCpOorrq+0YAeBCFi
-	 tHG0lpMCcM743RhOpxHkmgiYvb7lYQZEWhC2jZq8=
+	b=rcjYSYJwUSsy5taDIBIndaXJPGj7VTeadc3ORyMEUXLRwW2sffQWUMDWa7lUar5ZU
+	 oV52RMqy4ELqApmfQTvmmI/5/rclYHJbjwHEH2y+REmQjpOBLBsYmCq6ZXWnhDq4RJ
+	 cc5gNwYDLT+GtaADuFwrWZDwzXue5dSXJgWAh+0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Igor Velkov <iav@iav.lv>,
+	Yaozhong Li <yaozhonguwl@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2183/2857] arm64: dts: amlogic: meson-sm1-odroid-hc4: run the SPI NOR at 40 MHz
-Date: Wed, 18 Nov 2026 15:53:37 +0100
-Message-ID: <20261118150320.004090644@linuxfoundation.org>
+Subject: [PATCH 6.1 2229/2857] arm64: dts: rockchip: disable unused i2s0 on rk3399-firefly
+Date: Wed, 18 Nov 2026 15:54:23 +0100
+Message-ID: <20261118150321.675849873@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +68,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Yaozhong Li <yaozhonguwl@gmail.com>
 
-[ Upstream commit b44e2be772f866985cafdf90355285069ea68495 ]
+[ Upstream commit 9416a641cfe5b75dd9178c15960ee741c1091b45 ]
 
-At 104 MHz, reads return corrupted data: bit 0 of the first byte of a
-transfer flips from 0 to 1 part of the time. The same byte read as the
-second byte of a transfer was correct in all 100 reads. One 4 KiB block
-read 200 times came back wrong 157 times. Writes are unaffected.
+The board file enables i2s0, but no sound card references it: the
+on-board RT5640 is wired to i2s1 and the S/PDIF transmitter has its own
+controller. Keeping it enabled starves the other controllers, due to the
+pl330 instance that serves the audio block only having six channels.
 
-flashcp verifies while it writes, so a bootloader update erases blocks
-it should skip and can abort halfway, with the flash half written.
+The i2s0 pin groups also lists GPIO4_A0, which carries SCLK_I2S_8CH_OUT,
+providing the MCLK the codec runs on.
 
-The Hardkernel vendor device tree for this board uses 40 MHz. At 40 MHz
-the same tests pass: 200 block reads with no mismatch, and 14 flashcp
-runs with no block erased.
+So add the pinmux for the MCLK signal to the i2s1 node.
 
-Tested on ODROID-HC4 with an XT25F128B.
+The RT5640 and S/PDIF cards then register with no DMA errors, and a
+1 kHz tone measured through the codec's internal HPOL/HPOR loopback is
+unchanged (L 2135 -> 2138, R 2202 -> 2203), confirming that MCLK still
+reaches the codec.
 
-Fixes: 7178f340e929 ("arm64: dts: meson-sm1-odroid-hc4: add spifc node to ODROID-HC4")
+Fixes: 171582e00db1 ("arm64: dts: rockchip: add support for firefly-rk3399 board")
 Assisted-by: LLM
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Link: https://patch.msgid.link/20261002-hc4-spi-nor-v2-2-8366a4f91049@iav.lv
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Yaozhong Li <yaozhonguwl@gmail.com>
+Link: https://patch.msgid.link/20260921063431.103-3-yaozhonguwl@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3399-firefly.dts | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts b/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
-index ffd2aef45617b..22e7bdacd85bf 100644
---- a/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-sm1-odroid-hc4.dts
-@@ -134,7 +134,7 @@ flash@0 {
- 		#size-cells = <1>;
- 		compatible = "jedec,spi-nor";
- 		reg = <0>;
--		spi-max-frequency = <104000000>;
-+		spi-max-frequency = <40000000>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+index 0e5cb46f0ea01..ba2ba5cffe43a 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+@@ -628,13 +628,9 @@ accelerometer@68 {
  	};
  };
  
+-&i2s0 {
+-	rockchip,playback-channels = <8>;
+-	rockchip,capture-channels = <8>;
+-	status = "okay";
+-};
+-
+ &i2s1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
+ 	rockchip,playback-channels = <2>;
+ 	rockchip,capture-channels = <2>;
+ 	status = "okay";
+@@ -689,6 +685,12 @@ ir_int: ir-int {
+ 		};
+ 	};
+ 
++	i2s1 {
++		i2s_8ch_mclk_pin: i2s-8ch-mclk-pin {
++			rockchip,pins = <4 RK_PA0 1 &pcfg_pull_none>;
++		};
++	};
++
+ 	lcd-panel {
+ 		lcd_panel_reset: lcd-panel-reset {
+ 			rockchip,pins = <4 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up>;
 -- 
 2.53.0
 
