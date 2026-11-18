@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018457;
-	b=HE4xMCiVs8PDBbB96KwXOHYItyJS5D0CN4iNbjoD96ARtV0GETuN6tO4YTkY1gja5KxC
-	 pRtXFvrJGHqjT6KwTOjx0BuQsJFvl+NS84nN5Be/OPZy9K3NkAIoXA0QrzgxDMXod41Pr
-	 ZtZfD1ff8r43oqsXnGLDj8X1wRysl9wlFlrwUX78uKktJcwDXfRjeHw9WrZde5/0qhTvj
-	 IZHDQ0OP6cKK5y/QEfJ55xeuWKkyRGEsVvwFcdNOvwzlqhzebuV4NG4OM4M9pa3ghS/IV
-	 wneu6QYrt/JI1xe7cf5Qr1Z+P+WGHCQ99tWF0CWSGSp9kUl7VtWxarYN46ZgLKs8ECg==
+	t=1795018460;
+	b=Gp+6Ky+iv8B0wyhcusGKl8cn/ikU3nxKV0WHEgACq9ti7gDuVbegqKa3Co2Y3B4U7sG2
+	 tB+WTVrGVwfhMXf2U9rgIN5qJP7Ky4CLdx40anbZIC30VBKaQbZA2nFcbp3d9mvBV88pS
+	 qi2h8fmeBK7OTqJ9i7GIsP6XorXfws9Twn9nQ+a3P7xPjiMXvfs4oOBY3+QlbZEQE4TVU
+	 8b1g7bb+egjXlE6FyKzxqinal1WP03MX7d2etMYpE//M9JEU962pRELTE56DTVjLB61kC
+	 XPcjwxrqPzmBmBgGYnUyciPmyygKblj/Z/xF1gV6i6H5vsCgUIf5Rpj297qVM0V39hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TrSAh6QfhV5nomVE6FfDQ8Lezy1XHuhXbFUvUjqs3wk=;
-	b=Ix6ryUGXJE7B7legCkKgDkKzXYrEaNsuiwMZgJGQwtsdo4hMyrCwHT7/BBiqlvAZEclF
-	 u3wtFCkWJs8usJXahRbp4bRUcoa7lznNsOsn8QWEpOy0QUtIE6SA94Kso0Krg4ftc5M9v
-	 Lpm768KCG3dZZ1BiN2eZhGDOYFkStkgLMI1EuQKINdJ/mR26FR8dAOa2xiSkvyyYMZi3l
-	 U1Czxsh6UcIcVPN1w09RxFxdeF9VtSbMzYJmHL7Y7xnyzHaOe8P/6UjNUUKFAnTXT2MAM
-	 vDx1MzPUGOxeA8XBUyVf396yRznmhVwgHNX/s0w5FSQ++JCDipP7OKIKDKffDzWfoVw==
+	bh=3K5QnZq5c1NnU1Qfd7GqNWJs9OtjMKq9ryBiAYbwYAE=;
+	b=nzq0cxWVOr+niJpK909Yvvya2SMMIUVWkDXQBsfvPSRccS2/If6UowLP12Y9PGorfSad
+	 WgLZvRh/Va/I0e/eyf10PV6YlZQrz7cviueOdMW2NdeHH93v1u4mlkSfDE24hl0uD+v7t
+	 ueyX+IcnqVup/l34DOM/FBDt3KBnGx0I/T8l76NS/zPeOQeVPlkWnCpLFtxrZeP+5hr+d
+	 YaZ7BBcyFUICWQZBOq5JCPwzfMNi6Z0TiM5e4QHXWVitccesuSTWQe6pIZR2HYqBh0aSr
+	 A2HtBLW8TXFFehfM3OjMEs3ERn0Sfb9CwsvYj4AiuLfnGPNIOej8nsmfKmXlkfWyY4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w68tky0Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIT5Ku0w;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960C0606A32C;
-	Wed, 18 Nov 2026 16:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F966606A31C;
+	Wed, 18 Nov 2026 16:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w68tky0Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F011F1F000C4;
-	Wed, 18 Nov 2026 16:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xIT5Ku0w
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C02BA1F000C4;
+	Wed, 18 Nov 2026 16:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018457;
-	bh=TrSAh6QfhV5nomVE6FfDQ8Lezy1XHuhXbFUvUjqs3wk=;
+	s=korg; t=1795018460;
+	bh=3K5QnZq5c1NnU1Qfd7GqNWJs9OtjMKq9ryBiAYbwYAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w68tky0YDrI6k/sEBrEmCGreRX8HpI1YaMT7iLd1IKcr1WZKqFi+0RhAOxZB2EY5n
-	 K/2KOwpK6Hj5HHQujEoGtAYKk6q1Q0T356Daxk+z4UsqGOQgtqKCeKEa/f1vYL2Fpx
-	 mOWaXacHNFp8Fd2VqaeFeHzjMtkv0rRP53TBwmt8=
+	b=xIT5Ku0wXZQwBrMx/fiM024MGBX1koukocgykQDrWA50/5VzzkVkGq8LjEjNvPfSN
+	 zMWqpp/DwhFwOhneS0SGWmVApQNVT5/pO26TnUif5y/jYIy5jhX9dn9nfltDmHGoCB
+	 aWQpxGw7SUCdAdezi6igI/luH2QNb+l5gjxvMKCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3fe892ea5fc292e1353f@syzkaller.appspotmail.com,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1246/2651] md: Fix the null-ptr-deref of mddev->private while submitting IO
-Date: Wed, 18 Nov 2026 15:41:26 +0100
-Message-ID: <20261118150332.842561908@linuxfoundation.org>
+Subject: [PATCH 7.3 1247/2651] dt-bindings: power: supply: ab8500: Add AB8505 charger
+Date: Wed, 18 Nov 2026 15:41:27 +0100
+Message-ID: <20261118150332.878186052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,98 +69,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 4c90b76e0198deb89376988daa8d96b48bea7fcf ]
+[ Upstream commit 80d28539c1f9baab72210501729d67e3d9daa4b8 ]
 
-Concurrent processes md_stop and IO submission can trigger a NULL
-pointer dereference of mddev->private:
+AB8500 and AB8505 expose different charger interrupt sets. Add a unique
+AB8505 charger compatible with the AB8500 compatible as its fallback.
+Use the variant-specific string to require the fourteen main and USB
+charger interrupts on AB8500 and the nine USB charger interrupts on
+AB8505.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000070
- RIP: 0010:_wait_barrier+0x2f/0x250
- Call Trace:
-  raid1_make_request+0x150/0xf50
-  md_handle_request+0x104/0x530
-  md_submit_bio+0x76/0x130
-  submit_bio+0xdd/0x250
-  submit_bio_wait+0x1f/0x40
-  __blkdev_direct_IO_simple+0x1f6/0x370
-  blkdev_write_iter+0x3b2/0x520
-  ksys_write+0x7d/0x190
+Also clarify that autopower_cfg describes the AB8500 facility, since the
+corresponding AB8505 register bit is reserved.
 
-One process can submit I/O through an open file while a forked process
-uses the same file to issue STOP_ARRAY. The opener check permits this
-because md_open() was called only once. do_md_stop() can then clear
-mddev->private while the I/O is entering the personality make_request
-callback.
-
-This affects raid0, raid1, raid10, and raid5. Suspend STOP_ARRAY while
-holding the reconfiguration lock so teardown waits for active_io
-references to drain. Fail I/O in md_handle_request() if mddev->pers is
-NULL after the array resumes.
-
-The sysfs stopping paths are protected by
-mddev_set_closing_and_sync_blockdev(). Apply that protection to both
-clear and inactive transitions even when the array is read-only.
-dm-raid teardown is already invoked with the device suspended.
-
-Fetch a reproducer in
-https://bugzilla.kernel.org/show_bug.cgi?id=222020
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+3fe892ea5fc292e1353f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=3fe892ea5fc292e1353f
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://patch.msgid.link/20260922030538.1634904-1-chengzhihao1@huawei.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: eb917497734c ("dt-bindings: power: supply: ab8500: Convert to DT schema format")
+Assisted-by: LLM
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260925-ab8500-charger-dt-v3-1-f80b8d295e2d@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ .../supply/stericsson,ab8500-charger.yaml     | 76 ++++++++++++++-----
+ 1 file changed, 56 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index b103784a3cb3e..7821233836051 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -414,6 +414,20 @@ bool md_handle_request(struct mddev *mddev, struct bio *bio)
- 		if (!percpu_ref_tryget_live(&mddev->active_io))
- 			goto check_suspended;
- 	}
-+	if (!mddev->pers) {
-+		/*
-+		 * The __md_stop() sets 'mddev->private' to NULL during
-+		 * the IO submitting, check 'mddev->pers' before the IO
-+		 * being processed by specific driver to avoid the
-+		 * null-ptr-deref of 'mddev-><member>'. The check is
-+		 * safe because the IO has got the 'mddev->active_io'
-+		 * reference, and all __md_stop() callers will wait for
-+		 * the reference to be zero.
-+		 */
-+		bio_io_error(bio);
-+		percpu_ref_put(&mddev->active_io);
-+		return true;
-+	}
- 	if (!mddev->pers->make_request(mddev, bio)) {
- 		percpu_ref_put(&mddev->active_io);
- 		if (mddev_is_dm(mddev) && mddev->pers->prepare_suspend)
-@@ -4673,7 +4687,8 @@ array_state_store(struct mddev *mddev, const char *buf, size_t len)
- 	case readonly:
- 	case inactive:
- 	case read_auto:
--		if (!mddev->pers || !md_is_rdwr(mddev))
-+		if (!mddev->pers ||
-+		    (st != clear && st != inactive && !md_is_rdwr(mddev)))
- 			break;
- 		/* write sysfs will not open mddev and opener should be 0 */
- 		err = mddev_set_closing_and_sync_blockdev(mddev, 0);
-@@ -8319,6 +8334,7 @@ static bool md_ioctl_need_suspend(unsigned int cmd)
- 	case HOT_REMOVE_DISK:
- 	case SET_BITMAP_FILE:
- 	case SET_ARRAY_INFO:
-+	case STOP_ARRAY:
- 		return true;
- 	default:
- 		return false;
+diff --git a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
+index 4f19744844e9c..dcffcecaea13b 100644
+--- a/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
++++ b/Documentation/devicetree/bindings/power/supply/stericsson,ab8500-charger.yaml
+@@ -10,12 +10,13 @@ title: AB8500 Charger
+ maintainers:
+   - Sebastian Reichel <sre@kernel.org>
+ 
+-allOf:
+-  - $ref: power-supply.yaml#
+-
+ properties:
+   compatible:
+-    const: stericsson,ab8500-charger
++    oneOf:
++      - const: stericsson,ab8500-charger
++      - items:
++          - const: stericsson,ab8505-charger
++          - const: stericsson,ab8500-charger
+ 
+   monitored-battery: true
+ 
+@@ -28,27 +29,15 @@ properties:
+ 
+   autopower_cfg:
+     type: boolean
+-    description: automatic poweron after powerloss
++    description: AB8500 automatic poweron after powerloss
+ 
+   interrupts:
++    minItems: 9
+     maxItems: 14
+ 
+   interrupt-names:
+-    items:
+-      - const: MAIN_CH_UNPLUG_DET
+-      - const: MAIN_CHARGE_PLUG_DET
+-      - const: MAIN_EXT_CH_NOT_OK
+-      - const: MAIN_CH_TH_PROT_R
+-      - const: MAIN_CH_TH_PROT_F
+-      - const: VBUS_DET_F
+-      - const: VBUS_DET_R
+-      - const: USB_LINK_STATUS
+-      - const: USB_CH_TH_PROT_R
+-      - const: USB_CH_TH_PROT_F
+-      - const: USB_CHARGER_NOT_OKR
+-      - const: VBUS_OVV
+-      - const: CH_WD_EXP
+-      - const: VBUS_CH_DROP_END
++    minItems: 9
++    maxItems: 14
+ 
+   io-channels:
+     minItems: 2
+@@ -74,6 +63,53 @@ required:
+   - io-channels
+   - io-channel-names
+ 
++allOf:
++  - $ref: power-supply.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: stericsson,ab8505-charger
++    then:
++      properties:
++        interrupts:
++          minItems: 9
++          maxItems: 9
++
++        interrupt-names:
++          items:
++            - const: VBUS_DET_F
++            - const: VBUS_DET_R
++            - const: USB_LINK_STATUS
++            - const: USB_CH_TH_PROT_R
++            - const: USB_CH_TH_PROT_F
++            - const: USB_CHARGER_NOT_OKR
++            - const: VBUS_OVV
++            - const: CH_WD_EXP
++            - const: VBUS_CH_DROP_END
++    else:
++      properties:
++        interrupts:
++          minItems: 14
++          maxItems: 14
++
++        interrupt-names:
++          items:
++            - const: MAIN_CH_UNPLUG_DET
++            - const: MAIN_CHARGE_PLUG_DET
++            - const: MAIN_EXT_CH_NOT_OK
++            - const: MAIN_CH_TH_PROT_R
++            - const: MAIN_CH_TH_PROT_F
++            - const: VBUS_DET_F
++            - const: VBUS_DET_R
++            - const: USB_LINK_STATUS
++            - const: USB_CH_TH_PROT_R
++            - const: USB_CH_TH_PROT_F
++            - const: USB_CHARGER_NOT_OKR
++            - const: VBUS_OVV
++            - const: CH_WD_EXP
++            - const: VBUS_CH_DROP_END
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.53.0
 
