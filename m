@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032180;
-	b=Xr2FUtnUGK9UAuFfE4S0kxbtENDEWjFCxYzTmPAite0eiPnNSDsb7GoqSkrcFvPvtnOd
-	 oFBIWBvMFKPjfqHiJXjJXx+VInyVC5P5k/rtJU95Qv4RzZ1E7W6O9E30jPdJVxPFiEoQI
-	 bov5w5bG5gah01p0r25sR+ixpZ072pdmAnDu+e8aXOBaJN+8pXLVOIj5dbqFgA2ZEa5jG
-	 QxuHALJqBFGbV8W4yF0tgiYjpHmxFvoHp2lt236EcsHiaOBEOstLkkPx3cI6zKn1R7OKG
-	 skJ63CXfCOCQbUL4SKj8BCI51Lga8tJrVjUfPr87DFnsnj31AsAtDHR1GUIURQJQXAg==
+	t=1795032182;
+	b=47egjU8twcjN9mCstmXnEZQ1Gubf6WuUM0bvo3SnyThuNflhI2qfD6VYHAv4Q7/Igw/1
+	 F8jaWlEVe2ULEiyGgjBl9rszFpde8NTvHkDlhaiv4C3BFfld9P8x+RLR9NAuISDuuPgPQ
+	 ovmy6ikdTsiYPw052g6j22GdoXG7zw0Kdq4EBCVMWMPAsrjZsQeThHeF1ktprm5VOlKIt
+	 s6USzULX/XHlGlehWgQ/oTjxAn4RDCv7ApdXNgMYEqU6S4MXIarh7e2fuO0NPWI1eqxxR
+	 dtzy3yvdmZlHgzbsO1IDdvzhbQhqTUe1MksNv7oe+2rw8g9pQlolS0bb5E+5f6KpN2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nHtbZ2Awb4kNbSOum9jTfrwmocd+tohXQK+YTd58l78=;
-	b=l8+kkQF8sdQrcSmrsdTrpH607kkduM0p59F2HTZ7ERx1s6q1825lB1IRD2p470p5y1vQ
-	 OLq3lz1OtRkkM9xYEWxRVYvr1nJI9c3aNd5Uv4x0hq6br4QH4uX3feekyIjneKvGj8hCI
-	 uBnn2jWVIptdHb5BRv1aWnDbnetyD5iBRAHd2WVUDMWAbKWz+IjaFXAyEfzS7iOxIYaCa
-	 rWq/8t+ncdKtlgir1M1M+4kOydejRzaMbo+0wgqNhzF3PWwnbBz7BnD28ZClWMi6+XDYK
-	 lgxOhFAZQn4o6rwBHfdnVAEvMPbadRw3UbB/HlYCs0cHaaL2OcYc2GeLcJmu98qOKMA==
+	bh=Moskcn3DPxQKZDRR2dhyP/c9zKNsnFz91fxml4yvYPM=;
+	b=VTkkTtMmLek1fs+gW8x2ECB7/bmLfHu6IGxVka9DX92vpKneCbEQAoeNWzu/T09qapyT
+	 R9edV3TZcCSVuc6p8PlOpx6FGMQlhyT1saLNwDcRd0eSnGkQKNAsrH1rF4h3ouNNKa4Lt
+	 rwUCUHHGVSLvTMqpgXaSOGIB+PkZOWQFK0v6j3yJf5/YYaImf80fFjBGp1zThzktOE+iD
+	 Xo9IU6vrKAtW1yxHix5Q0PzlPcNjnuX2u0gJnMpHw1kSRvid9PR7vIwmZlFZ7J8JQx+fK
+	 1R/XkO0x27Qzl3Qzms1aVT0xL5bihsphxutOXrBZagmGGtLpNv+nEv8wj7seD3qx2zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6+7UtE8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nc1BHt0B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AAC606A31C;
-	Wed, 18 Nov 2026 20:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF840606A31C;
+	Wed, 18 Nov 2026 20:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H6+7UtE8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442FC1F000C4;
-	Wed, 18 Nov 2026 20:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nc1BHt0B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA671F000C4;
+	Wed, 18 Nov 2026 20:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032179;
-	bh=nHtbZ2Awb4kNbSOum9jTfrwmocd+tohXQK+YTd58l78=;
+	s=korg; t=1795032182;
+	bh=Moskcn3DPxQKZDRR2dhyP/c9zKNsnFz91fxml4yvYPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H6+7UtE8WUJvgj7BaG9fDpw6AqX1jtbumgeevEvwXCUTY0AafLDfbkSZyF8Clpe0n
-	 WvcbfaQHUxi3PRvgGuCYjOXuIX7mfuGaurR+rHxL0/HTelPIph7xRo6wnYqkCGQIZ8
-	 iiTMGAqhI5EuP/o6NGyG4SEALO16TgeMkVFEQiWI=
+	b=nc1BHt0Bn6PTUP1q9YamXMSMN/NguIRuaae92RVjLbJHbq0f5QUaoYkXIk87PvBds
+	 WNycucb1mFL+328Z2IdrUhNcQYfPp5S40umv7nx/9OMEXHvQNj9/EtrXy4++fC91Pi
+	 6cl48zcuDtq3Y8hydg3mgGV0Nk9cttsSYr8Nmz2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianan Huang <jnhuang95@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1319/1756] f2fs: quota: fix quota flush failure during filesystem freeze
-Date: Wed, 18 Nov 2026 15:57:26 +0100
-Message-ID: <20261118150101.947481059@linuxfoundation.org>
+Subject: [PATCH 6.12 1284/1756] RDMA/irdma: Fix FRWR IRDMAQPSQ_PBLADDR field population
+Date: Wed, 18 Nov 2026 15:56:51 +0100
+Message-ID: <20261118150100.678123780@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,85 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianan Huang <jnhuang95@gmail.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit f6f8f34480c78eade6542faea6386c47c9b4c6b3 ]
+[ Upstream commit 59df57262e6fa9e6f4aa76d6d324134777c702a0 ]
 
-Quota flush retries can be exhausted during filesystem freeze.
+Previously, the IRDMAQPSQ_PBLADDR FRWR WQE field was being populated
+using a mask that was right-shifted, whereas it should have been the
+address being right-shifted.
 
-freeze_super() and the quota checkpoint may race as below.
+This ended up working fine in many cases because the lowermost 12 bits
+are always zero (the addresses are page aligned) and the uppermost 12
+bits are usually zero too, but it could break for DMA addresses that
+are wider than 52 bits.
 
-freeze_super()                       f2fs_ckpt
-- down_write(&sb->s_umount)
-- sb->s_writers.frozen = SB_FREEZE_PAGEFAULT
-- sync_filesystem()
- - f2fs_sync_fs()
-  - f2fs_issue_checkpoint()
-   - queue CP_SYNC -----------------> - block_operations()
-                                      - down_read_trylock(s_umount)
-                                        : fails; freeze holds write lock
-                                      - quota flush retries exhausted
-                                      - set CP_QUOTA_NEED_FSCK_FLAG
+Fix this by right-shifting the address instead of the mask, similar
+to how it was done in the original i40iw driver.
 
-During the PAGEFAULT sync pass, freeze_super() holds s_umount for
-write, but umount_lock_holder is not set until f2fs_freeze().  Thus
-quota writeback tries to acquire s_umount again and can exhaust retries.
+Tested with NFS over RDMA with some added debug logs to ensure it
+was hitting both the direct (single page) path as well as multi
+page (< 512).
 
-With checkpoint merge enabled, f2fs_issue_checkpoint() may dispatch
-CP_SYNC to f2fs_ckpt. That thread also cannot acquire the freeze lock.
-
-Record current as umount_lock_holder around the VFS PAGEFAULT sync so
-checkpoint runs in the freeze caller and quota flush uses its existing
-s_umount write lock.
-
-Fixes: eb85c2410d6f ("f2fs: quota: fix to avoid warning in dquot_writeback_dquots()")
-Signed-off-by: Jianan Huang <jnhuang95@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20261015161756.3078300-1-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index acf6bdea8a451..53983e8385e45 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1734,6 +1734,25 @@ int f2fs_sync_fs(struct super_block *sb, int sync)
- 	return err;
- }
- 
-+static int f2fs_sync_fs_super(struct super_block *sb, int sync)
-+{
-+	struct f2fs_sb_info *sbi = F2FS_SB(sb);
-+	bool freeze_sync = sync &&
-+			sb->s_writers.frozen == SB_FREEZE_PAGEFAULT;
-+	int err;
-+
-+	/* freeze_super() holds s_umount for write during this sync pass. */
-+	if (freeze_sync)
-+		sbi->umount_lock_holder = current;
-+
-+	err = f2fs_sync_fs(sb, sync);
-+
-+	if (freeze_sync)
-+		sbi->umount_lock_holder = NULL;
-+
-+	return err;
-+}
-+
- static int f2fs_freeze(struct super_block *sb)
- {
- 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
-@@ -3301,7 +3320,7 @@ static const struct super_operations f2fs_sops = {
- #endif
- 	.evict_inode	= f2fs_evict_inode,
- 	.put_super	= f2fs_put_super,
--	.sync_fs	= f2fs_sync_fs,
-+	.sync_fs	= f2fs_sync_fs_super,
- 	.freeze_fs	= f2fs_freeze,
- 	.unfreeze_fs	= f2fs_unfreeze,
- 	.statfs		= f2fs_statfs,
+diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
+index 16dbb1d350425..9f9e6829a889c 100644
+--- a/drivers/infiniband/hw/irdma/ctrl.c
++++ b/drivers/infiniband/hw/irdma/ctrl.c
+@@ -1326,7 +1326,7 @@ int irdma_sc_mr_fast_register(struct irdma_sc_qp *qp,
+ 			 info->first_pm_pbl_index >> 16);
+ 	set_64bit_val(wqe, 8,
+ 		      FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXHI, temp) |
+-		      FIELD_PREP(IRDMAQPSQ_PBLADDR >> IRDMA_HW_PAGE_SHIFT, info->reg_addr_pa));
++		      FIELD_PREP(IRDMAQPSQ_PBLADDR, info->reg_addr_pa >> IRDMA_HW_PAGE_SHIFT));
+ 	set_64bit_val(wqe, 16,
+ 		      info->total_len |
+ 		      FIELD_PREP(IRDMAQPSQ_FIRSTPMPBLIDXLO, info->first_pm_pbl_index));
 -- 
 2.53.0
 
