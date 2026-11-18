@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036148;
-	b=0m8suxAN9Vea/O0eJGOIGkPDQLhhc8sjEMnG0Hf0bdiPm4hHTU+nYvvG1d4Pj30SwYDq
-	 aNRuJ54IcZpIPeRHqP2HtKumk7Ebrer5/3xGUVUIy1McRH3HZWWfq0Llk7M6aKB3QNQuX
-	 Gvm2MfNq8YX90oaGa/LkCK3LvVSq6ZGN2sfykyGpHo+sI7zAVD5+wIg6hP530yrsOCdXO
-	 dX4Df04MGllfJoj3D/4eoHeFYTUFOEl665ehIqTNDqhAr9sWq8ks8x5qMMN++qgsa55YS
-	 apRpV3bLD6oc55sgb0ZQWnS/Hnrp8JuGDrvVLt6t6lWQMIM7WfNqS6cIrBWPuTRenww==
+	t=1795036151;
+	b=0OcUZhmkCB/qmUOW43o5zPb6RsQrjdedLHEnBE5r3/eJGfJRjtGFNW7iTc9oYbY6pIwQ
+	 MWqEQtujGe8YKaGVH/sAL64nkLfyNdJEyW60lm26rm9XCFvBLDdRFjwjwPw557qbOdcMH
+	 6XB/7MhVVs2RITYrjbiKhH40ZWRNT/gHIxWg3LRxq3PWrWqNmXbiZMnBthTnGpeDmJMhF
+	 CPK2R45IGQ/6wEpbqVicHMbVyvUpTht+nGrZyATBHKOSphSpJbpMb4VB7bihfPrdvZIN/
+	 pSFgBBPPoIQWKFseA7k/hrWG0l6g5pGgT0krOh0/Z47jcLtSefIeo5wshWp78vV0INQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r1adE++wkvmVQTMvYP3PM+bwFXgGsG8ZWKgK/XLNz1o=;
-	b=vBE+nQs0KlSSpEh0bmes5WyqhwHNGIpNdLJmeqdQ3ywGLaKmt9CpLIsmU3oYQX1xbou/
-	 M66p4aSGmmyfQiu/rJiozsU0NYid6Hwx6Gb2MY7x4UldAUm8B7Es/rlNxyHe34Lr58FeV
-	 YHxSCvFAapcigVFWa+g9Seoc2TM3Im3YjlQc7bLOxqQqIKLX6Awx06vcoAgivyCXl9n8s
-	 0xcbDWEy8vwibiPnXDvD4lUBIFL+qkud3csdkTf2YHlXQdq7Nz6pSFy4OyFLuc4rkJkVj
-	 3f5DvgnbOhrf6s4sfy/78JDoyt53mjyfdyRJFYN5tWlV4p4UJg9PCN5diMpN0hs3ZhQ==
+	bh=KnjY5BCEZan3veMnpaq7e7SZk8wY7tJKiljXFdeUUkc=;
+	b=1wypj2bu1ageLynbM9DGEr87Bi0XrRn3m8+0Blzr7cSdX/MReBz5wFEYPIBkrtcx180g
+	 RxnYBcfYw28h847TuRDgT7+WJ6hJUFp0mS+2bBS3mv9FMpkqHpd+x5dlRRFsBDymTP7lR
+	 uBWros750Xvi7FFGfB3u3RZsFklomoJ2P5GPUuz4W8mME3RtUtNq6xT9VfEJG0A2k88q2
+	 JdNeOdLwf6iLBgsmkQ28LPYogbsLxPDcRT4/bd8+5HknW8T3X5PPfWsBwiPETQvznE+mM
+	 zCJ3XKehQC6DB7V26KPF3YeHCY+8ybqAvLCNlBvfFoM6iOA9Us2yXsrgzJd4BJwwLMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DecFSxEf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpS7hFR+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41879606A333;
-	Wed, 18 Nov 2026 21:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F04606A32A;
+	Wed, 18 Nov 2026 21:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DecFSxEf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C2F1F000C4;
-	Wed, 18 Nov 2026 21:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpS7hFR+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E46D1F000C4;
+	Wed, 18 Nov 2026 21:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036148;
-	bh=r1adE++wkvmVQTMvYP3PM+bwFXgGsG8ZWKgK/XLNz1o=;
+	s=korg; t=1795036150;
+	bh=KnjY5BCEZan3veMnpaq7e7SZk8wY7tJKiljXFdeUUkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DecFSxEfrtTpk3xupiLMBAqh4BCKXEv9pGRknBQLAVWdvCJOvIdOjIgPI8OSysp6V
-	 io6PV1yAvioiyqnrvTaYEQ5nfGT7Fiw3n5W2lY2gQGK0cP70MQ7oKputUNyoQBDcS0
-	 lysS5b4g6DimAgWMPzLk5JNxGHplh0C+V+G0JpGw=
+	b=QpS7hFR+qcOUJ5JiG6mjlgv45Rs0nOz8wUGpwLdvi+h5l+EpcFB5DKuZbRrUOgUhZ
+	 XWe1xhG1EhIdi0Q/HaPxkojTvE5TeQPWgT65Ff3vOHCxjofZ3Yr9gho0/GgbT6qulz
+	 NgjCIloKqXbxtaPhhSIyveSWQ7rWU9BrIOHfAoA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiale Yao <yaojiale02@163.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0955/3318] iio: potentiometer: x9250: reject devices without match data
-Date: Wed, 18 Nov 2026 15:26:17 +0100
-Message-ID: <20261118150348.278338163@linuxfoundation.org>
+Subject: [PATCH 6.6 0956/3318] iio: adc: ti-adc128s052: validate SPI match data
+Date: Wed, 18 Nov 2026 15:26:18 +0100
+Message-ID: <20261118150348.312108843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,53 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit d13716e3defd5b8cec3ee2c27f4d9b7e01314067 ]
+[ Upstream commit 4ac257f2fd2a9cac00e748486fa003b4e1cc453e ]
 
-A device bound through driver_override need not match an entry in the
-driver tables. In that case spi_get_device_match_data() returns NULL,
-but x9250_probe() later dereferences the result while naming the IIO
-device.
+SPI driver_override allows a device to bind to this driver without
+matching either the firmware tables or SPI device ID table. In that
+case, spi_get_device_match_data() returns NULL.
 
-Reject devices without match data before enabling the regulators.
+adc128_probe() also obtains the IIO device name by dereferencing the
+result of spi_get_device_id(), which is NULL on the same override path.
+The probe can therefore crash before it reaches the match data access.
 
-Fixes: 66bfc528a6fd ("iio: potentiometer: Add support for the Renesas X9250 potentiometers")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
+data") fixed the same driver_override issue in another SPI driver.
+Reject devices without match data and use the always available SPI
+modalias for the IIO device name.
+
+Fixes: d5f0da0c6972 ("iio: adc: ti-adc128s052: Switch to use spi_get_device_match_data()")
 Cc: stable@vger.kernel.org
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/potentiometer/x9250.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/adc/ti-adc128s052.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/potentiometer/x9250.c b/drivers/iio/potentiometer/x9250.c
-index 7353484926997..1c9e22459058b 100644
---- a/drivers/iio/potentiometer/x9250.c
-+++ b/drivers/iio/potentiometer/x9250.c
-@@ -155,10 +155,15 @@ static const char *const x9250_regulator_names[] = {
+diff --git a/drivers/iio/adc/ti-adc128s052.c b/drivers/iio/adc/ti-adc128s052.c
+index a456ea78462f3..e29d752989faa 100644
+--- a/drivers/iio/adc/ti-adc128s052.c
++++ b/drivers/iio/adc/ti-adc128s052.c
+@@ -150,12 +150,14 @@ static int adc128_probe(struct spi_device *spi)
+ 	adc = iio_priv(indio_dev);
+ 	adc->spi = spi;
  
- static int x9250_probe(struct spi_device *spi)
- {
-+	const struct x9250_cfg *cfg;
- 	struct iio_dev *indio_dev;
- 	struct x9250 *x9250;
- 	int ret;
- 
-+	cfg = spi_get_device_match_data(spi);
-+	if (!cfg)
+-	indio_dev->name = spi_get_device_id(spi)->name;
++	config = spi_get_device_match_data(spi);
++	if (!config)
 +		return -ENODATA;
 +
- 	ret = devm_regulator_bulk_get_enable(&spi->dev, ARRAY_SIZE(x9250_regulator_names),
- 					     x9250_regulator_names);
- 	if (ret)
-@@ -176,7 +181,7 @@ static int x9250_probe(struct spi_device *spi)
++	indio_dev->name = spi->modalias;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	indio_dev->info = &adc128_info;
  
- 	x9250 = iio_priv(indio_dev);
- 	x9250->spi = spi;
--	x9250->cfg = spi_get_device_match_data(spi);
-+	x9250->cfg = cfg;
- 	x9250->wp_gpio = devm_gpiod_get_optional(&spi->dev, "wp", GPIOD_OUT_LOW);
- 	if (IS_ERR(x9250->wp_gpio))
- 		return dev_err_probe(&spi->dev, PTR_ERR(x9250->wp_gpio),
+-	config = spi_get_device_match_data(spi);
+-
+ 	indio_dev->channels = config->channels;
+ 	indio_dev->num_channels = config->num_channels;
+ 
 -- 
 2.53.0
 
