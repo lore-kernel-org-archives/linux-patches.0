@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051110;
-	b=UZpe65FYXjzEgx+4H62m1mH3fPNRwtdrxPrJ5L1vCytQj6UZnk4C8DozupAhfzbEB9iO
-	 4D7pwaime9pM7qmHp6chztNhj4tonpm/YkhXM3AwHfvNjeW+Zu1zIKTZts95O3SWcDeXk
-	 4S/ZMdQw/j1HefSeuVGoyaS9mAzoJxEMKMFo2WlkLOo3xAaIibUl1Kyb51BjC87pzZOQ2
-	 0ZGSqdaLYASJinBqv2XRP4cl5K0gCZ0j2UEvTI7xhvKcYoazL3Z+9CSyIxIGlrG7xSPN/
-	 5aHqa7+Vr2M8HvyxqM5/bPgd27nSDrzzIERysGb8jZocT9XecJaHduFnr8gK8tTjbVA==
+	t=1795051113;
+	b=cSn7PqEvVC7qgEcBOqxWTWevbdncMM9mraodXK+GsIKKl9nYfu0cX3EMIPFNyvkVIbwi
+	 3r3Z0n6D6FTi+dZKxuUDTpeWPOfTDFyD30NlaqkjCKQlHV42Pf+/od4AsYcp7eP342VB6
+	 Dz3wbwyKK9G24Tx/FddVPCl8QhWJ0O488sX9nPFxUgv7BRQ8oIN/JJPFuVv7bIddTGImR
+	 DB5VUvTTMQiqVXJW83Kd7u5jixWrpdWduVGvCIMr4ttXKM3CY7aDUf3XkhI7d23puoDx8
+	 1BsdD7Gs1fnIRt3MhdTDY+0InlTTMmb5+XqXlAnqGZxa65M/5Gm1a6gAxG9RdQyIGiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051113;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1A4je/Daod98yRelYvFME8g987MQLwkpykB2WrlXm/8=;
-	b=M6ggaqK76krb5tADiZIUWX4cpWTNTkayDT8jG8xvb9ZaP40Lw579b0kv3LmPq6VfhA6U
-	 Pn+oLMDQS2hZoSIaqHQKaT0XrNp9PJiHy0zcHE0dVtgmxsGsK5EzVbkJ7Yfl3TdyUkN84
-	 QS1885wh4b0Vn9sBrGcX2EbhYhvpay5dPcXRDlroN872dCw0NAsLcybNEYmghCsadg+qB
-	 SBRLjcWe3U4Os2sI/7fdWdQ7JF3IL9m9PL+Ilc7EC6nL0KxZwlgzfAm6Qy14/skg3bk4X
-	 5M6pdr1/5b0atLj7JWCFmYfR2SfRHaUywvHX9MKoG0Qp5Me/HwfDOXFKS+sMqr5s9tA==
+	bh=tIcU7+dL+1rZVfIKQXQtAli0fZB9nCy8mD5vidPvtyg=;
+	b=VbRYsL5ZHxH4O5fSPr+G5lDRbG3izKMrsdSdePRpUCdYwH4Zjcm7WWlq/ABo0XEvYA8+
+	 Fdo7mCw3VwqLFnSKJ51sV05MdbnLRXA8em0JBvPmf1enD+nIwIDx88yJMhaGBuJ0vNlCj
+	 NAfMTU4zD/cOjdwb9syOU5KhQP02YEMxVKda5sTQXjPbRfHJ4P6NXGec7aQqjzp4g1gtt
+	 uDW5BpUuqZwV924cJ6fePqEAO4Y3CkcEVQDNScfZfZ5mQLvsPdARszOu8ic8kjTRHCtHc
+	 Vqjq3hIVvh5TE+07cGYDA/rR8KoXYNgbqvzLADfm9Ctc9ce22582IDhoHzT9BImNrug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cFK0Qrit;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZPp+iMp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CE5606A31C;
-	Thu, 19 Nov 2026 01:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D06606A31C;
+	Thu, 19 Nov 2026 01:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cFK0Qrit
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBC51F000C4;
-	Thu, 19 Nov 2026 01:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZPp+iMp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454CF1F000C4;
+	Thu, 19 Nov 2026 01:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051110;
-	bh=1A4je/Daod98yRelYvFME8g987MQLwkpykB2WrlXm/8=;
+	s=korg; t=1795051112;
+	bh=tIcU7+dL+1rZVfIKQXQtAli0fZB9nCy8mD5vidPvtyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cFK0QritFVXfbdDlrU9BpLFUkgWjfqYKEEOQTerB5ni+Z0uOeVtWIyUvefW/Cp1/W
-	 JeMihBGpZoaBAWRIjLmmARWJDcId/cqbipwiCA0QSIAmnaTAqh72dUJPnOdbfZaKbO
-	 2+vRKvJ01TWxzIZyeScdEUSOg6x8CDU/RSTBN4ZE=
+	b=xZPp+iMpBfut6R+ng8dS4nR25rawH4nUuzbNbRWw4QzRwqUNeQ0T4hHGvj7zyMJOO
+	 livEkZoVRW0v+QewKGhuO/KUvxTPZXVuuvanRsSFwSFgTnNpuNlqYOiS3DyvByDVUJ
+	 1eERrZtzY2VdeWQHyBJbAI28HVz96fwgIRJigbiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0093/2214] uio: sercos3: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:29:29 +0100
-Message-ID: <20261118150013.685694440@linuxfoundation.org>
+Subject: [PATCH 5.15 0094/2214] comedi: ni_atmio16d: Add sanity check to interrupt handler
+Date: Wed, 18 Nov 2026 15:29:30 +0100
+Message-ID: <20261118150013.722429346@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,41 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit a432f68c51fc6761658445e80a798b8425fdb3dc ]
+[ Upstream commit 13f4796223489a5349b466ce54bb868f46c9fefd ]
 
-The driver has a match table for the pci bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+For safety, check the dev->attached flag in the interrupt handler to
+ensure the device has been fully set up, avoiding a possible null
+pointer dereference of dev->read_subdev.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260704152642.54769-1-pengpeng@iscas.ac.cn
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-6-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_sercos3.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers/ni_atmio16d.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/uio/uio_sercos3.c b/drivers/uio/uio_sercos3.c
-index b93a5f8f4cba2..20d8b5f9d0e97 100644
---- a/drivers/uio/uio_sercos3.c
-+++ b/drivers/uio/uio_sercos3.c
-@@ -212,6 +212,7 @@ static struct pci_device_id sercos3_pci_ids[] = {
- 	},
- 	{ 0, }
- };
-+MODULE_DEVICE_TABLE(pci, sercos3_pci_ids);
+diff --git a/drivers/comedi/drivers/ni_atmio16d.c b/drivers/comedi/drivers/ni_atmio16d.c
+index b347878b13592..3b2e714b47249 100644
+--- a/drivers/comedi/drivers/ni_atmio16d.c
++++ b/drivers/comedi/drivers/ni_atmio16d.c
+@@ -224,6 +224,9 @@ static irqreturn_t atmio16d_interrupt(int irq, void *d)
+ 	struct comedi_subdevice *s = dev->read_subdev;
+ 	unsigned short val;
  
- static struct pci_driver sercos3_pci_driver = {
- 	.name = "sercos3",
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	val = inw(dev->iobase + AD_FIFO_REG);
+ 	comedi_buf_write_samples(s, &val, 1);
+ 	comedi_handle_events(dev, s);
 -- 
 2.53.0
 
