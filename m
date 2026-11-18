@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026827;
-	b=MbHbkzWC9gzMEEsOHYpi8VfGMATfC2WnteeEMkIdkn33C68PS2Ca1J5ywRk5cqV/rId9
-	 nF8hyQjf73oujjhBsc5XsbkhLmvQsXWsSQqq3+mFLlhKGDO4fYvDBnSOfFVXlwplZ0YjK
-	 dVbv3xNFeaMdZtUhBu5pVpNW3l1RNMp52JXWu8x9+V6+E2YS3j1+PAWblpe0q7IeXD3yH
-	 lcFv9UXM6sjlI+REhwfMxTeSd+ktnrpRVRnvuBYMiNDr7ATa02HvP3CVOgCOji6bn20aw
-	 qYT8ptxUYlrFrqMeJq6YMNCODA84XEwjiws01C+mP2vcoBIVhKkD4FioHs9GveKxRLg==
+	t=1795026830;
+	b=LJF62VBX2rtzgLFHHk0AKVQy3K2BiOemZHwMBTwM9jBSW6fPwDkaRvMmkpw0G2adwQt/
+	 BB5pzUsKaKkFYbqb7Dh2gFjhuGbD+8Ysj3+U56RSRbyAj9m12gfgnrkHEm7wahHODZjiw
+	 Uzt7pjh5ortaHu4fgmLZ3CKkiZE/86LZHHG1mVxGIszdDcwKXOom9ClFJeKeoZQ4Ngp8p
+	 5ePUHVo7rBxlGKTQ5j3MOa35VRgo5xsVZytr5m4TZeum+94sD6Wqy+b4RxDYiYsPX3SqH
+	 TBqXoWidGUexKU94UmlSGgnQk3wkP2XE98hZSOn3dXo0a9y5rq2x88v2fcdHane+ouw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026830;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=KWIP5l1Q5jULetmQ5bY2atIOFkIT8SzjDFX/5husaak=;
-	b=H1qBgzvxLIUz/5moKI/2OvfB0EQb93udIfQadz8CmHmzpSE58/FbUwUkpeYGX+wnhc6Y
-	 SNyBKPeVA5uYwed3Yyg5mMH91zmgPqpNW8RHvXhp7EKqlXRIPyJjSZ31WYhJ99HIhcbfG
-	 4xVhX01nEA2Q0ewoMVXCkWwM054Icrb+d2CdDYy7PxXevhI+qqvO49G5UukYbWLk2bGiF
-	 fGFIBMzGaX0TBZyHhKamhktXvsG5t7ufAw3vPc9NuZ1BPLN2XRxCCZawwcG8IOfIW6y+5
-	 aHH38SjB7MRodIf6TYIdI4eS9hoSg2xOGVz4JoaVpv6xIP1l58r+iTsoJLvlpPwnOxw==
+	bh=d63Tq0K1C3d+iMWLPToLbvtwLPxcnK5dmklKCpnNUfI=;
+	b=H9L4CPjuLPWRosQP95oWeXm/ekzekPWENImYbtMRyN9df+H1uy4RiUJRVwHOQFMqt8rs
+	 BAUTPrnzTJltyXsvc9/pbxFJWyQhk6ElDH1TV55LgAA/dHPPMKb1KjetDfSvMBwcHnJOc
+	 wxZpjRLjJNDBvsWeMybc122EauWUkSr/EAHg779UVDuVdohurLEETriOQurYa+6Tf8wyH
+	 wPSpYfB/SYBilk4W1O+Fz44/TGM39rDd3LDQG2SCboJC870eSt2lzerTT05tW6NjXjKLz
+	 PX5PBXFXJB0shBf7GEhyYivNf8wmsqfKnaYElLO9N0S/GANJ8URdnHXHAZ3miPr5txw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6rUk2pD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YShGeKxm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644CB60A2606;
-	Wed, 18 Nov 2026 18:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F51606A325;
+	Wed, 18 Nov 2026 18:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6rUk2pD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961631F000C4;
-	Wed, 18 Nov 2026 18:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YShGeKxm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 782FB1F000CA;
+	Wed, 18 Nov 2026 18:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026827;
-	bh=KWIP5l1Q5jULetmQ5bY2atIOFkIT8SzjDFX/5husaak=;
+	s=korg; t=1795026830;
+	bh=d63Tq0K1C3d+iMWLPToLbvtwLPxcnK5dmklKCpnNUfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6rUk2pD5ZDUaTMHzsVO0UiMOhLLk8yqwU8qdRFa1ImBW8XMJMpI98Y3T+2olN6Bl
-	 4jPR1tfwu+lYtRMBMxNJKalbW5OdfM5NdZXuNu7wo+Wxa45g0fBCQ9MBoYoxt6gvPa
-	 2GCEUgetY6Nu+xuIGeeyYGqIeDi0DdFQJERXTxFk=
+	b=YShGeKxmjfucuiZFEedpeh03/4Ji0uUO7P0o5N6BM6bx7nZkMfxB+UpaEkV1LvfuW
+	 7ZHrzOMx4awHPn2CP+nEsCsqbbToxzlAybGPRYHd7CMfqa8AfO9y9NDQg4CxfdDdBN
+	 9ESvT2rG8HnABCAoJ8/4Oak/ixnwHZvW6LvRv+hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Subject: [PATCH 6.18 1556/2151] selftests/nolibc: use the configured kernel header directory
-Date: Wed, 18 Nov 2026 15:54:51 +0100
-Message-ID: <20261118150218.576465304@linuxfoundation.org>
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1574/2151] selftests/bpf: Use its own netns in flow_dissector_skb_less_direct_attach
+Date: Wed, 18 Nov 2026 15:55:09 +0100
+Message-ID: <20261118150219.219867784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,35 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit f9532b372e415e8198287ce010efa22f337857b5 ]
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-The freestanding build hardcodes the source tree's usr/include even when
-selftests exports KHDR_INCLUDES for an output-directory build. Use the
-exported header location while preserving -nostdlib, -nostdinc and static
-linkage. GCC 14 and Clang 21 builds then find the generated UAPI headers.
+[ Upstream commit 76c1913f311f32971dc2c3e106e285bd63c1804d ]
 
-Fixes: eb1353110831 ("selftests/nolibc: integrate with kselftests")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Link: https://patch.msgid.link/20261014200142.1364761-1-sashal@kernel.org
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+test_flow_dissector_skb_less_direct_attach() and
+test_flow_dissector_skb_less_indirect_attach() each create a netns to
+run in, and test_progs may run the two at the same time.
+
+Both name their netns flow_dissector_skb_less_indirect_attach_ns. When
+the two tests overlap, one of them fails to create or open the netns,
+or loses it to the cleanup of the other one.
+
+Name the netns of the direct attach test after that test.
+
+Fixes: 2b044dd186f0 ("selftests/bpf: re-split main function into dedicated tests")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+Link: https://lore.kernel.org/bpf/20261008-selftests-bpf-flow-dissector-netns-v1-1-5d9889aaad84@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/nolibc/Makefile | 2 +-
+ tools/testing/selftests/bpf/prog_tests/flow_dissector.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/nolibc/Makefile b/tools/testing/selftests/nolibc/Makefile
-index 43f0b608c7960..e3c66f568ddca 100644
---- a/tools/testing/selftests/nolibc/Makefile
-+++ b/tools/testing/selftests/nolibc/Makefile
-@@ -10,7 +10,7 @@ cc-option = $(call __cc-option, $(CC),,$(1),$(2))
- include Makefile.include
+diff --git a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+index 08bae13248c4a..ec688b68a50fe 100644
+--- a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
++++ b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+@@ -706,7 +706,7 @@ void test_flow_dissector_skb_less_direct_attach(void)
+ 	struct bpf_flow *skel;
+ 	struct netns_obj *ns;
  
- $(OUTPUT)/nolibc-test: CFLAGS = -nostdlib -nostdinc -static \
--	 -isystem $(top_srcdir)/tools/include/nolibc -isystem $(top_srcdir)/usr/include \
-+	 -isystem $(top_srcdir)/tools/include/nolibc $(KHDR_INCLUDES) \
- 	 $(CFLAGS_NOLIBC_TEST)
- $(OUTPUT)/nolibc-test: LDLIBS = $(if $(LLVM),,-lgcc)
- $(OUTPUT)/nolibc-test: nolibc-test.c nolibc-test-linkage.c | headers
+-	ns = netns_new("flow_dissector_skb_less_indirect_attach_ns", true);
++	ns = netns_new("flow_dissector_skb_less_direct_attach_ns", true);
+ 	if (!ASSERT_OK_PTR(ns, "create and open netns"))
+ 		return;
+ 
 -- 
 2.53.0
 
