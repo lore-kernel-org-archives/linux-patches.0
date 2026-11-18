@@ -1,52 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042477;
-	b=5kVFTeP1ndg8uomPP4pb6OA4kKxmTlkc5lI2Im0X+o8t9qXvpUc8M7ByStmjNJ+f9X/O
-	 TOgYlsW98Z67/S05PYmvq7XQD6pxFhHEB+z8J8DL5hn2musHnuooWqMk5QD7u7AkzVl48
-	 PZJQnZ0zwGAwbMrCfSzdXUhoMK9GZbI63DSrZpTkDOGrcLbFNkBQHDDdCAO+yXREoGggH
-	 Ad6xEilEk7D5wP7mnBXV0bhUTUZo5eiboHRdPNRMrKfzI0DjejNgh9dmGtdPA01GkhMSm
-	 961Bu4aOrjMVIE0yQWjvT2bZ8EYmWGl5xmxn8s4dRheunZWKSdmt5Mar88LxlHg0pyw==
+	t=1795042479;
+	b=wulfhip0EC10S6HOw+NCmDCCU3w7wS9dl+OI999B++nbt7bu3g6eLH4DiUYJb13tpYKb
+	 RLdcGVmI0+4FU1cKBI2Lm7kNJQSNBxWerJTQ2Bk3onrR2yN01fksZuHNnqKChnUkVASaG
+	 9noyb3PE3tgxexkdRZ0KXrFQ+aSkaPbMj6HzRFxzrVG3/IatRU7CPQ5LcjCDZ38xxqE2P
+	 FqOF/XgYWjcWNOIwll2/04x9IroXCeX0kTfSPRLQ6/xTvGumZXpIdD75Sq8q74nlSSMow
+	 +zA0KNTzt/vaEHn4OwrhSDArsbIOCACfUS7YMRiKMYXNG8mNlBzo9mIrYc8/0fmDf6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ewLNYJcPKiNm5U4lZNWy7tRHBCnFij+k+LwzmJ6WZuI=;
-	b=1pApkGmH63VcB55FOOJk3m10xaduPWWtCywi0xo38rdUhk4n0E8fH/2AsnThR0aZx544
-	 GgGRVVJ156FnaNg3uAcxUEbSZPhQvTWXa+1dkBZBf0cGcI+6L8C3r/B4TlpWn5rem4jwW
-	 HELQcJt28H78EyJualEt1kfFYR5nabQf6wHp9hxOC3pAALG0a3oODVXexo87XSRSVZJFI
-	 q4r2/89i/35Itbl9Ay8segroQgM66JpfDPtUG3l81G0AinKBmJDg4s+Xhg/2t8maQ6wNU
-	 kC5Aqeq/RKVNtxOlUSBkjot0OtOJBGyI1p/2DIrlujwQzRkZS6OlD9tr4/Hjxq2nMLg==
+	bh=lMVtKF7fznbmm1eq4/4iuNKnq3dehAV9EZw5Cn6oK+E=;
+	b=ldAMBxT4YvoPvCXo2zzzL2OnZKJV0YS2gW0yzOgWuM69RhZiCwHicfppQHFub5X/5CTV
+	 H6fPZu6NxoLsWTwA8qAgayS8l8Ukii39zJdnlKDqqDzwowRtMBKg/+I2gyUWDk2XPGOG4
+	 LGQUW6Y95EzUAl+sOZYCj1kgthqcVR9znl0A/zDvXciiZrczXeBVf7fdCgJObQC58avzj
+	 pACafQWk6iKGxpk+8FUYdYwFVVtWuPehTknq2wERV2fCsoj1hbyB8KJeXRtuVv6n3bPXW
+	 1DnDMLMT+yNwvfQY1hDcuMm7+QeG7evNWGBrUIucf0py7HgUS9jBptkpQmg7/0ArhOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0wyzjoa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UfIe79n7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2EE606A31C;
-	Wed, 18 Nov 2026 22:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641DE606A32F;
+	Wed, 18 Nov 2026 22:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y0wyzjoa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6581F000C4;
-	Wed, 18 Nov 2026 22:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UfIe79n7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0571F000C6;
+	Wed, 18 Nov 2026 22:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042476;
-	bh=ewLNYJcPKiNm5U4lZNWy7tRHBCnFij+k+LwzmJ6WZuI=;
+	s=korg; t=1795042479;
+	bh=lMVtKF7fznbmm1eq4/4iuNKnq3dehAV9EZw5Cn6oK+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0wyzjoaf0R46kxETamVzHpSFSxdtDfstFf7hJGl9FwWtYlUYdfEfyRSgrZbbsIBx
-	 Ao1kqWKYlu7VYjOIbSb3Iv3uSBX+2dLM+5Gw/GHebzd8XQ+8ex8QDqVre8rO8qMHdJ
-	 sigN8UhvKpL/mFnkrC7I71P5uYRL/gqyWLXHQIig=
+	b=UfIe79n7whcq0JFuN0G8sa+kZH1Z2KdDLAkGBEWDnyOCagweOaYJerOYG9rNgoLrv
+	 w/jU3RSOjZskQJMz8oNoexCAtR6JP5bgy1Kn3xmUPXinu8j2v/Sf7yRDj7cDTMdPFP
+	 kFBjCoOoqMNj7bR3e/Q2eSSlFisNzah49i2VG/Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkman <daniel@iogearbox.net>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3184/3318] gtp: hold RCU in gtp_genl_send_echo_req()
-Date: Wed, 18 Nov 2026 16:03:26 +0100
-Message-ID: <20261118150455.327590469@linuxfoundation.org>
+Subject: [PATCH 6.6 3158/3318] scripts/gdb/radix-tree: add lx-radix-tree-command
+Date: Wed, 18 Nov 2026 16:03:00 +0100
+Message-ID: <20261118150454.599807105@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,176 +76,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit a204e9c001dfafe83cac01b16508b1cf5c953355 ]
+[ Upstream commit caa71919a622e3f7d290d4f17ae538b15f5cb6d3 ]
 
-Such function is invoked in process context, performs an RCU device
-lookup and dereference the found device with no additional protection.
+Patch series "scripts/gdb/symbols: make BPF debug info available to GDB",
+v2.
 
-  =============================
-  WARNING: suspicious RCU usage
-  7.3.0-virtme #7 Not tainted
-  -----------------------------
-  net/core/dev.c:1047 RCU-list traversed in non-reader section!!
+This series greatly simplifies debugging BPF progs when using QEMU gdbstub
+by providing symbol names, sizes, and line numbers to GDB.
 
-  other info that might help us debug this:
+Patch 1 adds radix tree iteration, which is necessary for parsing
+prog_idr.  Patch 2 is the actual implementation; its description contains
+some details on how to use this.
 
-  rcu_scheduler_active = 2, debug_locks = 1
-  locks held by python3/233: 2, last CPU#5:
-   #0: ffffffffbab93268 (cb_lock){++++}-{4:4}, at: genl_rcv+0x19/0x40
-   #1: ffffffffbab93320 (genl_mutex){+.+.}-{4:4}, at:
-                                                genl_rcv_msg+0x12c/0x160
+This patch (of 2):
 
-  stack backtrace:
-  CPU: 5 UID: 0 PID: 233 Comm: python3 Not tainted 7.3.0#7 PREEMPT(full)
-  Hardware name: Bochs, BIOS Bochs 01/01/2011
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6f/0xb0
-   lockdep_rcu_suspicious.cold+0x37/0x8e
-   dev_get_by_index_rcu+0x135/0x180
-   gtp_find_dev+0xe7/0x360 [gtp]
-   gtp_genl_send_echo_req+0x298/0xb30 [gtp]
-   genl_family_rcv_msg_doit+0x20f/0x310
-   genl_family_rcv_msg+0x3a8/0x640
-   genl_rcv_msg+0xbb/0x160
-   netlink_rcv_skb+0x154/0x3a0
-   genl_rcv+0x28/0x40
-   netlink_unicast+0x54b/0x860
-   netlink_sendmsg+0x7fb/0xf60
-   __sys_sendto+0x3d6/0x450
-   __x64_sys_sendto+0xe4/0x1f0
-   do_syscall_64+0xff/0x530
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7ffa43b0256e
-  Code: 4d 89 d8 e8 d4 bd 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83
-   f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39
-   83 fa 08 75 e7 e8 03 ff ff ff 0f 1f 00 f3 0f 1e fa
-  RSP: 002b:00007ffd3b8828d0 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
-  RAX: ffffffffffffffda RBX: 00007ffd3b8829e0 RCX: 00007ffa43b0256e
-  RDX: 0000000000000034 RSI: 00007ffa3519d0d0 RDI: 0000000000000006
-  RBP: 00007ffd3b8828e0 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000202 R12: 00007ffa351cc0c0
-  R13: 00007ffd3b8829e0 R14: 00007ffa354ca130 R15: 00007ffa4433d498
-   </TASK>
+Add a function and a command to iterate over radix tree contents.
+Duplicate the C implementation in Python, but drop support for tagging.
 
-Add the missing RCU guards and keep it for the whole function body,
-while the RCU-protected device is used.
-
-Found by code inspection, validated explicitly testing the relevant
-code path.
-
-Fixes: d33bd757d362 ("gtp: Implement GTP echo request")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/ed27d133fe73afd377d3fa4e553c34e7987b6dd9.1792744478.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20251106124600.86736-1-iii@linux.ibm.com
+Link: https://lkml.kernel.org/r/20251106124600.86736-2-iii@linux.ibm.com
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Daniel Borkman <daniel@iogearbox.net>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 66d190b072b4 ("scripts/gdb: fix radix tree lookup pointer handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 44 ++++++++++++++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 14 deletions(-)
+ scripts/gdb/linux/radixtree.py | 139 +++++++++++++++++++++++++++++++--
+ 1 file changed, 132 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 6e6942d1e2c70..23a0dc9f578be 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1761,9 +1761,9 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 	struct gtp_dev *gtp;
- 	struct flowi4 fl4;
- 	struct rtable *rt;
-+	int len, ret = 0;
- 	struct sock *sk;
- 	__be16 port;
--	int len;
+diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
+index 074543ac763d2..bc2954e45c327 100644
+--- a/scripts/gdb/linux/radixtree.py
++++ b/scripts/gdb/linux/radixtree.py
+@@ -30,13 +30,16 @@ def entry_to_node(node):
+ def node_maxindex(node):
+     return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
  
- 	if (!info->attrs[GTPA_VERSION] ||
- 	    !info->attrs[GTPA_LINK] ||
-@@ -1775,14 +1775,21 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 	dst_ip = nla_get_be32(info->attrs[GTPA_PEER_ADDRESS]);
- 	src_ip = nla_get_be32(info->attrs[GTPA_MS_ADDRESS]);
+-def lookup(root, index):
++def resolve_root(root):
++    if root.type == radix_tree_root_type.get_type():
++        return root
+     if root.type == radix_tree_root_type.get_type().pointer():
+-        node = root.dereference()
+-    elif root.type != radix_tree_root_type.get_type():
+-        raise gdb.GdbError("must be {} not {}"
+-                           .format(radix_tree_root_type.get_type(), root.type))
++        return root.dereference()
++    raise gdb.GdbError("must be {} not {}"
++                       .format(radix_tree_root_type.get_type(), root.type))
  
-+	rcu_read_lock();
- 	gtp = gtp_find_dev(sock_net(skb->sk), info->attrs);
--	if (!gtp)
--		return -ENODEV;
-+	if (!gtp) {
-+		ret = -ENODEV;
-+		goto unlock;
-+	}
++def lookup(root, index):
++    root = resolve_root(root)
+     node = root['xa_head']
+     if node == 0:
+         return None
+@@ -71,14 +74,120 @@ def lookup(root, index):
  
--	if (!gtp->sk_created)
--		return -EOPNOTSUPP;
--	if (!(gtp->dev->flags & IFF_UP))
--		return -ENETDOWN;
-+	if (!gtp->sk_created) {
-+		ret = -EOPNOTSUPP;
-+		goto unlock;
-+	}
-+	if (!(gtp->dev->flags & IFF_UP)) {
-+		ret = -ENETDOWN;
-+		goto unlock;
-+	}
+     return node
  
- 	if (version == GTP_V0) {
- 		struct gtp0_header *gtp0_h;
-@@ -1791,8 +1798,10 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 			sizeof(struct iphdr) + sizeof(struct udphdr);
- 
- 		skb_to_send = netdev_alloc_skb_ip_align(gtp->dev, len);
--		if (!skb_to_send)
--			return -ENOMEM;
-+		if (!skb_to_send) {
-+			ret = -ENOMEM;
-+			goto unlock;
-+		}
- 
- 		sk = gtp->sk0;
- 		port = htons(GTP0_PORT);
-@@ -1808,8 +1817,10 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 			sizeof(struct iphdr) + sizeof(struct udphdr);
- 
- 		skb_to_send = netdev_alloc_skb_ip_align(gtp->dev, len);
--		if (!skb_to_send)
--			return -ENOMEM;
-+		if (!skb_to_send) {
-+			ret = -ENOMEM;
-+			goto unlock;
-+		}
- 
- 		sk = gtp->sk1u;
- 		port = htons(GTP1U_PORT);
-@@ -1819,7 +1830,8 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 		memset(gtp1u_h, 0, sizeof(struct gtp1_header_long));
- 		gtp1u_build_echo_msg(gtp1u_h, GTP_ECHO_REQ);
- 	} else {
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto unlock;
- 	}
- 
- 	rt = ip4_route_output_gtp(&fl4, sk, dst_ip, src_ip);
-@@ -1827,7 +1839,8 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 		netdev_dbg(gtp->dev, "no route for echo request to %pI4\n",
- 			   &dst_ip);
- 		kfree_skb(skb_to_send);
--		return -ENODEV;
-+		ret = -ENODEV;
-+		goto unlock;
- 	}
- 
- 	local_bh_disable();
-@@ -1841,7 +1854,10 @@ static int gtp_genl_send_echo_req(struct sk_buff *skb, struct genl_info *info)
- 				    dev_net(gtp->dev)),
- 			    false);
- 	local_bh_enable();
--	return 0;
+-class LxRadixTree(gdb.Function):
++def descend(parent, index):
++    offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
++    return offset, parent["slots"][offset]
 +
-+unlock:
-+	rcu_read_unlock();
-+	return ret;
- }
++def load_root(root):
++    node = root["xa_head"]
++    nodep = node
++
++    if is_internal_node(node):
++        node = entry_to_node(node)
++        maxindex = node_maxindex(node)
++        return int(node["shift"]) + constants.LX_RADIX_TREE_MAP_SHIFT, \
++               nodep, maxindex
++
++    return 0, nodep, 0
++
++class RadixTreeIter:
++    def __init__(self, start):
++        self.index = 0
++        self.next_index = start
++        self.node = None
++
++def xa_mk_internal(v):
++    return (v << 2) | 2
++
++LX_XA_RETRY_ENTRY = xa_mk_internal(256)
++LX_RADIX_TREE_RETRY = LX_XA_RETRY_ENTRY
++
++def next_chunk(root, iter):
++    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
++
++    index = iter.next_index
++    if index == 0 and iter.index != 0:
++        return None
++
++    restart = True
++    while restart:
++        restart = False
++
++        _, child, maxindex = load_root(root)
++        if index > maxindex:
++            return None
++        if not child:
++            return None
++
++        if not is_internal_node(child):
++            iter.index = index
++            iter.next_index = (maxindex + 1) & mask
++            iter.node = None
++            return root["xa_head"].address
++
++        while True:
++            node = entry_to_node(child)
++            offset, child = descend(node, index)
++
++            if not child:
++                while True:
++                    offset += 1
++                    if offset >= constants.LX_RADIX_TREE_MAP_SIZE:
++                        break
++                    slot = node["slots"][offset]
++                    if slot:
++                        break
++                index &= ~node_maxindex(node)
++                index = (index + (offset << int(node["shift"]))) & mask
++                if index == 0:
++                    return None
++                if offset == constants.LX_RADIX_TREE_MAP_SIZE:
++                    restart = True
++                    break
++                child = node["slots"][offset]
++
++            if not child:
++                restart = True
++                break
++            if child == LX_XA_RETRY_ENTRY:
++                break
++            if not node["shift"] or not is_internal_node(child):
++                break
++
++    iter.index = (index & ~node_maxindex(node)) | offset
++    iter.next_index = ((index | node_maxindex(node)) + 1) & mask
++    iter.node = node
++
++    return node["slots"][offset].address
++
++def next_slot(slot, iter):
++    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
++    for _ in range(iter.next_index - iter.index - 1):
++        slot += 1
++        iter.index = (iter.index + 1) & mask
++        if slot.dereference():
++            return slot
++    return None
++
++def for_each_slot(root, start=0):
++    iter = RadixTreeIter(start)
++    slot = None
++    while True:
++        if not slot:
++            slot = next_chunk(root, iter)
++            if not slot:
++                break
++        yield iter.index, slot
++        slot = next_slot(slot, iter)
++
++class LxRadixTreeLookup(gdb.Function):
+     """ Lookup and return a node from a RadixTree.
  
- static const struct nla_policy gtp_genl_policy[GTPA_MAX + 1] = {
+ $lx_radix_tree_lookup(root_node [, index]): Return the node at the given index.
+ If index is omitted, the root node is dereference and returned."""
+ 
+     def __init__(self):
+-        super(LxRadixTree, self).__init__("lx_radix_tree_lookup")
++        super(LxRadixTreeLookup, self).__init__("lx_radix_tree_lookup")
+ 
+     def invoke(self, root, index=0):
+         result = lookup(root, index)
+@@ -87,4 +196,20 @@ If index is omitted, the root node is dereference and returned."""
+ 
+         return result
+ 
++class LxRadixTree(gdb.Command):
++    """Show all values stored in a RadixTree."""
++
++    def __init__(self):
++        super(LxRadixTree, self).__init__("lx-radix-tree", gdb.COMMAND_DATA,
++                                          gdb.COMPLETE_NONE)
++
++    def invoke(self, argument, from_tty):
++        args = gdb.string_to_argv(argument)
++        if len(args) != 1:
++            raise gdb.GdbError("Usage: lx-radix-tree ROOT")
++        root = gdb.parse_and_eval(args[0])
++        for index, slot in for_each_slot(root):
++            gdb.write("[{}] = {}\n".format(index, slot.dereference()))
++
+ LxRadixTree()
++LxRadixTreeLookup()
 -- 
 2.53.0
 
