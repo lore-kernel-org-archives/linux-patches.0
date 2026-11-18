@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027316;
-	b=CppwvakWj3bymuMFyRAP7v0dioa4IWeu9TGaS08M7mw2+ziQSeSvux/nQbrBNpwKe5P9
-	 i4x8Iw7n/kuzxoHiCWK6JHmbOmhtFGlCU0SDo13lKQb4HJPqcCuAeiziwuVN1NYOWbgsV
-	 MocJ5sCW68Vf49/GGB0jfdWk9nwYw3zftUyK/SzSMiEGS2ol6jBJ1Ov5teagUo/2hQOav
-	 +Bq72r6PEcAIrxpb8ElFOanZDzAis2F8nFyz6MMNa4sWq6D0Ctpk3RGb6jPej/vmSRNei
-	 HeNcbjrDWJyQEW8cy8byw9QNzBhY1SEbCTwKbNK69zSgcdb6KmRIWTCSPf+DK0SeNLg==
+	t=1795027319;
+	b=yboHNK4yY/a6vMAit6Y22XcbBkagPt7i8sJeXQk1z8TcHy7r3tFatJgClMBT+gQDwhz4
+	 kx5XhABsC5J3taHnm6bo8NlpmJNddgeLsP7RYt/yVGkoGn0vvkx3f2zdXg7+hkDrYWL70
+	 8c37NiAWs+fI+fbDjGQx/uun5QyJIgCxjF7YPH70iXBELsWT3+F3SMmhbAWVrt02QlaDc
+	 T28ITzEBNVfMNy14ga9MYGbqt8dt7g1IinnEZrl4WzjJ7hTPc1B7WNwMOiLl4QKd7RbAY
+	 otMKJjmMYEfdCeqOt0drYkAieW4aYsrkE+4XccDsOkr2L3RYySiBK+ysxh/xWA7gUnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JdQCcYoAzWZkwI8lNMwbZ2OCRIuzmKXEBQzmJpVbOnM=;
-	b=Exo/8TNoNSTXNZVrTu7XmXHMX5qmZn5WPXbZtbOzLwOcJukkHZhkQWw7YviqWlWPViOq
-	 aivLPwcU8j381qpNo/aYwfopeOoTXcAUr/FZQDeHGbOgfxXJQBKIpCUnVIRQFup/IqbXF
-	 JDOy1uMSX2UHr38GBScSGLIHx6qHwOZq5SbEVcWi9rD6g78n27yq7FHY9qwDf8w5kYWTc
-	 vQH2VhzqnM+rJXpI8gDJ2Joj9CosPd9FiKHuyFH9rFP+1lwYnKx+0i0Jc6nPHtvMSu4qe
-	 ELqkTE2K5EFi0fOL9jbOjA1etOeG0/TLjAANFEtFToWrtW7Z1wTmbn2oQ/EMsJIW2VQ==
+	bh=FsdzwxuhRNm39cLr90OF4sBCkk7jrY3Z0DvSH4XzI00=;
+	b=nOdzYWRTbiORrxVxLGEkoujlfRdyyPi5EW+HLVUyrzi7wL9aBCOA1i6z7er4WtL6j4rX
+	 Y9xBGrIFAj/htpA1h3gLSHhJhNwGdKPO4dlSxjX492Eztb0zi0fjeEx1br/ePcumrLnVn
+	 FiWDHQuu8moM3WtFryisr/Bogj6st4+40LwkjOuoGt/35ulxS+9pXUUH1MoeGXEVEFMpl
+	 X6pSO4wZUBI/C+UeO6w9DZzjUDDSuSnLGhcrbTUmtjKpsORXWMYo3O6D+rLNdS+7r1tre
+	 Ynlu8beo35R7LyI/wsVytPdVdbobw7jxtDojhqdVRptcBYGru+vAAY+0Hdq3wxfhnhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URe39xSg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTbMI8mi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B759606A333;
-	Wed, 18 Nov 2026 18:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A24E606A33E;
+	Wed, 18 Nov 2026 18:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=URe39xSg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50021F000C4;
-	Wed, 18 Nov 2026 18:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTbMI8mi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3D81F000C4;
+	Wed, 18 Nov 2026 18:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027316;
-	bh=JdQCcYoAzWZkwI8lNMwbZ2OCRIuzmKXEBQzmJpVbOnM=;
+	s=korg; t=1795027319;
+	bh=FsdzwxuhRNm39cLr90OF4sBCkk7jrY3Z0DvSH4XzI00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=URe39xSgSK99stoioQT+R9BthfhgVbZrDtutz9SbDiL9OtTflHDvzE60bcOrhWM18
-	 zcK1IM+ofN6HG1cjkDFhBzgGbDZ07HmGHA18EnEjWA6yX2erVLb0nn3SioKPbu2KJA
-	 PPjJMK0GfT1VzcLlCZIN1YSI/baFykjwPD0tWs4k=
+	b=XTbMI8mioaiTg98PPzgd2pRbMZi9Q5nTIFeMqbEuG+yPaYrAkjDozv9F74DTkg32C
+	 tW/K5x+1NMGz5wz9Ygnst8Apf3w+FSYh9MlyH/nErq+YLoaKXWdsg85jA+VYyHfIhV
+	 qFYpcSP9IQbySeBfI2qf4S6WC9medlcqRqQg+oGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Igor Skalkin <igor.skalkin@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1747/2151] bpf: Use memmove() to store bytes in an xdp_buff
-Date: Wed, 18 Nov 2026 15:58:02 +0100
-Message-ID: <20261118150225.493786695@linuxfoundation.org>
+Subject: [PATCH 6.18 1748/2151] usb: gadget: dummy_hcd: fix SuperSpeed ep0 maxpacket
+Date: Wed, 18 Nov 2026 15:58:03 +0100
+Message-ID: <20261118150225.529901764@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,46 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Igor Skalkin <igor.skalkin@oss.qualcomm.com>
 
-[ Upstream commit ab08863c58b1a96ff8378e373cb3d277cbe65b68 ]
+[ Upstream commit e68f245bcb1f863aeb8eab617bd06878c078029a ]
 
-bpf_dynptr_write() to the dynptr of an xdp_buff ends in
-bpf_xdp_store_bytes(). The source can be a slice of the same xdp_buff which
-overlaps the destination, and the helper itself takes such a slice as well.
-memcpy() then reads bytes which it has overwritten already. On x86 with
-FSRM
+For USB_SPEED_SUPER, dummy_hcd sets ep0 maxpacket to 9.
+That is incorrect for SuperSpeed ep0 and breaks short packet handling
+in control transfer tests.
 
-  p = bpf_dynptr_slice_rdwr(&ptr, 0, NULL, 64);
-  bpf_dynptr_write(&ptr, 8, p, 64, 0);
+Set ep0 maxpacket to 512 for SuperSpeed.
 
-repeats the first 8 bytes of the packet instead of moving 64.
-
-A write that crosses from the linear part into a fragment is copied piece
-by piece, where the first piece can overwrite what the second one has yet
-to read. That is not dealt with here.
-
-Fixes: 2012c867c800 ("bpf: verifier: Accept dynptr mem as mem in helpers")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-16-alexei.starovoitov@gmail.com
+Fixes: 1cd8fd2887e1 ("usb: gadget: dummy_hcd: add SuperSpeed support")
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Igor Skalkin <igor.skalkin@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260812081910.6821-2-igor.skalkin@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/dummy_hcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index d79a51ba69824..17e5f9a23b8e9 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4200,7 +4200,8 @@ BPF_CALL_4(bpf_xdp_store_bytes, struct xdp_buff *, xdp, u32, offset,
- 	if (!ptr)
- 		bpf_xdp_copy_buf(xdp, offset, buf, len, true);
+diff --git a/drivers/usb/gadget/udc/dummy_hcd.c b/drivers/usb/gadget/udc/dummy_hcd.c
+index 1d4df43f0f8c2..41643b19d90a8 100644
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -918,7 +918,7 @@ static int dummy_set_selfpowered(struct usb_gadget *_gadget, int value)
+ static void dummy_udc_update_ep0(struct dummy *dum)
+ {
+ 	if (dum->gadget.speed == USB_SPEED_SUPER)
+-		dum->ep[0].ep.maxpacket = 9;
++		dum->ep[0].ep.maxpacket = 512;
  	else
--		memcpy(ptr, buf, len);
-+		/* through a dynptr the source may be an overlapping slice */
-+		memmove(ptr, buf, len);
- 
- 	return 0;
+ 		dum->ep[0].ep.maxpacket = 64;
  }
 -- 
 2.53.0
