@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028821;
-	b=4BqVnXKVW48gv74X12+l64X90BaRCG6/WAo/WVHBEQtUrnL5albr/VHUXuGvmlL5mNej
-	 da9THg4pt+pfJnPIKFpxNFpKq3AGeyLZviNDVzpwwC2pwXfQHIQza3N9H/fG4bwR1/LxE
-	 gAwUJNOw1aYa691ba7k8XtggppnWOE08jyAm1ogmH5k1b+nJdRg1GcJBHY4GSEXMp2ibZ
-	 307DSYP+oxBI4wRYsHj/up9Tj7F6DTjkqM5rMH62DQ/RT2x1xonddKFJV6/KekI+RuCdM
-	 pKjsbSd9IzV+YAielQtzGAV/8GluycrJHSPtE9693TKO5RpBdt9NqYBDzKSrayVSKbA==
+	t=1795028824;
+	b=XpuaNo4tajbbHRhOmoKXA3i1GiMs02yfT0n20YVORqZ8eyrTGo3VkTzmaX9+K69zmDij
+	 vEZSwo/K+slWb56Wv8stNfDUwMid8NjHE8mQyomfUGa44eUcCRznnwX1D+KMxDEvbKQVD
+	 99pFsq85XtVtxfGffpBqAmQKL86M8gLz/y1XVGrY15wSM+z6iAqSXD86VOTbWTg2qTtwH
+	 g6CsC/f3RfcxQVQVGvTZOL5yjCQcNUWIs8xwEWXQzU0p44gCmKISyaq8b5jQx0x29rj0a
+	 HXQ6ZcsMN6GAiKVxv/SZuIenSkhEer0jihxuEfmCEL2Dj//d92eYwD8u/rPFrs3x1Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028821;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028824;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=62MVLqXCPHeei+o7kNYZNLZrkd3n3Vna//2JB+ewzs4=;
-	b=ERBRAkHFbNb7uVmipxXk5PQGNaCImtgqxZQV2Ixyf0B2YVIMpPBVJljnpfp9XF1v29cy
-	 cR3/NHsxrMfK8YBh8m42dlzghKTgx0tNZbYGdLIwtg/QBVs/05C388yZJKg+UgKC7wz8A
-	 q4b5ecwHXjoFcF4YdVds1aGgiMX2NV8MI5a4v0waYjAxtG/V6mvlaDecShorPUMN+pQV2
-	 T6/hJG+kxmqbNNiueao2pnVJPsjB8uto0vUSr1okGN5zD0l1SvfF8e5sJ1gaPMAphQNdU
-	 UT6Z5E/k9iae8k5LwvfLWRG+Ned6mA4oAaKKDM7lPTBrrlhJjBeynumdGGUjALb8AeQ==
+	bh=NdTKScHrsa2VNJPjc0tOmEZhNDt50gOEy0Ui9Cpif/c=;
+	b=3JysxR+fAdPUY0rfHbvc4QQHTmQMs+erkgopodtoZ7m7jqd89qgMINK9sbPFxQIKEvCm
+	 OEMf3T2h14HVfCNim989KWCjbZn7tycByLExKmcEfXLfHQ6KqmmfRi6+2RzvgzI0vOv/s
+	 AVcA2dEC1UDrmXqTKecUkkfRKjdyG9c3mAkIK1nDu8p0i1KqG0DdPZ3R2EzguwR531pnl
+	 y6eR/xwnIShLz2JIrFjWRBCK89/a6AsgHVXzY9SYkF/Ej9ugE/BO3xizcZm9QqcpgNpPr
+	 ZufFeRtG28qwuJrpjtFqjyckOs8FKM+1/tn2o1FnJq/cDCdNHd9NSglmqaiK8hmmc5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMp6yyaP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvhRZ2+D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13C0606A332;
-	Wed, 18 Nov 2026 19:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2D1606A332;
+	Wed, 18 Nov 2026 19:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMp6yyaP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9691F000CA;
-	Wed, 18 Nov 2026 19:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FvhRZ2+D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A2E1F000C4;
+	Wed, 18 Nov 2026 19:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028821;
-	bh=62MVLqXCPHeei+o7kNYZNLZrkd3n3Vna//2JB+ewzs4=;
+	s=korg; t=1795028824;
+	bh=NdTKScHrsa2VNJPjc0tOmEZhNDt50gOEy0Ui9Cpif/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RMp6yyaPwFuxh3zkKBs3Gp3t3sTfHvOkv8zx57de+Ri4PICXo417AmsQzI7XQz0tL
-	 7oVxojKG94zGCPVhVwrnppJS2Cq6d+3DG4au1O5VFg9n5IyVZjYRqj4nrNAHZi/3fn
-	 KZBEa8y2D5muFSvqF+aQAL86Nt7kx9OLCUiSDXVM=
+	b=FvhRZ2+DfdxwN5jKMgQJJakhXy00PNebdXzgwqkKmD4OPuThEITcQ0hNvTCMyoKvA
+	 bQ+E9HD1X9G0/dU3K00hrXBbU02QXffHTzOnoz3MOQqwaXCjmQpkzDMsyGOlNv+ZPN
+	 9fJa65BFf32OHn7kKOXHLKuXEVRWuDcl2SQ6bSig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raveendra Talabattula <raveendra.talabattula@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0131/1756] drm/komeda: Fix bits parsing of GLB_CORE_ID
-Date: Wed, 18 Nov 2026 15:37:38 +0100
-Message-ID: <20261118150013.406993436@linuxfoundation.org>
+Subject: [PATCH 6.12 0132/1756] accel/qaic: reject BO sizes that overflow page count
+Date: Wed, 18 Nov 2026 15:37:39 +0100
+Message-ID: <20261118150013.442076115@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,55 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raveendra Talabattula <raveendra.talabattula@arm.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-[ Upstream commit ec902de0221747094f9ccbb61454e9633fbf282f ]
+[ Upstream commit 568d4cb5dcc5ec4e22975699b6ea67a30806884c ]
 
-GLB_CORE_ID contains the product and version information returned by the
-hardware. The current macros parses VERSION_MINOR as a 4-bit field and
-VERSION_STATUS as an 8-bit field, which does not match the register
-layout. As a result, the driver reports an incorrect version number.
+create_sgt() receives the BO size as a u64 but stores the number of
+pages in an int. qaic_create_bo_ioctl() page-aligns the user-supplied
+size without an upper bound, so DIV_ROUND_UP(size, PAGE_SIZE) can exceed
+INT_MAX and truncate when assigned to nr_pages.
 
-Fix the parsing macros to match the hardware specification:
-- VERSION_MINOR is 8 bits at [11:4]
-- VERSION_STATUS is 4 bits at [3:0]
+When the page count wraps to a small positive value (for example a BO
+larger than 16 TiB on a 4 KiB page kernel), create_sgt() succeeds after
+allocating only a handful of pages while the GEM object still records
+the full size, so the request never fails with -ENOMEM. The temporary
+pages array and the allocation loop both use the truncated count, so the
+backing SG table ends up smaller than obj->size. Later slice operations
+validate against obj->size and then clone ranges from this short sgt.
 
-Fixes: bd628c1bed79 ("drm/komeda: komeda_dev/pipeline/component definition and initialzation")
-Signed-off-by: Raveendra Talabattula <raveendra.talabattula@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260803142122.4127851-2-raveendra.talabattula@arm.com
+Compute the page count as a u64 and reject sizes that do not fit in
+nr_pages before the narrowing conversion.
+
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260708031959.966009-1-alvinhuang0603@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/include/malidp_product.h | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/accel/qaic/qaic_data.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/arm/display/include/malidp_product.h b/drivers/gpu/drm/arm/display/include/malidp_product.h
-index 16a8a2c22c423..f0c34eff523f1 100644
---- a/drivers/gpu/drm/arm/display/include/malidp_product.h
-+++ b/drivers/gpu/drm/arm/display/include/malidp_product.h
-@@ -8,14 +8,18 @@
- #define _MALIDP_PRODUCT_H_
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index aa89571b37f0e..f9c00302aff86 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -15,6 +15,7 @@
+ #include <linux/math64.h>
+ #include <linux/mm.h>
+ #include <linux/moduleparam.h>
++#include <linux/overflow.h>
+ #include <linux/scatterlist.h>
+ #include <linux/spinlock.h>
+ #include <linux/srcu.h>
+@@ -454,7 +455,12 @@ static int create_sgt(struct qaic_device *qdev, struct sg_table **sgt_out, u64 s
+ 	int order;
  
- /* Product identification */
-+/* GLB_CORE_ID fields as per HW specification:
-+ * MINOR is 8 bits ([11:4]) and STATUS is 4 bits ([3:0]).
-+ * Update masks/shifts accordingly.
-+ */
- #define MALIDP_CORE_ID(__product, __major, __minor, __status) \
- 	((((__product) & 0xFFFF) << 16) | (((__major) & 0xF) << 12) | \
--	(((__minor) & 0xF) << 8) | ((__status) & 0xFF))
-+	(((__minor) & 0xFF) << 4) | ((__status) & 0xF))
- 
- #define MALIDP_CORE_ID_PRODUCT_ID(__core_id) ((__u32)(__core_id) >> 16)
- #define MALIDP_CORE_ID_MAJOR(__core_id)      (((__u32)(__core_id) >> 12) & 0xF)
--#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >> 8) & 0xF)
--#define MALIDP_CORE_ID_STATUS(__core_id)     (((__u32)(__core_id)) & 0xFF)
-+#define MALIDP_CORE_ID_MINOR(__core_id)      (((__u32)(__core_id) >>  4) & 0xFF)
-+#define MALIDP_CORE_ID_STATUS(__core_id)     ((__u32)(__core_id) & 0xF)
- 
- /* Mali-display product IDs */
- #define MALIDP_D71_PRODUCT_ID	0x0071
+ 	if (size) {
+-		nr_pages = DIV_ROUND_UP(size, PAGE_SIZE);
++		u64 nr_pages_u64 = DIV_ROUND_UP_ULL(size, PAGE_SIZE);
++
++		if (overflows_type(nr_pages_u64, int))
++			return -E2BIG;
++
++		nr_pages = nr_pages_u64;
+ 		/*
+ 		 * calculate how much extra we are going to allocate, to remove
+ 		 * later
 -- 
 2.53.0
 
