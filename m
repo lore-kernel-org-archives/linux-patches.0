@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030711;
-	b=VklWCwjLg9wFdGkwRoXQnPSf8ANGsh8tom4+Q8ck0soRiaYNL0LXNA6Z/QzOxiUVp/Rm
-	 SY4uCU9kcZfV5zyMJ/C6JFswefKptXx96OQmbv3Bl8YUVh7p1hVIKgZIa1dYdMaBA81tP
-	 gDikywv+hpC7uw+zzjAZkivazIAmQYOLKVdjvNs3jDY8vZ86Y3kYTJzr5M9ymzuafDIU4
-	 msscQHTyxrSZ1SNsTBe2/l2KHec508Y/CNi2wGMkhND7AvrKnP9H30712MPpuj06rFaeX
-	 zfi6jcw/NzJ1KyBG0e9u0P3A+ChMhYKmwOi+9P2016xMxfPiPz8JGHJKZhqoQOmji/A==
+	t=1795030714;
+	b=AMVhlvhhNwY/LtTuenbv/W3EPEXdmXA/Sy/ckHbamGbg+thJEzTHCaPHwXB98ly6pDpi
+	 UIY43HIn7PYJFnQEOM2vN0SquBHz/iuYzFkzipW5+GF+tr6FYiCJCm/0qjs9zwfYA2/KX
+	 O2YG5hqB3JRj2Py12Ft3wFno0Whlmo4QYR7KsqqHPCvT3Z++Dw7HuJU12sCS9oEtyF5ZH
+	 FmKOpTKNffBnY63RImMMddfVTVskwwENvu4C0PAnnYXmdb1NxptkDOaNFf+w9dBrYivkK
+	 Jdkk0uwtXr9AS5z0J6iTNT9KWlGWbt7t57rgLLDbK2Lnw0WgU/D3YfUe8MV67AwDg3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030711;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030714;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k7WI8HA/jPVe7hWgf+KQ8CGqS3tykykjtF+d3mxX84Q=;
-	b=ocGSRS5a1WTGI6nn9cObztqbM539iAkVmDBi0TcW/tRoLMwY2t2+zS59DncFbhKJTbqE
-	 /1c6ILFnVBp6vIWfRpfkGWKj+gb0PI4z438TaeqT/LHPL26OKMBb/3whZxuWSe4HDGZpF
-	 dMHU2CGqw/nKrJA67/Phwq54iAZSdZRrlWfhKGnqQuOKGmYGNbHfcbHMOTgt2QGGhEaWN
-	 /Sji327CxW0il7s9OePqO5gwj1avW4GBF6vIkFv61jkc/v4DU8s0ckNsyaHxWVW6N7V2W
-	 Z2dBeS41SM3F0SJezef9HBN9vSFVZsXHVK1qoVzbvhNVhNWlB87t2a1QI+6CP/f07qw==
+	bh=0e1X77e29irC43T4uYgy5fjQSYFi7hUS8Zag9KMuT4U=;
+	b=DdU7pAHrb3W5DiwL6SchBLkbynm1zEWpyi4aVXLZDTePJUrzRwuttJMkUB2Tp+fCHXK1
+	 Fyx0Ehxf3tZWbzmZ8QoqCtqwIlZpyzVfDVIE94y8CJToA+lG2Q1EnoeJnX1J50SjUntdi
+	 5PnlnWiiy2fj3iUgngi5jSrhIUGW4DMhY2X+2DJxhYocz7x+mHcbzedBork6xrek77GjL
+	 qai/VzPAZdg4npGKF6+lcwRNPdQm0OfYWDo7QkyVVHmWq9O9+WpRksFJWRuoaQXclqE3J
+	 AalevMz9XzLDPiGqnuQLqDxRX88r9K8fFDuFJsJCihEmBhmi/DaGdpXcHLINfvPaq4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jp853aWS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gU4px0cR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DF7606A333;
-	Wed, 18 Nov 2026 19:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D84606A333;
+	Wed, 18 Nov 2026 19:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jp853aWS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E291F000C4;
-	Wed, 18 Nov 2026 19:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gU4px0cR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A01B1F000C6;
+	Wed, 18 Nov 2026 19:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030711;
-	bh=k7WI8HA/jPVe7hWgf+KQ8CGqS3tykykjtF+d3mxX84Q=;
+	s=korg; t=1795030714;
+	bh=0e1X77e29irC43T4uYgy5fjQSYFi7hUS8Zag9KMuT4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jp853aWSWobhzVdcD7EAB0bruirdKuF/gLRryUEuKSwKYh6d1MS+0/QBd2NJxP6f/
-	 NSAJ7YPyTI0h+DgPCt6AHyLZMJNZ5rRgsBc5xIkfBRGfgVqwGIpeWc2VF9xTispdHh
-	 CV7JevVNdThKGtHnZ1zv/V+A6uH1341ZvCyxyoWA=
+	b=gU4px0cRqxM7qtb0Q1Xgz/GM/dT3C6SYJlM1amu3tvh5ILTEwGvntFD+7beuZSWBM
+	 UsvgJRmfH4InnSds2MacVchuza/IalXyr69ttAxDotJKcWi36UlRkITnBtbaciACKN
+	 XvG0vv180PwtnZhetekFt3eHJR4sGYRoIgd3bsiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0802/1756] phy: freescale: fsl-samsung-hdmi: Support dynamic integer
-Date: Wed, 18 Nov 2026 15:48:49 +0100
-Message-ID: <20261118150041.605989576@linuxfoundation.org>
+Subject: [PATCH 6.12 0803/1756] phy: freescale: fsl-samsung-hdmi: Use helper function devm_clk_get_enabled()
+Date: Wed, 18 Nov 2026 15:48:50 +0100
+Message-ID: <20261118150041.639425628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,664 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 1951dbb41d1dff7c135eed4fa1a6330df6971549 ]
+[ Upstream commit 279950205dde78bc0e3ca73a8dfee6842f0e1edc ]
 
-There is currently a look-up table for a variety of resolutions.
-Since the phy has the ability to dynamically calculate the values
-necessary to use the intger divider which should allow more
-resolutions without having to update the look-up-table.
+Since commit 7ef9651e9792 ("clk: Provide new devm_clk helpers for prepared
+and enabled clocks"), devm_clk_get() and clk_prepare_enable() can now be
+replaced by devm_clk_get_enabled() when driver enables the clocks for the
+whole lifetime of the device. Moreover, it is no longer necessary to
+unprepare and disable the clocks explicitly.
 
-If the lookup table cannot find an exact match, fall back to the
-dynamic calculator of the integer divider.
-
-Previously, the value of P was hard-coded to 1, this required an
-update to the phy_pll_cfg table to add in the extra value into the
-table, so if the value of P is calculated to be something else
-by the PMS calculator, the calculated_phy_pll_cfg structure
-can be used instead without having to keep track of which method
-was used.
-
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Link: https://lore.kernel.org/r/20240914112816.520224-4-aford173@gmail.com
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/tencent_9087BCE04E38E6AA5C4B2252B82FA99C2009@qq.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: c01ccf91b257 ("phy: freescale: fsl-samsung-hdmi: initialize default rate")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-samsung-hdmi.c | 377 +++++++++++++------
- 1 file changed, 270 insertions(+), 107 deletions(-)
+ drivers/phy/freescale/phy-fsl-samsung-hdmi.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
 diff --git a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-index 4f6874226f9ab..029de69fbeaf4 100644
+index 029de69fbeaf4..0c7a107bba307 100644
 --- a/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
 +++ b/drivers/phy/freescale/phy-fsl-samsung-hdmi.c
-@@ -16,6 +16,8 @@
+@@ -706,7 +706,7 @@ static int fsl_samsung_hdmi_phy_probe(struct platform_device *pdev)
+ 	if (IS_ERR(phy->regs))
+ 		return PTR_ERR(phy->regs);
  
- #define PHY_REG(reg)		(reg * 4)
+-	phy->apbclk = devm_clk_get(phy->dev, "apb");
++	phy->apbclk = devm_clk_get_enabled(phy->dev, "apb");
+ 	if (IS_ERR(phy->apbclk))
+ 		return dev_err_probe(phy->dev, PTR_ERR(phy->apbclk),
+ 				     "failed to get apb clk\n");
+@@ -716,12 +716,6 @@ static int fsl_samsung_hdmi_phy_probe(struct platform_device *pdev)
+ 		return dev_err_probe(phy->dev, PTR_ERR(phy->refclk),
+ 				     "failed to get ref clk\n");
  
-+#define REG01_PMS_P_MASK	GENMASK(3, 0)
-+#define REG03_PMS_S_MASK	GENMASK(7, 4)
- #define REG12_CK_DIV_MASK	GENMASK(5, 4)
+-	ret = clk_prepare_enable(phy->apbclk);
+-	if (ret) {
+-		dev_err(phy->dev, "failed to enable apbclk\n");
+-		return ret;
+-	}
+-
+ 	pm_runtime_get_noresume(phy->dev);
+ 	pm_runtime_set_active(phy->dev);
+ 	pm_runtime_enable(phy->dev);
+@@ -737,8 +731,6 @@ static int fsl_samsung_hdmi_phy_probe(struct platform_device *pdev)
+ 	return 0;
  
- #define REG13_TG_CODE_LOW_MASK	GENMASK(7, 0)
-@@ -38,281 +40,296 @@
- #define REG34_PLL_LOCK		BIT(6)
- #define REG34_PHY_CLK_READY	BIT(5)
- 
--#define PHY_PLL_DIV_REGS_NUM 6
-+#ifndef MHZ
-+#define MHZ	(1000UL * 1000UL)
-+#endif
-+
-+#define PHY_PLL_DIV_REGS_NUM 7
- 
- struct phy_config {
- 	u32	pixclk;
- 	u8	pll_div_regs[PHY_PLL_DIV_REGS_NUM];
- };
- 
-+/*
-+ * The calculated_phy_pll_cfg only handles integer divider for PMS,
-+ * meaning the last four entries will be fixed, but the first three will
-+ * be calculated by the PMS calculator.
-+ */
-+static struct phy_config calculated_phy_pll_cfg = {
-+	.pixclk = 0,
-+	.pll_div_regs = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x00 },
-+};
-+
-+/* The lookup table contains values for which the fractional divder is used */
- static const struct phy_config phy_pll_cfg[] = {
- 	{
- 		.pixclk = 22250000,
--		.pll_div_regs = { 0x4b, 0xf1, 0x89, 0x88, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x4b, 0xf1, 0x89, 0x88, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 23750000,
--		.pll_div_regs = { 0x50, 0xf1, 0x86, 0x85, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x50, 0xf1, 0x86, 0x85, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 24000000,
--		.pll_div_regs = { 0x50, 0xf0, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x50, 0xf0, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 24024000,
--		.pll_div_regs = { 0x50, 0xf1, 0x99, 0x02, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x50, 0xf1, 0x99, 0x02, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 25175000,
--		.pll_div_regs = { 0x54, 0xfc, 0xcc, 0x91, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x54, 0xfc, 0xcc, 0x91, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 25200000,
--		.pll_div_regs = { 0x54, 0xf0, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x54, 0xf0, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 26750000,
--		.pll_div_regs = { 0x5a, 0xf2, 0x89, 0x88, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0xf2, 0x89, 0x88, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 27000000,
--		.pll_div_regs = { 0x5a, 0xf0, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0xf0, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 27027000,
--		.pll_div_regs = { 0x5a, 0xf2, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0xf2, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 29500000,
--		.pll_div_regs = { 0x62, 0xf4, 0x95, 0x08, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x62, 0xf4, 0x95, 0x08, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 30750000,
--		.pll_div_regs = { 0x66, 0xf4, 0x82, 0x01, 0x88, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x66, 0xf4, 0x82, 0x01, 0x88, 0x45 },
- 	}, {
- 		.pixclk = 30888000,
--		.pll_div_regs = { 0x66, 0xf4, 0x99, 0x18, 0x88, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x66, 0xf4, 0x99, 0x18, 0x88, 0x45 },
- 	}, {
- 		.pixclk = 33750000,
--		.pll_div_regs = { 0x70, 0xf4, 0x82, 0x01, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x70, 0xf4, 0x82, 0x01, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 35000000,
--		.pll_div_regs = { 0x58, 0xb8, 0x8b, 0x88, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x58, 0xb8, 0x8b, 0x88, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 36000000,
--		.pll_div_regs = { 0x5a, 0xb0, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0xb0, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 36036000,
--		.pll_div_regs = { 0x5a, 0xb2, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0xb2, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 40000000,
--		.pll_div_regs = { 0x64, 0xb0, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x64, 0xb0, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 43200000,
--		.pll_div_regs = { 0x5a, 0x90, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x90, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 43243200,
--		.pll_div_regs = { 0x5a, 0x92, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x92, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 44500000,
--		.pll_div_regs = { 0x5c, 0x92, 0x98, 0x11, 0x84, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x5c, 0x92, 0x98, 0x11, 0x84, 0x41 },
- 	}, {
- 		.pixclk = 47000000,
--		.pll_div_regs = { 0x62, 0x94, 0x95, 0x82, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x62, 0x94, 0x95, 0x82, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 47500000,
--		.pll_div_regs = { 0x63, 0x96, 0xa1, 0x82, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x63, 0x96, 0xa1, 0x82, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 50349650,
--		.pll_div_regs = { 0x54, 0x7c, 0xc3, 0x8f, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x54, 0x7c, 0xc3, 0x8f, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 50400000,
--		.pll_div_regs = { 0x54, 0x70, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x54, 0x70, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 53250000,
--		.pll_div_regs = { 0x58, 0x72, 0x84, 0x03, 0x82, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x58, 0x72, 0x84, 0x03, 0x82, 0x41 },
- 	}, {
- 		.pixclk = 53500000,
--		.pll_div_regs = { 0x5a, 0x72, 0x89, 0x88, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x72, 0x89, 0x88, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 54000000,
--		.pll_div_regs = { 0x5a, 0x70, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x70, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 54054000,
--		.pll_div_regs = { 0x5a, 0x72, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x72, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 59000000,
--		.pll_div_regs = { 0x62, 0x74, 0x95, 0x08, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x62, 0x74, 0x95, 0x08, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 59340659,
--		.pll_div_regs = { 0x62, 0x74, 0xdb, 0x52, 0x88, 0x47 },
-+		.pll_div_regs = { 0xd1, 0x62, 0x74, 0xdb, 0x52, 0x88, 0x47 },
- 	}, {
- 		.pixclk = 59400000,
--		.pll_div_regs = { 0x63, 0x70, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x63, 0x70, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 61500000,
--		.pll_div_regs = { 0x66, 0x74, 0x82, 0x01, 0x88, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x66, 0x74, 0x82, 0x01, 0x88, 0x45 },
- 	}, {
- 		.pixclk = 63500000,
--		.pll_div_regs = { 0x69, 0x74, 0x89, 0x08, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x69, 0x74, 0x89, 0x08, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 67500000,
--		.pll_div_regs = { 0x54, 0x52, 0x87, 0x03, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x54, 0x52, 0x87, 0x03, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 70000000,
--		.pll_div_regs = { 0x58, 0x58, 0x8b, 0x88, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x58, 0x58, 0x8b, 0x88, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 72000000,
--		.pll_div_regs = { 0x5a, 0x50, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x50, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 72072000,
--		.pll_div_regs = { 0x5a, 0x52, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x52, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 74176000,
--		.pll_div_regs = { 0x5d, 0x58, 0xdb, 0xA2, 0x88, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x5d, 0x58, 0xdb, 0xA2, 0x88, 0x41 },
- 	}, {
- 		.pixclk = 74250000,
--		.pll_div_regs = { 0x5c, 0x52, 0x90, 0x0d, 0x84, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x5c, 0x52, 0x90, 0x0d, 0x84, 0x41 },
- 	}, {
- 		.pixclk = 78500000,
--		.pll_div_regs = { 0x62, 0x54, 0x87, 0x01, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x62, 0x54, 0x87, 0x01, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 80000000,
--		.pll_div_regs = { 0x64, 0x50, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x64, 0x50, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 82000000,
--		.pll_div_regs = { 0x66, 0x54, 0x82, 0x01, 0x88, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x66, 0x54, 0x82, 0x01, 0x88, 0x45 },
- 	}, {
- 		.pixclk = 82500000,
--		.pll_div_regs = { 0x67, 0x54, 0x88, 0x01, 0x90, 0x49 },
-+		.pll_div_regs = { 0xd1, 0x67, 0x54, 0x88, 0x01, 0x90, 0x49 },
- 	}, {
- 		.pixclk = 89000000,
--		.pll_div_regs = { 0x70, 0x54, 0x84, 0x83, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x70, 0x54, 0x84, 0x83, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 90000000,
--		.pll_div_regs = { 0x70, 0x54, 0x82, 0x01, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x70, 0x54, 0x82, 0x01, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 94000000,
--		.pll_div_regs = { 0x4e, 0x32, 0xa7, 0x10, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x4e, 0x32, 0xa7, 0x10, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 95000000,
--		.pll_div_regs = { 0x50, 0x31, 0x86, 0x85, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x50, 0x31, 0x86, 0x85, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 98901099,
--		.pll_div_regs = { 0x52, 0x3a, 0xdb, 0x4c, 0x88, 0x47 },
-+		.pll_div_regs = { 0xd1, 0x52, 0x3a, 0xdb, 0x4c, 0x88, 0x47 },
- 	}, {
- 		.pixclk = 99000000,
--		.pll_div_regs = { 0x52, 0x32, 0x82, 0x01, 0x88, 0x47 },
-+		.pll_div_regs = { 0xd1, 0x52, 0x32, 0x82, 0x01, 0x88, 0x47 },
- 	}, {
- 		.pixclk = 100699300,
--		.pll_div_regs = { 0x54, 0x3c, 0xc3, 0x8f, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x54, 0x3c, 0xc3, 0x8f, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 100800000,
--		.pll_div_regs = { 0x54, 0x30, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x54, 0x30, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 102500000,
--		.pll_div_regs = { 0x55, 0x32, 0x8c, 0x05, 0x90, 0x4b },
-+		.pll_div_regs = { 0xd1, 0x55, 0x32, 0x8c, 0x05, 0x90, 0x4b },
- 	}, {
- 		.pixclk = 104750000,
--		.pll_div_regs = { 0x57, 0x32, 0x98, 0x07, 0x90, 0x49 },
-+		.pll_div_regs = { 0xd1, 0x57, 0x32, 0x98, 0x07, 0x90, 0x49 },
- 	}, {
- 		.pixclk = 106500000,
--		.pll_div_regs = { 0x58, 0x32, 0x84, 0x03, 0x82, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x58, 0x32, 0x84, 0x03, 0x82, 0x41 },
- 	}, {
- 		.pixclk = 107000000,
--		.pll_div_regs = { 0x5a, 0x32, 0x89, 0x88, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x32, 0x89, 0x88, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 108000000,
--		.pll_div_regs = { 0x5a, 0x30, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x30, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 108108000,
--		.pll_div_regs = { 0x5a, 0x32, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x32, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 118000000,
--		.pll_div_regs = { 0x62, 0x34, 0x95, 0x08, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x62, 0x34, 0x95, 0x08, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 118800000,
--		.pll_div_regs = { 0x63, 0x30, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x63, 0x30, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 123000000,
--		.pll_div_regs = { 0x66, 0x34, 0x82, 0x01, 0x88, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x66, 0x34, 0x82, 0x01, 0x88, 0x45 },
- 	}, {
- 		.pixclk = 127000000,
--		.pll_div_regs = { 0x69, 0x34, 0x89, 0x08, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x69, 0x34, 0x89, 0x08, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 135000000,
--		.pll_div_regs = { 0x70, 0x34, 0x82, 0x01, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x70, 0x34, 0x82, 0x01, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 135580000,
--		.pll_div_regs = { 0x71, 0x39, 0xe9, 0x82, 0x9c, 0x5b },
-+		.pll_div_regs = { 0xd1, 0x71, 0x39, 0xe9, 0x82, 0x9c, 0x5b },
- 	}, {
- 		.pixclk = 137520000,
--		.pll_div_regs = { 0x72, 0x38, 0x99, 0x10, 0x85, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x72, 0x38, 0x99, 0x10, 0x85, 0x41 },
- 	}, {
- 		.pixclk = 138750000,
--		.pll_div_regs = { 0x73, 0x35, 0x88, 0x05, 0x90, 0x4d },
-+		.pll_div_regs = { 0xd1, 0x73, 0x35, 0x88, 0x05, 0x90, 0x4d },
- 	}, {
- 		.pixclk = 140000000,
--		.pll_div_regs = { 0x75, 0x36, 0xa7, 0x90, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x75, 0x36, 0xa7, 0x90, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 144000000,
--		.pll_div_regs = { 0x78, 0x30, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x78, 0x30, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 148352000,
--		.pll_div_regs = { 0x7b, 0x35, 0xdb, 0x39, 0x90, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x7b, 0x35, 0xdb, 0x39, 0x90, 0x45 },
- 	}, {
- 		.pixclk = 148500000,
--		.pll_div_regs = { 0x7b, 0x35, 0x84, 0x03, 0x90, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x7b, 0x35, 0x84, 0x03, 0x90, 0x45 },
- 	}, {
- 		.pixclk = 154000000,
--		.pll_div_regs = { 0x40, 0x18, 0x83, 0x01, 0x00, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x40, 0x18, 0x83, 0x01, 0x00, 0x40 },
- 	}, {
- 		.pixclk = 157000000,
--		.pll_div_regs = { 0x41, 0x11, 0xa7, 0x14, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x41, 0x11, 0xa7, 0x14, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 160000000,
--		.pll_div_regs = { 0x42, 0x12, 0xa1, 0x20, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x42, 0x12, 0xa1, 0x20, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 162000000,
--		.pll_div_regs = { 0x43, 0x18, 0x8b, 0x08, 0x96, 0x55 },
-+		.pll_div_regs = { 0xd1, 0x43, 0x18, 0x8b, 0x08, 0x96, 0x55 },
- 	}, {
- 		.pixclk = 164000000,
--		.pll_div_regs = { 0x45, 0x11, 0x83, 0x82, 0x90, 0x4b },
-+		.pll_div_regs = { 0xd1, 0x45, 0x11, 0x83, 0x82, 0x90, 0x4b },
- 	}, {
- 		.pixclk = 165000000,
--		.pll_div_regs = { 0x45, 0x11, 0x84, 0x81, 0x90, 0x4b },
-+		.pll_div_regs = { 0xd1, 0x45, 0x11, 0x84, 0x81, 0x90, 0x4b },
- 	}, {
- 		.pixclk = 180000000,
--		.pll_div_regs = { 0x4b, 0x10, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x4b, 0x10, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 185625000,
--		.pll_div_regs = { 0x4e, 0x12, 0x9a, 0x95, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x4e, 0x12, 0x9a, 0x95, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 188000000,
--		.pll_div_regs = { 0x4e, 0x12, 0xa7, 0x10, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x4e, 0x12, 0xa7, 0x10, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 198000000,
--		.pll_div_regs = { 0x52, 0x12, 0x82, 0x01, 0x88, 0x47 },
-+		.pll_div_regs = { 0xd1, 0x52, 0x12, 0x82, 0x01, 0x88, 0x47 },
- 	}, {
- 		.pixclk = 205000000,
--		.pll_div_regs = { 0x55, 0x12, 0x8c, 0x05, 0x90, 0x4b },
-+		.pll_div_regs = { 0xd1, 0x55, 0x12, 0x8c, 0x05, 0x90, 0x4b },
- 	}, {
- 		.pixclk = 209500000,
--		.pll_div_regs = { 0x57, 0x12, 0x98, 0x07, 0x90, 0x49 },
-+		.pll_div_regs = { 0xd1, 0x57, 0x12, 0x98, 0x07, 0x90, 0x49 },
- 	}, {
- 		.pixclk = 213000000,
--		.pll_div_regs = { 0x58, 0x12, 0x84, 0x03, 0x82, 0x41 },
-+		.pll_div_regs = { 0xd1, 0x58, 0x12, 0x84, 0x03, 0x82, 0x41 },
- 	}, {
- 		.pixclk = 216000000,
--		.pll_div_regs = { 0x5a, 0x10, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x10, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 216216000,
--		.pll_div_regs = { 0x5a, 0x12, 0xfd, 0x0c, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x5a, 0x12, 0xfd, 0x0c, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 237600000,
--		.pll_div_regs = { 0x63, 0x10, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x63, 0x10, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 254000000,
--		.pll_div_regs = { 0x69, 0x14, 0x89, 0x08, 0x80, 0x40 },
-+		.pll_div_regs = { 0xd1, 0x69, 0x14, 0x89, 0x08, 0x80, 0x40 },
- 	}, {
- 		.pixclk = 277500000,
--		.pll_div_regs = { 0x73, 0x15, 0x88, 0x05, 0x90, 0x4d },
-+		.pll_div_regs = { 0xd1, 0x73, 0x15, 0x88, 0x05, 0x90, 0x4d },
- 	}, {
- 		.pixclk = 288000000,
--		.pll_div_regs = { 0x78, 0x10, 0x00, 0x00, 0x80, 0x00 },
-+		.pll_div_regs = { 0xd1, 0x78, 0x10, 0x00, 0x00, 0x80, 0x00 },
- 	}, {
- 		.pixclk = 297000000,
--		.pll_div_regs = { 0x7b, 0x15, 0x84, 0x03, 0x90, 0x45 },
-+		.pll_div_regs = { 0xd1, 0x7b, 0x15, 0x84, 0x03, 0x90, 0x45 },
- 	},
- };
- 
-@@ -322,7 +339,8 @@ struct reg_settings {
- };
- 
- static const struct reg_settings common_phy_cfg[] = {
--	{ PHY_REG(0), 0x00 }, { PHY_REG(1), 0xd1 },
-+	{ PHY_REG(0), 0x00 },
-+	/* PHY_REG(1-7) pix clk specific */
- 	{ PHY_REG(8), 0x4f }, { PHY_REG(9), 0x30 },
- 	{ PHY_REG(10), 0x33 }, { PHY_REG(11), 0x65 },
- 	/* REG12 pixclk specific */
-@@ -415,6 +433,83 @@ fsl_samsung_hdmi_phy_configure_pll_lock_det(struct fsl_samsung_hdmi_phy *phy,
- 	       phy->regs + PHY_REG(14));
+ register_clk_failed:
+-	clk_disable_unprepare(phy->apbclk);
+-
+ 	return ret;
  }
  
-+static unsigned long fsl_samsung_hdmi_phy_find_pms(unsigned long fout, u8 *p, u16 *m, u8 *s)
-+{
-+	unsigned long best_freq = 0;
-+	u32 min_delta = 0xffffffff;
-+	u8 _p, best_p;
-+	u16 _m, best_m;
-+	u8 _s, best_s;
-+
-+	/*
-+	 * Figure 13-78 of the reference manual states the PLL should be TMDS x 5
-+	 * while the TMDS_CLKO should be the PLL / 5.  So to calculate the PLL,
-+	 * take the pix clock x 5, then return the value of the PLL / 5.
-+	 */
-+	fout *= 5;
-+
-+	/* The ref manual states the values of 'P' range from 1 to 11 */
-+	for (_p = 1; _p <= 11; ++_p) {
-+		for (_s = 1; _s <= 16; ++_s) {
-+			u64 tmp;
-+			u32 delta;
-+
-+			/* s must be one or even */
-+			if (_s > 1 && (_s & 0x01) == 1)
-+				_s++;
-+
-+			/* _s cannot be 14 per the TRM */
-+			if (_s == 14)
-+				continue;
-+
-+			/*
-+			 * TODO: Ref Manual doesn't state the range of _m
-+			 * so this should be further refined if possible.
-+			 * This range was set based on the original values
-+			 * in the lookup table
-+			 */
-+			tmp = (u64)fout * (_p * _s);
-+			do_div(tmp, 24 * MHZ);
-+			_m = tmp;
-+			if (_m < 0x30 || _m > 0x7b)
-+				continue;
-+
-+			/*
-+			 * Rev 2 of the Ref Manual states the
-+			 * VCO can range between 750MHz and
-+			 * 3GHz. The VCO is assumed to be
-+			 * Fvco = (M * f_ref) / P,
-+			 * where f_ref is 24MHz.
-+			 */
-+			tmp = (u64)_m * 24 * MHZ;
-+			do_div(tmp, _p);
-+			if (tmp < 750 * MHZ ||
-+			    tmp > 3000 * MHZ)
-+				continue;
-+
-+			/* Final frequency after post-divider */
-+			do_div(tmp, _s);
-+
-+			delta = abs(fout - tmp);
-+			if (delta < min_delta) {
-+				best_p = _p;
-+				best_s = _s;
-+				best_m = _m;
-+				min_delta = delta;
-+				best_freq = tmp;
-+			}
-+		}
-+	}
-+
-+	if (best_freq) {
-+		*p = best_p;
-+		*m = best_m;
-+		*s = best_s;
-+	}
-+
-+	return best_freq / 5;
-+}
-+
- static int fsl_samsung_hdmi_phy_configure(struct fsl_samsung_hdmi_phy *phy,
- 					  const struct phy_config *cfg)
- {
-@@ -428,13 +523,13 @@ static int fsl_samsung_hdmi_phy_configure(struct fsl_samsung_hdmi_phy *phy,
- 	for (i = 0; i < ARRAY_SIZE(common_phy_cfg); i++)
- 		writeb(common_phy_cfg[i].val, phy->regs + common_phy_cfg[i].reg);
- 
--	/* set individual PLL registers PHY_REG2 ... PHY_REG7 */
-+	/* set individual PLL registers PHY_REG1 ... PHY_REG7 */
- 	for (i = 0; i < PHY_PLL_DIV_REGS_NUM; i++)
--		writeb(cfg->pll_div_regs[i], phy->regs + PHY_REG(2) + i * 4);
-+		writeb(cfg->pll_div_regs[i], phy->regs + PHY_REG(1) + i * 4);
- 
--	/* High nibble of pll_div_regs[1] contains S which also gets written to REG21 */
-+	/* High nibble of PHY_REG3 and low nibble of PHY_REG21 both contain 'S' */
- 	writeb(REG21_SEL_TX_CK_INV | FIELD_PREP(REG21_PMS_S_MASK,
--	       cfg->pll_div_regs[1] >> 4), phy->regs + PHY_REG(21));
-+	       cfg->pll_div_regs[2] >> 4), phy->regs + PHY_REG(21));
- 
- 	fsl_samsung_hdmi_phy_configure_pll_lock_det(phy, cfg);
- 
-@@ -459,34 +554,102 @@ static unsigned long phy_clk_recalc_rate(struct clk_hw *hw,
- 	return phy->cur_cfg->pixclk;
- }
- 
--static long phy_clk_round_rate(struct clk_hw *hw,
--			       unsigned long rate, unsigned long *parent_rate)
-+/* Helper function to lookup the available fractional-divider rate */
-+static const struct phy_config *fsl_samsung_hdmi_phy_lookup_rate(unsigned long rate)
- {
- 	int i;
- 
-+	/* Search the lookup table */
- 	for (i = ARRAY_SIZE(phy_pll_cfg) - 1; i >= 0; i--)
- 		if (phy_pll_cfg[i].pixclk <= rate)
--			return phy_pll_cfg[i].pixclk;
-+			break;
-+
-+	return &phy_pll_cfg[i];
-+}
-+
-+static void fsl_samsung_hdmi_calculate_phy(struct phy_config *cal_phy, unsigned long rate,
-+				    u8 p, u16 m, u8 s)
-+{
-+	cal_phy->pixclk = rate;
-+	cal_phy->pll_div_regs[0] = FIELD_PREP(REG01_PMS_P_MASK, p);
-+	cal_phy->pll_div_regs[1] = m;
-+	cal_phy->pll_div_regs[2] = FIELD_PREP(REG03_PMS_S_MASK, s-1);
-+	/* pll_div_regs 3-6 are fixed and pre-defined already */
-+}
-+
-+static long phy_clk_round_rate(struct clk_hw *hw,
-+			       unsigned long rate, unsigned long *parent_rate)
-+{
-+	const struct phy_config *fract_div_phy;
-+	u32 int_div_clk;
-+	u16 m;
-+	u8 p, s;
-+
-+	/* If the clock is out of range return error instead of searching */
-+	if (rate > 297000000 || rate < 22250000)
-+		return -EINVAL;
-+
-+	/* Search the fractional divider lookup table */
-+	fract_div_phy = fsl_samsung_hdmi_phy_lookup_rate(rate);
- 
--	return -EINVAL;
-+	/* If the rate is an exact match, return that value */
-+	if (rate == fract_div_phy->pixclk)
-+		return fract_div_phy->pixclk;
-+
-+	/* If the exact match isn't found, calculate the integer divider */
-+	int_div_clk = fsl_samsung_hdmi_phy_find_pms(rate, &p, &m, &s);
-+
-+	/* If the int_div_clk rate is an exact match, return that value */
-+	if (int_div_clk == rate)
-+		return int_div_clk;
-+
-+	/* If neither rate is an exact match, use the value from the LUT */
-+	return fract_div_phy->pixclk;
-+}
-+
-+static int phy_use_fract_div(struct fsl_samsung_hdmi_phy *phy, const struct phy_config *fract_div_phy)
-+{
-+	phy->cur_cfg = fract_div_phy;
-+	dev_dbg(phy->dev, "fsl_samsung_hdmi_phy: using fractional divider rate = %u\n",
-+		phy->cur_cfg->pixclk);
-+	return fsl_samsung_hdmi_phy_configure(phy, phy->cur_cfg);
- }
- 
- static int phy_clk_set_rate(struct clk_hw *hw,
- 			    unsigned long rate, unsigned long parent_rate)
- {
- 	struct fsl_samsung_hdmi_phy *phy = to_fsl_samsung_hdmi_phy(hw);
--	int i;
-+	const struct phy_config *fract_div_phy;
-+	u32 int_div_clk;
-+	u16 m;
-+	u8 p, s;
- 
--	for (i = ARRAY_SIZE(phy_pll_cfg) - 1; i >= 0; i--)
--		if (phy_pll_cfg[i].pixclk <= rate)
--			break;
-+	/* Search the fractional divider lookup table */
-+	fract_div_phy = fsl_samsung_hdmi_phy_lookup_rate(rate);
- 
--	if (i < 0)
--		return -EINVAL;
-+	/* If the rate is an exact match, use that value */
-+	if (fract_div_phy->pixclk == rate)
-+		return phy_use_fract_div(phy, fract_div_phy);
- 
--	phy->cur_cfg = &phy_pll_cfg[i];
-+	/*
-+	 * If the rate from the fractional divider is not exact, check the integer divider,
-+	 * and use it if that value is an exact match.
-+	 */
-+	int_div_clk = fsl_samsung_hdmi_phy_find_pms(rate, &p, &m, &s);
-+	if (int_div_clk == rate) {
-+		dev_dbg(phy->dev, "fsl_samsung_hdmi_phy: integer divider rate = %u\n",
-+				   int_div_clk);
-+
-+		fsl_samsung_hdmi_calculate_phy(&calculated_phy_pll_cfg, int_div_clk, p, m, s);
-+		phy->cur_cfg  = &calculated_phy_pll_cfg;
-+		return fsl_samsung_hdmi_phy_configure(phy, phy->cur_cfg);
-+	}
- 
--	return fsl_samsung_hdmi_phy_configure(phy, phy->cur_cfg);
-+	/*
-+	 * If neither the fractional divider nor the integer divider can find an exact value
-+	 * fall back to using the fractional divider
-+	 */
-+	return phy_use_fract_div(phy, fract_div_phy);
- }
- 
- static const struct clk_ops phy_clk_ops = {
 -- 
 2.53.0
 
