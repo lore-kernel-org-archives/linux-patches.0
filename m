@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038024;
-	b=Vav/m8H9GIjjf9hIDWhlZYJDj73aQvb0XscNBJWQHzFKmyfJa+oyY72eZJiWM4+5zQQb
-	 U4MJYWoiB7bkOUVKsi4G24H+fEOSZgfJUhh0HcGxUUEr4qlG68/OOXBVp+IhTQZRtUsMM
-	 Z5Kspaq4650wgfGEBEJWAbKc87SnR5qv2k+q0PtMBDd82fOfyWS6Nx7cuqXsezGvJqP9W
-	 xb6CF8jXJ0iIrTxbmin/N9tqeZ9H0DGKM/WkaoUUJfiscaMjg12fw31leqJT1mPPtzY17
-	 hSX5mSubQk7pKa1vKqR+akRg/JT+Uw0ncxysvykoiEm5LKDeKCdA3dXSVJOUAfAvzWw==
+	t=1795038027;
+	b=ro3dWkUrWWBWWl5tMgXJ7fWEjFd2tnTUYgGro0//ycxPmWfgfuo53FB2qJykycDASXH6
+	 KRFiqZ4Tm/nHkwvKMJpK7zIC2mVjBV9CLf+5MRMzo//xB0eQ80QdO2Ut26vOEHvULhbiQ
+	 Pxsb7nZ7KDpXFk2FtT8SzaZ6j7GN//UW+BHSAI4LOhYMMDgCD9BFbYTTqk44l6ahtUJlD
+	 ZqmZYXXA4Fm5PQRFwWuRKgK1Oas7psaO4WamFS6obuKNPlo+BPr2ODrbB9F0BjEDb9/t4
+	 a7dBPjKoIHSqhDqG0cakf4zJAtPa7uNAF4GTZx+KJXhdYaUXPrqkgsJQ6OV+yxUo0UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZUEkpbtZq2HNngztIKnYg5CZkPV9+eJ9mzerFZ9a+zw=;
-	b=rtSyNpCCyJ2IcWBHJM4Ki/8wPmbUHU9UaW3NSq3zlHdVnA804m6RhRqgisswtW1cVusj
-	 mkX+de61w5ddfAnyZpPiprdoX2yawbQsTuJtFJMyM6I5ZVU0YP5egi9z3tLc7ZTszWMm8
-	 xUuxfsgrcQ6bwhsyDhla7Q6bln7IC4z/Bmf3wuYkzq2DMS3r5tG4ST0S7iouwPx1i55KR
-	 PbvPpzimvDVAQZIr4xdJFUgTtiIXMioxrxz1L5UYduYDaTXhvP/sd10ERJnvW4hIRUmxz
-	 Fte2iOqLxnji/3jkWNs7y/KQy3A9QEZi4yudodSaKBhyxVoBFrC1YU1gTaotrQPtomA==
+	bh=ibmdYWDGCwilxXKLnHHQa9jdohMOOlI7Au78AgvAjsI=;
+	b=Syr/0yc85z0YIRQ3wHjxj5/n+2dkXn3cjFDDd42jHYULfYrJ3q9UnuzXNlVXOcbSCd4u
+	 PvpOJDhgcdaIFMhTDwxm2SwZS5E9+5qWvEUrARCpts8rRX58y6QL1W4Q45wa4kNGTMt6C
+	 ITxJWYMoG8oQHyXzZwcnHx+shd6Auw1ruCdApVCxSxd3L+qUA3iuEzt4PFpIHBEmVFS9m
+	 UXH3SstfM0BJ6cVgsOVnsrWwJM/wRtRAZl2f7NwvQsqUc7cr59NJF9ONUcSoZgmp1fcyT
+	 cXLGK8u3N01Nvr4tngY69mTp1RswkuRVMEXIhEABrjGD56FGhmv45YN5YWb99aFQpJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmymGoXT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XX2dzteh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C99606A31C;
-	Wed, 18 Nov 2026 21:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8C7606A33E;
+	Wed, 18 Nov 2026 21:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HmymGoXT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBD71F000C5;
-	Wed, 18 Nov 2026 21:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XX2dzteh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0551F000C7;
+	Wed, 18 Nov 2026 21:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038024;
-	bh=ZUEkpbtZq2HNngztIKnYg5CZkPV9+eJ9mzerFZ9a+zw=;
+	s=korg; t=1795038027;
+	bh=ibmdYWDGCwilxXKLnHHQa9jdohMOOlI7Au78AgvAjsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HmymGoXTYa7/XIart6ps1VoSBgpLKt4ZEVRanYAILnkoZuCSmCoR/+vU/+o49JnCV
-	 +l0EDkPpHNVQSq8RWbA72MSjzrFB3MuPHGmh97HlR+4PWeJfHIF6Yr4e6FyZAKn9Qt
-	 1SH/VJ/HrpnL2t8hAzOvrVLvarcQfKMUzkmKePTo=
+	b=XX2dztehB38Gc7DLhxo+wKsCd6Cm47axMk3fLZ3U6FE4u8MV6yNLRSfTguYP2L9Cz
+	 yymAg5h8WC3U36hxWTFrbXqWIjqMZ0nq6q4Zf2SHWbnIufyw67dYe0/u8XIB9ELV8Y
+	 tkZMIIiHFvEUEUKmMIrRsn8aMzvVlWGc+vn2DIRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1597/3318] batman-adv: tt: dont drop local events queued during TVLV update
-Date: Wed, 18 Nov 2026 15:36:59 +0100
-Message-ID: <20261118150409.070825343@linuxfoundation.org>
+Subject: [PATCH 6.6 1598/3318] lib/crypto: mips: Disable Octeon SHA code on little-endian kernels
+Date: Wed, 18 Nov 2026 15:37:00 +0100
+Message-ID: <20261118150409.102749620@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,185 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit ed7a0dfdd370acb48be7a281df732c1bebcc7f1d upstream.
+commit dd2a4edb26e1c78823c50ba10c42f2d3de2e5ec4 upstream.
 
-batadv_tt_tvlv_container_update() read the number of local changes without
-holding changes_list_lock. batadv_tt_local_event() is not serialized by
-the commit_lock and can queue new events before the changes_list is
-flushed:
+Kernels built for the MIPS64-based Cavium Octeon SoCs are normally
+big-endian, but little-endian builds are also supported.  Currently, the
+SHA-1, SHA-256, and SHA-512 code using the Octeon crypto co-processor is
+enabled in both builds.
 
-  CPU0                          CPU1
-  batadv_tt_tvlv_container_update()
-    num = ...local_changes;
-                                batadv_tt_local_event()
-                                  list_add_tail(...);
-                                  ...local_changes++;
-    spin_lock_bh(&...changes_list_lock);
-    /* only num events copied but all freed */
+This code is untestable without the hardware.  However, based on the
+code itself, it is implausible that it computes hash values correctly in
+little-endian builds.  Such builds write many incorrect values to COP2:
 
-The additional events were freed without ever being sent. Other nodes will
-only notice this via a CRC mismatch and must request the full table.
+  - SHA-1 and SHA-256: The 64-bit integer that contains the last two
+    32-bit message words of each block is written to COP2 entirely
+    byte-reflected, due to missing endianness conversion in
+    octeon_sha1_start() and octeon_sha256_start() to compensate for
+    using native 64-bit loads from the message bytes.  This differs from
+    all the earlier message words which are written correctly.
 
-The number of changes and the changes_list must therefore be taken
-atomically. Events queued afterwards then stay in the tt.changes_list for
-the next TT round.
+    Furthermore, the state is written to COP2 with each 32-bit word
+    byte-reflected within each 64-bit integer, due to incorrect use of
+    64-bit endianness conversion in write_octeon_64bit_hash_dword() when
+    the state is kept in memory in native-endian 32-bit words.
 
-The changes can no longer be kept for the next round when the TVLV buffer
-allocation fails. But they would be sent with a skipped TTVN anyway, so the
-other nodes have to request the full table in this case either way. The
-last changeset is only dropped in this case when the TTVN was incremented.
-Without new changes, it still describes the current TTVN.
+  - SHA-512: All the 64-bit message words are written to COP2
+    byte-reflected, due to missing endianness conversion in
+    write_octeon_64bit_block_sha512() and octeon_sha512_start().  The
+    SHA-512 state words seem to be written correctly.
 
-Previously, the unconsumed changes caused a retry of the TVLV container
-update in the next commit round. Since the changes are now consumed, the
-next round would only take the path without changes and wait for
-BATADV_TT_OGM_APPEND_MAX rounds before updating the container again. Until
-then, the outdated container with the previous TTVN would still be
-announced. The ogm_append_cnt is therefore reset on failure to retry the
-update in the next OGM interval.
+Big-endian kernels aren't affected by these bugs.  These bugs also
+aren't new; this code has been broken on little-endian ever since it and
+Octeon little-endian support were first added in v4.1.
 
-This doesn't make the CRC consistent with the announced changeset. The
-local table modifications are still not serialized with the commit and
-batadv_tt_local_transition_new() can still make a client part of the CRC
-for which the event is only part of the next TT round. Such an
-inconsistency is detected by the CRC check of the other nodes and solved
-via a full table request.
+Commit d2a948d2db68 ("MIPS: Octeon: Make octeon-md5 driver
+endian-agnostic") made the MD5 code work on little-endian kernels by
+adding 64-bit endianness conversions to the COP2 macros used by MD5
+(some of which are shared by SHA-1 and SHA-256, despite those algorithms
+keeping the state words in native-endian instead of MD5's little-endian,
+causing some of the strange behavior described above).  However, SHA-1,
+SHA-256, and SHA-512 were never fixed to work on little-endian kernels.
 
+Therefore, disable the Octeon SHA-1, SHA-256, and SHA-512 code in
+little-endian kernels.  This causes the generic code that actually
+computes hash values correctly to be used instead.
+
+Fixes: 82be2dcfa6a1 ("crypto: octeon - add SHA1 module")
+Fixes: c3d0def62001 ("crypto: octeon - add SHA256 module")
+Fixes: fbaa4dfd51a0 ("crypto: octeon - add SHA512 module")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-fc286ddd-5bed-4683-b842-ee7a307eeb19
-Fixes: a73105b8d4c7 ("batman-adv: improved client announcement mechanism")
-[ Context, switch to old "mesh_iface" name "soft_iface", access
- local_changes with atomic_t helpers ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/20261022054450.20746-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 61 +++++++++++++++++++++++-------
- 1 file changed, 48 insertions(+), 13 deletions(-)
+ arch/mips/crypto/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 031f9bd8f72dd..c3331304cc394 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -1019,20 +1019,22 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
-  * batadv_tt_tvlv_container_update() - update the translation table tvlv
-  *  container after local tt changes have been committed
-  * @bat_priv: the bat priv with all the soft interface information
-+ * @changes_list: list of committed changes which will be consumed
-+ * @tt_diff_entries_num: number of entries in @changes_list
-  */
--static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
-+static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv,
-+					    struct list_head *changes_list,
-+					    int tt_diff_entries_num)
- {
- 	struct batadv_tt_change_node *entry, *safe;
- 	struct batadv_tvlv_tt_data *tt_data;
- 	struct batadv_tvlv_tt_change *tt_change;
- 	int tt_diff_len, tt_change_len = 0;
--	int tt_diff_entries_num = 0;
- 	int tt_diff_entries_count = 0;
- 	bool drop_changes = false;
- 	size_t tt_extra_len = 0;
- 	u16 tvlv_len;
+diff --git a/arch/mips/crypto/Kconfig b/arch/mips/crypto/Kconfig
+index 9003a5c1e879f..f8ddfcf47575b 100644
+--- a/arch/mips/crypto/Kconfig
++++ b/arch/mips/crypto/Kconfig
+@@ -32,7 +32,7 @@ config CRYPTO_MD5_OCTEON
  
--	tt_diff_entries_num = atomic_read(&bat_priv->tt.local_changes);
- 	tt_diff_len = batadv_tt_len(tt_diff_entries_num);
+ config CRYPTO_SHA1_OCTEON
+ 	tristate "Hash functions: SHA-1 (OCTEON)"
+-	depends on CPU_CAVIUM_OCTEON
++	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_HASH
+ 	help
+@@ -42,7 +42,7 @@ config CRYPTO_SHA1_OCTEON
  
- 	/* if we have too many changes for one packet don't send any
-@@ -1050,19 +1052,39 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ config CRYPTO_SHA256_OCTEON
+ 	tristate "Hash functions: SHA-224 and SHA-256 (OCTEON)"
+-	depends on CPU_CAVIUM_OCTEON
++	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
+ 	select CRYPTO_SHA256
+ 	select CRYPTO_HASH
+ 	help
+@@ -52,7 +52,7 @@ config CRYPTO_SHA256_OCTEON
  
- 	tvlv_len = batadv_tt_prepare_tvlv_local_data(bat_priv, &tt_data,
- 						     &tt_change, &tt_diff_len);
--	if (!tvlv_len)
-+	if (!tvlv_len) {
-+		/* the changes are lost and the other nodes have to request the
-+		 * full table. Don't answer TT requests for the new TTVN with
-+		 * the stale changeset of the previous TTVN. Without changes, the
-+		 * TTVN was not incremented and the last changeset is still valid
-+		 */
-+		if (drop_changes || tt_diff_entries_num > 0) {
-+			list_for_each_entry_safe(entry, safe, changes_list,
-+						 list) {
-+				list_del(&entry->list);
-+				kmem_cache_free(batadv_tt_change_cache, entry);
-+			}
-+
-+			spin_lock_bh(&bat_priv->tt.last_changeset_lock);
-+			kfree(bat_priv->tt.last_changeset);
-+			bat_priv->tt.last_changeset = NULL;
-+			bat_priv->tt.last_changeset_len = 0;
-+			spin_unlock_bh(&bat_priv->tt.last_changeset_lock);
-+		}
-+
-+		/* announce the already committed TTVN in the next OGM interval
-+		 * instead of waiting for BATADV_TT_OGM_APPEND_MAX idle rounds
-+		 */
-+		atomic_set(&bat_priv->tt.ogm_append_cnt, 0);
- 		return;
-+	}
- 
- 	tt_data->flags = BATADV_TT_OGM_DIFF;
- 
- 	if (!drop_changes && tt_diff_len == 0)
- 		goto container_register;
- 
--	spin_lock_bh(&bat_priv->tt.changes_list_lock);
--	atomic_set(&bat_priv->tt.local_changes, 0);
--
--	list_for_each_entry_safe(entry, safe, &bat_priv->tt.changes_list,
--				 list) {
-+	list_for_each_entry_safe(entry, safe, changes_list, list) {
- 		if (tt_diff_entries_count < tt_diff_entries_num) {
- 			memcpy(tt_change + tt_diff_entries_count,
- 			       &entry->change,
-@@ -1072,7 +1094,6 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 		list_del(&entry->list);
- 		kmem_cache_free(batadv_tt_change_cache, entry);
- 	}
--	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
- 
- 	tt_extra_len = batadv_tt_len(tt_diff_entries_num -
- 				     tt_diff_entries_count);
-@@ -3761,11 +3782,25 @@ static void batadv_tt_local_purge_pending_clients(struct batadv_priv *bat_priv)
-  */
- static void batadv_tt_local_commit_changes_nolock(struct batadv_priv *bat_priv)
- {
-+	LIST_HEAD(changes_list);
-+	int changes_num;
-+
- 	lockdep_assert_held(&bat_priv->tt.commit_lock);
- 
--	if (atomic_read(&bat_priv->tt.local_changes) < 1) {
-+	/* atomically get the list of changes. The TTVN decision and the
-+	 * announced changeset must cover the same events. Events queued
-+	 * afterwards stay in the tt.changes_list for the next TT round
-+	 */
-+	spin_lock_bh(&bat_priv->tt.changes_list_lock);
-+	list_splice_init(&bat_priv->tt.changes_list, &changes_list);
-+	changes_num = atomic_read(&bat_priv->tt.local_changes);
-+	atomic_set(&bat_priv->tt.local_changes, 0);
-+	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
-+
-+	if (changes_num == 0) {
- 		if (!batadv_atomic_dec_not_zero(&bat_priv->tt.ogm_append_cnt))
--			batadv_tt_tvlv_container_update(bat_priv);
-+			batadv_tt_tvlv_container_update(bat_priv, &changes_list,
-+							changes_num);
- 		return;
- 	}
- 
-@@ -3782,7 +3817,7 @@ static void batadv_tt_local_commit_changes_nolock(struct batadv_priv *bat_priv)
- 
- 	/* reset the sending counter */
- 	atomic_set(&bat_priv->tt.ogm_append_cnt, BATADV_TT_OGM_APPEND_MAX);
--	batadv_tt_tvlv_container_update(bat_priv);
-+	batadv_tt_tvlv_container_update(bat_priv, &changes_list, changes_num);
- }
- 
- /**
+ config CRYPTO_SHA512_OCTEON
+ 	tristate "Hash functions: SHA-384 and SHA-512 (OCTEON)"
+-	depends on CPU_CAVIUM_OCTEON
++	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
+ 	select CRYPTO_SHA512
+ 	select CRYPTO_HASH
+ 	help
 -- 
 2.53.0
 
