@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043746;
-	b=o7hg2MA9Un5POmmF7i5f1PUJzOWYpAinhyEcWwx/NHCw5qJCwf1zDRpSO0YidlKu5Qvu
-	 DR88Cik9wkbzjGXoxDcCho03/C+8u3RKEWlzVPcc1HMY6p+E5X6gS5RUxHEYf0tDVg8u4
-	 5FsQfZCYXEkMpBRobMi3GC8I1hb//DqwBnc7aEQsfstk2g0HyhQcFhYvAvMzFaLjpKi3O
-	 n7hG76ZeqVVXhIH3AhpgC/d3CAMaj2llJ3Coz/J6K3h17DKP4njPH8bjoEPmqskn9G992
-	 KAeFXD7XrL63Kf6xz2q4E7ch3oDpZtl60sisIZ3yLPrCOt1KcZOsVLGEZjpC3c2zixQ==
+	t=1795043749;
+	b=x8bVrJSrs/Qempkl38IgCUtAq0WN1+h0y5rk6v4H57rXqJWzKKRwa3ohKefwepvDh6h9
+	 VpmyXqLaNM/JLMEBIjBs58TlS/9CnflUmGbRxOFzAGoSqFcqAYOYQwiVg3JBV6lZDEqs5
+	 j/drX36imNVdf/XnWhpWVNQ7qNghCKgeq/XqOUH6yHp11zFTNROmEdp+WY10UCgsVdnxF
+	 E/h2g5IjroRPOgHnWz2PXD3wdR9t5nzte8W5MblTf8PIZ5E0QAuBLtqKpCLAIrkQfptsE
+	 eMEzDRcCMhdhFtZEPDm2aPP2IBlj19NTiZhBP814IPjbumR2nNX+g5et/DpkVIEFhqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043746;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043749;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=RhsiFP/9h8FYIJfedBilvo2QUM9NTICF/CT34Q/m/ZY=;
-	b=X2aC9mUxFhnHgq2cfJPDeYB0VsGjDWPmwtvzOyrhw3cRdS/ii7WrpVqkxCYxaRMoiQK9
-	 fl4iyvGklwUq5DVwEniTAsWFIX9hIMGviZQOzSJpzS8P8JNZUO+SVoY4fHBpgvWDBNKaE
-	 25uB+cCl/RrbSN1I06oFZV+KCXISaQvjQuZQ9h1sr9bTWM+Q2QrBL0zmrTZETaFdr+8nd
-	 O0xS1tmwTQGYFanQzWqbkY31D4c0QWdXl5bFQ0Y4Ng5YOFFNByxRbImp/0n01PAgbjylz
-	 AcA58IutGnCDhlwfIMXtrfwUH4bOioxD3wWDqaw6+AyJS+PDgY3j+gpEdrA5tJEmuFg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=faD0PFJJLA7nw/EMbImDDBVgKVpc9b1emlZAMaFLfnQ=;
+	b=bkOAYnKX86P5bz5rufVoRJ+UDkchO2adJ5QlqAIHULoliDsZF47P0A1CvxE/jWch8hBO
+	 vkWx9/n+v2wkXBmZY5IS2e81RNmfHpUF2ymbuO/a29QgrbepBzk3Pj/1pJa+cBctsv3Ux
+	 TBAerq3Jc0NDDYs2BJ2qEchm7Bi+ljLeTHz/bfipru7vfxZXnFLFnnZSAry6hXi6Eoo/J
+	 8FxGNViIJ5CndVCHG2S1hrfoy8jwm98VZAqWHFw4+FUrxEW8XI+05uHsDNFykg49Ol5YG
+	 VZ2TaDYmsPQWmYEws+liOPgw8pR/ES5Gi0R7oGK+Dolt55IH9g1rRsS7FKwpZ6RB4uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mh0BhAFT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5gSiqKt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76ABC606A320;
-	Wed, 18 Nov 2026 23:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57128606A325;
+	Wed, 18 Nov 2026 23:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mh0BhAFT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C478A1F000C4;
-	Wed, 18 Nov 2026 23:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A5gSiqKt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51851F000C4;
+	Wed, 18 Nov 2026 23:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043746;
-	bh=RhsiFP/9h8FYIJfedBilvo2QUM9NTICF/CT34Q/m/ZY=;
+	s=korg; t=1795043749;
+	bh=faD0PFJJLA7nw/EMbImDDBVgKVpc9b1emlZAMaFLfnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mh0BhAFTcf/qybHRr8/fz6TJS7ye2tzTDPMaEAeUf96iRQ6luqEOLUPCVjugovp3j
-	 VD0jjTKIZ9baENwggbFtQtSXEfQaP74WQmQbK/91JZ3gIsPG9ObvC169ClQRkKArwt
-	 ZmzEDDm+9bWQ6V+7SGSAXCl75uYXsbjYbRntA4Fo=
+	b=A5gSiqKtf3URP50Kplgde8XYsJg1QjtrwtL/E/OCZd7/7VZztfumn61lt4sR6kWHj
+	 zzg3VT/m4FRjboYaC4+7nPFI7rcFfnexOxdMo5cY/jknmTZ/FbU+wCOamJWY4aLjl6
+	 owAzoYilqgw3BxSAWribSmS27H4GjoJFXzHIRhoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Gopel <jgopel@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 0318/2857] thunderbolt: Do not RPM complete unrelated subtrees on unplug
-Date: Wed, 18 Nov 2026 15:22:32 +0100
-Message-ID: <20261118150212.891485196@linuxfoundation.org>
+	Andras Pataki <apataki@flatironinstitute.org>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0280/2857] ceph: do not cache negative dentries for snapped directories
+Date: Wed, 18 Nov 2026 15:21:54 +0100
+Message-ID: <20261118150211.507604719@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -61,101 +64,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Gopel <jgopel@gmail.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-commit 96a8479804e3f7af43e639e9df39f562f1a75fd5 upstream.
+[ Upstream commit af59562a5b3d34fb3aa7753f2543393578d06dbf ]
 
-When a Thunderbolt device is unplugged, that switch and every switch
-subsequent to it on the bus device list is `complete()`d, not just its
-child devices. In the case of multiple domains, it may cause, eg, an
-attempt to `complete()` the uninitialized domain 1 root switch RPM
-completion on unplug of a switch from domain 0 (though ordering is not
-guaranteed numerically sorted).
+When a LOOKUP/LOOKUPSNAP in a snapped directory returns ENOENT
+without a trace, ceph_finish_lookup() creates a negative dentry
+via d_add(dentry, NULL).  For live directories this is fine — the
+dentry naturally expires.  But for snapped directories,
+ceph_d_revalidate() unconditionally trusts all cached dentries
+(valid = 1), so a negative dentry created by a transient error
+persists forever, hiding entries that genuinely exist in the
+snapshot.
 
-I initially noticed this issue on a Dell XPS9720 when the system would
-seem to sporadically not wake after unplugging a Thunderbolt dock. I
-tried multiple kernel versions including v7.2.7 and v7.3-rc4 to see if
-that resolved the issue, but the issue persisted. Eventually I found
-that I could consistently generate a kernel Oops reporting a page fault
-at 0xffff_ffff_ffff_fff8 on unplug from one side of the laptop and went
-bug hunting. I became suspicious of the `bus_for_each_dev()` walk that I
-ultimately ended up changing. To confirm this issue, I did an eBPF trace
-of `bus_for_each_dev()`, `complete_rpm()`, and `complete()` while
-unplugging in a variety of situations and found that an unplug from
-domain 0 tries to `complete_rpm()` domain 1's switch, whose RPM
-completion is not initialized and thus is holding a null wait-list
-pointer, triggering the page fault.
+Only cache negative dentries for live (non-snapshotted) parent
+directories.  For snapped parents, skip the negative dentry so
+that VFS retries the lookup on the next access.  Since the
+conditions that trigger a negative dentry (MDS transient error,
+local ENOENT shortcut, or MDS null dentry lease) are all rare in
+snapped directories, the performance impact of this change is
+negligible.
 
-Here are the key sections of that eBPF trace. Note that HEAD denotes the
-completion's own wait-list HEAD:
-
-```
-RESCAN_ENTER domain=0
-
-COMPLETE rescan_domain=0 target=0-1 target_domain=0
-         route=0x1 parent=0-0 unplugged=1
-COMPLETION done=0 head=HEAD next=HEAD prev=HEAD
-
-BUS_WALK domain=0 start=0-1 callback=complete_rpm
-CALLBACK_ENTER rescan_domain=0 dev=1-0 parent=domain1 is_switch=1
-
-COMPLETE rescan_domain=0 target=1-0 target_domain=1
-         route=0x0 parent=domain1 unplugged=0
-COMPLETION done=0 head=HEAD next=0 prev=0
-
-        complete+5
-        complete_rpm+43
-        bus_for_each_dev+133
-        icm_free_unplugged_children+250
-        icm_rescan_work+42
-```
-
-This patch gates the `complete()` on an additional condition - that the
-Thunderbolt domain matches the domain of the device that was unplugged.
-
-I only have a single system with multiple Thunderbolt domains - the Dell
-XPS9720. I am consistently able to reproduce the Oops on that system.
-Since running with this patch, I have not seen the Oops reoccur. I have
-also tested it on a Thinkpad X1-Gen12, and that system boots and runs
-well with it, but it only has a single Thunderbolt domain, so it does
-not exercise the multi-domain failure case.
-
-Fixes: 4f7c2e0d8765 ("thunderbolt: Make sure device runtime resume completes before taking domain lock")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Gopel <jgopel@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://tracker.ceph.com/issues/78529
+Reported-by: Andras Pataki <apataki@flatironinstitute.org>
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/icm.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ceph/dir.c   | 10 ++++++++--
+ fs/ceph/inode.c |  3 ++-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/thunderbolt/icm.c
-+++ b/drivers/thunderbolt/icm.c
-@@ -2036,7 +2036,7 @@ static int complete_rpm(struct device *d
- {
- 	struct tb_switch *sw = tb_to_switch(dev);
+diff --git a/fs/ceph/dir.c b/fs/ceph/dir.c
+index 6b189276d7662..031cc13087535 100644
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -721,8 +721,13 @@ struct dentry *ceph_finish_lookup(struct ceph_mds_request *req,
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				if (d_unhashed(dentry))
+-					d_add(dentry, NULL);
++				if (d_unhashed(dentry)) {
++					struct inode *parent =
++						d_inode(dentry->d_parent);
++					if (!parent ||
++					    ceph_snap(parent) == CEPH_NOSNAP)
++						d_add(dentry, NULL);
++				}
+ 			}
+ 		}
+ 	}
+@@ -773,6 +778,7 @@ static struct dentry *ceph_lookup(struct inode *dir, struct dentry *dentry,
+ 			    dentry->d_name.len) &&
+ 		    !is_root_ceph_dentry(dir, dentry) &&
+ 		    ceph_test_mount_opt(fsc, DCACHE) &&
++		    ceph_snap(dir) == CEPH_NOSNAP &&
+ 		    __ceph_dir_is_complete(ci) &&
+ 		    __ceph_caps_issued_mask_metric(ci, CEPH_CAP_FILE_SHARED, 1)) {
+ 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 9843dee709c14..86aa95736726f 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -1462,7 +1462,8 @@ int ceph_fill_trace(struct super_block *sb, struct ceph_mds_request *req)
+ 				ceph_dir_clear_ordered(dir);
+ 				d_delete(dn);
+ 			} else if (have_lease) {
+-				if (d_unhashed(dn))
++				if (d_unhashed(dn) &&
++				    ceph_snap(dir) == CEPH_NOSNAP)
+ 					d_add(dn, NULL);
+ 			}
  
--	if (sw)
-+	if (sw && sw->tb == data)
- 		complete(&sw->rpm_complete);
- 	return 0;
- }
-@@ -2052,8 +2052,8 @@ static void remove_unplugged_switch(stru
- 	 * tb_switch_remove() calls pm_runtime_get_sync() that then waits
- 	 * for it.
- 	 */
--	complete_rpm(&sw->dev, NULL);
--	bus_for_each_dev(&tb_bus_type, &sw->dev, NULL, complete_rpm);
-+	complete_rpm(&sw->dev, sw->tb);
-+	bus_for_each_dev(&tb_bus_type, &sw->dev, sw->tb, complete_rpm);
- 	tb_switch_remove(sw);
- 
- 	pm_runtime_mark_last_busy(parent);
+-- 
+2.53.0
+
 
 
