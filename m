@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026810;
-	b=au4OBgoZ1Z9b7uYT5zMv7aN1aVX4B+T8rn5a5lJ9Bfjz0dKE/4MnmgRs50o8H1avaiUy
-	 LBT2SLlCpQeIlI7VtNJCPtgC1buPFMrCkFqtrtcOQwTu4/iK1XeXsWVD+myO/c+xdHrsK
-	 CWwHjG87zM6loO/7GE4ecaZnASxqqX0HAWP8PjBkaNupQNB0AXBnSY+FVKBN0kOJm98Tv
-	 kDn/NekoAqvdFkUMM8wEvbLLTeyZkAqEkznK72TevZSa/5iCEaGuQTCc7Var6p4Pb1y5H
-	 HqFb1IrVLhIAgq0KSVmxEST4oJFdjpTUBsaj3tV0iwK5jTezyCRYfgRzDfT6qoWXQtQ==
+	t=1795026813;
+	b=IhMckXabJrSd5cWmFWPyHL8pHgWVY252uhbQucmrRZc2Omp+4lGG7loddKxpHOBbZiCN
+	 dMng0SAQ/J/k1ys0M4lHy7SWdRhYf5ddawjlKm5bSvDYnoJ15skHgbKGW1sSJqmWMJi4m
+	 5MDVnhGp431+gOLYrQ9npWqo9pXohGNGTLjD5+95BqLUIvOIo9RvpOhI43aqjQOnwR3JO
+	 a8WWTb8eAknnsrzm3PCL7NCLFKMQfOpqyZ2yviG4i6KBHOGCQPpdWObKkd7W9t6Qw1aSo
+	 hLEA/vmUV4JurrOVTG9QmvNLqroBO9dH3EO9KgdJ5DxWpL3ufex0pYTdc/UOT9mNrYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026810;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ugPSqqtcABo2DTeJbhAoeeBYMGw2e2ZVowrydHalHt8=;
-	b=VOZDUfVsLIfD2ouiEg0GW7aa1ibFziYkf+MewfNWRWC4sMKZ3UsfIKwsqWkBOKbe6cme
-	 IJzGgp9+RTwOMhK0aPPJyMCjrvz4cU5h50tQTYCLtuiE/Nz8pBFi0kdnLxlXlAeGnZI+F
-	 qSAjCp7NbeZVj9w0giR5Tdt+kXrbZZBZ8+gDlNRWIaVQyVlnmMTksd2IzxXOmPLmcMRHt
-	 pwCt3qPZWur367IsxXpB6GHxMAgxf7V1O6iIgTfdSH2GdWJ/DPpJ5jLm4oWvvtx/9FfPL
-	 7y4krlW+jge+yZr3ZmUkyG/lUJvW21M9U+3Dcieoe4uO3ULcbQU53e4tWtvg9olBIqg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=42H37l9r0YNiRNFFzNxlyOL+60S0d22tcZpTuaPBGrI=;
+	b=IE01sJ7Selq5NZ9D0DeJ1PVWJCFV4TYfuq2NHJ2+qVahQc3wc2XonKMT9l0CxtOZSAtk
+	 P4BAeceZdsRARmv8GBK/JZSFaoYFi3x6Cjzy27muQONG8ClgMbKAlI7k8wq68DsVg2qd+
+	 ZVYI0uuSVZtQcO3JMgNtOrYsaT1zumAzsR6gN0+MMzzd+qNwziy2SmZ7Xg+C50PvkvZbi
+	 NJ0/SNUf0USC8zvMfYYszmKbVmFWwrKvNjSDTOlXmEUqGaG1Ql55IDndCjagUiLGwy2bQ
+	 Gc0wnQdHqzppqWmaH4+R3dONemcS/gdt1IWwiUCUrRJWaaHKvBMjPeqZDZ+br+tiubw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nLrExZVL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="e9U6A/yM";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F5E606A31C;
-	Wed, 18 Nov 2026 18:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5888F606A32F;
+	Wed, 18 Nov 2026 18:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nLrExZVL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827441F000C4;
-	Wed, 18 Nov 2026 18:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9U6A/yM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E1D1F000C4;
+	Wed, 18 Nov 2026 18:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026810;
-	bh=ugPSqqtcABo2DTeJbhAoeeBYMGw2e2ZVowrydHalHt8=;
+	s=korg; t=1795026812;
+	bh=42H37l9r0YNiRNFFzNxlyOL+60S0d22tcZpTuaPBGrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nLrExZVLZvSOA3Xhuffzs7+aBHsgb6M/Lm++GINBtk958DudQD4hwLF4xtM8VC3qd
-	 dwHynCrBVLryMxLiTtWbwfmLJ770fuLiNZ9vv1RR0GWca8VHmmmzPlfuK83XsOciEM
-	 HBebFuGczEMjmhLfCo+FqprjInZ1HQuKbBlpmv5g=
+	b=e9U6A/yMd6WnndnbEVD07u/mgLfgetNcwbbqmq9njvDKMkJ/aUeKdba8z2KtkSMwh
+	 v9LCJITd/Mt5316TNDhfAHX+Z0YDjDZpSY0F19Eoj0sbSK6ELYHqNd7qHoQBKbJMSg
+	 odziwvdeWWNAdaw7bL7HYOq78kZkGGG9JZPjdwGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Sagi Maimon <maimon.sagi@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1568/2151] net: axienet: free outstanding TX buffers in axienet_dma_bd_release()
-Date: Wed, 18 Nov 2026 15:55:03 +0100
-Message-ID: <20261118150219.002618620@linuxfoundation.org>
+Subject: [PATCH 6.18 1569/2151] ata: libata: Move quirk flags to their own enum
+Date: Wed, 18 Nov 2026 15:55:04 +0100
+Message-ID: <20261118150219.038256410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -64,178 +63,148 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagi Maimon <maimon.sagi@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 0c20cb4cfb40cf270d6c4c2c2ff5e5d72322644a ]
+[ Upstream commit a42b71d49945aac0b943987cbdec1d1c805caab3 ]
 
-axienet_dma_bd_release() walks the RX ring to unmap and free every
-receive buffer before releasing it, but frees the TX descriptor ring
-with dma_free_coherent() alone.  Any descriptor that
-axienet_free_tx_chain() had not yet reclaimed still holds its skb and
-its streaming DMA mapping, and both are lost.
+The anonymous enum in include/linux/libata.h that is used to store
+various global constants can currently be backed by type int.
+(It contains both negative and positive constants.)
 
-axienet_stop() disables TX NAPI and stops the DMA engine before calling
-it, so nothing reclaims those descriptors afterwards.  Bringing the
-interface down while frames are in flight therefore leaks up to
-lp->tx_bd_num skbs and mappings each time.
+__ATA_QUIRK_MAX is currently 31.
+The quirk flags in the various global constants enum are defined as
+"1U << quirk_flag_bit".
 
-axienet_dma_err_handler() already walks the TX ring this way before it
-restarts the DMA engine: it unmaps every descriptor whose cntrl is still
-set - axienet_free_tx_chain() clears it on reclaim - frees any skb still
-attached, and clears the descriptor.  Move that loop into a helper,
-axienet_free_tx_bufs(), and call it from axienet_dma_bd_release() too.
-This relies on axienet_stop() having stopped the DMA engine first, as
-the RX walk in the same function already does.  The helper frees the
-skbs with dev_kfree_skb_any(), as drops: in the error handler, which
-runs from a workqueue, that frees them directly rather than deferring
-them to softirq as dev_kfree_skb_irq() did.
+Thus if we simply add an additional quirk, the quirk flag will be 1 << 31,
+which is a value that is too large to be represented by a signed int.
+The various global constants enum will thus therefore be backed by type
+long.
 
-The walk must not run on a ring that is not there.  axienet_open() does
-not check the result of the reset that runs axienet_dma_bd_init(), so
-when that reset fails tx_bd_v is either still NULL or, after an earlier
-close, points at the ring that close freed.  Clear tx_bd_v and rx_bd_v
-once their rings are freed, and skip the walk when tx_bd_v is NULL.
-That also ends the second dma_free_coherent() of a stale ring which the
-same path already did.  On the axienet_dma_bd_init() error path the TX
-ring has just been allocated zeroed, so the walk does nothing.
+This will lead to error prints like e.g.:
+ata_port_err(ap, "EH pending after %d tries, giving up\n",
+	     ATA_EH_MAX_TRIES);
 
-This was reported by the Sashiko AI review bot.
+now failing to build, with build error:
+error: format ‘%d’ expects argument of type ‘int’, but argument 4 has type ‘long int’ [-Werror=format=]
 
-Tested on the AXI Ethernet MAC of an ADVA TimeCard X2 (PCIe card, with
-the built-in AXI DMA): traffic passes, and after each of ten down/up
-cycles and five module reloads, all made with traffic running and each
-running axienet_dma_bd_release(), traffic resumes and nothing is logged.
-The leak itself was not measured, and neither the failed-reset paths nor
-axienet_dma_err_handler() were exercised.
+This is because all constants in the various global constants enum now
+has to be printed as a long, as that is now the backing type of the enum.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Reviewed-by: Joe Damato <joe@dama.to>
-Assisted-by: LLM sparse
-Signed-off-by: Sagi Maimon <maimon.sagi@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20261007034620.1360542-1-maimon.sagi@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Since the compiler will use the smallest possible backing type for an
+enum, it is good practice to not mix unrelated things in a single enum.
+
+Move the quirk flags to a separate enum, so that we don't need to change
+the printf specifier for all other constants in the "various global
+constants" enum when adding an additional quirk.
+
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 4153718a215e ("ata: libata-core: Fix NO_FUA quirks shadowed by earlier quirk entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/xilinx/xilinx_axienet_main.c | 74 +++++++++++++------
- 1 file changed, 50 insertions(+), 24 deletions(-)
+ include/linux/libata.h | 74 ++++++++++++++++++++++--------------------
+ 1 file changed, 38 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 50ddc7c53b630..9bd458f158391 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -173,6 +173,46 @@ static dma_addr_t desc_get_phys_addr(struct axienet_local *lp,
- 	return ret;
- }
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index a92908f07e220..9e7be3591b048 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -85,6 +85,44 @@ enum ata_quirks {
+ 	__ATA_QUIRK_MAX,
+ };
  
-+/**
-+ * axienet_free_tx_bufs - Release the buffers still held by the TX ring
-+ * @lp:		Pointer to the axienet_local structure
-+ *
-+ * Unmap every descriptor whose mapping is still live, free any skb still
-+ * attached, and clear the descriptor for reuse.  axienet_free_tx_chain()
-+ * clears cntrl when it reclaims a descriptor, so a non-zero value means
-+ * the mapping is live.  The DMA engine must be stopped.
++/*
++ * Quirk flags: may be set by libata or controller drivers on drives.
++ * Some quirks may be drive/controller pair dependent.
 + */
-+static void axienet_free_tx_bufs(struct axienet_local *lp)
-+{
-+	struct axidma_bd *cur_p;
-+	u32 i;
++enum {
++	ATA_QUIRK_DIAGNOSTIC		= (1U << __ATA_QUIRK_DIAGNOSTIC),
++	ATA_QUIRK_NODMA			= (1U << __ATA_QUIRK_NODMA),
++	ATA_QUIRK_NONCQ			= (1U << __ATA_QUIRK_NONCQ),
++	ATA_QUIRK_MAX_SEC_128		= (1U << __ATA_QUIRK_MAX_SEC_128),
++	ATA_QUIRK_BROKEN_HPA		= (1U << __ATA_QUIRK_BROKEN_HPA),
++	ATA_QUIRK_DISABLE		= (1U << __ATA_QUIRK_DISABLE),
++	ATA_QUIRK_HPA_SIZE		= (1U << __ATA_QUIRK_HPA_SIZE),
++	ATA_QUIRK_IVB			= (1U << __ATA_QUIRK_IVB),
++	ATA_QUIRK_STUCK_ERR		= (1U << __ATA_QUIRK_STUCK_ERR),
++	ATA_QUIRK_BRIDGE_OK		= (1U << __ATA_QUIRK_BRIDGE_OK),
++	ATA_QUIRK_ATAPI_MOD16_DMA	= (1U << __ATA_QUIRK_ATAPI_MOD16_DMA),
++	ATA_QUIRK_FIRMWARE_WARN		= (1U << __ATA_QUIRK_FIRMWARE_WARN),
++	ATA_QUIRK_1_5_GBPS		= (1U << __ATA_QUIRK_1_5_GBPS),
++	ATA_QUIRK_NOSETXFER		= (1U << __ATA_QUIRK_NOSETXFER),
++	ATA_QUIRK_BROKEN_FPDMA_AA	= (1U << __ATA_QUIRK_BROKEN_FPDMA_AA),
++	ATA_QUIRK_DUMP_ID		= (1U << __ATA_QUIRK_DUMP_ID),
++	ATA_QUIRK_MAX_SEC_LBA48		= (1U << __ATA_QUIRK_MAX_SEC_LBA48),
++	ATA_QUIRK_ATAPI_DMADIR		= (1U << __ATA_QUIRK_ATAPI_DMADIR),
++	ATA_QUIRK_NO_NCQ_TRIM		= (1U << __ATA_QUIRK_NO_NCQ_TRIM),
++	ATA_QUIRK_NOLPM			= (1U << __ATA_QUIRK_NOLPM),
++	ATA_QUIRK_WD_BROKEN_LPM		= (1U << __ATA_QUIRK_WD_BROKEN_LPM),
++	ATA_QUIRK_ZERO_AFTER_TRIM	= (1U << __ATA_QUIRK_ZERO_AFTER_TRIM),
++	ATA_QUIRK_NO_DMA_LOG		= (1U << __ATA_QUIRK_NO_DMA_LOG),
++	ATA_QUIRK_NOTRIM		= (1U << __ATA_QUIRK_NOTRIM),
++	ATA_QUIRK_MAX_SEC_1024		= (1U << __ATA_QUIRK_MAX_SEC_1024),
++	ATA_QUIRK_MAX_TRIM_128M		= (1U << __ATA_QUIRK_MAX_TRIM_128M),
++	ATA_QUIRK_NO_NCQ_ON_ATI		= (1U << __ATA_QUIRK_NO_NCQ_ON_ATI),
++	ATA_QUIRK_NO_LPM_ON_ATI		= (1U << __ATA_QUIRK_NO_LPM_ON_ATI),
++	ATA_QUIRK_NO_ID_DEV_LOG		= (1U << __ATA_QUIRK_NO_ID_DEV_LOG),
++	ATA_QUIRK_NO_LOG_DIR		= (1U << __ATA_QUIRK_NO_LOG_DIR),
++	ATA_QUIRK_NO_FUA		= (1U << __ATA_QUIRK_NO_FUA),
++};
 +
-+	for (i = 0; i < lp->tx_bd_num; i++) {
-+		cur_p = &lp->tx_bd_v[i];
-+		if (cur_p->cntrl) {
-+			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
-+
-+			dma_unmap_single(lp->dev, addr,
-+					 (cur_p->cntrl &
-+					  XAXIDMA_BD_CTRL_LENGTH_MASK),
-+					 DMA_TO_DEVICE);
-+		}
-+		/* not reclaimed by axienet_free_tx_chain(), so a drop */
-+		if (cur_p->skb)
-+			dev_kfree_skb_any(cur_p->skb);
-+		cur_p->phys = 0;
-+		cur_p->phys_msb = 0;
-+		cur_p->cntrl = 0;
-+		cur_p->status = 0;
-+		cur_p->app0 = 0;
-+		cur_p->app1 = 0;
-+		cur_p->app2 = 0;
-+		cur_p->app3 = 0;
-+		cur_p->app4 = 0;
-+		cur_p->skb = NULL;
-+	}
-+}
-+
- /**
-  * axienet_dma_bd_release - Release buffer descriptor rings
-  * @ndev:	Pointer to the net_device structure
-@@ -186,11 +226,18 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 	int i;
- 	struct axienet_local *lp = netdev_priv(ndev);
+ enum {
+ 	/* various global constants */
+ 	LIBATA_MAX_PRD		= ATA_MAX_PRD / 2,
+@@ -391,42 +429,6 @@ enum {
+ 	 */
+ 	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 9,
  
--	/* If we end up here, tx_bd_v must have been DMA allocated. */
-+	/* tx_bd_v is NULL if axienet_dma_bd_init() did not get as far as
-+	 * allocating it, and is cleared below once the ring is freed;
-+	 * dma_free_coherent() accepts NULL.
-+	 */
-+	if (lp->tx_bd_v)
-+		axienet_free_tx_bufs(lp);
-+
- 	dma_free_coherent(lp->dev,
- 			  sizeof(*lp->tx_bd_v) * lp->tx_bd_num,
- 			  lp->tx_bd_v,
- 			  lp->tx_bd_p);
-+	lp->tx_bd_v = NULL;
- 
- 	if (!lp->rx_bd_v)
- 		return;
-@@ -221,6 +268,7 @@ static void axienet_dma_bd_release(struct net_device *ndev)
- 			  sizeof(*lp->rx_bd_v) * lp->rx_bd_num,
- 			  lp->rx_bd_v,
- 			  lp->rx_bd_p);
-+	lp->rx_bd_v = NULL;
- }
- 
- static u64 axienet_dma_rate(struct axienet_local *lp)
-@@ -2732,29 +2780,7 @@ static void axienet_dma_err_handler(struct work_struct *work)
- 	axienet_dma_stop(lp);
- 	netdev_reset_queue(ndev);
- 
--	for (i = 0; i < lp->tx_bd_num; i++) {
--		cur_p = &lp->tx_bd_v[i];
--		if (cur_p->cntrl) {
--			dma_addr_t addr = desc_get_phys_addr(lp, cur_p);
+-	/*
+-	 * Quirk flags: may be set by libata or controller drivers on drives.
+-	 * Some quirks may be drive/controller pair dependent.
+-	 */
+-	ATA_QUIRK_DIAGNOSTIC		= (1U << __ATA_QUIRK_DIAGNOSTIC),
+-	ATA_QUIRK_NODMA			= (1U << __ATA_QUIRK_NODMA),
+-	ATA_QUIRK_NONCQ			= (1U << __ATA_QUIRK_NONCQ),
+-	ATA_QUIRK_MAX_SEC_128		= (1U << __ATA_QUIRK_MAX_SEC_128),
+-	ATA_QUIRK_BROKEN_HPA		= (1U << __ATA_QUIRK_BROKEN_HPA),
+-	ATA_QUIRK_DISABLE		= (1U << __ATA_QUIRK_DISABLE),
+-	ATA_QUIRK_HPA_SIZE		= (1U << __ATA_QUIRK_HPA_SIZE),
+-	ATA_QUIRK_IVB			= (1U << __ATA_QUIRK_IVB),
+-	ATA_QUIRK_STUCK_ERR		= (1U << __ATA_QUIRK_STUCK_ERR),
+-	ATA_QUIRK_BRIDGE_OK		= (1U << __ATA_QUIRK_BRIDGE_OK),
+-	ATA_QUIRK_ATAPI_MOD16_DMA	= (1U << __ATA_QUIRK_ATAPI_MOD16_DMA),
+-	ATA_QUIRK_FIRMWARE_WARN		= (1U << __ATA_QUIRK_FIRMWARE_WARN),
+-	ATA_QUIRK_1_5_GBPS		= (1U << __ATA_QUIRK_1_5_GBPS),
+-	ATA_QUIRK_NOSETXFER		= (1U << __ATA_QUIRK_NOSETXFER),
+-	ATA_QUIRK_BROKEN_FPDMA_AA	= (1U << __ATA_QUIRK_BROKEN_FPDMA_AA),
+-	ATA_QUIRK_DUMP_ID		= (1U << __ATA_QUIRK_DUMP_ID),
+-	ATA_QUIRK_MAX_SEC_LBA48		= (1U << __ATA_QUIRK_MAX_SEC_LBA48),
+-	ATA_QUIRK_ATAPI_DMADIR		= (1U << __ATA_QUIRK_ATAPI_DMADIR),
+-	ATA_QUIRK_NO_NCQ_TRIM		= (1U << __ATA_QUIRK_NO_NCQ_TRIM),
+-	ATA_QUIRK_NOLPM			= (1U << __ATA_QUIRK_NOLPM),
+-	ATA_QUIRK_WD_BROKEN_LPM		= (1U << __ATA_QUIRK_WD_BROKEN_LPM),
+-	ATA_QUIRK_ZERO_AFTER_TRIM	= (1U << __ATA_QUIRK_ZERO_AFTER_TRIM),
+-	ATA_QUIRK_NO_DMA_LOG		= (1U << __ATA_QUIRK_NO_DMA_LOG),
+-	ATA_QUIRK_NOTRIM		= (1U << __ATA_QUIRK_NOTRIM),
+-	ATA_QUIRK_MAX_SEC_1024		= (1U << __ATA_QUIRK_MAX_SEC_1024),
+-	ATA_QUIRK_MAX_TRIM_128M		= (1U << __ATA_QUIRK_MAX_TRIM_128M),
+-	ATA_QUIRK_NO_NCQ_ON_ATI		= (1U << __ATA_QUIRK_NO_NCQ_ON_ATI),
+-	ATA_QUIRK_NO_LPM_ON_ATI		= (1U << __ATA_QUIRK_NO_LPM_ON_ATI),
+-	ATA_QUIRK_NO_ID_DEV_LOG		= (1U << __ATA_QUIRK_NO_ID_DEV_LOG),
+-	ATA_QUIRK_NO_LOG_DIR		= (1U << __ATA_QUIRK_NO_LOG_DIR),
+-	ATA_QUIRK_NO_FUA		= (1U << __ATA_QUIRK_NO_FUA),
 -
--			dma_unmap_single(lp->dev, addr,
--					 (cur_p->cntrl &
--					  XAXIDMA_BD_CTRL_LENGTH_MASK),
--					 DMA_TO_DEVICE);
--		}
--		if (cur_p->skb)
--			dev_kfree_skb_irq(cur_p->skb);
--		cur_p->phys = 0;
--		cur_p->phys_msb = 0;
--		cur_p->cntrl = 0;
--		cur_p->status = 0;
--		cur_p->app0 = 0;
--		cur_p->app1 = 0;
--		cur_p->app2 = 0;
--		cur_p->app3 = 0;
--		cur_p->app4 = 0;
--		cur_p->skb = NULL;
--	}
-+	axienet_free_tx_bufs(lp);
- 
- 	for (i = 0; i < lp->rx_bd_num; i++) {
- 		cur_p = &lp->rx_bd_v[i];
+ 	/* User visible DMA mask for DMA control. DO NOT renumber. */
+ 	ATA_DMA_MASK_ATA	= (1 << 0),	/* DMA on ATA Disk */
+ 	ATA_DMA_MASK_ATAPI	= (1 << 1),	/* DMA on ATAPI */
 -- 
 2.53.0
 
