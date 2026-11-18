@@ -1,59 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060277;
-	b=xhKgjFpKP5TFCGFnsFSt4j7Mk0lSA4hklLFwr6WnFtvDUM9Up80ICmtVTll+EX2OxIcA
-	 owHCujPqAobWW6rVmNTQajcFNtH4yXd0BoXtzMuHAxHmDtUp4KQ9Tpd+MSouBW0Wb4/mI
-	 2k2qrOdHULY4dujrJqjaDaNQNabUQv8WPojF1Ma8+tR8FO6qzR3CqDwCN6NKNZys1E+lK
-	 hNlk//oGWT3FLWKiEpNaJ7KG7q87B5Ka5+2GzGWZrHk18e4phdQ+4ANoz/F1A9mglaodF
-	 XE5dqBOPwGkgVjludIxOX/OzlJhgRIm9yUdZKobl6jSe5U3OrXE+djH9ei/q+QJnZ4Q==
+	t=1795060280;
+	b=vys2NETUtUJHMDP0CEHZA8G4TDIIYXOyW+U/W2/YkTC44/j8sCsTuDHdjSdoIGXfQT2i
+	 6+LesIx4Rr1KYnEx54tTu/qx1pfW7XXBfkRBqWqWiergpKq2kUymaInk4W1i6Jg+dexRf
+	 nNHVWSiBo1dgmQTEKFijzmL5mBxHBsmuOdkXLOPndvLXK0t7OnnwdxYMNTpWHkGhXyKhs
+	 0JkgT6Sxc49QOOvZSh2qlNffUsrkyROkXlNnnKvGkWvD2teWS18hurFJLzWe1YYmk3uSU
+	 /30CK+Mqpr7J1bzVHorDO7JP2zBM2pbJU2QU1pfWK4n0/pmAW+WcXgS4CbwbO2bmaNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DwBuLriJb29qt/Vwo0Qz+KmxhLWzoQ2Iy0VS5Px25Fg=;
-	b=cCz5WAOvKRBnm1QLPsIEvMk6ZhLxSYsAJfg/02YIWI0aumPnjZWJRkf32vUo40EtZAIR
-	 gwfnFNPu5hsyBtdw7VhXssAuZtTWZBRrwun9Xg8XSjpvE9oiVTRi2JY46R5gNu/w/X9Uw
-	 xlANXuEYjylqrJWrHbqx73ibyHLCJmIeCVcZzfX7DwKdH487aFzRJEGE0kCUPkipGSqlK
-	 kxpQZM92oGQgSTZEtfuJmbQHDBta7WBHgyM8lTZpqR4AXx8wMArBpRUE6UpKih3rKQ7oB
-	 4guscSgHm6tKQPRTrGRLIJMK9sz7xAcQHMQ6BdC/vBFgpn9aNDPreMceChkRc6o5bkQ==
+	bh=I3vR24DtiseltAulrBMdGXpaVRNpJTQVhvTChpBY4ZA=;
+	b=VQn2l9co/CLxzda5l2t/dh3Iy7H7FLv7MgiGY5oj0fuOZH6kIROcDnjXulFBv/cTH5eB
+	 iyjiM7TXTKGMwBvj566Qo9xwqap2XgOVXJQEf1965ksczSoGkZy9q+ZHrxyEsOv4eLtct
+	 mBhaTtY6yiuYArGLsuYATvRnps27BL6JQXjOV0gLxSS3UDkxPUnxbQpru3U9/n3oc0T0L
+	 0dWydJlmJuqvn2PE/1ZJI7UXnmECrCCXBuKpsmH5gJ6B4znJNdXMIAMGmV6N7+pWLsdSS
+	 Ram9HSW/V/oKt0b+Z9hkIH9SWtEUXlY93/YAgI0mxv5kHsyb8D9J+nLvHbY4Py2PDFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkIVg88s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxHB1o9k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928E8606A32A;
-	Thu, 19 Nov 2026 03:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0517B606A32A;
+	Thu, 19 Nov 2026 03:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkIVg88s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20521F000C4;
-	Thu, 19 Nov 2026 03:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxHB1o9k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3402E1F000C4;
+	Thu, 19 Nov 2026 03:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060277;
-	bh=DwBuLriJb29qt/Vwo0Qz+KmxhLWzoQ2Iy0VS5Px25Fg=;
+	s=korg; t=1795060279;
+	bh=I3vR24DtiseltAulrBMdGXpaVRNpJTQVhvTChpBY4ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NkIVg88sNjo85KUj6MUu5eGmzDaKAUKXdyZ1VDXZkseaoZqswR/CwAggw7azvmE5x
-	 xUDCNh3R+4NiYB2KzsCgPk93U4be0YsO68SmJKbdmtdDvDQJcCH/jC/EUbcKC8Df9l
-	 eA88nSlYR2h11FFCclv6TDN2PNO3nQPyUbKTKOMA=
+	b=IxHB1o9kyWz3NKmQTnwRmtUfTHAnQ5NBtoFxb6f9YqILr96k+jlXK3bysixz2p9o9
+	 O9PMPMDnWg7axajwRfYmPteAriJyH0+hzpVS3tI0gAFE8zSPIt3kL5tUpsAEaKKCWz
+	 ZpmQJuXI1PRiDWvlHUZmLy5tX65c1DDSTxhJdxhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Brian Robbins <brianrob@linux.microsoft.com>,
 	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1140/1848] perf inject jit: Add namespaces support
-Date: Wed, 18 Nov 2026 15:52:58 +0100
-Message-ID: <20261118150007.343493293@linuxfoundation.org>
+Subject: [PATCH 5.10 1141/1848] perf jit: Fix a few memory leaks
+Date: Wed, 18 Nov 2026 15:52:59 +0100
+Message-ID: <20261118150007.399640688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -75,379 +77,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 67dec926931448d688efb5fe34f7b5a22470fc0a ]
+[ Upstream commit dc67c7837a832952459c4f7829e89b9d8d15f420 ]
 
-This patch fixes "perf inject --jit" to properly operate on
-namespaced/containerized processes:
+As reported by leak sanitizer.
 
-* jitdump files are generated by the process, thus they should be
-  looked up in its mount NS.
-
-* DSOs of injected MMAP events will later be looked up in the process
-  mount NS, so write them into its NS.
-
-* PIDs & TIDs from jitdump events need to be translated to the PID as
-  seen by "perf record" before written into MMAP events.
-
-For a process in a different PID NS, the TID & PID given in the jitdump
-event are actually ignored; I use the TID & PID of the thread which
-mmap()ed the jitdump file. This is simplified and won't do for forks of
-the initial process, if they continue using the same jitdump file.
-Future patches might improve it.
-
-This was tested by recording a NodeJS process running with
-"--perf-prof", inside a Docker container, and by recording another
-NodeJS process running in the same namespaces as perf itself, to make
-sure it's not broken for non-containerized processes.
-
-Signed-off-by: Yonatan Goldschmidt <yonatan.goldschmidt@granulate.io>
-Acked-by: Jiri Olsa <jolsa@redhat.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Brian Robbins <brianrob@linux.microsoft.com>
 Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://lore.kernel.org/r/20201105015604.1726943-1-yonatan.goldschmidt@granulate.io
+Cc: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20230403203545.1872196-1-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 4eddf7d9e341 ("perf jitdump: Use dirname() return value in jit_open()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-inject.c  |  4 +-
- tools/perf/util/jit.h        |  2 +-
- tools/perf/util/jitdump.c    | 84 ++++++++++++++++++++++++++++--------
- tools/perf/util/namespaces.c | 12 ++++++
- tools/perf/util/namespaces.h |  2 +
- 5 files changed, 82 insertions(+), 22 deletions(-)
+ tools/perf/util/genelf_debug.c | 45 +++++++++++++++++++++-------------
+ tools/perf/util/jitdump.c      |  7 +++++-
+ 2 files changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index 8f1a99e2fcd7c..a68fccec7d6db 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -313,7 +313,7 @@ static int perf_event__jit_repipe_mmap(struct perf_tool *tool,
- 	 * if jit marker, then inject jit mmaps and generate ELF images
+diff --git a/tools/perf/util/genelf_debug.c b/tools/perf/util/genelf_debug.c
+index dd40683bd4c00..8786c366566e6 100644
+--- a/tools/perf/util/genelf_debug.c
++++ b/tools/perf/util/genelf_debug.c
+@@ -87,6 +87,12 @@ buffer_ext_init(struct buffer_ext *be)
+ 	be->max_sz = 0;
+ }
+ 
++static void
++buffer_ext_exit(struct buffer_ext *be)
++{
++	free(be->data);
++}
++
+ static inline size_t
+ buffer_ext_size(struct buffer_ext *be)
+ {
+@@ -487,28 +493,28 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	Elf_Scn *scn;
+ 	Elf_Shdr *shdr;
+ 	struct buffer_ext dl, di, da;
+-	int ret;
++	int ret = -1;
+ 
+ 	buffer_ext_init(&dl);
+ 	buffer_ext_init(&di);
+ 	buffer_ext_init(&da);
+ 
+-	ret = jit_process_debug_info(code_addr, debug, nr_debug_entries, &dl, &da, &di);
+-	if (ret)
+-		return -1;
++	if (jit_process_debug_info(code_addr, debug, nr_debug_entries, &dl, &da, &di))
++		goto out;
++
+ 	/*
+ 	 * setup .debug_line section
  	 */
- 	ret = jit_process(inject->session, &inject->output, machine,
--			  event->mmap.filename, event->mmap.pid, &n);
-+			  event->mmap.filename, event->mmap.pid, event->mmap.tid, &n);
- 	if (ret < 0)
- 		return ret;
- 	if (ret) {
-@@ -414,7 +414,7 @@ static int perf_event__jit_repipe_mmap2(struct perf_tool *tool,
- 	 * if jit marker, then inject jit mmaps and generate ELF images
+ 	scn = elf_newscn(e);
+ 	if (!scn) {
+ 		warnx("cannot create section");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	d = elf_newdata(scn);
+ 	if (!d) {
+ 		warnx("cannot get new data");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	d->d_align = 1;
+@@ -521,7 +527,7 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	shdr = elf_getshdr(scn);
+ 	if (!shdr) {
+ 		warnx("cannot get section header");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	shdr->sh_name = 52; /* .debug_line */
+@@ -536,13 +542,13 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	scn = elf_newscn(e);
+ 	if (!scn) {
+ 		warnx("cannot create section");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	d = elf_newdata(scn);
+ 	if (!d) {
+ 		warnx("cannot get new data");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	d->d_align = 1;
+@@ -555,7 +561,7 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	shdr = elf_getshdr(scn);
+ 	if (!shdr) {
+ 		warnx("cannot get section header");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	shdr->sh_name = 64; /* .debug_info */
+@@ -570,13 +576,13 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	scn = elf_newscn(e);
+ 	if (!scn) {
+ 		warnx("cannot create section");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	d = elf_newdata(scn);
+ 	if (!d) {
+ 		warnx("cannot get new data");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	d->d_align = 1;
+@@ -589,7 +595,7 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	shdr = elf_getshdr(scn);
+ 	if (!shdr) {
+ 		warnx("cannot get section header");
+-		return -1;
++		goto out;
+ 	}
+ 
+ 	shdr->sh_name = 76; /* .debug_info */
+@@ -601,9 +607,14 @@ jit_add_debug_info(Elf *e, uint64_t code_addr, void *debug, int nr_debug_entries
+ 	/*
+ 	 * now we update the ELF image with all the sections
  	 */
- 	ret = jit_process(inject->session, &inject->output, machine,
--			  event->mmap2.filename, event->mmap2.pid, &n);
-+			  event->mmap2.filename, event->mmap2.pid, event->mmap2.tid, &n);
- 	if (ret < 0)
- 		return ret;
- 	if (ret) {
-diff --git a/tools/perf/util/jit.h b/tools/perf/util/jit.h
-index 6817ffc2a059f..fb810e1b2de7c 100644
---- a/tools/perf/util/jit.h
-+++ b/tools/perf/util/jit.h
-@@ -5,7 +5,7 @@
- #include <data.h>
- 
- int jit_process(struct perf_session *session, struct perf_data *output,
--		struct machine *machine, char *filename, pid_t pid, u64 *nbytes);
-+		struct machine *machine, char *filename, pid_t pid, pid_t tid, u64 *nbytes);
- 
- int jit_inject_record(const char *filename);
- 
+-	if (elf_update(e, ELF_C_WRITE) < 0) {
++	if (elf_update(e, ELF_C_WRITE) < 0)
+ 		warnx("elf_update debug failed");
+-		return -1;
+-	}
+-	return 0;
++	else
++		ret = 0;
++
++out:
++	buffer_ext_exit(&dl);
++	buffer_ext_exit(&di);
++	buffer_ext_exit(&da);
++	return ret;
+ }
 diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 3797318b5fa60..5eba0914f1709 100644
+index 5eba0914f1709..cd15b6704485f 100644
 --- a/tools/perf/util/jitdump.c
 +++ b/tools/perf/util/jitdump.c
-@@ -19,6 +19,7 @@
- #include "event.h"
- #include "debug.h"
- #include "evlist.h"
-+#include "namespaces.h"
- #include "symbol.h"
- #include <elf.h>
+@@ -247,9 +247,11 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ 	 */
+ 	strcpy(jd->dir, name);
+ 	dirname(jd->dir);
++	free(buf);
  
-@@ -36,6 +37,7 @@ struct jit_buf_desc {
- 	struct perf_data *output;
- 	struct perf_session *session;
- 	struct machine *machine;
-+	struct nsinfo  *nsi;
- 	union jr_entry   *entry;
- 	void             *buf;
- 	uint64_t	 sample_type;
-@@ -73,7 +75,8 @@ struct jit_tool {
- #define get_jit_tool(t) (container_of(tool, struct jit_tool, tool))
- 
- static int
--jit_emit_elf(char *filename,
-+jit_emit_elf(struct jit_buf_desc *jd,
-+	     char *filename,
- 	     const char *sym,
- 	     uint64_t code_addr,
- 	     const void *code,
-@@ -84,14 +87,18 @@ jit_emit_elf(char *filename,
- 	     uint32_t unwinding_header_size,
- 	     uint32_t unwinding_size)
- {
--	int ret, fd;
-+	int ret, fd, saved_errno;
-+	struct nscookie nsc;
- 
- 	if (verbose > 0)
- 		fprintf(stderr, "write ELF image %s\n", filename);
- 
-+	nsinfo__mountns_enter(jd->nsi, &nsc);
- 	fd = open(filename, O_CREAT|O_TRUNC|O_WRONLY, 0644);
-+	saved_errno = errno;
-+	nsinfo__mountns_exit(&nsc);
- 	if (fd == -1) {
--		pr_warning("cannot create jit ELF %s: %s\n", filename, strerror(errno));
-+		pr_warning("cannot create jit ELF %s: %s\n", filename, strerror(saved_errno));
- 		return -1;
- 	}
- 
-@@ -100,8 +107,11 @@ jit_emit_elf(char *filename,
- 
-         close(fd);
- 
--        if (ret)
--                unlink(filename);
-+	if (ret) {
-+		nsinfo__mountns_enter(jd->nsi, &nsc);
-+		unlink(filename);
-+		nsinfo__mountns_exit(&nsc);
-+	}
- 
- 	return ret;
- }
-@@ -137,12 +147,15 @@ static int
- jit_open(struct jit_buf_desc *jd, const char *name)
- {
- 	struct jitheader header;
-+	struct nscookie nsc;
- 	struct jr_prefix *prefix;
- 	ssize_t bs, bsz = 0;
- 	void *n, *buf = NULL;
- 	int ret, retval = -1;
- 
-+	nsinfo__mountns_enter(jd->nsi, &nsc);
- 	jd->in = fopen(name, "r");
-+	nsinfo__mountns_exit(&nsc);
- 	if (!jd->in)
- 		return -1;
- 
-@@ -392,6 +405,20 @@ jit_inject_event(struct jit_buf_desc *jd, union perf_event *event)
  	return 0;
- }
+ error:
++	free(buf);
+ 	funlockfile(jd->in);
+ error_noflock:
+ 	free(buf);
+@@ -568,7 +570,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
  
-+static pid_t jr_entry_pid(struct jit_buf_desc *jd, union jr_entry *jr)
-+{
-+	if (jd->nsi && jd->nsi->in_pidns)
-+		return jd->nsi->tgid;
-+	return jr->load.pid;
-+}
-+
-+static pid_t jr_entry_tid(struct jit_buf_desc *jd, union jr_entry *jr)
-+{
-+	if (jd->nsi && jd->nsi->in_pidns)
-+		return jd->nsi->pid;
-+	return jr->load.tid;
-+}
-+
- static uint64_t convert_timestamp(struct jit_buf_desc *jd, uint64_t timestamp)
- {
- 	struct perf_tsc_conversion tc = { .time_shift = 0, };
-@@ -437,14 +464,15 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	const char *sym;
- 	uint64_t count;
- 	int ret, csize, usize;
--	pid_t pid, tid;
-+	pid_t nspid, pid, tid;
- 	struct {
- 		u32 pid, tid;
- 		u64 time;
- 	} *id;
+ 	ret = perf_event__process_mmap2(tool, event, &sample, jd->machine);
+ 	if (ret)
+-		return ret;
++		goto out;
  
--	pid   = jr->load.pid;
--	tid   = jr->load.tid;
-+	nspid = jr->load.pid;
-+	pid   = jr_entry_pid(jd, jr);
-+	tid   = jr_entry_tid(jd, jr);
- 	csize = jr->load.code_size;
- 	usize = jd->unwinding_mapped_size;
- 	addr  = jr->load.code_addr;
-@@ -470,7 +498,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	filename = event->mmap2.filename;
- 	size = snprintf(filename, PATH_MAX, "%s/jitted-%d-%" PRIu64 ".so",
- 			jd->dir,
--			pid,
-+			nspid,
- 			count);
- 	/* snprintf returns would-be length on truncation, clamp to buffer */
- 	if (size >= sizeof(event->mmap2.filename))
-@@ -480,7 +508,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 
- 	size = PERF_ALIGN(size, sizeof(u64));
- 	uaddr = (uintptr_t)code;
--	ret = jit_emit_elf(filename, sym, addr, (const void *)uaddr, csize, jd->debug_data, jd->nr_debug_entries,
-+	ret = jit_emit_elf(jd, filename, sym, addr, (const void *)uaddr, csize, jd->debug_data, jd->nr_debug_entries,
- 			   jd->unwinding_data, jd->eh_frame_hdr_size, jd->unwinding_size);
- 
- 	if (jd->debug_data && jd->nr_debug_entries) {
-@@ -499,7 +527,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 		free(event);
- 		return -1;
- 	}
--	if (stat(filename, &st))
-+	if (nsinfo__stat(filename, &st, jd->nsi))
- 		memset(&st, 0, sizeof(st));
- 
- 	event->mmap2.header.type = PERF_RECORD_MMAP2;
-@@ -563,14 +591,15 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	int usize;
- 	u16 idr_size;
- 	int ret;
--	pid_t pid, tid;
-+	pid_t nspid, pid, tid;
- 	struct {
- 		u32 pid, tid;
- 		u64 time;
- 	} *id;
- 
--	pid = jr->move.pid;
--	tid =  jr->move.tid;
-+	nspid = jr->load.pid;
-+	pid   = jr_entry_pid(jd, jr);
-+	tid   = jr_entry_tid(jd, jr);
- 	usize = jd->unwinding_mapped_size;
- 	idr_size = jd->machine->id_hdr_size;
- 
-@@ -584,7 +613,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	filename = event->mmap2.filename;
- 	size = snprintf(filename, PATH_MAX, "%s/jitted-%d-%" PRIu64 ".so",
- 	         jd->dir,
--	         pid,
-+		 nspid,
- 		 jr->move.code_index);
- 	/* snprintf returns would-be length on truncation, clamp to buffer */
- 	if (size >= sizeof(event->mmap2.filename))
-@@ -592,7 +621,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 
- 	size++; /* for \0 */
- 
--	if (stat(filename, &st))
-+	if (nsinfo__stat(filename, &st, jd->nsi))
- 		memset(&st, 0, sizeof(st));
- 
- 	size = PERF_ALIGN(size, sizeof(u64));
-@@ -760,7 +789,7 @@ jit_inject(struct jit_buf_desc *jd, char *path)
-  * as captured in the RECORD_MMAP record
-  */
- static int
--jit_detect(char *mmap_name, pid_t pid)
-+jit_detect(char *mmap_name, pid_t pid, struct nsinfo *nsi)
-  {
- 	char *p;
- 	char *end = NULL;
-@@ -800,7 +829,7 @@ jit_detect(char *mmap_name, pid_t pid)
- 	 * pid does not match mmap pid
- 	 * pid==0 in system-wide mode (synthesized)
- 	 */
--	if (pid && pid2 != pid)
-+	if (pid && pid2 != nsi->nstgid)
- 		return -1;
+ 	ret = jit_inject_event(jd, event);
  	/*
- 	 * validate suffix
-@@ -842,16 +871,30 @@ jit_process(struct perf_session *session,
- 	    struct machine *machine,
- 	    char *filename,
- 	    pid_t pid,
-+	    pid_t tid,
- 	    u64 *nbytes)
- {
-+	struct thread *thread;
-+	struct nsinfo *nsi;
- 	struct evsel *first;
- 	struct jit_buf_desc jd;
- 	int ret;
+@@ -577,6 +579,8 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+ 	if (!ret)
+ 		build_id__mark_dso_hit(tool, event, &sample, NULL, jd->machine);
  
-+	thread = machine__findnew_thread(machine, pid, tid);
-+	if (thread == NULL) {
-+		pr_err("problem processing JIT mmap event, skipping it.\n");
-+		return 0;
-+	}
-+
-+	nsi = nsinfo__get(thread->nsinfo);
-+	thread__put(thread);
-+
- 	/*
- 	 * first, detect marker mmap (i.e., the jitdump mmap)
- 	 */
--	if (jit_detect(filename, pid)) {
-+	if (jit_detect(filename, pid, nsi)) {
-+		nsinfo__put(nsi);
-+
- 		// Strip //anon* mmaps if we processed a jitdump for this pid
- 		if (jit_has_pid(machine, pid) && (strncmp(filename, "//anon", 6) == 0))
- 			return 1;
-@@ -864,6 +907,7 @@ jit_process(struct perf_session *session,
- 	jd.session = session;
- 	jd.output  = output;
- 	jd.machine = machine;
-+	jd.nsi = nsi;
- 
- 	/*
- 	 * track sample_type to compute id_all layout
-@@ -881,5 +925,7 @@ jit_process(struct perf_session *session,
- 		ret = 1;
- 	}
- 
-+	nsinfo__put(jd.nsi);
-+
++out:
++	free(event);
  	return ret;
  }
-diff --git a/tools/perf/util/namespaces.c b/tools/perf/util/namespaces.c
-index 285d6f30d9129..fe69f3b03fa0d 100644
---- a/tools/perf/util/namespaces.c
-+++ b/tools/perf/util/namespaces.c
-@@ -280,3 +280,15 @@ char *nsinfo__realpath(const char *path, struct nsinfo *nsi)
  
- 	return rpath;
+@@ -926,6 +930,7 @@ jit_process(struct perf_session *session,
+ 	}
+ 
+ 	nsinfo__put(jd.nsi);
++	free(jd.buf);
+ 
+ 	return ret;
  }
-+
-+int nsinfo__stat(const char *filename, struct stat *st, struct nsinfo *nsi)
-+{
-+	int ret;
-+	struct nscookie nsc;
-+
-+	nsinfo__mountns_enter(nsi, &nsc);
-+	ret = stat(filename, st);
-+	nsinfo__mountns_exit(&nsc);
-+
-+	return ret;
-+}
-diff --git a/tools/perf/util/namespaces.h b/tools/perf/util/namespaces.h
-index 4b33f684eddd0..2a004e6ec9c58 100644
---- a/tools/perf/util/namespaces.h
-+++ b/tools/perf/util/namespaces.h
-@@ -8,6 +8,7 @@
- #define __PERF_NAMESPACES_H
- 
- #include <sys/types.h>
-+#include <sys/stat.h>
- #include <linux/stddef.h>
- #include <linux/perf_event.h>
- #include <linux/refcount.h>
-@@ -55,6 +56,7 @@ void nsinfo__mountns_enter(struct nsinfo *nsi, struct nscookie *nc);
- void nsinfo__mountns_exit(struct nscookie *nc);
- 
- char *nsinfo__realpath(const char *path, struct nsinfo *nsi);
-+int nsinfo__stat(const char *filename, struct stat *st, struct nsinfo *nsi);
- 
- static inline void __nsinfo__zput(struct nsinfo **nsip)
- {
 -- 
 2.53.0
 
