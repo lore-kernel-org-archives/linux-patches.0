@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034110;
-	b=lHKPkuoSOjyaLSx/q4tvbqr52yKgoHjrpjEv+8tvIpUw+UYFO93c5O79hy8ngoUmpcEd
-	 ZlM17Fe6Fui0P6QhXyNIbq82aeNaKiPH5FokDDgFeZzFLf2XQ4WzpHcSMyTtw7yV1Cd+s
-	 7M5/PN6UrjvBRb6O9bKfH0WTL8KZnlQ3eyz67NQOqHNAm+qGqqPSiFMye4uz8F2CQ52gq
-	 mMmQ/LY6Voda+i+eRFJrPZKFoEuiC4LeW9yPObZBak1g7ez/f132WBPJ8QYg4ERyG1858
-	 1W7BNgGKFeZUsRnH2NhZ+kvRmVP+9dqgdqPDEM1213qXSy14WAdrRCQcaCWekKeHlaw==
+	t=1795034112;
+	b=bjdc0Z9uije5enib8GnNbJV4BNnaIg00iPo92ldydFrdNYLv9Ub9oHbJjp/NURgxEgBY
+	 U3aXH5ATgMpN4K4DRvPXL0LZhk6LLZxWNA0p7p2nNLDNHOf31vDRQNPMznCowFG6su4pu
+	 FqA9YImWWjeAx1bCeDw5+vDBRZICouNfV99CW/0Vh64x1M03XJ16AhiBn2RTFLYQ+nae2
+	 fZYlqPenbG9Cn9qbOmhuU7ILD7AtWzcGhGvlu2kKIayHzixbeMjTrkeOyTfjSLiyN7CUX
+	 lmzhId+2hbKRd6bZu5q3Ex1hHGVFTW7iF9fXQS8dhquy4AutBPHYboUwJ8R3iOyQaLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034110;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034112;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jem5tuWKYR+GfqlodiDvyW1phxvrvgbzUIVziINb/VQ=;
-	b=tMnGbHFF07AWxoFyqlAZkr1Jd41kt3j4Z3JrFvYfZNAItokK0jvvHXT/tdI1dbm73Fca
-	 hzUqkAGb3eyQtgaRwsl2v0f5YTko19j7w+wV/lI8rRRo3sgA/g8L2Rbupxa7elwH5Roez
-	 KweEIwrF2rLXq4h+gTs4OHcE6s0iAIoA4vP5+2RnDe9mT8RJzoJEGg/2AbVmf4NmpcktR
-	 Dy8KcL+9SN0HLwVAMNPXtMarrTe1PVUxhfUFbqtQuNqUK4oWU82tKa3k9Vo6DrCWhLqry
-	 bH2WQ1ntMc79YOoi5C2/Pxtlza9SNFNZFawG6eJ0Won/nh/Pu/rVEYr7a7+NECRUvog==
+	bh=a+oN9KJUR1UNVdJZiUP75A87IXVkCF6u8z+R+X/FriU=;
+	b=gk7FalFRyCxJ0vUc2YSyq+onl/y+Y0DFVY67c/kF7Fd3eiMDT5b782FIYz/gLPde/6bf
+	 PomWsgXCzZVmxM6aS8x6Lf5hJ1vtwAvTwnmy4J0S2kwto6jJr9y6pL1F2+gDhVBFTqbjy
+	 6nssd1mHx+oU6mINxKebfzkFtBdGFoXOipSG3DsuQVYGBR/DmkKTgYdYtR4b2SmUjIGDC
+	 apjk6hNEB0SiEJQQCAGAuZoc/vtL6Cv5kHuYa3HMp4qdn1Vdwouq+YrsiSinYre8/PWLB
+	 vrjWAx6yEk3vlfpugYLYlE95a3p8YZ9p65U8q8ml/bgpeCC4r2Cr2u3N2UWXKZJ6NqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y3a52oup;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T49yaMhQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05767606A31C;
-	Wed, 18 Nov 2026 20:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2C2606A320;
+	Wed, 18 Nov 2026 20:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y3a52oup
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E42B1F000C4;
-	Wed, 18 Nov 2026 20:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T49yaMhQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2834E1F000C5;
+	Wed, 18 Nov 2026 20:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034109;
-	bh=jem5tuWKYR+GfqlodiDvyW1phxvrvgbzUIVziINb/VQ=;
+	s=korg; t=1795034112;
+	bh=a+oN9KJUR1UNVdJZiUP75A87IXVkCF6u8z+R+X/FriU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3a52oup3a/wYjG+iqzrvS28wRWybriLpza9aPxz+QPi3cBIq6JbbbjZutluPhwTv
-	 UdkpDvA9nR7PZpe5rzWvK3LIS+gd3cQbpM0LpPkPDA89CH0JZH3TihpmgVv47HS8/c
-	 IdUCiJ5vQjpukDggV6OaSNo1EBOimW7y03qupymc=
+	b=T49yaMhQ58yJwOxh3vQIrGohyQ8Q3wlgpAqCUnb84fpTzEJ+ROSjg+msXZi95aYD9
+	 62D6feMgB706nUyQyhZmO8tu7b05Hu+m4GNGwZ1I+2PIY8M0nCn4GqvKiTQ16hToPu
+	 q7hQzVDE9RbqRclyUbRyUzDj+eAwDlSL5agseWEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@h-partners.com>,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	sashiko-bot@kernel.org,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0246/3318] ACPI: APEI: Handle repeated SEA error storms
-Date: Wed, 18 Nov 2026 15:14:28 +0100
-Message-ID: <20261118150322.648796878@linuxfoundation.org>
+Subject: [PATCH 6.6 0255/3318] fbdev: omap2: dsi: do not copy isr table
+Date: Wed, 18 Nov 2026 15:14:37 +0100
+Message-ID: <20261118150322.985625972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,99 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@h-partners.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit e61487226b7df39e5f4683b036ee6aa7a5039d7b ]
+[ Upstream commit 31875c51c31edec57b3620f278680c23a823763b ]
 
-When hardware memory corruption occurs and a user process accesses the
-corrupted page, the CPU triggers a Synchronous External Abort (SEA).
-The kernel invokes do_sea() to handle the exception, which calls
-memory_failure() to handle the faulty page.
+To te able to unregister stuff from isrs, the corresponding table was
+copied.  Nobody seems to unregister stuff that way, so it does not help.
+But there are stack-allocated objects passed to these isrs giving chances
+of UAF of these objects if irqs are unregistered while they are handled,
+so better do not copy that table.
 
-Scenario 1: Memory Error Interrupt First, then SEA
-The page is already poisoned by the memory error interrupt path. The
-subsequent SEA handler sends a SIGBUS to the task, which accesses the
-poisoned page. This flow is correct.
-
-Scenario 2: SEA first, then memory error interrupt (problematic scenario)
-If a user task directly accesses corrupted memory through a PFNMAP-style
-mapping (e.g., devmem), the page may still be in the free-buddy state when
-SEA is handled. In this case, memory_failure() will poison the page without
-invoking kill_accessing_process(), and then takes the free-buddy recovery
-path.
-
-After the CPU returns to the task context, the task re-enters the SEA
-handler due to the same access. However, ghes_estatus_cached() suppresses
-all subsequent entries during the 10-second window, preventing
-ghes_do_proc() from being called. This suppression blocks the
-MF_ACTION_REQUIRED-based SIGBUS delivery, causing the kernel to fail to
-kill the task immediately. Consequently, the process keeps re-entering
-the SEA handler, leading to an SEA storm. Later, the memory error
-interrupt path also cannot kill the task, leaving the system stuck in
-this repeated loop.
-
-The following error logs are explained using the devmem process:
-  NOTICE:  SEA Handle
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: recovery action for free buddy page: Recovered
-  [ T9955] EDAC MC0: 1 UE Multi-bit ECC on unknown memory
-           (page:0x1000093 offset:0xc00 grain:1 - APEI location: ...)
-  NOTICE:  SEA Handle
-  NOTICE:  SEA Handle
-  ...
-  ...        ---> SEA storm
-  ...
-  NOTICE:  SEA Handle
-  [ T9955] Memory failure: 0x1000093: already hardware poisoned
-  ghes_print_estatus: 1 callbacks suppressed
-  [Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 9
-  [Hardware Error]: event severity: recoverable
-  [Hardware Error]:   section_type: ARM processor error
-  [Hardware Error]:    physical fault address: 0x0000001000093c00
-  [T54990] Memory failure: 0x1000093: already hardware poisoned
-  [T54990] 0x1000093: Sending SIGBUS to devmem:54990 due to hardware memory corruption
-
-To resolve this, return an error when encountering the same SEA again.
-The subsequent SEA handler invocation uses arm64_notify_die() to send a
-SIGBUS signal to the task, which terminates the process and prevents it
-from re-entering the handler loop.
-
-Signed-off-by: Junhao He <hejunhao3@h-partners.com>
-Reviewed-by: Wupeng Ma <mawupeng1@huawei.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260527082707.2013499-1-hejunhao3@h-partners.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: sashiko-bot@kernel.org
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/omap2/omapfb/dss/dsi.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 9c0d256fc72b1..36917a7613d06 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -1154,8 +1154,16 @@ static int ghes_in_nmi_queue_one_entry(struct ghes *ghes,
- 	ghes_clear_estatus(ghes, &tmp_header, buf_paddr, fixmap_idx);
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
+index b7eb17a16ec42..0dc771f0c2ba4 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
+@@ -325,8 +325,6 @@ struct dsi_data {
  
- 	/* This error has been reported before, don't process it again. */
--	if (ghes_estatus_cached(estatus))
-+	if (ghes_estatus_cached(estatus)) {
-+		/*
-+		 * Return failure on duplicate SEA entries so that the
-+		 * subsequent SEA handler invocation sends a SIGBUS signal to
-+		 * the task to prevent it from re-entering the handler loop.
-+		 */
-+		if (is_hest_sync_notify(ghes))
-+			rc = -ECANCELED;
- 		goto no_work;
-+	}
+ 	spinlock_t irq_lock;
+ 	struct dsi_isr_tables isr_tables;
+-	/* space for a copy used by the interrupt handler */
+-	struct dsi_isr_tables isr_tables_copy;
  
- 	llist_add(&estatus_node->llnode, &ghes_estatus_llist);
+ 	int update_channel;
+ #ifdef DSI_PERF_MEASURE
+@@ -837,15 +835,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
+ 		del_timer(&dsi->te_timer);
+ #endif
  
+-	/* make a copy and unlock, so that isrs can unregister
+-	 * themselves */
+-	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
+-		sizeof(dsi->isr_tables));
+ 
++	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
+ 	spin_unlock(&dsi->irq_lock);
+ 
+-	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
+-
+ 	dsi_handle_irq_errors(dsidev, irqstatus, vcstatus, ciostatus);
+ 
+ 	dsi_collect_irq_stats(dsidev, irqstatus, vcstatus, ciostatus);
 -- 
 2.53.0
 
