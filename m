@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034893;
-	b=P3gcSw8aVGEQ4W840hqteYGs0JF5OeUVFE6Ox3Ogtz7+1JriOWZV3uJIMnRTBA0blOPo
-	 A4L8I2rKFvn6TT/w2+EkhGk8E9sTGYgweBpNyxTqmj495s6O1VoNR6n3oJm6lA4Szzs20
-	 IKyCrD/KYZPGEh2mO80kphTgFQgv86FFqnHtoduKPqboKWTh/6DGeHmIdrqHw4WfaLOL+
-	 UaHQJMNw5IZ17LiRRxPbEJ/hWMFivOv0AQewBd7ZZz6ca/TVq7Ol2cGEtS3GZBaoGYLA0
-	 elq1iVEb/rVwQov1nN6UkSllVHPEaStzsS/X0cBr+K9UL9S/yQfLyEQKlBDpEUGvvyQ==
+	t=1795034896;
+	b=MRYtO7UgneNICILeDyTh2MJkeqPSlb5BfzKicLCdnureEasGs86yOV8ioBErylHuxJSF
+	 xAhuBlYWyQMnfmZK3ShPxOVeiNrwvsjKLPMLTgVMp6ieMsRxedtXEFJTKBjFxQoMLOsZj
+	 uIS3kURUm9EoQgqLgKftBE8OGgYw9bHwbZZWLnX7heSFnfO/dgZf8PHeJrIbKzNFiDJ9j
+	 xsHnZjAgXY2qgES9Xx3GcD6Vt0KlA29/WcBhJwHr04teR7gYnM1tAekIJEzG4FDQxZJRX
+	 DA9kPTb/ss79koiczf6sR4mbXxQ3wwrXYAZOvP3Gf3Q6R9W6vwcIV69qKSQs5395zIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034893;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=q4/HvmTZxNzW828w0JCaBXof55joqhklcgpbVBYyj8w=;
-	b=1usPYDxEVElKeRgFtpZ27Df2R8mjj/8g7L+gv1UqNZpNPmRkW6ez3CpsvWWyyvsC0JOR
-	 re8lXThDaENTsD8pH2++E0/kbyeFnWFoWpPdvk2tdOQTjE/mNTD/6oLznStSFFwHICWzj
-	 4j9qJncPZBduCSkotqfz8ChjG2KbyNyGTzF6HHqJwYTvI+zcvCXLaJ1py7ssGA45tfzHh
-	 wwS2PxreQD8YRyo7eIfPNzpDon1Mul3NM06+omVCYJM6BQvU6X92+lqf8+HQHv2pI+KiA
-	 5JS48CN1A/fFuD/UaLOSvlPi0/ZS/UGHhgCzk3YsIga9okEsKGDQ6J7koXHbsKsHnqQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hYRDC3F1eLtTCoWg59zwwxvIVxyB0V5cWuNsL/eUc34=;
+	b=io1GAgJtsDUvePlIXK2q6ryypljhyxxUUWlQIna8btV31wqrmZBc15vApXn+qCvS9Rj0
+	 7TlYmFX/5dLPAzKfBybobkH6YnUxvCCuHFQoxF2MybCtOtJ7oy0AsDEzP8W6RlnF0cziP
+	 8WQSAyOslf30MZ24vZ/9/dorwij/+jAAIQz01Y8MTH+OgmHVn2OyVas2M8hNLbMolZFCE
+	 Z/YvviCKBvJp/+CS4pZD9OZ1kVAOW9qdX124MlCH9qRQL9SF0f05v9C67uVh25W3c6ruQ
+	 XTUMi4X4oHtfqJMSaYZXTME+CmdrHQSGVteGzTz3CACvlDCUJTu0Ml98Q+peqZ6Tv/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="elFa/EUW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="m5+HqIC/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A79606A31C;
-	Wed, 18 Nov 2026 20:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64040606A31C;
+	Wed, 18 Nov 2026 20:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=elFa/EUW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC551F000C4;
-	Wed, 18 Nov 2026 20:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m5+HqIC/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B702F1F000C5;
+	Wed, 18 Nov 2026 20:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034893;
-	bh=q4/HvmTZxNzW828w0JCaBXof55joqhklcgpbVBYyj8w=;
+	s=korg; t=1795034896;
+	bh=hYRDC3F1eLtTCoWg59zwwxvIVxyB0V5cWuNsL/eUc34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=elFa/EUWKgjGX3gBxIrhkUvnxGCqKXT/e2PNXqww+wsPpBxyc31FS+DkjxJqTAmaJ
-	 SNwEU6n0aqB2OAIMcR6OnQATJB4upgiQmcAdFutbQK7ibZJoMGPp3tXl6MHHZSq1aZ
-	 4dBHRCyBJyGEMJ+k618QSc73Hkzw5T4/2KTX070I=
+	b=m5+HqIC/Aku4oC8LJMDzjuo6NK73PwkQObYiXVCYXbmTvovl8lW4u2etLve6/dORK
+	 2huhG2UT4tJYk1HouLvv255tQZHm2ch/QQYCGWcYa4IIS9iIt8QDi1i5nxYncNUxxv
+	 PwKF2pFu3akV3hnoGP0xLoDlT3NzLeWrX+nLLe8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Theo Andersen Carton <andersen.theo@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0530/3318] drm/amd/display: Fix fast updates on DCE 6.x
-Date: Wed, 18 Nov 2026 15:19:12 +0100
-Message-ID: <20261118150333.116648417@linuxfoundation.org>
+Subject: [PATCH 6.6 0531/3318] drm/amdgpu: skip the noirq suspend reset for a switcheroo-parked GPU
+Date: Wed, 18 Nov 2026 15:19:13 +0100
+Message-ID: <20261118150333.154366450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,87 +62,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Theo Andersen Carton <andersen.theo@gmail.com>
 
-[ Upstream commit 88427119e1f039c8cdffd63726c136a986ef519f ]
+[ Upstream commit eadb85cca111152bd334b861fb53747ab851d13a ]
 
-DCE6 should use legacy fast updates, just like all DCE8 - DCN2.
-Set that flag for DCE 6.0, 6.1 and 6.4 (all DCE6 versions).
+amdgpu_pmops_suspend_noirq() resets the ASIC unconditionally. When the GPU
+has been parked by vga_switcheroo it has neither power nor a PCIe link, so
+the reset cannot reach it: pci_set_power_state() reports the device as
+inaccessible and amdgpu_asic_reset() returns -EINVAL. A failure there
+aborts the entire noirq suspend phase, and with it the system suspend, so
+the machine cannot sleep at all while the GPU is switched off.
 
-Technically DCE6 should have been included when the fast update
-code was refactored, but it just happened to work until now.
+amdgpu_device_prepare(), amdgpu_device_suspend() and amdgpu_device_resume()
+all bail out early on DRM_SWITCH_POWER_OFF. This callback was added later,
+for an unrelated reason, and did not inherit the check. nouveau guards
+every one of its PM callbacks the same way.
 
-A recent commit "Attach only plane updates that actually changed"
-has exposed this issue because with that commit, DC accidentally
-took the new fast update code path for DCE6 as well, which caused
-it to boot into a black screen with a flip done timeout.
+Bail out the same way here. On a single-GPU system switch_power_state is
+never DRM_SWITCH_POWER_OFF, so this is a no-op there.
 
-This fix should be backported to all kernel versions that
-have "Refactor fast update to use new HWSS build sequence",
-but this patch won't apply cleanly to older kernels due to
-another refactor in "Remove dc param from check_update".
+Found on a MacBookPro11,5, where the Radeon is powered down through
+apple-gmux so that the internal panel can be driven by the iGPU instead.
+Every suspend failed in amdgpu_pmops_suspend_noirq() while the card was
+off; with this check a full S3 cycle completes.
 
-Fixes: 0baae6246307 ("drm/amd/display: Refactor fast update to use new HWSS build sequence")
-Fixes: 9ec11bb842b6 ("drm/amd/display: Remove dc param from check_update")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260923122033.1046651-1-timur.kristof@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: 9e051720f9d3 ("drm/amdgpu: Ensure HDA function is suspended before ASIC reset")
+Signed-off-by: Theo Andersen Carton <andersen.theo@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 698fda6e360625850413a2d1a90b72ae5f03073d)
+(cherry picked from commit 539d0558638a6dcc066f1cf592b6b9a52adc8ea4)
 Cc: stable@vger.kernel.org
-[ sashal: Set enable_legacy_fast_update in debug_defaults (dc_debug_options) instead of a new dc_check_config struct, and dropped the is_apu context line in dce64_construct(). ]
+[ sashal: Kept the local amdgpu_pmops_suspend_noirq() body (no int r, no reset-domain locking, bare amdgpu_asic_reset()) and inserted the switcheroo power-off early return after suspend_complete = true;. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-index 556c453666a74..c069cf0ef4bd7 100644
---- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-@@ -438,6 +438,10 @@ static const struct dce_abm_mask abm_mask = {
- 		ABM_MASK_SH_LIST_DCE110(_MASK)
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 1712c399c962d..1f8171c148ee6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2437,6 +2437,15 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
  
-+static const struct dc_debug_options debug_defaults = {
-+	.enable_legacy_fast_update = true,
-+};
+ 	adev->suspend_complete = true;
 +
- #define CTX  ctx
- #define REG(reg) mm ## reg
++	/*
++	 * A GPU parked by vga_switcheroo has no power and no PCIe link, so the
++	 * ASIC reset below would fail and abort the whole noirq suspend phase.
++	 * Bail out like amdgpu_device_prepare/suspend/resume() already do.
++	 */
++	if (drm_dev->switch_power_state == DRM_SWITCH_POWER_OFF)
++		return 0;
++
+ 	if (amdgpu_acpi_should_gpu_reset(adev))
+ 		return amdgpu_asic_reset(adev);
  
-@@ -964,6 +968,7 @@ static bool dce60_construct(
- 	dc->caps.max_cursor_size = 64;
- 	dc->caps.dual_link_dvi = true;
- 	dc->caps.extended_aux_timeout_support = false;
-+	dc->debug = debug_defaults;
- 
- 	/*************************************************
- 	 *  Create resources                             *
-@@ -1158,6 +1163,7 @@ static bool dce61_construct(
- 	dc->caps.i2c_speed_in_khz = 40;
- 	dc->caps.max_cursor_size = 64;
- 	dc->caps.is_apu = true;
-+	dc->debug = debug_defaults;
- 
- 	/*************************************************
- 	 *  Create resources                             *
-@@ -1355,6 +1361,7 @@ static bool dce64_construct(
- 	dc->caps.max_downscale_ratio = 200;
- 	dc->caps.i2c_speed_in_khz = 40;
- 	dc->caps.max_cursor_size = 64;
-+	dc->debug = debug_defaults;
- 
- 	/*************************************************
- 	 *  Create resources                             *
 -- 
 2.53.0
 
