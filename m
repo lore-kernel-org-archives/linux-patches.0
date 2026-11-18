@@ -1,59 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054355;
-	b=up/ArpjMS4QtPCgPTWTMXXEDc2FMLzi72qWBoxlNrrDATwuVi9xWgWF/vLlpWXsl+UGV
-	 vmPpW6Cz2+9iw4H1+tyrqiBQEPxvthagub+maC0hzqwDVu+S3u3OIwrkVm2UUKPwXKwic
-	 y49ar+v7aU8MzH33Jh0LZPSGy9RHHA+jirnchy89z7HOLcO/+pSkwCnPpdA0Q5kFB4DM1
-	 Mqcq9OwfcFEks9GUh0PCZLZEvL4ETVzAiHmOPlRUW1jm9+xq4f0HfdOGofZmnL1/+uQA1
-	 YIFzpjrIBDkrXN48kSPs2dHFQ2yclnUcrV+rVGNMv5cIjea0nrlyKSWXV30x/8MCKiQ==
+	t=1795054359;
+	b=lkRGluEl5D4mXBsvyCmp7jwszA3CloO2oWzF1aHHPZ5pWdLGhXjoNQvjerne8krbGi97
+	 snAN+7b6STfrS3O38Lmsl9lTOhcyGNGVl6w48TzjCPrWtutge99T/0pCWUVmfCRRgiRkR
+	 rkw0oGpltMcAA4ZtKKmSfZet4vnbikpaDiNxOjOy2Rx9ndocYeCRz732cBE2Ejd1BVg1P
+	 /r3PQywln2Or9mlNImeT0mO85JjogUqXFRq0HkPqrNYncLubs4qkmNmK5dqhPw43u1Oig
+	 3GRozQJbqKWRlc4spfdx/Y1B+ie7B0VB82FTdO+CVDpJSwcm03DTrae70M0r8iXPrHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054359;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vCZJJM3LRtXzRR/kMkz4Szcowuoj56X9/88q4yAvNKU=;
-	b=qF7FpA4B9NUKDG8O4qQYm1ld8GPg2VLeVaweoqagU0nGnIsM9iaf9GmMfGjMIIf69gGp
-	 GZJd4+l9CfQr6lZSsvbz1/a4ydMIuq2f1FAvPWfWA8JbgADZ3fe7X5VowFJ8HBNf89HRO
-	 QmtkxJKgq3fJb+XWs3onsdlFV8ajI71qh/7EObz6QgLzNDjunQApExqyy9po93KHnZHex
-	 vwp049RnlQMhKCOudh1Gc+DXoWT8UnW/SEc8h5PUb2oWdBGV05xHKkQmNK64wQm0LBC4Y
-	 gIx0pFQDulxb6L4gEsSQsN++btNS7Dyf0qaeYUM6usWi1z8jgVkE2X1pa+Sqov0/D+A==
+	bh=mu4jFI56ET+B6XY3BivOz3Q5XC7AvtuYZttrESSeUg4=;
+	b=hP1CP3i8w2tv/PNfD4av33pYFMg5kx/5zeFeWly8L0OLWC8dEi39qTqYKEhsXKYFXZde
+	 gGN/tGj7akJiDR9XDJEH1Eu+gEGZoBUkY4HbOaUgwBEwUSYlGhOy99f4k+86b4ynrt9l3
+	 j2uRsEwE6xHtGRzyHNnKYhho/dalJqAB/ODSHcu6D1KTckW1+FT3vOR1ZQLO4b3K9OyWY
+	 /0UffoX6pVFzi2eNrkMgbCGDmPSq/YS6F29KC44uMNyl+XXkRGq8w+WTJINC5JEjSJlBi
+	 ULRdVl3OZ1YghtimC+2kVXtYeq7EPswLpMSwtf2XlF6eana4nATpJGjD4zEb0x9AsxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIARfqYL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JIL6fomS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1F9606A330;
-	Thu, 19 Nov 2026 02:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72075606A320;
+	Thu, 19 Nov 2026 02:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QIARfqYL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888D61F000C4;
-	Thu, 19 Nov 2026 02:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JIL6fomS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5ED1F000C4;
+	Thu, 19 Nov 2026 02:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054355;
-	bh=vCZJJM3LRtXzRR/kMkz4Szcowuoj56X9/88q4yAvNKU=;
+	s=korg; t=1795054358;
+	bh=mu4jFI56ET+B6XY3BivOz3Q5XC7AvtuYZttrESSeUg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QIARfqYLrOe6fWw6YrBY9ffLU5fcKjsADFjoFC8B1yojrVJm2TOsE+IirPmayPExd
-	 g2JbZGucKupFC4NUfgppsvZq4l0ueJ0595E2q4atZovC/z9OU/vEbhPrKXdb5uAHdL
-	 ivNd0iCkhiMR6m7naNKhRv3rqELpowAP5zzmR5qo=
+	b=JIL6fomSlQbbvuMDv3FE5nZqbwX1VwvOoktij+mjKg9PJpCwiHh8bfc9fLrIuRRA/
+	 PSVBw1lYNo4pOR0hpZ70h7PntSuD6NrCu1Bcpw4JzLvfNeumPRTNCrqg4Zxvnmo0vm
+	 huG6wzYYePvgGBQLvp8RaHtmqykXCDvrfOk35WK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Joseph Qi <jiangqi903@gmail.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1243/2214] ocfs2: constify struct ocfs2_lock_res_ops
-Date: Wed, 18 Nov 2026 15:48:39 +0100
-Message-ID: <20261118150101.441101315@linuxfoundation.org>
+Subject: [PATCH 5.15 1205/2214] assoc_array: fill the segment cache in one place
+Date: Wed, 18 Nov 2026 15:48:01 +0100
+Message-ID: <20261118150100.057181123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -75,157 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 3ebe69c0c3ae3ef5ecd1ad86aa98a3b7cbe3c7e9 ]
+[ Upstream commit 1159eaf9acb3de1417fb86b382b5e41b46eb17a4 ]
 
-"struct ocfs2_lock_res_ops" are not modified in this driver.
+The loop that records the segment of each leaf in a full node is written
+out twice in assoc_array_insert_into_terminal_node(): for the node at
+its own level, and again at the far end of a shortcut that replaces it.
+Make it assoc_array_fill_segment_cache().
 
-Constifying this structure moves some data to a read-only section, so
-increase overall security.
+The second copy did not look for metadata pointers, because that path is
+only taken for a node holding nothing but leaves, so the function finds
+none there.  The new key's segment is still set by each caller, from the
+walk the first time and from the key the second.
 
-In order to do it, "struct ocfs2_lock_res" also needs to be adjusted to
-this new const qualifier.
+No functional change.
 
-On a x86_64, with allmodconfig:
-Before:
-======
-   text	   data	    bss	    dec	    hex	filename
-  83038	   2632	    400	  86070	  15036	fs/ocfs2/dlmglue.o
-
-After:
-=====
-   text	   data	    bss	    dec	    hex	filename
-  83806	   1992	    272	  86070	  15036	fs/ocfs2/dlmglue.o
-
-Link: https://lkml.kernel.org/r/43d3e2ae3a97d3cbe93d6ba6ce48ae5ec04d7526.1718382288.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Joseph Qi <jiangqi903@gmail.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 5b4696e0bfc3 ("ocfs2: cache the mount context for dentry lock callbacks")
+Assisted-by: LLM
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Tested-by: David Howells <dhowells@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Stable-dep-of: 48691075b0ad ("assoc_array: don't chain a new shortcut onto an existing one")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlmglue.c | 28 ++++++++++++++--------------
- fs/ocfs2/ocfs2.h   |  2 +-
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ lib/assoc_array.c | 56 +++++++++++++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 21 deletions(-)
 
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index dacf01536b529..ce61085f3b94b 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -222,12 +222,12 @@ struct ocfs2_lock_res_ops {
+diff --git a/lib/assoc_array.c b/lib/assoc_array.c
+index a9295e8ca5d4d..600b2d85bccb6 100644
+--- a/lib/assoc_array.c
++++ b/lib/assoc_array.c
+@@ -515,6 +515,38 @@ static bool assoc_array_insert_in_node(struct assoc_array_edit *edit,
+ 	return false;
+ }
+ 
++/*
++ * Fill in the edit script's segment cache for a full node: the segment at
++ * this level of each leaf's index key, or 0xff for a metadata pointer.
++ * The new key's segment, in the last entry, is left to the caller.  Returns
++ * true if there are any metadata pointers.
++ */
++static bool assoc_array_fill_segment_cache(struct assoc_array_edit *edit,
++					   const struct assoc_array_ops *ops,
++					   const struct assoc_array_node *node,
++					   int level)
++{
++	struct assoc_array_ptr *ptr;
++	unsigned long base_seg;
++	bool have_meta;
++	int i;
++
++	have_meta = false;
++	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
++		ptr = node->slots[i];
++		if (assoc_array_ptr_is_meta(ptr)) {
++			edit->segment_cache[i] = 0xff;
++			have_meta = true;
++			continue;
++		}
++		base_seg = ops->get_object_key_chunk(
++			assoc_array_ptr_to_leaf(ptr), level);
++		base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
++		edit->segment_cache[i] = base_seg & ASSOC_ARRAY_FAN_MASK;
++	}
++	return have_meta;
++}
++
+ /*
+  * Handle insertion into a terminal node.
   */
- #define LOCK_TYPE_USES_LVB		0x2
+@@ -534,7 +566,6 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
  
--static struct ocfs2_lock_res_ops ocfs2_inode_rw_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_inode_rw_lops = {
- 	.get_osb	= ocfs2_get_inode_osb,
- 	.flags		= 0,
- };
+ 	node	= result->terminal_node.node;
+ 	level	= result->terminal_node.level;
+-	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
  
--static struct ocfs2_lock_res_ops ocfs2_inode_inode_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_inode_inode_lops = {
- 	.get_osb	= ocfs2_get_inode_osb,
- 	.check_downconvert = ocfs2_check_meta_downconvert,
- 	.set_lvb	= ocfs2_set_meta_lvb,
-@@ -235,50 +235,50 @@ static struct ocfs2_lock_res_ops ocfs2_inode_inode_lops = {
- 	.flags		= LOCK_TYPE_REQUIRES_REFRESH|LOCK_TYPE_USES_LVB,
- };
+ 	pr_devel("-->%s()\n", __func__);
  
--static struct ocfs2_lock_res_ops ocfs2_super_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_super_lops = {
- 	.flags		= LOCK_TYPE_REQUIRES_REFRESH,
- };
+@@ -566,19 +597,8 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
  
--static struct ocfs2_lock_res_ops ocfs2_rename_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_rename_lops = {
- 	.flags		= 0,
- };
+ 	/* We need to find out how similar the leaves are. */
+ 	pr_devel("no spare slots\n");
+-	have_meta = false;
+-	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
+-		ptr = node->slots[i];
+-		if (assoc_array_ptr_is_meta(ptr)) {
+-			edit->segment_cache[i] = 0xff;
+-			have_meta = true;
+-			continue;
+-		}
+-		base_seg = ops->get_object_key_chunk(
+-			assoc_array_ptr_to_leaf(ptr), level);
+-		base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
+-		edit->segment_cache[i] = base_seg & ASSOC_ARRAY_FAN_MASK;
+-	}
++	have_meta = assoc_array_fill_segment_cache(edit, ops, node, level);
++	edit->segment_cache[ASSOC_ARRAY_FAN_OUT] = result->terminal_node.slot;
  
--static struct ocfs2_lock_res_ops ocfs2_nfs_sync_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_nfs_sync_lops = {
- 	.flags		= 0,
- };
+ 	if (have_meta) {
+ 		pr_devel("have meta\n");
+@@ -791,13 +811,7 @@ static bool assoc_array_insert_into_terminal_node(struct assoc_array_edit *edit,
+ 	/* This now reduces to a node splitting exercise for which we'll need
+ 	 * to regenerate the disparity table.
+ 	 */
+-	for (i = 0; i < ASSOC_ARRAY_FAN_OUT; i++) {
+-		ptr = node->slots[i];
+-		base_seg = ops->get_object_key_chunk(assoc_array_ptr_to_leaf(ptr),
+-						     level);
+-		base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
+-		edit->segment_cache[i] = base_seg & ASSOC_ARRAY_FAN_MASK;
+-	}
++	assoc_array_fill_segment_cache(edit, ops, node, level);
  
--static struct ocfs2_lock_res_ops ocfs2_trim_fs_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_trim_fs_lops = {
- 	.flags		= LOCK_TYPE_REQUIRES_REFRESH|LOCK_TYPE_USES_LVB,
- };
- 
--static struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
- 	.flags		= LOCK_TYPE_REQUIRES_REFRESH|LOCK_TYPE_USES_LVB,
- };
- 
--static struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
- 	.get_osb	= ocfs2_get_dentry_osb,
- 	.post_unlock	= ocfs2_dentry_post_unlock,
- 	.downconvert_worker = ocfs2_dentry_convert_worker,
- 	.flags		= 0,
- };
- 
--static struct ocfs2_lock_res_ops ocfs2_inode_open_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_inode_open_lops = {
- 	.get_osb	= ocfs2_get_inode_osb,
- 	.flags		= 0,
- };
- 
--static struct ocfs2_lock_res_ops ocfs2_flock_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_flock_lops = {
- 	.get_osb	= ocfs2_get_file_osb,
- 	.flags		= 0,
- };
- 
--static struct ocfs2_lock_res_ops ocfs2_qinfo_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_qinfo_lops = {
- 	.set_lvb	= ocfs2_set_qinfo_lvb,
- 	.get_osb	= ocfs2_get_qinfo_osb,
- 	.flags		= LOCK_TYPE_REQUIRES_REFRESH | LOCK_TYPE_USES_LVB,
- };
- 
--static struct ocfs2_lock_res_ops ocfs2_refcount_block_lops = {
-+static const struct ocfs2_lock_res_ops ocfs2_refcount_block_lops = {
- 	.check_downconvert = ocfs2_check_refcount_downconvert,
- 	.downconvert_worker = ocfs2_refcount_convert_worker,
- 	.flags		= 0,
-@@ -511,7 +511,7 @@ static inline void ocfs2_init_start_time(struct ocfs2_mask_waiter *mw)
- static void ocfs2_lock_res_init_common(struct ocfs2_super *osb,
- 				       struct ocfs2_lock_res *res,
- 				       enum ocfs2_lock_type type,
--				       struct ocfs2_lock_res_ops *ops,
-+				       const struct ocfs2_lock_res_ops *ops,
- 				       void *priv)
- {
- 	res->l_type          = type;
-@@ -554,7 +554,7 @@ void ocfs2_inode_lock_res_init(struct ocfs2_lock_res *res,
- 			       unsigned int generation,
- 			       struct inode *inode)
- {
--	struct ocfs2_lock_res_ops *ops;
-+	const struct ocfs2_lock_res_ops *ops;
- 
- 	switch(type) {
- 		case OCFS2_LOCK_TYPE_RW:
-diff --git a/fs/ocfs2/ocfs2.h b/fs/ocfs2/ocfs2.h
-index 9de838f1ac555..fd57d798a8bae 100644
---- a/fs/ocfs2/ocfs2.h
-+++ b/fs/ocfs2/ocfs2.h
-@@ -154,7 +154,7 @@ struct ocfs2_lock_stats {
- 
- struct ocfs2_lock_res {
- 	void                    *l_priv;
--	struct ocfs2_lock_res_ops *l_ops;
-+	const struct ocfs2_lock_res_ops *l_ops;
- 
- 
- 	struct list_head         l_blocked_list;
+ 	base_seg = ops->get_key_chunk(index_key, level);
+ 	base_seg >>= level & ASSOC_ARRAY_KEY_CHUNK_MASK;
 -- 
 2.53.0
 
