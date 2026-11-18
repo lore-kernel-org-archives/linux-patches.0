@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024503;
-	b=Ef8r+SndRzV34agUAhxM8yy7trlpn8uOxti8y6nyC5O1QEQGSZgpTD91vrwBVpwOpRRQ
-	 SO+kqUctx2K1qDECM/PDdl4lMMXUOPBQX2mzSX6vrGgpDt3kv9KaVOKhPMXexyJQ43IVP
-	 2Q/MFUmwhCIzwyXIt8qRI2sVOoLO8npX4tKSM6BjnOsDYxe9Va4abwOuIbGgu5ib2SiSA
-	 uZ3J9Qo4kwkc1HwQtWCy+hhk8s07amFagFfvOmbuYPSdi0WKZvNvNrINEoTzUvRCGMnC7
-	 F0ECBP5xhM3ki62lHck6AnxLyVdRW9Mb+7xKhAoZ5WM/7wc7FelFbzrISS2/PAH4ekw==
+	t=1795024506;
+	b=ypGT4efl2Het0PfthmNfCdvChk6fqsLOy6roExp1MbCqKEKlDmF9FQfYg3Q9AALFn2PM
+	 AksvaQHC0GfP1vmofv/pDrK8+fKKvHoFvhIuqLTYtNb0TgdYZzgmTlDEKw3V2IXxOC2td
+	 zbeMh9TdBQOzeC360LiQ2lFX/O2u7Fg82uX0Oxj1wrh5mmO/mmm1E7tRVmJJ23SK9jJ1B
+	 hKL+XlsL4cVzb/Fr4zuWkN9U+h53D4H9n+TVxg72w+HZLPHs6YnFaFXI6KDN+gwR19euP
+	 MPH0jkAgliC/7NeCwW7rwo4cfUxKHhhnky8T/PcnyS/X9dHzOs9b1QGhVlSDVThvq2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024506;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oA3UoD1f6ClTkyuaxyT+R1cMouf2DpEssF6wPOUleHM=;
-	b=hsc2RoJ7n8wz88F919GyDu+mkH3iPkQUVcQh5oLFo0BraWYXRqLQGinBKUE4e3R5ZchY
-	 zo3+VuSK7C7IjegTYyjvK3ImFn9q4qcGKTB6Ve+ap3z4QcdGPOtSBMDgf7VvvlfWb6IUz
-	 dXEl/SwqOWQk7rSOVjZh3NcdKUWIgXsumOShJsm0ceSBcVsDrVL2KP0QAtJJMUevY81hU
-	 61/ofNsJ+8xFVeXoElSj1pZ6B03kNQmC+DN6gluCVFADTXyNSQXeaOoJXhAiHoM5xHFnI
-	 TSJ3HJLc7cDlv2OdIQwjLcImS3qj9FNIFemDOfBrcMzrLCDv3QZeIohe4bwEaHzDTMA==
+	bh=nHeFbNZKByooKWtHp7nSXDbye8QE6m0QD7tQ2Srae4g=;
+	b=ch5//+YEn29MwwXOS1Nt4OKhusx/awZfDxMTZLVRDKb76I/fetoly4yWrdN8mz0UW5wx
+	 wLyz6RtFTDhcu2lLBifCTEhXOvOHL1pkelJ8i7O3UYA/mDzFVneZ0/z8tEy+aB7C3/15+
+	 m0K1SIF2eTnUk+FBxCD1l2L7IsW38XSCJRURIJmBJtqlTAh2LHsVivR6KDT5o0VqtloLd
+	 +kM1s5UnrVwjE7AMF3TnwLt3Nv0/e5dVprQwFPpHvF2Orhvyg/jFdPJuVR59V1Al0g4DN
+	 R+R/a5yGS4nlp+0UPHUZQNHartj6/SW8N9QHASSqBp1k7HADGUBXbLRmAjIAGbOivsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1oIP1EUU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfLTnKFw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE66606A33E;
-	Wed, 18 Nov 2026 17:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16496606A330;
+	Wed, 18 Nov 2026 17:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1oIP1EUU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1721F000C8;
-	Wed, 18 Nov 2026 17:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfLTnKFw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238E51F000CA;
+	Wed, 18 Nov 2026 17:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024502;
-	bh=oA3UoD1f6ClTkyuaxyT+R1cMouf2DpEssF6wPOUleHM=;
+	s=korg; t=1795024505;
+	bh=nHeFbNZKByooKWtHp7nSXDbye8QE6m0QD7tQ2Srae4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1oIP1EUUtealluBJxloXgiYfocs38SZ1M4vkUHye4nFkZA5/A7X1Vd2ajGVZSa+x2
-	 GRFkg/QJroYCjEZw9Zt4DoRbZHVQEbkejPxfsaoaiFN1/BGKhNy8jEOW2M8l3EZb94
-	 h3BLfKXaINf79D1fWj6STjAKDH5tXy8PGmqdZCaw=
+	b=YfLTnKFwgcODMmSNL8UP7wu/+lW2u7OIgYzLV3Hk4+CZl+MiaUCzcdHWFVBSXgMGt
+	 7iWbkPj33iXgZXv0IjRJYM8sf1RNhbB2lUma7GYdJ8MPi3xb7XUubO8/69hMjzusQM
+	 FEhiHvM9/C3lIbDpCiB19nIMxlPZk6lh0U2Ye37o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aaron Kling <webgeek1234@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0749/2151] ASoC: mediatek: mt8183: Fix APLL enable error handling
-Date: Wed, 18 Nov 2026 15:41:24 +0100
-Message-ID: <20261118150149.304003265@linuxfoundation.org>
+Subject: [PATCH 6.18 0750/2151] dt-bindings: vendor-prefixes: Add Chip Wealth Technology
+Date: Wed, 18 Nov 2026 15:41:25 +0100
+Message-ID: <20261118150149.351429406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,74 +68,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-[ Upstream commit 30cf48383006579d7cd35380cc6e766260b72bff ]
+[ Upstream commit 058ee00216a1356e710446b59a800065d2abbd80 ]
 
-Currently, the mt8183_apll*_enable() functions call mux_setting(afe, true)
-but do not check its return value to handle failures.
+Add an entry for Chip Wealth Technology (https://www.chipwealth.com/)
 
-In addition, the cleanup paths of mt8183_apll*_enable() do not call
-mux_setting(afe, false) when the enable operation fails, while the
-mt8183_apll*_disable() functions do.
-
-Add error handling for apll*_mux_setting() and call mux_setting(afe, false)
-in the cleanup paths when mt8183_apll*_enable() fails.
-
-Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260903045203.175337-4-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+Link: https://patch.msgid.link/20260727-ayn-qcs8550-v9-1-e3db456e10e5@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-index dd1a5925af96d..06556689976db 100644
---- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-+++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
-@@ -376,7 +376,9 @@ int mt8183_apll1_enable(struct mtk_base_afe *afe)
- 	int ret;
- 
- 	/* setting for APLL */
--	apll1_mux_setting(afe, true);
-+	ret = apll1_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL22M]);
- 	if (ret) {
-@@ -405,6 +407,8 @@ int mt8183_apll1_enable(struct mtk_base_afe *afe)
- ERR_CLK_APLL1_TUNER:
- 	clk_disable_unprepare(afe_priv->clk[CLK_APLL22M]);
- ERR_CLK_APLL22M:
-+	apll1_mux_setting(afe, false);
-+
- 	return ret;
- }
- 
-@@ -430,7 +434,9 @@ int mt8183_apll2_enable(struct mtk_base_afe *afe)
- 	int ret;
- 
- 	/* setting for APLL */
--	apll2_mux_setting(afe, true);
-+	ret = apll2_mux_setting(afe, true);
-+	if (ret)
-+		return ret;
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_APLL24M]);
- 	if (ret) {
-@@ -459,6 +465,8 @@ int mt8183_apll2_enable(struct mtk_base_afe *afe)
- ERR_CLK_APLL2_TUNER:
- 	clk_disable_unprepare(afe_priv->clk[CLK_APLL24M]);
- ERR_CLK_APLL24M:
-+	apll2_mux_setting(afe, false);
-+
- 	return ret;
- }
- 
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 8bc95dd4b2592..5e80440a22395 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -305,6 +305,8 @@ patternProperties:
+     description: ChipOne
+   "^chipspark,.*":
+     description: ChipSPARK
++  "^chipwealth,.*":
++    description: Chip Wealth Technology
+   "^chongzhou,.*":
+     description: Shenzhen Chongzhou Electronic Technology Co., Ltd
+   "^chrontel,.*":
 -- 
 2.53.0
 
