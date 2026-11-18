@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029013;
-	b=gqVmWtEa3MsXoTi0EvDc927u+mpF0mDJDV8EGIsQaqWvBc/4adnFu6XX6lw5w3u0cbRA
-	 nxjgjmTTx+RY5u7aVzsB6pItu/Sic+CoUknE3hG+puuX8nK0SxJL0skGttKa0tyq+IkjI
-	 x6ntoTDVgKpXY24gGeS26dsu51f3VkxyrjMsvDw72euUP2mksm7mFIeg1eHO1bT7WmV8Y
-	 NXGZO85EdFI7Wz95RV8f3rRQZJmvdD9AKuT60mi+dvEvILRahlH7qpKDoYukted6NcT3Q
-	 cx3I1gBtEOSMKZa78fDuXCZRivuJz8B0lB7Rcxg3uzU62yTOMsqcs1lj5L+cfzVbe3w==
+	t=1795029016;
+	b=W+fARyqnbwazxLbbi6aCx5slnHzntC9tseB1Zeg0hvNs422cdNV3ZLU1bFsWOf0FOiK5
+	 yOXt7mKE1A5ldyFl/NTzW5nLRV4OniTqTKYjDtRVsj67xcrQ1IQaRg2efne5Y6jNLfqIG
+	 2nuq7S0OXlsABkl/gVC5S/iRiR+yZlAUo3idX9Zhp0cKSQaC6Ct64qnWv5fA8WfZj+8Jd
+	 BCdbBk6k1NYjBBwjvADy5S5bcK9vAGqN9VghC/oC+zcl7ksnf2TW3d10b9mFODd0R8qYG
+	 Bb42xs0AIlKRVQ+CFZXnQpX2uamihbywW/2w7wWeoE1wWSInjJ/abe8DpQt6ZldZmeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZMkIwF5iwutQfBDIBq367OXXhQeUG+zQy1Bso04sz18=;
-	b=X6PF1Hpvgqor9+zwY7miFID8AxJLVz6e6BaZmOYfWwtPpgHbVoA05DZyMaxeKErV3En3
-	 2sRNUTEHxfIQ1zcs8M8/BmvHWnxyKwte6nR1hIxR0yhRPx2XYvIKBo2bBbhSit+7IZW5w
-	 u/lyae/rd0SjHAAYWaKI/YxwknKIVYvjYcON3jVi2d6B8739UI6TZfGJ9ITqRJCWcw1PW
-	 ru1m8N9GinM52Ikxc0SyUNePW9SnHnP/7GnnG8+T+3W0jMHGBWKmOe8Oc/uIUdnh9ez9E
-	 E2+WsQvDjXMtTZ2c+g7yKJttVVNwPT7zSBRUKegzWFuee/m8dqdxpWQTZw2o2UsAw2g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=jZcLsl62V5cVdhIPfveaNDqi0L9mJxtpqN54rLpYfkQ=;
+	b=NyCdexU4ufD0MUXNpqt/LbhkCp5JxDBkL8/xhogJ4XIvxYpxne5gJNEiEKk8I6q/3dBk
+	 u4XAXYgX8XOLlzMHi9pr2NfLv08Nhd47dgETSAj7So7RimlNqWKD+5vmpPDeyLMwxlGsn
+	 BKghGbwpiTMIuAe7asgtiqzzjUuGlQxd8NxOzciFyNsa/ytdQucqwVdbXkau2vwld8Pw4
+	 c0vQrDG108JYAzTtD12OXqWQv76gHnGFH2YElqAY0oNPwgyfpeGXiwVfRwNik5S9s5iML
+	 cVTLSFhR/bf5UiHvgvVeR7Pp+HAImVnSAYR7Fslw2QYNan/huoRr2oVFcYRotXJ2+7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuDB8M9m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsSwDdMj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDE0606A325;
-	Wed, 18 Nov 2026 19:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0F360A260C;
+	Wed, 18 Nov 2026 19:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HuDB8M9m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72271F000C6;
-	Wed, 18 Nov 2026 19:10:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsSwDdMj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2581F000C4;
+	Wed, 18 Nov 2026 19:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029013;
-	bh=ZMkIwF5iwutQfBDIBq367OXXhQeUG+zQy1Bso04sz18=;
+	s=korg; t=1795029016;
+	bh=jZcLsl62V5cVdhIPfveaNDqi0L9mJxtpqN54rLpYfkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HuDB8M9mRvrdCh+cV9uLF+C26C0Pwu+MjOxgWAUyT4xMsacGjsRHocgIAeRo50ST4
-	 KWZnXANdsuwHnoekPrWlTkCzZnAgdMhrLEjIhoXoFl5rqgLzjfFncbpWpnOl7uwt0+
-	 W5IwL7YoK1NaNf8CiRw8tjNnqaDcZXwyb0fzUQrE=
+	b=rsSwDdMj67CDJIfA/Pp8J9aWAPJtZXSnJNGw8BIb1IKAwAobk6izDmutjLiriYKmf
+	 XaJk2mKOnuL3f4dQOp+posxu341Dm5hmHzEg5jsl7acnIXz67YBZmFpYkKDwrc8kW3
+	 1GhIVoA4TcuCrg+DaxdhC2DFwGD9QyUxIWVa6u2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0198/1756] wifi: rtw88: debugfs: dont vzalloc(0) when rsvd_page is read unconfigured
-Date: Wed, 18 Nov 2026 15:38:45 +0100
-Message-ID: <20261118150016.266189115@linuxfoundation.org>
+Subject: [PATCH 6.12 0163/1756] perf jitdump: Fix debug_data and unwinding_data leaks
+Date: Wed, 18 Nov 2026 15:38:10 +0100
+Message-ID: <20261118150014.697907226@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,60 +64,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 81510c3d6f2199889a4a936d8cf8b9e05911b10e ]
+[ Upstream commit 2bd967f3adcba1d3e54f10b0d8b25f950e4f03fd ]
 
-Reading the rsvd_page debugfs entry before writing a page offset and
-count to it calls vzalloc() with a size of zero, because
-rsvd_page.page_num defaults to 0.  vmalloc warns about this:
+jit_repipe_debug_info() overwrites jd->debug_data without freeing the
+previous allocation.  If two consecutive JIT_CODE_DEBUG_INFO records
+appear without an intervening LOAD record consuming the data, the first
+allocation leaks.
 
-  WARNING: mm/vmalloc.c:4019 at __vmalloc_node_range_noprof+0x9ac/0xa30
-  ...
-  Call Trace:
-   __vmalloc_node_noprof+0x4c/0x70
-   rtw_debugfs_get_rsvd_page+0x4c/0x110 [rtw88_core]
-   seq_read_iter+0x132/0x4b0
-   seq_read+0x12e/0x1c0
-   full_proxy_read+0x6f/0xc0
-   vfs_read+0xdd/0x490
+The sibling jit_repipe_unwinding_info() already frees the old
+jd->unwinding_data before reassignment — add the same pattern to
+jit_repipe_debug_info() using zfree().
 
-rtw_fw_dump_fifo() would reject the zero size anyway, but only after
-the allocation.  Check for a zero buffer size first and print a short
-usage hint instead of allocating.
+Also add cleanup of both buffers in jit_close() so they are freed when
+the jitdump session ends, even if no LOAD record consumed them.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Abdurrahman Karadag <abdurrahmankaradag19@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260827131244.35623-1-abdurrahmankaradag19@gmail.com
+Fixes: 9b07e27f88b9 ("perf inject: Add jitdump mmap injection support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/debug.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/perf/util/jitdump.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
-index c26a6905fd15a..ca38bc12dce26 100644
---- a/drivers/net/wireless/realtek/rtw88/debug.c
-+++ b/drivers/net/wireless/realtek/rtw88/debug.c
-@@ -315,6 +315,11 @@ static int rtw_debugfs_get_rsvd_page(struct seq_file *m, void *v)
- 	int i;
- 	int ret;
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index 0cb6705ab40d8..d6583cc32d635 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -116,6 +116,8 @@ jit_close(struct jit_buf_desc *jd)
+ 	funlockfile(jd->in);
+ 	fclose(jd->in);
+ 	jd->in = NULL;
++	zfree(&jd->debug_data);
++	zfree(&jd->unwinding_data);
+ }
  
-+	if (!buf_size) {
-+		seq_puts(m, "usage: echo <page_offset> <page_num> > rsvd_page\n");
-+		return 0;
-+	}
-+
- 	buf = vzalloc(buf_size);
- 	if (!buf)
- 		return -ENOMEM;
+ static int
+@@ -646,6 +648,7 @@ static int jit_repipe_debug_info(struct jit_buf_desc *jd, union jr_entry *jr)
+ 
+ 	memcpy(data, &jr->info.entries, sz);
+ 
++	zfree(&jd->debug_data);
+ 	jd->debug_data       = data;
+ 
+ 	/*
 -- 
 2.53.0
 
