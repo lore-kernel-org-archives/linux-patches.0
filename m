@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032800;
-	b=X/dk34Pyc6Q0fVxsMHsmnqGb/7SgPhaVvJ8POE0YnZBcGPVWCc6V8kEOpIo2UXtRvcRj
-	 SoEfNuW0E1pOeFNweI6eP0BX/j2mw4FUpxn9DoBcQR88FsiQ7eEGDK1ivoVCdljDPmiVo
-	 U9aEDt1a15hXNzX48Y5PUhc2x4/reFdbfABjeQfoG0MCT7Sh2SydfUwg6QC+C/5kxQbgq
-	 2Sx4SAl1OPMV2EbHWUvgGOFq9h+zjkEM1N2K7bEZ+u+WJNxGVTWo+eN4AwvLwRAbYz8jH
-	 f18JFGNLswHDcnO9pjpmURi7v+h6+32EPQe3FuMg0vtnBuLwJnh0wI7wWDLnQkg3v1w==
+	t=1795032803;
+	b=wDZXxa1cpPXUhfvCn6Sp30aTQvuSoCevLeI1KfoI1R2MSJkncmII47r62btnHEMdxBPw
+	 0rX/lsVVS2hn0ztGaJ1D8JtOiDrqG/JTrzMiW51kOtrianwyqQ/315ELWB/Jzv78VKWTY
+	 g+1zT5ZgCBFOfi81McSjnrm+5k2zwEBzs1CyJ2WdgGOq95+zRFPChjydcro6VFUusgYYt
+	 pLOyM9Qc5iB16hfaImyOeqOnrcyUoS7Xnp0Rx2wB42zFeod0fDEhjCGoMCvyASuiUK+ob
+	 9+QuwrBnCtVAMdjIDArSaBCQQEwFJNQ0xs3nX41320sOavyvrGaig/B0nvq7KKLpJcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032800;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C3dac3wDfwsyVnSlKwijn29dYM9Xw48m2VBPzxijPRo=;
-	b=QhRH9EDtku6cbKy7NFwOTpVqlhNS4GGqRt5kNEXB4hYqLWf3nkm3pgehc7ThRmIMp837
-	 u4Vs+LcY+NED5/NyGD1qUVleeU/+rxRT8g6vBnMQUPy54FetZVvklCyQuOZOpD65RvSZ/
-	 yK5GB3jbyeENlDBCAg23u9LD7VD9129cwaZPLbTkXzyD1tX0/YtpmEZmGrgqAIjMts54l
-	 4NEVhHR1T524yvAeNMny/4dKV71K3OFl9kqOMICdguBRh9R8v9WraWdS93bnY4J3v9k+/
-	 OUdXf/YhsCqV5mn2ypr2C9GNhQYc6p8WME0lypbaYV1bU5PSgETEJ5Y+/WH9n5MHiIg==
+	bh=U0lXGC0LQPb9lp5RJodL9wQIz/DDqeJm6AfvJpW1IVw=;
+	b=zlu+OFt4Wza27yB09wxmFtmHZFDz4iOG4qr8lNC4vdE/x/9VuoyzXji9ODfBpg1bbysD
+	 BXvhr7x6Q/4CGNybwbHrYkkbTj5fwIqR1cBHZmK7db78yKPrwmzvSlbKAGdc86YFo8AEF
+	 /SgW/Hem1k+wcjwC37UQw0wEw7NM3i91UzrfiEXWPxCBgUxUP+WQSAbb0e973VkvjBtlQ
+	 pYKPbB7izz4Jije7iAwuVU4nJLF8UMowqdtxaiFHUYQkeqvThsrLxsfiZQgU4zdFyXyRi
+	 8aScRbBPQCbo3ygBpDH9bKr24sfLYtdaIa5oruJpCO9+j1WXdth+aBA2QacveZRDbBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0EOnf67;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMCiX6V6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179F0606A32F;
-	Wed, 18 Nov 2026 20:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE4F606A31C;
+	Wed, 18 Nov 2026 20:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D0EOnf67
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1B31F000C5;
-	Wed, 18 Nov 2026 20:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gMCiX6V6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3F61F000C4;
+	Wed, 18 Nov 2026 20:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032799;
-	bh=C3dac3wDfwsyVnSlKwijn29dYM9Xw48m2VBPzxijPRo=;
+	s=korg; t=1795032802;
+	bh=U0lXGC0LQPb9lp5RJodL9wQIz/DDqeJm6AfvJpW1IVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D0EOnf6754S+T847XakSyqurcdVyP8QLeM7EuLWePW6LyHSQQLp1UZkEmePi4mnQH
-	 hKlBXiLZa4B1Pl9VnRTiIqAvQbPWCk8nXMqDBUaPEgsEMfeSIiu/mKuf9Goh0teaAM
-	 tYErNBkeue8Aki/8iJzIf6U4kHIE+PxBJxpIEj5A=
+	b=gMCiX6V6akSuvuQDjB6atba+RbrFPKuZPCK1w5fFgzPrn6QriZpfOF2xSMOv6GecD
+	 iT0SFALC6vGB61W9GSiawxv437Isg7n12OQ5qU4BU3MH0elzUjsftEol3CiuFlXqg0
+	 wL85UZvvv1ODeK7Vm1/ShtK5a6WrksxAcM22ROE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1539/1756] net/rds: include the scope id in the sendmsg connection cache check
-Date: Wed, 18 Nov 2026 16:01:06 +0100
-Message-ID: <20261118150110.212950738@linuxfoundation.org>
+Subject: [PATCH 6.12 1540/1756] net/rds: keep the connected peers scope id apart from the bound one
+Date: Wed, 18 Nov 2026 16:01:07 +0100
+Message-ID: <20261118150110.249339703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,55 +70,169 @@ Content-Transfer-Encoding: 8bit
 
 From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit b7dfff5e3eb3984d42026a6d653ec2a3d5cec729 ]
+[ Upstream commit 3fe64a5f670dbd6c7c84c2345b0b9726b3b79b31 ]
 
-rds_sendmsg() reuses the connection cached in rs->rs_conn when its
-peer address and ToS match the request.  The interface index is part
-of a connection's identity as well: rds_conn_create_outgoing() passes
-the request's scope_id down as dev_if, and rds_conn_lookup() compares
-c_dev_if, so sends to the same link-local address through two
-interfaces are two different connections.  The cache-hit test never
-looked at it.
+rds_connect() has nowhere to keep the scope of a link-local peer, so
+it stores it in rs_bound_scope_id, the scope of the socket's own
+bound address, for rds_bind() to check a later link-local bind
+against.  That field is then also what a send without a destination
+uses as the request's scope, what getpeername() and recvmsg() report
+as the peer's scope, and what a later bind() overwrites:
+rds_add_bound() stores the bound address's scope unconditionally,
+which for a non-link-local address is 0.
 
-A socket bound to a non-link-local address has rs_bound_scope_id 0,
-and the scope check at the top of rds_sendmsg() accepts any non-zero
-destination scope for such a socket.  So after a send to fe80::x%ifA,
-a send to fe80::x%ifB hits the cached ifA connection and the datagram
-leaves through ifA, to whichever peer answers to that address there.
+So after connect(fe80::x%ifA) followed by bind(global), a send() with
+no destination asks for fe80::x with scope 0.  rds_conn_lookup() keys
+on the interface, so that finds or creates a connection with c_dev_if
+0, which the TCP transport then tries to connect through
+sin6_scope_id 0 and tcp_v6_connect() rejects for a link-local peer:
+the connected socket's data is queued on a connection that can never
+come up.  In the other order, bind(global) then connect(fe80::x%ifB),
+the connect leaves a global-bound socket with rs_bound_scope_id ifB,
+so sends to other link-local peers are refused as off-link and sends
+to global peers inherit a meaningless interface.
 
-Compare c_dev_if with the request's scope_id in the cache test, so
-that such a send takes the lookup path and finds, or creates, the ifB
-connection - the same key the lookup uses.  A send without a
-destination takes its scope from the socket, and the connection it
-created was keyed on that same scope, so the comparison holds for it
-too; the next patch gives that send the connected peer's own scope.
+Give the connected peer its own rs_conn_scope_id.  rds_connect()
+records it there and leaves the bound scope alone, rds_bind()'s
+connected-socket check compares against it, and the destination-less
+send takes its scope from it - falling back to the bound scope for a
+non-link-local peer, so that send() and sendto() to the connected
+peer compute the same scope, and so the same connection.
+getpeername() reports the connected peer with its own scope.
+recvmsg() used to report every sender with the socket's bound scope;
+a connected socket receives from any peer, so neither the bound scope
+nor the connected peer's scope is right for an arbitrary sender.  It
+now reports a link-local sender with the interface recorded on its
+connection, c_dev_if: the TCP accept path takes it from the incoming
+socket, and the IB passive side resolves it from the local address,
+the closest the CM gets to the arrival interface.  Any other sender
+is reported with scope 0, the inet6 convention.  Either way, a reply
+to the address an application was given reaches the same connection.
 
-Found by inspection while reworking this cache for the connection
-lifetime series on net-next; not observed in the field.
+Found by inspection while reworking the sendmsg connection cache; not
+observed in the field.
 
 Fixes: 1e2b44e78eea ("rds: Enable RDS IPv6 support")
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261020002816.3087414-2-achender@kernel.org
+Link: https://patch.msgid.link/20261020002816.3087414-3-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rds/af_rds.c | 15 +++++++++------
+ net/rds/bind.c   |  4 ++--
+ net/rds/rds.h    |  2 ++
+ net/rds/recv.c   | 11 ++++++++++-
+ net/rds/send.c   |  6 +++++-
+ 5 files changed, 28 insertions(+), 10 deletions(-)
 
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index 85f6471ee6543..63b6d6e6b035d 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -135,8 +135,7 @@ static int rds_getname(struct socket *sock, struct sockaddr *uaddr,
+ 			sin6->sin6_port = rs->rs_conn_port;
+ 			sin6->sin6_addr = rs->rs_conn_addr;
+ 			sin6->sin6_flowinfo = 0;
+-			/* scope_id is the same as in the bound address. */
+-			sin6->sin6_scope_id = rs->rs_bound_scope_id;
++			sin6->sin6_scope_id = rs->rs_conn_scope_id;
+ 			uaddr_len = sizeof(*sin6);
+ 		}
+ 	} else {
+@@ -568,6 +567,7 @@ static int rds_connect(struct socket *sock, struct sockaddr *uaddr,
+ 		}
+ 		ipv6_addr_set_v4mapped(sin->sin_addr.s_addr, &rs->rs_conn_addr);
+ 		rs->rs_conn_port = sin->sin_port;
++		rs->rs_conn_scope_id = 0;
+ 		break;
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -612,11 +612,14 @@ static int rds_connect(struct socket *sock, struct sockaddr *uaddr,
+ 				ret = -EINVAL;
+ 				break;
+ 			}
+-			/* Remember the connected address scope ID.  It will
+-			 * be checked against the binding local address when
+-			 * the socket is bound.
++			/* Remember the connected address scope ID.  It is
++			 * checked against the binding local address when
++			 * the socket is bound, and gives a send without a
++			 * destination its scope.
+ 			 */
+-			rs->rs_bound_scope_id = sin6->sin6_scope_id;
++			rs->rs_conn_scope_id = sin6->sin6_scope_id;
++		} else {
++			rs->rs_conn_scope_id = 0;
+ 		}
+ 		rs->rs_conn_addr = sin6->sin6_addr;
+ 		rs->rs_conn_port = sin6->sin6_port;
+diff --git a/net/rds/bind.c b/net/rds/bind.c
+index 97a29172a8eec..70237a3243f02 100644
+--- a/net/rds/bind.c
++++ b/net/rds/bind.c
+@@ -233,8 +233,8 @@ int rds_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
+ 	 * non-link local address (scope_id is 0).
+ 	 */
+ 	if (!ipv6_addr_any(&rs->rs_conn_addr) && scope_id &&
+-	    rs->rs_bound_scope_id &&
+-	    scope_id != rs->rs_bound_scope_id) {
++	    rs->rs_conn_scope_id &&
++	    scope_id != rs->rs_conn_scope_id) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index a1dd83c2f9a29..5a1789ace8fbf 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -613,6 +613,8 @@ struct rds_sock {
+ 	struct in6_addr		rs_conn_addr;
+ #define rs_conn_addr_v4		rs_conn_addr.s6_addr32[3]
+ 	__be16			rs_conn_port;
++	/* scope of rs_conn_addr when it is link-local, 0 otherwise */
++	__u32			rs_conn_scope_id;
+ 	struct rds_transport    *rs_transport;
+ 
+ 	/*
+diff --git a/net/rds/recv.c b/net/rds/recv.c
+index 110fb22c3e2e4..b205943803570 100644
+--- a/net/rds/recv.c
++++ b/net/rds/recv.c
+@@ -755,7 +755,16 @@ int rds_recvmsg(struct socket *sock, struct msghdr *msg, size_t size,
+ 				sin6->sin6_port = inc->i_hdr.h_sport;
+ 				sin6->sin6_addr = inc->i_saddr;
+ 				sin6->sin6_flowinfo = 0;
+-				sin6->sin6_scope_id = rs->rs_bound_scope_id;
++				/* A link-local sender is reported with the
++				 * interface recorded on its connection (the
++				 * accepting socket's device for TCP, the one
++				 * resolved for the local address on IB); any
++				 * other sender has no scope.
++				 */
++				sin6->sin6_scope_id =
++					(ipv6_addr_type(&inc->i_saddr) &
++					 IPV6_ADDR_LINKLOCAL) ?
++					inc->i_conn->c_dev_if : 0;
+ 				msg->msg_namelen = sizeof(*sin6);
+ 			}
+ 		}
 diff --git a/net/rds/send.c b/net/rds/send.c
-index 27cedbbd140db..d38964cbf3aa1 100644
+index d38964cbf3aa1..f9f6482ffb79f 100644
 --- a/net/rds/send.c
 +++ b/net/rds/send.c
-@@ -1308,7 +1308,8 @@ int rds_sendmsg(struct socket *sock, struct msghdr *msg, size_t payload_len)
- 	/* rds_conn_create has a spinlock that runs with IRQ off.
- 	 * Caching the conn in the socket helps a lot. */
- 	if (rs->rs_conn && ipv6_addr_equal(&rs->rs_conn->c_faddr, &daddr) &&
--	    rs->rs_tos == rs->rs_conn->c_tos) {
-+	    rs->rs_tos == rs->rs_conn->c_tos &&
-+	    rs->rs_conn->c_dev_if == scope_id) {
- 		conn = rs->rs_conn;
- 	} else {
- 		conn = rds_conn_create_outgoing(sock_net(sock->sk),
+@@ -1222,7 +1222,11 @@ int rds_sendmsg(struct socket *sock, struct msghdr *msg, size_t payload_len)
+ 		lock_sock(sk);
+ 		daddr = rs->rs_conn_addr;
+ 		dport = rs->rs_conn_port;
+-		scope_id = rs->rs_bound_scope_id;
++		/* The connected peer's scope for a link-local peer, else
++		 * the bound scope, as an explicit send to that peer would
++		 * compute below.
++		 */
++		scope_id = rs->rs_conn_scope_id ?: rs->rs_bound_scope_id;
+ 		release_sock(sk);
+ 	}
+ 
 -- 
 2.53.0
 
