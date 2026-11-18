@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029483;
-	b=cxk+NSAi+4po4fHrdimIRkmh9IqQQJ0wC97HpL8+gGn+pEz0Fg1wo4bGrWolJLbvy65p
-	 pUu0KAxPaFw2TSlclT4NB1vNZI5yrIlEUXBmfxNs3ggGEgSCdWjXfUqDw7W/xh+LGPaFL
-	 0Y53SnexXwix8WnZDCnBMQugMq96nSj8QD1gC0ygQijtTeJ2m8JlRPHvBlarsmbg8Dv6o
-	 Dak5DoxBzdfBa8Rucs7QV4VFg4vOXKg5Z2Y++Vq98E2CMUK8+cjB5bmH8PSg8WnoQiAtQ
-	 ll0h5Jdh9jHYxMTzRczFLtn3VI1FpFYfJyeGYZBmx6X1bCDnQJqoH1ZmakYSRcumMHw==
+	t=1795029486;
+	b=ik4/Hpa8Xj9S98x5k7Rt34j1p8ZxiIwZWU9JXUohqIAjyuc84fEPQdeR/Hdqlh2JHoSD
+	 m+mFxTgpJ/IWfrgQFh/MCE/4qRJcHEeHjP6gwuSpl9H9flJgva81xKsNGnruGEzUohIqt
+	 TSMfZMawlJHtYIo59xSDnsOK4nIs86jd00nTb2pQMSe0Z44izNO4tqVcOi9EJ69he2zX8
+	 yFzRAPvyueUP3ocQ8yajK5GI6djTd+t4CekBtOZSCBUN+S1ShUH2lLmYYnoLzm2b21U2p
+	 ofwT23f5t9d5PRo9CRBSGSzxodJt28TmUws4x+QxRcJ8vPgD8xTOrhqfKLGivAziXAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bdPzDLlER8EA5v8eeUEBahP/VWHNBMapo9tUeIY1COc=;
-	b=oFRllcb2wbnmhZ9AwQnI6uXcj7TsAuJlFc+W1JzEI7yO7CxlyP4wX/GISwTo0y9nyZ5i
-	 y3k1iKIH3GAR98RY/4Ps4MYclv33gmJwBSi5HOxfPLN28n4F9sVUUdzgQ4fhSBnQPrDQq
-	 +Q+GpW+/e/a/NIeTd3NLrSqC3iA2hRp1OuDLEmVYJ3e/36sSk758wRKfEE8vCuePQDpto
-	 VH7VPuwDDUH+SSz+HdWKw8DgCsr35Z4S0Q4YUUkaUKCP/xK7x3X7WM0DDyRvvLH9GAZUO
-	 s5vV4Dlk660VsmriDs+bMNYwodWVHBquKZ6vXVH30HsEEI3t+lR5vtULbg+DTE+Zo3g==
+	bh=Orb3BsCTDOaTMlaph0vsTE8SInCfqhOs9i1V57GME4M=;
+	b=Hz157LlF8+1CBcUYt+d5Vk3iOBJAOvZ4sanjdDOXRU0cX3LqhIIAxG6sp7NgVThxmL8i
+	 13TQ7c3e/fAchXLwn3ZKjiIbLhJ9soPaItGjqjQLGWZAgQqq54QrGpeCVEye/kc9Se3vX
+	 xuqjsC6pzE8qtOuuz17JtC/r5SxwvO6orXdnKsPE9tBd2++3If3Zmh/gh2ZNINUAZN43b
+	 zxaKgYDNKjbBY2zWWSXxxIxzyP1sOGdngD73heyveEy/oVWNZEfXv8YNyrrkgB2qJM1vt
+	 eDduYW111aO9U1oYXuUOf55KXRKCl/MsDx86ZyVlBhHtivXx+dsgDMZSbd5UPpH5Ndg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqqmnNYP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="d++lbus/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7ADB606A31C;
-	Wed, 18 Nov 2026 19:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923F8606A31C;
+	Wed, 18 Nov 2026 19:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqqmnNYP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D74C1F000C4;
-	Wed, 18 Nov 2026 19:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d++lbus/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E792B1F000C4;
+	Wed, 18 Nov 2026 19:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029483;
-	bh=bdPzDLlER8EA5v8eeUEBahP/VWHNBMapo9tUeIY1COc=;
+	s=korg; t=1795029486;
+	bh=Orb3BsCTDOaTMlaph0vsTE8SInCfqhOs9i1V57GME4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dqqmnNYPiqq4uqQ7SderktNOqoDBKV+frVqFc6GEQ3xWRC59arcD58MU4SKxQaHkQ
-	 RXrKgZZMtctkKwvIG1m/FRyqDMSfYUZE3MRGUoOhUolHKCveak4Rb/X7F5bUbZgZLB
-	 mC611H532Xvd/SewgtYhLobH9jmYZqoVSa9yRoM4=
+	b=d++lbus/3N4KNSKdHdc+rEO//CBGZHck2Z9dNMEGvOlz7wdJW1HDXQ8itCcbQo8VV
+	 YF1eYUOWfXJ74ah1s2M8JTnjJfMDfQ5AucRffN36+PboqLIX7cPUGcMGSAL4wTQBIg
+	 BFVd/Apoh/SwZudqywqjUzajKO9ZyCTW1FbN+Zxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Christian Loehle <christian.loehle@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0364/1756] cpuidle: menu: Remove incorrect unlikely() annotation
-Date: Wed, 18 Nov 2026 15:41:31 +0100
-Message-ID: <20261118150022.803676709@linuxfoundation.org>
+Subject: [PATCH 6.12 0365/1756] cpuidle: menu: Remove single state handling
+Date: Wed, 18 Nov 2026 15:41:32 +0100
+Message-ID: <20261118150022.842617323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,21 +68,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit fcbd7897b871e157ee5c595e950c8466d86c0cd5 ]
+[ Upstream commit 93983a9f3beea791c21d77c2425488ad327d4fda ]
 
-The unlikely() annotation on the early-return condition in menu_select()
-is incorrect on systems with only one idle state (e.g., ARM64 servers
-with a single ACPI LPI state). Branch profiling shows 100% misprediction
-on such systems since drv->state_count <= 1 is always true.
+cpuidle systems where the governor has no choice because there's only
+a single idle state are now handled by cpuidle core and bypass the
+governor, so remove the related handling.
 
-On platforms where only state0 is available, this path is the common
-case, not an unlikely edge case. Remove the misleading annotation to
-let the branch predictor learn the actual behavior.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260105-annotated_idle-v1-1-10ddf0771b58@debian.org
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+[ rjw: Rebase on top of the cpuidle changes merged recently ]
+Link: https://patch.msgid.link/20260216185005.1131593-5-aboorvad@linux.ibm.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: d594187cafd5 ("cpuidle: menu: Do not return a disabled idle state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -91,15 +87,15 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 0ce7323450011..88b87ad5557a7 100644
+index 88b87ad5557a7..3c135e40bf20d 100644
 --- a/drivers/cpuidle/governors/menu.c
 +++ b/drivers/cpuidle/governors/menu.c
 @@ -287,7 +287,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
  		data->bucket = which_bucket(KTIME_MAX);
  	}
  
--	if (unlikely(drv->state_count <= 1 || latency_req == 0) ||
-+	if (drv->state_count <= 1 || latency_req == 0 ||
+-	if (drv->state_count <= 1 || latency_req == 0 ||
++	if (latency_req == 0 ||
  	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
  	      latency_req < drv->states[1].exit_latency_ns) &&
  	     !dev->states_usage[0].disable)) {
