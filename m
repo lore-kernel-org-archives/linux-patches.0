@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061506;
-	b=DvhGzMsaVpTfy6/20JGPFIszVmVrAbnDJ6gDNAwqe516VoKSXTK7RYa6Mykc8EX0+MN2
-	 oL4ntksEQ9bfyCNqaMoCqDjzxYOgfPSuhAzBtxOhuIVcFwnNzo5zjVykIJoXK9l4l7VaF
-	 FZgeWb3jOc1oKVrDdnv9He7p0hO/V8UHsdNxPoWGI8kBZ72i9P2fx6vJIfuwqTkEgC9aw
-	 9AKz+f2cKjFPLHBqTY5Ao3PUlmeHTFISbnj61FgKvEC1aKAJsUNe18L/BHNB7A+nyNNjB
-	 upunSlUeLKJKO5Xy3lJtx3ZPF0rGLIgJ3Luxu5Byd+Nnn/GleOTjKqHsFvkVBpmIvxw==
+	t=1795061509;
+	b=WZhVWKNopqGpCtNVtV05uKLDwMZbUpNcZ7OmF6EQ2KLbn7XM9WlxxezwWpoDGz1lMBvM
+	 HYdHbcWuEVoYxu1VvzNEsgg/3QaUlcDWPTdhmmh/3Z8UgnY3KCbj6Jz8MdF0vXdN0y5rZ
+	 IiLjAnTVdT1quFnFK1HM4c/BIG22dlTCn1iY5eyRGW3lJ/Mg1L8OCWbsMny3d2TmIjwKM
+	 j2KD7u3cPGk7XNrzjkEmkIWHstrGM9ffdvjXaHgukcmwQewy6Bo1Coq86VbrrKBx0YZvI
+	 z8bMdxIIRBqjy+mIfMVduRBt3Ft12iMgnN9bydnNpPszVDoXm9b9roR5EA6EZ6cCsOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061509;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lxHat8jNkyfqyGiJg+aguwIj+SPrsSJP3vblgPvcuB8=;
-	b=0KDWlpea+/je5/hzpHMZ1aaNqrpQbNhcEWGE2wD85HgTwu4DO5H7mJ8NYuzn8G9+RNNg
-	 BCNaDuW6ap6eyJ+oU6IcN7+y1PlR/4Y0OAiABufS4mVWuMnR6SIVnMimvFiklwpOSz3Da
-	 a+MJ16SA6aDiOJWEgUWLZKFRtkcafFXCKwhfnpuLaeYI/SVMAR3RvDmXpG305E99Lx2cI
-	 4E4GSECrIS5pjsDRLPIbYnk8auaFNX42xGU4TzeXXpAdPROeMksoS+mfkbdqz5Up99dSU
-	 oH/yaZvLkwmiZF4yo06gPPQ9YcDCyzdtm16Hyuk4vT3pz4oj/SUKn/p1G0V0gOXlGRA==
+	bh=sI2EAby65ReDZV11AiO9EOv8b8oB7QcULDprcJi54pU=;
+	b=AFhD2in1KJ1B5+G0oNIluYkEUQho7JcL+DEAiYV6uYotniLqCBdufPQ5dOoVVICcTf8O
+	 iEKGgPBdLUADwz+oDrZvMql71+h2OOhy3CEup2vEthDYtKmVZo/k2zUKRyUhWNhQbQ5rs
+	 vGeSllxsX0tv9e73G/RC1GMV6d+4CPzcTxo1PWYSIadZpm3X9Fboio9oCmcm/blnQj7AL
+	 krqQ+35XecHj4GesRj9Fo3YrVP9eyUPPOpT1+YSEezl/ljUtn98RB1gqCpA8572e9BIi/
+	 zrxK+KIw02y7fFnV63mZ3Hk8v5QWKC3T4Ey2HS7P36SZQr8mlMvfJGse/72YZgHSQzA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eO+TaQNU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I14nx2vL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90961606A33D;
-	Thu, 19 Nov 2026 04:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F69660A2602;
+	Thu, 19 Nov 2026 04:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eO+TaQNU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E362B1F000C4;
-	Thu, 19 Nov 2026 04:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I14nx2vL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CEC1F000C4;
+	Thu, 19 Nov 2026 04:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061506;
-	bh=lxHat8jNkyfqyGiJg+aguwIj+SPrsSJP3vblgPvcuB8=;
+	s=korg; t=1795061509;
+	bh=sI2EAby65ReDZV11AiO9EOv8b8oB7QcULDprcJi54pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eO+TaQNUr6Oj8hdpESoDqj1lJJ8M3Jf2ZJAm1S1jHX/HfVtfGef5HLN4T9MHlLkYG
-	 lJx6gIpR2205ZH+h6KiywEvszMrw5487tIQgAQWUI/poOJJ9Q1JTZhK3vA76aCDKsF
-	 xAqn3jc07Xy2cCKWBoVB+RFrGBDn9vQ6KrDSR8Hk=
+	b=I14nx2vL/0a2u7QMKqVk6Upmn3Z0Af6JvUM0DlfpKG2ZaIvG339do4Go+zXQywSYj
+	 kNrgTMMklKR3Nh6d+eeXAxOs7H2/119k7oT8au/Ol7vnOHj/NA0ltjqzz3ZNLo3Nua
+	 OmiEH0oPRkcqfmuWHZUZq8WXimOST6/F1d6dZQu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joas Antonio dos Santos <joasantonio108@gmail.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1577/1848] calipso: hash the cache key, not the option start, in calipso_cache_add()
-Date: Wed, 18 Nov 2026 16:00:15 +0100
-Message-ID: <20261118150025.607385095@linuxfoundation.org>
+Subject: [PATCH 5.10 1578/1848] clocksource/drivers/timer-mediatek: Fix random crash at boot
+Date: Wed, 18 Nov 2026 16:00:16 +0100
+Message-ID: <20261118150025.645312213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,47 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joas Antonio dos Santos <joasantonio108@gmail.com>
+From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
 
-[ Upstream commit d538cc3ec0bc4cb7b40981b3213a6c6671959ed5 ]
+[ Upstream commit 8496a1d234e8cf9cb15c4282cb3a11c6550bd242 ]
 
-calipso_cache_add() stores calipso_ptr + 2 as the cache key, but
-computes entry->hash over calipso_ptr, i.e. starting two bytes earlier
-at the option type and length.  calipso_opt_getattr() looks entries up
-with calipso_cache_check(calipso + 2, calipso[1], ...), which hashes the
-key itself.
+MediaTek bootloaders generally enable APXGPT timers at boot. This means
+that a timer IRQ can sometimes happen between the IRQ line request and the
+configuration of the clock event handler. This leads to a hard crash with
+an instruction abort, branch to pc 0x0 in mtk_gpt_interrupt handler as
+clkevt is null.
 
-The two hashes only match on a jhash collision, so the CALIPSO label
-cache never hits and every labelled packet takes the full DOI lookup and
-category conversion path.  The memcmp() on the key keeps lookups
-correct, so this is a performance bug only.
+To avoid this issue request the IRQ with IRQF_NO_AUTOEN and enable it
+explicitly after the clock event is configured.
 
-Hash the stored key, as cipso_v4_cache_add() does for CIPSO.
+Issue was reported and fix tested on the Lenovo Tab E7 (TB-7104F, mt8167).
 
-Fixes: 4fee5242bf41 ("calipso: Add a label cache.")
-Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/179138670045.80227.16155454353416856947@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a0858f937960 ("clocksource/drivers/timer-mediatek: Convert the driver to timer-of")
+Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20261002072115.169250-2-l.scorcia@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/calipso.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-mediatek.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/calipso.c b/net/ipv6/calipso.c
-index c2e716601ed3e..717ae49ab6480 100644
---- a/net/ipv6/calipso.c
-+++ b/net/ipv6/calipso.c
-@@ -284,7 +284,7 @@ static int calipso_cache_add(const unsigned char *calipso_ptr,
- 		goto cache_add_failure;
- 	}
- 	entry->key_len = calipso_ptr_len;
--	entry->hash = calipso_map_cache_hash(calipso_ptr, calipso_ptr_len);
-+	entry->hash = calipso_map_cache_hash(entry->key, calipso_ptr_len);
- 	refcount_inc(&secattr->cache->refcount);
- 	entry->lsm_data = secattr->cache;
+diff --git a/drivers/clocksource/timer-mediatek.c b/drivers/clocksource/timer-mediatek.c
+index 9318edcd89635..f05c26a64b72b 100644
+--- a/drivers/clocksource/timer-mediatek.c
++++ b/drivers/clocksource/timer-mediatek.c
+@@ -251,7 +251,7 @@ static struct timer_of to = {
+ 	},
  
+ 	.of_irq = {
+-		.flags = IRQF_TIMER | IRQF_IRQPOLL,
++		.flags = IRQF_TIMER | IRQF_IRQPOLL | IRQF_NO_AUTOEN,
+ 	},
+ };
+ 
+@@ -272,6 +272,7 @@ static int __init mtk_syst_init(struct device_node *node)
+ 
+ 	clockevents_config_and_register(&to.clkevt, timer_of_rate(&to),
+ 					TIMER_SYNC_TICKS, 0xffffffff);
++	enable_irq(timer_of_irq(&to));
+ 
+ 	return 0;
+ }
+@@ -306,6 +307,7 @@ static int __init mtk_gpt_init(struct device_node *node)
+ 					TIMER_SYNC_TICKS, 0xffffffff);
+ 
+ 	mtk_gpt_enable_irq(&to, TIMER_CLK_EVT);
++	enable_irq(timer_of_irq(&to));
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
