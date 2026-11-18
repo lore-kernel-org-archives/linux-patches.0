@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035140;
-	b=izxnv5/fw/QxdCxCsCNUH9M2XcCeG6ApCnTflGhdCBHiKSUgiTHqMRf67fjx+eLtwb6O
-	 D/IEXKF2v61QfMp0T0Mj62A5pZ8IHKSk0sFMpQW0QDMQAiQVixT5uj2dmEMWayCRFIws7
-	 2KLOApw+Ptm8wqFnrzhL+YNYntj/fI+R9hSVgTLkkPJJtDj4rf2v7xJmEfCm0981Ca8RB
-	 pBRazqYH3D5TcixiNnlSZfBNJT3D4GA00TyPgiNDrYisnxzUaDhfNBiAJu8Z8jrqaDJiS
-	 EfbK6Bet8D+m+Po1fn06aiNl4eSGb9V0OSdUoRoJ4J3BiApADAcyJwFUkpKA8sJNwpw==
+	t=1795035143;
+	b=IPspIVrWq0Dz+o4HqLhLgGZ8KV6dG3AoRr/R+kROndjKQiaFoONRcrikypD2byw7fxJt
+	 3CkjON8k6i4p1LFG5j55slMPbPrpVHjUomnFmp8839sgcZy1R5gRLzFXEEoXV1oRhs+A9
+	 4RhWWhUZ8XJurb4xGUs11TupbiYb2999+FGU8XlFWHMFDQq/SBXfqrdRvB+TXkpbxHbml
+	 kGiKSDiHzXoVnLqnXGk3Ajw+QrQZfLQDcewt4WdEeAjTVsIWE77HPxkn9VYhp7BpFxYPH
+	 tq+kVCM4TNImric0MVMVafE3tvChpOiYhJIBunKjZfZShcidIzCn5Vkh8r7Vx6H2P9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i1cdiWTIHRG1tiD7/FKKRzr8jPTxV8gSouWz8ffNhyI=;
-	b=VQxFiIUjuMBmFy5VuYuIg/Yoz161pBNOCXIjNxBTvDBR63ooKfCZ8JvtpDT7qA5f3hOx
-	 JlmSC9dP8FCMe4HWfzCGVbs/13EDD0kyU7N8wPbDwFhOId8iyMSoITBUrASQW9LY68lsq
-	 /Npr+ZsB2QrSlGBFTBVx1nJPPGog6QO+gBW8ItOMBkhq1A3OmYb86L5YIVaHsI4LnRdSo
-	 sl9V0CVjlx49B7I0TfdJZtIbd1/Nf5Fg6jo01IAX736nXrtfvgRM5R4GKu5TG5g56YrEf
-	 17SsvRKulU0O3RnnElzirpKm7t7A0hUkZfsHU19MXqzdT+Os4lDaiVFg3QZzYrNtLSQ==
+	bh=o0sKzjcqA6NlGiJXOjtj/MfNzozQO2vY6Ki/6eofL6o=;
+	b=gX8QZobjQBFyASwfdLU9ma1j/ouy641kmCcW9osbumDUQ5ZeecgJhVupG5ajmY7xKQgP
+	 OtT94UXfzdii0Gld9dAPt6giwheZRC56uEqQg7VTIF76oDXXY53u7hHUFpmdGAKVDfUyo
+	 I3UG+RzqNEOcHegS74wApFa/wPJB1TIvxO3qwXjecbnj1K5slcbT1WaG3g/UVZ88TQTuL
+	 wpQ6ZTqhlMwoQqz3TJgF3mJHDwlXXzPnc9uK3+MQ/PNuZ5EA2V2kPRYFPSXgkja/+STEb
+	 P7RUOctYgzWsQ9luWAwN4uaG6MteOS8knZFMyMHmEMXwWIS+2j4osSKW4cZq5PjKTXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPXqdrYM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Yxe/J4eG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C181A606A31C;
-	Wed, 18 Nov 2026 20:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF21606A31C;
+	Wed, 18 Nov 2026 20:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPXqdrYM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243FA1F000C4;
-	Wed, 18 Nov 2026 20:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yxe/J4eG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FAD1F000C4;
+	Wed, 18 Nov 2026 20:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035140;
-	bh=i1cdiWTIHRG1tiD7/FKKRzr8jPTxV8gSouWz8ffNhyI=;
+	s=korg; t=1795035143;
+	bh=o0sKzjcqA6NlGiJXOjtj/MfNzozQO2vY6Ki/6eofL6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hPXqdrYM5cAW/crW9H7hgPJRRfj+n3DQeQW9mwS12XlYJrT4XbJPLaEsUFUURGLxQ
-	 K0O/lsBBGQ6SpvAYbgjwuQ70/HTjpbGez01C8oAz6wdFpH8pSC6k1QIp71BfL4nM4V
-	 /QrAhdu6OmGsdBFGeSI5vxj7afBg8KzmFoT/XP40=
+	b=Yxe/J4eGb1We8UpfEa2GC9ZbTlRLBK3qS2EBsCXEzko/ov45Bf6tQHPzO6l1gW9sk
+	 WCV31I2FYZDdvZ91hUwIfGzKnYvEM9rdJcQLiN3t2zIQbnihvx67tF9MkU9nVJ+1zw
+	 kPIHJ9Yc/d3IXhWcC6FLsdiBrqp/BknBbgaU0DEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil@kernel.org>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0619/3318] media: cx23885: unregister DVB bus when SP2 CI setup fails
-Date: Wed, 18 Nov 2026 15:20:41 +0100
-Message-ID: <20261118150336.388912682@linuxfoundation.org>
+Subject: [PATCH 6.6 0620/3318] media: gspca: use vb2_video_unregister_device() on disconnect
+Date: Wed, 18 Nov 2026 15:20:42 +0100
+Message-ID: <20261118150336.425882798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,85 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit 22f552ff726a82a086be4ef02ce5099a0e8624b6 upstream.
+commit 3dbbbc3cafa2de377d9b97af4e35b8b6b5282047 upstream.
 
-The DVBSKY S950C, DVBSKY T980C and TechnoTrend CT2-4500 CI paths register
-the DVB bus before attaching their SP2 CI client. If that client cannot be
-created, bound, or pinned, the current error path removes the I2C frontend
-components and only deallocates the frontend list, leaving the registered
-DVB adapter behind. Removing an I2C demod before unregistering the DVB bus
-can also expose the use-after-free ordering fixed for the normal remove
-path.
+gspca uses vb2_fop_release(), but gspca_disconnect() only unregisters
+the video device. If the queue owner closes the device after USB
+disconnect, vb2_fop_release() releases the queue and invokes
+gspca_stop_streaming() at that point.
 
-Unregister the DVB bus immediately when SP2 CI setup fails, before the
-existing I2C client cleanup. The bus helper empties the frontend list, so
-the later frontend deallocation has nothing left to release. Keep failures
-from vb2_dvb_register_bus() on the existing cleanup path. Also release an
-unbound SP2 client and propagate the actual I2C creation or CI registration
-error.
+gspca_stream_off() calls subdriver stop callbacks and
+usb_set_interface() through gspca_dev->dev. By the time the late close
+runs, the USB core can have freed the usb_device, resulting in a
+use-after-free. This was observed as a KASAN use-after-free in sd_stopN().
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Use vb2_video_unregister_device() so the queue is released and streaming
+is stopped synchronously during disconnect, while the usb_device is still
+valid. Since the helper takes the queue lock, which is usb_lock, call it
+after dropping that lock.
 
-Fixes: 2b0aac3011bc ("[media] cx23885: move CI/MAC registration to a separate function")
-Cc: stable@vger.kernel.org
-Assisted-by: OpenAI:GPT-5.6
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Fixes: f729ef5796d8 ("media: videobuf2-v4l2.c: add vb2_video_unregister_device helper function")
+Cc: stable@vger.kernel.org # 5.10.x
+Suggested-by: Hans Verkuil <hverkuil@kernel.org>
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/cx23885/cx23885-dvb.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/media/usb/gspca/gspca.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/media/pci/cx23885/cx23885-dvb.c
-+++ b/drivers/media/pci/cx23885/cx23885-dvb.c
-@@ -1160,8 +1160,12 @@ static int dvb_register_ci_mac(struct cx
- 		info.platform_data = &sp2_config;
- 		request_module(info.type);
- 		client_ci = i2c_new_client_device(&i2c_bus->i2c_adap, &info);
--		if (!i2c_client_has_driver(client_ci))
-+		if (IS_ERR(client_ci))
-+			return PTR_ERR(client_ci);
-+		if (!client_ci->dev.driver) {
-+			i2c_unregister_device(client_ci);
- 			return -ENODEV;
-+		}
- 		if (!try_module_get(client_ci->dev.driver->owner)) {
- 			i2c_unregister_device(client_ci);
- 			return -ENODEV;
-@@ -1204,7 +1208,7 @@ static int dvb_register(struct cx23885_t
- 	int (*p_set_voltage)(struct dvb_frontend *fe,
- 			     enum fe_sec_voltage voltage) = NULL;
- 	int mfe_shared = 0; /* bus not shared by default */
--	int ret;
-+	int ret = -EINVAL;
+--- a/drivers/media/usb/gspca/gspca.c
++++ b/drivers/media/usb/gspca/gspca.c
+@@ -1643,9 +1643,8 @@ void gspca_disconnect(struct usb_interfa
+ #endif
  
- 	/* Get the first frontend */
- 	fe0 = vb2_dvb_get_frontend(&port->frontends, 1);
-@@ -2586,8 +2590,10 @@ static int dvb_register(struct cx23885_t
- 		goto frontend_detach;
+ 	v4l2_device_disconnect(&gspca_dev->v4l2_dev);
+-	video_unregister_device(&gspca_dev->vdev);
+-
+ 	mutex_unlock(&gspca_dev->usb_lock);
++	vb2_video_unregister_device(&gspca_dev->vdev);
  
- 	ret = dvb_register_ci_mac(port);
--	if (ret)
-+	if (ret) {
-+		vb2_dvb_unregister_bus(&port->frontends);
- 		goto frontend_detach;
-+	}
- 
- 	return 0;
- 
-@@ -2618,7 +2624,7 @@ frontend_detach:
- 
- 	port->gate_ctrl = NULL;
- 	vb2_dvb_dealloc_frontends(&port->frontends);
--	return -EINVAL;
-+	return ret;
- }
- 
- int cx23885_dvb_register(struct cx23885_tsport *port)
+ 	/* (this will call gspca_release() immediately or on last close) */
+ 	v4l2_device_put(&gspca_dev->v4l2_dev);
 
 
