@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053040;
-	b=EpsGDHtcX4tOmxXGp6Icbmv31CaHx5A2T+Vse0+sKEXgIZLAkwVEZRsk0LUIvpYaLOD8
-	 cSPnEeLrYVgB5vzs7BT7Y9VQDQ9wqrx26ZZs2edUGXOrnu5Lqd6wGGrq5VSOShAQbQ+6f
-	 ZSA/HvrZsUkysiEzg4y7VeAU2yzqhA6T4BDlN9fne2HZ+mGfZL7ODydCWbMQgTpeLE+UR
-	 E5H3ROuSMB3xC3qCm073/rrFQJMUiJj6ZZipNHHBCOARMKbB1ASz2nuzqFvm+1+kzltQS
-	 sQQnNG/F65rj80l2/5gMYEr15HEXkRs99ib9fVThl+r0EcmmAidZHJFc5rrxugy8M2Q==
+	t=1795053043;
+	b=M4ZRkxUvl18zT0DM7NXI3XNmSXaLZgbGQagiYXncqlku/OoUIRUwAlgGsVicOqu5S7PG
+	 zc+NVkMWfEHkNMNK6D8gtWCGL924GrEpF7qOGSWhBgO237fgvNDLLPHHGX4kHfTvyQ7eM
+	 Octx5hAc09krRX4kfGwS66pTd6hQodXcQwDZ3wy52iPfahIOh0cbOQ9MVojWqudgZp5SR
+	 deXzbyRr5V/Q09S404H6jefGjjtN7LYztdgCJdi22niHfQrmU6LgFBb8pq1TiuKqnMOfK
+	 PWvrB+s8AZKMqFixdse+M40ojku3z56tbIaoctwuPpFbr5bXIhiK3Dui7ek+37ZHxEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053040;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053043;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mn5th3VerCWSvyKgf//ZvAzod6EMwU1fgB9LW4t+9n4=;
-	b=CBhzhsUkPZP+2QJEquxFzaaVtP7B2dNRJdnxNgROBy+TgfAiF/nQ2KmVpXvOxl52xaxG
-	 S2a2Obz7YfXnE8Fsw5+UeT1jsKLFZkppEsUt6XZfnvIypb3DuTRSWOUB3K3qHngshgBsP
-	 9mR+Z1/3KH4vuCJwCNC96OR9/Am8qPn0eano7M8JF2NXDg05YM75YvD0wDwOjX3MJtq/R
-	 incRV2A5tAFL10asMa2RQJL/BG1CWBJ0m0ToGSARUHK/tVOCjE+Wt+tCQuNNtnBToT61T
-	 /3aJ2AkZvs0cwBgJvhTaRaFeozM8fb6IHXYTW5Dk5Quv+nlBVDK5ENKJnjsGYTbnWEA==
+	bh=bU1a/CCfKiAkbtnoeUHvCzjFOTUNHVWxYeVECH7irss=;
+	b=TSzNGt/A5MGhFlDNsDwG01d714ugTg1/iBB7ps1M7RMeTmTJDqrLtpkUPJtFsSAUiFOC
+	 DQYsfG1EeSWjT0B/eb2KfgxePr5KDqe0M/wie3nfyXhMmEdjLgCYpq+1e2DOKNckWBOWy
+	 NRj1vl9Z49DGMDJY/7IYxs6TSckvBhNkhN44eF1D+Gu9V0QiAxL9FSMuA/fFCWdW2yyXy
+	 45AwnoElnFU6Hvs0ik9cGdQaB84Jg++lNZDglSzWwdbRmJjohus6xjuL2JTFcJNxUp3Is
+	 whSM102VeYdCoGxFHd+9kGtj0j449VCY+sqKCLo6p5c62GMKZDdJ9XkbMss2Lf/QeTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9cRV+gw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nBtcLBNK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0FE606A320;
-	Thu, 19 Nov 2026 01:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF68A606A325;
+	Thu, 19 Nov 2026 01:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P9cRV+gw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F33F1F000C4;
-	Thu, 19 Nov 2026 01:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nBtcLBNK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB28C1F000C4;
+	Thu, 19 Nov 2026 01:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053040;
-	bh=Mn5th3VerCWSvyKgf//ZvAzod6EMwU1fgB9LW4t+9n4=;
+	s=korg; t=1795053043;
+	bh=bU1a/CCfKiAkbtnoeUHvCzjFOTUNHVWxYeVECH7irss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P9cRV+gwC152y00+FvfAkMOcN5JZSFRynsC20WsXMLDQSGyyP2MsA0h92KOPrslu2
-	 d5cg5etPqTKWoM1YNsAFJFA8ZKGR8Z9JVPOtPzxmbpSYzjGvdNr2HQv+gJz6X5PIke
-	 NZ8cBHKF8xa+NN9p8Ty4TTR7fUb4+bCoPsz8zPAI=
+	b=nBtcLBNKbO22UpMlwYB2XTEdlNiqZOD1pS73OCVyZuT7MmbhnWNzlovNdvOHKaw8l
+	 uASrLzFXdMLH3KLZ3Z4WiOBTQwHBNtEfB3CpYrxznE8onqcWOl5rwmYQiT5uVg9CEs
+	 jkRSY2wZaCzSy6MwVme+B/C73GaCtlyBtiW03f1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
-	Paulo Alcantara <pc@manguebit.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0776/2214] smb: client: validate SMB1 EA list bounds before parsing
-Date: Wed, 18 Nov 2026 15:40:52 +0100
-Message-ID: <20261118150042.692410042@linuxfoundation.org>
+Subject: [PATCH 5.15 0777/2214] xfs: check for buffer overruns when examining local/remote xattr entries
+Date: Wed, 18 Nov 2026 15:40:53 +0100
+Message-ID: <20261118150042.728150468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,89 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit ddc7a7e1eeb116ccaf010a6f1fb6ab927f3f888d ]
+[ Upstream commit 91c41f9524906a8ebd2ae68c98a07b4bd5255ddb ]
 
-CIFSSMBQAllEAs() checks the server-provided EA list length by adding it
-to the response pointer. On 32-bit systems, a positive length can wrap
-the pointer and pass the comparison. The parser then walks outside the
-received response while reading the next FEA header.
+LOLLM noticed that the xattr scrub and repair code can walk off the end
+of the buffer if the xattr entry record starts so close to the end of
+the buffer that there's not even space for the entry structure itself.
+Strengthen the bounds checking here.
 
-A response with a list length of 0x40000000 reproduces this as a native
-i386 page fault and kernel panic from listxattr() against an SMB1
-server.
-
-Check that the EA list starts within the SMB byte area before reading
-its header. Keep its length unsigned and compare it with the bytes left
-in the response without pointer addition.
-
-SMB1 is not negotiated by default and requires an explicit vers=1.0
-mount.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Replaced unavailable smb_EIO2() calls with direct -EIO assignments. ]
+Cc: stable@vger.kernel.org # v4.15
+Fixes: 13791d3b833428 ("xfs: scrub extended attribute leaf space")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: adapted checks to the combined void xchk_xattr_entry() function instead of separate scrub and repair helpers ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifssmb.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/xfs/scrub/attr.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/cifs/cifssmb.c b/fs/cifs/cifssmb.c
-index 685fdf7ecd070..2a085d4e99c5d 100644
---- a/fs/cifs/cifssmb.c
-+++ b/fs/cifs/cifssmb.c
-@@ -6039,9 +6039,11 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
- 	int rc = 0;
- 	int bytes_returned;
- 	int list_len;
-+	u32 ea_list_len;
- 	struct fealist *ea_response_data;
- 	struct fea *temp_fea;
- 	char *temp_ptr;
-+	char *byte_area;
- 	char *end_of_smb;
- 	__u16 params, byte_count, data_offset;
- 	unsigned int ea_name_len = ea_name ? strlen(ea_name) : 0;
-@@ -6118,9 +6120,18 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
- 	ea_response_data = (struct fealist *)
- 				(((char *) &pSMBr->hdr.Protocol) + data_offset);
- 
--	list_len = le32_to_cpu(ea_response_data->list_len);
--	cifs_dbg(FYI, "ea length %d\n", list_len);
--	if (list_len <= 8) {
-+	byte_area = pByteArea(&pSMBr->hdr);
-+	end_of_smb = byte_area + get_bcc(&pSMBr->hdr);
-+	if ((char *)ea_response_data < byte_area ||
-+	    (char *)ea_response_data >
-+	    end_of_smb - sizeof(ea_response_data->list_len)) {
-+		rc = -EIO;
-+		goto QAllEAsOut;
-+	}
+diff --git a/fs/xfs/scrub/attr.c b/fs/xfs/scrub/attr.c
+index 601e02d749881..01a2f893c156f 100644
+--- a/fs/xfs/scrub/attr.c
++++ b/fs/xfs/scrub/attr.c
+@@ -276,6 +276,12 @@ xchk_xattr_entry(
+ 	/* Check the name information. */
+ 	if (ent->flags & XFS_ATTR_LOCAL) {
+ 		lentry = xfs_attr3_leaf_name_local(leaf, idx);
++		name_end = (char *)lentry + offsetof(typeof(*lentry), nameval[0]);
++		if (name_end > buf_end) {
++			xchk_da_set_corrupt(ds, level);
++			return;
++		}
 +
-+	ea_list_len = le32_to_cpu(ea_response_data->list_len);
-+	cifs_dbg(FYI, "%s: ea length: %u\n", __func__, ea_list_len);
-+	if (ea_list_len <= 8) {
- 		cifs_dbg(FYI, "empty EA list returned from server\n");
- 		/* didn't find the named attribute */
- 		if (ea_name)
-@@ -6129,12 +6140,12 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
- 	}
- 
- 	/* make sure list_len doesn't go past end of SMB */
--	end_of_smb = (char *)pByteArea(&pSMBr->hdr) + get_bcc(&pSMBr->hdr);
--	if ((char *)ea_response_data + list_len > end_of_smb) {
-+	if (ea_list_len > end_of_smb - (char *)ea_response_data) {
- 		cifs_dbg(FYI, "EA list appears to go beyond SMB\n");
- 		rc = -EIO;
- 		goto QAllEAsOut;
- 	}
-+	list_len = ea_list_len;
- 
- 	/* account for ea list len */
- 	list_len -= 4;
+ 		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
+ 				be16_to_cpu(lentry->valuelen));
+ 		name_end = (char *)lentry + namesize;
+@@ -283,6 +289,12 @@ xchk_xattr_entry(
+ 			xchk_da_set_corrupt(ds, level);
+ 	} else {
+ 		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
++		name_end = (char *)rentry + offsetof(typeof(*rentry), name[0]);
++		if (name_end > buf_end) {
++			xchk_da_set_corrupt(ds, level);
++			return;
++		}
++
+ 		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
+ 		name_end = (char *)rentry + namesize;
+ 		if (rentry->namelen == 0)
 -- 
 2.53.0
 
