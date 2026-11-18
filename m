@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024758;
-	b=0BFwOFUIqrEWj9CCaqdFPsxAlHBm8ZK43dD2CWL6XzCu098fF7XBcgrAnHHL0dzVTsmX
-	 6H/dm3jHyIFC+1glYx+g924m+aTZMr8T5AYzn2VsfBQE2ALo1Iq1W+4Y6IEz7j2Z99phn
-	 d78iYOELK6TW3gAh3f2lmxNs9CrqVtUZykNwVHOOP+gPUrpEa+bLDyIptBNxGqSqLndyT
-	 J1lA/Gxx6g/aQv91zzieenodNeGrK45cbSHiDuQHtNKyt7lkbqwi7n/pqGVSCa1X56u6S
-	 NAPa7nMUDRzoiIsb5A25sUDQl2pfCkClwGhbNIdrrDECUw/2T8hWAGCrYzS1w1Ywyvg==
+	t=1795024761;
+	b=tIkyjIKHSqUo+b/Z1hQpia5093HR6yDvce0wFZM7dOvP2KKAY3Dc49ipbA2GtafMBu9c
+	 WaBXptyDXNtat0fzkF1qE4wPFWBMnNSVK7qOWMp3nC5dyhbQgUz5wC7PSzz16kDCWx5+n
+	 TBICBx+7IvxQl1+hhBwHATgsaNyAf/6vFhY/TSzdZHsU2m+sSf5eVnoQ2reEfA9sXLkKA
+	 3VkKmo3K7+jAcT/SBW7tWRIUAc+8xqZOSYgRyuOPdnVijbjofLbCjzu+ZtjY1Ifet7F7P
+	 mBI/jcjSc9OgQJFaqbHcdvEDCFuelaTNYGnRbwm6HR4Iiumdd/qHmoXPGo0EPPMRuHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024758;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FpJ9FU3DSrzqiwT/zRS0FcNn8ivgnYxJ0aW7ZhGunMg=;
-	b=3OlkhJ9wrAWph7nymChCRl79L2c/UIea6y3I2PM/4kQ6mQ3MYry4a0Jsty2Iiiks7ngq
-	 4ZUSXNLqNuo7hArbk1y7XPn4fgwjEKFNmtFTe2H31DSC/+zwlKh54vMaO+XEPRO4s7m5d
-	 CPjzXXdqaO8zyCGg1YIW+X19sCE2R9wZV2ybfUc9lzNCHMD37a3pJ88ucPH8/A9iQ4TM3
-	 m6n+gV3Vtl1hqb1Vy/D2gPAkpULDieJm4ydS0IBnJ/o2hlQ1u67kY+ZdF1dZmnWvngBsV
-	 e0Hi6ivYNVEJN8DXpY8fdVAWRY9NfEuQAHwUVc5iigF0LvnoC4/tmp86xcIhwTnsWPg==
+	bh=ZIPsHAcVwGZvAxVb7R/yVQbrvqGWwTg3fxStRWpay48=;
+	b=EPgLy1hQY5zNHx1bX0Tw24U2m3lO9uNos2Z51F6dJcMya2nTQOQBZVPRDRWhtqlXl5K3
+	 OiAbMYYq4XvEU/VDKN64vnjYpHQDHa66yu9s6fiQBbDGYFP+yvNcmsiP7ynnTcMNBKPBm
+	 ulTxQiIwPwykS29S+ylmBesxHOk21fNYFlp2a3cq+xJrrIn180BrVy3ohADPxShpAYt7U
+	 KIG35DVaur4PIc0qHMw10dmN9LSXYW+82Wsq/KSwGe29wABesLiF9+7Q8UVkSLw2AD1cu
+	 AwA7uNgsf9SKe3USRHTg9NbBSYzXo0Y+cuDQ0CfM2f7gwBXSOGAwwbJpsY/ncLF3gKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Gvk0/2aa";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bTVPEXu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE1E606A31C;
-	Wed, 18 Nov 2026 17:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A6F60A2604;
+	Wed, 18 Nov 2026 17:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gvk0/2aa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EC51F000C4;
-	Wed, 18 Nov 2026 17:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1bTVPEXu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C91F000C4;
+	Wed, 18 Nov 2026 17:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024758;
-	bh=FpJ9FU3DSrzqiwT/zRS0FcNn8ivgnYxJ0aW7ZhGunMg=;
+	s=korg; t=1795024761;
+	bh=ZIPsHAcVwGZvAxVb7R/yVQbrvqGWwTg3fxStRWpay48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gvk0/2aaHE19nqR/VfQHu4SVhEZnFkqoQiy/TMSmRKSqCO8xCSCUfcJQ8FmYUY3P8
-	 kQU3isRwRdou1eqhGE9N+UaAVm+rUE6VeNUcvjsHsso47s9U3ljI15eH47C1tAEzqZ
-	 7CEZj3AiZjGioijpqmCQG9+JmwJAROJxAA8RezQ4=
+	b=1bTVPEXu5pcQDbnSsJR/PrbMbrL8mPdvRJG6DKGgC46z3FIDGH+j+HT3VFkPuuToc
+	 PbYdbuHfrfJcMd8rt0hVwXHIscrhrf+lDr8v/8OzkN+TfoVt/jQwfGEnAP1aDoG3uq
+	 Hi9luY6JEzuKaBGKW5BY5d7BYif6rHhWQxCV9J78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0840/2151] fs/ntfs3: fix slab-out-of-bounds write in attr_insert_range()
-Date: Wed, 18 Nov 2026 15:42:55 +0100
-Message-ID: <20261118150152.847813252@linuxfoundation.org>
+Subject: [PATCH 6.18 0823/2151] ASoC: mediatek: mt8192: switch to devm_clk_get_optional()
+Date: Wed, 18 Nov 2026 15:42:38 +0100
+Message-ID: <20261118150152.113384479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,58 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit bf9a6578e03b065335836e025356b4b9170b9449 ]
+[ Upstream commit 6f4edfdce0099dc0c346c78c85f58a23d4ee646e ]
 
-When fallocate(FALLOC_FL_INSERT_RANGE) grows a still-resident ntfs3
-attribute, attr_insert_range() shifts the inline data using the insert
-length 'bytes' as both the destination offset and the copy size:
+Switch from devm_clk_get() to devm_clk_get_optional() when requesting
+clocks, as optional clocks automatically return NULL when not present
+instead of requiring manual check and NULL assignment.
 
-  memmove(data + bytes, data, bytes);
+Additionally, handle clock errors properly using dev_err_probe() to
+propagate error codes (such as -EPROBE_DEFER) on failure instead of
+just printing a warning and continuing with NULL pointers.
 
-Both are wrong: the shift must start at the insertion point 'vbo' and
-move only the data past it (data_size - vbo). When bytes > data_size the
-memmove runs off the end of the data_size + bytes buffer and overflows
-the adjacent slab object.
-
-Since vbo < data_size is already enforced above, the reworked offsets stay
-within the data_size + bytes buffer and cannot under/overflow.
-
-  BUG: KASAN: slab-out-of-bounds in attr_insert_range (fs/ntfs3/attrib.c:2581)
-  Write of size 512 at addr ffff8880135e8b10 by task exploit/142
-   ...
-   __asan_memmove (mm/kasan/shadow.c:95)
-   attr_insert_range (fs/ntfs3/attrib.c:2581)
-   ntfs_fallocate (fs/ntfs3/file.c:618)
-   vfs_fallocate (fs/open.c:338)
-   __x64_sys_fallocate (fs/open.c:362)
-   ...
-
-Fixes: 9256ec35359f ("fs/ntfs3: Refactoring attr_insert_range to restore after errors")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260918133912.133799-6-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 4e348c0f813e1..1feef22cc67e3 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -2438,8 +2438,8 @@ int attr_insert_range(struct ntfs_inode *ni, u64 vbo, u64 bytes)
- 			char *data = Add2Ptr(attr_b,
- 					     le16_to_cpu(attr_b->res.data_off));
+diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
+index 77f596cab92da..9b9a3465ddb52 100644
+--- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
++++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
+@@ -672,13 +672,10 @@ int mt8192_init_clock(struct mtk_base_afe *afe)
+ 		return -ENOMEM;
  
--			memmove(data + bytes, data, bytes);
--			memset(data, 0, bytes);
-+			memmove(data + vbo + bytes, data + vbo, data_size - vbo);
-+			memset(data + vbo, 0, bytes);
- 			goto done;
- 		}
+ 	for (i = 0; i < CLK_NUM; i++) {
+-		afe_priv->clk[i] = devm_clk_get(afe->dev, aud_clks[i]);
+-		if (IS_ERR(afe_priv->clk[i])) {
+-			dev_warn(afe->dev, "%s devm_clk_get %s fail, ret %ld\n",
+-				 __func__,
+-				 aud_clks[i], PTR_ERR(afe_priv->clk[i]));
+-			afe_priv->clk[i] = NULL;
+-		}
++		afe_priv->clk[i] = devm_clk_get_optional(afe->dev, aud_clks[i]);
++		if (IS_ERR(afe_priv->clk[i]))
++			return dev_err_probe(afe->dev, PTR_ERR(afe_priv->clk[i]),
++					     "failed to get clock %s\n", aud_clks[i]);
+ 	}
  
+ 	afe_priv->apmixedsys = syscon_regmap_lookup_by_phandle(of_node,
 -- 
 2.53.0
 
