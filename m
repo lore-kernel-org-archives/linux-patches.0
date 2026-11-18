@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057148;
-	b=Dum6hIQKvr0/FT89TGP627fUAH/t78u7gUIwtw0pkqQ4H+KiDtzVuH3kmOHKODWOQck0
-	 Gqb9hcbQZZFvUQyJMRjGWoGFNUXeJFtJjdZ+Ya2ctJNqFDMyWaeTMm2L7m9bcDAsr0abo
-	 FJ1Hlprkx6I8+wTXhlwJs3Xa00z6XKueP74N4NVUhzqICczueAvutf7gHFRT6TRFGE0W3
-	 /J81kxvj9pBZ7UaCWeIh66DdwzxOZnGtIdO6e4OqrgO3IO9NhPK921B+M1HBV3NvOJRS4
-	 iASbwYZQt9N2d0nUCd+eN4TOSguKck69kFipg/GOgP+KxHtWJCo3P3EcfBrFgKLR76w==
+	t=1795057150;
+	b=mxe6ejEH2n70yRFLPvX9Eds7H5qiPJsawNEzgh6XnAlNlo5/MvJyOPcac5ypymUO0XLd
+	 sSWRjEqU/iA2SBLrQtgxXj4LLJXZ3aeunPmdWlPuL2Se24eAywYDJKVotKg8nnk/81xvv
+	 kYIz3npfd3aW3DUMGJWLzYl9F4CXVK6rNnww7JVFP2s/G4UbMyBXnduNLXmsK2MgWClot
+	 ngXDCDpVokktsFAKdvy8Ym7Ew6IsCBvn2h7DZxdAceo0qKb6lxKAHZFeDt21WNLTqidEU
+	 UiT4jztGSw01jfnCThk1YMXrt33ADBWoZO6Bag57BcQw+alzyaZd+IAfJkwp44ovdHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057150;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9alYnNzENcajZNQW9pTA86rf5QAf5f/kMPf6nDdLGwM=;
-	b=viO1UUC4HDzDK0Wu5KHUBwUB/8XU0T6TSxeIg/jKdIFJE6N5NIjKy86cUjFxWRo0FLk0
-	 /8rql8h5Jr/r0K5BDo/gzOTe44RwckO/221vXeI4PobxdCEYWSG1A1NLj8/+hl4iaxInn
-	 46FXBb9HJ+e+HFnszpTlMzQGkqzBlC4Ukk5BGOli6xC9ddzt7sN+EpG0vsM4+TEHR+9et
-	 cKDcXPHwfE5wxVkjqtV/kE1+YIjBnmC+icRfr3hTijni356h7HuE8bn8w9uMSXJCtuEmQ
-	 1NKU279vbfd/lGQ4xK36g13/gFNMps3DSciNsFF6FRfMkrlm96ANjnYmQBauQQs+MMA==
+	bh=H1z1aEYbs/BNWpaOBHZ2YqZYdRei3WoUdr/9JNDoWbg=;
+	b=AY8yt6vrmI31kplWEQ4DltR4skY7SALhRPABnUgTeDmYJfBwYQ1Eg9DeOjsYirf/Vvto
+	 Ea2j9PeJ4uIA2jzh3vLmH+8HZedpHJgzvjojyyudBEb50ES9tIjkSZEudR5fdLTenWRAi
+	 Ld/+l4D7oPQD7gl2PvzkM7wN92KwD/moCIZDVKEjb9GVbowi3O8neoD4742M4XMZcRlQZ
+	 YUv/bdGHcxpn//rZVhbdF56LRcMeUtI27bNCrhG9iM83pZooGj5cUFGib3vvAgeq6sM1o
+	 /JV3zGR4e1qmUEOteIxtk+hn6I4/hRM41itlUc+jgo1mbxIDv4P/y1Xo+UMOPL/QzVQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hr8pwhLc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcSxd3V+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE16606A31C;
-	Thu, 19 Nov 2026 02:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4C606A31C;
+	Thu, 19 Nov 2026 02:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hr8pwhLc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556F41F000C4;
-	Thu, 19 Nov 2026 02:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcSxd3V+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C1B1F000C4;
+	Thu, 19 Nov 2026 02:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057147;
-	bh=9alYnNzENcajZNQW9pTA86rf5QAf5f/kMPf6nDdLGwM=;
+	s=korg; t=1795057150;
+	bh=H1z1aEYbs/BNWpaOBHZ2YqZYdRei3WoUdr/9JNDoWbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hr8pwhLcWrBKLkjDP6pK23l8gG/My9zzkF06Dwq8by3a/CFvjuonOuAp6iL2Ve5C9
-	 W5FKfbzHrEAbn63TZCMaMVzbxEzOTTjz43r/AwvE5S5fh7BXISWyP0DNN1nabsYj+U
-	 nH3HZ6X9G9wmh8EGPIDU5wSdGjCXXtPCZqqkmxlQ=
+	b=GcSxd3V+W05lkSmnmISPzKbIh2Zl6BTdBjmPegW5KRuk7kbAsS6uAJpOCDtCMuajN
+	 vluUJBQo0PkamrYDZ0rkswx63i2vefdJXe29FALlKeLHnQTb1MW9/yTllZb0QJqkRD
+	 k/FfBZLwkZLgBwrJfPrPvOdK2KdUSJ0HIdvGz41w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0028/1848] drm/amdgpu: Gate debugfs MMIO access on kernel lockdown
-Date: Wed, 18 Nov 2026 15:34:26 +0100
-Message-ID: <20261118145912.349080376@linuxfoundation.org>
+Subject: [PATCH 5.10 0029/1848] drm/radeon: avoid double free in r600 DPM cleanup
+Date: Wed, 18 Nov 2026 15:34:27 +0100
+Message-ID: <20261118145912.398651453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,58 +68,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 17ac73b24006700f50972d37e297dec1f523c14a ]
+[ Upstream commit d3f30034f861a585f8e487ae1555d9f288a96f87 ]
 
-amdgpu_regs, amdgpu_regs2, and related debugfs nodes allow
-arbitrary MMIO read/write via RREG32/WREG32 without checking
-security_locked_down(). On kernel_lockdown=integrity systems
-this bypasses the same restrictions as /dev/mem and PCI config
-space sysfs.
+r600_parse_extended_power_table() uses manual kfree() calls for some
+early allocation failures, but the freed pointers are left in the
+dynamic power-management state. If device teardown later calls
+r600_free_extended_power_table(), those stale pointers can be freed
+again.
 
-Check LOCKDOWN_PCI_ACCESS (matching pci-sysfs) at the entry of every
-debugfs handler that performs direct register access.
+Use the common extended power table cleanup helper for those early
+failure paths as well, and clear each pointer after freeing it so
+repeated cleanup stays safe.
 
-v2: Use consistent check as per previous check to use
-LOCKDOWN_DEBUGFS(Lijo)
-
-v3: Do not create any entry from amdgpu_debugfs_regs_init() if
-LOCKDOWN_PCI_ACCESS is active and log once. (Lijo)
-
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/radeon/r600_dpm.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-index 06f1c2970b58b..d7e8fe4dce0db 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -26,6 +26,7 @@
- #include <linux/kthread.h>
- #include <linux/pci.h>
- #include <linux/uaccess.h>
-+#include <linux/security.h>
- #include <linux/pm_runtime.h>
- #include <linux/poll.h>
- #include <drm/drm_debugfs.h>
-@@ -1217,6 +1218,12 @@ int amdgpu_debugfs_regs_init(struct amdgpu_device *adev)
- 	struct dentry *ent, *root = minor->debugfs_root;
- 	unsigned int i;
+diff --git a/drivers/gpu/drm/radeon/r600_dpm.c b/drivers/gpu/drm/radeon/r600_dpm.c
+index 35b77c9447010..ea478a3ddfbac 100644
+--- a/drivers/gpu/drm/radeon/r600_dpm.c
++++ b/drivers/gpu/drm/radeon/r600_dpm.c
+@@ -935,7 +935,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -946,8 +946,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -958,9 +957,7 @@ int r600_parse_extended_power_table(struct radeon_device *rdev)
+ 			ret = r600_parse_clk_voltage_dep_table(&rdev->pm.dpm.dyn_state.mvdd_dependency_on_mclk,
+ 							       dep_table);
+ 			if (ret) {
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_sclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddci_dependency_on_mclk.entries);
+-				kfree(rdev->pm.dpm.dyn_state.vddc_dependency_on_mclk.entries);
++				r600_free_extended_power_table(rdev);
+ 				return ret;
+ 			}
+ 		}
+@@ -1300,17 +1297,29 @@ void r600_free_extended_power_table(struct radeon_device *rdev)
+ 	struct radeon_dpm_dynamic_state *dyn_state = &rdev->pm.dpm.dyn_state;
  
-+	if (security_locked_down(LOCKDOWN_PCI_ACCESS)) {
-+		drm_info(adev_to_drm(adev),
-+			 "amdgpu: HW debugfs nodes disabled (kernel lockdown)\n");
-+		return 0;
-+	}
-+
- 	for (i = 0; i < ARRAY_SIZE(debugfs_regs); i++) {
- 		ent = debugfs_create_file(debugfs_regs_names[i],
- 					  S_IFREG | S_IRUGO, root,
+ 	kfree(dyn_state->vddc_dependency_on_sclk.entries);
++	dyn_state->vddc_dependency_on_sclk.entries = NULL;
+ 	kfree(dyn_state->vddci_dependency_on_mclk.entries);
++	dyn_state->vddci_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->vddc_dependency_on_mclk.entries);
++	dyn_state->vddc_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->mvdd_dependency_on_mclk.entries);
++	dyn_state->mvdd_dependency_on_mclk.entries = NULL;
+ 	kfree(dyn_state->cac_leakage_table.entries);
++	dyn_state->cac_leakage_table.entries = NULL;
+ 	kfree(dyn_state->phase_shedding_limits_table.entries);
++	dyn_state->phase_shedding_limits_table.entries = NULL;
+ 	kfree(dyn_state->ppm_table);
++	dyn_state->ppm_table = NULL;
+ 	kfree(dyn_state->cac_tdp_table);
++	dyn_state->cac_tdp_table = NULL;
+ 	kfree(dyn_state->vce_clock_voltage_dependency_table.entries);
++	dyn_state->vce_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->uvd_clock_voltage_dependency_table.entries);
++	dyn_state->uvd_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->samu_clock_voltage_dependency_table.entries);
++	dyn_state->samu_clock_voltage_dependency_table.entries = NULL;
+ 	kfree(dyn_state->acp_clock_voltage_dependency_table.entries);
++	dyn_state->acp_clock_voltage_dependency_table.entries = NULL;
+ }
+ 
+ enum radeon_pcie_gen r600_get_pcie_gen_support(struct radeon_device *rdev,
 -- 
 2.53.0
 
