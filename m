@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025613;
-	b=1gBHB/9ceWBGLZjOqTBG0mssPHGqtCD4gzWIhmno7p3QTYi84h9+Gz6NGDUBRrSBjeKf
-	 I049160xwvrcGBtVCxIDTixcxzZIl4SRyVSdNvDxZSaiKjt2kLmG9j1FDjgTy7RJ/VROq
-	 cl7bCphdQx2jXaTxUTCwZ9SNqRGkLMqobSBNC/gZ/pq+JVkLLO5MMAF+eyH924XPpZwrc
-	 YWMcU+4XOKsMu6OqkzL4ow3gmp6vhVpMzBvcRSZHTFm6UlUHfwGkITfUG69AHxY3Q2s4A
-	 RH1EYuQ2QU4r6zezcql2e4WqJTN6mKIFRvnv8NNiBD4587XX2I20NeCiNKlNp5Arnzg==
+	t=1795025616;
+	b=vQC++F1Zo7XxCPqOCDPJJaiK32O0pxHoDXAplhJaq6eJ5I+DEUGbuFLteNWO8+ODlPi3
+	 xkf+MfnqNWH1980FUqbAg9pqtcavwv2QAHQE+2t8hID2CARjXo5bN2QHiSVz2reuVECpw
+	 Mhxg2EbuiZ1+Sax8gYLUE3ioXah8ZOkWaUXO70xFY1pCCNEk87ZnUxMSbJ+vyBZRE8XOI
+	 2rdqEkNDnI4ZwInsASOClwLQTFZgHQUgBxDa4CuMKhqDq29LxM/oatnlDr2WetiOzepa0
+	 fRRC25GoRmrDy8UjNvuveqnJ3j3eqLjrUSF8lM51DKIm4d9N/G9/kxe2v43Kp1Ezg/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=slV67mtf7M6izXe+Gca8RJMFQFMQGcBYj+0fX1FkvaQ=;
-	b=Q8dxd1NNkcvCm0Qqj+hxDkbX+8M2exTtr80BPj2vAfDbmm1jtwx3dvmYZrhjRovqgIx7
-	 dy9mvOmvO9ZrOuY5utw13mrCTPyfZCYfLJDz4ahk/7HbTBf01BApX8BI+W6/QZfmDAmIU
-	 /d+Ccb1sSDJcuYthGKTq7dVzUhjdrgdi184jxvJZD2Hyj7hy7K9/yXWnkSqGS2ifuvfIl
-	 v4T2AOuwhkwbsUHktfs81s1fQtp3kvm/UECEV0qGiaTLhb/FUkAKSi4Ad9bsYVE1lTF+/
-	 aSiOJ7HTxvuTdoqvyGD7/F9BdxUBskJgt/CM3yR5jYoqHWfSSGf733arRKuBgcBOykw==
+	bh=W7VFhHszNcQq4JFLx0rTu657NGh51wwbwQywQWdmqE8=;
+	b=FDhSxoMVSydMypLbkpxjWUIjc+e+FKGbqM2rZejFxQMt5TavaDVbVuw/wY5T2Z/6BUbh
+	 4j+162nCK1KZAQCn9b8LZ5fCNM29rLe08hBtEk0Txu44ZEW3ti+RH5PQggEEvkUCe93lZ
+	 Jto750CvSJ093jhqP4KP2X0XD+1f6IJAz1rba4vva14oHjTNYlVkha0sVK1hVKirDRHz4
+	 DVEfcj0nLO8GB7UNqK2qEspahrxSfLmu4pAuJ2CMkXLvxs5E3VPps6gkhc3Bgn7a9bKRo
+	 UkMZF7Kdc06nF5M+2bfpeeD19cd2fDqMV2AOW12XMMsvKKlVqbzCdZS42kIJjJ+AYIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=07ZA2Coo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5F5PWwG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DA2606A320;
-	Wed, 18 Nov 2026 18:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4F2606A31C;
+	Wed, 18 Nov 2026 18:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=07ZA2Coo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946451F000C4;
-	Wed, 18 Nov 2026 18:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5F5PWwG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6836D1F000C4;
+	Wed, 18 Nov 2026 18:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025613;
-	bh=slV67mtf7M6izXe+Gca8RJMFQFMQGcBYj+0fX1FkvaQ=;
+	s=korg; t=1795025615;
+	bh=W7VFhHszNcQq4JFLx0rTu657NGh51wwbwQywQWdmqE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=07ZA2Coo3vEuKkFWFmxZVVoy42o1eelJeKrc3J4DQDTLCwhkDE1xdb4c0GiaxDpyU
-	 8uIbb4SyTKz7j6mz7qftkQz5/G2uDGN+3YOTUjZVR3fA49/s65Ajxh1OeDvdjra2ff
-	 +kvYuUO1Y1RjVEnuG1N2DRZG1cx0cL3TSWJJJ5oQ=
+	b=S5F5PWwGISwwyIDpbdM58Jue3MHYbfA9TlRcNxl+nvCwPD+mWWONuXVOYAvJkK50v
+	 l5yRU2rA510PO0eJsNOTIaooI3FuG6h9a/KsdnZ0EDEmYlzFN51BQij58wA0MCg+Ij
+	 pZJksLIY5nLxus2p6CTx+3bfrdIMhLI72uGJs91w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1140/2151] arm64: dts: allwinner: sun50i-h6: Add missing IOMMU for video engine
-Date: Wed, 18 Nov 2026 15:47:55 +0100
-Message-ID: <20261118150203.733669063@linuxfoundation.org>
+Subject: [PATCH 6.18 1141/2151] ipv4: fix IP ID reuse in ip_select_ident_segs()
+Date: Wed, 18 Nov 2026 15:47:56 +0100
+Message-ID: <20261118150203.769555173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,39 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 965a49fc413d996eba9bae2a3132f03f45a2ea1b ]
+[ Upstream commit fe7ca0c13f7d477d6f461114815c57fde3f930ca ]
 
-The video engine on the H6 actually has two IOMMU ports. The one already
-listed is simply named "VE" in the user manual. The missing one is named
-"VE_R" and is probably either read-only or used for reference frames.
-Either way, it should be listed.
+ip_select_ident_segs() must put the first of the @segs reserved IP IDs
+in iph->id, as GSO assigns id, id + 1, ..., id + segs - 1 to segments.
 
-Add a reference to the "VE_R" IOMMU port to the video engine node.
+Commit f866fbc842de ("ipv4: fix data-races around inet->inet_id")
+used atomic_add_return() for non-TCP sockets, which returns the first
+ID of the next packet instead. Consecutive GSO packets can then reuse
+IP IDs.
 
-Fixes: 62a8ccf3a248 ("arm64: dts: allwinner: h6: Fix Cedrus IOMMU usage")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260712030011.3778169-7-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+SCTP GSO is affected. Other callers use segs == 1, and only see
+a harmless off-by-one (UDP GSO has a separate, older issue).
+
+Use atomic_fetch_add() instead, like the TCP path.
+
+Fixes: f866fbc842de ("ipv4: fix data-races around inet->inet_id")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260930144018.1174068-2-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi | 2 +-
+ include/net/ip.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-index ce8d5953c22cb..310ef79271a19 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-h6.dtsi
-@@ -206,7 +206,7 @@ video-codec@1c0e000 {
- 			resets = <&ccu RST_BUS_VE>;
- 			interrupts = <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>;
- 			allwinner,sram = <&ve_sram 1>, <&de2_sram 1>;
--			iommus = <&iommu 3>;
-+			iommus = <&iommu 3>, <&iommu 1>;
- 		};
- 
- 		gpu: gpu@1800000 {
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 86e555fb6897b..1fcbdb3bfbbb4 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -580,7 +580,7 @@ static inline void ip_select_ident_segs(struct net *net, struct sk_buff *skb,
+ 			val = atomic_read(&inet_sk(sk)->inet_id);
+ 			atomic_set(&inet_sk(sk)->inet_id, val + segs);
+ 		} else {
+-			val = atomic_add_return(segs, &inet_sk(sk)->inet_id);
++			val = atomic_fetch_add(segs, &inet_sk(sk)->inet_id);
+ 		}
+ 		iph->id = htons(val);
+ 		return;
 -- 
 2.53.0
 
