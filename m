@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047633;
-	b=bJNu7b8crd4fU0kD+j+n0MwCSfl6MWA2IePmucfRRFNPzsVF7dAxmLYpJbi45KrocRZ8
-	 tdyH+S7vSxRhddgXHqRzo7sdqZ+yTcl7etCBD7GWzpMdsEp4fJUJfQ4L972MbItCEPcZu
-	 ImjF+Ab+VH5CRqSNSZc3kpJGWp34pQChAZERYEvqmszfByiArrmMaJjXJb9EnVprYR4Sh
-	 tTynyYaEwRdTp7Pq1ysFyegOFIlhAOI7hHznuYSkABgwYalE524d3NHf7fhgnmctPA3tw
-	 lKmlh8qxfPsQbcebCu3FI/MJVjAQc5u05L8uucuv7mV0H0S/upO1wL6HE096dKn2sVw==
+	t=1795047636;
+	b=IXj1MNCYXcXWncCo/QUWqMq2fZqfXrsQjMyyD8kqD6BJrg3LmNxtXnS2XMvOCGLFUMCN
+	 U+NCEDd1/NUemh1HTd6n4gJScXfu8s+Rvk6hr1y/TpCK0whhhtfZ4BEKiVFXI8tQADZD9
+	 trAUm+r+n+92t4JBfLJ+ihGSS4ln2l3kP0Ett9GO5LvtaDwutkzJf5OMDObLYkwRyq6Az
+	 i+qPtrj6dyVz6xwLez3DKZK+Dy1MUGQext/Si+HEiWic1+FqadQNsjz9Q5nDU1/+hJ53B
+	 6/C6E8n454zI63OQeerOY/Du9Ivni2asgRZ2v/qYuqV2o8rhg1aR6lSznViI53ZKHPg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047633;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047636;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OUvc8URwJst8yaNsyTEelF+VTW89CLb7QeJD3gaf3ec=;
-	b=XnW8TdBz0T3lBWoyq7nUZeLm3J4AhGUTKnpGiqgAAp/0vmpaSU74fC/RfTWfU/JcJB3A
-	 qj467lP+i1GlQIBpjbNlWiwVMQToahlmt8ojSsBDmYNDznhnINu7ZoyJ6wDcG/cwgbd5K
-	 ihpv3rv1HGmcZv4Wl/ppouTjRfma0t3+4RrgSiTtjFg+xWfyiTfBd59XwnRUHGW5ViOct
-	 oTVZ5KdblgSw9eMSh/z4KLiBHoYxasCR3i1JXoySJFXsAbyHt32A71G/Z3Bj52yIppsrf
-	 qk4VAMKRByHjmpNp6annJqbvI1O7l4FLCmft3jTkCbmuDIVQBLfMSPM4WFXgLVnHvPg==
+	bh=wyH+1vNZ2KskJ6lpmPVoxCv9OWaVnJHG8fAyalXUWW4=;
+	b=c1tXayXrgp1GakhOVI/lgpn/DfOGHUHRNatPIzveTfLKL2KlwQ7P/JHf5vhntNQU9h7S
+	 XbsLmICgy0nGGCXHf0of/cXO6DTZgtNOQsVVqZ4VrINOFOz+7HRBRCxrmbUBFGpp4wh5D
+	 o/3rKGHCKCBX1G3GaPXP3s8P9vafZkN16IRGsKXiipMq37dTuxQxWlQRn8mLApHTw1MPu
+	 B70r5Y2IlRWQdbrC1/n/i9MIdkakqE3h1iWg/GCUn2/xLkFWqIIUWy+lK+T/yjPh2KQ9P
+	 mZrI48C8v7U2H+C8jblZTDiCtvrGoSpEprxKrVsqhToqp13S148XMogHTJX+n3k0DZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ActjSES0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="OMOM28t/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AE8606A320;
-	Thu, 19 Nov 2026 00:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F3C606A31C;
+	Thu, 19 Nov 2026 00:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ActjSES0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284761F000C4;
-	Thu, 19 Nov 2026 00:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OMOM28t/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29141F000C4;
+	Thu, 19 Nov 2026 00:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047633;
-	bh=OUvc8URwJst8yaNsyTEelF+VTW89CLb7QeJD3gaf3ec=;
+	s=korg; t=1795047636;
+	bh=wyH+1vNZ2KskJ6lpmPVoxCv9OWaVnJHG8fAyalXUWW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ActjSES0dC2WxqVxgfOyv6da/8chKxSP5xW8YnOfkZ1XSW08gvFjdU3VAw47GDoFw
-	 qcjwfNeMccQDXDC6D13xzLBUam9gBal9mOAH9nL1Y45y8N0aBHzVs+mWfjisrCTeVa
-	 AM1HnHRD3oRuyxD8PJgNH0vmGNk9AY4B2w/MsD+U=
+	b=OMOM28t/G6c3Yvj2N/5y11Vs54lSAxrCbkXF9nqlpsY7QaXzg6SjV9TzeoRos8fMs
+	 lThxacZaUMQxUDqCQPyJqvlVNi8EFbOlK++AjK2VqiiANa4dxNFFpOVHDdW0Nzo4DB
+	 sacMXtIQJ1vukGlJREuvvRzs7hlRhzuVACnDAeN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Wei Wang <wvw@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Jann Horn <jannh@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1708/2857] arm64: suspend: Save and restore TPIDR2_EL0 across CPU suspend
-Date: Wed, 18 Nov 2026 15:45:42 +0100
-Message-ID: <20261118150302.829427870@linuxfoundation.org>
+Subject: [PATCH 6.1 1709/2857] mm: document mmu_notifier_invalidate_range_start_nonblock()
+Date: Wed, 18 Nov 2026 15:45:43 +0100
+Message-ID: <20261118150302.865467386@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,71 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Wang <wvw@google.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit beeec04046227eba42b7cc5ab32498aa43da9632 ]
+[ Upstream commit 7ced098fcfe596feab3cea4f40128b0119c7bf1a ]
 
-TPIDR2_EL0 is a live EL0 register on systems with SME, but
-cpu_do_suspend()/cpu_do_resume() don't preserve it. Its value is
-UNKNOWN after a warm reset, so the task that initiates suspend can
-return to userspace with a corrupted TPIDR2_EL0.
+Document what mmu_notifier_invalidate_range_start_nonblock() is for.  Also
+add a __must_check annotation to signal that callers must bail out if a
+notifier vetoes the operation.
 
-Save and restore it alongside TPIDR_EL0 and TPIDRRO_EL0. The new slot
-fits in existing padding, so sizeof(struct cpu_suspend_ctx) is
-unchanged.
-
-Fixes: a9d691585950 ("arm64/sme: Implement support for TPIDR2")
-Cc: stable@vger.kernel.org
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Wei Wang <wvw@google.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ sashal: Adapted the suspend context layout for the missing TCR2_EL1 slot, using offset 104 instead of 112 for TPIDR2_EL0. ]
+Link: https://lkml.kernel.org/r/20230918201832.265108-1-jannh@google.com
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 6d65925777ec ("mm/mmu_notifier: finish non-blocking interval invalidation on error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/suspend.h | 2 +-
- arch/arm64/mm/proc.S             | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ include/linux/mmu_notifier.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
-index 0cde2f473971e..eb60c97355530 100644
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+diff --git a/include/linux/mmu_notifier.h b/include/linux/mmu_notifier.h
+index d6c06e1402771..7c81de8e381e2 100644
+--- a/include/linux/mmu_notifier.h
++++ b/include/linux/mmu_notifier.h
+@@ -461,7 +461,14 @@ mmu_notifier_invalidate_range_start(struct mmu_notifier_range *range)
+ 	lock_map_release(&__mmu_notifier_invalidate_range_start_map);
+ }
  
--#define NR_CTX_REGS 13
-+#define NR_CTX_REGS 14
- #define NR_CALLEE_SAVED_REGS 12
- 
- /*
-diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
-index b9ecbbae1e1ab..5d41d39d58472 100644
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -102,6 +102,10 @@ SYM_FUNC_START(cpu_do_suspend)
- 	 * call stack.
- 	 */
- 	str	x18, [x0, #96]
-+alternative_if ARM64_SME
-+	mrs_s	x2, SYS_TPIDR2_EL0
-+	str	x2, [x0, #104]
-+alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
- 
-@@ -145,6 +149,10 @@ SYM_FUNC_START(cpu_do_resume)
- 	 */
- 	disable_daif
- 	msr	mdscr_el1, x10
-+alternative_if ARM64_SME
-+	ldr	x2, [x0, #104]
-+	msr_s	SYS_TPIDR2_EL0, x2
-+alternative_else_nop_endif
- 
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
+-static inline int
++/*
++ * This version of mmu_notifier_invalidate_range_start() avoids blocking, but it
++ * can return an error if a notifier can't proceed without blocking, in which
++ * case you're not allowed to modify PTEs in the specified range.
++ *
++ * This is mainly intended for OOM handling.
++ */
++static inline int __must_check
+ mmu_notifier_invalidate_range_start_nonblock(struct mmu_notifier_range *range)
+ {
+ 	int ret = 0;
 -- 
 2.53.0
 
