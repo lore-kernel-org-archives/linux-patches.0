@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054208;
-	b=PdFXwcF3oxxScQcNwwFX7+WqfwhbiVqxHkjZrn3y+OpioFVKSwvR9yD5K083FIRW7Ns1
-	 raptScj6d69B8X2RNLW+hr5B9pzp3VTrsjopPuWSeGzBA3kZg47PUadmwiGfE9lrpvPzy
-	 0HJpfYxfxIyAJNGRTKloIMe8pv5BVFGL1+L0/8kFv6O0d/prj2BifaRcMB5RxF/AKy5pg
-	 RRRV5W+2d/kFAuez+3FNN6N3SfZ2aZbs9Zy4I/QksbLHXGfwtKVbSVN0kEaqldl6QO9Uf
-	 IlaQo4KXUlV2/nZJMj4wLX2E314BjK4r5MoUli2aU9AnRTyvSV1dAWE9oBZHCuN4Aeg==
+	t=1795054211;
+	b=eaH8fmbS6rhzoexUAgBMtfA7/05HvCUFdo4B7Pl2Mo+2GBSI3DsELdoL8ejq+C4Z4vgn
+	 9U7EzfB0ERnTB3J+lBKRW4+Pw9lV/X1T6PbtnK4lMmP41Uqb/XIDxU8jv15f66xoIA4X9
+	 kQStLXRoL9MWOBuU6hwOfJM4IOUoX5yVTYvsqGhcRV6T/mZj014zIIidWRtV50G1C3+Wg
+	 0+czgB0p0fzE7WL2jqwjnr+ZJ83YcafqallPJoGVwb2fi/T/LJ1UKa670RD4PcaJz2q5K
+	 874uZKuFF1ZTf3AfQMxX3Gbd2mS9RFrgzu3CWvcxh6o5gF57BOlvb53d4xN42XwvWFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wTdCOYchRLgDkSg81qOvu7VHwVLkTA1DWPVjPxvE+fM=;
-	b=HtiBzUDebQNMt2Nfj7oiNM6yTHpLMrFiJHMkYZPsj6udV6SYlX/hbUWaLnx0CYJohjOU
-	 lyz1ZV8BWf1UN9widgqjKMgoFYr0L0XYTPjYcx1natoGQLlbprNBkxJj5l+lD4yTh9mEM
-	 bVjFD8/r1rjFT+2tNIPHV8uCiB1cnGfn1HEhrUhiXbCpoy4zZrjOwq3LazTEPkz/U23Y1
-	 UOdV2QcT+zCHvQgETpW9bFvwblO+pD+jzaZg1m+r9SvvUshC//5CjYaIiCdkjPjw0PlDK
-	 DcH1Vwo+aO6M/P9KoFQfhx4CMMgdkf2tp20DrtCeGiShHb8a5Pd5JNmoPc/gOpt7EOw==
+	bh=lcoGpjIPs0hOh7XQG7s9g1bDMdR7kaBVqIY/pxrdYYU=;
+	b=CHBDx9iN+OLGspiHAbBoWV6ltsYWzhvjCU98otEZPPWp2lT6Xq+H+K3M0XimdHcXI683
+	 tjNMntDuCxdC0uvrBwMUzfB8KSfqwH/uvGC7Mn8yFLUFzrpvLurhgVJyqPpnqcZfMnLqr
+	 lMOIxaR/3l690DAdEdEZe4y+0+SvcUUrOZQ/YWF6HBqNBH4he9QlFiT5Lmi5OqvGPEJp6
+	 pDVNOWODSv3AWWP1AwOy9hAmy55IQi0r2ncqSwbtUCMElz/z5/PEMnWaO2yQUppbn60N5
+	 JrkwTacEjyvLBM/y33ypP+H7pwiZvxV/Uv9+bL/diopqC/1PqgPt4fBELMpeGy102Nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gufozqcv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxxez1FP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8442C606A320;
-	Thu, 19 Nov 2026 02:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F656606A325;
+	Thu, 19 Nov 2026 02:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gufozqcv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D604D1F000CA;
-	Thu, 19 Nov 2026 02:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxxez1FP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B2E1F000C9;
+	Thu, 19 Nov 2026 02:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054208;
-	bh=wTdCOYchRLgDkSg81qOvu7VHwVLkTA1DWPVjPxvE+fM=;
+	s=korg; t=1795054211;
+	bh=lcoGpjIPs0hOh7XQG7s9g1bDMdR7kaBVqIY/pxrdYYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gufozqcv3pIC9wsYaYYMwP0Y3yMqScHmr/44L0Fv+0pe64h7gwuuBdBwzV1DhgoTl
-	 wFvLybuAjYKMLrALUp+gg6IcAPb5C7suEpcZBPyCuRXd8k5fpnvVtVzV2Rk6x7CQOA
-	 EhYj198MsrydEeDd+XKDlC4SmC2wF4OO/XjhDoYc=
+	b=hxxez1FPe9BskZ/uinfNOOCpMIm9YMEF/ZSXf67ZVkcif6yG1FSX6HzEsSyFMWeJF
+	 22uAI/z/MbLzoANk6zvU8IAYrJn+HW5R4L7wkEUdNbjywaOeX9cxtgoWKPoq2XTj7t
+	 anm4yjGMhFH8UhnVQXFRvS849/utrlrTecBhFaVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Eugen Hristev <ehristev@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Xiaogang Chen <xiaogang.chen@amd.com>,
+	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1192/2214] media: atmel-isi: release unregistered video device on remove
-Date: Wed, 18 Nov 2026 15:47:48 +0100
-Message-ID: <20261118150059.582181604@linuxfoundation.org>
+Subject: [PATCH 5.15 1193/2214] drm/amdkfd: stop restore retries on device unplug
+Date: Wed, 18 Nov 2026 15:47:49 +0100
+Message-ID: <20261118150059.618524412@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,69 +70,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
 
-[ Upstream commit c0a6d78dad3af1def80f04df82bfd70456ec406c ]
+[ Upstream commit 3254ed0b15f2fe656c9cb36ccb59b92422440bf8 ]
 
-atmel_isi_probe() allocates the video device before registering the
-V4L2 async notifier. The video device is registered later from the
-notifier complete callback once the remote subdevice has been bound.
+amdgpu_amdkfd_restore_userptr_worker() and svm_range_restore_work()
+reschedule themselves when validation fails with evicted objects
+pending. After a surprise removal the restore paths fail with -ENODEV
+permanently, so rescheduling just spins the worker uselessly until
+cancel_delayed_work_sync() in fini finally stops it - which can take
+a while, since process teardown itself is delayed by the dead device.
 
-The remove path relies on the notifier unbind callback to unregister
-the video device. However, if the remote subdevice is never bound, or
-the complete callback fails before video_register_device() succeeds,
-the video device remains unregistered. In that case the unbind path
-does not release the object allocated by video_device_alloc(), and the
-remove path leaks it.
+Treat -ENODEV as terminal in both workers.
 
-Only unregister the video device from the unbind callback when it has
-actually been registered, and clear the driver pointer afterwards.
-After unregistering and cleaning up the notifier, release the video
-device directly if the pointer is still present. This covers devices
-that were allocated but never registered while avoiding a second
-release of successfully registered devices.
-
-This issue was found by manual code inspection.
-
-Fixes: d12c9088c0b2a ("[media] atmel-isi: remove dependency of the soc-camera framework")
+Cc: Xiaogang Chen <xiaogang.chen@amd.com>
+Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 266fab83139600e58db7e900e930c722e619b78c)
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-[ sashal: retained the older v4l2_async_notifier_*() calls in the int-returning remove callback ]
+[ sashal: Adapted notifier-locked retry handling to the existing atomic eviction counter checks. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/atmel/atmel-isi.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c    | 17 ++++++++++++-----
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c            |  8 +++++---
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/atmel/atmel-isi.c b/drivers/media/platform/atmel/atmel-isi.c
-index 095d80c4f59e7..1f6d28536f726 100644
---- a/drivers/media/platform/atmel/atmel-isi.c
-+++ b/drivers/media/platform/atmel/atmel-isi.c
-@@ -1124,10 +1124,13 @@ static void isi_graph_notify_unbind(struct v4l2_async_notifier *notifier,
- {
- 	struct atmel_isi *isi = notifier_to_isi(notifier);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 07aa9f8de2644..b89bcf84cfa9d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2188,6 +2188,7 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	struct task_struct *usertask;
+ 	struct mm_struct *mm;
+ 	int evicted_bos;
++	int ret;
  
-+	if (!video_is_registered(isi->vdev))
-+		return;
-+
- 	dev_dbg(isi->dev, "Removing %s\n", video_device_node_name(isi->vdev));
+ 	evicted_bos = atomic_read(&process_info->evicted_bos);
+ 	if (!evicted_bos)
+@@ -2205,7 +2206,8 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
  
--	/* Checks internally if vdev have been init or not */
- 	video_unregister_device(isi->vdev);
-+	isi->vdev = NULL;
+ 	mutex_lock(&process_info->lock);
+ 
+-	if (update_invalid_user_pages(process_info, mm))
++	ret = update_invalid_user_pages(process_info, mm);
++	if (ret)
+ 		goto unlock_out;
+ 	/* userptr_inval_list can be empty if all evicted userptr BOs
+ 	 * have been freed. In that case there is nothing to validate
+@@ -2215,7 +2217,8 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 		if (atomic_read(&process_info->evicted_bos) != evicted_bos)
+ 			goto unlock_out; /* Concurrent eviction, try again */
+ 
+-		if (validate_invalid_user_pages(process_info))
++		ret = validate_invalid_user_pages(process_info);
++		if (ret)
+ 			goto unlock_out;
+ 	}
+ 	/* Final check for concurrent evicton and atomic update. If
+@@ -2224,8 +2227,10 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	 * reference counting inside KFD will handle this case.
+ 	 */
+ 	if (atomic_cmpxchg(&process_info->evicted_bos, evicted_bos, 0) !=
+-	    evicted_bos)
++	    evicted_bos) {
++		ret = -EAGAIN;
+ 		goto unlock_out;
++	}
+ 	evicted_bos = 0;
+ 	if (kgd2kfd_resume_mm(mm)) {
+ 		pr_err("%s: Failed to resume KFD\n", __func__);
+@@ -2239,8 +2244,10 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
+ 	mmput(mm);
+ 	put_task_struct(usertask);
+ 
+-	/* If validation failed, reschedule another attempt */
+-	if (evicted_bos)
++	/* If validation failed, reschedule another attempt, unless the
++	 * device is gone for good
++	 */
++	if (evicted_bos && ret != -ENODEV)
+ 		schedule_delayed_work(&process_info->restore_userptr_work,
+ 			msecs_to_jiffies(AMDGPU_USERPTR_RESTORE_DELAY_MS));
  }
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index ff776944793a8..0b20ef89c4ad5 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1575,7 +1575,7 @@ static void svm_range_restore_work(struct work_struct *work)
+ 	struct mm_struct *mm;
+ 	int evicted_ranges;
+ 	int invalid;
+-	int r;
++	int r = 0;
  
- static int isi_graph_notify_bound(struct v4l2_async_notifier *notifier,
-@@ -1329,6 +1332,8 @@ static int atmel_isi_remove(struct platform_device *pdev)
- 	pm_runtime_disable(&pdev->dev);
- 	v4l2_async_notifier_unregister(&isi->notifier);
- 	v4l2_async_notifier_cleanup(&isi->notifier);
-+	if (isi->vdev)
-+		video_device_release(isi->vdev);
- 	v4l2_device_unregister(&isi->v4l2_dev);
+ 	svms = container_of(dwork, struct svm_range_list, restore_work);
+ 	evicted_ranges = atomic_read(&svms->evicted_ranges);
+@@ -1645,8 +1645,10 @@ static void svm_range_restore_work(struct work_struct *work)
+ 	mutex_unlock(&svms->lock);
+ 	mmap_write_unlock(mm);
  
- 	return 0;
+-	/* If validation failed, reschedule another attempt */
+-	if (evicted_ranges) {
++	/* If validation failed, reschedule another attempt, unless the
++	 * device is gone for good
++	 */
++	if (evicted_ranges && r != -ENODEV) {
+ 		pr_debug("reschedule to restore svm range\n");
+ 		schedule_delayed_work(&svms->restore_work,
+ 			msecs_to_jiffies(AMDGPU_SVM_RANGE_RESTORE_DELAY_MS));
 -- 
 2.53.0
 
