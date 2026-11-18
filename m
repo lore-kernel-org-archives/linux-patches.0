@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019752;
-	b=TiMEtZXNoHi1jpDQBPFgjDdEuaTm3GPidE5ttvbAZsH0A1lGPD5oQa17MRoYkVi63s/m
-	 3dokrBDfHy1aYCjBz/1CghX5fwiRAqWNo93a9sOm9gJsn7gySok4J8D+NaqiCk7evet8b
-	 rQVyN/Iu6XwHK4H3UQh4MBzzNC4nUx95OxVmxXRz9y1UisMSLg4g4g9IkEZ4bRAeU6vyT
-	 scnE0PiU8SEMBUrlD6B3ZPj7/O8PGjY/xpkQ63a0bpQmkp3GXvai+XbkSJy0+8m4qzH17
-	 guevu+swH8rNj5dv8xkz9cD4dPRdb1HgY9LFZ/pJc3PC3S8r7WbNYcN3l9Hoqn8Gtlg==
+	t=1795019755;
+	b=X7ZqXZYNJovgBLWUzcXjC8I/Z5cjHW6Afw5cnMr7AkECBtBff9a4TdyImVFD6cw5Vylc
+	 GoPHsHgU1m4t9huExS24AqakubbDydYo9v7a8RvfYAj/7U69STeXMlGvcQVWlqdHZs7WA
+	 NxRYoqEK5eGDybI+A6yT+vDDmmUrBmMl902E0DON4pOMHg1SWvsSHgqK5rqZnjzgEX0UC
+	 YBfeIMpDRDLc2sl1fBih78QiPqRYK4qxaO8DC8etlYvR5b1AGIQPuXq9fU9id0D9tkLf8
+	 3Ud8gkk2Vp1TP5sfFrql/Z95pgVCw+wo+Hhg5W+69W2GW8WxeaVBcVaGyvY7GDF4Ylw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B033Vhi70zkXEYC5UbpnumF0oNAE+nDIjqT6j59v1aI=;
-	b=zjcExwCNPxN4DNiMoYkNQc2wUVdayF1JVohZhast1SMFK9iXpEG/y73hq5Txsj/CHP40
-	 HuhFmwXICb9N8ZFaHDpO3KMq/nkLR/i5dionbuDYm4qdDbj/oDRd1wljB6ODUo8Iy8Hof
-	 J9F3oJSB76W9wNXdZsyhQ3xW3HbeRfRl7BzzIaaA2CZE6Ue3fPpZn841K+VEVOqhCHXNb
-	 hZpVNQSkUIi2gx295HITvPnm+JZA+IWsclbuW1soLIU311I+7Dg6qy7PUuEOcmwVwM+oE
-	 XpujILQFzHYBiOpFUEuw4d1LeRsWubUwrnGr1q4FyUwHQkPPdINfiBaTpqNgNKC1RBA==
+	bh=JL0RnZgBVkNiXH11iWUmlMCtonicuMDlOmz43Q/YIlo=;
+	b=NZcecqRKqL526iUlUcnYNbVt4gv1Lv3bYaTwNCQNcU2zq2hrFxY/3o5QzspLtIG9JFbh
+	 KyGYNupsIfrXuLKS+2c3R7+MzcQvlDVQfn0vbMGUZ3FecF+Zk0v9RVoyuZFO8W7QjUCN2
+	 ehoFcTibWWUcsKj+GRgo6brrY6uCMRR3hh+Jlyr0RKQax9tzssOiVrFzvcUTkE63RH5dL
+	 5ZJ7lBDa269pvg7a55kyaOX12ZaklSE8EMB/uLJ2hg9o4ied2kHwNu7OPh8570Kow0vPk
+	 OeH+gs8j4Tvzf0v+kb6PXhbmds7kTyanW/XopTHF2XdwaxfStoWQEeZyYOoJvjsqESQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptlcRqsJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gX0LdF99;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6115606A320;
-	Wed, 18 Nov 2026 16:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4428D606A32F;
+	Wed, 18 Nov 2026 16:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptlcRqsJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38711F000C4;
-	Wed, 18 Nov 2026 16:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gX0LdF99
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9654A1F000C4;
+	Wed, 18 Nov 2026 16:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019752;
-	bh=B033Vhi70zkXEYC5UbpnumF0oNAE+nDIjqT6j59v1aI=;
+	s=korg; t=1795019755;
+	bh=JL0RnZgBVkNiXH11iWUmlMCtonicuMDlOmz43Q/YIlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptlcRqsJ6HGPL+zhMWRasUfzSW3dxsKcPkGnN8pSXmlUr7mEqxRh4+hMfQwO8QuqY
-	 qvc95COdI8LVBgW+5Umccl90Si9bzJVn/fRMKoHFG4z4XSAeiN+LK3qt5T7LYTvLl5
-	 /8hW/Z/yVNLmyKhzXima5Ys5wCd9abXZDhsXvpm4=
+	b=gX0LdF99M3u7jV00ZjD4bcZOanl4AJJh31NVo0tQolhr4U8SwmgO8Zuz6/9cqgcjj
+	 qGjjwxUYskAZCfzQOFLYpS+oKZPYRNqjbVxsgvI3Z+wOmnRBeUFu4RzKQmbiJU/ipo
+	 bCun9O1n1OfLWvU+qwT6UVcBIbtndzAeOQ7qIriY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1701/2651] ALSA: pcm: Protect delay DMA sync against concurrent HW_FREE
-Date: Wed, 18 Nov 2026 15:49:01 +0100
-Message-ID: <20261118150348.887586649@linuxfoundation.org>
+Subject: [PATCH 7.3 1710/2651] wifi: mwifiex: append hotfix number to firmware version string
+Date: Wed, 18 Nov 2026 15:49:10 +0100
+Message-ID: <20261118150349.195233772@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,230 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Jeff Chen <jeff.chen_1@nxp.com>
 
-[ Upstream commit 50f413b83b31ea8d8ee4276165ab95ed5ab0e10f ]
+[ Upstream commit 958f20d5aa0aa645068454fdb62ebc625ac9a115 ]
 
-A PCM DMA buffer must remain allocated until explicit DMA synchronization
-finishes. snd_pcm_delay() calls snd_pcm_dma_buffer_sync() after dropping
-the stream lock, without participating in the buffer-access exclusion
-used by HW_FREE.
+mwifiex_ret_get_hw_spec() parses and logs the FW_HOTFIX_VER_ID TLV,
+but the hotfix value is not stored in the adapter structure. As a
+result, the hotfix number never appears in the firmware version string
+returned by mwifiex_drv_get_driver_version().
 
-With a managed NONCONTIG buffer requiring explicit sync, HW_PARAMS can
-allocate a separate runtime descriptor when the requested ring exceeds
-the preallocation. In PREPARED state with mmap_count zero, concurrent
-HWSYNC and HW_FREE calls on the same open PCM file can interleave:
+Store the hotfix version from FW_HOTFIX_VER_ID and append it to the
+firmware version string.
 
-1. HWSYNC checks the state in snd_pcm_delay() under the stream lock and
-   releases that lock.
-2. The sync helper fetches runtime->dma_buffer_p and enters
-   snd_dma_noncontig_sync() with that descriptor.
-3. HW_FREE takes the negative buffer-access count, checks PREPARED under
-   the stream lock, releases the lock, and frees the DMA allocation and
-   dynamic descriptor through snd_pcm_lib_free_pages().
-4. The sync callback resumes and reads the freed descriptor.
-
-The stream lock does not cover the allocation's release, and the sync
-operation has no positive buffer-access count to prevent it. The stale
-read causes a use-after-free in snd_dma_noncontig_sync(). DELAY uses the
-same snd_pcm_delay() path.
-
-Take a positive buffer-access count before checking the state and keep it
-until the DMA sync finishes, as the transfer and mmap paths already do.
-HW_FREE then returns -EBUSY while this access is active. If a buffer
-writer has already entered, snd_pcm_delay() returns -EBUSY before using
-the buffer. Keep the sync outside the stream lock and balance the count
-on the state-error path as well.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-    Read of size 4 at addr ffff888108f58584 by task pcm-uaf-fixture/487
-
-    CPU: 1 UID: 0 PID: 487 Comm: pcm-uaf-fixture Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     kasan_report+0xe0/0x110
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_buffer_sync+0xc9/0x110 [snd_pcm]
-     snd_pcm_delay+0x3bd/0x550 [snd_pcm]
-     snd_pcm_common_ioctl+0x1e7/0x3aa0 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     ? __pfx_snd_pcm_ioctl+0x10/0x10 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f1cae7ab91b
-    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
-    RSP: 002b:00007ffe12d544f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f1cae7ab91b
-    RDX: 0000000000000000 RSI: 0000000000004122 RDI: 0000000000000003
-    RBP: 00000000000001ee R08: 0000000000000073 R09: 00000000ffffffff
-    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-    R13: 0000000000000001 R14: 00005584f32b1398 R15: 00005584f32b2ce8
-     </TASK>
-
-    Allocated by task 487:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     snd_pcm_lib_malloc_pages+0x27c/0x9f0 [snd_pcm]
-     snd_pcm_hw_params+0x171c/0x1d10 [snd_pcm]
-     snd_pcm_common_ioctl+0x1f62/0x3aa0 [snd_pcm]
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 499:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     snd_pcm_lib_free_pages+0x1c9/0x420 [snd_pcm]
-     snd_pcm_common_ioctl+0x2bd3/0x3aa0 [snd_pcm]
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff888108f58580
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 4 bytes inside of
-     freed 64-byte region [ffff888108f58580, ffff888108f585c0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x108f58
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff888108f58480: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888108f58500: 00 00 00 00 00 06 fc fc fc fc fc fc fc fc fc fc
-    >ffff888108f58580: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                       ^
-     ffff888108f58600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888108f58680: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-    ------------[ cut here ]------------
-    kernel BUG at kernel/dma/mapping.c:417!
-    Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-    CPU: 1 UID: 0 PID: 487 Comm: pcm-uaf-fixture Tainted: G    B               7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Tainted: [B]=BAD_PAGE
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    RIP: 0010:__dma_sync_sg_for_cpu+0x230/0x360
-    Code: df 48 c1 e8 03 80 3c 10 00 0f 85 fa 00 00 00 4c 8b 35 d4 6b 7a 09 e8 7f e2 17 00 83 fd 02 0f 86 39 fe ff ff e8 71 e2 17 00 90 <0f> 0b e8 69 e2 17 00 be 08 00 00 00 4c 89 ff e8 bc 5f 77 00 4c 89
-    RSP: 0018:ffff888111f3fc50 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffffffffc0250d10 RCX: ffffffff816d395f
-    RDX: ffff88810836ba00 RSI: ffff888108f58580 RDI: ffffffffc02510d8
-    RBP: 00000000ffff8881 R08: 0000000000000000 R09: fffffbfff804a239
-    R10: ffffffffc02511cf R11: 6e696c6261736944 R12: ffff888108f58580
-    R13: 0000000002ce00e5 R14: ffffffffc0258720 R15: 0000000000000000
-    FS:  00007f1cae69c780(0000) GS:ffff8881fd861000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 000055d1affa2480 CR3: 0000000108fc0003 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Call Trace:
-     <TASK>
-     snd_dma_noncontig_sync+0x15a/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_buffer_sync+0xc9/0x110 [snd_pcm]
-     snd_pcm_delay+0x3bd/0x550 [snd_pcm]
-     snd_pcm_common_ioctl+0x1e7/0x3aa0 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     ? __pfx_snd_pcm_ioctl+0x10/0x10 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f1cae7ab91b
-    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
-    RSP: 002b:00007ffe12d544f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f1cae7ab91b
-    RDX: 0000000000000000 RSI: 0000000000004122 RDI: 0000000000000003
-    RBP: 00000000000001ee R08: 0000000000000073 R09: 00000000ffffffff
-    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-    R13: 0000000000000001 R14: 00005584f32b1398 R15: 00005584f32b2ce8
-     </TASK>
-    Modules linked in: snd_pcmtest snd_pcm
-    ---[ end trace 0000000000000000 ]---
-    RIP: 0010:__dma_sync_sg_for_cpu+0x230/0x360
-    Code: df 48 c1 e8 03 80 3c 10 00 0f 85 fa 00 00 00 4c 8b 35 d4 6b 7a 09 e8 7f e2 17 00 83 fd 02 0f 86 39 fe ff ff e8 71 e2 17 00 90 <0f> 0b e8 69 e2 17 00 be 08 00 00 00 4c 89 ff e8 bc 5f 77 00 4c 89
-    RSP: 0018:ffff888111f3fc50 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffffffffc0250d10 RCX: ffffffff816d395f
-    RDX: ffff88810836ba00 RSI: ffff888108f58580 RDI: ffffffffc02510d8
-    RBP: 00000000ffff8881 R08: 0000000000000000 R09: fffffbfff804a239
-    R10: ffffffffc02511cf R11: 6e696c6261736944 R12: ffff888108f58580
-    R13: 0000000002ce00e5 R14: ffffffffc0258720 R15: 0000000000000000
-    FS:  00007f1cae69c780(0000) GS:ffff8881fd861000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 000055d1affa2480 CR3: 0000000108fc0003 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Kernel panic - not syncing: Fatal exception
-    Kernel Offset: disabled
-    Rebooting in 1 seconds..
-
-Fixes: a25684a95646 ("ALSA: memalloc: Support for non-contiguous page allocation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-d74585d187e0b1810c08-v2-25432d0951f67fdaa1a9@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assisted-by: LLM sparse
+Fixes: 7715d79553de ("wifi: mwifiex: Support firmware hotfix version in GET_HW_SPEC responses")
+Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
+Link: https://patch.msgid.link/20261012123624.3147417-2-jeff.chen_1@oss.nxp.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/cmdevt.c    | 10 ++++++++--
+ drivers/net/wireless/marvell/mwifiex/fw.h        |  6 ++++++
+ drivers/net/wireless/marvell/mwifiex/init.c      |  1 +
+ drivers/net/wireless/marvell/mwifiex/main.h      |  1 +
+ drivers/net/wireless/marvell/mwifiex/sta_ioctl.c |  3 ++-
+ 5 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 1164ee7f14f07..1a2148b42e716 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -3110,14 +3110,19 @@ static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
- static int snd_pcm_delay(struct snd_pcm_substream *substream,
- 			 snd_pcm_sframes_t *delay)
- {
-+	struct snd_pcm_runtime *runtime = substream->runtime;
- 	int err;
+diff --git a/drivers/net/wireless/marvell/mwifiex/cmdevt.c b/drivers/net/wireless/marvell/mwifiex/cmdevt.c
+index 29e0f274575e5..268a795db4867 100644
+--- a/drivers/net/wireless/marvell/mwifiex/cmdevt.c
++++ b/drivers/net/wireless/marvell/mwifiex/cmdevt.c
+@@ -1594,11 +1594,17 @@ int mwifiex_ret_get_hw_spec(struct mwifiex_private *priv,
+ 						    api_rev->major_ver,
+ 						    api_rev->minor_ver);
+ 					break;
+-				case FW_HOTFIX_VER_ID:
++				case FW_HOTFIX_VER_ID: {
++					struct hw_spec_fw_hotfix_ver *hf;
++
++					hf = (void *)tlv;
++					adapter->fw_hotfix_ver =
++						le16_to_cpu(hf->hotfix_ver);
+ 					mwifiex_dbg(adapter, INFO,
+ 						    "Firmware hotfix version %d\n",
+-						    api_rev->major_ver);
++						    adapter->fw_hotfix_ver);
+ 					break;
++				}
+ 				default:
+ 					mwifiex_dbg(adapter, FATAL,
+ 						    "Unknown api_id: %d\n",
+diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
+index 93561116959ac..f254d6d6e3eb9 100644
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -1104,6 +1104,12 @@ struct hw_spec_api_rev {
+ 	u8 minor_ver;
+ } __packed;
  
-+	/* Keep the DMA buffer alive through the sync below. */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
- 	scoped_guard(pcm_stream_lock_irq, substream) {
- 		err = do_pcm_hwsync(substream);
- 		if (delay && !err)
- 			*delay = snd_pcm_calc_delay(substream);
- 	}
- 	snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_CPU);
-+	atomic_dec(&runtime->buffer_accessing);
++struct hw_spec_fw_hotfix_ver {
++	struct mwifiex_ie_types_header header;
++	__le16 api_id;
++	__le16 hotfix_ver;
++} __packed;
++
+ struct host_cmd_ds_get_hw_spec {
+ 	__le16 hw_if_version;
+ 	__le16 version;
+diff --git a/drivers/net/wireless/marvell/mwifiex/init.c b/drivers/net/wireless/marvell/mwifiex/init.c
+index 0c89250137248..e8a5f9b758d60 100644
+--- a/drivers/net/wireless/marvell/mwifiex/init.c
++++ b/drivers/net/wireless/marvell/mwifiex/init.c
+@@ -296,6 +296,7 @@ static void mwifiex_init_adapter(struct mwifiex_adapter *adapter)
+ 	adapter->config_bands = 0;
+ 	adapter->adhoc_start_band = 0;
+ 	adapter->fw_release_number = 0;
++	adapter->fw_hotfix_ver = 0;
+ 	adapter->fw_cap_info = 0;
+ 	memset(&adapter->upld_buf, 0, sizeof(adapter->upld_buf));
+ 	adapter->event_cause = 0;
+diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
+index 27559e2ddc317..eb47ade44e1fb 100644
+--- a/drivers/net/wireless/marvell/mwifiex/main.h
++++ b/drivers/net/wireless/marvell/mwifiex/main.h
+@@ -1003,6 +1003,7 @@ struct mwifiex_adapter {
+ 	bool host_mlme_enabled;
+ 	struct ieee80211_txrx_stypes mwifiex_mgmt_stypes[NUM_NL80211_IFTYPES];
+ 	u8 fw_api_ver;
++	u16 fw_hotfix_ver;
+ 	u8 key_api_major_ver, key_api_minor_ver;
+ 	u8 max_p2p_conn, max_sta_conn;
+ 	struct memory_type_mapping *mem_type_mapping_tbl;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
+index 19196848778c0..1d38747348511 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
+@@ -1144,7 +1144,8 @@ mwifiex_drv_get_driver_version(struct mwifiex_adapter *adapter, char *version,
+ 	char fw_ver[32];
  
- 	return err;
- }
+ 	ver.l = cpu_to_le32(adapter->fw_release_number);
+-	sprintf(fw_ver, "%u.%u.%u.p%u", ver.c[2], ver.c[1], ver.c[0], ver.c[3]);
++	sprintf(fw_ver, "%u.%u.%u.p%u.%u", ver.c[2], ver.c[1],
++		ver.c[0], ver.c[3], adapter->fw_hotfix_ver);
+ 
+ 	snprintf(version, max_len, driver_version, fw_ver);
+ 
 -- 
 2.53.0
 
