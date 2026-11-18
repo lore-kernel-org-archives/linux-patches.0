@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060178;
-	b=S7N2FlDeWunBZy1/MpaRrYHUwxNT4eh26JWFThkWv7QF3tDN4d3uttIGO3fLoX5NaUC8
-	 XGbT1zHmRErCN8PLSz8aZFMXX5cnxgUEMMjTQ15s9WEP+GiZKrIZkna+P0ejomi8B/juT
-	 2Rx3vhLXa4xHL12QZpWwKSzmglVB+d14cq0LDd3/SEVxhT4o2U7DpLZ4I6QNLeVGjg4/P
-	 01l8M5NAT5gX3E+/1RUTvsTXdwmSJ6VJXG+zapJw9fHqqbgBKGjJobqSZQkhQ8wfHiqUq
-	 gcte+XbatB3AX91RUfHTi6w6kRonn4eS8Rw0bYVMpv7VDOxYe4hhCqDo3qVcaNJODMw==
+	t=1795060181;
+	b=EVj4BWw+q2UCMvxUSCztce6QH1OigBi5bZ3xWhlUDaI7UI9C6e3J6i4I36Ugkf0gYw0F
+	 QQXnus8Xt0Q7ObjDqtMeEGNIT+HHfm32dX9U29n4g1z/OVmRFIWnpeWvM/YwQ2GmEoBMe
+	 M7z3vUU0dkOW7HsJdbjkUoN6lVSezVwvlfn0C5q3LygWGuXxAFtklNXYFg5vlLnQeDeff
+	 Bg7aEgS2A4f3USoewcH5gX1jnxIgemTv8D7XcDVRXkGe4XOu3DBPL8KHj0cY3lxDfLSBK
+	 esUw/6HAg52HkYYGnwRiZC4bsX/ewiuGR3ABDncVv3j5r8b2h1lW3LOg+kp/7WWHy5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060181;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HntHc9YU10PFSOi2ZZ7ZQHX7d9NEQSNWsrshO1kwvqA=;
-	b=TjHIOEaO0KvFZUGdcFrVmVkFddDBQ7lXOZMTXcA5gFKEcdVWOKkOtI42Ei2KwsH7rJQd
-	 x87P3uCpwP2l8xDmvPxnwrJjx93yt6g9A1DVDq9yrd2fX/GBuoB7H8dAHtgI/Ih1OI1hL
-	 TWv+dM48Y0AZvBUPEKLqmFvQefDqOcxxctFVhM4Jvk9T5JjAjVl0REE55/ivDjz/fI2fp
-	 Er+Hrsu3OVNPtML2e/BYwB49zHvrsBHabku/kdijQPhpu7OE+sKjqRDnvuUJIN4yIUZN0
-	 tSvbLouCdesTN1aaYVT5XnTh3l4H0xLktHA3hG3QjIN+DFqZjscBj0+LvZr0H6GsSWA==
+	bh=nq+fwK6lzbu8VI3tGmVjq7h5//oZFl3kVHYjXaFYVF8=;
+	b=yj/4EYjR60TFjxC0pL+sdTV5m5dOXLsA41zJG+A+vwFOsZL4mr5L7ZKJmnEGzAjYfKpr
+	 vlubxdBkgNDhXhX6GjV4DL7dbtaSb5n9BsuIgRR9Y2kX8bpKgHLLg2kyQBFjyLuZ0XAHE
+	 DZB+puZgDEuNMqkNp7mu7lcLPZwrGkyMoYGTH36H9+yHhaZpsdZZ1bJ3G0++G794js51e
+	 UXDhGRUnakoNrjs6ZAOyuWFrAuhJoBWpe39YRtn5sUW1hfs0A4hOsB+/REaF9dkyc5ZEL
+	 Q0HnGtRttWRiPDdW//xpMimzQn2L3ccMI7ghKEW6EcAO5L3WFUwE6n06EgdHT+YQsCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiapXUkg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yey6Binb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56613606A325;
-	Thu, 19 Nov 2026 03:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11244606A320;
+	Thu, 19 Nov 2026 03:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kiapXUkg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA431F000C4;
-	Thu, 19 Nov 2026 03:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yey6Binb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2FE1F000C4;
+	Thu, 19 Nov 2026 03:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060178;
-	bh=HntHc9YU10PFSOi2ZZ7ZQHX7d9NEQSNWsrshO1kwvqA=;
+	s=korg; t=1795060180;
+	bh=nq+fwK6lzbu8VI3tGmVjq7h5//oZFl3kVHYjXaFYVF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiapXUkgOBC/namBbcDFJAvlvx2RzI2p3DKTbEpWww9gmcnvBZT4KySmT7Z2wFRxF
-	 o7ZzdAtI3oNdS0++HDVoUkeAxOWkNEqjF+uEmfp/7KNFrHqXWwVZvuR71GEOxqgqL1
-	 jHQyl+PVCIu02kgn7rsahF4UfOKpHP9XExXoQG3I=
+	b=yey6BinbBHqcBSDxkP2yHi4JY8l+Ob6qb9voEyBjiEziW/Hf5pCr+hFu6OhvMUgah
+	 LaUm8yShKN9O8hSOP02iJlRSMhFveLqXcXDcfAPJCvZm0ataTMrTkzW+iE9fQjP+zu
+	 ecImGgkQqaJ1ikamYEmSqUOkHbqwrjChb5kmwBSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1104/1848] scsi: aic7xxx: Use default settings on the SGI O2 onboard controllers
-Date: Wed, 18 Nov 2026 15:52:22 +0100
-Message-ID: <20261118150005.484953691@linuxfoundation.org>
+Subject: [PATCH 5.10 1105/1848] xfs: cap the block count of xfs_iomap_write_direct() at one extent
+Date: Wed, 18 Nov 2026 15:52:23 +0100
+Message-ID: <20261118150005.569885099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,94 +71,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 696bdfc58975fbc70d2e2347a74e0b562e7e2494 ]
+[ Upstream commit 66d1ce09ebd72709f8d739630c39f440445173fd ]
 
-The SGI O2 firmware runs its onboard aic7880s without the Adaptec BIOS, so
-scratch RAM holds no settings. The left over BIOS path reads uninitialised
-bytes, and bad parity panics the boot.
+xfs_iomap_write_direct() reserves blocks for the whole count in an
+unsigned int. For a pNFS layout the client chooses that count, and an
+RW LAYOUTGET for 16 TiB wraps the reservation and shuts XFS down.
 
-Use the defaults there with host ID 0. ahc_init() keeps the default host ID
-ahc_pci_config() chose, 7 on other PCI controllers, so only the O2 changes.
+xfs_bmapi_write() maps at most XFS_MAX_BMBT_EXTLEN blocks here, so cap
+the count at that. nfsd asks again for the rest. The other callers get
+the same mapping as before.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Pankaj Raghav <p.raghav@samsung.com>
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Link: https://patch.msgid.link/20261026131432.26065-1-kaloz@kernel.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
-[ sashal: Adjusted context in ahc_init() to preserve an existing tab on the blank line after the host-ID assignment. ]
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: Replaced XFS_MAX_BMBT_EXTLEN with the equivalent MAXEXTLEN constant in the expression and comment. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic7xxx/aic7xxx_core.c |  8 ++++++--
- drivers/scsi/aic7xxx/aic7xxx_pci.c  | 20 +++++++++++++++++++-
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_iomap.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
-index 12fed15dec66f..a6b18547df7d7 100644
---- a/drivers/scsi/aic7xxx/aic7xxx_core.c
-+++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
-@@ -5267,9 +5267,13 @@ ahc_init(struct ahc_softc *ahc)
+diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
+index bd5a25f4952d0..2f7cce023c0e8 100644
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -203,6 +203,14 @@ xfs_iomap_write_direct(
  
- 	/*
- 	 * Assume we have a board at this stage and it has been reset.
-+	 * PCI controllers keep the host ID ahc_pci_config() chose.
- 	 */
--	if ((ahc->flags & AHC_USEDEFAULTS) != 0)
--		ahc->our_id = ahc->our_id_b = 7;
-+	if ((ahc->flags & AHC_USEDEFAULTS) != 0) {
-+		if ((ahc->chip & AHC_PCI) == 0)
-+			ahc->our_id = 7;
-+		ahc->our_id_b = 7;
-+	}
- 	
- 	/*
- 	 * Default to allowing initiator operations.
-diff --git a/drivers/scsi/aic7xxx/aic7xxx_pci.c b/drivers/scsi/aic7xxx/aic7xxx_pci.c
-index 656f680c78024..7db8e20aff5c4 100644
---- a/drivers/scsi/aic7xxx/aic7xxx_pci.c
-+++ b/drivers/scsi/aic7xxx/aic7xxx_pci.c
-@@ -701,6 +701,21 @@ ahc_find_pci_device(ahc_dev_softc_t pci)
- 	return (NULL);
- }
+ 	ASSERT(count_fsb > 0);
  
-+/*
-+ * The SGI O2 firmware runs its onboard controllers, in slots 1 and 2 of the
-+ * root bus, without the Adaptec BIOS and at host ID 0.  It leaves no settings
-+ * in scratch RAM, which may still hold power-on contents with bad parity.
-+ */
-+static bool
-+ahc_pci_sgi_o2_onboard(struct ahc_softc *ahc)
-+{
-+	int slot = ahc_get_pci_slot(ahc->dev_softc);
++	/*
++	 * xfs_bmapi_write() maps at most MAXEXTLEN blocks in one
++	 * mapping, so don't reserve blocks for more. A pNFS layout range
++	 * comes from a client, and its block count may not even fit the
++	 * 32-bit reservation. The caller maps the rest with a later call.
++	 */
++	count_fsb = min_t(xfs_filblks_t, count_fsb, MAXEXTLEN);
 +
-+	return IS_ENABLED(CONFIG_SGI_IP32) &&
-+	       ahc_get_pci_bus(ahc->dev_softc) == 0 &&
-+	       (slot == 1 || slot == 2);
-+}
-+
- int
- ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
- {
-@@ -782,6 +797,9 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
- 	ahc->bus_intr = ahc_pci_intr;
- 	ahc->bus_chip_init = ahc_pci_chip_init;
- 
-+	if (ahc_pci_sgi_o2_onboard(ahc))
-+		ahc->flags |= AHC_NO_BIOS_INIT;
-+
- 	/* Remember how the card was setup in case there is no SEEPROM */
- 	if ((ahc_inb(ahc, HCNTRL) & POWRDN) == 0) {
- 		ahc_pause(ahc);
-@@ -898,7 +916,7 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
- 			 * Assume only one connector and always turn
- 			 * on termination.
- 			 */
-- 			our_id = 0x07;
-+			our_id = ahc_pci_sgi_o2_onboard(ahc) ? 0 : 0x07;
- 			sxfrctl1 = STPWEN;
- 		}
- 		ahc_outb(ahc, SCSICONF, our_id|ENSPCHK|RESET_SCSI);
+ 	resaligned = xfs_aligned_fsb_count(offset_fsb, count_fsb,
+ 					   xfs_get_extsz_hint(ip));
+ 	if (unlikely(XFS_IS_REALTIME_INODE(ip))) {
 -- 
 2.53.0
 
