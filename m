@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054311;
-	b=DLwX0wRUh/nlIOZTdtOyCoKOjUQQRGPFckP5JlTbx8qsKD7BjgNLvgnLaM/9omaeyfCy
-	 wCCTwf0HWJSawvnM2hVJ+tQQEyxmDUQX+jJhpVFp/4RIwIIbMB2J5y4CZYKSSG2M7ZXZu
-	 1AjzT8I3hST33ZcmLIjSaK84hC2nK09hT+NFTtFeOlFFjoYUxLtjNfz4Gt3ydWmVjU0JG
-	 jr85vZuqRXvmVnghDCtOfo+QTag+1jyUoYJMc5vP51KRAWvU3Zru3ZA016WuFn+N1xj94
-	 cc+3xccjsLg10i0NUDlNGcW9/J5Pl1sD6L+d3iGfx4pBAzDRuoPbM+xCSiiJUWNKe4g==
+	t=1795054314;
+	b=c/wonQ7q/gzIGsafa2RLP5F5It2ZVspmL1STTAqqr0w76arOmocx24kWXU/HhsPrtWHM
+	 iEHx511qPliCJfUO3O6hIiPErML6D9SN3p1DcZfv3Nu4evhpIi+S78x2OvpJSUZ1XqEeP
+	 DN5K3e3YD5RU+VYSdZ4KRVZVQFCYLbUfn9kwGwm8aHIJkKwsQ5PwvPZ0ckoFebbsZAfot
+	 QH+7dV+hlnGvmnDuzNfovETMEUE/LSRrZgpmlN4JeLLGHXmSaWoJ/aYO+nUcuSRYO6us0
+	 nJo9x8X3BWBCBRSfnCOO4GvhRhdpV8WSceFjgzFC8VeXb3j4D4ZZevWKBRMaJwr6wtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PS8kevWysaMtY5Dv+Nmh+XsqhO+Ya52lFyFJN2pPJvk=;
-	b=1W4FdgGTD78cRGJhip78R6/yBQ5umRx71UVhp8gyrJK94D5QQOFgcIUgxVeLu6hi3Qm3
-	 AAUmhAGsP1dK+DnwgE2cD1lQjbefHKmRvrcPX76dLZhu7cVXEFAkF5NK1eb3Qz4x6Uqa1
-	 hY52CgKCFkEPZbaKbhKGe0Q6VTVnQ9wZXCF/+2oRR8A14teWsoIgWKGTXV4LyVfO87oZV
-	 bi7Xoc9iU1Ii63rn3NT6V7lHaPyJrz7aycREME7BE6lAD3n4BmW8ZeL3EslPYF7WHJVrA
-	 Gh0UJGDHcRtrb5hmAJGTU9oNlbD+dgyccuvl3avSL+dW5lyAenw5m7SRs4M5yUrx0UQ==
+	bh=tl9Nq9+Y8jRKkPT3wcstvSWby3p9RvYC4cxTq8z/yFc=;
+	b=GolB3O9GPD2uJaXrxqUj5NnezaEOc4o0RMZCIZGAplHqm8GMekp81M4OLbmCTlSzmWmB
+	 bgxRSpxMSwy6OMRyXUeWqmTv5rGed9ZFU3TVzjp8O3OkjAZ/JS4mEO3zqn8jVSQ3uZJf+
+	 Qg6D16gDm6pLhmXDxWM3nRAOKoydebijp4ymzgWoJX6B9uuSpehGly0WeyL+f9OVLCiOs
+	 TKwEd5OOaBrdgx8Rj607K7l9QjBV/dJ8n8ZsygAwrsRQxKByj34tBByLHnrufseekBRk0
+	 xS6U59mp84pyqRoDu/RIq/5AEXzt6JIbzSFo56n7WHOXCxzvEsL+4LwUS58lGLL+uzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXL17ZzR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xK5PGagw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DD3606A31C;
-	Thu, 19 Nov 2026 02:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D587F606A31C;
+	Thu, 19 Nov 2026 02:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXL17ZzR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50211F000C5;
-	Thu, 19 Nov 2026 02:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xK5PGagw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397151F000C5;
+	Thu, 19 Nov 2026 02:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054311;
-	bh=PS8kevWysaMtY5Dv+Nmh+XsqhO+Ya52lFyFJN2pPJvk=;
+	s=korg; t=1795054314;
+	bh=tl9Nq9+Y8jRKkPT3wcstvSWby3p9RvYC4cxTq8z/yFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sXL17ZzRmNRTg7x/xvj4bRufRaycCAretp4V/nzlifiM1lMluWZcVcsajYp1jSoDj
-	 3toAtKZzmc+htXmwySm+XK7SY4wecQqcFdmreOks/sZN+YctICM0wnknBHrHIwrIRR
-	 q5CPs98iVPhHWzuKeAJ61VzM7OZ7c6NHLNWETciI=
+	b=xK5PGagwphN9m0lRs8Ed7kO1tDdac24Ub8ZqsI3C7x2gCUhEtN7sW4VDmHP+KcFqe
+	 1CvnPA8GURSCriAGZFypie0LAmCTuEzA+4TKfqlzhje600VmCwr/ha630wcN+EUnKG
+	 LC7d1R929hqd4tErAzmUIEMlWX1xG7RJVmuWCz6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Howells <dhowells@redhat.com>,
+	Wei Yang <albinwyang@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1203/2214] assoc_array: dont lose objects when a root shortcut is split at level 4
-Date: Wed, 18 Nov 2026 15:47:59 +0100
-Message-ID: <20261118150059.981284678@linuxfoundation.org>
+Subject: [PATCH 5.15 1230/2214] mm/madvise: add cond_resched() in THP branch of madvise_cold_or_pageout_pte_range()
+Date: Wed, 18 Nov 2026 15:48:26 +0100
+Message-ID: <20261118150100.957367390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,63 +74,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Wei Yang <albinwyang@tencent.com>
 
-[ Upstream commit 20b436c1ae8d37032f888c725915729830dc52f2 ]
+[ Upstream commit f5cfc8e3b20ad71949a1e5623ff45882c063a71b ]
 
-assoc_array_insert_mid_shortcut() takes level, the level of the node
-holding the shortcut as assoc_array_walk() reports it, and adds
-ASSOC_ARRAY_LEVEL_STEP to get the level of a node in that shortcut's
-place.  If the new key first differs from the shortcut no further in
-than that, no shortcut is made in front of the split, and new_n0 takes
-the old shortcut's place directly.
+During stress testing with stress-ng on a 256-CPU system, a softlockup was
+observed when madvise(MADV_COLD) was called on a 31GB memory region backed
+by transparent hugepages.  The region contains 15935 THP PMD entries, and
+the softlockup was triggered after 14485 of them had been processed.
 
-A shortcut at the root is held by no node.  assoc_array_walk() reports
-level 0 for it, and whatever takes its place is the root, which is read
-at level 0.  So when the new key first differs from a root shortcut in
-bits 4-7, diff is 4, no shortcut is made in front, and new_n0, whose
-slots are indexed by bits 4-7, becomes the root and is indexed by bits
-0-3.  Objects already in the array can no longer be found, and the new
-one lands in a slot its key does not select.
+The THP branch of madvise_cold_or_pageout_pte_range() has no scheduling
+point.  walk_pmd_range() invokes it once per 2MB PMD entry with no
+cond_resched() anywhere in the loop.  Each iteration calls
+pmdp_invalidate() which issues a synchronous TLB shootdown (dsb ish)
+waiting for all CPUs to acknowledge.  This operation can be time-consuming
+under heavy system load, causing the accumulated time across all PMD
+entries to exceed the softlockup threshold (20s) and panic when
+softlockup_panic=1.  On a CONFIG_PREEMPT_NONE=y kernel, there is no other
+opportunity to reschedule during this entire traversal.
 
-Eighteen keys are enough: seventeen that agree on bits 0-7 make the root
-a shortcut, and one that agrees with them on bits 0-3 only splits it.
-Three of the eighteen objects can then not be found, and inserting one
-of those keys again adds a second object instead of replacing it.
+The regular PTE path already has an unconditional cond_resched() at the
+function tail (introduced by commit 9c276cc65a58 ("mm: introduce
+MADV_COLD") and commit 1a4e58cce84e ("mm: introduce MADV_PAGEOUT") when
+MADV_COLD and MADV_PAGEOUT were first introduced) and a conditional one
+inside the loop (commit b2f557a21bc8 ("mm/madvise: add cond_resched() in
+madvise_cold_or_pageout_pte_range()")).  The THP branch never received
+equivalent treatment.
 
-Only add the step for a shortcut that hangs from a node.  A root
-shortcut split at level 4 then gets a shortcut in front of the split
-that ends at level 4, as assoc_array_insert_into_terminal_node() already
-makes when the leaves of a full root node first differ there.
+Fix by adding cond_resched() at the huge_unlock exit path after
+spin_unlock(ptl) and reclaim_pages(), which is the single exit point for
+all goto paths in the THP branch.
 
-Found by a userspace test that builds a shortcut ending at every level
-and splits it at every level inside it, from the root and from a node:
-every split of a root shortcut at level 4 failed, and nothing else did.
+Crash log:
+  watchdog: BUG: soft lockup - CPU#63 stuck for 23s! [stress-ng-vm:1665914]
+  ...
+  Call trace:
+  pmdp_invalidate+0x48/0x68
+  madvise_cold_or_pageout_pte_range+0x84c/0xb00
+  walk_pmd_range.isra.0+0x1ac/0x3b0
+  walk_pud_range+0x120/0x190
+  walk_pgd_range+0x170/0x1b8
+  __walk_page_range+0x184/0x198
+  walk_page_range_vma+0x94/0x128
+  madvise_cold+0xd8/0x198
+  madvise_vma_behavior+0x234/0x638
+  madvise_walk_vmas.constprop.0+0xdc/0x210
+  madvise_do_behavior+0xa8/0x328
+  do_madvise+0xd8/0x140
+  __arm64_sys_madvise+0x2c/0xe0
 
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Assisted-by: LLM
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/20261010024042.4070048-1-albin_yang@163.com
+Signed-off-by: Wei Yang <albinwyang@tencent.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adjusted context because reclaim_pages() uses page_list instead of folio_list ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/madvise.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 62e35116db19c..e7c9a2f513114 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -843,7 +843,8 @@ static bool assoc_array_insert_mid_shortcut(struct assoc_array_edit *edit,
- 	 * zero length - otherwise we just connect the new node directly to the
- 	 * parent.
- 	 */
--	level += ASSOC_ARRAY_LEVEL_STEP;
-+	if (shortcut->back_pointer)
-+		level += ASSOC_ARRAY_LEVEL_STEP;
- 	if (diff > level) {
- 		pr_devel("pre-shortcut %d...%d\n", level, diff);
- 		keylen = round_up(diff, ASSOC_ARRAY_KEY_CHUNK_SIZE);
+diff --git a/mm/madvise.c b/mm/madvise.c
+index fba17d32cc1d0..81fb8fce409d4 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -383,6 +383,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
+ 		spin_unlock(ptl);
+ 		if (pageout)
+ 			reclaim_pages(&page_list);
++		cond_resched();
+ 		return 0;
+ 	}
+ 
 -- 
 2.53.0
 
