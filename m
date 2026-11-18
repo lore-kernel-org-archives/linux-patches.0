@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053718;
-	b=mlPequOY2JLC3r2aRxbNgMAgvhKLuE8cOA+iySmgXH39uOh6hELFNLGxaCLCdkooOiCn
-	 wukeGl0GJM7dIHg5rciJTFs3wmb1cDb6Dub9fPrT+7CWVNZMKxR6LMm3NXBQEHHS8xD1G
-	 4SOzk0QatgkuFCvWw9YliUIfcf2xfFGEQumqphm4NcrWFVmKT9xp7bcZ10OX017Dg5kUt
-	 ec7sDZwyLEReBAU+aPJa431u8xuMaBVatAD4Z9i6W704flZjcxoUyWednoa4Vq2r4jV4O
-	 j8TRMauZ0S1E83wTCrthtN+E5Ory1Wu+denP33QtUV/1VBda6/DLEuH8tCG2j7uBI/g==
+	t=1795053720;
+	b=LM/+yRY/l2Wcfz/985lgbjWFLNQf0mFyBi1Zopcp7q9QDoOVRgSKZZpo0tjocs/KbbJq
+	 RShXf3xGnitBbcMsP8bvyMapWIPG/F1lnRmdcXfOZZi+6fmX7H00D4kO+OIR8UIBItTPN
+	 a/tDoe+F633o6JqQ2CH5gaP2oVs1Yp4WDom7Wxxs4y5SUDJSuo1NoRf6wjWOhTBCRxZVf
+	 BXsWiba8UWJITRevWpuWzfbhezeUZRtVfkHOPUy+jbQ2kvsHf4w37JXCqeBmNVf27am0u
+	 Pvadn3OCqoAGqlSulA+YyeAf7BpIpKve07YXlhnxex7+OM7M3bqk9weqqdNC5PsgriA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053718;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f12N3S7AdU+c6K60ED0IZ4LzkHhpchFOBeZdWH6l4yQ=;
-	b=ZXlFAZZ5HzON7i22jSLvHrcewvEoMvwtlEyfcEmjJe2ah886xrT2zZ7+MlhuZD1eSt8N
-	 8USXW4IZ9LwYt8uRutDd3p8xDz7rIlwtwFOu/TpXu3EdxyBKuDzC0fbm5kvrO3T7ZtnGZ
-	 VoBcZJTSS5oFN0Mxb91+3Uikc5Q7zqzIDuPNYjTF0Zh3pujTU/AflMCJW8dxXyNoVfYIy
-	 YGwhwB2ulcOzMszk7GG7x87DcUHSFLaWYcK0jgkVFUtUHu6tFk2GNfCCEcmr3uUFmg3Jr
-	 tgIvq7/bZ7/hzgjZ8u5pW/RPxKAphbBVjWy3phbjzNKR549avZ4Y9xx8VbYO/GBq2dQ==
+	bh=QLfQC1hZSvyEX+QB49n5C3ufR7OORHZXh8nnTkXK3SE=;
+	b=jVqTZQKRzyfUTpQZENiIXk9MHQyTEmfyYwlOErtsVsnwHa0x+6ZYLB6qxoIGxpIbxdCf
+	 tbz7oRp22qK40At2T011R7KoaDZPLfAw8kdoRKunClicaGUNnqL6ybWFz3KCm1gLhmgTg
+	 H/gjtcmagTDNblhjrS5HZfilReNLMg8YXm33eaa13juJGkKkh+yrLDiY/ThUkpeTGs2LU
+	 5WE6hhAzi25ifQVoIczeQJ9S7bjljk6PHrpUp0K+mKaYqB2qhuxO+4wuJVnm2PEbnNS4m
+	 lGBAGPN5s72cRdMsdVJBwNXNSOgEAdm0Eo4IXpzDyFtmPDT6YvCFFZodl3jMjJfBmng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j8u6dbdZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mzjUCe/u";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117CA606A31C;
-	Thu, 19 Nov 2026 02:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF1F606A320;
+	Thu, 19 Nov 2026 02:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j8u6dbdZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8231F000C4;
-	Thu, 19 Nov 2026 02:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mzjUCe/u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1971B1F000C4;
+	Thu, 19 Nov 2026 02:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053717;
-	bh=f12N3S7AdU+c6K60ED0IZ4LzkHhpchFOBeZdWH6l4yQ=;
+	s=korg; t=1795053720;
+	bh=QLfQC1hZSvyEX+QB49n5C3ufR7OORHZXh8nnTkXK3SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j8u6dbdZXtn/mzUQzS2XgBDKopl44HiIevuGLfL+oGJV+ymqZzY/OX//rD/wmFnu8
-	 lrZ/2zedbHacoxxeaEepS91Q9xbNeSNzGkFC8vwCbwl6PhvPgCWYbZxwDEd1mYISvn
-	 w3dp/Od5QC2/x5OiM4c2oFBOgMo+xZAQMvzKHL2M=
+	b=mzjUCe/upSkJmfQM7QnsLWAuVQgi8A1BOP0AcYeQtjvU4oq1TH0n9GAnaqStP6Y76
+	 JF5fOZF7HYejW3y76k8JGAjQSG/zNnYPadPXRjN8nUEaIYFP0BUPodUbQ88Mwz7FwX
+	 UFVY5U1C7t7F+PmKLE6graTwliPmT0div9G3EzuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Sinan Turunc <enscrpt@pm.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0981/2214] KVM: nSVM: Ignore EFER.LMA if EFER.LME=0 when preparing L2 state
-Date: Wed, 18 Nov 2026 15:44:17 +0100
-Message-ID: <20261118150051.488635484@linuxfoundation.org>
+Subject: [PATCH 5.15 1017/2214] ALSA: usb-audio: Bound packet copies by the PCM buffer size
+Date: Wed, 18 Nov 2026 15:44:53 +0100
+Message-ID: <20261118150053.054552033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,58 +68,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sinan Turunc <enscrpt@pm.me>
 
-[ Upstream commit 1c4c84a643b704e473cb171f7b61359ff29b12a4 ]
+[ Upstream commit 06be918062adc1a5a76dc346803b136b20bdb5ae ]
 
-Force EFER.LMA=0 if EFER.LME=0 when preparing L2 state for VMRUN, i.e.
-mimic real hardware's behavior of ignoring EFER.LMA if EFER.LME=0.  VMRUN
-unfortunately allows the nonsensical combination, i.e. doesn't fail, but
-KVM itself has an invariant EFER.LMA can be set et if and only if EFER.LME
-is set.   Breaking that invariant can lead to a variety of issue,
-particularly in MMU code that keys off EFER.LMA when determining whether to
-emulate/virtualization 4/5-level paging versus PAE paging.
+retire_capture_urb() and prepare_playback_urb() assume that one USB
+packet never carries more data than the whole ALSA ring buffer. Nothing
+enforces that: the packet size comes from the device (wMaxPacketSize,
+and curpacksize == maxpacksize when the class-specific endpoint
+descriptor sets MaxPacketsOnly), while the PCM hardware constraints only
+require 64-byte periods, two periods and a period time of one data
+interval. An 8 kHz mono U8 stream on a 128-byte buffer is legal, and a
+full-speed device can send 1023-byte packets into it.
 
+On the first oversized packet hwptr_done is wrapped once and stays
+beyond buffer_bytes (895 for 1023 bytes into 128). On the next packet
+the wrap arithmetic in the copy path computes
+
+    bytes1 = subs->buffer_bytes - oldptr
+
+with oldptr > buffer_bytes, so bytes1 wraps to about 4 GB and memcpy()
+runs off the end of the URB buffer and of the vmalloc'd DMA buffer:
+
+  BUG: KASAN: slab-out-of-bounds in retire_capture_urb+0x251/0x870
+  Read of size 4294966529 at addr ffff88800c1e2800 by task vhci_rx/82
+
+and for playback, where copy_to_urb() has the same shape:
+
+  BUG: KASAN: vmalloc-out-of-bounds in copy_to_urb.isra.0+0x188/0x430
+  Read of size 4294966529 at addr ffffc9000004537f by task vhci_rx/79
+   prepare_playback_urb+0x98a/0x1fc0
+
+Truncate an oversized capture packet to the buffer size, and stop
+filling a playback URB once it holds a whole buffer. With bytes <=
+buffer_bytes the single wrap of hwptr_done and the two-part memcpy()
+in both copy paths stay inside the buffer. A device whose packets do
+not fit the buffer at all was never going to play correctly anyway.
+
+Reproduced on 7.3-rc7 with a USB/IP device (dummy_hcd cannot carry
+isochronous data) advertising a UAC1 endpoint with MaxPacketsOnly and
+wMaxPacketSize 1023, and a PCM client using period_size 64, periods 2.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Cc: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260902232028.2767071-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: Replaced the unavailable cached EFER field with a local READ_ONCE() snapshot of VMCB12 EFER. ]
+Signed-off-by: Sinan Turunc <enscrpt@pm.me>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261026223543.620-2-enscrpt@pm.me
+[ sashal: added the missing ctx->buffer_size check that was already present upstream ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/usb/pcm.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
-index f5b9bac913d7b..9a3045d843fc6 100644
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -461,6 +461,7 @@ void nested_vmcb02_compute_g_pat(struct vcpu_svm *svm)
- static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12)
- {
- 	bool new_vmcb12 = false;
-+	u64 efer = READ_ONCE(vmcb12->save.efer);
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 737302cfede8f..2f3fadeeb3a38 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1228,6 +1228,18 @@ static void retire_capture_urb(struct snd_usb_substream *subs,
+ 			bytes -= adj;
+ 			subs->stream_offset_adj -= adj;
+ 		}
++		/*
++		 * A packet can be as large as the endpoint's maxpacksize, which
++		 * the device chooses, while the ring buffer can be as small as
++		 * two 64-byte periods. The hwptr_done wrap below handles one
++		 * wrap only, so never take more than one buffer from a packet.
++		 */
++		if (unlikely(bytes > subs->buffer_bytes)) {
++			dev_warn_ratelimited(&subs->dev->dev,
++					     "%u-byte packet exceeds %u-byte buffer, truncating\n",
++					     bytes, subs->buffer_bytes);
++			bytes = subs->buffer_bytes;
++		}
+ 		frames = bytes / stride;
+ 		if (!subs->txfr_quirk)
+ 			bytes = frames * stride;
+@@ -1441,7 +1453,14 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
- 	nested_vmcb02_compute_g_pat(svm);
- 	vmcb_mark_dirty(svm->vmcb, VMCB_NPT);
-@@ -488,12 +489,16 @@ static void nested_vmcb02_prepare_save(struct vcpu_svm *svm, struct vmcb *vmcb12
- 
- 	kvm_set_rflags(&svm->vcpu, vmcb12->save.rflags | X86_EFLAGS_FIXED);
- 
-+	/* SVM ignores EFER.LMA if EFER.LME=0 (instead of failing VMRUN). */
-+	if (!(efer & EFER_LME))
-+		efer &= ~EFER_LMA;
-+
- 	/*
- 	 * Force-set EFER_SVME even though it is checked earlier on the
- 	 * VMCB12, because the guest can flip the bit between the check
- 	 * and now.  Clearing EFER_SVME would call svm_free_nested.
- 	 */
--	svm_set_efer(&svm->vcpu, vmcb12->save.efer | EFER_SVME);
-+	svm_set_efer(&svm->vcpu, efer | EFER_SVME);
- 
- 	svm_set_cr0(&svm->vcpu, vmcb12->save.cr0);
- 	svm_set_cr4(&svm->vcpu, vmcb12->save.cr4);
+ 	for (i = 0; i < ctx->packets; i++) {
+ 		counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
+-		if (counts < 0)
++		/*
++		 * Bound by the ring buffer as well as by the URB:
++		 * copy_to_urb() wraps hwptr_done once, so one URB must
++		 * never carry more than the whole buffer.
++		 */
++		if (counts < 0 ||
++		    (frames + counts) * stride > ctx->buffer_size ||
++		    (frames + counts) * stride > subs->buffer_bytes)
+ 			break;
+ 		/* set up descriptor */
+ 		urb->iso_frame_desc[i].offset = frames * stride;
 -- 
 2.53.0
 
