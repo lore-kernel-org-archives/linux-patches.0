@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042066;
-	b=G5SLqpBt7KNavOuNGGSc+/Hh/J8Fj75KmnkIZ11sCNAeeQ0Ue4hQNYOW1RGRdd+m5DCU
-	 hcZyam5NVrqJUsmIf81ZgfTD7sOfsLjMnlz2dz6voYHje+X9F2JAuljNlhGbV6Xm4HJFB
-	 Un0ol95zGcqcy9UUQU4Vju5y6Q374dW39dmdEMDk4CooC48lVbBx7vuI0FGvCLTS/tSSx
-	 n/QDkpU5XzXVMPj7UlZAg74wUH7BFcXRRM2ms+XJ5EL9NqBkHXF2Swj6ebkBML1bWtjUu
-	 Uaq/5d7nOPqnlE7ocV4aczbgd7XxGWaMKwTAYsTFDcZfkkgvxq5Jkf8vl280unpd97A==
+	t=1795042069;
+	b=XXU4QTTCRSZttGFljgm94FLJayOhrl16Du2qc8RTRVqIWoE/gtQvEZW3z9lFzw/kWUKN
+	 ERwk2L4/Hg7IM0v6W5NYKr7oKpeY0uSzxRYtlvMB5gZRO4eJPGdWNP0vSzNAKt1cQ68r1
+	 lOuhDefo6STDR7COIg9GASzt/3HoqRT7NdFyb6r5K7938yN7t1btet5hEUrVDlbEejGtU
+	 O1sslCaoqXKB0ECZjf5D5cPL7EMnAsIiAOFE/1OHzbPKnyq3LeUQ8hEutDCzD1zj8JlNs
+	 osW/7J3zakgV5IrJVFtJnz2Vc3Bv85KcUPBjD0HabVo7RH1qYRCUk9sgOImRgRg3mfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042066;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=txRVmpqbA6CR2KFaOss4Ef/KKqEi7FY29BmwNCOONaA=;
-	b=xLWctKJoR2Lm3F1GJ802s9pYO66q8ZoipX2wvhDr5Y7Rf2BNgmJMpUu6J+6hoxC7zjnh
-	 n+tNZowkhHJvI21YbN52YtSDr43l24f9MbvQeEWTZ4FA5iBF58E3N2yf5nmmsEaaMhT0L
-	 WuQwqv+xw4OCqRa7RmVFaM8YkZylX5PjUUYCe6HJZvahnqinqPZ40wcs8jCGx2hhz+7/E
-	 WDL8E8P6+Lroyt/yNpVqprZqw6vK/FE71cixT9H9Y3qivkHnnV2TVuiKLYqAzHoq3jdMp
-	 XEtivFgJyb+iasl95rxXVU1u1WI49ukQ3a+wTFsfIipQfX48VTWTxRJCA8H8bPfC4rA==
+	bh=Ik//OIBZwmmzuDgCuJzZnh/wcXbS2RrtIdOQrK8vKOE=;
+	b=qrgndvpqY2g5VZ05uSquXUJKA8N+080ebz6anMkztVxe3I26taxn67m5TUEv5cgKi5WV
+	 VPntVlKSSZDp9wFE4Pmwr4jaK9W8YCNHHmk0uMRrz0GGD2/7kdbPLdXnA4R1cgpJZYXh+
+	 zrESAgHa6Ae+UBJCKr/yN2SFJhQMLXEThBZX7V3cIMe/WqsMtt2nKOxiPIsqge/hqjwLH
+	 CXXN+YnH40NHBv5YHDNY1p1wMHc9J6UnVlkd5rJXwpGtBXJpymGhwDoLsaiYKFE/HOPT1
+	 2qVuVjqB6u5jbsdiFKpsKUd4AWq0oUpsa0oG1z3Kxjn9dKz4bUz1Q57oXWN+p6b9ssA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+reWWUC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y91FcuNk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7FA606A320;
-	Wed, 18 Nov 2026 22:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835B4606A320;
+	Wed, 18 Nov 2026 22:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r+reWWUC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079811F000C5;
-	Wed, 18 Nov 2026 22:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y91FcuNk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55AF1F000C4;
+	Wed, 18 Nov 2026 22:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042066;
-	bh=txRVmpqbA6CR2KFaOss4Ef/KKqEi7FY29BmwNCOONaA=;
+	s=korg; t=1795042069;
+	bh=Ik//OIBZwmmzuDgCuJzZnh/wcXbS2RrtIdOQrK8vKOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+reWWUCYOOD389CME+jYdHu2cA+OzfwmNSlM5XylfPNgdF8To+mNHzDRtvGNOra6
-	 jf2iT72BQ8P8mxerRJFRFloNrthTLFrt3tOjBwUsBQsbrVf+iMC9SRZwgnOJQR4Omd
-	 WndCF18q9RpaKd58XL1IvH0jGslz7wXyRR+A/q2E=
+	b=Y91FcuNkOrr717+lopunAwOdm5Dd1zu3Db8zuRBhzfA8uzB9xgYIc1OqQ9OqgrVSx
+	 chZflyVJ36e2ykt/DkZ4A4T7WvPotdyIPJ0vA5VFq1Z+GZdymNFG18Esv/Y6oouvHQ
+	 e/FKWsw98/pBr7Kc2DRtR7bB0GVGpCHAxiTAVKDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3039/3318] selftests/bpf: Run the cpumask map insert tests only for the test task
-Date: Wed, 18 Nov 2026 16:01:01 +0100
-Message-ID: <20261118150451.339548689@linuxfoundation.org>
+Subject: [PATCH 6.6 3040/3318] ALSA: pcm: Protect the unregister notifier traversal
+Date: Wed, 18 Nov 2026 16:01:02 +0100
+Message-ID: <20261118150451.367407555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,57 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit e2c978ad415ce223e71f6ddaa92778225eca0bef ]
+[ Upstream commit 680be9f82d4977d3410c513d3bfe912d100f64fc ]
 
-verify_success() attaches each cpumask test program to task_newtask,
-forks a single child, and expects err to be 0 afterwards. Most programs
-return right away for other tasks than the test one.
+snd_pcm_free() traverses snd_pcm_notify_list and calls n_unregister
+without register_mutex, although snd_pcm_notify() takes that mutex to
+add and remove notifiers. PCM disconnect releases the mutex before the
+free callback runs, so it does not protect this later traversal.
 
-test_insert_leave and test_insert_remove_release don't, and insert a
-cpumask into the single entry of __cpumask_map for every task created
-in the system while they are attached. test_insert_leave leaves its
-cpumask in the map, so a second task created, for instance by a test
-running in parallel, fails to insert one and sets err to 3. Two tasks
-created at the same time can do the same to test_insert_remove_release.
+With no open OSS file, normal snd-pcm-oss removal can overlap PCM card
+teardown, for example when unbinding snd-dummy:
 
-Return early for other tasks than the test one in both programs, as the
-other programs do.
+  PCM card teardown                     snd-pcm-oss unload
+  -----------------                     ------------------
+  snd_pcm_dev_disconnect()
+    remove PCM under register_mutex
+    unlock register_mutex
+  snd_pcm_free()
+    fetch notifier
+                                        snd_pcm_notify(..., 1)
+                                          unlink notifier under mutex
+                                        free module storage
+    read notifier->n_unregister
+    invoke callback
 
-Fixes: 7b6abcfa15cd ("selftests/bpf: Add selftest suite for cpumask kfuncs")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-cpumask-insert-filter-v1-1-3249218594d7@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+The free path can then read the notifier from released module storage
+or call its unloaded code.
+
+Hold register_mutex across the unregister traversal and its callbacks.
+Notifier removal must wait until both have finished. This also protects
+the traversal if a callback releases the last module reference: module
+exit cannot unlink its notifier until the free path releases the mutex.
+Drop the mutex before private_free and the remaining stream cleanup.
+
+Fixes: c461482c8072 ("[ALSA] Unregister device files at disconnection")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/pm-pmb-26d66390a25fec9fad6c-v6-5be251a3ac8832955a31-1@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/cpumask_success.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/core/pcm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/cpumask_success.c b/tools/testing/selftests/bpf/progs/cpumask_success.c
-index 674a63424dee3..76daff114cb29 100644
---- a/tools/testing/selftests/bpf/progs/cpumask_success.c
-+++ b/tools/testing/selftests/bpf/progs/cpumask_success.c
-@@ -387,6 +387,9 @@ int BPF_PROG(test_insert_leave, struct task_struct *task, u64 clone_flags)
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index a921e4e05baf2..fa2f0bcbb63dc 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -870,8 +870,10 @@ static int snd_pcm_free(struct snd_pcm *pcm)
  {
- 	struct bpf_cpumask *cpumask;
- 
-+	if (!is_test_task())
-+		return 0;
-+
- 	cpumask = create_cpumask();
- 	if (!cpumask)
+ 	if (!pcm)
  		return 0;
-@@ -403,6 +406,9 @@ int BPF_PROG(test_insert_remove_release, struct task_struct *task, u64 clone_fla
- 	struct bpf_cpumask *cpumask;
- 	struct __cpumask_map_value *v;
- 
-+	if (!is_test_task())
-+		return 0;
-+
- 	cpumask = create_cpumask();
- 	if (!cpumask)
- 		return 0;
+-	if (!pcm->internal)
+-		pcm_call_notify(pcm, n_unregister);
++	if (!pcm->internal) {
++		scoped_guard(mutex, &register_mutex)
++			pcm_call_notify(pcm, n_unregister);
++	}
+ 	if (pcm->private_free)
+ 		pcm->private_free(pcm);
+ 	snd_pcm_lib_preallocate_free_for_all(pcm);
 -- 
 2.53.0
 
