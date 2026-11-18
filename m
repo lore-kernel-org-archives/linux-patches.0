@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016994;
-	b=vh3MnpxY8HV76b5Gx33PBczrTrocAcQVP5zbBQv9FNhySNSU4psFAaq4ulqdFANW4yVu
-	 UUFqDXneHP1lRCagLV+x4z1facyZIdGXFtGn/V4+r+WxtetOTA9st1NkLKJdBaEr5YXau
-	 zYTlL8lhOFEd1f6DMgp5+haafvFcomcIvJ7nc9G1X+0kXm1tRbEmjBiw6JoUnNfMsxfFB
-	 B7vx+YcET8QS9aEW6GnvXT4PWc+12z08+urPdWleRf7K5+FEcH2H/rX176iGbGc8qEtso
-	 etGUrT+4VHU4F3AusXf2UALc7Aeomyw4TUaOpPCLKYVa3S4ufxEdr8VJ+Lus5ZmhYUQ==
+	t=1795016997;
+	b=CT2MHrc0EuiTxDp8MAFtzXKhUGeW9bBkC8kt9fUIdQieHjAAeHlRCl825K5AGI/bEDub
+	 5DofvO+aKnBCqkqml+4nAlqn1aGOP/Wn84Y+1X53uYa6TV7AZy8miTWgN4JKOl/vmONdm
+	 YioNBNgK4APuNXtmbS7+KwRRgkXZWx5KDfx4tPf+PMbpQSn9XOmjw9bUdKSavrCCGawpQ
+	 kxX/hRc88OAlOiBU32cDqtfc6qp784eCehuEF+2D/CUNYgu+cxkHPRwrMZDNE6KjBgzux
+	 AS4ZChtYP4F7x/5RhMxE5DwvlVXnznUf7fwZRqwQFT93ejjmDREgOkUV3+db7zEQXfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016997;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uv10dcKTI/+qX7nBaLQ+QKwLUqWOFG18ej9DthMqRU8=;
-	b=Z/nKmF//oeL4Dw8s77ceSxAT3f1DyiddP1xJpMK/ptItAb8ZgEL7a7cK4RP1vogJdCGS
-	 r2beWXRKWGOaMod7qPCC4Ybigd9nGRZdJmWUD+dP+zecHhr1Sk3krwyyoK4euHWZdR0kj
-	 od/NWzy9lBKyikKcTl2A5gJkDIzhhzIrDzghxDrOA/PxpZn8QthqHS5W/1n9Kh2Zbzadn
-	 aALqA5NjhXTWSiROh/S4VBUHq2Wy6yUVYwhE0E1Er27ICuq9WygJD2NXapr41FercG7kj
-	 KYt5qhVz++5ozBG8ZVf5ahuvJWNnrv8glNTT8YoPnKuO4ncxToDd/EP7ajnnYzcwDNg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=CWHtAXe+kCXmUecpUC+2RSe+PDJMmEzPFXv46IWmEIk=;
+	b=4MyQZ/Zqq0YOu352s6nWeDVma8QkcMvVO71K2re9QwaFHY/WCXSz3j+skl7TmcH3Bpie
+	 TXUwJcfLQ2Lhs7+MlEzHT6yDZh410B2S2VIsKVnu3ofKv6rQ7ekZA6FbaNOijlBdeVDYS
+	 tbVPME/4DA5dhiiUIE0QzJve1SPPv0Nu8i/HM84ASffRg5kNJLKH8I+ujpkOSdIMEIGWJ
+	 73v2RPu42QtQ/ZKyE4M56a3p9uXXHSyjYOZ0/elWH5vdvUkFi9akC51uwkbh24U6NUNYv
+	 j+fK+MBim6YZaxNwjhrUH6CZYWjKwSGsl0hsxN1LEs2psUiPGDUZc7lU9vV5fAAfy6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Az61gnN8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nY6sv99f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814BA606A325;
-	Wed, 18 Nov 2026 15:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCDB606A320;
+	Wed, 18 Nov 2026 15:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Az61gnN8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DF41F000C5;
-	Wed, 18 Nov 2026 15:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nY6sv99f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4DB1F000C4;
+	Wed, 18 Nov 2026 15:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016994;
-	bh=uv10dcKTI/+qX7nBaLQ+QKwLUqWOFG18ej9DthMqRU8=;
+	s=korg; t=1795016997;
+	bh=CWHtAXe+kCXmUecpUC+2RSe+PDJMmEzPFXv46IWmEIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Az61gnN89ipJARLPCh0/iVtlNQSrPixzWYFWqQWX7+QR0+4nUhIHEko8Q5O53Axo6
-	 wS9fBPY6MU986RuJLVDJMXjKByWra9ysOdssbcDBP5aql9dKPlB2Lhd60x/YPyi7I8
-	 F3KcNYqmqEC/dYb0iqPXxoSpxXJgbI1QXuslqrX8=
+	b=nY6sv99f7ekas33awqBLCfYLv8Np5xyEUC51sjbvRz31Zckq2EaewewyrQ2olNehu
+	 OHFApfGj6g9/J/uFc/84O4svByL3f7ncmeKa0MIhDWPzDR4r1vMojE4tNVSO0s5abN
+	 abTUUl+q/JqXbUh1jXo54wg9OKoXrLQ1OV9osEVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Sinyavin <sinyavin@gmail.com>,
+	Atsushi Nemoto <anemo@mba.ocn.ne.jp>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0725/2651] serial: msm: select PM_OPP
-Date: Wed, 18 Nov 2026 15:32:45 +0100
-Message-ID: <20261118150313.971151285@linuxfoundation.org>
+Subject: [PATCH 7.3 0726/2651] serial: txx9: Drop noop probe function and dangerous remove callback
+Date: Wed, 18 Nov 2026 15:32:46 +0100
+Message-ID: <20261118150314.005497527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -61,45 +64,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Sinyavin <sinyavin@gmail.com>
+From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 6a8352bb4e4bfcf67fa23c49d2e0d14684ffe2e6 ]
+[ Upstream commit 22c6a6ac74c2434735638e7ef1101597ae263aec ]
 
-Commit 173ebdedcd84 ("serial: msm: Use OPP table for DVFS support")
-made the MSM serial driver unconditionally configure the core clock
-through the OPP framework during probe.
+The only platform device that can be bound to the driver is allocated by
+the driver itself. That device doesn't have platdata, so the probe
+function only consists of a loop that is never run and thus can be
+dropped without loss of functionality.
 
-When CONFIG_PM_OPP is disabled, devm_pm_opp_set_clkname() is a stub that
-returns -EOPNOTSUPP, so every MSM serial port fails to probe. Select
-PM_OPP to keep minimal configurations functional.
+The remove function then should better not undo things that were not
+done in the first place. That happens because serial_txx9_init() calls
+serial_txx9_register_ports() with the created platform device and so
+up->dev == &dev->dev evaluates to true and uart_remove_one_port() is
+called twice for each port.
 
-Fixes: 173ebdedcd84 ("serial: msm: Use OPP table for DVFS support")
-Signed-off-by: Dmitry Sinyavin <sinyavin@gmail.com>
-Link: https://patch.msgid.link/20260830085340.2542624-1-sinyavin@gmail.com
+So let serial_txx9_exit() undo exactly what serial_txx9_init() does and
+remove the useless respectively wrong functions.
+
+Fixes: 0970769aceb9 ("[SERIAL] serial_txx9 driver update")
+Reviewed-by: Atsushi Nemoto <anemo@mba.ocn.ne.jp>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/cd4fce2cef14907ebe4713c147f8896924380e44.1786697789.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/serial_txx9.c | 55 ++------------------------------
+ 1 file changed, 3 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/tty/serial/Kconfig b/drivers/tty/serial/Kconfig
-index cf7dba473b203..bf680d22199b1 100644
---- a/drivers/tty/serial/Kconfig
-+++ b/drivers/tty/serial/Kconfig
-@@ -904,6 +904,7 @@ config SERIAL_JSM
- config SERIAL_MSM
- 	tristate "MSM on-chip serial port support"
- 	depends on ARCH_QCOM || COMPILE_TEST
-+	select PM_OPP
- 	select SERIAL_CORE
+diff --git a/drivers/tty/serial/serial_txx9.c b/drivers/tty/serial/serial_txx9.c
+index 4ae9a45c8e3a3..ef56979321b9e 100644
+--- a/drivers/tty/serial/serial_txx9.c
++++ b/drivers/tty/serial/serial_txx9.c
+@@ -1009,7 +1009,8 @@ static void serial_txx9_unregister_port(int line)
+ 	struct uart_port *uart = &serial_txx9_ports[line];
  
- config SERIAL_MSM_CONSOLE
+ 	mutex_lock(&serial_txx9_mutex);
+-	uart_remove_one_port(&serial_txx9_reg, uart);
++	if (uart->iobase || uart->mapbase)
++		uart_remove_one_port(&serial_txx9_reg, uart);
+ 	uart->flags = 0;
+ 	uart->type = PORT_UNKNOWN;
+ 	uart->iobase = 0;
+@@ -1019,52 +1020,6 @@ static void serial_txx9_unregister_port(int line)
+ 	mutex_unlock(&serial_txx9_mutex);
+ }
+ 
+-/*
+- * Register a set of serial devices attached to a platform device.
+- */
+-static int serial_txx9_probe(struct platform_device *dev)
+-{
+-	struct uart_port *p = dev_get_platdata(&dev->dev);
+-	struct uart_port port;
+-	int ret, i;
+-
+-	memset(&port, 0, sizeof(struct uart_port));
+-	for (i = 0; p && p->uartclk != 0; p++, i++) {
+-		port.iobase	= p->iobase;
+-		port.membase	= p->membase;
+-		port.irq	= p->irq;
+-		port.uartclk	= p->uartclk;
+-		port.iotype	= p->iotype;
+-		port.flags	= p->flags;
+-		port.mapbase	= p->mapbase;
+-		port.dev	= &dev->dev;
+-		port.has_sysrq	= IS_ENABLED(CONFIG_SERIAL_TXX9_CONSOLE);
+-		ret = serial_txx9_register_port(&port);
+-		if (ret < 0) {
+-			dev_err(&dev->dev, "unable to register port at index %d "
+-				"(IO%lx MEM%llx IRQ%d): %d\n", i,
+-				p->iobase, (unsigned long long)p->mapbase,
+-				p->irq, ret);
+-		}
+-	}
+-	return 0;
+-}
+-
+-/*
+- * Remove serial ports registered against a platform device.
+- */
+-static void serial_txx9_remove(struct platform_device *dev)
+-{
+-	int i;
+-
+-	for (i = 0; i < UART_NR; i++) {
+-		struct uart_port *up = &serial_txx9_ports[i];
+-
+-		if (up->dev == &dev->dev)
+-			serial_txx9_unregister_port(i);
+-	}
+-}
+-
+ #ifdef CONFIG_PM
+ static int serial_txx9_suspend(struct platform_device *dev, pm_message_t state)
+ {
+@@ -1096,8 +1051,6 @@ static int serial_txx9_resume(struct platform_device *dev)
+ #endif
+ 
+ static struct platform_driver serial_txx9_plat_driver = {
+-	.probe		= serial_txx9_probe,
+-	.remove		= serial_txx9_remove,
+ #ifdef CONFIG_PM
+ 	.suspend	= serial_txx9_suspend,
+ 	.resume		= serial_txx9_resume,
+@@ -1251,9 +1204,7 @@ static void __exit serial_txx9_exit(void)
+ 	platform_driver_unregister(&serial_txx9_plat_driver);
+ 	platform_device_unregister(serial_txx9_plat_devs);
+ 	for (i = 0; i < UART_NR; i++) {
+-		struct uart_port *up = &serial_txx9_ports[i];
+-		if (up->iobase || up->mapbase)
+-			uart_remove_one_port(&serial_txx9_reg, up);
++		serial_txx9_unregister_port(i);
+ 	}
+ 
+ 	uart_unregister_driver(&serial_txx9_reg);
 -- 
 2.53.0
 
