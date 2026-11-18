@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036591;
-	b=oJVYmavIdPXgH5ZQH3FR+7zbCFdZMVSTZXzFWJ4/7yu/scWFp0w4Lj08lrqpOAoOdzUi
-	 oeXGgJGkoEej+PZC5wrZ61I5ESYGg9t4JqqVbbS80vRB+UV50zr+Ltka8dtGJ1w4agUoF
-	 3ulM/JOw13EAHz9G3hDAH7M6aOZ4D4h7lXa5qNYtBVrTAhijHmtKuB5zPms9VDNlKEwG7
-	 EqCKrYmz2YAyq9sbGUnWNQER/zk42/fhasQwsq5F7wQ/Gx9nVmTnjoYlpuDG00Vo6Oy35
-	 Rmqv22Orv1E/IpH9mO1A+NRM6xhjlsjrYgj0luGwbFMDKBtosZhNMzc5UjvNHoIDcbg==
+	t=1795036594;
+	b=o3ummMradQTq6kvks1zIkIj7r/AHrIzz8r4cM3Be2xsdP2unyAaj1YGsJijrUFAfQj5N
+	 Z1Fj6uMXseqymoU7wCPbO68RB383TXa9MSTnaOD1Kn6D0KYtQJmArOgFOfoqF/BsJsrcy
+	 J3E1fVWxjDQSE0ixrdqFTqbvKKgSgn1Smq8ksDGsVWGuE7Xp9OXLf8E+Gu7zeMPi4tbkP
+	 MOktyfBegd27rsAmQZJww+Ugo6nC/K4w7rryUn3xXf3iw52I+G7LRnnxI2dhXObKP5MzQ
+	 6V/z6biovFHJtqkFAWjPBmZ3UXzx5B8ob5p9kcdJBN15GiILQR7TANy7whfg6XQKAvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036591;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036594;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=9OoY9/1jnd7znCz6G3rZwBqt4UQHpVgNy6K5PvyQieo=;
-	b=W7dAdGitchVLY3ajIUaAQkUfSEemcc2qtVakw4MkOBvm1uFKox1V1KqrmG/JXBowo8j3
-	 Gw8TRCJCg5VuoEwp5jeRgFFTlNka0oArGqScfEccFsyt8RsL/dUjzaX/nsKxVOaF9DgYx
-	 BGUaqDMAhO2lsjJMsiBBpUNGD84WQJTh3mi+VJ7AKqbQdq/q0rNz/uWOSOShZwg4QqpKe
-	 m6Z0SyUztGc8dNimXe+4x/XOQ5wBaz0N9h18C82mQLbYLd2wUcZMOpjbjtRYT2JHftKPM
-	 BHoetpQYPvgZbxwGoMimvG1W2kwvriHCwmf3QFI43Jzb9NGKzdcNcIfqAaBMy0S7o8A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cv1RkNvTBiictbAVuTXL6cY4+hhYuVO2bg5B+f77CKw=;
+	b=uFNogWnpykM9Y8JrswSsRBK07zXEBiYJmG1reU4mN2g2TByRQXsesaR7QbxiJGOUQgzz
+	 Sj1mkcUGjKCII2iT4iEGYTD7WAxVFDgyeS7ErlBgU7kUiPa0fCapG9fNJ6JBoW+uRmxOM
+	 gF7sqXAaxOZWo+e9Fw0z4uayjIzWYU4ILhGcEioTHycn/AXPEgpAZLIDnSeYqwKVKn9kd
+	 CvoFtTjN2HvVeV/XQoI/jtbjXRYtZoBMOUsQDmD7ZBe+ZxDz1LxOd+bEasJvVWOk2+ho5
+	 2vmBX1vO8cz7LvLxaMDsrrr36+vC0ZIbf8SUMKFMLmT12w/d7KfnyUYwtWPr2GUPH6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxUP4Ene;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLs82ria;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE063606A320;
-	Wed, 18 Nov 2026 21:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1270E60A2603;
+	Wed, 18 Nov 2026 21:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxUP4Ene
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AC41F000C4;
-	Wed, 18 Nov 2026 21:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLs82ria
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212911F000C4;
+	Wed, 18 Nov 2026 21:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036590;
-	bh=9OoY9/1jnd7znCz6G3rZwBqt4UQHpVgNy6K5PvyQieo=;
+	s=korg; t=1795036593;
+	bh=cv1RkNvTBiictbAVuTXL6cY4+hhYuVO2bg5B+f77CKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oxUP4EnesM5pDq+e+RxFe2xdsVfZDRr9AClRCtJrVxej0ZOEYBh8E1eF/mfNXS53f
-	 cWlCTJOG40/EA9gEJJULrrsHZniS82BVkaJrcsv7HU5f0qDrE3IILdu2QM2q2cSscJ
-	 WeZZc95J45Iem4omc9KYcyKWCdpuwzRT/Mb+99Nw=
+	b=hLs82riaog+ePnIKwoc5zUqkLbld8V6BjlNdEwfbFVpS9hScHzQqksjUQlFCdSYZz
+	 NwboZkScDiYeX9/iTsiJh5efRp3Zmsn8fEOaoVBPAWbMhUbTTIeTB+JNNbTSiQeNaM
+	 LhVMRn9diBoKXJsRetJclyG/80Ug/CV6m9sFvRlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1107/3318] platform/x86: hp-bioscfg: NUL-terminate the SPM auth token
-Date: Wed, 18 Nov 2026 15:28:49 +0100
-Message-ID: <20261118150353.205278426@linuxfoundation.org>
+Subject: [PATCH 6.6 1116/3318] Bluetooth: L2CAP: Reject invalid TxWindow in configuration requests
+Date: Wed, 18 Nov 2026 15:28:58 +0100
+Message-ID: <20261118150353.490615672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,58 +62,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit f2769668959f6411ac69e83080a240f8a8785e05 ]
+[ Upstream commit c5ebb0245fe927cf5fa33510a9cb2799c4a2dd01 ]
 
-auth_token_store() copies the token with kmemdup(), which does not NUL
-terminate it, but hp_calculate_security_buffer() and
-hp_populate_security_buffer() use it as a C string and read past the
-allocation.
+A peer can send an ERTM RFC option with a TxWindow
+of zero, which is out of spec. It is stored in
+remote_tx_win unchanged and later passed to
+l2cap_seq_list_init(), where roundup_pow_of_two(0)
+is undefined. On some architectures this results in
+a ZERO_SIZE_PTR list and a remote kernel oops.
 
-A lone newline (echo > auth_token) is worse: kmemdup() of 0 bytes
-returns ZERO_SIZE_PTR, which passes the NULL checks, so a later
-attribute write passes it to strlen().
+A TxWindow above 63 is out of spec as well. With
+6-bit sequence numbers we would then send more
+unacknowledged frames than the sequence space can
+tell apart.
 
-A userspace replica of the two helpers under ASan reports a heap
-buffer overflow in hp_calculate_security_buffer() for the unterminated
-token and a fault at address 0x10 for the lone newline, and is clean
-with this change.
+Reply with L2CAP_CONF_UNACCEPT and propose the
+default TxWindow instead of accepting the value, so
+remote_tx_win always stays within 1 to 63. Keep the
+parameters of an earlier request then, and do not
+treat the request as done because an earlier one was.
 
-The token is a string, so copy it with kstrndup(), which always NUL
-terminates and allocates at least one byte.
+Also refuse a zero size in l2cap_seq_list_init(), so
+any other path that reaches it with a zero TxWindow
+fails the channel instead of the kernel.
 
-Fixes: b2715aa2e135 ("platform/x86: hp-bioscfg: spmobj-attributes")
+Fixes: f2fcfcd67025 ("Bluetooth: Add configuration support for ERTM and Streaming mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20261007134711.473857-9-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
-index c9ed2134d39fb..46882298e92b2 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/spmobj-attributes.c
-@@ -307,7 +307,7 @@ static ssize_t auth_token_store(struct kobject *kobj,
- 		length--;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 2720325d23ec8..82f51661d8f10 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -323,6 +323,10 @@ static int l2cap_seq_list_init(struct l2cap_seq_list *seq_list, u16 size)
+ {
+ 	size_t alloc_size, i;
  
- 	/* allocate space and copy current auth token */
--	bioscfg_drv.spm_data.auth_token = kmemdup(buf, length, GFP_KERNEL);
-+	bioscfg_drv.spm_data.auth_token = kstrndup(buf, length, GFP_KERNEL);
- 	if (!bioscfg_drv.spm_data.auth_token) {
- 		ret = -ENOMEM;
- 		goto exit_token;
++	/* roundup_pow_of_two(0) is undefined */
++	if (!size)
++		return -EINVAL;
++
+ 	/* Allocated size is a power of 2 to map sequence numbers
+ 	 * (which may be up to 14 bits) in to a smaller array that is
+ 	 * sized for the negotiated ERTM transmit windows.
+@@ -3601,18 +3605,33 @@ static int l2cap_parse_conf_req(struct l2cap_chan *chan, void *data, size_t data
+ 			break;
+ 
+ 		case L2CAP_MODE_ERTM:
+-			if (!test_bit(CONF_EWS_RECV, &chan->conf_state))
+-				chan->remote_tx_win = rfc.txwin_size;
+-			else
+-				rfc.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
+-
+-			chan->remote_max_tx = rfc.max_transmit;
+-
+ 			size = min_t(u16, le16_to_cpu(rfc.max_pdu_size),
+ 				     chan->conn->mtu - L2CAP_EXT_HDR_SIZE -
+ 				     L2CAP_SDULEN_SIZE - L2CAP_FCS_SIZE);
+ 			rfc.max_pdu_size = cpu_to_le16(size);
+-			chan->remote_mps = size;
++
++			/* The TxWindow must be within 1 to 63, otherwise
++			 * propose the default one and keep the parameters of
++			 * an earlier request. This overrides a PENDING result
++			 * from the EFS check above, so the request is no
++			 * longer pending, nor done if an earlier one was.
++			 */
++			if (!rfc.txwin_size ||
++			    rfc.txwin_size > L2CAP_DEFAULT_TX_WINDOW) {
++				result = L2CAP_CONF_UNACCEPT;
++				clear_bit(CONF_LOC_CONF_PEND, &chan->conf_state);
++				clear_bit(CONF_OUTPUT_DONE, &chan->conf_state);
++				rfc.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
++				remote_efs = 0;
++			} else {
++				if (!test_bit(CONF_EWS_RECV, &chan->conf_state))
++					chan->remote_tx_win = rfc.txwin_size;
++				else
++					rfc.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
++
++				chan->remote_max_tx = rfc.max_transmit;
++				chan->remote_mps = size;
++			}
+ 
+ 			__l2cap_set_ertm_timeouts(chan, &rfc);
+ 
 -- 
 2.53.0
 
