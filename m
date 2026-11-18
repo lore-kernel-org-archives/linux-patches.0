@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025721;
-	b=fshFvuNc3YO/q+sUfWqkmw88nze9K/CX1pf1Q5a2otfS/eriB+601dLwfng/9IY2GmlK
-	 QkAcGMJfLIkDUThMK1cj2+nUXNPR8Mjp8B82F8o8TrFa6hUJ1G39UoJ+lSVVWtqI1ESOH
-	 BjrxFXHHX0q2RF1lUAaQ0+Tsejf7DqkZcV33lsdwd8p/93YSHufsvkcCwKJHrq3664WAg
-	 BK67RJgiWki3tzhCQCoY4osdsVH4+G+JhYiSDSK6bxcYEBhh5kzqpWVeyW8BEyOSY+vhn
-	 BZvICCxgwcMRswB8vexzaFUrlO1i6I4HIpyHxE3bi1/1X+MiYX4FJneX9gopQqj4Xgg==
+	t=1795025723;
+	b=RjFxeMGPA7nHy22r/+FAeGqfCtqkUzlFoBaGB4Tc3J0H84ZpCpspFpwimBsIJjVaJL0O
+	 awcldyCb2iOid7yogUkz4UFyZ2dUuAWmQzfjv6gfv+jLgKfiKQJK9vVGQGXPBvDuwNTRp
+	 Hse1OMREfCfYsZgR+U5Q2gTVIoK/UxSTCVRDfgWeHQ97ij+vDjS8YWCbUcrN3zXE5zpFm
+	 4DWReFGTVwaqVE10seyh7ZFgdxuQUhD+L/Jn0Mai97eutomMfr0PPtbbj51clcPp3EGfQ
+	 BiEFdmKVRnHOlBcNMbR9RGL+GOBrs2kAtSTXI+npZ0lrjzOFjztzwX7uP46m7Vhmm9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025723;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MiVsc4rqy1X8+F2qU9OG+qPkSI9R0EKPvqb39JD06U0=;
-	b=1HoXZReFlPYUoDMZDLaYcol3nEDfT/K16qxAaTNZiXIFVDY5uf7bsWksAbm86JhF6XYi
-	 Qd0D2FOFJ6LmGP5Cmyuf1cBimaomRWaMQ0i3o1uGH8/7UWOzi7KnR0aJtuUyKpEPTieV5
-	 iCPqMN48Utr/uN9B45eHOPydOkqPsFb+2rc7cUxa8l2kVENwmhX/r0Sr6x9nLb6bj2vFJ
-	 qNAkIMW94+kDqz68aTVqtC5OhpU3+2TeXvVUusqlS0nyesaYIx8QrMdHkQ6K/Hir6dNvL
-	 CFogChOglQAn2e0J1TTKCSVRNZCFtg4uqMMaDAt8UXwohb980emG3xoh50YAH9c/7Ng==
+	bh=O73BCMYsQslati0GDvOvNI3CtCvaXh5tpM49pfVPK68=;
+	b=Cn843cN6y2/806fgrEUOoXvVLNC6GbI3yy3Dh4J6pDaed6o9885SanQDS47CDjo+yKVn
+	 ltlEmdEIKX979coDAyc+7n6mmyk0tKPMQEIXmw5YKgAT0Q+rgN9rjTd3jQ5nXuIGkBL3Y
+	 JngCdbHXt5bOkSfZ9sT60MlNnaZgAMSviqfvSuekB6joTWBqNRyIfT8hvPQmhHIEyh39t
+	 GE3PKKVyElGD1taQa7vxYQQ88kHbGVAOpnyLgbqKjd9sM1v86qry+2kHgCuLdGdNCXstP
+	 XDfylDrEkxeuDaI/56JDfChny2VNwZH9IAew3EsqHYiiY2GfUL9TGUGU1ujbE34WuIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="g/ftXz0f";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BswvpvV7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04026606A331;
-	Wed, 18 Nov 2026 18:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA218606A330;
+	Wed, 18 Nov 2026 18:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g/ftXz0f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0831F000C4;
-	Wed, 18 Nov 2026 18:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BswvpvV7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F8BD1F000C4;
+	Wed, 18 Nov 2026 18:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025720;
-	bh=MiVsc4rqy1X8+F2qU9OG+qPkSI9R0EKPvqb39JD06U0=;
+	s=korg; t=1795025723;
+	bh=O73BCMYsQslati0GDvOvNI3CtCvaXh5tpM49pfVPK68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g/ftXz0fpocSjfj+/wSSbvQPQuKIDbgJRHyhuWlMyC27Sdx3gaQVT3upbQEkMWH3v
-	 B48shvow/OahPEthWk34/jXgXBgXrf1Y0STJFhLxYd+/Ht1xe/aiKB43L9njiFh48A
-	 RSb+2NGSOJOxAY2j4sr1onD05YBgGscnKlPlCH9o=
+	b=BswvpvV7gGeIEa25lzFfLVwUMWg/L8A300IQQBW9ohzxhKLtRZ+kfyYcbO1+O5qxe
+	 InKuYwEoeIq9Xh5qwpO24WGrzCcOav0FLoDhKGFxt3wxk1xbqdjL9t8WcM2VZgYBBp
+	 B4GL7bLTfen7juebx5/bHSLW92LlPsn6RC0fdyd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wilson Felipe Pereira <wfelipe@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1179/2151] init/main: fix off-by-one in argv_init cleanup
-Date: Wed, 18 Nov 2026 15:48:34 +0100
-Message-ID: <20261118150205.075656108@linuxfoundation.org>
+Subject: [PATCH 6.18 1180/2151] init/main: fix false-positive kernel panic on environment variable overwrite
+Date: Wed, 18 Nov 2026 15:48:35 +0100
+Message-ID: <20261118150205.113198722@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,58 +70,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Wilson Felipe Pereira <wfelipe@google.com>
 
-[ Upstream commit b82ed0e3a1dafe41577b095318a3ea6c0eec6f46 ]
+[ Upstream commit 51e766bcd35e706d8df29dd0fac98871fdced261 ]
 
-Patch series "init: fix array boundary bugs in boot parameter parsing".
+In unknown_bootoption(), the limit checking for environment variables sets
+panic_later *before* checking if the variable already exists in envp_init.
 
-This series fixes two distinct boundary logic edge-case bugs in
-`init/main.c` related to parsing boot command-line arguments and
-environment variables.  Both bugs have been present since the early git
-history (Linux-2.6.12-rc2).
+If a user passes exactly MAX_INIT_ENVS custom variables and then
+overwrites the final variable by matching its key, it causes a
+false-positive hard panic on boot despite not actually exceeding the array
+bounds or increasing the total variable count.
 
-1. The first patch fixes an off-by-one error in `init_setup()` where
-   the final slot of the `argv_init` array was left uncleared. This
-   allowed a stale kernel parameter to leak into the `init` process's
-   user-space command line if exactly `MAX_INIT_ARGS` unknown
-   parameters were passed.
+Swapping the order of these checks allows the duplicate check to break out
+of the loop before the panic flag is erroneously latched.
 
-2. The second patch fixes a false-positive kernel panic in
-   `unknown_bootoption()`. If a user filled the environment variable
-   array up to its exact limit (32) and then attempted to overwrite
-   the final variable, the kernel would panic before evaluating
-   whether it was a harmless duplicate.
+To verify, boot a VM with 31 custom variables (filling the array up to its
+limit of 32) and then overwrite the very last variable:
 
-Exact QEMU reproduction steps for both edge cases are documented inside
-their respective commit descriptions.
+  ENV_VARS=$(for i in {1..31}; do echo -n "var$i=$i "; done)
+  qemu-system-x86_64 -kernel bzImage -append "$ENV_VARS var31=overwrite"
 
-This patch (of 2):
+Without this patch, the kernel crashes instantly with:
+  Kernel panic - not syncing: Too many boot env vars at 'var31=overwrite'
 
-When cleaning up argv_init in init_setup() and rdinit_setup(), the loop
-terminates one element early due to using '<' instead of '<='.  Since
-argv_init is sized MAX_INIT_ARGS+2, index MAX_INIT_ARGS is a valid element
-that should be cleared to NULL.
+With this patch, the kernel safely overwrites the variable and boots.
 
-If exactly MAX_INIT_ARGS unknown arguments are passed before 'init=', the
-uncleared argv_init[MAX_INIT_ARGS] can act as a ghost argument to
-/sbin/init or cause a spurious kernel panic when later appended to.
-
-To verify the argument leak, boot a VM into a shell with 32 unknown kernel
-arguments, the init parameter, and 31 user arguments:
-
-  STALE_ARGS=$(for i in {1..32}; do echo -n "stale$i "; done)
-  USER_ARGS=$(for i in {1..31}; do echo -n "user$i "; done)
-  qemu-system-x86_64 -kernel bzImage \
-      -append "$STALE_ARGS init=/bin/sh $USER_ARGS"
-
-Running `cat /proc/1/cmdline` inside the shell reveals that the 32nd
-kernel argument ('stale32') incorrectly leaked into the init process's
-command line.  This patch zeroes the final slot, cleanly terminating the
-array.
-
-Link: https://lore.kernel.org/20260818045357.4123784-1-wfelipe@google.com
-Link: https://lore.kernel.org/20260818045357.4123784-2-wfelipe@google.com
+Link: https://lore.kernel.org/20260818045357.4123784-3-wfelipe@google.com
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: ffdfc40976dd ("[PATCH] Add rdinit parameter to pick early userspace init")
 Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -130,27 +104,24 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/init/main.c b/init/main.c
-index 2097f4bbc0d87..71977bd3bc3c0 100644
+index 71977bd3bc3c0..6985bf93b055d 100644
 --- a/init/main.c
 +++ b/init/main.c
-@@ -573,7 +573,7 @@ static int __init init_setup(char *str)
- 	 * the shell think it should execute a script with such name.
- 	 * So we ignore all arguments entered _before_ init=... [MJ]
- 	 */
--	for (i = 1; i < MAX_INIT_ARGS; i++)
-+	for (i = 1; i <= MAX_INIT_ARGS; i++)
- 		argv_init[i] = NULL;
- 	return 1;
- }
-@@ -585,7 +585,7 @@ static int __init rdinit_setup(char *str)
- 
- 	ramdisk_execute_command = str;
- 	/* See "auto" comment in init_setup */
--	for (i = 1; i < MAX_INIT_ARGS; i++)
-+	for (i = 1; i <= MAX_INIT_ARGS; i++)
- 		argv_init[i] = NULL;
- 	return 1;
- }
+@@ -540,12 +540,12 @@ static int __init unknown_bootoption(char *param, char *val,
+ 		/* Environment option */
+ 		unsigned int i;
+ 		for (i = 0; envp_init[i]; i++) {
++			if (!strncmp(param, envp_init[i], len+1))
++				break;
+ 			if (i == MAX_INIT_ENVS) {
+ 				panic_later = "env";
+ 				panic_param = param;
+ 			}
+-			if (!strncmp(param, envp_init[i], len+1))
+-				break;
+ 		}
+ 		envp_init[i] = param;
+ 	} else {
 -- 
 2.53.0
 
