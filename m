@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019871;
-	b=SRKzSdvuUHRiyn5nHoevrsxjSO2cipad2jmYsrS6Ef9+4vUzgx44EbCwOMu7VnQ/HfIF
-	 goZV3lifR9IAfMFgiSPnSS/ZezCYhghzgykPclZ670veZ/e2mWC0d4W1yC6bJUykW3TLx
-	 tQsAcKffnf9kK3i43G6hY52rYA1tolHRSyGW0/cP0+c6traDSJaaWHGHu7E/eB7GwFe9N
-	 7EqRRtTEho6dhd77wck26tflujDewoo/p5VJzlwFXej0zkgGa/y1qh/lyItbo1WVv2xEw
-	 TI4Lxs7Sgwbk9EHkXKdJavCHZ5wL3Z0XSDRf9VRS095iRirFtOMaX1n4XxNJK2L/U/g==
+	t=1795019873;
+	b=o2JxpFcMN2JUi9SiBHoAtYVtmGcabtrO+5/xSi4SomCMVLXkk8bNUd8XdD4OVgKsVgRa
+	 u8kYeANmG/eZp7iWzEvFxm9/JDdlPZz+TsXQSdA+zI1D2UaBnsq789Qq35P5M7pp7jomr
+	 S69pVrjDJmRAPc30aqeVCVJD06V+Zcu5TYZeQU665ZvfQH70ADDdAYjdtR1YWjNHZ//jM
+	 StBt500EYNxsKiFTZ3NiK9nndXuFsU7bN1Ad89YeT0kVyNi5m7X3D7zzPWO0m1kS+U/JJ
+	 zwvGetFi9qj8up9EYw79Ps8Zoc6ytLycYFaEiRpZRodU/p4J7SV5yjFRQZoR9+1rqFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OLvOpvlgM7dT1OKRri4Cw2D5JBWBunBfDL+UTwUcR9Q=;
-	b=hUeO9URqAJs7P1eZ5mI3sduf/3AI9WwIhWZ0iG8ae6n37JeBtg5KvQWUTXy3GDP0A75G
-	 tHf46/z/yKgXeq+CO7qHjN3zDo1WvM5+v2gwqQWRdrFVZ9ogcGCH6xH4TbqIQ4aGw4573
-	 76zoTOO8H6DTiryEgP2ORusy3hCObYN2I+50xV2MUQu86r/dfsi2aVud86qt2yXHbZQyB
-	 VqrWkR/yiw65nyIQN/x6+GO9zMg1/0zKIbNGdfe+HOtyuMUjxfzQpAR6XW0EAPUqa0THg
-	 STgLha2fDrKA4q6xNMPYDbIH15dJLzsaQOvshpS749hxKOpWLcLhTPkdfhQYFppUY8Q==
+	bh=wc4nQxzPO7FpIbGXbCvT80svVHwHPGrLah7eDv4Xe1k=;
+	b=CCCx555xbmPqln+qoaI+JaV1DxLl/cmMnMK0ZVEHICttXeJ1gCNLBI2e/lGhVtNavtSY
+	 CYjAOIWV/2l1zTPNWtOzyMZ8p0M/UHOOKOT49++AeJlO0sEgs56T9xayfK2xIWKRPltj7
+	 Tw0q4OPmm1176g/5iea2Yn4s6IjZx2b7GFHq5Z6P4lHoFJZkCvB39eQ1O+oeq8YJ6lndG
+	 IDmDZuMBcPOcxPO8z+fVA9VmCcp7H5sbZ4NiwsxbDpgcBixtq5F7a9VjtUwWe/G9hFOou
+	 fNe9c3vBdmwFmpdzP4IFGgNZxCQ+muxreqPQ48rBMH2C6c/9Pb/EWL/mghYt66M1rLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhfJrHUz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKuyY1jb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14672606A31C;
-	Wed, 18 Nov 2026 16:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D2B606A31C;
+	Wed, 18 Nov 2026 16:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhfJrHUz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E911F000C4;
-	Wed, 18 Nov 2026 16:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dKuyY1jb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C2B1F000C4;
+	Wed, 18 Nov 2026 16:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019870;
-	bh=OLvOpvlgM7dT1OKRri4Cw2D5JBWBunBfDL+UTwUcR9Q=;
+	s=korg; t=1795019873;
+	bh=wc4nQxzPO7FpIbGXbCvT80svVHwHPGrLah7eDv4Xe1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhfJrHUzbKDuWptqC8c8moMEAUREcWbPh1o6KnD5dN4hzexbMRssMV+1CoSD7XLi5
-	 vQ5wBuNE17jNaI2OqDKf9lHj3AUzQ6DK7F08/nEsdOx5Cnb8FoZV0dGO0BnSy6HJtl
-	 p1w4/as8QZw3oGWCw4E9QK+k+nIBFOwvk8evzqMY=
+	b=dKuyY1jb7FC4DiYC6pv+Gw3QxZUg81cGLk1UcivYUV1qZ/DfbcMWmYjLSmiwXnuw7
+	 TmlVh4mktRDrSD0xwSOcfbWA8hxRoiAPDoQ6lPQZCV8u/KQd1lT9WotDW6U3YboD4z
+	 /lc3Cx3UbUZItwoOYhpvUWw2nwkDYKngwApk6AzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chien Wong <m@xv97.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1709/2651] wifi: mac80211: reserve MME tailroom for protected beacons
-Date: Wed, 18 Nov 2026 15:49:09 +0100
-Message-ID: <20261118150349.162233611@linuxfoundation.org>
+Subject: [PATCH 7.3 1700/2651] ALSA: rawmidi: Drain input work before freeing the runtime
+Date: Wed, 18 Nov 2026 15:49:00 +0100
+Message-ID: <20261118150348.853812744@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,44 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chien Wong <m@xv97.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 48002331da85c7c962cfbc09c8bd84d219a6fe1c ]
+[ Upstream commit 8c3529f0a8faaac7d73333486f69da1617ecc579 ]
 
-Beacon protection appends an MME to beacons, but the skb
-allocation does not reserve tailroom for it. If the available
-tailroom is too small, the crypto path drops the beacon.
+The input runtime embeds event_work, so the work must be drained before
+close_substream() frees the runtime. The cancellation in
+snd_rawmidi_input_trigger() runs before close clears substream->opened,
+leaving a window for snd_rawmidi_receive() to enqueue more work.
 
-Two factors often mask this: the 256-byte TIM reservation is
-rarely fully used, and dev_alloc_skb() may round up the
-allocation, leaving extra tailroom. Neither guarantees enough
-room for the MME.
+With a sequencer subscription to a USB MIDI input port, an in-flight
+completion can overlap the last subscription's midisynth_unsubscribe():
 
-Reserve enough room for the largest MME.
+1. snd_usbmidi_input_data() observes input_triggered and is delayed
+   before calling snd_rawmidi_receive().
+2. Unsubscribe enters close_substream(), clears input_triggered through
+   the provider trigger callback and returns from cancel_work_sync().
+   The substream is still opened.
+3. The completion resumes. snd_rawmidi_receive() takes substream->lock,
+   sees opened set and queues runtime->event_work before dropping the
+   lock.
+4. Close clears opened under that lock, closes the provider and frees
+   the runtime. Stopping USB URBs does not drain the raw-MIDI work.
+5. The queued work runs and snd_rawmidi_input_event_work() reads event
+   or substream from the freed runtime, causing a use-after-free.
 
-Fixes: 0a3a84360b37 ("mac80211: Beacon protection using the new BIGTK (AP)")
-Signed-off-by: Chien Wong <m@xv97.com>
-Link: https://patch.msgid.link/20261012140738.70178-3-m@xv97.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Cancel input event_work again after clearing opened, before closing the
+provider or releasing the runtime's private data. Receive holds
+substream->lock through its opened check and work enqueue, so once close
+has cleared opened under that lock, no further receive can queue work.
+The final cancellation therefore drains any late work before the
+runtime is freed. Keep it outside the spinlock so a running callback can
+finish.
+
+Fixes: b3c705aa9e91 ("ALSA: rawmidi - Use workq for event handling")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-98489078ab56528d8e4a-v2-9408ce8c8f3c70b5c10d@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/core/rawmidi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 4e23f89867e35..0492205459f0a 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -5769,7 +5769,8 @@ __ieee80211_beacon_get_ap(struct ieee80211_hw *hw,
- 
- 	skb = dev_alloc_skb(local->tx_headroom + beacon->head_len +
- 			    beacon->tail_len + 256 +
--			    local->hw.extra_beacon_tailroom + mbssid_len);
-+			    local->hw.extra_beacon_tailroom + mbssid_len +
-+			    IEEE80211_ENCRYPT_TAILROOM);
- 	if (!skb)
- 		return NULL;
- 
+diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
+index 2617bb5b4faf5..9ef2c0e95b673 100644
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -557,6 +557,9 @@ static void close_substream(struct snd_rawmidi *rmidi,
+ 		substream->opened = 0;
+ 		substream->append = 0;
+ 	}
++	/* Drain input work queued after the earlier cancellation. */
++	if (substream->stream == SNDRV_RAWMIDI_STREAM_INPUT)
++		cancel_work_sync(&substream->runtime->event_work);
+ 	substream->ops->close(substream);
+ 	if (substream->runtime->private_free)
+ 		substream->runtime->private_free(substream);
 -- 
 2.53.0
 
