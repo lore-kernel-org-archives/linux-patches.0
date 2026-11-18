@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061914;
-	b=dJ2N8SOHoo80CnBzSeCnCgmGpe9NbmxUw4GWe3yn3ycN3PlWb0iBBnqFA2o2C8zJeg5E
-	 +FIpIE1DU9iH0WheXpRNICsLGYhRrnVFh7g3LbZKu5A40+jIDpnl6Cn21OUES1d3sxYIU
-	 paXzyayCwMj3vxLk+jBk8pz6mrEaV7hhpEsUJasf42yLSnsff1XTNGO3tjg9HRnfdkpya
-	 vyGWeNt12BZWofi/jti//k2W6Sj6ID2cgctShsUxhAlBfFVW9H9msW0micvFh0JqgmjtY
-	 eIx+HCCrAMZiIXtHzPmcQh7q/Nqu/sXmEA2CIAf2WiPFMSwr4djjrm2UQmfzQSgFRpw==
+	t=1795061917;
+	b=369cB4IhWTYZrdlLSCyY1yR2DwEgc8pmCPaeH/zHxskg2kti+ovfAM827AS6Z/6hLZkT
+	 rjknfHpkFvGRoJHOsZ+O9QOiwwID8XHS8jbOFkz+gGKs0n2H8bPDtbs4j3zO1TNJr3iIx
+	 y3FdqsGicZq/H3Egprd5qIujyiyMp+IpODfyMbWrn1vbRfgfJMTq3rMilvU4s2A8byGzu
+	 gEu/cCZxP6ACzdbYshkvkcweknP8NFT7x7YNzz7kcL8a2vK2tRHJBjMSIWzh+e2rfS318
+	 2vnDftVkzu7Jlli8MqXmN9z5QHeoztEWraT48Q7h/9e+owgWUT1WtPrifRMLS87vHxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061914;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=4RjztGMWZwXVoW+Vs35UzTxrtlk3zCwnPOInoRxD1fI=;
-	b=dkIJdWLctXbqdBWUMUlbYwiT6CL6aALjNMouKYSo17r8C55KeJfxymt1alIszsPdyEex
-	 eMonNmZ10UJCsE+/oZ6WHiEht3UH0jQV194xbkly099G4IVCtuvkbURiKvZeCXd9cHKwx
-	 3y/zDUnbcczQNa+xyFR4MOER+UGjaXiBe0AwlAL/u/Atyj9mwzR8XmZp26XXqHGvRHWvc
-	 KMaqA5BGyKIdKyvUgUzTtvgx8i28S3rojmW96WYYZOlZpZw40OkaLlYgr2f4/wmxmdu+x
-	 dtQwq10QJRwQzJVjCktu+85CVZUoCE7RGUmu/W6dDwjMZJtNv159mGhI+SMfqHWpK8w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=dekTK9EsNajOZfvhFr7kz6DbERg23Y5+/e6QIdh7Bsk=;
+	b=CATJ4XbqrAyvKSiPh5kHRREQvcqeyIDDVjDNJLeo9QnUNJwdlelAdK5AQz+BG+sGD7lF
+	 Vos5DdY2Zkp/2EfnMrTbhOQfg1O0hR/iZqKJseZ1anB1W9QFks7IMNCnkTubFmP9WSnLI
+	 4PhPhciq7FWA8b6PdRa7uG3bSUYxOPRN1N/H13OYnegxfszjg+z22kuPjN04BjA1jfABJ
+	 3wJXglvGrwLqlPBlJc7QzdtR+p/ylvzrFq0FK+9BKG83d4s0yen1XZgFxIRHE3euwtonw
+	 rZszt+rIx0uu5hTB/zVQD9suA7pejySGk319dgc1uZhCsopy7hLuvGwWpPY53Ysov9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lK3nEBRI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Axm6MlmH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D49606A320;
-	Thu, 19 Nov 2026 04:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E377606A320;
+	Thu, 19 Nov 2026 04:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lK3nEBRI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F521F000CA;
-	Thu, 19 Nov 2026 04:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Axm6MlmH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5001F000C5;
+	Thu, 19 Nov 2026 04:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061914;
-	bh=4RjztGMWZwXVoW+Vs35UzTxrtlk3zCwnPOInoRxD1fI=;
+	s=korg; t=1795061917;
+	bh=dekTK9EsNajOZfvhFr7kz6DbERg23Y5+/e6QIdh7Bsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lK3nEBRIN6epVnl1K4EjmGx1JA/CkpiNZYQRi6HBI6dsjknKzalRjXMPJgFcJqz9b
-	 Pfds5HWjLzNCIOHLustT7arHMcnNUFXFySbX6dGNIyAMnQ5FYFr0nSWTuQte0m8z2j
-	 YwwSNuP3hk+MuNlvN8LvNThsu0ZL3JTF4DOo+9ks=
+	b=Axm6MlmHP4e3b83aUVlREKOj6Io2YmMCB4xmdk1R3ITw7tWoJQc7zBgXS7uYSjs5x
+	 p1/8542L5edk3D9eOcOh4moFV9BQAWCWEaMJnNnkzRzDAwaXjP9K3jeJBv6YLIJVsW
+	 dwVYHtIuDBoUIWVC1JAZ+21vv1EQ+lHHKTjEZl8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1722/1848] octeontx2-af: Fix CQ enable state tracking after AQ writes
-Date: Wed, 18 Nov 2026 16:02:40 +0100
-Message-ID: <20261118150031.728320233@linuxfoundation.org>
+Subject: [PATCH 5.10 1723/1848] netfilter: nf_conntrack: avoid truncating IPv6 nexthdr offset
+Date: Wed, 18 Nov 2026 16:02:41 +0100
+Message-ID: <20261118150031.765111516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -64,57 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 07bd391eb9572e74f073c49acef327611234f9bb ]
+[ Upstream commit 48d522b65fb0ce2bd54f8f5838d77b48afcf1f3e ]
 
-Use the CQ context's ena field when updating the CQ enable bitmap.
-The current code reads rq.ena, which overlaps bit 0 of the CQ base address
-and can leave the bitmap out of sync with the hardware context. This can
-cause enabled CQs to be skipped during teardown.
+find_prev_fhdr() returns the offset of the Next Header field before an
+IPv6 Fragment header through an int pointer, but stores the offset in a
+u8 local.  An extension header chain can put this field beyond byte 255,
+causing the offset to wrap before it is saved in the fragment queue.
 
-Use sq.ena for the SQ bitmap update as well, so each queue type reads
-its own context.
+Reassembly later uses the wrapped value to update the preceding Next
+Header field.  This overwrites another byte in the IPv6 header chain and
+can make conntrack parse a different transport tuple from the one used
+by IPv6 local delivery.  A two-fragment packet can, for example, be
+recorded as UDP destination port 53 while its payload is delivered to
+UDP port 9999.
 
-Fixes: 557dd485eaeb ("octeontx2-af: Support for disabling NIX RQ/SQ/CQ contexts")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
-Link: https://patch.msgid.link/20261011125508.534618-1-alok.a.tiwari@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Use int for the working offset, matching the output argument and the
+other offset variables in this path.
+
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/netfilter/nf_conntrack_reasm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 971e0ae917f41..283f8fd2bf450 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -799,7 +799,7 @@ static int rvu_nix_aq_enq_inst(struct rvu *rvu, struct nix_aq_enq_req *req,
- 				__clear_bit(req->qidx, pfvf->rq_bmap);
- 		}
- 		if (req->ctype == NIX_AQ_CTYPE_SQ) {
--			ena = (req->rq.ena & req->sq_mask.ena) |
-+			ena = (req->sq.ena & req->sq_mask.ena) |
- 				(test_bit(req->qidx, pfvf->sq_bmap) &
- 				~req->sq_mask.ena);
- 			if (ena)
-@@ -808,7 +808,7 @@ static int rvu_nix_aq_enq_inst(struct rvu *rvu, struct nix_aq_enq_req *req,
- 				__clear_bit(req->qidx, pfvf->sq_bmap);
- 		}
- 		if (req->ctype == NIX_AQ_CTYPE_CQ) {
--			ena = (req->rq.ena & req->cq_mask.ena) |
-+			ena = (req->cq.ena & req->cq_mask.ena) |
- 				(test_bit(req->qidx, pfvf->cq_bmap) &
- 				~req->cq_mask.ena);
- 			if (ena)
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index 8313069b9f391..9bbda792efbeb 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -394,7 +394,7 @@ find_prev_fhdr(struct sk_buff *skb, u8 *prevhdrp, int *prevhoff, int *fhoff)
+ {
+ 	u8 nexthdr = ipv6_hdr(skb)->nexthdr;
+ 	const int netoff = skb_network_offset(skb);
+-	u8 prev_nhoff = netoff + offsetof(struct ipv6hdr, nexthdr);
++	int prev_nhoff = netoff + offsetof(struct ipv6hdr, nexthdr);
+ 	int start = netoff + sizeof(struct ipv6hdr);
+ 	int len = skb->len - start;
+ 	u8 prevhdr = NEXTHDR_IPV6;
 -- 
 2.53.0
 
