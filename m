@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025579;
-	b=L3UwSlkAp2/eyerACLoWBMSgdPvMufmE2pbuXtiRJMrsbKa5dc4bLl9vCoZffZD2H++8
-	 hpNHK4J9O6mopWgt71/R0umOMkaLcDyW/3F3pQUs1UM28oNL93cE8MSc7GEoFn17D1Zfk
-	 4kGQQg1VeLdEQw+iGcGybK25NrOt5sV4VlDUnIEsYHw0sv61x4m6PMGp6KvN7UsV7i5y4
-	 WiI2AXUnudIGAeHSOqGbenQwRDRdr525I/fa6Lv6rBq++LB6BcRsuNDs+beyg4q4xwpOM
-	 g8WMgBlYtquFUjyxQzcppdy8/H0CrsMBrnflAgFXGYWqDvIh22lA/VrN0yv7gq/X6dA==
+	t=1795025582;
+	b=g7/vlxq2bUxF/FhxhLlkpPG1e0jnHhoU22xo7RJnFacaPVOFtLdIXSPC2XNIDleVondT
+	 e3HdzhXHS0pr/r6PLgKHwVV+kZ5FjtWFKOsxKM6z4UFgALWF7D3IwV3Dek6PzcZLHF4vJ
+	 8LD8AeSHZsfMhSFAFMe3MejXy9VjFFgUBDN/Vr/JlO0wcLCn+LDc7dHBU2fGfJvexX2yI
+	 C7nmexc4QHROnGhSXBeOkOZ38TCl/dgt5+f//qRGzi07Stt6uaXxyOSSAxmxX7Ymb+7Hg
+	 jsPeIhA922YSqHmLAvQcsrSVb7R+5wwnjtoeHnVo3wpXSnxQJ8DqDi1W9JllH5OmL8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Nj7jhuFGofoVVRB5vXmJdviwoIBnoXexeD9TmaQqFB4=;
-	b=RBkXrEk7ubQNs0flH75WmfJA4Z+DZFP53sdF6am39D5nhytZ0/OQbgkla5hY9hvRe91+
-	 P1qt+jCglQ3scIgSBlnmmHO40qVVOEKd0Cj4nLtvEDNORUw4rssoUtDKcMZo8j4MOY5lL
-	 gHC1YlWigaUAchDczt0VJHRE25PKuzTlA1vCZjcGx4/IX6nAuXKiqQ35yNHCSIR1INOCV
-	 eBia/Z4TxjjE0bGe3S5OpKkjpaqJ+1mdBFrONhEGRr8sUoFRsPD6gAx2AsOYIXAnbZVxR
-	 OaQmRMMavnIKk3JZpNYSIshC2wzXfODR+ZNjntFuzFCCNH2bSD1Zs5WHBRfIzppg5sw==
+	bh=bmlLRNmV1r0TmG9AAryzncxBz9z76ZDYW+chOnvhYBg=;
+	b=K6t/DNo4omfO7El5c+pFEDxflReptdxgL1HTtZ8HBkUoEWaushNW9itZ4JThDcQTEhK+
+	 F0fRqSGD2M1/VRcQJzNm3lU+hRhDa+f58vDeBRC7HrtVmosk4w0Du34+NIAR4mHwvtv/M
+	 gMvBkLlTf7WrlDI7iNYAoZuvGigovet9apEmQ1HnFy5+fDmH9gOmMV/e7MmknEutCFdLC
+	 P3dq8FdiNBCJJQvZEy8JJdAXNpZr9QobrAOKR73q0dUQa4uC1lEuCzFyXaG/AARucckUj
+	 pMPYKF3eG5ZY7ndNviOkSjhuE9Y8H0GlvXlydnRm3I4ML3mxxbuUPgCTFZ+trgW7lYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKxhOKvJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8qeUcDq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF7760A2604;
-	Wed, 18 Nov 2026 18:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D207606A331;
+	Wed, 18 Nov 2026 18:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IKxhOKvJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884071F000C6;
-	Wed, 18 Nov 2026 18:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y8qeUcDq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5871F000C6;
+	Wed, 18 Nov 2026 18:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025579;
-	bh=Nj7jhuFGofoVVRB5vXmJdviwoIBnoXexeD9TmaQqFB4=;
+	s=korg; t=1795025581;
+	bh=bmlLRNmV1r0TmG9AAryzncxBz9z76ZDYW+chOnvhYBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKxhOKvJi3euZwnlGiquqY3X8V6+6X6zwSJVt0ejwYkS22Pw5vmILpck726cY9z20
-	 KzU90Xk36uenTjZAYoamf/l0ROyJdBo49nGpKKG0u93Afn55fYkK+ZybBh6v5RQYe2
-	 api74aMuytAyVDfwfYcE0hq0azNDZApnPyp6fJRY=
+	b=Y8qeUcDqRpSOs0tu3vHTKr7XLiicSqnNOfW8bJz9Aw9v+c+ndjEC32beY68tWWP9E
+	 iGHvV11XpjQ/l6nawtXQ3CToGHB8XX6+HvDPCiLz/HAfExHK22F45YB1m44H6QtKfw
+	 RPmgRxWoOs1b5KOg9meTmsuG4cPvb0shkW7w4t7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1129/2151] dmaengine: ste_dma40: Validate DMA specifier length
-Date: Wed, 18 Nov 2026 15:47:44 +0100
-Message-ID: <20261118150203.329764107@linuxfoundation.org>
+Subject: [PATCH 6.18 1130/2151] dmaengine: ste_dma40: Reject direction changes after allocation
+Date: Wed, 18 Nov 2026 15:47:45 +0100
+Message-ID: <20261118150203.362172305@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,41 +72,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9f1064ebe17cf3ab65ac6eb166398e02678aea33 ]
+[ Upstream commit 77ebc64f40717b8501793b5f5ee717a141e62e8e ]
 
-The DMA40 binding requires three cells, but d40_xlate() reads args[0],
-args[1], and args[2] without checking args_count. A malformed provider node
-can specify fewer cells, leaving some of these values uninitialized when
-the OF DMA core invokes the translation callback.
+Logical channel allocation uses the configured direction to select the
+source or destination allocation mask, derive the logical channel number,
+and choose the LCPA location.
 
-Reject specifiers that do not contain exactly three cells before reading
-the argument array.
+d40_set_runtime_config_write() nevertheless overwrites the configured
+direction when a transfer is prepared for the opposite direction.
+d40_free_dma() then clears the wrong allocation mask, leaking the original
+resource and potentially releasing one used by another client.
 
-Fixes: fa332de5c6b3 ("dmaengine: ste_dma40: Supply full Device Tree parsing support")
+Reject directions that differ from the direction used during allocation
+and propagate runtime configuration errors to callers. Skip slave runtime
+configuration for memcpy transfers, which also use d40_prep_sg() but do
+not require it.
+
+Fixes: 95e1400fa131 ("DMAENGINE: add runtime slave config to DMA40 v3")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260618051539.15E201F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-17-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-18-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/ste_dma40.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index d51b7c19d42dc..bc4e30d46bdc9 100644
+index bc4e30d46bdc9..5c2a13b2f826d 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -2395,6 +2395,9 @@ static struct dma_chan *d40_xlate(struct of_phandle_args *dma_spec,
- 	dma_cap_mask_t cap;
- 	u32 flags;
+@@ -2268,7 +2268,13 @@ d40_prep_sg(struct dma_chan *dchan, struct scatterlist *sg_src,
+ 		return NULL;
+ 	}
  
-+	if (dma_spec->args_count != 3)
-+		return NULL;
+-	d40_set_runtime_config_write(dchan, &chan->slave_config, direction);
++	if (direction != DMA_MEM_TO_MEM) {
++		ret = d40_set_runtime_config_write(dchan,
++						   &chan->slave_config,
++						   direction);
++		if (ret)
++			return NULL;
++	}
+ 
+ 	spin_lock_irqsave(&chan->lock, flags);
+ 
+@@ -2723,6 +2729,13 @@ static int d40_set_runtime_config_write(struct dma_chan *chan,
+ 		return -EINVAL;
+ 	}
+ 
++	if (direction != cfg->dir) {
++		chan_err(d40c,
++			 "transfer direction %d differs from allocated direction %d\n",
++			 direction, cfg->dir);
++		return -EINVAL;
++	}
 +
- 	memset(&cfg, 0, sizeof(struct stedma40_chan_cfg));
+ 	src_addr_width = config->src_addr_width;
+ 	src_maxburst = config->src_maxburst;
+ 	dst_addr_width = config->dst_addr_width;
+@@ -2731,13 +2744,6 @@ static int d40_set_runtime_config_write(struct dma_chan *chan,
+ 	if (direction == DMA_DEV_TO_MEM) {
+ 		config_addr = config->src_addr;
  
- 	dma_cap_zero(cap);
+-		if (cfg->dir != DMA_DEV_TO_MEM)
+-			dev_dbg(d40c->base->dev,
+-				"channel was not configured for peripheral "
+-				"to memory transfer (%d) overriding\n",
+-				cfg->dir);
+-		cfg->dir = DMA_DEV_TO_MEM;
+-
+ 		/* Configure the memory side */
+ 		if (dst_addr_width == DMA_SLAVE_BUSWIDTH_UNDEFINED)
+ 			dst_addr_width = src_addr_width;
+@@ -2747,13 +2753,6 @@ static int d40_set_runtime_config_write(struct dma_chan *chan,
+ 	} else if (direction == DMA_MEM_TO_DEV) {
+ 		config_addr = config->dst_addr;
+ 
+-		if (cfg->dir != DMA_MEM_TO_DEV)
+-			dev_dbg(d40c->base->dev,
+-				"channel was not configured for memory "
+-				"to peripheral transfer (%d) overriding\n",
+-				cfg->dir);
+-		cfg->dir = DMA_MEM_TO_DEV;
+-
+ 		/* Configure the memory side */
+ 		if (src_addr_width == DMA_SLAVE_BUSWIDTH_UNDEFINED)
+ 			src_addr_width = dst_addr_width;
 -- 
 2.53.0
 
