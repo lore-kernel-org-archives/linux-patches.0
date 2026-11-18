@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018277;
-	b=d7AClNNCZqgD+/QRkkRi9rRJZ/LvSuKUNlkiVudBYGkDCiYqCWRyOoqAAinAcidT61/Q
-	 bMVl659DNGKj8kaq8JZftFvZoTTBQw69L2QYJAimh5an3Nh1C9z8bCGwB6whiej7jGIt9
-	 ajgSX5rWGjkE0JYCe5fbHbJODzlbaHiOp2I6YOjBj0Ym51wFrHw0PLODgf9itqNKkjL9H
-	 q1rn/L0KfTrGOlbJXzXwMZ9fcIdo9Sb85r0OGDfel5aK1WgadOyWWpebQVfsrCVS6vpoq
-	 jMI3faPjBuqGviT0BOifYxNs3ci++Me/l7muUpmJYrKpVe3AIEcHdS67YHCWDvb6VcA==
+	t=1795018280;
+	b=Sm/ZmWdqbXySVU0jIoVaD7Dqtvz6yosWN2K/Ag1rGOFkhKkERzyyRT3wbvMqa8sYfZzK
+	 VnAPZsYCBhyHcqALrJJIdIyQHYw5Jo5XLVOJMe7P4uei8F2Ot/z2Uw8UMrO9vHKXgO0Qt
+	 GwPCj7OhHOapsSqe+8ZRmmIpLavJCrDQo7B730SccmYnSHfWeLYEvYLDJ/oKQJa1DTQWZ
+	 wwbGydhaH74UJ2LIdVEXvFEbQEGr1JlcmhLhLZxBFB+PE52Ncki+JBExjYcnw2J+K4QGd
+	 gyClDBZQxHJVLP6t8fgrwB2j0onyaAijiIgFYkjHzSKksmMAH5uQd2YfwOY7fwEXj2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018277;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018280;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+0pKkRe7t22bgFLNE/nEMkoU9z045vlfMyNhXPQjwvE=;
-	b=VNExkOP60mqeGXOivK4Msa65R240MDRd1rt6ygCG3rVr3ENKsPCfJhtLOtVIsgj9nn0G
-	 RvQEcKKnWtHgNnFUButuDtW9PVY6tZDqd7FB8zwhWp5cKigy0Dcx6yh8w6qJ0rfrlH8IB
-	 CIdPgdJJPAKdw6CKmoe/3xEb/b9QrjBiD1Mj9ltqlkQQPhH7ThLj/ygfzHFrAaMQBNbGP
-	 rzqDI+zAW9ttMZVNFpeKltd2JkTNxVYtwcEqKbcEhjjmO0E5uahh76h7iIGC6o2K/dxFS
-	 mjCSwBMcnWyV8xUST9xj/3FsUPlSDbPf2nDken/g40uSiEPSMciWb+hRuva36j4iGNw==
+	bh=+IlMy7yciLFGlKSUJY0Lsc+/HV1iPhgZt+lFvXuK/34=;
+	b=ATPCorXy4vMcYAiDoPEjNhfJ3Kg4m1z2angK4lAOc/B8YYnCC5MOD++ZsmTf4t3IJLBk
+	 LpCznXGDYe0voYCpfY3N14QoY9/+8dAqf+XKIEJecjxFqNKyFET4MXOUyDCVr9tZojCmR
+	 qcGz9n3HFXiQhecn3uDy6kbu9gL/nve0JsI/vT8ASjdrLpqBesqGkn7YBzKMoU/LXGI6e
+	 3kv/2fsaV+uJUgOJtyZEuDbL5AiLPiq+g1n/m3jvR3r6kenTAFD2gtHm6wiFYKybYfz4Q
+	 Vw+Dx3QfexnvTUtIXxY5/shCNYV3gh1EnU5zJXVLv4yfwY4PzRNMPR0Ix8qoMxFnkyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ZbXAiKf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYQmvL78;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA90606A320;
-	Wed, 18 Nov 2026 16:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDAB606A334;
+	Wed, 18 Nov 2026 16:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ZbXAiKf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C52A1F000C4;
-	Wed, 18 Nov 2026 16:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LYQmvL78
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807131F000C6;
+	Wed, 18 Nov 2026 16:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018277;
-	bh=+0pKkRe7t22bgFLNE/nEMkoU9z045vlfMyNhXPQjwvE=;
+	s=korg; t=1795018280;
+	bh=+IlMy7yciLFGlKSUJY0Lsc+/HV1iPhgZt+lFvXuK/34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ZbXAiKfRUwamN13oJluotooCqIv/u7c8oBPu/glyfuEe6oGF/0JyGV7pD9XGJ8Uz
-	 KRjPZ6hQl8doYFEZGGnmuWWQUlF7W5UNFzlHr2FlS++MYsHLnWnh3QlOtQjlifDL74
-	 cdUy0aisEAh42/kj0UG6awVw4erknjJKVIIw5uaA=
+	b=LYQmvL787pEJzZoaF9ayW6ITidF3qRbTCZoWU1oLby28NrIjp6XPVgI9ksIwmR3vG
+	 OWtZ+qy7hbG0Qnle/CCiSEZJ6pePoNIwXQ3OVp1EGCpA47Z9CcPs81DMDtbaAHOflL
+	 rQbFXujmdjXZuWAoWfhCr+0TnA/ILOymlRxWVUQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
 	Ben Horgan <ben.horgan@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
 	James Morse <james.morse@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1184/2651] arm_mpam: resctrl: Correct check that existing class is L3
-Date: Wed, 18 Nov 2026 15:40:24 +0100
-Message-ID: <20261118150330.627985346@linuxfoundation.org>
+Subject: [PATCH 7.3 1185/2651] arm_mpam: resctrl: Make read_mon_cdp_safe() self consistent
+Date: Wed, 18 Nov 2026 15:40:25 +0100
+Message-ID: <20261118150330.664553046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,21 +71,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Ben Horgan <ben.horgan@arm.com>
 
-[ Upstream commit 724eae25d16ee49e5cabbd927af95ef2be8fd78c ]
+[ Upstream commit 09ff5358c6233c3155c8779c608c24d7f146f532 ]
 
-The class used to back mbm_total_bytes can be either at the L3 or the
-memory. If a platform had candidate classes at both the memory and the L3
-then, as the check for whether the existing class is L3 or not in
-counter_update_class() is broken, the class that will be chosen depends on
-which order the classes are considered and so the probe order.
+When read_mon_cdp_safe() is called with cdp_enabled equal to false then the
+reading returned in val is the sum of the monitor values for the given
+component. However, when cdp_enabled equal to true it is again the sum of
+the monitor values but with the initial value of val also added. Both
+resctrl_arch_cntr_read() and resctrl_arch_rmid_read() call
+read_mon_cdp_safe() and are documented to return the val directly without
+consideration of the older value.
 
-Fix the check.
+The val is always zeroed before read_mon_cdp_safe() is called except in
+__check_limbo() and __l3_mon_event_count_sum() but the latter is not
+relevant on MPAM systems.  The extra accumulation in __check_limbo() means
+when there are multiple RMIDs in limbo some of them may be marked dirty
+when they are already clean.
 
-Fixes: 1458c4f05335 ("arm_mpam: resctrl: Add support for csu counters")
-Tested-by: Gavin Shan <gshan@redhat.com>
+Change the cdp_enabled equals true case to match the false case.
+
+Fixes: fb56b29932ca ("arm_mpam: resctrl: Add resctrl_arch_rmid_read()")
 Signed-off-by: Ben Horgan <ben.horgan@arm.com>
+Tested-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: James Morse <james.morse@arm.com>
+[morse: fixed commit message indenting and removed stale description]
 Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -93,18 +102,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
-index 9d223057953ab..b825bd90d4bdb 100644
+index b825bd90d4bdb..321741a702fea 100644
 --- a/drivers/resctrl/mpam_resctrl.c
 +++ b/drivers/resctrl/mpam_resctrl.c
-@@ -1076,7 +1076,7 @@ static void counter_update_class(enum resctrl_event_id evt_id,
- 	struct mpam_class *existing_class = mpam_resctrl_counters[evt_id].class;
+@@ -497,7 +497,7 @@ static int read_mon_cdp_safe(struct mpam_resctrl_mon *mon, struct mpam_component
+ 		if (err)
+ 			return err;
  
- 	if (existing_class) {
--		if (class->level == 3) {
-+		if (existing_class->level == 3) {
- 			pr_debug("Existing class is L3 - L3 wins\n");
- 			return;
- 		}
+-		*val += code_val + data_val;
++		*val = code_val + data_val;
+ 		return 0;
+ 	}
+ 
 -- 
 2.53.0
 
