@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021300;
-	b=01m0uN3llCyrBGpu/ij1NoTfG1mNk6X8a9gw/zbb7pkuIV4Svp4UR/mmGNXLOIX82FGt
-	 IQ+rvixywTV1/PVFwAa+ZXNHDYuPR4HQ7OYQ53UO7UNqZPfk4dDrm1hFqaTSQ5W+KG6hO
-	 lGeFsnG03/sqwqB+ZXDlBrOKHxHxxxMTQOE/BWQ4kHRAydZeMa1gPMXJJ53bH3tNblRN8
-	 mAQghqtr2coyKWPTb2VrPZYG7cbCc95m7nIi4duNqBfg1cCKRRybS9LQ5ahO/nRxcYwLj
-	 sGVrUuiR/Yzn6YgMsDtW0MEwCnuw7wNVJPEQoE3a48phvQneV48N0b56wrMtVxvU3UQ==
+	t=1795021303;
+	b=GzrJC1218fX2DHXtDvOnRGh7nC+aLYrIPFN943Bn4DTyhCxH2fDXJ20JnGdhX/uT+HJ0
+	 fUxLewXuz58nSU6t2jxXBtZ3yc2D4PNF5la7YW01wesqZDIggFBbUpaBiSrcS4QS5QKqL
+	 73YeowNpkDdmdvMPjB3PGy6juwEmdnxJaA32MIKeEI/ue/QznoBSs/tcYWbiqMPnAS7+l
+	 8966a3Yf+oae73Mw/XDdJZ/Y5VR/0L2lGIDo8sINMNgTbrjwPSwq3sPdUgxfTf9EKaxUP
+	 F86RTHjpbHneuILG2RjA0awrgk7QTO6kvklhb+95syG6bFSovQtqhMUU9fE+b6h/Cbw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/a5xfI3tbODvuJUIg1kHEl4rju61Ho6LnXE09beojbs=;
-	b=3BwVUlREO12zXinR7lfGJnB50El8nvYBT4lCA0RF5PyMTNilb37tZvDE9Tc4GdD5ezp9
-	 gTmm1YywgzcTxaNkURAj8Jc2A/Was85BNs6f/XjdmEDRdN68xu2wCAOaScO2T/qGCBW//
-	 3kT2FmlZFQcgdGdAWjzbhb+5fAHDqxWy78bfNUkClt02G2pzjzXH+PY62gKb6rt5kdegc
-	 pPt+nx5OZwUh8uElcPKIZNl0VRYCRpeRVdidzdbmRWQL73UX5a8bQ8dGOhz9fMuaTqy5C
-	 CwuobHnZBae/KIwTF3cjuAErP16Zw9KpqVE9lI2optkMqB8cJqnt/Tx28iIV+RE80AA==
+	bh=5bSXWsrB9lST9vGejSq8WPdip/74ajScntZxUvaTqI8=;
+	b=LAW3lP1jXnB/ApI0lZ2RsPXd3Fdj6QIWZVZP1Agv5rMU2Ojjeb1szTyT7Ujh61r/aLXk
+	 02L6XG2+GbR5QgvpPX03HIpvg9/dwptSqXNjnpufLjTmJDFcXzlae8EoXyepxx780TcQG
+	 ybH7NbOftY/B5mI0JLfHYvtg+Viai3g4WYIRru5SOQO+3kQv/2z0yRpRX/q5dCP2dVFpY
+	 PL8D0Z+pR7Kh9yjcxMR0nMrstLB/gmafl7sQawbpZg6lTSruR6MctWpiGy6dPkjqwjdBq
+	 hjZvkZCeOVeBqtNxMVrVIYD4nvPFKpGR8sWjPv2RytjiAEFIgouWUKTop1WpEm8XoJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McrupRJy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZejB7c3L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF04606A31C;
-	Wed, 18 Nov 2026 17:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B86606A31C;
+	Wed, 18 Nov 2026 17:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McrupRJy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320301F000C6;
-	Wed, 18 Nov 2026 17:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZejB7c3L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67B31F000C4;
+	Wed, 18 Nov 2026 17:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021300;
-	bh=/a5xfI3tbODvuJUIg1kHEl4rju61Ho6LnXE09beojbs=;
+	s=korg; t=1795021303;
+	bh=5bSXWsrB9lST9vGejSq8WPdip/74ajScntZxUvaTqI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McrupRJyBRd2gOsy2CmVi5/XN72S6huxhoX6/PixFwC/8ef3EzX2488KydrE5WTIz
-	 X9HtZn7feJ8k0+OxlR4L82n0C1fj/Fts4RSVO+4qH9paXKbBvoWd+6esDE7BW7CPd2
-	 PshQIN8sy/GVkU77HyfIbOI3FQaiejkili2nUApA=
+	b=ZejB7c3LKq0TpXB77C156YP28SY4PLBTxW39wTmSLcYgPQU/4P8ZpBc43SM6IEqkx
+	 LNkdIU3/aT/QzSngDMZHGd6Zy7V3OfNIGOpJ4C2hktwcXlsQyCJWig5A3kHSN25im5
+	 9EIV9naqB31HMN2EOeCSHmzmfCf6tednVs8x4TnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Yunlong Ma <yunlong_ma@buaa.edu.cn>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Gabriel Goller <g.goller@proxmox.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2257/2651] net: bcmasp: fix network filter lookup and wake filter pair allocation
-Date: Wed, 18 Nov 2026 15:58:17 +0100
-Message-ID: <20261118150406.675735488@linuxfoundation.org>
+Subject: [PATCH 7.3 2258/2651] bridge: mcast: Delete empty MDB entry when port group creation fails
+Date: Wed, 18 Nov 2026 15:58:18 +0100
+Message-ID: <20261118150406.706220568@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,229 +71,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit fa1459375794f14fb65039cd19c9398d759b491e ]
+[ Upstream commit 1d0590f96fa4133578b7370ea9ce1d871f6bfc21 ]
 
-In bcmasp_netfilt_get_init(), when looking up an existing filter (!init)
-for a specified location, if the filter at loc was not claimed, the
-previous loop continued searching higher indices and could return an
-arbitrary unrelated filter belonging to the port. This caused flow get or
-delete operations on an empty rule location to return or delete an
-unintended filter.
+When a port group cannot be created for a new group, the MDB entry that
+was created for it is left with no ports and is not joined by the host.
+Its timer is never armed, so the entry is never deleted, but it is
+counted towards mcast_hash_max. When this maximum is reached, the bridge
+disables multicast snooping.
 
-Fix this by checking only the requested location on lookup and rejecting
-RX_CLS_LOC_ANY when !init. In addition, harden wake filter allocation
-and release by ensuring wake filter pair searches stay on even boundaries
-where both entries are free, checking that loc + 1 is free for positioned
-wake filters, and validating parity and bounds on release.
+Since commit b57e8d870d52 ("net: bridge: Maintain number of MDB entries
+in net_bridge_mcast_port"), port group creation also fails when the port
+reached its mcast_max_groups limit. A host behind such a port can
+therefore disable snooping by sending reports for new groups, which is
+what the limit is meant to prevent. The RTM_NEWMDB path has the same
+problem.
 
-Fixes: c5d511c49587 ("net: bcmasp: Add support for wake on net filters")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-7-florian.fainelli@broadcom.com
+Fix by deleting the entry after a failure if it is unused. Delete it
+immediately rather than arming its timer, so that it stops counting
+towards the maximum right away.
+
+Fixes: b57e8d870d52 ("net: bridge: Maintain number of MDB entries in net_bridge_mcast_port")
+Reported-by: Yunlong Ma <yunlong_ma@buaa.edu.cn>
+Closes: https://lore.kernel.org/netdev/2f5b61e2.1e71a.1a11fcb3809.Coremail.yunlong_ma@buaa.edu.cn/
+Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Gabriel Goller <g.goller@proxmox.com>
+Reviewed-by: Gabriel Goller <g.goller@proxmox.com>
+Link: https://patch.msgid.link/20261016101407.2030133-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 121 +++++++++++---------
- 1 file changed, 70 insertions(+), 51 deletions(-)
+ net/bridge/br_mdb.c       | 16 +++++++++++++---
+ net/bridge/br_multicast.c |  9 +++++++++
+ net/bridge/br_private.h   |  1 +
+ 3 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index 972474893a6bc..f41a79529f100 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -511,6 +511,13 @@ static int bcmasp_netfilt_wr_to_hw(struct bcmasp_priv *priv,
- 	return 0;
+diff --git a/net/bridge/br_mdb.c b/net/bridge/br_mdb.c
+index a01bd280c722b..0adcd1524ab24 100644
+--- a/net/bridge/br_mdb.c
++++ b/net/bridge/br_mdb.c
+@@ -819,6 +819,7 @@ static int br_mdb_add_group_src_fwd(const struct br_mdb_config *cfg,
+ 	struct br_mdb_config sg_cfg;
+ 	struct br_ip sg_ip;
+ 	u8 flags = 0;
++	int err;
+ 
+ 	sg_ip = cfg->group;
+ 	sg_ip.src = src_ip->src;
+@@ -842,7 +843,11 @@ static int br_mdb_add_group_src_fwd(const struct br_mdb_config *cfg,
+ 	sg_cfg.filter_mode = MCAST_INCLUDE;
+ 	sg_cfg.rt_protocol = cfg->rt_protocol;
+ 	sg_cfg.nlflags = cfg->nlflags;
+-	return br_mdb_add_group_sg(&sg_cfg, sgmp, brmctx, flags, extack);
++	err = br_mdb_add_group_sg(&sg_cfg, sgmp, brmctx, flags, extack);
++	if (err)
++		br_multicast_del_group(sgmp);
++
++	return err;
  }
  
-+static bool bcmasp_netfilt_is_companion(struct bcmasp_priv *priv, int i)
+ static int br_mdb_add_group_src(const struct br_mdb_config *cfg,
+@@ -1047,6 +1052,7 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
+ 	struct net_bridge_mcast *brmctx;
+ 	struct br_ip group = cfg->group;
+ 	unsigned char flags = 0;
++	int err;
+ 
+ 	brmctx = __br_mdb_choose_context(br, entry, extack);
+ 	if (!brmctx)
+@@ -1073,9 +1079,13 @@ static int br_mdb_add_group(const struct br_mdb_config *cfg,
+ 		flags |= MDB_PG_FLAGS_PERMANENT;
+ 
+ 	if (br_multicast_is_star_g(&group))
+-		return br_mdb_add_group_star_g(cfg, mp, brmctx, flags, extack);
++		err = br_mdb_add_group_star_g(cfg, mp, brmctx, flags, extack);
+ 	else
+-		return br_mdb_add_group_sg(cfg, mp, brmctx, flags, extack);
++		err = br_mdb_add_group_sg(cfg, mp, brmctx, flags, extack);
++	if (err)
++		br_multicast_del_group(mp);
++
++	return err;
+ }
+ 
+ static int __br_mdb_add(const struct br_mdb_config *cfg,
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 3fbad7b597695..ecc74b73a3e1c 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -647,6 +647,14 @@ static void br_multicast_del_mdb_entry(struct net_bridge_mdb_entry *mp)
+ 	queue_work(system_long_wq, &br->mcast_gc_work);
+ }
+ 
++void br_multicast_del_group(struct net_bridge_mdb_entry *mp)
 +{
-+	return i > 0 && (i % 2) &&
-+	       priv->net_filters[i].wake_filter &&
-+	       priv->net_filters[i - 1].wake_filter;
++	if (mp->ports || mp->host_joined)
++		return;
++
++	br_multicast_del_mdb_entry(mp);
 +}
 +
- void bcmasp_netfilt_suspend(struct bcmasp_intf *intf)
+ static void br_multicast_group_expired(struct timer_list *t)
  {
- 	struct bcmasp_priv *priv = intf->parent;
-@@ -524,9 +531,7 @@ void bcmasp_netfilt_suspend(struct bcmasp_intf *intf)
- 		    priv->net_filters[i].port != intf->port)
- 			continue;
- 
--		if (i > 0 && (i % 2) &&
--		    priv->net_filters[i].wake_filter &&
--		    priv->net_filters[i - 1].wake_filter)
-+		if (bcmasp_netfilt_is_companion(priv, i))
- 			continue;
- 
- 		ret = bcmasp_netfilt_wr_to_hw(priv, &priv->net_filters[i]);
-@@ -556,9 +561,7 @@ int bcmasp_netfilt_get_all_active(struct bcmasp_intf *intf, u32 *rule_locs,
- 		    priv->net_filters[i].port != intf->port)
- 			continue;
- 
--		if (i > 0 && (i % 2) &&
--		    priv->net_filters[i].wake_filter &&
--		    priv->net_filters[i - 1].wake_filter)
-+		if (bcmasp_netfilt_is_companion(priv, i))
- 			continue;
- 
- 		if (j == *rule_cnt)
-@@ -583,9 +586,7 @@ int bcmasp_netfilt_get_active(struct bcmasp_intf *intf)
- 			continue;
- 
- 		/* Skip over a wake filter pair */
--		if (i > 0 && (i % 2) &&
--		    priv->net_filters[i].wake_filter &&
--		    priv->net_filters[i - 1].wake_filter)
-+		if (bcmasp_netfilt_is_companion(priv, i))
- 			continue;
- 
- 		cnt++;
-@@ -607,6 +608,9 @@ bool bcmasp_netfilt_check_dup(struct bcmasp_intf *intf,
- 		    priv->net_filters[i].port != intf->port)
- 			continue;
- 
-+		if (bcmasp_netfilt_is_companion(priv, i))
-+			continue;
-+
- 		cur = &priv->net_filters[i].fs;
- 
- 		if (cur->flow_type != fs->flow_type ||
-@@ -659,7 +663,7 @@ bool bcmasp_netfilt_check_dup(struct bcmasp_intf *intf,
- }
- 
- /* If no network filter found, return open filter.
-- * If no more open filters return NULL
-+ * If no more open filters return error.
-  */
- struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
- 						  u32 loc, bool wake_filter,
-@@ -669,45 +673,55 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
- 	struct bcmasp_priv *priv = intf->parent;
- 	int i, open_index = -1;
- 
--	/* Check whether we exceed the filter table capacity */
-+	if (!init) {
-+		if (loc == RX_CLS_LOC_ANY || loc >= priv->num_net_filters)
-+			return ERR_PTR(-EINVAL);
-+
-+		if (priv->net_filters[loc].claimed &&
-+		    priv->net_filters[loc].port == intf->port &&
-+		    !bcmasp_netfilt_is_companion(priv, loc))
-+			return &priv->net_filters[loc];
-+
-+		return ERR_PTR(-ENOENT);
-+	}
-+
- 	if (loc != RX_CLS_LOC_ANY && loc >= priv->num_net_filters)
- 		return ERR_PTR(-EINVAL);
- 
- 	/* If the filter location is busy (already claimed) and we are initializing
- 	 * the filter (insertion), return a busy error code.
- 	 */
--	if (loc != RX_CLS_LOC_ANY && init && priv->net_filters[loc].claimed)
--		return ERR_PTR(-EBUSY);
--
--	/* We need two filters for wake-up, so we cannot use an odd filter */
--	if (wake_filter && loc != RX_CLS_LOC_ANY && (loc % 2))
--		return ERR_PTR(-EINVAL);
--
--	/* Initialize the loop index based on the desired location or from 0 */
--	i = loc == RX_CLS_LOC_ANY ? 0 : loc;
--
--	for ( ; i < priv->num_net_filters; i++) {
--		/* Found matching network filter */
--		if (!init &&
--		    priv->net_filters[i].claimed &&
--		    priv->net_filters[i].hw_index == i &&
--		    priv->net_filters[i].port == intf->port)
--			return &priv->net_filters[i];
--
--		/* If we don't need a new filter or new filter already found */
--		if (!init || open_index >= 0)
--			continue;
--
--		/* Wake filter conslidates two filters to cover more bytes
--		 * Wake filter is open if...
--		 * 1. It is an even filter
--		 * 2. The current and next filter is not claimed
--		 */
--		if (wake_filter && !(i % 2) && !priv->net_filters[i].claimed &&
--		    !priv->net_filters[i + 1].claimed)
--			open_index = i;
--		else if (!priv->net_filters[i].claimed)
--			open_index = i;
-+	if (loc != RX_CLS_LOC_ANY) {
-+		if (priv->net_filters[loc].claimed)
-+			return ERR_PTR(-EBUSY);
-+
-+		/* We need two filters for wake-up, so we cannot use an odd filter */
-+		if (wake_filter) {
-+			if ((loc % 2) || loc + 1 >= priv->num_net_filters)
-+				return ERR_PTR(-EINVAL);
-+			if (priv->net_filters[loc + 1].claimed)
-+				return ERR_PTR(-EBUSY);
-+		}
-+		open_index = loc;
-+	} else {
-+		for (i = 0; i < priv->num_net_filters; i++) {
-+			/* Wake filter consolidates two filters to cover more bytes.
-+			 * Wake filter is open if:
-+			 * 1. It is an even filter
-+			 * 2. The current and next filter is not claimed
-+			 */
-+			if (wake_filter) {
-+				if (!(i % 2) && (i + 1 < priv->num_net_filters) &&
-+				    !priv->net_filters[i].claimed &&
-+				    !priv->net_filters[i + 1].claimed) {
-+					open_index = i;
-+					break;
-+				}
-+			} else if (!priv->net_filters[i].claimed) {
-+				open_index = i;
-+				break;
-+			}
-+		}
+ 	struct net_bridge_mdb_entry *mp = timer_container_of(mp, t, timer);
+@@ -1554,6 +1562,7 @@ __br_multicast_add_group(struct net_bridge_mcast *brmctx,
+ 	p = br_multicast_new_port_group(pmctx->port, group, *pp, 0, src,
+ 					filter_mode, RTPROT_KERNEL, NULL);
+ 	if (unlikely(!p)) {
++		br_multicast_del_group(mp);
+ 		p = ERR_PTR(-ENOMEM);
+ 		goto out;
  	}
- 
- 	if (open_index >= 0) {
-@@ -716,16 +730,20 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
- 		nfilter->port = intf->port;
- 		nfilter->ch = intf->channel + priv->tx_chan_offset;
- 		nfilter->hw_index = open_index;
--	}
- 
--	if (wake_filter && open_index >= 0) {
--		/* Claim next filter */
--		priv->net_filters[open_index + 1].claimed = true;
--		priv->net_filters[open_index + 1].wake_filter = true;
--		nfilter->wake_filter = true;
-+		if (wake_filter) {
-+			/* Claim next filter */
-+			priv->net_filters[open_index + 1].claimed = true;
-+			priv->net_filters[open_index + 1].wake_filter = true;
-+			priv->net_filters[open_index + 1].hw_index = open_index + 1;
-+			priv->net_filters[open_index + 1].port = intf->port;
-+			priv->net_filters[open_index + 1].ch = intf->channel +
-+							       priv->tx_chan_offset;
-+			nfilter->wake_filter = true;
-+		}
- 	}
- 
--	return nfilter ? nfilter : ERR_PTR(-EINVAL);
-+	return nfilter ? nfilter : ERR_PTR(-ENOSPC);
- }
- 
- void bcmasp_netfilt_release(struct bcmasp_intf *intf,
-@@ -733,7 +751,8 @@ void bcmasp_netfilt_release(struct bcmasp_intf *intf,
- {
- 	struct bcmasp_priv *priv = intf->parent;
- 
--	if (nfilt->wake_filter) {
-+	if (nfilt->wake_filter && !(nfilt->hw_index % 2) &&
-+	    nfilt->hw_index + 1 < priv->num_net_filters) {
- 		memset(&priv->net_filters[nfilt->hw_index + 1], 0,
- 		       sizeof(struct bcmasp_net_filter));
- 	}
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index b01997ea95089..ff746f036f548 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -998,6 +998,7 @@ struct net_bridge_mdb_entry *
+ br_mdb_ip_get(struct net_bridge *br, struct br_ip *dst);
+ struct net_bridge_mdb_entry *
+ br_multicast_new_group(struct net_bridge *br, struct br_ip *group);
++void br_multicast_del_group(struct net_bridge_mdb_entry *mp);
+ struct net_bridge_port_group *
+ br_multicast_new_port_group(struct net_bridge_port *port,
+ 			    const struct br_ip *group,
 -- 
 2.53.0
 
