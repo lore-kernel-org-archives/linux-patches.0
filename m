@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039061;
-	b=WbpHUR0eagmpVdk+wQBJUIj+e1Lq6Hj1ij2HNICPLRJ/flHqxO0a/2sUXnCRZFwGeayc
-	 V9uLG5YMGQYuEqsUyHxOFvqLoLNTRLyPr7q8wEHKqDjXM6SwAWHLSev6DItVXRqQBz6Bl
-	 sBjK8khN7nWZWFYpli74hxPBzLN6eFsBlNn1jcZ7apXNUArbmzzt5rDdfsZ/rd+bw6KbZ
-	 Wq3EqXS3I2qmj+Fs1Q+TP18qs0PxQyn8BBShtepenmjEmoPGdQY6/N7xhiFmCgUzvfzTi
-	 yg95Z+4FNoZOsDs0Me1XHCrL6gxCdo/zFfFeOkMjdCDUD6NN4/nQo+75jTyS9np8Hpw==
+	t=1795039064;
+	b=t40HvrtDgG3FzmtBWl2lZUSkwDjo4GSmwfCLOy84a1gP3sbH2hq646mcPQXyDZ30T1A4
+	 L2kGQ0VP/0Gj6ZpwwTXbj3RQ7VUeKLAiDPRjD8CY2bv3pHcwpn6oGaOmcEImmAHkafAeg
+	 oin4SDRfsy6GIT0bYI5N6oRxUTXNP8uRJIa5sEGCrFqMQek79m8fKsXP2GLEeghDNsUq0
+	 JH5hwHN/fMXdA+cH7s4iQYRO1lZ0LsQTPpBGUzj5YIimhmdUEOM4unCuIaHIRsvedqpiX
+	 q5YA4hd+hEB/0Vj29tFS1w3CIN7kppl1xLRvflg5ICSib1Blig0gEqhiguKIolW185Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=U7S5B8HGMTaKWHFTB71NNj1U//xOlTnzsh/aJ8L1Ruw=;
-	b=eo8wks6SsCGLfykh+ZjcKi9w50XlxFXdZ/tpaXN+ibGhoIJi6z4YXxfBA8eZFmMsDCOr
-	 kvUoWBMim8pKVX57z0kHsbBXti1/KXl62qPX2z6ZXh3cl4EChYK0sCcEVNk6DEL3Gr95R
-	 evv8K7r+cGWb494Rq9Kw4w5cKvyP4IpI2WUvJKE28kgmFLNycs4LyFqdyAqaSueZ2rbuX
-	 SkWIEyPU0YROSeH0PW+KkcBGg/xOkvTuc6AZFh0qbYewrxCrOxwtH+UKJfLn+ZTOMNYQJ
-	 nP8s0zGLCaBRTA6xQkvYQ8i0Rqv/MpCJnZZjY5OCO6QQTRJnnhvKgnlzKl/XTaR0lhQ==
+	bh=DW6GqwvSFQQqSGe3biXoiYBmOqtD9M4OuWG42Iv9gKY=;
+	b=alXgYVc22A5g6GGDcAklvJ9fJetaXz72ul+Exz/3lRfMe3cIgwm983egiGbl7WzDpyMr
+	 GjP/eAOWB/5yN0YKSna5DRvbF/czL4GkZ7KqJgrPiABSHMelfwnVyTj8muC70yXjCObT4
+	 weKFB/jTJUAxEzfWdmMrhtEVB8nwKvvxM6XuCgP4fTib1SjbKpmmWWy10FOgsyO8hGoWx
+	 C4zzITVhvcrYy0XJqimOFxKjaHiohdsVkcoomrBaVfMLEtLu7UaTOiwPpseJj4tUfOX6a
+	 eBJ6t2URmHY4tepSAEUzIyxmFfa7uACT8Xp8DfyebIi2LyZ/r6/C9NYGJUYF5c65lbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NtwKHhl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HIvSTHuq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862F9606A332;
-	Wed, 18 Nov 2026 21:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EE4606A325;
+	Wed, 18 Nov 2026 21:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NtwKHhl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AF71F000C4;
-	Wed, 18 Nov 2026 21:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HIvSTHuq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E4C1F000C4;
+	Wed, 18 Nov 2026 21:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039061;
-	bh=U7S5B8HGMTaKWHFTB71NNj1U//xOlTnzsh/aJ8L1Ruw=;
+	s=korg; t=1795039064;
+	bh=DW6GqwvSFQQqSGe3biXoiYBmOqtD9M4OuWG42Iv9gKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1NtwKHhlzSurJW9/mvfDUO0wpPtQ7+Vt+d8Ee/Q6ZWoszXkSrLVC9pCUjoWz+VEAi
-	 0MpBH4Q/OOCwwcHg97zfFlsIP9mguyNZVkjXbPuHRudBmT8Y7zokFkHh4AUn1SyKw9
-	 KFBjmU7UcEA8jB9NVEzK9W/2ea/3Rrb+4AZ2JUPQ=
+	b=HIvSTHuqbxhCHO9VWpiezWcrWrc0txOSnWrxukX1gPzNqOePuFJBy9cu+e4Jh5AsV
+	 aLpfNfKhg3v7K6/gNdrmRg4MrY4Kvtne2bfMhN315TQ6FMiAtIMILV5IGZGxxtghd7
+	 bvAVJDwJ6qBCPO+98c7Yp+QzsqQif/5NcYTHggio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Hao Qin <hao.qin@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1923/3318] mm/huge_memory: fix truncate racing with PMD zapping
-Date: Wed, 18 Nov 2026 15:42:25 +0100
-Message-ID: <20261118150419.702063079@linuxfoundation.org>
+Subject: [PATCH 6.6 1924/3318] Bluetooth: btmtk: Remove resetting mt7921 before downloading the fw
+Date: Wed, 18 Nov 2026 15:42:26 +0100
+Message-ID: <20261118150419.734249839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,66 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Hao Qin <hao.qin@mediatek.com>
 
-[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
+[ Upstream commit a7208610761ae9b3bc109ddc493eb7c332fca5b2 ]
 
-zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
-If this was the last mapping, truncation can skip unmapping the folio
-and proceed without waiting for the PMD lock, racing with dirtying.
+Remove resetting mt7921 before downloading the fw, as it may cause
+command timeout when performing the reset.
 
-ifs_set_range_dirty() can oops if MADV_DONTNEED races with
-ftruncate() on XFS, when we get the folio set dirty after it was found
-to not be mapped anymore.
-
-Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
-matching the PTE zap path. This keeps the folio mapped while updating
-its state, so truncation must wait for the page table lock.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify comment and description ]
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adapted zap_huge_pmd_folio() changes to zap_huge_pmd() using page_remove_rmap(). ]
+Signed-off-by: Hao Qin <hao.qin@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 4aa032e96fa60..c9b40d69ff1fd 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -1717,8 +1717,6 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 52a7f727d2dd5..7f3dfd1cd80d5 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1001,7 +1001,6 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 		fwname = FIRMWARE_MT7668;
+ 		break;
+ 	case 0x7922:
+-	case 0x7961:
+ 	case 0x7925:
+ 		/* Reset the device to ensure it's in the initial state before
+ 		 * downloading the firmware to ensure.
+@@ -1009,7 +1008,8 @@ int btmtk_usb_setup(struct hci_dev *hdev)
  
- 		if (pmd_present(orig_pmd)) {
- 			page = pmd_page(orig_pmd);
--			page_remove_rmap(page, vma, true);
--			VM_BUG_ON_PAGE(page_mapcount(page) < 0, page);
- 			VM_BUG_ON_PAGE(!PageHead(page), page);
- 		} else if (thp_migration_supported()) {
- 			swp_entry_t entry;
-@@ -1742,6 +1740,12 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 				folio_mark_dirty(page_folio(page));
- 		}
+ 		if (!test_bit(BTMTK_FIRMWARE_LOADED, &btmtk_data->flags))
+ 			btmtk_usb_subsys_reset(hdev, dev_id);
+-
++		fallthrough;
++	case 0x7961:
+ 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
+ 				      fw_version, fw_flavor);
  
-+		/* Remove the rmap after transferring the dirty bit to the folio. */
-+		if (pmd_present(orig_pmd)) {
-+			page_remove_rmap(page, vma, true);
-+			VM_BUG_ON_PAGE(page_mapcount(page) < 0, page);
-+		}
-+
- 		spin_unlock(ptl);
- 		if (flush_needed)
- 			tlb_remove_page_size(tlb, page, HPAGE_PMD_SIZE);
 -- 
 2.53.0
 
