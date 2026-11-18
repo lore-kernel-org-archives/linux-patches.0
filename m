@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050127;
-	b=jHtdTlNI6Gg+oZGfagSxgRFWlnlkn1DY3tHnCe6gifWm4mvgAuRkz+wRh0urCG3iX+qK
-	 yJlsQkt5mG4PZOJUeNZJVPJCj5DB1237uaK11gyy92HqfDjfaZLLT6m0V0UBEyxvrawvy
-	 QLu6gPN/laXZjwtwODfpRi54bp/SVRXr1epawLcmLIZHhPmzzDC/LektKg+cV0680a+uf
-	 sV6981vMUb2AaqcO8yx3US6CrNXTkXvaOZlCs3jq11Us6m2+Tk6+lS0llMpObqRGvK7nU
-	 GdpnkwJDAISVJxoIJBlTNoApMKQXqSw58ksM+DnMrsu/aTHl1fxnbDdpqPVIp/zMPdA==
+	t=1795050130;
+	b=KBEWjvLcIkBBSdUnl+ubKJJt20lj3Qbndo9qUVmkDx/hAt5gXf1aD00JfeKQ3NX0nLA4
+	 znVBapLMgwN0KN9ZvYHtZKGioPq6G8lJTDqI6qaycCETLwtk5B1R//82YMBNSxipL+rP4
+	 ktWB96A+NvMZ5qtzdSIduLi8h4DBzSSrkJ5ryV4oEtCJLe2pCB+5C6pHs9AKULDOlxPHx
+	 vActHHLaKlyngFvlqYsvJ4Kw9FN3eQRwyMsOV48IH2598aNqH7VkIwyAz7HAYpcY+uA2v
+	 Oxjd6McdcifAeMh0e+jKt3Ui9YmH1v5VE/doFUXnVuOkyldRXkDAC5OpXki72jDm+DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mex8rPjsdB5TeQ2UFWdxcIqS/CkABmoWiOG3rrtG3Lc=;
-	b=SEnvAemWs3LfrQOH5TXpXJGZLjP3npiOUuW2S92Wch/q6aVMnrbV0H3JELFhX5NEwCI3
-	 DhxSrWTIqfo6cdlmqBJQZAn/uEP0P82XnsNo+XxWmJ+4mDavTXXvPxS/ixtfxi2HrqoQx
-	 cLa2Dj5MAtQKdp0EWHxr4CRnt6lRU35wxlrpHIHw4ePUhY1TEOHtXyOmHcH926lcBkQPg
-	 o3JEUk2ZcrisbJfDtv076sT1Adj30JGD/wYaX8YSnSoeZI0I4NPqeusqnT5ppNJcFY5KO
-	 Q2U0kyZl8RYoWcNBbnR6dhgGyAMubYhaRtNDkEtJF/OYisYUGF/y+Sw3xMhK+TFRJhQ==
+	bh=Pnp3X07TNofClwZM+dJosiqIW9t0WjKuJsItcCUxa8k=;
+	b=5gU85G0eMRTLSmj4iPMiFYYWnD5kkJA1HnN2R+PON6Uc0YBzmOhkMF3JJ/YqiZSZg4Oa
+	 j41OejsqHuRx/mQV2xX7d5uccA1kIGFyUmi7rBxyudgCdW8CzkcIQImLErbnUmdWs1tF5
+	 oWqCw74fZZbwm9Mp8BDG/QUmc6I0Hh7keJ27NgAISqKShKFNog9tFJGuRsXUlY6qh/KDA
+	 UDXbRFPO9m61WE7sQ6K2AVguTim7BM3XOJ5YTtGq7Yo/T8ya7QzLkYWM0VQlhHXCeoe4M
+	 cSr2YqmlxbKe1+ZdsA7zamku+6owVjEAQP5JfySjtr38d3oI9ImIv2NEKxKYxjuvcxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XpswRKUy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uruLj+Oy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D51606A320;
-	Thu, 19 Nov 2026 01:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0A0606A31C;
+	Thu, 19 Nov 2026 01:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XpswRKUy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3C11F000C4;
-	Thu, 19 Nov 2026 01:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uruLj+Oy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26E71F000C4;
+	Thu, 19 Nov 2026 01:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050127;
-	bh=Mex8rPjsdB5TeQ2UFWdxcIqS/CkABmoWiOG3rrtG3Lc=;
+	s=korg; t=1795050130;
+	bh=Pnp3X07TNofClwZM+dJosiqIW9t0WjKuJsItcCUxa8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XpswRKUyPw0ApVqhZAAdYomoHsXhOXNuE25ToPLUb15TX3jPpS2mFsQHpnCU+s0Ke
-	 Vb7tkt2Te2h2hU5sF+aAPftbzYRU9lkcESDvlb65FzjDvYkkH6KAmkJnbC7T61UbVV
-	 mgUM+N8pD7XJumr+z3BrN/eRbYbxR3dPVKtD6Urc=
+	b=uruLj+OysEuyljyjk4cOzhD5XphZPBDynUYc7mS4lOH+XgLMv/8+qyYWBKaJAM7dr
+	 VXJi6JBhwJ0ZoZ5zS5oH9o8uiSI+IFlgFehf01W9j5HqE270SN1SgVADKWLuWJnzgs
+	 2lg/GAxUtlk05hAXqQbRhjX9OJ4F+bhIVlj2pCNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2580/2857] ASoC: codecs: sta32x: Fix definition of Ch2 and Ch3 Volume Bypass controls
-Date: Wed, 18 Nov 2026 16:00:14 +0100
-Message-ID: <20261118150334.391957152@linuxfoundation.org>
+Subject: [PATCH 6.1 2598/2857] netfilter: nft_compat: restrict raw table targets/matches
+Date: Wed, 18 Nov 2026 16:00:32 +0100
+Message-ID: <20261118150335.083669742@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,39 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ea53ab9003d8655cf7e94428de3006e86fbd06a0 ]
+[ Upstream commit ac364eb4d6d747b15df17e5fc9e442c318afaaac ]
 
-Each channel's master volume bypass (CxVBP) is in its own
-configuration register, C2CFG and C3CFG, not in C1CFG, which holds the
-channel 1 bit.
+xt targets and matches declaring .table = "raw" (CT, NOTRACK) rely on
+only ever running in the legacy raw table's prerouting/output chains,
+ahead of conntrack. nft_compat_chain_validate_dependency() already
+enforces this kind of correspondence for "nat" by requiring the chain
+type to actually be NAT, but did nothing for "raw": a rule wrapping
+the CT target could be loaded into any hook and any priority via
+nft_compat, including after the real conntrack hook has already run.
 
-Fixes: c034abf6e503 ("ASoC: add STA32X codec driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/8576f091aa0fe172ce43f28dacd6a1bf638258c6.1792135144.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The CT target attaches a conntrack template to the skb when none is
+set yet.
+
+Require that a "raw" table dependency actually matches what xtables
+enforces via the implict/builtin table dependency.
+
+Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
+Assisted-by: LLM
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/sta32x.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_compat.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/sound/soc/codecs/sta32x.c b/sound/soc/codecs/sta32x.c
-index 29af9595dac19..8d2b1395822a7 100644
---- a/sound/soc/codecs/sta32x.c
-+++ b/sound/soc/codecs/sta32x.c
-@@ -465,8 +465,8 @@ SOC_SINGLE("Ch2 Tone Control Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_TCB_SHIF
- SOC_SINGLE("Ch1 EQ Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_EQBP_SHIFT, 1, 0),
- SOC_SINGLE("Ch2 EQ Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_EQBP_SHIFT, 1, 0),
- SOC_SINGLE("Ch1 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
--SOC_SINGLE("Ch2 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
--SOC_SINGLE("Ch3 Master Volume Bypass Switch", STA32X_C1CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
-+SOC_SINGLE("Ch2 Master Volume Bypass Switch", STA32X_C2CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
-+SOC_SINGLE("Ch3 Master Volume Bypass Switch", STA32X_C3CFG, STA32X_CxCFG_VBP_SHIFT, 1, 0),
- SOC_ENUM("Ch1 Limiter Select", sta32x_limiter_ch1_enum),
- SOC_ENUM("Ch2 Limiter Select", sta32x_limiter_ch2_enum),
- SOC_ENUM("Ch3 Limiter Select", sta32x_limiter_ch3_enum),
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index 67a138b9be3a6..247d9229e30e6 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -14,6 +14,7 @@
+ #include <linux/netfilter/nf_tables.h>
+ #include <linux/netfilter/nf_tables_compat.h>
+ #include <linux/netfilter/x_tables.h>
++#include <linux/netfilter_ipv4.h>
+ #include <linux/netfilter_ipv4/ip_tables.h>
+ #include <linux/netfilter_ipv6/ip6_tables.h>
+ #include <linux/netfilter_bridge/ebtables.h>
+@@ -45,6 +46,20 @@ static int nft_compat_chain_validate_dependency(const struct nft_ctx *ctx,
+ 			type = NFT_CHAIN_T_NAT;
+ 		if (basechain->type->type != type)
+ 			return -EINVAL;
++	} else if (strcmp(tablename, "raw") == 0) {
++		/* iptables-nft emulates the legacy raw table, which only
++		 * ever has prerouting/output chains at this exact priority.
++		 */
++		if (ctx->family != NFPROTO_IPV4 &&
++		    ctx->family != NFPROTO_IPV6)
++			return -EINVAL;
++
++		if (basechain->ops.hooknum != NF_INET_PRE_ROUTING &&
++		    basechain->ops.hooknum != NF_INET_LOCAL_OUT)
++			return -EINVAL;
++
++		if (basechain->ops.priority != NF_IP_PRI_RAW)
++			return -EINVAL;
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
