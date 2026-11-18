@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052288;
-	b=Eeuvuaa7Czk0R0pl9kB1QemNqgRSgwQ3DQ7YIrjXTYBBNcs8wWIg9PeXMaS0WdJmiSGX
-	 LycCEY4I/8vn0WM3qzFmOh5b0roWgsRrdB0yWK94ZlhP7kmYhEfwd7N5f7y2lFi21ITBe
-	 FHyYMbXz6FZ9vSGHKQ5ZkYFdbgo3Tm+7iRRPbe5x8HaypL0yrfTM2a4srcV3ZYOVpwb3A
-	 8TxW+wGVoPhVLpzS8XKng55RMMbF8g2KcrjM1KIVcMs6b9YEKUQwIs1+BvvGetIW/DFvY
-	 tHRxxfRbg9lzu6sJu59xngj2LBT7iKJ/ctzzk9JyA/D1yjXgpKUkJy5YjBJ1Copsj1Q==
+	t=1795052292;
+	b=z1ScnuqCzRuyzeNhtnNHxsx/PaEpxdnLyI70pP0yJxUfFOlserXJZmwwAY3Gj8FLkvW4
+	 xJL6wLuOtG6c4CAH4zteTJhCvKZ13QE3YGqvXILetE8dq3EDoxPwCpQcmcj7CJJZX8E7z
+	 xzfPGwzWYSZT1U/0Ahqx2wcowkkcCKIruxV2QDh+3ZyuYdHe/G2SUWeJzWxpiyl8MIBf6
+	 2Uq2E6uHUFYvfv71eVl1knHYbmN3MBq1Zz3eL0loq5YfrYPAwtcYCve+byYPg3hGoslqz
+	 qAZ+T+Ht5JqIMwWPcfWxDYOpzB1JB04jbU+EeRhMhKEiWA880s7rU7MiNhQSvyPptLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052288;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xoXXrlGWX6wyDK3CMfQEdpoYd0lVY/bgn8JJRjGhhsg=;
-	b=QktXA7HACI9O0naeEuAIvZ4OG7z2vhdX1CndaY1yF0LMQIyPiWWc4Yjr3UddA6hsL0S7
-	 nPu1WNPYD3qz0u0AXx6hI0GCl1dLIij1eKo361mVOh/iKMfCv0T2vJd6GYf4VsRPD6mSa
-	 FB4d9dta19WYNtw72NJXygJyJr6u6WQ2a2uGsKZ9OTPoo31Mm2XGE0Up3ZtYAM844eyzB
-	 8Gwl+Tf9It3oLNGPcFmCfJoNadjZifWZeWub3FOwraB/AhhTXWnUlmCGP9TTc+XnBGVz+
-	 xxVDot/XFM/3uYJINMvXlJVXQaOE5cGmJhME1Z7sLIuZ/HzafkSmgb73HlklH8dpRVA==
+	bh=63x3aBBXjcm071OIpcW60clOSQnGqq87s652ie8KHjs=;
+	b=ee1awaRSCaI1/2vQbjxxLhlDmY4ZTTATMZr8gktl/Fo6jcxytMDHyNX/W61hw1OCtoa7
+	 FJ3FWSVSjw85XLVtk3ss3uO08fXIXkb5+a1hdfNgQ+s5LxbggE4MV/nWBZgHLRqlfq32E
+	 h1xZTDvvVCP1RTgEhs5Orkaoo9x7kNhEr47RXaDsPiVl+WAwdsG3Oua0kxfaS3Lv6gbrE
+	 n+PY1CdVNe/qH129R4ekVTQhha/socA7G/v65E/3c7tnd22hUczoSf/yFbcpQLqR0tY+/
+	 9GOmtH2zEfkOZFzxXhsooYSG9A/E+mDwacQVImzKkITgvayneJiXmg89TtavjFVRyXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zeKAdlLn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGAcD6jz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BEB606A320;
-	Thu, 19 Nov 2026 01:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F271C606A31C;
+	Thu, 19 Nov 2026 01:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zeKAdlLn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362971F000C4;
-	Thu, 19 Nov 2026 01:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGAcD6jz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B911F000C4;
+	Thu, 19 Nov 2026 01:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052288;
-	bh=xoXXrlGWX6wyDK3CMfQEdpoYd0lVY/bgn8JJRjGhhsg=;
+	s=korg; t=1795052291;
+	bh=63x3aBBXjcm071OIpcW60clOSQnGqq87s652ie8KHjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zeKAdlLn3WCjwonNdmcSOj3ZHqmppE1Gxjqv+YklCVSLcqQ+tT7e7zEgpnoeSYyqS
-	 IKy866ZBjotZs2wZRlJMTn4chYinzJDRXbeZhr/ryQ2+jLe5hKdiqMyKRfqMFlhwWn
-	 E+0YExHts4OwyiR6O6q39WH5Sprbem1bXE/e7quQ=
+	b=qGAcD6jzxP0tTl5joEeNx0+5wynMJBXLpgf/Lc2dq/Dkaf/5ZzhreYPOYmyfA82Xx
+	 ylZE3AOiQ4cucyNhI0ZR16SI71oMAACCXC5CVWW35cKTu1OT8gWclU3tlG6796QA+c
+	 ugVoVm+3E5bldU/w6sA3NwSDqzm9d+tOSiT8OHBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shehryar Ahmad <shehryar.amd@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Hui Peng <benquike@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0508/2214] iio: accel: adis16201: fix channel order for buffer mode
-Date: Wed, 18 Nov 2026 15:36:24 +0100
-Message-ID: <20261118150031.451376226@linuxfoundation.org>
+Subject: [PATCH 5.15 0509/2214] ata: libata-scsi: abort multi-sector pass-through commands when multi_count is 0
+Date: Wed, 18 Nov 2026 15:36:25 +0100
+Message-ID: <20261118150031.487539296@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,56 +69,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shehryar Ahmad <shehryar.amd@gmail.com>
+From: Hui Peng <benquike@gmail.com>
 
-[ Upstream commit a4b9f1137b76faab6891ce0bd3f5c02dda7c392d ]
+[ Upstream commit 3bab8c7e0c6ba187a47163a1f71477213a278c48 ]
 
-Reshuffle adis16201_channels to ascending scan_index order to avoid data
-corruption during IIO core demultiplexing since the ADIS driver builds
-the buffer in channel array order, while the IIO core demultiplexes it
-in scan_index order.
+When an ATA_12, ATA_16, or ATA_32 pass-through command with a
+multi-sector PIO command opcode (ATA_CMD_READ_MULTI,
+ATA_CMD_WRITE_MULTI, ATA_CMD_READ_MULTI_EXT, ATA_CMD_WRITE_MULTI_EXT, or
+ATA_CMD_WRITE_MULTI_FUA_EXT) is submitted via SG_IO on a device where
+multiple-sector mode is not configured (dev->multi_count == 0),
+ata_scsi_pass_thru() currently logs a warning and still dispatches the
+taskfile. When the DRQ interrupt fires, ata_pio_sectors() triggers
+WARN_ON_ONCE(qc->dev->multi_count == 0) and computes
+nsect = min((qc->nbytes - qc->curbytes) / qc->sect_size, 0) = 0, failing
+to transfer any sectors:
 
-This changes the raw buffer byte layout for existing adis16201 users
-reading buffered data directly.
+  ata1.00: invalid multi_count 1 ignored
+  WARNING: drivers/ata/libata-sff.c:666 at ata_pio_sectors+0x27d/0x300
+  Call Trace:
+   <IRQ>
+   ata_sff_hsm_move+0x211/0x22e0
+   __ata_sff_port_intr+0x1c8/0x520
+   ata_bmdma_port_intr+0xa1/0x5b0
+   ata_bmdma_interrupt+0x1f5/0x550
 
-Fixes: 591298e54cea ("Staging: iio: accel: adis16201: Move adis16201 driver out of staging")
+Per ACS-3 section 7.12.7.21, if IDENTIFY DEVICE word 59 bit 8 is cleared
+to zero (multi_count == 0) and a READ MULTIPLE or WRITE MULTIPLE command
+is received without a preceding successful SET MULTIPLE MODE command, the
+device returns command aborted (ABRT). Per the SAT specification, an ABRT
+error translates to the ABORTED COMMAND sense key with NO ADDITIONAL SENSE
+INFORMATION (0x00, 0x00).
+
+Fail multi-sector taskfile commands in ata_scsi_pass_thru() with
+ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0, 0) when
+dev->multi_count == 0.
+
+Fixes: 1dce589c38c3 ("libata passthru: support PIO multi commands")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shehryar Ahmad <shehryar.amd@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Assisted-by: LLM
+Signed-off-by: Hui Peng <benquike@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20260921032556.1160734-1-benquike@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/adis16201.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/ata/libata-scsi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
-index f063226a42f37..a41c861ff8c02 100644
---- a/drivers/iio/accel/adis16201.c
-+++ b/drivers/iio/accel/adis16201.c
-@@ -202,19 +202,19 @@ static int adis16201_write_raw(struct iio_dev *indio_dev,
- }
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 7ec130c932576..7725910eca0b6 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -3031,6 +3031,11 @@ static unsigned int ata_scsi_pass_thru(struct ata_queued_cmd *qc)
+ 	if (is_multi_taskfile(tf)) {
+ 		unsigned int multi_count = 1 << (cdb[1] >> 5);
  
- static const struct iio_chan_spec adis16201_channels[] = {
--	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
--			 12),
--	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
- 	ADIS_ACCEL_CHAN(X, ADIS16201_XACCL_OUT_REG, ADIS16201_SCAN_ACC_X,
- 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
- 	ADIS_ACCEL_CHAN(Y, ADIS16201_YACCL_OUT_REG, ADIS16201_SCAN_ACC_Y,
- 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 14),
--	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
- 	ADIS_INCLI_CHAN(X, ADIS16201_XINCL_OUT_REG, ADIS16201_SCAN_INCLI_X,
- 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
- 	ADIS_INCLI_CHAN(Y, ADIS16201_YINCL_OUT_REG, ADIS16201_SCAN_INCLI_Y,
- 			BIT(IIO_CHAN_INFO_CALIBBIAS), 0, 12),
--	IIO_CHAN_SOFT_TIMESTAMP(7)
-+	ADIS_SUPPLY_CHAN(ADIS16201_SUPPLY_OUT_REG, ADIS16201_SCAN_SUPPLY, 0,
-+			 12),
-+	ADIS_AUX_ADC_CHAN(ADIS16201_AUX_ADC_REG, ADIS16201_SCAN_AUX_ADC, 0, 12),
-+	ADIS_TEMP_CHAN(ADIS16201_TEMP_OUT_REG, ADIS16201_SCAN_TEMP, 0, 12),
-+	IIO_CHAN_SOFT_TIMESTAMP(7),
- };
- 
- static const struct iio_info adis16201_info = {
++		if (!dev->multi_count) {
++			ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0, 0);
++			return 1;
++		}
++
+ 		/* compare the passed through multi_count
+ 		 * with the cached multi_count of libata
+ 		 */
 -- 
 2.53.0
 
