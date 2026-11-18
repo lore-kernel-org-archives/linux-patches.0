@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030992;
-	b=VZdGdWMJWC1xzDwCkqKlNg0HKFu6WFCtAKNzqRkGMbNbPn/eHbrczsLFwZyREhqmIMbU
-	 g0l4i+0oeorj9DBwyC5etgN/h+MXRJhehJz69DNv2AYP8kTmCcfWblCDrtEri/YGCtNjW
-	 pMMFZu/jIJP7xM/3c6b2HmWXXUd1KLC+EnKm3X1HBjVKo9QRm0d7FrmPuF1krW3zuS/C9
-	 vNC7btV9CKsNFzv7B+B2obU8bPvW2KhwsWBi/e4fUSYl+La4oEcuCowtSJ55gqtBAEI8h
-	 /77eIEP044/HqliydQ6YuSQM1C+jcJLPAWQ7oXPxQkVDigFNkNnZ1wqWcxl8juKdkFw==
+	t=1795030995;
+	b=mKSYuiAyi6N3VGEl2dVstxJ+Mukp3C2G69fuzu7XWm5/FEzy4HT7knyLbViWnsXADRIu
+	 egzcECiqz9NaByFz1XvKlnY709H/YQcLyN1b2sfVlTwYiuLEQKbAh/nwMpfDqudkyeOuU
+	 eWp30Y0D5KKbXLXQmLUxlrGqcXk/ODfU6MWiDnL9eoyNsOr3WRXloX7Z8SLkOxPVrS4UE
+	 gfpkHlTTxh31RwUhhdC+F15Bh4yxibNy37PIylCqr+TAS33PwuyjyR4php2IDPt6uk4cS
+	 JabjzM+/Kkw9LZgUdHFNE3ghEAdK6yz2Zeb2VWDhNEvVTef38zhWcvZnkp6xp7jMntQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+ecz0jNNo7O5IzDC2//fzxmvRDIQ4Qw/c4+RxjA6qXQ=;
-	b=xMeBlOXKsrd09ghrFdp8ETfdZBA0Cg2sLiciOAH8xaR23ZaFeLmWuoCe8obexzCVDvnv
-	 9CU1N1QFpb6WVdlrc1alUkUOGVjpIF0TVvYGpTLZU3zGrjWLJ1m/dd01GEoJ+QBT0ObHN
-	 r0TCvOJO9O9PdY1NIRdk0LoG56WTdN0pvsUp1TrIBNhD96eHnagjn+xL1R/sG75+7OvMZ
-	 SZ3uec+Tgh8A712pbxJavk5rX4/cnRkncybBXfzfCL03V8hbwo2rRK196IdyGJLIASH2A
-	 9VIkM9awsRkhnmpoEixu9v9+KJTYdFkqsvSFTHCvUOWzEE9DV+R2K7+uHZpn6YWBOAQ==
+	bh=c8QRRGZoC6bbiOco5wWvf6BwiwHSUKy+jHHvNI/qFF0=;
+	b=JTN8gw5tznQOYVJJSGC+lyI7gzpoAs0fXyJ0S4hB9+dyegaorHuqfZOIENi4lTxnWc1r
+	 FgrshRZjvbUi66f8VVpPh4rat+E+cv1rvhD+jP4SPx2XwNMzwaDL6FLrCKKiOVlIhfEGd
+	 mvcoQNsS6pRgfu6Ud2EOHZMaqnQQs9/L6NNRmg41SJt4qLhk9ssgFxvFFEZaIRZ0FYlgN
+	 pxBS2pZ7u+ODQJPtjO9Ou/r7xSh45b/roRN5ZZthd7H0roSAjcQcN9rqFPPMtGKM2qwaL
+	 O4PKRMyqGkSYHc58fPVvqVfxQfjEqh/wD/b0pkkhUpsKJVJ+CB8rpeROBHb7W611+MA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFhdGjXN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+PF+6ci;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B731606A31C;
-	Wed, 18 Nov 2026 19:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2176E606A32A;
+	Wed, 18 Nov 2026 19:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFhdGjXN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6171F000C4;
-	Wed, 18 Nov 2026 19:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q+PF+6ci
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE151F000C4;
+	Wed, 18 Nov 2026 19:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030992;
-	bh=+ecz0jNNo7O5IzDC2//fzxmvRDIQ4Qw/c4+RxjA6qXQ=;
+	s=korg; t=1795030995;
+	bh=c8QRRGZoC6bbiOco5wWvf6BwiwHSUKy+jHHvNI/qFF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFhdGjXNPEpUFhlfoqId5+iqbjXgcVjkfet2k5mQ6JXKEF73quKQ6rC2HioaqUVVq
-	 KZG0kdXFfxz+StQyWAYXpLdxOXpEwuNoysWw18tx6l2zJGQffNHsoKt2s/n7LL46Ff
-	 Zlm7krWAIW8x4QJkBuzSGjmtB68/EDzCZW5oTDYM=
+	b=q+PF+6ciDfK6zzsccLYiY7/Q7lgWeTh18emutyDnlrMTJHohWquRO8VIQBAiyQKmk
+	 ix1lGdSYA++/a2+sj1JmjMCZOWaKFPKUHq6lY94ni/lBFg6yUiwDLeG4yIvXIqxsRT
+	 fMR++iI0vsczmWCHInpRi2uiwt858M1up4BQGQKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0900/1756] dmaengine: ste_dma40: Validate memcpy configuration
-Date: Wed, 18 Nov 2026 15:50:27 +0100
-Message-ID: <20261118150045.836140593@linuxfoundation.org>
+Subject: [PATCH 6.12 0901/1756] pNFS/flexfiles: honor FF_FLAGS_NO_IO_THRU_MDS over the mdsthreshold hint
+Date: Wed, 18 Nov 2026 15:50:28 +0100
+Message-ID: <20261118150045.871832658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,78 +68,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 0ac4a90c4805b41013044fdefff051ae59a54302 ]
+[ Upstream commit 78422f623c1e150e3cdfe62598c6e352a2dcfc5f ]
 
-d40_config_memcpy() builds a default memcpy configuration without passing
-it through d40_validate_conf(). A dev_type supplied through the
-memcpy-channels device tree property can therefore bypass the bounds
-checks added for client configurations.
+A flexfiles layout may carry FF_FLAGS_NO_IO_THRU_MDS, which tells the
+client that this file's data must not be read or written through the
+metadata server.
 
-The generic DMA direction enum assigns zero to DMA_MEM_TO_MEM, unlike
-DMA40's old private enum. Allow memory-to-memory directions in the
-validator so checking the generated configuration does not reject all
-memcpy channels.
+The RFC 5661 mdsthreshold hint pulls the other way.  When a server returns
+one, pnfs_within_mdsthreshold() answers "use MDS I/O" for every I/O below
+the threshold, pnfs_update_layout() then hands back no segment, and
+ff_layout_pg_init_read() reads through the MDS - the very thing the
+layout forbids.  A server that sets both is asking for two incompatible
+things; the layout flag is the stronger statement, and the one whose
+violation the client cannot recover from.
 
-Validate the generated memcpy configuration before deriving logical
-channel registers or allocating the channel.
+Record the policy on the inode, where it outlives the layout hdr that
+carried it, and consult it before the hint:
 
-Fixes: 2c2b62d5d911 ("dmaengine: ste_dma40: Replace ST-E's home-brew DMA direction defs with generic ones")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-24-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+ - ff_layout_alloc_lseg() sets NFS_INO_NO_IO_THRU_MDS beside the existing
+   sticky hdr-level NFS4_FF_HDR_NO_IO_THRU_MDS bit.
+
+ - pnfs_within_mdsthreshold() returns false at once for such an inode, so
+   no I/O is diverted to the MDS on the strength of the hint.
+
+The bit is never cleared for the life of the in-core inode.  Servers are
+assumed to be consistent in their no-fallback policy per file, which is
+the assumption ff_layout_hdr_no_fallback_to_mds() already makes; a server
+that was not would lose the effect of its mdsthreshold hint - a SHOULD -
+on an inode that is already in core, and nothing else.
+
+Fixes: 260074cd8413 ("pNFS/flexfiles: Add support for FF_FLAGS_NO_IO_THRU_MDS")
+Assisted-by: Claude:claude-opus-5[1m]
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/nfs/flexfilelayout/flexfilelayout.c |  5 ++++-
+ fs/nfs/internal.h                      | 29 ++++++++++++++++++++++++++
+ fs/nfs/pnfs.c                          | 12 ++++++++++-
+ 3 files changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 6fb0d8f61261f..21469034495d7 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -1764,7 +1764,8 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	    d40c->base->gen_dmac.num_event_groups)
- 		invalid_dev_type = true;
+diff --git a/fs/nfs/flexfilelayout/flexfilelayout.c b/fs/nfs/flexfilelayout/flexfilelayout.c
+index d8751f1d519d1..d40f0c253b9b4 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayout.c
++++ b/fs/nfs/flexfilelayout/flexfilelayout.c
+@@ -574,9 +574,12 @@ ff_layout_alloc_lseg(struct pnfs_layout_hdr *lh,
+ 	if (!p)
+ 		goto out_sort_mirrors;
+ 	fls->flags = be32_to_cpup(p);
+-	if (fls->flags & FF_FLAGS_NO_IO_THRU_MDS)
++	if (fls->flags & FF_FLAGS_NO_IO_THRU_MDS) {
+ 		set_bit(NFS4_FF_HDR_NO_IO_THRU_MDS,
+ 			&FF_LAYOUT_FROM_HDR(lh)->flags);
++		/* Outlives this layout hdr; see NFS_INO_NO_IO_THRU_MDS */
++		nfs_set_no_io_thru_mds(lh->plh_inode);
++	}
  
--	if (!conf->dir) {
-+	if (conf->dir != DMA_MEM_TO_MEM &&
-+	    !is_slave_direction(conf->dir)) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
- 	}
-@@ -2059,12 +2060,17 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- static int d40_config_memcpy(struct d40_chan *d40c)
+ 	p = xdr_inline_decode(&stream, 4);
+ 	if (!p)
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 7808b06f23323..da7087c80ceab 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -529,6 +529,35 @@ static inline bool nfs_file_io_is_buffered(struct nfs_inode *nfsi)
+ 	return test_bit(NFS_INO_ODIRECT, &nfsi->flags) == 0;
+ }
+ 
++/*
++ * Module-private nfs_inode->flags bit (not in <linux/nfs_fs.h>, so no
++ * exported layout changes): set, and never cleared for the life of the
++ * in-core inode, once a layout driver has seen the server forbid I/O
++ * through the MDS for this file (flexfiles sets it from
++ * FF_FLAGS_NO_IO_THRU_MDS in ff_layout_alloc_lseg()).  The RFC 5661
++ * mdsthreshold hint must not be acted on for such a file, since the only
++ * thing pnfs_within_mdsthreshold() can ask for is the one thing the
++ * layout forbids.  Servers are assumed to be consistent in their
++ * no-fallback policy per file, the same assumption
++ * ff_layout_hdr_no_fallback_to_mds() already makes; if one were not, the
++ * only effect is that its mdsthreshold hint - a SHOULD - stops being
++ * honored for an inode that is already in core.
++ */
++#define NFS_INO_NO_IO_THRU_MDS	(30)
++
++static inline void nfs_set_no_io_thru_mds(struct inode *inode)
++{
++	struct nfs_inode *nfsi = NFS_I(inode);
++
++	if (!test_bit(NFS_INO_NO_IO_THRU_MDS, &nfsi->flags))
++		set_bit(NFS_INO_NO_IO_THRU_MDS, &nfsi->flags);
++}
++
++static inline bool nfs_no_io_thru_mds(struct inode *inode)
++{
++	return test_bit(NFS_INO_NO_IO_THRU_MDS, &NFS_I(inode)->flags);
++}
++
+ /* Must be called with exclusively locked inode->i_rwsem */
+ static inline void nfs_file_block_o_direct(struct nfs_inode *nfsi)
  {
- 	dma_cap_mask_t cap = d40c->chan.device->cap_mask;
-+	int ret;
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index 94028a881d443..33e8f8e816bd5 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1992,7 +1992,9 @@ pnfs_find_lseg(struct pnfs_layout_hdr *lo,
+  * is set to IOMODE_READ for a READ request, and set to IOMODE_RW for a
+  * WRITE request.
+  *
+- * A return of true means use MDS I/O.
++ * A return of true means use MDS I/O, so for a file whose layout forbids
++ * that (see NFS_INO_NO_IO_THRU_MDS) the hint is not evaluated at all:
++ * there is no answer it could give that this client may act on.
+  *
+  * From rfc 5661:
+  * If a file's size is smaller than the file size threshold, data accesses
+@@ -2013,6 +2015,14 @@ static bool pnfs_within_mdsthreshold(struct nfs_open_context *ctx,
+ 	if (t == NULL)
+ 		return ret;
  
- 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_log;
- 		d40c->dma_cfg.dev_type =
- 			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
++	/*
++	 * The server has told a layout driver that this file's I/O may not
++	 * go through the MDS (flexfiles FF_FLAGS_NO_IO_THRU_MDS).  Honor
++	 * that over its own mdsthreshold hint.
++	 */
++	if (nfs_no_io_thru_mds(ino))
++		return ret;
 +
- 		d40_log_cfg(&d40c->dma_cfg,
- 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
- 
-@@ -2072,6 +2078,10 @@ static int d40_config_memcpy(struct d40_chan *d40c)
- 		   dma_has_cap(DMA_SLAVE, cap)) {
- 		d40c->dma_cfg = dma40_memcpy_conf_phy;
- 
-+		ret = d40_validate_conf(d40c, &d40c->dma_cfg);
-+		if (ret)
-+			return ret;
-+
- 		/* Generate interrupt at end of transfer or relink. */
- 		d40c->dst_def_cfg |= BIT(D40_SREG_CFG_TIM_POS);
+ 	dprintk("%s bm=0x%x rd_sz=%llu wr_sz=%llu rd_io=%llu wr_io=%llu\n",
+ 		__func__, t->bm, t->rd_sz, t->wr_sz, t->rd_io_sz, t->wr_io_sz);
  
 -- 
 2.53.0
