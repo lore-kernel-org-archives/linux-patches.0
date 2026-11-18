@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048283;
-	b=xus4qxzuh8yt6XN2pSd7aon5Se23lWT6WqmWbv8gl1Vjnl+e/GU90IZlHBcsN0aVXyE4
-	 3AXxHO62HBmwnUl33GcFm095TdZFfmNStk7I3JyhXc69M3XKhHd1SC7JTRgsT14DCZV07
-	 dmh03H5aLgManWAih+gN4P/9TpiO1N3o5bjReaipSyrJCKYBgjudRPcBL+DZVeRcmecGx
-	 dP5Cl57tBST+4DwArSIhFWkvdm8+H/eKQkK7iXrkGUXv5yft+Sdz1PpIPG9Kmd6Fn1pw+
-	 EARswfG1JrOcv3BAu0ZnDq9r1Rwi48FOVEV0PTdWCoFNU8fzcp1FKuDwRzhe0+BM5Qg==
+	t=1795048286;
+	b=AxZpZ7PMvROnMu9WfEqJD1XvSWoXilNbygGLCrS4nlweMUd+v2HYjwa0PpqfL39eEBIM
+	 2dwjNudAtzqfOKu7fNIrf8TmYWAysiqcE2LawittKDDfOZv/c4umig9m509toBMypXhxN
+	 Q7BgQkW3PavUhscd/RlYFwtTw1f1EvaKPYMmUxDxjku7zIoi1WoBSe6T7wDEIb1bhx0kF
+	 9FjuiFFh4lTTE0D60XoJomZXFxBmBhShqfk9dzTzQ0GY3NAsigXw5PKB4ONxiRBUrJAOV
+	 hv9gWX9hMv8M8Cc+NYGzengcSMzeEfYZpnCV4qSp1cezmomL4Q6/QuW5rga1NE/mNgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048283;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jhWedttkv1w41S4V6d7tn8YZ5HD2I7fglcNbbtwkFAc=;
-	b=Sk8hXM9yaZJsQ7k/Pn+huErPXHCdQUxCap5WYbLC0vc92RPbApzjO60yLuE66Rew69Dr
-	 RA7obHJNmQw+lJ4aSCopJ2Aop0VBo9KFVC0s+nQi+h29Js0f0kvLcYJoJzWxw5qNG5EZ4
-	 f9nON/P5qLhQif0Php8j/Hsz6TrKFtOmMJhC4I997W3Wg7p2hW5ZQfdeR5LiGApQ8G0sN
-	 Ami77a/vnLzULPGOI2zMSdeyrqT55Zy6k2YP7nRBOWHduZcgcaGfXbHMTObx2w8wtJoft
-	 gKMERpQf6zCTblpWoiETmcSvWf1eAgYWkds7mmlykkk42uSrYWZV7qIwKAG5KCVmkxg==
+	bh=dkCx19iTQps7APISQkwyu2GtIyzA4yHGSvljCOWVrqA=;
+	b=Dkaq0L2Qhf+IBkj+G6K8C+Jppqx239lrNMNcygco7ycw8vBw/XOQrbjPCAGfjOfG2JCi
+	 LHoP2OHsjxjsst95MdoktU/eyyow1SdZXBCV10rYVW6IFHLCxaGEoMI8+xsiPjQ5y3ppn
+	 T+9sB6SKHOVNia3vUfyLuSU3VdnLj0niMi0sQlolFKrAZmPOn9bKvW+wfmeNCCNoUK67U
+	 WVW0LBgDQBUrgnaucWAP3iSWStf9lgvoQiMqZ33XoMn3NDnKQQ2F0bFKSuW2Lhq2EgVDf
+	 TCfpVUtC6mi3oKjwqBERXcu5+voYNi0+JFXofi/K0J8qTOXPUFNJh1aYzCrbHqB2wuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBCFwOU9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1EYjSRRC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD17606A334;
-	Thu, 19 Nov 2026 00:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F8A606A31C;
+	Thu, 19 Nov 2026 00:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UBCFwOU9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D461F000C4;
-	Thu, 19 Nov 2026 00:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1EYjSRRC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722461F000C4;
+	Thu, 19 Nov 2026 00:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048282;
-	bh=jhWedttkv1w41S4V6d7tn8YZ5HD2I7fglcNbbtwkFAc=;
+	s=korg; t=1795048286;
+	bh=dkCx19iTQps7APISQkwyu2GtIyzA4yHGSvljCOWVrqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UBCFwOU9bAtOyi17xfkcJQ8gVJ16ZKQR9W7KV/wUeYCgTKkZ8eTJwRL9io2o65MAN
-	 FZ2jdE1ghfIcVmk9wDwLgNzg5JiubNBwCn36PJoSP0po++I+xrL+f3m+HSw/WX3VWh
-	 w3DbBsLlp50uwjpKhwObrYWi34pHm+c2j4tR0YBA=
+	b=1EYjSRRCUU5JSxFrsc4/wJCL/j3Sc887hVYP08IPNU8ODsSqWH7Z0MbcMc5MTMQ5m
+	 cYP3kIBvH2VOagi7m7pnmZagQG2GQD0xj6fGsAx1svCHEr8tE+fAodIC4v99ARqYSq
+	 hHLHgswkxFJ3k/P0Cy2U6nxOBZDxykZsfqRFleTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1938/2857] phy: cadence: Sierra: Do not modify register when getting parent clock
-Date: Wed, 18 Nov 2026 15:49:32 +0100
-Message-ID: <20261118150310.992129848@linuxfoundation.org>
+Subject: [PATCH 6.1 1903/2857] cpuidle: menu: Do not return a disabled idle state
+Date: Wed, 18 Nov 2026 15:48:57 +0100
+Message-ID: <20261118150309.746892717@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,60 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory CLEMENT <gregory.clement@bootlin.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit 955e68eb3067842067b7b5395a3f8c278428802a ]
+[ Upstream commit d594187cafd5ad65afc5f00242f8fa20e1d8c0f1 ]
 
-The get_parent() callback for the PLL_CMNLC1 clock was incorrectly
-writing to the register while determining the parent clock index. This
-unintended register access forces the PHY back into training mode. If
-the PHY is already configured, this unexpected change prevents it from
-exiting training mode.
+When idle state 0 is disabled and the PM QoS latency constraint is
+zero (latency_req == 0), the first branch of the || in the early-return
+condition of menu_select() is taken immediately, so state 0 is returned
+regardless of its disable flag.
 
-Remove the register write operation to ensure the PHY remains stable
-during the get_parent() callback.
+Address this by making the !disable check a prerequisite for the entire
+early-return condition, so that when state 0 is disabled the normal
+state selection loop is used instead, which already skips disabled
+states.
 
-Fixes: da08aab940092 ("phy: cadence: Sierra: Fix to get correct parent for mux clocks")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260306-fix_sierra_get_parent-v2-1-cafe89ee5382@bootlin.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 53812cdc9100 ("cpuidle: menu: Move the latency_req == 0 special case check")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Link: https://patch.msgid.link/20260827094820.3900062-1-luoxueqin@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/cadence/phy-cadence-sierra.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/cpuidle/governors/menu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/cadence/phy-cadence-sierra.c b/drivers/phy/cadence/phy-cadence-sierra.c
-index 6e86a6517f378..d560f4c1e686c 100644
---- a/drivers/phy/cadence/phy-cadence-sierra.c
-+++ b/drivers/phy/cadence/phy-cadence-sierra.c
-@@ -662,23 +662,16 @@ static const struct phy_ops noop_ops = {
- static u8 cdns_sierra_pll_mux_get_parent(struct clk_hw *hw)
- {
- 	struct cdns_sierra_pll_mux *mux = to_cdns_sierra_pll_mux(hw);
--	struct regmap_field *plllc1en_field = mux->plllc1en_field;
--	struct regmap_field *termen_field = mux->termen_field;
- 	struct regmap_field *field = mux->pfdclk_sel_preg;
- 	unsigned int val;
- 	int index;
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index ef1ff9c36c6de..6a8fe31b03674 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -314,10 +314,10 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	nr_iowaiters = nr_iowait_cpu(dev->cpu);
+ 	data->bucket = which_bucket(data->next_timer_ns, nr_iowaiters);
  
- 	regmap_field_read(field, &val);
- 
--	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1])) {
-+	if (strstr(clk_hw_get_name(hw), clk_names[CDNS_SIERRA_PLL_CMNLC1]))
- 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC1], 0, val);
--		if (index == 1) {
--			regmap_field_write(plllc1en_field, 1);
--			regmap_field_write(termen_field, 1);
--		}
--	} else {
-+	else
- 		index = clk_mux_val_to_index(hw, cdns_sierra_pll_mux_table[CMN_PLLLC], 0, val);
--	}
- 
- 	return index;
- }
+-	if (latency_req == 0 ||
+-	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
+-	      latency_req < drv->states[1].exit_latency_ns) &&
+-	     !dev->states_usage[0].disable)) {
++	if (!dev->states_usage[0].disable &&
++	    (latency_req == 0 ||
++	     data->next_timer_ns < drv->states[1].target_residency_ns ||
++	     latency_req < drv->states[1].exit_latency_ns)) {
+ 		/*
+ 		 * In this case state[0] will be used no matter what, so return
+ 		 * it right away and keep the tick running if state[0] is a
 -- 
 2.53.0
 
