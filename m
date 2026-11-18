@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046514;
-	b=PYnm7iVD8zlvbIIYHxY/ec81gIeUiOuaab/IUza21mk1TMznK1VPR/fVjkGbrtAtmWOE
-	 qv0XBcZLlQj7UKqonLYh0cqM94v7Qw51ArGN9VYe4k7b98FMpRht4i3FvlSzSH5oEunEN
-	 3a+QnhaWyN20OohArNGfuLjA85401uT7LV4V5gxuAfJPVjkNV4gSzZT+DQBVK23qL14N6
-	 9hPPQAFAtHyv+qYFwixmiVxdpUGpZbOkFyUg5tPm6pe5jUZNga77uHxtQkAjDcEJBdnes
-	 0k7h/18Z43jEc1S0BzCbwtK0Hgxwf5LFVqJRs2YqanU9m4INOxRejXCHUfWQdKQo49Q==
+	t=1795046517;
+	b=MmchMAOUMPWioNfxrT+FRvawbu3RoXT/L9q7p04l+QL/zhMB+IYzds2lbbsMpVFliHHH
+	 IliRYUDy9lTzOGqdJ5moLmWiS9iaBe4H4m5FwK/O5ZXrHe5+D63ZRM9ma2m58Kak68rUj
+	 v7jSkGe+OXKhF0mKuA7B1+IQxzTVRYBfySAwBGpM9GDdR3Ywwv5o75o45eoFqTb+uA85A
+	 /Taq9CXf3NDqj//HmVo/h8Tetmu4NEueBBG8OY1w6qM7vevj8AJrJAtqOsA81aeBTa9op
+	 iu05SVO8+NAFLBmkUhGjNRFIeA0CUAQX3ugwyAEex/mDUZFUZENNM83pdJ2zVjGrvdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zbOAU/F832iE/KNivGnre/HeRXIkCEwL+smzvGcM6vo=;
-	b=YeMKRvovdhrpvYbdw/01a751KYdc0SCR/l4BNMu+ADEHs/ludEi0cwjW/d7QtLccg4L6
-	 JFRO/+PtGRODdPxshCcFLlDIwDFfYbuokCU/YwURC1++n20Pw/G5mcovqubdBqEQ2H6p9
-	 fffcdLFQ5IUXT1pK+BJSnoVhiwnfOj/eeDn4X7yvBNRa96m8x3ykeW4YsfqaxmeatxbdO
-	 CTAoK7xK0SdCWyRTq5jqBOD6XVXP64flt5xOLB23J+5/eejyEwCvmnX0J9M3rzQDkQCID
-	 joRrRKjtIrJOcF6ombJHu8xpT++YqA0EstxmWaJyAOKFCniZ9vo7jUk/DLVIyoua3xg==
+	bh=gXlHmXjR4NadsthxNY/vUFZ1BlQQQCgD7DeKbn5LAeU=;
+	b=BTf/j/r7kMvA76YhHhlk2qSnuVNsiqVdJI6RpyAgJaDujUwOp+HbznkU8izCa4gnEJVS
+	 bOY2iW7DpUb2e5rL0cLVeF5rigrMS3TLyauPZerhORi5t9z6yhMs35dheg7Kd5bfc1WcX
+	 lcUkqK0We8oyfYs2C3VBpQOwjgLTtlvgGIVAKhsAMstsxdyAP0XhX3CmyXclWTfodZOWu
+	 6d2UjHDebK9w7P0YnB9bWOGfHOquVLaR1n5wZGwQVPxeuSygV4QMBhCpjzLNVIQ+RBxUR
+	 gRLykeze/dG0aNyQM55jkVAQe6aD4qeTSLYM1N9xQxGt6AuErrluEgiOXGFmtC4G3/g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5ASqpuu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12iecA2O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763B1606A325;
-	Thu, 19 Nov 2026 00:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE33606A31C;
+	Thu, 19 Nov 2026 00:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G5ASqpuu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80291F000C4;
-	Thu, 19 Nov 2026 00:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12iecA2O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913DA1F000C4;
+	Thu, 19 Nov 2026 00:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046514;
-	bh=zbOAU/F832iE/KNivGnre/HeRXIkCEwL+smzvGcM6vo=;
+	s=korg; t=1795046517;
+	bh=gXlHmXjR4NadsthxNY/vUFZ1BlQQQCgD7DeKbn5LAeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G5ASqpuuEj8orJJ/3iOqPNSYspUz9MYkOH2zoD05jgavUGnzN5KL+XSekedI2enxe
-	 BUlP1OPpN6s9thyQu6knQIdSHhsbEcDeybvGBhs6UctRXbc+gAqPbXXKn2/JogXCw8
-	 1hgOCUBfW5/4QyXAG+0S/4fqCP/h8UqYvBJy1ufo=
+	b=12iecA2OWYU9nysn2N9Oe0EQNYW336G08BTWzoXM20b9/DGz7KHP0IyZcdSX4LuW6
+	 1QSYdzx7uGFOBTlvzXA2r7kLiBre1/OozqU6O4EWH03qq21+z8E4vhO/DFGrLpWaDQ
+	 oKwUG28uOU6PSWC9CRwNUw6mC+yHOussvtZoVzfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com,
+	syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1291/2857] drm/amdgpu: parse CS IBs at the BO offset their VA mapping starts at
-Date: Wed, 18 Nov 2026 15:38:45 +0100
-Message-ID: <20261118150247.974914318@linuxfoundation.org>
+Subject: [PATCH 6.1 1309/2857] udf: dont let the extent type hide an exhausted free-space table extent
+Date: Wed, 18 Nov 2026 15:39:03 +0100
+Message-ID: <20261118150248.593752958@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,47 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit 63a59637517682a920f86da1a189a3e639dd4fb3 ]
+[ Upstream commit da582d84fcf5f2f0c1d7760e1a899ca7cedb80fc ]
 
-For rings which parse or patch the IBs on the CPU, like JPEG and VCN,
-the CS looks the IB up through its VA mapping and maps the BO, but
-ignores the offset in the BO the mapping starts at. It then parses
-other data than the GPU executes. On navi31, an IB of JPEG NOPs in the
-second page of a BO, mapped with offset_in_bo 4096, is parsed from the
-zeros in the first page and rejected:
+udf_table_new_block() takes the first block of the free-space table
+extent closest to the goal.  It keeps that extent's type and length
+together in goal_elen, subtracts one block, and deletes the extent only
+if goal_elen then reaches zero.  UDF 2.60 section 2.3.7.1 requires the
+free-space extents of an Unallocated Space Entry to be of type 1
+(allocated but not recorded), and mkudffs writes them that way.  For
+such an extent the type bits keep goal_elen non-zero, so taking its last
+block leaves a type-1 extent of length zero behind, starting at the
+block after the extent, which is in use.
 
-  amdgpu 0000:03:00.0: Invalid packet [0x00000000]!
+The next allocation that picks this empty extent returns that in-use
+block.  Subtracting a block from 0x40000000 then borrows from the type
+bits, and the extent becomes type 0 with a length of 2^30 - blocksize:
+about a gigabyte of "free" space overlapping live metadata, the other
+table extents and whatever lies behind the partition.  From then on
+blocks are handed out twice, or past the end of the partition.
 
-while the same IB submitted through a mapping of the whole BO works.
+Extents that udf_table_free_blocks() adds are type 0, where the check
+works, so only tables written by mkudffs or by another implementation
+are affected.  Nothing more than filling such a filesystem is needed:
+on a fresh 1 MiB "mkudffs --space=unalloctable" image, creating empty
+files until the partition is full writes file entries over the reserve
+volume descriptor sequence and the backup anchor, and df then reports a
+negative amount of used space.
 
-Add the mapping offset when locating the IB in the BO.
+On syzbot's images the same double allocation is what the two reports
+below trip over.  In the first, ftruncate() extends a new file with
+enough hole extents to need a chain of allocation extent descriptors;
+one AED is placed on another inode's file entry, and a later one is
+placed on the block of the AED currently being filled, which
+udf_setup_indirect_aext() zeroes, so __udf_add_aext() finds
+lengthAllocDescs out of step with its cursor.  In the second, an AED
+is placed past the end of the device, sb_getblk() fails, and the error
+path of udf_do_extend_file() calls udf_truncate_extents() on an extent
+list that no longer covers i_size.
 
-Fixes: 4802ce117786 ("drm/amdgpu: fix UVD/VCE VM emulation")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 74ba1d87d67d0a38d8248928241c3e1c73d0d53b)
+Keep the type separately from the length, as udf_table_prealloc_blocks()
+already does.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Reported-by: syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=799a0e744ac47f928024
+Reported-by: syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=43fc5ba6dcb33e3261ca
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://patch.msgid.link/6b51c38d2d069544053c542470950e2a448b0b8d.1793349907.git.matthias.goergens@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/balloc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index a9e046576f7ef..0a5fa026d595e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1071,7 +1071,7 @@ static int amdgpu_cs_patch_ibs(struct amdgpu_cs_parser *p,
- 		if (r)
- 			return r;
+diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
+index e8e3e291ef819..0bbe86da3d133 100644
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -580,7 +580,7 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 	uint32_t elen, goal_elen = 0;
+ 	struct kernel_lb_addr eloc, goal_eloc;
+ 	struct extent_position epos, goal_epos;
+-	int8_t etype;
++	int8_t etype, goal_etype = 0;
+ 	struct udf_inode_info *iinfo = UDF_I(table);
  
--		kptr += va_start - (m->start * AMDGPU_GPU_PAGE_SIZE);
-+		kptr += va_start - (m->start * AMDGPU_GPU_PAGE_SIZE) + m->offset;
+ 	*err = -ENOSPC;
+@@ -628,7 +628,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 			goal_epos.block = epos.block;
+ 			goal_epos.offset = epos.offset - adsize;
+ 			goal_eloc = eloc;
+-			goal_elen = (etype << 30) | elen;
++			goal_elen = elen;
++			goal_etype = etype;
+ 		}
+ 	}
  
- 		if (ring->funcs->parse_cs) {
- 			memcpy(ib->ptr, kptr, ib->length_dw * 4);
+@@ -650,7 +651,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 	goal_elen -= sb->s_blocksize;
+ 
+ 	if (goal_elen)
+-		udf_write_aext(table, &goal_epos, &goal_eloc, goal_elen, 1);
++		udf_write_aext(table, &goal_epos, &goal_eloc,
++			       (goal_etype << 30) | goal_elen, 1);
+ 	else
+ 		udf_delete_aext(table, goal_epos);
+ 	brelse(goal_epos.bh);
 -- 
 2.53.0
 
