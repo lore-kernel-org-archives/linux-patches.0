@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041977;
-	b=3IQnMdgXU5Wx3YB8kyZJSOP8mlhw5qm7zUGXDNMbwUFBl2C8nncu6j5Zx/YUBvewJ3aU
-	 haQBnUzJNHon9vP1InyOLwHqiavKZrBFj7Ujxi8B7H4BhY0irvv4Wg0JUZBrwr6eXl4AJ
-	 j9Bhvkvm/n/sZ/O0GsveMhQ2Jy3RVS/qzbXXf2H329kDhrVcFAo7l+V3JsXHbr9tmL5sw
-	 U/6cE7jPQHJeOrL9l+dVeOB415OnN7d62WllKWJj4nkSkrek4C+5SSIWMmbJ+YJeKkvVe
-	 XXs7wi+pC6OVch3+Tpmc4C7yQ5JJKc0q4ONcZiw4I4wm12F8Y7UlFUfbjX0aluz91tA==
+	t=1795041980;
+	b=K7ocJTnekQXyqjCtW7PWqfmmvOBp1J0oAwvphIpv1ohgaWkGhawhINPnDkNMLlpbYDs7
+	 LCuhYpDsxXEeVh4bLlAbd6PYoX1IB0uOzno8LQoAgNLndIcEYIqKwWU8OC8wBFyaaCuLY
+	 8tWSahYMbokxbhkXfXUql150vLE/ORaYpwrZMh6G/ufhpFP+un+ahDRzZDVhjllblUg7e
+	 1MqlptMKUr4v0VRYT4+ezFFnSVvmh1TN0KH4U5wRIdQEr5lVAtyROlXgTy9E5oVROcAzH
+	 VF4wqs9J35+/ZHnjcKzRu9BeD6nD2xkinrWuilR7om6HIWJuTda3ryxm8IUQ+BEAf2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041977;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9D0Hu/nJh0PpKAhh7cTo0PRF6OxsWoqc3w4Bha4UeiY=;
-	b=UJ+khmu2CPtmxwdouh7Urge8SQD8eTOX479G+8qQj7IxyNYae7iiNZizDOu5ICIxDsYR
-	 5RwkTB1LrgLvM5zlsbzeNLiLx9ixzkYn99axe0rKju7HF3nbljiHV0LdM5zVtHwpN8GT8
-	 OdFc3ExNVdhg8CX4e/CmnQqaa/iJnA0c8CjpzeccVhroFawavbf5R28jBRcqzSO5+3aN0
-	 JnLtBa20OOXPaPgoQ1XQmS+mDf2QPeZ9mLH3li2msApHjfUCECUwjN9c0gVMDTNMYufR0
-	 mZkB5eVsUoXPhmZ/cyPW/rgpCtDYrUqglnohOFha8c3Y2aHhIEKyACngZnpu1/Gw1Vg==
+	bh=jTAj62CKiJ74Embno0sJGub7TCgG8UJk8Py+06iwAX0=;
+	b=qzYpGYd4H9ffAPGl4InitspEvMA/BAc3OeLzmQGOte42EVWeUU4cJYCNntF4ev+Th2zE
+	 WBSOeQ9hMWzAXVbAXmYf7ISgC5eyUqU9QLcnf9vn4TYIpE8ZqM86jc1eDfF65uB0BRJQl
+	 kFfdATNGrvtAeTCcnS39Vj2Tlxi0jPQcacbhUnpOWwpVLjkjbY4eWXDHKaXNG4GYaYclE
+	 eOPDrc32e1HcEIc71Jb8ZBfqMVhdxUlAlOzTejoPBCKwlpHnWJcYeI5+UUKwKx+gPwHUb
+	 5zsi5Zj8QT6ATAY9PEfM+s2WpXWVc6PIM+s8rqlGXGO2H3FI53sY5xxEjaai8WLlGQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFyduNRl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjJQroLK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B4C606A325;
-	Wed, 18 Nov 2026 22:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0D1606A32C;
+	Wed, 18 Nov 2026 22:46:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wFyduNRl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB45D1F000C4;
-	Wed, 18 Nov 2026 22:46:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kjJQroLK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF431F000C4;
+	Wed, 18 Nov 2026 22:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041977;
-	bh=9D0Hu/nJh0PpKAhh7cTo0PRF6OxsWoqc3w4Bha4UeiY=;
+	s=korg; t=1795041980;
+	bh=jTAj62CKiJ74Embno0sJGub7TCgG8UJk8Py+06iwAX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wFyduNRlXQyDO4lTfPLftNWE2dzRkTAS3FhRWq4xvz/ZgNfRn8XuQ3rFBeYmfLqw6
-	 vPDffQ9eGfNDZap7DMh3EKxV3MKJREgg/44E4b5aKbxNJQG9Irt4UuygDIUSknLL3b
-	 X7vIGPESRIgnov8032tMHpQMOIWBe3XHocOCu7fc=
+	b=kjJQroLKtJcSt1BCrfB9Cob9QKVamDgEdWaI6J9Plxvqg+PPRbYK3YHV9We6rMKpw
+	 oxRpkuVkkN6Ov+t5xcnSlCI1tkVYY9GT+2RqCF8OZMrVNO9Mlijjul/eVLl7uCQxEO
+	 wXhutHIw30CP6jiXivX5nFPtG3/hjDnOzbX5zsis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3006/3318] bpf: Dont take an extension for a writable raw tracepoint program
-Date: Wed, 18 Nov 2026 16:00:28 +0100
-Message-ID: <20261118150450.428257157@linuxfoundation.org>
+Subject: [PATCH 6.6 3007/3318] power: supply: qcom_battmgr: report full batteries
+Date: Wed, 18 Nov 2026 16:00:29 +0100
+Message-ID: <20261118150450.454491160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,50 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 7fe348f18b37b3f4c8beb981ef3f84564047380a ]
+[ Upstream commit 6c8098e04ee4d233399e40e7311715844910f8f8 ]
 
-bpf_probe_register() compares max_tp_access of the program that is
-attached with the size of the buffer that the tracepoint lets programs
-write to.  An extension of that program, or of one of its global
-functions, gets the same context and the same pointer to the buffer.  What
-it accesses is noted in its own max_tp_access, which nobody looks at.  So
-it reads and writes behind the buffer, of a tracepoint that may have none:
+The SC8280XP battery-status response has no explicit full state. When a
+battery reaches its full capacity on external power, neither the charging
+nor discharging bit is set. The driver consequently reports "Not
+charging", which can make userspace show the system as battery powered.
 
-  BUG: KASAN: stack-out-of-bounds in bpf_prog_5843f2b820eb4929_tr26_ext_far+0xf4/0x10c
-  Write of size 4 at addr ffffc90000d8f894 by task wext/103
+Use the response's power-online bit and the reported capacity to identify
+a battery that is full while externally powered. Preserve "Not charging"
+for a battery whose charging is inhibited below its full capacity.
 
-Refuse such extensions.
-
-Fixes: be8704ff07d2 ("bpf: Introduce dynamic program extensions")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-29-alexei.starovoitov@gmail.com
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+Assisted-by: LLM
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261008-battmgr-full-v1-1-4f5485a9c421@oss.qualcomm.com
+[put variable definition in Reverse-Christmas-tree order]
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/power/supply/qcom_battmgr.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index d020de1301858..cf54ebba430d8 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -20365,6 +20365,15 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
- 					"Extension programs should be JITed\n");
- 				return -EINVAL;
- 			}
-+			/*
-+			 * How much of the buffer of the tracepoint is used
-+			 * is checked for the program that is attached to it.
-+			 */
-+			if (tgt_prog->type == BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE) {
-+				bpf_log(log,
-+					"Cannot extend a writable raw tracepoint program\n");
-+				return -EINVAL;
-+			}
- 			tgt_changes_pkt_data = aux->func
- 					       ? aux->func[subprog]->aux->changes_pkt_data
- 					       : aux->changes_pkt_data;
+diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+index 63799fd24e837..bfff97756e7d5 100644
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -1017,6 +1017,7 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+ 					   size_t len)
+ {
+ 	unsigned int opcode = le32_to_cpu(resp->hdr.opcode);
++	unsigned int power_state;
+ 	unsigned int source;
+ 	unsigned int state;
+ 	size_t payload_len = len - sizeof(struct pmic_glink_hdr);
+@@ -1065,19 +1066,24 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+ 			return;
+ 		}
+ 
++		battmgr->status.capacity = le32_to_cpu(resp->status.capacity) * 1000;
++		battmgr->status.power_now = le32_to_cpu(resp->status.rate) * 1000;
++		battmgr->status.voltage_now = le32_to_cpu(resp->status.battery_voltage) * 1000;
++		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
++
+ 		state = le32_to_cpu(resp->status.battery_state);
++		power_state = le32_to_cpu(resp->status.power_state);
+ 		if (state & BIT(0))
+ 			battmgr->status.status = POWER_SUPPLY_STATUS_DISCHARGING;
+ 		else if (state & BIT(1))
+ 			battmgr->status.status = POWER_SUPPLY_STATUS_CHARGING;
++		else if ((power_state & BIT(0)) &&
++			 battmgr->info.last_full_capacity &&
++			 battmgr->status.capacity >= battmgr->info.last_full_capacity)
++			battmgr->status.status = POWER_SUPPLY_STATUS_FULL;
+ 		else
+ 			battmgr->status.status = POWER_SUPPLY_STATUS_NOT_CHARGING;
+ 
+-		battmgr->status.capacity = le32_to_cpu(resp->status.capacity) * 1000;
+-		battmgr->status.power_now = le32_to_cpu(resp->status.rate) * 1000;
+-		battmgr->status.voltage_now = le32_to_cpu(resp->status.battery_voltage) * 1000;
+-		battmgr->status.temperature = qcom_battmgr_sc8280xp_convert_temp(le32_to_cpu(resp->status.temperature));
+-
+ 		source = le32_to_cpu(resp->status.charging_source);
+ 		qcom_battmgr_sc8280xp_set_online(battmgr->ac_psy, &battmgr->ac.online,
+ 						 source == BATTMGR_CHARGING_SOURCE_AC);
 -- 
 2.53.0
 
