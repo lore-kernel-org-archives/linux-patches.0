@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047062;
-	b=YZTlb9zBEqpOYfEog/cXJbjNBiA92nFxQDOEflWvPWIfLJ4gA8VXIabr25IdDej4MO7Y
-	 icCy/e4WmoqEwoxNcBXtS9NDStMjElPVJ67ux0Z7V+FTQ/mG2Olb47XCmvn3TRWLkhlOT
-	 TcVmBhZ533UzJSYeuRAyPIGKbByFHk12lEruSvz0knJ1ROFeC8jAyz8/bDv6M7jaIfu6l
-	 H3/dEDaa8UPSVoMPStY+nQGa3mEO2T/d1JWmN1NzsOp5/mXqzUGoOay84XpieCBfjR5s/
-	 Q0LE3se9jd5IcBwXaQNfIhbaElBWH1Q9vwHdE59z0z/r+oJhf3WIE7XqNSGM03yd0kw==
+	t=1795047065;
+	b=EEZD5+RHNKOmjycRaMLmANKBPGQtHivXn5yZELdHSTaYZjS82SsPfkj2dR3EB7663cCU
+	 aBMOnC3tkibsQRiSIIneRU3fhvf83igSfhPNdd4t1nypkWxnvEw+LXZWUT/IRHZfNvm3w
+	 ZDx2TfPsKifadomEq1mGkSfLlfxOp290ICJcSkjwLiAPde33xLvTlHWEPBgNDqZG+3QIg
+	 MLn9iwb0p0h3LQTP67xFDJZNa4vhAFryq4LHAH9x1kJ3YaUmAPwb/K8L9UAh3wor5uGgR
+	 XYZhoteyqeMZXiaeMyG6k6AUAC6IB/+KZEon9H1n9lNgwMSIzHAGbljOYLylfxicDAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047062;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047065;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OqDAZt1LBYw2zs0C3QXZpzYHGv+tN35w0/zA4Ee/rhM=;
-	b=oFcnw+9hyc+dJ2NM+0tzWH9Q3QrtTSWW5ItB1CfNvd88/a91Q3YjUDg2IYc0vmluBXJC
-	 VV6VI84XRf03Sj8D5l3GuZeRn8TsxUTmPTT6IRAlNwwxXLxZf1sD/KepDs7mml48tQe19
-	 t54cxerCqAGprEj85tfrADbfzRYst6ESkuh89O1up91bi2FQwaXFs1l4Yzcz1js0nfz/I
-	 XDuiYC7OYDYOYP3ABKMF1InjgfxA3GKVlFkzM7n2nSJBIv7be07M11W8+1tJzxwepTNTm
-	 93/QfK4Kw0cgaInWgukbOFzrXIg9g0oCr+NUezHae1MxDc7YuQm/D9mT5YZc44l0xdA==
+	bh=K0VS3WLR5ly1dqBLPPp9oPWgfMEqyl+cSUh4/gzoOf0=;
+	b=dMbDodcr4r7eHX1czc4lwviL5LteSAY3URiBblN1c+o69T77iyN6YGsxx8ZqiYS6uLaW
+	 g4+S3q+V1uCnydgDQL089L8mI77pdmOcIlM6lmaydlJwPA7pv31kOAZhv+ILxW2yDMnoK
+	 c8JqqzYBukAZpwPQZ2LlcEtH08/kRQtDPuswmgHSZBrog7JiLCKxrS/7GxmvREk4v/ye0
+	 5NVzgjlbMu+Yo0Iw6+LtcGO3oSoGFae7blqO4SKyKVpdk7RP1opusOjIDm9nlLoopDTRH
+	 87HSg8SAJRw3HSqayhmsecFqlRDFTLfz0Yaq0eAWJUtUryuXkcVzlJMnerlBe8VIO5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2fT0r9/H";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWrhcup0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C622760A2600;
-	Thu, 19 Nov 2026 00:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511AB606A31C;
+	Thu, 19 Nov 2026 00:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fT0r9/H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31CB31F000C7;
-	Thu, 19 Nov 2026 00:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWrhcup0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D331F000C4;
+	Thu, 19 Nov 2026 00:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047062;
-	bh=OqDAZt1LBYw2zs0C3QXZpzYHGv+tN35w0/zA4Ee/rhM=;
+	s=korg; t=1795047065;
+	bh=K0VS3WLR5ly1dqBLPPp9oPWgfMEqyl+cSUh4/gzoOf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2fT0r9/HIY0uqZOi9Ozvqz1ZyTPkOvwa7/XYc/tsnv9l1mStqrWk4ahFWlcgBaqNl
-	 gZK5FjpOOaS+/gMW1wJrAfFBcdg71d2Tz+bNvGDchOCnkJ++4EuGNaNTn/gQr6Q8OE
-	 5RNr8pBaKacgGncVLZeB+FdNMNT/rO/l0xOJhkIY=
+	b=yWrhcup0TkdcjtTNVD+Be2szpNiW9FbL1D+xHZq2MTIdJFvyZGUcIcF+bJOuFyMfB
+	 AtaywJiCuaGDrQ4SnGDUUNUr80GJU5K3SOAmBrg9l4XD5IqpbiyUlszjvJTKpTS7aH
+	 uQ8AMXIusee/QGCn6UbEhh4qNVYSpOOqV53kUoHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1467/2857] virtiofs: validate fixed-output response length
-Date: Wed, 18 Nov 2026 15:41:41 +0100
-Message-ID: <20261118150254.132200216@linuxfoundation.org>
+Subject: [PATCH 6.1 1503/2857] mm/mlock: use a long for the page count in mlock_fixup()
+Date: Wed, 18 Nov 2026 15:42:17 +0100
+Message-ID: <20261118150255.453026947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,100 +73,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit 5364d081125a34e90851fbb46ecc93f79339ce78 ]
+[ Upstream commit 3ae91e3079b1504ef162b2884454d5f1421f4eb9 ]
 
-A short successful virtiofs response can leave the fixed-output portion of
-the request argument buffer unwritten.  The completion path nevertheless
-copies the full declared output to the request destination, allowing stale
-allocator contents to reach callers such as fuse_statfs().
+mlock_fixup() adjusts mm->locked_vm, an unsigned long, by the number of
+pages whose VM_LOCKED state it changes, but computes that number in an
+int:
 
-Require successful fixed-output responses to contain their complete
-declared output.  Continue to permit a shorter final argument only for
-out_argvar requests.  Reject positive and internal restart error values
-and require valid error replies to be header-only.  The error already
-stored in the FUSE output header is returned by fuse_request_end(), so do
-not copy output arguments from an error reply.
+	int nr_pages;
+	...
+	nr_pages = (end - start) >> PAGE_SHIFT;
+	...
+	mm->locked_vm += nr_pages;
 
-This was found by source review with AI assistance.  A header-only
-successful FUSE_STATFS reply returned stale fields in nine of nine calls
-across three boots.  The fixed kernel rejected the short response and
-preserved complete replies, valid negative-error replies, and
-variable-output replies.
+When a single VMA range of 2^31 pages (8 TiB with 4 KiB pages) or more
+is locked or unlocked, the count is truncated to 32 bits and then
+sign-extended, so locked_vm is changed by the wrong amount, while
+munmap(), mremap() and the other paths that maintain locked_vm use the
+full unsigned long page count.
 
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: stable@vger.kernel.org
+Such a range is reachable on 64-bit architectures with a 47-bit or
+larger user address space (x86_64, arm64 with 48-bit VA, riscv64 Sv48)
+by a task with CAP_IPC_LOCK or a raised RLIMIT_MEMLOCK, which do_mlock()
+checks against the full untruncated length.  It costs nothing with
+MAP_NORESERVE and MLOCK_ONFAULT/MCL_ONFAULT, since then no page is
+populated.  On x86_64, after
+
+	p = mmap(NULL, 8UL << 40, PROT_READ | PROT_WRITE,
+		 MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE, -1, 0);
+	mlock2(p, 8UL << 40, MLOCK_ONFAULT);
+
+VmLck in /proc/self/status reads 18446744065119617024 kB instead of
+8589934592 kB; munmap() of the region then subtracts the true size and
+leaves VmLck at 18446744056529682432 kB instead of 0.  With 16 TiB,
+locked_vm is not changed at all, VmLck stays 0 kB, and after the task
+drops CAP_IPC_LOCK or lowers RLIMIT_MEMLOCK, mlock(), mmap(MAP_LOCKED)
+and the other mlock_future_ok() and account_locked_vm() users enforce
+RLIMIT_MEMLOCK against that count, so they let the task lock memory
+beyond its limit (or, in the 8 TiB case, refuse every further lock).
+The error persists for the life of the mm; unlocking the range in pieces
+skews it further.  The wrong count is per-mm accounting only: it does
+not change which pages are locked.
+
+The int has been there since before git history (the variable was named
+"pages" until it was renamed in 2.6.28); every other updater of
+locked_vm uses an unsigned long or long count.  Make nr_pages a long,
+which holds the page count of any user range and its negation, so the
+existing sign handling is unchanged.
+
+Found by formal verification of mm/mlock.c against the kernel binary.
+
+Link: https://lore.kernel.org/20261014131358.780240-1-nickolai@csail.mit.edu
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
 Assisted-by: LLM
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adjusted context for the older mlock_fixup() signature and local variable declarations ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ mm/mlock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index ab410ebe7c304..2a51d7b4d216c 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -535,6 +535,10 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	unsigned int num_out;
- 	unsigned int i;
- 
-+	/* fuse_request_end() returns this error; there are no args to copy. */
-+	if (req->out.h.error)
-+		goto out;
-+
- 	remaining = req->out.h.len - sizeof(req->out.h);
- 	num_in = args->in_numargs - args->in_pages;
- 	num_out = args->out_numargs - args->out_pages;
-@@ -560,6 +564,7 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	if (args->out_argvar)
- 		args->out_args[args->out_numargs - 1].size = remaining;
- 
-+out:
- 	kfree(req->argbuf);
- 	req->argbuf = NULL;
- }
-@@ -567,7 +572,9 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- /* Verify that the server properly follows the FUSE protocol */
- static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
+diff --git a/mm/mlock.c b/mm/mlock.c
+index 0124022f0f379..8fa8e871ccbf8 100644
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -406,7 +406,7 @@ static int mlock_fixup(struct vm_area_struct *vma, struct vm_area_struct **prev,
  {
-+	struct fuse_args *args = req->args;
- 	struct fuse_out_header *oh = &req->out.h;
-+	unsigned int expected;
- 
- 	if (len < sizeof(*oh)) {
- 		pr_warn("virtio-fs: response too short (%u)\n", len);
-@@ -582,6 +589,29 @@ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- 			oh->unique, req->in.h.unique);
- 		return false;
- 	}
-+	if (oh->error <= -ERESTARTSYS || oh->error > 0) {
-+		pr_warn("virtio-fs: invalid error value (%d)\n", oh->error);
-+		return false;
-+	}
-+
-+	if (oh->error) {
-+		if (len != sizeof(*oh)) {
-+			pr_warn("virtio-fs: error response too long (%u)\n", len);
-+			return false;
-+		}
-+		return true;
-+	}
-+
-+	expected = sizeof(*oh) +
-+		   fuse_len_args(args->out_numargs, args->out_args);
-+	if (len > expected ||
-+	    (len < expected &&
-+	     (!args->out_argvar ||
-+	      expected - len > args->out_args[args->out_numargs - 1].size))) {
-+		pr_warn("virtio-fs: invalid response length (%u, expected %u)\n",
-+			len, expected);
-+		return false;
-+	}
- 	return true;
- }
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	pgoff_t pgoff;
+-	int nr_pages;
++	long nr_pages;
+ 	int ret = 0;
+ 	vm_flags_t oldflags = vma->vm_flags;
  
 -- 
 2.53.0
