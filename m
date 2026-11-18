@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056972;
-	b=4YBBcxiP4ri0OKcdIfzrbNcsvvABfaCBME0uQ91LfJLPu1ef5sc+xZKQUPAuCQZ96Toc
-	 2xP0CR6wi1qZwn1evJnsEcTiH+IMehRvS7cJKwBOilPnDyTqGfaYmw/GV9vppgAXzDFYE
-	 DMnvMsykKC5181VPcsTJXe9cC1Pcpvj/vCkSjvmizXa6OU+sFfeoZ6Fv1zp+Ms+L97l4F
-	 5pVXNDK/ytY/qYlLaxsRJgv0XDqToGyBEviJEvfsceypvHP3blLHDFskL/lS90UrZqJIq
-	 0YmJ4u9eaa9eaEL9xqUbpNFKYICkddwp4ATELzgInm8eC7/5WkgIQOx18PgQuBx8qBw==
+	t=1795056975;
+	b=M3jDtYUaWjfv2AaeB9qfYy0DwyWSfUcoURoTS6OAMw8wVC7xDARcwgsZGAvrPw96OQu+
+	 2vbhDcgv+eqy94euCudP795wYLvyGCiqZOOy4jGapnCUQm8ZhlnD/u5K99T2ARPCmf4tc
+	 hSmQqagvVm5GMDl37AdG+neLTSt7tCu06yJqeElV65uRUkHkcBYS+XDECeYKU4FEX2/o+
+	 qVLCsOW/1cWAaJ2RRr8bisLdk9Ki/Qnzo7U7IngY5dRuxKI8RfUjSvlMZC7IFmmvzKNsb
+	 BW76TTQAfQuaB6PYw3f2pQNG5Nb+0A+/Q0ZcO3Fgo6h/L6D7wZT6U5iGESj01IOdm+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056975;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HbSnH1hThL7T46TSj89oM0t1sDgFzOPNfiG4cr+5pa0=;
-	b=FCMdyEPqsMZ9qrYYVYzDr5xf3LYjjXGNECBfqUZjTNDVBQTOey3LxQU88XtGecgR9cuH
-	 M3RVK6yvamAfr2lO/vBku6QrO8k/NjwL20fpQgOxcGrZo1PZ0wuDcjxZqI9nx7M2KNmUC
-	 FrH4HDxQIo2iiUUkIOgc5R4yIjzTLmUP3C704Q6OfkSQTik4zyXM1qmW7G82cCA5NgX1l
-	 TQzO0ve+OR335egx56fwH1iOwomwGSg8BXqP2zbiSn+pevzRm0Jz3rDnm6gVWynZpB6xO
-	 UUpIPjC4jYXLhXsal9mAcPuFKZHoVkZQW3/78enc4B8FzylQKImwYhfXGCQ/D98/7jg==
+	bh=FCS2JsNcDkHGaPD89N2qQq1qBhKpPwcH6NGOAeNKXb4=;
+	b=eDGRyYdXdX9VdSyKwCaj2qYshO6RVDGMyQ1NsJ28PIoIJlqXzJ9nUSDmBSC8eA9DISZ7
+	 jfTmjdytH0AlZ+y6Xksyu8qg5M0xfpyCJyCPGZeubSZSV/auFRdp1ytipnwLPJfpLaDVb
+	 oMt3plcb+Rr4pq+1MAC9F6LZmdwF7UmlbgByQF/ql25XH9k6PtTFuSM/NgQKb20hAr66v
+	 zP3fFOI9Mj2td7/+MVj8Ozq3gX4jM3AYvZSs9l4bZrfMrQpIhUwgDIraKtQ5DpNalDqq5
+	 C0Mx6xGJmhUMaqcVL5iv+ndeFHVBBQCdJiZ4PSTkkE7HqA67Q61gYqL2qx/Xq7lofNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SEXa+xGe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=akb3+p3W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CDE606A320;
-	Thu, 19 Nov 2026 02:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D10C606A320;
+	Thu, 19 Nov 2026 02:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SEXa+xGe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC671F000C4;
-	Thu, 19 Nov 2026 02:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=akb3+p3W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E191F000C4;
+	Thu, 19 Nov 2026 02:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056971;
-	bh=HbSnH1hThL7T46TSj89oM0t1sDgFzOPNfiG4cr+5pa0=;
+	s=korg; t=1795056975;
+	bh=FCS2JsNcDkHGaPD89N2qQq1qBhKpPwcH6NGOAeNKXb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SEXa+xGeJuI6M31ZtHjvRs7zEKmycF0vJJQ5PBbS/P2xyLuFXLz7pFvXCb5VcG0yZ
-	 A70OGQw+VnajEOZX2Ryiv5VtSwEnPHZdFTTz66vxUrYcte3xZW5VjawArn3+IGaUQK
-	 vxrsmLK2BrOJ1LHy7IW3ANFT/OmZFn7591ELl6Os=
+	b=akb3+p3WShxzzp12WlnfKHL7qRjFT84hC9THFbd/74/CKhX6QthPEb6hM9xjfFSTY
+	 yMzAhzuIFWWbTRl/ztbar0/qDQO/SOTRXujU43h3mZGP6mrZ7CRt5AmIBiZ3vwiTvK
+	 m8tIW/lDHVL0pNqrQAY7jshee+54m8Abrzjb32YY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
 	Jack Wang <jinpu.wang@ionos.com>,
+	Jan Kara <jack@suse.cz>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2179/2214] rnbd-srv: remove struct rnbd_dev_blk_io
-Date: Wed, 18 Nov 2026 16:04:15 +0100
-Message-ID: <20261118150137.542671011@linuxfoundation.org>
+Subject: [PATCH 5.15 2180/2214] rnbd-srv: remove the name field from struct rnbd_dev
+Date: Wed, 18 Nov 2026 16:04:16 +0100
+Message-ID: <20261118150137.584247631@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,171 +74,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit d7b78de2b1552e3e7ce3a069f075cc2729aa5c34 ]
+[ Upstream commit 6e880cf59932a14bca128fc8e8faae0554932942 ]
 
-Only the priv field of rnbd_dev_blk_io is used, so store the value of
-that in bio->bi_private directly and remove the entire bio_set overhead.
+Just print the block device name directly using the %pg format specifier.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://lore.kernel.org/r/20220124091107.642561-12-hch@lst.de
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20220713055317.1888500-7-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: d9667ade40f9 ("block/rnbd-srv: don't free the device on a sysfs error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv-dev.c |  4 +---
- drivers/block/rnbd/rnbd-srv-dev.h | 13 ++-----------
- drivers/block/rnbd/rnbd-srv.c     | 27 ++++-----------------------
- drivers/block/rnbd/rnbd-srv.h     |  1 -
- 4 files changed, 7 insertions(+), 38 deletions(-)
+ drivers/block/rnbd/rnbd-srv-dev.c   | 1 -
+ drivers/block/rnbd/rnbd-srv-dev.h   | 1 -
+ drivers/block/rnbd/rnbd-srv-sysfs.c | 5 ++---
+ drivers/block/rnbd/rnbd-srv.c       | 9 ++++-----
+ drivers/block/rnbd/rnbd-srv.h       | 3 +--
+ 5 files changed, 7 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/block/rnbd/rnbd-srv-dev.c b/drivers/block/rnbd/rnbd-srv-dev.c
-index 98d3e591a0885..c5d0a03911659 100644
+index c5d0a03911659..c63017f6e4214 100644
 --- a/drivers/block/rnbd/rnbd-srv-dev.c
 +++ b/drivers/block/rnbd/rnbd-srv-dev.c
-@@ -12,8 +12,7 @@
- #include "rnbd-srv-dev.h"
- #include "rnbd-log.h"
- 
--struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags,
--			       struct bio_set *bs)
-+struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags)
- {
- 	struct rnbd_dev *dev;
- 	int ret;
-@@ -30,7 +29,6 @@ struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags,
+@@ -28,7 +28,6 @@ struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags)
+ 		goto err;
  
  	dev->blk_open_flags = flags;
- 	bdevname(dev->bdev, dev->name);
--	dev->ibd_bio_set = bs;
+-	bdevname(dev->bdev, dev->name);
  
  	return dev;
  
 diff --git a/drivers/block/rnbd/rnbd-srv-dev.h b/drivers/block/rnbd/rnbd-srv-dev.h
-index 1a14ece0be726..2c3df02b5e8ec 100644
+index 2c3df02b5e8ec..201a021246c2e 100644
 --- a/drivers/block/rnbd/rnbd-srv-dev.h
 +++ b/drivers/block/rnbd/rnbd-srv-dev.h
-@@ -14,25 +14,16 @@
- 
+@@ -15,7 +15,6 @@
  struct rnbd_dev {
  	struct block_device	*bdev;
--	struct bio_set		*ibd_bio_set;
  	fmode_t			blk_open_flags;
- 	char			name[BDEVNAME_SIZE];
+-	char			name[BDEVNAME_SIZE];
  };
  
--struct rnbd_dev_blk_io {
--	struct rnbd_dev *dev;
--	void		 *priv;
--	/* have to be last member for front_pad usage of bioset_init */
--	struct bio	bio;
--};
--
  /**
-  * rnbd_dev_open() - Open a device
-+ * @path:	path to open
-  * @flags:	open flags
-- * @bs:		bio_set to use during block io,
-  */
--struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags,
--			       struct bio_set *bs);
-+struct rnbd_dev *rnbd_dev_open(const char *path, fmode_t flags);
+diff --git a/drivers/block/rnbd/rnbd-srv-sysfs.c b/drivers/block/rnbd/rnbd-srv-sysfs.c
+index 4db98e0e76f0e..122fee8aedd8a 100644
+--- a/drivers/block/rnbd/rnbd-srv-sysfs.c
++++ b/drivers/block/rnbd/rnbd-srv-sysfs.c
+@@ -39,14 +39,13 @@ static struct kobj_type dev_ktype = {
+ };
  
- /**
-  * rnbd_dev_close() - Close a device
+ int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
+-			       struct block_device *bdev,
+-			       const char *dev_name)
++			       struct block_device *bdev)
+ {
+ 	struct kobject *bdev_kobj;
+ 	int ret;
+ 
+ 	ret = kobject_init_and_add(&dev->dev_kobj, &dev_ktype,
+-				   rnbd_devs_kobj, dev_name);
++				   rnbd_devs_kobj, "%pg", bdev);
+ 	if (ret) {
+ 		kobject_put(&dev->dev_kobj);
+ 		return ret;
 diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index e9875a54e8bf0..4bd58aa0e283f 100644
+index 4bd58aa0e283f..6e6423d8c149a 100644
 --- a/drivers/block/rnbd/rnbd-srv.c
 +++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -116,9 +116,7 @@ rnbd_get_sess_dev(int dev_id, struct rnbd_srv_session *srv_sess)
- 
- static void rnbd_dev_bi_end_io(struct bio *bio)
- {
--	struct rnbd_dev_blk_io *io = bio->bi_private;
--
--	rnbd_endio(io->priv, blk_status_to_errno(bio->bi_status));
-+	rnbd_endio(bio->bi_private, blk_status_to_errno(bio->bi_status));
- 	bio_put(bio);
+@@ -421,7 +421,7 @@ static struct rnbd_srv_sess_dev
+ 	return sess_dev;
  }
  
-@@ -131,7 +129,6 @@ static int process_rdma(struct rnbd_srv_session *srv_sess,
- 	struct rnbd_srv_sess_dev *sess_dev;
- 	u32 dev_id;
- 	int err;
--	struct rnbd_dev_blk_io *io;
- 	struct bio *bio;
- 	short prio;
+-static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(const char *id)
++static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(struct block_device *bdev)
+ {
+ 	struct rnbd_srv_dev *dev;
  
-@@ -152,7 +149,7 @@ static int process_rdma(struct rnbd_srv_session *srv_sess,
- 	priv->sess_dev = sess_dev;
- 	priv->id = id;
+@@ -429,7 +429,7 @@ static struct rnbd_srv_dev *rnbd_srv_init_srv_dev(const char *id)
+ 	if (!dev)
+ 		return ERR_PTR(-ENOMEM);
  
--	bio = bio_alloc_bioset(GFP_KERNEL, 1, sess_dev->rnbd_dev->ibd_bio_set);
-+	bio = bio_alloc(GFP_KERNEL, 1);
- 	if (bio_add_page(bio, virt_to_page(data), datalen,
- 			offset_in_page(data)) != datalen) {
- 		rnbd_srv_err(sess_dev, "Failed to map data to bio\n");
-@@ -160,12 +157,8 @@ static int process_rdma(struct rnbd_srv_session *srv_sess,
- 		goto bio_put;
- 	}
+-	strscpy(dev->id, id, sizeof(dev->id));
++	snprintf(dev->id, sizeof(dev->id), "%pg", bdev);
+ 	kref_init(&dev->kref);
+ 	INIT_LIST_HEAD(&dev->sess_dev_list);
+ 	mutex_init(&dev->lock);
+@@ -514,7 +514,7 @@ rnbd_srv_get_or_create_srv_dev(struct rnbd_dev *rnbd_dev,
+ 	int ret;
+ 	struct rnbd_srv_dev *new_dev, *dev;
  
--	io = container_of(bio, struct rnbd_dev_blk_io, bio);
--	io->dev = sess_dev->rnbd_dev;
--	io->priv = priv;
--
- 	bio->bi_end_io = rnbd_dev_bi_end_io;
--	bio->bi_private = io;
-+	bio->bi_private = priv;
- 	bio->bi_opf = rnbd_to_bio_flags(le32_to_cpu(msg->rw));
- 	bio->bi_iter.bi_sector = le64_to_cpu(msg->sector);
- 	bio->bi_iter.bi_size = le32_to_cpu(msg->bi_size);
-@@ -260,7 +253,6 @@ static void destroy_sess(struct rnbd_srv_session *srv_sess)
+-	new_dev = rnbd_srv_init_srv_dev(rnbd_dev->name);
++	new_dev = rnbd_srv_init_srv_dev(rnbd_dev->bdev);
+ 	if (IS_ERR(new_dev))
+ 		return new_dev;
  
- out:
- 	xa_destroy(&srv_sess->index_idr);
--	bioset_exit(&srv_sess->sess_bio_set);
- 
- 	pr_info("RTRS Session %s disconnected\n", srv_sess->sessname);
- 
-@@ -289,16 +281,6 @@ static int create_sess(struct rtrs_srv *rtrs)
- 		return -ENOMEM;
- 
- 	srv_sess->queue_depth = rtrs_srv_get_queue_depth(rtrs);
--	err = bioset_init(&srv_sess->sess_bio_set, srv_sess->queue_depth,
--			  offsetof(struct rnbd_dev_blk_io, bio),
--			  BIOSET_NEED_BVECS);
--	if (err) {
--		pr_err("Allocating srv_session for path %s failed\n",
--		       pathname);
--		kfree(srv_sess);
--		return err;
--	}
--
- 	xa_init_flags(&srv_sess->index_idr, XA_FLAGS_ALLOC);
- 	INIT_LIST_HEAD(&srv_sess->sess_dev_list);
- 	mutex_init(&srv_sess->lock);
-@@ -752,8 +734,7 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
- 		goto reject;
- 	}
- 
--	rnbd_dev = rnbd_dev_open(full_path, open_flags,
--				 &srv_sess->sess_bio_set);
-+	rnbd_dev = rnbd_dev_open(full_path, open_flags);
- 	if (IS_ERR(rnbd_dev)) {
- 		pr_err("Opening device '%s' on session %s failed, failed to open the block device, err: %ld\n",
- 		       full_path, srv_sess->sessname, PTR_ERR(rnbd_dev));
+@@ -767,8 +767,7 @@ static int process_msg_open(struct rnbd_srv_session *srv_sess,
+ 	 */
+ 	mutex_lock(&srv_dev->lock);
+ 	if (!srv_dev->dev_kobj.state_in_sysfs) {
+-		ret = rnbd_srv_create_dev_sysfs(srv_dev, rnbd_dev->bdev,
+-						 rnbd_dev->name);
++		ret = rnbd_srv_create_dev_sysfs(srv_dev, rnbd_dev->bdev);
+ 		if (ret) {
+ 			mutex_unlock(&srv_dev->lock);
+ 			rnbd_srv_err(srv_sess_dev,
 diff --git a/drivers/block/rnbd/rnbd-srv.h b/drivers/block/rnbd/rnbd-srv.h
-index 98ddc31eb4088..05909a0d73f64 100644
+index 05909a0d73f64..7cc3b299134e5 100644
 --- a/drivers/block/rnbd/rnbd-srv.h
 +++ b/drivers/block/rnbd/rnbd-srv.h
-@@ -23,7 +23,6 @@ struct rnbd_srv_session {
- 	struct rtrs_srv		*rtrs;
- 	char			sessname[NAME_MAX];
- 	int			queue_depth;
--	struct bio_set		sess_bio_set;
+@@ -68,8 +68,7 @@ void rnbd_srv_sess_dev_force_close(struct rnbd_srv_sess_dev *sess_dev,
+ /* rnbd-srv-sysfs.c */
  
- 	struct xarray		index_idr;
- 	/* List of struct rnbd_srv_sess_dev */
+ int rnbd_srv_create_dev_sysfs(struct rnbd_srv_dev *dev,
+-			      struct block_device *bdev,
+-			      const char *dir_name);
++			      struct block_device *bdev);
+ void rnbd_srv_destroy_dev_sysfs(struct rnbd_srv_dev *dev);
+ int rnbd_srv_create_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev);
+ void rnbd_srv_destroy_dev_session_sysfs(struct rnbd_srv_sess_dev *sess_dev);
 -- 
 2.53.0
 
