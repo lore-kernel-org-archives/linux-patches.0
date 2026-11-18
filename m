@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032373;
-	b=m09WGBEHYcSVlPaAkfMvZtfWnw7yh/zURojyU/pbEcEipZDmAuvmLHGU1l4OXO/bQE2P
-	 EH2vvK6ZrjK9ssMW0gRi1upU75hOP0mqrnjMn8U4zVkxj5GPTDGnUu9api5BSVTsgdxwC
-	 MCZOQAZcBf3gOuMAKbVtAHiNAkRyMGxQyKzcnbXTcHnx6xoP2Oeyutd5BpAvd1nR6nNre
-	 cjzWSu+9Npn9b8U8bCzRkCFcACbQYdYmGXrT3WUMg4D0JCeJmu+qgaAwhC5sYcGW/2HtE
-	 VxCpe/LZcn472/ZBh+bzISW8jK3ksOYOpuxqS0zZb5UJKPr1F3Rlzd2u2eZuk4jOhxQ==
+	t=1795032375;
+	b=ed7xopImOHdDEASy/oTT6hnGZWCKWcryKWNxwDHjnP1/LkLURlqHCmnu/1X6puYsWS/r
+	 LX1fqNwcoF0TeJt7cnvAV6d1ygrv2VAYaeo5db8zk3a3AmscWdjEROGbSHAwWPsKYHNu2
+	 xrtGZhGhJ73inPJmf8xjqSBgT4POa/o7NZOu8xf8/QRUvEApvfHAYbOYTP6yjX6RspVKR
+	 FgYuRNr4oolpMjxFE4s3QF3Rfsz/HYbcg96Xlg5Ap6RoF2jwYAyQMpiaZcgEFQDZ8TaNS
+	 /ceVeJcvDhNPe+70GFrRxzsK+WVVLIpdl5E8oFCCS8Me7XzpyfaO9jvuq5AQ3W0X1ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W4y82VMtZgq3vQg7O78tpr6opGTjIFF+C8g3gIjHSJE=;
-	b=4vUq/DHifpBvnAMaTR8QmrZNifJO8yXAeBGMv+2CQU3ocSq/7Sl+sqtUqDzEq+q4gapP
-	 XelDGNRZnNrT+d3TOa2ZWzqaXu8pO6Io4b2o47JZPp+O2r/zb/FrcJxKOPY1+p7PCpcEA
-	 naq5UOhPEyBLc/mxgs6nE60wSHgcbAl3Gp+UcqZGkVU5G8n5mFwp/CRuyef2yaIgD5Mo0
-	 fgJWN5R22aX603Yw3YEiozjaJkiqqzqN0HOkRVONCXnfr2UYCBo/I85lnL3KoRS8iAN7i
-	 fX5zacqzkT2A1721HEPVRK8vtQlRtmDxjlyw1c5VGNBnQUxdGEsoQNuPINJHB+u2FMQ==
+	bh=cVJt35H10d/O2qMT3tH9V3/btofu+UfEg7FCF+R73E4=;
+	b=XIoDeuKyom+Pv15G6o+FIOIlzNBR1Q0URIVSFJd746htSJelc4Tq3zqaqtc32auqp5dp
+	 Vsn1YuxEulikg1FjkAbffbwuOwXqu1Ze7mG4H8dJf5OynJiWjy4rZq0la1JwPKfNc5zXL
+	 pxduxLPwsGqoesfkqaH7Pr4JfWaffhM8vi91uoxHlbWMYo0EJ+/cI8Ph7VmOMdBHoE7gn
+	 WrVzcMFo5UN0HsuhwctpA0jmmgBKQc35EylaV3qQBLcbIbYc582YeDKcQdtLSNpt1l9p4
+	 1bTzBVUZnYHxT72SQNqhHgLpIUVRcYSqVfJgI2aO4QY8/N9W22nqt/Iy0ZK0BqKYLKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egAe48tX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbjpB+0K;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F8B606A31C;
-	Wed, 18 Nov 2026 20:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF94606A32C;
+	Wed, 18 Nov 2026 20:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=egAe48tX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBF51F000C4;
-	Wed, 18 Nov 2026 20:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TbjpB+0K
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C63F1F000C4;
+	Wed, 18 Nov 2026 20:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032372;
-	bh=W4y82VMtZgq3vQg7O78tpr6opGTjIFF+C8g3gIjHSJE=;
+	s=korg; t=1795032375;
+	bh=cVJt35H10d/O2qMT3tH9V3/btofu+UfEg7FCF+R73E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egAe48tXRXhwY+G7gWPfINIgI2IB9hrcupdD4MY6KXNEzKKCuag6RqPi6YYf7Uxs5
-	 bSDgYlT5cKqVI3jqj7BMdjqayu86ugLx5aM8UxoC44YUBxynSJu9fKTrdMIh3jZ6mQ
-	 gD5ktjoRHOuQUOYKySobUF6plDBG6C+rn7BokbPs=
+	b=TbjpB+0KGJkHTSEZS3NooOoC+q7N9Cbo4jeujVW2JKsZGzGxmihfxIiPThNOd6YKy
+	 CcuVMbUsae7h06Upnhprua3obncFT7KPgfJxOhdOJRiWATI1/LRbn74vpgADU3fSL8
+	 Spnc89VOvIxJT1ItGS2dC/WarR6z54qfXqgkvzF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Velkov <iav@iav.lv>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1389/1756] power: supply: gpio-charger: Report discharging without input power
-Date: Wed, 18 Nov 2026 15:58:36 +0100
-Message-ID: <20261118150104.459595060@linuxfoundation.org>
+Subject: [PATCH 6.12 1390/1756] RDMA/core: Preserve the selected source GID on failed AH modification
+Date: Wed, 18 Nov 2026 15:58:37 +0100
+Message-ID: <20261118150104.493129827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,45 +67,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit f0f400459bf6a037e70768de623fff3f8920b8bb ]
+[ Upstream commit d01ee4c84193196b6e4be4caf1ff8fdcc441ed96 ]
 
-The status property follows only the charge-status GPIO. Without input
-power a charger such as the BQ24133 releases its open-drain STAT pin,
-and depending on the board the GPIO then reads as charging.
+When an address-handle modification fails, the core replaces its source-GID
+reference. The old address then loses the reference which keeps its source
+entry alive.
 
-On Kobol Helios64 the board runs from its battery after a mains loss,
-and the charger reports online 0 with status "Charging".
-
-Report "Discharging" whenever the online GPIO is present and inactive.
-
-Fixes: df68c44c720a ("power: supply: gpio-charger: Add support for charger status.")
-Assisted-by: LLM
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Link: https://patch.msgid.link/20261018-gpio-charger-offline-v2-1-482795f9e27c@iav.lv
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 1a1f460ff151 ("RDMA: Hold the sgid_attr inside the struct ib_ah/qp")
+Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-1-60f6da3ddec3@nvidia.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/gpio-charger.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/verbs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/gpio-charger.c b/drivers/power/supply/gpio-charger.c
-index 6139f736ecbe4..fba7b0616059c 100644
---- a/drivers/power/supply/gpio-charger.c
-+++ b/drivers/power/supply/gpio-charger.c
-@@ -100,7 +100,10 @@ static int gpio_charger_get_property(struct power_supply *psy,
- 		val->intval = gpiod_get_value_cansleep(gpio_charger->gpiod);
- 		break;
- 	case POWER_SUPPLY_PROP_STATUS:
--		if (gpiod_get_value_cansleep(gpio_charger->charge_status))
-+		/* Without input power the battery discharges, whatever the status pin says */
-+		if (gpio_charger->gpiod && !gpiod_get_value_cansleep(gpio_charger->gpiod))
-+			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
-+		else if (gpiod_get_value_cansleep(gpio_charger->charge_status))
- 			val->intval = POWER_SUPPLY_STATUS_CHARGING;
- 		else
- 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
+diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
+index d6fd7db5cbbd7..28df0e8b8da8d 100644
+--- a/drivers/infiniband/core/verbs.c
++++ b/drivers/infiniband/core/verbs.c
+@@ -954,7 +954,8 @@ int rdma_modify_ah(struct ib_ah *ah, struct rdma_ah_attr *ah_attr)
+ 		ah->device->ops.modify_ah(ah, ah_attr) :
+ 		-EOPNOTSUPP;
+ 
+-	ah->sgid_attr = rdma_update_sgid_attr(ah_attr, ah->sgid_attr);
++	if (!ret)
++		ah->sgid_attr = rdma_update_sgid_attr(ah_attr, ah->sgid_attr);
+ 	rdma_unfill_sgid_attr(ah_attr, old_sgid_attr);
+ 	return ret;
+ }
 -- 
 2.53.0
 
