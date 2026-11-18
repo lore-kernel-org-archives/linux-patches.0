@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035835;
-	b=sT8xxAG5wrd48rX60zShg4pz3fRtFzGqDiLPD8E7/Ux8Okm3JrwPYAiDunakFMtYKGtF
-	 lwua44exTwyH8E3TaAc6OOoI6yP8GAhTQoY00k3xfK52wPjr+/oHvFqnBpQp0uCmzJqCH
-	 GJW3N2X37tnxvptH+AUCvxysOdwLyawNgYxNl+j4vsOnG2th8z6OTi+Pftu4HjZo9LFHx
-	 08hQApnkPnICJVWVi3YomCpG82k2DNAe0EB5gdU4jXczO9tz4OR+TpBLL22lODSutZfFN
-	 mg610UGqyTaQGvYhHMYUQ57qYlL0lasrlOqdsYfwW2CHY97joXRoi4gvefpYfzQDaHg==
+	t=1795035838;
+	b=amyGEjjsLQtQFBUFnAXhI68zfpb8MNoKyDRjz2tQKraMusmUIQHpiUBVQosGjBdpmyLK
+	 4NdUfaTD4CDmqbQe6mtfSyIE+CEplIb8ZyeEMRlelGKZa0QkWgOqmxt/ogumihyifLXxb
+	 a178PKVZHEXN1FoFGICRv2kXiprYLroUgOIfj1DKp5hnhhrXmJrfNlm3BccLMH1SN90RP
+	 bYQorLzGIM6ZjsUHYiY80QTIyEOc7LetEtFh8LQdLAhIQ7jVNWumXkfJ1vpRqcpC0dSKK
+	 W/AUHF0R5c6jAohuq6Au0j+P2gcueVtRD+Nq9M/PonnBnqwLRtbVCTBuqjKaB4J10pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035838;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TXzfBhtAyydVXOY8+Aq+8QCuascxHlAK8kY/hF36Qf0=;
-	b=5kUJZa2KTWleTm8iEUirrVyY1ZODG/wSrb08Ln6pYFtMtTJ+29lI9tlp2yV/4U5xSQAT
-	 5v9wPzq4amm1TwUD4OGDoRP4RUzGTE1IjhY/fxFoaPUAco40tiU/ocos2cpjHktcMR21M
-	 4jZqQrHk3WoYVuTj1TXkSexRAsD4ASyftm5QE5/+cc5VvOHSApXOjzDH1DWdMwLmigI3K
-	 TpZduYdPue98KB/Q8yywxDCcD+CC5K7YfzG4CCNPZL2wsW8Lyok5Cu/hWfktTCJNVWS5b
-	 hHKE5qC+0rwN59x1UMfaIiPzOPyXSODWQsWmB4xT8iLS8DnEVfAnr7Mh8VkiAfNnX4Q==
+	bh=UOllwuBHF40crjdxp4EVMYiM2DGurPyrvpDqJutswaw=;
+	b=2Ab/JBaJjb+GVxhyI/W9MEUNjGRJIGCEwkes3VTWsD4y/KrIAvguK8KLNfow7j9NUqm4
+	 21JFz0ap85gA5Aqbp5+swJFscRrxWE+q/mHRuj+mQs5pCuLk6WBbo9MVNzMHNlh35PxP7
+	 Q6Jqc0d4LEl9BMiq/vkj2c5IunILMGvb21hpuvABS1dVmfajTUuGTIiYaa8fCPedw+Sn8
+	 EZFkHGbtTf1SaR//vvdpZb1YxMk8ReteubbV7NaxG0HgBkfveptWU+Sme/fT3SiuXWjE9
+	 V/dVBM8Rp0ONSpz/RJMaPqaTYFRk2D3891Hed5wGkx2oWmoP1PLKMBp3f6x1cSzwpvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYo0dYlm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydCQbjXn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B41A606A31C;
-	Wed, 18 Nov 2026 21:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB2460A5BCC;
+	Wed, 18 Nov 2026 21:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aYo0dYlm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CDF1F01573;
-	Wed, 18 Nov 2026 21:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydCQbjXn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5231D1F0092B;
+	Wed, 18 Nov 2026 21:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035835;
-	bh=TXzfBhtAyydVXOY8+Aq+8QCuascxHlAK8kY/hF36Qf0=;
+	s=korg; t=1795035837;
+	bh=UOllwuBHF40crjdxp4EVMYiM2DGurPyrvpDqJutswaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aYo0dYlm4aF7eYYtruoFxy8LItpcNu/kgvsaA9eTrFFe4Mvx3ciQPVeZdxZ/Hh4yD
-	 5nY4wle9eOv2vx23lNCuuJZrKXDCh6RTkUu4x0voEgZxjkYAfcoeYL1JlP82GzNHJO
-	 SGjDLmHTZrwsIkJiT+wekGaSOtoM12vWb6fm3vqM=
+	b=ydCQbjXnd0rUQB6N0TcFDj7Nqb6IL1DaX9PuugGr+W00znTZGqYortwGFpIifpTCY
+	 WbJ2o579cPHZ8TvlpKaT1j2wi415UJ3quOvvA6H6J6qSnV1zLeHZpeJ8IP0M2BfC9Q
+	 3F2/Us/Wnj0nEdlVoDOkIlqWkSlBzwRYr1D59ARE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eugen Hristev <ehristev@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0845/3318] media: microchip-isc: synchronize the IRQ before disabling clocks on stop
-Date: Wed, 18 Nov 2026 15:24:27 +0100
-Message-ID: <20261118150344.535346095@linuxfoundation.org>
+Subject: [PATCH 6.6 0846/3318] media: microchip-isc: disable histogram and flush AWB work on teardown
+Date: Wed, 18 Nov 2026 15:24:28 +0100
+Message-ID: <20261118150344.569542836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,82 +71,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 19fa5407da5ef3e605cacfcd90f70d8b2c121cd7 ]
+[ Upstream commit 00d87c379915a3689b2488bd37f490875d79e20f ]
 
-isc_stop_streaming() masks the DMA interrupt and then drops the runtime
-PM reference, which disables the ISC clocks. microchip_isc_interrupt()
-may still be executing on another CPU at that point; it reads ISC_INTSR
-over regmap, and touching the unclocked registers triggers an external
-abort.
+isc_stop_streaming() and the isc_start_streaming() error path dropped the
+runtime PM reference with the histogram still enabled. A HISDONE firing
+just before the stop, or a failed isc_update_profile() on the start path,
+can queue isc_awb_work(), which reads the histogram registers before
+taking its own PM reference and faults on the unclocked device.
 
-Store the IRQ number at probe and call synchronize_irq() after masking
-the interrupt, before dropping the PM reference.
+Disable the histogram, synchronize the IRQ and flush the work before the
+device is left unclocked. isc_configure() is the one enabling the
+histogram and then calling isc_update_profile(), so do the cleanup in its
+own failure path; isc_stop_streaming() does the same on teardown.
+synchronize_irq() must come before cancel_work_sync(), so an in-flight
+handler cannot re-queue awb_work after it is cancelled.
 
-Fixes: 106267444f12 ("[media] atmel-isc: add the Image Sensor Controller code")
+Fixes: 93d4a26c3dab ("[media] atmel-isc: add the isc pipeline function")
 Cc: stable@vger.kernel.org
 Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 Reviewed-by: Eugen Hristev <ehristev@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/microchip/microchip-isc-base.c    | 3 +++
- drivers/media/platform/microchip/microchip-isc.h         | 1 +
- drivers/media/platform/microchip/microchip-sama5d2-isc.c | 2 ++
- drivers/media/platform/microchip/microchip-sama7g5-isc.c | 2 ++
- 4 files changed, 8 insertions(+)
+ .../media/platform/microchip/microchip-isc-base.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index df3b36e9f7f25..608985499826e 100644
+index 608985499826e..ad21ae52cac90 100644
 --- a/drivers/media/platform/microchip/microchip-isc-base.c
 +++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -425,6 +425,9 @@ static void isc_stop_streaming(struct vb2_queue *vq)
+@@ -289,6 +289,7 @@ static int isc_configure(struct isc_device *isc)
+ 	struct regmap *regmap = isc->regmap;
+ 	u32 pfe_cfg0, dcfg, mask, pipeline;
+ 	struct isc_subdev_entity *subdev = isc->current_subdev;
++	int ret;
+ 
+ 	pfe_cfg0 = isc->config.sd_format->pfe_cfg0_bps;
+ 	pipeline = isc->config.bits_pipeline;
+@@ -321,7 +322,15 @@ static int isc_configure(struct isc_device *isc)
+ 		isc_set_histogram(isc, false);
+ 
+ 	/* Update profile */
+-	return isc_update_profile(isc);
++	ret = isc_update_profile(isc);
++	if (ret) {
++		/* flush the histogram work before the clocks are gated */
++		isc_set_histogram(isc, false);
++		synchronize_irq(isc->irq);
++		cancel_work_sync(&isc->awb_work);
++	}
++
++	return ret;
+ }
+ 
+ static int isc_prepare_streaming(struct vb2_queue *vq)
+@@ -425,9 +434,13 @@ static void isc_stop_streaming(struct vb2_queue *vq)
  	/* Disable DMA interrupt */
  	regmap_write(isc->regmap, ISC_INTDIS, ISC_INT_DDONE);
  
-+	/* let a running IRQ handler finish before the clock is disabled */
-+	synchronize_irq(isc->irq);
++	isc_set_histogram(isc, false);
++
+ 	/* let a running IRQ handler finish before the clock is disabled */
+ 	synchronize_irq(isc->irq);
+ 
++	cancel_work_sync(&isc->awb_work);
 +
  	pm_runtime_put_sync(isc->dev);
  
  	/* Disable stream on the sub device */
-diff --git a/drivers/media/platform/microchip/microchip-isc.h b/drivers/media/platform/microchip/microchip-isc.h
-index ad4e98a1dd8fc..f5e322c2e36bc 100644
---- a/drivers/media/platform/microchip/microchip-isc.h
-+++ b/drivers/media/platform/microchip/microchip-isc.h
-@@ -287,6 +287,7 @@ struct isc_device {
- 	u32			dcfg;
- 
- 	struct device		*dev;
-+	int			irq;
- 	struct v4l2_device	v4l2_dev;
- 	struct video_device	video_dev;
- 
-diff --git a/drivers/media/platform/microchip/microchip-sama5d2-isc.c b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-index 7cedfd29ac130..583d3c4dca54f 100644
---- a/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama5d2-isc.c
-@@ -448,6 +448,8 @@ static int microchip_isc_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
- 
-+	isc->irq = irq;
-+
- 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
- 			       "microchip-sama5d2-isc", isc);
- 	if (ret < 0) {
-diff --git a/drivers/media/platform/microchip/microchip-sama7g5-isc.c b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-index 36f52ea38d55b..d2e1899869c43 100644
---- a/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-+++ b/drivers/media/platform/microchip/microchip-sama7g5-isc.c
-@@ -437,6 +437,8 @@ static int microchip_xisc_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		return irq;
- 
-+	isc->irq = irq;
-+
- 	ret = devm_request_irq(dev, irq, microchip_isc_interrupt, 0,
- 			       "microchip-sama7g5-xisc", isc);
- 	if (ret < 0) {
 -- 
 2.53.0
 
