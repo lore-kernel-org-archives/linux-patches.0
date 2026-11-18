@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017044;
-	b=38z8uqOvD7QU0gfomjWLUajQXE6vnxoUruBLkbAw/0xMHoW9bDgftVRkyoWxDOaKwtIB
-	 ne1zSSrg0DnTsBrimZV+oQJBo/EYqs87Qm13h1g8XLthKUlCdFyws3Vi5Th/qjtg/ayre
-	 30ronSApY8B3rOIdKP6gcaF1MjVZhF+4UrSbecwy/1JIK8jVrJFgO/07M/3em51RjqH+d
-	 JEsQL300HxLCV++yrVa1z0ODF0t08LUifBg+qx1ALhZ1ofP4YvUjFqzVgy0EBz061erJQ
-	 nAsF60EH6JhKXex7yDA+NmeKvHZEqWBSnWVBp0t372irEmdmTwkqDkLI4nPEpyP4cSg==
+	t=1795017047;
+	b=3kkeQ3tnj2xMaCTD0tQGJcJILHRxiSGthBLJyeCvaMNoyFMfPu0Av/2ITI4+5UyR5JR3
+	 NxNUMt4yKGeULcTg/5Lxqnz8H45kRV5W14HK6sKVUPFjfGV7TsH42pAw6B+qkvKCzAtlP
+	 t90yFx2AKBH/pNLBFIefOlmcBA/wpKnG7Fma0TDc9TWyHlRoZbISL6AE38Ipuqc9DgY6A
+	 DZf+VmBsWBbjEh+pcQG8kRmX0jh8LFS2vqxkIeVwCmeDj0kqyIIT8JwWXXx9HFTqbtmVF
+	 vENTgxRkBOCxUflG+3Qj2LISIBAu7hTq3IrHzDqJX8bLOR/lcmm5JvSW15b0YYrcl2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017047;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=82OmfySOyER1/Lq4tzHkJJqU0GsNtP+Lr00j7eshHjA=;
-	b=GUxG3LMf/qdCd+myzvT59XSgdRr1I0RY/xIP/Fw0t2fELdkNz5S/y0kJZaGH4a621+/S
-	 pkXxeWEbqvhJiZ6pBuSIL906KU40izM2+Lf004kVrF9WzGx4ZxOxXRdQ0MxxsjjMZoa+9
-	 hsJE8pcXaPKKVdSuU1zY6fqDUcbtJnZ6ICGp4pAYARpdj261Tpn0x2bVTfFNM1w0qXCFp
-	 bVL2JThQxhzArRsJqYHSpx2kHZ3uJuuhBcReg5f0YS9JP+kT4ywQLm3pT6Q7/4JeqEn2K
-	 /w1DCp6Zuk/BS6EXL7ydcJ9n9cwN35jAxTzdJ+dhEOA751tvVmqx8VrLopwhotCDxAA==
+	bh=QqlNpByvNtxQo7DlucRBqTzOaaLbV2Esluqa5asTNJE=;
+	b=1rnsfhin0FiYX9MDTkzNYiMUqOtpxOlRsHxpFlmDMCmqIHllVUcYkJcmuiMHzo3hgGjn
+	 HucrbechoN+Gdd2+Ya27u7DfiOeaRJ32lwWs85xJbtfzuYt7JDniSLKJwdF6JrxKqCppf
+	 xnajASWr9JFMhvUR8K0sokdw/4tKzV83fsxXQzMOkpR1jFQvsZf83WHkVgFkGHZQDjW5C
+	 Y3Y1u1y+K6MIoQfwBdp2rBUaGQRpFn+hqXfbxDNu2hbDHYOjFpLu5zC5lImhDePvD4MQ5
+	 DkkJwZjlvTAQfE7FJtEGWzCHfBMSNvlW1DrPqGzQy0EPrWPGeXCNUqwP1EteXL8Afgg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pczesbbv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTlUm7S0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62953606A32F;
-	Wed, 18 Nov 2026 15:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2FC606A320;
+	Wed, 18 Nov 2026 15:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pczesbbv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A6A1F000C6;
-	Wed, 18 Nov 2026 15:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HTlUm7S0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8844F1F000C4;
+	Wed, 18 Nov 2026 15:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017044;
-	bh=82OmfySOyER1/Lq4tzHkJJqU0GsNtP+Lr00j7eshHjA=;
+	s=korg; t=1795017047;
+	bh=QqlNpByvNtxQo7DlucRBqTzOaaLbV2Esluqa5asTNJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pczesbbvpiCmPR38z4Au7sLZG0UtoPMIgoHp0+YL7YR0y3jR/NOeMx23D0lnOG7Zd
-	 kcKdHcsc6ddyM6nUWTyfGtzz22gT5yRr+yyijvVYxuWh+3B7fQ8YHyce7RiCwlzVYg
-	 prk6Ri9liJDYNiRZxboXLPoNt99uJ1ObN2TnRZzk=
+	b=HTlUm7S04KtoynTagghlwiVwWj3f8uz9+3fPdOZkULETPaXWXP6WBsH0bNBdSaIsR
+	 H5rigZRgU6hceEUmx2oaekxdJRyr8nHdhXJeVyRuItNDcchdRS5yDgFz5IeV1Nqie8
+	 zn+N1TSYsqLr5frhH5958S2cn5sHH0+0jpWEcZ+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
+	George Zhang <george.zhang@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0745/2651] ARM: dts: ux500: Convert HREF audio to audio-graph-card2
-Date: Wed, 18 Nov 2026 15:33:05 +0100
-Message-ID: <20261118150314.702554531@linuxfoundation.org>
+Subject: [PATCH 7.3 0746/2651] drm/amd/display: Force FreeSync range minimum on quirky panels
+Date: Wed, 18 Nov 2026 15:33:06 +0100
+Message-ID: <20261118150314.737886026@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,366 +71,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Fangzhi Zuo <jerry.zuo@amd.com>
 
-[ Upstream commit f9b2262d1edba1b6c0abc12118105f8fa200980a ]
+[ Upstream commit 7ea37c0f067875911f3954133fb5ace0bc518ba3 ]
 
-Describe the HREF500 and HREF520 sound hardware with two-link audio
-graph cards in their PMIC-specific HREF DTSIs, and name the card
-HREF-500. Connect MSP1 to codec DAI 0 for playback and MSP3 to codec
-DAI 1 for capture.
+[why]
+Some panels advertise a FreeSync range minimum that does not operate
+reliably at the low end:
+- X34GS (EDID panel id ACR 0x08AF) reports a minimum that
+  can flicker or drop out when the refresh rate approaches the reported
+  minimum.
+- 34w-30 (EDID panel id LEN 0x66F1) reports a 48 Hz minimum over
+  DisplayPort, but the panel fails to light up at that minimum, resulting
+  in a black screen. Forcing the minimum to 60 Hz avoids the black screen
+  and lets the display light up normally.
 
-Describe the DSP_A format, codec-provided bit and frame clocks,
-16-by-16-bit TDM frame and active slots on the graph endpoints. Keep the
-clocks running continuously, matching the legacy machine driver's normal
-one- and two-channel mode.
+[how]
+- Add a force_freesync_min_hz field to struct dc_panel_patch.
+- Add apply_edid_quirks() cases keyed on the affected panel ids that set
+  force_freesync_min_hz (55 Hz for the X34GS, 60 Hz for the G34w-30).
+- In amdgpu_dm_update_freesync_caps(), when the quirk is set and the sink
+  is otherwise FreeSync capable, clamp the reported VRR range minimum
+  (min_vfreq and monitor_range.min_vfreq) to the quirked value.
+- Add a KUnit test covering the new quirk.
 
-Keep each complete card, including its endpoint graph, connector
-widgets and routes, in the existing PMIC-specific HREF DTSI. The AB8500
-variant exposes six digital microphone endpoints. AB8505 has neither
-the digital microphone interface nor its VDMIC regulator, so leave
-these endpoints out of HREF520 and remove its stale regulator and pin
-configuration nodes.
-
-Select ULPCLK as the fixed parent of the codec audio clock in the
-HREF-specific codec DTSIs. This replaces the machine driver clock
-control with declarative board policy.
-
-Fixes: 4ecae2ae9535 ("ARM: dts: ux500-href: Switch HREF520 to AB8505")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: e4dca268eea6 ("drm/amd/display: Restore FreeSync VCP code check for HDMI/PCON sinks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/ste-ab8500.dtsi      |   6 --
- arch/arm/boot/dts/st/ste-ab8505.dtsi      |   6 --
- arch/arm/boot/dts/st/ste-dbx5x0.dtsi      |   5 -
- arch/arm/boot/dts/st/ste-href-ab8500.dtsi | 104 +++++++++++++++++++
- arch/arm/boot/dts/st/ste-href-ab8505.dtsi | 118 +++++++++++++++++-----
- 5 files changed, 196 insertions(+), 43 deletions(-)
+ .../display/amdgpu_dm/amdgpu_dm_connector.c    | 12 ++++++++++++
+ .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c  | 18 ++++++++++++++++++
+ .../amdgpu_dm/tests/amdgpu_dm_helpers_test.c   | 17 +++++++++++++++++
+ drivers/gpu/drm/amd/display/dc/dc_types.h      |  1 +
+ 4 files changed, 48 insertions(+)
 
-diff --git a/arch/arm/boot/dts/st/ste-ab8500.dtsi b/arch/arm/boot/dts/st/ste-ab8500.dtsi
-index dd30d08ccb9b9..a55f365ea0200 100644
---- a/arch/arm/boot/dts/st/ste-ab8500.dtsi
-+++ b/arch/arm/boot/dts/st/ste-ab8500.dtsi
-@@ -364,12 +364,6 @@ ab8500_ldo_ana_reg: ab8500_ldo_ana {
- 			};
- 		};
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+index 45a69bf43971f..c1f1809b7935a 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_connector.c
+@@ -3963,6 +3963,18 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+ 		}
+ 	}
  
--		sound {
--			stericsson,audio-codec = <&codec>;
--			clocks = <&prcmu_clk PRCMU_SYSCLK>, <&ab8500_clock AB8500_SYSCLK_ULP>, <&ab8500_clock AB8500_SYSCLK_INT>;
--			clock-names = "sysclk", "ulpclk", "intclk";
--		};
--
- 		mcde@a0350000 {
- 			vana-supply = <&ab8500_ldo_ana_reg>;
- 
-diff --git a/arch/arm/boot/dts/st/ste-ab8505.dtsi b/arch/arm/boot/dts/st/ste-ab8505.dtsi
-index 131c82508e820..24b12f0cf322f 100644
---- a/arch/arm/boot/dts/st/ste-ab8505.dtsi
-+++ b/arch/arm/boot/dts/st/ste-ab8505.dtsi
-@@ -301,12 +301,6 @@ ab8500_ldo_ana_reg: ab8500_ldo_ana {
- 			};
- 		};
- 
--		sound {
--			stericsson,audio-codec = <&codec>;
--			clocks = <&prcmu_clk PRCMU_SYSCLK>, <&ab8500_clock AB8500_SYSCLK_ULP>, <&ab8500_clock AB8500_SYSCLK_INT>;
--			clock-names = "sysclk", "ulpclk", "intclk";
--		};
--
- 		mcde@a0350000 {
- 			vana-supply = <&ab8500_ldo_ana_reg>;
- 
-diff --git a/arch/arm/boot/dts/st/ste-dbx5x0.dtsi b/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
-index 25a20fafc6b96..32ef115a243c9 100644
---- a/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
-+++ b/arch/arm/boot/dts/st/ste-dbx5x0.dtsi
-@@ -1071,11 +1071,6 @@ mmc@80008000 {
- 			status = "disabled";
- 		};
- 
--		sound {
--			compatible = "stericsson,snd-soc-mop500";
--			stericsson,cpu-dai = <&msp1 &msp3>;
--		};
--
- 		msp0: msp@80123000 {
- 			compatible = "stericsson,ux500-msp-i2s";
- 			reg = <0x80123000 0x1000>;
-diff --git a/arch/arm/boot/dts/st/ste-href-ab8500.dtsi b/arch/arm/boot/dts/st/ste-href-ab8500.dtsi
-index 5eeb44c5e9323..ff72f5f6d6525 100644
---- a/arch/arm/boot/dts/st/ste-href-ab8500.dtsi
-+++ b/arch/arm/boot/dts/st/ste-href-ab8500.dtsi
-@@ -6,6 +6,48 @@
- #include "ste-ab8500.dtsi"
- 
- / {
-+	href_sound: sound {
-+		compatible = "audio-graph-card2";
-+		label = "HREF-500";
-+		widgets =
-+			"Headphone", "Headset",
-+			"Speaker", "Earpiece Speaker",
-+			"Speaker", "Loudspeaker",
-+			"Line", "Line Out",
-+			"Speaker", "Vibra 1 Motor",
-+			"Speaker", "Vibra 2 Motor",
-+			"Microphone", "Mic 1 Jack",
-+			"Microphone", "Mic 2 Jack",
-+			"Line", "Line In",
-+			"Microphone", "Digital Mic 1",
-+			"Microphone", "Digital Mic 2",
-+			"Microphone", "Digital Mic 3",
-+			"Microphone", "Digital Mic 4",
-+			"Microphone", "Digital Mic 5",
-+			"Microphone", "Digital Mic 6";
-+		routing =
-+			"Headset", "Headset Left",
-+			"Headset", "Headset Right",
-+			"Earpiece Speaker", "Earpiece",
-+			"Loudspeaker", "Speaker Left",
-+			"Loudspeaker", "Speaker Right",
-+			"Line Out", "LineOut Left",
-+			"Line Out", "LineOut Right",
-+			"Vibra 1 Motor", "Vibra 1",
-+			"Vibra 2 Motor", "Vibra 2",
-+			"Mic 1", "Mic 1 Jack",
-+			"Mic 2", "Mic 2 Jack",
-+			"LineIn Left", "Line In",
-+			"LineIn Right", "Line In",
-+			"DMic 1", "Digital Mic 1",
-+			"DMic 2", "Digital Mic 2",
-+			"DMic 3", "Digital Mic 3",
-+			"DMic 4", "Digital Mic 4",
-+			"DMic 5", "Digital Mic 5",
-+			"DMic 6", "Digital Mic 6";
-+		links = <&href_msp1_port &href_msp3_port>;
-+	};
++	/*
++	 * Apply per-monitor FreeSync range quirks. Some panels report a
++	 * VRR minimum that does not operate reliably; force it when the
++	 * monitor is quirked (see apply_edid_quirks()).
++	 */
++	if (sink->edid_caps.panel_patch.force_freesync_min_hz && freesync_capable) {
++		amdgpu_dm_connector->min_vfreq =
++			sink->edid_caps.panel_patch.force_freesync_min_hz;
++		connector->display_info.monitor_range.min_vfreq =
++			amdgpu_dm_connector->min_vfreq;
++	}
 +
- 	soc {
- 		prcmu@80157000 {
- 			ab8500 {
-@@ -488,3 +530,65 @@ ab8500_chargalg {
- 		};
- 	};
+ 	/* Handle MCCS */
+ 	if (do_mccs) {
+ 		dm_helpers_read_mccs_caps(adev->dm.dc->ctx, amdgpu_dm_connector->dc_link, sink);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index 673b3cede7ddf..e1cc617eeda59 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -147,6 +147,24 @@ STATIC_IFN_KUNIT void apply_edid_quirks(struct dc_link *link, struct edid *edid,
+ 		drm_dbg_driver(dev, "Hiding secondary tile on panel id %X\n", panel_id);
+ 		edid_caps->panel_patch.disable_second_tile = true;
+ 		break;
++	/*
++	 * Workaround for the Acer Predator X34GS which reports a FreeSync
++	 * minimum refresh rate that does not operate reliably. Force the
++	 * FreeSync range minimum to 55 Hz.
++	 */
++	case drm_edid_encode_panel_id('A', 'C', 'R', 0x08AF):
++		drm_dbg_driver(dev, "Force FreeSync min to 55 Hz on panel id %X\n", panel_id);
++		edid_caps->panel_patch.force_freesync_min_hz = 55;
++		break;
++	/*
++	 * Workaround for the Lenovo G34w-30 which reports a FreeSync
++	 * minimum refresh rate (48 Hz) that fails to light up over DP.
++	 * Force the FreeSync range minimum to 60 Hz.
++	 */
++	case drm_edid_encode_panel_id('L', 'E', 'N', 0x66F1):
++		drm_dbg_driver(dev, "Force FreeSync min to 60 Hz on panel id %X\n", panel_id);
++		edid_caps->panel_patch.force_freesync_min_hz = 60;
++		break;
+ 	default:
+ 		return;
+ 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/tests/amdgpu_dm_helpers_test.c b/drivers/gpu/drm/amd/display/amdgpu_dm/tests/amdgpu_dm_helpers_test.c
+index 639512bea2754..d03a5a61b0cd5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/tests/amdgpu_dm_helpers_test.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/tests/amdgpu_dm_helpers_test.c
+@@ -186,6 +186,22 @@ static void dm_test_apply_edid_quirks_skip_phy_ssc(struct kunit *test)
+ 	KUNIT_EXPECT_TRUE(test, link->wa_flags.skip_phy_ssc_reduction);
+ }
+ 
++/**
++ * dm_test_apply_edid_quirks_force_freesync_min - Test ACR 0x08AF FreeSync min quirk
++ * @test: The KUnit test context
++ */
++static void dm_test_apply_edid_quirks_force_freesync_min(struct kunit *test)
++{
++	struct dc_edid_caps edid_caps = {0};
++	struct dc_link *link = dm_test_quirk_link(test);
++	struct edid *edid = dm_test_edid_with_panel_id(test,
++			drm_edid_encode_panel_id('A', 'C', 'R', 0x08AF));
++
++	apply_edid_quirks(link, edid, &edid_caps);
++
++	KUNIT_EXPECT_EQ(test, edid_caps.panel_patch.force_freesync_min_hz, 55U);
++}
++
+ /**
+  * dm_test_apply_edid_quirks_unknown_noop - Test unknown panel id is a no-op
+  * @test: The KUnit test context
+@@ -3730,6 +3746,7 @@ static struct kunit_case amdgpu_dm_helpers_test_cases[] = {
+ 	KUNIT_CASE(dm_test_apply_edid_quirks_remove_sink_ext_caps),
+ 	KUNIT_CASE(dm_test_apply_edid_quirks_disable_colorimetry),
+ 	KUNIT_CASE(dm_test_apply_edid_quirks_skip_phy_ssc),
++	KUNIT_CASE(dm_test_apply_edid_quirks_force_freesync_min),
+ 	KUNIT_CASE(dm_test_apply_edid_quirks_unknown_noop),
+ 	/* dm_helpers_parse_edid_caps */
+ 	KUNIT_CASE(dm_test_parse_edid_caps_null_edid),
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
+index 7da673111ed91..64b4adee36c4b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
+@@ -194,6 +194,7 @@ struct dc_panel_patch {
+ 	bool oled_optimize_display_on;
+ 	unsigned int force_mst_blocked_discovery;
+ 	unsigned int wait_after_dpcd_poweroff_ms;
++	unsigned int force_freesync_min_hz;
  };
-+
-+&codec {
-+	assigned-clocks = <&ab8500_clock AB8500_SYSCLK_INT>;
-+	assigned-clock-parents = <&ab8500_clock AB8500_SYSCLK_ULP>;
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		port@0 {
-+			reg = <0>;
-+
-+			href_codec_playback: endpoint {
-+				remote-endpoint = <&href_msp1_endpoint>;
-+				bitclock-master;
-+				frame-master;
-+				dai-tdm-slot-num = <16>;
-+				dai-tdm-slot-width = <16>;
-+				dai-tdm-slot-tx-mask = <0 1 0 1>;
-+			};
-+		};
-+
-+		port@1 {
-+			reg = <1>;
-+
-+			href_codec_capture: endpoint {
-+				remote-endpoint = <&href_msp3_endpoint>;
-+				bitclock-master;
-+				frame-master;
-+				dai-tdm-slot-num = <16>;
-+				dai-tdm-slot-width = <16>;
-+				dai-tdm-slot-rx-mask = <1>;
-+			};
-+		};
-+	};
-+};
-+
-+&msp1 {
-+	href_msp1_port: port {
-+		href_msp1_endpoint: endpoint {
-+			continuous-clock;
-+			remote-endpoint = <&href_codec_playback>;
-+			dai-format = "dsp_a";
-+			dai-tdm-slot-num = <16>;
-+			dai-tdm-slot-width = <16>;
-+			dai-tdm-slot-tx-mask = <0 1 0 1>;
-+		};
-+	};
-+};
-+
-+&msp3 {
-+	href_msp3_port: port {
-+		href_msp3_endpoint: endpoint {
-+			continuous-clock;
-+			remote-endpoint = <&href_codec_capture>;
-+			dai-format = "dsp_a";
-+			dai-tdm-slot-num = <16>;
-+			dai-tdm-slot-width = <16>;
-+			dai-tdm-slot-rx-mask = <1>;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/st/ste-href-ab8505.dtsi b/arch/arm/boot/dts/st/ste-href-ab8505.dtsi
-index 268db68ccf87b..eba6f674c6911 100644
---- a/arch/arm/boot/dts/st/ste-href-ab8505.dtsi
-+++ b/arch/arm/boot/dts/st/ste-href-ab8505.dtsi
-@@ -6,6 +6,36 @@
- #include "ste-ab8505.dtsi"
  
- / {
-+	href_sound: sound {
-+		compatible = "audio-graph-card2";
-+		label = "HREF-500";
-+		widgets =
-+			"Headphone", "Headset",
-+			"Speaker", "Earpiece Speaker",
-+			"Speaker", "Loudspeaker",
-+			"Line", "Line Out",
-+			"Speaker", "Vibra 1 Motor",
-+			"Speaker", "Vibra 2 Motor",
-+			"Microphone", "Mic 1 Jack",
-+			"Microphone", "Mic 2 Jack",
-+			"Line", "Line In";
-+		routing =
-+			"Headset", "Headset Left",
-+			"Headset", "Headset Right",
-+			"Earpiece Speaker", "Earpiece",
-+			"Loudspeaker", "Speaker Left",
-+			"Loudspeaker", "Speaker Right",
-+			"Line Out", "LineOut Left",
-+			"Line Out", "LineOut Right",
-+			"Vibra 1 Motor", "Vibra 1",
-+			"Vibra 2 Motor", "Vibra 2",
-+			"Mic 1", "Mic 1 Jack",
-+			"Mic 2", "Mic 2 Jack",
-+			"LineIn Left", "Line In",
-+			"LineIn Right", "Line In";
-+		links = <&href_msp1_port &href_msp3_port>;
-+	};
-+
- 	soc {
- 		prcmu@80157000 {
- 			ab8505 {
-@@ -48,10 +78,6 @@ ab8500_ldo_anamic2_reg: ab8500_ldo_anamic2 {
- 						regulator-name = "V-AMIC2";
- 					};
- 
--					ab8500_ldo_dmic_reg: ab8500_ldo_dmic {
--						regulator-name = "V-DMIC";
--					};
--
- 					ab8500_ldo_ana_reg: ab8500_ldo_ana {
- 						regulator-name = "V-CSI/DSI";
- 					};
-@@ -80,7 +106,6 @@ gpio {
- 						    <&pwm_default_mode>,
- 						    <&adi1_default_mode>,
- 						    <&usbuicc_default_mode>,
--						    <&dmic_default_mode>,
- 						    <&extcpena_default_mode>,
- 						    <&modsclsda_default_mode>;
- 
-@@ -365,27 +390,6 @@ default_cfg {
- 							};
- 						};
- 					};
--					/* This sets up the microphone pins */
--					dmic {
--						dmic_default_mode: dmic_default {
--							default_mux {
--								function = "dmic";
--								groups = "dmic12_d_1",
--									 "dmic34_d_1",
--									 "dmic56_d_1";
--							};
--							default_cfg {
--								pins = "GPIO27_J6",
--									 "GPIO28_K6",
--									 "GPIO29_G6",
--									 "GPIO30_H6",
--									 "GPIO31_F5",
--									 "GPIO32_G5";
--								input-enable;
--								bias-pull-down;
--							};
--						};
--					};
- 					extcpena {
- 						extcpena_default_mode: extcpena_default {
- 							default_mux {
-@@ -488,3 +492,65 @@ ab8500_chargalg {
- 		};
- 	};
- };
-+
-+&codec {
-+	assigned-clocks = <&ab8500_clock AB8500_SYSCLK_INT>;
-+	assigned-clock-parents = <&ab8500_clock AB8500_SYSCLK_ULP>;
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		port@0 {
-+			reg = <0>;
-+
-+			href_codec_playback: endpoint {
-+				remote-endpoint = <&href_msp1_endpoint>;
-+				bitclock-master;
-+				frame-master;
-+				dai-tdm-slot-num = <16>;
-+				dai-tdm-slot-width = <16>;
-+				dai-tdm-slot-tx-mask = <0 1 0 1>;
-+			};
-+		};
-+
-+		port@1 {
-+			reg = <1>;
-+
-+			href_codec_capture: endpoint {
-+				remote-endpoint = <&href_msp3_endpoint>;
-+				bitclock-master;
-+				frame-master;
-+				dai-tdm-slot-num = <16>;
-+				dai-tdm-slot-width = <16>;
-+				dai-tdm-slot-rx-mask = <1>;
-+			};
-+		};
-+	};
-+};
-+
-+&msp1 {
-+	href_msp1_port: port {
-+		href_msp1_endpoint: endpoint {
-+			continuous-clock;
-+			remote-endpoint = <&href_codec_playback>;
-+			dai-format = "dsp_a";
-+			dai-tdm-slot-num = <16>;
-+			dai-tdm-slot-width = <16>;
-+			dai-tdm-slot-tx-mask = <0 1 0 1>;
-+		};
-+	};
-+};
-+
-+&msp3 {
-+	href_msp3_port: port {
-+		href_msp3_endpoint: endpoint {
-+			continuous-clock;
-+			remote-endpoint = <&href_codec_capture>;
-+			dai-format = "dsp_a";
-+			dai-tdm-slot-num = <16>;
-+			dai-tdm-slot-width = <16>;
-+			dai-tdm-slot-rx-mask = <1>;
-+		};
-+	};
-+};
+ /**
 -- 
 2.53.0
 
