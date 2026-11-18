@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049863;
-	b=RRrR2F/ii6reXfOfK1FoCJt4n8Nf0mMsUbfxlDq6a79gWSkfYfFcgzv9N2PFVh49HrBW
-	 AfNL4mF0rqGzbLPmq9uME/fiDmgKC/0Zxm0SvfNFuz18XZ4YbLLhXSEo6Jaqiwo2qIcLr
-	 9mSPM1puHcGPEx89scxLA5v+EQ5kf5AwAA3jZF/0Lvzrdo8ClQ7MDTbyRV0+PFM0QBd8q
-	 cRAmZCyODycLwvjJeKWWsudfEh14ELMXbzgZWbdC0Huqo9o2o6rR9rkBTQLinpkrEgVuI
-	 F40H1zFPe3i1vbT8XPx9b0F7U1LWxmTaJ1EIYNrZ5mDoyvc8Kpxr9Swt3Xxi612VS4Q==
+	t=1795049866;
+	b=00vzAI4lMkwjfAVHlQODZvQOs4g8MOAkygGjLJAJyA99uvZ0UI7H4c0BhOj0LAon3mv5
+	 l4Kk7dwzsbshBRcygiRZeseLrSTFzR+9Luaij7wrMSLSFKp6aQH7iDSCMmv+8HF5tzjAa
+	 Uy1GjBO/lMKnlbIn909v2uRRSnk9bKm4y6q95xv5XfeLUJJs6bqnuPs8OWib3/9S52EJU
+	 0wmlewoJRf4EpLpMSWr+G1ejFgaY1lvsz/D1H0FZAcCGgTMonDiFlRFxXnPOwckLdknAt
+	 QUc3+0A4+IZAVJ7g+6DhAQH5PDTMjDxVJTc3hY4UCDspw7QRUwIkcpBVdc0qJi1OlOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049866;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gFT+KTxz/Kd95fttoqZaDmc1ZuOmx8Zwqo4UatHb/dg=;
-	b=p7LJ8jHq0gnAFr4LEno7TClaoUJqONOfk3hgikSrtV8GjuW5Cco7wXHq4JFR2a/J0NDD
-	 fer27NecT2i9kjTNUL7CEhgTGK6K3i6UwhspAQgGkc26sNySlypIogXsRwVDqHB8q2jfm
-	 9292JKOwdOs/2NQIJTZgFPY2opKVm8wTrJkAS0ZoLFinkIp095kmyW4gdqGoScD+7JO4Z
-	 Wkiu1YpLIGYX/VkUI0N9gQKNjxrC+tGs3c3iUjQ2Ph8jAIKyXDk3r83xtkTxMOsVOtJqZ
-	 A+71fy5VNbEHnboIv1Hxs6iiDPvSgJ6PKV6EB5bHWpv4TJLWFYo1CMZ5Gg1zc0JkB3Q==
+	bh=DK3Zt9OhtDvjM3WxzfAgZKTFyETws05dpci0j6ixbDw=;
+	b=454AitX5sJF0bEJPCRfq5ef0KYUX0eomqZ3Pg1XzxQ4RiHeb0PtemG2MLPl+V0eZ00Ix
+	 0VmE7kgEHHTmACILMFMZq7xJbvIacoPXkOPBymi31r1pRaMR34lMz2zgzC7xtHwjNFW5x
+	 pCnkWFGnKnEg2Qh9J9GO+Jb7MMUuGaM9t8+6uGBX0bzkVea6KLkRjjHLzOrHwGsarPr9h
+	 j9zhp6cDDsAzqa7GF+Pe/jXN9X3jiW+oevvzzIqSeuT89LnMN/39t6UdlHEcPzypdIqM/
+	 9Qs7ftIJd8OjuugtOyv5H++Ahw2ykVdMZgj52SZYsMa+yBWlzNNTOmT6XfuWFXBPPTw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlk9ViF2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=frQ4j5FN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E069606A330;
-	Thu, 19 Nov 2026 00:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02591606A325;
+	Thu, 19 Nov 2026 00:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tlk9ViF2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6331F000C4;
-	Thu, 19 Nov 2026 00:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=frQ4j5FN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5133E1F000C7;
+	Thu, 19 Nov 2026 00:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049863;
-	bh=gFT+KTxz/Kd95fttoqZaDmc1ZuOmx8Zwqo4UatHb/dg=;
+	s=korg; t=1795049865;
+	bh=DK3Zt9OhtDvjM3WxzfAgZKTFyETws05dpci0j6ixbDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tlk9ViF2SmdCqXuzIYhomjumTji3DXxmSNiU4FWLYVrQ0txUn8wcYx8eME6dP1+Pw
-	 kzRnkOWZKPFDN8bBgu2t3OIh+2A5nvKbx7Kae058DyKXIdA0A42xtjk20J70Gziw57
-	 P+ZcGqthXaWfGbLUelPH+uN2v3BSFpwYW9VOP8Q4=
+	b=frQ4j5FNbtjxag6T/ouadj4g2PCReEgEbn+UH0GJZhgykd6lRMmR869oNyXNlou7d
+	 02FNNrADjfEk921wS8mgMdqaZ54LuR7pnTjxlnT2k+9XdZmrgFQXTZiWiV0QrHvw4i
+	 Pm9zfOsQ2Qid+BnHvbm+Ulhc4CIFjmIGn4FzSF/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
+	Hilda Wu <hildawu@realtek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2504/2857] Bluetooth: btintel: Zero version data before parsing TLVs
-Date: Wed, 18 Nov 2026 15:58:58 +0100
-Message-ID: <20261118150331.714533167@linuxfoundation.org>
+Subject: [PATCH 6.1 2505/2857] Bluetooth: btrtl: Add btrealtek data struct
+Date: Wed, 18 Nov 2026 15:58:59 +0100
+Message-ID: <20261118150331.750124391@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,41 +68,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Hilda Wu <hildawu@realtek.com>
 
-[ Upstream commit cf87709d7ff83b4de5d42b61e4a9806fe374cb9d ]
+[ Upstream commit 5b355944b19011011dd3fd4187444c5ff1d76ad2 ]
 
-Firmware may omit optional TLVs, leaving their corresponding fields
-unset in the caller-supplied struct intel_version_tlv. Since the
-structure is typically stack-allocated and not cleared beforehand,
-fields for which no TLV is received retain uninitialized stack
-memory. This stale data can be logged via btintel_version_info_tlv()
-and copied back to the caller, leaking kernel stack contents.
+This patch adds a data structure for btrealtek object, and the
+definition of vendor behavior flags. It also adds macros to set/test/get
+the flags.
 
-Clear the structure in btintel_read_version_tlv() before parsing so
-that fields with no corresponding TLV are deterministically zero
-instead of containing garbage.
-
-Fixes: 57375beef71a ("Bluetooth: btintel: Add infrastructure to read controller information")
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 56e20c3d8ad3 ("Bluetooth: MSFT: Serialize handle map cleanup with event processing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btrtl.h | 21 +++++++++++++++++++++
+ drivers/bluetooth/btusb.c |  3 +++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 7501a946aed7c..3adfe01166c5e 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -645,6 +645,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
- 		return -EIO;
+diff --git a/drivers/bluetooth/btrtl.h b/drivers/bluetooth/btrtl.h
+index 1c6282241d2d2..349d72ee571b6 100644
+--- a/drivers/bluetooth/btrtl.h
++++ b/drivers/bluetooth/btrtl.h
+@@ -52,6 +52,27 @@ struct rtl_vendor_config {
+ 	struct rtl_vendor_config_entry entry[];
+ } __packed;
+ 
++enum {
++	REALTEK_ALT6_CONTINUOUS_TX_CHIP,
++
++	__REALTEK_NUM_FLAGS,
++};
++
++struct btrealtek_data {
++	DECLARE_BITMAP(flags, __REALTEK_NUM_FLAGS);
++};
++
++#define btrealtek_set_flag(hdev, nr)					\
++	do {								\
++		struct btrealtek_data *realtek = hci_get_priv((hdev));	\
++		set_bit((nr), realtek->flags);				\
++	} while (0)
++
++#define btrealtek_get_flag(hdev)					\
++	(((struct btrealtek_data *)hci_get_priv(hdev))->flags)
++
++#define btrealtek_test_flag(hdev, nr)	test_bit((nr), btrealtek_get_flag(hdev))
++
+ #if IS_ENABLED(CONFIG_BT_RTL)
+ 
+ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 5599f77dc6efd..b850b6835334b 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3982,6 +3982,9 @@ static int btusb_probe(struct usb_interface *intf,
+ 		/* Override the rx handlers */
+ 		data->recv_event = btusb_recv_event_intel;
+ 		data->recv_bulk = btusb_recv_bulk_intel;
++	} else if (id->driver_info & BTUSB_REALTEK) {
++		/* Allocate extra space for Realtek device */
++		priv_size += sizeof(struct btrealtek_data);
  	}
  
-+	memset(version, 0, sizeof(*version));
- 	err = btintel_parse_version_tlv(hdev, version, skb);
- 
- 	kfree_skb(skb);
+ 	data->recv_acl = hci_recv_frame;
 -- 
 2.53.0
 
