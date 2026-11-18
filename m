@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030031;
-	b=AW7VGmsnffWk9ltbAjiOu3hvUl5WmRg2aW+D2/b4uakF54gQriB2dlLrT89YWcTCxymE
-	 QTvNcjTxXcot7b6zyjdqHgvg9jAEkfBtjiNRN2x9E/5/7GQqwJ+ZHnK55smscBJHqOiVa
-	 AGlIS/HDK3gtPZmJVvYB1Id88Io1o7RoPvD9Ybxzk00m1/e/cYMFl7l+Kq7TCmbjslLpM
-	 hba/VflE/8+mOEK81KGltsUvyVq0V6k8y0GCgdi08kLD2CNnaopWm49+qWV/b3tmpnMg0
-	 4BScAp7JTrl0lhIzOpQDquujiclredlGRKcN/+t6+NcQI5x7b4UaMWMJoG8a8KmabyA==
+	t=1795030033;
+	b=Pvd0RUcVrc3rh6CjQStCnFac391YDf976dVuyw09B6/CAaOKCuQeJf6mkLrgZBQ4/UqL
+	 8zDUq/mh3AzwdSnZFV5xnIUSHlzuQIIKgbKhkjY3hAA9BtGg+m2+Q8BD4R0xM9mB+coAI
+	 Xxa8K2Zey3VINp0inLe0KJq9AP3FKv9dCNPz9YqR2pGvdOoCrmkHhP8JewUhScN2fybzV
+	 r934mhFn/VySkNKuBW5aRgf8PpQtEZiPKl+k+uu+LICmmAniP0WFgPU1ltqo0doIsc9Gc
+	 XuBq1aS4e2jowSme47XQ4fW/QMyqzpzPEslGaSXi/6HWdmHqOhDJjUUNb86t8JlC5xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030031;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AyBvaVVLRwnHwtGz1IM6WB5RN3MmwxsjZp4Oi9o/2rM=;
-	b=aS1OyxiINg7wXH0WuJTiBa1jAmK8CsA7SAbeWXCssh/BfWEeY0GzZjhqWAdLZgHgvub0
-	 7VcDJMhnPuG0x7pbRfpYVKNu+XoEfVdKGFHg3ltRaCyuGdi9HMQ1lJMwSiRf9ty+Bn7Jq
-	 P+CLqARyNNc3c0QGLyp29SnU5SLX/T7GR9oH3S3vj/aDukOlzT+gY3rmNydWmF4+ITv+V
-	 tjsBYf/XJdmieLPTL0Ejiqm4RzGwQH6NnuZMvb80G/ppcBNOsPHxHNqRiwLVZQoLG3smS
-	 7VhcsIJRQS9rcz8Ur9tWGV1rqTXBYKu+Qou+ed2uylx6fg5agNbUoNK4glWRBryXFkw==
+	bh=FePQA+VoJ4vqTCHAqwvDgHAGSRcSwZje40JvQh0JwU0=;
+	b=nVVp8+MWnxptxNfDacW29PWGB66Y8+MfsDzOhrVYT3kTuplurv+q6DBE1M83G/nxxGqD
+	 vmcb3am38j7LUxi4FfhFlL8OGiYSVLEQvI8aVJFLb+9zMOaaXcfUvvYbMxVvOTYqSwbdf
+	 MiLhjA1rCemNjFBT5GT7oFD+8h5mGWihQcY3GOxCsf06QM9DxbvsaQL82sEo1oOAEOjuO
+	 T6kZFdhpADG5KzvjrI/kORQbH3mGDNITmnF0SXjavfq6FyCi0KhhoR24UIYiVwyElYRUq
+	 Sf0hxAYBuCdmdwjwnJmA7jZqTglm4X1jfPnzvRpOIKd45P7BOvwCZsuUhk9Z8ZbWLRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQWIKSxG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="T6/iwS5I";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9C2606A31C;
-	Wed, 18 Nov 2026 19:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF53606A31C;
+	Wed, 18 Nov 2026 19:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eQWIKSxG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7BE1F000C4;
-	Wed, 18 Nov 2026 19:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6/iwS5I
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F761F000C4;
+	Wed, 18 Nov 2026 19:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030031;
-	bh=AyBvaVVLRwnHwtGz1IM6WB5RN3MmwxsjZp4Oi9o/2rM=;
+	s=korg; t=1795030033;
+	bh=FePQA+VoJ4vqTCHAqwvDgHAGSRcSwZje40JvQh0JwU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQWIKSxGOjhATx20Rijh0lhaBLT371aG6+b5LYRmyL9fU2r4AF6swXgvrTa91NGqY
-	 v3n51PeurPAOJd2l8OxTr9/TS2hND8uNFy9ODwRfvZhm+Y9l2d3QIHzua51m186Dcg
-	 abQIFJoEQCMGT52BgIlDDOWCTWvfiawWBBksZvp0=
+	b=T6/iwS5IeLZ/lmIACsVzmwIUKos3iB0bzmsNOU4BHUIV1OJdo8LPbWH4k+JRlw8bD
+	 56RpColra0uuYd0jdDQECZI3ZUikVRgT45YEDGuUHgVRWDGVeBjGC88ifmbTm6Q2zX
+	 sR1bjJCrWyRzz95B4337PXFkZtoeDUZvbjCZxt7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0518/1756] swim: Select appropriate drive once only
-Date: Wed, 18 Nov 2026 15:44:05 +0100
-Message-ID: <20261118150029.782486337@linuxfoundation.org>
+Subject: [PATCH 6.12 0519/1756] swim: Enable the drive when probing
+Date: Wed, 18 Nov 2026 15:44:06 +0100
+Message-ID: <20261118150029.823724472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,48 +72,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit a2d22b3f25c388f9fbce7bf36a45a8900dce4aa3 ]
+[ Upstream commit 57d88c8f4ea34a4dd7c5351bd026e225c7283f3f ]
 
-Before turning off the spindle motor, call swim_drive() to select the
-appropriate drive. Remove the swim_drive() call from swim_add_floppy()
-because it was already called by swim_floppy_init().
+According to the ISM spec, the MOTON bit "causes the Enable 1 and Enable 2
+signals to be turned on to the drive." It doesn't actually turn on the
+motor. When selecting a drive, enable MOTON. Disable it upon eject or
+release. This fixes detection of the Sony FDHD drive.
 
 Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/370f73fcceb53ce4860904ce6cf4f06ade0e43d5.1788513996.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/f5bf5b596a33a801faaaaa6dc2844c30d3ee82b2.1788513996.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/block/swim.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index bd619c57ebc96..83842dc667374 100644
+index 83842dc667374..d69dfd6a824a5 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -679,8 +679,10 @@ static void floppy_release(struct gendisk *disk)
+@@ -154,8 +154,9 @@ struct iwm {
+ /*----------------------------------------------------------------------------*/
+ 
+ enum drive_location {
+-	INTERNAL_DRIVE = 0x02,
+-	EXTERNAL_DRIVE = 0x04,
++	NO_DRIVE = 0,
++	INTERNAL_DRIVE = BIT(1),
++	EXTERNAL_DRIVE = BIT(2),
+ };
+ 
+ enum media_type {
+@@ -311,9 +312,15 @@ static inline void swim_drive(struct swim __iomem *base,
+ 	if (location == INTERNAL_DRIVE) {
+ 		swim_write(base, mode0, EXTERNAL_DRIVE); /* clear drive 1 bit */
+ 		swim_write(base, mode1, INTERNAL_DRIVE); /* set drive 0 bit */
++		swim_write(base, mode1, MOTON);
+ 	} else if (location == EXTERNAL_DRIVE) {
+ 		swim_write(base, mode0, INTERNAL_DRIVE); /* clear drive 0 bit */
+ 		swim_write(base, mode1, EXTERNAL_DRIVE); /* set drive 1 bit */
++		swim_write(base, mode1, MOTON);
++	} else {
++		swim_write(base, mode0, INTERNAL_DRIVE);
++		swim_write(base, mode0, EXTERNAL_DRIVE);
++		swim_write(base, mode0, MOTON);
+ 	}
+ }
+ 
+@@ -447,6 +454,7 @@ static int floppy_eject(struct floppy_state *fs)
+ 	swim_drive(base, fs->location);
+ 	swim_motor(base, OFF);
+ 	swim_eject(base);
++	swim_drive(base, NO_DRIVE);
+ 
+ 	fs->disk_in = 0;
+ 	fs->ejected = 1;
+@@ -652,8 +660,10 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
  	else if (fs->ref_count > 0)
  		--fs->ref_count;
  
 -	if (fs->ref_count == 0)
 +	if (fs->ref_count == 0) {
-+		swim_drive(base, fs->location);
  		swim_motor(base, OFF);
++		swim_drive(base, NO_DRIVE);
 +	}
- 	mutex_unlock(&swim_mutex);
+ 	return err;
  }
  
-@@ -752,8 +754,6 @@ static int swim_add_floppy(struct swim_priv *swd, enum drive_location location)
+@@ -682,6 +692,7 @@ static void floppy_release(struct gendisk *disk)
+ 	if (fs->ref_count == 0) {
+ 		swim_drive(base, fs->location);
+ 		swim_motor(base, OFF);
++		swim_drive(base, NO_DRIVE);
+ 	}
+ 	mutex_unlock(&swim_mutex);
+ }
+@@ -804,6 +815,7 @@ static int swim_floppy_init(struct swim_priv *swd)
+ 	if (swim_readbit(base, DRIVE_PRESENT) &&
+ 	    !swim_readbit(base, ONEMEG_DRIVE))
+ 		swim_add_floppy(swd, EXTERNAL_DRIVE);
++	swim_drive(base, NO_DRIVE);
  
- 	fs->location = location;
+ 	/* register floppy drives */
  
--	swim_drive(base, location);
--
- 	swim_motor(base, OFF);
- 
- 	fs->type = HD_MEDIA;
 -- 
 2.53.0
 
