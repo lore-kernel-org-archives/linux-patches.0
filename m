@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017388;
-	b=YYBBg2n5nZSdDaBSn9foIbJADGWPc5F1E3oFtDvJ/6C2965Vuq6UfjDJnlVD9q0XA5p2
-	 XU6JENzXqwz4r4ppHTA+D+2MSN78nQiazp+i0d9NdExsVxibGw07iGZARh9tz0mAF5bsV
-	 d8ALjMvUA0tSGvBMtMIkaNuD2aCg48oIvjEiq++OSbJx9V/oi+dTUDEk7opXxZ0nG8IJL
-	 4toqfhz8Zm/5h65yA739O+3pr5y81qNdmEm3Z/ownuijQZdOUuB8aUwi+K4C5+XJLE3Hl
-	 S+HlZlu6XoxjxW7z4l86LHKxDiZ4YinwC4huypinRJyaqoXsdDO7JPrrQgxynMmEI4w==
+	t=1795017391;
+	b=wmOIBEx4kOnmtAF51VU8yNZLPnX8b0kD6tuKwWvJ058lJ9OwqNvRk0M+wyVer4MOS3Pa
+	 34btNHbiMfsy530cs4Ok0Oy43cwgeTeeL/EAhvN3SVsZrfEXDzz6/DTlkSknm9kWEf95i
+	 YoRGgMyVC3bCTRaY53tQi7Fqggbml0OsIsDctW1oF3hON4dwKL3kBDpN8XJpjwi3IlIvu
+	 XLpmkePpiwWYzEc0pGRq4bdOvCtYnirOew/VbvX2+9FbpJksO4qSTsQdnP+HP3Oxgf42V
+	 adD7TZXkFQal1J3cvcu/h8STf5aaYzCbAemPV002mzZ0nANszvgHjocluKwD6MLOQjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ky2Us8OEXjMHOlZ7rbYP1DmBla66Kicv09EG7sbdIjI=;
-	b=Kdim0EgSbn4Zq6xQRRt/jkr+OJo1t/zyqGoHaBqd5Lv9lIpFuqR+O+ja0y7JvliCvaRP
-	 /AP9UVb/9PhiMBOa6KnpqtotThLMvHCfBXhGl7dXnB+auVTdcnB+//wEeVvbWvcKbwOTs
-	 ZgZzGfy57yLEcg3RWGe8dFcJKABzKO6DLaBR8RLAw3Wj50SHYZNlJoor3bHaCYGACWBQQ
-	 MdOP3hmKDhz/IYo4RBGpMImIqv6v3gm/jup2gVlGj6icg+rvr5zixCut4Qbk+r88GKAF4
-	 7J+v4X5qlnoJEHSF+MW/HHQ4buGzUUpay9wHjXObyB//IDsj4rtUEyweJQtn0rkClkQ==
+	bh=95ukgwSKSFNfl4XPCXaCtzYSHu0Wtx8V684YhvoG56s=;
+	b=ICtcYI0Cyb+CwD9Ic5J6OwqTGrKZKsmUHRPLqB/bYpo063KG0PWEkks3SL6b8mD6P9pi
+	 ediYzG2X+vttVHWMRC7xKrMn/VFi7Dykl0op2/0OLIpdTXv2orre/YP7bzJV8nTfeK1+7
+	 8+1/NOzw6Ze3kUf/kJRpYtAn+L4Ogz4VX8yGM9Xu1KaKLgGTaDkQ/5rY5ktGXbwTwBwHn
+	 5jyyxlJrcRaquoEZhq4PQvlwXU6vcYAennk88/3oaSqGI0cibk+iqqpWribpOegu1dq9J
+	 3jY+Av4yqJEDq9lgIV0DJrq55lCC6069yYhlJkhNMOUWlDAfr+eQ5cCdZM15mWav8vQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zTevgdrC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fsl/cDiG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62A7606A330;
-	Wed, 18 Nov 2026 15:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5BD606A31C;
+	Wed, 18 Nov 2026 15:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zTevgdrC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FF21F000C7;
-	Wed, 18 Nov 2026 15:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fsl/cDiG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1534D1F000C5;
+	Wed, 18 Nov 2026 15:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017388;
-	bh=Ky2Us8OEXjMHOlZ7rbYP1DmBla66Kicv09EG7sbdIjI=;
+	s=korg; t=1795017391;
+	bh=95ukgwSKSFNfl4XPCXaCtzYSHu0Wtx8V684YhvoG56s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zTevgdrC3XzSNVKKxBkDm28wbwToc4HCgxZaoQk+bmlznp+muOjoHP8a4W8JD5oRO
-	 P3+susN0t8MdKX5N/ky4MkwTNBSpOsuftu2tLZADaCL2TpMX6BNY3fulY5qgsE96oz
-	 8lvyUEr5ny4ndO1LEvhhMbZdhDkcDEO3gYQRKNC0=
+	b=fsl/cDiGkkZ7NZKPR15KbtU/H13d0/3uAk/VyJsmeQw9k9BWWPnO8/bxiv58HainV
+	 Ls7EWoyE/EzVN3jv9yT6eIgPQMYo42WgmDfSWWsThGx0hWWRt42JCO90RQoE4k2AeA
+	 O3kubR5xWQ7UjD0cMrYEqKeC7q20W3TJPSaSrX/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yibo Tan <lhfff@tju.edu.cn>,
+	Joel Granados <joel.granados@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0865/2651] perf annotate-data: Resolve type DIEs in the debug file they came from
-Date: Wed, 18 Nov 2026 15:35:05 +0100
-Message-ID: <20261118150318.997111678@linuxfoundation.org>
+Subject: [PATCH 7.3 0828/2651] sysctl: unregister tables before freeing bitmap
+Date: Wed, 18 Nov 2026 15:34:28 +0100
+Message-ID: <20261118150317.696306048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,110 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Yibo Tan <lhfff@tju.edu.cn>
 
-[ Upstream commit 14ca0a28de37849afdda6ffd4c9047f58d8906c2 ]
+[ Upstream commit 238dfe02fb0a9f72d7fd275d74ce80f13923ef31 ]
 
-'perf report -s type' hangs burning CPU on the dwz compressed debug
-info of libz.so.1 (zlib-ng): die_collect_vars() saves the
-dwarf_dieoffset() of the type DIE, which is relative to the file it
-lives in - the dwz alt file for the types shared by more than one CU -
-and update_var_state() resolves that offset in the main debug file,
-parsing whatever is at it, here a typedef whose DW_AT_type refers to
-itself.
+The table registered for bitmap_0001 retains a pointer to
+test_data.bitmap_0001. unregister_sysctl_table() prevents new handlers
+from starting and waits for active handlers to finish.
 
-Record whether the type DIE came from the alt file and resolve the
-offset with die_get_type_die() in that file, with no fallback.
+test_sysctl_exit() currently frees the bitmap before unregistering the
+table. A concurrent read during module removal can therefore enter
+proc_do_large_bitmap() while the bitmap is freed. KASAN reports a
+slab-use-after-free in _find_next_bit().
 
-Fixes: 06b2ce75386df04b ("perf annotate-data: Maintain variable type info")
-Fixes: 55ee3d005d62279d ("perf annotate-data: Add a cache for global variable types")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Unregister all tables before freeing the bitmap so the unregister rundown
+provides the required lifetime boundary.
+
+The unmodified module reproduced the use-after-free in three KASAN runs.
+With this change, three runs each completed 100 load, read and unload race
+rounds without a kernel diagnostic.
+
+Fixes: 2ea622b887e7 ("tools/testing/selftests/sysctl/sysctl.sh: add proc_do_large_bitmap() test case")
 Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Yibo Tan <lhfff@tju.edu.cn>
+Signed-off-by: Joel Granados <joel.granados@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/annotate-data.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ lib/test_sysctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
-index 4e4c587640823..d6f3d1b55f6d6 100644
---- a/tools/perf/util/annotate-data.c
-+++ b/tools/perf/util/annotate-data.c
-@@ -645,6 +645,8 @@ struct global_var_entry {
- 	u64 start;
- 	u64 end;
- 	u64 die_offset;
-+	int die_tag;
-+	bool from_alt;	/* die_offset is relative to the alt (dwz) file */
- };
+diff --git a/lib/test_sysctl.c b/lib/test_sysctl.c
+index 909cfcf76dbfc..dd795979558a2 100644
+--- a/lib/test_sysctl.c
++++ b/lib/test_sysctl.c
+@@ -321,11 +321,11 @@ module_init(test_sysctl_init);
  
- static int global_var_cmp(const void *_key, const struct rb_node *node)
-@@ -682,7 +684,7 @@ static struct global_var_entry *global_var__find(struct data_loc_info *dloc, u64
- }
- 
- static bool global_var__add(struct data_loc_info *dloc, u64 addr,
--			    const char *name, Dwarf_Die *type_die)
-+			    const char *name, Dwarf_Die *type_die, bool from_alt)
+ static void __exit test_sysctl_exit(void)
  {
- 	struct dso *dso = map__dso(dloc->ms->map);
- 	struct global_var_entry *gvar;
-@@ -704,6 +706,8 @@ static bool global_var__add(struct data_loc_info *dloc, u64 addr,
- 	gvar->start = addr;
- 	gvar->end = addr + size;
- 	gvar->die_offset = dwarf_dieoffset(type_die);
-+	gvar->die_tag = dwarf_tag(type_die);
-+	gvar->from_alt = from_alt;
- 
- 	rb_add(&gvar->node, dso__global_vars(dso), global_var_less);
- 	return true;
-@@ -778,12 +782,14 @@ static void global_var__collect(struct data_loc_info *dloc)
- 			if (pos->reg != -1)
- 				continue;
- 
--			if (!dwarf_offdie(dwarf, pos->die_off, &type_die))
-+			if (!die_get_type_die(dwarf, pos->die_off, pos->die_tag,
-+					      pos->from_alt, &type_die))
- 				continue;
- 
- 			get_global_var_info(dloc, pos->addr, &var_name, &var_offset);
- 
--			global_var__add(dloc, pos->addr, var_name, &type_die);
-+			global_var__add(dloc, pos->addr, var_name, &type_die,
-+					pos->from_alt);
- 		}
- 
- 		delete_var_types(var_types);
-@@ -808,7 +814,8 @@ bool get_global_var_type(Dwarf_Die *cu_die, struct data_loc_info *dloc,
- 
- 	gvar = global_var__find(dloc, var_addr);
- 	if (gvar) {
--		if (!dwarf_offdie(dloc->di->dbg, gvar->die_offset, type_die))
-+		if (!die_get_type_die(dloc->di->dbg, gvar->die_offset,
-+				      gvar->die_tag, gvar->from_alt, type_die))
- 			return false;
- 
- 		*var_offset = var_addr - gvar->start;
-@@ -838,7 +845,8 @@ bool get_global_var_type(Dwarf_Die *cu_die, struct data_loc_info *dloc,
- 
- ok:
- 	/* The address should point to the start of the variable */
--	global_var__add(dloc, var_addr - *var_offset, var_name, type_die);
-+	global_var__add(dloc, var_addr - *var_offset, var_name, type_die,
-+			!die_same_file(cu_die, type_die));
- 	return true;
+-	kfree(test_data.bitmap_0001);
+ 	for (int i = 0; i < TEST_H_SIZE; i++) {
+ 		if (ctl_headers[i])
+ 			unregister_sysctl_table(ctl_headers[i]);
+ 	}
++	kfree(test_data.bitmap_0001);
  }
  
-@@ -893,7 +901,8 @@ static void update_var_state(struct type_state *state, struct data_loc_info *dlo
- 				continue;
- 		}
- 		/* Get the type DIE using the offset */
--		if (!dwarf_offdie(dloc->di->dbg, var->die_off, &mem_die))
-+		if (!die_get_type_die(dloc->di->dbg, var->die_off,
-+				      var->die_tag, var->from_alt, &mem_die))
- 			continue;
- 
- 		if (var->reg == DWARF_REG_FB || var->reg == fbreg || var->reg == state->stack_reg) {
+ module_exit(test_sysctl_exit);
 -- 
 2.53.0
 
