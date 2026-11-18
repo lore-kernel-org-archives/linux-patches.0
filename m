@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030747;
-	b=cDHWEqsiJrTTe/hdjZxTkFzCVFzalBoQfJpnVg0ch8gZ6R6MeyEhMgt1OHFhFnhvok1X
-	 RbaS6dBkf4ONTrty4puUAY1EVPhFv+yE8C4kRk+/ycnt5BNozwG3bk/PfqW/5vzCAMons
-	 h5noBvbXDED50xiSHKByfDewrTvooh+Xaz8yl8Pc7w8Sbymi2v5YeaOO2lY+SutbCLAgO
-	 FQCqw8iemwOvkZqHZUDuLVgHVVtRT2FofIxBK4ncIEfF8AFsay3sGyAhWFJSAdwNg/Td/
-	 IGu9FmrleLwAKVWVZXQhZyVi4hZQnX38ia92S+u/x2dECQEoGDXfNwrqehK31jWXqdw==
+	t=1795030750;
+	b=0RiZ9w9T+YH3Nd+XivxAMv9DouwJKOVvkCmtScsNyWnBxJg9V9bZp6thH8zoZyL4ZTJK
+	 guIGC/2ztWAa7KQfeCOoGNgZuMjK37RtCYuvaIevDQfQg+rIba+6MuAwCST07Mxx9N3oT
+	 LfO+Xfi3j/Y4ZwbbdheeNxs91SZ1sntCzTPd5SnbENRS7X8bs4bu2grkXouoLMMELmZpt
+	 aOdlr+640L05SpuW6z7g23hHHtknCA6zq1t5fDKMF0q9+GG87aG3XtVPViQvpL/wHK8pB
+	 Xuj6/L/8WS6LlmpBJjiZ6i7OSHIe99DNHhcqez7WWaF+B1ifSq19+TVyfveAyBfBwhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030747;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030750;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W1bMPjf8cWKiviOsgEsjwnhkq6Xa+gzAr+NTFw6wceQ=;
-	b=ocKScJRcXObDQa2jPTwdSclnHudYebVDyFO8mCg+t7iXkWFe5IHROpmCJerjKhpKm8Op
-	 ggJcxhnsbz9l6UAVr48ccoASEcrj3U7vTwl9LdSrWD1UbKUt+snjOXUzXDlaMpirKCxJ9
-	 MvUvgECnoEjrwtouVt0wfM5BcS+0Y1J2EVgsAPLRVvc5OUwVZ7yxZy5e3LKgG830e4BxR
-	 1L6YxSu2T8yfWivnl0JivFPZofIm0wJbmnmWTGJjuaD4Y4/AS6hHXnYQ4aDW4x5wgOXy7
-	 4LSFOIJiZtCbzYXnB8/792JJtNj1+3AyktK+y0ObLxQR4XQKiBL0QjG7OaczM4kyang==
+	bh=iwC8qzofi5zHKZqbnC0WpVSCRmPyKgQ1iqJYgyIjCB8=;
+	b=cWAnDUvUCftoLhFRHcME61zsDmxI38hKV7gU2/cbIrtzBOJdttWclRVKb7kSZEyv37cE
+	 vZ5m3Kh3vvqQ6qMSmvE7oanWhWZluPggKook7GCZDMTmtjiDsU5UckmG9Npy5bstW8R6j
+	 fhn+r1MdeWGMtYAeqFRfFk/GeFBouCG7vbIWYdqGS8xpEj4weZUBVq3/wWBYCrtImIe2m
+	 B+o/wWa39JpnaXX97agnFUXSrM5Y03SLcfb7RnCntsJd31i297b7qJC9ApoYaUbXhGd2Z
+	 og72Xjhe3tKfPJ626jgIdHkkXyCRfmSx/tWN7YL2iHn/AlXJvMF9IcNvTdCjiDntDPA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqBcXJ9l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U67xADTG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3984606A33F;
-	Wed, 18 Nov 2026 19:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FDC606A918;
+	Wed, 18 Nov 2026 19:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sqBcXJ9l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A761F000C5;
-	Wed, 18 Nov 2026 19:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U67xADTG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3C01F000C6;
+	Wed, 18 Nov 2026 19:39:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030747;
-	bh=W1bMPjf8cWKiviOsgEsjwnhkq6Xa+gzAr+NTFw6wceQ=;
+	s=korg; t=1795030750;
+	bh=iwC8qzofi5zHKZqbnC0WpVSCRmPyKgQ1iqJYgyIjCB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sqBcXJ9lhAOAH7hLKrVnX1aZSunumcBEsxhsM6vNguCC0FGkXOGsfDqpOoB+UDY+Z
-	 AsbjNSkY0PJ0BSRwdNNCL4QZoc5yBKIqXbamipmngoVEYLFMuKiritVOhY8sYRmevr
-	 +NlQJ8G4/kK/6wEGiwBxikDXnry84wgACAJC99Nw=
+	b=U67xADTGkrQuKFOd8jgPrvAVTrsAiPpKdimOQ9GkND10ITyS/CAcTX/Ry4jRrGMOJ
+	 d/31SUXUwV06y5mX6rhQSyH+SlXxy5zKaU8a0hDc9z/yScfni2EBbiXRByIO5QdiWg
+	 LH1fGYybQH+ryamWSJ3rbARdn0rKXNqmsW5WcTmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	sashiko-bot@kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0814/1756] .gitignore: drop Module.markers
-Date: Wed, 18 Nov 2026 15:49:01 +0100
-Message-ID: <20261118150042.005324909@linuxfoundation.org>
+Subject: [PATCH 6.12 0815/1756] perf/cxl: Program the requested event group on configurable counters
+Date: Wed, 18 Nov 2026 15:49:02 +0100
+Message-ID: <20261118150042.038361200@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,38 +70,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit a7d32fa14bc74d1786a2f0513b6f0815bd4be311 ]
+[ Upstream commit b22dcc11429866e07dc54299255e8ca13c26d38a ]
 
-commit fc5377668c3d ("tracing: Remove markers") deleted the marker code
-and the modpost output. Follow-up commit 8723eaeff59a ("Kbuild: clean up
-marker") removed it from clean and mrproper targets. Both are from 2009,
-so the file is hopefully no longer in anyone's tree, drop it from
-.gitignore as well.
+cxl_pmu_get_event_idx() sets *counter_idx for a configurable counter but
+never *event_idx. hwc->event_base stays 0, so cxl_pmu_event_start()
+programs event group 0 no matter which group the user asked for.
 
-Fixes: 8723eaeff59a ("Kbuild: clean up marker")
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/8cbe913b9f80dc6fea73a9e3d51429db2b38905f.1790838401.git.jstancek@redhat.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Return the matched capability's event_idx.
+
+Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .gitignore | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/perf/cxl_pmu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index a61e4778d011c..f94178a69e328 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -67,7 +67,6 @@ modules.order
- /vmlinux-gdb.py
- /vmlinuz
- /System.map
--/Module.markers
- /modules.builtin
- /modules.builtin.modinfo
- /modules.builtin.ranges
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index ce97062a66190..968b72dba88a0 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -510,7 +510,10 @@ static const struct attribute_group *cxl_pmu_attr_groups[] = {
+ 	NULL
+ };
+ 
+-/* If counter_idx == NULL, don't try to allocate a counter. */
++/*
++ * If counter_idx == NULL, don't try to allocate a counter. Callers that
++ * allocate pass both counter_idx and event_idx.
++ */
+ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
+ 				 int *event_idx)
+ {
+@@ -538,7 +541,7 @@ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
+ 
+ 	pmu_ev = cxl_pmu_find_config_counter_ev_cap(info, vid, gid, mask);
+ 	if (!IS_ERR(pmu_ev)) {
+-		if (!counter_idx)
++		if (!counter_idx || !event_idx)
+ 			return 0;
+ 
+ 		bitmap_andnot(configurable_and_free, info->conf_counter_bm,
+@@ -549,6 +552,7 @@ static int cxl_pmu_get_event_idx(struct perf_event *event, int *counter_idx,
+ 			return -EINVAL;
+ 
+ 		*counter_idx = i;
++		*event_idx = pmu_ev->event_idx;
+ 		return 0;
+ 	}
+ 
 -- 
 2.53.0
 
