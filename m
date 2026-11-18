@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042788;
-	b=BS4X8WbmmD1iwlv9y/QpoS5W3i01SyJOcSn9/EYItTtN7L9hIi5D31W8RL+9t+BaoLL3
-	 oHwHCkrl9EQrE81H8hypFQubMbyggGWTQa78hMfxYLd99YBCdu4OGtQykE/N/PrB0uBsp
-	 WX9AaYchfBMOwn7Jy1x7Sq0/PGcTeJ8/igIz9FqsCoR9lXZOEVdJMjMBUDZ7nFfnODI0R
-	 anxctFZXZpCOOnTl2COuNifdy+k42mymnLNGY8cBDz+SZpZis9LyKf/O0pSr2rlDkaOU7
-	 do2B3eVglf79As7n0D/YOYefu+O8gUckAF2yVhy2NByNkGJ/vyoXcIRgn7uPdr+kNXg==
+	t=1795042791;
+	b=cKwJ6auWpVIYhrwF4z2GvzHX/qo4ffASvVbMLzNU+MneTUBqbMnlkGfJjuWZZ1NZ2WZ5
+	 q1Ld4eW+RA9rzN0aFo8sx25MY1wat+UmSieu15hLvQaVZ2qq+/XBoVqquTLxTV5Fghn3l
+	 WYeQtTbAuzUo9WyAnb/gtyTz0A4AWwPodcLArQJ18k9uU0Wzb4FU441UyJUIS6mxavfMj
+	 QG3LBwPSJeZrvThFLYimHnRSE9Os2ngDXU9Wl3PnINb1tjzTjH9ACqru7tRfRQC7xdfRK
+	 bPV7qVM6Ek4h5OIta1fncaaqMBOFCT0iQNwZBZzbYVBdk/0jU4mPZ6H1N/T+lT8CQHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EcBUH1ub3bd37h3BY/jjchskoBRJS3Nm5PG8L2SGyt0=;
-	b=Xwcn8dlduQsxjTr8Rry/NmuKLSYikQMxXele/VciXOxu1GyUuR6GZO9/LQyl3cTCOv3C
-	 hQp8gGkp1EEZc0+UQDZ9OE1RtQppMHN7kPYRFi+MkHB64lO2NGXdgaPa+DyqlYSJ539nZ
-	 HfeXC1v/QgjWR6sH4lxmoodZqMcMZpmi9Pzq3DuX5bEHyniRcNN3yr+7xkzZCeO4hZAbf
-	 go+nN4D4j5yMa5YycdU1nsN6dqLQVVVpnOOIFibhfus/wP/7nM8q0g16FbPjLMmXeWiFT
-	 Mjh8yzlq218XYeVB2qYRQ+uMHL7QSOxAh91GWZil/sXVHcr7UAECHZOS9DmbtdKxJHw==
+	bh=ocf+W6as2/UVQB26U/1Y3ApYIFaIC0zsXKbw5GhKnEo=;
+	b=OYuK2BBZDaXcfXkeW2pGkEF8JGu+DL9YXTpNYNxo+0VmXywnFRx4QVy/uwWieyLIf2dx
+	 jBRNyQXbE07l/PBBfkYahYA0y2yytwcvxcbhbp5nSjW5TQC7+pAeFsZ09lQwr6RUQ3DF4
+	 g8z7jVvXXZ7t+oFh9/nP7FZxr9jNS8ZdSHoPPK3x0TOUncYyRn/rAYAyiByMyT+VdXTNf
+	 iNdidf6f4LVhaiNvv+HjDAgezPhPAWGEOkCwldrsIyFYh6e3PDFVXC95+wjawwfOccnyc
+	 a6l3UOljhr5NXOZGeOsiUIJhf9rsndIJrEF1wfyD69A6f7Xm/jueVqQaA+jyFw/+07A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSD+lzyN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bRG/U3tA";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20246606A325;
-	Wed, 18 Nov 2026 22:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C8F606A320;
+	Wed, 18 Nov 2026 22:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FSD+lzyN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C9A1F000C5;
-	Wed, 18 Nov 2026 22:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bRG/U3tA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3674C1F000C4;
+	Wed, 18 Nov 2026 22:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042788;
-	bh=EcBUH1ub3bd37h3BY/jjchskoBRJS3Nm5PG8L2SGyt0=;
+	s=korg; t=1795042790;
+	bh=ocf+W6as2/UVQB26U/1Y3ApYIFaIC0zsXKbw5GhKnEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FSD+lzyNyIWFzHNhtelc2d2q2vpsJtZm3xFRBsTnpV+asqMAPDUyxxdHpZgoOh0M8
-	 hDFBfHuwsdk0xQ/iXhvA9E2gBmz20LxU9Rs1VN5oIZAtMHwTI430KlAqGfEBYQ3Agr
-	 qqvYl76GFLFEbpxG4wGRCZTR3sXG00JD1JhQOOls=
+	b=bRG/U3tAQeSiXxZIPf7ekigZL9QBKNAIbDg+MnXXgfmJqjCY3Dbly6ysLhNmzJCvW
+	 IQRt5Z8Gyees3dsSeFQHWyXjzKUX6HuvXNZMIg34ik6LoGQlbImk8eI8pp4llw49sw
+	 NXgA3tnpVStDWQD37E71BsrkCTwZkhLZDH9BztO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <almagui@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3296/3318] libbpf: fix cross-endian build with newer libbpf
-Date: Wed, 18 Nov 2026 16:05:18 +0100
-Message-ID: <20261118150458.474819109@linuxfoundation.org>
+Subject: [PATCH 6.6 3297/3318] RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables
+Date: Wed, 18 Nov 2026 16:05:19 +0100
+Message-ID: <20261118150458.503305384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,54 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-commit 087f3964f4b3 ("libbpf: Support layout section handling in BTF")
-added extra data to the BTF header.
+[ Upstream commit 00baeade709fb66da647e8327e8398bb532e30f7 ]
 
-This extra data is ignored in the native case, but when building with
-different endianness the bswap code in old libbpf would check for strict
-size equality, leading to build failures such as this when BTF data is
-generated with a newer version of libbpf (through pahole)
-    BTFIDS  vmlinux.unstripped
-  libbpf: Can't load BTF with non-native endianness due to unsupported header length 32
-  FAILED: load BTF from vmlinux.unstripped: Operation not supported
-  make[2]: *** [../scripts/Makefile.vmlinux:72: vmlinux.unstripped] Error 255
+Locked QP and CQ lookups from EQ interrupts can deadlock with
+create-path XArray updates. If an interrupt arrives while the create
+path holds the plain xa_lock, the lookup spins forever trying to
+acquire the same lock.
 
-Newer libbpf versions also properly ignore trailing data in the bswap
-case, but the patch is too intrusive to backport, so take the header
-length comparison fix from it instead.
+Use IRQ-safe XArray helpers for all QP and CQ create-path updates,
+including the GSI QP store and error paths. Initialize both arrays with
+XA_FLAGS_LOCK_IRQ so sleeping allocations preserve interrupt state.
 
-Link: https://github.com/NixOS/nixpkgs/pull/570639
-Fixes: 3289959b97ca ("libbpf: Support BTF loading and raw data output in both endianness")
-Acked-by: Alan Maguire <almagui@kernel.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+[ The GSI QP create path is not present in 6.6.y, so omit that hunk. ]
+
+Fixes: 98df2aee1459 ("RDMA/erdma: Hold CQ references when processing EQ events")
+Fixes: a52eeff32024 ("RDMA/erdma: Hold QP references for AE and CM processing")
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Link: https://patch.msgid.link/20260828030344.88021-1-chengyou@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_main.c  |  4 ++--
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 16 ++++++++--------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 2e9f28cece3ff..54ad899a1e96c 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -222,14 +222,14 @@ static int btf_parse_hdr(struct btf *btf)
- 	struct btf_header *hdr = btf->hdr;
- 	__u32 meta_left;
+diff --git a/drivers/infiniband/hw/erdma/erdma_main.c b/drivers/infiniband/hw/erdma/erdma_main.c
+index 0880c79a978c2..6dc6c7f4fb2e0 100644
+--- a/drivers/infiniband/hw/erdma/erdma_main.c
++++ b/drivers/infiniband/hw/erdma/erdma_main.c
+@@ -519,8 +519,8 @@ static int erdma_ib_device_add(struct pci_dev *pdev)
+ 	INIT_LIST_HEAD(&dev->cep_list);
  
--	if (btf->raw_size < sizeof(struct btf_header)) {
-+	if (btf->raw_size < offsetofend(struct btf_header, str_len)) {
- 		pr_debug("BTF header not found\n");
- 		return -EINVAL;
+ 	spin_lock_init(&dev->lock);
+-	xa_init_flags(&dev->qp_xa, XA_FLAGS_ALLOC1);
+-	xa_init_flags(&dev->cq_xa, XA_FLAGS_ALLOC1);
++	xa_init_flags(&dev->qp_xa, XA_FLAGS_ALLOC1 | XA_FLAGS_LOCK_IRQ);
++	xa_init_flags(&dev->cq_xa, XA_FLAGS_ALLOC1 | XA_FLAGS_LOCK_IRQ);
+ 	dev->next_alloc_cqn = 1;
+ 	dev->next_alloc_qpn = 1;
+ 
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index a9b2d0890570f..94b3d4aea1236 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -945,9 +945,9 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	kref_init(&qp->ref);
+ 	init_completion(&qp->safe_free);
+ 
+-	ret = xa_alloc_cyclic(&dev->qp_xa, &qp->ibqp.qp_num, qp,
+-			      XA_LIMIT(1, dev->attrs.max_qp - 1),
+-			      &dev->next_alloc_qpn, GFP_KERNEL);
++	ret = xa_alloc_cyclic_irq(&dev->qp_xa, &qp->ibqp.qp_num, qp,
++				  XA_LIMIT(1, dev->attrs.max_qp - 1),
++				  &dev->next_alloc_qpn, GFP_KERNEL);
+ 	if (ret < 0) {
+ 		ret = -ENOMEM;
+ 		goto err_out;
+@@ -1003,7 +1003,7 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	else
+ 		free_kernel_qp(qp);
+ err_out_xa:
+-	xa_erase(&dev->qp_xa, QP_ID(qp));
++	xa_erase_irq(&dev->qp_xa, QP_ID(qp));
+ err_out:
+ 	return ret;
+ }
+@@ -1682,9 +1682,9 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	refcount_set(&cq->refcount, 1);
+ 	init_completion(&cq->free);
+ 
+-	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
+-			      XA_LIMIT(1, dev->attrs.max_cq - 1),
+-			      &dev->next_alloc_cqn, GFP_KERNEL);
++	ret = xa_alloc_cyclic_irq(&dev->cq_xa, &cq->cqn, cq,
++				  XA_LIMIT(1, dev->attrs.max_cq - 1),
++				  &dev->next_alloc_cqn, GFP_KERNEL);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -1731,7 +1731,7 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
  	}
  
- 	if (hdr->magic == bswap_16(BTF_MAGIC)) {
- 		btf->swapped_endian = true;
--		if (bswap_32(hdr->hdr_len) != sizeof(struct btf_header)) {
-+		if (bswap_32(hdr->hdr_len) < offsetofend(struct btf_header, str_len)) {
- 			pr_warn("Can't load BTF with non-native endianness due to unsupported header length %u\n",
- 				bswap_32(hdr->hdr_len));
- 			return -ENOTSUP;
+ err_out_xa:
+-	xa_erase(&dev->cq_xa, cq->cqn);
++	xa_erase_irq(&dev->cq_xa, cq->cqn);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
