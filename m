@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026440;
-	b=j8X7lgbQaJZrkh01CAb+SM8vto5wKPBcj6S27MEB3u2QUXmWo9Vo/xYzo6lvfEGGR355
-	 U6wa/EEteCgZRy36Hlr4WFSIy8Bf/NUdWL8O+am3eSmqCjKA99htuIEUehftnMwYGI8uZ
-	 av+blLC2H37WUZie1p3WvdrFZfuQt+n+owkBDDt8apE0Px5yvmpcaQl7SqgGN71U6kC/l
-	 JyF0i1C8YEDIROCfLGyTmfiNO+Lx8Ppu1LIMOTagrSq7kaC4ZOSozJrTIHUpV+SL1sw3t
-	 CzvaDVkb8Y1TLe+YQbwkk74IZMV6kJAOGCxWuNr2vdXsXsptNHy8E1tSWN9QXlzThxA==
+	t=1795026443;
+	b=hlNZHdKEcozRIjXAEMwWoX7k4FAk8hZ7TYMh2y4WL/6FkYPcEC1KMcTFV9cetxai2E4J
+	 KDT1PappfwWFJ4wc6qFVRB5kf08CraGPSx6vcH8/jvSCBMl0ceOHycpoFCFcSnYk9tr5S
+	 IgixmeKz4UP656Oj/TiHjmpDBaqHu8R5vJrAdEseMnJLqN9LFSb2WL/CAsb6Nuvdj/V/w
+	 aerOh2OmhcBr4JPIMyrg11ZVDCoNxRGnV5HTaQxgS4jodw5NnqbHkaxXeftmmyt2dzY/s
+	 g+ao937cqE+taE2bMv0Y32z1YVek8o+yxPgVyE26YiYs8t/TVc1zA9yNZrn7oAkXU3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026440;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pGAK8ITRjRBNtg7eSirXfCZDag7cR9ryT7Z52N/DWME=;
-	b=qFaTZ10rZGgVTdZ2PKly38NMtzhDJ8mqd4Qw3gNdF7dqTaQ1bV06hUVC2Smw6ppNoqJc
-	 cv977B0xGTf7pYZL4DzMg2rGSLxgZJqrWK7v0zhAw87jJPyjkd3svc93Gz8Yby4iSiTC6
-	 ba8jK8RXJ6BuJ0QMygzY7NWLXV/ZLXgXsM/bMoakvhudS1SF7l+frDX4F/RzTky54frGP
-	 vedUnN7sBvYNhztjWm+rUhCjWPis5RItHGtrhgh6t0YfhnTLRW3/cuv/xA2jkOhzvaR58
-	 zRn4bWhPu1N/qfw33a8Et+Pak3n3voNCCnugRsEFTryLNusTbf48Y+b86wHX/Iy4NyA==
+	bh=yQnC/QjUz9xR8sVdGMq//34h3RhhsuXOhVUACUjtI+w=;
+	b=RhhB/+p+nhxYRY6Ms955bCOtIK2STGoAMyzY6fUAd/pb7buPavoOGp2WT0VlfWfdDfST
+	 Sj+Iv+UfoX9hYu7LAfd8SDX3KdF4yo+goNbTTz35NkqcnLQqVHrFDg5ACKAEtvZqwFNUk
+	 d0Gvst2KRXUW3fttxoC3x047fcJQD+UBKm8lx2yquFtmc+TjexcHuZNrOy+9wKyiW5Ken
+	 ARF/OC9v8wLS8Ivx/p2PP3Ge35XXczIRLPItaackViyWu+w+hSpxIqEH5ACCu4MtLph8z
+	 cVSiYV31nM+z2be94jIEApamLdtouiW5aKQC+QgMAm9yZJhXnLoSncK4h6rF5epXdHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DsuXtyx0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOq8aM4j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE82606A32C;
-	Wed, 18 Nov 2026 18:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BA5606A32A;
+	Wed, 18 Nov 2026 18:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DsuXtyx0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115331F000C4;
-	Wed, 18 Nov 2026 18:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOq8aM4j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC5F1F000C4;
+	Wed, 18 Nov 2026 18:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026440;
-	bh=pGAK8ITRjRBNtg7eSirXfCZDag7cR9ryT7Z52N/DWME=;
+	s=korg; t=1795026443;
+	bh=yQnC/QjUz9xR8sVdGMq//34h3RhhsuXOhVUACUjtI+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DsuXtyx0FMMlcBgyJFpgfE+SIyAXGlSKI7xUawJqg8wBJ+zpC78AEGyT5IO2Hxd7N
-	 0YBi8hLUG3U/B9+tNOWCRbAuyci3vPUmYKumYdOFsF3gMhXyjpWg98vm2HjUp5DnoG
-	 c015bi79elfhC8YQlo7hcs3YMMoKZStVnqJ5CnWk=
+	b=MOq8aM4jqL1PbvQx5mknfLKLQQN1kjls85sPKLHpnSRGOfB62bPTMeNac+fiMrURK
+	 0ZRhI4GbLQ89MP2iinOKR6z9r9Q/qIwyZAlp7ke7xhghyEOU3b0UMYJBfqHk0sFmsf
+	 +Xwjt6UvXV6jgeGepktYHTWlK2w1yc3GLXzUZnk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1437/2151] clk: qcom: rcg2: Clear force enable after rate failure
-Date: Wed, 18 Nov 2026 15:52:52 +0100
-Message-ID: <20261118150214.284620548@linuxfoundation.org>
+Subject: [PATCH 6.18 1438/2151] s390/ptrace: Preserve ILC when updating system call number
+Date: Wed, 18 Nov 2026 15:52:53 +0100
+Message-ID: <20261118150214.318767986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,47 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit d4e8c6b9aef42d06cf5755543ad10097b2217990 ]
+[ Upstream commit 946b9dcff33bd4669464674ae1c00683b875be55 ]
 
-Shared RCG rate changes assert force-enable before programming the new
-configuration. If programming fails, the function returns without
-clearing force-enable, leaving the root running while CCF can release
-temporary parent and resource references.
+When an attached debugger changes gpr2 via PTRACE_POKEUSR while the
+traced process has PIF_SYSCALL set, the int_code in pt_regs is also
+updated. In case of an svc it contains the instruction length code
+(ILC), as well as the system call number.
 
-Attempt to clear force-enable on the configuration error path before
-returning the original programming error. This restores the same cleanup
-performed after a successful configuration while preserving the primary
-failure for callers.
+The ptrace code sets the ILC unconditionally to a value which matches the
+svc instruction. However the svc instruction also may have been executed
+via the execute or execute relative long instruction, which have a
+different length. Therefore preserve the ILC and only change the system
+call number using syscall_set_nr().
 
-Fixes: 7ef6f11887bd ("clk: qcom: Configure the RCGs to a safe source as needed")
-Assisted-by: LLM
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260917-topic-qc_clk_fixes-v1-3-5531cb00514b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This makes sure that in case of a PSW rewind the instruction address
+points to the correct instruction.
+
+Fixes: 56e62a737028 ("s390: convert to generic entry")
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/kernel/ptrace.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index a7d4dfc107e53..33b9cef509781 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1362,8 +1362,10 @@ clk_rcg2_shared_force_enable_clear(struct clk_hw *hw, const struct freq_tbl *f)
- 		return ret;
+diff --git a/arch/s390/kernel/ptrace.c b/arch/s390/kernel/ptrace.c
+index 494216c4b4f3d..42fd1a42058a7 100644
+--- a/arch/s390/kernel/ptrace.c
++++ b/arch/s390/kernel/ptrace.c
+@@ -35,6 +35,7 @@
+ #include <asm/ptrace.h>
+ #include <asm/rwonce.h>
+ #include <asm/fpu.h>
++#include <asm/syscall.h>
  
- 	ret = clk_rcg2_configure(rcg, f);
--	if (ret)
-+	if (ret) {
-+		clk_rcg2_clear_force_enable(hw);
- 		return ret;
-+	}
+ #include "entry.h"
  
- 	return clk_rcg2_clear_force_enable(hw);
- }
+@@ -350,11 +351,9 @@ static int __poke_user(struct task_struct *child, addr_t addr, addr_t data)
+ 				return -EINVAL;
+ 		}
+ 
+-		if (test_pt_regs_flag(regs, PIF_SYSCALL) &&
+-			addr == offsetof(struct user, regs.gprs[2])) {
+-			struct pt_regs *regs = task_pt_regs(child);
+-
+-			regs->int_code = 0x20000 | (data & 0xffff);
++		if (addr == offsetof(struct user, regs.gprs[2])) {
++			if (test_pt_regs_flag(regs, PIF_SYSCALL))
++				syscall_set_nr(child, regs, data);
+ 		}
+ 		*(addr_t *)((addr_t) &regs->psw + addr) = data;
+ 	} else if (addr < offsetof(struct user, regs.orig_gpr2)) {
 -- 
 2.53.0
 
