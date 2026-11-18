@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062041;
-	b=4DMpfYmzYAnFLf2s7qCnGnkgVs/WzJTiGe9EvxJ4WxBtlRuxzo0RcX1P+42ey3xqPSi1
-	 HkagDzVM6pad1xHGknGmPUEo4MFlDVyBOfHymbAXFAahxW48/vyp0xKAjVY7klND8OPtu
-	 kdRYcK0EX7J8i+x+svUk6UQE9raEtJLS0765z0uq2PQdyTflXu5gCti3XN62f3LDAOR6P
-	 UBS6aUB5hqkAfWDRhf/hjkTjfs7fmupmZzb/Uadu2pMFZemgoH+98nuvOATkPS8sEaYvf
-	 2J5ugDtSrGJBJWOYk4byUGGGy+EPh8xYaA/tgfM6GkjKEi2bJpVO4e6pQCZ/9pBohOQ==
+	t=1795062044;
+	b=h3jv97//+r+pqqOA/PmQMzZja9TtutAoK1eLY9BzzDgMw8az9wNo3NflYeIaJJyFqcYr
+	 7r9qFqQSmu2G4/AQuDECd1GYESeDpzobw+Hn6Ddb/5awPHDfW96ZnnjHJBK8q3RwSvEgA
+	 hTU6q73zsK4gNLAHw5X4y9h6hDbqbLc4GEfPA/mTDk7VnEad5j7da7VvWh5oTdMW5uvgm
+	 rohMTNcQIRsO8rBJLmvWFPFdI+b1hZ5K38zuUvaD4LlJtY8P+lct9QpCgU1t86gVdQmkR
+	 nzhpj3nIdSByhvGufzGTMWxilcnshU1Qgotw7X8Zm/wO98dbkf8ASy1+KTbmjndA+Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062041;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062044;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aUdM8Xfx+rDk4Iyfkm6uWJL2JpKTcGekvNBNCEZJC+A=;
-	b=VnJOcFG8JAu0/wmuPFEwBNRVHCh2sMUr/ntN94YPFinQb8Yied0aHc6/RjMRnhHlCQut
-	 CIItb546TRGVMNwfTKlI4Toaou8rdEMfI8IdtWnj9YrSNzkpfux0tozMhdt5taAchiN0A
-	 1fCfIhBAKz7IgFRBQ0JSrrKL7Cqb9QQNqolyE8RF5grWQfT5xFjNXhqEmwsx4Tgalec/B
-	 1Axxgy2ZcwTV9hujy+MnBzGyeyUl9DeDG5SlboshikGYV+Lh6uXobqx+SLCcnWBily3uh
-	 1hsNbceVi0Jnvnocm+GR9yKKR95kR2w9owTKjFxY4TivOHeu/IMjGvnVwbm/TrL2e6A==
+	bh=t75kyClrVbZ2EGn+9hocnf+RoRnkp5h4wPwwDB3q/dM=;
+	b=ZgpwudEjVHambbVpNFvG+gq0rX2PWApNjaY9Dqal7nHNoss6DadJYxhSJu5SoYiX4OGa
+	 AmzvpgH5ccwULPlABeW6Qm6eu7scXP+0DVH9JVU3Wb+Qysxsc9GyqmYusKXxKqfBXnT7N
+	 GBew0Po0AULUs+3qOaOEh6Jod9vyhr2xv1fzIUJ1z6ASUhmXtL+WPn+qQKJotsg+ncBn5
+	 jX0ATc46a+F9sJAMAsOabwhL/bTJ2XgxfdBsi+TnV8DKgDMqTuyOHE+G8E05MgL9fU3k5
+	 Z18NHbIJNPrzvnvfxXzahkqYHiEvFj0+5gIlPdnmy6dOuvkpInA9etNoyPd8+4g6tHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xVxczYiL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RtNx7g3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A031606A320;
-	Thu, 19 Nov 2026 04:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1217E606A325;
+	Thu, 19 Nov 2026 04:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xVxczYiL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82D31F000C4;
-	Thu, 19 Nov 2026 04:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0RtNx7g3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694521F000C4;
+	Thu, 19 Nov 2026 04:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062041;
-	bh=aUdM8Xfx+rDk4Iyfkm6uWJL2JpKTcGekvNBNCEZJC+A=;
+	s=korg; t=1795062043;
+	bh=t75kyClrVbZ2EGn+9hocnf+RoRnkp5h4wPwwDB3q/dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xVxczYiLRwyZNS4k2HViiZwhweMbU+jdL1HvC+w9G/0K4r/ZZiJPgDepMD+8oblsX
-	 r5RtYlFisYaxK5lQ34AmpkCR4jxgOi5F8VzjKq3FFQi3ojXraowuv7DHhNQAoHpERS
-	 1dYN5WXqcCoFS2f+f1t7p0pnvmODOhpLodKVwbSw=
+	b=0RtNx7g359dldwRBpq5g4wXG8l2In8m2jMtKPXKjrnz7EL8nWEfCX/thcADoqSSJ+
+	 g9Q0TU70DJ10t2umwfCZ7AhQS+4oAJZ462fcdgES0N1Nmi5qgGidurIxkMWnxER9IC
+	 CKELhsgzS+oSgN9UlUJLG8YMKZKXD9FDaAC/sQ9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coco Li <lixiaoyan@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Liang Hao <haohlliang@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1767/1848] selftests/net: Add SHA256 computation over data sent in tcp_mmap
-Date: Wed, 18 Nov 2026 16:03:25 +0100
-Message-ID: <20261118150033.382612198@linuxfoundation.org>
+Subject: [PATCH 5.10 1732/1848] timers: Clear pending_map on CPU hotplug
+Date: Wed, 18 Nov 2026 16:02:50 +0100
+Message-ID: <20261118150032.086450445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,284 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyan Li <lixiaoyan@google.com>
+From: Liang Hao <haohlliang@gmail.com>
 
-[ Upstream commit 5c5945dc695c54f2b55a934a10b6c4e220f9c140 ]
+[ Upstream commit e7cad586d73276cbd4466de81b2092287d7475c0 ]
 
-Add option to compute and send SHA256 over data sent (-i).
+CPU hotplug migration leaves pending_map bits set on the outgoing CPU
+while its wheel vectors are empty. After re-online, a later next_expiry
+recalc can treat those empty buckets as pending and temporarily pull
+next_expiry forward until collect drains the bits.
 
-This is to ensure the correctness of data received.
-Data is randomly populated from /dev/urandom.
+Clear pending_map under the base lock after migration in timers_dead_cpu().
 
-Tested:
-./tcp_mmap -s -z -i
-./tcp_mmap -z -H $ADDR -i
-SHA256 is correct
-
-./tcp_mmap -s -i
-./tcp_mmap -H $ADDR -i
-SHA256 is correct
-
-Signed-off-by: Coco Li <lixiaoyan@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230321081202.2370275-2-lixiaoyan@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 5536d5553f27 ("selftests/net: tcp_mmap: remove unused -k option and keepflag")
+Fixes: 500462a9de65 ("timers: Switch to a non-cascading wheel")
+Signed-off-by: Liang Hao <haohlliang@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260930063621.37740-1-haohlliang@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/Makefile   |   2 +-
- tools/testing/selftests/net/tcp_mmap.c | 102 ++++++++++++++++++++++---
- 2 files changed, 92 insertions(+), 12 deletions(-)
+ kernel/time/timer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/Makefile b/tools/testing/selftests/net/Makefile
-index ef352477cac6b..48e403c56cc34 100644
---- a/tools/testing/selftests/net/Makefile
-+++ b/tools/testing/selftests/net/Makefile
-@@ -39,5 +39,5 @@ KSFT_KHDR_INSTALL := 1
- include ../lib.mk
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index 2b1afc00e3184..50a512c2403cf 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -45,6 +45,7 @@
+ #include <linux/compat.h>
+ #include <linux/random.h>
+ #include <linux/sysctl.h>
++#include <linux/bitmap.h>
  
- $(OUTPUT)/reuseport_bpf_numa: LDLIBS += -lnuma
--$(OUTPUT)/tcp_mmap: LDLIBS += -lpthread
-+$(OUTPUT)/tcp_mmap: LDLIBS += -lpthread -lcrypto
- $(OUTPUT)/tcp_inq: LDLIBS += -lpthread
-diff --git a/tools/testing/selftests/net/tcp_mmap.c b/tools/testing/selftests/net/tcp_mmap.c
-index 00f837c9bc6c4..51d48229c18cd 100644
---- a/tools/testing/selftests/net/tcp_mmap.c
-+++ b/tools/testing/selftests/net/tcp_mmap.c
-@@ -66,11 +66,16 @@
- #include <poll.h>
- #include <linux/tcp.h>
- #include <assert.h>
-+#include <openssl/pem.h>
+ #include <linux/uaccess.h>
+ #include <asm/unistd.h>
+@@ -2035,6 +2036,7 @@ int timers_dead_cpu(unsigned int cpu)
+ 		for (i = 0; i < WHEEL_SIZE; i++)
+ 			migrate_timer_list(new_base, old_base->vectors + i);
  
- #ifndef MSG_ZEROCOPY
- #define MSG_ZEROCOPY    0x4000000
- #endif
- 
-+#ifndef min
-+#define min(a, b)  ((a) < (b) ? (a) : (b))
-+#endif
-+
- #define FILE_SZ (1ULL << 35)
- static int cfg_family = AF_INET6;
- static socklen_t cfg_alen = sizeof(struct sockaddr_in6);
-@@ -81,12 +86,14 @@ static int sndbuf; /* Default: autotuning.  Can be set with -w <integer> option
- static int zflg; /* zero copy option. (MSG_ZEROCOPY for sender, mmap() for receiver */
- static int xflg; /* hash received data (simple xor) (-h option) */
- static int keepflag; /* -k option: receiver shall keep all received file in memory (no munmap() calls) */
-+static int integrity; /* -i option: sender and receiver compute sha256 over the data.*/
- 
- static size_t chunk_size  = 512*1024;
- 
- static size_t map_align;
- 
- unsigned long htotal;
-+unsigned int digest_len;
- 
- static inline void prefetch(const void *x)
- {
-@@ -147,12 +154,14 @@ static void *mmap_large_buffer(size_t need, size_t *allocated)
- 
- void *child_thread(void *arg)
- {
-+	unsigned char digest[SHA256_DIGEST_LENGTH];
- 	unsigned long total_mmap = 0, total = 0;
- 	struct tcp_zerocopy_receive zc;
-+	unsigned char *buffer = NULL;
- 	unsigned long delta_usec;
-+	EVP_MD_CTX *ctx = NULL;
- 	int flags = MAP_SHARED;
- 	struct timeval t0, t1;
--	char *buffer = NULL;
- 	void *raddr = NULL;
- 	void *addr = NULL;
- 	double throughput;
-@@ -179,6 +188,14 @@ void *child_thread(void *arg)
- 			addr = ALIGN_PTR_UP(raddr, map_align);
- 		}
- 	}
-+	if (integrity) {
-+		ctx = EVP_MD_CTX_new();
-+		if (!ctx) {
-+			perror("cannot enable SHA computing");
-+			goto error;
-+		}
-+		EVP_DigestInit_ex(ctx, EVP_sha256(), NULL);
-+	}
- 	while (1) {
- 		struct pollfd pfd = { .fd = fd, .events = POLLIN, };
- 		int sub;
-@@ -190,7 +207,7 @@ void *child_thread(void *arg)
- 
- 			memset(&zc, 0, sizeof(zc));
- 			zc.address = (__u64)((unsigned long)addr);
--			zc.length = chunk_size;
-+			zc.length = min(chunk_size, FILE_SZ - lu);
- 
- 			res = getsockopt(fd, IPPROTO_TCP, TCP_ZEROCOPY_RECEIVE,
- 					 &zc, &zc_len);
-@@ -199,6 +216,8 @@ void *child_thread(void *arg)
- 
- 			if (zc.length) {
- 				assert(zc.length <= chunk_size);
-+				if (integrity)
-+					EVP_DigestUpdate(ctx, addr, zc.length);
- 				total_mmap += zc.length;
- 				if (xflg)
- 					hash_zone(addr, zc.length);
-@@ -210,22 +229,30 @@ void *child_thread(void *arg)
- 			}
- 			if (zc.recv_skip_hint) {
- 				assert(zc.recv_skip_hint <= chunk_size);
--				lu = read(fd, buffer, zc.recv_skip_hint);
-+				lu = read(fd, buffer, min(zc.recv_skip_hint,
-+							  FILE_SZ - total));
- 				if (lu > 0) {
-+					if (integrity)
-+						EVP_DigestUpdate(ctx, buffer, lu);
- 					if (xflg)
- 						hash_zone(buffer, lu);
- 					total += lu;
- 				}
-+				if (lu == 0)
-+					goto end;
- 			}
- 			continue;
- 		}
- 		sub = 0;
- 		while (sub < chunk_size) {
--			lu = read(fd, buffer + sub, chunk_size - sub);
-+			lu = read(fd, buffer + sub, min(chunk_size - sub,
-+							FILE_SZ - total));
- 			if (lu == 0)
- 				goto end;
- 			if (lu < 0)
- 				break;
-+			if (integrity)
-+				EVP_DigestUpdate(ctx, buffer + sub, lu);
- 			if (xflg)
- 				hash_zone(buffer + sub, lu);
- 			total += lu;
-@@ -236,6 +263,20 @@ void *child_thread(void *arg)
- 	gettimeofday(&t1, NULL);
- 	delta_usec = (t1.tv_sec - t0.tv_sec) * 1000000 + t1.tv_usec - t0.tv_usec;
- 
-+	if (integrity) {
-+		fcntl(fd, F_SETFL, 0);
-+		EVP_DigestFinal_ex(ctx, digest, &digest_len);
-+		lu = read(fd, buffer, SHA256_DIGEST_LENGTH);
-+		if (lu != SHA256_DIGEST_LENGTH)
-+			perror("Error: Cannot read SHA256\n");
-+
-+		if (memcmp(digest, buffer,
-+			   SHA256_DIGEST_LENGTH))
-+			fprintf(stderr, "Error: SHA256 of the data is not right\n");
-+		else
-+			printf("\nSHA256 is correct\n");
-+	}
-+
- 	throughput = 0;
- 	if (delta_usec)
- 		throughput = total * 8.0 / (double)delta_usec / 1000.0;
-@@ -367,19 +408,38 @@ static unsigned long default_huge_page_size(void)
- 	return hps;
- }
- 
-+static void randomize(void *target, size_t count)
-+{
-+	static int urandom = -1;
-+	ssize_t got;
-+
-+	urandom = open("/dev/urandom", O_RDONLY);
-+	if (urandom < 0) {
-+		perror("open /dev/urandom");
-+		exit(1);
-+	}
-+	got = read(urandom, target, count);
-+	if (got != count) {
-+		perror("read /dev/urandom");
-+		exit(1);
-+	}
-+}
-+
- int main(int argc, char *argv[])
- {
-+	unsigned char digest[SHA256_DIGEST_LENGTH];
- 	struct sockaddr_storage listenaddr, addr;
- 	unsigned int max_pacing_rate = 0;
-+	EVP_MD_CTX *ctx = NULL;
-+	unsigned char *buffer;
- 	uint64_t total = 0;
- 	char *host = NULL;
- 	int fd, c, on = 1;
- 	size_t buffer_sz;
--	char *buffer;
- 	int sflg = 0;
- 	int mss = 0;
- 
--	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:")) != -1) {
-+	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:i")) != -1) {
- 		switch (c) {
- 		case '4':
- 			cfg_family = PF_INET;
-@@ -425,6 +485,9 @@ int main(int argc, char *argv[])
- 		case 'a':
- 			map_align = atol(optarg);
- 			break;
-+		case 'i':
-+			integrity = 1;
-+			break;
- 		default:
- 			exit(1);
- 		}
-@@ -467,7 +530,7 @@ int main(int argc, char *argv[])
- 	}
- 
- 	buffer = mmap_large_buffer(chunk_size, &buffer_sz);
--	if (buffer == (char *)-1) {
-+	if (buffer == (unsigned char *)-1) {
- 		perror("mmap");
- 		exit(1);
- 	}
-@@ -500,17 +563,34 @@ int main(int argc, char *argv[])
- 		perror("setsockopt SO_ZEROCOPY, (-z option disabled)");
- 		zflg = 0;
- 	}
-+	if (integrity) {
-+		randomize(buffer, buffer_sz);
-+		ctx = EVP_MD_CTX_new();
-+		if (!ctx) {
-+			perror("cannot enable SHA computing");
-+			exit(1);
-+		}
-+		EVP_DigestInit_ex(ctx, EVP_sha256(), NULL);
-+	}
- 	while (total < FILE_SZ) {
-+		size_t offset = total % chunk_size;
- 		int64_t wr = FILE_SZ - total;
- 
--		if (wr > chunk_size)
--			wr = chunk_size;
--		/* Note : we just want to fill the pipe with 0 bytes */
--		wr = send(fd, buffer, (size_t)wr, zflg ? MSG_ZEROCOPY : 0);
-+		if (wr > chunk_size - offset)
-+			wr = chunk_size - offset;
-+		/* Note : we just want to fill the pipe with random bytes */
-+		wr = send(fd, buffer + offset,
-+			  (size_t)wr, zflg ? MSG_ZEROCOPY : 0);
- 		if (wr <= 0)
- 			break;
-+		if (integrity)
-+			EVP_DigestUpdate(ctx, buffer + offset, wr);
- 		total += wr;
- 	}
-+	if (integrity && total == FILE_SZ) {
-+		EVP_DigestFinal_ex(ctx, digest, &digest_len);
-+		send(fd, digest, (size_t)SHA256_DIGEST_LENGTH, 0);
-+	}
- 	close(fd);
- 	munmap(buffer, buffer_sz);
- 	return 0;
++		bitmap_zero(old_base->pending_map, WHEEL_SIZE);
+ 		raw_spin_unlock(&old_base->lock);
+ 		raw_spin_unlock_irq(&new_base->lock);
+ 		put_cpu_ptr(&timer_bases);
 -- 
 2.53.0
 
