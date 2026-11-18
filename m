@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061386;
-	b=ygywR0K2B9MNhiwzDJcvSZ85ic3QmHYKybO/Q9qkiRc+8hhBKIqNDpAdt9MnAyLS1cTj
-	 fDeiGZXeNjc2E9UMxqgdz6XiZf/ITPqsSgFcDk0qpB0ds5ZSvoW9KnV2Tj73oJnh6k3aX
-	 byz0Q83rs6RFApGzXPsRquoWcgsc8Z0gfYpBgdmAcLti1fpC752olBtY/J45pPAkQJStC
-	 d0YpqGFgBWvIq6dpWBuykggM1eh29p6L04766fAjIAw0b5Vs0pieWzp2L9YUPNgv2wpoS
-	 vWYEcWci0wrzEoBgtfezsbndi1kJaL6KbZS/0HDFLQpGugP0+RkjiTN7tdXu9+gzyxA==
+	t=1795061389;
+	b=ty2jIXnIMuk4Rxat6CcvNbP7SbGYbvLzFYX3pJBVxJPfpxoRR7ZNPWVPsK98XWkq5+Xt
+	 IDKYUbcOzdtYSXe1P26OAJMocH31qfDaXlTjjeKF845GOuVtGVtA1egaqRWiWoq6hb49p
+	 ciOVvYR7XbKzLrPTUealW0GK14kWj94Gvqy4muOY9vnQuYNqIN8MiqDcjFvMW2w8NAtek
+	 emlr9eakXeE8cqXma0utRmNprZnuoC9T8gNjdk8f9NlsiloUxE5uOn1xjTuGeB2pk4cUz
+	 RbgSHWimZEOqpdVzSZI1YVtX92vgYaFZNWzcIHoWrGJjQmyBbwIFNEJBq2u1LgRf5rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061386;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=e8Yrt2uOISvs52dn3bJJ/2ZL3ZjjMXDm2aYjz6VhdSM=;
-	b=quUCfrcE8MRalO1dB+BlTLEbUigV5AAtkYa2vRj6FdgPyMwAZ6KcEmWpukaPn1SsCp5c
-	 y4RS/dq4Vq75tJVF9rta9AJvTPVWLiQeGBem2WWZ32iou8TywmVKavzXhSypD0E0aazud
-	 FbGtCF86b7XLoUp6ZIAZhlDUjP54NispvFJ4m8liOaEcl1s+xjIA99a0QQw+woIk03E7D
-	 00jYbr4gaDWtsaxvia9h+f+jzJ24MsO4FgOMPSNfhKZRFiDde1PRZIW7F1U7MI+aZrFoo
-	 9zoPMDlHBekqlU6ncig+RpHRJuxKL2awWcVojnoKgfAIC9AB7wbxePtjXw8KlcND5mw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=avrsKcEBSWFsRowGbkWFGFBOXhfwlrW/xIWYBxQw5OA=;
+	b=AN6S3q0iUvEBQarLKu3bdEpISIaPmVTHHVfd/qRboqyFMbnY2JMAZQm+4vtdyKQ7+eEa
+	 oUNm2VSOC6vnaCqP2phNAisVsJ2eG+Wv/DVaADItAwluMexVlj00st2XRS844uT6gev1t
+	 KOE6Nr1CBO2Da/KfuvhvcGPHbF4gETWa/wJ70VsfvBsXH2OKqpWCCghrC6envipoNFZk0
+	 v+BnTLgwWQMXMO1E/Duv8iACSoGqvhZEjkkNdluPy/PZI0yZDpjsDr+t+e1lnanEfXGuz
+	 JLzuWicSqN6iGvYe+rZ2tUJ8hzwsCIYXWvDXLf8WV6qmQncR81n5B96hmThbyuczYFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNszwnH4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mAsFCCl/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71087606A320;
-	Thu, 19 Nov 2026 04:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CD0606A32A;
+	Thu, 19 Nov 2026 04:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNszwnH4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7BB1F000C4;
-	Thu, 19 Nov 2026 04:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mAsFCCl/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138DC1F000C4;
+	Thu, 19 Nov 2026 04:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061385;
-	bh=e8Yrt2uOISvs52dn3bJJ/2ZL3ZjjMXDm2aYjz6VhdSM=;
+	s=korg; t=1795061388;
+	bh=avrsKcEBSWFsRowGbkWFGFBOXhfwlrW/xIWYBxQw5OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNszwnH4UDv1IwdCntuS9eZmafO9XiOon2/uim9TZdzwDl7sG8uPJexBCrFlhNxwN
-	 i+kbOykBFZpkj6XH6fPzJp6wtblqY6bO7f56qeC1xthVB/E0UWKmd0I32zRMCn+Fu6
-	 AQDtHECf9mzCrwQlqkJtCmNv+So2X0SGGLpBiVVc=
+	b=mAsFCCl/QZ0dH7BCTYIrLhj2fjwxrlxAfcpjJ+jAA6EnGt9vC9DUGW1KM0kPxy77m
+	 aP7GNzFpT6jl+/m1mQx2RVc1mNpVyIQHu9Yotcw8BSjZE/yum9RzLhLXQsWSTDtS38
+	 4yVYOMvXtU3wcEeUYUtIpyToXdj/y46Rjlhm6mqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1534/1848] ASoC: mediatek: common: Handle constraint return value in FE startup
-Date: Wed, 18 Nov 2026 15:59:32 +0100
-Message-ID: <20261118150023.683027083@linuxfoundation.org>
+Subject: [PATCH 5.10 1535/1848] PCI/sysfs: Rely on lengths from scnprintf(), dsm_label_utf16s_to_utf8s()
+Date: Wed, 18 Nov 2026 15:59:33 +0100
+Message-ID: <20261118150023.780039561@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,61 +63,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Krzysztof Wilczyński <kw@linux.com>
 
-[ Upstream commit 5fcdb40a4776cc6f8d3179aa9cf9663fc18c7861 ]
+[ Upstream commit 316ae33051215f92c72fe13bc1bfc4e513a26700 ]
 
-snd_pcm_hw_constraint_integer() may return 1, which is then returned
-from mtk_afe_fe_startup(). ASoC only treats 0 as success when marking
-the DAI as started, so .shutdown() can be skipped on rollback.
+scnprintf() returns the number of bytes written into the buffer.  Change
+dsm_label_utf16s_to_utf8s() to do the same.  Rely on those values instead
+of using strlen() to compute the buffer length.
 
-Return 0 explicitly on success.
+No functional change intended.
 
-Fixes: 283b612429a2 ("ASoC: mediatek: implement mediatek common structure")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261007110858.509341-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[bhelgaas: reorder patch in series, len++ to include newline added by
+dsm_label_utf16s_to_utf8s(), commit log]
+Link: https://lore.kernel.org/r/20210603000112.703037-3-kw@linux.com
+Signed-off-by: Krzysztof Wilczyński <kw@linux.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Stable-dep-of: 36f9bd09920e ("PCI/sysfs: Stop reporting _DSM failures as -EPERM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/common/mtk-afe-fe-dai.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pci/pci-label.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/mediatek/common/mtk-afe-fe-dai.c b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
-index 882cdf86c8bf8..22bd137d61c57 100644
---- a/sound/soc/mediatek/common/mtk-afe-fe-dai.c
-+++ b/sound/soc/mediatek/common/mtk-afe-fe-dai.c
-@@ -75,8 +75,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index c702164d4ad1a..5b59b1870f3f0 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -154,14 +154,17 @@ enum acpi_attr_enum {
+ 	ACPI_ATTR_INDEX_SHOW,
+ };
  
- 	ret = snd_pcm_hw_constraint_integer(runtime,
- 					    SNDRV_PCM_HW_PARAM_PERIODS);
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(afe->dev, "snd_pcm_hw_constraint_integer failed\n");
-+		return ret;
-+	}
- 
- 	/* dynamic allocate irq to memif */
- 	if (memif->irq_usage < 0) {
-@@ -88,10 +90,10 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
- 		} else {
- 			dev_err(afe->dev, "%s() error: no more asys irq\n",
- 				__func__);
--			ret = -EBUSY;
-+			return -EBUSY;
- 		}
- 	}
--	return ret;
-+	return 0;
+-static void dsm_label_utf16s_to_utf8s(union acpi_object *obj, char *buf)
++static int dsm_label_utf16s_to_utf8s(union acpi_object *obj, char *buf)
+ {
+ 	int len;
++
+ 	len = utf16s_to_utf8s((const wchar_t *)obj->buffer.pointer,
+ 			      obj->buffer.length / sizeof(wchar_t),
+ 			      UTF16_LITTLE_ENDIAN,
+ 			      buf, PAGE_SIZE - 1);
+-	buf[len] = '\n';
++	buf[len++] = '\n';
++
++	return len;
  }
- EXPORT_SYMBOL_GPL(mtk_afe_fe_startup);
  
+ static int dsm_get_label(struct device *dev, char *buf,
+@@ -169,7 +172,7 @@ static int dsm_get_label(struct device *dev, char *buf,
+ {
+ 	acpi_handle handle;
+ 	union acpi_object *obj, *tmp;
+-	int len = -1;
++	int len = 0;
+ 
+ 	handle = ACPI_HANDLE(dev);
+ 	if (!handle)
+@@ -191,20 +194,19 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 		 * this entry must return a null string.
+ 		 */
+ 		if (attr == ACPI_ATTR_INDEX_SHOW) {
+-			scnprintf(buf, PAGE_SIZE, "%llu\n", tmp->integer.value);
++			len = scnprintf(buf, PAGE_SIZE, "%llu\n", tmp->integer.value);
+ 		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
+ 			if (tmp[1].type == ACPI_TYPE_STRING)
+-				scnprintf(buf, PAGE_SIZE, "%s\n",
++				len = scnprintf(buf, PAGE_SIZE, "%s\n",
+ 					  tmp[1].string.pointer);
+ 			else if (tmp[1].type == ACPI_TYPE_BUFFER)
+-				dsm_label_utf16s_to_utf8s(tmp + 1, buf);
++				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
+ 		}
+-		len = strlen(buf) > 0 ? strlen(buf) : -1;
+ 	}
+ 
+ 	ACPI_FREE(obj);
+ 
+-	return len;
++	return len > 0 ? len : -1;
+ }
+ 
+ static bool device_has_dsm(struct device *dev)
 -- 
 2.53.0
 
