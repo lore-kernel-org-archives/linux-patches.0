@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031995;
-	b=pwxBCO9NESySeWNemJWB8lZgr/nU+mXrNNTfZHfVlM9x4X48U1eIOxeJ6F5JmrihLXNw
-	 6/jdQPC6MzJZEyMwRvuYHIgiybJRsVKsDGIOGoHqgKRKMk9u39Vg90GUEtGx9Uc+vELbK
-	 XXh71YYX1WkJSEyPsmI6IfKAF8jBCO+STFG7KUgBz0bkBeyyaJpYdD/D4Q+fulylrz9HI
-	 bjRa8z5oVxB01UKsvxrqsIZX6nVQuj0mJC4XEfXLQmrpGGA+G76xNoA730nxEchZwEg1A
-	 GEui27vTLhPfkZ8gH20kXRfxT4SqKqvIQQXCT0AEkDWAY9+4gjtBWnUhHxqqIkTqEaQ==
+	t=1795031999;
+	b=oXbDGrBcs8lrUQ6/q3LOyL564rqqWu6M/Z6dtlSXvSqV5FvdXaUErqk+Sos5bwu5aiBI
+	 iHfVb37Nod++YA3K1FwQK5Ra79PYZ2LAKeUCLwAxNH+/YnR46TdwbeSdx67WMdAwGUbak
+	 tT26TYAjtpdjYzH1C9zL1LfVjizdgS8Y2/ju8cYy0hZkfoqwLZq2efT6V+AJ7ABB8YM7B
+	 IH3nKcDDl55nIFctQzi36RkY3RcRY+aHVhDhv9RbbB257gmCiU/UixrbjkW8lbz4JXjTV
+	 YVuWTC/uLMvx4xxVWlQMhfq6kCUGdaCbTpubE8VbpPHwzBu0jAyRy++J8xnf/bi9z/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031995;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031999;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FW2TDjmZHTT4KqPuBNxmZWFfwOK3TH5ckmPVO7R6bDM=;
-	b=wNgma/WZCHMuGa6NfPb1MOynxufu8BqDS5gclyQOrGlgC7Ozm2Spw43RMYt+3m/NMskU
-	 ja7rTbYQUXagc3Ku7HeeD+yKEVNojql/DvqBw6tEzeghPA1CwmmxeZf9BUbI202LTFBTW
-	 bbaoUnYgzIpLaVx/f75JPi+f1EDGUmFrPbjhWd/hwUswh3v7c+LowsXXaGE/aTXYwSetI
-	 9W6SFWSIrdjs045HpOL1vJbwDLuvgQsdL+DEtpfRBFX8P9Qa7ZaoXtfJBLb4pQCcQNi8C
-	 f4bNK/TRGzLRYKk8/IvAxRbGsnEOUFKMbRKzGBe9H08XgVi7X7EsTX3gzW3JH8BxBpA==
+	bh=9zYW2nfNfS+2APoSAoVbz2qBaDKcWVdOPLpfPdyo6xw=;
+	b=aRiX1f4UHZodA8tNUZVgpMkRgn13ATJNJ05nG1HflIAtqpHqgM5y0aehNtDnHwmKBaxR
+	 RGIn0LkXpmDu4v+6jsaVUkhCtqpueisZU78M+HyWklLjzxtmSIcKziLlPT1smWyiZe2G5
+	 HDBtyRa2vnEKXV1kz0E/5YxxC+UuAbgno1UDeZq/MnF8+6nhzogOdwQgniRZ3QJzq8Q1t
+	 xJt5Rxmw7ErQQCMMah0IYPqXlj3KeyGvz+Q/r2Tgx4qjP0cfFyKdqGKKF4c7lE0+9iMBH
+	 B9mJJsnZqVeFPUSmcabHj4yY8pOhMEE8xJAPWD3ptLyWPCG72R/kQSOQ/GoJdh+YeKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv8oNDXm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDJqddhR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0C1606A333;
-	Wed, 18 Nov 2026 19:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2598606A334;
+	Wed, 18 Nov 2026 19:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zv8oNDXm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2848F1F000C4;
-	Wed, 18 Nov 2026 19:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qDJqddhR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E6D1F000C4;
+	Wed, 18 Nov 2026 19:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031995;
-	bh=FW2TDjmZHTT4KqPuBNxmZWFfwOK3TH5ckmPVO7R6bDM=;
+	s=korg; t=1795031998;
+	bh=9zYW2nfNfS+2APoSAoVbz2qBaDKcWVdOPLpfPdyo6xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zv8oNDXm0z+Rzd9wWRWaTklQhdNZfL0ZUcrfS62nmMqhXGfG+w+1xrMOtuE1HJVxJ
-	 ZpGn9QKabv2Ya5sIX16p+NyrxnvYuz2Pg/61/hGuFeCMaakkdMRnHkBzZ4KHRZkXcA
-	 o19tK5O8eGs+LAsuJ1+DN4L43dJ1f85b5pbqEsiQ=
+	b=qDJqddhRp6gH035iHGsigon4u6n9iMcfTD0tTLMjqjsRXmTgq39RFxlh8EPZm14T6
+	 /5Uyw+wVRhtmvxDmnqSyufJcc6Z9jU9N6+1RysVidIWshOweZeYX/Z3Zot4CJfeBs1
+	 mzFo4lUHIlJJHrqrTn5tC/Y2slBJfi7rw7ixCh1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Long Zhao <longzhao@ambarella.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1255/1756] spmi: pmic-arb: return 0 in spmi_pmic_arb_register_buses() on success
-Date: Wed, 18 Nov 2026 15:56:22 +0100
-Message-ID: <20261118150059.661188999@linuxfoundation.org>
+Subject: [PATCH 6.12 1256/1756] dt-bindings: vendor-prefixes: add Ambarella
+Date: Wed, 18 Nov 2026 15:56:23 +0100
+Message-ID: <20261118150059.692791352@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,34 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+From: Long Zhao <longzhao@ambarella.com>
 
-[ Upstream commit 82f4c1948a4f951d7d501757a31c6a10eccd37ae ]
+[ Upstream commit 5ef299ffb56531b3a4f2b311000da76beed403ee ]
 
-The "ret" could be returned with an uninitialized value. Fix it.
+Document the Ambarella, Inc. vendor prefix so Ambarella DT bindings
+can be applied without waiting for the SoC series.
 
-Fixes: 979987371739 ("spmi: pmic-arb: Add multi bus support")
-Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Long Zhao <longzhao@ambarella.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20261014-cv75-prefix-v1-1-fe95ed567880@ambarella.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spmi/spmi-pmic-arb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index ea843159b745d..4e1974fd4acd3 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1777,7 +1777,7 @@ static int spmi_pmic_arb_register_buses(struct spmi_pmic_arb *pmic_arb,
- 		}
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static void spmi_pmic_arb_deregister_buses(struct spmi_pmic_arb *pmic_arb)
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index fb89e413e3d24..5f577bb1b692c 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -101,6 +101,8 @@ patternProperties:
+     description: Amarula Solutions
+   "^amazon,.*":
+     description: Amazon.com, Inc.
++  "^ambarella,.*":
++    description: Ambarella, Inc.
+   "^amcc,.*":
+     description: Applied Micro Circuits Corporation (APM, formally AMCC)
+   "^amd,.*":
 -- 
 2.53.0
 
