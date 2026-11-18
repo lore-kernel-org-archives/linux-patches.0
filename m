@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046240;
-	b=AN+9os0fFpFvB9mStKqt/4/JD4Gj7GJfm2XqD0oSZZ6S7Nz3y+46xiNxi2B6vXsznq8d
-	 7+Kl3s/WyUueyUaWWWoncbtrFHZp7LtkfUZRqrJeTJYuovzGMnrQv7EFzGMDFluztiK9N
-	 i+nPbh2X0UsgpHVnOIFEp0tvvvYlsHP5mw3yu4pww/1uCdEYwRyWmnLirJzVnjoG0xZW7
-	 Xk9jh5A7TfdHEx5HefdbuEhzkJdQ13DTWe9ACJczMznSIvZtujWn60drwBN2qHdKb/kE3
-	 UbGny3ar1gesvWY37ilJh3CIyD8R3idMB0jrZsmamK9GyHS9LHGfIPAY3aj6Pjy47ZQ==
+	t=1795046242;
+	b=2UzC4OqmYu8ewUGUuFfKo8eQSqHZTak4yht6DEq/tgNLPm5DatHJx5LZxTChVl7H4QB5
+	 YaRcuqObSwioEUAgS0Rzr6NdbXAxPF/LSDFvhnEpoJgOKhvEqAYE3x4elg/a0jZzu4ezh
+	 zYtksAelZv0FvqXCHFBPwfa0K4Il98E0BPsAnw0DqmxV/0xg9+R54o6RIvM+XPv1X9uje
+	 wktfk2gzBX+oRCeToXo08JLJbOSDhjwXGK5lIqi2uqwyfKIwnh8fHyFQ3h2y4xRhPjDVl
+	 5G3JcGHDwEFY3oAh+1dz8bKB1Ksnb04gdK8ILt+SFjHzVhb0T69bXZvKoMoBXi4oUIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046240;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046242;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/3VrO8OvUVlKc115tCGjEqbRiGGEgus5+9AzdTRHlJs=;
-	b=3eDtLJdf9hbPAjAx/dJO74NEPahDqyPg3/H8kKUR+RlRxvVDZOlEcothwbAWr8edBn+e
-	 E66psadbB8OFzTgpY0taB2E+HzwsKfM+tY1OHY8kCEZk/fuKDr0Wx+KJa6Jy/UlPcqXJw
-	 1nub2Nb2xwJmupmG1/O+BkcoBlwaGNF1PwBkr5DO90ta92O2miMAYhZXxQgXgDYMbIMsh
-	 Uw+m31l5Ny2D4BRZs1xBMgQK4qhWxi26nFKHf09UAB4+wKuqW41peILWMcXOrroWgOoni
-	 yuwCuPMrrm8fGboSL/V4wqa1U0CXJ2BXlIE2OSppU7YNoMdMAhbkDLtKJSPlClPxS+w==
+	bh=p0nRnlq/hX8iA/hrfP1ouYfjffdV3+m9S6FiIjfqOUo=;
+	b=EVNoi4BvqD3SUH8c0hhN+7R5l/aScHuG6gOrA7gfMn1++92A8PuJqpX3Qp6fyPwiyp6Q
+	 XcVo0hPAZMJeQ69uTSBO66p/pMokYWZlwlM3pmUR4fl6+YM+px3vR3G1Jjaifcf6YM1j0
+	 jxGBH8xcI3QOcUuCdzCQMX8P+tEPpYzNhH1wm80XO3vTXQfXm+r5nKNG6Xh5p6y8mVBcE
+	 ngaic2bg8siLegS1k67mS7LoAlOQ7fkbFMm/6LE4DqH5AVHOkdqlmzsq5XEtebJF51tso
+	 42xsPpzSJYmvhiph+cUFEnwVXJBfAEBOJQqVUMaKtR7hRyHM08hev7ceqzHSKF06+OQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aecIJBf/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6AkLqFa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119D2606A31C;
-	Wed, 18 Nov 2026 23:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8092606A31C;
+	Wed, 18 Nov 2026 23:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aecIJBf/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F0D1F000C4;
-	Wed, 18 Nov 2026 23:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T6AkLqFa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1691F000C4;
+	Wed, 18 Nov 2026 23:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046239;
-	bh=/3VrO8OvUVlKc115tCGjEqbRiGGEgus5+9AzdTRHlJs=;
+	s=korg; t=1795046242;
+	bh=p0nRnlq/hX8iA/hrfP1ouYfjffdV3+m9S6FiIjfqOUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aecIJBf/mvWeM/H9EEUQ/bgRoE1dX4684JN+68bZE9OxHXvXLw/5zwSzMAosOBOZV
-	 0N+2QrAja9hzQpZ9i2gJg44rna5wJGzjUMT3IgQf+9FkoyMEBW0tA1mK9csrnJTuSq
-	 SFb+t++hKjc/VeFQboLQiiI3WFimrGKREbboBaP8=
+	b=T6AkLqFaIC63uebhP39OZAjCmrlJZOzegZrbdreJSQZD8ZvNFVsylSdRnPE7PwkW4
+	 LDmuu/6TKbvDKSR41dkbiOHNxS3B0T/uzsGnMF8J0cLgR84d1snxNUeAgSs2tHWGoH
+	 wrFxoNjG5Reyh5F4mQ/sUN4K0GjCJ7TkhNWUDCzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Yingjie Wang <x-professor@outlook.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1203/2857] 9p: dont decrement a server-owned zero nlink
-Date: Wed, 18 Nov 2026 15:37:17 +0100
-Message-ID: <20261118150244.916594660@linuxfoundation.org>
+Subject: [PATCH 6.1 1212/2857] scsi: bsg: Report synchronous data copyback failures
+Date: Wed, 18 Nov 2026 15:37:26 +0100
+Message-ID: <20261118150245.228469238@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,86 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Yingjie Wang <x-professor@outlook.com>
 
-[ Upstream commit 4e915aa8566173b44146bc46177c85afbe6bdf96 ]
+[ Upstream commit a52f2ad45726d788755b525adcf51f65a6b836ff ]
 
-A 9P2000.L server can report nlink=0 for a regular file that still
-exists.  On a cache=loose or cache=fscache mount, lookup stores that
-value with set_nlink().  A later successful unlink calls
-v9fs_dec_count(), which still calls drop_nlink() for a non-directory.
-drop_nlink() warns, and the unsigned link count wraps to 4294967295.
-fstat() on a descriptor opened before the unlink shows 0 before and
-4294967295 after.
+scsi_bsg_sg_io_fn() ignores the result of blk_rq_unmap_user(). For a
+data-in command that uses a bounce buffer, unmapping copies the completed
+data to userspace. If that copy fails, SG_IO can report success despite the
+copyback failure.
 
-The warning on the unpatched kernel, trimmed:
+Capture the unmap status. Preserve an earlier sense-buffer copy error and
+otherwise return the data copyback error. This matches the error precedence
+used by scsi_complete_sghdr_rq().
 
-WARNING: fs/inode.c:408 at drop_nlink+0xac/0xd0, CPU#1: trigger/188
-CPU: 1 UID: 0 PID: 188 Comm: trigger Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
-RIP: 0010:drop_nlink+0xac/0xd0
-Call Trace:
- <TASK>
- v9fs_remove+0x529/0x750
- vfs_unlink+0x2f0/0xbd0
- filename_unlinkat+0x340/0x6c0
- __x64_sys_unlink+0x46/0x70
- do_syscall_64+0xe8/0x4f0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
----[ end trace 0000000000000000 ]---
+On x86_64, a virtio-scsi INQUIRY with an unaligned PROT_NONE destination
+made ioctl() return 0 in 20/20 runs before this change and return -1 with
+errno EFAULT in 20/20 runs afterward. Writable controls succeeded in 20/20
+runs on both kernels.
 
-Directories whose cached nlink is at most 2 already skip this
-decrement, because the exported filesystem may not maintain nlink
-(commit ac89b2ef9b559).  cache=none skips it as well (commit
-574aa0b479947).  cache=mmap does not take this path: it sets neither
-CACHE_META nor CACHE_LOOSE.  A regular file on cache=loose or
-cache=fscache still does.  Its count came from GETATTR and may
-already be zero, so skip the decrement when i_nlink is already 0.
-
-Verified on 7.3-rc4-00537-ga3ff15db6820 with only this change.  A
-server that advertises nlink=0 and accepts the unlink no longer
-warns, and the open descriptor stays at nlink 0.  An honest server
-on the same mount still goes from 1 to 0.  A rejected unlink leaves
-the count unchanged.  cache=none is unchanged.  With panic_on_warn
-the unpatched kernel panics on the warning; the patched kernel does
-not.
-
-Fixes: ac89b2ef9b559 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
+Fixes: 10e8855b9451 ("bsg: add SG_IO to SG v4")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Message-ID: <8B490036-EBB0-4A36-AE39-F294F7C79649@stu.pku.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Reviewed-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/2561d633cc8cef513d75eb1df260046a4971e783.1792772194.git.x-professor@outlook.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/scsi_bsg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 1e7dce8101279..ba670d86894a9 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -541,6 +541,12 @@ static int v9fs_at_to_dotl_flags(int flags)
-  * nothing and races with concurrent metadata fetches that may already
-  * have observed the post-unlink value (nlink == 0).
-  *
-+ * The same applies to a regular file whose cached nlink has already been
-+ * driven to zero by the server: in the cached modes the attributes come
-+ * from GETATTR and are applied verbatim, so decrementing a link count the
-+ * server does not maintain only trips the drop_nlink() WARN_ON and
-+ * underflows i_nlink.
-+ *
-  * @inode: inode whose nlink is being dropped
-  */
- static void v9fs_dec_count(struct inode *inode)
-@@ -549,6 +555,8 @@ static void v9fs_dec_count(struct inode *inode)
+diff --git a/drivers/scsi/scsi_bsg.c b/drivers/scsi/scsi_bsg.c
+index 96ee35256a168..461f14d4b253a 100644
+--- a/drivers/scsi/scsi_bsg.c
++++ b/drivers/scsi/scsi_bsg.c
+@@ -15,7 +15,7 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	struct scsi_cmnd *scmd;
+ 	struct request *rq;
+ 	struct bio *bio;
+-	int ret;
++	int ret, unmap_ret;
  
- 	if (v9ses->cache != CACHE_LOOSE && v9ses->cache != CACHE_FSCACHE)
- 		return;
-+	if (inode->i_nlink == 0)
-+		return;
- 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
- 		drop_nlink(inode);
- }
+ 	if (hdr->protocol != BSG_PROTOCOL_SCSI  ||
+ 	    hdr->subprotocol != BSG_SUB_PROTOCOL_SCSI_CMD)
+@@ -89,7 +89,9 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	else
+ 		hdr->dout_resid = scmd->resid_len;
+ 
+-	blk_rq_unmap_user(bio);
++	unmap_ret = blk_rq_unmap_user(bio);
++	if (!ret)
++		ret = unmap_ret;
+ 
+ out_put_request:
+ 	blk_mq_free_request(rq);
 -- 
 2.53.0
 
