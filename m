@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038529;
-	b=r9QJR/8zUaW3ZOu3B6Bq4UnY13ULVfbykbYGduSqkPLZKtJxIPcznrQG8FHggounE9nO
-	 56hTnlB10ESsc/HUh1JO/lq3efSLAy5pulG3dH92VwbIdq0TbaPCHpG0XvCgPIQL/bTWV
-	 6orlYw7ap96Ya2Wk8LWt3pYOc62f5Hwha29I8mvsCuDtkEiDvDgyIoSyABBVbG8+Qt1L1
-	 L94UmBk/G20QxlBuPt5kT6DbAZYXNA8191MMjhsocDaJivZZLC1i95S//N3uWsNLDAbNe
-	 H3u9EP6i0/BPh6fzdER9NdxVldDkw4n+66Vs8CUCrIg81mrPIlFo/1UQVURmRTndw2g==
+	t=1795038532;
+	b=LoNelrIE1b/JaqsG1N6uqkSGHuiHlzwyJjOvqiCJfsSJDQorPnEZ77ovbXjixf6l195s
+	 ltRVCPRysGLktEVZl+WOnsDqaBMj4z7qZ52gUdGwUuDrwzAKi89zVlwqMJrhEwI6230x7
+	 kCFcKZ5jTtqU78mzyoq4fsgAYi3Sj4rcuxlTbFIdG9Iv+VwnkjTlspJWbp0XGf3h5Ccch
+	 Qd49zuIuifw0ukjHGO8RcDAiCQiEbN58tFDTNblwr051O98ZjeZhbtoWc9l0ljPRJ372E
+	 gcd1f9Uv245LIsMfjwPU8JZXZ/2twNm0YBy+gBd+aeUxLL6iOeSaNICtxCIv7vL1OzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0Ld4f5nKTqdTwbMQG6kgnFe0NQ3cc7EIal5fo7UYZZs=;
-	b=qEYnoCWKuCqw+3IeovJ0q3wwdf/7uikxEemEaVpgzLreFjLgZfI9xeb6WIjmFrnF04AI
-	 +YAnImv/MTLb65tYGiM+01KHz6pmYOL+DFlXWl7kx6ftBEq1ctEC8SWDfkqCz4mpSnadn
-	 WCoWbsaw37PQ4zDB00P1qOzK9zbc//HA5MMU3cNyTnKJuIejT6xQHVDflvbqSMxHAKL7G
-	 jLCJtFmXm2ojlfdlV7Nr8++bXw4HuvBoabvlyvmjQ494f8RGRLOJ3WKs4cphUTfUYEX4v
-	 LA6VoWFHdtOHKQM3QVB1jRHyQXNZBsIkXzKudYzwbKPFO+eyYJMFN4qjYcqU0X+1TMA==
+	bh=/iJdjFhxvR+KUkQoFLl/+knlk6Wv+hxwl6u0SCAPkII=;
+	b=sLi9XQJbJUlzpKnI5VtdH08iWtubP/7z4r+RcNZw5sIvmAD1qFzKE4V74Ic4mEs/FQjn
+	 yacReR2mhfo3REp+6gE/4FKL/mYoxviqWvPRa6a93htsiOCH5sfgxSU0/I04+yVPIIL1A
+	 baQmaJa9YDyhzFCqZj02afIeV0drO6X/7qqb11qbQ8IpnCT/g6GSzuHrJqZiVkToUla2M
+	 dyruAmwbDmXsXqeJUkL6uNh7hGwzEwyAEDyKSPrPSzSfEijzcCCMDARTeLtu3jo8EPfAm
+	 c/NDX/XKma430GAJ8+2IQYB9YGf8AUYJ2hCMSZFfvvPUBhHUHHk+AKZcqW4vnqj49NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omYHAwIk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rW7pdKwr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8478B606A31C;
-	Wed, 18 Nov 2026 21:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550FF606A31C;
+	Wed, 18 Nov 2026 21:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omYHAwIk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45FA1F000C4;
-	Wed, 18 Nov 2026 21:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rW7pdKwr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CACA1F000C4;
+	Wed, 18 Nov 2026 21:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038529;
-	bh=0Ld4f5nKTqdTwbMQG6kgnFe0NQ3cc7EIal5fo7UYZZs=;
+	s=korg; t=1795038532;
+	bh=/iJdjFhxvR+KUkQoFLl/+knlk6Wv+hxwl6u0SCAPkII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omYHAwIkaOYEwRvOWF0LMxuCtLx1g6DOllHWnM80gagQh6aqRYwQDsI9duANnpxjo
-	 hsK36zFgLS8IRUWlU1WrajhklVGVy+xkXz/X208mypD8MeI+AEC+CwCgiz9z8+toYn
-	 dNMNOoWNsbar7WR0vN2OHvlzJumfJx2RfgQhsB7g=
+	b=rW7pdKwrY0E87wrf/G5osRbwZgEQ4k+zdDwzRyO4uIMYuSBVQXnnSs0mJtyDqg7nd
+	 vuo4w+H1oIFUj0O4PcWGU5opzYNScVZJ2Xx4/zap9wegS4sK778m9FjkOqkw3RA6y3
+	 VXCehZEVKxfurqj+5Vb+knLE4EtMmtKy3qfiMxNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1774/3318] Input: matrix_keypad - avoid repeatedly converting GPIO to IRQ
-Date: Wed, 18 Nov 2026 15:39:56 +0100
-Message-ID: <20261118150415.079467037@linuxfoundation.org>
+Subject: [PATCH 6.6 1775/3318] Input: matrix_keypad - consolidate handling of clustered interrupt
+Date: Wed, 18 Nov 2026 15:39:57 +0100
+Message-ID: <20261118150415.111192289@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,159 +69,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit a96fb711c6be76bcfbcf594a865002fa7c0eb525 ]
+[ Upstream commit 8cf4b3683a713a4b54d44565e8a32b4cca357084 ]
 
-There is no need to do conversion from GPIOs to interrupt numbers.
-Convert row GPIOs to interrupt numbers once in probe() and use
-this information when the driver needs to enable or disable given
-interrupt line.
+Now that the driver stores interrupt numbers corresponding to individual
+GPIOs in non-clustered mode, it is possible to unify handling of both
+modes by storing clustered interrupt at position 0 and setting the
+number of interrupts in this case to 1.
 
-Link: https://lore.kernel.org/r/20240121053232.276968-1-dmitry.torokhov@gmail.com
+Link: https://lore.kernel.org/r/20240121053232.276968-2-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Stable-dep-of: 1527451f87df ("Revert "Input: matrix_keypad - force switch rows to input mode"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/keyboard/matrix_keypad.c | 48 ++++++++++++++------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+ drivers/input/keyboard/matrix_keypad.c | 63 ++++++++------------------
+ 1 file changed, 20 insertions(+), 43 deletions(-)
 
 diff --git a/drivers/input/keyboard/matrix_keypad.c b/drivers/input/keyboard/matrix_keypad.c
-index 50fa764c82d2b..1cd1ffb80401a 100644
+index 1cd1ffb80401a..44ef600b8f191 100644
 --- a/drivers/input/keyboard/matrix_keypad.c
 +++ b/drivers/input/keyboard/matrix_keypad.c
-@@ -27,6 +27,7 @@ struct matrix_keypad {
+@@ -27,9 +27,10 @@ struct matrix_keypad {
  	const struct matrix_keypad_platform_data *pdata;
  	struct input_dev *input_dev;
  	unsigned int row_shift;
+-	unsigned int row_irqs[MATRIX_MAX_ROWS];
+ 
+-	DECLARE_BITMAP(disabled_gpios, MATRIX_MAX_ROWS);
 +	unsigned int row_irqs[MATRIX_MAX_ROWS];
++	unsigned int num_row_irqs;
++	DECLARE_BITMAP(wakeup_enabled_irqs, MATRIX_MAX_ROWS);
  
- 	DECLARE_BITMAP(disabled_gpios, MATRIX_MAX_ROWS);
+ 	uint32_t last_key_state[MATRIX_MAX_COLS];
+ 	struct delayed_work work;
+@@ -86,28 +87,18 @@ static bool row_asserted(const struct matrix_keypad_platform_data *pdata,
  
-@@ -92,7 +93,7 @@ static void enable_row_irqs(struct matrix_keypad *keypad)
- 		enable_irq(pdata->clustered_irq);
- 	else {
- 		for (i = 0; i < pdata->num_row_gpios; i++)
--			enable_irq(gpio_to_irq(pdata->row_gpios[i]));
-+			enable_irq(keypad->row_irqs[i]);
- 	}
- }
- 
-@@ -105,7 +106,7 @@ static void disable_row_irqs(struct matrix_keypad *keypad)
- 		disable_irq_nosync(pdata->clustered_irq);
- 	else {
- 		for (i = 0; i < pdata->num_row_gpios; i++)
--			disable_irq_nosync(gpio_to_irq(pdata->row_gpios[i]));
-+			disable_irq_nosync(keypad->row_irqs[i]);
- 	}
- }
- 
-@@ -233,7 +234,6 @@ static void matrix_keypad_stop(struct input_dev *dev)
- static void matrix_keypad_enable_wakeup(struct matrix_keypad *keypad)
+ static void enable_row_irqs(struct matrix_keypad *keypad)
  {
- 	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
--	unsigned int gpio;
+-	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
  	int i;
  
- 	if (pdata->clustered_irq > 0) {
-@@ -241,21 +241,16 @@ static void matrix_keypad_enable_wakeup(struct matrix_keypad *keypad)
- 			keypad->gpio_all_disabled = true;
- 	} else {
+-	if (pdata->clustered_irq > 0)
+-		enable_irq(pdata->clustered_irq);
+-	else {
+-		for (i = 0; i < pdata->num_row_gpios; i++)
+-			enable_irq(keypad->row_irqs[i]);
+-	}
++	for (i = 0; i < keypad->num_row_irqs; i++)
++		enable_irq(keypad->row_irqs[i]);
+ }
  
--		for (i = 0; i < pdata->num_row_gpios; i++) {
--			if (!test_bit(i, keypad->disabled_gpios)) {
--				gpio = pdata->row_gpios[i];
+ static void disable_row_irqs(struct matrix_keypad *keypad)
+ {
+-	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
+ 	int i;
+ 
+-	if (pdata->clustered_irq > 0)
+-		disable_irq_nosync(pdata->clustered_irq);
+-	else {
+-		for (i = 0; i < pdata->num_row_gpios; i++)
+-			disable_irq_nosync(keypad->row_irqs[i]);
+-	}
++	for (i = 0; i < keypad->num_row_irqs; i++)
++		disable_irq_nosync(keypad->row_irqs[i]);
+ }
+ 
+ /*
+@@ -233,35 +224,20 @@ static void matrix_keypad_stop(struct input_dev *dev)
+ 
+ static void matrix_keypad_enable_wakeup(struct matrix_keypad *keypad)
+ {
+-	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
+ 	int i;
+ 
+-	if (pdata->clustered_irq > 0) {
+-		if (enable_irq_wake(pdata->clustered_irq) == 0)
+-			keypad->gpio_all_disabled = true;
+-	} else {
 -
--				if (enable_irq_wake(gpio_to_irq(gpio)) == 0)
-+		for (i = 0; i < pdata->num_row_gpios; i++)
-+			if (!test_bit(i, keypad->disabled_gpios))
-+				if (enable_irq_wake(keypad->row_irqs[i]) == 0)
- 					__set_bit(i, keypad->disabled_gpios);
--			}
--		}
- 	}
+-		for (i = 0; i < pdata->num_row_gpios; i++)
+-			if (!test_bit(i, keypad->disabled_gpios))
+-				if (enable_irq_wake(keypad->row_irqs[i]) == 0)
+-					__set_bit(i, keypad->disabled_gpios);
+-	}
++	for_each_clear_bit(i, keypad->wakeup_enabled_irqs, keypad->num_row_irqs)
++		if (enable_irq_wake(keypad->row_irqs[i]) == 0)
++			__set_bit(i, keypad->wakeup_enabled_irqs);
  }
  
  static void matrix_keypad_disable_wakeup(struct matrix_keypad *keypad)
  {
- 	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
--	unsigned int gpio;
+-	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
  	int i;
  
- 	if (pdata->clustered_irq > 0) {
-@@ -264,12 +259,9 @@ static void matrix_keypad_disable_wakeup(struct matrix_keypad *keypad)
- 			keypad->gpio_all_disabled = false;
- 		}
- 	} else {
--		for (i = 0; i < pdata->num_row_gpios; i++) {
--			if (test_and_clear_bit(i, keypad->disabled_gpios)) {
--				gpio = pdata->row_gpios[i];
--				disable_irq_wake(gpio_to_irq(gpio));
--			}
+-	if (pdata->clustered_irq > 0) {
+-		if (keypad->gpio_all_disabled) {
+-			disable_irq_wake(pdata->clustered_irq);
+-			keypad->gpio_all_disabled = false;
 -		}
-+		for (i = 0; i < pdata->num_row_gpios; i++)
-+			if (test_and_clear_bit(i, keypad->disabled_gpios))
-+				disable_irq_wake(keypad->row_irqs[i]);
+-	} else {
+-		for (i = 0; i < pdata->num_row_gpios; i++)
+-			if (test_and_clear_bit(i, keypad->disabled_gpios))
+-				disable_irq_wake(keypad->row_irqs[i]);
++	for_each_set_bit(i, keypad->wakeup_enabled_irqs, keypad->num_row_irqs) {
++		disable_irq_wake(keypad->row_irqs[i]);
++		__clear_bit(i, keypad->wakeup_enabled_irqs);
  	}
  }
  
-@@ -306,7 +298,7 @@ static int matrix_keypad_init_gpio(struct platform_device *pdev,
- 				   struct matrix_keypad *keypad)
- {
- 	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
--	int i, err;
-+	int i, irq, err;
- 
- 	/* initialized strobe lines as outputs, activated */
- 	for (i = 0; i < pdata->num_col_gpios; i++) {
-@@ -345,11 +337,19 @@ static int matrix_keypad_init_gpio(struct platform_device *pdev,
+@@ -335,6 +311,9 @@ static int matrix_keypad_init_gpio(struct platform_device *pdev,
+ 				"Unable to acquire clustered interrupt\n");
+ 			goto err_free_rows;
  		}
++
++		keypad->row_irqs[0] = pdata->clustered_irq;
++		keypad->num_row_irqs = 1;
  	} else {
  		for (i = 0; i < pdata->num_row_gpios; i++) {
--			err = request_any_context_irq(
--					gpio_to_irq(pdata->row_gpios[i]),
-+			irq = gpio_to_irq(pdata->row_gpios[i]);
-+			if (irq < 0) {
-+				err = irq;
-+				dev_err(&pdev->dev,
-+					"Unable to convert GPIO line %i to irq: %d\n",
-+					pdata->row_gpios[i], err);
-+				goto err_free_irqs;
-+			}
-+
-+			err = request_any_context_irq(irq,
- 					matrix_keypad_interrupt,
- 					IRQF_TRIGGER_RISING |
--					IRQF_TRIGGER_FALLING,
-+						IRQF_TRIGGER_FALLING,
- 					"matrix-keypad", keypad);
- 			if (err < 0) {
- 				dev_err(&pdev->dev,
-@@ -357,6 +357,8 @@ static int matrix_keypad_init_gpio(struct platform_device *pdev,
- 					pdata->row_gpios[i]);
- 				goto err_free_irqs;
- 			}
-+
-+			keypad->row_irqs[i] = irq;
+ 			irq = gpio_to_irq(pdata->row_gpios[i]);
+@@ -360,6 +339,8 @@ static int matrix_keypad_init_gpio(struct platform_device *pdev,
+ 
+ 			keypad->row_irqs[i] = irq;
  		}
++
++		keypad->num_row_irqs = pdata->num_row_gpios;
  	}
  
-@@ -366,7 +368,7 @@ static int matrix_keypad_init_gpio(struct platform_device *pdev,
+ 	/* initialized as disabled - enabled by input->open */
+@@ -386,12 +367,8 @@ static void matrix_keypad_free_gpio(struct matrix_keypad *keypad)
+ 	const struct matrix_keypad_platform_data *pdata = keypad->pdata;
+ 	int i;
  
- err_free_irqs:
- 	while (--i >= 0)
--		free_irq(gpio_to_irq(pdata->row_gpios[i]), keypad);
+-	if (pdata->clustered_irq > 0) {
+-		free_irq(pdata->clustered_irq, keypad);
+-	} else {
+-		for (i = 0; i < pdata->num_row_gpios; i++)
+-			free_irq(keypad->row_irqs[i], keypad);
+-	}
++	for (i = 0; i < keypad->num_row_irqs; i++)
 +		free_irq(keypad->row_irqs[i], keypad);
- 	i = pdata->num_row_gpios;
- err_free_rows:
- 	while (--i >= 0)
-@@ -388,7 +390,7 @@ static void matrix_keypad_free_gpio(struct matrix_keypad *keypad)
- 		free_irq(pdata->clustered_irq, keypad);
- 	} else {
- 		for (i = 0; i < pdata->num_row_gpios; i++)
--			free_irq(gpio_to_irq(pdata->row_gpios[i]), keypad);
-+			free_irq(keypad->row_irqs[i], keypad);
- 	}
  
  	for (i = 0; i < pdata->num_row_gpios; i++)
+ 		gpio_free(pdata->row_gpios[i]);
 -- 
 2.53.0
 
