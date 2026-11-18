@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039879;
-	b=SExCvO9Sb2Mi7tFHWPUk2jx1WHw8/Wx/CySibukHeFXnugNHEsFd3K7I2Ff6OTfUCVsP
-	 a13PxCWXJwCTSIPKXGysz5JYqVOzzWXARxBsS5pCLvrsWqw+2Vvb+EDdR/5ptok0G7ZU0
-	 9w6gGsOGsYko2k7dRksP4E9cnaFOeTPHT3QMfNsWCdh2Et8OEAgGEKokF9v3jlRFZKO0F
-	 xDewqSCd1bPqgQIciNfNUlloqRoDIPZC9J5o9YBA9qHxmgpDFAx8oJosfenHtFNaWQ67e
-	 9Tw2WCtUo83jaXr5WZnBiW7cSQ6q2fWRApnJdh3Ycm8My7ETZgh7rcxrlxp7RCFz+Og==
+	t=1795039882;
+	b=y2KwMARGPwcMRnofu7G6cm66eCJS9ob8sIczGktiA6jsW60Jzs25CFAeiPxGYeCT6dhQ
+	 X8UXUFSxUwe2E8FEu6vEtHhNw2M1Tzsu/9ZRY1m900gWw0Iqc4dbelAK+lgHs/0E1sJfZ
+	 BEFnNoOuNgZ90ys1QckXvXyzqZmkAtY0Wn7rWsaqGZS8ewsRxpjFRsdrtbBTEuxHIeutf
+	 wEMNqHIDEb9GWFwXtmDjRJ6Mkm0D0arj6D+FcgLBFBmB3D3f0iIZcD39XbHnA9IZJhq2k
+	 UYinXZDSNv7E7rY6Z99L79CCduIhZNRzeJ3Lvu6N+lzOpEhMoPOAdM3oJgMdU6F13Pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jebOjXgnRMPV4fLVYDzE84Mr+ZUIzQX2B46vn+5vErw=;
-	b=kqg3K5w4Ww++XHOOznyxP+0ktYkKSJEInMw9Lwbg+6afCDqwTus0ws402p50Nv3+0NLG
-	 kQ3DYLHjLzMdaoa68Cwf3wdR/WOrSyYUI1HA+eA3XLONK9l40/qoUL/p3ztfYIS31PSCA
-	 8GFzg0ziPrGzwC1TwNmeX2LzdsAVLFxwPgzmikuVT3u77aWn9tG6aVuqMca+Z0xlkNRtT
-	 cG8zGHT8JM18rAg60EtTC7VpLWpNyIUV1JBQXQDdRiGln8HFUfKWBvTUITaugP88nvqXc
-	 9qgtWDsQWjgCviIwI/YpjtRp3wo0nTyQg8yas7sD3jcJ7U5Tahaj+gruUbaRmcce/Dg==
+	bh=RoI57r+kHCFGJ0UCuGw5OD/lIdZvKgrODnE24tAIgAE=;
+	b=QoWsLiE3QC9fFAggsCSowSlupTI8lUYUTywpkqvNcU0c4e2mkz7tn8XNxZxaJacsxmmq
+	 7WNa1Pf/Jid80l8kvV3e+Xtqhq/6P3ltK5x88NYvm66dv7aeu9CsOm8qHKl079MSzt4xQ
+	 /f2mLZWHSVD+EIQGAkP3KzbKDc1eSGaYnHbaCpMyUtSb5Wd6xUrSI9VjOF+7N7+JacDMo
+	 ge7xfR0WV5QXI+Xc7TNFxqfHKGnAGtGd9M9PQcvGl6ElV2NXftos+SOYQzyYgX8obcgmY
+	 G7k7pnWV7TR17TCdJzj+CD2c1vKzjHhD0Ayx92/a88fWORZ1DBIqSOm+pMWg1gWuVLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MUkyaQwp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSBIctHL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C67E60A260E;
-	Wed, 18 Nov 2026 22:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA3C606A32C;
+	Wed, 18 Nov 2026 22:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MUkyaQwp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F681F000C6;
-	Wed, 18 Nov 2026 22:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSBIctHL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616D41F000C4;
+	Wed, 18 Nov 2026 22:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039879;
-	bh=jebOjXgnRMPV4fLVYDzE84Mr+ZUIzQX2B46vn+5vErw=;
+	s=korg; t=1795039881;
+	bh=RoI57r+kHCFGJ0UCuGw5OD/lIdZvKgrODnE24tAIgAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MUkyaQwp2DHP+E1E2ALSTMTY8EG1sdXVyG/vmKEUYownD9FTOar2DNyf/+nADhJYq
-	 XaDjORCyq29jHgD4YObbCpZB0xSjAHUz6JXGH+pWdeuoT3yzs7T3jq6RlGeZc/9fHK
-	 5PU3m1xNvOTfrU/A+hCkJj2B7NbNhVwIK5XO+yug=
+	b=cSBIctHLUKtCcGnTpYR+1HEjtumIUSHtKOyUxpRNSzdtPvHi4/YFCRVjnKKi5qG7l
+	 n44VFGp84ik9ojtmIRT2a+96HmpJ4Pl2AoQMAPiOuYyTkcz/pYbbnMFB7b8cXb+2ZC
+	 ApTY5vla/5jwygLautMfERfL21MhevgqXyAhqCac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Julian Braha <julianbraha@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Thomas Huth <thuth@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2257/3318] kconfig: fix extra output from savedefconfig on out-of-range defaults
-Date: Wed, 18 Nov 2026 15:47:59 +0100
-Message-ID: <20261118150429.532536506@linuxfoundation.org>
+Subject: [PATCH 6.6 2258/3318] crypto: qat - fix active_devs leak on crypto alg registration failure
+Date: Wed, 18 Nov 2026 15:48:00 +0100
+Message-ID: <20261118150429.560798375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,244 +70,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
+[ Upstream commit 178829f1b5b259938188a10f4103fdb901b6435e ]
 
-The Kconfig interpreter currently allows defaults that are outside of the
-range bounds.
+adf_dev_start() registered both alg sets in a single condition.
+If qat_algs_register() succeeds but qat_asym_algs_register() fails,
+ADF_STATUS_CRYPTO_ALGS_REGISTERED is left clear, so adf_dev_stop() skips
+qat_algs_unregister(): the skciphers and aeads stay registered with
+active_devs stuck at 1, pinning the module.
 
-In these cases, the 'sym_validate_range' function will adjust the default
-value to the nearest range bound. For example, see this example:
+Both helpers leak active_devs internally as well - they increment it and
+return without decrementing when a crypto_register_*() call fails, and
+the asym path also leaves the already-registered akcipher behind.
 
-  config A
-    int
-    range 1 2
-    default 16
+Split the registration in adf_dev_start() so that an asym failure
+unregisters qat_algs, and unwind active_devs (and the akcipher) on the
+error paths of both register helpers. While at it, propagate the error
+code returned by the register helpers instead of a blanket -EFAULT.
 
-Here, since the default value of 16 is greater than the bounds, the
-effective default value gets adjusted down to the upper bound, 2.
-
-However, 'savedefconfig' writes non-default values, and without being
-aware of the automatic adjustment to the range bound, it would write: A=2
-
-This limitation is also documented in a comment: "The following fails to
-handle the situation where a default value is further limited by the valid
-range."
-
-To resolve this, let's factor out the default-range adjustment logic from
-the existing 'sym_validate_range' function into its own
-'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
-that it compares against the effective value.
-
-Adds tests, accordingly.
-
-Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
-Assisted-by: Codex:gpt-5.6-sol
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 9b2f33a1bfcd ("crypto: qat - fix unregistration of crypto algorithms")
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c                      | 39 ++++++++----
- .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
- .../tests/savedefconfig_range/__init__.py     |  8 +++
- .../kconfig/tests/savedefconfig_range/config  |  7 +++
- .../savedefconfig_range/expected_defconfig    |  0
- 5 files changed, 102 insertions(+), 12 deletions(-)
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+ .../crypto/intel/qat/qat_common/adf_init.c    | 24 ++++++++++++-----
+ .../crypto/intel/qat/qat_common/qat_algs.c    | 15 ++++++-----
+ .../intel/qat/qat_common/qat_asym_algs.c      | 26 ++++++++++++++-----
+ 3 files changed, 45 insertions(+), 20 deletions(-)
 
-diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index 0e44990ea0dda..b4213fb4b6419 100644
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -117,7 +117,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
- 	return strtoll(sym->curr.val, NULL, base);
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_init.c b/drivers/crypto/intel/qat/qat_common/adf_init.c
+index 718bedff9c16e..169d4d39ee7de 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_init.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_init.c
+@@ -232,13 +232,23 @@ static int adf_dev_start(struct adf_accel_dev *accel_dev)
+ 	clear_bit(ADF_STATUS_STARTING, &accel_dev->status);
+ 	set_bit(ADF_STATUS_STARTED, &accel_dev->status);
+ 
+-	if (!list_empty(&accel_dev->crypto_list) &&
+-	    (qat_algs_register() || qat_asym_algs_register())) {
+-		dev_err(&GET_DEV(accel_dev),
+-			"Failed to register crypto algs\n");
+-		set_bit(ADF_STATUS_STARTING, &accel_dev->status);
+-		clear_bit(ADF_STATUS_STARTED, &accel_dev->status);
+-		return -EFAULT;
++	if (!list_empty(&accel_dev->crypto_list)) {
++		ret = qat_algs_register();
++		if (ret) {
++			dev_err(&GET_DEV(accel_dev), "Failed to register crypto algs\n");
++			set_bit(ADF_STATUS_STARTING, &accel_dev->status);
++			clear_bit(ADF_STATUS_STARTED, &accel_dev->status);
++			return ret;
++		}
++
++		ret = qat_asym_algs_register();
++		if (ret) {
++			dev_err(&GET_DEV(accel_dev), "Failed to register crypto asym algs\n");
++			qat_algs_unregister();
++			set_bit(ADF_STATUS_STARTING, &accel_dev->status);
++			clear_bit(ADF_STATUS_STARTED, &accel_dev->status);
++			return ret;
++		}
+ 	}
+ 	set_bit(ADF_STATUS_CRYPTO_ALGS_REGISTERED, &accel_dev->status);
+ 
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs.c b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+index 274bcc83a1fc2..2ff0efb23513a 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+@@ -1395,19 +1395,22 @@ int qat_algs_register(void)
+ 	ret = crypto_register_skciphers(qat_skciphers,
+ 					ARRAY_SIZE(qat_skciphers));
+ 	if (ret)
+-		goto unlock;
++		goto err_dec;
+ 
+ 	ret = crypto_register_aeads(qat_aeads, ARRAY_SIZE(qat_aeads));
+ 	if (ret)
+-		goto unreg_algs;
++		goto err_unreg_skciphers;
+ 
+-unlock:
+ 	mutex_unlock(&algs_lock);
+-	return ret;
++	return 0;
+ 
+-unreg_algs:
++err_unreg_skciphers:
+ 	crypto_unregister_skciphers(qat_skciphers, ARRAY_SIZE(qat_skciphers));
+-	goto unlock;
++err_dec:
++	active_devs--;
++unlock:
++	mutex_unlock(&algs_lock);
++	return ret;
  }
  
--static void sym_validate_range(struct symbol *sym)
-+/*
-+ * Return the nearest range bound for an out-of-range default value.
-+ * Return NULL if the value is valid or the symbol has no active range.
-+ */
-+static struct symbol *sym_get_near_range_bound(struct symbol *sym,
-+					  const char *value)
- {
- 	struct property *prop;
- 	struct symbol *range_sym;
-@@ -132,21 +137,31 @@ static void sym_validate_range(struct symbol *sym)
- 		base = 16;
- 		break;
- 	default:
--		return;
-+		return NULL;
- 	}
- 	prop = sym_get_range_prop(sym);
- 	if (!prop)
--		return;
--	val = strtoll(sym->curr.val, NULL, base);
-+		return NULL;
-+	val = strtoll(value, NULL, base);
- 	range_sym = prop->expr->left.sym;
- 	val2 = sym_get_range_val(range_sym, base);
- 	if (val >= val2) {
- 		range_sym = prop->expr->right.sym;
- 		val2 = sym_get_range_val(range_sym, base);
- 		if (val <= val2)
--			return;
-+			return NULL;
- 	}
--	sym->curr.val = range_sym->curr.val;
-+
-+	return range_sym;
-+}
-+
-+static void sym_validate_range(struct symbol *sym)
-+{
-+	struct symbol *range_sym;
-+
-+	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
-+	if (range_sym)
-+		sym->curr.val = range_sym->curr.val;
- }
+ void qat_algs_unregister(void)
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
+index fc0613f37b7e1..96f0fece1ceac 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_asym_algs.c
+@@ -1284,13 +1284,25 @@ int qat_asym_algs_register(void)
+ 	int ret = 0;
  
- static void sym_set_changed(struct symbol *sym)
-@@ -707,7 +722,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
- const char *sym_get_string_default(struct symbol *sym)
- {
- 	struct property *prop;
--	struct symbol *ds;
-+	struct symbol *ds, *range_sym;
- 	const char *str = "";
- 	tristate val;
- 
-@@ -725,11 +740,6 @@ const char *sym_get_string_default(struct symbol *sym)
- 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
- 			break;
- 		default:
--			/*
--			 * The following fails to handle the situation
--			 * where a default value is further limited by
--			 * the valid range.
--			 */
- 			ds = prop_get_symbol(prop);
- 			if (ds != NULL) {
- 				sym_calc_value(ds);
-@@ -773,6 +783,11 @@ const char *sym_get_string_default(struct symbol *sym)
- 	default:
- 		break;
- 	}
+ 	mutex_lock(&algs_lock);
+-	if (++active_devs == 1) {
+-		rsa.base.cra_flags = 0;
+-		ret = crypto_register_akcipher(&rsa);
+-		if (ret)
+-			goto unlock;
+-		ret = crypto_register_kpp(&dh);
+-	}
++	if (++active_devs != 1)
++		goto unlock;
 +
-+	range_sym = sym_get_near_range_bound(sym, str);
-+	if (range_sym)
-+		str = range_sym->curr.val;
++	rsa.base.cra_flags = 0;
++	ret = crypto_register_akcipher(&rsa);
++	if (ret)
++		goto err_dec;
 +
- 	return str;
- }
- 
-diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-new file mode 100644
-index 0000000000000..fd59d9082ed5b
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-@@ -0,0 +1,60 @@
-+# SPDX-License-Identifier: GPL-2.0
++	ret = crypto_register_kpp(&dh);
++	if (ret)
++		goto err_unreg_akcipher;
 +
-+# Static default and range values
++	mutex_unlock(&algs_lock);
++	return 0;
 +
-+config INT_DEFAULT_ABOVE_RANGE
-+	int
-+	range 1 1
-+	default 16
-+
-+config INT_DEFAULT_BELOW_RANGE
-+	int
-+	range 4 8
-+	default 2
-+
-+# Default and range values determined by other options
-+
-+config RANGE_UPPER_BOUND
-+	int
-+	default 3
-+
-+config INT_DYNAMIC_RANGE
-+	int
-+	range 0 RANGE_UPPER_BOUND
-+	default 4
-+
-+# Hex
-+
-+config HEX_DEFAULT_ABOVE_RANGE
-+	hex
-+	range 0x10 0x20
-+	default 0x40
-+
-+# Implicit default value of 0
-+
-+config INT_IMPLICIT_DEFAULT_ZERO
-+	int
-+	range 1 4
-+
-+# Conditional range
-+
-+config USE_FIRST_RANGE
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_RANGE
-+	int
-+	range 1 2 if USE_FIRST_RANGE
-+	range 3 4 if !USE_FIRST_RANGE
-+	default 3
-+
-+# Conditional default
-+
-+config USE_DEFAULT
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_DEFAULT
-+	int
-+	range 1 2
-+	default 3 if USE_DEFAULT
-diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-new file mode 100644
-index 0000000000000..961454be732c2
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-@@ -0,0 +1,8 @@
-+# SPDX-License-Identifier: GPL-2.0
-+"""Test savedefconfig with numerical defaults outside of ranges."""
-+
-+
-+def test(conf):
-+    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
-+                          out_file='defconfig') == 0
-+    assert conf.config_matches('expected_defconfig')
-diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
-new file mode 100644
-index 0000000000000..d939cfe5fd349
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/config
-@@ -0,0 +1,7 @@
-+CONFIG_INT_DEFAULT_ABOVE_RANGE=1
-+CONFIG_INT_DEFAULT_BELOW_RANGE=4
-+CONFIG_INT_DYNAMIC_RANGE=3
-+CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
-+CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
-+CONFIG_INT_CONDITIONAL_RANGE=2
-+CONFIG_INT_CONDITIONAL_DEFAULT=2
-diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
-new file mode 100644
-index 0000000000000..e69de29bb2d1d
++err_unreg_akcipher:
++	crypto_unregister_akcipher(&rsa);
++err_dec:
++	active_devs--;
+ unlock:
+ 	mutex_unlock(&algs_lock);
+ 	return ret;
 -- 
 2.53.0
 
